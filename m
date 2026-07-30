@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72FEE3914ED;
-	Thu, 30 Jul 2026 14:44:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0046D432E98;
+	Thu, 30 Jul 2026 14:44:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422684; cv=none; b=I90F1PZYJsXTpgOWharLWCo1IJKFFeYcBmrkTq9ePn7m5NGP8se0RlETPcHWCjH9EpondJVasqtQhIHh9SM0aUvyqABAAX6uAZDLLYxmR6AFaN24GyS9FO1sTsDT+YGMcXes8zSdF6g/4BgoP4tbdymks3NBAHqBOQLptBaBImA=
+	t=1785422687; cv=none; b=fQv0Lsh3uW0LThw17xbcr3ocY+P5NU2uJYbIFwB7mKsaJSyWBsvpe3NytvO+0P57A6uDERPZLObw5L8vUclWoCKOdy09oemnHTgQDC8IZtR6EAkfaYLby1AJ9NZsp6UAsZT/DuxdOL7dTj+I+Zhw+DDGXeYp69VPLcPosO9DetQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422684; c=relaxed/simple;
-	bh=6Bbq0aA6Y0K0R+EzAFhmLeXILCFeWmbY5JfQpV3wSfE=;
+	s=arc-20240116; t=1785422687; c=relaxed/simple;
+	bh=1l9GG3pchAw23CPgmKZIpSVgDtErmXI4DLYEj7D5x4Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OYg2dPNA18wIWoJu1do2T7K77IKhCg2+/LGbRS67v4MgHt0rn688KTTy3CXdrGE0vjg/A53hUqVOmNYpGi/xGIUrf23URs876yBVDtwE45i9dAMmkV795e2g9l4XUPq2e02CB+pcBqfF8r+psEV0nMGy8f7SRK6jE2zGWpOPIzc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q0gozerp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KtzvRjavIsjnWbTKj09wDsAtPAouv3wiF/ffxGLHBRrGiv/+C7J3SiBK+muGrsleJY6i6T9HWMvZwYIizYKQy2ntUQ9Lh3q1jfOUodCCwOGSAlo01UGWOOd9wKy1Vw1tw95FB67dGkjY0GtB0uzPYDCokg9zXbuHtRNHvb+hDjY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MHKbp2nR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q0gozerp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 869D01F000E9;
-	Thu, 30 Jul 2026 14:44:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MHKbp2nR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C7521F000E9;
+	Thu, 30 Jul 2026 14:44:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422683;
-	bh=CRWHzgoVZdRDc+ZLgfsNTqFO3yOpLQgBQ18HfoiJ3kY=;
+	s=korg; t=1785422685;
+	bh=SUY/+pIpII9SL3DEFGAjIcZH2F1uan2rB1AWR0kH0ww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q0gozerp9bUQbdhzT5Z0b8F3yq6ifm8CcqdJv2aKrzVwi4NdGKYRogiE/voxPRisR
-	 56O6AkQIT1Rr1i0o3ChMqRZncxTsvsApbRAjHTfKFl9haiXTt7UrNQQW1yCs69sQ0t
-	 peUpee+UiE2SWe/kFkXjNOgCSCj9Mw/6ZgT+10FU=
+	b=MHKbp2nRs0aqTn1PTnXeBEuWd8c0J0L21YZ9xFOqRvl6bCMmE0r2MeEOgTsbkRAxq
+	 hdRH8SDaQ6+qa7Dm7o/fKcRKwtVb4A9HsRHIl5RbEd2DXz93FbPoH94yppt6ynR2ES
+	 lKH19mi9cmWyYp075Z0gjgtj36zfEC/eo+0ZpWyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 7.1 523/744] media: ti: vpe: Fix the error code of devm_request_irq()
-Date: Thu, 30 Jul 2026 16:13:16 +0200
-Message-ID: <20260730141455.390574437@linuxfoundation.org>
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Bryan ODonoghue <bod@kernel.org>
+Subject: [PATCH 7.1 506/744] media: qcom: camss: Fix RDI streaming for CSID 680
+Date: Thu, 30 Jul 2026 16:12:59 +0200
+Message-ID: <20260730141455.035641446@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -50,37 +52,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
-commit 5e78a431a3f74c632351791d7902c60199d1ce83 upstream.
+commit 93ea81d16570442dbca04d2e2563ae8c3e65fa1b upstream.
 
-Return the actual error code from devm_request_irq() instead of
-incorrectly returning -ENOMEM.
+Fix streaming to RDI1 and RDI2. csid->phy.en_vc contains a bitmask of
+enabled CSID ports not virtual channels.
 
-Fixes: fc2873aa4a21 ("media: ti: vpe: Add the VIP driver")
+We cycle through the number of available CSID ports and test this value
+against the vc_en bitmask.
+
+We then use the passed value both as an index to the port configuration
+macros and as a virtual channel index.
+
+This is a very broken pattern. Reviewing the initial introduction of VC
+support it states that you can only map one CSID to one VFE. This is true
+however each CSID has multiple sources which can sink inside of the VFE -
+for example there is a "pixel" path for bayer stats which sources @
+CSID(x):3 and sinks on VFE(x):pix.
+
+That is CSID port # 3 should drive VFE port #3. With our current setup only
+a sensor which drives virtual channel number #3 could possibly enable that
+setup.
+
+This is deeply wrong the virtual channel has no relevance to hooking CSID
+to VFE, a fact that is proven after this patch is applied allowing
+RDI0,RDI1 and RDI2 to function with VC0 whereas before only RDI1 worked.
+
+Another way the current model breaks is the DT field. A sensor driving
+different data-types on the same VC would not be able to separate the VC:DT
+pair to separate RDI outputs, thus breaking another feature of VCs in the
+MIPI data-stream.
+
+Default the VC back to zero. A follow on series will implement subdev
+streams to actually enable VCs without breaking CSID source to VFE sink.
+
+Fixes: 253314b20408 ("media: qcom: camss: Add CSID 680 support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/ti/vpe/vip.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/platform/qcom/camss/camss-csid-680.c |   30 ++++++++++-----------
+ 1 file changed, 15 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/media/platform/ti/vpe/vip.c b/drivers/media/platform/ti/vpe/vip.c
-index a3c5e966f64c..bd34c982b427 100644
---- a/drivers/media/platform/ti/vpe/vip.c
-+++ b/drivers/media/platform/ti/vpe/vip.c
-@@ -3472,7 +3472,7 @@ static int vip_probe_slice(struct platform_device *pdev, int slice)
- 	ret = devm_request_irq(&pdev->dev, dev->irq, vip_irq,
- 			       0, VIP_MODULE_NAME, dev);
- 	if (ret < 0)
--		return -ENOMEM;
-+		return ret;
+--- a/drivers/media/platform/qcom/camss/camss-csid-680.c
++++ b/drivers/media/platform/qcom/camss/camss-csid-680.c
+@@ -219,9 +219,9 @@ static void __csid_configure_top(struct
+ 	    CSID_TOP_IO_PATH_CFG0(csid->id));
+ }
  
- 	spin_lock_init(&dev->slock);
- 	mutex_init(&dev->mutex);
--- 
-2.55.0
-
+-static void __csid_configure_rdi_stream(struct csid_device *csid, u8 enable, u8 vc)
++static void __csid_configure_rdi_stream(struct csid_device *csid, u8 enable, u8 port, u8 vc)
+ {
+-	struct v4l2_mbus_framefmt *input_format = &csid->fmt[MSM_CSID_PAD_FIRST_SRC + vc];
++	struct v4l2_mbus_framefmt *input_format = &csid->fmt[MSM_CSID_PAD_FIRST_SRC + port];
+ 	const struct csid_format_info *format = csid_get_fmt_entry(csid->res->formats->formats,
+ 								   csid->res->formats->nformats,
+ 								   input_format->code);
+@@ -233,28 +233,28 @@ static void __csid_configure_rdi_stream(
+ 		lane_cnt = 4;
+ 
+ 	val = 0;
+-	writel(val, csid->base + CSID_RDI_FRM_DROP_PERIOD(vc));
++	writel(val, csid->base + CSID_RDI_FRM_DROP_PERIOD(port));
+ 
+ 	/*
+ 	 * DT_ID is a two bit bitfield that is concatenated with
+ 	 * the four least significant bits of the five bit VC
+ 	 * bitfield to generate an internal CID value.
+ 	 *
+-	 * CSID_RDI_CFG0(vc)
++	 * CSID_RDI_CFG0(port)
+ 	 * DT_ID : 28:27
+ 	 * VC    : 26:22
+ 	 * DT    : 21:16
+ 	 *
+ 	 * CID   : VC 3:0 << 2 | DT_ID 1:0
+ 	 */
+-	dt_id = vc & 0x03;
++	dt_id = port & 0x03;
+ 
+ 	/* note: for non-RDI path, this should be format->decode_format */
+ 	val |= DECODE_FORMAT_PAYLOAD_ONLY << RDI_CFG0_DECODE_FORMAT;
+ 	val |= format->data_type << RDI_CFG0_DATA_TYPE;
+ 	val |= vc << RDI_CFG0_VIRTUAL_CHANNEL;
+ 	val |= dt_id << RDI_CFG0_DT_ID;
+-	writel(val, csid->base + CSID_RDI_CFG0(vc));
++	writel(val, csid->base + CSID_RDI_CFG0(port));
+ 
+ 	val = RDI_CFG1_TIMESTAMP_STB_FRAME;
+ 	val |= RDI_CFG1_BYTE_CNTR_EN;
+@@ -265,23 +265,23 @@ static void __csid_configure_rdi_stream(
+ 	val |= RDI_CFG1_CROP_V_EN;
+ 	val |= RDI_CFG1_PACKING_MIPI;
+ 
+-	writel(val, csid->base + CSID_RDI_CFG1(vc));
++	writel(val, csid->base + CSID_RDI_CFG1(port));
+ 
+ 	val = 0;
+-	writel(val, csid->base + CSID_RDI_IRQ_SUBSAMPLE_PERIOD(vc));
++	writel(val, csid->base + CSID_RDI_IRQ_SUBSAMPLE_PERIOD(port));
+ 
+ 	val = 1;
+-	writel(val, csid->base + CSID_RDI_IRQ_SUBSAMPLE_PATTERN(vc));
++	writel(val, csid->base + CSID_RDI_IRQ_SUBSAMPLE_PATTERN(port));
+ 
+ 	val = 0;
+-	writel(val, csid->base + CSID_RDI_CTRL(vc));
++	writel(val, csid->base + CSID_RDI_CTRL(port));
+ 
+-	val = readl(csid->base + CSID_RDI_CFG0(vc));
++	val = readl(csid->base + CSID_RDI_CFG0(port));
+ 	if (enable)
+ 		val |= RDI_CFG0_ENABLE;
+ 	else
+ 		val &= ~RDI_CFG0_ENABLE;
+-	writel(val, csid->base + CSID_RDI_CFG0(vc));
++	writel(val, csid->base + CSID_RDI_CFG0(port));
+ }
+ 
+ static void csid_configure_stream(struct csid_device *csid, u8 enable)
+@@ -290,11 +290,11 @@ static void csid_configure_stream(struct
+ 
+ 	__csid_configure_top(csid);
+ 
+-       /* Loop through all enabled VCs and configure stream for each */
++	/* Loop through all enabled ports and configure a stream for each */
+ 	for (i = 0; i < MSM_CSID_MAX_SRC_STREAMS; i++) {
+ 		if (csid->phy.en_vc & BIT(i)) {
+-			__csid_configure_rdi_stream(csid, enable, i);
+-			__csid_configure_rx(csid, &csid->phy, i);
++			__csid_configure_rdi_stream(csid, enable, i, 0);
++			__csid_configure_rx(csid, &csid->phy, 0);
+ 			__csid_ctrl_rdi(csid, enable, i);
+ 		}
+ 	}
 
 
