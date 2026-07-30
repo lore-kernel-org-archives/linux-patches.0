@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9275643E9DF;
-	Thu, 30 Jul 2026 15:10:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FCFB3AA187;
+	Thu, 30 Jul 2026 15:10:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424253; cv=none; b=Cz1yJTUUt7L0gt2YvC1wjFRyBtIR4kvxeFj5rZKr4+u7lXpvMCZ8QLLLRWq4DzgqWrhopf+AqDY26dwdImNWcEDrFTuGLn/TgQsTBDZ9xQHI67oFz3MXSFw7IA1kHjOuxOO+i16XD3+VUZQrScoBDt+ycAwurSJbg1yths8acwI=
+	t=1785424254; cv=none; b=r0AhiAlO18qz6OqBQXHd9KOEY17NRMRuyC/62/9pQO4rA+DXvvOtHlYs6xHNu5C1cTPOtokD/SCYAV6Xrdxp5I+nt68KAIg/1aauaHuQKGpGlf+l0qs7BtEN2RSeEkk/k/eScctyGorgAFY2sCIlDWXQtitAluAoU3R2l12EQLw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424253; c=relaxed/simple;
-	bh=Rk1ZRlqQ2nkcCVptDp4TQq3lfuECKvTYrW4J9OuG30k=;
+	s=arc-20240116; t=1785424254; c=relaxed/simple;
+	bh=UeZKoEnarIO8hjTbBSlGVJwO2xG6evrBNqhw1bACERg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EitpQPVvAP81pdSigrI9A+gdOO2Fvuq2VoXDFCMQMfPws1zy2Pt3InxyiKRTrdj6449xK/72u33zB1gqMsMS+39Dbcnm8OrzxbEHItZ1fIfB/4DMnNjna+vTe8kR2Fmlr1eZ/oLJpBGdcnDMKQDCYj8T8snMJqY7qsxLXM9HbOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ldDiMDlQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bWcICgCUFAxJr6wUxlIRkVnQ1kODA1FBBYdtAbl01Z0hMDtS/Wd/WBIG1XqFnz+oVP1nrCgmKzgm+iSHyI9hxQARq+JeYhq+8FX+DCH1P0QAUZJ1SifBpa0PirJig87pi/pzEW96Zd3QrYaqmxkNretmaJD6PpUkOAvRJtyM+Ek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ysLIMXnT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ldDiMDlQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03D751F00A3A;
-	Thu, 30 Jul 2026 15:10:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ysLIMXnT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EBD51F000E9;
+	Thu, 30 Jul 2026 15:10:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424247;
-	bh=7PJS9Yi+2QZXgtkJ1cSMnb6Bgvepe2nrouExPWp5qLY=;
+	s=korg; t=1785424244;
+	bh=bYZ3r3fzpRCXwQOb8ZaQm3OROBAHSnldZGlaTutezoo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ldDiMDlQnXd+1pVviZSM+B5+hzgnlz3pwubzNn9TR3f85wNuKboysVV/DLNcKqbPR
-	 ARxYrY25DU0pcnIInM8ML1VSMyNWfHlahKuuURWSXXavV/3cWead/n4KzFB08FuN8w
-	 09a8urzlMS1eh3k84GAEi6VVtRiRIRO8p8av4KEs=
+	b=ysLIMXnT/O/0DgGICdcBthMoIxpYqddb48008CEdkPdB00gSRs4I3Q12DRZahI+Sq
+	 i7bkePnk+b7+T+1lDFGvgI+dNsF4/xWtJEw/XIObugV3BUUjmpxWQNwcWv09dnyxlI
+	 cvvwBktRsXY6kJd3dFc8J33AJMXcX3DvqeI9u6t0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ashutosh Desai <ashutoshdesai993@gmail.com>,
-	Lyude Paul <lyude@redhat.com>
-Subject: [PATCH 6.18 328/675] drm/dp/mst: fix OOB reads on 2-byte fields in sideband reply parsers
-Date: Thu, 30 Jul 2026 16:10:58 +0200
-Message-ID: <20260730141452.098475683@linuxfoundation.org>
+	Alessio Belle <alessio.belle@imgtec.com>,
+	Brajesh Gupta <brajesh.gupta@imgtec.com>,
+	Matt Coster <matt.coster@imgtec.com>
+Subject: [PATCH 6.18 327/675] drm/imagination: Fit paired fragment job in the correct CCCB
+Date: Thu, 30 Jul 2026 16:10:57 +0200
+Message-ID: <20260730141452.078355513@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -50,90 +51,157 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ashutosh Desai <ashutoshdesai993@gmail.com>
+From: Alessio Belle <alessio.belle@imgtec.com>
 
-commit 6b89ba3dba2f583626fb693e47e951ffb8bf591f upstream.
+commit 4baf9e70cb756d78dd56419f8baee2978a72d0c3 upstream.
 
-Three sideband reply parsers read 16-bit fields as:
+For geometry jobs with a paired fragment job, at the moment, the
+DRM scheduler's prepare_job() callback:
 
-  val = (raw->msg[idx] << 8) | (raw->msg[idx+1]);
+- checks for internal (driver) dependencies for the geometry job;
+- calls into pvr_queue_get_paired_frag_job_dep() to check for external
+  dependencies for the fragment job (the two jobs are submitted together
+  but the common scheduler code doesn't know about it, so this needs to
+  be done at this point in time);
+- calls into the prepare_job() callback again, but for the fragment job,
+  to check its internal dependencies as well, passing the fragment job's
+  drm_sched_job and the geometry job's drm_sched_entity / pvr_queue.
 
-and check bounds only after the fact. When idx == raw->curlen,
-raw->msg[idx+1] reads one byte past the received message data into
-the following struct fields (curchunk_len, curchunk_idx, curlen).
+The problem with the last step is that pvr_queue_prepare_job() doesn't
+always take the mismatched fragment job and geometry queue into account,
+in particular when checking whether there is space for the fragment
+command to be submitted, so the code ends up checking for space in the
+geometry (i.e. wrong) CCCB.
+The rest of the nested prepare_job() callback happens to work fine at
+the moment as the other internal dependencies are not relevant for a
+paired fragment job.
 
-Affected functions:
- - drm_dp_sideband_parse_enum_path_resources_ack()
-   full_payload_bw_number and avail_payload_bw_number fields
- - drm_dp_sideband_parse_allocate_payload_ack()
-   allocated_pbn field
- - drm_dp_sideband_parse_query_payload_ack()
-   allocated_pbn field
+Move the initialisation of a paired fragment job's done fence and CCCB
+fence to pvr_queue_get_paired_frag_job_dep(), inferring the correct
+queue from the fragment job itself.
 
-Fix by using a single combined check (idx + 2 > curlen) before each
-2-byte read. Since the check is strictly tighter than idx > curlen,
-no separate step is needed.
+This fixes cases where prepare_job() wrongly assumed that there was
+enough space for a paired fragment job in its own CCCB, unblocking
+run_job(), which then returned early without writing the full sequence
+of commands to the CCCB.
 
-Fixes: ad7f8a1f9ced ("drm/helper: add Displayport multi-stream helper (v0.6)")
-Cc: <stable@vger.kernel.org> # v3.17+
-Signed-off-by: Ashutosh Desai <ashutoshdesai993@gmail.com>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-[added fixes tag]
-Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patch.msgid.link/20260510203128.2884846-1-ashutoshdesai993@gmail.com
+The above lead to kernel warnings such as the following and potentially
+job timeouts (depending on waiters on the missing commands):
+
+  [  552.421075] WARNING: drivers/gpu/drm/imagination/pvr_cccb.c:178 at pvr_cccb_write_command_with_header+0x2c4/0x330 [powervr], CPU#2: kworker/u16:5/63
+  [  552.421230] Modules linked in:
+  [  552.421592] CPU: 2 UID: 0 PID: 63 Comm: kworker/u16:5 Tainted: G        W           7.0.0-rc2-gc5d053e4dccb #39 PREEMPT
+  [  552.421625] Tainted: [W]=WARN
+  [  552.421637] Hardware name: Texas Instruments AM625 SK (DT)
+  [  552.421655] Workqueue: powervr-sched drm_sched_run_job_work [gpu_sched]
+  [  552.421744] pstate: 80000005 (Nzcv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+  [  552.421766] pc : pvr_cccb_write_command_with_header+0x2c4/0x330 [powervr]
+  [  552.421850] lr : pvr_queue_submit_job_to_cccb+0x57c/0xa74 [powervr]
+  [  552.421923] sp : ffff800084c47650
+  [  552.421936] x29: ffff800084c47740 x28: 0000000000000df8 x27: ffff800088a77000
+  [  552.421979] x26: 0000000000000030 x25: ffff800084c47680 x24: 0000000000001000
+  [  552.422017] x23: ffff800084c47820 x22: 1ffff00010988ecc x21: 0000000000000008
+  [  552.422055] x20: 0000000000000208 x19: ffff000006ad5a88 x18: 0000000000000000
+  [  552.422093] x17: 0000000020020000 x16: 0000000000020000 x15: 0000000000000000
+  [  552.422130] x14: 0000000000000000 x13: 0000000000000000 x12: 0000000000000000
+  [  552.422167] x11: 000000000000f2f2 x10: 00000000f3000000 x9 : 00000000f3f3f3f3
+  [  552.422204] x8 : 00000000f2f2f200 x7 : ffff700010988ecc x6 : 0000000000000008
+  [  552.422241] x5 : 0000000000000000 x4 : 1ffff0001114ee00 x3 : 0000000000000000
+  [  552.422278] x2 : 0000000000000007 x1 : 0000000000000fff x0 : 000000000000002f
+  [  552.422316] Call trace:
+  [  552.422330]  pvr_cccb_write_command_with_header+0x2c4/0x330 [powervr] (P)
+  [  552.422411]  pvr_queue_submit_job_to_cccb+0x57c/0xa74 [powervr]
+  [  552.422486]  pvr_queue_run_job+0x3a4/0x990 [powervr]
+  [  552.422562]  drm_sched_run_job_work+0x580/0xd48 [gpu_sched]
+  [  552.422623]  process_one_work+0x520/0x1288
+  [  552.422657]  worker_thread+0x3f0/0xb3c
+  [  552.422679]  kthread+0x334/0x3d8
+  [  552.422706]  ret_from_fork+0x10/0x20
+
+Fixes: eaf01ee5ba28 ("drm/imagination: Implement job submission and scheduling")
+Cc: stable@vger.kernel.org
+Signed-off-by: Alessio Belle <alessio.belle@imgtec.com>
+Reviewed-by: Brajesh Gupta <brajesh.gupta@imgtec.com>
+Link: https://patch.msgid.link/20260330-job-submission-fixes-cleanup-v1-2-7de8c09cef8c@imgtec.com
+Signed-off-by: Matt Coster <matt.coster@imgtec.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/display/drm_dp_mst_topology.c |   17 ++++-------------
- 1 file changed, 4 insertions(+), 13 deletions(-)
+ drivers/gpu/drm/imagination/pvr_queue.c |   32 ++++++++++++++------------------
+ 1 file changed, 14 insertions(+), 18 deletions(-)
 
---- a/drivers/gpu/drm/display/drm_dp_mst_topology.c
-+++ b/drivers/gpu/drm/display/drm_dp_mst_topology.c
-@@ -934,16 +934,13 @@ static bool drm_dp_sideband_parse_enum_p
- 	repmsg->u.path_resources.port_number = (raw->msg[idx] >> 4) & 0xf;
- 	repmsg->u.path_resources.fec_capable = raw->msg[idx] & 0x1;
- 	idx++;
--	if (idx > raw->curlen)
-+	if (idx + 2 > raw->curlen)
- 		goto fail_len;
- 	repmsg->u.path_resources.full_payload_bw_number = (raw->msg[idx] << 8) | (raw->msg[idx+1]);
- 	idx += 2;
--	if (idx > raw->curlen)
-+	if (idx + 2 > raw->curlen)
- 		goto fail_len;
- 	repmsg->u.path_resources.avail_payload_bw_number = (raw->msg[idx] << 8) | (raw->msg[idx+1]);
--	idx += 2;
--	if (idx > raw->curlen)
--		goto fail_len;
- 	return true;
- fail_len:
- 	DRM_DEBUG_KMS("enum resource parse length fail %d %d\n", idx, raw->curlen);
-@@ -961,12 +958,9 @@ static bool drm_dp_sideband_parse_alloca
- 		goto fail_len;
- 	repmsg->u.allocate_payload.vcpi = raw->msg[idx];
- 	idx++;
--	if (idx > raw->curlen)
-+	if (idx + 2 > raw->curlen)
- 		goto fail_len;
- 	repmsg->u.allocate_payload.allocated_pbn = (raw->msg[idx] << 8) | (raw->msg[idx+1]);
--	idx += 2;
--	if (idx > raw->curlen)
--		goto fail_len;
- 	return true;
- fail_len:
- 	DRM_DEBUG_KMS("allocate payload parse length fail %d %d\n", idx, raw->curlen);
-@@ -980,12 +974,9 @@ static bool drm_dp_sideband_parse_query_
+--- a/drivers/gpu/drm/imagination/pvr_queue.c
++++ b/drivers/gpu/drm/imagination/pvr_queue.c
+@@ -488,10 +488,11 @@ pvr_queue_get_job_kccb_fence(struct pvr_
+ }
  
- 	repmsg->u.query_payload.port_number = (raw->msg[idx] >> 4) & 0xf;
- 	idx++;
--	if (idx > raw->curlen)
-+	if (idx + 2 > raw->curlen)
- 		goto fail_len;
- 	repmsg->u.query_payload.allocated_pbn = (raw->msg[idx] << 8) | (raw->msg[idx + 1]);
--	idx += 2;
--	if (idx > raw->curlen)
--		goto fail_len;
- 	return true;
- fail_len:
- 	DRM_DEBUG_KMS("query payload parse length fail %d %d\n", idx, raw->curlen);
+ static struct dma_fence *
+-pvr_queue_get_paired_frag_job_dep(struct pvr_queue *queue, struct pvr_job *job)
++pvr_queue_get_paired_frag_job_dep(struct pvr_job *job)
+ {
+ 	struct pvr_job *frag_job = job->type == DRM_PVR_JOB_TYPE_GEOMETRY ?
+ 				   job->paired_job : NULL;
++	struct pvr_queue *frag_queue = frag_job ? frag_job->ctx->queues.fragment : NULL;
+ 	struct dma_fence *f;
+ 	unsigned long index;
+ 
+@@ -510,7 +511,10 @@ pvr_queue_get_paired_frag_job_dep(struct
+ 		return dma_fence_get(f);
+ 	}
+ 
+-	return frag_job->base.sched->ops->prepare_job(&frag_job->base, &queue->entity);
++	/* Initialize the paired fragment job's done_fence, so we can signal it. */
++	pvr_queue_job_fence_init(frag_job->done_fence, frag_queue);
++
++	return pvr_queue_get_job_cccb_fence(frag_queue, frag_job);
+ }
+ 
+ /**
+@@ -529,11 +533,6 @@ pvr_queue_prepare_job(struct drm_sched_j
+ 	struct pvr_queue *queue = container_of(s_entity, struct pvr_queue, entity);
+ 	struct dma_fence *internal_dep = NULL;
+ 
+-	/*
+-	 * Initialize the done_fence, so we can signal it. This must be done
+-	 * here because otherwise by the time of run_job() the job will end up
+-	 * in the pending list without a valid fence.
+-	 */
+ 	if (job->type == DRM_PVR_JOB_TYPE_FRAGMENT && job->paired_job) {
+ 		/*
+ 		 * This will be called on a paired fragment job after being
+@@ -543,18 +542,15 @@ pvr_queue_prepare_job(struct drm_sched_j
+ 		 */
+ 		if (job->paired_job->has_pm_ref)
+ 			return NULL;
+-
+-		/*
+-		 * In this case we need to use the job's own ctx to initialise
+-		 * the done_fence.  The other steps are done in the ctx of the
+-		 * paired geometry job.
+-		 */
+-		pvr_queue_job_fence_init(job->done_fence,
+-					 job->ctx->queues.fragment);
+-	} else {
+-		pvr_queue_job_fence_init(job->done_fence, queue);
+ 	}
+ 
++	/*
++	 * Initialize the done_fence, so we can signal it. This must be done
++	 * here because otherwise by the time of run_job() the job will end up
++	 * in the pending list without a valid fence.
++	 */
++	pvr_queue_job_fence_init(job->done_fence, queue);
++
+ 	/* CCCB fence is used to make sure we have enough space in the CCCB to
+ 	 * submit our commands.
+ 	 */
+@@ -575,7 +571,7 @@ pvr_queue_prepare_job(struct drm_sched_j
+ 
+ 	/* The paired job fence should come last, when everything else is ready. */
+ 	if (!internal_dep)
+-		internal_dep = pvr_queue_get_paired_frag_job_dep(queue, job);
++		internal_dep = pvr_queue_get_paired_frag_job_dep(job);
+ 
+ 	return internal_dep;
+ }
 
 
