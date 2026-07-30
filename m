@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FAF143C7D7;
-	Thu, 30 Jul 2026 14:34:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15E3440963F;
+	Thu, 30 Jul 2026 14:34:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422091; cv=none; b=FcyT8I4trcB3zfjoaOSqK8I05b/l/CX0DZghnNvgqv5YlUPJBOeGHmiSpShwqrhzMLdow+B18znUAClBC/KSn+FBTfYXHPqjbK0tXoetBzHmbabgdcHsVoW/TVSnanMNYCYYSKMOhEEvxH/o5P2FMd1G66Cl8RNWLcu+jUiZaOs=
+	t=1785422094; cv=none; b=RErNWO0ynadwRoyas0VTrf6zby5LU9zZYzuOwYlg9W1AT9K0+2Ykyqyea32D0RGQz2QtHQoq+1w7ajVxF5a9TNzoDlEVa6u3vQSDPxehaEsj83ioZK9GdsRo7h1LilrTz8xOS0WrVqdeAFxbNZY+Rc3WUg6Ix1dMO07k4ezU3P4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422091; c=relaxed/simple;
-	bh=yWQeO6mvBDTivl0FgXo2cHhf5fIU4RisOeWi8HpcYzQ=;
+	s=arc-20240116; t=1785422094; c=relaxed/simple;
+	bh=LUyhWZTCTsvCIKyQN8OOpbeJMTndf0voGKl+caP1XkQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CRnBlG8Kcimg1aylOeF0/iOfL8b3qAWPUwvrUKB3dqs5KL+eJ4lx8E4DC8BuMWZkokMD9jXI8CHb8M6Z2t/V3A54fn+uh+4JC8ucK/TU04yBe7xtPYeF5di1YD+diioN9LkMolP5Hhg/cwV8H/lpi7fXRWFBpvgBqay5RFyDVKY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xPQGaxQq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=cUA9aB4CVLJhgWOd9lsJ9X5DhUGZZ+j5BWmCfe1qrOtHYMEmzRnZu9oUlPsnGZ+9mTNZvHz/ca0Qje8YfkSx5mnuBHm0yQU0YWDKivKKfoUuJJxpVfSbxkBTUre+jZRwRnm4kiZovsu2JJZ1HifrnkW3GbnSecr+kx7pxtO/Q24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wKXBWK48; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xPQGaxQq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F5971F000E9;
-	Thu, 30 Jul 2026 14:34:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wKXBWK48"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FF361F000E9;
+	Thu, 30 Jul 2026 14:34:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422089;
-	bh=7tYzxr4Yx4KEuxj8Eu0kALPWgqJmGZqqCgFHxsrd/0U=;
+	s=korg; t=1785422093;
+	bh=ZQQVEN14oGDWgUQvNZ69+jJGp+WiqmZrd6zssGfo88w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xPQGaxQqroMJ4OJXeiZ8IYMToE02NjBvc+gbYJXbySS7RM2Cv5rf84h6HX3UFx6m7
-	 emxRiIJ1Kekjzcx1QWXOnvhb05/KS5w0zat05l3l5OiVHHgq6J8Mxdrgbvh2uXRDiF
-	 F1BRUndgbJ5mNNhv+APjfNjvYK0MPkjS+LgZL4Dk=
+	b=wKXBWK480Mpru674OEHymJ5t+tpkTVBj9vIxcHV31GVCgCyioSCNffN2qwMQTDhDC
+	 J/ZOnc12xmAKJG7FVYRMPMykR23j+2K/hMMrcejxKXOKrcNtnIgrwSWu2M2W4/Cxep
+	 gtBpfrXvbS3eIlvPyq6S7kdEXPNoxaEZQcR35+xg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	"Nikhil P. Rao" <nikhil.rao@amd.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Raag Jadav <raag.jadav@intel.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 267/744] pds_core: fix use-after-free on workqueue during remove
-Date: Thu, 30 Jul 2026 16:09:00 +0200
-Message-ID: <20260730141449.969105432@linuxfoundation.org>
+Subject: [PATCH 7.1 315/744] drm/xe/i2c: Allow per domain unique id
+Date: Thu, 30 Jul 2026 16:09:48 +0200
+Message-ID: <20260730141450.980815621@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -46,124 +47,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nikhil P. Rao <nikhil.rao@amd.com>
+From: Raag Jadav <raag.jadav@intel.com>
 
-[ Upstream commit 0ad134881508c36b65c1a8864f8bec53adbd3327 ]
+[ Upstream commit 5d8ed6b64220ad629aade5f174e3f690c37435f9 ]
 
-In pdsc_remove(), the workqueue is destroyed before pdsc_teardown()
-is called. This ordering allows two paths to queue work on the
-destroyed workqueue:
+PCI bus, device and function can be same for devices existing across
+different domains. Allow per domain unique identifier while registering
+platform device to prevent name conflict.
 
-1. If pdsc_teardown() -> pdsc_devcmd_reset() times out, the error
-   path in pdsc_devcmd_locked() queues health_work.
-
-2. A NotifyQ event can trigger the ISR and queue work before free_irq()
-   is called in pdsc_teardown().
-
-Fix by moving destroy_workqueue() after pdsc_teardown() so the
-workqueue outlives every queuer; destroy_workqueue() then flushes any
-work still pending.
-
-Draining the queued work also requires ordering the teardown so the
-resources that work touches are freed last:
-
-  - In pdsc_qcq_free(), after freeing the interrupt, cancel_work_sync()
-    the queue's work and only then clear qcq->intx, so
-    pdsc_process_adminq()'s read of qcq->intx for interrupt-credit
-    return cannot race with the clear.
-
-  - Free adminqcq before notifyqcq: the shared adminq ISR is released
-    when adminqcq is freed, and the adminq work accesses notifyqcq, so
-    both must be stopped before notifyqcq is freed.
-
-Fixes: 01ba61b55b20 ("pds_core: Add adminq processing and commands")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Closes: https://patchwork.kernel.org/comment/27002369/
-Signed-off-by: Nikhil P. Rao <nikhil.rao@amd.com>
-Link: https://patch.msgid.link/20260714180223.1642792-3-nikhil.rao@amd.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: f0e53aadd702 ("drm/xe: Support for I2C attached MCUs")
+Signed-off-by: Raag Jadav <raag.jadav@intel.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://patch.msgid.link/20260721113438.651100-1-raag.jadav@intel.com
+Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
+(cherry picked from commit a79f6abc8b516b5bd906e2eca8121e3549ee163f)
+Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/pds_core/core.c | 14 ++++++++++----
- drivers/net/ethernet/amd/pds_core/main.c |  5 +++--
- 2 files changed, 13 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/xe/xe_i2c.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/amd/pds_core/core.c b/drivers/net/ethernet/amd/pds_core/core.c
-index b6d4b30147232a..a73a2ab9060e62 100644
---- a/drivers/net/ethernet/amd/pds_core/core.c
-+++ b/drivers/net/ethernet/amd/pds_core/core.c
-@@ -110,7 +110,6 @@ static void pdsc_qcq_intr_free(struct pdsc *pdsc, struct pdsc_qcq *qcq)
- 		return;
+diff --git a/drivers/gpu/drm/xe/xe_i2c.c b/drivers/gpu/drm/xe/xe_i2c.c
+index 706783863d07d6..f05f23221c1b7b 100644
+--- a/drivers/gpu/drm/xe/xe_i2c.c
++++ b/drivers/gpu/drm/xe/xe_i2c.c
+@@ -95,18 +95,21 @@ static int xe_i2c_register_adapter(struct xe_i2c *i2c)
+ 	struct platform_device *pdev;
+ 	struct fwnode_handle *fwnode;
+ 	int ret;
++	u32 id;
  
- 	pdsc_intr_free(pdsc, qcq->intx);
--	qcq->intx = PDS_CORE_INTR_INDEX_NOT_ASSIGNED;
- }
+ 	fwnode = fwnode_create_software_node(xe_i2c_adapter_properties, NULL);
+ 	if (IS_ERR(fwnode))
+ 		return PTR_ERR(fwnode);
  
- static int pdsc_qcq_intr_alloc(struct pdsc *pdsc, struct pdsc_qcq *qcq)
-@@ -145,6 +144,12 @@ void pdsc_qcq_free(struct pdsc *pdsc, struct pdsc_qcq *qcq)
- 
- 	pdsc_qcq_intr_free(pdsc, qcq);
- 
-+	/* Drain any work queued by ISR before it was freed above */
-+	if (qcq->work.func)
-+		cancel_work_sync(&qcq->work);
++	id = (pci_domain_nr(pci->bus) << 16) | pci_dev_id(pci);
 +
-+	qcq->intx = PDS_CORE_INTR_INDEX_NOT_ASSIGNED;
-+
- 	if (qcq->q_base)
- 		dma_free_coherent(dev, qcq->q_size,
- 				  qcq->q_base, qcq->q_base_pa);
-@@ -304,8 +309,11 @@ int pdsc_qcq_alloc(struct pdsc *pdsc, unsigned int type, unsigned int index,
- 
- static void pdsc_core_uninit(struct pdsc *pdsc)
- {
--	pdsc_qcq_free(pdsc, &pdsc->notifyqcq);
-+	/* Free adminqcq first: its work accesses notifyqcq, so we must
-+	 * disable its IRQ and drain its work before freeing notifyqcq.
-+	 */
- 	pdsc_qcq_free(pdsc, &pdsc->adminqcq);
-+	pdsc_qcq_free(pdsc, &pdsc->notifyqcq);
- 
- 	if (pdsc->kern_dbpage) {
- 		iounmap(pdsc->kern_dbpage);
-@@ -477,8 +485,6 @@ void pdsc_teardown(struct pdsc *pdsc, bool removing)
- {
- 	if (!pdsc->pdev->is_virtfn)
- 		pdsc_devcmd_reset(pdsc);
--	if (pdsc->adminqcq.work.func)
--		cancel_work_sync(&pdsc->adminqcq.work);
- 
- 	pdsc_core_uninit(pdsc);
- 
-diff --git a/drivers/net/ethernet/amd/pds_core/main.c b/drivers/net/ethernet/amd/pds_core/main.c
-index 22db78343eb075..638b9c7a509d9d 100644
---- a/drivers/net/ethernet/amd/pds_core/main.c
-+++ b/drivers/net/ethernet/amd/pds_core/main.c
-@@ -435,8 +435,6 @@ static void pdsc_remove(struct pci_dev *pdev)
- 		pdsc_auxbus_dev_del(pdsc, pdsc, &pdsc->padev);
- 
- 		timer_shutdown_sync(&pdsc->wdtimer);
--		if (pdsc->wq)
--			destroy_workqueue(pdsc->wq);
- 
- 		mutex_lock(&pdsc->config_lock);
- 		set_bit(PDSC_S_STOPPING_DRIVER, &pdsc->state);
-@@ -444,6 +442,9 @@ static void pdsc_remove(struct pci_dev *pdev)
- 		pdsc_stop(pdsc);
- 		pdsc_teardown(pdsc, PDSC_TEARDOWN_REMOVING);
- 		mutex_unlock(&pdsc->config_lock);
-+
-+		if (pdsc->wq)
-+			destroy_workqueue(pdsc->wq);
- 		mutex_destroy(&pdsc->config_lock);
- 		mutex_destroy(&pdsc->devcmd_lock);
- 
+ 	/*
+ 	 * Not using platform_device_register_full() here because we don't have
+ 	 * a handle to the platform_device before it returns. xe_i2c_notifier()
+ 	 * uses that handle, but it may be called before
+ 	 * platform_device_register_full() is done.
+ 	 */
+-	pdev = platform_device_alloc(adapter_name, pci_dev_id(pci));
++	pdev = platform_device_alloc(adapter_name, id);
+ 	if (!pdev) {
+ 		ret = -ENOMEM;
+ 		goto err_fwnode_remove;
 -- 
 2.53.0
 
