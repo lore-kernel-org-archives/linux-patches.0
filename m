@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0727416CF3;
-	Thu, 30 Jul 2026 14:47:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E72B416139;
+	Thu, 30 Jul 2026 14:47:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422865; cv=none; b=FXn+IpWg7MDScDhtqRObawM9arpwtsKS+RLGo21/YTmgD5nUYG/QwkA9G9YsksHYdum9uHMTtBC28EhwCreoip3jNUlBc/HSPX4NMLjc0R6ZlFPQHxwY6NHVGsYExe/wwMP8lh4V8qST0Bubjo5ar2u8cJAeZMwhglOVuSwUtN8=
+	t=1785422868; cv=none; b=bqs2nhVcUCtgNhBmYRBPMCdcKDwKbmoUO97h0YQLnobfZWdPOYF8djI5AWZDVtPxJXc8f2nf4AhKeYPUwYHoPZu7c3J1Pq0ZLto1vt3m+37/D/6Bm/TDosvQYkMZIyxTj4Ndql3xoxD8PrG/t7uR9Ee6vFN48sPJfaFPEX9+m0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422865; c=relaxed/simple;
-	bh=vZL6FTpNSdpokOJ79Dfc3HPNA2X9qXbmM/vJo4yNTQY=;
+	s=arc-20240116; t=1785422868; c=relaxed/simple;
+	bh=f0kOPT7H/Gqnbw36WS//Y2bYGlLTGjPPBZZGt+DipkU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UZ1+4leHxiVl+q+nN4zLyHFddvButc+l/8Z0CjqhU81lKSLoz6XaBZovDOvvEJuuCRMd+NZ0qLtJFyCLNBtezRB8yr1UN6yiJ9DJ0/+LzrYOP2njvIjP2XuCc1W7r1P2JojOwsGqCucBYyEInIjDnL0sqHmFw70tv1H2y/+GxYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AGi4j92m; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bB1huTOQli2tQU2LGL8EMJKdehCCzLfpD1hzXYRACVQmGqzZV8VEgmkzklLI9aKkX+Yu/CSLDoyghaMVqK+af+DqScZpM9mUa2tIu8PnRiErmC+jah3/hHKNKOqpWMl4C6f+aBZsYrd5etXVvqM3IRu/ToywgAT8ZQLfy0zu1IY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TbA3TXMh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AGi4j92m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18F901F000E9;
-	Thu, 30 Jul 2026 14:47:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TbA3TXMh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D96531F00A3A;
+	Thu, 30 Jul 2026 14:47:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422864;
-	bh=UD6Cggh/UdXmjiaTVPObEhnPjxPY+8WfKm2ZOhTTh28=;
+	s=korg; t=1785422867;
+	bh=JqNxr5PgzGFXh1zFL6k/qVHPuXsiqcnut3lUE0uJyfQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AGi4j92m2Wusu5Sns82ekQ0kdTpu5T/upcMOp7A7vdMM+92ZZ7UfTeRXLV0VWTCKG
-	 W/+P3yZz0O62AX2AE6QFewg4D1Jp5/RV9PnVcg+vY8JFlS+MGlcANKTnwRJx4acwxK
-	 /EmCA53F1P3nWAS+NSuTNvexyLgUDz1lybcKqbFU=
+	b=TbA3TXMhNzeGofyfPd6eiiJaY+uSNjJNSAcf7iS9WrcwysLMwopPH8bTN0TcVxzaI
+	 dxn5sgi0UWZGhsCZf2HYwqOkgz9D436x4wR1WcYv1u+0+/j34XEQNzhxNYtKgRi5zE
+	 sugeBBwgHv6WNHkS6s4IMcqig41WgZSXFsHLsuk8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Hutchings <benh@debian.org>,
-	stable <stable@kernel.org>
-Subject: [PATCH 7.1 582/744] uio_hv_generic: Bind to FCopy device by default
-Date: Thu, 30 Jul 2026 16:14:15 +0200
-Message-ID: <20260730141456.655247063@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Subject: [PATCH 7.1 583/744] serial: sc16is7xx: implement gpio get_direction() callback
+Date: Thu, 30 Jul 2026 16:14:16 +0200
+Message-ID: <20260730141456.676666332@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -50,46 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ben Hutchings <benh@debian.org>
+From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
 
-commit 87d3621ccc63b3999d756bb59f0cedd738c28eb3 upstream.
+commit af071d9e07e57cfff239e8d09d2f3b05ebc9c667 upstream.
 
-The Hyper-V kernel-mode fcopy driver was removed in 6.10 and the new
-fcopy daemon requires this uio driver to function.  However, by
-default the driver does not bind to any devices, and must be
-configured through the sysfs "new_id" file.
+It's strongly recommended for GPIO drivers to always implement the
+.get_direction() callback - even when the direction is tracked in
+software. The GPIO core emits a warning when the callback is missing
+and a user reads the direction of a line, e.g. via
+/sys/kernel/debug/gpio.
 
-Since the FCopy device is now only usable through this driver, add its
-ID to the driver's ID table so that the daemon will work "out of the
-box".
-
-Signed-off-by: Ben Hutchings <benh@debian.org>
-Fixes: ec314f61e4fc ("Drivers: hv: Remove fcopy driver")
+Fixes: dfeae619d781 ("serial: sc16is7xx")
 Cc: stable <stable@kernel.org>
-Link: https://patch.msgid.link/ahQ6xuhSReidmN-3@decadent.org.uk
+Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+Acked-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260716210813.2582826-1-hugo@hugovil.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/uio/uio_hv_generic.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/tty/serial/sc16is7xx.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/drivers/uio/uio_hv_generic.c
-+++ b/drivers/uio/uio_hv_generic.c
-@@ -396,9 +396,15 @@ hv_uio_remove(struct hv_device *dev)
- 	vmbus_free_ring(dev->channel);
+--- a/drivers/tty/serial/sc16is7xx.c
++++ b/drivers/tty/serial/sc16is7xx.c
+@@ -1274,6 +1274,17 @@ static int sc16is7xx_gpio_set(struct gpi
+ 	return 0;
  }
  
-+static const struct hv_vmbus_device_id hv_uio_id_table[] = {
-+	{ HV_FCOPY_GUID },
-+	{}
-+};
-+MODULE_DEVICE_TABLE(vmbus, hv_uio_id_table);
++static int sc16is7xx_gpio_get_direction(struct gpio_chip *chip, unsigned int offset)
++{
++	struct sc16is7xx_port *s = gpiochip_get_data(chip);
++	struct uart_port *port = &s->p[0].port;
++	unsigned int val;
 +
- static struct hv_driver hv_uio_drv = {
- 	.name = "uio_hv_generic",
--	.id_table = NULL, /* only dynamic id's */
-+	.id_table = hv_uio_id_table,
- 	.probe = hv_uio_probe,
- 	.remove = hv_uio_remove,
- };
++	val = sc16is7xx_port_read(port, SC16IS7XX_IODIR_REG);
++
++	return val & BIT(offset) ? GPIO_LINE_DIRECTION_OUT : GPIO_LINE_DIRECTION_IN;
++}
++
+ static int sc16is7xx_gpio_direction_input(struct gpio_chip *chip,
+ 					  unsigned offset)
+ {
+@@ -1351,6 +1362,7 @@ static int sc16is7xx_setup_gpio_chip(str
+ 	s->gpio.parent		 = dev;
+ 	s->gpio.label		 = dev_name(dev);
+ 	s->gpio.init_valid_mask	 = sc16is7xx_gpio_init_valid_mask;
++	s->gpio.get_direction	 = sc16is7xx_gpio_get_direction;
+ 	s->gpio.direction_input	 = sc16is7xx_gpio_direction_input;
+ 	s->gpio.get		 = sc16is7xx_gpio_get;
+ 	s->gpio.direction_output = sc16is7xx_gpio_direction_output;
 
 
