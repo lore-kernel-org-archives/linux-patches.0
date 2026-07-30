@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA7AC5C613;
-	Thu, 30 Jul 2026 14:46:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E0C37475C;
+	Thu, 30 Jul 2026 14:46:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422784; cv=none; b=jCQFfe2p9msSfCn5VHKqlE/q35teUAilx1tROfRXj7lIf7MZoG2uJGBeuBikVdSsc3XxCHqG1DjPH4Si+DSSDKj2De5HJNlJrB4k0zX0xI32ALCVKDv20BA+CvxiB2u2TKYRfmXIlQtBNrFyWWY9jZu3Jz4aPzzr0VVEw9bRe2A=
+	t=1785422788; cv=none; b=pLKPmtX91Sba7A1nQb04V7fGuz4wS1Vq2CSEW0UhU24KaoZTWIzhtgZaxsENZbwIE0BzReZ7tdqym4xVxkiBN8Ot5TXxlumF/zjZ1wvQ9YbmFGdmCwjJ2+Gif509V8icNcJQ8tIFUIndVUy6Zm/PjO7VHUJGZhipiKBNK+qcY6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422784; c=relaxed/simple;
-	bh=niNxYo7jCHP0KE8rThSQwBniqioQlsYpTyOYnNBRT50=;
+	s=arc-20240116; t=1785422788; c=relaxed/simple;
+	bh=oF5aRCfHVm6zyMWX4eOPVM9Iwrqmf/qVs3+K8A0mEzA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T3ELNbpq8Az6KisdxYaPvwp/9SudGPHQyWeADIpfwA5Wrr2hgmn+Keya2ubgAQXfkwGj7umiaudTgNi7UTYjP4QZJwi5zvEegFiqEFJyGVPPbkDZV7I23+9MtmVi29ubab5Gw4bP8nqwCV8tmcF9jHCT0gbUE+MF37m8A5n5/Ts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NTLUHUkt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iPH2TxFhEM2rHGrgDCXj+R8AklM1wyO6u3h+WWscs4W+vjrSGM6dvDXj3QVV4gnc6TnmBLBlrGWLMC8pjrMFY2cRBduadYiW51fGcboqijbqeZ/vbgmbYHW7oSyRp6h2hFNI0oAokWQKYfuZVoF7dXqtwshw3mEVRn1FbwGuCw4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H7FZxJ+m; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NTLUHUkt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C77C1F000E9;
-	Thu, 30 Jul 2026 14:46:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H7FZxJ+m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 465C81F000E9;
+	Thu, 30 Jul 2026 14:46:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422783;
-	bh=wdMH0Z9qzpi60f/LXIRMzLQOC/4PwToV4sytVemQelA=;
+	s=korg; t=1785422786;
+	bh=QrT9qHQOEz388gtt0usrfsujW8Xn8YGU6EouAfYEIhk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NTLUHUkt77lTbhRkmAicLRAEGoxUNrWDPPjEane+EAJEMpRN6z27gLJAPpvGC6zNJ
-	 pe5Q+gn9somKd/48dtOjwiYOXDBKR6qtbCXP3ddMT8jGohKSW2hmQkkiQvRfEt9Crk
-	 vRddzv0SgTL7VcQ2MsvKlM+/zZfQUzCtNcG5DZcw=
+	b=H7FZxJ+msPYc0mqQhpOSfkYaRVQSuc1pNBsuQNSft6tyZw1f6KCQyguU49DZVQRf8
+	 48Y9bh9p/R///yvHkRsQau80+JDhLatD+FwjpiPF4qxrw22AnHrrvRVs4xmEUJPcCo
+	 lMFe4Wcdq9z4JNEj82kttXsYBi9xHevEZoM/dFcc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+019ced393ab913002b75@syzkaller.appspotmail.com,
-	Deepanshu Kartikey <kartikey406@gmail.com>,
+	Valery Borovsky <vebohr@gmail.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 7.1 511/744] media: rtl2832: fix use-after-free in rtl2832_remove()
-Date: Thu, 30 Jul 2026 16:13:04 +0200
-Message-ID: <20260730141455.140765009@linuxfoundation.org>
+Subject: [PATCH 7.1 512/744] media: rtl2832_sdr: Return queued buffers on start_streaming() failure
+Date: Thu, 30 Jul 2026 16:13:05 +0200
+Message-ID: <20260730141455.161706821@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -51,54 +50,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Valery Borovsky <vebohr@gmail.com>
 
-commit 680daf40a82d483949f87f0d8f98639dc47e610c upstream.
+commit 33ca0aab6f4bd90921fc1395478f38f72c4d19af upstream.
 
-cancel_delayed_work_sync() is called before i2c_mux_del_adapters()
-in rtl2832_remove(). While the cancel waits for any running instance
-of i2c_gate_work to finish, it does not prevent the timer from being
-rescheduled by a concurrent thread.
+The vb2 framework hands buffers to the driver via buf_queue() before
+calling start_streaming().  If start_streaming() returns an error
+without first returning those buffers via vb2_buffer_done(),
+vb2_start_streaming() fires WARN_ON(owned_by_drv_count) and the queued
+buffers leak.
 
-During probe, the r820t_attach() call attempts I2C transfers through
-the mux adapter. These transfers go through i2c_mux_master_xfer(),
-which calls rtl2832_deselect() after the transfer completes,
-rescheduling i2c_gate_work via schedule_delayed_work(). If this
-transfer is still in flight when rtl2832_remove() runs,
-rtl2832_deselect() can reschedule i2c_gate_work after it has been
-cancelled, causing a use-after-free when kfree(dev) is called.
+rtl2832_sdr_start_streaming() had multiple error paths that hit this
+trap: two direct early returns (-ENODEV, -ERESTARTSYS), plus six
+`goto err` paths covering subdev s_power, tuner setup, ADC setup,
+stream-buffer allocation, urb allocation, and urb submission failures.
+None of them returned the queued buffers.
 
-Fix this by calling i2c_mux_del_adapters() before
-cancel_delayed_work_sync(). Once the mux adapter is unregistered, no
-new I2C transfers can go through it, so rtl2832_deselect() can no
-longer reschedule i2c_gate_work. The subsequent
-cancel_delayed_work_sync() is then guaranteed to be final.
+The original function had no distinct success exit and fell straight
+through into the err label, which previously only did mutex_unlock and
+"return ret".  Adding queued-buffer cleanup at err must therefore be
+paired with an explicit success return; otherwise every successful
+start would also drain the buffer queue and kill streaming.  Add that
+success return, then add rtl2832_sdr_cleanup_queued_bufs() at the err
+label and before each early return.
 
-Fixes: cddcc40b1b15 ("[media] rtl2832: convert to use an explicit i2c mux core")
+The cleanup helper takes a vb2_buffer_state argument so that the
+start_streaming error paths can pass VB2_BUF_STATE_QUEUED (as
+expected by userspace on start_streaming failure) while stop_streaming
+keeps its existing VB2_BUF_STATE_ERROR semantics.
+
+This mirrors the uvcvideo fix in commit 4cf3b6fd54eb ("media: uvcvideo:
+Return queued buffers on start_streaming() failure").
+
+The err label still does not roll back power_ctrl(), frontend_ctrl(),
+the POWER_ON flag, or stream/URB allocations that may have happened
+before the failing step.  Those are pre-existing leaks of a different
+class and are not addressed here.
+
+Fixes: 771138920eaf ("[media] rtl2832_sdr: Realtek RTL2832 SDR driver module")
 Cc: stable@vger.kernel.org
-Reported-by: syzbot+019ced393ab913002b75@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=019ced393ab913002b75
-Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
+Signed-off-by: Valery Borovsky <vebohr@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/dvb-frontends/rtl2832.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/media/dvb-frontends/rtl2832_sdr.c |   19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
 
---- a/drivers/media/dvb-frontends/rtl2832.c
-+++ b/drivers/media/dvb-frontends/rtl2832.c
-@@ -1115,10 +1115,10 @@ static void rtl2832_remove(struct i2c_cl
+--- a/drivers/media/dvb-frontends/rtl2832_sdr.c
++++ b/drivers/media/dvb-frontends/rtl2832_sdr.c
+@@ -399,7 +399,8 @@ static int rtl2832_sdr_alloc_urbs(struct
+ }
  
- 	dev_dbg(&client->dev, "\n");
+ /* Must be called with vb_queue_lock hold */
+-static void rtl2832_sdr_cleanup_queued_bufs(struct rtl2832_sdr_dev *dev)
++static void rtl2832_sdr_cleanup_queued_bufs(struct rtl2832_sdr_dev *dev,
++					    enum vb2_buffer_state state)
+ {
+ 	struct platform_device *pdev = dev->pdev;
+ 	unsigned long flags;
+@@ -413,7 +414,7 @@ static void rtl2832_sdr_cleanup_queued_b
+ 		buf = list_entry(dev->queued_bufs.next,
+ 				struct rtl2832_sdr_frame_buf, list);
+ 		list_del(&buf->list);
+-		vb2_buffer_done(&buf->vb.vb2_buf, VB2_BUF_STATE_ERROR);
++		vb2_buffer_done(&buf->vb.vb2_buf, state);
+ 	}
+ 	spin_unlock_irqrestore(&dev->queued_bufs_lock, flags);
+ }
+@@ -855,11 +856,15 @@ static int rtl2832_sdr_start_streaming(s
  
--	cancel_delayed_work_sync(&dev->i2c_gate_work);
--
- 	i2c_mux_del_adapters(dev->muxc);
+ 	dev_dbg(&pdev->dev, "\n");
  
-+	cancel_delayed_work_sync(&dev->i2c_gate_work);
+-	if (!dev->udev)
++	if (!dev->udev) {
++		rtl2832_sdr_cleanup_queued_bufs(dev, VB2_BUF_STATE_QUEUED);
+ 		return -ENODEV;
++	}
+ 
+-	if (mutex_lock_interruptible(&dev->v4l2_lock))
++	if (mutex_lock_interruptible(&dev->v4l2_lock)) {
++		rtl2832_sdr_cleanup_queued_bufs(dev, VB2_BUF_STATE_QUEUED);
+ 		return -ERESTARTSYS;
++	}
+ 
+ 	if (d->props->power_ctrl)
+ 		d->props->power_ctrl(d, 1);
+@@ -900,7 +905,11 @@ static int rtl2832_sdr_start_streaming(s
+ 	if (ret)
+ 		goto err;
+ 
++	mutex_unlock(&dev->v4l2_lock);
++	return 0;
 +
- 	regmap_exit(dev->regmap);
+ err:
++	rtl2832_sdr_cleanup_queued_bufs(dev, VB2_BUF_STATE_QUEUED);
+ 	mutex_unlock(&dev->v4l2_lock);
  
- 	kfree(dev);
+ 	return ret;
+@@ -920,7 +929,7 @@ static void rtl2832_sdr_stop_streaming(s
+ 	rtl2832_sdr_kill_urbs(dev);
+ 	rtl2832_sdr_free_urbs(dev);
+ 	rtl2832_sdr_free_stream_bufs(dev);
+-	rtl2832_sdr_cleanup_queued_bufs(dev);
++	rtl2832_sdr_cleanup_queued_bufs(dev, VB2_BUF_STATE_ERROR);
+ 	rtl2832_sdr_unset_adc(dev);
+ 
+ 	/* sleep tuner */
 
 
