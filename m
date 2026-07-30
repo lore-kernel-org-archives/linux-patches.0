@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F6BE3769FD;
-	Thu, 30 Jul 2026 15:53:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A65643DA26;
+	Thu, 30 Jul 2026 15:53:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426788; cv=none; b=mds4BhPbfdgqihI2V+JYtp/K/bQ0oH6yeW6knLaq0nkXhMJqn4y5EZrYMI4Sb5LflBaACSr7rOz4vGL/zOHTfyBwIuDB7iYlVF25ikOwJwfu3dKIJ2Yqt21lhfJhr+lrrmtaTpdQ/Op6rernI0n54alxKOoDYztDWEqYCEgvZ/4=
+	t=1785426791; cv=none; b=PmXABP/DKddanA1o4We2S1lQiQfajlrPqBD7852NfBVdgrGoHUrEqdDiQdJfkt3T/B/MjM5k/lCMPd92f9XqLyvzGdVTbHy7zMkQPr9fanb4zb5NdKQa6eROlyQBt3i+Kn0t2YajZQiBjINClIfq8kNW7jtyOa1iJoSuK0Qrlxc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426788; c=relaxed/simple;
-	bh=9EI/EdRd7NAft3oFzUr/5YBDhL3htqxEdxdAyObbgBI=;
+	s=arc-20240116; t=1785426791; c=relaxed/simple;
+	bh=XIzmeEOQX2FMNHLIphkz9OHzmRFr0UO5On/vDCcDATY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gxJwPVaVEUUg6w/HW872lMEh6xAUO80+VkSOrMuKDYgOc5sjoTLvL+irts3UlWC6TU2K4Bp08gKmSEuUBbUToIysH7TPKveaFgSTMgmQPKnRViduSbA8+pTzcDuKntFjwsxUVBePUZWCRu+VgFFZW58vKaZUqFMBpsLAqdKxCcs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gsXmfsWv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VF6/Zx3B789htFemHGQsNgoAUqLxYwb7m3K1fzQTGWU42Sp0oMOd9bvLuWdJhZdxw6F0iPNpvDElWtBc6fTZ1h0SHGbejd2emKNNuQoR3vdnL3f9VZlY/3WtkDDJ27Kd6O+xktnuYNGkvCrwYCMPqkNPSL6UlJ/LLgMS7kGuVnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FYSZoL7v; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gsXmfsWv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 862DA1F000E9;
-	Thu, 30 Jul 2026 15:53:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FYSZoL7v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60C7C1F000E9;
+	Thu, 30 Jul 2026 15:53:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426787;
-	bh=FfBUzt4Xvol2UC9jXWzM0JBAaF708C4CgSu9q0aJ6GM=;
+	s=korg; t=1785426789;
+	bh=RRpeEXNQUUenb13wvPGurFIal/X47jU2C5arEmZZ9Cs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gsXmfsWvCa75wG4ZC5c/Dv7AFweOO7JZN6Ntfk2GvgKuFzKleJ4H8EfyBrBHQpCj9
-	 8XXLQDlRBWrOIDP+C51s4206VObp0T/UC/YwhiopSBkGMzV1ziuBsVvzCc2hyr7Nj1
-	 UiSdwunXtUdWlByjk25oFoDayiP6bg2NIpxFWlfc=
+	b=FYSZoL7vJvYMlVw4vZxZSHdICZAuhTOHaz/kELUsYogJ1b0SDZtH6DdbMHJXc75pc
+	 nXTki2zrsAc08PkRdqxKoWvsMbb55PCO6peruOYUvX+X2b03HzxOwORZbzIG0vMGWR
+	 eovwA5yR/6jHGFy2Njlmi8bkKOCeml2ctH7MLHcE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amery Hung <ameryhung@gmail.com>,
+	Tristan Madani <tristan@talencesecurity.com>,
+	Eduard Zingerman <eddyz87@gmail.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 542/602] bpf: Refactor check_ctx_access()
-Date: Thu, 30 Jul 2026 16:15:34 +0200
-Message-ID: <20260730141447.416815442@linuxfoundation.org>
+Subject: [PATCH 6.12 543/602] bpf: Reset register bounds before narrowing retval range in check_mem_access()
+Date: Thu, 30 Jul 2026 16:15:35 +0200
+Message-ID: <20260730141447.438283974@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -51,81 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amery Hung <ameryhung@gmail.com>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-[ Upstream commit 201b62ccc83153d2925d310a2afe762905e0c455 ]
+[ Upstream commit 5e0b273e0a62cc04ec338c7b502797c66c2ed42a ]
 
-Reduce the variable passing madness surrounding check_ctx_access().
-Currently, check_mem_access() passes many pointers to local variables to
-check_ctx_access(). They are used to initialize "struct
-bpf_insn_access_aux info" in check_ctx_access() and then passed to
-is_valid_access(). Then, check_ctx_access() takes the data our from
-info and write them back the pointers to pass them back. This can be
-simpilified by moving info up to check_mem_access().
+When the BPF verifier processes a context load of an LSM hook return
+value, it calls __mark_reg_s32_range() to narrow the register to the
+hook's valid range. However, __mark_reg_s32_range() intersects the new
+range with the register's existing bounds using max_t()/min_t() rather
+than replacing them.
 
-No functional change.
+If the destination register carries stale bounds from a prior instruction
+(e.g. BPF_MOV64_IMM), the intersection can produce a range narrower than
+reality. The verifier then believes it knows the register's exact value,
+while at runtime the actual hook return value is loaded, creating a
+verifier/runtime mismatch that can be used to bypass BPF memory safety
+checks.
 
-Signed-off-by: Amery Hung <ameryhung@gmail.com>
-Link: https://lore.kernel.org/r/20250221175644.1822383-1-ameryhung@gmail.com
+The else branch already calls mark_reg_unknown() to reset register state
+before any narrowing. Apply the same reset in the is_retval path so
+stale bounds are cleared before __mark_reg_s32_range() intersects.
+
+Fixes: 5d99e198be27 ("bpf, lsm: Add check for BPF LSM return value")
+Cc: stable@vger.kernel.org
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://lore.kernel.org/r/20260622230123.3695446-2-tristmd@gmail.com
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Stable-dep-of: 5e0b273e0a62 ("bpf: Reset register bounds before narrowing retval range in check_mem_access()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/verifier.c |   27 +++++----------------------
- 1 file changed, 5 insertions(+), 22 deletions(-)
+ kernel/bpf/verifier.c |    1 +
+ 1 file changed, 1 insertion(+)
 
 --- a/kernel/bpf/verifier.c
 +++ b/kernel/bpf/verifier.c
-@@ -5829,18 +5829,10 @@ static int check_packet_access(struct bp
- 
- /* check access to 'struct bpf_context' fields.  Supports fixed offsets only */
- static int check_ctx_access(struct bpf_verifier_env *env, int insn_idx, int off, int size,
--			    enum bpf_access_type t, enum bpf_reg_type *reg_type,
--			    struct btf **btf, u32 *btf_id, bool *is_retval, bool is_ldsx)
-+			    enum bpf_access_type t, struct bpf_insn_access_aux *info)
- {
--	struct bpf_insn_access_aux info = {
--		.reg_type = *reg_type,
--		.log = &env->log,
--		.is_retval = false,
--		.is_ldsx = is_ldsx,
--	};
--
- 	if (env->ops->is_valid_access &&
--	    env->ops->is_valid_access(off, size, t, env->prog, &info)) {
-+	    env->ops->is_valid_access(off, size, t, env->prog, info)) {
- 		/* A non zero info.ctx_field_size indicates that this field is a
- 		 * candidate for later verifier transformation to load the whole
- 		 * field and then apply a mask when accessed with a narrower
-@@ -5848,15 +5840,8 @@ static int check_ctx_access(struct bpf_v
- 		 * will only allow for whole field access and rejects any other
- 		 * type of narrower access.
- 		 */
--		*reg_type = info.reg_type;
--		*is_retval = info.is_retval;
--
--		if (base_type(*reg_type) == PTR_TO_BTF_ID) {
--			*btf = info.btf;
--			*btf_id = info.btf_id;
--		} else {
--			env->insn_aux_data[insn_idx].ctx_field_size = info.ctx_field_size;
--		}
-+		if (base_type(info->reg_type) != PTR_TO_BTF_ID)
-+			env->insn_aux_data[insn_idx].ctx_field_size = info->ctx_field_size;
- 		/* remember the offset of last byte accessed in ctx */
- 		if (env->prog->aux->max_ctx_offset < off + size)
- 			env->prog->aux->max_ctx_offset = off + size;
-@@ -7224,9 +7209,7 @@ static int check_mem_access(struct bpf_v
- 		if (err < 0)
- 			return err;
- 
--		err = check_ctx_access(env, insn_idx, off, size, t, &info.reg_type,
--				       &info.btf, &info.btf_id, &info.is_retval,
--				       info.is_ldsx);
-+		err = check_ctx_access(env, insn_idx, off, size, t, &info);
- 		if (err)
- 			verbose_linfo(env, insn_idx, "; ");
- 		if (!err && t == BPF_READ && value_regno >= 0) {
+@@ -7219,6 +7219,7 @@ static int check_mem_access(struct bpf_v
+ 			 */
+ 			if (info.reg_type == SCALAR_VALUE) {
+ 				if (info.is_retval && get_func_retval_range(env->prog, &range)) {
++					mark_reg_unknown(env, regs, value_regno);
+ 					err = __mark_reg_s32_range(env, regs, value_regno,
+ 								   range.minval, range.maxval);
+ 					if (err)
 
 
