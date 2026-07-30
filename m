@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 434DC442FC1;
-	Thu, 30 Jul 2026 14:33:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C345438468;
+	Thu, 30 Jul 2026 14:33:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422010; cv=none; b=WAtL0ixX8HAH2l6k3TSzuC3ty4/V9Qi8sxKfo89R8gg8pt57Vzx4WAph2xkMcodTdOcdpaKs3d+uemT80C7K7p69Wg0nngGLBtx2yKNZB8jbCMx6Sdp71EdWcE2FwGEEyWHD4ojqmR1g0KLfOvE8gd9t54vAzsjM+/jmmUbCZGo=
+	t=1785422013; cv=none; b=FJhDmWP56a2aK7g3aJMhnHLLhEozTKS78tnesGU/ZE3bkxckyA30Xu18n04v91ddHwLJAerwKCTWJcYmQw5O/GNwYqyqF6mvsrHdS6kYwp97FqejEA5nFHWRW7ZHjPGNRydAVhhs0E6gL/+zi6Bo5TT18ej+DubBDGh8w1MWVWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422010; c=relaxed/simple;
-	bh=Va644u75uduNee01FUoKFMa+9csynoTbrqTwbU0YN5w=;
+	s=arc-20240116; t=1785422013; c=relaxed/simple;
+	bh=SWYrXIyutwsFsRDciIIZy/COQJZJFvXHau7hscBZ1Qc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jjprntR3a7zHTIvJL7ej0Z3hQMLzfdoQCxR7GtGQZz0aZZQKhNzOe1OvCnDhbVJGDQIjZefQb6HDXBej6qnTrkae4zV6Lc9duR3dCYc8sOzfyrxoa4tnnAxYWu5AQKFc/rfLSdAbbwZIHiHGZdH1t39mN9hs7cAEI8XfdWSbfKY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YGE6QU81; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OF6dKYh7lBy9Q1Fk35omaIPSf1G/PsdBZOdUTXW++/fiu2gzjjUDMFyZBqhBqDXlqGs9jvwsbnm5YTTNnJ0IKi1k/TwyrPgfgEGbD02QQVAK3Evq47i9R8MSxjHMZnQ1ClhIBa675U1Wop/l3sL6bn3AXM0yBp30A+ckaJ+k3e8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OueGe8/u; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YGE6QU81"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D6DA1F00A3D;
-	Thu, 30 Jul 2026 14:33:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OueGe8/u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AFF61F000E9;
+	Thu, 30 Jul 2026 14:33:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422008;
-	bh=nXMMswF9G+UHv/BTJXZwhN3waXXeu/LtbVpft9OZiTY=;
+	s=korg; t=1785422012;
+	bh=dTg7Hk/yqeDM4v75hSR9nacY4IU1C4HcZX/zMh3W6E4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YGE6QU81Xsd/eD7VJ9j4siKdbWS6uCj3NOf+7Z2xniUGns079qhKw1P2DT3PvpTaQ
-	 FgcjHT76t8h4/cxbSWE0l6IhxYryYeP6dE/OR4dyfcS559VTLe7oP1LAMIrhxBRN+I
-	 v6kwZNrraQpPT7dC8f0GLTnFqV17dzSDihCxIE1M=
+	b=OueGe8/un9Yiu5CmLoNhiWQi7zDbvRC2k2B8cvdoi/SXcMz1ovVW/70nnFpkhGTj8
+	 QCmfSFfy7J7sC/eIbCwrzOJd4rWl2+ODFvRwAVqXt0U0XqWu0xhbsL/9raZyIGj90y
+	 CBOdrVNL4XxXWFppphGMHQQG/AyjonUJWzBb5iHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>,
+	Sean Wang <sean.wang@mediatek.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 294/744] wifi: mt76: fix airoha_npu dependency tracking
-Date: Thu, 30 Jul 2026 16:09:27 +0200
-Message-ID: <20260730141450.540585076@linuxfoundation.org>
+Subject: [PATCH 7.1 295/744] wifi: mt76: mt7925: fix crash in reset link replay
+Date: Thu, 30 Jul 2026 16:09:28 +0200
+Message-ID: <20260730141450.563856673@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -52,94 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Sean Wang <sean.wang@mediatek.com>
 
-[ Upstream commit 7cd57ff6c6263519e6e463cbc2e0898828a70c42 ]
+[ Upstream commit bd8b2ec838184236c3fcbf738a926328836adf12 ]
 
-There is a new build failure with MT7996E=m MT76_CORE=y and NET_AIROHA_NPU=m:
+During reset recovery, mt7925_vif_connect_iter() replays firmware state
+for links tracked in mvif->valid_links. After MLO link changes or MCU
+timeout recovery, the driver bitmap can temporarily contain a link whose
+mac80211 bss_conf has already gone away.
 
-ld.lld: error: undefined symbol: airoha_npu_get
-ld.lld: error: undefined symbol: airoha_npu_put
->>> referenced by npu.c
->>>               drivers/net/wireless/mediatek/mt76/npu.o:(mt76_npu_init) in archive vmlinux.a
+This can pass a NULL bss_conf to mt76_connac_mcu_uni_add_dev(), matching
+the crash where x1, the second argument, is NULL:
 
-Fix this by reworking the dependency for the MT7996_NPU to only
-allow enabling that when mt76_core can link against the npu driver.
+pc : mt76_connac_mcu_uni_add_dev+0x8c/0x1f8 [mt76_connac_lib]
+lr : mt7925_vif_connect_iter+0x9c/0x168 [mt7925_common]
+x2 : ffffff80a77f6018 x1 : 0000000000000000 x0 : ffffff8099402080
+Call trace:
+mt76_connac_mcu_uni_add_dev+0x8c/0x1f8 [mt76_connac_lib]
+mt7925_vif_connect_iter+0x9c/0x168 [mt7925_common]
+mt7925_mac_reset_work+0x264/0x2f8 [mt7925_common]
 
-To make sure this gets caught more easily in the future when additional
-mt76 variants need the same dependency, also turn CONFIG_MT76_NPU into
-a tristate symbol that has the same dependency.
+Skip missing bss_conf entries before replaying the link. Non-MLO AP/STA
+reset replay is unchanged because the helper still returns &vif->bss_conf
+for the legacy link.
 
-Fixes: 7fb554b1b623 ("wifi: mt76: Introduce the NPU generic layer")
-Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://patch.msgid.link/20260612201519.4054683-1-arnd@kernel.org
+Fixes: 14061994184d ("wifi: mt76: mt7925: add link handling in mt7925_vif_connect_iter")
+Signed-off-by: Sean Wang <sean.wang@mediatek.com>
+Link: https://patch.msgid.link/20260616161016.19346-1-sean.wang@kernel.org
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/Kconfig        | 4 ++--
- drivers/net/wireless/mediatek/mt76/Makefile       | 6 +++++-
- drivers/net/wireless/mediatek/mt76/mt76.h         | 2 +-
- drivers/net/wireless/mediatek/mt76/mt7996/Kconfig | 2 +-
- 4 files changed, 9 insertions(+), 5 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7925/mac.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/Kconfig b/drivers/net/wireless/mediatek/mt76/Kconfig
-index 502303622a5382..2ca96e0527c029 100644
---- a/drivers/net/wireless/mediatek/mt76/Kconfig
-+++ b/drivers/net/wireless/mediatek/mt76/Kconfig
-@@ -38,8 +38,8 @@ config MT792x_USB
- 	select MT76_USB
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/mac.c b/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
+index 50034d7c04f0cf..717c52ad9c1e36 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
+@@ -1275,6 +1275,9 @@ mt7925_vif_connect_iter(void *priv, u8 *mac,
  
- config MT76_NPU
--	bool
--	depends on MT76_CORE
-+	tristate
-+	depends on NET_AIROHA_NPU=y || MT76_CORE=NET_AIROHA_NPU
+ 	for_each_set_bit(i, &valid, IEEE80211_MLD_MAX_NUM_LINKS) {
+ 		bss_conf = mt792x_vif_to_bss_conf(vif, i);
++		if (!bss_conf)
++			continue;
++
+ 		mconf = mt792x_vif_to_link(mvif, i);
  
- source "drivers/net/wireless/mediatek/mt76/mt76x0/Kconfig"
- source "drivers/net/wireless/mediatek/mt76/mt76x2/Kconfig"
-diff --git a/drivers/net/wireless/mediatek/mt76/Makefile b/drivers/net/wireless/mediatek/mt76/Makefile
-index 1d42adfe803044..cacdd2b13d05bf 100644
---- a/drivers/net/wireless/mediatek/mt76/Makefile
-+++ b/drivers/net/wireless/mediatek/mt76/Makefile
-@@ -12,7 +12,11 @@ mt76-y := \
- 	mmio.o util.o trace.o dma.o mac80211.o debugfs.o eeprom.o \
- 	tx.o agg-rx.o mcu.o wed.o scan.o channel.o
- 
--mt76-$(CONFIG_MT76_NPU) += npu.o
-+ifdef CONFIG_MT76_NPU
-+# CONFIG_MT76_NPU is tristate to simplify dependency tracking,
-+# but it behaves as a bool symbol here.
-+mt76-y += npu.o
-+endif
- mt76-$(CONFIG_PCI) += pci.o
- mt76-$(CONFIG_NL80211_TESTMODE) += testmode.o
- 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76.h b/drivers/net/wireless/mediatek/mt76/mt76.h
-index 527bef97e122a1..0eea08553069cb 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt76.h
-@@ -1646,7 +1646,7 @@ int mt76_testmode_dump(struct ieee80211_hw *hw, struct sk_buff *skb,
- int mt76_testmode_set_state(struct mt76_phy *phy, enum mt76_testmode_state state);
- int mt76_testmode_alloc_skb(struct mt76_phy *phy, u32 len);
- 
--#ifdef CONFIG_MT76_NPU
-+#if IS_ENABLED(CONFIG_MT76_NPU)
- void mt76_npu_check_ppe(struct mt76_dev *dev, struct sk_buff *skb,
- 			u32 info);
- int mt76_npu_dma_add_buf(struct mt76_phy *phy, struct mt76_queue *q,
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/Kconfig b/drivers/net/wireless/mediatek/mt76/mt7996/Kconfig
-index 5503d03bf62c65..5742bce12fbb58 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/Kconfig
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/Kconfig
-@@ -16,6 +16,6 @@ config MT7996E
- config MT7996_NPU
- 	bool "MT7996 (PCIe) NPU support"
- 	depends on MT7996E
--	depends on NET_AIROHA_NPU=y || MT7996E=NET_AIROHA_NPU
-+	depends on NET_AIROHA_NPU=y || MT76_CORE=NET_AIROHA_NPU
- 	select MT76_NPU
- 	default n
+ 		mt76_connac_mcu_uni_add_dev(&dev->mphy, bss_conf, &mconf->mt76,
 -- 
 2.53.0
 
