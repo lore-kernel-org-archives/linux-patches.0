@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B192445ACD;
-	Thu, 30 Jul 2026 14:36:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B9FC43F8A6;
+	Thu, 30 Jul 2026 14:36:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422185; cv=none; b=MAnewfciRQeovTIRGR+0SWDmz/uY5Tz05d73VSX/4nv6mVfu8b3Oz50S3AN6j/RJGSBT8EGT7a/oic3HMz5LUAYHPPo/gi79290Rrnn400Xo143lhwgo+FviH+n7pb/UqvtUyqgNTOQ6AfR/L8+FAm/9Mryf6AyUkd6MEUJ16aA=
+	t=1785422188; cv=none; b=e/Rsp8ai49RTRR5vxgi7LhQLxChz9uBA/qrtaJrNeuFpD3wf/UZpqPr0NfAq0fYkC3+cEoy9BiYtVOaOwYkODqqjC+hevC44lJ6uvXVB0OMeyOUGgWaT287/+UpV71y1hihWFL1SB5JQ6Tbpr0bOdiAyVrcuEWupfeaqYW/ldOo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422185; c=relaxed/simple;
-	bh=fpCd6J172q9vl4HzY3UTtZlrfeXYoqZak4VWT63g4pc=;
+	s=arc-20240116; t=1785422188; c=relaxed/simple;
+	bh=Y3HTAL5BGw/+cpy3DbRa8sMNsNT8AZQtAnaww5rntrY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X5LmRqVl4r02h0a/l8Q9opWPsn8PQ3Xh5s3iX50eE6IN0oP8Jd3tDZs/xo+KKVET4q4dVCW2LTlXmqzc1EzILroqR06XUfp4oWx1qq2YZIVPb5lfaG1HQ4S5uhxqoEU0A0UvcP/lw8o0izwLz8H843YTcI4Eo23W3CdQRNfdSRc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P0a6mHzS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eyX22zKmHlRJWeGH0HZyIbZn7EoS38thUwE99o9v8+o9ISlnvzgR+q43C0lXQHirOROuG/B0UqwQCE5B94TeNIbtgIPIuyo1YjI3txG7nz51Lm5Vkwz+VmFXx6IDMfz6MI4WZSD4SOa7W7ZdiPWjv01xQXSlXiNKksytkJn40pc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KjItNCT+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P0a6mHzS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 838431F000E9;
-	Thu, 30 Jul 2026 14:36:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KjItNCT+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E6561F00A3A;
+	Thu, 30 Jul 2026 14:36:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422184;
-	bh=h2oshGXg8Zi6oODppgcQ5g1ti1MxT0Kdg5cuoqnow3Y=;
+	s=korg; t=1785422187;
+	bh=VqDQHrQw8hymQoCX/bVreU4HQJOU8dlGD9cx9ergKT0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P0a6mHzSglelx1h35gnRIFFNHG5+fvQPlNsunAn96/APg3x6xop7T1nlR/d3s6MCw
-	 oqD/pYtoQLcZL4BKkT70Wq2xMMDh9U4BZuRpByHsNFSTtP9UpE4Un3L1QUPcOVKGFo
-	 ICDP0XT4DHEYBA4TFW5z5VFCCuIQykK4vkAW37lI=
+	b=KjItNCT+SYODiCJ1TxlGdqa6bqqthgvzV3imIZcBLWBTzIEc9mJBQUihNQaJwc4qo
+	 MRKKq3CaM2E0Wug87B3JpCyHwOueTIfkBUfuuYsWSvcgLc3PwXPWDLQ+51u9DLTm79
+	 YjCPr6tEZ+leK28fIvtfRU0jlw9UqvrS/3JGbz/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Eric Dumazet <edumazet@google.com>,
-	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 352/744] net: drop_monitor: fix info leak in NET_DM_ATTR_PAYLOAD
-Date: Thu, 30 Jul 2026 16:10:25 +0200
-Message-ID: <20260730141451.768111855@linuxfoundation.org>
+Subject: [PATCH 7.1 353/744] drop_monitor: fix size calculations for 64-bit attributes
+Date: Thu, 30 Jul 2026 16:10:26 +0200
+Message-ID: <20260730141451.789044193@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -52,75 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 5e9c8baee0329fbefe7c67aea945e2a07f15e98b ]
+[ Upstream commit 7089f7ab99c89f443c92d8fcc585e63f2727f0b3 ]
 
-net_dm_packet_report_fill() and net_dm_hw_packet_report_fill() open code
-the NET_DM_ATTR_PAYLOAD attribute to avoid zeroing the packet payload
-before overwriting it with skb_copy_bits().
+net_dm_packet_report_fill() and net_dm_hw_packet_report_fill() use
+nla_put_u64_64bit() to append 64-bit attributes (NET_DM_ATTR_PC and
+NET_DM_ATTR_TIMESTAMP).
 
-skb_put() reserves nla_total_size(payload_len), i.e. the header plus the
-NLA_ALIGN() padding, but only payload_len bytes are copied in. When
-payload_len is not a multiple of 4 the 1-3 padding bytes are never
-initialized and are leaked to user space inside the netlink message.
+On 32-bit architectures without CONFIG_HAVE_EFFICIENT_UNALIGNED_ACCESS,
+nla_put_u64_64bit() may append a 4-byte NET_DM_ATTR_PAD attribute for
+64-bit alignment.
 
-KMSAN confirms the leak for the software path when the packet payload
-length is not 4-byte aligned:
+However, net_dm_packet_report_size() and net_dm_hw_packet_report_size()
+used nla_total_size(sizeof(u64)) instead of nla_total_size_64bit(sizeof(u64)),
+budgeting 12 bytes instead of up to 16 bytes.
 
-  BUG: KMSAN: kernel-infoleak in _copy_to_iter
-   _copy_to_iter
-   __skb_datagram_iter
-   skb_copy_datagram_iter
-   netlink_recvmsg
-   sock_recvmsg
-   __sys_recvfrom
-  Uninit was created at:
-   kmem_cache_alloc_node_noprof
-   __alloc_skb
-   net_dm_packet_work
-  Bytes 173-175 of 176 are uninitialized
+This under-estimation of SKB size can lead to an skb_over_panic() when
+__nla_reserve() or skb_put() is subsequently called.
 
-Use __nla_reserve(), which sets up the attribute header and zeroes the
-padding, instead of open coding the attribute construction.
+Fix this by using nla_total_size_64bit(sizeof(u64)) in both size calculations.
 
 Fixes: ca30707dee2b ("drop_monitor: Add packet alert mode")
 Fixes: 5e58109b1ea4 ("drop_monitor: Add support for packet alert mode for hardware drops")
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
-Link: https://patch.msgid.link/20260722122817.5548-1-yhlee@isslab.korea.ac.kr
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260722141743.3266924-2-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/drop_monitor.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ net/core/drop_monitor.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/net/core/drop_monitor.c b/net/core/drop_monitor.c
-index f23cea9e1aafb1..afcd8ba411b6ac 100644
+index afcd8ba411b6ac..61d6679b074eef 100644
 --- a/net/core/drop_monitor.c
 +++ b/net/core/drop_monitor.c
-@@ -671,9 +671,7 @@ static int net_dm_packet_report_fill(struct sk_buff *msg, struct sk_buff *skb,
- 	if (nla_put_u16(msg, NET_DM_ATTR_PROTO, be16_to_cpu(skb->protocol)))
- 		goto nla_put_failure;
- 
--	attr = skb_put(msg, nla_total_size(payload_len));
--	attr->nla_type = NET_DM_ATTR_PAYLOAD;
--	attr->nla_len = nla_attr_size(payload_len);
-+	attr = __nla_reserve(msg, NET_DM_ATTR_PAYLOAD, payload_len);
- 	if (skb_copy_bits(skb, 0, nla_data(attr), payload_len))
- 		goto nla_put_failure;
- 
-@@ -831,9 +829,7 @@ static int net_dm_hw_packet_report_fill(struct sk_buff *msg,
- 	if (nla_put_u16(msg, NET_DM_ATTR_PROTO, be16_to_cpu(skb->protocol)))
- 		goto nla_put_failure;
- 
--	attr = skb_put(msg, nla_total_size(payload_len));
--	attr->nla_type = NET_DM_ATTR_PAYLOAD;
--	attr->nla_len = nla_attr_size(payload_len);
-+	attr = __nla_reserve(msg, NET_DM_ATTR_PAYLOAD, payload_len);
- 	if (skb_copy_bits(skb, 0, nla_data(attr), payload_len))
- 		goto nla_put_failure;
- 
+@@ -566,13 +566,13 @@ static size_t net_dm_packet_report_size(size_t payload_len)
+ 	       /* NET_DM_ATTR_ORIGIN */
+ 	       nla_total_size(sizeof(u16)) +
+ 	       /* NET_DM_ATTR_PC */
+-	       nla_total_size(sizeof(u64)) +
++	       nla_total_size_64bit(sizeof(u64)) +
+ 	       /* NET_DM_ATTR_SYMBOL */
+ 	       nla_total_size(NET_DM_MAX_SYMBOL_LEN + 1) +
+ 	       /* NET_DM_ATTR_IN_PORT */
+ 	       net_dm_in_port_size() +
+ 	       /* NET_DM_ATTR_TIMESTAMP */
+-	       nla_total_size(sizeof(u64)) +
++	       nla_total_size_64bit(sizeof(u64)) +
+ 	       /* NET_DM_ATTR_ORIG_LEN */
+ 	       nla_total_size(sizeof(u32)) +
+ 	       /* NET_DM_ATTR_PROTO */
+@@ -766,7 +766,7 @@ net_dm_hw_packet_report_size(size_t payload_len,
+ 	       /* NET_DM_ATTR_FLOW_ACTION_COOKIE */
+ 	       net_dm_flow_action_cookie_size(hw_metadata) +
+ 	       /* NET_DM_ATTR_TIMESTAMP */
+-	       nla_total_size(sizeof(u64)) +
++	       nla_total_size_64bit(sizeof(u64)) +
+ 	       /* NET_DM_ATTR_ORIG_LEN */
+ 	       nla_total_size(sizeof(u32)) +
+ 	       /* NET_DM_ATTR_PROTO */
 -- 
 2.53.0
 
