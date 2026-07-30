@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69E0F3B27E9;
-	Thu, 30 Jul 2026 15:54:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59B293B27E9;
+	Thu, 30 Jul 2026 15:54:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426874; cv=none; b=Hj/Db+TZFRqpwVyKSjNR5FvzGfiTCcPtJN8HE65gTa8MWkCJ9SOrQHftewuGEyy2Fn8J2sa2T+Vj12OPzz+r66MqE6xiUtYrC5DlU2nV5Qa3dJQVTWrQeYbvJoAysN1ousp0SjDoE965fForwMd1uFEatf1uv6LQLAZ3sb4PGlY=
+	t=1785426877; cv=none; b=ZEZNihTnyh50SCGDWMaTFwFk3/V4cFDmxBX3KbxBRxiGcDuKxVrjDAvRFHL3JU7xzr8r7O29q3Q7bqwDo74q6gDAJF8CzM40pTqNeABFMMH1pynOLy37UK/p8S9gOjDD0E1UEB3hYEU3iD4uRZjzHFTE6TWYuQ+KCJ/fE68bcXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426874; c=relaxed/simple;
-	bh=wwDdS+lBDzbeJCQ1tiWAUbtjf5tOajpX6DBzQPnjL1Y=;
+	s=arc-20240116; t=1785426877; c=relaxed/simple;
+	bh=WWcVwy1dwp/O5WVBwHFoq+BIC/3LR9wWRek20yF6DLU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aditeEKJUzTy9d+kvAAEyWA0e/8ZBra+tv0WRbUnC0x7v6CNSiSnu89+R7M77A6nvvUe4pJ7kfbeJZf8jwZcfYeSMc1Jt2DBXKbsI6y9hySEI9NWRFiSEPmF6wQDiVViUpxlNHmDR7n8atV55dgx/TJCWNCPKFG/MF7T538s2Sw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NefxunKS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MktFnBBuh0FSEKkQ+feZFkNFhyXZslXmcpwepHVK/zS3FlL1QmupqOBKtG/+R/TtR684WD+y7adp6mK9WY0TWg2dzBCkQLBD3Iu9MIHjwXLBLsf74en0MaTrJYzJPi02jDVVURXQGz7KFjCO4HZD4s3SKnScQtVXLNEGNkivPXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I/o58wfs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NefxunKS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE8B71F000E9;
-	Thu, 30 Jul 2026 15:54:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I/o58wfs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B069A1F000E9;
+	Thu, 30 Jul 2026 15:54:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426873;
-	bh=PSpo3wH6+WRVEmeBgL84ndOtNB+LfxDw883EAYI1KUY=;
+	s=korg; t=1785426876;
+	bh=gs2dn9uEm9/N605MaUuCPlNfDA6J/WziYSKOf6pNgTI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NefxunKSmnUWQG12qaWF4ouIrNHAR98WbHw/QSemmRXAmLulkPUx++AraWjwXS8P1
-	 U27GALUvW0nwG884v7Z54iuHxEhCJvhD9C8WsalOcuYfXd4gUt4Sq2wCwXganXe7iF
-	 Wz8S4ItbM+gcEagiojXYqTmco0zNkFmxIt3t23M8=
+	b=I/o58wfsH0N8DnKgNmBZ30JBAQ/Aqs1RuBg2ly68zNFwDIpK8wX5c9qgVdQ6nP1kN
+	 U1BungQ6nGuwSAEYMj418DDT+DZqmaPWWt07mA0kYCkGyZs6IaAtXgpd9OEdYom9+L
+	 krJDX58+2hKAi5PqFJnJ1As6+IVs6zLJLRD4bEfM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	linux-afs@lists.infradead.org,
+	linux-fsdevel@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 573/602] Bluetooth: hci_core: Fix not accounting for BIS/CIS/PA links separately
-Date: Thu, 30 Jul 2026 16:16:05 +0200
-Message-ID: <20260730141448.089603126@linuxfoundation.org>
+Subject: [PATCH 6.12 574/602] afs: Improve server refcount/active count tracing
+Date: Thu, 30 Jul 2026 16:16:06 +0200
+Message-ID: <20260730141448.111244037@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -50,97 +53,178 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 9d4b01a0bf8d2163ae129c9c537cb0753ad5a2aa ]
+[ Upstream commit 76daa300d41acc1180f8a46eead36905054beafb ]
 
-This fixes the likes of hci_conn_num(CIS_LINK) returning the total of
-ISO connection which includes BIS_LINK as well, so this splits the
-iso_num into each link type and introduces hci_iso_num that can be used
-in places where the total number of ISO connection still needs to be
-used.
+Improve server refcount/active count tracing to distinguish between simply
+getting/putting a ref and using/unusing the server record (which changes
+the activity count as well as the refcount).  This makes it a bit easier to
+work out what's going on.
 
-Fixes: 23205562ffc8 ("Bluetooth: separate CIS_LINK and BIS_LINK link types")
-Fixes: a7bcffc673de ("Bluetooth: Add PA_LINK to distinguish BIG sync and PA sync connections")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
+cc: linux-fsdevel@vger.kernel.org
+Link: https://lore.kernel.org/r/20250224234154.2014840-10-dhowells@redhat.com/ # v1
+Link: https://lore.kernel.org/r/20250310094206.801057-6-dhowells@redhat.com/ # v4
+Stable-dep-of: 330e2c514823 ("afs: Fix dynamic lookup to fail on cell lookup failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/bluetooth/hci_core.h |   30 +++++++++++++++++++++++++-----
- 1 file changed, 25 insertions(+), 5 deletions(-)
+ fs/afs/fsclient.c          |    4 ++--
+ fs/afs/rxrpc.c             |    2 +-
+ fs/afs/server.c            |   11 ++++++-----
+ fs/afs/server_list.c       |    4 ++--
+ include/trace/events/afs.h |   27 +++++++++++++++------------
+ 5 files changed, 26 insertions(+), 22 deletions(-)
 
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -128,7 +128,9 @@ struct hci_conn_hash {
- 	struct list_head list;
- 	unsigned int     acl_num;
- 	unsigned int     sco_num;
--	unsigned int     iso_num;
-+	unsigned int     cis_num;
-+	unsigned int     bis_num;
-+	unsigned int     pa_num;
- 	unsigned int     le_num;
- 	unsigned int     le_num_peripheral;
- };
-@@ -1000,9 +1002,13 @@ static inline void hci_conn_hash_add(str
- 		h->sco_num++;
- 		break;
- 	case CIS_LINK:
-+		h->cis_num++;
-+		break;
- 	case BIS_LINK:
-+		h->bis_num++;
-+		break;
- 	case PA_LINK:
--		h->iso_num++;
-+		h->pa_num++;
- 		break;
- 	}
- }
-@@ -1028,9 +1034,13 @@ static inline void hci_conn_hash_del(str
- 		h->sco_num--;
- 		break;
- 	case CIS_LINK:
-+		h->cis_num--;
-+		break;
- 	case BIS_LINK:
-+		h->bis_num--;
-+		break;
- 	case PA_LINK:
--		h->iso_num--;
-+		h->pa_num--;
- 		break;
- 	}
- }
-@@ -1047,9 +1057,11 @@ static inline unsigned int hci_conn_num(
- 	case ESCO_LINK:
- 		return h->sco_num;
- 	case CIS_LINK:
-+		return h->cis_num;
- 	case BIS_LINK:
-+		return h->bis_num;
- 	case PA_LINK:
--		return h->iso_num;
-+		return h->pa_num;
- 	default:
- 		return 0;
- 	}
-@@ -1059,7 +1071,15 @@ static inline unsigned int hci_conn_coun
- {
- 	struct hci_conn_hash *c = &hdev->conn_hash;
+--- a/fs/afs/fsclient.c
++++ b/fs/afs/fsclient.c
+@@ -1650,7 +1650,7 @@ int afs_fs_give_up_all_callbacks(struct
+ 	bp = call->request;
+ 	*bp++ = htonl(FSGIVEUPALLCALLBACKS);
  
--	return c->acl_num + c->sco_num + c->le_num + c->iso_num;
-+	return c->acl_num + c->sco_num + c->le_num + c->cis_num + c->bis_num +
-+		c->pa_num;
-+}
-+
-+static inline unsigned int hci_iso_count(struct hci_dev *hdev)
-+{
-+	struct hci_conn_hash *c = &hdev->conn_hash;
-+
-+	return c->cis_num + c->bis_num;
+-	call->server = afs_use_server(server, afs_server_trace_give_up_cb);
++	call->server = afs_use_server(server, afs_server_trace_use_give_up_cb);
+ 	afs_make_call(call, GFP_NOFS);
+ 	afs_wait_for_call_to_complete(call);
+ 	ret = call->error;
+@@ -1756,7 +1756,7 @@ bool afs_fs_get_capabilities(struct afs_
+ 		return false;
+ 
+ 	call->key	= key;
+-	call->server	= afs_use_server(server, afs_server_trace_get_caps);
++	call->server	= afs_use_server(server, afs_server_trace_use_get_caps);
+ 	call->peer	= rxrpc_kernel_get_peer(estate->addresses->addrs[addr_index].peer);
+ 	call->probe	= afs_get_endpoint_state(estate, afs_estate_trace_get_getcaps);
+ 	call->probe_index = addr_index;
+--- a/fs/afs/rxrpc.c
++++ b/fs/afs/rxrpc.c
+@@ -190,7 +190,7 @@ static void afs_free_call(struct afs_cal
+ 	if (call->type->destructor)
+ 		call->type->destructor(call);
+ 
+-	afs_unuse_server_notime(call->net, call->server, afs_server_trace_put_call);
++	afs_unuse_server_notime(call->net, call->server, afs_server_trace_unuse_call);
+ 	kfree(call->request);
+ 
+ 	o = atomic_read(&net->nr_outstanding_calls);
+--- a/fs/afs/server.c
++++ b/fs/afs/server.c
+@@ -33,7 +33,7 @@ struct afs_server *afs_find_server(struc
+ 
+ 	do {
+ 		if (server)
+-			afs_unuse_server_notime(net, server, afs_server_trace_put_find_rsq);
++			afs_unuse_server_notime(net, server, afs_server_trace_unuse_find_rsq);
+ 		server = NULL;
+ 		seq++; /* 2 on the 1st/lockless path, otherwise odd */
+ 		read_seqbegin_or_lock(&net->fs_addr_lock, &seq);
+@@ -49,7 +49,7 @@ struct afs_server *afs_find_server(struc
+ 		server = NULL;
+ 		continue;
+ 	found:
+-		server = afs_maybe_use_server(server, afs_server_trace_get_by_addr);
++		server = afs_maybe_use_server(server, afs_server_trace_use_by_addr);
+ 
+ 	} while (need_seqretry(&net->fs_addr_lock, seq));
+ 
+@@ -76,7 +76,7 @@ struct afs_server *afs_find_server_by_uu
+ 		 * changes.
+ 		 */
+ 		if (server)
+-			afs_unuse_server(net, server, afs_server_trace_put_uuid_rsq);
++			afs_unuse_server(net, server, afs_server_trace_unuse_uuid_rsq);
+ 		server = NULL;
+ 		seq++; /* 2 on the 1st/lockless path, otherwise odd */
+ 		read_seqbegin_or_lock(&net->fs_lock, &seq);
+@@ -91,7 +91,7 @@ struct afs_server *afs_find_server_by_uu
+ 			} else if (diff > 0) {
+ 				p = p->rb_right;
+ 			} else {
+-				afs_use_server(server, afs_server_trace_get_by_uuid);
++				afs_use_server(server, afs_server_trace_use_by_uuid);
+ 				break;
+ 			}
+ 
+@@ -273,7 +273,8 @@ static struct afs_addr_list *afs_vl_look
  }
  
- static inline bool hci_conn_valid(struct hci_dev *hdev, struct hci_conn *conn)
+ /*
+- * Get or create a fileserver record.
++ * Get or create a fileserver record and return it with an active-use count on
++ * it.
+  */
+ struct afs_server *afs_lookup_server(struct afs_cell *cell, struct key *key,
+ 				     const uuid_t *uuid, u32 addr_version)
+--- a/fs/afs/server_list.c
++++ b/fs/afs/server_list.c
+@@ -16,7 +16,7 @@ void afs_put_serverlist(struct afs_net *
+ 	if (slist && refcount_dec_and_test(&slist->usage)) {
+ 		for (i = 0; i < slist->nr_servers; i++)
+ 			afs_unuse_server(net, slist->servers[i].server,
+-					 afs_server_trace_put_slist);
++					 afs_server_trace_unuse_slist);
+ 		kfree_rcu(slist, rcu);
+ 	}
+ }
+@@ -98,7 +98,7 @@ struct afs_server_list *afs_alloc_server
+ 		if (j < slist->nr_servers) {
+ 			if (slist->servers[j].server == server) {
+ 				afs_unuse_server(volume->cell->net, server,
+-						 afs_server_trace_put_slist_isort);
++						 afs_server_trace_unuse_slist_isort);
+ 				continue;
+ 			}
+ 
+--- a/include/trace/events/afs.h
++++ b/include/trace/events/afs.h
+@@ -132,22 +132,25 @@ enum yfs_cm_operation {
+ 	EM(afs_server_trace_destroy,		"DESTROY  ") \
+ 	EM(afs_server_trace_free,		"FREE     ") \
+ 	EM(afs_server_trace_gc,			"GC       ") \
+-	EM(afs_server_trace_get_by_addr,	"GET addr ") \
+-	EM(afs_server_trace_get_by_uuid,	"GET uuid ") \
+-	EM(afs_server_trace_get_caps,		"GET caps ") \
+ 	EM(afs_server_trace_get_install,	"GET inst ") \
+-	EM(afs_server_trace_get_new_cbi,	"GET cbi  ") \
+ 	EM(afs_server_trace_get_probe,		"GET probe") \
+-	EM(afs_server_trace_give_up_cb,		"giveup-cb") \
+ 	EM(afs_server_trace_purging,		"PURGE    ") \
+-	EM(afs_server_trace_put_call,		"PUT call ") \
+ 	EM(afs_server_trace_put_cbi,		"PUT cbi  ") \
+-	EM(afs_server_trace_put_find_rsq,	"PUT f-rsq") \
+ 	EM(afs_server_trace_put_probe,		"PUT probe") \
+-	EM(afs_server_trace_put_slist,		"PUT slist") \
+-	EM(afs_server_trace_put_slist_isort,	"PUT isort") \
+-	EM(afs_server_trace_put_uuid_rsq,	"PUT u-req") \
+-	E_(afs_server_trace_update,		"UPDATE")
++	EM(afs_server_trace_see_expired,	"SEE expd ") \
++	EM(afs_server_trace_unuse_call,		"UNU call ") \
++	EM(afs_server_trace_unuse_create_fail,	"UNU cfail") \
++	EM(afs_server_trace_unuse_find_rsq,	"UNU f-rsq") \
++	EM(afs_server_trace_unuse_slist,	"UNU slist") \
++	EM(afs_server_trace_unuse_slist_isort,	"UNU isort") \
++	EM(afs_server_trace_unuse_uuid_rsq,	"PUT u-req") \
++	EM(afs_server_trace_update,		"UPDATE   ") \
++	EM(afs_server_trace_use_by_addr,	"USE addr ") \
++	EM(afs_server_trace_use_by_uuid,	"USE uuid ") \
++	EM(afs_server_trace_use_cm_call,	"USE cm-cl") \
++	EM(afs_server_trace_use_get_caps,	"USE gcaps") \
++	EM(afs_server_trace_use_give_up_cb,	"USE gvupc") \
++	E_(afs_server_trace_wait_create,	"WAIT crt ")
+ 
+ #define afs_volume_traces \
+ 	EM(afs_volume_trace_alloc,		"ALLOC         ") \
+@@ -1369,7 +1372,7 @@ TRACE_EVENT(afs_server,
+ 		    __entry->reason = reason;
+ 			   ),
+ 
+-	    TP_printk("s=%08x %s u=%d a=%d",
++	    TP_printk("s=%08x %s r=%d a=%d",
+ 		      __entry->server,
+ 		      __print_symbolic(__entry->reason, afs_server_traces),
+ 		      __entry->ref,
 
 
