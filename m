@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1853431488;
-	Thu, 30 Jul 2026 14:38:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05940443E20;
+	Thu, 30 Jul 2026 14:38:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422334; cv=none; b=Dh34/zuuFliR3cFRs7Ih2xUTJ9CNFj6VvC6ph7HHmg9c06/Vs9v//w2D+RekwlS86On8fQxA5iamG4pPNXQQ8Glg97IIk8BGWTo3NBHDQfJO5NHqgynmIk0kLAGXFa8NjX6Nk0dWBuF6qAvAtAlYXjrWuy6G+aqcM3FiTWlRfR0=
+	t=1785422337; cv=none; b=BJEgLQ2fYvXWGSnYzbxl26upl1jeoCgwWpf5uHqra6KWH3WSe0gaC3n01xSdGuV74Mop0kWuaF8Tf5n0QCNqylxYkIopWD3JnX5gt5ZxwqgHBZlU9Q1rbipYtLFD8Igvfp4dXBHAmAEO75vcPyvUVK6vPjzmaqBkMnEq3sB9UEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422334; c=relaxed/simple;
-	bh=HPzBsE1PO+gpD7WM8k2ZkE9/tPX3ScUbVYqthi96Fgc=;
+	s=arc-20240116; t=1785422337; c=relaxed/simple;
+	bh=0FD4InawYaxvem5hWufEw5IZJp/vZIU9CUgtCB0SZ4Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kshR4otP9FXgdX7/fIlFGC1YV7VUCNbv1wDlQYFZ1fOMn26ksN2DI+R//oxYy9Qu7W2YSs/6iD0Y1n8N95RG9quuMC50MDMJpx7rtUe8GwQqTbbgH7s6fg37jGdBfxpPUAFZvXp0y128s0CBmYt4ealbHLXQ1LarxZYmuK5Ecko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o9YRQHIh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=m8o2cMCoy5qa1XI4ItFs548DYMuIxqEmO0n5znUWiJiyE4DhoDBaNwzsTby1IdFDCNj9cKReRH5cQ/IFQruCnCSCFdfPv4kp7kpayUC1gopYNnpkr9z1yL8RRhIpQic1K6X8S0YNK5GMQ+us8Wpnm9sYI9RnwlRBzRjMcPxe7F4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O+eVplFK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o9YRQHIh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EC821F000E9;
-	Thu, 30 Jul 2026 14:38:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O+eVplFK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 453AE1F000E9;
+	Thu, 30 Jul 2026 14:38:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422332;
-	bh=VJLkqQJh7dYOXona05xcefxj8WHQkzMb8xCdfefMGi8=;
+	s=korg; t=1785422335;
+	bh=2gWyMz65/0u8et/Acgqdp9Pg0w7FC3E041Xv8BfNcag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o9YRQHIhukWB9d8UrkNhxMzAnoON8wbnsCqFoRhgAzym4M/UnxI20Beon4V4crtVw
-	 e5nLMe57yvvNE71f8S22vyuhAai0MWnFIYUpjU9noyfjyOgg8Loa9Tbn1zt2N3xDYX
-	 B+vEufJuZF7gDlSpTX9jw+JSw58zLD26uurZl3ao=
+	b=O+eVplFKGom7sJy9vBsX4LI843OzFUmI80EosvQaJ6gpAPt60Ldr4W5V5VHCbNU4C
+	 jRG6K04LbUhAJi8+cktqgeuRCezyAGRRFpMQLD9S0PAbilzTuXvTfpeFvAp4j9NiNg
+	 n/MYbU68W1CkMz1rdKcaCjYEVPrOeAeVS7lIgNaM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Brost <matthew.brost@intel.com>,
-	Matthew Auld <matthew.auld@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>
-Subject: [PATCH 7.1 401/744] drm/xe: Fix PTE index in xe_vm_populate_pgtable() for chunked binds
-Date: Thu, 30 Jul 2026 16:11:14 +0200
-Message-ID: <20260730141452.814467392@linuxfoundation.org>
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Inki Dae <inki.dae@samsung.com>,
+	dri-devel@lists.freedesktop.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-samsung-soc@vger.kernel.org
+Subject: [PATCH 7.1 366/744] drm/exynos: fbdev: Remove offset into screen_buffer
+Date: Thu, 30 Jul 2026 16:10:39 +0200
+Message-ID: <20260730141452.064947942@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -45,80 +48,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matthew Brost <matthew.brost@intel.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-commit 34a4dd45cf210c04fee773b0dbc350aec285f03c upstream.
+commit 760bbc58c2c833dec0ee38dd959f4f2f4084fc57 upstream.
 
-xe_vm_populate_pgtable() indexed the source PTE array (update->pt_entries)
-by the per-call loop counter, assuming each call starts at the first entry
-of the update. That holds for the CPU bind path
-(xe_migrate_update_pgtables_cpu), which populates a whole update in a single
-call, but not for the GPU bind path: write_pgtable() splits an update into
-MAX_PTE_PER_SDI (510) sized MI_STORE_DATA_IMM chunks, invoking the populate
-callback once per chunk with an advancing qword_ofs but a fresh command-
-buffer destination pointer.
+The screen_buffer field in struct fb_info contains the kernel address
+of the first byte of framebuffer memory. Do not add the display offset.
+This offset only describes scrolling during scanout.
 
-As a result, every chunk after the first re-read pt_entries from index 0
-instead of from its true offset, so PTEs beyond the first 510 entries of a
-single update were programmed with the wrong physical pages, shifting the
-mapping by exactly MAX_PTE_PER_SDI pages.
-
-This stayed latent because a single update only exceeds 510 qwords when a
-large (e.g. 2M) region is bound as individual 4K PTEs rather than a single
-huge-page entry, which happens when the backing store is sufficiently
-fragmented. It was surfaced by the BO defrag path, which deliberately
-rebinds such fragmented ranges via the GPU bind path, producing
-deterministic data corruption offset by 510 pages.
-
-Index pt_entries by the chunk's absolute offset relative to update->ofs so
-both the CPU and GPU paths pick the correct entries.
-
-Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
-Cc: stable@vger.kernel.org
-Assisted-by: GitHub_Copilot:claude-opus-4.8
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
-Reviewed-by: Matthew Auld <matthew.auld@intel.com>
-Link: https://patch.msgid.link/20260702012434.3861171-1-matthew.brost@intel.com
-(cherry picked from commit e6f2d0b757c4fb577a513c577140109d1d292a9a)
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Fixes: 19c8b8343d9c ("drm/exynos: fixed overlay data updating.")
+Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Acked-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Signed-off-by: Inki Dae <inki.dae@samsung.com>
+Cc: dri-devel@lists.freedesktop.org
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: linux-samsung-soc@vger.kernel.org
+Cc: <stable@vger.kernel.org> # v3.2+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_pt.c |   14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/exynos/exynos_drm_fbdev.c |    6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
---- a/drivers/gpu/drm/xe/xe_pt.c
-+++ b/drivers/gpu/drm/xe/xe_pt.c
-@@ -1025,12 +1025,22 @@ xe_vm_populate_pgtable(struct xe_migrate
- 	u64 *ptr = data;
- 	u32 i;
+--- a/drivers/gpu/drm/exynos/exynos_drm_fbdev.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_fbdev.c
+@@ -61,17 +61,13 @@ static int exynos_drm_fbdev_update(struc
+ 	struct fb_info *fbi = helper->info;
+ 	struct drm_framebuffer *fb = helper->fb;
+ 	unsigned int size = fb->width * fb->height * fb->format->cpp[0];
+-	unsigned long offset;
  
-+	/*
-+	 * @qword_ofs is the absolute entry offset within the page table, while
-+	 * @ptes is indexed relative to @update->ofs (its first entry). The GPU
-+	 * path (write_pgtable) splits a single update into MAX_PTE_PER_SDI-sized
-+	 * chunks, calling this with an advancing @qword_ofs but a fresh @data
-+	 * pointer per chunk, so translate back into a @ptes index rather than
-+	 * assuming the chunk starts at ptes[0].
-+	 */
- 	for (i = 0; i < num_qwords; i++) {
-+		u32 idx = qword_ofs - update->ofs + i;
-+
- 		if (map)
- 			xe_map_wr(tile_to_xe(tile), map, (qword_ofs + i) *
--				  sizeof(u64), u64, ptes[i].pte);
-+				  sizeof(u64), u64, ptes[idx].pte);
- 		else
--			ptr[i] = ptes[i].pte;
-+			ptr[i] = ptes[idx].pte;
- 	}
- }
+ 	fbi->fbops = &exynos_drm_fb_ops;
+ 
+ 	drm_fb_helper_fill_info(fbi, helper, sizes);
+ 
+-	offset = fbi->var.xoffset * fb->format->cpp[0];
+-	offset += fbi->var.yoffset * fb->pitches[0];
+-
+ 	fbi->flags |= FBINFO_VIRTFB;
+-	fbi->screen_buffer = exynos_gem->kvaddr + offset;
++	fbi->screen_buffer = exynos_gem->kvaddr;
+ 	fbi->screen_size = size;
+ 	fbi->fix.smem_len = size;
  
 
 
