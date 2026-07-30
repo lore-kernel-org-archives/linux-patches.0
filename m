@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEEFE30C618;
-	Thu, 30 Jul 2026 15:14:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D93F33B0598;
+	Thu, 30 Jul 2026 15:14:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424484; cv=none; b=TfQFEMc99uJNKSy9tGUjPUqhsZ+7mV6SXBq1NL2Zkfj/HM5gQdH9CBC6VzlKm4zNpiyQmyBPVwXLG1+aDnvpSHIruGOgWmnzahqAQwq+mw9wFGyz5vnBohGglJ2um52K/zhIj7X9CVcYTFAnhW14Idej7wMfNbNe5CyJywNsGm4=
+	t=1785424488; cv=none; b=rHULL+OolwaI1aa/UUIosqc0PjcCF+mgUG1WRkWPREsFV8aYAmCwsBdbomogQj1Qj8QoptbMWzhRQNTmWSuMMx++KWKHlE1lJj+oov9uv6bQnoyhH3N1PxV898HPxqxQG5wFOCn2qGiIqh+7pIDsfvdR0yJ59QFqHQKe0+apN64=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424484; c=relaxed/simple;
-	bh=rQaEHJPckiokI+iBI4gQIurM0EDC/dAZuOpgUWd0MRE=;
+	s=arc-20240116; t=1785424488; c=relaxed/simple;
+	bh=kXDMA7XoUv114mW7dtnbnPJRm7V0AKd96mw2vcabC0o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=AbYDPlvAsREupArA9SlgGbYTkuASkKIJWhCK7A2tnz2wvq4CgPNf8ZVD6NBhHNhI3DclMj/UUEXKDLEGWZ+n3T4tuUTNdP8nK0G3/BFBVwEZaLKtoo9vHFCQAkFCWrSKSpbN95ZXuznGG468MXJCj/O9OaJqVunkmAQXO2JGxaI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LeCXsMP8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=CdtwIaVYOP4zuO/FOylthVSXCFrSLSxJSW9HMLDaFxwFeR21jo8RAaNtVX3MoTird3Pq38SMqZj12Y1bRyaVN7UUHzgg2oOj92SlthIHND5ZmC6GVNAS9uWLtrqDDqi+xfcUAQuXVVEblPN/x+zPdPIm0CQHltn9TQQ+K6OmVLc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eR0C8+7F; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LeCXsMP8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 193E41F000E9;
-	Thu, 30 Jul 2026 15:14:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eR0C8+7F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8E271F000E9;
+	Thu, 30 Jul 2026 15:14:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424483;
-	bh=7VCgSOXa5+SIVyhJ+mDgCXEmzCJmoyRNNjCvXXQ7K5E=;
+	s=korg; t=1785424486;
+	bh=Pp68PFeQO9oACazSLGjhFjCYUT7lcY6sbo4KnI2LQ7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LeCXsMP8ouK+P2Ed6PFFx10in1QtGU7tUZExJI8NNmmghU/x8hTRDGu4pr/tm7E5P
-	 0H4H3HTG1LpPVfzGQtsrOEAG5WQQuJ9lRi4081OVxpDkKbzmFVhr4oiKfHBy2EYENG
-	 Rcv0mjboScui4Z9GqgCuhrREUNA2AkFZtwUuOoTk=
+	b=eR0C8+7FiO6w6QsYDvy4a045aaAEqYGHrcIr0Y/feJXbe94dMBLxxNQfR8GcG4Pti
+	 +bqkhHEs7IreuYN1X9O9+ComzGm5FjuqakmPCRp+tib6H+qqRW7DATtiZAMKNfd/kx
+	 kOoHeDfIDNrSDabSNMipY5uaH4M5jXskU+Dnm1SE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Martin Hodo <martin.hodo@intel.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Simona Vetter <simona.vetter@ffwll.ch>,
+	Animesh Manna <animesh.manna@intel.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@intel.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
 	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-	Sebastian Brzezinka <sebastian.brzezinka@intel.com>
-Subject: [PATCH 6.18 365/675] drm/i915: Return NULL on error in active_instance
-Date: Thu, 30 Jul 2026 16:11:35 +0200
-Message-ID: <20260730141452.887340490@linuxfoundation.org>
+	=?UTF-8?q?Micha=C5=82=20Grzelak?= <michal.grzelak@intel.com>
+Subject: [PATCH 6.18 366/675] drm/i915/bios: range check LFP Data Block panel_type2
+Date: Thu, 30 Jul 2026 16:11:36 +0200
+Message-ID: <20260730141452.908102292@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -55,55 +56,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+From: Jani Nikula <jani.nikula@intel.com>
 
-commit 1e33f0de5fdcd09e51fdec1e5822448970b6420f upstream.
+commit 2084503f2d087bf956198e7f6eb25b03a7049cb2 upstream.
 
-Avoid returning &node->base when node is NULL due to OOM
-during GFP_ATOMIC allocation.
+While the panel_type from LFP Data Block is range checked, panel_type2
+is not. Add a few helpers for range checking, and use them to not only
+check panel_type2, but also improve clarity and correctness in the panel
+type selection.
 
-Discovered using AI-assisted static analysis confirmed by
-Intel Product Security.
+Discovered using AI-assisted static analysis confirmed by Intel Product
+Security.
+
+v2:
+- Fix commit message typo (Michał)
+- Add is_panel_type_pnp() (Ville)
 
 Reported-by: Martin Hodo <martin.hodo@intel.com>
-Fixes: bfaae47db3c0 ("drm/i915: make lockdep slightly happier about execbuf.")
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Cc: Simona Vetter <simona.vetter@ffwll.ch>
-Cc: <stable@vger.kernel.org> # v5.13+
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Reviewed-by: Sebastian Brzezinka <sebastian.brzezinka@intel.com>
-Reviewed-by: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Link: https://patch.msgid.link/20260624090940.74840-1-joonas.lahtinen@linux.intel.com
-(cherry picked from commit 6029bc064f0b1bac184203a50fbaaf070fa18832)
+Fixes: 6434cf630086 ("drm/i915/bios: calculate panel type as per child device index in VBT")
+Cc: stable@vger.kernel.org # v6.0+
+Cc: Animesh Manna <animesh.manna@intel.com>
+Cc: Ville Syrjälä <ville.syrjala@intel.com>
+Reviewed-by: Michał Grzelak <michal.grzelak@intel.com> # v1
+Reviewed-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patch.msgid.link/20260626140155.1389655-1-jani.nikula@intel.com
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+(cherry picked from commit c9ebe5d2f25729d6cfbbb1235d640bf67f9275df)
 Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/i915_active.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/i915/display/intel_bios.c |   36 +++++++++++++++++++++++-------
+ 1 file changed, 28 insertions(+), 8 deletions(-)
 
---- a/drivers/gpu/drm/i915/i915_active.c
-+++ b/drivers/gpu/drm/i915/i915_active.c
-@@ -318,7 +318,7 @@ active_instance(struct i915_active *ref,
- 	 */
- 	node = kmem_cache_alloc(slab_cache, GFP_ATOMIC);
- 	if (!node)
--		goto out;
-+		goto err;
- 
- 	__i915_active_fence_init(&node->base, NULL, node_retire);
- 	node->ref = ref;
-@@ -332,6 +332,11 @@ out:
- 	spin_unlock_irq(&ref->tree_lock);
- 
- 	return &node->base;
-+
-+err:
-+	spin_unlock_irq(&ref->tree_lock);
-+
-+	return NULL;
+--- a/drivers/gpu/drm/i915/display/intel_bios.c
++++ b/drivers/gpu/drm/i915/display/intel_bios.c
+@@ -624,6 +624,21 @@ get_lfp_data_tail(const struct bdb_lfp_d
+ 		return NULL;
  }
  
- void __i915_active_init(struct i915_active *ref,
++static bool is_panel_type_valid(int panel_type)
++{
++	return panel_type >= 0 && panel_type < 16;
++}
++
++static bool is_panel_type_pnp(int panel_type)
++{
++	return panel_type == 0xff;
++}
++
++static bool is_panel_type_valid_or_pnp(int panel_type)
++{
++	return is_panel_type_valid(panel_type) || is_panel_type_pnp(panel_type);
++}
++
+ static int opregion_get_panel_type(struct intel_display *display,
+ 				   const struct intel_bios_encoder_data *devdata,
+ 				   const struct drm_edid *drm_edid, bool use_fallback)
+@@ -641,15 +656,21 @@ static int vbt_get_panel_type(struct int
+ 	if (!lfp_options)
+ 		return -1;
+ 
+-	if (lfp_options->panel_type > 0xf &&
+-	    lfp_options->panel_type != 0xff) {
++	if (!is_panel_type_valid_or_pnp(lfp_options->panel_type)) {
+ 		drm_dbg_kms(display->drm, "Invalid VBT panel type 0x%x\n",
+ 			    lfp_options->panel_type);
+ 		return -1;
+ 	}
+ 
+-	if (devdata && devdata->child.handle == DEVICE_HANDLE_LFP2)
++	if (devdata && devdata->child.handle == DEVICE_HANDLE_LFP2) {
++		if (!is_panel_type_valid_or_pnp(lfp_options->panel_type2)) {
++			drm_dbg_kms(display->drm, "Invalid VBT panel type 2 0x%x\n",
++				    lfp_options->panel_type2);
++			return -1;
++		}
++
+ 		return lfp_options->panel_type2;
++	}
+ 
+ 	drm_WARN_ON(display->drm,
+ 		    devdata && devdata->child.handle != DEVICE_HANDLE_LFP1);
+@@ -763,13 +784,12 @@ static int get_panel_type(struct intel_d
+ 				    panel_types[i].name, panel_types[i].panel_type);
+ 	}
+ 
+-	if (panel_types[PANEL_TYPE_OPREGION].panel_type >= 0)
++	if (is_panel_type_valid(panel_types[PANEL_TYPE_OPREGION].panel_type))
+ 		i = PANEL_TYPE_OPREGION;
+-	else if (panel_types[PANEL_TYPE_VBT].panel_type == 0xff &&
+-		 panel_types[PANEL_TYPE_PNPID].panel_type >= 0)
++	else if (is_panel_type_pnp(panel_types[PANEL_TYPE_VBT].panel_type) &&
++		 is_panel_type_valid(panel_types[PANEL_TYPE_PNPID].panel_type))
+ 		i = PANEL_TYPE_PNPID;
+-	else if (panel_types[PANEL_TYPE_VBT].panel_type != 0xff &&
+-		 panel_types[PANEL_TYPE_VBT].panel_type >= 0)
++	else if (is_panel_type_valid(panel_types[PANEL_TYPE_VBT].panel_type))
+ 		i = PANEL_TYPE_VBT;
+ 	else
+ 		i = PANEL_TYPE_FALLBACK;
 
 
