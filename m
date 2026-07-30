@@ -1,45 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51A3D36607D;
-	Thu, 30 Jul 2026 15:48:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C5FE382F01;
+	Thu, 30 Jul 2026 15:48:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426532; cv=none; b=diuTTQZV0xr/lOAXfA93BH5EJlTnOukJ3CmEPQl+8SeLw6CUwVulzUAn/pVebY6fVVAiExAEtztMrfY0LVPAzG6JU6ioDek4VhceZcEccUvwbkqx2pj/1uK3U7U3edlnwugkQBaWnewAfrYu27Yorg/gHH21Q4dEiTL3KJKJVYU=
+	t=1785426534; cv=none; b=ret6hebFHw31swnsfWZpHhzBK/KgTmvbOaynh7EiwzVrsH4MPYmGc1iaXLWsUekFCeI1PJTpHj1dM/ILZsWPfJomXMq2q0EJdp8rILQ//iIHj0NxhCrffM+TqgqvCE/wC1yEuDhZbfJJ9vGEk0eVGcnTBMbv+qC6aRdQKmrBSTk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426532; c=relaxed/simple;
-	bh=1Iq/KMAgCOSFK32k7vlfmTXKxLC9+nq/F1VR412iogA=;
+	s=arc-20240116; t=1785426534; c=relaxed/simple;
+	bh=AXpdiWcQ8u3DkztwXEsep2HC7/RMjiK7m665h0tGIIg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QZmEsG+tmCtHWUEtMGk/KzHdSkDee5jgbnX/IBlQvXyG6RijGWaPIY/uPoiUdm7smrcl5yScBjONpZiOzyXRU2NpSLLbV3uTFa3NYRxlDiMZS6vUCsKO/mIzoSf7mYEGFRZFrx0BXVZQCqzc+a7v5PoR1y1wZHHCZTsPrhtzTIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qrKj+5jv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LUn/R+OglWt2H33EbpBGLh3TxcwOT3I3bfu0Qgn4nElv1fTqlrEAg3xgaWE7PoLkCyvAr0UDLUSws8o+R//0KhBOqTNmTvwfo84qZ+/1ExondvAn1JFkaZ5QvM2z2yo6BeZ96ovtn8kaJfn8i1K8ARXYU0w3sz8evwS3Mnr1zyk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F6eoWkVu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qrKj+5jv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4C9D1F000E9;
-	Thu, 30 Jul 2026 15:48:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F6eoWkVu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80A5A1F000E9;
+	Thu, 30 Jul 2026 15:48:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426530;
-	bh=z6wjhwl+CHY8LqRmIjd0yyxGp2z4bOicV/6PbiA19sI=;
+	s=korg; t=1785426533;
+	bh=Q/TfLOYlSzvaBLJOotn1XCZb7ZkyU/PSLaNLNAd7rus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qrKj+5jvJmJlFIHnTqHegtHtGMq866GlvlmPsN30cWWadjMe99wQO12hO3OVbz21D
-	 bstvqfNi2A9sUcrwBQFae84UMt0IjTNLjM9cjE0rWlBP6W2L0zLqXOtS79+zsXrniP
-	 mxeZ3a1Mbgow89vlBlpA2EmRT/HJBUOa2ORrOu/A=
+	b=F6eoWkVu4INBGvyi1jDSZhbQnULY/GCnlaaiiWlBHbGvas2WgGJLcDj1gptA4nS97
+	 qjsmvCSO+VFr+glYWbVVbStHmadouJXlaZMNWMWpFhNMROOECodoexep0i3bzjKppR
+	 7sgGtw4msdvzYBBrjAQjHMf9JxijEbGzrAqY4p84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quan Sun <2022090917019@std.uestc.edu.cn>,
-	Yinhao Hu <dddddd@hust.edu.cn>,
-	Kaiyan Mei <M202472210@hust.edu.cn>,
-	Dongliang Mu <dzm91@hust.edu.cn>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Jay Wang <wanjay@amazon.com>
-Subject: [PATCH 6.12 451/602] bpf: Fix same-register dst/src OOB read and pointer leak in sock_ops
-Date: Thu, 30 Jul 2026 16:14:03 +0200
-Message-ID: <20260730141445.436591907@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 452/602] net: qrtr: ns: Raise node count limit to 512
+Date: Thu, 30 Jul 2026 16:14:04 +0200
+Message-ID: <20260730141445.457546839@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -58,84 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>
 
-[ Upstream commit 10f86a2a5c91fc4c4d001960f1c21abe52545ef6 ]
+commit ff194cffd586cbd4cc49eccb002c65f2a902a277 upstream.
 
-When a BPF sock_ops program accesses ctx fields with dst_reg == src_reg,
-the SOCK_OPS_GET_SK() and SOCK_OPS_GET_FIELD() macros fail to zero the
-destination register in the !fullsock / !locked_tcp_sock path.
+The current node limit of 64 breaks the functionality for a number of AI200
+deployments that have up to 384 nodes. Raise the limit to 512.
 
-Both macros borrow a temporary register to check is_fullsock /
-is_locked_tcp_sock when dst_reg == src_reg, because dst_reg holds the
-ctx pointer. When the check is false (e.g., TCP_NEW_SYN_RECV state with
-a request_sock), dst_reg should be zeroed but is not, leaving the stale
-ctx pointer:
-
- - SOCK_OPS_GET_SK: dst_reg retains the ctx pointer, passes NULL checks
-   as PTR_TO_SOCKET_OR_NULL, and can be used as a bogus socket pointer,
-   leading to stack-out-of-bounds access in helpers like
-   bpf_skc_to_tcp6_sock().
-
- - SOCK_OPS_GET_FIELD: dst_reg retains the ctx pointer which the
-   verifier believes is a SCALAR_VALUE, leaking a kernel pointer.
-
-Fix both macros by:
- - Changing JMP_A(1) to JMP_A(2) in the fullsock path to skip the
-   added instruction.
- - Adding BPF_MOV64_IMM(si->dst_reg, 0) after the temp register
-   restore in the !fullsock path, placed after the restore because
-   dst_reg == src_reg means we need src_reg intact to read ctx->temp.
-
-Fixes: fd09af010788 ("bpf: sock_ops ctx access may stomp registers in corner case")
-Fixes: 84f44df664e9 ("bpf: sock_ops sk access may stomp registers when dst_reg = src_reg")
-Reported-by: Quan Sun <2022090917019@std.uestc.edu.cn>
-Reported-by: Yinhao Hu <dddddd@hust.edu.cn>
-Reported-by: Kaiyan Mei <M202472210@hust.edu.cn>
-Reported-by: Dongliang Mu <dzm91@hust.edu.cn>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Closes: https://lore.kernel.org/bpf/6fe1243e-149b-4d3b-99c7-fcc9e2f75787@std.uestc.edu.cn/T/#u
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Acked-by: Martin KaFai Lau <martin.lau@kernel.org>
-Link: https://patch.msgid.link/20260407022720.162151-2-jiayuan.chen@linux.dev
+Fixes: 27d5e84e810b ("net: qrtr: ns: Limit the total number of nodes")
+Cc: stable@vger.kernel.org
+Signed-off-by: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260713145901.212396-1-youssef.abdulrahman@oss.qualcomm.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Jay Wang <wanjay@amazon.com>
+Signed-off-by: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ net/qrtr/ns.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index f54e7152d68798..90e396423eb7af 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -10483,10 +10483,11 @@ static u32 sock_ops_convert_ctx_access(enum bpf_access_type type,
- 				      si->dst_reg, si->dst_reg,		      \
- 				      offsetof(OBJ, OBJ_FIELD));	      \
- 		if (si->dst_reg == si->src_reg)	{			      \
--			*insn++ = BPF_JMP_A(1);				      \
-+			*insn++ = BPF_JMP_A(2);				      \
- 			*insn++ = BPF_LDX_MEM(BPF_DW, reg, si->src_reg,	      \
- 				      offsetof(struct bpf_sock_ops_kern,      \
- 				      temp));				      \
-+			*insn++ = BPF_MOV64_IMM(si->dst_reg, 0);	      \
- 		}							      \
- 	} while (0)
+diff --git a/net/qrtr/ns.c b/net/qrtr/ns.c
+index a10e8de4f7e105..e8e3ba1b3b8239 100644
+--- a/net/qrtr/ns.c
++++ b/net/qrtr/ns.c
+@@ -85,9 +85,9 @@ struct qrtr_node {
+ /* Max nodes limit is chosen based on the current platform requirements.
+  * If the requirement changes in the future, this value can be increased.
+  */
+-#define QRTR_NS_MAX_NODES   64
++#define QRTR_NS_MAX_NODES   512
  
-@@ -10520,10 +10521,11 @@ static u32 sock_ops_convert_ctx_access(enum bpf_access_type type,
- 				      si->dst_reg, si->src_reg,		      \
- 				      offsetof(struct bpf_sock_ops_kern, sk));\
- 		if (si->dst_reg == si->src_reg)	{			      \
--			*insn++ = BPF_JMP_A(1);				      \
-+			*insn++ = BPF_JMP_A(2);				      \
- 			*insn++ = BPF_LDX_MEM(BPF_DW, reg, si->src_reg,	      \
- 				      offsetof(struct bpf_sock_ops_kern,      \
- 				      temp));				      \
-+			*insn++ = BPF_MOV64_IMM(si->dst_reg, 0);	      \
- 		}							      \
- 	} while (0)
+-static u8 node_count;
++static u16 node_count;
  
+ static struct qrtr_node *node_get(unsigned int node_id)
+ {
 -- 
 2.53.0
 
