@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E555432E6E;
-	Thu, 30 Jul 2026 14:26:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 190E5438487;
+	Thu, 30 Jul 2026 14:26:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421612; cv=none; b=ai8Rm7pHpUpnLyotoMMVI2z3jLtaihDZZHuxmahFguXfSfAc+H4bYOneVcHauQXEvom6nykPDQV0rbH8mNy9wbQ/ZNNyW4Rb/ZZmlncvYUPJaurwV1f/AJaYKkjj039ZyMZbjsYqMvXcTCWWhsS3n629GWu43AqPODlfJttt+go=
+	t=1785421615; cv=none; b=TG+0hnuytM+YJQBxDEKm9UrcdsSan8gYSiC5Vp87ghPYhOrbzrR8TAfZqLA/i+ipoHHHkQs0A1kNpShzfwDgSSfCjrxVVliZPKFsTHKazAblu4LD1t4JqJkw2R0nSz8D+gdMJcxRVUKn49yxEkIgQtlbljqgtYjUbJCtXQh9FXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421612; c=relaxed/simple;
-	bh=tOAz4suJjD0kO0elqd2VO6cP0DxCCO1MKbAs3miyW98=;
+	s=arc-20240116; t=1785421615; c=relaxed/simple;
+	bh=1Jfcdl8X/DjkgPzlBZRul2C/sKwO54vCrVK/u5cTN0w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qcNATaxeFnRk+pC41mKcnpV1ZArxiL8doalx1GOhfKL7N5X8JO31FQXU3o7KgnA+HsJ/0D3GqmKbPs2otc93plrRAuFl0mRr69h1bQKS1qpAleyt3fzItsjVttSOCkQXoVInjnoky8fwFkRA8vJJC9kdj3COOTCk3cv2a+bWRBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sOMKpeab; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G7o8JF2yhBm7M13422Bf9glyNu+Pu0EQjfIIigE8bt3jt0WDzqlbayPo5hs6zj2f9eiX7cLvfDJwdHcIqZjAYgg3ATc/+a+H04z6jukZ/R6/Rmg8hUUDs+sFijb6/cid5RAJP3ntyjI+Q0oKs+TWWU9RWmd6gq3wvdJC4PsJelI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tZOXREQW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sOMKpeab"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FB511F000E9;
-	Thu, 30 Jul 2026 14:26:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tZOXREQW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B2391F000E9;
+	Thu, 30 Jul 2026 14:26:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421610;
-	bh=kiiJnjWGLAfBrSTTOcNDHFsfpaimj6J++GcAzSB1L/I=;
+	s=korg; t=1785421613;
+	bh=KoPFXLNn/++q2nB9g7NZ2tb68dtXsAIWKqR7zdyP3SY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sOMKpeabPqvvwl1yM/gTv/ftDpqj22Vy1mUJsvXKmKmeG3byL07F00Uu3KLt4dhMF
-	 tbK0M495qwZ5iiQo5NzimN6npCNjbVv/QuG8zPRsLsVv0R2KrQ4tFPtK3zwvmbeAQj
-	 quMzFikM1eoTgDBy9jA+9JIX3nVzoD2aDA74hMbw=
+	b=tZOXREQW5f0pUwpe2CMt628n/kB5W8hbt0CnW86IaeNj44eKKzOofstMwcNXH6yQn
+	 M6BtUs9AwQiWKdRDBDuHoWxLlDPCABUiTqHqUZdLNoOVpX3gwhU1f1JxmrhLdRo1ix
+	 EadfHowooFUu2TSiINHfm7CL6PDet/lKoSroRdos=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenjing Liu <wenjing.liu@amd.com>,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Georgi Valkov <gvalkov@gmail.com>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 161/744] drm/amd/display: Add dp_skip_rbr flag for NUTMEG
-Date: Thu, 30 Jul 2026 16:07:14 +0200
-Message-ID: <20260730141447.714306000@linuxfoundation.org>
+Subject: [PATCH 7.1 162/744] wifi: mwifiex: fix freeze for 60 seconds caused by request_firmware
+Date: Thu, 30 Jul 2026 16:07:15 +0200
+Message-ID: <20260730141447.737185639@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -46,82 +46,82 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Georgi Valkov <gvalkov@gmail.com>
 
-[ Upstream commit e39b7cf5c62e027af166772e46382356ecb45c36 ]
+[ Upstream commit 121a96c5a0db8d18e2ba2cb89660cca8a40508fe ]
 
-No functional changes. Just clean up a conceptual mismatch.
+Fix regression in rgpower table loading, caused by using
+request_firmware(): when the requested firmware does not exist, e.g.
+nxp/rgpower_WW.bin does not exist on OpenWRT builds for WRT3200ACM,
+request_firmware() falls back to firmware_fallback_sysfs(), which expects
+the firmware to be provided by user space using SYSFS. No such utility is
+provided in this configuration, so the entire system locks up for 60
+seconds, until the request times out. During this time, no other log
+messages are observed, and the device does not respond to commands over
+UART.
 
-Based on feedback on the NUTMEG code in DC, the
-preferred_link_setting is meant to force the DP link to a
-specific setting, meaning both the link rate and lane count
-should be locked to an exact value. What NUTMEG needs is
-a lower bound on the link rate, which is not the same concept.
+The request_firmware() call is performed in the following context:
+current->comm kworker/1:2  in_task 1  irqs_disabled 0  in_atomic 0
 
-Implement this as a HW workaround flag instead.
+Fixed by using request_firmware_direct(). This prevents fallback to SYSFS,
+and avoids delay. The rgpower table is optional. The driver falls back
+to the device tree power table if the firmware is not present.
 
-Suggested-by: Wenjing Liu <wenjing.liu@amd.com>
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 871ceb853841bcaa4e6cec3723b16c4887a760be)
-Cc: stable@vger.kernel.org
+The error code is printed for debugging and returned to the caller,
+which only cares for success or failure, so there are no side effects.
+
+Fixes: 7b6f16a25806 ("wifi: mwifiex: add rgpower table loading support")
+Signed-off-by: Georgi Valkov <gvalkov@gmail.com>
+Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Link: https://patch.msgid.link/20260712221709.7099-1-gvalkov@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dc.h                         | 2 ++
- drivers/gpu/drm/amd/display/dc/link/link_detection.c        | 2 +-
- .../drm/amd/display/dc/link/protocols/link_dp_capability.c  | 6 +++---
- 3 files changed, 6 insertions(+), 4 deletions(-)
+ drivers/net/wireless/marvell/mwifiex/sta_ioctl.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dc.h b/drivers/gpu/drm/amd/display/dc/dc.h
-index 55152f12af48be..61a28e287c1b98 100644
---- a/drivers/gpu/drm/amd/display/dc/dc.h
-+++ b/drivers/gpu/drm/amd/display/dc/dc.h
-@@ -1727,6 +1727,8 @@ struct dc_scratch_space {
- 		bool dp_skip_DID2;
- 		bool dp_skip_reset_segment;
- 		bool dp_skip_fs_144hz;
-+		/* Some DP bridges don't work with RBR and must use HBR. */
-+		bool dp_skip_rbr;
- 		bool dp_mot_reset_segment;
- 		/* Some USB4 docks do not handle turning off MST DSC once it has been enabled. */
- 		bool dpia_mst_dsc_always_on;
-diff --git a/drivers/gpu/drm/amd/display/dc/link/link_detection.c b/drivers/gpu/drm/amd/display/dc/link/link_detection.c
-index 794dd6a9591830..faf33e9b1c6f37 100644
---- a/drivers/gpu/drm/amd/display/dc/link/link_detection.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/link_detection.c
-@@ -621,7 +621,7 @@ static bool detect_dp(struct dc_link *link,
- 		link->dpcd_caps.sink_count.bits.SINK_COUNT = 1;
- 		/* NUTMEG requires that we use HBR, doesn't work with RBR. */
- 		if (link->dpcd_caps.branch_dev_id == DP_BRANCH_DEVICE_ID_00001A)
--			link->preferred_link_setting.link_rate = LINK_RATE_HIGH;
-+			link->wa_flags.dp_skip_rbr = true;
+diff --git a/drivers/net/wireless/marvell/mwifiex/sta_ioctl.c b/drivers/net/wireless/marvell/mwifiex/sta_ioctl.c
+index a6550548d3b435..9460d5352b234e 100644
+--- a/drivers/net/wireless/marvell/mwifiex/sta_ioctl.c
++++ b/drivers/net/wireless/marvell/mwifiex/sta_ioctl.c
+@@ -196,6 +196,7 @@ static int mwifiex_request_rgpower_table(struct mwifiex_private *priv)
+ 	struct mwifiex_adapter *adapter = priv->adapter;
+ 	char rgpower_table_name[30];
+ 	char country_code[3];
++	int ret;
+ 
+ 	strscpy(country_code, domain_info->country_code, sizeof(country_code));
+ 
+@@ -214,16 +215,17 @@ static int mwifiex_request_rgpower_table(struct mwifiex_private *priv)
+ 		adapter->rgpower_data = NULL;
  	}
  
- 	return true;
-diff --git a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
-index c9c76b8c3e3ba2..fe8420b803eeda 100644
---- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
-@@ -750,9 +750,9 @@ static bool decide_dp_link_settings(struct dc_link *link, struct dc_link_setting
- 	if (req_bw > dp_link_bandwidth_kbps(link, &link->verified_link_cap))
- 		return false;
- 
--	if (link->preferred_link_setting.link_rate != LINK_RATE_UNKNOWN) {
--		initial_link_setting.link_rate = link->preferred_link_setting.link_rate;
--		current_link_setting.link_rate = link->preferred_link_setting.link_rate;
-+	if (link->wa_flags.dp_skip_rbr) {
-+		initial_link_setting.link_rate = LINK_RATE_HIGH;
-+		current_link_setting.link_rate = LINK_RATE_HIGH;
+-	if ((request_firmware(&adapter->rgpower_data, rgpower_table_name,
+-			      adapter->dev))) {
++	ret = request_firmware_direct(&adapter->rgpower_data, rgpower_table_name,
++				      adapter->dev);
++
++	if (ret) {
+ 		mwifiex_dbg(
+ 			adapter, INFO,
+-			"info: %s: failed to request regulatory power table\n",
+-			__func__);
+-		return -EIO;
++			"info: %s: failed to request regulatory power table: %d\n",
++			__func__, ret);
  	}
  
- 	/* search for the minimum link setting that:
+-	return 0;
++	return ret;
+ }
+ 
+ static int mwifiex_dnld_rgpower_table(struct mwifiex_private *priv)
 -- 
 2.53.0
 
