@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FC3C44CAC9;
-	Thu, 30 Jul 2026 15:29:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48C2744CAC1;
+	Thu, 30 Jul 2026 15:30:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425401; cv=none; b=PRvX9t7GJl0v/6o2O+hcMioHKyiAyCE6KEpAEDAkX2E9mxatOD56aULVjW4VQLj3vLBzgGAID2Z8sE5AdMTEDHSj06qvyXThEpe83Q6XSjZz3ONJS2btVWYu6qkXKoeI/9eLhBTot6K6Js9XcUVH5UBvSWwYUpULdEW1jcXfc3M=
+	t=1785425405; cv=none; b=FM0Q11QWNMafiagpwfvbulmDw+xKzTpugNs18AUTOGOVjN0ImCP0cgw2QSF1vwgaOL4oWSOOs9SbJqhrteAzeXeDI0+83ah57WT4S5xYC/50zRX/8SSsZsBVENA1gaVG8VHK65F9n/+2mZ4OPRQt0IhS2V18msS12MfBSL8YqU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425401; c=relaxed/simple;
-	bh=BZEUrsmxuTPP6op/xO/tXpDOmceVN0+0VKdBEiOVBsw=;
+	s=arc-20240116; t=1785425405; c=relaxed/simple;
+	bh=eTYf6DQA/9UgnWkhBHI2ArmFVSutDFPTO197Src4r7s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=loZrn3WKRP6aCKFuGa1J7HBQXQcujR0wcyZ/YXoaLXv7nwSWkNVKbfveAcixF4AZNatasJvQ5XV9Czqg7zWXFpuDTGIcr1BKSZZdfwixwIMO3YAX/UaZld5u0Dy8zr8ZaCcOupGPAl/wBazSwVhS/uroZUa3NUwUL6hEtaLfOGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vYd26qJr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q8ggGXMDRfIGwmCG1Y21ABh4inZ+CzbA82vuRNmnzpsIlV5UjwxevqSV8OYFvFc/0suiAdF6xwO66maYh2sB8LK3chuNa4PV7AkjNpk1okm211KW2ADPHbwHux6TZW6+yoDveIHbWwdBopabr8qZ6NSO1KK9FoBIC/OTGHmTNPk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kJZBLDSX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vYd26qJr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 521A01F00A3A;
-	Thu, 30 Jul 2026 15:29:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kJZBLDSX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2581D1F00A3D;
+	Thu, 30 Jul 2026 15:29:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425397;
-	bh=ZbV744XWXFCdaAws22SZFz9rN7LEYT6R7RUnGLHX9LU=;
+	s=korg; t=1785425400;
+	bh=nIfb1HB/hbIc4LYzkwBv/+UiflvVEiKKYYvEOXL55XY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vYd26qJrrUBELwN0/vhtJ0zbq99uQiVBXDHpFLVO38TBJBszBt0wfpI90ziIfiIZR
-	 jXiKh+o7fjKri0osS+P7VtlObdRIBDjsySAK3ovhqVwu7gS/Oqmb9g4+38PddV10Cg
-	 88vJc48ToODi5E8FL3cl+hvEujD5ieFpiWweJ6Jw=
+	b=kJZBLDSX1uASSLOJc2I6lMNaMjrxacWjtptEZTJUslRZlYRGFNMVG+bY9EMqbRMIi
+	 UmKazlP3iy38SXC54WMB51NeoCrv0Y6RJ2YZ2vdDA1uCp+5+/a8QKaiPBxPXZYlfud
+	 hh3ofBB4JE/CxIMwzT0KHuYCeOqsrI2zIbfsh6kk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 056/602] wifi: ipw2100: fix potential memory leak in ipw2100_pci_init_one()
-Date: Thu, 30 Jul 2026 16:07:28 +0200
-Message-ID: <20260730141437.180502273@linuxfoundation.org>
+Subject: [PATCH 6.12 057/602] wifi: mac80211_hwsim: clamp virtio RX length before skb_put
+Date: Thu, 30 Jul 2026 16:07:29 +0200
+Message-ID: <20260730141437.201690605@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -51,58 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-[ Upstream commit 0d388f62031dbabcba0f44bb91b59f10e88cac17 ]
+[ Upstream commit 10a2b430f8f06ae14b9590b6f6faa6b588ef0654 ]
 
-The memory allocated in the ipw2100_alloc_device() function is not freed
-in some of the error paths in ipw2100_pci_init_one(). Fix that by
-converting the direct return into a goto to the error path return.
+hwsim_virtio_rx_work() passes the virtqueue used-ring length reported by
+the device straight to skb_put() on a fixed-size receive skb. A backend
+reporting a length larger than the skb tailroom drives skb_put() past the
+buffer end and hits skb_over_panic() -- a host-triggerable guest panic
+(denial of service).
 
-The error path when pci_enable_device() fails cannot jump to fail, since
-at this point priv is not set, so perform error handling inline.
+Clamp the length to the skb's available room before skb_put(). A
+conforming device never reports more than the posted buffer size, so valid
+frames are unaffected; a truncated over-report then fails the
+length/header checks in hwsim_virtio_handle_cmd() and is dropped, so
+truncating rather than dropping here cannot be turned into a parsing
+problem.
 
-Fixes: 2c86c275015c ("Add ipw2100 wireless driver.")
-Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
-Link: https://patch.msgid.link/20260620065242.93798-1-nihaal@cse.iitm.ac.in
+Fixes: 5d44fe7c9808 ("mac80211_hwsim: add frame transmission support over virtio")
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Link: https://patch.msgid.link/20260620-b4-disp-474bee37-v1-1-1a4d37f3e2d4@proton.me
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/ipw2x00/ipw2100.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/wireless/virtual/mac80211_hwsim.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/intel/ipw2x00/ipw2100.c b/drivers/net/wireless/intel/ipw2x00/ipw2100.c
-index fe75941c584d15..95778dfdfa6d81 100644
---- a/drivers/net/wireless/intel/ipw2x00/ipw2100.c
-+++ b/drivers/net/wireless/intel/ipw2x00/ipw2100.c
-@@ -6167,6 +6167,8 @@ static int ipw2100_pci_init_one(struct pci_dev *pci_dev,
- 	if (err) {
- 		printk(KERN_WARNING DRV_NAME
- 		       "Error calling pci_enable_device.\n");
-+		free_libipw(dev, 0);
-+		pci_iounmap(pci_dev, ioaddr);
- 		return err;
- 	}
+diff --git a/drivers/net/wireless/virtual/mac80211_hwsim.c b/drivers/net/wireless/virtual/mac80211_hwsim.c
+index e992e59b591892..63fae67c816225 100644
+--- a/drivers/net/wireless/virtual/mac80211_hwsim.c
++++ b/drivers/net/wireless/virtual/mac80211_hwsim.c
+@@ -6605,6 +6605,7 @@ static void hwsim_virtio_rx_work(struct work_struct *work)
  
-@@ -6179,16 +6181,14 @@ static int ipw2100_pci_init_one(struct pci_dev *pci_dev,
- 	if (err) {
- 		printk(KERN_WARNING DRV_NAME
- 		       "Error calling pci_set_dma_mask.\n");
--		pci_disable_device(pci_dev);
--		return err;
-+		goto fail;
- 	}
+ 	skb->data = skb->head;
+ 	skb_reset_tail_pointer(skb);
++	len = min(len, skb_end_offset(skb));
+ 	skb_put(skb, len);
+ 	hwsim_virtio_handle_cmd(skb);
  
- 	err = pci_request_regions(pci_dev, DRV_NAME);
- 	if (err) {
- 		printk(KERN_WARNING DRV_NAME
- 		       "Error calling pci_request_regions.\n");
--		pci_disable_device(pci_dev);
--		return err;
-+		goto fail;
- 	}
- 
- 	/* We disable the RETRY_TIMEOUT register (0x41) to keep
 -- 
 2.53.0
 
