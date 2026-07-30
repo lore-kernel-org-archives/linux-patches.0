@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3885743E9DF;
-	Thu, 30 Jul 2026 14:43:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BA2E3914ED;
+	Thu, 30 Jul 2026 14:43:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422613; cv=none; b=jpKiLe0spSt3Z8x6M1qt+1vrImU9qXR+MNv8PVzkAWe1zyycndSgEafM170cDoPXDgcb1+g3IVQC3Ht4F/GRU/mCNqPSVOGQoL5cigSr0TdU7hM5kYDHFRPLy3cccCM/FORYWiDwQQtyH9tznIf6BboK332bdd003K+WAXvprsA=
+	t=1785422616; cv=none; b=XkUZYfwNk2anLcbjm87OFyopk5yswmZ3leBYdRjOFsODVebBh/nkXfXGBuIrVj2skCC0NyIZ9xx06K0Wd4Uu4JOM58eeM6UFu6gU/4IwUG96fM1GuXpjfJL+2gyaXLDyxpcKZodxMr6iaRNyfykBuUrlTO6d6y5jWFNUXkPADYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422613; c=relaxed/simple;
-	bh=dwdonFKanIZbxlMpWk+ysfzvGf19mHIyZkBVJbGucVs=;
+	s=arc-20240116; t=1785422616; c=relaxed/simple;
+	bh=efH49/U4IYAh83TKotec5n9sgqL4HVdVQVph6tAomZw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mSYrsOU1HqNF6vjqYOTukqtfhAYYk87OLI6IU1pveUn6m2oXwGKGKSxCQolSJ5Z4HcKCdxNODB6i5JPzQ8G8nq91W4gLxUSUEPhaH6iMfiQPBR0htt+puE6lSUDHT4lPAakjrWX26n8Ri9tvgPPGQ7trWisnUb6TxRrKi8mHS2A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JegGLzYS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TV3R0yvzmKnR2RUGRXHivfZZpVqVXONDvUCKTUkdO6Ngb2Trf7yQ0acBB2U6IRroiSQvLbZ+zc9Bsygo5IPBaIwxvwch1asPM4DlnjFHT91ISdve0InVUvyqX+sbHXQTMOp/y0whsikq2WImiKuU7KG3tmV2FMoZY5o/KARy0pQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VOTHw19F; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JegGLzYS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9446F1F000E9;
-	Thu, 30 Jul 2026 14:43:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VOTHw19F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67D701F000E9;
+	Thu, 30 Jul 2026 14:43:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422612;
-	bh=1uZunHoPv2NaM/dJ0Y1euldpASvwd0kajcz5RIJ66Vc=;
+	s=korg; t=1785422614;
+	bh=VS+fm9E/QI+AVEde+O+vgFoTGqCm5qqcQxQcV/zWQYM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JegGLzYSb0hbM5sdUKxLif5fltxv+SN68A7GT5/V1Qej/PjlR3q7gC9EhGH25jtPC
-	 bsd9436ihPHVwZ9dkhjoCT6hvrJcJpsZvJ88jI+UYtmxXlcpJ5VH216R2WqWHkE6I6
-	 ZAdDYlqtH/3T+6fiYBxJhsCZmgCntoWD9FIPpWIY=
+	b=VOTHw19F94kWwPLFTVwFdCgeftR3imtNiKmKIJYsFdH5bRmUNe2WKuaYw8Vxdm4nU
+	 O1FYpvODYZ/SCi3WCuHh4fWoVwS/K9ExbQeblegSk5+Eih7I0lcUcvF9OHZJIJKcNF
+	 rnR/DjxeE0dFbZ7mycr31tLQ0f28okXKZLd8LUfk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.1 461/744] drm/amdgpu: Print vmid, pasid and more task info in devcoredump
-Date: Thu, 30 Jul 2026 16:12:14 +0200
-Message-ID: <20260730141454.095889182@linuxfoundation.org>
+	David Carlier <devnexen@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 7.1 497/744] media: nuvoton: npcm-video: fix memory leaks in probe and remove
+Date: Thu, 30 Jul 2026 16:12:50 +0200
+Message-ID: <20260730141454.851735672@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -45,65 +44,113 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: David Carlier <devnexen@gmail.com>
 
-commit ea9d70db278957e1e81e4aea58b4b131ba262cfb upstream.
+commit 50cc0e547da50b887e63dfa1ad203cd5b735d01e upstream.
 
-These are in the dmesg logs but are missing from devcoredumps.
+npcm_video_probe() allocates the npcm_video structure with kzalloc_obj()
+but never frees it on any probe error path or in npcm_video_remove(),
+leaking the allocation on every failed probe and every normal unbind.
 
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit fed7aa36d79802c3e02acd05aeae8b0a877e47c2)
+Additionally, when npcm_video_setup_video() fails, the reserved memory
+association established by of_reserved_mem_device_init() in
+npcm_video_init() is not released, leaking the rmem_assigned_device
+entry on the global list.
+
+Fix both by adding kfree(video) to all probe error paths and to
+npcm_video_remove(), and adding the missing
+of_reserved_mem_device_release() call when npcm_video_setup_video()
+fails.
+
+Fixes: 46c15a4ff1f4 ("media: nuvoton: Add driver for NPCM video capture and encoding engine")
 Cc: stable@vger.kernel.org
+Signed-off-by: David Carlier <devnexen@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_dev_coredump.c |    7 ++++++-
- drivers/gpu/drm/amd/amdgpu/amdgpu_dev_coredump.h |    1 +
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ drivers/media/platform/nuvoton/npcm-video.c |   32 ++++++++++++++++++++--------
+ 1 file changed, 23 insertions(+), 9 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_dev_coredump.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_dev_coredump.c
-@@ -240,10 +240,14 @@ amdgpu_devcoredump_format(char *buffer,
- 	drm_printf(&p, "kernel: " UTS_RELEASE "\n");
- 	drm_printf(&p, "module: " KBUILD_MODNAME "\n");
- 	drm_printf(&p, "time: %ptSp\n", &coredump->reset_time);
-+	drm_printf(&p, "pasid: %u\n", coredump->pasid);
-+	drm_printf(&p, "vmid: %u\n", coredump->vmid);
+--- a/drivers/media/platform/nuvoton/npcm-video.c
++++ b/drivers/media/platform/nuvoton/npcm-video.c
+@@ -1750,42 +1750,55 @@ static int npcm_video_probe(struct platf
+ 	regs = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(regs)) {
+ 		dev_err(&pdev->dev, "Failed to parse VCD reg in DTS\n");
+-		return PTR_ERR(regs);
++		rc = PTR_ERR(regs);
++		goto err_free;
+ 	}
  
- 	if (coredump->reset_task_info.task.pid)
--		drm_printf(&p, "process_name: %s PID: %d\n",
-+		drm_printf(&p, "process_name: %s TGID: %d thread: %s PID: %d\n",
- 			   coredump->reset_task_info.process_name,
-+			   coredump->reset_task_info.tgid,
-+			   coredump->reset_task_info.task.comm,
- 			   coredump->reset_task_info.task.pid);
+ 	video->vcd_regmap = devm_regmap_init_mmio(&pdev->dev, regs,
+ 						  &npcm_video_regmap_cfg);
+ 	if (IS_ERR(video->vcd_regmap)) {
+ 		dev_err(&pdev->dev, "Failed to initialize VCD regmap\n");
+-		return PTR_ERR(video->vcd_regmap);
++		rc = PTR_ERR(video->vcd_regmap);
++		goto err_free;
+ 	}
  
- 	/* SOC Information */
-@@ -525,6 +529,7 @@ void amdgpu_coredump(struct amdgpu_devic
- 			amdgpu_vm_put_task_info(ti);
- 		}
- 		coredump->pasid = job->pasid;
-+		coredump->vmid = job->vmid;
- 		coredump->num_ibs = job->num_ibs;
- 		for (i = 0; i < job->num_ibs; ++i) {
- 			coredump->ibs[i].gpu_addr = job->ibs[i].gpu_addr;
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_dev_coredump.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_dev_coredump.h
-@@ -63,6 +63,7 @@ struct amdgpu_coredump_info {
- 	char				*formatted;
+ 	video->reset = devm_reset_control_get(&pdev->dev, NULL);
+ 	if (IS_ERR(video->reset)) {
+ 		dev_err(&pdev->dev, "Failed to get VCD reset control in DTS\n");
+-		return PTR_ERR(video->reset);
++		rc = PTR_ERR(video->reset);
++		goto err_free;
+ 	}
  
- 	unsigned int			pasid;
-+	unsigned int			vmid;
- 	int				num_ibs;
- 	struct amdgpu_coredump_ib_info	ibs[] __counted_by(num_ibs);
- };
+ 	video->gcr_regmap = syscon_regmap_lookup_by_phandle(pdev->dev.of_node,
+ 							    "nuvoton,sysgcr");
+-	if (IS_ERR(video->gcr_regmap))
+-		return PTR_ERR(video->gcr_regmap);
++	if (IS_ERR(video->gcr_regmap)) {
++		rc = PTR_ERR(video->gcr_regmap);
++		goto err_free;
++	}
+ 
+ 	video->gfx_regmap = syscon_regmap_lookup_by_phandle(pdev->dev.of_node,
+ 							    "nuvoton,sysgfxi");
+-	if (IS_ERR(video->gfx_regmap))
+-		return PTR_ERR(video->gfx_regmap);
++	if (IS_ERR(video->gfx_regmap)) {
++		rc = PTR_ERR(video->gfx_regmap);
++		goto err_free;
++	}
+ 
+ 	rc = npcm_video_init(video);
+ 	if (rc)
+-		return rc;
++		goto err_free;
+ 
+ 	rc = npcm_video_setup_video(video);
+ 	if (rc)
+-		return rc;
++		goto err_release_mem;
+ 
+ 	dev_info(video->dev, "NPCM video driver probed\n");
+ 	return 0;
++
++err_release_mem:
++	of_reserved_mem_device_release(&pdev->dev);
++err_free:
++	kfree(video);
++	return rc;
+ }
+ 
+ static void npcm_video_remove(struct platform_device *pdev)
+@@ -1800,6 +1813,7 @@ static void npcm_video_remove(struct pla
+ 	v4l2_device_unregister(v4l2_dev);
+ 	if (video->ece.enable)
+ 		npcm_video_ece_stop(video);
++	kfree(video);
+ 	of_reserved_mem_device_release(dev);
+ }
+ 
 
 
