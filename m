@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 505C443F8D3;
-	Thu, 30 Jul 2026 14:31:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF62831E831;
+	Thu, 30 Jul 2026 14:31:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421869; cv=none; b=HIbM/E5En7sJjvP9qWUR/i001HfOVAyXmjc55Vljjk1ZgXLTlUn3ghNikbS3FLqrPL+UePOCAmhyYvB49MU65LJRI/Mzkwa9w/iRAsVXtTjvFzOg6HzXq+eZcg4DNjtny2Vwc5PDEUyZp4SEgmNTuBSoOiGv73IelSmq3RneIAk=
+	t=1785421871; cv=none; b=X+boKXt+wW4uN1zFTQf50JDLSTuJb7ErWTH+t8JXHSKv/cK6IT4NN0Lk6nYf2Cz3O1F9os1YRCvqGRct3YAYkNHKSGZBNAM1lYl2I8dpqfeuONar3EadVpuIgkxs2rHuIitTCMaP6GP00fet85pTGT1qOjsjJA5JiY3aD7Akulo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421869; c=relaxed/simple;
-	bh=wE1Am4YBYbCa8QG5tWR2Cros4bNid41b47S8N+pT8GA=;
+	s=arc-20240116; t=1785421871; c=relaxed/simple;
+	bh=PCTTDaBaUvbQoPJQOGkqXhGjXLHmmFbgG/i2d6A9Wtc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VxIk1ak8JikWF1rh0U8wF8IQ8NbyBf6Iqq9VAeemvmtI8RU8JEDkkXhdiPpjgDKJ6tFrYX1rueXDII2lEi5Y0ie7PYWAFbxa94sZT/MaFF5fFetCWMe8Z8+KoM0++FYaMqIxGPPNpNo0HbaKarzAJSL2KgeteyVNYx+o7dyHDLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ON4y0c0T; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ShHk9xPeWqBjOQx6kEHTap8IXXnu4m09xs6hDxTf7KRtnzDXJMVic1RPVrTva1syePW7H5QTFShJLnpn3DlmqxESo/0waBX12IdwABJZaS5HMcl33+ngU/2DKJ5f0MwbjXhH6z5CmPlv50ZpPDlUUr4x6wk8GaADuK7FB570vZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mlikdtD7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ON4y0c0T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 410541F000E9;
-	Thu, 30 Jul 2026 14:31:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mlikdtD7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1273F1F000E9;
+	Thu, 30 Jul 2026 14:31:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421867;
-	bh=0reHL9lfaQwwDRE92MEhAcyj75qDhNYlVclNFU1xHp0=;
+	s=korg; t=1785421870;
+	bh=9xSAtdQ/T7etjgIzLcZKhGtUXcfmmxm32xlPjz30IYo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ON4y0c0TXoA/cRvFewUedVbDtCKEt2xWTQLfJ1Jr1omMiyjVXzgAo6UVsCA+2aN8M
-	 OGSIlFxCmhvH1pr4tRpfql+0bCkNxrNCWqhbxQxJZBqUSUap2qD+Up/JbV3F9M1kyQ
-	 J02KVf3DYzF/ZeWvh5/PENVmPzDAWDSSqa2OPIAc=
+	b=mlikdtD7X0MdCdyIaNrTBW6Ea2hZ9f7noRHMP0xSepJYdiP1+LtH50UB0wLds6BPP
+	 rcfb2KzhgSsNVUjqTWlKPnMEdyWypJ9kIlJi68euapPuaQrDZ/q23NRF9cWermfMeP
+	 tciKTGIA/VyiZgZYk5wu7rwwBjo1mXowj6/0xmog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Enrico Zanda <enrico.zanda@arm.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Benjamin Berg <benjamin.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 247/744] vhost-net: fix TX stall when vhost owns virtio-net header
-Date: Thu, 30 Jul 2026 16:08:40 +0200
-Message-ID: <20260730141449.543593815@linuxfoundation.org>
+Subject: [PATCH 7.1 248/744] wifi: mac80211: copy aggregation information
+Date: Thu, 30 Jul 2026 16:08:41 +0200
+Message-ID: <20260730141449.564019954@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -52,56 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Enrico Zanda <enrico.zanda@arm.com>
+From: Benjamin Berg <benjamin.berg@intel.com>
 
-[ Upstream commit 3c0d10f233f19153f81fef685b5c6716776a5af3 ]
+[ Upstream commit 0fe2d5be7ab59717adb3f9cfab3832c6c4dd770c ]
 
-When vhost owns the virtio-net header, i.e. when
-VHOST_NET_F_VIRTIO_NET_HDR is negotiated, sock_hlen is 0,
-meaning that no header will be forwarded to the TAP device.
+This information can be considered part of the capabilities and should
+also be copied to the NAN data station.
 
-In the current vhost_net_build_xdp() implementation,
-when sock_hlen == 0, the gso pointer can point at the start of the
-Ethernet frame instead of a virtio-net header.
-This results in a wrong interpretation of the destination MAC address
-bytes as struct virtio_net_hdr fields.
-
-This can, for some MAC addresses, trigger -EINVAL and return early
-before the TX descriptor is completed, which can stall vhost-net TX.
-
-Before 97b2409f28e0, the gso pointer was set to the zeroed padding area,
-using it as a synthetic virtio-net header. Restore that behavior.
-
-Fixes: 97b2409f28e0 ("vhost-net: reduce one userspace copy when building XDP buff")
-Signed-off-by: Enrico Zanda <enrico.zanda@arm.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Link: https://patch.msgid.link/20260708152242.2268848-1-enrico.zanda@arm.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 27e9b326b674 ("wifi: mac80211: support NAN stations")
+Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20260714141038.15620aa5324b.I049254b854ac91c32e0768eb7c819f32eda34218@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/net.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ net/mac80211/cfg.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/vhost/net.c b/drivers/vhost/net.c
-index b9af63fb630602..6949b704166d58 100644
---- a/drivers/vhost/net.c
-+++ b/drivers/vhost/net.c
-@@ -722,10 +722,12 @@ static int vhost_net_build_xdp(struct vhost_net_virtqueue *nvq,
- 		goto err;
+diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
+index 0bc10136b816ef..80210ef4cbc843 100644
+--- a/net/mac80211/cfg.c
++++ b/net/mac80211/cfg.c
+@@ -2414,6 +2414,9 @@ static int sta_apply_parameters(struct ieee80211_local *local,
+ 		memcpy(&sta->deflink.pub->supp_rates,
+ 		       &nmi_sta->deflink.pub->supp_rates,
+ 		       sizeof(sta->deflink.pub->supp_rates));
++
++		sta->deflink.pub->agg = nmi_sta->deflink.pub->agg;
++		__ieee80211_sta_recalc_aggregates(sta, 0);
  	}
  
--	gso = buf + pad - sock_hlen;
--
--	if (!sock_hlen)
-+	if (!sock_hlen) {
- 		memset(buf, 0, pad);
-+		gso = buf;
-+	} else {
-+		gso = buf + pad - sock_hlen;
-+	}
- 
- 	if ((gso->flags & VIRTIO_NET_HDR_F_NEEDS_CSUM) &&
- 	    vhost16_to_cpu(vq, gso->csum_start) +
+ 	/* set the STA state after all sta info from usermode has been set */
 -- 
 2.53.0
 
