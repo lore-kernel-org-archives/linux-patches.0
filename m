@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CD0630C618;
-	Thu, 30 Jul 2026 15:02:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DB4A3A4505;
+	Thu, 30 Jul 2026 15:02:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423732; cv=none; b=UjKJtDYCGZSN1pf5IriniE4EeJ9PD0qoN6aoHBN2hTfpQuOHicDbJ9p+uW5/SlilJHIatE+6rPTcC/tKWdRv5+av9crTKwLoKMMgqujx6pQoMgoT4E9Yryfxix4tmJlBu9399L2MepiSId9DFeUn9zOd8WTxJQtmZh8W7V8wjHg=
+	t=1785423734; cv=none; b=HStOPkNJfAPPEqcb8NWXAhZum+YkFZNmfyX8rcADuOXmeAEDGIgl7INsshKox9yHR8xBwre48uS0UH9fFqnEU9/H86MEfGNMobDuRnky12mVbuW8XUb/LaOsArevjGBR/9QYJLh6cR9Ls40FaujP6TnD3/MJ5bz7QBBpSxzHutg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423732; c=relaxed/simple;
-	bh=dd8i60R3D4ha5j9rK6oLQLY3WsfutlE9MnL1XsnUNwc=;
+	s=arc-20240116; t=1785423734; c=relaxed/simple;
+	bh=5ps+wCAgyk/t62Z27BI6YrrZgDRE0HRVxuzn3u/kQ9E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bAvwar0rpK6RrC1ZVuuHCatGigXCOFM4O0yJOdY0pLkeVEYV5lZ5M3rpVfmzamdxlhqSIW7W+LMq0563hqV2MAMVnXiA3W9np7dXnvaJ24Vd4z6pRrx2WOplV/smqGY711KAF6jKeU03KmzdflDxr48oDFGmhmZXwOhSke6vgLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XhxpHCGS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DNHKjqSDhObt5OrpUfESYY3tJuMnEi9YS987sMUaPcXiCaIkooAZUcJkjP3nND6zDLYIgyuJaz43U9iMqokVBVfxBMyOhtd2S19XIhly2tqcCO6xjE3uuYLRhc5nQefOkje/s95vZ5LLyPYaPn5Wcqab9oEnMWcre0g+pBO0b0o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oVVhQut1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XhxpHCGS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7E681F000E9;
-	Thu, 30 Jul 2026 15:02:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oVVhQut1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2F821F000E9;
+	Thu, 30 Jul 2026 15:02:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423730;
-	bh=CB4xrWsn54JkG5cDeZfvlzxc0UtAfkgPMM2zSJz7OWA=;
+	s=korg; t=1785423733;
+	bh=V+Znt8nBO/jRr5RcFfgU6nPHCiLMR+d8d6dP+OtEPi4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XhxpHCGSFETpLhp9zMWteeQCHAculwoamHGztj4TUH88ZKfGsnXAPy9rnNi/xv26s
-	 pMTeoXqbzGecSPqxm9dBigPcMIC9HqxbGVOp0AqOIQeIV/eoUL5J/sI0xA7GEbD4Pq
-	 mGMGKB6i54vFICW6SiX9kZ41tMTqB52+jD/OvhQw=
+	b=oVVhQut1ThhGlCHl6BWoOoXoR7gs45RASWm3yCcstGTLzCNA/Rmv6SdOBW+2cWp91
+	 Mnhg0IXE8yv9FvP9gPGWJukz3c6hU+7MJgzKuKwRK7ZxZi6FsLuC6xzwy+lLD2rcpT
+	 Eph8Z/AmWe4tUeorteIPo9ZSh/3flr1mIOIKSCis=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Fan Wu <fanwu01@zju.edu.cn>
-Subject: [PATCH 6.18 146/675] usb: gadget: f_midi: cancel pending IN work before freeing the midi object
-Date: Thu, 30 Jul 2026 16:07:56 +0200
-Message-ID: <20260730141448.241478435@linuxfoundation.org>
+	Peter Chen <peter.chen@kernel.org>,
+	Melbin K Mathew <mlbnkm1@gmail.com>
+Subject: [PATCH 6.18 147/675] usb: gadget: printer: fix infinite loop in printer_read()
+Date: Thu, 30 Jul 2026 16:07:57 +0200
+Message-ID: <20260730141448.262498525@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -50,68 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Melbin K Mathew <mlbnkm1@gmail.com>
 
-commit 5650c18d93a1db7e27cb5a40b394747eb4686d5b upstream.
+commit c2e819be6a5c7f34344926b4bd7e3dfca58cf48a upstream.
 
-The f_midi driver embeds a work item (midi->work) whose handler,
-f_midi_in_work(), dereferences the enclosing struct f_midi through
-container_of().  This work is armed from two sites: f_midi_complete(),
-on a normal IN-endpoint completion, and f_midi_in_trigger(), on an ALSA
-rawmidi output-stream start.
+printer_read() uses the same variable for the requested copy size and
+the number of bytes actually copied to user space. copy_to_user()
+returns the number of bytes not copied, so when it fails to copy
+anything, the computed copied length becomes zero.
 
-Neither f_midi_disable() nor f_midi_unbind() cancels midi->work.
-f_midi_disable() only disables the endpoints and drains the in_req_fifo;
-it does not synchronize the work item, and the sound card is released
-asynchronously to the final free of the midi object.
+In that case len, buf, current_rx_bytes and current_rx_buf are left
+unchanged. If RX data is available and the user buffer remains
+unwritable, the read loop can repeat indefinitely.
 
-The midi object is reference-counted (midi->free_ref) and is freed in
-f_midi_free() only once both the usb_function reference and the rawmidi
-private_data reference have been dropped.  In f_midi_unbind(),
-f_midi_disable() runs before the sound card is released, so while the
-USB endpoints are already disabled the rawmidi device is still usable by
-an open substream.  A concurrent userspace write on such a substream can
-reach f_midi_in_trigger() and queue midi->work again after
-f_midi_disable() has returned.  A work item armed this way may still be
-pending when the last reference drops and f_midi_free() proceeds to
-kfree(midi), letting f_midi_in_work() dereference the struct after it
-has been freed, a use-after-free.
+Track the copied length separately and return -EFAULT, or the number of
+bytes already copied, if an iteration makes no progress.
 
-For this reason cancelling midi->work in f_midi_disable() would not be
-sufficient: the ALSA trigger path can rearm the work after disable()
-returns.  Cancelling at the refcount-zero free site is the boundary
-after which neither arming source can survive, because by then both
-references that keep the midi object alive have been dropped: the USB
-endpoints are already disabled and the rawmidi device has been released.
-
-Fix this by calling cancel_work_sync(&midi->work) in the refcount-zero
-block of f_midi_free(), before the embedded work_struct is freed along
-with the rest of the structure.  opts->lock is a sleeping mutex, so
-calling cancel_work_sync() under it is permitted, and the handler takes
-midi->transmit_lock rather than opts->lock, so no self-deadlock can
-occur while it waits for a running instance of the work to finish.
-
-This issue was found by an in-house static analysis tool.
-
-Fixes: 8653d71ce3763 ("usb/gadget: f_midi: Replace tasklet with work")
+Fixes: b185f01a9ab7 ("usb: gadget: printer: factor out f_printer")
 Cc: stable <stable@kernel.org>
-Assisted-by: Codex:gpt-5.5
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Link: https://patch.msgid.link/20260709150717.399083-1-fanwu01@zju.edu.cn
+Reviewed-by: Peter Chen <peter.chen@kernel.org>
+Signed-off-by: Melbin K Mathew <mlbnkm1@gmail.com>
+Link: https://patch.msgid.link/20260709205622.55700-1-mlbnkm1@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_midi.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/gadget/function/f_printer.c |   23 ++++++++++++++++++-----
+ 1 file changed, 18 insertions(+), 5 deletions(-)
 
---- a/drivers/usb/gadget/function/f_midi.c
-+++ b/drivers/usb/gadget/function/f_midi.c
-@@ -1302,6 +1302,7 @@ static void f_midi_free(struct usb_funct
- 	opts = container_of(f->fi, struct f_midi_opts, func_inst);
- 	mutex_lock(&opts->lock);
- 	if (!--midi->free_ref) {
-+		cancel_work_sync(&midi->work);
- 		kfree(midi->id);
- 		kfifo_free(&midi->in_req_fifo);
- 		kfree(midi);
+--- a/drivers/usb/gadget/function/f_printer.c
++++ b/drivers/usb/gadget/function/f_printer.c
+@@ -431,7 +431,7 @@ printer_read(struct file *fd, char __use
+ {
+ 	struct printer_dev		*dev = fd->private_data;
+ 	unsigned long			flags;
+-	size_t				size;
++	size_t				size, not_copied, copied;
+ 	size_t				bytes_copied;
+ 	struct usb_request		*req;
+ 	/* This is a pointer to the current USB rx request. */
+@@ -524,10 +524,12 @@ printer_read(struct file *fd, char __use
+ 		else
+ 			size = len;
+ 
+-		size -= copy_to_user(buf, current_rx_buf, size);
+-		bytes_copied += size;
+-		len -= size;
+-		buf += size;
++		not_copied = copy_to_user(buf, current_rx_buf, size);
++		copied = size - not_copied;
++
++		bytes_copied += copied;
++		len -= copied;
++		buf += copied;
+ 
+ 		spin_lock_irqsave(&dev->lock, flags);
+ 
+@@ -542,6 +544,17 @@ printer_read(struct file *fd, char __use
+ 		if (dev->interface < 0)
+ 			goto out_disabled;
+ 
++		if (!copied) {
++			dev->current_rx_req = current_rx_req;
++			dev->current_rx_bytes = current_rx_bytes;
++			dev->current_rx_buf = current_rx_buf;
++			spin_unlock_irqrestore(&dev->lock, flags);
++			mutex_unlock(&dev->lock_printer_io);
++			return bytes_copied ? bytes_copied : -EFAULT;
++		}
++
++		size = copied;
++
+ 		/* If we not returning all the data left in this RX request
+ 		 * buffer then adjust the amount of data left in the buffer.
+ 		 * Othewise if we are done with this RX request buffer then
 
 
