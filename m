@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6292F30C618;
-	Thu, 30 Jul 2026 15:13:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D8BB3C1D70;
+	Thu, 30 Jul 2026 15:14:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424439; cv=none; b=e55heLLkadH4nNZYqyB+tfEYlggogyeiGgIYUYZcMILqbw0nOxwiARbl3l5n7tZAT7kq076dQjhE6sdRykQk8aTuH1wAtLkO7R20zzz0kAA9bhW5bBKSBu8+P5SRTcgta+9xn3MAU66DyuisTVCb/DOcqzK17oY5ypdZFyOUNXg=
+	t=1785424442; cv=none; b=VmEAHQV0TUchRAv1C2JDC9yyZVaWrxlu8jiRsOUkurQcSpLjaY+EVX9DobSgyC6mYvLJOTt6oOQ7Bj+yZ8/TraPBaJJJGBN65mhv4wXYpoSzAzIQTy+hyXU6m8cocozVrnJ5aYqsQpLMy6KQrFX6spUHLKBYUXizVSC18mp9i90=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424439; c=relaxed/simple;
-	bh=BtN+EVSqPsZxXfnMqK4ipmwDfTVndWVpAVdDDG+tpD0=;
+	s=arc-20240116; t=1785424442; c=relaxed/simple;
+	bh=4MDKwNtEeTGff+SFX5pT4wiv00vBMZR5sYXUl95xDoM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hX+zdUFwW7kWiMEoR2CXiROKNpCpA/nzY3Ic93o1JWudMM2XOvZg5Lwo1CyYedegZ66CHV2C4eILBTNANulveu8XxYe/nEZRGoCCcij0Z1bcqpGrp7/4zIXTVMhhQlpY2jU7dBiK0KIA7+2oInBdlvm95AtS+dsEeGcEIDfLWYg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qw6fBbGM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cfcOj8JyRSB5f3nh+GhgPBMK0iCfurOVtad3Vgf+RkFpvscI+NhW1Mh6TARqkXl7gHODkWZLb+yiw/TugiuPH6CbnNo/i17H72hqwOujMhTS1MDxCBN1xx7Y9K4f/fQn4/nwUy3wjDta1yHoxF2ZSjd2BPC6gD5AkhkJoENHeuk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mr/PNecJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qw6fBbGM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE8C51F000E9;
-	Thu, 30 Jul 2026 15:13:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mr/PNecJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B34911F000E9;
+	Thu, 30 Jul 2026 15:14:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424438;
-	bh=KtTCQRtyt5RUjNnjjEZZpXz3INXoBoHF462AF8gvMZo=;
+	s=korg; t=1785424441;
+	bh=v3ZSbJvn7JDvWo44t+M+2cgFrkEHm3BH1APLw+wF4s0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qw6fBbGMNQQuUusbyg5iROL0qB2VPmmr7QD38sip/BBx2kww/ebtOqgCdwAOW+rl5
-	 7hd4fBwfMM+nY/6M1swYkuBsxvPkSVlWj3GtcasypVXRyQaqyg5lU33Yc1wp2mTQ9A
-	 0tFwGuIYL7cAEaKlSbZq3FtAnULNZ9yb8sXq3Q7g=
+	b=Mr/PNecJzozCt1w4jDmUD91Y8CLfRdp2puUfFRAhY2vVSqRBBuhlSH0PwCyVQ3Qfy
+	 Ku9fofUwtCa8gLWqT8LuB0847Ut43lZy+ZeORUHdAsU/esngtF08FQHIFkLQ+VUj7f
+	 mxFshAeP0SJwjXATGc6lCa1UpJkIhPD3REuhGu0E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Iago Toral Quiroga <itoral@igalia.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>
-Subject: [PATCH 6.18 393/675] drm/v3d: Reach the GMP through the hub registers on V3D 7.x
-Date: Thu, 30 Jul 2026 16:12:03 +0200
-Message-ID: <20260730141453.485766794@linuxfoundation.org>
+	Valery Borovsky <vebohr@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.18 394/675] media: airspy: Return queued buffers on start_streaming() failure
+Date: Thu, 30 Jul 2026 16:12:04 +0200
+Message-ID: <20260730141453.508014244@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -44,58 +44,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maíra Canal <mcanal@igalia.com>
+From: Valery Borovsky <vebohr@gmail.com>
 
-commit f7df2da0d1c375c1c4c70e1e0b569592de0d6b73 upstream.
+commit 04344d0b4929caa94c0df72f767752aa0935ef5d upstream.
 
-v3d_idle_axi() drains the GPU's memory interface for a safe powerdown by
-using the V3D_GMP_CFG register. It reached both registers with the macros
-V3D_CORE_READ and V3D_CORE_WRITE.
+The vb2 framework hands buffers to the driver via buf_queue() before
+calling start_streaming().  If start_streaming() returns an error
+without first returning those buffers via vb2_buffer_done(),
+vb2_start_streaming() fires WARN_ON(owned_by_drv_count) and the queued
+buffers leak.
 
-On V3D 7.x the GMP is no longer a per-core block; it lives in the hub
-register region. Reaching it through the per-core register block addresses
-the wrong region.
+airspy_start_streaming() returned -ENODEV early when the USB device had
+been disconnected (s->udev == NULL) without returning any buffers that
+buf_queue() had already accepted.  Take v4l2_lock first and jump to the
+existing err_clear_bit label, which already drains s->queued_bufs via
+vb2_buffer_done(..., VB2_BUF_STATE_QUEUED) before unlocking.
 
-Select the hub accessors (V3D_{READ,WRITE}) for the GMP on V3D 7.x and
-keep the per-core path for earlier generations.
+This mirrors the uvcvideo fix in commit 4cf3b6fd54eb ("media: uvcvideo:
+Return queued buffers on start_streaming() failure").
 
+Fixes: 634fe5033951 ("[media] airspy: AirSpy SDR driver")
 Cc: stable@vger.kernel.org
-Fixes: 0ad5bc1ce463 ("drm/v3d: fix up register addresses for V3D 7.x")
-Link: https://patch.msgid.link/20260718-v3d-pm-axi-transactions-v1-1-4ecd7729ed70@igalia.com
-Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
+Signed-off-by: Valery Borovsky <vebohr@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/v3d/v3d_gem.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/media/usb/airspy/airspy.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/v3d/v3d_gem.c
-+++ b/drivers/gpu/drm/v3d/v3d_gem.c
-@@ -45,6 +45,18 @@ v3d_init_hw_state(struct v3d_dev *v3d)
- static void
- v3d_idle_axi(struct v3d_dev *v3d, int core)
- {
-+	if (v3d->ver >= V3D_GEN_71) {
-+		V3D_WRITE(V3D_GMP_CFG(v3d->ver), V3D_GMP_CFG_STOP_REQ);
-+
-+		if (wait_for((V3D_READ(V3D_GMP_STATUS(v3d->ver)) &
-+			      (V3D_GMP_STATUS_RD_COUNT_MASK |
-+			       V3D_GMP_STATUS_WR_COUNT_MASK |
-+			       V3D_GMP_STATUS_CFG_BUSY)) == 0, 100)) {
-+			drm_err(&v3d->drm, "Failed to wait for safe GMP shutdown\n");
-+		}
-+		return;
+--- a/drivers/media/usb/airspy/airspy.c
++++ b/drivers/media/usb/airspy/airspy.c
+@@ -522,11 +522,13 @@ static int airspy_start_streaming(struct
+ 
+ 	dev_dbg(s->dev, "\n");
+ 
+-	if (!s->udev)
+-		return -ENODEV;
+-
+ 	mutex_lock(&s->v4l2_lock);
+ 
++	if (!s->udev) {
++		ret = -ENODEV;
++		goto err_clear_bit;
 +	}
 +
- 	V3D_CORE_WRITE(core, V3D_GMP_CFG(v3d->ver), V3D_GMP_CFG_STOP_REQ);
+ 	s->sequence = 0;
  
- 	if (wait_for((V3D_CORE_READ(core, V3D_GMP_STATUS(v3d->ver)) &
+ 	set_bit(POWER_ON, &s->flags);
 
 
