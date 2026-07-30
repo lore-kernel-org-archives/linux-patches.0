@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDB0E41DED0;
-	Thu, 30 Jul 2026 14:55:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D0044398FA;
+	Thu, 30 Jul 2026 14:55:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423331; cv=none; b=GFVVZVvdglcVFV+nczSI7F/lIUFSYWYFk+zZPSBqYT/kBAaZU7mWm1wGm6xsJWqlT/LtS38sk5ZwpiFQTDnE72jsXV/9+q5ebkDkn8CcJgkGGNqdnhwiqxCxdkr0gjtoiZ0X9DuF94zBC+zcDSG3zO8fTeeHqBeg47FnWay+1ag=
+	t=1785423334; cv=none; b=sKIk8dYV+GrPyJ1N5zKkKY4p46+zvcQuyk/YPpHsD1sZQ49EtM8RWT0KiTr+kbsCuuG5jTv4ttQ0uY4fyE1pnKrKb1B09ebT+mgfmsVBYDxWT7719SJlWqnrs5KRP5dbDmCAhz0N8w/0tAlPovWPlsS2bV5Wm6q9z9weAl4y4D4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423331; c=relaxed/simple;
-	bh=hBM0NJ+DAp7TzQxZB1rDkiTweGDonEE/TYK93QMe2Zc=;
+	s=arc-20240116; t=1785423334; c=relaxed/simple;
+	bh=EPwwDXvasaZEdF+4s2qC8q+ED+xH6YIWG9zqQkTYads=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kTRS0xp7UujsWvfbyjA0acFHJhkPQUVeznvusuhkVRRwDP8ZZdQH1osXCO3tRHtJlrnKycp1Lm4dMTdwDtNmdVqsjsOlPbcgcsN3cvD7NFsllApdyu0qARRH8LdtefnTjLraO83watCdIlif9NN58Ag3VW7xSvwE+r3H1eEzN0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rK9lS40L; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Wpl3ERhTcy2Kd6HgqozZGLban7xgCJqMJLnnjWks8FwJxku1q5IVAxScYxxK49nx4MGCjFJhHWNUjBVC9toFaW0Q3Ku9CEoGxcGdlB1kPAcjdtE3beJa+XtzZsbAIL78XMOYC5Ga4z3ImmiNG3mdZ9jwPgVXdCxiwoNBZUzQ/zk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zoEJVjZw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rK9lS40L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D92E61F000E9;
-	Thu, 30 Jul 2026 14:55:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zoEJVjZw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1EDB1F000E9;
+	Thu, 30 Jul 2026 14:55:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423330;
-	bh=NGsg3sJNSrPZXRow9sOpMj0l6ZjNCDDunYHns5mZa3s=;
+	s=korg; t=1785423333;
+	bh=orJCMSvC+/ygJBEwgp3uN0tF5AnwUr7cactl585nNDk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rK9lS40LUeeE2l8khAuUrrHiuS+JtSlRMyilcwjje0e28h6GeDfpmF0hYBxRblsdp
-	 xPWHWKAoH32uxudU9DAns27552ImHSgHWVIqLYmAxOd13H1Jf5rx/CHBWIw0B1qus5
-	 Ml8QOQbJP5GwrXsEJ+/klpGNHO6Gx8Cd5Kea0Uqc=
+	b=zoEJVjZwTbJyvHZiBO5CCQAYEXzbaHYY1GqxWU/+DVZhH80DO2uT4Ap827UdnTEk0
+	 ER77gEuZ8brEl3HcLJbelPhAmyYRSm1rsdbqDUWeFcoykVP1FiOWoE7T/6U8g7Vr5i
+	 oH4/l4PVEf/oGT0as4AOW1bb8TDW23b9D4R2du0g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boyuan Zhang <boyuan.zhang@amd.com>,
+	Yang Wang <kevinyang.wang@amd.com>,
+	Asad Kamal <asad.kamal@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.1 703/744] drm/amdgpu/jpeg: fix jpeg_v4_0_3_is_idle detection
-Date: Thu, 30 Jul 2026 16:16:16 +0200
-Message-ID: <20260730141459.217213488@linuxfoundation.org>
+Subject: [PATCH 7.1 694/744] drm/amd/pm: make pp_features read-only when scpm is enabled
+Date: Thu, 30 Jul 2026 16:16:07 +0200
+Message-ID: <20260730141459.020300914@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -50,37 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boyuan Zhang <boyuan.zhang@amd.com>
+From: Yang Wang <kevinyang.wang@amd.com>
 
-commit c44af3810fc8b3adf6910a332038aa566560c8fa upstream.
+commit 53c78ab388bfc1a4d72e756815d0db0a842c812e upstream.
 
-jpeg_v4_0_3_is_idle() initializes ret to false and then accumulates ring
-idle status using &=. Since false & condition always remains false, the
-function can never report the JPEG block as idle.
+SCPM owns power feature control when enabled.
 
-Initialize ret to true so the function returns true only when all JPEG
-rings report RB_JOB_DONE.
+Make pp_features read-only during sysfs setup by clearing its write bits
+and store callback.
 
-Signed-off-by: Boyuan Zhang <boyuan.zhang@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
+Reviewed-by: Asad Kamal <asad.kamal@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit e9df8e9d04e0593d17ddb069f3b7958991cd18c9)
+(cherry picked from commit 6a5786e191fdce36c5db170e5209cf609e8f0087)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/pm/amdgpu_pm.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.c
-+++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.c
-@@ -1010,7 +1010,7 @@ void jpeg_v4_0_3_dec_ring_nop(struct amd
- static bool jpeg_v4_0_3_is_idle(struct amdgpu_ip_block *ip_block)
- {
- 	struct amdgpu_device *adev = ip_block->adev;
--	bool ret = false;
-+	bool ret = true;
- 	int i, j;
- 
- 	for (i = 0; i < adev->jpeg.num_jpeg_inst; ++i) {
+--- a/drivers/gpu/drm/amd/pm/amdgpu_pm.c
++++ b/drivers/gpu/drm/amd/pm/amdgpu_pm.c
+@@ -2682,6 +2682,11 @@ static int default_attr_update(struct am
+ 		     gc_ver != IP_VERSION(9, 4, 3)) ||
+ 		    gc_ver < IP_VERSION(9, 0, 0))
+ 			*states = ATTR_STATE_UNSUPPORTED;
++
++		if (adev->scpm_enabled) {
++			dev_attr->attr.mode &= ~S_IWUGO;
++			dev_attr->store = NULL;
++		}
+ 	} else if (DEVICE_ATTR_IS(gpu_metrics)) {
+ 		if (gc_ver < IP_VERSION(9, 1, 0))
+ 			*states = ATTR_STATE_UNSUPPORTED;
 
 
