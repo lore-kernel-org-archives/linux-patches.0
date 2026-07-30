@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27E8C36607D;
-	Thu, 30 Jul 2026 15:51:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBB7237B012;
+	Thu, 30 Jul 2026 15:51:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426671; cv=none; b=a7tI91qDiAlAVTr6Oy4Oq4LqW+E3P4zP2MWN4xo87Dn6a7Ev2YUVcFM4aPntXftJ7FgOtNG1PpwQgw+sdGuYUNPxd4lLnxvmzs1QK2ZnTTort0PxBsXhOp5RL5VDNeUVAs4umF+MBghWDp69mQn75ceYDShL42DDHUMr4HEWagI=
+	t=1785426674; cv=none; b=hbxB4gTxTORy2/gCoWfkMltATDkodzvsD4woVQzXE2Vu775DtUDAXd458Wmxw5WEJFORQod5ReOLDrA+ByqwbgFadw+R1SYTFVEW1W/rtXo/hj9L+3KUSzBWcjuD4Owv9yR77k85hR/KZ5EcNjFx3hW96Xqtl08vAlEtl2o5nE0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426671; c=relaxed/simple;
-	bh=7OUDAncrGaC5FTQhEKo0MAh2R4RwgmDwLysWH858X9k=;
+	s=arc-20240116; t=1785426674; c=relaxed/simple;
+	bh=NEt2jYeEW0Cvqrwn5Snhe11irrjeZhgp6eMAa0YmBUQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VzDUl7fg9nlCscHKltyfJrJftMr8X3BVKFDFRAoFAWDLgzp1vxYjE2t3o2Kd5q/DcugtxzK/pR63KIDBDJ0OmSzX483L+ICvPuPZ0oQ9kDw42PEAB3SjHzAjmRaZWaRS9Ie/YTfoYhXfi6PZWBm1PkBkRO6NKrY4W/WtLzLWS5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JEK/v45S; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Cez/nZVCAdRg8Wh0moVO4BUqz3bF7wdMGBJMQspa1eI8ANBkq3WWZB+XwnDDjGC1YO7YutZPVi8TBTZ+2Ns7fJMmiUr3yTOdlsIQtAYcw/lT3NmmSSvhmAd602IisButJ7MFyFKnebfOwhEBKN0tuYPXo0fBKTftfCD3PaVwQfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1DJJ6/4H; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JEK/v45S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 824351F00A3D;
-	Thu, 30 Jul 2026 15:51:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1DJJ6/4H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5461F1F00A3D;
+	Thu, 30 Jul 2026 15:51:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426670;
-	bh=7fmv0F+Y7ND/RJoHDs4qwCBbaGEe/FKj6Ic8ZD3P9Wk=;
+	s=korg; t=1785426672;
+	bh=73m1nobiH/As1dHYEj0WCZO/6aiZANFYytfkryr0uiI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JEK/v45SXEUz2k28UIC77y754wEIYBOMVJ2hxxDtQA14sWqSIBR8356KKUykQw/XD
-	 4Val34AnbE7jT90w4q4nlQf/6+RwjJUIuBEOTjgUFNFUeGZAT3CnT6foD6F0Drrj3V
-	 AJuQunJVbJ5RYqqL13Ex+PkkyWOEJ/SgpRf6N1xo=
+	b=1DJJ6/4H0zEbxhZ4jOpCKRi4u1hggujmI/+gwyKppxTR66dVaqo38wOJMGIuOA24X
+	 UDhgfrqCJMWoeiw7TPNzYbP/jkaFvaP4vKGSeVCNnsvsPUr7Agx/2XEP6uNgnwibOV
+	 Z2whjgo0WtV3OmarGFiRZvjSEOBuqwdV08fkFZnA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wenst@chromium.org>,
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Chen-Yu Tsai <wenst@chromium.org>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 500/602] ASoC: mediatek: mt8183-afe-pcm: Shorten memif_data table using macros
-Date: Thu, 30 Jul 2026 16:14:52 +0200
-Message-ID: <20260730141446.488227924@linuxfoundation.org>
+Subject: [PATCH 6.12 501/602] ASoC: mediatek: mt8183-afe-pcm: Support >32 bit DMA addresses
+Date: Thu, 30 Jul 2026 16:14:53 +0200
+Message-ID: <20260730141446.509623607@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -54,280 +54,75 @@ Content-Transfer-Encoding: 8bit
 
 From: Chen-Yu Tsai <wenst@chromium.org>
 
-[ Upstream commit 91c2685430f217ae8f2866e4372948eaf123b5c4 ]
+[ Upstream commit 9e7bc5cb8d089d9799e17a9ac99c5da9b13b02e3 ]
 
-The memif_data table describes all the supported PCM channels for the
-audio frontend. Most of the fields are either the same or can be derived
-from the interface's name. This results in a very long table (in source
-code) that can be shortened with macros.
+The AFE DMA hardware supports up to 34 bits for DMA addresses. This is
+missing from the driver and prevents reserved memory regions from
+working properly when the allocated region is above the 4GB line.
 
-Do just that. Some "convenience" macros were added to cover non-existent
-register fields that would otherwise require multiple layers of macros
-to handle.
+Fill in the related register offsets for each DAI, and also set the
+DMA mask. Also fill in the LSB end register offsets for completeness.
 
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Fixes: a94aec035a12 ("ASoC: mediatek: mt8183: add platform driver")
 Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://patch.msgid.link/20250515073825.4155297-2-wenst@chromium.org
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Link: https://patch.msgid.link/20250612074901.4023253-8-wenst@chromium.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Stable-dep-of: f0334fbfd107 ("ASoC: mediatek: mt8183: Check runtime resume during probe")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/mediatek/mt8183/mt8183-afe-pcm.c |  243 ++++++-----------------------
- 1 file changed, 54 insertions(+), 189 deletions(-)
+ sound/soc/mediatek/mt8183/mt8183-afe-pcm.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
 --- a/sound/soc/mediatek/mt8183/mt8183-afe-pcm.c
 +++ b/sound/soc/mediatek/mt8183/mt8183-afe-pcm.c
-@@ -425,196 +425,61 @@ static const struct snd_soc_component_dr
- 	.name = "mt8183-afe-pcm-dai",
- };
+@@ -6,6 +6,7 @@
+ // Author: KaiChieh Chuang <kaichieh.chuang@mediatek.com>
  
-+#define MT8183_MEMIF_BASE(_id, _en_reg, _fs_reg, _mono_reg)    \
-+	[MT8183_MEMIF_##_id] = { \
-+		.name = #_id,				\
-+		.id = MT8183_MEMIF_##_id,		\
-+		.reg_ofs_base = AFE_##_id##_BASE,	\
-+		.reg_ofs_cur = AFE_##_id##_CUR,		\
-+		.reg_ofs_end = AFE_##_id##_END,		\
-+		.fs_reg = (_fs_reg),			\
-+		.fs_shift = _id##_MODE_SFT,		\
-+		.fs_maskbit = _id##_MODE_MASK,		\
-+		.mono_reg = (_mono_reg),		\
-+		.mono_shift = _id##_DATA_SFT,		\
-+		.enable_reg = (_en_reg),		\
-+		.enable_shift = _id##_ON_SFT,		\
-+		.hd_reg = AFE_MEMIF_HD_MODE,		\
-+		.hd_align_reg = AFE_MEMIF_HDALIGN,	\
-+		.hd_shift = _id##_HD_SFT,		\
-+		.hd_align_mshift = _id##_HD_ALIGN_SFT,	\
-+		.agent_disable_reg = -1,		\
-+		.agent_disable_shift = -1,		\
-+		.msb_reg = -1,				\
-+		.msb_shift = -1,			\
-+	}
-+
-+#define MT8183_MEMIF(_id, _fs_reg, _mono_reg) \
-+		MT8183_MEMIF_BASE(_id, AFE_DAC_CON0, _fs_reg, _mono_reg)
-+
-+/* For convenience with macros: missing register fields */
-+#define MOD_DAI_DATA_SFT	-1
-+#define HDMI_MODE_SFT		-1
-+#define HDMI_MODE_MASK		-1
-+#define HDMI_DATA_SFT		-1
-+#define HDMI_ON_SFT		-1
-+
-+/* For convenience with macros: register name differences */
-+#define AFE_VUL12_BASE		AFE_VUL_D2_BASE
-+#define AFE_VUL12_CUR		AFE_VUL_D2_CUR
-+#define AFE_VUL12_END		AFE_VUL_D2_END
-+#define AWB2_HD_ALIGN_SFT	AWB2_ALIGN_SFT
-+#define VUL12_DATA_SFT		VUL12_MONO_SFT
-+#define AFE_HDMI_BASE		AFE_HDMI_OUT_BASE
-+#define AFE_HDMI_CUR		AFE_HDMI_OUT_CUR
-+#define AFE_HDMI_END		AFE_HDMI_OUT_END
-+
+ #include <linux/delay.h>
++#include <linux/dma-mapping.h>
+ #include <linux/module.h>
+ #include <linux/mfd/syscon.h>
+ #include <linux/of.h>
+@@ -432,6 +433,9 @@ static const struct snd_soc_component_dr
+ 		.reg_ofs_base = AFE_##_id##_BASE,	\
+ 		.reg_ofs_cur = AFE_##_id##_CUR,		\
+ 		.reg_ofs_end = AFE_##_id##_END,		\
++		.reg_ofs_base_msb = AFE_##_id##_BASE_MSB,	\
++		.reg_ofs_cur_msb = AFE_##_id##_CUR_MSB,		\
++		.reg_ofs_end_msb = AFE_##_id##_END_MSB,		\
+ 		.fs_reg = (_fs_reg),			\
+ 		.fs_shift = _id##_MODE_SFT,		\
+ 		.fs_maskbit = _id##_MODE_MASK,		\
+@@ -463,11 +467,17 @@ static const struct snd_soc_component_dr
+ #define AFE_VUL12_BASE		AFE_VUL_D2_BASE
+ #define AFE_VUL12_CUR		AFE_VUL_D2_CUR
+ #define AFE_VUL12_END		AFE_VUL_D2_END
++#define AFE_VUL12_BASE_MSB	AFE_VUL_D2_BASE_MSB
++#define AFE_VUL12_CUR_MSB	AFE_VUL_D2_CUR_MSB
++#define AFE_VUL12_END_MSB	AFE_VUL_D2_END_MSB
+ #define AWB2_HD_ALIGN_SFT	AWB2_ALIGN_SFT
+ #define VUL12_DATA_SFT		VUL12_MONO_SFT
+ #define AFE_HDMI_BASE		AFE_HDMI_OUT_BASE
+ #define AFE_HDMI_CUR		AFE_HDMI_OUT_CUR
+ #define AFE_HDMI_END		AFE_HDMI_OUT_END
++#define AFE_HDMI_BASE_MSB	AFE_HDMI_OUT_BASE_MSB
++#define AFE_HDMI_CUR_MSB	AFE_HDMI_OUT_CUR_MSB
++#define AFE_HDMI_END_MSB	AFE_HDMI_OUT_END_MSB
+ 
  static const struct mtk_base_memif_data memif_data[MT8183_MEMIF_NUM] = {
--	[MT8183_MEMIF_DL1] = {
--		.name = "DL1",
--		.id = MT8183_MEMIF_DL1,
--		.reg_ofs_base = AFE_DL1_BASE,
--		.reg_ofs_cur = AFE_DL1_CUR,
--		.fs_reg = AFE_DAC_CON1,
--		.fs_shift = DL1_MODE_SFT,
--		.fs_maskbit = DL1_MODE_MASK,
--		.mono_reg = AFE_DAC_CON1,
--		.mono_shift = DL1_DATA_SFT,
--		.enable_reg = AFE_DAC_CON0,
--		.enable_shift = DL1_ON_SFT,
--		.hd_reg = AFE_MEMIF_HD_MODE,
--		.hd_align_reg = AFE_MEMIF_HDALIGN,
--		.hd_shift = DL1_HD_SFT,
--		.hd_align_mshift = DL1_HD_ALIGN_SFT,
--		.agent_disable_reg = -1,
--		.agent_disable_shift = -1,
--		.msb_reg = -1,
--		.msb_shift = -1,
--	},
--	[MT8183_MEMIF_DL2] = {
--		.name = "DL2",
--		.id = MT8183_MEMIF_DL2,
--		.reg_ofs_base = AFE_DL2_BASE,
--		.reg_ofs_cur = AFE_DL2_CUR,
--		.fs_reg = AFE_DAC_CON1,
--		.fs_shift = DL2_MODE_SFT,
--		.fs_maskbit = DL2_MODE_MASK,
--		.mono_reg = AFE_DAC_CON1,
--		.mono_shift = DL2_DATA_SFT,
--		.enable_reg = AFE_DAC_CON0,
--		.enable_shift = DL2_ON_SFT,
--		.hd_reg = AFE_MEMIF_HD_MODE,
--		.hd_align_reg = AFE_MEMIF_HDALIGN,
--		.hd_shift = DL2_HD_SFT,
--		.hd_align_mshift = DL2_HD_ALIGN_SFT,
--		.agent_disable_reg = -1,
--		.agent_disable_shift = -1,
--		.msb_reg = -1,
--		.msb_shift = -1,
--	},
--	[MT8183_MEMIF_DL3] = {
--		.name = "DL3",
--		.id = MT8183_MEMIF_DL3,
--		.reg_ofs_base = AFE_DL3_BASE,
--		.reg_ofs_cur = AFE_DL3_CUR,
--		.fs_reg = AFE_DAC_CON2,
--		.fs_shift = DL3_MODE_SFT,
--		.fs_maskbit = DL3_MODE_MASK,
--		.mono_reg = AFE_DAC_CON1,
--		.mono_shift = DL3_DATA_SFT,
--		.enable_reg = AFE_DAC_CON0,
--		.enable_shift = DL3_ON_SFT,
--		.hd_reg = AFE_MEMIF_HD_MODE,
--		.hd_align_reg = AFE_MEMIF_HDALIGN,
--		.hd_shift = DL3_HD_SFT,
--		.hd_align_mshift = DL3_HD_ALIGN_SFT,
--		.agent_disable_reg = -1,
--		.agent_disable_shift = -1,
--		.msb_reg = -1,
--		.msb_shift = -1,
--	},
--	[MT8183_MEMIF_VUL2] = {
--		.name = "VUL2",
--		.id = MT8183_MEMIF_VUL2,
--		.reg_ofs_base = AFE_VUL2_BASE,
--		.reg_ofs_cur = AFE_VUL2_CUR,
--		.fs_reg = AFE_DAC_CON2,
--		.fs_shift = VUL2_MODE_SFT,
--		.fs_maskbit = VUL2_MODE_MASK,
--		.mono_reg = AFE_DAC_CON2,
--		.mono_shift = VUL2_DATA_SFT,
--		.enable_reg = AFE_DAC_CON0,
--		.enable_shift = VUL2_ON_SFT,
--		.hd_reg = AFE_MEMIF_HD_MODE,
--		.hd_align_reg = AFE_MEMIF_HDALIGN,
--		.hd_shift = VUL2_HD_SFT,
--		.hd_align_mshift = VUL2_HD_ALIGN_SFT,
--		.agent_disable_reg = -1,
--		.agent_disable_shift = -1,
--		.msb_reg = -1,
--		.msb_shift = -1,
--	},
--	[MT8183_MEMIF_AWB] = {
--		.name = "AWB",
--		.id = MT8183_MEMIF_AWB,
--		.reg_ofs_base = AFE_AWB_BASE,
--		.reg_ofs_cur = AFE_AWB_CUR,
--		.fs_reg = AFE_DAC_CON1,
--		.fs_shift = AWB_MODE_SFT,
--		.fs_maskbit = AWB_MODE_MASK,
--		.mono_reg = AFE_DAC_CON1,
--		.mono_shift = AWB_DATA_SFT,
--		.enable_reg = AFE_DAC_CON0,
--		.enable_shift = AWB_ON_SFT,
--		.hd_reg = AFE_MEMIF_HD_MODE,
--		.hd_align_reg = AFE_MEMIF_HDALIGN,
--		.hd_shift = AWB_HD_SFT,
--		.hd_align_mshift = AWB_HD_ALIGN_SFT,
--		.agent_disable_reg = -1,
--		.agent_disable_shift = -1,
--		.msb_reg = -1,
--		.msb_shift = -1,
--	},
--	[MT8183_MEMIF_AWB2] = {
--		.name = "AWB2",
--		.id = MT8183_MEMIF_AWB2,
--		.reg_ofs_base = AFE_AWB2_BASE,
--		.reg_ofs_cur = AFE_AWB2_CUR,
--		.fs_reg = AFE_DAC_CON2,
--		.fs_shift = AWB2_MODE_SFT,
--		.fs_maskbit = AWB2_MODE_MASK,
--		.mono_reg = AFE_DAC_CON2,
--		.mono_shift = AWB2_DATA_SFT,
--		.enable_reg = AFE_DAC_CON0,
--		.enable_shift = AWB2_ON_SFT,
--		.hd_reg = AFE_MEMIF_HD_MODE,
--		.hd_align_reg = AFE_MEMIF_HDALIGN,
--		.hd_shift = AWB2_HD_SFT,
--		.hd_align_mshift = AWB2_ALIGN_SFT,
--		.agent_disable_reg = -1,
--		.agent_disable_shift = -1,
--		.msb_reg = -1,
--		.msb_shift = -1,
--	},
--	[MT8183_MEMIF_VUL12] = {
--		.name = "VUL12",
--		.id = MT8183_MEMIF_VUL12,
--		.reg_ofs_base = AFE_VUL_D2_BASE,
--		.reg_ofs_cur = AFE_VUL_D2_CUR,
--		.fs_reg = AFE_DAC_CON0,
--		.fs_shift = VUL12_MODE_SFT,
--		.fs_maskbit = VUL12_MODE_MASK,
--		.mono_reg = AFE_DAC_CON0,
--		.mono_shift = VUL12_MONO_SFT,
--		.enable_reg = AFE_DAC_CON0,
--		.enable_shift = VUL12_ON_SFT,
--		.hd_reg = AFE_MEMIF_HD_MODE,
--		.hd_align_reg = AFE_MEMIF_HDALIGN,
--		.hd_shift = VUL12_HD_SFT,
--		.hd_align_mshift = VUL12_HD_ALIGN_SFT,
--		.agent_disable_reg = -1,
--		.agent_disable_shift = -1,
--		.msb_reg = -1,
--		.msb_shift = -1,
--	},
--	[MT8183_MEMIF_MOD_DAI] = {
--		.name = "MOD_DAI",
--		.id = MT8183_MEMIF_MOD_DAI,
--		.reg_ofs_base = AFE_MOD_DAI_BASE,
--		.reg_ofs_cur = AFE_MOD_DAI_CUR,
--		.fs_reg = AFE_DAC_CON1,
--		.fs_shift = MOD_DAI_MODE_SFT,
--		.fs_maskbit = MOD_DAI_MODE_MASK,
--		.mono_reg = -1,
--		.mono_shift = 0,
--		.enable_reg = AFE_DAC_CON0,
--		.enable_shift = MOD_DAI_ON_SFT,
--		.hd_reg = AFE_MEMIF_HD_MODE,
--		.hd_align_reg = AFE_MEMIF_HDALIGN,
--		.hd_shift = MOD_DAI_HD_SFT,
--		.hd_align_mshift = MOD_DAI_HD_ALIGN_SFT,
--		.agent_disable_reg = -1,
--		.agent_disable_shift = -1,
--		.msb_reg = -1,
--		.msb_shift = -1,
--	},
--	[MT8183_MEMIF_HDMI] = {
--		.name = "HDMI",
--		.id = MT8183_MEMIF_HDMI,
--		.reg_ofs_base = AFE_HDMI_OUT_BASE,
--		.reg_ofs_cur = AFE_HDMI_OUT_CUR,
--		.fs_reg = -1,
--		.fs_shift = -1,
--		.fs_maskbit = -1,
--		.mono_reg = -1,
--		.mono_shift = -1,
--		.enable_reg = -1,	/* control in tdm for sync start */
--		.enable_shift = -1,
--		.hd_reg = AFE_MEMIF_HD_MODE,
--		.hd_align_reg = AFE_MEMIF_HDALIGN,
--		.hd_shift = HDMI_HD_SFT,
--		.hd_align_mshift = HDMI_HD_ALIGN_SFT,
--		.agent_disable_reg = -1,
--		.agent_disable_shift = -1,
--		.msb_reg = -1,
--		.msb_shift = -1,
--	},
-+	MT8183_MEMIF(DL1, AFE_DAC_CON1, AFE_DAC_CON1),
-+	MT8183_MEMIF(DL2, AFE_DAC_CON1, AFE_DAC_CON1),
-+	MT8183_MEMIF(DL3, AFE_DAC_CON2, AFE_DAC_CON1),
-+	MT8183_MEMIF(VUL2, AFE_DAC_CON2, AFE_DAC_CON2),
-+	MT8183_MEMIF(AWB, AFE_DAC_CON1, AFE_DAC_CON1),
-+	MT8183_MEMIF(AWB2, AFE_DAC_CON2, AFE_DAC_CON2),
-+	MT8183_MEMIF(VUL12, AFE_DAC_CON0, AFE_DAC_CON0),
-+	MT8183_MEMIF(MOD_DAI, AFE_DAC_CON1, -1),
-+	/* enable control in tdm for sync start */
-+	MT8183_MEMIF_BASE(HDMI, -1, -1, -1),
- };
+ 	MT8183_MEMIF(DL1, AFE_DAC_CON1, AFE_DAC_CON1),
+@@ -951,6 +961,10 @@ static int mt8183_afe_pcm_dev_probe(stru
+ 	struct reset_control *rstc;
+ 	int i, irq_id, ret;
  
- static const struct mtk_base_irq_data irq_data[MT8183_IRQ_NUM] = {
++	ret = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(34));
++	if (ret)
++		return ret;
++
+ 	afe = devm_kzalloc(&pdev->dev, sizeof(*afe), GFP_KERNEL);
+ 	if (!afe)
+ 		return -ENOMEM;
 
 
