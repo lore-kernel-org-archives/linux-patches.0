@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD4693793A9;
-	Thu, 30 Jul 2026 14:49:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C74063793A9;
+	Thu, 30 Jul 2026 14:49:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422981; cv=none; b=QFVfYk8X46Qy2wXw1HIduo8R/Ud7VJ86ZXPS/WgUFBde/wNw5kSViOFfGx4saoUOzIEc6vjFb/n5g7E5hCaqravvE/lcKtulHTTSoZuSqYEYw8bLrhwRRsyUdRTuSkbaa/V25nScG4jw0Fq+MZUU2QslahZAbJLgJc0noKnBBXo=
+	t=1785422985; cv=none; b=NJ5PC0B6QH680qAZ4y9hCA8QZxriD5wOea1DFwkIbN0xben4KALXr+wAsTPL6pLF1vwxGiCfX9aWLIJXBdUWkcjXDHS55KBk5O5W7672miemsd/X6oYQjU/zNnEjfhDOSKZmEBHRUbDev2urwqIyur2sGQGLmH+MsP5DKYtpO7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422981; c=relaxed/simple;
-	bh=rOFKalXZQ+e+HWl1n3x8sl66pwzTMXrHzZuG3SEDI7s=;
+	s=arc-20240116; t=1785422985; c=relaxed/simple;
+	bh=yuleUqPlWas4aoV1+pvmFjpqp3k4ZmqkzAZYF7W0cuA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O9eoyDSZ+CI8vNzaV6oSFyq3JMqMZE9ps13KHXbujqUHZFl6aFFXCYQ8nLKPLGT7hFw9ddRMmW+sSQpNQsOU1iyRw4WhhVeSUK7XZ6UIGWDiewbWCT9+hY0WqwjISDtc6x/e1MJ4M8x4FrXpWrQdjXCa2d0568X8xXqGenff9eM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Plp4MWRt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QFc2/kKV8pW1JhCvr2BAT9Sp899uhBCOlGZDnQUt33jI7TEgJ5bACK8KtA+Rgz2PjR6Jqz/jYscLEbv3BmkzyFgLqDfSdhrfF+tbCXGMf1rhioTCdwFyYZDD1ZjQsPDE9bTQvHATlYRltHjsLowxkxFp+GbhlZ4rLmXL78BCYLQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ewRLO6tn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Plp4MWRt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25FCD1F000E9;
-	Thu, 30 Jul 2026 14:49:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ewRLO6tn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED6541F000E9;
+	Thu, 30 Jul 2026 14:49:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422980;
-	bh=77anVx++MrJHnddvpsgmPvx6bQhjbkhDYkfq7U+YquE=;
+	s=korg; t=1785422983;
+	bh=t3CZysRs6yQEln8kdRCpTNKIJOhCVtp1Ph6KHHa66jY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Plp4MWRtw0GCx7cQu9h0Q0mxYV6eDKhNpped2Jiymbe4mqAwwL8acQfiV2mzFenly
-	 9BriOuRqEQbnjnpApYp3kvd2T4yxIg5/9XX0MECcnvy9WMKYUWKu6i8KUsInmDjcDY
-	 BWClqUELegb0vZHUs4c40HY4qn0nFpHjL0G3Hy+k=
+	b=ewRLO6tneVJejw4/t45eY0anBOk/yirrgSYu0/ibZJ9BfSV8TZXL96QoQ0GbhGON/
+	 XLP3FqxehWnYSPWtFExOTeR2Id3yUhIlDojyN7lYN0mROhuWAtCZ4/Y++Xy3pr1kAQ
+	 ESE7TIqApLqpcsJNI8Zkz3kkLTXHy7OxPgiIKNIU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Zhiling Zou <roxy520tt@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.1 624/744] sctp: close UDP tunnel sockets during netns teardown
-Date: Thu, 30 Jul 2026 16:14:57 +0200
-Message-ID: <20260730141457.540519239@linuxfoundation.org>
+	Max Kellermann <max.kellermann@ionos.com>,
+	Xiubo Li <xiubo.li@clyso.com>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 7.1 625/744] ceph: add owner/capability checks for CEPH_IOC_SET_LAYOUT*
+Date: Thu, 30 Jul 2026 16:14:58 +0200
+Message-ID: <20260730141457.560203325@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -53,43 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <roxy520tt@gmail.com>
+From: Max Kellermann <max.kellermann@ionos.com>
 
-commit ffb2bd7ade36ec4da32c46a6eddbf4515316d08c upstream.
+commit cee38bbf5556a8e0a232ccae41649580827d7806 upstream.
 
-proc_sctp_do_udp_port() starts per-net SCTP UDP tunneling sockets when
-net.sctp.udp_port is set, and stops/restarts them when the sysctl value
-changes. The netns exit path does not stop these sockets, so a namespace
-can be torn down while its SCTP UDP tunnel sockets are still installed.
+These permission checks were already missing in the initial
+impementation of these ioctls.  This Ceph allows any user who owns a
+file descriptor to manipulate the layout of any file, even if they
+don't have write permissions.
 
-Close the UDP tunnel sockets from sctp_ctrlsock_exit() after unregistering
-the per-net sysctl table. This prevents new sysctl writes from racing in
-while the sockets are being released, and closes the sockets before the
-control socket is destroyed.
+It might be a good idea to guard other ioctls with permission checks
+as well or even disallow regular users (even if they own the file) to
+manipulate layout settings completely, as this may be abused to DoS
+the Ceph servers, but right now, I find it most urgent to have setter
+checks at all.
 
-Fixes: 046c052b475e ("sctp: enable udp tunneling socks")
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/b9f1f02b0780ad6a719e2413f5f0bb8eb7702d94.1782585631.git.roxy520tt%40gmail.com
-Signed-off-by: Zhiling Zou <roxy520tt@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/6dab75f22855cb219e2e30a5497cab03b970ab91.1784033357.git.roxy520tt@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 8f4e91dee2a2 ("ceph: ioctls")
+Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
+Reviewed-by: Xiubo Li <xiubo.li@clyso.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/protocol.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/ceph/ioctl.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/net/sctp/protocol.c
-+++ b/net/sctp/protocol.c
-@@ -1454,6 +1454,7 @@ static int __net_init sctp_ctrlsock_init
- static void __net_exit sctp_ctrlsock_exit(struct net *net)
- {
- 	sctp_sysctl_net_unregister(net);
-+	sctp_udp_sock_stop(net);
+--- a/fs/ceph/ioctl.c
++++ b/fs/ceph/ioctl.c
+@@ -72,6 +72,9 @@ static long ceph_ioctl_set_layout(struct
+ 	struct ceph_ioctl_layout nl;
+ 	int err;
  
- 	/* Free the control endpoint.  */
- 	inet_ctl_sock_destroy(net->sctp.ctl_sock);
++	if (!inode_owner_or_capable(&nop_mnt_idmap, inode))
++		return -EACCES;
++
+ 	if (copy_from_user(&l, arg, sizeof(l)))
+ 		return -EFAULT;
+ 
+@@ -142,6 +145,9 @@ static long ceph_ioctl_set_layout_policy
+ 	int err;
+ 	struct ceph_mds_client *mdsc = ceph_sb_to_fs_client(inode->i_sb)->mdsc;
+ 
++	if (!inode_owner_or_capable(&nop_mnt_idmap, inode))
++		return -EACCES;
++
+ 	/* copy and validate */
+ 	if (copy_from_user(&l, arg, sizeof(l)))
+ 		return -EFAULT;
 
 
