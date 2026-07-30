@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3508A3C3F4C;
-	Thu, 30 Jul 2026 15:12:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A61633C3F4C;
+	Thu, 30 Jul 2026 15:12:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424346; cv=none; b=QEBXn7o/4i0T2nLDtIh7Pet/0NE1Ajp39OE6f9VWvw9/hrYDU6lsby2MoXPq9diyBAUyg3fzd/KBU3tYXZaUBfguvfWH1o6mhpZdBj1qnAZF1HMWmnklnG1HVdxGXQHIwug5YtU1ju8xyC++Dcldo9PWxEv6rzrjjhWeolOgH9M=
+	t=1785424348; cv=none; b=oZbpxTfCsOuK08k7bokqtEs7U4HXI3AENNj610hX1ngsx9jnST3S4hbl3tjIFlG8PZouhTkZXWzAhmAnhGhOm1LfTHDytXu4r/5P4T0hEkOnXmCQCv5BKzR3MlHVYiWdgrJqrjcAO3+ROhTQhQPYClJwErbHlf42R7Yrgbc3Md0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424346; c=relaxed/simple;
-	bh=tROesbveg7+WA/Q/pBGTgvHRJb+neVubxfavv8kClUA=;
+	s=arc-20240116; t=1785424348; c=relaxed/simple;
+	bh=9h5sZfzj7yPcQH5PPIeWGrhEKgV4Wcaswf6rEp5mp64=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YRoQYiKSmbYkxWdFY0GxmXO8wYx5mCpHcjm9yITQhMB4xrVXFoaIMsV7RyvICT6WYOED718vVKqIehSsQ4bSUPONxy/Z475OEG2EU0yuK4z3DctpkJPGrxWm0PQ4CsDI188+zOkjtylnPlstOjEwT6NIwGOLYyrAKze3+pG625g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ca8j2F2p; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NCQnDw4hlfDP/zxuKL+2EYrTFCi9JuEISQctHykds/MmHqiNO0qzvdotFbYLjrqMeLvNLxrp7eI3wLZRDnAhB4bPKBj7Ny0aCIes+Ky5VecVr+jZ2yrk6QVJ5LwmFE9tge/uNNLhqTRcGE65cTXKmo9j3V6vbxicYToR1gloWC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=opsoHjRZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ca8j2F2p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 344E31F000E9;
-	Thu, 30 Jul 2026 15:12:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="opsoHjRZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AEAA1F000E9;
+	Thu, 30 Jul 2026 15:12:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424344;
-	bh=1coZ/1512fG0LxXbw3POzj+z5uditEkl/SF9LUx+ri4=;
+	s=korg; t=1785424347;
+	bh=gV0nm4i6mvkTvM7RImfh6AwwOtPQLwfUJIITfFctqLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ca8j2F2pY6sLDlp/uCdvC4iexG4p0cGWCsWqs2IIasgU9E87jCKz8xsF3V01EiY3G
-	 E9jKH42IxRkuWcNbN/3ddEB5FWaibTbJJnkRk50uSebiWSLnGf0hk4450u5ANTJ3tU
-	 lTydJUw4Z87n4NEoyZQbbcV+EVqyS4E5JSboSVwg=
+	b=opsoHjRZscR/JqPSrrg06hbYyMsAYqE3UnhkqJVZvbcfDzoqaWsP1g+LM+E72bg5n
+	 AGiYE2moyG33YkG0RLv83AfhmnIJ7NTQL5YOsqKKgAmfuERMpVkuDy5vYct/h3wIYI
+	 Te7fLGZ4nkg3ebvwrkGMZHU3ss9qkI09vSoT7yyY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
+	Eduard Zingerman <eddyz87@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 316/675] net: airoha: fix ETS channel derivation in airoha_tc_setup_qdisc_ets()
-Date: Thu, 30 Jul 2026 16:10:46 +0200
-Message-ID: <20260730141451.843101878@linuxfoundation.org>
+Subject: [PATCH 6.18 317/675] bpf, sockmap: Fix cork use-after-free in tcp_bpf_sendmsg()
+Date: Thu, 30 Jul 2026 16:10:47 +0200
+Message-ID: <20260730141451.865327126@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -52,44 +53,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-[ Upstream commit 649ea07fc25a17aa51bff710baac1ab161022a7c ]
+[ Upstream commit 2d66a033864e27ab8d5e44cb36f31d9d2413bee4 ]
 
-Derive the hardware QoS channel from opt->parent instead of opt->handle
-in airoha_tc_setup_qdisc_ets(). The ETS qdisc handle is either
-user-specified or auto-allocated by qdisc_alloc_handle() and bears no
-relation to the HTB leaf classid that identifies the hardware channel.
-HTB derives the channel from TC_H_MIN(opt->classid), and ETS is always
-attached as a child of an HTB leaf, so its opt->parent matches that
-classid. Using opt->handle instead can cause two ETS qdiscs on different
-HTB leaves to collide on the same hardware channel, corrupting scheduler
-configuration and stats.
+tcp_bpf_sendmsg() keeps msg_tx across sk_stream_wait_memory(), which
+drops and reacquires the socket lock.  Its error path tries to decide
+whether msg_tx names the local temporary message by comparing it with
+the current value of psock->cork.
 
-Fixes: 20bf7d07c956 ("net: airoha: Add sched ETS offload support")
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20260720-airoha-ets-handle-fix-v2-1-6f7129ddc06f@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This comparison is unsafe when two threads send on the same socket:
+
+  Thread A                         Thread B
+  msg_tx = psock->cork
+  sk_msg_alloc() fails
+  sk_stream_wait_memory()
+    releases the socket lock      acquires the socket lock
+                                  completes the cork
+                                  psock->cork = NULL
+                                  frees the cork
+    reacquires the socket lock
+  msg_tx != psock->cork
+  sk_msg_free(msg_tx)
+
+The stale cork is therefore mistaken for the local temporary message
+and freed again.  KASAN reported:
+
+  BUG: KASAN: slab-use-after-free in sk_msg_free+0x49/0x50
+  Read of size 4 at addr ffff88810c908800 by task poc/90
+  Call Trace:
+   sk_msg_free+0x49/0x50
+   tcp_bpf_sendmsg+0x14f5/0x1cc0
+   __sys_sendto+0x32c/0x3a0
+   __x64_sys_sendto+0xdb/0x1b0
+  Allocated by task 89:
+   __kasan_kmalloc+0x8f/0xa0
+   tcp_bpf_sendmsg+0x16b3/0x1cc0
+  Freed by task 91:
+   __kasan_slab_free+0x43/0x70
+   kfree+0x131/0x3c0
+   tcp_bpf_sendmsg+0xec3/0x1cc0
+
+msg_tx can only name the stack-local tmp or the shared cork. Check for
+tmp directly so a changed psock->cork cannot turn a shared message into
+an apparent local one.
+
+Fixes: 604326b41a6f ("bpf, sockmap: convert to generic sk_msg interface")
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
+Link: https://lore.kernel.org/bpf/87fr18lmzo.fsf%40cloudflare.com/
+Link: https://lore.kernel.org/netdev/20260719161630.2901208-1-nicoyip.dev%40gmail.com/ [v1]
+Link: https://patch.msgid.link/20260724103856.3399001-1-nicoyip.dev@gmail.com
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/airoha/airoha_eth.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ net/ipv4/tcp_bpf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/airoha/airoha_eth.c b/drivers/net/ethernet/airoha/airoha_eth.c
-index 5efd03c2deea77..64ab34e37c36f9 100644
---- a/drivers/net/ethernet/airoha/airoha_eth.c
-+++ b/drivers/net/ethernet/airoha/airoha_eth.c
-@@ -2326,8 +2326,7 @@ static int airoha_tc_setup_qdisc_ets(struct airoha_gdm_port *port,
- 	if (opt->parent == TC_H_ROOT)
- 		return -EINVAL;
- 
--	channel = TC_H_MAJ(opt->handle) >> 16;
--	channel = channel % AIROHA_NUM_QOS_CHANNELS;
-+	channel = TC_H_MIN(opt->parent) % AIROHA_NUM_QOS_CHANNELS;
- 
- 	switch (opt->command) {
- 	case TC_ETS_REPLACE:
+diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
+index 7a3f0b244c8fc8..c27e797eff275a 100644
+--- a/net/ipv4/tcp_bpf.c
++++ b/net/ipv4/tcp_bpf.c
+@@ -589,7 +589,7 @@ static int tcp_bpf_sendmsg(struct sock *sk, struct msghdr *msg, size_t size)
+ wait_for_memory:
+ 		err = sk_stream_wait_memory(sk, &timeo);
+ 		if (err) {
+-			if (msg_tx && msg_tx != psock->cork)
++			if (msg_tx == &tmp)
+ 				sk_msg_free(sk, msg_tx);
+ 			goto out_err;
+ 		}
 -- 
 2.53.0
 
