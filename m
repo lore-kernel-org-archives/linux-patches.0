@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9831A44685A;
-	Thu, 30 Jul 2026 16:03:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AC744483BC;
+	Thu, 30 Jul 2026 16:03:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427406; cv=none; b=SQDYfeEnXQp4kg/3D3ltgioDe1xp7cJgh97eT2cke0CefA+j3w0eHltKNCNpteWJHSAFID68NxX+odCw5IxwH/l5/tTwKVgPftZnBGstig/Hh7LN4a3g3DFgrTajd57ZHPujkbadX/cOFj1T+L5DVo8lGoyg78L1TqXRjIcX5AQ=
+	t=1785427409; cv=none; b=MCqk4TfGUrM0ntEH2BJRINgM4qlKx+tbfWqxAxuqXXq32aYvBHtN66wdzY27XMiIVpM9Bqvo4txNxAQ9OUlQ20Nx2324h9aC1HGcXGqAqnjnjffsCl3xJeAbImsMz16fr67TktRGdoBmAbE7RWz4lEwTgimUjxFzuvI2geSiJBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427406; c=relaxed/simple;
-	bh=SJuYWevUHZd4YjtODv+/ctzyFHg0JYnLq7Bz0OMBvfk=;
+	s=arc-20240116; t=1785427409; c=relaxed/simple;
+	bh=EReuoFgwQ1JtFFT46+Dqhf9GER8uuTIBPRS5aVjz4n8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vEliNlPR/pF6V0FGAOYUzh1OTTfr9Z8Kg8TTmeIU7H+pUP0jwZ3Zt1TmfSxcLp4syOw19JNUO1Q1Jf+mr7ScBpemjpLLT7AGZaffbg0agd2GZ3XbnJ4w3vFjyyXF+bQh1IHm5YaAa8js/uSfnY2BDEOjvBnsWSJNbHurQw3WgXY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xnr25Qu8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=efUv7qvw6txhX2hCX7IqQhHqJ5YJXpm3CqBFsqj8kUvAL6KCWQDdRnWeYYRbYjaUjSbkgxlBYrq8zNPxdoITMGTjFqrSWWf1w11zOKBQKvcPz5Hmjy0SyM7HPQRKb8ZDEy50ur9DNe8YotfYK4YcKiEbhFTOOSmJ6dQmMfiC8Go=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hvUCIjlR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xnr25Qu8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F17431F00A3A;
-	Thu, 30 Jul 2026 16:03:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hvUCIjlR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C75801F000E9;
+	Thu, 30 Jul 2026 16:03:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427405;
-	bh=9eKCvuRd6/JEI+uW/Fp2XzT5C8WhM/OcZYAdTRZ+HIM=;
+	s=korg; t=1785427408;
+	bh=TJZD8ygC8OvYldulIZVMLS5DqZPjW02i6oIWbItRGlU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xnr25Qu8i8td65QJyrIzNOpXIdNnvmnfDNkZYCkaJ4cGCtmxQ/SrSsf25X6SnGhin
-	 KxeWXnKTcyDuSCoUiuc99vzJ8XZQixB/KG4dZ2RW1wIjDxRzpIO4uJTN5zsOv89WpR
-	 mErLIq26UUkqrdARFY3vMXrIazYYtR6DEY564X3k=
+	b=hvUCIjlR2FZPVfyDMjOUUimVsjZMvvVbkIijfjLOtby2cVKfMKcdrS7hFQmUYjaWm
+	 8iNMHSvh74fwKeyA/vnBX7d7tPyEBGrdVWnx1YeMwSJcu+2UltEJVGBOyfzMc2SUa9
+	 48o0jhDog+o6ZWmpVqz/l/8pO705laHts/IoGFds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Nikhil P. Rao" <nikhil.rao@amd.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 159/484] pds_core: reject component parameter in legacy firmware update
-Date: Thu, 30 Jul 2026 16:10:56 +0200
-Message-ID: <20260730141426.921058690@linuxfoundation.org>
+Subject: [PATCH 6.6 133/484] ASoC: bt-sco: fix duplicate DAPM widget names for wideband DAI
+Date: Thu, 30 Jul 2026 16:10:30 +0200
+Message-ID: <20260730141426.347293837@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -52,42 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikhil P. Rao <nikhil.rao@amd.com>
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-[ Upstream commit 7be2552e601c247a328a5aba6fc06ac844b94a16 ]
+[ Upstream commit 0b604e886ece11b71c4daaeccc512c784b89b014 ]
 
-The legacy firmware update path does not support per-component updates.
-If a user specifies a component parameter with devlink flash, reject
-the request with -EOPNOTSUPP rather than silently ignoring the component
-parameter and flashing the entire firmware image.
+The bt-sco-pcm-wb DAI uses the same stream_name strings as bt-sco-pcm
+("Playback" and "Capture"). This causes duplicate DAPM AIF widget
+names within the same component, leading to debugfs warnings:
 
-Fixes: 49ce92fbee0b ("pds_core: add FW update feature to devlink")
-Signed-off-by: Nikhil P. Rao <nikhil.rao@amd.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260708163649.128620-1-nikhil.rao@amd.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+  debugfs: 'Playback' already exists in 'dapm'
+  debugfs: 'Capture' already exists in 'dapm'
+
+Give the wideband DAI distinct stream names ("WB Playback" and
+"WB Capture") and add corresponding DAPM AIF widgets and routes for
+them.
+
+Fixes: 5947e1b4992e ("ASoC: bt-sco: extend rate and add a general compatible string")
+Assisted-by: VeroCoder:claude-sonnet-4-5
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Link: https://patch.msgid.link/20260715100620.1387159-1-shengjiu.wang@oss.nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/pds_core/devlink.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ sound/soc/codecs/bt-sco.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/amd/pds_core/devlink.c b/drivers/net/ethernet/amd/pds_core/devlink.c
-index 3144bad75a4df5..9939296145b522 100644
---- a/drivers/net/ethernet/amd/pds_core/devlink.c
-+++ b/drivers/net/ethernet/amd/pds_core/devlink.c
-@@ -88,6 +88,12 @@ int pdsc_dl_flash_update(struct devlink *dl,
- {
- 	struct pdsc *pdsc = devlink_priv(dl);
+diff --git a/sound/soc/codecs/bt-sco.c b/sound/soc/codecs/bt-sco.c
+index 3afcef2dfa3529..c0bf45b76cb8c5 100644
+--- a/sound/soc/codecs/bt-sco.c
++++ b/sound/soc/codecs/bt-sco.c
+@@ -17,11 +17,17 @@ static const struct snd_soc_dapm_widget bt_sco_widgets[] = {
+ 			    SND_SOC_NOPM, 0, 0),
+ 	SND_SOC_DAPM_AIF_OUT("BT_SCO_TX", "Capture", 0,
+ 			     SND_SOC_NOPM, 0, 0),
++	SND_SOC_DAPM_AIF_IN("BT_SCO_RX_WB", "WB Playback", 0,
++			    SND_SOC_NOPM, 0, 0),
++	SND_SOC_DAPM_AIF_OUT("BT_SCO_TX_WB", "WB Capture", 0,
++			     SND_SOC_NOPM, 0, 0),
+ };
  
-+	if (params->component) {
-+		NL_SET_ERR_MSG_MOD(extack,
-+				   "Component update not supported by this device");
-+		return -EOPNOTSUPP;
-+	}
-+
- 	return pdsc_firmware_update(pdsc, params->fw, extack);
- }
+ static const struct snd_soc_dapm_route bt_sco_routes[] = {
+ 	{ "BT_SCO_TX", NULL, "RX" },
+ 	{ "TX", NULL, "BT_SCO_RX" },
++	{ "BT_SCO_TX_WB", NULL, "RX" },
++	{ "TX", NULL, "BT_SCO_RX_WB" },
+ };
  
+ static struct snd_soc_dai_driver bt_sco_dai[] = {
+@@ -45,14 +51,14 @@ static struct snd_soc_dai_driver bt_sco_dai[] = {
+ 	{
+ 		.name = "bt-sco-pcm-wb",
+ 		.playback = {
+-			.stream_name = "Playback",
++			.stream_name = "WB Playback",
+ 			.channels_min = 1,
+ 			.channels_max = 1,
+ 			.rates = SNDRV_PCM_RATE_8000 | SNDRV_PCM_RATE_16000,
+ 			.formats = SNDRV_PCM_FMTBIT_S16_LE,
+ 		},
+ 		.capture = {
+-			 .stream_name = "Capture",
++			 .stream_name = "WB Capture",
+ 			.channels_min = 1,
+ 			.channels_max = 1,
+ 			.rates = SNDRV_PCM_RATE_8000 | SNDRV_PCM_RATE_16000,
 -- 
 2.53.0
 
