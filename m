@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ECBA38E5DC;
-	Thu, 30 Jul 2026 16:17:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BEA73B19B3;
+	Thu, 30 Jul 2026 16:17:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785428240; cv=none; b=YUn+GMcnPMV/HM1eVSJiT7V1XrKyV+yz7VyrHvj0M6Bgjpk44IR49lIStAVlPw7NPJnkblkKfWVDoRQm+zkTqWZKhfBdPSR+L7RjF+1wrxgs1fsaapJJ6twH/MJApTWhQGZPcOXhikj+VojwC86X6ZDk8X3DnXZoZUj1OL2tsG4=
+	t=1785428243; cv=none; b=kkcJ9KL+2cnKxp4xODDmJmCyjV+LA0PegSwVCULU6/YQT25bpJoRUvytVUBcbOwmoN7mur7KYNSLPedcl71bb/v8D8Rupcaz/xD/7hF4eYUtf6TFo3Va05kYvhW5WOx1WyXhWEzfAZN3ZCq0uvtE1qkFVUJraJlEZ2LKcoBBnRM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785428240; c=relaxed/simple;
-	bh=5+FAH7wym9Y93ZI9THsolznBvLURY93Diy3nNU2t7Vg=;
+	s=arc-20240116; t=1785428243; c=relaxed/simple;
+	bh=44O1qOW/6YDPsfF6I/aVLKdQ1fk/f9TAtSB07s96HbI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=snDG/2HJbOD3FLnid1sEhgpjn/UzeYtcT7dEnwVHnsa8hYuchG3Vc/Igfvnl4NIZ/TDxojKCNvNrKJERaCIxBfz1cGa6324XaXoByY4zAlGPpiOC4TxNL693muCpNktD5nhmKx3JwaT127GA/Y5GvxyRPF8kg5/0KNye/L95Blw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=itAqAozB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nWx1TZ22OW3R2UqB5Yl83gZGV+nWNEyQAjxFvkimU4DmVERgxbF1LeLWasAkN4+kAViXtg4HQ/Gm+lm/9+EgP6ThS4CadZ24N9yEopyxlSkWm+4fM16hu77taC780j4sEp63zZw2s5e3X0MPT8iy/q0fGl+OGIrSuuADVo7VOsY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2RjisZbn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="itAqAozB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79E791F000E9;
-	Thu, 30 Jul 2026 16:17:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2RjisZbn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 546911F000E9;
+	Thu, 30 Jul 2026 16:17:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785428239;
-	bh=goOE+50WTih4viSA8FXb4ur8O14ZV+slyKA6/Ge72Xg=;
+	s=korg; t=1785428241;
+	bh=GBMnzQQzPfVf+5JaMUSPKNFN/GqtNfmTRS2ybndnByg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=itAqAozByBBduvkJjWI0PCFddMTj4eb4S4o5IiVTHOPxjoeKARrYWy5vTsDheZJxb
-	 dSiQcF3O9KlZjIaI0ZDp6imcb0Bet/Hd8mTOyvouP3vzy2q4twaIGXkAFXrd1ioZo3
-	 Nzp3xoVHedD8tXO2GrVt/SOZFY/8ApAKEpgJUds8=
+	b=2RjisZbnixR3VXqADt7jy9bEt6CDBf61HrcMt9osm/KONWIjmmlrlNj2YGupAZDXn
+	 8hWwvE7wOHLTZLAsj57Iv2X6x7yEc756D0IWTRk7hkqgz22h0XphP/BspdhT8wVmjY
+	 5wqzvLLex3UAMYyScu+saKCaqdq4gkR+wrPg+JYU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko bot <sashiko-bot@kernel.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Tejun Heo <tj@kernel.org>,
+	Allen Pais <allen.lkml@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 451/484] Input: ims-pcu - fix firmware leak in async update
-Date: Thu, 30 Jul 2026 16:15:48 +0200
-Message-ID: <20260730141433.279147150@linuxfoundation.org>
+Subject: [PATCH 6.6 452/484] workqueue: Factor out init_cpu_worker_pool()
+Date: Thu, 30 Jul 2026 16:15:49 +0200
+Message-ID: <20260730141433.300981231@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -51,46 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Tejun Heo <tj@kernel.org>
 
-[ Upstream commit d48795b5cd6828d36b707e8d62fc9e5c90e004ab ]
+[ Upstream commit 2fcdb1b44491e08f5334a92c50e8f362e0d46f91 ]
 
-The firmware object was not being released if validation failed.
-Use __free(firmware) to ensure the firmware is always released.
+Factor out init_cpu_worker_pool() from workqueue_init_early(). This is pure
+reorganization in preparation of BH workqueue support.
 
-Fixes: 628329d52474 ("Input: add IMS Passenger Control Unit driver")
-Cc: stable@vger.kernel.org
-Reported-by: Sashiko bot <sashiko-bot@kernel.org>
-Assisted-by: Gemini:gemini-3.1-pro
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Tested-by: Allen Pais <allen.lkml@gmail.com>
+Stable-dep-of: 50fd6dd755c6 ("tracing/user_events: Fix use-after-free in user_event_mm_dup()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/misc/ims-pcu.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ kernel/workqueue.c |   32 ++++++++++++++++++--------------
+ 1 file changed, 18 insertions(+), 14 deletions(-)
 
---- a/drivers/input/misc/ims-pcu.c
-+++ b/drivers/input/misc/ims-pcu.c
-@@ -964,9 +964,10 @@ out:
- 	return retval;
+--- a/kernel/workqueue.c
++++ b/kernel/workqueue.c
+@@ -6609,6 +6609,22 @@ static void __init restrict_unbound_cpum
+ 	cpumask_and(wq_unbound_cpumask, wq_unbound_cpumask, mask);
  }
  
--static void ims_pcu_process_async_firmware(const struct firmware *fw,
-+static void ims_pcu_process_async_firmware(const struct firmware *_fw,
- 					   void *context)
- {
-+	const struct firmware *fw __free(firmware) = _fw;
- 	struct ims_pcu *pcu = context;
- 	int error;
++static void __init init_cpu_worker_pool(struct worker_pool *pool, int cpu, int nice)
++{
++	BUG_ON(init_worker_pool(pool));
++	pool->cpu = cpu;
++	cpumask_copy(pool->attrs->cpumask, cpumask_of(cpu));
++	cpumask_copy(pool->attrs->__pod_cpumask, cpumask_of(cpu));
++	pool->attrs->nice = nice;
++	pool->attrs->affn_strict = true;
++	pool->node = cpu_to_node(cpu);
++
++	/* alloc pool ID */
++	mutex_lock(&wq_pool_mutex);
++	BUG_ON(worker_pool_assign_id(pool));
++	mutex_unlock(&wq_pool_mutex);
++}
++
+ /**
+  * workqueue_init_early - early init for workqueue subsystem
+  *
+@@ -6657,20 +6673,8 @@ void __init workqueue_init_early(void)
+ 		struct worker_pool *pool;
  
-@@ -987,8 +988,6 @@ static void ims_pcu_process_async_firmwa
- 	ims_pcu_handle_firmware_update(pcu, fw);
- 	mutex_unlock(&pcu->cmd_mutex);
- 
--	release_firmware(fw);
+ 		i = 0;
+-		for_each_cpu_worker_pool(pool, cpu) {
+-			BUG_ON(init_worker_pool(pool));
+-			pool->cpu = cpu;
+-			cpumask_copy(pool->attrs->cpumask, cpumask_of(cpu));
+-			cpumask_copy(pool->attrs->__pod_cpumask, cpumask_of(cpu));
+-			pool->attrs->nice = std_nice[i++];
+-			pool->attrs->affn_strict = true;
+-			pool->node = cpu_to_node(cpu);
 -
- out:
- 	complete(&pcu->async_firmware_done);
- }
+-			/* alloc pool ID */
+-			mutex_lock(&wq_pool_mutex);
+-			BUG_ON(worker_pool_assign_id(pool));
+-			mutex_unlock(&wq_pool_mutex);
+-		}
++		for_each_cpu_worker_pool(pool, cpu)
++			init_cpu_worker_pool(pool, cpu, std_nice[i++]);
+ 	}
+ 
+ 	/* create default unbound and ordered wq attrs */
 
 
