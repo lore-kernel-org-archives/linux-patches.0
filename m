@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D31833C3F4C;
-	Thu, 30 Jul 2026 15:03:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C108D43F0B5;
+	Thu, 30 Jul 2026 15:03:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423806; cv=none; b=YrzQZ2YYfWrm5P3DUO37N/v4DkS1yosvrAvMuGfIUIBIM702xd7kw96hwHauXHtr7OIgyMBZDo7U2d7SlxU60W5FnI5iQGc3ttB3rxWuKrQqNF+xPt47xz10OZn1TpYd1MN3+N3ZJa7H6o7fXSmeNNrJhBvipsoulGdzifUgSk4=
+	t=1785423809; cv=none; b=FkeesXBjWd087NO3RSCpgazYbrL1LrXPAJaIDPaLxETKoDQTyf5dubY3LPDq4f61JvGwJH/MBh+C+UzoiYSHMHCC+S0U5lVTStbBPrpE4Ng6HrHDaGteq+TKnDLZHWhGQk6chA5EL+1sGCNC6Q2CUmz6/LVNorrNQ8/dkUwYtuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423806; c=relaxed/simple;
-	bh=UEpYG0f0YU53PIbuMP66JfEY6E4Szy5KvYiGS/10gmE=;
+	s=arc-20240116; t=1785423809; c=relaxed/simple;
+	bh=uMjhr1ScrKHk1DffmrSHvZfNPyGvyWZRVr5NI9iKE4A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rzpUhEua52FImZcP4mSSOqtvZzWJVbrf27xQsMMqsCSz6iT+2Lkitj2dBv/Qnnf4yzPO1hGKLKcWX/RazQeWxYElddqm55yDpZWVZZ0clHBiA5QxIumkvYAQtn8OGINUutOfRvq0jmU0ZW0kbgrnJIfi9q8MvXRXLxMsM5ysfUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZBGhUk0d; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UKUwwsAyYWw9P8VymUTy1Ntm01iAN345Eo2U5SMnxSJy0vZovj8c12KMPcNU408cAYIFve9rI7U1PLt3X15XEpCu6U4tsL/A5iwRl2i61V2x4Adv+Ze5Q4ixti67/nO3ba03lL0yRFAwfebJWTEfMhxpe5Ju5B0cxTTqFF0v52w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QkZj6vaE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZBGhUk0d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 404F71F000E9;
-	Thu, 30 Jul 2026 15:03:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QkZj6vaE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 222DA1F00A3F;
+	Thu, 30 Jul 2026 15:03:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423804;
-	bh=cz+CEjhbEWMhA2AvYBrvDXMnf4GEkNOd2bXWALDMeJw=;
+	s=korg; t=1785423807;
+	bh=L3heQyeFv812KJqdTMMfIli7QczhlQ1SrZJDX7WxKyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZBGhUk0deLK2mw0EsqbdkLf1HqIL4GOn8ZsvWbHRF2HVroKjjberboLdqHg0j2si3
-	 E3CU2YXM8ZYDSO85iu2IEQN505zukyRvTGmoLqw6M5wBtGbJScVDXKQrsS5bSte8lf
-	 k67/TT3kHzkvSuPoUpqfPCV5103Onub/hz/JN2xc=
+	b=QkZj6vaE+m25tIry5flk6B0fgHcp98M2ng59FW0IWk0GKrTtGDtcyBvqgIr/RQj2n
+	 szdjTVdZFnhchLFbnO9DqqwuZWzfUgROmnmDKrS+PbZ9NpFGLGwh8VJdivZ+JsVR9S
+	 ddtNjwiNo5xhPyOrVcpm1+VBbBC1kGONhi9uYFUA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Shuicheng Lin <shuicheng.lin@intel.com>,
-	Matt Roper <matthew.d.roper@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Qihang <q.h.hack.winter@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 128/675] drm/xe/wopcm: fix WOPCM size for LNL+
-Date: Thu, 30 Jul 2026 16:07:38 +0200
-Message-ID: <20260730141447.865642200@linuxfoundation.org>
+Subject: [PATCH 6.18 129/675] ksmbd: pin conn during async oplock break notification
+Date: Thu, 30 Jul 2026 16:07:39 +0200
+Message-ID: <20260730141447.886702470@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -48,73 +46,79 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
+From: Qihang <q.h.hack.winter@gmail.com>
 
-[ Upstream commit ad87e2476b3b246580f407afc8ffa91d621bc849 ]
+[ Upstream commit aa5d8f3f96aa11a4a54ce993c11ce8af11c546f9 ]
 
-Starting on LNL the WOPCM size is 8MB instead of 4, so we need to avoid
-using the [0, 8MB) range of the GGTT as that can be unaccessible from
-the microcontrollers.
+smb2_oplock_break_noti() and smb2_lease_break_noti() store a ksmbd_conn
+pointer in an async ksmbd_work and then queue that work on ksmbd-io.  The
+work only increments conn->r_count, which prevents teardown from passing
+the pending-request wait after the increment, but it does not pin the
+struct ksmbd_conn object.
 
-Note that the proper long-term fix here is to read the WOPCM size from
-the HW, but that is a more serious rework that would be difficult to
-backport, so we can do that as a follow-up.
+If connection teardown races with an oplock break notification, the last
+conn reference can be dropped before the queued worker finishes.  The
+worker then uses the freed conn in ksmbd_conn_write() and
+ksmbd_conn_r_count_dec().
 
-Fixes: 9c57bc08652a ("drm/xe/lnl: Drop force_probe requirement")
-Signed-off-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Cc: Shuicheng Lin <shuicheng.lin@intel.com>
-Cc: Matt Roper <matthew.d.roper@intel.com>
-Reviewed-by: Shuicheng Lin <shuicheng.lin@intel.com>
-Link: https://patch.msgid.link/20260713221758.3285744-2-daniele.ceraolospurio@intel.com
-(cherry picked from commit 3033b0b24ed0e2f5e56bdd4d9c183417c365a45b)
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Take a real conn reference when publishing the conn pointer to the async
+work item, and drop it after the notification work has decremented
+r_count.  Apply the same lifetime rule to lease break notification, which
+uses the same work->conn pattern.
+
+Fixes: 3aa660c05924 ("ksmbd: prevent connection release during oplock break notification")
+Signed-off-by: Qihang <q.h.hack.winter@gmail.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_wopcm.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ fs/smb/server/oplock.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_wopcm.c b/drivers/gpu/drm/xe/xe_wopcm.c
-index ada0d0aa6b7494..2fd2a82be89f87 100644
---- a/drivers/gpu/drm/xe/xe_wopcm.c
-+++ b/drivers/gpu/drm/xe/xe_wopcm.c
-@@ -49,9 +49,9 @@
-  */
- 
- /* Default WOPCM size is 2MB from Gen11, 1MB on previous platforms */
--/* FIXME: Larger size require for 2 tile PVC, do a proper probe sooner or later */
-+/* FIXME: Larger size require for some platforms, do a proper probe sooner or later */
- #define DGFX_WOPCM_SIZE			SZ_4M
--/* FIXME: Larger size require for MTL, do a proper probe sooner or later */
-+#define LNL_WOPCM_SIZE			SZ_8M
- #define MTL_WOPCM_SIZE			SZ_4M
- #define WOPCM_SIZE			SZ_2M
- 
-@@ -181,9 +181,14 @@ static int __wopcm_init_regs(struct xe_device *xe, struct xe_gt *gt,
- 
- u32 xe_wopcm_size(struct xe_device *xe)
- {
--	return IS_DGFX(xe) ? DGFX_WOPCM_SIZE :
--		xe->info.platform == XE_METEORLAKE ? MTL_WOPCM_SIZE :
--		WOPCM_SIZE;
-+	if (xe->info.platform >= XE_LUNARLAKE)
-+		return LNL_WOPCM_SIZE;
-+	else if (IS_DGFX(xe))
-+		return DGFX_WOPCM_SIZE;
-+	else if (xe->info.platform == XE_METEORLAKE)
-+		return MTL_WOPCM_SIZE;
-+	else
-+		return WOPCM_SIZE;
+diff --git a/fs/smb/server/oplock.c b/fs/smb/server/oplock.c
+index a019c4496ae433..ff0dbf3f8cbf49 100644
+--- a/fs/smb/server/oplock.c
++++ b/fs/smb/server/oplock.c
+@@ -705,6 +705,7 @@ static void __smb2_oplock_break_noti(struct work_struct *wk)
+ out:
+ 	ksmbd_free_work_struct(work);
+ 	ksmbd_conn_r_count_dec(conn);
++	ksmbd_conn_put(conn);
  }
  
  /**
+@@ -740,7 +741,7 @@ static int smb2_oplock_break_noti(struct oplock_info *opinfo)
+ 	br_info->open_trunc = opinfo->open_trunc;
+ 
+ 	work->request_buf = (char *)br_info;
+-	work->conn = conn;
++	work->conn = ksmbd_conn_get(conn);
+ 	work->sess = opinfo->sess;
+ 
+ 	ksmbd_conn_r_count_inc(conn);
+@@ -814,6 +815,7 @@ static void __smb2_lease_break_noti(struct work_struct *wk)
+ out:
+ 	ksmbd_free_work_struct(work);
+ 	ksmbd_conn_r_count_dec(conn);
++	ksmbd_conn_put(conn);
+ }
+ 
+ /**
+@@ -853,7 +855,7 @@ static int smb2_lease_break_noti(struct oplock_info *opinfo)
+ 	memcpy(br_info->lease_key, lease->lease_key, SMB2_LEASE_KEY_SIZE);
+ 
+ 	work->request_buf = (char *)br_info;
+-	work->conn = conn;
++	work->conn = ksmbd_conn_get(conn);
+ 	work->sess = opinfo->sess;
+ 
+ 	ksmbd_conn_r_count_inc(conn);
 -- 
 2.53.0
 
