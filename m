@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EA5E33438F;
-	Thu, 30 Jul 2026 15:38:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58A9719CD1D;
+	Thu, 30 Jul 2026 15:38:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425927; cv=none; b=Fg9tL6GQuXmoKAnqaYhr9vSp3oViFn5Gf3PhQhTxJ3j1Zivc2dJfYtuLaEDl6jmeeKXUqfghyiL0GfGqyNU33Jgu0pi0902SEfUdTDFUuGp5e2T7qk6Xsk3j+SNMWBb5t3txmMwIFtAnVAyGXlI/+JPba7BZBqi/pgi1mOwy9f4=
+	t=1785425930; cv=none; b=UPsP8U7kYKvjWDMmFe1xoksKbf69rHII0Iy+31+JtGdgXW+Dhp99PSkcSxB0hjsQLq2ntfWRC5OBakouLgI/KBi5rG6jeWrcV1zqYzMYIM5qAeH8jOUlOT46Dw461cwl8TnbyBj1yLK5C3pwcYZTeEeDaAnDSBL4aNcudDdX64c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425927; c=relaxed/simple;
-	bh=0TGVSOHOa95bpXiDXfc2wU2vAQjNE1OR4JAEP/HfbOU=;
+	s=arc-20240116; t=1785425930; c=relaxed/simple;
+	bh=9O/vSCo+E6kZ6NrhymTsmaD+o1i8nmIVfAeEGKCPYbI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dvKsZM0YEj+nTqamKVI8AiCopda3gixF8b0Ckc10d9BAco5KvDyhPeWeQ1q0f1L/6uQiEP+n9TzRMIrbmWUROXNlby5WlVStBbox87CNd7PtEvC59vxFOB/lX1GRmpaD2T60frUntk3H41j5E+rvhnSqbhNQPzDmfvEXchi5/i8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GSiED/8y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tN4l5dV2FOOgEuFGZBgg1s7O6cGaDztN+JHHjxIbizicaWYrLFWYyOPFdD3FnU5uwDgD4ZWawMo6VgoGkHAY7Wh0OnIRJmQzllTtQQP7FcQ0hiQptfKF0iDqNiCATqT04x6UsNX2+W8nkC+xvIQ7F3hW5RWn5xt33FndjMuUioU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XNEVgfND; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GSiED/8y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA4601F000E9;
-	Thu, 30 Jul 2026 15:38:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XNEVgfND"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCD931F000E9;
+	Thu, 30 Jul 2026 15:38:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425926;
-	bh=JPLJ5domnhyx2XU95TT7YjkIdMwMYJDAF9ap+kKRBI0=;
+	s=korg; t=1785425929;
+	bh=mGYICQty8ELIu5o6tbncgIpHrY9fmfvCnqcjvIft1us=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GSiED/8yxRemgB8WgKzt+NsrfuTnFhQ7OAWlkWAtP68ktF80CPRXV+v7cWIT3W5J9
-	 dsSvu1IORgwYDdvIyN0NRkN2+mZoo9CwCZ5j3rKMBPRNTmMYlVqYIHea53FHRAqzQO
-	 zzbHpFF6GU8CudzJlxFEEndAfEI4smls2TpyhQQE=
+	b=XNEVgfNDcFkdOodzfAcPtcEqRDb19nRx877JVeYkC1SSnpwzqGeA9a6vrrwt0EmNc
+	 gS3/JFZ5trrytw3+6bQFc+IZhmSXwuHjGsGpSFUIwkVQmgarCppMpZLrvwlrXG6U3X
+	 UagviGVeeTnrq0Ym8Rkjs1QK65f/KVObwSTrM/zs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yael Chemla <ychemla@nvidia.com>,
-	Cosmin Ratiu <cratiu@nvidia.com>,
+	Alexei Lazar <alazar@nvidia.com>,
+	Carolina Jubran <cjubran@nvidia.com>,
 	Tariq Toukan <tariqt@nvidia.com>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 241/602] net/mlx5: E-Switch, fix zero num_dest in prio_tag egress vlan rule
-Date: Thu, 30 Jul 2026 16:10:33 +0200
-Message-ID: <20260730141441.036828144@linuxfoundation.org>
+Subject: [PATCH 6.12 242/602] net/mlx5e: Report zero bandwidth for non-ETS traffic classes
+Date: Thu, 30 Jul 2026 16:10:34 +0200
+Message-ID: <20260730141441.057251228@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -53,49 +54,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yael Chemla <ychemla@nvidia.com>
+From: Alexei Lazar <alazar@nvidia.com>
 
-[ Upstream commit d12956d083eb70f2c6d72711aebaf8c2ce21e170 ]
+[ Upstream commit ffb1873b2df11945b8c395e859169248675c91c5 ]
 
-esw_egress_acl_vlan_create() hardcodes num_dest=0 in its
-mlx5_add_flow_rules() call. When invoked from the non-bond path
-fwd_dest is NULL and num_dest=0 is correct. When invoked from
-esw_acl_egress_ofld_rules_create() during a bond event, fwd_dest is
-non-NULL and flow_act.action carries MLX5_FLOW_CONTEXT_ACTION_FWD_DEST,
-but _mlx5_add_flow_rules() rejects a non-NULL dest pointer paired with
-dest_num<=0 and returns -EINVAL. The error propagates as
-"configure slave vport egress fwd, err(-22)". The passive vport's egress
-ACL table ends up with its flow groups allocated but no FTEs, so
-prio-tagged packets are not popped and bond failover is broken on
-prio_tag_required devices.
+The IEEE 802.1Qaz standard defines that bandwidth allocation percentages
+only apply to Enhanced Transmission Selection (ETS) traffic classes.
+For STRICT and VENDOR transmission selection algorithms, bandwidth
+percentage values are not applicable.
 
-Fix by passing fwd_dest ? 1 : 0 as num_dest to match the actual number
-of destinations supplied.
+Currently for non-ETS 100 bandwidth is being reported for all traffic
+classes in the get operation due to hardware limitation, regardless of
+their TSA type.
 
-Fixes: bf773dc0e6d5 ("net/mlx5: E-Switch, Introduce APIs to enable egress acl forward-to-vport rule")
-Signed-off-by: Yael Chemla <ychemla@nvidia.com>
-Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
+Fix this by reporting 0 for non-ETS traffic classes.
+
+Fixes: 820c2c5e773d ("net/mlx5e: Read ETS settings directly from firmware")
+Signed-off-by: Alexei Lazar <alazar@nvidia.com>
+Reviewed-by: Carolina Jubran <cjubran@nvidia.com>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260717073306.1242399-1-tariqt@nvidia.com
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Link: https://patch.msgid.link/20260717075125.1244877-2-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/esw/acl/helper.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/esw/acl/helper.c b/drivers/net/ethernet/mellanox/mlx5/core/esw/acl/helper.c
-index d599e50af346be..fc545bfb54de76 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/esw/acl/helper.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/esw/acl/helper.c
-@@ -71,7 +71,7 @@ int esw_egress_acl_vlan_create(struct mlx5_eswitch *esw,
- 	flow_act.action = flow_action;
- 	vport->egress.allowed_vlan =
- 		mlx5_add_flow_rules(vport->egress.acl, spec,
--				    &flow_act, fwd_dest, 0);
-+				    &flow_act, fwd_dest, fwd_dest ? 1 : 0);
- 	if (IS_ERR(vport->egress.allowed_vlan)) {
- 		err = PTR_ERR(vport->egress.allowed_vlan);
- 		esw_warn(esw->dev,
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c b/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
+index 84e700777941ec..d74ff20f825954 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
+@@ -158,6 +158,13 @@ static int mlx5e_dcbnl_ieee_getets(struct net_device *netdev,
+ 	}
+ 	memcpy(ets->tc_tsa, priv->dcbx.tc_tsa, sizeof(ets->tc_tsa));
+ 
++	/* Report 0 for non ETS TSA */
++	for (i = 0; i < ets->ets_cap; i++) {
++		if (ets->tc_tx_bw[i] == MLX5E_MAX_BW_ALLOC &&
++		    priv->dcbx.tc_tsa[i] != IEEE_8021QAZ_TSA_ETS)
++			ets->tc_tx_bw[i] = 0;
++	}
++
+ 	return err;
+ }
+ 
 -- 
 2.53.0
 
