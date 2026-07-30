@@ -1,110 +1,110 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C2433164B7;
-	Thu, 30 Jul 2026 18:17:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47D0443F095
+	for <patches@lists.linux.dev>; Thu, 30 Jul 2026 18:23:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785435466; cv=none; b=XdFY1uxpXeUcttAOckAItSjWekoOFy0stSKdRq//6p42w8Fq0sCp7fC3DqeLCAll5AU8FabELgflP93nSLjgVrquKOxzk1neWvv3NwBr6Jy2ZcXUspyWW6zLfBEnj6pZcaog+77wgj86fbr5R/IWegPPE1PYkyIQS/Lmr6H1/Vk=
+	t=1785435802; cv=none; b=ao07bK4WEGWncimstlM437xkpkaRmoWohW/7QyIu7IMz8VWxWeTIlrw6eaPTtqIaUkntoQ/EeYbPbL5U3qEL+Mzvu8Y4GJdWbgJMb5pLxNgnCgDe43MyJDsMPOllaaf7LmgAR6lgEvoZrzaffN5a2SW8Xbqsx6G3Sx78U/kW7/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785435466; c=relaxed/simple;
-	bh=Snwv4ZX9n7rsHVFGJZZarZQi0g4FUtW3ValMoH96bV0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YEHdXpaZRRZckcmpXjhX/281iIyz9ATzMiNaxFt3Go5/o3Bi6jhCXCAwx6LA9nxBBDQAR4PDembkkLB8vWv+CPlJycVomvEs1CpS0cSELJXRP2QMFUpRvdEHZKXvnQGKxoqdhjfd9C0iOtefpLsqXFrPvbg+G2dmC0dXMK7cH3A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fuXCm1mL; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1785435802; c=relaxed/simple;
+	bh=xCJhnHpVwOTvaL/DW/gllYM+iIXcd40BoQJSe+AulWA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=QisKp4iwHfk8Z8saj0rkVxb0SfyRwvpTBAyD2fhS5QiJo0XXqG3v83cxJQiWhWg9TR22GnguWKcezmbdRj9J1J//PWch8JSrtqfh0OgngmoklWHBKdzI1DxZGn1WrSXx24kg50ZXWM2PoODY6hTC8mw0QZ6uK0NwHeGbWH9WbEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=Wtjh4vfF; arc=none smtp.client-ip=209.85.128.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fuXCm1mL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86F6F1F000E9;
-	Thu, 30 Jul 2026 18:17:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785435464;
-	bh=6R6dAzebd0lU5AFh1vm8XcRfXETiBlUdRxOXlhLQ9dU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fuXCm1mLoqc5U3HXHSVUiHIjwDassHB8iSnSwNq4WhbmdXls3Z/2rBcJQQryry0MQ
-	 d0/5PoQ4wY1kXlywpxQCvpsKPiMhJPYwXdKaTtnn4ZkrDnUy/qUhdtciMN4bkCWUB2
-	 UxyJhIaQl4tedm4dCpOaRXe2lNKkO7HwUeOlA7P4jjJE59v1utLBeKnNEzjeVX6J9J
-	 rddw/X8gRdnv87M//z/5Vi15Mrs9YHzBlWvHxQG70tqI5fSchBSokpp/u0pHWO2vM2
-	 VzXYjm0e9qd9kJ3V7eR3+yo5W1sbmCjfCPjDRm1umjoiaj1J5PuVngngXMpH3w1+dj
-	 Pg9O90dBhysgg==
-From: Miguel Ojeda <ojeda@kernel.org>
-To: gregkh@linuxfoundation.org
-Cc: achill@achill.org,
-	akpm@linux-foundation.org,
-	broonie@kernel.org,
-	conor@kernel.org,
-	f.fainelli@gmail.com,
-	hargar@microsoft.com,
-	jonathanh@nvidia.com,
-	linux-kernel@vger.kernel.org,
-	linux@roeck-us.net,
-	lkft-triage@lists.linaro.org,
-	patches@kernelci.org,
-	patches@lists.linux.dev,
-	pavel@nabladev.com,
-	rwarsow@gmx.de,
-	shuah@kernel.org,
-	sr@sladewatkins.com,
-	stable@vger.kernel.org,
-	sudipm.mukherjee@gmail.com,
-	torvalds@linux-foundation.org,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Joel Fernandes <joelagnelf@nvidia.com>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	dri-devel@lists.freedesktop.org
-Subject: Re: [PATCH 6.18 000/675] 6.18.42-rc1 review
-Date: Thu, 30 Jul 2026 20:17:17 +0200
-Message-ID: <20260730181717.95457-1-ojeda@kernel.org>
-In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
-References: <20260730141445.110192266@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="Wtjh4vfF"
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-495590dde14so887475e9.0
+        for <patches@lists.linux.dev>; Thu, 30 Jul 2026 11:23:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20251104; t=1785435799; x=1786040599; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=DqfbmiEZ/jbsyui/HXGCKKp3cbCCYufKhVYiKs6CwOs=;
+        b=Wtjh4vfF02S6WBew3gZmwoYT7uq1Dq38Sp1Gj38AjNY8+XIpYIUDCRwgdkcgvr5oUW
+         OYcTKdmbo2YQAKzGXhU5zvplxM0hM2IzRWrK6De+0AVvjHPwqbZEJyMZJwxlrPXwlrjX
+         TG8uxtvGO0+UVOT9kMkf37MMftQqJLwXY3/jNC3dmZYnK0aghwPmlquxQ6cG7SVtsN63
+         Q5U1s++mIgdwL/viKqMZSheQmxJmzqtKiizgv9C1gIxrJoPkjeUBcQqElAv6vKQ8HLXx
+         BwS5I/7vct1bBCO4kzEoRai8Jg4v8L6hjk2KR9GRLPz5MjBhAaXWPEQRRL3/YopPcpT2
+         X8tg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1785435799; x=1786040599;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=DqfbmiEZ/jbsyui/HXGCKKp3cbCCYufKhVYiKs6CwOs=;
+        b=mgaQYQ+CIrDa/iACCBcO6UutP1C29WM5ary37WkeX2Iekfsn6NlL6DHoFFEWDgKx4I
+         H3Rg+o/UwxMiizDeXvK6twx2NsVAjmrl9PzacQJ2+RVRMyTRxs4i9pCU7APK1oLigFYF
+         qMgaWUcJBP6c23GIQg5rpL1PG8gXoOdd3Z4b/hRYEuodydKIzUOCKyjOLaHD+Eh62tU9
+         Mdlc0xCRjaQuj/2/PLvRBEXwpmBNhjRMs2B7JiqMM6ruMHZ4Kg18NHE1/Lhp0ws+1SiR
+         rTL7/KHEHvtf48GlurPH4dMnUB+TX9QA46nq4jXjM8BTtuQATdi7QOo6+2V1BPkphwh4
+         Xmcg==
+X-Gm-Message-State: AOJu0Yzjiz8g3atMmuK82BXcIPid8grnTpI5ETs4rkJQGMOV6/QZksST
+	ptvTMoGt9if4Az1omWVYx9uOWS1Pw3fAbnYlt6/lwIbziVw9BvK8VjE=
+X-Gm-Gg: AR+sD12ozAtpCA3RnYrgIWOMJfScNkvjgiibACVl06Z6bgUFw0zQGfWhT3h11ASyb3W
+	Vo4WzmYNGiEJWialWS6N+H8AH0vEELCSQQu80iNaXCMSSBTrBn1bhRGe1ft2E07cznEdjk6mKS9
+	UuahSGrnCH8Y0REowUP3BC3sM68tmBNI3EhhYrlD1i9J7JKdj75EkJRUS/JEEEZ6vKkZJMCRC7J
+	HPAp+auAdSxChZnyvgve+aQjDFElUww5MjnajdmOt70QEFcwbb6ASLsYubSDlpxfLiGqFTlnc19
+	MPpyMmq5LwVld3BySMQ7rzIMFBz3SuyetllnP1UBShYi5exkOQl5y+dFeCG8ZvTsWaNDWad1RPB
+	6W5vjtpkZs+eXycZMBkHzapjMxzuE3Hoo79sCMQe7wOSlQrbtHupucaQFC9pLB1oi1AVrnHOF21
+	7bKjAfQXWMiGtbJcqEuMAD4WNxXO1sP55X5y9q5YblFxspdJhmjd+fa0sCLGjcF7PU6/Pwns5Co
+	aEv8FWhuxGg2REB1r40o5ROnTIbsa+U++XluiKAZQ==
+X-Received: by 2002:a05:600c:4ec7:b0:495:6934:414c with SMTP id 5b1f17b1804b1-49804c531bamr23186975e9.19.1785435799385;
+        Thu, 30 Jul 2026 11:23:19 -0700 (PDT)
+Received: from [192.168.1.3] (p5b2aca7f.dip0.t-ipconnect.de. [91.42.202.127])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49801216694sm72464365e9.13.2026.07.30.11.23.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 30 Jul 2026 11:23:19 -0700 (PDT)
+Message-ID: <9ba2d3bd-593d-4d72-9654-5a6e4d76c0d4@googlemail.com>
+Date: Thu, 30 Jul 2026 20:23:18 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: Betterbird (Windows)
+Subject: Re: [PATCH 6.6 000/484] 6.6.148-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com
+References: <20260730141423.392222816@linuxfoundation.org>
+Content-Language: de-DE
+From: Peter Schneider <pschneider1968@googlemail.com>
+In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-On Thu, 30 Jul 2026 16:05:30 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.18.42 release.
-> There are 675 patches in this series, all will be posted as a response
+Am 30.07.2026 um 16:08 schrieb Greg Kroah-Hartman:
+> This is the start of the stable review cycle for the 6.6.148 release.
+> There are 484 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
->
-> Responses should be made by Sat, 01 Aug 2026 14:13:45 +0000.
-> Anything received after that time might be too late.
 
-Boot-tested under QEMU for Rust x86_64, arm64 and riscv64; built-tested
-for loongarch64 and arm32:
+Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg oddities or regressions found.
 
-Tested-by: Miguel Ojeda <ojeda@kernel.org>
+Tested-by: Peter Schneider <pschneider1968@googlemail.com>
 
-I detected in the middle of the build lines like:
 
-    find: 'lib': No such file or directory
+Beste Grüße,
+Peter Schneider
 
-It looks like we need:
+-- 
+Climb the mountain not to plant your flag, but to embrace the challenge,
+enjoy the air and behold the view. Climb it so you can see the world,
+not so the world can see you.                    -- David McCullough Jr.
 
-    ee8bfb15d02d ("drm: drop lib from header search path.")
-
-to go together with the one that was backported:
-
-    5e7b3c10420e ("gpu: Move DRM buddy allocator one level up (part two)")
-
-Having said that, there is something going on a bit confusing: commits
-"part one" (4a9671a03f2b) and "part two" (ba110db8e1bc) in mainline seem
-to have been merged into just the "part two" above in this -rc. Is that
-intentional? I am asking because the original removal of the `lib`
-folder happened in "part one" in mainline, so I was expecting to have to
-point to that one above, but it doesn't exist on its own.
-
-Cc: Joel Fernandes <joelagnelf@nvidia.com>
-Cc: David Airlie <airlied@gmail.com>
-Cc: Simona Vetter <simona@ffwll.ch>
-Cc: dri-devel@lists.freedesktop.org
-
-I hope that helps & thanks!
-
-Cheers,
-Miguel
+OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
+Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
