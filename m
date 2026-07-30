@@ -1,39 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BE9F35BDAA;
-	Thu, 30 Jul 2026 15:54:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F36093B27E9;
+	Thu, 30 Jul 2026 15:54:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426851; cv=none; b=QFRhlRCQijy1PG8TOygnUj6FctY+7QZtun4VCSvsJJPHKoDuHlr0Ke1VVP5QNOaKmINqxQ3W5APmQ0DGIur4AReL9OBrH7Qp84imW3/jh75R5NSqeIziblkIh56HYFOQLLEKPEjnheLI3Q42q1EhIiri4/k2P1pdoTNNgEt1xcM=
+	t=1785426854; cv=none; b=VpCigLuCSLgVR+5psHRdRb+/2/qP/khqD7iT529V47cMsXw9Bz/MvyNcdcrbegZYI7Hl8DFOPbLIR6gcp29VDLx+l8NNa/aJPmbyjcuEUBvJarfMMX7SeV3TCW7LYrtTF0yYofHJrldlJRha13w5qENykSsGfVp5w1HI3w3IKmw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426851; c=relaxed/simple;
-	bh=pksBRTWceaZ3u1IjoWIO29bubHx1RPmLA8cXHfpPPdY=;
+	s=arc-20240116; t=1785426854; c=relaxed/simple;
+	bh=uH0hOLU9FLUWpYMNUNWLs3hclZSkW9fxihBjFI+XF70=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LWD1/nUR7Of/tyFBe+EgvikwHdjKVbjII/9IuZwn4EmzVRUaX8ZBzVPazhZ7vbxkZXBs4RQXCyv7K27SsmEEa2+ChgdBvCFMaShqDb7ieyjRyqQpd5tjdAr6YglWHEK95FK4O6mimoJnZ6mK0cfQlssaStMGwBC5Iqu/y9SzO0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lgn3fSnX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jhyDRSlJMvHj/UFZI6kKXKJZJoEpNkEUrs79Ug0AdsZCAN6fr1QPa2UIK3TLMoADmE3TlBhnD1e7rg3Jxs884yMZ+7qhaYM5R8y1pqc7a5a8ucoIP30kXIuVZetHcI1013iOiykcFjVIm1bicmMYW92iVlFT0QhTqnq9shgG21U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nGAtIfnD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lgn3fSnX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6817C1F000E9;
-	Thu, 30 Jul 2026 15:54:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nGAtIfnD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 301411F000E9;
+	Thu, 30 Jul 2026 15:54:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426849;
-	bh=XbWvVsKHIz3B3qew2FIlij7erT+Bed1xkTS5O1BjX10=;
+	s=korg; t=1785426852;
+	bh=vUTZuWojgZpXjsMg7s16LG/tzLXoAhmPlzUemqB3bOo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lgn3fSnX9GRdhSZz/USj1MXSOjOVy8ZShGjZvIIz0hpczJGZNZpCydhNQ2v2zULT9
-	 +k8qpqT1RNUpQrB6A3PSFPE/nqgCkLq62PZAyEwDkAkJBL9tZUaLR6e5zunR8lj0pL
-	 w/lqAa8GzNIWqnOvB0Lw0iRNEjPYZnkjTgr1ZhtE=
+	b=nGAtIfnD35zo1/m3nYurLmwSqlJSkCjfIsnVp+2p42ZUx1kPye+n3U5rS/F0eArQp
+	 xZbC0CNsZmTrGSjPbLwQY2ZYb0EKF6q1RhO6TyxrMF4t/6yAd1ZprDzUozttLlFbu4
+	 DcEl/igDCXpp7RkKsYoChO2eRegV2M6pbeN/FTk8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack3000@gmail.com>,
-	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
+	Muchun Song <songmuchun@bytedance.com>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Oscar Salvador <osalvador@suse.de>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
+	Joao Martins <joao.m.martins@oracle.com>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Michal Hocko <mhocko@suse.com>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 520/602] landlock: Fix LANDLOCK_SCOPE_SIGNAL bypass on the SIGIO path
-Date: Thu, 30 Jul 2026 16:15:12 +0200
-Message-ID: <20260730141446.934183746@linuxfoundation.org>
+Subject: [PATCH 6.12 521/602] mm/mm_init: fix pageblock migratetype for ZONE_DEVICE compound pages
+Date: Thu, 30 Jul 2026 16:15:13 +0200
+Message-ID: <20260730141446.955221332@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -46,168 +58,118 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Muchun Song <songmuchun@bytedance.com>
 
-[ Upstream commit 4b80320ca7ed03d6e683f95b6066565dc97b9f92 ]
+[ Upstream commit 94405c6136839f7c462249c8b4b957bcb9527a9d ]
 
-LANDLOCK_SCOPE_SIGNAL must prevent a sandboxed process from signaling
-processes outside its Landlock domain.  It can be bypassed through the
-asynchronous SIGIO delivery path.
+The memmap_init_zone_device() function only initializes the migratetype of
+the first pageblock of a compound page.  If the compound page size exceeds
+pageblock_nr_pages (e.g., 1GB hugepages with 2MB pageblocks), subsequent
+pageblocks in the compound page remain uninitialized.
 
-A sandboxed process that owns any file or socket can arm it with
-fcntl(fd, F_SETOWN, -pgid), fcntl(fd, F_SETSIG, SIGKILL) and O_ASYNC, so
-that an I/O event makes the kernel deliver the chosen signal to the
-whole process group.  As the head of its process group's task list (the
-default position right after fork()) that group can also hold the
-non-sandboxed process that launched it, e.g. a supervisor or a security
-monitor.  The sandbox can thus kill or signal the processes
-LANDLOCK_SCOPE_SIGNAL is meant to protect from it.
+Move the migratetype initialization out of __init_zone_device_page() and
+into a separate pageblock_migratetype_init_range() function.  This
+iterates over the entire PFN range of the memory, ensuring that all
+pageblocks are correctly initialized.
 
-The scope is enforced in hook_file_send_sigiotask() against the Landlock
-domain recorded at F_SETOWN time, not the live domain of the sender.
-control_current_fowner() decides whether to record that domain and skips
-recording it when the fowner target is in the caller's thread group,
-which is safe only for a single-task target (PIDTYPE_PID, PIDTYPE_TGID).
-For a process group (PIDTYPE_PGID) pid_task() returns only one member;
-recording is skipped whenever that member shares the caller's thread
-group, and hook_file_send_sigiotask() then lets the signal fan out to
-the whole group unchecked.
+Also remove the stale confusing comment about MEMINIT_HOTPLUG above the
+migratetype setting since it is an obsolete relic from commit 966cf44f637e
+("mm: defer ZONE_DEVICE page initialization to the point where we init
+pgmap") and no longer makes sense here.
 
-Record the domain for every non single-process target so the scope is
-enforced against each group member at delivery time.
-
-That recording is necessary but not sufficient on its own: the kernel
-signals a process group through its members' thread-group leaders, and
-the leader of the registrant's own process can carry a different
-Landlock domain than the sibling thread that armed the owner.
-domain_is_scoped() would then deny that leader, even though commit
-18eb75f3af40 ("landlock: Always allow signals between threads of the
-same process") requires same-process delivery to be allowed.
-hook_task_kill() avoids this by evaluating same_thread_group() live, per
-recipient; the SIGIO path instead delegates the whole decision to a
-single registration-time check, which a process-group fan-out cannot
-honor.
-
-So also record the registrant's thread group next to its domain and
-exempt it at delivery: hook_file_send_sigiotask() allows the signal
-whenever the recipient belongs to the registrant's own process,
-restoring the same-process guarantee while keeping out-of-domain group
-members blocked.  The direct kill() path (hook_task_kill) already
-evaluates the live domain and is unaffected.
-
-Fixes: 18eb75f3af40 ("landlock: Always allow signals between threads of the same process")
-Cc: stable@vger.kernel.org
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Reviewed-by: Günther Noack <gnoack3000@gmail.com>
-Link: https://patch.msgid.link/56bffc24f3d0d08b45a686a48e99766b0a0821fa.1780614610.git.hexlabsecurity@proton.me
-[mic: Check pid_type earlier and improve comment, fix commit message,
-fix comment formatting]
-Signed-off-by: Mickaël Salaün <mic@digikod.net>
+Link: https://lore.kernel.org/20260428081855.1249045-6-songmuchun@bytedance.com
+Fixes: c4386bd8ee3a ("mm/memremap: add ZONE_DEVICE support for compound pages")
+Signed-off-by: Muchun Song <songmuchun@bytedance.com>
+Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Reviewed-by: Oscar Salvador <osalvador@suse.de>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Acked-by: Liam R. Howlett <liam@infradead.org>
+Cc: "Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>
+Cc: Joao Martins <joao.m.martins@oracle.com>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
+Cc: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/landlock/fs.c   |   14 ++++++++++++++
- security/landlock/fs.h   |   10 ++++++++++
- security/landlock/task.c |   11 +++++++++++
- 3 files changed, 35 insertions(+)
+ mm/mm_init.c |   34 +++++++++++++++++++---------------
+ 1 file changed, 19 insertions(+), 15 deletions(-)
 
---- a/security/landlock/fs.c
-+++ b/security/landlock/fs.c
-@@ -1666,6 +1666,14 @@ static bool control_current_fowner(struc
- 	lockdep_assert_held(&fown->lock);
+--- a/mm/mm_init.c
++++ b/mm/mm_init.c
+@@ -650,6 +650,20 @@ static inline void fixup_hashdist(void)
+ static inline void fixup_hashdist(void) {}
+ #endif /* CONFIG_NUMA */
  
- 	/*
-+	 * A process-group or session owner (PIDTYPE_PGID/PIDTYPE_SID) fans the
-+	 * signal out to every member at delivery time, so record the domain and
-+	 * let hook_file_send_sigiotask() check the live scope per recipient.
-+	 */
-+	if (fown->pid_type != PIDTYPE_PID && fown->pid_type != PIDTYPE_TGID)
-+		return true;
++#ifdef CONFIG_ZONE_DEVICE
++static __meminit void pageblock_migratetype_init_range(unsigned long pfn,
++		unsigned long nr_pages, int migratetype)
++{
++	const unsigned long end = pfn + nr_pages;
 +
-+	/*
- 	 * Some callers (e.g. fcntl_dirnotify) may not be in an RCU read-side
- 	 * critical section.
- 	 */
-@@ -1681,6 +1689,7 @@ static void hook_file_set_fowner(struct
++	for (pfn = pageblock_align(pfn); pfn < end; pfn += pageblock_nr_pages) {
++		set_pageblock_migratetype(pfn_to_page(pfn), migratetype);
++		if (IS_ALIGNED(pfn, PAGES_PER_SECTION))
++			cond_resched();
++	}
++}
++#endif
++
+ #ifdef CONFIG_DEFERRED_STRUCT_PAGE_INIT
+ static inline void pgdat_set_deferred_range(pg_data_t *pgdat)
  {
- 	struct landlock_ruleset *prev_dom;
- 	struct landlock_cred_security fown_subject = {};
-+	struct pid *prev_tg, *fown_tg = NULL;
- 	size_t fown_layer = 0;
+@@ -1000,21 +1014,6 @@ static void __ref __init_zone_device_pag
+ 	page->zone_device_data = NULL;
  
  	/*
-@@ -1706,21 +1715,26 @@ static void hook_file_set_fowner(struct
- 		if (new_subject) {
- 			landlock_get_ruleset(new_subject->domain);
- 			fown_subject = *new_subject;
-+			fown_tg = get_pid(task_tgid(current));
- 		}
+-	 * Mark the block movable so that blocks are reserved for
+-	 * movable at startup. This will force kernel allocations
+-	 * to reserve their blocks rather than leaking throughout
+-	 * the address space during boot when many long-lived
+-	 * kernel allocations are made.
+-	 *
+-	 * Please note that MEMINIT_HOTPLUG path doesn't clear memmap
+-	 * because this is done early in section_activate()
+-	 */
+-	if (pageblock_aligned(pfn)) {
+-		set_pageblock_migratetype(page, MIGRATE_MOVABLE);
+-		cond_resched();
+-	}
+-
+-	/*
+ 	 * ZONE_DEVICE pages are released directly to the driver page allocator
+ 	 * which will set the page count to 1 when allocating the page.
+ 	 */
+@@ -1105,6 +1104,9 @@ void __ref memmap_init_zone_device(struc
+ 
+ 		__init_zone_device_page(page, pfn, zone_idx, nid, pgmap);
+ 
++		if (IS_ALIGNED(pfn, PAGES_PER_SECTION))
++			cond_resched();
++
+ 		if (pfns_per_compound == 1)
+ 			continue;
+ 
+@@ -1112,6 +1114,8 @@ void __ref memmap_init_zone_device(struc
+ 				     compound_nr_pages(pfn, altmap, pgmap));
  	}
  
- 	prev_dom = landlock_file(file)->fown_subject.domain;
-+	prev_tg = landlock_file(file)->fown_tg;
- 	landlock_file(file)->fown_subject = fown_subject;
-+	landlock_file(file)->fown_tg = fown_tg;
- #ifdef CONFIG_AUDIT
- 	landlock_file(file)->fown_layer = fown_layer;
- #endif /* CONFIG_AUDIT*/
- 
- 	/* May be called in an RCU read-side critical section. */
- 	landlock_put_ruleset_deferred(prev_dom);
-+	put_pid(prev_tg);
- }
- 
- static void hook_file_free_security(struct file *file)
- {
-+	put_pid(landlock_file(file)->fown_tg);
- 	landlock_put_ruleset_deferred(landlock_file(file)->fown_subject.domain);
- }
- 
---- a/security/landlock/fs.h
-+++ b/security/landlock/fs.h
-@@ -70,6 +70,16 @@ struct landlock_file_security {
- 	 * euid.
- 	 */
- 	struct landlock_cred_security fown_subject;
-+	/**
-+	 * @fown_tg: Thread group of the task that set the file owner, pinned
-+	 * while @fown_subject holds a domain.  It lets
-+	 * hook_file_send_sigiotask() always allow a SIGIO delivered to the
-+	 * owner's own process -- e.g. the thread-group leader reached through a
-+	 * process-group owner -- matching the same-process exemption of
-+	 * hook_task_kill().  NULL when no domain is recorded.  Protected by
-+	 * file->f_owner->lock, like @fown_subject.
-+	 */
-+	struct pid *fown_tg;
- };
- 
- /**
---- a/security/landlock/task.c
-+++ b/security/landlock/task.c
-@@ -314,6 +314,17 @@ static int hook_file_send_sigiotask(stru
- 	if (!subject->domain)
- 		return 0;
- 
-+	/*
-+	 * Always allow delivery to the file owner's own process, including a
-+	 * thread-group leader reached through a process-group owner.  This
-+	 * mirrors hook_task_kill()'s same-process exemption and preserves the
-+	 * guarantee of commit 18eb75f3af40 ("landlock: Always allow signals
-+	 * between threads of the same process"), which the registration-time
-+	 * check cannot honor for a process-group target.
-+	 */
-+	if (task_tgid(tsk) == landlock_file(fown->file)->fown_tg)
-+		return 0;
++	pageblock_migratetype_init_range(start_pfn, nr_pages, MIGRATE_MOVABLE);
 +
- 	scoped_guard(rcu)
- 	{
- 		is_scoped = domain_is_scoped(subject->domain,
+ 	pr_debug("%s initialised %lu pages in %ums\n", __func__,
+ 		nr_pages, jiffies_to_msecs(jiffies - start));
+ }
 
 
