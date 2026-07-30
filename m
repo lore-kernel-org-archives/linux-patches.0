@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E41F1FE44A;
-	Thu, 30 Jul 2026 14:50:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17D18175A6D;
+	Thu, 30 Jul 2026 14:50:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423058; cv=none; b=swz8mI2ZcM2RBpVrmDJLqWmAubZ/xW2F3zJMn1JD0OC4gbRIv8LsXDP+gpvprvOuM+UCCal0l52rVCSoEOonvNjSLyM6QhRSUYNBQyH3EkX1gRmQ93J4ZiYQ7dP4Hriq84pBoxgPy9a6cQh0RYW63msEMWXd+gJB/MlHYP8BMC4=
+	t=1785423061; cv=none; b=aHlebQBkSg3phNy/ftpH6ftr6r+kdFVsrSTnoCB0YMLV/8HEsvYihGBGozYW/FDfYMU7M5VMmyG9uSdt/BgqQxLz9zNXAAZXV8pKLQGenmVM+/rgPR58GYSKmLep5vVr2pcyuTkKyTVVjzzFSxBYnQi2usq83CaiK3fU8BJqNBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423058; c=relaxed/simple;
-	bh=kJDNFDQiupU58DZaeSF2zdg7xW8wEvlDIwiIPOgawHE=;
+	s=arc-20240116; t=1785423061; c=relaxed/simple;
+	bh=9BERfODaGYLHK7M0/w0lk47ERKmG0pJAtj/TzxFbhB8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ck9vuZjUpaseu641k3E0kY5oYakS9XWD9kdvmwMT/IxwmJ8163OlDlqXyOGN97LpxuDPXL3bSJiSOREvwmbLUn0JtfyeUE8DVmZoCRermGVQKLo+PetXDSzqtf2xB0F3bHlRJU4/wIRPP8RTe8c4IX78JrLjzKIEd6l+u5cQ+64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AB8tXYa7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EQllBk4Fmmd20uPkTGlAHBSlUjVp00x3V4qLG0Nw3m9RkbE9zbwgmm8zqBAiaKlclG53cg0E5l5NlwUPCLSUGcnfwZeSJwOcZk0x8evE0MqQ9WPbiATs552TFEP2+cBvGI1+ESAY85M0+uGtXxPLIsmEGdg1Lam01qJ9tAF/w7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J6d8HXAH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AB8tXYa7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 692691F000E9;
-	Thu, 30 Jul 2026 14:50:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J6d8HXAH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3900B1F00A3D;
+	Thu, 30 Jul 2026 14:50:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423056;
-	bh=xhkxXXuOc5vMrA+3gD+uyHLRXVW9XxKWZbD/kGsM80M=;
+	s=korg; t=1785423059;
+	bh=86NnP+RIBAE+dB7AfIY6rjiuJIeLz47oCqlfvpWVx5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AB8tXYa7l5k+mOGQRiTw+yu0Pq7FxSwQH91zjfqTjWAXD3Tkznbr2vA1QHSgZeiF2
-	 KQ5jwqrzeciTYJs0biDXR1QkCooMQlA6/s2KLKEEGx7zk74FmVrnCZ5LfYiq5jSsOl
-	 TQ7xOsC31S871jCJGCYCvCxSh38TEWT8PCxrYw/8=
+	b=J6d8HXAHwDZ+L1UgA6sggVxVjTCW960vENzbWsnlRS1w7iZKvHG+MAPOG+4NK6T6B
+	 /f2QJk4jAvSVzSFyZVpVjISe+7LGw++7SRvk02cc1vNYc7RKQlYHv57jsHihuou+9b
+	 yaOrgJfqrj3Jtomng6ETX1981d9wBOqaQUaWRghY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Ranner <frank.ranner@intel.com>,
-	kernel test robot <lkp@intel.com>,
-	Mat Martineau <martineau@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Kalpan Jani <kalpan.jani@mpiricsoftware.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.1 607/744] mptcp: fix BUILD_BUG_ON on legacy ARM config
-Date: Thu, 30 Jul 2026 16:14:40 +0200
-Message-ID: <20260730141457.176159318@linuxfoundation.org>
+Subject: [PATCH 7.1 608/744] mptcp: fix stale skb->sk reference on subflow close
+Date: Thu, 30 Jul 2026 16:14:41 +0200
+Message-ID: <20260730141457.197665297@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -53,52 +52,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Kalpan Jani <kalpan.jani@mpiricsoftware.com>
 
-commit 133cca19d75b9264bc2bbcdf2c3b80e3da207649 upstream.
+commit bd7aae448f6ee9d82599a4474664de1e6e91a535 upstream.
 
-The 0-day bot managed to find kernel configs that cause build failures,
-e.g. when using the StrongARM SA1100 target (ARMv4).
+The backlog list is updated by mptcp_data_ready() under
+mptcp_data_lock(). The cleanup of backlog references to a closing
+subflow, however, was performed in mptcp_close_ssk(), before
+__mptcp_close_ssk() acquires the ssk lock, and while holding neither
+the ssk lock nor mptcp_data_lock().
 
-On such legacy ARM architecture, all structures are apparently aligned
-to 32 bits, causing build issue here. Indeed, on such architecture,
-'flags' size is not equivalent to sizeof(u16) as expected, but to
-sizeof(u32).
+Because that traversal ran without mptcp_data_lock(), concurrent softirq
+RX processing on another CPU (subflow_data_ready() -> mptcp_data_ready()
+-> __mptcp_add_backlog(), under mptcp_data_lock()) could add a backlog
+entry referencing the ssk while the cleanup loop was in progress. Such
+an entry could be missed by the cleanup, or the concurrent list update
+could corrupt the traversal, leaving skb->sk pointing at the ssk after
+it is freed.
 
-Instead, use memset(). It was not used before to ensure a simple clear
-operation was used by the compiler. But at the end, it shouldn't matter,
-and the compiler should optimise this to the same operation with or
-without memset() when -O above 0 is used. So let's switch to memset() to
-fix this issue, and reduce this complexity.
+A later mptcp_backlog_purge() then dereferences the stale pointer,
+triggering a warning in inet_sock_destruct() (ssk->sk_rmem_alloc != 0)
+followed by a use-after-free in mptcp_backlog_purge().
 
-Fixes: 5e939544f9d2 ("mptcp: fix uninit-value in mptcp_established_options")
+Fix this by moving the backlog cleanup into __mptcp_close_ssk(), after
+subflow->closing is set to 1 and while the ssk lock is still held,
+serialized under mptcp_data_lock(). The cleanup runs only on the push
+path (MPTCP_CF_PUSH), where backlog references accumulate; on other
+teardown paths the caller already handles cleanup.
+
+With subflow->closing set and mptcp_data_lock() held across the purge,
+any concurrent mptcp_data_ready() either completes its enqueue before
+the purge runs and is caught, or observes closing=1 and bails out. Once
+mptcp_data_unlock() is reached, no new skb referencing the ssk can be
+enqueued, so the cleanup is exhaustive.
+
+Remove the unprotected traversal from mptcp_close_ssk() entirely.
+
+Fixes: ee458a3f314e ("mptcp: introduce mptcp-level backlog")
 Cc: stable@vger.kernel.org
-Suggested-by: Frank Ranner <frank.ranner@intel.com>
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202605312026.Srgsz7Tp-lkp@intel.com/
-Closes: https://lore.kernel.org/oe-kbuild-all/202607031100.upQfRZTM-lkp@intel.com/
-Reviewed-by: Mat Martineau <martineau@kernel.org>
+Suggested-by: Paolo Abeni <pabeni@redhat.com>
+Reported-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/621
+Signed-off-by: Kalpan Jani <kalpan.jani@mpiricsoftware.com>
+Acked-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260722-net-mptcp-misc-fixes-7-2-rc5-v1-5-6fb595bc86ef@kernel.org
+Link: https://patch.msgid.link/20260722-net-mptcp-misc-fixes-7-2-rc5-v1-3-6fb595bc86ef@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/options.c |    5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ net/mptcp/protocol.c |   33 +++++++++++++++++++--------------
+ 1 file changed, 19 insertions(+), 14 deletions(-)
 
---- a/net/mptcp/options.c
-+++ b/net/mptcp/options.c
-@@ -573,10 +573,7 @@ static bool mptcp_established_options_ds
- 	bool ret = false;
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -2545,6 +2545,22 @@ static void __mptcp_subflow_disconnect(s
+ 	}
+ }
  
- 	/* Zero `use_ack` and `use_map` flags with one shot. */
--	BUILD_BUG_ON(sizeof_field(struct mptcp_ext, flags) != sizeof(u16));
--	BUILD_BUG_ON(!IS_ALIGNED(offsetof(struct mptcp_ext, flags),
--				 sizeof(u16)));
--	*(u16 *)&opts->ext_copy.flags = 0;
-+	memset(&opts->ext_copy.flags, 0, sizeof(opts->ext_copy.flags));
- 	opts->csum_reqd = READ_ONCE(msk->csum_enabled);
- 	mpext = skb ? mptcp_get_ext(skb) : NULL;
++static void mptcp_cleanup_ssk_backlog(struct sock *sk, struct sock *ssk)
++{
++	struct mptcp_sock *msk = mptcp_sk(sk);
++	struct sk_buff *skb;
++
++	mptcp_data_lock(sk);
++	list_for_each_entry(skb, &msk->backlog_list, list) {
++		if (skb->sk != ssk)
++			continue;
++
++		atomic_sub(skb->truesize, &skb->sk->sk_rmem_alloc);
++		skb->sk = NULL;
++	}
++	mptcp_data_unlock(sk);
++}
++
+ /* subflow sockets can be either outgoing (connect) or incoming
+  * (accept).
+  *
+@@ -2568,6 +2584,9 @@ static void __mptcp_close_ssk(struct soc
+ 	lock_sock_nested(ssk, SINGLE_DEPTH_NESTING);
+ 	subflow->closing = 1;
  
++	if (flags & MPTCP_CF_PUSH)
++		mptcp_cleanup_ssk_backlog(sk, ssk);
++
+ 	/* Borrow the fwd allocated page left-over; fwd memory for the subflow
+ 	 * could be negative at this point, but will be reach zero soon - when
+ 	 * the data allocated using such fragment will be freed.
+@@ -2659,9 +2678,6 @@ out:
+ void mptcp_close_ssk(struct sock *sk, struct sock *ssk,
+ 		     struct mptcp_subflow_context *subflow)
+ {
+-	struct mptcp_sock *msk = mptcp_sk(sk);
+-	struct sk_buff *skb;
+-
+ 	/* The first subflow can already be closed or disconnected */
+ 	if (subflow->close_event_done || READ_ONCE(subflow->local_id) < 0)
+ 		return;
+@@ -2671,17 +2687,6 @@ void mptcp_close_ssk(struct sock *sk, st
+ 	if (sk->sk_state == TCP_ESTABLISHED)
+ 		mptcp_event(MPTCP_EVENT_SUB_CLOSED, mptcp_sk(sk), ssk, GFP_KERNEL);
+ 
+-	/* Remove any reference from the backlog to this ssk; backlog skbs consume
+-	 * space in the msk receive queue, no need to touch sk->sk_rmem_alloc
+-	 */
+-	list_for_each_entry(skb, &msk->backlog_list, list) {
+-		if (skb->sk != ssk)
+-			continue;
+-
+-		atomic_sub(skb->truesize, &skb->sk->sk_rmem_alloc);
+-		skb->sk = NULL;
+-	}
+-
+ 	/* subflow aborted before reaching the fully_established status
+ 	 * attempt the creation of the next subflow
+ 	 */
 
 
