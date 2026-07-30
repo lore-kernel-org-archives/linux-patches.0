@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D1953D75C4;
-	Thu, 30 Jul 2026 14:41:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C999143B3F8;
+	Thu, 30 Jul 2026 14:41:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422486; cv=none; b=q0cOb5PRYGccexmKWce4yOlyOPdBRYeWhoI9HiVFP7jzuvyDzYNUEsUKNJJ7ZOY+N3PJUOcYU50yOQ7r8C3yvRixhETT2OahBDKgTS9PM3JFXQpWFHREA0zLYFe0Zy1BmvV4hBEWv2giiy7l64AM+VUGAfaVRUHTAKWEeVZwchA=
+	t=1785422488; cv=none; b=EF9h2qNNrDWWdtK/29dgtNfGCeq64vAwuF7cB3y93Tg4EBO3pE+RQtoK3xzMMgoBgvyLWBjyPtVIqwwVM1ul2a0kl6RNDeWEDtNDVa2QuU7Kwllid4eWWF5MetXxpKD5PriReV+vjE25klTW4qNAF1KKAZrZ6e+ZPOCa0F4lWkc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422486; c=relaxed/simple;
-	bh=dEgQVDCpSOZP7pZbe5eAeIJ8BCTINzSposoFnTbaEFQ=;
+	s=arc-20240116; t=1785422488; c=relaxed/simple;
+	bh=CCORwOGTaIS+kCc3U+dKzh1lndNTagZtaq86/qHzM9U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uxtfuX/zeL56hGJ88UyX0WEN3hgZOLcgDpuvv3YiwZsN3HT8GjuI3vKoM+pegdObN1sW8df3p6xQgCn7lbEDn/zqcZrHnxJw/QmKxICyzNPK80iIC7yYRCjvTRL7WSIjxUvGfqTaZizXJML5/CbXWfZurvDwx1Vxn6yVLMVbau4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=198/6PzE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ig5Xw3crHKxnSJSQJT6ddD2lcjlIzvHRdoZZhVrNqEHZNbUM/WJ9LkDOxV2xLwL9MjFO/CyxKPD6rYKkpIsv7HuwSQoe/kdE4HiHgNLZMi4Gn0MLZsfUvLMdzymmrPUwYHIeFutS0WCLLzXORK7CWY6MYPLsGsnf7JjVmLilXxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lm0wDBLI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="198/6PzE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68EFF1F000E9;
-	Thu, 30 Jul 2026 14:41:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lm0wDBLI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 318831F000E9;
+	Thu, 30 Jul 2026 14:41:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422484;
-	bh=SLQqViDyp/OtQ0gKykNmjOnTWaOl0rbzetyZF22R5CY=;
+	s=korg; t=1785422487;
+	bh=BoSCxLZNa/Dm0w1wjEBveudcJCO8bxArv5aOIqHvTdA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=198/6PzExe65zkR8qLBueEN6sDRG2wQiKKnRCwi63AjZp14sch1+KO8//J4iGsGS6
-	 6iW21buS9k/QDTK0OtgLdmMF8IMUd3zjnq7sT87nIiaBSzEJK19PRPhbIkfPjXznu5
-	 ynUwy6l3x7q5E1Hi7rQyorm9iBzwJ6/LYa5mQ56Q=
+	b=Lm0wDBLInlBhxW7bHf0MHbCAMO5PjEdhG4wAfU0CP62LwRAxJAlT3aG0sb4jYbTyG
+	 ZDc9KI64YwNG4Oz7XiFT4wruKstdxHn19itE8gIcaqYo4VHwsJzkftDHS5Tw73rV3q
+	 by+TSDcG+e0/dXeF2I2RMWkYFNmka0PTg+12rzj8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	WenTao Liang <vulab@iscas.ac.cn>,
+	George Zhang <george.zhang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.1 453/744] drm/amd/pm/ci: Dont disable MCLK DPM on Bonaire 0x6658 (R7 260X)
-Date: Thu, 30 Jul 2026 16:12:06 +0200
-Message-ID: <20260730141453.926717128@linuxfoundation.org>
+Subject: [PATCH 7.1 454/744] drm/amd/display: set new_stream to NULL after release
+Date: Thu, 30 Jul 2026 16:12:07 +0200
+Message-ID: <20260730141453.947030448@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -44,67 +45,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: WenTao Liang <vulab@iscas.ac.cn>
 
-commit 85371c5ef502d10add72eab38711e191dccea981 upstream.
+commit 9fa26b9eed6195bf840f39ac183b9a6237548755 upstream.
 
-The old radeon driver has a documented workaround in ci_dpm.c
-which claims that Bonaire 0x6658 with old memory controller
-firmware is unstable with MCLK DPM, so as a precaution I
-disabled MCLK DPM on this ASIC in amdgpu.
+In dm_update_crtc_state(), the skip_modeset path releases new_stream
+via dc_stream_release() but does not set the pointer to NULL.
 
-Note that the old MC firmware is not actually used with
-amdgpu, but in theory it's possible that the VBIOS sets
-up the ASIC with an old MC firmware that is already running
-when amdgpu initializes (in which case amdgpu doesn't
-load its own firmware).
+If a later error (e.g., color management failure) triggers the fail
+label, the error path calls dc_stream_release() again on the same
+dangling pointer, causing a double release and potential use-after-free.
 
-What I expected to happen is that the GPU would simply use
-its maximum memory clock, and indeed this is what seemed
-to happen according to amdgpu_pm_info which reads the
-current MCLK value from the SMU.
-However, some users reported a huge perf regression
-and upon a closer look it seems that the GPU seems to
-not actually use the highest MCLK value, despite the SMU
-reporting that it does.
+Fix this by setting new_stream to NULL after the initial release.
 
-Let's not disable MCLK DPM on Bonaire 0x6658 (R7 260X).
-
-Keep MCLK DPM disabled on R9 M380 in the 2015 iMac
-because that still hangs if we enable it.
-
-Fixes: 9851f29cb06c ("drm/amd/pm/ci: Disable MCLK DPM on problematic CI ASICs")
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Fixes: 9b690ef3c704 ("drm/amd/display: Avoid full modeset when not required")
+Signed-off-by: WenTao Liang <vulab@iscas.ac.cn>
+Reviewed-by: George Zhang <george.zhang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit d34acad064ee7d82bd18f5d87592c422d4d323ac)
+(cherry picked from commit 99f3af19073b3ddbfd96e789124cce12c4277b28)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/powerplay/hwmgr/hwmgr.c |    7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/hwmgr.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/hwmgr.c
-@@ -106,11 +106,8 @@ int hwmgr_early_init(struct pp_hwmgr *hw
- 		hwmgr->od_enabled = false;
- 		switch (hwmgr->chip_id) {
- 		case CHIP_BONAIRE:
--			/* R9 M380 in iMac 2015: SMU hangs when enabling MCLK DPM
--			 * R7 260X cards with old MC ucode: MCLK DPM is unstable
--			 */
--			if (adev->pdev->subsystem_vendor == 0x106B ||
--			    adev->pdev->device == 0x6658) {
-+			/* R9 M380 in iMac 2015: SMU hangs when enabling MCLK DPM */
-+			if (adev->pdev->subsystem_vendor == 0x106B) {
- 				dev_info(adev->dev, "disabling MCLK DPM on quirky ASIC");
- 				adev->pm.pp_feature &= ~PP_MCLK_DPM_MASK;
- 				hwmgr->feature_mask &= ~PP_MCLK_DPM_MASK;
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -11715,6 +11715,7 @@ skip_modeset:
+ 	/* Release extra reference */
+ 	if (new_stream)
+ 		dc_stream_release(new_stream);
++	new_stream = NULL;
+ 
+ 	/*
+ 	 * We want to do dc stream updates that do not require a
 
 
