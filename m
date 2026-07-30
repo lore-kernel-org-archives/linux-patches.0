@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8EB344998D;
-	Thu, 30 Jul 2026 15:28:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D683E448CF4;
+	Thu, 30 Jul 2026 15:28:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425325; cv=none; b=nkQBlRME+NMayIY4EPzTSJqQ1oI/0yCjWEQwNBtVNhWK87lHPJi0gEre0gDSfhxaQUMcLd43AqBOHYD7KinK7gA+xXljI5U83OS8vnUV7Klq2lNMprNNGZgOeoUfzNncbU1J9DVhTLxYva+rBlhB99ql14r2DUJJ+9HjtaHk0I4=
+	t=1785425328; cv=none; b=VJqW+6TWTzvedKH2wEZYGxID20LVAWZzYbrsYu/rOAo3byKTZorSfRikBMyYjcD2yVBPUcZVCcEOer8Dh2RzN1rI5bSS0ZcWOG3wdW/0G3550OrAi5udLWODeK0GEnK0xWFcf7hLIEna4syzsZCnP6HRF3Msde7FT8WnH1qZgkI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425325; c=relaxed/simple;
-	bh=AiTP4b7MYo1Ypw9xFbVgCHyNrKaTuUrQhUiJ9fWaBek=;
+	s=arc-20240116; t=1785425328; c=relaxed/simple;
+	bh=4QET7/hTA07HYfbTmn+GABUN8GcyDoMYyKN7wxeQgus=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SgOXiigWX6U57LvC2+WvGxcxCGo7xPsTzqP9i2KlOJy2f2jAVxp3lQwYQ2lWcnqhYvzfiYEe3lrgBmoyL5XzHVcINbJdbKHSX9+ZxLkrVIOCpHcAz8dflkfF5wX+xBxBoggJcm1+ZmGNcPpsybO+QdIGYrZGfkx0JJhdUTmm5FU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g9cDGbgW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rrsKHF6m7uPirIY/MNW2fswNpY83+cTos/XNYLQlSMa2zGue5UfRyglIk5JhsTFeXYli8QNE8tPMDCK8n2tIxRs3+LEXO+cCcVzBruqLXuIEc/+bdbaIyMtESfCEkPjLeNBalX9n7ZxZJBKM4r7mOs9NqYxI7YGL45YMoc0NvbI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=af+SAJKO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g9cDGbgW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E70AF1F000E9;
-	Thu, 30 Jul 2026 15:28:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="af+SAJKO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF6AC1F000E9;
+	Thu, 30 Jul 2026 15:28:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425324;
-	bh=8v54NUtEbsPtbPoqxTK1we7NKHOyqVo/x6dGKFIQL6M=;
+	s=korg; t=1785425327;
+	bh=AjmaBbJELSbmCba5KYEJRLI2XJTr8nb7JharMstOo7c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g9cDGbgWNxNZH+l3E9e1uj3oF5qimY+/+D5LwHuNgcBIViwHo1T3+7oPm0sLNTY4P
-	 +s1/HN4EHZ62xZpa9RvnsIiFR/gKt7MY4zlDBFZd5coNLhy3ParGCHq+SE/SXKNoa3
-	 TAfmiu8LAOfKyy9JfRCchBKsheFsSFnGcu0Rwnck=
+	b=af+SAJKO3x3T9qyClsCIAF9VQ8emlKsmcUA804ZwN5dK8usHZ0WNN3yRGIJbJv4pN
+	 BLuOaOg9RMhVWQNJWi72LOhDMphBEyRa9CgOeKiQJK71aqTfKRpCVnalqmGk6PerVP
+	 OmTT9UMVFkf5B5Mgjt3OVfxIBgpV/emvfhYoZTZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Dan Carpenter <error27@gmail.com>,
+	Mikko Perttunen <mperttunen@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 029/602] Revert "arm64: dts: ti: k3-am62a7-sk: Add bootph-all tag to vqmmc"
-Date: Thu, 30 Jul 2026 16:07:01 +0200
-Message-ID: <20260730141436.619666694@linuxfoundation.org>
+Subject: [PATCH 6.12 030/602] gpu: host1x: Fix use-after-free in host1x_bo_clear_cached_mappings
+Date: Thu, 30 Jul 2026 16:07:02 +0200
+Message-ID: <20260730141436.640637940@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -49,33 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-This reverts commit 1b21939117aea112f6b7fa67bba6fb43d2a8e8ec.
+From: Mikko Perttunen <mperttunen@nvidia.com>
 
+[ Upstream commit 266cddf7bd0f6c79b6c0633aef742a22bf70265b ]
+
+__host1x_bo_unpin() drops the last reference to the mapping and frees
+it, so we can't dereference mapping afterwards. The cache itself
+outlives the mapping, so use the cache local variable instead.
+
+Reported-by: Dan Carpenter <error27@gmail.com>
+Closes: https://lore.kernel.org/linux-tegra/ah6ErK6f4kVudVIA@stanley.mountain/T/#u
+Signed-off-by: Mikko Perttunen <mperttunen@nvidia.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
+Link: https://patch.msgid.link/20260603-host1x-bocache-leak-fix-v1-1-494101dbfd30@nvidia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/ti/k3-am62a7-sk.dts | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/gpu/host1x/bus.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/ti/k3-am62a7-sk.dts b/arch/arm64/boot/dts/ti/k3-am62a7-sk.dts
-index f94378379447a6..0b6e371eea98d2 100644
---- a/arch/arm64/boot/dts/ti/k3-am62a7-sk.dts
-+++ b/arch/arm64/boot/dts/ti/k3-am62a7-sk.dts
-@@ -134,7 +134,6 @@ vddshv_sdio: regulator-5 {
- 		gpios = <&main_gpio0 31 GPIO_ACTIVE_HIGH>;
- 		states = <1800000 0x0>,
- 			 <3300000 0x1>;
--		bootph-all;
- 	};
+diff --git a/drivers/gpu/host1x/bus.c b/drivers/gpu/host1x/bus.c
+index ef42e9a883f4f9..4dd83627fae06a 100644
+--- a/drivers/gpu/host1x/bus.c
++++ b/drivers/gpu/host1x/bus.c
+@@ -1006,10 +1006,10 @@ void host1x_bo_clear_cached_mappings(struct host1x_bo *bo)
+ 		if (WARN_ON(!cache))
+ 			continue;
  
- 	leds {
-@@ -382,7 +381,6 @@ pmic_irq_pins_default: pmic-irq-default-pins {
- 		pinctrl-single,pins = <
- 			AM62AX_MCU_IOPAD(0x000, PIN_INPUT, 7) /* (E11) MCU_GPIO0_0 */
- 		>;
--		bootph-all;
- 	};
- };
- 
+-		mutex_lock(&mapping->cache->lock);
++		mutex_lock(&cache->lock);
+ 		WARN_ON(kref_read(&mapping->ref) != 1);
+ 		__host1x_bo_unpin(&mapping->ref);
+-		mutex_unlock(&mapping->cache->lock);
++		mutex_unlock(&cache->lock);
+ 	}
+ }
+ EXPORT_SYMBOL(host1x_bo_clear_cached_mappings);
 -- 
 2.53.0
 
