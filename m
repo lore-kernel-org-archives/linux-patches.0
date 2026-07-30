@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF9F5382F01;
-	Thu, 30 Jul 2026 15:51:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7E4D374192;
+	Thu, 30 Jul 2026 15:51:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426699; cv=none; b=Z6mcw91Y6ZRNO/LAezduwlUnsYr7cC+ExyAlDzdFEN+IJcao7+6AXkkeHNVH5JxpLTMd9DXqoTD4GdjFZ6Wsi7cgwg6i3keNSvUalZzemiiSlqqTsDp/Ijtw+frMJofGXKuz14ISEU1gpedOP1eWg9DYqPu0WAjugOLD/WKvMgw=
+	t=1785426706; cv=none; b=XYds1olR/er/TrXDNeky4mygDE9bIaQy8whQR4TPoKIy8Af6ienQ/xi1+Mi597wmaFtPAmjNkrNpEM0Br171NQrPvqVfdGj+2txUaG1XlUi0A6/8HCD6UCcm38omR4/eJ7/OzaJMbEAqwqcJ8eIflEWIVdcWX4jni9t/hWTlXsw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426699; c=relaxed/simple;
-	bh=rVhKTBowk3EPOZs18FvnADfEXPN5MHmUuF8eSvwaqbk=;
+	s=arc-20240116; t=1785426706; c=relaxed/simple;
+	bh=A2YJkbsq4rwAjJXhcpnjbyRZwC0lPOtblQwKNLB+1s4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QJlSm5hw6Q+XDv2kpbHMy4eoK+bbuYQAGA+uojZbNPJqIcrNV+qM7bLa55DK/pHcSktgBo7HbG27cAeOHGGmHwpKO72WcU3DFWnw9dF8f4XyW6dUGdzLlEruYK7j6/ZO7rwgBOhluTDEhixw/JrTC8oQ3hx8lQA1svbal1XGHhU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RCreU8RN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=MC5yQmJdim17kNlKH5cHTIA24cpjsT6axY7tRVzhbmbrRX9ysHXUL27KMIAGR8t5ZR1VciT1ZKE4gAdKf9j6RlEpju47vJsewXiIYKjOaP3N7XiDJqrcGELqsRbWlpfJzg3RX5g3wRvTYIX1cRh1ECRfrHaSEJhz7dpEJdpNkY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q1BwG0/a; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RCreU8RN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1494B1F00A3A;
-	Thu, 30 Jul 2026 15:51:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q1BwG0/a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 470691F00A3A;
+	Thu, 30 Jul 2026 15:51:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426698;
-	bh=3J9SQvTXF4pYdETy9pGShTUNOHMhhCKz6JXIESk9dXY=;
+	s=korg; t=1785426704;
+	bh=HqMzXHEdQFBnt3HPnV1BDsbI9P9sz0hBWnE7uLeEjdI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RCreU8RN7qD2y9RrGv9d3pLrjwsm01oBvVbcYZZYABdthyEaruLGTg0J131G5DQ6R
-	 FcFRw5gHQ/PSwJuznyZSclHPgm14LjTEdCUJ/cIQn6+TYNjOIU+tghVJi5A3UwHa78
-	 z9gosUdO+HZsHabZadBB4RqmnroQmNTAsvHyQWeo=
+	b=Q1BwG0/auTVGNaTBVxOMfDIbPCOPSSftZCIEi/UYL8tZcHUg71SEPH4ilPN1mvRHx
+	 hVAeFH2hDrhHmVBrYVckwdazyPnE0kNM2qGomGgYzp+qaEgNFJ12YGVd8Si2knTvFy
+	 GcQmv+rMJuP+AGtp7vkhdbInFGzom/sV3r1Vw28s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Theodor Arsenij Larionov-Trichkine <theodorlarionov@gmail.com>,
-	Florian Westphal <fw@strlen.de>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Matthew Auld <matthew.auld@intel.com>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	John Olender <john.olender@gmail.com>,
+	Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 509/602] netfilter: nft_fib: reject fib expression on the netdev egress hook
-Date: Thu, 30 Jul 2026 16:15:01 +0200
-Message-ID: <20260730141446.690443592@linuxfoundation.org>
+Subject: [PATCH 6.12 511/602] gpu/buddy: bail out of try_harder when alignment cannot be honoured
+Date: Thu, 30 Jul 2026 16:15:03 +0200
+Message-ID: <20260730141446.735601899@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -45,103 +48,144 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Theodor Arsenij Larionov-Trichkine <theodorlarionov@gmail.com>
+From: Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>
 
-[ Upstream commit d07955dd34ecae17d35d8c7d0a273a3fba653a8c ]
+[ Upstream commit 56bc6384314fb9ae98975fb2af8b143097ede3dc ]
 
-A fib expression in a netdev egress base chain dereferences nft_in(pkt),
-NULL on the transmit path, causing a NULL pointer dereference at eval.
-nft_fib_validate() masks the hook with NF_INET_* values, but netdev hook
-numbers are a separate enum that aliases them (NF_NETDEV_EGRESS ==
-NF_INET_LOCAL_IN), so an egress chain passes validation and then faults.
+The try_harder contiguous fallback could return a range whose start
+offset did not match the caller's min_block_size. When a candidate's
+start is misaligned, realign it: free the misaligned run and reallocate
+exactly @size at the next lower min_block_size boundary. This keeps the
+returned size unchanged with no surplus to trim, and rejects the request
+only when no aligned candidate fits.
 
-Add nft_fib_netdev_validate() that limits each result/flag to the netdev
-hook where the device it reads exists: the input-device cases (OIF,
-OIFNAME, ADDRTYPE with F_IIF) to ingress, the output-device case (ADDRTYPE
-with F_OIF) to egress, ADDRTYPE with no device flag to both. Also restrict
-nft_fib_validate() to NFPROTO_IPV4/IPV6/INET so its NF_INET_* masks are
-not applied to another family's hooks.
+v2: align misaligned candidates down to min_block_size instead of
+    bailing out, for both the RHS and LHS paths (Matthew).
 
-Fixes: 42df6e1d221d ("netfilter: Introduce egress hook")
+Fixes: 0a1844bf0b53 ("drm/buddy: Improve contiguous memory allocation")
+Suggested-by: Christian König <christian.koenig@amd.com>
+Cc: Matthew Auld <matthew.auld@intel.com>
+Cc: Christian König <christian.koenig@amd.com>
+Cc: Timur Kristóf <timur.kristof@gmail.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/netfilter-devel/ajxsjcDOnwllMfoR@strlen.de/
-Signed-off-by: Theodor Arsenij Larionov-Trichkine <theodorlarionov@gmail.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Reviewed-by: Matthew Auld <matthew.auld@intel.com>
+Tested-by: John Olender <john.olender@gmail.com>
+Signed-off-by: Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>
+Link: https://patch.msgid.link/20260709131050.1022759-1-Arunpravin.PaneerSelvam@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nft_fib.c        |    9 +++++++++
- net/netfilter/nft_fib_netdev.c |   29 ++++++++++++++++++++++++++++-
- 2 files changed, 37 insertions(+), 1 deletion(-)
+ drivers/gpu/buddy.c |   65 ++++++++++++++++++++++++++++++++++++----------------
+ 1 file changed, 45 insertions(+), 20 deletions(-)
 
---- a/net/netfilter/nft_fib.c
-+++ b/net/netfilter/nft_fib.c
-@@ -31,6 +31,15 @@ int nft_fib_validate(const struct nft_ct
- 	const struct nft_fib *priv = nft_expr_priv(expr);
- 	unsigned int hooks;
- 
-+	switch (ctx->family) {
-+	case NFPROTO_IPV4:
-+	case NFPROTO_IPV6:
-+	case NFPROTO_INET:
-+		break;
-+	default:
-+		return -EOPNOTSUPP;
-+	}
-+
- 	switch (priv->result) {
- 	case NFT_FIB_RESULT_OIF:
- 	case NFT_FIB_RESULT_OIFNAME:
---- a/net/netfilter/nft_fib_netdev.c
-+++ b/net/netfilter/nft_fib_netdev.c
-@@ -50,6 +50,33 @@ static void nft_fib_netdev_eval(const st
- 	regs->verdict.code = NFT_BREAK;
+--- a/drivers/gpu/buddy.c
++++ b/drivers/gpu/buddy.c
+@@ -901,22 +901,30 @@ static int __gpu_buddy_alloc_range(struc
+ 			     blocks, total_allocated_on_err);
  }
  
-+static int nft_fib_netdev_validate(const struct nft_ctx *ctx,
-+				   const struct nft_expr *expr)
++static int __alloc_contig_aligned_retry(struct gpu_buddy *mm,
++					u64 unaligned_offset,
++					u64 size,
++					u64 min_block_size,
++					struct list_head *blocks)
 +{
-+	const struct nft_fib *priv = nft_expr_priv(expr);
-+	unsigned int hooks;
++	u64 aligned_offset = round_down(unaligned_offset, min_block_size);
 +
-+	switch (priv->result) {
-+	case NFT_FIB_RESULT_OIF:
-+	case NFT_FIB_RESULT_OIFNAME:
-+		hooks = (1 << NF_NETDEV_INGRESS);
-+		break;
-+	case NFT_FIB_RESULT_ADDRTYPE:
-+		if (priv->flags & NFTA_FIB_F_IIF)
-+			hooks = (1 << NF_NETDEV_INGRESS);
-+		else if (priv->flags & NFTA_FIB_F_OIF)
-+			hooks = (1 << NF_NETDEV_EGRESS);
-+		else
-+			hooks = (1 << NF_NETDEV_INGRESS) |
-+				(1 << NF_NETDEV_EGRESS);
-+		break;
-+	default:
-+		return -EINVAL;
-+	}
-+
-+	return nft_chain_validate_hooks(ctx->chain, hooks);
++	return __gpu_buddy_alloc_range(mm, aligned_offset, size, NULL, blocks);
 +}
 +
- static struct nft_expr_type nft_fib_netdev_type;
- static const struct nft_expr_ops nft_fib_netdev_ops = {
- 	.type		= &nft_fib_netdev_type,
-@@ -57,7 +84,7 @@ static const struct nft_expr_ops nft_fib
- 	.eval		= nft_fib_netdev_eval,
- 	.init		= nft_fib_init,
- 	.dump		= nft_fib_dump,
--	.validate	= nft_fib_validate,
-+	.validate	= nft_fib_netdev_validate,
- };
+ static int __alloc_contig_try_harder(struct gpu_buddy *mm,
+ 				     u64 size,
+ 				     u64 min_block_size,
+ 				     struct list_head *blocks)
+ {
+-	u64 rhs_offset, lhs_offset, lhs_size, filled;
++	u64 rhs_offset, lhs_offset, filled;
+ 	struct gpu_buddy_block *block;
+ 	unsigned int tree, order;
+-	LIST_HEAD(blocks_lhs);
+-	unsigned long pages;
+ 	u64 modify_size;
+ 	int err;
  
- static struct nft_expr_type nft_fib_netdev_type __read_mostly = {
+ 	modify_size = rounddown_pow_of_two(size);
+-	pages = modify_size >> ilog2(mm->chunk_size);
+-	order = fls(pages) - 1;
++	order = ilog2(modify_size) - ilog2(mm->chunk_size);
+ 	if (order == 0)
+ 		return -ENOSPC;
+ 
+@@ -932,31 +940,48 @@ static int __alloc_contig_try_harder(str
+ 		while (iter) {
+ 			block = rbtree_get_free_block(iter);
+ 
+-			/* Allocate blocks traversing RHS */
+ 			rhs_offset = gpu_buddy_block_offset(block);
++
++			/* Allocate blocks traversing RHS */
+ 			err =  __gpu_buddy_alloc_range(mm, rhs_offset, size,
+ 						       &filled, blocks);
+-			if (!err || err != -ENOSPC)
++			if (err && err != -ENOSPC)
+ 				return err;
+-
+-			lhs_size = max((size - filled), min_block_size);
+-			if (!IS_ALIGNED(lhs_size, min_block_size))
+-				lhs_size = round_up(lhs_size, min_block_size);
+-
+-			/* Allocate blocks traversing LHS */
+-			lhs_offset = gpu_buddy_block_offset(block) - lhs_size;
+-			err =  __gpu_buddy_alloc_range(mm, lhs_offset, lhs_size,
+-						       NULL, &blocks_lhs);
++			if (!err && IS_ALIGNED(rhs_offset, min_block_size))
++				return 0;
+ 			if (!err) {
+-				list_splice(&blocks_lhs, blocks);
++				/* Allocate the unaligned RHS offset using round_down */
++				gpu_buddy_free_list_internal(mm, blocks);
++				err = __alloc_contig_aligned_retry(mm, rhs_offset,
++								   size,
++								   min_block_size,
++								   blocks);
++				if (!err)
++					return 0;
++				if (err != -ENOSPC) {
++					gpu_buddy_free_list_internal(mm, blocks);
++					return err;
++				}
++				goto next;
++			}
++
++			if (size - filled > rhs_offset)
++				goto next;
++
++			lhs_offset = rhs_offset - (size - filled);
++
++			/* Allocate the unaligned LHS offset using round_down */
++			gpu_buddy_free_list_internal(mm, blocks);
++			err = __alloc_contig_aligned_retry(mm, lhs_offset, size,
++							   min_block_size, blocks);
++			if (!err)
+ 				return 0;
+-			} else if (err != -ENOSPC) {
++			if (err != -ENOSPC) {
+ 				gpu_buddy_free_list_internal(mm, blocks);
+ 				return err;
+ 			}
+-			/* Free blocks for the next iteration */
++next:
+ 			gpu_buddy_free_list_internal(mm, blocks);
+-
+ 			iter = rb_prev(iter);
+ 		}
+ 	}
 
 
