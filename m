@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3502C374192;
-	Thu, 30 Jul 2026 15:43:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BB6C373C1A;
+	Thu, 30 Jul 2026 15:43:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426222; cv=none; b=gYfZpYnJaxfk5uy5N8V0VQwByQqPIB3mWk24RpRDplijJNYmYqjTYqtAMmETR6HmtDryBUbNS3iikn10xZKr2ozeVUYf8fDevW2uvOUWuwKJBuGmN1A02zax+1dqpG1POivtKuVl11XH+rbcSblxXRs+1FikaSKX1SCmtDHJDxo=
+	t=1785426225; cv=none; b=cV0Hz4syCS2qf9h6k2pdiTvR5a4BCu3vtzRxf7MWZpzatSxIkSRxqkkP6cflTZ1SMAnz+M0dJPgr2/T4YNYhRdcCruKPOAHFgF3f3f/Zupp1fAC1vEdO2HWwalmbaZ9iSGj2WnJVFyuBuFqG0OgZFNkPwgZHOUw1QRcRp9OI9JQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426222; c=relaxed/simple;
-	bh=e/8VXtGZKQzz3KpeQ1rsoAEr3s3Z1yWyUy1heDvJTYw=;
+	s=arc-20240116; t=1785426225; c=relaxed/simple;
+	bh=iD83ZHAgdpxsMgPG1XUqHVwBxT5lsB+aAw/eOL6bqEM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X2RuQCG7tHUWx78RTd657MMWcG9T10D+b0T2nGyuJ8aVO4917nVrAFlLz+APZhER+tYiCh7c1o/UaWY9bTIHyz5HiZ115VZPGHjNdSzIO5fjb0oILwN38Ab6rjOnYJI1xRdofcMIkG2JCJ9wrpEhPu+4NVDFNMm0O9QFLMNiHFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KJMpMvws; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bwqxCwGhyZ+1Q7Ne0XmbiHjGT7HYqJrlaQ2ueoMR+9ZQ9VAqjCJ1aYDXmm9xKsE8j0la6SWZ7bOU+AvbQKHWiPw6eWu58JXYiWSq5mZISPqIRhaDJhDIfHGT/bNmIUh4t4PQD4NdKek4Plj2/X+i8IKbFwJ96eVZ589LxAuFHrA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jomSl4Tr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KJMpMvws"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86AF11F000E9;
-	Thu, 30 Jul 2026 15:43:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jomSl4Tr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58B591F000E9;
+	Thu, 30 Jul 2026 15:43:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426221;
-	bh=UJt3PyfCTbn/LduSsOy9hhgWvFsx9ZlDiC+J3OEUSwE=;
+	s=korg; t=1785426223;
+	bh=PlvdNqIsEnueACVmVABXK39DZwFuS3xPrKRGZpRWjtE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KJMpMvwsZL69hIv5dkeoNGAJL8ouBj2YzoQNPjKnZmGReTi7Y9ZGoR53HkYe+9PAy
-	 OFWiyodRKC2IRwXFhdCXFowah8UG7j6vbmTz+E+JnnK/ZUZfV/OnNlgNTe1b3I3f1j
-	 pHH3pbDPIEU4WH9ZHM52kKUJHB5XhGHbcnQUNbeU=
+	b=jomSl4TrJrwOcM+Jniqz5648d9JN1VtzyIWJBzQ+PAxEhF2cb2N9BXwB9yqsagarG
+	 L1bVuvF16JoUwuiM3vjnDo+Su+WbLfy/5bKfm/fUBTdVYmbf1dXEUStpeGYXRoHFkW
+	 FOTElVn/osUKujBAHNn2x6oNzDtvzyQwqIiq8+HA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Norbert Szetei <norbert@doyensec.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.12 344/602] ALSA: timer: drain a slaves callback before its master detaches it
-Date: Thu, 30 Jul 2026 16:12:16 +0200
-Message-ID: <20260730141443.188626977@linuxfoundation.org>
+	Ma Ke <make24@iscas.ac.cn>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.12 327/602] media: saa7134: Fix a possible memory leak in saa7134_video_init1
+Date: Thu, 30 Jul 2026 16:11:59 +0200
+Message-ID: <20260730141442.835795058@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -50,60 +50,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Norbert Szetei <norbert@doyensec.com>
+From: Ma Ke <make24@iscas.ac.cn>
 
-commit bdefe1346a8e6b8dc8593406dc2617e985fcbcab upstream.
+commit f86ed548386e3050e5f8f25b450d09dc009d9a88 upstream.
 
-snd_timer_close_locked() drains the closing instance's own in-flight
-callback (IFLG_CALLBACK) before freeing it, but not its slaves'. When a
-master instance is closed, remove_slave_links() clears each slave's
-->timer; the slave's own close then reads timer == NULL and takes the
-branch that skips the drain entirely (snd_timer_stop_slave() also no-ops
-on a NULL timer). So a slave whose callback is still running when the
-master is closed is freed underneath the live callback, leading to
-use-after-free.
+In saa7134_video_init1(), the return value of the first
+saa7134_pgtable_alloc() is not checked. If it fails, the function
+continues as if successful, leaving the driver with an invalid page
+table. Additionally, if vb2_queue_init() for the VBI queue fails after
+the video queue page table has been allocated, the allocated memory is
+not freed before returning. The second saa7134_pgtable_alloc() also
+lacks a return value check. Errors occur during device probing before
+the device is fully registered, the normal cleanup path in
+saa7134_finidev() is not executed, leading to memory leaks and
+potential use of uninitialized DMA resources.
 
-Drain the slaves too before remove_slave_links() severs them.
-snd_timer_stop() has already taken this instance off the active list, so
-no new slave callback can be queued. Take the slaves off the ack list so
-a pending one can't fire either, then wait for any that is already in
-flight.
+Check the return value of both saa7134_pgtable_alloc() calls and
+propagate errors. On failure of any later step, free allocated page
+tables to avoid memory leaks. Ensure control handlers are also
+released on error to prevent further resource leakage.
 
-Fixes: 37745918e0e7 ("ALSA: timer: Introduce virtual userspace-driven timers")
+Found by code review.
+
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Norbert Szetei <norbert@doyensec.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/D26598EB-DBF7-4D76-9F71-8E4BD59822D4@doyensec.com
+Fixes: a00e68888d5d ("[media] saa7134: move saa7134_pgtable to saa7134_dmaqueue")
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/core/timer.c |   14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/media/pci/saa7134/saa7134-video.c |   25 ++++++++++++++++++++-----
+ 1 file changed, 20 insertions(+), 5 deletions(-)
 
---- a/sound/core/timer.c
-+++ b/sound/core/timer.c
-@@ -437,10 +437,20 @@ static void snd_timer_close_locked(struc
- 	snd_timer_stop(timeri);
+--- a/drivers/media/pci/saa7134/saa7134-video.c
++++ b/drivers/media/pci/saa7134/saa7134-video.c
+@@ -1716,8 +1716,10 @@ int saa7134_video_init1(struct saa7134_d
+ 	q->dev = &dev->pci->dev;
+ 	ret = vb2_queue_init(q);
+ 	if (ret)
+-		return ret;
+-	saa7134_pgtable_alloc(dev->pci, &dev->video_q.pt);
++		goto err_free_ctrl;
++	ret = saa7134_pgtable_alloc(dev->pci, &dev->video_q.pt);
++	if (ret)
++		goto err_free_ctrl;
  
- 	if (timer) {
-+		struct snd_timer_instance *slave;
-+		bool busy;
+ 	q = &dev->vbi_vbq;
+ 	q->type = V4L2_BUF_TYPE_VBI_CAPTURE;
+@@ -1734,11 +1736,24 @@ int saa7134_video_init1(struct saa7134_d
+ 	q->lock = &dev->lock;
+ 	q->dev = &dev->pci->dev;
+ 	ret = vb2_queue_init(q);
+-	if (ret)
+-		return ret;
+-	saa7134_pgtable_alloc(dev->pci, &dev->vbi_q.pt);
++	if (ret) {
++		saa7134_pgtable_free(dev->pci, &dev->video_q.pt);
++		goto err_free_ctrl;
++	}
 +
- 		timer->num_instances--;
--		/* wait, until the active callback is finished */
-+		/* unqueue then drain the slaves' callbacks before remove_slave_links() severs them */
- 		spin_lock_irq(&timer->lock);
--		while (timeri->flags & SNDRV_TIMER_IFLG_CALLBACK) {
-+		list_for_each_entry(slave, &timeri->slave_list_head, open_list)
-+			list_del_init(&slave->ack_list);
-+		for (;;) {
-+			busy = timeri->flags & SNDRV_TIMER_IFLG_CALLBACK;
-+			list_for_each_entry(slave, &timeri->slave_list_head, open_list)
-+				busy |= slave->flags & SNDRV_TIMER_IFLG_CALLBACK;
-+			if (!busy)
-+				break;
- 			spin_unlock_irq(&timer->lock);
- 			udelay(10);
- 			spin_lock_irq(&timer->lock);
++	ret = saa7134_pgtable_alloc(dev->pci, &dev->vbi_q.pt);
++	if (ret) {
++		saa7134_pgtable_free(dev->pci, &dev->video_q.pt);
++		goto err_free_ctrl;
++	}
+ 
+ 	return 0;
++
++err_free_ctrl:
++	v4l2_ctrl_handler_free(&dev->ctrl_handler);
++	if (card_has_radio(dev))
++		v4l2_ctrl_handler_free(&dev->radio_ctrl_handler);
++	return ret;
+ }
+ 
+ void saa7134_video_fini(struct saa7134_dev *dev)
 
 
