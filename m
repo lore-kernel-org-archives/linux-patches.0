@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F54C43C7D7;
-	Thu, 30 Jul 2026 14:35:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 070B5440A2C;
+	Thu, 30 Jul 2026 14:35:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422123; cv=none; b=IHZTpnT/yaSbDxhzSISxTFTEHxv4cF4uwyzaKy1yxHoWpcaLW6HJE6HhwOGw5Z9qqNpVj1M0i/MFbkV+pcsqqXIhqwIoVa2TLvSU+RxxReSq5WHSmnXLyef1Fq1iIOEnY9VNY7VzASz7Ayrqyj0DZjCdgBWaWokDJGsSE1lmsIk=
+	t=1785422126; cv=none; b=cXe0KdNoH9tm3Pz/DSuk/KwKH8n3JAmxBmIcGq1nyj2aQ2RY/VZJhH85YBKvlvWpEeNTI4XzjIMA+CDpFdBocpY57MU9shO/oh1/kuBbNCUdnTI163zpD7LK8ckKxo8PFxE4LuinzIIx7CNlF4p1ICO8lY6+dl/TI6DbH3JFOfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422123; c=relaxed/simple;
-	bh=QIFw/5CUAJunmRgnJnZ7QURPW84FPH6H6f/w3RbvhFY=;
+	s=arc-20240116; t=1785422126; c=relaxed/simple;
+	bh=T0BFpX8BEIT9YNg9h7FnYsoyBKhTF3PS57HtSniEkLc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kT/z/kUp+YpPj0Gjh0lVAnJQfUqWCa3IQbLXCfltoAAV7QaYIMJdzmL2FMvFpsCYtePyicIj/GowM9QtlFXiILrWnm8hHfL5aMZ/NqH+vmsigHm18GuLQY1J4od5RQbBT80wj/zSnfIHTK/dnPRnIX0j2oyQIhRoiehlEPVcGRY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PnB0v7bd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=reHyhwu/OjalTyEFvHIZDOAYwqVaOaRi/qxGSjxJNhTc5sbJlShqk+HUkdukHE2IeA2wTp9gJwFwepmMdYQJFKEVkMayn7AGOwnjATCan+3ZcfYES1aG+P96CIqk3XRk2WT+QrssTgLz1kEq9ad7HhESNriNFh6yVUvmJQNhLQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tU4Yyczi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PnB0v7bd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ADAA1F00A3A;
-	Thu, 30 Jul 2026 14:35:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tU4Yyczi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 625A51F000E9;
+	Thu, 30 Jul 2026 14:35:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422122;
-	bh=7zHFMrNolIytlagAY4qiWU7OpgzFugxgpqDWwvxj5BM=;
+	s=korg; t=1785422124;
+	bh=rxw6MMWC1WGJhdOQxdCjLMQvztOytx9vgJ22Kx9fDnU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PnB0v7bdKrgXJORQSQKPFHAyFwYxBdaOgFcWee5gLgxT65xXR1aP15kJgEFuIa9QC
-	 83MjrT5G12qe4uyOpAyNJutpGoMdft6q3FwufFI2q33zV9ojfE0O5cbWAQXOP4a53l
-	 ZLB0wB1VZpS27q4wWk/rDJNc8grNvUkD6ycl/tM4=
+	b=tU4YyczidL/5GXnc9euYP9WyeR9akto+wUYuDD+D6Nrs2H7KeLFmn5fLhxisrEP1Y
+	 5YQcXK50SRhBeyxg4egbdrmMozcUka0Cf9RWt0EuppuFG58Ka5TvKiSd+rRBqyVDHo
+	 pK879GNKax0J6alCNqA0ZmTXFnDsC48EXet0Mvgg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Matthew Auld <matthew.auld@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Shuicheng Lin <shuicheng.lin@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 333/744] net: qrtr: restrict socket creation to the initial network namespace
-Date: Thu, 30 Jul 2026 16:10:06 +0200
-Message-ID: <20260730141451.362670223@linuxfoundation.org>
+Subject: [PATCH 7.1 316/744] drm/xe/vm: Fix SVM leak on resv obj alloc failure in xe_vm_create()
+Date: Thu, 30 Jul 2026 16:09:49 +0200
+Message-ID: <20260730141451.000992766@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -45,67 +47,77 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+From: Shuicheng Lin <shuicheng.lin@intel.com>
 
-[ Upstream commit 3b536db8fb32da9e9c62f2bb45e2e319331f0426 ]
+[ Upstream commit d2c6800ad1802bed72a6de1416536737f114f1d6 ]
 
-QRTR keeps its entire port and node state in module-global variables
-that are not partitioned per network namespace: qrtr_local_nid is a
-single global node id (always 1) and qrtr_ports is a single global
-xarray. qrtr_port_lookup() and qrtr_local_enqueue() operate on that
-global state with no network-namespace check, and qrtr_create() places
-no restriction on the namespace a socket is created in.
+Commit 9e9787414882 ("drm/xe/userptr: replace xe_hmm with gpusvm") made
+xe_svm_init() unconditional in xe_vm_create() and extended it to also
+initialize a "simple" gpusvm state for non-fault-mode VMs. The matching
+xe_svm_fini() call in xe_vm_close_and_put() was updated to run
+unconditionally, but the error unwind path in xe_vm_create() was not.
 
-As a result an unprivileged process that creates an AF_QIPCRTR socket
-in a separate network namespace, e.g. via
-unshare(CLONE_NEWUSER | CLONE_NEWNET), can send QRTR datagrams -
-including control-plane messages such as QRTR_TYPE_NEW_SERVER - to QRTR
-sockets owned by another namespace, and vice versa. The receiving
-socket sees such a message as coming from node id 1, indistinguishable
-from a legitimate local client, breaking the isolation that network
-namespaces are expected to provide.
+On the drm_gpuvm_resv_object_alloc() failure path, xe_svm_init() has
+already succeeded but xe_svm_fini() is only called when
+XE_VM_FLAG_FAULT_MODE is set. For non-fault-mode VMs this leaves
+vm->svm.gpusvm partially initialized and leaks the resources allocated
+by drm_gpusvm_init().
 
-QRTR is a transport to global hardware endpoints (the modem and other
-remote processors) and has no per-namespace semantics; its in-kernel
-name service already creates its socket in init_net only. Confine the
-socket family to the initial network namespace, as other
-non-namespace-aware socket families do (see llc_ui_create() and the
-ieee802154 socket code).
+For fault-mode VMs, xe_svm_init() additionally acquires the pagemap
+owner via drm_pagemap_acquire_owner() and the pagemaps via
+xe_svm_get_pagemaps(). Those resources are released by xe_svm_close(),
+not xe_svm_fini(). On the same error path, xe_svm_close() is not
+called either, so fault-mode VMs leak the pagemap owner and pagemaps.
 
-Fixes: bdabad3e363d ("net: Add Qualcomm IPC router")
-Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
-Link: https://patch.msgid.link/20260716154319.3297699-1-qwe.aldo@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fix both leaks:
+
+- Call xe_svm_fini() unconditionally on the err_svm_fini path, matching
+  the unconditional xe_svm_init() call. Move the vm->size = 0
+  assignment out of the conditional so the xe_vm_is_closed() assert in
+  xe_svm_fini() (and xe_svm_close()) holds for both modes.
+
+- Call xe_svm_close() for fault-mode VMs before xe_svm_fini(), matching
+  the ordering used in xe_vm_close_and_put().
+
+Fixes: 9e9787414882 ("drm/xe/userptr: replace xe_hmm with gpusvm")
+Cc: Matthew Auld <matthew.auld@intel.com>
+Assisted-by: Claude:claude-opus-4.7
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://patch.msgid.link/20260721205516.4058959-2-shuicheng.lin@intel.com
+Signed-off-by: Shuicheng Lin <shuicheng.lin@intel.com>
+(cherry picked from commit ca2a3587d577ba764e0fe628fb676244fc33ddd4)
+Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/qrtr/af_qrtr.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/gpu/drm/xe/xe_vm.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/qrtr/af_qrtr.c b/net/qrtr/af_qrtr.c
-index 2288159f5b1bba..7482a09adb54f9 100644
---- a/net/qrtr/af_qrtr.c
-+++ b/net/qrtr/af_qrtr.c
-@@ -1261,6 +1261,14 @@ static int qrtr_create(struct net *net, struct socket *sock,
- 	if (sock->type != SOCK_DGRAM)
- 		return -EPROTOTYPE;
+diff --git a/drivers/gpu/drm/xe/xe_vm.c b/drivers/gpu/drm/xe/xe_vm.c
+index ab6cc1f0a78949..aec3c2a60d5888 100644
+--- a/drivers/gpu/drm/xe/xe_vm.c
++++ b/drivers/gpu/drm/xe/xe_vm.c
+@@ -1810,10 +1810,10 @@ struct xe_vm *xe_vm_create(struct xe_device *xe, u32 flags, struct xe_file *xef)
+ 	return ERR_PTR(err);
  
-+	/* QRTR keeps its port and node state in module-global variables that
-+	 * are not partitioned per network namespace, and the in-kernel name
-+	 * service only operates in init_net. Confine the family to init_net so
-+	 * a socket in another namespace cannot reach the global control plane.
-+	 */
-+	if (!net_eq(net, &init_net))
-+		return -EAFNOSUPPORT;
-+
- 	sk = sk_alloc(net, AF_QIPCRTR, GFP_KERNEL, &qrtr_proto, kern);
- 	if (!sk)
- 		return -ENOMEM;
+ err_svm_fini:
+-	if (flags & XE_VM_FLAG_FAULT_MODE) {
+-		vm->size = 0; /* close the vm */
+-		xe_svm_fini(vm);
+-	}
++	vm->size = 0; /* close the vm */
++	if (flags & XE_VM_FLAG_FAULT_MODE)
++		xe_svm_close(vm);
++	xe_svm_fini(vm);
+ err_no_resv:
+ 	mutex_destroy(&vm->snap_mutex);
+ 	for_each_tile(tile, xe, id)
 -- 
 2.53.0
 
