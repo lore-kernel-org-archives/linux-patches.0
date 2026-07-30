@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DC22175A6D;
-	Thu, 30 Jul 2026 14:31:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8416D3C3F4C;
+	Thu, 30 Jul 2026 14:31:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421899; cv=none; b=pptCMDkKCWQN2CtBkbKidVHxLk6ZHJWsjhUJVb/lYIHa+JcDw8KZEHeERKpWC8x1GvLtjy1e1ooBGQqIbGQ2UmXzsbAqeqpCG8QuMeEyk5lA+WAbSW3FJeaQrLExXIbSXBiM+ylgAu19tsUF5/gc2TbJJZLQvhYCK4b0oxcNjY8=
+	t=1785421902; cv=none; b=hVvmfed2bFezMLKIFZf6whvT4QDNk+//CLWQzhP2Cr2sh/gLrB8aw/9SZC0GjI7jhWDYiySD1Sm94fkG/bSp+dQecsQoYXP1jS7RP3G5yX97dS8J3e8+KpEr0JnH9OU584Y1rWZAQg99UpW0SYxFDcNj9butle4LQbdJ2iysjf0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421899; c=relaxed/simple;
-	bh=zm4YcGNmA8ROsnXN2WcT19WzJSy3VrmF7m+K/R476ew=;
+	s=arc-20240116; t=1785421902; c=relaxed/simple;
+	bh=xRiLTqUl1b21O6xBvhj4md3pP2pFimSxbPjkZ2TQEhs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XYRoNyTGTickaUaCNEvLAbCZOG8elxAPrlYcpMN4ecvgelNdBv2bW4ReOqQDM2kTYhNUFXOn37DlUUlZ999NoUpfSRAUZDMh90dZG+K3EUdZ8II7T3rnl+Rohfym41LEoucyBcoeeV1BKkvt2dcctqXVZp0SZp3xytCnIUugFn0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IuTj0NoG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KmbKZ9IdxWZ8UYidZZaS5OcVqXCOCfRuEu01MBiqp13w/y3gp7Gh9tKOBE1RXoigCWk0baBtBChuuuegA4LOS88sWNTpKwdJJ5Dnm4NG5sXcTPWupB3Igni7b88PbKi2x0FAloyLLB6f0wGYfPU6OO6P70BAAFdiOicClErcyy4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NIFEF2qk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IuTj0NoG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 827311F00A3A;
-	Thu, 30 Jul 2026 14:31:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NIFEF2qk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C34F1F000E9;
+	Thu, 30 Jul 2026 14:31:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421898;
-	bh=WvsBiZUJJy6hAouvAryttEgR6KpTy6ySYnzKCjyC9mY=;
+	s=korg; t=1785421901;
+	bh=dHig/fcGUkSqvlbWgkt5qKEb5AVizzYK6t3DVZ7Pg5Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IuTj0NoGWWnNo1/62dEKbJGZRs5FpQ5RC3/U8wTE8HbEO2mp9VcnWFidXO6pv3CLD
-	 NGwojVGnmnL3K0y4jaTsg2eyhR7mPuh4u9b9znyEwEiHzN4b/6f0790chdokASJBV4
-	 Yjz8+Kk5Ey8116LE52NSexwadomPU4Ck17XScYFw=
+	b=NIFEF2qkXMXjRDnjBrhcWkN9lP/qwvD11FhFgJJ0FCAcxI+Q7nOeLM6bz6TVB8C0G
+	 WtrWQ9EfXxz30dKdU8ecwUG0PJ7KxwfYKOm50OUi4QxXSpRbTINc0O1WxAGHIGgXLq
+	 PkY+Ji6EcOXV1audkKxiukzQSaCpBM43zNhzUbyY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patrick Oppenlander <patrick.oppenlander@gmail.com>,
-	Prashanth Kumar KR <PrashanthKumar.K.R@amd.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jason Xing <kerneljasonxing@gmail.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 256/744] amd-xgbe: fix MAC_AUTO_SW handling in CL37 AN
-Date: Thu, 30 Jul 2026 16:08:49 +0200
-Message-ID: <20260730141449.734430145@linuxfoundation.org>
+Subject: [PATCH 7.1 257/744] soreuseport: Clear sk_reuseport_cb before failure in sk_clone().
+Date: Thu, 30 Jul 2026 16:08:50 +0200
+Message-ID: <20260730141449.756313369@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -52,56 +55,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prashanth Kumar KR <PrashanthKumar.K.R@amd.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 4bf22afe53a1de4b44b04cf677fd5199089cbdff ]
+[ Upstream commit 98da8ce87dd561f08fbe44f75865edc5d9b2ba5f ]
 
-MAC_AUTO_SW (VR_MII_DIG_CTRL1 bit 9) enables automatic XPCS speed
-mode switching after CL37 auto-negotiation and is only meaningful in
-SGMII MAC mode. The original code unconditionally set this bit on
-every call to xgbe_an37_set(), including when called from
-xgbe_an37_disable() with enable=false. This left MAC_AUTO_SW=1 after
-AN was disabled, causing the XPCS to autonomously switch speed from
-stale AN state during subsequent mode changes, breaking SGMII speed
-negotiation on 1G copper SFP modules.
+When sk_clone() fails, sk_destruct() is called for the new socket.
 
-Patrick: This was breaking negotiation for all 1G SFP modules,
-not just copper modules.
+If the parent socket has sk->sk_reuseport_cb, the child will call
+reuseport_detach_sock() for the reuseport group.
 
-Fixes: 42fd432fe6d3 ("amd-xgbe: align CL37 AN sequence as per databook")
-Reported-by: Patrick Oppenlander <patrick.oppenlander@gmail.com>
-Link: https://lore.kernel.org/netdev/CAEg67GmFS0Q4oSZkz8zWdOzckSth9_vBPiOy6a7-d697C2w2Xg@mail.gmail.com
-Signed-off-by: Prashanth Kumar KR <PrashanthKumar.K.R@amd.com>
-Tested-by: Patrick Oppenlander <patrick.oppenlander@gmail.com>
-Link: https://patch.msgid.link/20260709095006.3683940-1-prashanthkumar.k.r@amd.com
+Let's clear sk->sk_reuseport_cb before any failure path in sk_clone().
+
+Note that this was not a problem before the cited commit because
+reuseport_detach_sock() did nothing if the socket was not found in
+the reuseport array.
+
+Fixes: 5dc4c4b7d4e8 ("bpf: Introduce BPF_MAP_TYPE_REUSEPORT_SOCKARRAY")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/all/20260709032007.9E4D61F000E9@smtp.kernel.org/
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260709183315.965751-2-kuniyu@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/xgbe/xgbe-mdio.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ net/core/sock.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c b/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
-index fa0df61812076a..12770af031eb8b 100644
---- a/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
-@@ -267,9 +267,14 @@ static void xgbe_an37_set(struct xgbe_prv_data *pdata, bool enable,
+diff --git a/net/core/sock.c b/net/core/sock.c
+index 1c73b6841d0ae9..d0f518381334ca 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -2547,6 +2547,8 @@ struct sock *sk_clone(const struct sock *sk, const gfp_t priority,
  
- 	XMDIO_WRITE(pdata, MDIO_MMD_VEND2, MDIO_CTRL1, reg);
+ 	cgroup_sk_clone(&newsk->sk_cgrp_data);
  
--	reg = XMDIO_READ(pdata, MDIO_MMD_VEND2, MDIO_PCS_DIG_CTRL);
--	reg |= XGBE_VEND2_MAC_AUTO_SW;
--	XMDIO_WRITE(pdata, MDIO_MMD_VEND2, MDIO_PCS_DIG_CTRL, reg);
-+	if (pdata->an_mode == XGBE_AN_MODE_CL37_SGMII) {
-+		reg = XMDIO_READ(pdata, MDIO_MMD_VEND2, MDIO_PCS_DIG_CTRL);
-+		if (enable)
-+			reg |= XGBE_VEND2_MAC_AUTO_SW;
-+		else
-+			reg &= ~XGBE_VEND2_MAC_AUTO_SW;
-+		XMDIO_WRITE(pdata, MDIO_MMD_VEND2, MDIO_PCS_DIG_CTRL, reg);
-+	}
- }
++	RCU_INIT_POINTER(newsk->sk_reuseport_cb, NULL);
++
+ 	rcu_read_lock();
+ 	filter = rcu_dereference(sk->sk_filter);
+ 	if (filter != NULL)
+@@ -2569,8 +2571,6 @@ struct sock *sk_clone(const struct sock *sk, const gfp_t priority,
+ 		goto free;
+ 	}
  
- static void xgbe_an37_restart(struct xgbe_prv_data *pdata)
+-	RCU_INIT_POINTER(newsk->sk_reuseport_cb, NULL);
+-
+ 	if (bpf_sk_storage_clone(sk, newsk))
+ 		goto free;
+ 
 -- 
 2.53.0
 
