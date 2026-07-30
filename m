@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01054384CC3;
-	Thu, 30 Jul 2026 15:55:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE55C411689;
+	Thu, 30 Jul 2026 15:56:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426960; cv=none; b=D9VZV0plTd9jqe8CwD4tVCn8pp5MN3YMTbLTLiOuMF+nEQwKsdozVIvNpS3bdPgPC51uO+ALp3MIUnbOAcfAPna9/Mj7eLt3wj7FP9tgq2wDmNe8+d6nVHwXkEz/Bzrr5Vqw5/Dm7xIsBo0CKda2NccpP3zrkcYJpfRiZH7p428=
+	t=1785426963; cv=none; b=pPJ5SFwbOPAUjLdANfl8MhWmiBhz23YbO8heVCVTgYQXnZ329jTiKx+3IGbv8hEbmKoZXM4bw4nruVfTJYNmOURQoB2s1BZLQO1Gyzl0brVcyRhPDnskHchPLYmYvwRDj1yHgCZlui8rh11AHX2USkkJu56SnqlTYVPxAY6zGaU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426960; c=relaxed/simple;
-	bh=eeJLqaI6dVvV6Hl7uIVjIWVzyPiyZ180mVgJPByX/+s=;
+	s=arc-20240116; t=1785426963; c=relaxed/simple;
+	bh=C93krHsrlfVtunK0pWwD8hJcqFsMVQLixrvO0PLJnW4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cbiyVL462RPXMXsOW8O0L1Q8QJTFOLif/6WDooatAi3mMQwQyzKz5WwRgwpe7Z6Qz4ivIM1YeMOM9lS7630o3qHUPdVBcALXcHk62Ht7mLLPIJZviH8SSHnxZCuzIiSi4p3lCkHsjWzXP1gYWXWrkP3Erp6iCpCpQNgLIS63nuQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hdhp+zoI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ujY6mbZ7gmkb3v+ujBXVgXjIAlm0qKDbxzpySXX82fstZvwgM47V9OubRJEWWLR7wyOnmnp/FvDcSU7xFd8JiTsp1fii14PHha5wn5QEQU3Fut1f5L+JFKcvm1/+KQN23SKh1PbZLHJPDGQjaTtz0rqOste4gdkBibdQme67UuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kyZjuNte; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hdhp+zoI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 666781F000E9;
-	Thu, 30 Jul 2026 15:55:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kyZjuNte"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3553C1F000E9;
+	Thu, 30 Jul 2026 15:56:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426958;
-	bh=VXxNnc2fhRKn5l44IlouTIC9YAh1KE0ydU7WsuNRoho=;
+	s=korg; t=1785426961;
+	bh=nX9BjPvtxOH4FN8wJj0arE4aoVmesz5unAVYPjnLIrg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hdhp+zoIcNKoNAR9uoESkoLeFOxR4jke1ToFZD9SqiUCQdJ7F1Yc+BiHNfX5MsE7q
-	 J9162rvkO16rrliCn1RN3Qh8nuu/kboD/XbNDQvs/Ybz149n1lm7D5Ug2s/6TwyUkm
-	 oj4udyhLeMPRLeU0hdjs0a20ZO14bbhvFMDBESXU=
+	b=kyZjuNte8Zeyl0QyrcsNmdK0FZaLOquzSnWUNWK2S5QmhVprFM9fkXJSYuw7teHv1
+	 XNWCIlGDOYcHGKLjlD73893zP4NhmMMz5Vnb84Pp0IXjslcmabTlDN0zjfXtponZ1i
+	 8raxwNgz2K2usaldoxb5Pr7Puw0OPY4UTB49k8F0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paulo Alcantra <pc@manguebit.org>,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	syzbot+41c68824eefb67cdf00c@syzkaller.appspotmail.com,
-	linux-afs@lists.infradead.org,
-	linux-fsdevel@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 6.12 601/602] afs: Fix uninit var in afs_alloc_anon_key()
-Date: Thu, 30 Jul 2026 16:16:33 +0200
-Message-ID: <20260730141448.683554378@linuxfoundation.org>
+	Dawei Feng <dawei.feng@seu.edu.cn>,
+	Yevgeny Kliteynik <kliteyn@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 566/602] net/mlx5: HWS, fix matcher leak on resize target setup failure
+Date: Thu, 30 Jul 2026 16:15:58 +0200
+Message-ID: <20260730141447.939006225@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -55,45 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Dawei Feng <dawei.feng@seu.edu.cn>
 
-commit 19eef1d98eeda3745df35839190b7d4a4adea656 upstream.
+[ Upstream commit bb09d0e64ecaa0aa0f7d1133a1696ed74dead295 ]
 
-Fix an uninitialised variable (key) in afs_alloc_anon_key() by setting it
-to cell->anonymous_key.  Without this change, the error check may return a
-false failure with a bad error number.
+hws_bwc_matcher_move() allocates a replacement matcher before setting it
+as the resize target. If mlx5hws_matcher_resize_set_target() fails, the
+replacement matcher is not attached anywhere and is leaked.
 
-Most of the time this is unlikely to happen because the first encounter
-with afs_alloc_anon_key() will usually be from (auto)mount, for which all
-subsequent operations must wait - apart from other (auto)mounts.  Once the
-call->anonymous_key is allocated, all further calls to afs_request_key()
-will skip the call to afs_alloc_anon_key() for that cell.
+Fix the leak by destroying the replacement matcher before returning from
+the resize-target failure path.
 
-Fixes: d27c71257825 ("afs: Fix delayed allocation of a cell's anonymous key")
-Reported-by: Paulo Alcantra <pc@manguebit.org>
-Signed-off-by: David Howells <dhowells@redhat.com>
-Reviewed-by: Paulo Alcantara <pc@manguebit.org>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: syzbot+41c68824eefb67cdf00c@syzkaller.appspotmail.com
-cc: linux-afs@lists.infradead.org
-cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+The bug was first flagged by an experimental analysis tool we are
+developing for kernel memory-management bugs while analyzing
+v6.13-rc1. The tool is still under development and is not yet publicly
+available. Manual inspection confirms that the bug is still
+present in v7.1.1.
+
+An x86_64 allyesconfig build showed no new warnings. As we do not have a
+mlx5 HWS-capable device to test with, no runtime testing was able to be
+performed.
+
+Fixes: 2111bb970c78 ("net/mlx5: HWS, added backward-compatible API handling")
+Cc: stable@vger.kernel.org
+Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
+Reviewed-by: Yevgeny Kliteynik <kliteyn@nvidia.com>
+Acked-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20260629064049.3852759-1-dawei.feng@seu.edu.cn
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/afs/security.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_bwc.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/afs/security.c
-+++ b/fs/afs/security.c
-@@ -26,7 +26,8 @@ static int afs_alloc_anon_key(struct afs
- 	struct key *key;
+--- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_bwc.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/mlx5hws_bwc.c
+@@ -225,6 +225,7 @@ static int hws_bwc_matcher_move(struct m
+ 	ret = mlx5hws_matcher_resize_set_target(old_matcher, new_matcher);
+ 	if (ret) {
+ 		mlx5hws_err(ctx, "Rehash error: failed setting resize target\n");
++		mlx5hws_matcher_destroy(new_matcher);
+ 		return ret;
+ 	}
  
- 	mutex_lock(&afs_key_lock);
--	if (!cell->anonymous_key) {
-+	key = cell->anonymous_key;
-+	if (!key) {
- 		key = rxrpc_get_null_key(cell->key_desc);
- 		if (!IS_ERR(key))
- 			cell->anonymous_key = key;
 
 
