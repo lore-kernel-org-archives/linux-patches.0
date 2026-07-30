@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CBA336607D;
-	Thu, 30 Jul 2026 15:45:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1BA93806BD;
+	Thu, 30 Jul 2026 15:45:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426325; cv=none; b=nFX/O48RIOKRH/oAsaDJh4z3e1TaOJsic57Y827PP4tcATnkc9oPfU8uAOg+0gvhFNXTrSjHlDEBkshZLS94Y0DZ3tkEn/gM9LCCvWBgYyXU4+CWkfybmLx3UE8cPZ0MRQwftIEmcnkhxfA+gIF46WCen1fiTLY0Jn+7/5TDcy4=
+	t=1785426327; cv=none; b=TKDknd9g2A9uSRrstqnhNDWblxIdoqmqrdPxM7xpVPYD11eL0J/4NE4qb5PMcEyuyTIycKM4srKXp4mLv2+FtdbL02YoRPt/sf6P0w9ZeKAPTrdANbqKj06gqCTz3dRdUweghBZbcbJgPCzLunmi+EwyGeyDg4Tmti4FJLv9JKw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426325; c=relaxed/simple;
-	bh=3EIsRHKscZfOsVIY/eULuMYVe7idRVPgDJtTmFQuSSg=;
+	s=arc-20240116; t=1785426327; c=relaxed/simple;
+	bh=FiFveepvyLU9LwSi8W8xl3WHufDaAZ9tB4oXTRshc5U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GJPlmOBl20lnFrOmJi1qc526xaTilivhtFXSWGVEtgC5EjJIjsZJQ3Firpm59sVXmOZFsw4qNzL+raaV3NYBFPcSDZ1Zz3/as3+aZz1dB2bjxtwFo4tQINNAYRckffajA9VF1NE0/ZdaL7jxMftbe4PKztkJg0NX6CWtinn/wKY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A6v3e9yC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aXxOhGd00vxv/yl3DXp/gs7IgG37MHOSkswrPT+2qNU0g7RfqXr5qD9YuNYBKSxLg1VsRcMC9kA8IgsRLB3lOUfc/a8ZIl93uZmaqO2FV1bSXPALmy3ijOOj38l+fVDrNztkHpkZmWc6LF82gZyE6dXKqszJcC7Xkw/mywuCFLw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ynF48iOE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A6v3e9yC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D21B1F000E9;
-	Thu, 30 Jul 2026 15:45:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ynF48iOE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 184A21F000E9;
+	Thu, 30 Jul 2026 15:45:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426323;
-	bh=+VkRUiUjcWRW8L19PV2X1TOXP59FIRp9zI+vw91pNe0=;
+	s=korg; t=1785426326;
+	bh=hSDQkCi3/4nsw/wO5wEn9osQR81SrUS6qOA7XmwXXQY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A6v3e9yChOZCdm5tiYs2opCZO9qjmuTqxIPDqork73mNA8OThJUF/5UpxWTVnFvvG
-	 CQCAUi0rsYz9y5DsyygBuvEGeQ+Oh+SrGkS1jePMbBy0rndaB1TzL/yLCO8EFyK8/I
-	 ZCXDK4RYz83ZR+aqapuss5IEdAP4zUhmzWh/ygn4=
+	b=ynF48iOEbAlSaanrri5OTO8aQZcL3AUHG89HuHd75grkwY7WeuqKw60dLM4mJ0WL0
+	 NFElu/wmUUVBNl6TfShzQBTXDD04ZVIGIeoEeLjh8nH3PKdUUh+ZHuXowmi2cYbL+H
+	 Sr7TluwwDAFYyu2jMUv72z6PWi8y8oXMnItJE4yE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Mirela Rabulea <mirela.rabulea@nxp.com>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>
-Subject: [PATCH 6.12 334/602] media: v4l2-fwnode: Fix subdev owner overwritten in v4l2_async_register_subdev_sensor()
-Date: Thu, 30 Jul 2026 16:12:06 +0200
-Message-ID: <20260730141442.981438059@linuxfoundation.org>
+	syzbot+019ced393ab913002b75@syzkaller.appspotmail.com,
+	Deepanshu Kartikey <kartikey406@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.12 325/602] media: rtl2832: fix use-after-free in rtl2832_remove()
+Date: Thu, 30 Jul 2026 16:11:57 +0200
+Message-ID: <20260730141442.795176591@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -52,89 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mirela Rabulea <mirela.rabulea@nxp.com>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-commit 06cb687a5132fcffe624c0070576ab852ac6b568 upstream.
+commit 680daf40a82d483949f87f0d8f98639dc47e610c upstream.
 
-The v4l2 helper v4l2_async_register_subdev_sensor() calls
-v4l2_async_register_subdev(), which is a macro that expands to
-__v4l2_async_register_subdev(sd,THIS_MODULE). Since the macro is expanded
-inside v4l2-fwnode.c, THIS_MODULE resolves to the v4l2-fwnode module
-rather than the sensor driver module that originally set sd->owner. When
-v4l2-fwnode is built-in, THIS_MODULE evaluates to NULL, which then
-overwrites the sensor driver's owner with NULL.
+cancel_delayed_work_sync() is called before i2c_mux_del_adapters()
+in rtl2832_remove(). While the cancel waits for any running instance
+of i2c_gate_work to finish, it does not prevent the timer from being
+rescheduled by a concurrent thread.
 
-This causes the problem that the sensor module's reference count is never
-incremented during async registration, so the module can be removed while
-the subdevice is still in use by a notifier (e.g., a CSI-2 receiver
-bridge driver).
+During probe, the r820t_attach() call attempts I2C transfers through
+the mux adapter. These transfers go through i2c_mux_master_xfer(),
+which calls rtl2832_deselect() after the transfer completes,
+rescheduling i2c_gate_work via schedule_delayed_work(). If this
+transfer is still in flight when rtl2832_remove() runs,
+rtl2832_deselect() can reschedule i2c_gate_work after it has been
+cancelled, causing a use-after-free when kfree(dev) is called.
 
-Fix this by renaming v4l2_async_register_subdev_sensor() to
-__v4l2_async_register_subdev_sensor() with an added explicit module
-argument and introducing a wrapper macro:
-    #define v4l2_async_register_subdev_sensor(sd) \
-        __v4l2_async_register_subdev_sensor(sd, THIS_MODULE)
+Fix this by calling i2c_mux_del_adapters() before
+cancel_delayed_work_sync(). Once the mux adapter is unregistered, no
+new I2C transfers can go through it, so rtl2832_deselect() can no
+longer reschedule i2c_gate_work. The subsequent
+cancel_delayed_work_sync() is then guaranteed to be final.
 
-This ensures the sensor driver module is properly referenced even when
-the sensor driver does not init the owner field before calling
-v4l2_async_register_subdev_sensor() and prevents premature module removal.
-
-Fixes: aef69d54755d ("media: v4l: fwnode: Add a convenience function for registering sensors")
+Fixes: cddcc40b1b15 ("[media] rtl2832: convert to use an explicit i2c mux core")
 Cc: stable@vger.kernel.org
-Suggested-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/linux-media/20240315073125.275501-2-sakari.ailus@linux.intel.com/
-Signed-off-by: Mirela Rabulea <mirela.rabulea@nxp.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Reported-by: syzbot+019ced393ab913002b75@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=019ced393ab913002b75
+Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/v4l2-core/v4l2-fwnode.c |    6 +++---
- include/media/v4l2-async.h            |    4 +++-
- 2 files changed, 6 insertions(+), 4 deletions(-)
+ drivers/media/dvb-frontends/rtl2832.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/media/v4l2-core/v4l2-fwnode.c
-+++ b/drivers/media/v4l2-core/v4l2-fwnode.c
-@@ -1205,7 +1205,7 @@ v4l2_async_nf_parse_fwnode_sensor(struct
- 	return 0;
- }
+--- a/drivers/media/dvb-frontends/rtl2832.c
++++ b/drivers/media/dvb-frontends/rtl2832.c
+@@ -1115,10 +1115,10 @@ static void rtl2832_remove(struct i2c_cl
  
--int v4l2_async_register_subdev_sensor(struct v4l2_subdev *sd)
-+int __v4l2_async_register_subdev_sensor(struct v4l2_subdev *sd, struct module *module)
- {
- 	struct v4l2_async_notifier *notifier;
- 	int ret;
-@@ -1231,7 +1231,7 @@ int v4l2_async_register_subdev_sensor(st
- 	if (ret < 0)
- 		goto out_cleanup;
+ 	dev_dbg(&client->dev, "\n");
  
--	ret = v4l2_async_register_subdev(sd);
-+	ret = __v4l2_async_register_subdev(sd, module);
- 	if (ret < 0)
- 		goto out_unregister;
+-	cancel_delayed_work_sync(&dev->i2c_gate_work);
+-
+ 	i2c_mux_del_adapters(dev->muxc);
  
-@@ -1249,7 +1249,7 @@ out_cleanup:
++	cancel_delayed_work_sync(&dev->i2c_gate_work);
++
+ 	regmap_exit(dev->regmap);
  
- 	return ret;
- }
--EXPORT_SYMBOL_GPL(v4l2_async_register_subdev_sensor);
-+EXPORT_SYMBOL_GPL(__v4l2_async_register_subdev_sensor);
- 
- MODULE_DESCRIPTION("V4L2 fwnode binding parsing library");
- MODULE_LICENSE("GPL");
---- a/include/media/v4l2-async.h
-+++ b/include/media/v4l2-async.h
-@@ -333,8 +333,10 @@ int __v4l2_async_register_subdev(struct
-  * An error is returned if the module is no longer loaded on any attempts
-  * to register it.
-  */
-+#define v4l2_async_register_subdev_sensor(sd) \
-+	__v4l2_async_register_subdev_sensor(sd, THIS_MODULE)
- int __must_check
--v4l2_async_register_subdev_sensor(struct v4l2_subdev *sd);
-+__v4l2_async_register_subdev_sensor(struct v4l2_subdev *sd, struct module *module);
- 
- /**
-  * v4l2_async_unregister_subdev - unregisters a sub-device to the asynchronous
+ 	kfree(dev);
 
 
