@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73D413AC0FE;
-	Thu, 30 Jul 2026 15:54:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4982140860A;
+	Thu, 30 Jul 2026 15:54:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426842; cv=none; b=Beub6tAMpQMNC2QbmD+HV55jxRUUyLC7Wuz6xU2dW787MKYlHUQ1vVVC+I7W7drtWqrcSFViGqPm39npXXLZ9y9DY3eXeMpR5mnhPQdHJPWkMU5esT9uAoBZRH2ehT4z7YM1PQ0yTHxbD2Hz4dJQNQ0PJf5vDZgSWqJpm31k9AQ=
+	t=1785426845; cv=none; b=rVyQZGYh+toQNjw1Wt33p4gmf1kziic6mooYmnN7RW4gVZ99kI8aICvC060hA7GOCTbYMlQf0ntQH7ZxHf/719kFFQuEu8uZdLX2HCA3+ea3wucnei0nzpYcJpvn/pYYObf0/urcBgDCrnjiJYv8ARrs+nwNvz103pT6j1oVdkw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426842; c=relaxed/simple;
-	bh=PfBdh/kzznwnlpR6uGG0N7ebVwzgUu5lHrSll/7BmAs=;
+	s=arc-20240116; t=1785426845; c=relaxed/simple;
+	bh=zEw+tGplljNKh2auvx67AwZebdggA08iwm4dD5vTdsM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HPQFO+HmovEw9G+YOFSDqHs9AhLfFPkvg2vRN/O/c7QtgMS77qSFQeGFYAUodKQ8XtFeDNAkrBUWglTvOMxlnFzv8mwRgWrpynK+QsTXitEDfvaQPtRrcPN0JTLEDmdmgjOxrhJI26Hi0aFH7vE7bHDPOcO5NQTeDqGnZVVXWuQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k6S1FNAB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aF+3s1vacUH7xlbbcdT/bVsyl3EA09E9rtpUrm4G12F7cWaAuXIFvTvWQA//QCMf00eMCMbhXNd1tvGzfLPhUeVBLuNcO61R7aKxYXg0CSHuDskVjEmWFMNfdznzKBr7RwPSfHvlYIKd3iRdFMc1VCGsyrjO3sKquaqnCQ0BKyU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UXwZxz9j; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k6S1FNAB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D716A1F00A3D;
-	Thu, 30 Jul 2026 15:54:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UXwZxz9j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A432B1F000E9;
+	Thu, 30 Jul 2026 15:54:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426841;
-	bh=BNLk2T1KuiPUZSXHLKze7eV7f1oF7NokLpAVdjkrm5g=;
+	s=korg; t=1785426844;
+	bh=nsqM2ZDQEshn9jV+9ILHpnaXXsv7UyUZSEyIgvhQ654=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k6S1FNABSjioT4ktXAS5lVN7aElX3nVLJjrLKDO8CYE8+vw2Si7AmB6VXmkjzxkuk
-	 LVd1Zz6n4rbie8myxCa8vwPmn2QaPjMaGL+/Y2Ay54pYrc01Cbh7opxzAlI1RJL8AR
-	 om0Ko5UdscS5gmp/RKlyhSIqRztTCrH5hiWInsXc=
+	b=UXwZxz9js6sYV2wi6tQIah2Ph1VdladZRtenwjKITWvNNPifLrdRMj30MDmzKX9HY
+	 uZpfWGVbmilrWG8D0ftjrvkVZ7O/2GKjTiHWTAtVPMdhsUxOyWfzQqQUVUnOeYy+Nx
+	 8gXjRL2xvvGVKZheDeFFRUjr/vN3HTS802PRKGc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ankit Garg <nktgrg@google.com>,
-	Praveen Kaligineedi <pkaligineedi@google.com>,
-	Jordan Rhee <jordanrhee@google.com>,
-	Harshitha Ramamurthy <hramamurthy@google.com>,
-	Joshua Washington <joshwash@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Sergio Paracuellos <sergio.paracuellos@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 559/602] gve: fix header buffer corruption with header-split and HW-GRO
-Date: Thu, 30 Jul 2026 16:15:51 +0200
-Message-ID: <20260730141447.788636554@linuxfoundation.org>
+Subject: [PATCH 6.12 560/602] gpio: mt7621: avoid corruption of shared interrupt trigger state
+Date: Thu, 30 Jul 2026 16:15:52 +0200
+Message-ID: <20260730141447.809936523@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -56,140 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ankit Garg <nktgrg@google.com>
+From: Sergio Paracuellos <sergio.paracuellos@gmail.com>
 
-[ Upstream commit d676c9a73bdcd8237425dbb826f2bd1a25c36e40 ]
+[ Upstream commit 1781172526d1092323af443fa03f00e6de560401 ]
 
-The DQO RX datapath programs a per-buffer-queue-descriptor
-header_buf_addr at post time and reads the split header back at
-completion time. Both the post and the read currently index the
-header buffer by queue position rather than by the buffer's identity:
-
-  - post (gve_rx_post_buffers_dqo): header_buf_addr is computed from
-    bufq->tail
-  - read (gve_rx_dqo): the header is read from desc_idx (the completion
-    queue head index)
-
-This relies on the buffer-queue index and the completion-queue index
-being equal for the start of every packet, i.e. on the device consuming
-posted buffers and returning completions in the exact same order. That
-assumption does not hold once HW-GRO is enabled with multiple
-flows: coalesced segments are accepted and completed in an order that
-may differ from the order buffers were posted, and segments from
-different flows may interleave.
-
-That results in two problems:
-
-1. Wrong header slot on read. Because the read offset is derived from
-   the completion index (desc_idx) while the device wrote the header to
-   the address programmed for the buffer's buf_id, the driver can copy
-   a header belonging to a different packet. This shows up as
-   throughput drop (about 30% drop and large numbers of TCP
-   retransmissions) with header-split and HW-GRO both enabled and many
-   streams.
-
-2. Header buffer reused while still owned by the device. The driver
-   advances bufq->head by one per completion and re-posts buffers based
-   on that. Arrival of N RX completions only guarantees that at least N
-   RX buffer descriptors have been read by the device. It does not
-   guarantee that the device has relinquished the ownership of all the
-   buffers corresponding to those N descriptors. With out-of-order
-   completions (e.g. the completion for a packet copied into buffer N
-   arrives before the completion for a packet copied into buffer N-1),
-   the driver can re-post and overwrite a header buffer that the device
-   is still going to write into, corrupting the header of a packet
-   whose completion has not yet been processed.
-
-Fix both issues by indexing the header buffer by buf_id on both the post
-and read paths. Reading from buf_id's slot is therefore always correct
-regardless of completion ordering (fixes problem 1).
-
-Indexing by buf_id also ties each header slot to the lifetime of its
-buffer state. A buffer state is only returned to the free/recycle lists
-when its own completion (buf_id) is processed, so its header slot can
-only be re-posted after the device is done with it. This makes header
-slot reuse safe under out-of-order completions (fixes problem 2).
-
-Allocate (gve_rx_alloc_hdr_bufs) and free (gve_rx_free_hdr_bufs) the
-header buffers based on num_buf_states to match the buf_id indexing.
+The bank-shared fields like 'rising' and 'falling' are modified using
+non-atomic read-modify-write operations. Since every gpio chip instance
+represents an entire bank of 32 pins, if 'mediatek_gpio_irq_type()' is
+called concurrently for different IRQs on the same bank a possible overwrite
+of each other's configuration is possible. Thus, protect this state with
+'gpio_generic_lock_irqsave' lock in the same way it is handled in irp_chip
+'mediatek_gpio_irq_mask()' and 'mediatek_gpio_irq_unmask()' callbacks.
 
 Cc: stable@vger.kernel.org
-Fixes: 5e37d8254e7f ("gve: Add header split data path")
-Signed-off-by: Ankit Garg <nktgrg@google.com>
-Reviewed-by: Praveen Kaligineedi <pkaligineedi@google.com>
-Reviewed-by: Jordan Rhee <jordanrhee@google.com>
-Reviewed-by: Harshitha Ramamurthy <hramamurthy@google.com>
-Signed-off-by: Joshua Washington <joshwash@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260617013208.3781453-1-joshwash@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: 4ba9c3afda41 ("gpio: mt7621: Add a driver for MT7621")
+Signed-off-by: Sergio Paracuellos <sergio.paracuellos@gmail.com>
+Link: https://patch.msgid.link/20260626060112.2498324-2-sergio.paracuellos@gmail.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+[ Changed `guard(gpio_generic_lock_irqsave)(&rg->chip)` to `guard(spinlock_irqsave)(&rg->lock)` as the generic GPIO chip lock does not exist in this tree. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/google/gve/gve_rx_dqo.c |   28 +++++++++++++++++----------
- 1 file changed, 18 insertions(+), 10 deletions(-)
+ drivers/gpio/gpio-mt7621.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/net/ethernet/google/gve/gve_rx_dqo.c
-+++ b/drivers/net/ethernet/google/gve/gve_rx_dqo.c
-@@ -212,11 +212,13 @@ static void gve_rx_starvation_timer(stru
- static void gve_rx_free_hdr_bufs(struct gve_priv *priv, struct gve_rx_ring *rx)
- {
- 	struct device *hdev = &priv->pdev->dev;
--	int buf_count = rx->dqo.bufq.mask + 1;
+--- a/drivers/gpio/gpio-mt7621.c
++++ b/drivers/gpio/gpio-mt7621.c
+@@ -156,6 +156,8 @@ mediatek_gpio_irq_type(struct irq_data *
+ 	int pin = d->hwirq;
+ 	u32 mask = BIT(pin);
  
- 	if (rx->dqo.hdr_bufs.data) {
--		dma_free_coherent(hdev, priv->header_buf_size * buf_count,
--				  rx->dqo.hdr_bufs.data, rx->dqo.hdr_bufs.addr);
-+		size_t size =
-+			(size_t)priv->header_buf_size * rx->dqo.num_buf_states;
++	guard(spinlock_irqsave)(&rg->lock);
 +
-+		dma_free_coherent(hdev, size, rx->dqo.hdr_bufs.data,
-+				  rx->dqo.hdr_bufs.addr);
- 		rx->dqo.hdr_bufs.data = NULL;
- 	}
- }
-@@ -421,7 +423,7 @@ int gve_rx_alloc_ring_dqo(struct gve_pri
- 
- 	/* Allocate header buffers for header-split */
- 	if (cfg->enable_header_split)
--		if (gve_rx_alloc_hdr_bufs(priv, rx, buffer_queue_slots))
-+		if (gve_rx_alloc_hdr_bufs(priv, rx, rx->dqo.num_buf_states))
- 			goto err;
- 
- 	/* Allocate RX completion queue */
-@@ -557,10 +559,13 @@ void gve_rx_post_buffers_dqo(struct gve_
- 		desc->buf_id = cpu_to_le16(buf_state - rx->dqo.buf_states);
- 		desc->buf_addr = cpu_to_le64(buf_state->addr +
- 					     buf_state->page_info.page_offset);
--		if (rx->dqo.hdr_bufs.data)
-+		if (rx->dqo.hdr_bufs.data) {
-+			u16 buf_id = le16_to_cpu(desc->buf_id);
-+
- 			desc->header_buf_addr =
- 				cpu_to_le64(rx->dqo.hdr_bufs.addr +
--					    priv->header_buf_size * bufq->tail);
-+					(size_t)priv->header_buf_size * buf_id);
-+		}
- 
- 		bufq->tail = (bufq->tail + 1) & bufq->mask;
- 		complq->num_free_slots--;
-@@ -827,10 +832,13 @@ static int gve_rx_dqo(struct napi_struct
- 		int unsplit = 0;
- 
- 		if (hdr_len && !hbo) {
--			rx->ctx.skb_head = gve_rx_copy_data(priv->dev, napi,
--							    rx->dqo.hdr_bufs.data +
--							    desc_idx * priv->header_buf_size,
--							    hdr_len);
-+			size_t offset =
-+				(size_t)buffer_id * priv->header_buf_size;
-+
-+			rx->ctx.skb_head =
-+				gve_rx_copy_data(priv->dev, napi,
-+						 rx->dqo.hdr_bufs.data + offset,
-+						 hdr_len);
- 			if (unlikely(!rx->ctx.skb_head))
- 				goto error;
- 			rx->ctx.skb_tail = rx->ctx.skb_head;
+ 	if (type == IRQ_TYPE_PROBE) {
+ 		if ((rg->rising | rg->falling |
+ 		     rg->hlevel | rg->llevel) & mask)
 
 
