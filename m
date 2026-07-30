@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C664411671;
-	Thu, 30 Jul 2026 14:45:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A36A439A4A0;
+	Thu, 30 Jul 2026 14:45:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422705; cv=none; b=Ou9gVzY5GAnYuuJoOujER/cGVcEXuTiGCDUinwtie2fjy4RQ8Aw/bPmF/V6f5ZTMtA1dmd5BwqiNCQBnCJFzmsA4AJtnfWshSBupa+9mc/erMmV6sJ/fXV2pMWZbGhfgHCdoqLr0F75ELI/xoJYz5+KAK4y8g3x0+16VXGjecbQ=
+	t=1785422708; cv=none; b=NqnBr2m9/qV0klspx6uv/21ELhibTtZ+qRd0nMHlHcjxJyQISmYoxrC1RuIoHiAmBV1je6798LKMF0xn5iM9zSyPPd9p2b29U/gTzQaZD5SSGcPgfdRH6a3fV9MGp6dH5uVXHT/G2R3Upi5PTQ0oX+BKJpuHZFSR/eF6OrtiLeA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422705; c=relaxed/simple;
-	bh=QH1/XRzcb9jyTgcTYmhQ1SdzveqDnh24ZNzZmlqHeH4=;
+	s=arc-20240116; t=1785422708; c=relaxed/simple;
+	bh=RExL2pFR/lfJbJ3gxDIU4/mMxUpj020GkrTsslxOBdU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vp3yW4MH7TFB0mT8Qu5ae7Rj9LWOhZcJcdXGmwWcj8+CvBGD11JSobQ3ATWnJ5SuzPk1U0tVKkYRSIl3NgnKy1mwuitu50th4M5D0qFU9y8Y8J0L29/L1D2AK6bWofS1SeMkeoKMWjPo0O8pxocN5IT2llLPzDd62rvZ6PheQLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PcsTh2CP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TXERvn02Gk3xwcXpSu/1jKKIsyYGTlO/jW1XJRYoaotPP4RaWh4qXJ2z/6fgTkQvXVFqUIF2mTq9vZ0HkJqJDO2ZoWgBa1Sp0ZjYUpWC7RknX8lRFx0xVlaAgOYb5p3x5rFA3rLzUl84cpNHDNrerpDZNIoGzHhG+/OXO/f7ZFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tzx1FZiK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PcsTh2CP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7DAC1F00A3A;
-	Thu, 30 Jul 2026 14:45:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tzx1FZiK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAF7A1F00A3F;
+	Thu, 30 Jul 2026 14:45:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422704;
-	bh=Y2y4z5FaUOSwUXmnK9Z8IDe1Eg+dgHPcAz7Oe4aEiCU=;
+	s=korg; t=1785422707;
+	bh=edZ7VLQCqBWT3Z2B19MOrNpOFCV/9xaXaLopetcyNc4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PcsTh2CPTnKc6rKTnty8znJcPeTFBhEo/F/mPJy03IMTu93PVeFSx8ud8JcNpivUL
-	 yYJuFfuCRrIoHmtjiIequI8JDZmu3yuEXoD6VJlBhS+q+hZYBNSk3huVXIKvdQLUXp
-	 P0O1tsfHXa7fL8RViwN2yn9yKAmz1ffJkoc3aMgI=
+	b=tzx1FZiKODiXMz60vwUJk7e2Hs1liiPM5WMlHiL9HpNQzPe5y29aQ4/A+v1muUH06
+	 igj5fuvKIc43HONdjS2HUWkGKBVvy5w98C03X+5XF1k+wySz+QVIe8j7uyAkMbEqF+
+	 K2JKpzHCzOjwldYYilPeO7wEB/ERJ+N4Wzri6RiA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Subject: [PATCH 7.1 529/744] media: v4l2-subdev: Fail {enable,disable}_streams and s_streaming nicely
-Date: Thu, 30 Jul 2026 16:13:22 +0200
-Message-ID: <20260730141455.516932180@linuxfoundation.org>
+	Zile Xiong <xiongzile99@gmail.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 7.1 530/744] media: vb2: use ssize_t for vb2_read/vb2_write
+Date: Thu, 30 Jul 2026 16:13:23 +0200
+Message-ID: <20260730141455.537173281@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -50,38 +51,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sakari Ailus <sakari.ailus@linux.intel.com>
+From: Zile Xiong <xiongzile99@gmail.com>
 
-commit 0bcbfd1c1142d85faef8df5cb679d37f71394c5f upstream.
+commit a562d6dc86bdfdd299e1b4734977a8d63e803583 upstream.
 
-If a sub-device does not set enable_streams() and disable_streams() pad
-ops while it sets the s_stream() video op to
-v4l2_subdev_s_stream_helper(), enabling or disabling streaming either way
-on the sub-device will result calling v4l2_subdev_s_stream_helper() and
-v4l2_subdev_{enable,disable}_streams() recursively, exhausting the stack.
-Return -ENOIOCTLCMD in this case to handle the situation gracefully.
+vb2_read() and vb2_write() return size_t, but propagate
+negative errno values from __vb2_perform_fileio().
 
-Fixes: b62949ddaa52 ("media: subdev: Support single-stream case in v4l2_subdev_enable/disable_streams()")
+This relies on implicit signed/unsigned conversions in callers
+(e.g. vb2_fop_read()) to recover error codes:
+
+    __vb2_perform_fileio() -> -EINVAL
+    vb2_read()             -> (size_t)-EINVAL
+    vb2_fop_read()         -> -EINVAL
+
+This relies on implicit conversions that are not obvious.
+
+These helpers are exported (EXPORT_SYMBOL_GPL) and part of the
+vb2 API, so changing their return type may affect existing users.
+
+However, they conceptually follow read/write semantics, where
+ssize_t is typically used to return either a byte count or a
+negative error code.
+
+Switch vb2_read() and vb2_write() to ssize_t, and update
+__vb2_perform_fileio() accordingly.
+
+Signed-off-by: Zile Xiong <xiongzile99@gmail.com>
+Acked-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Fixes: b25748fe6126 ("[media] v4l: videobuf2: add read() and write() emulator")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/v4l2-core/v4l2-subdev.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/media/common/videobuf2/videobuf2-core.c |   12 ++++++------
+ include/media/videobuf2-core.h                  |    8 ++++----
+ 2 files changed, 10 insertions(+), 10 deletions(-)
 
---- a/drivers/media/v4l2-core/v4l2-subdev.c
-+++ b/drivers/media/v4l2-core/v4l2-subdev.c
-@@ -2504,6 +2504,10 @@ int v4l2_subdev_s_stream_helper(struct v
- 	u64 source_mask = 0;
- 	int pad_index = -1;
+--- a/drivers/media/common/videobuf2/videobuf2-core.c
++++ b/drivers/media/common/videobuf2/videobuf2-core.c
+@@ -2990,8 +2990,8 @@ static int __vb2_cleanup_fileio(struct v
+  * @nonblock:	mode selector (1 means blocking calls, 0 means nonblocking)
+  * @read:	access mode selector (1 means read, 0 means write)
+  */
+-static size_t __vb2_perform_fileio(struct vb2_queue *q, char __user *data, size_t count,
+-		loff_t *ppos, int nonblock, int read)
++static ssize_t __vb2_perform_fileio(struct vb2_queue *q, char __user *data, size_t count,
++				    loff_t *ppos, int nonblock, int read)
+ {
+ 	struct vb2_fileio_data *fileio;
+ 	struct vb2_fileio_buf *buf;
+@@ -3154,15 +3154,15 @@ static size_t __vb2_perform_fileio(struc
+ 	return ret;
+ }
  
-+	if (WARN_ON(!v4l2_subdev_has_op(sd, pad, enable_streams) ||
-+		    !v4l2_subdev_has_op(sd, pad, disable_streams)))
-+		return -ENOIOCTLCMD;
-+
- 	/*
- 	 * Find the source pad. This helper is meant for subdevs that have a
- 	 * single source pad, so failures shouldn't happen, but catch them
+-size_t vb2_read(struct vb2_queue *q, char __user *data, size_t count,
+-		loff_t *ppos, int nonblocking)
++ssize_t vb2_read(struct vb2_queue *q, char __user *data, size_t count,
++		 loff_t *ppos, int nonblocking)
+ {
+ 	return __vb2_perform_fileio(q, data, count, ppos, nonblocking, 1);
+ }
+ EXPORT_SYMBOL_GPL(vb2_read);
+ 
+-size_t vb2_write(struct vb2_queue *q, const char __user *data, size_t count,
+-		loff_t *ppos, int nonblocking)
++ssize_t vb2_write(struct vb2_queue *q, const char __user *data, size_t count,
++		  loff_t *ppos, int nonblocking)
+ {
+ 	return __vb2_perform_fileio(q, (char __user *) data, count,
+ 							ppos, nonblocking, 0);
+--- a/include/media/videobuf2-core.h
++++ b/include/media/videobuf2-core.h
+@@ -1093,8 +1093,8 @@ __poll_t vb2_core_poll(struct vb2_queue
+  * @ppos:	file handle position tracking pointer
+  * @nonblock:	mode selector (1 means blocking calls, 0 means nonblocking)
+  */
+-size_t vb2_read(struct vb2_queue *q, char __user *data, size_t count,
+-		loff_t *ppos, int nonblock);
++ssize_t vb2_read(struct vb2_queue *q, char __user *data, size_t count,
++		 loff_t *ppos, int nonblock);
+ /**
+  * vb2_write() - implements write() syscall logic.
+  * @q:		pointer to &struct vb2_queue with videobuf2 queue.
+@@ -1103,8 +1103,8 @@ size_t vb2_read(struct vb2_queue *q, cha
+  * @ppos:	file handle position tracking pointer
+  * @nonblock:	mode selector (1 means blocking calls, 0 means nonblocking)
+  */
+-size_t vb2_write(struct vb2_queue *q, const char __user *data, size_t count,
+-		loff_t *ppos, int nonblock);
++ssize_t vb2_write(struct vb2_queue *q, const char __user *data, size_t count,
++		  loff_t *ppos, int nonblock);
+ 
+ /**
+  * typedef vb2_thread_fnc - callback function for use with vb2_thread.
 
 
