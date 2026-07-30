@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AD351FE44A;
-	Thu, 30 Jul 2026 14:54:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 095E3337699;
+	Thu, 30 Jul 2026 14:54:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423263; cv=none; b=rKcAhPttpKOEJGwn8sJeL2JVtso7WS+d6GVr0FIajjf7Y4kHxJuJb9b/HmVKgWBeysin7eCmIBYpCAE3jkC+RFcrlABb/qdeEk9s3/Wy2nbls5fKDIvbBmlpzAaK0cDvuP8Cs50T7iZbUeM2iLMB15YGZFt7uYY/SasyXEg/kCc=
+	t=1785423266; cv=none; b=pn43ae159fHDyVfmre/37N27l+hFAgP+mbOMsNzwbFOjgSx6m6+iRQUuYS+JKGsrTYdMyIe1NpnYN6RzjMmS2/Rj/neeSHxAs1gmNONWDItLdru4ZUT6Yb3VC+kxL/+gw5z+QMx+dlEpUBK5ju9+v9fm4lBLtQsT5gt1+CfCWWQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423263; c=relaxed/simple;
-	bh=ysLWxAqpbCrcJRDaTDwLIk68oSiMiAFO4XQVQFfYqsg=;
+	s=arc-20240116; t=1785423266; c=relaxed/simple;
+	bh=SQBCZP0L1SrWy5lZcWb6wC7BnW0uRkf/g0pOCr0C/6E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WsFllv/dNUPHSbfLfBwYcyMYDUsN7vwnItLh9ou/njmp3K2hE9ooO7lr4xCjmGzOEfxUhw0X07WRNpBZfwBUvLBD1ClGCgw1n9ENtb1juOfRK0F3o0tApAOpkacaLxoVC4v0RmXc8Q0Z93D3gar+2wYJqdkrr025eN2AYuZ9irU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UZs+gb9r; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sF1KenhYQ7vyIDfsn32rQqojFSvaI85EXhCSTAIiGD7j1uzltFwZ4BlWnyXCYwN08hDmaStSfK/ClNT0XxRuyidVeXWFtHkHG/lnaT72m7UG5RWWcScixXg55eFtWP3QS8H8o/dzVa7D4F9eBaDdv2YLm1DLozSTO6y2NYJyRwI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yAzJRcXK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UZs+gb9r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 924791F000E9;
-	Thu, 30 Jul 2026 14:54:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yAzJRcXK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 647561F000E9;
+	Thu, 30 Jul 2026 14:54:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423262;
-	bh=CFswDvYZ0cnNA7gfgxAd3MxVetSBbAi11tX8Dll20hA=;
+	s=korg; t=1785423264;
+	bh=CZ9hveDwdk2NbGXEDgwdTYqwgEyz2J5tvnr8Nu6WNQk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UZs+gb9rNHUoPdVJ2jANnF8PqKotymzKt5ecMT1LB5888Z1yoaUQqmafwMF2GBKvt
-	 tLud2KoG8gAVpDbKzlJLrBzVN0hlpkaHHtcE+mARG1DiljFl1dlWOmW8+HZaTMGhgC
-	 ZEbezCbG1FREN7vfVqnYe8QXr/g4Ct5fK1Hyd97w=
+	b=yAzJRcXKgILr5hmE00RwaZof935ICSC8WjYW2ZKOVITuXOj6286ZZOK2/k768j8Jy
+	 R4q2V6uzKev1pfYjUDu0v9o4V75Zn/a9JUcWfZ80Gkthu9JAgVqBTUzNqP+GHS633f
+	 skncEhQY2gFBaRipG2cfaIRiqODWAMqQX0mgib84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	LocalHost <localhost.detect@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
-	Wentao Guan <guanwentao@uniontech.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 723/744] ksmbd: validate ACE size against SID sub-authorities
-Date: Thu, 30 Jul 2026 16:16:36 +0200
-Message-ID: <20260730141459.651551744@linuxfoundation.org>
+	Alex Deucher <alexander.deucher@amd.com>,
+	Jesse Zhang <jesse.zhang@amd.com>
+Subject: [PATCH 7.1 697/744] drm/amdgpu/gfx11: fix EOP interrupt routing for KQ and userq
+Date: Thu, 30 Jul 2026 16:16:10 +0200
+Message-ID: <20260730141459.085505068@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -53,66 +50,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Jesse Zhang <Jesse.Zhang@amd.com>
 
-commit 5152c6d49e3fd4e9f2e857c57527aead752f1f87 upstream.
+commit 0a3d35460320baf8744c7dcc3e287e07fbaf6d36 upstream.
 
-set_ntacl_dacl() validates sid.num_subauth before copying an ACE, but
-does not verify that the declared ACE size contains all sub-authorities
-described by that field. An undersized ACE can therefore be copied
-and later make the POSIX ACL deduplication walk inspect data beyond
-the copied ACE boundary.
+Try KQ by ring_id first (KCQ and UQ never share a HW slot); fall back
+to amdgpu_userq_process_fence_irq() on miss, since KQ EOPs were
+misrouted into the userq fence path when enable_mes is true.
 
-The existing initial bound check is also too small. It only ensures
-that the ACE size field is accessible before set_ntacl_dacl() reads
-sid.num_subauth farther into the input buffer.
+Require a strict (me,pipe,queue) match in the gfx case, then userq gfx
+EOPs fall through to amdgpu_userq_process_fence_irq().
 
-Require enough input for the fixed SID header before accessing
-num_subauth, reject ACEs smaller than that header, and skip ACEs
-whose declared size cannot contain the complete SID. This makes the
-validation consistent with the other ACE walk paths.
-
-Reported-by: LocalHost <localhost.detect@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Suggested-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Jesse Zhang <jesse.zhang@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 88e589cc811ba907209a426c426c469bcb4bb894)
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smbacl.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c |   43 ++++++++++++++++++++++-----------
+ 1 file changed, 29 insertions(+), 14 deletions(-)
 
-diff --git a/fs/smb/server/smbacl.c b/fs/smb/server/smbacl.c
-index f8696399130889..0359cd10320269 100644
---- a/fs/smb/server/smbacl.c
-+++ b/fs/smb/server/smbacl.c
-@@ -743,15 +743,22 @@ static void set_ntacl_dacl(struct mnt_idmap *idmap,
- 		for (i = 0; i < nt_num_aces; i++) {
- 			unsigned short nt_ace_size;
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
+@@ -6513,25 +6513,33 @@ static int gfx_v11_0_eop_irq(struct amdg
+ 			     struct amdgpu_iv_entry *entry)
+ {
+ 	u32 doorbell_offset = entry->src_data[0];
+-	u8 me_id, pipe_id, queue_id;
+-	struct amdgpu_ring *ring;
+-	int i;
  
--			if (offsetof(struct smb_ace, access_req) > aces_size)
-+			if (aces_size < offsetof(struct smb_ace, sid) +
-+					CIFS_SID_BASE_SIZE)
- 				break;
+ 	DRM_DEBUG("IH: CP EOP\n");
  
- 			nt_ace_size = le16_to_cpu(ntace->size);
--			if (nt_ace_size > aces_size)
-+			if (nt_ace_size > aces_size ||
-+			    nt_ace_size < offsetof(struct smb_ace, sid) +
-+					  CIFS_SID_BASE_SIZE)
- 				break;
+-	if (adev->enable_mes && doorbell_offset) {
+-		amdgpu_userq_process_fence_irq(adev, doorbell_offset);
+-	} else {
+-		me_id = (entry->ring_id & 0x0c) >> 2;
+-		pipe_id = (entry->ring_id & 0x03) >> 0;
+-		queue_id = (entry->ring_id & 0x70) >> 4;
++	if (!adev->gfx.disable_kq) {
++		u8 me_id = (entry->ring_id & 0x0c) >> 2;
++		u8 pipe_id = (entry->ring_id & 0x03) >> 0;
++		u8 queue_id = (entry->ring_id & 0x70) >> 4;
++		struct amdgpu_ring *ring;
++		int i;
  
- 			if (ntace->sid.num_subauth == 0 ||
--			    ntace->sid.num_subauth > SID_MAX_SUB_AUTHORITIES)
-+			    ntace->sid.num_subauth > SID_MAX_SUB_AUTHORITIES ||
-+			    nt_ace_size < offsetof(struct smb_ace, sid) +
-+					  CIFS_SID_BASE_SIZE +
-+					  sizeof(__le32) *
-+					  ntace->sid.num_subauth)
- 				goto next_ace;
+ 		switch (me_id) {
+ 		case 0:
+-			if (pipe_id == 0)
+-				amdgpu_fence_process(&adev->gfx.gfx_ring[0]);
+-			else
+-				amdgpu_fence_process(&adev->gfx.gfx_ring[1]);
++			/*
++			 * MES splits gfx HQDs per (me,pipe): KGQ owns queue=0,
++			 * userq gfx owns queue>=1 (see amdgpu_mes_get_hqd_mask).
++			 * Require a strict (me,pipe,queue) match so userq gfx
++			 * EOPs fall through to amdgpu_userq_process_fence_irq().
++			 */
++			for (i = 0; i < adev->gfx.num_gfx_rings; i++) {
++				ring = &adev->gfx.gfx_ring[i];
++				if ((ring->me == me_id) &&
++				    (ring->pipe == pipe_id) &&
++				    (ring->queue == queue_id)) {
++					amdgpu_fence_process(ring);
++					return 0;
++				}
++			}
+ 			break;
+ 		case 1:
+ 		case 2:
+@@ -6543,13 +6551,20 @@ static int gfx_v11_0_eop_irq(struct amdg
+ 				 */
+ 				if ((ring->me == me_id) &&
+ 				    (ring->pipe == pipe_id) &&
+-				    (ring->queue == queue_id))
++				    (ring->queue == queue_id)) {
+ 					amdgpu_fence_process(ring);
++					return 0;
++				}
+ 			}
+ 			break;
++		default:
++			break;
+ 		}
+ 	}
  
- 			memcpy((char *)pndace + size, ntace, nt_ace_size);
--- 
-2.53.0
-
++	if (adev->enable_mes && doorbell_offset)
++		amdgpu_userq_process_fence_irq(adev, doorbell_offset);
++
+ 	return 0;
+ }
+ 
 
 
