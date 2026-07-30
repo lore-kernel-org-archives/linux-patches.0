@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E43A402444;
-	Thu, 30 Jul 2026 14:32:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 788D4429802;
+	Thu, 30 Jul 2026 14:32:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421929; cv=none; b=ePEam0EOBlWZ+xK5uNrOgGvWy2fVCNsrXliIOp6FOtmP63Vd1gIBUXMIOpiukb4ptllDfc57eSy8WepZwqskFBaOlVzPBXh/QpgE9D0E90f5Q6xyxLe/JL+aEdKqnoEEnFOYqIoG2zDflB1utAC8Bl1uRhFNGToEiq9v0KjhNIk=
+	t=1785421932; cv=none; b=Co0UZHGoPyy9ZlGlPfPDW3ZDt0137f8HWZFc04aKUt3EyRokUzdQvXf7CqNK5e8mKZj+sjlZfm8AWIjH60u937BQAi1vXM1MTxQn0E3jy6uDGGqNodd4fn3jKaxeth5BqTrftXTyeS6v0Wq5rv7PHhR/bczDV+V1bOC9sdf8wz0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421929; c=relaxed/simple;
-	bh=ROyKaJfcXdr4DNTXmSjXbGSB8+J+kOsSjH950Cg5K6E=;
+	s=arc-20240116; t=1785421932; c=relaxed/simple;
+	bh=dkGvygfVVt/AHxmjIF6I/cB0bQhjpVr6y2N1CuqRwhg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GnCzk0bNu1iq0gpbNdOx50PQB3xEvBdHJWKI023BHMxu771MTn5aEMUDscBzQylJl2rU7vP01vIUt/FGMlJydhc3H5Mt/shkybqKkZqVGMahrUNWET0PM7/PS6hOW02DU9xKRd4vXHBdMNJbvugv5RzeI37jgm0yMOV+oaOhOmI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TZxjZHg/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=r+YjjA+8Zf78NUMbyD1Kepk43wrWNLQGoA2Rw2o+gR48G0tDd1+c3lxR4eVyc6zlprBw3XRzzjfJz78dmNxQIgcW+LFA0vCvgXnQo4iWMyLHICX5CUpekF/qm8N2YBsptxds2Dumr1vxi6Yqw8L1edb2jxA05RZ93nNnK2xOXp8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jm8saP/R; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TZxjZHg/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1E8C1F000E9;
-	Thu, 30 Jul 2026 14:32:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jm8saP/R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB3A11F000E9;
+	Thu, 30 Jul 2026 14:32:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421928;
-	bh=z0fpKVrA2eYOyeEKGhTV7gFjQWg8G8tx+kzvWH7Pxkw=;
+	s=korg; t=1785421931;
+	bh=EgMd953lpjatdDDXZkWemz54hihCBfXkjaG9XT41Y38=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TZxjZHg//HiBh8qv8YN71B1NboCAx4vM9vfTYaVECk1qYKl2W/YBbyGfXJJ848V0p
-	 /8bDhMe+2o6BpRoIcVhVc+KHmnyzenbephvBrDx/YfGzqHspAGQ2o7FvCHar5PFLm+
-	 tAH/cPHZvnYBA4evShSeFSUnKhqaQsbvWohgw/vM=
+	b=Jm8saP/RVb7cElfa8Hct+ZW2cssPNUnATtgVOKf3JmR81xwktCZLJjbpztBdjNwnR
+	 6pthfaEEHeTtx3dRxY9Hd3TFdeGxqOVmvK3efH8m4U2rP6RHEPZxPvCi7u95s8XvsU
+	 2M+oKPDtZwqAg6wZIJoM/PKDtLQ2qNZ85V+eqG3w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HanQuan <eilaimemedsnaimel@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	"Nikhil P. Rao" <nikhil.rao@amd.com>,
+	Harshitha Ramamurthy <hramamurthy@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 265/744] sctp: fix auth_chunk_list capacity check in sctp_auth_ep_add_chunkid
-Date: Thu, 30 Jul 2026 16:08:58 +0200
-Message-ID: <20260730141449.926943199@linuxfoundation.org>
+Subject: [PATCH 7.1 266/744] pds_core: fix deadlock between reset thread and remove
+Date: Thu, 30 Jul 2026 16:08:59 +0200
+Message-ID: <20260730141449.948509779@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -52,44 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HanQuan <eilaimemedsnaimel@gmail.com>
+From: Nikhil P. Rao <nikhil.rao@amd.com>
 
-[ Upstream commit ff04b26794a16a8a879eb4fd2c02c2d6b03850e9 ]
+[ Upstream commit ab0eec0ff0a421737a37f510ceab5c6ea59cd05a ]
 
-sctp_auth_ep_add_chunkid() uses SCTP_NUM_CHUNK_TYPES (20) as the
-capacity limit for ep->auth_chunk_list, allowing it to hold up to
-20 chunk entries (param_hdr.length up to 24). However, the copy
-destination asoc->c.auth_chunks in struct sctp_cookie is only
-SCTP_AUTH_MAX_CHUNKS (16) entries (20 bytes). When more than 16
-chunks are added, sctp_association_init() memcpy overflows the
-destination by up to 4 bytes.
+pci_reset_function() acquires device_lock before performing the reset.
+pdsc_remove() is called by the PCI core with device_lock already held.
+If pdsc_pci_reset_thread() is running when pdsc_remove() is called,
+destroy_workqueue() will block waiting for the work to complete, while
+the work is blocked waiting for device_lock - deadlock.
 
-Fix by using SCTP_AUTH_MAX_CHUNKS as the capacity limit, matching
-the destination capacity.
+Use pci_try_reset_function() which uses pci_dev_trylock() internally.
+This acquires both the device lock and the PCI config access lock
+without blocking - if either lock is contended, it returns -EAGAIN
+immediately. This avoids the deadlock while also ensuring proper
+config space access serialization during the reset.
 
-Fixes: 1f485649f529 ("[SCTP]: Implement SCTP-AUTH internals")
-Signed-off-by: HanQuan <eilaimemedsnaimel@gmail.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20260713032021.3491702-1-zhoujian.zja@antgroup.com
+The pci_dev_get/put calls are also removed as they were unnecessary -
+the driver-owned workqueue is destroyed in pdsc_remove(), guaranteeing
+the work completes before remove returns. The PCI core holds its
+reference to pci_dev throughout the entire unbind sequence.
+
+Fixes: 81665adf25d2 ("pds_core: Fix pdsc_check_pci_health function to use work thread")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Closes: https://patchwork.kernel.org/comment/27002369/
+Signed-off-by: Nikhil P. Rao <nikhil.rao@amd.com>
+Reviewed-by: Harshitha Ramamurthy <hramamurthy@google.com>
+Link: https://patch.msgid.link/20260714180223.1642792-2-nikhil.rao@amd.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/auth.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/amd/pds_core/core.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/net/sctp/auth.c b/net/sctp/auth.c
-index be9782760f5093..c901d373af803c 100644
---- a/net/sctp/auth.c
-+++ b/net/sctp/auth.c
-@@ -672,7 +672,7 @@ int sctp_auth_ep_add_chunkid(struct sctp_endpoint *ep, __u8 chunk_id)
- 	/* Check if we can add this chunk to the array */
- 	param_len = ntohs(p->param_hdr.length);
- 	nchunks = param_len - sizeof(struct sctp_paramhdr);
--	if (nchunks == SCTP_NUM_CHUNK_TYPES)
-+	if (nchunks == SCTP_AUTH_MAX_CHUNKS)
- 		return -EINVAL;
+diff --git a/drivers/net/ethernet/amd/pds_core/core.c b/drivers/net/ethernet/amd/pds_core/core.c
+index 705cab7b07273d..b6d4b30147232a 100644
+--- a/drivers/net/ethernet/amd/pds_core/core.c
++++ b/drivers/net/ethernet/amd/pds_core/core.c
+@@ -602,9 +602,10 @@ void pdsc_pci_reset_thread(struct work_struct *work)
+ 	struct pdsc *pdsc = container_of(work, struct pdsc, pci_reset_work);
+ 	struct pci_dev *pdev = pdsc->pdev;
  
- 	p->chunks[nchunks] = chunk_id;
+-	pci_dev_get(pdev);
+-	pci_reset_function(pdev);
+-	pci_dev_put(pdev);
++	/* Use try variant to avoid deadlock with pdsc_remove().
++	 * If lock is contended, the watchdog timer will retry.
++	 */
++	pci_try_reset_function(pdev);
+ }
+ 
+ static void pdsc_check_pci_health(struct pdsc *pdsc)
 -- 
 2.53.0
 
