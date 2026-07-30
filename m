@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 364E94446F7;
-	Thu, 30 Jul 2026 15:31:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A075344D011;
+	Thu, 30 Jul 2026 15:31:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425496; cv=none; b=Kp4eHbr3eHpNMy58463tJMSpTTZjradzsdN33xyofIB/g7Ekj/eqUZeu/Wx/kZzlXqZ6yJkxqnBeWBccLT79NwC6o4l9pUkSP8Wa/8BEDfTXY7hr2ZH3kOjZLvmNQjrFzItk3moqLEU1q/puSPNpp58THVO8GIHJoWvzKL2gLcU=
+	t=1785425498; cv=none; b=Fbx8APTfAXNipy0/pZS+qbzNYZguXDkdoQPK1nEfsCwTwyoYVrPQgqjJhuOYMR6UuO9Fv/xOiBIN2TrlH5MTJIi/tPnMjVDE+/raGLYJKV5FEbWrXYnhsOU1sZFpaiaTWdfaqg5ZXj//0JHUGqEf7+Mp8lqErhRy/RfwsC5jPDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425496; c=relaxed/simple;
-	bh=6gNcLAMIKZZsbdSHW+2ZzLVZuOZx8t2WnQ63YgkBKZs=;
+	s=arc-20240116; t=1785425498; c=relaxed/simple;
+	bh=8S1H6qIE98E/24lEdL9PMw8OW5lXscDM50PGp1909m8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B55Y48ADtSZl2PhvC0k03NzSMmnq8uEmQwzduPdAuiSeuact5EJ7WXhry0yjA7bkxyDJc6JfPASLPcFZBGU+e6K3TL5DPlvE2ytA0Xe2ixjAOKUJ6AUUQui7iPm58/fr/uApuSHKpH+1CohAh8Bf5H6U/em1DWFqwjuksIiTugY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ib6mLXlh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SmlTPWTn22Cx2KkSGXovG5x2dRQa5mApO+RJcHJfeDFlD77bEdjg3aYWWftc5jdCL9HALASf9vmL58lRur48DYWit47QLDyyOFWN8wClOb+fgKkBuxnwbQze3wvaq3TKGXzIIFg16lMkZa5ZexEwbRTOUOZQ5Ee5L94Nq1/621A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p7yIOJS+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ib6mLXlh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 304A31F000E9;
-	Thu, 30 Jul 2026 15:31:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p7yIOJS+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 072A81F000E9;
+	Thu, 30 Jul 2026 15:31:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425494;
-	bh=vpdKTpgZ7tilh4PMG3/gT+Ob3YVUD4BgmoVQjZTFRtQ=;
+	s=korg; t=1785425497;
+	bh=/zL938gSD17Zbyx38k4lGspNs4FWiO1mspSWa9DYxEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ib6mLXlhbYDpNo11itbqIroxX3ecw66iGABGeYoo4OddArmcKH8x+ng41iQTKE387
-	 JlSfTkZDcdZDK6ZyzbCcXsn+nRul9+5rWEUW0uzTWhIdBvYTQwAa5sDVspC2rwKgoR
-	 jNY8GP0C7y5sw3jpG0RsR4rcoa+D7f1IgGbaX1ik=
+	b=p7yIOJS+q5UzaGyACwpBYrQa2Fc/uff2DKxnAz5mnydZTzE87QjLyoOJNjMvkWWEo
+	 em5I+Y4vzlkwkC5xYBMmToEbzlHDGe9kgo7DIvw5Pbahx3l/jcOXD7k4K1e3OxgTds
+	 VOdgqRpMfwDPvik2oZiSzYH9M25prZTwrQkF94+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Rosen Penev <rosenp@gmail.com>,
 	Damien Le Moal <dlemoal@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 087/602] ata: sata_dwc_460ex: fix clear_interrupt_bit() clearing all pending interrupts
-Date: Thu, 30 Jul 2026 16:07:59 +0200
-Message-ID: <20260730141437.823622177@linuxfoundation.org>
+Subject: [PATCH 6.12 088/602] ata: sata_dwc_460ex: fix infinite loop in NCQ tag completion bit-scanning
+Date: Thu, 30 Jul 2026 16:08:00 +0200
+Message-ID: <20260730141437.844555797@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -53,16 +53,18 @@ Content-Transfer-Encoding: 8bit
 
 From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit 66c4e310ad71f41e41736d33dd8a1fb5eaaec7f3 ]
+[ Upstream commit c2130f6553f4a5cbdc259de069600117a995f197 ]
 
-clear_interrupt_bit() ignores the bit argument and performs a
-read-write-back of the entire INTPR register.  If INTPR uses standard
-Write-1-to-Clear semantics, this clears every pending interrupt bit,
-not just the intended one.  Coalesced interrupts (e.g. DMAT + NEWFP)
-would be cleared together, silently losing the second event.
+The hand-rolled bit-scanning loop in the NCQ completion path has an
+infinite loop bug.  When tag_mask has only high bits set (e.g.
+0x80000000), the inner while loop left-shifts tag_mask until it
+overflows to 0.  At that point !(0 & 1) is always true and 0 <<= 1
+stays 0, causing an infinite loop in hardirq context with a spinlock
+held.
 
-Write only the specific bit to clear so that other pending interrupts
-are preserved.
+Replace the open-coded bit-scanning with __ffs() which correctly
+finds the least significant set bit and is bounded by the width of
+the argument.
 
 Fixes: 62936009f35a ("[libata] Add 460EX on-chip SATA driver, sata_dwc_460ex")
 Assisted-by: opencode:big-pickle
@@ -70,23 +72,30 @@ Signed-off-by: Rosen Penev <rosenp@gmail.com>
 Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/sata_dwc_460ex.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/ata/sata_dwc_460ex.c | 9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
 
 diff --git a/drivers/ata/sata_dwc_460ex.c b/drivers/ata/sata_dwc_460ex.c
-index 97b934fa116e26..74514608a7fada 100644
+index 74514608a7fada..66db8dd8ec2670 100644
 --- a/drivers/ata/sata_dwc_460ex.c
 +++ b/drivers/ata/sata_dwc_460ex.c
-@@ -394,8 +394,7 @@ static void clear_serror(struct ata_port *ap)
+@@ -607,14 +607,9 @@ static irqreturn_t sata_dwc_isr(int irq, void *dev_instance)
+ 	status = ap->ops->sff_check_status(ap);
+ 	dev_dbg(ap->dev, "%s ATA status register=0x%x\n", __func__, status);
  
- static void clear_interrupt_bit(struct sata_dwc_device *hsdev, u32 bit)
- {
--	sata_dwc_writel(&hsdev->sata_dwc_regs->intpr,
--			sata_dwc_readl(&hsdev->sata_dwc_regs->intpr));
-+	sata_dwc_writel(&hsdev->sata_dwc_regs->intpr, bit);
- }
- 
- static u32 qcmd_tag_to_mask(u8 tag)
+-	tag = 0;
+ 	while (tag_mask) {
+-		while (!(tag_mask & 0x00000001)) {
+-			tag++;
+-			tag_mask <<= 1;
+-		}
+-
+-		tag_mask &= (~0x00000001);
++		tag = __ffs(tag_mask);
++		tag_mask &= ~(1U << tag);
+ 		qc = ata_qc_from_tag(ap, tag);
+ 		if (unlikely(!qc)) {
+ 			dev_err(ap->dev, "failed to get qc");
 -- 
 2.53.0
 
