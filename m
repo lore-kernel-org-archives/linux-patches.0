@@ -1,36 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09D16194A6C;
-	Thu, 30 Jul 2026 16:09:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE316446C19;
+	Thu, 30 Jul 2026 16:09:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427796; cv=none; b=A4BwoSsD4y0giuDJuXcw6XkSLjdHKDe6i0A06+k2enbtiKgj5thjuMTmfXR53EdMptBUYMRlPKRY5xEHM4oj8HOb9C/rRdCrPPtvzCY2QT3jy41IPNBcXHtiyvAMVDDxgVrX/ldX1otv+ri4LTtyabx7RdAgcZD2PN3tDLJcnWQ=
+	t=1785427799; cv=none; b=JYT7QT9DoqfnRpV0O+Xe96S39+0iurN/b2Y6+LGVOZsFYLB1zOOYaFqV1X7GAtuuYXnLrGBEpvJg5U2qTp7QN2mn+edKQmUVDRLpVvFh0HXCyqFKq530hvcdMo11tmnq9v3/MYh8QhmO51FPV+wm8qkJ0vXqjt4+fQ/ZKRDmGVI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427796; c=relaxed/simple;
-	bh=sb20eJpkAszgKJsH+jA+F1AGvhuxouevMOG7pwcmFAI=;
+	s=arc-20240116; t=1785427799; c=relaxed/simple;
+	bh=4Uv8xUWz+P2QRikQ2I8vzYuujKWRH7p/evo0Bp8SEbE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IAW9p4buaZ5IqX2tM+s/2L3HYniMKe+Fv6rZ3Dj3WO2Qckmi79PfNXEHcEdqyKDu6hAANMZ7pFpVGAsTw2Mz3b3AaZIe8fzH/Yv4bN1RlRv8Fxlt3PmzpViRy5H5JK3hijCoT0Q2nHZ+Pk07OEUPP59yPaBsk7NJxN7J+FL2wSE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HjpfJerl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UD/GszhLg15fgm2BKYxIFAuqUddk/Vr8nUxT6BSOxhxW9eRe0dal/Zn2zCSoTUEb5XfDQCCpDvAeZhU7S4+7djaovjlxXYge+g9dLNjenEPBtMkrTnn5W7TbommrRLHPdU/zB3/JGgg+kIqpc154CFOvXau2JryF2pjroGj8mF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jWr2H+xS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HjpfJerl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63A611F000E9;
-	Thu, 30 Jul 2026 16:09:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jWr2H+xS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B0F11F000E9;
+	Thu, 30 Jul 2026 16:09:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427794;
-	bh=6du1FhWA/NZlQ2/jbr3EN6/CCq0TxEXxU38YjsQrVyE=;
+	s=korg; t=1785427797;
+	bh=whsc2Amax/lZJjm+W1TrzoX58NfX2Nridly6tQQ3Ots=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HjpfJerlv6k26q7Jk7RxD+rZ+n+BzqP5J8Lq/ig9i5ltxeso6pxlbKVYbhrRVdvn/
-	 UH5PqNx0CQS8YwG8bMqOakVWTvwEKESCRtAgz19SrWtpj9F4Zqgo1V1pao44RdRUe7
-	 RthOnupjnD7hDpCZL7NZtjoEWiDiDL8YvwVvFyOU=
+	b=jWr2H+xSvmfqOBPZDVgctfliny6JovNQmYqbM0zRchW6kUK0wfR2TJMCXh+WJyiS5
+	 5rVS/k9daYjRnPgTM+f5B3DJX/VafolSSruuV/g/zczqVHcmNCaNBx7btzcwwh26w2
+	 sVA0oHp2X6uukas0cE6xOhxevuJMwGs2ZHTjFtvY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 6.6 296/484] tracing/probes: Prevent out-of-bounds write in __trace_probe_log_err()
-Date: Thu, 30 Jul 2026 16:13:13 +0200
-Message-ID: <20260730141429.924109419@linuxfoundation.org>
+	Kees Cook <kees@kernel.org>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Yiqi Sun <sunyiqixm@gmail.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 6.6 297/484] arm64: syscall: Ensure saved x0 is kept in-sync with tracer updates
+Date: Thu, 30 Jul 2026 16:13:14 +0200
+Message-ID: <20260730141429.944850200@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -49,38 +54,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Will Deacon <will@kernel.org>
 
-commit a9d6fb284039a5d3858a1d9f9a0d7e46cfb7c2d4 upstream.
+commit e057b94772328221405b067c3a85fe479b915dc8 upstream.
 
-If trace_probe_log.argc is 0 in __trace_probe_log_err(), the loop
-constructing the command string will not execute and p will remain equal to
-command. Writing to *(p - 1) will cause an out-of-bounds access before
-command. This should not happen, but better to be treated.
+When seccomp support was originally added to arm64 in a1ae65b21941
+("arm64: add seccomp support"), seccomp was erroneously called _before_
+the ptrace syscall-enter-stop and therefore the tracer could trivially
+manipulate the syscall register state after the seccomp check had
+passed. This was subsequently fixed in a5cd110cb836 ("arm64/ptrace: run
+seccomp after ptrace") by moving the seccomp check after the tracer has
+run. Unfortunately, a decade later, that fix has been reported to be
+incomplete.
 
-Reject if trace_probe_log.argc is 0.
+On arm64, both the first argument to a syscall and its eventual return
+value are allocated to register x0. In order to facilitate syscall
+restarting and querying of syscall arguments on the syscall exit path,
+the original value of x0 is stashed in 'struct pt_regs::orig_x0' early
+during the syscall entry path and is returned for the first argument by
+syscall_get_arguments(). Unlike 32-bit Arm, this stashed value is not
+directly exposed via ptrace() and so changes to register x0 made by the
+tracer on a syscall-enter-stop are not reflected in 'orig_x0'. This
+means that seccomp, syscall tracepoints and audit can observe a stale
+value for the register compared to the argument that will be observed by
+the actual syscall.
 
-Link: https://lore.kernel.org/all/178454233992.290363.18323091580600697731.stgit@devnote2/
+Re-sync 'orig_x0' from x0 on the syscall entry path following a
+potential ptrace stop (i.e. PTRACE_EVENTMSG_SYSCALL_ENTRY or
+SECCOMP_RET_TRACE). This behaviour is limited to native tasks (because
+compat tasks expose 'orig_r0' to ptrace) where the syscall is not being
+skipped (because x0 is updated to hold the return value of -ENOSYS in
+that case).
 
-Fixes: ab105a4fb894 ("tracing: Use tracing error_log with probe events")
+Cc: Kees Cook <kees@kernel.org>
+Cc: Jinjie Ruan <ruanjinjie@huawei.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
 Cc: stable@vger.kernel.org
-Assisted-by: Antigravity:gemini-3.5-flash
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Reported-by: Yiqi Sun <sunyiqixm@gmail.com>
+Link: https://lore.kernel.org/all/20260529065444.1336608-1-sunyiqixm@gmail.com/
+Suggested-by: Catalin Marinas <catalin.marinas@arm.com>
+Fixes: a5cd110cb836 ("arm64/ptrace: run seccomp after ptrace")
+Reviewed-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Tested-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_probe.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/kernel/ptrace.c |   29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
 
---- a/kernel/trace/trace_probe.c
-+++ b/kernel/trace/trace_probe.c
-@@ -186,7 +186,7 @@ void __trace_probe_log_err(int offset, i
+--- a/arch/arm64/kernel/ptrace.c
++++ b/arch/arm64/kernel/ptrace.c
+@@ -2191,6 +2191,21 @@ static void report_syscall(struct pt_reg
+ 	}
+ }
  
- 	lockdep_assert_held(&dyn_event_ops_mutex);
++static void update_syscall_orig_x0_after_ptrace(struct pt_regs *regs)
++{
++	/*
++	 * Keep orig_x0 authoritative so that seccomp (via
++	 * syscall_get_arguments()), audit and the restart path all see the same
++	 * first argument the syscall is dispatched with, even if it has been
++	 * updated by a tracer. Skip this for NO_SYSCALL (set either by the user
++	 * or the tracer), as regs[0] holds the return value (see the comment in
++	 * el0_svc_common()) and can be unwound using syscall_rollback().
++	 * For compat tasks, orig_r0 is provided directly through GPR index 17.
++	 */
++	if (!is_compat_task() && regs->syscallno != NO_SYSCALL)
++		regs->orig_x0 = regs->regs[0];
++}
++
+ int syscall_trace_enter(struct pt_regs *regs)
+ {
+ 	unsigned long flags = read_thread_flags();
+@@ -2199,12 +2214,26 @@ int syscall_trace_enter(struct pt_regs *
+ 		report_syscall(regs, PTRACE_SYSCALL_ENTER);
+ 		if (flags & _TIF_SYSCALL_EMU)
+ 			return NO_SYSCALL;
++
++		/*
++		 * Ensure ptrace changes to x0 during a regular
++		 * syscall-enter-stop (PTRACE_SYSCALL) are visible to
++		 * subsequent seccomp checks, tracepoints and audit.
++		 */
++		update_syscall_orig_x0_after_ptrace(regs);
+ 	}
  
--	if (!trace_probe_log.argv)
-+	if (!trace_probe_log.argv || !trace_probe_log.argc)
- 		return;
+ 	/* Do the secure computing after ptrace; failures should be fast. */
+ 	if (secure_computing() == -1)
+ 		return NO_SYSCALL;
  
- 	/* Recalculate the length and allocate buffer */
++	/*
++	 * Ensure tracer changes to x0 during seccomp ptrace exit
++	 * processing (SECCOMP_RET_TRACE) are visible to tracepoints and
++	 * audit.
++	 */
++	update_syscall_orig_x0_after_ptrace(regs);
++
+ 	if (test_thread_flag(TIF_SYSCALL_TRACEPOINT))
+ 		trace_sys_enter(regs, regs->syscallno);
+ 
 
 
