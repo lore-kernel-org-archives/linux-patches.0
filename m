@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9001943E48C;
-	Thu, 30 Jul 2026 14:30:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A4C333D509;
+	Thu, 30 Jul 2026 14:30:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421814; cv=none; b=qGxEHBAUT/Es6XCn1wMv/a5tYTaic8obb4+HuH3hukgXYFKF5/0IOoN7fJsg4Qke10rnQqhnADGiNFUmkZpvUc6IiLJJtBNsdi4x1RqFzHb8B5F8iAxvBjACalmItc4w3xDuwAriUOG566IQu6TPshobGBF/uFnPYxhw0gZUcxQ=
+	t=1785421817; cv=none; b=DBvwbdurtowvwcXyX73WVUMeS3uXtME/THzA3v0ZrbgEvfgg07NkTR3kHzWW87lNiwux8o0IM1HoUw9xQ7Nun9nGxMCCwFIcvdtWOXlNOyxYSIKVWKlum5vKTbNZ+voHB6F1l4BcZAhbbiHasgJaNomaHq5VLa10BVu3Fze5BA4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421814; c=relaxed/simple;
-	bh=I7vi/JCseL/4+Xk3lL3ocPP1zrRw49F44TLn6h4BNCA=;
+	s=arc-20240116; t=1785421817; c=relaxed/simple;
+	bh=QdAiJO6nM2uL52tgk+tfWoK4Ec6HbHK3e47Kmm5gsg8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=u2qhd7AN3qSCFY86dK1mt4j5+T/I3d9PfEWn8CzgL8KpCjd6QoSyeX8+vMif6Vz5blJDQNfkBvEPVAzrdQlEdZrhNOwhtISMcAkB5wYVMmH+0+rnS5zB57yaRDMPDc+9tBdiO3gKYtS242EnjhTDsZ/3bwgWRJN5/a2vQv7oAWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jmLEiPPI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oVunv2Q39vSHV0ovL41zZ3ILt0gILsef7rpZKaeFdy0eR9a38V1F7f0rHSKSnFT6cb9whY1LAN75nhnwmMW98IQJJGTPy92qTQaamF7lkUt3ehxfUEOWB1t47G6ZyiDcOV1k8D+4YACVkICunPvPSrAfo4UNgySKDc4MltQwqzc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ecEPEVtP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jmLEiPPI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E16921F000E9;
-	Thu, 30 Jul 2026 14:30:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ecEPEVtP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C71AF1F000E9;
+	Thu, 30 Jul 2026 14:30:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421813;
-	bh=iU/k1op18JsIH7Zs1AYSBTpRMkTTE4WUMBgar0K1GEk=;
+	s=korg; t=1785421816;
+	bh=SW2O36YhqpeeHPReheLQhjlY+Q4saiSHYPpO9wiZL4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jmLEiPPI5u3STYyRuLyKEeANTR/Uuj9xqa253fA/EECIvItKRAtU5cSAV5JPNVoQ+
-	 pfjJHHv6trlPu22EJKJszFrE1oj8/NW8YlFIfsNjSprh6YreMsgw62wQECcFlfkr4i
-	 0I8jWxaiC9vRBozCKMXdyHZj5WbU3tz6soenUAKU=
+	b=ecEPEVtPGHHt96H3iwSVkfPLGxApBS5/G1DhebxDqD4Oi36lijG9FUkW0exdeN055
+	 z9dLeZIZA47qaGoYXAan6GsB/2m/GsGcgwZvTMTBr3x7jhVoMXg7sM/ll6ROl3gipN
+	 lbMspsT8VfGr8jdY1Lnl2eQ6s77+lMidxsDDaOW0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"=?UTF-8?q?Ricardo=20B . =20Marli=C3=A8re?=" <rbm@suse.com>,
-	Simon Horman <horms@kernel.org>,
+	Petr Machata <petrm@nvidia.com>,
+	Nikolay Aleksandrov <nikolay@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Danielle Ratson <danieller@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 230/744] selftests/net: Fix tun IPv6 test addresses to avoid 6to4 range
-Date: Thu, 30 Jul 2026 16:08:23 +0200
-Message-ID: <20260730141449.179891972@linuxfoundation.org>
+Subject: [PATCH 7.1 231/744] netlink: specs: rt-link: convert bridge port flag attributes to u8
+Date: Thu, 30 Jul 2026 16:08:24 +0200
+Message-ID: <20260730141449.200588756@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -46,70 +48,148 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ricardo B. Marlière <rbm@suse.com>
+From: Danielle Ratson <danieller@nvidia.com>
 
-[ Upstream commit ef01724fa235a228e3d3e8b117e89403cd8feb25 ]
+[ Upstream commit f6e3b21608e974c4aaa4cfd73a239dacf1d8a9a3 ]
 
-The IPv6 addresses used for the tun_vnet_udptnl fixture currently fall in
-the 2002::/16 prefix, which is reserved for the 6to4 transition mechanism
-(RFC 3056).
+A number of IFLA_BRPORT_* attributes are documented in the rt-link spec
+as having the "flag" type, i.e. a payload-less NLA_FLAG attribute whose
+meaning is presence-only. This does not match the kernel, which emits
+these attributes with nla_put_u8() and validates them as NLA_U8 in
+br_port_policy[]. The values are not mere presence flags but carry a u8
+payload (0/1).
 
-On systems where the sit module is loaded, the kernel automatically claims
-2002::/16 as a 6to4 tunnel prefix. When the test assigns a 2002:: address
-to a TUN interface, sit registers a competing local route for the same
-address. This ambiguity breaks the GENEVE decapsulation path: packets
-injected via the TUN fd are not delivered to the test socket, causing the
-IPv6-outer gtgso send_gso_packet variants to fail.
+Convert these bridge port attributes from "flag" to "u8" so the spec
+reflects the actual wire format.
 
-Replace all four IPv6 test addresses with addresses from the fd00:db8::/32
-range, which is part of the ULA space (fc00::/7, RFC 4193) and carries no
-special kernel semantics.
-
-Fixes: 24e59f26eef2 ("selftest: tun: Add helpers for GSO over UDP tunnel")
-Signed-off-by: Ricardo B. Marlière <rbm@suse.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260706-b4-net_tun_addr-v1-1-3d3cb2473560@suse.com
+Fixes: 077b6022d24b ("doc/netlink/specs: Add sub-message type to rt_link family")
+Reviewed-by: Petr Machata <petrm@nvidia.com>
+Acked-by: Nikolay Aleksandrov <nikolay@nvidia.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: Danielle Ratson <danieller@nvidia.com>
+Link: https://patch.msgid.link/a57cdfcfc4a6dcb92106c25b4dde5059fde2bd44.1783236731.git.danieller@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/tun.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ Documentation/netlink/specs/rt-link.yaml | 40 ++++++++++++------------
+ 1 file changed, 20 insertions(+), 20 deletions(-)
 
-diff --git a/tools/testing/selftests/net/tun.c b/tools/testing/selftests/net/tun.c
-index cf106a49b55e38..abe488bac50bb3 100644
---- a/tools/testing/selftests/net/tun.c
-+++ b/tools/testing/selftests/net/tun.c
-@@ -42,19 +42,19 @@ static struct in_addr param_ipaddr4_inner_src = {
- };
- 
- static struct in6_addr param_ipaddr6_outer_dst = {
--	{ { 0x20, 0x02, 0x0d, 0xb8, 0x01, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 } },
-+	{ { 0xfd, 0x00, 0x0d, 0xb8, 0x01, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 } },
- };
- 
- static struct in6_addr param_ipaddr6_outer_src = {
--	{ { 0x20, 0x02, 0x0d, 0xb8, 0x01, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 } },
-+	{ { 0xfd, 0x00, 0x0d, 0xb8, 0x01, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 } },
- };
- 
- static struct in6_addr param_ipaddr6_inner_dst = {
--	{ { 0x20, 0x02, 0x0d, 0xb8, 0x02, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 } },
-+	{ { 0xfd, 0x00, 0x0d, 0xb8, 0x02, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 } },
- };
- 
- static struct in6_addr param_ipaddr6_inner_src = {
--	{ { 0x20, 0x02, 0x0d, 0xb8, 0x02, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 } },
-+	{ { 0xfd, 0x00, 0x0d, 0xb8, 0x02, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 } },
- };
- 
- #ifndef BIT
+diff --git a/Documentation/netlink/specs/rt-link.yaml b/Documentation/netlink/specs/rt-link.yaml
+index 644a8bd7b93c34..e656f05268ed26 100644
+--- a/Documentation/netlink/specs/rt-link.yaml
++++ b/Documentation/netlink/specs/rt-link.yaml
+@@ -1583,31 +1583,31 @@ attribute-sets:
+         type: u32
+       -
+         name: mode
+-        type: flag
++        type: u8
+       -
+         name: guard
+-        type: flag
++        type: u8
+       -
+         name: protect
+-        type: flag
++        type: u8
+       -
+         name: fast-leave
+-        type: flag
++        type: u8
+       -
+         name: learning
+-        type: flag
++        type: u8
+       -
+         name: unicast-flood
+-        type: flag
++        type: u8
+       -
+         name: proxyarp
+-        type: flag
++        type: u8
+       -
+         name: learning-sync
+-        type: flag
++        type: u8
+       -
+         name: proxyarp-wifi
+-        type: flag
++        type: u8
+       -
+         name: root-id
+         type: binary
+@@ -1654,34 +1654,34 @@ attribute-sets:
+         type: pad
+       -
+         name: mcast-flood
+-        type: flag
++        type: u8
+       -
+         name: mcast-to-ucast
+-        type: flag
++        type: u8
+       -
+         name: vlan-tunnel
+-        type: flag
++        type: u8
+       -
+         name: bcast-flood
+-        type: flag
++        type: u8
+       -
+         name: group-fwd-mask
+         type: u16
+       -
+         name: neigh-suppress
+-        type: flag
++        type: u8
+       -
+         name: isolated
+-        type: flag
++        type: u8
+       -
+         name: backup-port
+         type: u32
+       -
+         name: mrp-ring-open
+-        type: flag
++        type: u8
+       -
+         name: mrp-in-open
+-        type: flag
++        type: u8
+       -
+         name: mcast-eht-hosts-limit
+         type: u32
+@@ -1690,10 +1690,10 @@ attribute-sets:
+         type: u32
+       -
+         name: locked
+-        type: flag
++        type: u8
+       -
+         name: mab
+-        type: flag
++        type: u8
+       -
+         name: mcast-n-groups
+         type: u32
+@@ -1702,7 +1702,7 @@ attribute-sets:
+         type: u32
+       -
+         name: neigh-vlan-suppress
+-        type: flag
++        type: u8
+       -
+         name: backup-nhid
+         type: u32
 -- 
 2.53.0
 
