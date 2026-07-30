@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A49A8331A48;
-	Thu, 30 Jul 2026 15:37:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D69F3438B7;
+	Thu, 30 Jul 2026 15:37:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425864; cv=none; b=uSKGiAZPJgUcV8AqUHoBakmngnZ98NQwZIs/QQQ+3eI+DmI+ECj+He5TcI1kF0kmlQcBEk8m7eSz414c6cWZWyuUyeB/rLpYlq4gABu/oa2EMUY4fVDRYE6s/dwoz9YFs4wMnfQRMYJln71NKGLptp4uLWDJsrSPj2/vyYO1pmg=
+	t=1785425867; cv=none; b=V9VfyQBHC9nMTtKyCqbxLx4wJkhQM6DeyrVVt2PlCW0Am9s8zAjGSDLzFqIW6pMCvMxgm1EZYC09jRQNNa3VNoQamA1tis88VY861OCb8QVLYCXaVaK86vUv+mpMPzIPgea2sb3f4R6WvvUWxji00rJ39QRcdl7+9PAlCJLsyqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425864; c=relaxed/simple;
-	bh=is4q215oogEZoh1SlPhVZ2pTBp/IdUjtLvyRa/ii0Ko=;
+	s=arc-20240116; t=1785425867; c=relaxed/simple;
+	bh=qrK0JDt0uzv/Iuo3pmETRhaEs+q82C2d8MFkSUS8qzQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s/uORkb3MHP4YxR9bVsyPAxflWlc+nlxZO5QZwFzZsVttxWhvCxsGo5pEXZPX6pFwFyo1qfopVx8ui8LoaVRuPl8gGy22YsCS15eI2HOnYp2sNucFy+mz0YzT8j4camJ29PrjrrFfbwRaK2+lWl1vaJMSaj6riMUZBfNq1eWXSo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0/BlV5Wm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YKag2cfUTEAxS15XWO7/UfZkcEv/EtPVCcJx96bpQNr1Abrqd99SseIBfF8Lo2u/LQS4JHcRqfhRRhMpwx+Ercdz367agBngvq+jOL1BNariX4ZNsMgLltBxhCzCOvwQawpbIBgF3M+MgkeqpO7SsrySICeWEtZBaz+DI//MaG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R7UdaoWj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0/BlV5Wm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 142821F000E9;
-	Thu, 30 Jul 2026 15:37:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R7UdaoWj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D89CB1F000E9;
+	Thu, 30 Jul 2026 15:37:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425863;
-	bh=kOOWcOEkywOEf2pCSzo+fH34tFCFP7kHyg7dN+ThFt8=;
+	s=korg; t=1785425866;
+	bh=vv8gmLepsbKu0SYx1cYSqf1vpTqwuaeO8ixKYTCutak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0/BlV5WmtY8T33lSVL0ql1Sb4UQTH8X0WHUWchmoQfshIKwoDi6x/63AJrb9A6JQE
-	 p0QQLMnikNuywh30LK2KXHRVSt7dw4dj53qj+JqJ7zbudcJkst912kZAxDmG2btcY6
-	 mYlpJtSslsJunZ5nPMLg5f25A0k9tCLyrRQNo2UU=
+	b=R7UdaoWjPD9SReq099X6vYNxz2sFSq0vvC/iD8AjhjKTVtvQwLDVQ2vT6AFckjmdn
+	 eXAkTkGiTLzegkiPaCjBHWD/xcPfUm3JSsH+w5NyxXYXe8L4/xqjZzBY3TVxv8L2Mm
+	 yz3Y1LcRhaMl/3ZV2GVnCmlQBJeaClMYo7GWsw0c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+456957213f32970c0762@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Felix Maurer <fmaurer@redhat.com>,
+	Sean Anderson <sean.anderson@linux.dev>,
+	Michael Walle <mwalle@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 217/602] net: hsr: fix memory leak on slave unregistration by removing synced VLANs
-Date: Thu, 30 Jul 2026 16:10:09 +0200
-Message-ID: <20260730141440.515291201@linuxfoundation.org>
+Subject: [PATCH 6.12 218/602] net: dpaa: fix mode setting
+Date: Thu, 30 Jul 2026 16:10:10 +0200
+Message-ID: <20260730141440.535624210@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -54,53 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Michael Walle <mwalle@kernel.org>
 
-[ Upstream commit dcf15eaf5641812f1cfc5e96537380132a7da89d ]
+[ Upstream commit da2c6bcc5e30b1496ac587785dcacf6e849eb6ef ]
 
-When an HSR master device is brought UP, it auto-adds VLAN 0 via
-vlan_vid0_add(), which propagates VID 0 to its slave devices (slave A and B).
+Before converting to the phylink interface, the init function would have
+set a non-reserved I/F mode in the maccfg2 register. After converting to
+phylink, 0 is written as mode, which is a reserved value (although it's
+the hardware default). Without a valid mode, a SGMII link is never
+established between the MAC and the PHY and thus .link_up() is never
+called which could set the correct mode according to the actual speed.
 
-If a slave device is later unregistered while HSR is active (e.g., during
-netns cleanup or interface destruction), hsr_del_port() is called to
-detach the slave port from the HSR master. However, hsr_del_port() currently
-does not delete the VLAN IDs that were synced to the slave device by HSR.
+Fix it by setting the maximum speed of the phy_interface_t in use in
+.mac_config() - just like the driver did before the phylink conversion.
 
-As a result, the slave device retains a refcount on VID 0 (and any other
-synced VLANs). When the slave device is destroyed, its vlan_info /
-vlan_vid_info structure remains allocated, leading to a memory leak.
-
-Fix this by calling vlan_vids_del_by_dev(port->dev, master->dev) in
-hsr_del_port() before unlinking slave A or slave B ports, matching the
-propagation logic in hsr_ndo_vlan_rx_add_vid() / hsr_ndo_vlan_rx_kill_vid()
-and the cleanup behavior in bonding and team drivers.
-
-Fixes: 1a8a63a5305e ("net: hsr: Add VLAN CTAG filter support")
-Reported-by: syzbot+456957213f32970c0762@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6a4cb6ca.57639fcc.86d58.000b.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Reviewed-by: Felix Maurer <fmaurer@redhat.com>
-Link: https://patch.msgid.link/20260721101240.995597-1-edumazet@google.com
+Fixes: 5d93cfcf7360 ("net: dpaa: Convert to phylink")
+Suggested-by: Sean Anderson <sean.anderson@linux.dev>
+Signed-off-by: Michael Walle <mwalle@kernel.org>
+Reviewed-by: Sean Anderson <sean.anderson@linux.dev>
+Reviewed-by: Sean Anderson <sean.anderson@linux.dev>
+Link: https://patch.msgid.link/20260717132401.2653252-1-mwalle@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/hsr/hsr_slave.c | 2 ++
- 1 file changed, 2 insertions(+)
+ .../net/ethernet/freescale/fman/fman_dtsec.c    | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/net/hsr/hsr_slave.c b/net/hsr/hsr_slave.c
-index 70472726c60494..ffc72597295273 100644
---- a/net/hsr/hsr_slave.c
-+++ b/net/hsr/hsr_slave.c
-@@ -238,6 +238,8 @@ void hsr_del_port(struct hsr_port *port)
- 		netdev_rx_handler_unregister(port->dev);
- 		if (!port->hsr->fwd_offloaded)
- 			dev_set_promiscuity(port->dev, -1);
-+		if (port->type == HSR_PT_SLAVE_A || port->type == HSR_PT_SLAVE_B)
-+			vlan_vids_del_by_dev(port->dev, master->dev);
- 		netdev_upper_dev_unlink(port->dev, master->dev);
+diff --git a/drivers/net/ethernet/freescale/fman/fman_dtsec.c b/drivers/net/ethernet/freescale/fman/fman_dtsec.c
+index 3088da7adf0f84..074ca626a51508 100644
+--- a/drivers/net/ethernet/freescale/fman/fman_dtsec.c
++++ b/drivers/net/ethernet/freescale/fman/fman_dtsec.c
+@@ -900,22 +900,28 @@ static void dtsec_mac_config(struct phylink_config *config, unsigned int mode,
+ {
+ 	struct mac_device *mac_dev = fman_config_to_mac(config);
+ 	struct dtsec_regs __iomem *regs = mac_dev->fman_mac->regs;
+-	u32 tmp;
++	u32 ecntrl, maccfg2;
++
++	maccfg2 = ioread32be(&regs->maccfg2);
++	maccfg2 &= ~(MACCFG2_NIBBLE_MODE | MACCFG2_BYTE_MODE);
+ 
+ 	switch (state->interface) {
+ 	case PHY_INTERFACE_MODE_RMII:
+-		tmp = DTSEC_ECNTRL_RMM;
++		ecntrl = DTSEC_ECNTRL_RMM;
++		maccfg2 |= MACCFG2_NIBBLE_MODE;
+ 		break;
+ 	case PHY_INTERFACE_MODE_RGMII:
+ 	case PHY_INTERFACE_MODE_RGMII_ID:
+ 	case PHY_INTERFACE_MODE_RGMII_RXID:
+ 	case PHY_INTERFACE_MODE_RGMII_TXID:
+-		tmp = DTSEC_ECNTRL_GMIIM | DTSEC_ECNTRL_RPM;
++		ecntrl = DTSEC_ECNTRL_GMIIM | DTSEC_ECNTRL_RPM;
++		maccfg2 |= MACCFG2_BYTE_MODE;
+ 		break;
+ 	case PHY_INTERFACE_MODE_SGMII:
+ 	case PHY_INTERFACE_MODE_1000BASEX:
+ 	case PHY_INTERFACE_MODE_2500BASEX:
+-		tmp = DTSEC_ECNTRL_TBIM | DTSEC_ECNTRL_SGMIIM;
++		ecntrl = DTSEC_ECNTRL_TBIM | DTSEC_ECNTRL_SGMIIM;
++		maccfg2 |= MACCFG2_BYTE_MODE;
+ 		break;
+ 	default:
+ 		dev_warn(mac_dev->dev, "cannot configure dTSEC for %s\n",
+@@ -923,7 +929,8 @@ static void dtsec_mac_config(struct phylink_config *config, unsigned int mode,
+ 		return;
  	}
  
+-	iowrite32be(tmp, &regs->ecntrl);
++	iowrite32be(ecntrl, &regs->ecntrl);
++	iowrite32be(maccfg2, &regs->maccfg2);
+ }
+ 
+ static void dtsec_link_up(struct phylink_config *config, struct phy_device *phy,
 -- 
 2.53.0
 
