@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D4A844CAF7;
-	Thu, 30 Jul 2026 16:12:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD9C744CAF7;
+	Thu, 30 Jul 2026 16:12:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427975; cv=none; b=c0ut2D8XD9ZkRiqNm0lLynNyQw+p+mYEzNOlKGLhRy6MQXrw7plaFxykFqzIB6gjMsFXeCnsGkn3Dbet00XegPmQy0a7b/Yhj4hrMegtM+RPjtTUS3XByKUuzfT1WaQugZuQHaeoB0J2cWzXX57KFX9nA7he/v7lW8TVoO9ERVc=
+	t=1785427978; cv=none; b=FOI0s7GHA2SXZikzYZFBDO71OB/9xTiQLLZxO/GchOUOwI+gbuwEhbDEYnx9D2vpy++KWLTchppQuE0A5QhimoqKGk7onACqmcGJUNmfH5OF2WJyaVSJouC08VpDR0bJEqMKoKowXSXoWv7Ntdd+Fm0i1AWgioDGlOhu03r8Aw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427975; c=relaxed/simple;
-	bh=Ry5Ka3jS9KWXgSA10Y02QyvMuHh3ugFP7wkn4A+r+1U=;
+	s=arc-20240116; t=1785427978; c=relaxed/simple;
+	bh=jYrLQa9WlHH6bBFd6wB6KO0qmvxZc7AapTzvLR9c6ew=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MK9YaXStEZPnJSOkBfENE8W1stq0Q8R0mA1od7VWa4VNObLWeUjZa5y1BFPuamACiVy4Uz3PGqbHav0xZlrqT490GDfPc1Qth47hOkyFBX6iTjIjXWwMv0SvBQsXFQMUHKQgGgSHwO6O7hogiepPIO09JsQ4Qo5NpDjuhzrd0vQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XwluKFfv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZGD9GFyXt+TfZyzx5zis7nM/ZBV6XUbMaTfrD07B7nBw6KvOShOBggkI0xGqI40hgC5m8d5wuVwm2msoJHkbhtFLgpUOYRV/M5CNA7WADHJUcavzVXaAsbDRdGam2/owlgslvsVcklSDyOiT+pb/EA/D4LdKrz8Smkw9Jh2rXQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ebXJS+z6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XwluKFfv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E82F1F000E9;
-	Thu, 30 Jul 2026 16:12:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ebXJS+z6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CA241F000E9;
+	Thu, 30 Jul 2026 16:12:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427974;
-	bh=cOdoiE9OkWudJZT4dveSx0Q3rjJb1RXCRIST9XlfG/Y=;
+	s=korg; t=1785427976;
+	bh=kAHDAhm8AnbaD6Dptd4ufI/l+8xUnT/sWcZ9CHxrND0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XwluKFfviUwdVGMLVNr6qWf1hTlrqHsqoARZXURNXEwoOuFMaofnQciOVWOURD/Wa
-	 VLR9B6KtkEYhKYZRZv5h1jxYL7WHO4NngRQLKtdn1DLCp18Nt8HNZ8arRyD+4oT4Z0
-	 BvkDMfQX+dOS2fMNQWiGywUxG3OVBNbejt0ATJsE=
+	b=ebXJS+z68JM4hUDqarV2psHj8us6btkh7nH/F6cVpycFXcGaDgoSr2i4TXHlSxti8
+	 dhYj3DX/OAC9MIWyosMFR/OxvzugqD84xjs/0a2ECgbhB5Uo00UMcPBEhj8lrGwFDc
+	 R3V/YwrOW6I19Q/HCSWi+mIq4hRaI2Xc9NxX7H7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+a725ab460fc1def9896f@syzkaller.appspotmail.com,
-	Yuezhang Mo <Yuezhang.Mo@sony.com>,
-	Sungjong Seo <sj1557.seo@samsung.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Jay Wang <wanjay@amazon.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Fangzhi Zuo <Jerry.Zuo@amd.com>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Matthew Schwartz <matthew.schwartz@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 358/484] exfat: validate cluster allocation bits of the allocation bitmap
-Date: Thu, 30 Jul 2026 16:14:15 +0200
-Message-ID: <20260730141431.253942865@linuxfoundation.org>
+Subject: [PATCH 6.6 359/484] drm/amd/display: Fix dcn32 DTB DTO update breaking live pixel rate sources
+Date: Thu, 30 Jul 2026 16:14:16 +0200
+Message-ID: <20260730141431.275042214@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -54,114 +54,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Harry Wentland <harry.wentland@amd.com>
 
-[ Upstream commit 79c1587b6cda74deb0c86fc7ba194b92958c793c ]
+commit 76a2db58e95e328007043f54ac3c7336ccbee440 upstream.
 
-syzbot created an exfat image with cluster bits not set for the allocation
-bitmap. exfat-fs reads and uses the allocation bitmap without checking
-this. The problem is that if the start cluster of the allocation bitmap
-is 6, cluster 6 can be allocated when creating a directory with mkdir.
-exfat zeros out this cluster in exfat_mkdir, which can delete existing
-entries. This can reallocate the allocated entries. In addition,
-the allocation bitmap is also zeroed out, so cluster 6 can be reallocated.
-This patch adds exfat_test_bitmap_range to validate that clusters used for
-the allocation bitmap are correctly marked as in-use.
+dcn32_update_clocks_update_dtb_dto() reprograms the DTB DTO of every
+timing generator in the context whenever the DTBCLK reference changes,
+passing a zeroed pixel rate and never setting is_hdmi.
+dccg32_set_dtbclk_dto() treats a zero pixel rate as a disable request,
+and that branch drives PIPE_DTO_SRC_SEL to the DP DTO source. A timing
+generator actively scanning out an HDMI stream therefore has its pixel
+rate source re-muxed out from under the live raster, and the OTG stops
+on the spot.
 
-Reported-by: syzbot+a725ab460fc1def9896f@syzkaller.appspotmail.com
-Tested-by: syzbot+a725ab460fc1def9896f@syzkaller.appspotmail.com
-Reviewed-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
-Reviewed-by: Sungjong Seo <sj1557.seo@samsung.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-[Adapted to 6.6: replaced __le_long/lel_to_cpu word-level bitmap access
- with per-bit test_bit_le() calls, as __le_long and lel_to_cpu do not
- exist in 6.6. Uses same test_bit_le API as rest of exfat bitmap code.]
-Signed-off-by: Jay Wang <wanjay@amazon.com>
+Two displays where only one runs a 128b/132b link hit this reliably.
+is_dtbclk_required() holds the DTBCLK reference high while both are
+active, and the moment the 128b/132b stream is torn down (compositor
+switch, display disable, hot-unplug) the next safe_to_lower pass drops
+the reference to the lowest DPM level and the DTO walk freezes the
+surviving screen. On Navi31 the DAL mailbox then goes deaf on the
+DISPCLK hard-min that follows the walk in dcn32_update_clocks(),
+stranding both SMU mailboxes until reboot.
+
+Set is_hdmi for HDMI and DVI signals so the disable path leaves the
+pixel rate source selection on the HDMI path, and pass the real pixel
+rate for 128b/132b streams so a reference change rescales their DTO
+instead of disabling it.
+
+Fixes: 128c1ca0303f ("drm/amd/display: Update DTBCLK for DCN32")
+Signed-off-by: Harry Wentland <harry.wentland@amd.com>
+Reviewed-by: Fangzhi Zuo <Jerry.Zuo@amd.com>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+[ mschwartz: dcn32 clk_mgr hunk only, as 6.6.y predates the dcn35
+  clk_mgr. The rest is HDMI FRL enablement, absent before 7.2, so the
+  FRL conditions and the req_audio_dtbclk_khz assignment they guard are
+  dropped and the FRL-centric changelog is rewritten. Added the
+  pipe_ctx->stream check the new dereferences need. ]
+Signed-off-by: Matthew Schwartz <matthew.schwartz@linux.dev>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/exfat/balloc.c | 54 ++++++++++++++++++++++++++++++++++++-----------
- 1 file changed, 42 insertions(+), 12 deletions(-)
+ .../gpu/drm/amd/display/dc/clk_mgr/dcn32/dcn32_clk_mgr.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/fs/exfat/balloc.c b/fs/exfat/balloc.c
-index 32209acd51be4f..2d4fe3d754bbc5 100644
---- a/fs/exfat/balloc.c
-+++ b/fs/exfat/balloc.c
-@@ -45,12 +45,37 @@ static const unsigned char used_bit[] = {
- /*
-  *  Allocation Bitmap Management Functions
-  */
-+static bool exfat_test_bitmap_range(struct super_block *sb, unsigned int clu,
-+		unsigned int count)
-+{
-+	struct exfat_sb_info *sbi = EXFAT_SB(sb);
-+	unsigned int start = clu;
-+	unsigned int end = clu + count;
-+	unsigned int ent_idx, i, b;
-+
-+	if (!is_valid_cluster(sbi, start) || !is_valid_cluster(sbi, end - 1))
-+		return false;
-+
-+	while (start < end) {
-+		ent_idx = CLUSTER_TO_BITMAP_ENT(start);
-+		i = BITMAP_OFFSET_SECTOR_INDEX(sb, ent_idx);
-+		b = BITMAP_OFFSET_BIT_IN_SECTOR(sb, ent_idx);
-+
-+		if (!test_bit_le(b, sbi->vol_amap[i]->b_data))
-+			return false;
-+
-+		start++;
-+	}
-+
-+	return true;
-+}
-+
- static int exfat_allocate_bitmap(struct super_block *sb,
- 		struct exfat_dentry *ep)
- {
- 	struct exfat_sb_info *sbi = EXFAT_SB(sb);
- 	long long map_size;
--	unsigned int i, need_map_size;
-+	unsigned int i, j, need_map_size;
- 	sector_t sector;
+diff --git a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn32/dcn32_clk_mgr.c b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn32/dcn32_clk_mgr.c
+index 1c5ae4d62e37b7..65344d0c7c10d2 100644
+--- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn32/dcn32_clk_mgr.c
++++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn32/dcn32_clk_mgr.c
+@@ -255,13 +255,20 @@ static void dcn32_update_clocks_update_dtb_dto(struct clk_mgr_internal *clk_mgr,
+ 		struct dtbclk_dto_params dto_params = {0};
  
- 	sbi->map_clu = le32_to_cpu(ep->dentry.bitmap.start_clu);
-@@ -77,20 +102,25 @@ static int exfat_allocate_bitmap(struct super_block *sb,
- 	sector = exfat_cluster_to_sector(sbi, sbi->map_clu);
- 	for (i = 0; i < sbi->map_sectors; i++) {
- 		sbi->vol_amap[i] = sb_bread(sb, sector + i);
--		if (!sbi->vol_amap[i]) {
--			/* release all buffers and free vol_amap */
--			int j = 0;
--
--			while (j < i)
--				brelse(sbi->vol_amap[j++]);
--
--			kvfree(sbi->vol_amap);
--			sbi->vol_amap = NULL;
--			return -EIO;
--		}
-+		if (!sbi->vol_amap[i])
-+			goto err_out;
- 	}
+ 		/* use mask to program DTO once per tg */
+-		if (pipe_ctx->stream_res.tg &&
++		if (pipe_ctx->stream && pipe_ctx->stream_res.tg &&
+ 				!(tg_mask & (1 << pipe_ctx->stream_res.tg->inst))) {
+ 			tg_mask |= (1 << pipe_ctx->stream_res.tg->inst);
  
-+	if (exfat_test_bitmap_range(sb, sbi->map_clu,
-+		EXFAT_B_TO_CLU_ROUND_UP(map_size, sbi)) == false)
-+		goto err_out;
-+
- 	return 0;
-+
-+err_out:
-+	j = 0;
-+	/* release all buffers and free vol_amap */
-+	while (j < i)
-+		brelse(sbi->vol_amap[j++]);
-+
-+	kvfree(sbi->vol_amap);
-+	sbi->vol_amap = NULL;
-+	return -EIO;
- }
+ 			dto_params.otg_inst = pipe_ctx->stream_res.tg->inst;
+ 			dto_params.ref_dtbclk_khz = ref_dtbclk_khz;
  
- int exfat_load_bitmap(struct super_block *sb)
++			if (dccg->ctx->dc->link_srv->dp_is_128b_132b_signal(pipe_ctx))
++				dto_params.pixclk_khz = pipe_ctx->stream->timing.pix_clk_100hz / 10;
++
++			if (dc_is_hdmi_signal(pipe_ctx->stream->signal) ||
++					dc_is_dvi_signal(pipe_ctx->stream->signal))
++				dto_params.is_hdmi = true;
++
+ 			dccg->funcs->set_dtbclk_dto(clk_mgr->dccg, &dto_params);
+ 			//dccg->funcs->set_audio_dtbclk_dto(clk_mgr->dccg, &dto_params);
+ 		}
 -- 
 2.53.0
 
