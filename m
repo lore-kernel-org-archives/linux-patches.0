@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBD3D392831;
-	Thu, 30 Jul 2026 15:18:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1ED4374A0E;
+	Thu, 30 Jul 2026 15:18:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424693; cv=none; b=Keo51nzQU+rBVQEtLNKOTozBZd/H4PnLxkHCjakd95iCrz1f7Z6NbQ4k5T5s0/FZ9KKnd0iRoEDNaw218GRmPv92lN1K2MDBOmlFxUMn5wIexgbphW4qoxsuVE4XHMKIx2wX+R62dXNcGY3wWnx5/M5gJDJDGzbV9llAfsV4qmI=
+	t=1785424696; cv=none; b=NBYzapawl48W4i9KbyPdKsdRxktdPVPGywlUHiGjKb+UKVE4cJaqRbxMx2Xg5B2xwf1FzL8iviFesAcEu9BOoe3P4H5W3rDRcnESiibFHTuKMTWB8sjWbU0HG93Ey5RaQ/Gv61nYHUWw5mQzRBSAf+wr9EwEvHtX42QdvIBNQ58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424693; c=relaxed/simple;
-	bh=JtnG1yDfxtyZGuS/Wj1IlTjUanCFjou/BIINdru6O5o=;
+	s=arc-20240116; t=1785424696; c=relaxed/simple;
+	bh=ChlBbf/uQBAirJ2hnmOkSPdoczMhR//rwjPxXD9rJtw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fqRz4Qm175yUWRTCG4Q7ADN2bE9XT1TaKqaa7yortgpcjjc+tH6C2wkPT7A4ggEDnE3xcDedkWij9geOwY9f0A1NbDCSTtaNAKOsT1eIzPYrUeeEqfuyirCOYgsT1F+i8MddJnXorPYLeyK0Rv8aLTkNlZQlcI1A3X0gJ0/hHZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G2FUOclG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ltB0CZUa/l9m+vhnO9PeESCmaRObSfdqS3Aswb3yov8MvrffCSk1oI+aN6OOrsbanc7de8UVA4eErJyM0DbUTUv8zoulxaonoRndrOfKDED182ae2/ReefMIviF84oKQnSWJ3e5bU+IZYSIHaUDo7qZn6KAJ2mTiIF+6NR4QbNg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B01t6XTg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G2FUOclG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A03C1F000E9;
-	Thu, 30 Jul 2026 15:18:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B01t6XTg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4770F1F00A3A;
+	Thu, 30 Jul 2026 15:18:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424691;
-	bh=3eBdNoeH7z43etAw3Aa8g3rBrMpTvGw6Y7rbDUHyHa4=;
+	s=korg; t=1785424694;
+	bh=hMykx5iUOgmNf0xCcWR4E4LbUm6VxqLjJ/hmiAuRGjI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G2FUOclGR0IJRaNSvokhYmr6T3FnyvVVWzbcLSmXU4dicw+Z2fcWjL26YBGhFsIls
-	 vutlaONvtsP25NWRdfSgcM3MlQ+YPIH4fwrfC04/mJLGlpNOb55AUjckQSiHLbJp3l
-	 eoMC0BpOPJSEjbpjXNsasOnRgaNWFXNNB1YzLiIk=
+	b=B01t6XTgsn3xHam+tbN1AmA3IiV+isj4f6jqVbeXOxjImnktVaZ2500bY94z69k9g
+	 NpzP11iWbpy0O6BGae5if0idHIHZIIQP44TI7/qjXZjC1RwFdiTsr/lSubHUY1Zv1f
+	 /38BL27p4oMW52CdeucATq2a0gqk1DLcqRmZH5l4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: [PATCH 6.18 483/675] serial: sc16is7xx: implement gpio get_direction() callback
-Date: Thu, 30 Jul 2026 16:13:33 +0200
-Message-ID: <20260730141455.390676380@linuxfoundation.org>
+	Devin Wittmayer <lucid_duck@justthetip.ca>,
+	Felix Fietkau <nbd@nbd.name>
+Subject: [PATCH 6.18 457/675] wifi: mt76: mt7921: drop TXRX_NOTIFY on non-mmio buses
+Date: Thu, 30 Jul 2026 16:13:07 +0200
+Message-ID: <20260730141454.845002723@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -51,54 +50,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+From: Devin Wittmayer <lucid_duck@justthetip.ca>
 
-commit af071d9e07e57cfff239e8d09d2f3b05ebc9c667 upstream.
+commit da4082e91acabc1498611ed8ccc53f0610baefc6 upstream.
 
-It's strongly recommended for GPIO drivers to always implement the
-.get_direction() callback - even when the direction is tracked in
-software. The GPIO core emits a warning when the callback is missing
-and a user reads the direction of a line, e.g. via
-/sys/kernel/debug/gpio.
+PKT_TYPE_TXRX_NOTIFY is an mmio-only event, but mt7921_rx_check() and
+mt7921_queue_rx_skb() dispatch it to mt7921_mac_tx_free() on every bus.
+mt7921_mac_tx_free() cleans the DMA tx queues with
+mt76_queue_tx_cleanup(), which calls queue_ops->tx_cleanup(). Only the
+mmio queue ops implement that callback; on USB and SDIO it is NULL, so
+a TXRX_NOTIFY there calls a NULL pointer in the RX worker:
 
-Fixes: dfeae619d781 ("serial: sc16is7xx")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Acked-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260716210813.2582826-1-hugo@hugovil.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  BUG: kernel NULL pointer dereference, address: 0000000000000000
+  RIP: 0010:0x0
+  Call Trace:
+   mt7921_mac_tx_free+0x64/0x310 [mt7921_common]
+   mt7921_rx_check+0x5f/0xf0 [mt7921_common]
+   mt76u_rx_worker+0x1b9/0x620 [mt76_usb]
+
+Drop the event on non-mmio buses via mt76_is_mmio(), as in
+commit 5683e1488aa9 ("wifi: mt76: connac: do not check WED status for
+non-mmio devices").
+
+Fixes: 48fab5bbef40 ("mt76: mt7921: introduce mt7921s support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
+Link: https://patch.msgid.link/20260627191336.20223-2-lucid_duck@justthetip.ca
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/sc16is7xx.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/net/wireless/mediatek/mt76/mt7921/mac.c |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/drivers/tty/serial/sc16is7xx.c
-+++ b/drivers/tty/serial/sc16is7xx.c
-@@ -1328,6 +1328,17 @@ static int sc16is7xx_gpio_set(struct gpi
- 	return 0;
- }
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/mac.c
+@@ -569,8 +569,9 @@ bool mt7921_rx_check(struct mt76_dev *md
  
-+static int sc16is7xx_gpio_get_direction(struct gpio_chip *chip, unsigned int offset)
-+{
-+	struct sc16is7xx_port *s = gpiochip_get_data(chip);
-+	struct uart_port *port = &s->p[0].port;
-+	unsigned int val;
-+
-+	val = sc16is7xx_port_read(port, SC16IS7XX_IODIR_REG);
-+
-+	return val & BIT(offset) ? GPIO_LINE_DIRECTION_OUT : GPIO_LINE_DIRECTION_IN;
-+}
-+
- static int sc16is7xx_gpio_direction_input(struct gpio_chip *chip,
- 					  unsigned offset)
- {
-@@ -1405,6 +1416,7 @@ static int sc16is7xx_setup_gpio_chip(str
- 	s->gpio.parent		 = dev;
- 	s->gpio.label		 = dev_name(dev);
- 	s->gpio.init_valid_mask	 = sc16is7xx_gpio_init_valid_mask;
-+	s->gpio.get_direction	 = sc16is7xx_gpio_get_direction;
- 	s->gpio.direction_input	 = sc16is7xx_gpio_direction_input;
- 	s->gpio.get		 = sc16is7xx_gpio_get;
- 	s->gpio.direction_output = sc16is7xx_gpio_direction_output;
+ 	switch (type) {
+ 	case PKT_TYPE_TXRX_NOTIFY:
+-		/* PKT_TYPE_TXRX_NOTIFY can be received only by mmio devices */
+-		mt7921_mac_tx_free(dev, data, len); /* mmio */
++		if (!mt76_is_mmio(mdev))
++			return false;
++		mt7921_mac_tx_free(dev, data, len);
+ 		return false;
+ 	case PKT_TYPE_TXS:
+ 		for (rxd += 2; rxd + 8 <= end; rxd += 8)
+@@ -599,7 +600,10 @@ void mt7921_queue_rx_skb(struct mt76_dev
+ 
+ 	switch (type) {
+ 	case PKT_TYPE_TXRX_NOTIFY:
+-		/* PKT_TYPE_TXRX_NOTIFY can be received only by mmio devices */
++		if (!mt76_is_mmio(mdev)) {
++			napi_consume_skb(skb, 1);
++			break;
++		}
+ 		mt7921_mac_tx_free(dev, skb->data, skb->len);
+ 		napi_consume_skb(skb, 1);
+ 		break;
 
 
