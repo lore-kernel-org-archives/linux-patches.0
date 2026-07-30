@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10A77430CDD;
-	Thu, 30 Jul 2026 14:24:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E534643D510;
+	Thu, 30 Jul 2026 14:24:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421479; cv=none; b=NADxhPW+IHxgKDHJ365EkuyT0erImgGgt3vRenUj0NNH+V+PSTobMV5376mbqp2S4/YSfFLqQ3t99nuIRAbILGntdpiXN7ds8JxuCHioMQ2Kuyd4uTTySNesfRte9v/pe5TKdu2iUJgk3sH4EaAkXEPXdmRyyk63xzhl1uueMLc=
+	t=1785421481; cv=none; b=CQjz6o1n2je1n72HivvAMiatjCCTfNXMJILKUDahVzpia6AdoVcEeDq1JAjyb+A5zQsud4i+JJlpzZI1ulWpBIAMRdwk3Mm8+FjD98ObuH89pM5O86uIju1/AA5fpExoSOCz1a1qRedVN2mc1okzH9wVjDGyfVwg5PL8N2X+j8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421479; c=relaxed/simple;
-	bh=e98oI2XXQAGgQvS1ExUYJ3wUFKkhdXT0PGuM/MEIit8=;
+	s=arc-20240116; t=1785421481; c=relaxed/simple;
+	bh=Bb8PEJdFIEm2aO7G1pHz4b/vBspixolUpsqizYjO0WA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W6rHqo5WeUONCPdUNt4K/gShGK4oyflf32h4e/mYUuCE0JSCXOa8KsEKPNm1J2zxLCtbd0DFnSKBpHy9+IYe1hjgYR/qiKZU3CxfZSp5fmePIvzasi6sAhoLBEh5W6MiAVdGzMSXfRBJuTDX+iaAwdou0doeP2PvakA5+sd6taY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eirt5rjj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pBMyNWyz1riGjY0XLQMsJXFrUHnENfNOFa9IUZ/pBvct8C3L7wQXuBw1yYnTjgMxLu78vjbKsPLWuj5nRQUEjWL3xTMppc7w/uA7e1ppbBzb3OSojkBe2ePQEvmMj8Y12LYMiOekIzYJ5+w7ESicch0NPtB4hH08aPcvPAAdS4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JKT1o5E+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eirt5rjj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12F2F1F00A3A;
-	Thu, 30 Jul 2026 14:24:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JKT1o5E+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01F781F000E9;
+	Thu, 30 Jul 2026 14:24:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421477;
-	bh=m4ok9/2bpCgMmkLROnENvzhOtOkv0pevCZ8ub9L5YKY=;
+	s=korg; t=1785421480;
+	bh=7C7i4V0UK/xeuSFrxtWbNpUy2Y3NGsNhXooTUODpnhA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eirt5rjjgB6S6q0HAOs2dDbEIFw3Llbkv0yeOeb9TriH0ttkTOWwenP4+pwzfKtYP
-	 XOdSlrl9nB5NQSrKlzCXbAC117e3YGRqVXpCA4Vq11nQJAeXqdGwo8gij36jorptT5
-	 EotUMpqv5RdWH0FyBoc50T6zWxWcZorhIQkdXLuY=
+	b=JKT1o5E+FuXlyJMUWZnS7FB9uhUP5ho+Z1K+1joUtODTNsjxwdwq7f0ZCvXDeVVmg
+	 SKLiu7WHktZZ8EMR+yOqDcryZPlo2VxiMjv17lkABSL0rO6jd88oYAz2UKC6Yc7VEj
+	 Xt95dKuj3ou8r04AWst1ByzKFZYccaIYo0w8kurQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linmao Li <lilinmao@kylinos.cn>,
-	Liviu Dudau <liviu.dudau@arm.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 116/744] drm/panthor: Check debugfs GEM lock initialization
-Date: Thu, 30 Jul 2026 16:06:29 +0200
-Message-ID: <20260730141446.744724793@linuxfoundation.org>
+Subject: [PATCH 7.1 081/744] ASoC: cs42l43: Correct report for forced microphone jack
+Date: Thu, 30 Jul 2026 16:05:54 +0200
+Message-ID: <20260730141445.993271502@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -51,44 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linmao Li <lilinmao@kylinos.cn>
+From: Charles Keepax <ckeepax@opensource.cirrus.com>
 
-[ Upstream commit 022e901333c3054656a640794e842bab7af5a75c ]
+[ Upstream commit f74e6e15485b68b92b2807071e822db6309b7e38 ]
 
-drmm_mutex_init() can fail while registering the managed cleanup action.
-When that happens, drmm_add_action_or_reset() destroys the mutex before
-returning the error. Continuing initialization would therefore leave the
-debugfs GEM object list with an unusable lock.
+Currently if the jack is forced to the microphone mode, it will report
+as line in. Correct the report to microphone.
 
-Propagate the error as is already done for the other managed mutexes in
-panthor_device_init().
-
-Fixes: a3707f53eb3f ("drm/panthor: show device-wide list of DRM GEM objects over DebugFS")
-Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
-Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
-Link: https://patch.msgid.link/20260713082912.321021-1-lilinmao@kylinos.cn
-Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
+Fixes: fc918cbe874e ("ASoC: cs42l43: Add support for the cs42l43")
+Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/20260708103430.1395207-1-ckeepax@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panthor/panthor_device.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ sound/soc/codecs/cs42l43-jack.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/panthor/panthor_device.c b/drivers/gpu/drm/panthor/panthor_device.c
-index 4f522a912d8968..48bb33bac36631 100644
---- a/drivers/gpu/drm/panthor/panthor_device.c
-+++ b/drivers/gpu/drm/panthor/panthor_device.c
-@@ -207,7 +207,10 @@ int panthor_device_init(struct panthor_device *ptdev)
- 		return ret;
+diff --git a/sound/soc/codecs/cs42l43-jack.c b/sound/soc/codecs/cs42l43-jack.c
+index 3e04e6897b1423..e88109979c1831 100644
+--- a/sound/soc/codecs/cs42l43-jack.c
++++ b/sound/soc/codecs/cs42l43-jack.c
+@@ -310,6 +310,7 @@ irqreturn_t cs42l43_bias_detect_clamp(int irq, void *data)
+ #define CS42L43_JACK_ABSENT 0x0
  
- #ifdef CONFIG_DEBUG_FS
--	drmm_mutex_init(&ptdev->base, &ptdev->gems.lock);
-+	ret = drmm_mutex_init(&ptdev->base, &ptdev->gems.lock);
-+	if (ret)
-+		return ret;
-+
- 	INIT_LIST_HEAD(&ptdev->gems.node);
- #endif
- 
+ #define CS42L43_JACK_OPTICAL (SND_JACK_MECHANICAL | SND_JACK_AVOUT)
++#define CS42L43_JACK_MICROPHONE (SND_JACK_MECHANICAL | SND_JACK_MICROPHONE)
+ #define CS42L43_JACK_HEADPHONE (SND_JACK_MECHANICAL | SND_JACK_HEADPHONE)
+ #define CS42L43_JACK_HEADSET (SND_JACK_MECHANICAL | SND_JACK_HEADSET)
+ #define CS42L43_JACK_LINEOUT (SND_JACK_MECHANICAL | SND_JACK_LINEOUT)
+@@ -871,7 +872,7 @@ static const struct cs42l43_jack_override_mode {
+ 		.hsdet_mode = CS42L43_JACK_3_POLE_SWITCHES,
+ 		.mic_ctrl = (0x3 << CS42L43_JACK_STEREO_CONFIG_SHIFT) |
+ 			    CS42L43_HS1_BIAS_EN_MASK | CS42L43_HS2_BIAS_EN_MASK,
+-		.report = CS42L43_JACK_LINEIN,
++		.report = CS42L43_JACK_MICROPHONE,
+ 	},
+ 	[CS42L43_JACK_RAW_OPTICAL] = {
+ 		.hsdet_mode = CS42L43_JACK_3_POLE_SWITCHES,
 -- 
 2.53.0
 
