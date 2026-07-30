@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61EC0446070;
-	Thu, 30 Jul 2026 16:06:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38B7139060A;
+	Thu, 30 Jul 2026 16:06:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427577; cv=none; b=Lk0nBeL8W4KP/FkrutVXM1g08ZfPqK2dLzgY5P6xlAX5qzga1e83sROCniuPaoo/OJ6jm26I1XMJjLzAWgKn1GDMVnQx6m204hDlM1AVWA04I/gT6mS4C1Tg/LukPNIFTFWbAP/CJsq1NPWSBUQK7DHgiz4CgQM8+JvZERNi0Pc=
+	t=1785427580; cv=none; b=SDPHSjkAzKBQ7cMbDL4DPG7YShhZiQLAQ/yRvvs3olAHr6i/VQLEv5i2jzAqKZUNzazWzk7eg8i40eDzX8O8DlzhXAesW9A+MNNyrELzh7Us3Xu7opVyAPIh35Fy8tw8LXZ8Odl9Fb/VUgycr38ryETRYTKyTX933/NKxJ1foeU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427577; c=relaxed/simple;
-	bh=YgVlJ7faYg1NVujdDfE9QluuOyOyQJNyFkNDgo932z8=;
+	s=arc-20240116; t=1785427580; c=relaxed/simple;
+	bh=a0TpuGClg7+Ts3QWg1De2EBZFO3cMLpSdI9cxmaDg38=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=esfPEaGwpCO94mrul/UlvLbh54FK4ynzaHmy5OrKzL7MUktcfKcZT0UmZLgAC/HzA9mj5NAny62GC2qxnI+k/+qd9HeGSgE3YAe5gHCv4bJcjib3YoEbOONJrqM04nFQ+Wlv+8Zu5lBJitbh5kCGcO618Tz+v9W6B2vk/2KFy5U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TUGohFIG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=E0PR/SJFawcqWpHF57e4oFjmndJvEo0tirfzIvzhs78egTl83u+qi8QaoPr+TFR6bFOdu7AVAVWxq+Zg2byXrfS4hggOLGVfdd9PKESo2nbE4PRGFgt2/sLytJV6wTGUcPb3LjIHRyl9HX8ak/TfwPvctu/Xds6+/1L1FIuHvD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DBSP6G4R; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TUGohFIG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4B901F000E9;
-	Thu, 30 Jul 2026 16:06:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DBSP6G4R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93DEE1F000E9;
+	Thu, 30 Jul 2026 16:06:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427576;
-	bh=WJS66/EvLsymgCN1WWSPLBc3mLZe/OLsRRN7cF8Ieag=;
+	s=korg; t=1785427579;
+	bh=YL7quch1hzahQdzPpKoly+bAhBh5o/9N9Fk+YEvmZcQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TUGohFIGZdTwV4vN5nmHbJUtTeQAEyUs22YE915VDXpCHvjzibjHiXjStUQ7Y/LQ+
-	 TCZq9fUI0/Jh31uWHGVHs7G6Aez/RS0HkqO7D4oRDt9Hlob0emRpy5Vjma3Wnkcixm
-	 8gn+a9wYFR6obXFamyVf+EuSS2pXrwO/hx30XPz4=
+	b=DBSP6G4RX/ujSLwGCdngkNIvet8yJ1+gEfmx48j6W6spmmNdMlP+jehFhT7kDQnNH
+	 46DWj6etgsRtcSpFC8G2Dvnh0DLsBl8s2yiaJTFtKXUR1fOh0avCFeeTJ+RF6fjGDK
+	 Fn9BNd4ZH6MAtJ9urSqJBQPqFYOrNHEbxAyoyZbk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+456957213f32970c0762@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Felix Maurer <fmaurer@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 182/484] net: hsr: fix memory leak on slave unregistration by removing synced VLANs
-Date: Thu, 30 Jul 2026 16:11:19 +0200
-Message-ID: <20260730141427.421273179@linuxfoundation.org>
+	David Francis <David.Francis@amd.com>,
+	David Yat Sin <david.yatsin@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.6 218/484] drm/amdkfd: Check bounds in allocate_event_notification_slot
+Date: Thu, 30 Jul 2026 16:11:55 +0200
+Message-ID: <20260730141428.208497505@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -54,55 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: David Francis <David.Francis@amd.com>
 
-[ Upstream commit dcf15eaf5641812f1cfc5e96537380132a7da89d ]
+commit bb52249fbbe948875155ccd45cd8d74bf4ae747b upstream.
 
-When an HSR master device is brought UP, it auto-adds VLAN 0 via
-vlan_vid0_add(), which propagates VID 0 to its slave devices (slave A and B).
+The valid event ids go from 0 to KFD_SIGNAL_EVENT_LIMIT
 
-If a slave device is later unregistered while HSR is active (e.g., during
-netns cleanup or interface destruction), hsr_del_port() is called to
-detach the slave port from the HSR master. However, hsr_del_port() currently
-does not delete the VLAN IDs that were synced to the slave device by HSR.
+allocate_event_notification_slot has an option to specify
+an event id to allocate at, used by CRIU. We weren't checking
+the bounds on that value.
 
-As a result, the slave device retains a refcount on VID 0 (and any other
-synced VLANs). When the slave device is destroyed, its vlan_info /
-vlan_vid_info structure remains allocated, leading to a memory leak.
+Check them.
 
-Fix this by calling vlan_vids_del_by_dev(port->dev, master->dev) in
-hsr_del_port() before unlinking slave A or slave B ports, matching the
-propagation logic in hsr_ndo_vlan_rx_add_vid() / hsr_ndo_vlan_rx_kill_vid()
-and the cleanup behavior in bonding and team drivers.
+v2: Lower bounds check is unecessary because of idr_alloc
+already rejecting negative numbers. Upper bounds check should
+be KFD_SIGNAL_EVENT_LIMIT since the signal mode mappings might
+not yet exist
 
-Fixes: 1a8a63a5305e ("net: hsr: Add VLAN CTAG filter support")
-Reported-by: syzbot+456957213f32970c0762@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6a4cb6ca.57639fcc.86d58.000b.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Reviewed-by: Felix Maurer <fmaurer@redhat.com>
-Link: https://patch.msgid.link/20260721101240.995597-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: David Francis <David.Francis@amd.com>
+Reviewed-by: David Yat Sin <david.yatsin@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 6853f1f6cbbeb3f53ebbbd7286536aeb2c5d5f50)
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/hsr/hsr_slave.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/amd/amdkfd/kfd_events.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/hsr/hsr_slave.c b/net/hsr/hsr_slave.c
-index b8230faa567f77..58e757dc555461 100644
---- a/net/hsr/hsr_slave.c
-+++ b/net/hsr/hsr_slave.c
-@@ -228,6 +228,8 @@ void hsr_del_port(struct hsr_port *port)
- 		netdev_rx_handler_unregister(port->dev);
- 		if (!port->hsr->fwd_offloaded)
- 			dev_set_promiscuity(port->dev, -1);
-+		if (port->type == HSR_PT_SLAVE_A || port->type == HSR_PT_SLAVE_B)
-+			vlan_vids_del_by_dev(port->dev, master->dev);
- 		netdev_upper_dev_unlink(port->dev, master->dev);
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_events.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_events.c
+@@ -106,6 +106,9 @@ static int allocate_event_notification_s
  	}
  
--- 
-2.53.0
-
+ 	if (restore_id) {
++		if (*restore_id >= KFD_SIGNAL_EVENT_LIMIT)
++			return -EINVAL;
++
+ 		id = idr_alloc(&p->event_idr, ev, *restore_id, *restore_id + 1,
+ 				GFP_KERNEL);
+ 	} else {
 
 
