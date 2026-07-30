@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8EC740FD86;
-	Thu, 30 Jul 2026 14:45:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6B5F367B89;
+	Thu, 30 Jul 2026 14:45:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422712; cv=none; b=opEVaZ9wvRRxWnTtAzv8E8RsD5GaWr1wu2JS9tpQ7cn3eJTBwfN6Yij909w+xKRfoKNaPl8enEBU7XLzM0zBln+nx+GL+v9Mne0utRBwA8nvwNDPcu+qnOMpaLDnkZkb/VYUWR0r7CgxcRPk3g6cff/0Qz9E7aQTtj3ZQnKWY6Y=
+	t=1785422715; cv=none; b=GhGBM8ZWdM5mgmkucOvtj2LqhqVt4QItSy/DE+nZ2tnCxSVVvJDJIvChQW/JOEpNH1TGbscnABot0x460bZ8eMQJJQafbCHXJL7bxdnbMYK8b2XxwRW0Jzlba3bjtv0wzDEBZqfpzBZNfFBCfBLZob//ufvjvU026f4HEwR4fHI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422712; c=relaxed/simple;
-	bh=ylrIrBjE0PElMGU8hJiu5EH6q4Z2SGCp9FkdYx2j6JM=;
+	s=arc-20240116; t=1785422715; c=relaxed/simple;
+	bh=FfadgGZINfxKONeZfaoTJnTKPjauu19O695BQdZEH10=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gHtmmZkCMQ0ITNwBbgELb5SfiNLy9fjXATdLr6gVUWPhyPb7Qh/2RTxUK3Nxzb9m3AZOliHhc6YUqWD0CjjUlb6Q55dT9LGWmPIW554t1Ii1mWz+ktGWBbKzIZHVV9RQjVSSVFqKhJLsDdN/+7tjxY0u4FiPaH4wbFySf12K5vY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n8DeUN0b; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZDEsz0y7e4+Cm8c22GFliIrC+y6/eK6ClDiuG3ckUa0BrHAb/sdFAudzTEnk0+LxBrVdIoXCAjE1T21jmADKTwcTQGioEv7fsXHhxDd5YEzaDYAIQCzwYWWqbLe0QeTwsfT0YrF5RJANX+kjCMk6p42cA1JtaZ7KmSVYvnEcwlM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TvoUDJdC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n8DeUN0b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 297B21F00A3A;
-	Thu, 30 Jul 2026 14:45:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TvoUDJdC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DD6D1F00A3A;
+	Thu, 30 Jul 2026 14:45:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422710;
-	bh=+XRrGr7IBtmXTKePxr2rPni/FfeR3nY/D6JoFJfCOLk=;
+	s=korg; t=1785422713;
+	bh=ef3faEWXdXBsFiIw3EldjPxJuKl/ABGmXcLhsAjGG24=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n8DeUN0bHCqV1IgF/MI/bQYhca/WUA1JZX1rMNsXR+ESEEy8uyDSTH9Z6nj90JYqF
-	 j4U7UYdjGDX1PSODSNUYFuCk9JF9ds9m9H5ExQsSM5ThRuq+mIeCDnODQVhhcWEBPy
-	 eOxGQ3erlFafOhCkS+WtNLYVcdhz/ROQZwtQvP3Q=
+	b=TvoUDJdChWjQTzAlz/nbHnRZ9/ZffwNqJKGjxbH4L4VVHdJUV4b74RzvGieY/Pf8N
+	 dqYB2f3kF2wAoxDLZa40BlugKEpoWsh501hwjY6v0bmKR5kvRSHu3aPo0fu1S69uvb
+	 FWuBuqtV/I1SkrTfv06UVDEPXxw/NUyja49sjWtc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 7.1 531/744] media: verisilicon: Export only needed pixels formats
-Date: Thu, 30 Jul 2026 16:13:24 +0200
-Message-ID: <20260730141455.558179841@linuxfoundation.org>
+Subject: [PATCH 7.1 532/744] media: vidtv: fix reference leak on failed device registration
+Date: Thu, 30 Jul 2026 16:13:25 +0200
+Message-ID: <20260730141455.579286099@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -51,56 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit e0f5d6ae76423ec5b6f97c7c3e1f02187b988afd upstream.
+commit 9aa21e1549db8882ff77b691e7714153df21dff0 upstream.
 
-Some pixel formats can only be produced if the decoder outputs
-reference pictures directly. In some cases, such as AV1 film-grain,
-the use of the post-processor is strictly required. In this case,
-only enumerate the post-processor supported formats. The exception is
-when V4L2_FMTDESC_FLAG_ENUM_ALL is set, in this case, we enumerate
-everything regardless of the state.
+When platform_device_register() fails in vidtv_bridge_init(), the
+embedded struct device in vidtv_bridge_dev has already been initialized
+by device_initialize(), but the failure path returns the error without
+dropping the device reference for the current platform device:
 
-Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
-Fixes: bcd4f091cf1e ("media: verisilicon: Use V4L2_FMTDESC_FLAG_ENUM_ALL flag")
+  vidtv_bridge_init()
+    -> platform_device_register(&vidtv_bridge_dev)
+       -> device_initialize(&vidtv_bridge_dev.dev)
+       -> setup_pdev_dma_masks(&vidtv_bridge_dev)
+       -> platform_device_add(&vidtv_bridge_dev)
+
+This leads to a reference leak when platform_device_register() fails.
+Fix this by calling platform_device_put() before returning the error.
+
+The issue was identified by a static analysis tool I developed and
+confirmed by manual review.
+
+Fixes: f90cf6079bf67 ("media: vidtv: add a bridge driver")
 Cc: stable@vger.kernel.org
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/verisilicon/hantro_v4l2.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/media/test-drivers/vidtv/vidtv_bridge.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/media/platform/verisilicon/hantro_v4l2.c
-+++ b/drivers/media/platform/verisilicon/hantro_v4l2.c
-@@ -222,6 +222,7 @@ static int vidioc_enum_fmt(struct file *
- 	unsigned int num_fmts, i, j = 0;
- 	bool skip_mode_none, enum_all_formats;
- 	u32 index = f->index & ~V4L2_FMTDESC_FLAG_ENUM_ALL;
-+	bool need_postproc = ctx->need_postproc;
+--- a/drivers/media/test-drivers/vidtv/vidtv_bridge.c
++++ b/drivers/media/test-drivers/vidtv/vidtv_bridge.c
+@@ -594,8 +594,10 @@ static int __init vidtv_bridge_init(void
+ 	int ret;
  
- 	/*
- 	 * If the V4L2_FMTDESC_FLAG_ENUM_ALL flag is set, we want to enumerate all
-@@ -230,6 +231,9 @@ static int vidioc_enum_fmt(struct file *
- 	enum_all_formats = !!(f->index & V4L2_FMTDESC_FLAG_ENUM_ALL);
- 	f->index = index;
+ 	ret = platform_device_register(&vidtv_bridge_dev);
+-	if (ret)
++	if (ret) {
++		platform_device_put(&vidtv_bridge_dev);
+ 		return ret;
++	}
  
-+	if (enum_all_formats)
-+		need_postproc = HANTRO_AUTO_POSTPROC;
-+
- 	/*
- 	 * When dealing with an encoder:
- 	 *  - on the capture side we want to filter out all MODE_NONE formats.
-@@ -242,7 +246,7 @@ static int vidioc_enum_fmt(struct file *
- 	 */
- 	skip_mode_none = capture == ctx->is_encoder;
- 
--	formats = hantro_get_formats(ctx, &num_fmts, HANTRO_AUTO_POSTPROC);
-+	formats = hantro_get_formats(ctx, &num_fmts, need_postproc);
- 	for (i = 0; i < num_fmts; i++) {
- 		bool mode_none = formats[i].codec_mode == HANTRO_MODE_NONE;
- 		fmt = &formats[i];
+ 	ret = platform_driver_register(&vidtv_bridge_driver);
+ 	if (ret)
 
 
