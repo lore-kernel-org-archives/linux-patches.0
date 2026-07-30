@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B81BE407CEF;
-	Thu, 30 Jul 2026 16:09:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E36D38C426;
+	Thu, 30 Jul 2026 16:09:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427756; cv=none; b=oT0N2HdxCmKWfDJcbQM+iDWvmKqtNS5rxWDXP6OfI2HDgRzCQb00pN2E35Ciii8E8GXPiBk60bdh3snnTW95izXqNN0jJY6nyewG+NlKneOjpm5FQCBEnrODL8pWrYY0ek8eQdJGG/W+9fm+Yf9XdobgwUTIUKGUNkjEVIwb3aQ=
+	t=1785427759; cv=none; b=A/rzVfbUpZ1MjEm9Y/a1x+z+kUF54jLkI/kIkSyU1rJDNuZhnY49SmAHBW4Ox/fglef26EKrPfk+/X5MaFJHssSpCUltROuvysGLmyDAtDcae0feqnTklDqyDtmL4yhu9K27BMNtU1yGuYbbr+c5ViPqXLA8PgFN2Jb0nYag+GA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427756; c=relaxed/simple;
-	bh=7bIbvMcrrHH0pMUY13j/P9ZXLJSwwpEnQ/n6452QW80=;
+	s=arc-20240116; t=1785427759; c=relaxed/simple;
+	bh=VdGoJHHItNwUXc+j+ZqcGh12jo4H3/lQPLPk8dcjTao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N78hoKXPpxppNhNK3XxMRiKvFkPC9jEtzLkM4/RLVUvHtSLW/Df2xwSHz1TjwlwHy7DXoDz60vql2jexv8rLdvdIT4BmFXDnO3H8LucE5bsURx2y4rek4CGdrKETDcQ4KhxibUVf/DnP41pU3PyUg+YDTfmZjU0rW6g8TfI/120=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IN9ZR2nJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MGvmx2TDCjxFom6iL6+n7WLfK7uIZWkilCG6AeGaNqgFSa7Ou9RM05lD5+43KK8L/BX1HMx76ZSKZfpbdk51dKaOzMBoWJXjk8etlcuS/ZHpx+RJVRDgN2wmz6QjLRO08NPpXBV6LCgItTgaXAQMTgWYq5cJb8BZrd6V4zlFg5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KMkMeteP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IN9ZR2nJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7A691F000E9;
-	Thu, 30 Jul 2026 16:09:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KMkMeteP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAE001F000E9;
+	Thu, 30 Jul 2026 16:09:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427755;
-	bh=TjMv2ufwSVUMDjZi346+VBit/ph8Vbl4aUHg8gkE5iw=;
+	s=korg; t=1785427758;
+	bh=Lyex6P13JlLnpQul0YrhKZAbKupBso2WbcfR8CLMVRk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IN9ZR2nJgX6yeGvDF36i2oylLeWfj3p4hMM8dX0I4haw8ITYu9yQNcvVrpONtJx12
-	 JsH6PrKZZWS9MO+BuBoP0i5devF+43RE6YrmbnIl3lVtxApq1f+s75h/P5Sfco5YZH
-	 dBonFHKzmHb3MI5MRPDpigOg9UdROq+cBC1JNrWI=
+	b=KMkMetePNEdQytjmwDLY96adQbWST6Z8kSmN+VgGqYaoVfigt55TGM3a2X9b8PoEb
+	 YH5GJbtm6N5aoEV8v3l/mHV33od40Aw2UPn4X2iwMl428yXN2xHTnEQbyw72wpV0yB
+	 /Q6mNp5nxUS7oSYewkJrrIMjN3QFOmD7UBoSmits=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoran Jiang <jianghaoran@kylinos.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.6 283/484] LoongArch: Fix oops during single-step debugging
-Date: Thu, 30 Jul 2026 16:13:00 +0200
-Message-ID: <20260730141429.639020433@linuxfoundation.org>
+	Xu Rao <raoxu@uniontech.com>,
+	Phillip Potter <phil@philpotter.co.uk>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.6 284/484] cdrom: fix stack out-of-bounds read in CDROMVOLCTRL
+Date: Thu, 30 Jul 2026 16:13:01 +0200
+Message-ID: <20260730141429.660986471@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -50,43 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoran Jiang <jianghaoran@kylinos.cn>
+From: Xu Rao <raoxu@uniontech.com>
 
-commit 73555fdab5e1e4f24ca000c41a616b34edf4b55d upstream.
+commit b27e195d4db8dea263050bdbeb11881b2999c9c6 upstream.
 
-When entering KDB via a breakpoint and then performing single-step
-debugging, an oops is triggered. Now during single-step debugging,
-kdb_local() expects the reason to be KDB_REASON_SSTEP, but it is
-actually KDB_REASON_OOPS. In kdb_stub(), when determining the reason,
-the ex_vector for single-step should be 0, as already implemented on
-other architectures such as arm64 and riscv.
+mmc_ioctl_cdrom_volume() first reads the audio control mode page into a
+32-byte stack buffer with cgc->buflen set to 24.  If the device reports a
+block descriptor, the function increases cgc->buflen to include that
+descriptor and reads the page again.
 
-Before the patch:
-[112]kdb> ss
+For CDROMVOLCTRL, the function then builds a MODE SELECT parameter list
+by moving cgc->buffer forward by offset - 8 bytes.  This drops the block
+descriptor from the outgoing payload and leaves a new 8-byte mode
+parameter header in front of the audio control page.  However, cgc->buflen
+is left unchanged.
 
-Entering kdb (current=0x900020009f520000, pid 10661) on
-processor 112 Oops: (null)
-due to oops @ 0x90000000005b57a4
+With a standard 8-byte block descriptor, cgc->buffer points at buffer + 8
+but cgc->buflen remains 32.  cdrom_mode_select() therefore asks the low
+level packet path to write 32 bytes from that adjusted pointer, reading 8
+bytes past the end of the 32-byte stack buffer.
 
+This is not hit by CDROMVOLREAD, and CDROMVOLCTRL only triggers it on
+drives that return a non-zero block descriptor length, which helps explain
+why it has gone unnoticed.  The overread is also sent to the device as
+extra MODE SELECT payload, so it may not produce an obvious local failure.
+
+Reduce cgc->buflen by the same amount as the buffer pointer adjustment so
+the MODE SELECT transfer covers only the intended parameter list.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Haoran Jiang <jianghaoran@kylinos.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
+Signed-off-by: Phillip Potter <phil@philpotter.co.uk>
+Link: https://patch.msgid.link/20260720194421.1497-2-phil@philpotter.co.uk
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kernel/kgdb.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/cdrom/cdrom.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/loongarch/kernel/kgdb.c
-+++ b/arch/loongarch/kernel/kgdb.c
-@@ -252,7 +252,8 @@ static int kgdb_loongarch_notify(struct
- 	if (atomic_read(&kgdb_active) != -1)
- 		kgdb_nmicallback(smp_processor_id(), regs);
+--- a/drivers/cdrom/cdrom.c
++++ b/drivers/cdrom/cdrom.c
+@@ -3191,6 +3191,7 @@ static noinline int mmc_ioctl_cdrom_volu
  
--	if (kgdb_handle_exception(args->trapnr, args->signr, cmd, regs))
-+	if (kgdb_handle_exception(regs->csr_era == stepped_address ? 0 : args->trapnr,
-+				  args->signr, cmd, regs))
- 		return NOTIFY_DONE;
- 
- 	if (atomic_read(&kgdb_setting_breakpoint))
+ 	/* set volume */
+ 	cgc->buffer = buffer + offset - 8;
++	cgc->buflen -= offset - 8;
+ 	memset(cgc->buffer, 0, 8);
+ 	return cdrom_mode_select(cdi, cgc);
+ }
 
 
