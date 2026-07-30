@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB2593839B2;
-	Thu, 30 Jul 2026 15:49:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EFF73839B2;
+	Thu, 30 Jul 2026 15:49:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426559; cv=none; b=cKp1Kdq7isvfGjfusezJPEOlmWiERNjxJtnw78g8CCBBwjp0M3+ziR3bAWCZddAC0vXo4Z643IQCkDFzWi1HrlHjgDKNfwAmWpeSzfKio8goA4h1gWrvIu0CJlw2N9j2RVm+Z3DmJctIts9RuB2KHXylgRMg66DQQ3V8L9nL/Tk=
+	t=1785426562; cv=none; b=qnaSRmuSRLtVpqQenHjgG8kNxpVIDhcIJhyrXY47G4uYhRIQR0Pki+uwzDB2TcChe1tmdIVl/VRe/kNXJ4v+F8lnfnDoFXJ/nKsC7TwpzXXraK9g/2/QfuNF28lAhdN/tTOkf5RgqTdJ7ZNqIlyrVIK9x+X/TnNe4/ErQ+VymT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426559; c=relaxed/simple;
-	bh=iwLJTc6FzhhBWX6uzYtBQSgFGLMEc2O+d105RDy7Nww=;
+	s=arc-20240116; t=1785426562; c=relaxed/simple;
+	bh=ZhdwxmGhUl2i6LA+lTUa9KTdovMj2ID/P4CmjLBsh3w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T5qzjT5vp+sNpx/Cads+69Ct0zPnOXJMFY25fRd7DSIKWE8G51kAqUioGebaPTPVK5JQdSmvme0gKiYvPsKcYn8sR9PWVElU1+z34JwRSzwFffYaejOitC9tMIuNnTA6FIwh9/UOwEQoklGPmsZmdryb6ClmFMvG3Al24hdDW+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KgY7BO7I; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JiLPGnb60W20Vwfg9ZieSWvPd5KiIjO/Ybg6vxJxLN59RzDK0mOACSyZsf61ty++4z4ep4YHMDW3ZJjoiWWPQUoBy4Nd1kaOttFLr/PVGWxKvPHXawzWKg0m4K/XFjSQRNJA+L7Ekly5QMqu8Ujzj5vnQWXOlkxVMW/v19jJyWY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f1ORepkO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KgY7BO7I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ED791F000E9;
-	Thu, 30 Jul 2026 15:49:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f1ORepkO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED00C1F000E9;
+	Thu, 30 Jul 2026 15:49:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426558;
-	bh=PPSo0WLf/xAQHyDYo5NvRwXzKka37aqO9Tg874S96Io=;
+	s=korg; t=1785426561;
+	bh=TRjOr+gZVbc//ti/vX9dJepp8BT1RO46sbez6fu4iFc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KgY7BO7IbdSGO6gx52iO8E9Ys0mae2ODlTSgVTM0n9mUwYZMBsaSAsMt3hv8hn5eM
-	 +8PbD+Xu/1icoiDmEzwiMyboQdIRDl7GnUkcZmp9htiTwULeuh7Ciir5cgsNiKExNq
-	 07gaOQjezsUviweRutafP4Pkvjw51qCqdSM3x8OI=
+	b=f1ORepkOPuMUYt3c1MBECUu+ILTUS8CRYs1a+6K1RVJaF7M1pTVawNoX8lJljDHN7
+	 mk5h8ytpg8TJcq9KO51pWrZJQU+JDiTVbxd1twaK8Xe3ZpJwJX/Y/aPvTXEWDDOOMe
+	 tmVdVjteZAN7SZtYAKnxcpz/sebkgZS4FUap/aCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiawen Wu <jiawenwu@trustnetic.com>,
-	Coia Prant <coiaprant@gmail.com>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Jordan Rhee <jordanrhee@google.com>,
+	Eddie Phillips <eddiephillips@google.com>,
+	Harshitha Ramamurthy <hramamurthy@google.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 460/602] net: pcs: xpcs: fix SGMII state reading
-Date: Thu, 30 Jul 2026 16:14:12 +0200
-Message-ID: <20260730141445.626010650@linuxfoundation.org>
+Subject: [PATCH 6.12 461/602] gve: fix Rx queue stall on alloc failure
+Date: Thu, 30 Jul 2026 16:14:13 +0200
+Message-ID: <20260730141445.646041045@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -53,117 +54,158 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Coia Prant <coiaprant@gmail.com>
+From: Eddie Phillips <eddiephillips@google.com>
 
-commit def9a4745e105145133e442dd8a1c126caf0f553 upstream.
+commit b65352a1bac64442ad95e64f385b40ccb9f1b0db upstream.
 
-Commit 2a22b7ae2fa3 ("net: pcs: xpcs: adapt Wangxun NICs for SGMII mode")
-added a path in xpcs_get_state_c37_sgmii() that reads speed/duplex from
-BMCR after AN completes. However, BMCR does not reflect the negotiated
-result on the hardware where this has been tested:
+When the system is under extreme memory pressure, page allocations can
+fail during the Rx buffer refill loop. If the number of buffers posted
+to hardware falls below a critical low threshold and the refill loop
+exits due to allocation failures, the queue can stall:
 
-- On RK3568 (MAC side SGMII), BMCR returns a fixed hardware reset value
-- Wangxun engineer Jiawen Wu confirmed that on their side, "BMCR looks
-  like it only wants to be return as 0" [0]
+1. The device drops incoming packets because there are no descriptors.
+2. Since no packets are processed, no Rx completions are generated.
+3. Because no completions occur, NAPI is never scheduled, preventing
+   the refill loop from running again even after memory is freed.
 
-The correct information is available in CL37_ANSGM_STS, which contains
-the actual link status and negotiated speed/duplex.
+This results in a permanent queue stall.
 
-This bug was previously masked by phylink core, which overrides the PCS
-link state with the PHY state when a PHY is present:
+Resolve this by introducing a starvation recovery timer for each Rx queue.
+If the number of buffers posted to hardware falls below a critical low
+threshold, start a timer to periodically reschedule NAPI. Once NAPI runs
+and successfully refills the queue above the threshold, the timer is
+not rescheduled.
 
-        /* If we have a phy, the "up" state is the union of both the
-         * PHY and the MAC
-         */
-        if (phy)
-                link_state.link &= pl->phy_state.link;
+The threshold is set to 32 because a single maximum-sized Receive Segment
+Coalescing (RSC) packet can consume up to 19 descriptors in the Rx path.
+Lower thresholds (such as 8 or 16) would be insufficient to process a
+complete maximum-sized RSC packet, risking packet drops or unexpected
+hardware behavior under memory pressure. Setting the threshold to 32
+guarantees a safe margin to handle at least one full RSC packet.
 
-Thus, when the link is down, the PHY's link_down state is applied on top
-of whatever the PCS reports, hiding the broken PCS state reading path.
-
-Modify xpcs_get_state_c37_sgmii() to:
-1. Read link state from CL37_ANSGM_STS
-2. If link is up, report speed/duplex from CL37_ANSGM_STS
-3. Remove the broken BMCR reading path entirely
-
-Also properly set state->an_complete to reflect the AN completion status,
-and clear CL37_ANCMPLT_INTR when link is down to avoid stale state.
-
-[0] https://lore.kernel.org/all/000c01dd1593$2ac0b0f0$804212d0$@trustnetic.com/
-
-Fixes: 2a22b7ae2fa3 ("net: pcs: xpcs: adapt Wangxun NICs for SGMII mode")
 Cc: stable@vger.kernel.org
-Tested-by: Jiawen Wu <jiawenwu@trustnetic.com>
-Signed-off-by: Coia Prant <coiaprant@gmail.com>
-Tested-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/20260717074324.3250043-2-coiaprant@gmail.com
+Fixes: 9b8dd5e5ea48 ("gve: DQO: Add RX path")
+Reviewed-by: Jordan Rhee <jordanrhee@google.com>
+Signed-off-by: Eddie Phillips <eddiephillips@google.com>
+Signed-off-by: Harshitha Ramamurthy <hramamurthy@google.com>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Link: https://patch.msgid.link/20260709211906.3322883-1-hramamurthy@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/pcs/pcs-xpcs.c | 32 +++++++-------------------------
- 1 file changed, 7 insertions(+), 25 deletions(-)
+ drivers/net/ethernet/google/gve/gve.h        |  3 ++
+ drivers/net/ethernet/google/gve/gve_rx_dqo.c | 36 ++++++++++++++++++++
+ 2 files changed, 39 insertions(+)
 
-diff --git a/drivers/net/pcs/pcs-xpcs.c b/drivers/net/pcs/pcs-xpcs.c
-index 82463f9d50c85c..0152f820c1bbe5 100644
---- a/drivers/net/pcs/pcs-xpcs.c
-+++ b/drivers/net/pcs/pcs-xpcs.c
-@@ -973,6 +973,7 @@ static int xpcs_get_state_c37_sgmii(struct dw_xpcs *xpcs,
+diff --git a/drivers/net/ethernet/google/gve/gve.h b/drivers/net/ethernet/google/gve/gve.h
+index 8ddd366d9fde54..e19d722e8e9a18 100644
+--- a/drivers/net/ethernet/google/gve/gve.h
++++ b/drivers/net/ethernet/google/gve/gve.h
+@@ -12,6 +12,7 @@
+ #include <linux/ethtool_netlink.h>
+ #include <linux/netdevice.h>
+ #include <linux/pci.h>
++#include <linux/timer.h>
+ #include <linux/u64_stats_sync.h>
+ #include <net/xdp.h>
  
- 	/* Reset link_state */
- 	state->link = false;
-+	state->an_complete = false;
- 	state->speed = SPEED_UNKNOWN;
- 	state->duplex = DUPLEX_UNKNOWN;
- 	state->pause = 0;
-@@ -984,6 +985,8 @@ static int xpcs_get_state_c37_sgmii(struct dw_xpcs *xpcs,
- 	if (ret < 0)
- 		return ret;
+@@ -38,6 +39,7 @@
  
-+	state->an_complete = ret & DW_VR_MII_AN_STS_C37_ANCMPLT_INTR;
-+
- 	if (ret & DW_VR_MII_C37_ANSGM_SP_LNKSTS) {
- 		int speed_value;
+ /* Interval to schedule a stats report update, 20000ms. */
+ #define GVE_STATS_REPORT_TIMER_PERIOD	20000
++#define GVE_RX_NAPI_RESCHED_MS 20 /* msecs */
  
-@@ -1002,34 +1005,13 @@ static int xpcs_get_state_c37_sgmii(struct dw_xpcs *xpcs,
- 			state->duplex = DUPLEX_FULL;
- 		else
- 			state->duplex = DUPLEX_HALF;
--	} else if (ret == DW_VR_MII_AN_STS_C37_ANCMPLT_INTR) {
--		int speed, duplex;
--
--		state->link = true;
--
--		speed = xpcs_read(xpcs, MDIO_MMD_VEND2, MDIO_CTRL1);
--		if (speed < 0)
--			return speed;
--
--		speed &= SGMII_SPEED_SS13 | SGMII_SPEED_SS6;
--		if (speed == SGMII_SPEED_SS6)
--			state->speed = SPEED_1000;
--		else if (speed == SGMII_SPEED_SS13)
--			state->speed = SPEED_100;
--		else if (speed == 0)
--			state->speed = SPEED_10;
--
--		duplex = xpcs_read(xpcs, MDIO_MMD_VEND2, MII_ADVERTISE);
--		if (duplex < 0)
--			return duplex;
+ /* Numbers of NIC tx/rx stats in stats report. */
+ #define NIC_TX_STATS_REPORT_NUM	0
+@@ -311,6 +313,7 @@ struct gve_rx_ring {
+ 	struct xdp_rxq_info xsk_rxq;
+ 	struct xsk_buff_pool *xsk_pool;
+ 	struct page_frag_cache page_cache; /* Page cache to allocate XDP frames */
++	struct timer_list starvation_timer; /* for queue starvation recovery */
+ };
  
--		if (duplex & DW_FULL_DUPLEX)
--			state->duplex = DUPLEX_FULL;
--		else if (duplex & DW_HALF_DUPLEX)
--			state->duplex = DUPLEX_HALF;
-+		return 0;
-+	}
- 
-+	/* Clear AN complete status or interrupt */
-+	if (state->an_complete)
- 		xpcs_write(xpcs, MDIO_MMD_VEND2, DW_VR_MII_AN_INTR_STS, 0);
--	}
- 
+ /* A TX desc ring entry */
+diff --git a/drivers/net/ethernet/google/gve/gve_rx_dqo.c b/drivers/net/ethernet/google/gve/gve_rx_dqo.c
+index 1154c1d8f66f05..2f7f31e4797cd2 100644
+--- a/drivers/net/ethernet/google/gve/gve_rx_dqo.c
++++ b/drivers/net/ethernet/google/gve/gve_rx_dqo.c
+@@ -199,6 +199,16 @@ static int gve_alloc_page_dqo(struct gve_rx_ring *rx,
  	return 0;
  }
+ 
++static void gve_rx_starvation_timer(struct timer_list *t)
++{
++	struct gve_rx_ring *rx = from_timer(rx, t, starvation_timer);
++	struct gve_priv *priv = rx->gve;
++	struct gve_notify_block *block;
++
++	block = &priv->ntfy_blocks[rx->ntfy_id];
++	napi_schedule(&block->napi);
++}
++
+ static void gve_rx_free_hdr_bufs(struct gve_priv *priv, struct gve_rx_ring *rx)
+ {
+ 	struct device *hdev = &priv->pdev->dev;
+@@ -290,10 +300,13 @@ static void gve_rx_reset_ring_dqo(struct gve_priv *priv, int idx)
+ void gve_rx_stop_ring_dqo(struct gve_priv *priv, int idx)
+ {
+ 	int ntfy_idx = gve_rx_idx_to_ntfy(priv, idx);
++	struct gve_rx_ring *rx = &priv->rx[idx];
+ 
+ 	if (!gve_rx_was_added_to_block(priv, idx))
+ 		return;
+ 
++	timer_shutdown_sync(&rx->starvation_timer);
++
+ 	gve_remove_napi(priv, ntfy_idx);
+ 	gve_rx_remove_from_block(priv, idx);
+ 	gve_rx_reset_ring_dqo(priv, idx);
+@@ -371,8 +384,10 @@ static int gve_rx_alloc_hdr_bufs(struct gve_priv *priv, struct gve_rx_ring *rx,
+ void gve_rx_start_ring_dqo(struct gve_priv *priv, int idx)
+ {
+ 	int ntfy_idx = gve_rx_idx_to_ntfy(priv, idx);
++	struct gve_rx_ring *rx = &priv->rx[idx];
+ 
+ 	gve_rx_add_to_block(priv, idx);
++	timer_setup(&rx->starvation_timer, gve_rx_starvation_timer, 0);
+ 	gve_add_napi(priv, ntfy_idx, gve_napi_poll_dqo);
+ }
+ 
+@@ -511,6 +526,7 @@ void gve_rx_post_buffers_dqo(struct gve_rx_ring *rx)
+ 	struct gve_rx_compl_queue_dqo *complq = &rx->dqo.complq;
+ 	struct gve_rx_buf_queue_dqo *bufq = &rx->dqo.bufq;
+ 	struct gve_priv *priv = rx->gve;
++	u32 num_bufs_avail_to_hw;
+ 	u32 num_avail_slots;
+ 	u32 num_full_slots;
+ 	u32 num_posted = 0;
+@@ -555,6 +571,26 @@ void gve_rx_post_buffers_dqo(struct gve_rx_ring *rx)
+ 	}
+ 
+ 	rx->fill_cnt += num_posted;
++
++	/* If the queue has fewer than GVE_RX_BUF_THRESH_DQO descriptors
++	 * visible to the hardware, the hardware is in danger of starving
++	 * and cannot trigger interrupts.
++	 *
++	 * We use a threshold of 32 because a single maximum-sized RSC
++	 * packet can consume up to 19 descriptors in the Rx path. Lower
++	 * thresholds (e.g., 8 or 16) would be unsafe as they could cause
++	 * the device to drop/stall on a maximum-sized RSC packet.
++	 *
++	 * Start the timer to periodically reschedule NAPI and recover.
++	 */
++	num_bufs_avail_to_hw =
++		((bufq->tail & ~(GVE_RX_BUF_THRESH_DQO - 1)) -
++		 bufq->head) & bufq->mask;
++
++	if (num_bufs_avail_to_hw < GVE_RX_BUF_THRESH_DQO) {
++		mod_timer(&rx->starvation_timer,
++			  jiffies + msecs_to_jiffies(GVE_RX_NAPI_RESCHED_MS));
++	}
+ }
+ 
+ static void gve_try_recycle_buf(struct gve_priv *priv, struct gve_rx_ring *rx,
 -- 
 2.53.0
 
