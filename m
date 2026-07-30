@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EE1C37F011;
-	Thu, 30 Jul 2026 15:35:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21CFD3806BD;
+	Thu, 30 Jul 2026 15:35:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425713; cv=none; b=E54ozYI5yc41ozZj8mPGNJqzAeB05yw3uYVaFNv3wc2kb5hvel5EiEKtBA6zG3UR7gMpYtzoL2JwQjkVuUKD6OmNCdYmxnsP5TImA2xqn16Fa3RZbk1ZwQmUvk03S+46zcXSyQE4MxUXyiWhcTj9qDcsrmEpUuf144viVcE/Uhg=
+	t=1785425716; cv=none; b=Ompq2D2/9laFPn0IAC6xkNuw8p2uh5oYxHakfD8i68fMRgeeVndeK1aEnhgXYKGnO6S6Q3hZ2CQ9qh0NV8d0PNjxcL5g/WVLB9KVGsnY100EVHSJ8XPeRZCu3srFFljtVYoQ13qD3dauoFY+/KCnlcWe6BAcjxhGYCGTZb+Lfus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425713; c=relaxed/simple;
-	bh=48x6t5WsNCDBaKAo8U9aEjNFIqYd/2dLSEOaTVfZeN0=;
+	s=arc-20240116; t=1785425716; c=relaxed/simple;
+	bh=5XHPbzqFBmIWWNPi/sM8pxklxJwrh9AvnUkB/5g9o5E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X+oR7xsgqT6VnfcZ1zibX8KX9FXyiJY7W/gG9Pvn3oWUcPF3bzKllEy3Zuv6g5F0zfcVKm3g0yEVGhTL1w5JaSkHqB8tCy0ZXNbanb/Pih/84WAVsXcWtkA8fDUqJZJ1B/vy6QQVo4BC0964D9O5/Y7qTS/aNcpupiP/mGsxGI4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZIxXeywT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F76F92miH0xRfD2J0KqDOigLBKe+bdYX48dvWCdVeIHZs/3X5CTqVKD91V/chdnR+hpKXUnYqJRAGJuDcFGoXwSKl3h1NSFLESPRt6eXe/D2pIkodM28yIbUzym+jlB54bnU/lsULmH7GvENc5zIjWnqR4phD+4P0G4LB1vRON0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kw2L3/Zp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZIxXeywT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A51AB1F000E9;
-	Thu, 30 Jul 2026 15:35:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kw2L3/Zp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E4F31F000E9;
+	Thu, 30 Jul 2026 15:35:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425712;
-	bh=ro/mdVIYkELKkcV7uXAqI2JwwQuNZjSZ20hH0r+yxi8=;
+	s=korg; t=1785425715;
+	bh=ojprc2pWhX9EOQKdhjrn1NgcHNL//J6wmynrMHS/kUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZIxXeywTFH8BTRTDrqJwP/I7qop55zoAkbZKbOLD2KAi0NjlyxRskgHfprLFEVnTl
-	 umnjfSFVtH/z4BE9b9QLRY3cZu+nKib1fJgHtA+GehiglQkonGJVFqorEDSDwzMvGA
-	 jVNsYZSX43owtd6F/2onULMQUJvFmBS2DHaB5Xr8=
+	b=kw2L3/ZplHk1xNHRi/TM7vBW9vXMujppvqh0JHMi0SSHuP6y1yP6UXw+0H9Hd2Hkv
+	 f23UTIT8CSXQUADQIHaD+BkMpziDacwZMYvJ9eVq3Ia4wc90wOxM4HWRXO85cERi3t
+	 7G21Ac9SOQqWJHPdUjcrUIXTBZcmIKwWvg+MdUEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Eugene Shalygin <eugene.shalygin@gmail.com>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 165/602] hwmon: (asus-ec-sensors) fix looping over banks while reading from EC
-Date: Thu, 30 Jul 2026 16:09:17 +0200
-Message-ID: <20260730141439.438982276@linuxfoundation.org>
+Subject: [PATCH 6.12 166/602] hwmon: (asus-ec-sensors) fix EC read intervals
+Date: Thu, 30 Jul 2026 16:09:18 +0200
+Message-ID: <20260730141439.459865310@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -53,33 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Eugene Shalygin <eugene.shalygin@gmail.com>
 
-[ Upstream commit e741d13cc2abfc6fccebe2008057aa52e285223e ]
+[ Upstream commit 60710b2af13b81da71b429d3f8b19dd70310729d ]
 
-Do not assume there are only bank 0 and bank 1 available, just use '!='
-for bank comparison.
+Take INITIAL_JIFFIES into account when setting up next update time.
 
 Fixes: d0ddfd241e57 ("hwmon: (asus-ec-sensors) add driver for ASUS EC")
 Signed-off-by: Eugene Shalygin <eugene.shalygin@gmail.com>
-Link: https://lore.kernel.org/r/20260711074217.554656-1-eugene.shalygin@gmail.com
+Link: https://lore.kernel.org/r/20260712110650.1240071-2-eugene.shalygin@gmail.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/asus-ec-sensors.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwmon/asus-ec-sensors.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/hwmon/asus-ec-sensors.c b/drivers/hwmon/asus-ec-sensors.c
-index 483dfb806cc510..909720fbf2685f 100644
+index 909720fbf2685f..d08abd1adc0812 100644
 --- a/drivers/hwmon/asus-ec-sensors.c
 +++ b/drivers/hwmon/asus-ec-sensors.c
-@@ -776,7 +776,7 @@ static int asus_ec_block_read(const struct device *dev,
+@@ -596,7 +596,7 @@ struct ec_sensors_data {
+ 	/* sorted list of unique register banks */
+ 	u8 banks[ASUS_EC_MAX_BANK + 1];
+ 	/* in jiffies */
+-	unsigned long last_updated;
++	u64 next_update;
+ 	struct lock_data lock_data;
+ 	/* number of board EC sensors */
+ 	u8 nr_sensors;
+@@ -865,13 +865,12 @@ static int get_cached_value_or_update(const struct device *dev,
+ 				      int sensor_index,
+ 				      struct ec_sensors_data *state, s32 *value)
+ {
+-	if (time_after(jiffies, state->last_updated + HZ)) {
++	if (time_after64(get_jiffies_64(), state->next_update)) {
+ 		if (update_ec_sensors(dev, state)) {
+ 			dev_err(dev, "update_ec_sensors() failure\n");
+ 			return -EIO;
  		}
- 		for (ireg = 0; ireg < ec->nr_registers; ireg++) {
- 			reg_bank = register_bank(ec->registers[ireg]);
--			if (reg_bank < bank) {
-+			if (reg_bank != bank) {
- 				continue;
- 			}
- 			ec_read(register_index(ec->registers[ireg]),
+-
+-		state->last_updated = jiffies;
++		state->next_update = get_jiffies_64() + HZ;
+ 	}
+ 
+ 	*value = state->sensors[sensor_index].cached_value;
+@@ -989,6 +988,7 @@ static int asus_ec_probe(struct platform_device *pdev)
+ 	if (!ec_data)
+ 		return -ENOMEM;
+ 
++	ec_data->next_update = INITIAL_JIFFIES;
+ 	dev_set_drvdata(dev, ec_data);
+ 	ec_data->board_info = pboard_info;
+ 
 -- 
 2.53.0
 
