@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4760F3E0091;
-	Thu, 30 Jul 2026 15:44:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 347CB390C9F;
+	Thu, 30 Jul 2026 15:44:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426276; cv=none; b=NsinI8d/zHyBKhzhOGL+bvwbYza9iSsI/7jA1Vlr+LDFl1aavWtXw3CWIjU6/d8p8t4N3uSksyF7F3JYpv1Nm5SuKZ91S9EmlYIO0nqRf6HrvuWeMIOM9ADIZL/EtWLsIbcLbkKdzDHbb4sRTIBGLe0+D19Fx3UkjH4Mub002Fo=
+	t=1785426279; cv=none; b=gmiUiWQ8BZeyTssls6ARt6Qaopj00S3oFHfA8S8WZLY9RTAf1rBq9bUusURxJvjWXI+YUxyYEpepVrh027KolwbyvFdo6ryBaIlpM7Gxi0cPwffOym3svX22sm21TmdESjfNGcgmJKRtgwkjYMy2rS4gqw8yZy3ZWHjxt0CB5rM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426276; c=relaxed/simple;
-	bh=ozMbhZFlzkFCA5GXCWYqssaNTRZU/vSP2W7Nozm8Hl4=;
+	s=arc-20240116; t=1785426279; c=relaxed/simple;
+	bh=1c37esh2yOpgvlZiKOdV6InZ/yTGWO/+jzGuviAcXHQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aLbpGWOdoWdaOMz0IHMouJTtCSf8KvVGehDqvx2EOqcZzr0Av7s10nnztivtFAaoPByG3uX4v2fIXZWNHUhuFrkmPkUxGH1BsO3evYanejFJ6CZyXzVGn4Za/Mu8UUblRX/ooRtRL3TAGdtHQ2pv4qHSAuuOqyyR1V+G8oWLXAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s4Tios56; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BF4eMBlxBTBk7VqNpD7ng8q49MBtPbT9ssiWcnS/6KpwEmc3DbdhgGqB2oDt52yi++E209nGCjkvTWcC97+01chUN7vQE+Th/MekLrzwkQ/14NQSk6ABWVNzFXsz2UiTYiuHCzbLPN0GA97orGKOb3PuNC9wHxaB2ITHnzQiLU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S0fQxfaC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s4Tios56"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D0F91F000E9;
-	Thu, 30 Jul 2026 15:44:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S0fQxfaC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CE5C1F000E9;
+	Thu, 30 Jul 2026 15:44:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426275;
-	bh=MpmrtMwkZeUlE/A+VERU1Mxsmvdz2b71ycC2FSFlZb4=;
+	s=korg; t=1785426278;
+	bh=391MhQ6tG99iRrmGtYhHir7OqS6vxcWZu8mDTUne8tY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s4Tios56FJV8zb5GcBHOT5tFJ0bLE/W2YH6ZHkw3DsPs0oHAk+YL+XcFhNJfBTV17
-	 KxhzkaHvwuxHZ/7r7VO/3ygXpL4XkuiMVjeV2HYst8B3c3eA85nPsTyXVKiBQpxTC2
-	 S58NQCaJAEU+StqYfcVvphYISmI97epzWa6WZM9w=
+	b=S0fQxfaCZbZO7gs8PgPZD+pXB1vwCe0exyQ+uPCjZ0df+4mh6d/5D4oIn2QYPr94g
+	 Jr4e+bwiVb53CTakANscrT4ByJvETtqa2Jk2kutJ7xcd8PfSp19NLU+1P7fX3/GFfi
+	 R+8qHESJXyEfwjFXoJ2J+ytHEzSlqJvYBMIm8HVI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Petr Pavlu <petr.pavlu@suse.com>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.12 361/602] objtool/rust: add one more `noreturn` Rust function for Rust 1.99.0
-Date: Thu, 30 Jul 2026 16:12:33 +0200
-Message-ID: <20260730141443.546105966@linuxfoundation.org>
+	Haoran Jiang <jianghaoran@kylinos.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.12 362/602] LoongArch: Fix oops during single-step debugging
+Date: Thu, 30 Jul 2026 16:12:34 +0200
+Message-ID: <20260730141443.567814919@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -53,51 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Haoran Jiang <jianghaoran@kylinos.cn>
 
-commit 5a81c35c3b18cd59ded56171a6a9f643b92a6759 upstream.
+commit 73555fdab5e1e4f24ca000c41a616b34edf4b55d upstream.
 
-Starting with Rust 1.99.0 (expected 2026-10-01), under
-`CONFIG_RUST_DEBUG_ASSERTIONS=y`, `objtool` may report:
+When entering KDB via a breakpoint and then performing single-step
+debugging, an oops is triggered. Now during single-step debugging,
+kdb_local() expects the reason to be KDB_REASON_SSTEP, but it is
+actually KDB_REASON_OOPS. In kdb_stub(), when determining the reason,
+the ex_vector for single-step should be 0, as already implemented on
+other architectures such as arm64 and riscv.
 
-    rust/kernel.o: warning: objtool: _R..._6kernel12module_param9set_paramaEB4_()
-    falls through to next function _R..._6kernel12module_param9set_paramhEB4_()
+Before the patch:
+[112]kdb> ss
 
-(and many others) due to calls to the `noreturn` symbol [1]:
+Entering kdb (current=0x900020009f520000, pid 10661) on
+processor 112 Oops: (null)
+due to oops @ 0x90000000005b57a4
 
-    core::panicking::panic_null_reference_constructed
-
-Thus add the mangled one to the list so that `objtool` knows it is
-actually `noreturn`.
-
-See commit 56d680dd23c3 ("objtool/rust: list `noreturn` Rust functions")
-for more details.
-
-Cc: stable@vger.kernel.org # Needed in 6.12.y and later (Rust is pinned in older LTSs).
-Cc: Josh Poimboeuf <jpoimboe@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Petr Pavlu <petr.pavlu@suse.com>
-Link: https://github.com/rust-lang/rust/pull/158796 [1]
-Reported-by: Alice Ryhl <aliceryhl@google.com>
-Closes: https://lore.kernel.org/rust-for-linux/alEBInX9gD1M5NAr@google.com/
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Tested-by: Alice Ryhl <aliceryhl@google.com>
-Link: https://patch.msgid.link/20260710173252.191781-1-ojeda@kernel.org
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Haoran Jiang <jianghaoran@kylinos.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/objtool/check.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/loongarch/kernel/kgdb.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/tools/objtool/check.c
-+++ b/tools/objtool/check.c
-@@ -220,6 +220,7 @@ static bool is_rust_noreturn(const struc
- 	       str_ends_with(func->name, "_4core9panicking18panic_nounwind_fmt")			||
- 	       str_ends_with(func->name, "_4core9panicking19assert_failed_inner")			||
- 	       str_ends_with(func->name, "_4core9panicking30panic_null_pointer_dereference")		||
-+	       str_ends_with(func->name, "_4core9panicking32panic_null_reference_constructed")		||
- 	       str_ends_with(func->name, "_4core9panicking36panic_misaligned_pointer_dereference")	||
- 	       str_ends_with(func->name, "_7___rustc17rust_begin_unwind")				||
- 	       strstr(func->name, "_4core9panicking13assert_failed")					||
+--- a/arch/loongarch/kernel/kgdb.c
++++ b/arch/loongarch/kernel/kgdb.c
+@@ -252,7 +252,8 @@ static int kgdb_loongarch_notify(struct
+ 	if (atomic_read(&kgdb_active) != -1)
+ 		kgdb_nmicallback(smp_processor_id(), regs);
+ 
+-	if (kgdb_handle_exception(args->trapnr, args->signr, cmd, regs))
++	if (kgdb_handle_exception(regs->csr_era == stepped_address ? 0 : args->trapnr,
++				  args->signr, cmd, regs))
+ 		return NOTIFY_DONE;
+ 
+ 	if (atomic_read(&kgdb_setting_breakpoint))
 
 
