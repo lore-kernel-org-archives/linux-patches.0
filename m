@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BC74429802;
-	Thu, 30 Jul 2026 14:32:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 774DD43BDCB;
+	Thu, 30 Jul 2026 14:32:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421962; cv=none; b=gsDzETr36ogGPo71FQ2Evh4ZzjIsd+x0BX2VHneR/28x0DNtLT+eNdDFiozs/VNlIKuL6wJE3HVvjry/jtihOyNYWhJs6hIWFgs/rhM+N7GnB8ufnIHkiPj+4UrCoIVvUtDhWvgx8uWbFYrU0Vb47fz0/h5RQg/rUj5ReXw+FDw=
+	t=1785421965; cv=none; b=dzZhsBsKum+XVWrUmg6u1h6ySenXG68S4Z039+lgmrICBD+QZzHvnaLGUQPX/DxxMWQPAzCExGOqQvFNUYF1Vf2VyJGNUMuRswMvcg4+oCh/QkA9/cy0qFaM15stqB7xXnIwfm7TJDcTZaE6LN+lMkybZo6N4hm0DDf4alk13bQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421962; c=relaxed/simple;
-	bh=WvORtEAU87P7TIPhWoKoh0HegH08f08Edq5SNh2JvKk=;
+	s=arc-20240116; t=1785421965; c=relaxed/simple;
+	bh=M8MnM2MxWpemrR+QU26EbgRWEOZ0zpJ0xuS9tmkdRB4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yw1GSI15iyJWz8v6JW+QJuLJ/G175hzgXgIrboa3TEgVdweE0qZGil+nfym8Ba3aPOB1JuZSYxlPWQy6d7S8sJLksDKlud7UVjYjcGyuO5+8BonyZrD8NT+4GJZYxGy5cf8befLaqs9BECmU2K0thBt/AlRRWZUP70MU1wGXc4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hEdIbaOv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nMMOrxefQBWRPiSZztqnqgE9e3GdQmpmdR7vgxdoK04wQ9P51CG+EPBUTpnpbEVdLco9S0vuB2UbuKmf76w7sZ0f4VtDFQQbMzTOEDcDJN8f1E4VPOoVijfoB5oOl3472QOcLKUZhO7+sR3sKrGeFxAtprqDzQw5rbvPask+wG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K48qfI0U; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hEdIbaOv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58AB11F000E9;
-	Thu, 30 Jul 2026 14:32:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K48qfI0U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFA381F000E9;
+	Thu, 30 Jul 2026 14:32:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421960;
-	bh=2+xiggcnZRCUufnWD7QQMGX9GBh9FW8IOhY2HoF4eAE=;
+	s=korg; t=1785421964;
+	bh=j/65vdS6IZC3xZ2pRf007MjD6hKAfZhH3JhDrAINF3g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hEdIbaOv3aLImSfAogPMaf5lTdbJMQ15CafhGd8cPvUxqrvMiIy2qDS8Dw3sH1j4u
-	 MUbDlH7BVT7vDcoLSZxawP02/rAUncHEkyrHuk68PQ/27VnUAVdse7gz/W5gRDXgsC
-	 qlJUpO5z1Kc0f3l81HT+YHjH35TUX4A4TmljrRxo=
+	b=K48qfI0Uh4dLBTBMkPb5rjQZlXn3Rz+6oBoJ6K/glSVfLTUfV/OVbU0qoO3urOlA7
+	 MjNBfKWdlt/Aooz2hPE3zdNOB9OKIr/vhZn3/pO5vl7flUF1NDBri6YICtJOdY45HK
+	 RGCtQXXr0cRk59S0lXPD2HCGEcgtpeOhl5XHEsGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Antonio Quartulli <antonio@openvpn.net>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 279/744] selftests: ovpn: add IPV6 and VETH configs
-Date: Thu, 30 Jul 2026 16:09:12 +0200
-Message-ID: <20260730141450.219021710@linuxfoundation.org>
+Subject: [PATCH 7.1 280/744] selftests: ovpn: increase timeout
+Date: Thu, 30 Jul 2026 16:09:13 +0200
+Message-ID: <20260730141450.239488900@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -54,48 +54,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-[ Upstream commit 90c792681a3732caaf7bf5bc435877736baf591a ]
+[ Upstream commit 61ac7049aaa86ae044e8a5b94d852218163d5bf8 ]
 
-They are required to run the selftests:
+The default timeout is 45 seconds, that's too low for a few ovpn tests.
 
- - Tests are executed in v4 and v6.
+Indeed, these tests can take up to 50 seconds with some debug kernel
+config on NIPA. Set a timeout to 90 seconds, just to be on the safe
+side.
 
- - Virtual Ethernet are used between the different netns.
-
-This has not been seen on NIPA before, because the 'ovpn' tests are
-executed with the 'tcp_ao' ones, merging their config files. These two
-kernel config are present in tools/testing/selftests/net/tcp_ao/config.
-
-This issue is visible when only the ovpn config is used on top of the
-default one. This is the recommended way to execute selftest targets.
+Note that the Fixes tag here points to the introduction of the ovpn
+tests because I don't know when they started to take more than 45
+seconds. That's OK because a timeout of 1.5 minutes is not exaggerated.
 
 Fixes: 959bc330a439 ("testing/selftests: add test tool and scripts for ovpn module")
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Acked-by: Antonio Quartulli <antonio@openvpn.net>
-Link: https://patch.msgid.link/20260710-net-sft-fix-containers-v1-3-a2915c294ef5@kernel.org
+Link: https://patch.msgid.link/20260710-net-sft-fix-containers-v1-4-a2915c294ef5@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/ovpn/config | 2 ++
- 1 file changed, 2 insertions(+)
+ tools/testing/selftests/net/ovpn/settings | 1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 tools/testing/selftests/net/ovpn/settings
 
-diff --git a/tools/testing/selftests/net/ovpn/config b/tools/testing/selftests/net/ovpn/config
-index d6cf033d555e70..6b424762e46ee3 100644
---- a/tools/testing/selftests/net/ovpn/config
-+++ b/tools/testing/selftests/net/ovpn/config
-@@ -4,6 +4,7 @@ CONFIG_CRYPTO_CHACHA20POLY1305=y
- CONFIG_CRYPTO_GCM=y
- CONFIG_DST_CACHE=y
- CONFIG_INET=y
-+CONFIG_IPV6=y
- CONFIG_NET=y
- CONFIG_NETFILTER=y
- CONFIG_NET_UDP_TUNNEL=y
-@@ -11,3 +12,4 @@ CONFIG_NF_TABLES=m
- CONFIG_NF_TABLES_INET=y
- CONFIG_OVPN=m
- CONFIG_STREAM_PARSER=y
-+CONFIG_VETH=y
+diff --git a/tools/testing/selftests/net/ovpn/settings b/tools/testing/selftests/net/ovpn/settings
+new file mode 100644
+index 00000000000000..ba4d85f74cd6b9
+--- /dev/null
++++ b/tools/testing/selftests/net/ovpn/settings
+@@ -0,0 +1 @@
++timeout=90
 -- 
 2.53.0
 
