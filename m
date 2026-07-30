@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2958E43C7B4;
-	Thu, 30 Jul 2026 14:49:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F309136493F;
+	Thu, 30 Jul 2026 14:49:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422959; cv=none; b=n3wTAWeSBzYjilmGNo9tcAUxDqJKeisZlfBCJ0uYM4lNceAA9YB6oqE2AodezFKErwQrmBMnh6iEoK4hU3YAicGEOS8Hihq0LO62Giz5bjqrmHW/x2uZhZXeqFSQAxjCgqHQM5Z+ovSV5JTKPtNGOyImvqmBwO/qezpyOC2uxP8=
+	t=1785422962; cv=none; b=jHHOsY1AA5MARLbTDbksvBaj0IZ99+RcMnmMkAOO4aijN7fCwvLuSgepcfGFdpXa/sgYu4TqSFAClHNp7Gx8Yb6oVnhEHgK6h+NCePR3u2eEISFVxkgWhAh0lXVh8ajtRMfUwH8pAjMtf++pIh0tNuZDznoOd7Nf2wM567OnplI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422959; c=relaxed/simple;
-	bh=vWZjDjc1GHVXi7wHc7HnGa1c1BKCnLzgP7eR4RhruLc=;
+	s=arc-20240116; t=1785422962; c=relaxed/simple;
+	bh=yTFoM59ydny8YS/utOsDE/8gckVsXOaaFToDgb+RNOk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RQErh99jO6VLp5XcZQTiypVinGJP+2sB7T8RA+PtLmStlh4Tia/QPz/zKOGQkf2OJ1VPFqVO6h2Jb+dwAYH3eUpOl1xj2A2gDonkxvmawz1UGvjZfSVXGcOIkLaJpXsnMGilN63z5iTwU3VbCkRz0fVuhTcRLYNSNj6+lFmlzVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=teoTn8sZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Mc6hXXxmYqO8SyzjtL78tDbuWiojWq8KrdAXd00/SmAENq/iOrNhCNqX9n/gdA2nJ9OqyRl4tLLv+yzNwRd5psKDtdlapPUNPLprM9DD7+EyWNoUaik6dP5iQfJoFE5eS88EMUgC4ebfcj1WwjS3n0egCZLmZnHFeeatH6+zx1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vLiu6//U; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="teoTn8sZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84A3F1F000E9;
-	Thu, 30 Jul 2026 14:49:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vLiu6//U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AA081F000E9;
+	Thu, 30 Jul 2026 14:49:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422958;
-	bh=wn6rQduIUW8R0LwXF93DDrI5Cxk+w9FhgLtGqDmcIyY=;
+	s=korg; t=1785422960;
+	bh=o0lfgLCCFoiyqYxr0DeKcCYLj2W6E+ZFspyd+8yCm3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=teoTn8sZfLy6Gfj2ojA+ZZsJ/7dfD/2QHoow2puteK+4JDRbDAG0vDPv9K6ZoDO+j
-	 g9/o5QXCAxGBZ84TgsfoRcfGPEbFh8LfQyK6IYPjkc2bOEiidGR4xUkN2sNUIBDN67
-	 irVjW70EuzetfNXcfRenYOYvBi1Bk0Q1H2XmvXwA=
+	b=vLiu6//UykC5siOvYsA/eP4ZqSIA+JoKpRJNuPhXH+neE0Z6UVpQaFgNFNUD0UPyI
+	 uhlfk86gXiDcfxSzOOUJNvHqH8xqq1XQfShV12m/V7fQGBqmZXEO2gbj5xCiOas3fS
+	 cPGvXZS5pNVy5usCUar5bNAOEXkd6mUIrTjGjHcQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SJ Park <sj@kernel.org>,
+	Breno Leitao <leitao@debian.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Pavel Tikhomirov <ptikhomirov@virtuozzo.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.1 617/744] mm/damon/core: disallow overlapping input ranges for damon_set_regions()
-Date: Thu, 30 Jul 2026 16:14:50 +0200
-Message-ID: <20260730141457.388242478@linuxfoundation.org>
+Subject: [PATCH 7.1 618/744] mm/kmemleak: fix checksum computation for per-cpu objects
+Date: Thu, 30 Jul 2026 16:14:51 +0200
+Message-ID: <20260730141457.409710399@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -50,70 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SJ Park <sj@kernel.org>
+From: Breno Leitao <leitao@debian.org>
 
-commit 954157679ec34661c2e87e7eb796104a797c32db upstream.
+commit 79c37ae3733e93d9d8ea12ecb44f717e61439024 upstream.
 
-damon_set_regions() assumes the input ranges are sorted by the address and
-don't overlap each other.  Hence the assumption was initially to be
-explicitly validated.  But commit 97d482f4592f ("mm/damon/sysfs: reuse
-damon_set_regions() for regions setting") has mistakenly removed the
-validation.
+The per-cpu object checksum folds each CPU's CRC together with XOR and
+seeds every CRC with 0.  Both choices make update_checksum() miss content
+changes:
 
-This can make DAMON behave in unexpected ways.  At the best, the
-monitoring results snapshot will just look weird since there will be
-overlapping regions.  DAMOS will also work weirdly, applying the same
-action multiple times for overlapping regions, and make DAMOS quota weird.
-More seriously, depending on the setup and regions updates sequence,
-negative size regions can be made.  It will trigger WARN_ONCE() if the
-kernel is built with CONFIG_DAMON_DEBUG_SANITY=y.  Depending on the
-monitoring results, the negative size region can further trigger division
-by zero in damon_merge_two_regions().
+  - XOR is self-cancelling, so equal contents on two CPUs cancel out and
+    simultaneous identical changes leave the checksum unchanged.
+  - crc32(0, ...) over all-zero content is 0, so a freshly allocated,
+    zeroed per-cpu area checksums to 0, matching the initial value, and
+    the object is never seen to change.
 
-Note that some of the consequences including the WARN_ONCE() and the
-divide by zero depend on commits that were introduced after the root cause
-commit 97d482f4592f ("mm/damon/sysfs: reuse damon_set_regions() for
-regions setting").
+See discussions at [0].
 
-Fix the problems by checking the assumption and returning an error if
-the input ranges don't meet the assumption.
+When update_checksum() wrongly reports an actively modified object as
+unchanged, kmemleak stops greying it for an extra scan and can report a
+live per-cpu object as a leak.
 
-The issue was discovered [1] by Sashiko.
+Fold the per-cpu CRC as a single rolling checksum across all CPUs and
+initialise the object checksum to ~0 so the first computed value always
+registers as a change, even for content that hashes to 0.
+reset_checksum() is seeded the same way.
 
-Link: https://lore.kernel.org/20260703165610.92894-1-sj@kernel.org
-Link: https://lore.kernel.org/20260630041806.151124-1-sj@kernel.org [1]
-Fixes: 97d482f4592f ("mm/damon/sysfs: reuse damon_set_regions() for regions setting")
-Signed-off-by: SJ Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org> # 5.19.x
+Link: https://lore.kernel.org/all/akfYImSNDh3OjIfR@gmail.com [0]
+Link: https://lore.kernel.org/20260703-kmemleak_checksum-v1-1-5e0ab7d6966f@debian.org
+Fixes: 6c99d4eb7c5e ("kmemleak: enable tracking for percpu pointers")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Co-developed-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Reviewed-by: Pavel Tikhomirov <ptikhomirov@virtuozzo.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/core.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ mm/kmemleak.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -240,12 +240,19 @@ int damon_set_regions(struct damon_targe
- {
- 	struct damon_region *r, *next;
- 	unsigned int i;
-+	unsigned long last_end;
- 	int err;
+--- a/mm/kmemleak.c
++++ b/mm/kmemleak.c
+@@ -676,7 +676,7 @@ static struct kmemleak_object *__alloc_o
+ 	atomic_set(&object->use_count, 1);
+ 	object->excess_ref = 0;
+ 	object->count = 0;			/* white color initially */
+-	object->checksum = 0;
++	object->checksum = ~0;
+ 	object->del_state = 0;
  
- 	for (i = 0; i < nr_ranges; i++) {
--		if (ALIGN_DOWN(ranges[i].start, min_region_sz) >=
--				ALIGN(ranges[i].end, min_region_sz))
-+		unsigned long start, end;
-+
-+		start = ALIGN_DOWN(ranges[i].start, min_region_sz);
-+		end = ALIGN(ranges[i].end, min_region_sz);
-+		if (start >= end)
-+			return -EINVAL;
-+		if (i > 0 && last_end > start)
- 			return -EINVAL;
-+		last_end = end;
+ 	/* task information */
+@@ -970,7 +970,7 @@ static void reset_checksum(unsigned long
  	}
  
- 	/* Remove regions which are not in the new ranges */
+ 	raw_spin_lock_irqsave(&object->lock, flags);
+-	object->checksum = 0;
++	object->checksum = ~0;
+ 	raw_spin_unlock_irqrestore(&object->lock, flags);
+ 	put_object(object);
+ }
+@@ -1399,7 +1399,8 @@ static bool update_checksum(struct kmeml
+ 		for_each_possible_cpu(cpu) {
+ 			void *ptr = per_cpu_ptr((void __percpu *)object->pointer, cpu);
+ 
+-			object->checksum ^= crc32(0, kasan_reset_tag((void *)ptr), object->size);
++			object->checksum = crc32(object->checksum,
++						 kasan_reset_tag((void *)ptr), object->size);
+ 		}
+ 	} else {
+ 		object->checksum = crc32(0, kasan_reset_tag((void *)object->pointer), object->size);
 
 
