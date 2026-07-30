@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6517446BF1;
-	Thu, 30 Jul 2026 16:09:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D9F7386567;
+	Thu, 30 Jul 2026 16:09:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427785; cv=none; b=fpDk8A3i0GzqhhnuTGeEc/kprPxuNWowYrdrnuxTGSEeD8WOM8kN+5xGxd1WbTEAm8tkKkCoScJb7L1zPZhSjglahi3TWhz/lNdBvZxxCRy7CPewoLLenqttSPTy0rlRYLgsMT9yEVpWtO/j2FKtc0IZq83fWn/7ulES9iE2pT8=
+	t=1785427787; cv=none; b=Bzn17VkGINoUHG5L8vmiUrJatA2omvaziEnTbHeBaaozF2l9/Vmv3bWulTF9IYCGdu8gceEUfj7NXVwlw4tRbnUyCmOgXeX0XcI2YWCeitjW4vgyuldL81Cxe9ofSfGLdyxSIo8630gIYb/QBkt3Db2IpN63dYvLsDD9Ud0K+O4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427785; c=relaxed/simple;
-	bh=zC39GT5+lUzFZK1dDfJLZ8u6Jr3h7MXZtnBrji/QlC0=;
+	s=arc-20240116; t=1785427787; c=relaxed/simple;
+	bh=WzGhY1dY9Zc4MDsZYjgBovDSEdTTgzs+gNF6cz/wPSU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V1zXYUapFEgjHAJeIzACSAaqXMhljIgt3/CBCWLLnhQ3nib6dYc9rx1rsTFWKaVF/3nhSJ15hQiiSrqIK43ntK+D+zGcanVntLWA3wlVcLJB3fz2CuW70zlxMJWE8Ir4SFtJRnLQgWf9MRWuLaS4EYH5l3QIWZiVDEbjgX56tqk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nyu4Rwt6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CKaVR2uRsXKQOC/SI2zjxbQRLPup1DyodhYwmk5C6BjH9fpDe3gX5I3b+PzwedOOrW2KVzFnWcYVFotlFwLHqK8XwdhP2oeNIZsMbLAZ5iOAJjpsLSVdJW7KUnk9M6zD2IBTfqe++d+cksiTr70lFWUBsNDJzLLQVBIMPhJe5ko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eQGOtFki; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nyu4Rwt6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2908F1F00A3D;
-	Thu, 30 Jul 2026 16:09:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eQGOtFki"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA5001F000E9;
+	Thu, 30 Jul 2026 16:09:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427783;
-	bh=qeSs6Jk46i8lA+wkS5dKmSm7z+jmgE9d2/CtZZecu80=;
+	s=korg; t=1785427786;
+	bh=LeS4sSKhL4ng9la0aTvdrmVZITm9k/UdSQwqYYuKusM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nyu4Rwt6EcbIgc2EilkPVlHTY13GHkAAMfJ/na83VTEdEd7e+HVgUaZ43jT9osQPc
-	 7qSXX/rNBTu9fJpvODehUIwaiKUizjdTaUXKd0cU+N4abWMQOsIPw/6OnKuSDfaIqi
-	 9zHfR7OZ2eaadN7VOWqOade9JQbV6cOvHelSWY/0=
+	b=eQGOtFkix2qTXtj5RM/1QMre5s9mZvpO3l1xcycZloQYohNmcnMTeBe2IO82TXS8D
+	 WExdv37SCBF/tG+dx1PhaJzhvClzcweKUHVdyCz4/ul9rci8WtjZ7GTSzXYrx/ltwa
+	 xvkY2mRYnlYcoVRWR9f5myoCZtytdIuq6hKO+sX0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.6 275/484] wifi: brcmfmac: make release_scratchbuffers idempotent
-Date: Thu, 30 Jul 2026 16:12:52 +0200
-Message-ID: <20260730141429.467563522@linuxfoundation.org>
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 6.6 293/484] tracing/eprobe: Fix exact system name matching in eprobe_dyn_event_match()
+Date: Thu, 30 Jul 2026 16:13:10 +0200
+Message-ID: <20260730141429.860629060@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -51,63 +49,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit 538c51e9d124cf656f2dd0c0394a8545efc7102d upstream.
+commit f418d68d71fd4a0a9cef92377bc8c4c3334b5b53 upstream.
 
-brcmf_pcie_release_scratchbuffers() frees the shared.scratch and
-shared.ringupd DMA buffers with dma_free_coherent() but does not clear
-the pointers afterwards, unlike the sibling release_ringbuffers() which
-NULLs commonrings/flowrings/idxbuf on release.
+eprobe_dyn_event_match() checks if the target event system in argv[0]
+matches ep->event_system using strncmp(ep->event_system, argv[0], len).
+However, if ep->event_system is longer than len (e.g. "eprobes" vs
+"ep/event"), strncmp() still returns 0 because the first len characters
+match.
 
-Both the bus_reset .reset callback (brcmf_pcie_reset) and
-brcmf_pcie_remove() call release_scratchbuffers.  When reset teardown
-has run before removal, remove's own teardown would call
-dma_free_coherent() a second time on the already-freed DMA allocation.
+Check that ep->event_system[len] is '\0' to ensure exact system name
+matching.
 
-NULL the pointers after free, matching release_ringbuffers(), so a later
-release observes that the allocation has already been released.  This
-patch makes repeated sequential release safe; the reset-work lifetime is
-handled separately by the following patch.
+Link: https://lore.kernel.org/all/178454235856.290363.14872590900774231133.stgit@devnote2/
 
-This issue was found by an in-house static analysis tool.
-
-Fixes: 4684997d9eea ("brcmfmac: reset PCIe bus on a firmware crash")
+Fixes: 7d5fda1c841f ("tracing: Fix event probe removal from dynamic events")
 Cc: stable@vger.kernel.org
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Assisted-by: Codex:gpt-5.6
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Link: https://patch.msgid.link/20260718024353.3147201-2-fanwu01@zju.edu.cn
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Assisted-by: Antigravity:gemini-3.5-flash
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ kernel/trace/trace_eprobe.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-@@ -1381,16 +1381,20 @@ fail:
- static void
- brcmf_pcie_release_scratchbuffers(struct brcmf_pciedev_info *devinfo)
- {
--	if (devinfo->shared.scratch)
-+	if (devinfo->shared.scratch) {
- 		dma_free_coherent(&devinfo->pdev->dev,
- 				  BRCMF_DMA_D2H_SCRATCH_BUF_LEN,
- 				  devinfo->shared.scratch,
- 				  devinfo->shared.scratch_dmahandle);
--	if (devinfo->shared.ringupd)
-+		devinfo->shared.scratch = NULL;
-+	}
-+	if (devinfo->shared.ringupd) {
- 		dma_free_coherent(&devinfo->pdev->dev,
- 				  BRCMF_DMA_D2H_RINGUPD_BUF_LEN,
- 				  devinfo->shared.ringupd,
- 				  devinfo->shared.ringupd_dmahandle);
-+		devinfo->shared.ringupd = NULL;
-+	}
- }
+--- a/kernel/trace/trace_eprobe.c
++++ b/kernel/trace/trace_eprobe.c
+@@ -168,7 +168,8 @@ static bool eprobe_dyn_event_match(const
+ 	if (!slash)
+ 		return false;
  
- static int brcmf_pcie_init_scratchbuffers(struct brcmf_pciedev_info *devinfo)
+-	if (strncmp(ep->event_system, argv[0], slash - argv[0]))
++	if (strncmp(ep->event_system, argv[0], slash - argv[0]) ||
++	    ep->event_system[slash - argv[0]] != '\0')
+ 		return false;
+ 	if (strcmp(ep->event_name, slash + 1))
+ 		return false;
 
 
