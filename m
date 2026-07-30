@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36A0E3914ED;
-	Thu, 30 Jul 2026 14:42:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37088439343;
+	Thu, 30 Jul 2026 14:42:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422553; cv=none; b=ZdDd3Z2R2x0mIqAQzW8mrgoCmejxQtmASWMI64uOXkuMBOkNnXAqWDS81UbNlzYBCdFnafgWvm1VCLSBfGyOOF1WIXawbHk2jUjOwPFahsSuAJ7p21MPr+ZbIrHsmvwo0VVXu61028a4+7skr35aW+anzRe30TcgdBb/9tfxiUY=
+	t=1785422556; cv=none; b=uAYhg6ujuEC3UbwsY5j8P8RLENn+wm6dlpIOb9eMsEn43qjlACw+bKe9DniBo2ypmM4i1BjoBhIOYcvo2HNXGNK4L8YWGAElEpIw714pNw9arGgkn3Oo9ADqgBnKy34MV3U+7DkDPpJ/7xlBTkMTBbtF808OIwouMA8V2wdFfPw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422553; c=relaxed/simple;
-	bh=uGv43kT7ByO2RBfUjb36fweqR6amvf8G3Ik3AhX0eBA=;
+	s=arc-20240116; t=1785422556; c=relaxed/simple;
+	bh=vVe9lOehxk4FYYlX6SRfQtHRlHtBzJnkxpMEUG0RgGU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MNcm2DmeoiqgQh1hoXNgtD4DO5H5gFAvwMcY7Hg6Tke8Lca95jDxQHgEFjRhDKCbKUfwxzmVUz1Wxg2CazDKrpH3yUkwut2qhdRVOCTk8HHoFFlk+dFw2iItF/6rz10lexyggi2Vt+9Ulp97QzTEeBWKmyjfTX7+YxMrFrHtgdE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ae1XcQ8O; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=J/7JCEgLU6mWv/1VqqM67BvjmxdP+IyNE2KvkL8KGfsdiv/xaYGwZITDak2WHmbFhMXpTe7Y+Ym94svKlHJCzcVkTH4gFniQEj87Hm4e75wWA8/9cPoM70GpVlgYI7OE3mFzZhUsdoAEGDCEGvQdOoSk7DG61mBURbAknEYxVv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bMwXqX0I; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ae1XcQ8O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9277F1F000E9;
-	Thu, 30 Jul 2026 14:42:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bMwXqX0I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FB4D1F000E9;
+	Thu, 30 Jul 2026 14:42:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422552;
-	bh=VcsdsY4O55eJmSMqZsdePDDBbDVPTTTQeaygWvD1TzE=;
+	s=korg; t=1785422554;
+	bh=uwo9rCO+i4WbxMb/eTeY3YebOlal6IctabHRcZT/Vrk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ae1XcQ8OQcmuxNBdlWt/rOBFhcJkjztSBPxU5Epevqrzpr0PZzhHMdfNfKQcexnNK
-	 JXvLpjPMY5X7FIK/Os+oC3qFD0dnfnrOvkBOjY7spCpaAQShBrvIuZN2tyPanJFf72
-	 Kz0GsZBY3Tv8FcC8bexwpOp3jUoVpmXswLY1T8dQ=
+	b=bMwXqX0IDWucKcvMWXGrFyAa4JuiaBgiCHwIpYq6R9LDD3FIz8h2Iq1Jr4ONnhBsP
+	 NCc5SzIE1eLxxjUwkDfvdgJEfTCq8bau//Sn9UPi2rFg8FgESdjj96xJv4Ec4DKbUF
+	 hrHyu6X8zngUkvrBSBDz5+VGvrziSd0v1hrpBjhE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Samuel Holland <samuel@sholland.org>,
+	Andrey Skvortsov <andrej.skvortzov@gmail.com>,
 	Paul Kocialkowski <paulk@sys-base.io>,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
 	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 7.1 478/744] media: cedrus: clean up media device on probe failure
-Date: Thu, 30 Jul 2026 16:12:31 +0200
-Message-ID: <20260730141454.453576263@linuxfoundation.org>
+Subject: [PATCH 7.1 479/744] media: cedrus: Fix missing cleanup in error path
+Date: Thu, 30 Jul 2026 16:12:32 +0200
+Message-ID: <20260730141454.475886999@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -53,51 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Samuel Holland <samuel@sholland.org>
 
-commit 2c869b6969f3061cbbdab587f4c0a88bd7fc3cc9 upstream.
+commit d99732334aaf33b9f93926b70b6a11c2cef3de39 upstream.
 
-cedrus_probe() initializes the media device before registering the video
-device, the media controller, and the media device. If any of those later
-steps fails, probe returns without calling media_device_cleanup(), so the
-media device internals initialized by media_device_init() are left behind.
+According to the documentation struct v4l2_fh has to be cleaned up with
+v4l2_fh_exit() before being freed. [1]
+Currently there is no actual bug here, when v4l2_fh_exit() isn't called.
+v4l2_fh_exit() in this case only destroys internal mutex. But it may
+change in the future, when v4l2_fh_init/v4l2_fh_exit will be enhanced.
 
-Add a media-device cleanup label to the probe unwind path and route video
-registration failures through it as well.
+1. https://docs.kernel.org/driver-api/media/v4l2-fh.html
 
-Fixes: 50e761516f2b8c ("media: platform: Add Cedrus VPU decoder driver")
+Signed-off-by: Samuel Holland <samuel@sholland.org>
+Signed-off-by: Andrey Skvortsov <andrej.skvortzov@gmail.com>
+Fixes: 50e761516f2b ("media: platform: Add Cedrus VPU decoder driver")
 Cc: stable@vger.kernel.org
-Reviewed-by: Paul Kocialkowski <paulk@sys-base.io>
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Acked-by: Paul Kocialkowski <paulk@sys-base.io>
 Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/media/sunxi/cedrus/cedrus.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/staging/media/sunxi/cedrus/cedrus.c |    1 +
+ 1 file changed, 1 insertion(+)
 
 --- a/drivers/staging/media/sunxi/cedrus/cedrus.c
 +++ b/drivers/staging/media/sunxi/cedrus/cedrus.c
-@@ -507,7 +507,7 @@ static int cedrus_probe(struct platform_
- 	ret = video_register_device(vfd, VFL_TYPE_VIDEO, 0);
- 	if (ret) {
- 		v4l2_err(&dev->v4l2_dev, "Failed to register video device\n");
--		goto err_m2m;
-+		goto err_media;
- 	}
+@@ -391,6 +391,7 @@ static int cedrus_open(struct file *file
+ err_m2m_release:
+ 	v4l2_m2m_ctx_release(ctx->fh.m2m_ctx);
+ err_free:
++	v4l2_fh_exit(&ctx->fh);
+ 	kfree(ctx);
+ 	mutex_unlock(&dev->dev_mutex);
  
- 	v4l2_info(&dev->v4l2_dev,
-@@ -533,7 +533,8 @@ err_m2m_mc:
- 	v4l2_m2m_unregister_media_controller(dev->m2m_dev);
- err_video:
- 	video_unregister_device(&dev->vfd);
--err_m2m:
-+err_media:
-+	media_device_cleanup(&dev->mdev);
- 	v4l2_m2m_release(dev->m2m_dev);
- err_v4l2:
- 	v4l2_device_unregister(&dev->v4l2_dev);
 
 
