@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15608373BEC;
-	Thu, 30 Jul 2026 15:34:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E76A2299929;
+	Thu, 30 Jul 2026 15:34:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425679; cv=none; b=sqUXeQPJaeIu+4JaEOgQqHauL/BBtX0T3iU8ehx2Rd3KDCiwrFJu4QB7yTxV4k/PmcSU8M+Kevfs10YewbEa/Jz1TdtKmP0TgpoqL7881tjI+yyvdelH5XUQYtybz+uDUg5E8SVwGEikO7QgUJQNmL7pB+tINnIP4Wy7gNc8I2g=
+	t=1785425682; cv=none; b=lepYSIANTl5BYDewmO4xh0yZLidBxlZj2tfgrAiMO6Ilh+l29BEAnKtpehzlGMZZ787qgf3JWjTZEuo7GnkQFIOJ3IsKVFrUib37pCNH0K41n4KMRgW7cmck34+7YppkqgIEXAFmshaQiWx6wJ7oSnVhjKg5EJEECAI37IktpVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425679; c=relaxed/simple;
-	bh=dYHNdRg8qFLsD/E5fjWBYy/OgKuWGtcJfAFc7MTFb94=;
+	s=arc-20240116; t=1785425682; c=relaxed/simple;
+	bh=xHooiC+OaFqlYv0hST1qU9spc2a/4xFma2WzzHeX850=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U/OpJtmcs0s47AeP0fG99ORu5beqhXzlUxyUQ7W7poRTh+yR38Jae+3Cp3Y+HPhgIqgtUfh6lqedkEyUkPQ73c+sjCubJr9YR5w2xTH/weF6b2rjwfdftFopC+bBHEDBobrVAWtlbwkUkciSzdt8jRjNU342V32GwREqEZ6GV0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O+WPzWXx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bl43gCK+0rbwmgfLsCoA5VFKZK75IK86ufy9f8w8YDYe9wLg5eLKRS+qkk8hx/rpT8gUTQbsaHSM9AGFSf64w/EsmozGh6WXO4jGywOPk0xU1XW011+APoh3lbzgs0BfgMKqZSN572hDel0uNJDNKdrCpNL7S5NNT3fesn1DX5U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o66tGrfM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O+WPzWXx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 604A51F000E9;
-	Thu, 30 Jul 2026 15:34:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o66tGrfM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E4DE1F000E9;
+	Thu, 30 Jul 2026 15:34:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425677;
-	bh=wndnpijBMYQrT2aA5pui6s8lu/R8TKtT2kg+jNhnGiQ=;
+	s=korg; t=1785425680;
+	bh=6t58Wbv8qTL3NHOsO0IH8VjGm4Adj0/9u5cZcH6EFVA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O+WPzWXxr6MBwGCoDYXHsCL7pQiUL2xYbULc8Luqyan2ROtggukpO7RUDywG536SC
-	 9T2hwC99m7Yh5Vz6fFUpNHdCxkYhh4fje3lzOWwXJ3N97oV5KoEu/l6/sJRa2GAZEr
-	 0d1+AqStOBslp35KRyU8FmnUoiTaXCUBKAkHszaw=
+	b=o66tGrfMimDA5+hkZnCSuzIDECzVQZFgU5dLkWMaXq9wrnm9JY1oUUeusOkEVrY9C
+	 srlMrVTXZUbqxLcBvMlYvHKZQXjQQRzkxPyQwWiaF/6U/X3rekOsws9VBFlvnP/rBw
+	 /tYti6aGRvw+uNkgPUl+1YgoXvazUDx485xcqPCk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Mark Brown <broonie@kernel.org>,
+	Denis Arefev <arefev@swemel.ru>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 154/602] ASoC: tas2781: bound firmware description string parsing
-Date: Thu, 30 Jul 2026 16:09:06 +0200
-Message-ID: <20260730141439.211841801@linuxfoundation.org>
+Subject: [PATCH 6.12 155/602] ALSA: hda: cs35l41: Fix NULL pointer dereference in cs35l41_get_acpi_mute_state()
+Date: Thu, 30 Jul 2026 16:09:07 +0200
+Message-ID: <20260730141439.231523593@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -51,151 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Denis Arefev <arefev@swemel.ru>
 
-[ Upstream commit bc889dfcea9294a1eae7f8e2f3573a90764ae4d0 ]
+[ Upstream commit 8527bbb33936340525a3504a00932b2f8fd75754 ]
 
-The TAS2781 firmware parser reads several variable-length description
-strings with strlen() before checking that the string terminator is
-present inside the firmware blob. A malformed firmware image without a
-NUL terminator can therefore make the parser walk past the end of the
-firmware buffer before the later size checks run.
+Return value of a function acpi_evaluate_dsm() is dereferenced  without
+checking for NULL, but it is usually checked for this function.
 
-Add a small bounded string-length helper and use it for all description
-fields that are parsed from the firmware buffer. Keep the existing size
-checks for the fixed bytes that follow each string.
+acpi_evaluate_dsm() may return NULL, when acpi_evaluate_object() returns
+acpi_status other than ACPI_SUCCESS, so add a check to prevent the crach.
 
-Fixes: 915f5eadebd2 ("ASoC: tas2781: firmware lib")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260706144540.93929-1-pengpeng@iscas.ac.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 447106e92a0c ("ALSA: hda: cs35l41: Support mute notifications for CS35L41 HDA")
+Cc: stable@vger.kernel.org
+Signed-off-by: Denis Arefev <arefev@swemel.ru>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Stable-dep-of: 3b597d24dc04 ("ALSA: hda: cs35l41: validate and free ACPI mute object")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/tas2781-fmwlib.c | 63 ++++++++++++++++++++++++++++---
- 1 file changed, 57 insertions(+), 6 deletions(-)
+ sound/pci/hda/cs35l41_hda.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/soc/codecs/tas2781-fmwlib.c b/sound/soc/codecs/tas2781-fmwlib.c
-index 0aeb88abbf52f1..a2c4602eb57440 100644
---- a/sound/soc/codecs/tas2781-fmwlib.c
-+++ b/sound/soc/codecs/tas2781-fmwlib.c
-@@ -11,6 +11,7 @@
- #include <linux/i2c.h>
- #include <linux/init.h>
- #include <linux/interrupt.h>
-+#include <linux/limits.h>
- #include <linux/module.h>
- #include <linux/of.h>
- #include <linux/of_irq.h>
-@@ -891,13 +892,42 @@ static int tasdevice_load_block_kernel(
- 	return 0;
- }
+diff --git a/sound/pci/hda/cs35l41_hda.c b/sound/pci/hda/cs35l41_hda.c
+index 099b8e9582b841..bc84415416aae5 100644
+--- a/sound/pci/hda/cs35l41_hda.c
++++ b/sound/pci/hda/cs35l41_hda.c
+@@ -1403,6 +1403,8 @@ static int cs35l41_get_acpi_mute_state(struct cs35l41_hda *cs35l41, acpi_handle
  
-+static int tasdevice_fw_strnlen(const struct firmware *fmw, int offset)
-+{
-+	const u8 *start;
-+	const u8 *nul;
-+	size_t remaining;
-+	size_t len;
-+
-+	if (offset < 0 || offset >= fmw->size)
-+		return -EINVAL;
-+
-+	start = fmw->data + offset;
-+	remaining = fmw->size - offset;
-+	nul = memchr(start, '\0', remaining);
-+	if (!nul)
-+		return -EINVAL;
-+
-+	len = nul - start;
-+	if (len > INT_MAX)
-+		return -EOVERFLOW;
-+
-+	return len;
-+}
-+
- static int fw_parse_variable_hdr(struct tasdevice_priv
- 	*tas_priv, struct tasdevice_dspfw_hdr *fw_hdr,
- 	const struct firmware *fmw, int offset)
- {
- 	const unsigned char *buf = fmw->data;
--	int len = strlen((char *)&buf[offset]);
-+	int len;
- 
-+	len = tasdevice_fw_strnlen(fmw, offset);
-+	if (len < 0) {
-+		dev_err(tas_priv->dev, "%s: Description error\n", __func__);
-+		offset = len;
-+		goto out;
-+	}
- 	len++;
- 
- 	if (offset + len + 8 > fmw->size) {
-@@ -1029,7 +1059,12 @@ static int fw_parse_data(struct tasdevice_fw *tas_fmw,
- 	memcpy(img_data->name, &data[offset], 64);
- 	offset += 64;
- 
--	n = strlen((char *)&data[offset]);
-+	n = tasdevice_fw_strnlen(fmw, offset);
-+	if (n < 0) {
-+		dev_err(tas_fmw->dev, "%s: Description error\n", __func__);
-+		offset = n;
-+		goto out;
-+	}
- 	n++;
- 	if (offset + n + 2 > fmw->size) {
- 		dev_err(tas_fmw->dev, "%s: Description error\n", __func__);
-@@ -1102,7 +1137,12 @@ static int fw_parse_program_data(struct tasdevice_priv *tas_priv,
- 		}
- 		offset += 64;
- 
--		n = strlen((char *)&buf[offset]);
-+		n = tasdevice_fw_strnlen(fmw, offset);
-+		if (n < 0) {
-+			dev_err(tas_priv->dev, "Description err\n");
-+			offset = n;
-+			goto out;
-+		}
- 		/* skip '\0' and 5 unused bytes */
- 		n += 6;
- 		if (offset + n > fmw->size) {
-@@ -1165,7 +1205,12 @@ static int fw_parse_configuration_data(
- 		memcpy(config->name, &data[offset], 64);
- 		offset += 64;
- 
--		n = strlen((char *)&data[offset]);
-+		n = tasdevice_fw_strnlen(fmw, offset);
-+		if (n < 0) {
-+			dev_err(tas_priv->dev, "Description err\n");
-+			offset = n;
-+			goto out;
-+		}
- 		n += 15;
- 		if (offset + n > fmw->size) {
- 			dev_err(tas_priv->dev, "Description err\n");
-@@ -1819,7 +1864,8 @@ static int fw_parse_calibration_data(struct tasdevice_priv *tas_priv,
- {
- 	struct tasdevice_calibration *calibration;
- 	unsigned char *data = (unsigned char *)fmw->data;
--	unsigned int i, n;
-+	unsigned int i;
-+	int n;
- 
- 	if (offset + 2 > fmw->size) {
- 		dev_err(tas_priv->dev, "%s: Calibrations error\n", __func__);
-@@ -1851,7 +1897,12 @@ static int fw_parse_calibration_data(struct tasdevice_priv *tas_priv,
- 		calibration = &(tas_fmw->calibrations[i]);
- 		offset += 64;
- 
--		n = strlen((char *)&data[offset]);
-+		n = tasdevice_fw_strnlen(fmw, offset);
-+		if (n < 0) {
-+			dev_err(tas_priv->dev, "Description err\n");
-+			offset = n;
-+			goto out;
-+		}
- 		/* skip '\0' and 2 unused bytes */
- 		n += 3;
- 		if (offset + n > fmw->size) {
+ 	if (cs35l41_dsm_supported(handle, CS35L41_DSM_GET_MUTE)) {
+ 		ret = acpi_evaluate_dsm(handle, &guid, 0, CS35L41_DSM_GET_MUTE, NULL);
++		if (!ret)
++			return -EINVAL;
+ 		mute = *ret->buffer.pointer;
+ 		dev_dbg(cs35l41->dev, "CS35L41_DSM_GET_MUTE: %d\n", mute);
+ 	}
 -- 
 2.53.0
 
