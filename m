@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A894C4119E0;
-	Thu, 30 Jul 2026 14:48:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 831A84119F8;
+	Thu, 30 Jul 2026 14:48:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422882; cv=none; b=tzTHeQZQvw7FKEASCL24PxI1Hr9rwd197pgliH5kUIvVpqMNBtEzVCVCIshADCxECFS05NFTu+9OVAWq6dXu8h6ruWdw6ybLalizx6hovkX8I2F2f9TUUPJp9a+2KyCbVROJrkjIbYztu6qs4bDUNU4qjnhRFeOfSBP5MgOyTlI=
+	t=1785422885; cv=none; b=ADUtWwJFIuU9GMX7jKKfrgNqn+dcRjchwpCnQ60B8E5ZzzBYZaDeDbRcPkWTISqVus6oZnpYewCuJ8IamRwZuwwKOwUcV66JQiLjXIDJMoPk5c89atUnZiqlOoNPwY1bm/TQGZIALxAPx4vUNT/CI0WhdCfvYIosJKqcVk7AE0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422882; c=relaxed/simple;
-	bh=/eiO7hVkTszSLIR+6Fnehd+pkOWMgUiKdNZFcE55uPM=;
+	s=arc-20240116; t=1785422885; c=relaxed/simple;
+	bh=MGtG70Ck1MNsqPMSTPZa0t1xbcsjWYOPeQZJlhVlWRA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CFnIz0DWWXJ/3WRYIB0IEipFY6BuxyG2t1rgz47sc+BPlQqXR5hdL2RWfsfiWk8+dp0T62WRFfJMBrSC+o5J0MgGm1FHclJyre/bNlovtYnyvlbuZXvhzhtxA++lgm33M4aA+CpL2UxdST//PqTOJIM2Fi9IqY7eEynrDS6Bifs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ReTeVvxW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Gk8A/0mQv6poU0saljSpI9p0fpI1LU0VzKApurabELQEfNKxEZnscQvG7pA3zbEIkS0QsFFa72muNrBFDr3XoE46S59VOdg1dE4A7AedL5jKGIKQ3rZClpzdPMjplfKzp506ohpZDw6YhWBGDa/uaxRZNY5KZI8RCOOZ3qu/+/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Gl8a7fH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ReTeVvxW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 105B11F000E9;
-	Thu, 30 Jul 2026 14:48:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Gl8a7fH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D98311F000E9;
+	Thu, 30 Jul 2026 14:48:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422881;
-	bh=w5bUO/2XvtuntelfOaM5kgsNJMNVd6fWi/YCLGOVCCE=;
+	s=korg; t=1785422884;
+	bh=VgBtfflqMvBgVUC0efMswSjczA5QDK+qJWoEcXtu8Mc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ReTeVvxW7GEjVrTjvi98wpBTzv1B+18Y7Nm4fPyc0DKAMnkHcQAoGZ8pyedsei6dA
-	 H+sLOMmgwch2DXYc+w+0ljV41t2QX9ll6T3Z05/NtPKjlfq8WBUELZSDLCnWi5VIjh
-	 7Ll68qQ9M3x9tQEffniDB4qx3/NWFUVJJiX6fN1Q=
+	b=0Gl8a7fHJsFpnjFeLzOQRa03REm9EgUkVjokYpLqyKpDrJ926oPSWSU9rfjT0I6BB
+	 l82+bO3rvvaHzS3U6iIGfhLi5ixzZbzqzfAfy7P8w02IqgJ9Q3pxxjUKwIhDBiL7Db
+	 DKCm2VKpFzF0ivWlFYaDxJU7Ja9EcOfQWsTGZPQ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Alexander Graf <graf@amazon.com>
-Subject: [PATCH 7.1 588/744] misc: nsm: only unlock nsm_dev on post-lock error paths
-Date: Thu, 30 Jul 2026 16:14:21 +0200
-Message-ID: <20260730141456.781281732@linuxfoundation.org>
+	Xu Rao <raoxu@uniontech.com>
+Subject: [PATCH 7.1 589/744] misc: nsm: pin the module while the device is open
+Date: Thu, 30 Jul 2026 16:14:22 +0200
+Message-ID: <20260730141456.801772598@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -51,51 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Xu Rao <raoxu@uniontech.com>
 
-commit ce1fed11d18e163baf7f875152a33bf80f625c1a upstream.
+commit 3b231f1e9990f4c21220d0a69733ce2105891ff9 upstream.
 
-nsm_dev_ioctl() jumps to the common out label even when the initial
-copy_from_user() fails before nsm->lock has been taken.  The error path
-then blindly unlocks a mutex that was never acquired.
+misc_open() installs a misc driver's file operations with fops_get(),
+which pins file_operations::owner before replacing the file's f_op.  The
+NSM misc device leaves nsm_dev_fops.owner unset, so opening /dev/nsm does
+not take a module reference on the nsm driver.
 
-This issue was found by our static analysis tool and then manually
-reviewed against the current tree.
+If the driver is built as a module, an open file descriptor can therefore
+survive rmmod of the module that provides its ioctl callbacks.  A later
+ioctl through that descriptor can call into unloaded module text.
 
-The grounded PoC kept the miscdevice ioctl entry and the pre-lock
-copy_from_user(&raw, argp, _IOC_SIZE(cmd)) failure path by issuing
-NSM_IOCTL_RAW with an invalid user pointer.  That failure reaches the
-shared out label before mutex_lock(&nsm->lock).  Lockdep reported:
-
-  WARNING: bad unlock balance detected!
-  exploit/193 is trying to release lock (&global_nsm.lock) at:
-  nsm_dev_ioctl+0x5f/0xcf [vuln_msv]
-  but there are no more locks to release!
-  no locks held by exploit/193.
-
-Return immediately on the pre-lock copy_from_user() failure and keep the
-common unlock label for the post-lock paths only.
+Set nsm_dev_fops.owner to THIS_MODULE so the misc core holds the module
+while any /dev/nsm file descriptor is open, matching the lifetime
+expectation for the installed file operations.
 
 Fixes: b9873755a6c8 ("misc: Add Nitro Secure Module driver")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Reviewed-by: Alexander Graf <graf@amazon.com>
-Link: https://patch.msgid.link/20260617145350.513875-1-runyu.xiao@seu.edu.cn
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
+Link: https://patch.msgid.link/BE6951D13B5E5513+20260713055523.3193089-1-raoxu@uniontech.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/nsm.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/misc/nsm.c |    1 +
+ 1 file changed, 1 insertion(+)
 
 --- a/drivers/misc/nsm.c
 +++ b/drivers/misc/nsm.c
-@@ -367,7 +367,7 @@ static long nsm_dev_ioctl(struct file *f
- 	/* Copy user argument struct to kernel argument struct */
- 	r = -EFAULT;
- 	if (copy_from_user(&raw, argp, _IOC_SIZE(cmd)))
--		goto out;
-+		return r;
+@@ -413,6 +413,7 @@ static int nsm_device_init_vq(struct vir
+ }
  
- 	mutex_lock(&nsm->lock);
- 
+ static const struct file_operations nsm_dev_fops = {
++	.owner = THIS_MODULE,
+ 	.unlocked_ioctl = nsm_dev_ioctl,
+ 	.compat_ioctl = compat_ptr_ioctl,
+ };
 
 
