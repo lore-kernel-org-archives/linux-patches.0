@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C9364499BB;
-	Thu, 30 Jul 2026 16:10:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C424448D15;
+	Thu, 30 Jul 2026 16:10:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427855; cv=none; b=G3B/n6ZcdLREEKThXgzsWQDJMwGqobBYc7Ma1CRHMPW2dk2CLbgYVLSrZrF3OIEhzxRYDqbFTye0qNJybroCi4J7sxSbjSOTD2JhB0QJogCYhgEE9dzygVSsLvffMNK65QM83JsPD6Ek8kCq8gdqc2x69VJBkaB9voBPn7l3uB8=
+	t=1785427858; cv=none; b=sa/10hl5nThUDI18IAtbr2Gl9yG/g4D9RkmjCpCxP6a3BsbYsZjGlX8iVJCMnm9Orjc6DHEj6mPqMgW4IF0iUBWAMU3bMtbuKU0BPSrruHfCW9HQVm7Td/D2co+0QN1X++AvF5M5JtATkSp344FKGq2SZKcPMcbMSbWFe/dGQZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427855; c=relaxed/simple;
-	bh=/7fdyM6WaVlN2lat8mnz55WrEjuFtUN95xjBA6bBvCU=;
+	s=arc-20240116; t=1785427858; c=relaxed/simple;
+	bh=pXfdkJfYxgHnApj73MHtmtDv4C+hJ09TsJFKSzcvWts=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ntOZR+87Th3vBJg8Tqb6Et4QZUELn4nZ5nBJ77tI6O1j0+zqxeHYZ7pwKkQW/PiPDY/aD7astTfV58F2LKj5PZv32Le6QaJIoX8TkRmeeopYG5Z77LW2jLuyx+wMlN0Runy/0TpwE32P3SVBuNJAN2+s6vi0N1RhVM1lKthI2n0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=09zooP9n; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TEISO5qSV9OdZ4Nwb22576f1qwjZ13+DRJ6xcaFxlkG2KDHXwRcsPrb/C8LvYGWcOe5c5Y7RoCClTSzLYP8Bd+OdwbHlusyiFNDGOPj/Hi5nO7OoOzOW0riGnPQ71a0icAVndhhPXcUi9rmxq11L+sQKmwMEmmH9LKtz5IQ6lgI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ShhfpRq7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="09zooP9n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C41A31F000E9;
-	Thu, 30 Jul 2026 16:10:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ShhfpRq7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B24861F000E9;
+	Thu, 30 Jul 2026 16:10:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427854;
-	bh=4UDQO0HOvQFVvFf1Ytpd2Y38wpWCYyoStdJ4ca51HDg=;
+	s=korg; t=1785427857;
+	bh=ezFNRdEadql6VxmjLrrhOsqNO1T87ChBBmk11wk5bNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=09zooP9nkx8C9Rrq5QkaZmv/ZE4w2i/UgkhZTYOHy1oz4ttkRDPV9+M9NDtw7FYF7
-	 sRFq7VfXB0qfL1ZnP/HRPm65h8+k3jqbla9zjFZfscpt553NEMvwz66NU0f5nh5jML
-	 4Oo45C6rDPOggRnd+gqKyXFoafT/tfLz4k7rV9Cs=
+	b=ShhfpRq74LQZuQ9/IqonUgQzuj2JQC5IX0V7WjjlMeltM080vDBB3KnRTtawgHQkq
+	 9nyGegWflegM8PSAqjhrht9sfnhMFGp7+lU4nqluWVTnWt1/1ExYI/yEJMAr6q+nIL
+	 0HgtRCAPJ7lchycl7rtq+nphc62/gLTYZPfGPDDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Samiullah Khawaja <skhawaja@google.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.6 315/484] iommu/vt-d: Disallow SVA if page walk is not coherent
-Date: Thu, 30 Jul 2026 16:13:32 +0200
-Message-ID: <20260730141430.329798552@linuxfoundation.org>
+	Breno Leitao <leitao@debian.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 316/484] phonet: pep: fix use-after-free in pep_get_sb()
+Date: Thu, 30 Jul 2026 16:13:33 +0200
+Message-ID: <20260730141430.352784531@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -53,43 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lu Baolu <baolu.lu@linux.intel.com>
+From: Breno Leitao <leitao@debian.org>
 
-commit 780dfed688622ea01be3c9c2c55eec2207f05e04 upstream.
+commit 0f71f852a96af9685858ce59fda34ecbf85c283d upstream.
 
-Hardware implementations report Scalable-Mode Page-walk Coherency Support
-via the SMPWCS field in the extended capability register. If the hardware
-does not support page-walk coherency, a clflush is required every time
-the page table entries (which are walked by the IOMMU hardware) are
-updated.
+pep_get_sb() doesn't consider that pskb_may_pull() might have relocated
+the skb data, and continue to access the older pointer, causing UAF.
 
-In the SVA case, page tables are managed by the CPU mm core, not by the
-IOMMU driver. Because the IOMMU driver has no way of knowing whether the
-CPU page table management code has ensured coherency via clflush, the
-driver must deny SVA if the hardware does not support coherent paging.
+Reproduced under KASAN:
 
-Fixes: ff3dc6521f78 ("iommu/vt-d: Fix CPU and IOMMU SVM feature matching checks")
+  BUG: KASAN: slab-use-after-free in pep_get_sb+0x234/0x3b0
+  Read of size 1 at addr ff11000105510f50 by task repro/157
+   pep_get_sb+0x234/0x3b0
+   pipe_handler_do_rcv+0x5f7/0xa10
+   pep_do_rcv+0x203/0x410
+   __sk_receive_skb+0x471/0x4a0
+   phonet_rcv+0x5b3/0x6c0
+   __netif_receive_skb+0xcc/0x1d0
+
+Refetch the header with skb_header_pointer() after pskb_may_pull(), so
+the possibly stale pointer is no longer dereferenced. There are better
+ways to solve this, but, this is the less instrusive one.
+
+Fixes: 9641458d3ec4 ("Phonet: Pipe End Point for Phonet Pipes protocol")
 Cc: stable@vger.kernel.org
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Reviewed-by: Samiullah Khawaja <skhawaja@google.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Link: https://patch.msgid.link/20260721-phonet_get_sb_uaf-v1-1-95fd7881cc4e@debian.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/intel/svm.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/phonet/pep.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/iommu/intel/svm.c
-+++ b/drivers/iommu/intel/svm.c
-@@ -149,7 +149,7 @@ int intel_svm_finish_prq(struct intel_io
- 
- void intel_svm_check(struct intel_iommu *iommu)
- {
--	if (!pasid_supported(iommu))
-+	if (!pasid_supported(iommu) || !ecap_smpwc(iommu->ecap))
- 		return;
- 
- 	if (cpu_feature_enabled(X86_FEATURE_GBPAGES) &&
+--- a/net/phonet/pep.c
++++ b/net/phonet/pep.c
+@@ -55,6 +55,8 @@ static unsigned char *pep_get_sb(struct
+ 	ph = skb_header_pointer(skb, 0, 2, &h);
+ 	if (ph == NULL || ph->sb_len < 2 || !pskb_may_pull(skb, ph->sb_len))
+ 		return NULL;
++	/* pskb_may_pull() may have reallocated the head; refetch ph. */
++	ph = skb_header_pointer(skb, 0, 2, &h);
+ 	ph->sb_len -= 2;
+ 	*ptype = ph->sb_type;
+ 	*plen = ph->sb_len;
 
 
