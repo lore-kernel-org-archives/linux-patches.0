@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5CF044D020;
-	Thu, 30 Jul 2026 15:26:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D195344DB61;
+	Thu, 30 Jul 2026 15:26:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425167; cv=none; b=k0HdNmAGHBb8U78/cbV4uVCWXafUQfJXFJDuyrUu2NPN5kifYwjhxhQIg6h/ItrvLN0ead+L6eCWTTFDQr6PIe5rj/P7/nBXykz8CtkTkr05jJT8KizUuWGOe+jrwuoOegy5GNoLmzLisKf/TY/0kzCLHIeKoybjZPO2OV1zgck=
+	t=1785425170; cv=none; b=hzpGws4I2lz0LuAKs8DGtZNAv8K+vgcOICf5BUbMmxnjcTdCU8Ir+q4VYeyfUrGDwFqmwSWPfnibX/VPQTGMbzWS2dHG4w4gLlU4dGf07brhTdATJBJJH0f04Q/GqCwodkoyGlwWF0iNETmr1DpMuQKPqX6yz+SPIfqNn5zIeAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425167; c=relaxed/simple;
-	bh=TLEgwec/feSwdmTk4/3gbhf4hLZjj6UrYNhhaD0FSl8=;
+	s=arc-20240116; t=1785425170; c=relaxed/simple;
+	bh=FKxxNQduQG+u1uuBkaoaQw6+deHyWp8rkgXNkC9sFBI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=buQTAKqdFMt87aCZn5DRWs106Ugxg+8Hr3gkb2r9AjyY8BDRA5+mYFumu8Nti1wi0MaklPtmZQ7rdljwSUlCLDXPVLshfrdviRMZI8KiORzXalKm/XVCF63bQq/deb7LfYZLmjdO0mu/NUl0iHwk6hUklNiczdf/askVC9xMAOE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KEwSfmrl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j1AJws/o1Q0KsPcu7K/PRGAvqgvztsrwyQj2ox2P2zz53ekafFOU5+wumwJe+iBTDk4qDJtD03LkQRN5AFOin7vH0UhJaEaXK/zqvUrb3cb5570hgB9GEX68WLP5MG9X9tNaOX0aKTIfvAhq7Jf1yWMWV6kkaNm4VyWuOHRusJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mUp/icP3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KEwSfmrl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CC571F000E9;
-	Thu, 30 Jul 2026 15:26:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mUp/icP3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DA951F00A3E;
+	Thu, 30 Jul 2026 15:26:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425165;
-	bh=3s5D6WBCdELtMZYo6LcL7C+mGYuLB/Y2aEccoLuY+3Y=;
+	s=korg; t=1785425168;
+	bh=2A1RhjjdFKZ0QC0rJRfPFOqRwePQFn/5ZxTNT3lTQ4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KEwSfmrlRAT5b6r19uehI8jLpjvMaNrE6saEWV3FtHV/26NKYupcUr3kKXHi9ZdsY
-	 t7hte7/Z4pfWCRmlukXFHGm6CGYxUeUhayeWK2bdFmY14w3r7Rweon1vSXrkyhG2dI
-	 pIZB+3B/cbXYSfJEogd868eV+VJHHgRnKtu0ThdI=
+	b=mUp/icP37Co0XtKuzUL/qo/uS1UWEOtLTYemBWQM00eem61sWF2QKBrYMfN8kjnS6
+	 mjnf5Bv8ujlTZAegOBM5Rp7jhET+FiYfhldMox5RaurHnSWslC8KFQaQvagOicvsKy
+	 Mkqe5xlBrV+tJPUfZUF6X0FfTDgTtWm+5OAT3N/E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Eric Biggers <ebiggers@kernel.org>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Fangzhi Zuo <Jerry.Zuo@amd.com>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Matthew Schwartz <matthew.schwartz@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 603/675] fscrypt: Avoid dynamic allocation in fscrypt_get_devices()
-Date: Thu, 30 Jul 2026 16:15:33 +0200
-Message-ID: <20260730141457.931265518@linuxfoundation.org>
+Subject: [PATCH 6.18 604/675] drm/amd/display: Fix DTB DTO updates breaking live pixel rate sources
+Date: Thu, 30 Jul 2026 16:15:34 +0200
+Message-ID: <20260730141457.952374031@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -52,259 +54,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Harry Wentland <harry.wentland@amd.com>
 
-commit 6fe4e4b8259e1330945b5f3c9476e08473b8e0e8 upstream.
+commit 76a2db58e95e328007043f54ac3c7336ccbee440 upstream.
 
-When a blk_crypto_key starts being used or is evicted, fs/crypto/ calls
-fscrypt_get_devices() to get the filesystem's list of block devices,
-then iterates over them and calls blk_crypto_config_supported(),
-blk_crypto_start_using_key(), or blk_crypto_evict_key() on each one.
+dcn32_update_clocks_update_dtb_dto() and its dcn35 counterpart reprogram
+the DTB DTO of every timing generator in the context whenever the DTBCLK
+reference changes, passing a zeroed pixel rate and never setting
+is_hdmi. Both dccg set_dtbclk_dto() implementations treat a zero pixel
+rate as a disable request. On dcn32 that branch drives PIPE_DTO_SRC_SEL
+to the DP DTO source, so a timing generator actively scanning out an
+HDMI stream has its pixel rate source re-muxed out from under the live
+raster and the OTG stops on the spot. On dcn35 it clears
+DTBCLK_DTO_ENABLE and restores DTBCLK_Pn clock gating, which does the
+same to a live 128b/132b stream.
 
-Currently, the block device pointers are placed in a dynamically
-allocated array.  This dynamic allocation is problematic because:
+Two displays where only one runs a 128b/132b link hit this reliably.
+is_dtbclk_required() holds the DTBCLK reference high while both are
+active, and the moment the 128b/132b stream is torn down (compositor
+switch, display disable, hot-unplug) the next safe_to_lower pass drops
+the reference to the lowest DPM level and the DTO walk freezes the
+surviving screen. On Navi31 the DAL mailbox then goes deaf on the
+DISPCLK hard-min that follows the walk in dcn32_update_clocks(),
+stranding both SMU mailboxes until reboot.
 
-- It can fail, especially at the fscrypt_destroy_inline_crypt_key() call
-  site when it's invoked for inode eviction under direct reclaim.
+Set is_hdmi for HDMI and DVI signals so the disable path leaves the
+pixel rate source selection on the HDMI path, and pass the real pixel
+rate for 128b/132b streams so a reference change rescales their DTO
+instead of disabling it.
 
-- fscrypt_destroy_inline_crypt_key() doesn't handle the failure.  It
-  just zeroizes and frees the blk_crypto_key without calling
-  blk_crypto_evict_key().  That causes a use-after-free.
-
-For now, let's fix this in the straightforward and easily-backportable
-way by switching to an on-stack array.  Currently the fscrypt
-multi-device functionality is used only by f2fs, which has a hardcoded
-limit of 8 block devices.  An on-stack array works fine for that.
-
-(Of course, this solution won't scale up to large number of block
-devices.  For that we'd need a different solution, like moving the block
-device iteration into the filesystem.  Or in the case of btrfs, which
-will only support blk-crypto-fallback, we should make it just call
-blk-crypto-fallback directly, so the block devices won't be needed.)
-
-Fixes: 22e9947a4b2b ("fscrypt: stop holding extra request_queue references")
-Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260713023708.9245-1-ebiggers%40kernel.org
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20260719055602.78828-1-ebiggers@kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Fixes: 128c1ca0303f ("drm/amd/display: Update DTBCLK for DCN32")
+Fixes: 8774029f76b9 ("drm/amd/display: Add DCN35 CLK_MGR")
+Signed-off-by: Harry Wentland <harry.wentland@amd.com>
+Reviewed-by: Fangzhi Zuo <Jerry.Zuo@amd.com>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+[ mschwartz: dcn32 and dcn35 clk_mgr hunks only. The rest is HDMI FRL
+  enablement, absent before 7.2, so the FRL conditions and the
+  req_audio_dtbclk_khz assignment they guard are dropped and the
+  FRL-centric changelog is rewritten. Added the pipe_ctx->stream check
+  the new dereferences need. ]
+Signed-off-by: Matthew Schwartz <matthew.schwartz@linux.dev>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/crypto/inline_crypt.c | 57 ++++++++++++++--------------------------
- fs/f2fs/super.c          | 25 ++++++++++--------
- include/linux/fscrypt.h  | 18 +++++++------
- 3 files changed, 44 insertions(+), 56 deletions(-)
+ .../gpu/drm/amd/display/dc/clk_mgr/dcn32/dcn32_clk_mgr.c | 9 ++++++++-
+ .../gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn35_clk_mgr.c | 9 ++++++++-
+ 2 files changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/fs/crypto/inline_crypt.c b/fs/crypto/inline_crypt.c
-index 645cc493607294..500397ca8a26fa 100644
---- a/fs/crypto/inline_crypt.c
-+++ b/fs/crypto/inline_crypt.c
-@@ -22,22 +22,14 @@
+diff --git a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn32/dcn32_clk_mgr.c b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn32/dcn32_clk_mgr.c
+index 7da7b41bd09256..b98d946a8d2ee6 100644
+--- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn32/dcn32_clk_mgr.c
++++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn32/dcn32_clk_mgr.c
+@@ -276,13 +276,20 @@ static void dcn32_update_clocks_update_dtb_dto(struct clk_mgr_internal *clk_mgr,
+ 		struct dtbclk_dto_params dto_params = {0};
  
- #include "fscrypt_private.h"
+ 		/* use mask to program DTO once per tg */
+-		if (pipe_ctx->stream_res.tg &&
++		if (pipe_ctx->stream && pipe_ctx->stream_res.tg &&
+ 				!(tg_mask & (1 << pipe_ctx->stream_res.tg->inst))) {
+ 			tg_mask |= (1 << pipe_ctx->stream_res.tg->inst);
  
--static struct block_device **fscrypt_get_devices(struct super_block *sb,
--						 unsigned int *num_devs)
-+static unsigned int
-+fscrypt_get_devices(struct super_block *sb,
-+		    struct block_device *devs[FSCRYPT_MAX_DEVICES])
- {
--	struct block_device **devs;
--
--	if (sb->s_cop->get_devices) {
--		devs = sb->s_cop->get_devices(sb, num_devs);
--		if (devs)
--			return devs;
--	}
--	devs = kmalloc(sizeof(*devs), GFP_KERNEL);
--	if (!devs)
--		return ERR_PTR(-ENOMEM);
-+	if (sb->s_cop->get_devices)
-+		return sb->s_cop->get_devices(sb, devs);
- 	devs[0] = sb->s_bdev;
--	*num_devs = 1;
--	return devs;
-+	return 1;
- }
+ 			dto_params.otg_inst = pipe_ctx->stream_res.tg->inst;
+ 			dto_params.ref_dtbclk_khz = ref_dtbclk_khz;
  
- static unsigned int fscrypt_get_dun_bytes(const struct fscrypt_inode_info *ci)
-@@ -96,7 +88,7 @@ int fscrypt_select_encryption_impl(struct fscrypt_inode_info *ci,
- 	const struct inode *inode = ci->ci_inode;
- 	struct super_block *sb = inode->i_sb;
- 	struct blk_crypto_config crypto_cfg;
--	struct block_device **devs;
-+	struct block_device *devs[FSCRYPT_MAX_DEVICES];
- 	unsigned int num_devs;
- 	unsigned int i;
- 
-@@ -135,20 +127,15 @@ int fscrypt_select_encryption_impl(struct fscrypt_inode_info *ci,
- 	crypto_cfg.key_type = is_hw_wrapped_key ?
- 		BLK_CRYPTO_KEY_TYPE_HW_WRAPPED : BLK_CRYPTO_KEY_TYPE_RAW;
- 
--	devs = fscrypt_get_devices(sb, &num_devs);
--	if (IS_ERR(devs))
--		return PTR_ERR(devs);
--
-+	num_devs = fscrypt_get_devices(sb, devs);
- 	for (i = 0; i < num_devs; i++) {
- 		if (!blk_crypto_config_supported(devs[i], &crypto_cfg))
--			goto out_free_devs;
-+			return 0;
- 	}
- 
- 	fscrypt_log_blk_crypto_impl(ci->ci_mode, devs, num_devs, &crypto_cfg);
- 
- 	ci->ci_inlinecrypt = true;
--out_free_devs:
--	kfree(devs);
- 
- 	return 0;
- }
-@@ -164,7 +151,7 @@ int fscrypt_prepare_inline_crypt_key(struct fscrypt_prepared_key *prep_key,
- 	enum blk_crypto_key_type key_type = is_hw_wrapped ?
- 		BLK_CRYPTO_KEY_TYPE_HW_WRAPPED : BLK_CRYPTO_KEY_TYPE_RAW;
- 	struct blk_crypto_key *blk_key;
--	struct block_device **devs;
-+	struct block_device *devs[FSCRYPT_MAX_DEVICES];
- 	unsigned int num_devs;
- 	unsigned int i;
- 	int err;
-@@ -182,17 +169,12 @@ int fscrypt_prepare_inline_crypt_key(struct fscrypt_prepared_key *prep_key,
- 	}
- 
- 	/* Start using blk-crypto on all the filesystem's block devices. */
--	devs = fscrypt_get_devices(sb, &num_devs);
--	if (IS_ERR(devs)) {
--		err = PTR_ERR(devs);
--		goto fail;
--	}
-+	num_devs = fscrypt_get_devices(sb, devs);
- 	for (i = 0; i < num_devs; i++) {
- 		err = blk_crypto_start_using_key(devs[i], blk_key);
- 		if (err)
- 			break;
- 	}
--	kfree(devs);
- 	if (err) {
- 		fscrypt_err(inode, "error %d starting to use blk-crypto", err);
- 		goto fail;
-@@ -210,20 +192,21 @@ void fscrypt_destroy_inline_crypt_key(struct super_block *sb,
- 				      struct fscrypt_prepared_key *prep_key)
- {
- 	struct blk_crypto_key *blk_key = prep_key->blk_key;
--	struct block_device **devs;
-+	struct block_device *devs[FSCRYPT_MAX_DEVICES];
- 	unsigned int num_devs;
- 	unsigned int i;
- 
- 	if (!blk_key)
- 		return;
- 
--	/* Evict the key from all the filesystem's block devices. */
--	devs = fscrypt_get_devices(sb, &num_devs);
--	if (!IS_ERR(devs)) {
--		for (i = 0; i < num_devs; i++)
--			blk_crypto_evict_key(devs[i], blk_key);
--		kfree(devs);
--	}
-+	/*
-+	 * Evict the key from all the filesystem's block devices.
-+	 * This *must* be done before the key is freed.
-+	 */
-+	num_devs = fscrypt_get_devices(sb, devs);
-+	for (i = 0; i < num_devs; i++)
-+		blk_crypto_evict_key(devs[i], blk_key);
++			if (dccg->ctx->dc->link_srv->dp_is_128b_132b_signal(pipe_ctx))
++				dto_params.pixclk_khz = pipe_ctx->stream->timing.pix_clk_100hz / 10;
 +
- 	kfree_sensitive(blk_key);
- }
- 
-diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
-index f6b75ce11d1c1a..6f787cbeefd096 100644
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -3659,24 +3659,27 @@ static bool f2fs_has_stable_inodes(struct super_block *sb)
- 	return true;
- }
- 
--static struct block_device **f2fs_get_devices(struct super_block *sb,
--					      unsigned int *num_devs)
-+static unsigned int
-+f2fs_get_devices(struct super_block *sb,
-+		 struct block_device *devs[FSCRYPT_MAX_DEVICES])
- {
- 	struct f2fs_sb_info *sbi = F2FS_SB(sb);
--	struct block_device **devs;
-+	int ndevs;
- 	int i;
- 
--	if (!f2fs_is_multi_device(sbi))
--		return NULL;
-+	static_assert(MAX_DEVICES <= FSCRYPT_MAX_DEVICES);
- 
--	devs = kmalloc_array(sbi->s_ndevs, sizeof(*devs), GFP_KERNEL);
--	if (!devs)
--		return ERR_PTR(-ENOMEM);
-+	if (!f2fs_is_multi_device(sbi)) {
-+		devs[0] = sb->s_bdev;
-+		return 1;
-+	}
-+	ndevs = sbi->s_ndevs;
-+	if (WARN_ON_ONCE(ndevs > FSCRYPT_MAX_DEVICES))
-+		ndevs = FSCRYPT_MAX_DEVICES;
- 
--	for (i = 0; i < sbi->s_ndevs; i++)
-+	for (i = 0; i < ndevs; i++)
- 		devs[i] = FDEV(i).bdev;
--	*num_devs = sbi->s_ndevs;
--	return devs;
-+	return ndevs;
- }
- 
- static const struct fscrypt_operations f2fs_cryptops = {
-diff --git a/include/linux/fscrypt.h b/include/linux/fscrypt.h
-index 516aba5b858b54..c009d4afe91857 100644
---- a/include/linux/fscrypt.h
-+++ b/include/linux/fscrypt.h
-@@ -57,6 +57,9 @@ struct fscrypt_name {
- /* Maximum value for the third parameter of fscrypt_operations.set_context(). */
- #define FSCRYPT_SET_CONTEXT_MAX_SIZE	40
- 
-+/* Maximum supported number of block devices per filesystem */
-+#define FSCRYPT_MAX_DEVICES	8
++			if (dc_is_hdmi_signal(pipe_ctx->stream->signal) ||
++					dc_is_dvi_signal(pipe_ctx->stream->signal))
++				dto_params.is_hdmi = true;
 +
- #ifdef CONFIG_FS_ENCRYPTION
+ 			dccg->funcs->set_dtbclk_dto(clk_mgr->dccg, &dto_params);
+ 			//dccg->funcs->set_audio_dtbclk_dto(clk_mgr->dccg, &dto_params);
+ 		}
+diff --git a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn35_clk_mgr.c b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn35_clk_mgr.c
+index 817a0253d10e52..d1785a5c7f85fd 100644
+--- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn35_clk_mgr.c
++++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn35_clk_mgr.c
+@@ -264,13 +264,20 @@ static void dcn35_update_clocks_update_dtb_dto(struct clk_mgr_internal *clk_mgr,
+ 		struct dtbclk_dto_params dto_params = {0};
  
- /* Crypto operations for filesystems */
-@@ -181,21 +184,20 @@ struct fscrypt_operations {
- 	bool (*has_stable_inodes)(struct super_block *sb);
+ 		/* use mask to program DTO once per tg */
+-		if (pipe_ctx->stream_res.tg &&
++		if (pipe_ctx->stream && pipe_ctx->stream_res.tg &&
+ 				!(tg_mask & (1 << pipe_ctx->stream_res.tg->inst))) {
+ 			tg_mask |= (1 << pipe_ctx->stream_res.tg->inst);
  
- 	/*
--	 * Return an array of pointers to the block devices to which the
--	 * filesystem may write encrypted file contents, NULL if the filesystem
--	 * only has a single such block device, or an ERR_PTR() on error.
-+	 * Retrieve the list of block devices to which the filesystem may write
-+	 * encrypted file contents.
- 	 *
--	 * On successful non-NULL return, *num_devs is set to the number of
--	 * devices in the returned array.  The caller must free the returned
--	 * array using kfree().
-+	 * This writes the block_device pointers to @devs and returns the count
-+	 * (between 1 and FSCRYPT_MAX_DEVICES inclusively).
- 	 *
- 	 * If the filesystem can use multiple block devices (other than block
- 	 * devices that aren't used for encrypted file contents, such as
- 	 * external journal devices), and wants to support inline encryption,
- 	 * then it must implement this function.  Otherwise it's not needed.
- 	 */
--	struct block_device **(*get_devices)(struct super_block *sb,
--					     unsigned int *num_devs);
-+	unsigned int (*get_devices)(
-+		struct super_block *sb,
-+		struct block_device *devs[FSCRYPT_MAX_DEVICES]);
- };
+ 			dto_params.otg_inst = pipe_ctx->stream_res.tg->inst;
+ 			dto_params.ref_dtbclk_khz = ref_dtbclk_khz;
  
- int fscrypt_d_revalidate(struct inode *dir, const struct qstr *name,
++			if (dccg->ctx->dc->link_srv->dp_is_128b_132b_signal(pipe_ctx))
++				dto_params.pixclk_khz = pipe_ctx->stream->timing.pix_clk_100hz / 10;
++
++			if (dc_is_hdmi_signal(pipe_ctx->stream->signal) ||
++					dc_is_dvi_signal(pipe_ctx->stream->signal))
++				dto_params.is_hdmi = true;
++
+ 			dccg->funcs->set_dtbclk_dto(clk_mgr->dccg, &dto_params);
+ 			//dccg->funcs->set_audio_dtbclk_dto(clk_mgr->dccg, &dto_params);
+ 		}
 -- 
 2.53.0
 
