@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B713F44BC97;
-	Thu, 30 Jul 2026 15:29:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D61344C675;
+	Thu, 30 Jul 2026 15:29:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425392; cv=none; b=GupeMQjxtnSQX9QWKv5Id1pBYu5BXH/r5WOS3LZWLy845Dygx91Uwe+Bgl0NUr2Mg7GpyOeAsdy/ratS15sxAl/plCP80Jk1VQ2xZZ9STQ0w9iGz0bzSN2WRL1lRtz9mrQ7/leo3CXKrD7gb6PDuovLnd8DWlctUwPgJzlDy/EM=
+	t=1785425396; cv=none; b=VWgLOsvacPGzZO7VrVNUUUI4PZaAAu0ob3OBe2LrEX/r0JmJPoQWyOqc101rDfgvlOphu9HFH9zKS4XUB+6Nsod7WlrcG/OpqFLi/48uzduBuCOMhWO0I+3pnJqY351jrkXcbLNPbF+6sQjD5PrN6w9jOQx6x4AUPDQCq30awFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425392; c=relaxed/simple;
-	bh=tPAcTsn7YlXPUExSEb5x7M7MpdlcZAnqNGI1IveUFZw=;
+	s=arc-20240116; t=1785425396; c=relaxed/simple;
+	bh=2GWsjNCFomXCfvfj+hYbxAfUd+5ulAL9fj/N7KaaES4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XQegPLEOrEZicGeyH+UGuC0N9iP6LsePqxVZkA43OaB9Xkvqsm903yRX0HOezgmxEE+FgP3PrB11BjiFG3dG8ODwc9cWP2/PkLEWSjoLAYgJUGN05cUsHiaKwtEjM+CTrSxvOIIouj1bcAg0hZbugc1LrT6v6T73HCWkk0nH5AY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uz/fpWR+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=el7ngHuOdo/Ck4YC3A7pJJK38Toj57yNSqgHD2CKWvOb3I/WQuw+7PhtDaUOJtnfH0Kc38Jx4MkM4gOwh24FZzHI9WZTDTahj4p7E4Gsc4xlbZLibWDkWKtChvdSfBvB1NAFKw325iM8QNuEhq68WxyvaZS66UiSWkoMtIqkbZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bLgDcJE7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uz/fpWR+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF0691F000E9;
-	Thu, 30 Jul 2026 15:29:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bLgDcJE7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3FAD1F00A3A;
+	Thu, 30 Jul 2026 15:29:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425389;
-	bh=w1rVr0WC/xVmZldyH3WWLDX8EeNqSSG1nmFeT3UwvQA=;
+	s=korg; t=1785425392;
+	bh=CUKdSKhPNn0fhEITqRlSupmQ7pCT7jG1gXWb9FeAQTQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uz/fpWR+MrsVr/sfh9vtuotwDhdmWL2afeAR6A6htFId9CGLaeqm41Qb/vi9K3JNZ
-	 npPCzv84sI+LJ/PEKpxQNwL6hn7bsFDE/cxtVkPoy71XKhaIefXz9BkkDIhA9g+uqQ
-	 kXnEwRXoS8XyN+Hg++XqDuiHON5Uz4Y/9EqgQaUo=
+	b=bLgDcJE7Nj7OabYG+hDn9Iu2pKH3vkMLncVjWT2FijmK2WRSSSTd1T5gXEiBMMJcE
+	 pmj7mI2lpfPRt6Ar0azd9/312cnnddEUpAo06Hr0Yyxva3MG7n/gtDVx572N2dl9rz
+	 d2kj1T9xds9ByHliUgXrkAhF8LR3qz+CwBrVlE78=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	AutonomousCodeSecurity@microsoft.com,
 	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
+	Florian Westphal <fw@strlen.de>,
 	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 053/602] xfrm6: clear dst.dev on error to avoid double netdev_put in xfrm6_fill_dst()
-Date: Thu, 30 Jul 2026 16:07:25 +0200
-Message-ID: <20260730141437.117441133@linuxfoundation.org>
+Subject: [PATCH 6.12 054/602] xfrm: policy: preallocate inexact bins before xfrm_hash_rebuild reinsert
+Date: Thu, 30 Jul 2026 16:07:26 +0200
+Message-ID: <20260730141437.138108584@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -54,55 +55,70 @@ Content-Transfer-Encoding: 8bit
 
 From: Xiang Mei (Microsoft) <xmei5@asu.edu>
 
-[ Upstream commit 136992de9bb91871084ae52d172610541c76e4d2 ]
+[ Upstream commit f38f8cce2f7e79775b3db7e8a5eacda04ac908e4 ]
 
-On the error path where in6_dev_get(dev) returns NULL, xfrm6_fill_dst()
-releases the device reference with netdev_put() but leaves
-xdst->u.dst.dev set. dst_destroy() later calls netdev_put(dst->dev)
-again, so the same net_device reference is released twice, underflowing
-its refcount (ref_tracker WARNING + "unregister_netdevice: waiting for
-<dev> to become free").
+xfrm_hash_rebuild()'s first loop preallocates the bins/chains the reinsert
+loop needs, so the reinsert (after hlist_del_rcu()) cannot allocate or
+fail. But its guard is inverted: it skips policies with prefixlen <
+threshold and preallocates for the rest.
 
-Clear xdst->u.dst.dev after the netdev_put(), the same way the XFRM
-device-offload paths xfrm_dev_state_add() and xfrm_dev_policy_add() in
-net/xfrm/xfrm_device.c NULL ->dev when releasing the reference on error.
+prefixlen < threshold is exactly when policy_hash_bysel() returns NULL and
+the reinsert takes the allocating xfrm_policy_inexact_insert() path. So the
+loop preallocates for the exact policies (which never allocate) and skips
+the inexact ones, whose bin/node is then allocated GFP_ATOMIC during
+reinsert. On failure the error path only WARN_ONCE()s and continues,
+leaving a poisoned bydst node; the next rebuild's hlist_del_rcu()
+dereferences LIST_POISON2 and takes a GPF. Reachable under memory pressure,
+deterministic via failslab.
 
-  ref_tracker: reference already released.
-  ref_tracker: allocated in:
-   xfrm6_fill_dst (net/ipv6/xfrm6_policy.c:86)
-   ...
-   udpv6_sendmsg (net/ipv6/udp.c:1696)
-   ...
-  ref_tracker: freed in:
-   xfrm6_fill_dst (net/ipv6/xfrm6_policy.c:90)
-   ...
-  WARNING: lib/ref_tracker.c:322 at ref_tracker_free+0x58b/0x780
-   dst_destroy (net/core/dst.c:115)
-   rcu_core
-   handle_softirqs
-   ...
+Invert the guard so preallocation covers exactly the reinserted policies;
+the reinsert then allocates nothing and cannot fail.
 
-Fixes: 84c4a9dfbf43 ("xfrm6: release dev before returning error")
+Crash:
+  Oops: general protection fault, probably for non-canonical address
+  0xfbd59c0000000024: 0000 [#1] SMP KASAN NOPTI
+  KASAN: maybe wild-memory-access in range [0xdead...]
+  ...
+  Workqueue: events xfrm_hash_rebuild
+  RIP: 0010:xfrm_hash_rebuild+0x5b3/0x1190
+  RAX: dead000000000122   (LIST_POISON2 + offset)
+  ...
+  Call Trace:
+   hlist_del_rcu (include/linux/rculist.h:599)
+   xfrm_hash_rebuild (net/xfrm/xfrm_policy.c:1365)
+   process_one_work (kernel/workqueue.c:3322)
+   worker_thread (kernel/workqueue.c:3486)
+   kthread (kernel/kthread.c:436)
+   ret_from_fork (arch/x86/kernel/process.c:158)
+   ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
+   ...
+  Kernel panic - not syncing: Fatal exception in interrupt
+
+Fixes: 24969facd704 ("xfrm: policy: store inexact policies in an rhashtable")
 Reported-by: AutonomousCodeSecurity@microsoft.com
 Signed-off-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
+Reviewed-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/xfrm6_policy.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/xfrm/xfrm_policy.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv6/xfrm6_policy.c b/net/ipv6/xfrm6_policy.c
-index 125ea9a5b8a082..3b749475f6ed65 100644
---- a/net/ipv6/xfrm6_policy.c
-+++ b/net/ipv6/xfrm6_policy.c
-@@ -88,6 +88,7 @@ static int xfrm6_fill_dst(struct xfrm_dst *xdst, struct net_device *dev,
- 	xdst->u.rt6.rt6i_idev = in6_dev_get(dev);
- 	if (!xdst->u.rt6.rt6i_idev) {
- 		netdev_put(dev, &xdst->u.dst.dev_tracker);
-+		xdst->u.dst.dev = NULL;
- 		return -ENODEV;
- 	}
+diff --git a/net/xfrm/xfrm_policy.c b/net/xfrm/xfrm_policy.c
+index f74e45a34b70df..e033390e77855c 100644
+--- a/net/xfrm/xfrm_policy.c
++++ b/net/xfrm/xfrm_policy.c
+@@ -1329,8 +1329,8 @@ static void xfrm_hash_rebuild(struct work_struct *work)
+ 			}
+ 		}
  
+-		if (policy->selector.prefixlen_d < dbits ||
+-		    policy->selector.prefixlen_s < sbits)
++		if (policy->selector.prefixlen_d >= dbits &&
++		    policy->selector.prefixlen_s >= sbits)
+ 			continue;
+ 
+ 		bin = xfrm_policy_inexact_alloc_bin(policy, dir);
 -- 
 2.53.0
 
