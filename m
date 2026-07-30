@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AE8740E8FC;
-	Thu, 30 Jul 2026 15:18:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45E6B3E95A8;
+	Thu, 30 Jul 2026 15:18:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424685; cv=none; b=U64uwG72YLd6Nnk+BYx3EhIzjx+3chKjRsnZku+XWaOHPO8YQbTZUnb5SFN4vHmbmjrRRjId0RGD4lL5g9Hq5oie+aWW07VBxcT0Q7maFAKN/PrDEbclXwFCX5elahKHTH2TssAv4IUFRCC3Ni169osvEHz74NXmcqyeksMStXE=
+	t=1785424687; cv=none; b=JJCpt6Js5coKOJaXjjAcdCleSfbI0BPF1Qwl0MP3/4XVmY3v9ti5DGqdEz9zvUvK4q3lKGt8j1wmgXw0Ov45/PzcGIiakI6EjMhMMgRyBS6Cej23z3wDAdt/Vauf/DnlF4RwXGcdamuWZRRdah5+hh+ZyWhgPBD24zR2CWatWcQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424685; c=relaxed/simple;
-	bh=CjA8rzZk3uApC4v2S6ohurK9pJRkb7WCOZUpbNtIzLY=;
+	s=arc-20240116; t=1785424687; c=relaxed/simple;
+	bh=cTiWqplc1ICrE8Oz0jkinddf7l9b0Xza7y5popjn6BQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OMMaHOlCSqkBm3DrMZeY1Ou3Zz67dDftOrMzTGfy0TVXv1zX9jH+C2p3OZdpJDJgI0GonIJp6H8P0RlgcF5T0+V0a1MDcl6KzcIDS3Q7Yt77VGeO0aJgmhOc5IOuXBRe9pIF+4/VfSiBFunXM7jExS2U1yljy20hnq4rvPLNP0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XsIiRz9j; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=i7C4ff02B9rotc/3cGyjiW6EctfCtHx5LgMQZJru9ZUZoFUpETGOLlHyOsYlUqmU/2VDotdFah5PoDihHhhMy5fpNWtF8RiEuCxOIDwyswrfKFvuM9cwgGWeRCvnKAAIyQRhGKv6HYUiTIGUScBoJuWW4Ld+p1rh/3IIfNLta7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C0ziwjTm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XsIiRz9j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF1A31F000E9;
-	Thu, 30 Jul 2026 15:18:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C0ziwjTm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0DAD1F000E9;
+	Thu, 30 Jul 2026 15:18:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424683;
-	bh=U2P2i95jFtZA3E4/VUD+KVnqY+k7wR65hj36Hb84aFw=;
+	s=korg; t=1785424686;
+	bh=+USP2nKoLRU4K+w6UTAA0LvdSUSfHI9VRYjDqRn9sOw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XsIiRz9jy4sUGajD5opYiCvGcTnroGB0cv9idldcjkDog7DtU7uteonvgu6Zy4k9h
-	 pX323uTcpDtyfAxLZbzPbqAjWaV92Iz8a6TFgNWB6aOFE5LdsolpmS3cmYLFuOd28x
-	 FeKLp6cEr6U1v3bcJWYxLh4cJf2g/4hootdB9Ah0=
+	b=C0ziwjTmBxKqo5nYflPWs7KKTofbdnsQp+mzkIQCW8YvN2b9F276tEOei9ONmGS+d
+	 c2S+nqgeykwzj6HqvAiZJrbKyMCg9gkkYrvCHJmqg83kYJB/vyNU8kVH9zH5Giytw5
+	 KDLdqO0dma9HmVwGYeJyFoseW5vNk/42AsTaxWbA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Bill Wendling <morbo@google.com>,
-	Justin Stitt <justinstitt@google.com>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Peter Zijlstra <peterz@infradead.org>
-Subject: [PATCH 6.18 480/675] x86/boot/compressed: Disable jump tables
-Date: Thu, 30 Jul 2026 16:13:30 +0200
-Message-ID: <20260730141455.327722791@linuxfoundation.org>
+	syzbot+f24c3d5d316011bacc70@syzkaller.appspotmail.com,
+	stable <stable@kernel.org>,
+	Ian Abbott <abbotti@mev.co.uk>
+Subject: [PATCH 6.18 481/675] comedi: comedi_parport: deal with premature interrupt
+Date: Thu, 30 Jul 2026 16:13:31 +0200
+Message-ID: <20260730141455.349210161@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -56,63 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Ian Abbott <abbotti@mev.co.uk>
 
-commit 4a9ec5ec9555ad62dc5b81a37ac946025c2ea002 upstream.
+commit 17221216ae8ce6a24e8a4e787382e3ebc81b88a8 upstream.
 
-After a recent upstream LLVM change to start generating jump and lookup
-tables in switch statements in more instances [1], linking the
-compressed x86 boot image when CONFIG_KERNEL_ZSTD is enabled fails with:
+Syzbot reported a general protection fault in
+`comedi_get_is_subdevice_running()`, which was called from the interrupt
+handler `parport_interrupt()` in the "comedi_parport" driver, but it
+does not currently have a C reproducer for the problem.  It's
+probably due to a premature interrupt for one of two reasons:
 
-  ld.lld: error: Unexpected run-time relocations (.rela) detected!
+1. The driver sets up the interrupt handler before the comedi subdevices
+   used by the interrupt handler have been allocated, but does not
+   disable the interrupt in the parallel port's CTRL register first.
+2. The driver uses a user-supplied I/O port base address which Syzbot
+   would have supplied, but it might not be backed by real parallel port
+   hardware.
 
-Dumping the relocations in misc.o, which is the only file influenced by
-CONFIG_KERNEL_ZSTD in the decompressor, shows dynamic relocations to
-some string constants, which correspond to the string literals in the
-switch statement in handle_zstd_error():
+Change the initialization order in the driver's comedi "attach" handler
+(`parport_attach()`) so that the hardware registers are initialized
+before the interrupt handler is requested.  This should prevent
+premature interrupts occurring for real hardware.
 
-  Relocation section '.rela.data.rel.ro' at offset 0x277b0 contains 31 entries:
-      Offset             Info             Type               Symbol's Value  Symbol's Name + Addend
-  0000000000000000  0000006600000001 R_X86_64_64            0000000000000000 .rodata.str1.1 + 73a
-  0000000000000008  0000006600000001 R_X86_64_64            0000000000000000 .rodata.str1.1 + 78e
-  0000000000000010  0000006600000001 R_X86_64_64            0000000000000000 .rodata.str1.1 + 78e
-  0000000000000018  0000006600000001 R_X86_64_64            0000000000000000 .rodata.str1.1 + 78e
-  ...
+Also add a test to the interrupt handler to ensure the comedi device is
+fully attached and return early if it isn't.
 
-This optimization is problematic for the decompressor environment, as it
-is built as -fPIE without any explicit absolute references (as described
-at the top of misc.c) while not applying any dynamic relocations, hence
-the linker assertion. To opt out of this optimization, which is of
-little value in this special early boot code, and to mirror the other
-x86 startup code in arch/x86/boot/startup, disable jump tables in the
-decompressor.
-
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Acked-by: Ard Biesheuvel <ardb@kernel.org>
-Cc: Bill Wendling <morbo@google.com>
-Cc: Justin Stitt <justinstitt@google.com>
-Cc: Nick Desaulniers <ndesaulniers@google.com>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: stable@vger.kernel.org
-Link: https://github.com/llvm/llvm-project/commit/fa02a6ed66b1700c996b49c96c6bc0eb014c9518 [1]
-Link: https://patch.msgid.link/20260722-x86-boot-compressed-disable-jt-clang-v2-1-7373d38482fb@kernel.org
-Closes: https://github.com/ClangBuiltLinux/linux/issues/2165
+Fixes: 241ab6ad7108e ("Staging: comedi: add comedi_parport driver")
+Reported-by: syzbot+f24c3d5d316011bacc70@syzkaller.appspotmail.com
+Cc: stable <stable@kernel.org>
+Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
+Link: https://patch.msgid.link/20260527125104.96596-1-abbotti@mev.co.uk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/boot/compressed/Makefile |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/comedi/drivers/comedi_parport.c |   13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
---- a/arch/x86/boot/compressed/Makefile
-+++ b/arch/x86/boot/compressed/Makefile
-@@ -27,6 +27,7 @@ targets := vmlinux vmlinux.bin vmlinux.b
- KBUILD_CFLAGS := -m$(BITS) -O2 $(CLANG_FLAGS)
- KBUILD_CFLAGS += -std=gnu11
- KBUILD_CFLAGS += -fno-strict-aliasing -fPIE
-+KBUILD_CFLAGS += -fno-jump-tables
- KBUILD_CFLAGS += -Wundef
- KBUILD_CFLAGS += -DDISABLE_BRANCH_PROFILING
- cflags-$(CONFIG_X86_32) := -march=i386
+--- a/drivers/comedi/drivers/comedi_parport.c
++++ b/drivers/comedi/drivers/comedi_parport.c
+@@ -211,6 +211,13 @@ static irqreturn_t parport_interrupt(int
+ 	unsigned int ctrl;
+ 	unsigned short val = 0;
+ 
++	/*
++	 * Check device is fully attached.  Device interrupts should have
++	 * been disabled, but do this in case of bad hardware.
++	 */
++	if (!dev->attached)
++		return IRQ_NONE;
++
+ 	ctrl = inb(dev->iobase + PARPORT_CTRL_REG);
+ 	if (!(ctrl & PARPORT_CTRL_IRQ_ENA))
+ 		return IRQ_NONE;
+@@ -231,6 +238,9 @@ static int parport_attach(struct comedi_
+ 	if (ret)
+ 		return ret;
+ 
++	outb(0, dev->iobase + PARPORT_DATA_REG);
++	outb(0, dev->iobase + PARPORT_CTRL_REG);
++
+ 	if (it->options[1]) {
+ 		ret = request_irq(it->options[1], parport_interrupt, 0,
+ 				  dev->board_name, dev);
+@@ -286,9 +296,6 @@ static int parport_attach(struct comedi_
+ 		s->cancel	= parport_intr_cancel;
+ 	}
+ 
+-	outb(0, dev->iobase + PARPORT_DATA_REG);
+-	outb(0, dev->iobase + PARPORT_CTRL_REG);
+-
+ 	return 0;
+ }
+ 
 
 
