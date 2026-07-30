@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C71C93769FD;
-	Thu, 30 Jul 2026 15:53:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59B2A36607D;
+	Thu, 30 Jul 2026 15:53:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426799; cv=none; b=BeKhRVvE351Ua1npEYjrTS3KZWH313L9swmPUIR0e6Dkn1xb1bBKYSgR86AB6C6vrNjiV+ca9C3SOJevXtoyjcmnBqXeQ8On850I8knXcAlfXJjb5cAjp5dy56p9NoE9hvZUKdrewTRkA8bbsdI+AVN2UOd4YpmXmkOBfjkkY4k=
+	t=1785426802; cv=none; b=DxR/6fmUo1YKTZ2PvElkjdTzEF4WpmMhFXNObDbvAKIKOOz4xwht+4HbXfjC+EsU4KtHqgMl5NKqHTWZgpOQnef+PAuA0LMC1DSycPJPUAv6+hW8Uk00kvi1rwb7fpD8Y4p3WRUXBz5HAZpLNG9dJeZB3iHlUfSyQoO6rcbeo18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426799; c=relaxed/simple;
-	bh=EbkAj/YEK0NvguOwV6oTqVAGCyTnjAN+yK3XnCcf6Rc=;
+	s=arc-20240116; t=1785426802; c=relaxed/simple;
+	bh=cQn5A1PBHXEOmiV/FTBHzF5wo+jkZrTkJstWIP5LtC4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WcbdLShI9uVPU8K/59avw0+BV50Jf2A5B4tWvFjv7hPvUGgM47kmg5+YB1vigSACuJwwX588K4xjvYN1k6txmc3zgp7H9gL0xjOdD4Mh6ZRzqKHnm6bd25Js8+svAazy+U6yH96C05LmWWONLrsyvjXkSSjXYMETCp/SN+WUVSE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X5P5/t9G; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ox2wvNs0/sge43rS/s8etZurL/0hUK1kaUnRlTPOKxbYuK0q0/sUjovnlDaQDF9y2CVtwoClyGGLjPtRiMjlE2TvsTU5qTqSbtdb0d4/NyzWSs7tbIj704pURwhp2R+69aDbPoHxxTmjZ3z6mmDah0661E1mawF1pWEDUm64IEk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r7gIMx/x; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X5P5/t9G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C824A1F000E9;
-	Thu, 30 Jul 2026 15:53:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r7gIMx/x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B07E71F000E9;
+	Thu, 30 Jul 2026 15:53:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426798;
-	bh=mgfcPJt1OYtShYLYDvVhV7+ckm0kWsvYtBGe/BrAYK8=;
+	s=korg; t=1785426801;
+	bh=2m+WPo+H4Lld647KspV5y6rcrpqH2dTYtwR/UOITD4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X5P5/t9GsmOFTcHa8ptSffEb8yV1M+ISyxjhXKQ+rgS22Wa9L9w5K5HvukYr0X9//
-	 1FCul6+hhsaR7CTBA9j2YYf1Gri7fPDHeuf8HFdGmQ3VMZmyds91KqQ/BD0S6Q18pA
-	 aCjF5v2++gJ0pXYVAFIld/pS4hf3ExlueapXQ98o=
+	b=r7gIMx/xcu8mTXzdSIvuFxqj36rx98Pc4dbZgavivmSOSUVkXf3ERSvaXllLORcGF
+	 TBOb5XBMyaWGlG7hd8o2UmRFzFBlZ7ob2/ygm/YbuCOBB5sjK/UGmjF4F5jQrkXDj6
+	 5qxKG8DtKr8WJo+BWHe0ySxGhK5ScWBpiXMvxyu8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Connor Williamson <connordw@amazon.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 545/602] block: remove redundant GD_NEED_PART_SCAN in add_disk_final()
-Date: Thu, 30 Jul 2026 16:15:37 +0200
-Message-ID: <20260730141447.481287799@linuxfoundation.org>
+Subject: [PATCH 6.12 546/602] dm-integrity: fix leaking uninitialized kernel memory
+Date: Thu, 30 Jul 2026 16:15:38 +0200
+Message-ID: <20260730141447.502879325@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -52,62 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Connor Williamson <connordw@amazon.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-[ Upstream commit 181bb9c9eae4f69fe510a62a42c2932d0314a800 ]
+[ Upstream commit 7bb03b2b01b814a9fc14afbfc2cbb2cca5b34750 ]
 
-add_disk_final() sets GD_NEED_PART_SCAN before calling bdev_add(),
-then calls disk_scan_partitions() which sets the flag itself. The
-early set is redundant and introduces a race.
+If hash size is less than device's tuple size, dm-integrity is supposed
+to zero the remaining space. There was a bug in the code that zeroing
+didn't work. This commit fixes it.
 
-Between bdev_add() and disk_scan_partitions(), concurrent openers
-(multipathd, blkid, LVM) see the flag in blkdev_get_whole() and
-trigger bdev_disk_changed(). When disk_scan_partitions() then runs,
-it calls bdev_disk_changed() again, dropping the partitions the
-concurrent opener already created before re-adding them, which can
-result in transient partition disappearances.
-
-The race is observable by inserting an msleep() between bdev_add()
-and disk_scan_partitions() while running concurrent open() calls
-during device bind. Without artificial delay, it manifests under
-scheduling pressure during boot on systems with aggressive device
-scanners (multipathd, systemd-udevd).
-
-Therefore, do not set GD_NEED_PART_SCAN in add_disk_final(). Other
-GD_NEED_PART_SCAN consumers (blkdev_get_whole(),
-sd_need_revalidate()) should not be affected as the flag
-is set internally by disk_scan_partitions().
-
-The retry-on-next-open intention from commit e5cfefa97bcc
-("block: fix scan partition for exclusively open device again")
-should also not be affected as the early return paths in
-disk_scan_partitions() should be unreachable at device registration
-time (bd_holder is NULL and open_partitions is zero).
-
-Fixes: e5cfefa97bcc ("block: fix scan partition for exclusively open device again")
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Assisted-by: Claude:claude-opus-4.6
+Fixes: fb0987682c62 ("dm-integrity: introduce the Inline mode")
 Cc: stable@vger.kernel.org
-Signed-off-by: Connor Williamson <connordw@amazon.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20260615130715.53693-1-connordw@amazon.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/genhd.c |    4 ----
- 1 file changed, 4 deletions(-)
+ drivers/md/dm-integrity.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/block/genhd.c
-+++ b/block/genhd.c
-@@ -387,10 +387,6 @@ static void add_disk_final(struct gendis
- 	struct device *ddev = disk_to_dev(disk);
- 
- 	if (!(disk->flags & GENHD_FL_HIDDEN)) {
--		/* Make sure the first partition scan will be proceed */
--		if (get_capacity(disk) && disk_has_partscan(disk))
--			set_bit(GD_NEED_PART_SCAN, &disk->state);
--
- 		bdev_add(disk->part0, ddev->devt);
- 		if (get_capacity(disk))
- 			disk_scan_partitions(disk, BLK_OPEN_READ);
+--- a/drivers/md/dm-integrity.c
++++ b/drivers/md/dm-integrity.c
+@@ -2502,7 +2502,7 @@ skip_spinlock:
+ 			struct bio_vec bv = bio_iter_iovec(bio, dio->bio_details.bi_iter);
+ 			const char *mem = bvec_kmap_local(&bv);
+ 			if (ic->tag_size < ic->tuple_size)
+-				memset(dio->integrity_payload + pos + ic->tag_size, 0, ic->tuple_size - ic->tuple_size);
++				memset(dio->integrity_payload + pos + ic->tag_size, 0, ic->tuple_size - ic->tag_size);
+ 			integrity_sector_checksum(ic, dio->bio_details.bi_iter.bi_sector, mem, dio->integrity_payload + pos);
+ 			kunmap_local(mem);
+ 			pos += ic->tuple_size;
 
 
