@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85C4230C618;
-	Thu, 30 Jul 2026 15:01:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EBC339A801;
+	Thu, 30 Jul 2026 15:01:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423661; cv=none; b=dcDHvB4n0DLG323JGjqEc9+04P0YgDZmpG6G9UBsCTLOvUYcxdAca1v22pw1QOGytNbQHDuZGNQyHZ/OaanbMFSxT0TgguIZXkddVhDaCDX6megDoja425WMruV1cBQOVPpYiizZHGF1sR91Vm8rL6R21DwRjBMxL9ZMp5pfs/8=
+	t=1785423664; cv=none; b=tZRtOnVoslJv6lLPM2N+pAGNn/wH0xKEOO5yO4gOgSqgsXqJOleSfZKsMkg4rlj5l61XHHqsqAfhxGQWanG+UGzuy1vw+NE/xUQgXKFryJUZ+ASpFHpjihnpdJf3Bz4eiO+lDFPFVFauJdYsdJUL+fRE3G3V+hTFxukQODnsQb0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423661; c=relaxed/simple;
-	bh=BEWxCLLXlbCrhKaksknoIjxnbfuVsKLwwtqHYt9CLwM=;
+	s=arc-20240116; t=1785423664; c=relaxed/simple;
+	bh=u3Vq2UfGVMUo57rGYb5JeSEzIU7poG68lQm+9hLiRu8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qcgReiHai69S4Mo5i02/ZZKt1Y9RdDCXJaRP0VQBcwibk8LyGz+CS4MUQgPxLB4Vezs+M+xpyPek8gAkPIZR9aMCIMGzVxb0SKY6IiKomrCp+EkztMN7+Cs9/NTRqcP3ubb21kFOsyRiLeA/F2LRiKmbQy+o1I9XYVzKfFuDZ/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xLqJ+OTS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PfIu6n40A56BJpEMSApDwzJPjTAXHeYRyNRYJUOE580uV7OEfRO2l9ZHy5Vx0G19CV4Fj7Xo419JQiZfZWDmdPR2TmydSnRH3LDDlgv9EKJVZbZIeCVFQI9zFWsdafp0VShyW9C8dEAqT+0xXrKYfn1hwMzrhasEu+U88v/h8zs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hR6Ld10n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xLqJ+OTS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7C651F000E9;
-	Thu, 30 Jul 2026 15:00:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hR6Ld10n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1B631F000E9;
+	Thu, 30 Jul 2026 15:01:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423660;
-	bh=0TzFkus9GCM0JHLPxBfLA/u21Z1FoIf1AjkLJLG4Udc=;
+	s=korg; t=1785423663;
+	bh=GMSA2Sv8DrfDGhEvRe7RMXJoJkll9vgwRS80pjORn6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xLqJ+OTSU5Z1pSF8WzQEuW5LrDScz5iD8hpdvHnyuOzdp/yl5IGXDUCCIemN/Oz7A
-	 STbcdDtKrHHTfhYTPFOwdEJAXQnm1n3VVmc/ODDFDWvRtFujOTbupHTARD6Id7QZSI
-	 C53pYP7z0F28cudgVE7cfWLdQVpkba/fQq631kIU=
+	b=hR6Ld10nSyBlBPhYDb7rDM6x9abRSgRL9h5yLz4bc+BrjgStGwzfYKlmx5zwh1/mw
+	 AGviEqHW21pTU376D4e9HIDgQIXpgikL4hU0x9t1dEPlL5LER+u1CfmhoWi/+9/G8P
+	 6+4QMrd8Xft2qJJcqygfZUF/QQNmPsdSxly0BDTE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linmao Li <lilinmao@kylinos.cn>,
-	Liviu Dudau <liviu.dudau@arm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 120/675] drm/panthor: Check debugfs GEM lock initialization
-Date: Thu, 30 Jul 2026 16:07:30 +0200
-Message-ID: <20260730141447.696510177@linuxfoundation.org>
+Subject: [PATCH 6.18 121/675] s390/checksum: Fix csum_partial() without vector facility
+Date: Thu, 30 Jul 2026 16:07:31 +0200
+Message-ID: <20260730141447.717162525@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -51,44 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linmao Li <lilinmao@kylinos.cn>
+From: Vasily Gorbik <gor@linux.ibm.com>
 
-[ Upstream commit 022e901333c3054656a640794e842bab7af5a75c ]
+[ Upstream commit 4bb06b60d982355e22647b3d12d6619419f8c1fa ]
 
-drmm_mutex_init() can fail while registering the managed cleanup action.
-When that happens, drmm_add_action_or_reset() destroys the mutex before
-returning the error. Continuing initialization would therefore leave the
-debugfs GEM object list with an unusable lock.
+Currently csum_partial() calls csum_copy() with copy=false and dst=NULL.
+On machines without the vector facility, csum_copy() falls back to
+cksm(dst, ...), causing the checksum to be calculated from address zero
+instead of the source buffer.
 
-Propagate the error as is already done for the other managed mutexes in
-panthor_device_init().
+The VX implementation already checksums data loaded from src. Make the
+fallback do the same by passing src to cksm().
 
-Fixes: a3707f53eb3f ("drm/panthor: show device-wide list of DRM GEM objects over DebugFS")
-Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
-Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
-Link: https://patch.msgid.link/20260713082912.321021-1-lilinmao@kylinos.cn
-Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
+Fixes: dcd3e1de9d17 ("s390/checksum: provide csum_partial_copy_nocheck()")
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panthor/panthor_device.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/s390/lib/csum-partial.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/panthor/panthor_device.c b/drivers/gpu/drm/panthor/panthor_device.c
-index 962a10e00848ef..cdf82d83de7abe 100644
---- a/drivers/gpu/drm/panthor/panthor_device.c
-+++ b/drivers/gpu/drm/panthor/panthor_device.c
-@@ -182,7 +182,10 @@ int panthor_device_init(struct panthor_device *ptdev)
- 		return ret;
- 
- #ifdef CONFIG_DEBUG_FS
--	drmm_mutex_init(&ptdev->base, &ptdev->gems.lock);
-+	ret = drmm_mutex_init(&ptdev->base, &ptdev->gems.lock);
-+	if (ret)
-+		return ret;
-+
- 	INIT_LIST_HEAD(&ptdev->gems.node);
- #endif
- 
+diff --git a/arch/s390/lib/csum-partial.c b/arch/s390/lib/csum-partial.c
+index 458abd9bac7025..9d74ceff136c54 100644
+--- a/arch/s390/lib/csum-partial.c
++++ b/arch/s390/lib/csum-partial.c
+@@ -23,7 +23,7 @@ static __always_inline __wsum csum_copy(void *dst, const void *src, int len, __w
+ 	if (!cpu_has_vx()) {
+ 		if (copy)
+ 			memcpy(dst, src, len);
+-		return cksm(dst, len, sum);
++		return cksm(src, len, sum);
+ 	}
+ 	kernel_fpu_begin(&vxstate, KERNEL_VXR_V16V23);
+ 	fpu_vlvgf(16, (__force u32)sum, 1);
 -- 
 2.53.0
 
