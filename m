@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87332443E44;
-	Thu, 30 Jul 2026 15:11:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D22839C00E;
+	Thu, 30 Jul 2026 15:11:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424300; cv=none; b=YTEMjBDwAMA/2r3rHC2sjVzkb5C4t/HQ86n05NlV45/Azkjs2Mp9PRWyWIohuQoWsZa8gd56FUl9a8c3RaC8iFEvIsZnByUTGwutwcHLwgsIuiXS/jsVUMPhhtFQ24HL8A0maO/kLCIELnvtguLzc1iMY8+sc6VFWhKjSvlmkSo=
+	t=1785424303; cv=none; b=QLA+9d7ikA4Zk9230hAaRHzGHeFei0Yb8wy3J0FY7/lz3GsYa9qAJhOIrJS2wyO75SnPvCvtwpn3t/hbUkdviyC99ZnXNjZZ5dg+PdKVKWfvi+xbmhvEOE/7GeILc3TMRIIat0rgJpODrbypqfo63yxsGq4yrtC2LZF7/+kihAA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424300; c=relaxed/simple;
-	bh=j9ppbcNzAoLN/cu07HJ8fRpaa5OZSAKQ6j/pTdu6Cmo=;
+	s=arc-20240116; t=1785424303; c=relaxed/simple;
+	bh=phfhJla3FVHyIz0lWNgBzEWwchkc5oygbwGTz+v198A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rnoERvyWDWCG0v7I2csC9whkA5kjboQLP8o79+dWtPDB6qwTiKYAQk02n3VS6ww3WzJWCDBL6Wtqad1Lx4b+wOL3roRedx6z9GSnAN6+BT7294esjWcqRYo7lyivhBXGu5V5txq2SGhAiMFe/2a3SMuwmr9DAIqkFQHbWpIirIc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DgsHa6Jc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Q+VWEbq4WmpryUyGzflczSdVSZ4yZWopYmxSQwo9sKU6MdekI2AR525Y9KJg9xnzi0oz8CmlmzM3GSzbA74qDjv9hteuNNm9s41MR+/rMgS7w7JGi+6nNZhcpV1MiVL2pKnPMlTcc8JZrn1JyZwuznEH2Q4x1FPJIsSuN1u6+MU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jlgavLXj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DgsHa6Jc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A72E1F00A3D;
-	Thu, 30 Jul 2026 15:11:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jlgavLXj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 728F61F000E9;
+	Thu, 30 Jul 2026 15:11:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424299;
-	bh=mBix7TzlebxwoiL8QKuph1+qFEx2Id6GYJlYraoSkps=;
+	s=korg; t=1785424302;
+	bh=S5FxtaBM3AR6PHbGi3aaDGkWy7Nuv5ZPeqjvwEOr/SE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DgsHa6JcmwEzwNKoDcqbfcQMbzD8CGioJgUoN/bBe8x7FWVc66S0Z/1CXLkIUz+CC
-	 8CDJhG56ueXOEewQ8aC7qCKc7VyE3XznuNsa0WHY0GeBWz8P/FiKHv4APovzcujYqq
-	 uaHWSCuM0aThQaYYOsUNIDeRpu6q4YbG10g6/Q7g=
+	b=jlgavLXj85VMV07ozU8LzWBj33y99Ui+TKsjCBfIxij8orD5VYgrA2paViPwYEfaX
+	 2ZGfnLbm8/VQ38MVecgpWxHrtpnqBK0CdYx8eSGJN4ycKh1JUBsxGreltURNK+MxmN
+	 sbz1Al/CBnYhBTsl4RiQOMcldWwBgdaD4HSbWeJs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	=?UTF-8?q?Pavel=20Ondra=C4=8Dka?= <pavel.ondracka@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 344/675] drm/radeon: fix r100_copy_blit for large BOs
-Date: Thu, 30 Jul 2026 16:11:14 +0200
-Message-ID: <20260730141452.444074182@linuxfoundation.org>
+	Sashiko <sashiko-bot@kernel.org>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Francois Dugast <francois.dugast@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>
+Subject: [PATCH 6.18 345/675] drm/xe: Return error on non-migratable faults requiring devmem
+Date: Thu, 30 Jul 2026 16:11:15 +0200
+Message-ID: <20260730141452.465342143@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -52,79 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Ondračka <pavel.ondracka@gmail.com>
+From: Matthew Brost <matthew.brost@intel.com>
 
-commit f896e86273dbbebb5eac966b4a201b5c62a02e9a upstream.
+commit 136fb61ba8571076dc5d49350a0e6d002d740b74 upstream.
 
-r100_copy_blit() copies BOs as 1024-pixel-wide ARGB8888 blits, so one
-GPU page becomes one blit row. Large copies are split into chunks of at
-most 8191 rows.
+Non-migratable faults that require devmem incorrectly jump to the 'out'
+label, which squashes the error code intended to be returned to the
+upper layers. Fix this by returning -EACCES instead.
 
-The kernel register header names the packet coordinate dwords SRC_Y_X
-and DST_Y_X. In the BITBLT_MULTI description in
-R5xx_Acceleration_v1.5.pdf docs, these correspond to [SRC_X1 | SRC_Y1]
-and [DST_X1 | DST_Y1], which are signed 13-bit coordinates in the
--8192..8191 range. The old code kept SRC/DST_PITCH_OFFSET at the BO base
-and used SRC_Y_X/DST_Y_X as the chunk address, so large BO moves could
-exceed that coordinate range.
-
-Compute per-chunk SRC/DST_PITCH_OFFSET bases and emit zero source and
-destination coordinates. r100_copy_blit() already packs
-SRC/DST_PITCH_OFFSET as pitch plus base offset, so large chunk addresses
-belong there rather than in the coordinate fields.
-
-This fixes Prison Architect corruption with 4096x4096 mipped textures
-after they are evicted to GTT under memory pressure on RV530.
-
-Closes: https://gitlab.freedesktop.org/mesa/mesa/-/work_items/6716
-Acked-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Pavel Ondračka <pavel.ondracka@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 87be26aee76239c6da03e599f238a426897f78ad)
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: 4208fac3dce5 ("drm/xe: Add more SVM GT stats")
 Cc: stable@vger.kernel.org
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Reviewed-by: Francois Dugast <francois.dugast@intel.com>
+Link: https://patch.msgid.link/20260617135101.1245574-1-matthew.brost@intel.com
+(cherry picked from commit c4508edb2c723de93717272488ea65b165637eac)
+Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/radeon/r100.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/xe/xe_svm.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/radeon/r100.c
-+++ b/drivers/gpu/drm/radeon/r100.c
-@@ -906,6 +906,7 @@ struct radeon_fence *r100_copy_blit(stru
- {
- 	struct radeon_ring *ring = &rdev->ring[RADEON_RING_TYPE_GFX_INDEX];
- 	struct radeon_fence *fence;
-+	uint64_t cur_src_offset, cur_dst_offset;
- 	uint32_t cur_pages;
- 	uint32_t stride_bytes = RADEON_GPU_PAGE_SIZE;
- 	uint32_t pitch;
-@@ -934,6 +935,10 @@ struct radeon_fence *r100_copy_blit(stru
- 			cur_pages = 8191;
- 		}
- 		num_gpu_pages -= cur_pages;
-+		cur_src_offset = src_offset +
-+			(uint64_t)num_gpu_pages * RADEON_GPU_PAGE_SIZE;
-+		cur_dst_offset = dst_offset +
-+			(uint64_t)num_gpu_pages * RADEON_GPU_PAGE_SIZE;
+--- a/drivers/gpu/drm/xe/xe_svm.c
++++ b/drivers/gpu/drm/xe/xe_svm.c
+@@ -1074,10 +1074,8 @@ retry:
  
- 		/* pages are in Y direction - height
- 		   page width in X direction - width */
-@@ -950,13 +955,13 @@ struct radeon_fence *r100_copy_blit(stru
- 				  RADEON_DP_SRC_SOURCE_MEMORY |
- 				  RADEON_GMC_CLR_CMP_CNTL_DIS |
- 				  RADEON_GMC_WR_MSK_DIS);
--		radeon_ring_write(ring, (pitch << 22) | (src_offset >> 10));
--		radeon_ring_write(ring, (pitch << 22) | (dst_offset >> 10));
-+		radeon_ring_write(ring, (pitch << 22) | (cur_src_offset >> 10));
-+		radeon_ring_write(ring, (pitch << 22) | (cur_dst_offset >> 10));
- 		radeon_ring_write(ring, (0x1fff) | (0x1fff << 16));
- 		radeon_ring_write(ring, 0);
- 		radeon_ring_write(ring, (0x1fff) | (0x1fff << 16));
--		radeon_ring_write(ring, num_gpu_pages);
--		radeon_ring_write(ring, num_gpu_pages);
-+		radeon_ring_write(ring, 0);
-+		radeon_ring_write(ring, 0);
- 		radeon_ring_write(ring, cur_pages | (stride_pixels << 16));
- 	}
- 	radeon_ring_write(ring, PACKET0(RADEON_DSTCACHE_CTLSTAT, 0));
+ 	xe_svm_range_fault_count_stats_incr(gt, range);
+ 
+-	if (ctx.devmem_only && !range->base.pages.flags.migrate_devmem) {
+-		err = -EACCES;
+-		goto out;
+-	}
++	if (ctx.devmem_only && !range->base.pages.flags.migrate_devmem)
++		return -EACCES;
+ 
+ 	if (xe_svm_range_is_valid(range, tile, ctx.devmem_only)) {
+ 		xe_svm_range_valid_fault_count_stats_incr(gt, range);
 
 
