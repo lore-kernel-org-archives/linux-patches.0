@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B63E038DC46;
-	Thu, 30 Jul 2026 16:00:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 837E71FECBA;
+	Thu, 30 Jul 2026 16:00:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427211; cv=none; b=Mb/vOWwxNPF96agItKPCYTBxvrJGeAh9arL7J8rOf6vaTeYOBqKjt0rCKueUhjukf83z122Vo5VCPdgM3u87yAz5OZkFT05aK/lI4jAgHKiiZpP7ZkIdchjLPPuOn9E+wcJ6I04+VHPWrRVJ6KyNhXJF53P7IYVthR2YoJoTcbU=
+	t=1785427214; cv=none; b=oO0mFMW4o3ESQTvxyzGgNku7hfRPI0Tr51scuWCi5w6d308OyiUZsECMJ9K/6A/7K5+XdUTDFWnY3PfgqLTugm0aa9Swy1yQG633liBp2vWC3bLwKmSzBhgbK7oE4iCbH1TEHMa+m1VBkBvmFswT4LTjcxkghHH7nBfm0dgCyuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427211; c=relaxed/simple;
-	bh=DMQUCD2z0mHX8i4+V5tlmi+SCEASQjv0LgSrHm4aebw=;
+	s=arc-20240116; t=1785427214; c=relaxed/simple;
+	bh=5KMqPJJceNvYKHY25LWIcT7R5gJr5Re/mbPjpA8X29U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UqP+M1FgQ1UIHGxCbvnLAeMH+ifucTNq+4sf78ZChKBOHWQAj8cjLbktZf3DxMuXqljDg0nV//8X+QMGNBxQCWhn/TaRBKT5Oul7+xIxakMRKLWQ+WINHa6Rmf6yf0rKOs/MvVK13eroImw1+bs/tdTYSs9s62B2YAizyTBuJFM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Onm5vDRJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uVSkPNiZpHHoFvrF8f7XKhhik099W/dmAWVqin2oK1p7pIoDzAqz76f49gyX/Ow3HeFODi2JoFAeD42DvZgSpDqZBUwVkGHBr6t3yW6TpMsbVD4A8/iQ8hy7yUrCtTztOkJ+tgU4wU8A9wSSXO95p58c7ivk/NgRfWBVeF2kXXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ORvfYZoE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Onm5vDRJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AAFB1F000E9;
-	Thu, 30 Jul 2026 16:00:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ORvfYZoE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D59FA1F000E9;
+	Thu, 30 Jul 2026 16:00:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427209;
-	bh=VNIM0QDIFx599BMuF1W5DRpMJHBZf8Ewbooqlb0DLnI=;
+	s=korg; t=1785427212;
+	bh=E8UC5KEqcG0PdHXA6qRJBH0voaD33vR13e9kclounFI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Onm5vDRJuYXlLcLqpCCLErg9mODhELYROQ6rW6V9Ib/mYU035RJHXpW638AlfsgK2
-	 vz5jb1IE6GhI3DT78TV0Zj9PiK2D6qEMYhV4flRe/2QJ277vNubF4RLd4PSD5JjDDG
-	 MFZ6x8WZ4QL1ce1RBj/eLmTbwlvUXXxCHdot4GA4=
+	b=ORvfYZoECzEdO0bD51pYdHa6gr9rMLo3TcedL1NdfBNPHhEMmNCFFN5oZj5BNviqF
+	 x9HX7eT0Zi6+hu/2TQQv5wpcH3RvYFrYvXvbVdbeBGFpHLrXGZw8AXDEzqwblcPCB6
+	 FnIlqv/vjxkWjI9vGEwiys5n4uDfUxH9Fyepe5xE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Unnathi Chalicheemala <unnathi.chalicheemala@oss.qualcomm.com>,
-	Sudeep Holla <sudeep.holla@kernel.org>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Tvrtko Ursulin <tursulin@ursulin.net>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 035/484] firmware: arm_ffa: Fix NULL dereference in ffa_partition_info_get()
-Date: Thu, 30 Jul 2026 16:08:52 +0200
-Message-ID: <20260730141424.187482836@linuxfoundation.org>
+Subject: [PATCH 6.6 084/484] drm/i915/gt: use correct selftest config symbol
+Date: Thu, 30 Jul 2026 16:09:41 +0200
+Message-ID: <20260730141425.273222828@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -51,46 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Unnathi Chalicheemala <unnathi.chalicheemala@oss.qualcomm.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 8ae5f8e4836667fcaffdf2e3c6068b0a8b364dd8 ]
+[ Upstream commit a82f1bb8191aec98a971a2196136016ef70c0880 ]
 
-ffa_partition_info_get() passes uuid_str directly to uuid_parse()
-without a NULL check. When a caller passes NULL, uuid_parse() ->
-__uuid_parse() -> uuid_is_valid() dereferences the pointer, causing
-a kernel panic:
+intel_engine_user.c checks CONFIG_DRM_I915_SELFTESTS before running
+the engine UABI isolation check. Kconfig defines DRM_I915_SELFTEST,
+without the trailing "S", and the rest of i915 uses
+CONFIG_DRM_I915_SELFTEST.
 
-  |  Unable to handle kernel NULL pointer dereference at virtual address
-  |  0000000000000040
-  |  pc : uuid_parse+0x40/0xac
-  |  lr : ffa_partition_info_get+0x1c/0x94 [arm_ffa]
+Because CONFIG_DRM_I915_SELFTESTS is not backed by any Kconfig symbol,
+the IS_ENABLED() test is always false. Use the existing selftest symbol
+so the debug/selftest guarded path can be reached when selftests are
+enabled.
 
-Add a NULL guard before uuid_parse() so a NULL argument returns
--ENODEV instead of crashing. Callers are expected to always supply
-a valid partition UUID, so NULL is not a supported input.
+This is a source-level fix. It does not claim dynamic hardware
+reproduction; the evidence is the Kconfig definition and the inconsistent
+guard in intel_engine_user.c.
 
-Fixes: d0c0bce83122 ("firmware: arm_ffa: Setup in-kernel users of FFA partitions")
-Signed-off-by: Unnathi Chalicheemala <unnathi.chalicheemala@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260617-ffa_partition_nullptr_fix-v2-1-bc801b4ce34c@oss.qualcomm.com
-Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
+Fixes: 750e76b4f9f6 ("drm/i915/gt: Move the [class][inst] lookup for engines onto the GT")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
+Link: https://lore.kernel.org/r/20260705080225.436-1-pengpeng@iscas.ac.cn
+(cherry picked from commit 14a2012a490258f3f93857bc4f1b203405964be7)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_ffa/driver.c | 2 +-
+ drivers/gpu/drm/i915/gt/intel_engine_user.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/arm_ffa/driver.c b/drivers/firmware/arm_ffa/driver.c
-index ece91d8d820b51..2309a31549e25a 100644
---- a/drivers/firmware/arm_ffa/driver.c
-+++ b/drivers/firmware/arm_ffa/driver.c
-@@ -582,7 +582,7 @@ static int ffa_partition_info_get(const char *uuid_str,
- 	uuid_t uuid;
- 	struct ffa_partition_info *pbuf;
- 
--	if (uuid_parse(uuid_str, &uuid)) {
-+	if (!uuid_str || uuid_parse(uuid_str, &uuid)) {
- 		pr_err("invalid uuid (%s)\n", uuid_str);
- 		return -ENODEV;
+diff --git a/drivers/gpu/drm/i915/gt/intel_engine_user.c b/drivers/gpu/drm/i915/gt/intel_engine_user.c
+index d304e0a948f0d1..13b27ee9e7bef2 100644
+--- a/drivers/gpu/drm/i915/gt/intel_engine_user.c
++++ b/drivers/gpu/drm/i915/gt/intel_engine_user.c
+@@ -260,7 +260,7 @@ void intel_engines_driver_register(struct drm_i915_private *i915)
+ 		p = &prev->rb_right;
  	}
+ 
+-	if (IS_ENABLED(CONFIG_DRM_I915_SELFTESTS) &&
++	if (IS_ENABLED(CONFIG_DRM_I915_SELFTEST) &&
+ 	    IS_ENABLED(CONFIG_DRM_I915_DEBUG_GEM)) {
+ 		struct intel_engine_cs *engine;
+ 		unsigned int isolation;
 -- 
 2.53.0
 
