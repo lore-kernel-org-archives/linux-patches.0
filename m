@@ -1,38 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FD6E442134;
-	Thu, 30 Jul 2026 15:29:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67334443E24;
+	Thu, 30 Jul 2026 15:29:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425362; cv=none; b=t9+7ELZ8pD58mpTE9ikI4SpKCkcn88b2uL+z1SfeKekfpoy+yG3Y7rEx+YBC/IbztSx94pMTXsOjV5Hoqre3hf3Nxf7i/pKfNPMavZ0FQeEV80OgNw8+ZkdDv+lZl5qPB3p09MW+UiUBlu+ECkaSKpfXn1GZHk8bje4FWrbby4A=
+	t=1785425365; cv=none; b=BA/F60cBJN/QgmXlzf6RfxzUPAc/LktUvjesKB7X2HZFh98WSxxcSIPBANoA3+ARQSYjY7Aa9CGwlPxVCxKBZEDz31EnfnATkMPOHtgZ2GEK13gdcDFFNQB1dO/yyV8979vOIWNxF3jqUpPrhhIz/RxOb074mDuBGcvjaIQo2bA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425362; c=relaxed/simple;
-	bh=Xp8trkx3O5NhSE0andpAjWF9cTjHJufy400rILadwWQ=;
+	s=arc-20240116; t=1785425365; c=relaxed/simple;
+	bh=+6Pyxnh2lKEnD3ss2b/sbwjhvG44dNApmWmarKZCyRE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CZuEbVSL/TjgsYeLYrh6/J7J5nshKfhtLCJWaIJtqDOK0R8lHiCQXxEcuSC+zfp5kZ6623HK4D2I29u0bHb01SRPsTmVaE8KzdyXy679IRQxmVsviZW5Ua+SMn/Dp7B7oAKp/sdqUDqbJKiz3Hy7Re5t1VMOTbU7Vxm1XQIGdO0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LqOHjVbL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Y3daylbswuNnrXm14Q6ir93QaVPXHPO/ROxk6zQVyxbFjON4J/s+8xvuw6MBD8mgFDk4RK9fNyfTai+lZKP7/amhe+Pg3SOoiZubNNv7OHCcVB/KMU0Drp01JgwYBQRVJEdkOKhXPY/T3h0P3TzZcPIAEvVRknoHtn2pXCZ1qiM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yLj0v6ZL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LqOHjVbL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BACF31F000E9;
-	Thu, 30 Jul 2026 15:29:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yLj0v6ZL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AE251F000E9;
+	Thu, 30 Jul 2026 15:29:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425361;
-	bh=KpDt844zFAHkjf5FdbQvJk/R3FNv2rXkQdDzGJLmQIM=;
+	s=korg; t=1785425364;
+	bh=TC7QAv2rkIG1ajmcTBo1f7ycsz13LA6XXrAu0QykhtY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LqOHjVbLXs5MGGkr9I30R7T7JFBmIQLCkjAjoaCFrTxTSLnqrK0G85r7TTREAX2Wg
-	 N1hY+OY3bp05uV+kcbEb/DdHBxi3RCqyXtJWYhmqhaT6Zikt4Opz6o0feUbjVitEtR
-	 IymFM/DUzmhFfJIJW0VXDGft7JfaHKGQeYLx5t+4=
+	b=yLj0v6ZLvfIebOPYgAOe7GpN9XFrIbr6Nc7lxSN3JH7/hYwLbjRzVTj2N8LsPsCxB
+	 Do1lPgGHRamlZ+aDs0jTG/lajZXw6XDFjsGYjJiY6ANbFZiR4yq/EWJAO5uzZM05x9
+	 ERa0W9cNRPAAsSn2WOTC/Ou075aD/LwWRZy7MmUo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
-	Ryosuke Yasuoka <ryasuoka@redhat.com>,
+	Kiryl Shutsemau <kas@kernel.org>,
+	Sashiko AI review <sashiko-bot@kernel.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Dev Jain <dev.jain@arm.com>,
+	David Hildenbrand <david@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Peter Xu <peterx@redhat.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Balbir Singh <balbirs@nvidia.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 009/602] drm/virtio: fix deadlock in display_info_cb by removing hotplug from dequeue worker
-Date: Thu, 30 Jul 2026 16:06:41 +0200
-Message-ID: <20260730141436.188982859@linuxfoundation.org>
+Subject: [PATCH 6.12 010/602] fs/proc/task_mmu: fix make_uffd_wp_huge_pte() prot-update race
+Date: Thu, 30 Jul 2026 16:06:42 +0200
+Message-ID: <20260730141436.210729519@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -51,79 +61,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryosuke Yasuoka <ryasuoka@redhat.com>
+From: Kiryl Shutsemau <kas@kernel.org>
 
-[ Upstream commit d1b894c5bbb3fee0012bd14356286dc2384e8213 ]
+commit 04718f7c9290f95385f0dd328758753dc1c36dec upstream.
 
-A probe-time deadlock can occur between the dequeue worker and
-drm_client_register(). During probe, drm_client_register() holds
-clientlist_mutex and calls the fbdev hotplug callback, which triggers an
-atomic commit that ends up sleeping in virtio_gpu_queue_ctrl_sgs()
-waiting for virtqueue space. The dequeue worker that would free that
-space calls virtio_gpu_cmd_get_display_info_cb(), which invokes
-drm_kms_helper_hotplug_event() -> drm_client_dev_hotplug(), attempting
-to acquire the same clientlist_mutex. Since wake_up() is only called
-after the resp_cb loop, the probe thread is never woken and both threads
-deadlock.
+Patch series "userfaultfd/pagemap: pre-existing fixes".
 
-Fix this by removing the hotplug notification from
-virtio_gpu_cmd_get_display_info_cb(). The display data (outputs[i].info)
-is still updated synchronously in the callback.
+These are pre-existing bug fixes that were carried at the front of the
+userfaultfd RWP working-set-tracking series up to v5 [1].  Per review
+feedback that fixes should not sit in the middle of a feature series, they
+are split out and sent on their own; the RWP series is reposted rebased on
+top of this.
 
-For the init path, drm_client_register() already fires an initial
-hotplug when the client is registered, which picks up the connector
-state updated by display_info_cb.
+All six were flagged by the Sashiko AI review of the RWP series and carry
+Reported-by: Sashiko AI review <sashiko-bot@kernel.org>.  They are
+independent of RWP, apply to mm-new directly, and carry Cc: stable@.
 
-For the runtime config_changed path, add a wait_event_timeout() in
-config_changed_work_func() so that display_info_cb updates the connector
-data before the hotplug notification is sent. Also replace
-drm_helper_hpd_irq_event() with drm_kms_helper_hotplug_event() since
-virtio-gpu never calls drm_kms_helper_poll_init() and thus
-drm_helper_hpd_irq_event() always returns false without doing anything.
+  1: fs/proc/task_mmu: a missing huge_ptep_modify_prot_start() in
+     make_uffd_wp_huge_pte() can lose hardware Dirty/Accessed updates
+     when PAGEMAP_SCAN write-protects a hugetlb PTE.
 
-Fixes: 27655b9bb9f0 ("drm/client: Send hotplug event after registering a client")
-Closes: https://syzkaller.appspot.com/bug?id=d6dd6f86d3aaf7eebe7406e45c1c6e549453f224
-Closes: https://syzkaller.appspot.com/bug?id=908bd910da5dd79b88de4cf7baf376cc873a922e
-Suggested-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Signed-off-by: Ryosuke Yasuoka <ryasuoka@redhat.com>
-Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Link: https://patch.msgid.link/20260713-virtiogpu_syzbot-v2-1-2958fa37d46d@redhat.com
+  2: fs/proc/task_mmu: pagemap_scan_hugetlb_entry() compares the range
+     against HPAGE_SIZE rather than the hstate page size, so it never
+     write-protects gigantic hugetlb pages.
+
+  3: fs/proc/task_mmu: PAGEMAP_SCAN with PM_SCAN_WP_MATCHING over an
+     unpopulated hugetlb range self-deadlocks -- pagemap_scan_pte_hole()
+     calls uffd_wp_range() while walk_hugetlb_range() holds the hugetlb
+     vma lock for read, and hugetlb_change_protection() then takes it
+     for write. Install the marker inline instead.
+
+  4: mm/huge_memory: change_non_present_huge_pmd() drops pmd_swp_uffd_wp
+     on a device-private PMD permission downgrade, silently losing the
+     uffd-wp marker.
+
+  5: userfaultfd: must_wait() applies pte_write() to a locklessly read
+     PTE without checking pte_present(), so swap/migration entries
+     decode random offset bits and a thread can stay parked on a stale
+     fault.
+
+  6: userfaultfd: __VMA_UFFD_FLAGS feeds VMA_UFFD_MINOR_BIT (41) to
+     mk_vma_flags() unconditionally, an out-of-bounds write into the
+     single-word vma_flags_t on 32-bit. Build the mask from config-gated
+     per-mode masks so an unavailable bit is never materialised.
+
+This patch (of 6):
+
+make_uffd_wp_huge_pte() arms the UFFD_WP bit on a present HugeTLB PTE by
+calling huge_ptep_modify_prot_commit() with a ptent snapshot that was
+fetched without the corresponding huge_ptep_modify_prot_start().  The
+start helper is what atomically clears the entry so the kernel-owned
+snapshot stays consistent until the commit; without it, the hardware may
+set Dirty or Accessed in the live PTE between the original read and the
+commit, and huge_ptep_modify_prot_commit() (whose generic implementation
+just calls set_huge_pte_at()) then writes the stale snapshot back over the
+live hardware bits, losing the update.
+
+The non-hugetlb sibling make_uffd_wp_pte() does this correctly via
+ptep_modify_prot_start() / ptep_modify_prot_commit().  Mirror that pattern
+for the present-PTE branch.  The migration case stays as-is -- migration
+entries are non-present, so there's no hardware update to race against.
+
+Link: https://lore.kernel.org/20260529172331.356655-1-kas@kernel.org
+Link: https://lore.kernel.org/20260529172331.356655-2-kas@kernel.org
+Link: https://lore.kernel.org/all/20260526130509.2748441-1-kirill@shutemov.name/ [1]
+Fixes: 52526ca7fdb9 ("fs/proc/task_mmu: implement IOCTL to get and optionally clear info about PTEs")
+Signed-off-by: Kiryl Shutsemau <kas@kernel.org>
+Reported-by: Sashiko AI review <sashiko-bot@kernel.org>
+Reviewed-by: Lorenzo Stoakes <ljs@kernel.org>
+Reviewed-by: Dev Jain <dev.jain@arm.com>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Balbir Singh <balbirs@nvidia.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[ kas: adapt to the pre-softleaf idiom; apply the
+  huge_ptep_modify_prot_start()/commit() fix to the present-PTE
+  (!huge_pte_none()) branch ]
+Signed-off-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/virtio/virtgpu_kms.c | 5 ++++-
- drivers/gpu/drm/virtio/virtgpu_vq.c  | 3 ---
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ fs/proc/task_mmu.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/virtio/virtgpu_kms.c b/drivers/gpu/drm/virtio/virtgpu_kms.c
-index 7dfb2006c561ca..ec31a41d33d678 100644
---- a/drivers/gpu/drm/virtio/virtgpu_kms.c
-+++ b/drivers/gpu/drm/virtio/virtgpu_kms.c
-@@ -48,7 +48,10 @@ static void virtio_gpu_config_changed_work_func(struct work_struct *work)
- 				virtio_gpu_cmd_get_edids(vgdev);
- 			virtio_gpu_cmd_get_display_info(vgdev);
- 			virtio_gpu_notify(vgdev);
--			drm_helper_hpd_irq_event(vgdev->ddev);
-+			wait_event_timeout(vgdev->resp_wq,
-+					   !vgdev->display_info_pending,
-+					   5 * HZ);
-+			drm_kms_helper_hotplug_event(vgdev->ddev);
- 		}
- 		events_clear |= VIRTIO_GPU_EVENT_DISPLAY;
- 	}
-diff --git a/drivers/gpu/drm/virtio/virtgpu_vq.c b/drivers/gpu/drm/virtio/virtgpu_vq.c
-index 0d3d0d09f39b9f..bcc070b478d30e 100644
---- a/drivers/gpu/drm/virtio/virtgpu_vq.c
-+++ b/drivers/gpu/drm/virtio/virtgpu_vq.c
-@@ -669,9 +669,6 @@ static void virtio_gpu_cmd_get_display_info_cb(struct virtio_gpu_device *vgdev,
- 	vgdev->display_info_pending = false;
- 	spin_unlock(&vgdev->display_info_lock);
- 	wake_up(&vgdev->resp_wq);
--
--	if (!drm_helper_hpd_irq_event(vgdev->ddev))
--		drm_kms_helper_hotplug_event(vgdev->ddev);
- }
+diff --git a/fs/proc/task_mmu.c b/fs/proc/task_mmu.c
+index 673b7d0fcfd8fa..bc127f1ad4bb28 100644
+--- a/fs/proc/task_mmu.c
++++ b/fs/proc/task_mmu.c
+@@ -2254,15 +2254,19 @@ static void make_uffd_wp_huge_pte(struct vm_area_struct *vma,
  
- static void virtio_gpu_cmd_get_capset_info_cb(struct virtio_gpu_device *vgdev,
+ 	psize = huge_page_size(hstate_vma(vma));
+ 
+-	if (is_hugetlb_entry_migration(ptent))
++	if (is_hugetlb_entry_migration(ptent)) {
+ 		set_huge_pte_at(vma->vm_mm, addr, ptep,
+ 				pte_swp_mkuffd_wp(ptent), psize);
+-	else if (!huge_pte_none(ptent))
+-		huge_ptep_modify_prot_commit(vma, addr, ptep, ptent,
+-					     huge_pte_mkuffd_wp(ptent));
+-	else
++	} else if (!huge_pte_none(ptent)) {
++		pte_t old_pte, new_pte;
++
++		old_pte = huge_ptep_modify_prot_start(vma, addr, ptep);
++		new_pte = huge_pte_mkuffd_wp(old_pte);
++		huge_ptep_modify_prot_commit(vma, addr, ptep, old_pte, new_pte);
++	} else {
+ 		set_huge_pte_at(vma->vm_mm, addr, ptep,
+ 				make_pte_marker(PTE_MARKER_UFFD_WP), psize);
++	}
+ }
+ #endif /* CONFIG_HUGETLB_PAGE */
+ 
 -- 
 2.53.0
 
