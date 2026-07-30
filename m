@@ -1,48 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58811411A07;
-	Thu, 30 Jul 2026 14:49:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25F8341A4FF;
+	Thu, 30 Jul 2026 14:49:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422973; cv=none; b=VJ9DloX+KMlzATk4okEmSp4v5GKUY0pSnhY8z1P0Gzosoj9Tk3q+HvGgWa6qFYBl6xLxRhnB3X79mokV3Pe7zZyaIvZ+DJWoT6R6lh7tE4mDlVlS+HRmjvkqwmXAS1XaM60cdjz1y6B5ShWU97+eVfvrax5wp0KSww3tOFWQpLQ=
+	t=1785422976; cv=none; b=jMYKhpOxd3HFHBwNtJCDtFT7ef6FqIK7PxHFrU12l+oxaHoUsELEWr/7iVDUBufs2VBB2wsq0QFAViXV1rjJjBCRf87Aj6hI5qSNFfMkW0rcs5NOCtas8Wx2FJ+soksuLRO+3r1+VYl1y1nhWx4Ziroqr/BdS4pAxSJBTkZr9NI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422973; c=relaxed/simple;
-	bh=qn2gtWQxsq2E7d+dvvZN5xHVqpbmU59ddEmSVz2rEFg=;
+	s=arc-20240116; t=1785422976; c=relaxed/simple;
+	bh=BbVD5drRQm8DomibgD2k+iR+WLUY9AFOnxcelDjJuhs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UzK+jy4z4aVP/YU2AhbPj33PDDSiAd7APFJ3nNlEOI0uG+fX+M6X455Gda9AbMgqLGUqwE+GLciCFcSbGKo+7WPXwN3bUhl2AiTAevv3s8A8A/W4ENBYaHYo5v8ZS51gvcdN3Uk/KpV9Rs0l6UJwBmIbKsJCsuTxXFYpgRCmUx0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KzPTxHuz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oEuD430pK+CRb2LbI9RFVOhHy+qne9Qr0+c8Z4DvhqzK/dHGU64spX+68kFvdozxfWHgWH9ZApq+UfBnfAnqOexy/Oa7BSiP6bJXU8+c/J2Rd2mpz1C6fwZNB018bzGcb8vobdw4ZF3/OjpUwS/27gUI1Dbl0AqffaRFn2yNODI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uQiZyPtH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KzPTxHuz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A794C1F000E9;
-	Thu, 30 Jul 2026 14:49:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uQiZyPtH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D06D1F000E9;
+	Thu, 30 Jul 2026 14:49:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422972;
-	bh=F2JTm3lMLbNouZb1hWbCnSXoicrmNk0ldA5PHI/K5eo=;
+	s=korg; t=1785422975;
+	bh=oCpOzQT4tsdprUV/47l85UuGThF7irrXhqAvB+ZD2/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KzPTxHuzQ3Phg5v7BeAP/2lmHcb3icmlQnceaxbxahI4xJjlV3QAgVhwi5F5OEaaK
-	 mHCPURWRrBGUVmkSZMMveRlTSR8JNwphoNZK3xFkT6OLdT3l8/Afe+Yv/ftjPp87a8
-	 hIQWxRTy8lbQmZP93o4/Dc7n4TB4bAVhz0zZL4uw=
+	b=uQiZyPtHhBvh8R8RwUtZWrQ8WRKqy63B9f4EeAj8xEBycQIjIeJO5ANMX98SW8BpQ
+	 7GWJozWXbf6QDYQCUvtYDvTMFp+x4DSjUSBI8bZjjyalOJkCIcuXGKMukp2pM/FitR
+	 N29pcGkPbqQwkUrLm/tcW3x3y2sGc0yU/6Y7XFzs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rik van Riel <riel@surriel.com>,
-	Zi Yan <ziy@nvidia.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Lance Yang <lance.yang@linux.dev>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Barry Song <baohua@kernel.org>,
-	Dev Jain <dev.jain@arm.com>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Nico Pache <npache@redhat.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Yang Shi <yang@os.amperecomputing.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.1 621/744] mm/huge_memory: set PG_has_hwpoisoned only after new folio head is established
-Date: Thu, 30 Jul 2026 16:14:54 +0200
-Message-ID: <20260730141457.475929696@linuxfoundation.org>
+	stable@kernel.org,
+	Jun Yang <junvyyang@tencent.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.1 622/744] sctp: dont free the ASCONFs own transport in DEL-IP processing
+Date: Thu, 30 Jul 2026 16:14:55 +0200
+Message-ID: <20260730141457.496474804@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -61,105 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rik van Riel <riel@surriel.com>
+From: Jun Yang <junvyyang@tencent.com>
 
-commit e1cd30eceb6908fc13bebce41283b885d71ee8d6 upstream.
+commit 9b2854f86f0b56e9027d68e7a3fc909d1a9b566f upstream.
 
-__split_folio_to_order() copies the hwpoison state onto each new sub-folio
-while splitting a folio to a non-zero order.  It does so via
+sctp_process_asconf() caches the transport the ASCONF chunk is processed
+against in asconf->transport (== chunk->transport, set once in sctp_rcv()).
+For an ASCONF located through its Address Parameter by
+__sctp_rcv_asconf_lookup(), that cached transport corresponds to the
+Address Parameter, which need not be the packet's source address.
 
-	if (handle_hwpoison && page_range_has_hwpoisoned(new_head, new_nr_pages))
-		folio_set_has_hwpoisoned(new_folio);
+sctp_process_asconf_param() rejects a DEL-IP for the packet source address
+(ADDIP D8, SCTP_ERROR_DEL_SRC_IP), but nothing protects asconf->transport.
+A single ASCONF can therefore carry, in order:
 
-*before* clear_compound_head(new_head)/prep_compound_page(new_head, ...)
-turns @new_head from a tail page into a proper folio head.
+    [Address Parameter L] [DEL-IP L] [DEL-IP 0.0.0.0]
 
-PG_has_hwpoisoned is a FOLIO_SECOND_PAGE flag, so
-folio_set_has_hwpoisoned() resolves to folio_flags(folio, 1).  With the
-new compound_info-based page-flags layout, folio_flags() asserts the page
-is not a tail:
+where L differs from the source. The DEL-IP for L passes the D8 check and
+calls sctp_assoc_rm_peer() on the transport that asconf->transport still
+points at, freeing it (RCU-deferred). The following wildcard DEL-IP then
+reuses the now-dangling asconf->transport in sctp_assoc_set_primary() and
+sctp_assoc_del_nonprimary_peers(): set_primary() dereferences the freed
+transport (->ipaddr, ->state) and plants the dangling pointer into
+asoc->peer.primary_path / active_path, and del_nonprimary_peers(), keeping
+only the pointer that is no longer on the list, removes every real
+transport, leaving the association with a transport_count of 0 and
+primary_path/active_path pointing at freed memory.
 
-	VM_BUG_ON_PGFLAGS(page->compound_info & 1, page);
-	VM_BUG_ON_PGFLAGS(n > 0 && !test_bit(PG_head, &page->flags.f), page);
+Reject a DEL-IP that targets the transport the ASCONF is being processed
+against, mirroring the existing source-address guard, so the wildcard
+branch can never reuse a freed transport.
 
-At the current call site @new_head still has the tail marker
-(compound_info bit 0 set, PG_head clear), so on CONFIG_DEBUG_VM kernels
-this hits:
-
-  kernel BUG at include/linux/page-flags.h:354
-  folio_flags+0x82
-  folio_set_has_hwpoisoned
-  __split_folio_to_order
-  __split_unmapped_folio
-  __folio_split
-  truncate_inode_partial_folio  (shmem hole-punch / MADV_REMOVE)
-
-Reproduced by syzkaller: hwpoison-inject a few subpages of a large shmem
-folio, then MADV_REMOVE (fallocate punch hole) on the same range, which
-splits the partial folio to a non-zero order.
-
-memory_failure() tries to split the poisoned folio to order 0 first, but
-that split is best-effort; when it fails the folio is left large with
-PG_has_hwpoisoned set, the case fa5a06170036 added this hwpoison copying
-for.
-
-Move the folio_set_has_hwpoisoned() call to after
-clear_compound_head()/prep_compound_page(), where @new_folio is a real
-order-new_order head folio (handle_hwpoison implies new_order != 0, so a
-second page always exists).  The flag still lands on the same struct page
-(page[1] of the new folio); only the ordering relative to compound-head
-setup changes, satisfying the FOLIO_SECOND_PAGE precondition.
-
-Link: https://lore.kernel.org/20260701174235.3173401-1-riel@surriel.com
-Fixes: fa5a06170036 ("mm/huge_memory: preserve PG_has_hwpoisoned if a folio is split to >0 order")
-Signed-off-by: Rik van Riel <riel@surriel.com>
-Assisted-by: Claude:claude-opus-4-8
-Reviewed-by: Zi Yan <ziy@nvidia.com>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Tested-by: Lance Yang <lance.yang@linux.dev>
-Reviewed-by: Lorenzo Stoakes <ljs@kernel.org>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Barry Song <baohua@kernel.org>
-Cc: Dev Jain <dev.jain@arm.com>
-Cc: Lance Yang <lance.yang@linux.dev>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Nico Pache <npache@redhat.com>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Yang Shi <yang@os.amperecomputing.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 42e30bf3463c ("[SCTP]: Handle the wildcard ADD-IP Address parameter")
+Cc: stable@kernel.org
+Signed-off-by: Jun Yang <junvyyang@tencent.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/tencent_73762ED1DF08CC9D5F5F61954B01350CFE0A@qq.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/huge_memory.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ net/sctp/sm_make_chunk.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/mm/huge_memory.c
-+++ b/mm/huge_memory.c
-@@ -3649,10 +3649,6 @@ static void __split_folio_to_order(struc
- 				 (1L << PG_dropbehind) |
- 				 LRU_GEN_MASK | LRU_REFS_MASK));
+--- a/net/sctp/sm_make_chunk.c
++++ b/net/sctp/sm_make_chunk.c
+@@ -3153,6 +3153,12 @@ static __be16 sctp_process_asconf_param(
+ 		if (!peer)
+ 			return SCTP_ERROR_DNS_FAILED;
  
--		if (handle_hwpoison &&
--		    page_range_has_hwpoisoned(new_head, new_nr_pages))
--			folio_set_has_hwpoisoned(new_folio);
--
- 		new_folio->mapping = folio->mapping;
- 		new_folio->index = folio->index + i;
- 
-@@ -3674,6 +3670,14 @@ static void __split_folio_to_order(struc
- 			folio_set_large_rmappable(new_folio);
- 		}
- 
-+		/*
-+		 * PG_has_hwpoisoned is on the 2nd page, so set it after
-+		 * the compound head is prepped.
++		/* Don't free asconf->transport; a later wildcard DEL-IP
++		 * parameter reuses it.
 +		 */
-+		if (handle_hwpoison &&
-+		    page_range_has_hwpoisoned(new_head, new_nr_pages))
-+			folio_set_has_hwpoisoned(new_folio);
++		if (peer == asconf->transport)
++			return SCTP_ERROR_REQ_REFUSED;
 +
- 		if (folio_test_young(folio))
- 			folio_set_young(new_folio);
- 		if (folio_test_idle(folio))
+ 		sctp_assoc_rm_peer(asoc, peer);
+ 		break;
+ 	case SCTP_PARAM_SET_PRIMARY:
 
 
