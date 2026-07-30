@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1E233D75C4;
-	Thu, 30 Jul 2026 14:37:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C232F442119;
+	Thu, 30 Jul 2026 14:37:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422227; cv=none; b=UXQ5w+gqCoTeACDjMjKPoTdDtMLqqgdAJjBRE4fVgZqepqWYPTYZRTVb7jNqlFsgPIxdxM71JDVNE6dkqq0UdXa2152VBraU9a0QEZE8FdKhHYN2R44jYAb4OY3LG/Ji/TB2JnztTEt8c7wlwGExSu1gIqdQZV6NDCyhqLi3T+8=
+	t=1785422230; cv=none; b=N2zN3PunWTeJys1qqk9cdNNJYo0setKwYLToUcn3yYaTcRChnIlMTRj2Yf0jpRcKyqBUesWmthD/fFWhxfDGEqz2LTxjsm80Phpz/OYblL87CACwwVMxnBqhr1/WvFU2QvDa1TSXklY0F+uhsaMHr5y96/BOEixjQJwTpjIXli0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422227; c=relaxed/simple;
-	bh=xZJlKG/ZIbGIxK2soeuhw147Ej50MZJrw91u1PTV4ow=;
+	s=arc-20240116; t=1785422230; c=relaxed/simple;
+	bh=ySiPW2VRJgOlnsbCm/elX1/s5B3WzbctJATev1OwOtA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mBqWrDkpzfBk9TcS+klqu2EzP2G0RWaCPE3nfLwOB/Qp/xZKkHShpoe5IG61QUxq57/rJ5irdQYw+/oH9MOE+kzmJX9IY1BMzDFwAPK5qqUT09MY72zcxJ1jkWqGYiR5jb9T1fqpZZvCIXKNp8Wx6YGmCIyE7LYQvsH0ZdnjqgA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=smXezseN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TN3ehwNLmFp12oePX1D7vmjmnXM75c27NjzXTfKZx1C6cerZrmvlOvrrSYUtF1nOv9nNKQ7nnex0yBzyRYXZdx07YpDK4YeA1KixGFjwDvbntO4Uet5fn3b9Qir9eE1wos4JX8XReO3KkcEbBryLbjYNHo/cAzkDJk64o6DOEVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OUfWXpae; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="smXezseN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1287A1F00A3A;
-	Thu, 30 Jul 2026 14:37:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OUfWXpae"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 288AC1F000E9;
+	Thu, 30 Jul 2026 14:37:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422226;
-	bh=S6nQX6L+ZGYWmQgC+ZC3xNCHNRhtbiLn1eu6bzGQcJ8=;
+	s=korg; t=1785422229;
+	bh=iVFT18oxJQ2he/9/xpmWdx6U2ckkWFUqBOtSE2vc6gM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=smXezseNl3GmOEp1uuHoV0P/gltaBV94RlVy+4PPN2CfgACU1xBLX9QujuPLToQCO
-	 x+nJtzFSJBzxidN/OXphgEXFbXE4nu9dbX7eZ7KBdqlimIVMRiKBRhThYkzSPyXcn8
-	 dVTUm3Knm8Zt6VOv7fLch2+rmo2M4UFHJ2i7GdHI=
+	b=OUfWXpaezqZJd2jShU8tAtK/Yd830/tcCclaBhq1fMM+Pa7z4JdvDUts2WfMHT/Nv
+	 mJB7fo9SDOGJTlDbd2hwHDDQi64s+FQzuqkNkBRRZ/otCy6JRhibPTCPCd3qcWa3Y3
+	 Uqj7gYHJBDDer5Iz2kOb0GXYeYbeuH01LkfzVurI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jakub Raczynski <j.raczynski@samsung.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 322/744] net: stmmac: xgmac: fix l4 filter port overwrite on register update
-Date: Thu, 30 Jul 2026 16:09:55 +0200
-Message-ID: <20260730141451.129258021@linuxfoundation.org>
+Subject: [PATCH 7.1 323/744] net: stmmac: fix l3l4 filter rejecting unsupported offload requests
+Date: Thu, 30 Jul 2026 16:09:56 +0200
+Message-ID: <20260730141451.150821556@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -56,84 +56,99 @@ Content-Transfer-Encoding: 8bit
 
 From: Nazim Amirul <muhammad.nazim.amirul.nazle.asmade@altera.com>
 
-[ Upstream commit 9fcf274d93af17396f20cccb63f1d4c17492a000 ]
+[ Upstream commit 5536d7c843637e9430279b94935fcf7df98babb3 ]
 
-The XGMAC_L4_ADDR register holds both source and destination port
-match values. The current implementation overwrites the entire register
-when configuring either port, so setting one silently erases the other.
+The basic flow parser in tc_add_basic_flow() does not validate match
+keys before proceeding. Unsupported offload configurations such as
+partial protocol masks, non-IPv4 network proto, or non-TCP/UDP transport
+proto are silently accepted instead of returning -EOPNOTSUPP.
 
-Fix this by reading the register first, then masking and updating only
-the relevant field before writing back.
+Add validation to return -EOPNOTSUPP early for:
+- No network or transport proto present in the key
+- Partial protocol mask (only full mask supported)
+- Network proto is not IPv4
+- Transport proto is not TCP or UDP
+
+Each rejection includes an extack message so the user knows which part
+of the match is unsupported.
+
+Also propagate -EOPNOTSUPP from tc_add_basic_flow() in tc_add_flow()
+by returning it directly rather than using break. The break was silently
+discarding the error for FLOW_CLS_REPLACE operations where entry->in_use
+is already true, causing tc_add_flow() to return 0 (success) for
+unsupported replace requests.
 
 Fixes: 425eabddaf0f ("net: stmmac: Implement L3/L4 Filters using TC Flower")
 Signed-off-by: Rohan G Thomas <rohan.g.thomas@altera.com>
 Signed-off-by: Nazim Amirul <muhammad.nazim.amirul.nazle.asmade@altera.com>
 Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/20260714023716.29865-3-muhammad.nazim.amirul.nazle.asmade@altera.com
+Link: https://patch.msgid.link/20260714023716.29865-4-muhammad.nazim.amirul.nazle.asmade@altera.com
 Reviewed-by: Jakub Raczynski <j.raczynski@samsung.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/stmicro/stmmac/dwxgmac2_core.c   | 28 +++++++++++--------
- 1 file changed, 16 insertions(+), 12 deletions(-)
+ .../net/ethernet/stmicro/stmmac/stmmac_tc.c   | 34 +++++++++++++++++++
+ 1 file changed, 34 insertions(+)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
-index f02b434bbd505b..52054f31376d50 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
-@@ -1370,36 +1370,40 @@ static int dwxgmac2_config_l4_filter(struct mac_device_info *hw, u32 filter_no,
- 		value &= ~XGMAC_L4PEN0;
- 	}
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
+index d786527185999d..1f8c9f47306b97 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
+@@ -446,6 +446,7 @@ static int tc_parse_flow_actions(struct stmmac_priv *priv,
+ }
  
--	value &= ~(XGMAC_L4SPM0 | XGMAC_L4SPIM0);
--	value &= ~(XGMAC_L4DPM0 | XGMAC_L4DPIM0);
- 	if (sa) {
- 		value |= XGMAC_L4SPM0;
- 		if (inv)
- 			value |= XGMAC_L4SPIM0;
-+		else
-+			value &= ~XGMAC_L4SPIM0;
- 	} else {
- 		value |= XGMAC_L4DPM0;
- 		if (inv)
- 			value |= XGMAC_L4DPIM0;
-+		else
-+			value &= ~XGMAC_L4DPIM0;
- 	}
+ #define ETHER_TYPE_FULL_MASK	cpu_to_be16(~0)
++#define IP_PROTO_FULL_MASK	0xFF
  
- 	ret = dwxgmac2_filter_write(hw, filter_no, XGMAC_L3L4_CTRL, value);
- 	if (ret)
- 		return ret;
+ static int tc_add_basic_flow(struct stmmac_priv *priv,
+ 			     struct flow_cls_offload *cls,
+@@ -461,6 +462,37 @@ static int tc_add_basic_flow(struct stmmac_priv *priv,
  
--	if (sa) {
--		value = FIELD_PREP(XGMAC_L4SP0, match);
-+	ret = dwxgmac2_filter_read(hw, filter_no, XGMAC_L4_ADDR, &value);
-+	if (ret)
-+		return ret;
+ 	flow_rule_match_basic(rule, &match);
  
--		ret = dwxgmac2_filter_write(hw, filter_no, XGMAC_L4_ADDR, value);
--		if (ret)
--			return ret;
-+	if (sa) {
-+		value &= ~XGMAC_L4SP0;
-+		value |= FIELD_PREP(XGMAC_L4SP0, match);
- 	} else {
--		value = FIELD_PREP(XGMAC_L4DP0, match);
--
--		ret = dwxgmac2_filter_write(hw, filter_no, XGMAC_L4_ADDR, value);
--		if (ret)
--			return ret;
-+		value &= ~XGMAC_L4DP0;
-+		value |= FIELD_PREP(XGMAC_L4DP0, match);
- 	}
- 
-+	ret = dwxgmac2_filter_write(hw, filter_no, XGMAC_L4_ADDR, value);
-+	if (ret)
-+		return ret;
++	/* Both network proto and transport proto not present in the key */
++	if (!match.mask || !(match.mask->n_proto || match.mask->ip_proto)) {
++		NL_SET_ERR_MSG_MOD(cls->common.extack,
++				   "filter must specify network or transport protocol");
++		return -EOPNOTSUPP;
++	}
 +
- 	if (!en)
- 		return dwxgmac2_filter_write(hw, filter_no, XGMAC_L3L4_CTRL, 0);
++	/* If the proto is present in the key and is not full mask */
++	if ((match.mask->n_proto && match.mask->n_proto != ETHER_TYPE_FULL_MASK) ||
++	    (match.mask->ip_proto && match.mask->ip_proto != IP_PROTO_FULL_MASK)) {
++		NL_SET_ERR_MSG_MOD(cls->common.extack,
++				   "only full protocol mask is supported");
++		return -EOPNOTSUPP;
++	}
++
++	/* Network proto is present in the key and is not IPv4 */
++	if (match.mask->n_proto && match.key->n_proto != cpu_to_be16(ETH_P_IP)) {
++		NL_SET_ERR_MSG_MOD(cls->common.extack,
++				   "only IPv4 network protocol is supported");
++		return -EOPNOTSUPP;
++	}
++
++	/* Transport proto is present in the key and is not TCP or UDP */
++	if (match.mask->ip_proto &&
++	    match.key->ip_proto != IPPROTO_TCP &&
++	    match.key->ip_proto != IPPROTO_UDP) {
++		NL_SET_ERR_MSG_MOD(cls->common.extack,
++				   "only TCP and UDP transport protocols are supported");
++		return -EOPNOTSUPP;
++	}
++
+ 	entry->ip_proto = match.key->ip_proto;
+ 	return 0;
+ }
+@@ -598,6 +630,8 @@ static int tc_add_flow(struct stmmac_priv *priv,
+ 		ret = tc_flow_parsers[i].fn(priv, cls, entry);
+ 		if (!ret)
+ 			entry->in_use = true;
++		else if (ret == -EOPNOTSUPP)
++			return ret;
+ 	}
  
+ 	if (!entry->in_use)
 -- 
 2.53.0
 
