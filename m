@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04CEB43F4C7;
-	Thu, 30 Jul 2026 14:34:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 441B643E09D;
+	Thu, 30 Jul 2026 14:34:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422064; cv=none; b=SWN27DROFbOLaMsmKPUysXwPtgHC+myFpIW7Q0fnZIHjDvuRRWw4dJWrUA59yyI1CcQ2iNu3++1ZM5BJolFbeylct+jnQoAipHoxo6SjRsYmdZKIputOiGeF8Ucq5oxO2EcT0DjHJz6dYP8FRKBxGsq7KdBkcUKdjgaecBF3LEk=
+	t=1785422067; cv=none; b=RaKF7kjBSEL7htSD4jZFF3t+twS/KNriEBB3ZeDZGrrwTM3wcr4LvADKTXZo0dx0WVdurZXNZ9Qi1C+QyScmIbmxSC/uqcekwAnfbLx59yU/ulRYJnwVFb1iNq9d0SMpj9xf8+z0s84a9k3ZAaegCjcgSPAOyxkbyxlJx1jdpmo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422064; c=relaxed/simple;
-	bh=bFS2TBWwkmbJ+g5KG5AmkZ1F8uZIAe/vCCwozqgtzbU=;
+	s=arc-20240116; t=1785422067; c=relaxed/simple;
+	bh=QrG21Uq9TM1AFpgxkKsd/mt5N/B+CETY1NyX2MdUzQA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YVfA62AhdaYdeaQ3vlflF+AEcBmTCv9WdBXS6Q/i8wRYn8qYU+slRWPs4A+9Hp9Izd/S1A18le5hfEoK4jOpO/ns6Ai81WjcgE3Wf9mLg41UxMLLyuyVEAkPuSKPY7bQQWNs+84LhD3A7z+adjOvaC3FcKqm3E1uSlinjO7xmDo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fGdAghV8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YymLuxMXDShsNjsN0G4vfiAh1GHqH5w8tYKWMNhE32aucXu+ohag6fB/v68CFsoEX6Rr9R2RBztREZeuB183tRg6d9q1ii2wF91EIe6lANzk7XNSEE4DuwIJb5PHgsv13Rj6gS+BCgHUmcBXM2dUkrOLMGxAX+ngVc4FsalPBt8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tjnogaCe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fGdAghV8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF7181F000E9;
-	Thu, 30 Jul 2026 14:34:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tjnogaCe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D48B1F000E9;
+	Thu, 30 Jul 2026 14:34:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422062;
-	bh=bOwmpNUWqSUlZSpC/Q+C9rX8cKDCmzPGaNAZpC52TLw=;
+	s=korg; t=1785422065;
+	bh=dk+QN0n5PlxJY1u7LDWHOdM6rQ6qfdbqRdOe21uodvE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fGdAghV8Cp4Z1y+c+jXJMbpBzC1wNtvVC79BRj7mtRpPfDjEb0ZN2PNzipU6d2MxK
-	 gYOnrclNLlqb3TesQ2ghm8wQFVk7M5c5ZUAPzzFwpsbXdkO0BrI9ca1zxQWl5ErK+5
-	 /ql6hSg0kOJUmzwc8MCozdxBU1qH4LyJdpFTCrjg=
+	b=tjnogaCepQyTDMFJzbF7ckrwrxwtA5mKjqKArrFKVmj28qV86IqKW7+Lbjb9X0MK5
+	 oj2SYytDroLBfNMlt86Sf6sfn9Np1THwfO5/9R48Atd0zQPnFPCBVONpEQC3QdBciN
+	 G1lgLtilsEl70dfNsIIDc5UFWVZ9MjgYaJWd5w7M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuyi Zhou <zhouchuyi@bytedance.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Thomas Gleixner <tglx@kernel.org>,
+	Sean Anderson <sean.anderson@linux.dev>,
+	Michael Walle <mwalle@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 310/744] smp: Make CSD lock acquisition atomic for debug mode
-Date: Thu, 30 Jul 2026 16:09:43 +0200
-Message-ID: <20260730141450.876627191@linuxfoundation.org>
+Subject: [PATCH 7.1 311/744] net: dpaa: fix mode setting
+Date: Thu, 30 Jul 2026 16:09:44 +0200
+Message-ID: <20260730141450.896635142@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -52,95 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuyi Zhou <zhouchuyi@bytedance.com>
+From: Michael Walle <mwalle@kernel.org>
 
-[ Upstream commit 35551efb155e3b83445a6c3f66cb498d5efc182c ]
+[ Upstream commit da2c6bcc5e30b1496ac587785dcacf6e849eb6ef ]
 
-Commit b0473dcd4b1d ("smp: Improve smp_call_function_single()
-CSD-lock diagnostics") changed smp_call_function_single() so that,
-when CSD lock debugging is enabled, async !wait calls use the
-destination CPU csd_data. That improves diagnostics, but it also removes
-the single-writer property that made the old csd_lock() safe: multiple
-CPUs can now prepare the same destination CPU CSD concurrently.
+Before converting to the phylink interface, the init function would have
+set a non-reserved I/F mode in the maccfg2 register. After converting to
+phylink, 0 is written as mode, which is a reserved value (although it's
+the hardware default). Without a valid mode, a SGMII link is never
+established between the MAC and the PHY and thus .link_up() is never
+called which could set the correct mode according to the actual speed.
 
-csd_lock() currently waits for CSD_FLAG_LOCK to clear and then sets the
-bit with a non-atomic read-modify-write. Two senders can both see an
-unlocked CSD, set the bit, overwrite the callback fields, and enqueue
-the same llist node. Re-adding a node that is already the queue head can
-make node->next point to itself, leaving the target CPU stuck walking
-call_single_queue. Later synchronous work, such as a TLB shootdown, can
-then remain queued and trigger soft-lockup warnings or panics.
+Fix it by setting the maximum speed of the phy_interface_t in use in
+.mac_config() - just like the driver did before the phylink conversion.
 
-Keep the single csd_lock() implementation, but when CSD lock debugging is
-enabled, acquire CSD_FLAG_LOCK with try_cmpxchg_acquire(). This makes the
-destination CPU CSD a real atomic lock in the only configuration where it
-can be shared by multiple remote senders, while preserving the existing
-non-debug fast path.
-
-Fixes: b0473dcd4b1d ("smp: Improve smp_call_function_single() CSD-lock diagnostics")
-Signed-off-by: Chuyi Zhou <zhouchuyi@bytedance.com>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Link: https://patch.msgid.link/20260716004539.13983-2-paulmck@kernel.org
+Fixes: 5d93cfcf7360 ("net: dpaa: Convert to phylink")
+Suggested-by: Sean Anderson <sean.anderson@linux.dev>
+Signed-off-by: Michael Walle <mwalle@kernel.org>
+Reviewed-by: Sean Anderson <sean.anderson@linux.dev>
+Reviewed-by: Sean Anderson <sean.anderson@linux.dev>
+Link: https://patch.msgid.link/20260717132401.2653252-1-mwalle@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/smp.c | 27 +++++++++++++++++++++++----
- 1 file changed, 23 insertions(+), 4 deletions(-)
+ .../net/ethernet/freescale/fman/fman_dtsec.c    | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/smp.c b/kernel/smp.c
-index dc6582bb35d084..52dffc86555cd2 100644
---- a/kernel/smp.c
-+++ b/kernel/smp.c
-@@ -137,10 +137,10 @@ csd_do_func(smp_call_func_t func, void *info, call_single_data_t *csd)
- 	trace_csd_function_exit(func, csd);
- }
- 
--#ifdef CONFIG_CSD_LOCK_WAIT_DEBUG
--
- static DEFINE_STATIC_KEY_MAYBE(CONFIG_CSD_LOCK_WAIT_DEBUG_DEFAULT, csdlock_debug_enabled);
- 
-+#ifdef CONFIG_CSD_LOCK_WAIT_DEBUG
-+
- /*
-  * Parse the csdlock_debug= kernel boot parameter.
-  *
-@@ -342,6 +342,10 @@ static __always_inline void csd_lock_wait(call_single_data_t *csd)
- 	smp_cond_load_acquire(&csd->node.u_flags, !(VAL & CSD_FLAG_LOCK));
- }
- #else
-+static __always_inline void __csd_lock_wait(call_single_data_t *csd)
-+{
-+}
-+
- static void csd_lock_record(call_single_data_t *csd)
+diff --git a/drivers/net/ethernet/freescale/fman/fman_dtsec.c b/drivers/net/ethernet/freescale/fman/fman_dtsec.c
+index fe35703c509e55..b8d70c0ecb6c66 100644
+--- a/drivers/net/ethernet/freescale/fman/fman_dtsec.c
++++ b/drivers/net/ethernet/freescale/fman/fman_dtsec.c
+@@ -900,22 +900,28 @@ static void dtsec_mac_config(struct phylink_config *config, unsigned int mode,
  {
+ 	struct mac_device *mac_dev = fman_config_to_mac(config);
+ 	struct dtsec_regs __iomem *regs = mac_dev->fman_mac->regs;
+-	u32 tmp;
++	u32 ecntrl, maccfg2;
++
++	maccfg2 = ioread32be(&regs->maccfg2);
++	maccfg2 &= ~(MACCFG2_NIBBLE_MODE | MACCFG2_BYTE_MODE);
+ 
+ 	switch (state->interface) {
+ 	case PHY_INTERFACE_MODE_RMII:
+-		tmp = DTSEC_ECNTRL_RMM;
++		ecntrl = DTSEC_ECNTRL_RMM;
++		maccfg2 |= MACCFG2_NIBBLE_MODE;
+ 		break;
+ 	case PHY_INTERFACE_MODE_RGMII:
+ 	case PHY_INTERFACE_MODE_RGMII_ID:
+ 	case PHY_INTERFACE_MODE_RGMII_RXID:
+ 	case PHY_INTERFACE_MODE_RGMII_TXID:
+-		tmp = DTSEC_ECNTRL_GMIIM | DTSEC_ECNTRL_RPM;
++		ecntrl = DTSEC_ECNTRL_GMIIM | DTSEC_ECNTRL_RPM;
++		maccfg2 |= MACCFG2_BYTE_MODE;
+ 		break;
+ 	case PHY_INTERFACE_MODE_SGMII:
+ 	case PHY_INTERFACE_MODE_1000BASEX:
+ 	case PHY_INTERFACE_MODE_2500BASEX:
+-		tmp = DTSEC_ECNTRL_TBIM | DTSEC_ECNTRL_SGMIIM;
++		ecntrl = DTSEC_ECNTRL_TBIM | DTSEC_ECNTRL_SGMIIM;
++		maccfg2 |= MACCFG2_BYTE_MODE;
+ 		break;
+ 	default:
+ 		dev_warn(mac_dev->dev, "cannot configure dTSEC for %s\n",
+@@ -923,7 +929,8 @@ static void dtsec_mac_config(struct phylink_config *config, unsigned int mode,
+ 		return;
+ 	}
+ 
+-	iowrite32be(tmp, &regs->ecntrl);
++	iowrite32be(ecntrl, &regs->ecntrl);
++	iowrite32be(maccfg2, &regs->maccfg2);
  }
-@@ -354,8 +358,23 @@ static __always_inline void csd_lock_wait(call_single_data_t *csd)
  
- static __always_inline void csd_lock(call_single_data_t *csd)
- {
--	csd_lock_wait(csd);
--	csd->node.u_flags |= CSD_FLAG_LOCK;
-+	if (IS_ENABLED(CONFIG_CSD_LOCK_WAIT_DEBUG) &&
-+	    static_branch_unlikely(&csdlock_debug_enabled)) {
-+
-+		for (;;) {
-+			unsigned int flags;
-+
-+			__csd_lock_wait(csd);
-+			flags = READ_ONCE(csd->node.u_flags);
-+
-+			if (!(flags & CSD_FLAG_LOCK) &&
-+			    try_cmpxchg_acquire(&csd->node.u_flags, &flags, flags | CSD_FLAG_LOCK))
-+				break;
-+		}
-+	} else {
-+		csd_lock_wait(csd);
-+		csd->node.u_flags |= CSD_FLAG_LOCK;
-+	}
- 
- 	/*
- 	 * prevent CPU from reordering the above assignment
+ static void dtsec_link_up(struct phylink_config *config, struct phy_device *phy,
 -- 
 2.53.0
 
