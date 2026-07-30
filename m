@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DC263C3F4C;
-	Thu, 30 Jul 2026 15:14:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D633D40FDB9;
+	Thu, 30 Jul 2026 15:14:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424496; cv=none; b=AgT9lP1Sa6KJviiVxW7DNCSw+eeqAlKtWUlJEu5lMJeIyFa7gAuy0yI6ZTStDdcMLuBs6q/aa5cAMN6QvAHr3IWlbnlU+4NcengGkrSVNttkHnCQYi95vE0q7Q15cQw+Tababp5Cg+V0V/xHTPKIvB0SOzqx67ftlmgx6hvSul4=
+	t=1785424499; cv=none; b=nKidQx1Z2I+HtvlEhlUI7yVhcKBqX65k709/Mt30oO8OQR9jfiN5s9IL+6TnAKfaaUb9N48YSyYYn3/pj1v052geAc0oA7kIA4krMbQFZRvmUt+tubsN7iCWSIrWIrh54XNthhB4gjva/hLVlF18FScIoPt5JU3Op+XXkGjuYbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424496; c=relaxed/simple;
-	bh=FlHArLU8LFcQfmY4ICv46BHCv7N5DOOqRupEk5KLTv0=;
+	s=arc-20240116; t=1785424499; c=relaxed/simple;
+	bh=83b3q7xRQhjwyys3kcTvIWYktTJ4KCcBdTEaFGsoQ+c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hsRyijZmy0MXOxQjp+zbhUf0mHvt8QAjRDLbMxZwGpYdswlmtSqFEwhjOvOaeApQ8E3LEGDpII9HUhqFCnuNI6OCvmyqldRN1vHIVVVt+3Ez686Y8y7y61Jk6Qnf7KsEbH2JO8UBhVAdFN5JT803ctJGqQ8LQuOGcmE/88zcXOg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iLaDfmJv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SqLf+etjJI7EJKnJZ2tL0o0Q4F1oIMQAl/WNRuq+ACHD/PGJDy4Xzu8sAWHjDkbL+tdjsPipBi0bIo99X8DBRfrpJ08tW4c4QegrV6jdpG71DiMPsqM5LAjOOOdOTJuFo7pxuzmnqzjsvIigXp4E7oN2uOxSpAY/D1lxPfdcyyk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WI9xU2vD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iLaDfmJv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 495381F000E9;
-	Thu, 30 Jul 2026 15:14:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WI9xU2vD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3288F1F000E9;
+	Thu, 30 Jul 2026 15:14:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424494;
-	bh=PYdm6u6NQ4hH6/6i/VhYdE5VoCy0/XsMEWJzEeTjWKo=;
+	s=korg; t=1785424497;
+	bh=tmuRqki+O+5UzXovANretLqeP/jCVvVYK8CxRkUfdJQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iLaDfmJvRLW4tFSYz6holXJ1Fh4Cfk9IUxJNPIpmpWP+eKI/eq2mYa7LU0PJI68zg
-	 TByhvNnlgPJRgMaijXGTjlB83A8/gmya/qKCFqc2xk3XsuBnx42hJqedPrJfj2mU87
-	 +xwW7wlebuFkX1dTu3z4VVlw+6LvzI4Ttj92nMwY=
+	b=WI9xU2vDqR0UmXcMQhKG3r0EYti6U5A+uzfdR/k29toYo8WxgMXi85W5D6j4z/+Ld
+	 7fvQU1VE0M9puHZnHN58ZBsE7tsymg/B3Q41IM6abxhjqQqQ0LS9QkzXgSFQuYtNnc
+	 K6j4AcixZMY3GKRCCxBpojH2mqagRBHJYpV+heqg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Hodo <martin.hodo@intel.com>,
-	Suraj Kandpal <suraj.kandpal@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Subject: [PATCH 6.18 359/675] drm/i915/hdcp: require monotonically increasing seq_num_v
-Date: Thu, 30 Jul 2026 16:11:29 +0200
-Message-ID: <20260730141452.761415586@linuxfoundation.org>
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.18 408/675] media: marvell-cam: fix missing pci_disable_device() on remove
+Date: Thu, 30 Jul 2026 16:12:18 +0200
+Message-ID: <20260730141453.804435929@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -52,50 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jani Nikula <jani.nikula@intel.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit db9e64c983dcb07ff256bd455f258c44aa530ff8 upstream.
+commit 033ff0420e4c9c240ae5523fff39770298efa964 upstream.
 
-The HDCP 2.2 specification requires the seq_num_v to be monotonically
-increasing, and repeated seq_num_v needs to be treated as an integrity
-failure. Make it so.
+During manual code audit, we found that cafe_pci_probe() enables the
+PCI device with pci_enable_device(), and its probe error path properly
+calls pci_disable_device() on failure.
 
-For the first message, seq_num_v must be zero, and is already
-checked. We can only check for less-than-or-equal for the subsequent
-messages, where hdcp2_encrypted is true.
+However, cafe_pci_remove() tears down the controller and frees the
+driver data without disabling the PCI device, leaving the remove path
+inconsistent with probe cleanup.
 
-Discovered using AI-assisted static analysis confirmed by Intel Product
-Security.
+Add the missing pci_disable_device() call to cafe_pci_remove().
 
-Reported-by: Martin Hodo <martin.hodo@intel.com>
-Fixes: d849178e2c9e ("drm/i915: Implement HDCP2.2 repeater authentication")
-Cc: stable@vger.kernel.org # v5.2+
-Cc: Suraj Kandpal <suraj.kandpal@intel.com>
-Reviewed-by: Suraj Kandpal <suraj.kandpal@intel.com>
-Link: https://patch.msgid.link/20260625104407.1025614-1-jani.nikula@intel.com
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-(cherry picked from commit 58a224375c81179b52558c53d8857b93196d2687)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Fixes: abfa3df36c01 ("[media] marvell-cam: Separate out the Marvell camera core")
+Cc: stable@vger.kernel.org
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_hdcp.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/media/platform/marvell/cafe-driver.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/i915/display/intel_hdcp.c
-+++ b/drivers/gpu/drm/i915/display/intel_hdcp.c
-@@ -1794,9 +1794,10 @@ int hdcp2_authenticate_repeater_topology
- 		return -EINVAL;
+--- a/drivers/media/platform/marvell/cafe-driver.c
++++ b/drivers/media/platform/marvell/cafe-driver.c
+@@ -609,6 +609,7 @@ static void cafe_pci_remove(struct pci_d
+ 		return;
  	}
- 
--	if (seq_num_v < hdcp->seq_num_v) {
--		/* Roll over of the seq_num_v from repeater. Reauthenticate. */
--		drm_dbg_kms(display->drm, "Seq_num_v roll over.\n");
-+	if (hdcp->hdcp2_encrypted && seq_num_v <= hdcp->seq_num_v) {
-+		/* Reauthenticate on Seq_num_v repeat or rollover */
-+		drm_dbg_kms(display->drm, "Seq_num_v %s\n",
-+			    seq_num_v == hdcp->seq_num_v ? "repeat" : "rollover");
- 		return -EINVAL;
- 	}
+ 	cafe_shutdown(cam);
++	pci_disable_device(pdev);
+ 	kfree(cam);
+ }
  
 
 
