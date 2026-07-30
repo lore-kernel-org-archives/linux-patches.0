@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 861A5449B2A;
-	Thu, 30 Jul 2026 16:04:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6745644BC93;
+	Thu, 30 Jul 2026 16:04:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427463; cv=none; b=IDEEwXqUHg46FRTOGJPI6PhD21HEErPgCP4W/zIujwCFD8yQFXhJi12HdqAXEaK7AHCBsPm/qVlNXXtFBVrqSG6M7vGENhq4/hovXaliYq/aLga56OPRDQDYh1bHBq85wVqLuFCHROBEq8jO4z+x+AU3d9XQb7hoEYUv5HHASRQ=
+	t=1785427466; cv=none; b=Y1TX67lsbU7imxLxpMLRrwretMKqWjnmrNyIiS2fynsdEt/R0zVo7S+ShUS/YelA7t5tBERKHZ2NkdzZQYTGvbcBsf+TVS7eYOqgqxImywFo1npIc6vUiG0d4IT3tvz3BnoRKcQwcCCSKyrvDBfAIAYgqRM0d/j2+V+xjjO8Dhc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427463; c=relaxed/simple;
-	bh=APme1/C2PW3yXIyBmNipkhD+IGnjAUc1fApAjKdCl/g=;
+	s=arc-20240116; t=1785427466; c=relaxed/simple;
+	bh=anETMD4iMC5VlUTWfqlXV+Uvp+16+LHEVksiEy2i8FU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GmafILn/FRBEn4w1uQb/pb3l4Spgjr6P21zeMFgCLdOTDeKPYENo+qt2dX1txdcum1hcBUcEfoXyqDngvypF4YJWm5qTN+9DXyx9iK9LK6iSju6F6+zjozEDuZPwQa4ocBL0uztRTimSAOYHq7fPDcZh0AZjQ4XkTKtDnoV8xCE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rGsiEh8W; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OTyLUf7lgRsODva0wNP20eHWeLM/dEK0Gd4rscS4h2gfpAXxpnq8JMG7XpINHroFWM4PfdNSIHKtrhCQPTC+5uvlORDs7U/233UTIAEAHh0uW1mPAz3cZfMDe+QitXcColqXn1TTmRCLhvtUT/2M2Ll1kWYTrMCqMdopdtNidVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VP8Z7Mzp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rGsiEh8W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D93921F00A3A;
-	Thu, 30 Jul 2026 16:04:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VP8Z7Mzp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE03C1F000E9;
+	Thu, 30 Jul 2026 16:04:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427462;
-	bh=M/6Qb3Bw1SeOYF3oCfu+6OEXx9nVjeUOdHxsnSLpxZ0=;
+	s=korg; t=1785427465;
+	bh=FUrcu89MZL0gFJAcUuCUHV0UoZvIAHuj/yJcwC5KqA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rGsiEh8WcbUIeVTWwZwX38Up9pe3Qc+k0l5p/iy2yzbLv9FwmOkwiHBiAXt85gwNW
-	 a0oUDi+leBEwczaMLdBAGkqtEIbC4N85Xpnjpps3jaagvn8rSvTyRzzaqoUgE8IbJo
-	 Oqs0E4ztNQCAtz60PngNc12G5Bw2OJIjbPoT12h4=
+	b=VP8Z7MzpfUZh218vTgc3hsOMxMmX+4m2rlfFG9ktqtSr6rWAHvSkXrhENwiYXYxIl
+	 UYMIfnebbfJk09z2lRLWcy+s8XpYai0iETuS5RmtAa/rtdEcgwOqMTrpDYoRzH/532
+	 N6GY2jpkDQ2cVTQaizdcYSx5/RKNxbcPatTMr79g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Felix Fietkau <nbd@nbd.name>,
+	"Salman S. Tahir" <salman.abusaad@gmail.com>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 177/484] wifi: mt76: mt7996: fix possible NULL-pointer deref in mt7996_mcu_sta_bfer_eht()
-Date: Thu, 30 Jul 2026 16:11:14 +0200
-Message-ID: <20260730141427.313953031@linuxfoundation.org>
+Subject: [PATCH 6.6 135/484] ASoC: cs35l56: Fix potential probe() deadlock
+Date: Thu, 30 Jul 2026 16:10:32 +0200
+Message-ID: <20260730141426.389918343@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -51,47 +52,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit 2fffc472bec490c8357defcee9c075ca74467352 ]
+[ Upstream commit 93c2a8ea2454b7b14eb378a58cad8a83c0ffc903 ]
 
-mt76_connac_get_eht_phy_cap routine can theoretically return NULL so
-check cap pointer before dereferencing it.
+On I2C/SPI call cs35l56_init() before calling
+snd_soc_register_component() to prevent the potential for a deadlock
+on init_completion.
 
-Fixes: ba01944adee9f ("wifi: mt76: mt7996: add EHT beamforming support")
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20260621-mt76_connac_get_he_phy_cap-fix-v1-4-ed4ccf7a0363@kernel.org
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+For most buses all the hardware would be ready when probe() returns,
+but on SoundWire, probe() must return before the SoundWire bus driver
+will enumerate the device. All access to the registers must be deferred
+until the driver receives an ATTACHED notification. But anything that
+could return -EPROBE_DEFER must be called during probe, and that includes
+snd_soc_register_component(). Because of that, on SoundWire the ASoC
+component can be created before the registers are accssible, so
+cs35l56_component_probe() waits for init_completion to signal that the
+registers are accessible.
+
+On I2C/SPI this 2-stage startup isn't required so their probe()
+functions simply called cs35l56_common_probe() and then cs35l56_init().
+The problem with this was that snd_soc_register_component() was still
+called early. If this triggered ASoC to create the card, ASoC would call
+cs35l56_component_probe() which waits on init_completion - but this would
+be running inside the cs35l56 driver probe() so blocking it from reaching
+the code that signals init_completion, causing a deadlock.
+
+Fixes: e496112529006 ("ASoC: cs35l56: Add driver for Cirrus Logic CS35L56")
+Reported-by: Salman S. Tahir <salman.abusaad@gmail.com>
+Closes: https://lore.kernel.org/linux-sound/95c21574-97d5-4311-9263-9e174d22d22c@opensource.cirrus.com/T/#u
+Tested-by: Salman S. Tahir <salman.abusaad@gmail.com>
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Link: https://patch.msgid.link/20260716132045.1469156-2-rf@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/mcu.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ sound/soc/codecs/cs35l56-i2c.c |  4 +---
+ sound/soc/codecs/cs35l56-spi.c |  4 +---
+ sound/soc/codecs/cs35l56.c     | 15 +++++++++++++++
+ 3 files changed, 17 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-index ccbd9b9c409d82..2abc8d15ea8522 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-@@ -1360,14 +1360,18 @@ mt7996_mcu_sta_bfer_eht(struct ieee80211_sta *sta, struct ieee80211_vif *vif,
- 	struct ieee80211_sta_eht_cap *pc = &sta->deflink.eht_cap;
- 	struct ieee80211_eht_cap_elem_fixed *pe = &pc->eht_cap_elem;
- 	struct ieee80211_eht_mcs_nss_supp *eht_nss = &pc->eht_mcs_nss_supp;
--	const struct ieee80211_sta_eht_cap *vc =
--		mt76_connac_get_eht_phy_cap(phy->mt76, vif);
--	const struct ieee80211_eht_cap_elem_fixed *ve = &vc->eht_cap_elem;
- 	u8 nss_mcs = u8_get_bits(eht_nss->bw._80.rx_tx_mcs9_max_nss,
- 				 IEEE80211_EHT_MCS_NSS_RX) - 1;
-+	const struct ieee80211_eht_cap_elem_fixed *ve;
-+	const struct ieee80211_sta_eht_cap *vc;
- 	u8 snd_dim, sts;
+diff --git a/sound/soc/codecs/cs35l56-i2c.c b/sound/soc/codecs/cs35l56-i2c.c
+index d10e0e2380e852..61dde15d5a5f55 100644
+--- a/sound/soc/codecs/cs35l56-i2c.c
++++ b/sound/soc/codecs/cs35l56-i2c.c
+@@ -39,9 +39,7 @@ static int cs35l56_i2c_probe(struct i2c_client *client)
+ 	if (ret != 0)
+ 		return ret;
  
-+	vc = mt76_connac_get_eht_phy_cap(phy->mt76, vif);
-+	if (!vc)
-+		return;
+-	ret = cs35l56_init(cs35l56);
+-	if (ret == 0)
+-		ret = cs35l56_irq_request(&cs35l56->base, client->irq);
++	ret = cs35l56_irq_request(&cs35l56->base, client->irq);
+ 	if (ret < 0)
+ 		cs35l56_remove(cs35l56);
+ 
+diff --git a/sound/soc/codecs/cs35l56-spi.c b/sound/soc/codecs/cs35l56-spi.c
+index 9962703915e1f1..df23d19308d4a2 100644
+--- a/sound/soc/codecs/cs35l56-spi.c
++++ b/sound/soc/codecs/cs35l56-spi.c
+@@ -37,9 +37,7 @@ static int cs35l56_spi_probe(struct spi_device *spi)
+ 	if (ret != 0)
+ 		return ret;
+ 
+-	ret = cs35l56_init(cs35l56);
+-	if (ret == 0)
+-		ret = cs35l56_irq_request(&cs35l56->base, spi->irq);
++	ret = cs35l56_irq_request(&cs35l56->base, spi->irq);
+ 	if (ret < 0)
+ 		cs35l56_remove(cs35l56);
+ 
+diff --git a/sound/soc/codecs/cs35l56.c b/sound/soc/codecs/cs35l56.c
+index b581e8f1576634..dda40e97cf5e66 100644
+--- a/sound/soc/codecs/cs35l56.c
++++ b/sound/soc/codecs/cs35l56.c
+@@ -1318,6 +1318,16 @@ int cs35l56_common_probe(struct cs35l56_private *cs35l56)
+ 		goto err;
+ 	}
+ 
++	/*
++	 * On SoundWire the cs35l56_init() cannot be run until after the
++	 * device has been enumerated by the SoundWire core.
++	 */
++	if (!cs35l56->sdw_peripheral) {
++		ret = cs35l56_init(cs35l56);
++		if (ret)
++			goto err_remove_wm_adsp;
++	}
 +
- 	bf->tx_mode = MT_PHY_TYPE_EHT_MU;
-+	ve = &vc->eht_cap_elem;
+ 	ret = snd_soc_register_component(cs35l56->base.dev,
+ 					 &soc_component_dev_cs35l56,
+ 					 cs35l56_dai, ARRAY_SIZE(cs35l56_dai));
+@@ -1332,6 +1342,11 @@ int cs35l56_common_probe(struct cs35l56_private *cs35l56)
+ 	wm_adsp2_remove(&cs35l56->dsp);
  
- 	mt7996_mcu_sta_sounding_rate(bf);
+ err:
++	if (pm_runtime_enabled(cs35l56->base.dev)) {
++		pm_runtime_dont_use_autosuspend(cs35l56->base.dev);
++		pm_runtime_disable(cs35l56->base.dev);
++	}
++
+ 	gpiod_set_value_cansleep(cs35l56->base.reset_gpio, 0);
+ 	regulator_bulk_disable(ARRAY_SIZE(cs35l56->supplies), cs35l56->supplies);
  
 -- 
 2.53.0
