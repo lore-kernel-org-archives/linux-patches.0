@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EC2830C618;
-	Thu, 30 Jul 2026 15:16:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB4C630C618;
+	Thu, 30 Jul 2026 15:16:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424616; cv=none; b=km3UfQMXueuJpIR1IHIDe9WT89UcOSlhqtQEmvbJIihLdQopfpAZeTqYeR4zJAuPXKwpOz9pyEqCOXZujZ0VFGEANDEqxztIxaXRFNEnjMQdougHhbh9V0Pg8BOX/hPvzMVB9YFSAekwQYfv2MmTikt4tocal5XzBJjZxpZuYAQ=
+	t=1785424619; cv=none; b=r2zY5k5IpZU5HCTX4yu08JQLd7ro443Ean315G7O+OldU14IAQhceZ8UEEe2HMYorkt3It81NfMQ2qPm61u4PqsjCDN6SuuZWcJ3Zz3dfvYnL/x7xqWchtV1UvrARWWb0aTbX74WQMMANbCvoDFVDeFZihsmuj/zSKSvkbTN8Nc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424616; c=relaxed/simple;
-	bh=a8WVfzz3Bqjw9XE+ebAKPn8R2keIBnbpEk7DKDk7t5w=;
+	s=arc-20240116; t=1785424619; c=relaxed/simple;
+	bh=scKoOQJ1v3OIAUZv//SL5+1e3AYrSavlcm6TeCBE/+8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uQD0yfHe5gDwt/CKLtjv1z2T12FzKweUfoKATPv7zU+nwQoguhXsZ7tsbncdVizHtiwTjYCSyR8SYmePTd2IcUxEJF/2iZMQTSntNjqe06wGZtXJhUtMSK4GtHCcPECMSF0rdF3DM/8pyMxjs5L3DBFA4WVxgcA5uv3KFk/SwJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ciWfLMFL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gdwomoU3bpK7KmgIShQzrbpxB9R9/mbDGUQ7Ke5f0MIP0egFn+7pPP1FXyfYJPg+31GbQA17MHndKdcOsLWbmQ6uqCgpSY2W2QwEHw7WpLqdnLS4O2/NWq32621ekM2SiSuY2fJtL+Bm2xsrmBVSwQLvXtTkENcmdghIyfkbjDI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GqAX/qwS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ciWfLMFL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 771651F000E9;
-	Thu, 30 Jul 2026 15:16:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GqAX/qwS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AB261F000E9;
+	Thu, 30 Jul 2026 15:16:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424615;
-	bh=7KClBhPK+I0WqpjUjouXpCA8782nN7Gl04JPXCPsybw=;
+	s=korg; t=1785424617;
+	bh=/P7DiGIsHhc2/8wgAum3zu7WYf9f83/GGUQ0MZGO+yk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ciWfLMFLzaSkONwDQHD0Led1LEivkFixQ5+gadOKMpmMrFNi4c6oSuzgp2yzYHhIS
-	 UzklX/ShcIPjbsf97uXOaObqexzo4B5PnqrjGD/jeRr1HAKWWjgHbeR5B1mRG6RIU0
-	 SgYgFfl4ybMSEZqQonKban23xaQVIl4195MbZl7c=
+	b=GqAX/qwSJO+L2w7YbuiEZUxp9Hi5780NX4RNXzk67w8U9FDzu6p8RbItFgBycbvRQ
+	 Vh+tOlIh2C3eoCYgovuM2Um+DitPeLcvtvVqJF4pstjZ5aK2m/OY+HhWi+diSuT7qj
+	 8I/yyBOfg+b5GomlWhSVp3n9e/PQSBooROITQkUk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Carlier <devnexen@gmail.com>,
+	Xiaolei Wang <xiaolei.wang@windriver.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.18 412/675] media: nuvoton: npcm-video: fix memory leaks in probe and remove
-Date: Thu, 30 Jul 2026 16:12:22 +0200
-Message-ID: <20260730141453.889484009@linuxfoundation.org>
+Subject: [PATCH 6.18 413/675] media: nxp: imx8-isi: Add missing v4l2_subdev_cleanup() in crossbar and pipe
+Date: Thu, 30 Jul 2026 16:12:23 +0200
+Message-ID: <20260730141453.910695376@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -50,107 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Carlier <devnexen@gmail.com>
+From: Xiaolei Wang <xiaolei.wang@windriver.com>
 
-commit 50cc0e547da50b887e63dfa1ad203cd5b735d01e upstream.
+commit 567418eedd25b3d86d489807682030b4b98b73d9 upstream.
 
-npcm_video_probe() allocates the npcm_video structure with kzalloc_obj()
-but never frees it on any probe error path or in npcm_video_remove(),
-leaking the allocation on every failed probe and every normal unbind.
+Both mxc_isi_crossbar_init() and mxc_isi_pipe_init() call
+v4l2_subdev_init_finalize() which allocates the subdev active state,
+but neither mxc_isi_crossbar_cleanup() nor mxc_isi_pipe_cleanup()
+calls v4l2_subdev_cleanup() to free it.
 
-Additionally, when npcm_video_setup_video() fails, the reserved memory
-association established by of_reserved_mem_device_init() in
-npcm_video_init() is not released, leaking the rmem_assigned_device
-entry on the global list.
+This causes a memory leak on every rmmod, reported by kmemleak:
 
-Fix both by adding kfree(video) to all probe error paths and to
-npcm_video_remove(), and adding the missing
-of_reserved_mem_device_release() call when npcm_video_setup_video()
-fails.
+  unreferenced object 0xffff0000d06fc800 (size 192):
+    comm "(udev-worker)", pid 254, jiffies 4294913455
+    backtrace (crc 36eeae58):
+      kmemleak_alloc+0x34/0x40
+      __kvmalloc_node_noprof+0x5f8/0x7d8
+      __v4l2_subdev_state_alloc+0x1fc/0x30c
+      __v4l2_subdev_init_finalize+0x178/0x368
 
-Fixes: 46c15a4ff1f4 ("media: nuvoton: Add driver for NPCM video capture and encoding engine")
+Add the missing v4l2_subdev_cleanup() calls before media_entity_cleanup()
+in both crossbar and pipe cleanup paths.
+
+Fixes: cf21f328fcaf ("media: nxp: Add i.MX8 ISI driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: David Carlier <devnexen@gmail.com>
+Signed-off-by: Xiaolei Wang <xiaolei.wang@windriver.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Link: https://patch.msgid.link/20260507041318.491594-3-xiaolei.wang@windriver.com
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/nuvoton/npcm-video.c |   32 ++++++++++++++++++++--------
- 1 file changed, 23 insertions(+), 9 deletions(-)
+ drivers/media/platform/nxp/imx8-isi/imx8-isi-crossbar.c |    1 +
+ drivers/media/platform/nxp/imx8-isi/imx8-isi-pipe.c     |    1 +
+ 2 files changed, 2 insertions(+)
 
---- a/drivers/media/platform/nuvoton/npcm-video.c
-+++ b/drivers/media/platform/nuvoton/npcm-video.c
-@@ -1750,42 +1750,55 @@ static int npcm_video_probe(struct platf
- 	regs = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(regs)) {
- 		dev_err(&pdev->dev, "Failed to parse VCD reg in DTS\n");
--		return PTR_ERR(regs);
-+		rc = PTR_ERR(regs);
-+		goto err_free;
- 	}
+--- a/drivers/media/platform/nxp/imx8-isi/imx8-isi-crossbar.c
++++ b/drivers/media/platform/nxp/imx8-isi/imx8-isi-crossbar.c
+@@ -492,6 +492,7 @@ err_free:
  
- 	video->vcd_regmap = devm_regmap_init_mmio(&pdev->dev, regs,
- 						  &npcm_video_regmap_cfg);
- 	if (IS_ERR(video->vcd_regmap)) {
- 		dev_err(&pdev->dev, "Failed to initialize VCD regmap\n");
--		return PTR_ERR(video->vcd_regmap);
-+		rc = PTR_ERR(video->vcd_regmap);
-+		goto err_free;
- 	}
+ void mxc_isi_crossbar_cleanup(struct mxc_isi_crossbar *xbar)
+ {
++	v4l2_subdev_cleanup(&xbar->sd);
+ 	media_entity_cleanup(&xbar->sd.entity);
+ 	kfree(xbar->pads);
+ 	kfree(xbar->inputs);
+--- a/drivers/media/platform/nxp/imx8-isi/imx8-isi-pipe.c
++++ b/drivers/media/platform/nxp/imx8-isi/imx8-isi-pipe.c
+@@ -819,6 +819,7 @@ void mxc_isi_pipe_cleanup(struct mxc_isi
+ {
+ 	struct v4l2_subdev *sd = &pipe->sd;
  
- 	video->reset = devm_reset_control_get(&pdev->dev, NULL);
- 	if (IS_ERR(video->reset)) {
- 		dev_err(&pdev->dev, "Failed to get VCD reset control in DTS\n");
--		return PTR_ERR(video->reset);
-+		rc = PTR_ERR(video->reset);
-+		goto err_free;
- 	}
- 
- 	video->gcr_regmap = syscon_regmap_lookup_by_phandle(pdev->dev.of_node,
- 							    "nuvoton,sysgcr");
--	if (IS_ERR(video->gcr_regmap))
--		return PTR_ERR(video->gcr_regmap);
-+	if (IS_ERR(video->gcr_regmap)) {
-+		rc = PTR_ERR(video->gcr_regmap);
-+		goto err_free;
-+	}
- 
- 	video->gfx_regmap = syscon_regmap_lookup_by_phandle(pdev->dev.of_node,
- 							    "nuvoton,sysgfxi");
--	if (IS_ERR(video->gfx_regmap))
--		return PTR_ERR(video->gfx_regmap);
-+	if (IS_ERR(video->gfx_regmap)) {
-+		rc = PTR_ERR(video->gfx_regmap);
-+		goto err_free;
-+	}
- 
- 	rc = npcm_video_init(video);
- 	if (rc)
--		return rc;
-+		goto err_free;
- 
- 	rc = npcm_video_setup_video(video);
- 	if (rc)
--		return rc;
-+		goto err_release_mem;
- 
- 	dev_info(video->dev, "NPCM video driver probed\n");
- 	return 0;
-+
-+err_release_mem:
-+	of_reserved_mem_device_release(&pdev->dev);
-+err_free:
-+	kfree(video);
-+	return rc;
++	v4l2_subdev_cleanup(sd);
+ 	media_entity_cleanup(&sd->entity);
+ 	mutex_destroy(&pipe->lock);
  }
- 
- static void npcm_video_remove(struct platform_device *pdev)
-@@ -1800,6 +1813,7 @@ static void npcm_video_remove(struct pla
- 	v4l2_device_unregister(v4l2_dev);
- 	if (video->ece.enable)
- 		npcm_video_ece_stop(video);
-+	kfree(video);
- 	of_reserved_mem_device_release(dev);
- }
- 
 
 
