@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06F4F423782;
-	Thu, 30 Jul 2026 15:01:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13C394052DC;
+	Thu, 30 Jul 2026 15:01:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423714; cv=none; b=TMXQErqV74IYeFzWOxZyWW+VY2gAiG7+7lMZnFkJJMZ3gyNoc7KuEfwcDipta4dxRSRNIQ7Fwn4aCUUMRpN4i8L1QaZUAhh/9T6P5GQMsmqOzt+dIYwHEaAe7Mxp6idlN2kkvXguYKwrq/AIcLJT2NdhXHwRORwXuKzCXTP2UNU=
+	t=1785423717; cv=none; b=L/1/WLgFfwxSCXgw9GivIH9FdhWiS9BSr3oxicIxhK/xtLB9G1lPyVJfP9Od0B4Xi1DWeL0ddtd8qy3wc/GPKv42oZzyL6hKZYjPiaOgm7/euBoxOjw4AtE45WfOxoXaATxfAQcpGZL7CkE06Csf6evSI+FufZ6RYCAuxA5Uia4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423714; c=relaxed/simple;
-	bh=YulG9bRmGL2z12hp6ZVhu/ldYc4AHhIovku9r9G6D6g=;
+	s=arc-20240116; t=1785423717; c=relaxed/simple;
+	bh=pgOmmh//E0izMNStAq3py7PcenWCzM6y6sY2Ximzpls=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bwBuZCGLbjVyGtcuJYZqpaWLGvRQg5iSxR+wWd2WTcvUKln5kem6jbFzQtT8C1FSNix6w4d5vGrRDcsQvbUZzsQb15YhJJWzw5fIpMhVMlt/IX4WKAaLXk45fEQsIIiuGkYFv4R495ry1+FjyJ69B8xGm7w8Qke6Q/5yLVbomw8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jcgXtW0d; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=jKtW5iYUQO8mJEHpxs5gNOEId+kZSS5VqNCVxUkxft62Yte780PxtvnE/6JLkxJufi3SMqIjMJoaAbGhlo1ISqvw0GOdCkIc9Z/t3fOr11ycktF15pjSf6064D8fNkkk/l9C9GzQ9at7AGw7xoS7clM2EpeJ/+A9j6APRc5j0PM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=louh10ry; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jcgXtW0d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 538D91F000E9;
-	Thu, 30 Jul 2026 15:01:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="louh10ry"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DFF41F000E9;
+	Thu, 30 Jul 2026 15:01:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423712;
-	bh=QMfxXi4ELoiy1KD7LB8iMMSCn8V+3JtTsw4pWhsJxPo=;
+	s=korg; t=1785423716;
+	bh=/cvuXThysDi6X1SMkKxKO2u8FLiXi0Z9ik2rAJ41yIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jcgXtW0dyIvJI1NanCeRpLBXdfH2KcXLtAx4iusr/o3z/9cOI9HfJFO+FBh2E8atO
-	 DcMrEihH6R3eQ5n9guWnWHZD28OFMOZVRENF0hmaMEP6qWJuyoLqYODdvKPGGrZ9eD
-	 CYtd67lkib8dYb/dLOy00X3htSN55Vgcq3rX9F5A=
+	b=louh10ryBoD8x8a36JlFRd/+lvZphJtgUeB4yAxufooYyw5QmOT5SnlZPAKVlcI5q
+	 qW2FTsstiGHNSaZsLLMgV0yODbJERdUhvQJjQ+XWrJUpPlEcmb+WkcT5qlWu7iBxTG
+	 LmPJ72UaGjWb6LKekuQWM4W09UGABHqlLWB6gi7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	"Chia-Lin Kao (AceLan)" <acelan.kao@canonical.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.18 141/675] usb: core: port: Deattach Type-C connector on component unbind
-Date: Thu, 30 Jul 2026 16:07:51 +0200
-Message-ID: <20260730141448.133786340@linuxfoundation.org>
+	Michal Wajdeczko <michal.wajdeczko@intel.com>,
+	=?UTF-8?q?Micha=C5=82=20Winiarski?= <michal.winiarski@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 124/675] drm/xe: Allow the caller to pass guc_buf_cache size
+Date: Thu, 30 Jul 2026 16:07:34 +0200
+Message-ID: <20260730141447.781327511@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -45,106 +45,119 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chia-Lin Kao (AceLan) <acelan.kao@canonical.com>
+From: Michał Winiarski <michal.winiarski@intel.com>
 
-commit e0b291fe117964037e0ba382eff4bb365d531c3a upstream.
+[ Upstream commit dca2701a6277399f9d255f09b4c34d9a7171c09b ]
 
-connector_unbind() is the mirror of connector_bind(), but it is missing
-the symmetric call to typec_deattach() that connector_bind() makes via:
+An upcoming change will use GuC buffer cache as a place where GuC
+migration data will be stored, and the memory requirement for that is
+larger than indirect data.
+Allow the caller to pass the size based on the intended usecase.
 
-    if (port_dev->child)
-        typec_attach(port_dev->connector, &port_dev->child->dev);
-
-When a Thunderbolt dock is unplugged, two teardown paths race:
-
-1. The component framework calls connector_unbind() first, which sets
-   port_dev->connector = NULL without calling typec_deattach().  This
-   leaves port->usb2_dev/port->usb3_dev in struct typec_port pointing at
-   the USB device that is about to be freed.
-
-2. usb_disconnect() then calls typec_deattach(port_dev->connector, ...),
-   but port_dev->connector is already NULL, so the call is a no-op and
-   port->usb2_dev is never cleared.
-
-3. Concurrently, UCSI detects a PD partner-disconnect event and calls
-   typec_unregister_partner(), which reads port->usb2_dev (now a dangling
-   pointer to freed memory) and passes it to typec_partner_unlink_device()
-   -> sysfs_remove_link() -> dev_name() on the freed device, corrupting
-   the typec/UCSI partner state.
-
-This corruption leaves the Thunderbolt tunnel in an inconsistent state on
-the next dock hot-plug.  On affected hardware the dock's I225/igc NIC fails
-to enumerate: AER fires a slot reset while the igc driver is still
-initialising ("PCIe link lost"), and the subsequent igc_reset attempt hits
-igc_rd32 on an already-detached device:
-
-    igc 0000:2e:00.0 eth0: PCIe link lost, device now detached
-    igc: Failed to read reg 0x0!
-    WARNING: CPU: 9 PID: 129 at drivers/net/ethernet/intel/igc/igc_main.c:7005
-             igc_rd32+0xa4/0xc0 [igc]
-    Call Trace:
-     igc_disable_pcie_master+0x16/0xa0 [igc]
-     igc_reset_hw_base+0x14/0x170 [igc]
-     igc_reset+0x63/0x110 [igc]
-     igc_io_slot_reset+0x9e/0xd0 [igc]
-     report_slot_reset+0x5d/0xc0
-     pcie_do_recovery+0x209/0x400
-     aer_isr_one_error_type+0x235/0x430
-     aer_isr+0x4e/0x80
-     irq_thread+0xf4/0x1f0
-
-4. UCSI later handles the PD partner-disconnect and calls
-   typec_unregister_partner(), which still sees the stale port->usb2_dev
-   and tries to remove its sysfs link a second time:
-
-   kernfs: can not remove 'typec', no directory
-   WARNING: CPU: 6 PID: 55 at fs/kernfs/dir.c:1706 kernfs_remove_by_name_ns+0xe9/0xf0
-   Workqueue: events ucsi_handle_connector_change [typec_ucsi]
-   Call Trace:
-    sysfs_remove_link+0x19/0x50
-    typec_unregister_partner+0x6e/0x120 [typec]
-    ucsi_unregister_partner+0x107/0x150 [typec_ucsi]
-    ucsi_handle_connector_change+0x3ec/0x490 [typec_ucsi]
-    process_one_work+0x18e/0x3e0
-    worker_thread+0x2e3/0x420
-    kthread+0x10a/0x230
-    ret_from_fork+0x121/0x140
-    ret_from_fork_asm+0x1a/0x30
-
-   With worse timing the same stale pointer is dereferenced after the
-   backing memory is freed, turning the warning into a use-after-free.
-
-Fix the asymmetry: call typec_deattach() before clearing
-port_dev->connector, matching what connector_bind() does on the bind side.
-typec_partner_deattach() is already protected by port->partner_link_lock,
-so it serialises safely with the concurrent typec_unregister_partner() path.
-
-Fixes: 11110783f5ea ("usb: Inform the USB Type-C class about enumerated devices")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Chia-Lin Kao (AceLan) <acelan.kao@canonical.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20260611071201.1235545-1-acelan.kao@canonical.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
+Link: https://patch.msgid.link/20251112132220.516975-12-michal.winiarski@intel.com
+Signed-off-by: Michał Winiarski <michal.winiarski@intel.com>
+Stable-dep-of: 56441f9e08ad ("drm/xe/vf: Fix VF CCS attach/detach race with in-flight BO moves")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/core/port.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/xe/xe_guc_buf.c | 44 ++++++++++++++++++++++++---------
+ drivers/gpu/drm/xe/xe_guc_buf.h |  1 +
+ 2 files changed, 34 insertions(+), 11 deletions(-)
 
---- a/drivers/usb/core/port.c
-+++ b/drivers/usb/core/port.c
-@@ -726,6 +726,8 @@ static void connector_unbind(struct devi
+diff --git a/drivers/gpu/drm/xe/xe_guc_buf.c b/drivers/gpu/drm/xe/xe_guc_buf.c
+index 502ca3a4ee6064..989c546d05689d 100644
+--- a/drivers/gpu/drm/xe/xe_guc_buf.c
++++ b/drivers/gpu/drm/xe/xe_guc_buf.c
+@@ -13,6 +13,8 @@
+ #include "xe_guc_buf.h"
+ #include "xe_sa.h"
  
- 	sysfs_remove_link(&connector->kobj, dev_name(dev));
- 	sysfs_remove_link(&dev->kobj, "connector");
-+	if (port_dev->child)
-+		typec_deattach(port_dev->connector, &port_dev->child->dev);
- 	port_dev->connector = NULL;
++#define XE_GUC_BUF_CACHE_DEFAULT_SIZE SZ_8K
++
+ static struct xe_guc *cache_to_guc(struct xe_guc_buf_cache *cache)
+ {
+ 	return container_of(cache, struct xe_guc, buf);
+@@ -23,21 +25,12 @@ static struct xe_gt *cache_to_gt(struct xe_guc_buf_cache *cache)
+ 	return guc_to_gt(cache_to_guc(cache));
  }
  
+-/**
+- * xe_guc_buf_cache_init() - Initialize the GuC Buffer Cache.
+- * @cache: the &xe_guc_buf_cache to initialize
+- *
+- * The Buffer Cache allows to obtain a reusable buffer that can be used to pass
+- * indirect H2G data to GuC without a need to create a ad-hoc allocation.
+- *
+- * Return: 0 on success or a negative error code on failure.
+- */
+-int xe_guc_buf_cache_init(struct xe_guc_buf_cache *cache)
++static int guc_buf_cache_init(struct xe_guc_buf_cache *cache, u32 size)
+ {
+ 	struct xe_gt *gt = cache_to_gt(cache);
+ 	struct xe_sa_manager *sam;
+ 
+-	sam = __xe_sa_bo_manager_init(gt_to_tile(gt), SZ_8K, 0, sizeof(u32));
++	sam = __xe_sa_bo_manager_init(gt_to_tile(gt), size, 0, sizeof(u32));
+ 	if (IS_ERR(sam))
+ 		return PTR_ERR(sam);
+ 	cache->sam = sam;
+@@ -48,6 +41,35 @@ int xe_guc_buf_cache_init(struct xe_guc_buf_cache *cache)
+ 	return 0;
+ }
+ 
++/**
++ * xe_guc_buf_cache_init() - Initialize the GuC Buffer Cache.
++ * @cache: the &xe_guc_buf_cache to initialize
++ *
++ * The Buffer Cache allows to obtain a reusable buffer that can be used to pass
++ * data to GuC or read data from GuC without a need to create a ad-hoc allocation.
++ *
++ * Return: 0 on success or a negative error code on failure.
++ */
++int xe_guc_buf_cache_init(struct xe_guc_buf_cache *cache)
++{
++	return guc_buf_cache_init(cache, XE_GUC_BUF_CACHE_DEFAULT_SIZE);
++}
++
++/**
++ * xe_guc_buf_cache_init_with_size() - Initialize the GuC Buffer Cache.
++ * @cache: the &xe_guc_buf_cache to initialize
++ * @size: size in bytes
++ *
++ * Like xe_guc_buf_cache_init(), except it allows the caller to make the cache
++ * buffer larger, allowing to accommodate larger objects.
++ *
++ * Return: 0 on success or a negative error code on failure.
++ */
++int xe_guc_buf_cache_init_with_size(struct xe_guc_buf_cache *cache, u32 size)
++{
++	return guc_buf_cache_init(cache, max(XE_GUC_BUF_CACHE_DEFAULT_SIZE, size));
++}
++
+ /**
+  * xe_guc_buf_cache_dwords() - Number of dwords the GuC Buffer Cache supports.
+  * @cache: the &xe_guc_buf_cache to query
+diff --git a/drivers/gpu/drm/xe/xe_guc_buf.h b/drivers/gpu/drm/xe/xe_guc_buf.h
+index 0d67604d96bdd7..8204e589625013 100644
+--- a/drivers/gpu/drm/xe/xe_guc_buf.h
++++ b/drivers/gpu/drm/xe/xe_guc_buf.h
+@@ -12,6 +12,7 @@
+ #include "xe_guc_buf_types.h"
+ 
+ int xe_guc_buf_cache_init(struct xe_guc_buf_cache *cache);
++int xe_guc_buf_cache_init_with_size(struct xe_guc_buf_cache *cache, u32 size);
+ u32 xe_guc_buf_cache_dwords(struct xe_guc_buf_cache *cache);
+ struct xe_guc_buf xe_guc_buf_reserve(struct xe_guc_buf_cache *cache, u32 dwords);
+ struct xe_guc_buf xe_guc_buf_from_data(struct xe_guc_buf_cache *cache,
+-- 
+2.53.0
+
 
 
