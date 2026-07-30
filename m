@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 688D619CD1D;
-	Thu, 30 Jul 2026 15:35:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F2023806BD;
+	Thu, 30 Jul 2026 15:35:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425730; cv=none; b=bdqxfx8g1DdBbO7WqKxGkFd+6Z8sD4u3/w88qkIvsNJYHw4dlOpmazBzNzE3xOxPdJ1CHIdcnBptKOp/Cpz41RNTzi9vm6rbGT0gri1MXYO5Wo1MUq1UezmcPMEkmEbavR9gCuKbeqN4PCMGfzyTNZ3mz9ngqcdMevfIhWvo/8c=
+	t=1785425733; cv=none; b=JzKUGpyvtGP6h5KjmcRv4vOcLDUZ+XKojcp/aVN9Sjw9DIeytQXDF7nTVuzx6Tp9VvvRXRSrX6m5HxRqLLBye9bN4Oxo7C5zcZHZgUDCm3fQk35n1uiKN+BENDWX/kSMi9aHhKoM1F59TAakpDDtdXH9Yb8j1fd3Uk7zqV5alTI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425730; c=relaxed/simple;
-	bh=dxyCBn8NNIZm9qjLZEMGfqHvI1tPCwUCVB35xTbEWeE=;
+	s=arc-20240116; t=1785425733; c=relaxed/simple;
+	bh=cZ9sP6VupIlBpNF9QMm/PKMchsTuOS8EsVFMXjWcG6o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lrkfai5ogSYPinr24er8JSnZ8aBWn9fiWVHP1qfgBozO9uEUnQ0baHu/eC2i2TS96LvWdFKy6L1oRJX9v7P+u94XIja0Y17e3/W+2JTzSvoqS/LOcKiMDGLp2wn2u5TBsyeFgsvA/i9OUNYp2diAApamMfeHYqcdHz3llJapaow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bJc36MZ4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=N4AJFsCBSa5/yi3EQtHTjV7ZES2Kax3m98pfXQHfM/h+zt9hQtwRAb34b+bMQPLymvV/FVqo+Src3ehm9ZcsOySL4bUVEKOoiBe5J3gVsiX+SxXjUnDTfepN+eYpEUuhs0g7NfN5W7ZEdDSQ+2GEV5MhedN9j03Qfbe2TSW85As=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hs/Lrp/Q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bJc36MZ4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C39D41F000E9;
-	Thu, 30 Jul 2026 15:35:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hs/Lrp/Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A9771F000E9;
+	Thu, 30 Jul 2026 15:35:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425729;
-	bh=g3aYkyj2oO6tGNPa4H88J8BFNFtf2u10Wxnd9obcjng=;
+	s=korg; t=1785425732;
+	bh=FoVCRPKVr7rwttmqHPp6EyQJKWPQ5OJk6MIkC5kZwEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bJc36MZ48SEf83f1kGWdenkZ/Z3EQbVz+oXXGtmmSDQox+PM7M6ewF1C++uIOo5sQ
-	 mbXRO240pOuDkFgekGt+IygWxIrXyxdmy+nKLj6UXevOQG+t3rV47Zus9Un9+y+rDb
-	 FAf/kenhKMk8FNtfcxfmI3xIKPnXGKf9mRHiPLtE=
+	b=Hs/Lrp/QRYDEYgO+78Ee3OdeG37hnYSm4zo/MVVG2TuYOmCjgtAtIrLubfDP0xjN6
+	 IoQVQyoq9Dz+fe099nyMtqdLFHaAQjA2T3egLbtHOrmaRbKw1pHPeHEcm46KzwZ37s
+	 dK+Ma+yo+uBlfYOxJEAxptJNEWiLClCl3H48XRLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Golle <daniel@makrotopia.org>,
-	Chen-Yu Tsai <wens@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 170/602] regulator: mt6358: use regmap helper to read fixed LDO calibration
-Date: Thu, 30 Jul 2026 16:09:22 +0200
-Message-ID: <20260730141439.542657255@linuxfoundation.org>
+Subject: [PATCH 6.12 171/602] Bluetooth: btusb: validate Realtek vendor event length
+Date: Thu, 30 Jul 2026 16:09:23 +0200
+Message-ID: <20260730141439.564158797@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -52,58 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Golle <daniel@makrotopia.org>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 1d26f125501f3fbe6c259ab75bf6516299a0bf0e ]
+[ Upstream commit df541cd485ff80a5ddc579d99687bc7506df9851 ]
 
-The "fixed" LDOs with output voltage calibration use
-mt6358_get_buck_voltage_sel as their get_voltage_sel op, but the
-MT6358_REG_FIXED and MT6366_REG_FIXED entries do not populate
-da_vsel_reg/da_vsel_mask. The op therefore reads register 0x0 with a
-zero mask and shifts the result by ffs(0) - 1 = -1, which is undefined
-behaviour and gets flagged by UBSAN on every boot on MT6366 boards:
+btusb_recv_event_realtek() reads the event code at data[0] and the Realtek
+subevent code at data[2] before deciding whether to consume a vendor event
+as a coredump.
 
-  UBSAN: shift-out-of-bounds in drivers/regulator/mt6358-regulator.c:384:38
-  shift exponent -1 is negative
-  Call trace:
-   mt6358_get_buck_voltage_sel+0xc8/0x120
-   regulator_get_voltage_rdev+0x70/0x170
-   set_machine_constraints+0x504/0xc38
-   regulator_register+0x324/0xc68
+For example, the two-byte event ff 00 contains a complete vendor-event
+header declaring zero parameters. The old classifier still reads a
+nonexistent third byte and can misclassify the event as a coredump if the
+adjacent byte is 0x34.
 
-Besides the undefined shift, the returned selector is always 0, so the
-actual calibration offset programmed in <reg>_ANA_CON0 is never
-reported.
+Require the HCI event header and first parameter to be present before
+inspecting the Realtek subevent code. Short events continue through the
+normal HCI receive path, which owns their protocol validation.
 
-The descriptor already carries the correct vsel_reg/vsel_mask (the
-ANA_CON0 calibration field), matching the regulator_set_voltage_sel_regmap
-op already in use. Read the selector back through
-regulator_get_voltage_sel_regmap instead.
-
-Fixes: cf08fa74c716 ("regulator: mt6358: Add output voltage fine tuning to fixed regulators")
-Signed-off-by: Daniel Golle <daniel@makrotopia.org>
-Reviewed-by: Chen-Yu Tsai <wens@kernel.org>
-Tested-by: Chen-Yu Tsai <wens@kernel.org>
-Link: https://patch.msgid.link/dcd98d81dede338c9bbb9700a9613c848b702e49.1784336005.git.daniel@makrotopia.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 044014ce85a1 ("Bluetooth: btrtl: Add Realtek devcoredump support")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/mt6358-regulator.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/bluetooth/btusb.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/regulator/mt6358-regulator.c b/drivers/regulator/mt6358-regulator.c
-index e4745f616cea3b..44bef0bdfdbe35 100644
---- a/drivers/regulator/mt6358-regulator.c
-+++ b/drivers/regulator/mt6358-regulator.c
-@@ -492,7 +492,7 @@ static const struct regulator_ops mt6358_volt_fixed_ops = {
- 	.list_voltage = regulator_list_voltage_linear,
- 	.map_voltage = regulator_map_voltage_linear,
- 	.set_voltage_sel = regulator_set_voltage_sel_regmap,
--	.get_voltage_sel = mt6358_get_buck_voltage_sel,
-+	.get_voltage_sel = regulator_get_voltage_sel_regmap,
- 	.set_voltage_time_sel = regulator_set_voltage_time_sel,
- 	.enable = regulator_enable_regmap,
- 	.disable = regulator_disable_regmap,
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 903d43380d038f..aadbda2fd5a20a 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -2707,7 +2707,9 @@ static int btusb_setup_realtek(struct hci_dev *hdev)
+ 
+ static int btusb_recv_event_realtek(struct hci_dev *hdev, struct sk_buff *skb)
+ {
+-	if (skb->data[0] == HCI_VENDOR_PKT && skb->data[2] == RTK_SUB_EVENT_CODE_COREDUMP) {
++	if (skb->len >= HCI_EVENT_HDR_SIZE + 1 &&
++	    skb->data[0] == HCI_VENDOR_PKT &&
++	    skb->data[2] == RTK_SUB_EVENT_CODE_COREDUMP) {
+ 		struct rtk_dev_coredump_hdr hdr = {
+ 			.code = RTK_DEVCOREDUMP_CODE_MEMDUMP,
+ 		};
 -- 
 2.53.0
 
