@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF8FF442FA6;
-	Thu, 30 Jul 2026 15:59:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4A9E374A0E;
+	Thu, 30 Jul 2026 15:59:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427164; cv=none; b=IL444yjxwrE8LrsShBC9KCdvDsD/EKildqDiPEd/hjyVrB8Pi9xDZ/uMyHc8Bov6dMYTR9mHe5echrHDGPpqI7EjzSkbGPdai8SKx1F3rkMZgIcPNLdGPpEajZhnAnbljONPy4Gb0FLicDtepmqBHwt+urWmYtEcVUpMslQ3KdA=
+	t=1785427167; cv=none; b=iZQ8IrhXPkKuwZ/uPgIMmFDdxmwkciKeV7r0uiUChQ4DSo994Ly4zPyvksq6YPuEafd4fPJ+mCiSVi6rmwpcQDBoF4+fVp00Kc1LHMpv7gpf6egAYiYc0QfuJI5jg04hSGP9jBJQWTkxK52K8/pLqFik1JYZe70rCsnTZdx4n6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427164; c=relaxed/simple;
-	bh=pNzMH85imxvSMGg6FExlG0dhvxce/1bFMx0tdrkt/D4=;
+	s=arc-20240116; t=1785427167; c=relaxed/simple;
+	bh=tKebIHxqO+hJcJ3dfg/hq+dWeMyZyWx+IET1+ydXlo0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FUEuy9DhKgNdRl3o/dtorPQ4rVD4YPwgAmmQaw3YVU1i84cy/ACU0sbMZBEF2c7t7us1JDjx1mY9oyZOXX/M06ue0DFHcXnVm4ucnWpFdRWObXEoLre3IIMzTlfbvdsKbZNaOxAD1OHR28yHIh0MslEqK2+zWKPR1+jFqp0YLIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yi9vemZB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iCDssYzh5r4chsW8cdCiJWOQ0t5UZ0LfhyaSEWCtkC4tMmNl1YYxJcddqJVnJYRRgpsFFBhZAWueM/JJCdrJ+39JVxEl6rVo7oR0i/qMW2gH566XWToZO4gkxYuO5itdD2vbbbxlvKo5CI6M2vOu4j+jDDR+4vFx1jYwsw5+ssk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xe3nosZq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yi9vemZB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3739A1F000E9;
-	Thu, 30 Jul 2026 15:59:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xe3nosZq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B7BB1F000E9;
+	Thu, 30 Jul 2026 15:59:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427163;
-	bh=VgNngA2/jpH8N/L7Rf5QcfBtnYfnFh8mwO+O9BCn/7E=;
+	s=korg; t=1785427166;
+	bh=tCp1pCsMQJQpdfxzfVJ7ynW/AXcSwYJJ4ynJvBxHNqU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Yi9vemZB7rl3898Mo6K8DYPl5jjgGUpr5sI7e9HEwS81nw4Hf7KWBtHOt5jbvPoxk
-	 poR/rFoL5+qHMhleluCJVUii3lO4RK/+T3K7wrJJ8VdPjdUkjF51gli1G1uNoE3tCb
-	 hZj1QgPZPia6l0vg/QFZyQYwUZVB1Yph0334DebU=
+	b=Xe3nosZqT4KzIkLq/EVmbPInH3xz+bzmy4QAzrn6qTzIwZyC8Lry1H5A/6qX2RvbV
+	 +gxblqmu9QqnMbSXN3X0m35xwJA9m+Djoq4CmjP4Oxd7j3Jt6Z4bhPsAno1RIjUqTU
+	 yQ4G7TWEJkV5BA3usgaEZLnelOFAXyc85PHQLFcU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Hidayath Khan <hidayath@linux.ibm.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Rosen Penev <rosenp@gmail.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 073/484] net/iucv: take a reference on the socket found in afiucv_hs_rcv()
-Date: Thu, 30 Jul 2026 16:09:30 +0200
-Message-ID: <20260730141425.021217867@linuxfoundation.org>
+Subject: [PATCH 6.6 074/484] ata: sata_dwc_460ex: enable SATA interrupts only after IRQ handler is registered
+Date: Thu, 30 Jul 2026 16:09:31 +0200
+Message-ID: <20260730141425.045333660@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -52,53 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit 4fa349156043dc119721d067329714179f501749 ]
+[ Upstream commit 4bbc16a353a98023e5ddfca7c1fc0e49971cf4d0 ]
 
-afiucv_hs_rcv() looks up the destination socket under iucv_sk_list.lock,
-drops the lock, and then passes the socket to the afiucv_hs_callback_*()
-handlers without holding a reference. AF_IUCV sockets are not
-RCU-protected and are freed synchronously by iucv_sock_kill() ->
-sock_put(), so a concurrent close can free the socket in the window
-between read_unlock() and the handler, which then dereferences freed
-memory (for example sk->sk_data_ready() in afiucv_hs_callback_syn()).
+sata_dwc_enable_interrupts() is called before platform_get_irq() and
+ata_host_activate(), leaving the SATA controller's interrupt mask
+enabled without a registered handler.  If a later step fails (irq
+request, phy init, etc.) or if the controller asserts an interrupt
+during probe, the irq line may fire with no handler, causing a
+spurious interrupt storm.
 
-Take a reference with sock_hold() while the socket is still on the list
-and release it with sock_put() once the handler has run.
+Move sata_dwc_enable_interrupts() after ata_host_activate() so that
+interrupts are only unmasked once the handler is registered and the
+core is fully initialized.
 
-Fixes: 3881ac441f64 ("af_iucv: add HiperSockets transport")
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Reviewed-by: Hidayath Khan <hidayath@linux.ibm.com>
-Link: https://patch.msgid.link/20260705-b4-disp-fc79c0dc-v1-1-d2cdcb57afa9@proton.me
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 62936009f35a ("[libata] Add 460EX on-chip SATA driver, sata_dwc_460ex")
+Assisted-by: opencode:big-pickle
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/iucv/af_iucv.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/ata/sata_dwc_460ex.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/net/iucv/af_iucv.c b/net/iucv/af_iucv.c
-index e9a9bb0dee065a..a7b95590f6c96c 100644
---- a/net/iucv/af_iucv.c
-+++ b/net/iucv/af_iucv.c
-@@ -2090,6 +2090,8 @@ static int afiucv_hs_rcv(struct sk_buff *skb, struct net_device *dev,
- 			}
- 		}
- 	}
-+	if (sk)
-+		sock_hold(sk);
- 	read_unlock(&iucv_sk_list.lock);
- 	if (!iucv)
- 		sk = NULL;
-@@ -2139,6 +2141,8 @@ static int afiucv_hs_rcv(struct sk_buff *skb, struct net_device *dev,
- 		kfree_skb(skb);
- 	}
+diff --git a/drivers/ata/sata_dwc_460ex.c b/drivers/ata/sata_dwc_460ex.c
+index 52f5168e4db542..16c1deef389d10 100644
+--- a/drivers/ata/sata_dwc_460ex.c
++++ b/drivers/ata/sata_dwc_460ex.c
+@@ -1168,9 +1168,6 @@ static int sata_dwc_probe(struct platform_device *ofdev)
+ 	/* Save dev for later use in dev_xxx() routines */
+ 	hsdev->dev = dev;
  
-+	if (sk)
-+		sock_put(sk);
- 	return err;
- }
+-	/* Enable SATA Interrupts */
+-	sata_dwc_enable_interrupts(hsdev);
+-
+ 	/* Get SATA interrupt number */
+ 	irq = irq_of_parse_and_map(np, 0);
+ 	if (!irq) {
+@@ -1203,6 +1200,8 @@ static int sata_dwc_probe(struct platform_device *ofdev)
+ 	if (err)
+ 		dev_err(dev, "failed to activate host");
  
++	/* Enable SATA Interrupts */
++	sata_dwc_enable_interrupts(hsdev);
+ 	return 0;
+ 
+ error_out:
 -- 
 2.53.0
 
