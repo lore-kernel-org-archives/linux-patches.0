@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 339BD35DA67;
-	Thu, 30 Jul 2026 15:47:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C6D930C143;
+	Thu, 30 Jul 2026 15:47:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426426; cv=none; b=lx2hNJ3ZzgGAVupPLF6KD5pgy8XExdKcHbHWDaF1Uyw/+ys4T5dpfEc5eoDYF67b+4LyZCOC02mozu1wSwGzngSgtWdWFT+t7rqkvbScFEtlpmK3Oko+Nlw3E3UZs4+NjsZTh6+OBn3YA2ij2b7yMUqiISOSABtWXM2U6SZePhU=
+	t=1785426429; cv=none; b=teB9rZ69KBjevBz2WmW/HVnuxcPR435NS6aYbeAGN521DIpVXUk41XREspRchE6hVqqNaiZQGCM5Rbfod5xXCI70peYDY0aUsWARlHlZMD70yY6QvYCz4W+EsbdMQbU92hbE/u5Ja5B7ZFpmFN6esIKoAIpvzEiX5d7hZGIuf94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426426; c=relaxed/simple;
-	bh=GT+/xZrMpmcbQuikzkXH9opTbZ8Y57y4jYXaZV0aRSA=;
+	s=arc-20240116; t=1785426429; c=relaxed/simple;
+	bh=76luyq0LAZYv7qOT50gKZcj4DO9u2m3oMdHPPocDHs8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eT4PuBM9H7ln7zwD1auHxIRM0Q0uUNC/nt+0NVvEniEeQC+EyWoj5Lgmoq7Bz5cL6M4tpIi/6NmKKtf0q1bxpwdjwC/jniMAWUCr9/TWGeTz0rLU3o2CnP1vgKoJZ4uculxN9M0N6A/7R25v8YOPmhAf1VFH2e6EWvfRZMigfwY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sczMUHar; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hWECUkSrji+ttzW0cWM0oLVPC5eyS79a9OEVlgVIxEOyKTQsKqG8u2AtyPVlo5dLi94boyKBqkXOgxOI64+8YiTEZXVOqR4VKEXqMDDdAMSv3ETBUoYVcP7dLBfA/u7ML6BO/p3xMbam2Mf/mTYSkYS1U5iYrxHRzUWABE4RCLc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nHgDOumd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sczMUHar"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F2921F000E9;
-	Thu, 30 Jul 2026 15:47:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nHgDOumd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6717B1F000E9;
+	Thu, 30 Jul 2026 15:47:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426425;
-	bh=LC0EOq6Gs6P5mom6n0G7QQI11rePAWdr/hgLuPAlI8E=;
+	s=korg; t=1785426427;
+	bh=aj+FhunT2uZVeQ+++UbMX9zrGnLwfakX+SRkm94U77M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sczMUHaraV1Awc7/GkRDgB9ZzX3aTw9G7nnE7rc79JaitNQOmY26eD6A90diEldOX
-	 pAH5nIVr1crcPzgBXj/+52gSF95E/vZGCZ/6ZY7HCa/pu7NsNYFHQIiifYbXIEsSwL
-	 VEA8Nydx4SzK2qXxYR1TRgHYkbCIG2IsPepd1WS8=
+	b=nHgDOumd4mhqXFcym2SVnSSetSzx4PBA+ISxc0TKEGU210BK4QYnHm5KDg3rpGABw
+	 /6/z9STiLX5WPw0SJvzMuQZmU2qnBoduLnnPq/iv6fGy3JfmnRIHJaVgXXsMynfRgZ
+	 kf+053sw7NALIIbUIomcf3ZInyfa3G39Ap62V9Cw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manjunath Patil <manjunath.b.patil@oracle.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
+	David Lee <david.lee@trailofbits.com>,
+	Martin Schiller <ms@dev.tdt.de>,
 	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.12 413/602] net/mlx5e: Use sender devcom for MPV master-up
-Date: Thu, 30 Jul 2026 16:13:25 +0200
-Message-ID: <20260730141444.643336073@linuxfoundation.org>
+Subject: [PATCH 6.12 414/602] net/x25: fix use-after-free in x25_kill_by_neigh()
+Date: Thu, 30 Jul 2026 16:13:26 +0200
+Message-ID: <20260730141444.664823714@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -51,78 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manjunath Patil <manjunath.b.patil@oracle.com>
+From: David Lee <david.lee@trailofbits.com>
 
-commit e32649b4bad90a6216d8e93cd7dd050af8ac9740 upstream.
+commit 5499e0602d2faafd42c580d25f615903c3fbe11b upstream.
 
-After PCIe DPC recovery, mlx5 reloads the affected functions and
-replays multiport affiliation events. In the reported failure, the
-first relevant device error was:
+x25_kill_by_neigh() walks the global X.25 socket list looking for sockets
+attached to a terminating neighbour. x25_list_lock protects list membership
+while the lookup is in progress, but it does not pin a socket's lifetime
+after the lock is dropped.
 
-  pcieport 0000:10:01.1: DPC: containment event
-  pcieport 0000:10:01.1: PCIe Bus Error: severity=Uncorrected (Fatal)
-  pcieport 0000:10:01.1:    [ 5] SDES                   (First)
+The function currently drops x25_list_lock before calling lock_sock(s). A
+concurrent close can run x25_release(), remove the same socket from
+x25_list, and drop the last socket reference in that window. The neighbour
+teardown path can then lock or inspect a freed struct sock/struct x25_sock.
 
-mlx5 recovered the PCI functions and resumed 0000:11:00.1. During
-that resume, RDMA multiport binding replayed
-MLX5_DRIVER_EVENT_AFFILIATION_DONE and mlx5e sent
-MPV_DEVCOM_MASTER_UP. The host then panicked with:
+Take sock_hold(s) while x25_list_lock still proves that the list entry is
+live, then drop the temporary reference after the socket has been locked,
+rechecked, and released. Recheck x25_sk(s)->neighbour after lock_sock(),
+because another path may have disconnected the socket before this path
+acquired the socket lock. Restart the list walk after each disconnect
+because the list lock was dropped and the previous iterator state may no
+longer be valid.
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000010
-  RIP: mlx5_devcom_comp_set_ready+0x5/0x40 [mlx5_core]
-  RDI: 0000000000000000
+A QEMU/KASAN run against origin/master reproduced a slab-use-after-free in
+x25_kill_by_neigh().
 
-Call trace included:
-
-  mlx5_devcom_comp_set_ready
-  mlx5e_devcom_event_mpv
-  mlx5_devcom_send_event
-  mlx5_ib_bind_slave_port
-  mlx5r_mp_probe
-  mlx5_pci_resume
-
-MPV devcom registration publishes mlx5e private data to the component
-peer list before mlx5e_devcom_init_mpv() stores the returned component
-device in priv->devcom. A concurrent master-up event can therefore
-reach a peer whose private data is visible but whose priv->devcom
-backpointer is still NULL.
-
-MPV_DEVCOM_MASTER_UP already carries the sender/master mlx5e private
-data as event_data. The ready bit is stored on the shared devcom
-component, not on an individual peer. Use the sender devcom when
-marking the MPV component ready.
-
-This preserves the readiness transition while avoiding a NULL
-dereference of the peer devcom pointer during affiliation replay after
-PCI error recovery.
-
-Fixes: bf11485f8419 ("net/mlx5: Register mlx5e priv to devcom in MPV mode")
-Assisted-by: Codex:gpt-5
-Signed-off-by: Manjunath Patil <manjunath.b.patil@oracle.com>
-Cc: stable@vger.kernel.org # 6.7+
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260707233911.3651139-1-manjunath.b.patil@oracle.com
+Fixes: 7781607938c8 ("net/x25: Fix null-ptr-deref caused by x25_disconnect")
+Cc: stable@vger.kernel.org
+Signed-off-by: David Lee <david.lee@trailofbits.com>
+Assisted-by: Codex:gpt-5.5
+Acked-by: Martin Schiller <ms@dev.tdt.de>
+Link: https://patch.msgid.link/20260713104752.241175-1-david.lee@trailofbits.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_main.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/x25/af_x25.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-@@ -206,11 +206,11 @@ static void mlx5e_disable_async_events(s
- 
- static int mlx5e_devcom_event_mpv(int event, void *my_data, void *event_data)
+--- a/net/x25/af_x25.c
++++ b/net/x25/af_x25.c
+@@ -1772,15 +1772,19 @@ void x25_kill_by_neigh(struct x25_neigh
  {
--	struct mlx5e_priv *slave_priv = my_data;
-+	struct mlx5e_priv *master_priv = event_data;
+ 	struct sock *s;
  
- 	switch (event) {
- 	case MPV_DEVCOM_MASTER_UP:
--		mlx5_devcom_comp_set_ready(slave_priv->devcom, true);
-+		mlx5_devcom_comp_set_ready(master_priv->devcom, true);
- 		break;
- 	case MPV_DEVCOM_MASTER_DOWN:
- 		/* no need for comp set ready false since we unregister after
++again:
+ 	write_lock_bh(&x25_list_lock);
+ 
+ 	sk_for_each(s, &x25_list) {
+ 		if (x25_sk(s)->neighbour == nb) {
++			sock_hold(s);
+ 			write_unlock_bh(&x25_list_lock);
+ 			lock_sock(s);
+-			x25_disconnect(s, ENETUNREACH, 0, 0);
++			if (x25_sk(s)->neighbour == nb)
++				x25_disconnect(s, ENETUNREACH, 0, 0);
+ 			release_sock(s);
+-			write_lock_bh(&x25_list_lock);
++			sock_put(s);
++			goto again;
+ 		}
+ 	}
+ 	write_unlock_bh(&x25_list_lock);
 
 
