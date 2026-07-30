@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86AA138AC80;
-	Thu, 30 Jul 2026 16:02:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72EC0446068;
+	Thu, 30 Jul 2026 16:03:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427379; cv=none; b=RquipXW49kUyCDu1+Ma0/z3qXBCzpxnj+V9Pom3079dXq6eJzfAXy7awqmwQzCfMZEfKce4w6z/mME+TRyNoVkMY4KYxW62r7xYEcs3+TlwYANRWKctltKBaLngIfiWoFfK1xjgvRTVjBvG/tM12gFT/1QaTRArEBbVZZeQRQLg=
+	t=1785427381; cv=none; b=DWqsDkqygcn+/0FxN0FdVDf6Re3lKkn56XpALw+KB/NXbrnwQ2m7i0KoNalpKSbfBnwHt+IsK3l3ZzpKEPdMeEBeBuniCCRUhoogfAGuBTSK7nBH2Rrcw338NdhuECKcEN8XGDQmapInbYMjlLzbh8xwMDc1f2tMf5a9HTARJVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427379; c=relaxed/simple;
-	bh=23j07rqDZ5pWj9vmAfT4W1k+evJUm4feLaxLQBUFWek=;
+	s=arc-20240116; t=1785427381; c=relaxed/simple;
+	bh=VWPeh6QqMbEn1smoK5Ohsrzo8EdzxwflSoOe/tZLtF4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m1/0q86Y7MAS92lpAsDIbA/StmvqtB3/J6/xrW7nBELFQ/hd5ZM7CC/u26kVr0sY7xmONQFlqvBnHxp0pIFwdiT6xL3Nl+QwhZ7cDfAcEKRB+daeafbcNt4yXbJiMFi/gMFUkGdrdkXWmlmNcBr4862GtTdzpmkBguQ71JqtiMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oIftJ5bT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MX/nGgaI9aM7U3nPeaJtlkGAVYz+VREK6MgkJgR0Slh8HWLViRts7xQPMwEsiwrzbaKAL+570zmPpP/RhSX3DStLgS7qhdagGv/zF0OSeKAE4sv1ykwa1zwNQENIXnyfSTL/KIHcl8byhiEC9fU33hT+00cwo1rlkv5qEM1U0i4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FTL4VDqQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oIftJ5bT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE2741F000E9;
-	Thu, 30 Jul 2026 16:02:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FTL4VDqQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83E111F000E9;
+	Thu, 30 Jul 2026 16:02:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427377;
-	bh=MyBJHr0hs7z1gBQZ4jwgT7LIlUI349BprgNbIsrPVzA=;
+	s=korg; t=1785427380;
+	bh=QrpVNKkBaKVI8gH3NHCnryXyAxQ2EaOM0rqtufN7+Tw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oIftJ5bTqwNoqMt5UbBv4FDQ6mD1ZXs0NReOzJyojQGMImf1LqpjZ1kJ2mXkywauw
-	 UyEsPrlFBdAAnCAT88RAA4D3LJhFmVO11RfL9JxrQsKoOaCyj3Hi7IrzL8GtuwY4Wr
-	 ZsvD+vlVrWUR7AgVRwUL9p+ilY0ZdQZVWbmM5N04=
+	b=FTL4VDqQdl7ttg6+XAZw4NetB6u6u772QR/slKMDm6vOs6TsgQxvOOqanBD5t7tYM
+	 ISvTIn2q2CXcj2ZzEL8djnKiFfKAY2n2u681ghJgickwxWaIWDDoHPrCUQGjBfVUzE
+	 x8ZapEGEG5/HmWWyPQznCjya++Jkd6YhtvDpfA2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Mark Brown <broonie@kernel.org>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Ioana Ciornei <ioana.ciornei@nxp.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 132/484] ASoC: tas2781: bound firmware description string parsing
-Date: Thu, 30 Jul 2026 16:10:29 +0200
-Message-ID: <20260730141426.326178064@linuxfoundation.org>
+Subject: [PATCH 6.6 150/484] dpaa2-eth: put MAC endpoint device on disconnect
+Date: Thu, 30 Jul 2026 16:10:47 +0200
+Message-ID: <20260730141426.722308249@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -51,151 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit bc889dfcea9294a1eae7f8e2f3573a90764ae4d0 ]
+[ Upstream commit b4b201cc93ff70150853aba03e14d314d1980ca0 ]
 
-The TAS2781 firmware parser reads several variable-length description
-strings with strlen() before checking that the string terminator is
-present inside the firmware blob. A malformed firmware image without a
-NUL terminator can therefore make the parser walk past the end of the
-firmware buffer before the later size checks run.
+fsl_mc_get_endpoint() returns the MAC endpoint device with a reference
+taken through device_find_child(). The Ethernet connect path stores that
+device in mac->mc_dev and keeps it for the lifetime of the connected MAC
+object.
 
-Add a small bounded string-length helper and use it for all description
-fields that are parsed from the firmware buffer. Keep the existing size
-checks for the fixed bytes that follow each string.
+However, the disconnect path only disconnects and closes the MAC before
+freeing the dpaa2_mac object. It does not drop the endpoint device
+reference stored in mac->mc_dev, so every successful connect leaks that
+device reference when the MAC is later disconnected.
 
-Fixes: 915f5eadebd2 ("ASoC: tas2781: firmware lib")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260706144540.93929-1-pengpeng@iscas.ac.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Drop the endpoint device reference after closing the MAC and before
+freeing the dpaa2_mac object.
+
+Fixes: 719479230893 ("dpaa2-eth: add MAC/PHY support through phylink")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Reviewed-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Reviewed-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Link: https://patch.msgid.link/20260708111738.750391-1-lgs201920130244@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/tas2781-fmwlib.c | 63 ++++++++++++++++++++++++++++---
- 1 file changed, 57 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/codecs/tas2781-fmwlib.c b/sound/soc/codecs/tas2781-fmwlib.c
-index 1cc64ed8de6da8..4b6bed6bf11567 100644
---- a/sound/soc/codecs/tas2781-fmwlib.c
-+++ b/sound/soc/codecs/tas2781-fmwlib.c
-@@ -11,6 +11,7 @@
- #include <linux/i2c.h>
- #include <linux/init.h>
- #include <linux/interrupt.h>
-+#include <linux/limits.h>
- #include <linux/module.h>
- #include <linux/of.h>
- #include <linux/of_irq.h>
-@@ -921,13 +922,42 @@ static int tasdevice_load_block_kernel(
- 	return 0;
+diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
+index 61bd2389ef4b54..d77c22d1030a92 100644
+--- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
++++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
+@@ -4720,6 +4720,7 @@ static void dpaa2_eth_disconnect_mac(struct dpaa2_eth_priv *priv)
+ 		dpaa2_mac_disconnect(mac);
+ 
+ 	dpaa2_mac_close(mac);
++	put_device(&mac->mc_dev->dev);
+ 	kfree(mac);
  }
  
-+static int tasdevice_fw_strnlen(const struct firmware *fmw, int offset)
-+{
-+	const u8 *start;
-+	const u8 *nul;
-+	size_t remaining;
-+	size_t len;
-+
-+	if (offset < 0 || offset >= fmw->size)
-+		return -EINVAL;
-+
-+	start = fmw->data + offset;
-+	remaining = fmw->size - offset;
-+	nul = memchr(start, '\0', remaining);
-+	if (!nul)
-+		return -EINVAL;
-+
-+	len = nul - start;
-+	if (len > INT_MAX)
-+		return -EOVERFLOW;
-+
-+	return len;
-+}
-+
- static int fw_parse_variable_hdr(struct tasdevice_priv
- 	*tas_priv, struct tasdevice_dspfw_hdr *fw_hdr,
- 	const struct firmware *fmw, int offset)
- {
- 	const unsigned char *buf = fmw->data;
--	int len = strlen((char *)&buf[offset]);
-+	int len;
- 
-+	len = tasdevice_fw_strnlen(fmw, offset);
-+	if (len < 0) {
-+		dev_err(tas_priv->dev, "%s: Description error\n", __func__);
-+		offset = len;
-+		goto out;
-+	}
- 	len++;
- 
- 	if (offset + len + 8 > fmw->size) {
-@@ -1059,7 +1089,12 @@ static int fw_parse_data(struct tasdevice_fw *tas_fmw,
- 	memcpy(img_data->name, &data[offset], 64);
- 	offset += 64;
- 
--	n = strlen((char *)&data[offset]);
-+	n = tasdevice_fw_strnlen(fmw, offset);
-+	if (n < 0) {
-+		dev_err(tas_fmw->dev, "%s: Description error\n", __func__);
-+		offset = n;
-+		goto out;
-+	}
- 	n++;
- 	if (offset + n + 2 > fmw->size) {
- 		dev_err(tas_fmw->dev, "%s: Description error\n", __func__);
-@@ -1132,7 +1167,12 @@ static int fw_parse_program_data(struct tasdevice_priv *tas_priv,
- 		}
- 		offset += 64;
- 
--		n = strlen((char *)&buf[offset]);
-+		n = tasdevice_fw_strnlen(fmw, offset);
-+		if (n < 0) {
-+			dev_err(tas_priv->dev, "Description err\n");
-+			offset = n;
-+			goto out;
-+		}
- 		/* skip '\0' and 5 unused bytes */
- 		n += 6;
- 		if (offset + n > fmw->size) {
-@@ -1195,7 +1235,12 @@ static int fw_parse_configuration_data(
- 		memcpy(config->name, &data[offset], 64);
- 		offset += 64;
- 
--		n = strlen((char *)&data[offset]);
-+		n = tasdevice_fw_strnlen(fmw, offset);
-+		if (n < 0) {
-+			dev_err(tas_priv->dev, "Description err\n");
-+			offset = n;
-+			goto out;
-+		}
- 		n += 15;
- 		if (offset + n > fmw->size) {
- 			dev_err(tas_priv->dev, "Description err\n");
-@@ -1849,7 +1894,8 @@ static int fw_parse_calibration_data(struct tasdevice_priv *tas_priv,
- {
- 	struct tasdevice_calibration *calibration;
- 	unsigned char *data = (unsigned char *)fmw->data;
--	unsigned int i, n;
-+	unsigned int i;
-+	int n;
- 
- 	if (offset + 2 > fmw->size) {
- 		dev_err(tas_priv->dev, "%s: Calibrations error\n", __func__);
-@@ -1881,7 +1927,12 @@ static int fw_parse_calibration_data(struct tasdevice_priv *tas_priv,
- 		calibration = &(tas_fmw->calibrations[i]);
- 		offset += 64;
- 
--		n = strlen((char *)&data[offset]);
-+		n = tasdevice_fw_strnlen(fmw, offset);
-+		if (n < 0) {
-+			dev_err(tas_priv->dev, "Description err\n");
-+			offset = n;
-+			goto out;
-+		}
- 		/* skip '\0' and 2 unused bytes */
- 		n += 3;
- 		if (offset + n > fmw->size) {
 -- 
 2.53.0
 
