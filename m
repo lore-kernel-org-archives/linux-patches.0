@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C36C3442B0F;
-	Thu, 30 Jul 2026 14:37:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A734D442106;
+	Thu, 30 Jul 2026 14:37:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422245; cv=none; b=hlIFKkUD5VUrvzImdqOfkMdL8wcSHNWPnJSZ/+25AiNrAy5xkmsR6Q1VJX59L+RJqbzfhRo0hLvGMLeWiIfvMQmI6henNHNnkrQd3TuapfX4UFhHn2Y05IrcrCSSAQ9ZN5no/K1dWzZs7upUeV0y/wmAz4xwR/USB1RSYKZEgyI=
+	t=1785422248; cv=none; b=bjQpmTwDn11XyZp8dwX384qCgSwYcuOjtcBEV3JsguiXy+JE2bK1XPresmlvJipW+S9sUb3PGCnoIr3vthjmVD8M6nm+WZU4sCv39CObRL2U0Nb/O4llXDx5VIX9xrnx5eaHOQdIJMjUJH1WoLEdryDzAqfH9CTKEWDmYpbKh08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422245; c=relaxed/simple;
-	bh=5udCZmnlKFVNy/O9Kmh31LZFDfSJOlwDDb0eLcIfwmg=;
+	s=arc-20240116; t=1785422248; c=relaxed/simple;
+	bh=3Oz1Mzhbgy0IptO5XyRkHP4pGriH4XcRO5uOHOgkrak=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BStc99KuBJYJj3Qgh8yjaPYjeqG2Rncvt+Pqce7Mn+X5e27r/IfWQKcVBtw04oYCWhNSLXh1Eok52pnJjHc7QwXSb5Y7EDhcyzLh481H0vigudR6MDB0jHxcmslLx+6pQnJAW5lIR41fCGng0QuywfFwRUQqzexe25/CMNEMXWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UJ2Ozpmq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=LQCGXIuhzkh6HC48pUi7csXuHZ8rWK70LE6T9khwYyvJkWulTU/vacJpN52G2msALOaRuIGXCX5SfmYprdjIZSMbkPdgWlw/Nz5+pqb9R1suY2tNPOV5/drUBVMNIwfmwvdumAYMEWSz0uYHYESIznExfsjBlTKgUck54F7fySQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1k1sadax; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UJ2Ozpmq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 165221F000E9;
-	Thu, 30 Jul 2026 14:37:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1k1sadax"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D4191F000E9;
+	Thu, 30 Jul 2026 14:37:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422244;
-	bh=aUN0O88WNAxpeUC3aMeP6rflz8nr9gDOPSNgAx+4R6s=;
+	s=korg; t=1785422247;
+	bh=toEX3gs2j8vrWeguawxXmJF6PBB39blvWn1E92uaevk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UJ2OzpmqqUjljRSB+XmyVBDtL3AFddTc3E3RXfHONxhW4Qj1Km240gfdfBa3j2vMQ
-	 dRA42KtjxpXYra9/AFshjJCbi7Z/sO8uuIZv85PNmuDpJZIqP/EJ2wo9Iz76x0B4ml
-	 jEm1XJBEokDqkTK/CoiyxraQB7LmB8X4I9iip5/w=
+	b=1k1sadaxg7gbNKw0XH/H1pWFfA+NmiuqDGFktrBJXC4CHtZU9u/wvnkj0dvWb1uaz
+	 lS2+fiX7gQK2N+UFyyvaP39nrV0QCb5Dg9tc76nxPiSHIMcyN63V9iK4aQ6zuGE8ek
+	 qQN7C11h3iR1decrnDZWhJfTKKBokRGB/Cwyl/6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Asad Kamal <asad.kamal@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.1 374/744] drm/amdgpu/gfx: fix cleaner shader IB buffer overflow
-Date: Thu, 30 Jul 2026 16:10:47 +0200
-Message-ID: <20260730141452.235434638@linuxfoundation.org>
+Subject: [PATCH 7.1 375/744] drm/amdgpu/uvd: Fix forcing MSG, FB BOs into VCPU segment when it isnt at 0 (v2)
+Date: Thu, 30 Jul 2026 16:10:48 +0200
+Message-ID: <20260730141452.257516029@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -45,76 +45,110 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Asad Kamal <asad.kamal@amd.com>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-commit 3e864bf2a32a1cbdf1e0f9c5a5a4176e8575f4a3 upstream.
+commit 32bd35f068a3507a1b3922cd12ea2985fc58c85b upstream.
 
-The cleaner shader sysfs path allocates a 16-dword (64 byte) IB but
-incorrectly fills (align_mask + 1) dwords. On GFX rings align_mask is
-0xff, so the loop wrote 256 dwords into a 64-byte buffer, causing a
-kernel page fault.
+UVD 4.x and older can only access MSG, FEEDBACK buffers from a
+specific 256M VRAM segment that the VCPU BO is also located in.
+We already modify all placements of the given BO to ensure
+the BO is placed within this segment.
 
-The IB only needs to be a minimal NOP shell to schedule the job; the
-cleaner shader itself is emitted on the ring via emit_cleaner_shader().
-Fill 16 dwords to match the allocation.
+Previously, it always assumed that the VCPU segment is
+the first 256M of VRAM, even though under some conditions
+the VCPU BO could be allocated outside this segment,
+which made UVD non-functional as the BOs were
+not inside the same segment as the UVD VCPU BO.
 
-v2: Use ib_size_dw variable (Lijo)
+Solve that by using the segment where the VCPU BO actually is.
 
-Fixes: d361ad5d2fc0 ("drm/amdgpu: Add sysfs interface for running cleaner shader")
-Suggested-by: Lijo Lazar <lijo.lazar@amd.com>
-Signed-off-by: Asad Kamal <asad.kamal@amd.com>
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+This fixes an issue with UVD failing to initialize on SI/CIK
+when resizable BAR is enabled and the VCPU BO is allocated
+in a different segment.
+
+v2:
+- For other BOs, keep using the same UVD segment as before.
+
+Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/3851
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit bf21af331ebf72d0935fd70c73192414a422c03a)
-CC: stable@vger.kernel.org
+(cherry picked from commit cbfd4d3fc2061a1ec8e9d36e65973ac3e813358a)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c |   33 +++++++++++++++++++++++---------
+ 1 file changed, 24 insertions(+), 9 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
-@@ -1646,12 +1646,13 @@ static int amdgpu_gfx_run_cleaner_shader
- 	struct amdgpu_device *adev = ring->adev;
- 	struct drm_gpu_scheduler *sched = &ring->sched;
- 	struct drm_sched_entity entity;
-+	unsigned int ib_size_dw = 16;
- 	static atomic_t counter;
- 	struct dma_fence *f;
- 	struct amdgpu_job *job;
- 	struct amdgpu_ib *ib;
- 	void *owner;
--	int i, r;
-+	int r;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
+@@ -135,7 +135,7 @@ MODULE_FIRMWARE(FIRMWARE_VEGA12);
+ MODULE_FIRMWARE(FIRMWARE_VEGA20);
  
- 	/* Initialize the scheduler entity */
- 	r = drm_sched_entity_init(&entity, DRM_SCHED_PRIORITY_NORMAL,
-@@ -1669,7 +1670,7 @@ static int amdgpu_gfx_run_cleaner_shader
- 	owner = (void *)(unsigned long)atomic_inc_return(&counter);
+ static void amdgpu_uvd_idle_work_handler(struct work_struct *work);
+-static void amdgpu_uvd_force_into_uvd_segment(struct amdgpu_bo *abo);
++static void amdgpu_uvd_force_into_vcpu_segment(struct amdgpu_bo *abo);
  
- 	r = amdgpu_job_alloc_with_ib(ring->adev, &entity, owner,
--				     64, 0, &job,
-+				     ib_size_dw * sizeof(uint32_t), 0, &job,
- 				     AMDGPU_KERNEL_JOB_ID_CLEANER_SHADER);
+ static int amdgpu_uvd_create_msg_bo_helper(struct amdgpu_device *adev,
+ 					   uint32_t size,
+@@ -158,7 +158,7 @@ static int amdgpu_uvd_create_msg_bo_help
+ 	amdgpu_bo_kunmap(bo);
+ 	amdgpu_bo_unpin(bo);
+ 	amdgpu_bo_placement_from_domain(bo, AMDGPU_GEM_DOMAIN_VRAM);
+-	amdgpu_uvd_force_into_uvd_segment(bo);
++	amdgpu_uvd_force_into_vcpu_segment(bo);
+ 	r = ttm_bo_validate(&bo->tbo, &bo->placement, &ctx);
  	if (r)
  		goto err;
-@@ -1679,9 +1680,8 @@ static int amdgpu_gfx_run_cleaner_shader
- 	job->run_cleaner_shader = true;
+@@ -545,6 +545,24 @@ void amdgpu_uvd_free_handles(struct amdg
+ 	}
+ }
  
- 	ib = &job->ibs[0];
--	for (i = 0; i <= ring->funcs->align_mask; ++i)
--		ib->ptr[i] = ring->funcs->nop;
--	ib->length_dw = ring->funcs->align_mask + 1;
-+	memset32(ib->ptr, ring->funcs->nop, ib_size_dw);
-+	ib->length_dw = ib_size_dw;
++static void amdgpu_uvd_force_into_vcpu_segment(struct amdgpu_bo *bo)
++{
++	struct amdgpu_device *adev = amdgpu_ttm_adev(bo->tbo.bdev);
++	struct amdgpu_bo *vcpu_bo = adev->uvd.inst[0].vcpu_bo;
++	struct amdgpu_res_cursor vcpu_cur;
++
++	amdgpu_res_first(vcpu_bo->tbo.resource, 0,
++			 amdgpu_bo_size(vcpu_bo), &vcpu_cur);
++
++	bo->placement.num_placement = 1;
++	bo->placement.placement = &bo->placements[0];
++	bo->placements[0].fpfn = ALIGN_DOWN(vcpu_cur.start, SZ_256M) >> PAGE_SHIFT;
++	bo->placements[0].lpfn = bo->placements[0].fpfn + (SZ_256M >> PAGE_SHIFT);
++	bo->placements[0].mem_type = vcpu_bo->tbo.resource->mem_type;
++	if (bo->placements[0].mem_type == TTM_PL_VRAM)
++		bo->placements[0].flags |= TTM_PL_FLAG_CONTIGUOUS;
++}
++
+ static void amdgpu_uvd_force_into_uvd_segment(struct amdgpu_bo *abo)
+ {
+ 	int i;
+@@ -595,13 +613,10 @@ static int amdgpu_uvd_cs_pass1(struct am
+ 	if (!ctx->parser->adev->uvd.address_64_bit) {
+ 		/* check if it's a message or feedback command */
+ 		cmd = amdgpu_ib_get_value(ctx->ib, ctx->idx) >> 1;
+-		if (cmd == 0x0 || cmd == 0x3) {
+-			/* yes, force it into VRAM */
+-			uint32_t domain = AMDGPU_GEM_DOMAIN_VRAM;
+-
+-			amdgpu_bo_placement_from_domain(bo, domain);
+-		}
+-		amdgpu_uvd_force_into_uvd_segment(bo);
++		if (cmd == 0x0 || cmd == 0x3)
++			amdgpu_uvd_force_into_vcpu_segment(bo);
++		else
++			amdgpu_uvd_force_into_uvd_segment(bo);
  
- 	f = amdgpu_job_submit(job);
- 
+ 		r = ttm_bo_validate(&bo->tbo, &bo->placement, &tctx);
+ 	}
 
 
