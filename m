@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1BB44519AB;
-	Thu, 30 Jul 2026 15:26:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8A9D443A89;
+	Thu, 30 Jul 2026 15:26:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425182; cv=none; b=DLE00RH1hLmi5wBchwX6xx5y3GtNNWm37Gu0yOIOUcMBa39feSvOPLwUFk44EdiqSfQLGvu1h13eonMz3WCD5oeWUUrpbb6HXanM8l9BUukEF3aYopZndjSNy6UhrIVFo+ONdHUzdpxKq3anObHLNt5G4AIiNtF5NRgsi/YdXkk=
+	t=1785425185; cv=none; b=sh41IGl6Xhl8rxmwo8cpXiv49L9rsU3NzPOIIgsmoDJk6KNMz/W1rdno1ZPmIgzAA3GVPSDaePtt+DnIdBuNQr90P2kI1wrJ918/783lMtD5UC92eQp0CbVJ15x4ueffGKWakMROIL740qhBFnYt5360aQ1etVdj0Z63aX4MSXA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425182; c=relaxed/simple;
-	bh=ZY1L/Ua6tRVAUgII/sk5ImKFGklv3qYgTgKJl0DdziM=;
+	s=arc-20240116; t=1785425185; c=relaxed/simple;
+	bh=a1/mgoSWQ++61E0WzuD7T0DOmKqpofaG7y7iq6yO1ms=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LvTkUnxpGiBymgXrOOqtQprHgvLzJbl8OJHWE9QrYWU6/XwLl2r6ByszdFV7TFm05xHed9i22Z4G+62cEIhUA8qwN7qfLelRcyCSiLsG9H7AHwVYDq9LRixTH3VGBZvPdSdQJgzaC9JJ11S/Ar/D/CHOiGUQUCnfYzS7Xfcpi/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m/QCVah7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ii/Hkkj+sTkZqXs0FoaR6kcZDFOQBXI4kIrnRq9wcdK8PHDrltlBqRAX3RJrduYNg1+Tfnv26XoNvPLKgr6BS7Nue8iR27mnlQrnsksoD0LXcdh0bA1AiMHbSr0xnZZ+bKvmedhW0BUX3QL8BfrnRx63CsWIVQ/LlsQV2ZXQLyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1iCISgR3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m/QCVah7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08B551F00A3F;
-	Thu, 30 Jul 2026 15:26:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1iCISgR3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1381E1F000E9;
+	Thu, 30 Jul 2026 15:26:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425180;
-	bh=V49cqbg6Jm+Zbe6y2qTnzyRu/4liQ3feeaMCMcO6wCQ=;
+	s=korg; t=1785425183;
+	bh=57OoKR15rz00Rp55T7iTzfqQs8axWVngzX1x9GFnjmM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m/QCVah7gwE5cFMbHMWWy3kWqypDymLbRAPXDze2ULjByeOBc9kMmA6sWlv+1/B1Y
-	 eKqS8hQEodrbs5YnJ6Jo1pknj8FS8XUgTd2NK18EBKn5fMWDJuWadQwCqIOFUf5x+N
-	 Fy8mmnEce17iYE+ttI7XpLkV7AQoLO6L2Bakmcdg=
+	b=1iCISgR3jMCEpvTtdxh+gcZXdVqTGg/dDb6x4TsLS7Fadp0PqZNhmxr/On/0YflpS
+	 UmJEayPmWUAiNdGmCktZ1mR6b+vZ6kPNgPWvF2U7go7LEBL+BJVlYv+L57sYsaIr+h
+	 EIF0hOfb+f33EupnCsD4eYW18IKIrKCcrUzp605g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Sashiko <sashiko-bot@kernel.org>,
 	Tony Luck <tony.luck@intel.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Reinette Chatre <reinette.chatre@intel.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Chen Yu <yu.c.chen@intel.com>,
+	stable@kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 653/675] fs/resctrl: Move RMID initialization to first mount
-Date: Thu, 30 Jul 2026 16:16:23 +0200
-Message-ID: <20260730141459.021723428@linuxfoundation.org>
+Subject: [PATCH 6.18 654/675] fs/resctrl: Fix use-after-free during unmount
+Date: Thu, 30 Jul 2026 16:16:24 +0200
+Message-ID: <20260730141459.044594814@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -54,176 +57,129 @@ Content-Transfer-Encoding: 8bit
 
 From: Tony Luck <tony.luck@intel.com>
 
-[ Upstream commit d0891647fbc6e931f27517364cbc4ee1811d76db ]
+[ Upstream commit 52fce648607e0d6a76eeb443d78708c49df1c554 ]
 
-L3 monitor features are enumerated during resctrl initialization and
-rmid_ptrs[] that tracks all RMIDs and depends on the number of supported
-RMIDs is allocated during this time.
+During unmount or failure teardown all mon_data structures that contain
+monitoring event file private data are freed after which kernfs nodes are
+removed. However, the RDT_DELETED flag is never set for the statically
+allocated default resource group.
 
-Telemetry monitor features are enumerated during first resctrl mount and
-may support a different number of RMIDs compared to L3 monitor features.
+A concurrent reader of an event file associated with the default resource
+group may, after dropping kernfs active protection, block on rdtgroup_mutex
+while unmount proceeds to free the file private data and destroy the kernfs
+node without waiting for the reader.
 
-Delay allocation and initialization of rmid_ptrs[] until first mount.
-Since the number of RMIDs cannot change on later mounts, keep the same set of
-rmid_ptrs[] until resctrl_exit(). This is required because the limbo handler
-keeps running after resctrl is unmounted and needs to access rmid_ptrs[]
-as it keeps tracking busy RMIDs after unmount.
+When the mutex is released, the reader wakes up, observes that RDT_DELETED
+is not set for the default group, and dereferences the already-freed
+file private data.
 
-Rename routines to match what they now do:
-dom_data_init() -> setup_rmid_lru_list()
-dom_data_exit() -> free_rmid_lru_list()
+The scenario can be depicted as follows:
+  CPU0                                      CPU1
+   /*
+    * Default resource group's
+    * monitoring data accessible via
+    * kernfs file with kernfs_node::priv
+    * pointing to a struct mon_data.
+    * User opens the file for reading.
+    */
+   rdtgroup_mondata_show()                 /* arch encounters fatal error */
+    rdtgroup_kn_lock_live()                 resctrl_exit()
+     atomic_inc(&rdtgroup_default.waitcount) cpus_read_lock()
+     kernfs_break_active_protection(kn)      mutex_lock(&rdtgroup_mutex)
+     cpus_read_lock()                        resctrl_fs_teardown()
+     mutex_lock(&rdtgroup_mutex)              rmdir_all_sub()
+                                              mon_put_kn_priv()
+                                               /* Delete all mon_data structures */
+                                              rdtgroup_destroy_root()
+                                               kernfs_destroy_root()
+                                               rdtgroup_default.kn = NULL
+                                             mutex_unlock(&rdtgroup_mutex)
+     /*
+      * rdtgroup_default.flags is empty so
+      * rdtgroup_kn_lock_live() returns
+      * &rdtgroup_default
+      */
+     md = of->kn->priv;
 
+     /* md points to freed mon_data */
+
+Set RDT_DELETED for the default group unconditionally since the flag does
+not lead to the freeing of this statically allocated group.
+
+Do not allow a new resctrl mount if there are any waiters on default group
+of previous mount. A new mount will re-initialize the default group that
+would appear to waiters from previous mount as though the default group is
+accessible causing them to access the mon_data structures from the previous
+mount that have been removed.
+
+Fixes: 2a6566038544 ("x86/resctrl: Expand the width of domid by replacing mon_data_bits")
+Closes: https://sashiko.dev/#/patchset/20260508182143.14592-1-tony.luck%40intel.com?part=2 [1]
+Reported-by: Sashiko <sashiko-bot@kernel.org>
 Signed-off-by: Tony Luck <tony.luck@intel.com>
+Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
-Link: https://lore.kernel.org/20251217172121.12030-1-tony.luck@intel.com
-Stable-dep-of: 52fce648607e ("fs/resctrl: Fix use-after-free during unmount")
+Reviewed-by: Chen Yu <yu.c.chen@intel.com>
+Cc: <stable@kernel.org>
+Link: https://patch.msgid.link/49a2ca3ca688f27e1a646cf90e1dc69287021127.1783377598.git.reinette.chatre@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/resctrl/internal.h |    4 +++
- fs/resctrl/monitor.c  |   54 +++++++++++++++++++++++---------------------------
- fs/resctrl/rdtgroup.c |    5 ++++
- 3 files changed, 34 insertions(+), 29 deletions(-)
+ fs/resctrl/rdtgroup.c |   18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
---- a/fs/resctrl/internal.h
-+++ b/fs/resctrl/internal.h
-@@ -351,6 +351,10 @@ int closids_supported(void);
- 
- void closid_free(int closid);
- 
-+int setup_rmid_lru_list(void);
-+
-+void free_rmid_lru_list(void);
-+
- int alloc_rmid(u32 closid);
- 
- void free_rmid(u32 closid, u32 rmid);
---- a/fs/resctrl/monitor.c
-+++ b/fs/resctrl/monitor.c
-@@ -862,20 +862,29 @@ void mbm_setup_overflow_handler(struct r
- 		schedule_delayed_work_on(cpu, &dom->mbm_over, delay);
- }
- 
--static int dom_data_init(struct rdt_resource *r)
-+int setup_rmid_lru_list(void)
- {
--	u32 idx_limit = resctrl_arch_system_num_rmid_idx();
- 	struct rmid_entry *entry = NULL;
--	int err = 0, i;
-+	u32 idx_limit;
- 	u32 idx;
-+	int i;
- 
--	mutex_lock(&rdtgroup_mutex);
-+	if (!resctrl_arch_mon_capable())
-+		return 0;
- 
-+	/*
-+	 * Called on every mount, but the number of RMIDs cannot change
-+	 * after the first mount, so keep using the same set of rmid_ptrs[]
-+	 * until resctrl_exit(). Note that the limbo handler continues to
-+	 * access rmid_ptrs[] after resctrl is unmounted.
-+	 */
-+	if (rmid_ptrs)
-+		return 0;
-+
-+	idx_limit = resctrl_arch_system_num_rmid_idx();
- 	rmid_ptrs = kcalloc(idx_limit, sizeof(struct rmid_entry), GFP_KERNEL);
--	if (!rmid_ptrs) {
--		err = -ENOMEM;
--		goto out_unlock;
--	}
-+	if (!rmid_ptrs)
-+		return -ENOMEM;
- 
- 	for (i = 0; i < idx_limit; i++) {
- 		entry = &rmid_ptrs[i];
-@@ -888,30 +897,24 @@ static int dom_data_init(struct rdt_reso
- 	/*
- 	 * RESCTRL_RESERVED_CLOSID and RESCTRL_RESERVED_RMID are special and
- 	 * are always allocated. These are used for the rdtgroup_default
--	 * control group, which will be setup later in resctrl_init().
-+	 * control group, which was setup earlier in rdtgroup_setup_default().
- 	 */
- 	idx = resctrl_arch_rmid_idx_encode(RESCTRL_RESERVED_CLOSID,
- 					   RESCTRL_RESERVED_RMID);
- 	entry = __rmid_entry(idx);
- 	list_del(&entry->list);
- 
--out_unlock:
--	mutex_unlock(&rdtgroup_mutex);
--
--	return err;
-+	return 0;
- }
- 
--static void dom_data_exit(struct rdt_resource *r)
-+void free_rmid_lru_list(void)
- {
--	mutex_lock(&rdtgroup_mutex);
--
--	if (!r->mon_capable)
--		goto out_unlock;
-+	if (!resctrl_arch_mon_capable())
-+		return;
- 
-+	mutex_lock(&rdtgroup_mutex);
- 	kfree(rmid_ptrs);
- 	rmid_ptrs = NULL;
--
--out_unlock:
- 	mutex_unlock(&rdtgroup_mutex);
- }
- 
-@@ -1773,7 +1776,8 @@ static void closid_num_dirty_rmid_free(v
-  * resctrl_l3_mon_resource_init() - Initialise global monitoring structures.
-  *
-  * Allocate and initialise global monitor resources that do not belong to a
-- * specific domain. i.e. the rmid_ptrs[] used for the limbo and free lists.
-+ * specific domain. i.e. the closid_num_dirty_rmid[] used to find the CLOSID
-+ * with the cleanest set of RMIDs.
-  * Called once during boot after the struct rdt_resource's have been configured
-  * but before the filesystem is mounted.
-  * Resctrl's cpuhp callbacks may be called before this point to bring a domain
-@@ -1793,12 +1797,6 @@ int resctrl_l3_mon_resource_init(void)
- 	if (ret)
- 		return ret;
- 
--	ret = dom_data_init(r);
--	if (ret) {
--		closid_num_dirty_rmid_free();
--		return ret;
--	}
--
- 	if (resctrl_arch_is_evt_configurable(QOS_L3_MBM_TOTAL_EVENT_ID)) {
- 		mon_event_all[QOS_L3_MBM_TOTAL_EVENT_ID].configurable = true;
- 		resctrl_file_fflags_init("mbm_total_bytes_config",
-@@ -1845,6 +1843,4 @@ void resctrl_l3_mon_resource_exit(void)
- 		return;
- 
- 	closid_num_dirty_rmid_free();
--
--	dom_data_exit(r);
- }
 --- a/fs/resctrl/rdtgroup.c
 +++ b/fs/resctrl/rdtgroup.c
-@@ -2732,6 +2732,10 @@ static int rdt_get_tree(struct fs_contex
+@@ -581,14 +581,20 @@ unlock:
+  *
+  * On resource group creation via a mkdir, an extra kernfs_node reference is
+  * taken to ensure that the rdtgroup structure remains accessible for the
+- * rdtgroup_kn_unlock() calls where it is removed.
++ * rdtgroup_kn_unlock() calls where it is removed. The default group is
++ * statically allocated: it does not have an extra reference but will have
++ * RDT_DELETED set on unmount to support safe access to its associated files
++ * via rdtgroup_kn_lock_live/rdtgroup_kn_unlock().
+  *
+- * Drop the extra reference here, then free the rdtgroup structure.
++ * For all but the default group: drop the extra reference, then free the
++ * rdtgroup structure.
+  *
+  * Return: void
+  */
+ static void rdtgroup_remove(struct rdtgroup *rdtgrp)
+ {
++	if (rdtgrp == &rdtgroup_default)
++		return;
+ 	kernfs_put(rdtgrp->kn);
+ 	kfree(rdtgrp);
+ }
+@@ -2732,6 +2738,12 @@ static int rdt_get_tree(struct fs_contex
  		goto out;
  	}
  
-+	ret = setup_rmid_lru_list();
-+	if (ret)
++	/* Avoid races from pending operations from a previous mount */
++	if (atomic_read(&rdtgroup_default.waitcount) != 0) {
++		ret = -EBUSY;
 +		goto out;
++	}
 +
- 	ret = rdtgroup_setup_root(ctx);
+ 	ret = setup_rmid_lru_list();
  	if (ret)
  		goto out;
-@@ -4518,4 +4522,5 @@ void resctrl_exit(void)
- 	 */
+@@ -3094,6 +3106,7 @@ static void resctrl_fs_teardown(void)
+ 	mon_put_kn_priv();
+ 	rdt_pseudo_lock_release();
+ 	rdtgroup_default.mode = RDT_MODE_SHAREABLE;
++	rdtgroup_default.flags = RDT_DELETED;
+ 	closid_exit();
+ 	schemata_list_destroy();
+ 	rdtgroup_destroy_root();
+@@ -4148,6 +4161,7 @@ static int rdtgroup_setup_root(struct rd
  
- 	resctrl_l3_mon_resource_exit();
-+	free_rmid_lru_list();
+ 	ctx->kfc.root = rdt_root;
+ 	rdtgroup_default.kn = kernfs_root_to_node(rdt_root);
++	rdtgroup_default.flags = 0;
+ 
+ 	return 0;
  }
 
 
