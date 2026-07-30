@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEBCC384223;
-	Thu, 30 Jul 2026 15:50:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C58A1382F01;
+	Thu, 30 Jul 2026 15:50:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426626; cv=none; b=PMaIK2oQg19XA8qUNMQofst7mrf63z/y6D3Nbek/WyKCIV0nAVbycw8WFTxAhxczLu3bHnOREzns9zzaodSPff9848dwMTsw2xuoux4d0QP59uk7+aUSJvR9culZq0ODDL8dxIbFiXSAaCyduTsiDdZ28+5UPpTJJRNboXKYCTQ=
+	t=1785426628; cv=none; b=FnWozApmJXYK6UxTYZDt/tgSFIdyvA25oK8UaC2vbYGEqFdVkeuNpysa0aTKHnJWTUbXud0CURKG4oZRiQW5MmsobxMzeOkoQDTyc4qFCowt7wJqoMj+V22bTyPqbMIcPAi1Zm1mNJmygFtQPsyOjSfa5b+zGO4TM3/ncwdDaPo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426626; c=relaxed/simple;
-	bh=qFM37BHvCq9PTIpZyifaUpVA1fKXWL8XIvw1CaTIXGk=;
+	s=arc-20240116; t=1785426628; c=relaxed/simple;
+	bh=mKsBweNkNomAaLMt46Ys/Kf3ByTAIpe/GHOviuvyN1k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oMET7lQCGu5uKDAKbcEhwGooJsKNM17b+imNA2u/oPaIR5LwzKuRFITXx2D39w3fxI3k8cQBzbtAJU/qHm3kmXCUrKqyrl15WOhvIomZqTqUVZ1lxdNsQhAZIDPS5Jl38Vdd80L89VvqIPQ9qaP8U5iqBMYMZwGEMmIvMvie99o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NO5wTig4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KgefmS8oGjD3W5bqPd5c/9clo8YKSbreZ2uK8uuqZEUlxogu0OszOiycOfbXNDgpgZ4SgmAshPfJEWl3+ryRoJdGBKt6x6S9hL0KGxrRZ0etUhnBdP1C6keRhBk5p8aNgSRc2mFBHN3cCy6snK9il72ZEprIW0d4iIgDxX55+2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hau+ipRP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NO5wTig4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 187CC1F000E9;
-	Thu, 30 Jul 2026 15:50:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hau+ipRP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1C521F000E9;
+	Thu, 30 Jul 2026 15:50:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426624;
-	bh=3yGjM/gObB2gcIzNcKtUaL7wOow8zr/OTJ38incynSc=;
+	s=korg; t=1785426627;
+	bh=2GwSpiex4viLBtu9muHUjIK8PJbWehwDw+9MaorXhe4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NO5wTig4uXjITrMxeFnUbklEsKznDy4vXEjqlQ9sOKnhgFB6y1XE5hpuZbL6Zg/07
-	 KF26h6gL8FQltSoS4OtdvAHefeh/BoFAHAcTh2UAPZ/LAcyhoQbQ5rquPm3ExUI96A
-	 Rfz8xFsvZQRUY3ywWZBWo75Vpzv0Lsm++CtiddC8=
+	b=Hau+ipRP75+ENlLa+chCE0fTUBIARRcxVIRxW83xeGkWaoomEk1IQXahaekEhW9RN
+	 7RxRbCIclfghUwA/soF9d8FLO7ikcwuE/nx1TD87BFS3iakMzzP+JRUb8fGlN0C/Pz
+	 2X+1eV0cYrD28w72pnD1B7E+WeCxFaLq9t1/uEJ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	David Howells <dhowells@redhat.com>,
-	Jeffrey Altman <jaltman@auristor.com>,
 	Marc Dionne <marc.dionne@auristor.com>,
-	"Junvyyang, Tencent Zhuque Lab" <zhuque@tencent.com>,
-	LePremierHomme <kwqcheii@proton.me>,
+	Jeffrey Altman <jaltman@auristor.com>,
 	Simon Horman <horms@kernel.org>,
 	linux-afs@lists.infradead.org,
+	stable@kernel.org,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 486/602] rxrpc: Fix notification vs call-release vs recvmsg
-Date: Thu, 30 Jul 2026 16:14:38 +0200
-Message-ID: <20260730141446.179681292@linuxfoundation.org>
+Subject: [PATCH 6.12 487/602] rxrpc: Fix socket notification race
+Date: Thu, 30 Jul 2026 16:14:39 +0200
+Message-ID: <20260730141446.201482744@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -59,133 +58,42 @@ Content-Transfer-Encoding: 8bit
 
 From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 2fd895842d49c23137ae48252dd211e5d6d8a3ed ]
+[ Upstream commit e66f8f32f50116670dbbee5bc9e692cd2cd0c8f8 ]
 
-When a call is released, rxrpc takes the spinlock and removes it from
-->recvmsg_q in an effort to prevent racing recvmsg() invocations from
-seeing the same call.  Now, rxrpc_recvmsg() only takes the spinlock when
-actually removing a call from the queue; it doesn't, however, take it in
-the lead up to that when it checks to see if the queue is empty.  It *does*
-hold the socket lock, which prevents a recvmsg/recvmsg race - but this
-doesn't prevent sendmsg from ending the call because sendmsg() drops the
-socket lock and relies on the call->user_mutex.
+There's a race between rxrpc_recvmsg() and rxrpc_notify_socket(), whereby
+the latter's attempt to avoid disabling interrupts and taking the socket's
+recvmsg_lock if the call is already queued may happen simultaneously with
+the former's discarding of a call that has nothing queued.
 
-Fix this by firstly removing the bit in rxrpc_release_call() that dequeues
-the released call and, instead, rely on recvmsg() to simply discard
-released calls (done in a preceding fix).
+Fix this by removing the shortcut.  Note that this only affects userspace's
+use of AF_RXRPC; the AFS filesystem driver doesn't use the socket queue.
 
-Secondly, rxrpc_notify_socket() is abandoned if the call is already marked
-as released rather than trying to be clever by setting both pointers in
-call->recvmsg_link to NULL to trick list_empty().  This isn't perfect and
-can still race, resulting in a released call on the queue, but recvmsg()
-will now clean that up.
-
-Fixes: 17926a79320a ("[AF_RXRPC]: Provide secure RxRPC sockets for use by userspace and kernel both")
+Fixes: 248f219cb8bc ("rxrpc: Rewrite the data and ack handling code")
+Link: https://sashiko.dev/#/patchset/20260616155749.2125907-1-dhowells%40redhat.com
 Signed-off-by: David Howells <dhowells@redhat.com>
-Reviewed-by: Jeffrey Altman <jaltman@auristor.com>
 cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Junvyyang, Tencent Zhuque Lab <zhuque@tencent.com>
-cc: LePremierHomme <kwqcheii@proton.me>
+cc: Jeffrey Altman <jaltman@auristor.com>
 cc: Simon Horman <horms@kernel.org>
 cc: linux-afs@lists.infradead.org
-Link: https://patch.msgid.link/20250717074350.3767366-4-dhowells@redhat.com
+cc: stable@kernel.org
+Link: https://patch.msgid.link/20260624163819.3017002-10-dhowells@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: e66f8f32f501 ("rxrpc: Fix socket notification race")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/trace/events/rxrpc.h |    3 ++-
- net/rxrpc/call_object.c      |   28 ++++++++++++----------------
- net/rxrpc/recvmsg.c          |    4 ++++
- 3 files changed, 18 insertions(+), 17 deletions(-)
+ net/rxrpc/recvmsg.c |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/include/trace/events/rxrpc.h
-+++ b/include/trace/events/rxrpc.h
-@@ -278,10 +278,10 @@
- 	EM(rxrpc_call_put_poke,			"PUT poke    ") \
- 	EM(rxrpc_call_put_recvmsg,		"PUT recvmsg ") \
- 	EM(rxrpc_call_put_recvmsg_peek_nowait,	"PUT peek-nwt") \
-+	EM(rxrpc_call_put_release_recvmsg_q,	"PUT rls-rcmq") \
- 	EM(rxrpc_call_put_release_sock,		"PUT rls-sock") \
- 	EM(rxrpc_call_put_release_sock_tba,	"PUT rls-sk-a") \
- 	EM(rxrpc_call_put_sendmsg,		"PUT sendmsg ") \
--	EM(rxrpc_call_put_unnotify,		"PUT unnotify") \
- 	EM(rxrpc_call_put_userid_exists,	"PUT u-exists") \
- 	EM(rxrpc_call_put_userid,		"PUT user-id ") \
- 	EM(rxrpc_call_see_accept,		"SEE accept  ") \
-@@ -294,6 +294,7 @@
- 	EM(rxrpc_call_see_disconnected,		"SEE disconn ") \
- 	EM(rxrpc_call_see_distribute_error,	"SEE dist-err") \
- 	EM(rxrpc_call_see_input,		"SEE input   ") \
-+	EM(rxrpc_call_see_notify_released,	"SEE nfy-rlsd") \
- 	EM(rxrpc_call_see_recvmsg,		"SEE recvmsg ") \
- 	EM(rxrpc_call_see_recvmsg_requeue,	"SEE recv-rqu") \
- 	EM(rxrpc_call_see_recvmsg_requeue_first, "SEE recv-rqF") \
---- a/net/rxrpc/call_object.c
-+++ b/net/rxrpc/call_object.c
-@@ -547,7 +547,7 @@ static void rxrpc_cleanup_ring(struct rx
- void rxrpc_release_call(struct rxrpc_sock *rx, struct rxrpc_call *call)
- {
- 	struct rxrpc_connection *conn = call->conn;
--	bool put = false, putu = false;
-+	bool putu = false;
- 
- 	_enter("{%d,%d}", call->debug_id, refcount_read(&call->ref));
- 
-@@ -559,23 +559,13 @@ void rxrpc_release_call(struct rxrpc_soc
- 
- 	rxrpc_put_call_slot(call);
- 
--	/* Make sure we don't get any more notifications */
-+	/* Note that at this point, the call may still be on or may have been
-+	 * added back on to the socket receive queue.  recvmsg() must discard
-+	 * released calls.  The CALL_RELEASED flag should prevent further
-+	 * notifications.
-+	 */
- 	spin_lock_irq(&rx->recvmsg_lock);
--
--	if (!list_empty(&call->recvmsg_link)) {
--		_debug("unlinking once-pending call %p { e=%lx f=%lx }",
--		       call, call->events, call->flags);
--		list_del(&call->recvmsg_link);
--		put = true;
--	}
--
--	/* list_empty() must return false in rxrpc_notify_socket() */
--	call->recvmsg_link.next = NULL;
--	call->recvmsg_link.prev = NULL;
--
- 	spin_unlock_irq(&rx->recvmsg_lock);
--	if (put)
--		rxrpc_put_call(call, rxrpc_call_put_unnotify);
- 
- 	write_lock(&rx->call_lock);
- 
-@@ -624,6 +614,12 @@ void rxrpc_release_calls_on_socket(struc
- 		rxrpc_put_call(call, rxrpc_call_put_release_sock);
- 	}
- 
-+	while ((call = list_first_entry_or_null(&rx->recvmsg_q,
-+						struct rxrpc_call, recvmsg_link))) {
-+		list_del_init(&call->recvmsg_link);
-+		rxrpc_put_call(call, rxrpc_call_put_release_recvmsg_q);
-+	}
-+
- 	_leave("");
- }
- 
 --- a/net/rxrpc/recvmsg.c
 +++ b/net/rxrpc/recvmsg.c
-@@ -29,6 +29,10 @@ void rxrpc_notify_socket(struct rxrpc_ca
+@@ -27,8 +27,6 @@ void rxrpc_notify_socket(struct rxrpc_ca
  
- 	if (!list_empty(&call->recvmsg_link))
+ 	_enter("%d", call->debug_id);
+ 
+-	if (!list_empty(&call->recvmsg_link))
+-		return;
+ 	if (test_bit(RXRPC_CALL_RELEASED, &call->flags)) {
+ 		rxrpc_see_call(call, rxrpc_call_see_notify_released);
  		return;
-+	if (test_bit(RXRPC_CALL_RELEASED, &call->flags)) {
-+		rxrpc_see_call(call, rxrpc_call_see_notify_released);
-+		return;
-+	}
- 
- 	rcu_read_lock();
- 
 
 
