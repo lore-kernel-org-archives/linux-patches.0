@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F512435A9F;
-	Thu, 30 Jul 2026 14:25:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D9F7432E65;
+	Thu, 30 Jul 2026 14:25:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421505; cv=none; b=SLvu5PLUbvd2Se3ww76yBxU7fkorTHdkTZKRH27sLMrjb40XxVOkT3k7WwCS4H8t2JRzmaMa/2KHsOf5dfD+tzn0y8TD6EC2umjbz1gkBQP/Na+3I9SrqTp+LBz4DWa5Lk+cmEi+es8VAgM4chkPC7dxD1B1zu2apLojaHvp3Zg=
+	t=1785421508; cv=none; b=dpSEuKm1fGv0g70ZWQhqzBPYdT7psBC81tJEdSqgzVcW9B3petqY5QgohJ6jQoKNoVfSonDFP7CrinklTd5eYz6aKkChtuZsqCwzaUxs8iPNj5nf+mGxjkRiBn53OKdt04zztb0HOeCCpszOhJ6WkfEp+JUdqUwkUQUktY4zafs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421505; c=relaxed/simple;
-	bh=5VJA3fDvSjVjkv2Q1iOGk6RjS+SnZwH5zmis5qwPldA=;
+	s=arc-20240116; t=1785421508; c=relaxed/simple;
+	bh=0z5DSwtS75vQsOYzjoIGuX2o/A5bqk0Ona7wdtMmBow=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=f7Gg28d/WYhhj4YZ/uJqJ+DfKNNXaElru9I8LzMWpDx7fTEn5AELbWSY5C5jrTdjyvrIaErrPlQUQ60SPmaSnsFckU8QzbfohSa+ziEHzBp8CQyZw06gKLXYOROc95ta1zATYm3B7CWrdcEWgkIY+1uJHZeeW+2E4cMlPzzOVP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aEuw5Q31; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KZnW7PsH4OfSZeUZcbwsUWdHMCp+FNm9gn3y08JHRYnVZnEQ9nWYnFTV1DtLzlSMVEoR18gqppS/QddmT3SWXzVra8Vrb0YnTynWaq/ymrwnR5SrI8DU0nGnEzoGg6vmC+7Le6RA3f31+Pev53J9YgE/8ttjjmoq+9mtRJ+b4sw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UcOu216k; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aEuw5Q31"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DCFF1F000E9;
-	Thu, 30 Jul 2026 14:25:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UcOu216k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BCC61F000E9;
+	Thu, 30 Jul 2026 14:25:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421504;
-	bh=47Rff8P82e3DrZORSUfdxte+PyyhVPMhwX7Dy76ZlLY=;
+	s=korg; t=1785421507;
+	bh=fKV7QqStWvIEyBDHsAp9zw+O92AG4A6KMF0EGM7Hr9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aEuw5Q31fbYojyIOMPQCpIWtvV+mjnb5RcYRI+G5hZZw7qPU72lSphCqtwhymOuCX
-	 s1a88Xmu581JeBd/dsNONlnH5o1uoPlZiMKkVW1b5UNjsUg9CtE8t6X22RHWBqg9LR
-	 NT3p49fpqB29DSiXs1LJS83Vt1oDvK0krjT2Sn+g=
+	b=UcOu216kucSISZyRwn/RMLmfsXgq6BhYYwgr6UrjvfoPH9qDc8WJ833OuO31declH
+	 L5Ig8KHRKgKefAE0FNfeTis0NojMCtW6gs4DGxfiH4ByHLChtnveG+yXi3BNE7Z7bT
+	 tRtO/AV3KHhUv8cWY5IqCvngX8BmOUJZLDpP40qw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
-	Tejas Upadhyay <tejas.upadhyay@intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Arvind Yadav <arvind.yadav@intel.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 124/744] drm/xe/guc: Hold device ref until queue teardown completes
-Date: Thu, 30 Jul 2026 16:06:37 +0200
-Message-ID: <20260730141446.919840452@linuxfoundation.org>
+Subject: [PATCH 7.1 082/744] sched_ext: Enable tick for finite slices on nohz_full
+Date: Thu, 30 Jul 2026 16:05:55 +0200
+Message-ID: <20260730141446.014254586@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -49,416 +45,116 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arvind Yadav <arvind.yadav@intel.com>
+From: Andrea Righi <arighi@nvidia.com>
 
-[ Upstream commit 9b7e60184f4b22e893d4ae95234d5f26261a430c ]
+[ Upstream commit 4ec10f38ff901dc10503d57cbdcf941248419ac1 ]
 
-GuC exec queue destruction can run asynchronously. If the final device
-put happens from a destroy worker, drmm cleanup can end up draining
-the same workqueue and deadlock.
+set_next_task_scx() updates the tick dependency before __schedule()
+updates rq->curr. When switching from a non-EXT task, such as idle, to
+an EXT task with a finite slice, sched_update_tick_dependency() checks
+the outgoing task and can allow the tick to remain stopped.
 
-Hold a drm_device reference for the queue lifetime and drop it after
-queue teardown completes. This keeps drmm cleanup from running while
-async destroy work is still pending.
+The dependency can also be lost without a slice-type transition. After a
+finite-slice task leaves the CPU idle, the enqueue path can clear the
+dependency against the idle rq->curr. SCX_RQ_CAN_STOP_TICK still records
+a finite slice, so another finite task skips the transition block and
+can run without the ticks needed to expire its slice.
 
-Move GuC destroy work to a module-lifetime Xe workqueue and flush it
-on PCI remove so hot-unbind/rebind still waits for pending destroy work.
+The reverse mismatch can also happen when the last finite-slice EXT task
+is dequeued: sub_nr_running() updates the dependency before rq->curr
+changes, so the outgoing task state can keep the dependency set after
+the CPU goes idle.
 
-With queue-held device refs, guc_submit_sw_fini() cannot run with live
-GuC IDs. Replace the fini wait with an assertion and remove the unused
-fini_wq.
+Fix this by unconditionally enabling the scheduler tick whenever a
+finite-slice EXT task is selected on a nohz_full CPU. Moreover, when the
+last runnable EXT task leaves, ignore the outgoing EXT slice state so
+the generic scheduler can correctly re-evaluate and clear the tick
+dependency.
 
-v2:
-  - Rebase
-
-v3:
-  - Switch to queue-lifetime drm_dev_get()/drm_dev_put() model. (Matt)
-  - Queue async teardown on system_dfl_wq instead of xe->destroy_wq. (Matt)
-  - Drop separate deferred drm_dev_put worker.
-  - Remove stale drain_workqueue(xe->destroy_wq) from guc_submit_sw_fini().
-
-v4:
-  - Replace the guc_submit_sw_fini() wait with an assertion and remove
-    the now-unused fini_wq. (sashiko)
-
-v5:
-  - Move destroy work to a module-lifetime Xe workqueue instead of
-    system_dfl_wq. (Matt)
-  - Flush the module-lifetime destroy workqueue during PCI remove to
-    preserve the old device-remove wait semantics.
-
-v6:
-  - Keep SVM pagemap destroy work on the per-device destroy_wq to avoid
-    letting it outlive the xe_device/drm_device. (Sashiko)
-  - Use WQ_MEM_RECLAIM for xe->destroy_wq because SVM pagemap destroy work
-    can be queued from the reclaim path.
-
-v7:
-  - Drop the per-device xe->destroy_wq and use the module-level destroy WQ
-    for SVM pagemap destroy as well. (Matt)
-  - Rename xe_exec_queue_destroy_wq_*() helpers to xe_destroy_wq_*()
-    helpers because the WQ is no longer exec-queue specific. (Matt)
-
-v8:
-  - Rebase.
-
-v9:
-  - Keep SVM pagemap destroy work on the per-device WQ_MEM_RECLAIM
-    destroy_wq because it can be queued from reclaim and embeds
-    the dev_pagemap used by devres teardown. (Sashiko)
-  - Keep the module-level destroy WQ GuC-only and drop WQ_MEM_RECLAIM
-    from it.
-  - Update the module-WQ kdoc to document the GuC/SVM split.
-
-v10:
-  - Keep xe->destroy_wq per-cpu while adding WQ_MEM_RECLAIM to fix the
-    workqueue allocation warning.
-
-v11:
-  - Drop the SVM pagemap destroy comment as it was revision-specific.
-    (Thomas)
-
-v12:
-  - Rebase.
-
-Fixes: 2d2be279f1ca ("drm/xe: fix UAF around queue destruction")
-Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Cc: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
-Cc: Tejas Upadhyay <tejas.upadhyay@intel.com>
-Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Signed-off-by: Arvind Yadav <arvind.yadav@intel.com>
-Link: https://patch.msgid.link/20260716062624.211396-1-arvind.yadav@intel.com
-Signed-off-by: Tejas Upadhyay <tejas.upadhyay@intel.com>
-(cherry picked from commit da1124abac689cc2b1d8995e5f0a816f8a122edb)
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Fixes: 22a920209ab6 ("sched_ext: Implement tickless support")
+Signed-off-by: Andrea Righi <arighi@nvidia.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_device.c       |  2 +-
- drivers/gpu/drm/xe/xe_device_types.h |  2 +-
- drivers/gpu/drm/xe/xe_guc_submit.c   | 66 ++++++++++++++++------------
- drivers/gpu/drm/xe/xe_guc_types.h    |  2 -
- drivers/gpu/drm/xe/xe_module.c       | 49 +++++++++++++++++++++
- drivers/gpu/drm/xe/xe_module.h       |  5 +++
- drivers/gpu/drm/xe/xe_pci.c          |  6 +++
- 7 files changed, 100 insertions(+), 32 deletions(-)
+ kernel/sched/ext.c | 47 ++++++++++++++++++++++++++++++++++------------
+ 1 file changed, 35 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_device.c b/drivers/gpu/drm/xe/xe_device.c
-index ffea4a453c01ca..991b0ea9218bb2 100644
---- a/drivers/gpu/drm/xe/xe_device.c
-+++ b/drivers/gpu/drm/xe/xe_device.c
-@@ -509,7 +509,7 @@ struct xe_device *xe_device_create(struct pci_dev *pdev,
- 						       WQ_MEM_RECLAIM);
- 	xe->ordered_wq = alloc_ordered_workqueue("xe-ordered-wq", 0);
- 	xe->unordered_wq = alloc_workqueue("xe-unordered-wq", WQ_PERCPU, 0);
--	xe->destroy_wq = alloc_workqueue("xe-destroy-wq", WQ_PERCPU, 0);
-+	xe->destroy_wq = alloc_workqueue("xe-destroy-wq", WQ_PERCPU | WQ_MEM_RECLAIM, 0);
- 	if (!xe->ordered_wq || !xe->unordered_wq ||
- 	    !xe->preempt_fence_wq || !xe->destroy_wq) {
- 		/*
-diff --git a/drivers/gpu/drm/xe/xe_device_types.h b/drivers/gpu/drm/xe/xe_device_types.h
-index 615218d775b14e..7e0901ac95c91d 100644
---- a/drivers/gpu/drm/xe/xe_device_types.h
-+++ b/drivers/gpu/drm/xe/xe_device_types.h
-@@ -351,7 +351,7 @@ struct xe_device {
- 	/** @unordered_wq: used to serialize unordered work */
- 	struct workqueue_struct *unordered_wq;
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index 5f1accb092e30b..432c4c68a2c010 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -2985,24 +2985,38 @@ static void set_next_task_scx(struct rq *rq, struct task_struct *p, bool first)
  
--	/** @destroy_wq: used to serialize user destroy work, like queue */
-+	/** @destroy_wq: used to serialize SVM pagemap destroy work */
- 	struct workqueue_struct *destroy_wq;
- 
- 	/** @tiles: device tiles */
-diff --git a/drivers/gpu/drm/xe/xe_guc_submit.c b/drivers/gpu/drm/xe/xe_guc_submit.c
-index 54606367eea3b3..b8465553aed2dc 100644
---- a/drivers/gpu/drm/xe/xe_guc_submit.c
-+++ b/drivers/gpu/drm/xe/xe_guc_submit.c
-@@ -10,6 +10,7 @@
- #include <linux/circ_buf.h>
- #include <linux/dma-fence-array.h>
- 
-+#include <drm/drm_drv.h>
- #include <drm/drm_managed.h>
- 
- #include "abi/guc_actions_abi.h"
-@@ -37,6 +38,7 @@
- #include "xe_macros.h"
- #include "xe_map.h"
- #include "xe_mocs.h"
-+#include "xe_module.h"
- #include "xe_pm.h"
- #include "xe_ring_ops_types.h"
- #include "xe_sched_job.h"
-@@ -232,17 +234,9 @@ static bool exec_queue_killed_or_banned_or_wedged(struct xe_exec_queue *q)
- static void guc_submit_sw_fini(struct drm_device *drm, void *arg)
- {
- 	struct xe_guc *guc = arg;
--	struct xe_device *xe = guc_to_xe(guc);
- 	struct xe_gt *gt = guc_to_gt(guc);
--	int ret;
--
--	ret = wait_event_timeout(guc->submission_state.fini_wq,
--				 xa_empty(&guc->submission_state.exec_queue_lookup),
--				 HZ * 5);
- 
--	drain_workqueue(xe->destroy_wq);
--
--	xe_gt_assert(gt, ret);
-+	xe_gt_assert(gt, xa_empty(&guc->submission_state.exec_queue_lookup));
- 
- 	xa_destroy(&guc->submission_state.exec_queue_lookup);
- }
-@@ -319,8 +313,6 @@ int xe_guc_submit_init(struct xe_guc *guc, unsigned int num_ids)
- 
- 	xa_init(&guc->submission_state.exec_queue_lookup);
- 
--	init_waitqueue_head(&guc->submission_state.fini_wq);
--
- 	primelockdep(guc);
- 
- 	guc->submission_state.initialized = true;
-@@ -411,9 +403,6 @@ static void __release_guc_id(struct xe_guc *guc, struct xe_exec_queue *q,
- 	xe_guc_id_mgr_release_locked(&guc->submission_state.idm,
- 				     q->guc->id, q->width);
- 
--	if (xa_empty(&guc->submission_state.exec_queue_lookup))
--		wake_up(&guc->submission_state.fini_wq);
--
- 	mutex_unlock(&guc->submission_state.lock);
- }
- 
-@@ -1690,6 +1679,7 @@ static void guc_exec_queue_fini(struct xe_exec_queue *q)
- {
- 	struct xe_guc_exec_queue *ge = q->guc;
- 	struct xe_guc *guc = exec_queue_to_guc(q);
-+	struct drm_device *drm = &guc_to_xe(guc)->drm;
- 
- 	if (xe_exec_queue_is_multi_queue_secondary(q)) {
- 		struct xe_exec_queue_group *group = q->multi_queue.group;
-@@ -1708,36 +1698,52 @@ static void guc_exec_queue_fini(struct xe_exec_queue *q)
- 	 * (timeline name).
+ 	/*
+ 	 * @p is getting newly scheduled or got kicked after someone updated its
+-	 * slice. Refresh whether tick can be stopped. See scx_can_stop_tick().
++	 * slice. Update SCX_RQ_CAN_STOP_TICK to reflect whether the tick can be
++	 * stopped. See scx_can_stop_tick().
++	 *
++	 * Moreover, refresh the load_avgs just when transitioning in and out of
++	 * nohz. In the future, we might want to add a mechanism to update
++	 * load_avgs periodically on tick-stopped CPUs.
  	 */
- 	kfree_rcu(ge, rcu);
-+
-+	drm_dev_put(drm);
- }
+-	if ((p->scx.slice == SCX_SLICE_INF) !=
+-	    (bool)(rq->scx.flags & SCX_RQ_CAN_STOP_TICK)) {
+-		if (p->scx.slice == SCX_SLICE_INF)
++	if (p->scx.slice == SCX_SLICE_INF) {
++		if (!(rq->scx.flags & SCX_RQ_CAN_STOP_TICK)) {
++			/*
++			 * Bypass mode always assigns finite slices, so @p
++			 * can't have an infinite slice while bypassing.
++			 * Therefore, sched_update_tick_dependency() can safely
++			 * evaluate the outgoing task.
++			 */
+ 			rq->scx.flags |= SCX_RQ_CAN_STOP_TICK;
+-		else
+-			rq->scx.flags &= ~SCX_RQ_CAN_STOP_TICK;
++			sched_update_tick_dependency(rq);
  
--static void __guc_exec_queue_destroy_async(struct work_struct *w)
-+static void guc_exec_queue_do_destroy(struct xe_exec_queue *q)
- {
--	struct xe_guc_exec_queue *ge =
--		container_of(w, struct xe_guc_exec_queue, destroy_async);
--	struct xe_exec_queue *q = ge->q;
-+	struct xe_guc_exec_queue *ge = q->guc;
- 	struct xe_guc *guc = exec_queue_to_guc(q);
-+	struct xe_device *xe = guc_to_xe(guc);
-+	struct drm_device *drm = &xe->drm;
+-		sched_update_tick_dependency(rq);
++			update_other_load_avgs(rq);
++		}
++	} else {
++		if (rq->scx.flags & SCX_RQ_CAN_STOP_TICK) {
++			rq->scx.flags &= ~SCX_RQ_CAN_STOP_TICK;
++			update_other_load_avgs(rq);
++		}
  
--	guard(xe_pm_runtime)(guc_to_xe(guc));
--	trace_xe_exec_queue_destroy(q);
-+	/*
-+	 * guc_exec_queue_fini() drops the queue's drm_device ref.
-+	 * Keep the device alive until the PM-runtime guard unwinds.
-+	 */
-+	drm_dev_get(drm);
- 
--	/* Confirm no work left behind accessing device structures */
--	cancel_delayed_work_sync(&ge->sched.base.work_tdr);
-+	scoped_guard(xe_pm_runtime, xe) {
-+		trace_xe_exec_queue_destroy(q);
- 
--	xe_exec_queue_fini(q);
-+		/* Confirm no work left behind accessing device structures */
-+		cancel_delayed_work_sync(&ge->sched.base.work_tdr);
-+
-+		xe_exec_queue_fini(q);
-+	}
-+
-+	drm_dev_put(drm);
- }
- 
--static void guc_exec_queue_destroy_async(struct xe_exec_queue *q)
-+static void __guc_exec_queue_destroy_async(struct work_struct *w)
- {
--	struct xe_guc *guc = exec_queue_to_guc(q);
--	struct xe_device *xe = guc_to_xe(guc);
-+	struct xe_guc_exec_queue *ge =
-+		container_of(w, struct xe_guc_exec_queue, destroy_async);
-+
-+	guc_exec_queue_do_destroy(ge->q);
-+}
- 
-+static void guc_exec_queue_destroy_async(struct xe_exec_queue *q)
-+{
- 	INIT_WORK(&q->guc->destroy_async, __guc_exec_queue_destroy_async);
- 
- 	/* We must block on kernel engines so slabs are empty on driver unload */
- 	if (q->flags & EXEC_QUEUE_FLAG_PERMANENT || exec_queue_wedged(q))
--		__guc_exec_queue_destroy_async(&q->guc->destroy_async);
-+		guc_exec_queue_do_destroy(q);
- 	else
--		queue_work(xe->destroy_wq, &q->guc->destroy_async);
-+		xe_destroy_wq_queue(&q->guc->destroy_async);
- }
- 
- static void __guc_exec_queue_destroy(struct xe_guc *guc, struct xe_exec_queue *q)
-@@ -1945,6 +1951,7 @@ static int guc_exec_queue_init(struct xe_exec_queue *q)
- {
- 	struct xe_gpu_scheduler *sched;
- 	struct xe_guc *guc = exec_queue_to_guc(q);
-+	struct drm_device *drm = &guc_to_xe(guc)->drm;
- 	struct workqueue_struct *submit_wq = NULL;
- 	struct xe_guc_exec_queue *ge;
- 	long timeout;
-@@ -1956,6 +1963,8 @@ static int guc_exec_queue_init(struct xe_exec_queue *q)
- 	if (!ge)
- 		return -ENOMEM;
- 
-+	drm_dev_get(drm);
-+
- 	q->guc = ge;
- 	ge->q = q;
- 	init_rcu_head(&ge->rcu);
-@@ -2034,6 +2043,7 @@ static int guc_exec_queue_init(struct xe_exec_queue *q)
- 	release_guc_id(guc, q);
- err_free:
- 	kfree(ge);
-+	drm_dev_put(drm);
- 
- 	return err;
- }
-diff --git a/drivers/gpu/drm/xe/xe_guc_types.h b/drivers/gpu/drm/xe/xe_guc_types.h
-index c7b9642b41ba74..31a2acb63ac34d 100644
---- a/drivers/gpu/drm/xe/xe_guc_types.h
-+++ b/drivers/gpu/drm/xe/xe_guc_types.h
-@@ -100,8 +100,6 @@ struct xe_guc {
- 		 * even initialized - before that not even the lock is valid
+ 		/*
+-		 * For now, let's refresh the load_avgs just when transitioning
+-		 * in and out of nohz. In the future, we might want to add a
+-		 * mechanism which calls the following periodically on
+-		 * tick-stopped CPUs.
++		 * @rq still references the outgoing scheduling context. A finite
++		 * slice is sufficient by itself to require the tick.
  		 */
- 		bool initialized;
--		/** @submission_state.fini_wq: submit fini wait queue */
--		wait_queue_head_t fini_wq;
- 	} submission_state;
- 
- 	/** @hwconfig: Hardware config state */
-diff --git a/drivers/gpu/drm/xe/xe_module.c b/drivers/gpu/drm/xe/xe_module.c
-index 4cb57818291229..99347f216ec893 100644
---- a/drivers/gpu/drm/xe/xe_module.c
-+++ b/drivers/gpu/drm/xe/xe_module.c
-@@ -7,6 +7,7 @@
- 
- #include <linux/init.h>
- #include <linux/module.h>
-+#include <linux/workqueue.h>
- 
- #include <drm/drm_module.h>
- 
-@@ -91,6 +92,50 @@ static int xe_check_nomodeset(void)
- 	return 0;
+-		update_other_load_avgs(rq);
++		if (tick_nohz_full_cpu(cpu_of(rq)))
++			tick_nohz_dep_set_cpu(cpu_of(rq), TICK_DEP_BIT_SCHED);
+ 	}
  }
  
-+static struct workqueue_struct *xe_destroy_wq;
-+
-+static int __init xe_destroy_wq_module_init(void)
-+{
-+	xe_destroy_wq = alloc_workqueue("xe-guc-destroy-wq", WQ_UNBOUND, 0);
-+	if (!xe_destroy_wq)
-+		return -ENOMEM;
-+	return 0;
-+}
-+
-+static void xe_destroy_wq_module_exit(void)
-+{
-+	if (xe_destroy_wq)
-+		destroy_workqueue(xe_destroy_wq);
-+	xe_destroy_wq = NULL;
-+}
-+
-+/**
-+ * xe_destroy_wq_queue() - Queue work on the destroy workqueue
-+ * @work: work item to queue
-+ *
-+ * The destroy workqueue has module lifetime and is used for GuC exec queue
-+ * teardown that can outlive a single xe_device. SVM pagemap destroy uses the
-+ * per-device xe->destroy_wq instead.
-+ *
-+ * Return: %true if @work was queued, %false if it was already pending.
-+ */
-+bool xe_destroy_wq_queue(struct work_struct *work)
-+{
-+	return queue_work(xe_destroy_wq, work);
-+}
-+
-+/**
-+ * xe_destroy_wq_flush() - Flush the destroy workqueue
-+ *
-+ * Drains all pending destroy work. Called from PCI remove to ensure
-+ * teardown ordering before the device is destroyed.
-+ */
-+void xe_destroy_wq_flush(void)
-+{
-+	if (xe_destroy_wq)
-+		flush_workqueue(xe_destroy_wq);
-+}
-+
- struct init_funcs {
- 	int (*init)(void);
- 	void (*exit)(void);
-@@ -112,6 +157,10 @@ static const struct init_funcs init_funcs[] = {
- 		.init = xe_sched_job_module_init,
- 		.exit = xe_sched_job_module_exit,
- 	},
-+	{
-+		.init = xe_destroy_wq_module_init,
-+		.exit = xe_destroy_wq_module_exit,
-+	},
- 	{
- 		.init = xe_register_pci_driver,
- 		.exit = xe_unregister_pci_driver,
-diff --git a/drivers/gpu/drm/xe/xe_module.h b/drivers/gpu/drm/xe/xe_module.h
-index 79cb9639c0f3df..e8e54f701cf3ee 100644
---- a/drivers/gpu/drm/xe/xe_module.h
-+++ b/drivers/gpu/drm/xe/xe_module.h
-@@ -8,6 +8,8 @@
+@@ -4296,6 +4310,15 @@ bool scx_can_stop_tick(struct rq *rq)
+ 	if (p->sched_class != &ext_sched_class)
+ 		return true;
  
- #include <linux/types.h>
- 
-+struct work_struct;
-+
- /* Module modprobe variables */
- struct xe_modparam {
- 	bool force_execlist;
-@@ -27,5 +29,8 @@ struct xe_modparam {
- 
- extern struct xe_modparam xe_modparam;
- 
-+bool xe_destroy_wq_queue(struct work_struct *work);
-+void xe_destroy_wq_flush(void);
-+
- #endif
- 
-diff --git a/drivers/gpu/drm/xe/xe_pci.c b/drivers/gpu/drm/xe/xe_pci.c
-index c2ecd27ec770a2..ad4955fe5ade7e 100644
---- a/drivers/gpu/drm/xe/xe_pci.c
-+++ b/drivers/gpu/drm/xe/xe_pci.c
-@@ -1029,6 +1029,12 @@ static void xe_pci_remove(struct pci_dev *pdev)
- 		return;
- 
- 	xe_device_remove(xe);
-+
 +	/*
-+	 * Preserve remove-time flush after moving destroy work to module
-+	 * lifetime.
++	 * @rq->curr may still reference an outgoing EXT task after it has been
++	 * dequeued. If no EXT tasks are accounted on @rq, ignore its stale
++	 * slice state. If another task is dispatched from a DSQ,
++	 * set_next_task_scx() will update the dependency for the incoming task.
 +	 */
-+	xe_destroy_wq_flush();
- 	xe_pm_fini(xe);
- }
++	if (!rq->scx.nr_running)
++		return true;
++
+ 	if (scx_bypassing(sch, cpu_of(rq)))
+ 		return false;
  
 -- 
 2.53.0
