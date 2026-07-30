@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 070B5440A2C;
-	Thu, 30 Jul 2026 14:35:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E761442107;
+	Thu, 30 Jul 2026 14:35:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422126; cv=none; b=cXe0KdNoH9tm3Pz/DSuk/KwKH8n3JAmxBmIcGq1nyj2aQ2RY/VZJhH85YBKvlvWpEeNTI4XzjIMA+CDpFdBocpY57MU9shO/oh1/kuBbNCUdnTI163zpD7LK8ckKxo8PFxE4LuinzIIx7CNlF4p1ICO8lY6+dl/TI6DbH3JFOfE=
+	t=1785422129; cv=none; b=Mcg6TMn7FfzrgRTwDW215qbe9Hda1OeJwsL9RyqcDXGX46/vsa8cqvURh8tXv6/7N6USHluGf6EQhRxytFsPvcf3Qb1AVy7nDAPy6VrOPjOODtQ+Orj2kXW5+GWF38MG9lZrflU3Shce23d/QL36BGa5LS6QVt0PRvk2bNo+rt8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422126; c=relaxed/simple;
-	bh=T0BFpX8BEIT9YNg9h7FnYsoyBKhTF3PS57HtSniEkLc=;
+	s=arc-20240116; t=1785422129; c=relaxed/simple;
+	bh=szstiSp//mB3FAxwg1iOg3Qw8JfToad2hEJta62FgLQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=reHyhwu/OjalTyEFvHIZDOAYwqVaOaRi/qxGSjxJNhTc5sbJlShqk+HUkdukHE2IeA2wTp9gJwFwepmMdYQJFKEVkMayn7AGOwnjATCan+3ZcfYES1aG+P96CIqk3XRk2WT+QrssTgLz1kEq9ad7HhESNriNFh6yVUvmJQNhLQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tU4Yyczi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ae11oy2OrK7Z5eJ/8NAxjQtmIsFtaErovNNJuA8bRmSW8D+KvAcEFJw//7r/OcvR7pt2bTW+BgkTWHLqRJnOh/uAqvk6JDsgwOgZQttNsH7mJJF7gJ8Vo+7MnyJv0exioSC/kH8FB49ogZMHA6s+abaDxJ6lDJfuOZq3l14bNnQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hjKo+/nF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tU4Yyczi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 625A51F000E9;
-	Thu, 30 Jul 2026 14:35:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hjKo+/nF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B3671F000E9;
+	Thu, 30 Jul 2026 14:35:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422124;
-	bh=rxw6MMWC1WGJhdOQxdCjLMQvztOytx9vgJ22Kx9fDnU=;
+	s=korg; t=1785422127;
+	bh=N0zgfRLZHCuJWv7vHCJMsKtf2+dIfjkwtiIUwg3vgdU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tU4YyczidL/5GXnc9euYP9WyeR9akto+wUYuDD+D6Nrs2H7KeLFmn5fLhxisrEP1Y
-	 5YQcXK50SRhBeyxg4egbdrmMozcUka0Cf9RWt0EuppuFG58Ka5TvKiSd+rRBqyVDHo
-	 pK879GNKax0J6alCNqA0ZmTXFnDsC48EXet0Mvgg=
+	b=hjKo+/nFvWsmqRUkEfzIdjXl0yWxCUvIQbh5/6BsLLxXf6gErp3wWTDProJh8w1QE
+	 ZDBePZNuIcYYF25z4HusFfIA67pDxJmM6cMHkJ+4FHv8SMch3rIUjTpJxRe4/r0kv7
+	 D3wUOI2qRk244mHGhRPAfXHvk0aB8rAa6ufMdkag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Auld <matthew.auld@intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Shuicheng Lin <shuicheng.lin@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 316/744] drm/xe/vm: Fix SVM leak on resv obj alloc failure in xe_vm_create()
-Date: Thu, 30 Jul 2026 16:09:49 +0200
-Message-ID: <20260730141451.000992766@linuxfoundation.org>
+Subject: [PATCH 7.1 334/744] raw: annotate lockless match fields in raw_v4_match()
+Date: Thu, 30 Jul 2026 16:10:07 +0200
+Message-ID: <20260730141451.382901470@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -47,77 +45,105 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shuicheng Lin <shuicheng.lin@intel.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit d2c6800ad1802bed72a6de1416536737f114f1d6 ]
+[ Upstream commit 18f116931f52e3c3303ad4b15ff41eb89b0e4239 ]
 
-Commit 9e9787414882 ("drm/xe/userptr: replace xe_hmm with gpusvm") made
-xe_svm_init() unconditional in xe_vm_create() and extended it to also
-initialize a "simple" gpusvm state for non-fault-mode VMs. The matching
-xe_svm_fini() call in xe_vm_close_and_put() was updated to run
-unconditionally, but the error unwind path in xe_vm_create() was not.
+raw_v4_match() is a lockless match helper under sk_for_each_rcu(). It
+still reads inet->inet_daddr, inet->inet_rcv_saddr and
+sk->sk_bound_dev_if with plain loads while bind, connect and
+bind-to-device paths can update the same match fields concurrently.
 
-On the drm_gpuvm_resv_object_alloc() failure path, xe_svm_init() has
-already succeeded but xe_svm_fini() is only called when
-XE_VM_FLAG_FAULT_MODE is set. For non-fault-mode VMs this leaves
-vm->svm.gpusvm partially initialized and leaks the resources allocated
-by drm_gpusvm_init().
+Annotate only those mutable match fields in raw_v4_match(), and do so
+at the point of use instead of hoisting the bound-device read before
+the earlier short-circuit tests.
 
-For fault-mode VMs, xe_svm_init() additionally acquires the pagemap
-owner via drm_pagemap_acquire_owner() and the pagemaps via
-xe_svm_get_pagemaps(). Those resources are released by xe_svm_close(),
-not xe_svm_fini(). On the same error path, xe_svm_close() is not
-called either, so fault-mode VMs leak the pagemap owner and pagemaps.
+Also annotate the raw bind writer and the shared IPv4 datagram connect
+writer used by raw sockets, so the address fields updated on bind and
+connect match explicit WRITE_ONCE() updates.
 
-Fix both leaks:
+This version intentionally leaves the shared disconnect-side IPv4
+writers to follow-up cleanup and limits the writer changes here to the
+raw bind path and the datagram connect path directly exercised by raw
+sockets.
 
-- Call xe_svm_fini() unconditionally on the err_svm_fini path, matching
-  the unconditional xe_svm_init() call. Move the vm->size = 0
-  assignment out of the conditional so the xe_vm_is_closed() assert in
-  xe_svm_fini() (and xe_svm_close()) holds for both modes.
-
-- Call xe_svm_close() for fault-mode VMs before xe_svm_fini(), matching
-  the ordering used in xe_vm_close_and_put().
-
-Fixes: 9e9787414882 ("drm/xe/userptr: replace xe_hmm with gpusvm")
-Cc: Matthew Auld <matthew.auld@intel.com>
-Assisted-by: Claude:claude-opus-4.7
-Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Link: https://patch.msgid.link/20260721205516.4058959-2-shuicheng.lin@intel.com
-Signed-off-by: Shuicheng Lin <shuicheng.lin@intel.com>
-(cherry picked from commit ca2a3587d577ba764e0fe628fb676244fc33ddd4)
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Fixes: 0daf07e52709 ("raw: convert raw sockets to RCU")
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Link: https://patch.msgid.link/20260716142958.3064224-1-runyu.xiao@seu.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_vm.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/ipv4/datagram.c |  4 ++--
+ net/ipv4/raw.c      | 23 ++++++++++++++++-------
+ 2 files changed, 18 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_vm.c b/drivers/gpu/drm/xe/xe_vm.c
-index ab6cc1f0a78949..aec3c2a60d5888 100644
---- a/drivers/gpu/drm/xe/xe_vm.c
-+++ b/drivers/gpu/drm/xe/xe_vm.c
-@@ -1810,10 +1810,10 @@ struct xe_vm *xe_vm_create(struct xe_device *xe, u32 flags, struct xe_file *xef)
- 	return ERR_PTR(err);
+diff --git a/net/ipv4/datagram.c b/net/ipv4/datagram.c
+index 1614593b6d7270..7d25519a6cdd3f 100644
+--- a/net/ipv4/datagram.c
++++ b/net/ipv4/datagram.c
+@@ -63,12 +63,12 @@ int __ip4_datagram_connect(struct sock *sk, struct sockaddr_unsized *uaddr, int
+ 	}
  
- err_svm_fini:
--	if (flags & XE_VM_FLAG_FAULT_MODE) {
--		vm->size = 0; /* close the vm */
--		xe_svm_fini(vm);
--	}
-+	vm->size = 0; /* close the vm */
-+	if (flags & XE_VM_FLAG_FAULT_MODE)
-+		xe_svm_close(vm);
-+	xe_svm_fini(vm);
- err_no_resv:
- 	mutex_destroy(&vm->snap_mutex);
- 	for_each_tile(tile, xe, id)
+ 	/* Update addresses before rehashing */
+-	inet->inet_daddr = fl4->daddr;
++	WRITE_ONCE(inet->inet_daddr, fl4->daddr);
+ 	inet->inet_dport = usin->sin_port;
+ 	if (!inet->inet_saddr)
+ 		inet->inet_saddr = fl4->saddr;
+ 	if (!inet->inet_rcv_saddr) {
+-		inet->inet_rcv_saddr = fl4->saddr;
++		WRITE_ONCE(inet->inet_rcv_saddr, fl4->saddr);
+ 		if (sk->sk_prot->rehash)
+ 			sk->sk_prot->rehash(sk);
+ 	}
+diff --git a/net/ipv4/raw.c b/net/ipv4/raw.c
+index 68e88cb3e55cbd..f47b8b49da3d12 100644
+--- a/net/ipv4/raw.c
++++ b/net/ipv4/raw.c
+@@ -120,13 +120,21 @@ bool raw_v4_match(struct net *net, const struct sock *sk, unsigned short num,
+ 		  __be32 raddr, __be32 laddr, int dif, int sdif)
+ {
+ 	const struct inet_sock *inet = inet_sk(sk);
++	__be32 daddr, rcv_saddr;
+ 
+-	if (net_eq(sock_net(sk), net) && inet->inet_num == num	&&
+-	    !(inet->inet_daddr && inet->inet_daddr != raddr) 	&&
+-	    !(inet->inet_rcv_saddr && inet->inet_rcv_saddr != laddr) &&
+-	    raw_sk_bound_dev_eq(net, sk->sk_bound_dev_if, dif, sdif))
+-		return true;
+-	return false;
++	if (!net_eq(sock_net(sk), net) || inet->inet_num != num)
++		return false;
++
++	daddr = READ_ONCE(inet->inet_daddr);
++	if (daddr && daddr != raddr)
++		return false;
++
++	rcv_saddr = READ_ONCE(inet->inet_rcv_saddr);
++	if (rcv_saddr && rcv_saddr != laddr)
++		return false;
++
++	return raw_sk_bound_dev_eq(net, READ_ONCE(sk->sk_bound_dev_if),
++				   dif, sdif);
+ }
+ EXPORT_SYMBOL_GPL(raw_v4_match);
+ 
+@@ -724,7 +732,8 @@ static int raw_bind(struct sock *sk, struct sockaddr_unsized *uaddr,
+ 					 chk_addr_ret))
+ 		goto out;
+ 
+-	inet->inet_rcv_saddr = inet->inet_saddr = addr->sin_addr.s_addr;
++	inet->inet_saddr = addr->sin_addr.s_addr;
++	WRITE_ONCE(inet->inet_rcv_saddr, addr->sin_addr.s_addr);
+ 	if (chk_addr_ret == RTN_MULTICAST || chk_addr_ret == RTN_BROADCAST)
+ 		inet->inet_saddr = 0;  /* Use device */
+ 	sk_dst_reset(sk);
 -- 
 2.53.0
 
