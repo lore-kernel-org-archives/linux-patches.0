@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49A76432E94;
-	Thu, 30 Jul 2026 14:57:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20799443AAA;
+	Thu, 30 Jul 2026 14:57:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423442; cv=none; b=fVPjN1yQK3V1+dTGWKRdbNqryC/0yPromtRHY55Ub4BrZCNLdohraeNrx3ggsIa63R9q0yLWuYetM0aD822w7MR+GXGO6UNtzhXiPDlHac0Vmzg5SCOWtEcMvkevtjqtheko7P53+Xy4BJWWKWU57YEiSvWlvMUcIAJXxYl0XMI=
+	t=1785423445; cv=none; b=B6H9tAnVmsi5Vd2zNV3tPFO/fxj0bRKB7fF8NdHM9GwPFaYyGx3ICySF5Vjz9nKe5+Nrz/VB5rDf3Gd3uoEHa0GcvGYGsG97XdItscw5eZ2BgWUPTwPBZX94qApXxO8rV/rH0ZfeoCg4velWkzydzBYnkyJDIMWH28ro/W2B0Qk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423442; c=relaxed/simple;
-	bh=LjIOe5mseECKjk42GKv1f8EvHVvlzI1ZvR0ShtWAEnY=;
+	s=arc-20240116; t=1785423445; c=relaxed/simple;
+	bh=G0xAmUnJG7xF4cbTO/Nht6+SATqB21iuRwBpZfU/QJQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sGYVUrz61F2I0vdJ4PCD9iPpqXb6b+e3NdIXQ29NZy8OI9yao+4HQ3fNCZB/Z6SBx9N8zVIPrU2BWk4lp5crGFDPnYoHmJETjYO55uujgLpd2BXeqbe3R/40z5Rjl/9NzmdxeBzZnaySlPp0TqOKZyG+KfqTwr8bSTVC+GJzquU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lGGmOS+W; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=thNViK533fbfJwOcGdIkNsfRuJrz8I04sDwImRdWvQ4vgDXo3isOlUBKemN5yixXY54zj2FuRNJLU/fh9LIIO0cO6c/yOsiYCsWCuKbKw4rh8tu/WXmUX5TYakMt5+q+gjKaTCV2InWuVeS+O/07KfZNUYN78rZfui5Zl/foKno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cjADo37F; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lGGmOS+W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3EA81F00A3A;
-	Thu, 30 Jul 2026 14:57:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cjADo37F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AD261F00A3A;
+	Thu, 30 Jul 2026 14:57:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423441;
-	bh=dDwBRi1VWz/Xm5nwptsEv96DxEJLUGN3LcT7vs4asd4=;
+	s=korg; t=1785423444;
+	bh=QxQm8ugMUY2eJKTfVp1j13nKJ3X5Uz1UBup7NWjG9qA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lGGmOS+WN6yTrw033MMleHrCCSe5AU4dQEFVnXTCaVkTcuioT8QQZCYL3j5S+RPuX
-	 sVbF7GALEeHaoXPH+myGMhmSGenrtquWgmERdc0f1JB9R35ZEcOWiLybF1Gbf2eLHy
-	 On74ttTVxG4ecggGT+0hfZh5notzR2ly80pkAKN0=
+	b=cjADo37FF/gmy6OqdSpKbHhcuZk8KX9NsLd+HZ7PuRdp0qgxA0+qFgUEItOGNLF+C
+	 v/P02rW23tvk3XWWlEtqYTaq0beSaDrsAfPO8GDzEpDQbMRKIURryEuMRWStoAjUfv
+	 TXSfV73yOIDEjvofP9569ktjs579ezYl+JSfz22Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Stultz <jstultz@google.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Tejun Heo <tj@kernel.org>,
+	Sashiko bot <sashiko-bot@kernel.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 046/675] sched/ext: Avoid null ptr traversal when ->put_prev_task() is called with NULL next
-Date: Thu, 30 Jul 2026 16:06:16 +0200
-Message-ID: <20260730141446.099656918@linuxfoundation.org>
+Subject: [PATCH 6.18 029/675] Input: ims-pcu - fix logic error in packet reset
+Date: Thu, 30 Jul 2026 16:05:59 +0200
+Message-ID: <20260730141445.740241874@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -52,58 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Stultz <jstultz@google.com>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-[ Upstream commit 12b5cd99a05f7cbc2ceb88b3b9601d404ef2236a ]
+[ Upstream commit 2c9b85a14abb4811e8d4773ccd13559e59792efb ]
 
-Early when trying to get sched_ext and proxy-exe working together,
-I kept tripping over NULL ptr in put_prev_task_scx() on the line:
-  if (sched_class_above(&ext_sched_class, next->sched_class)) {
+ims_pcu_reset_packet() incorrectly sets have_stx to true, which implies
+that the start-of-packet delimiter has already been received. This
+causes the protocol parser to skip waiting for the next STX byte and
+potentially process garbage data.
 
-Which was due to put_prev_task() passes a NULL next, calling:
-  prev->sched_class->put_prev_task(rq, prev, NULL);
+Correctly set have_stx to false when resetting the packet state.
 
-put_prev_task_scx() already guards for a NULL next in the
-switch_class case, but doesn't seem to have a guard for
-sched_class_above() check.
-
-I can't say I understand why this doesn't trip usually without
-proxy-exec. And in newer kernels there are way fewer
-put_prev_task(), and I can't easily reproduce the issue now
-even with proxy-exec.
-
-But we still have one put_prev_task() call left in core.c that
-seems like it could trip this, so I wanted to send this out for
-consideration.
-
-tj: put_prev_task() can be called with NULL @next; however, when @p is
-queued, that doesn't happen, so this condition shouldn't currently be
-triggerable. The connection isn't straightforward or necessarily reliable,
-so add the NULL check even if it can't currently be triggered.
-
-Link: http://lkml.kernel.org/r/20251206022218.1541878-1-jstultz@google.com
-Signed-off-by: John Stultz <jstultz@google.com>
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Stable-dep-of: b7d9c359e5cf ("sched_ext: Don't warn on core-sched forced idle in put_prev_task_scx()")
+Fixes: 875115b82c29 ("Input: ims-pcu - fix heap-buffer-overflow in ims_pcu_process_data()")
+Cc: stable@vger.kernel.org
+Reported-by: Sashiko bot <sashiko-bot@kernel.org>
+Assisted-by: Gemini:gemini-3.1-pro
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/ext.c | 2 +-
+ drivers/input/misc/ims-pcu.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index d8280f87443310..d399494364c0a3 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -2396,7 +2396,7 @@ static void put_prev_task_scx(struct rq *rq, struct task_struct *p,
- 		 * ops.enqueue() that @p is the only one available for this cpu,
- 		 * which should trigger an explicit follow-up scheduling event.
- 		 */
--		if (sched_class_above(&ext_sched_class, next->sched_class)) {
-+		if (next && sched_class_above(&ext_sched_class, next->sched_class)) {
- 			WARN_ON_ONCE(!(sch->ops.flags & SCX_OPS_ENQ_LAST));
- 			do_enqueue_task(rq, p, SCX_ENQ_LAST, -1);
- 		} else {
+diff --git a/drivers/input/misc/ims-pcu.c b/drivers/input/misc/ims-pcu.c
+index 7c837094c498ed..168662a2cc890c 100644
+--- a/drivers/input/misc/ims-pcu.c
++++ b/drivers/input/misc/ims-pcu.c
+@@ -450,7 +450,7 @@ static void ims_pcu_handle_response(struct ims_pcu *pcu)
+ 
+ static void ims_pcu_reset_packet(struct ims_pcu *pcu)
+ {
+-	pcu->have_stx = true;
++	pcu->have_stx = false;
+ 	pcu->have_dle = false;
+ 	pcu->read_pos = 0;
+ 	pcu->check_sum = 0;
 -- 
 2.53.0
 
