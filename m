@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1ED4374A0E;
-	Thu, 30 Jul 2026 15:18:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B738C30C618;
+	Thu, 30 Jul 2026 15:18:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424696; cv=none; b=NBYzapawl48W4i9KbyPdKsdRxktdPVPGywlUHiGjKb+UKVE4cJaqRbxMx2Xg5B2xwf1FzL8iviFesAcEu9BOoe3P4H5W3rDRcnESiibFHTuKMTWB8sjWbU0HG93Ey5RaQ/Gv61nYHUWw5mQzRBSAf+wr9EwEvHtX42QdvIBNQ58=
+	t=1785424698; cv=none; b=nBaBCWoLct2cpKJJy9BknqdiQVs0k93LTPP6Pi1A/XNCkjm+U9RABAiG0kaftwYxg26+OOO4PLoTvZXH7UgoE1EWdaoGv7rJU7nnQLCNOgiFJMWAU/Hjzc8O6ZOemk6RMkYN3e5MF2eFDl83lBM5ZwG/Zx3H/3dpuioRgFQOr1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424696; c=relaxed/simple;
-	bh=ChlBbf/uQBAirJ2hnmOkSPdoczMhR//rwjPxXD9rJtw=;
+	s=arc-20240116; t=1785424698; c=relaxed/simple;
+	bh=zGG4ZeesuFtnjGut16Varegp1QH3Y2CuOhUSaGZCsGI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ltB0CZUa/l9m+vhnO9PeESCmaRObSfdqS3Aswb3yov8MvrffCSk1oI+aN6OOrsbanc7de8UVA4eErJyM0DbUTUv8zoulxaonoRndrOfKDED182ae2/ReefMIviF84oKQnSWJ3e5bU+IZYSIHaUDo7qZn6KAJ2mTiIF+6NR4QbNg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B01t6XTg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GwBYWAtX+E5bVvL/doR2PpUIREoqxPJ4vVkx4ygqfa6YL+Ya1y0xk+1INc7FxiCMXSxE0e3t7db0RCr33CYRduqQ2uFvep7xsSLt9UpPyIFBlC1yK7g76Q1GBZ1hk7HYWRSLwJ6hBfEc8lyWsNPhJmPi99I+SmeqZekrWcRHliU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WeDo8AJV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B01t6XTg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4770F1F00A3A;
-	Thu, 30 Jul 2026 15:18:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WeDo8AJV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 181F51F000E9;
+	Thu, 30 Jul 2026 15:18:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424694;
-	bh=hMykx5iUOgmNf0xCcWR4E4LbUm6VxqLjJ/hmiAuRGjI=;
+	s=korg; t=1785424697;
+	bh=t5qz3MYO0hdJlwoXisS734C6yPvQk58ytDgIGQqLj5M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B01t6XTgsn3xHam+tbN1AmA3IiV+isj4f6jqVbeXOxjImnktVaZ2500bY94z69k9g
-	 NpzP11iWbpy0O6BGae5if0idHIHZIIQP44TI7/qjXZjC1RwFdiTsr/lSubHUY1Zv1f
-	 /38BL27p4oMW52CdeucATq2a0gqk1DLcqRmZH5l4=
+	b=WeDo8AJVXRc0Cm5lHiQy0IUN5TcCde91GMqnKvvlA6AACZ+/0cHjBnMbO0A/EUrpN
+	 nsuv/Sg3564t+AUg6PFYyB5tsBlxwt3MkdqNI+RAuumeWVNWIymrjKkroLVAFziOgO
+	 jLvNdmEK+p8bkKOn51yNc3h327HgtsYnlkXN6s2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Devin Wittmayer <lucid_duck@justthetip.ca>,
-	Felix Fietkau <nbd@nbd.name>
-Subject: [PATCH 6.18 457/675] wifi: mt76: mt7921: drop TXRX_NOTIFY on non-mmio buses
-Date: Thu, 30 Jul 2026 16:13:07 +0200
-Message-ID: <20260730141454.845002723@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Jiangshan Yi <yijiangshan@kylinos.cn>
+Subject: [PATCH 6.18 484/675] serial: 8250_mid: Fix NULL function pointer dereference on DNV/ICX-D/SNR platforms
+Date: Thu, 30 Jul 2026 16:13:34 +0200
+Message-ID: <20260730141455.411542628@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -50,63 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Devin Wittmayer <lucid_duck@justthetip.ca>
+From: Jiangshan Yi <yijiangshan@kylinos.cn>
 
-commit da4082e91acabc1498611ed8ccc53f0610baefc6 upstream.
+commit 7fb13fd7e9a59a37cd911efff83abe19e3ee029d upstream.
 
-PKT_TYPE_TXRX_NOTIFY is an mmio-only event, but mt7921_rx_check() and
-mt7921_queue_rx_skb() dispatch it to mt7921_mac_tx_free() on every bus.
-mt7921_mac_tx_free() cleans the DMA tx queues with
-mt76_queue_tx_cleanup(), which calls queue_ops->tx_cleanup(). Only the
-mmio queue ops implement that callback; on USB and SDIO it is NULL, so
-a TXRX_NOTIFY there calls a NULL pointer in the RX worker:
+Commit b1b4efea05a5 ("serial: 8250_mid: Disable DMA for selected
+platforms") replaced the dnv_board setup and exit callbacks with
+PTR_IF(false, ...), which evaluates to NULL. However, the three call
+sites in mid8250_probe() and mid8250_remove() unconditionally
+dereference these function pointers without NULL checks, causing a NULL
+pointer dereference (kernel oops) on any Denverton (DNV), Ice Lake Xeon
+D (ICX-D/CDF), or Snowridge (SNR) platform.
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000000
-  RIP: 0010:0x0
-  Call Trace:
-   mt7921_mac_tx_free+0x64/0x310 [mt7921_common]
-   mt7921_rx_check+0x5f/0xf0 [mt7921_common]
-   mt76u_rx_worker+0x1b9/0x620 [mt76_usb]
+Fix this by adding the missing NULL checks before calling the setup and
+exit callbacks.
 
-Drop the event on non-mmio buses via mt76_is_mmio(), as in
-commit 5683e1488aa9 ("wifi: mt76: connac: do not check WED status for
-non-mmio devices").
-
-Fixes: 48fab5bbef40 ("mt76: mt7921: introduce mt7921s support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
-Link: https://patch.msgid.link/20260627191336.20223-2-lucid_duck@justthetip.ca
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: b1b4efea05a5 ("serial: 8250_mid: Disable DMA for selected platforms")
+Cc: stable <stable@kernel.org>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
+Link: https://patch.msgid.link/20260715073546.1875083-1-yijiangshan@kylinos.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7921/mac.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/tty/serial/8250/8250_mid.c |   14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
---- a/drivers/net/wireless/mediatek/mt76/mt7921/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7921/mac.c
-@@ -569,8 +569,9 @@ bool mt7921_rx_check(struct mt76_dev *md
+--- a/drivers/tty/serial/8250/8250_mid.c
++++ b/drivers/tty/serial/8250/8250_mid.c
+@@ -318,9 +318,11 @@ static int mid8250_probe(struct pci_dev
+ 	if (!uart.port.membase)
+ 		return -ENOMEM;
  
- 	switch (type) {
- 	case PKT_TYPE_TXRX_NOTIFY:
--		/* PKT_TYPE_TXRX_NOTIFY can be received only by mmio devices */
--		mt7921_mac_tx_free(dev, data, len); /* mmio */
-+		if (!mt76_is_mmio(mdev))
-+			return false;
-+		mt7921_mac_tx_free(dev, data, len);
- 		return false;
- 	case PKT_TYPE_TXS:
- 		for (rxd += 2; rxd + 8 <= end; rxd += 8)
-@@ -599,7 +600,10 @@ void mt7921_queue_rx_skb(struct mt76_dev
+-	ret = mid->board->setup(mid, &uart.port);
+-	if (ret)
+-		return ret;
++	if (mid->board->setup) {
++		ret = mid->board->setup(mid, &uart.port);
++		if (ret)
++			return ret;
++	}
  
- 	switch (type) {
- 	case PKT_TYPE_TXRX_NOTIFY:
--		/* PKT_TYPE_TXRX_NOTIFY can be received only by mmio devices */
-+		if (!mt76_is_mmio(mdev)) {
-+			napi_consume_skb(skb, 1);
-+			break;
-+		}
- 		mt7921_mac_tx_free(dev, skb->data, skb->len);
- 		napi_consume_skb(skb, 1);
- 		break;
+ 	ret = mid8250_dma_setup(mid, &uart);
+ 	if (ret)
+@@ -336,7 +338,8 @@ static int mid8250_probe(struct pci_dev
+ 	return 0;
+ 
+ err:
+-	mid->board->exit(mid);
++	if (mid->board->exit)
++		mid->board->exit(mid);
+ 	return ret;
+ }
+ 
+@@ -346,7 +349,8 @@ static void mid8250_remove(struct pci_de
+ 
+ 	serial8250_unregister_port(mid->line);
+ 
+-	mid->board->exit(mid);
++	if (mid->board->exit)
++		mid->board->exit(mid);
+ }
+ 
+ static const struct mid8250_board pnw_board = {
 
 
