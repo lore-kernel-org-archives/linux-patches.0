@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 892E742FCD8;
-	Thu, 30 Jul 2026 14:27:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCC3F413D8F;
+	Thu, 30 Jul 2026 14:27:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421641; cv=none; b=nElzQj2VoHWGmR5IlN8DshCt5lUq+W7lHt7M3QRIJ6F8lbp0IOkOeFcpmqydSxhAdl7o+iRlG9MvHcEnXDZSY+GGQjuhBH2UHxwxZiEFImAioiFDO9p2BWfgetRi0l62U9k82YFI6LDBkbC3uq9CLEVXQw0hoG/+a/nTRW/Uxvk=
+	t=1785421645; cv=none; b=etgy5Etccx2blAJAiU8cVLq7l32cpVkTFnAuIYKS5D0Bwk3eJ5D0wMMFfTY2AfQavFHu1oFAnUM71Rxv1DZu8he7kFt7WCathWXJrykHRGVL87Xrw/DzVQ0a9NUiBqhG5J8ZomtmX13pzCzxmCsyCPqRcQQsqSB96e1diONDanU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421641; c=relaxed/simple;
-	bh=PHCKLhbE5+xNv07e8nB4Vr0PRqtjM1WZrpm/LobJkTg=;
+	s=arc-20240116; t=1785421645; c=relaxed/simple;
+	bh=bM1illokgh9F+gT2+6eMiu6mWW1+fwA2Ry3/xXKrQAo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Et9b5gbmZ1fK9tZw9bjxw62eaQf+A1O9TP1JDE4Mj2d6QrZ486r6bBy7aqgrafcn2UVDClRiZeD1rYusnhMWHbplpJvZJP4TINVXxlZdM7S9zOL20t0ZPGLqBMI0gVQ6WbNnOhf4xqAWHAaN0c/l/rn+pJ/WM5XpIOmhrzrWvdI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QIHvFrBr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tRaqbagqUg7sefVv8w+8yyGlWcH6LXeQiKMHyxNPdMEuTLUwZHc/7L/0GwRLZK7RbuO0Nk2zos6NDWAAHnhNOIG21WLBMRkknBeRhRNxvxaJni7tuw1KbWEe2TNA56Mp4vN2tF2nEMo7/n5YsWAZVEv0JAlvkf1GI2kulO+Tpzc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nwZnwOGm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QIHvFrBr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBE8D1F000E9;
-	Thu, 30 Jul 2026 14:27:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nwZnwOGm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEE821F000E9;
+	Thu, 30 Jul 2026 14:27:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421640;
-	bh=e0JgwL6U8e1VHVg8iHK7guQhi6jGjJ6EqVzjUhQEYtE=;
+	s=korg; t=1785421643;
+	bh=Vx62+EyUGcFTqsppptsUuRHMif+2hiLIQa2tqqffO4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QIHvFrBr2StPVzNOr76x9706s3JH5KYk93teCGs55h2sNIbCV3d8Eli5LWH5HdwDX
-	 wG6CS67c8ttxAJ2l4u9NocSh/UkGKQoL2dpx0Rpdkm0B4qInACdqgfPkrn8W7ePpln
-	 /As4aVMeUyv6LzR6nkzzn8YiYSJp+Bg4l0ZO9nlc=
+	b=nwZnwOGmLIsMkjkA8GPIjKeGbCQpOopVuGScZelqqbVB4KtTfEC2qm2bsJsYO5bNg
+	 Xqv0KWObCMhxfHdhoHA2SwLH/H4lgirP3GpFtqKy4ythm7dZ71Z+vFd6wqBwLJIQm8
+	 XAW+mEJjuBvnLaMJ4dswi6h+SttUMsJH7wh9dUM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaole Zhang <gaole.zhang@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	syzbot+9eebf5f6544c5e873858@syzkaller.appspotmail.com,
+	Edward Adam Davis <eadavis@qq.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 170/744] wifi: ath11k: fix NULL pointer dereference in ath11k_hal_srng_access_begin
-Date: Thu, 30 Jul 2026 16:07:23 +0200
-Message-ID: <20260730141447.904763762@linuxfoundation.org>
+Subject: [PATCH 7.1 171/744] hwmon: (corsair-psu) Stop device IO before calling hid_hw_stop
+Date: Thu, 30 Jul 2026 16:07:24 +0200
+Message-ID: <20260730141447.925405273@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -53,65 +52,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gaole Zhang <gaole.zhang@oss.qualcomm.com>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit e8d85672dd7e2523f774caafba8f858384e18df7 ]
+[ Upstream commit 9ab8656548cd737b98d0b19c4253aff8d68e97f4 ]
 
-In ATH11K_QMI_EVENT_FW_READY, ATH11K_FLAG_REGISTERED is set
-unconditionally even when ath11k_core_qmi_firmware_ready() fails.
-This leaves the driver in an inconsistent state where
-initialization is considered complete although the firmware ready
-handling did not finish successfully. During the subsequent SSR,
-the driver enters the restart path based on this incorrect state
-and dereferences uninitialized srng members, resulting in a NULL
-pointer dereference.
+hid_hw_stop() does not stop the device IO.
 
-Call trace:
-  ath11k_hal_srng_access_begin+0xc/0x60 [ath11k] (P)
-  ath11k_ce_cleanup_pipes+0x17c/0x180 [ath11k]
-  ath11k_core_restart+0x40/0x168 [ath11k]
+This results in a race condition between hid_input_report() and the point
+immediately following the execution of hid_device_io_start() within
+corsairpsu_probe(). If the probe operation fails after "io start" has
+been initiated, this race condition will result in a uaf vulnerability
+[1].
 
-Fix this by:
-- skipping firmware_ready if ATH11K_FLAG_REGISTERED is already set
-- setting ATH11K_FLAG_REGISTERED only when firmware_ready succeeds
-- setting ATH11K_FLAG_QMI_FAIL and aborting the FW_READY handling
-on error
+CPU0				CPU1
+====				====
+corsairpsu_probe()
+ hid_device_io_start()
+  ... unlock driver_input_lock
+ hid_hw_stop()
+  kfree(hidraw)			__hid_input_report()
+				 ... acquire driver_input_lock
+				 hid_report_raw_event()
+				  hidraw_report_event()
+				   ... access hidraw's list_lock // trigger uaf
 
-Tested-on: WCN6750 hw1.0 AHB WLAN.MSL.2.0.c2-00204-QCAMSLSWPLZ-1
+Consequently, when corsairpsu_probe() fails and hid_hw_stop() needs to
+be executed, the io_started flag is first cleared while holding the
+driver_input_lock to prevent potential race conditions involving input
+reports.
 
-Fixes: 6fe62a8cec51c ("wifi: ath11k: Add cold boot calibration support on WCN6750")
-Signed-off-by: Gaole Zhang <gaole.zhang@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260609090609.4041009-1-gaole.zhang@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+[1]
+BUG: KASAN: slab-use-after-free in rt_spin_lock+0x83/0x400 kernel/locking/spinlock_rt.c:56
+Call Trace:
+ hidraw_report_event+0x5d/0x3a0 drivers/hid/hidraw.c:577
+ hid_report_raw_event+0x311/0x1730 drivers/hid/hid-core.c:2076
+ __hid_input_report drivers/hid/hid-core.c:2152 [inline]
+ hid_input_report+0x44e/0x580 drivers/hid/hid-core.c:2174
+ hid_irq_in+0x47e/0x6d0 drivers/hid/usbhid/hid-core.c:286
+ __usb_hcd_giveback_urb+0x3b3/0x5e0 drivers/usb/core/hcd.c:1657
+ dummy_timer+0x8a9/0x47d0 drivers/usb/gadget/udc/dummy_hcd.c:2005
+
+Allocated by task 10:
+ hidraw_connect+0x57/0x430 drivers/hid/hidraw.c:606
+ hid_connect+0x5bf/0x19d0 drivers/hid/hid-core.c:2277
+ hid_hw_start+0xa8/0x120 drivers/hid/hid-core.c:2387
+ corsairpsu_probe+0xd9/0x3c0 drivers/hwmon/corsair-psu.c:782
+
+Freed by task 10:
+ hidraw_disconnect+0x4f/0x60 drivers/hid/hidraw.c:662
+ hid_disconnect drivers/hid/hid-core.c:2362 [inline]
+ hid_hw_stop+0x101/0x1e0 drivers/hid/hid-core.c:2407
+ corsairpsu_probe+0x327/0x3c0 drivers/hwmon/corsair-psu.c:826
+
+Fix the problem by calling hid_device_io_stop() before calling
+hid_hw_stop().
+
+Fixes: d115b51e0e56 ("hwmon: add Corsair PSU HID controller driver")
+Reported-by: syzbot+9eebf5f6544c5e873858@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=9eebf5f6544c5e873858
+Tested-by: syzbot+9eebf5f6544c5e873858@syzkaller.appspotmail.com
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Link: https://lore.kernel.org/r/tencent_BB7C33EB9EA41B7B4B5F1B8B25C0BA13BB08@qq.com
+[groeck: Updated subject and description;
+ call hid_device_io_stop() only if IO has been started]
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/qmi.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/hwmon/corsair-psu.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/ath/ath11k/qmi.c b/drivers/net/wireless/ath/ath11k/qmi.c
-index feebbc30f3df32..a304feca70423e 100644
---- a/drivers/net/wireless/ath/ath11k/qmi.c
-+++ b/drivers/net/wireless/ath/ath11k/qmi.c
-@@ -3295,9 +3295,14 @@ static void ath11k_qmi_driver_event_work(struct work_struct *work)
- 			clear_bit(ATH11K_FLAG_CRASH_FLUSH,
- 				  &ab->dev_flags);
- 			clear_bit(ATH11K_FLAG_RECOVERY, &ab->dev_flags);
--			ath11k_core_qmi_firmware_ready(ab);
--			set_bit(ATH11K_FLAG_REGISTERED, &ab->dev_flags);
--
-+			if (!test_bit(ATH11K_FLAG_REGISTERED, &ab->dev_flags)) {
-+				ret = ath11k_core_qmi_firmware_ready(ab);
-+				if (ret) {
-+					set_bit(ATH11K_FLAG_QMI_FAIL, &ab->dev_flags);
-+					break;
-+				}
-+				set_bit(ATH11K_FLAG_REGISTERED, &ab->dev_flags);
-+			}
- 			break;
- 		case ATH11K_QMI_EVENT_COLD_BOOT_CAL_DONE:
- 			break;
+diff --git a/drivers/hwmon/corsair-psu.c b/drivers/hwmon/corsair-psu.c
+index 76f3e1da68d09e..ce958cdaef58a3 100644
+--- a/drivers/hwmon/corsair-psu.c
++++ b/drivers/hwmon/corsair-psu.c
+@@ -822,6 +822,7 @@ static int corsairpsu_probe(struct hid_device *hdev, const struct hid_device_id
+ 
+ fail_and_close:
+ 	hid_hw_close(hdev);
++	hid_device_io_stop(hdev);
+ fail_and_stop:
+ 	hid_hw_stop(hdev);
+ 	return ret;
 -- 
 2.53.0
 
