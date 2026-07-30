@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5E8543E4BA;
-	Thu, 30 Jul 2026 15:07:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD12D43E4BA;
+	Thu, 30 Jul 2026 15:07:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424060; cv=none; b=GTuik6TeKlVs4V5Lmj6bTj8PzIXbsI5k3p9chLd7jkoNDSpthMg7nypTVpXlT2rAT6psnBjsjxfDmI+jUoB0Ff7elhc4WR/mcSLghVuTszCLTTvq691V2N5a5LKixfLYt/MkpqXF05n0BW6F5noILANckxyqqxo7CeopkSxU1Zk=
+	t=1785424062; cv=none; b=E+y/vRZdO1FIwIMjtJtrFzN1GnZ0O7zZuKpfUWDIHvwT5dxUIeucKaBAwVxeHlxZAkkfdODlhlSSsJ9eEpg/IW47at5l64KmINqo/bSDcYmrkwusugOZ8OgteSa7unD2pG71XpIXMvePx+yhbDzwPjpx266RiUF4P66kYFtz0S4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424060; c=relaxed/simple;
-	bh=5eufumB5UpPKSwcEEgH/Kg0HjlvggiFbYKfus8BDqzk=;
+	s=arc-20240116; t=1785424062; c=relaxed/simple;
+	bh=IlZ/XDqKU98vV3sibq5afhWOcaVJzmZJap1p7GSzNVs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dff+T3M1G1GvP69R2KYk62yI66ikyPyff9jZ7HmLdDBK1uL+JF0y3bX6U912GQ59mUVtu5FhHaOzmAVr3aZKdXLRKhnY9l7HGT8inXBHVO6h2WUoMeoEnPFt90dzKR//YXaVHCa+v5KHaOaw/Yd/THlKi3kt8idtgwJ36JMwzOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AJPfR1tl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ohdN4CtmYUkgWAEwwYooDQsryEOblNRwliahLPvkd4UlJr/Pr+pO3DapElTD+/eEAi82P9mqItpVRhWf3S1/wxsgPJWahaO9JKJVu0c0+f5kwKkvsQn5IMSmlnfpI0Bh/IximxTWky/vDrWIa1Tp/CIokXc2EGy6ft72Pg4+b2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jfLreJLi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AJPfR1tl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40D301F000E9;
-	Thu, 30 Jul 2026 15:07:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jfLreJLi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 148FE1F000E9;
+	Thu, 30 Jul 2026 15:07:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424058;
-	bh=4ddbRah4tNR7+pSjtQhEoeEbDfcdZScbfzXz6/seNyE=;
+	s=korg; t=1785424061;
+	bh=84QQrJ4vCnjmDiULY/hxBliBB/nMXDjVTtjbywH6kTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AJPfR1tly//hSzG/sYh2L/k/vorElhHLChfCP/Y427+pCIWyEqX8E0HlfMhkhojTW
-	 8N7m9wvK3en4Ez6j9WPzzkGwQrgVjc8pVqucjcTbPze+mY6r8lWHAmaokMyFngFWwG
-	 AreMSa7ZAQHZmQQLGJpgNrqemUUXgNq9wEKIDAvw=
+	b=jfLreJLiAhs48OEG6PbZiNzPclLpA6VWEu3HJl0rOdCBnWJ97K6ud4wDiqioh/Pmq
+	 qsut0n68IEQhxAjIHyMJPOC5nboFbw1hY6ZBIF/dLx9Zx5Ex8dCnL/pr2BVxnR+3TM
+	 rTfxCOy6s0GSzg+fvsjk5oWaMBHHKD7GYX5ORw80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 259/675] wifi: mt76: mt7925: guard link STA in decap offload
-Date: Thu, 30 Jul 2026 16:09:49 +0200
-Message-ID: <20260730141450.642634258@linuxfoundation.org>
+Subject: [PATCH 6.18 260/675] wifi: mt76: mt7915: guard HE capability lookups
+Date: Thu, 30 Jul 2026 16:09:50 +0200
+Message-ID: <20260730141450.662558113@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -51,44 +52,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit 96ea44f2269f30364cffa054ee3a87e595bef0d4 ]
+[ Upstream commit 8e9db062654a388d0fa587acbeeae68dd33eba41 ]
 
-mt7925_sta_set_decap_offload() iterates over the vif valid_links mask
-when updating decap offload state for an MLO station. The station may not
-have a link STA for every valid link of the vif, so mt792x_sta_to_link()
-can return NULL for a link that belongs to the vif but not to the station.
+mt7915_mcu_bss_he_tlv() and mt7915_mcu_sta_bfer_tlv() both run after
+checking HE support, then dereference the HE PHY capability returned by
+mt76_connac_get_he_phy_cap(). That helper can return NULL when no
+capability entry matches the vif type.
 
-The function currently dereferences mlink before checking whether the
-link WCID is ready. If mlink is NULL, setting or clearing
-MT_WCID_FLAG_HDR_TRANS dereferences a NULL pointer.
+Fetch the capability before appending the TLV and skip the HE-specific
+setup when no matching capability is available.
 
-Skip links without a station link before touching mlink->wcid.
-
-Fixes: b859ad65309a ("wifi: mt76: mt7925: add link handling in mt7925_sta_set_decap_offload")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Link: https://patch.msgid.link/20260708075539.726200-1-lgs201920130244@gmail.com
+Fixes: e6d557a78b60 ("mt76: mt7915: rely on mt76_connac_get_phy utilities")
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Link: https://patch.msgid.link/20260620155332.81120-1-ruoyuw560@gmail.com
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7925/main.c | 3 +++
- 1 file changed, 3 insertions(+)
+ .../net/wireless/mediatek/mt76/mt7915/mcu.c    | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/main.c b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-index 6c0dc72efc3928..910713e62e14a5 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-@@ -1573,6 +1573,9 @@ static void mt7925_sta_set_decap_offload(struct ieee80211_hw *hw,
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
+index 79e021ac0bdbcc..f60e2eaea2af4a 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
+@@ -595,6 +595,8 @@ mt7915_mcu_bss_he_tlv(struct sk_buff *skb, struct ieee80211_vif *vif,
+ 	struct tlv *tlv;
  
- 		mlink = mt792x_sta_to_link(msta, i);
+ 	cap = mt76_connac_get_he_phy_cap(phy->mt76, vif);
++	if (!cap)
++		return;
  
-+		if (!mlink)
-+			continue;
+ 	tlv = mt76_connac_mcu_add_tlv(skb, BSS_INFO_HE_BASIC, sizeof(*he));
+ 
+@@ -1177,13 +1179,12 @@ mt7915_mcu_sta_bfer_vht(struct ieee80211_sta *sta, struct mt7915_phy *phy,
+ }
+ 
+ static void
+-mt7915_mcu_sta_bfer_he(struct ieee80211_sta *sta, struct ieee80211_vif *vif,
+-		       struct mt7915_phy *phy, struct sta_rec_bf *bf)
++mt7915_mcu_sta_bfer_he(struct ieee80211_sta *sta,
++		       const struct ieee80211_sta_he_cap *vc,
++		       struct sta_rec_bf *bf)
+ {
+ 	struct ieee80211_sta_he_cap *pc = &sta->deflink.he_cap;
+ 	struct ieee80211_he_cap_elem *pe = &pc->he_cap_elem;
+-	const struct ieee80211_sta_he_cap *vc =
+-		mt76_connac_get_he_phy_cap(phy->mt76, vif);
+ 	const struct ieee80211_he_cap_elem *ve = &vc->he_cap_elem;
+ 	u16 mcs_map = le16_to_cpu(pc->he_mcs_nss_supp.rx_mcs_80);
+ 	u8 nss_mcs = mt7915_mcu_get_sta_nss(mcs_map);
+@@ -1242,6 +1243,7 @@ mt7915_mcu_sta_bfer_tlv(struct mt7915_dev *dev, struct sk_buff *skb,
+ {
+ 	struct mt7915_vif *mvif = (struct mt7915_vif *)vif->drv_priv;
+ 	struct mt7915_phy *phy = mvif->phy;
++	const struct ieee80211_sta_he_cap *vc = NULL;
+ 	int tx_ant = hweight8(phy->mt76->chainmask) - 1;
+ 	struct sta_rec_bf *bf;
+ 	struct tlv *tlv;
+@@ -1260,6 +1262,12 @@ mt7915_mcu_sta_bfer_tlv(struct mt7915_dev *dev, struct sk_buff *skb,
+ 	if (!ebf && !dev->ibf)
+ 		return;
+ 
++	if (sta->deflink.he_cap.has_he && ebf) {
++		vc = mt76_connac_get_he_phy_cap(phy->mt76, vif);
++		if (!vc)
++			return;
++	}
 +
- 		if (enabled)
- 			set_bit(MT_WCID_FLAG_HDR_TRANS, &mlink->wcid.flags);
- 		else
+ 	tlv = mt76_connac_mcu_add_tlv(skb, STA_REC_BF, sizeof(*bf));
+ 	bf = (struct sta_rec_bf *)tlv;
+ 
+@@ -1268,7 +1276,7 @@ mt7915_mcu_sta_bfer_tlv(struct mt7915_dev *dev, struct sk_buff *skb,
+ 	 * ht: iBF only, since mac80211 lacks of eBF support
+ 	 */
+ 	if (sta->deflink.he_cap.has_he && ebf)
+-		mt7915_mcu_sta_bfer_he(sta, vif, phy, bf);
++		mt7915_mcu_sta_bfer_he(sta, vc, bf);
+ 	else if (sta->deflink.vht_cap.vht_supported)
+ 		mt7915_mcu_sta_bfer_vht(sta, phy, bf, ebf);
+ 	else if (sta->deflink.ht_cap.ht_supported)
 -- 
 2.53.0
 
