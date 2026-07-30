@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF5382E9EC7;
-	Thu, 30 Jul 2026 14:27:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0D1A2E9EC7;
+	Thu, 30 Jul 2026 14:27:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421663; cv=none; b=bqWVCKCtJ8KG/+CU2kKot88bu96w1KBLQOMNY4eygm2ZI+vsE2LDOiao/xLG8rLS/5g0zZ49zqUGj/hJ+TpO+HaZNvHfg7V4474Z53kQhpIIDjjg3l5lLW8+75ZzGTx/dj9jM8WdivqCzHUbYZSrrGt1v1Nt3qSpQf0ice1Q9o0=
+	t=1785421666; cv=none; b=PTrxYpo7w1CKnwlPMDCWlSiAnOnfsfhCPcFPmCMzEunx3tY8vHSg6asi9zsTJn6moqrtIChJ88Ny4IKiRNkRax8Hdx/w9wXXYZJs9pABFtozlcYDaP9Ua3VypP61qt7MtaQTqjuQpUkIInbOKP1WpO7USQ2wFOitEv4hZR093wM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421663; c=relaxed/simple;
-	bh=b8i8GQFwPxJS+2FZEaSFnfWUnJn8gX9VDjHyzgK6PVA=;
+	s=arc-20240116; t=1785421666; c=relaxed/simple;
+	bh=5in1Mr7ufS1k1iyBvRM8WwwseD94CiuLy3+OZyFL/nU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=grv3Cg8yD5izf2eUT3NqajFJr4f8eShREUbVz+eAZjmJuifr/RAj0ox8lCi2X3C+/hGKu3LiQunZur7lp8ZPSWwtKBL8crbEn0vehk/LDJVJeA3HUddhEYdFyt5LGCoxaPhYqLn8+JLQJJITn38f4BEW1bUP56bj353TPQg7rtc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1TfUj1Vv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CvWlz6c3+7rE5OYaQRET6NX59qxtNlKZDXyfrVa5oVl3r5bTIcnj0Fqt7K6tDPiLyK0iUPbCntJX6wjfFNZs54ZH4nUDgqFgFgfDSq9OWgWBHMTH6emNAJE/ejfVte8WCVBc/POumqjXo2cin/yI0WQgfVzhzDW2DILEwCvFKag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2DjqYUE0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1TfUj1Vv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 466C91F000E9;
-	Thu, 30 Jul 2026 14:27:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2DjqYUE0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D4571F000E9;
+	Thu, 30 Jul 2026 14:27:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421661;
-	bh=2Q18EEXDg76ySfTLqnb08o8+9Jj6wtD/pP57gRbiN6A=;
+	s=korg; t=1785421664;
+	bh=eLNspnBNYdggbsmGtOUgZcdL04A5HetPWKswFwoYPuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1TfUj1Vvq5vjFoc7GeHbHkeAOf48lpsUbwHo+25loZC/2PgPf58iM4XOy5d6dUvW+
-	 RJbTXdKiFsMG5l6WdLVCi2c82ts4HDuSgmXtuDzePZ+x+mT4JIMoFQrzH5TmxVQgAu
-	 Gwv1Ii1Wt+8hVBkPF3Ci9fENmhiudzfn6LXYv5P0=
+	b=2DjqYUE0L6l40LyZiHKhyv8QPWvGy+xlt4SyGd8plRij1PxriTapXqx1b+Ernva1n
+	 QtXDu45e9OZV2/Vt4O5R9FnGFAzsRzn3NKzUK7PGcd7C9zdRgeGoDQoxFxZS0JuSiE
+	 Yf0Tjhc9AF9vVDdlafsQ6kSa92cx/xPRydRGchFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qihang <q.h.hack.winter@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 125/744] ksmbd: pin conn during async oplock break notification
-Date: Thu, 30 Jul 2026 16:06:38 +0200
-Message-ID: <20260730141446.940951047@linuxfoundation.org>
+Subject: [PATCH 7.1 173/744] hwmon: (gigabyte_waterforce) Stop device IO before calling hid_hw_stop
+Date: Thu, 30 Jul 2026 16:07:26 +0200
+Message-ID: <20260730141447.965847025@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -52,73 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qihang <q.h.hack.winter@gmail.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit aa5d8f3f96aa11a4a54ce993c11ce8af11c546f9 ]
+[ Upstream commit ff0c5c53d08274e200b48a4d53aa078265e873cb ]
 
-smb2_oplock_break_noti() and smb2_lease_break_noti() store a ksmbd_conn
-pointer in an async ksmbd_work and then queue that work on ksmbd-io.  The
-work only increments conn->r_count, which prevents teardown from passing
-the pending-request wait after the increment, but it does not pin the
-struct ksmbd_conn object.
+Calling hid_hw_stop() does not stop the device IO.
+This results in a race condition between hid_input_report() and the point
+immediately following the execution of hid_device_io_start() within
+the driver probe function. If the probe operation fails after "io start"
+has been initiated, this race condition will result in a UAF vulnerability.
 
-If connection teardown races with an oplock break notification, the last
-conn reference can be dropped before the queued worker finishes.  The
-worker then uses the freed conn in ksmbd_conn_write() and
-ksmbd_conn_r_count_dec().
+Fix the problem by calling hid_device_io_stop() before calling
+hid_hw_stop().
 
-Take a real conn reference when publishing the conn pointer to the async
-work item, and drop it after the notification work has decremented
-r_count.  Apply the same lifetime rule to lease break notification, which
-uses the same work->conn pattern.
-
-Fixes: 3aa660c05924 ("ksmbd: prevent connection release during oplock break notification")
-Signed-off-by: Qihang <q.h.hack.winter@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: 42ac68e3d4ba0 ("hwmon: Add driver for Gigabyte AORUS Waterforce AIO coolers")
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/oplock.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/hwmon/gigabyte_waterforce.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/server/oplock.c b/fs/smb/server/oplock.c
-index 60e7e821c2455d..3f28dc3b7fc415 100644
---- a/fs/smb/server/oplock.c
-+++ b/fs/smb/server/oplock.c
-@@ -705,6 +705,7 @@ static void __smb2_oplock_break_noti(struct work_struct *wk)
- out:
- 	ksmbd_free_work_struct(work);
- 	ksmbd_conn_r_count_dec(conn);
-+	ksmbd_conn_put(conn);
- }
+diff --git a/drivers/hwmon/gigabyte_waterforce.c b/drivers/hwmon/gigabyte_waterforce.c
+index 27487e215bddff..4eea05f8b569c2 100644
+--- a/drivers/hwmon/gigabyte_waterforce.c
++++ b/drivers/hwmon/gigabyte_waterforce.c
+@@ -371,13 +371,15 @@ static int waterforce_probe(struct hid_device *hdev, const struct hid_device_id
+ 	if (IS_ERR(priv->hwmon_dev)) {
+ 		ret = PTR_ERR(priv->hwmon_dev);
+ 		hid_err(hdev, "hwmon registration failed with %d\n", ret);
+-		goto fail_and_close;
++		goto fail_and_io_stop;
+ 	}
  
- /**
-@@ -740,7 +741,7 @@ static int smb2_oplock_break_noti(struct oplock_info *opinfo)
- 	br_info->open_trunc = opinfo->open_trunc;
+ 	waterforce_debugfs_init(priv);
  
- 	work->request_buf = (char *)br_info;
--	work->conn = conn;
-+	work->conn = ksmbd_conn_get(conn);
- 	work->sess = opinfo->sess;
+ 	return 0;
  
- 	ksmbd_conn_r_count_inc(conn);
-@@ -814,6 +815,7 @@ static void __smb2_lease_break_noti(struct work_struct *wk)
- out:
- 	ksmbd_free_work_struct(work);
- 	ksmbd_conn_r_count_dec(conn);
-+	ksmbd_conn_put(conn);
- }
- 
- /**
-@@ -853,7 +855,7 @@ static int smb2_lease_break_noti(struct oplock_info *opinfo)
- 	memcpy(br_info->lease_key, lease->lease_key, SMB2_LEASE_KEY_SIZE);
- 
- 	work->request_buf = (char *)br_info;
--	work->conn = conn;
-+	work->conn = ksmbd_conn_get(conn);
- 	work->sess = opinfo->sess;
- 
- 	ksmbd_conn_r_count_inc(conn);
++fail_and_io_stop:
++	hid_device_io_stop(hdev);
+ fail_and_close:
+ 	hid_hw_close(hdev);
+ fail_and_stop:
 -- 
 2.53.0
 
