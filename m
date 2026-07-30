@@ -1,46 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1D40383983;
-	Thu, 30 Jul 2026 15:55:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8175411689;
+	Thu, 30 Jul 2026 15:55:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426946; cv=none; b=ushy/iuM6xk1lX+gOGLUa6A/ftmguI42IK0UUUzXMbRWk+wLXxnORvi/J1XZnRYp2Rbshu1OikdWy5q2aXh3nTURJ25ReFAEJObthdbQsEa89pYFK18XUpT0DnsMI5WptfcA8X3IcZryENTSiGZJ2ZDBpHh3CFgnYRxUBbH8qcg=
+	t=1785426948; cv=none; b=jnsn8SOmScWsjp59JE+N88KMqPSzNnV6PLB5x7zrQbxbPJ/He9qCHmwO+XvutYLTk7DZ4A/x15JMo+3IufGUaZSttgCDTLaCOrQP69VqLrI4KAR3VPxRMPfHeqnPQQN6wYr+75p3yW/bLSfe97Tsz7wvAAqRP3t47KomX2kWs7U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426946; c=relaxed/simple;
-	bh=GgvK5pHBxn1Tlo1lxxuPCth6WuvoMaFobSPzanIGDhw=;
+	s=arc-20240116; t=1785426948; c=relaxed/simple;
+	bh=HSrz+Xlst2bptMOieUQoNjKY/2FwHKzSfhxHkrMVz5U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FBynrft+G6524BA7zNZtt3nW7PjPp0dY56DnV448svRazb1fJ+VS4d9ZzYVlHy+EgJcqbOKpT7o6xtTJTQ86WAwV5kRmPaXe+CUOTKY3YKHDbyKuoDgsam8thUWtdrUoN93Prqy15yWk6yE1iPoOnJNxpTx4gGNcsChrLwHrcbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ytDndNco; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fL8h4Jr9sUJEru6qlmVp4hIS9Jq0LCbewis2thYbTfrHFxfm1JCkGQEDY59Bu/3lhnEU+75fPED8+33iRsp7WevJUU4wtMik312sHm+Q8139EuNj5LKYe4FcXFFiwajutQY8BL2WYyqWY2h4DEyvUYSmP282ouGs9AJLY5CVQiA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S3l61XIP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ytDndNco"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AC611F000E9;
-	Thu, 30 Jul 2026 15:55:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S3l61XIP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29C881F000E9;
+	Thu, 30 Jul 2026 15:55:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426944;
-	bh=hoRlSFz9+N2qHPI/StjUt5DOZrSnAht4FR5dmhBY7/4=;
+	s=korg; t=1785426947;
+	bh=MZaLy85OoOavF8w5jjAE3Ql4KEDaYCARbaMqdKb06/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ytDndNcopzCkoUdjD8ayEBLkLVPiknp9JoVwVPHqlyrxUh6FzInYa7/O+XDnoMVqm
-	 ZSbvt/GRr7IP16lw7+KA5ZwhL37I3orpH1QlQhku5b6XAfCI5XXcdobdWxKYkZJLGt
-	 VkILBNHVz29O6FapxcKZr5p2j+eB/8FPv2bZ3u8o=
+	b=S3l61XIP4w4B3AYxVHT0mPB2SLpVb7pr0vxfmw/59JDLFVC45h0nRk4IZeTNQcBTc
+	 tf11i7B5dIzrGPzXkQ7ZJNM+DIbc6HQxEWxYM7X3c66mRLmBhU1P8JkO97EKxkL/vT
+	 /zbetH4+27fAwwdsMGZbH1l3hQOuG3wm/yh8t9Qk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Nan Li <tonanli66@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	linux-afs@lists.infradead.org,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.12 596/602] afs: handle CB.InitCallBackState3 requests without a server record
-Date: Thu, 30 Jul 2026 16:16:28 +0200
-Message-ID: <20260730141448.579088301@linuxfoundation.org>
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.12 597/602] Bluetooth: hci_conn: Fix running bis_cleanup for hci_conn->type PA_LINK
+Date: Thu, 30 Jul 2026 16:16:29 +0200
+Message-ID: <20260730141448.601341010@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -59,55 +49,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nan Li <tonanli66@gmail.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-commit f3cf725cd284b7912d5522babb44721bf38c8887 upstream.
+commit d36349ea73d805bb72cbc24ab90cb1da4ad5c379 upstream.
 
-The cache manager callback path now attaches the server record to an
-incoming call through the rxrpc peer's app data.  That association is
-not guaranteed to exist for every callback request, and most callback
-handlers already tolerate that case.
+Connections with type of PA_LINK shall be considered temporary just to
+track the lifetime of PA Sync setup, once the BIG Sync is established
+and connection are created with BIS_LINK the existing PA_LINK
+connection shall not longer use bis_cleanup otherwise it terminates the
+PA Sync when that shall be left to BIS_LINK connection to do it.
 
-Make CB.InitCallBackState3 follow the same pattern by checking whether a
-server record was attached before using it.  If the peer is not mapped
-to a server record, trace the request and ignore it, matching the
-existing behaviour for other unmatched callback requests.
-
-This keeps the callback handler consistent with the rest of the cache
-manager service and avoids depending on peer state that may not be
-available for a given request.
-
-Fixes: 40e8b52fe8c8 ("afs: Use the per-peer app data provided by rxrpc")
-Cc: stable@kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Nan Li <tonanli66@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://patch.msgid.link/20260622090856.2746629-2-dhowells@redhat.com
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: linux-afs@lists.infradead.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: a7bcffc673de ("Bluetooth: Add PA_LINK to distinguish BIG sync and PA sync connections")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/afs/cmservice.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ net/bluetooth/hci_conn.c  |   10 +++++++++-
+ net/bluetooth/hci_event.c |    7 ++++++-
+ 2 files changed, 15 insertions(+), 2 deletions(-)
 
---- a/fs/afs/cmservice.c
-+++ b/fs/afs/cmservice.c
-@@ -369,6 +369,11 @@ static int afs_deliver_cb_init_call_back
- 		return 0;
- 	}
- 
-+	if (!call->server) {
-+		trace_afs_cm_no_server_u(call, call->request);
-+		return 0;
-+	}
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -830,7 +830,15 @@ static void bis_cleanup(struct hci_conn
+ 		/* Check if ISO connection is a BIS and terminate advertising
+ 		 * set and BIG if there are no other connections using it.
+ 		 */
+-		bis = hci_conn_hash_lookup_big(hdev, conn->iso_qos.bcast.big);
++		bis = hci_conn_hash_lookup_big_state(hdev,
++						     conn->iso_qos.bcast.big,
++						     BT_CONNECTED);
++		if (bis)
++			return;
 +
- 	if (memcmp(call->request, &call->server->_uuid, sizeof(call->server->_uuid)) != 0) {
- 		pr_notice("Callback UUID does not match fileserver UUID\n");
- 		trace_afs_cm_no_server_u(call, call->request);
++		bis = hci_conn_hash_lookup_big_state(hdev,
++						     conn->iso_qos.bcast.big,
++						     BT_CONNECT);
+ 		if (bis)
+ 			return;
+ 
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -7026,9 +7026,14 @@ static void hci_le_big_sync_established_
+ 				continue;
+ 		}
+ 
+-		if (ev->status != 0x42)
++		if (ev->status != 0x42) {
+ 			/* Mark PA sync as established */
+ 			set_bit(HCI_CONN_PA_SYNC, &bis->flags);
++			/* Reset cleanup callback of PA Sync so it doesn't
++			 * terminate the sync when deleting the connection.
++			 */
++			conn->cleanup = NULL;
++		}
+ 
+ 		bis->sync_handle = conn->sync_handle;
+ 		bis->iso_qos.bcast.big = ev->handle;
 
 
