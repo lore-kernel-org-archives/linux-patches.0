@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B95F936607D;
-	Thu, 30 Jul 2026 15:49:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 465F5358373;
+	Thu, 30 Jul 2026 15:49:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426585; cv=none; b=MWeVEDqhXnHXD9SFJChTmiyJVatpwpOy8PGnhfWJCJBfj8c8OBWRd+0ltXUjUrQJGj2yN9xtPXnLTramm78CUGAdW9smzhlNdr+fsJuxUAdnJ0xiLlI8l7i3hvV6BUmS2Dv2kWwzx+3K2x+eskER9nHj/xGV5wmroPinZ4O0Wmg=
+	t=1785426588; cv=none; b=QaFYNHydWplH2bIgAqn9tLiq/+emrl4sTpfsS81U1D6O7BIOKXqy/srsEt62HEANV0HTIW2iPYN3wyrCF1gfeM8lev6038+pIVSjDySRzc/wxXGWXsocFqAdGJrFTYYHe1siEIz+Ky1ILmgglkEGV4mKa1EojREkVGcYcD0KgnI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426585; c=relaxed/simple;
-	bh=2gS6WMYJBu9Yz7TsGzP1x+Qesv45AruV7yeWCy0X5Go=;
+	s=arc-20240116; t=1785426588; c=relaxed/simple;
+	bh=wF5SkHfesrb/6Fvr0jOcuAvnH1N7M0tYED6ZNGXd4JI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dW/4kqKKQP+vvZ0C3qoooWFWaYtKAlAqNIKJa6tKLM6UNZz7UozTBMD9QGlr1FXUeh51H7vzhBOxVHaGzIo24BrY7JAtXEQaNvDVFkV4t0Z/MoW641AZQSHtiXnhZXBimYhoSfPWvy2MHmyl6NKuKaI1cPGYx4WRUHqG67ibb9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aFABEG7A; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oJ7aC54I8GDd1z1ngiphB9FxoChl136gsJBBid/DUkjYkRzkdNnOQlKrhQW92h1ww+mEbWfLsSlhnVc75dZ0xYT8k9/sTY05x/jFrssXHnZNyxOfySYPVBnqmwbbSkW8wdm2rIqJ2j9Hp0fxDdSz11lOWaFOM/p5l9AzMawCpr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Net6EwUA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aFABEG7A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C41EE1F000E9;
-	Thu, 30 Jul 2026 15:49:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Net6EwUA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9735B1F000E9;
+	Thu, 30 Jul 2026 15:49:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426584;
-	bh=yq0vKgm995ngDBv2CYPmnR8WyjXpYa49dWn729QpAKI=;
+	s=korg; t=1785426587;
+	bh=f1Y4BmZC8uzyK5w0COws/9EXj+V59/ELpPEMlk1wifw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aFABEG7AVL/T5RkAP09zmdR5+/Ajn3yYQbjlubffSI8SpK4LDCmDZKW8w+Ffc0M2+
-	 JFX9l1F1JAzCl8EU3rcd0A3F/G5dupg7xyeuR6jaKeZeCGXjFgCaHiFc7Wg0QyocTd
-	 +8NL6ByXt4tlb59N1A0kjSNxgPG4Is9mwMxOZsmM=
+	b=Net6EwUAWRmKTszmfjR9ZHtFEaQiesv950NPiZOxZaMSCEUY+fDTUnpPj40wZTVMC
+	 6gC+yb6hzXAvobDasj6Jxk1GzN4fF3IVYv815i4g/WlJsCV8fN9Mjy8FYL7+hwngW+
+	 hfPwcMTq9P9wc/HI0m8rFNYf5rZ2YWVNkRR+k2wA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
+	Jeremy Kerr <jk@codeconstruct.com.au>,
 	Doruk Tan Ozturk <doruk@0sec.ai>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 426/602] mac802154: llsec: reject frames shorter than the authentication tag
-Date: Thu, 30 Jul 2026 16:13:38 +0200
-Message-ID: <20260730141444.917253072@linuxfoundation.org>
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.12 427/602] mctp: serial: handle zero-length frames to prevent rx buffer overflow
+Date: Thu, 30 Jul 2026 16:13:39 +0200
+Message-ID: <20260730141444.938047042@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -53,53 +54,91 @@ Content-Transfer-Encoding: 8bit
 
 From: Doruk Tan Ozturk <doruk@0sec.ai>
 
-commit fd3a3f28ed60c6af4b2a39933b151d6b27842c3b upstream.
+commit 793b9b729f1e8de57be8c8daf1a9838be96cabed upstream.
 
-llsec_do_decrypt_auth() computes the associated-data length for the
-AEAD request as
+The MCTP serial receive state machine reads a frame length byte in
+mctp_serial_push_header() case 2 and validates it upper-bound-only:
 
-	assoclen += datalen - authlen;
+	if (c > MCTP_SERIAL_FRAME_MTU) {
+		dev->rxstate = STATE_ERR;
+	} else {
+		dev->rxlen = c;
+		dev->rxpos = 0;
+		dev->rxstate = STATE_DATA;
+		...
+	}
 
-where datalen is the number of bytes after the MAC header and authlen
-(4, 8 or 16) is the length of the authentication tag. Nothing verifies
-that the frame actually carries at least authlen payload bytes. A
-secured frame whose payload is shorter than the tag makes
-datalen - authlen negative; assoclen is then passed to
-aead_request_set_ad() as an unsigned value close to 4 GiB, so
-crypto_aead_decrypt() walks far off the end of the scatterlist that
-only spans the real frame.
+A length of zero passes this check, so rxlen is set to 0 and the state
+machine advances to STATE_DATA. In mctp_serial_push() STATE_DATA, the
+incoming byte is stored and rxpos incremented before the terminator is
+tested:
 
-The frame is fully attacker-controlled and reaches this path from any
-IEEE 802.15.4 peer in radio range. Reject frames whose payload is
-shorter than the authentication tag before the subtraction.
+	dev->rxbuf[dev->rxpos] = c;
+	dev->rxpos++;
+	dev->rxstate = STATE_DATA;
+	if (dev->rxpos == dev->rxlen) {
+		dev->rxpos = 0;
+		dev->rxstate = STATE_TRAILER;
+	}
 
-Dynamically reproduced on a KASAN kernel as a general-protection-fault
-in the AEAD scatterwalk, and the fix confirmed.
+With rxlen == 0 the "rxpos == rxlen" terminator can never fire (rxpos is
+already 1 on the first data byte), so subsequent bytes are written past
+the end of the fixed 74-byte rxbuf, which is the last member of the
+netdev private area. Every following data byte is an attacker-controlled
+1-byte out-of-bounds heap write, and the overflow continues until a
+frame (0x7e) or escape byte resets the parser -- effectively unbounded.
 
-Fixes: 4c14a2fb5d14 ("mac802154: add llsec decryption method")
+Reaching this requires CAP_NET_ADMIN to attach the N_MCTP line
+discipline and bring the resulting mctpserialN netdev up, after which
+the bytes arrive via the tty receive path.
+
+Route a zero-length frame straight to STATE_TRAILER instead of
+STATE_DATA. The trailer/framing bytes are still consumed, and the frame
+resolves to a zero-length skb that the MCTP core rejects; the parser
+never enters STATE_DATA with rxlen == 0, so the out-of-bounds write can
+no longer occur.
+
+KASAN, on a frame of 0x7e 0x01 0x00 followed by data bytes (before this
+change):
+
+  UBSAN: array-index-out-of-bounds in drivers/net/mctp/mctp-serial.c:370
+  index 74 is out of range for type 'u8 [74]'
+  BUG: KASAN: slab-out-of-bounds in mctp_serial_tty_receive_buf
+  Write of size 1 at addr ... by task kworker/u16:0
+   mctp_serial_tty_receive_buf
+   tty_ldisc_receive_buf
+   flush_to_ldisc
+  Allocated by task 152:
+   alloc_netdev_mqs
+   mctp_serial_open
+
+v2: route zero-length frames to STATE_TRAILER instead of STATE_ERR so
+    the trailer/framing bytes are still consumed (Jeremy Kerr).
+
+Found by 0sec automated security-research tooling (https://0sec.ai).
+Fixes: a0c2ccd9b5ad ("mctp: Add MCTP-over-serial transport binding")
 Cc: stable@vger.kernel.org
-Reviewed-by: Simon Horman <horms@kernel.org>
+Suggested-by: Jeremy Kerr <jk@codeconstruct.com.au>
+Assisted-by: 0sec:multi-model
 Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
-Link: https://patch.msgid.link/20260716193423.32498-1-doruk@0sec.ai
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260715082021.46315-1-doruk@0sec.ai
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac802154/llsec.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/mctp/mctp-serial.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/mac802154/llsec.c
-+++ b/net/mac802154/llsec.c
-@@ -891,6 +891,11 @@ llsec_do_decrypt_auth(struct sk_buff *sk
- 	data = skb_mac_header(skb) + skb->mac_len;
- 	datalen = skb_tail_pointer(skb) - data;
- 
-+	if (datalen < authlen) {
-+		kfree_sensitive(req);
-+		return -EBADMSG;
-+	}
-+
- 	sg_init_one(&sg, skb_mac_header(skb), assoclen + datalen);
- 
- 	if (!(hdr->sec.level & IEEE802154_SCF_SECLEVEL_ENC)) {
+--- a/drivers/net/mctp/mctp-serial.c
++++ b/drivers/net/mctp/mctp-serial.c
+@@ -317,7 +317,7 @@ static void mctp_serial_push_header(stru
+ 		} else {
+ 			dev->rxlen = c;
+ 			dev->rxpos = 0;
+-			dev->rxstate = STATE_DATA;
++			dev->rxstate = c > 0 ? STATE_DATA : STATE_TRAILER;
+ 			dev->rxfcs = crc_ccitt_byte(dev->rxfcs, c);
+ 		}
+ 		break;
 
 
