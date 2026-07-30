@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74024402444;
-	Thu, 30 Jul 2026 14:31:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DC22175A6D;
+	Thu, 30 Jul 2026 14:31:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421896; cv=none; b=bGist4vgQWz5mvkBj+KqZKDKdAo09ZSah5KURcVRhGZql+M5uBe08KpgWye7BuK3qIC9VefbGwVKkWNeJ68UliytOn477Sq8BQzMkGWv9SM+YA457/5hlLKoc6kbTnTuyoeZWiWp1PpPfkcBVoOfqvzyXGGngVpBbGH7/xuxyjI=
+	t=1785421899; cv=none; b=pptCMDkKCWQN2CtBkbKidVHxLk6ZHJWsjhUJVb/lYIHa+JcDw8KZEHeERKpWC8x1GvLtjy1e1ooBGQqIbGQ2UmXzsbAqeqpCG8QuMeEyk5lA+WAbSW3FJeaQrLExXIbSXBiM+ylgAu19tsUF5/gc2TbJJZLQvhYCK4b0oxcNjY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421896; c=relaxed/simple;
-	bh=YQ7jSgGY3c2QACoYb0SLbnywh/ng93vcHdvXma3NMpU=;
+	s=arc-20240116; t=1785421899; c=relaxed/simple;
+	bh=zm4YcGNmA8ROsnXN2WcT19WzJSy3VrmF7m+K/R476ew=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bIqp4RyvPGIChzhf8nhXxgJgRNfWRZQcy36jhlCFOZCwpNifPCVKcQbc7ycTErVwZ+uUV/bU47lORa/GU96f/urVAKe7LbqNVbiM580yuFHAzIFLIQ1KCITOD2wg4cZLNZHCcC3AqViVjMccCwATJfrsI1ogYzkbD/xrEKA+mM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TAkBiRr6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XYRoNyTGTickaUaCNEvLAbCZOG8elxAPrlYcpMN4ecvgelNdBv2bW4ReOqQDM2kTYhNUFXOn37DlUUlZ999NoUpfSRAUZDMh90dZG+K3EUdZ8II7T3rnl+Rohfym41LEoucyBcoeeV1BKkvt2dcctqXVZp0SZp3xytCnIUugFn0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IuTj0NoG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TAkBiRr6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D5AF1F000E9;
-	Thu, 30 Jul 2026 14:31:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IuTj0NoG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 827311F00A3A;
+	Thu, 30 Jul 2026 14:31:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421895;
-	bh=YYDBhw9fsyFNC1W4v2OArJPfTRlFlg81wvC7tl9pQi8=;
+	s=korg; t=1785421898;
+	bh=WvsBiZUJJy6hAouvAryttEgR6KpTy6ySYnzKCjyC9mY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TAkBiRr6X6w+ZfH8mmezUfu9h9mMM8wlcDxuBjN9x0nDbZuYaOJTYaDY9UyUvFrBI
-	 M45Tbz0gdpFntb46xapTU35YNIgsXx7FYfxBx5R9n64ZDD6gkRqTDn3xNhrk6nReUt
-	 3XsQWwbrTVE6B3cxALvsi4jz93w+aQPyUdGEzUaY=
+	b=IuTj0NoGWWnNo1/62dEKbJGZRs5FpQ5RC3/U8wTE8HbEO2mp9VcnWFidXO6pv3CLD
+	 NGwojVGnmnL3K0y4jaTsg2eyhR7mPuh4u9b9znyEwEiHzN4b/6f0790chdokASJBV4
+	 Yjz8+Kk5Ey8116LE52NSexwadomPU4Ck17XScYFw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Cheng <icheng@nvidia.com>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Will Deacon <will@kernel.org>,
+	Patrick Oppenlander <patrick.oppenlander@gmail.com>,
+	Prashanth Kumar KR <PrashanthKumar.K.R@amd.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 255/744] arm64/mm: Check the requested PFN range during memory removal
-Date: Thu, 30 Jul 2026 16:08:48 +0200
-Message-ID: <20260730141449.713830976@linuxfoundation.org>
+Subject: [PATCH 7.1 256/744] amd-xgbe: fix MAC_AUTO_SW handling in CL37 AN
+Date: Thu, 30 Jul 2026 16:08:49 +0200
+Message-ID: <20260730141449.734430145@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -52,46 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Cheng <icheng@nvidia.com>
+From: Prashanth Kumar KR <PrashanthKumar.K.R@amd.com>
 
-[ Upstream commit 285f90a4d1141c7594f2368e19cbb307388eff30 ]
+[ Upstream commit 4bf22afe53a1de4b44b04cf677fd5199089cbdff ]
 
-prevent_memory_remove_notifier() advances pfn while scanning the requested
-range for early memory. When the loop completes, pfn is at or beyond
-end_pfn. Passing it to can_unmap_without_split() therefore checks a range
-after the one being offlined.
+MAC_AUTO_SW (VR_MII_DIG_CTRL1 bit 9) enables automatic XPCS speed
+mode switching after CL37 auto-negotiation and is only meaningful in
+SGMII MAC mode. The original code unconditionally set this bit on
+every call to xgbe_an37_set(), including when called from
+xgbe_an37_disable() with enable=false. This left MAC_AUTO_SW=1 after
+AN was disabled, causing the XPCS to autonomously switch speed from
+stale AN state during subsequent mode changes, breaking SGMII speed
+negotiation on 1G copper SFP modules.
 
-Consequently, a valid request can be rejected based on the following
-range, while a request that would split a leaf mapping can be accepted if
-the shifted range can be unmapped without a split. This was observed with
-CXL DAX memory, where the final memory block was incorrectly allowed to
-be offlined.
+Patrick: This was breaking negotiation for all 1G SFP modules,
+not just copper modules.
 
-Pass arg->start_pfn into can_unmap_without_split() so it checks the
-requested range.
-
-Fixes: 95a58852b0e5 ("arm64/mm: Reject memory removal that splits a kernel leaf mapping")
-Signed-off-by: Richard Cheng <icheng@nvidia.com>
-Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: 42fd432fe6d3 ("amd-xgbe: align CL37 AN sequence as per databook")
+Reported-by: Patrick Oppenlander <patrick.oppenlander@gmail.com>
+Link: https://lore.kernel.org/netdev/CAEg67GmFS0Q4oSZkz8zWdOzckSth9_vBPiOy6a7-d697C2w2Xg@mail.gmail.com
+Signed-off-by: Prashanth Kumar KR <PrashanthKumar.K.R@amd.com>
+Tested-by: Patrick Oppenlander <patrick.oppenlander@gmail.com>
+Link: https://patch.msgid.link/20260709095006.3683940-1-prashanthkumar.k.r@amd.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/mm/mmu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/amd/xgbe/xgbe-mdio.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/mm/mmu.c b/arch/arm64/mm/mmu.c
-index fd756390fe925c..fbbd31cd4cbd84 100644
---- a/arch/arm64/mm/mmu.c
-+++ b/arch/arm64/mm/mmu.c
-@@ -2201,7 +2201,7 @@ static int prevent_memory_remove_notifier(struct notifier_block *nb,
- 		}
- 	}
+diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c b/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
+index fa0df61812076a..12770af031eb8b 100644
+--- a/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
++++ b/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
+@@ -267,9 +267,14 @@ static void xgbe_an37_set(struct xgbe_prv_data *pdata, bool enable,
  
--	if (!can_unmap_without_split(pfn, arg->nr_pages))
-+	if (!can_unmap_without_split(arg->start_pfn, arg->nr_pages))
- 		return NOTIFY_BAD;
+ 	XMDIO_WRITE(pdata, MDIO_MMD_VEND2, MDIO_CTRL1, reg);
  
- 	return NOTIFY_OK;
+-	reg = XMDIO_READ(pdata, MDIO_MMD_VEND2, MDIO_PCS_DIG_CTRL);
+-	reg |= XGBE_VEND2_MAC_AUTO_SW;
+-	XMDIO_WRITE(pdata, MDIO_MMD_VEND2, MDIO_PCS_DIG_CTRL, reg);
++	if (pdata->an_mode == XGBE_AN_MODE_CL37_SGMII) {
++		reg = XMDIO_READ(pdata, MDIO_MMD_VEND2, MDIO_PCS_DIG_CTRL);
++		if (enable)
++			reg |= XGBE_VEND2_MAC_AUTO_SW;
++		else
++			reg &= ~XGBE_VEND2_MAC_AUTO_SW;
++		XMDIO_WRITE(pdata, MDIO_MMD_VEND2, MDIO_PCS_DIG_CTRL, reg);
++	}
+ }
+ 
+ static void xgbe_an37_restart(struct xgbe_prv_data *pdata)
 -- 
 2.53.0
 
