@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FB3A37756C;
-	Thu, 30 Jul 2026 14:46:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CA2E37475C;
+	Thu, 30 Jul 2026 14:46:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422761; cv=none; b=bKJDXPP9yfPkvhlgjct5ac5ci7qN5oDk9PsMTF7QXUFp7RxdFq++2qAPkLDoUzMnRAgF3qUtCaTJcAtrb1899ibHqBhfG+7W/0nJB9kkcs6umxLqJ0A031evksNKtX4WTeD3hWrXZRAx9Wmd9JjUFHFOW5SSq9rhUZLvokknzck=
+	t=1785422764; cv=none; b=FkPw+Y7atWguk1gUGtFTrz8RX2aLB1c50SqpgokYu8mp2TEv3R5BsfczzStCUimsXtfdHoB48wCQzhACd8ZNOa2sXqoqAh+twMHd9miB8M4hgoK8kWjHUOOlcnh4x6VOg5mEkAw1hERELhkdzvmyhfzK2NQ4w88NVdNodS87WMQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422761; c=relaxed/simple;
-	bh=/l72E87czLfPgMrgqPvSllZjkiCKCQ5bit2BxIkngAA=;
+	s=arc-20240116; t=1785422764; c=relaxed/simple;
+	bh=nKkPrNuCSXvMxYDkcINyxWAzgiTGVVbT7yb5kg/kzrk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gTE6wZ/YJLZVw6STpuH21yn/Zwo9yY2hilqjS50KvT8EXEkVWoQC27QoMu5eMQXtY3UzUs8FsqFHityblhfTV5h53Wuq8b34UXlSkK+ZyuqHJbeB+JAZitmHqPk9t/wtTJ/D3aH+OHOkN1zakifbTjgOg1YjLXsn94hJ9itlX78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nf8s+M46; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bXVvYXMhJI9S4qon3kxfxnTcBH8eCqi6SAzDOpo8DpExPN9pdkn9Fs/5HXdFcYolqFqmT+UVhBfRsKvmbFFayKzKI+WUhKB9YLcRNYn1tkqtra4rKIr5icUaclv38PXK1lKjGMLNxsR7Jq1b+x+yIf6/ChEa8HyLqSuiG68ngso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oL/rSafZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nf8s+M46"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2B101F000E9;
-	Thu, 30 Jul 2026 14:45:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oL/rSafZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96FFF1F000E9;
+	Thu, 30 Jul 2026 14:46:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422760;
-	bh=XYBW9NXOVY133Bu+JwteY8TtXCDTrSwFSe9SXk4gQWU=;
+	s=korg; t=1785422763;
+	bh=TgThtRg4jFkxPTDexX0uLzqKqZBOOKIsFWi09QlBjiQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nf8s+M46x1GGJqoJuYsrcX2GglzJ2VC63JEmYZ0KLVEteSy9HYmukClLVk+XcL1dh
-	 a4pn347I/4jT+vrLWXR2XoRMUpjIUct3b/zRoWCzqgQVsYwtL+PkugH2bhefRWucu3
-	 eyGnMdboXe9PLaDevZyKrYzaecnAipX61bKDO1KQ=
+	b=oL/rSafZ4T9/v++BCVMZunydTHuvJDMmV/vw3tJZPOR6x1k1O6a5oTo/rwQ8xLJWy
+	 1KUDJoCnb+nhge0aijoz2bHZM3G8Jn2Qdl2l0+olRyWZotzDrvQHH85k7lKA3hEqQ5
+	 j7HqwEak156naz6B1rTl5ZgdK21hggoPfRu/wp3U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doruk Tan Ozturk <doruk@0sec.ai>,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Huihui Huang <hhhuang@smu.edu.sg>,
 	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 7.1 545/744] wifi: mwifiex: fix NULL dereference when the AP has HT-cap but no HT-oper
-Date: Thu, 30 Jul 2026 16:13:38 +0200
-Message-ID: <20260730141455.860127064@linuxfoundation.org>
+Subject: [PATCH 7.1 546/744] wifi: wilc1000: validate assoc response length before subtracting header
+Date: Thu, 30 Jul 2026 16:13:39 +0200
+Message-ID: <20260730141455.881457349@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -51,52 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doruk Tan Ozturk <doruk@0sec.ai>
+From: Huihui Huang <hhhuang@smu.edu.sg>
 
-commit c3d68e294cbb6a4090bb219d3dcaca85a011809b upstream.
+commit 4c4c97b60a5e978121d9ee8cb0ab3916e5d6a8de upstream.
 
-mwifiex_tdls_add_ht_oper() gates its follow-the-AP-bandwidth path on
-bss_desc->bcn_ht_cap being present, but then dereferences a different
-pointer, bss_desc->bcn_ht_oper:
+wilc_parse_assoc_resp_info() computes the trailing IE length as
 
-	if (ISSUPP_CHANWIDTH40(priv->adapter->hw_dot_11n_dev_cap) &&
-	    bss_desc->bcn_ht_cap &&
-	    ISALLOWED_CHANWIDTH40(bss_desc->bcn_ht_oper->ht_param))
+	ies_len = buffer_len - sizeof(*res);
 
-bcn_ht_cap and bcn_ht_oper are populated independently while parsing the
-associated AP's beacon in mwifiex_update_bss_desc_with_ie(): an AP that
-advertises an HT Capabilities element but no HT Operation element leaves
-bcn_ht_cap non-NULL and bcn_ht_oper NULL. Setting up a TDLS link to a
-peer while associated to such an AP then dereferences the NULL
-bcn_ht_oper and crashes the kernel. Every other bcn_ht_oper user in the
-driver NULL-checks it first.
+without first checking that buffer_len is at least sizeof(struct
+wilc_assoc_resp) (6 bytes). buffer_len is the length reported for a
+received association response (host_int_parse_assoc_resp_info() passes
+hif_drv->assoc_resp / assoc_resp_info_len straight in) and must be
+validated before the driver accesses the fixed header.
 
-Guard on the pointer that is actually dereferenced.
+For a frame shorter than the 6-byte fixed header, the subtraction wraps.
+For a four-byte response the result is truncated to a u16 ies_len of
+65534, so kmemdup() then attempts to copy 65534 bytes starting at
+buffer + sizeof(*res), beyond the valid association-response data
+(CWE-125). A response shorter than four bytes can also cause an
+out-of-bounds read of res->status_code at offsets 2 and 3.
 
-Found by 0sec automated security-research tooling (https://0sec.ai).
+Reject frames too short to hold the fixed header before touching the
+header or computing ies_len. Also set the connection status to a failure
+on this path: the caller falls through to a
+"conn_info->status == WLAN_STATUS_SUCCESS" check after the parser
+returns, so leaving the status untouched could let a malformed short
+response be treated as a successful association.
 
-Fixes: 396939f94084 ("mwifiex: add HT operation IE in TDLS setup confirm")
+Fixes: c5c77ba18ea6 ("staging: wilc1000: Add SDIO/SPI 802.11 driver")
 Cc: stable@vger.kernel.org
-Assisted-by: 0sec:multi-model
-Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
-Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Link: https://patch.msgid.link/20260716103042.88469-1-doruk@0sec.ai
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Huihui Huang <hhhuang@smu.edu.sg>
+Link: https://patch.msgid.link/20260714091811.3596126-1-hhhuang@smu.edu.sg
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/marvell/mwifiex/tdls.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/microchip/wilc1000/hif.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/net/wireless/marvell/mwifiex/tdls.c
-+++ b/drivers/net/wireless/marvell/mwifiex/tdls.c
-@@ -215,7 +215,7 @@ mwifiex_tdls_add_ht_oper(struct mwifiex_
+--- a/drivers/net/wireless/microchip/wilc1000/hif.c
++++ b/drivers/net/wireless/microchip/wilc1000/hif.c
+@@ -600,6 +600,11 @@ static s32 wilc_parse_assoc_resp_info(u8
+ 	u16 ies_len;
+ 	struct wilc_assoc_resp *res = (struct wilc_assoc_resp *)buffer;
  
- 	/* follow AP's channel bandwidth */
- 	if (ISSUPP_CHANWIDTH40(priv->adapter->hw_dot_11n_dev_cap) &&
--	    bss_desc->bcn_ht_cap &&
-+	    bss_desc->bcn_ht_oper &&
- 	    ISALLOWED_CHANWIDTH40(bss_desc->bcn_ht_oper->ht_param))
- 		ht_oper->ht_param = bss_desc->bcn_ht_oper->ht_param;
- 
++	if (buffer_len < sizeof(*res)) {
++		ret_conn_info->status = WLAN_STATUS_UNSPECIFIED_FAILURE;
++		return -EINVAL;
++	}
++
+ 	ret_conn_info->status = le16_to_cpu(res->status_code);
+ 	if (ret_conn_info->status == WLAN_STATUS_SUCCESS) {
+ 		ies = &buffer[sizeof(*res)];
 
 
