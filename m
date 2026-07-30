@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDB6E4052DC;
-	Thu, 30 Jul 2026 14:52:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E2FA3C3F4C;
+	Thu, 30 Jul 2026 14:52:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423138; cv=none; b=iqXP0wpQ00MHN7cCOisOxf2uLc0/l0DlfmHdDq+WD7sZbP42sVs5bae9oVLoPBgj0/Iq6KUqPLGCaco8l4w1AhWE5Jyd9zrZHCgWiO8Xxx5YcD3PitG3qSwPdYc+YdrDUonbcVvFjEBk+3wtL0C4qa+ZAQL4LCRdIHrNtlrzbMI=
+	t=1785423141; cv=none; b=rqYebm4CePOtWfbSalt8RLAkLsk1clqL1UMw3G5OfZGAIlF9LTixniCy8jMcEziKTHRKuISIllsgzRJBdZsX6RBrQQGDgmr8Og6FlY6g+i0IUrszTzwnzgVVpAaiz+lmpX0vfIpd2yL8CVtwhAtmp98iUgB+7wYfUK/8XwrT1cg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423138; c=relaxed/simple;
-	bh=FByCdD8j9GuS8sLK5Q/fE8Y9K578yQ8PZg6OiebFjf4=;
+	s=arc-20240116; t=1785423141; c=relaxed/simple;
+	bh=TOIFtOziVI2zKK8+cy7OmWCoDV6OEE+LTORyxEaQF7E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KTEcvJD1bH5tkCb7YF72Fs3EBueHYnTL+M+Gq56ZpCedkR9KyKjoy7FQ+x6TmbhgzF32yaCI69Jj6jkkrvDrR9sSQaAYw+nRCN8HrgzVWr/euVpVS/Poe4gDA4v6byKKQqp9UcYUK0uBCxPIL2UA9VYZF0yTVlyDUkIjVndMSXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hb5OWOjz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Hj/jzwCPL56WPzCnLABE/q2uWcos1qgZJHb1S5hVF1qY5+npI+mrLCdvpQcdxYtTkp0v11QcRCwcVfu7ByJSqEaCF6vPgdw+/XEdnPrNDXspVjRsIGRbaXuui/04FLEmqDkugdgppX5ZYYzwdHYU/6BEEmVboOsQX6HE3WEwd1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kk8poHBh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hb5OWOjz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5550D1F00A3D;
-	Thu, 30 Jul 2026 14:52:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kk8poHBh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27CCF1F000E9;
+	Thu, 30 Jul 2026 14:52:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423136;
-	bh=+ySvmLBezaaodHoPKWrOfE7MASSsREcmap2/hb5RO8M=;
+	s=korg; t=1785423139;
+	bh=dyZIFy+bnTcVDCNNuaIt8BXVOVmcZgsWq8OhIiHQKXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Hb5OWOjzfcQhFc2ZWBn+qwnQQECUgwKfZNVIBuo8pCPCeflkVbPTShg6TdFxpTehj
-	 5PdwRS0xUX49pvqeIRBux9p8j4C5dEcPK6/ghQOFQXIOAT3Z149XmVgJ9v43R16CGL
-	 n7V9j6m1WIImUVchkojU2QKlhcl5QiKhyLBcpnUQ=
+	b=Kk8poHBhUInr+vHmX2MkNK1m2eI7dwhpuMdQ0KFX0IlADTUP+Og8Pbwn+7EVTe9Z6
+	 QhLiMidY4RcUldNL6EyyC2s3it9/gvd/dkJA90lbmOhe4FLYBEPtxOskiZdJDGzqF2
+	 wmpGSvJGtP90f/FqEfEeFN06lWFnte25EyVtMZUs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Antoine Tenart <atenart@kernel.org>,
+	Ibrahim Hashimov <security@auditcode.ai>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.1 678/744] ila: reload IPv6 header after pskb_may_pull in checksum adjust
-Date: Thu, 30 Jul 2026 16:15:51 +0200
-Message-ID: <20260730141458.674564929@linuxfoundation.org>
+Subject: [PATCH 7.1 679/744] mac802154: hold an interface reference across the scan worker
+Date: Thu, 30 Jul 2026 16:15:52 +0200
+Message-ID: <20260730141458.695784728@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -52,83 +50,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Ibrahim Hashimov <security@auditcode.ai>
 
-commit 92d3817649df2b0b6a008a686c8275c88d7ef594 upstream.
+commit 234e5e898b713bc0b3a631b6f002897f43d046c8 upstream.
 
-ila_csum_adjust_transport() caches ip6h = ipv6_hdr(skb) before calling
-pskb_may_pull(). On a non-linear skb whose transport header sits in a page
-fragment, pskb_may_pull() can call __pskb_pull_tail() / pskb_expand_head()
-and free the old skb head, leaving ip6h dangling; the following
-get_csum_diff(ip6h, p) then reads freed memory. ila_update_ipv6_locator()
-uses ip6h (and the iaddr derived from it) again after the csum-adjust
-call and additionally writes the new locator through that pointer.
+mac802154_scan_worker() captures the scanning sub-interface under RCU
+and then keeps dereferencing sdata->dev after rcu_read_unlock() and
+outside the rtnl -- in the failure traces, in
+mac802154_transmit_beacon_req() (skb->dev = sdata->dev), and in the
+end_scan cleanup. Nothing keeps that netdev alive across the worker
+iteration.
 
-Impact: a remote IPv6 packet routed through a configured ILA
-csum-adjust-transport route or receive-side mapping triggers a
-slab-use-after-free in ila_update_ipv6_locator() (KASAN). The route or
-mapping requires CAP_NET_ADMIN to configure, but trigger packets are
-unauthenticated once it exists.
+A concurrent DEL_INTERFACE or PHY removal can unregister the interface
+once the worker drops the rtnl between its two drv_set_channel()
+sections. unregister_netdevice() frees the netdev asynchronously from
+netdev_run_todo() with the rtnl already dropped, so neither holding the
+rtnl nor the per-PHY IEEE802154_IS_SCANNING flag prevents a stale worker
+iteration from dereferencing the freed netdev -- a KASAN
+slab-use-after-free, reachable by racing TRIGGER_SCAN against
+DEL_INTERFACE (both CAP_NET_ADMIN).
 
-Reload ip6h after each pskb_may_pull() in ila_csum_adjust_transport()
-before the csum-diff read. In ila_update_ipv6_locator() only the
-ILA_CSUM_ADJUST_TRANSPORT case pulls the skb, so reload ip6h and iaddr in
-that case alone before the destination-address write; the neutral-map
-modes never pull and keep their cached pointers.
+Pin the netdev with netdev_hold() while the RCU read lock is still held,
+and release it at every worker exit.
 
-Fixes: 33f11d16142b ("ila: Create net/ipv6/ila directory")
+Fixes: 57588c71177f ("mac802154: Handle passive scanning")
 Cc: stable@vger.kernel.org
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Antoine Tenart <atenart@kernel.org>
-Link: https://patch.msgid.link/20260714114903.3763420-1-michael.bommarito@gmail.com
+Signed-off-by: Ibrahim Hashimov <security@auditcode.ai>
+Link: https://patch.msgid.link/20260721211228.34578-1-security@auditcode.ai
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/ila/ila_common.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ net/mac802154/scan.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/net/ipv6/ila/ila_common.c
-+++ b/net/ipv6/ila/ila_common.c
-@@ -85,6 +85,7 @@ static void ila_csum_adjust_transport(st
- 			struct tcphdr *th = (struct tcphdr *)
- 					(skb_network_header(skb) + nhoff);
+--- a/net/mac802154/scan.c
++++ b/net/mac802154/scan.c
+@@ -179,6 +179,7 @@ void mac802154_scan_worker(struct work_s
+ 	enum nl802154_scan_types scan_req_type;
+ 	struct ieee802154_sub_if_data *sdata;
+ 	unsigned int scan_duration = 0;
++	netdevice_tracker dev_tracker;
+ 	struct wpan_phy *wpan_phy;
+ 	u8 scan_req_duration;
+ 	u8 page, channel;
+@@ -209,6 +210,14 @@ void mac802154_scan_worker(struct work_s
+ 		return;
+ 	}
  
-+			ip6h = ipv6_hdr(skb);
- 			diff = get_csum_diff(ip6h, p);
- 			inet_proto_csum_replace_by_diff(&th->check, skb,
- 							diff, true, true);
-@@ -96,6 +97,7 @@ static void ila_csum_adjust_transport(st
- 					(skb_network_header(skb) + nhoff);
++	/*
++	 * sdata->dev is dereferenced below after rcu_read_unlock() and outside
++	 * the rtnl, and a concurrent DEL_INTERFACE / PHY teardown can free it
++	 * asynchronously from netdev_run_todo(). Pin it with a reference taken
++	 * while the RCU read lock is still held, and drop it at every exit.
++	 */
++	netdev_hold(sdata->dev, &dev_tracker, GFP_ATOMIC);
++
+ 	wpan_phy = scan_req->wpan_phy;
+ 	scan_req_type = scan_req->type;
+ 	scan_req_duration = scan_req->duration;
+@@ -262,12 +271,14 @@ void mac802154_scan_worker(struct work_s
+ 		"Scan page %u channel %u for %ums\n",
+ 		page, channel, jiffies_to_msecs(scan_duration));
+ 	queue_delayed_work(local->mac_wq, &local->scan_work, scan_duration);
++	netdev_put(sdata->dev, &dev_tracker);
+ 	return;
  
- 			if (uh->check || skb->ip_summed == CHECKSUM_PARTIAL) {
-+				ip6h = ipv6_hdr(skb);
- 				diff = get_csum_diff(ip6h, p);
- 				inet_proto_csum_replace_by_diff(&uh->check, skb,
- 								diff, true, true);
-@@ -110,6 +112,7 @@ static void ila_csum_adjust_transport(st
- 			struct icmp6hdr *ih = (struct icmp6hdr *)
- 					(skb_network_header(skb) + nhoff);
+ end_scan:
+ 	rtnl_lock();
+ 	mac802154_scan_cleanup_locked(local, sdata, false);
+ 	rtnl_unlock();
++	netdev_put(sdata->dev, &dev_tracker);
+ }
  
-+			ip6h = ipv6_hdr(skb);
- 			diff = get_csum_diff(ip6h, p);
- 			inet_proto_csum_replace_by_diff(&ih->icmp6_cksum, skb,
- 							diff, true, true);
-@@ -127,6 +130,15 @@ void ila_update_ipv6_locator(struct sk_b
- 	switch (p->csum_mode) {
- 	case ILA_CSUM_ADJUST_TRANSPORT:
- 		ila_csum_adjust_transport(skb, p);
-+		/*
-+		 * ila_csum_adjust_transport() calls pskb_may_pull(), which can
-+		 * reallocate the skb head and leave ip6h (and the iaddr derived
-+		 * from it) dangling; reload both before the write below.  The
-+		 * other csum modes do not pull, so their cached pointers stay
-+		 * valid.
-+		 */
-+		ip6h = ipv6_hdr(skb);
-+		iaddr = ila_a2i(&ip6h->daddr);
- 		break;
- 	case ILA_CSUM_NEUTRAL_MAP:
- 		if (sir2ila) {
+ int mac802154_trigger_scan_locked(struct ieee802154_sub_if_data *sdata,
 
 
