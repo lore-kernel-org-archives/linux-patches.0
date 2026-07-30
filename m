@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3386413D8F;
-	Thu, 30 Jul 2026 14:21:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A29F943F0BE;
+	Thu, 30 Jul 2026 14:21:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421269; cv=none; b=aTwYZPbbm368hftxQBakr1OdG4FTj2MKKFk+3dgBnPFhJD8tzBwPM3RZ4akS9rgwQ787CV+WR32x6YmfxkHDirxEXkx0lGPXoUt7iYrH6lgIWFHzvnyeH6V7iM/M2V99tfsVy9L1meu4k/yspRA+vQdZaNcsMeuCPfoendVaSYk=
+	t=1785421276; cv=none; b=NWKOJeiwAUwSr7P6EC81AYeUwhEqjhxmS0I/Zc8aM2BYgKzbzaEXZdOZUE0O0zFvoo6q45+ptCeyfWa6kX2hA28oliOMV2fKPH1xDVCyvL3E96+N35xFjMh1QhdFkg35ZIcK00kM6gFr5GiO5kWREPyUEJqX2v2P/+JHqn4qkVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421269; c=relaxed/simple;
-	bh=tf5XtpeNv6NwVIBrjtyoKUH+UTzQgecKfS0nNhRWYHU=;
+	s=arc-20240116; t=1785421276; c=relaxed/simple;
+	bh=QBAROHmgIXCi4DJ+Vdg7DQ31PLW8Ieul7KloCNJvwjY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GUqhxZbkX1CMHHDoFS8uAgksI37vhFQRW8cQOS7uLbx4fx3IxgKBEGk4y1Fy6z5aE7fYbjd+wiphBIfcRc7M/PkWM8OrpcO/KqEdKTxshIsft2UQuhV2ogQwZXdEoWboot33yFllFtaFqACqc0YoSNTkzh01OjAxQYH4E2fxE7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UrbPMDe2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dGTfDpLwjKDoRjBVQoYEw8wiKxItkIwZrCtRw5i34R1UUsSpXO15C5tKhwRanAm9g2DHwSas0QcsiY2YOxv4z2voQZiIasvXViJHAEmZW4p2hctULzJ7jfecoY5HmFlfzUiBDP55kcaFmDncOSajiOwPOqHZQJBt8EOF6omalgE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rzguSVB4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UrbPMDe2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 246FE1F000E9;
-	Thu, 30 Jul 2026 14:21:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rzguSVB4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C4021F00A3A;
+	Thu, 30 Jul 2026 14:21:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421266;
-	bh=a/1qVT8WYkN9Rhliqtf0QfDXeaZojwZJMVP5mChxjWw=;
+	s=korg; t=1785421270;
+	bh=Xg3dgpyFx39792mQUfDkbeCsdczqD7iuqTJ9MkoxCIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UrbPMDe2yBMia0KOYfk3JNZNBAAGQotPyJc2Re8XaJK5mEq/mDyPiZ8EE0EMMwpDX
-	 aZD5LOCE3UNWdx+hslE925uswcd+LHnXqQH7sd40Zsi6EGbp2HFeqQfRe1zKlSgHbR
-	 iRRByRvhxQTFnOPYxKUAwUk/C3SAVrr8Z2rdT4XU=
+	b=rzguSVB4A0Lau9Pc2Lc6k/fmi6gH3U9CztCNQ/p0QsAo/LdjNxnO3qeIRBILdycTJ
+	 qOmNNGrxYz77GOnOm9LORbVuf8QM2Ye3nK2pW8KdtVOAY8PxNjmmFWYVk3XYejmvjp
+	 mWNTvYIUf2s9IUps21KHFzytmIVRe5+IMpXvbLM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
-	Florian Westphal <fw@strlen.de>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 047/744] xfrm: policy: preallocate inexact bins before xfrm_hash_rebuild reinsert
-Date: Thu, 30 Jul 2026 16:05:20 +0200
-Message-ID: <20260730141445.279140564@linuxfoundation.org>
+Subject: [PATCH 7.1 048/744] wifi: mac80211: allocate backup ieee80211_nan_sched_cfg off stack
+Date: Thu, 30 Jul 2026 16:05:21 +0200
+Message-ID: <20260730141445.301094234@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -53,72 +51,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei (Microsoft) <xmei5@asu.edu>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit f38f8cce2f7e79775b3db7e8a5eacda04ac908e4 ]
+[ Upstream commit 44494b0d1d16e76ae805817579eacc801b10ed37 ]
 
-xfrm_hash_rebuild()'s first loop preallocates the bins/chains the reinsert
-loop needs, so the reinsert (after hlist_del_rcu()) cannot allocate or
-fail. But its guard is inverted: it skips policies with prefixlen <
-threshold and preallocates for the rest.
+The ieee80211_nan_sched_cfg structure is too large to keep on the
+per thread stack:
 
-prefixlen < threshold is exactly when policy_hash_bysel() returns NULL and
-the reinsert takes the allocating xfrm_policy_inexact_insert() path. So the
-loop preallocates for the exact policies (which never allocate) and skips
-the inexact ones, whose bin/node is then allocated GFP_ATOMIC during
-reinsert. On failure the error path only WARN_ONCE()s and continues,
-leaving a poisoned bydst node; the next rebuild's hlist_del_rcu()
-dereferences LIST_POISON2 and takes a GPF. Reachable under memory pressure,
-deterministic via failslab.
+net/mac80211/nan.c:251:5: error: stack frame size (1560) exceeds limit (1536) in 'ieee80211_nan_set_local_sched' [-Werror,-Wframe-larger-than]
+  251 | int ieee80211_nan_set_local_sched(struct ieee80211_sub_if_data *sdata,
 
-Invert the guard so preallocation covers exactly the reinserted policies;
-the reinsert then allocates nothing and cannot fail.
+Allocate this dynamically using kmalloc_obj() to reduce the stack
+usage of this function to a manageable 344 bytes for the same
+configuration.
 
-Crash:
-  Oops: general protection fault, probably for non-canonical address
-  0xfbd59c0000000024: 0000 [#1] SMP KASAN NOPTI
-  KASAN: maybe wild-memory-access in range [0xdead...]
-  ...
-  Workqueue: events xfrm_hash_rebuild
-  RIP: 0010:xfrm_hash_rebuild+0x5b3/0x1190
-  RAX: dead000000000122   (LIST_POISON2 + offset)
-  ...
-  Call Trace:
-   hlist_del_rcu (include/linux/rculist.h:599)
-   xfrm_hash_rebuild (net/xfrm/xfrm_policy.c:1365)
-   process_one_work (kernel/workqueue.c:3322)
-   worker_thread (kernel/workqueue.c:3486)
-   kthread (kernel/kthread.c:436)
-   ret_from_fork (arch/x86/kernel/process.c:158)
-   ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
-   ...
-  Kernel panic - not syncing: Fatal exception in interrupt
-
-Fixes: 24969facd704 ("xfrm: policy: store inexact policies in an rhashtable")
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Signed-off-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
-Reviewed-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: 589c06e8fdee ("wifi: mac80211: add NAN local schedule support")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://patch.msgid.link/20260611130100.3387714-1-arnd@kernel.org
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_policy.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/mac80211/nan.c | 35 +++++++++++++++++++----------------
+ 1 file changed, 19 insertions(+), 16 deletions(-)
 
-diff --git a/net/xfrm/xfrm_policy.c b/net/xfrm/xfrm_policy.c
-index 639934f300167e..bed4b5a3fcce14 100644
---- a/net/xfrm/xfrm_policy.c
-+++ b/net/xfrm/xfrm_policy.c
-@@ -1329,8 +1329,8 @@ static void xfrm_hash_rebuild(struct work_struct *work)
- 			}
- 		}
+diff --git a/net/mac80211/nan.c b/net/mac80211/nan.c
+index 4e262b624521d2..d089b18321e44c 100644
+--- a/net/mac80211/nan.c
++++ b/net/mac80211/nan.c
+@@ -253,9 +253,12 @@ int ieee80211_nan_set_local_sched(struct ieee80211_sub_if_data *sdata,
+ {
+ 	struct ieee80211_nan_channel *sched_idx_to_chan[IEEE80211_NAN_MAX_CHANNELS] = {};
+ 	struct ieee80211_nan_sched_cfg *sched_cfg = &sdata->vif.cfg.nan_sched;
+-	struct ieee80211_nan_sched_cfg backup_sched;
++	struct ieee80211_nan_sched_cfg *backup_sched __free(kfree) = kmalloc_obj(*backup_sched);
+ 	int ret;
  
--		if (policy->selector.prefixlen_d < dbits ||
--		    policy->selector.prefixlen_s < sbits)
-+		if (policy->selector.prefixlen_d >= dbits &&
-+		    policy->selector.prefixlen_s >= sbits)
++	if (!backup_sched)
++		return -ENOMEM;
++
+ 	if (sched->n_channels > IEEE80211_NAN_MAX_CHANNELS)
+ 		return -EOPNOTSUPP;
+ 
+@@ -275,13 +278,13 @@ int ieee80211_nan_set_local_sched(struct ieee80211_sub_if_data *sdata,
+ 
+ 	bitmap_zero(sdata->u.nan.removed_channels, IEEE80211_NAN_MAX_CHANNELS);
+ 
+-	memcpy(backup_sched.schedule, sched_cfg->schedule,
+-	       sizeof(backup_sched.schedule));
+-	memcpy(backup_sched.channels, sched_cfg->channels,
+-	       sizeof(backup_sched.channels));
+-	memcpy(backup_sched.avail_blob, sched_cfg->avail_blob,
+-	       sizeof(backup_sched.avail_blob));
+-	backup_sched.avail_blob_len = sched_cfg->avail_blob_len;
++	memcpy(backup_sched->schedule, sched_cfg->schedule,
++	       sizeof(backup_sched->schedule));
++	memcpy(backup_sched->channels, sched_cfg->channels,
++	       sizeof(backup_sched->channels));
++	memcpy(backup_sched->avail_blob, sched_cfg->avail_blob,
++	       sizeof(backup_sched->avail_blob));
++	backup_sched->avail_blob_len = sched_cfg->avail_blob_len;
+ 
+ 	memcpy(sched_cfg->avail_blob, sched->nan_avail_blob,
+ 	       sched->nan_avail_blob_len);
+@@ -377,17 +380,17 @@ int ieee80211_nan_set_local_sched(struct ieee80211_sub_if_data *sdata,
+ 		if (!chan_def->chan)
  			continue;
  
- 		bin = xfrm_policy_inexact_alloc_bin(policy, dir);
+-		if (!cfg80211_chandef_identical(&backup_sched.channels[i].chanreq.oper,
++		if (!cfg80211_chandef_identical(&backup_sched->channels[i].chanreq.oper,
+ 						chan_def))
+ 			ieee80211_nan_remove_channel(sdata,
+ 						     &sched_cfg->channels[i]);
+ 	}
+ 
+ 	/* Re-add all backed up channels */
+-	for (int i = 0; i < ARRAY_SIZE(backup_sched.channels); i++) {
++	for (int i = 0; i < ARRAY_SIZE(backup_sched->channels); i++) {
+ 		struct ieee80211_nan_channel *chan = &sched_cfg->channels[i];
+ 
+-		*chan = backup_sched.channels[i];
++		*chan = backup_sched->channels[i];
+ 
+ 		/*
+ 		 * For deferred update, no channels were removed and the channel
+@@ -418,11 +421,11 @@ int ieee80211_nan_set_local_sched(struct ieee80211_sub_if_data *sdata,
+ 		}
+ 	}
+ 
+-	memcpy(sched_cfg->schedule, backup_sched.schedule,
+-	       sizeof(backup_sched.schedule));
+-	memcpy(sched_cfg->avail_blob, backup_sched.avail_blob,
+-	       sizeof(backup_sched.avail_blob));
+-	sched_cfg->avail_blob_len = backup_sched.avail_blob_len;
++	memcpy(sched_cfg->schedule, backup_sched->schedule,
++	       sizeof(backup_sched->schedule));
++	memcpy(sched_cfg->avail_blob, backup_sched->avail_blob,
++	       sizeof(backup_sched->avail_blob));
++	sched_cfg->avail_blob_len = backup_sched->avail_blob_len;
+ 	sched_cfg->deferred = false;
+ 	bitmap_zero(sdata->u.nan.removed_channels, IEEE80211_NAN_MAX_CHANNELS);
+ 
 -- 
 2.53.0
 
