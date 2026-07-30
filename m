@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92ACF5C613;
-	Thu, 30 Jul 2026 14:37:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CB3643F0BE;
+	Thu, 30 Jul 2026 14:37:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422233; cv=none; b=h71jJOTYOMtLdVC+EPnudHTd++9lrTIY0q1JlCwwDNzBB+/ag5/I156+K0GB+gYORSv8eUmwph7BNcC3EBSw2UjEe+1dqK8AyzmzVcaMvcie0gWTNRnprNO/8uqQiHyfvgmDo2ZYuWxUQTnL2w0ckpQVJ6sNiTep5xhza6RZiok=
+	t=1785422236; cv=none; b=bBqfvS/T53W+vJNCuStP2A+fEuYSo3hEP9lv+EJDrBekOMw+I4vBnZ75IEmx6fQjOM77OE+7w8NmuRflm7cAq3VEkW192J1vjAJugQNcR678iOXwLtcpaXeKel6SvQN/3hC7ZwKJkmibWUQ44bicivL/Plo8NRVo4e0NX/dN8dY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422233; c=relaxed/simple;
-	bh=XHQudZEFU0lDViCzEPu+rY6WYh2UV4leXlzudU2XVoU=;
+	s=arc-20240116; t=1785422236; c=relaxed/simple;
+	bh=gav4D5emVzQJ9Wkak4M+atAcBfQcT64B9ARYxM0pLa0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=re0jIDZja3IW1NiNzdsH3Xm7xVdST+2fZjf5P9C4JnpetYd8ISf3C9+K+PkB8j2rA035qICOGezlrhw7wFgbxMtHpJd+2zsyuglHB3XDfJSCILLouqLaUmgkzAfT8YtxHK4FlNdctzZGPdjkSfFTq36nxtZCcsloI8HEyb6kutE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0hqtileE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=M5ZmvtaYg5ByDpq3PN/r+WI8gPG+Kaa44gGvLZNEsPbfM0Ex+PwXg88QPueQ2gxe/7mDDd7GmZlPwbAS4Ua7GWGrOwqlZfT+MfSRR0wFmtRXqQkicOiJpNaPReesIpj7hfUj6DY/qdvm0OmUsx6chPMFn0CPcZf0OBLmr6fSU+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M8x7Pxnm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0hqtileE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F21561F000E9;
-	Thu, 30 Jul 2026 14:37:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M8x7Pxnm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8ADC1F000E9;
+	Thu, 30 Jul 2026 14:37:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422232;
-	bh=xHiXspIMv8ERyWMukoYdM0JyAIIbl6w3HETdTHKXo8s=;
+	s=korg; t=1785422235;
+	bh=EUAjMnBeboot7CxmWuFd4ppziQonYk01Yc5tbMpbcfI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0hqtileEUhP5tCBgT5pS3szXf82Q+pAi5MgWsW6f1aYao9876JlKffBhyer79l4Ww
-	 h4JWcMkHLTFPQqkMUIjWWBgwn2wz2u/3s2aKdGTt2BmW93lvcHeqe169vkgGDNuscn
-	 d0DYZOx880m+xMYGN+sAUOe2VjjNaqkSqozX09Dw=
+	b=M8x7PxnmpQfYOdEAMiRFDMo1eG1QJM0Q52e/ifpx4QHkuneyk8ggBulzgcogK50X3
+	 Ws1o0aZz92ZvSoI+UHBBlDHRM2ndiYPUhrcCzWA2p2vJd9Iw2l5eK6VOzedv97xVXN
+	 ibx49LfUjrhb1IbpfIQbhMS7O5mzGTW3/K+Q3r3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harshaka Narayana <harshaka.narayana@broadcom.com>,
-	Ronak Doshi <ronak.doshi@broadcom.com>,
-	Sankararaman Jayaraman <sankararaman.jayaraman@broadcom.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 314/744] vmxnet3: fix BUG_ON in vmxnet3_get_hdr_len() for Geneve packets
-Date: Thu, 30 Jul 2026 16:09:47 +0200
-Message-ID: <20260730141450.959507660@linuxfoundation.org>
+	Chen Ni <nichen@iscas.ac.cn>,
+	Dragan Simic <dsimic@manjaro.org>,
+	Heiko Stuebner <heiko@sntech.de>
+Subject: [PATCH 7.1 363/744] drm/rockchip: analogix_dp: Add missing error check for platform_get_resource()
+Date: Thu, 30 Jul 2026 16:10:36 +0200
+Message-ID: <20260730141452.001114053@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -54,84 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harshaka Narayana <harshaka.narayana@broadcom.com>
+From: Chen Ni <nichen@iscas.ac.cn>
 
-[ Upstream commit 34a71f5361fc3adb5b7138da78750b0d535a8252 ]
+commit 45895f4d4d5f222d07412f90664f88b059627859 upstream.
 
-vmxnet3_get_hdr_len() assumes gdesc->rcd.v4/v6/tcp always describe the
-outer header, but for a Geneve-encapsulated packet the device can set
-them based on the inner header instead, signalled by the
-VMXNET3_RCD_HDR_INNER_SHIFT bit in the completion descriptor. Since the
-function never skips the outer encapsulation, this mismatch triggers:
+Add missing error check for platform_get_resource() return value to
+prevent NULL pointer dereference when memory resource is not available.
 
-- BUG_ON(hdr.ipv4->protocol != IPPROTO_TCP), because the outer
-  protocol is UDP (Geneve), not TCP.
-- BUG_ON(hdr.eth->h_proto != ...), when the tunnel's outer and inner
-  IP versions differ (e.g. outer IPv6/inner IPv4 or vice versa).
-
-Check VMXNET3_RCD_HDR_INNER_SHIFT up front and bail out, since the
-function cannot locate the inner header it would need to parse. Also
-convert the remaining BUG_ON()s in this function to return 0
-defensively.
-
-Fixes: 45dac1d6ea04 ("vmxnet3: Changes for vmxnet3 adapter version 2 (fwd)")
-Signed-off-by: Harshaka Narayana <harshaka.narayana@broadcom.com>
-Reviewed-by: Ronak Doshi <ronak.doshi@broadcom.com>
-Reviewed-by: Sankararaman Jayaraman <sankararaman.jayaraman@broadcom.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260713140915.3381715-1-harshaka.narayana@broadcom.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 718b3bb9c0ab ("drm/rockchip: analogix_dp: Expand device data to support multiple edp display")
+Cc: stable@vger.kernel.org
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Reviewed-by: Dragan Simic <dsimic@manjaro.org>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patch.msgid.link/20260209033123.1089370-1-nichen@iscas.ac.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/vmxnet3/vmxnet3_drv.c | 22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/rockchip/analogix_dp-rockchip.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/vmxnet3/vmxnet3_drv.c b/drivers/net/vmxnet3/vmxnet3_drv.c
-index 40522afc053203..f8df83f9965db5 100644
---- a/drivers/net/vmxnet3/vmxnet3_drv.c
-+++ b/drivers/net/vmxnet3/vmxnet3_drv.c
-@@ -1530,7 +1530,11 @@ vmxnet3_get_hdr_len(struct vmxnet3_adapter *adapter, struct sk_buff *skb,
- 		struct ipv6hdr *ipv6;
- 		struct tcphdr *tcp;
- 	} hdr;
--	BUG_ON(gdesc->rcd.tcp == 0);
-+
-+	/* v4/v6/tcp then describe the inner header, which we can't locate. */
-+	if ((le32_to_cpu(gdesc->dword[0]) & (1UL << VMXNET3_RCD_HDR_INNER_SHIFT)) ||
-+	    gdesc->rcd.tcp == 0)
-+		return 0;
+--- a/drivers/gpu/drm/rockchip/analogix_dp-rockchip.c
++++ b/drivers/gpu/drm/rockchip/analogix_dp-rockchip.c
+@@ -461,6 +461,8 @@ static int rockchip_dp_probe(struct plat
+ 		return -ENOMEM;
  
- 	maplen = skb_headlen(skb);
- 	if (unlikely(sizeof(struct iphdr) + sizeof(struct tcphdr) > maplen))
-@@ -1544,15 +1548,21 @@ vmxnet3_get_hdr_len(struct vmxnet3_adapter *adapter, struct sk_buff *skb,
+ 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
++	if (!res)
++		return -EINVAL;
  
- 	hdr.eth = eth_hdr(skb);
- 	if (gdesc->rcd.v4) {
--		BUG_ON(hdr.eth->h_proto != htons(ETH_P_IP) &&
--		       hdr.veth->h_vlan_encapsulated_proto != htons(ETH_P_IP));
-+		if (hdr.eth->h_proto != htons(ETH_P_IP) &&
-+		    hdr.veth->h_vlan_encapsulated_proto != htons(ETH_P_IP))
-+			return 0;
-+
- 		hdr.ptr += hlen;
--		BUG_ON(hdr.ipv4->protocol != IPPROTO_TCP);
-+		if (hdr.ipv4->protocol != IPPROTO_TCP)
-+			return 0;
-+
- 		hlen = hdr.ipv4->ihl << 2;
- 		hdr.ptr += hdr.ipv4->ihl << 2;
- 	} else if (gdesc->rcd.v6) {
--		BUG_ON(hdr.eth->h_proto != htons(ETH_P_IPV6) &&
--		       hdr.veth->h_vlan_encapsulated_proto != htons(ETH_P_IPV6));
-+		if (hdr.eth->h_proto != htons(ETH_P_IPV6) &&
-+		    hdr.veth->h_vlan_encapsulated_proto != htons(ETH_P_IPV6))
-+			return 0;
-+
- 		hdr.ptr += hlen;
- 		/* Use an estimated value, since we also need to handle
- 		 * TSO case.
--- 
-2.53.0
-
+ 	i = 0;
+ 	while (dp_data[i].reg) {
 
 
