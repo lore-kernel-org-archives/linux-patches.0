@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBA7936829D;
-	Thu, 30 Jul 2026 16:10:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 860E736829D;
+	Thu, 30 Jul 2026 16:10:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427832; cv=none; b=aZB4UNxfDUj/t02Z1ELCL3ll1P5rNNgTkiw8BUy+vRRXaUWp1rCP55CzJwEBcJcNCOnCpXXwTTknjHuT+wXlfAbZM1ceu+rWhreXKNG6CJfWAZLQcfjhZLwKgKfjbotyFXD+05GR0gLjIsLpKK+SA5rslwoKKwv/4lor28WgM4M=
+	t=1785427835; cv=none; b=NNVBNuXDW/KcR9ACAenunfpcJFVAbcibM0jcFtHdTxHQgSo16tpS3yN+tOGJRM9yrI/bLUAAOBjDZw1u7B0hAyxX8mPEjVLXF6yyw4yugBvc71hs+M2CwT056vO9X70DlyFvUn3ezUow42W4ZQ/JbVH1wtp+HoQdDeI9pTy1xlY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427832; c=relaxed/simple;
-	bh=LMUZbuJMU18sfr41Sy7FBBwfruMuUSPQUmW9yo2BeX4=;
+	s=arc-20240116; t=1785427835; c=relaxed/simple;
+	bh=hIjF/JFscCeWchAQXcqAu2HXip2Lpy6MrVQvweWdJ5o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qW0teP1aLnEpqjdc5v03pf+3j7af1eyiwSvUpwPb/IOLzNRZKgXTGxLdih0+rdYOHt3dYag+Acorl4xngBh/rsEgg1+MvwnlGl2MWmPIw1WMGTecrNb88HvSc5h2AkNQf5dSxsl0RoeEIXsXnYlAuxSf47HG/wYZAsQ0M4wtOoA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D8XbYrxo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=E+kn4armul69ozC/oEGK//vJ93P99HhOQjKcFUkrXSxEQdwPbbkCJ3w6srWB6F4/NKNONCt8GW+yl4DTAsC3oZr+OJ14VwS9dqs7TBgWrBXEiLinJD0zA2mZceQOypOOg2pU5pNn1CI0URB24V2MXOILIGf3hMXgJSYpNKxjOpM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AIkDSBIO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D8XbYrxo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 243151F000E9;
-	Thu, 30 Jul 2026 16:10:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AIkDSBIO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAA881F000E9;
+	Thu, 30 Jul 2026 16:10:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427831;
-	bh=++PwNiin8v09tBZkKXVxuMJyqvyZneRS9MtD/N8uFA8=;
+	s=korg; t=1785427834;
+	bh=9aZT8xUjoIw0w/IElypCgbmjaHyyrIeX5PBC1PWsx00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D8XbYrxouc33sp2tx18li5ypCZhqDZGaURMEHv+XeM6bhLYynUKyU5t00GfzDCMuP
-	 twRoND/r7RS9KylI4MXhEZ/pzzj/s8UvyANcW9ZE1NojIdUwzyKrf4y9Ahdls5LH7y
-	 ASiqI45riXF+2SR1F01cqm44au6NZ7h6GOQsDb5s=
+	b=AIkDSBIOUffUs6R5qKOMrq8zVLiRZAHDZDVHXW8VlavWGH1/x62uyrCwlYeRN3Sv3
+	 WFTOSzm282stIgZRL6ErbuC/CVlgdbCk9Ww9UTtAs1bY8x9A50zr9pFgGMOopxRhJg
+	 +JGHYGDs9gTwtuSPjiZxsyxz1x6mG5Fqq+abzOpU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Douya Le <ldy3087146292@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
 	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 6.6 308/484] libceph: Reject monmaps advertising zero monitors
-Date: Thu, 30 Jul 2026 16:13:25 +0200
-Message-ID: <20260730141430.179338005@linuxfoundation.org>
+Subject: [PATCH 6.6 309/484] libceph: reject zero bucket types in crush_decode
+Date: Thu, 30 Jul 2026 16:13:26 +0200
+Message-ID: <20260730141430.201114570@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -50,47 +54,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
+From: Douya Le <ldy3087146292@gmail.com>
 
-commit 40480eee361ed9676b3f844d532ac28b47251634 upstream.
+commit 05f90284223381005d6bcddab3fda4a97f9c3401 upstream.
 
-A message of type CEPH_MSG_MON_MAP contains a monmap that is sent from a
-monitor to the client. This monmap contains information about the
-existing monitors in the cluster. Currently, a monmap indicating that
-there are zero monitors in the cluster is treated as valid. However, it
-is impossible to have zero monitors in the cluster and still receive a
-valid monmap from a monitor. Therefore, such a monmap must be corrupted
-and should be treated as invalid. Furthermore, a monmap with a monitor
-count of zero can subsequently crash the client when attempting to open
-a session with a monitor in __open_session(). This happens because the
-"BUG_ON(monc->monmap->num_mon < 1)" assertion in pick_new_mon() is
-triggered.
+CRUSH bucket type 0 is reserved for devices.  The mapper relies on
+that invariant and uses type 0 to identify leaf devices.
 
-This patch extends a check in ceph_monmap_decode() to also reject
-arriving mon_maps with num_mon == 0 rather than only with
-num_mon > CEPH_MAX_MON.
+If crush_decode() accepts a bucket with type 0, a malformed CRUSH map
+can make the mapper treat a negative bucket ID as a device and pass it
+to is_out(), which then indexes the OSD weight array with a negative
+value.
 
-[ idryomov: drop "log output for unusual values of num_mon" part ]
+Reject zero bucket types while decoding the CRUSH map so the invalid
+state never reaches the mapper.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
+Fixes: f24e9980eb86 ("ceph: OSD client")
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Assisted-by: Codex:GPT-5.4
+Signed-off-by: Douya Le <ldy3087146292@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
 Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/mon_client.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ceph/osdmap.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/ceph/mon_client.c
-+++ b/net/ceph/mon_client.c
-@@ -114,7 +114,7 @@ static struct ceph_monmap *ceph_monmap_d
- 
- 	dout("%s fsid %pU epoch %u num_mon %u\n", __func__, &fsid, epoch,
- 	     num_mon);
--	if (num_mon > CEPH_MAX_MON)
-+	if (num_mon == 0 || num_mon > CEPH_MAX_MON)
- 		goto e_inval;
- 
- 	monmap = kmalloc(struct_size(monmap, mon_inst, num_mon), GFP_NOIO);
+--- a/net/ceph/osdmap.c
++++ b/net/ceph/osdmap.c
+@@ -520,6 +520,8 @@ static struct crush_map *crush_decode(vo
+ 		ceph_decode_need(p, end, 4*sizeof(u32), bad);
+ 		b->id = ceph_decode_32(p);
+ 		b->type = ceph_decode_16(p);
++		if (b->type == 0)
++			goto bad;
+ 		b->alg = ceph_decode_8(p);
+ 		if (b->alg != alg) {
+ 			b->alg = 0;
 
 
