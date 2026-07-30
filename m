@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45E6B3E95A8;
-	Thu, 30 Jul 2026 15:18:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AD913B6352;
+	Thu, 30 Jul 2026 15:18:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424687; cv=none; b=JJCpt6Js5coKOJaXjjAcdCleSfbI0BPF1Qwl0MP3/4XVmY3v9ti5DGqdEz9zvUvK4q3lKGt8j1wmgXw0Ov45/PzcGIiakI6EjMhMMgRyBS6Cej23z3wDAdt/Vauf/DnlF4RwXGcdamuWZRRdah5+hh+ZyWhgPBD24zR2CWatWcQ=
+	t=1785424690; cv=none; b=V2JmpnlnhgEviUQmtudUoMqiT5L7HeOBvrcEdMmAtETqWKB2Udm9xQPQ+Ht8jP5P8O9WSRxUjEl4pULQd+nQ+Ry0sW5mZEhp3Uud71akidy4sJyz2PUuoWRAYw4wpvl+oXl2AjcXX2fi4dYm97iPShvn9FuWuQx6Ve0lhI3H+70=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424687; c=relaxed/simple;
-	bh=cTiWqplc1ICrE8Oz0jkinddf7l9b0Xza7y5popjn6BQ=;
+	s=arc-20240116; t=1785424690; c=relaxed/simple;
+	bh=RmC2uZWr5L1kd3hpbFgTCtYGPyAo7VTky/Y7f31dVH0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i7C4ff02B9rotc/3cGyjiW6EctfCtHx5LgMQZJru9ZUZoFUpETGOLlHyOsYlUqmU/2VDotdFah5PoDihHhhMy5fpNWtF8RiEuCxOIDwyswrfKFvuM9cwgGWeRCvnKAAIyQRhGKv6HYUiTIGUScBoJuWW4Ld+p1rh/3IIfNLta7Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C0ziwjTm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZDBpEKZqTjdHwWO66b20JHRseCjMGQPHhMsdrrLst2oyHOhAJYJOuTNzuw7nP6ZwgKr0pgL4vdGETlJ8nKit711TqZVuH2przf2xnjMZi4e8VvIEoD7xlS9Bw0d3BqGuEYyWLuv0MVqWREhCqmXYuBPrBE12JWf1rdF+g4EpIu4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fv7X2gIl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C0ziwjTm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0DAD1F000E9;
-	Thu, 30 Jul 2026 15:18:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fv7X2gIl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74C181F000E9;
+	Thu, 30 Jul 2026 15:18:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424686;
-	bh=+USP2nKoLRU4K+w6UTAA0LvdSUSfHI9VRYjDqRn9sOw=;
+	s=korg; t=1785424689;
+	bh=KfUoa5+XWUsrbH421KspGaAuPToX7N4ZqdENQ0GZ7+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C0ziwjTmBxKqo5nYflPWs7KKTofbdnsQp+mzkIQCW8YvN2b9F276tEOei9ONmGS+d
-	 c2S+nqgeykwzj6HqvAiZJrbKyMCg9gkkYrvCHJmqg83kYJB/vyNU8kVH9zH5Giytw5
-	 KDLdqO0dma9HmVwGYeJyFoseW5vNk/42AsTaxWbA=
+	b=Fv7X2gIlqqfIG7vXOLYB/0TSbGpQ+GSZkZajn2gkIwUR90WcgGronpKQ2uYF9vjbe
+	 YwRQ/YGZ5WFea6EtNKLL3ihopsxwcL68xXi3YI6fieWXtMOyBPOXgM0+E2zmKcp9Kj
+	 1FhdOpJk3203hTQ0MKni2+MvwXfVMbzJ0piBTJuc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+f24c3d5d316011bacc70@syzkaller.appspotmail.com,
-	stable <stable@kernel.org>,
-	Ian Abbott <abbotti@mev.co.uk>
-Subject: [PATCH 6.18 481/675] comedi: comedi_parport: deal with premature interrupt
-Date: Thu, 30 Jul 2026 16:13:31 +0200
-Message-ID: <20260730141455.349210161@linuxfoundation.org>
+	Ben Hutchings <benh@debian.org>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.18 482/675] uio_hv_generic: Bind to FCopy device by default
+Date: Thu, 30 Jul 2026 16:13:32 +0200
+Message-ID: <20260730141455.369660406@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -51,76 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Abbott <abbotti@mev.co.uk>
+From: Ben Hutchings <benh@debian.org>
 
-commit 17221216ae8ce6a24e8a4e787382e3ebc81b88a8 upstream.
+commit 87d3621ccc63b3999d756bb59f0cedd738c28eb3 upstream.
 
-Syzbot reported a general protection fault in
-`comedi_get_is_subdevice_running()`, which was called from the interrupt
-handler `parport_interrupt()` in the "comedi_parport" driver, but it
-does not currently have a C reproducer for the problem.  It's
-probably due to a premature interrupt for one of two reasons:
+The Hyper-V kernel-mode fcopy driver was removed in 6.10 and the new
+fcopy daemon requires this uio driver to function.  However, by
+default the driver does not bind to any devices, and must be
+configured through the sysfs "new_id" file.
 
-1. The driver sets up the interrupt handler before the comedi subdevices
-   used by the interrupt handler have been allocated, but does not
-   disable the interrupt in the parallel port's CTRL register first.
-2. The driver uses a user-supplied I/O port base address which Syzbot
-   would have supplied, but it might not be backed by real parallel port
-   hardware.
+Since the FCopy device is now only usable through this driver, add its
+ID to the driver's ID table so that the daemon will work "out of the
+box".
 
-Change the initialization order in the driver's comedi "attach" handler
-(`parport_attach()`) so that the hardware registers are initialized
-before the interrupt handler is requested.  This should prevent
-premature interrupts occurring for real hardware.
-
-Also add a test to the interrupt handler to ensure the comedi device is
-fully attached and return early if it isn't.
-
-Fixes: 241ab6ad7108e ("Staging: comedi: add comedi_parport driver")
-Reported-by: syzbot+f24c3d5d316011bacc70@syzkaller.appspotmail.com
+Signed-off-by: Ben Hutchings <benh@debian.org>
+Fixes: ec314f61e4fc ("Drivers: hv: Remove fcopy driver")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://patch.msgid.link/20260527125104.96596-1-abbotti@mev.co.uk
+Link: https://patch.msgid.link/ahQ6xuhSReidmN-3@decadent.org.uk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/comedi/drivers/comedi_parport.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/uio/uio_hv_generic.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/comedi/drivers/comedi_parport.c
-+++ b/drivers/comedi/drivers/comedi_parport.c
-@@ -211,6 +211,13 @@ static irqreturn_t parport_interrupt(int
- 	unsigned int ctrl;
- 	unsigned short val = 0;
- 
-+	/*
-+	 * Check device is fully attached.  Device interrupts should have
-+	 * been disabled, but do this in case of bad hardware.
-+	 */
-+	if (!dev->attached)
-+		return IRQ_NONE;
-+
- 	ctrl = inb(dev->iobase + PARPORT_CTRL_REG);
- 	if (!(ctrl & PARPORT_CTRL_IRQ_ENA))
- 		return IRQ_NONE;
-@@ -231,6 +238,9 @@ static int parport_attach(struct comedi_
- 	if (ret)
- 		return ret;
- 
-+	outb(0, dev->iobase + PARPORT_DATA_REG);
-+	outb(0, dev->iobase + PARPORT_CTRL_REG);
-+
- 	if (it->options[1]) {
- 		ret = request_irq(it->options[1], parport_interrupt, 0,
- 				  dev->board_name, dev);
-@@ -286,9 +296,6 @@ static int parport_attach(struct comedi_
- 		s->cancel	= parport_intr_cancel;
- 	}
- 
--	outb(0, dev->iobase + PARPORT_DATA_REG);
--	outb(0, dev->iobase + PARPORT_CTRL_REG);
--
- 	return 0;
+--- a/drivers/uio/uio_hv_generic.c
++++ b/drivers/uio/uio_hv_generic.c
+@@ -395,9 +395,15 @@ hv_uio_remove(struct hv_device *dev)
+ 	vmbus_free_ring(dev->channel);
  }
  
++static const struct hv_vmbus_device_id hv_uio_id_table[] = {
++	{ HV_FCOPY_GUID },
++	{}
++};
++MODULE_DEVICE_TABLE(vmbus, hv_uio_id_table);
++
+ static struct hv_driver hv_uio_drv = {
+ 	.name = "uio_hv_generic",
+-	.id_table = NULL, /* only dynamic id's */
++	.id_table = hv_uio_id_table,
+ 	.probe = hv_uio_probe,
+ 	.remove = hv_uio_remove,
+ };
 
 
