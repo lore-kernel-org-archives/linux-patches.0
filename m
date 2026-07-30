@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FAB533D50F;
-	Thu, 30 Jul 2026 14:31:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AFD035C68A;
+	Thu, 30 Jul 2026 14:31:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421890; cv=none; b=PLfMrn9CqfUToUPVEfJvX1qkQLXK53tQyCACtKNT9oP0ku8koNS9ZYj7ftgnrg1AA2PL0ZKCbQHJ/cG0qwK4yTFiX+wPRwCEw5ES+5HrezpBwuBQynstYPB0wBhyiuDE/1bSJQxQc8ywDCHLi8+RZhZgsnWUgjXpwL3oTwwfexg=
+	t=1785421893; cv=none; b=h/h3an1j8EPXyl+YzNU8MI6SZ0amr8rw2y5yiXx2DyWXqw1EMT5wJ8FZa8xpJVbbNCCeYfxY1WKZJcWJtiTdH3kmsuDQzj+LnOv6AsxxaM7kPggS56izuclaH52uaTrg8vhQcwj4gL43P76D0guVUVhUrTeI9Hm8eL9v4GdpYNA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421890; c=relaxed/simple;
-	bh=1GIyk7pDS5ALTxf/GOSxsm5ga0pHno2++q2bgGevwRI=;
+	s=arc-20240116; t=1785421893; c=relaxed/simple;
+	bh=/CMJ3O2NtZhMFkeAfP7VwjMalZruhmh23XFQTJ+WrKI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jPKhQR04Y/d+NrpoXRVHULtVD9JPkHDhfQSR2UTglyLKt36Yh4p31nEjPtWpKibePEU4GJlUXwRD7q0HdWGAtxzx/9u9yJrGJNmeGBBHEDr6Z9IFP92OdtdFuEPh82GLkd6N7ns6MnCMy8kp6vh+M0IETtPGWoBJz/U339dylYg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CZkmIVIW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=D2KevtBJd7Icht1fJ09cHyNq1y/efj2xq1a8uInfmdlPtU77A4FovZnf8FBR4Tdlxba/cbR8e7TIkIonhLVyB92ilN0qgRj1RGx8fH2paxXcghbCuQUBkBMx3pYtSM+q+ee5Iyoi6HVnaBptsR1JE97E2OBZvyfUiku+kxd5qSA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=03+BDZ5k; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CZkmIVIW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 733091F000E9;
-	Thu, 30 Jul 2026 14:31:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="03+BDZ5k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85B631F000E9;
+	Thu, 30 Jul 2026 14:31:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421889;
-	bh=ipRXE2K2rfTaUvRjlVNfUhI5Ombmt1lAapfV6ezUqtU=;
+	s=korg; t=1785421892;
+	bh=BWtWqGZhs7DS5JFmIngcj65CLgC+snmXhb8HGPpIJKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CZkmIVIWRPKO3j+o8X6XaZxboj35Nck9FD2VTWfqM0WGmcqs+FGblRDOQHJBrq95S
-	 zwDh0uLAp+AAwm+LFPU7C2MVbqVNl2cdgyXz7F95vKkDF9EWbVzAeeMecXgggf1xi8
-	 IK7ywoBO6Jy25P85r5Iob2/Hp/Y2t1UsBwVkyprI=
+	b=03+BDZ5kzXLwb+iGnRui/JBJqg2pjQvvq3mT1ddkqLSUNRyFb8cR/U4yeB79ny99P
+	 BhxtQdUD+GzJY8TKI8xqApQvdsE0ErDPe2DjD0v+LzR9CXmICd0Mtr/Ms4uIdfJMuq
+	 mW2fULjnxZIgOG8eiZta56CvxFW5Mqt9dYE0zXJs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Nikhil P. Rao" <nikhil.rao@amd.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Steven Price <steven.price@arm.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 253/744] pds_core: reject component parameter in legacy firmware update
-Date: Thu, 30 Jul 2026 16:08:46 +0200
-Message-ID: <20260730141449.670085579@linuxfoundation.org>
+Subject: [PATCH 7.1 254/744] arm64: Correct value returned by ESR_ELx_FSC_ADDRSZ_nL()
+Date: Thu, 30 Jul 2026 16:08:47 +0200
+Message-ID: <20260730141449.691693180@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -52,41 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikhil P. Rao <nikhil.rao@amd.com>
+From: Steven Price <steven.price@arm.com>
 
-[ Upstream commit 7be2552e601c247a328a5aba6fc06ac844b94a16 ]
+[ Upstream commit b877075d0baa22c225842c2f19e3ea0a9cbcbe39 ]
 
-The legacy firmware update path does not support per-component updates.
-If a user specifies a component parameter with devlink flash, reject
-the request with -EOPNOTSUPP rather than silently ignoring the component
-parameter and flashing the entire firmware image.
+Address size fault, level -1 is encoded as 0b101001 or 0x29 according to
+the Arm ARM. Correct the value to match the spec. This also matches the
+offset of "level -1 address size fault" in the fault_info array in
+fault.c.
 
-Fixes: 49ce92fbee0b ("pds_core: add FW update feature to devlink")
-Signed-off-by: Nikhil P. Rao <nikhil.rao@amd.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260708163649.128620-1-nikhil.rao@amd.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: fb8a3eba9c81 ("KVM: arm64: Only read HPFAR_EL2 when value is architecturally valid")
+Signed-off-by: Steven Price <steven.price@arm.com>
+Reviewed-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/pds_core/devlink.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/arm64/include/asm/esr.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/amd/pds_core/devlink.c b/drivers/net/ethernet/amd/pds_core/devlink.c
-index 3f0e56b951bf0b..d6fccd89476a0a 100644
---- a/drivers/net/ethernet/amd/pds_core/devlink.c
-+++ b/drivers/net/ethernet/amd/pds_core/devlink.c
-@@ -90,6 +90,12 @@ int pdsc_dl_flash_update(struct devlink *dl,
- {
- 	struct pdsc *pdsc = devlink_priv(dl);
- 
-+	if (params->component) {
-+		NL_SET_ERR_MSG_MOD(extack,
-+				   "Component update not supported by this device");
-+		return -EOPNOTSUPP;
-+	}
-+
- 	return pdsc_firmware_update(pdsc, params->fw, extack);
- }
+diff --git a/arch/arm64/include/asm/esr.h b/arch/arm64/include/asm/esr.h
+index 7e86d400864e03..64e9bd137b603c 100644
+--- a/arch/arm64/include/asm/esr.h
++++ b/arch/arm64/include/asm/esr.h
+@@ -131,7 +131,7 @@
+  * Annoyingly, the negative levels for Address size faults aren't laid out
+  * contiguously (or in the desired order)
+  */
+-#define ESR_ELx_FSC_ADDRSZ_nL(n)	((n) == -1 ? 0x25 : 0x2C)
++#define ESR_ELx_FSC_ADDRSZ_nL(n)	((n) == -1 ? 0x29 : 0x2C)
+ #define ESR_ELx_FSC_ADDRSZ_L(n)		((n) < 0 ? ESR_ELx_FSC_ADDRSZ_nL(n) : \
+ 						   (ESR_ELx_FSC_ADDRSZ + (n)))
  
 -- 
 2.53.0
