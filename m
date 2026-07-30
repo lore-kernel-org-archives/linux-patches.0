@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0644740B360;
-	Thu, 30 Jul 2026 14:25:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B30C1AF0BB;
+	Thu, 30 Jul 2026 14:25:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421553; cv=none; b=hTn7W7wLCqgAqbBamrGUb1+9/q340DGyd2cBUJrn6TLx9BJzaAs0L24m8CCtXpY4IUIJ4ZhbP6OQnOaEncZae26XaIhwamx9UQuBrHonswTjuyPt91TwV3uDOzIvLZ85pBcs/aD0g2KZZnrLy2aseAdhO/ESuPsIydlzJIsHKSg=
+	t=1785421556; cv=none; b=TWbrOeZCdBRXAzJ9/9vU8204iXcHriHvZIg3Wwx+ZRWpTLqyuWWjmVfjdG6VhqQOiCUCrAu0HqG6n8BpMXDdCUaumuNv56lr/z5PSdFBXrlSxFvEAXrNKYZf+0wkXBtFZCn0hWy4HZgFnLvJ5K/IDSO+Gs+Wf8TpjKaFxVhY1c0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421553; c=relaxed/simple;
-	bh=QN0/5w5yqX9gwFZBK/szZRDHhUTo0ydXLQXubhz/vZI=;
+	s=arc-20240116; t=1785421556; c=relaxed/simple;
+	bh=Y8oG0rDmEXqsbCTu17Gg3ptE3e/jNI6oGxIPdznHQcA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F1zPLu2BDsmN6IsauNLerwmbyipombv7cSAouWysMlMcEpDq0fEL/0BwJsF/DPUDITSDdUzKu6nDiXUWFVCV2V0SQnS2LY10VGbm00nHw4ACC8+o3PuprCHiGnxfhwCK8fkuJTlALSXt93PGVhLH6Kg5dno/fkFqE/ULy90xgIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hXWOss5d; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=H58dJcKNkpsCJoGC8efk2NRgnkTb5EfcRaNqVS6XnN31AzQTk9cKAosUi4R0vZ76/tnb/G3E1N6BXlPFI883xg+kzpRedCq5XEQQCL6y5QswAcjwhwA0cBnYs6h/XmdG9K5LLfbwBelAv4B5nXriK9vR2xL0WPNYoeCfLUqr/NQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZC/6Z5qF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hXWOss5d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2310A1F00A3A;
-	Thu, 30 Jul 2026 14:25:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZC/6Z5qF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01BF81F00A3A;
+	Thu, 30 Jul 2026 14:25:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421551;
-	bh=aEJqG3G1d/n01s5uZ8GfuUbndahYl/tDTO9ZY0I8Dxo=;
+	s=korg; t=1785421554;
+	bh=wfIZZrWrvimCDoZP1I1TtveBY1x58nV8eM0ou8yy+es=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hXWOss5dhdcHj+uJcqI6OyU+E7NrUx6TouaponQDDFxG8InHfitEzk7FpHPxVAgOw
-	 qO3+ZoRF//1lwKkBmYJ48o+dY1iQ3SYUN5OT2lHLuKnyegjXThdxIYuK/Y9QdRSrUO
-	 gHuV/B4O7wlbrfL9Oy9PXGHPsfSjEYeluRMirSno=
+	b=ZC/6Z5qFV2Heo4s+o3M0K/jVH3YJC6LmQsyAgW+Cz/IyUn0BZLuP/O68zR1MJYW42
+	 Cc0SBJ1jFJDPRQrv/hMRJ1hoG43+WO4SQlFNT+rAYFcSJex5Q0899uyiudEi6vFM3A
+	 zM/6QxZxI4OCiV1nsrIeZg0ZrqfhSql6FfKhszLM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+faf3a6cf579fc65591ca@syzkaller.appspotmail.com,
 	stable <stable@kernel.org>,
-	Jinchao Wang <wangjinchao600@gmail.com>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 7.1 143/744] usb: gadget: dummy_hcd: prevent fifo_req reuse during giveback
-Date: Thu, 30 Jul 2026 16:06:56 +0200
-Message-ID: <20260730141447.326438208@linuxfoundation.org>
+	Fan Wu <fanwu01@zju.edu.cn>
+Subject: [PATCH 7.1 144/744] usb: gadget: f_midi: cancel pending IN work before freeing the midi object
+Date: Thu, 30 Jul 2026 16:06:57 +0200
+Message-ID: <20260730141447.348552659@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -52,141 +50,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinchao Wang <wangjinchao600@gmail.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit d5e5cd3654d2b5359a12ea6586120f05b28634ee upstream.
+commit 5650c18d93a1db7e27cb5a40b394747eb4686d5b upstream.
 
-dummy_hcd embeds a single shared usb_request (dum->fifo_req) that the
-"emulated single-request FIFO" fast-path in dummy_queue() reuses for
-small IN transfers: it copies the caller's request into it
-(req->req = *_req) and queues it, treating list_empty(&fifo_req.queue)
-as "the slot is free".
+The f_midi driver embeds a work item (midi->work) whose handler,
+f_midi_in_work(), dereferences the enclosing struct f_midi through
+container_of().  This work is armed from two sites: f_midi_complete(),
+on a normal IN-endpoint completion, and f_midi_in_trigger(), on an ALSA
+rawmidi output-stream start.
 
-The completion side (dummy_timer/transfer/nuke/dummy_dequeue) follows
-the standard pattern: list_del_init(&req->queue) unlinks the request,
-then the lock is dropped and usb_gadget_giveback_request() invokes
-req->complete().  But list_del_init() makes fifo_req.queue look empty
-*before* the completion callback returns, so a concurrent dummy_queue()
-on another CPU sees the slot as free, reuses fifo_req and runs
-req->req = *_req -- overwriting req->complete while dummy_timer is
-mid-calling it.  The indirect call then jumps to a clobbered pointer,
-causing a general protection fault / page fault in dummy_timer
-(syzkaller extid faf3a6cf579fc65591ca).  The clobbering write is an
-in-bounds memcpy on a live shared object, so KASAN cannot flag it.
+Neither f_midi_disable() nor f_midi_unbind() cancels midi->work.
+f_midi_disable() only disables the endpoints and drains the in_req_fifo;
+it does not synchronize the work item, and the sound card is released
+asynchronously to the final free of the midi object.
 
-Add a fifo_req_busy bit covering the shared request's whole lifetime:
-set it in dummy_queue() when the FIFO fast-path takes fifo_req (making
-it the fast-path guard, replacing the list_empty(&fifo_req.queue)
-test), and clear it after the completion callback has returned, via a
-dummy_giveback() helper used at all four gadget-request giveback
-sites.  The shared slot can no longer be reused until its completion
-callback has finished.
+The midi object is reference-counted (midi->free_ref) and is freed in
+f_midi_free() only once both the usb_function reference and the rawmidi
+private_data reference have been dropped.  In f_midi_unbind(),
+f_midi_disable() runs before the sound card is released, so while the
+USB endpoints are already disabled the rawmidi device is still usable by
+an open substream.  A concurrent userspace write on such a substream can
+reach f_midi_in_trigger() and queue midi->work again after
+f_midi_disable() has returned.  A work item armed this way may still be
+pending when the last reference drops and f_midi_free() proceeds to
+kfree(midi), letting f_midi_in_work() dereference the struct after it
+has been freed, a use-after-free.
 
-Reported-by: syzbot+faf3a6cf579fc65591ca@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=faf3a6cf579fc65591ca
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+For this reason cancelling midi->work in f_midi_disable() would not be
+sufficient: the ALSA trigger path can rearm the work after disable()
+returns.  Cancelling at the refcount-zero free site is the boundary
+after which neither arming source can survive, because by then both
+references that keep the midi object alive have been dropped: the USB
+endpoints are already disabled and the rawmidi device has been released.
+
+Fix this by calling cancel_work_sync(&midi->work) in the refcount-zero
+block of f_midi_free(), before the embedded work_struct is freed along
+with the rest of the structure.  opts->lock is a sleeping mutex, so
+calling cancel_work_sync() under it is permitted, and the handler takes
+midi->transmit_lock rather than opts->lock, so no self-deadlock can
+occur while it waits for a running instance of the work to finish.
+
+This issue was found by an in-house static analysis tool.
+
+Fixes: 8653d71ce3763 ("usb/gadget: f_midi: Replace tasklet with work")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Jinchao Wang <wangjinchao600@gmail.com>
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://patch.msgid.link/5db8bba5b3499a86cd2e776f9918126b68b2508b.1784198306.git.wangjinchao600@gmail.com
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Link: https://patch.msgid.link/20260709150717.399083-1-fanwu01@zju.edu.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/udc/dummy_hcd.c |   40 ++++++++++++++++++++++++-------------
- 1 file changed, 27 insertions(+), 13 deletions(-)
+ drivers/usb/gadget/function/f_midi.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/gadget/udc/dummy_hcd.c
-+++ b/drivers/usb/gadget/udc/dummy_hcd.c
-@@ -278,6 +278,7 @@ struct dummy {
- 	unsigned			ints_enabled:1;
- 	unsigned			udc_suspended:1;
- 	unsigned			pullup:1;
-+	unsigned			fifo_req_busy:1;
- 
- 	/*
- 	 * HOST side support
-@@ -329,6 +330,26 @@ static inline struct dummy *gadget_dev_t
- 
- /* DEVICE/GADGET SIDE UTILITY ROUTINES */
- 
-+/*
-+ * Give back a gadget request with dum->lock dropped around the callback.
-+ * If @req is the shared fifo_req, clear fifo_req_busy afterward: the flag
-+ * was set in dummy_queue() when the shared request was taken and must stay
-+ * set until its completion callback has returned; list_del_init() alone
-+ * makes the request look idle while the callback is still running.
-+ * Caller holds dum->lock and has already done list_del_init() + status.
-+ */
-+static void dummy_giveback(struct dummy *dum, struct usb_ep *_ep,
-+			   struct dummy_request *req)
-+{
-+	bool fifo = req == &dum->fifo_req;
-+
-+	spin_unlock(&dum->lock);
-+	usb_gadget_giveback_request(_ep, &req->req);
-+	spin_lock(&dum->lock);
-+	if (fifo)
-+		dum->fifo_req_busy = 0;
-+}
-+
- /* called with spinlock held */
- static void nuke(struct dummy *dum, struct dummy_ep *ep)
- {
-@@ -339,9 +360,7 @@ static void nuke(struct dummy *dum, stru
- 		list_del_init(&req->queue);
- 		req->req.status = -ESHUTDOWN;
- 
--		spin_unlock(&dum->lock);
--		usb_gadget_giveback_request(&ep->ep, &req->req);
--		spin_lock(&dum->lock);
-+		dummy_giveback(dum, &ep->ep, req);
- 	}
- }
- 
-@@ -728,10 +747,11 @@ static int dummy_queue(struct usb_ep *_e
- 
- 	/* implement an emulated single-request FIFO */
- 	if (ep->desc && (ep->desc->bEndpointAddress & USB_DIR_IN) &&
--			list_empty(&dum->fifo_req.queue) &&
-+			!dum->fifo_req_busy &&
- 			list_empty(&ep->queue) &&
- 			_req->length <= FIFO_SIZE) {
- 		req = &dum->fifo_req;
-+		dum->fifo_req_busy = 1;
- 		req->req = *_req;
- 		req->req.buf = dum->fifo_buf;
- 		memcpy(dum->fifo_buf, _req->buf, _req->length);
-@@ -785,9 +805,7 @@ static int dummy_dequeue(struct usb_ep *
- 		dev_dbg(udc_dev(dum),
- 				"dequeued req %p from %s, len %d buf %p\n",
- 				req, _ep->name, _req->length, _req->buf);
--		spin_unlock(&dum->lock);
--		usb_gadget_giveback_request(_ep, _req);
--		spin_lock(&dum->lock);
-+		dummy_giveback(dum, _ep, req);
- 	}
- 	spin_unlock_irqrestore(&dum->lock, flags);
- 	return retval;
-@@ -1523,9 +1541,7 @@ top:
- 		if (req->req.status != -EINPROGRESS) {
- 			list_del_init(&req->queue);
- 
--			spin_unlock(&dum->lock);
--			usb_gadget_giveback_request(&ep->ep, &req->req);
--			spin_lock(&dum->lock);
-+			dummy_giveback(dum, &ep->ep, req);
- 
- 			/* requests might have been unlinked... */
- 			rescan = 1;
-@@ -1910,9 +1926,7 @@ restart:
- 				dev_dbg(udc_dev(dum), "stale req = %p\n",
- 						req);
- 
--				spin_unlock(&dum->lock);
--				usb_gadget_giveback_request(&ep->ep, &req->req);
--				spin_lock(&dum->lock);
-+				dummy_giveback(dum, &ep->ep, req);
- 				ep->already_seen = 0;
- 				goto restart;
- 			}
+--- a/drivers/usb/gadget/function/f_midi.c
++++ b/drivers/usb/gadget/function/f_midi.c
+@@ -1309,6 +1309,7 @@ static void f_midi_free(struct usb_funct
+ 	opts = container_of(f->fi, struct f_midi_opts, func_inst);
+ 	mutex_lock(&opts->lock);
+ 	if (!--midi->free_ref) {
++		cancel_work_sync(&midi->work);
+ 		kfree(midi->id);
+ 		kfifo_free(&midi->in_req_fifo);
+ 		kfree(midi);
 
 
