@@ -1,49 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AF9A383983;
-	Thu, 30 Jul 2026 15:54:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE9A23B05B8;
+	Thu, 30 Jul 2026 15:54:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426861; cv=none; b=pvYQYbXci4mHqUjuMJK14R9GFkMA2yDr1kobIGfhv2bUT/cc6LyuV6kybR+KJrvXXu56bxGWrAaR4XLgBaeGXgfOtzZy8pKnHVqDAjtjNq3BFqwo0d0+isqNb1yPtf+7bMhGaJ6ourfrK4uShX1rAyq0Tq0Lz65kvoDBgLwyfq0=
+	t=1785426863; cv=none; b=mTC1B/B5fQ/6o5pO4EnLvXK6Fg6PKa0S2JIIvUrAKo4oD+uydG1/e/i6rvR90JPU3j+qlMsy2UZVC8XT7JL4LqDd9qUbqaWl1bWTZCsjsnWch8IS5jKH49ZnuVQUKxLNRSchdpp8V5A2gr6CKbO4qKfYOeL8ESqWnAAI+b/LZFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426861; c=relaxed/simple;
-	bh=PXUL0bkhpDFYuj78wuXaidCsKHj6Bel0HF5IHvPGpfo=;
+	s=arc-20240116; t=1785426863; c=relaxed/simple;
+	bh=wV2IIevJGMa29ze0+fK0rxGJAVFA8rT45CO88SLOZjs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kv4Rvu7j5PvE1ptwT+16jVHIAknOrOgNNiP+NMyzPFz6bhT3yrLGibVZ6VAJIGkg4kLMKz7ZcyjO1M856jcoxvUHEWdZBpss6AXMWFiqGx+GG0MQRT4/YJsWqkQ7hff2Wfu7LhgiD/4d2zrOuH5kXXdHMzL6951f3Igoq0Ir8E8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lyt4F8XJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AYD6iLrdWUNVPxRNZQjmcsNKX1vaKO59rdSdWL4xchAePWLdKnoxG8wUpYM2AIJnBOKvP/oKhFyUvUCpd4kFaHS1zLz+iMkKMTOeHGmJVhJ0r2l9On4flJXni7La+D3xzMYfUE/MdNU07jk5Tui5ZrvD+7V73yCBVHiwTaMO/CY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I0vQdCJe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lyt4F8XJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E92B1F000E9;
-	Thu, 30 Jul 2026 15:54:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I0vQdCJe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 156DD1F00A3A;
+	Thu, 30 Jul 2026 15:54:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426858;
-	bh=cN94cHios7/BXYt+hB2igJH9PPrFU1Y7XX6KjWEPyck=;
+	s=korg; t=1785426861;
+	bh=VmgDEe04OInfmtMZgJGDrQUKm2yOftr9F0EP8+73lxo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lyt4F8XJMGOiAjFEfihjdTXSvKp7G7GqwfzICq1taNcLbmqQWm7pWs1AizVtKJtFH
-	 rPSpiowiomRbti6pFBt4OF0n0c7TDkJ4wKxaVjRZkoGOFw/HBIQ25f1LyxhKx9ec/d
-	 GXgbxxUMmdsc5GXnM3zRRWFFgyT/xKUl2atDQ9b0=
+	b=I0vQdCJeWOhrny+/tCU3hWtP3c+f9Lr9EYGyL+7nxgQsidetkuNnZxwzdUvXYJoBp
+	 4BOu4Mh1aPclPeOzR+XXsVrl3Ps+6BgFWSTgvJ/5XCxBtMVgAThzuX+GcPnbQ+iw3d
+	 JTc6ZWtx34OF67cyEjxzAeUrmenaDX/B7tDq3vg8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	"Lorenzo Stoakes (Oracle)" <ljs@kernel.org>,
+	Muchun Song <songmuchun@bytedance.com>,
 	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	Axel Rasmussen <axelrasmussen@google.com>,
-	Liam Howlett <liam.howlett@oracle.com>,
-	Michal Hocko <mhocko@suse.com>,
 	Oscar Salvador <osalvador@suse.de>,
-	Sidhartha Kumar <sidhartha.kumar@oracle.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
+	Joao Martins <joao.m.martins@oracle.com>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Michal Hocko <mhocko@suse.com>,
+	Nicholas Piggin <npiggin@gmail.com>,
 	Suren Baghdasaryan <surenb@google.com>,
 	Vlastimil Babka <vbabka@kernel.org>,
-	Wei Xu <weixugc@google.com>,
-	Yuanchu Xie <yuanchu@google.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 523/602] mm: prepare to move subsection_map_init() to mm/sparse-vmemmap.c
-Date: Thu, 30 Jul 2026 16:15:15 +0200
-Message-ID: <20260730141446.998154100@linuxfoundation.org>
+Subject: [PATCH 6.12 524/602] mm/sparse-vmemmap: fix DAX vmemmap accounting with optimization
+Date: Thu, 30 Jul 2026 16:15:16 +0200
+Message-ID: <20260730141447.020539738@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -62,829 +64,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "David Hildenbrand (Arm)" <david@kernel.org>
+From: Muchun Song <songmuchun@bytedance.com>
 
-[ Upstream commit fead6dcff83b02f8d6dc3c1ebbe4e09c05c54ee5 ]
+[ Upstream commit 721a73e30c9e3e8fcffe1725bcede1bbd20b4918 ]
 
-We want to move subsection_map_init() to mm/sparse-vmemmap.c.
+When vmemmap optimization is enabled for DAX, the nr_memmap_pages counter
+in /proc/vmstat is incorrect.  The current code always accounts for the
+full, non-optimized vmemmap size, but vmemmap optimization reduces the
+actual number of vmemmap pages by reusing tail pages.  This causes the
+system to overcount vmemmap usage, leading to inaccurate page statistics
+in /proc/vmstat.
 
-To prepare for getting rid of subsection_map_init() in mm/sparse.c
-completely, use a static inline function for !CONFIG_SPARSEMEM_VMEMMAP.
+Fix this by introducing section_nr_vmemmap_pages(), which returns the
+exact vmemmap page count for a given pfn range based on whether
+optimization is in effect.
 
-While at it, move the declaration to internal.h and rename it to
-"sparse_init_subsection_map()".
-
-Link: https://lkml.kernel.org/r/20260320-sparsemem_cleanups-v2-11-096addc8800d@kernel.org
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: Lorenzo Stoakes (Oracle) <ljs@kernel.org>
-Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Cc: Axel Rasmussen <axelrasmussen@google.com>
-Cc: Liam Howlett <liam.howlett@oracle.com>
+Link: https://lore.kernel.org/20260428081855.1249045-5-songmuchun@bytedance.com
+Fixes: 15995a352474 ("mm: report per-page metadata information")
+Signed-off-by: Muchun Song <songmuchun@bytedance.com>
+Acked-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Acked-by: Oscar Salvador <osalvador@suse.de>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Acked-by: Liam R. Howlett <liam@infradead.org>
+Cc: "Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>
+Cc: Joao Martins <joao.m.martins@oracle.com>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
+Cc: Michael Ellerman <mpe@ellerman.id.au>
 Cc: Michal Hocko <mhocko@suse.com>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Sidhartha Kumar <sidhartha.kumar@oracle.com>
+Cc: Nicholas Piggin <npiggin@gmail.com>
 Cc: Suren Baghdasaryan <surenb@google.com>
 Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Wei Xu <weixugc@google.com>
-Cc: Yuanchu Xie <yuanchu@google.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: 721a73e30c9e ("mm/sparse-vmemmap: fix DAX vmemmap accounting with optimization")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/mm/mmu.c            |    5 
- arch/loongarch/mm/init.c       |    5 
- arch/powerpc/mm/mem.c          |    5 
- arch/riscv/mm/init.c           |    5 
- arch/s390/mm/init.c            |    5 
- arch/x86/mm/init_64.c          |    5 
- include/linux/memory_hotplug.h |    8 -
- include/linux/mmzone.h         |    7 
- mm/internal.h                  |   47 ++++++
- mm/memory_hotplug.c            |   13 -
- mm/memremap.c                  |    4 
- mm/mm_init.c                   |    2 
- mm/sparse-vmemmap.c            |  310 +++++++++++++++++++++++++++++++++++++++++
- mm/sparse.c                    |   80 ----------
- 14 files changed, 399 insertions(+), 102 deletions(-)
+ mm/sparse-vmemmap.c |   34 ++++++++++++++++++++++++++++++----
+ 1 file changed, 30 insertions(+), 4 deletions(-)
 
---- a/arch/arm64/mm/mmu.c
-+++ b/arch/arm64/mm/mmu.c
-@@ -1384,12 +1384,13 @@ int arch_add_memory(int nid, u64 start,
- 	return ret;
- }
- 
--void arch_remove_memory(u64 start, u64 size, struct vmem_altmap *altmap)
-+void arch_remove_memory(u64 start, u64 size, struct vmem_altmap *altmap,
-+			struct dev_pagemap *pgmap)
- {
- 	unsigned long start_pfn = start >> PAGE_SHIFT;
- 	unsigned long nr_pages = size >> PAGE_SHIFT;
- 
--	__remove_pages(start_pfn, nr_pages, altmap);
-+	__remove_pages(start_pfn, nr_pages, altmap, pgmap);
- 	__remove_pgd_mapping(swapper_pg_dir, __phys_to_virt(start), size);
- }
- 
---- a/arch/loongarch/mm/init.c
-+++ b/arch/loongarch/mm/init.c
-@@ -103,12 +103,13 @@ int arch_add_memory(int nid, u64 start,
- 	return ret;
- }
- 
--void arch_remove_memory(u64 start, u64 size, struct vmem_altmap *altmap)
-+void arch_remove_memory(u64 start, u64 size, struct vmem_altmap *altmap,
-+			struct dev_pagemap *pgmap)
- {
- 	unsigned long start_pfn = start >> PAGE_SHIFT;
- 	unsigned long nr_pages = size >> PAGE_SHIFT;
- 
--	__remove_pages(start_pfn, nr_pages, altmap);
-+	__remove_pages(start_pfn, nr_pages, altmap, pgmap);
- }
- 
- #ifdef CONFIG_NUMA
---- a/arch/powerpc/mm/mem.c
-+++ b/arch/powerpc/mm/mem.c
-@@ -157,12 +157,13 @@ int __ref arch_add_memory(int nid, u64 s
- 	return rc;
- }
- 
--void __ref arch_remove_memory(u64 start, u64 size, struct vmem_altmap *altmap)
-+void __ref arch_remove_memory(u64 start, u64 size, struct vmem_altmap *altmap,
-+			      struct dev_pagemap *pgmap)
- {
- 	unsigned long start_pfn = start >> PAGE_SHIFT;
- 	unsigned long nr_pages = size >> PAGE_SHIFT;
- 
--	__remove_pages(start_pfn, nr_pages, altmap);
-+	__remove_pages(start_pfn, nr_pages, altmap, pgmap);
- 	arch_remove_linear_mapping(start, size);
- }
- #endif
---- a/arch/riscv/mm/init.c
-+++ b/arch/riscv/mm/init.c
-@@ -1839,9 +1839,10 @@ int __ref arch_add_memory(int nid, u64 s
- 	return ret;
- }
- 
--void __ref arch_remove_memory(u64 start, u64 size, struct vmem_altmap *altmap)
-+void __ref arch_remove_memory(u64 start, u64 size, struct vmem_altmap *altmap,
-+			      struct dev_pagemap *pgmap)
- {
--	__remove_pages(start >> PAGE_SHIFT, size >> PAGE_SHIFT, altmap);
-+	__remove_pages(start >> PAGE_SHIFT, size >> PAGE_SHIFT, altmap, pgmap);
- 	remove_linear_mapping(start, size);
- 	flush_tlb_all();
- }
---- a/arch/s390/mm/init.c
-+++ b/arch/s390/mm/init.c
-@@ -290,12 +290,13 @@ int arch_add_memory(int nid, u64 start,
- 	return rc;
- }
- 
--void arch_remove_memory(u64 start, u64 size, struct vmem_altmap *altmap)
-+void arch_remove_memory(u64 start, u64 size, struct vmem_altmap *altmap,
-+			struct dev_pagemap *pgmap)
- {
- 	unsigned long start_pfn = start >> PAGE_SHIFT;
- 	unsigned long nr_pages = size >> PAGE_SHIFT;
- 
--	__remove_pages(start_pfn, nr_pages, altmap);
-+	__remove_pages(start_pfn, nr_pages, altmap, pgmap);
- 	vmem_remove_mapping(start, size);
- }
- #endif /* CONFIG_MEMORY_HOTPLUG */
---- a/arch/x86/mm/init_64.c
-+++ b/arch/x86/mm/init_64.c
-@@ -1293,12 +1293,13 @@ kernel_physical_mapping_remove(unsigned
- 	remove_pagetable(start, end, true, NULL);
- }
- 
--void __ref arch_remove_memory(u64 start, u64 size, struct vmem_altmap *altmap)
-+void __ref arch_remove_memory(u64 start, u64 size, struct vmem_altmap *altmap,
-+			      struct dev_pagemap *pgmap)
- {
- 	unsigned long start_pfn = start >> PAGE_SHIFT;
- 	unsigned long nr_pages = size >> PAGE_SHIFT;
- 
--	__remove_pages(start_pfn, nr_pages, altmap);
-+	__remove_pages(start_pfn, nr_pages, altmap, pgmap);
- 	kernel_physical_mapping_remove(start, start + size);
- }
- #endif /* CONFIG_MEMORY_HOTPLUG */
---- a/include/linux/memory_hotplug.h
-+++ b/include/linux/memory_hotplug.h
-@@ -153,9 +153,10 @@ static inline bool movable_node_is_enabl
- 	return movable_node_enabled;
- }
- 
--extern void arch_remove_memory(u64 start, u64 size, struct vmem_altmap *altmap);
-+extern void arch_remove_memory(u64 start, u64 size, struct vmem_altmap *altmap,
-+			       struct dev_pagemap *pgmap);
- extern void __remove_pages(unsigned long start_pfn, unsigned long nr_pages,
--			   struct vmem_altmap *altmap);
-+			   struct vmem_altmap *altmap, struct dev_pagemap *pgmap);
- 
- /* reasonably generic interface to expand the physical pages */
- extern int __add_pages(int nid, unsigned long start_pfn, unsigned long nr_pages,
-@@ -321,7 +322,8 @@ extern int sparse_add_section(int nid, u
- 		unsigned long nr_pages, struct vmem_altmap *altmap,
- 		struct dev_pagemap *pgmap);
- extern void sparse_remove_section(unsigned long pfn, unsigned long nr_pages,
--				  struct vmem_altmap *altmap);
-+				  struct vmem_altmap *altmap,
-+				  struct dev_pagemap *pgmap);
- extern struct page *sparse_decode_mem_map(unsigned long coded_mem_map,
- 					  unsigned long pnum);
- extern struct zone *zone_for_pfn_range(int online_type, int nid,
---- a/include/linux/mmzone.h
-+++ b/include/linux/mmzone.h
-@@ -1815,15 +1815,13 @@ struct mem_section_usage {
- 	unsigned long pageblock_flags[0];
- };
- 
--void subsection_map_init(unsigned long pfn, unsigned long nr_pages);
--
- struct page;
- struct page_ext;
- struct mem_section {
- 	/*
- 	 * This is, logically, a pointer to an array of struct
- 	 * pages.  However, it is stored with some other magic.
--	 * (see sparse.c::sparse_init_one_section())
-+	 * (see sparse_init_one_section())
- 	 *
- 	 * Additionally during early boot we encode node id of
- 	 * the location of the section here to guide allocation.
-@@ -2092,8 +2090,9 @@ void sparse_init(void);
- #else
- #define sparse_init()	do {} while (0)
- #define sparse_index_init(_sec, _nid)  do {} while (0)
-+#define sparse_vmemmap_init_nid_early(_nid) do {} while (0)
-+#define sparse_vmemmap_init_nid_late(_nid) do {} while (0)
- #define pfn_in_present_section pfn_valid
--#define subsection_map_init(_pfn, _nr_pages) do {} while (0)
- #endif /* CONFIG_SPARSEMEM */
- 
- #endif /* !__GENERATING_BOUNDS.H */
---- a/mm/internal.h
-+++ b/mm/internal.h
-@@ -749,6 +749,53 @@ extern void *memmap_alloc(phys_addr_t si
- void memmap_init_range(unsigned long, int, unsigned long, unsigned long,
- 		unsigned long, enum meminit_context, struct vmem_altmap *, int);
- 
-+#ifdef CONFIG_SPARSEMEM
-+int sparse_index_init(unsigned long section_nr, int nid);
-+
-+static inline void sparse_init_one_section(struct mem_section *ms,
-+		unsigned long pnum, struct page *mem_map,
-+		struct mem_section_usage *usage, unsigned long flags)
-+{
-+	unsigned long coded_mem_map;
-+
-+	BUILD_BUG_ON(SECTION_MAP_LAST_BIT > PFN_SECTION_SHIFT);
-+
-+	/*
-+	 * We encode the start PFN of the section into the mem_map such that
-+	 * page_to_pfn() on !CONFIG_SPARSEMEM_VMEMMAP can simply subtract it
-+	 * from the page pointer to obtain the PFN.
-+	 */
-+	coded_mem_map = (unsigned long)(mem_map - section_nr_to_pfn(pnum));
-+	VM_WARN_ON_ONCE(coded_mem_map & ~SECTION_MAP_MASK);
-+
-+	ms->section_mem_map &= ~SECTION_MAP_MASK;
-+	ms->section_mem_map |= coded_mem_map;
-+	ms->section_mem_map |= flags | SECTION_HAS_MEM_MAP;
-+	ms->usage = usage;
-+}
-+
-+static inline void __section_mark_present(struct mem_section *ms,
-+		unsigned long section_nr)
-+{
-+	if (section_nr > __highest_present_section_nr)
-+		__highest_present_section_nr = section_nr;
-+
-+	ms->section_mem_map |= SECTION_MARKED_PRESENT;
-+}
-+#endif /* CONFIG_SPARSEMEM */
-+
-+/*
-+ * mm/sparse-vmemmap.c
-+ */
-+#ifdef CONFIG_SPARSEMEM_VMEMMAP
-+void sparse_init_subsection_map(unsigned long pfn, unsigned long nr_pages);
-+#else
-+static inline void sparse_init_subsection_map(unsigned long pfn,
-+		unsigned long nr_pages)
-+{
-+}
-+#endif /* CONFIG_SPARSEMEM_VMEMMAP */
-+
- #if defined CONFIG_COMPACTION || defined CONFIG_CMA
- 
- /*
---- a/mm/memory_hotplug.c
-+++ b/mm/memory_hotplug.c
-@@ -564,6 +564,7 @@ void remove_pfn_range_from_zone(struct z
-  * @pfn: starting pageframe (must be aligned to start of a section)
-  * @nr_pages: number of pages to remove (must be multiple of section size)
-  * @altmap: alternative device page map or %NULL if default memmap is used
-+ * @pgmap: device page map or %NULL if not ZONE_DEVICE
-  *
-  * Generic helper function to remove section mappings and sysfs entries
-  * for the section of the memory we are removing. Caller needs to make
-@@ -571,7 +572,7 @@ void remove_pfn_range_from_zone(struct z
-  * calling offline_pages().
-  */
- void __remove_pages(unsigned long pfn, unsigned long nr_pages,
--		    struct vmem_altmap *altmap)
-+		    struct vmem_altmap *altmap, struct dev_pagemap *pgmap)
- {
- 	const unsigned long end_pfn = pfn + nr_pages;
- 	unsigned long cur_nr_pages;
-@@ -586,7 +587,7 @@ void __remove_pages(unsigned long pfn, u
- 		/* Select all remaining pages up to the next section boundary */
- 		cur_nr_pages = min(end_pfn - pfn,
- 				   SECTION_ALIGN_UP(pfn + 1) - pfn);
--		sparse_remove_section(pfn, cur_nr_pages, altmap);
-+		sparse_remove_section(pfn, cur_nr_pages, altmap, pgmap);
- 	}
- }
- 
-@@ -1411,7 +1412,7 @@ static void remove_memory_blocks_and_alt
- 
- 		remove_memory_block_devices(cur_start, memblock_size);
- 
--		arch_remove_memory(cur_start, memblock_size, altmap);
-+		arch_remove_memory(cur_start, memblock_size, altmap, NULL);
- 
- 		/* Verify that all vmemmap pages have actually been freed. */
- 		WARN(altmap->alloc, "Altmap not fully unmapped");
-@@ -1456,7 +1457,7 @@ static int create_altmaps_and_memory_blo
- 		ret = create_memory_block_devices(cur_start, memblock_size,
- 						  params.altmap, group);
- 		if (ret) {
--			arch_remove_memory(cur_start, memblock_size, params.altmap);
-+			arch_remove_memory(cur_start, memblock_size, params.altmap, NULL);
- 			kfree(params.altmap);
- 			goto out;
- 		}
-@@ -1534,7 +1535,7 @@ int add_memory_resource(int nid, struct
- 		/* create memory block devices after memory was added */
- 		ret = create_memory_block_devices(start, size, NULL, group);
- 		if (ret) {
--			arch_remove_memory(start, size, params.altmap);
-+			arch_remove_memory(start, size, params.altmap, NULL);
- 			goto error;
- 		}
- 	}
-@@ -2273,7 +2274,7 @@ static int try_remove_memory(u64 start,
- 		 * No altmaps present, do the removal directly
- 		 */
- 		remove_memory_block_devices(start, size);
--		arch_remove_memory(start, size, NULL);
-+		arch_remove_memory(start, size, NULL, NULL);
- 	} else {
- 		/* all memblocks in the range have altmaps */
- 		remove_memory_blocks_and_altmaps(start, size);
---- a/mm/memremap.c
-+++ b/mm/memremap.c
-@@ -122,10 +122,10 @@ static void pageunmap_range(struct dev_p
- 				   PHYS_PFN(range_len(range)));
- 	if (pgmap->type == MEMORY_DEVICE_PRIVATE) {
- 		__remove_pages(PHYS_PFN(range->start),
--			       PHYS_PFN(range_len(range)), NULL);
-+			       PHYS_PFN(range_len(range)), NULL, pgmap);
- 	} else {
- 		arch_remove_memory(range->start, range_len(range),
--				pgmap_altmap(pgmap));
-+				pgmap_altmap(pgmap), pgmap);
- 		kasan_remove_zero_shadow(__va(range->start), range_len(range));
- 	}
- 	mem_hotplug_done();
---- a/mm/mm_init.c
-+++ b/mm/mm_init.c
-@@ -1835,7 +1835,7 @@ void __init free_area_init(unsigned long
- 		pr_info("  node %3d: [mem %#018Lx-%#018Lx]\n", nid,
- 			(u64)start_pfn << PAGE_SHIFT,
- 			((u64)end_pfn << PAGE_SHIFT) - 1);
--		subsection_map_init(start_pfn, end_pfn - start_pfn);
-+		sparse_init_subsection_map(start_pfn, end_pfn - start_pfn);
- 	}
- 
- 	/* Initialise every node */
 --- a/mm/sparse-vmemmap.c
 +++ b/mm/sparse-vmemmap.c
-@@ -31,6 +31,8 @@
- 
- #include <asm/dma.h>
- 
-+#include "internal.h"
-+
- /*
-  * Allocate a block of memory to be used to back the virtual memory map
-  * or to back the page tables that are used to create the mapping.
-@@ -476,3 +478,311 @@ struct page * __meminit __populate_secti
- 
- 	return pfn_to_page(pfn);
+@@ -539,6 +539,31 @@ void offline_mem_sections(unsigned long
+ 	}
  }
-+
-+static void subsection_mask_set(unsigned long *map, unsigned long pfn,
-+		unsigned long nr_pages)
-+{
-+	int idx = subsection_map_index(pfn);
-+	int end = subsection_map_index(pfn + nr_pages - 1);
-+
-+	bitmap_set(map, idx, end - idx + 1);
-+}
-+
-+void __init sparse_init_subsection_map(unsigned long pfn, unsigned long nr_pages)
-+{
-+	int end_sec_nr = pfn_to_section_nr(pfn + nr_pages - 1);
-+	unsigned long nr, start_sec_nr = pfn_to_section_nr(pfn);
-+
-+	for (nr = start_sec_nr; nr <= end_sec_nr; nr++) {
-+		struct mem_section *ms;
-+		unsigned long pfns;
-+
-+		pfns = min(nr_pages, PAGES_PER_SECTION
-+				- (pfn & ~PAGE_SECTION_MASK));
-+		ms = __nr_to_section(nr);
-+		subsection_mask_set(ms->usage->subsection_map, pfn, pfns);
-+
-+		pr_debug("%s: sec: %lu pfns: %lu set(%d, %d)\n", __func__, nr,
-+				pfns, subsection_map_index(pfn),
-+				subsection_map_index(pfn + pfns - 1));
-+
-+		pfn += pfns;
-+		nr_pages -= pfns;
-+	}
-+}
-+
-+#ifdef CONFIG_MEMORY_HOTPLUG
-+
-+/* Mark all memory sections within the pfn range as online */
-+void online_mem_sections(unsigned long start_pfn, unsigned long end_pfn)
-+{
-+	unsigned long pfn;
-+
-+	for (pfn = start_pfn; pfn < end_pfn; pfn += PAGES_PER_SECTION) {
-+		unsigned long section_nr = pfn_to_section_nr(pfn);
-+		struct mem_section *ms = __nr_to_section(section_nr);
-+
-+		ms->section_mem_map |= SECTION_IS_ONLINE;
-+	}
-+}
-+
-+/* Mark all memory sections within the pfn range as offline */
-+void offline_mem_sections(unsigned long start_pfn, unsigned long end_pfn)
-+{
-+	unsigned long pfn;
-+
-+	for (pfn = start_pfn; pfn < end_pfn; pfn += PAGES_PER_SECTION) {
-+		unsigned long section_nr = pfn_to_section_nr(pfn);
-+		struct mem_section *ms = __nr_to_section(section_nr);
-+
-+		ms->section_mem_map &= ~SECTION_IS_ONLINE;
-+	}
-+}
-+
-+static struct page * __meminit populate_section_memmap(unsigned long pfn,
-+		unsigned long nr_pages, int nid, struct vmem_altmap *altmap,
-+		struct dev_pagemap *pgmap)
-+{
-+	struct page *page = __populate_section_memmap(pfn, nr_pages, nid, altmap,
-+						      pgmap);
-+
-+	memmap_pages_add(DIV_ROUND_UP(nr_pages * sizeof(struct page), PAGE_SIZE));
-+
-+	return page;
-+}
-+
-+static void depopulate_section_memmap(unsigned long pfn, unsigned long nr_pages,
+ 
++static int __meminit section_nr_vmemmap_pages(unsigned long pfn, unsigned long nr_pages,
 +		struct vmem_altmap *altmap, struct dev_pagemap *pgmap)
 +{
-+	unsigned long start = (unsigned long) pfn_to_page(pfn);
-+	unsigned long end = start + nr_pages * sizeof(struct page);
++	const unsigned int order = pgmap ? pgmap->vmemmap_shift : 0;
++	const unsigned long pages_per_compound = 1UL << order;
 +
-+	memmap_pages_add(-1L * (DIV_ROUND_UP(nr_pages * sizeof(struct page), PAGE_SIZE)));
-+	vmemmap_free(start, end, altmap);
-+}
++	VM_WARN_ON_ONCE(!IS_ALIGNED(pfn | nr_pages, PAGES_PER_SUBSECTION));
++	VM_WARN_ON_ONCE(nr_pages > PAGES_PER_SECTION);
 +
-+static void free_map_bootmem(struct page *memmap)
-+{
-+	unsigned long start = (unsigned long)memmap;
-+	unsigned long end = (unsigned long)(memmap + PAGES_PER_SECTION);
++	if (!vmemmap_can_optimize(altmap, pgmap))
++		return DIV_ROUND_UP(nr_pages * sizeof(struct page), PAGE_SIZE);
 +
-+	memmap_boot_pages_add(-1L * (DIV_ROUND_UP(PAGES_PER_SECTION * sizeof(struct page),
-+						  PAGE_SIZE)));
-+	vmemmap_free(start, end, NULL);
-+}
-+
-+static int clear_subsection_map(unsigned long pfn, unsigned long nr_pages)
-+{
-+	DECLARE_BITMAP(map, SUBSECTIONS_PER_SECTION) = { 0 };
-+	DECLARE_BITMAP(tmp, SUBSECTIONS_PER_SECTION) = { 0 };
-+	struct mem_section *ms = __pfn_to_section(pfn);
-+	unsigned long *subsection_map = ms->usage
-+		? &ms->usage->subsection_map[0] : NULL;
-+
-+	subsection_mask_set(map, pfn, nr_pages);
-+	if (subsection_map)
-+		bitmap_and(tmp, map, subsection_map, SUBSECTIONS_PER_SECTION);
-+
-+	if (WARN(!subsection_map || !bitmap_equal(tmp, map, SUBSECTIONS_PER_SECTION),
-+				"section already deactivated (%#lx + %ld)\n",
-+				pfn, nr_pages))
-+		return -EINVAL;
-+
-+	bitmap_xor(subsection_map, map, subsection_map, SUBSECTIONS_PER_SECTION);
-+	return 0;
-+}
-+
-+static bool is_subsection_map_empty(struct mem_section *ms)
-+{
-+	return bitmap_empty(&ms->usage->subsection_map[0],
-+			    SUBSECTIONS_PER_SECTION);
-+}
-+
-+static int fill_subsection_map(unsigned long pfn, unsigned long nr_pages)
-+{
-+	struct mem_section *ms = __pfn_to_section(pfn);
-+	DECLARE_BITMAP(map, SUBSECTIONS_PER_SECTION) = { 0 };
-+	unsigned long *subsection_map;
-+	int rc = 0;
-+
-+	subsection_mask_set(map, pfn, nr_pages);
-+
-+	subsection_map = &ms->usage->subsection_map[0];
-+
-+	if (bitmap_empty(map, SUBSECTIONS_PER_SECTION))
-+		rc = -EINVAL;
-+	else if (bitmap_intersects(map, subsection_map, SUBSECTIONS_PER_SECTION))
-+		rc = -EEXIST;
-+	else
-+		bitmap_or(subsection_map, map, subsection_map,
-+				SUBSECTIONS_PER_SECTION);
-+
-+	return rc;
-+}
-+
-+/*
-+ * To deactivate a memory region, there are 3 cases to handle:
-+ *
-+ * 1. deactivation of a partial hot-added section:
-+ *      a) section was present at memory init.
-+ *      b) section was hot-added post memory init.
-+ * 2. deactivation of a complete hot-added section.
-+ * 3. deactivation of a complete section from memory init.
-+ *
-+ * For 1, when subsection_map does not empty we will not be freeing the
-+ * usage map, but still need to free the vmemmap range.
-+ */
-+static void section_deactivate(unsigned long pfn, unsigned long nr_pages,
-+		struct vmem_altmap *altmap, struct dev_pagemap *pgmap)
-+{
-+	struct mem_section *ms = __pfn_to_section(pfn);
-+	bool section_is_early = early_section(ms);
-+	struct page *memmap = NULL;
-+	bool empty;
-+
-+	if (clear_subsection_map(pfn, nr_pages))
-+		return;
-+
-+	empty = is_subsection_map_empty(ms);
-+	if (empty) {
-+		/*
-+		 * Mark the section invalid so that valid_section()
-+		 * return false. This prevents code from dereferencing
-+		 * ms->usage array.
-+		 */
-+		ms->section_mem_map &= ~SECTION_HAS_MEM_MAP;
-+
-+		/*
-+		 * When removing an early section, the usage map is kept (as the
-+		 * usage maps of other sections fall into the same page). It
-+		 * will be re-used when re-adding the section - which is then no
-+		 * longer an early section. If the usage map is PageReserved, it
-+		 * was allocated during boot.
-+		 */
-+		if (!PageReserved(virt_to_page(ms->usage))) {
-+			kfree_rcu(ms->usage, rcu);
-+			WRITE_ONCE(ms->usage, NULL);
-+		}
-+		memmap = pfn_to_page(SECTION_ALIGN_DOWN(pfn));
++	if (order < PFN_SECTION_SHIFT) {
++		VM_WARN_ON_ONCE(!IS_ALIGNED(pfn | nr_pages, pages_per_compound));
++		return VMEMMAP_RESERVE_NR * nr_pages / pages_per_compound;
 +	}
 +
-+	/*
-+	 * The memmap of early sections is always fully populated. See
-+	 * section_activate() and pfn_valid() .
-+	 */
-+	if (!section_is_early)
-+		depopulate_section_memmap(pfn, nr_pages, altmap, pgmap);
-+	else if (memmap)
-+		free_map_bootmem(memmap);
++	VM_WARN_ON_ONCE(!IS_ALIGNED(pfn | nr_pages, PAGES_PER_SECTION));
 +
-+	if (empty)
-+		ms->section_mem_map = (unsigned long)NULL;
-+}
-+
-+static struct page * __meminit section_activate(int nid, unsigned long pfn,
-+		unsigned long nr_pages, struct vmem_altmap *altmap,
-+		struct dev_pagemap *pgmap)
-+{
-+	struct mem_section *ms = __pfn_to_section(pfn);
-+	struct mem_section_usage *usage = NULL;
-+	struct page *memmap;
-+	int rc;
-+
-+	if (!ms->usage) {
-+		usage = kzalloc(mem_section_usage_size(), GFP_KERNEL);
-+		if (!usage)
-+			return ERR_PTR(-ENOMEM);
-+		ms->usage = usage;
-+	}
-+
-+	rc = fill_subsection_map(pfn, nr_pages);
-+	if (rc) {
-+		if (usage)
-+			ms->usage = NULL;
-+		kfree(usage);
-+		return ERR_PTR(rc);
-+	}
-+
-+	/*
-+	 * The early init code does not consider partially populated
-+	 * initial sections, it simply assumes that memory will never be
-+	 * referenced.  If we hot-add memory into such a section then we
-+	 * do not need to populate the memmap and can simply reuse what
-+	 * is already there.
-+	 */
-+	if (nr_pages < PAGES_PER_SECTION && early_section(ms))
-+		return pfn_to_page(pfn);
-+
-+	memmap = populate_section_memmap(pfn, nr_pages, nid, altmap, pgmap);
-+	if (!memmap) {
-+		section_deactivate(pfn, nr_pages, altmap, pgmap);
-+		return ERR_PTR(-ENOMEM);
-+	}
-+
-+	return memmap;
-+}
-+
-+/**
-+ * sparse_add_section - add a memory section, or populate an existing one
-+ * @nid: The node to add section on
-+ * @start_pfn: start pfn of the memory range
-+ * @nr_pages: number of pfns to add in the section
-+ * @altmap: alternate pfns to allocate the memmap backing store
-+ * @pgmap: alternate compound page geometry for devmap mappings
-+ *
-+ * This is only intended for hotplug.
-+ *
-+ * Note that only VMEMMAP supports sub-section aligned hotplug,
-+ * the proper alignment and size are gated by check_pfn_span().
-+ *
-+ *
-+ * Return:
-+ * * 0		- On success.
-+ * * -EEXIST	- Section has been present.
-+ * * -ENOMEM	- Out of memory.
-+ */
-+int __meminit sparse_add_section(int nid, unsigned long start_pfn,
-+		unsigned long nr_pages, struct vmem_altmap *altmap,
-+		struct dev_pagemap *pgmap)
-+{
-+	unsigned long section_nr = pfn_to_section_nr(start_pfn);
-+	struct mem_section *ms;
-+	struct page *memmap;
-+	int ret;
-+
-+	ret = sparse_index_init(section_nr, nid);
-+	if (ret < 0)
-+		return ret;
-+
-+	memmap = section_activate(nid, start_pfn, nr_pages, altmap, pgmap);
-+	if (IS_ERR(memmap))
-+		return PTR_ERR(memmap);
-+
-+	/*
-+	 * Poison uninitialized struct pages in order to catch invalid flags
-+	 * combinations.
-+	 */
-+	page_init_poison(memmap, sizeof(struct page) * nr_pages);
-+
-+	ms = __nr_to_section(section_nr);
-+	__section_mark_present(ms, section_nr);
-+
-+	/* Align memmap to section boundary in the subsection case */
-+	if (section_nr_to_pfn(section_nr) != start_pfn)
-+		memmap = pfn_to_page(section_nr_to_pfn(section_nr));
-+	sparse_init_one_section(ms, section_nr, memmap, ms->usage, 0);
++	if (IS_ALIGNED(pfn, pages_per_compound))
++		return VMEMMAP_RESERVE_NR;
 +
 +	return 0;
 +}
 +
-+void sparse_remove_section(unsigned long pfn, unsigned long nr_pages,
-+		struct vmem_altmap *altmap, struct dev_pagemap *pgmap)
-+{
-+	struct mem_section *ms = __pfn_to_section(pfn);
-+
-+	if (WARN_ON_ONCE(!valid_section(ms)))
-+		return;
-+
-+	section_deactivate(pfn, nr_pages, altmap, pgmap);
-+}
-+#endif /* CONFIG_MEMORY_HOTPLUG */
---- a/mm/sparse.c
-+++ b/mm/sparse.c
-@@ -79,7 +79,7 @@ static noinline struct mem_section __ref
- 	return section;
+ static struct page * __meminit populate_section_memmap(unsigned long pfn,
+ 		unsigned long nr_pages, int nid, struct vmem_altmap *altmap,
+ 		struct dev_pagemap *pgmap)
+@@ -546,7 +571,7 @@ static struct page * __meminit populate_
+ 	struct page *page = __populate_section_memmap(pfn, nr_pages, nid, altmap,
+ 						      pgmap);
+ 
+-	memmap_pages_add(DIV_ROUND_UP(nr_pages * sizeof(struct page), PAGE_SIZE));
++	memmap_pages_add(section_nr_vmemmap_pages(pfn, nr_pages, altmap, pgmap));
+ 
+ 	return page;
+ }
+@@ -557,7 +582,7 @@ static void depopulate_section_memmap(un
+ 	unsigned long start = (unsigned long) pfn_to_page(pfn);
+ 	unsigned long end = start + nr_pages * sizeof(struct page);
+ 
+-	memmap_pages_add(-1L * (DIV_ROUND_UP(nr_pages * sizeof(struct page), PAGE_SIZE)));
++	memmap_pages_add(-section_nr_vmemmap_pages(pfn, nr_pages, altmap, pgmap));
+ 	vmemmap_free(start, end, altmap);
  }
  
--static int __meminit sparse_index_init(unsigned long section_nr, int nid)
-+int __meminit sparse_index_init(unsigned long section_nr, int nid)
+@@ -565,9 +590,10 @@ static void free_map_bootmem(struct page
  {
- 	unsigned long root = SECTION_NR_TO_ROOT(section_nr);
- 	struct mem_section *section;
-@@ -103,7 +103,7 @@ static int __meminit sparse_index_init(u
- 	return 0;
- }
- #else /* !SPARSEMEM_EXTREME */
--static inline int sparse_index_init(unsigned long section_nr, int nid)
-+int sparse_index_init(unsigned long section_nr, int nid)
- {
- 	return 0;
- }
-@@ -161,14 +161,6 @@ static void __meminit mminit_validate_me
-  * those loops early.
-  */
- unsigned long __highest_present_section_nr;
--static void __section_mark_present(struct mem_section *ms,
--		unsigned long section_nr)
--{
--	if (section_nr > __highest_present_section_nr)
--		__highest_present_section_nr = section_nr;
--
--	ms->section_mem_map |= SECTION_MARKED_PRESENT;
--}
+ 	unsigned long start = (unsigned long)memmap;
+ 	unsigned long end = (unsigned long)(memmap + PAGES_PER_SECTION);
++	unsigned long pfn = page_to_pfn(memmap);
  
- #define for_each_present_section_nr(start, section_nr)		\
- 	for (section_nr = next_present_section_nr(start-1);	\
-@@ -180,44 +172,6 @@ static inline unsigned long first_presen
- 	return next_present_section_nr(-1);
+-	memmap_boot_pages_add(-1L * (DIV_ROUND_UP(PAGES_PER_SECTION * sizeof(struct page),
+-						  PAGE_SIZE)));
++	memmap_boot_pages_add(-section_nr_vmemmap_pages(pfn, PAGES_PER_SECTION,
++							NULL, NULL));
+ 	vmemmap_free(start, end, NULL);
  }
  
--#ifdef CONFIG_SPARSEMEM_VMEMMAP
--static void subsection_mask_set(unsigned long *map, unsigned long pfn,
--		unsigned long nr_pages)
--{
--	int idx = subsection_map_index(pfn);
--	int end = subsection_map_index(pfn + nr_pages - 1);
--
--	bitmap_set(map, idx, end - idx + 1);
--}
--
--void __init subsection_map_init(unsigned long pfn, unsigned long nr_pages)
--{
--	int end_sec_nr = pfn_to_section_nr(pfn + nr_pages - 1);
--	unsigned long nr, start_sec_nr = pfn_to_section_nr(pfn);
--
--	for (nr = start_sec_nr; nr <= end_sec_nr; nr++) {
--		struct mem_section *ms;
--		unsigned long pfns;
--
--		pfns = min(nr_pages, PAGES_PER_SECTION
--				- (pfn & ~PAGE_SECTION_MASK));
--		ms = __nr_to_section(nr);
--		subsection_mask_set(ms->usage->subsection_map, pfn, pfns);
--
--		pr_debug("%s: sec: %lu pfns: %lu set(%d, %d)\n", __func__, nr,
--				pfns, subsection_map_index(pfn),
--				subsection_map_index(pfn + pfns - 1));
--
--		pfn += pfns;
--		nr_pages -= pfns;
--	}
--}
--#else
--void __init subsection_map_init(unsigned long pfn, unsigned long nr_pages)
--{
--}
--#endif
--
- /* Record a memory area against a node. */
- static void __init memory_present(int nid, unsigned long start, unsigned long end)
- {
-@@ -268,20 +222,6 @@ static void __init memblocks_present(voi
- 		memory_present(nid, start, end);
- }
- 
--/*
-- * Subtle, we encode the real pfn into the mem_map such that
-- * the identity pfn - section_mem_map will return the actual
-- * physical page frame number.
-- */
--static unsigned long sparse_encode_mem_map(struct page *mem_map, unsigned long pnum)
--{
--	unsigned long coded_mem_map =
--		(unsigned long)(mem_map - (section_nr_to_pfn(pnum)));
--	BUILD_BUG_ON(SECTION_MAP_LAST_BIT > PFN_SECTION_SHIFT);
--	BUG_ON(coded_mem_map & ~SECTION_MAP_MASK);
--	return coded_mem_map;
--}
--
- #ifdef CONFIG_MEMORY_HOTPLUG
- /*
-  * Decode mem_map from the coded memmap
-@@ -294,16 +234,6 @@ struct page *sparse_decode_mem_map(unsig
- }
- #endif /* CONFIG_MEMORY_HOTPLUG */
- 
--static void __meminit sparse_init_one_section(struct mem_section *ms,
--		unsigned long pnum, struct page *mem_map,
--		struct mem_section_usage *usage, unsigned long flags)
--{
--	ms->section_mem_map &= ~SECTION_MAP_MASK;
--	ms->section_mem_map |= sparse_encode_mem_map(mem_map, pnum)
--		| SECTION_HAS_MEM_MAP | flags;
--	ms->usage = usage;
--}
--
- static unsigned long usemap_size(void)
- {
- 	return BITS_TO_LONGS(SECTION_BLOCKFLAGS_BITS) * sizeof(unsigned long);
-@@ -587,6 +517,7 @@ void __init sparse_init(void)
- 	vmemmap_populate_print_last();
- }
- 
-+#ifndef CONFIG_SPARSEMEM_VMEMMAP
- #ifdef CONFIG_MEMORY_HOTPLUG
- 
- /* Mark all memory sections within the pfn range as online */
-@@ -930,7 +861,6 @@ int __meminit sparse_add_section(int nid
- 		page_init_poison(memmap, sizeof(struct page) * nr_pages);
- 
- 	ms = __nr_to_section(section_nr);
--	set_section_nid(section_nr, nid);
- 	__section_mark_present(ms, section_nr);
- 
- 	/* Align memmap to section boundary in the subsection case */
-@@ -942,7 +872,8 @@ int __meminit sparse_add_section(int nid
- }
- 
- void sparse_remove_section(unsigned long pfn, unsigned long nr_pages,
--			   struct vmem_altmap *altmap)
-+			   struct vmem_altmap *altmap,
-+			   struct dev_pagemap *pgmap)
- {
- 	struct mem_section *ms = __pfn_to_section(pfn);
- 
-@@ -952,3 +883,4 @@ void sparse_remove_section(unsigned long
- 	section_deactivate(pfn, nr_pages, altmap);
- }
- #endif /* CONFIG_MEMORY_HOTPLUG */
-+#endif /* !CONFIG_SPARSEMEM_VMEMMAP */
 
 
