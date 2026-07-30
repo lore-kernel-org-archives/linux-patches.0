@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00D84449B26;
-	Thu, 30 Jul 2026 16:17:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 858B73B19B3;
+	Thu, 30 Jul 2026 16:17:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785428235; cv=none; b=gf2Bq8NbuX7ZmzdfX8WqMfq7nAcXqTKvsRJKBlF/PpzmhnnUryO0vO9gjF62kxFz4JU2pXl7lGcoH5xVehvdWr9TiUBdOr2lgxNotm689zG0m6ph707zpIMdnHODVVjvjcy0xt3XxYxGT6ChleUobpHucaYmoEII4JsYn3Om+Ow=
+	t=1785428237; cv=none; b=O4DJGUlUksMGUg4iomBvD+aB46aIp4S/5sVxY5NkCLJDuij0AbHEd8RczwK/+NfP0WIwUz3i1jpw07ohtsWxn9ZLF1RmYdS6H22J0ohNZMWtOxrGEHMT5N0OYp/BR9+dRcd3kgEzjzeFwIUp5syZq5ftyt7MfmhfoRgnAZ4j2Jk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785428235; c=relaxed/simple;
-	bh=H7VBrz9SiJchAITvS+Y8WPwNq8cD+ksepD4DDu7MRm8=;
+	s=arc-20240116; t=1785428237; c=relaxed/simple;
+	bh=HwFcbxbfw91z4q+U7Q5na34k/AWibUcVMeCdlvjItv0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cyu2HM9cMynG34aviA4+BMoWPjc076IQlzMzA2/SJTOlfOHHuZPi0fagAscKaZOCCjYvHQpvwiKl20OgjAs5z1VX+gxFP1gzfZBXw+v1m5FIF1+XsAOFiSV36MTnIMVy5aO40Kk3x7xcQwADGx8wDt0o4JTH6/dio4eHONWYPE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lDs8JiOO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sziN0tJ6TKGHoIUUXnWNrOhXegAZXTeeWVbglRqUnnT95ybbxErS8BjeN86U5xHviDOYbN2dtyWDWp5gJgeMZnHa3EiFlYtxwwyb6s2MG9o5LFIF7JzeboN3UUtE3DdtKgq61px2OULgYvAsZoES/ohGMDv0h1bxRfiCccj33Uo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oa6BC4Hz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lDs8JiOO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1F201F000E9;
-	Thu, 30 Jul 2026 16:17:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oa6BC4Hz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1C771F000E9;
+	Thu, 30 Jul 2026 16:17:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785428233;
-	bh=Yg8kXbycOc/6I+F1lBqXIrIA3JJOff4IjRZCaVc4On0=;
+	s=korg; t=1785428236;
+	bh=i4QKrmvAWZF53lCEahPw+eFweihvlY7Ze+/O+OwPTbM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lDs8JiOO0y+C/K+hNG6t+u34k11VKyhYho3Fe+El9fYVqpLezk+bUkf9zwS3K1dEk
-	 Yu5R6RXzNDz9P3QkJzE4xamc6h+6sZ9oyYQT73gORe6YXCwTmuO3lbA4wAcS4KhvwP
-	 Gbb6ErtEVQdTTnnidn8LN95d32zJObz+ZnP1Kg6c=
+	b=Oa6BC4Hz95aeztzzSrMZzkrUo0CHbHtjlBS8alDBjVFHgC21JauKllI5KOQcCamn8
+	 oQ/1rkoG03/mVimaPml6xRWzq3XFN2cf7I7WxWSfJj3Bw3W+dM6nJjNGsZ/G098CJR
+	 ip+Cs+NN9u/3uJSrXMd5RVWb9ZcUQuvYLyfOvmP4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Luis Chamberalin <mcgrof@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 449/484] dm-verity: make error counter atomic
-Date: Thu, 30 Jul 2026 16:15:46 +0200
-Message-ID: <20260730141433.236283766@linuxfoundation.org>
+Subject: [PATCH 6.6 450/484] firmware_loader: introduce __free() cleanup hanler
+Date: Thu, 30 Jul 2026 16:15:47 +0200
+Message-ID: <20260730141433.258587020@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -50,68 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-[ Upstream commit 8ec4d9c5a5cf4b61fc087f871465b1f79b393325 ]
+[ Upstream commit 8dde8fa0cc3edce73c050b9882d06c1a575f6402 ]
 
-The error counter "v->corrupted_errs" was not atomic, thus it could be
-subject to race conditions. The call to
-dm_audit_log_target("max-corrupted-errors") may be skipped due to the
-races.
+Define cleanup handler using facilities from linux/cleanup.h to simplify
+error handling in code using firmware loader. This will allow writing code
+like this:
 
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Assisted-by: Claude:claude-opus-4.6
-Fixes: 65ff5b7ddf05 ("dm verity: add error handling modes for corrupted blocks")
-Cc: stable@vger.kernel.org
+int driver_update_firmware(...)
+{
+	const struct firmware *fw_entry __free(firmware) = NULL;
+	int error;
+
+	...
+	error = request_firmware(&fw_entry, fw_name, dev);
+	if (error) {
+		dev_err(dev, "failed to request firmware %s: %d",
+			fw_name, error);
+		return error;
+	}
+
+	error = check_firmware_valid(fw_entry);
+	if (error)
+		return error;
+
+	guard(mutex)(&instance->lock);
+
+	error = use_firmware(instance, fw);
+	if (error)
+		return error;
+
+	return 0;
+}
+
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Acked-by: Luis Chamberalin <mcgrof@kernel.org>
+Link: https://lore.kernel.org/r/ZaeQw7VXhnirX4pQ@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: d48795b5cd68 ("Input: ims-pcu - fix firmware leak in async update")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-verity-target.c |   12 +++++++-----
- drivers/md/dm-verity.h        |    2 +-
- 2 files changed, 8 insertions(+), 6 deletions(-)
+ include/linux/firmware.h |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/md/dm-verity-target.c
-+++ b/drivers/md/dm-verity-target.c
-@@ -227,14 +227,16 @@ static int verity_handle_err(struct dm_v
- 	char *envp[] = { verity_env, NULL };
- 	const char *type_str = "";
- 	struct mapped_device *md = dm_table_get_md(v->ti->table);
-+	int ce;
+--- a/include/linux/firmware.h
++++ b/include/linux/firmware.h
+@@ -4,6 +4,7 @@
  
- 	/* Corruption should be visible in device status in all modes */
- 	v->hash_failed = true;
+ #include <linux/types.h>
+ #include <linux/compiler.h>
++#include <linux/cleanup.h>
+ #include <linux/gfp.h>
  
--	if (v->corrupted_errs >= DM_VERITY_MAX_CORRUPTED_ERRS)
--		goto out;
--
--	v->corrupted_errs++;
-+	ce = atomic_read(&v->corrupted_errs);
-+	do {
-+		if (ce >= DM_VERITY_MAX_CORRUPTED_ERRS)
-+			goto out;
-+	} while (!atomic_try_cmpxchg(&v->corrupted_errs, &ce, ce + 1));
+ #define FW_ACTION_NOUEVENT 0
+@@ -196,4 +197,6 @@ static inline void firmware_upload_unreg
  
- 	switch (type) {
- 	case DM_VERITY_BLOCK_TYPE_DATA:
-@@ -250,7 +252,7 @@ static int verity_handle_err(struct dm_v
- 	DMERR_LIMIT("%s: %s block %llu is corrupted", v->data_dev->name,
- 		    type_str, block);
+ int firmware_request_cache(struct device *device, const char *name);
  
--	if (v->corrupted_errs == DM_VERITY_MAX_CORRUPTED_ERRS) {
-+	if (ce + 1 == DM_VERITY_MAX_CORRUPTED_ERRS) {
- 		DMERR("%s: reached maximum errors", v->data_dev->name);
- 		dm_audit_log_target(DM_MSG_PREFIX, "max-corrupted-errors", v->ti, 0);
- 	}
---- a/drivers/md/dm-verity.h
-+++ b/drivers/md/dm-verity.h
-@@ -58,7 +58,7 @@ struct dm_verity {
- 	unsigned int digest_size;	/* digest size for the current hash algorithm */
- 	unsigned int ahash_reqsize;/* the size of temporary space for crypto */
- 	enum verity_mode mode;	/* mode for handling verification errors */
--	unsigned int corrupted_errs;/* Number of errors for corrupted blocks */
-+	atomic_t corrupted_errs;/* Number of errors for corrupted blocks */
- 
- 	struct workqueue_struct *verify_wq;
- 
++DEFINE_FREE(firmware, struct firmware *, release_firmware(_T))
++
+ #endif
 
 
