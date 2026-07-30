@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7A1D445AF8;
-	Thu, 30 Jul 2026 14:58:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5E7D43C7B4;
+	Thu, 30 Jul 2026 14:58:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423488; cv=none; b=UP6iJhAKhe3qFIlpaWwdPHQ6T5nY+O4QJHQ3SoOFJxclIq7QTtE869qSLhjtxx2lLOAOASziFwrO4wToFRnuERthbSfJNkQfPYILRkO7LmMBsgMBxt337Cn1uFeVXsdfLxDbz8xkcK+aP5jXn8vU/q52LEbrFk9OPq6fCp+LeZw=
+	t=1785423491; cv=none; b=bNnvl+8KUF1mOuenrKC4uLaW9wLg8gqZSlJHL955WLsm97zcYvkwCAI9Q0Un/R7yd+P6rMewp42L1CkaijUQ7+gr2M8fY9tF2RcYhtOHCNGwJE6RAehU0Lc/tb6FsRDOAgQJNYRju2KlKGzPXnU85FiQqlIDL7YRb0YdqbgwG0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423488; c=relaxed/simple;
-	bh=p+nHmKjRd5BbNa0b17UwnDkBhPMpmXa8PNtS/nqW9+Q=;
+	s=arc-20240116; t=1785423491; c=relaxed/simple;
+	bh=XJzxdpyVcjsOEpEwR8QrlnHsRY341ExRUw44NYh/jvs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xd5IAF1D38JyOPk0rQo2w0SYhioyVoKwsQJoFn0G60ETL+b34V35IBaDUG24+panNKXzdbV7w4zvdqChexv1+KDpPBLnTF2FerZZHUt9GOYb796NuEW+E/XJhAk4ur7LS1+VD95+btFwexxp/6KWP2VqYOOKBu5jz8JhBz3rcxU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v8Y+tXUa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LLs29qgDbCo39ia1XOedf/wCwWdSoyifInDum2on/kjwrSZUeBZ6WUYIDlCiXl6MtpW5BaQaQGhwG0qXX3puNOjL5DWC1q/WzmpsVSsEfpYqrAwuxPWGDaClVblrYF/fELMxZ5bmYZozOr6OyEMYqmc9+CpanNfVojSR+90hTd4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lJdQwwVm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v8Y+tXUa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E3F01F000E9;
-	Thu, 30 Jul 2026 14:58:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lJdQwwVm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 033541F000E9;
+	Thu, 30 Jul 2026 14:58:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423486;
-	bh=sEOWBMQAesUjhLWX6XxBo89DTd6NMmvCPFofbVq7zCc=;
+	s=korg; t=1785423489;
+	bh=0+NNGRqqNGzG3BJ4ZzEB2US8Lj+URIEur/4vpXju5Bw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v8Y+tXUa2Cy0iiFes8YS5E7ClCQ/U7O/qocSljzEOgjO++gF0NcdcO6jRlVGi7ogH
-	 +N5Zp8q65YquuWCA3amBolWgcp/Pyy2M+4UTy+7ql/UTOEncEvxpx1D4KuhZx+rUao
-	 14XJ4EsVhawDrjDRaphzqh3tUD95iVnio81gBu5E=
+	b=lJdQwwVmm3cCNasmc47yB8+iir+fJK4lF1CKOKhzU9u1yHzadL/Ip16S0+g3oj7bT
+	 LMFFqcMmek7u1S2TUe2MM1fX1y1OTnJX7ISi4k2mjpCoB9tpNI0mjSIJFV/qdbi2oF
+	 hxhBHKSfRfZt0aw9NYGGJY4ryX2+v7WBdy9+CFDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandrova Alyona <aga@itb.spb.ru>,
-	Leon Romanovsky <leon@kernel.org>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 060/675] RDMA/irdma: Prevent overflows in memory contiguity checks
-Date: Thu, 30 Jul 2026 16:06:30 +0200
-Message-ID: <20260730141446.396007746@linuxfoundation.org>
+Subject: [PATCH 6.18 061/675] xfrm: clear mode callbacks after failed mode setup
+Date: Thu, 30 Jul 2026 16:06:31 +0200
+Message-ID: <20260730141446.417099734@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -51,62 +51,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandrova Alyona <aga@itb.spb.ru>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 3cda0dfe8c651dcbb9e38977905d3d3b1750c4ab ]
+[ Upstream commit 2538bd3cd1ff5af655908469544ac7b7ae259386 ]
 
-irdma_check_mem_contiguous() and irdma_check_mr_contiguous() verify that
-PBL entries describe physically contiguous memory ranges.
+xfrm_state_gc_task can run long after a failed IPTFS state setup. In the
+reproduced case, __xfrm_init_state() cached x->mode_cbs, IPTFS setup
+returned -ENOMEM before publishing mode_data, and the temporary module
+reference from xfrm_get_mode_cbs() was dropped immediately. The dead state
+then kept x->mode_cbs until deferred GC ran after xfrm_iptfs had been
+unloaded.
 
-Both functions calculate byte offsets using 32-bit operands. For example,
-with 4 KiB pages, pg_size * pg_idx overflows 32-bit arithmetic when
-pg_idx reaches 1048576. In the level-2 check, PBLE_PER_PAGE is 512, so
-i * pg_size * PBLE_PER_PAGE overflows when i reaches 2048.
+Clear x->mode_cbs when mode init or clone fails before publishing
+mode_data. Those states never installed mode-specific state or the
+long-term IPTFS module pin, so deferred GC has nothing mode-specific to
+destroy and must not retain a callback table pointer past the temporary
+lookup reference.
 
-These values are reachable in the driver. For MRs, palloc->total_cnt
-comes from iwmr->page_cnt, which is calculated by
-ib_umem_num_dma_blocks(). The MR size is limited by IRDMA_MAX_MR_SIZE,
-so a 4 GiB MR with 4 KiB pages can reach page_cnt of 1048576. PBLE
-resources do not exclude this value either: for gen3, the limit is based
-on avail_sds * MAX_PBLE_PER_SD, and MAX_PBLE_PER_SD is 0x40000, so 4 SDs
-are enough for 1048576 PBLEs.
+The buggy scenario involves two paths, with each column showing the order
+within that path:
 
-Cast one operand to u64 before the multiplications so that the offset
-calculations are performed in 64-bit arithmetic.
+failed setup path:
+1. cache x->mode_cbs
+2. mode setup fails before mode_data
+3. drop the temporary module ref
+4. dead state keeps x->mode_cbs cached
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+GC/unload path:
+1. xfrm_state_put() queues GC work
+2. xfrm_iptfs unloads later
+3. xfrm_state_gc_task runs
+4. GC dereferences stale x->mode_cbs
 
-Fixes: b48c24c2d710 ("RDMA/irdma: Implement device supported verb APIs")
-Signed-off-by: Aleksandrova Alyona <aga@itb.spb.ru>
-Link: https://patch.msgid.link/20260624144846.61242-1-aga@itb.spb.ru
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+This also covers the failed clone path where clone_state() returns before
+publishing mode_data.
+
+Validation reproduced this kernel report:
+Kernel panic - not syncing: Fatal exception
+CONFIG_FAULT_INJECTION_STACKTRACE_FILTER=y
+failslab_stacktrace_filter matched xfrm_iptfs frames
+ack_error=-12
+FAULT_INJECTION: forcing a failure
+BUG: unable to handle page fault
+Workqueue: events xfrm_state_gc_task
+RIP: xfrm_state_gc_task+0x142/0x650
+Modules linked in: esp4_offload xfrm_user [last unloaded: xfrm_iptfs]
+Kernel panic - not syncing: Fatal exception
+
+Fixes: 4b3faf610cc6 ("xfrm: iptfs: add new iptfs xfrm mode impl")
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/verbs.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/xfrm/xfrm_state.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
-index 5f5b79109d5471..4084168d0194fb 100644
---- a/drivers/infiniband/hw/irdma/verbs.c
-+++ b/drivers/infiniband/hw/irdma/verbs.c
-@@ -2800,7 +2800,7 @@ static bool irdma_check_mem_contiguous(u64 *arr, u32 npages, u32 pg_size)
- 	u32 pg_idx;
+diff --git a/net/xfrm/xfrm_state.c b/net/xfrm/xfrm_state.c
+index 89daad5db10c9d..b9049c2297bd5a 100644
+--- a/net/xfrm/xfrm_state.c
++++ b/net/xfrm/xfrm_state.c
+@@ -2070,8 +2070,11 @@ static struct xfrm_state *xfrm_state_clone_and_setup(struct xfrm_state *orig,
  
- 	for (pg_idx = 0; pg_idx < npages; pg_idx++) {
--		if ((*arr + (pg_size * pg_idx)) != arr[pg_idx])
-+		if ((*arr + ((u64)pg_size * pg_idx)) != arr[pg_idx])
- 			return false;
+ 	x->mode_cbs = orig->mode_cbs;
+ 	if (x->mode_cbs && x->mode_cbs->clone_state) {
+-		if (x->mode_cbs->clone_state(x, orig))
++		if (x->mode_cbs->clone_state(x, orig)) {
++			if (!x->mode_data)
++				x->mode_cbs = NULL;
+ 			goto error;
++		}
  	}
  
-@@ -2833,7 +2833,7 @@ static bool irdma_check_mr_contiguous(struct irdma_pble_alloc *palloc,
  
- 	for (i = 0; i < lvl2->leaf_cnt; i++, leaf++) {
- 		arr = leaf->addr;
--		if ((*start_addr + (i * pg_size * PBLE_PER_PAGE)) != *arr)
-+		if ((*start_addr + ((u64)i * pg_size * PBLE_PER_PAGE)) != *arr)
- 			return false;
- 		ret = irdma_check_mem_contiguous(arr, leaf->cnt, pg_size);
- 		if (!ret)
+@@ -3253,6 +3256,8 @@ int __xfrm_init_state(struct xfrm_state *x, struct netlink_ext_ack *extack)
+ 		if (x->mode_cbs->init_state)
+ 			err = x->mode_cbs->init_state(x);
+ 		module_put(x->mode_cbs->owner);
++		if (err && !x->mode_data)
++			x->mode_cbs = NULL;
+ 	}
+ error:
+ 	return err;
 -- 
 2.53.0
 
