@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B1FF3769F5;
-	Thu, 30 Jul 2026 15:02:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 053E32D73B5;
+	Thu, 30 Jul 2026 15:02:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423777; cv=none; b=NyyXxFMa6v6Curx+6zoeUGsVAGC5Tc+pnGaOswN9YSSxyIhIHXYA2C9NvsbxkKo1HPKRLBHj3DrSbqxC26nlPe+1NZ1Cy6/qw2sZoDYVZHzuI6clT1RRYA9Z1dufDSGh6imhuJUQua1lra1ar87RY1FGRtaBZxoCCUk5mhqSj74=
+	t=1785423780; cv=none; b=YefmNlM06+oxnlN0DkWy7JUImbhiTaaGxe8gOHDhNQQRExYeJKObimfWxYKkqdYMmMVu7157wTnszOwodBpZNjY3X8rSR5gGdyf8q+/SlG7iiNvf8oeejrsMh6lEAfDfCvf8eaT8EYWwMhdykzt+W2GI6aH2G0Bio7ifZR7rVxk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423777; c=relaxed/simple;
-	bh=DrmJzG/u85XSaVsRl7ant1ZnknQ/nsgz9mrqWvAbya8=;
+	s=arc-20240116; t=1785423780; c=relaxed/simple;
+	bh=tSt+6GiUAXjzdZbFJifNYQC/+woM3b3sL8XEqdREtzw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K8LcxZpaFzya0/fpMTRyHy19ItiPwXKwAYQsFvFUsSKdC5vhFm3QWGw9MK1S8aSDMtkTioGvr9f6wh9vEKkYNCpQb4KY2WrzInUxD8ltU8rvPCuL6rIL/eDkE8Kl4kJPUg4EyPKoEV5LXtzkPSpTcki2XRKU5HOfi4lcF890fto=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DKAPxPff; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OP2Sy24cecDdwW3NQDGyezFEUmpxGKcn4JxjRrNHc1T3pB4nWxrD1B9PPufX+B3c276lAT1bISo+PZecYmYKhlAOWI8AOiot+i+dpc+DSPbdBLkpR7If7d7GqDWwPRrFm1/lzNVkH40A7v1vZCaiGsXtprQGGfxldWd2zoBtJ18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HL8PfD3c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DKAPxPff"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 855C01F000E9;
-	Thu, 30 Jul 2026 15:02:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HL8PfD3c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E6F61F000E9;
+	Thu, 30 Jul 2026 15:02:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423776;
-	bh=BJKxrbkWAF0qijg5E5UPInVh5wteDby0PjRwzzIjOG8=;
+	s=korg; t=1785423778;
+	bh=AhbU/099J5p+aQZNFCL+sNqhJCvuo2+SWw2d+NPu8lY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DKAPxPff+t2y3SEcWeXXDehBLSDaVOspKmegovzKNdnSpq9uLJnU8AqB4rwqB4A1J
-	 HBuDhvdtk02KgZLT4g/I+6REnC9w96BvGmD0JhTvKIMwWxUvhI4fJEkItDnFxik/H6
-	 YjhCdKpLZwGFKUAWTil16r+jp371YyMC7e1rSwWA=
+	b=HL8PfD3cF2Ds8F5nduq26KAtGOY2hLl4Nsq7S3L5HhhHgWx8iWXUtvPgbWEvWKGkj
+	 UOGomXt8i38R71yfcNqnhVlLN0q+n8eweFS51PCwEA5oPYfBtepSCRnH7lksRXCEpk
+	 rAoRrYE4Wos4eH0554mesAKRz7k6JK+yrbh+/j+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xie Bo <xb@ultrarisc.com>,
-	Anup Patel <anup@brainfault.org>,
+	Satyanarayana K V P <satyanarayana.k.v.p@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Michal Wajdeczko <michal.wajdeczko@intel.com>,
+	Matthew Auld <matthew.auld@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 161/675] RISC-V: KVM: Serialize virtual interrupt pending state updates
-Date: Thu, 30 Jul 2026 16:08:11 +0200
-Message-ID: <20260730141448.558377055@linuxfoundation.org>
+Subject: [PATCH 6.18 126/675] drm/xe/vf: Shadow buffer management for CCS read/write operations
+Date: Thu, 30 Jul 2026 16:07:36 +0200
+Message-ID: <20260730141447.823887870@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -51,394 +53,204 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xie Bo <xb@ultrarisc.com>
+From: Satyanarayana K V P <satyanarayana.k.v.p@intel.com>
 
-commit d024a0a7879e6f37c0152aacf6d8e37b214a1738 upstream.
+[ Upstream commit fa18290bf0723b02bfa8d30d2e14722f0d096c2c ]
 
-KVM RISC-V tracks guest local interrupt state with two bitmaps:
+CCS copy command consist of 5-dword sequence. If vCPU halts during
+save/restore operations while these sequences are being programmed,
+incomplete writes can cause page faults during IGPU CCS metadata saving.
 
-  - irqs_pending: interrupts that should be visible to the guest
-  - irqs_pending_mask: interrupts whose pending state changed
+Use shadow buffer management to prevent partial write issues during CCS
+operations.
 
-The current code updates those bitmaps with independent atomic bitops
-and assumes a multiple-producer, single-consumer protocol. That model
-does not actually hold.
-
-kvm_riscv_vcpu_sync_interrupts() is not a pure consumer. When the guest
-changes guest-visible HVIP state, sync_interrupts() writes both
-irqs_pending and irqs_pending_mask to reflect the new guest state back
-into KVM state. As a result, irqs_pending and irqs_pending_mask form a
-single logical state transition, but they are not updated atomically as
-a pair.
-
-This allows a race where a newly injected interrupt is lost. For
-example:
-
-  CPU0                              CPU1
-  ----                              ----
-  kvm_riscv_vcpu_set_interrupt(VS_SOFT)
-    set_bit(VS_SOFT, irqs_pending)
-                                    kvm_riscv_vcpu_sync_interrupts()
-                                      sees guest-cleared HVIP.VSSIP
-                                      sets irqs_pending_mask
-                                      clear_bit(IRQ_VS_SOFT, irqs_pending)
-    set_bit(VS_SOFT, irqs_pending_mask)
-    kvm_vcpu_kick()
-
-After that interleaving, a later flush can update HVIP without VSSIP
-even though a new virtual interrupt was injected. In practice, the
-guest can remain blocked in WFI with work pending.
-
-The same pending/mask protocol is shared by VS soft interrupts, PMU
-overflow delivery, and AIA high interrupt synchronization, so the race
-is not limited to one interrupt source.
-
-Fix this by serializing all updates to irqs_pending and irqs_pending_mask
-with a per-vCPU raw spinlock. This keeps the pending bit and the dirty
-mask as one state transition across:
-
-  - set/unset interrupt
-  - guest HVIP sync
-  - interrupt flush to guest CSR state
-  - vCPU reset
-  - AIA CSR writes that clear dirty state
-
-Use non-atomic bitmap operations while holding the lock. Hold the lock
-across the AIA sync, flush, and pending checks as well, so both bitmap
-words share the same serialization domain.
-
-This intentionally replaces the existing lockless protocol instead of
-trying to repair it with additional barriers. The problem is not memory
-ordering on a single field; it is that two separate bitmaps encode one
-shared state machine while both producers and sync paths can modify
-them. A per-vCPU raw spinlock keeps the fix small, local, and suitable
-for backporting.
-
-Fixes: cce69aff689e ("RISC-V: KVM: Implement VCPU interrupts and requests handling")
-Cc: stable@vger.kernel.org
-Signed-off-by: Xie Bo <xb@ultrarisc.com>
-Reviewed-by: Anup Patel <anup@brainfault.org>
-Link: https://lore.kernel.org/r/20260715020359.1521354-2-xb@ultrarisc.com
-Signed-off-by: Anup Patel <anup@brainfault.org>
-
-[ bo: Adapt the AIA and general CSR helpers to their 6.18.y layout. ]
-
+Signed-off-by: Satyanarayana K V P <satyanarayana.k.v.p@intel.com>
+Suggested-by: Matthew Brost <matthew.brost@intel.com>
+Cc: Michal Wajdeczko <michal.wajdeczko@intel.com>
+Cc: Matthew Auld <matthew.auld@intel.com>
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://patch.msgid.link/20251118120745.3460172-3-satyanarayana.k.v.p@intel.com
+Stable-dep-of: 56441f9e08ad ("drm/xe/vf: Fix VF CCS attach/detach race with in-flight BO moves")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/include/asm/kvm_host.h | 10 ++---
- arch/riscv/kvm/aia.c              | 35 ++++++++++++----
- arch/riscv/kvm/vcpu.c             | 68 ++++++++++++++++++++++---------
- arch/riscv/kvm/vcpu_onereg.c      |  8 +++-
- 4 files changed, 87 insertions(+), 34 deletions(-)
+ drivers/gpu/drm/xe/xe_migrate.c      | 57 ++++++++++++++++++++++++++--
+ drivers/gpu/drm/xe/xe_migrate.h      |  3 ++
+ drivers/gpu/drm/xe/xe_sriov_vf_ccs.c | 19 ++++++++--
+ drivers/gpu/drm/xe/xe_sriov_vf_ccs.h |  1 +
+ 4 files changed, 73 insertions(+), 7 deletions(-)
 
-diff --git a/arch/riscv/include/asm/kvm_host.h b/arch/riscv/include/asm/kvm_host.h
-index 4d794573e3dbe8..fd3ba183cd8241 100644
---- a/arch/riscv/include/asm/kvm_host.h
-+++ b/arch/riscv/include/asm/kvm_host.h
-@@ -220,13 +220,13 @@ struct kvm_vcpu_arch {
- 	/*
- 	 * VCPU interrupts
- 	 *
--	 * We have a lockless approach for tracking pending VCPU interrupts
--	 * implemented using atomic bitops. The irqs_pending bitmap represent
--	 * pending interrupts whereas irqs_pending_mask represent bits changed
--	 * in irqs_pending. Our approach is modeled around multiple producer
--	 * and single consumer problem where the consumer is the VCPU itself.
-+	 * The irqs_pending bitmap represents pending interrupts whereas
-+	 * irqs_pending_mask represents bits changed in irqs_pending. Updates
-+	 * to these bitmaps are serialized so vcpu interrupt sync/flush cannot
-+	 * drop a newly injected interrupt while syncing guest-visible HVIP.
- 	 */
- #define KVM_RISCV_VCPU_NR_IRQS	64
-+	raw_spinlock_t irqs_pending_lock;
- 	DECLARE_BITMAP(irqs_pending, KVM_RISCV_VCPU_NR_IRQS);
- 	DECLARE_BITMAP(irqs_pending_mask, KVM_RISCV_VCPU_NR_IRQS);
+diff --git a/drivers/gpu/drm/xe/xe_migrate.c b/drivers/gpu/drm/xe/xe_migrate.c
+index b6905f35d6c81f..6a0c088d09fb33 100644
+--- a/drivers/gpu/drm/xe/xe_migrate.c
++++ b/drivers/gpu/drm/xe/xe_migrate.c
+@@ -33,6 +33,7 @@
+ #include "xe_res_cursor.h"
+ #include "xe_sa.h"
+ #include "xe_sched_job.h"
++#include "xe_sriov_vf_ccs.h"
+ #include "xe_sync.h"
+ #include "xe_trace_bo.h"
+ #include "xe_validation.h"
+@@ -1022,12 +1023,16 @@ int xe_migrate_ccs_rw_copy(struct xe_tile *tile, struct xe_exec_queue *q,
+ 	u32 batch_size, batch_size_allocated;
+ 	struct xe_device *xe = gt_to_xe(gt);
+ 	struct xe_res_cursor src_it, ccs_it;
++	struct xe_sriov_vf_ccs_ctx *ctx;
++	struct xe_sa_manager *bb_pool;
+ 	u64 size = xe_bo_size(src_bo);
+ 	struct xe_bb *bb = NULL;
+ 	u64 src_L0, src_L0_ofs;
+ 	u32 src_L0_pt;
+ 	int err;
  
-diff --git a/arch/riscv/kvm/aia.c b/arch/riscv/kvm/aia.c
-index dad3181856600f..b8b50608215564 100644
---- a/arch/riscv/kvm/aia.c
-+++ b/arch/riscv/kvm/aia.c
-@@ -50,12 +50,15 @@ void kvm_riscv_vcpu_aia_flush_interrupts(struct kvm_vcpu *vcpu)
- 	struct kvm_vcpu_aia_csr *csr = &vcpu->arch.aia_context.guest_csr;
- 	unsigned long mask, val;
- 
-+	lockdep_assert_held(&vcpu->arch.irqs_pending_lock);
++	ctx = &xe->sriov.vf.ccs.contexts[read_write];
 +
- 	if (!kvm_riscv_aia_available())
- 		return;
+ 	xe_res_first_sg(xe_bo_sg(src_bo), 0, size, &src_it);
  
--	if (READ_ONCE(vcpu->arch.irqs_pending_mask[1])) {
--		mask = xchg_acquire(&vcpu->arch.irqs_pending_mask[1], 0);
--		val = READ_ONCE(vcpu->arch.irqs_pending[1]) & mask;
-+	mask = vcpu->arch.irqs_pending_mask[1];
-+	if (mask) {
-+		vcpu->arch.irqs_pending_mask[1] = 0;
-+		val = vcpu->arch.irqs_pending[1] & mask;
- 
- 		csr->hviph &= ~mask;
- 		csr->hviph |= val;
-@@ -66,6 +69,8 @@ void kvm_riscv_vcpu_aia_sync_interrupts(struct kvm_vcpu *vcpu)
- {
- 	struct kvm_vcpu_aia_csr *csr = &vcpu->arch.aia_context.guest_csr;
- 
-+	lockdep_assert_held(&vcpu->arch.irqs_pending_lock);
-+
- 	if (kvm_riscv_aia_available())
- 		csr->vsieh = ncsr_read(CSR_VSIEH);
- }
-@@ -74,13 +79,22 @@ void kvm_riscv_vcpu_aia_sync_interrupts(struct kvm_vcpu *vcpu)
- bool kvm_riscv_vcpu_aia_has_interrupts(struct kvm_vcpu *vcpu, u64 mask)
- {
- 	unsigned long seip;
-+#ifdef CONFIG_32BIT
-+	unsigned long flags;
-+	bool pending;
-+#endif
- 
- 	if (!kvm_riscv_aia_available())
- 		return false;
- 
- #ifdef CONFIG_32BIT
--	if (READ_ONCE(vcpu->arch.irqs_pending[1]) &
--	    (vcpu->arch.aia_context.guest_csr.vsieh & upper_32_bits(mask)))
-+	raw_spin_lock_irqsave(&vcpu->arch.irqs_pending_lock, flags);
-+	pending = vcpu->arch.irqs_pending[1] &
-+		  (vcpu->arch.aia_context.guest_csr.vsieh &
-+		   upper_32_bits(mask));
-+	raw_spin_unlock_irqrestore(&vcpu->arch.irqs_pending_lock, flags);
-+
-+	if (pending)
- 		return true;
- #endif
- 
-@@ -198,6 +212,9 @@ int kvm_riscv_vcpu_aia_set_csr(struct kvm_vcpu *vcpu,
- 			       unsigned long val)
- {
- 	struct kvm_vcpu_aia_csr *csr = &vcpu->arch.aia_context.guest_csr;
-+#ifdef CONFIG_32BIT
-+	unsigned long flags;
-+#endif
- 
- 	if (reg_num >= sizeof(struct kvm_riscv_aia_csr) / sizeof(unsigned long))
- 		return -ENOENT;
-@@ -206,8 +223,12 @@ int kvm_riscv_vcpu_aia_set_csr(struct kvm_vcpu *vcpu,
- 		((unsigned long *)csr)[reg_num] = val;
- 
- #ifdef CONFIG_32BIT
--		if (reg_num == KVM_REG_RISCV_CSR_AIA_REG(siph))
--			WRITE_ONCE(vcpu->arch.irqs_pending_mask[1], 0);
-+		if (reg_num == KVM_REG_RISCV_CSR_AIA_REG(siph)) {
-+			raw_spin_lock_irqsave(&vcpu->arch.irqs_pending_lock, flags);
-+			vcpu->arch.irqs_pending_mask[1] = 0;
-+			raw_spin_unlock_irqrestore(&vcpu->arch.irqs_pending_lock,
-+						   flags);
-+		}
- #endif
+ 	xe_res_first_sg(xe_bo_sg(src_bo), xe_bo_ccs_pages_start(src_bo),
+@@ -1060,11 +1065,15 @@ int xe_migrate_ccs_rw_copy(struct xe_tile *tile, struct xe_exec_queue *q,
+ 		size -= src_L0;
  	}
  
-diff --git a/arch/riscv/kvm/vcpu.c b/arch/riscv/kvm/vcpu.c
-index d26c4967c20e24..6f8e9b105da7e4 100644
---- a/arch/riscv/kvm/vcpu.c
-+++ b/arch/riscv/kvm/vcpu.c
-@@ -78,6 +78,7 @@ static void kvm_riscv_vcpu_context_reset(struct kvm_vcpu *vcpu,
- 
- static void kvm_riscv_reset_vcpu(struct kvm_vcpu *vcpu, bool kvm_sbi_reset)
- {
-+	unsigned long flags;
- 	bool loaded;
- 
- 	/**
-@@ -102,8 +103,10 @@ static void kvm_riscv_reset_vcpu(struct kvm_vcpu *vcpu, bool kvm_sbi_reset)
- 
- 	kvm_riscv_vcpu_aia_reset(vcpu);
- 
-+	raw_spin_lock_irqsave(&vcpu->arch.irqs_pending_lock, flags);
- 	bitmap_zero(vcpu->arch.irqs_pending, KVM_RISCV_VCPU_NR_IRQS);
- 	bitmap_zero(vcpu->arch.irqs_pending_mask, KVM_RISCV_VCPU_NR_IRQS);
-+	raw_spin_unlock_irqrestore(&vcpu->arch.irqs_pending_lock, flags);
- 
- 	kvm_riscv_vcpu_pmu_reset(vcpu);
- 
-@@ -147,6 +150,7 @@ int kvm_arch_vcpu_create(struct kvm_vcpu *vcpu)
- 
- 	/* Setup VCPU hfence queue */
- 	spin_lock_init(&vcpu->arch.hfence_lock);
-+	raw_spin_lock_init(&vcpu->arch.irqs_pending_lock);
- 
- 	spin_lock_init(&vcpu->arch.reset_state.lock);
- 
-@@ -348,10 +352,14 @@ void kvm_riscv_vcpu_flush_interrupts(struct kvm_vcpu *vcpu)
- {
- 	struct kvm_vcpu_csr *csr = &vcpu->arch.guest_csr;
- 	unsigned long mask, val;
-+	unsigned long flags;
- 
--	if (READ_ONCE(vcpu->arch.irqs_pending_mask[0])) {
--		mask = xchg_acquire(&vcpu->arch.irqs_pending_mask[0], 0);
--		val = READ_ONCE(vcpu->arch.irqs_pending[0]) & mask;
-+	raw_spin_lock_irqsave(&vcpu->arch.irqs_pending_lock, flags);
++	bb_pool = ctx->mem.ccs_bb_pool;
++	guard(mutex) (xe_sa_bo_swap_guard(bb_pool));
++	xe_sa_bo_swap_shadow(bb_pool);
 +
-+	mask = vcpu->arch.irqs_pending_mask[0];
-+	if (mask) {
-+		vcpu->arch.irqs_pending_mask[0] = 0;
-+		val = vcpu->arch.irqs_pending[0] & mask;
- 
- 		csr->hvip &= ~mask;
- 		csr->hvip |= val;
-@@ -359,11 +367,14 @@ void kvm_riscv_vcpu_flush_interrupts(struct kvm_vcpu *vcpu)
- 
- 	/* Flush AIA high interrupts */
- 	kvm_riscv_vcpu_aia_flush_interrupts(vcpu);
-+
-+	raw_spin_unlock_irqrestore(&vcpu->arch.irqs_pending_lock, flags);
- }
- 
- void kvm_riscv_vcpu_sync_interrupts(struct kvm_vcpu *vcpu)
- {
- 	unsigned long hvip;
-+	unsigned long flags;
- 	struct kvm_vcpu_arch *v = &vcpu->arch;
- 	struct kvm_vcpu_csr *csr = &vcpu->arch.guest_csr;
- 
-@@ -372,34 +383,41 @@ void kvm_riscv_vcpu_sync_interrupts(struct kvm_vcpu *vcpu)
- 
- 	/* Sync-up HVIP.VSSIP bit changes does by Guest */
- 	hvip = ncsr_read(CSR_HVIP);
-+
-+	raw_spin_lock_irqsave(&v->irqs_pending_lock, flags);
-+
- 	if ((csr->hvip ^ hvip) & (1UL << IRQ_VS_SOFT)) {
- 		if (hvip & (1UL << IRQ_VS_SOFT)) {
--			if (!test_and_set_bit(IRQ_VS_SOFT,
--					      v->irqs_pending_mask))
--				set_bit(IRQ_VS_SOFT, v->irqs_pending);
-+			if (!__test_and_set_bit(IRQ_VS_SOFT,
-+						v->irqs_pending_mask))
-+				__set_bit(IRQ_VS_SOFT, v->irqs_pending);
- 		} else {
--			if (!test_and_set_bit(IRQ_VS_SOFT,
--					      v->irqs_pending_mask))
--				clear_bit(IRQ_VS_SOFT, v->irqs_pending);
-+			if (!__test_and_set_bit(IRQ_VS_SOFT,
-+						v->irqs_pending_mask))
-+				__clear_bit(IRQ_VS_SOFT, v->irqs_pending);
- 		}
+ 	bb = xe_bb_ccs_new(gt, batch_size, read_write);
+ 	if (IS_ERR(bb)) {
+ 		drm_err(&xe->drm, "BB allocation failed.\n");
+ 		err = PTR_ERR(bb);
+-		goto err_ret;
++		return err;
  	}
  
- 	/* Sync up the HVIP.LCOFIP bit changes (only clear) by the guest */
- 	if ((csr->hvip ^ hvip) & (1UL << IRQ_PMU_OVF)) {
- 		if (!(hvip & (1UL << IRQ_PMU_OVF)) &&
--		    !test_and_set_bit(IRQ_PMU_OVF, v->irqs_pending_mask))
--			clear_bit(IRQ_PMU_OVF, v->irqs_pending);
-+		    !__test_and_set_bit(IRQ_PMU_OVF, v->irqs_pending_mask))
-+			__clear_bit(IRQ_PMU_OVF, v->irqs_pending);
- 	}
+ 	batch_size_allocated = batch_size;
+@@ -1113,10 +1122,52 @@ int xe_migrate_ccs_rw_copy(struct xe_tile *tile, struct xe_exec_queue *q,
+ 	xe_assert(xe, (batch_size_allocated == bb->len));
+ 	src_bo->bb_ccs[read_write] = bb;
  
- 	/* Sync-up AIA high interrupts */
- 	kvm_riscv_vcpu_aia_sync_interrupts(vcpu);
++	xe_sriov_vf_ccs_rw_update_bb_addr(ctx);
++	xe_sa_bo_sync_shadow(bb->bo);
+ 	return 0;
++}
  
-+	raw_spin_unlock_irqrestore(&v->irqs_pending_lock, flags);
+-err_ret:
+-	return err;
++/**
++ * xe_migrate_ccs_rw_copy_clear() - Clear the CCS read/write batch buffer
++ * content.
++ * @src_bo: The buffer object @src is currently bound to.
++ * @read_write : Creates BB commands for CCS read/write.
++ *
++ * Directly clearing the BB lacks atomicity and can lead to undefined
++ * behavior if the vCPU is halted mid-operation during the clearing
++ * process. To avoid this issue, we use a shadow buffer object approach.
++ *
++ * First swap the SA BO address with the shadow BO, perform the clearing
++ * operation on the BB, update the shadow BO in the ring buffer, then
++ * sync the shadow and the actual buffer to maintain consistency.
++ *
++ * Returns: None.
++ */
++void xe_migrate_ccs_rw_copy_clear(struct xe_bo *src_bo,
++				  enum xe_sriov_vf_ccs_rw_ctxs read_write)
++{
++	struct xe_bb *bb = src_bo->bb_ccs[read_write];
++	struct xe_device *xe = xe_bo_device(src_bo);
++	struct xe_sriov_vf_ccs_ctx *ctx;
++	struct xe_sa_manager *bb_pool;
++	u32 *cs;
 +
- 	/* Sync-up timer CSRs */
- 	kvm_riscv_vcpu_timer_sync(vcpu);
++	xe_assert(xe, IS_SRIOV_VF(xe));
++
++	ctx = &xe->sriov.vf.ccs.contexts[read_write];
++	bb_pool = ctx->mem.ccs_bb_pool;
++
++	guard(mutex) (xe_sa_bo_swap_guard(bb_pool));
++	xe_sa_bo_swap_shadow(bb_pool);
++
++	cs = xe_sa_bo_cpu_addr(bb->bo);
++	memset(cs, MI_NOOP, bb->len * sizeof(u32));
++	xe_sriov_vf_ccs_rw_update_bb_addr(ctx);
++
++	xe_sa_bo_sync_shadow(bb->bo);
++
++	xe_bb_free(bb, NULL);
++	src_bo->bb_ccs[read_write] = NULL;
  }
  
- int kvm_riscv_vcpu_set_interrupt(struct kvm_vcpu *vcpu, unsigned int irq)
- {
-+	unsigned long flags;
+ /**
+diff --git a/drivers/gpu/drm/xe/xe_migrate.h b/drivers/gpu/drm/xe/xe_migrate.h
+index bc55f650204b83..438c3bb66d9b24 100644
+--- a/drivers/gpu/drm/xe/xe_migrate.h
++++ b/drivers/gpu/drm/xe/xe_migrate.h
+@@ -131,6 +131,9 @@ int xe_migrate_ccs_rw_copy(struct xe_tile *tile, struct xe_exec_queue *q,
+ 			   struct xe_bo *src_bo,
+ 			   enum xe_sriov_vf_ccs_rw_ctxs read_write);
+ 
++void xe_migrate_ccs_rw_copy_clear(struct xe_bo *src_bo,
++				  enum xe_sriov_vf_ccs_rw_ctxs read_write);
 +
- 	/*
- 	 * We only allow VS-mode software, timer, and external
- 	 * interrupts when irq is one of the local interrupts
-@@ -412,9 +430,10 @@ int kvm_riscv_vcpu_set_interrupt(struct kvm_vcpu *vcpu, unsigned int irq)
- 	    irq != IRQ_PMU_OVF)
- 		return -EINVAL;
+ struct xe_lrc *xe_migrate_lrc(struct xe_migrate *migrate);
+ struct xe_exec_queue *xe_migrate_exec_queue(struct xe_migrate *migrate);
+ int xe_migrate_access_memory(struct xe_migrate *m, struct xe_bo *bo,
+diff --git a/drivers/gpu/drm/xe/xe_sriov_vf_ccs.c b/drivers/gpu/drm/xe/xe_sriov_vf_ccs.c
+index 1a7d767632dadf..d62156195f321b 100644
+--- a/drivers/gpu/drm/xe/xe_sriov_vf_ccs.c
++++ b/drivers/gpu/drm/xe/xe_sriov_vf_ccs.c
+@@ -148,7 +148,8 @@ static int alloc_bb_pool(struct xe_tile *tile, struct xe_sriov_vf_ccs_ctx *ctx)
+ 	xe_sriov_info(xe, "Allocating %s CCS BB pool size = %lldMB\n",
+ 		      ctx->ctx_id ? "Restore" : "Save", bb_pool_size / SZ_1M);
  
--	set_bit(irq, vcpu->arch.irqs_pending);
--	smp_mb__before_atomic();
--	set_bit(irq, vcpu->arch.irqs_pending_mask);
-+	raw_spin_lock_irqsave(&vcpu->arch.irqs_pending_lock, flags);
-+	__set_bit(irq, vcpu->arch.irqs_pending);
-+	__set_bit(irq, vcpu->arch.irqs_pending_mask);
-+	raw_spin_unlock_irqrestore(&vcpu->arch.irqs_pending_lock, flags);
+-	sa_manager = xe_sa_bo_manager_init(tile, bb_pool_size, SZ_16);
++	sa_manager = __xe_sa_bo_manager_init(tile, bb_pool_size, SZ_4K, SZ_16,
++					     XE_SA_BO_MANAGER_FLAG_SHADOW);
  
- 	kvm_vcpu_kick(vcpu);
+ 	if (IS_ERR(sa_manager)) {
+ 		xe_sriov_err(xe, "Suballocator init failed with error: %pe\n",
+@@ -314,6 +315,18 @@ int xe_sriov_vf_ccs_init(struct xe_device *xe)
+ 	return err;
+ }
  
-@@ -423,6 +442,8 @@ int kvm_riscv_vcpu_set_interrupt(struct kvm_vcpu *vcpu, unsigned int irq)
- 
- int kvm_riscv_vcpu_unset_interrupt(struct kvm_vcpu *vcpu, unsigned int irq)
- {
-+	unsigned long flags;
++#define XE_SRIOV_VF_CCS_RW_BB_ADDR_OFFSET	(2 * sizeof(u32))
++void xe_sriov_vf_ccs_rw_update_bb_addr(struct xe_sriov_vf_ccs_ctx *ctx)
++{
++	u64 addr = xe_sa_manager_gpu_addr(ctx->mem.ccs_bb_pool);
++	struct xe_lrc *lrc = xe_exec_queue_lrc(ctx->mig_q);
++	struct xe_device *xe = gt_to_xe(ctx->mig_q->gt);
 +
- 	/*
- 	 * We only allow VS-mode software, timer, counter overflow and external
- 	 * interrupts when irq is one of the local interrupts
-@@ -435,26 +456,33 @@ int kvm_riscv_vcpu_unset_interrupt(struct kvm_vcpu *vcpu, unsigned int irq)
- 	    irq != IRQ_PMU_OVF)
- 		return -EINVAL;
++	xe_device_wmb(xe);
++	xe_map_wr(xe, &lrc->bo->vmap, XE_SRIOV_VF_CCS_RW_BB_ADDR_OFFSET, u32, addr);
++	xe_device_wmb(xe);
++}
++
+ /**
+  * xe_sriov_vf_ccs_attach_bo - Insert CCS read write commands in the BO.
+  * @bo: the &buffer object to which batch buffer commands will be added.
+@@ -374,9 +387,7 @@ int xe_sriov_vf_ccs_detach_bo(struct xe_bo *bo)
+ 		if (!bb)
+ 			continue;
  
--	clear_bit(irq, vcpu->arch.irqs_pending);
--	smp_mb__before_atomic();
--	set_bit(irq, vcpu->arch.irqs_pending_mask);
-+	raw_spin_lock_irqsave(&vcpu->arch.irqs_pending_lock, flags);
-+	__clear_bit(irq, vcpu->arch.irqs_pending);
-+	__set_bit(irq, vcpu->arch.irqs_pending_mask);
-+	raw_spin_unlock_irqrestore(&vcpu->arch.irqs_pending_lock, flags);
- 
+-		memset(bb->cs, MI_NOOP, bb->len * sizeof(u32));
+-		xe_bb_free(bb, NULL);
+-		bo->bb_ccs[ctx_id] = NULL;
++		xe_migrate_ccs_rw_copy_clear(bo, ctx_id);
+ 	}
  	return 0;
  }
+diff --git a/drivers/gpu/drm/xe/xe_sriov_vf_ccs.h b/drivers/gpu/drm/xe/xe_sriov_vf_ccs.h
+index 0745c0ff022828..a9c6512f87034f 100644
+--- a/drivers/gpu/drm/xe/xe_sriov_vf_ccs.h
++++ b/drivers/gpu/drm/xe/xe_sriov_vf_ccs.h
+@@ -19,6 +19,7 @@ int xe_sriov_vf_ccs_attach_bo(struct xe_bo *bo);
+ int xe_sriov_vf_ccs_detach_bo(struct xe_bo *bo);
+ int xe_sriov_vf_ccs_register_context(struct xe_device *xe);
+ void xe_sriov_vf_ccs_print(struct xe_device *xe, struct drm_printer *p);
++void xe_sriov_vf_ccs_rw_update_bb_addr(struct xe_sriov_vf_ccs_ctx *ctx);
  
- bool kvm_riscv_vcpu_has_interrupts(struct kvm_vcpu *vcpu, u64 mask)
+ static inline bool xe_sriov_vf_ccs_ready(struct xe_device *xe)
  {
-+	unsigned long flags;
- 	unsigned long ie;
-+	bool ret;
- 
-+	raw_spin_lock_irqsave(&vcpu->arch.irqs_pending_lock, flags);
- 	ie = ((vcpu->arch.guest_csr.vsie & VSIP_VALID_MASK)
- 		<< VSIP_TO_HVIP_SHIFT) & (unsigned long)mask;
- 	ie |= vcpu->arch.guest_csr.vsie & ~IRQ_LOCAL_MASK &
- 		(unsigned long)mask;
--	if (READ_ONCE(vcpu->arch.irqs_pending[0]) & ie)
--		return true;
-+	ret = vcpu->arch.irqs_pending[0] & ie;
-+	raw_spin_unlock_irqrestore(&vcpu->arch.irqs_pending_lock, flags);
- 
- 	/* Check AIA high interrupts */
--	return kvm_riscv_vcpu_aia_has_interrupts(vcpu, mask);
-+	if (!ret)
-+		ret = kvm_riscv_vcpu_aia_has_interrupts(vcpu, mask);
-+
-+	return ret;
- }
- 
- void __kvm_riscv_vcpu_power_off(struct kvm_vcpu *vcpu)
-diff --git a/arch/riscv/kvm/vcpu_onereg.c b/arch/riscv/kvm/vcpu_onereg.c
-index 865dae903aa0f6..3e8f9a28341215 100644
---- a/arch/riscv/kvm/vcpu_onereg.c
-+++ b/arch/riscv/kvm/vcpu_onereg.c
-@@ -522,6 +522,7 @@ static int kvm_riscv_vcpu_general_set_csr(struct kvm_vcpu *vcpu,
- 					  unsigned long reg_val)
- {
- 	struct kvm_vcpu_csr *csr = &vcpu->arch.guest_csr;
-+	unsigned long flags;
- 
- 	if (reg_num >= sizeof(struct kvm_riscv_csr) / sizeof(unsigned long))
- 		return -ENOENT;
-@@ -533,8 +534,11 @@ static int kvm_riscv_vcpu_general_set_csr(struct kvm_vcpu *vcpu,
- 
- 	((unsigned long *)csr)[reg_num] = reg_val;
- 
--	if (reg_num == KVM_REG_RISCV_CSR_REG(sip))
--		WRITE_ONCE(vcpu->arch.irqs_pending_mask[0], 0);
-+	if (reg_num == KVM_REG_RISCV_CSR_REG(sip)) {
-+		raw_spin_lock_irqsave(&vcpu->arch.irqs_pending_lock, flags);
-+		vcpu->arch.irqs_pending_mask[0] = 0;
-+		raw_spin_unlock_irqrestore(&vcpu->arch.irqs_pending_lock, flags);
-+	}
- 
- 	return 0;
- }
 -- 
 2.53.0
 
