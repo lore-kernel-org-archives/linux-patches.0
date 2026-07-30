@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4A9E374A0E;
-	Thu, 30 Jul 2026 15:59:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8571743F4BC;
+	Thu, 30 Jul 2026 15:59:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427167; cv=none; b=iZQ8IrhXPkKuwZ/uPgIMmFDdxmwkciKeV7r0uiUChQ4DSo994Ly4zPyvksq6YPuEafd4fPJ+mCiSVi6rmwpcQDBoF4+fVp00Kc1LHMpv7gpf6egAYiYc0QfuJI5jg04hSGP9jBJQWTkxK52K8/pLqFik1JYZe70rCsnTZdx4n6s=
+	t=1785427170; cv=none; b=nAGGVG312S9Or2PAbllxOina2QCHzeS61c4Gk0fAYGR63ygqwm7xfHkBvo76dG7uR3fEZowJWLo8VR0ot0a0DdiUZONNV00kcfs/Qe7pVunplNgyiNlSL+GU4Pcl90a9gmdnA3QPJgpBoARZ2wul8qU4bic8t5+zeIIkZ5B5YKs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427167; c=relaxed/simple;
-	bh=tKebIHxqO+hJcJ3dfg/hq+dWeMyZyWx+IET1+ydXlo0=;
+	s=arc-20240116; t=1785427170; c=relaxed/simple;
+	bh=HHRuZV+tpaIIZhrIEgywsPE7bpXyCWu2B3I/OsLzd0A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iCDssYzh5r4chsW8cdCiJWOQ0t5UZ0LfhyaSEWCtkC4tMmNl1YYxJcddqJVnJYRRgpsFFBhZAWueM/JJCdrJ+39JVxEl6rVo7oR0i/qMW2gH566XWToZO4gkxYuO5itdD2vbbbxlvKo5CI6M2vOu4j+jDDR+4vFx1jYwsw5+ssk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xe3nosZq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bixb31vv8Dg7I/coRl7tpas25DGUt4mJlXBEk0H9AL/J0NiGKaA3sabGkYJ0u+vyIvFKMYzJKfl0WEzksv1nnpbbZ3kJwjl9a4RYR7OyTygotrWBXlM1rilw4B7t8u7PtNq+MtA5vkQvrWDrM4ttFoKL25HdzoMuKJL3quMGgr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CSmwl6UX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xe3nosZq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B7BB1F000E9;
-	Thu, 30 Jul 2026 15:59:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CSmwl6UX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0E511F000E9;
+	Thu, 30 Jul 2026 15:59:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427166;
-	bh=tCp1pCsMQJQpdfxzfVJ7ynW/AXcSwYJJ4ynJvBxHNqU=;
+	s=korg; t=1785427169;
+	bh=PG/yA1J7i5NnavvHlVx/+Xk2GiWcuWPMsPe/vKHYr/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xe3nosZqT4KzIkLq/EVmbPInH3xz+bzmy4QAzrn6qTzIwZyC8Lry1H5A/6qX2RvbV
-	 +gxblqmu9QqnMbSXN3X0m35xwJA9m+Djoq4CmjP4Oxd7j3Jt6Z4bhPsAno1RIjUqTU
-	 yQ4G7TWEJkV5BA3usgaEZLnelOFAXyc85PHQLFcU=
+	b=CSmwl6UXox7DD7DXyxowY60PluOuufqhWkHR63RD9i3obslP5+tnoRyLHaEN9nvsC
+	 D7o8BrZHteFikiAEoQVf1J9DhFaBAWIDmvBWicIk6sI7pTl42dGoZAgHyGl+XRTZvL
+	 wtbWxwsS09+eieaaoTfPYVTupFTXuvx8CZH8Xk34=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
+	Jacob Moroni <jmoroni@google.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 074/484] ata: sata_dwc_460ex: enable SATA interrupts only after IRQ handler is registered
-Date: Thu, 30 Jul 2026 16:09:31 +0200
-Message-ID: <20260730141425.045333660@linuxfoundation.org>
+Subject: [PATCH 6.6 039/484] RDMA/umem: Add ib_umem_dmabuf_get_pinned_and_lock helper
+Date: Thu, 30 Jul 2026 16:08:56 +0200
+Message-ID: <20260730141424.273324075@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -51,53 +51,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Jacob Moroni <jmoroni@google.com>
 
-[ Upstream commit 4bbc16a353a98023e5ddfca7c1fc0e49971cf4d0 ]
+[ Upstream commit 553dfa8cbd0c6d36adae042d9738ddf8f8765ac7 ]
 
-sata_dwc_enable_interrupts() is called before platform_get_irq() and
-ata_host_activate(), leaving the SATA controller's interrupt mask
-enabled without a registered handler.  If a later step fails (irq
-request, phy init, etc.) or if the controller asserts an interrupt
-during probe, the irq line may fire with no handler, causing a
-spurious interrupt storm.
+Move the inner logic of ib_umem_dmabuf_get_pinned_with_dma_device()
+to a new static function that returns with the lock held upon success.
 
-Move sata_dwc_enable_interrupts() after ata_host_activate() so that
-interrupts are only unmasked once the handler is registered and the
-core is fully initialized.
+The intent is to allow reuse for the future get_pinned_revocable_and_lock
+function.
 
-Fixes: 62936009f35a ("[libata] Add 460EX on-chip SATA driver, sata_dwc_460ex")
-Assisted-by: opencode:big-pickle
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Jacob Moroni <jmoroni@google.com>
+Link: https://patch.msgid.link/20260305170826.3803155-2-jmoroni@google.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Stable-dep-of: a846aecb931b ("RDMA/irdma: Prevent rereg_mr for non-mem regions")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/sata_dwc_460ex.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/infiniband/core/umem_dmabuf.c | 35 ++++++++++++++++++++-------
+ 1 file changed, 26 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/ata/sata_dwc_460ex.c b/drivers/ata/sata_dwc_460ex.c
-index 52f5168e4db542..16c1deef389d10 100644
---- a/drivers/ata/sata_dwc_460ex.c
-+++ b/drivers/ata/sata_dwc_460ex.c
-@@ -1168,9 +1168,6 @@ static int sata_dwc_probe(struct platform_device *ofdev)
- 	/* Save dev for later use in dev_xxx() routines */
- 	hsdev->dev = dev;
+diff --git a/drivers/infiniband/core/umem_dmabuf.c b/drivers/infiniband/core/umem_dmabuf.c
+index 44bb7449738cf4..acb0922a786131 100644
+--- a/drivers/infiniband/core/umem_dmabuf.c
++++ b/drivers/infiniband/core/umem_dmabuf.c
+@@ -198,18 +198,19 @@ static struct dma_buf_attach_ops ib_umem_dmabuf_attach_pinned_ops = {
+ 	.move_notify = ib_umem_dmabuf_unsupported_move_notify,
+ };
  
--	/* Enable SATA Interrupts */
--	sata_dwc_enable_interrupts(hsdev);
--
- 	/* Get SATA interrupt number */
- 	irq = irq_of_parse_and_map(np, 0);
- 	if (!irq) {
-@@ -1203,6 +1200,8 @@ static int sata_dwc_probe(struct platform_device *ofdev)
+-struct ib_umem_dmabuf *
+-ib_umem_dmabuf_get_pinned_with_dma_device(struct ib_device *device,
+-					  struct device *dma_device,
+-					  unsigned long offset, size_t size,
+-					  int fd, int access)
++static struct ib_umem_dmabuf *
++ib_umem_dmabuf_get_pinned_and_lock(struct ib_device *device,
++				   struct device *dma_device,
++				   unsigned long offset,
++				   size_t size, int fd, int access,
++				   const struct dma_buf_attach_ops *ops)
+ {
+ 	struct ib_umem_dmabuf *umem_dmabuf;
+ 	int err;
+ 
+-	umem_dmabuf = ib_umem_dmabuf_get_with_dma_device(device, dma_device, offset,
+-							 size, fd, access,
+-							 &ib_umem_dmabuf_attach_pinned_ops);
++	umem_dmabuf =
++		ib_umem_dmabuf_get_with_dma_device(device, dma_device, offset,
++						   size, fd, access, ops);
+ 	if (IS_ERR(umem_dmabuf))
+ 		return umem_dmabuf;
+ 
+@@ -222,7 +223,6 @@ ib_umem_dmabuf_get_pinned_with_dma_device(struct ib_device *device,
+ 	err = ib_umem_dmabuf_map_pages(umem_dmabuf);
  	if (err)
- 		dev_err(dev, "failed to activate host");
+ 		goto err_release;
+-	dma_resv_unlock(umem_dmabuf->attach->dmabuf->resv);
  
-+	/* Enable SATA Interrupts */
-+	sata_dwc_enable_interrupts(hsdev);
- 	return 0;
+ 	return umem_dmabuf;
  
- error_out:
+@@ -231,6 +231,23 @@ ib_umem_dmabuf_get_pinned_with_dma_device(struct ib_device *device,
+ 	ib_umem_release(&umem_dmabuf->umem);
+ 	return ERR_PTR(err);
+ }
++
++struct ib_umem_dmabuf *
++ib_umem_dmabuf_get_pinned_with_dma_device(struct ib_device *device,
++					  struct device *dma_device,
++					  unsigned long offset, size_t size,
++					  int fd, int access)
++{
++	struct ib_umem_dmabuf *umem_dmabuf =
++		ib_umem_dmabuf_get_pinned_and_lock(device, dma_device, offset,
++						   size, fd, access,
++						   &ib_umem_dmabuf_attach_pinned_ops);
++	if (IS_ERR(umem_dmabuf))
++		return umem_dmabuf;
++
++	dma_resv_unlock(umem_dmabuf->attach->dmabuf->resv);
++	return umem_dmabuf;
++}
+ EXPORT_SYMBOL(ib_umem_dmabuf_get_pinned_with_dma_device);
+ 
+ struct ib_umem_dmabuf *ib_umem_dmabuf_get_pinned(struct ib_device *device,
 -- 
 2.53.0
 
