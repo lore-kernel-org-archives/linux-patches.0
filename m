@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BECA40DFC6;
-	Thu, 30 Jul 2026 15:22:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F939446058;
+	Thu, 30 Jul 2026 15:22:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424975; cv=none; b=UZcjZHmnQvjnhqtPAIwx/kZBzKIlN3GaQSlixiXarPm+brflJbff6tjKv7xEnQpeW8szwI7066umDuY+AkEPyLZNVuVsxI5yC8Li2856/PApXNNRjWkl2au4bjFcvwkouD5jXJ/TmnpclvZfcMIMiv8B/cdpzwj5FOTiErw8wNQ=
+	t=1785424978; cv=none; b=mZ1i84C8WhLc5YDSgoN+klnUVDw+XHgQsQcqSkHOGZYBzoICXygT2gkvZm1vl5ux81wKQTUxMse5ju+lP817jzXi6Aemk5VYjM9KP7uK3xFTtspfl5C6YE/tw2w21A/jUBoVC1turrgYpxhfIDG6Nqzz2mNTTi15fYTkmvW+Z1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424975; c=relaxed/simple;
-	bh=MxfhDAmGeky0nkeMQfFSH6lxxZT/AMXh7yatzekGp4o=;
+	s=arc-20240116; t=1785424978; c=relaxed/simple;
+	bh=B51fEa0NrptA8RKW2g5mGj6JVLVovyRcVnanaPSwH10=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jMbXhVGTRT5zlPOCsbnTDKJ5vKp1+lCPRKOaR3JW+SvdsSy2AD5ljA/CaJAMGVj7ZvPriXx1f7mI9H29tAKD7sV558oVFWSU8wEUHZ+HkxCg9QVOdeeCMHUAK3oTTPZbXkpHXn/MMNBJYzU4Sr/gZYERbr23GVu9hRT118bdsv4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GRKYbA4S; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=YIXjkn1uoDJIBZeTVvChRiwFdg6rbnrFAT09zWTQnhataUai2dlfVHowx6UNE3RRDfc2oLAPXKpvCpl20wHjjm0SsZERcwc0Tp82WKj7LhGaTjCjqyr3fFnahkF/VVDDgevPieDbytdshZKAxXNl68h5dBeKQXeH2nQ3Vtuq/5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hb3WGG+K; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GRKYbA4S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B298D1F000E9;
-	Thu, 30 Jul 2026 15:22:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hb3WGG+K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BAC11F000E9;
+	Thu, 30 Jul 2026 15:22:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424974;
-	bh=U/8ppRTgydFuB4zz7vEvum0Fdh8xClrKWANSY84DTGM=;
+	s=korg; t=1785424977;
+	bh=6K9YM6e+Htjg4f37+Xdwl6dIvliBnir4pH1sWnoGEno=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GRKYbA4SDndG8J5DxMwHlcO8V6SkvZvhuXSGkz5YebZHM192cOTwI6GFDLRA8xLf6
-	 vuaa49pTTL1nXO6iT+jiqsU7VA7g0nTYN92s416KdHy16fzauvKTM4B9zI/VhAN7BK
-	 8LeSSF96sPo0dp5V22MkvsNQBlFQo8A43eEIau7Y=
+	b=Hb3WGG+KHhumea/Ojeg9Mp7aU8ML/XNnn0430neIk4i3HyfdDcMdgyHPVQt6V7U61
+	 YnDiCzw+9DWwgWrGGTSMz0BEd8pWOm5nXS57GXuOhurr28DLs8YmJF2tGQxurPjUsf
+	 dz9AL6Y+BLqhH3NRw/oBnNPLWwrgxYE+KAN5M3jk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakob Linke <jakob@linke.cx>,
+	Boyuan Zhang <boyuan.zhang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 581/675] drm/amdgpu/soc24: reset dGPU if suspend got aborted
-Date: Thu, 30 Jul 2026 16:15:11 +0200
-Message-ID: <20260730141457.474351669@linuxfoundation.org>
+Subject: [PATCH 6.18 582/675] drm/amdgpu/vce: fix integer overflow in image size
+Date: Thu, 30 Jul 2026 16:15:12 +0200
+Message-ID: <20260730141457.494717598@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -44,81 +44,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jakob Linke <jakob@linke.cx>
+From: Boyuan Zhang <boyuan.zhang@amd.com>
 
-commit aff079bdce65f6d085e4b0091fdf87fffa95b0d9 upstream.
+commit 186bfdc4e26d019b2e7570cb121964a1d89b2e5b upstream.
 
-For SOC24 ASICs (RDNA4 / Navi 4x dGPUs) re-enabling PM features fails if an
-S3 suspend got aborted, the same issue already handled for SOC21 and SOC15:
+Fix a security vulnerability where malicious VCE command streams
+with oversized dimensions (e.g. 65536×65536) cause 32-bit integer
+overflow, wrapping the calculated buffer size to 0. This bypasses
+validation and allows GPU firmware to perform out-of-bound memory
+access.
 
-  commit df3c7dc5c58b ("drm/amdgpu: Reset dGPU if suspend got aborted")
-  commit 38e8ca3e4b6d ("amdgpu/soc15: enable asic reset for dGPU in case of suspend abort")
+The fix uses 64-bit arithmetic to detect overflow and rejects
+invalid dimensions before they reach the hardware.
 
-The aborted resume fails with:
+V2: remove redundant check
+V3: modify max height value
+V4: remove size64
 
-  amdgpu: SMU: No response msg_reg: 6 resp_reg: 0
-  amdgpu: Failed to enable requested dpm features!
-  amdgpu: resume of IP block <smu> failed -62
-
-Apply the same workaround for soc24: detect the aborted-suspend state at
-resume via the sign-of-life register and reset the device before re-init.
-
-This is a workaround till a proper solution is finalized.
-
-Fixes: 98b912c50e44 ("drm/amdgpu: Add soc24 common ip block (v2)")
-Signed-off-by: Jakob Linke <jakob@linke.cx>
+Signed-off-by: Boyuan Zhang <boyuan.zhang@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit fed5bdbfe1d4a19a26c70f7fc58017dc88be1c18)
+(cherry picked from commit cbe408dba581755ad1279a487ec786d8927d778d)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/soc24.c |   28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vce.c |   17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/soc24.c
-+++ b/drivers/gpu/drm/amd/amdgpu/soc24.c
-@@ -526,8 +526,36 @@ static int soc24_common_suspend(struct a
- 	return soc24_common_hw_fini(ip_block);
- }
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vce.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vce.c
+@@ -853,9 +853,20 @@ int amdgpu_vce_ring_parse_cs(struct amdg
+ 				goto out;
+ 			}
  
-+static bool soc24_need_reset_on_resume(struct amdgpu_device *adev)
-+{
-+	u32 sol_reg1, sol_reg2;
+-			*size = amdgpu_ib_get_value(ib, idx + 8) *
+-				amdgpu_ib_get_value(ib, idx + 10) *
+-				8 * 3 / 2;
++			uint32_t width, height;
++			width = amdgpu_ib_get_value(ib, idx + 8);
++			height = amdgpu_ib_get_value(ib, idx + 10);
 +
-+	/* Will reset for the following suspend abort cases.
-+	 * 1) Only reset dGPU side.
-+	 * 2) S3 suspend got aborted and TOS is active.
-+	 *    As for dGPU suspend abort cases the SOL value
-+	 *    will be kept as zero at this resume point.
-+	 */
-+	if (!(adev->flags & AMD_IS_APU) && adev->in_s3) {
-+		sol_reg1 = RREG32_SOC15(MP0, 0, regMPASP_SMN_C2PMSG_81);
-+		msleep(100);
-+		sol_reg2 = RREG32_SOC15(MP0, 0, regMPASP_SMN_C2PMSG_81);
++			if (width == 0 || height == 0 ||
++			    width > 4096 || height > 2304) {
++				DRM_ERROR("invalid VCE image size: %ux%u\n",
++					  width, height);
++				r = -EINVAL;
++				goto out;
++			}
 +
-+		return (sol_reg1 != sol_reg2);
-+	}
++			*size = width * height * 8 * 3 / 2;
 +
-+	return false;
-+}
-+
- static int soc24_common_resume(struct amdgpu_ip_block *ip_block)
- {
-+	struct amdgpu_device *adev = ip_block->adev;
-+
-+	if (soc24_need_reset_on_resume(adev)) {
-+		dev_info(adev->dev, "S3 suspend aborted, resetting...");
-+		soc24_asic_reset(adev);
-+	}
-+
- 	return soc24_common_hw_init(ip_block);
- }
+ 			break;
  
+ 		case 0x04000001: /* config extension */
 
 
