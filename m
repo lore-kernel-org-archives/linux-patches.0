@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47B8B299929;
-	Thu, 30 Jul 2026 15:37:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4363A19CD1D;
+	Thu, 30 Jul 2026 15:37:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425873; cv=none; b=ax4J1/IKutj8dtfVEvRiLELPkAH1Dshy3ggjE3MApaBj7hgu4k2bDSxwQi4d2VakI7QQ80hozfiDRcecbQr/YhAOBxDBK4NvjtI/u1bVYVWf1GfeRs2PQ9fZC8F6yEGukatzVmEfCZdlkF6HJ1AlZXrvLvKv/tDuT5Y6S5Dpmq0=
+	t=1785425876; cv=none; b=crJf7fYGloehV34OtAAz3sbkoKaur1vDkKPMc5Ys0tyZ0MyJGhfGowl2tYIXCJhlBJCymmNqoassOPumdVoSPWwGI8SEGpVDp8TIKK2jc9KXZnZyEhagNX9HWCen1D/I9M9Zd4K3r3KyhKolbUOHcGzc57PNjR+F3LhoeUFtC4g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425873; c=relaxed/simple;
-	bh=ySm3CIQ/VVQ+xC5d/IJEsoFIW6+5AFJwmKFzH/CdS3Y=;
+	s=arc-20240116; t=1785425876; c=relaxed/simple;
+	bh=UBZWUU/qK2C4vewrw1+YmlxZWu7R+ZDhm1N9+VQHQ3M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WFCQKdu1ntcQXpvSfMmr91tSX2PwQNPY+eEMRsGqbFQYm3f8oUHSL+pDcWRjKHaUgaOD5OGxy4/T6lMzqYoS78y0ANXAmmMvIJpKw891WvN9V03Pn2zPE6KFo0gEZrOhOioanCJAD2wu5s8dGUiN1GoIpxzRN0DJEKK3pVf0Z70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sHg24acu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hQKPjX5+kpMZlBOm29cl4atOv6fSZlrihAbRseCkp0tgtQD5CXKFMmq7pw9Gz4dGn1JT1xsMakFKFmhwE7NEOKETf8CtxzFgIi3gbgmhEWcBqLu3hLrw3k2VcdOOMre5pA6yJ1ifuT52d/gZTw+t79ewERA4SZxXn3E4/txlmFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c30a3bd8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sHg24acu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A90201F000E9;
-	Thu, 30 Jul 2026 15:37:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c30a3bd8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BA821F00A3A;
+	Thu, 30 Jul 2026 15:37:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425872;
-	bh=zaAGhkEfIw4AwyP9D4gHKUBv7O1E2BM1P997DasYwFw=;
+	s=korg; t=1785425875;
+	bh=Ph4pCA9EnchtZlD8CXORST+WjDHmVphwYKTx/pZ4LYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sHg24acuJsSR1lqKUkuGBrgCQ6oLEz+Deu5uquTsAMBs2zqVjETdc6ycG5RBaequI
-	 uLyqr3kt5F14EoY07rPE2BYa8Y68evf3tsQfu6afgbqKNtZrSgEQ3WK3e1pCi0q+11
-	 ot7odaXfYzNG2/eIY7KkPLOXep/gJ77iCNi1r3r4=
+	b=c30a3bd8NqQXwJNHPfeHeiiV3fiqlyBh71BzgN8cV/K/LIxFRZHGq5ZDeh6+gSjob
+	 pX0LXqitK3YRUrdXE2P9k4caRvIbSAX5oX/9cyB/6azQjZ/oQ3tc8NIZD2idACsPQb
+	 UzakMV+Vnx92MVtaxQ/WH4IQKn+MbEBVfGfSmk+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harshaka Narayana <harshaka.narayana@broadcom.com>,
-	Ronak Doshi <ronak.doshi@broadcom.com>,
-	Sankararaman Jayaraman <sankararaman.jayaraman@broadcom.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Joanne Koong <joannelkoong@gmail.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 220/602] vmxnet3: fix BUG_ON in vmxnet3_get_hdr_len() for Geneve packets
-Date: Thu, 30 Jul 2026 16:10:12 +0200
-Message-ID: <20260730141440.579093193@linuxfoundation.org>
+Subject: [PATCH 6.12 221/602] iomap: correct the range of a partial dirty clear
+Date: Thu, 30 Jul 2026 16:10:13 +0200
+Message-ID: <20260730141440.600468085@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -54,82 +54,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harshaka Narayana <harshaka.narayana@broadcom.com>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-[ Upstream commit 34a71f5361fc3adb5b7138da78750b0d535a8252 ]
+[ Upstream commit 88c26515313169806a412a362b32a1eca53d21bd ]
 
-vmxnet3_get_hdr_len() assumes gdesc->rcd.v4/v6/tcp always describe the
-outer header, but for a Geneve-encapsulated packet the device can set
-them based on the inner header instead, signalled by the
-VMXNET3_RCD_HDR_INNER_SHIFT bit in the completion descriptor. Since the
-function never skips the outer encapsulation, this mismatch triggers:
+The block range calculation in ifs_clear_range_dirty() is incorrect when
+partially clearing a range in a folio. We cannot clear the dirty bit of
+the first block or the last block if the start or end offset is not
+blocksize-aligned. This has not yet caused any issues since we always
+clear a whole folio in iomap_writeback_folio().
 
-- BUG_ON(hdr.ipv4->protocol != IPPROTO_TCP), because the outer
-  protocol is UDP (Geneve), not TCP.
-- BUG_ON(hdr.eth->h_proto != ...), when the tunnel's outer and inner
-  IP versions differ (e.g. outer IPv6/inner IPv4 or vice versa).
+Fix this by rounding up the first block to blocksize alignment, and
+calculate the last block by rounding down (using truncation). Correct
+the nr_blks calculation accordingly.
 
-Check VMXNET3_RCD_HDR_INNER_SHIFT up front and bail out, since the
-function cannot locate the inner header it would need to parse. Also
-convert the remaining BUG_ON()s in this function to return 0
-defensively.
-
-Fixes: 45dac1d6ea04 ("vmxnet3: Changes for vmxnet3 adapter version 2 (fwd)")
-Signed-off-by: Harshaka Narayana <harshaka.narayana@broadcom.com>
-Reviewed-by: Ronak Doshi <ronak.doshi@broadcom.com>
-Reviewed-by: Sankararaman Jayaraman <sankararaman.jayaraman@broadcom.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260713140915.3381715-1-harshaka.narayana@broadcom.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 4ce02c679722 ("iomap: Add per-block dirty state tracking to improve performance")
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Link: https://patch.msgid.link/20260714082325.325163-2-yi.zhang@huaweicloud.com
+Reviewed-by: Joanne Koong <joannelkoong@gmail.com>
+Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/vmxnet3/vmxnet3_drv.c | 22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
+ fs/iomap/buffered-io.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/vmxnet3/vmxnet3_drv.c b/drivers/net/vmxnet3/vmxnet3_drv.c
-index e1e472b3a301ef..538738231a5a95 100644
---- a/drivers/net/vmxnet3/vmxnet3_drv.c
-+++ b/drivers/net/vmxnet3/vmxnet3_drv.c
-@@ -1518,7 +1518,11 @@ vmxnet3_get_hdr_len(struct vmxnet3_adapter *adapter, struct sk_buff *skb,
- 		struct ipv6hdr *ipv6;
- 		struct tcphdr *tcp;
- 	} hdr;
--	BUG_ON(gdesc->rcd.tcp == 0);
-+
-+	/* v4/v6/tcp then describe the inner header, which we can't locate. */
-+	if ((le32_to_cpu(gdesc->dword[0]) & (1UL << VMXNET3_RCD_HDR_INNER_SHIFT)) ||
-+	    gdesc->rcd.tcp == 0)
-+		return 0;
+diff --git a/fs/iomap/buffered-io.c b/fs/iomap/buffered-io.c
+index 5f885286b2f4a0..44f5c9889cefcb 100644
+--- a/fs/iomap/buffered-io.c
++++ b/fs/iomap/buffered-io.c
+@@ -137,13 +137,17 @@ static void ifs_clear_range_dirty(struct folio *folio,
+ {
+ 	struct inode *inode = folio->mapping->host;
+ 	unsigned int blks_per_folio = i_blocks_per_folio(inode, folio);
+-	unsigned int first_blk = (off >> inode->i_blkbits);
+-	unsigned int last_blk = (off + len - 1) >> inode->i_blkbits;
+-	unsigned int nr_blks = last_blk - first_blk + 1;
++	unsigned int first_blk = round_up(off, i_blocksize(inode)) >>
++				 inode->i_blkbits;
++	unsigned int last_blk = (off + len) >> inode->i_blkbits;
+ 	unsigned long flags;
  
- 	maplen = skb_headlen(skb);
- 	if (unlikely(sizeof(struct iphdr) + sizeof(struct tcphdr) > maplen))
-@@ -1532,15 +1536,21 @@ vmxnet3_get_hdr_len(struct vmxnet3_adapter *adapter, struct sk_buff *skb,
++	if (first_blk >= last_blk)
++		return;
++
+ 	spin_lock_irqsave(&ifs->state_lock, flags);
+-	bitmap_clear(ifs->state, first_blk + blks_per_folio, nr_blks);
++	bitmap_clear(ifs->state, first_blk + blks_per_folio,
++		     last_blk - first_blk);
+ 	spin_unlock_irqrestore(&ifs->state_lock, flags);
+ }
  
- 	hdr.eth = eth_hdr(skb);
- 	if (gdesc->rcd.v4) {
--		BUG_ON(hdr.eth->h_proto != htons(ETH_P_IP) &&
--		       hdr.veth->h_vlan_encapsulated_proto != htons(ETH_P_IP));
-+		if (hdr.eth->h_proto != htons(ETH_P_IP) &&
-+		    hdr.veth->h_vlan_encapsulated_proto != htons(ETH_P_IP))
-+			return 0;
-+
- 		hdr.ptr += hlen;
--		BUG_ON(hdr.ipv4->protocol != IPPROTO_TCP);
-+		if (hdr.ipv4->protocol != IPPROTO_TCP)
-+			return 0;
-+
- 		hlen = hdr.ipv4->ihl << 2;
- 		hdr.ptr += hdr.ipv4->ihl << 2;
- 	} else if (gdesc->rcd.v6) {
--		BUG_ON(hdr.eth->h_proto != htons(ETH_P_IPV6) &&
--		       hdr.veth->h_vlan_encapsulated_proto != htons(ETH_P_IPV6));
-+		if (hdr.eth->h_proto != htons(ETH_P_IPV6) &&
-+		    hdr.veth->h_vlan_encapsulated_proto != htons(ETH_P_IPV6))
-+			return 0;
-+
- 		hdr.ptr += hlen;
- 		/* Use an estimated value, since we also need to handle
- 		 * TSO case.
 -- 
 2.53.0
 
