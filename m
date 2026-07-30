@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39524448CF9;
-	Thu, 30 Jul 2026 15:24:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FE8E449991;
+	Thu, 30 Jul 2026 15:24:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425043; cv=none; b=lfpk7SGbXglJLMxK4zr+aN+9waE+u9kFMmpJG87+0NZh8jKgl0LV1pAyzgEVD85t/DZHhOATc3l77+woZfRyZ1CWhxwc5UXel6HOK8b4kr9nvh+k1hbzxG+Kf6Yp90vDltvQOGEimyH1Jv4RwurWvp/q11Lyv0qOX7Uc3wwVjyI=
+	t=1785425047; cv=none; b=igWtNAQ8j+l3nab0ekXW31uSargW0yQqXpjAGsh9AXE7x3qmAxfXuTUgvkLvgw8kwvJVLST+etIR1tvz1PNR8ekXUkWxht5hdhfgw5iz8zkYFdzZU0T0MBLBAgcDGdHepX8tNNXpXEq96ppDnEqHwViV8a3UBJVM2ZnV8ZH6NfM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425043; c=relaxed/simple;
-	bh=xAeZg6Euo9IOvfo2asWwLMTBORzHHNXTJx6qe6Pa5uY=;
+	s=arc-20240116; t=1785425047; c=relaxed/simple;
+	bh=ocCT1y3TfLnYQmY8X2m0aoq3pYHisJoqImoaFiJAuYM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NQO5F/dAblZCWuJWP2FD+pBIEk8qnqb2tomUuTnPc+Qya+s1IOnk6q7g0AcZLG5hwZDQsPJfY+HBnINO6vpcEdmzpoJi0clL90v53BQEjZV9KV09p9CzuhmaMfZQSWCzEd6g2WcvGUPjNATxunquiE03OTz+yJovc1L7UchvQgY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=velD1YiL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Y+kg0y/49rJSXGz8+f3/W8MNK/WOfaFY6+kQZn6782jF707BiPx/+yeSZW3g/xwKOoGrm/aZgR5mPoXa4/YilbcBSw7L/DROWhsYjbDIjlElGhR5sxpLXHu0mLGWOFdc1o14AhFFA1GDeYdE8j+MbmUex8ZDr2NXq68T0ZIncXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PLYt4nWk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="velD1YiL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 808851F000E9;
-	Thu, 30 Jul 2026 15:24:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PLYt4nWk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83AE11F000E9;
+	Thu, 30 Jul 2026 15:24:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425042;
-	bh=1zLHo85JM9mCv4wNHqsYYm9UjpG8MqhmgS5YuhRvvr0=;
+	s=korg; t=1785425045;
+	bh=gbdI417nJ7TNdebhYQ6ODiqdtWcsLekWjZGYSq0XX8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=velD1YiLxwNw6su5hYI97vclUwzSu/Q6Ueb9NSDgQFyMJc/F9lBRzvSPprKoFGfTX
-	 RBDOtZu7jsY3DpC9kGaHEklBd9RNOkmscnX2OfqCPmcnQYEdChHKcke+9P9VpdLsy9
-	 EdPUqz54M6GHoxY3P/8iR0lWMdkgxW+WeUnJXKkY=
+	b=PLYt4nWkMeJvwuMKAJkd1QUdt8GEbQdhvnsRmQo30/dYD62OyBjIdnXeq+RiFN7M5
+	 b0GNCWlKZJsgfwTA8DnIdXHdiplaZ+l+JAuzhc0kkmLMCEXWNcpmtFTpIz4WSbwcp+
+	 6DmZiJ70plXNUoSiRvWkSmmRSPCaC7R0rO/1UDRQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
+	Ricardo Robaina <rrobaina@redhat.com>,
 	Paul Moore <paul@paul-moore.com>,
-	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 607/675] audit: widen ino fields to u64
-Date: Thu, 30 Jul 2026 16:15:37 +0200
-Message-ID: <20260730141458.016235411@linuxfoundation.org>
+Subject: [PATCH 6.18 608/675] audit: use unsigned int instead of unsigned
+Date: Thu, 30 Jul 2026 16:15:38 +0200
+Message-ID: <20260730141458.037719367@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -52,184 +51,199 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Ricardo Robaina <rrobaina@redhat.com>
 
-[ Upstream commit 125dfa218134df7cc112667e92984de9d8cd0bf6 ]
+[ Upstream commit 8b226771014beab1292081151a99530886ce54b4 ]
 
-inode->i_ino is being widened from unsigned long to u64. The audit
-subsystem uses unsigned long ino in struct fields, function parameters,
-and local variables that store inode numbers from arbitrary filesystems.
-On 32-bit platforms this truncates inode numbers that exceed 32 bits,
-which will cause incorrect audit log entries and broken watch/mark
-comparisons.
+Address checkpatch.pl warning below, across the audit subsystem:
 
-Widen all audit ino fields, parameters, and locals to u64, and update
-the inode format string from %lu to %llu to match.
+  WARNING: Prefer 'unsigned int' to bare use of 'unsigned'
 
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260304-iino-u64-v3-2-2257ad83d372@kernel.org
-Acked-by: Paul Moore <paul@paul-moore.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Minor cleanup, no functional changes.
+
+Signed-off-by: Ricardo Robaina <rrobaina@redhat.com>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Stable-dep-of: 81905b5acbe7 ("audit: fix recursive locking deadlock in audit_dupe_exe()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/audit.h   |    2 +-
- kernel/audit.h          |   13 ++++++-------
- kernel/audit_fsnotify.c |    4 ++--
- kernel/audit_watch.c    |   12 ++++++------
- kernel/auditsc.c        |    4 ++--
- 5 files changed, 17 insertions(+), 18 deletions(-)
+ include/linux/audit.h      |    4 ++--
+ include/linux/audit_arch.h |   12 ++++++------
+ kernel/audit.c             |    2 +-
+ kernel/audit.h             |    2 +-
+ kernel/audit_tree.c        |    2 +-
+ kernel/audit_watch.c       |    2 +-
+ kernel/auditfilter.c       |    8 ++++----
+ kernel/auditsc.c           |    2 +-
+ lib/compat_audit.c         |   12 ++++++------
+ 9 files changed, 23 insertions(+), 23 deletions(-)
 
 --- a/include/linux/audit.h
 +++ b/include/linux/audit.h
-@@ -16,7 +16,7 @@
- #include <uapi/linux/netfilter/nf_tables.h>
- #include <uapi/linux/fanotify.h>
+@@ -125,8 +125,8 @@ enum audit_nfcfgop {
+ 	AUDIT_NFT_OP_INVALID,
+ };
  
--#define AUDIT_INO_UNSET ((unsigned long)-1)
-+#define AUDIT_INO_UNSET ((u64)-1)
- #define AUDIT_DEV_UNSET ((dev_t)-1)
+-extern int __init audit_register_class(int class, unsigned *list);
+-extern int audit_classify_syscall(int abi, unsigned syscall);
++extern int __init audit_register_class(int class, unsigned int *list);
++extern int audit_classify_syscall(int abi, unsigned int syscall);
+ extern int audit_classify_arch(int arch);
  
- struct audit_sig_info {
+ /* audit_names->type values */
+--- a/include/linux/audit_arch.h
++++ b/include/linux/audit_arch.h
+@@ -21,13 +21,13 @@ enum auditsc_class_t {
+ 	AUDITSC_NVALS /* count */
+ };
+ 
+-extern int audit_classify_compat_syscall(int abi, unsigned syscall);
++extern int audit_classify_compat_syscall(int abi, unsigned int syscall);
+ 
+ /* only for compat system calls */
+-extern unsigned compat_write_class[];
+-extern unsigned compat_read_class[];
+-extern unsigned compat_dir_class[];
+-extern unsigned compat_chattr_class[];
+-extern unsigned compat_signal_class[];
++extern unsigned int compat_write_class[];
++extern unsigned int compat_read_class[];
++extern unsigned int compat_dir_class[];
++extern unsigned int compat_chattr_class[];
++extern unsigned int compat_signal_class[];
+ 
+ #endif
+--- a/kernel/audit.c
++++ b/kernel/audit.c
+@@ -2030,7 +2030,7 @@ void audit_log_vformat(struct audit_buff
+ 		 * here and AUDIT_BUFSIZ is at least 1024, then we can
+ 		 * log everything that printk could have logged. */
+ 		avail = audit_expand(ab,
+-			max_t(unsigned, AUDIT_BUFSIZ, 1+len-avail));
++			max_t(unsigned int, AUDIT_BUFSIZ, 1+len-avail));
+ 		if (!avail)
+ 			goto out_va_end;
+ 		len = vsnprintf(skb_tail_pointer(skb), avail, fmt, args2);
 --- a/kernel/audit.h
 +++ b/kernel/audit.h
-@@ -76,7 +76,7 @@ struct audit_names {
- 	int			name_len;	/* number of chars to log */
- 	bool			hidden;		/* don't log this record */
- 
--	unsigned long		ino;
-+	u64			ino;
- 	dev_t			dev;
- 	umode_t			mode;
- 	kuid_t			uid;
-@@ -225,9 +225,9 @@ extern int auditd_test_task(struct task_
- #define AUDIT_INODE_BUCKETS	32
- extern struct list_head audit_inode_hash[AUDIT_INODE_BUCKETS];
- 
--static inline int audit_hash_ino(u32 ino)
-+static inline int audit_hash_ino(u64 ino)
- {
--	return (ino & (AUDIT_INODE_BUCKETS-1));
-+	return ((u32)ino & (AUDIT_INODE_BUCKETS-1));
- }
- 
+@@ -233,7 +233,7 @@ static inline int audit_hash_ino(u64 ino
  /* Indicates that audit should log the full pathname. */
-@@ -277,16 +277,15 @@ extern int audit_to_watch(struct audit_k
- extern int audit_add_watch(struct audit_krule *krule, struct list_head **list);
- extern void audit_remove_watch_rule(struct audit_krule *krule);
- extern char *audit_watch_path(struct audit_watch *watch);
--extern int audit_watch_compare(struct audit_watch *watch, unsigned long ino,
--			       dev_t dev);
-+extern int audit_watch_compare(struct audit_watch *watch, u64 ino, dev_t dev);
+ #define AUDIT_NAME_FULL -1
  
- extern struct audit_fsnotify_mark *audit_alloc_mark(struct audit_krule *krule,
- 						    char *pathname, int len);
- extern char *audit_mark_path(struct audit_fsnotify_mark *mark);
- extern void audit_remove_mark(struct audit_fsnotify_mark *audit_mark);
- extern void audit_remove_mark_rule(struct audit_krule *krule);
--extern int audit_mark_compare(struct audit_fsnotify_mark *mark,
--			      unsigned long ino, dev_t dev);
-+extern int audit_mark_compare(struct audit_fsnotify_mark *mark, u64 ino,
-+			      dev_t dev);
- extern int audit_dupe_exe(struct audit_krule *new, struct audit_krule *old);
- extern int audit_exe_compare(struct task_struct *tsk,
- 			     struct audit_fsnotify_mark *mark);
---- a/kernel/audit_fsnotify.c
-+++ b/kernel/audit_fsnotify.c
-@@ -25,7 +25,7 @@
-  */
- struct audit_fsnotify_mark {
- 	dev_t dev;		/* associated superblock device */
--	unsigned long ino;	/* associated inode number */
-+	u64 ino;		/* associated inode number */
- 	char *path;		/* insertion path */
- 	struct fsnotify_mark mark; /* fsnotify mark on the inode */
- 	struct audit_krule *rule;
-@@ -57,7 +57,7 @@ char *audit_mark_path(struct audit_fsnot
- 	return mark->path;
- }
+-extern int audit_match_class(int class, unsigned syscall);
++extern int audit_match_class(int class, unsigned int syscall);
+ extern int audit_comparator(const u32 left, const u32 op, const u32 right);
+ extern int audit_uid_comparator(kuid_t left, u32 op, kuid_t right);
+ extern int audit_gid_comparator(kgid_t left, u32 op, kgid_t right);
+--- a/kernel/audit_tree.c
++++ b/kernel/audit_tree.c
+@@ -33,7 +33,7 @@ struct audit_chunk {
+ 	struct audit_node {
+ 		struct list_head list;
+ 		struct audit_tree *owner;
+-		unsigned index;		/* index; upper bit indicates 'will prune' */
++		unsigned int index;	/* index; upper bit indicates 'will prune' */
+ 	} owners[] __counted_by(count);
+ };
  
--int audit_mark_compare(struct audit_fsnotify_mark *mark, unsigned long ino, dev_t dev)
-+int audit_mark_compare(struct audit_fsnotify_mark *mark, u64 ino, dev_t dev)
- {
- 	if (mark->ino == AUDIT_INO_UNSET)
- 		return 0;
 --- a/kernel/audit_watch.c
 +++ b/kernel/audit_watch.c
-@@ -37,7 +37,7 @@ struct audit_watch {
- 	refcount_t		count;	/* reference count */
- 	dev_t			dev;	/* associated superblock device */
- 	char			*path;	/* insertion path */
--	unsigned long		ino;	/* associated inode number */
-+	u64			ino;	/* associated inode number */
- 	struct audit_parent	*parent; /* associated parent */
- 	struct list_head	wlist;	/* entry in parent->watches list */
- 	struct list_head	rules;	/* anchor for krule->rlist */
-@@ -125,7 +125,7 @@ char *audit_watch_path(struct audit_watc
- 	return watch->path;
- }
- 
--int audit_watch_compare(struct audit_watch *watch, unsigned long ino, dev_t dev)
-+int audit_watch_compare(struct audit_watch *watch, u64 ino, dev_t dev)
- {
- 	return (watch->ino != AUDIT_INO_UNSET) &&
- 		(watch->ino == ino) &&
 @@ -244,7 +244,7 @@ static void audit_watch_log_rule_change(
  /* Update inode info in audit rules based on filesystem event. */
  static void audit_update_watch(struct audit_parent *parent,
  			       const struct qstr *dname, dev_t dev,
--			       unsigned long ino, unsigned invalidating)
-+			       u64 ino, unsigned invalidating)
+-			       u64 ino, unsigned invalidating)
++			       u64 ino, unsigned int invalidating)
  {
  	struct audit_watch *owatch, *nwatch, *nextw;
  	struct audit_krule *r, *nextr;
-@@ -285,7 +285,7 @@ static void audit_update_watch(struct au
- 				list_del(&oentry->rule.list);
- 				audit_panic("error updating watch, removing");
- 			} else {
--				int h = audit_hash_ino((u32)ino);
-+				int h = audit_hash_ino(ino);
+--- a/kernel/auditfilter.c
++++ b/kernel/auditfilter.c
+@@ -165,13 +165,13 @@ static inline int audit_to_inode(struct
  
- 				/*
- 				 * nentry->rule.watch == oentry->rule.watch so
-@@ -439,7 +439,7 @@ int audit_add_watch(struct audit_krule *
+ static __u32 *classes[AUDIT_SYSCALL_CLASSES];
  
- 	audit_add_to_parent(krule, parent);
- 
--	h = audit_hash_ino((u32)watch->ino);
-+	h = audit_hash_ino(watch->ino);
- 	*list = &audit_inode_hash[h];
- error:
- 	path_put(&parent_path);
-@@ -527,7 +527,7 @@ int audit_dupe_exe(struct audit_krule *n
- int audit_exe_compare(struct task_struct *tsk, struct audit_fsnotify_mark *mark)
+-int __init audit_register_class(int class, unsigned *list)
++int __init audit_register_class(int class, unsigned int *list)
  {
- 	struct file *exe_file;
--	unsigned long ino;
-+	u64 ino;
- 	dev_t dev;
+ 	__u32 *p = kcalloc(AUDIT_BITMASK_SIZE, sizeof(__u32), GFP_KERNEL);
+ 	if (!p)
+ 		return -ENOMEM;
+ 	while (*list != ~0U) {
+-		unsigned n = *list++;
++		unsigned int n = *list++;
+ 		if (n >= AUDIT_BITMASK_SIZE * 32 - AUDIT_SYSCALL_CLASSES) {
+ 			kfree(p);
+ 			return -EINVAL;
+@@ -186,7 +186,7 @@ int __init audit_register_class(int clas
+ 	return 0;
+ }
  
- 	/* only do exe filtering if we are recording @current events/records */
+-int audit_match_class(int class, unsigned syscall)
++int audit_match_class(int class, unsigned int syscall)
+ {
+ 	if (unlikely(syscall >= AUDIT_BITMASK_SIZE * 32))
+ 		return 0;
+@@ -237,7 +237,7 @@ static int audit_match_signal(struct aud
+ /* Common user-space to kernel rule translation. */
+ static inline struct audit_entry *audit_to_entry_common(struct audit_rule_data *rule)
+ {
+-	unsigned listnr;
++	unsigned int listnr;
+ 	struct audit_entry *entry;
+ 	int i, err;
+ 
 --- a/kernel/auditsc.c
 +++ b/kernel/auditsc.c
-@@ -886,7 +886,7 @@ static int audit_filter_inode_name(struc
- 				   struct audit_names *n,
- 				   struct audit_context *ctx)
+@@ -150,7 +150,7 @@ static const struct audit_nfcfgop_tab au
+ 
+ static int audit_match_perm(struct audit_context *ctx, int mask)
  {
--	int h = audit_hash_ino((u32)n->ino);
-+	int h = audit_hash_ino(n->ino);
- 	struct list_head *list = &audit_inode_hash[h];
+-	unsigned n;
++	unsigned int n;
  
- 	return __audit_filter_op(tsk, ctx, list, n, ctx->major);
-@@ -1534,7 +1534,7 @@ static void audit_log_name(struct audit_
- 		audit_log_format(ab, " name=(null)");
+ 	if (unlikely(!ctx))
+ 		return 0;
+--- a/lib/compat_audit.c
++++ b/lib/compat_audit.c
+@@ -4,32 +4,32 @@
+ #include <linux/audit_arch.h>
+ #include <asm/unistd32.h>
  
- 	if (n->ino != AUDIT_INO_UNSET)
--		audit_log_format(ab, " inode=%lu dev=%02x:%02x mode=%#ho ouid=%u ogid=%u rdev=%02x:%02x",
-+		audit_log_format(ab, " inode=%llu dev=%02x:%02x mode=%#ho ouid=%u ogid=%u rdev=%02x:%02x",
- 				 n->ino,
- 				 MAJOR(n->dev),
- 				 MINOR(n->dev),
+-unsigned compat_dir_class[] = {
++unsigned int compat_dir_class[] = {
+ #include <asm-generic/audit_dir_write.h>
+ ~0U
+ };
+ 
+-unsigned compat_read_class[] = {
++unsigned int compat_read_class[] = {
+ #include <asm-generic/audit_read.h>
+ ~0U
+ };
+ 
+-unsigned compat_write_class[] = {
++unsigned int compat_write_class[] = {
+ #include <asm-generic/audit_write.h>
+ ~0U
+ };
+ 
+-unsigned compat_chattr_class[] = {
++unsigned int compat_chattr_class[] = {
+ #include <asm-generic/audit_change_attr.h>
+ ~0U
+ };
+ 
+-unsigned compat_signal_class[] = {
++unsigned int compat_signal_class[] = {
+ #include <asm-generic/audit_signal.h>
+ ~0U
+ };
+ 
+-int audit_classify_compat_syscall(int abi, unsigned syscall)
++int audit_classify_compat_syscall(int abi, unsigned int syscall)
+ {
+ 	switch (syscall) {
+ #ifdef __NR_open
 
 
