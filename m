@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E6D644D6AB;
-	Thu, 30 Jul 2026 16:13:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CE5944D6AB;
+	Thu, 30 Jul 2026 16:13:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427994; cv=none; b=bGlyB13fH6Z8r0NaekmWH5a3R4ziACK6+5BB5/Uf5dPy/EfVLue35nKXZiISsh7eb7K/ePbaHxGdtrj2Ql/1ulbfEsgD9HQAmk9ASj9g8tlyObIhqADDfyE76n2BsLI6BSddO8FdzHF1VQFoLom++Po+qnGdNUSF4/O2yYzb12E=
+	t=1785427997; cv=none; b=an6ysXGBNibDsI/UXyxJa6XRgDZPmOrYrh/9lXUMOzM2Wsky2mTmuyR8IafFCcxamoHp4EPBpvfoHvVNDkY5mptcrz5sFbe8k1OftR0QDeJQH4MW63U/B4WBkvWI07iIQYL+e+sN0HIZm+gdZ5XJ+H1cMEm86Y9ZhbZ9O0JlUko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427994; c=relaxed/simple;
-	bh=iHSC6LbGiPfaJMC2GeRrg8NfigTlRafXD8tLyeQCIAA=;
+	s=arc-20240116; t=1785427997; c=relaxed/simple;
+	bh=Mt31lpTWG/2ay//+7PE3bTS/P0ANAF7Iy6DqiktYfmk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ciMdV1Jbh6mEgFTlQh+n3El4BdemyKQzEo5wJYO1WCToj51kc2x4tuGMh+GSDa4b5kKZd+qweoQfjqrxQ9/au7/3sf/YOMiyvqm226WUNEVfdiE9Dl767sCriBjIjPQUlF+is8jF2tx+L8AwMl62IEtXx24tTBaQmm4sEOA45b0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JSICKJyT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=koNB8smmBZ7JL5XcEmusl0nq2wYUqejOLHTcjPNLMimMkZL4J+ws8SPKEoJLLTFLyTb8fPwP5SNYzXXBkHvGXx5n41ChJlYlcMvLXFsN4apxpSyCZi1Off/lTQpDcm9TaQFYBa+GUAYvOwy/GDjP4tD4o2FekfIx86oaGLlUgjU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fHhBZw8l; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JSICKJyT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E2341F000E9;
-	Thu, 30 Jul 2026 16:13:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fHhBZw8l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D49551F000E9;
+	Thu, 30 Jul 2026 16:13:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427993;
-	bh=7eDIhs5gW625NQh5fcg+xCR1KqWvADyCqIVr6QQtqrM=;
+	s=korg; t=1785427996;
+	bh=6PmDh/BbjpKIXSMlSjhnlv5VO5RHOIdaOfj02V7JU8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JSICKJyTlArJonHztQr7iDyzDPf2k1ly2Yi0IwPEhvY1cDfCi1G359LrUkzVNrQh7
-	 gca9Q5tRhCjwgwUW896aK1kRh9ShbMFfzmMOQzF5OiNaXEXmAu3lha5URTq7rqJOv7
-	 0HNSL0lFr9I0PzOZvvxD/XiIIkCTAhIA2/U+5/I0=
+	b=fHhBZw8lgzH5Z8VGeSudHJwKzJvWVkL+7iDx3ce7D6jzLjlTIYld56on6AsG+D/mE
+	 AUT70/LtNNGE7D0oVx29HwtsuGyJMdUqQjkuJPMHhTGHIenhuOxS5kpgBI6BkPfZqX
+	 xgk5VVRPJNDxXTre+8P93dZWWLAh5QnrSlw42swk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
+	Julian Orth <ju.orth@gmail.com>,
 	Jason Gunthorpe <jgg@nvidia.com>,
-	Weinan Liu <wnliu@google.com>,
-	Wei Wang <wei.w.wang@hotmail.com>,
-	Samiullah Khawaja <skhawaja@google.com>,
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+	Vivek Kasireddy <vivek.kasireddy@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 364/484] iommu/amd: Dont split flush for amd_iommu_domain_flush_all()
-Date: Thu, 30 Jul 2026 16:14:21 +0200
-Message-ID: <20260730141431.381741320@linuxfoundation.org>
+Subject: [PATCH 6.6 365/484] udmabuf: Do not create malformed scatterlists
+Date: Thu, 30 Jul 2026 16:14:22 +0200
+Message-ID: <20260730141431.402681730@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -57,62 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weinan Liu <wnliu@google.com>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit 69fe699afe1afcb730164b86c228483c2da05f94 ]
+[ Upstream commit 5bf888673e0dda5a53220fa0c4956271a46c353c ]
 
-We have observed multiple full invalidations occurring during device
-detach when we are done using the vfio-device.
+Using a sg_set_folio() loop for every 4K results in a malformed scatterlist
+because sg_set_folio() has an issue with offsets > PAGE_SIZE and because
+scatterlist expects the creator to build a list which consolidates any
+physical contiguity.
 
-blocked_domain_attach_device()
-  -> detach_device()
-    -> amd_iommu_domain_flush_all()
-      -> amd_iommu_domain_flush_pages(..., CMD_INV_IOMMU_ALL_PAGES_ADDRESS)
+sg_alloc_table_from_pages() creates a valid scatterlist directly from a
+struct page array, so go back to that.
 
-      	while (size != 0) {
+Remove the offsets allocation and just store an array of tail pages as it
+did before the below commit. Everything wants that anyhow.
 
-          -> __domain_flush_pages( flush_size /* power of 2 flush_size */)
-            -> domain_flush_pages_v1()
-              -> build_inv_iommu_pages()
-                -> build_inv_address()
-
-         }
-
-build_inv_address() will trigger a full invalidation  if the chunk
-size > (1 << 51). Consequently, the guest will issue multiple full
-invalidations for a single call to  amd_iommu_domain_flush_all()
-
-Without this patch, we will see 10 time instead of 1 time full
-invalidations for every amd_iommu_domain_flush_all().
-
-Cc: stable@vger.kernel.org
-Fixes: a270be1b3fdf ("iommu/amd: Use only natural aligned flushes in a VM")
-Suggested-by: Josef Bacik <josef@toxicpanda.com>
-Suggested-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Weinan Liu <wnliu@google.com>
-Reviewed-by: Wei Wang <wei.w.wang@hotmail.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Reviewed-by: Samiullah Khawaja <skhawaja@google.com>
-Reviewed-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Fixes: 0c8b91ef5100 ("udmabuf: add back support for mapping hugetlb pages")
+Reported-by: Julian Orth <ju.orth@gmail.com>
+Closes: https://lore.kernel.org/all/20260308-scatterlist-v1-1-39c4566b0bba@gmail.com/
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Reviewed-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Link: https://patch.msgid.link/0-v1-42779f29381a+4b9-udmabuf_sg_jgg@nvidia.com
+Stable-dep-of: 504e2b4ab97a ("dma-buf/udmabuf: skip redundant cpu sync to fix cacheline EEXIST warning")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/amd/iommu.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/dma-buf/udmabuf.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/drivers/iommu/amd/iommu.c
-+++ b/drivers/iommu/amd/iommu.c
-@@ -1441,7 +1441,8 @@ static void __domain_flush_pages(struct
- static void domain_flush_pages(struct protection_domain *domain,
- 			       u64 address, size_t size, int pde)
- {
--	if (likely(!amd_iommu_np_cache)) {
-+	if (likely(!amd_iommu_np_cache) ||
-+		size >= (1ULL<<52)) {
- 		__domain_flush_pages(domain, address, size, pde);
- 		return;
- 	}
+--- a/drivers/dma-buf/udmabuf.c
++++ b/drivers/dma-buf/udmabuf.c
+@@ -100,14 +100,16 @@ static struct sg_table *get_sg_table(str
+ 					0, ubuf->pagecount << PAGE_SHIFT,
+ 					GFP_KERNEL);
+ 	if (ret < 0)
+-		goto err;
++		goto err_alloc;
++
+ 	ret = dma_map_sgtable(dev, sg, direction, 0);
+ 	if (ret < 0)
+-		goto err;
++		goto err_map;
+ 	return sg;
+ 
+-err:
++err_map:
+ 	sg_free_table(sg);
++err_alloc:
+ 	kfree(sg);
+ 	return ERR_PTR(ret);
+ }
 
 
