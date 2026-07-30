@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC1B23769FD;
-	Thu, 30 Jul 2026 15:47:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CBD73769FD;
+	Thu, 30 Jul 2026 15:47:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426478; cv=none; b=YU8RydPyVRloi6S+O98eOG4mua3vV7cFF/4fRdm5B17/TYlsb+tyciuAm4mkYC8nRbF4/P+RXNTT6UEhnp5OZxLCr0Gvn+lSW7waxTJWUDN5LD3XYMAuXQ13AqWkSMO57htyB8texWkfQcD+ZeGgaQu+v3A1uxZbSL3DdYHL5FQ=
+	t=1785426480; cv=none; b=Jt8Q8AzX02VGAX0MsSqRG6E4LOhGgOI74FYnbK0dNTGyu+3NHgIOtYWKokxhNl+X3ltoKHQZvwEhAymdwjjiQp3dkcgFfPgjdcrpGOj4EIFkkaNWe01us16NIjEA5/Y8E9zTGeW0m6ay7uwE5PuHusjtHs9otaMCEQmhfOakydU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426478; c=relaxed/simple;
-	bh=gNq88ONT7p4I8FzBQtmn2gkvtxbcK8IMU3f4oaABUs0=;
+	s=arc-20240116; t=1785426480; c=relaxed/simple;
+	bh=vF7ALT4cxnANrcgQB1behqjgQKWAE8cUIkUuCPkhWxY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bjBrPFsT55c5zkwgn6wCv477A0SRRmnXwk1j5ByQabBbPZ/hgVSDKhA6xcwgunwhQ6ZA53CftHkPoetXnJsP/ZC2zrWvedoqL9G1Un1G5JIT0blep+w5Op6xaWOPPqHk5fFqQQPONTKn+6NCgJn3aPAMsSMx94EDdedA4/8RGQQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qIb05jwI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tVJolWtXJfrnx+qhatoBZF6HA1T4M1rBzjAD58iV+F13wSuBCc55EoL236jbROHHceyiLhAN8pK+oFyYBbXZ7qbLp02GY3zoSKU36Y8YmRXNSKtWe1Dgiy3nIfsMIMjeTlV/DkMrZJei4ugDmlr0HTvBKS3oQb6iO/Sn4na/jIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vMgEkGAt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qIb05jwI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D88111F000E9;
-	Thu, 30 Jul 2026 15:47:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vMgEkGAt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B60311F00A3A;
+	Thu, 30 Jul 2026 15:47:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426476;
-	bh=bKETUbwvCmqMCNlOZdqnI0an6XCBen/cEdFfIIztCtQ=;
+	s=korg; t=1785426479;
+	bh=zbQQ8PWqmVxXxEUr/wTncZJvNbgAP7d1M6++sUr6fOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qIb05jwI+zdBXWannIvMS0CDYG25YphSB1CLgRqPg7fiTQedA0TlIt8v/g58i9lZN
-	 0jah6WcpmrwyCtUpjJ9FxVeRQess7eHZEN6oTBpUzJ9Gg/FSiFc4cwS743nIn5xeyg
-	 00x28mREK22BQbe7+1JCUL8wqskaZiI6myZ/k2eI=
+	b=vMgEkGAtgMKZDt5DR17br0hd9/e9DuiPglSNVCWUER7NplOvJtVOe9DU1DhycHWHA
+	 g2zU13+EBH+1ZSliTa2bHj4f9yW8M1VACh4ykjfpOmRybox8WxMlpdNl4XMs9JYtGR
+	 tEGlKEe/RH+x7W+eZis7reQRBIGk28bL3Kgy/P2Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Raphael Tiovalen <jamestiotio@gmail.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Antoine Tenart <atenart@kernel.org>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 434/602] vxlan: mdb: Fix source list corruption on a failed replace
-Date: Thu, 30 Jul 2026 16:13:46 +0200
-Message-ID: <20260730141445.086150394@linuxfoundation.org>
+	Yang Wang <kevinyang.wang@amd.com>,
+	Asad Kamal <asad.kamal@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 435/602] drm/amd/pm: fix amdgpu_pm_info power display units
+Date: Thu, 30 Jul 2026 16:13:47 +0200
+Message-ID: <20260730141445.107341940@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -53,131 +51,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Raphael Tiovalen <jamestiotio@gmail.com>
+From: Yang Wang <kevinyang.wang@amd.com>
 
-commit dcd9b465965422b9654f6026e8a2fa8984f74c3c upstream.
+commit 238baca26a6279e688d1a156bd031390b82eb578 upstream.
 
-When replacing the source list of an MDB remote entry, all existing
-sources are first marked for deletion and vxlan_mdb_remote_srcs_add()
-is then called to add the new source list. Sources present in the new
-list have their deletion mark cleared, and any sources left marked
-afterwards are removed.
+amdgpu_pm_info displayed power sensor readings with the wrong fractional unit.
+It treated the low byte of the raw sensor value as the decimal part of watts,
+while that field represents milliwatts in the decoded value. As a result,
+debugfs could report misleading SoC power when the remainder was not already
+a two-digit centiwatt value.
 
-If vxlan_mdb_remote_srcs_add() fails partway through, its error path
-deletes all entries on the remote's source list. That rollback is only
-correct for its other caller, vxlan_mdb_remote_add(), where the remote
-was just allocated and the list contains solely entries added during
-the call. On the replace path the list also holds pre-existing sources,
-so a failed replace tears them down together with their (S, G)
-forwarding entries instead of leaving the entry unchanged.
+Example with query = 0x00000354:
 
-This is reachable from an existing (*, G) remote. An EXCLUDE filter
-that loses sources starts forwarding traffic that should be blocked,
-while an INCLUDE filter that loses sources drops traffic that should be
-forwarded.
+  raw field        value
+  ---------------------
+  query >> 8       3 W
+  query & 0xff     84 mW
+  decoded power    3084 mW
 
-Mark entries created during the current pass with a new
-VXLAN_SGRP_F_NEW flag. On failure, delete only those entries and clear
-the deletion mark on the pre-existing ones, so a failed replace leaves
-the source list untouched. Retain the flag until the whole operation
-succeeds and then clear it. Also stop vxlan_mdb_remote_src_add() from
-deleting a pre-existing entry it only looked up when adding that
-entry's forwarding entry fails.
+  output           value
+  ---------------------
+  before           3.84 W
+  after            3.08 W
 
-Fixes: a3a48de5eade ("vxlan: mdb: Add MDB control path support")
+Fixes: f0b8f65b4825 ("drm/amd/amdgpu: fix the GPU power print error in pm info")
+Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
+Reviewed-by: Asad Kamal <asad.kamal@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 01992b121fb652c753d37e0c1427a2d1a557d2b1)
 Cc: stable@vger.kernel.org
-Signed-off-by: James Raphael Tiovalen <jamestiotio@gmail.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Antoine Tenart <atenart@kernel.org>
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/20260720160428.249356-1-jamestiotio@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/vxlan/vxlan_mdb.c |   30 ++++++++++++++++++------------
- 1 file changed, 18 insertions(+), 12 deletions(-)
+ drivers/gpu/drm/amd/pm/amdgpu_pm.c |   21 ++++++++++++---------
+ 1 file changed, 12 insertions(+), 9 deletions(-)
 
---- a/drivers/net/vxlan/vxlan_mdb.c
-+++ b/drivers/net/vxlan/vxlan_mdb.c
-@@ -42,6 +42,7 @@ struct vxlan_mdb_remote {
- };
+--- a/drivers/gpu/drm/amd/pm/amdgpu_pm.c
++++ b/drivers/gpu/drm/amd/pm/amdgpu_pm.c
+@@ -40,6 +40,8 @@
  
- #define VXLAN_SGRP_F_DELETE	BIT(0)
-+#define VXLAN_SGRP_F_NEW	BIT(1)
+ #define DEVICE_ATTR_IS(_name)		(attr_id == device_attr_id__##_name)
  
- struct vxlan_mdb_src_entry {
- 	struct hlist_node node;
-@@ -844,6 +845,7 @@ vxlan_mdb_remote_src_add(const struct vx
- 		ent = vxlan_mdb_remote_src_entry_add(remote, &src->addr);
- 		if (!ent)
- 			return -ENOMEM;
-+		ent->flags |= VXLAN_SGRP_F_NEW;
- 	} else if (!(cfg->nlflags & NLM_F_REPLACE)) {
- 		NL_SET_ERR_MSG_MOD(extack, "Source entry already exists");
- 		return -EEXIST;
-@@ -853,15 +855,16 @@ vxlan_mdb_remote_src_add(const struct vx
- 	if (err)
- 		goto err_src_del;
- 
--	/* Clear flags in case source entry was marked for deletion as part of
--	 * replace flow.
-+	/* Clear the deletion mark so the entry survives the replace sweep.
-+	 * The new mark is retained until the whole operation succeeds.
- 	 */
--	ent->flags = 0;
-+	ent->flags &= ~VXLAN_SGRP_F_DELETE;
- 
- 	return 0;
- 
- err_src_del:
--	vxlan_mdb_remote_src_entry_del(ent);
-+	if (ent->flags & VXLAN_SGRP_F_NEW)
-+		vxlan_mdb_remote_src_entry_del(ent);
- 	return err;
- }
- 
-@@ -889,11 +892,19 @@ static int vxlan_mdb_remote_srcs_add(con
- 			goto err_src_del;
- 	}
- 
-+	hlist_for_each_entry(ent, &remote->src_list, node)
-+		ent->flags &= ~VXLAN_SGRP_F_NEW;
++#define power_2_mwatt(power)	(((power) >> 8) * 1000 + ((power) & 0xff))
 +
- 	return 0;
+ struct od_attribute {
+ 	struct kobj_attribute	attribute;
+ 	struct list_head	entry;
+@@ -3200,7 +3202,6 @@ static int amdgpu_hwmon_get_power(struct
+ 				  enum amd_pp_sensors sensor)
+ {
+ 	struct amdgpu_device *adev = dev_get_drvdata(dev);
+-	unsigned int uw;
+ 	u32 query = 0;
+ 	int r;
  
- err_src_del:
--	hlist_for_each_entry_safe(ent, tmp, &remote->src_list, node)
--		vxlan_mdb_remote_src_del(cfg->vxlan, &cfg->group, remote, ent);
-+	hlist_for_each_entry_safe(ent, tmp, &remote->src_list, node) {
-+		if (ent->flags & VXLAN_SGRP_F_NEW)
-+			vxlan_mdb_remote_src_del(cfg->vxlan, &cfg->group, remote,
-+						 ent);
-+		else
-+			ent->flags &= ~VXLAN_SGRP_F_DELETE;
-+	}
- 	return err;
- }
+@@ -3209,9 +3210,7 @@ static int amdgpu_hwmon_get_power(struct
+ 		return r;
  
-@@ -1069,7 +1080,7 @@ vxlan_mdb_remote_srcs_replace(const stru
- 
- 	err = vxlan_mdb_remote_srcs_add(cfg, remote, extack);
- 	if (err)
--		goto err_clear_delete;
-+		return err;
- 
- 	hlist_for_each_entry_safe(ent, tmp, &remote->src_list, node) {
- 		if (ent->flags & VXLAN_SGRP_F_DELETE)
-@@ -1078,11 +1089,6 @@ vxlan_mdb_remote_srcs_replace(const stru
- 	}
- 
- 	return 0;
+ 	/* convert to microwatts */
+-	uw = (query >> 8) * 1000000 + (query & 0xff) * 1000;
 -
--err_clear_delete:
--	hlist_for_each_entry(ent, &remote->src_list, node)
--		ent->flags &= ~VXLAN_SGRP_F_DELETE;
--	return err;
+-	return uw;
++	return power_2_mwatt(query) * 1000;
  }
  
- static int vxlan_mdb_remote_replace(const struct vxlan_mdb_config *cfg,
+ static ssize_t amdgpu_hwmon_show_power_avg(struct device *dev,
+@@ -4607,7 +4606,7 @@ static int amdgpu_debugfs_pm_info_pp(str
+ {
+ 	uint32_t mp1_ver = amdgpu_ip_version(adev, MP1_HWIP, 0);
+ 	uint32_t gc_ver = amdgpu_ip_version(adev, GC_HWIP, 0);
+-	uint32_t value;
++	uint32_t value, mwatt, centiwatt;
+ 	uint64_t value64 = 0;
+ 	uint32_t query = 0;
+ 	int size;
+@@ -4632,17 +4631,21 @@ static int amdgpu_debugfs_pm_info_pp(str
+ 		seq_printf(m, "\t%u mV (VDDNB)\n", value);
+ 	size = sizeof(uint32_t);
+ 	if (!amdgpu_dpm_read_sensor(adev, AMDGPU_PP_SENSOR_GPU_AVG_POWER, (void *)&query, &size)) {
++		mwatt = power_2_mwatt(query);
++		centiwatt = DIV_ROUND_CLOSEST(mwatt, 10);
+ 		if (adev->flags & AMD_IS_APU)
+-			seq_printf(m, "\t%u.%02u W (average SoC including CPU)\n", query >> 8, query & 0xff);
++			seq_printf(m, "\t%u.%02u W (average SoC including CPU)\n", centiwatt / 100, centiwatt % 100);
+ 		else
+-			seq_printf(m, "\t%u.%02u W (average SoC)\n", query >> 8, query & 0xff);
++			seq_printf(m, "\t%u.%02u W (average SoC)\n", centiwatt / 100, centiwatt % 100);
+ 	}
+ 	size = sizeof(uint32_t);
+ 	if (!amdgpu_dpm_read_sensor(adev, AMDGPU_PP_SENSOR_GPU_INPUT_POWER, (void *)&query, &size)) {
++		mwatt = power_2_mwatt(query);
++		centiwatt = DIV_ROUND_CLOSEST(mwatt, 10);
+ 		if (adev->flags & AMD_IS_APU)
+-			seq_printf(m, "\t%u.%02u W (current SoC including CPU)\n", query >> 8, query & 0xff);
++			seq_printf(m, "\t%u.%02u W (current SoC including CPU)\n", centiwatt / 100, centiwatt % 100);
+ 		else
+-			seq_printf(m, "\t%u.%02u W (current SoC)\n", query >> 8, query & 0xff);
++			seq_printf(m, "\t%u.%02u W (current SoC)\n", centiwatt / 100, centiwatt % 100);
+ 	}
+ 	size = sizeof(value);
+ 	seq_printf(m, "\n");
 
 
