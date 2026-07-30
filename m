@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77CF543E09D;
-	Thu, 30 Jul 2026 15:04:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14CE939C00E;
+	Thu, 30 Jul 2026 15:04:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423874; cv=none; b=udfQg7oWULTUEM3jgzbMCI56zPuJVF0CJEwnnuPUBVd5rxHY4ASDthGJC8gK6DFMfv/TL1XAHlz3mYpKlp0K0nlWcjBp8Lqb7b4dVlXxOT+PsXH+t/HlRUQfiWpncqChm2dRkIWYZN47kQW8cLCGWjUlsEtxI48GQtPOFMLMFOQ=
+	t=1785423877; cv=none; b=kmk+Gr3YDR2NYDNbYVumfPBCJ87YLUiZdsnqKGpxoZtwsx6/jMZVhvSSZXr/HsPUDCG1sHIxOWXzex7lhCHohM/d7ydXPCs8Jw4JH19GHTprd19OzReHgbP7TzdXQ9RmubZ+7YrXKa/bvURzbb2YMw8amAgxRGzIZ1ho3st929o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423874; c=relaxed/simple;
-	bh=zDBxj03Ie+uHZo4jBR7bGlgtv+83sK+zTyv8UBk4cGk=;
+	s=arc-20240116; t=1785423877; c=relaxed/simple;
+	bh=828C7WYAQIvXSjrLHMUr7hDdedAoAcOGuk6hyYTV/Dk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OOlIAosQ4hOIkzeZy29/CAQ3DhXhfm5xRH+dJa8+TNqQAXTy69Ji9TCC0bzShPLHmjM/pnXyYtmkmXDvn4/KcAJYHP1CGwywhObUQ61qNeUrf7fs5VBkhPplCDt9wRADPz+7vMGhUZzmA8r/8jaFArxnuudvZzT3mAS4QD6nRsM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cu8wYgqI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AbC1wF+rWaAg0BxV6dPLEtg+otAK2TiXd6B31w0pH5j6D+Pb5SoC72H3wD293K39wmwmg4VsXwNHaGz5SfK4QZapvl4zNDaAEt77GPzWgWr2FuJSESqHfMRySOq6YEzXa6v08RkB7xqd4Rr5urBiBKw6d1Mz1BmXAKH+Qg3JOwQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GTyumZ2S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cu8wYgqI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 992B61F000E9;
-	Thu, 30 Jul 2026 15:04:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GTyumZ2S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7077F1F000E9;
+	Thu, 30 Jul 2026 15:04:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423873;
-	bh=9WbvnjAroEsK3Zr/vSp755AofiRtGMK1OjRFbTuqvFs=;
+	s=korg; t=1785423876;
+	bh=K6wnJAfi3hvLmBSlW/pp2zd6GnguXOTZxDoOlbK7B9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cu8wYgqIjB4L5fsKz/cSqxmQONop8xsBXE6sxQCkvF+YCHy7vh5TwLt5eC0oW6uSr
-	 tQ6+QrBKcSJ7Zvqhz0rF8a7kc3XYIsFmWeUQvkqxK495cAGwXi3skP2k3K19rREffQ
-	 SnEmmheMyIxWW09MTkDwp21vSFgFWgclcln3eC3U=
+	b=GTyumZ2SIjH1iuHTUeJAV/+nDKpHarHMgwrF+1aChSh8POP70DC4M5yG9z2JNtN22
+	 DVpbDrrOcTHEWXxQDahAHtyGLZX9JshUChi+KRKHh3e0hgAgGwNkEE/jw/b1KqF2lW
+	 DtPX5WUBXSIcHlNvARtJPjXWMV5+vL/LzqneMlx8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
 	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 196/675] wifi: iwlwifi: fix pointer arithmetic in iwl_add_mcc_to_tas_block_list
-Date: Thu, 30 Jul 2026 16:08:46 +0200
-Message-ID: <20260730141449.310118258@linuxfoundation.org>
+Subject: [PATCH 6.18 197/675] wifi: iwlwifi: validate payload length in iwl_pnvm_complete_fn
+Date: Thu, 30 Jul 2026 16:08:47 +0200
+Message-ID: <20260730141449.330649073@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -53,41 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 
-[ Upstream commit bc796f84ec9a95b356959ec7caf1d4fce33f3a76 ]
+[ Upstream commit daec24a5ed5da77a108e246ad77aa8b889911f93 ]
 
-The expression list[*size++] increments the pointer 'size'
-rather than the u8 value it points to (operator precedence: ++
-binds to the pointer before the dereference). As a result the
-block-list entry is written at the correct index but *size is
-never incremented, so the caller's count stays at zero and
-subsequent calls overwrite slot 0 every time.
+iwl_pnvm_complete_fn() casts pkt->data directly to
+struct iwl_pnvm_init_complete_ntfy and reads the status field
+without first verifying that the firmware notification payload
+is large enough to contain that structure.
 
-Change to list[(*size)++] so that the value pointed to by size
-is incremented after use as the array index.
+Add a WARN_ON_ONCE check against sizeof(*pnvm_ntf) and return
+early without reading uninitialised memory if the payload is too
+short.
 
-Fixes: 5f4656610edb ("wifi: iwlwifi: extend TAS_CONFIG cmd support for v5")
+Fixes: b3e4c0f34c17 ("iwlwifi: move PNVM implementation to common code")
 Assisted-by: GitHubCopilot:gpt-5.3-codex
 Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20260715215523.d2cd92242582.Ife4140a4e27be2a1cd9f886c5a9b376ce182a019@changeid
+Link: https://patch.msgid.link/20260715215523.7f2a669e5c75.I00465dcfcbccb250ae9af2d9bb305e24de1ba394@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/fw/regulatory.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/intel/iwlwifi/fw/pnvm.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/regulatory.c b/drivers/net/wireless/intel/iwlwifi/fw/regulatory.c
-index e1f28b0532530a..818eb1c4b158f1 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/regulatory.c
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/regulatory.c
-@@ -483,7 +483,7 @@ bool iwl_add_mcc_to_tas_block_list(u16 *list, u8 *size, u16 mcc)
- 	if (*size >= IWL_WTAS_BLACK_LIST_MAX)
- 		return false;
+diff --git a/drivers/net/wireless/intel/iwlwifi/fw/pnvm.c b/drivers/net/wireless/intel/iwlwifi/fw/pnvm.c
+index f297e82d63d234..5de3a9c0b3ef09 100644
+--- a/drivers/net/wireless/intel/iwlwifi/fw/pnvm.c
++++ b/drivers/net/wireless/intel/iwlwifi/fw/pnvm.c
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
+ /*
+- * Copyright(c) 2020-2025 Intel Corporation
++ * Copyright(c) 2020-2026 Intel Corporation
+  */
  
--	list[*size++] = mcc;
-+	list[(*size)++] = mcc;
- 	return true;
- }
- IWL_EXPORT_SYMBOL(iwl_add_mcc_to_tas_block_list);
+ #include "iwl-drv.h"
+@@ -12,6 +12,7 @@
+ #include "fw/api/alive.h"
+ #include "fw/uefi.h"
+ #include "fw/img.h"
++#include "fw/dbg.h"
+ 
+ #define IWL_PNVM_REDUCED_CAP_BIT BIT(25)
+ 
+@@ -26,6 +27,12 @@ static bool iwl_pnvm_complete_fn(struct iwl_notif_wait_data *notif_wait,
+ 	struct iwl_trans *trans = (struct iwl_trans *)data;
+ 	struct iwl_pnvm_init_complete_ntfy *pnvm_ntf = (void *)pkt->data;
+ 
++	if (IWL_FW_CHECK(trans,
++			 iwl_rx_packet_payload_len(pkt) < sizeof(*pnvm_ntf),
++			 "Bad notif len: %d\n",
++			 iwl_rx_packet_payload_len(pkt)))
++		return true;
++
+ 	IWL_DEBUG_FW(trans,
+ 		     "PNVM complete notification received with status 0x%0x\n",
+ 		     le32_to_cpu(pnvm_ntf->status));
 -- 
 2.53.0
 
