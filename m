@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C58A1382F01;
-	Thu, 30 Jul 2026 15:50:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95448431E60;
+	Thu, 30 Jul 2026 15:50:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426628; cv=none; b=FnWozApmJXYK6UxTYZDt/tgSFIdyvA25oK8UaC2vbYGEqFdVkeuNpysa0aTKHnJWTUbXud0CURKG4oZRiQW5MmsobxMzeOkoQDTyc4qFCowt7wJqoMj+V22bTyPqbMIcPAi1Zm1mNJmygFtQPsyOjSfa5b+zGO4TM3/ncwdDaPo=
+	t=1785426631; cv=none; b=JULmnbtDL5YaTLMnwb9AvzUtUfilENwUAzWFb1fqq1dz77j6YhLSN9xtNyUJlXEb9JABcHtBw10CgiYnXqhxrNwKKFf23R1RJZzG2wy2BEXZVOa0uwdtjkqEtIHMOx815tKBbip3aGaE2kS0LeaufFl3GZfuRAHpWK8iG4da48U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426628; c=relaxed/simple;
-	bh=mKsBweNkNomAaLMt46Ys/Kf3ByTAIpe/GHOviuvyN1k=;
+	s=arc-20240116; t=1785426631; c=relaxed/simple;
+	bh=qeWft5fm0PZwhNnJfwAOTVhBwu7rBtm3Sk7V8L0zhSA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KgefmS8oGjD3W5bqPd5c/9clo8YKSbreZ2uK8uuqZEUlxogu0OszOiycOfbXNDgpgZ4SgmAshPfJEWl3+ryRoJdGBKt6x6S9hL0KGxrRZ0etUhnBdP1C6keRhBk5p8aNgSRc2mFBHN3cCy6snK9il72ZEprIW0d4iIgDxX55+2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hau+ipRP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kAcL1oU48Fnac8G9If4HvmilIZdao13yHwe45VNocAFSfWRWLjoCq7EwulF4T6TGwm2WLdL7JDqI0pHlFFxxA+e1+WkDMvPdjl0VjtYlu7Zw79qx7jFA3LEZFo/lT+3JyT7t3wQL1Zd8qEd6CFPlSrXNyotS3/fWtXVTJC4p0BA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t8HJl/oc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hau+ipRP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1C521F000E9;
-	Thu, 30 Jul 2026 15:50:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t8HJl/oc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B40011F000E9;
+	Thu, 30 Jul 2026 15:50:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426627;
-	bh=2GwSpiex4viLBtu9muHUjIK8PJbWehwDw+9MaorXhe4=;
+	s=korg; t=1785426630;
+	bh=ZczWTfK3LBi45PwJuxCHzxVkU6wI4YUCdR1DK/lPu4Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Hau+ipRP75+ENlLa+chCE0fTUBIARRcxVIRxW83xeGkWaoomEk1IQXahaekEhW9RN
-	 7RxRbCIclfghUwA/soF9d8FLO7ikcwuE/nx1TD87BFS3iakMzzP+JRUb8fGlN0C/Pz
-	 2X+1eV0cYrD28w72pnD1B7E+WeCxFaLq9t1/uEJ0=
+	b=t8HJl/ocepRIzBpQ8lDRyn4vV+FCK0XtWey3JhBp5jegMKAakDGUeZkkY9klEvX+t
+	 8yl9xTVyZCW64d6IasA4SM/IxVytdKkWjLjyEf3q0kx9FBmaYilHzDYDbicNkM2aZ1
+	 0CbuRR60ukEO4BTBDzBBd8Xob2kt+h7bmlBlMR8o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Jeffrey Altman <jaltman@auristor.com>,
-	Simon Horman <horms@kernel.org>,
-	linux-afs@lists.infradead.org,
-	stable@kernel.org,
-	Jakub Kicinski <kuba@kernel.org>,
+	NeilBrown <neil@brown.name>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 487/602] rxrpc: Fix socket notification race
-Date: Thu, 30 Jul 2026 16:14:39 +0200
-Message-ID: <20260730141446.201482744@linuxfoundation.org>
+Subject: [PATCH 6.12 470/602] VFS/audit: introduce kern_path_parent() for audit
+Date: Thu, 30 Jul 2026 16:14:22 +0200
+Message-ID: <20260730141445.839396043@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -56,44 +51,188 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: NeilBrown <neil@brown.name>
 
-[ Upstream commit e66f8f32f50116670dbbee5bc9e692cd2cd0c8f8 ]
+[ Upstream commit 76a53de6f7ff0641570364234fb4489f4d4fc8e9 ]
 
-There's a race between rxrpc_recvmsg() and rxrpc_notify_socket(), whereby
-the latter's attempt to avoid disabling interrupts and taking the socket's
-recvmsg_lock if the call is already queued may happen simultaneously with
-the former's discarding of a call that has nothing queued.
+audit_alloc_mark() and audit_get_nd() both need to perform a path
+lookup getting the parent dentry (which must exist) and the final
+target (following a LAST_NORM name) which sometimes doesn't need to
+exist.
 
-Fix this by removing the shortcut.  Note that this only affects userspace's
-use of AF_RXRPC; the AFS filesystem driver doesn't use the socket queue.
+They don't need the parent to be locked, but use kern_path_locked() or
+kern_path_locked_negative() anyway.  This is somewhat misleading to the
+casual reader.
 
-Fixes: 248f219cb8bc ("rxrpc: Rewrite the data and ack handling code")
-Link: https://sashiko.dev/#/patchset/20260616155749.2125907-1-dhowells%40redhat.com
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Jeffrey Altman <jaltman@auristor.com>
-cc: Simon Horman <horms@kernel.org>
-cc: linux-afs@lists.infradead.org
-cc: stable@kernel.org
-Link: https://patch.msgid.link/20260624163819.3017002-10-dhowells@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This patch introduces a more targeted function, kern_path_parent(),
+which returns not holding locks.  On success the "path" will
+be set to the parent, which must be found, and the return value is the
+dentry of the target, which might be negative.
+
+This will clear the way to rename kern_path_locked() which is
+otherwise only used to prepare for removing something.
+
+It also allows us to remove kern_path_locked_negative(), which is
+transformed into the new kern_path_parent().
+
+Signed-off-by: NeilBrown <neil@brown.name>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Stable-dep-of: 81905b5acbe7 ("audit: fix recursive locking deadlock in audit_dupe_exe()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rxrpc/recvmsg.c |    2 --
- 1 file changed, 2 deletions(-)
+ fs/namei.c              |   43 +++++++++++++++++++++++++++++++++++++++++++
+ include/linux/namei.h   |    1 +
+ kernel/audit.h          |    4 ++--
+ kernel/audit_fsnotify.c |    9 +++------
+ kernel/audit_watch.c    |    9 ++++++---
+ 5 files changed, 55 insertions(+), 11 deletions(-)
 
---- a/net/rxrpc/recvmsg.c
-+++ b/net/rxrpc/recvmsg.c
-@@ -27,8 +27,6 @@ void rxrpc_notify_socket(struct rxrpc_ca
+--- a/fs/namei.c
++++ b/fs/namei.c
+@@ -2705,6 +2705,49 @@ static struct dentry *__kern_path_locked
+ 	return d;
+ }
  
- 	_enter("%d", call->debug_id);
++/**
++ * kern_path_parent: lookup path returning parent and target
++ * @name: path name
++ * @path: path to store parent in
++ *
++ * The path @name should end with a normal component, not "." or ".." or "/".
++ * A lookup is performed and if successful the parent information
++ * is store in @parent and the dentry is returned.
++ *
++ * The dentry maybe negative, the parent will be positive.
++ *
++ * Returns:  dentry or error.
++ */
++struct dentry *kern_path_parent(const char *name, struct path *path)
++{
++	struct filename *filename = getname_kernel(name);
++	struct path parent_path;
++	struct dentry *d;
++	struct qstr last;
++	int type, error;
++
++	error = filename_parentat(AT_FDCWD, filename, 0, &parent_path, &last, &type);
++	if (error) {
++		d = ERR_PTR(error);
++		goto out;
++	}
++	if (unlikely(type != LAST_NORM)) {
++		path_put(&parent_path);
++		d = ERR_PTR(-EINVAL);
++		goto out;
++	}
++
++	d = lookup_one_len_unlocked(last.name, parent_path.dentry, last.len);
++	if (IS_ERR(d)) {
++		path_put(&parent_path);
++		goto out;
++	}
++	*path = parent_path;
++out:
++	putname(filename);
++	return d;
++}
++
+ struct dentry *kern_path_locked(const char *name, struct path *path)
+ {
+ 	struct filename *filename = getname_kernel(name);
+--- a/include/linux/namei.h
++++ b/include/linux/namei.h
+@@ -51,6 +51,7 @@ struct dentry *lookup_one_qstr_excl(cons
+ 				    struct dentry *base,
+ 				    unsigned int flags);
+ extern int kern_path(const char *, unsigned, struct path *);
++struct dentry *kern_path_parent(const char *name, struct path *parent);
  
--	if (!list_empty(&call->recvmsg_link))
--		return;
- 	if (test_bit(RXRPC_CALL_RELEASED, &call->flags)) {
- 		rxrpc_see_call(call, rxrpc_call_see_notify_released);
- 		return;
+ extern struct dentry *kern_path_create(int, const char *, struct path *, unsigned int);
+ extern struct dentry *user_path_create(int, const char __user *, struct path *, unsigned int);
+--- a/kernel/audit.h
++++ b/kernel/audit.h
+@@ -279,8 +279,8 @@ extern struct audit_fsnotify_mark *audit
+ extern char *audit_mark_path(struct audit_fsnotify_mark *mark);
+ extern void audit_remove_mark(struct audit_fsnotify_mark *audit_mark);
+ extern void audit_remove_mark_rule(struct audit_krule *krule);
+-extern int audit_mark_compare(struct audit_fsnotify_mark *mark,
+-			      unsigned long ino, dev_t dev);
++extern int audit_mark_compare(struct audit_fsnotify_mark *mark, u64 ino,
++			      dev_t dev);
+ extern int audit_dupe_exe(struct audit_krule *new, struct audit_krule *old);
+ extern int audit_exe_compare(struct task_struct *tsk,
+ 			     struct audit_fsnotify_mark *mark);
+--- a/kernel/audit_fsnotify.c
++++ b/kernel/audit_fsnotify.c
+@@ -57,7 +57,7 @@ char *audit_mark_path(struct audit_fsnot
+ 	return mark->path;
+ }
+ 
+-int audit_mark_compare(struct audit_fsnotify_mark *mark, unsigned long ino, dev_t dev)
++int audit_mark_compare(struct audit_fsnotify_mark *mark, u64 ino, dev_t dev)
+ {
+ 	if (mark->ino == AUDIT_INO_UNSET)
+ 		return 0;
+@@ -76,17 +76,14 @@ struct audit_fsnotify_mark *audit_alloc_
+ 	struct audit_fsnotify_mark *audit_mark;
+ 	struct path path;
+ 	struct dentry *dentry;
+-	struct inode *inode;
+ 	int ret;
+ 
+ 	if (pathname[0] != '/' || pathname[len-1] == '/')
+ 		return ERR_PTR(-EINVAL);
+ 
+-	dentry = kern_path_locked(pathname, &path);
++	dentry = kern_path_parent(pathname, &path);
+ 	if (IS_ERR(dentry))
+ 		return ERR_CAST(dentry); /* returning an error */
+-	inode = path.dentry->d_inode;
+-	inode_unlock(inode);
+ 
+ 	audit_mark = kzalloc(sizeof(*audit_mark), GFP_KERNEL);
+ 	if (unlikely(!audit_mark)) {
+@@ -100,7 +97,7 @@ struct audit_fsnotify_mark *audit_alloc_
+ 	audit_update_mark(audit_mark, dentry->d_inode);
+ 	audit_mark->rule = krule;
+ 
+-	ret = fsnotify_add_inode_mark(&audit_mark->mark, inode, 0);
++	ret = fsnotify_add_inode_mark(&audit_mark->mark, path.dentry->d_inode, 0);
+ 	if (ret < 0) {
+ 		audit_mark->path = NULL;
+ 		fsnotify_put_mark(&audit_mark->mark);
+--- a/kernel/audit_watch.c
++++ b/kernel/audit_watch.c
+@@ -244,7 +244,7 @@ static void audit_watch_log_rule_change(
+ /* Update inode info in audit rules based on filesystem event. */
+ static void audit_update_watch(struct audit_parent *parent,
+ 			       const struct qstr *dname, dev_t dev,
+-			       unsigned long ino, unsigned invalidating)
++			       u64 ino, unsigned int invalidating)
+ {
+ 	struct audit_watch *owatch, *nwatch, *nextw;
+ 	struct audit_krule *r, *nextr;
+@@ -347,15 +347,18 @@ static void audit_remove_parent_watches(
+ /* Get path information necessary for adding watches. */
+ static int audit_get_nd(struct audit_watch *watch, struct path *parent)
+ {
+-	struct dentry *d = kern_path_locked(watch->path, parent);
++	struct dentry *d;
++
++	d = kern_path_parent(watch->path, parent);
+ 	if (IS_ERR(d))
+ 		return PTR_ERR(d);
++
+ 	if (d_is_positive(d)) {
+ 		/* update watch filter fields */
+ 		watch->dev = d->d_sb->s_dev;
+ 		watch->ino = d_backing_inode(d)->i_ino;
+ 	}
+-	inode_unlock(d_backing_inode(parent->dentry));
++
+ 	dput(d);
+ 	return 0;
+ }
 
 
