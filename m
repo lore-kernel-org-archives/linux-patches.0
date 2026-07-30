@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6021640B360;
-	Thu, 30 Jul 2026 14:28:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44E9D19CD1D;
+	Thu, 30 Jul 2026 14:28:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421698; cv=none; b=agrrp1vBPXsFOYKBuUIexXFTIOIrmXmayQlsFn6SnyZ5+Cgs8VyuqdcHUVYRIoUueSGMMbLE/oZF2sdrQiSGUiXr7eFntBzZPtzGi70vtkqYmxeo/HMeVQqEij/UN7Dwvm8ilftsVuKWbaBDdq4TH8fILmSIlZr1qECyqBHePEM=
+	t=1785421701; cv=none; b=BNkMinjsVotFnlioOvigxU/qmiA4IE+RfbPiL4Ierw2TDe5Ia6j4J8dFrSmrzZNdGJdswp/jO40VVv2/723/Xf/g1HaMREVEsmK9+GpvvpfkLKXxI47pRwKtnVnvrvKIimPss3Ts5FG9EMliFkk0oFPh2kboDnf75ZxdXYPW10k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421698; c=relaxed/simple;
-	bh=oMjT6sr8QWrOTIuBPi+hE6B+3/K06yO64LenCZ2/nU4=;
+	s=arc-20240116; t=1785421701; c=relaxed/simple;
+	bh=4aNTE9/2PS+jLxUWPeWpW20iHtgd+vggwq41mC0TjP0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rsGt+2cQl6cEgVzPkQdzCOL6iIvt+HLBIn9Vu+Ii6S3ptoXk5063RiHdSPtkmuxYqLdwVF3wRWqBbn7W5ZaphMsWRN8PnLd8tdthPrUtTlNnHUAAPaEFsC9whGfuKBZVo02zaGGFE4CIb1kcttYZBT2wplk8ljsaeKR7tBqpY88=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zdjg8nYw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UyhBNJHzcGkxx02A5ffGcC1UWhQJG60zr34ExJ/yydB71nCu+qSWprTI0hMYXm5HRVDHfJNx2L/uVYpvah8tLkLfCFIxI8ygypN+PfsW5YUJjKZlm8XIDYZo07Cjy1yvLA24B3dqdanlJt0xk43zRwiamRwCWNKb++gKyhWnCOU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j0uyom0B; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zdjg8nYw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3DC31F000E9;
-	Thu, 30 Jul 2026 14:28:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j0uyom0B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9265E1F000E9;
+	Thu, 30 Jul 2026 14:28:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421697;
-	bh=f2NdlxN2dpCh7jgFO0jJ1pGPXKlLjifLYl7cN3R5iFk=;
+	s=korg; t=1785421700;
+	bh=EGW9Rrqcj3Qd26UqfaiNCrAtXsSz6GLjOEHY9NY1f7I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Zdjg8nYwe2IN7/G8rRB0/9hzpIWBGkvFQ0VyWVN+pYkbm3AFdr+k60f4do77KGfTP
-	 GZ5uxTxmu40hLwQdi1PJI3s/cJh4CXBOiwnEazUY2PBu5SyghCq6RKWgkB65D/OVoY
-	 jCSTOE1Oydq9sqbhvg0FBsMPXLwrYRty3bqmcizI=
+	b=j0uyom0BcuwvDAcMbia6z5IzWyMSIXEj1woXbTQNBuQ4ANrEY4pmd7827iPy+RK4E
+	 2oC+sZtkersQNW+w46OaMVIslxDd7PhgF9mVSSXLVbiYIOrp0TqclmSXXOOpMmSzTq
+	 LQYmtsnLgvGlByWbEnegoLAvoKIF5oTQT88k+VvQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Qu Wenruo <wqu@suse.com>,
+	You-Kai Zheng <ykzheng@synology.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 174/744] hwmon: (nzxt-smart2) Stop device IO before calling hid_hw_stop
-Date: Thu, 30 Jul 2026 16:07:27 +0200
-Message-ID: <20260730141447.986803599@linuxfoundation.org>
+Subject: [PATCH 7.1 192/744] btrfs: declare btrfs_ioctl_search_args_v2::buf as __u8
+Date: Thu, 30 Jul 2026 16:07:45 +0200
+Message-ID: <20260730141448.363890009@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -51,40 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: You-Kai Zheng <ykzheng@synology.com>
 
-[ Upstream commit 59d104b54b0b42e30fd2a68d24ee5c49dcc54d1e ]
+[ Upstream commit b95181f3929ff98949fa9460ca93eccebbf2d7fc ]
 
-Calling hid_hw_stop() does not stop the device IO.
-This results in a race condition between hid_input_report() and the point
-immediately following the execution of hid_device_io_start() within
-the driver probe function. If the probe operation fails after "io start"
-has been initiated, this race condition will result in a UAF vulnerability.
+The variable-sized buffer buf in struct btrfs_ioctl_search_args_v2 is
+declared as __u64[], but it holds a packed byte stream of search results,
+where all offsets into the buffer are in bytes.
 
-Fix the problem by calling hid_device_io_stop() before calling
-hid_hw_stop().
+Declaring buf as __u64[] makes it easy for user space to write incorrect
+pointer arithmetic: adding a byte offset directly to a __u64 pointer
+scales the offset by 8, landing at byte position offset*8 instead of
+offset.
 
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Fixes: 53e68c20aeb1e ("hwmon: add driver for NZXT RGB&Fan Controller/Smart Device v2")
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+This recently caused an infinite loop in btrfs-progs: the accessor read
+all-zero data from misaddressed items, which fed zeroed search keys back
+into the ioctl loop and spun forever. The issue was worked around at the
+time by disabling TREE_SEARCH_V2 entirely in btrfs-progs (d73e69824854:
+"btrfs-progs: temporarily disable usage of v2 of search tree ioctl").
+
+The kernel side already treats buf as a byte buffer, so change the
+declaration to __u8[] to match the actual semantics and prevent similar
+misuse in user space. The change is ABI compatible: both the structure size
+and alignment are unchanged.
+
+Fixes: cc68a8a5a433 ("btrfs: new ioctl TREE_SEARCH_V2")
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: You-Kai Zheng <ykzheng@synology.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/nzxt-smart2.c | 2 +-
+ include/uapi/linux/btrfs.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/nzxt-smart2.c b/drivers/hwmon/nzxt-smart2.c
-index 58ef9fa0184be4..e2316c46629d61 100644
---- a/drivers/hwmon/nzxt-smart2.c
-+++ b/drivers/hwmon/nzxt-smart2.c
-@@ -768,7 +768,7 @@ static int nzxt_smart2_hid_probe(struct hid_device *hdev,
+diff --git a/include/uapi/linux/btrfs.h b/include/uapi/linux/btrfs.h
+index 9165154a274d94..16ff7beab9ca59 100644
+--- a/include/uapi/linux/btrfs.h
++++ b/include/uapi/linux/btrfs.h
+@@ -598,7 +598,7 @@ struct btrfs_ioctl_search_args_v2 {
+ 	__u64 buf_size;		   /* in - size of buffer
+ 					    * out - on EOVERFLOW: needed size
+ 					    *       to store item */
+-	__u64 buf[];                       /* out - found items */
++	__u8 buf[];                        /* out - found items */
+ };
  
- out_hw_close:
- 	hid_hw_close(hdev);
--
-+	hid_device_io_stop(hdev);
- out_hw_stop:
- 	hid_hw_stop(hdev);
- 	return ret;
+ /* With a @src_length of zero, the range from @src_offset->EOF is cloned! */
 -- 
 2.53.0
 
