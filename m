@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7892379988;
-	Thu, 30 Jul 2026 15:00:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5934E274650;
+	Thu, 30 Jul 2026 15:00:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423613; cv=none; b=dPiFg6Ir+7d1QES0xPPbp5Mr2vrKm6i6PmysuY5dE8heQC7kdZt+Wtq/LI5RruqE5yES3XKxwIJF0RZElaHLuVR7Jbz5rvtgcaDjwXpJNOpB63HJGculSv46JbPONZNo+P4tTeCEDXwgPWo35UJ4S0k4dflfB1GIPGAIUMbZ6Gs=
+	t=1785423616; cv=none; b=OhGe92UrmFXB71kOgGKobQ3LSy+ZFFatPyxAMqcFTMt32jvlEBXjXwdkfH05ky+U9aeWMqzNTuVE4Ym2Fx4EoAv2gtRxjnVZ+hmtGu/2ZxLjrRIWfu6WYtW9jV97+bvql95q4AuBj7myAIkjSYsmp0ON7VhoILmlaZmQX8dQKMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423613; c=relaxed/simple;
-	bh=vg9Iepm3JWoeISM08UcUbLe9s3U7f5fj7/HWKt4G2tE=;
+	s=arc-20240116; t=1785423616; c=relaxed/simple;
+	bh=SAcW3GqBzCg4Dm+0DhF1z62HaZerbjvAMs9mojmuwRc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gZFSFuW2doWWsqDo8A8JX4Y8hCeVgaMfVLrCOan3LmWswsz5vcTv8XRu9Cai4vuT5+1RyDcyyoB3eKI6a2ngacIpWqLH/FDqcm0j3cYlfGRcYrCC7gyjI/sISzmNGGiKMGZieFuRjsX4VEGv2ml16pmxnsrpxxl3LLiUZAxzv18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RXVowdoz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VSla7tsYCI508+sZzfR9ZO/tCctw8Oromew3lWkxAfqxt64LQ7kMRu23LlDyq9fzT0tR9LBs/v/8MbrQiwM5/rQxo2RoIqKPyCk3wnfxKhQaT+PNYqHidKbE+TaoU9M/dAmJ3i2fOokRq/O515Zn+dbn65aS128CPQbbUjEtl4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N/y7Eosa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RXVowdoz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD50C1F000E9;
-	Thu, 30 Jul 2026 15:00:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N/y7Eosa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F9791F000E9;
+	Thu, 30 Jul 2026 15:00:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423612;
-	bh=o0zZW5cCYhUegrcp6el7Xdd+dYbV0SEjH4OvpNAHWL0=;
+	s=korg; t=1785423615;
+	bh=cNva+gt0OTG5K5n0eBAPKQimTQbDXIuUjoefJaYUgyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RXVowdozH1I8yQ5NWxR5d2GOJTF8Mt811zt7uz4KD3UdKIbScLt+zR5BGgqGv5M3V
-	 QKM5CWvsD/6NSpmgZsJJ94gUWaqnZpQbH1oKhd4SoLGqxgMExLnRtrXjfeGc9adoPL
-	 R/IJUikh7aijr+2+JToxnE7aWfbr7NxCy7Jpyiz0=
+	b=N/y7Eosa7oN+8hTyN6ty9gaONR1Ok36E9glm9wTrvY1uIr75iN6V0b75FWmvdceLM
+	 HN+4igu0Wf19dr492dPyhzHAsowSc5jJjBZ7D3FYrxiN1kXhzTw86hKsLmt9vAy0hw
+	 ISpGDTC5n9+D4gbGFu+TM/YglGEbU2dB4cJ14Q7I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
+	Andrzej Kacprowski <andrzej.kacprowski@linux.intel.com>,
+	Karol Wachowski <karol.wachowski@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 104/675] ata: sata_dwc_460ex: fix infinite loop in NCQ tag completion bit-scanning
-Date: Thu, 30 Jul 2026 16:07:14 +0200
-Message-ID: <20260730141447.346535053@linuxfoundation.org>
+Subject: [PATCH 6.18 105/675] accel/ivpu: Fix wrong register read in LNL failure diagnostics
+Date: Thu, 30 Jul 2026 16:07:15 +0200
+Message-ID: <20260730141447.368389394@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -51,51 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Karol Wachowski <karol.wachowski@linux.intel.com>
 
-[ Upstream commit c2130f6553f4a5cbdc259de069600117a995f197 ]
+[ Upstream commit e4159045c2704dfe146f0ccb0445d9d074cd6882 ]
 
-The hand-rolled bit-scanning loop in the NCQ completion path has an
-infinite loop bug.  When tag_mask has only high bits set (e.g.
-0x80000000), the inner while loop left-shifts tag_mask until it
-overflows to 0.  At that point !(0 & 1) is always true and 0 <<= 1
-stays 0, causing an infinite loop in hardirq context with a spinlock
-held.
+diagnose_failure_lnl() read VPU_HW_BTRS_MTL_INTERRUPT_STAT instead of
+VPU_HW_BTRS_LNL_INTERRUPT_STAT, which on LNL and newer parts is a
+different register with a different bit layout, so failure diagnostics
+decoded the wrong register and reported a bogus error cause.
+Read the LNL interrupt status register instead.
 
-Replace the open-coded bit-scanning with __ffs() which correctly
-finds the least significant set bit and is bounded by the width of
-the argument.
-
-Fixes: 62936009f35a ("[libata] Add 460EX on-chip SATA driver, sata_dwc_460ex")
-Assisted-by: opencode:big-pickle
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Fixes: 8a27ad81f7d3 ("accel/ivpu: Split IP and buttress code")
+Reviewed-by: Andrzej Kacprowski <andrzej.kacprowski@linux.intel.com>
+Signed-off-by: Karol Wachowski <karol.wachowski@linux.intel.com>
+Link: https://patch.msgid.link/20260710101331.1899505-1-karol.wachowski@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/sata_dwc_460ex.c | 9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+ drivers/accel/ivpu/ivpu_hw_btrs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/ata/sata_dwc_460ex.c b/drivers/ata/sata_dwc_460ex.c
-index d3472bfc606ffc..36cc28b8986509 100644
---- a/drivers/ata/sata_dwc_460ex.c
-+++ b/drivers/ata/sata_dwc_460ex.c
-@@ -607,14 +607,9 @@ static irqreturn_t sata_dwc_isr(int irq, void *dev_instance)
- 	status = ap->ops->sff_check_status(ap);
- 	dev_dbg(ap->dev, "%s ATA status register=0x%x\n", __func__, status);
+diff --git a/drivers/accel/ivpu/ivpu_hw_btrs.c b/drivers/accel/ivpu/ivpu_hw_btrs.c
+index aa33f562d29c12..e9786204feca43 100644
+--- a/drivers/accel/ivpu/ivpu_hw_btrs.c
++++ b/drivers/accel/ivpu/ivpu_hw_btrs.c
+@@ -845,7 +845,7 @@ static void diagnose_failure_mtl(struct ivpu_device *vdev)
  
--	tag = 0;
- 	while (tag_mask) {
--		while (!(tag_mask & 0x00000001)) {
--			tag++;
--			tag_mask <<= 1;
--		}
--
--		tag_mask &= (~0x00000001);
-+		tag = __ffs(tag_mask);
-+		tag_mask &= ~(1U << tag);
- 		qc = ata_qc_from_tag(ap, tag);
- 		if (unlikely(!qc)) {
- 			dev_err(ap->dev, "failed to get qc");
+ static void diagnose_failure_lnl(struct ivpu_device *vdev)
+ {
+-	u32 reg = REGB_RD32(VPU_HW_BTRS_MTL_INTERRUPT_STAT) & BTRS_LNL_IRQ_MASK;
++	u32 reg = REGB_RD32(VPU_HW_BTRS_LNL_INTERRUPT_STAT) & BTRS_LNL_IRQ_MASK;
+ 
+ 	if (REG_TEST_FLD(VPU_HW_BTRS_LNL_INTERRUPT_STAT, ATS_ERR, reg)) {
+ 		ivpu_err(vdev, "ATS_ERR_LOG1 0x%08x ATS_ERR_LOG2 0x%08x\n",
 -- 
 2.53.0
 
