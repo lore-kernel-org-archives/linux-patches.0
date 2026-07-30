@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5257E3B6366;
-	Thu, 30 Jul 2026 14:51:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16BC1407597;
+	Thu, 30 Jul 2026 14:51:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423115; cv=none; b=ZJ8a97wjoqyoUlqyOprQhXe3kDDFSputPh61SdFWrHf7hVnE1VR1Qwqc0mTPzW5Ev2U9ir3ZqP+QwazrdDBbckIBlzKQ6XlOq0zM5HWs4tLrPv0Pd+gHID6zZxNL2tHpDAwg2hdpBbW9FG5Q08BKI/gUr7txwCa0a+ppazSV4M4=
+	t=1785423118; cv=none; b=tz15yraWTmjvUrFS5pHSuZ4lSKGWd9RECMYHED3Y8I+SibmEnlu7+t6KWLJsnofYUmYYhICZrgic4dRNIsfcU2w7KE4vmC1Nt9Tyu/6scncWDPocK4Z97jJwYnqHjXZnlroBdk6t0pZdguOyQFG54jvfAZqTKlR1w9O3Vgi8xaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423115; c=relaxed/simple;
-	bh=MkHy9jL9TOhYX5JbU04SMnZCuTls1gpOR8iKUjrXTeg=;
+	s=arc-20240116; t=1785423118; c=relaxed/simple;
+	bh=sAOlsFA7CBm1Woq+VJWbdbz/2xgbQfal2G0kh6+Bg24=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aPb68SxcQFgdCFuBNjkEz0tMAiOtnlMukrbzVB7IPV6C69UN3pshjb0Yuahcawdx5vUJSaauxgrt3S+oRpeZXqW8j33fhYObD2rcsf2IhRqG2QidNHfWSJ683h6Qjm850NPxEtScZBnPeJPWfN3hEbja/mst1FIVABMu28AWyNM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1gWwHCzY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=uBhm8HIcX0LI1bGdPCTMXEygEdH1w4kDX/nloFaslig/iG3pMnLjcSC1sDyGbsFBKMVT9x6t6OwZsfeqpu810BP4Xi9XF4RItpzcQC/J9jKDFJZcHWbGUK8atyx62zMYM/YuYlpK/xzAX6di3/hJYT61Nt6kHp10LtdjHeJG7uY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d4qFg30e; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1gWwHCzY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DE701F000E9;
-	Thu, 30 Jul 2026 14:51:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d4qFg30e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6942E1F000E9;
+	Thu, 30 Jul 2026 14:51:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423114;
-	bh=U2HTBFz3RvfnijWCfX5DRywbqRtJbJ9jfWa12Qx4Tf4=;
+	s=korg; t=1785423117;
+	bh=4GShDEeCcBVFPS1U2tupPtE3XJgulDy9K1STKbtGiFY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1gWwHCzYahO5/DzGrAvXxlKKWGJUNnzw+ow2rMsxc9y69eSYpcde+wK/q0k5DGFLs
-	 aoiFdiTHtnJ4OCF+yzvGlUTugixwhW67FGpvmshbtFYNX+892+IIEofBOoRbABNmGI
-	 hH3oFtnZk+B5M1ZW9qtobYit3KbRBEpHtmzMIZ1s=
+	b=d4qFg30ebV9pwHUS1gN92KAkuinOTMwQ4igDEWQFq0rnxrFpDHsa84zeZPXinSvBd
+	 YGVC8vImspyf6Ix5zDNeGgI2rOjOVEBgdQTq/rCFNGpwM3TZQ5EsXlNZG96of/DYX8
+	 WExSkJzozSvL66hTcFp9gABkSt2lrKE1Ay9ir1Uk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 7.1 671/744] rbd: Reset positive result codes to zero in object map update path
-Date: Thu, 30 Jul 2026 16:15:44 +0200
-Message-ID: <20260730141458.525418974@linuxfoundation.org>
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	Carl Johnson <carl@jpartners.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 7.1 672/744] smb: client: handle STATUS_STOPPED_ON_SYMLINK responses without a symlink target
+Date: Thu, 30 Jul 2026 16:15:45 +0200
+Message-ID: <20260730141458.546636700@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -44,64 +45,167 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
+From: Carl Johnson <carl@jpartners.org>
 
-commit a6c4250b81bd30beae94e1b7a4b26fa1193ad2e4 upstream.
+commit 2eb74eef4b7eda8df593d22fb48e94ef959ec8a5 upstream.
 
-In a reply message to an RBD request, a positive result code indicates
-a data payload, which is not allowed for writes. While
-rbd_osd_req_callback() already resets a positive result code for writes
-to zero, rbd_object_map_callback() does not. This allows a corrupted
-reply to an object map update to trigger the rbd_assert(*result < 0) in
-__rbd_obj_handle_request(). This happens, because
-rbd_object_map_callback() calls rbd_obj_handle_request() ->
-__rbd_obj_handle_request() and passes this positive result code. From
-__rbd_obj_handle_request(), rbd_obj_advance_write() is called, which
-leaves the positive result code unchanged and returns true. Therefore,
-the if(done && *result) branch is executed in __rbd_obj_handle_request()
-and the assertion triggers.
+The macOS built-in SMB server returns STATUS_STOPPED_ON_SYMLINK for a
+CREATE on a path whose final component is a symlink, but it does not
+include a Symbolic Link Error Response in the error data: both
+ErrorContextCount and ByteCount are zero, so the symlink target is not
+present in the response at all.  Per [MS-SMB2] section 2.2.2 such a
+response should carry a valid Symbolic Link Error Response, so this is a
+server bug, but the target can still be retrieved with
+FSCTL_GET_REPARSE_POINT.
 
-This patch fixes the issue by adjusting the logic in the
-rbd_object_map_callback() path. A positive result code for an object map
-update is now reset to zero (similar to rbd_osd_req_callback()), and the
-message is subsequently handled the same way as if the result code was
-zero from the beginning. Additionally, a WARN_ON_ONCE() is added for
-this case.
+Frame from a capture against macOS 26.5.2 (build 25F84):
+
+    SMB2 hdr : Status=0x8000002d STATUS_STOPPED_ON_SYMLINK, Cmd=Create
+    Error Rsp: StructureSize=0x0009
+               Error Context Count: 0
+               Byte Count: 0
+               Error Data: 00
+
+symlink_data() cannot find a struct smb2_symlink_err_rsp in such a
+response and returns -EINVAL, which parse_create_response() propagates,
+so smb2_query_path_info() bails out at
+
+	if (rc || !data->reparse_point)
+		goto out;
+
+before it can retry with SMB2_OP_GET_REPARSE.  stat(), readlink() and ls
+of any server-side symlink then fail with -EINVAL:
+
+  $ ls -la Config
+  l????????? ? ? ? ? ? Config.json
+  $ stat Config/Config.json
+  stat: cannot statx 'Config/Config.json': Invalid argument
+
+A 5.10 client resolves these symlinks correctly against the same server
+and share, so this is a regression for Apple SMB servers.
+
+Handle it in several places:
+
+ - symlink_data() detects the empty response (ErrorContextCount and
+   ByteCount both zero) and returns a distinct -ENODATA, so that "server
+   did not send the target" can be told apart from a genuinely malformed
+   response and only this case is worked around.
+
+ - parse_create_response() treats -ENODATA like
+   STATUS_IO_REPARSE_TAG_NOT_HANDLED, which does not carry the target
+   either: leave the reparse tag unset and clear rc, so the existing
+   SMB2_OP_GET_REPARSE path retrieves the target.
+
+ - smb2_query_path_info() only fixes up the symlink target type when the
+   target is already known.  SMB2_OP_GET_REPARSE sets data->reparse.tag
+   but does not parse the target out of the reparse buffer; that happens
+   later, in reparse_info_to_fattr().  Without this check
+   smb2_fix_symlink_target_type() is called with a NULL target and
+   returns -EIO.  This could not happen with servers that send the target
+   inline and therefore skip SMB2_OP_GET_REPARSE.
+
+ - smb2_open_file() maps -ENODATA to -EIO, matching
+   STATUS_IO_REPARSE_TAG_NOT_HANDLED, so its callers retrieve the target
+   with SMB2_OP_GET_REPARSE as well.
+
+Tested on Debian 13, kernel 6.18.38 (armv7), against macOS 26.5.2:
+symlinks now resolve, including relative, parent-traversing and directory
+symlinks, and reads through symlinks succeed.
 
 Cc: stable@vger.kernel.org
-Fixes: 22e8bd51bb04 ("rbd: support for object-map and fast-diff")
-Signed-off-by: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
-Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Co-developed-by: Pali Rohár <pali@kernel.org>
+Signed-off-by: Pali Rohár <pali@kernel.org>
+Signed-off-by: Carl Johnson <carl@jpartners.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/rbd.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/smb/client/smb2file.c  |   21 +++++++++++++++++++++
+ fs/smb/client/smb2inode.c |   23 ++++++++++++++++++++---
+ 2 files changed, 41 insertions(+), 3 deletions(-)
 
---- a/drivers/block/rbd.c
-+++ b/drivers/block/rbd.c
-@@ -1957,10 +1957,15 @@ static int rbd_object_map_update_finish(
- 	bool has_current_state;
- 	void *p;
+--- a/fs/smb/client/smb2file.c
++++ b/fs/smb/client/smb2file.c
+@@ -30,6 +30,19 @@ static struct smb2_symlink_err_rsp *syml
+ 	u8 *end = (u8 *)err + iov->iov_len;
+ 	u32 len;
  
--	if (osd_req->r_result)
-+	if (osd_req->r_result < 0)
- 		return osd_req->r_result;
- 
- 	/*
-+	 * Writes aren't allowed to return a data payload.
-+	 */
-+	WARN_ON_ONCE(osd_req->r_result > 0);
-+
 +	/*
- 	 * Nothing to do for a snapshot object map.
- 	 */
- 	if (osd_req->r_num_ops == 1)
++	 * Per [MS-SMB2] section 2.2.2, a STATUS_STOPPED_ON_SYMLINK response has to
++	 * carry a Symbolic Link Error Response, so ByteCount cannot be zero.  Some
++	 * servers (e.g. the macOS built-in SMB server) violate this and return an
++	 * empty error response, with both ErrorContextCount and ByteCount set to
++	 * zero, i.e. without the symlink target.  Detect this and return -ENODATA
++	 * so that callers can tell "server did not send the target" apart from a
++	 * malformed response, and retrieve the target with FSCTL_GET_REPARSE_POINT
++	 * instead.
++	 */
++	if (!err->ErrorContextCount && !le32_to_cpu(err->ByteCount))
++		return ERR_PTR(-ENODATA);
++
+ 	if (err->ErrorContextCount) {
+ 		struct smb2_error_context_rsp *p;
+ 
+@@ -201,6 +214,14 @@ int smb2_open_file(const unsigned int xi
+ 			rc = smb2_parse_symlink_response(oparms->cifs_sb, &err_iov,
+ 							 oparms->path,
+ 							 &data->symlink_target);
++			/*
++			 * If smb2_parse_symlink_response returned -ENODATA then the
++			 * symlink_target was not sent. Treat this as if the SMB2_open()
++			 * failed with STATUS_IO_REPARSE_TAG_NOT_HANDLED status, which is
++			 * indicated by the -EIO errno.
++			 */
++			if (rc == -ENODATA)
++				rc = -EIO;
+ 			if (!rc) {
+ 				memset(smb2_data, 0, sizeof(*smb2_data));
+ 				oparms->create_options |= OPEN_REPARSE_POINT;
+--- a/fs/smb/client/smb2inode.c
++++ b/fs/smb/client/smb2inode.c
+@@ -792,9 +792,19 @@ static int parse_create_response(struct
+ 		rc = smb2_parse_symlink_response(cifs_sb, iov,
+ 						 full_path,
+ 						 &data->symlink_target);
+-		if (rc)
++		if (rc != 0 && rc != -ENODATA)
+ 			return rc;
+-		tag = IO_REPARSE_TAG_SYMLINK;
++		/*
++		 * -ENODATA means that the response was parsed but did not contain
++		 * the symlink target at all (see symlink_data()).  Treat it like
++		 * STATUS_IO_REPARSE_TAG_NOT_HANDLED, which does not contain it
++		 * either: leave the tag unset and clear rc, so that the caller
++		 * retrieves the target with SMB2_OP_GET_REPARSE.
++		 */
++		if (rc == -ENODATA)
++			rc = 0;
++		else
++			tag = IO_REPARSE_TAG_SYMLINK;
+ 		reparse_point = true;
+ 		break;
+ 	case STATUS_SUCCESS:
+@@ -987,7 +997,14 @@ int smb2_query_path_info(const unsigned
+ 				rc = -EOPNOTSUPP;
+ 		}
+ 
+-		if (data->reparse.tag == IO_REPARSE_TAG_SYMLINK && !rc) {
++		/*
++		 * If the symlink was already parsed in create response then it is needed to fix
++		 * its type now (after the second call with OPEN_REPARSE_POINT which filled the
++		 * data->fi.Attributes). If the symlink was not parsed in create response then
++		 * the data->symlink_target was not filled yet and then the type will be fixed
++		 * later after data->symlink_target is filled.
++		 */
++		if (data->reparse.tag == IO_REPARSE_TAG_SYMLINK && !rc && data->symlink_target) {
+ 			bool directory = le32_to_cpu(data->fi.Attributes) & ATTR_DIRECTORY;
+ 			rc = smb2_fix_symlink_target_type(&data->symlink_target, directory, cifs_sb);
+ 		}
 
 
