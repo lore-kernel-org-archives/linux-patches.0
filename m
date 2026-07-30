@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 212DB449B1E;
-	Thu, 30 Jul 2026 15:29:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23F3B44998F;
+	Thu, 30 Jul 2026 15:29:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425351; cv=none; b=N1oQGvHXjUA6Jsz0u9Jubu0CTKAz7oKSdcIaBQFc7ZB8OPrz2fXhX+w3dA7wib9eHstpFfZf2bhCW93VSA6Czhchu3eX0xcsk9HZ0EocOUkjctnzuEsV/jAllmZvPVG78J081OETVXjS5h5qxxI1eTpH2LKOuA7QCLiVfgCE7+8=
+	t=1785425354; cv=none; b=nZHC6Jftb3n+buoUaDt1vbc+wr0ju3RFLaboXyJYO3qk7lS5ufq79nKmBl1TyeZEUox85wqEEds3HJ2SAfUqn7VnvcBtg0g7QV53XIdyW4ee6W8DJ2vsoFsw6nPr99RnbzByQmdCAIAIub9p+MI4wZQR9fiPVSq0dmKfs+nk3Zc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425351; c=relaxed/simple;
-	bh=pm6dy9wIFDj3UTSOmwC3DkhTJGYBD7Xggd7AHyYsGfY=;
+	s=arc-20240116; t=1785425354; c=relaxed/simple;
+	bh=dE0xSw287W/LcUOA/tCKGTZVlx0tP4c5UC5w2vXsoTc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ouas63aTDN/0myOjeuTNhee2m3xiodCUORbk0aJARXi63Z4nKAR8sV3rLF7g6QTLPStlhE5Fhtx2fLIn7yg40c11F2csvclYXPOxc8z5b8OZW9Ubq8bzFyYzG8qB/nsvnEAGpm7ZVyVPctA1L/ReiR0nIkh9x33FPZxUiXTt5XE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WRqO64KZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RMJd/EZ4IraGmSrcXaF873StMmDU2FU9FL6C5iF55ZgxDtHlJwEIb6tgH//I3wgswpy4VhCz4t87lH8FdJyVRO97eTxdLnkMaqQIS0Em5ZwEQ1BaOpuaxJPdTIUdW3rVgCB7Y2VUhpB3Q6bPfU+v0jEmVLK5+1O462rn69dt8v0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T1eNDKVG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WRqO64KZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E59B1F000E9;
-	Thu, 30 Jul 2026 15:29:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T1eNDKVG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 484C61F000E9;
+	Thu, 30 Jul 2026 15:29:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425350;
-	bh=i7Gt2YKLPZZp+HLTrwi1xGDX1UIx8MeY9d6ucgyrF+w=;
+	s=korg; t=1785425352;
+	bh=w2LhOWsYaOC5F9tOEpMCc3lsBKjbN23O4vbdHgOigv0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WRqO64KZ76HpSuGBDk90tS43SUCOeMSXfP76woOUBLpXTeo4/CqoQKgs6PAeJaPEP
-	 y3yHbvG3WCA43e5T6OHSIBH3CXz7Oq2Zk1dbXFl5n41WSnlgnkWcBicXGL+9KLYGgO
-	 RFM3SDLTqLEdQQBEBDNPlH9YVBcf9EjHX877CDBo=
+	b=T1eNDKVGnCdJ/f4pR22ZNZfvF8RazrquUow4xIgtmVWecDPiPn8tri2B2e4iUYL47
+	 WykQ9cI/tpXL+GOJGkWAIKqdYKuIy1x+t1cvdbEw4l67jtzhrXWWQ2sHc+K08OAuKG
+	 ylYeXFiv0Lwiotv2oigWkjrLapibL+5QQjDhG+yw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sudeep Holla <sudeep.holla@kernel.org>,
-	Seth Forshee <sforshee@nvidia.com>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 037/602] firmware: arm_ffa: Respect firmware advertised RX/TX buffer size limits
-Date: Thu, 30 Jul 2026 16:07:09 +0200
-Message-ID: <20260730141436.788337396@linuxfoundation.org>
+Subject: [PATCH 6.12 038/602] IB/mad: Drop unmatched RMPP responses before reassembly
+Date: Thu, 30 Jul 2026 16:07:10 +0200
+Message-ID: <20260730141436.808442773@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -51,115 +51,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Seth Forshee <sforshee@nvidia.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit 53716a4d745f1dac7aff33f3d1494b701eb2f888 ]
+[ Upstream commit d2e52d610b9b09694261632340b801a421e0b0c5 ]
 
-FFA_FEATURES reports the minimum size and alignment boundary required
-for RXTX_MAP. In FF-A v1.2 and later it can also report a maximum buffer
-size, with zero meaning that no maximum is enforced.
+Kernel-handled RMPP receive processing starts reassembly for active
+DATA responses before the response is matched to an outstanding send.
+The normal match happens later, after ib_process_rmpp_recv_wc() has
+either assembled a complete message or consumed the segment.
 
-The driver only used the minimum value and then rounded it up to PAGE_SIZE
-before invoking RXTX_MAP after commit 83210251fd70 ("firmware: arm_ffa:
-Use the correct buffer size during RXTX_MAP"). On systems where PAGE_SIZE
-is larger than the advertised minimum, this can exceed a non-zero maximum
-reported by firmware. Older implementations do not advertise a maximum and
-may also reject the rounded-up size.
+That ordering lets an unsolicited response that routes to a kernel
+RMPP agent by the high TID bits allocate or extend RMPP receive state
+before the full TID and source address are checked against a real
+request. A reordered burst can therefore reach the receive-side
+insertion path even though the response would not match any send.
 
-Decode the maximum size and clamp the page-aligned minimum to it when it
-is present. If no maximum is advertised and RXTX_MAP rejects the rounded
-size with INVALID_PARAMETERS, retry with the advertised minimum size.
-Record drv_info->rxtx_bufsz only after RXTX_MAP succeeds so it reflects
-the size registered with firmware.
+For kernel-handled RMPP DATA responses, require the existing
+ib_find_send_mad() match before entering RMPP reassembly. The matcher
+already checks the full TID, management class and source address/GID
+against the agent wait, backlog and in-flight send lists. If there is
+no match, drop the response without creating RMPP state.
 
-While there, also update RXTX_MAP_MIN_BUFSZ() to use FIELD_GET() for
-consistency.
+This leaves the RMPP window behavior unchanged and only rejects
+responses that have no corresponding request.
 
-Fixes: 83210251fd70 ("firmware: arm_ffa: Use the correct buffer size during RXTX_MAP")
-Suggested-by: Sudeep Holla <sudeep.holla@kernel.org>
-Signed-off-by: Seth Forshee <sforshee@nvidia.com>
-Link: https://patch.msgid.link/20260602-b4-ffa-rxtx-map-fixes-v2-1-7cb06508da84@nvidia.com
-(sudeep.holla: Minor rewording subject and commit message)
-Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
+Fixes: fa619a77046b ("[PATCH] IB: Add RMPP implementation")
+Assisted-by: Codex:gpt-5-5-xhigh
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Link: https://patch.msgid.link/3170ff3bc389a930bb1641f2caa394a0b2241579.1780774907.git.michael.bommarito@gmail.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_ffa/driver.c | 27 ++++++++++++++++++++-------
- 1 file changed, 20 insertions(+), 7 deletions(-)
+ drivers/infiniband/core/mad.c | 30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
-diff --git a/drivers/firmware/arm_ffa/driver.c b/drivers/firmware/arm_ffa/driver.c
-index 3b221ba990aa1e..67fc9e46001b77 100644
---- a/drivers/firmware/arm_ffa/driver.c
-+++ b/drivers/firmware/arm_ffa/driver.c
-@@ -32,6 +32,7 @@
- #include <linux/interrupt.h>
- #include <linux/io.h>
- #include <linux/kernel.h>
-+#include <linux/minmax.h>
- #include <linux/module.h>
- #include <linux/mm.h>
- #include <linux/mutex.h>
-@@ -55,7 +56,9 @@
- 	(FIELD_PREP(SENDER_ID_MASK, (s)) | FIELD_PREP(RECEIVER_ID_MASK, (r)))
+diff --git a/drivers/infiniband/core/mad.c b/drivers/infiniband/core/mad.c
+index 73f3a0b9a54b5f..96c1fd8039fb59 100644
+--- a/drivers/infiniband/core/mad.c
++++ b/drivers/infiniband/core/mad.c
+@@ -1778,6 +1778,24 @@ void ib_mark_mad_done(struct ib_mad_send_wr_private *mad_send_wr)
+ 			      &mad_send_wr->mad_agent_priv->done_list);
+ }
  
- #define RXTX_MAP_MIN_BUFSZ_MASK	GENMASK(1, 0)
--#define RXTX_MAP_MIN_BUFSZ(x)	((x) & RXTX_MAP_MIN_BUFSZ_MASK)
-+#define RXTX_MAP_MAX_BUFSZ_MASK	GENMASK(31, 16)
-+#define RXTX_MAP_MIN_BUFSZ(x)	(FIELD_GET(RXTX_MAP_MIN_BUFSZ_MASK, (x)))
-+#define RXTX_MAP_MAX_BUFSZ(x)	(FIELD_GET(RXTX_MAP_MAX_BUFSZ_MASK, (x)))
- 
- #define FFA_MAX_NOTIFICATIONS		64
- 
-@@ -1855,7 +1858,7 @@ static int __init ffa_init(void)
- {
- 	int ret;
- 	u32 buf_sz;
--	size_t rxtx_bufsz = SZ_4K;
-+	size_t rxtx_min_bufsz = SZ_4K, rxtx_max_bufsz = 0, rxtx_bufsz;
- 
- 	ret = ffa_transport_init(&invoke_ffa_fn);
- 	if (ret)
-@@ -1878,15 +1881,18 @@ static int __init ffa_init(void)
- 	ret = ffa_features(FFA_FN_NATIVE(RXTX_MAP), 0, &buf_sz, NULL);
- 	if (!ret) {
- 		if (RXTX_MAP_MIN_BUFSZ(buf_sz) == 1)
--			rxtx_bufsz = SZ_64K;
-+			rxtx_min_bufsz = SZ_64K;
- 		else if (RXTX_MAP_MIN_BUFSZ(buf_sz) == 2)
--			rxtx_bufsz = SZ_16K;
-+			rxtx_min_bufsz = SZ_16K;
- 		else
--			rxtx_bufsz = SZ_4K;
-+			rxtx_min_bufsz = SZ_4K;
++static bool is_kernel_rmpp_data_response(struct ib_mad_agent_private *agent,
++					 struct ib_mad_recv_wc *mad_recv_wc)
++{
++	const struct ib_mad_hdr *mad_hdr = &mad_recv_wc->recv_buf.mad->mad_hdr;
++	struct ib_rmpp_mad *rmpp_mad;
 +
-+		rxtx_max_bufsz = RXTX_MAP_MAX_BUFSZ(buf_sz) * SZ_4K;
-+		if (rxtx_max_bufsz != 0 && rxtx_max_bufsz < rxtx_min_bufsz)
-+			rxtx_max_bufsz = rxtx_min_bufsz;
++	if (!ib_mad_kernel_rmpp_agent(&agent->agent) ||
++	    !ib_response_mad(mad_hdr) ||
++	    !ib_is_mad_class_rmpp(mad_hdr->mgmt_class))
++		return false;
++
++	rmpp_mad = (struct ib_rmpp_mad *)mad_recv_wc->recv_buf.mad;
++
++	return (ib_get_rmpp_flags(&rmpp_mad->rmpp_hdr) &
++		IB_MGMT_RMPP_FLAG_ACTIVE) &&
++	       rmpp_mad->rmpp_hdr.rmpp_type == IB_MGMT_RMPP_TYPE_DATA;
++}
++
+ static void ib_mad_complete_recv(struct ib_mad_agent_private *mad_agent_priv,
+ 				 struct ib_mad_recv_wc *mad_recv_wc)
+ {
+@@ -1796,6 +1814,18 @@ static void ib_mad_complete_recv(struct ib_mad_agent_private *mad_agent_priv,
  	}
  
--	rxtx_bufsz = PAGE_ALIGN(rxtx_bufsz);
--	drv_info->rxtx_bufsz = rxtx_bufsz;
-+	rxtx_bufsz = min_not_zero(PAGE_ALIGN(rxtx_min_bufsz), rxtx_max_bufsz);
- 	drv_info->rx_buffer = alloc_pages_exact(rxtx_bufsz, GFP_KERNEL);
- 	if (!drv_info->rx_buffer) {
- 		ret = -ENOMEM;
-@@ -1902,10 +1908,17 @@ static int __init ffa_init(void)
- 	ret = ffa_rxtx_map(virt_to_phys(drv_info->tx_buffer),
- 			   virt_to_phys(drv_info->rx_buffer),
- 			   rxtx_bufsz / FFA_PAGE_SIZE);
-+	if (ret == -EINVAL && !rxtx_max_bufsz && rxtx_min_bufsz < rxtx_bufsz) {
-+		rxtx_bufsz = rxtx_min_bufsz;
-+		ret = ffa_rxtx_map(virt_to_phys(drv_info->tx_buffer),
-+				   virt_to_phys(drv_info->rx_buffer),
-+				   rxtx_bufsz / FFA_PAGE_SIZE);
+ 	list_add(&mad_recv_wc->recv_buf.list, &mad_recv_wc->rmpp_list);
++	if (is_kernel_rmpp_data_response(mad_agent_priv, mad_recv_wc)) {
++		spin_lock_irqsave(&mad_agent_priv->lock, flags);
++		mad_send_wr = ib_find_send_mad(mad_agent_priv, mad_recv_wc);
++		spin_unlock_irqrestore(&mad_agent_priv->lock, flags);
++
++		if (!mad_send_wr) {
++			ib_free_recv_mad(mad_recv_wc);
++			deref_mad_agent(mad_agent_priv);
++			return;
++		}
 +	}
- 	if (ret) {
- 		pr_err("failed to register FFA RxTx buffers\n");
- 		goto free_pages;
- 	}
-+	drv_info->rxtx_bufsz = rxtx_bufsz;
- 
- 	mutex_init(&drv_info->rx_lock);
- 	mutex_init(&drv_info->tx_lock);
++
+ 	if (ib_mad_kernel_rmpp_agent(&mad_agent_priv->agent)) {
+ 		mad_recv_wc = ib_process_rmpp_recv_wc(mad_agent_priv,
+ 						      mad_recv_wc);
 -- 
 2.53.0
 
