@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B33C3439343;
-	Thu, 30 Jul 2026 14:39:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3D82439343;
+	Thu, 30 Jul 2026 14:39:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422352; cv=none; b=U6HayKm+nzK6WG/zEJmMDiSsZlxtRItiusneD26A1fcuyjVd9wXT38DU2pjYHRGN1U+JLHVeEBcmBLzHqxR2oPF0lI5RxN3ikiNzjVRtN363wGe3juGSNv/M5vjMj/cfpRZyBzLUoyAuOIkJvYSed1wpQBcnnfvHluZePWKQASg=
+	t=1785422356; cv=none; b=Fnw2rx4cIC8END1U3UhhWfQJN+czjWI18+Rl7bmvs79I6k1bMrPcAPOj5FyoeoCgYkAjNs2D7L/w60LEyJHM1DtiuNhuQxaHSLEp5vjHyxVHHGCweIptDJQ0bOvW6OCEd+1z+ESue8uWquqMG5gXI0oYpp1jkoGoRJRWn9vHoxw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422352; c=relaxed/simple;
-	bh=N7F8wol/DLDO+w/5mpO+9PDS1PTEJUlsCD02znO/Rhk=;
+	s=arc-20240116; t=1785422356; c=relaxed/simple;
+	bh=axSe+sNwv5b+3ebp8RwWlbHxaTLBwTqFUSO5JlQGBco=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=M0otzTV1q7XVF/E7YtbFCDVkGfmCqIHgmnhOsdOkSLJUAJuljjeIN7wuv1AkPQwrFPootuYajUjJSJK7oc71ODqm99kTgHmxscozaT5caDDPw1iipqWpViJ7o6guu3WW5U0iOj+4+mrFOHl3sypMbeFaRmQ/kzSTYqsOKpOZzyo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M2M/8uxi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=qux0BDwYCQSFoWiZXj/GXEqgTYavlakEPrv7nXpGR4X7Ji4YsDFX2k0a0moDe6tl3xrtshDbTml9YFaTso5nb7us0se7RKwtSLbaU+ahO6kjeAWFQpWrCXfeVUl7buiaNY79NHTvn6087A2L82pXsQVgmORCycuMQ790SdOOCgk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YCmyxqp7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M2M/8uxi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 012E51F000E9;
-	Thu, 30 Jul 2026 14:39:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YCmyxqp7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18B241F000E9;
+	Thu, 30 Jul 2026 14:39:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422351;
-	bh=674XPwHvl4dQ77HC6xilNfILMe9YNkxoQu35Av7rHp0=;
+	s=korg; t=1785422354;
+	bh=KlGxFitXqt7+T7Rh8cfNwbaUFOK6eiEXAMBkMZjFyyY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M2M/8uxiqFi3HmkmCAdGvFwZv1ftEFJmpraIcOJFRagmIYrv2mbtJNiIQqQyzJaGy
-	 yU12o7+jQWRExkpYXTPkn9U62iSs9bE/iIUivN940qF6RkiB/BLKzNs46IwV93OYnv
-	 RppLAATrwVnMSzUoNiOL/v2aE8DAv8jydZfZqzp8=
+	b=YCmyxqp7B9imDH6ECJ/0nbJoSZANjJG8ChkoPOq2M+Kijsc1AJIgLl7xJm6wqh1NH
+	 iDP2+JgZe5KziwYMaKtT28UmTFzl6ESi58xANsBIF0+nZOJaAmg4ol0Sx7QdREDAKm
+	 9aN9fXjp8BmM/E6VEc7bHOB0Ol48DL9e47TSsr1c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Brost <matthew.brost@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
-	Arvind Yadav <arvind.yadav@intel.com>,
-	Tejas Upadhyay <tejas.upadhyay@intel.com>
-Subject: [PATCH 7.1 406/744] drm/xe/madvise: Skip invalidation for purgeable state updates
-Date: Thu, 30 Jul 2026 16:11:19 +0200
-Message-ID: <20260730141452.920989022@linuxfoundation.org>
+	Brajesh Gupta <brajesh.gupta@imgtec.com>,
+	Alessio Belle <alessio.belle@imgtec.com>
+Subject: [PATCH 7.1 407/744] drm/imagination: Fix double call to drm_sched_entity_fini()
+Date: Thu, 30 Jul 2026 16:11:20 +0200
+Message-ID: <20260730141452.944150393@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -54,77 +51,177 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arvind Yadav <arvind.yadav@intel.com>
+From: Brajesh Gupta <brajesh.gupta@imgtec.com>
 
-commit 57441577bac3637473da2c9644336eaa0ac5732f upstream.
+commit 4af24c27a39ba147a613a09e10b9e0f7294524c0 upstream.
 
-Purgeable state updates only change VMA/BO metadata. They do not zap
-PTEs when switching between DONTNEED and WILLNEED. PTEs are zapped
-later if the BO is actually purged.
+Call sequence of double call:
+pvr_context_destroy
+  pvr_context_kill_queues
+    pvr_queue_kill
+      drm_sched_entity_destroy
+        drm_sched_entity_fini // here
+  pvr_context_put
+    kref_put(..., pvr_context_release)
+      pvr_context_destroy_queues
+        pvr_queue_destroy
+          drm_sched_entity_fini // here
 
-xe_vm_invalidate_madvise_range() waits on the VM dma-resv before checking
-vma->skip_invalidation. Since purgeable madvise marks all affected VMAs to
-skip invalidation, this wait is unnecessary and can stall on unrelated
-in-flight work.
+Call to drm_sched_entity_destroy() from pvr_context_kill_queues() calls
+drm_sched_entity_flush() + drm_sched_entity_fini().
+drm_sched_entity_flush() ensures all pending jobs are completed and
+drm_sched_entity_fini() ensures no further submission is allowed as
+per expectation from pvr_context_kill_queues(). Double call to
+drm_sched_entity_fini() is misuse of the API so keep call only in
+pvr_context_create() failure path.
 
-Skip the invalidate path entirely for purgeable state updates.
+Stack trace for issue with addition of refcounting for DRM entity
+stats in commit fd177135f0e6 ("drm/sched: Account entity GPU time"):
 
-v2:
-  - Replace inline 'args->type != DRM_XE_VMA_ATTR_PURGEABLE_STATE'
-    check with a small helper madvise_range_needs_invalidation().
-    (Himal)
+[  789.490527] ------------[ cut here ]------------
+[  789.490559] refcount_t: underflow; use-after-free.
+[  789.490657] WARNING: lib/refcount.c:28 at refcount_warn_saturate+0xf4/0x144, CPU#0: kworker/u16:1/440
+[  789.490695] Modules linked in: powervr drm_gpuvm drm_exec gpu_sched drm_shmem_helper xhci_plat_hcd xhci_hcd dwc3 usbcore usb_common snd_soc_simple_card snd_soc_simple_card_utils sa2ul sha512 sha256 dwc3_am62 sha1 authenc rti_wdt libsha512 at24 sch_fq_codel fuse dm_mod ipv6
+[  789.490798] CPU: 0 UID: 0 PID: 440 Comm: kworker/u16:1 Not tainted 7.0.0-rc7-02049-g5e2c0700091b #22 PREEMPT
+[  789.490809] Hardware name: Texas Instruments AM625 SK (DT)
+[  789.490815] Workqueue: powervr-sched pvr_queue_fence_release_work [powervr]
+[  789.490868] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[  789.490876] pc : refcount_warn_saturate+0xf4/0x144
+[  789.490884] lr : refcount_warn_saturate+0xf4/0x144
+[  789.490892] sp : ffff8000822cbcc0
+[  789.490895] x29: ffff8000822cbcc0 x28: 0000000000000000 x27: 0000000000000000
+[  789.490909] x26: 0000000000000000 x25: ffff800081b1e338 x24: ffff000004541405
+[  789.490922] x23: ffff000004bea950 x22: ffff00000042e400 x21: ffff000007123e30
+[  789.490935] x20: ffff000007123000 x19: ffff000007a80d50 x18: fffffffffffe7768
+[  789.490948] x17: 74736574202c6e6f x16: 697461746e656d65 x15: ffff800081b269f0
+[  789.490962] x14: 0000000000000030 x13: ffff800081b26a70 x12: 0000000000000211
+[  789.490975] x11: 00000000000000c0 x10: 0000000000000b50 x9 : ffff8000822cbb30
+[  789.490988] x8 : ffff0000014e7bb0 x7 : ffff00007725e780 x6 : 0000000372a05f49
+[  789.491001] x5 : 0000000000000000 x4 : 0000000000000001 x3 : 0000000000000010
+[  789.491013] x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff0000014e7000
+[  789.491027] Call trace:
+[  789.491032]  refcount_warn_saturate+0xf4/0x144 (P)
+[  789.491043]  drm_sched_entity_fini+0x164/0x18c [gpu_sched]
+[  789.491081]  pvr_queue_destroy+0x64/0x134 [powervr]
+[  789.491110]  pvr_context_destroy_queues+0x34/0x64 [powervr]
+[  789.491138]  pvr_context_release+0x70/0xac [powervr]
+[  789.491166]  pvr_context_put.part.0+0x5c/0x7c [powervr]
+[  789.491193]  pvr_context_put+0x14/0x24 [powervr]
+[  789.491221]  pvr_queue_fence_release_work+0x20/0x38 [powervr]
+[  789.491249]  process_one_work+0x160/0x4c4
+[  789.491264]  worker_thread+0x188/0x310
+[  789.491276]  kthread+0x130/0x13c
+[  789.491287]  ret_from_fork+0x10/0x20
+[  789.491300] ---[ end trace 0000000000000000 ]---
 
-Suggested-by: Matthew Brost <matthew.brost@intel.com>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Cc: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
-Signed-off-by: Arvind Yadav <arvind.yadav@intel.com>
-Reviewed-by: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
-Link: https://patch.msgid.link/20260526135447.2973029-1-arvind.yadav@intel.com
-Signed-off-by: Tejas Upadhyay <tejas.upadhyay@intel.com>
-Fixes: ada7486c5668 ("drm/xe: Implement madvise ioctl for xe")
-Cc: <stable@vger.kernel.org> # v6.18+
-(cherry picked from commit 134377098b9c14abd31c3bcac00c9653f0f0c4c3)
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Fixes: eaf01ee5ba28 ("drm/imagination: Implement job submission and scheduling")
+Cc: stable@vger.kernel.org
+Signed-off-by: Brajesh Gupta <brajesh.gupta@imgtec.com>
+Reviewed-by: Alessio Belle <alessio.belle@imgtec.com>
+Link: https://patch.msgid.link/20260630-b4-sched_fix-v7-1-71aa39c62627@imgtec.com
+Signed-off-by: Alessio Belle <alessio.belle@imgtec.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_vm_madvise.c |   19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/imagination/pvr_context.c |   18 ++++++++++--------
+ drivers/gpu/drm/imagination/pvr_queue.c   |    6 ++++--
+ drivers/gpu/drm/imagination/pvr_queue.h   |    2 +-
+ 3 files changed, 15 insertions(+), 11 deletions(-)
 
---- a/drivers/gpu/drm/xe/xe_vm_madvise.c
-+++ b/drivers/gpu/drm/xe/xe_vm_madvise.c
-@@ -332,6 +332,20 @@ static int xe_vm_invalidate_madvise_rang
+--- a/drivers/gpu/drm/imagination/pvr_context.c
++++ b/drivers/gpu/drm/imagination/pvr_context.c
+@@ -161,22 +161,24 @@ ctx_fw_data_init(void *cpu_ptr, void *pr
+ /**
+  * pvr_context_destroy_queues() - Destroy all queues attached to a context.
+  * @ctx: Context to destroy queues on.
++ * @cleanup_queue_entity: Whether to cleanup the queue entity e.g. context
++ * creation failure path.
+  *
+  * Should be called when the last reference to a context object is dropped.
+  * It releases all resources attached to the queues bound to this context.
+  */
+-static void pvr_context_destroy_queues(struct pvr_context *ctx)
++static void pvr_context_destroy_queues(struct pvr_context *ctx, bool cleanup_queue_entity)
+ {
+ 	switch (ctx->type) {
+ 	case DRM_PVR_CTX_TYPE_RENDER:
+-		pvr_queue_destroy(ctx->queues.fragment);
+-		pvr_queue_destroy(ctx->queues.geometry);
++		pvr_queue_destroy(ctx->queues.fragment, cleanup_queue_entity);
++		pvr_queue_destroy(ctx->queues.geometry, cleanup_queue_entity);
+ 		break;
+ 	case DRM_PVR_CTX_TYPE_COMPUTE:
+-		pvr_queue_destroy(ctx->queues.compute);
++		pvr_queue_destroy(ctx->queues.compute, cleanup_queue_entity);
+ 		break;
+ 	case DRM_PVR_CTX_TYPE_TRANSFER_FRAG:
+-		pvr_queue_destroy(ctx->queues.transfer);
++		pvr_queue_destroy(ctx->queues.transfer, cleanup_queue_entity);
+ 		break;
+ 	}
+ }
+@@ -240,7 +242,7 @@ static int pvr_context_create_queues(str
+ 	return -EINVAL;
+ 
+ err_destroy_queues:
+-	pvr_context_destroy_queues(ctx);
++	pvr_context_destroy_queues(ctx, true);
  	return err;
  }
  
-+/**
-+ * madvise_range_needs_invalidation() - Check whether madvise needs invalidation
-+ * @args: madvise ioctl arguments
-+ *
-+ * Purgeable state updates only touch VMA/BO metadata. PTEs stay valid and are
-+ * zapped only if the BO is later purged.
-+ *
-+ * Return: true when the update needs PTE invalidation.
-+ */
-+static bool madvise_range_needs_invalidation(const struct drm_xe_madvise *args)
-+{
-+	return args->type != DRM_XE_VMA_ATTR_PURGEABLE_STATE;
-+}
-+
- static bool madvise_args_are_sane(struct xe_device *xe, const struct drm_xe_madvise *args)
+@@ -356,7 +358,7 @@ err_destroy_fw_obj:
+ 	pvr_fw_object_destroy(ctx->fw_obj);
+ 
+ err_destroy_queues:
+-	pvr_context_destroy_queues(ctx);
++	pvr_context_destroy_queues(ctx, true);
+ 
+ err_free_ctx_data:
+ 	kfree(ctx->data);
+@@ -382,7 +384,7 @@ pvr_context_release(struct kref *ref_cou
+ 	spin_unlock(&pvr_dev->ctx_list_lock);
+ 
+ 	xa_erase(&pvr_dev->ctx_ids, ctx->ctx_id);
+-	pvr_context_destroy_queues(ctx);
++	pvr_context_destroy_queues(ctx, false);
+ 	pvr_fw_object_destroy(ctx->fw_obj);
+ 	kfree(ctx->data);
+ 	pvr_vm_context_put(ctx->vm_ctx);
+--- a/drivers/gpu/drm/imagination/pvr_queue.c
++++ b/drivers/gpu/drm/imagination/pvr_queue.c
+@@ -1401,11 +1401,12 @@ void pvr_queue_kill(struct pvr_queue *qu
+ /**
+  * pvr_queue_destroy() - Destroy a queue.
+  * @queue: The queue to destroy.
++ * @cleanup_queue_entity: Whether to cleanup the queue entity.
+  *
+  * Cleanup the queue and free the resources attached to it. Should be
+  * called from the context release function.
+  */
+-void pvr_queue_destroy(struct pvr_queue *queue)
++void pvr_queue_destroy(struct pvr_queue *queue, bool cleanup_queue_entity)
  {
- 	if (XE_IOCTL_DBG(xe, !args))
-@@ -708,8 +722,9 @@ int xe_vm_madvise_ioctl(struct drm_devic
- 	madvise_funcs[attr_type](xe, vm, madvise_range.vmas, madvise_range.num_vmas, args,
- 				 &details);
+ 	if (!queue)
+ 		return;
+@@ -1415,7 +1416,8 @@ void pvr_queue_destroy(struct pvr_queue
+ 	mutex_unlock(&queue->ctx->pvr_dev->queues.lock);
  
--	err = xe_vm_invalidate_madvise_range(vm, madvise_range.addr,
--					     madvise_range.addr + args->range);
-+	if (madvise_range_needs_invalidation(args))
-+		err = xe_vm_invalidate_madvise_range(vm, madvise_range.addr,
-+						     madvise_range.addr + args->range);
+ 	drm_sched_fini(&queue->scheduler);
+-	drm_sched_entity_fini(&queue->entity);
++	if (cleanup_queue_entity)
++		drm_sched_entity_fini(&queue->entity);
  
- 	if (madvise_range.has_svm_userptr_vmas)
- 		xe_svm_notifier_unlock(vm);
+ 	if (WARN_ON(queue->last_queued_job_scheduled_fence))
+ 		dma_fence_put(queue->last_queued_job_scheduled_fence);
+--- a/drivers/gpu/drm/imagination/pvr_queue.h
++++ b/drivers/gpu/drm/imagination/pvr_queue.h
+@@ -158,7 +158,7 @@ struct pvr_queue *pvr_queue_create(struc
+ 
+ void pvr_queue_kill(struct pvr_queue *queue);
+ 
+-void pvr_queue_destroy(struct pvr_queue *queue);
++void pvr_queue_destroy(struct pvr_queue *queue, bool cleanup_queue_entity);
+ 
+ void pvr_queue_process(struct pvr_queue *queue);
+ 
 
 
