@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF7B43B6366;
-	Thu, 30 Jul 2026 14:46:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAB3F35C180;
+	Thu, 30 Jul 2026 14:46:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422806; cv=none; b=ZyVZySOYzR1W+qyoxFwdjuQQ+DKoTBd7uhu5h72rjZTlicI7aG6fsEK48L7fIbA/NPwcKBhClbDMWzZlVIy/uyipx/DzFpPPFUV3ehm6CmoLYYZxUhJooARNzODQw6diniMdYDAkVg6ptnxW6qldtcekRMUkziEvF8XvefUz+UM=
+	t=1785422809; cv=none; b=ES82xqgg0Rz8zTvMdM/vDx6SSXftJ+nOcn08pljOuWttb1mTZxk/VkgXjZxr5rqUkeu1kfuyKh8rjwlW5XOxy6xZmSPqOdJmUS8l3ki4v93Zb2s4C2nPG34+jpl7A/f32JCPeCDFfp0haLmOPw2R7w85ieLROG+9/nPAx+8J4H0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422806; c=relaxed/simple;
-	bh=OI+SATb0Slw3/UJeGm8x3Y50j8Y9L0Qnao90L96cmgc=;
+	s=arc-20240116; t=1785422809; c=relaxed/simple;
+	bh=cQI6MULA/eSdx+PrVGPkUqHdfgKzBVw20aE6hWuut1g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=puuiJp0S2joPKJx0beR/JE815+T2mM+ZyJS6dlI3UALSeX3aH0fa3x2XOezR9jlOK7eISGp4qi6HaTVkzArA+eP5BlENH2wTdQEltdA7HHqvQboO8kn105Li3OI0izPdC6t8SPBp+FaAZXp9EaUhEMeIREnHs8H6bGUW4tMV+uU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kx3DKP5q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KY8gD8A2JSbZb75kYP+G3r6aER1OFcTSpW36u6pe/Y90esFHY7KxHxnMFITOQlvWQAAqtEpfLE/lwozmKNS9gXw8sziW5qBs82YXycCOzUlSSF1fZb1hhmgTFhvbKIDmCydFwvFowEh99RPtNoEKgaZTzocFXHixTSpY5TEITII=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PF/inEdT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kx3DKP5q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19EE61F000E9;
-	Thu, 30 Jul 2026 14:46:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PF/inEdT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15D4E1F000E9;
+	Thu, 30 Jul 2026 14:46:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422804;
-	bh=rQ5caSI4pnqw0Ly0dcUBRuAzbcd0WvlObsNEe+k7jfs=;
+	s=korg; t=1785422807;
+	bh=QudUQRQ5Gn5v3mWNKui5A72PUcGkijpPTyl8oFjxgKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Kx3DKP5qepJoF3ZCH9bgxXTr/p4kVQlUVJC8DJLAtyE8T53Vg4b5Kck+udXI+kjvW
-	 ZBY1M2qKzfKd8h60MfT9OBu0lKXDSJws4oghCHK68q+3HLcPkLHt7BJZUEAcvowMHK
-	 Ae7QwSDys9KbUup9My21NN84v6L90vZ2at4+usas=
+	b=PF/inEdTHGl8UFYqBbqwig26huecAO3FbkIZOAtQKHq4AHr2UrAIcZK9x6opnFJic
+	 zZbaJhfNanv0gI4zRuewRNfnPCmLItNhHnIlnBstWu6OIlXpEmsb3MjVWl82Vs1GYm
+	 siJGeb6pKGnXXXhUoQOqBCIm6Fg3YcgZhi/oSAGc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Alice Ryhl <aliceryhl@google.com>
-Subject: [PATCH 7.1 563/744] rust_binder: only print failure if error has source
-Date: Thu, 30 Jul 2026 16:13:56 +0200
-Message-ID: <20260730141456.251097059@linuxfoundation.org>
+	FUJITA Tomonori <fujita.tomonori@gmail.com>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: [PATCH 7.1 564/744] rust: time: fix as_micros_ceil() to round correctly for negative Delta
+Date: Thu, 30 Jul 2026 16:13:57 +0200
+Message-ID: <20260730141456.273177799@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -50,47 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alice Ryhl <aliceryhl@google.com>
+From: FUJITA Tomonori <fujita.tomonori@gmail.com>
 
-commit bb66b1a3452534adb8b72abf2f761375970fe472 upstream.
+commit 880c43b185ca52239e75bc546cc4f4d9154d0fed upstream.
 
-The commit that fixes BINDER_GET_EXTENDED_ERROR changed the condition
-for printing transaction failures so errors are printed even if the
-cause is a dead or frozen process. Undo this change so that the error
-is only printed if the failure has an errno associated with it.
+The ceiling-division idiom `(n + d - 1) / d` only produces the
+correct result when `n` is non-negative.
 
-Cc: stable@kernel.org
-Fixes: 77bfebf11077 ("rust_binder: fix BINDER_GET_EXTENDED_ERROR")
-Signed-off-by: Alice Ryhl <aliceryhl@google.com>
-Link: https://patch.msgid.link/20260708-get-extended-error-fix-printing-v1-1-6e293b213b70@google.com
+For example, if n = -1000 (exactly -1us), the old code computed (-1000
++ 999) / 1000 == 0 instead of -1.
+
+For negative n, truncating division already rounds towards positive
+infinity, so no bias is needed in that case.
+
+Fixes: fae0cdc12340 ("rust: time: Introduce Delta type")
+Signed-off-by: FUJITA Tomonori <fujita.tomonori@gmail.com>
+Acked-by: Andreas Hindborg <a.hindborg@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260713225235.3243480-1-tomo@flapping.org
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/android/binder/thread.rs |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ rust/kernel/time.rs |   11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
---- a/drivers/android/binder/thread.rs
-+++ b/drivers/android/binder/thread.rs
-@@ -1273,14 +1273,14 @@ impl Thread {
-                         inner.extended_error =
-                             ExtendedError::new(info.debug_id as u32, err.reply, source.to_errno());
-                     }
--                }
- 
--                pr_warn!(
--                    "{}:{} transaction to {} failed: {err:?}",
--                    info.from_pid,
--                    info.from_tid,
--                    info.to_pid
--                );
-+                    pr_warn!(
-+                        "{}:{} transaction to {} failed: {err:?}",
-+                        info.from_pid,
-+                        info.from_tid,
-+                        info.to_pid
-+                    );
-+                }
-             }
+--- a/rust/kernel/time.rs
++++ b/rust/kernel/time.rs
+@@ -441,15 +441,22 @@ impl Delta {
+     /// to the value in the [`Delta`].
+     #[inline]
+     pub fn as_micros_ceil(self) -> i64 {
++        let n = self.as_nanos();
++        let n = if n >= 0 {
++            n.saturating_add(NSEC_PER_USEC - 1)
++        } else {
++            n
++        };
++
+         #[cfg(CONFIG_64BIT)]
+         {
+-            self.as_nanos().saturating_add(NSEC_PER_USEC - 1) / NSEC_PER_USEC
++            n / NSEC_PER_USEC
          }
+ 
+         #[cfg(not(CONFIG_64BIT))]
+         // SAFETY: It is always safe to call `ktime_to_us()` with any value.
+         unsafe {
+-            bindings::ktime_to_us(self.as_nanos().saturating_add(NSEC_PER_USEC - 1))
++            bindings::ktime_to_us(n)
+         }
+     }
  
 
 
