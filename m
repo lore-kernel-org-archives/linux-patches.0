@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D11E4052DC;
-	Thu, 30 Jul 2026 14:59:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BC9B4052DC;
+	Thu, 30 Jul 2026 14:59:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423544; cv=none; b=EGx7MKCJ6BdvCKvhThjfhGapKi+rgvTxc2FJLrA1RTjFI5p1k8i0Rj5PeFQufuMDDyIAFXJIF0aoN2Rt9TEXLfZq/6FVN0qxbCDCIJ6vdHLXDSiHX926lqMApKSiOTX+2fYZ32X8/I0tJQlpUMa2NuXaId1xsXHwkHumzTXN5hg=
+	t=1785423547; cv=none; b=SymsBy1rB1QB4zcrKYhMj4kCVRco4oCH0JnvkB/k8h+sCqX9o5/oS5kzSieOnu1SIUpUH8+aDgNQAUEROgq85svO5FbebxZJD+GqzhnZN4aQCUqikcsmmmVEhpx1NrMK6oKWmUVhA8vzIdjOkcPFaZyco39bypJOiluroIgGbRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423544; c=relaxed/simple;
-	bh=LT1Kwozo/kHpbOiytGdYmBOGP7mYiwl9Vk3+Z7sZ93U=;
+	s=arc-20240116; t=1785423547; c=relaxed/simple;
+	bh=NxyQKZ+2NAiFRrrxICCaL8Ab1mZ0p/V7UJ4mh6huk3c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f44mz92oWuMnbKtQckFPQ1fwR4akIeHblga70pfO60zOtpfuRsY0db2GiJghRsGDk9ZMAMSrvcn7lK0F3DvdEXPu+mZJSnBB3lme9E6QkiJcYnBT6HokNt3stFMR1fgn7HAAyg3LeqpsG4pGoEFeMkEFR03ZJph+7JCSwXC9jTE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yJQ3YZB/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aJfrzsHNbdxuJa0SlkzcQrutw7rgZJq42vQRJn/RzVuPzwRFy9jW68XNphqTnu0TslxAVHYfIpi1R00eMXiEHMhRsSsjPM1+Q0Z9Tq8R1kyCU2oOEyiWjnmPyvlevwNdXgLmCyA27ua+fGV4fYtkGCoaybHWdahE/uvNZNJFtVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eyguegLC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yJQ3YZB/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0BD51F000E9;
-	Thu, 30 Jul 2026 14:59:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eyguegLC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE9FA1F00A3A;
+	Thu, 30 Jul 2026 14:59:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423543;
-	bh=E0Ek9qytfbj1PWYEDZO48mHR9GcOcFCXmtHbPKArwHg=;
+	s=korg; t=1785423546;
+	bh=7hamBEvohwauUT0gnFcj3i3JI60UjfYuMyMPXYpCeeo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yJQ3YZB/nflGJjndANze6BzfpcmDaGDFGWf2/0B9PDAmPtj+LLQU9DUW2M0kgnNCg
-	 tm56Q/Wy2f4XcNAJiHNAPOHwjTKvcSRy7f1qd6sSOK1WvEIJt9W4hTGzbHvz1YiHIe
-	 Hl45wNGcWEWJraxPT5m0PYtdFdA4xPdPFYs5p1sw=
+	b=eyguegLC016tF8h5cZvFPG9tAhyD1lRycjc8ihTTZZqVdr4XfqZp9w+MMRCdCqr2O
+	 yS1qdRT0pL8yHRtkvFgKodptOtcWwiLKLw/Ewx9hjxIDCH4VUwtZjgcALPUh/0ceao
+	 FWANiJTc4e0DXuO9pwkOjXxgUx5eW9BpWF9+VKt8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>,
+	Zhao Li <enderaoelyther@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 027/675] xprtrdma: Clear receive-side ownership pointers on release
-Date: Thu, 30 Jul 2026 16:05:57 +0200
-Message-ID: <20260730141445.698135936@linuxfoundation.org>
+Subject: [PATCH 6.18 075/675] wifi: nl80211: free RNR data on MBSSID mismatch
+Date: Thu, 30 Jul 2026 16:06:45 +0200
+Message-ID: <20260730141446.722946786@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -51,108 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Zhao Li <enderaoelyther@gmail.com>
 
-[ Upstream commit 2ae8e7afbc63bf84243367f89eb43571f0345a74 ]
+[ Upstream commit 07a95ec2b54774201fdf4ef7ffb0ca2ab19ed29c ]
 
-Three small ownership-state cleanups land the transport in a
-state that lets future reviewers reason about each pointer
-locally rather than tracing the whole reply path:
+nl80211_parse_beacon() rejects EMA RNR data when there are fewer RNR
+entries than MBSSID entries.
 
-rpcrdma_rep_put() clears rep->rr_rqst before the rep enters
-rb_free_reps so that no rep on the free list still carries a
-stale rqst pointer.  rpcrdma_reply_handler() and
-rpcrdma_unpin_rqst() are the only sites that set rr_rqst;
-rpcrdma_reply_handler() hands the rep through
-rpcrdma_rep_put(), and rpcrdma_unpin_rqst() NULLs rr_rqst
-directly because its error path abandons the rep for
-teardown cleanup rather than returning it to rb_free_reps.
+The rejected RNR allocation has not been attached to the beacon data yet,
+so free it before returning the error.
 
-rpcrdma_reply_put() NULLs req->rl_reply before calling
-rpcrdma_rep_put().  The previous order placed the rep on
-rb_free_reps while req->rl_reply still pointed at it; the
-window was harmless because xprt_rdma_free_slot() holds the
-req exclusively across the pair, but closing it makes the
-invariant 'rep on rb_free_reps implies no req references it'
-strictly checkable.
-
-rpcrdma_sendctx_unmap() and rpcrdma_sendctx_cancel() clear
-req->rl_sendctx after dropping the sendctx pointer in the
-sendctx ring.  Without this, req->rl_sendctx survives across
-Send completion and points at a sendctx that may already have
-been reassigned by rpcrdma_sendctx_get_locked() to a different
-req.  No caller dereferences the stale pointer today --
-rpcrdma_prepare_send_sges() overwrites it before the next
-Send -- but a NULL is a more honest representation of 'the
-Send is no longer outstanding' and lets the assertion patch
-that follows trip on any future regression.
-
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
+Fixes: dbbb27e183b1 ("cfg80211: support RNR for EMA AP")
+Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
+Link: https://patch.msgid.link/20260610112208.1308-2-enderaoelyther@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtrdma/rpc_rdma.c |  4 ++++
- net/sunrpc/xprtrdma/verbs.c    | 12 ++++++++++--
- 2 files changed, 14 insertions(+), 2 deletions(-)
+ net/wireless/nl80211.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/sunrpc/xprtrdma/rpc_rdma.c b/net/sunrpc/xprtrdma/rpc_rdma.c
-index 5d1f96bffd7491..e2694fb03ba1b3 100644
---- a/net/sunrpc/xprtrdma/rpc_rdma.c
-+++ b/net/sunrpc/xprtrdma/rpc_rdma.c
-@@ -542,6 +542,7 @@ void rpcrdma_sendctx_unmap(struct rpcrdma_sendctx *sc)
+diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
+index 6e41a4269e1c57..e765c992eb20e4 100644
+--- a/net/wireless/nl80211.c
++++ b/net/wireless/nl80211.c
+@@ -6232,8 +6232,10 @@ static int nl80211_parse_beacon(struct cfg80211_registered_device *rdev,
+ 			if (IS_ERR(rnr))
+ 				return PTR_ERR(rnr);
  
- 	rpcrdma_sendctx_dma_unmap(sc);
- 	sc->sc_req = NULL;
-+	req->rl_sendctx = NULL;
- 	rpcrdma_req_put(req);
- }
+-			if (rnr && rnr->cnt < bcn->mbssid_ies->cnt)
++			if (rnr && rnr->cnt < bcn->mbssid_ies->cnt) {
++				kfree(rnr);
+ 				return -EINVAL;
++			}
  
-@@ -550,8 +551,11 @@ void rpcrdma_sendctx_unmap(struct rpcrdma_sendctx *sc)
-  */
- static void rpcrdma_sendctx_cancel(struct rpcrdma_sendctx *sc)
- {
-+	struct rpcrdma_req *req = sc->sc_req;
-+
- 	rpcrdma_sendctx_dma_unmap(sc);
- 	sc->sc_req = NULL;
-+	req->rl_sendctx = NULL;
- }
- 
- /* Prepare an SGE for the RPC-over-RDMA transport header.
-diff --git a/net/sunrpc/xprtrdma/verbs.c b/net/sunrpc/xprtrdma/verbs.c
-index efd91ed249fabe..e2d3cee825cd7f 100644
---- a/net/sunrpc/xprtrdma/verbs.c
-+++ b/net/sunrpc/xprtrdma/verbs.c
-@@ -1080,9 +1080,15 @@ static struct rpcrdma_rep *rpcrdma_rep_get_locked(struct rpcrdma_buffer *buf)
-  * @buf: buffer pool
-  * @rep: rep to release
-  *
-+ * The rep's transient association with an rpc_rqst, established
-+ * by rpcrdma_reply_handler() and torn down here, must not survive
-+ * onto rb_free_reps: rpcrdma_post_recvs() pulls reps from the free
-+ * list to re-post them, and a non-NULL rr_rqst on a free-listed rep
-+ * would imply the rep is still referenced by a req.
-  */
- void rpcrdma_rep_put(struct rpcrdma_buffer *buf, struct rpcrdma_rep *rep)
- {
-+	rep->rr_rqst = NULL;
- 	llist_add(&rep->rr_node, &buf->rb_free_reps);
- }
- 
-@@ -1265,9 +1271,11 @@ rpcrdma_mr_get(struct rpcrdma_xprt *r_xprt)
-  */
- void rpcrdma_reply_put(struct rpcrdma_buffer *buffers, struct rpcrdma_req *req)
- {
--	if (req->rl_reply) {
--		rpcrdma_rep_put(buffers, req->rl_reply);
-+	struct rpcrdma_rep *rep = req->rl_reply;
-+
-+	if (rep) {
- 		req->rl_reply = NULL;
-+		rpcrdma_rep_put(buffers, rep);
- 	}
- 	/* I2: rl_reply NULL after the put closes the
- 	 * 'rep on rb_free_reps still referenced by req' window.
+ 			bcn->rnr_ies = rnr;
+ 		}
 -- 
 2.53.0
 
