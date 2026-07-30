@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED4DA43C7A2;
-	Thu, 30 Jul 2026 15:22:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F050340DFC6;
+	Thu, 30 Jul 2026 15:23:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424981; cv=none; b=LrDAnOt6uGvUtRliGIwgOF58yAgwBvgq6oNSBJC6IPMo1pl4Y4JTNUK22bICR04Eqa6emaZ0wv5wmQsQGsl8oLnn4WC0CvDQs9VUjE89/t4MOxpmu2wjKIAaJSbapldT1fNZfgukdrzukbCacK3y/m/vDCPymqRZBgq/QnS+G/8=
+	t=1785424984; cv=none; b=nM5KA2BnotGWuT9irfcdTfdm9swGqwPsb1GtWVXlusj7+8Uqos2PQZ1xSBcLRWujLVPUrH7wMZA6i7xdbQ4QVzQW6dXOd/J4Ur2qJz16csQCk7QVCwwxhOhryaLX9qFczds2PNOGbjalf8f0tgID2LIO6jd19udYnt3opTAoWP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424981; c=relaxed/simple;
-	bh=h+3sDjVRQkK3EB/aNOzUfmaEb2b1n84wZZpYdH2XhBY=;
+	s=arc-20240116; t=1785424984; c=relaxed/simple;
+	bh=kOfIVhITJXszJ3bpnDd6fr2SkVQW73CmYPN+sv7+5ik=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RRJbkPXg636ClL+RBosqylBJRta7faJwQVJmrEYdg3NM+xcYGEjoRlrGtBBu9gD54JozkpG0nXmOmxwKrbcpC4Ip0wXAPSMuEKcGjl0C1kyZUVmqpaWLtJK1ba71jib3d6nrqpyA4VdWHvPmFHucXdVDk1AjD5QaPgys2z8HXSA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MkAMbhav; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=c5RHSphkSJP2gO+27v4ONt2PaZRrMfO/8xCvQS9IgGs+Wn7mXZ4gnt7A48ew1AeFyx7evDN1ocyazf3pPWGgH4q24roS+9eUbppIWzxDOaPcmqjzc7GzIjRiRrLKjk6ChJ2BwW4AXmJRdIHL/xPIzk/8pwJPkBlzRfTyWZfSGVE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jRk/7pcb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MkAMbhav"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4690A1F000E9;
-	Thu, 30 Jul 2026 15:22:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jRk/7pcb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2012F1F000E9;
+	Thu, 30 Jul 2026 15:23:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424979;
-	bh=QTXLSauxTb3Fsxbyxcwgm11tj4tqsMKZe01prHh9xVM=;
+	s=korg; t=1785424982;
+	bh=pah5NjNoLXfTelcNYb9D1MQKbnd7aIoBIPkHYg6Zk40=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MkAMbhav088k92METNFY/ob34GxEjmwCwC3SfCsjI3rclUDWz1X20e5Iwy590rMZ3
-	 2Rs/2yHePv9iAgwU0Yi13CcltujOs+sDXjN30Lj9Dac+dgKdkoYzMxJezq1OzoQNLw
-	 gOxgl/Ht20HWfunXf5QlyHKtlECd6SIp7uhtAHiA=
+	b=jRk/7pcbQc0ws52riVf0zrLkggbDlgIhNy6rDW/7fBlzxdBvl4O3ZeYZ6mLApGuJG
+	 01QwW2q6VA/Iv5zssgagEnnq0fmBisyFXpGhXr7/+lT1Ff1xmK/N/uWZ5NgmHvTImU
+	 4jtlcQscT/cmvnnzC7+j/4qPGAouR+fB7X7+ms9k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boyuan Zhang <boyuan.zhang@amd.com>,
-	David Rosca <david.rosca@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 583/675] drm/amdgpu/vcn4: avoid rereading IB param length
-Date: Thu, 30 Jul 2026 16:15:13 +0200
-Message-ID: <20260730141457.514877447@linuxfoundation.org>
+	Imre Deak <imre.deak@intel.com>,
+	Lyude Paul <lyude@redhat.com>,
+	intel-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
+	Jonas Emilsson <jonas.emilsson@gmail.com>,
+	Luca Coelho <luciano.coelho@intel.com>,
+	Maarten Lankhorst <dev@lankhorst.se>
+Subject: [PATCH 6.18 584/675] drm/dp_mst: Handle torn-down topology gracefully in drm_dp_mst_topology_queue_probe()
+Date: Thu, 30 Jul 2026 16:15:14 +0200
+Message-ID: <20260730141457.535177016@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -51,80 +55,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boyuan Zhang <boyuan.zhang@amd.com>
+From: Luca Coelho <luciano.coelho@intel.com>
 
-commit 3b4082fabc67c9780b06eb959e59dd92fa79c0f0 upstream.
+commit 613059875958e7b217b250ed14c3b189f9488421 upstream.
 
-Reuse the parameter length returned by
-vcn_v4_0_enc_find_ib_param() instead of rereading it from
-the IB.
+A hotplug or link-loss event can tear down the MST topology
+(setting mgr->mst_state = false and mgr->mst_primary = NULL) concurrently
+with a caller invoking drm_dp_mst_topology_queue_probe(). Since the check
+is already performed under mgr->lock, the condition is not a programming
+error but a valid race -- the topology was valid when the caller decided
+to call this function, but was torn down before the lock was acquired.
 
-This avoids a potential TOCTOU issue if the IB contents
-change between reads.
+Replace the drm_WARN_ON() with a graceful early return. This eliminates
+spurious kernel warnings and the resulting compositor crashes observed
+when connecting/disconnecting DP MST monitors, while keeping the correct
+behavior of doing nothing when MST is not active. A drm_dbg_mst() trace
+is added so the skipped probe remains observable under MST debug logging.
 
-Signed-off-by: Boyuan Zhang <boyuan.zhang@amd.com>
-Reviewed-by: David Rosca <david.rosca@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit dbb02b4755f8c1f3773263f2d779872c1c0c073a)
+The existing WARN_ON(mgr->mst_primary) in drm_dp_mst_topology_mgr_set_mst()
+already catches the case where the topology is initialized twice, so no
+diagnostic coverage is lost.
+
+Fixes: dbaeef363ea5 ("drm/dp_mst: Add a helper to queue a topology probe")
+Cc: Imre Deak <imre.deak@intel.com>
+Cc: Lyude Paul <lyude@redhat.com>
 Cc: stable@vger.kernel.org
+Cc: intel-gfx@lists.freedesktop.org
+Cc: dri-devel@lists.freedesktop.org
+Signed-off-by: Jonas Emilsson <jonas.emilsson@gmail.com>
+Signed-off-by: Luca Coelho <luciano.coelho@intel.com>
+Link: https://lore.kernel.org/all/20260503034533.1023686-1-jonas.emilsson@gmail.com
+Acked-by: Imre Deak <imre.deak@intel.com>
+Link: https://patch.msgid.link/20260622140532.526722-1-luciano.coelho@intel.com
+Signed-off-by: Maarten Lankhorst <dev@lankhorst.se>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c |   15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/display/drm_dp_mst_topology.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vcn_v4_0.c
-@@ -1926,14 +1926,17 @@ out:
- #define RENCODE_IB_PARAM_SESSION_INIT			0x00000003
- 
- /* return the offset in ib if id is found, -1 otherwise */
--static int vcn_v4_0_enc_find_ib_param(struct amdgpu_ib *ib, uint32_t id, int start)
-+static int vcn_v4_0_enc_find_ib_param(struct amdgpu_ib *ib, uint32_t id, int start, uint32_t *length)
+--- a/drivers/gpu/drm/display/drm_dp_mst_topology.c
++++ b/drivers/gpu/drm/display/drm_dp_mst_topology.c
+@@ -3740,8 +3740,10 @@ void drm_dp_mst_topology_queue_probe(str
  {
- 	int i;
- 	uint32_t len;
+ 	mutex_lock(&mgr->lock);
  
- 	for (i = start; (len = amdgpu_ib_get_value(ib, i)) >= 8; i += len / 4) {
--		if (amdgpu_ib_get_value(ib, i + 1) == id)
-+		if (amdgpu_ib_get_value(ib, i + 1) == id) {
-+			if (length)
-+				*length = len;
- 			return i;
-+		}
- 	}
- 	return -1;
- }
-@@ -1943,14 +1946,14 @@ static int vcn_v4_0_ring_patch_cs_in_pla
- 					   struct amdgpu_ib *ib)
- {
- 	struct amdgpu_ring *ring = amdgpu_job_ring(job);
--	uint32_t val;
-+	uint32_t val, len;
- 	int idx = 0, sidx;
+-	if (drm_WARN_ON(mgr->dev, !mgr->mst_state || !mgr->mst_primary))
++	if (!mgr->mst_state || !mgr->mst_primary) {
++		drm_dbg_kms(mgr->dev, "queue_probe skipped: topology torn down\n");
+ 		goto out_unlock;
++	}
  
- 	/* The first instance can decode anything */
- 	if (!ring->me)
- 		return 0;
- 
--	while ((idx = vcn_v4_0_enc_find_ib_param(ib, RADEON_VCN_ENGINE_INFO, idx)) >= 0) {
-+	while ((idx = vcn_v4_0_enc_find_ib_param(ib, RADEON_VCN_ENGINE_INFO, idx, &len)) >= 0) {
- 		val = amdgpu_ib_get_value(ib, idx + 2); /* RADEON_VCN_ENGINE_TYPE */
- 		if (val == RADEON_VCN_ENGINE_TYPE_DECODE) {
- 			uint32_t valid_buf_flag = amdgpu_ib_get_value(ib, idx + 6);
-@@ -1963,12 +1966,12 @@ static int vcn_v4_0_ring_patch_cs_in_pla
- 				amdgpu_ib_get_value(ib, idx + 8);
- 			return vcn_v4_0_dec_msg(p, job, msg_buffer_addr);
- 		} else if (val == RADEON_VCN_ENGINE_TYPE_ENCODE) {
--			sidx = vcn_v4_0_enc_find_ib_param(ib, RENCODE_IB_PARAM_SESSION_INIT, idx);
-+			sidx = vcn_v4_0_enc_find_ib_param(ib, RENCODE_IB_PARAM_SESSION_INIT, idx, NULL);
- 			if (sidx >= 0 &&
- 			    amdgpu_ib_get_value(ib, sidx + 2) == RENCODE_ENCODE_STANDARD_AV1)
- 				return vcn_v4_0_limit_sched(p, job);
- 		}
--		idx += amdgpu_ib_get_value(ib, idx) / 4;
-+		idx += len / 4;
- 	}
- 	return 0;
- }
+ 	drm_dp_mst_topology_mgr_invalidate_mstb(mgr->mst_primary);
+ 	drm_dp_mst_queue_probe_work(mgr);
 
 
