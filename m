@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE8A333D50F;
-	Thu, 30 Jul 2026 14:24:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A86BA431A5C;
+	Thu, 30 Jul 2026 14:24:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421470; cv=none; b=h4SUpRVumyaslAJWDzP1zwcY3QWccF+QITcOB6klCGPNnu0uUSworADAaOHzhubGAGjmmbdTPpmaI4WeD4WKRzsDInZ/Zxb4Fy8xRbj6OSAlqUY4DCQCvPDosr2IJ3O05XaW4UtgB6lLEsWrI0SadClG2iT+23GG8HTdyLh0pIg=
+	t=1785421472; cv=none; b=XLYwG2py7Cn55Jd+WlTB6oSOoaa6HCwI2009E+cAKmhbr9/Wa++JnMIvXvmVV1y4Y6KWzlxY0ZfO2FJXHqz4kmXUcOmAp+fq4yVJoyOoqZKRmPLUE0xw2p5JVbl7r//R4r8RPOgTvntPqP8kgKrjqNwlEeq3sjsgFoS8PHc2ArE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421470; c=relaxed/simple;
-	bh=rGc4PLjRrL02OE90koHjiZnB/vp32Nh6Q/rt1pGdnBc=;
+	s=arc-20240116; t=1785421472; c=relaxed/simple;
+	bh=2B3+29JiS1HNI3jtJ5dAFj4XXlXekILYTHfdl6MXhB8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j36QVR8B1dcSCnmH7Aro2Nl/DHUTLe0niTo9/fAfoybZg8C0LZsULpbsaTIWYWCDntIKFfjO2hclVJyHn7OmgpRsYl9UTERhdN8iaBTEOKPzm5prW0jVbQrW9y4nCwnXX06h1NsAavoCywYEop8c3QLvo8uSIqTY2jdY2fwhubA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H5hzY2kH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tPb+jFTGs3eMhvO+Ipw3GrIkklZpeyPyZrykMKPPtwCZsQQBbVVySSb/5uqEY71NJ4WwadDbzsArB8k55F5hcdDXZ0hnDQasLvwNo8wGGnNaK2tuaRX72WMmCw/Vxc/aTJVJEwh0w4ocd5GkSj2vGleZEGg/kM8njF/8nF+RiMo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bz6OtGmK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H5hzY2kH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 237D71F000E9;
-	Thu, 30 Jul 2026 14:24:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bz6OtGmK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 097251F000E9;
+	Thu, 30 Jul 2026 14:24:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421468;
-	bh=XPYxcdQfnrnATQXMb7y0y4hGBnj1dsZ1uQBkrlFxxbU=;
+	s=korg; t=1785421471;
+	bh=4hyHcendPveFimFiKf2dvHgdVUWcC4afZ7fpXAGlhmM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H5hzY2kHlasyKXByZ9/WTaQBMOJu+RCQFKQydB+3AvIGQZRU8TkX8FTKSo4/HfqtE
-	 6n1IlQfbIpgw/O0Rm2zprKsALLCXHa1YGBYtmmiIbnjNtdEO1bWNRBh+qmxtDaevTT
-	 TndQOw+DCIdCAk73CR1CQc2uRHKuKo2pIJ8Ujjdg=
+	b=bz6OtGmKuvZLBbPrgKQuRREEWs9uSOgdqQo6RilDnwAAwlCLWifovky3rYo2bZRBQ
+	 0v7tF5L4a/cWL+QSAcpAOEL+Ms2ZFkYDn/36+7w45YwlFZQbdFslz82Lm3JPv9Xw7L
+	 ZOt1r7aslaYBJll3Z+z3zYGIId0gmhAWItSeRAaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frederic Weisbecker <frederic@kernel.org>,
-	Thomas Gleixner <tglx@kernel.org>,
+	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
 	Shrikanth Hegde <sshegde@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 113/744] powerpc/time: Prepare to stop elapsing in dynticks-idle
-Date: Thu, 30 Jul 2026 16:06:26 +0200
-Message-ID: <20260730141446.680848059@linuxfoundation.org>
+Subject: [PATCH 7.1 114/744] powerpc/vtime: Initialize starttime at boot for native accounting
+Date: Thu, 30 Jul 2026 16:06:27 +0200
+Message-ID: <20260730141446.702263152@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -52,122 +52,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frederic Weisbecker <frederic@kernel.org>
+From: Shrikanth Hegde <sshegde@linux.ibm.com>
 
-[ Upstream commit c8ba971cf8567d49eb5f43ee90c4e50424331c18 ]
+[ Upstream commit c1c1ffa490fc33591e90852ed0d38804dd20bc36 ]
 
-Currently the tick subsystem stores the idle cputime accounting in
-private fields, allowing cohabitation with architecture idle vtime
-accounting. The former is fetched on online CPUs, the latter on offline
-CPUs.
+It was observed that /proc/stat had very large value for one ore more
+CPUs. It was more visible after recent code simplifications around
+cpustats.
 
-For consolidation purpose, architecture vtime accounting will continue
-to account the cputime but will make a break when the idle tick is
-stopped. The dyntick cputime accounting will then be relayed by the tick
-subsystem so that the idle cputime is still seen advancing coherently
-even when the tick isn't there to flush the idle vtime.
+System has 240 CPUs.
 
-Prepare for that and introduce three new APIs which will be used in
-subsequent patches:
+cat /proc/uptime;
+194.18 46500.55
+cat /proc/stat
+cpu  5966 39 837032887 4650070 164 185 100 0 0 0
+cpu0 108 0 837030890 19109 24 4 23 0 0 0
 
-  - vtime_dynticks_start() is deemed to be called when idle enters in
-    dyntick mode. The idle cputime that elapsed so far is accumulated.
+Since uptime is 194s, system time of each CPU can't be more than 19400.
+Sum of system time  of all CPUs can't be more than 19400*240 4656000.
+In fact huge value is close to mftb(). Note mftb doesn't reset on powerVM
+when the LPAR restart. It only resets when whole system resets. The same
+issue exists for kexec too.
 
-  - vtime_dynticks_stop() is deemed to be called when idle exits from
-    dyntick mode. The vtime entry clocks are fast-forward to current time
-    so that idle accounting restarts elapsing from now.
+This happens since starttime is not setup at init time. Once it is set
+then subsequent vtime_delta will return the right delta.
 
-  - vtime_reset() is deemed to be called from dynticks idle IRQ entry to
-    fast-forward the clock to current time so that the IRQ time is still
-    accounted by vtime while nohz cputime is paused.
+Fix it by initializing the starttime during CPU initialization. This
+fixes the large times seen.
 
-Also accumulated vtime won't be flushed from dyntick-idle ticks to avoid
-accounting twice the idle cputime, along with nohz accounting.
+cat /proc/uptime; cat /proc/stat
+15.78 3694.63
+cpu  6035 35 1347 369479 23 144 49 0 0 0
+cpu0 19 0 38 1508 0 1 14 0 0 0
 
-Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Tested-by: Shrikanth Hegde <sshegde@linux.ibm.com>
-Reviewed-by: Shrikanth Hegde <sshegde@linux.ibm.com>
-Link: https://patch.msgid.link/20260508131647.43868-6-frederic@kernel.org
-Stable-dep-of: c1c1ffa490fc ("powerpc/vtime: Initialize starttime at boot for native accounting")
+Now, system time is reported as expected.
+
+Fixes: cf9efce0ce31 ("powerpc: Account time using timebase rather  than PURR")
+Reviewed-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
+Suggested-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
+Signed-off-by: Shrikanth Hegde <sshegde@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260605124329.377533-1-sshegde@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/time.c | 41 ++++++++++++++++++++++++++++++++++++++
- include/linux/vtime.h      |  6 ++++++
- 2 files changed, 47 insertions(+)
+ arch/powerpc/kernel/time.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/arch/powerpc/kernel/time.c b/arch/powerpc/kernel/time.c
-index b4472288e0d434..3460d1a5a97c2a 100644
+index 3460d1a5a97c2a..11145c40183dd1 100644
 --- a/arch/powerpc/kernel/time.c
 +++ b/arch/powerpc/kernel/time.c
-@@ -376,6 +376,47 @@ void vtime_task_switch(struct task_struct *prev)
- 		acct->starttime = acct0->starttime;
+@@ -377,7 +377,6 @@ void vtime_task_switch(struct task_struct *prev)
  	}
  }
-+
-+#ifdef CONFIG_NO_HZ_COMMON
-+/**
-+ * vtime_reset - Fast forward vtime entry clocks
-+ *
-+ * Called from dynticks idle IRQ entry to fast-forward the clocks to current time
-+ * so that the IRQ time is still accounted by vtime while nohz cputime is paused.
-+ */
-+void vtime_reset(void)
-+{
-+	struct cpu_accounting_data *acct = get_accounting(current);
-+
-+	acct->starttime = mftb();
-+#ifdef CONFIG_ARCH_HAS_SCALED_CPUTIME
-+	acct->startspurr = read_spurr(acct->starttime);
-+#endif
-+}
-+
-+/**
-+ * vtime_dyntick_start - Inform vtime about entry to idle-dynticks
-+ *
-+ * Called when idle enters in dyntick mode. The idle cputime that elapsed so far
-+ * is accumulated and the tick subsystem takes over the idle cputime accounting.
-+ */
-+void vtime_dyntick_start(void)
-+{
-+	vtime_account_idle(current);
-+}
-+
-+/**
-+ * vtime_dyntick_stop - Inform vtime about exit from idle-dynticks
-+ *
-+ * Called when idle exits from dyntick mode. The vtime entry clocks are
-+ * fast-forward to current time so that idle accounting restarts elapsing from
-+ * now.
-+ */
-+void vtime_dyntick_stop(void)
-+{
-+	vtime_reset();
-+}
-+#endif /* CONFIG_NO_HZ_COMMON */
- #endif /* CONFIG_VIRT_CPU_ACCOUNTING_NATIVE */
  
- void __no_kcsan __delay(unsigned long loops)
-diff --git a/include/linux/vtime.h b/include/linux/vtime.h
-index 29dd5b91dd7d66..3fc04b849e4e30 100644
---- a/include/linux/vtime.h
-+++ b/include/linux/vtime.h
-@@ -32,11 +32,17 @@ extern void vtime_account_irq(struct task_struct *tsk, unsigned int offset);
- extern void vtime_account_softirq(struct task_struct *tsk);
- extern void vtime_account_hardirq(struct task_struct *tsk);
- extern void vtime_flush(struct task_struct *tsk);
-+extern void vtime_reset(void);
-+extern void vtime_dyntick_start(void);
-+extern void vtime_dyntick_stop(void);
- #else /* !CONFIG_VIRT_CPU_ACCOUNTING_NATIVE */
- static inline void vtime_account_irq(struct task_struct *tsk, unsigned int offset) { }
- static inline void vtime_account_softirq(struct task_struct *tsk) { }
- static inline void vtime_account_hardirq(struct task_struct *tsk) { }
- static inline void vtime_flush(struct task_struct *tsk) { }
-+static inline void vtime_reset(void) { }
-+static inline void vtime_dyntick_start(void) { }
-+static inline void vtime_dyntick_stop(void) { }
+-#ifdef CONFIG_NO_HZ_COMMON
+ /**
+  * vtime_reset - Fast forward vtime entry clocks
+  *
+@@ -394,6 +393,7 @@ void vtime_reset(void)
  #endif
+ }
+ 
++#ifdef CONFIG_NO_HZ_COMMON
+ /**
+  * vtime_dyntick_start - Inform vtime about entry to idle-dynticks
+  *
+@@ -933,6 +933,7 @@ static void __init set_decrementer_max(void)
+ static void __init init_decrementer_clockevent(void)
+ {
+ 	register_decrementer_clockevent(smp_processor_id());
++	vtime_reset();
+ }
+ 
+ void secondary_cpu_time_init(void)
+@@ -948,6 +949,7 @@ void secondary_cpu_time_init(void)
+ 	/* FIME: Should make unrelated change to move snapshot_timebase
+ 	 * call here ! */
+ 	register_decrementer_clockevent(smp_processor_id());
++	vtime_reset();
+ }
  
  /*
 -- 
