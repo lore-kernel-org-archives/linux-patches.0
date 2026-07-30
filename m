@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E95293B6366;
-	Thu, 30 Jul 2026 14:55:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDB0E41DED0;
+	Thu, 30 Jul 2026 14:55:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423329; cv=none; b=InZog8VYc1YqMSM5Vf1zLQwC1sY2vCJ13acayJd5Ft4mhAIjJ9yJ85WmS0g4eMgRq2mUcwBWyGFAwg9oPTenAs5JbX+388ALle078rCrweBUX30TUYPU5VTxk06JNOUnnZEyP2KV7bu1u4Wc0wJ35+AAP5Gvvg9oAjNZd3YfK7o=
+	t=1785423331; cv=none; b=GFVVZVvdglcVFV+nczSI7F/lIUFSYWYFk+zZPSBqYT/kBAaZU7mWm1wGm6xsJWqlT/LtS38sk5ZwpiFQTDnE72jsXV/9+q5ebkDkn8CcJgkGGNqdnhwiqxCxdkr0gjtoiZ0X9DuF94zBC+zcDSG3zO8fTeeHqBeg47FnWay+1ag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423329; c=relaxed/simple;
-	bh=8Kzu8szJTYtbp1bsJnSlbO3bpaXBAc34W3mvruxD0PM=;
+	s=arc-20240116; t=1785423331; c=relaxed/simple;
+	bh=hBM0NJ+DAp7TzQxZB1rDkiTweGDonEE/TYK93QMe2Zc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ssozGHxkQ0n9SV6N4wuxKxvU7poKMT0aB83kFdEzlDuvCEKdZod2LjYjHEZg1iVRgRZkgh3ki69oWFzK6GGr9DCwmnpHstr+SjZa0LwmprSS+im/2JPe8/q8haSdjgREfATUAjoei67BjaRWZE8Su0OG23L8t/OxNWfuso5tssY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tHIebwmF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kTRS0xp7UujsWvfbyjA0acFHJhkPQUVeznvusuhkVRRwDP8ZZdQH1osXCO3tRHtJlrnKycp1Lm4dMTdwDtNmdVqsjsOlPbcgcsN3cvD7NFsllApdyu0qARRH8LdtefnTjLraO83watCdIlif9NN58Ag3VW7xSvwE+r3H1eEzN0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rK9lS40L; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tHIebwmF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 076341F000E9;
-	Thu, 30 Jul 2026 14:55:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rK9lS40L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D92E61F000E9;
+	Thu, 30 Jul 2026 14:55:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423327;
-	bh=NEIl7xBmMDETd5LV4GR4iS2Go4kn2lq8Z6zHH8p4gWs=;
+	s=korg; t=1785423330;
+	bh=NGsg3sJNSrPZXRow9sOpMj0l6ZjNCDDunYHns5mZa3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tHIebwmFZn2IWmFsBZ0qOI1IOztRaLwRzqagtYINC6ESTv9jYArgVn5fb+csiWJbO
-	 WziXn10V3Qm1qy6FGjNh1Klhlt3dErcthBN4K4Hv6TmC9d02NtHfXLUvhpe0i7bKNF
-	 6sh+Nqt4/wdOPO1GIRojlO3t+dGtrnHGl3fILyno=
+	b=rK9lS40LUeeE2l8khAuUrrHiuS+JtSlRMyilcwjje0e28h6GeDfpmF0hYBxRblsdp
+	 xPWHWKAoH32uxudU9DAns27552ImHSgHWVIqLYmAxOd13H1Jf5rx/CHBWIw0B1qus5
+	 Ml8QOQbJP5GwrXsEJ+/klpGNHO6Gx8Cd5Kea0Uqc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitaly Prosyak <vitaly.prosyak@amd.com>,
+	Boyuan Zhang <boyuan.zhang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.1 702/744] drm/amdgpu/gfx9: replace BUG_ON() with WARN_ON()
-Date: Thu, 30 Jul 2026 16:16:15 +0200
-Message-ID: <20260730141459.195370754@linuxfoundation.org>
+Subject: [PATCH 7.1 703/744] drm/amdgpu/jpeg: fix jpeg_v4_0_3_is_idle detection
+Date: Thu, 30 Jul 2026 16:16:16 +0200
+Message-ID: <20260730141459.217213488@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -50,61 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Boyuan Zhang <boyuan.zhang@amd.com>
 
-commit 6302be10b521f5106ce01eb5a724b9e7945a5061 upstream.
+commit c44af3810fc8b3adf6910a332038aa566560c8fa upstream.
 
-There's no need to crash the kernel for these cases.
+jpeg_v4_0_3_is_idle() initializes ret to false and then accumulates ring
+idle status using &=. Since false & condition always remains false, the
+function can never report the JPEG block as idle.
 
-Reviewed-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
+Initialize ret to true so the function returns true only when all JPEG
+rings report RB_JOB_DONE.
+
+Signed-off-by: Boyuan Zhang <boyuan.zhang@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit b71604f8685b0eba07866f4e8dc30f93e1931054)
+(cherry picked from commit e9df8e9d04e0593d17ddb069f3b7958991cd18c9)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
-@@ -1183,7 +1183,7 @@ static void gfx_v9_0_wait_reg_mem(struct
- 				 WAIT_REG_MEM_ENGINE(eng_sel)));
+--- a/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.c
++++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.c
+@@ -1010,7 +1010,7 @@ void jpeg_v4_0_3_dec_ring_nop(struct amd
+ static bool jpeg_v4_0_3_is_idle(struct amdgpu_ip_block *ip_block)
+ {
+ 	struct amdgpu_device *adev = ip_block->adev;
+-	bool ret = false;
++	bool ret = true;
+ 	int i, j;
  
- 	if (mem_space)
--		BUG_ON(addr0 & 0x3); /* Dword align */
-+		WARN_ON(addr0 & 0x3); /* Dword align */
- 	amdgpu_ring_write(ring, addr0);
- 	amdgpu_ring_write(ring, addr1);
- 	amdgpu_ring_write(ring, ref);
-@@ -5466,7 +5466,7 @@ static void gfx_v9_0_ring_emit_ib_gfx(st
- 	}
- 
- 	amdgpu_ring_write(ring, header);
--	BUG_ON(ib->gpu_addr & 0x3); /* Dword align */
-+	WARN_ON(ib->gpu_addr & 0x3); /* Dword align */
- 	amdgpu_ring_write(ring,
- #ifdef __BIG_ENDIAN
- 		(2 << 0) |
-@@ -5562,7 +5562,7 @@ static void gfx_v9_0_ring_emit_ib_comput
- 	}
- 
- 	amdgpu_ring_write(ring, PACKET3(PACKET3_INDIRECT_BUFFER, 2));
--	BUG_ON(ib->gpu_addr & 0x3); /* Dword align */
-+	WARN_ON(ib->gpu_addr & 0x3); /* Dword align */
- 	amdgpu_ring_write(ring,
- #ifdef __BIG_ENDIAN
- 				(2 << 0) |
-@@ -5603,9 +5603,9 @@ static void gfx_v9_0_ring_emit_fence(str
- 	 * aligned if only send 32bit data low (discard data high)
- 	 */
- 	if (write64bit)
--		BUG_ON(addr & 0x7);
-+		WARN_ON(addr & 0x7);
- 	else
--		BUG_ON(addr & 0x3);
-+		WARN_ON(addr & 0x3);
- 	amdgpu_ring_write(ring, lower_32_bits(addr));
- 	amdgpu_ring_write(ring, upper_32_bits(addr));
- 	amdgpu_ring_write(ring, lower_32_bits(seq));
+ 	for (i = 0; i < adev->jpeg.num_jpeg_inst; ++i) {
 
 
