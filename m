@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89CA04457AD;
-	Thu, 30 Jul 2026 15:31:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E48D037A85D;
+	Thu, 30 Jul 2026 15:32:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425518; cv=none; b=oQBbdY9MppCFuKh2inR1Srjc7cGmidpOjPpV23wp5kB3FuR5FWa/n/l5viK3e3e+GzTmKXpNW0/r4yDQCNCq35GTbtu7Q/D0Ct+rMsDWdzAZKse0ijiAwiFEk/nuhN2oY+KaFCg+AZ+KnK+0We9G9vlEgN9CB9peaO+Li0dwESA=
+	t=1785425522; cv=none; b=izTTt9jpBuE5/a2a86PyalPIS/UsMiz74RLcMUhf8NfHntSVyyYDGRnlloIBVQFiyWrtCAvwrE5m5VzEsZFwnMkhe6apKVxwnNPGP3B71dPVfUYoUyu2FAjHi71pqbjnLy/vVFZ3UMrCkqU7zDd2fH7dqDhsQ+Dcbox6kIHmkCA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425518; c=relaxed/simple;
-	bh=TdLILWskzNOaHSOTw2t5TyYuy3B41kWLDGaF9QjKfDE=;
+	s=arc-20240116; t=1785425522; c=relaxed/simple;
+	bh=vs+SZuUt9p2gV4LKv0/fmUkzpGAq7VHFui/YOdzUiTs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rEGJbkoOGoqMu4AvT/3vTJVsFJ7G49WQLnTFVXSEhu6D2qsWz3XEX1X3HVwLJ4cRy4bPjqnenSuEIhHXIwpHKtxQzV6zFGY9zIyoPc25U31TRHCTezehj4wA/Pr0WlhfLk3LdC6cCs/lfIEBCpKvDEaA3ZzSeQ9JonrBqgtTVG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EHfB9p42; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Z5Y4jGkYyYVaW3Gv/Exn3cDFAlXaXy6vbHvtlttrcy03XtuWgxis/vp4qqSR3858jPdErBUvN9a99k50BK5A5EctctV7L/qAdxS33+0TgAYEWFbM0nXGLmnsCm+k71+qcgHyOHjbTCwSdiZtvfLMEWiXxiNBFMTotpe+13GC3PY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GRKbe2Oh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EHfB9p42"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E80D31F000E9;
-	Thu, 30 Jul 2026 15:31:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GRKbe2Oh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAD161F00A3A;
+	Thu, 30 Jul 2026 15:31:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425517;
-	bh=z5e+0XGgWi40kVefY3+yu1atiocrTCfJmvdohmj4KO4=;
+	s=korg; t=1785425520;
+	bh=utR+I46swep3T/vDUZYgFhL2OC+x10TyVAUHckhnyKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EHfB9p42S6npcQzxJMjUvwK3SMh4al8VZCxDcIw0+kBBz0KVtcS9zvUyV+Mg2U8JO
-	 0/OWWYEW+QsbM3wCMa367HaULpFEyMjwmFaOiVm0/gMyYGJXUIw1G2wHmZTaBXd9Jp
-	 8ACmipcqtyJ4Vle501MIKraqKVmH+dHEB1ostlss=
+	b=GRKbe2OhOYNhowSTqKpPzl4fg+692neKsCLNA+sx6kFThs22691uFz1JOpmTh9Ab3
+	 RQhz69yDPgSSLptK+SV0PYxxn25IRgTu24iZZJNSgzKCGDvbUvm2Ah1ZUBPsYoTpOb
+	 +rPoc27j4IpfGGBFE2nrAIgz4Gv6NR8tTtTS6Qys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Salvador Blaya <tiniebla6@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Shrikanth Hegde <sshegde@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 090/602] ALSA: usb-audio: Skip DSD quirk for Musical Fidelity M6s DAC
-Date: Thu, 30 Jul 2026 16:08:02 +0200
-Message-ID: <20260730141437.887334694@linuxfoundation.org>
+Subject: [PATCH 6.12 099/602] powerpc/time: Prepare to stop elapsing in dynticks-idle
+Date: Thu, 30 Jul 2026 16:08:11 +0200
+Message-ID: <20260730141438.074216982@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -51,45 +52,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Frederic Weisbecker <frederic@kernel.org>
 
-[ Upstream commit 93b47e66cc6d6c6382d44b44f5e7f6fc3a7b38c3 ]
+[ Upstream commit c8ba971cf8567d49eb5f43ee90c4e50424331c18 ]
 
-Salvador reported that the recent fix for applying the DSD quirk to
-Musical Fidelity devices broke for his M6s DAC model (2772:0502).
+Currently the tick subsystem stores the idle cputime accounting in
+private fields, allowing cohabitation with architecture idle vtime
+accounting. The former is fetched on online CPUs, the latter on offline
+CPUs.
 
-Although this is basically a firmware bug, the model in question is
-fairly old, and no further firmware update can be expected, so it'd be
-better to address in the driver side.
+For consolidation purpose, architecture vtime accounting will continue
+to account the cputime but will make a break when the idle tick is
+stopped. The dyntick cputime accounting will then be relayed by the tick
+subsystem so that the idle cputime is still seen advancing coherently
+even when the tick isn't there to flush the idle vtime.
 
-As an ad hoc workaround, skip the DSD quirk for this device by adding
-an empty quirk entry of 2772:0502; this essentially skips the later
-DSD quirk entry by the match with the vendor 2772.
+Prepare for that and introduce three new APIs which will be used in
+subsequent patches:
 
-Fixes: da3a7efff64e ("ALSA: usb-audio: Update for native DSD support quirks")
-Reported-by: Salvador Blaya <tiniebla6@gmail.com>
-Closes: https://lore.kernel.org/CAOdyq+qFaqCh=tK_wNnA64hv5pQuA1Y09ANxQ=xK8yR-t4mf9Q@mail.gmail.com
-Tested-by: Salvador Blaya <tiniebla6@gmail.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260709095614.1418838-1-tiwai@suse.de
+  - vtime_dynticks_start() is deemed to be called when idle enters in
+    dyntick mode. The idle cputime that elapsed so far is accumulated.
+
+  - vtime_dynticks_stop() is deemed to be called when idle exits from
+    dyntick mode. The vtime entry clocks are fast-forward to current time
+    so that idle accounting restarts elapsing from now.
+
+  - vtime_reset() is deemed to be called from dynticks idle IRQ entry to
+    fast-forward the clock to current time so that the IRQ time is still
+    accounted by vtime while nohz cputime is paused.
+
+Also accumulated vtime won't be flushed from dyntick-idle ticks to avoid
+accounting twice the idle cputime, along with nohz accounting.
+
+Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Tested-by: Shrikanth Hegde <sshegde@linux.ibm.com>
+Reviewed-by: Shrikanth Hegde <sshegde@linux.ibm.com>
+Link: https://patch.msgid.link/20260508131647.43868-6-frederic@kernel.org
+Stable-dep-of: c1c1ffa490fc ("powerpc/vtime: Initialize starttime at boot for native accounting")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/quirks.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/powerpc/kernel/time.c | 41 ++++++++++++++++++++++++++++++++++++++
+ include/linux/vtime.h      |  6 ++++++
+ 2 files changed, 47 insertions(+)
 
-diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
-index 489dd84e20967c..ea2ec3507521ef 100644
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -2369,6 +2369,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
- 		   QUIRK_FLAG_DSD_RAW),
- 	DEVICE_FLG(0x2708, 0x0002, /* Audient iD14 */
- 		   QUIRK_FLAG_IGNORE_CTL_ERROR),
-+	DEVICE_FLG(0x2772, 0x0502, /* Musical Fidelity M6s DAC */
-+		   0), /* for avoiding QUIRK_FLAG_DSD_RAW with vendor match */
- 	DEVICE_FLG(0x2912, 0x30c8, /* Audioengine D1 */
- 		   QUIRK_FLAG_GET_SAMPLE_RATE),
- 	DEVICE_FLG(0x2a70, 0x1881, /* OnePlus Technology (Shenzhen) Co., Ltd. BE02T */
+diff --git a/arch/powerpc/kernel/time.c b/arch/powerpc/kernel/time.c
+index ce7f91172ec2b6..c8beb00e6a27c6 100644
+--- a/arch/powerpc/kernel/time.c
++++ b/arch/powerpc/kernel/time.c
+@@ -376,6 +376,47 @@ void vtime_task_switch(struct task_struct *prev)
+ 		acct->starttime = acct0->starttime;
+ 	}
+ }
++
++#ifdef CONFIG_NO_HZ_COMMON
++/**
++ * vtime_reset - Fast forward vtime entry clocks
++ *
++ * Called from dynticks idle IRQ entry to fast-forward the clocks to current time
++ * so that the IRQ time is still accounted by vtime while nohz cputime is paused.
++ */
++void vtime_reset(void)
++{
++	struct cpu_accounting_data *acct = get_accounting(current);
++
++	acct->starttime = mftb();
++#ifdef CONFIG_ARCH_HAS_SCALED_CPUTIME
++	acct->startspurr = read_spurr(acct->starttime);
++#endif
++}
++
++/**
++ * vtime_dyntick_start - Inform vtime about entry to idle-dynticks
++ *
++ * Called when idle enters in dyntick mode. The idle cputime that elapsed so far
++ * is accumulated and the tick subsystem takes over the idle cputime accounting.
++ */
++void vtime_dyntick_start(void)
++{
++	vtime_account_idle(current);
++}
++
++/**
++ * vtime_dyntick_stop - Inform vtime about exit from idle-dynticks
++ *
++ * Called when idle exits from dyntick mode. The vtime entry clocks are
++ * fast-forward to current time so that idle accounting restarts elapsing from
++ * now.
++ */
++void vtime_dyntick_stop(void)
++{
++	vtime_reset();
++}
++#endif /* CONFIG_NO_HZ_COMMON */
+ #endif /* CONFIG_VIRT_CPU_ACCOUNTING_NATIVE */
+ 
+ void __no_kcsan __delay(unsigned long loops)
+diff --git a/include/linux/vtime.h b/include/linux/vtime.h
+index 29dd5b91dd7d66..3fc04b849e4e30 100644
+--- a/include/linux/vtime.h
++++ b/include/linux/vtime.h
+@@ -32,11 +32,17 @@ extern void vtime_account_irq(struct task_struct *tsk, unsigned int offset);
+ extern void vtime_account_softirq(struct task_struct *tsk);
+ extern void vtime_account_hardirq(struct task_struct *tsk);
+ extern void vtime_flush(struct task_struct *tsk);
++extern void vtime_reset(void);
++extern void vtime_dyntick_start(void);
++extern void vtime_dyntick_stop(void);
+ #else /* !CONFIG_VIRT_CPU_ACCOUNTING_NATIVE */
+ static inline void vtime_account_irq(struct task_struct *tsk, unsigned int offset) { }
+ static inline void vtime_account_softirq(struct task_struct *tsk) { }
+ static inline void vtime_account_hardirq(struct task_struct *tsk) { }
+ static inline void vtime_flush(struct task_struct *tsk) { }
++static inline void vtime_reset(void) { }
++static inline void vtime_dyntick_start(void) { }
++static inline void vtime_dyntick_stop(void) { }
+ #endif
+ 
+ /*
 -- 
 2.53.0
 
