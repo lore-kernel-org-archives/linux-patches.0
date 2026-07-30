@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47E1A2D9EE4;
-	Thu, 30 Jul 2026 14:20:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 214CD43B4B8;
+	Thu, 30 Jul 2026 14:20:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421213; cv=none; b=m7IyYLvxqJP8qIREd5c4BTbsr+tIGWlaJDs66nmDq1dDA1ux0qhkWmEFdrV+24Or26xrNy9a5ZgGhSbR6JPbqPDRdsA8F9fI9oFXaqyIp5Jm7zX3YX+tdOhHG8hek2y7kcjcD4zEO3H4rvVqoD4zopHzclcky66MkOPpup3r+Hg=
+	t=1785421216; cv=none; b=AF7wHlQ3kktOWCQ1w+aBwggSmytdLWWoYQMMoNlfh3wVEY2lhsG4KVQKmc0kHsQuTxCRcqCWkp+CWeKdpbcQEBvMSqVkBceTRfENeETGfQ7NIsHTrdJaHBlsvbdyenwRV0N//yXN8CVqxHGeHzsmOSKfiwTrUW4wUofIcKYedi0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421213; c=relaxed/simple;
-	bh=63SzKYcpmBKDrA1b8wGxSk5F3ZHr8I4f8fdWK+yKs0A=;
+	s=arc-20240116; t=1785421216; c=relaxed/simple;
+	bh=lffVx+IrTIN9Nhsry01PYmahVdgNKdZuO1fulOkSj94=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HK3j5pF77KoGwBXK+2oQKvcJZR3B4M4Jhb60bwaW7gOeIFs5MZL2DjTlkQ5Uu0v7zF5zT89ODTBCJyUUPCaR2DkKxK+rVGJD0ID6chJZCYbdb0vBLg8UP2m39H+CuSF60thvdJrSfIsUTKEt+SobNaypDC4hSLOUtUVDLvzC9Es=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jnlsbBU2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FwO816yTlSxgyu74DeygrhMFOsUm5dg+nNAkKun8OMyc4md9o2hu+LZjcbFb1MaZ8ZxsGZG1J7hygVvHnHaB5fSRwjhSOEZroMdL4ZD2KaO95M2YREVdj1aNR8psi/mFpz+yQeFxLt3QSsyqYqerU8laVtpl/SOEC5PEyeVLhH8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QKZk5slw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jnlsbBU2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E9F21F00A3A;
-	Thu, 30 Jul 2026 14:20:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QKZk5slw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D59E1F000E9;
+	Thu, 30 Jul 2026 14:20:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421211;
-	bh=DNVcOt9DA91NQA83gnT977DyrLTiswy/cliN3ZXAtp4=;
+	s=korg; t=1785421214;
+	bh=VOaJXnvdDWYDmyfx9oNODL5K1PksvQvFSpX1MfZ5M/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jnlsbBU2b6+7BZdgCN4QoFyYHqDfbOcfzLgKWDqNXhV7tEH7ATnURQLgRCMJyvDar
-	 /5s7UFa1kiX7i8GRPH4KfgJnMvNfpPPu7CL5dpKKlg5d1m616Ir/dYVLaBAUEsUqrz
-	 yVT2WD4LGXeptW8kM6Iu7miQzBSv4M1nY/L1ClM0=
+	b=QKZk5slwXh+ALiQByL0iGS1xKMAeRV82ST0nRei0EhGfgIXxS8jRyhWNKGYMlVkHU
+	 eajI7OVGuLuMAD7veoxR6+eA3jskRRao3JYXon24IQzhLtkbcdC4yWaUai4sTKVzin
+	 FGsL71VN7QihR7QFusVgolz8jm/I0XX6CMnQqqzM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	Andrea Righi <arighi@nvidia.com>,
+	Junzhong Pan <panjunzhong@linux.spacemit.com>,
+	Yixun Lan <dlan@kernel.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 028/744] sched_ext: Dont warn on core-sched forced idle in put_prev_task_scx()
-Date: Thu, 30 Jul 2026 16:05:01 +0200
-Message-ID: <20260730141444.882893253@linuxfoundation.org>
+Subject: [PATCH 7.1 029/744] reset: spacemit: k3: fix USB2 ahb reset
+Date: Thu, 30 Jul 2026 16:05:02 +0200
+Message-ID: <20260730141444.903396327@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -51,49 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: Yixun Lan <dlan@kernel.org>
 
-[ Upstream commit b7d9c359e5cf867f7eb23df3bb1c6b9e58af24da ]
+[ Upstream commit 1ca22c6aa006b05143367268066fb74e32cfe66b ]
 
-put_prev_task_scx() warns when a runnable task drops to a lower sched_class
-without SCX_OPS_ENQ_LAST, on the assumption that balance_one() would have
-kept it running. Core scheduling breaks that: a forced-idle SMT sibling
-reschedules through the core_pick fast path in pick_next_task(), which skips
-pick_task_scx() and thus balance_one(), so a runnable task can drop to idle
-with ENQ_LAST unset.
+According to SpacemiT K3's updated docs, the USB2 ahb reset and USB2 bus
+clock enable bit was wrongly swapped, the correct one should be:
 
-Gate the warning on sched_cpu_cookie_match(): a cookie mismatch means core
-scheduling forced the idle, while a match (or core scheduling off) still
-catches a genuine missing-ENQ_LAST drop.
+Register : APMU_USB_CLK_RES_CTRL
+bit[1]   : usb2_port_bus_clk_en
+bit[0]   : usb2_port_ahb_rstn
 
-Fixes: 7c65ae81ea86 ("sched_ext: Don't call put_prev_task_scx() before picking the next task")
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
+Fixes: a0e0c2f8c5f3 ("reset: spacemit: k3: Decouple composite reset lines")
+Reported-by: Junzhong Pan <panjunzhong@linux.spacemit.com>
+Signed-off-by: Yixun Lan <dlan@kernel.org>
+Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
+Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/ext.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/reset/spacemit/reset-spacemit-k3.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 0e13139a7f27b9..5f1accb092e30b 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -3097,9 +3097,14 @@ static void put_prev_task_scx(struct rq *rq, struct task_struct *p,
- 		 * sched_class, %SCX_OPS_ENQ_LAST must be set. Tell
- 		 * ops.enqueue() that @p is the only one available for this cpu,
- 		 * which should trigger an explicit follow-up scheduling event.
-+		 *
-+		 * Core scheduling can force this CPU idle while @p stays
-+		 * runnable. @p's cookie then won't match the core's, so skip
-+		 * the warning in that case.
- 		 */
- 		if (next && sched_class_above(&ext_sched_class, next->sched_class)) {
--			WARN_ON_ONCE(!(sch->ops.flags & SCX_OPS_ENQ_LAST));
-+			WARN_ON_ONCE(sched_cpu_cookie_match(rq, p) &&
-+				     !(sch->ops.flags & SCX_OPS_ENQ_LAST));
- 			do_enqueue_task(rq, p, SCX_ENQ_LAST, -1);
- 		} else {
- 			do_enqueue_task(rq, p, 0, -1);
+diff --git a/drivers/reset/spacemit/reset-spacemit-k3.c b/drivers/reset/spacemit/reset-spacemit-k3.c
+index 9841f5e057b2a0..2e87f320cf1184 100644
+--- a/drivers/reset/spacemit/reset-spacemit-k3.c
++++ b/drivers/reset/spacemit/reset-spacemit-k3.c
+@@ -112,7 +112,7 @@ static const struct ccu_reset_data k3_apmu_resets[] = {
+ 	[RESET_APMU_SDH0]	= RESET_DATA(APMU_SDH0_CLK_RES_CTRL,	0, BIT(1)),
+ 	[RESET_APMU_SDH1]	= RESET_DATA(APMU_SDH1_CLK_RES_CTRL,	0, BIT(1)),
+ 	[RESET_APMU_SDH2]	= RESET_DATA(APMU_SDH2_CLK_RES_CTRL,	0, BIT(1)),
+-	[RESET_APMU_USB2_AHB]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0, BIT(1)),
++	[RESET_APMU_USB2_AHB]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0, BIT(0)),
+ 	[RESET_APMU_USB2_VCC]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0, BIT(2)),
+ 	[RESET_APMU_USB2_PHY]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0, BIT(3)),
+ 	[RESET_APMU_USB3_A_AHB]	= RESET_DATA(APMU_USB_CLK_RES_CTRL,	0, BIT(5)),
 -- 
 2.53.0
 
