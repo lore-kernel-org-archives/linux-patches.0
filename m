@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EEB637B012;
-	Thu, 30 Jul 2026 15:46:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF8EB36607D;
+	Thu, 30 Jul 2026 15:46:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426381; cv=none; b=WMJGhr4im+tVMTowJid0A6qhm5tK+1mEFXPf84R7IbxQv7f1s15ltm5hu1/EC+Euh6AhAAQrTB7JU2EOayY2AB3HJv/RDC/yypadfw0LL2blsQ9BwgwskMhhhTdG+wKuNVZeUhuS/HAvJstF7fQ+vHDEEgQtLPsd3cwOon3FNw8=
+	t=1785426383; cv=none; b=JN+dktR3EYYborxcpONE2RVnmmQvyihuOYMAc9R5oYg+bKNsmoVKwtpc2GVP5oEhaN+MBwmb/mf/6YxIL1AJ3h2RJz7j2Gn8Xqt56ZyP5sKb5L3ClgQ7A8RYDSLBD7Ar/0a90bGo9bIABz2VMdPqVbvTeUDkbQfRH4HXlgGbQug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426381; c=relaxed/simple;
-	bh=SioyfHPBT+keI0aZIGZ5tElzO7pW32wTTTYxjX7zhXU=;
+	s=arc-20240116; t=1785426383; c=relaxed/simple;
+	bh=vb0MZ8CTeH8bwYf/V4LuuXTBGQMBluSz3pEAUp/e4U0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QiQB7xdHtmaHGM2//1X2p4JRR0CelbDQq6awBzhpxsgDzlnwpmprwDXZ9aG8LT8gRnZyGa0ZVGFGP8ztWLI7+iHUcG3MNm+WobKpULbui4g7UvjRcB8pTGLDyoKnlo+WEx0hNmdYP/Nhc4CXpjZwGHS06q2/6NGbSxB7crk3aG0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n7CtB0yt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jYyLzzERFnj3OVwcSA64oRkMgFZHoHw5K4gUFEnBrbpXXDszZJiES2b8UDGMivk4U9rb4U1dvaq8XEx8wIBAS6nKn66t7w63m6DvHcWKwq7Nn5tvckjlTrHFzD0PGvNFzRznbMkoCgs3nS9fuWfPmRXtSeV11fAqfZqWap/iFhY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qEbnKfKF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n7CtB0yt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F5D21F000E9;
-	Thu, 30 Jul 2026 15:46:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qEbnKfKF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 374961F000E9;
+	Thu, 30 Jul 2026 15:46:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426379;
-	bh=2ByDplMUiHgyVjdq0CXoVFxo1zhg3wWEfiTDUEBqOfE=;
+	s=korg; t=1785426382;
+	bh=XCqnNJ/TL6KTjHnJ5KOdl9i73fzQ902Vc7Ui5tgLG+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n7CtB0ytFVNesRvAx/p6cGAclxMwCSzrOGPPLbJtGgRjZPpC6HrE0tzy6QRu+lbBn
-	 1ophlXLSzJ1cy2YN+JzccI7N7ioiixjb5EdngsQz5liiPgMT6Wq5Rs3vNxdpWFMWST
-	 cQj7jQxhTFxtFZGAB2D9fE1iGxuq+UMEMCEW/q9c=
+	b=qEbnKfKFB62woiSF0SJJM7NIUEJQmnPJeOrhS+UWm41iH10iIuXqxSI97/opztNgZ
+	 4Frp/zQ5FglDjE9ilH/vD6nSVPduzx15T9oSHH0eUIaCgaucPwM5muICl30D5Zjr1n
+	 XLFQHc0/FkvEkc3esSDOs6waEPmIU/EcXYumht2o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shihuang Liu <shlomojune6@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Taehee Yoo <ap420073@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 399/602] amt: fix use-after-free in AMT delayed works
-Date: Thu, 30 Jul 2026 16:13:11 +0200
-Message-ID: <20260730141444.345456151@linuxfoundation.org>
+	Chancel Liu <chancel.liu@nxp.com>,
+	Shengjiu Wang <shengjiu.wang@gmail.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.12 400/602] ASoC: fsl_sai: Fix spurious BCLK on resume by clearing BYP
+Date: Thu, 30 Jul 2026 16:13:12 +0200
+Message-ID: <20260730141444.366888579@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -52,89 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shihuang Liu <shlomojune6@gmail.com>
+From: Chancel Liu <chancel.liu@nxp.com>
 
-commit ea20c44935d6142daecfa9b39d635033a7553e1b upstream.
+commit d091132889c1378dd0944a72f86eae3e4da1e4fa upstream.
 
-When an AMT device is removed, pending delayed works can still access
-the freed amt_dev structure, which may result in kernel crashes or
-memory corruption.
+When the BCLK divider ratio is 1:1, fsl_sai_set_bclk() enables bypass
+mode by setting BYP, but never clears the bit. The BYP=1 value remains
+in the regcache, and is restored by regcache_sync() on the next runtime
+resume.
 
-amt_dev_stop() cancels req_wq and discovery_wq with
-cancel_delayed_work_sync(), but these works can be scheduled again
-from event_wq after the cancellation. This allows delayed works to
-access the freed amt_dev structure after the netdev has been released.
+Since BYP=1 combined with BCD=1 immediately outputs the ungated MCLK
+as BCLK without waiting for BCE/TE/RE to be enabled, the clock is
+driven prematurely before the stream is fully configured, causing
+noise on some codecs.
 
-The following is a simple race scenario:
+Fix this by clearing BYP and BCI in fsl_sai_hw_free() taking into
+account sync mode and the opposite stream's state, so that the regcache
+holds BYP=0 before runtime suspend and regcache_sync() on resume will
+not restore bypass mode prematurely.
 
-CPU0                         CPU1
-
-amt_dev_stop()
-cancel_delayed_work_sync()
-                             amt_event_work()
-                             mod_delayed_work(req_wq)
-free netdev
-                             req_wq accesses freed amt_dev
-
-Use disable_delayed_work_sync() in amt_dev_stop() to prevent req_wq and
-discovery_wq from being queued again and wait for running work items
-to complete.
-
-The delayed works are disabled after initialization in
-amt_newlink() and enabled only when the device is successfully opened.
-This keeps the delayed work lifecycle synchronized with the lifetime
-of the AMT device.
-
-Fixes: cbc21dc1cfe9 ("amt: add data plane of amt interface")
+Fixes: a50b7926d015 ("ASoC: fsl_sai: implement 1:1 bclk:mclk ratio support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Shihuang Liu <shlomojune6@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Taehee Yoo <ap420073@gmail.com>
-Link: https://patch.msgid.link/20260722113919.7723-1-shlomojune6@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Chancel Liu <chancel.liu@nxp.com>
+Reviewed-by: Shengjiu Wang <shengjiu.wang@gmail.com>
+Link: https://patch.msgid.link/20260710070835.3749817-1-chancel.liu@oss.nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/amt.c |   14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ sound/soc/fsl/fsl_sai.c |   29 +++++++++++++++++++++++++----
+ 1 file changed, 25 insertions(+), 4 deletions(-)
 
---- a/drivers/net/amt.c
-+++ b/drivers/net/amt.c
-@@ -3029,9 +3029,15 @@ static int amt_dev_open(struct net_devic
- 	amt->event_idx = 0;
- 	amt->nr_events = 0;
+--- a/sound/soc/fsl/fsl_sai.c
++++ b/sound/soc/fsl/fsl_sai.c
+@@ -725,6 +725,8 @@ static int fsl_sai_hw_free(struct snd_pc
+ 	struct fsl_sai *sai = snd_soc_dai_get_drvdata(cpu_dai);
+ 	bool tx = substream->stream == SNDRV_PCM_STREAM_PLAYBACK;
+ 	unsigned int ofs = sai->soc_data->reg_offset;
++	int adir = tx ? RX : TX;
++	int dir  = tx ? TX : RX;
  
-+	enable_delayed_work(&amt->discovery_wq);
-+	enable_delayed_work(&amt->req_wq);
+ 	/* Clear xMR to avoid channel swap with mclk_with_tere enabled case */
+ 	regmap_write(sai->regmap, FSL_SAI_xMR(tx), 0);
+@@ -732,10 +734,29 @@ static int fsl_sai_hw_free(struct snd_pc
+ 	regmap_update_bits(sai->regmap, FSL_SAI_xCR3(tx, ofs),
+ 			   FSL_SAI_CR3_TRCE_MASK, 0);
+ 
+-	if (!sai->is_consumer_mode[tx] &&
+-	    sai->mclk_streams & BIT(substream->stream)) {
+-		clk_disable_unprepare(sai->mclk_clk[sai->mclk_id[tx]]);
+-		sai->mclk_streams &= ~BIT(substream->stream);
++	if (!sai->is_consumer_mode[tx]) {
++		bool adir_active = !!(sai->mclk_streams & BIT(!substream->stream));
++		/*
++		 * If opposite stream provides clocks for synchronous mode and
++		 * it is inactive, Clear BYP and BCI
++		 */
++		if (fsl_sai_dir_is_synced(sai, adir) && !adir_active)
++			regmap_update_bits(sai->regmap, FSL_SAI_xCR2(!tx, ofs),
++					   FSL_SAI_CR2_BCI | FSL_SAI_CR2_BYP, 0);
++		/*
++		 * Clear BYP and BCI of current stream if either of:
++		 * 1. current stream doesn't provide clocks for synchronous mode
++		 * 2. current stream provides clocks for synchronous mode but no
++		 *    more stream is active.
++		 */
++		if (!fsl_sai_dir_is_synced(sai, dir) || !adir_active)
++			regmap_update_bits(sai->regmap, FSL_SAI_xCR2(tx, ofs),
++					   FSL_SAI_CR2_BCI | FSL_SAI_CR2_BYP, 0);
 +
- 	err = amt_socket_create(amt);
--	if (err)
-+	if (err) {
-+		disable_delayed_work(&amt->req_wq);
-+		disable_delayed_work(&amt->discovery_wq);
- 		return err;
-+	}
++		if (sai->mclk_streams & BIT(substream->stream)) {
++			clk_disable_unprepare(sai->mclk_clk[sai->mclk_id[tx]]);
++			sai->mclk_streams &= ~BIT(substream->stream);
++		}
+ 	}
  
- 	amt->req_cnt = 0;
- 	amt->remote_ip = 0;
-@@ -3057,8 +3063,8 @@ static int amt_dev_stop(struct net_devic
- 	struct sk_buff *skb;
- 	int i;
- 
--	cancel_delayed_work_sync(&amt->req_wq);
--	cancel_delayed_work_sync(&amt->discovery_wq);
-+	disable_delayed_work_sync(&amt->req_wq);
-+	disable_delayed_work_sync(&amt->discovery_wq);
- 	cancel_delayed_work_sync(&amt->secret_wq);
- 
- 	/* shutdown */
-@@ -3313,6 +3319,8 @@ static int amt_newlink(struct net *net,
- 	INIT_DELAYED_WORK(&amt->req_wq, amt_req_work);
- 	INIT_DELAYED_WORK(&amt->secret_wq, amt_secret_work);
- 	INIT_WORK(&amt->event_wq, amt_event_work);
-+	disable_delayed_work(&amt->req_wq);
-+	disable_delayed_work(&amt->discovery_wq);
- 	INIT_LIST_HEAD(&amt->tunnel_list);
  	return 0;
- err:
 
 
