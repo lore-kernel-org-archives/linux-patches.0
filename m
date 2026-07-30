@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60DDD43DA4B;
-	Thu, 30 Jul 2026 14:32:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D9C943CE6E;
+	Thu, 30 Jul 2026 14:32:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421946; cv=none; b=qrCnKXu9+KksfbF+KqLk6sDT2/Fb3PSZ6IS9Gr8H1de3QQwKkauKc6hm/YClosQMnvEb4VgLalDs3A23I6unarprnlEmbkxqxa6pGi29RyKuwwHxRLy+1cXbdzMsaxGMWt+lytUkIUXyFUBOKEyapDw0Vjov+VvDRq1UZbjSFg4=
+	t=1785421951; cv=none; b=t4ODFJjJ4usgDDzzupJ+xA/UkVpJUt5dz3IL5FpGSC8kF643QqiSHQeEup7PyLuYI7Tdme0OHF02MeMRXbgJ2v+0DA59sbelEpjLmCN8pfTgZbgSsAqpTrMDvl2hPK0haQ4I02DEOG/18enZC8e709YQmYBQzlh4mvjLWWrq+3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421946; c=relaxed/simple;
-	bh=sRjw2EuguAx0fCk05Pybr64pVW4Ch4MZ0xtM8r6f5oM=;
+	s=arc-20240116; t=1785421951; c=relaxed/simple;
+	bh=naYw8H9VSFDd70902dhse16Arl76hd7V21KzYU59HEY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iYhlCb28r8NGw7mk7sweIeZYVKLisF3XhjcjgXO33AM/R8kxTFjfU3zmWhXTdyAhzRF0+z3kXFItNmSCgqVk0uhOkesX8EPeSDKdREiObqPX/JQGAx1oGfUY/sNPoXWffSCxCkmOv846rVbb81eFFwIUp4lVwtwuQ4qFX/oBBwk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jj/Ltlan; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=c8e/KByEI1Rani6nGbtZUSNdB+/GReCk2mhhqyykJe81d8lLq0Rzyg8666txaW7nqzHQpLxrjRWEUkVWV7RicGiZpbYP68I4GV2WdxSl8WcjG3qHPye4hzlt53nk3iTc8s9pWVdwZK98HRXT//u7IxEZibr1L8wY6T7hsd+bgXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z9GviFnJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jj/Ltlan"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94AB41F00A3A;
-	Thu, 30 Jul 2026 14:32:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z9GviFnJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 976F51F000E9;
+	Thu, 30 Jul 2026 14:32:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421943;
-	bh=iyzu0uLNdn8jXAl/Zx8Xpmrxjkw5e+gj9JcNeOFH1WY=;
+	s=korg; t=1785421946;
+	bh=+zRDExP3cAS5wdP8zUimb5kCjypye96RaKOwRkyLEF8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jj/Ltlan63EfK7W6Rczz+S7sB7T/bk5GQ8gICDQoT+26op12cpwr9iDFY17aiPbDj
-	 I/4zqJmgPPCv5YuDU46KLoOPBnDFrzAYk9DL9ohfuekStsYBLJMZ/73HfCIdzOe9Is
-	 YaLEJfG74/CdidSZstcmev8t08I/6Kwj1EAXSiWc=
+	b=z9GviFnJxQVhVwcknDXKlP6BGt+1yTyzb9sMt9gp+/DD+NSfGR3bfD1FiLWFn6IWR
+	 5kbrDEqsrgRl/bzC4Aex3fnGfJKid+fYALc3/c/u86vgqUSQrArdWlXQY0J+bVSPh9
+	 O2kcf4E8dvMRfVePJwuGs6drndCFFsz5BN3QwCjA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Michael Walle <mwalle@kernel.org>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 228/744] Bluetooth: btusb: validate Realtek vendor event length
-Date: Thu, 30 Jul 2026 16:08:21 +0200
-Message-ID: <20260730141449.136526554@linuxfoundation.org>
+Subject: [PATCH 7.1 229/744] net: phy: marvell: fix return code
+Date: Thu, 30 Jul 2026 16:08:22 +0200
+Message-ID: <20260730141449.158824952@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -51,46 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Michael Walle <mwalle@kernel.org>
 
-[ Upstream commit df541cd485ff80a5ddc579d99687bc7506df9851 ]
+[ Upstream commit 7d8ca62d6a9ef593780161586b4efc811ac094fe ]
 
-btusb_recv_event_realtek() reads the event code at data[0] and the Realtek
-subevent code at data[2] before deciding whether to consume a vendor event
-as a coredump.
+Return the correct error code, not the value written to the register.
 
-For example, the two-byte event ff 00 contains a complete vendor-event
-header declaring zero parameters. The old classifier still reads a
-nonexistent third byte and can misclassify the event as a coredump if the
-adjacent byte is 0x34.
-
-Require the HCI event header and first parameter to be present before
-inspecting the Realtek subevent code. Short events continue through the
-normal HCI receive path, which owns their protocol validation.
-
-Fixes: 044014ce85a1 ("Bluetooth: btrtl: Add Realtek devcoredump support")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: a219912e0fec ("net: phy: marvell: implement config_inband() method")
+Signed-off-by: Michael Walle <mwalle@kernel.org>
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Link: https://patch.msgid.link/20260706120637.1947685-1-mwalle@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/phy/marvell.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index cc6392f8d98cd2..7f66e7c6e77ad4 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -2765,7 +2765,9 @@ static int btusb_setup_realtek(struct hci_dev *hdev)
+diff --git a/drivers/net/phy/marvell.c b/drivers/net/phy/marvell.c
+index 7a578b5aa2ed60..f71cffa8840628 100644
+--- a/drivers/net/phy/marvell.c
++++ b/drivers/net/phy/marvell.c
+@@ -753,7 +753,7 @@ static int m88e1111_config_inband(struct phy_device *phydev, unsigned int modes)
+ 	err = phy_modify(phydev, MII_M1111_PHY_EXT_SR,
+ 			 MII_M1111_HWCFG_SERIAL_AN_BYPASS, extsr);
+ 	if (err < 0)
+-		return extsr;
++		return err;
  
- static int btusb_recv_event_realtek(struct hci_dev *hdev, struct sk_buff *skb)
- {
--	if (skb->data[0] == HCI_VENDOR_PKT && skb->data[2] == RTK_SUB_EVENT_CODE_COREDUMP) {
-+	if (skb->len >= HCI_EVENT_HDR_SIZE + 1 &&
-+	    skb->data[0] == HCI_VENDOR_PKT &&
-+	    skb->data[2] == RTK_SUB_EVENT_CODE_COREDUMP) {
- 		struct rtk_dev_coredump_hdr hdr = {
- 			.code = RTK_DEVCOREDUMP_CODE_MEMDUMP,
- 		};
+ 	return phy_modify_paged(phydev, MII_MARVELL_FIBER_PAGE, MII_BMCR,
+ 				BMCR_ANENABLE, bmcr);
 -- 
 2.53.0
 
