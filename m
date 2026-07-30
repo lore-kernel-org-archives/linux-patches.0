@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D4E3409121;
-	Thu, 30 Jul 2026 15:17:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49EB83B0598;
+	Thu, 30 Jul 2026 15:17:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424665; cv=none; b=CLUZGzFaYyke9MzoEqCnPNalPW20tGCK7ecxkLgWoxduwgPOP4zZrr9uBWtAkrGzYn5L5SohuS1C71twPT/5wYZfb/gI42z+i3+AvtcUyaeumXFiPCVp986Df6RiZlSX0CtI+/hvpmuNz0eh7A73k9bjKUokqEG/KS77eO17K+M=
+	t=1785424667; cv=none; b=F2JE8CZYAC1S4+JZFPW/53bnY2scB3tT+4/zD7mIEmkR0rGzEerF9bf5GVuQ8Jfzbh/NXKtZnWIqnmx5qTtreGWQ0IXFRzhPEzUhZtPzaJOOW+GaGdmUhhJWOz42B/Pns+leLUjx55JS1tPM+vmK2FrHirZdnVpwEIcSeAbJtAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424665; c=relaxed/simple;
-	bh=SCZUlGjLjsgb4+0+zdkstvwUwU87h/g4j1UVYY3Br3c=;
+	s=arc-20240116; t=1785424667; c=relaxed/simple;
+	bh=IRUjcKFgsy+7mFlR0tEE3py6addTl5hvCGR59Uenwrk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TkDk0ZrBXqcMI7nF9yUr6Ga/QdLFErOPCh9NzF9qUXi2OTueUkeX65ufWqe780eMRlZqayZQWB3xwwyGFX3Gk+k/CX1sM5cqySGCjGGmRTxabyytJFJXLyPfy59aZblQ5GZFdjurZ4TorrivSEhHvHyeaNj10800+MLpI9OOPlw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ETEhHjuo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Vo4nVB6BjyOLe4gkZEyysl/AELMib1WGU9ReVgkiXTyqS8fDL9AIZGnLWK3Ws7sn34Vb5+u7L3YnFaenzx5M1dxywKysJeJT7eSFwzNbhtrCFcXbTfhQ5h3mHF0lnLWfxRr931RYSP+DqipXjibwhydTrUp9eme9YQWc6i6SRBI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mBrPSl08; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ETEhHjuo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCE4B1F00A3A;
-	Thu, 30 Jul 2026 15:17:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mBrPSl08"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5BE81F000E9;
+	Thu, 30 Jul 2026 15:17:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424663;
-	bh=ZsfeXt6U4xA8q3+myueb47G2J5tjQwc6d/yav1MVsoc=;
+	s=korg; t=1785424666;
+	bh=oZoLLFbfEGNVCFItNjeon3fvz61uKtZpO50C4RhkEIc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ETEhHjuoezq8LfJb8LYAWBVslmXoE/USRVWkOeNWXfFAEvkEX4tVarmE9d/sND/oZ
-	 Upn2tTRcxjpKxsqwDiO7dubgzoGd5/xnd8Xn0uYy2ywbIzVLSE/I8J+A9KWARCqWFT
-	 3jit0himbfM6rtVjDFHs6UCUVaoUtAVyxXCZAspQ=
+	b=mBrPSl08OeC3+sD2Dxwtzc2dgsyIVfna+idAWoUpCsWtRLLAuKxbttZ+WNtCaA6T8
+	 Kvv72ScQMYQWVhb0lzVK2GjZ2psZzn8y8+PM0sjzU7mMsoj2EcP+BL8AE15OdgH6Vs
+	 dY5w56A0L00nKWFHFT9Gu14tdHCDOyovQgV1Pl9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Devin Wittmayer <lucid_duck@justthetip.ca>,
-	Felix Fietkau <nbd@nbd.name>
-Subject: [PATCH 6.18 456/675] wifi: mt76: mt7615: drop TXRX_NOTIFY on non-mmio buses
-Date: Thu, 30 Jul 2026 16:13:06 +0200
-Message-ID: <20260730141454.824947270@linuxfoundation.org>
+	Haoran Jiang <jianghaoran@kylinos.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.18 474/675] LoongArch: Fix oops during single-step debugging
+Date: Thu, 30 Jul 2026 16:13:24 +0200
+Message-ID: <20260730141455.202351096@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -50,53 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Devin Wittmayer <lucid_duck@justthetip.ca>
+From: Haoran Jiang <jianghaoran@kylinos.cn>
 
-commit 39afc46c0243d10b7795e6e6cf4ae91f41732120 upstream.
+commit 73555fdab5e1e4f24ca000c41a616b34edf4b55d upstream.
 
-PKT_TYPE_TXRX_NOTIFY is an mmio-only event, but mt7615_rx_check() and
-mt7615_queue_rx_skb() dispatch it to mt7615_mac_tx_free() on every bus.
-mt7615_mac_tx_free() cleans the DMA tx queues with
-mt76_queue_tx_cleanup(), which calls queue_ops->tx_cleanup(). Only the
-mmio queue ops implement that callback; on the mt7663 USB and SDIO
-buses it is NULL, so a TXRX_NOTIFY there calls a NULL pointer in the RX
-worker. Same defect as the mt7921 and mt7925 patches in this series.
+When entering KDB via a breakpoint and then performing single-step
+debugging, an oops is triggered. Now during single-step debugging,
+kdb_local() expects the reason to be KDB_REASON_SSTEP, but it is
+actually KDB_REASON_OOPS. In kdb_stub(), when determining the reason,
+the ex_vector for single-step should be 0, as already implemented on
+other architectures such as arm64 and riscv.
 
-Drop the event on non-mmio buses via mt76_is_mmio(), as in
-commit 5683e1488aa9 ("wifi: mt76: connac: do not check WED status for
-non-mmio devices").
+Before the patch:
+[112]kdb> ss
 
-Fixes: eb99cc95c3b6 ("mt76: mt7615: introduce mt7663u support")
+Entering kdb (current=0x900020009f520000, pid 10661) on
+processor 112 Oops: (null)
+due to oops @ 0x90000000005b57a4
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
-Link: https://patch.msgid.link/20260627191336.20223-4-lucid_duck@justthetip.ca
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: Haoran Jiang <jianghaoran@kylinos.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7615/mac.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/loongarch/kernel/kgdb.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/net/wireless/mediatek/mt76/mt7615/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7615/mac.c
-@@ -1601,6 +1601,8 @@ bool mt7615_rx_check(struct mt76_dev *md
+--- a/arch/loongarch/kernel/kgdb.c
++++ b/arch/loongarch/kernel/kgdb.c
+@@ -252,7 +252,8 @@ static int kgdb_loongarch_notify(struct
+ 	if (atomic_read(&kgdb_active) != -1)
+ 		kgdb_nmicallback(smp_processor_id(), regs);
  
- 	switch (type) {
- 	case PKT_TYPE_TXRX_NOTIFY:
-+		if (!mt76_is_mmio(mdev))
-+			return false;
- 		mt7615_mac_tx_free(dev, data, len);
- 		return false;
- 	case PKT_TYPE_TXS:
-@@ -1634,6 +1636,10 @@ void mt7615_queue_rx_skb(struct mt76_dev
- 		dev_kfree_skb(skb);
- 		break;
- 	case PKT_TYPE_TXRX_NOTIFY:
-+		if (!mt76_is_mmio(mdev)) {
-+			dev_kfree_skb(skb);
-+			break;
-+		}
- 		mt7615_mac_tx_free(dev, skb->data, skb->len);
- 		dev_kfree_skb(skb);
- 		break;
+-	if (kgdb_handle_exception(args->trapnr, args->signr, cmd, regs))
++	if (kgdb_handle_exception(regs->csr_era == stepped_address ? 0 : args->trapnr,
++				  args->signr, cmd, regs))
+ 		return NOTIFY_DONE;
+ 
+ 	if (atomic_read(&kgdb_setting_breakpoint))
 
 
