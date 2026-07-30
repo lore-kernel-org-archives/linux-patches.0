@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0032B270545;
-	Thu, 30 Jul 2026 15:41:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3B60270545;
+	Thu, 30 Jul 2026 15:41:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426088; cv=none; b=JrAzQV/df7L/Fj1ovvD4pLmAW6HWFfr+cPgRSrISl7DZd6Wpn6HuqKkGu8zynIXNNnEfqTjrC2mTXvA0j91UQqviasAy5Fa+t4dx/+5NDXo+KAJ/bNH7yDEsqLaTdnKVrR0+1JqLJL0hfK26WQebNGgWtfmm9tJw0j9v38Rxw6k=
+	t=1785426090; cv=none; b=hYzJAu/McEGD+GxK3zeAG8tJP1SnUOKnagjNLS5cVzv5A+6oM6VSQp8T1g+2UHT4hpAvc6oGjzCbV13aIhwQAHkq3hoWY2w3cJ7HRNsvI0plV+Sm9hZaeRJ9YqjzxLYVKeMjnJA6iaP7traME/cle+bjG7TcQEdyCOiSHtE3z3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426088; c=relaxed/simple;
-	bh=1Nq2lTS2G3ExsSftLA8dpF5YRT+EIlheNgUtQGf0LVA=;
+	s=arc-20240116; t=1785426090; c=relaxed/simple;
+	bh=ox8TZ90O6dVbEHBofu7zuSLKaBMd73yvEhDEV2pzSG4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X4jc4BBiZjEAYAMyphjOlPuydP2TqKyHd0xHupNHdOwCfz1dEOsUjNOB3Q/OSWo7b2heRtJTqKVxtWMtaEd379iEmN/DjN9YNXdAVmuvQdG9AKfhCjTSWfB8K8tI94efRzEQiBxGQ3M1IWOzJ5M376YPWXZyffidovDuzGEltb0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hn+KQhNE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SBVQaJPrN2Uz7IPpeK0kDdn/dP20Jh43SPMJc9Z9ayYMyS+Mmn6nk1WiEPGEr9nTaeiG87xrrk5ME1BsQ4UGM4HQ4Jfzl91V0FI9OKQ50z7Bgpk7YDNMfLM07lBjBvh6HdMsm+ktFM3KNu2EYRVW5R1w3PUvsvo0R4Nfi7/XU3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AIGrlMIJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hn+KQhNE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B6FC1F000E9;
-	Thu, 30 Jul 2026 15:41:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AIGrlMIJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF3311F000E9;
+	Thu, 30 Jul 2026 15:41:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426086;
-	bh=63NK12uoXj5wn1ZlnWBJEvcMGJip1MgIr58f+076J70=;
+	s=korg; t=1785426089;
+	bh=OMiSnfp7KvXYUkSnGREqc0++V/f/lV1hFao0fQIAKz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hn+KQhNExJqZqQEqizyPAgXZ5rDThuzRi6dUTZ7clkPJ8XQFGH3YoPXdFeL7Cki+W
-	 Ep/pzTVzDHs+YP2ACSo3JGTkG1ZUJey5DsISPs4JfNLifC7DqTpcEHgMifFEyo4twY
-	 HFbqrGTrDCu4JACjbKBQgiQqcwl4mfHG8MdIYkME=
+	b=AIGrlMIJ8ehg/bwy2lI3Ft25Np1pujAOD2ymh5z7tHMyGZKYWoNnP6mFHcBJczk7B
+	 6T0SREaCAiixupOptzPIUT2v2nwaWG+itsT4ZmL0VBkYkw0/LbUU+54TcAXGVWmwuY
+	 5/9cRg8jfYye+5GnaSRh7BvZSp+7vqBSfXvoigB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zero Day Initiative <zdi-disclosures@trendmicro.com>,
-	Ian Forbes <ian.forbes@broadcom.com>,
-	Maaz Mombasawala <maaz.mombasawala@broadcom.com>,
-	Zack Rusin <zack.rusin@broadcom.com>
-Subject: [PATCH 6.12 297/602] drm/vmwgfx: Validate vmw_surface_metadata::array_size
-Date: Thu, 30 Jul 2026 16:11:29 +0200
-Message-ID: <20260730141442.210698289@linuxfoundation.org>
+	Vitaly Prosyak <vitaly.prosyak@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 280/602] drm/amdgpu/sdma6.0: replace BUG_ON() with WARN_ON()
+Date: Thu, 30 Jul 2026 16:11:12 +0200
+Message-ID: <20260730141441.855617276@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -52,69 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Forbes <ian.forbes@broadcom.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit a4f55260f7f7d4dc4d0ee55063dfb0c457b77991 upstream.
+commit ec42c96c322e5cc48099ab5e67b5cbe236cb1949 upstream.
 
-This field comes from userspace and should be validated against specific
-limits depending on which Shader Model (SM) is available.
+There's no need to crash the kernel for these cases.
 
-Fixes: 504901dbb0b5 ("drm/vmwgfx: Refactor surface_define to use vmw_surface_metadata")
-Reported-by: Zero Day Initiative <zdi-disclosures@trendmicro.com>
+Reviewed-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit c17a508a7d652da3728f8bbc481bfffe96d65a87)
 Cc: stable@vger.kernel.org
-Signed-off-by: Ian Forbes <ian.forbes@broadcom.com>
-Reviewed-by: Maaz Mombasawala <maaz.mombasawala@broadcom.com>
-Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
-Link: https://patch.msgid.link/20260623193314.506257-1-ian.forbes@broadcom.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_surface.c |   22 +++++++++++++++++-----
- 1 file changed, 17 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/sdma_v6_0.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_surface.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_surface.c
-@@ -96,7 +96,7 @@ static int vmw_gb_surface_unbind(struct
- static int vmw_gb_surface_destroy(struct vmw_resource *res);
- static int
- vmw_gb_surface_define_internal(struct drm_device *dev,
--			       struct drm_vmw_gb_surface_create_ext_req *req,
-+			       const  struct drm_vmw_gb_surface_create_ext_req *req,
- 			       struct drm_vmw_gb_surface_create_rep *rep,
- 			       struct drm_file *file_priv);
- static int
-@@ -1538,7 +1538,7 @@ int vmw_gb_surface_reference_ext_ioctl(s
-  */
- static int
- vmw_gb_surface_define_internal(struct drm_device *dev,
--			       struct drm_vmw_gb_surface_create_ext_req *req,
-+			       const  struct drm_vmw_gb_surface_create_ext_req *req,
- 			       struct drm_vmw_gb_surface_create_rep *rep,
- 			       struct drm_file *file_priv)
- {
-@@ -1556,9 +1556,21 @@ vmw_gb_surface_define_internal(struct dr
- 				req->base.svga3d_flags);
- 
- 	/* array_size must be null for non-GL3 host. */
--	if (req->base.array_size > 0 && !has_sm4_context(dev_priv)) {
--		VMW_DEBUG_USER("SM4 surface not supported.\n");
--		return -EINVAL;
-+	if (req->base.array_size > 0) {
-+		if (has_sm5_context(dev_priv)) {
-+			if (req->base.array_size > SVGA3D_SM5_MAX_SURFACE_ARRAYSIZE) {
-+				VMW_DEBUG_USER("Invalid Surface Array Size.\n");
-+				return -EINVAL;
-+			}
-+		} else if (has_sm4_context(dev_priv)) {
-+			if (req->base.array_size > SVGA3D_SM4_MAX_SURFACE_ARRAYSIZE) {
-+				VMW_DEBUG_USER("Invalid Surface Array Size.\n");
-+				return -EINVAL;
-+			}
-+		} else {
-+			VMW_DEBUG_USER("SM4+ surface not supported.\n");
-+			return -EINVAL;
-+		}
- 	}
- 
- 	if (!has_sm4_1_context(dev_priv)) {
+--- a/drivers/gpu/drm/amd/amdgpu/sdma_v6_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/sdma_v6_0.c
+@@ -357,7 +357,7 @@ static void sdma_v6_0_ring_emit_fence(st
+ 	amdgpu_ring_write(ring, SDMA_PKT_COPY_LINEAR_HEADER_OP(SDMA_OP_FENCE) |
+ 			  SDMA_PKT_FENCE_HEADER_MTYPE(0x3)); /* Ucached(UC) */
+ 	/* zero in first two bits */
+-	BUG_ON(addr & 0x3);
++	WARN_ON(addr & 0x3);
+ 	amdgpu_ring_write(ring, lower_32_bits(addr));
+ 	amdgpu_ring_write(ring, upper_32_bits(addr));
+ 	amdgpu_ring_write(ring, lower_32_bits(seq));
+@@ -368,7 +368,7 @@ static void sdma_v6_0_ring_emit_fence(st
+ 		amdgpu_ring_write(ring, SDMA_PKT_COPY_LINEAR_HEADER_OP(SDMA_OP_FENCE) |
+ 				  SDMA_PKT_FENCE_HEADER_MTYPE(0x3));
+ 		/* zero in first two bits */
+-		BUG_ON(addr & 0x3);
++		WARN_ON(addr & 0x3);
+ 		amdgpu_ring_write(ring, lower_32_bits(addr));
+ 		amdgpu_ring_write(ring, upper_32_bits(addr));
+ 		amdgpu_ring_write(ring, upper_32_bits(seq));
 
 
