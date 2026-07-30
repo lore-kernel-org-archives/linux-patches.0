@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEDBE4562B1;
-	Thu, 30 Jul 2026 15:26:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F37FD456E0F;
+	Thu, 30 Jul 2026 15:26:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425191; cv=none; b=boLijB10xy4mUpV3XclODAMMTmfrvwQQearWFSQ+2Pzp1RswQGnQbvbwH2SozMWjs+PZehFBYjrgkBrsrJsaRFqEq5ShlEMmXq65vEYHhufhSFfdjBklJIFIVzznwZgQ2nkUVLcryKQyEt/voAQ/JWOsegIBjY1pjBj0G61VOQ0=
+	t=1785425194; cv=none; b=NUcRGXnpQU7wua4EtWz5Khy9a85It2ArEfaEhLQaE//NrtTUk4GYZHyPGZ1ysdFeJEK3Sr3G5F+ExbBCCMBd7qV4jJI/44lw/+Tx+X6MM8YiKoz/+lHdz48NpCmDYJN1Mwe4EaVZrPCEtsMkm/W6dVqVlijpNJJi0T2ryQbgg90=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425191; c=relaxed/simple;
-	bh=MeF7XAvspfjKIaOsNwr1CrLhSNBG8JMClc/vnQ/aSkg=;
+	s=arc-20240116; t=1785425194; c=relaxed/simple;
+	bh=pxoB+0LSX9syxkeCkaOYCxDDohvvLudOd7l9DKuSlhc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MkaFOB14Rsb1w5Yf+Ro2VZ4qn1F1Y2PhFUykB8n+iW60YG+zOt6TVCSmL/2YQHSG5CginVwURsfi4+6HCwJm2FZGdAawliV5E2G02GiYqr//jIO+KVPFubQHIhzmllAXs1cPAJ3W1GS9xtWDb4GK6EjkCD7bJnJy3w6/Zig/HO4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dlUFktH+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KKcyhyGSXSeN5qDpGSOsX0Y2UQCjd9RDzAbjgDRFceryUO+7J2N+Gx8XsWpc/6OsO0iYLZOg14UqFJZHpJzgccvPvMjahXMRIuLnzJS5NFY79TC4oKBsRUQdP/e/KIbOaZvTeb9/v7pGGk+lp2xkeya6pc+ckJ9QrNk7cQm0+yU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GCTBO2mc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dlUFktH+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 350681F00A3A;
-	Thu, 30 Jul 2026 15:26:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GCTBO2mc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 526C81F000E9;
+	Thu, 30 Jul 2026 15:26:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425189;
-	bh=tOEhRUMWZBeTvY0AfX16smq7ZlDA3sHEPnirnpEmuVw=;
+	s=korg; t=1785425192;
+	bh=z8wXuvw4nyOoPy/gp7JuNnAbm2zvlgbGTWYSWqjApbE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dlUFktH+q9JR0adPIn/BTV3d5c8iNU4EYgRUeDsr/kmBrsg1T0i6iqi4GS0cWV0rp
-	 gKGJAQ7kgJVLbeUMQ7VHOUDvYUzZHMjP2rPqKk8LA+GqNTnai/gw4ft35ccwUcACws
-	 0YiOfYybpoc/Giu9mKG+6SoWliRPsNOTdBaS6r90=
+	b=GCTBO2mcUJeTSUiPDwlB13m5zHC76DtOI5v9pIsExTC1y84+wwnn1uXeoa1sai8td
+	 2A21EnQOaWHHUWHrvwV0Ysi9v+Uiz1TwxWNLWP1CCnDhjv9V7DfruD1rOa4+yxD624
+	 pQDRPB7HuqIVEx/3MAleJpGvWOBp7V+P/pDSsvPw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Erni Sri Satya Vennela <ernis@linux.microsoft.com>,
-	Shradha Gupta <shradhagupta@linux.microsoft.com>,
-	Haiyang Zhang <haiyangz@microsoft.com>,
-	Simon Horman <horms@kernel.org>,
-	Yury Norov <ynorov@nvidia.com>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 656/675] net: mana: Optimize irq affinity for low vcpu configs
-Date: Thu, 30 Jul 2026 16:16:26 +0200
-Message-ID: <20260730141459.090048113@linuxfoundation.org>
+Subject: [PATCH 6.18 657/675] octeontx2-af: validate body pcifunc in rvu_mbox_handler_rep_event_notify
+Date: Thu, 30 Jul 2026 16:16:27 +0200
+Message-ID: <20260730141459.112292399@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -55,250 +51,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shradha Gupta <shradhagupta@linux.microsoft.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit 5316394b1752f6cf3f9901e7fefdec1cd1d97fd3 ]
+[ Upstream commit 2156a29aecfffa2eb7c558255690084efbe9f3b0 ]
 
-Before the commit 755391121038 ("net: mana: Allocate MSI-X vectors
-dynamically"), all the MANA IRQs were assigned statically and together
-during early driver load.
+rvu_mbox_handler_rep_event_notify() in drivers/net/ethernet/marvell/
+octeontx2/af/rvu_rep.c queues a sender-controlled REP_EVENT_NOTIFY
+request body verbatim, and rvu_rep_up_notify() then forwards
+event->pcifunc (the nested body field, distinct from the
+AF-normalised header pcifunc) into rvu_get_pfvf(), rvu_get_pf() and
+the AF->PF mailbox device index without any bounds check.
 
-After this commit, the IRQ allocation for MANA was done in two phases.
-HWC IRQ allocated earlier and then, queue IRQs dynamically added at a
-later point. By this time, the IRQ weights on vCPUs can become imbalanced
-and if IRQ count is greater than the vCPU count the topology aware IRQ
-distribution logic in MANA can cause multiple MANA IRQs to land on the
-same vCPUs, while other sibling vCPUs have none (case 1).
+A VF attached to a PF that has been put into switchdev
+representor mode reaches this path: the VF mailbox handler
+otx2_pfvf_mbox_handler() forwards every message id including
+MBOX_MSG_REP_EVENT_NOTIFY to AF without an allowlist, and the AF
+dispatcher rewrites only msg->pcifunc, leaving struct
+rep_event::pcifunc attacker-controlled.  The sibling
+rvu_mbox_handler_esw_cfg() refuses requests whose header pcifunc
+is not rvu->rep_pcifunc; this handler has no equivalent gate.
 
-On SMP enabled, low-vCPU systems, this becomes a bigger problem as the
-softIRQ handling overhead of two IRQs on the same vCPUs becomes much more
-than their overheads if they were spread across sibling vCPUs.
+An out-of-range body pcifunc selects an &rvu->pf[]/&rvu->hwvf[]
+element past the allocated array and, for RVU_EVENT_MAC_ADDR_CHANGE,
+turns into a six-byte attacker-chosen OOB ether_addr_copy() target
+inside the queued worker; KASAN reports a slab-out-of-bounds write
+in rvu_rep_wq_handler.
 
-In such cases when many parallel TCP connections are tested, the
-throughput drops significantly.
+Reject malformed requests at the handler entry by gating on
+is_pf_func_valid(), which is already the canonical PF/VF range check
+in this driver; expose it via rvu.h so callers in rvu_rep.c can use
+it instead of open-coding the same range arithmetic.
 
-Fix the affinity assignment logic, in cases where the IRQ count is greater
-than the vCPU count and when IRQs are added dynamically, by utilizing all
-the vCPUs irrespective of their NUMA/core bindings (case 2).
-
-The results of setting the affinity and hint to NULL were also studied,
-and we observed that, with this logic if there are pre-existing IRQs
-allocated on the VM (apart from MANA), during MANA IRQs allocation, it
-leads to clustering of the MANA queue IRQs again (case 3).
-
-=======================================================
-Case 1: without this patch
-=======================================================
-4 vcpu(2 cores), 5 MANA IRQs (1 HWC + 4 Queue)
-
-	TYPE		effective vCPU aff
-=======================================================
-IRQ0:	HWC		0
-IRQ1:	mana_q1		0
-IRQ2:	mana_q2		2
-IRQ3:	mana_q3		0
-IRQ4:	mana_q4		3
-
-%soft on each vCPU(mpstat -P ALL 1) on receiver
-vCPU		0	1	2	3
-=======================================================
-pass 1:		38.85	0.03	24.89	24.65
-pass 2:		39.15	0.03	24.57	25.28
-pass 3:		40.36	0.03	23.20	23.17
-
-=======================================================
-Case 2: with this patch
-=======================================================
-4 vcpu(2 cores), 5 MANA IRQs (1 HWC + 4 Queue)
-
-        TYPE            effective vCPU aff
-=======================================================
-IRQ0:   HWC             0
-IRQ1:   mana_q1         0
-IRQ2:   mana_q2         1
-IRQ3:   mana_q3         2
-IRQ4:   mana_q4         3
-
-%soft on each vCPU(mpstat -P ALL 1) on receiver
-vCPU            0       1       2       3
-=======================================================
-pass 1:         15.42	15.85	14.99	14.51
-pass 2:         15.53	15.94	15.81	15.93
-pass 3:         16.41	16.35	16.40	16.36
-
-=======================================================
-Case 3: with affinity set to NULL
-=======================================================
-4 vCPU(2 cores), 5 MANA IRQs (1 HWC + 4 Queue)
-
-	TYPE		effective vCPU aff
-=======================================================
-IRQ0:	HWC			0
-IRQ1:	mana_q1			2
-IRQ2:	mana_q2			3
-IRQ3:	mana_q3			2
-IRQ4:	mana_q4			3
-
-=======================================================
-Throughput Impact(in Gbps, same env)
-=======================================================
-TCP conn	with patch	w/o patch	aff NULL
-20480		15.65		7.73		5.25
-10240		15.63		8.93		5.77
-8192		15.64		9.69		7.16
-6144		15.64		13.16		9.33
-4096		15.69		15.75		13.50
-2048		15.69		15.83		13.61
-1024		15.71		15.28		13.60
-
-Fixes: 755391121038 ("net: mana: Allocate MSI-X vectors dynamically")
+Fixes: b8fea84a0468 ("octeontx2-pf: Add support to sync link state between representor and VFs")
 Cc: stable@vger.kernel.org
-Co-developed-by: Erni Sri Satya Vennela <ernis@linux.microsoft.com>
-Signed-off-by: Erni Sri Satya Vennela <ernis@linux.microsoft.com>
-Signed-off-by: Shradha Gupta <shradhagupta@linux.microsoft.com>
-Reviewed-by: Haiyang Zhang <haiyangz@microsoft.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Yury Norov <ynorov@nvidia.com>
-Link: https://patch.msgid.link/20260624072138.1632849-1-shradhagupta@linux.microsoft.com
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Link: https://patch.msgid.link/20260520154157.1439319-1-michael.bommarito@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Kept 7.1's `int *irqs, irq, err, i;` declaration (minus the deleted `skip_first_cpu`) instead of upstream's `msi` variant, as this tree lacks the `mana_gd_get_gic()` refactor. ]
+Stable-dep-of: 8cdcf3d2caac ("octeontx2-af: cn10k: restrict VF LMTLINE sharing to its own PF")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/microsoft/mana/gdma_main.c |   78 +++++++++++++++++++-----
- 1 file changed, 64 insertions(+), 14 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/af/rvu.c     |    2 +-
+ drivers/net/ethernet/marvell/octeontx2/af/rvu.h     |    1 +
+ drivers/net/ethernet/marvell/octeontx2/af/rvu_rep.c |    8 ++++++++
+ 3 files changed, 10 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/microsoft/mana/gdma_main.c
-+++ b/drivers/net/ethernet/microsoft/mana/gdma_main.c
-@@ -125,6 +125,8 @@ static int mana_gd_query_max_resources(s
- 	} else {
- 		/* If dynamic allocation is enabled we have already allocated
- 		 * hwc msi
-+		 * Also, we make sure in this case the following is always true
-+		 * (num_msix_usable - 1 HWC) <= num_online_cpus()
- 		 */
- 		gc->num_msix_usable = min(resp.max_msix, num_online_cpus() + 1);
- 	}
-@@ -1587,8 +1589,8 @@ void mana_gd_free_res_map(struct gdma_re
-  * do the same thing.
-  */
- 
--static int irq_setup(unsigned int *irqs, unsigned int len, int node,
--		     bool skip_first_cpu)
-+static int mana_irq_setup_numa_aware(unsigned int *irqs, unsigned int len,
-+				     int node, bool skip_first_cpu)
- {
- 	const struct cpumask *next, *prev = cpu_none_mask;
- 	cpumask_var_t cpus __free(free_cpumask_var);
-@@ -1624,11 +1626,24 @@ done:
- 	return 0;
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
+@@ -435,7 +435,7 @@ struct rvu_pfvf *rvu_get_pfvf(struct rvu
+ 		return &rvu->pf[rvu_get_pf(rvu->pdev, pcifunc)];
  }
  
-+/* must be called with cpus_read_lock() held */
-+static void mana_irq_setup_linear(unsigned int *irqs, unsigned int len)
-+{
-+	int cpu;
-+
-+	for_each_online_cpu(cpu) {
-+		if (len == 0)
-+			break;
-+
-+		irq_set_affinity_and_hint(*irqs++, cpumask_of(cpu));
-+		len--;
-+	}
-+}
-+
- static int mana_gd_setup_dyn_irqs(struct pci_dev *pdev, int nvec)
+-static bool is_pf_func_valid(struct rvu *rvu, u16 pcifunc)
++bool is_pf_func_valid(struct rvu *rvu, u16 pcifunc)
  {
- 	struct gdma_context *gc = pci_get_drvdata(pdev);
- 	struct gdma_irq_context *gic;
--	bool skip_first_cpu = false;
- 	int *irqs, irq, err, i;
+ 	int pf, vf, nvfs;
+ 	u64 cfg;
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
+@@ -900,6 +900,7 @@ u16 rvu_get_rsrc_mapcount(struct rvu_pfv
+ struct rvu_pfvf *rvu_get_pfvf(struct rvu *rvu, int pcifunc);
+ void rvu_get_pf_numvfs(struct rvu *rvu, int pf, int *numvfs, int *hwvf);
+ bool is_block_implemented(struct rvu_hwinfo *hw, int blkaddr);
++bool is_pf_func_valid(struct rvu *rvu, u16 pcifunc);
+ bool is_pffunc_map_valid(struct rvu *rvu, u16 pcifunc, int blktype);
+ int rvu_get_lf(struct rvu *rvu, struct rvu_block *block, u16 pcifunc, u16 slot);
+ int rvu_lf_reset(struct rvu *rvu, struct rvu_block *block, int lf);
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_rep.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_rep.c
+@@ -97,6 +97,14 @@ int rvu_mbox_handler_rep_event_notify(st
+ {
+ 	struct rep_evtq_ent *qentry;
  
- 	irqs = kmalloc_array(nvec, sizeof(int), GFP_KERNEL);
-@@ -1636,10 +1651,12 @@ static int mana_gd_setup_dyn_irqs(struct
++	/* The mailbox dispatcher normalises only the header pcifunc; the
++	 * nested struct rep_event::pcifunc body field is sender-controlled
++	 * and is later used by rvu_rep_up_notify() to index rvu->pf[] /
++	 * rvu->hwvf[].  Reject out-of-range body selectors before queueing.
++	 */
++	if (!is_pf_func_valid(rvu, req->pcifunc))
++		return -EINVAL;
++
+ 	qentry = kmalloc(sizeof(*qentry), GFP_ATOMIC);
+ 	if (!qentry)
  		return -ENOMEM;
- 
- 	/*
-+	 * In this function, num_msix_usable = HWC IRQ + Queue IRQ.
-+	 * nvec is only Queue IRQ (HWC already setup).
- 	 * While processing the next pci irq vector, we start with index 1,
- 	 * as IRQ vector at index 0 is already processed for HWC.
- 	 * However, the population of irqs array starts with index 0, to be
--	 * further used in irq_setup()
-+	 * further used in mana_irq_setup_numa_aware()
- 	 */
- 	for (i = 1; i <= nvec; i++) {
- 		gic = kzalloc(sizeof(*gic), GFP_KERNEL);
-@@ -1669,18 +1686,51 @@ static int mana_gd_setup_dyn_irqs(struct
- 	}
- 
- 	/*
--	 * When calling irq_setup() for dynamically added IRQs, if number of
--	 * CPUs is more than or equal to allocated MSI-X, we need to skip the
--	 * first CPU sibling group since they are already affinitized to HWC IRQ
-+	 * When calling mana_irq_setup_numa_aware() for dynamically added IRQs,
-+	 * if number of CPUs is more than or equal to allocated MSI-X, we need to
-+	 * skip the first CPU sibling group since they are already affinitized to
-+	 * HWC IRQ
- 	 */
- 	cpus_read_lock();
--	if (gc->num_msix_usable <= num_online_cpus())
--		skip_first_cpu = true;
-+	if (gc->num_msix_usable <= num_online_cpus()) {
-+		err = mana_irq_setup_numa_aware(irqs, nvec, gc->numa_node,
-+						true);
-+		if (err) {
-+			cpus_read_unlock();
-+			goto free_irq;
-+		}
-+	} else {
-+		/*
-+		 * When num_msix_usable are more than num_online_cpus, our
-+		 * queue IRQs should be equal to num of online vCPUs.
-+		 * We try to make sure queue IRQs spread across all vCPUs.
-+		 * In such a case NUMA or CPU core affinity does not matter.
-+		 * Note: in this case the total mana IRQ should always be
-+		 * num_online_cpus + 1. The first HWC IRQ is already handled
-+		 * in HWC setup calls
-+		 * However, if CPUs went offline since num_msix_usable was
-+		 * computed, queue IRQs will be more than num_online_cpus().
-+		 * In such cases remaining extra IRQs will retain their default
-+		 * affinity.
-+		 */
-+		int first_unassigned = num_online_cpus();
- 
--	err = irq_setup(irqs, nvec, gc->numa_node, skip_first_cpu);
--	if (err) {
--		cpus_read_unlock();
--		goto free_irq;
-+		if (nvec > first_unassigned) {
-+			char buf[32];
-+
-+			if (first_unassigned == nvec - 1)
-+				snprintf(buf, sizeof(buf), "%d",
-+					 first_unassigned);
-+			else
-+				snprintf(buf, sizeof(buf), "%d-%d",
-+					 first_unassigned, nvec - 1);
-+
-+			dev_dbg(&pdev->dev,
-+				"MANA IRQ indices #%s will retain the default CPU affinity\n",
-+				buf);
-+		}
-+
-+		mana_irq_setup_linear(irqs, nvec);
- 	}
- 
- 	cpus_read_unlock();
-@@ -1766,7 +1816,7 @@ static int mana_gd_setup_irqs(struct pci
- 		nvec -= 1;
- 	}
- 
--	err = irq_setup(irqs, nvec, gc->numa_node, false);
-+	err = mana_irq_setup_numa_aware(irqs, nvec, gc->numa_node, false);
- 	if (err) {
- 		cpus_read_unlock();
- 		goto free_irq;
 
 
