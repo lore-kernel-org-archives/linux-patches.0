@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8186431488;
-	Thu, 30 Jul 2026 14:38:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA095431488;
+	Thu, 30 Jul 2026 14:38:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422324; cv=none; b=LFr3dqx2spHpfXIdqHkn6AoOqJqnsV65NHfyUkhaZYJJLvwZh0no8I/X7UAHhhk9Iqstb6eHYNHQRX13Qy2Ja8pf5Ot57OA0QsIQ5nIriX+ThEUINpWYcrdNirVLcUW9k4gYUQjaU17Cvfgmg6U46M5z0Alx1ejCjcRYndWe30g=
+	t=1785422327; cv=none; b=qbe+PyjVNdtm3lR0BpKBwjBJdPGrS1xaCyA8cW9a6MoBF/YDIhKQMgt5w4EVcZ2zHbp6UgCXMmT/eIZvqlNIuViMvLIbHA+afSKq3Tb5piyVaizy8KyPzVq89QYJs5fFO5Zm/Ar2PwjXivzW0IjbU+XbhE5hkU4BOTD84Dfk2EU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422324; c=relaxed/simple;
-	bh=czFDRcuXgNTL+QN68MVNkFFzKr6hDm2TlGv+aJJPEwE=;
+	s=arc-20240116; t=1785422327; c=relaxed/simple;
+	bh=mQjBvitvnPl24qyrczl5Em8rX8T932O0ZluVGVccEfU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JmQbn13chsBmLu56XzpA0Bdots+1FtclYx0aD+dI4YZWhkP8IqT38SjP+Lse2wquZyXabEBUOowk21SV2hMOGL18PKSLMeBPbzoA3tvWWc3czfzriXXOHDQM04B2ynFgY4RiX2Y707wsahVjvtmwUvOM4ayorAteokow0iKFs0o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y0/RLVQE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=nUYEHiHVQuLE6/BcH12ftDTp92kX5rDJkX/+P1Ph8K4Kb9TDhrUPqm+Lmjsqx47CqrOj6DM91koTxZBYYPHL0Gx96RBtHNaE6Dp3iS4yAkd71wGwPxDDXd4ZIQu0kH1djdQmpjmB4HFdjyx7TGSXuafo43+417UK/Xl3pwJuQz8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dhzNhqDB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y0/RLVQE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13C691F000E9;
-	Thu, 30 Jul 2026 14:38:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dhzNhqDB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D4DA1F00A3E;
+	Thu, 30 Jul 2026 14:38:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422323;
-	bh=IOfkzdN4Kb9da5aElmU6gjItpWTS3+PcYTvDnWjWwA8=;
+	s=korg; t=1785422326;
+	bh=jCycmxTv2JjmXXky+XZVm2eWg+2eh5EFsFbBlTAJfOU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y0/RLVQEuX9NEqRcn3mQKRtWK3XEU6lkqw3bqJJxioD9qZ2RCp4eAzObLOKrMF7+L
-	 gsN86lFR+Pr4ESIGHLZB25cdm5yXTkDJB/lG284QbJZt6Qo8TitqDlHJBkdLjONta/
-	 oXpxjnOtSWmYF6+3fXDqJTtf1qqy4iWrfd1mOImg=
+	b=dhzNhqDBfZq8xlowYCQj/6VmA2yBMHdvc7Io8mbyxh3MmkkvP2eSAYfVneGpCrJc5
+	 lLPBkplKome1Vveg4sxDjAB382jvBO+xh718hbNf+DosR8Im6kgLFB9RLZA7vc8m+U
+	 FDerPWixws07DyDeYJ/5ERrKQf2BPN9XwgTV+rog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Francois Dugast <francois.dugast@intel.com>,
+	Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>,
+	Ashutosh Dixit <ashutosh.dixit@intel.com>,
 	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>
-Subject: [PATCH 7.1 398/744] drm/xe: Return error on non-migratable faults requiring devmem
-Date: Thu, 30 Jul 2026 16:11:11 +0200
-Message-ID: <20260730141452.750794534@linuxfoundation.org>
+Subject: [PATCH 7.1 399/744] drm/xe/oa: Fix offset alignment for MERT WHITELIST_OA_MERT_MMIO_TRG
+Date: Thu, 30 Jul 2026 16:11:12 +0200
+Message-ID: <20260730141452.771622195@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -53,41 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Brost <matthew.brost@intel.com>
+From: Ashutosh Dixit <ashutosh.dixit@intel.com>
 
-commit 136fb61ba8571076dc5d49350a0e6d002d740b74 upstream.
+commit 959b5016e4646b55fd2fd0438932e4c4e9ce171f upstream.
 
-Non-migratable faults that require devmem incorrectly jump to the 'out'
-label, which squashes the error code intended to be returned to the
-upper layers. Fix this by returning -EACCES instead.
+'head' argument for WHITELIST_OA_MERT_MMIO_TRG was previously wrong (not
+multiple of 16). Fix this.
 
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Fixes: 4208fac3dce5 ("drm/xe: Add more SVM GT stats")
+Fixes: ec02e49f21bc ("drm/xe/rtp: Whitelist OAMERT MMIO trigger registers")
 Cc: stable@vger.kernel.org
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
-Reviewed-by: Francois Dugast <francois.dugast@intel.com>
-Link: https://patch.msgid.link/20260617135101.1245574-1-matthew.brost@intel.com
-(cherry picked from commit c4508edb2c723de93717272488ea65b165637eac)
+Reviewed-by: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
+Signed-off-by: Ashutosh Dixit <ashutosh.dixit@intel.com>
+Link: https://patch.msgid.link/20260629172634.1100983-1-ashutosh.dixit@intel.com
+(cherry picked from commit f6c23e4589bdc69a5d2f79aed5c5bddd5d406cbe)
 Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_svm.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/xe/xe_reg_whitelist.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/xe/xe_svm.c
-+++ b/drivers/gpu/drm/xe/xe_svm.c
-@@ -1255,10 +1255,8 @@ retry:
+--- a/drivers/gpu/drm/xe/xe_reg_whitelist.c
++++ b/drivers/gpu/drm/xe/xe_reg_whitelist.c
+@@ -110,7 +110,7 @@ static const struct xe_rtp_entry_sr regi
+ 			      OAM_HEAD_POINTER(XE_OAM_SCMI_1_BASE_ADJ))
  
- 	xe_svm_range_fault_count_stats_incr(gt, range);
+ #define WHITELIST_OA_MERT_MMIO_TRG \
+-	WHITELIST_OA_MMIO_TRG(OAMERT_MMIO_TRG, OAMERT_STATUS, OAMERT_HEAD_POINTER)
++	WHITELIST_OA_MMIO_TRG(OAMERT_MMIO_TRG, OAMERT_STATUS, OAMERT_TAIL_POINTER)
  
--	if (ctx.devmem_only && !range->base.pages.flags.migrate_devmem) {
--		err = -EACCES;
--		goto out;
--	}
-+	if (ctx.devmem_only && !range->base.pages.flags.migrate_devmem)
-+		return -EACCES;
- 
- 	if (xe_svm_range_is_valid(range, tile, ctx.devmem_only, dpagemap)) {
- 		xe_svm_range_valid_fault_count_stats_incr(gt, range);
+ 	{ XE_RTP_NAME("oag_mmio_trg_rcs"),
+ 	  XE_RTP_RULES(GRAPHICS_VERSION_RANGE(1200, XE_RTP_END_VERSION_UNDEFINED),
 
 
