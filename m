@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2A5B41B8CA;
-	Thu, 30 Jul 2026 15:01:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAFF541B8CA;
+	Thu, 30 Jul 2026 15:01:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423696; cv=none; b=PG3iw+vjR3ZSY4VzDgXS2sr6uxYBALqDFw49/e7hqaiwMCWDNqE6uXi+PXtn2Dfq3aMmwjdsjpaWFxkP2G9FJtbpIXbI9KO4txujwuwZAWiHbntiHxXQ3043zzhaLk4G3t2/pkgdstIA3eRe7qGYeupuYNkGF1eRfF4jYXNfENQ=
+	t=1785423699; cv=none; b=E9mb/jEB1yP+Y2zySGcla269nSA/4B0CbJPC7qmT17yYeZMOeRKKnsD0p0dTvflxyws+Tyz48TUzAMP8Nkp5zfvoHP35z4WEnSjL3Ni1RSpIf0wooqLQlw+qzY9tigZ1AVdCV2qqe1EhOAsqNy7Q/DEC2PL2nsHuoT1zzEWGgA4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423696; c=relaxed/simple;
-	bh=UzClH3+TGiDHNDa614fR2VmMX49OYagMschUIqe/q94=;
+	s=arc-20240116; t=1785423699; c=relaxed/simple;
+	bh=WDBjH2T5jc4I0gr5YKoT8RYRNjwzxanJ3fGIKYxVIs4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=abc1bVywM83NJ57h7nbMeKpbdYJ+d43+1i+ShEgCdgfCe5RdyA1CACpB9BEyLexESyKj2ZNTxfgZWmGxN2G428DVluzyiX6k3+ZwXoQJAJlyhNgbOizGw67AFWmEeZDs5BzlykUbg++8tHdGcLYLr1Tqw9+ndkjHjkFtKezNyBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Px68dOrY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QFLBxgYuYRuFcoSuvuxDdLZO/WGZkAKFT4r5LmlJL8+LtTYB44J/T/qFAdi7N4Peh0UmCGZz4M2Se3ACdTm91kq+Mo1RAkOTIvG006kyKcT3BI/5VPOY3uEX2ZZCQjUS4D/snHj+tr3nXk9/y9T5S3xoKchDE3cHrPZEIJ6+he0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p/sItVYP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Px68dOrY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3046C1F00A3A;
-	Thu, 30 Jul 2026 15:01:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p/sItVYP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C7301F000E9;
+	Thu, 30 Jul 2026 15:01:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423694;
-	bh=NIOhRy8nM+l9yi+IaxsSJFdniHiteV+N+g2C3l20Feg=;
+	s=korg; t=1785423697;
+	bh=d+N4bxnHG40iPsh9/YWeEnlVsreZioMuBq+RL71oKqs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Px68dOrY2wXQLTvMv+LMggqgsAAnu7IfcEwnJNi7dMUZxFUHuqWutCybsV3c6aHby
-	 1B23fzDHyX3I8qHVLEtuHimHnuTbhtBs0k5Qa/jZVcjcNjgXEIBgsW9BPpN2mhQ671
-	 BFaJWPytzecWDA3z7ciO7BxQyCYFl8Wfx/smJQsU=
+	b=p/sItVYPqkS8Ys+NncJZB8m0C1dvaNUyzjlJrrDkd6t6debv06QwU2PkpvkxWllDX
+	 KhOP235uV9J+a45vKBhZv6g9nWGWUO7Ikb8EzFzGx8X1cUBstDJhRhexdKhyQeojFq
+	 p7VrvNQdslzIo/DwN6Teey+rnhys8hytnEO6H1Dc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Vecera <ivecera@redhat.com>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Jiri Pirko <jiri@nvidia.com>,
+	zdi-disclosures@trendmicro.com,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Davide Caratti <dcaratti@redhat.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 135/675] dpll: fix NULL pointer dereference in dpll_msg_add_pin_ref_sync()
-Date: Thu, 30 Jul 2026 16:07:45 +0200
-Message-ID: <20260730141448.009544380@linuxfoundation.org>
+Subject: [PATCH 6.18 136/675] net/sched: act_tunnel_key: Defer dst_release to RCU callback
+Date: Thu, 30 Jul 2026 16:07:46 +0200
+Message-ID: <20260730141448.029600984@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -53,69 +54,174 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Vecera <ivecera@redhat.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit d2e914a4a0d0f753dbae830264850d044026167c ]
+[ Upstream commit f1f5c8a3955f8fda3f84ed883ac8daa1847e724c ]
 
-When a dpll_pin is shared across multiple dpll_device instances and
-those devices are being unregistered (e.g. during driver module removal),
-a NULL pointer dereference can occur in dpll_msg_add_pin_ref_sync().
+Fix a race-condition use-after-free in tunnel_key_release_params().
 
-This happens under the following conditions:
- - A pin is registered with two or more dpll devices (dpll_A, dpll_B)
- - The pin has ref_sync pairs with other pins
- - During unregistration of dpll_A's pins, a ref_sync partner pin is
-   unregistered first, removing it from dpll_A->pin_refs
- - But since the partner pin is still registered with dpll_B, its
-   dpll_refs is not empty, so dpll_pin_ref_sync_pair_del() does NOT
-   run and the partner stays in the pin's ref_sync_pins xarray
- - When the pin itself is then unregistered from dpll_A, the delete
-   notification calls dpll_msg_add_pin_ref_sync() which finds the
-   partner in ref_sync_pins, passes dpll_pin_available() (partner is
-   still registered with dpll_B), but dpll_pin_on_dpll_priv(dpll_A,
-   partner) returns NULL because partner was already removed from
-   dpll_A->pin_refs
- - The NULL priv pointer is passed to the driver's ref_sync_get
-   callback, which dereferences it
+The function releases the metadata_dst of the old params synchronously
+via dst_release() while deferring the params struct free with
+kfree_rcu(). A concurrent tunnel_key_act() reader on the datapath may
+still hold the old params pointer (under rcu_read_lock_bh) and proceed
+to call dst_clone(&params->tcft_enc_metadata->dst) after the writer's
+dst_release has already pushed the dst's rcuref to RCUREF_DEAD.
 
- BUG: kernel NULL pointer dereference, address: 0000000000000034
- Oops: Oops: 0000 [#1] SMP NOPTI
- RIP: 0010:zl3073x_dpll_input_pin_ref_sync_get+0x73/0x80 [zl3073x]
- Call Trace:
-  dpll_msg_add_pin_ref_sync+0xb8/0x200
-  dpll_cmd_pin_get_one+0x3b6/0x4b0
-  dpll_pin_event_send+0x72/0x140
-  __dpll_pin_unregister+0x5a/0x2b0
-  dpll_pin_unregister+0x49/0x70
+zdi-disclosures@trendmicro.com produced a poc which i (and Victor) verified
+that KASAN reports:
 
-Fix this by skipping ref_sync pins whose priv pointer cannot be resolved
-for the current dpll device.
+==================================================================
+BUG: KASAN: slab-use-after-free in instrument_atomic_read_write include/linux/instrumented.h:112
+BUG: KASAN: slab-use-after-free in atomic_sub_return_release include/linux/atomic/atomic-instrumented.h:326
+BUG: KASAN: slab-use-after-free in __rcuref_put include/linux/rcuref.h:109
+BUG: KASAN: slab-use-after-free in rcuref_put include/linux/rcuref.h:173
+BUG: KASAN: slab-use-after-free in dst_release+0x5b/0x370 net/core/dst.c:168
+Write of size 4 at addr ffff88806158de40 by task poc/9388
 
-Fixes: 58256a26bfb3 ("dpll: add reference sync get/set")
-Signed-off-by: Ivan Vecera <ivecera@redhat.com>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Link: https://patch.msgid.link/20260710193625.1378822-1-ivecera@redhat.com
+CPU: 0 UID: 0 PID: 9388 Comm: poc Tainted: G        W           7.1.0-rc7 #7 PREEMPT(lazy)
+Tainted: [W]=WARN
+Hardware name: QEMU Ubuntu 25.10 PC v2 (i440FX + PIIX, + 10.1 machine, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:94
+ dump_stack_lvl+0x100/0x190 lib/dump_stack.c:120
+ print_address_description mm/kasan/report.c:378
+ print_report+0x139/0x4ad mm/kasan/report.c:482
+ kasan_report+0xe4/0x1d0 mm/kasan/report.c:595
+ check_region_inline mm/kasan/generic.c:186
+ kasan_check_range+0x125/0x200 mm/kasan/generic.c:200
+ instrument_atomic_read_write include/linux/instrumented.h:112
+ atomic_sub_return_release include/linux/atomic/atomic-instrumented.h:326
+ __rcuref_put include/linux/rcuref.h:109
+ rcuref_put include/linux/rcuref.h:173
+ dst_release+0x5b/0x370 net/core/dst.c:168
+ refdst_drop include/net/dst.h:272
+ skb_dst_drop include/net/dst.h:284
+ skb_release_head_state+0x293/0x400 net/core/skbuff.c:1163
+ skb_release_all net/core/skbuff.c:1187
+[..]
+Allocated by task 9391:
+ kasan_save_stack+0x30/0x50 mm/kasan/common.c:57
+ kasan_save_track+0x14/0x30 mm/kasan/common.c:78
+ poison_kmalloc_redzone mm/kasan/common.c:398
+ __kasan_kmalloc+0x9a/0xb0 mm/kasan/common.c:415
+ kasan_kmalloc include/linux/kasan.h:263
+ __do_kmalloc_node mm/slub.c:5296
+ __kmalloc_noprof+0x2f1/0x830 mm/slub.c:5308
+ kmalloc_noprof include/linux/slab.h:954
+ kzalloc_noprof include/linux/slab.h:1188
+ offload_action_alloc+0x2f/0x130 net/core/flow_offload.c:35
+ tcf_action_offload_add_ex+0x1ba/0x880 net/sched/act_api.c:258
+ tcf_action_offload_add net/sched/act_api.c:293
+ tcf_action_init+0x66e/0xa20 net/sched/act_api.c:1547
+ tcf_action_add+0xf6/0x5d0 net/sched/act_api.c:2101
+[..]
+Freed by task 9391:
+ kasan_save_stack+0x30/0x50 mm/kasan/common.c:57
+ kasan_save_track+0x14/0x30 mm/kasan/common.c:78
+ kasan_save_free_info+0x3b/0x70 mm/kasan/generic.c:584
+ poison_slab_object mm/kasan/common.c:253
+ __kasan_slab_free+0x6b/0x90 mm/kasan/common.c:285
+ kasan_slab_free include/linux/kasan.h:235
+ slab_free_hook mm/slub.c:2689
+ slab_free mm/slub.c:6251
+ kfree+0x21f/0x6b0 mm/slub.c:6566
+ tcf_action_offload_add_ex+0x4ad/0x880 net/sched/act_api.c:284
+ tcf_action_offload_add net/sched/act_api.c:293
+ tcf_action_init+0x66e/0xa20 net/sched/act_api.c:1547
+ tcf_action_add+0xf6/0x5d0 net/sched/act_api.c:2101
+
+The buggy address belongs to the object at ffff88806158de00
+ which belongs to the cache kmalloc-256 of size 256
+The buggy address is located 64 bytes inside of
+ freed 256-byte region [ffff88806158de00, ffff88806158df00)
+
+The buggy address belongs to the physical page:
+page: refcount:0 mapcount:0 mapping:0000000000000000 index:0xffff88806158d600 pfn:0x6158c
+head: order:1 mapcount:0 entire_mapcount:0 nr_pages_mapped:0 pincount:0
+flags: 0x4fff00000000240(workingset|head|node=1|zone=1|lastcpupid=0x7ff)
+page_type: f5(slab)
+raw: 04fff00000000240 ffff88801c841b40 ffffea0001856290 ffffea0001856190
+raw: ffff88806158d600 0000000800100009 00000000f5000000 0000000000000000
+head: 04fff00000000240 ffff88801c841b40 ffffea0001856290 ffffea0001856190
+head: ffff88806158d600 0000000800100009 00000000f5000000 0000000000000000
+head: 04fff00000000001 ffffffffffffff81 00000000ffffffff 00000000ffffffff
+head: ffffffffffffffff 0000000000000000 00000000ffffffff 0000000000000002
+page dumped because: kasan: bad access detected
+page_owner tracks the page as allocated
+page last allocated via order 1, migratetype Unmovable, gfp_mask 0xd2820(GFP_ATOMIC|__GFP_NOWARN|__GFP_NORETRY|__GFP_COMP|__GFP_NOMEMALLOC), pid 9391, tgid 9378 (poc), ts 123227323196, free_ts 0
+ set_page_owner include/linux/page_owner.h:32
+ post_alloc_hook+0xfe/0x140 mm/page_alloc.c:1853
+ prep_new_page mm/page_alloc.c:1861
+ get_page_from_freelist+0x110c/0x2fc0 mm/page_alloc.c:3941
+ __alloc_frozen_pages_noprof+0x263/0x2bc0 mm/page_alloc.c:5221
+ alloc_slab_page mm/slub.c:3278
+ allocate_slab mm/slub.c:3467
+ new_slab+0xa6/0x690 mm/slub.c:3525
+ refill_objects+0x271/0x420 mm/slub.c:7272
+ refill_sheaf mm/slub.c:2816
+ __pcs_replace_empty_main+0x373/0x630 mm/slub.c:4652
+ alloc_from_pcs mm/slub.c:4750
+ slab_alloc_node mm/slub.c:4884
+ __do_kmalloc_node mm/slub.c:5295
+ __kmalloc_noprof+0x66d/0x830 mm/slub.c:5308
+ kmalloc_noprof include/linux/slab.h:954
+ metadata_dst_alloc+0x26/0x90 net/core/dst.c:298
+ tun_rx_dst include/net/dst_metadata.h:144
+ __ip_tun_set_dst include/net/dst_metadata.h:208
+ tunnel_key_init+0xb01/0x1b90 net/sched/act_tunnel_key.c:451
+ tcf_action_init_1+0x46b/0x6c0 net/sched/act_api.c:1428
+ tcf_action_init+0x448/0xa20 net/sched/act_api.c:1503
+ tcf_action_add+0xf6/0x5d0 net/sched/act_api.c:2101
+[..]
+==================================================================
+
+Fix by moving dst_release() into a custom RCU callback that runs
+after the grace period, matching the lifetime of the containing
+params struct.  Readers in the datapath therefore always find a live
+rcuref when calling dst_clone().
+
+Fixes: 9174c3df1cd18 ("net/sched: act_tunnel_key: fix memory leak in case of action replace")
+Reported-by: zdi-disclosures@trendmicro.com
+Tested-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Davide Caratti <dcaratti@redhat.com>
+Link: https://patch.msgid.link/20260711150537.7946-1-jhs@mojatatu.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dpll/dpll_netlink.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/sched/act_tunnel_key.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/dpll/dpll_netlink.c b/drivers/dpll/dpll_netlink.c
-index de8b065280d15d..eb23ee401aaef8 100644
---- a/drivers/dpll/dpll_netlink.c
-+++ b/drivers/dpll/dpll_netlink.c
-@@ -486,6 +486,9 @@ dpll_msg_add_pin_ref_sync(struct sk_buff *msg, struct dpll_pin *pin,
- 		if (!dpll_pin_available(ref_sync_pin))
- 			continue;
- 		ref_sync_pin_priv = dpll_pin_on_dpll_priv(dpll, ref_sync_pin);
-+		/* Pin may have been unregistered from this dpll already */
-+		if (!ref_sync_pin_priv)
-+			continue;
- 		if (WARN_ON(!ops->ref_sync_get))
- 			return -EOPNOTSUPP;
- 		ret = ops->ref_sync_get(pin, pin_priv, ref_sync_pin,
+diff --git a/net/sched/act_tunnel_key.c b/net/sched/act_tunnel_key.c
+index 876b30c5709e1f..b14807761d829e 100644
+--- a/net/sched/act_tunnel_key.c
++++ b/net/sched/act_tunnel_key.c
+@@ -342,14 +342,20 @@ static const struct nla_policy tunnel_key_policy[TCA_TUNNEL_KEY_MAX + 1] = {
+ 	[TCA_TUNNEL_KEY_ENC_TTL]      = { .type = NLA_U8 },
+ };
+ 
+-static void tunnel_key_release_params(struct tcf_tunnel_key_params *p)
++static void tunnel_key_release_params_rcu(struct rcu_head *head)
+ {
+-	if (!p)
+-		return;
++	struct tcf_tunnel_key_params *p = container_of(head, typeof(*p), rcu);
++
+ 	if (p->tcft_action == TCA_TUNNEL_KEY_ACT_SET)
+ 		dst_release(&p->tcft_enc_metadata->dst);
++	kfree(p);
++}
+ 
+-	kfree_rcu(p, rcu);
++static void tunnel_key_release_params(struct tcf_tunnel_key_params *p)
++{
++	if (!p)
++		return;
++	call_rcu(&p->rcu, tunnel_key_release_params_rcu);
+ }
+ 
+ static int tunnel_key_init(struct net *net, struct nlattr *nla,
 -- 
 2.53.0
 
