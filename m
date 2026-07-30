@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 516D84052DC;
-	Thu, 30 Jul 2026 15:04:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4273941D625;
+	Thu, 30 Jul 2026 15:04:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423854; cv=none; b=A547jSsxHE25G/mqrCEk1OxsgjT/bXZilPpVnVfRvxcvk4N1KxC28Uk57V9ch3ecBMG7F1n5kJY1D2L7TJYmkAdFo0vYqI4uFmBenDx06hDpQ5dFSjJ5TvnospRC0oowYOXUUte9G2BgEwr8owrcagbK+Uu8Ym7bEJBbEmGAuQY=
+	t=1785423857; cv=none; b=VtNZcRaLM+jZxCM1HrWHn6QX6R8PF7dLWMbv6CYyEuVyMy/iyn6mhPSuVcSiZZ2HMq3oL58E6jN8YlZTxYM3nopJFEVh4wmA5Wz0aLF1fB57I4YZ0rk9dSe6Q97W17LGjNOFXWbpkhpq00vWGHSknJDV8xuIAaD9zjhexB9ardw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423854; c=relaxed/simple;
-	bh=K5WcePJa/jKQcA7CaVu/6XzDnO47n9NY6UIFEHVwuRw=;
+	s=arc-20240116; t=1785423857; c=relaxed/simple;
+	bh=ivGcsHc8F/weyFXWnSzyeh0s2Acb10GjEcMo/FrdgUI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W6uXwz9279HDkAUCvWeL85a0oOOwW6Oy2E8S9hJvbwzn9D9rd8TsjGRurG1ZuKBizkJFb0OgeOx740OX8OTFkMsrhpKNNFedqvjZxEGfFTMGHE7431moilGGM5yHhkzaGOFjqtXlbK/UEc92prNTvzp1AopCxIBdcJKnMB5kVRM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U4aFShjq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Lx08c7MfEJFdiJVjVM8ro4EtkerwhuiKnkQdM5CPNoYUBctMM5H1LCT72EWRYdFK/BIGw9OAqzIxrdsCzQMJ1ZvfX6SZDJiAwo0VMBPyX1D+SOiDtEJEWOHDpqwpAZDCkMyWgYTXObRV/imM6LpngKT1vC0UrEknJz0S9mZqhDQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IlE6mbhh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U4aFShjq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8BE61F000E9;
-	Thu, 30 Jul 2026 15:04:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IlE6mbhh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96DB31F000E9;
+	Thu, 30 Jul 2026 15:04:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423853;
-	bh=1T37zPKsjNj1POQDCpomAkZrjPSYKbgvUHH9HMS1JMk=;
+	s=korg; t=1785423856;
+	bh=YksPQzfI+KNLijx9AtsiImP6y/duT7g6EVB8CBUixz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U4aFShjqmgpISw6ey3BtPpCEUwiF8A3QHLp362kkUX86Npg/f5crdg9tquHfB+c0v
-	 H0Ku/sbM6EMpJN/cnr5ZSwID7M4Mn7OE657YpdDCbusqC1XqWIwguRJrjN71qgzQXC
-	 1X0o6ODIAgG/WPFh5vI5grdwxBjnp2cSLu19yEqM=
+	b=IlE6mbhhhuXVjo6oRBaZbMi44ILFZV/EpDPrvqjnhVsQbS+934kxz00pqcvHsxJn+
+	 Kycd5X71iLuH976TK/H0e3Cz1gojeKMkAkRwj3gL76VGKS8lUBf5PCy9u1mkZbjmd9
+	 bZYA4BP0cotOWoYWhqBie3LJsbDiyV1tHUu/qZ40=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wens@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 189/675] ASoC: sun4i-codec: Set quirks.playback_only for H616 codec
-Date: Thu, 30 Jul 2026 16:08:39 +0200
-Message-ID: <20260730141449.161733685@linuxfoundation.org>
+Subject: [PATCH 6.18 190/675] ALSA: hda: cs35l41: validate and free ACPI mute object
+Date: Thu, 30 Jul 2026 16:08:40 +0200
+Message-ID: <20260730141449.181850780@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -51,36 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen-Yu Tsai <wens@kernel.org>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit d9e96f859de3ea3e99bce927a988449a1816483c ]
+[ Upstream commit 3b597d24dc0455ae926f1053f97c2725038fc3cd ]
 
-The H616 codec does not have capture capabilities. Set the
-.playback_only quirks flag to denote this.
+cs35l41_get_acpi_mute_state() evaluates a _DSM method to get the ACPI
+mute state and reads the first byte from the returned object.
 
-This was somehow missing from the original driver patch, even though
-the patch prior to it in the series added this quirk.
+However, the returned ACPI object is owned by the caller and is never
+freed after use, so each successful query leaks the _DSM result object.
 
-Fixes: 9155c321a1d0 ("ASoC: sun4i-codec: support allwinner H616 codec")
-Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
-Link: https://patch.msgid.link/20260714113304.270224-1-wens@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+The code also assumes that the returned object is a buffer with at least
+one byte. A malformed firmware response can return a different object
+type or an empty buffer, and the direct ret->buffer.pointer dereference
+can then access an invalid pointer.
+
+Use the typed _DSM helper, validate that the returned buffer contains at
+least one byte, and free the ACPI object after reading it.
+
+Fixes: 447106e92a0c ("ALSA: hda: cs35l41: Support mute notifications for CS35L41 HDA")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Link: https://patch.msgid.link/20260708113625.752913-1-lgs201920130244@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sunxi/sun4i-codec.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/hda/codecs/side-codecs/cs35l41_hda.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/sunxi/sun4i-codec.c b/sound/soc/sunxi/sun4i-codec.c
-index 93733ff2e32a03..3b92318e18ba6f 100644
---- a/sound/soc/sunxi/sun4i-codec.c
-+++ b/sound/soc/sunxi/sun4i-codec.c
-@@ -2236,6 +2236,7 @@ static const struct sun4i_codec_quirks sun50i_h616_codec_quirks = {
- 	.reg_dac_fifoc	= REG_FIELD(SUN50I_H616_CODEC_DAC_FIFOC, 0, 31),
- 	.reg_dac_txdata	= SUN8I_H3_CODEC_DAC_TXDATA,
- 	.has_reset	= true,
-+	.playback_only	= true,
- 	.dma_max_burst	= SUN4I_DMA_MAX_BURST,
- };
+diff --git a/sound/hda/codecs/side-codecs/cs35l41_hda.c b/sound/hda/codecs/side-codecs/cs35l41_hda.c
+index 438a19bd979bfe..de2fd6471f0598 100644
+--- a/sound/hda/codecs/side-codecs/cs35l41_hda.c
++++ b/sound/hda/codecs/side-codecs/cs35l41_hda.c
+@@ -1437,10 +1437,19 @@ static int cs35l41_get_acpi_mute_state(struct cs35l41_hda *cs35l41, acpi_handle
+ 	guid_parse(CS35L41_UUID, &guid);
+ 
+ 	if (cs35l41_dsm_supported(handle, CS35L41_DSM_GET_MUTE)) {
+-		ret = acpi_evaluate_dsm(handle, &guid, 0, CS35L41_DSM_GET_MUTE, NULL);
++		ret = acpi_evaluate_dsm_typed(handle, &guid, 0,
++			      CS35L41_DSM_GET_MUTE, NULL,
++			      ACPI_TYPE_BUFFER);
++
+ 		if (!ret)
+ 			return -EINVAL;
++		if (!ret->buffer.length || !ret->buffer.pointer) {
++			ACPI_FREE(ret);
++			return -EINVAL;
++		}
++
+ 		mute = *ret->buffer.pointer;
++		ACPI_FREE(ret);
+ 		dev_dbg(cs35l41->dev, "CS35L41_DSM_GET_MUTE: %d\n", mute);
+ 	}
  
 -- 
 2.53.0
