@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9903442FBC;
-	Thu, 30 Jul 2026 15:22:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2531C30567C;
+	Thu, 30 Jul 2026 15:22:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424964; cv=none; b=hK06ZXziX2YRjW6NhBZYfQ2OpwaOZ7nN+bIAf8OSwyo27zDCTl1OYOWoeXdOCtxDA4MqLbaajeAHbEAYxMsBOTZBCLij+h4C29W2ZV7DKdponcBNfDyH2VZP7vvS5aaOOqdJU3CYIyXyYsBiUXOooDZ5mUWWkoDEJMfQPp02TQc=
+	t=1785424967; cv=none; b=k1kLFIgPAc2nbSxOBid41EZoWY26/c9CA8tI4JN3zzGc5YCmUZcCiXXJKmVwPglgAjE7IOb0vswSvddZDjajXN/VZrOszgPnyjDx0b6wSeIIlgbZlRK0KU59UBSgTtppekDfNlCwUnYJpnMGs2bovMVV9nOOofsPHfLzdU2vF5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424964; c=relaxed/simple;
-	bh=c8LyCWLpf2x1APztHsrDwUkOFIGrz90WCjePb36MMSc=;
+	s=arc-20240116; t=1785424967; c=relaxed/simple;
+	bh=slnNYxDLRtzCXgtQqhCrmw854G6WEdMh/qrUU28JUcg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N4jfN91UcPEFK5nbEwyXydRYy73hbOGoylmmEQd6QvzBMleUG6BmX8pcGnQ3oaSSVM3bFGWCe6T/5G3J1X8x4SwDNFKuvc4RLsq6ZONdKhtXb5J9mdmIKS/EHUodVs0vjGkrNT1Oy9FW/zLytoFkeCyq32GuyN5tah4mv3Fl5rg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PlFsETcV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hlntjpzLh7BSCH4V9eNARzTuKI7TMzT5PkEPRgTfQTPU9QKKgpphNFGIGtfvRpOpbrI72mokpHNiKqPnDp5m7BdqEb5t3zTjN3n0FOuaJ82L1uSaAOvelUaOQXvpXzviV8u5iEhIzpvD+g3Of+FYnEd35cCLMCjjWbLdUtV6z9s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XlpSlWbQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PlFsETcV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 506171F000E9;
-	Thu, 30 Jul 2026 15:22:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XlpSlWbQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2875B1F000E9;
+	Thu, 30 Jul 2026 15:22:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424962;
-	bh=WIiKk5Z7k3T9Kxb9yggyFPQijNK7nhtsbW6ZkUChTVg=;
+	s=korg; t=1785424965;
+	bh=eNNvKOL1guJ8+ayeJ/OHVF68R68yVTduftHF2fCoAm4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PlFsETcVtL9TgW0QRZZB9S4S1pjFD6YJXqizA46eG+++EWDXwtByO/LQqnpmX9oO0
-	 Ln6hEQbYg9TG8cvcKZAMhz2CRV7NBO26L0xb43Yu9+PdCtdvWIHjaDINiYQvq32iop
-	 4gycWW77gEHLhtP0JUWbJ102IZJUYJRxXLbUvEAs=
+	b=XlpSlWbQH75hjQoekaumhQlo/h5mKmbmDdMOL5p28QmGjdTa8SpjvgNiHz7TtYcWR
+	 MMJcX4wbky7zdbbqbAhIm3gtwuqJSFhr8eI2EPPEi2rnJI2r0mJDe3YCwpGYXw+RKY
+	 e4fMxAyAH69Z8Fp9EUo8M6HDQYUr0xs2p4TIGOj4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boyuan Zhang <boyuan.zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 578/675] drm/amdgpu/jpeg: fix jpeg_v4_0_3_is_idle detection
-Date: Thu, 30 Jul 2026 16:15:08 +0200
-Message-ID: <20260730141457.413949217@linuxfoundation.org>
+	Jordan Rhee <jordanrhee@google.com>,
+	Eddie Phillips <eddiephillips@google.com>,
+	Harshitha Ramamurthy <hramamurthy@google.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 552/675] gve: fix Rx queue stall on alloc failure
+Date: Thu, 30 Jul 2026 16:14:42 +0200
+Message-ID: <20260730141456.870827849@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -50,37 +53,147 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boyuan Zhang <boyuan.zhang@amd.com>
+From: Eddie Phillips <eddiephillips@google.com>
 
-commit c44af3810fc8b3adf6910a332038aa566560c8fa upstream.
+commit b65352a1bac64442ad95e64f385b40ccb9f1b0db upstream.
 
-jpeg_v4_0_3_is_idle() initializes ret to false and then accumulates ring
-idle status using &=. Since false & condition always remains false, the
-function can never report the JPEG block as idle.
+When the system is under extreme memory pressure, page allocations can
+fail during the Rx buffer refill loop. If the number of buffers posted
+to hardware falls below a critical low threshold and the refill loop
+exits due to allocation failures, the queue can stall:
 
-Initialize ret to true so the function returns true only when all JPEG
-rings report RB_JOB_DONE.
+1. The device drops incoming packets because there are no descriptors.
+2. Since no packets are processed, no Rx completions are generated.
+3. Because no completions occur, NAPI is never scheduled, preventing
+   the refill loop from running again even after memory is freed.
 
-Signed-off-by: Boyuan Zhang <boyuan.zhang@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit e9df8e9d04e0593d17ddb069f3b7958991cd18c9)
+This results in a permanent queue stall.
+
+Resolve this by introducing a starvation recovery timer for each Rx queue.
+If the number of buffers posted to hardware falls below a critical low
+threshold, start a timer to periodically reschedule NAPI. Once NAPI runs
+and successfully refills the queue above the threshold, the timer is
+not rescheduled.
+
+The threshold is set to 32 because a single maximum-sized Receive Segment
+Coalescing (RSC) packet can consume up to 19 descriptors in the Rx path.
+Lower thresholds (such as 8 or 16) would be insufficient to process a
+complete maximum-sized RSC packet, risking packet drops or unexpected
+hardware behavior under memory pressure. Setting the threshold to 32
+guarantees a safe margin to handle at least one full RSC packet.
+
 Cc: stable@vger.kernel.org
+Fixes: 9b8dd5e5ea48 ("gve: DQO: Add RX path")
+Reviewed-by: Jordan Rhee <jordanrhee@google.com>
+Signed-off-by: Eddie Phillips <eddiephillips@google.com>
+Signed-off-by: Harshitha Ramamurthy <hramamurthy@google.com>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Link: https://patch.msgid.link/20260709211906.3322883-1-hramamurthy@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/google/gve/gve.h        |    3 ++
+ drivers/net/ethernet/google/gve/gve_rx_dqo.c |   34 +++++++++++++++++++++++++++
+ 2 files changed, 37 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.c
-+++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.c
-@@ -1010,7 +1010,7 @@ void jpeg_v4_0_3_dec_ring_nop(struct amd
- static bool jpeg_v4_0_3_is_idle(struct amdgpu_ip_block *ip_block)
- {
- 	struct amdgpu_device *adev = ip_block->adev;
--	bool ret = false;
-+	bool ret = true;
- 	int i, j;
+--- a/drivers/net/ethernet/google/gve/gve.h
++++ b/drivers/net/ethernet/google/gve/gve.h
+@@ -13,6 +13,7 @@
+ #include <linux/netdevice.h>
+ #include <linux/net_tstamp.h>
+ #include <linux/pci.h>
++#include <linux/timer.h>
+ #include <linux/ptp_clock_kernel.h>
+ #include <linux/u64_stats_sync.h>
+ #include <net/page_pool/helpers.h>
+@@ -41,6 +42,7 @@
  
- 	for (i = 0; i < adev->jpeg.num_jpeg_inst; ++i) {
+ /* Interval to schedule a stats report update, 20000ms. */
+ #define GVE_STATS_REPORT_TIMER_PERIOD	20000
++#define GVE_RX_NAPI_RESCHED_MS 20 /* msecs */
+ 
+ /* Numbers of NIC tx/rx stats in stats report. */
+ #define NIC_TX_STATS_REPORT_NUM	0
+@@ -338,6 +340,7 @@ struct gve_rx_ring {
+ 	struct xdp_rxq_info xdp_rxq;
+ 	struct xsk_buff_pool *xsk_pool;
+ 	struct page_frag_cache page_cache; /* Page cache to allocate XDP frames */
++	struct timer_list starvation_timer; /* for queue starvation recovery */
+ };
+ 
+ /* A TX desc ring entry */
+--- a/drivers/net/ethernet/google/gve/gve_rx_dqo.c
++++ b/drivers/net/ethernet/google/gve/gve_rx_dqo.c
+@@ -18,6 +18,16 @@
+ #include <net/tcp.h>
+ #include <net/xdp_sock_drv.h>
+ 
++static void gve_rx_starvation_timer(struct timer_list *t)
++{
++	struct gve_rx_ring *rx = timer_container_of(rx, t, starvation_timer);
++	struct gve_priv *priv = rx->gve;
++	struct gve_notify_block *block;
++
++	block = &priv->ntfy_blocks[rx->ntfy_id];
++	napi_schedule(&block->napi);
++}
++
+ static void gve_rx_free_hdr_bufs(struct gve_priv *priv, struct gve_rx_ring *rx)
+ {
+ 	struct device *hdev = &priv->pdev->dev;
+@@ -120,6 +130,7 @@ void gve_rx_stop_ring_dqo(struct gve_pri
+ 
+ 	if (rx->dqo.page_pool)
+ 		page_pool_disable_direct_recycling(rx->dqo.page_pool);
++	timer_shutdown_sync(&rx->starvation_timer);
+ 	gve_remove_napi(priv, ntfy_idx);
+ 	gve_rx_remove_from_block(priv, idx);
+ 	gve_rx_reset_ring_dqo(priv, idx);
+@@ -208,8 +219,10 @@ static int gve_rx_alloc_hdr_bufs(struct
+ void gve_rx_start_ring_dqo(struct gve_priv *priv, int idx)
+ {
+ 	int ntfy_idx = gve_rx_idx_to_ntfy(priv, idx);
++	struct gve_rx_ring *rx = &priv->rx[idx];
+ 
+ 	gve_rx_add_to_block(priv, idx);
++	timer_setup(&rx->starvation_timer, gve_rx_starvation_timer, 0);
+ 	gve_add_napi(priv, ntfy_idx, gve_napi_poll_dqo);
+ }
+ 
+@@ -363,6 +376,7 @@ void gve_rx_post_buffers_dqo(struct gve_
+ 	struct gve_rx_compl_queue_dqo *complq = &rx->dqo.complq;
+ 	struct gve_rx_buf_queue_dqo *bufq = &rx->dqo.bufq;
+ 	struct gve_priv *priv = rx->gve;
++	u32 num_bufs_avail_to_hw;
+ 	u32 num_avail_slots;
+ 	u32 num_full_slots;
+ 	u32 num_posted = 0;
+@@ -398,6 +412,26 @@ void gve_rx_post_buffers_dqo(struct gve_
+ 	}
+ 
+ 	rx->fill_cnt += num_posted;
++
++	/* If the queue has fewer than GVE_RX_BUF_THRESH_DQO descriptors
++	 * visible to the hardware, the hardware is in danger of starving
++	 * and cannot trigger interrupts.
++	 *
++	 * We use a threshold of 32 because a single maximum-sized RSC
++	 * packet can consume up to 19 descriptors in the Rx path. Lower
++	 * thresholds (e.g., 8 or 16) would be unsafe as they could cause
++	 * the device to drop/stall on a maximum-sized RSC packet.
++	 *
++	 * Start the timer to periodically reschedule NAPI and recover.
++	 */
++	num_bufs_avail_to_hw =
++		((bufq->tail & ~(GVE_RX_BUF_THRESH_DQO - 1)) -
++		 bufq->head) & bufq->mask;
++
++	if (num_bufs_avail_to_hw < GVE_RX_BUF_THRESH_DQO) {
++		mod_timer(&rx->starvation_timer,
++			  jiffies + msecs_to_jiffies(GVE_RX_NAPI_RESCHED_MS));
++	}
+ }
+ 
+ static void gve_rx_skb_csum(struct sk_buff *skb,
 
 
