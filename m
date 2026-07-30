@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 788793B05B8;
-	Thu, 30 Jul 2026 15:55:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F74C442FC9;
+	Thu, 30 Jul 2026 15:55:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426917; cv=none; b=BL9ThJ87Dmo3pqEr+gh4+e4rhdr6fh6wW+Z0Gvw+yOY7tw6b6abpjMTwCu3xF9FYg87HK5Aynwx/Cf0uWVAoDs4KlPHy1yFTgzWmmuabluPa0g+EaboKfZm8xEMmQAmKmiRQkY57taShpP8aJUzc28F85dn3zqX+x6Z1u0FZE8A=
+	t=1785426920; cv=none; b=AWd3KKGog+jTvb/FGn00alHW7PsDpNZ02QQMCC/V3L0Bw5t8lzBm/sevpPjEXRgKrFhIAG415rDnUf9wjXPkc2Pxy/eK9lvQLd7vfa746FE8EJAxFe9qKEJtLOlF3T4FavEK8wJv8iHCdtvg/Mu2kB20B0yqlYxa0GZ4+Q2atB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426917; c=relaxed/simple;
-	bh=hqD4TZCDCL2pE3jaKvg+SRSF63n7z/uOGHwb5wJPFks=;
+	s=arc-20240116; t=1785426920; c=relaxed/simple;
+	bh=popsH/O191DVnctX5zY2KLifW1TxrT41YT+laUorRWM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n/0lnp+kK6f/x7gbOo4qgDXoNZ6kCYQiCOo552clJU+2PNMUrTSLqGqdwfZZFJ5wjEods7enIuEHljin99FodoIDdd28FL9kPUGTyZUR5nLf5iLH5L+RVSHOIP3D247BzQy/qotW1QdQdCB7OOLYOAxtliJ5yp2E/qiAuwtWvyk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aiKIIHEi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sCNTHaCuxkltoGX0CWTBYassD9neMgAkvm1rEiY+9TVeegtLafzmZSnJNOXJQbC1o9QIbs+03xjff/5+lg5v4s7TbbM6oqmEWI6DLdQpiaoyfQWAj/QfvHgsZfGRH77D9LHF8V/XkxeOyhKQi7RxdspBUnIZe7COZXm3gtSBcrQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EV4hOJBL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aiKIIHEi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D00571F000E9;
-	Thu, 30 Jul 2026 15:55:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EV4hOJBL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACFA11F000E9;
+	Thu, 30 Jul 2026 15:55:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426916;
-	bh=YzPF2upV8momy5cerApkC0K/NSAtqwBA6VX0zGxfDfo=;
+	s=korg; t=1785426919;
+	bh=cnRRs7oMlOV2vC9mqkyS3kPjMRDq1WGraFfrIbtg0i0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aiKIIHEivsmRP3JVAjNf5stCmbGVG3xxqiKxEcyEuOvmXeij8hyZ9wKC0Z5kKgOcq
-	 8PShVwScRp/CJhBOX+KfKKn0MgzixoAYd+RAbw49jeKNZMq+NdiwcKxWwm39AHsn2K
-	 o8cMOYCnZqfK4TaAGAGiyYYk/rKveSjso0v4wRmc=
+	b=EV4hOJBLZ/Zj8GcXzCeGZYlv33AWGuVb2K2vA4GtXlIBrqt/rMd4sHn0+1vhh9m9n
+	 +j5zjxinDnS8EZ40ERLzQqREjHjoMFh4UoAL1SWbPmT2ZHrNtmChhsrd+5WCUHt3qC
+	 O5FCBfR8UaqYznF6rnxKPLJ4cWIkvu8dsoMTM3zQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gal Pressman <gal@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Mark Bloch <mbloch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 587/602] net/mlx5e: Fix NULL pointer dereference in ioctl module EEPROM query
-Date: Thu, 30 Jul 2026 16:16:19 +0200
-Message-ID: <20260730141448.389546994@linuxfoundation.org>
+	Joel Fernandes <joelagnelf@nvidia.com>,
+	Dave Airlie <airlied@redhat.com>,
+	intel-xe@lists.freedesktop.org,
+	Peter Senna Tschudin <peter.senna@linux.intel.com>,
+	Koen Koning <koen.koning@linux.intel.com>
+Subject: [PATCH 6.12 588/602] gpu: Fix uninitialized buddy for built-in drivers
+Date: Thu, 30 Jul 2026 16:16:20 +0200
+Message-ID: <20260730141448.411050188@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -53,45 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gal Pressman <gal@nvidia.com>
+From: Koen Koning <koen.koning@linux.intel.com>
 
-commit 7d36a4a8bf62dc508bc6bb4b59727aec25064ca5 upstream.
+commit cc27314c67516c138ee3829197d1c3b998e29fae upstream.
 
-The mlx5_query_mcia() function unconditionally dereferences the status
-pointer to store the MCIA register status value.
-However, mlx5e_get_module_id() passes NULL since it doesn't need the
-status value.
+Move buddy to the start of the link order, so its __init runs before any
+other built-in drivers that may depend on it. Otherwise, a built-in
+driver that tries to use the buddy allocator will run into a kernel NULL
+pointer dereference because slab_blocks is uninitialized.
 
-Add a NULL check before dereferencing the status pointer to prevent a
-NULL pointer dereference.
+Specifically, this fixes drm/xe (as built-in) running into a kernel
+panic during boot, because it uses buddy during device probe.
 
-Fixes: 2e4c44b12f4d ("net/mlx5: Refactor EEPROM query error handling to return status separately")
-Signed-off-by: Gal Pressman <gal@nvidia.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
-Signed-off-by: Mark Bloch <mbloch@nvidia.com>
-Link: https://patch.msgid.link/20251225132717.358820-4-mbloch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: ba110db8e1bc ("gpu: Move DRM buddy allocator one level up (part two)")
+Cc: Joel Fernandes <joelagnelf@nvidia.com>
+Cc: Dave Airlie <airlied@redhat.com>
+Cc: intel-xe@lists.freedesktop.org
+Reviewed-by: Dave Airlie <airlied@redhat.com>
+Tested-by: Peter Senna Tschudin <peter.senna@linux.intel.com>
+Signed-off-by: Koen Koning <koen.koning@linux.intel.com>
+Signed-off-by: Dave Airlie <airlied@redhat.com>
+Link: https://patch.msgid.link/20260213152047.179628-1-koen.koning@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/port.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpu/Makefile |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/mellanox/mlx5/core/port.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/port.c
-@@ -393,9 +393,11 @@ static int mlx5_query_mcia(struct mlx5_c
- 	if (err)
- 		return err;
- 
--	*status = MLX5_GET(mcia_reg, out, status);
--	if (*status)
-+	if (MLX5_GET(mcia_reg, out, status)) {
-+		if (status)
-+			*status = MLX5_GET(mcia_reg, out, status);
- 		return -EIO;
-+	}
- 
- 	ptr = MLX5_ADDR_OF(mcia_reg, out, dwords);
- 	memcpy(data, ptr, size);
+--- a/drivers/gpu/Makefile
++++ b/drivers/gpu/Makefile
+@@ -2,7 +2,8 @@
+ # drm/tegra depends on host1x, so if both drivers are built-in care must be
+ # taken to initialize them in the correct order. Link order is the only way
+ # to ensure this currently.
++# Similarly, buddy must come first since it is used by other drivers.
++obj-$(CONFIG_GPU_BUDDY)	+= buddy.o
+ obj-y			+= host1x/ drm/ vga/ tests/
+ obj-$(CONFIG_IMX_IPUV3_CORE)	+= ipu-v3/
+ obj-$(CONFIG_TRACE_GPU_MEM)		+= trace/
+-obj-$(CONFIG_GPU_BUDDY)		+= buddy.o
 
 
