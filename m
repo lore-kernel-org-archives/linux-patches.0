@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 343DD3911CA;
-	Thu, 30 Jul 2026 16:07:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C916397AF2;
+	Thu, 30 Jul 2026 16:07:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427631; cv=none; b=I8lzNfKaBcOKF3TImmkNxypbNYplFAE2tKgk/IdcYDHzVG4tPF57DM5f8cnzfmRe6tBVCXkOy7KmGJpSjRJQ93sTH9EPzNeFOjLY0bIM+8eIsPCGmQd9lTdUcLoTl5+uqsotQwo3dsGVcn3wuMyNFLjotBFE8C1v49ysSIV+a9E=
+	t=1785427634; cv=none; b=MjiojTdLMabrEpH37qmatTG/Siof8Z3C0WTp91TR5s6Tp80ia6/36VeYUcGnrDG+Z2xS6eFC6UfBeDL3K2jp4r/56lGqTQJoow76wLbHC9jGl+zhp5Swa1ar0XkKk/rbOLud5N0uJA5LDYacp1/yvyZNUj5/fxemOsZApLEIYAk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427631; c=relaxed/simple;
-	bh=LlfGGxHd3L9QmdF4AJA/g6uveDrDb3QPD6LzvNwpu30=;
+	s=arc-20240116; t=1785427634; c=relaxed/simple;
+	bh=/H+b7CZlbrpe5ut7ktnWfrvIufJOZcq/NGqcauwp0hA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q+cdV7u+8TClj5fFlLYyhZHWU/p4TYqbD/taPxGuKaaXJOuttkFdBwDv7ZtpjDrKK6JmY7x7s7BmbFjPIG5adS5XkRzVkyzSSYcD5ILK3GKY+VULpv1lHM8lb3CN9wxU9HY8NOkQlSXSBONrnEKItJtl6TjwFgSExtmagr9TbYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n03obFI2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kF5QckwwPkwGcDxsxJTWqfD5ksicq/eISNUGWPcwrbYrDAG0NADEYwa7MAcdGhr6d2C22PFACtxzYptZWVqeN0xBE63FeDG0wJVVjqUPwOwbzhzrYhJd3QagcDSLFY8j3jKIhVJAqfeFBL+mwFNHMfGqMGS13SoSM8bovL66ClM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b53rzgvJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n03obFI2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B92C1F000E9;
-	Thu, 30 Jul 2026 16:07:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b53rzgvJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 645071F00A3A;
+	Thu, 30 Jul 2026 16:07:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427630;
-	bh=cYkq+AAt9ZnEdtTLBcB9dYkp3Ja2o0KFpoBKLKqiFDs=;
+	s=korg; t=1785427632;
+	bh=OJj92fLSasLx+1HHTYMmf4vTE6S25oEONxJRcv4sgYY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n03obFI2u7Gf35dYezFOx2YlHvOyr/91AbkNnBIsuWuDyVlW2pqlKd8qpylld1JF6
-	 6SuQLgdCB7L+es48GvARnKz/Xl0US717n1y4VWDFGSQLG+qrEODP4nuB8kvPae6UR5
-	 MDbUxyORzzS1OpSrpH7x23+0IQuYQsNGOmF/DDBk=
+	b=b53rzgvJ+VnJojQVpv4+N1nThNg1pXGpbai8tTi8JCVWsOrm8zsjnaTjCGEpe3M8z
+	 iqjozlVbvvCqkEnP5TTN+xCuRu+T455eTGJibTxRQFDPYe857YqoRcsgYVnS57357g
+	 iBfnmmP8HhO0e5XVdpRrcPfOfMXUhVIu1CH89VNc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Chen-Yu Tsai <wens@kernel.org>,
+	Johan Hovold <johan@kernel.org>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.6 239/484] media: cedrus: skip invalid H.264 reference list entries
-Date: Thu, 30 Jul 2026 16:12:16 +0200
-Message-ID: <20260730141428.671517113@linuxfoundation.org>
+Subject: [PATCH 6.6 240/484] media: cx231xx: fix devres lifetime
+Date: Thu, 30 Jul 2026 16:12:17 +0200
+Message-ID: <20260730141428.694858384@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -53,47 +50,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Johan Hovold <johan@kernel.org>
 
-commit 10358ea986c3c85516d1c8206486464f79d36e76 upstream.
+commit 7d6358ab02866e5b7ed8d3a00805297617bbb0ec upstream.
 
-Cedrus consumes H.264 ref_pic_list0/ref_pic_list1 entries from the
-stateless slice control and later uses their indices to look up
-decode->dpb[] in _cedrus_write_ref_list().
+USB drivers bind to USB interfaces and any device managed resources
+should have their lifetime tied to the interface rather than parent USB
+device. This avoids issues like memory leaks when drivers are unbound
+without their devices being physically disconnected (e.g. on probe
+deferral or configuration changes).
 
-Rejecting such controls in cedrus_try_ctrl() would break existing
-userspace, since stateless H.264 reference lists may legitimately carry
-out-of-range indices for missing references. Instead, guard the actual
-DPB lookup in Cedrus and skip entries whose indices do not fit the fixed
-V4L2_H264_NUM_DPB_ENTRIES array.
+Fix the driver state lifetime so that it is released on driver unbind.
 
-This keeps the fix local to the driver use site and avoids out-of-bounds
-reads from malformed or unsupported reference list entries.
-
-Fixes: e000e1fa4bdbd ("media: uapi: h264: Update reference lists")
-Cc: stable@vger.kernel.org
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Tested-by: Chen-Yu Tsai <wens@kernel.org>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Fixes: 184a82784d50 ("[media] cx231xx: use devm_ functions to allocate memory")
+Cc: stable@vger.kernel.org	# 3.17
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/media/sunxi/cedrus/cedrus_h264.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/media/usb/cx231xx/cx231xx-cards.c |   16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
---- a/drivers/staging/media/sunxi/cedrus/cedrus_h264.c
-+++ b/drivers/staging/media/sunxi/cedrus/cedrus_h264.c
-@@ -210,6 +210,9 @@ static void _cedrus_write_ref_list(struc
- 		u8 dpb_idx;
+--- a/drivers/media/usb/cx231xx/cx231xx-cards.c
++++ b/drivers/media/usb/cx231xx/cx231xx-cards.c
+@@ -1577,7 +1577,8 @@ static int cx231xx_init_v4l2(struct cx23
+ 		 dev->video_mode.end_point_addr,
+ 		 dev->video_mode.num_alt);
  
- 		dpb_idx = ref_list[i].index;
-+		if (dpb_idx >= V4L2_H264_NUM_DPB_ENTRIES)
-+			continue;
-+
- 		dpb = &decode->dpb[dpb_idx];
+-	dev->video_mode.alt_max_pkt_size = devm_kmalloc_array(&udev->dev, 32, dev->video_mode.num_alt, GFP_KERNEL);
++	dev->video_mode.alt_max_pkt_size = devm_kmalloc_array(&interface->dev, 32,
++							      dev->video_mode.num_alt, GFP_KERNEL);
+ 	if (dev->video_mode.alt_max_pkt_size == NULL)
+ 		return -ENOMEM;
  
- 		if (!(dpb->flags & V4L2_H264_DPB_ENTRY_FLAG_ACTIVE))
+@@ -1618,7 +1619,8 @@ static int cx231xx_init_v4l2(struct cx23
+ 		 dev->vbi_mode.num_alt);
+ 
+ 	/* compute alternate max packet sizes for vbi */
+-	dev->vbi_mode.alt_max_pkt_size = devm_kmalloc_array(&udev->dev, 32, dev->vbi_mode.num_alt, GFP_KERNEL);
++	dev->vbi_mode.alt_max_pkt_size = devm_kmalloc_array(&interface->dev, 32,
++							    dev->vbi_mode.num_alt, GFP_KERNEL);
+ 	if (dev->vbi_mode.alt_max_pkt_size == NULL)
+ 		return -ENOMEM;
+ 
+@@ -1660,7 +1662,9 @@ static int cx231xx_init_v4l2(struct cx23
+ 		 "sliced CC EndPoint Addr 0x%x, Alternate settings: %i\n",
+ 		 dev->sliced_cc_mode.end_point_addr,
+ 		 dev->sliced_cc_mode.num_alt);
+-	dev->sliced_cc_mode.alt_max_pkt_size = devm_kmalloc_array(&udev->dev, 32, dev->sliced_cc_mode.num_alt, GFP_KERNEL);
++	dev->sliced_cc_mode.alt_max_pkt_size = devm_kmalloc_array(&interface->dev, 32,
++								  dev->sliced_cc_mode.num_alt,
++								  GFP_KERNEL);
+ 	if (dev->sliced_cc_mode.alt_max_pkt_size == NULL)
+ 		return -ENOMEM;
+ 
+@@ -1724,7 +1728,7 @@ static int cx231xx_usb_probe(struct usb_
+ 	udev = usb_get_dev(interface_to_usbdev(interface));
+ 
+ 	/* allocate memory for our device state and initialize it */
+-	dev = devm_kzalloc(&udev->dev, sizeof(*dev), GFP_KERNEL);
++	dev = devm_kzalloc(&interface->dev, sizeof(*dev), GFP_KERNEL);
+ 	if (dev == NULL) {
+ 		retval = -ENOMEM;
+ 		goto err_if;
+@@ -1854,7 +1858,9 @@ static int cx231xx_usb_probe(struct usb_
+ 			 dev->ts1_mode.end_point_addr,
+ 			 dev->ts1_mode.num_alt);
+ 
+-		dev->ts1_mode.alt_max_pkt_size = devm_kmalloc_array(&udev->dev, 32, dev->ts1_mode.num_alt, GFP_KERNEL);
++		dev->ts1_mode.alt_max_pkt_size = devm_kmalloc_array(&interface->dev, 32,
++								    dev->ts1_mode.num_alt,
++								    GFP_KERNEL);
+ 		if (dev->ts1_mode.alt_max_pkt_size == NULL) {
+ 			retval = -ENOMEM;
+ 			goto err_video_alt;
 
 
