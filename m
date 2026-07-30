@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD8D443B6D1;
-	Thu, 30 Jul 2026 14:40:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4FC7431488;
+	Thu, 30 Jul 2026 14:40:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422410; cv=none; b=mJTEkMbzZMqT1Tx68Dv7yvD0KnHtQnmLKjwZgmjrvtsXSaPAMFRE670ZiUScL3gd0pWScTlGgCee55DKQk7dYtFSCq2SGaDOD5jgaqi5Ys+PsYydr88cxMFAS0zzhTz9aXpJqqAeThW8XVvAg3G6mGN1WpPpr2X/500MjxSRQ5U=
+	t=1785422413; cv=none; b=Wq1jjWtrmobCpl2vogW9MTXvSKfkypxaH6RVYdvZZbnTDYY1uL4q9889LYr49Lic3ztPwBDXVsH4C7r3TVAVKNvIHWNGXbxlOh92CY6iMsIjHvuB/sGoklAuzGt47ONogaPzwVEhBkXD8HgLoql7nxmlpl31R6XLAMtOebB4+7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422410; c=relaxed/simple;
-	bh=brJNUYj+lJrBci4mAXQVW0bCRU6mTg/1tPVrek41Oqs=;
+	s=arc-20240116; t=1785422413; c=relaxed/simple;
+	bh=KUEWw9UK/4hF9Ql5LH8EqkHBs9sHyKKDTa7feVnIc0s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gJiamGMg1c4i1L8GJnohcodTNZ3kR9CaLvwDwPK6VHbPdlhcpT1cdiDm6jfHjwkho8RPJJqC32HQ/DjeS9uRNPsPbUDd2i8lk7ZVRzGz4xi1F49qHdRlh22vxEOxsGD8IRUJmgiLoLD6obqNJmvhedwhEBT+K1sKKAwL4b0MtjQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z95MJwer; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DATqTSeaLcW5+cyzxV5BxX7EfBqk1EPuh+5jxmHH9QmtfWG8NKHkgEmZdhlU+UngsECKwy/m/oXnnusFF8VbKVg9M1FfCNWOV8mxvguisH2hu3/zd4EBQ4DzW8maYpXWU5C4GDbIg5tdTdjnQ5sHXAoLHugNFP5fQB3p1N1jTOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gWSSovps; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z95MJwer"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 456DE1F000E9;
-	Thu, 30 Jul 2026 14:40:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gWSSovps"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 351EA1F000E9;
+	Thu, 30 Jul 2026 14:40:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422408;
-	bh=mXcpufP/luDVUOcXwsTs0Q+ai5CWc2Uau0w5yEkk+wo=;
+	s=korg; t=1785422411;
+	bh=/cG+YNgaBuaL8G29N+77r65qpP5vla0t5+btmd+gHp4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z95MJwerIdmG+tQgwlAh+9bU1nQdfVf3iHdHFfSBtKxehyvaEXc9jGBo13NThC47X
-	 NKaL2Y3eVldeqJ9ePe6NERz8TK7vibBEjHRaasuvTfAOT3bXbHaZ8PsaTz/b5zHrua
-	 Knddpcwyt927vuit4Sy5zl0URIWaU63jqhz+khI0=
+	b=gWSSovpsbRmuYkIeARB7bFHTmQEj6VmqGvoxz7KiWdJBez4S9UyDCl3pbDZDzAJ3z
+	 2uqRdE1nF5WDFV4mC3cg3CbqbiwnQrO+PhUlvGyYokGfVSlO84ALbk2/mHmAqXkbsi
+	 4A1+Kx9xqPSurk/Fw79CclF6BYKvzHh64z9u664o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yongqiang Sun <Yongqiang.Sun@amd.com>,
-	David Francis <David.Francis@amd.com>,
+	Vitaly Prosyak <vitaly.prosyak@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.1 411/744] drm/amdkfd: clamp v9 CRIU control stack checkpoint copy to BO size
-Date: Thu, 30 Jul 2026 16:11:24 +0200
-Message-ID: <20260730141453.031875338@linuxfoundation.org>
+Subject: [PATCH 7.1 429/744] drm/amdgpu/sdma6.0: replace BUG_ON() with WARN_ON()
+Date: Thu, 30 Jul 2026 16:11:42 +0200
+Message-ID: <20260730141453.415886535@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -51,117 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yongqiang Sun <Yongqiang.Sun@amd.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit 426ffae6ecc7ec77d32bf8be065c21a1b881b084 upstream.
+commit ec42c96c322e5cc48099ab5e67b5cbe236cb1949 upstream.
 
-CRIU checkpoint copies the MQD control stack using cp_hqd_cntl_stack_size
-from hardware without bounding it to the allocated BO region. If the HW
-field is larger than the queue's control stack allocation, memcpy reads
-past the BO into adjacent GTT memory and can leak kernel data to userspace.
+There's no need to crash the kernel for these cases.
 
-Store the page-aligned control stack BO size in mqd_manager and clamp
-checkpoint copies and reported checkpoint sizes to
-min(cp_hqd_cntl_stack_size, mm->ctl_stack_size). Apply the same bound
-for multi-XCC v9.4.3 checkpoint layout.
-
-Signed-off-by: Yongqiang Sun <Yongqiang.Sun@amd.com>
-Reviewed-by: David Francis <David.Francis@amd.com>
+Reviewed-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 6c2abd0ec09e86c6323010673766f76050e28aa3)
+(cherry picked from commit c17a508a7d652da3728f8bbc481bfffe96d65a87)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager.h    |    1 
- drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c |   25 +++++++++++++++++++++---
- 2 files changed, 23 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/sdma_v6_0.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager.h
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager.h
-@@ -127,6 +127,7 @@ struct mqd_manager {
- 	struct mutex	mqd_mutex;
- 	struct kfd_node	*dev;
- 	uint32_t mqd_size;
-+	uint32_t ctl_stack_size;
- };
- 
- struct mqd_user_context_save_area_header {
---- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
-@@ -27,6 +27,7 @@
- #include <linux/uaccess.h>
- #include "kfd_priv.h"
- #include "kfd_mqd_manager.h"
-+#include "kfd_topology.h"
- #include "v9_structs.h"
- #include "gc/gc_9_0_offset.h"
- #include "gc/gc_9_0_sh_mask.h"
-@@ -400,8 +401,11 @@ static int get_wave_state(struct mqd_man
- static int get_checkpoint_info(struct mqd_manager *mm, void *mqd, u32 *ctl_stack_size)
- {
- 	struct v9_mqd *m = get_mqd(mqd);
-+	u32 per_xcc_size;
- 
--	if (check_mul_overflow(m->cp_hqd_cntl_stack_size, NUM_XCC(mm->dev->xcc_mask), ctl_stack_size))
-+	per_xcc_size = min_t(u32, m->cp_hqd_cntl_stack_size, mm->ctl_stack_size);
-+
-+	if (check_mul_overflow(per_xcc_size, NUM_XCC(mm->dev->xcc_mask), ctl_stack_size))
- 		return -EINVAL;
- 
- 	return 0;
-@@ -410,13 +414,15 @@ static int get_checkpoint_info(struct mq
- static void checkpoint_mqd(struct mqd_manager *mm, void *mqd, void *mqd_dst, void *ctl_stack_dst)
- {
- 	struct v9_mqd *m;
-+	u32 ctl_stack_copy_size;
- 	/* Control stack is located one page after MQD. */
- 	void *ctl_stack = (void *)((uintptr_t)mqd + AMDGPU_GPU_PAGE_SIZE);
- 
- 	m = get_mqd(mqd);
-+	ctl_stack_copy_size = min_t(u32, m->cp_hqd_cntl_stack_size, mm->ctl_stack_size);
- 
- 	memcpy(mqd_dst, m, sizeof(struct v9_mqd));
--	memcpy(ctl_stack_dst, ctl_stack, m->cp_hqd_cntl_stack_size);
-+	memcpy(ctl_stack_dst, ctl_stack, ctl_stack_copy_size);
- }
- 
- static void checkpoint_mqd_v9_4_3(struct mqd_manager *mm,
-@@ -425,15 +431,19 @@ static void checkpoint_mqd_v9_4_3(struct
- 								  void *ctl_stack_dst)
- {
- 	struct v9_mqd *m;
-+	u32 ctl_stack_stride;
- 	int xcc;
- 	uint64_t size = get_mqd(mqd)->cp_mqd_stride_size;
- 
-+	ctl_stack_stride = min_t(u32, get_mqd(mqd)->cp_hqd_cntl_stack_size,
-+				 mm->ctl_stack_size);
-+
- 	for (xcc = 0; xcc < NUM_XCC(mm->dev->xcc_mask); xcc++) {
- 		m = get_mqd(mqd + size * xcc);
- 
- 		checkpoint_mqd(mm, m,
- 				(uint8_t *)mqd_dst + sizeof(*m) * xcc,
--				(uint8_t *)ctl_stack_dst + m->cp_hqd_cntl_stack_size * xcc);
-+				(uint8_t *)ctl_stack_dst + ctl_stack_stride * xcc);
- 	}
- }
- 
-@@ -987,6 +997,15 @@ struct mqd_manager *mqd_manager_init_v9(
- 		mqd->is_occupied = kfd_is_occupied_cp;
- 		mqd->get_checkpoint_info = get_checkpoint_info;
- 		mqd->mqd_size = sizeof(struct v9_mqd);
-+		if (dev->kfd->cwsr_enabled) {
-+			struct kfd_topology_device *topo_dev;
-+
-+			topo_dev = kfd_topology_device_by_id(dev->id);
-+			if (topo_dev)
-+				mqd->ctl_stack_size =
-+					ALIGN(topo_dev->node_props.ctl_stack_size,
-+					      AMDGPU_GPU_PAGE_SIZE);
-+		}
- 		mqd->mqd_stride = mqd_stride_v9;
- #if defined(CONFIG_DEBUG_FS)
- 		mqd->debugfs_show_mqd = debugfs_show_mqd;
+--- a/drivers/gpu/drm/amd/amdgpu/sdma_v6_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/sdma_v6_0.c
+@@ -360,7 +360,7 @@ static void sdma_v6_0_ring_emit_fence(st
+ 	amdgpu_ring_write(ring, SDMA_PKT_COPY_LINEAR_HEADER_OP(SDMA_OP_FENCE) |
+ 			  SDMA_PKT_FENCE_HEADER_MTYPE(0x3)); /* Ucached(UC) */
+ 	/* zero in first two bits */
+-	BUG_ON(addr & 0x3);
++	WARN_ON(addr & 0x3);
+ 	amdgpu_ring_write(ring, lower_32_bits(addr));
+ 	amdgpu_ring_write(ring, upper_32_bits(addr));
+ 	amdgpu_ring_write(ring, lower_32_bits(seq));
+@@ -371,7 +371,7 @@ static void sdma_v6_0_ring_emit_fence(st
+ 		amdgpu_ring_write(ring, SDMA_PKT_COPY_LINEAR_HEADER_OP(SDMA_OP_FENCE) |
+ 				  SDMA_PKT_FENCE_HEADER_MTYPE(0x3));
+ 		/* zero in first two bits */
+-		BUG_ON(addr & 0x3);
++		WARN_ON(addr & 0x3);
+ 		amdgpu_ring_write(ring, lower_32_bits(addr));
+ 		amdgpu_ring_write(ring, upper_32_bits(addr));
+ 		amdgpu_ring_write(ring, upper_32_bits(seq));
 
 
