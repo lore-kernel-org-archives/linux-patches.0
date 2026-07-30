@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFE87443A9D;
-	Thu, 30 Jul 2026 15:21:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A32464446E9;
+	Thu, 30 Jul 2026 15:21:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424913; cv=none; b=WlpTOa/3GNtrpy8yzt7nkIX2mp1XkAY9zFBSpQvy26H1rMzdIDHtFbKXNP/HE0DwSdQSRQHMrCrWu61Oj/VOnZfNjUEg6DKfPXRWIl7UwfvoebYViBsS1S155W+f1Tgtu/+mmmL7Z6/fvGCRAlqaaygVJ+sqSQzGaqhZvjgNAPU=
+	t=1785424915; cv=none; b=WuKNG5z7j09V5EvbjceADqG2qQSo8iwwiZ318Y6eWEnmj1De+Kgey9lomq2AiHafqYNKiMV4iC00am9Dq/QKvkg0m78M5Uj2szJEIvhONblQGSkdfig+YMCpap/EnqAsv09N+NFiIn3Rz9iUcJo3Kj0EyXwLhCKv2tAcMa5KhUg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424913; c=relaxed/simple;
-	bh=cFiI00n5pryNbK27TuRKk47l4k088tF6Aq4mug1gpAQ=;
+	s=arc-20240116; t=1785424915; c=relaxed/simple;
+	bh=tXxoIEQIayA4mNrpDuAvV13vffuFR1vtJokzo34Lv9c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jDoEWDFgK962V8/zHj5JoKUe3VcRDpm3Dpbs+ra2uA0BE36xGreXooZR6gX0agQ+9CCdYy+ca/C/CHMgLUFyFVB4Kch31mbsWaFiF+JVh3jBh4L/t1l8IBrPRGxDo+DvflLnqX7gRUuHheTdUY9cwy2uAIEbKXA+hNNVKTB+lhI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X7Tu1GYW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=W6x6MOFsnhWxF3g0ldiLzIQlS6ruo2/ZbVF5s7Vk6bCfT5nbKBIrlebZRiyihPXxaPphTsfOzJc8RyJMTcDltlq41khw8GAvLVF+lFns4Xa39pQE0nUtbthKvjPxZpgRxpXsOZo99nvF9TvuOAjS0GPndbsDbc31bIBA+yjaSeo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N0uGvWHj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X7Tu1GYW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30D371F000E9;
-	Thu, 30 Jul 2026 15:21:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N0uGvWHj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B9E41F000E9;
+	Thu, 30 Jul 2026 15:21:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424911;
-	bh=oaWwEmC7GLI7mBG1odeS3QJYsx8dyP1dxsMtUQOTDE0=;
+	s=korg; t=1785424914;
+	bh=/uStC4/x4QkO9rUK6SKpkLmxNPldaqxFhBZRonFOWgM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X7Tu1GYWGCZ2B94YjvHyYAD1itUaZMxvVoQS7iaEi6D3KMIkHiZ0O6fKMKY1GmIhv
-	 bpR1mE7ot9aoFORUtwa8zX0P8avXZ1sT6gVQc1qyS5RZZWjg31PPZM0PnuXI+7KnDb
-	 nHqlBkYTv9ugeZp4l3oay0Qo5hKut6F6nxeJmeJs=
+	b=N0uGvWHj9gJnfXxCBY+0vIgjnsWaA3EpKlRtmas3NEClS6sXauWLU/ADD9YYZPHXj
+	 137EzVXXnOpTcxU5A+eeUrUOR1xuwKrjT/J/SgsXZkPYmPCKnzFij+SW+X1bMPur16
+	 1ESGzdvu7UnBrNKdHQ0CDuxwc3IqSQh3Q2hL6Gz8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuvam Pandey <shuvampandey1@gmail.com>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Antonio Quartulli <antonio@openvpn.net>
-Subject: [PATCH 6.18 561/675] ovpn: hold peer before scheduling keepalive work
-Date: Thu, 30 Jul 2026 16:14:51 +0200
-Message-ID: <20260730141457.057499642@linuxfoundation.org>
+	Asim Viladi Oglu Manizada <manizada@pm.me>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 562/675] pppoe: reload header pointer after dev_hard_header()
+Date: Thu, 30 Jul 2026 16:14:52 +0200
+Message-ID: <20260730141457.077870718@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -51,47 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuvam Pandey <shuvampandey1@gmail.com>
+From: Asim Viladi Oglu Manizada <manizada@pm.me>
 
-commit a4710ae2e7e322fdaefb4be8604228279cfaf48c upstream.
+commit e9c238f6fe42fb1b4dba3a578277de32cb487937 upstream.
 
-ovpn_peer_keepalive_send() passes its peer reference to
-ovpn_xmit_special(), which ultimately drops it. The keepalive scheduler
-currently queues the work first and takes the reference only after
-schedule_work() reports that the work was queued.
+pppoe_sendmsg() saves a pointer to the PPPoE header before calling
+dev_hard_header(). Device header callbacks are allowed to reallocate the
+skb head, invalidating pointers into it.
 
-Once schedule_work() queues the item, another CPU may run the worker
-before the caller gets to ovpn_peer_hold(). In that case the worker can
-consume a reference that was not acquired for it, corrupting the peer
-lifetime accounting.
+This can happen when a send is blocked in copy_from_user() while the first
+non-Ethernet port is added to an empty team device. The team's delegated
+GRE header callback then expands the skb head. PPPoE subsequently writes
+six bytes through the stale pointer into the freed head.
 
-Take the peer reference before queueing the work and drop it again when
-the work was already pending.
+Reload the PPPoE header through the skb's network-header offset after
+device header creation. pskb_expand_head() updates that offset when it
+relocates the head.
 
-Fixes: 3ecfd9349f40 ("ovpn: implement keepalive mechanism")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Shuvam Pandey <shuvampandey1@gmail.com>
-Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Signed-off-by: Antonio Quartulli <antonio@openvpn.net>
+Signed-off-by: Asim Viladi Oglu Manizada <manizada@pm.me>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260722093814.3017176-1-manizada@pm.me
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ovpn/peer.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/ppp/pppoe.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/net/ovpn/peer.c
-+++ b/drivers/net/ovpn/peer.c
-@@ -1280,8 +1280,10 @@ static time64_t ovpn_peer_keepalive_work
- 		netdev_dbg(peer->ovpn->dev,
- 			   "sending keepalive to peer %u\n",
- 			   peer->id);
--		if (schedule_work(&peer->keepalive_work))
--			ovpn_peer_hold(peer);
-+		if (WARN_ON(!ovpn_peer_hold(peer)))
-+			return 0;
-+		if (!schedule_work(&peer->keepalive_work))
-+			ovpn_peer_put(peer);
- 	}
+--- a/drivers/net/ppp/pppoe.c
++++ b/drivers/net/ppp/pppoe.c
+@@ -903,6 +903,7 @@ static int pppoe_sendmsg(struct socket *
+ 	dev_hard_header(skb, dev, ETH_P_PPP_SES,
+ 			po->pppoe_pa.remote, NULL, total_len);
  
- 	if (next_run1 < next_run2)
++	ph = pppoe_hdr(skb);
+ 	memcpy(ph, &hdr, sizeof(struct pppoe_hdr));
+ 
+ 	ph->length = htons(total_len);
 
 
