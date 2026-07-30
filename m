@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11488365A19;
-	Thu, 30 Jul 2026 14:21:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C79813C2785;
+	Thu, 30 Jul 2026 14:21:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421301; cv=none; b=reb3Mojn9s176zml66KhMi8vUFdZbFg79EWCqDWwsEhHb2Afjr6bioC4tIHgfU3Vdi2Jjk+BVN/K2uRFi99Vt/dmUWrwVmmqMET/PtxvZzJQF5k4X/l1Vy2xP7l7cmyzsJCkMyBMa53Uh3E70FfihhHMGEYLHgmDis6DBoaFE4Q=
+	t=1785421305; cv=none; b=O61zUTLXmU/ceaGLDcUIijGBuAUwdlzCJGB1yeYDwdZPODOelELtGuzFMJHCwvY0AxWzBGq9bIPKRZvsNHP+jHzoSqPQ9LWfND3hzQdUdBMSXv1E7ikHUjX9zOygH+KZerbUN1XaSEVIRn7tAkab4xsBK502bdzs/Lhs1f/xzso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421301; c=relaxed/simple;
-	bh=bw7m6YIfGeJbbgdzHQSbd2J62/BHgR1uFDiG9qwyjXY=;
+	s=arc-20240116; t=1785421305; c=relaxed/simple;
+	bh=0aI71tSDe0GV7swUETt9nkF6yWSqcoKn8rux3mNC1aM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AfORmaTOeq0bcSI9eFVWdYAjZeKFpSUoSRa2GHI4V8USBZIlLJZTz7u4u6ld+z/oiCqpBb1HObyIBD4tyUWPZVkbYRYj2iBqWq9p7FNYnTk960kmfuugBCiiIabJPEt1+Nhk6EDFhWGcoo/chXOshKtqQ8T2vlvsq9pGNT6/xOU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iBekwB9o; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HybDu5Tj4tgK3JZemHLSedEXeyngwc/Rt6d3S42yYVPB9BbMVL0LiS4+FW/3cT3pZdwPJ9A9yB3uTSMPCN97nbV3N4LsI8f5GoSPzuzSLCvYaixmHvc90GLdQShK/6G1O04qmZroCBYIYShVU65DWMfBDfj22OwJii39oUSRehI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zGpZcaY4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iBekwB9o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 560051F000E9;
-	Thu, 30 Jul 2026 14:21:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zGpZcaY4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB6191F000E9;
+	Thu, 30 Jul 2026 14:21:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421299;
-	bh=WftzWeCYTlYuchCPVOkMiC0WTIoqWf1Snz0MuEQXmSg=;
+	s=korg; t=1785421303;
+	bh=rdqIrGOO9HpuA9puu4FppT98eOntOZ/NU7qXsb9n5TY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iBekwB9ofuZ+1L4tg1C7Pb0Ptm4QAbzM7XNcEB4+xR17OfWaUCl1X3y6stb4nm/zb
-	 kBG/7ea/pVEeCOBN182p4MXFImzupAIV5DnzZ9X09ZeoOY6BgKSqRyobJwCeOJvBik
-	 el20r/rbBWNI6JvKOYhZ0a8WlbdKyD2uSLPbUMfM=
+	b=zGpZcaY4Zr7MOZ6eFWGEjfni7bqFyvn21Mf6C5Ea9QjF8luEXhWr+E3Ur5WUX1Ib6
+	 J+8X86aRtfYTGzInm9EgxAJoBdmZzDwNkQjBDgYbebKGHn8eMnTN5g/RoLvtXtdAQu
+	 XCarZGwuwwi9LvakL58O6Av85v1/RhhMentxqv/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes@sipsolutions.net>,
-	Kaixuan Li <kaixuan.li@ntu.edu.sg>,
-	Maoyi Xie <maoyixie.tju@gmail.com>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Christian Lamparter <chunkeey@gmail.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 057/744] wifi: mac80211: defer link RX stats percpu free to RCU
-Date: Thu, 30 Jul 2026 16:05:30 +0200
-Message-ID: <20260730141445.487736372@linuxfoundation.org>
+Subject: [PATCH 7.1 058/744] wifi: p54: validate RX frame length in p54_rx_eeprom_readback()
+Date: Thu, 30 Jul 2026 16:05:31 +0200
+Message-ID: <20260730141445.508638886@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -53,75 +53,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit aa2eb62525188269cdd402a583b9a8ed94657ff0 ]
+[ Upstream commit ebd6d37fa94bee929e0b4c9ca19fdf9b1dcf6cea ]
 
-sta_remove_link() frees a removed MLO link's RX stats percpu buffer right
-away, but defers only the link container to RCU:
+p54_rx_eeprom_readback() copies the requested EEPROM slice out of a
+device-supplied readback frame without checking that the skb actually holds
+that many bytes. Commit da1b9a55ff11 ("wifi: p54: prevent buffer-overflow in
+p54_rx_eeprom_readback()") closed the destination overflow by copying a
+fixed priv->eeprom_slice_size (and rejecting a mismatched advertised len),
+but the source side is still unbounded: nothing verifies the frame is long
+enough to supply that many bytes.
 
-	sta_info_free_link(&alloc->info);
-	kfree_rcu(alloc, rcu_head);
+A malicious USB device can send a short frame whose advertised len matches
+priv->eeprom_slice_size while the payload is truncated. The equality check
+passes and memcpy() reads past the end of the skb, leaking adjacent heap:
 
-The RX fast path reads link_sta under rcu_read_lock and writes the percpu
-stats. A reader that resolved link_sta before the removal keeps the
-pointer. The container stays alive from the kfree_rcu, so the read still
-works. But the percpu block it points to is already freed. This needs
-uses_rss. That is when pcpu_rx_stats exists.
+  BUG: KASAN: slab-out-of-bounds in p54_rx (drivers/net/wireless/intersil/p54/txrx.c:507)
+  Read of size 1016 at addr ffff88800f077114 by task swapper/0/0
+  Call Trace:
+   <IRQ>
+   ...
+   __asan_memcpy (mm/kasan/shadow.c:105)
+   p54_rx (drivers/net/wireless/intersil/p54/txrx.c:507)
+   p54u_rx_cb (drivers/net/wireless/intersil/p54/p54usb.c:163)
+   __usb_hcd_giveback_urb (drivers/usb/core/hcd.c:1657)
+   dummy_timer (drivers/usb/gadget/udc/dummy_hcd.c:2005)
+   ...
+   </IRQ>
 
-The full STA teardown frees the deflink stats only after
-synchronize_net(). The link removal path had no such barrier. The race is
-hard to win in practice, but the free should still wait for RCU.
+  The buggy address belongs to the object at ffff88800f0770c0
+   which belongs to the cache skbuff_small_head of size 704
+  The buggy address is located 84 bytes inside of
+   allocated 704-byte region [ffff88800f0770c0, ffff88800f077380)
 
-Free the link together with its data from a single RCU callback, so the
-percpu block is reclaimed only after readers drain.
+Check that the slice fits in the skb before copying.
 
-Fixes: c71420db653a ("wifi: mac80211: RCU-ify link STA pointers")
-Link: https://lore.kernel.org/r/20260626080158.3589711-1-maoyixie.tju@gmail.com
-Suggested-by: Johannes Berg <johannes@sipsolutions.net>
-Co-developed-by: Kaixuan Li <kaixuan.li@ntu.edu.sg>
-Signed-off-by: Kaixuan Li <kaixuan.li@ntu.edu.sg>
-Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
-Link: https://patch.msgid.link/20260627083028.3826810-1-maoyixie.tju@gmail.com
+Fixes: 7cb770729ba8 ("p54: move eeprom code into common library")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Acked-by: Christian Lamparter <chunkeey@gmail.com>
+Link: https://patch.msgid.link/20260628000510.4152481-1-xmei5@asu.edu
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/sta_info.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ drivers/net/wireless/intersil/p54/txrx.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/net/mac80211/sta_info.c b/net/mac80211/sta_info.c
-index 4c31ef8817ce07..6d58571a364d14 100644
---- a/net/mac80211/sta_info.c
-+++ b/net/mac80211/sta_info.c
-@@ -355,6 +355,15 @@ static void sta_info_free_link(struct link_sta_info *link_sta)
- 	free_percpu(link_sta->pcpu_rx_stats);
- }
+diff --git a/drivers/net/wireless/intersil/p54/txrx.c b/drivers/net/wireless/intersil/p54/txrx.c
+index 1294a1d6528e2c..9f491334c8d043 100644
+--- a/drivers/net/wireless/intersil/p54/txrx.c
++++ b/drivers/net/wireless/intersil/p54/txrx.c
+@@ -499,11 +499,19 @@ static void p54_rx_eeprom_readback(struct p54_common *priv,
+ 		if (le16_to_cpu(eeprom->v2.len) != priv->eeprom_slice_size)
+ 			return;
  
-+static void sta_link_free_rcu(struct rcu_head *head)
-+{
-+	struct sta_link_alloc *alloc =
-+		container_of(head, struct sta_link_alloc, rcu_head);
++		if (eeprom->v2.data + priv->eeprom_slice_size >
++		    skb_tail_pointer(skb))
++			return;
 +
-+	sta_info_free_link(&alloc->info);
-+	kfree(alloc);
-+}
+ 		memcpy(priv->eeprom, eeprom->v2.data, priv->eeprom_slice_size);
+ 	} else {
+ 		if (le16_to_cpu(eeprom->v1.len) != priv->eeprom_slice_size)
+ 			return;
+ 
++		if (eeprom->v1.data + priv->eeprom_slice_size >
++		    skb_tail_pointer(skb))
++			return;
 +
- static void sta_accumulate_removed_link_stats(struct sta_info *sta, int link_id)
- {
- 	struct link_sta_info *link_sta = wiphy_dereference(sta->local->hw.wiphy,
-@@ -439,10 +448,8 @@ static void sta_remove_link(struct sta_info *sta, unsigned int link_id,
+ 		memcpy(priv->eeprom, eeprom->v1.data, priv->eeprom_slice_size);
+ 	}
  
- 	RCU_INIT_POINTER(sta->link[link_id], NULL);
- 	RCU_INIT_POINTER(sta->sta.link[link_id], NULL);
--	if (alloc) {
--		sta_info_free_link(&alloc->info);
--		kfree_rcu(alloc, rcu_head);
--	}
-+	if (alloc)
-+		call_rcu(&alloc->rcu_head, sta_link_free_rcu);
- 
- 	ieee80211_sta_recalc_aggregates(&sta->sta);
- }
 -- 
 2.53.0
 
