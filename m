@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49078445AF6;
-	Thu, 30 Jul 2026 15:32:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D543435A9E;
+	Thu, 30 Jul 2026 15:32:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425527; cv=none; b=KXdLFxKYIBbRe8EdAtHzZpyZtiLrNH7OE9HL4P1Slor3tBR/qVDiTOJKfPqJW0JvBaHAlXv1DMRQGH5ZA4QH2AhucI6hVhH5aE3riGhziSMvgN/HBK4rEz8ws01H1y9R0vOsbcUTrJGAhCWVNHA+uuu/Vo9hV2pxgjIjrlSWU4A=
+	t=1785425530; cv=none; b=M8VVLtFuDOhioTDqXb9m+JHvzYvgq30qSHiG1zpfiuLz2Af6bms/engnK8Rn/YjszPJ1PWYnqX2XSE/4FADS6iiu7AoNDqUInR97rUZWhyyIen9YYdNSSwqF2Z7p+MuG5Fs7jNpXJlYhq+Fbazi2L94hCYbx3gU3HGdYVm+aoKo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425527; c=relaxed/simple;
-	bh=1Hjo2fYZ9l0gnjs9blYXBhrD5CIOHSdcfB/BbyN7h0M=;
+	s=arc-20240116; t=1785425530; c=relaxed/simple;
+	bh=prVWdOsjQw0v/q5/n2SmrJo/wSK0FhQaXrGBzAYGqsg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W+FUoS3sz1XwLYJGkYJj5zMDUHf3zCNO0D/V9Zuu0hUdOFE9++ED2RirtMEKoYmzZONrnqbJkqHnO9MTfdQRZmflgYcvniQtwwZOoE1DS3Lazrd15gS4l0Nva4tPbT+mQfbXXXzK6oUasRWVai8hgg61Uf37PW9jJuv2NeOXtv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IlgLOrwX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZOxcJCqTWsIGC2ZGmukF0TuT3Tlyj2xOLpboJkwcnXjniAMVN1DNd69XxtlZzE7oMbJbJFGXH+dTTTHB7wkOPLxc8eE+DYupVtoQCAlrsqoNs9olDxoE79HbpwnO7PZKTJQfoFQGsE2enMLlahgM7W0DPxuSjYavv2kuegXmg6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PZ7FVpa2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IlgLOrwX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95A341F000E9;
-	Thu, 30 Jul 2026 15:32:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PZ7FVpa2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D0F21F000E9;
+	Thu, 30 Jul 2026 15:32:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425526;
-	bh=yZ2we5ZSFDDGnXieWuldSyTp37Hi5tens2fjRK1vix8=;
+	s=korg; t=1785425528;
+	bh=UWP5+wYcWpoROmWec6X9g5H10nBx03Pis1ENPQ5Pl7g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IlgLOrwXo3zPDvBJVsM3T3cxdRfB4p4ywDPvw8tGcFtxiEsWdFIp8CirSUSmGuNMg
-	 fiDMSRoXLkIfkm3c7gO9J9UrXz9nlQqB+aRIFBSHctpzIPxalFya4uQ5nWyGzDJqSr
-	 mgD1XB4d7/scXblyw5TQyBJJqaN5QF7vBlsEX2Ns=
+	b=PZ7FVpa2Eb9iS2WAMKdhWcR/4GW3WOrmBVj7d3NpNPA/arEXSXGSHJShkWDZiD8SW
+	 1ToSLahOBrGZ4jNXjNgu8VHWKscIBnphqXR/si+f+ias5O5Eq/eHE12nXJeccoBNVu
+	 WeobbHR4yPsLDk5JaTaj09gQnYDiHCh6AIEGDye8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Michal Luczaj <mhal@rbox.co>,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 101/602] bpf, sockmap: Reject unhashed UDP sockets on sockmap update
-Date: Thu, 30 Jul 2026 16:08:13 +0200
-Message-ID: <20260730141438.116414047@linuxfoundation.org>
+Subject: [PATCH 6.12 102/602] s390/checksum: Fix csum_partial() without vector facility
+Date: Thu, 30 Jul 2026 16:08:14 +0200
+Message-ID: <20260730141438.137760216@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -54,72 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Luczaj <mhal@rbox.co>
+From: Vasily Gorbik <gor@linux.ibm.com>
 
-[ Upstream commit 66efd3368ae10d05e08fbe6425b50fdec7186ac7 ]
+[ Upstream commit 4bb06b60d982355e22647b3d12d6619419f8c1fa ]
 
-UDP sockets get SOCK_RCU_FREE set when (auto-)bound. This means
-sk_is_refcounted(unbound) = true, while sk_is_refcounted(bound) = false.
+Currently csum_partial() calls csum_copy() with copy=false and dst=NULL.
+On machines without the vector facility, csum_copy() falls back to
+cksm(dst, ...), causing the checksum to be calculated from address zero
+instead of the source buffer.
 
-Because sockmap accepts unbound UDP sockets, a BPF program can increment a
-socket's refcount via lookup. If the socket is subsequently bound, the
-transition from unbound to bound causes bpf_sk_release() to skip the
-decrement of the refcount, causing a memory leak.
+The VX implementation already checksums data loaded from src. Make the
+fallback do the same by passing src to cksm().
 
-unreferenced object 0xffff88810bc2eb40 (size 1984):
-  comm "test_progs", pid 2451, jiffies 4295320596
-  hex dump (first 32 bytes):
-    7f 00 00 01 7f 00 00 01 d2 04 1b b7 04 d2 00 00  ................
-    02 00 01 40 00 00 00 00 00 00 00 00 00 00 00 00  ...@............
-  backtrace (crc bdee079d):
-    kmem_cache_alloc_noprof+0x557/0x660
-    sk_prot_alloc+0x69/0x240
-    sk_alloc+0x30/0x460
-    inet_create+0x2ce/0xf80
-    __sock_create+0x25b/0x5c0
-    __sys_socket+0x119/0x1d0
-    __x64_sys_socket+0x72/0xd0
-    do_syscall_64+0xa1/0x5f0
-    entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-Instead of special-casing for refcounted sockets, reject unhashed UDP
-sockets during sockmap updates, as there is no benefit to supporting those.
-This effectively reverts the commit under Fixes, with two exceptions:
-
-1. sock_map_sk_state_allowed() maintains a fall-through `return true`.
-2. In the spirit of commit b8b8315e39ff ("bpf, sockmap: Remove unhash
-   handler for BPF sockmap usage"), the proto::unhash BPF handler is not
-   reintroduced.
-
-Historical note: this issue is related to commit 67312adc96b5 ("bpf: reject
-unhashed sockets in bpf_sk_assign").
-
-Fixes: 0c48eefae712 ("sock_map: Lift socket state restriction for datagram sockets")
-Suggested-by: Kuniyuki Iwashima <kuniyu@google.com>
-Signed-off-by: Michal Luczaj <mhal@rbox.co>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
-Reviewed-by: John Fastabend <john.fastabend@gmail.com>
-Link: https://lore.kernel.org/bpf/20260707-sockmap-lookup-udp-leak-v4-2-f878346f27ab@rbox.co
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Fixes: dcd3e1de9d17 ("s390/checksum: provide csum_partial_copy_nocheck()")
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sock_map.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/s390/lib/csum-partial.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/core/sock_map.c b/net/core/sock_map.c
-index 82a14f131d00c6..6440ce16fc6214 100644
---- a/net/core/sock_map.c
-+++ b/net/core/sock_map.c
-@@ -542,6 +542,8 @@ static bool sock_map_sk_state_allowed(const struct sock *sk)
- {
- 	if (sk_is_tcp(sk))
- 		return (1 << sk->sk_state) & (TCPF_ESTABLISHED | TCPF_LISTEN);
-+	if (sk_is_udp(sk))
-+		return sk_hashed(sk);
- 	if (sk_is_stream_unix(sk))
- 		return (1 << sk->sk_state) & TCPF_ESTABLISHED;
- 	if (sk_is_vsock(sk) &&
+diff --git a/arch/s390/lib/csum-partial.c b/arch/s390/lib/csum-partial.c
+index 458abd9bac7025..9d74ceff136c54 100644
+--- a/arch/s390/lib/csum-partial.c
++++ b/arch/s390/lib/csum-partial.c
+@@ -23,7 +23,7 @@ static __always_inline __wsum csum_copy(void *dst, const void *src, int len, __w
+ 	if (!cpu_has_vx()) {
+ 		if (copy)
+ 			memcpy(dst, src, len);
+-		return cksm(dst, len, sum);
++		return cksm(src, len, sum);
+ 	}
+ 	kernel_fpu_begin(&vxstate, KERNEL_VXR_V16V23);
+ 	fpu_vlvgf(16, (__force u32)sum, 1);
 -- 
 2.53.0
 
