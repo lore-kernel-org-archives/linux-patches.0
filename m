@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E0F8443A92;
-	Thu, 30 Jul 2026 15:24:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70CE44499AC;
+	Thu, 30 Jul 2026 15:24:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425056; cv=none; b=DMrgXRC9TMYPyr+rH5bo9eV30GFjUTqY7NhnEcyeVu2gYY9qDqbBFmwrz5fz4T1pr+vCB+RMulQ6xwYwBVnqYla1Fr14Ln2nQB5pPom9fz1RelZEgWyvuEkQbJCHxPYJ5peiXG8m0BNkyWje75LKYi5WpIciZ0HFvKnrfylhvkE=
+	t=1785425058; cv=none; b=hMsdeWM9Oo17WtvNcGLRmprjTquAvIie74TaUZs8EbfIShxfqQ/FGBR0jNaHSLp3hvwVCED7QT99zpBatV2bGMGz7f4xoWU3drZo70B3zPZ2FoiBBt9f3DNJWoUZVJnAAhxpuwFeWcb3RjS5mAsH2QE9CkssyBPWt1rhiUtMS/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425056; c=relaxed/simple;
-	bh=NYWQMchw8EUDR8NQfQr9Z29jXmANrcDyKtIZMPQh8kA=;
+	s=arc-20240116; t=1785425058; c=relaxed/simple;
+	bh=YsUhEt1HzQ6F6VNn2YD97/KwuegpFhFMlHkYE0TlB6g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dS7xLioAtypdS1Mo+2UX5xwU1VBB05hrtXFV1Sd7DWIP3t1L0RBwVYzVuHlIfrWPnvLg9misL8xWCLObNQDM+8Mt5IqYP7cj7QnWZOxj39SvFuYImkVlk9cyVEuuAkOTRU+tFAe8z8tGLMXHwA5QRDxQUEfpcCZKKHNlby7L4zM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cf52+5iL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=LZjswoLpmXCyylklyZHJ8ethw2eHcDVLRI6NXObVZ/BnU5R+iRCksdGa4/J8jYTMF+ExewoaQ6PY0GXnp5bzvc91hfApwUmUEGDE/5g+Ejo3i3kWFnpzNZt0Y18Wu6C41fyq9vCzNK4YbGeAF+sVCzbmz0LJ7NJxghTkkHthLZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t5NymcaO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cf52+5iL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFD4C1F000E9;
-	Thu, 30 Jul 2026 15:24:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t5NymcaO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF0481F000E9;
+	Thu, 30 Jul 2026 15:24:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425054;
-	bh=UlB49DmYbVdElVvkhSbP+8e82Ei87UlYCfUk+ur8Iw8=;
+	s=korg; t=1785425057;
+	bh=jF+J8LWUGXAvCKe1Ty10IO/5kIp30z4tmpaLXDxdEc8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Cf52+5iLQiXbrl/0t0Sm4ZTcj+n6+7klIXBvr2eG7dJXpQ+BfYPB931a3pDcGTnk/
-	 E/d9eB2kEJT0BYiVjBLqs+DeJlt9R9tK99EpGxAIJAkXOdjSIRFujZOxWN+OSQkFhm
-	 d88wGTYxIn1dIwRZsZo/DxY3DQ12vBz180XHyTHE=
+	b=t5NymcaOT+QSy4ye4LIDgftGMcJOUT5ZfCT7uo7mvZoj6bmdu6D2be1YBthoxWdoV
+	 KtzJn3241dQ9ZFpOtmA4y+2qOSN03gODxYVEV7qaQ1KYg6o3B7BHbG473fYWu8BF05
+	 lO8R2UQEGL3KgvOvYLMQNr1gaB+VnT8MHXPA/7OQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cem@kernel.org>,
+	Jason Wang <jasowang@redhat.com>,
+	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 611/675] xfs: dont replace the wrong part of the cow fork
-Date: Thu, 30 Jul 2026 16:15:41 +0200
-Message-ID: <20260730141458.103134958@linuxfoundation.org>
+Subject: [PATCH 6.18 612/675] vduse: return internal vq group struct as map token
+Date: Thu, 30 Jul 2026 16:15:42 +0200
+Message-ID: <20260730141458.125018203@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -46,432 +46,352 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: "Darrick J. Wong" <djwong@kernel.org>
+From: Eugenio Pérez <eperezma@redhat.com>
 
-[ Upstream commit a1caeeadbf57ff86dfc3454398c46de86056a74e ]
+[ Upstream commit 02e3f7ffe2906033da73b7c7ea8180b131d0cdbc ]
 
-LOLLM points out that xfs_iext_lookup_extent can return a @got where
-got->br_startoff < startoff.  In this case, xrep_cow_replace_range
-replaces the entire mapping instead of just the part that had been
-marked bad in the bitmap, but advances the bitmap cursor in
-xrep_cow_replace by the amount replaced.  As a result, we fail to
-replace the end of the bad range, and replace part of the good range.
+Return the internal struct that represents the vq group as virtqueue map
+token, instead of the device.  This allows the map functions to access
+the information per group.
 
-Fix this by rewriting the replace method to handle replacing the middle
-of a cow fork mapping.  This we do by returning both the current mapping
-as @got, and the subset of the mapping that we want to replace as @rep,
-using @rep to store the results of the new allocation, and comparing
-@rep to @got to figure out the exact transformations needed.
+At this moment all the virtqueues share the same vq group, that only
+can point to ASID 0.  This change prepares the infrastructure for actual
+per-group address space handling
 
-Cc: stable@vger.kernel.org # v6.8
-Fixes: dbbdbd0086320a ("xfs: repair problems in CoW forks")
-Signed-off-by: "Darrick J. Wong" <djwong@kernel.org>
-Assisted-by: LOLLM # finding obvious bugs
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Signed-off-by: Eugenio Pérez <eperezma@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-Id: <20260119143306.1818855-5-eperezma@redhat.com>
+Stable-dep-of: 9c1523803445 ("VDUSE: avoid leaking information to userspace")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/cow_repair.c |  203 +++++++++++++++++++++++++++++-----------------
- fs/xfs/scrub/trace.h      |   28 +++---
- 2 files changed, 148 insertions(+), 83 deletions(-)
+ drivers/vdpa/vdpa_user/iova_domain.c |   21 ++----
+ drivers/vdpa/vdpa_user/iova_domain.h |    5 -
+ drivers/vdpa/vdpa_user/vduse_dev.c   |  109 ++++++++++++++++++++++++++++++-----
+ include/linux/virtio.h               |    6 -
+ 4 files changed, 108 insertions(+), 33 deletions(-)
 
---- a/fs/xfs/scrub/cow_repair.c
-+++ b/fs/xfs/scrub/cow_repair.c
-@@ -80,12 +80,6 @@ struct xrep_cow {
- 	unsigned int		next_bno;
+--- a/drivers/vdpa/vdpa_user/iova_domain.c
++++ b/drivers/vdpa/vdpa_user/iova_domain.c
+@@ -493,17 +493,15 @@ void vduse_domain_unmap_page(struct vdus
+ 	vduse_domain_free_iova(iovad, dma_addr, size);
+ }
+ 
+-void *vduse_domain_alloc_coherent(struct vduse_iova_domain *domain,
+-				  size_t size, dma_addr_t *dma_addr,
+-				  gfp_t flag)
++dma_addr_t vduse_domain_alloc_coherent(struct vduse_iova_domain *domain,
++				       size_t size, void *orig)
+ {
+ 	struct iova_domain *iovad = &domain->consistent_iovad;
+ 	unsigned long limit = domain->iova_limit;
+ 	dma_addr_t iova = vduse_domain_alloc_iova(iovad, size, limit);
+-	void *orig = alloc_pages_exact(size, flag);
+ 
+-	if (!iova || !orig)
+-		goto err;
++	if (!iova)
++		return DMA_MAPPING_ERROR;
+ 
+ 	spin_lock(&domain->iotlb_lock);
+ 	if (vduse_iotlb_add_range(domain, (u64)iova, (u64)iova + size - 1,
+@@ -514,17 +512,12 @@ void *vduse_domain_alloc_coherent(struct
+ 	}
+ 	spin_unlock(&domain->iotlb_lock);
+ 
+-	*dma_addr = iova;
++	return iova;
+ 
+-	return orig;
+ err:
+-	*dma_addr = DMA_MAPPING_ERROR;
+-	if (orig)
+-		free_pages_exact(orig, size);
+-	if (iova)
+-		vduse_domain_free_iova(iovad, iova, size);
++	vduse_domain_free_iova(iovad, iova, size);
+ 
+-	return NULL;
++	return DMA_MAPPING_ERROR;
+ }
+ 
+ void vduse_domain_free_coherent(struct vduse_iova_domain *domain, size_t size,
+--- a/drivers/vdpa/vdpa_user/iova_domain.h
++++ b/drivers/vdpa/vdpa_user/iova_domain.h
+@@ -67,9 +67,8 @@ void vduse_domain_unmap_page(struct vdus
+ 			     dma_addr_t dma_addr, size_t size,
+ 			     enum dma_data_direction dir, unsigned long attrs);
+ 
+-void *vduse_domain_alloc_coherent(struct vduse_iova_domain *domain,
+-				  size_t size, dma_addr_t *dma_addr,
+-				  gfp_t flag);
++dma_addr_t vduse_domain_alloc_coherent(struct vduse_iova_domain *domain,
++				       size_t size, void *orig);
+ 
+ void vduse_domain_free_coherent(struct vduse_iova_domain *domain, size_t size,
+ 				void *vaddr, dma_addr_t dma_addr,
+--- a/drivers/vdpa/vdpa_user/vduse_dev.c
++++ b/drivers/vdpa/vdpa_user/vduse_dev.c
+@@ -22,6 +22,7 @@
+ #include <linux/uio.h>
+ #include <linux/vdpa.h>
+ #include <linux/nospec.h>
++#include <linux/virtio.h>
+ #include <linux/vmalloc.h>
+ #include <linux/sched/mm.h>
+ #include <uapi/linux/vduse.h>
+@@ -83,6 +84,10 @@ struct vduse_umem {
+ 	struct mm_struct *mm;
  };
  
--/* CoW staging extent. */
--struct xrep_cow_extent {
--	xfs_fsblock_t		fsbno;
--	xfs_extlen_t		len;
--};
--
- /*
-  * Mark the part of the file range that corresponds to the given physical
-  * space.  Caller must ensure that the physical range is within xc->irec.
-@@ -401,22 +395,21 @@ out_rtg:
- STATIC int
- xrep_cow_alloc(
- 	struct xfs_scrub	*sc,
--	xfs_extlen_t		maxlen,
--	struct xrep_cow_extent	*repl)
-+	struct xfs_bmbt_irec	*del)
- {
- 	struct xfs_alloc_arg	args = {
- 		.tp		= sc->tp,
- 		.mp		= sc->mp,
- 		.oinfo		= XFS_RMAP_OINFO_SKIP_UPDATE,
- 		.minlen		= 1,
--		.maxlen		= maxlen,
-+		.maxlen		= del->br_blockcount,
- 		.prod		= 1,
- 		.resv		= XFS_AG_RESV_NONE,
- 		.datatype	= XFS_ALLOC_USERDATA,
- 	};
- 	int			error;
- 
--	error = xfs_trans_reserve_more(sc->tp, maxlen, 0);
-+	error = xfs_trans_reserve_more(sc->tp, del->br_blockcount, 0);
- 	if (error)
- 		return error;
- 
-@@ -429,8 +422,8 @@ xrep_cow_alloc(
- 
- 	xfs_refcount_alloc_cow_extent(sc->tp, false, args.fsbno, args.len);
- 
--	repl->fsbno = args.fsbno;
--	repl->len = args.len;
-+	del->br_startblock = args.fsbno;
-+	del->br_blockcount = args.len;
++struct vduse_vq_group {
++	struct vduse_dev *dev;
++};
++
+ struct vduse_dev {
+ 	struct vduse_vdpa *vdev;
+ 	struct device *dev;
+@@ -115,6 +120,7 @@ struct vduse_dev {
+ 	u32 vq_num;
+ 	u32 vq_align;
+ 	struct vduse_umem *umem;
++	struct vduse_vq_group *groups;
+ 	struct mutex mem_lock;
+ 	unsigned int bounce_size;
+ 	struct mutex domain_lock;
+@@ -615,6 +621,16 @@ static int vduse_vdpa_set_vq_state(struc
  	return 0;
  }
  
-@@ -441,10 +434,12 @@ xrep_cow_alloc(
- STATIC int
- xrep_cow_alloc_rt(
- 	struct xfs_scrub	*sc,
--	xfs_extlen_t		maxlen,
--	struct xrep_cow_extent	*repl)
-+	struct xfs_bmbt_irec	*del)
- {
--	xfs_rtxlen_t		maxrtx = xfs_rtb_to_rtx(sc->mp, maxlen);
-+	xfs_fsblock_t		fsbno;
-+	xfs_rtxlen_t		maxrtx =
-+		min(U32_MAX, xfs_blen_to_rtbxlen(sc->mp, del->br_blockcount));
-+	xfs_extlen_t		len;
- 	int			error;
- 
- 	error = xfs_trans_reserve_more(sc->tp, 0, maxrtx);
-@@ -452,11 +447,14 @@ xrep_cow_alloc_rt(
- 		return error;
- 
- 	error = xfs_rtallocate_rtgs(sc->tp, NULLRTBLOCK, 1, maxrtx, 1, false,
--			false, &repl->fsbno, &repl->len);
-+			false, &fsbno, &len);
- 	if (error)
- 		return error;
- 
--	xfs_refcount_alloc_cow_extent(sc->tp, true, repl->fsbno, repl->len);
-+	xfs_refcount_alloc_cow_extent(sc->tp, true, fsbno, len);
++static union virtio_map vduse_get_vq_map(struct vdpa_device *vdpa, u16 idx)
++{
++	struct vduse_dev *dev = vdpa_to_vduse(vdpa);
++	union virtio_map ret = {
++		.group = &dev->groups[0],
++	};
 +
-+	del->br_startblock = fsbno;
-+	del->br_blockcount = len;
- 	return 0;
++	return ret;
++}
++
+ static int vduse_vdpa_get_vq_state(struct vdpa_device *vdpa, u16 idx,
+ 				struct vdpa_vq_state *state)
+ {
+@@ -834,6 +850,7 @@ static const struct vdpa_config_ops vdus
+ 	.get_vq_affinity	= vduse_vdpa_get_vq_affinity,
+ 	.reset			= vduse_vdpa_reset,
+ 	.set_map		= vduse_vdpa_set_map,
++	.get_vq_map		= vduse_get_vq_map,
+ 	.free			= vduse_vdpa_free,
+ };
+ 
+@@ -841,7 +858,14 @@ static void vduse_dev_sync_single_for_de
+ 					     dma_addr_t dma_addr, size_t size,
+ 					     enum dma_data_direction dir)
+ {
+-	struct vduse_iova_domain *domain = token.iova_domain;
++	struct vduse_dev *vdev;
++	struct vduse_iova_domain *domain;
++
++	if (!token.group)
++		return;
++
++	vdev = token.group->dev;
++	domain = vdev->domain;
+ 
+ 	vduse_domain_sync_single_for_device(domain, dma_addr, size, dir);
+ }
+@@ -850,7 +874,14 @@ static void vduse_dev_sync_single_for_cp
+ 					     dma_addr_t dma_addr, size_t size,
+ 					     enum dma_data_direction dir)
+ {
+-	struct vduse_iova_domain *domain = token.iova_domain;
++	struct vduse_dev *vdev;
++	struct vduse_iova_domain *domain;
++
++	if (!token.group)
++		return;
++
++	vdev = token.group->dev;
++	domain = vdev->domain;
+ 
+ 	vduse_domain_sync_single_for_cpu(domain, dma_addr, size, dir);
+ }
+@@ -860,7 +891,14 @@ static dma_addr_t vduse_dev_map_page(uni
+ 				     enum dma_data_direction dir,
+ 				     unsigned long attrs)
+ {
+-	struct vduse_iova_domain *domain = token.iova_domain;
++	struct vduse_dev *vdev;
++	struct vduse_iova_domain *domain;
++
++	if (!token.group)
++		return DMA_MAPPING_ERROR;
++
++	vdev = token.group->dev;
++	domain = vdev->domain;
+ 
+ 	return vduse_domain_map_page(domain, page, offset, size, dir, attrs);
+ }
+@@ -869,7 +907,14 @@ static void vduse_dev_unmap_page(union v
+ 				 size_t size, enum dma_data_direction dir,
+ 				 unsigned long attrs)
+ {
+-	struct vduse_iova_domain *domain = token.iova_domain;
++	struct vduse_dev *vdev;
++	struct vduse_iova_domain *domain;
++
++	if (!token.group)
++		return;
++
++	vdev = token.group->dev;
++	domain = vdev->domain;
+ 
+ 	return vduse_domain_unmap_page(domain, dma_addr, size, dir, attrs);
+ }
+@@ -877,33 +922,57 @@ static void vduse_dev_unmap_page(union v
+ static void *vduse_dev_alloc_coherent(union virtio_map token, size_t size,
+ 				      dma_addr_t *dma_addr, gfp_t flag)
+ {
+-	struct vduse_iova_domain *domain = token.iova_domain;
+-	unsigned long iova;
++	struct vduse_dev *vdev;
++	struct vduse_iova_domain *domain;
+ 	void *addr;
+ 
+ 	*dma_addr = DMA_MAPPING_ERROR;
+-	addr = vduse_domain_alloc_coherent(domain, size,
+-					   (dma_addr_t *)&iova, flag);
++	if (!token.group)
++		return NULL;
++
++	addr = alloc_pages_exact(size, flag);
+ 	if (!addr)
+ 		return NULL;
+ 
+-	*dma_addr = (dma_addr_t)iova;
++	vdev = token.group->dev;
++	domain = vdev->domain;
++	*dma_addr = vduse_domain_alloc_coherent(domain, size, addr);
++	if (*dma_addr == DMA_MAPPING_ERROR)
++		goto err;
+ 
+ 	return addr;
++
++err:
++	free_pages_exact(addr, size);
++	return NULL;
  }
  
-@@ -470,19 +468,19 @@ static inline int
- xrep_cow_find_mapping(
- 	struct xrep_cow		*xc,
- 	struct xfs_iext_cursor	*icur,
--	xfs_fileoff_t		startoff,
--	struct xfs_bmbt_irec	*got)
-+	xfs_fileoff_t		badoff,
-+	xfs_extlen_t		badlen,
-+	struct xfs_bmbt_irec	*got,
-+	struct xfs_bmbt_irec	*rep)
+ static void vduse_dev_free_coherent(union virtio_map token, size_t size,
+ 				    void *vaddr, dma_addr_t dma_addr,
+ 				    unsigned long attrs)
  {
- 	struct xfs_inode	*ip = xc->sc->ip;
- 	struct xfs_ifork	*ifp = xfs_ifork_ptr(ip, XFS_COW_FORK);
- 
--	if (!xfs_iext_lookup_extent(ip, ifp, startoff, icur, got))
-+	if (!xfs_iext_lookup_extent(ip, ifp, badoff, icur, got))
- 		goto bad;
-+	memcpy(rep, got, sizeof(*rep));
- 
--	if (got->br_startoff > startoff)
--		goto bad;
--
--	if (got->br_blockcount == 0)
-+	if (got->br_startoff > badoff)
- 		goto bad;
- 
- 	if (isnullstartblock(got->br_startblock))
-@@ -491,6 +489,24 @@ xrep_cow_find_mapping(
- 	if (xfs_bmap_is_written_extent(got))
- 		goto bad;
- 
-+	if (got->br_startoff < badoff) {
-+		const int64_t	delta = badoff - got->br_startoff;
+-	struct vduse_iova_domain *domain = token.iova_domain;
++	struct vduse_dev *vdev;
++	struct vduse_iova_domain *domain;
 +
-+		rep->br_blockcount -= delta;
-+		rep->br_startoff += delta;
-+		rep->br_startblock += delta;
-+	}
++	if (!token.group)
++		return;
 +
-+	if (got->br_startoff + got->br_blockcount > badoff + badlen) {
-+		const int64_t	delta = (got->br_startoff + got->br_blockcount) -
-+					(badoff + badlen);
-+
-+		rep->br_blockcount -= delta;
-+	}
-+
-+	if (got->br_blockcount == 0)
-+		goto bad;
-+
- 	return 0;
- bad:
- 	ASSERT(0);
-@@ -501,46 +517,92 @@ bad:
- #define REPLACE_RIGHT_SIDE	(1U << 1)
++	vdev = token.group->dev;
++	domain = vdev->domain;
  
- /*
-- * Given a CoW fork mapping @got and a replacement mapping @repl, remap the
-- * beginning of @got with the space described by @rep.
-+ * Given a CoW fork mapping @got and a replacement mapping @rep, map the space
-+ * described by @rep into the cow fork, pushing aside @got as necessary.  @icur
-+ * must point to iext tree leaf containing @got.
-  */
- static inline void
- xrep_cow_replace_mapping(
--	struct xfs_inode		*ip,
--	struct xfs_iext_cursor		*icur,
--	const struct xfs_bmbt_irec	*got,
--	const struct xrep_cow_extent	*repl)
-+	struct xfs_inode	*ip,
-+	struct xfs_iext_cursor	*icur,
-+	struct xfs_bmbt_irec	*got,
-+	struct xfs_bmbt_irec	*rep)
- {
--	struct xfs_bmbt_irec		new = *got; /* struct copy */
-+	struct xfs_ifork	*ifp = xfs_ifork_ptr(ip, XFS_COW_FORK);
-+	xfs_fileoff_t		rep_endoff =
-+			rep->br_startoff + rep->br_blockcount;
-+	xfs_fileoff_t		got_endoff =
-+			got->br_startoff + got->br_blockcount;
-+	uint32_t		state = BMAP_COWFORK;
- 
--	ASSERT(repl->len > 0);
-+	ASSERT(rep->br_blockcount > 0);
- 	ASSERT(!isnullstartblock(got->br_startblock));
-+	ASSERT(got->br_startoff <= rep->br_startoff);
-+	ASSERT(got_endoff >= rep_endoff);
- 
--	trace_xrep_cow_replace_mapping(ip, got, repl->fsbno, repl->len);
-+	trace_xrep_cow_replace_mapping(ip, got, rep);
- 
--	if (got->br_blockcount == repl->len) {
-+	if (got->br_startoff == rep->br_startoff)
-+		state |= BMAP_LEFT_FILLING;
-+	if (got_endoff == rep_endoff)
-+		state |= BMAP_RIGHT_FILLING;
-+
-+	switch (state & (BMAP_LEFT_FILLING | BMAP_RIGHT_FILLING)) {
-+	case BMAP_LEFT_FILLING | BMAP_RIGHT_FILLING:
- 		/*
--		 * The new extent is a complete replacement for the existing
--		 * extent.  Update the COW fork record.
-+		 * Replacement matches the whole mapping, update the record.
- 		 */
--		new.br_startblock = repl->fsbno;
--		xfs_iext_update_extent(ip, BMAP_COWFORK, icur, &new);
--		return;
--	}
-+		xfs_iext_update_extent(ip, state, icur, rep);
-+		break;
-+	case BMAP_LEFT_FILLING:
-+		/*
-+		 * Replace the first part of the mapping: Update the cursor
-+		 * position with the new mapping, then add a record with the
-+		 * tail of the old mapping.
-+		 */
-+		got->br_startoff = rep_endoff;
-+		got->br_blockcount -= rep->br_blockcount;
-+		got->br_startblock += rep->br_blockcount;
-+
-+		xfs_iext_update_extent(ip, state, icur, rep);
-+		xfs_iext_next(ifp, icur);
-+		xfs_iext_insert(ip, icur, got, state);
-+		break;
-+	case BMAP_RIGHT_FILLING:
-+		/*
-+		 * Replacing the last part of the mapping.  Shorten the current
-+		 * mapping then add a record with the new mapping.
-+		 */
-+		got->br_blockcount -= rep->br_blockcount;
- 
--	/*
--	 * The new extent can replace the beginning of the COW fork record.
--	 * Move the left side of @got upwards, then insert the new record.
--	 */
--	new.br_startoff += repl->len;
--	new.br_startblock += repl->len;
--	new.br_blockcount -= repl->len;
--	xfs_iext_update_extent(ip, BMAP_COWFORK, icur, &new);
--
--	new.br_startoff = got->br_startoff;
--	new.br_startblock = repl->fsbno;
--	new.br_blockcount = repl->len;
--	xfs_iext_insert(ip, icur, &new, BMAP_COWFORK);
-+		xfs_iext_update_extent(ip, state, icur, got);
-+		xfs_iext_next(ifp, icur);
-+		xfs_iext_insert(ip, icur, rep, state);
-+		break;
-+	case 0:
-+		/*
-+		 * Replacing the middle of the extent.  Shorten the current
-+		 * mapping, add a new record with the new mapping, and add a
-+		 * second new record with the tail of the old mapping.
-+		 */
-+		got->br_blockcount = rep->br_startoff - got->br_startoff;
-+
-+		struct xfs_bmbt_irec	new = {
-+			.br_startoff	= rep_endoff,
-+			.br_blockcount	= got_endoff - rep_endoff,
-+			.br_state	= got->br_state,
-+			.br_startblock	= got->br_startblock +
-+						rep->br_blockcount +
-+						got->br_blockcount,
-+		};
-+
-+		xfs_iext_update_extent(ip, state, icur, got);
-+		xfs_iext_next(ifp, icur);
-+		xfs_iext_insert(ip, icur, rep, state);
-+		xfs_iext_next(ifp, icur);
-+		xfs_iext_insert(ip, icur, &new, state);
-+		break;
-+	}
+ 	vduse_domain_free_coherent(domain, size, vaddr, dma_addr, attrs);
  }
  
- /*
-@@ -554,33 +616,30 @@ xrep_cow_replace_range(
- 	xfs_extlen_t		*blockcount)
+ static bool vduse_dev_need_sync(union virtio_map token, dma_addr_t dma_addr)
  {
- 	struct xfs_iext_cursor	icur;
--	struct xrep_cow_extent	repl;
--	struct xfs_bmbt_irec	got;
-+	struct xfs_bmbt_irec	got, rep;
- 	struct xfs_scrub	*sc = xc->sc;
--	xfs_fileoff_t		nextoff;
--	xfs_extlen_t		alloc_len;
-+	xfs_fsblock_t		old_fsbno;
- 	int			error;
+-	struct vduse_iova_domain *domain = token.iova_domain;
++	struct vduse_dev *vdev;
++	struct vduse_iova_domain *domain;
++
++	if (!token.group)
++		return false;
++
++	vdev = token.group->dev;
++	domain = vdev->domain;
  
- 	/*
--	 * Put the existing CoW fork mapping in @got.  If @got ends before
--	 * @rep, truncate @rep so we only replace one extent mapping at a time.
-+	 * Put the existing CoW fork mapping in @got, and put in @rep the
-+	 * contents of @got trimmed to @startoff/@blockcount.  We only want
-+	 * to replace the bad region, and only one mapping at a time.
- 	 */
--	error = xrep_cow_find_mapping(xc, &icur, startoff, &got);
-+	error = xrep_cow_find_mapping(xc, &icur, startoff, *blockcount, &got,
-+			&rep);
- 	if (error)
- 		return error;
--	nextoff = min(startoff + *blockcount,
--		      got.br_startoff + got.br_blockcount);
-+	old_fsbno = rep.br_startblock;
- 
- 	/*
- 	 * Allocate a replacement extent.  If we don't fill all the blocks,
- 	 * shorten the quantity that will be deleted in this step.
- 	 */
--	alloc_len = min_t(xfs_fileoff_t, XFS_MAX_BMBT_EXTLEN,
--			  nextoff - startoff);
- 	if (XFS_IS_REALTIME_INODE(sc->ip))
--		error = xrep_cow_alloc_rt(sc, alloc_len, &repl);
-+		error = xrep_cow_alloc_rt(sc, &rep);
- 	else
--		error = xrep_cow_alloc(sc, alloc_len, &repl);
-+		error = xrep_cow_alloc(sc, &rep);
- 	if (error)
- 		return error;
- 
-@@ -588,7 +647,7 @@ xrep_cow_replace_range(
- 	 * Replace the old mapping with the new one, and commit the metadata
- 	 * changes made so far.
- 	 */
--	xrep_cow_replace_mapping(sc->ip, &icur, &got, &repl);
-+	xrep_cow_replace_mapping(sc->ip, &icur, &got, &rep);
- 
- 	xfs_inode_set_cowblocks_tag(sc->ip);
- 	error = xfs_defer_finish(&sc->tp);
-@@ -597,15 +656,15 @@ xrep_cow_replace_range(
- 
- 	/* Note the old CoW staging extents; we'll reap them all later. */
- 	if (XFS_IS_REALTIME_INODE(sc->ip))
--		error = xrtb_bitmap_set(&xc->old_cowfork_rtblocks,
--				got.br_startblock, repl.len);
-+		error = xrtb_bitmap_set(&xc->old_cowfork_rtblocks, old_fsbno,
-+				rep.br_blockcount);
- 	else
--		error = xfsb_bitmap_set(&xc->old_cowfork_fsblocks,
--				got.br_startblock, repl.len);
-+		error = xfsb_bitmap_set(&xc->old_cowfork_fsblocks, old_fsbno,
-+				rep.br_blockcount);
- 	if (error)
- 		return error;
- 
--	*blockcount = repl.len;
-+	*blockcount = rep.br_blockcount;
- 	return 0;
+ 	return dma_addr < domain->bounce_size;
  }
+@@ -917,7 +986,14 @@ static int vduse_dev_mapping_error(union
  
---- a/fs/xfs/scrub/trace.h
-+++ b/fs/xfs/scrub/trace.h
-@@ -2672,9 +2672,9 @@ TRACE_EVENT(xrep_cow_mark_file_range,
- );
+ static size_t vduse_dev_max_mapping_size(union virtio_map token)
+ {
+-	struct vduse_iova_domain *domain = token.iova_domain;
++	struct vduse_dev *vdev;
++	struct vduse_iova_domain *domain;
++
++	if (!token.group)
++		return 0;
++
++	vdev = token.group->dev;
++	domain = vdev->domain;
  
- TRACE_EVENT(xrep_cow_replace_mapping,
--	TP_PROTO(struct xfs_inode *ip, const struct xfs_bmbt_irec *irec,
--		 xfs_fsblock_t new_startblock, xfs_extlen_t new_blockcount),
--	TP_ARGS(ip, irec, new_startblock, new_blockcount),
-+	TP_PROTO(struct xfs_inode *ip, const struct xfs_bmbt_irec *got,
-+		 const struct xfs_bmbt_irec *rep),
-+	TP_ARGS(ip, got, rep),
- 	TP_STRUCT__entry(
- 		__field(dev_t, dev)
- 		__field(xfs_ino_t, ino)
-@@ -2682,28 +2682,34 @@ TRACE_EVENT(xrep_cow_replace_mapping,
- 		__field(xfs_fileoff_t, startoff)
- 		__field(xfs_filblks_t, blockcount)
- 		__field(xfs_exntst_t, state)
-+		__field(xfs_fileoff_t, new_startoff)
- 		__field(xfs_fsblock_t, new_startblock)
- 		__field(xfs_extlen_t, new_blockcount)
-+		__field(xfs_exntst_t, new_state)
- 	),
- 	TP_fast_assign(
- 		__entry->dev = ip->i_mount->m_super->s_dev;
- 		__entry->ino = ip->i_ino;
--		__entry->startoff = irec->br_startoff;
--		__entry->startblock = irec->br_startblock;
--		__entry->blockcount = irec->br_blockcount;
--		__entry->state = irec->br_state;
--		__entry->new_startblock = new_startblock;
--		__entry->new_blockcount = new_blockcount;
-+		__entry->startoff = got->br_startoff;
-+		__entry->startblock = got->br_startblock;
-+		__entry->blockcount = got->br_blockcount;
-+		__entry->state = got->br_state;
-+		__entry->new_startoff = rep->br_startoff;
-+		__entry->new_startblock = rep->br_startblock;
-+		__entry->new_blockcount = rep->br_blockcount;
-+		__entry->new_state = rep->br_state;
- 	),
--	TP_printk("dev %d:%d ino 0x%llx startoff 0x%llx startblock 0x%llx fsbcount 0x%llx state 0x%x new_startblock 0x%llx new_fsbcount 0x%x",
-+	TP_printk("dev %d:%d ino 0x%llx startoff 0x%llx startblock 0x%llx fsbcount 0x%llx state 0x%x new_startoff 0x%llx new_startblock 0x%llx new_fsbcount 0x%x new_state 0x%x",
- 		  MAJOR(__entry->dev), MINOR(__entry->dev),
- 		  __entry->ino,
- 		  __entry->startoff,
- 		  __entry->startblock,
- 		  __entry->blockcount,
- 		  __entry->state,
-+		  __entry->new_startoff,
- 		  __entry->new_startblock,
--		  __entry->new_blockcount)
-+		  __entry->new_blockcount,
-+		  __entry->new_state)
- );
+ 	return domain->bounce_size;
+ }
+@@ -1716,6 +1792,7 @@ static int vduse_destroy_dev(char *name)
+ 	if (dev->domain)
+ 		vduse_domain_destroy(dev->domain);
+ 	kfree(dev->name);
++	kfree(dev->groups);
+ 	vduse_dev_destroy(dev);
+ 	module_put(THIS_MODULE);
  
- TRACE_EVENT(xrep_cow_free_staging,
+@@ -1874,6 +1951,11 @@ static int vduse_create_dev(struct vduse
+ 	dev->device_features = config->features;
+ 	dev->device_id = config->device_id;
+ 	dev->vendor_id = config->vendor_id;
++	dev->groups = kcalloc(1, sizeof(dev->groups[0]), GFP_KERNEL);
++	if (!dev->groups)
++		goto err_vq_groups;
++	dev->groups[0].dev = dev;
++
+ 	dev->name = kstrdup(config->name, GFP_KERNEL);
+ 	if (!dev->name)
+ 		goto err_str;
+@@ -1910,6 +1992,8 @@ err_dev:
+ err_idr:
+ 	kfree(dev->name);
+ err_str:
++	kfree(dev->groups);
++err_vq_groups:
+ 	vduse_dev_destroy(dev);
+ err:
+ 	return ret;
+@@ -2071,7 +2155,6 @@ static int vdpa_dev_add(struct vdpa_mgmt
+ 		return -ENOMEM;
+ 	}
+ 
+-	dev->vdev->vdpa.vmap.iova_domain = dev->domain;
+ 	ret = _vdpa_register_device(&dev->vdev->vdpa, dev->vq_num);
+ 	if (ret) {
+ 		put_device(&dev->vdev->vdpa.dev);
+--- a/include/linux/virtio.h
++++ b/include/linux/virtio.h
+@@ -41,13 +41,13 @@ struct virtqueue {
+ 	void *priv;
+ };
+ 
+-struct vduse_iova_domain;
++struct vduse_vq_group;
+ 
+ union virtio_map {
+ 	/* Device that performs DMA */
+ 	struct device *dma_dev;
+-	/* VDUSE specific mapping data */
+-	struct vduse_iova_domain *iova_domain;
++	/* VDUSE specific virtqueue group for doing map */
++	struct vduse_vq_group *group;
+ };
+ 
+ int virtqueue_add_outbuf(struct virtqueue *vq,
 
 
