@@ -1,38 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96D2B380FD6;
-	Thu, 30 Jul 2026 15:48:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51A3D36607D;
+	Thu, 30 Jul 2026 15:48:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426528; cv=none; b=brpeP8vbu5tUWOB+Hs0J0s+deQ+b/PIa5ywnJBDUFpAhDY3zheVlv7I3cke7XGXcB3srKa5HZDIfmVGQ0k4PqUDegb9MCrv5e3dVW0A1zW0rOg/tq4d+LJ7s+IWntu1jdWaC2VYJoFsrmT6OzCpAcxmBtmd53+ZqxrcWolsQWRs=
+	t=1785426532; cv=none; b=diuTTQZV0xr/lOAXfA93BH5EJlTnOukJ3CmEPQl+8SeLw6CUwVulzUAn/pVebY6fVVAiExAEtztMrfY0LVPAzG6JU6ioDek4VhceZcEccUvwbkqx2pj/1uK3U7U3edlnwugkQBaWnewAfrYu27Yorg/gHH21Q4dEiTL3KJKJVYU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426528; c=relaxed/simple;
-	bh=pWKVNXF3QygkC/EMpVGsMqc+MBMEq22Zina8NF3h810=;
+	s=arc-20240116; t=1785426532; c=relaxed/simple;
+	bh=1Iq/KMAgCOSFK32k7vlfmTXKxLC9+nq/F1VR412iogA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uO3nzDEytqd6DebO5f07ytfmfhw/yKkScnFwufYcpkMYpcTQN7ExaQmB3ulSc1d42hlr6ooz5BZSW+L9l7bWYm+Vv4QpnUnu+5QK9Uh4Vi0lJVJBqIzMc7B/s631rnYeYi6RwjhozE9idjrNJGWB4nm2wWmljDBrHnMzuemBjIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KpQTuZQa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QZmEsG+tmCtHWUEtMGk/KzHdSkDee5jgbnX/IBlQvXyG6RijGWaPIY/uPoiUdm7smrcl5yScBjONpZiOzyXRU2NpSLLbV3uTFa3NYRxlDiMZS6vUCsKO/mIzoSf7mYEGFRZFrx0BXVZQCqzc+a7v5PoR1y1wZHHCZTsPrhtzTIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qrKj+5jv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KpQTuZQa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F17901F000E9;
-	Thu, 30 Jul 2026 15:48:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qrKj+5jv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4C9D1F000E9;
+	Thu, 30 Jul 2026 15:48:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426527;
-	bh=wybnFPbOv/UnBb7r24bwNX36xzdw9159KnzZ/sW1A0Y=;
+	s=korg; t=1785426530;
+	bh=z6wjhwl+CHY8LqRmIjd0yyxGp2z4bOicV/6PbiA19sI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KpQTuZQaLzNnx8DxIAyWsJWrCXQYxfsUsMy4/6C62Uotf+AOxqwzVm/iFryKjlOpC
-	 0RBSIDZ7YSdUWhQHKO5+vetHhmQ5IbmQbeuiy3HzOjFOsoJSGSXquaJP6FUz8pjC7F
-	 1iYCwGMmzv4zpWRVw/ibrQG3NJKS5dWRxG1U7WA8=
+	b=qrKj+5jvJmJlFIHnTqHegtHtGMq866GlvlmPsN30cWWadjMe99wQO12hO3OVbz21D
+	 bstvqfNi2A9sUcrwBQFae84UMt0IjTNLjM9cjE0rWlBP6W2L0zLqXOtS79+zsXrniP
+	 mxeZ3a1Mbgow89vlBlpA2EmRT/HJBUOa2ORrOu/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Wang <kevinyang.wang@amd.com>,
-	Kenneth Feng <kenneth.feng@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 450/602] drm/amd/pm: fix smu13 power limit range calculation
-Date: Thu, 30 Jul 2026 16:14:02 +0200
-Message-ID: <20260730141445.416362163@linuxfoundation.org>
+	Quan Sun <2022090917019@std.uestc.edu.cn>,
+	Yinhao Hu <dddddd@hust.edu.cn>,
+	Kaiyan Mei <M202472210@hust.edu.cn>,
+	Dongliang Mu <dzm91@hust.edu.cn>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Jay Wang <wanjay@amazon.com>
+Subject: [PATCH 6.12 451/602] bpf: Fix same-register dst/src OOB read and pointer leak in sock_ops
+Date: Thu, 30 Jul 2026 16:14:03 +0200
+Message-ID: <20260730141445.436591907@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -51,105 +58,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Wang <kevinyang.wang@amd.com>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-commit 220f22e1d66c1cfb63387eb1c4210f92a357c2d9 upstream.
+[ Upstream commit 10f86a2a5c91fc4c4d001960f1c21abe52545ef6 ]
 
-SMU13 reports SocketPowerLimitAc/Dc as the default power limit, but
-MsgLimits.Power may carry a different firmware bound for the same PPT
-throttler. Using only the socket limit for both min and max can therefore
-expose an incorrect power range.
+When a BPF sock_ops program accesses ctx fields with dst_reg == src_reg,
+the SOCK_OPS_GET_SK() and SOCK_OPS_GET_FIELD() macros fail to zero the
+destination register in the !fullsock / !locked_tcp_sock path.
 
-Keep the socket limit as the default, but derive the range from both values:
-use the lower value for the min base and the higher value for the max base
-before applying OD percentages. Keep the current limit query independent
-from the cap calculation.
+Both macros borrow a temporary register to check is_fullsock /
+is_locked_tcp_sock when dst_reg == src_reg, because dst_reg holds the
+ctx pointer. When the check is false (e.g., TCP_NEW_SYN_RECV state with
+a request_sock), dst_reg should be zeroed but is not, leaving the stale
+ctx pointer:
 
-Fixes: 1eaf26db9590 ("drm/amd/pm: fix smu13 power limit default/cap calculation")
-Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/5419
-Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
-Reviewed-by: Kenneth Feng <kenneth.feng@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit f45bbf0f62f266ed8422d84f347d75d5fca846a7)
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+ - SOCK_OPS_GET_SK: dst_reg retains the ctx pointer, passes NULL checks
+   as PTR_TO_SOCKET_OR_NULL, and can be used as a bogus socket pointer,
+   leading to stack-out-of-bounds access in helpers like
+   bpf_skc_to_tcp6_sock().
+
+ - SOCK_OPS_GET_FIELD: dst_reg retains the ctx pointer which the
+   verifier believes is a SCALAR_VALUE, leaking a kernel pointer.
+
+Fix both macros by:
+ - Changing JMP_A(1) to JMP_A(2) in the fullsock path to skip the
+   added instruction.
+ - Adding BPF_MOV64_IMM(si->dst_reg, 0) after the temp register
+   restore in the !fullsock path, placed after the restore because
+   dst_reg == src_reg means we need src_reg intact to read ctx->temp.
+
+Fixes: fd09af010788 ("bpf: sock_ops ctx access may stomp registers in corner case")
+Fixes: 84f44df664e9 ("bpf: sock_ops sk access may stomp registers when dst_reg = src_reg")
+Reported-by: Quan Sun <2022090917019@std.uestc.edu.cn>
+Reported-by: Yinhao Hu <dddddd@hust.edu.cn>
+Reported-by: Kaiyan Mei <M202472210@hust.edu.cn>
+Reported-by: Dongliang Mu <dzm91@hust.edu.cn>
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Closes: https://lore.kernel.org/bpf/6fe1243e-149b-4d3b-99c7-fcc9e2f75787@std.uestc.edu.cn/T/#u
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Acked-by: Martin KaFai Lau <martin.lau@kernel.org>
+Link: https://patch.msgid.link/20260407022720.162151-2-jiayuan.chen@linux.dev
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Jay Wang <wanjay@amazon.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c |   11 +++++++----
- drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c |   15 ++++++++-------
- 2 files changed, 15 insertions(+), 11 deletions(-)
+ net/core/filter.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
-@@ -2396,11 +2396,14 @@ static int smu_v13_0_0_get_power_limit(s
- 	uint32_t pp_limit = smu->adev->pm.ac_power ?
- 			      skutable->SocketPowerLimitAc[PPT_THROTTLER_PPT0] :
- 			      skutable->SocketPowerLimitDc[PPT_THROTTLER_PPT0];
--	uint32_t power_limit = 0, od_percent_upper = 0, od_percent_lower = 0;
-+	uint32_t msg_limit = skutable->MsgLimits.Power[PPT_THROTTLER_PPT0][POWER_SOURCE_AC];
-+	uint32_t min_limit = min_t(uint32_t, pp_limit, msg_limit);
-+	uint32_t max_limit = max_t(uint32_t, pp_limit, msg_limit);
-+	uint32_t od_percent_upper = 0, od_percent_lower = 0;
- 	int ret;
+diff --git a/net/core/filter.c b/net/core/filter.c
+index f54e7152d68798..90e396423eb7af 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -10483,10 +10483,11 @@ static u32 sock_ops_convert_ctx_access(enum bpf_access_type type,
+ 				      si->dst_reg, si->dst_reg,		      \
+ 				      offsetof(OBJ, OBJ_FIELD));	      \
+ 		if (si->dst_reg == si->src_reg)	{			      \
+-			*insn++ = BPF_JMP_A(1);				      \
++			*insn++ = BPF_JMP_A(2);				      \
+ 			*insn++ = BPF_LDX_MEM(BPF_DW, reg, si->src_reg,	      \
+ 				      offsetof(struct bpf_sock_ops_kern,      \
+ 				      temp));				      \
++			*insn++ = BPF_MOV64_IMM(si->dst_reg, 0);	      \
+ 		}							      \
+ 	} while (0)
  
- 	if (current_power_limit) {
--		ret = smu_v13_0_get_current_power_limit(smu, &power_limit);
-+		ret = smu_v13_0_get_current_power_limit(smu, current_power_limit);
- 		if (ret)
- 			*current_power_limit = pp_limit;
- 	}
-@@ -2423,12 +2426,12 @@ static int smu_v13_0_0_get_power_limit(s
- 		od_percent_upper, od_percent_lower, pp_limit);
+@@ -10520,10 +10521,11 @@ static u32 sock_ops_convert_ctx_access(enum bpf_access_type type,
+ 				      si->dst_reg, si->src_reg,		      \
+ 				      offsetof(struct bpf_sock_ops_kern, sk));\
+ 		if (si->dst_reg == si->src_reg)	{			      \
+-			*insn++ = BPF_JMP_A(1);				      \
++			*insn++ = BPF_JMP_A(2);				      \
+ 			*insn++ = BPF_LDX_MEM(BPF_DW, reg, si->src_reg,	      \
+ 				      offsetof(struct bpf_sock_ops_kern,      \
+ 				      temp));				      \
++			*insn++ = BPF_MOV64_IMM(si->dst_reg, 0);	      \
+ 		}							      \
+ 	} while (0)
  
- 	if (max_power_limit) {
--		*max_power_limit = pp_limit * (100 + od_percent_upper);
-+		*max_power_limit = max_limit * (100 + od_percent_upper);
- 		*max_power_limit /= 100;
- 	}
- 
- 	if (min_power_limit) {
--		*min_power_limit = pp_limit * (100 - od_percent_lower);
-+		*min_power_limit = min_limit * (100 - od_percent_lower);
- 		*min_power_limit /= 100;
- 	}
- 
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
-@@ -2357,15 +2357,16 @@ static int smu_v13_0_7_get_power_limit(s
- 	uint32_t pp_limit = smu->adev->pm.ac_power ?
- 			      skutable->SocketPowerLimitAc[PPT_THROTTLER_PPT0] :
- 			      skutable->SocketPowerLimitDc[PPT_THROTTLER_PPT0];
--	uint32_t power_limit = 0, od_percent_upper = 0, od_percent_lower = 0;
-+	uint32_t msg_limit = skutable->MsgLimits.Power[PPT_THROTTLER_PPT0][POWER_SOURCE_AC];
-+	uint32_t min_limit = min_t(uint32_t, pp_limit, msg_limit);
-+	uint32_t max_limit = max_t(uint32_t, pp_limit, msg_limit);
-+	uint32_t od_percent_upper = 0, od_percent_lower = 0;
- 	int ret;
- 
- 	if (current_power_limit) {
--		ret = smu_v13_0_get_current_power_limit(smu, &power_limit);
-+		ret = smu_v13_0_get_current_power_limit(smu, current_power_limit);
- 		if (ret)
--			power_limit = pp_limit;
--
--		*current_power_limit = power_limit;
-+			*current_power_limit = pp_limit;
- 	}
- 
- 	if (default_power_limit)
-@@ -2386,12 +2387,12 @@ static int smu_v13_0_7_get_power_limit(s
- 		od_percent_upper, od_percent_lower, pp_limit);
- 
- 	if (max_power_limit) {
--		*max_power_limit = pp_limit * (100 + od_percent_upper);
-+		*max_power_limit = max_limit * (100 + od_percent_upper);
- 		*max_power_limit /= 100;
- 	}
- 
- 	if (min_power_limit) {
--		*min_power_limit = pp_limit * (100 - od_percent_lower);
-+		*min_power_limit = min_limit * (100 - od_percent_lower);
- 		*min_power_limit /= 100;
- 	}
- 
+-- 
+2.53.0
+
 
 
