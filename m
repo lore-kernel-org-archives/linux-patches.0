@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BA653A6B7F;
-	Thu, 30 Jul 2026 14:26:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FBDC33D4E2;
+	Thu, 30 Jul 2026 14:26:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421580; cv=none; b=P/7/2FA0Cpp/wuKus/nkKhZTrTONlw1uqqDw9M9AJRzaAvjv/Mk19Io/JWF/VGvwLtgzstUJA4iBEl3pPutmxSWBUnpB/NVAFxBXQfDpZM43lNeM3J/5hUL62hvyl5qbVdIr9w9uUF/L+gk0/0XslLT9/ggthiwu//P1c/BlYcw=
+	t=1785421582; cv=none; b=EwPry8a3TUXX1iMpTI0LERktznJGDCEN0edX4HkL73NZA5f1nTsarc4sSnClMjScNyhzpUuH1iLDEdqOYswxltbz7zIEMLZT2PZnr/JGKVUQyHFSp9arVoWTCDgaTx1yUEKQgEW6Q5hMLl0FelfYE37VZMlbrnItd/+2sL61OJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421580; c=relaxed/simple;
-	bh=rJN2+Em7/evE/C72qkDDVkAtVcGKqUFJuzcQJlZIAUw=;
+	s=arc-20240116; t=1785421582; c=relaxed/simple;
+	bh=MitNT1npYBOu8u5U9eBhjjjWPvdJtd+fjKiAISizyuM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UEGc1DNqEST9pTIja0ZWFGsHXHrbT2okC8yvFGIU2Cvh75vfo9FfDt4PJnaulhGxDIVsdDjzFWSKDuBJ+pNfmIy6nPln9sfKj2LxyJjGvbm6umHlJKULXmxxT7dKXBFV8syfg1alLVFnxtlzWb7I11LJzdNh4b7gGAJuosyy3vk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZU3vwYNB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SWgFbmjKtPL6MVFOlVkwNSMGQmYQF+wg7KFenZ6jaARfwMQQO+DEXhljuWB+ojvo2jW6wJormO9JkqSK91bXHSEAqpzAWyiGH4dKNDYbx124alPQeaoKgbHCwuXKrE81fM6r7275lLVaFHUFuE49IMbtqbKPmvdv5Q+RHx3wOig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uxXnQhBv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZU3vwYNB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB0D51F000E9;
-	Thu, 30 Jul 2026 14:26:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uxXnQhBv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0EAD1F000E9;
+	Thu, 30 Jul 2026 14:26:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421578;
-	bh=FpvgIJHSj2zSsClQdpGv6hZ2kSoUPUni1rr6HgtfXlA=;
+	s=korg; t=1785421581;
+	bh=w1QR0qxMWvQ9tRXk1JkyKft1+1C8zDJ0woyiwCEYFVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZU3vwYNB3f+6ln0MI6I7JMct/QTWfsbpr3V4yCv25R6FAH9tVwf8OVkdSHstKOGNR
-	 LtQkXL8+AVXjdPHszqG20ge2g6l5/so9rOTXXmwIqHyfVQslqKQHj3vC8lGupyX8kd
-	 x0YTRXtAzddDLCaSYoNH8c92XUWOo3dNXtlfjurE=
+	b=uxXnQhBvO9L4BsyTP8NLMJ9J4EVu3XcVEbi0jI9TD4uTy5adQpywg4jtxP73Z6Ex9
+	 ZqnRf2xU2q/v5xHlqVYZKPa4TXLfjNoGrM2S3J34P3Kg8H5dCa/538PuuG4q3HmR4V
+	 MX5lj/Jg/ja3V2mAR49G2uVQbh+FxpuwCKcRFd+k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Fan Wu <fanwu01@zju.edu.cn>
-Subject: [PATCH 7.1 151/744] usb: gadget: udc: bdc: free IRQ and drain func_wake_notify before teardown
-Date: Thu, 30 Jul 2026 16:07:04 +0200
-Message-ID: <20260730141447.494950923@linuxfoundation.org>
+	Muhammad Bilal <meatuni001@gmail.com>
+Subject: [PATCH 7.1 152/744] usb: gadget: uvc: clamp SEND_RESPONSE length to the response buffer
+Date: Thu, 30 Jul 2026 16:07:05 +0200
+Message-ID: <20260730141447.517785815@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -50,120 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Muhammad Bilal <meatuni001@gmail.com>
 
-commit 0583f2fbf8f86ae3a0ce054f96783dd83e65d9bb upstream.
+commit b70dc75e85ba968b7b76eebfe5d63000080b875b upstream.
 
-The Broadcom BDC UDC driver registers its IRQ handler with
-devm_request_irq() in bdc_udc_init(), so the IRQ is released by devm
-only after bdc_remove() returns.  devm releases resources in reverse
-LIFO order, but bdc_remove() runs bdc_udc_exit() and bdc_hw_exit() ->
-bdc_mem_free() manually before returning: bdc_udc_exit() tears down
-individual endpoint objects via bdc_free_ep(), while bdc_hw_exit() ->
-bdc_mem_free() frees and NULLs the DMA-coherent status-report ring
-(bdc->srr.sr_bds) and kfree()s bdc->bdc_ep_array.  Both happen while
-the IRQ handler (bdc_udc_interrupt, requested with IRQF_SHARED)
-remains deliverable in the window up to the post-remove devm
-free_irq().
+uvc_send_response() builds the UVC control response from a user-supplied
+struct uvc_request_data:
 
-On receipt of a shared interrupt in that window, bdc_udc_interrupt()
-dereferences bdc->srr.sr_bds[bdc->srr.dqp_index] (NULL or freed DMA)
-and dispatches sr_handler callbacks that index into bdc_ep_array,
-causing a NULL-deref or use-after-free.
+	req->length = min_t(unsigned int, uvc->event_length, data->length);
+	...
+	memcpy(req->buf, data->data, req->length);
 
-The same window affects the delayed_work bdc->func_wake_notify, which is
-armed from the IRQ handler via bdc_sr_uspc() -> handle_link_state_change()
--> schedule_delayed_work() and may self-rearm from its own callback
-bdc_func_wake_timer().  No cancel exists anywhere in the driver, so a
-queued work item that fires after bdc_remove() returns and the bdc
-structure is devm-freed dereferences freed memory.
+req->length is clamped to uvc->event_length, which is taken from the
+host control request wLength (up to UVC_MAX_REQUEST_SIZE, 64), and to
+data->length, which comes from the UVCIOC_SEND_RESPONSE ioctl and is
+only checked for being negative.  The source buffer data->data is only
+60 bytes, so a response with uvc->event_length and data->length both
+greater than 60 makes memcpy() read past the end of data->data.
 
-Replace devm_request_irq() with request_irq() and add an explicit
-free_irq(bdc->irq, bdc) in bdc_remove().  Clear BDC_GIE before
-free_irq() to stop the device from asserting interrupts, then
-free_irq() drains any in-flight handler, then cancel_delayed_work_sync()
-drains the func_wake_notify delayed work.  This ordering ensures the
-IRQ handler and delayed work cannot interfere with the subsequent
-endpoint and DMA teardown in bdc_udc_exit() and bdc_hw_exit().  Wire the
-matching free_irq() into the bdc_udc_init() error path so the IRQ is
-released on probe failure, and route the bdc_init_ep() failure through
-err0 instead of returning directly.
+Clamp req->length to sizeof(data->data) as well.
 
-This issue was found by an in-house static analysis tool.
-
-Fixes: efed421a94e6 ("usb: gadget: Add UDC driver for Broadcom USB3.0 device controller IP BDC")
+Fixes: a5eaaa1f33e7 ("usb: gadget: uvc: use capped length value")
 Cc: stable <stable@kernel.org>
-Assisted-by: Codex:gpt-5.5
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Link: https://patch.msgid.link/20260709020904.502611-1-fanwu01@zju.edu.cn
+Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
+Link: https://patch.msgid.link/20260629195004.148405-1-meatuni001@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/udc/bdc/bdc_core.c |   20 ++++++++++++++++++++
- drivers/usb/gadget/udc/bdc/bdc_udc.c  |    7 ++++---
- 2 files changed, 24 insertions(+), 3 deletions(-)
+ drivers/usb/gadget/function/uvc_v4l2.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/usb/gadget/udc/bdc/bdc_core.c
-+++ b/drivers/usb/gadget/udc/bdc/bdc_core.c
-@@ -585,9 +585,29 @@ disable_clk:
- static void bdc_remove(struct platform_device *pdev)
- {
- 	struct bdc *bdc;
-+	unsigned long flags;
-+	u32 temp;
+--- a/drivers/usb/gadget/function/uvc_v4l2.c
++++ b/drivers/usb/gadget/function/uvc_v4l2.c
+@@ -200,6 +200,8 @@ uvc_send_response(struct uvc_device *uvc
+ 		return usb_ep_set_halt(cdev->gadget->ep0);
  
- 	bdc  = platform_get_drvdata(pdev);
- 	dev_dbg(bdc->dev, "%s ()\n", __func__);
-+	/*
-+	 * Disable the device interrupt source before freeing the IRQ:
-+	 * clear BDC_GIE so the controller stops asserting interrupts,
-+	 * then free_irq drains any in-flight handler.
-+	 */
-+	spin_lock_irqsave(&bdc->lock, flags);
-+	temp = bdc_readl(bdc->regs, BDC_BDCSC);
-+	temp &= ~BDC_GIE;
-+	bdc_writel(bdc->regs, BDC_BDCSC, temp);
-+	spin_unlock_irqrestore(&bdc->lock, flags);
-+	free_irq(bdc->irq, bdc);
-+	/*
-+	 * Drain func_wake_notify after free_irq: the IRQ handler arms this
-+	 * delayed_work via bdc_sr_uspc -> handle_link_state_change ->
-+	 * schedule_delayed_work (self-rearmed in bdc_func_wake_timer), so
-+	 * the IRQ must be released first to prevent re-arm after cancel.
-+	 */
-+	cancel_delayed_work_sync(&bdc->func_wake_notify);
- 	bdc_udc_exit(bdc);
- 	bdc_hw_exit(bdc);
- 	bdc_phy_exit(bdc);
---- a/drivers/usb/gadget/udc/bdc/bdc_udc.c
-+++ b/drivers/usb/gadget/udc/bdc/bdc_udc.c
-@@ -530,8 +530,8 @@ int bdc_udc_init(struct bdc *bdc)
+ 	req->length = min_t(unsigned int, uvc->event_length, data->length);
++	if (req->length > sizeof(data->data))
++		req->length = sizeof(data->data);
+ 	req->zero = data->length < uvc->event_length;
  
- 
- 	bdc->gadget.name = BRCM_BDC_NAME;
--	ret = devm_request_irq(bdc->dev, bdc->irq, bdc_udc_interrupt,
--				IRQF_SHARED, BRCM_BDC_NAME, bdc);
-+	ret = request_irq(bdc->irq, bdc_udc_interrupt, IRQF_SHARED,
-+			  BRCM_BDC_NAME, bdc);
- 	if (ret) {
- 		dev_err(bdc->dev,
- 			"failed to request irq #%d %d\n",
-@@ -542,7 +542,7 @@ int bdc_udc_init(struct bdc *bdc)
- 	ret = bdc_init_ep(bdc);
- 	if (ret) {
- 		dev_err(bdc->dev, "bdc init ep fail: %d\n", ret);
--		return ret;
-+		goto err0;
- 	}
- 
- 	ret = usb_add_gadget_udc(bdc->dev, &bdc->gadget);
-@@ -571,6 +571,7 @@ int bdc_udc_init(struct bdc *bdc)
- err1:
- 	usb_del_gadget_udc(&bdc->gadget);
- err0:
-+	free_irq(bdc->irq, bdc);
- 	bdc_free_ep(bdc);
- 
- 	return ret;
+ 	memcpy(req->buf, data->data, req->length);
 
 
