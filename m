@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7635B45041D;
-	Thu, 30 Jul 2026 16:04:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B4BD38E8BB;
+	Thu, 30 Jul 2026 16:05:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427500; cv=none; b=n6yE+2X3q2om+aHLK3CvRFZXH+40svVnRDeUhyPvT9gkjwZb6URAoJNFapAUs/7kkPlLlQBmQr99VHc5hNVteDqyKWPfS2fSv+yJ/2Enslx+7bebRS20hHF6O4uhQOjlEaT1hxATO5xLWZrma1uADUdW/Kktfzdl6YKi5vcE1FU=
+	t=1785427503; cv=none; b=O84c1yD1mDVHkihtTMgTXQWf5kj0RYF0lfT2f+4fNQh01AImuRBoE0ZFHDeuaR764VmcZEAaoeqnz6zQjlJLrk9S3g94zN3SqNZCZ2SFaRG5b82kOtdvWW4p9YTFCoT7pVQiADkjo30yfkeS0HL5ipmQmxCSB5uaNfjcsmbm85s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427500; c=relaxed/simple;
-	bh=c/+5IgaokuFyPWKrFauq5JIR0hnCgYPma+XErNyqShQ=;
+	s=arc-20240116; t=1785427503; c=relaxed/simple;
+	bh=kh5CzeLDw4fC8yDqe0YOtd+eYeQCGf/x7NCjucGFVpg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ini5z3GK2Md+8eXEIfUfC1rj98M5PFV2Wt/MTIIw4rxodFsN0BduBwxlrCMQ9XzVkV9DwuVtuDYhA6doqP7eSqMuZi0p3wtSsEVg9snEVW+dYdXANc5S0KyX35/fsdvFTDdDJyMFmdgL2RN35up9qN/ZYW1euMM797S4sIbWaa0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qSaadqrH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qD4S9vXTE3QNjVb+EqZymxu9B1Sz2ySmTUH5vZ2xPdHZ4W5Aaa5JyQqdz1UqSgxpU9C+jeQZRB32YdllXrBJ2xX9wCGs0nyXQgs4E+UBVGXk3wcSFw1aPLkuKZMviZsXMzm+N09t7li1lDYdElfUr1esQKSNOGEChEablJYS/h4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qm2Lmzy0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qSaadqrH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D24541F000E9;
-	Thu, 30 Jul 2026 16:04:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qm2Lmzy0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B53911F00A3E;
+	Thu, 30 Jul 2026 16:05:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427499;
-	bh=gdWqO3dK+1a2A4Ku/ehQuXuKijV7uiltgvy6OA/P2no=;
+	s=korg; t=1785427502;
+	bh=52ZKir+B8FfDY3I9X4Zg2cic9zlcrl8BcT5TdJUi7iA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qSaadqrHe4mSzZb7K+GZ8/sPCVJm+XMpZNRQ2I9MfOAGKvrnKTya0nbm/fDSoUwlC
-	 ijDkjPbc67/f3jkMo10zW8eu2TJj2OpV0SeeOSst+5RlQX3fm52QFxYmTpKJMTc2u9
-	 RdOl1YJk79BDwZtWjan4X9JdJH20Zdug0iX1frac=
+	b=qm2Lmzy0YKUFET3fj0KlAZU6nxNHa8eqf2kVYzWoVURQNg3KGwuSaJsBEwx0XUunK
+	 /dSNcHtn2cpGWgkRFbs1yxRco53Go/CzVzh9WCL4S/E2/hBMix++I5UCYFKvtSe7gF
+	 57hTCdlqZEzbkrFjHPpntN5cxknSMZPPqXsKuPts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Qingfang Deng <dqfext@gmail.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 193/484] ppp: use IFF_NO_QUEUE in virtual interfaces
-Date: Thu, 30 Jul 2026 16:11:30 +0200
-Message-ID: <20260730141427.660523468@linuxfoundation.org>
+Subject: [PATCH 6.6 194/484] ppp: convert to percpu netstats
+Date: Thu, 30 Jul 2026 16:11:31 +0200
+Message-ID: <20260730141427.683013372@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -46,7 +45,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
@@ -55,98 +53,133 @@ Content-Transfer-Encoding: 8bit
 
 From: Qingfang Deng <dqfext@gmail.com>
 
-[ Upstream commit 95d0d094ba26432ec467e2260f4bf553053f1f8f ]
+[ Upstream commit 1a3e9b7a6b09e8ab3d2af019e4a392622685855e ]
 
-For PPPoE, PPTP, and PPPoL2TP, the start_xmit() function directly
-forwards packets to the underlying network stack and never returns
-anything other than 1. So these interfaces do not require a qdisc,
-and the IFF_NO_QUEUE flag should be set.
-
-Introduces a direct_xmit flag in struct ppp_channel to indicate when
-IFF_NO_QUEUE should be applied. The flag is set in ppp_connect_channel()
-for relevant protocols.
-
-While at it, remove the usused latency member from struct ppp_channel.
+Convert to percpu netstats to avoid lock contention when reading them.
 
 Signed-off-by: Qingfang Deng <dqfext@gmail.com>
-Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Link: https://patch.msgid.link/20250301135517.695809-1-dqfext@gmail.com
+Link: https://patch.msgid.link/20250610083211.909015-1-dqfext@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: 543adf072165 ("ppp: annotate data races in ppp_generic")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ppp/ppp_generic.c | 4 ++++
- drivers/net/ppp/pppoe.c       | 1 +
- drivers/net/ppp/pptp.c        | 1 +
- include/linux/ppp_channel.h   | 3 +--
- net/l2tp/l2tp_ppp.c           | 1 +
- 5 files changed, 8 insertions(+), 2 deletions(-)
+ drivers/net/ppp/ppp_generic.c | 52 +++++++++++++----------------------
+ 1 file changed, 19 insertions(+), 33 deletions(-)
 
 diff --git a/drivers/net/ppp/ppp_generic.c b/drivers/net/ppp/ppp_generic.c
-index 53e96a8740397c..62169a38b984a2 100644
+index 62169a38b984a2..065a99c9d6b3e2 100644
 --- a/drivers/net/ppp/ppp_generic.c
 +++ b/drivers/net/ppp/ppp_generic.c
-@@ -3508,6 +3508,10 @@ ppp_connect_channel(struct channel *pch, int unit)
- 		ret = -ENOTCONN;
- 		goto outl;
- 	}
-+	if (pch->chan->direct_xmit)
-+		ppp->dev->priv_flags |= IFF_NO_QUEUE;
-+	else
-+		ppp->dev->priv_flags &= ~IFF_NO_QUEUE;
- 	spin_unlock_bh(&pch->downl);
- 	if (pch->file.hdrlen > ppp->file.hdrlen)
- 		ppp->file.hdrlen = pch->file.hdrlen;
-diff --git a/drivers/net/ppp/pppoe.c b/drivers/net/ppp/pppoe.c
-index bc726b54ca745d..4aab447f0d65c9 100644
---- a/drivers/net/ppp/pppoe.c
-+++ b/drivers/net/ppp/pppoe.c
-@@ -699,6 +699,7 @@ static int pppoe_connect(struct socket *sock, struct sockaddr *uservaddr,
- 		po->chan.mtu = dev->mtu - sizeof(struct pppoe_hdr) - 2;
- 		po->chan.private = sk;
- 		po->chan.ops = &pppoe_chan_ops;
-+		po->chan.direct_xmit = true;
+@@ -107,18 +107,6 @@ struct ppp_file {
+ #define PF_TO_PPP(pf)		PF_TO_X(pf, struct ppp)
+ #define PF_TO_CHANNEL(pf)	PF_TO_X(pf, struct channel)
  
- 		error = ppp_register_net_channel(dev_net(dev), &po->chan);
- 		if (error) {
-diff --git a/drivers/net/ppp/pptp.c b/drivers/net/ppp/pptp.c
-index 3a10303eb756a8..386e0be78a6a96 100644
---- a/drivers/net/ppp/pptp.c
-+++ b/drivers/net/ppp/pptp.c
-@@ -469,6 +469,7 @@ static int pptp_connect(struct socket *sock, struct sockaddr *uservaddr,
- 	po->chan.mtu -= PPTP_HEADER_OVERHEAD;
- 
- 	po->chan.hdrlen = 2 + sizeof(struct pptp_gre_header);
-+	po->chan.direct_xmit = true;
- 	error = ppp_register_channel(&po->chan);
- 	if (error) {
- 		pr_err("PPTP: failed to register PPP channel (%d)\n", error);
-diff --git a/include/linux/ppp_channel.h b/include/linux/ppp_channel.h
-index 45e6e427ceb8a0..f73fbea0dbc239 100644
---- a/include/linux/ppp_channel.h
-+++ b/include/linux/ppp_channel.h
-@@ -42,8 +42,7 @@ struct ppp_channel {
- 	int		hdrlen;		/* amount of headroom channel needs */
- 	void		*ppp;		/* opaque to channel */
- 	int		speed;		/* transfer rate (bytes/second) */
--	/* the following is not used at present */
--	int		latency;	/* overhead time in milliseconds */
-+	bool		direct_xmit;	/* no qdisc, xmit directly */
+-/*
+- * Data structure to hold primary network stats for which
+- * we want to use 64 bit storage.  Other network stats
+- * are stored in dev->stats of the ppp strucute.
+- */
+-struct ppp_link_stats {
+-	u64 rx_packets;
+-	u64 tx_packets;
+-	u64 rx_bytes;
+-	u64 tx_bytes;
+-};
+-
+ /*
+  * Data structure describing one ppp unit.
+  * A ppp unit corresponds to a ppp network interface device
+@@ -162,7 +150,6 @@ struct ppp {
+ 	struct bpf_prog *active_filter; /* filter for pkts to reset idle */
+ #endif /* CONFIG_PPP_FILTER */
+ 	struct net	*ppp_net;	/* the net we belong to */
+-	struct ppp_link_stats stats64;	/* 64 bit network stats */
  };
  
- #ifdef __KERNEL__
-diff --git a/net/l2tp/l2tp_ppp.c b/net/l2tp/l2tp_ppp.c
-index 34d8582c0c072e..2e856a83a7506b 100644
---- a/net/l2tp/l2tp_ppp.c
-+++ b/net/l2tp/l2tp_ppp.c
-@@ -810,6 +810,7 @@ static int pppol2tp_connect(struct socket *sock, struct sockaddr *uservaddr,
- 	po->chan.private = sk;
- 	po->chan.ops	 = &pppol2tp_chan_ops;
- 	po->chan.mtu	 = pppol2tp_tunnel_mtu(tunnel);
-+	po->chan.direct_xmit	= true;
+ /*
+@@ -1545,23 +1532,12 @@ ppp_net_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
+ static void
+ ppp_get_stats64(struct net_device *dev, struct rtnl_link_stats64 *stats64)
+ {
+-	struct ppp *ppp = netdev_priv(dev);
+-
+-	ppp_recv_lock(ppp);
+-	stats64->rx_packets = ppp->stats64.rx_packets;
+-	stats64->rx_bytes   = ppp->stats64.rx_bytes;
+-	ppp_recv_unlock(ppp);
+-
+-	ppp_xmit_lock(ppp);
+-	stats64->tx_packets = ppp->stats64.tx_packets;
+-	stats64->tx_bytes   = ppp->stats64.tx_bytes;
+-	ppp_xmit_unlock(ppp);
+-
+ 	stats64->rx_errors        = dev->stats.rx_errors;
+ 	stats64->tx_errors        = dev->stats.tx_errors;
+ 	stats64->rx_dropped       = dev->stats.rx_dropped;
+ 	stats64->tx_dropped       = dev->stats.tx_dropped;
+ 	stats64->rx_length_errors = dev->stats.rx_length_errors;
++	dev_fetch_sw_netstats(stats64, dev->tstats);
+ }
  
- 	error = ppp_register_net_channel(sock_net(sk), &po->chan);
- 	if (error) {
+ static int ppp_dev_init(struct net_device *dev)
+@@ -1659,6 +1635,7 @@ static void ppp_setup(struct net_device *dev)
+ 	dev->type = ARPHRD_PPP;
+ 	dev->flags = IFF_POINTOPOINT | IFF_NOARP | IFF_MULTICAST;
+ 	dev->priv_destructor = ppp_dev_priv_destructor;
++	dev->pcpu_stat_type = NETDEV_PCPU_STAT_TSTATS;
+ 	netif_keep_dst(dev);
+ }
+ 
+@@ -1804,8 +1781,7 @@ ppp_send_frame(struct ppp *ppp, struct sk_buff *skb)
+ #endif /* CONFIG_PPP_FILTER */
+ 	}
+ 
+-	++ppp->stats64.tx_packets;
+-	ppp->stats64.tx_bytes += skb->len - PPP_PROTO_LEN;
++	dev_sw_netstats_tx_add(ppp->dev, 1, skb->len - PPP_PROTO_LEN);
+ 
+ 	switch (proto) {
+ 	case PPP_IP:
+@@ -2483,8 +2459,7 @@ ppp_receive_nonmp_frame(struct ppp *ppp, struct sk_buff *skb)
+ 		break;
+ 	}
+ 
+-	++ppp->stats64.rx_packets;
+-	ppp->stats64.rx_bytes += skb->len - 2;
++	dev_sw_netstats_rx_add(ppp->dev, skb->len - PPP_PROTO_LEN);
+ 
+ 	npi = proto_to_npindex(proto);
+ 	if (npi < 0) {
+@@ -3312,14 +3287,25 @@ static void
+ ppp_get_stats(struct ppp *ppp, struct ppp_stats *st)
+ {
+ 	struct slcompress *vj = ppp->vj;
++	int cpu;
+ 
+ 	memset(st, 0, sizeof(*st));
+-	st->p.ppp_ipackets = ppp->stats64.rx_packets;
++	for_each_possible_cpu(cpu) {
++		struct pcpu_sw_netstats *p = per_cpu_ptr(ppp->dev->tstats, cpu);
++		u64 rx_packets, rx_bytes, tx_packets, tx_bytes;
++
++		rx_packets = u64_stats_read(&p->rx_packets);
++		rx_bytes = u64_stats_read(&p->rx_bytes);
++		tx_packets = u64_stats_read(&p->tx_packets);
++		tx_bytes = u64_stats_read(&p->tx_bytes);
++
++		st->p.ppp_ipackets += rx_packets;
++		st->p.ppp_ibytes += rx_bytes;
++		st->p.ppp_opackets += tx_packets;
++		st->p.ppp_obytes += tx_bytes;
++	}
+ 	st->p.ppp_ierrors = ppp->dev->stats.rx_errors;
+-	st->p.ppp_ibytes = ppp->stats64.rx_bytes;
+-	st->p.ppp_opackets = ppp->stats64.tx_packets;
+ 	st->p.ppp_oerrors = ppp->dev->stats.tx_errors;
+-	st->p.ppp_obytes = ppp->stats64.tx_bytes;
+ 	if (!vj)
+ 		return;
+ 	st->vj.vjs_packets = vj->sls_o_compressed + vj->sls_o_uncompressed;
 -- 
 2.53.0
 
