@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7796D2C0F93;
-	Thu, 30 Jul 2026 15:02:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 504C73B5DEE;
+	Thu, 30 Jul 2026 15:02:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423745; cv=none; b=cSwy8mKG53Vjm8m+2rv77188UydMzRvzb2o8JAWKbTD6dXwJA/PlOjfv9eeMoG4bZMWyUaAFS0BWn5XANdGwbHEoJ507ydt3Jgprx6bDvAUf2y/T18kFt6uHJ2rE1zpsH4VgZYYD/ZwzY2fOBSdBhLFeO9TK8RVSBQs3hYAsi7g=
+	t=1785423749; cv=none; b=d8WCt5dSnkmjCl+trvp0/DrKc5cKGqvg3Zyf4DrffdueYyJBoFn1BGWFOonwhN7gkDFEwxBOoFDOLSCL6YcEzi+cbr6IXDjHoXtLOX4yEGlYom7OJHawS4ER1rZwhaTUP4Kx5lA76lhF8QRp/AKjzoV1ZHWP1g5lGy/1L2zZGao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423745; c=relaxed/simple;
-	bh=f89uQlja+nvyAytAHRy4aDZIe0gxLPVC8OJSu2FK6L4=;
+	s=arc-20240116; t=1785423749; c=relaxed/simple;
+	bh=sxGnED0br7+k+6b+xtOLGjkhy7LQD3fqtz/n2LH+cc4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cw8FskcjkGKmmKYcobUUO3sP2qa/mtpkYslha0DzSYooto5v2uTtLVS/sDgybfgCrKZYSYIB/BNHjVte/54+SntE7YA8JwZmJkxZmXHEUHZg6L72HBQ5blRhSOPXjmh14pKCA8Je4vhlUxr/NbxGzAKJ09WLAuZmTpmYAcqu6Gw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rqGzYZ/H; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dMieL03Ct/bVUD6aTUio+64IAMMs/0uHUhyubOxRIzi9a4VDtCNu1Irq6SSatwBw/dwixZdbeo9EoZ46LyPDH49CGdiWObX7rbFPI+rHuvdymroLc2kjOsT+X21gxa4h4cYNfN2LZjranZWKhEAs+j/P9bFL4+AYiHoV9BXjQT0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0bTsQxWi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rqGzYZ/H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C90911F000E9;
-	Thu, 30 Jul 2026 15:02:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0bTsQxWi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0E5A1F000E9;
+	Thu, 30 Jul 2026 15:02:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423744;
-	bh=nlmSXp5HH4ephevNCfrXNj/qRD9jzDLIM+CwyeWLeoU=;
+	s=korg; t=1785423747;
+	bh=CfnmDT7aG4T92n9xJ+Hixd8VEvv+6N24bynzJv5XXO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rqGzYZ/HCGHJaN1TswqtpXsP5d47jkgZ3YSOfw/U/CYpQ2SO4Zj9nXw9GE3E9ys4F
-	 2ZU9a9v+d1rhMKfgVY+fOJ8X+rurOtPVBFqQx78wxy0cK33Ar32MBsoD49Swn0kApq
-	 RAY+3eO8j/53HhavQlT1WFqc3BKm/aEo5BT9BEhw=
+	b=0bTsQxWi03D/s/kiqRZhJTaog0h5hp8pjLspBmEoVijIRjJQwjuc/BJS1bn0VjhYX
+	 N1AQJ0WEr95X8mdiqbjv3cpW63FN+oQ/is9CMIuPKqMGUHQinQEvKt8E1yq3NMh6dX
+	 ZR2CxpZgryiauJdcc3/yQKwQgxUkn9f6YQtk75HI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Sonali Pradhan <sonalipradhan@google.com>
-Subject: [PATCH 6.18 151/675] usb: gadget: f_ncm: validate datagram bounds in ncm_unwrap_ntb()
-Date: Thu, 30 Jul 2026 16:08:01 +0200
-Message-ID: <20260730141448.347674066@linuxfoundation.org>
+	Satyanarayana K V P <satyanarayana.k.v.p@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Michal Wajdeczko <michal.wajdeczko@intel.com>,
+	Matthew Auld <matthew.auld@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 125/675] drm/xe/sa: Shadow buffer support in the sub-allocator pool
+Date: Thu, 30 Jul 2026 16:07:35 +0200
+Message-ID: <20260730141447.801737595@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -50,91 +53,228 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sonali Pradhan <sonalipradhan@google.com>
+From: Satyanarayana K V P <satyanarayana.k.v.p@intel.com>
 
-commit 1febec7e47cdcd01f43fb0211094e3010474666e upstream.
+[ Upstream commit 1f2cf5295cdba71818288c9e495b4ef5097565ed ]
 
-When unpacking host-supplied NTBs, ncm_unwrap_ntb() checks datagram length
-against frame_max but does not verify that the datagram fits within the
-declared block length. Additionally, when decoding multiple NTBs from a
-single socket buffer, subsequent block lengths are not checked against the
-actual remaining buffer data.
+The existing sub-allocator is limited to managing a single buffer object.
+This enhancement introduces shadow buffer functionality to support
+scenarios requiring dual buffer management.
 
-With these checks missing, a malicious USB host can specify datagram
-offsets and lengths that point beyond the block, or supply secondary NTB
-headers declaring lengths larger than the buffer. skb_put_data() then
-copies adjacent kernel memory from skb_shared_info into the network skb.
+The changes include added shadow buffer object creation capability,
+Management for both primary and shadow buffers, and appropriate locking
+mechanisms for thread-safe operations.
 
-Fix this by verifying that sufficient buffer space remains for the NTB
-header before parsing, handling zero-length block declarations, ensuring
-that block lengths never exceed the remaining buffer space, and verifying
-that each datagram payload stays strictly within the block boundary.
+This enables more flexible buffer allocation strategies in scenarios where
+shadow buffering is required.
 
-Fixes: 427694cfaafa ("usb: gadget: ncm: Handle decoding of multiple NTB's in unwrap call")
-Fixes: 2b74b0a04d3e ("USB: gadget: f_ncm: add bounds checks to ncm_unwrap_ntb()")
-Cc: stable <stable@kernel.org>
-Assisted-by: Jetski:Gemini-2.5-Pro
-Signed-off-by: Sonali Pradhan <sonalipradhan@google.com>
-Link: https://patch.msgid.link/20260703083725.1903850-1-sonalipradhan@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Satyanarayana K V P <satyanarayana.k.v.p@intel.com>
+Suggested-by: Matthew Brost <matthew.brost@intel.com>
+Cc: Michal Wajdeczko <michal.wajdeczko@intel.com>
+Cc: Matthew Auld <matthew.auld@intel.com>
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://patch.msgid.link/20251118120745.3460172-2-satyanarayana.k.v.p@intel.com
+Stable-dep-of: 56441f9e08ad ("drm/xe/vf: Fix VF CCS attach/detach race with in-flight BO moves")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/function/f_ncm.c |   17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/xe/xe_guc_buf.c      |  2 +-
+ drivers/gpu/drm/xe/xe_sa.c           | 67 +++++++++++++++++++++++++++-
+ drivers/gpu/drm/xe/xe_sa.h           | 20 ++++++++-
+ drivers/gpu/drm/xe/xe_sa_types.h     |  3 ++
+ drivers/gpu/drm/xe/xe_sriov_vf_ccs.c |  3 ++
+ 5 files changed, 91 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/gadget/function/f_ncm.c
-+++ b/drivers/usb/gadget/function/f_ncm.c
-@@ -1189,6 +1189,10 @@ static int ncm_unwrap_ntb(struct gether
- 	frame_max = ncm_opts->max_segment_size;
+diff --git a/drivers/gpu/drm/xe/xe_guc_buf.c b/drivers/gpu/drm/xe/xe_guc_buf.c
+index 989c546d05689d..3de6377ae2d521 100644
+--- a/drivers/gpu/drm/xe/xe_guc_buf.c
++++ b/drivers/gpu/drm/xe/xe_guc_buf.c
+@@ -30,7 +30,7 @@ static int guc_buf_cache_init(struct xe_guc_buf_cache *cache, u32 size)
+ 	struct xe_gt *gt = cache_to_gt(cache);
+ 	struct xe_sa_manager *sam;
  
- parse_ntb:
-+	if (to_process < (int)opts->nth_size) {
-+		INFO(port->func.config->cdev, "Packet too small for headers\n");
-+		goto err;
-+	}
- 	tmp = (__le16 *)ntb_ptr;
+-	sam = __xe_sa_bo_manager_init(gt_to_tile(gt), size, 0, sizeof(u32));
++	sam = __xe_sa_bo_manager_init(gt_to_tile(gt), size, 0, sizeof(u32), 0);
+ 	if (IS_ERR(sam))
+ 		return PTR_ERR(sam);
+ 	cache->sam = sam;
+diff --git a/drivers/gpu/drm/xe/xe_sa.c b/drivers/gpu/drm/xe/xe_sa.c
+index fedd017d6dd36a..d9e0d30f8135e9 100644
+--- a/drivers/gpu/drm/xe/xe_sa.c
++++ b/drivers/gpu/drm/xe/xe_sa.c
+@@ -29,6 +29,7 @@ static void xe_sa_bo_manager_fini(struct drm_device *drm, void *arg)
+ 		kvfree(sa_manager->cpu_ptr);
  
- 	/* dwSignature */
-@@ -1209,8 +1213,12 @@ parse_ntb:
- 	tmp++; /* skip wSequence */
+ 	sa_manager->bo = NULL;
++	sa_manager->shadow = NULL;
+ }
  
- 	block_len = get_ncm(&tmp, opts->block_length);
-+	if (block_len == 0)
-+		block_len = to_process;
-+
- 	/* (d)wBlockLength */
--	if ((block_len < opts->nth_size + opts->ndp_size) || (block_len > ntb_max)) {
-+	if ((block_len < opts->nth_size + opts->ndp_size) || (block_len > ntb_max) ||
-+			(block_len > to_process)) {
- 		INFO(port->func.config->cdev, "Bad block length: %#X\n", block_len);
- 		goto err;
+ /**
+@@ -37,12 +38,14 @@ static void xe_sa_bo_manager_fini(struct drm_device *drm, void *arg)
+  * @size: number of bytes to allocate
+  * @guard: number of bytes to exclude from suballocations
+  * @align: alignment for each suballocated chunk
++ * @flags: flags for suballocator
+  *
+  * Prepares the suballocation manager for suballocations.
+  *
+  * Return: a pointer to the &xe_sa_manager or an ERR_PTR on failure.
+  */
+-struct xe_sa_manager *__xe_sa_bo_manager_init(struct xe_tile *tile, u32 size, u32 guard, u32 align)
++struct xe_sa_manager *__xe_sa_bo_manager_init(struct xe_tile *tile, u32 size,
++					      u32 guard, u32 align, u32 flags)
+ {
+ 	struct xe_device *xe = tile_to_xe(tile);
+ 	struct xe_sa_manager *sa_manager;
+@@ -79,6 +82,26 @@ struct xe_sa_manager *__xe_sa_bo_manager_init(struct xe_tile *tile, u32 size, u3
+ 		memset(sa_manager->cpu_ptr, 0, bo->ttm.base.size);
  	}
-@@ -1273,7 +1281,7 @@ parse_ntb:
- 			index = index2;
- 			/* wDatagramIndex[0] */
- 			if ((index < opts->nth_size) ||
--					(index > block_len - opts->dpe_size)) {
-+					(index > block_len)) {
- 				INFO(port->func.config->cdev,
- 				     "Bad index: %#X\n", index);
- 				goto err;
-@@ -1285,7 +1293,8 @@ parse_ntb:
- 			 * ethernet hdr + crc or larger than max frame size
- 			 */
- 			if ((dg_len < 14 + crc_len) ||
--					(dg_len > frame_max)) {
-+					(dg_len > frame_max) ||
-+					(dg_len > block_len - index)) {
- 				INFO(port->func.config->cdev,
- 				     "Bad dgram length: %#X\n", dg_len);
- 				goto err;
-@@ -1310,7 +1319,7 @@ parse_ntb:
- 			dg_len2 = get_ncm(&tmp, opts->dgram_item_len);
  
- 			/* wDatagramIndex[1] */
--			if (index2 > block_len - opts->dpe_size) {
-+			if (index2 > block_len) {
- 				INFO(port->func.config->cdev,
- 				     "Bad index: %#X\n", index2);
- 				goto err;
++	if (flags & XE_SA_BO_MANAGER_FLAG_SHADOW) {
++		struct xe_bo *shadow;
++
++		ret = drmm_mutex_init(&xe->drm, &sa_manager->swap_guard);
++		if (ret)
++			return ERR_PTR(ret);
++
++		shadow = xe_managed_bo_create_pin_map(xe, tile, size,
++						      XE_BO_FLAG_VRAM_IF_DGFX(tile) |
++						      XE_BO_FLAG_GGTT |
++						      XE_BO_FLAG_GGTT_INVALIDATE |
++						      XE_BO_FLAG_PINNED_NORESTORE);
++		if (IS_ERR(shadow)) {
++			drm_err(&xe->drm, "Failed to prepare %uKiB BO for SA manager (%pe)\n",
++				size / SZ_1K, shadow);
++			return ERR_CAST(shadow);
++		}
++		sa_manager->shadow = shadow;
++	}
++
+ 	drm_suballoc_manager_init(&sa_manager->base, managed_size, align);
+ 	ret = drmm_add_action_or_reset(&xe->drm, xe_sa_bo_manager_fini,
+ 				       sa_manager);
+@@ -88,6 +111,48 @@ struct xe_sa_manager *__xe_sa_bo_manager_init(struct xe_tile *tile, u32 size, u3
+ 	return sa_manager;
+ }
+ 
++/**
++ * xe_sa_bo_swap_shadow() - Swap the SA BO with shadow BO.
++ * @sa_manager: the XE sub allocator manager
++ *
++ * Swaps the sub-allocator primary buffer object with shadow buffer object.
++ *
++ * Return: None.
++ */
++void xe_sa_bo_swap_shadow(struct xe_sa_manager *sa_manager)
++{
++	struct xe_device *xe = tile_to_xe(sa_manager->bo->tile);
++
++	xe_assert(xe, sa_manager->shadow);
++	lockdep_assert_held(&sa_manager->swap_guard);
++
++	swap(sa_manager->bo, sa_manager->shadow);
++	if (!sa_manager->bo->vmap.is_iomem)
++		sa_manager->cpu_ptr = sa_manager->bo->vmap.vaddr;
++}
++
++/**
++ * xe_sa_bo_sync_shadow() - Sync the SA Shadow BO with primary BO.
++ * @sa_bo: the sub-allocator buffer object.
++ *
++ * Synchronize sub-allocator shadow buffer object with primary buffer object.
++ *
++ * Return: None.
++ */
++void xe_sa_bo_sync_shadow(struct drm_suballoc *sa_bo)
++{
++	struct xe_sa_manager *sa_manager = to_xe_sa_manager(sa_bo->manager);
++	struct xe_device *xe = tile_to_xe(sa_manager->bo->tile);
++
++	xe_assert(xe, sa_manager->shadow);
++	lockdep_assert_held(&sa_manager->swap_guard);
++
++	xe_map_memcpy_to(xe, &sa_manager->shadow->vmap,
++			 drm_suballoc_soffset(sa_bo),
++			 xe_sa_bo_cpu_addr(sa_bo),
++			 drm_suballoc_size(sa_bo));
++}
++
+ /**
+  * __xe_sa_bo_new() - Make a suballocation but use custom gfp flags.
+  * @sa_manager: the &xe_sa_manager
+diff --git a/drivers/gpu/drm/xe/xe_sa.h b/drivers/gpu/drm/xe/xe_sa.h
+index 99dbf0eea54025..90ffa93a000ce4 100644
+--- a/drivers/gpu/drm/xe/xe_sa.h
++++ b/drivers/gpu/drm/xe/xe_sa.h
+@@ -14,12 +14,14 @@
+ struct dma_fence;
+ struct xe_tile;
+ 
+-struct xe_sa_manager *__xe_sa_bo_manager_init(struct xe_tile *tile, u32 size, u32 guard, u32 align);
++#define XE_SA_BO_MANAGER_FLAG_SHADOW	BIT(0)
++struct xe_sa_manager *__xe_sa_bo_manager_init(struct xe_tile *tile, u32 size,
++					      u32 guard, u32 align, u32 flags);
+ struct drm_suballoc *__xe_sa_bo_new(struct xe_sa_manager *sa_manager, u32 size, gfp_t gfp);
+ 
+ static inline struct xe_sa_manager *xe_sa_bo_manager_init(struct xe_tile *tile, u32 size, u32 align)
+ {
+-	return __xe_sa_bo_manager_init(tile, size, SZ_4K, align);
++	return __xe_sa_bo_manager_init(tile, size, SZ_4K, align, 0);
+ }
+ 
+ /**
+@@ -68,4 +70,18 @@ static inline void *xe_sa_bo_cpu_addr(struct drm_suballoc *sa)
+ 		drm_suballoc_soffset(sa);
+ }
+ 
++void xe_sa_bo_swap_shadow(struct xe_sa_manager *sa_manager);
++void xe_sa_bo_sync_shadow(struct drm_suballoc *sa_bo);
++
++/**
++ * xe_sa_bo_swap_guard() - Retrieve the SA BO swap guard within sub-allocator.
++ * @sa_manager: the &xe_sa_manager
++ *
++ * Return: Sub alloctor swap guard mutex.
++ */
++static inline struct mutex *xe_sa_bo_swap_guard(struct xe_sa_manager *sa_manager)
++{
++	return &sa_manager->swap_guard;
++}
++
+ #endif
+diff --git a/drivers/gpu/drm/xe/xe_sa_types.h b/drivers/gpu/drm/xe/xe_sa_types.h
+index cb7238799dcb20..1085c9c37d6b61 100644
+--- a/drivers/gpu/drm/xe/xe_sa_types.h
++++ b/drivers/gpu/drm/xe/xe_sa_types.h
+@@ -12,6 +12,9 @@ struct xe_bo;
+ struct xe_sa_manager {
+ 	struct drm_suballoc_manager base;
+ 	struct xe_bo *bo;
++	struct xe_bo *shadow;
++	/** @swap_guard: Timeline guard updating @bo and @shadow */
++	struct mutex swap_guard;
+ 	void *cpu_ptr;
+ 	bool is_iomem;
+ };
+diff --git a/drivers/gpu/drm/xe/xe_sriov_vf_ccs.c b/drivers/gpu/drm/xe/xe_sriov_vf_ccs.c
+index 739a3eb180b53c..1a7d767632dadf 100644
+--- a/drivers/gpu/drm/xe/xe_sriov_vf_ccs.c
++++ b/drivers/gpu/drm/xe/xe_sriov_vf_ccs.c
+@@ -160,9 +160,12 @@ static int alloc_bb_pool(struct xe_tile *tile, struct xe_sriov_vf_ccs_ctx *ctx)
+ 	offset = 0;
+ 	xe_map_memset(xe, &sa_manager->bo->vmap, offset, MI_NOOP,
+ 		      bb_pool_size);
++	xe_map_memset(xe, &sa_manager->shadow->vmap, offset, MI_NOOP,
++		      bb_pool_size);
+ 
+ 	offset = bb_pool_size - sizeof(u32);
+ 	xe_map_wr(xe, &sa_manager->bo->vmap, offset, u32, MI_BATCH_BUFFER_END);
++	xe_map_wr(xe, &sa_manager->shadow->vmap, offset, u32, MI_BATCH_BUFFER_END);
+ 
+ 	ctx->mem.ccs_bb_pool = sa_manager;
+ 
+-- 
+2.53.0
+
 
 
