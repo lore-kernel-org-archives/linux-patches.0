@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5075C41DED0;
-	Thu, 30 Jul 2026 15:05:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20934407CCF;
+	Thu, 30 Jul 2026 15:05:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423917; cv=none; b=VdmTWxZ66IuewDntIRuRr3HIOv7aDqIR/V+qI4yhmX4MaRzlATRFG0Sob1ghUugTqOIcy7LmKETD4dniCErNDbGuOJeze9h2uN1T/dwUjhKO+/FiXrLs979Nba9X3OXbhZ4ujSRBD9zKVlbKStw9cEJ+oKUo5u07jb/4+cTm5XA=
+	t=1785423920; cv=none; b=ngX80sxND2ND/FuOn7VVX5rn9SUq5QJgesR34zEYD/1SZ1zOumWujnoqOlbvVUP4uDdhBIPsHZELvY3cUsx+TiGWbSww1ljs3QGtcUPIldoj6333dqeLPILKi7FxdWHZIC5hecRq3TiR9XXyEqiGKp+1dyJ30iNCZvXn9FDHSDo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423917; c=relaxed/simple;
-	bh=CtopFwG4Zi5fxmEIjeh0D0ku9Iny42/o/9y+wkDy+7k=;
+	s=arc-20240116; t=1785423920; c=relaxed/simple;
+	bh=PPk+xxt4/eVvhtfXf2oilsip8v6XO6e6U0tX+A9hlnw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZfwpOUeCwW61joDXv2Cz6bwtUMVzQkeMroMQ1bn9gyLcYV3IeD4C5mYo3NvhmOFsiFuTlv7+BA8xagNXt+DdkwAD5rrFWx8yLVhRjCiYwr7xMwf/q28x71LMOTK7K2KWWa3FfpI/HntuFc6USmURZ+IVamQyz+7D8dJe1jzpTM4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xPIQjjn5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cebvD4OunzbevxGzz+f46p1SQKkQ+iWKVE+dgb0uJCKRNUzzYjv6cUYYe/wP2Ah62UokAtIXMGI4m/ZZA8SAletLsHZDBRUap+/k2QlZJt38QXD5vRgP5+NKLdQmfow0g+mrfApb3FldYsAmi+uAAk5M+aRXjoOdIIdephD7i+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gweCRQKn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xPIQjjn5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A714C1F000E9;
-	Thu, 30 Jul 2026 15:05:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gweCRQKn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B0D61F000E9;
+	Thu, 30 Jul 2026 15:05:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423916;
-	bh=ajSSBUj4BOwJp9Qrm1VkoZvrtdORqt+oAOZiHTqmfko=;
+	s=korg; t=1785423919;
+	bh=hbnIaXXXHmF/0Z9MohxBSDAsj5+x69/OF44JzLxKGkc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xPIQjjn5BXOsfSRTiCdMKS4ys9Rno5auu+Bfp8Ejf6NH1qV/IYWgXE7+Tn7Iul45i
-	 Ixom2AvPqhQbe+8WwPJDVApdBjkJFQYnMO/sTBE3lZtiUgEs3CpCybZqzUfn7Rm/Os
-	 CeU8+CxK2U3FAsLqvrC/Gy8eoH+CRwpUUm04AJN0=
+	b=gweCRQKnPpGU9jJ1/oIxH37FSxpr9GihvGyNwbV9MmFVD1KooR7Tgg5DyOwLtIG+m
+	 QPJbC70onABbVjBAnIJ6YkzJZjDcLldh3djAXOT9Ew5+/IuX3bqCTMEg3AbgIPLYZ+
+	 mYlg10QocSusJZ1cNgPRIG/hgpIHzgbBNgEaDufw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Daniel Golle <daniel@makrotopia.org>,
+	Chen-Yu Tsai <wens@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 209/675] hwmon: occ: validate poll response sensor blocks
-Date: Thu, 30 Jul 2026 16:08:59 +0200
-Message-ID: <20260730141449.584881706@linuxfoundation.org>
+Subject: [PATCH 6.18 210/675] regulator: mt6358: use regmap helper to read fixed LDO calibration
+Date: Thu, 30 Jul 2026 16:09:00 +0200
+Message-ID: <20260730141449.605784950@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -51,116 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Daniel Golle <daniel@makrotopia.org>
 
-[ Upstream commit 70e76e700fc6c46afb4e17aec099a1ea089b4a22 ]
+[ Upstream commit 1d26f125501f3fbe6c259ab75bf6516299a0bf0e ]
 
-The OCC poll response parser walks a counted list of sensor data blocks.
-It used the static backing-array capacity as the parse boundary, but a
-transport response makes only data_length bytes current and valid. A
-truncated response can therefore make the parser consume a block header or
-block extent outside the current response.
+The "fixed" LDOs with output voltage calibration use
+mt6358_get_buck_voltage_sel as their get_voltage_sel op, but the
+MT6358_REG_FIXED and MT6366_REG_FIXED entries do not populate
+da_vsel_reg/da_vsel_mask. The op therefore reads register 0x0 with a
+zero mask and shifts the result by ffs(0) - 1 = -1, which is undefined
+behaviour and gets flagged by UBSAN on every boot on MT6366 boards:
 
-Use data_length as the parent boundary, prove the fixed poll header and
-each current block header before reading them, and prove the complete block
-before advancing. Keep parsed sensor metadata local until the complete
-response has passed validation, then publish it. Propagate
-malformed-response errors before publishing the OCC as active.
+  UBSAN: shift-out-of-bounds in drivers/regulator/mt6358-regulator.c:384:38
+  shift exponent -1 is negative
+  Call trace:
+   mt6358_get_buck_voltage_sel+0xc8/0x120
+   regulator_get_voltage_rdev+0x70/0x170
+   set_machine_constraints+0x504/0xc38
+   regulator_register+0x324/0xc68
 
-Fixes: aa195fe49b03 ("hwmon (occ): Parse OCC poll response")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://lore.kernel.org/r/20260720115826.14813-1-pengpeng@iscas.ac.cn
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Besides the undefined shift, the returned selector is always 0, so the
+actual calibration offset programmed in <reg>_ANA_CON0 is never
+reported.
+
+The descriptor already carries the correct vsel_reg/vsel_mask (the
+ANA_CON0 calibration field), matching the regulator_set_voltage_sel_regmap
+op already in use. Read the selector back through
+regulator_get_voltage_sel_regmap instead.
+
+Fixes: cf08fa74c716 ("regulator: mt6358: Add output voltage fine tuning to fixed regulators")
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+Reviewed-by: Chen-Yu Tsai <wens@kernel.org>
+Tested-by: Chen-Yu Tsai <wens@kernel.org>
+Link: https://patch.msgid.link/dcd98d81dede338c9bbb9700a9613c848b702e49.1784336005.git.daniel@makrotopia.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/occ/common.c | 38 ++++++++++++++++++++++++++++++--------
- 1 file changed, 30 insertions(+), 8 deletions(-)
+ drivers/regulator/mt6358-regulator.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/occ/common.c b/drivers/hwmon/occ/common.c
-index e18e80e832fd3f..175208d712b06e 100644
---- a/drivers/hwmon/occ/common.c
-+++ b/drivers/hwmon/occ/common.c
-@@ -1052,32 +1052,49 @@ static int occ_setup_sensor_attrs(struct occ *occ)
- }
- 
- /* only need to do this once at startup, as OCC won't change sensors on us */
--static void occ_parse_poll_response(struct occ *occ)
-+static int occ_parse_poll_response(struct occ *occ)
- {
- 	unsigned int i, old_offset, offset = 0, size = 0;
-+	u16 data_length;
- 	struct occ_sensor *sensor;
--	struct occ_sensors *sensors = &occ->sensors;
-+	struct occ_sensors parsed = {};
-+	struct occ_sensors *sensors = &parsed;
- 	struct occ_response *resp = &occ->resp;
- 	struct occ_poll_response *poll =
- 		(struct occ_poll_response *)&resp->data[0];
- 	struct occ_poll_response_header *header = &poll->header;
- 	struct occ_sensor_data_block *block = &poll->block;
- 
-+	data_length = get_unaligned_be16(&resp->data_length);
-+	if (data_length < sizeof(*header) || data_length > OCC_RESP_DATA_BYTES) {
-+		dev_err(occ->bus_dev, "invalid OCC poll response length %u\n",
-+			data_length);
-+		return -EMSGSIZE;
-+	}
-+
- 	dev_info(occ->bus_dev, "OCC found, code level: %.16s\n",
- 		 header->occ_code_level);
- 
- 	for (i = 0; i < header->num_sensor_data_blocks; ++i) {
- 		block = (struct occ_sensor_data_block *)((u8 *)block + offset);
-+		if (size + sizeof(*header) + sizeof(block->header) >
-+		    data_length) {
-+			dev_err(occ->bus_dev,
-+				"truncated OCC sensor block header\n");
-+			return -EMSGSIZE;
-+		}
-+
- 		old_offset = offset;
- 		offset = (block->header.num_sensors *
- 			  block->header.sensor_length) + sizeof(block->header);
--		size += offset;
- 
- 		/* validate all the length/size fields */
--		if ((size + sizeof(*header)) >= OCC_RESP_DATA_BYTES) {
--			dev_warn(occ->bus_dev, "exceeded response buffer\n");
--			return;
-+		if (size + sizeof(*header) + offset > data_length) {
-+			dev_err(occ->bus_dev,
-+				"exceeded OCC poll response length\n");
-+			return -EMSGSIZE;
- 		}
-+		size += offset;
- 
- 		dev_dbg(occ->bus_dev, " %04x..%04x: %.4s (%d sensors)\n",
- 			old_offset, offset - 1, block->header.eye_catcher,
-@@ -1107,6 +1124,9 @@ static void occ_parse_poll_response(struct occ *occ)
- 
- 	dev_dbg(occ->bus_dev, "Max resp size: %u+%zd=%zd\n", size,
- 		sizeof(*header), size + sizeof(*header));
-+	occ->sensors = parsed;
-+
-+	return 0;
- }
- 
- int occ_active(struct occ *occ, bool active)
-@@ -1138,10 +1158,12 @@ int occ_active(struct occ *occ, bool active)
- 			goto unlock;
- 		}
- 
--		occ->active = true;
- 		occ->next_update = jiffies + OCC_UPDATE_FREQUENCY;
--		occ_parse_poll_response(occ);
-+		rc = occ_parse_poll_response(occ);
-+		if (rc)
-+			goto unlock;
- 
-+		occ->active = true;
- 		rc = occ_setup_sensor_attrs(occ);
- 		if (rc) {
- 			dev_err(occ->bus_dev,
+diff --git a/drivers/regulator/mt6358-regulator.c b/drivers/regulator/mt6358-regulator.c
+index e4745f616cea3b..44bef0bdfdbe35 100644
+--- a/drivers/regulator/mt6358-regulator.c
++++ b/drivers/regulator/mt6358-regulator.c
+@@ -492,7 +492,7 @@ static const struct regulator_ops mt6358_volt_fixed_ops = {
+ 	.list_voltage = regulator_list_voltage_linear,
+ 	.map_voltage = regulator_map_voltage_linear,
+ 	.set_voltage_sel = regulator_set_voltage_sel_regmap,
+-	.get_voltage_sel = mt6358_get_buck_voltage_sel,
++	.get_voltage_sel = regulator_get_voltage_sel_regmap,
+ 	.set_voltage_time_sel = regulator_set_voltage_time_sel,
+ 	.enable = regulator_enable_regmap,
+ 	.disable = regulator_disable_regmap,
 -- 
 2.53.0
 
