@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CEEA2D0602;
-	Thu, 30 Jul 2026 16:18:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 191E42D0602;
+	Thu, 30 Jul 2026 16:18:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785428292; cv=none; b=lBP73FoQdzHZWUuk7aEIrK9YNEZbctwogih6I+9UOgCq4cZpB+N0e6hvy82oOgV6lX8pfEkcCdERLR3L1NZpcDD6zLP0XMl4sBbgmYYxaBl7RDJd2aDvrOahx/APhP8qQ/8aKVANnhKPb5dhCUTrKY84LOScVo06w/hpmJNUND0=
+	t=1785428295; cv=none; b=mH7G49fEiNq9lSCSHDwJ3Oy9JzsL3N2YzPpdxSmg4Kag4ZSv7XOLajzMDWRACAkXV4Dv1dzbQRUtarTvfBtdf9XEQHkyC5CB7LwHtfLi5IT4uAfbkwTZmS/RCI4MLVqxwjwg9SZ6OcSqhxBNV8dko6k8Azm/NvBNULBVKvXbXBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785428292; c=relaxed/simple;
-	bh=ma6W7WPvg7OtAsBEdaHO4uHf7QCPjb/q7ENJ/6x2oYw=;
+	s=arc-20240116; t=1785428295; c=relaxed/simple;
+	bh=j35NL+xBvQ1iODAqeQMAapqXrnZbWcJObyoldvT9aNA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lp73FIGcrf5XhZ//hSFusd7JikkNAOsfACGbps87J+6yMntwX/eF7//K5v2M2dXyLomRx+lkNVJMTcPQbE/6P4lzgUSGEMhp7AmRjna30I8K5Yemq3Iv7RXb10tI6Orwa+sju0JjqPIPuUzV486UN0TbPXWPDnm6ebfivnyS0pY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m2Nqp7qe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JQAC15B3ePTlo/FIC00P+b+MSixs052qjB95VkDiNjfUfjTz5KRXaJiEr77oUIyPGNhYwpIj28mR/l+mREIDwrijoOJZkfNIXyTcL2O907PTKW5tXEtd00ESvYpgKpV80v6Pu1hrG7V8G+ZX/ZLHhiLjWbtopxnuTwPU5LwSVQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t7xiCfxV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m2Nqp7qe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42E9F1F000E9;
-	Thu, 30 Jul 2026 16:18:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t7xiCfxV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B88B1F000E9;
+	Thu, 30 Jul 2026 16:18:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785428290;
-	bh=v1SQqJEvti8dq1cGrSx/ggCizet7JCA5uun4zEF3PH4=;
+	s=korg; t=1785428293;
+	bh=sa73Z+ayG2KK2HcaCR61v7b2VGuk83Gz+qtHYU7mvMo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m2Nqp7qeURxW3U5kn6wBu6+vx1qLAf2hLRsX90FRha8J4EaK/hhFuV66jz+biEfAn
-	 EYaKT8+G6JsdxFO218kl42YQsT35adDho4PpU3sHYBOfM27WFbBHLP6Cfhfs/G8OFO
-	 xmDjjME0cwlRV0FdvO6JAiYabHW1Sz17C9D20X6A=
+	b=t7xiCfxVQ2TCPS5E5CRAJ4hnHobjwQN9zzlg3Vd7ckvPuELtwe4RaDaiulzIGl9KN
+	 oArDFmqjLwvwRcHdCg87cZZflhoWjT5PYkv/TennMY6BbXJCAd5BdAAYGGmL6G0sLT
+	 PSKwbroSW5jd06T7v313AgvLJEYwfryZsIHPNmNI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Sergio Paracuellos <sergio.paracuellos@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 415/484] netfilter: nf_conntrack_sip: remove net variable shadowing
-Date: Thu, 30 Jul 2026 16:15:12 +0200
-Message-ID: <20260730141432.492428572@linuxfoundation.org>
+Subject: [PATCH 6.6 464/484] gpio: mt7621: avoid corruption of shared interrupt trigger state
+Date: Thu, 30 Jul 2026 16:16:01 +0200
+Message-ID: <20260730141433.566050558@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -50,36 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Sergio Paracuellos <sergio.paracuellos@gmail.com>
 
-[ Upstream commit 7970d6aaf710db166de98c5356a260089896fae5 ]
+[ Upstream commit 1781172526d1092323af443fa03f00e6de560401 ]
 
-net is already set, derived from nf_conn.
-I don't see how the device could be living in a different netns
-than the conntrack entry.
+The bank-shared fields like 'rising' and 'falling' are modified using
+non-atomic read-modify-write operations. Since every gpio chip instance
+represents an entire bank of 32 pins, if 'mediatek_gpio_irq_type()' is
+called concurrently for different IRQs on the same bank a possible overwrite
+of each other's configuration is possible. Thus, protect this state with
+'gpio_generic_lock_irqsave' lock in the same way it is handled in irp_chip
+'mediatek_gpio_irq_mask()' and 'mediatek_gpio_irq_unmask()' callbacks.
 
-Remove the extra variable and re-use existing one.
-
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Stable-dep-of: e5e24a365a5e ("netfilter: nf_conntrack_sip: validate skb_dst() before accessing it")
+Cc: stable@vger.kernel.org
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: 4ba9c3afda41 ("gpio: mt7621: Add a driver for MT7621")
+Signed-off-by: Sergio Paracuellos <sergio.paracuellos@gmail.com>
+Link: https://patch.msgid.link/20260626060112.2498324-2-sergio.paracuellos@gmail.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+[ Changed `guard(gpio_generic_lock_irqsave)(&rg->chip)` to `guard(spinlock_irqsave)(&rg->lock)` as the generic GPIO chip lock does not exist in this tree. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_conntrack_sip.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/gpio/gpio-mt7621.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/netfilter/nf_conntrack_sip.c
-+++ b/net/netfilter/nf_conntrack_sip.c
-@@ -948,9 +948,8 @@ static int set_expected_rtp_rtcp(struct
- 		saddr = &ct->tuplehash[!dir].tuple.src.u3;
- 	} else if (sip_external_media) {
- 		struct net_device *dev = skb_dst(skb)->dev;
--		struct net *net = dev_net(dev);
--		struct flowi fl;
- 		struct dst_entry *dst = NULL;
-+		struct flowi fl;
+--- a/drivers/gpio/gpio-mt7621.c
++++ b/drivers/gpio/gpio-mt7621.c
+@@ -156,6 +156,8 @@ mediatek_gpio_irq_type(struct irq_data *
+ 	int pin = d->hwirq;
+ 	u32 mask = BIT(pin);
  
- 		memset(&fl, 0, sizeof(fl));
- 
++	guard(spinlock_irqsave)(&rg->lock);
++
+ 	if (type == IRQ_TYPE_PROBE) {
+ 		if ((rg->rising | rg->falling |
+ 		     rg->hlevel | rg->llevel) & mask)
 
 
