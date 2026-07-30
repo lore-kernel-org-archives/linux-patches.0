@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDB8130C143;
-	Thu, 30 Jul 2026 15:47:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C123236607D;
+	Thu, 30 Jul 2026 15:47:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426448; cv=none; b=m43vXQIUXyLDpAAl+e/MZgMwjbau6iZlV765Chk10gSkC7Xan2QMN/CrseR1XFBSEvuUJdTEH3KBaWpdG/pkLOg2/PI4XMbhqpFyxab2edqjGVk4n5yDzuI8x7moFu9Yy6OSEjgY0+FUYQlhacViOjRgiiohCec29MPPoY7lPT8=
+	t=1785426451; cv=none; b=EAFvPj/l69SYBINfO5JX2jXUHUjm0ijswdvHyY/w445FSYqj0N1Lf3qefkuoRvcf//+UweqXLEspSqUH8Z/8gVsx2rN3dfC7m22L5/8x39rd+LrDGtc3kq2340FSx0A1Cs6udYVlNdy07DcBYAYzDB5+1/6/qYzPzB9iKCbRLsE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426448; c=relaxed/simple;
-	bh=DeEteOnI+YmTB3ZscIMw0e3Oj9ncBLGhfY6hAzliSdo=;
+	s=arc-20240116; t=1785426451; c=relaxed/simple;
+	bh=mnDgaq1Z9B//rS1stFPMAxY1ZRzFbYpKJpAihYLpM98=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ss2gUfMjPjrnlmlSMQt0njaE0SHYDqgrYPSm91ss2+eUFP30+AplkQVBYAJb9/xU2fcWPzfXKU1zeQBTVa9ypZlsyBB4TEE97zukEIkaZ5MB9bB4PIIQ/Km21cEjMfcRFoiHE/V7PIAYRk5VBkwm0LaOEIvDk+aQAqRk3HIpCm0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zP9ihqFF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G1e++ZZWFxJGDbEmEtvucXbPGDNbzSqHjN1hKCus8OAqlc7g+T+cBohW3Yy2hVP23UsgzLwiZ42Iz3jXJ2yWN4qxylJQpRAi+wj7e6Kg6FC//N0C3G7Uv3EmOPCTDl/wlKXWA8hi2eykvuQDGUoz48U/RGHnGaGeDWBgNQ05Iwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bPnjuQYt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zP9ihqFF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4286E1F000E9;
-	Thu, 30 Jul 2026 15:47:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bPnjuQYt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1980D1F000E9;
+	Thu, 30 Jul 2026 15:47:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426447;
-	bh=Z0oKKdt4fQSrFMC96qxLMrAt8/ONzhwHmfMx/tgtbjE=;
+	s=korg; t=1785426450;
+	bh=YCopve5lxIufF5BkQFnfKYzV3yxc3DmcDY9PGxCuCFQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zP9ihqFFAF28Esl+aau22kTwu5ZF3q6EQGRU8qhmpQPnkdKYIjIGwd1G49Jun77pw
-	 Oep9uksz9dd0wKSFtaKFK+DjMN1fOBfsu+3CgXNg+p1lmVxo/RPdfsmSVTJjlfK2Xc
-	 BmKuV03co0uNlBM42Jbxdw59y9CU4TzoSuuJ/HYc=
+	b=bPnjuQYtYhq+lTzZaaXs6NBBZ5Se4fJbT8usbKvEEJd8QldTeDOdhff4Uim8iJjKz
+	 8pZ9SszxrYo8rYVdJBdbusnDKFbT1LeXCgAuDBdGMdIqyGX6XF/ggmbhDb5tSBaP0G
+	 1Xtf31q4dzA5k+/cHDIDfY5CHIWMFM3uvMXoBkBU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 6.12 379/602] tracing/probes: Avoid temporary buffer truncation in trace_probe_match_command_args()
-Date: Thu, 30 Jul 2026 16:12:51 +0200
-Message-ID: <20260730141443.923235441@linuxfoundation.org>
+Subject: [PATCH 6.12 380/602] tracing/probes: Fix potential underflow in LEN_OR_ZERO macro
+Date: Thu, 30 Jul 2026 16:12:52 +0200
+Message-ID: <20260730141443.943599737@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -51,51 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit 15f197856d68882af9416fc97516bb55079b7677 upstream.
+commit 8ce20bfba48902e1382187cd1a852f7cf3a1e739 upstream.
 
-In trace_probe_match_command_args(), a stack buffer buf[MAX_ARGSTR_LEN + 1]
-(256 bytes) is used to format "<name>=<comm>". However, since name can
-be up to 32 bytes (MAX_ARG_NAME_LEN) and comm up to 255 bytes
-(MAX_ARGSTR_LEN), the formatted string can exceed 256 bytes and get
-truncated by snprintf(), causing spurious argument matching failures.
+In __set_print_fmt(), LEN_OR_ZERO is defined as (len ? len - pos : 0).
+If len is non-zero but smaller than pos, len - pos evaluates to a negative
+integer. When passed as a size argument to snprintf(), this negative value
+is cast to a large unsigned size_t, bypassing buffer size limits.
 
-Instead of formatting into a temporary buffer on stack, compare the
-argument name, the '=' delimiter, and the comm expression directly.
+Ensure len > pos before subtracting to avoid integer underflow.
 
-Link: https://lore.kernel.org/all/178454233010.290363.10428767141343428804.stgit@devnote2/
+Link: https://lore.kernel.org/all/178454234934.290363.15247317871499514139.stgit@devnote2/
 
-Fixes: eb5bf81330a7 ("tracing/kprobe: Add per-probe delete from event")
+Fixes: 5bf652aaf46c ("tracing/probes: Integrate duplicate set_print_fmt()")
 Cc: stable@vger.kernel.org
 Assisted-by: Antigravity:gemini-3.5-flash
 Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_probe.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ kernel/trace/trace_probe.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/kernel/trace/trace_probe.c
 +++ b/kernel/trace/trace_probe.c
-@@ -2212,16 +2212,17 @@ int trace_probe_compare_arg_type(struct
- bool trace_probe_match_command_args(struct trace_probe *tp,
- 				    int argc, const char **argv)
+@@ -1886,7 +1886,7 @@ int traceprobe_update_arg(struct probe_a
+ }
+ 
+ /* When len=0, we just calculate the needed length */
+-#define LEN_OR_ZERO (len ? len - pos : 0)
++#define LEN_OR_ZERO (len > pos ? len - pos : 0)
+ static int __set_print_fmt(struct trace_probe *tp, char *buf, int len,
+ 			   enum probe_print_type ptype)
  {
--	char buf[MAX_ARGSTR_LEN + 1];
- 	int i;
- 
- 	if (tp->nr_args < argc)
- 		return false;
- 
- 	for (i = 0; i < argc; i++) {
--		snprintf(buf, sizeof(buf), "%s=%s",
--			 tp->args[i].name, tp->args[i].comm);
--		if (strcmp(buf, argv[i]))
-+		int len = strlen(tp->args[i].name);
-+
-+		if (strncmp(argv[i], tp->args[i].name, len) ||
-+		    argv[i][len] != '=' ||
-+		    strcmp(argv[i] + len + 1, tp->args[i].comm))
- 			return false;
- 	}
- 	return true;
 
 
