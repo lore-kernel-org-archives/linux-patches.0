@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DD69395AD2;
-	Thu, 30 Jul 2026 16:07:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79C50401A0A;
+	Thu, 30 Jul 2026 16:07:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427622; cv=none; b=fT5G1gU/ae3SQ0N32WgAst0JYw2Kwt7GIM7iUCVsSkTBDOpe+ULCZFH5vOaypdvKoYCtJO4TECLpdKCUrGCCYAGJGZV4imNOR8pltF0/jhZogqLIAGcvKGvQu2ETK87jn0x0UADDAOi+cIQiLRyFkXR93bM6GW0Q1+vwD78ErxU=
+	t=1785427625; cv=none; b=gneW/YYHrDSBeylR4ThpqXwuqUHHVX6TbgD17q9pvIJtPLRVg5KqQMtFWDaEScHqV5Lm6/7GGHgI7o5vtcM8N/N/W1EG7QM4C3bNrdudz7p3PPk87x3KCENZ4VQ0QepfonIqympKQmI2btakA0HejMPfcuuDlJbtA/4t7OJ3OW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427622; c=relaxed/simple;
-	bh=cl1FnGjR5j4CBCZZtWxgEmwJM0dm6F65z3GkeKEXB4E=;
+	s=arc-20240116; t=1785427625; c=relaxed/simple;
+	bh=96zOJa1MPV2gDPUj3la6Pp4Uxnxp2qII5iGzdjWJ7nc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nYjGxdtmQldXTnt60QRC/aqomfOS8s8Z43mQeP3/ZNuxia0I4EEkBITja6EqU2olT8h75dqc1KSkgZXjjw/MQ83HHnphRXytxTtP6j1k3TGmp4H19EfsnOqASpBVajDkap8kJXaQGUONyI+GxlmtzSxUTD/V5erAAC6DHkP0Cxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HqGOfjBc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ounT815pczqgFOWNaoOGSf2r6wCXIjd+RDh/6YlGo9E8YZmnRaObFHAvM+qhlcBaxUP3/OADpuSEhCUGbASqs2thRNWS4mY1b1pV/dneM2t+LwcsGb+H+bqhsDxNR2dmp0fmFu6r6LoqnOvKdf3A4xE9aidLAJZW2tklB3Hr8S4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WYHFc5kr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HqGOfjBc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 013A11F000E9;
-	Thu, 30 Jul 2026 16:07:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WYHFc5kr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D49031F000E9;
+	Thu, 30 Jul 2026 16:07:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427621;
-	bh=PxQEZtq02jEhZU2m2tAGACu974e0zZ6SrF3Tz1j+aVM=;
+	s=korg; t=1785427624;
+	bh=oJgWmmUq2XxUZRd321OtCktMvP8EOnfhEMvOQPOgTus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HqGOfjBceT33kXV92iXJGHudzRLp4YBhZCf/80XrU+dD7JX2dYIRh7GGlsPglYVJ0
-	 IGb2fdFiGZDH1zNxdfXBtAsfV1LZvyGxxqF3AiLCn9AXXKiRH9ryGyZE/iLBZO0tOY
-	 N7bNESFHKKkCa86AX2JebAu78D0PD6cFwro7xM5c=
+	b=WYHFc5krRfPeyC5Mq+nA1SCCx+hQtm7omglsF717SXuys3i4Q4npriu8r+f4ssXwb
+	 y//12GLzRtPOcsQ9xa3VYl//WmJCfmJAHi5kToHSKwmHYnrxiidLnOgHWWEnvuIQS6
+	 sLhQNAvsNUekn7ES6UVJpqoDBaAbS3Y4hqC/sXnM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Paul Kocialkowski <paulk@sys-base.io>,
+	Ijae Kim <ae878000@gmail.com>,
 	Myeonghun Pak <mhun512@gmail.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.6 236/484] media: cec: seco: unregister adapter on IR probe failure
-Date: Thu, 30 Jul 2026 16:12:13 +0200
-Message-ID: <20260730141428.603361411@linuxfoundation.org>
+Subject: [PATCH 6.6 237/484] media: cedrus: clean up media device on probe failure
+Date: Thu, 30 Jul 2026 16:12:14 +0200
+Message-ID: <20260730141428.625461490@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -52,47 +55,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Myeonghun Pak <mhun512@gmail.com>
 
-commit c3a78691be8245e52ced489f268e413f18061ac2 upstream.
+commit 2c869b6969f3061cbbdab587f4c0a88bd7fc3cc9 upstream.
 
-If secocec_ir_probe() fails after cec_register_adapter() succeeds,
-probe returns an error and the driver remove callback is not called.
-The current unwind path unregisters the notifier and then falls through
-to cec_delete_adapter(), which violates the CEC adapter lifetime rules
-after a successful registration.
+cedrus_probe() initializes the media device before registering the video
+device, the media controller, and the media device. If any of those later
+steps fails, probe returns without calling media_device_cleanup(), so the
+media device internals initialized by media_device_init() are left behind.
 
-Add a registered-adapter unwind path that unregisters the notifier and
-the adapter instead.
+Add a media-device cleanup label to the probe unwind path and route video
+registration failures through it as well.
 
-Fixes: daef95769b3a ("media: seco-cec: add Consumer-IR support")
+Fixes: 50e761516f2b8c ("media: platform: Add Cedrus VPU decoder driver")
 Cc: stable@vger.kernel.org
+Reviewed-by: Paul Kocialkowski <paulk@sys-base.io>
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
 Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/cec/platform/seco/seco-cec.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/staging/media/sunxi/cedrus/cedrus.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/media/cec/platform/seco/seco-cec.c
-+++ b/drivers/media/cec/platform/seco/seco-cec.c
-@@ -649,7 +649,7 @@ static int secocec_probe(struct platform
+--- a/drivers/staging/media/sunxi/cedrus/cedrus.c
++++ b/drivers/staging/media/sunxi/cedrus/cedrus.c
+@@ -509,7 +509,7 @@ static int cedrus_probe(struct platform_
+ 	ret = video_register_device(vfd, VFL_TYPE_VIDEO, 0);
+ 	if (ret) {
+ 		v4l2_err(&dev->v4l2_dev, "Failed to register video device\n");
+-		goto err_m2m;
++		goto err_media;
+ 	}
  
- 	ret = secocec_ir_probe(secocec);
- 	if (ret)
--		goto err_notifier;
-+		goto err_unregister_adapter;
- 
- 	platform_set_drvdata(pdev, secocec);
- 
-@@ -657,6 +657,10 @@ static int secocec_probe(struct platform
- 
- 	return ret;
- 
-+err_unregister_adapter:
-+	cec_notifier_cec_adap_unregister(secocec->notifier, secocec->cec_adap);
-+	cec_unregister_adapter(secocec->cec_adap);
-+	goto err;
- err_notifier:
- 	cec_notifier_cec_adap_unregister(secocec->notifier, secocec->cec_adap);
- err_delete_adapter:
+ 	v4l2_info(&dev->v4l2_dev,
+@@ -535,7 +535,8 @@ err_m2m_mc:
+ 	v4l2_m2m_unregister_media_controller(dev->m2m_dev);
+ err_video:
+ 	video_unregister_device(&dev->vfd);
+-err_m2m:
++err_media:
++	media_device_cleanup(&dev->mdev);
+ 	v4l2_m2m_release(dev->m2m_dev);
+ err_v4l2:
+ 	v4l2_device_unregister(&dev->v4l2_dev);
 
 
