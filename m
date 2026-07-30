@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A7403FADF1;
-	Thu, 30 Jul 2026 14:57:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D45A3FADF1;
+	Thu, 30 Jul 2026 14:57:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423422; cv=none; b=PCw62tfHtrbzorKHE+EnbMvtkUbRuh82fDB6Y52T0xFuyFHWPL8LmmOz0N7ver57SsxLSuLOpGzqAoqHVfx6pgHZmJOtD3oLPe/X4UEomo9ekW02nq6jk7XykMLv8P68pRR0osGTF+Ou7FxkrU7NBpp6QWVGNg2jLcBFQmNcmMQ=
+	t=1785423425; cv=none; b=Fsf4lpNle8+SgRwLS+M3FHLPn5irfhBfrwOGgo7mrZcPQ2bGETFMCDko90kZKhVNBgKugLwdaPhd7oKd2PAdf77v8gghQLn0jBvTYWYLGgi6tjsEZ9I1OGflxt8Iw9g1CqpUVIfaa+CCDdF8W9r2dMNPGFxJ6CvDMQ77Xbt39kg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423422; c=relaxed/simple;
-	bh=qz69b/88JpA0fAdzWp8RCq6nDm2GB2B7fkYINScm4Jg=;
+	s=arc-20240116; t=1785423425; c=relaxed/simple;
+	bh=is+VWtq02EQlkORjaybxfkng+bRt38jfYsSepqdshko=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xos1FY7raVTk+/knCR9TiGq7Jiavc0phdKPcBwxMVaUaR0raNRtIo0vWjGNVEdDAJykEWxVJKc/dIQOkN9rhnPPCMi86U8WebkaVis+SFwUYNEbgnqVUytdbAS6Anm9jUt9nR0KsaSfMcN5jwYOE6bCwMUJHgNQVALpEmqEviEU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JJYETHMn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CDdorkpnkyBe0SpG2AiWe5H7jFm1UMkD2nUGkb9n3C2NmMt0JmGYkMAmukrfsstV3Rrz2sAra8wc71HYGayWPhPtogPJeSCii8hHDtT0bVwYomRGTGVEy1vofW2xzHCFCw78AT06qPtzNKsnq0Up8v5sL3Dxyd7rYWCE8k7YjXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eH36cCRX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JJYETHMn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D61F31F000E9;
-	Thu, 30 Jul 2026 14:57:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eH36cCRX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A97EA1F000E9;
+	Thu, 30 Jul 2026 14:57:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423421;
-	bh=ZskH8yywm+X6gtpUHTyki+PGXbn2mM1pXCeteOhabuU=;
+	s=korg; t=1785423424;
+	bh=lop09a3cJiGAiUE3zulVkGNKQgMPHAkAe+d4MEGHI/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JJYETHMn8Rwu4P+8Q7Ekoj2t00IhIBxZJQB23UsW33SZP4DQdUVgqkLaMMKHakqJO
-	 +4GgvIDPTRBMNQGE/B0C5F6ZLuctDlnPL1ylC78sVHoA/koYTuUdEVmb0IS63Z2bB5
-	 N1uU+K4oBFxNif4feVtByVBk2O8gAaMIP06VqwXw=
+	b=eH36cCRX6som6HHNjuZPJMeYVQxAmm1M2QsrxHZfdqq1ebStW3YrWO3pyDPOMcBdd
+	 U5WsINkBwZJde3+d8qLHT/VSxW3BJv2maHEzGms3elF+HxgZdSPs7uJ2EIqHaaFzpU
+	 JizIqqVGux88PbvA2XSD8a3KAkL3yKx0TRSsoftU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Pengpeng Hou <pengpeng@iscas.ac.cn>,
 	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 039/675] mtd: mtdswap: remove debugfs stats file on teardown
-Date: Thu, 30 Jul 2026 16:06:09 +0200
-Message-ID: <20260730141445.950094988@linuxfoundation.org>
+Subject: [PATCH 6.18 040/675] mtd: nand: mtk-ecc: stop on ECC idle timeouts
+Date: Thu, 30 Jul 2026 16:06:10 +0200
+Message-ID: <20260730141445.972015979@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -53,53 +53,71 @@ Content-Transfer-Encoding: 8bit
 
 From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 66fb31358108d10245b9e4ef0eef3e7d9747055e ]
+[ Upstream commit 16f7ec8d5dc100eafd2c8e06cd30340a30b104a1 ]
 
-mtdswap_add_debugfs() creates an mtdswap_stats debugfs file under the
-per-MTD debugfs directory, but mtdswap_remove_dev() never removes it
-before freeing the mtdswap_dev.
+mtk_ecc_wait_idle() logs when the encoder or decoder does not become
+idle, but returns void. Callers can therefore configure a non-idle ECC
+engine or read parity bytes after an unconfirmed encoder idle state.
 
-Store the returned dentry and remove it during device teardown before the
-driver-private state is freed.
+Return the idle poll result and propagate it from the enable and encode
+paths that require the engine to be idle before continuing.
 
-Fixes: a32159024620 ("mtd: Add mtdswap block driver")
+Fixes: 1d6b1e464950 ("mtd: mediatek: driver for MTK Smart Device")
 Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/mtdswap.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/mtd/nand/ecc-mtk.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/mtd/mtdswap.c b/drivers/mtd/mtdswap.c
-index d8f2e5be2d315e..42ff7deace80c5 100644
---- a/drivers/mtd/mtdswap.c
-+++ b/drivers/mtd/mtdswap.c
-@@ -125,6 +125,7 @@ struct mtdswap_dev {
- 
- 	char *page_buf;
- 	char *oob_buf;
-+	struct dentry *debugfs_stats;
+diff --git a/drivers/mtd/nand/ecc-mtk.c b/drivers/mtd/nand/ecc-mtk.c
+index c75bb8b80cc1e1..96703f0a418ea2 100644
+--- a/drivers/mtd/nand/ecc-mtk.c
++++ b/drivers/mtd/nand/ecc-mtk.c
+@@ -123,8 +123,8 @@ static int mt7622_ecc_regs[] = {
+ 	[ECC_DECIRQ_STA] =      0x144,
  };
  
- struct mtdswap_oobdata {
-@@ -1262,7 +1263,8 @@ static int mtdswap_add_debugfs(struct mtdswap_dev *d)
- 	if (IS_ERR_OR_NULL(root))
- 		return -1;
- 
--	debugfs_create_file("mtdswap_stats", S_IRUSR, root, d, &mtdswap_fops);
-+	d->debugfs_stats = debugfs_create_file("mtdswap_stats", 0400, root,
-+					       d, &mtdswap_fops);
- 
- 	return 0;
- }
-@@ -1463,6 +1465,7 @@ static void mtdswap_remove_dev(struct mtd_blktrans_dev *dev)
+-static inline void mtk_ecc_wait_idle(struct mtk_ecc *ecc,
+-				     enum mtk_ecc_operation op)
++static inline int mtk_ecc_wait_idle(struct mtk_ecc *ecc,
++				    enum mtk_ecc_operation op)
  {
- 	struct mtdswap_dev *d = MTDSWAP_MBD_TO_MTDSWAP(dev);
+ 	struct device *dev = ecc->dev;
+ 	u32 val;
+@@ -136,6 +136,8 @@ static inline void mtk_ecc_wait_idle(struct mtk_ecc *ecc,
+ 	if (ret)
+ 		dev_warn(dev, "%s NOT idle\n",
+ 			 op == ECC_ENCODE ? "encoder" : "decoder");
++
++	return ret;
+ }
  
-+	debugfs_remove(d->debugfs_stats);
- 	del_mtd_blktrans_dev(dev);
- 	mtdswap_cleanup(d);
- 	kfree(d);
+ static irqreturn_t mtk_ecc_irq(int irq, void *id)
+@@ -312,7 +314,11 @@ int mtk_ecc_enable(struct mtk_ecc *ecc, struct mtk_ecc_config *config)
+ 		return ret;
+ 	}
+ 
+-	mtk_ecc_wait_idle(ecc, op);
++	ret = mtk_ecc_wait_idle(ecc, op);
++	if (ret) {
++		mutex_unlock(&ecc->lock);
++		return ret;
++	}
+ 
+ 	ret = mtk_ecc_config(ecc, config);
+ 	if (ret) {
+@@ -412,7 +418,9 @@ int mtk_ecc_encode(struct mtk_ecc *ecc, struct mtk_ecc_config *config,
+ 	if (ret)
+ 		goto timeout;
+ 
+-	mtk_ecc_wait_idle(ecc, ECC_ENCODE);
++	ret = mtk_ecc_wait_idle(ecc, ECC_ENCODE);
++	if (ret)
++		goto timeout;
+ 
+ 	/* Program ECC bytes to OOB: per sector oob = FDM + ECC + SPARE */
+ 	len = (config->strength * ecc->caps->parity_bits + 7) >> 3;
 -- 
 2.53.0
 
