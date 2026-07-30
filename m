@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08AFD37CD59;
-	Thu, 30 Jul 2026 15:46:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D44CF332629;
+	Thu, 30 Jul 2026 15:46:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426398; cv=none; b=aPVDe7EF11nUT5vnaUABohE2yndelC733v9g0A7YIl9sxA2TDiJqZc7wXg/T2u3SR78IGSyWvfsDJTNXEOockujXBzgFHXl8m43QWbd5Og1lqrbf+Qh1a+F/4e72LPXpTuY6Ua4l6mOp1uREovO1upQdY9WFiXDlp0qXRSpFRTQ=
+	t=1785426401; cv=none; b=gDeW2WwphuBYt0zvEykBvQ3cuykBtL2iRBj/tKqYTgZgDT6F12aNQ2JIc6XZEuipttNB8/qMMSM7x4fy/oq8yPQNowCINOrKjcastF45exEm5IcJ32fsmiEiglnJNri7KfkTYB4iLwn6KNjjjWKgQfl3YSVkStq0Lq4aO+EX8/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426398; c=relaxed/simple;
-	bh=+0GT6mQfPVykdkKlnG4FeCAb+VJzgHdz2GYpY0zrEnI=;
+	s=arc-20240116; t=1785426401; c=relaxed/simple;
+	bh=yXkqtZ2ae6N53aprIXM/20RiVb1lAoy3ii71JOm4gS0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YE5Ehhfe4z0jBdTAjLGxyEz6/TTwDNDgUmIc661H3QQEwepuzArxAjGoFhVYgztQjICyINsGxWjCjRj/7pfHMJ3zPK+9WvbDPbMKymL3eE1eh05uDVnOjG0mzZzSb3LWyY2wWj/qRuBKEg/jbSGb/4pas8+6C5SWsmRcVkRjivk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q5wWX8dG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=E4c7FnvgT+ApBU8AMnCm0M6X1QuP4yzUQk4hQTi5HkyEDAXgPFFp4eHOfZ+5+tUIcr1TmySF3tlDcZ/aRXQOWf6sHTk0HxWkxbf0AkC+PnZApnrSEaDobhheBVMahOUVHdN9eY5JegYNYvrQleVH3ez6h3RYk53GS0bB4DMl0cQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mVmqBxxi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q5wWX8dG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 644141F00A3A;
-	Thu, 30 Jul 2026 15:46:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mVmqBxxi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AC851F000E9;
+	Thu, 30 Jul 2026 15:46:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426396;
-	bh=6q7FGkLMwIorOMvF5PKmSsaNHMlfgCfr30nTK+eAt28=;
+	s=korg; t=1785426399;
+	bh=QLcvdeGcndZDwJobVDNP04wIzLm8l3A2frbMYBUjcYY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q5wWX8dGqvYkulnyUwme2DdD1+SIBzcNqvlMfgfF5NaJ0iNRZWrRCCwnk9jz/+Qhq
-	 fUW1/+Zp9QCvk1zXwhNm6QMR3D/G7KKP2n2mxZacQV5dxY6ZFTL9okv55a3JiU3yK2
-	 QWuz5VnQhyZzAzQXTCFwrjWtr3W3M73KJlrcSV1w=
+	b=mVmqBxxiyjPrBcn0dUZ1+MUxG24H7N9jjGCTq2l+pOddeYd529/u8mI6A1Q0P80bs
+	 DmcewZJcGgEvHEidT2fDsnKXuhCz6MsuauzlrkXFOGyy5MTmWuxpgbjRxlMSaHf3lC
+	 9SJPzRk30C+oV6PChQrLrrI8za46W2nyZxSyHbqU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tengda Wu <wutengda@huaweicloud.com>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 6.12 404/602] ftrace: Add global mutex to serialize trace_parser access
-Date: Thu, 30 Jul 2026 16:13:16 +0200
-Message-ID: <20260730141444.454569589@linuxfoundation.org>
+	Zhang Yi <yi.zhang@huawei.com>,
+	Joanne Koong <joannelkoong@gmail.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 6.12 405/602] iomap: fix out-of-bounds bitmap_set() with zero-length range
+Date: Thu, 30 Jul 2026 16:13:17 +0200
+Message-ID: <20260730141444.475133874@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -50,98 +53,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tengda Wu <wutengda@huaweicloud.com>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-commit 7720b63bcef3f54c7fe288774b720a227d54a306 upstream.
+commit 9c7d8f7c8994c790fca501dc45ce66e7356cbe05 upstream.
 
-In ftrace, the trace_parser structure is allocated and initialized when
-a trace file is opened, and is subsequently used across write and release
-handlers to parse user input.
+ifs_set_range_dirty() and ifs_set_range_uptodate() compute last_blk
+as (off + len - 1) >> i_blkbits.  When off is 0 and len is 0, the
+unsigned subtraction underflows to SIZE_MAX, producing a huge
+last_blk and nr_blks value that causes bitmap_set() to write far
+beyond the ifs->state allocation.
 
-The affected handler paths and their specific functions are:
-  - Open paths: ftrace_regex_open(), ftrace_graph_open()
-  - Write paths: ftrace_regex_write(), ftrace_graph_write()
-  - Release paths: ftrace_regex_release(), ftrace_graph_release()
+Regarding ifs_set_range_uptodate(), it is temporarily safe because len
+cannot be passed in as 0. However, for ifs_set_range_dirty() this is
+reachable from __iomap_write_end(): when copy_folio_from_iter_atomic()
+returns 0 (e.g. user buffer fault) and the folio is already uptodate,
+the guard at the top of __iomap_write_end() does not trigger because
+!folio_test_uptodate() is false, and iomap_set_range_dirty() is called
+with copied == 0.
 
-If userspace opens a trace file descriptor and shares it across multiple
-threads, concurrent write calls will race on the parser's internal state,
-specifically the 'idx', 'cont', and 'buffer' fields, leading to corrupted
-input or undefined behavior.
+Add a !len guard to both functions before the computation, so that a
+zero-length range is a no-op.
 
-Fix this by adding a global mutex, parser_lock, to serialize all access
-to trace_parser across write and release paths, preventing concurrent
-corruption of parser state.
-
-Fixes: e704eff3ff51 ("ftrace: Have set_graph_function handle multiple functions in one write")
-Fixes: 689fd8b65d66 ("tracing: trace parser support for function and graph")
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260725024721.1983675-1-wutengda@huaweicloud.com
-Signed-off-by: Tengda Wu <wutengda@huaweicloud.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Fixes: 4ce02c679722 ("iomap: Add per-block dirty state tracking to improve performance")
+Cc: stable@vger.kernel.org # v6.6
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Link: https://patch.msgid.link/20260714082325.325163-5-yi.zhang@huaweicloud.com
+Reviewed-by: Joanne Koong <joannelkoong@gmail.com>
+Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ftrace.c |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ fs/iomap/buffered-io.c |   22 ++++++++++++++--------
+ 1 file changed, 14 insertions(+), 8 deletions(-)
 
---- a/kernel/trace/ftrace.c
-+++ b/kernel/trace/ftrace.c
-@@ -1073,6 +1073,12 @@ struct ftrace_ops global_ops = {
- };
+--- a/fs/iomap/buffered-io.c
++++ b/fs/iomap/buffered-io.c
+@@ -60,11 +60,13 @@ static bool ifs_set_range_uptodate(struc
+ 		struct iomap_folio_state *ifs, size_t off, size_t len)
+ {
+ 	struct inode *inode = folio->mapping->host;
+-	unsigned int first_blk = off >> inode->i_blkbits;
+-	unsigned int last_blk = (off + len - 1) >> inode->i_blkbits;
+-	unsigned int nr_blks = last_blk - first_blk + 1;
++	unsigned int first_blk, last_blk;
  
- /*
-+ * parser_lock - Protects trace_parser state against concurrent operations.
-+ * Held across trace_get_user() and subsequent buffer parsing to prevent races.
-+ */
-+static DEFINE_MUTEX(parser_lock);
+-	bitmap_set(ifs->state, first_blk, nr_blks);
++	if (len) {
++		first_blk = off >> inode->i_blkbits;
++		last_blk = (off + len - 1) >> inode->i_blkbits;
++		bitmap_set(ifs->state, first_blk, last_blk - first_blk + 1);
++	}
+ 	return ifs_is_fully_uptodate(folio, ifs);
+ }
+ 
+@@ -164,13 +166,17 @@ static void ifs_set_range_dirty(struct f
+ {
+ 	struct inode *inode = folio->mapping->host;
+ 	unsigned int blks_per_folio = i_blocks_per_folio(inode, folio);
+-	unsigned int first_blk = (off >> inode->i_blkbits);
+-	unsigned int last_blk = (off + len - 1) >> inode->i_blkbits;
+-	unsigned int nr_blks = last_blk - first_blk + 1;
++	unsigned int first_blk, last_blk;
+ 	unsigned long flags;
+ 
++	if (!len)
++		return;
 +
-+/*
-  * Used by the stack unwinder to know about dynamic ftrace trampolines.
-  */
- struct ftrace_ops *ftrace_ops_trampoline(unsigned long addr)
-@@ -5730,6 +5736,8 @@ ftrace_regex_write(struct file *file, co
- 	/* iter->hash is a local copy, so we don't need regex_lock */
++	first_blk = off >> inode->i_blkbits;
++	last_blk = (off + len - 1) >> inode->i_blkbits;
+ 	spin_lock_irqsave(&ifs->state_lock, flags);
+-	bitmap_set(ifs->state, first_blk + blks_per_folio, nr_blks);
++	bitmap_set(ifs->state, first_blk + blks_per_folio,
++		   last_blk - first_blk + 1);
+ 	spin_unlock_irqrestore(&ifs->state_lock, flags);
+ }
  
- 	parser = &iter->parser;
-+
-+	guard(mutex)(&parser_lock);
- 	read = trace_get_user(parser, ubuf, cnt, ppos);
- 
- 	if (read >= 0 && trace_parser_loaded(parser) &&
-@@ -6453,12 +6461,14 @@ int ftrace_regex_release(struct inode *i
- 		iter = file->private_data;
- 
- 	parser = &iter->parser;
-+	mutex_lock(&parser_lock);
- 	if (trace_parser_loaded(parser)) {
- 		int enable = !(iter->flags & FTRACE_ITER_NOTRACE);
- 
- 		ftrace_process_regex(iter, parser->buffer,
- 				     parser->idx, enable);
- 	}
-+	mutex_unlock(&parser_lock);
- 
- 	trace_parser_put(parser);
- 
-@@ -6790,10 +6800,12 @@ ftrace_graph_release(struct inode *inode
- 
- 		parser = &fgd->parser;
- 
-+		mutex_lock(&parser_lock);
- 		if (trace_parser_loaded((parser))) {
- 			ret = ftrace_graph_set_hash(fgd->new_hash,
- 						    parser->buffer);
- 		}
-+		mutex_unlock(&parser_lock);
- 
- 		trace_parser_put(parser);
- 
-@@ -6913,6 +6925,7 @@ ftrace_graph_write(struct file *file, co
- 
- 	parser = &fgd->parser;
- 
-+	guard(mutex)(&parser_lock);
- 	read = trace_get_user(parser, ubuf, cnt, ppos);
- 
- 	if (read >= 0 && trace_parser_loaded(parser) &&
 
 
