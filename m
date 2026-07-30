@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86B5A217723;
-	Thu, 30 Jul 2026 15:18:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EA4D392831;
+	Thu, 30 Jul 2026 15:18:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424701; cv=none; b=qZteHeO1sPpFA1VH3kqzOlfyhxpPtOk2P7fh4B1rgqZqj/yninVUEmSghiycmNeZPbN0OrzFdT9x/Xto9a+cfKM/E5wjka7sfw0Qh04+xVTvRc+mNRtAjf07wSj1K2elzfnX0wxXdRIwBo8FTWn0A3b2w3yuEcaOocAiGKre5ek=
+	t=1785424704; cv=none; b=YAIYjJ2Gls/R7Cq1XywpKyO6hKbvJoPBs6dCcSd4MMnPdLMeosMHk1KFSRMjVFGHpTp+fpZa1GO9iw9beaG1KMV0zKXfrFrAw2zS9AqOVf0vNxx5lCNZFbn9J+VjffC0ptLPNvX6i0SVoSl5NZIOUHQdj1JUaQKemnsL2YeZGBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424701; c=relaxed/simple;
-	bh=/X/ihY7p11nNgVkp/gWvdZiGedqvFGNNmnDSmYoxdtQ=;
+	s=arc-20240116; t=1785424704; c=relaxed/simple;
+	bh=tpsVFlNw/IihU9d9VyHNxu+AL+z2R/hmyrEEOk65J+M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sK0MAnvrO3O/4FKLWlGtFBjO/Z7FnFkGzPL0FcYcIAh2nHgJjgg5Ey1BQyLnu6Sdkf5nd5mz63LG2ntgXHsObAT+QuAYAfw4IrLwrEaIQXrxP5M1XRDE1gRi+xzPkptrBXUGjd06BVMdujsu31ZaJAmLyZ+Q3Y3zLm3+aMJrDm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yt/JPUtl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=n4k5f5fVVa2sFL2IpY/lKSILkXLaaYVSwgz1KbaCBt25nf92YqW//19Gp7S5tr266aiQnLqWcZkELM33oOaMJqpw8hBNXAMI0BvBRKI9R6DEYqUJZQLByUbVUiz+zZ29NSiuagyRTJtobs1Eh830LHw/M0337eTbF3xHwsPSCAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ushu6/kk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yt/JPUtl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E202B1F00A3A;
-	Thu, 30 Jul 2026 15:18:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ushu6/kk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA2861F000E9;
+	Thu, 30 Jul 2026 15:18:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424700;
-	bh=XeOpFNlvhTvYw0nUlTUqATDST/7irn2+nt8Oa3I8A+Q=;
+	s=korg; t=1785424703;
+	bh=GtHHSkLrtTBTlcXmL34OOr/D8nw04hcTyoRdWrE5SxA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yt/JPUtlChxKZoa7q07iIb9VEdrj1/MSFqx0ap+sgtp4mK1cE2oRB1JoLgxzX0fwl
-	 waPYbard74mQQhHPtJCTCYJf3tiH1fPBr29msBOz62rfkHHzhTjWL8auxTcSSOzPPN
-	 4HScabUEaWoYKivzHHXVfYZ9hCNs1+5Qb3rUdqUM=
+	b=ushu6/kksxGOQXsuo41AddEHKGzrb+wag5GjMelK0hyQe8AIjrc6oPa+B8TrVa8oe
+	 uEsEAeGoywWCS4RJiqv/zffiMZg97ShJaPb2E0SgmogAFBEaBsX2tEFiJk/eSAX0mv
+	 eClyNbrOFXOFK9LPjENh1s1cw7CyTrBI9sKnMGmM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Ethan Nelson-Moore <enelsonmoore@gmail.com>,
-	Elizabeth Figura <zfigura@codeweavers.com>
-Subject: [PATCH 6.18 485/675] selftests: ntsync: correct CONFIG_NTSYNC name
-Date: Thu, 30 Jul 2026 16:13:35 +0200
-Message-ID: <20260730141455.431414195@linuxfoundation.org>
+	Menachem Adin <menachem.adin@intel.com>,
+	Alexander Usyskin <alexander.usyskin@intel.com>
+Subject: [PATCH 6.18 486/675] mei: bus: access mei_device under device_lock on cleanup
+Date: Thu, 30 Jul 2026 16:13:36 +0200
+Message-ID: <20260730141455.451694796@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -51,31 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ethan Nelson-Moore <enelsonmoore@gmail.com>
+From: Alexander Usyskin <alexander.usyskin@intel.com>
 
-commit f97752cfe511c1ed9933057455c73aaac07d6517 upstream.
+commit f112ea910e554d58b4b39a4492b7d302f0f4204f upstream.
 
-The config fragment for these tests defines CONFIG_WINESYNC, which
-refers to an earlier name for the ntsync driver before it was merged
-[1]. Correct it to define CONFIG_NTSYNC instead.
+Fix couple of problems in mei_cl_bus_dev_release():
 
-[1] https://lore.kernel.org/all/f4cc1a38-1441-62f8-47e4-0c67f5ad1d43@codeweavers.com/
+mei_cl_flush_queues() is running without lock.
+bus->file_list access after mei_dev_bus_put(bus) can become a
+use-after-free if this was the last reference to bus.
 
-Fixes: 7f853a252cde ("selftests: ntsync: Add some tests for semaphore state.")
+Protect queues cleanup and WARN traversal by device lock there
+to avoid the concurrent access problems.
+Move WARN traversal before mei_dev_bus_put(bus).
+
+This file uses bus variable name for mei_device, adjust
+code of mei_cl_bus_dev_release() to use bus variable too.
+
 Cc: stable <stable@kernel.org>
-Signed-off-by: Ethan Nelson-Moore <enelsonmoore@gmail.com>
-Reviewed-by: Elizabeth Figura <zfigura@codeweavers.com>
-Link: https://patch.msgid.link/20260609175505.19632-1-enelsonmoore@gmail.com
+Fixes: 35e8a426b16a ("mei: bus: Check for still connected devices in mei_cl_bus_dev_release()")
+Reviewed-by: Menachem Adin <menachem.adin@intel.com>
+Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
+Link: https://patch.msgid.link/20260705151259.3054795-1-alexander.usyskin@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/drivers/ntsync/config |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/misc/mei/bus.c |   16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
---- a/tools/testing/selftests/drivers/ntsync/config
-+++ b/tools/testing/selftests/drivers/ntsync/config
-@@ -1 +1 @@
--CONFIG_WINESYNC=y
-+CONFIG_NTSYNC=y
+--- a/drivers/misc/mei/bus.c
++++ b/drivers/misc/mei/bus.c
+@@ -4,6 +4,7 @@
+  * Intel Management Engine Interface (Intel MEI) Linux driver
+  */
+ 
++#include <linux/cleanup.h>
+ #include <linux/module.h>
+ #include <linux/device.h>
+ #include <linux/kernel.h>
+@@ -1317,15 +1318,16 @@ static void mei_dev_bus_put(struct mei_d
+ static void mei_cl_bus_dev_release(struct device *dev)
+ {
+ 	struct mei_cl_device *cldev = to_mei_cl_device(dev);
+-	struct mei_device *mdev = cldev->cl->dev;
++	struct mei_device *bus = cldev->bus;
+ 	struct mei_cl *cl;
+ 
+-	mei_cl_flush_queues(cldev->cl, NULL);
+-	mei_me_cl_put(cldev->me_cl);
+-	mei_dev_bus_put(cldev->bus);
+-
+-	list_for_each_entry(cl, &mdev->file_list, link)
+-		WARN_ON(cl == cldev->cl);
++	scoped_guard(mutex, &bus->device_lock) {
++		mei_cl_flush_queues(cldev->cl, NULL);
++		mei_me_cl_put(cldev->me_cl);
++		list_for_each_entry(cl, &bus->file_list, link)
++			WARN_ON(cl == cldev->cl);
++	}
++	mei_dev_bus_put(bus);
+ 
+ 	kfree(cldev->cl);
+ 	kfree(cldev);
 
 
