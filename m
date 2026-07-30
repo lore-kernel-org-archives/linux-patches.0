@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3E38438468;
-	Thu, 30 Jul 2026 14:36:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6060E411689;
+	Thu, 30 Jul 2026 14:36:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422215; cv=none; b=SgPUssH6e7tHIIgkPOzfhzyf5lFDm8qOq1Ydb/VLqJR388hEnogwqh1ImZfsXfxxPLcBmQ9bvpSDuw+QFSyMyfsQbp9XkMDpnWUU9o4Zvsp2MYCtaCuhcTF+smDZhd7PiLg8MxjmDLN4wuSO1qjgb/361NLECVWPrWrWx/lWm9E=
+	t=1785422218; cv=none; b=bQ09XnH5VXmE10jlUoAlxfPqsiQJquQIDjqvG14nkcUZBrdnbbomQgDamGsHFEdMYIoXS8Cgt5MZcZKzZqOSAY1+1MBzAbMRLbmfobMtlgbfAgzb+JAJ58hlFYDtP31m+FcOiEyp9MGepYEnpK1H09f2UWgJS4m+jfFDq+FT+a4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422215; c=relaxed/simple;
-	bh=c/DogLW4IEkYigmWC8g6bs6lbDIl5ecZtKvRvydZHLA=;
+	s=arc-20240116; t=1785422218; c=relaxed/simple;
+	bh=b46JBtBJ8WLM8hoA2jnxUoPlCtyFJSkLJn4AOqun5hs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K+eeuyK7QYd005s9hoP+4LG2QS1GXqga8RBU64eN69rwEARJ9HDvUcm/0nn2yOOduWajJXrJ839iYjhNAvzNnU8g0YcqBGsHODDsPm3XqovIgMRog+TtopZtAo0iajYWC6y6hA+Xe5EeTtCaabhEfmJZ831s7wJpXjVxLN0M4Ww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fjA5430o; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=N2kCMoK8I1bLiLRbfLGhTKRdI7OHPSpG9lEMSgLQw4HcsFBhhiVhHFxUKpqROU5oTguhLGyzlT+RHDdiT28b3pSCuJQIqBZ5ZyOZXKogSUc1Y0hzGDPvEnMijsp8f/vo7eESaRowZi3FSqUrzLiTmOw48xXh1dLaEEaztn7rsj0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OKL2UlAO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fjA5430o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D97511F000E9;
-	Thu, 30 Jul 2026 14:36:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OKL2UlAO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C07BE1F000E9;
+	Thu, 30 Jul 2026 14:36:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422214;
-	bh=nRTQipy2oodNj17DAZL09R8eLJ9UTjZUX7T2np3zaVw=;
+	s=korg; t=1785422217;
+	bh=H7jJKkd4Gw853QRmfdqvkMaSjKvQnsHAILfvIH8QHrM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fjA5430oGvtp0OZL7wOvXwXHGQ6v+reVKdzjzY1XmAHaHjjA8y0Qd9CLsCDSZIWLq
-	 5BG1VStqvnG0DdKJNowOukSOI49itlpaxj9ctQEQ2OkV/+GNp4Tw3e9jx2e/1Lizsw
-	 ZPKv3q4O/+BsjWsRyCfxgsUwiYv13O5E2HMtl2cI=
+	b=OKL2UlAOd0tHHUFxAxSXoDPICOHCg7PXeXpOZzsDfTFrlbQs2PwDZToIHgu+uy3Xs
+	 3EIrjuT/GuCCYURDOG4+duD4s4v7gOjJtXI/sXNduSEogdrCgYC8/iREDfIjr8BdSb
+	 Mz9HZLKVqGC1Bwoo6HzHtQN3Nh8Jl2Gba/sPrtd8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Ripard <mripard@kernel.org>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Subject: [PATCH 7.1 361/744] drm/tidss: Fix missing drm_bridge_add() call
-Date: Thu, 30 Jul 2026 16:10:34 +0200
-Message-ID: <20260730141451.959573283@linuxfoundation.org>
+	AutonomousCodeSecurity@microsoft.com,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	"Cen Zhang (Microsoft)" <blbllhy@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.1 319/744] tipc: fix u16 MTU truncation in media and bearer MTU validation
+Date: Thu, 30 Jul 2026 16:09:52 +0200
+Message-ID: <20260730141451.064543521@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -50,63 +54,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+From: Cen Zhang (Microsoft) <blbllhy@gmail.com>
 
-commit 83084bb36847cbd2b13743f7333aaca12613a72b upstream.
+[ Upstream commit 9f29cd8a8e7901a2617c8064ce9f50fc67b97cb8 ]
 
-tidss encoder-bridge is not added with drm_bridge_add() call, which
-leads to:
+Both TIPC_NL_MEDIA_SET and TIPC_NL_BEARER_SET accept user-supplied
+MTU values but only enforce a minimum bound, not a maximum. When a user
+sets the MTU to a value exceeding U16_MAX (65535), it passes validation
+but is silently truncated when assigned to u16 fields l->mtu and
+l->advertised_mtu in tipc_link_create(). Values like 65536 (0x10000)
+truncate to 0, causing a division by zero in tipc_link_set_queue_limits()
+which computes TIPC_MAX_PUBL / (l->mtu / ITEM_SIZE). Other overflowing
+values (e.g. 65537-131071) produce small incorrect MTU values, resulting
+in link malfunction behaviors.
 
-[drm] Missing drm_bridge_add() before attach
+Crash stack (triggered as unprivileged user via user namespace):
 
-Add the missing call, using devm_drm_bridge_add() variant to get the
-drm_bridge_remove() handled automatically.
+  tipc_link_set_queue_limits  net/tipc/link.c:2531
+  tipc_link_create            net/tipc/link.c:520
+  tipc_node_check_dest        net/tipc/node.c:1279
+  tipc_disc_rcv               net/tipc/discover.c:252
+  tipc_rcv                    net/tipc/node.c:2129
+  tipc_udp_recv               net/tipc/udp_media.c:392
 
-The commit marked with the Fixes tag (from v6.6) is the commit that
-added the encoder bridge without drm_bridge_add(). However, this fix is
-not directly applicable there as devm_drm_bridge_alloc() was not used to
-alloc the bridge, so using devm version for drm_bridge_add() wouldn't be
-safe. Instead, drm_bridge_add() and drm_bridge_remove() would be needed
-there, but that would require new plumbing code as we don't have a
-separate cleanup function in the tidss_encoder.c, not in the tidss_kms.c
-from which the encoder is created.
+Two independent paths lack the upper bound check:
+1. tipc_udp_mtu_bad() -- called from __tipc_nl_media_set() (MEDIA_SET)
+2. inline check in __tipc_nl_bearer_set() at bearer.c:1160 (BEARER_SET)
 
-Also, there has been no reported bugs caused by the missing
-drm_bridge_add(). The drm_bridge_add() initializes the bridge's
-hpd_mutex, but HPD is not used for the encoder bridge. drm_bridge_add()
-also adds the bridge to the global bridge_list, which is only used in
-of_drm_find_bridge(), and again that is not used for the encoder bridge.
+Fix both by rejecting MTU values above U16_MAX.
 
-Thus, while the original commit is not right, there should be no bugs
-caused by it, and for the time being I'm not sending a patch for the
-stable kernels for the original commit.
-
-This fix applies on top of commit 66cdf05f8548 ("drm/tidss: encoder:
-convert to devm_drm_bridge_alloc()"), which changes the tidss_encoder.c
-to use the devm variant (added in v6.17). The warning print was added in
-v6.19, so applying this fix to v6.17+ gets rid of the warning for all
-kernel versions.
-
-Cc: stable@vger.kernel.org # v6.17+
-Fixes: c932ced6b585 ("drm/tidss: Update encoder/bridge chain connect model")
-Acked-by: Maxime Ripard <mripard@kernel.org>
-Link: https://patch.msgid.link/20260311-tidss-minor-fixes-v2-2-cb4479784458@ideasonboard.com
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 901271e0403a ("tipc: implement configuration of UDP media MTU")
+Reported-by: AutonomousCodeSecurity@microsoft.com
+Closes: https://lore.kernel.org/all/CAB8m9WgETt0AjmFwE=F-CKjGXsK6_WDv0=kbYRcC8-noo+amnA@mail.gmail.com
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Signed-off-by: Cen Zhang (Microsoft) <blbllhy@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260714041541.307702-1-blbllhy@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tidss/tidss_encoder.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/tipc/netlink.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/tidss/tidss_encoder.c
-+++ b/drivers/gpu/drm/tidss/tidss_encoder.c
-@@ -106,6 +106,8 @@ int tidss_encoder_create(struct tidss_de
- 	enc = &t_enc->encoder;
- 	enc->possible_crtcs = possible_crtcs;
+diff --git a/net/tipc/netlink.c b/net/tipc/netlink.c
+index 8336a9664703fe..1307dd1a961341 100644
+--- a/net/tipc/netlink.c
++++ b/net/tipc/netlink.c
+@@ -113,12 +113,16 @@ const struct nla_policy tipc_nl_node_policy[TIPC_NLA_NODE_MAX + 1] = {
+ };
  
-+	devm_drm_bridge_add(tidss->dev, &t_enc->bridge);
+ /* Properties valid for media, bearer and link */
++static const struct netlink_range_validation tipc_nl_mtu_range = {
++	.max = U16_MAX,
++};
 +
- 	/* Attaching first bridge to the encoder */
- 	ret = drm_bridge_attach(enc, &t_enc->bridge, NULL,
- 				DRM_BRIDGE_ATTACH_NO_CONNECTOR);
+ const struct nla_policy tipc_nl_prop_policy[TIPC_NLA_PROP_MAX + 1] = {
+ 	[TIPC_NLA_PROP_UNSPEC]		= { .type = NLA_UNSPEC },
+ 	[TIPC_NLA_PROP_PRIO]		= { .type = NLA_U32 },
+ 	[TIPC_NLA_PROP_TOL]		= { .type = NLA_U32 },
+ 	[TIPC_NLA_PROP_WIN]		= { .type = NLA_U32 },
+-	[TIPC_NLA_PROP_MTU]		= { .type = NLA_U32 },
++	[TIPC_NLA_PROP_MTU]		= NLA_POLICY_FULL_RANGE(NLA_U32, &tipc_nl_mtu_range),
+ 	[TIPC_NLA_PROP_BROADCAST]	= { .type = NLA_U32 },
+ 	[TIPC_NLA_PROP_BROADCAST_RATIO]	= { .type = NLA_U32 }
+ };
+-- 
+2.53.0
+
 
 
