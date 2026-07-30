@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12166384CC3;
-	Thu, 30 Jul 2026 15:57:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C80143E4B5;
+	Thu, 30 Jul 2026 15:57:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427037; cv=none; b=LweBH+NENCK1/ElxC6WDC6lBCkFlEQXR0ai9rZI2uqTLBM9YXgMMiubZnyAteBVj1xxJK6VsQprcqUlh8zdEfjyqzq8GgIdXkusf3CkXukKdEa02kp5lUuhYvdjXmcGfC+pIiZEyeO8ry66Tuu76MhDfbPmYF+nYffM8m7yoISc=
+	t=1785427039; cv=none; b=tmuXx52ECS9Y4K2u2JfAhSDmp6ir/OX03ht0wV4RFpxMWv8LKVUON7yUo5p0E48zlM8G/K6tjZ8hfzUGMkiL7DYqeV68LnOpFEGnPXZ1gexqqPy/ECI6MS6H/ChBbyOOcdOiy4gxFhDfiF2n5GVicV1GQMCHVFps40QX+TjWzfg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427037; c=relaxed/simple;
-	bh=ppdOnuhLfMLpZc0InaLe1IqinBoLmVHd5PC9srakufo=;
+	s=arc-20240116; t=1785427039; c=relaxed/simple;
+	bh=rWBcRCKuH0tQ2BXhnKyTFAQAW3QraKp4rHkb5l+wXFc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z6SviNpgevALYxvRbPjWj/S5JUtAke6V2WgDFONBnKSmgIb7yjiEAEsb+HPWZBRDyfzS0CkYnRd6QsUMhdgJ9PW75meKa7QxJeHsigzw9HGKPoXhvdubbGaZlWWrp5szsnf40xEcK6ybcv0NZi2CESo8JYBmXEQ56YDIujlVJy4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QusGnz9k; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pA9wLrzUX6cXwFpshST+6f4l5ux3vApyVbqMEpzL3AThHXBngsmNQ018C/EAwt9WNKbyeth/Xs0lupq7GOguB39OBOWVxFtjnZTI4Jlo+jcA2ACMJtDxI5jAvUdicNasa+6m9uauirZAhJCqy4TPkLSI0fyj1MotWfttkORYmLY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QgKLezs6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QusGnz9k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E40A1F00A3A;
-	Thu, 30 Jul 2026 15:57:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QgKLezs6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 023501F00A3A;
+	Thu, 30 Jul 2026 15:57:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427035;
-	bh=wPChOKH0AyD4/JLw3pHwRx0RjG3lVv18asASkdptxmA=;
+	s=korg; t=1785427038;
+	bh=ON2psj4FNsGSQaY7IJn2hIZhhzehJB0aakyoyhhlrqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QusGnz9kif5xTLQ6Bc01zXwm9eiWLK6HJwn3L4YPs32Zls26rrXkOKHbHqdpOcRWp
-	 udpPz8P2swHzlKBMWYl4j4+2uD4en6pgU1iZREBSvq/UKNX4t6WdJJ6iee2Zfm9USW
-	 csarC83FOprN/1vf9od6Q5JDEOj2/UbWsZDipBXI=
+	b=QgKLezs6ofg/9PuyEUYd9QIl0U9qX6figF7OAqmJOhpdgnbSHqeeSzJ+1oWU8wxiJ
+	 jhdfpybSczAzyRJtSS7fOAgJuuYSI6gYRGwiGiGCj+9G863EVNaBs1gS6VgzlfLltz
+	 nk7YTbEi6r9A1A5txzfHujHXoRQeCjss2/eGJhc4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sumit Gupta <sumitg@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 029/484] arm64: tegra: Fix CPU compatible string to cortex-a78ae on Tegra234
-Date: Thu, 30 Jul 2026 16:08:46 +0200
-Message-ID: <20260730141424.058749489@linuxfoundation.org>
+Subject: [PATCH 6.6 030/484] IB/mad: Drop unmatched RMPP responses before reassembly
+Date: Thu, 30 Jul 2026 16:08:47 +0200
+Message-ID: <20260730141424.079905132@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -51,142 +51,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sumit Gupta <sumitg@nvidia.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit 0dfa1e960f86e032007882b032c5cc7d14ebe73e ]
+[ Upstream commit d2e52d610b9b09694261632340b801a421e0b0c5 ]
 
-The Tegra234 SoC uses Cortex-A78AE cores, not Cortex-A78. Update the
-compatible string for all CPU nodes to match the actual hardware.
+Kernel-handled RMPP receive processing starts reassembly for active
+DATA responses before the response is matched to an outstanding send.
+The normal match happens later, after ib_process_rmpp_recv_wc() has
+either assembled a complete message or consumed the segment.
 
-Tegra234 hardware reports:
-  # head /proc/cpuinfo | egrep 'implementer|part'
-  CPU implementer : 0x41
-  CPU part        : 0xd42
+That ordering lets an unsolicited response that routes to a kernel
+RMPP agent by the high TID bits allocate or extend RMPP receive state
+before the full TID and source address are checked against a real
+request. A reordered burst can therefore reach the receive-side
+insertion path even though the response would not match any send.
 
-Which maps to (from arch/arm64/include/asm/cputype.h):
-  #define ARM_CPU_IMP_ARM              0x41
-  #define ARM_CPU_PART_CORTEX_A78AE    0xD42
+For kernel-handled RMPP DATA responses, require the existing
+ib_find_send_mad() match before entering RMPP reassembly. The matcher
+already checks the full TID, management class and source address/GID
+against the agent wait, backlog and in-flight send lists. If there is
+no match, drop the response without creating RMPP state.
 
-Fixes: a12cf5c339b08 ("arm64: tegra: Describe Tegra234 CPU hierarchy")
-Signed-off-by: Sumit Gupta <sumitg@nvidia.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
+This leaves the RMPP window behavior unchanged and only rejects
+responses that have no corresponding request.
+
+Fixes: fa619a77046b ("[PATCH] IB: Add RMPP implementation")
+Assisted-by: Codex:gpt-5-5-xhigh
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Link: https://patch.msgid.link/3170ff3bc389a930bb1641f2caa394a0b2241579.1780774907.git.michael.bommarito@gmail.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/nvidia/tegra234.dtsi | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ drivers/infiniband/core/mad.c | 30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/nvidia/tegra234.dtsi b/arch/arm64/boot/dts/nvidia/tegra234.dtsi
-index d1d7f6a50e11f2..6decf99af5f089 100644
---- a/arch/arm64/boot/dts/nvidia/tegra234.dtsi
-+++ b/arch/arm64/boot/dts/nvidia/tegra234.dtsi
-@@ -3109,7 +3109,7 @@ cpus {
- 		#size-cells = <0>;
+diff --git a/drivers/infiniband/core/mad.c b/drivers/infiniband/core/mad.c
+index 242434c09e8d8f..bddb1c607aff62 100644
+--- a/drivers/infiniband/core/mad.c
++++ b/drivers/infiniband/core/mad.c
+@@ -1778,6 +1778,24 @@ void ib_mark_mad_done(struct ib_mad_send_wr_private *mad_send_wr)
+ 			      &mad_send_wr->mad_agent_priv->done_list);
+ }
  
- 		cpu0_0: cpu@0 {
--			compatible = "arm,cortex-a78";
-+			compatible = "arm,cortex-a78ae";
- 			device_type = "cpu";
- 			reg = <0x00000>;
++static bool is_kernel_rmpp_data_response(struct ib_mad_agent_private *agent,
++					 struct ib_mad_recv_wc *mad_recv_wc)
++{
++	const struct ib_mad_hdr *mad_hdr = &mad_recv_wc->recv_buf.mad->mad_hdr;
++	struct ib_rmpp_mad *rmpp_mad;
++
++	if (!ib_mad_kernel_rmpp_agent(&agent->agent) ||
++	    !ib_response_mad(mad_hdr) ||
++	    !ib_is_mad_class_rmpp(mad_hdr->mgmt_class))
++		return false;
++
++	rmpp_mad = (struct ib_rmpp_mad *)mad_recv_wc->recv_buf.mad;
++
++	return (ib_get_rmpp_flags(&rmpp_mad->rmpp_hdr) &
++		IB_MGMT_RMPP_FLAG_ACTIVE) &&
++	       rmpp_mad->rmpp_hdr.rmpp_type == IB_MGMT_RMPP_TYPE_DATA;
++}
++
+ static void ib_mad_complete_recv(struct ib_mad_agent_private *mad_agent_priv,
+ 				 struct ib_mad_recv_wc *mad_recv_wc)
+ {
+@@ -1796,6 +1814,18 @@ static void ib_mad_complete_recv(struct ib_mad_agent_private *mad_agent_priv,
+ 	}
  
-@@ -3128,7 +3128,7 @@ cpu0_0: cpu@0 {
- 		};
- 
- 		cpu0_1: cpu@100 {
--			compatible = "arm,cortex-a78";
-+			compatible = "arm,cortex-a78ae";
- 			device_type = "cpu";
- 			reg = <0x00100>;
- 
-@@ -3147,7 +3147,7 @@ cpu0_1: cpu@100 {
- 		};
- 
- 		cpu0_2: cpu@200 {
--			compatible = "arm,cortex-a78";
-+			compatible = "arm,cortex-a78ae";
- 			device_type = "cpu";
- 			reg = <0x00200>;
- 
-@@ -3166,7 +3166,7 @@ cpu0_2: cpu@200 {
- 		};
- 
- 		cpu0_3: cpu@300 {
--			compatible = "arm,cortex-a78";
-+			compatible = "arm,cortex-a78ae";
- 			device_type = "cpu";
- 			reg = <0x00300>;
- 
-@@ -3185,7 +3185,7 @@ cpu0_3: cpu@300 {
- 		};
- 
- 		cpu1_0: cpu@10000 {
--			compatible = "arm,cortex-a78";
-+			compatible = "arm,cortex-a78ae";
- 			device_type = "cpu";
- 			reg = <0x10000>;
- 
-@@ -3204,7 +3204,7 @@ cpu1_0: cpu@10000 {
- 		};
- 
- 		cpu1_1: cpu@10100 {
--			compatible = "arm,cortex-a78";
-+			compatible = "arm,cortex-a78ae";
- 			device_type = "cpu";
- 			reg = <0x10100>;
- 
-@@ -3223,7 +3223,7 @@ cpu1_1: cpu@10100 {
- 		};
- 
- 		cpu1_2: cpu@10200 {
--			compatible = "arm,cortex-a78";
-+			compatible = "arm,cortex-a78ae";
- 			device_type = "cpu";
- 			reg = <0x10200>;
- 
-@@ -3242,7 +3242,7 @@ cpu1_2: cpu@10200 {
- 		};
- 
- 		cpu1_3: cpu@10300 {
--			compatible = "arm,cortex-a78";
-+			compatible = "arm,cortex-a78ae";
- 			device_type = "cpu";
- 			reg = <0x10300>;
- 
-@@ -3261,7 +3261,7 @@ cpu1_3: cpu@10300 {
- 		};
- 
- 		cpu2_0: cpu@20000 {
--			compatible = "arm,cortex-a78";
-+			compatible = "arm,cortex-a78ae";
- 			device_type = "cpu";
- 			reg = <0x20000>;
- 
-@@ -3280,7 +3280,7 @@ cpu2_0: cpu@20000 {
- 		};
- 
- 		cpu2_1: cpu@20100 {
--			compatible = "arm,cortex-a78";
-+			compatible = "arm,cortex-a78ae";
- 			device_type = "cpu";
- 			reg = <0x20100>;
- 
-@@ -3299,7 +3299,7 @@ cpu2_1: cpu@20100 {
- 		};
- 
- 		cpu2_2: cpu@20200 {
--			compatible = "arm,cortex-a78";
-+			compatible = "arm,cortex-a78ae";
- 			device_type = "cpu";
- 			reg = <0x20200>;
- 
-@@ -3318,7 +3318,7 @@ cpu2_2: cpu@20200 {
- 		};
- 
- 		cpu2_3: cpu@20300 {
--			compatible = "arm,cortex-a78";
-+			compatible = "arm,cortex-a78ae";
- 			device_type = "cpu";
- 			reg = <0x20300>;
- 
+ 	list_add(&mad_recv_wc->recv_buf.list, &mad_recv_wc->rmpp_list);
++	if (is_kernel_rmpp_data_response(mad_agent_priv, mad_recv_wc)) {
++		spin_lock_irqsave(&mad_agent_priv->lock, flags);
++		mad_send_wr = ib_find_send_mad(mad_agent_priv, mad_recv_wc);
++		spin_unlock_irqrestore(&mad_agent_priv->lock, flags);
++
++		if (!mad_send_wr) {
++			ib_free_recv_mad(mad_recv_wc);
++			deref_mad_agent(mad_agent_priv);
++			return;
++		}
++	}
++
+ 	if (ib_mad_kernel_rmpp_agent(&mad_agent_priv->agent)) {
+ 		mad_recv_wc = ib_process_rmpp_recv_wc(mad_agent_priv,
+ 						      mad_recv_wc);
 -- 
 2.53.0
 
