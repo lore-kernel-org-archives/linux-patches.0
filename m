@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80B8542F707;
-	Thu, 30 Jul 2026 15:22:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BECA40DFC6;
+	Thu, 30 Jul 2026 15:22:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424972; cv=none; b=A5/LezVHiK67fAoa/O1BHU+niOUQuovanAO8XdVUx6zDFuNh7wH+zX4Ruh0GJarGQn/OdmiGi6Gjr1qcgNUseoVRdjAl65qLAex7nQM46HrTJueUleNWurHmjHy7nkdmCW71wDrWkVcOu4aZzDqJpCk8lqDIe86JSf9k/S08MOg=
+	t=1785424975; cv=none; b=UZcjZHmnQvjnhqtPAIwx/kZBzKIlN3GaQSlixiXarPm+brflJbff6tjKv7xEnQpeW8szwI7066umDuY+AkEPyLZNVuVsxI5yC8Li2856/PApXNNRjWkl2au4bjFcvwkouD5jXJ/TmnpclvZfcMIMiv8B/cdpzwj5FOTiErw8wNQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424972; c=relaxed/simple;
-	bh=Px9eOxcybrhdZS/6olN1fhnpIMAYw7VWDDSRGdok+D4=;
+	s=arc-20240116; t=1785424975; c=relaxed/simple;
+	bh=MxfhDAmGeky0nkeMQfFSH6lxxZT/AMXh7yatzekGp4o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jcaoPt1fnQkHXJ3IEQcvk61Nj5K0lATzgZ93/E4bny3Fsp0fO3/yU75TpYOl3RBOs8PAWgIc3XfrzB6yaEbf3z/kqUqgQ3sGjKSUJDvw2OvU/7YT9NZttOyx4lkJeb2BLQHWxMFpjWDWosEAPEIFiwLSB3CRpPRkh/xAGonwjJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lC6Rjgeq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jMbXhVGTRT5zlPOCsbnTDKJ5vKp1+lCPRKOaR3JW+SvdsSy2AD5ljA/CaJAMGVj7ZvPriXx1f7mI9H29tAKD7sV558oVFWSU8wEUHZ+HkxCg9QVOdeeCMHUAK3oTTPZbXkpHXn/MMNBJYzU4Sr/gZYERbr23GVu9hRT118bdsv4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GRKYbA4S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lC6Rjgeq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7A751F000E9;
-	Thu, 30 Jul 2026 15:22:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GRKYbA4S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B298D1F000E9;
+	Thu, 30 Jul 2026 15:22:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424971;
-	bh=b7eIcqVr2OWs3OqoMdiYLB+XC+K+YkSLRFxUQu6bjTk=;
+	s=korg; t=1785424974;
+	bh=U/8ppRTgydFuB4zz7vEvum0Fdh8xClrKWANSY84DTGM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lC6Rjgeqx0kr5TmYdycrWLyPOfr8j6j+7rrjtkNDaH1/2xtAAz6py2NqjP6mYinFF
-	 1unMOVeBu2O+VqUsewSmzXUqcAqGwZyG4o81BIVHGlj7D1ZCc5hsYIiVWIlllza+gQ
-	 ks2c97mlTOYEpw6k9JhMhjNqATC+aVa3r1in5dRs=
+	b=GRKYbA4SDndG8J5DxMwHlcO8V6SkvZvhuXSGkz5YebZHM192cOTwI6GFDLRA8xLf6
+	 vuaa49pTTL1nXO6iT+jiqsU7VA7g0nTYN92s416KdHy16fzauvKTM4B9zI/VhAN7BK
+	 8LeSSF96sPo0dp5V22MkvsNQBlFQo8A43eEIau7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitaly Prosyak <vitaly.prosyak@amd.com>,
+	Jakob Linke <jakob@linke.cx>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 580/675] drm/amdgpu/sdma4.4.2: replace BUG_ON() with WARN_ON()
-Date: Thu, 30 Jul 2026 16:15:10 +0200
-Message-ID: <20260730141457.454495776@linuxfoundation.org>
+Subject: [PATCH 6.18 581/675] drm/amdgpu/soc24: reset dGPU if suspend got aborted
+Date: Thu, 30 Jul 2026 16:15:11 +0200
+Message-ID: <20260730141457.474351669@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -50,40 +50,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Jakob Linke <jakob@linke.cx>
 
-commit 40cdbe9fa424cc6264a7aed93a04bd7d69109d9e upstream.
+commit aff079bdce65f6d085e4b0091fdf87fffa95b0d9 upstream.
 
-There's no need to crash the kernel for these cases.
+For SOC24 ASICs (RDNA4 / Navi 4x dGPUs) re-enabling PM features fails if an
+S3 suspend got aborted, the same issue already handled for SOC21 and SOC15:
 
-Reviewed-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
+  commit df3c7dc5c58b ("drm/amdgpu: Reset dGPU if suspend got aborted")
+  commit 38e8ca3e4b6d ("amdgpu/soc15: enable asic reset for dGPU in case of suspend abort")
+
+The aborted resume fails with:
+
+  amdgpu: SMU: No response msg_reg: 6 resp_reg: 0
+  amdgpu: Failed to enable requested dpm features!
+  amdgpu: resume of IP block <smu> failed -62
+
+Apply the same workaround for soc24: detect the aborted-suspend state at
+resume via the sign-of-life register and reset the device before re-init.
+
+This is a workaround till a proper solution is finalized.
+
+Fixes: 98b912c50e44 ("drm/amdgpu: Add soc24 common ip block (v2)")
+Signed-off-by: Jakob Linke <jakob@linke.cx>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit fa4f86a148271e325e95287630a3a15a9cd35fdc)
+(cherry picked from commit fed5bdbfe1d4a19a26c70f7fc58017dc88be1c18)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/sdma_v4_4_2.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/soc24.c |   28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/sdma_v4_4_2.c
-+++ b/drivers/gpu/drm/amd/amdgpu/sdma_v4_4_2.c
-@@ -458,7 +458,7 @@ static void sdma_v4_4_2_ring_emit_fence(
- 	/* write the fence */
- 	amdgpu_ring_write(ring, SDMA_PKT_HEADER_OP(SDMA_OP_FENCE));
- 	/* zero in first two bits */
--	BUG_ON(addr & 0x3);
-+	WARN_ON(addr & 0x3);
- 	amdgpu_ring_write(ring, lower_32_bits(addr));
- 	amdgpu_ring_write(ring, upper_32_bits(addr));
- 	amdgpu_ring_write(ring, lower_32_bits(seq));
-@@ -468,7 +468,7 @@ static void sdma_v4_4_2_ring_emit_fence(
- 		addr += 4;
- 		amdgpu_ring_write(ring, SDMA_PKT_HEADER_OP(SDMA_OP_FENCE));
- 		/* zero in first two bits */
--		BUG_ON(addr & 0x3);
-+		WARN_ON(addr & 0x3);
- 		amdgpu_ring_write(ring, lower_32_bits(addr));
- 		amdgpu_ring_write(ring, upper_32_bits(addr));
- 		amdgpu_ring_write(ring, upper_32_bits(seq));
+--- a/drivers/gpu/drm/amd/amdgpu/soc24.c
++++ b/drivers/gpu/drm/amd/amdgpu/soc24.c
+@@ -526,8 +526,36 @@ static int soc24_common_suspend(struct a
+ 	return soc24_common_hw_fini(ip_block);
+ }
+ 
++static bool soc24_need_reset_on_resume(struct amdgpu_device *adev)
++{
++	u32 sol_reg1, sol_reg2;
++
++	/* Will reset for the following suspend abort cases.
++	 * 1) Only reset dGPU side.
++	 * 2) S3 suspend got aborted and TOS is active.
++	 *    As for dGPU suspend abort cases the SOL value
++	 *    will be kept as zero at this resume point.
++	 */
++	if (!(adev->flags & AMD_IS_APU) && adev->in_s3) {
++		sol_reg1 = RREG32_SOC15(MP0, 0, regMPASP_SMN_C2PMSG_81);
++		msleep(100);
++		sol_reg2 = RREG32_SOC15(MP0, 0, regMPASP_SMN_C2PMSG_81);
++
++		return (sol_reg1 != sol_reg2);
++	}
++
++	return false;
++}
++
+ static int soc24_common_resume(struct amdgpu_ip_block *ip_block)
+ {
++	struct amdgpu_device *adev = ip_block->adev;
++
++	if (soc24_need_reset_on_resume(adev)) {
++		dev_info(adev->dev, "S3 suspend aborted, resetting...");
++		soc24_asic_reset(adev);
++	}
++
+ 	return soc24_common_hw_init(ip_block);
+ }
+ 
 
 
