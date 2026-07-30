@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E7DA443AAB;
-	Thu, 30 Jul 2026 15:59:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E281343F8CB;
+	Thu, 30 Jul 2026 15:59:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427184; cv=none; b=QxcGvBBKY96XZ8GUyJHvUlX1o7rSEzId0F3CL3rLX3y9uE0uIwrXBF2XMmITLpQnkqv7xpEbI2h2H/TQ2SHDUOcV+DHLmtTN03iMnxdfolxjf65zz7SGeX6o8pDg+DPJmvtBJkhW3IyNRo/tUmu0q3xo7ZpSaI/QYTj5b3uzbJk=
+	t=1785427188; cv=none; b=F1UqSzYq8YbU8+LNc+TLacGIhx+1s6NNhliG51gxRAsvUgKCEPjpAKZ+ujZliQta5IgFmxuZfsLR9KgNojdATED7oyH262V/FPs7Klx2C6vDqCtoAaPRoZRR3QAonlxraXmVfACRpzyFJvQx4rv4aB8H0Y77U9lX9QFcYDqWQaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427184; c=relaxed/simple;
-	bh=uZebe1Fn5sRc5AGJCLsR/CBaBGrfIgqE9uxTzW/1xRY=;
+	s=arc-20240116; t=1785427188; c=relaxed/simple;
+	bh=WWN5GA9F22j8VwgYmUDRFaJOi0fS2k7TL/a1+uWuHMk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aCvxG7A3T9BNKVKGmfySBxv2Gj7ADaS73xAuELxR6wI4c03ChBNkBhpIKcd9wkwM3Q00f/4nGSdPTY13bmt6/LTJePRsgrfdP4hrnrtChinEYlIBHo76ikrzbzU5/OivWe3deR0CXGcxICVQqrf6fYwnKxJJCBLCC+mzD0wpiPc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vaXrgaYC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gh8THE+tYqiJ6ZOBNQbr2B3RuBiT2Gfy6Mq1LAtnP++ivR+VRjUX9NVKqXJYSkaRRRvzj8w6LJfmmSFE7RcZN9+6KmPbkxlIsuVoqYdVwOeCr1vZBBqAQ5PsP4pdnRMMWVnYhUrwiitYedsNygPPx5Hez/LC7C5J2lVFYUT1zmU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yjp0ROxO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vaXrgaYC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C5F11F000E9;
-	Thu, 30 Jul 2026 15:59:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yjp0ROxO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA3901F000E9;
+	Thu, 30 Jul 2026 15:59:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427183;
-	bh=9xgOWq2bJ/EoNRMzx0iOAP6IuDNBBQtid+v0KNaW9bg=;
+	s=korg; t=1785427186;
+	bh=4DpirIj4reNuCmnKE0FhiQHGcVkOIom60bxk7rYUtU4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vaXrgaYCqkWdSY6ycSzNI13LYDXEdIiHlC2OW86KMO01ACRcwTm86SD9e31lJsYiF
-	 hoGkAOuKe4VSYNC3HxEmPok6gTmZs8W/ZjfHwpfnsmsT/OUYWZN48FAwtUpryil/cZ
-	 pFTsP7ooKDY4tO5yyQcrVawWKB1nCv2F0iEicq3Q=
+	b=yjp0ROxO+YfKWlQKyj9vY27tQq2fyulHIB5bkEZuS3lUxwMWhvItpvz+n69Q1GJ3O
+	 +ikFLbYQyg2mAwqvOEu45hUlnFMv5DHEAC6rTi3Bhb59Qja3/VWo8Hp16b8dwa2s+q
+	 x/6sQ6wq+WUmJUTkJcmVKuf25uksk3jywp1H3j4Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Johan Hovold <johan@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Pauli Virtanen <pav@iki.fi>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 079/484] Bluetooth: qca: fix NVM tag length underflow in TLV parser
-Date: Thu, 30 Jul 2026 16:09:36 +0200
-Message-ID: <20260730141425.154247548@linuxfoundation.org>
+Subject: [PATCH 6.6 080/484] Bluetooth: mgmt: fix locking in unpair_device/disconnect_sync
+Date: Thu, 30 Jul 2026 16:09:37 +0200
+Message-ID: <20260730141425.177980327@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -54,66 +51,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit c90164ca0f7036942ba088eb7ea8d3f6c2352020 ]
+[ Upstream commit 16cd66443957e4ad42155c6fec401012f600c6f8 ]
 
-In the TLV_TYPE_NVM branch of qca_tlv_check_data() the tag loop bound is
-"while (idx < length - sizeof(struct tlv_type_nvm))". "length" is a signed
-int from the firmware TLV header and sizeof(struct tlv_type_nvm) is a
-size_t (12), so "length" is converted to size_t and any firmware-supplied
-"length" < 12 makes the subtraction wrap to a huge value. The loop body
-then reads a 12-byte struct tlv_type_nvm past the end of the short
-vmalloc'd firmware buffer (and the EDL_TAG_ID_* handlers can write past it).
+Dereferencing RCU-protected pointers outside critical sections is
+invalid and may lead to UAF.
 
-Rewrite the bound as "idx + sizeof(struct tlv_type_nvm) <= length"; both
-operands are non-negative, so it no longer underflows and a "length" too
-small for one record correctly skips the loop.
+Take hdev->lock for hci_conn lookup and hci_abort_conn().  Don't use RCU
+to ensure the conn is fully initialized at this point.
 
-  BUG: KASAN: vmalloc-out-of-bounds in qca_download_firmware.isra.0 (drivers/bluetooth/btqca.c:421)
-  Read of size 2 at addr ffffc900000e5004 by task kworker/u9:0/52
-  Workqueue: hci0 hci_power_on
-  Call Trace:
-   ...
-   kasan_report (mm/kasan/report.c:595)
-   qca_download_firmware.isra.0 (drivers/bluetooth/btqca.c:421 drivers/bluetooth/btqca.c:617)
-   qca_uart_setup (drivers/bluetooth/btqca.c:948)
-   qca_setup (drivers/bluetooth/hci_qca.c:2029)
-   hci_uart_setup (drivers/bluetooth/hci_ldisc.c:438)
-   hci_dev_open_sync (net/bluetooth/hci_sync.c:5227)
-   hci_power_on (net/bluetooth/hci_core.c:920)
-   process_one_work (kernel/workqueue.c:3322)
-   worker_thread (kernel/workqueue.c:3486)
-   kthread (kernel/kthread.c:436)
-   ret_from_fork (arch/x86/kernel/process.c:158)
-   ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
-
-Fixes: 2e4edfa1e2bd ("Bluetooth: qca: add missing firmware sanity checks")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Reviewed-by: Johan Hovold <johan@kernel.org>
-Acked-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Fixes: 227a0cdf4a028 ("Bluetooth: MGMT: Fix not generating command complete for MGMT_OP_DISCONNECT")
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btqca.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/mgmt.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
-index 5b34da23adce7c..09ef7df5c231bf 100644
---- a/drivers/bluetooth/btqca.c
-+++ b/drivers/bluetooth/btqca.c
-@@ -430,7 +430,7 @@ static int qca_tlv_check_data(struct hci_dev *hdev,
+diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
+index 20fe7f011b75c2..2d9781668cb74a 100644
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -3005,6 +3005,8 @@ static int unpair_device_sync(struct hci_dev *hdev, void *data)
+ 	struct mgmt_cp_unpair_device *cp = cmd->param;
+ 	struct hci_conn *conn;
  
- 		idx = 0;
- 		data = tlv->data;
--		while (idx < length - sizeof(struct tlv_type_nvm)) {
-+		while (idx + sizeof(struct tlv_type_nvm) <= length) {
- 			tlv_nvm = (struct tlv_type_nvm *)(data + idx);
++	hci_dev_lock(hdev);
++
+ 	if (cp->addr.type == BDADDR_BREDR)
+ 		conn = hci_conn_hash_lookup_ba(hdev, ACL_LINK,
+ 					       &cp->addr.bdaddr);
+@@ -3012,6 +3014,11 @@ static int unpair_device_sync(struct hci_dev *hdev, void *data)
+ 		conn = hci_conn_hash_lookup_le(hdev, &cp->addr.bdaddr,
+ 					       le_addr_type(cp->addr.type));
  
- 			tag_id = le16_to_cpu(tlv_nvm->tag_id);
++	if (conn)
++		hci_conn_get(conn);
++
++	hci_dev_unlock(hdev);
++
+ 	if (!conn)
+ 		return 0;
+ 
+@@ -3019,6 +3026,7 @@ static int unpair_device_sync(struct hci_dev *hdev, void *data)
+ 	 * will clean up the connection no matter the error.
+ 	 */
+ 	hci_abort_conn(conn, HCI_ERROR_REMOTE_USER_TERM);
++	hci_conn_put(conn);
+ 
+ 	return 0;
+ }
+@@ -3166,6 +3174,8 @@ static int disconnect_sync(struct hci_dev *hdev, void *data)
+ 	struct mgmt_cp_disconnect *cp = cmd->param;
+ 	struct hci_conn *conn;
+ 
++	hci_dev_lock(hdev);
++
+ 	if (cp->addr.type == BDADDR_BREDR)
+ 		conn = hci_conn_hash_lookup_ba(hdev, ACL_LINK,
+ 					       &cp->addr.bdaddr);
+@@ -3173,6 +3183,11 @@ static int disconnect_sync(struct hci_dev *hdev, void *data)
+ 		conn = hci_conn_hash_lookup_le(hdev, &cp->addr.bdaddr,
+ 					       le_addr_type(cp->addr.type));
+ 
++	if (conn)
++		hci_conn_get(conn);
++
++	hci_dev_unlock(hdev);
++
+ 	if (!conn)
+ 		return -ENOTCONN;
+ 
+@@ -3180,6 +3195,7 @@ static int disconnect_sync(struct hci_dev *hdev, void *data)
+ 	 * will clean up the connection no matter the error.
+ 	 */
+ 	hci_abort_conn(conn, HCI_ERROR_REMOTE_USER_TERM);
++	hci_conn_put(conn);
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
