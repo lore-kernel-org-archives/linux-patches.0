@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9399732B116;
-	Thu, 30 Jul 2026 14:55:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65AF14052DC;
+	Thu, 30 Jul 2026 14:55:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423308; cv=none; b=tNpicmOslSLYn0RI4BDW8WlGvGBIMxdHojCxS7iQycF4UrK38x/eVdGJ2HLW9s/ZnWWmg9TlfU778hiuUNRdLDjIgXRLqbwsXbeLIg87vXYho3sdiKuOuTNtgn2BcaCTbboc+DAnbR4yzVD0oXpKHOO/BJxXzxHgp2z/kcPEYEE=
+	t=1785423311; cv=none; b=u6nldHrCfiIb29hJGaWyrqnngys8uf+0rjNYav/IAHOHcMxyTLXsv0T7Yfu03WR4R/VvRu0NS4iTR0q2yp2rXt8YIQNn/2aZBwGorAxeUlB29zwVNUntpACS+MR0mWcisAYXjEfj28h3QaLP+6Oru27CAgCh63dYjY30x5RxYBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423308; c=relaxed/simple;
-	bh=FgdqHhYkI2V50emrbFjdAMGaSE9iGsoZyUa5LAgbxhg=;
+	s=arc-20240116; t=1785423311; c=relaxed/simple;
+	bh=x8RvDdkeRkPTvMAqmDKWlKNIXN4YfOuUujtBYz09kg4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rzwhQejr74oSqcZBgn1o9a6PyfknCkZvBHigqDi7fISHhcCU5YLTDDmI+XOIvddEin3zg5F9HxTKAmELBzKS/H5Gc2CVGmckzILS4/X3AYBy8a4gTxBhsXCjID+7d7v/Lj9E/asKmzhTuUlbEbod8299qNZ3ATF1aVMRuyS8wC8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TaDG3ZHH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q+YsXzOxkHveJCIvM9++LdIkdqdVAoYpkWUXz8z2SYco87tsFI1RAU6mfc3wqTDcJIftSAWfNyGWjSu3EdDSWwjf2z0QRcz7Oqn4d+4MjPnDBi+VHP1PvtrkD9LfT2nLJwcLpTFiG5JW5ZePTtMborHzPNqbdGyW/yH9AOCAQug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RxYtkZV7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TaDG3ZHH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F31D61F000E9;
-	Thu, 30 Jul 2026 14:55:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RxYtkZV7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C199C1F000E9;
+	Thu, 30 Jul 2026 14:55:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423307;
-	bh=BoDQMTiYP/YHYdUX6kYtBo6up9ouzfzH9DHe5JQT2cQ=;
+	s=korg; t=1785423310;
+	bh=7N1jMyNM7I+aTmr/v3JoX9b5K4LWwyMOSkU7SvLEZmI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TaDG3ZHH0rMlyohE7Ry7s7cKp8kmVZp+gnzUwuP/AeucjYZd0tXqwByt17ZvgNhVi
-	 lfQzIIHlm2wFYf2g41xnxjcNwo2ztV0BYWBl+EfoccHdNHUBNjSRa5+EZFKm90hCfs
-	 CKKII9m9slOwaPpYqv7tFeXsWSMMTHDZDJzjmupU=
+	b=RxYtkZV78dZxG2lIikei0e9748yxCiQ6D3JYKZN7YXtFNyujv3SdXeLzJz3HZc3Jc
+	 6ZzD/u2OlfgsHyl/ho3MMs3IS9hpuhhb3mzz8z7L08JolCDhccogHGelpfVQhsEMHl
+	 tf+mc5IRkinu33xvS7D/qp0Wx3mUjk3YHjSobuKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Erni Sri Satya Vennela <ernis@linux.microsoft.com>,
-	Shradha Gupta <shradhagupta@linux.microsoft.com>,
-	Haiyang Zhang <haiyangz@microsoft.com>,
-	Simon Horman <horms@kernel.org>,
-	Yury Norov <ynorov@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Breno Leitao <leitao@debian.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 737/744] net: mana: Optimize irq affinity for low vcpu configs
-Date: Thu, 30 Jul 2026 16:16:50 +0200
-Message-ID: <20260730141459.975288331@linuxfoundation.org>
+Subject: [PATCH 7.1 738/744] bootconfig: move xbc_snprint_cmdline() to lib/bootconfig.c
+Date: Thu, 30 Jul 2026 16:16:51 +0200
+Message-ID: <20260730141459.997679477@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -55,250 +51,162 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shradha Gupta <shradhagupta@linux.microsoft.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 5316394b1752f6cf3f9901e7fefdec1cd1d97fd3 ]
+[ Upstream commit 5a643e4623238e14b03d75ca0d4eda0645720cee ]
 
-Before the commit 755391121038 ("net: mana: Allocate MSI-X vectors
-dynamically"), all the MANA IRQs were assigned statically and together
-during early driver load.
+Move xbc_snprint_cmdline() from init/main.c to lib/bootconfig.c so the
+function (and its xbc_namebuf scratch buffer) becomes part of the shared
+parser library. tools/bootconfig already compiles lib/bootconfig.c
+directly, which lets a follow-up patch reuse the same renderer in the
+userspace tool to convert a bootconfig file into a flat cmdline string
+at build time.
 
-After this commit, the IRQ allocation for MANA was done in two phases.
-HWC IRQ allocated earlier and then, queue IRQs dynamically added at a
-later point. By this time, the IRQ weights on vCPUs can become imbalanced
-and if IRQ count is greater than the vCPU count the topology aware IRQ
-distribution logic in MANA can cause multiple MANA IRQs to land on the
-same vCPUs, while other sibling vCPUs have none (case 1).
+No functional change.
 
-On SMP enabled, low-vCPU systems, this becomes a bigger problem as the
-softIRQ handling overhead of two IRQs on the same vCPUs becomes much more
-than their overheads if they were spread across sibling vCPUs.
+Link: https://lore.kernel.org/all/20260508-bootconfig_using_tools-v1-1-1132219aa773@debian.org/
 
-In such cases when many parallel TCP connections are tested, the
-throughput drops significantly.
-
-Fix the affinity assignment logic, in cases where the IRQ count is greater
-than the vCPU count and when IRQs are added dynamically, by utilizing all
-the vCPUs irrespective of their NUMA/core bindings (case 2).
-
-The results of setting the affinity and hint to NULL were also studied,
-and we observed that, with this logic if there are pre-existing IRQs
-allocated on the VM (apart from MANA), during MANA IRQs allocation, it
-leads to clustering of the MANA queue IRQs again (case 3).
-
-=======================================================
-Case 1: without this patch
-=======================================================
-4 vcpu(2 cores), 5 MANA IRQs (1 HWC + 4 Queue)
-
-	TYPE		effective vCPU aff
-=======================================================
-IRQ0:	HWC		0
-IRQ1:	mana_q1		0
-IRQ2:	mana_q2		2
-IRQ3:	mana_q3		0
-IRQ4:	mana_q4		3
-
-%soft on each vCPU(mpstat -P ALL 1) on receiver
-vCPU		0	1	2	3
-=======================================================
-pass 1:		38.85	0.03	24.89	24.65
-pass 2:		39.15	0.03	24.57	25.28
-pass 3:		40.36	0.03	23.20	23.17
-
-=======================================================
-Case 2: with this patch
-=======================================================
-4 vcpu(2 cores), 5 MANA IRQs (1 HWC + 4 Queue)
-
-        TYPE            effective vCPU aff
-=======================================================
-IRQ0:   HWC             0
-IRQ1:   mana_q1         0
-IRQ2:   mana_q2         1
-IRQ3:   mana_q3         2
-IRQ4:   mana_q4         3
-
-%soft on each vCPU(mpstat -P ALL 1) on receiver
-vCPU            0       1       2       3
-=======================================================
-pass 1:         15.42	15.85	14.99	14.51
-pass 2:         15.53	15.94	15.81	15.93
-pass 3:         16.41	16.35	16.40	16.36
-
-=======================================================
-Case 3: with affinity set to NULL
-=======================================================
-4 vCPU(2 cores), 5 MANA IRQs (1 HWC + 4 Queue)
-
-	TYPE		effective vCPU aff
-=======================================================
-IRQ0:	HWC			0
-IRQ1:	mana_q1			2
-IRQ2:	mana_q2			3
-IRQ3:	mana_q3			2
-IRQ4:	mana_q4			3
-
-=======================================================
-Throughput Impact(in Gbps, same env)
-=======================================================
-TCP conn	with patch	w/o patch	aff NULL
-20480		15.65		7.73		5.25
-10240		15.63		8.93		5.77
-8192		15.64		9.69		7.16
-6144		15.64		13.16		9.33
-4096		15.69		15.75		13.50
-2048		15.69		15.83		13.61
-1024		15.71		15.28		13.60
-
-Fixes: 755391121038 ("net: mana: Allocate MSI-X vectors dynamically")
-Cc: stable@vger.kernel.org
-Co-developed-by: Erni Sri Satya Vennela <ernis@linux.microsoft.com>
-Signed-off-by: Erni Sri Satya Vennela <ernis@linux.microsoft.com>
-Signed-off-by: Shradha Gupta <shradhagupta@linux.microsoft.com>
-Reviewed-by: Haiyang Zhang <haiyangz@microsoft.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Yury Norov <ynorov@nvidia.com>
-Link: https://patch.msgid.link/20260624072138.1632849-1-shradhagupta@linux.microsoft.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Kept 7.1's `int *irqs, irq, err, i;` declaration (minus the deleted `skip_first_cpu`) instead of upstream's `msi` variant, as this tree lacks the `mana_gd_get_gic()` refactor. ]
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Stable-dep-of: dec4d8118c17 ("bootconfig: fix NULL-pointer arithmetic in xbc_snprint_cmdline()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/microsoft/mana/gdma_main.c |   78 +++++++++++++++++++-----
- 1 file changed, 64 insertions(+), 14 deletions(-)
+ include/linux/bootconfig.h |    3 ++
+ init/main.c                |   45 ------------------------------------
+ lib/bootconfig.c           |   56 +++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 59 insertions(+), 45 deletions(-)
 
---- a/drivers/net/ethernet/microsoft/mana/gdma_main.c
-+++ b/drivers/net/ethernet/microsoft/mana/gdma_main.c
-@@ -197,6 +197,8 @@ static int mana_gd_query_max_resources(s
- 	} else {
- 		/* If dynamic allocation is enabled we have already allocated
- 		 * hwc msi
-+		 * Also, we make sure in this case the following is always true
-+		 * (num_msix_usable - 1 HWC) <= num_online_cpus()
- 		 */
- 		gc->num_msix_usable = min(resp.max_msix, num_online_cpus() + 1);
- 	}
-@@ -1667,8 +1669,8 @@ void mana_gd_free_res_map(struct gdma_re
-  * do the same thing.
-  */
+--- a/include/linux/bootconfig.h
++++ b/include/linux/bootconfig.h
+@@ -265,6 +265,9 @@ static inline struct xbc_node * __init x
+ int __init xbc_node_compose_key_after(struct xbc_node *root,
+ 			struct xbc_node *node, char *buf, size_t size);
  
--static int irq_setup(unsigned int *irqs, unsigned int len, int node,
--		     bool skip_first_cpu)
-+static int mana_irq_setup_numa_aware(unsigned int *irqs, unsigned int len,
-+				     int node, bool skip_first_cpu)
++/* Render key/value pairs under @root as a flat cmdline string */
++int __init xbc_snprint_cmdline(char *buf, size_t size, struct xbc_node *root);
++
+ /**
+  * xbc_node_compose_key() - Compose full key string of the XBC node
+  * @node: An XBC node.
+--- a/init/main.c
++++ b/init/main.c
+@@ -324,51 +324,6 @@ static void * __init get_boot_config_fro
+ 
+ #ifdef CONFIG_BOOT_CONFIG
+ 
+-static char xbc_namebuf[XBC_KEYLEN_MAX] __initdata;
+-
+-#define rest(dst, end) ((end) > (dst) ? (end) - (dst) : 0)
+-
+-static int __init xbc_snprint_cmdline(char *buf, size_t size,
+-				      struct xbc_node *root)
+-{
+-	struct xbc_node *knode, *vnode;
+-	char *end = buf + size;
+-	const char *val, *q;
+-	int ret;
+-
+-	xbc_node_for_each_key_value(root, knode, val) {
+-		ret = xbc_node_compose_key_after(root, knode,
+-					xbc_namebuf, XBC_KEYLEN_MAX);
+-		if (ret < 0)
+-			return ret;
+-
+-		vnode = xbc_node_get_child(knode);
+-		if (!vnode) {
+-			ret = snprintf(buf, rest(buf, end), "%s ", xbc_namebuf);
+-			if (ret < 0)
+-				return ret;
+-			buf += ret;
+-			continue;
+-		}
+-		xbc_array_for_each_value(vnode, val) {
+-			/*
+-			 * For prettier and more readable /proc/cmdline, only
+-			 * quote the value when necessary, i.e. when it contains
+-			 * whitespace.
+-			 */
+-			q = strpbrk(val, " \t\r\n") ? "\"" : "";
+-			ret = snprintf(buf, rest(buf, end), "%s=%s%s%s ",
+-				       xbc_namebuf, q, val, q);
+-			if (ret < 0)
+-				return ret;
+-			buf += ret;
+-		}
+-	}
+-
+-	return buf - (end - size);
+-}
+-#undef rest
+-
+ /* Make an extra command line under given key word */
+ static char * __init xbc_make_cmdline(const char *key)
  {
- 	const struct cpumask *next, *prev = cpu_none_mask;
- 	cpumask_var_t cpus __free(free_cpumask_var);
-@@ -1704,11 +1706,24 @@ done:
- 	return 0;
+--- a/lib/bootconfig.c
++++ b/lib/bootconfig.c
+@@ -408,6 +408,62 @@ const char * __init xbc_node_find_next_k
+ 		return "";	/* No value key */
  }
  
-+/* must be called with cpus_read_lock() held */
-+static void mana_irq_setup_linear(unsigned int *irqs, unsigned int len)
++static char xbc_namebuf[XBC_KEYLEN_MAX] __initdata;
++
++#define rest(dst, end) ((end) > (dst) ? (end) - (dst) : 0)
++
++/**
++ * xbc_snprint_cmdline() - Render bootconfig keys under @root as a cmdline string
++ * @buf: Destination buffer (may be NULL when @size is 0 to query the length)
++ * @size: Size of @buf in bytes
++ * @root: Subtree root whose key=value pairs should be rendered
++ *
++ * Walk all key/value pairs under @root and emit them as a space-separated
++ * cmdline string into @buf. Values containing whitespace are quoted with
++ * double quotes. Returns the number of bytes that would be written if @buf
++ * were large enough (matching snprintf semantics), or a negative errno on
++ * failure.
++ */
++int __init xbc_snprint_cmdline(char *buf, size_t size, struct xbc_node *root)
 +{
-+	int cpu;
++	struct xbc_node *knode, *vnode;
++	char *end = buf + size;
++	const char *val, *q;
++	int ret;
 +
-+	for_each_online_cpu(cpu) {
-+		if (len == 0)
-+			break;
++	xbc_node_for_each_key_value(root, knode, val) {
++		ret = xbc_node_compose_key_after(root, knode,
++					xbc_namebuf, XBC_KEYLEN_MAX);
++		if (ret < 0)
++			return ret;
 +
-+		irq_set_affinity_and_hint(*irqs++, cpumask_of(cpu));
-+		len--;
++		vnode = xbc_node_get_child(knode);
++		if (!vnode) {
++			ret = snprintf(buf, rest(buf, end), "%s ", xbc_namebuf);
++			if (ret < 0)
++				return ret;
++			buf += ret;
++			continue;
++		}
++		xbc_array_for_each_value(vnode, val) {
++			/*
++			 * For prettier and more readable /proc/cmdline, only
++			 * quote the value when necessary, i.e. when it contains
++			 * whitespace.
++			 */
++			q = strpbrk(val, " \t\r\n") ? "\"" : "";
++			ret = snprintf(buf, rest(buf, end), "%s=%s%s%s ",
++				       xbc_namebuf, q, val, q);
++			if (ret < 0)
++				return ret;
++			buf += ret;
++		}
 +	}
++
++	return buf - (end - size);
 +}
++#undef rest
 +
- static int mana_gd_setup_dyn_irqs(struct pci_dev *pdev, int nvec)
- {
- 	struct gdma_context *gc = pci_get_drvdata(pdev);
- 	struct gdma_irq_context *gic;
--	bool skip_first_cpu = false;
- 	int *irqs, irq, err, i;
+ /* XBC parse and tree build */
  
- 	irqs = kmalloc_objs(int, nvec);
-@@ -1716,10 +1731,12 @@ static int mana_gd_setup_dyn_irqs(struct
- 		return -ENOMEM;
- 
- 	/*
-+	 * In this function, num_msix_usable = HWC IRQ + Queue IRQ.
-+	 * nvec is only Queue IRQ (HWC already setup).
- 	 * While processing the next pci irq vector, we start with index 1,
- 	 * as IRQ vector at index 0 is already processed for HWC.
- 	 * However, the population of irqs array starts with index 0, to be
--	 * further used in irq_setup()
-+	 * further used in mana_irq_setup_numa_aware()
- 	 */
- 	for (i = 1; i <= nvec; i++) {
- 		gic = kzalloc_obj(*gic);
-@@ -1749,18 +1766,51 @@ static int mana_gd_setup_dyn_irqs(struct
- 	}
- 
- 	/*
--	 * When calling irq_setup() for dynamically added IRQs, if number of
--	 * CPUs is more than or equal to allocated MSI-X, we need to skip the
--	 * first CPU sibling group since they are already affinitized to HWC IRQ
-+	 * When calling mana_irq_setup_numa_aware() for dynamically added IRQs,
-+	 * if number of CPUs is more than or equal to allocated MSI-X, we need to
-+	 * skip the first CPU sibling group since they are already affinitized to
-+	 * HWC IRQ
- 	 */
- 	cpus_read_lock();
--	if (gc->num_msix_usable <= num_online_cpus())
--		skip_first_cpu = true;
-+	if (gc->num_msix_usable <= num_online_cpus()) {
-+		err = mana_irq_setup_numa_aware(irqs, nvec, gc->numa_node,
-+						true);
-+		if (err) {
-+			cpus_read_unlock();
-+			goto free_irq;
-+		}
-+	} else {
-+		/*
-+		 * When num_msix_usable are more than num_online_cpus, our
-+		 * queue IRQs should be equal to num of online vCPUs.
-+		 * We try to make sure queue IRQs spread across all vCPUs.
-+		 * In such a case NUMA or CPU core affinity does not matter.
-+		 * Note: in this case the total mana IRQ should always be
-+		 * num_online_cpus + 1. The first HWC IRQ is already handled
-+		 * in HWC setup calls
-+		 * However, if CPUs went offline since num_msix_usable was
-+		 * computed, queue IRQs will be more than num_online_cpus().
-+		 * In such cases remaining extra IRQs will retain their default
-+		 * affinity.
-+		 */
-+		int first_unassigned = num_online_cpus();
- 
--	err = irq_setup(irqs, nvec, gc->numa_node, skip_first_cpu);
--	if (err) {
--		cpus_read_unlock();
--		goto free_irq;
-+		if (nvec > first_unassigned) {
-+			char buf[32];
-+
-+			if (first_unassigned == nvec - 1)
-+				snprintf(buf, sizeof(buf), "%d",
-+					 first_unassigned);
-+			else
-+				snprintf(buf, sizeof(buf), "%d-%d",
-+					 first_unassigned, nvec - 1);
-+
-+			dev_dbg(&pdev->dev,
-+				"MANA IRQ indices #%s will retain the default CPU affinity\n",
-+				buf);
-+		}
-+
-+		mana_irq_setup_linear(irqs, nvec);
- 	}
- 
- 	cpus_read_unlock();
-@@ -1846,7 +1896,7 @@ static int mana_gd_setup_irqs(struct pci
- 		nvec -= 1;
- 	}
- 
--	err = irq_setup(irqs, nvec, gc->numa_node, false);
-+	err = mana_irq_setup_numa_aware(irqs, nvec, gc->numa_node, false);
- 	if (err) {
- 		cpus_read_unlock();
- 		goto free_irq;
+ static int __init xbc_init_node(struct xbc_node *node, char *data, uint16_t flag)
 
 
