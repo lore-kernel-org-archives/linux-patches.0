@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCBCC446055;
-	Thu, 30 Jul 2026 15:32:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6007445AD7;
+	Thu, 30 Jul 2026 15:33:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425579; cv=none; b=mRwEvIyltr9luytdDcDpbayZXA7yI2Mz9+4bK5L7ocKuQky2nwKa+AFav20gO1ytMfH1eyxaxyazg24GNKVj31LIW1TU/UB/supSXTSG+OK0Om8gTzAJFydNtJaE1hSmoCYNs54IXauXTUYYQ/MFt8iLZ9ToaJg9hIz1ubwxSyo=
+	t=1785425582; cv=none; b=gYO0xC5rj1y+25rSc7YXU5QkS1rixpIIcGcT291vVVI+XQ8Nq0CCJ9ESoMcUKUFnIy6ehb0r8Bwu9lJ++qBwx4ftEVMzqOoYlabbIriNkNQzgJalHVYz7zV87wcBWdrgS6dMKBEPwbwAquYlcfqKG7lVliL+6+Zux89vIBjVrm4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425579; c=relaxed/simple;
-	bh=DuNN1NxFHr+uZw07EuvoQGkgltMGvRfOQeFL8tt6wno=;
+	s=arc-20240116; t=1785425582; c=relaxed/simple;
+	bh=TaYDkzz8o62t/u1fb4Wa8LAXDiiy7kOXGY9DHQ3FhNU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y7B7ku9znOU5spOEBTd71LD6CiZMOjpWt5VgeBRda/9TN63zL9hIFHWGexr3CF2Tvzc3tlRW6UPI47ne/SfXyeGT1Wbf/cgyk6cApAXrP412ug0wrZF8tD1iHqjlnwEn+i5tGON2s5hM6EEcjrZaHCmmHX2MA2tLiKX9AYu1YDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WKOQyFoW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tf0nwfcknaZoHXFebisVLjv/qWF7WibY7aYXQAACdDrP8iMdds+VMzsu1PyUrDjKWJWusnN3Vh0sLCo2rtud/fpdp+amgGSJGcChwKmfkCpJqOH5G+fzZsWCcw6RUmTmd+i+wOpkXMVAlj4pfaNGuUXMSjhOk/Ox+8BNFtapWIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pxC9RnZj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WKOQyFoW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C9B31F000E9;
-	Thu, 30 Jul 2026 15:32:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pxC9RnZj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 169A01F000E9;
+	Thu, 30 Jul 2026 15:32:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425577;
-	bh=1W9UDnLB1Z/soF2/HXyKQwukr4OmYDlxWeYFc0FhPzg=;
+	s=korg; t=1785425580;
+	bh=sHKoyq9IT1ygwczk/N99GnOK1vd3LQe9prRMuoC8jb4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WKOQyFoWza+LRtFwnGrjtuT5Vw7zlgyZApAMwdxmsumrXagwV3wm4n0jr242evmlm
-	 YI9oeLYkEfPJzp6NYTcXbllmdEp8w/GhQoK1oYG4m/Jf0t0xzKq3/ghAAfC4M1ayIa
-	 tsLtw4+sAB8WyK4ot3lZIAL1x1ZVKlNqofpGCTpE=
+	b=pxC9RnZjJSsQo7X0G4pYPMumsZelRTEozx5MhxPZtX4mcANuVdUcsM8EW9PzSix6W
+	 oGh4/erUpZcs7PhoT5hvjVKu/tJuHiLwSwriJt80t0ef2o2o0dfNL0tRw0vHeeuArY
+	 FpmhVZ7r26lsWm5+mFT1P/Pz24d2/rA/GofFoR4A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+faf3a6cf579fc65591ca@syzkaller.appspotmail.com,
-	stable <stable@kernel.org>,
-	Jinchao Wang <wangjinchao600@gmail.com>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 6.12 118/602] usb: gadget: dummy_hcd: prevent fifo_req reuse during giveback
-Date: Thu, 30 Jul 2026 16:08:30 +0200
-Message-ID: <20260730141438.468782090@linuxfoundation.org>
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 092/602] Bluetooth: MGMT: revalidate LOAD_CONN_PARAM queued update
+Date: Thu, 30 Jul 2026 16:08:04 +0200
+Message-ID: <20260730141437.928002094@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -52,141 +52,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinchao Wang <wangjinchao600@gmail.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-commit d5e5cd3654d2b5359a12ea6586120f05b28634ee upstream.
+[ Upstream commit 2bf282f8f715f5d05d6f4c49ffb3bd241c5e667e ]
 
-dummy_hcd embeds a single shared usb_request (dum->fifo_req) that the
-"emulated single-request FIFO" fast-path in dummy_queue() reuses for
-small IN transfers: it copies the caller's request into it
-(req->req = *_req) and queues it, treating list_empty(&fifo_req.queue)
-as "the slot is free".
+MGMT_OP_LOAD_CONN_PARAM queues conn_update_sync() when a single parameter
+update changes an existing LE central connection. The queued work currently
+stores a borrowed hci_conn_params entry from hdev->le_conn_params. A later
+LOAD_CONN_PARAM request can clear disabled parameters and free that entry
+before hci_cmd_sync_work() runs the queued callback.
 
-The completion side (dummy_timer/transfer/nuke/dummy_dequeue) follows
-the standard pattern: list_del_init(&req->queue) unlinks the request,
-then the lock is dropped and usb_gadget_giveback_request() invokes
-req->complete().  But list_del_init() makes fifo_req.queue look empty
-*before* the completion callback returns, so a concurrent dummy_queue()
-on another CPU sees the slot as free, reuses fifo_req and runs
-req->req = *_req -- overwriting req->complete while dummy_timer is
-mid-calling it.  The indirect call then jumps to a clobbered pointer,
-causing a general protection fault / page fault in dummy_timer
-(syzkaller extid faf3a6cf579fc65591ca).  The clobbering write is an
-in-bounds memcpy on a live shared object, so KASAN cannot flag it.
+Do not keep the borrowed hci_conn_params pointer in queued work. Queue the
+hci_conn instead and hold a reference until the queued callback completes.
+When the work runs, revalidate that the connection is still present, look
+up the current hci_conn_params entry, and cancel the update if userspace
+removed that entry while the work was pending.
 
-Add a fifo_req_busy bit covering the shared request's whole lifetime:
-set it in dummy_queue() when the FIFO fast-path takes fifo_req (making
-it the fast-path guard, replacing the list_empty(&fifo_req.queue)
-test), and clear it after the completion callback has returned, via a
-dummy_giveback() helper used at all four gadget-request giveback
-sites.  The shared slot can no longer be reused until its completion
-callback has finished.
+Copy the interval values from the current params entry under hdev->lock,
+then drop the lock and keep using hci_le_conn_update_sync() to issue the
+update.
 
-Reported-by: syzbot+faf3a6cf579fc65591ca@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=faf3a6cf579fc65591ca
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Jinchao Wang <wangjinchao600@gmail.com>
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://patch.msgid.link/5db8bba5b3499a86cd2e776f9918126b68b2508b.1784198306.git.wangjinchao600@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Validation reproduced this kernel report:
+BUG: KASAN: slab-use-after-free in conn_update_sync+0x2a/0xf0 [bluetooth]
+Read of size 1 at addr ffff88810c697126 by task kworker/u17:0/377
+Workqueue: hci0 hci_cmd_sync_work [bluetooth]
+
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x66/0xa0
+ print_report+0xce/0x5f0
+ kasan_report+0xe0/0x110
+ conn_update_sync+0x2a/0xf0 [bluetooth]
+ hci_cmd_sync_work+0x187/0x210 [bluetooth]
+ process_one_work+0x4fd/0xbc0
+ worker_thread+0x2d8/0x570
+ kthread+0x1ad/0x1f0
+ ret_from_fork+0x3c9/0x540
+ ret_from_fork_asm+0x1a/0x30
+
+Allocated by task 466:
+ hci_conn_params_add+0xa6/0x240 [bluetooth]
+ load_conn_param+0x4e1/0x850 [bluetooth]
+ hci_sock_sendmsg+0x96b/0xf80 [bluetooth]
+
+Freed by task 474:
+ kfree+0x313/0x590
+ hci_conn_params_clear_disabled+0x9b/0xc0 [bluetooth]
+ load_conn_param+0x4bf/0x850 [bluetooth]
+ hci_sock_sendmsg+0x96b/0xf80 [bluetooth]
+
+Fixes: 0ece498c27d8c ("Bluetooth: MGMT: Make MGMT_OP_LOAD_CONN_PARAM update existing connection")
+Suggested-by: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/udc/dummy_hcd.c |   40 ++++++++++++++++++++++++-------------
- 1 file changed, 27 insertions(+), 13 deletions(-)
+ net/bluetooth/mgmt.c | 44 +++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 35 insertions(+), 9 deletions(-)
 
---- a/drivers/usb/gadget/udc/dummy_hcd.c
-+++ b/drivers/usb/gadget/udc/dummy_hcd.c
-@@ -277,6 +277,7 @@ struct dummy {
- 	unsigned			ints_enabled:1;
- 	unsigned			udc_suspended:1;
- 	unsigned			pullup:1;
-+	unsigned			fifo_req_busy:1;
+diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
+index 6280fcfcdd0c6a..0c09cb5a78e028 100644
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -8024,14 +8024,36 @@ static int remove_device(struct sock *sk, struct hci_dev *hdev,
  
- 	/*
- 	 * HOST side support
-@@ -328,6 +329,26 @@ static inline struct dummy *gadget_dev_t
+ static int conn_update_sync(struct hci_dev *hdev, void *data)
+ {
+-	struct hci_conn_params *params = data;
+-	struct hci_conn *conn;
++	struct hci_conn *conn = data;
++	struct hci_conn_params *params;
++	struct hci_conn_params local = {};
  
- /* DEVICE/GADGET SIDE UTILITY ROUTINES */
- 
-+/*
-+ * Give back a gadget request with dum->lock dropped around the callback.
-+ * If @req is the shared fifo_req, clear fifo_req_busy afterward: the flag
-+ * was set in dummy_queue() when the shared request was taken and must stay
-+ * set until its completion callback has returned; list_del_init() alone
-+ * makes the request look idle while the callback is still running.
-+ * Caller holds dum->lock and has already done list_del_init() + status.
-+ */
-+static void dummy_giveback(struct dummy *dum, struct usb_ep *_ep,
-+			   struct dummy_request *req)
-+{
-+	bool fifo = req == &dum->fifo_req;
+-	conn = hci_conn_hash_lookup_le(hdev, &params->addr, params->addr_type);
+-	if (!conn)
+-		return -ECANCELED;
++	hci_dev_lock(hdev);
 +
-+	spin_unlock(&dum->lock);
-+	usb_gadget_giveback_request(_ep, &req->req);
-+	spin_lock(&dum->lock);
-+	if (fifo)
-+		dum->fifo_req_busy = 0;
++	if (!hci_conn_valid(hdev, conn) || conn->role != HCI_ROLE_MASTER)
++		goto cancel;
++
++	params = hci_conn_params_lookup(hdev, &conn->dst, conn->dst_type);
++	if (!params)
++		goto cancel;
++
++	local.conn_min_interval = params->conn_min_interval;
++	local.conn_max_interval = params->conn_max_interval;
++	local.conn_latency = params->conn_latency;
++	local.supervision_timeout = params->supervision_timeout;
+ 
+-	return hci_le_conn_update_sync(hdev, conn, params);
++	hci_dev_unlock(hdev);
++
++	return hci_le_conn_update_sync(hdev, conn, &local);
++
++cancel:
++	hci_dev_unlock(hdev);
++	return -ECANCELED;
 +}
 +
- /* called with spinlock held */
- static void nuke(struct dummy *dum, struct dummy_ep *ep)
- {
-@@ -338,9 +359,7 @@ static void nuke(struct dummy *dum, stru
- 		list_del_init(&req->queue);
- 		req->req.status = -ESHUTDOWN;
- 
--		spin_unlock(&dum->lock);
--		usb_gadget_giveback_request(&ep->ep, &req->req);
--		spin_lock(&dum->lock);
-+		dummy_giveback(dum, &ep->ep, req);
- 	}
++static void conn_update_sync_destroy(struct hci_dev *hdev, void *data, int err)
++{
++	hci_conn_put(data);
  }
  
-@@ -727,10 +746,11 @@ static int dummy_queue(struct usb_ep *_e
- 
- 	/* implement an emulated single-request FIFO */
- 	if (ep->desc && (ep->desc->bEndpointAddress & USB_DIR_IN) &&
--			list_empty(&dum->fifo_req.queue) &&
-+			!dum->fifo_req_busy &&
- 			list_empty(&ep->queue) &&
- 			_req->length <= FIFO_SIZE) {
- 		req = &dum->fifo_req;
-+		dum->fifo_req_busy = 1;
- 		req->req = *_req;
- 		req->req.buf = dum->fifo_buf;
- 		memcpy(dum->fifo_buf, _req->buf, _req->length);
-@@ -784,9 +804,7 @@ static int dummy_dequeue(struct usb_ep *
- 		dev_dbg(udc_dev(dum),
- 				"dequeued req %p from %s, len %d buf %p\n",
- 				req, _ep->name, _req->length, _req->buf);
--		spin_unlock(&dum->lock);
--		usb_gadget_giveback_request(_ep, _req);
--		spin_lock(&dum->lock);
-+		dummy_giveback(dum, _ep, req);
+ static int load_conn_param(struct sock *sk, struct hci_dev *hdev, void *data,
+@@ -8141,9 +8163,13 @@ static int load_conn_param(struct sock *sk, struct hci_dev *hdev, void *data,
+ 			    (conn->le_conn_min_interval != min ||
+ 			     conn->le_conn_max_interval != max ||
+ 			     conn->le_conn_latency != latency ||
+-			     conn->le_supv_timeout != timeout))
+-				hci_cmd_sync_queue(hdev, conn_update_sync,
+-						   hci_param, NULL);
++			     conn->le_supv_timeout != timeout)) {
++				hci_conn_get(conn);
++				if (hci_cmd_sync_queue(hdev, conn_update_sync,
++						       conn,
++						       conn_update_sync_destroy) < 0)
++					hci_conn_put(conn);
++			}
+ 		}
  	}
- 	spin_unlock_irqrestore(&dum->lock, flags);
- 	return retval;
-@@ -1522,9 +1540,7 @@ top:
- 		if (req->req.status != -EINPROGRESS) {
- 			list_del_init(&req->queue);
  
--			spin_unlock(&dum->lock);
--			usb_gadget_giveback_request(&ep->ep, &req->req);
--			spin_lock(&dum->lock);
-+			dummy_giveback(dum, &ep->ep, req);
- 
- 			/* requests might have been unlinked... */
- 			rescan = 1;
-@@ -1908,9 +1924,7 @@ restart:
- 				dev_dbg(udc_dev(dum), "stale req = %p\n",
- 						req);
- 
--				spin_unlock(&dum->lock);
--				usb_gadget_giveback_request(&ep->ep, &req->req);
--				spin_lock(&dum->lock);
-+				dummy_giveback(dum, &ep->ep, req);
- 				ep->already_seen = 0;
- 				goto restart;
- 			}
+-- 
+2.53.0
+
 
 
