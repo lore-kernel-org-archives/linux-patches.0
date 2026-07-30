@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C418437A85D;
-	Thu, 30 Jul 2026 15:46:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61F633914ED;
+	Thu, 30 Jul 2026 15:47:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426421; cv=none; b=U+Ydu377xKyrOqacqNPueOtlDQE1qNdzCcXI1/zscNbvOtOChPjLPfhtOD8ETXQvkFfGKBF52OpB/QwZypA8UQYZLD+af1Ayop6h+voLf5nbK2VOIOgACDHRSlVCDSjPxCR6vhPPAW4t6k+AUCtwlfaNFwlDZkQhuP4JR/d60ek=
+	t=1785426423; cv=none; b=gus1N3SO/yQ5M5fT++SJNAse9eD5cWUztnn/OdOsJ3KnP4icTzye7Ba78XHtC9+OFMyqB53iTJui3Lmb6bKCSpfDmfSweiBWhqkt6ufh37IjZTr3BOWc1HrrtH/dHIq/yVXmSrXtV7Oyo9EC/rhLJGyPziQ6Ctn4WJOMM3a6S9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426421; c=relaxed/simple;
-	bh=Lp111esMV7AXFElaUGZ3Je+J+Eo882goBA+QbwOcyYg=;
+	s=arc-20240116; t=1785426423; c=relaxed/simple;
+	bh=xcSS3dGAG9yBCuwVZS/EDMQf4ytsxBcF6TrK37jFp00=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MjPHXjzSCb2IyXkUmXweHrTU8EOwn9Gi+qPLQE/CH9XP9FQv3Z9aJ+1mKLiI9bod4nbcv7ajcaPfv5HS1/prTyR5BugzWq0HIUNcgeS0nHj+Mn6GoVR1HNOsJuXIMnu03pyt0ZB8PL9TibEHVPTnTMrI3ZrPy5uKEFTrrYZzMUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ue5K2xTj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UpKaqQ9xlNzSgVn2yFJN/v62IqLcLALn0LIBukZDZuuQ+SF8Um6lkQTCAstHdaZnv3TXQZfYivhOJWzU2VPFJ+PDKGfdzWPTa6PahIaE3DysYWfkGWW23YQJWkhHsAnRvBQXL/A2dhdjTP48erNDumesARftYIZ5e56RNPDtIrY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gXVjZmGi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ue5K2xTj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC2431F000E9;
-	Thu, 30 Jul 2026 15:46:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gXVjZmGi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFFDE1F000E9;
+	Thu, 30 Jul 2026 15:47:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426419;
-	bh=waZII385yPDLyxbqr4t4M5iyauDw573s/YgVeQJYXz8=;
+	s=korg; t=1785426422;
+	bh=feC/dJr3afpe0rvzoasbb3zWCStHqhnA0UgbRzEAJHI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ue5K2xTj5ItMcHpFT9MKOq1IAtmif5ihJ/4FcPssxLJG/68ZJuePX/5tupN2y300X
-	 5G+aNyRF03QyClGL9T0C4tpiWa4xNLlmmFnF1mz6yOc4vQD8kOTAY0P996+/xMEP0g
-	 +fenC2tZ8H9OsUL4pjU9W4C47UyOpuFkJrjeLdy8=
+	b=gXVjZmGiB9a/Fr/ELwuow3b1dg2Amn5Msj3QQ3FDKqkm3tnT4z+MO0h0fn9fT8BlH
+	 JvqxHdMVDP3FoChUSFTzMQASF8oadNSJQIy+rKhzwYlQ25e310vieVxfzYu1XKZgAW
+	 f8pEPyQGtXto8ySOUiqzANUghB6vRhdj7PUy/OvU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.12 412/602] net/iucv: fix use-after-free of a severed iucv_path
-Date: Thu, 30 Jul 2026 16:13:24 +0200
-Message-ID: <20260730141444.622631808@linuxfoundation.org>
+	deepakraog <gaikwad.dcg@gmail.com>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 6.12 377/602] tracing: Fix resource leak on mmiotrace trace_pipe close
+Date: Thu, 30 Jul 2026 16:12:49 +0200
+Message-ID: <20260730141443.883239127@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -50,61 +50,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: deepakraog <gaikwad.dcg@gmail.com>
 
-commit be7cc4656eb1f54029610e82d1f0fdd3f9b5ec0a upstream.
+commit c1d87e724ae55e781b7cc7ccafb34d9e668582b2 upstream.
 
-af_iucv queues not-yet-received message notifications on iucv->message_q,
-each holding a raw pointer to the connection's iucv_path.  When the peer
-severs the connection, iucv_sever_path() frees that path with
-iucv_path_free() but leaves the notifications queued.  A later recvmsg()
-drains message_q via iucv_process_message_q() and hands the stale path to
-message_receive() -- a use-after-free of the freed iucv_path.
+The mmiotrace tracer was added May 12th 2008. At that time, resources
+created in pipe_open() could not be freed because there was not
+pipe_close function pointer of the tracer. The pipe_close function pointer
+was added in December 7th, 2009, but the mmiotrace tracer was not updated.
 
-Drop the queued notifications when the path is severed; once the path is
-gone they can no longer be received.  This also frees the notifications
-leaked when a socket is closed with messages still queued.
+mmio_pipe_open() allocates a header_iter and takes a pci_dev reference
+when trace_pipe is opened. mmio_close() frees them, but it was only
+wired to the tracer's .close callback.
 
-Fixes: f0703c80e515 ("[AF_IUCV]: postpone receival of iucv-packets")
-Closes: https://sashiko.dev/#/patchset/20260705-b4-disp-fc79c0dc-v1-1-d2cdcb57afa9@proton.me?part=1
+tracing_release_pipe() invokes .pipe_close, not .close, when the
+trace_pipe file is released. As a result, closing trace_pipe with the
+mmiotrace tracer active leaked the header_iter allocation and left a
+stale pci_dev reference.
+
+Set .pipe_close to mmio_close, matching how function_graph wires both
+callbacks to the same handler.
+
+Note, if the trace_pipe is read to completion, it will clean up the
+resources, but if one were to run:
+
+  # head -n 1 /sys/kernel/tracing/trace_pipe
+ VERSION 20070824
+
+Over and over again, it would trigger a massive leak.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Link: https://patch.msgid.link/20260707-b4-disp-783fedbb-v1-1-463b9dbda2ea@proton.me
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: c521efd1700a8 ("tracing: Add pipe_close interface)
+Link: https://patch.msgid.link/20260715143604.14481-1-gaikwad.dcg@gmail.com
+Signed-off-by: deepakraog <gaikwad.dcg@gmail.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/iucv/af_iucv.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ kernel/trace/trace_mmiotrace.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/iucv/af_iucv.c
-+++ b/net/iucv/af_iucv.c
-@@ -334,6 +334,7 @@ static void iucv_sever_path(struct sock
- 	unsigned char user_data[16];
- 	struct iucv_sock *iucv = iucv_sk(sk);
- 	struct iucv_path *path = iucv->path;
-+	struct sock_msg_q *p, *n;
- 
- 	/* Whoever resets the path pointer, must sever and free it. */
- 	if (xchg(&iucv->path, NULL)) {
-@@ -345,6 +346,19 @@ static void iucv_sever_path(struct sock
- 		} else
- 			pr_iucv->path_sever(path, NULL);
- 		iucv_path_free(path);
-+
-+		/*
-+		 * Message notifications queued on message_q still reference
-+		 * the now freed path; drop them, otherwise a later recvmsg()
-+		 * would pass the freed iucv_path to message_receive() via
-+		 * iucv_process_message_q().
-+		 */
-+		spin_lock_bh(&iucv->message_q.lock);
-+		list_for_each_entry_safe(p, n, &iucv->message_q.list, list) {
-+			list_del(&p->list);
-+			kfree(p);
-+		}
-+		spin_unlock_bh(&iucv->message_q.lock);
- 	}
+--- a/kernel/trace/trace_mmiotrace.c
++++ b/kernel/trace/trace_mmiotrace.c
+@@ -109,7 +109,6 @@ static void mmio_pipe_open(struct trace_
+ 	iter->private = hiter;
  }
  
+-/* XXX: This is not called when the pipe is closed! */
+ static void mmio_close(struct trace_iterator *iter)
+ {
+ 	struct header_iter *hiter = iter->private;
+@@ -279,6 +278,7 @@ static struct tracer mmio_tracer __read_
+ 	.start		= mmio_trace_start,
+ 	.pipe_open	= mmio_pipe_open,
+ 	.close		= mmio_close,
++	.pipe_close	= mmio_close,
+ 	.read		= mmio_read,
+ 	.print_line	= mmio_print_line,
+ 	.noboot		= true,
 
 
