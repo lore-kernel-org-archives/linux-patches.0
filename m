@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85EC539A801;
-	Thu, 30 Jul 2026 15:08:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E6703769F5;
+	Thu, 30 Jul 2026 15:08:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424114; cv=none; b=cUEWwwx9Q4/CaO02y7e4IPQzmH7ShkcYW7e4bJGI27MVXCgjRVFm/4EKfUwsIlR0xdf1LKSP6gDDHvuCBw5XYk/ROjkGOg93jqwrL/Wrkc8B2mR2MUNG7WYfr5GAvfRiGY5HM4pMGZXhEh1Ci0WzB21f3XmDd+sQx3phXjsn8gA=
+	t=1785424117; cv=none; b=Y87rKWqLMVcpTG0CbkNOX23fV9v25pG1JrNi+S3ifP92MNueYjsnkWEMCThhRl7YnogSmxXJ7HWBBJWc2tWB6iOyN9UzyoJQolhkkKck/Ea+jqKRnO++BQu94ZIl2n6lFNchvkhgUjDJaAyWOele1PUXkioxFAYCW1lWPIAQ0cM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424114; c=relaxed/simple;
-	bh=mU9BcOX8ZPym2UfSW4maVDf7qxpx2EADJpYKEbLzsNs=;
+	s=arc-20240116; t=1785424117; c=relaxed/simple;
+	bh=ZSvAk47OzTg3lNW8mKfoyezHAIJu7ohzQT/wuTSDbHo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cbwXhgiU2GAIGP4mnmsK1puICzV/j4ruV2MoNYT+kd31rhd8DKk+QWGAfygornvvPxMa7iRM7g3mQfHFE4rFrQwZjWXVcPRQcM8XGbfG0wKXF+QwSFCuA3zC44+cutftkZIQ/F+Ssl9OzvXPK9fuDdTdD7avSSWebiBvTTSwXvo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jjrBwDlU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=djRJyWgDqo2EejRswUAeTUc9YPKCHmup+3SJheLb0LjrxD4ydc6wo4NrUWWCnBT8a7GlcFOzCsCdTImqxA1REZv48rGSve06uMGuGZJOri/Al3xpmQOdByL/VAhyCyPRkDNw5CobiywEA4vR5sO/4mlJJZa/I7ACrxan+mw7S7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ucf7hjba; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jjrBwDlU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D90D91F000E9;
-	Thu, 30 Jul 2026 15:08:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ucf7hjba"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD6C91F000E9;
+	Thu, 30 Jul 2026 15:08:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424113;
-	bh=n9K6sjAxviTs+6lEyXQSLP7Bh1Lgj8AkGU3yuAbH44E=;
+	s=korg; t=1785424116;
+	bh=2FUe3L2uOUbB1QtepNXpKkBcDRWqYiTKXut0b87ploI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jjrBwDlUHhN2xUDshrvwsHuqzuIYFdan24OYOszACBmdgcgUhBnyCZB3fwBrJ/bVu
-	 pfZ1XZkdfkeyEtTR93bc0P+gDyMXqxEAjPNWlYGHsRUI+Cf/Y5je/XwyZriRMdlwKo
-	 L9osy4FJN+lnKatMAiscItH8Ev2MxcmtnDZaOXKw=
+	b=ucf7hjbaPUsH9/Ot+Hi+NNrc4ABHSckNIE+Lad3UT6aXjJFawuuNseEa/NSrM9zht
+	 e+mQZdLDs8qMfKsU+Gn7V7jriSpv3xqRBHbT9chN9mUeuukyQjUojP7hMQ0yeQGq/r
+	 4K0RMNyNiSx9KiiX3uTG3I9uvxYn8Zk16gRGc/H0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Auld <matthew.auld@intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Shuicheng Lin <shuicheng.lin@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Joanne Koong <joannelkoong@gmail.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 281/675] drm/xe/vm: Fix SVM leak on resv obj alloc failure in xe_vm_create()
-Date: Thu, 30 Jul 2026 16:10:11 +0200
-Message-ID: <20260730141451.097223019@linuxfoundation.org>
+Subject: [PATCH 6.18 282/675] iomap: correct the range of a partial dirty clear
+Date: Thu, 30 Jul 2026 16:10:12 +0200
+Message-ID: <20260730141451.117980395@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -47,77 +48,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shuicheng Lin <shuicheng.lin@intel.com>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-[ Upstream commit d2c6800ad1802bed72a6de1416536737f114f1d6 ]
+[ Upstream commit 88c26515313169806a412a362b32a1eca53d21bd ]
 
-Commit 9e9787414882 ("drm/xe/userptr: replace xe_hmm with gpusvm") made
-xe_svm_init() unconditional in xe_vm_create() and extended it to also
-initialize a "simple" gpusvm state for non-fault-mode VMs. The matching
-xe_svm_fini() call in xe_vm_close_and_put() was updated to run
-unconditionally, but the error unwind path in xe_vm_create() was not.
+The block range calculation in ifs_clear_range_dirty() is incorrect when
+partially clearing a range in a folio. We cannot clear the dirty bit of
+the first block or the last block if the start or end offset is not
+blocksize-aligned. This has not yet caused any issues since we always
+clear a whole folio in iomap_writeback_folio().
 
-On the drm_gpuvm_resv_object_alloc() failure path, xe_svm_init() has
-already succeeded but xe_svm_fini() is only called when
-XE_VM_FLAG_FAULT_MODE is set. For non-fault-mode VMs this leaves
-vm->svm.gpusvm partially initialized and leaks the resources allocated
-by drm_gpusvm_init().
+Fix this by rounding up the first block to blocksize alignment, and
+calculate the last block by rounding down (using truncation). Correct
+the nr_blks calculation accordingly.
 
-For fault-mode VMs, xe_svm_init() additionally acquires the pagemap
-owner via drm_pagemap_acquire_owner() and the pagemaps via
-xe_svm_get_pagemaps(). Those resources are released by xe_svm_close(),
-not xe_svm_fini(). On the same error path, xe_svm_close() is not
-called either, so fault-mode VMs leak the pagemap owner and pagemaps.
-
-Fix both leaks:
-
-- Call xe_svm_fini() unconditionally on the err_svm_fini path, matching
-  the unconditional xe_svm_init() call. Move the vm->size = 0
-  assignment out of the conditional so the xe_vm_is_closed() assert in
-  xe_svm_fini() (and xe_svm_close()) holds for both modes.
-
-- Call xe_svm_close() for fault-mode VMs before xe_svm_fini(), matching
-  the ordering used in xe_vm_close_and_put().
-
-Fixes: 9e9787414882 ("drm/xe/userptr: replace xe_hmm with gpusvm")
-Cc: Matthew Auld <matthew.auld@intel.com>
-Assisted-by: Claude:claude-opus-4.7
-Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Link: https://patch.msgid.link/20260721205516.4058959-2-shuicheng.lin@intel.com
-Signed-off-by: Shuicheng Lin <shuicheng.lin@intel.com>
-(cherry picked from commit ca2a3587d577ba764e0fe628fb676244fc33ddd4)
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Fixes: 4ce02c679722 ("iomap: Add per-block dirty state tracking to improve performance")
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Link: https://patch.msgid.link/20260714082325.325163-2-yi.zhang@huaweicloud.com
+Reviewed-by: Joanne Koong <joannelkoong@gmail.com>
+Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_vm.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/iomap/buffered-io.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_vm.c b/drivers/gpu/drm/xe/xe_vm.c
-index 8f7b8f2da06bac..b00da90e399135 100644
---- a/drivers/gpu/drm/xe/xe_vm.c
-+++ b/drivers/gpu/drm/xe/xe_vm.c
-@@ -1626,10 +1626,10 @@ struct xe_vm *xe_vm_create(struct xe_device *xe, u32 flags, struct xe_file *xef)
- 	return ERR_PTR(err);
+diff --git a/fs/iomap/buffered-io.c b/fs/iomap/buffered-io.c
+index c0fa6acf19375b..734854f864fd1e 100644
+--- a/fs/iomap/buffered-io.c
++++ b/fs/iomap/buffered-io.c
+@@ -127,13 +127,17 @@ static void ifs_clear_range_dirty(struct folio *folio,
+ {
+ 	struct inode *inode = folio->mapping->host;
+ 	unsigned int blks_per_folio = i_blocks_per_folio(inode, folio);
+-	unsigned int first_blk = (off >> inode->i_blkbits);
+-	unsigned int last_blk = (off + len - 1) >> inode->i_blkbits;
+-	unsigned int nr_blks = last_blk - first_blk + 1;
++	unsigned int first_blk = round_up(off, i_blocksize(inode)) >>
++				 inode->i_blkbits;
++	unsigned int last_blk = (off + len) >> inode->i_blkbits;
+ 	unsigned long flags;
  
- err_svm_fini:
--	if (flags & XE_VM_FLAG_FAULT_MODE) {
--		vm->size = 0; /* close the vm */
--		xe_svm_fini(vm);
--	}
-+	vm->size = 0; /* close the vm */
-+	if (flags & XE_VM_FLAG_FAULT_MODE)
-+		xe_svm_close(vm);
-+	xe_svm_fini(vm);
- err_no_resv:
- 	mutex_destroy(&vm->snap_mutex);
- 	for_each_tile(tile, xe, id)
++	if (first_blk >= last_blk)
++		return;
++
+ 	spin_lock_irqsave(&ifs->state_lock, flags);
+-	bitmap_clear(ifs->state, first_blk + blks_per_folio, nr_blks);
++	bitmap_clear(ifs->state, first_blk + blks_per_folio,
++		     last_blk - first_blk);
+ 	spin_unlock_irqrestore(&ifs->state_lock, flags);
+ }
+ 
 -- 
 2.53.0
 
