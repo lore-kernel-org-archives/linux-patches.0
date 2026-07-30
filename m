@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13B10443E25;
-	Thu, 30 Jul 2026 14:36:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25BE6443E4A;
+	Thu, 30 Jul 2026 14:36:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422176; cv=none; b=cD4ZsW9OkBhoEV1fc/HrMfYmMwPD51quDMMg/4vSRg8PSEjUjuGTZ7DANVpheJpciUOQEI+F7rATmOeujv6u0Lj0Jia3gbLU2oE53WqiTuvJ93/UTIg8//67F1jEpHb/yvVdok9ojWvEYps2m4x87D4Ut0wrbyVYsah4jOmPE3c=
+	t=1785422179; cv=none; b=rgoAVlXZn2C7VqX6yEHCsFyQr/QDqU9cEdeJ3BGg/xOdGG46WbBBPmAqFDxPfgmy0DcqG/HRrQADYM80ko16gTMaYWKJh1P2xCm4wxSDMCNgqkXhamaaFseu6/Y4aIJFIQvzfUotH8VNHaHZe3xrHpMfr9QHJTeHZrDDcaRGxhc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422176; c=relaxed/simple;
-	bh=EBBQZwR7AW1WMpE5e62yGke2+kD9Ast67KWG5c6MB7g=;
+	s=arc-20240116; t=1785422179; c=relaxed/simple;
+	bh=eSzGv6DQfV6Biwt4F8nGFP2g3BzkwdUwEapFU3f57yg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hUjxooh6/oh3T+hYbJ84Tp+pCPNv6T5Hy1o1WAgrB7JDqedYgWwPbcaYJ7apK35rU5tk1L7GyNSGSHBKTm0qVCxW6WriEhADb3eXE9bYjdxt1afipRnI5RuFAAx4DIGOzGbLXn2RrfZlaR9wLGNx5chWxUsFCWOX4zxY6Txa+SY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gk/pB0qi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dpYaC6JzzYCpxfGhC+7a47eFTyDAH+LmgTfqQIUEmiAivXlLAEAsZ6PoASgfP0RHXA0j3bn1o4aEs0IEUv3wLnJtgATLHyOumPdZ4wwSyQnjg1MJddtA0/9yAmTe4uK0UWdvzpZApyDC/BUN/hk+Ij65/VrlBhm6JhzQxOfs2O8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U/VQsQ1O; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gk/pB0qi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DAA01F000E9;
-	Thu, 30 Jul 2026 14:36:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U/VQsQ1O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73C951F000E9;
+	Thu, 30 Jul 2026 14:36:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422175;
-	bh=V9PiXNK6Kh5x6Tc7JdPvLwUQWJcS9e5jRozsFey4seI=;
+	s=korg; t=1785422178;
+	bh=XD8CwCgNv7J7HVZySszp7gF4IoctTrBRBtKQGQiXFmU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Gk/pB0qiQxZLr/tkna6QI7HXw8Jy/pHNDOxGvM3WtYLvtKcQhsCatDidUeTsnyW/Z
-	 4rFdmJXq2C4Yo+FLiIY/+GIIO2pI4/wr7gY9Unn1F6xHuk99KwY076u/HEBRbs0AQ/
-	 GZh8l4vONv8m6B29843ppWjeaiCQzZwAoOf13ZIM=
+	b=U/VQsQ1O136c/sTd0sNoErN0K0f3qEPiIh9uWRv3aCFcah2IFd3iOOVoTfzsxy5h2
+	 VCS0Gr3pHYfg8s+nb2WYP34RxuoE0BYTE1Tr+yJW9wGpZlKfHLT8nkrE7IWShWLXql
+	 //mpPbeeeqf4ep2lJ9kMXroDZJZ8t45v695oL0c4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
+	AutonomousCodeSecurity@microsoft.com,
+	"Cen Zhang (Microsoft)" <blbllhy@gmail.com>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 349/744] net: airoha: fix ETS channel derivation in airoha_tc_setup_qdisc_ets()
-Date: Thu, 30 Jul 2026 16:10:22 +0200
-Message-ID: <20260730141451.706317936@linuxfoundation.org>
+Subject: [PATCH 7.1 350/744] tipc: fix integer overflow in tipc_recvmsg() and tipc_recvstream()
+Date: Thu, 30 Jul 2026 16:10:23 +0200
+Message-ID: <20260730141451.727508331@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -52,44 +53,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Cen Zhang (Microsoft) <blbllhy@gmail.com>
 
-[ Upstream commit 649ea07fc25a17aa51bff710baac1ab161022a7c ]
+[ Upstream commit 47f42ff521b4eeb46e82f9a46a4783a99f7570d7 ]
 
-Derive the hardware QoS channel from opt->parent instead of opt->handle
-in airoha_tc_setup_qdisc_ets(). The ETS qdisc handle is either
-user-specified or auto-allocated by qdisc_alloc_handle() and bears no
-relation to the HTB leaf classid that identifies the hardware channel.
-HTB derives the channel from TC_H_MIN(opt->classid), and ETS is always
-attached as a child of an HTB leaf, so its opt->parent matches that
-classid. Using opt->handle instead can cause two ETS qdiscs on different
-HTB leaves to collide on the same hardware channel, corrupting scheduler
-configuration and stats.
+In tipc_recvmsg(), the copy length is computed as:
 
-Fixes: 20bf7d07c956 ("net: airoha: Add sched ETS offload support")
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20260720-airoha-ets-handle-fix-v2-1-6f7129ddc06f@kernel.org
+  copy = min_t(int, dlen - offset, buflen);
+
+buflen is size_t but min_t(int, ...) casts it to int. When buflen
+exceeds INT_MAX (e.g. 0xFFFFFFFF via io_uring provided buffers), it
+wraps negative, wins the comparison, and the negative copy length
+propagates to simple_copy_to_iter() where int-to-size_t promotion
+makes it SIZE_MAX, triggering a WARN_ON. tipc_recvstream() has the
+same pattern.
+
+  Kernel panic - not syncing: kernel: panic_on_warn set ...
+  RIP: 0010:simple_copy_to_iter+0x9e/0xd0 (net/core/datagram.c:521)
+  Call Trace:
+   __skb_datagram_iter+0x123/0x8b0 (net/core/datagram.c:402)
+   skb_copy_datagram_iter+0x77/0x1a0 (net/core/datagram.c:534)
+   tipc_recvmsg+0x3d7/0xe80 (net/tipc/socket.c:1934)
+   io_recvmsg+0x47e/0xda0
+
+Fix by changing min_t(int, ...) to min_t(size_t, ...) in both
+functions. The result is always <= (dlen - offset), which is bounded
+by TIPC maximum message size (0x1ffff bytes), so the implicit
+narrowing on assignment to int copy is always safe.
+
+Fixes: e9f8b10101c6 ("tipc: refactor function tipc_sk_recvmsg()")
+Fixes: ec8a09fbbeff ("tipc: refactor function tipc_sk_recv_stream()")
+Reported-by: AutonomousCodeSecurity@microsoft.com
+Signed-off-by: Cen Zhang (Microsoft) <blbllhy@gmail.com>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/20260720214103.47732-1-blbllhy@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/airoha/airoha_eth.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ net/tipc/socket.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/airoha/airoha_eth.c b/drivers/net/ethernet/airoha/airoha_eth.c
-index 1e361a35ebd490..b03d1b2c820a5a 100644
---- a/drivers/net/ethernet/airoha/airoha_eth.c
-+++ b/drivers/net/ethernet/airoha/airoha_eth.c
-@@ -2326,8 +2326,7 @@ static int airoha_tc_setup_qdisc_ets(struct net_device *dev,
- 	if (opt->parent == TC_H_ROOT)
- 		return -EINVAL;
+diff --git a/net/tipc/socket.c b/net/tipc/socket.c
+index 490f30899b5a9a..14f3f2e5dba092 100644
+--- a/net/tipc/socket.c
++++ b/net/tipc/socket.c
+@@ -1934,7 +1934,7 @@ static int tipc_recvmsg(struct socket *sock, struct msghdr *m,
+ 	if (likely(!err)) {
+ 		int offset = skb_cb->bytes_read;
  
--	channel = TC_H_MAJ(opt->handle) >> 16;
--	channel = channel % AIROHA_NUM_QOS_CHANNELS;
-+	channel = TC_H_MIN(opt->parent) % AIROHA_NUM_QOS_CHANNELS;
- 
- 	switch (opt->command) {
- 	case TC_ETS_REPLACE:
+-		copy = min_t(int, dlen - offset, buflen);
++		copy = min_t(size_t, dlen - offset, buflen);
+ 		rc = skb_copy_datagram_msg(skb, hlen + offset, m, copy);
+ 		if (unlikely(rc))
+ 			goto exit;
+@@ -2066,7 +2066,7 @@ static int tipc_recvstream(struct socket *sock, struct msghdr *m,
+ 		/* Copy data if msg ok, otherwise return error/partial data */
+ 		if (likely(!err)) {
+ 			offset = skb_cb->bytes_read;
+-			copy = min_t(int, dlen - offset, buflen - copied);
++			copy = min_t(size_t, dlen - offset, buflen - copied);
+ 			rc = skb_copy_datagram_msg(skb, hlen + offset, m, copy);
+ 			if (unlikely(rc))
+ 				break;
 -- 
 2.53.0
 
