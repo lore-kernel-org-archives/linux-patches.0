@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E72B416139;
-	Thu, 30 Jul 2026 14:47:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57B5437883C;
+	Thu, 30 Jul 2026 14:47:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422868; cv=none; b=bqs2nhVcUCtgNhBmYRBPMCdcKDwKbmoUO97h0YQLnobfZWdPOYF8djI5AWZDVtPxJXc8f2nf4AhKeYPUwYHoPZu7c3J1Pq0ZLto1vt3m+37/D/6Bm/TDosvQYkMZIyxTj4Ndql3xoxD8PrG/t7uR9Ee6vFN48sPJfaFPEX9+m0U=
+	t=1785422871; cv=none; b=o6K7QpirOYoDFzMyXkw2pu6IMu7gzJobLuGVuuZtIudp8b1JJquhdHgQiYH4J4wKJ7zyNityD8OxgEZIaEHdLnN0xUZ19rsbSVaDSJhi9s7xW9d9kPUr8V2QwHF7PpaLDv+95MpuDaCqPOj00OVYM07OFKifTgDIlWbOJ+PhXSk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422868; c=relaxed/simple;
-	bh=f0kOPT7H/Gqnbw36WS//Y2bYGlLTGjPPBZZGt+DipkU=;
+	s=arc-20240116; t=1785422871; c=relaxed/simple;
+	bh=hhbfyUNU8bcBPZXMAe6udD1SveFYrmxemvU5spCsvkA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bB1huTOQli2tQU2LGL8EMJKdehCCzLfpD1hzXYRACVQmGqzZV8VEgmkzklLI9aKkX+Yu/CSLDoyghaMVqK+af+DqScZpM9mUa2tIu8PnRiErmC+jah3/hHKNKOqpWMl4C6f+aBZsYrd5etXVvqM3IRu/ToywgAT8ZQLfy0zu1IY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TbA3TXMh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kAfRmxdVDNrWvNt43wX9flibqkligzzVGEfrGPws45oEYjIqfoZKbi4l3kzoHuBfQ9v1EIYgibHtFU7CmcHWt7G1Nv6k08zf0vw0GjfZ1oOThvYR4b0Nl7xRYy8DOmkcZnnkVyNk3ZFOyKnBBjrOX02zghRTFJU3G6eqQ9uxTik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NLvvW3LH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TbA3TXMh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D96531F00A3A;
-	Thu, 30 Jul 2026 14:47:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NLvvW3LH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B14C31F000E9;
+	Thu, 30 Jul 2026 14:47:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422867;
-	bh=JqNxr5PgzGFXh1zFL6k/qVHPuXsiqcnut3lUE0uJyfQ=;
+	s=korg; t=1785422870;
+	bh=YohnJTwGCIsBYy57t46pYLob3xEWaEMKK7V6wbJS8VA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TbA3TXMhNzeGofyfPd6eiiJaY+uSNjJNSAcf7iS9WrcwysLMwopPH8bTN0TcVxzaI
-	 dxn5sgi0UWZGhsCZf2HYwqOkgz9D436x4wR1WcYv1u+0+/j34XEQNzhxNYtKgRi5zE
-	 sugeBBwgHv6WNHkS6s4IMcqig41WgZSXFsHLsuk8=
+	b=NLvvW3LHTZiqiHoKM/4KUtFFdylsOgaE+8Ahmv8yXVZnJYcYbjdOmGQyGKSu7n7iY
+	 9ku7oFGOYZFQvB8n/k19reqgpgqzYvLfu92sUPOTvm8WjLHYyVYJzYlZ27YTVi8sXF
+	 cT+G8dIrNoHWiJgkuL6EFIXc/5G/wThADlIlKljw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: [PATCH 7.1 583/744] serial: sc16is7xx: implement gpio get_direction() callback
-Date: Thu, 30 Jul 2026 16:14:16 +0200
-Message-ID: <20260730141456.676666332@linuxfoundation.org>
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Jiangshan Yi <yijiangshan@kylinos.cn>
+Subject: [PATCH 7.1 584/744] serial: 8250_mid: Fix NULL function pointer dereference on DNV/ICX-D/SNR platforms
+Date: Thu, 30 Jul 2026 16:14:17 +0200
+Message-ID: <20260730141456.697404709@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -51,54 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+From: Jiangshan Yi <yijiangshan@kylinos.cn>
 
-commit af071d9e07e57cfff239e8d09d2f3b05ebc9c667 upstream.
+commit 7fb13fd7e9a59a37cd911efff83abe19e3ee029d upstream.
 
-It's strongly recommended for GPIO drivers to always implement the
-.get_direction() callback - even when the direction is tracked in
-software. The GPIO core emits a warning when the callback is missing
-and a user reads the direction of a line, e.g. via
-/sys/kernel/debug/gpio.
+Commit b1b4efea05a5 ("serial: 8250_mid: Disable DMA for selected
+platforms") replaced the dnv_board setup and exit callbacks with
+PTR_IF(false, ...), which evaluates to NULL. However, the three call
+sites in mid8250_probe() and mid8250_remove() unconditionally
+dereference these function pointers without NULL checks, causing a NULL
+pointer dereference (kernel oops) on any Denverton (DNV), Ice Lake Xeon
+D (ICX-D/CDF), or Snowridge (SNR) platform.
 
-Fixes: dfeae619d781 ("serial: sc16is7xx")
+Fix this by adding the missing NULL checks before calling the setup and
+exit callbacks.
+
+Fixes: b1b4efea05a5 ("serial: 8250_mid: Disable DMA for selected platforms")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Acked-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260716210813.2582826-1-hugo@hugovil.com
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
+Link: https://patch.msgid.link/20260715073546.1875083-1-yijiangshan@kylinos.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/sc16is7xx.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/tty/serial/8250/8250_mid.c |   14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
---- a/drivers/tty/serial/sc16is7xx.c
-+++ b/drivers/tty/serial/sc16is7xx.c
-@@ -1274,6 +1274,17 @@ static int sc16is7xx_gpio_set(struct gpi
+--- a/drivers/tty/serial/8250/8250_mid.c
++++ b/drivers/tty/serial/8250/8250_mid.c
+@@ -318,9 +318,11 @@ static int mid8250_probe(struct pci_dev
+ 	if (!uart.port.membase)
+ 		return -ENOMEM;
+ 
+-	ret = mid->board->setup(mid, &uart.port);
+-	if (ret)
+-		return ret;
++	if (mid->board->setup) {
++		ret = mid->board->setup(mid, &uart.port);
++		if (ret)
++			return ret;
++	}
+ 
+ 	ret = mid8250_dma_setup(mid, &uart);
+ 	if (ret)
+@@ -336,7 +338,8 @@ static int mid8250_probe(struct pci_dev
  	return 0;
+ 
+ err:
+-	mid->board->exit(mid);
++	if (mid->board->exit)
++		mid->board->exit(mid);
+ 	return ret;
  }
  
-+static int sc16is7xx_gpio_get_direction(struct gpio_chip *chip, unsigned int offset)
-+{
-+	struct sc16is7xx_port *s = gpiochip_get_data(chip);
-+	struct uart_port *port = &s->p[0].port;
-+	unsigned int val;
-+
-+	val = sc16is7xx_port_read(port, SC16IS7XX_IODIR_REG);
-+
-+	return val & BIT(offset) ? GPIO_LINE_DIRECTION_OUT : GPIO_LINE_DIRECTION_IN;
-+}
-+
- static int sc16is7xx_gpio_direction_input(struct gpio_chip *chip,
- 					  unsigned offset)
- {
-@@ -1351,6 +1362,7 @@ static int sc16is7xx_setup_gpio_chip(str
- 	s->gpio.parent		 = dev;
- 	s->gpio.label		 = dev_name(dev);
- 	s->gpio.init_valid_mask	 = sc16is7xx_gpio_init_valid_mask;
-+	s->gpio.get_direction	 = sc16is7xx_gpio_get_direction;
- 	s->gpio.direction_input	 = sc16is7xx_gpio_direction_input;
- 	s->gpio.get		 = sc16is7xx_gpio_get;
- 	s->gpio.direction_output = sc16is7xx_gpio_direction_output;
+@@ -346,7 +349,8 @@ static void mid8250_remove(struct pci_de
+ 
+ 	serial8250_unregister_port(mid->line);
+ 
+-	mid->board->exit(mid);
++	if (mid->board->exit)
++		mid->board->exit(mid);
+ }
+ 
+ static const struct mid8250_board pnw_board = {
 
 
