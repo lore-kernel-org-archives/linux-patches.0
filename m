@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A82CC3C1D6D;
-	Thu, 30 Jul 2026 14:25:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AB6A43CEE7;
+	Thu, 30 Jul 2026 14:25:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421546; cv=none; b=qaJDXBzN7+5wAnzPqtGUZI27oh27mohg5kHDnPRMzKgeZf4sMQrZRdVJ3ngax1hUoDOUu92O3E8SK8Ac3ddrrFEkwkhxY4Nc8PCMP0NOhqVwPDmqw/bf5p243yTCiKgUZIdL8W8I7sody/SaT7M8P64nsGPe25bcfp6fZw9f0yo=
+	t=1785421551; cv=none; b=idpvX0hk3M75JQ9kuptrlAURKg53WnGMogA6gf10+RPsWhcpcdfpzJNMOvvKrxEx+1EfEnuqBSKcljbLNcpwgFjseUlFvReLbnmBzjLGFT0kWlk0mpsZEjANb6ZIQbD4q8loAgZf5pTigCLD4PxETnnge/C9jdCXz4EylZ9+Lqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421546; c=relaxed/simple;
-	bh=goHyoKXtt3s5oJ2YlmXcPyDFkMQqzgDxKRIx7vVzVqc=;
+	s=arc-20240116; t=1785421551; c=relaxed/simple;
+	bh=Qgsrq/1vH/yWbC5crWYCa3YOJJ7r4yOdf2RvpNQ2MrU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TjaFiQk00JlWdJWEHWDkBuRngnrWEkvdkxGAn+JlNqS4pqZkjFueztBKdw5flDTsy9xFKye3uw8tlgW+33F9AGWASVM/W9FMhLh/watxYMrXbyFUJ9AJzEsemUFLSbsBPOOMikWzX16miKapVCnGOHEVTuJULe5UO7QhD2umNE4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SUEf9wVR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ITdj+0ta3NtmOb9F5zvAOsUyO8ENo8hUmKuhAPHVRXr9vl3Rljbum/YAq2+vC1wyl5UqJBkkp2VpescPbpwkjTAK4nbDcu26Uz2uWivN38yFqv4NkFrO1WY/DEs8q5yB6z0zmVEk6V1DoJzvfj1ZGO8hfeeWLld1LjRqfPjW0cU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XWhG+WyE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SUEf9wVR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F88B1F000E9;
-	Thu, 30 Jul 2026 14:25:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XWhG+WyE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18AD71F000E9;
+	Thu, 30 Jul 2026 14:25:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421545;
-	bh=aJ+r2gb5ds3nJpMzaqFjhOfCq0gyr+NNzPNkzJ6ZRfQ=;
+	s=korg; t=1785421548;
+	bh=B7fxUeKHqOP2kRiUcBOdCGFDru8rTtluD1jOltN1Jak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SUEf9wVRsGR0p9NJV0qeLJ48jP0hJyjyDv076Amm/WuL6ovztswTcsC/TApdRsMsz
-	 LyTau06fTom63qBd7UoOJMZJbEnWxUS7iUWQjcyVuc3MLpEGP2KFdwPYEqVDP94oD1
-	 hCF4GKh4N1g1O6DGnCTFxaNvj+aAobM9La/aiUsk=
+	b=XWhG+WyEMQallfZ4ofefJb6u44ESRUzsskRb45FIRTiBTU0NtxiErCbMi2J6ZwYLt
+	 V8pHzmLpnQOfb5GcEMQ+pRf05mm7/ZY6V0FCMHGI6/udL1KwBKf9BWlODQ5ZWbQSc1
+	 Dfx7FWA6eK1dY+AvZBRGl1N3dqdYYS/94KBxaXsU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ai Chao <aichao@kylinos.cn>,
 	stable <stable@kernel.org>,
-	Huang Wei <huangwei@kylinos.cn>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 7.1 141/744] USB: storage: add NO_ATA_1X quirk for Longmai USB Key
-Date: Thu, 30 Jul 2026 16:06:54 +0200
-Message-ID: <20260730141447.282050848@linuxfoundation.org>
+	Xu Yang <xu.yang_2@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>
+Subject: [PATCH 7.1 142/744] usb: chipidea: fix usage_count leak when autosuspend_delay is negative
+Date: Thu, 30 Jul 2026 16:06:55 +0200
+Message-ID: <20260730141447.303819210@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -52,58 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huang Wei <huangwei@kylinos.cn>
+From: Xu Yang <xu.yang_2@nxp.com>
 
-commit 3b4ca2e01c1dd8c00b675b794732945f460a471b upstream.
+commit fc3afb5728e297994863f8a2a01b88a920bbf53e upstream.
 
-The Longmai Technologies USB Key (0x04b4:0xb708) advertises itself as a
-SCSI/Bulk-only mass storage device but does not correctly handle ATA
-pass-through commands. When such a command (ATA_12 or ATA_16) is sent to
-the device it fails to respond and the transfer eventually times out,
-leaving the device unusable.
+The probe() calls pm_runtime_use_autosuspend(), but remove() does not call
+pm_runtime_dont_use_autosuspend(). This can lead to a usage_count leak if
+autosuspend_delay is set to a negative value.
 
-Add an unusual_devs entry for this device that sets the US_FL_NO_ATA_1X
-flag, so usb-storage short-circuits ATA pass-through commands and returns
-INVALID COMMAND OPERATION CODE (0x20 0x05 0x24 0x00) instead of forwarding
-them to the device.
+The pm_runtime_use_autosuspend() also notes that it's important to undo
+this with pm_runtime_dont_use_autosuspend() at driver exit time.
 
-Information about the device in /sys/kernel/debug/usb/devices:
-
-T:  Bus=02 Lev=01 Prnt=01 Port=01 Cnt=01 Dev#= 12 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=00(>ifc ) Sub=06 Prot=50 MxPS=64 #Cfgs=  1
-P:  Vendor=04b4 ProdID=b708 Rev= 1.00
-S:  Manufacturer=Longmai Technologies
-S:  Product=USB Key
-C:* #Ifs= 1 Cfg#= 1 Atr=80 MxPwr=100mA
-I:* If#= 0 Alt= 0 #EPs= 2 Cls=08(stor.) Sub=06 Prot=50 Driver=usb-storage
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-
-Reported-by: Ai Chao <aichao@kylinos.cn>
+Fixes: 1f874edcb731 ("usb: chipidea: add runtime power management support")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Huang Wei <huangwei@kylinos.cn>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://patch.msgid.link/20260716033341.2830872-1-huangwei@kylinos.cn
+Assisted-by: Claude:claude-sonnet-4.6
+Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260716104126.2763454-1-xu.yang_2@oss.nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/storage/unusual_devs.h |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/usb/chipidea/core.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/storage/unusual_devs.h
-+++ b/drivers/usb/storage/unusual_devs.h
-@@ -395,6 +395,13 @@ UNUSUAL_DEV(  0x04b3, 0x4001, 0x0110, 0x
- 		USB_SC_DEVICE, USB_PR_CB, NULL,
- 		US_FL_MAX_SECTORS_MIN),
+--- a/drivers/usb/chipidea/core.c
++++ b/drivers/usb/chipidea/core.c
+@@ -1253,6 +1253,7 @@ static void ci_hdrc_remove(struct platfo
+ 		usb_role_switch_unregister(ci->role_switch);
  
-+/* Reported by Ai Chao <aichao@kylinos.cn> */
-+UNUSUAL_DEV(  0x04b4, 0xb708, 0x0000, 0xffff,
-+		"Longmai Technologies",
-+		"USB Key",
-+		USB_SC_SCSI, USB_PR_BULK, NULL,
-+		US_FL_NO_ATA_1X),
-+
- /*
-  * Reported by Simon Levitt <simon@whattf.com>
-  * This entry needs Sub and Proto fields
+ 	if (ci->supports_runtime_pm) {
++		pm_runtime_dont_use_autosuspend(&pdev->dev);
+ 		pm_runtime_get_sync(&pdev->dev);
+ 		pm_runtime_disable(&pdev->dev);
+ 		pm_runtime_put_noidle(&pdev->dev);
 
 
