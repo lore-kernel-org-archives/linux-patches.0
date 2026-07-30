@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFCA042F707;
-	Thu, 30 Jul 2026 15:22:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80B8542F707;
+	Thu, 30 Jul 2026 15:22:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424969; cv=none; b=evsilNZS3KgnN21IHhK3e6ltKCVGutWwUPJ4hz8Cb2dntCRynekswWeZnAneSMMAgx2wsHrddfX1R0AtaqigT3QSFK5MpJmDvHWrCFIWOkdafkNJrqd+Zd0+GLXkBkg1L+hqS2J7WR26cbAfYli7tKLP3dY4bP6q2OcQm/8qbZA=
+	t=1785424972; cv=none; b=A5/LezVHiK67fAoa/O1BHU+niOUQuovanAO8XdVUx6zDFuNh7wH+zX4Ruh0GJarGQn/OdmiGi6Gjr1qcgNUseoVRdjAl65qLAex7nQM46HrTJueUleNWurHmjHy7nkdmCW71wDrWkVcOu4aZzDqJpCk8lqDIe86JSf9k/S08MOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424969; c=relaxed/simple;
-	bh=ipDja2onpl+3QMQdRSx5iLnblxxooZ6Fi3jHnD/URzs=;
+	s=arc-20240116; t=1785424972; c=relaxed/simple;
+	bh=Px9eOxcybrhdZS/6olN1fhnpIMAYw7VWDDSRGdok+D4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q4XEGvtXRuTwSmPkWZ3WJavGY3cKen3Q/isVMFwW26zjCU5xrULWh3cuOnWErdXLhmi5pqIKiULeCGdQwyDwgKxAd1lsTiutsUOK++1wtVmFI9naAf/528a7jgs+P4gJgEJNSdU3HwEvvoCiJpQfcZS9LGg+sAc7aDDHH+hNGts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sMcePlCN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jcaoPt1fnQkHXJ3IEQcvk61Nj5K0lATzgZ93/E4bny3Fsp0fO3/yU75TpYOl3RBOs8PAWgIc3XfrzB6yaEbf3z/kqUqgQ3sGjKSUJDvw2OvU/7YT9NZttOyx4lkJeb2BLQHWxMFpjWDWosEAPEIFiwLSB3CRpPRkh/xAGonwjJE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lC6Rjgeq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sMcePlCN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF5401F000E9;
-	Thu, 30 Jul 2026 15:22:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lC6Rjgeq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7A751F000E9;
+	Thu, 30 Jul 2026 15:22:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424968;
-	bh=yt7r8ZHcSXmvSdjQ2EklVfby0+aXmgdP7al4Qwix3qY=;
+	s=korg; t=1785424971;
+	bh=b7eIcqVr2OWs3OqoMdiYLB+XC+K+YkSLRFxUQu6bjTk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sMcePlCN35FeBFDZFPKUptT80o4dTFd6/NvFgWXK2Xxtl9e29n84AcMlmlRJy5Fvl
-	 fL4edj+FN2JplXH402qRcDJIRNDterOGUbnO2eI1KMcC9lE3kElBTEiA3V/G6nAyN9
-	 owW7IufWxSlWAuv5Y7BIo4cc8pAuvZJA58gBubzw=
+	b=lC6Rjgeqx0kr5TmYdycrWLyPOfr8j6j+7rrjtkNDaH1/2xtAAz6py2NqjP6mYinFF
+	 1unMOVeBu2O+VqUsewSmzXUqcAqGwZyG4o81BIVHGlj7D1ZCc5hsYIiVWIlllza+gQ
+	 ks2c97mlTOYEpw6k9JhMhjNqATC+aVa3r1in5dRs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boyuan Zhang <boyuan.zhang@amd.com>,
-	"David (Ming Qiang) Wu" <David.Wu3@amd.com>,
+	Vitaly Prosyak <vitaly.prosyak@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 579/675] drm/amdgpu/jpeg: fix jpeg_v5_0_1_is_idle detection
-Date: Thu, 30 Jul 2026 16:15:09 +0200
-Message-ID: <20260730141457.434225681@linuxfoundation.org>
+Subject: [PATCH 6.18 580/675] drm/amdgpu/sdma4.4.2: replace BUG_ON() with WARN_ON()
+Date: Thu, 30 Jul 2026 16:15:10 +0200
+Message-ID: <20260730141457.454495776@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -51,38 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boyuan Zhang <boyuan.zhang@amd.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit efcedeececcf995fcf717b21e39aa7c446fa3bf7 upstream.
+commit 40cdbe9fa424cc6264a7aed93a04bd7d69109d9e upstream.
 
-jpeg_v5_0_1_is_idle() initializes ret to false and then accumulates ring
-idle status using &=. Since false & condition always remains false, the
-function can never report the JPEG block as idle.
+There's no need to crash the kernel for these cases.
 
-Initialize ret to true so the function returns true only when all JPEG
-rings report RB_JOB_DONE.
-
-Signed-off-by: Boyuan Zhang <boyuan.zhang@amd.com>
-Reviewed-by: David (Ming Qiang) Wu <David.Wu3@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 680adf5faeeabb4585f7aeb53681719e2d6c2f41)
+(cherry picked from commit fa4f86a148271e325e95287630a3a15a9cd35fdc)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/sdma_v4_4_2.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c
-+++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c
-@@ -657,7 +657,7 @@ static void jpeg_v5_0_1_dec_ring_set_wpt
- static bool jpeg_v5_0_1_is_idle(struct amdgpu_ip_block *ip_block)
- {
- 	struct amdgpu_device *adev = ip_block->adev;
--	bool ret = false;
-+	bool ret = true;
- 	int i, j;
- 
- 	for (i = 0; i < adev->jpeg.num_jpeg_inst; ++i) {
+--- a/drivers/gpu/drm/amd/amdgpu/sdma_v4_4_2.c
++++ b/drivers/gpu/drm/amd/amdgpu/sdma_v4_4_2.c
+@@ -458,7 +458,7 @@ static void sdma_v4_4_2_ring_emit_fence(
+ 	/* write the fence */
+ 	amdgpu_ring_write(ring, SDMA_PKT_HEADER_OP(SDMA_OP_FENCE));
+ 	/* zero in first two bits */
+-	BUG_ON(addr & 0x3);
++	WARN_ON(addr & 0x3);
+ 	amdgpu_ring_write(ring, lower_32_bits(addr));
+ 	amdgpu_ring_write(ring, upper_32_bits(addr));
+ 	amdgpu_ring_write(ring, lower_32_bits(seq));
+@@ -468,7 +468,7 @@ static void sdma_v4_4_2_ring_emit_fence(
+ 		addr += 4;
+ 		amdgpu_ring_write(ring, SDMA_PKT_HEADER_OP(SDMA_OP_FENCE));
+ 		/* zero in first two bits */
+-		BUG_ON(addr & 0x3);
++		WARN_ON(addr & 0x3);
+ 		amdgpu_ring_write(ring, lower_32_bits(addr));
+ 		amdgpu_ring_write(ring, upper_32_bits(addr));
+ 		amdgpu_ring_write(ring, upper_32_bits(seq));
 
 
