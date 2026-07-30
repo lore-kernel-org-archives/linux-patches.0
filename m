@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8EA742FCD8;
-	Thu, 30 Jul 2026 14:26:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E555432E6E;
+	Thu, 30 Jul 2026 14:26:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421608; cv=none; b=gJQFq7dCgLF4HmSOF6DeNTozeyi0nBkhObh1qt8cPhncD6rVHyX41MwLV1xjNgJtKEVFL94O4c9ah+Lsp325xdVKuSsfrGQFep8T5VwOrf+GlFNzNRHh7DN+PeK4pRm3bqtG5J6qMErNwWm0pXJrUuP3eZ34yEbvUq9IceKlQXU=
+	t=1785421612; cv=none; b=ai8Rm7pHpUpnLyotoMMVI2z3jLtaihDZZHuxmahFguXfSfAc+H4bYOneVcHauQXEvom6nykPDQV0rbH8mNy9wbQ/ZNNyW4Rb/ZZmlncvYUPJaurwV1f/AJaYKkjj039ZyMZbjsYqMvXcTCWWhsS3n629GWu43AqPODlfJttt+go=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421608; c=relaxed/simple;
-	bh=/FTTnpCamhUct2ynOBFtN8kIYr5AO/Psuu1CcwjWXvc=;
+	s=arc-20240116; t=1785421612; c=relaxed/simple;
+	bh=tOAz4suJjD0kO0elqd2VO6cP0DxCCO1MKbAs3miyW98=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ECNxisUGy3S2dNdHwpPNi1XxOtzzjZYDuKA9xCSmAvUrptQBWUnsFoRWE6KFLwMFuiE1lVIWY+/BCOORQ+7HGOotzVZNpyC/Rnv6J1AK5E3+6YBAgaPdMWPbMVOT9EUmLwbdrAD1WObaFJCh7RDQz4ths8tJy05HNcCHXi/wqgw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rKB6JADt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=qcNATaxeFnRk+pC41mKcnpV1ZArxiL8doalx1GOhfKL7N5X8JO31FQXU3o7KgnA+HsJ/0D3GqmKbPs2otc93plrRAuFl0mRr69h1bQKS1qpAleyt3fzItsjVttSOCkQXoVInjnoky8fwFkRA8vJJC9kdj3COOTCk3cv2a+bWRBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sOMKpeab; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rKB6JADt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 251E41F000E9;
-	Thu, 30 Jul 2026 14:26:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sOMKpeab"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FB511F000E9;
+	Thu, 30 Jul 2026 14:26:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421607;
-	bh=qBpPnG3znnjOnqz/AXNoHtc71h7Fw6RftGfAAEl0kJU=;
+	s=korg; t=1785421610;
+	bh=kiiJnjWGLAfBrSTTOcNDHFsfpaimj6J++GcAzSB1L/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rKB6JADtfc5udnDrqHOtZeU0dtRpPdc/4atRVfTkXkWFTwJ7fyJnyK+acAFrOw9xG
-	 EDst1o2l6CpMWQGYdwvv04Vcz5+i+IUEYQ2Wsx2fE6wKtsLdY3HAqOhHqHGjMK6BDW
-	 yGhIwZQ+3XR8VydtHItT9ebnVLo5TeuL7Nfga+hM=
+	b=sOMKpeabPqvvwl1yM/gTv/ftDpqj22Vy1mUJsvXKmKmeG3byL07F00Uu3KLt4dhMF
+	 tbK0M495qwZ5iiQo5NzimN6npCNjbVv/QuG8zPRsLsVv0R2KrQ4tFPtK3zwvmbeAQj
+	 quMzFikM1eoTgDBy9jA+9JIX3nVzoD2aDA74hMbw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuanyu Tseng <Chuanyu.Tseng@amd.com>,
-	Fangzhi Zuo <Jerry.Zuo@amd.com>,
+	Wenjing Liu <wenjing.liu@amd.com>,
 	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 160/744] drm/amd/display: Fix preferred link rate for NUTMEG
-Date: Thu, 30 Jul 2026 16:07:13 +0200
-Message-ID: <20260730141447.693501664@linuxfoundation.org>
+Subject: [PATCH 7.1 161/744] drm/amd/display: Add dp_skip_rbr flag for NUTMEG
+Date: Thu, 30 Jul 2026 16:07:14 +0200
+Message-ID: <20260730141447.714306000@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -56,45 +55,73 @@ Content-Transfer-Encoding: 8bit
 
 From: Timur Kristóf <timur.kristof@gmail.com>
 
-[ Upstream commit 9fb646bc4d87f62bcbf0a7ea326430eb802c475c ]
+[ Upstream commit e39b7cf5c62e027af166772e46382356ecb45c36 ]
 
-When there is a preferred link rate setting, it needs to be
-applied to both the current and initial link rate.
-This was regressed by a "coding style" fix, which caused
-the current link rate to not respect the preferred value.
+No functional changes. Just clean up a conceptual mismatch.
 
-This commit restores the functionality of NUTMEG,
-the DP bridge encoder found on old APUs such as Kaveri.
+Based on feedback on the NUTMEG code in DC, the
+preferred_link_setting is meant to force the DP link to a
+specific setting, meaning both the link rate and lane count
+should be locked to an exact value. What NUTMEG needs is
+a lower bound on the link rate, which is not the same concept.
 
-Fixes: a62346043a89 ("drm/amd/display: Fix coding style issue")
-Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/5465
-Cc: Chuanyu Tseng <Chuanyu.Tseng@amd.com>
-Reviewed-by: Fangzhi Zuo <Jerry.Zuo@amd.com>
+Implement this as a HW workaround flag instead.
+
+Suggested-by: Wenjing Liu <wenjing.liu@amd.com>
 Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit e78b0a367f8690b682029d90e75308dc84ed51de)
+(cherry picked from commit 871ceb853841bcaa4e6cec3723b16c4887a760be)
 Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/amd/display/dc/link/protocols/link_dp_capability.c    | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/dc.h                         | 2 ++
+ drivers/gpu/drm/amd/display/dc/link/link_detection.c        | 2 +-
+ .../drm/amd/display/dc/link/protocols/link_dp_capability.c  | 6 +++---
+ 3 files changed, 6 insertions(+), 4 deletions(-)
 
+diff --git a/drivers/gpu/drm/amd/display/dc/dc.h b/drivers/gpu/drm/amd/display/dc/dc.h
+index 55152f12af48be..61a28e287c1b98 100644
+--- a/drivers/gpu/drm/amd/display/dc/dc.h
++++ b/drivers/gpu/drm/amd/display/dc/dc.h
+@@ -1727,6 +1727,8 @@ struct dc_scratch_space {
+ 		bool dp_skip_DID2;
+ 		bool dp_skip_reset_segment;
+ 		bool dp_skip_fs_144hz;
++		/* Some DP bridges don't work with RBR and must use HBR. */
++		bool dp_skip_rbr;
+ 		bool dp_mot_reset_segment;
+ 		/* Some USB4 docks do not handle turning off MST DSC once it has been enabled. */
+ 		bool dpia_mst_dsc_always_on;
+diff --git a/drivers/gpu/drm/amd/display/dc/link/link_detection.c b/drivers/gpu/drm/amd/display/dc/link/link_detection.c
+index 794dd6a9591830..faf33e9b1c6f37 100644
+--- a/drivers/gpu/drm/amd/display/dc/link/link_detection.c
++++ b/drivers/gpu/drm/amd/display/dc/link/link_detection.c
+@@ -621,7 +621,7 @@ static bool detect_dp(struct dc_link *link,
+ 		link->dpcd_caps.sink_count.bits.SINK_COUNT = 1;
+ 		/* NUTMEG requires that we use HBR, doesn't work with RBR. */
+ 		if (link->dpcd_caps.branch_dev_id == DP_BRANCH_DEVICE_ID_00001A)
+-			link->preferred_link_setting.link_rate = LINK_RATE_HIGH;
++			link->wa_flags.dp_skip_rbr = true;
+ 	}
+ 
+ 	return true;
 diff --git a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
-index 782a45caa13d4a..c9c76b8c3e3ba2 100644
+index c9c76b8c3e3ba2..fe8420b803eeda 100644
 --- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
 +++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
-@@ -750,8 +750,10 @@ static bool decide_dp_link_settings(struct dc_link *link, struct dc_link_setting
+@@ -750,9 +750,9 @@ static bool decide_dp_link_settings(struct dc_link *link, struct dc_link_setting
  	if (req_bw > dp_link_bandwidth_kbps(link, &link->verified_link_cap))
  		return false;
  
--	if (link->preferred_link_setting.link_rate != LINK_RATE_UNKNOWN)
-+	if (link->preferred_link_setting.link_rate != LINK_RATE_UNKNOWN) {
- 		initial_link_setting.link_rate = link->preferred_link_setting.link_rate;
-+		current_link_setting.link_rate = link->preferred_link_setting.link_rate;
-+	}
+-	if (link->preferred_link_setting.link_rate != LINK_RATE_UNKNOWN) {
+-		initial_link_setting.link_rate = link->preferred_link_setting.link_rate;
+-		current_link_setting.link_rate = link->preferred_link_setting.link_rate;
++	if (link->wa_flags.dp_skip_rbr) {
++		initial_link_setting.link_rate = LINK_RATE_HIGH;
++		current_link_setting.link_rate = LINK_RATE_HIGH;
+ 	}
  
  	/* search for the minimum link setting that:
- 	 * 1. is supported according to the link training result
 -- 
 2.53.0
 
