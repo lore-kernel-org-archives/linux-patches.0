@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA4F2407597;
-	Thu, 30 Jul 2026 15:01:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AC0F39A801;
+	Thu, 30 Jul 2026 15:01:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423707; cv=none; b=I5AUjWEnZtw/L/n9EmQNO5pEm30ivR7/ATFkRI+HoQ2vENFFxcolhg6fgobTgTYLy2b0UIeTg+xIUkdaP9Wndoa8UEmfbedUEYAZkiqTbydSP9GTdlmT8r6PHGbrEuFOrLU9WmrpMVSPaEX1r08CeyUbENV1c1/bIWsLCLsj17g=
+	t=1785423711; cv=none; b=E1B5Aitt5ZbhK1KNUNwlJU+VistIsI57rfsaaoMhCQX1lShf66zuNWfcjXmH1Ff3CcD6Q3XPXECoDIgue10PiN7Xhpor2ylQlTBTc9FVcUCZLQiIgkXNyfgAAwMFaYyk3X9lQd/mYK7cCCt7braB4MCukJeV/ZOg80wkoIbMg+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423707; c=relaxed/simple;
-	bh=W2Vpns4yYhos3GoG4ORXg87jlRGdr4YmUMcvA165wMI=;
+	s=arc-20240116; t=1785423711; c=relaxed/simple;
+	bh=TNIyYvL9PzZHvENBP0LEh8uxiZ8wL6UVdJCZ5ZGR9OE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=toYsrSy1VaIqS78p6ixRNAsJ+FKbgi4M/CwtF1Yw+VGqwTOHG5T+ZmpRSfz2EnW8CFlw5BbWDanBlis6x8e+U/FmmvICjKk2WuUvs3LOF47LjerLf5DqCzI64uA/dmVo4z5orjwSSAhdxwuqUhSSIVfNTTsaebrl75fy/DzI3cM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g1EFztVx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DwpMIjds0l2NA2TEK3XgUMBc0zvPDkMeUruCuvhcx/A78BW4/YvCzDAqvjs9yCBCFAiI3XT5j+Q1TZeB/oCF1tQlFoQ2eOroshAPq+WAOjO2BScotBSclLkbdMh2sNRo8IVqr6hWcOxX4KcfaUhCe8nRc6x6Ep+w3wX54jOC8e8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0ixTM+04; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g1EFztVx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 314C01F000E9;
-	Thu, 30 Jul 2026 15:01:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0ixTM+04"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 514661F000E9;
+	Thu, 30 Jul 2026 15:01:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423706;
-	bh=IelDKd+oXakZRtTWXuWPmLGORkAro1KSOf70nTSE008=;
+	s=korg; t=1785423709;
+	bh=cVeP9tEkAKoySvlsn1xvWvNVqIeXF1cEt2XjJiv2dKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g1EFztVxgndmEKpPAM0XNDPUXtVLfUR0WNcUxlyDVzB6Nbufz9uJqG3/Es1m6eUUK
-	 DgxOQLYfMeYVvZqYxk9acBPifxGarTz0GSTPX/9BHONfjvEyjm5bG6NkaU2OSFd89v
-	 EZLdD/dcR0Z3X8c71vtUfWKGs7mzhwRGdzSdFlqE=
+	b=0ixTM+04M2kW7Ph0ANzhr55GE9szrAyivR1TB6X65XuSAIdYwfSXtpvD7xMdr/ANV
+	 Mn8lybuCiTL4/50WP3mAj0QeKdRY30PSGSf0klwju0RZkGvIjgFZQY72RyAfW6tRGr
+	 8YIIeilQWc90m85lhsDmPJuHmWodkkG45o70id1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Griffin Kroah-Hartman <griffin@kroah.com>,
-	Alan Stern <stern@rowland.harvard.edu>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.18 139/675] usb: core: sysfs: add lock to bos_descriptors_read()
-Date: Thu, 30 Jul 2026 16:07:49 +0200
-Message-ID: <20260730141448.091974052@linuxfoundation.org>
+	Huihui Huang <hhhuang@smu.edu.sg>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.18 140/675] wifi: at76c50x-usb: avoid length underflow in at76_guess_freq()
+Date: Thu, 30 Jul 2026 16:07:50 +0200
+Message-ID: <20260730141448.113189395@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -51,52 +50,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Griffin Kroah-Hartman <griffin@kroah.com>
+From: Huihui Huang <hhhuang@smu.edu.sg>
 
-commit 4e0197fbb0eec588795d5431716a244d9ac8fa93 upstream.
+commit 61a799ffd1e5a4fd3702d547828b7ff3d161468e upstream.
 
-Add a lock to the function bos_descriptors_read().
+at76_guess_freq() checks only that the received frame is at least a bare
+802.11 header (24 bytes) before subtracting the fixed management-body
+offset:
 
-This function accesses udev->bos, which could be simultaneously freed in
-usb_reset_and_verify_device(), a function that is commonly called in
-drivers all over the kernel.
+	len -= el_off;
 
-Assisted-by: gkh_clanker_t1000
-Signed-off-by: Griffin Kroah-Hartman <griffin@kroah.com>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Cc: stable <stable@kernel.org>
-Link: https://patch.msgid.link/20260715-usb_core_patches_3-v1-1-53021f5576fd@kroah.com
+For both beacon and probe response frames, el_off is 36. If the frame is
+shorter than el_off, subtracting it causes the calculated IE length to
+wrap. The length is eventually passed to cfg80211_find_elem_match() as a
+very large unsigned value, so the element walk runs beyond the RX skb.
+
+This path is reached from at76_rx_tasklet() while scanning. If the device
+delivers a truncated beacon or probe response, the oversized IE length
+causes an out-of-bounds read during scanning.
+
+Skip the IE lookup if the frame does not reach the variable elements,
+before subtracting el_off.
+
+Fixes: 1264b951463a ("at76c50x-usb: add driver")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Huihui Huang <hhhuang@smu.edu.sg>
+Link: https://patch.msgid.link/20260715140815.1242033-1-hhhuang@smu.edu.sg
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/sysfs.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/net/wireless/atmel/at76c50x-usb.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/core/sysfs.c
-+++ b/drivers/usb/core/sysfs.c
-@@ -899,10 +899,15 @@ bos_descriptors_read(struct file *filp,
- {
- 	struct device *dev = kobj_to_dev(kobj);
- 	struct usb_device *udev = to_usb_device(dev);
--	struct usb_host_bos *bos = udev->bos;
-+	struct usb_host_bos *bos;
- 	struct usb_bos_descriptor *desc;
- 	size_t desclen, n = 0;
-+	int rc;
+--- a/drivers/net/wireless/atmel/at76c50x-usb.c
++++ b/drivers/net/wireless/atmel/at76c50x-usb.c
+@@ -1521,13 +1521,16 @@ static inline int at76_guess_freq(struct
  
-+	rc = usb_lock_device_interruptible(udev);
-+	if (rc < 0)
-+		return -EINTR;
-+	bos = udev->bos;
- 	if (bos) {
- 		desc = bos->desc;
- 		desclen = le16_to_cpu(desc->wTotalLength);
-@@ -911,6 +916,7 @@ bos_descriptors_read(struct file *filp,
- 			memcpy(buf, (void *) desc + off, n);
- 		}
+ 	if (ieee80211_is_probe_resp(hdr->frame_control)) {
+ 		el_off = offsetof(struct ieee80211_mgmt, u.probe_resp.variable);
+-		el = ((struct ieee80211_mgmt *)hdr)->u.probe_resp.variable;
+ 	} else if (ieee80211_is_beacon(hdr->frame_control)) {
+ 		el_off = offsetof(struct ieee80211_mgmt, u.beacon.variable);
+-		el = ((struct ieee80211_mgmt *)hdr)->u.beacon.variable;
+ 	} else {
+ 		goto exit;
  	}
-+	usb_unlock_device(udev);
- 	return n;
- }
- static const BIN_ATTR_RO(bos_descriptors, 65535); /* max-size BOS */
++
++	if (len < el_off)
++		goto exit;
++
++	el = priv->rx_skb->data + el_off;
+ 	len -= el_off;
+ 
+ 	el = cfg80211_find_ie(WLAN_EID_DS_PARAMS, el, len);
 
 
