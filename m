@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74EA643F0B5;
-	Thu, 30 Jul 2026 14:57:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4584A43F4A3;
+	Thu, 30 Jul 2026 14:57:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423476; cv=none; b=t7SYi3f7BWMvWtT42q1anMIWFaPLQzBSWne7bsXFXjAUvMbXyIguOChhZa+9NS/1znXlRR5m2dqO5dYPcW0xOGCh/JaksCPvg5tYCoch4xuPj3lYkP0FaFm17HbaYVPo1HufZlnoeyEIIc3v2H2EftHBDuI3BbTKonZU12HB2GI=
+	t=1785423479; cv=none; b=j2qcfeS9MoStdbZjE/HoFML3YzWbCAkAo26IMQ6BPVevrqHhKiRixlL4lU2D5McTS3hdqo54Z1gzHEh2t3ckYldK8gkYspzG8KtPgXVyQMJ0WqUua8pRmn3cQr0T8NNnT0kJpXKAi1PjEjAn0SZGj5Rd7vMhEXiGRHE5wk5xk3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423476; c=relaxed/simple;
-	bh=zgk2SGIE+Rs45MurQF/lbfe0Z+SM2diDLCK5hoTk9f8=;
+	s=arc-20240116; t=1785423479; c=relaxed/simple;
+	bh=L7Zgx26p7BT/9gUYRMbsbFopMMiPoh+KYiLs6gpWFlg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AApyFnObgAJJc/1uS/FlKnC4OiNquOfoZuXFvdv1VZSaAp7r9Igm6ROirZArwNdul/jYuJP9eI5WBuzfsX74DyKuiH2vpyC3x3ygZ5Ag2po/9DL4cnweubv6vPkX01Zfwv8EKENn5UO4E9ZMXx05YihgbzGSBmJgc0FVCnFLDWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rohUhbpD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JjAWIqx5+DrR38T/3TmGR5J9o4+iBo21AMXeCYLyAU83lOVsIbiaaeym9uSnYnYfNkKrlTAJ2PHKinPPyhwfeO1a8i2FjfB5A6r7A0kJFsRhgX82NSJNmmb6sZ52bfDVZzLNIFFHvYXEk2lYIk2ZgfrSm68A8DZSrVuRpzx0KBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LUp91kpP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rohUhbpD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D07921F000E9;
-	Thu, 30 Jul 2026 14:57:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LUp91kpP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A23641F000E9;
+	Thu, 30 Jul 2026 14:57:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423475;
-	bh=hssXK85lZPgmf4h1kHkPMZn+e0FtQee82GGt6qKB8GE=;
+	s=korg; t=1785423478;
+	bh=rbz0oj7bXZqB/Cem5obYXYBbjd8BwJvikZ6nLY3SlxA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rohUhbpDZBdxoZ9m40FkCUNlcAsiqbC4v8prt3DlYdnmRsygUrmR16elF96ZkKIrq
-	 0RQwrAGNhttDSPz7TwAuTxF0qyQa5EVev8dtYLFlA2gAxX6M4T34GMVbYlZ5sMy+4M
-	 Jh42HNT1oarYZUNzqxQbGBXsY+G10Iggugo2Ly6U=
+	b=LUp91kpP2xrXNG5URjqYWXuv9QrOII/GPp5AMCe1zh03vyTYqmaAvgsgkZIOZQJ0L
+	 psao3YJwbbOasR5frNxzNwcHqGUocKRXRyGb/t6VzIA+UwR6J5vF6yIRIiqPMSQerV
+	 V2rZZnhq2xdhTaugjg1Eb99d7JwRQ38gxKd5AALo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joanne Koong <joannelkoong@gmail.com>,
-	Junxi Qian <qjx1298677004@gmail.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Bernard Metzler <bernard.metzler@linux.dev>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 030/675] fuse: fix writeback array overflow when max_pages is one
-Date: Thu, 30 Jul 2026 16:06:00 +0200
-Message-ID: <20260730141445.760803706@linuxfoundation.org>
+Subject: [PATCH 6.18 057/675] RDMA/siw: publish QP after initialization
+Date: Thu, 30 Jul 2026 16:06:27 +0200
+Message-ID: <20260730141446.328824313@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -53,54 +52,151 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junxi Qian <qjx1298677004@gmail.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit c3880a7b10e487e033dc6f388bda118436566f7a ]
+[ Upstream commit bb27fcc67c429d97f785c92c35a6c5adebb05d7f ]
 
-fuse_iomap_writeback_range() appends one folio pointer and one
-fuse_folio_desc for every dirty range that is merged into the current
-writeback request.  The merge decision checks the byte budget against
-fc->max_pages and fc->max_write, but it does not check whether the folio
-and descriptor arrays still have another free slot.
+siw_create_qp() currently calls siw_qp_add() before the queues, CQ
+pointers, state, completion, and device list entry are ready. A QPN
+lookup can therefore reach a QP that is still being constructed.
 
-This is not sufficient for fuseblk, where the filesystem block size can
-be smaller than PAGE_SIZE.  With writeback cache enabled and max_pages
-negotiated as one, contiguous sub-page dirty ranges can fit within the
-byte budget while spanning more than one folio.  The next append can then
-write past the one-slot folios and descs arrays.
+Move siw_qp_add() to the end of siw_create_qp(), after QP
+initialization and before adding the QP to the siw device list.
 
-Split the request when the number of already attached folios has reached
-fc->max_pages.  This keeps the folio/descriptor slot accounting in sync
-with the send decision.
-
-Fixes: ef7e7cbb323f ("fuse: use iomap for writeback")
-Cc: stable@vger.kernel.org
-Reviewed-by: Joanne Koong <joannelkoong@gmail.com>
-Signed-off-by: Junxi Qian <qjx1298677004@gmail.com>
-Link: https://patch.msgid.link/20260506122415.205340-1-qjx1298677004@gmail.com
-Acked-by: Miklos Szeredi <mszeredi@redhat.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: f29dd55b0236 ("rdma/siw: queue pair methods")
+Link: https://patch.msgid.link/r/20260630060040.966461-1-ruoyuw560@gmail.com
+Suggested-by: Bernard Metzler <bernard.metzler@linux.dev>
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Acked-by: Bernard Metzler <bernard.metzler@linux.dev>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/file.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/infiniband/sw/siw/siw_verbs.c | 44 +++++++++++++++------------
+ 1 file changed, 24 insertions(+), 20 deletions(-)
 
-diff --git a/fs/fuse/file.c b/fs/fuse/file.c
-index 79d1b502e73195..585dd90361b654 100644
---- a/fs/fuse/file.c
-+++ b/fs/fuse/file.c
-@@ -2140,7 +2140,10 @@ static bool fuse_writepage_need_send(struct fuse_conn *fc, loff_t pos,
+diff --git a/drivers/infiniband/sw/siw/siw_verbs.c b/drivers/infiniband/sw/siw/siw_verbs.c
+index efa2f097b58289..9fbade0b85715a 100644
+--- a/drivers/infiniband/sw/siw/siw_verbs.c
++++ b/drivers/infiniband/sw/siw/siw_verbs.c
+@@ -316,6 +316,7 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
+ 	struct siw_ucontext *uctx =
+ 		rdma_udata_to_drv_context(udata, struct siw_ucontext,
+ 					  base_ucontext);
++	struct siw_uresp_create_qp uresp = {};
+ 	unsigned long flags;
+ 	int num_sqe, num_rqe, rv = 0;
+ 	size_t length;
+@@ -369,11 +370,6 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
+ 	spin_lock_init(&qp->rq_lock);
+ 	spin_lock_init(&qp->orq_lock);
  
- 	WARN_ON(!ap->num_folios);
+-	rv = siw_qp_add(sdev, qp);
+-	if (rv)
+-		goto err_atomic;
+-
+-
+ 	/* All queue indices are derived from modulo operations
+ 	 * on a free running 'get' (consumer) and 'put' (producer)
+ 	 * unsigned counter. Having queue sizes at power of two
+@@ -391,14 +387,14 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
  
--	/* Reached max pages */
-+	/* Reached max pages or max folio slots */
-+	if (ap->num_folios >= fc->max_pages)
-+		return true;
+ 	if (qp->sendq == NULL) {
+ 		rv = -ENOMEM;
+-		goto err_out_xa;
++		goto err_out;
+ 	}
+ 	if (attrs->sq_sig_type != IB_SIGNAL_REQ_WR) {
+ 		if (attrs->sq_sig_type == IB_SIGNAL_ALL_WR)
+ 			qp->attrs.flags |= SIW_SIGNAL_ALL_WR;
+ 		else {
+ 			rv = -EINVAL;
+-			goto err_out_xa;
++			goto err_out;
+ 		}
+ 	}
+ 	qp->pd = pd;
+@@ -424,7 +420,7 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
+ 
+ 		if (qp->recvq == NULL) {
+ 			rv = -ENOMEM;
+-			goto err_out_xa;
++			goto err_out;
+ 		}
+ 		qp->attrs.rq_size = num_rqe;
+ 	}
+@@ -439,11 +435,8 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
+ 	qp->attrs.state = SIW_QP_STATE_IDLE;
+ 
+ 	if (udata) {
+-		struct siw_uresp_create_qp uresp = {};
+-
+ 		uresp.num_sqe = num_sqe;
+ 		uresp.num_rqe = num_rqe;
+-		uresp.qp_id = qp_id(qp);
+ 
+ 		if (qp->sendq) {
+ 			length = num_sqe * sizeof(struct siw_sqe);
+@@ -452,7 +445,7 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
+ 						      length, &uresp.sq_key);
+ 			if (!qp->sq_entry) {
+ 				rv = -ENOMEM;
+-				goto err_out_xa;
++				goto err_out;
+ 			}
+ 		}
+ 
+@@ -464,9 +457,23 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
+ 			if (!qp->rq_entry) {
+ 				uresp.sq_key = SIW_INVAL_UOBJ_KEY;
+ 				rv = -ENOMEM;
+-				goto err_out_xa;
++				goto err_out;
+ 			}
+ 		}
++	}
++	qp->tx_cpu = siw_get_tx_cpu(sdev);
++	if (qp->tx_cpu < 0) {
++		rv = -EINVAL;
++		goto err_out;
++	}
++	init_completion(&qp->qp_free);
 +
- 	if ((bytes + PAGE_SIZE - 1) >> PAGE_SHIFT > fc->max_pages)
- 		return true;
++	rv = siw_qp_add(sdev, qp);
++	if (rv)
++		goto err_out_tx;
++
++	if (udata) {
++		uresp.qp_id = qp_id(qp);
  
+ 		if (udata->outlen < sizeof(uresp)) {
+ 			rv = -EINVAL;
+@@ -476,22 +483,19 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
+ 		if (rv)
+ 			goto err_out_xa;
+ 	}
+-	qp->tx_cpu = siw_get_tx_cpu(sdev);
+-	if (qp->tx_cpu < 0) {
+-		rv = -EINVAL;
+-		goto err_out_xa;
+-	}
++
+ 	INIT_LIST_HEAD(&qp->devq);
+ 	spin_lock_irqsave(&sdev->lock, flags);
+ 	list_add_tail(&qp->devq, &sdev->qp_list);
+ 	spin_unlock_irqrestore(&sdev->lock, flags);
+ 
+-	init_completion(&qp->qp_free);
+-
+ 	return 0;
+ 
+ err_out_xa:
+ 	xa_erase(&sdev->qp_xa, qp_id(qp));
++err_out_tx:
++	siw_put_tx_cpu(qp->tx_cpu);
++err_out:
+ 	if (uctx) {
+ 		rdma_user_mmap_entry_remove(qp->sq_entry);
+ 		rdma_user_mmap_entry_remove(qp->rq_entry);
 -- 
 2.53.0
 
