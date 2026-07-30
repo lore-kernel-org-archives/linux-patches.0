@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52D40435A9E;
-	Thu, 30 Jul 2026 15:31:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 117D137C92C;
+	Thu, 30 Jul 2026 15:31:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425507; cv=none; b=DrjYcp1aXeFrzR417gcP9seaesyI9uRPnbM0YTPS1QhMCI2Dt8UhvrZiB/AH0NViuomHwGZ5QiSIt6sLq/tDb8gtGpUbMvp381qDrusB1QlUkl94ujZucusVHyBG2KnWGukEK7zac0d67gQ+LWhT970uT1pVClDoe0Nn224gVV8=
+	t=1785425510; cv=none; b=LSn96nXCxq+/afu62FEZOKqnEbZe8xxJTE+8cFur0WDxFoWWuLyKBInLYyj7WXXwmTE5fX82o13ZcVnLtjO31dFBuRHLvOs/1RZceb6ojLuh3B8RtKm9JTkGjTTWp6Om+PQrP3FsQm+VMH4mg4x6CD2eN9PdTy8PCaAI8UkMwiI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425507; c=relaxed/simple;
-	bh=1c9x5V5ZqReLnldw95xnK1JcON/NUWo5UUFkUWMyB3s=;
+	s=arc-20240116; t=1785425510; c=relaxed/simple;
+	bh=tSnN2Yipw31NiyME8Xm4byegzOP2DHmgHutCvwbPlAE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bpb0wE/Ry+90Q1l5UeAy7K65aD8iSMbuZUJsQj5J39MPJyIShtmvkFb/OxVIh8ydL+s3gT3K6P2x+ouOTJC0fbSWHax6qDvoCV74hnK1Js+Yud4e/bscBdA1wWpeI8D8NQtW089S+nxkfNh0Q4ntVnZLq/l4eLe3kWAjBCCmQEw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cmgRWkwo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lub/3/vK64WVCUTe/zq9CJgcXzic5f3Q1fdUnmnlNyqhguvMeN0e7O7Y80ikqeWmwhgBqNmIX9laE5SxiTLhh+ZX5D++w3wCGqXZJ2EtV/hKvSjfd6Te+urXoOR8kwzSG/o28lzVpgivE2LuRir6a7ET4kKmXbyh2jUGlzMzWSA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p4b7C5LW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cmgRWkwo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F55F1F00A3A;
-	Thu, 30 Jul 2026 15:31:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p4b7C5LW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C8B41F00A3A;
+	Thu, 30 Jul 2026 15:31:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425506;
-	bh=WG/GU0w2b3m2rIcu/rzN5MHljWJFluB63X+gq2ldrGs=;
+	s=korg; t=1785425509;
+	bh=peeG2uqlk3Wk9x5Ua2nYgHUgU9scKueOvdBpCiY3idg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cmgRWkwo9mCvZrrYi2qV8aEr10Z1adyEAbAVvm3LStQ/b6oYcwEadI6cG8frW7rsR
-	 6XH95vMkVOT/09a6q378i1YqXeVMNWlJduyyYi571GvelW2hpng3QOKVU2jkD/7BQj
-	 M8SHX6BKWmyY4D7IxtrUTvi8QTBk8uXOLC3N2UIc=
+	b=p4b7C5LWg0j+L5KKksnwB5yCO8XZtzAfPnfUT5LisC9+fGNoFL+CdMT3hfHgtkw8s
+	 3Ntswqt8TgvFy2Ulw7gNNgdUOFOXgrVjwL4Nf+WGzG3o2oNhV4nIlTF3TS4TQr72FO
+	 HNoDgvelUFSukbCI9gMWOZW7JfijoocQm3IghAIA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danila Chernetsov <listdansp@mail.ru>,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
+	Bernard Metzler <bernard.metzler@linux.dev>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 048/602] RDMA/hns: Fix potential integer overflow in mhop hem cleanup
-Date: Thu, 30 Jul 2026 16:07:20 +0200
-Message-ID: <20260730141437.015430329@linuxfoundation.org>
+Subject: [PATCH 6.12 049/602] RDMA/siw: publish QP after initialization
+Date: Thu, 30 Jul 2026 16:07:21 +0200
+Message-ID: <20260730141437.036286203@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -52,50 +52,151 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danila Chernetsov <listdansp@mail.ru>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit 9f0f2d2121f16d420199a82ac5bbc242269133b3 ]
+[ Upstream commit bb27fcc67c429d97f785c92c35a6c5adebb05d7f ]
 
-In hns_roce_cleanup_mhop_hem_table(), the expression:
+siw_create_qp() currently calls siw_qp_add() before the queues, CQ
+pointers, state, completion, and device list entry are ready. A QPN
+lookup can therefore reach a QP that is still being constructed.
 
-    obj = i * buf_chunk_size / table->obj_size;
+Move siw_qp_add() to the end of siw_create_qp(), after QP
+initialization and before adding the QP to the siw device list.
 
-is evaluated using 32-bit unsigned arithmetic because
-'buf_chunk_size' is u32 and the usual arithmetic conversions convert
-'i' to unsigned int. The result is assigned to a u64 variable, but the
-multiplication may overflow before the assignment.
-
-For sufficiently large HEM tables, this produces an incorrect object
-index passed to hns_roce_table_mhop_put().
-
-Cast 'i' to u64 before the multiplication so that the intermediate
-calculation is performed with 64-bit arithmetic.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: a25d13cbe816 ("RDMA/hns: Add the interfaces to support multi hop addressing for the contexts in hip08")
-Link: https://patch.msgid.link/r/20260627095951.51378-1-listdansp@mail.ru
-Signed-off-by: Danila Chernetsov <listdansp@mail.ru>
-Reviewed-by: Junxian Huang <huangjunxian6@hisilicon.com>
+Fixes: f29dd55b0236 ("rdma/siw: queue pair methods")
+Link: https://patch.msgid.link/r/20260630060040.966461-1-ruoyuw560@gmail.com
+Suggested-by: Bernard Metzler <bernard.metzler@linux.dev>
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Acked-by: Bernard Metzler <bernard.metzler@linux.dev>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hem.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/sw/siw/siw_verbs.c | 44 +++++++++++++++------------
+ 1 file changed, 24 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hem.c b/drivers/infiniband/hw/hns/hns_roce_hem.c
-index 1680d0ac071ed1..ae7a3939124f23 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hem.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hem.c
-@@ -842,7 +842,7 @@ static void hns_roce_cleanup_mhop_hem_table(struct hns_roce_dev *hr_dev,
- 					mhop.bt_chunk_size;
+diff --git a/drivers/infiniband/sw/siw/siw_verbs.c b/drivers/infiniband/sw/siw/siw_verbs.c
+index d0c0cde09f1186..8ecff632ab6f3d 100644
+--- a/drivers/infiniband/sw/siw/siw_verbs.c
++++ b/drivers/infiniband/sw/siw/siw_verbs.c
+@@ -317,6 +317,7 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
+ 	struct siw_ucontext *uctx =
+ 		rdma_udata_to_drv_context(udata, struct siw_ucontext,
+ 					  base_ucontext);
++	struct siw_uresp_create_qp uresp = {};
+ 	unsigned long flags;
+ 	int num_sqe, num_rqe, rv = 0;
+ 	size_t length;
+@@ -370,11 +371,6 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
+ 	spin_lock_init(&qp->rq_lock);
+ 	spin_lock_init(&qp->orq_lock);
  
- 	for (i = 0; i < table->num_hem; ++i) {
--		obj = i * buf_chunk_size / table->obj_size;
-+		obj = (u64)i * buf_chunk_size / table->obj_size;
- 		if (table->hem[i])
- 			hns_roce_table_mhop_put(hr_dev, table, obj, 0);
+-	rv = siw_qp_add(sdev, qp);
+-	if (rv)
+-		goto err_atomic;
+-
+-
+ 	/* All queue indices are derived from modulo operations
+ 	 * on a free running 'get' (consumer) and 'put' (producer)
+ 	 * unsigned counter. Having queue sizes at power of two
+@@ -392,14 +388,14 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
+ 
+ 	if (qp->sendq == NULL) {
+ 		rv = -ENOMEM;
+-		goto err_out_xa;
++		goto err_out;
  	}
+ 	if (attrs->sq_sig_type != IB_SIGNAL_REQ_WR) {
+ 		if (attrs->sq_sig_type == IB_SIGNAL_ALL_WR)
+ 			qp->attrs.flags |= SIW_SIGNAL_ALL_WR;
+ 		else {
+ 			rv = -EINVAL;
+-			goto err_out_xa;
++			goto err_out;
+ 		}
+ 	}
+ 	qp->pd = pd;
+@@ -425,7 +421,7 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
+ 
+ 		if (qp->recvq == NULL) {
+ 			rv = -ENOMEM;
+-			goto err_out_xa;
++			goto err_out;
+ 		}
+ 		qp->attrs.rq_size = num_rqe;
+ 	}
+@@ -440,11 +436,8 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
+ 	qp->attrs.state = SIW_QP_STATE_IDLE;
+ 
+ 	if (udata) {
+-		struct siw_uresp_create_qp uresp = {};
+-
+ 		uresp.num_sqe = num_sqe;
+ 		uresp.num_rqe = num_rqe;
+-		uresp.qp_id = qp_id(qp);
+ 
+ 		if (qp->sendq) {
+ 			length = num_sqe * sizeof(struct siw_sqe);
+@@ -453,7 +446,7 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
+ 						      length, &uresp.sq_key);
+ 			if (!qp->sq_entry) {
+ 				rv = -ENOMEM;
+-				goto err_out_xa;
++				goto err_out;
+ 			}
+ 		}
+ 
+@@ -465,9 +458,23 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
+ 			if (!qp->rq_entry) {
+ 				uresp.sq_key = SIW_INVAL_UOBJ_KEY;
+ 				rv = -ENOMEM;
+-				goto err_out_xa;
++				goto err_out;
+ 			}
+ 		}
++	}
++	qp->tx_cpu = siw_get_tx_cpu(sdev);
++	if (qp->tx_cpu < 0) {
++		rv = -EINVAL;
++		goto err_out;
++	}
++	init_completion(&qp->qp_free);
++
++	rv = siw_qp_add(sdev, qp);
++	if (rv)
++		goto err_out_tx;
++
++	if (udata) {
++		uresp.qp_id = qp_id(qp);
+ 
+ 		if (udata->outlen < sizeof(uresp)) {
+ 			rv = -EINVAL;
+@@ -477,22 +484,19 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
+ 		if (rv)
+ 			goto err_out_xa;
+ 	}
+-	qp->tx_cpu = siw_get_tx_cpu(sdev);
+-	if (qp->tx_cpu < 0) {
+-		rv = -EINVAL;
+-		goto err_out_xa;
+-	}
++
+ 	INIT_LIST_HEAD(&qp->devq);
+ 	spin_lock_irqsave(&sdev->lock, flags);
+ 	list_add_tail(&qp->devq, &sdev->qp_list);
+ 	spin_unlock_irqrestore(&sdev->lock, flags);
+ 
+-	init_completion(&qp->qp_free);
+-
+ 	return 0;
+ 
+ err_out_xa:
+ 	xa_erase(&sdev->qp_xa, qp_id(qp));
++err_out_tx:
++	siw_put_tx_cpu(qp->tx_cpu);
++err_out:
+ 	if (uctx) {
+ 		rdma_user_mmap_entry_remove(qp->sq_entry);
+ 		rdma_user_mmap_entry_remove(qp->rq_entry);
 -- 
 2.53.0
 
