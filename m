@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ED8636607D;
-	Thu, 30 Jul 2026 15:46:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5033137F8D7;
+	Thu, 30 Jul 2026 15:46:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426406; cv=none; b=tdkTUuLjGFFRYdm1r4KS208cGcnMmmyybk3nb8b5NpLNZHuqUKxZx7Vj7CRwJ4eWXOqmrXtfaKFwxSOy4GmxQWUo65nzafCC9vbP588N6wLx3zGhZuZ3yeSvTuupPJS8RIuLQcEMOBT1566T1/MdL8OemkNCSMMd30/+E1ueqNg=
+	t=1785426409; cv=none; b=rAgfFGRGX1Vxo8fHSnHc+AHAzKVFkh9gCgbSPnhHQJhSXlmI81JMkKYbNN9JysLEp0DKqFNwTDzfpXeJRl4uz4pFD82yu6uyLvLma3YT+YD5bZat5bXkGaGoWyIc4f7te4cK/YrRE0OW+h6l2y54CeYEeMBZ3LEmgZuV2ghTC30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426406; c=relaxed/simple;
-	bh=NzIgRYXoyahKbT3lMVXHk2p2hv/NyXlS//8N6eAcM7U=;
+	s=arc-20240116; t=1785426409; c=relaxed/simple;
+	bh=JIJtDfgJYKUtK5tHvrdPLdQo2OlwrA5nCAh8hKY1x/k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U0xS8EAiNKH/7/Sz9PFUd5sRf4H/fRqgTj8lcByEkUFsWias3qLC/gSHnBajMWEJNnub60Nk97hIVpgQHT/5poAfi5OPO2YHRIHGT1j9peodvAEoMgjPVTP0GyKpEP5NmK2ugTzCPRdp+o+NSffAwTwv6fQHbPtkGodlx0r+Wr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TaTJIMEv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lm3kBQNChHqyYyvygy3ZIgSjdXaLI+RYtJBKod2u1Rok3Vt+wLDXdOVkP67B8l4/vGG68iz0zNoRTqUs+eZKLX4hxN1Ck9iDrEKiRnaeMFjzaHccD92A+JY97373FhkS6Rep34zxAIAjvS5OWjwfB0kcfSzuiMZ/eJPRh5i0tU0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ittdGRin; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TaTJIMEv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAAD01F000E9;
-	Thu, 30 Jul 2026 15:46:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ittdGRin"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC2AE1F00A3D;
+	Thu, 30 Jul 2026 15:46:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426405;
-	bh=9HWiYkOFe/tjzTSUTuOycv3wma8AWJPCAP879c8yWiE=;
+	s=korg; t=1785426408;
+	bh=wRIzv6XAutBQRPqdJC8ISDbBwQ9foKIGmHFNek9iz58=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TaTJIMEvly/v3u9YW45yb0yvuuLRK9IrFvFSgJI6nGznr2oWojXE2IGcLe66UYUH0
-	 8IRPeM0LiE2udC1/3HgM3jg+3lG2ZvP93VXZZ+76pq8dMU775rzetzSPdjPBbdKijH
-	 RZ+7JH6yNQItz0mYL6ENPCmlv3RsgN6i88BXFuU4=
+	b=ittdGRin+zfMCVlufFeAY6MIL1/nf2KK6rSlx74eb6bW9sdpKK/3UQ+fQtoF1BxH0
+	 jeNGH80rQ7ns4jgN+EFGWTtTHYq6EHTW3cq+3HyRvKlbos9uswuQ8vFth0oDbiAm/E
+	 bxJARuXgRrDdwQZPAOXlClscTmXkyuQ1V425k+e0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
+	Doruk Tan Ozturk <doruk@0sec.ai>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 407/602] phonet: pep: fix use-after-free in pep_get_sb()
-Date: Thu, 30 Jul 2026 16:13:19 +0200
-Message-ID: <20260730141444.517573413@linuxfoundation.org>
+Subject: [PATCH 6.12 408/602] vxlan: require CAP_NET_ADMIN in the device netns for changelink
+Date: Thu, 30 Jul 2026 16:13:20 +0200
+Message-ID: <20260730141444.539152791@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -50,48 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Doruk Tan Ozturk <doruk@0sec.ai>
 
-commit 0f71f852a96af9685858ce59fda34ecbf85c283d upstream.
+commit 3a61bd9637f3d929aa846e4eb3d98b48c26fcb0e upstream.
 
-pep_get_sb() doesn't consider that pskb_may_pull() might have relocated
-the skb data, and continue to access the older pointer, causing UAF.
+A tunnel changelink() operates on at most two netns, dev_net(dev) and
+the sticky underlay netns vxlan->net. They differ once the device is
+created in or moved to a netns other than the one the request runs in.
+The rtnl changelink path checks CAP_NET_ADMIN only against dev_net(dev),
+so a caller privileged there but not in vxlan->net can rewrite a vxlan
+device whose underlay lives in vxlan->net.
 
-Reproduced under KASAN:
+vxlan_changelink() validates and applies the new configuration against
+vxlan->net (vxlan_config_validate(vxlan->net, ...)) and can reopen the
+underlay socket in that netns, so the same reasoning as the tunnel
+changelink series applies here.
 
-  BUG: KASAN: slab-use-after-free in pep_get_sb+0x234/0x3b0
-  Read of size 1 at addr ff11000105510f50 by task repro/157
-   pep_get_sb+0x234/0x3b0
-   pipe_handler_do_rcv+0x5f7/0xa10
-   pep_do_rcv+0x203/0x410
-   __sk_receive_skb+0x471/0x4a0
-   phonet_rcv+0x5b3/0x6c0
-   __netif_receive_skb+0xcc/0x1d0
+Gate vxlan_changelink() with rtnl_dev_link_net_capable(), at the top of
+the op before any attribute is parsed, matching ipgre_changelink() and
+the rest of the "require CAP_NET_ADMIN in the device netns for
+changelink" series.
 
-Refetch the header with skb_header_pointer() after pskb_may_pull(), so
-the possibly stale pointer is no longer dereferenced. There are better
-ways to solve this, but, this is the less instrusive one.
+Found by 0sec automated security-research tooling (https://0sec.ai).
 
-Fixes: 9641458d3ec4 ("Phonet: Pipe End Point for Phonet Pipes protocol")
+Fixes: 8bcdc4f3a20b ("vxlan: add changelink support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Link: https://patch.msgid.link/20260721-phonet_get_sb_uaf-v1-1-95fd7881cc4e@debian.org
+Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
+Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Link: https://patch.msgid.link/20260716203500.70573-2-doruk@0sec.ai
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/phonet/pep.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/vxlan/vxlan_core.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/net/phonet/pep.c
-+++ b/net/phonet/pep.c
-@@ -55,6 +55,8 @@ static unsigned char *pep_get_sb(struct
- 	ph = skb_header_pointer(skb, 0, 2, &h);
- 	if (ph == NULL || ph->sb_len < 2 || !pskb_may_pull(skb, ph->sb_len))
- 		return NULL;
-+	/* pskb_may_pull() may have reallocated the head; refetch ph. */
-+	ph = skb_header_pointer(skb, 0, 2, &h);
- 	ph->sb_len -= 2;
- 	*ptype = ph->sb_type;
- 	*plen = ph->sb_len;
+--- a/drivers/net/vxlan/vxlan_core.c
++++ b/drivers/net/vxlan/vxlan_core.c
+@@ -4381,6 +4381,9 @@ static int vxlan_changelink(struct net_d
+ 	struct vxlan_rdst *dst;
+ 	int err;
+ 
++	if (!rtnl_dev_link_net_capable(dev, vxlan->net))
++		return -EPERM;
++
+ 	dst = &vxlan->default_dst;
+ 	err = vxlan_nl2conf(tb, data, dev, &conf, true, extack);
+ 	if (err)
 
 
