@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74A66372ECB;
-	Thu, 30 Jul 2026 15:07:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51C4736D50D;
+	Thu, 30 Jul 2026 15:07:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424051; cv=none; b=jc4jGfgPtrkCsfiPYi529E2pjZOVltcrKZ8UcGY+Uq+X+fn0EOnvLJqQRBwsxtnAub6sP5wXe2c7huinf+tOTOITtd+rDsnreMVcxaVGlvToI93OkKWpkO53tT4qS4AEosgkM8OwC4XDntgwgWBPNepCMQAJVrx+2vp2LizVRis=
+	t=1785424054; cv=none; b=O7f1vyJiwHHMg3nnLG7KR4NixsJPfODTErArntm7kyqr7kE3kjDkY/1q49ClbdGrAeLDUW9qtvOdnjwrQILLpm4XRbnrEK972+kr+VOLzbKqKw442QmI4ngldkuMbA77+uTlH5PeAjZqTNCpiE0BGdDvs7NoHDgDlEL00bomB00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424051; c=relaxed/simple;
-	bh=LvGn8mwYxF04ivZWkmGvIXtOHdUQuB0l4LNZBSJeK3o=;
+	s=arc-20240116; t=1785424054; c=relaxed/simple;
+	bh=nRt+qMDwgZyHTtnjfVALEJTW43BpTCcQWMVeGj2aOkc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FvpNF4qdf0FvDzqmHu/Ch1JhdNMPJT6+D7oHhFu7lxbfDP06KnbVLmVTbsDD8H6M+Ko+vJnE8KTdfR9z8UZ0RabzXD4apRVg+tJ2Q+4xN++9oF4tnqzgape/vIs+4HCRiclcOPb8JJ071t6qRxXr2S890VVDHBscSxmin88pi1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kBWRB9H9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cseNDzrWQIfCv9GH3/TjkJaOHktHnR86ypgJqYm43/V+3fn3IBZk1NuIvgWs0+6jziyRUZjJvl3pdapidjJoUfRr2leZf0+lEI5SaIpp7jcyyJj04N2cvmWggfxv5gmsvPGfN5msDJ8frMWV//1Zjkki5JjvuAnrS+hME5XiIuc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mj/xHTkm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kBWRB9H9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF8E91F000E9;
-	Thu, 30 Jul 2026 15:07:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mj/xHTkm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9582F1F000E9;
+	Thu, 30 Jul 2026 15:07:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424050;
-	bh=weHtbOpzwsetFc2HyyK1kEG4czAx9KHJXgidNYFodaw=;
+	s=korg; t=1785424053;
+	bh=pDkSeOh7xORagDVrD2ENNN8dW2pMNYjlYNxs+cvbzXE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kBWRB9H9OPMOg8v4T8cvfWAiaBhI70R2pwqK4FwT9WhPPyyU2PL5Z5+xU9pu0WlB9
-	 EfS+SKHhRH4TgO28BsjacgN9251KX71rWFSQ67bCdnSkZpDFIvPnqZwjLFNil1/riO
-	 zCPqWqWPLRb1psSqmF89nvPdbbuiHYM9G6OCWIXg=
+	b=mj/xHTkmJaiZrinUZTdn8sShuSxFXUFfYk25wJl9AAde+cNdy0aT+zUtIvJCRPGvJ
+	 1AIpKxTWCAtflRgSDDD1iJ/thXXF0O7zYdO+YrV1j81eKteAV7upElqOEM9r358LaK
+	 71x+gE0XpJGrQ/fIJ4D7PdaM0E5Y8fkY6rqM0lV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Ioana Ciornei <ioana.ciornei@nxp.com>,
+	Qingfang Deng <dqfext@gmail.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 221/675] dpaa2-eth: put MAC endpoint device on disconnect
-Date: Thu, 30 Jul 2026 16:09:11 +0200
-Message-ID: <20260730141449.839637463@linuxfoundation.org>
+Subject: [PATCH 6.18 257/675] ppp: dont store tx skb in the fastpath
+Date: Thu, 30 Jul 2026 16:09:47 +0200
+Message-ID: <20260730141450.600130493@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -52,46 +51,288 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Qingfang Deng <dqfext@gmail.com>
 
-[ Upstream commit b4b201cc93ff70150853aba03e14d314d1980ca0 ]
+[ Upstream commit 70836c8d0fe046400de8cdcf0613b2f1f6bddde3 ]
 
-fsl_mc_get_endpoint() returns the MAC endpoint device with a reference
-taken through device_find_child(). The Ethernet connect path stores that
-device in mac->mc_dev and keeps it for the lifetime of the connected MAC
-object.
+Currently, ppp->xmit_pending is used in ppp_send_frame() to pass a skb
+to ppp_push(), and holds the skb when a PPP channel cannot immediately
+transmit it. This state is redundant because the transmit queue
+(ppp->file.xq) can already handle the backlog. Furthermore, during
+normal operation, an skb is queued in file.xq only to be immediately
+dequeued, causing unnecessary overhead.
 
-However, the disconnect path only disconnects and closes the MAC before
-freeing the dpaa2_mac object. It does not drop the endpoint device
-reference stored in mac->mc_dev, so every successful connect leaks that
-device reference when the MAC is later disconnected.
+Refactor the transmit path to avoid stashing the skb when possible:
+- Remove ppp->xmit_pending.
+- Rename ppp_send_frame() to ppp_prepare_tx_skb(), and don't call
+  ppp_push() in it. It returns 1 if the skb is consumed
+  (dropped/handled) or 0 if it can be passed to ppp_push().
+- Update ppp_push() to accept the skb. It returns 1 if the skb is
+  consumed, or 0 if the channel is busy.
+- Optimize __ppp_xmit_process():
+  - Fastpath: If the queue is empty, attempt to send the skb directly
+    via ppp_push(). If busy, queue it.
+  - Slowpath: If the queue is not empty, process the backlog in
+    file.xq. Split dequeuing loop into a separate function
+    ppp_xmit_flush() so ppp_channel_push() uses that directly instead of
+    passing a NULL skb to __ppp_xmit_process().
 
-Drop the endpoint device reference after closing the MAC and before
-freeing the dpaa2_mac object.
+This simplifies the states and reduces locking in the fastpath.
 
-Fixes: 719479230893 ("dpaa2-eth: add MAC/PHY support through phylink")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Reviewed-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Reviewed-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Link: https://patch.msgid.link/20260708111738.750391-1-lgs201920130244@gmail.com
+Signed-off-by: Qingfang Deng <dqfext@gmail.com>
+Link: https://patch.msgid.link/20260303093219.234403-1-dqfext@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: ba712ecfd942 ("ppp: annotate concurrent dev->stats accesses")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ppp/ppp_generic.c | 111 ++++++++++++++++++++--------------
+ 1 file changed, 65 insertions(+), 46 deletions(-)
 
-diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
-index 18d86badd6ea73..6fd478572ef8ff 100644
---- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
-+++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
-@@ -4732,6 +4732,7 @@ static void dpaa2_eth_disconnect_mac(struct dpaa2_eth_priv *priv)
- 		dpaa2_mac_disconnect(mac);
+diff --git a/drivers/net/ppp/ppp_generic.c b/drivers/net/ppp/ppp_generic.c
+index 6d001fb1462d30..e09a916356a1d4 100644
+--- a/drivers/net/ppp/ppp_generic.c
++++ b/drivers/net/ppp/ppp_generic.c
+@@ -134,7 +134,6 @@ struct ppp {
+ 	int		debug;		/* debug flags 70 */
+ 	struct slcompress *vj;		/* state for VJ header compression */
+ 	enum NPmode	npmode[NUM_NP];	/* what to do with each net proto 78 */
+-	struct sk_buff	*xmit_pending;	/* a packet ready to go out 88 */
+ 	struct compressor *xcomp;	/* transmit packet compressor 8c */
+ 	void		*xc_state;	/* its internal state 90 */
+ 	struct compressor *rcomp;	/* receive decompressor 94 */
+@@ -265,8 +264,8 @@ struct ppp_net {
+ static int ppp_unattached_ioctl(struct net *net, struct ppp_file *pf,
+ 			struct file *file, unsigned int cmd, unsigned long arg);
+ static void ppp_xmit_process(struct ppp *ppp, struct sk_buff *skb);
+-static void ppp_send_frame(struct ppp *ppp, struct sk_buff *skb);
+-static void ppp_push(struct ppp *ppp);
++static int ppp_prepare_tx_skb(struct ppp *ppp, struct sk_buff **pskb);
++static int ppp_push(struct ppp *ppp, struct sk_buff *skb);
+ static void ppp_channel_push(struct channel *pch);
+ static void ppp_receive_frame(struct ppp *ppp, struct sk_buff *skb,
+ 			      struct channel *pch);
+@@ -1655,26 +1654,44 @@ static void ppp_setup(struct net_device *dev)
+  */
  
- 	dpaa2_mac_close(mac);
-+	put_device(&mac->mc_dev->dev);
- 	kfree(mac);
+ /* Called to do any work queued up on the transmit side that can now be done */
++static void ppp_xmit_flush(struct ppp *ppp)
++{
++	struct sk_buff *skb;
++
++	while ((skb = skb_dequeue(&ppp->file.xq))) {
++		if (unlikely(!ppp_push(ppp, skb))) {
++			skb_queue_head(&ppp->file.xq, skb);
++			return;
++		}
++	}
++	/* If there's no work left to do, tell the core net code that we can
++	 * accept some more.
++	 */
++	netif_wake_queue(ppp->dev);
++}
++
+ static void __ppp_xmit_process(struct ppp *ppp, struct sk_buff *skb)
+ {
+ 	ppp_xmit_lock(ppp);
+-	if (!ppp->closing) {
+-		ppp_push(ppp);
+-
+-		if (skb)
++	if (unlikely(ppp->closing)) {
++		kfree_skb(skb);
++		goto out;
++	}
++	if (unlikely(ppp_prepare_tx_skb(ppp, &skb)))
++		goto out;
++	/* Fastpath: No backlog, just send the new skb. */
++	if (likely(skb_queue_empty(&ppp->file.xq))) {
++		if (unlikely(!ppp_push(ppp, skb))) {
+ 			skb_queue_tail(&ppp->file.xq, skb);
+-		while (!ppp->xmit_pending &&
+-		       (skb = skb_dequeue(&ppp->file.xq)))
+-			ppp_send_frame(ppp, skb);
+-		/* If there's no work left to do, tell the core net
+-		   code that we can accept some more. */
+-		if (!ppp->xmit_pending && !skb_peek(&ppp->file.xq))
+-			netif_wake_queue(ppp->dev);
+-		else
+ 			netif_stop_queue(ppp->dev);
+-	} else {
+-		kfree_skb(skb);
++		}
++		goto out;
+ 	}
++
++	/* Slowpath: Enqueue the new skb and process backlog */
++	skb_queue_tail(&ppp->file.xq, skb);
++	ppp_xmit_flush(ppp);
++out:
+ 	ppp_xmit_unlock(ppp);
  }
  
+@@ -1761,13 +1778,15 @@ pad_compress_skb(struct ppp *ppp, struct sk_buff *skb)
+ }
+ 
+ /*
+- * Compress and send a frame.
+- * The caller should have locked the xmit path,
+- * and xmit_pending should be 0.
++ * Compress and prepare to send a frame.
++ * The caller should have locked the xmit path.
++ * Returns 1 if the skb was consumed, 0 if it can be passed to ppp_push().
++ * @pskb is updated if a compressor is in use.
+  */
+-static void
+-ppp_send_frame(struct ppp *ppp, struct sk_buff *skb)
++static int
++ppp_prepare_tx_skb(struct ppp *ppp, struct sk_buff **pskb)
+ {
++	struct sk_buff *skb = *pskb;
+ 	int proto = PPP_PROTO(skb);
+ 	struct sk_buff *new_skb;
+ 	int len;
+@@ -1788,7 +1807,7 @@ ppp_send_frame(struct ppp *ppp, struct sk_buff *skb)
+ 					      "PPP: outbound frame "
+ 					      "not passed\n");
+ 			kfree_skb(skb);
+-			return;
++			return 1;
+ 		}
+ 		/* if this packet passes the active filter, record the time */
+ 		if (!(ppp->active_filter &&
+@@ -1836,6 +1855,7 @@ ppp_send_frame(struct ppp *ppp, struct sk_buff *skb)
+ 			}
+ 			consume_skb(skb);
+ 			skb = new_skb;
++			*pskb = skb;
+ 			cp = skb_put(skb, len + 2);
+ 			cp[0] = 0;
+ 			cp[1] = proto;
+@@ -1862,6 +1882,7 @@ ppp_send_frame(struct ppp *ppp, struct sk_buff *skb)
+ 		if (!new_skb)
+ 			goto drop;
+ 		skb = new_skb;
++		*pskb = skb;
+ 	}
+ 
+ 	/*
+@@ -1873,42 +1894,38 @@ ppp_send_frame(struct ppp *ppp, struct sk_buff *skb)
+ 			goto drop;
+ 		skb_queue_tail(&ppp->file.rq, skb);
+ 		wake_up_interruptible(&ppp->file.rwait);
+-		return;
++		return 1;
+ 	}
+ 
+-	ppp->xmit_pending = skb;
+-	ppp_push(ppp);
+-	return;
++	return 0;
+ 
+  drop:
+ 	kfree_skb(skb);
+ 	++ppp->dev->stats.tx_errors;
++	return 1;
+ }
+ 
+ /*
+- * Try to send the frame in xmit_pending.
++ * Try to send the frame.
+  * The caller should have the xmit path locked.
++ * Returns 1 if the skb was consumed, 0 if not.
+  */
+-static void
+-ppp_push(struct ppp *ppp)
++static int
++ppp_push(struct ppp *ppp, struct sk_buff *skb)
+ {
+ 	struct list_head *list;
+ 	struct channel *pch;
+-	struct sk_buff *skb = ppp->xmit_pending;
+-
+-	if (!skb)
+-		return;
+ 
+ 	list = &ppp->channels;
+ 	if (list_empty(list)) {
+ 		/* nowhere to send the packet, just drop it */
+-		ppp->xmit_pending = NULL;
+ 		kfree_skb(skb);
+-		return;
++		return 1;
+ 	}
+ 
+ 	if ((ppp->flags & SC_MULTILINK) == 0) {
+ 		struct ppp_channel *chan;
++		int ret;
+ 		/* not doing multilink: send it down the first channel */
+ 		list = list->next;
+ 		pch = list_entry(list, struct channel, clist);
+@@ -1920,27 +1937,26 @@ ppp_push(struct ppp *ppp)
+ 			 * skb but linearization failed
+ 			 */
+ 			kfree_skb(skb);
+-			ppp->xmit_pending = NULL;
++			ret = 1;
+ 			goto out;
+ 		}
+ 
+-		if (chan->ops->start_xmit(chan, skb))
+-			ppp->xmit_pending = NULL;
++		ret = chan->ops->start_xmit(chan, skb);
+ 
+ out:
+ 		spin_unlock(&pch->downl);
+-		return;
++		return ret;
+ 	}
+ 
+ #ifdef CONFIG_PPP_MULTILINK
+ 	/* Multilink: fragment the packet over as many links
+ 	   as can take the packet at the moment. */
+ 	if (!ppp_mp_explode(ppp, skb))
+-		return;
++		return 0;
+ #endif /* CONFIG_PPP_MULTILINK */
+ 
+-	ppp->xmit_pending = NULL;
+ 	kfree_skb(skb);
++	return 1;
+ }
+ 
+ #ifdef CONFIG_PPP_MULTILINK
+@@ -2009,7 +2025,7 @@ static int ppp_mp_explode(struct ppp *ppp, struct sk_buff *skb)
+ 	 * performance if we have a lot of channels.
+ 	 */
+ 	if (nfree == 0 || nfree < navail / 2)
+-		return 0; /* can't take now, leave it in xmit_pending */
++		return 0; /* can't take now, leave it in transmit queue */
+ 
+ 	/* Do protocol field compression */
+ 	if (skb_linearize(skb))
+@@ -2203,8 +2219,12 @@ static void __ppp_channel_push(struct channel *pch, struct ppp *ppp)
+ 	spin_unlock(&pch->downl);
+ 	/* see if there is anything from the attached unit to be sent */
+ 	if (skb_queue_empty(&pch->file.xq)) {
+-		if (ppp)
+-			__ppp_xmit_process(ppp, NULL);
++		if (ppp) {
++			ppp_xmit_lock(ppp);
++			if (!ppp->closing)
++				ppp_xmit_flush(ppp);
++			ppp_xmit_unlock(ppp);
++		}
+ 	}
+ }
+ 
+@@ -3464,7 +3484,6 @@ static void ppp_destroy_interface(struct ppp *ppp)
+ 	}
+ #endif /* CONFIG_PPP_FILTER */
+ 
+-	kfree_skb(ppp->xmit_pending);
+ 	free_percpu(ppp->xmit_recursion);
+ 
+ 	free_netdev(ppp->dev);
 -- 
 2.53.0
 
