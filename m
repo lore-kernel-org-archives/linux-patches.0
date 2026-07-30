@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4063A3A254B;
-	Thu, 30 Jul 2026 14:41:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16A2A33D4E2;
+	Thu, 30 Jul 2026 14:41:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422512; cv=none; b=YMDptWT14V1/kt+G9Tt9AwSjzUjP3uDhn6ieSbhXcLoxX2KnPUZgH8ZNrdNyjyVQUzL6/vtctOeis82Qcaqo53LLy6fE5fImwesJauCi4ydXRquIwbpZSVR36K/6bTt8pB1oM4x4btiaFGCwEiZqXQ27Ruu+zpRfu8pSK6RYUGU=
+	t=1785422515; cv=none; b=l3Tax5WL4xof1XWDjbxjy9xeelLgMpLS0Do6NdquCFsGK4m6/8b1ecJioylVfZpgls+Egyj4JeZLVf7th0SnaFenGpBsMMGU439LiR1Xkr49eUHu+dS1knLivCDsGxnQAar57hAsl+9L711RWKXzBAWQsvR4G9sZvcPMFdcHtmo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422512; c=relaxed/simple;
-	bh=KdNobE4sctZd33s7xnECWw2gUx9cBJxSOki5OgCMWVU=;
+	s=arc-20240116; t=1785422515; c=relaxed/simple;
+	bh=AwEWqLu1S9tHdzbkVtkUr6BacpvwzyedGHkz5qHMSeM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mcSbnPrYU/yjQ3wzXhySIjc7HioDNShOHKGx6uDqMxcFcjad1cVvKNMIi09dn1KWh5na414L4Pi7Wr2IDH58KHxI8AGi5Vccnkb4rHfoNmD/mW/gmOzE6xWHEINh90qvYkAsJsCfSAuCMBgaZ+bZtu7GSzRd50Y20DWZgkBczyY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pQn4CyO7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nDzmMAxO/KLWMSOAvVk9n2YbTGX6taj64SO9eZb9YT9+e1AZklRgL28kmCBo67JOyjbCCHDJbbSPgv+rKwyh3sdsAGG5saPP4Dj18ZZX6fXxC7AX2VQam18c4Wz0axFPXzQJJa6lLYxkv6xbFjjW1yntiPwhJozdrsjN8pPsiEM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jsy0FOsp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pQn4CyO7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46EEF1F000E9;
-	Thu, 30 Jul 2026 14:41:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jsy0FOsp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F09D1F000E9;
+	Thu, 30 Jul 2026 14:41:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422510;
-	bh=yLm5A1s1/ph423yxJWdtBGi4awW9+r9+SMIakeihg2o=;
+	s=korg; t=1785422513;
+	bh=r3qai6Wm8YHBu2KVyAPjiWunwdi/ayD2qjnRG660kKg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pQn4CyO7UH3BmAU5AnGBGFgXJEkGcJByveUeox2YNJbvUWX0Y6izScgph9EpILHV7
-	 wbDd9SGlwVkWxU/es03fsc+ACfcASNOfcyeAHywcxDEkQNZJMG4TwIs/Ci7Vra/v4I
-	 3ROFbbVb9FFAXrwWh5sPK2n5aZJaWtIdLeg2GuKM=
+	b=jsy0FOspgR0jR6oF9HYd1IJLprhQDje5u9xTFByjIFh+CikEU38mAYUM78FaRepQi
+	 zSD0M2yitRPGPl67tLA3mSCZyS6FuTqmqG1Cy8GVMt6DuWMeFC1/j2mtcwVSxLYim6
+	 HgZk9RVLBI6j3qKhFNI/xlXXnx6YHLhxgfa7y5N4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luigi Santivetti <luigi.santivetti@imgtec.com>,
-	Alessio Belle <alessio.belle@imgtec.com>
-Subject: [PATCH 7.1 409/744] drm/imagination: fix error checking of pvr_vm_context_lookup()
-Date: Thu, 30 Jul 2026 16:11:22 +0200
-Message-ID: <20260730141452.988987237@linuxfoundation.org>
+	Alex Hung <alex.hung@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	George Zhang <george.zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 7.1 458/744] drm/amd/display: Fix backlight max_brightness to match exported range
+Date: Thu, 30 Jul 2026 16:12:11 +0200
+Message-ID: <20260730141454.031387781@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -50,87 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luigi Santivetti <luigi.santivetti@imgtec.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit cf385cf6e713eba0720651174dac0b2d2f5bb8f8 upstream.
+commit f1b5d8f9cc54ae8a2567ac126867ae488e1bf625 upstream.
 
-Since pvr_vm_context_lookup() returns either NULL or a pointer, then stop
-using IS_ERR() for checking the return value.
+[Why]
+FWTS autobrightness fails on eDP panels because actual_brightness can
+read higher than the advertised max_brightness (e.g. 63576 vs 62451).
 
-Using IS_ERR() leads to the kernel oops reported below. It can be
-reproduced by passing an invalid VM context handle from userspace to the
-DRM_IOCTL_PVR_CREATE_CONTEXT ioctl.
+The conversion helpers expose the firmware PWM range to userspace as
+[0..max].  But max_brightness is advertised as (max - min), which is
+smaller.  So reading the level can return a value above max_brightness.
 
-[   92.733119] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000148
-[   92.742042] Mem abort info:
-[   92.744890]   ESR = 0x0000000096000004
-[   92.748686]   EC = 0x25: DABT (current EL), IL = 32 bits
-[   92.754020]   SET = 0, FnV = 0
-[   92.757154]   EA = 0, S1PTW = 0
-[   92.760337]   FSC = 0x04: level 0 translation fault
-[   92.765243] Data abort info:
-[   92.768129]   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
-[   92.773626]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
-[   92.778763]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
-[   92.784098] user pgtable: 4k pages, 48-bit VAs, pgdp=000000088ed23000
-[   92.790550] [0000000000000148] pgd=0000000000000000, p4d=0000000000000000
-[   92.797381] Internal error: Oops: 0000000096000004 [#1]  SMP
-[   92.803027] Modules linked in: powervr
-[   92.852533] CPU: 0 UID: 0 PID: 409 Comm: triangle Not tainted 7.1.0-rc5-g98b46e693b91 #1 PREEMPT
-[   92.861385] Hardware name: Texas Instruments AM68 SK (DT)
-[   92.866766] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[   92.873709] pc : pvr_vm_get_fw_mem_context+0x0/0xc [powervr]
-[   92.879376] lr : pvr_queue_create+0x26c/0x440 [powervr]
-[   92.884595] sp : ffff8000837fbb00
-[   92.887895] x29: ffff8000837fbb60 x28: 0000000000000000 x27: ffff8000837fbce8
-[   92.895015] x26: ffff000807f61a40 x25: ffff000807f61a00 x24: ffff000807f64400
-[   92.902135] x23: ffff00080a5ab000 x22: ffff800079b24730 x21: ffff000807f61800
-[   92.909254] x20: ffff00080999e680 x19: 0000000000000000 x18: 0000000000000000
-[   92.916373] x17: 0000000000000000 x16: 0000000000000000 x15: 0000000000000001
-[   92.923492] x14: 0000000000000000 x13: 0000000000000002 x12: ffff80008145b298
-[   92.930611] x11: ffff8000844e5000 x10: ffff80008165a130 x9 : 0000000000000100
-[   92.937730] x8 : 0000000000000001 x7 : ffff0008076b27e0 x6 : ffff00080ec43b7c
-[   92.944850] x5 : ffff00080ec43b78 x4 : 0000000000000000 x3 : ffff00080999e680
-[   92.951968] x2 : 0000000000000000 x1 : 0000000000000000 x0 : 0000000000000000
-[   92.959088] Call trace:
-[   92.961521]  pvr_vm_get_fw_mem_context+0x0/0xc [powervr] (P)
-[   92.967173]  pvr_context_create+0x190/0x410 [powervr]
-[   92.972218]  pvr_ioctl_create_context+0x44/0x8c [powervr]
-[   92.977608]  drm_ioctl_kernel+0xbc/0x124 [drm]
-[   92.982127]  drm_ioctl+0x1f8/0x4dc [drm]
-[   92.986098]  __arm64_sys_ioctl+0xac/0x104
-[   92.990102]  invoke_syscall+0x54/0x10c
-[   92.993842]  el0_svc_common.constprop.0+0x40/0xe0
-[   92.998532]  do_el0_svc+0x1c/0x28
-[   93.001835]  el0_svc+0x38/0x11c
-[   93.004969]  el0t_64_sync_handler+0xa0/0xe4
-[   93.009139]  el0t_64_sync+0x198/0x19c
-[   93.012792] Code: aa1703e0 d2800014 95cb0ba4 17ffffe8 (f940a400)
-[   93.018869] ---[ end trace 0000000000000000 ]---
+This regressed in commit 4b61b8a39051 ("drm/amd/display: Add debugging
+message for brightness caps"), which changed max_brightness to
+(max - min) and undid commit 8dbd72cb7900 ("drm/amd/display: Export full
+brightness range to userspace").
 
-Fixes: d2d79d29bb98 ("drm/imagination: Implement context creation/destruction ioctls")
+[How]
+Advertise max_brightness as max, and scale the initial AC/DC brightness
+against max too.  Update the KUnit expectations to match.
+
+Fixes: 4b61b8a39051 ("drm/amd/display: Add debugging message for brightness caps")
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: George Zhang <george.zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit bd9e2b5b0473c75abc0f4134dfe79ecbfb16610d)
 Cc: stable@vger.kernel.org
-Signed-off-by: Luigi Santivetti <luigi.santivetti@imgtec.com>
-Reviewed-by: Alessio Belle <alessio.belle@imgtec.com>
-Link: https://patch.msgid.link/20260707-staging-ddkopsrc-2435-v1-1-24e160d44476@imgtec.com
-Signed-off-by: Alessio Belle <alessio.belle@imgtec.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/imagination/pvr_context.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/imagination/pvr_context.c
-+++ b/drivers/gpu/drm/imagination/pvr_context.c
-@@ -309,8 +309,8 @@ int pvr_context_create(struct pvr_file *
- 		goto err_free_ctx;
- 
- 	ctx->vm_ctx = pvr_vm_context_lookup(pvr_file, args->vm_context_handle);
--	if (IS_ERR(ctx->vm_ctx)) {
--		err = PTR_ERR(ctx->vm_ctx);
-+	if (!ctx->vm_ctx) {
-+		err = -EINVAL;
- 		goto err_free_ctx;
- 	}
- 
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -5383,11 +5383,11 @@ amdgpu_dm_register_backlight_device(stru
+ 	caps = &dm->backlight_caps[aconnector->bl_idx];
+ 	if (get_brightness_range(caps, &min, &max)) {
+ 		if (power_supply_is_system_supplied() > 0)
+-			props.brightness = DIV_ROUND_CLOSEST((max - min) * caps->ac_level, 100);
++			props.brightness = DIV_ROUND_CLOSEST(max * caps->ac_level, 100);
+ 		else
+-			props.brightness = DIV_ROUND_CLOSEST((max - min) * caps->dc_level, 100);
++			props.brightness = DIV_ROUND_CLOSEST(max * caps->dc_level, 100);
+ 		/* min is zero, so max needs to be adjusted */
+-		props.max_brightness = max - min;
++		props.max_brightness = max;
+ 		drm_dbg(drm, "Backlight caps: min: %d, max: %d, ac %d, dc %d\n", min, max,
+ 			caps->ac_level, caps->dc_level);
+ 	} else
 
 
