@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F7D1432E6E;
-	Thu, 30 Jul 2026 14:32:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C99BA429802;
+	Thu, 30 Jul 2026 14:32:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421935; cv=none; b=iErcGHGPgGO0LpWjQHHnKkAXV//u0sO9P17fXmXzd3UAzDSbfwcDn/NNqpYRFlzi831FYyW/KHHfkR4xqYVQuPEHud183bs/Km8JSOWI+UNThfPNu4q2k3m4BnEG/gdkK9cBlYKW0UB/1XvQr0oNTU6SrqlpO+ggk3q18fKzzOU=
+	t=1785421939; cv=none; b=k0VnvwyMEezBQvP60gc+hlY+hvsIhzIM97uNnCVMkXtypIZheKUJmTuXK2FcyaM+x/mYTVxoQUgFwQ8JS1SBu53DtO54oJgT4LXeXocDXB4QZcCWlL/cSqeKlYpV7pC0qOC41PfMwbvEEtC26vKyBf0mdf0Mz2NQePAJa5nRD6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421935; c=relaxed/simple;
-	bh=Go9iwKs/SjbdnfA9CEwE4QEbWgaZH0Xo0i2Zny7bIAA=;
+	s=arc-20240116; t=1785421939; c=relaxed/simple;
+	bh=dsaEieAi8Ok5cf6wFC7Ayqgl1ZL7tSdygNCy5QAeLGg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CkdS7gY9MOp+tDSeQMabYT31iG19XzX5O9WkWjPjctyh/wuUZO/L5UlnQ6FuzInX08vVaF2/U/0TxCEqPrTfllKALw7IDS+5Bejb+jf6+jDS8/JOYDfL+JYzWVFRDS2uytQsMHMa5X2ESiw754VysZUApmE5e88tuHJJFvZEm9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MKGFNbO5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oUgiaDMTEqqtKrshXWTxIc1fCu4R+wvBTlTzxFJUoauCNlRIsrVSWjQpFgS63lynPLBeToxJg5AQrDgPBEpkcSTfB6O58glxGfBVasoXjkDYpVqUcF6qyvXnQ7WQzigZBznTAroLkREFpmBXbsGVEK6x+rJQMrtysuFn+IVPzbY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zV6xMM8i; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MKGFNbO5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4A541F000E9;
-	Thu, 30 Jul 2026 14:32:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zV6xMM8i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C85FF1F00A3A;
+	Thu, 30 Jul 2026 14:32:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421934;
-	bh=LeLPIeN2jDKMQWuQgk7gKOyeB0beUIbX+0g4Og5Vm0c=;
+	s=korg; t=1785421937;
+	bh=ow3tv6asvVZw/5J2aKrWHwjmPh9hT81VQur232X5J7g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MKGFNbO5Pj++AG2nzfVaY3PCujVALYPVM0fQwQFBUjo0Dr73f/Uy8ILMdhMmV/e2E
-	 VuGVTGYefzoIu0KJ0SUVQNBnu7m9HQrHPnojkY3rc3RYfHtyEtjZm7rNZI7LSWI1r3
-	 May/mo7a4+CniXFl0GNE2pvROBf/bzFG+AvcDHQw=
+	b=zV6xMM8itiw+vpQqjy6ebMIpNcQCZcMjuWora8eYvGlqnlVYG5/7/eKuCPKn6bqpT
+	 Dcq9+L3PfnMI4cKxN1cYuzj9WMzw9+NuKGr0sW+jFXwubucxtrzwEErL/fHZ7n+a0M
+	 Dof89N/GX7c2JlevRnNsMfnu6/qzt+vvnYN0GRnA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Baffo <marco@mandelbit.com>,
-	Antonio Quartulli <antonio@openvpn.net>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 225/744] ovpn: use monotonic clock for peer keepalive timeouts
-Date: Thu, 30 Jul 2026 16:08:18 +0200
-Message-ID: <20260730141449.068475700@linuxfoundation.org>
+Subject: [PATCH 7.1 226/744] hwmon: occ: validate poll response sensor blocks
+Date: Thu, 30 Jul 2026 16:08:19 +0200
+Message-ID: <20260730141449.091727537@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -51,78 +51,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marco Baffo <marco@mandelbit.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit f7e6287ccd3abeed9e638b581dc3fdf742106ba3 ]
+[ Upstream commit 70e76e700fc6c46afb4e17aec099a1ea089b4a22 ]
 
-Replace ktime_get_real_seconds() with the monotonic
-ktime_get_boottime_seconds() to ensure the keepalive mechanism is robust
-against system clock modifications.
+The OCC poll response parser walks a counted list of sensor data blocks.
+It used the static backing-array capacity as the parse boundary, but a
+transport response makes only data_length bytes current and valid. A
+truncated response can therefore make the parser consume a block header or
+block extent outside the current response.
 
-Right now, the driver uses ktime_get_real_seconds() to track peer
-timeouts, relying on the system wall-clock.
+Use data_length as the parent boundary, prove the fixed poll header and
+each current block header before reading them, and prove the complete block
+before advancing. Keep parsed sensor metadata local until the complete
+response has passed validation, then publish it. Propagate
+malformed-response errors before publishing the OCC as active.
 
-An administrative time adjustment or an NTP sync that steps the clock
-forward can cause `now' to instantly exceed `last_recv + timeout'.
-
-When this occurs, the driver artificially expires healthy peers.
-Depending on the OpenVPN user-space configuration, this triggers a
-premature tunnel restart (if --keepalive or --ping-restart is used) or
-a complete disconnection of the client (if --ping-exit is used).
-
-Fixes: 3ecfd9349f40 ("ovpn: implement keepalive mechanism")
-Signed-off-by: Marco Baffo <marco@mandelbit.com>
-Signed-off-by: Antonio Quartulli <antonio@openvpn.net>
+Fixes: aa195fe49b03 ("hwmon (occ): Parse OCC poll response")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://lore.kernel.org/r/20260720115826.14813-1-pengpeng@iscas.ac.cn
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ovpn/io.c   | 4 ++--
- drivers/net/ovpn/peer.c | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/hwmon/occ/common.c | 38 ++++++++++++++++++++++++++++++--------
+ 1 file changed, 30 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/ovpn/io.c b/drivers/net/ovpn/io.c
-index a6b777a9c2d9a2..9a66d693039a3c 100644
---- a/drivers/net/ovpn/io.c
-+++ b/drivers/net/ovpn/io.c
-@@ -142,7 +142,7 @@ void ovpn_decrypt_post(void *data, int ret)
- 	}
+diff --git a/drivers/hwmon/occ/common.c b/drivers/hwmon/occ/common.c
+index e18e80e832fd3f..175208d712b06e 100644
+--- a/drivers/hwmon/occ/common.c
++++ b/drivers/hwmon/occ/common.c
+@@ -1052,32 +1052,49 @@ static int occ_setup_sensor_attrs(struct occ *occ)
+ }
  
- 	/* keep track of last received authenticated packet for keepalive */
--	WRITE_ONCE(peer->last_recv, ktime_get_real_seconds());
-+	WRITE_ONCE(peer->last_recv, ktime_get_boottime_seconds());
- 
- 	rcu_read_lock();
- 	sock = rcu_dereference(peer->sock);
-@@ -294,7 +294,7 @@ void ovpn_encrypt_post(void *data, int ret)
- 
- 	ovpn_peer_stats_increment_tx(&peer->link_stats, orig_len);
- 	/* keep track of last sent packet for keepalive */
--	WRITE_ONCE(peer->last_sent, ktime_get_real_seconds());
-+	WRITE_ONCE(peer->last_sent, ktime_get_boottime_seconds());
- 	/* skb passed down the stack - don't free it */
- 	skb = NULL;
- err_unlock:
-diff --git a/drivers/net/ovpn/peer.c b/drivers/net/ovpn/peer.c
-index 7dedbe54a37cfb..9c82078146bbaf 100644
---- a/drivers/net/ovpn/peer.c
-+++ b/drivers/net/ovpn/peer.c
-@@ -45,7 +45,7 @@ static void unlock_ovpn(struct ovpn_priv *ovpn,
-  */
- void ovpn_peer_keepalive_set(struct ovpn_peer *peer, u32 interval, u32 timeout)
+ /* only need to do this once at startup, as OCC won't change sensors on us */
+-static void occ_parse_poll_response(struct occ *occ)
++static int occ_parse_poll_response(struct occ *occ)
  {
--	time64_t now = ktime_get_real_seconds();
-+	time64_t now = ktime_get_boottime_seconds();
+ 	unsigned int i, old_offset, offset = 0, size = 0;
++	u16 data_length;
+ 	struct occ_sensor *sensor;
+-	struct occ_sensors *sensors = &occ->sensors;
++	struct occ_sensors parsed = {};
++	struct occ_sensors *sensors = &parsed;
+ 	struct occ_response *resp = &occ->resp;
+ 	struct occ_poll_response *poll =
+ 		(struct occ_poll_response *)&resp->data[0];
+ 	struct occ_poll_response_header *header = &poll->header;
+ 	struct occ_sensor_data_block *block = &poll->block;
  
- 	netdev_dbg(peer->ovpn->dev,
- 		   "scheduling keepalive for peer %u: interval=%u timeout=%u\n",
-@@ -1357,7 +1357,7 @@ void ovpn_peer_keepalive_work(struct work_struct *work)
- {
- 	struct ovpn_priv *ovpn = container_of(work, struct ovpn_priv,
- 					      keepalive_work.work);
--	time64_t next_run = 0, now = ktime_get_real_seconds();
-+	time64_t next_run = 0, now = ktime_get_boottime_seconds();
- 	LLIST_HEAD(release_list);
++	data_length = get_unaligned_be16(&resp->data_length);
++	if (data_length < sizeof(*header) || data_length > OCC_RESP_DATA_BYTES) {
++		dev_err(occ->bus_dev, "invalid OCC poll response length %u\n",
++			data_length);
++		return -EMSGSIZE;
++	}
++
+ 	dev_info(occ->bus_dev, "OCC found, code level: %.16s\n",
+ 		 header->occ_code_level);
  
- 	spin_lock_bh(&ovpn->lock);
+ 	for (i = 0; i < header->num_sensor_data_blocks; ++i) {
+ 		block = (struct occ_sensor_data_block *)((u8 *)block + offset);
++		if (size + sizeof(*header) + sizeof(block->header) >
++		    data_length) {
++			dev_err(occ->bus_dev,
++				"truncated OCC sensor block header\n");
++			return -EMSGSIZE;
++		}
++
+ 		old_offset = offset;
+ 		offset = (block->header.num_sensors *
+ 			  block->header.sensor_length) + sizeof(block->header);
+-		size += offset;
+ 
+ 		/* validate all the length/size fields */
+-		if ((size + sizeof(*header)) >= OCC_RESP_DATA_BYTES) {
+-			dev_warn(occ->bus_dev, "exceeded response buffer\n");
+-			return;
++		if (size + sizeof(*header) + offset > data_length) {
++			dev_err(occ->bus_dev,
++				"exceeded OCC poll response length\n");
++			return -EMSGSIZE;
+ 		}
++		size += offset;
+ 
+ 		dev_dbg(occ->bus_dev, " %04x..%04x: %.4s (%d sensors)\n",
+ 			old_offset, offset - 1, block->header.eye_catcher,
+@@ -1107,6 +1124,9 @@ static void occ_parse_poll_response(struct occ *occ)
+ 
+ 	dev_dbg(occ->bus_dev, "Max resp size: %u+%zd=%zd\n", size,
+ 		sizeof(*header), size + sizeof(*header));
++	occ->sensors = parsed;
++
++	return 0;
+ }
+ 
+ int occ_active(struct occ *occ, bool active)
+@@ -1138,10 +1158,12 @@ int occ_active(struct occ *occ, bool active)
+ 			goto unlock;
+ 		}
+ 
+-		occ->active = true;
+ 		occ->next_update = jiffies + OCC_UPDATE_FREQUENCY;
+-		occ_parse_poll_response(occ);
++		rc = occ_parse_poll_response(occ);
++		if (rc)
++			goto unlock;
+ 
++		occ->active = true;
+ 		rc = occ_setup_sensor_attrs(occ);
+ 		if (rc) {
+ 			dev_err(occ->bus_dev,
 -- 
 2.53.0
 
