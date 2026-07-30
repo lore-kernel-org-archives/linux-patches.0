@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21A2335C68A;
-	Thu, 30 Jul 2026 14:31:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15A2F33D50F;
+	Thu, 30 Jul 2026 14:31:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421917; cv=none; b=LXvNNAKdovAXSc6aY3tBM8IaTV9JHdBMaHZoZ7fUlUGFRGX9iZzmv41ByZHF6IlxiBJaPaC1eZElag6RO4fW5Z+SQZH7bx++Sf7vLgeQcQu+0pbcDz9MXIXSXJsO906ScDaInGGe6YcFxzBFY0XH8g0fl+kjgYY5erx+dDJfo5s=
+	t=1785421922; cv=none; b=qep8jM/bAUXgWdPJGiA4nj0ZOiHDOljKdt1Ok+G7QcmzdrpKNB+zvtayAlxQDiDPtBsYpfL6m0Hr2f40ECR1AWuDp9OuDIMgZyPm1vnmfx46ShJpKCozwv/2FLHV2moa/xe/juLij4nDcvSfvxsZTfE9O3/qSDiRU+N0CV2sJP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421917; c=relaxed/simple;
-	bh=T3sq8UEYZLjzlAnV7luGOhyJ7bPD6SdDhC7cI7soReo=;
+	s=arc-20240116; t=1785421922; c=relaxed/simple;
+	bh=6lvPuFh3YdhvrsF4KC50VVTMqEWt/rnpTCmNEXSpknA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FIv4aZ/MaAR4GxLEkc+imWvc5HScSZPr91KlicS9Bi9KWCpMVeMz6wntjdE+GrMPiXp6HhjuUi1xAouYjCTwjZ1YSSg6nx91psoIEdq0oXPCHNrNMjAkWl84H9foyBYH4Zk4sDua738BEQAjFIOMU5LJybg9hjFOAReb6ApUvv4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zl1Cx7dt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ied0J1My77urwUt+xiptxXO2uUvHNYqA2PRso7RZYD6yAn7SuGY+t84lhyRRxlSCb1ntYzCkS0BuG4EYerTle7caDDbiiThU/pXdcg20LelvMa32PeiUTgjBJg0S/rN141fIte9I0455LXya7Eko9DWOHu8pM5NsBF37Kzpv1eg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gM1s/5SO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zl1Cx7dt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C8DD1F000E9;
-	Thu, 30 Jul 2026 14:31:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gM1s/5SO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BD661F000E9;
+	Thu, 30 Jul 2026 14:31:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421916;
-	bh=LpthaF81U69cwwCD861R496O5c0320iRVtHIMWDmods=;
+	s=korg; t=1785421919;
+	bh=G1gDSOAHodvdebAnXffgAeLsg9kvuVdnmsnCNSw4CRY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zl1Cx7dtCTycFNA/48mBSpsdPSEsoTWF6iQ/s1+KqVRhM8+P5XG4YcNfJ4FDIpbn+
-	 e0J+tVTKp/ONpLt7rKBqWYFxK/7DRYcdKM6VCFKq11UkP1yHwYgVCLhRMMl5/uyNVC
-	 OIRLFrZ3umJaDGJQoTQYpEJFMEkZL9W5QPmV5RzU=
+	b=gM1s/5SO3MlOhUWO170jk06NY2FsOIejooTHF3w4CWXVSaFTH4LIACsVZGav4s5Wj
+	 3pOiYOdVj+UIr2PW8sdtLlMiSencOLbxQSH6C71+hzsRInC/Q71X6taIY4G0p5bBvV
+	 HyAVSvVJtv4ELFhBvgeZ+7nioAqhsde8RW3S6lSQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Tung Nguyen <tung.quang.nguyen@est.tech>,
-	Weiming Shi <bestswngs@gmail.com>,
+	Chenguang Zhao <zhaochenguang@kylinos.cn>,
+	Jiawen Wu <jiawenwu@trustnetic.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 261/744] tipc: serialize udp bearer replicast list updates
-Date: Thu, 30 Jul 2026 16:08:54 +0200
-Message-ID: <20260730141449.841588820@linuxfoundation.org>
+Subject: [PATCH 7.1 262/744] net: txgbe: fix heap overflow when reading module EEPROM
+Date: Thu, 30 Jul 2026 16:08:55 +0200
+Message-ID: <20260730141449.863258324@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -53,191 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Chenguang Zhao <zhaochenguang@kylinos.cn>
 
-[ Upstream commit 350e592ff4e30e48ffb55e142d11a73e63f4869c ]
+[ Upstream commit 6a905a71fd43ce8b45f05044b11491337f232c9d ]
 
-tipc_udp_rcast_add() and cleanup_bearer() both update ub->rcast.list with
-list_add_rcu() / list_del_rcu(), but nothing serializes them. The add runs
-from the encap receive softirq (via tipc_udp_rcast_disc()) without
-rtnl_lock(), so it can race the cleanup delete and corrupt the list:
+txgbe_read_eeprom_hostif() always copies round_up(length, 4) bytes
+into the caller buffer, which ethtool allocates with exactly 'length'
+bytes. A non-4-aligned length therefore causes an out-of-bounds write.
+Copy only the remaining bytes on the final dword instead.
 
-  list_del corruption. prev->next should be ffff8880298d7ab8,
-    but was ffff88802449ad38. (prev=ffff888027e3ec98)
-  kernel BUG at lib/list_debug.c:62!
-  RIP: __list_del_entry_valid_or_report+0x17a/0x200
-  Workqueue: events cleanup_bearer
-  Call Trace:
-   cleanup_bearer (net/tipc/udp_media.c:811)
-   process_one_work (kernel/workqueue.c:3302)
-   worker_thread (kernel/workqueue.c:3466)
-
-The bearer can be enabled from an unprivileged user namespace, as the
-TIPCv2 generic-netlink ops carry no GENL_ADMIN_PERM.
-
-Add a spinlock to struct udp_bearer and take it around the list_add_rcu()
-in tipc_udp_rcast_add() and the list_del_rcu() loop in cleanup_bearer() so
-the two writers can no longer corrupt the list.
-
-Reject a duplicate peer under the same lock before allocating, and remove
-tipc_udp_is_known_peer(). The old lockless pre-check in
-tipc_udp_rcast_disc() was racy: two softirqs discovering the same peer
-could both find it absent and add it twice.
-
-cleanup_bearer() runs from a workqueue after tipc_udp_disable() clears the
-bearer's up bit, so an encap softirq can still reach tipc_udp_rcast_add()
-and add a peer after cleanup_bearer() has already emptied the list, leaking
-that entry when the bearer is freed. Mark the bearer disabled under
-rcast_lock once the list is emptied and refuse further additions.
-
-Fixes: ef20cd4dd163 ("tipc: introduce UDP replicast")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Suggested-by: Tung Nguyen <tung.quang.nguyen@est.tech>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
-Link: https://patch.msgid.link/20260716025203.9332-2-bestswngs@gmail.com
+Signed-off-by: Chenguang Zhao <zhaochenguang@kylinos.cn>
+Reviewed-by: Jiawen Wu <jiawenwu@trustnetic.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Fixes: 9b97b6b5635b ("net: txgbe: support getting module EEPROM by page")
+Link: https://patch.msgid.link/20260713085111.1481884-1-chenguang.zhao@linux.dev
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/udp_media.c | 56 +++++++++++++++++++++-----------------------
- 1 file changed, 27 insertions(+), 29 deletions(-)
+ drivers/net/ethernet/wangxun/txgbe/txgbe_aml.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/net/tipc/udp_media.c b/net/tipc/udp_media.c
-index 62ae7f5b58409c..230645cc01c921 100644
---- a/net/tipc/udp_media.c
-+++ b/net/tipc/udp_media.c
-@@ -94,6 +94,8 @@ struct udp_replicast {
-  * @ifindex:	local address scope
-  * @work:	used to schedule deferred work on a bearer
-  * @rcast:	associated udp_replicast container
-+ * @rcast_lock:	serialize updates to @rcast.list against concurrent updaters
-+ * @disabled:	bearer is being torn down; reject further @rcast.list additions
-  */
- struct udp_bearer {
- 	struct tipc_bearer __rcu *bearer;
-@@ -101,6 +103,8 @@ struct udp_bearer {
- 	u32 ifindex;
- 	struct work_struct work;
- 	struct udp_replicast rcast;
-+	spinlock_t rcast_lock;
-+	bool disabled;
- };
+diff --git a/drivers/net/ethernet/wangxun/txgbe/txgbe_aml.c b/drivers/net/ethernet/wangxun/txgbe/txgbe_aml.c
+index 8fc32df8e49a44..479c83f5d6454c 100644
+--- a/drivers/net/ethernet/wangxun/txgbe/txgbe_aml.c
++++ b/drivers/net/ethernet/wangxun/txgbe/txgbe_aml.c
+@@ -96,11 +96,13 @@ int txgbe_read_eeprom_hostif(struct wx *wx,
+ 	dword_len = round_up(length, 4) >> 2;
  
- static int tipc_udp_is_mcast_addr(struct udp_media_addr *addr)
-@@ -278,26 +282,6 @@ static int tipc_udp_send_msg(struct net *net, struct sk_buff *skb,
- 	return err;
- }
- 
--static bool tipc_udp_is_known_peer(struct tipc_bearer *b,
--				   struct udp_media_addr *addr)
--{
--	struct udp_replicast *rcast, *tmp;
--	struct udp_bearer *ub;
--
--	ub = rcu_dereference_rtnl(b->media_ptr);
--	if (!ub) {
--		pr_err_ratelimited("UDP bearer instance not found\n");
--		return false;
--	}
--
--	list_for_each_entry_safe(rcast, tmp, &ub->rcast.list, list) {
--		if (!memcmp(&rcast->addr, addr, sizeof(struct udp_media_addr)))
--			return true;
--	}
--
--	return false;
--}
--
- static int tipc_udp_rcast_add(struct tipc_bearer *b,
- 			      struct udp_media_addr *addr)
- {
-@@ -308,16 +292,34 @@ static int tipc_udp_rcast_add(struct tipc_bearer *b,
- 	if (!ub)
- 		return -ENODEV;
- 
-+	spin_lock_bh(&ub->rcast_lock);
-+	if (ub->disabled) {
-+		spin_unlock_bh(&ub->rcast_lock);
-+		return 0;
-+	}
-+	list_for_each_entry(rcast, &ub->rcast.list, list) {
-+		if (!memcmp(&rcast->addr, addr, sizeof(*addr))) {
-+			spin_unlock_bh(&ub->rcast_lock);
-+			return 0;
-+		}
-+	}
+ 	for (i = 0; i < dword_len; i++) {
++		u32 copy_len = min_t(u32, 4, length - i * 4);
 +
- 	rcast = kmalloc_obj(*rcast, GFP_ATOMIC);
--	if (!rcast)
-+	if (!rcast) {
-+		spin_unlock_bh(&ub->rcast_lock);
- 		return -ENOMEM;
-+	}
+ 		value = rd32a(wx, WX_FW2SW_MBOX, i + offset);
+ 		le32_to_cpus(&value);
  
- 	if (dst_cache_init(&rcast->dst_cache, GFP_ATOMIC)) {
-+		spin_unlock_bh(&ub->rcast_lock);
- 		kfree(rcast);
- 		return -ENOMEM;
+-		memcpy(data, &value, 4);
+-		data += 4;
++		memcpy(data, &value, copy_len);
++		data += copy_len;
  	}
  
- 	memcpy(&rcast->addr, addr, sizeof(struct udp_media_addr));
-+	list_add_rcu(&rcast->list, &ub->rcast.list);
-+	b->bcast_addr.broadcast = TIPC_REPLICAST_SUPPORT;
-+	spin_unlock_bh(&ub->rcast_lock);
- 
- 	if (ntohs(addr->proto) == ETH_P_IP)
- 		pr_info("New replicast peer: %pI4\n", &rcast->addr.ipv4);
-@@ -325,8 +327,6 @@ static int tipc_udp_rcast_add(struct tipc_bearer *b,
- 	else if (ntohs(addr->proto) == ETH_P_IPV6)
- 		pr_info("New replicast peer: %pI6\n", &rcast->addr.ipv6);
- #endif
--	b->bcast_addr.broadcast = TIPC_REPLICAST_SUPPORT;
--	list_add_rcu(&rcast->list, &ub->rcast.list);
  	return 0;
- }
- 
-@@ -361,9 +361,6 @@ static int tipc_udp_rcast_disc(struct tipc_bearer *b, struct sk_buff *skb)
- 		return 0;
- 	}
- 
--	if (likely(tipc_udp_is_known_peer(b, &src)))
--		return 0;
--
- 	return tipc_udp_rcast_add(b, &src);
- }
- 
-@@ -644,9 +641,6 @@ int tipc_udp_nl_bearer_add(struct tipc_bearer *b, struct nlattr *attr)
- 		return -EINVAL;
- 	}
- 
--	if (tipc_udp_is_known_peer(b, &addr))
--		return 0;
--
- 	return tipc_udp_rcast_add(b, &addr);
- }
- 
-@@ -679,6 +673,7 @@ static int tipc_udp_enable(struct net *net, struct tipc_bearer *b,
- 		return -ENOMEM;
- 
- 	INIT_LIST_HEAD(&ub->rcast.list);
-+	spin_lock_init(&ub->rcast_lock);
- 
- 	if (!attrs[TIPC_NLA_BEARER_UDP_OPTS])
- 		goto err;
-@@ -819,10 +814,13 @@ static void cleanup_bearer(struct work_struct *work)
- 	struct udp_replicast *rcast, *tmp;
- 	struct tipc_net *tn;
- 
-+	spin_lock_bh(&ub->rcast_lock);
- 	list_for_each_entry_safe(rcast, tmp, &ub->rcast.list, list) {
- 		list_del_rcu(&rcast->list);
- 		call_rcu_hurry(&rcast->rcu, rcast_free_rcu);
- 	}
-+	ub->disabled = true;
-+	spin_unlock_bh(&ub->rcast_lock);
- 
- 	tn = tipc_net(sock_net(ub->sk));
- 
 -- 
 2.53.0
 
