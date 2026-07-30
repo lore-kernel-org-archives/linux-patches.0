@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFF213C1D6D;
-	Thu, 30 Jul 2026 14:25:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5E1633D4E2;
+	Thu, 30 Jul 2026 14:25:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421531; cv=none; b=NE7FAUg9FdNW3fUPWzib4R5+QLr/DeQFJNfhmCFHoFslCh5GkKw0mVvANJtD7X8tYupOoTINjfrPUCGHr3B1XVUMR0e1wLUT5T1lFlVheS1QNLvpTABXtH2yFwr57UX6sEblbioBUrGtYHJ4u35BxhMsZNd30EJVTFj/2itNpKU=
+	t=1785421534; cv=none; b=SDLUu3MHZsrjr/B2G+OGxhr42kwSJsqhKUMxMFT5fNi9+FZSK+/RL0/l5tzmtfw6YovjRVsI2Cld00OvzNTtuKPKulMVJJDRJxta4C4/aSbq5+LBVH9MSLdUhfbDwH4hJy7oV5GAS2gsxhsA0dzwyshj1V0kBa/DitqyYP2ZXwg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421531; c=relaxed/simple;
-	bh=KbQlvpfOVN/CtdvfboPtfMwO0MIvPZepgXt09vQ8bNM=;
+	s=arc-20240116; t=1785421534; c=relaxed/simple;
+	bh=MAiHsBnwJ0XOQCgb3UKy2TX+20as/JQLtARXTkSGkxY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qSDK9qLYHghSJ88jnIvAKzDrEk68G5TsZ54eqqBMzeppULIPtJUAkoeUmWqFK38B8NrR7z6O/qHoM8cyO+xI0BoIi1pGLDJ0J7/YV90mMq54wTN8UfTVviy4NpEJsffJDv6Gt117Z81Tq1bQm4Uer5SboSO2DAWACxHm7AaDFmU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qc5WA/VV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gKhCxv09rKU1NY4oqbkjdcXv+f/UkdQfDCW7ZiyA7Mhd9EdoRK/qduxQ8P6TLca3krpP2LW/2QscWzbIcCA8hrcmYOLPUmBczRq0BYnNQXU72Djl+VjzR9tqiH2le7iaOz/MzNyUVNHuPvwKbFTFMAGZ/jGwcf6DKfpkIxlkNj0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hOzZ9OgA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qc5WA/VV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 113DC1F000E9;
-	Thu, 30 Jul 2026 14:25:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hOzZ9OgA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE9CB1F000E9;
+	Thu, 30 Jul 2026 14:25:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421530;
-	bh=EE+ErqsjZJdg+Hq9WTE13aTpFWz2w3bMTTtiOt1ql08=;
+	s=korg; t=1785421533;
+	bh=uXxI4fN6cwcBIZUSqt4kHd4gxw/lk6AGaHsgs8FtiiY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qc5WA/VVHXJdZr8eEdSgLsneyeiB3XZGAu9vkoZAaD8L4mk+JxoWFXE1FfjmZMCYi
-	 KzIXmCB1pFfj2L/oRUhzNHOblEKfUd53YBAN1oeYBdMPdMf849t4bbvglLOEzIRgJm
-	 qmsLbc1cetg8Tv7HXB8606+XCl8Xjf4ph4ZO99D4=
+	b=hOzZ9OgALvG9SHI4AEwAs/enS8BHvcba8IIxJC5cIEOpTtOI34ZeLRLbSKn4WXrD7
+	 3Qz9NgDGoFMYJWF0xZA/yJQ9wCYMNP/EDeyOEs9VSs46YIVQ+l6gy8AebOQe8Mm1S/
+	 0qL1RjMfSN0zgh4rHN3EKgsw+DHAGOxomSz49yiM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	David Ahern <dsahern@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 136/744] mpls: fix NULL deref in mpls_valid_fib_dump_req() on CONFIG_INET=n
-Date: Thu, 30 Jul 2026 16:06:49 +0200
-Message-ID: <20260730141447.170507676@linuxfoundation.org>
+	Griffin Kroah-Hartman <griffin@kroah.com>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	stable <stable@kernel.org>
+Subject: [PATCH 7.1 137/744] usb: core: sysfs: add lock to bos_descriptors_read()
+Date: Thu, 30 Jul 2026 16:06:50 +0200
+Message-ID: <20260730141447.193104551@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -53,68 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Griffin Kroah-Hartman <griffin@kroah.com>
 
-[ Upstream commit 56d96fededd61192cd7cc8d2b0f36adfd59036c3 ]
+commit 4e0197fbb0eec588795d5431716a244d9ac8fa93 upstream.
 
-On CONFIG_INET=n builds, mpls_valid_fib_dump_req() walks the parsed
-attribute table itself instead of calling ip_valid_fib_dump_req(). The
-RTA_OIF arm passes tb[RTA_OIF] to nla_get_u32() without checking it is
-present, so an RTM_GETROUTE dump for AF_MPLS with strict checking and no
-RTA_OIF hits a NULL dereference.
+Add a lock to the function bos_descriptors_read().
 
-RTM_GETROUTE is RTNL_KIND_GET, which rtnetlink_rcv_msg() permits without
-CAP_NET_ADMIN, so an unprivileged user can trigger it.
+This function accesses udev->bos, which could be simultaneously freed in
+usb_reset_and_verify_device(), a function that is commonly called in
+drivers all over the kernel.
 
-  Oops: general protection fault, probably for non-canonical address
-        0xdffffc0000000000: 0000 [#1] SMP KASAN NOPTI
-  KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
-  RIP: 0010:mpls_valid_fib_dump_req (net/mpls/af_mpls.c:2189)
-  Call Trace:
-   mpls_dump_routes (net/mpls/af_mpls.c:2236)
-   netlink_dump (net/netlink/af_netlink.c:2331)
-   __netlink_dump_start (net/netlink/af_netlink.c:2446)
-   rtnetlink_rcv_msg (net/core/rtnetlink.c:7033)
-   netlink_rcv_skb (net/netlink/af_netlink.c:2556)
-   netlink_unicast (net/netlink/af_netlink.c:1345)
-   netlink_sendmsg (net/netlink/af_netlink.c:1900)
-   __sock_sendmsg (net/socket.c:790)
-   ____sys_sendmsg (net/socket.c:2684)
-   ___sys_sendmsg (net/socket.c:2738)
-   __sys_sendmsg (net/socket.c:2770)
-   do_syscall_64 (arch/x86/entry/syscall_64.c:94)
-   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
-
-Skip unset attributes, as ip_valid_fib_dump_req() does.
-
-Fixes: 196cfebf8972 ("net/mpls: Handle kernel side filtering of route dumps")
-Assisted-by: Claude:claude-opus-4-8
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20260711114958.1009619-3-bestswngs@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Assisted-by: gkh_clanker_t1000
+Signed-off-by: Griffin Kroah-Hartman <griffin@kroah.com>
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Cc: stable <stable@kernel.org>
+Link: https://patch.msgid.link/20260715-usb_core_patches_3-v1-1-53021f5576fd@kroah.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mpls/af_mpls.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/usb/core/sysfs.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/net/mpls/af_mpls.c b/net/mpls/af_mpls.c
-index 26340a7306b591..b64a8b1bac0961 100644
---- a/net/mpls/af_mpls.c
-+++ b/net/mpls/af_mpls.c
-@@ -2186,6 +2186,9 @@ static int mpls_valid_fib_dump_req(struct net *net, const struct nlmsghdr *nlh,
- 		int ifindex;
+--- a/drivers/usb/core/sysfs.c
++++ b/drivers/usb/core/sysfs.c
+@@ -899,10 +899,15 @@ bos_descriptors_read(struct file *filp,
+ {
+ 	struct device *dev = kobj_to_dev(kobj);
+ 	struct usb_device *udev = to_usb_device(dev);
+-	struct usb_host_bos *bos = udev->bos;
++	struct usb_host_bos *bos;
+ 	struct usb_bos_descriptor *desc;
+ 	size_t desclen, n = 0;
++	int rc;
  
- 		if (i == RTA_OIF) {
-+			if (!tb[i])
-+				continue;
-+
- 			ifindex = nla_get_u32(tb[i]);
- 			filter->dev = dev_get_by_index_rcu(net, ifindex);
- 			if (!filter->dev)
--- 
-2.53.0
-
++	rc = usb_lock_device_interruptible(udev);
++	if (rc < 0)
++		return -EINTR;
++	bos = udev->bos;
+ 	if (bos) {
+ 		desc = bos->desc;
+ 		desclen = le16_to_cpu(desc->wTotalLength);
+@@ -911,6 +916,7 @@ bos_descriptors_read(struct file *filp,
+ 			memcpy(buf, (void *) desc + off, n);
+ 		}
+ 	}
++	usb_unlock_device(udev);
+ 	return n;
+ }
+ static const BIN_ATTR_RO(bos_descriptors, 65535); /* max-size BOS */
 
 
