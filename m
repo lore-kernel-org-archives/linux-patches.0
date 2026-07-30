@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90F943B38B8;
-	Thu, 30 Jul 2026 15:58:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6643C2D0602;
+	Thu, 30 Jul 2026 15:58:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427102; cv=none; b=LgHLi+b3pAhCOtxkPjjzTd/ed38azwxtW88rmVwqEaYPrHfhAeSe19nTKuKMymw7ztidCvP/hhGP7ucDDYHVd06MT/F3fysChx/SLAwm38PCEZ2NBC0Qo/+vIgt7gz+rhgH3wf6zWS2JfdD0yXjQ5OyDeefhWyQ5lfy9oRX+8pM=
+	t=1785427105; cv=none; b=m9DCedOZ+PBTAcLDCzLCjUAizLzIOpzB+dHAgL7HjqaqtN1gwTm8z1QyHsJG+JhvPi0agcKBQQrZ5K/67+Yv+1JFUHNYwErzgMD/rJns8JvlGlxkR1bGbeulOu/d8Ph6JnNwttRYPvZvyKoRrUFzOLliCmJhgHOPVwXRXmenmME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427102; c=relaxed/simple;
-	bh=T0CSY/dxguZZ9RoxmJO6//swA3mxKxtrlKiyjIXBtFs=;
+	s=arc-20240116; t=1785427105; c=relaxed/simple;
+	bh=kQvBunnxSzVFVmpCc4nURpl56/2UJn3EINWQzZ2ihmo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g4O7ZYCYCSJMs28q5YiEt5+A34qjcyE7FsahoqTHQDVkx/n/pUgqgSnApLkUuXS0wb2SMOrNlfYEmMoK/vSa3E9RkCOTl3FuMmzTNIDpBLgbqIQfnUTFkJ6bggK8jDmE9UD6YEPMRTUv/ShX65gr6OEOP14TT6yDW78FYsHnBdQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iuPcP/IW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=C6FNG5pRos6JrRxuLZhN4VaopavCzvCXjVyvuBs+p5BZnRm4IzyhW2+JdqTpvzxvnDUfPCvYpjk4vh7RqllbN+3Uu14by3d78bo35GhmjzBclVgkwKe68AcNqaKiqCb9VtooCfuv+MplJ6pHgzcV2fCUhBKlgu+FCaiseM7epi4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BfzP76Qk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iuPcP/IW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC4391F000E9;
-	Thu, 30 Jul 2026 15:58:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BfzP76Qk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2CA01F000E9;
+	Thu, 30 Jul 2026 15:58:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427101;
-	bh=8BRDea7UhSvceU1HUzv5AMuYERz1RhmFarA902s+H1k=;
+	s=korg; t=1785427104;
+	bh=g+luCRhg4hPsKKgDtZODiniYhn5dmvNPd9DjQHLq0Jc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iuPcP/IW2zeUIEtJ3rGneKxPTZx2bwBxwKS2GSjelbV9fXpUdclwFX9TNfBf/IpPy
-	 1E/sRkIdUnQgU+TLfn3ijv2TTXIEbcSPzYOU9G+QfXXRbwW0e0vgeYk/J+YJTqi3Yg
-	 XTFAYdobT2B49OL6+8QpD0ePk3v55dUe3Irn+MOM=
+	b=BfzP76QkcfMcJ+pV7ZJLUnAqwylH6rKvge8B01WIDKr1nOiVCDsjwlOjLFb+UFGPa
+	 jIBB4b/sWUgNBIZoNK/LRZus0na3CztMQLC8294h/3W68Y/u42Tr8vyWHvyHOTrNbU
+	 PKte1B8vPKNRYKKpHhLDXU3AuBE0nK0R4UnHbr3Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
+	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 053/484] wifi: cfg80211: cancel sched scan results work on unregister
-Date: Thu, 30 Jul 2026 16:09:10 +0200
-Message-ID: <20260730141424.579015244@linuxfoundation.org>
+Subject: [PATCH 6.6 054/484] wifi: ipw2100: fix potential memory leak in ipw2100_pci_init_one()
+Date: Thu, 30 Jul 2026 16:09:11 +0200
+Message-ID: <20260730141424.601831017@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -51,81 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
 
-[ Upstream commit edf0730be33696a1bd142792830d392129e495cc ]
+[ Upstream commit 0d388f62031dbabcba0f44bb91b59f10e88cac17 ]
 
-cfg80211_sched_scan_results() can queue rdev->sched_scan_res_wk from a
-driver result notification while a scheduled scan request is present. The
-work callback recovers the containing cfg80211_registered_device and then
-locks the wiphy and walks the scheduled-scan request list.
+The memory allocated in the ipw2100_alloc_device() function is not freed
+in some of the error paths in ipw2100_pci_init_one(). Fix that by
+converting the direct return into a goto to the error path return.
 
-wiphy_unregister() already makes the wiphy unreachable and drains rdev work
-items before cfg80211_dev_free() can release the object, but it does not
-drain sched_scan_res_wk. A queued or running result work item can therefore
-cross the unregister/free boundary and access freed rdev state.
+The error path when pci_enable_device() fails cannot jump to fail, since
+at this point priv is not set, so perform error handling inline.
 
-The buggy scenario involves two paths, with each column showing the order
-within that path:
-
-scheduled-scan result path:        unregister/free path:
-1. cfg80211_sched_scan_results()   1. interface teardown stops and
-   queues rdev->sched_scan_res_wk.    removes the scheduled scan request.
-2. cfg80211_wq starts the work     2. wiphy_unregister() drains other
-   item and recovers rdev.            rdev work items.
-3. The worker locks rdev->wiphy    3. cfg80211_dev_free() destroys and
-   and walks rdev state.              frees rdev.
-
-Cancel sched_scan_res_wk in wiphy_unregister() alongside the other rdev
-work items. cancel_work_sync() removes a pending result notification and
-waits for an already running callback, so cfg80211_dev_free() cannot free
-rdev while this work item is still active.
-
-Validation reproduced this kernel report:
-BUG: KASAN: use-after-free in cfg80211_sched_scan_results_wk+0x4a6/0x530
-Workqueue: cfg80211 cfg80211_sched_scan_results_wk [cfg80211]
-Read of size 8
-Call trace:
-  dump_stack_lvl+0x66/0xa0
-  print_report+0xce/0x630
-  cfg80211_sched_scan_results_wk+0x4a6/0x530
-  srso_alias_return_thunk+0x5/0xfbef5
-  __virt_addr_valid+0x224/0x430
-  kasan_report+0xac/0xe0
-  lockdep_hardirqs_on_prepare+0xea/0x1a0
-  process_one_work+0x8d0/0x18f0 (kernel/workqueue.c:3212)
-  lock_is_held_type+0x8f/0x100
-  worker_thread+0x5ad/0xfd0
-  __kthread_parkme+0xc6/0x200
-  kthread+0x31e/0x410
-  trace_hardirqs_on+0x1a/0x170
-  ret_from_fork+0x576/0x810
-  __switch_to+0x57e/0xe20
-  __switch_to_asm+0x33/0x70
-  ret_from_fork_asm+0x1a/0x30
-
-Fixes: 807f8a8c3004 ("cfg80211/nl80211: add support for scheduled scans")
-Assisted-by: Codex:gpt-5.5
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Link: https://patch.msgid.link/20260619162542.3878296-1-zzzccc427@gmail.com
+Fixes: 2c86c275015c ("Add ipw2100 wireless driver.")
+Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+Link: https://patch.msgid.link/20260620065242.93798-1-nihaal@cse.iitm.ac.in
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/core.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/intel/ipw2x00/ipw2100.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/wireless/core.c b/net/wireless/core.c
-index d07c4baa32d9f4..800fbfd5919491 100644
---- a/net/wireless/core.c
-+++ b/net/wireless/core.c
-@@ -1132,6 +1132,7 @@ void wiphy_unregister(struct wiphy *wiphy)
- 	/* this has nothing to do now but make sure it's gone */
- 	cancel_work_sync(&rdev->wiphy_work);
+diff --git a/drivers/net/wireless/intel/ipw2x00/ipw2100.c b/drivers/net/wireless/intel/ipw2x00/ipw2100.c
+index 9e9ff0cb724cac..a1eb69efecc6d1 100644
+--- a/drivers/net/wireless/intel/ipw2x00/ipw2100.c
++++ b/drivers/net/wireless/intel/ipw2x00/ipw2100.c
+@@ -6172,6 +6172,8 @@ static int ipw2100_pci_init_one(struct pci_dev *pci_dev,
+ 	if (err) {
+ 		printk(KERN_WARNING DRV_NAME
+ 		       "Error calling pci_enable_device.\n");
++		free_libipw(dev, 0);
++		pci_iounmap(pci_dev, ioaddr);
+ 		return err;
+ 	}
  
-+	cancel_work_sync(&rdev->sched_scan_res_wk);
- 	cancel_work_sync(&rdev->rfkill_block);
- 	cancel_work_sync(&rdev->conn_work);
- 	flush_work(&rdev->event_work);
+@@ -6184,16 +6186,14 @@ static int ipw2100_pci_init_one(struct pci_dev *pci_dev,
+ 	if (err) {
+ 		printk(KERN_WARNING DRV_NAME
+ 		       "Error calling pci_set_dma_mask.\n");
+-		pci_disable_device(pci_dev);
+-		return err;
++		goto fail;
+ 	}
+ 
+ 	err = pci_request_regions(pci_dev, DRV_NAME);
+ 	if (err) {
+ 		printk(KERN_WARNING DRV_NAME
+ 		       "Error calling pci_request_regions.\n");
+-		pci_disable_device(pci_dev);
+-		return err;
++		goto fail;
+ 	}
+ 
+ 	/* We disable the RETRY_TIMEOUT register (0x41) to keep
 -- 
 2.53.0
 
