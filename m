@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E9B7442106;
-	Thu, 30 Jul 2026 15:59:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3855D442139;
+	Thu, 30 Jul 2026 15:59:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427190; cv=none; b=bDEh2dLEE0qENqq0rsHr/hsqMS8tvhY1WxO/GhAfNDG6Ab4gCWqdeGbP9d9G3JpLlUGYWrlGAXJ6cQQafTOGcGmwNlI+8S90DzmU/LTmCK133mE0GmQsNh0xBNBVX67a0OwTLGwbasVuFuZdkbi14JZu6SgzZE017MsjgPOQ1T4=
+	t=1785427193; cv=none; b=swX/ufA4tLIZrtCsKItp0eHilrl5h4S8b533Z38acJQjAszEGaq8ko5U+W2ygwWgwN45yXQYCthTvIazqSmR2n8mg4vMuE9YjeOEi2xvIZyqnSPUL5AdV364Tq4YZV0gcY0ChMbo6BrzXAcTVBn9gHI1PXMkDlp5Ygu4s6CXr1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427190; c=relaxed/simple;
-	bh=9i6F/NUIrxRN2V0wlEkQJLa9K672g+Il0+7a0ArqWls=;
+	s=arc-20240116; t=1785427193; c=relaxed/simple;
+	bh=4TJ6WTyukxLBwXeQ8kcAdaEFVKhgMX7tNay0iHV9hIo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cABwuv5Zp5Gtu3pypnvf2v1LO6cr0TS5CwfjFF+n54pcvbkMt5qfOkKQZ3BTzBMqH2jGQpWIDajSExtmGH1v+V+GMNEG6eB9arHf28p6UQ90m1GX1mR5w+6zQBa+gKcHaGKB3sM/3Xi06zauMS9E95rotHM9+sR3FJmuAY2Siio=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G7HBAIam; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bmkcnGSq2vp8Yh/Tlom+5I6Nm87WTT4vOPPExdF5432LgSlNnZJn6UjLmP4yQDGuuuvYHFJu3UXXg8TLJ3s2ZHcHboubekjsjbFxyVJ1/PB2FegyzVREeI7BeR3nLX6fZPxS+wfgRuEQ/JSwNzxdiWzgZHNcW7+rM+sJW3zciSM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PLOC2USY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G7HBAIam"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B49F41F000E9;
-	Thu, 30 Jul 2026 15:59:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PLOC2USY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 941EF1F000E9;
+	Thu, 30 Jul 2026 15:59:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427189;
-	bh=ldbGPkvzy8mW2XIu23yToI241QdENeaZTCNhxvuzsbU=;
+	s=korg; t=1785427192;
+	bh=H9TObCxChdciH0KrB6OfxQAuFLJ0u6dacHuw/fPjEQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G7HBAIamIFPjkkHJe81sFraWNwmcFdou5L3sHRPdNbkbtR5LIyWrX0if99JioiJ50
-	 LHMH4HEnKnYRL7uCO8MbdOxOpxAECfJtFv0f42NRaqficcPmmCAqeSbOT1eCyReJiD
-	 tcR3vX4PcUPsI0N91x0xZr2DAqDDm8WXRbc0fulM=
+	b=PLOC2USYaazxWAmS4OnP49XaqpdEsMSVIqpwXyPfiUNDaHZM0pBTb/K37u+xml0xS
+	 68tE+rLhOwJkVlBj6XPHbSq2IGAS8F2fGHHsNVXMjhEo9fmbVUrw8YPsvoz1Snq0U2
+	 J+QGV3ZGvZ13qLeMQ9Gd6s5C/vNvUt4qV4LTwirI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Zijun Hu <zijun.hu@oss.qualcomm.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 081/484] Bluetooth: mgmt: hold reference for hci_conn in mgmt_pending_cmds
-Date: Thu, 30 Jul 2026 16:09:38 +0200
-Message-ID: <20260730141425.202108709@linuxfoundation.org>
+Subject: [PATCH 6.6 082/484] Bluetooth: hci_qca: Clear memdump state on invalid dump size
+Date: Thu, 30 Jul 2026 16:09:39 +0200
+Message-ID: <20260730141425.226271722@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -51,105 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit da55f570191d5d72f10c607a7043b947eb05ea46 ]
+[ Upstream commit bf587a10c33e5571a299742e45bc18960b9912e7 ]
 
-Dereferencing RCU-protected pointers outside critical sections is
-invalid and may lead to UAF.  Use of hci_conn in hci_sync callbacks also
-needs to hold refcount to avoid UAF.
+qca_controller_memdump() allocates qca->qca_memdump before processing
+the first dump packet. For a sequence-zero packet it then disables IBS,
+marks memdump collection active, and reads the advertised dump size.
 
-Take appropriate locks for hci_conn lookups, and take refcount for
-hci_conn pointers stored in mgmt_pending_cmd so that the pointer stays
-valid.
+If the controller reports a zero dump size, the error path frees the
+local qca_memdump object and returns without clearing qca->qca_memdump
+or undoing the collection state. A later memdump work item initializes
+its local pointer from qca->qca_memdump and skips allocation when that
+pointer is non-NULL, so it can operate on freed memory. The stale
+collection and IBS-disabled flags can also leave waiters or later
+transmit handling blocked behind an aborted dump.
 
-When accessing conn->state, ensure hdev->lock is held to avoid data
-race.
+Clear the saved pointer and memdump state before returning from the
+invalid-size path, matching the cleanup used when hci_devcd_init() fails.
 
-Fixes: 7b445e220db9 ("Bluetooth: MGMT: Fix holding hci_conn reference while command is queued")
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
+A static analysis checker reported the stale memdump state, and manual
+source review confirmed the invalid-size failure path.
+
+Fixes: 06d3fdfcdf5c ("Bluetooth: hci_qca: Add qcom devcoredump support")
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Reviewed-by: Zijun Hu <zijun.hu@oss.qualcomm.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/mgmt.c | 26 ++++++++++++++++++++++----
- 1 file changed, 22 insertions(+), 4 deletions(-)
+ drivers/bluetooth/hci_qca.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index 2d9781668cb74a..979caeb85a42c7 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -7417,6 +7417,9 @@ static void get_conn_info_complete(struct hci_dev *hdev, void *data, int err)
- 		rp.max_tx_power = HCI_TX_POWER_INVALID;
- 	}
- 
-+	if (conn)
-+		hci_conn_put(conn);
-+
- 	mgmt_cmd_complete(cmd->sk, cmd->hdev->id, MGMT_OP_GET_CONN_INFO, status,
- 			  &rp, sizeof(rp));
- 
-@@ -7431,6 +7434,8 @@ static int get_conn_info_sync(struct hci_dev *hdev, void *data)
- 	int err;
- 	__le16   handle;
- 
-+	hci_dev_lock(hdev);
-+
- 	/* Make sure we are still connected */
- 	if (cp->addr.type == BDADDR_BREDR)
- 		conn = hci_conn_hash_lookup_ba(hdev, ACL_LINK,
-@@ -7438,12 +7443,16 @@ static int get_conn_info_sync(struct hci_dev *hdev, void *data)
- 	else
- 		conn = hci_conn_hash_lookup_ba(hdev, LE_LINK, &cp->addr.bdaddr);
- 
--	if (!conn || conn->state != BT_CONNECTED)
-+	if (!conn || conn->state != BT_CONNECTED) {
-+		hci_dev_unlock(hdev);
- 		return MGMT_STATUS_NOT_CONNECTED;
-+	}
- 
--	cmd->user_data = conn;
-+	cmd->user_data = hci_conn_get(conn);
- 	handle = cpu_to_le16(conn->handle);
- 
-+	hci_dev_unlock(hdev);
-+
- 	/* Refresh RSSI each time */
- 	err = hci_read_rssi_sync(hdev, handle);
- 
-@@ -7577,6 +7586,9 @@ static void get_clock_info_complete(struct hci_dev *hdev, void *data, int err)
- 	}
- 
- complete:
-+	if (conn)
-+		hci_conn_put(conn);
-+
- 	mgmt_cmd_complete(cmd->sk, cmd->hdev->id, cmd->opcode, status, &rp,
- 			  sizeof(rp));
- 
-@@ -7593,15 +7605,21 @@ static int get_clock_info_sync(struct hci_dev *hdev, void *data)
- 	memset(&hci_cp, 0, sizeof(hci_cp));
- 	hci_read_clock_sync(hdev, &hci_cp);
- 
-+	hci_dev_lock(hdev);
-+
- 	/* Make sure connection still exists */
- 	conn = hci_conn_hash_lookup_ba(hdev, ACL_LINK, &cp->addr.bdaddr);
--	if (!conn || conn->state != BT_CONNECTED)
-+	if (!conn || conn->state != BT_CONNECTED) {
-+		hci_dev_unlock(hdev);
- 		return MGMT_STATUS_NOT_CONNECTED;
-+	}
- 
--	cmd->user_data = conn;
-+	cmd->user_data = hci_conn_get(conn);
- 	hci_cp.handle = cpu_to_le16(conn->handle);
- 	hci_cp.which = 0x01; /* Piconet clock */
- 
-+	hci_dev_unlock(hdev);
-+
- 	return hci_read_clock_sync(hdev, &hci_cp);
- }
- 
+diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+index 2986b18655a150..47c50a43db0232 100644
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -1069,6 +1069,10 @@ static void qca_controller_memdump(struct work_struct *work)
+ 			if (!(qca_memdump->ram_dump_size)) {
+ 				bt_dev_err(hu->hdev, "Rx invalid memdump size");
+ 				kfree(qca_memdump);
++				qca->qca_memdump = NULL;
++				qca->memdump_state = QCA_MEMDUMP_COLLECTED;
++				clear_and_wake_up_bit(QCA_MEMDUMP_COLLECTION, &qca->flags);
++				clear_bit(QCA_IBS_DISABLED, &qca->flags);
+ 				kfree_skb(skb);
+ 				mutex_unlock(&qca->hci_memdump_lock);
+ 				return;
 -- 
 2.53.0
 
