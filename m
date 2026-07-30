@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE1D8442FBC;
-	Thu, 30 Jul 2026 15:26:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E73363E0091;
+	Thu, 30 Jul 2026 15:26:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425203; cv=none; b=IGOYDie3nlp7o2LM3cgbqxxRvdDX/RfcNvL8E5i+NIuQ4plwtk+dnR0zM4+vOgtNZ8VoUrSMfZ41XVcb7uNu7/ggl2lc2SQ4tVTXagoZBeUf/1R2nbcM+/ko3XEpvDJQUVHHY6A57Ux+ZssWIpia4ra9q42LyRtj7zBGN4VoqCE=
+	t=1785425206; cv=none; b=cNfyl/I1HIywj+BDl0YNtQe12j9FpW/cY2EGvN6Srgx0wrqNTToWusIzgcUzLR4gsc8Qf0NJ48JWXrNo2ljY2g3Y3czq0ATFyKSIGLnqMOoBYbWhETfDTC9q77AQaekLvhePRAIXUP/YX/MvhiEcrWzLtpY1XoBObfAnMKua8g4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425203; c=relaxed/simple;
-	bh=gyQ6MhJCtsSC5OI5P7/KSQLWdt2VwyMaa5abaQNYPxs=;
+	s=arc-20240116; t=1785425206; c=relaxed/simple;
+	bh=PvQyRopOuBz2Hcj9FW6PTWo2LzofZk36m6YRqrPjXs8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IQ4kOzLd9QUEYPjgS7UNIm9CGSugiERQBDSsLRI3fbKALSuTO1+9GlfuNuZT3sBiuAp56zG0rjZzxpSVsFdPmqvvx33PMwUfSRF+IJ/CW9QUAqG6Cc1663HJQvSXFPwXXNWzu5KiCvQrxj5yHv1KuBoxNNNted3PwbR84FB9VNg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tRURD7OO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q6nJUgLhhQh4Of7Oz7ZKZJ7vO3kNi66bzIMRw8uSdlJq5qrfHSXNSv/XhmVB27ApinkP4G9GVCC7cYAhGqerchzlhUNJnMkkBhmD69MSuhFEPL/OquNBRKjXbwjx7Cb6H4hx4vkjXWiVeL3orFCUxKklE6LlMBf7rF12Qn4hjOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P0wlP08F; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tRURD7OO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DA321F000E9;
-	Thu, 30 Jul 2026 15:26:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P0wlP08F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 417761F000E9;
+	Thu, 30 Jul 2026 15:26:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425201;
-	bh=E8r9d5IBnR6njoUjmDniR/3m0lJC+k8oQ9SOwojS/pM=;
+	s=korg; t=1785425204;
+	bh=OHy6kQnT6qNeSMewo0ReFoOwhr+1s87xMB6CegIPS54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tRURD7OOfR0NnlsShkifTwrXFIWSaQ4ImdKSSXp3S1crr7tQjKbU4snbivDphimbw
-	 F2bHGT9V2DCyV/sOX1Y+tWUu9knINXuIkj550N+uAL9qDoL0r8XXxfuVj5TXlDir/K
-	 fSLFDl+HDiw9PBodo86d/YkwCp3mXHW2j7IQ2Nfc=
+	b=P0wlP08FBQj6GXFUwMmpE8BHni+B3W3//Zjv6/bub5qYA7gGX2Yf0ygTIZBdfIJWr
+	 W4Y+GybppwQq4A2w6Cm0s6LfxUoSMJ15txhPH5JSc2HdX6j5D7kMRUS6gEsh4nk1MR
+	 Pl8iAjgcKuf/O7Geed4DepaYEYkn6qOnFP1EFLV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 660/675] bootconfig: fix NULL-pointer arithmetic in xbc_snprint_cmdline()
-Date: Thu, 30 Jul 2026 16:16:30 +0200
-Message-ID: <20260730141459.176335742@linuxfoundation.org>
+Subject: [PATCH 6.18 661/675] ata: libata-core: Reject an invalid concurrent positioning ranges count
+Date: Thu, 30 Jul 2026 16:16:31 +0200
+Message-ID: <20260730141459.198958476@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -51,94 +52,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-[ Upstream commit dec4d8118c179b3d12bca7e609054c6011c4f2ce ]
+[ Upstream commit 533a0b940f901c15e5cbbd4b5d66e871c209e8ce ]
 
-xbc_snprint_cmdline() is meant to be called twice: first with
-buf=NULL, size=0 to probe the rendered length, then with a real
-buffer to fill it (the standard snprintf() two-pass pattern). The
-probe call makes the function compute "buf + size" (NULL + 0) and,
-on every iteration, advance "buf += ret" from that NULL base and
-pass the result back into snprintf().
+ata_dev_config_cpr() takes the number of range descriptors from buf[0]
+of the concurrent positioning ranges log (up to 255), which the device
+reports independently of the log size in the GPL directory. The count is
+then walked at a fixed 32-byte stride in two places with no bound: the
+log read here, and the INQUIRY VPD page B9h emitter, which writes one
+descriptor per range into the fixed 2048-byte ata_scsi_rbuf. A device
+reporting a count larger than its own log overflows the read buffer (up
+to 7704 bytes past a 512-byte slab), and a count above 62 overflows the
+response buffer on the emit side.
 
-Pointer arithmetic on a NULL pointer is undefined behavior. It is
-harmless in the in-kernel callers today, but the follow-up patches
-run this same code in the userspace tools/bootconfig parser at kernel
-build time, where host UBSan / FORTIFY_SOURCE abort the build.
+Bound the count once, on probe, against both the log the device returned
+and the number of descriptors the VPD B9h response buffer can hold
+(ATA_DEV_MAX_CPR, derived from the rbuf size). Reject an out-of-range
+count with a warning; this keeps the emitter in bounds with no separate
+change there.
 
-Track a running written length (size_t) instead of mutating @buf, and
-only form "buf + len" when @buf is non-NULL. snprintf(NULL, 0, ...)
-is itself well defined and returns the would-be length, so the
-two-pass "probe then fill" usage returns identical byte counts.
-
-Link: https://lore.kernel.org/all/20260626-bootconfig_using_tools-v7-1-24ab72139c29@debian.org/
-
-Fixes: 51887d03aca1 ("bootconfig: init: Allow admin to use bootconfig for kernel command line")
+Suggested-by: Damien Le Moal <dlemoal@kernel.org>
+Fixes: fe22e1c2f705 ("libata: support concurrent positioning ranges log")
+Fixes: c745dfc541e7 ("libata: fix reading concurrent positioning ranges log")
 Cc: stable@vger.kernel.org
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+[ adapted `kzalloc_flex()` allocation to `kzalloc(struct_size(...), GFP_KERNEL)` and adjusted context offsets. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/bootconfig.c |   23 ++++++++++++++++-------
- 1 file changed, 16 insertions(+), 7 deletions(-)
+ drivers/ata/libata-core.c |   18 ++++++++++++++++++
+ drivers/ata/libata-scsi.c |    2 --
+ drivers/ata/libata.h      |    9 +++++++++
+ 3 files changed, 27 insertions(+), 2 deletions(-)
 
---- a/lib/bootconfig.c
-+++ b/lib/bootconfig.c
-@@ -424,10 +424,18 @@ static char xbc_namebuf[XBC_KEYLEN_MAX]
- int __init xbc_snprint_cmdline(char *buf, size_t size, struct xbc_node *root)
- {
- 	struct xbc_node *knode, *vnode;
--	char *end = buf + size;
- 	const char *val, *q;
-+	size_t len = 0;
- 	int ret;
+--- a/drivers/ata/libata-core.c
++++ b/drivers/ata/libata-core.c
+@@ -2833,6 +2833,24 @@ static void ata_dev_config_cpr(struct at
+ 	if (!nr_cpr)
+ 		goto out;
  
 +	/*
-+	 * Track the running written length rather than advancing @buf, so we
-+	 * never form "buf + size" or "buf += ret" while @buf is NULL (the
-+	 * size-probe call passes buf=NULL, size=0). NULL pointer arithmetic
-+	 * is undefined behavior and trips host UBSan / FORTIFY_SOURCE when
-+	 * this renderer runs at kernel build time. snprintf(NULL, 0, ...)
-+	 * itself is well defined and returns the would-be length.
++	 * The device reports the number of CPR descriptors independently of the
++	 * log size, and that count is also used to emit VPD page B9h into the
++	 * fixed-size rbuf. Reject a count larger than what that buffer can hold
++	 * (ATA_DEV_MAX_CPR) or larger than the log the device actually returned.
 +	 */
- 	xbc_node_for_each_key_value(root, knode, val) {
- 		ret = xbc_node_compose_key_after(root, knode,
- 					xbc_namebuf, XBC_KEYLEN_MAX);
-@@ -436,10 +444,11 @@ int __init xbc_snprint_cmdline(char *buf
++	if (nr_cpr > ATA_DEV_MAX_CPR) {
++		ata_dev_warn(dev,
++			     "Too many concurrent positioning ranges\n");
++		goto out;
++	}
++
++	if (buf_len < 64 + (size_t)nr_cpr * 32) {
++		ata_dev_warn(dev,
++			     "Invalid number of concurrent positioning ranges\n");
++		goto out;
++	}
++
+ 	cpr_log = kzalloc(struct_size(cpr_log, cpr, nr_cpr), GFP_KERNEL);
+ 	if (!cpr_log)
+ 		goto out;
+--- a/drivers/ata/libata-scsi.c
++++ b/drivers/ata/libata-scsi.c
+@@ -37,8 +37,6 @@
+ #include "libata.h"
+ #include "libata-transport.h"
  
- 		vnode = xbc_node_get_child(knode);
- 		if (!vnode) {
--			ret = snprintf(buf, rest(buf, end), "%s ", xbc_namebuf);
-+			ret = snprintf(buf ? buf + len : NULL, rest(len, size),
-+				       "%s ", xbc_namebuf);
- 			if (ret < 0)
- 				return ret;
--			buf += ret;
-+			len += ret;
- 			continue;
- 		}
- 		xbc_array_for_each_value(vnode, val) {
-@@ -449,15 +458,15 @@ int __init xbc_snprint_cmdline(char *buf
- 			 * whitespace.
- 			 */
- 			q = strpbrk(val, " \t\r\n") ? "\"" : "";
--			ret = snprintf(buf, rest(buf, end), "%s=%s%s%s ",
--				       xbc_namebuf, q, val, q);
-+			ret = snprintf(buf ? buf + len : NULL, rest(len, size),
-+				       "%s=%s%s%s ", xbc_namebuf, q, val, q);
- 			if (ret < 0)
- 				return ret;
--			buf += ret;
-+			len += ret;
- 		}
- 	}
+-#define ATA_SCSI_RBUF_SIZE	2048
+-
+ static DEFINE_SPINLOCK(ata_scsi_rbuf_lock);
+ static u8 ata_scsi_rbuf[ATA_SCSI_RBUF_SIZE];
  
--	return buf - (end - size);
-+	return len;
- }
- #undef rest
+--- a/drivers/ata/libata.h
++++ b/drivers/ata/libata.h
+@@ -144,6 +144,15 @@ static inline void ata_acpi_bind_dev(str
+ #endif
  
+ /* libata-scsi.c */
++#define ATA_SCSI_RBUF_SIZE	2048
++
++/*
++ * Maximum number of concurrent positioning ranges (CPR) supported. The ACS
++ * specifications allow up to 255, but we limit this to the number of CPR
++ * descriptors that fit in the rbuf buffer used to emit VPD page B9h.
++ */
++#define ATA_DEV_MAX_CPR		min(255, ((ATA_SCSI_RBUF_SIZE - 64) / 32))
++
+ extern struct ata_device *ata_scsi_find_dev(struct ata_port *ap,
+ 					    const struct scsi_device *scsidev);
+ extern int ata_scsi_add_hosts(struct ata_host *host,
 
 
