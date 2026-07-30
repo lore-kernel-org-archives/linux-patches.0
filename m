@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0805043E097;
-	Thu, 30 Jul 2026 14:19:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26E2C43E9F9;
+	Thu, 30 Jul 2026 14:19:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421169; cv=none; b=lhrww2u62je3ajUIhE3CPiXHR++iV6XPAiNRKbVSYZvdAzPooSTMnFebJ15JFnzP3VwTp/609UNthJm5xro3lNjY7AcGzloSiFrO4RQhbp1sT7yjmHgHL+vwnrEyxiXr7svzlgvvqUkP2/DqRZPj8WaNP3r45yCzRC3m094MXUU=
+	t=1785421172; cv=none; b=CxWCmq0HhdjrGznnqQCnS88i9dQrv2PWQ9xxxhgPgFjiFYHNyYBwR71TQWT81HbvlihdH6vWm+ro7qytC8VcqpArA1Tx49LwbZwglWJa6UbGpmIRV7CfhFgoqf97kimCWdsq9+7LbMCr0hU9MGMiN+Xf5ofx+NeR/PPZXEqhHo4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421169; c=relaxed/simple;
-	bh=2/oBI4uBjiCi6tmoyVwnhV6bDwV3kF7d0jScKHNw83s=;
+	s=arc-20240116; t=1785421172; c=relaxed/simple;
+	bh=DGAKmOVLMPBaC2bV+nM36ozETKIubBkGdKO9w/BxGds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eo+AfIG5HWGUHurOt/T5Jwb5DdS0iXxi8dxTSgAnF1XnjqwrXR19mRdsg76foW3j/7Y5SObubnwBHsS2wd9A+qf6Evm8oa+QCca2z4ZfDhAkqVUE7nPqdrCnM7J/KG9Gi70af4N5sw0GAHNqzBaQMKxO4qMawg6tojIvmsZcmfI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GEYrxCTw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=M0ZfyVBrAACZhffHVwMhMnggfxupHG8Kvq/Gc8S7KbS40d/yDZKvnzVGXOkBvDVmex/LW9yHeTFa8bBUFyv7RWDylD7oaASASV2PyrdIi0Ati51z9aOpoZfTnmQTatQcQW3sq8sKn2WEeT0kcWwUBGHB9yZ0g52WRBudJgBNmEg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W5kB0v5w; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GEYrxCTw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B60D1F00A3D;
-	Thu, 30 Jul 2026 14:19:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W5kB0v5w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DB061F00A3D;
+	Thu, 30 Jul 2026 14:19:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421167;
-	bh=q1DfDc80jmWo5TLFyWLN/Eif4D3vOA692XMGmYQvSog=;
+	s=korg; t=1785421170;
+	bh=qlR8QR7HFJiecCo7Z+6+MjJaY66+sVsTHKa3zSqykFA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GEYrxCTw45SBhhLOdvKjbEaJ3alHXtLRwAdjLHDoCyPnp9SWeHMWp7RW2Njdjd+5l
-	 CVS4tNJpN3cB9I/vYK8Tg9bywBkMsMGdwuSyiEnPE/TV0+zai+jiqo2dyOM4M8wq45
-	 5oFwH8yQ9eS6TEqrsRtoGBm/smrT0s1jDbtFBn0U=
+	b=W5kB0v5wWJAJ9pulZdWH+osFmQhhwM2T0iZfJQnTAPbrrn2Wo8J8glANwTQ/0K70V
+	 TZYtkwbPMW9TwYeokr0u7COrVSJ36+krCpeWkLPZGUHt2eKf6cP71/hpMVnoeOXA14
+	 s8QbdcKNfMR/bFjBCNF+lYk+fQ4hKimKUiBefwDA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Tejun Heo <tj@kernel.org>,
+	Sumit Gupta <sumitg@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 014/744] sched_ext: Annotate ksyncs with __rcu in alloc/free_kick_syncs()
-Date: Thu, 30 Jul 2026 16:04:47 +0200
-Message-ID: <20260730141444.585911808@linuxfoundation.org>
+Subject: [PATCH 7.1 015/744] arm64: tegra: Fix CPU compatible string to cortex-a78ae on Tegra234
+Date: Thu, 30 Jul 2026 16:04:48 +0200
+Message-ID: <20260730141444.606922274@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -51,47 +51,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: Sumit Gupta <sumitg@nvidia.com>
 
-[ Upstream commit 115d1ce989747045bd7745c7ab020982660c7e42 ]
+[ Upstream commit 0dfa1e960f86e032007882b032c5cc7d14ebe73e ]
 
-scx_kick_syncs is a per-CPU __rcu pointer, so per_cpu_ptr() returns struct
-scx_kick_syncs __rcu **. alloc_kick_syncs() and free_kick_syncs() stored it
-in a plain struct scx_kick_syncs **ksyncs, which sparse flags as an __rcu
-address-space mismatch. Annotate ksyncs to match. Its accesses already go
-through rcu_*_pointer().
+The Tegra234 SoC uses Cortex-A78AE cores, not Cortex-A78. Update the
+compatible string for all CPU nodes to match the actual hardware.
 
-Fixes: 987e00035c0e ("sched_ext: Rename pnt_seq to kick_sync")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202606122315.pbnDHP0n-lkp@intel.com/
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Tegra234 hardware reports:
+  # head /proc/cpuinfo | egrep 'implementer|part'
+  CPU implementer : 0x41
+  CPU part        : 0xd42
+
+Which maps to (from arch/arm64/include/asm/cputype.h):
+  #define ARM_CPU_IMP_ARM              0x41
+  #define ARM_CPU_PART_CORTEX_A78AE    0xD42
+
+Fixes: a12cf5c339b08 ("arm64: tegra: Describe Tegra234 CPU hierarchy")
+Signed-off-by: Sumit Gupta <sumitg@nvidia.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/ext.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/nvidia/tegra234.dtsi | 24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 8429bebc21a19a..0e13139a7f27b9 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -5615,7 +5615,7 @@ static void free_kick_syncs(void)
- 	int cpu;
+diff --git a/arch/arm64/boot/dts/nvidia/tegra234.dtsi b/arch/arm64/boot/dts/nvidia/tegra234.dtsi
+index 18220cdac9f9bb..eda23431ed05ea 100644
+--- a/arch/arm64/boot/dts/nvidia/tegra234.dtsi
++++ b/arch/arm64/boot/dts/nvidia/tegra234.dtsi
+@@ -5339,7 +5339,7 @@ cpus {
+ 		#size-cells = <0>;
  
- 	for_each_possible_cpu(cpu) {
--		struct scx_kick_syncs **ksyncs = per_cpu_ptr(&scx_kick_syncs, cpu);
-+		struct scx_kick_syncs __rcu **ksyncs = per_cpu_ptr(&scx_kick_syncs, cpu);
- 		struct scx_kick_syncs *to_free;
+ 		cpu0_0: cpu@0 {
+-			compatible = "arm,cortex-a78";
++			compatible = "arm,cortex-a78ae";
+ 			device_type = "cpu";
+ 			reg = <0x00000>;
  
- 		to_free = rcu_replace_pointer(*ksyncs, NULL, true);
-@@ -6538,7 +6538,7 @@ static int alloc_kick_syncs(void)
- 	 * can exceed percpu allocator limits on large machines.
- 	 */
- 	for_each_possible_cpu(cpu) {
--		struct scx_kick_syncs **ksyncs = per_cpu_ptr(&scx_kick_syncs, cpu);
-+		struct scx_kick_syncs __rcu **ksyncs = per_cpu_ptr(&scx_kick_syncs, cpu);
- 		struct scx_kick_syncs *new_ksyncs;
+@@ -5358,7 +5358,7 @@ cpu0_0: cpu@0 {
+ 		};
  
- 		WARN_ON_ONCE(rcu_access_pointer(*ksyncs));
+ 		cpu0_1: cpu@100 {
+-			compatible = "arm,cortex-a78";
++			compatible = "arm,cortex-a78ae";
+ 			device_type = "cpu";
+ 			reg = <0x00100>;
+ 
+@@ -5377,7 +5377,7 @@ cpu0_1: cpu@100 {
+ 		};
+ 
+ 		cpu0_2: cpu@200 {
+-			compatible = "arm,cortex-a78";
++			compatible = "arm,cortex-a78ae";
+ 			device_type = "cpu";
+ 			reg = <0x00200>;
+ 
+@@ -5396,7 +5396,7 @@ cpu0_2: cpu@200 {
+ 		};
+ 
+ 		cpu0_3: cpu@300 {
+-			compatible = "arm,cortex-a78";
++			compatible = "arm,cortex-a78ae";
+ 			device_type = "cpu";
+ 			reg = <0x00300>;
+ 
+@@ -5415,7 +5415,7 @@ cpu0_3: cpu@300 {
+ 		};
+ 
+ 		cpu1_0: cpu@10000 {
+-			compatible = "arm,cortex-a78";
++			compatible = "arm,cortex-a78ae";
+ 			device_type = "cpu";
+ 			reg = <0x10000>;
+ 
+@@ -5434,7 +5434,7 @@ cpu1_0: cpu@10000 {
+ 		};
+ 
+ 		cpu1_1: cpu@10100 {
+-			compatible = "arm,cortex-a78";
++			compatible = "arm,cortex-a78ae";
+ 			device_type = "cpu";
+ 			reg = <0x10100>;
+ 
+@@ -5453,7 +5453,7 @@ cpu1_1: cpu@10100 {
+ 		};
+ 
+ 		cpu1_2: cpu@10200 {
+-			compatible = "arm,cortex-a78";
++			compatible = "arm,cortex-a78ae";
+ 			device_type = "cpu";
+ 			reg = <0x10200>;
+ 
+@@ -5472,7 +5472,7 @@ cpu1_2: cpu@10200 {
+ 		};
+ 
+ 		cpu1_3: cpu@10300 {
+-			compatible = "arm,cortex-a78";
++			compatible = "arm,cortex-a78ae";
+ 			device_type = "cpu";
+ 			reg = <0x10300>;
+ 
+@@ -5491,7 +5491,7 @@ cpu1_3: cpu@10300 {
+ 		};
+ 
+ 		cpu2_0: cpu@20000 {
+-			compatible = "arm,cortex-a78";
++			compatible = "arm,cortex-a78ae";
+ 			device_type = "cpu";
+ 			reg = <0x20000>;
+ 
+@@ -5510,7 +5510,7 @@ cpu2_0: cpu@20000 {
+ 		};
+ 
+ 		cpu2_1: cpu@20100 {
+-			compatible = "arm,cortex-a78";
++			compatible = "arm,cortex-a78ae";
+ 			device_type = "cpu";
+ 			reg = <0x20100>;
+ 
+@@ -5529,7 +5529,7 @@ cpu2_1: cpu@20100 {
+ 		};
+ 
+ 		cpu2_2: cpu@20200 {
+-			compatible = "arm,cortex-a78";
++			compatible = "arm,cortex-a78ae";
+ 			device_type = "cpu";
+ 			reg = <0x20200>;
+ 
+@@ -5548,7 +5548,7 @@ cpu2_2: cpu@20200 {
+ 		};
+ 
+ 		cpu2_3: cpu@20300 {
+-			compatible = "arm,cortex-a78";
++			compatible = "arm,cortex-a78ae";
+ 			device_type = "cpu";
+ 			reg = <0x20300>;
+ 
 -- 
 2.53.0
 
