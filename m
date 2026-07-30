@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B9BA33438F;
-	Thu, 30 Jul 2026 15:43:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A1C3373C1A;
+	Thu, 30 Jul 2026 15:43:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426182; cv=none; b=TanNJGv/5ZGcM5MgvUf0MFvysNgzLMoxH8EDyh4Ifbsg2KgQ9rRW/RodJf22hUYx8LKdkygmP/hb6zW37NbU4jPTnjm0FnH12xTYmzSMjTe8kEvuqu/6+G33g4XmWhm+WX6ysbrdJQfQzQbchRYbIPKdrXmu9PUqGulmLSby1HI=
+	t=1785426185; cv=none; b=F+RVFWRwDryE+Ge0k6nMPSoT49O35q76bEQ2w7vu6yWMTER5FkpIwjMzGco1cageusxtVdG30vLLc9aZLuWMyOtKeQe3xcWK1YYDY+e3bGjzJlm67tf/3is4yFbIFtyOIG4g0JkEpYYNvmczUVD10Hn6vnnM6rzhZEQPgVvoTIQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426182; c=relaxed/simple;
-	bh=vpEbfrz2OEBXhqNyo/EtinyelXp5KZ+VLiPx+DG7F5s=;
+	s=arc-20240116; t=1785426185; c=relaxed/simple;
+	bh=IWaxZap6V9f7WaN4ioZFeiYv0n5vOki4SGLiu1ed1zE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UDT0DGePLhj1ty2Zmlst35Hs/t9WrTPmG5aHD3vjumqMtw7DaG2XTgGV7KiMwqr6mudgU/nd58HoRqjm9ydpq53CopNaw1IJDZyNj9ouw342kD0U1MZbKajAKRkYqYdV18OT3/y4IsWbqwIB2kvs85H8FPx1lm2vXnp6VUypBqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dWG45o5s; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BSYu6BKQYxGWg3mTJWw6VdME8DPWxP9x/OFQSloiqlVhl9P/o+grmCp1JvLhu8OwtH1wIWIbAh2t3pVK00gCAdtokdlnEg5YY9iOa/ADH0W/kuTgDv7qnFu/4Y7aRj3f8GIRH+NDy/9AQXD3ziGH8l5RC5nGCwjWK7eqaM+pZ1c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PpB0eXAE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dWG45o5s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A96AE1F000E9;
-	Thu, 30 Jul 2026 15:43:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PpB0eXAE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 684CA1F000E9;
+	Thu, 30 Jul 2026 15:43:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426181;
-	bh=FpeDRsTJTU764JQrthf/KIdQ6Ga+MlwvCxrexAnaW1k=;
+	s=korg; t=1785426183;
+	bh=Bh7Lmik0Cy5fHeqXTNT4OK0S7NrIIVlXV/Q74d8SYrY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dWG45o5saFU6TLOg+evaH/YtLTtVt0FSqTwJcdcqu9OJcTdQXcEy1hiVk6j1uoXdx
-	 7Rp542dkFsQwBM1ARX49Ze1yE66l52BJy5xok/Vq+IXVMxNsoWihKd/ba9+TgDpHAZ
-	 5Qu/YtTPD8Ca9WoHXfcRgOQTaXyyF9QQx7vGt6Ys=
+	b=PpB0eXAEErqtv1RD73jqWf/Mslx6eFHIQ31u6gTRnXemWd75LZl36r6qLIQPos3NG
+	 Cfyy+ordDEkQEQ+K5vyK3pHYTIz6MT/HJB2jKlvJKyYnLAw518SgakG2eCWEn3zaoZ
+	 xBdwTLsmRqzVThQduuhb8Ddi8mAMkOFxjDG/E9+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shahyan Soltani <shahyan.soltani@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 285/602] drm/amdgpu: fix lifetime issue of amdgpu_vm_get_task_info_pasid()
-Date: Thu, 30 Jul 2026 16:11:17 +0200
-Message-ID: <20260730141441.960350193@linuxfoundation.org>
+	Martin Hodo <martin.hodo@intel.com>,
+	Faith Ekstrand <faith.ekstrand@collabora.com>,
+	Simona Vetter <simona.vetter@ffwll.ch>,
+	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>
+Subject: [PATCH 6.12 286/602] drm/i915/gem: Do not leak siblings[] on proto context error
+Date: Thu, 30 Jul 2026 16:11:18 +0200
+Message-ID: <20260730141441.980842631@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -45,79 +50,90 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shahyan Soltani <shahyan.soltani@amd.com>
+From: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 
-commit 04cc4aa3617b0ed67e859f91f09de5d896a46f3a upstream.
+commit eed3de2acf6aa5154d49098b026710b646db67ee upstream.
 
-The vm pointer returned from amdgpu_vm_get_vm_from_pasid() is only
-valid while the lock is still being held. Once xa_unlock_irqrestore is
-called and returned, the pointer is no longer under lock and is subject
-to modification. Since, the caller still dereferences vm->task_info in
-amdgpu_vm_get_task_info_vm() after the lock is removed, this causes a
-use after unlock problem.
+After a successful BALANCE/PARALLEL_SUBMIT extension on context
+creation, error during processing of next user extension leaks
+the siblings[] array. Fix that.
 
-Remove the lifetime issue present in amdgpu_vm_get_task_info_pasid()
-through removing the amdgpu_vm_get_vm_from_pasid() function from
-amdgpu_vm.c and making the relevant code inline to hold the lock while
-it is still in use.
+Discovered using AI-assisted static analysis confirmed by
+Intel Product Security.
 
-Signed-off-by: Shahyan Soltani <shahyan.soltani@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 9d01579f3f868b333acc901815972685989092c7)
-Cc: stable@vger.kernel.org
+Reported-by: Martin Hodo <martin.hodo@intel.com>
+Fixes: d4433c7600f7 ("drm/i915/gem: Use the proto-context to handle create parameters (v5)")
+Cc: Faith Ekstrand <faith.ekstrand@collabora.com>
+Cc: Simona Vetter <simona.vetter@ffwll.ch>
+Cc: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: <stable@vger.kernel.org> # v5.15+
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Reviewed-by: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
+Link: https://lore.kernel.org/r/20260701073030.44850-1-joonas.lahtinen@linux.intel.com
+(cherry picked from commit aa65e0a4b51b3b54b53e4142aaa2d997aa1061ff)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c |   25 ++++++++++---------------
- 1 file changed, 10 insertions(+), 15 deletions(-)
+ drivers/gpu/drm/i915/gem/i915_gem_context.c |   22 ++++++++++++++--------
+ 1 file changed, 14 insertions(+), 8 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-@@ -2308,19 +2308,6 @@ static void amdgpu_vm_destroy_task_info(
- 	kfree(ti);
+--- a/drivers/gpu/drm/i915/gem/i915_gem_context.c
++++ b/drivers/gpu/drm/i915/gem/i915_gem_context.c
+@@ -771,8 +771,8 @@ static int set_proto_ctx_engines(struct
+ 		struct intel_engine_cs *engine;
+ 
+ 		if (copy_from_user(&ci, &user->engines[n], sizeof(ci))) {
+-			kfree(set.engines);
+-			return -EFAULT;
++			err = -EFAULT;
++			goto err;
+ 		}
+ 
+ 		memset(&set.engines[n], 0, sizeof(set.engines[n]));
+@@ -788,8 +788,8 @@ static int set_proto_ctx_engines(struct
+ 			drm_dbg(&i915->drm,
+ 				"Invalid engine[%d]: { class:%d, instance:%d }\n",
+ 				n, ci.engine_class, ci.engine_instance);
+-			kfree(set.engines);
+-			return -ENOENT;
++			err = -ENOENT;
++			goto err;
+ 		}
+ 
+ 		set.engines[n].type = I915_GEM_ENGINE_TYPE_PHYSICAL;
+@@ -802,15 +802,21 @@ static int set_proto_ctx_engines(struct
+ 					   set_proto_ctx_engines_extensions,
+ 					   ARRAY_SIZE(set_proto_ctx_engines_extensions),
+ 					   &set);
+-	if (err) {
+-		kfree(set.engines);
+-		return err;
+-	}
++	if (err)
++		goto err_extensions;
+ 
+ 	pc->num_user_engines = set.num_engines;
+ 	pc->user_engines = set.engines;
+ 
+ 	return 0;
++
++err_extensions:
++	for (n = 0; n < set.num_engines; n++)
++		kfree(set.engines[n].siblings);
++err:
++	kfree(set.engines);
++
++	return err;
  }
  
--static inline struct amdgpu_vm *
--amdgpu_vm_get_vm_from_pasid(struct amdgpu_device *adev, u32 pasid)
--{
--	struct amdgpu_vm *vm;
--	unsigned long flags;
--
--	xa_lock_irqsave(&adev->vm_manager.pasids, flags);
--	vm = xa_load(&adev->vm_manager.pasids, pasid);
--	xa_unlock_irqrestore(&adev->vm_manager.pasids, flags);
--
--	return vm;
--}
--
- /**
-  * amdgpu_vm_put_task_info - reference down the vm task_info ptr
-  *
-@@ -2366,8 +2353,16 @@ amdgpu_vm_get_task_info_vm(struct amdgpu
- struct amdgpu_task_info *
- amdgpu_vm_get_task_info_pasid(struct amdgpu_device *adev, u32 pasid)
- {
--	return amdgpu_vm_get_task_info_vm(
--			amdgpu_vm_get_vm_from_pasid(adev, pasid));
-+	struct amdgpu_task_info *ti;
-+	struct amdgpu_vm *vm;
-+	unsigned long flags;
-+
-+	xa_lock_irqsave(&adev->vm_manager.pasids, flags);
-+	vm = xa_load(&adev->vm_manager.pasids, pasid);
-+	ti = amdgpu_vm_get_task_info_vm(vm);
-+	xa_unlock_irqrestore(&adev->vm_manager.pasids, flags);
-+
-+	return ti;
- }
- 
- static int amdgpu_vm_create_task_info(struct amdgpu_vm *vm)
+ static int set_proto_ctx_sseu(struct drm_i915_file_private *fpriv,
 
 
