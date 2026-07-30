@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AD8E440A2C;
-	Thu, 30 Jul 2026 14:22:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7339A442B0F;
+	Thu, 30 Jul 2026 14:22:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421324; cv=none; b=m36jGdkcFS2L9GpQCBBAGXe+FqWpBr0xPrvaefiG6UvqeA4tUHBLtXswvz33lugqttHJk+D8ESZvyKkWqDkGqP0CCeWlA6yR1jkqZsUg9oCDWMmQIc1IQShIoz95Vc4gFUv1G6TqcZCDQb7KwjWLOsBlDqzM+jNKuc91csUtthA=
+	t=1785421327; cv=none; b=X7wSsSvzw2Gd7MDrgQsnj/6MefaDFS8eXcrFMfbbIC/pXzPJ8TPqC+XZQjX1HUEUCA4EE6zyYNBmeaP3so1QCmPpzXbv3jdiEp7WDUZu//9DsbK/R59HtOe9k7e3clZd0unHhT4qJulQ0lqnYEaECfMAhFwfmcipAeHXWUKfk2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421324; c=relaxed/simple;
-	bh=BEbeFeIu8Wy15QkQtRJhOl9GbbrL/jt8j6msxQskhsc=;
+	s=arc-20240116; t=1785421327; c=relaxed/simple;
+	bh=JBBCiwya6GDu9Swb7NY7N/8Ln7uvwgT91bJJbDb75Ic=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qMs6MG80/DgDHgE4If5QNYMzb6D9DVTaGTa6Y9BhvJDkuVuGFWo5y/IVdgIInDM49qkbPH4C9U6AL9pzDB4rVizw/M3Azo9leskAhpEZEsBLCtM/vxN8SvKdnc9TsZM2AUJKSig00HhCecSla2yF51H5st+Wa6hubDMjcb1A3q4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m0cihmQw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JpnNZDlACnO4Su1tvQAnG43pGFxkHdJxKIzRE3iRCdLdkFSxo0eFCrzvTZyJqsq4UN07Di82YgY+zrIIAm3yDLTE0YBF8ygAGxEddKfxkgMqhF4MF2MZoulaYjxv7c6YFjYBJMrxLIcwlMWG21jlyq6/mIfad2srE4TVpKbrszk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p9G1H0ba; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m0cihmQw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D5311F000E9;
-	Thu, 30 Jul 2026 14:22:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p9G1H0ba"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C43E11F000E9;
+	Thu, 30 Jul 2026 14:22:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421323;
-	bh=JJACowtj2O0+W/G/8xLwNMorc15WX3THv4BoN2yk2z8=;
+	s=korg; t=1785421326;
+	bh=9cw1wCv9tiYym9U6u6fFLZ8cVzSxM/IMn/tEWLx/1ec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m0cihmQw4sBFhQOqj1/dN1Mw3IN9L8eMN8VDaN+07lJdONRvwp4iW2m9hTP5GkOyc
-	 Q6S3Ho19mJ8T8cQOKq9o9KqaRuEG7kR4zsleW2l30M88W0kz6XBseg950MK6BblRZc
-	 2/I4rhrPQr86DnynnWOs93CKRb/86X2OzOjTM+ws=
+	b=p9G1H0bawCf2pMivjA8k0n0TUq0vV5P1z/znab5+GsmyAi2ntTnx32fmwIdIEhrOP
+	 qNK1Y87PCmP7MEY18v5I/dRCJ2X9Dwod7PlQi6k9u8fi9IEkICpn8stwq7ImhzD56z
+	 Kx3LAGwmrWhS7hOxUR1bkNZkH7c4wQYIvmbkvSlY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Zhao Li <enderaoelyther@gmail.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 064/744] wifi: cfg80211: validate PMSR measurement type data
-Date: Thu, 30 Jul 2026 16:05:37 +0200
-Message-ID: <20260730141445.637747776@linuxfoundation.org>
+Subject: [PATCH 7.1 065/744] wifi: cfg80211: validate PMSR FTM preamble range
+Date: Thu, 30 Jul 2026 16:05:38 +0200
+Message-ID: <20260730141445.659057570@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -53,72 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhao Li <enderaoelyther@gmail.com>
 
-[ Upstream commit 41aa973eb05922848dded26875c55ef982ac1c49 ]
+[ Upstream commit 36230936468f0ba4930e94aef496fc229d4bb951 ]
 
-PMSR request parsing accepts missing or duplicated measurement type
-entries in NL80211_PMSR_REQ_ATTR_DATA.
+PMSR FTM request parsing accepts preamble values outside the
+enumerated nl80211 preamble range.
 
-Track whether one measurement type was already provided, reject a
-second one immediately, and return an error if the request data block
-contains no measurement type at all.
+Reject out-of-range values before using them in the parser capability
+bit test using the policy.
 
 Fixes: 9bb7e0f24e7e7 ("cfg80211: add peer measurement with FTM initiator API")
 Assisted-by: Codex:gpt-5.5
 Assisted-by: Claude:claude-opus-4.8
 Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Link: https://patch.msgid.link/20260612133656.92900-2-enderaoelyther@gmail.com
+Link: https://patch.msgid.link/20260612133703.93274-2-enderaoelyther@gmail.com
+[drop unnecessary check]
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/pmsr.c | 19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+ net/wireless/nl80211.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/wireless/pmsr.c b/net/wireless/pmsr.c
-index 1ee7a9e2cdef21..4b10ce0486f4a6 100644
---- a/net/wireless/pmsr.c
-+++ b/net/wireless/pmsr.c
-@@ -214,6 +214,7 @@ static int pmsr_parse_peer(struct cfg80211_registered_device *rdev,
- {
- 	struct nlattr *tb[NL80211_PMSR_PEER_ATTR_MAX + 1];
- 	struct nlattr *req[NL80211_PMSR_REQ_ATTR_MAX + 1];
-+	bool have_measurement_type = false;
- 	struct nlattr *treq;
- 	int err, rem;
- 
-@@ -267,6 +268,14 @@ static int pmsr_parse_peer(struct cfg80211_registered_device *rdev,
- 	}
- 
- 	nla_for_each_nested(treq, req[NL80211_PMSR_REQ_ATTR_DATA], rem) {
-+		if (have_measurement_type) {
-+			NL_SET_ERR_MSG_ATTR(info->extack, treq,
-+					    "multiple measurement types in request data");
-+			return -EINVAL;
-+		}
-+
-+		have_measurement_type = true;
-+
- 		switch (nla_type(treq)) {
- 		case NL80211_PMSR_TYPE_FTM:
- 			err = pmsr_parse_ftm(rdev, treq, out, info);
-@@ -276,10 +285,16 @@ static int pmsr_parse_peer(struct cfg80211_registered_device *rdev,
- 					    "unsupported measurement type");
- 			err = -EINVAL;
- 		}
-+		if (err)
-+			return err;
- 	}
- 
--	if (err)
--		return err;
-+	if (!have_measurement_type) {
-+		NL_SET_ERR_MSG_ATTR(info->extack,
-+				    req[NL80211_PMSR_REQ_ATTR_DATA],
-+				    "missing measurement type in request data");
-+		return -EINVAL;
-+	}
- 
- 	return 0;
- }
+diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
+index 3024fa8dd78021..3476681ecd7aa8 100644
+--- a/net/wireless/nl80211.c
++++ b/net/wireless/nl80211.c
+@@ -461,7 +461,9 @@ nl80211_ftm_responder_policy[NL80211_FTM_RESP_ATTR_MAX + 1] = {
+ static const struct nla_policy
+ nl80211_pmsr_ftm_req_attr_policy[NL80211_PMSR_FTM_REQ_ATTR_MAX + 1] = {
+ 	[NL80211_PMSR_FTM_REQ_ATTR_ASAP] = { .type = NLA_FLAG },
+-	[NL80211_PMSR_FTM_REQ_ATTR_PREAMBLE] = { .type = NLA_U32 },
++	[NL80211_PMSR_FTM_REQ_ATTR_PREAMBLE] =
++		NLA_POLICY_RANGE(NLA_U32, NL80211_PREAMBLE_LEGACY,
++				 NL80211_PREAMBLE_HE),
+ 	[NL80211_PMSR_FTM_REQ_ATTR_NUM_BURSTS_EXP] =
+ 		NLA_POLICY_MAX(NLA_U8, 15),
+ 	[NL80211_PMSR_FTM_REQ_ATTR_BURST_PERIOD] = { .type = NLA_U16 },
 -- 
 2.53.0
 
