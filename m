@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D690365A19;
-	Thu, 30 Jul 2026 16:14:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CD8D43E4AC;
+	Thu, 30 Jul 2026 16:14:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785428073; cv=none; b=czNAJ/H/9rNN72mJ/x5JYJnmzj/PLy7enxh8IBU9f2WIiKOAgcFWcvs3XoDWtelQhXo+znMhKgPs1UmbpaJm07p35/47579t69LMLlrJloskax8fQWZsq8NXo+D47DsJPUUVnLqX2M90QW5kZMwcPLF8sGru96UsaGrnWiX8byk=
+	t=1785428075; cv=none; b=vBe65eVjuJbWdGuLc/Qs+i71b6LjtFZBZdxgfwgbM2ZCixHItVPdF1t2MpPAOoKkVvbhX8Ty58oEA6WkXrKMRmc3b76o1TRoJVcurGAOlwoYAe85TBdXa9TM0/an40Z77jX09XJQaZFJ75h3AXBwVXjHNxPOZwQUPVGE19muRpE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785428073; c=relaxed/simple;
-	bh=5VTiEAkBGNlr/hmzZftQIlPqoze0ZKWGhRI4teMwG1s=;
+	s=arc-20240116; t=1785428075; c=relaxed/simple;
+	bh=Yfps5vSfuW2xDw1OwHZU/aqauI5ggDzX9sBpdJHbcFs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PWviVCX70FN3fS31AjfTc2Qf22GHO+Ol6NapiLDo8plSQ8l8QYUi4i1U7aD0YGiaCcd9sFTK+w+vQWjaZsovMjVkfMe+lobJNge/5V03wc3yEmzrt/iOyO8xic4U77/76PHpUgyQ7s7ZLV1cLGvSx5aHtpYg/y4zGDm7OeDxVtQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ctuR2uJb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZBBUre6gyJPkGnMLTyvRJK4Ur1W+ZFNzhJAR/vknm/EOIRRONQpzF8LncL+y4ZNW/HUIW/+e+3BsQJ38OU/7/cLcgbGnUFo/oen62sw2/Fx7AbIzNM34enTKcIz8YeQ3Zxj2ZQrzRsgDlVpnqQSH6DAyVExTBsbemxP1xk+8G1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TEOZdCQ8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ctuR2uJb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3249E1F00A3D;
-	Thu, 30 Jul 2026 16:14:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TEOZdCQ8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 047381F000E9;
+	Thu, 30 Jul 2026 16:14:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785428070;
-	bh=JuCddbZQXcHfCksvGpMx9tIHN8OMIDIbOd3CUgb4h1U=;
+	s=korg; t=1785428073;
+	bh=ai25uOCXZ46LJVrWs2bS0JZmqoBoSmmkt3AcmtF7K5o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ctuR2uJb8xgfXPJ3RvB45Ijf3BLyC2cR3V04w+9DUGbBonLXcPO3WavCLoTrGA/j9
-	 eywylrMurS3Pod277u+/yDeezXu4WUkDQIH0tJEEYHq4hm+4l5D1kE5XTd8SGKBNxs
-	 u0p/6zgWnXhKhJF5QQs4FrKELlkvCbQnC364j7gc=
+	b=TEOZdCQ8StUN5dev9cRFyZJVOuciVl2M6A8I8gB9Eft819mnjwxJPNXlK+rqm1tDz
+	 naKSv2qvtwZ/Y+Vj8ab9w9zy/oJc1EdWMi5jGTCpy8eSWVogYYqwn2vFUQUopm5UkK
+	 zNBaspOQbI3Zh8GgEPq1usxt3rC79YwvSf3fd67Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Subbaraya Sundeep <sbhatta@marvell.com>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Simon Horman <horms@kernel.org>,
+	Ratheesh Kannoth <rkannoth@marvell.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 393/484] octeontx2: Annotate mmio regions as __iomem
-Date: Thu, 30 Jul 2026 16:14:50 +0200
-Message-ID: <20260730141432.011756617@linuxfoundation.org>
+Subject: [PATCH 6.6 394/484] octeontx2-pf: clear stale mailbox IRQ state before request_irq()
+Date: Thu, 30 Jul 2026 16:14:51 +0200
+Message-ID: <20260730141432.034124268@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -51,96 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Subbaraya Sundeep <sbhatta@marvell.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit d0976b43956ee8c8bd093223df9115bfcf63dfe5 ]
+[ Upstream commit f918554fb7246e89b98ef90abe80801f038258b3 ]
 
-This patch removes unnecessary typecasts by marking the
-mbox_regions array as __iomem since it is used to store
-pointers to memory-mapped I/O (MMIO) regions. Also simplified
-the call to readq() in PF driver by removing redundant type casts.
+otx2_register_mbox_intr() currently installs the PF mailbox IRQ handler
+before clearing stale mailbox interrupt state. The function itself then
+comments that the local interrupt bits must be cleared first to avoid
+spurious interrupts, but that clear happens only after request_irq() has
+already exposed the handler to irq delivery.
 
-Signed-off-by: Subbaraya Sundeep <sbhatta@marvell.com>
-Link: https://patch.msgid.link/1749484309-3434-1-git-send-email-sbhatta@marvell.com
+A running system can reach this during PF mailbox interrupt registration
+while stale or latched RVU_PF_INT state is still present. If delivery
+happens in the request_irq()-to-clear window,
+otx2_pfaf_mbox_intr_handler() can run before local quiesce and touch
+the same pf->mbox and pf->mbox_wq carrier that probe and teardown later
+reuse or destroy.
+
+Move the stale mailbox interrupt clear ahead of request_irq(), but keep
+interrupt enabling after the handler is installed. This closes the
+pre-clear early-IRQ window without creating a new enable-before-handler
+window.
+
+Fixes: 5a6d7c9daef3 ("octeontx2-pf: Mailbox communication with AF")
+Cc: stable@vger.kernel.org
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Ratheesh Kannoth <rkannoth@marvell.com>
+Link: https://patch.msgid.link/20260611160014.3202224-2-runyu.xiao@seu.edu.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: f918554fb724 ("octeontx2-pf: clear stale mailbox IRQ state before request_irq()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/rvu.c      |   12 ++++++------
- drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c |    3 +--
- 2 files changed, 7 insertions(+), 8 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
-@@ -2330,7 +2330,7 @@ static inline void rvu_afvf_mbox_up_hand
- 	__rvu_mbox_up_handler(mwork, TYPE_AFVF);
- }
- 
--static int rvu_get_mbox_regions(struct rvu *rvu, void **mbox_addr,
-+static int rvu_get_mbox_regions(struct rvu *rvu, void __iomem **mbox_addr,
- 				int num, int type, unsigned long *pf_bmap)
- {
- 	struct rvu_hwinfo *hw = rvu->hw;
-@@ -2355,7 +2355,7 @@ static int rvu_get_mbox_regions(struct r
- 				bar4 = rvupf_read64(rvu, RVU_PF_VF_BAR4_ADDR);
- 				bar4 += region * MBOX_SIZE;
- 			}
--			mbox_addr[region] = (void *)ioremap_wc(bar4, MBOX_SIZE);
-+			mbox_addr[region] = ioremap_wc(bar4, MBOX_SIZE);
- 			if (!mbox_addr[region])
- 				goto error;
- 		}
-@@ -2378,7 +2378,7 @@ static int rvu_get_mbox_regions(struct r
- 					  RVU_AF_PF_BAR4_ADDR);
- 			bar4 += region * MBOX_SIZE;
- 		}
--		mbox_addr[region] = (void *)ioremap_wc(bar4, MBOX_SIZE);
-+		mbox_addr[region] = ioremap_wc(bar4, MBOX_SIZE);
- 		if (!mbox_addr[region])
- 			goto error;
- 	}
-@@ -2386,7 +2386,7 @@ static int rvu_get_mbox_regions(struct r
- 
- error:
- 	while (region--)
--		iounmap((void __iomem *)mbox_addr[region]);
-+		iounmap(mbox_addr[region]);
- 	return -ENOMEM;
- }
- 
-@@ -2396,10 +2396,10 @@ static int rvu_mbox_init(struct rvu *rvu
- 			 void (mbox_up_handler)(struct work_struct *))
- {
- 	int err = -EINVAL, i, dir, dir_up;
-+	void __iomem **mbox_regions;
- 	void __iomem *reg_base;
- 	struct rvu_work *mwork;
- 	unsigned long *pf_bmap;
--	void **mbox_regions;
- 	const char *name;
- 	u64 cfg;
- 
-@@ -2422,7 +2422,7 @@ static int rvu_mbox_init(struct rvu *rvu
- 
- 	mutex_init(&rvu->mbox_lock);
- 
--	mbox_regions = kcalloc(num, sizeof(void *), GFP_KERNEL);
-+	mbox_regions = kcalloc(num, sizeof(void __iomem *), GFP_KERNEL);
- 	if (!mbox_regions) {
- 		err = -ENOMEM;
- 		goto free_bitmap;
 --- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
 +++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
-@@ -597,8 +597,7 @@ static int otx2_pfvf_mbox_init(struct ot
- 		base = pci_resource_start(pf->pdev, PCI_MBOX_BAR_NUM) +
- 		       MBOX_SIZE;
- 	else
--		base = readq((void __iomem *)((u64)pf->reg_base +
--					      RVU_PF_VF_BAR4_ADDR));
-+		base = readq(pf->reg_base + RVU_PF_VF_BAR4_ADDR);
+@@ -1027,6 +1027,9 @@ static int otx2_register_mbox_intr(struc
+ 	char *irq_name;
+ 	int err;
  
- 	hwbase = ioremap_wc(base, MBOX_SIZE * pf->total_vfs);
- 	if (!hwbase) {
++	/* Clear stale mailbox interrupt state before installing the handler. */
++	otx2_write64(pf, RVU_PF_INT, BIT_ULL(0));
++
+ 	/* Register mailbox interrupt handler */
+ 	irq_name = &hw->irq_name[RVU_PF_INT_VEC_AFPF_MBOX * NAME_SIZE];
+ 	snprintf(irq_name, NAME_SIZE, "RVUPFAF Mbox");
+@@ -1038,10 +1041,7 @@ static int otx2_register_mbox_intr(struc
+ 		return err;
+ 	}
+ 
+-	/* Enable mailbox interrupt for msgs coming from AF.
+-	 * First clear to avoid spurious interrupts, if any.
+-	 */
+-	otx2_write64(pf, RVU_PF_INT, BIT_ULL(0));
++	/* Enable mailbox interrupt for msgs coming from AF. */
+ 	otx2_write64(pf, RVU_PF_INT_ENA_W1S, BIT_ULL(0));
+ 
+ 	if (!probe_af)
 
 
