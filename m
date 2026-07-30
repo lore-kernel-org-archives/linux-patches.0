@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 953984499B0;
-	Thu, 30 Jul 2026 16:03:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BA974499B3;
+	Thu, 30 Jul 2026 16:03:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427423; cv=none; b=s0AythIiIu4GaJfLJSXvgurJuEJDfthoDT68ozlut9HM9dC8SD8d8GfIhxCSVgC3Gq1b0y+vpKKtM02dg0H5+wFB3mC88txlYz17G/rPDClbP8mAZziez9GuG2vwhQku6LKEIAhAZjqGUmh/dF6QBdY60DI1nlhkuoQsX9BRe/Q=
+	t=1785427426; cv=none; b=qNy9gRSvOcYijB2G6p6sdS4oQ/ozHaweDo+dS6tZv5/e1CSpzwkLLjSJggIOR511R4rWCV2bTy9xmQpXE5/4QPmIxEK7x1fZMuV6lw8Cur2z1RdvvopCsdPtVp3QTdpar23vBpGzdbIJPcHIRyqr8JKfe5pi4xH16FhKR6JjvCY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427423; c=relaxed/simple;
-	bh=XMhQcPR5KarEWQFVVxbh/HLAzXTxetV74AWZkgbQ2mw=;
+	s=arc-20240116; t=1785427426; c=relaxed/simple;
+	bh=yNy1fUsYH3vqPtxTiRihhmzYjmn8fez2K4X+F+kD+is=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nlpLUaLQcUGa/gymFCU5Q3XM/uGyCapCTSbtJp40mqhK9Z2+Hhlj0AoSGkrFoV1cS/jtzG/b0NDK4sYxYbWpOLwkoiYcBEwPGB789ojAuqnXH947eBzyVWpK21c8PBAm9TUb4S9Gv3Z2fXFuV9PhFlkNNW4c701R4ourvvSMB+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MoovQ+eX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=W7abb0mYuM8g7UQZ/0Y0qrC23MzJLAR0HwGaHulUq1CpiV3hyfT7htTvkvuN9XO2Lj3xxjzfoUNmY4AUNKJCNonSGHFrQpOTV+kon+jO1zmyFh2UStqQBDH4y/hxucy/3RJIISat1yVHmEmQUBhgSszb1+/EWSHN+7AXS5tfiM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kq7x3TTd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MoovQ+eX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3B3E1F00A3E;
-	Thu, 30 Jul 2026 16:03:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kq7x3TTd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5C951F000E9;
+	Thu, 30 Jul 2026 16:03:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427422;
-	bh=+L14pEAtxNhZ6MYHJOtrkpKVnTXP+YwkRmD4XcYjod4=;
+	s=korg; t=1785427425;
+	bh=KvTUgCWuBGj+7d/hik81ZB6AdXxNeimhYNqeYtMePkc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MoovQ+eXpu0y1rG7MKN/4JB/07MoWglSCro4opDvxPNODVzRkrD3HbF4tPXjkJHzP
-	 lhsRns1YE/J0j9jHpqUgyzcGz4+w9fLVzBW+gX9wWZBNnI6suyD0+aGVpWWDZoycCc
-	 87JhkeQBV/WYjAzHQK4+wWWxDyawiu7aWpEsK3zc=
+	b=Kq7x3TTd2gU3Z+EttSmqQ2LLjuq/guyz5vTaCHz1EZU5P4e5x2aBR5p6+mPYhEOvc
+	 Eg6ErtlwsGx7KLGSiXQF7/a1K5IhgchD5B2AIzSVSLvXK1107sGW+4tFF25OVpAxE+
+	 ESgP2OC6E2/aeSo2Q3M929Kw3S1jtjYE3Da71If4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	sashiko-bot <sashiko-bot@kernel.org>,
 	"Nikhil P. Rao" <nikhil.rao@amd.com>,
 	Brett Creeley <brett.creeley@amd.com>,
 	Pavan Chebbi <pavan.chebbi@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	sashiko-bot@kernel.org
-Subject: [PATCH 6.6 164/484] pds_core: fix auxiliary device add/del races
-Date: Thu, 30 Jul 2026 16:11:01 +0200
-Message-ID: <20260730141427.031297705@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 165/484] pds_core: check for workqueue allocation failure
+Date: Thu, 30 Jul 2026 16:11:02 +0200
+Message-ID: <20260730141427.053812337@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -56,76 +56,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Nikhil P. Rao <nikhil.rao@amd.com>
 
-[ Upstream commit bfa33cd513c7ceb93c5a4c30e5662acd73c0a916 ]
+[ Upstream commit 3a660ca49e2c3807bffe0519db3cff677a5906e0 ]
 
-Two paths add or delete the same slot (pf->vfs[vf_id].padev): a VF's
-pdsc_reset_done() and the PF's devlink enable_vnet/disable_vnet handler.
-They serialize on config_lock, but neither guards the slot under it
-correctly.
+pdsc_init_pf() does not check whether create_singlethread_workqueue()
+succeeded.
 
-add() registers and stores a new auxiliary device without first checking
-the slot, so a second add of an already-populated slot leaks the first
-device. del() makes that check outside config_lock, so two concurrent
-dels can both pass it; the first clears the slot, and the second
-dereferences a NULL pointer.
+Fail probe on failure. The workqueue is set up before the timer and
+mutexes, so its failure path must unwind only the earlier setup.
 
-Check and update the slot under config_lock in both paths.
-
-Fixes: b699bdc720c0 ("pds_core: specify auxiliary_device to be created")
-Reported-by: sashiko-bot@kernel.org # Running on a local machine
+Fixes: c2dbb0904310 ("pds_core: health timer and workqueue")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260629200358.2626129-1-nikhil.rao%40amd.com?part=2
 Signed-off-by: Nikhil P. Rao <nikhil.rao@amd.com>
 Reviewed-by: Brett Creeley <brett.creeley@amd.com>
 Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Link: https://patch.msgid.link/20260714210745.1785625-1-nikhil.rao@amd.com
+Link: https://patch.msgid.link/20260714212713.1788438-1-nikhil.rao@amd.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/pds_core/auxbus.c | 17 ++++++++++++++---
- 1 file changed, 14 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/amd/pds_core/main.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/amd/pds_core/auxbus.c b/drivers/net/ethernet/amd/pds_core/auxbus.c
-index 889a18962270aa..7d7c87fe9e8f27 100644
---- a/drivers/net/ethernet/amd/pds_core/auxbus.c
-+++ b/drivers/net/ethernet/amd/pds_core/auxbus.c
-@@ -177,17 +177,21 @@ void pdsc_auxbus_dev_del(struct pdsc *cf, struct pdsc *pf,
- {
- 	struct pds_auxiliary_dev *padev;
+diff --git a/drivers/net/ethernet/amd/pds_core/main.c b/drivers/net/ethernet/amd/pds_core/main.c
+index 76652e0e5b6d9c..93fa7dfd74cbc9 100644
+--- a/drivers/net/ethernet/amd/pds_core/main.c
++++ b/drivers/net/ethernet/amd/pds_core/main.c
+@@ -238,6 +238,10 @@ static int pdsc_init_pf(struct pdsc *pdsc)
+ 	/* General workqueue and timer, but don't start timer yet */
+ 	snprintf(wq_name, sizeof(wq_name), "%s.%d", PDS_CORE_DRV_NAME, pdsc->uid);
+ 	pdsc->wq = create_singlethread_workqueue(wq_name);
++	if (!pdsc->wq) {
++		err = -ENOMEM;
++		goto err_out_unmap_bars;
++	}
+ 	INIT_WORK(&pdsc->health_work, pdsc_health_thread);
+ 	timer_setup(&pdsc->wdtimer, pdsc_wdtimer_cb, 0);
+ 	pdsc->wdtimer_period = PDSC_WATCHDOG_SECS * HZ;
+@@ -252,7 +256,7 @@ static int pdsc_init_pf(struct pdsc *pdsc)
+ 	err = pdsc_setup(pdsc, PDSC_SETUP_INIT);
+ 	if (err) {
+ 		mutex_unlock(&pdsc->config_lock);
+-		goto err_out_unmap_bars;
++		goto err_out_shutdown_timer;
+ 	}
  
--	if (!*pd_ptr)
--		return;
--
- 	mutex_lock(&pf->config_lock);
- 
-+	/* A concurrent del may have already torn this device down and
-+	 * cleared it.
-+	 */
- 	padev = *pd_ptr;
-+	if (!padev)
-+		goto out_unlock;
-+
- 	pds_client_unregister(pf, padev->client_id);
- 	auxiliary_device_delete(&padev->aux_dev);
- 	auxiliary_device_uninit(&padev->aux_dev);
- 	*pd_ptr = NULL;
- 
-+out_unlock:
- 	mutex_unlock(&pf->config_lock);
- }
- 
-@@ -210,6 +214,13 @@ int pdsc_auxbus_dev_add(struct pdsc *cf, struct pdsc *pf,
- 
- 	mutex_lock(&pf->config_lock);
- 
-+	/* Nothing to do if the aux device is already present.  This also
-+	 * guards against a second add overwriting *pd_ptr and leaking the
-+	 * first, symmetric with the check in pdsc_auxbus_dev_del().
-+	 */
-+	if (*pd_ptr)
-+		goto out_unlock;
-+
- 	mask = BIT_ULL(PDSC_S_FW_DEAD) |
- 	       BIT_ULL(PDSC_S_STOPPING_DRIVER);
- 	if (cf->state & mask) {
+ 	err = pdsc_start(pdsc);
+@@ -298,13 +302,14 @@ static int pdsc_init_pf(struct pdsc *pdsc)
+ 	pdsc_stop(pdsc);
+ err_out_teardown:
+ 	pdsc_teardown(pdsc, PDSC_TEARDOWN_REMOVING);
+-err_out_unmap_bars:
++err_out_shutdown_timer:
+ 	timer_shutdown_sync(&pdsc->wdtimer);
+ 	if (pdsc->wq)
+ 		destroy_workqueue(pdsc->wq);
+ 	mutex_destroy(&pdsc->config_lock);
+ 	mutex_destroy(&pdsc->devcmd_lock);
+ 	pci_free_irq_vectors(pdsc->pdev);
++err_out_unmap_bars:
+ 	pdsc_unmap_bars(pdsc);
+ err_out_release_regions:
+ 	pci_release_regions(pdsc->pdev);
 -- 
 2.53.0
 
