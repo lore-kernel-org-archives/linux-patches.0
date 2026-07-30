@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65991446060;
-	Thu, 30 Jul 2026 15:58:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3863643FD01;
+	Thu, 30 Jul 2026 15:58:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427085; cv=none; b=dpCGYp6EVx/VrAthmRepB771SopL8Hk3aHT2To140vaK8NMvY05Zn/BJlodCIv/BD1nm8m8MBUh7iUZ0mA6Z5iT0xnUcF1nyS1kdYYseERLqogzfyVy9Ez+yl0BL8XPLmRoGol6709zMwD2yOtcTMHR+dNtevvOvEfrP2jLcDCI=
+	t=1785427088; cv=none; b=aLqURoo3Bwy9m32DJt2aRaVEWvt5jfiTWHrVtGmWBl7CdxvRhSddBPwDM3QU+r8jE2ysq56tT/osQfuVuq2pswHTlMC89ZXmJynsRx2p+LCfmy9ga5O9XnRCuHBfcrOKXAA5lvYd/KqPN5xbtjWMg0TB+DLCgdkPh/h2PPd4XoM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427085; c=relaxed/simple;
-	bh=E61g8OeKaOLHNjfRUdrRFAav7zM4icRKnqJ/wDmgfBI=;
+	s=arc-20240116; t=1785427088; c=relaxed/simple;
+	bh=2sgxrekKWIHTdATIfomlWPtW/GBLzkbL3hKec9QGB3Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PaTp+3MR7dQQPDUwQvxjI4lpHZWJiq7ZjCbDoyAY2R/y6kXHnYzMzEy4PJzKTNN3QZakYikp3sIcQ5cqCTLoVgLLlZloQSVS3MGSYRREHvwJgbDmOgeDyLHx6XN0XEy0/MiO6GJl05ROTt6Ul0Od6SBFwRwBFsFnMiKkUS/HADM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=no6p5/0S; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bkoiU80mwmqdyscL8TD5UE0ith17L4xKKFz4A8AJXWUhH8SUBOtQwpcqD6UCHZiGA2j+i+uABnn0J/NiYcyyQV44dJcTvzDyt8GLPoNUqvFMUSPvApxlB/mMJWB++poFRMLdVs/8Y8WlF7PLzLKTodbI+g8e/foaXluflyz9sgo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FPGEVKhV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="no6p5/0S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C19431F000E9;
-	Thu, 30 Jul 2026 15:58:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FPGEVKhV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 949EF1F00A3A;
+	Thu, 30 Jul 2026 15:58:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427084;
-	bh=U15WHsKB07UGvolh+wrFmjzeCkNbPLDtuSnudGYLL+E=;
+	s=korg; t=1785427087;
+	bh=6oJ01fle18pIs6tCQ5H7Yb9uZfIFmAohUPzp5gfhiBI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=no6p5/0S4gT9Bz9Bq59GCq/na1t5wDiw4HMQvOkUpDybRCBkb/LaLWt3gxz7RILN0
-	 vjvGrFV9aLKcAoFVBMjfv4zZ4qlce8KWxWmV6Gqjq0Vtuk9pTj4hq/YPaAnHSt4b7c
-	 O588PbpG0QiYatW9i1IrsMXaP3FEnWqCziX416Vo=
+	b=FPGEVKhVaaESQJurlNF/gRjDPV2H09xwG0TRSGa+L8KyNs68ZyfhQzhSsSD6uVtVl
+	 7uREpjFDuW4iQV+4hc4IFDrsOgCxUM/qXmJQoaTC0IycBSI1Svv7ugxhJavpITzqqr
+	 O4ENwqn4oL3N9hLw/4vOjUTWqh61DvkzyiPUdOgk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bernard Metzler <bernard.metzler@linux.dev>,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	syzbot+e9c76b56dc05023b8117@syzkaller.appspotmail.com,
+	Xue Lei <Xue.Lei@windriver.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 047/484] RDMA/siw: publish QP after initialization
-Date: Thu, 30 Jul 2026 16:09:04 +0200
-Message-ID: <20260730141424.445638452@linuxfoundation.org>
+Subject: [PATCH 6.6 048/484] mtd: fix double free and WARN_ON in add_mtd_device() error paths
+Date: Thu, 30 Jul 2026 16:09:05 +0200
+Message-ID: <20260730141424.467337911@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -52,151 +52,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Xue Lei <Xue.Lei@windriver.com>
 
-[ Upstream commit bb27fcc67c429d97f785c92c35a6c5adebb05d7f ]
+[ Upstream commit 9d4af746af8ce27eefc2338b2feaa1e01f28b6c3 ]
 
-siw_create_qp() currently calls siw_qp_add() before the queues, CQ
-pointers, state, completion, and device list entry are ready. A QPN
-lookup can therefore reach a QP that is still being constructed.
+When device_register() or mtd_nvmem_add() fails inside
+add_mtd_device() for a partition, the error handling triggers
+mtd_release() via put_device() or device_unregister(). mtd_release()
+calls release_mtd_partition() which frees the mtd_info structure.
+However, callers such as mtd_add_partition() and add_mtd_partitions()
+also call free_partition() in their error paths, resulting in a double
+free.
 
-Move siw_qp_add() to the end of siw_create_qp(), after QP
-initialization and before adding the QP to the siw device list.
+Additionally, release_mtd_partition() hits WARN_ON(!list_empty(
+&mtd->part.node)) because the partition node is still linked in the
+parent's partitions list when the release callback fires from the
+add_mtd_device() error path.
 
-Fixes: f29dd55b0236 ("rdma/siw: queue pair methods")
-Link: https://patch.msgid.link/r/20260630060040.966461-1-ruoyuw560@gmail.com
-Suggested-by: Bernard Metzler <bernard.metzler@linux.dev>
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Acked-by: Bernard Metzler <bernard.metzler@linux.dev>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fix this by overriding dev->type and dev->release before put_device()
+in the error paths, so that device_release() invokes a no-op function
+instead of mtd_release(). For the mtd_nvmem_add() failure case,
+device_unregister() is replaced with device_del() to separate the
+device removal from the final kobject reference drop, allowing the
+override to take effect before put_device() is called.
+
+The callers' error paths (list_del + free_partition) remain the sole
+owners of mtd_info lifetime on add_mtd_device() failure, which is the
+expected contract.
+
+The normal partition teardown path is not affected: del_mtd_device()
+goes through kref_put() -> mtd_device_release() -> device_unregister()
+with dev->type still set to &mtd_devtype, so mtd_release() ->
+release_mtd_partition() continues to work correctly for the regular
+removal case.
+
+Reported-by: syzbot+e9c76b56dc05023b8117@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=e9c76b56dc05023b8117
+Fixes: 19bfa9ebebb5 ("mtd: use refcount to prevent corruption")
+Signed-off-by: Xue Lei <Xue.Lei@windriver.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/siw/siw_verbs.c | 44 +++++++++++++++------------
- 1 file changed, 24 insertions(+), 20 deletions(-)
+ drivers/mtd/mtdcore.c | 23 +++++++++++++++++++----
+ 1 file changed, 19 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/infiniband/sw/siw/siw_verbs.c b/drivers/infiniband/sw/siw/siw_verbs.c
-index 75a7ad323c8230..40e0e0a2486db5 100644
---- a/drivers/infiniband/sw/siw/siw_verbs.c
-+++ b/drivers/infiniband/sw/siw/siw_verbs.c
-@@ -302,6 +302,7 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
- 	struct siw_ucontext *uctx =
- 		rdma_udata_to_drv_context(udata, struct siw_ucontext,
- 					  base_ucontext);
-+	struct siw_uresp_create_qp uresp = {};
- 	unsigned long flags;
- 	int num_sqe, num_rqe, rv = 0;
- 	size_t length;
-@@ -355,11 +356,6 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
- 	spin_lock_init(&qp->rq_lock);
- 	spin_lock_init(&qp->orq_lock);
+diff --git a/drivers/mtd/mtdcore.c b/drivers/mtd/mtdcore.c
+index 97ca2a897f1d49..506ebd4ba1b458 100644
+--- a/drivers/mtd/mtdcore.c
++++ b/drivers/mtd/mtdcore.c
+@@ -103,6 +103,15 @@ static void mtd_release(struct device *dev)
+ 	device_destroy(&mtd_class, index + 1);
+ }
  
--	rv = siw_qp_add(sdev, qp);
--	if (rv)
--		goto err_atomic;
--
--
- 	/* All queue indices are derived from modulo operations
- 	 * on a free running 'get' (consumer) and 'put' (producer)
- 	 * unsigned counter. Having queue sizes at power of two
-@@ -377,14 +373,14 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
- 
- 	if (qp->sendq == NULL) {
- 		rv = -ENOMEM;
--		goto err_out_xa;
-+		goto err_out;
- 	}
- 	if (attrs->sq_sig_type != IB_SIGNAL_REQ_WR) {
- 		if (attrs->sq_sig_type == IB_SIGNAL_ALL_WR)
- 			qp->attrs.flags |= SIW_SIGNAL_ALL_WR;
- 		else {
- 			rv = -EINVAL;
--			goto err_out_xa;
-+			goto err_out;
- 		}
- 	}
- 	qp->pd = pd;
-@@ -410,7 +406,7 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
- 
- 		if (qp->recvq == NULL) {
- 			rv = -ENOMEM;
--			goto err_out_xa;
-+			goto err_out;
- 		}
- 		qp->attrs.rq_size = num_rqe;
- 	}
-@@ -425,11 +421,8 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
- 	qp->attrs.state = SIW_QP_STATE_IDLE;
- 
- 	if (udata) {
--		struct siw_uresp_create_qp uresp = {};
--
- 		uresp.num_sqe = num_sqe;
- 		uresp.num_rqe = num_rqe;
--		uresp.qp_id = qp_id(qp);
- 
- 		if (qp->sendq) {
- 			length = num_sqe * sizeof(struct siw_sqe);
-@@ -438,7 +431,7 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
- 						      length, &uresp.sq_key);
- 			if (!qp->sq_entry) {
- 				rv = -ENOMEM;
--				goto err_out_xa;
-+				goto err_out;
- 			}
- 		}
- 
-@@ -450,9 +443,23 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
- 			if (!qp->rq_entry) {
- 				uresp.sq_key = SIW_INVAL_UOBJ_KEY;
- 				rv = -ENOMEM;
--				goto err_out_xa;
-+				goto err_out;
- 			}
- 		}
-+	}
-+	qp->tx_cpu = siw_get_tx_cpu(sdev);
-+	if (qp->tx_cpu < 0) {
-+		rv = -EINVAL;
-+		goto err_out;
-+	}
-+	init_completion(&qp->qp_free);
++/*
++ * No-op device release used in add_mtd_device() error paths.
++ * Prevents mtd_release() from being called via device_release(),
++ * which would free the mtd_info that the caller still manages.
++ */
++static void mtd_dev_release_nop(struct device *dev)
++{
++}
 +
-+	rv = siw_qp_add(sdev, qp);
-+	if (rv)
-+		goto err_out_tx;
-+
-+	if (udata) {
-+		uresp.qp_id = qp_id(qp);
- 
- 		if (udata->outlen < sizeof(uresp)) {
- 			rv = -EINVAL;
-@@ -462,22 +469,19 @@ int siw_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
- 		if (rv)
- 			goto err_out_xa;
- 	}
--	qp->tx_cpu = siw_get_tx_cpu(sdev);
--	if (qp->tx_cpu < 0) {
--		rv = -EINVAL;
--		goto err_out_xa;
+ static void mtd_device_release(struct kref *kref)
+ {
+ 	struct mtd_info *mtd = container_of(kref, struct mtd_info, refcnt);
+@@ -745,10 +754,8 @@ int add_mtd_device(struct mtd_info *mtd)
+ 	mtd_check_of_node(mtd);
+ 	of_node_get(mtd_get_of_node(mtd));
+ 	error = device_register(&mtd->dev);
+-	if (error) {
+-		put_device(&mtd->dev);
++	if (error)
+ 		goto fail_added;
 -	}
-+
- 	INIT_LIST_HEAD(&qp->devq);
- 	spin_lock_irqsave(&sdev->lock, flags);
- 	list_add_tail(&qp->devq, &sdev->qp_list);
- 	spin_unlock_irqrestore(&sdev->lock, flags);
  
--	init_completion(&qp->qp_free);
--
+ 	/* Add the nvmem provider */
+ 	error = mtd_nvmem_add(mtd);
+@@ -786,8 +793,16 @@ int add_mtd_device(struct mtd_info *mtd)
  	return 0;
  
- err_out_xa:
- 	xa_erase(&sdev->qp_xa, qp_id(qp));
-+err_out_tx:
-+	siw_put_tx_cpu(qp->tx_cpu);
-+err_out:
- 	if (uctx) {
- 		rdma_user_mmap_entry_remove(qp->sq_entry);
- 		rdma_user_mmap_entry_remove(qp->rq_entry);
+ fail_nvmem_add:
+-	device_unregister(&mtd->dev);
++	device_del(&mtd->dev);
+ fail_added:
++	/*
++	 * Clear type and set nop release to prevent mtd_release() ->
++	 * release_mtd_partition() -> free_partition() from freeing mtd.
++	 * The caller handles cleanup on failure.
++	 */
++	mtd->dev.type = NULL;
++	mtd->dev.release = mtd_dev_release_nop;
++	put_device(&mtd->dev);
+ 	of_node_put(mtd_get_of_node(mtd));
+ 	idr_remove(&mtd_idr, i);
+ fail_locked:
 -- 
 2.53.0
 
