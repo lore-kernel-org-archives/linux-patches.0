@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFEDB37BE9C;
-	Thu, 30 Jul 2026 15:45:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0B4137F8D7;
+	Thu, 30 Jul 2026 15:45:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426356; cv=none; b=ZZRB5pPIAWMGDgFZrNoem4yjWg7mQMOZLFTl0Om4kILnBmdanHaUE2AfHUsUhwmJrYLwRBT2I1l3IxnH0EGK0RI8omVhjQkVexpqMAIljdIpBlWp1mw5RR0mzh6zfe39H+lrF04saBxTpTbtAa7QgMTx8YzPYTiIG7rgw9hhnuc=
+	t=1785426358; cv=none; b=uTHm2dhFnSut7zsK2xO7PzzjgYQn2Ip02B6nRpUIFx9kP0SR2yfUWQAEfI4tVgJvD/9Ug3Bq+m04/xMxzVboFTmWrDvtB/AA/DNZ5+8q7bxwiRXNMyGqGSCXtGxvdV5aaBwlJ70ox7O0shW7s77EoAAlkLaepPQmKr3KHyn2F5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426356; c=relaxed/simple;
-	bh=BKgeUsRTfktQ6UQ9lJmWsuMHoGYEvM2Q8NHNNFfUjBI=;
+	s=arc-20240116; t=1785426358; c=relaxed/simple;
+	bh=lgfEbu9hnh2H5bkBt5B6lpmGp829wbh+fx/dXwSKYfw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qggws5gNJi7/5KsptJSCl4b6uDpDMzBCEczUFhLxsMwKdmt2VOUBNIKlkWviAO/VQN5ki6SbBYBWhaeptgKxJSE1qXKMjMgWVAf/HOFTrCPDENm0P3xkB4NJg32p/QjWHg2zoxoj5buV3Zn3+2bsdIZ7Kikcj/PAYSI0e2YjQOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G2+sVSu4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kfwFYP+y0+mkBYSjpGYeEmIEQMwFcrCjof0rCma7Cpb81IN+NFAfHJdp0vzVg+4Dk5x0iJhzoykNJEp2u7778BxelyRkYNINlKCKcU6h/+27/mNcWNTwUKyaRbKcxGAJKDw9MQNeLljLXxIwLwCjCn361pzukwMp398/PIVKzeY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XM0Az/TK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G2+sVSu4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47E981F000E9;
-	Thu, 30 Jul 2026 15:45:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XM0Az/TK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 128B81F000E9;
+	Thu, 30 Jul 2026 15:45:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426354;
-	bh=/eMw3L/hEMHv4UN1AG1G7FVrCDpS6C49pFis/wI1WWc=;
+	s=korg; t=1785426357;
+	bh=MCOuGd+PcPLyBpGCSqzsY8e+0/GWehjdmt4/5MhCK8Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G2+sVSu4nu00CC/2dhdvPeRRXLVsv+aYU3Q4uIoRGPnUS2/IHxCN5TBP4+jDnPaBA
-	 Zd98Abig32Qs1P7co9znc63DSmhgH7FJnNfdjSCOICABWSnC284tokeJ35tbLhQPyD
-	 qmmQMnfvXNe6y8XibQHdtkUrR9jRs+d1XK4GqBDA=
+	b=XM0Az/TK9M6RUpX5jaykO2mYng8DsbcXEjA+udvo5r0k7mooNc3NLwSPdeRBR4COZ
+	 1LzrJh9xP7tMqZqe4DvS1qGjIZy/C7LvWRQUTeOpyTtZkGl4PTKksyy76Q7m0ajPMk
+	 JKd51cZh9P6FzvvW3uVstbAuB9xDJdzN1y/58iHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	WenTao Liang <vulab@iscas.ac.cn>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Douya Le <ldy3087146292@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
 	Viacheslav Dubeyko <slava@dubeyko.com>,
-	Alex Markuze <amarkuze@redhat.com>,
 	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 6.12 391/602] ceph: fix refcount leak in ceph_readdir()
-Date: Thu, 30 Jul 2026 16:13:03 +0200
-Message-ID: <20260730141444.175924538@linuxfoundation.org>
+Subject: [PATCH 6.12 392/602] libceph: bound get_version reply decode to front len
+Date: Thu, 30 Jul 2026 16:13:04 +0200
+Message-ID: <20260730141444.196516295@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -52,51 +55,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: WenTao Liang <vulab@iscas.ac.cn>
+From: Douya Le <ldy3087146292@gmail.com>
 
-commit c3e64079d8b9663e3998d0caac9aba915b6b93ae upstream.
+commit d3c32939fa0e3ee9b883b9a0fd1972c5c444e3d0 upstream.
 
-The ceph_readdir() function allocates a ceph_mds_request via
-ceph_mdsc_create_request() and stores it in dfi->last_readdir. In
-the directory entry processing loop, if the entry's offset is less
-than ctx->pos or if the inode pointer is unexpectedly NULL, the
-function returns -EIO without releasing the reference held by
-dfi->last_readdir, causing a refcount leak.
+handle_get_version_reply() uses msg->front_alloc_len as the decode
+boundary for MON_GET_VERSION_REPLY.  That is the size of the reused
+reply buffer, not the number of bytes actually received.
 
-Fix this by adding ceph_mdsc_put_request(dfi->last_readdir) before
-returning on these error paths. Also set dfi->last_readdir to NULL
-for safety, matching the cleanup done at the normal exit.
+A truncated reply can therefore pass ceph_decode_need() and decode the
+second u64 from stale tail bytes left in the buffer by an earlier
+message, causing an uninitialized memory read.
+
+Use msg->front.iov_len as the receive-side decode boundary, matching
+other libceph reply handlers and limiting decoding to the bytes that
+were actually read from the wire.
 
 Cc: stable@vger.kernel.org
-Fixes: af9ffa6df7e3 ("ceph: add support to readdir for encrypted names")
-Signed-off-by: WenTao Liang <vulab@iscas.ac.cn>
+Fixes: 513a8243d67f ("libceph: mon_get_version request infrastructure")
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Assisted-by: Codex:GPT-5.4
+Signed-off-by: Douya Le <ldy3087146292@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
 Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/dir.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ net/ceph/mon_client.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/ceph/dir.c
-+++ b/fs/ceph/dir.c
-@@ -546,11 +546,16 @@ more:
- 			pr_warn_client(cl,
- 				"%p %llx.%llx rde->offset 0x%llx ctx->pos 0x%llx\n",
- 				inode, ceph_vinop(inode), rde->offset, ctx->pos);
-+			ceph_mdsc_put_request(dfi->last_readdir);
-+			dfi->last_readdir = NULL;
- 			return -EIO;
- 		}
+--- a/net/ceph/mon_client.c
++++ b/net/ceph/mon_client.c
+@@ -821,7 +821,7 @@ static void handle_get_version_reply(str
+ 	struct ceph_mon_generic_request *req;
+ 	u64 tid = le64_to_cpu(msg->hdr.tid);
+ 	void *p = msg->front.iov_base;
+-	void *end = p + msg->front_alloc_len;
++	void *const end = p + msg->front.iov_len;
+ 	u64 handle;
  
--		if (WARN_ON_ONCE(!rde->inode.in))
-+		if (WARN_ON_ONCE(!rde->inode.in)) {
-+			ceph_mdsc_put_request(dfi->last_readdir);
-+			dfi->last_readdir = NULL;
- 			return -EIO;
-+		}
- 
- 		ctx->pos = rde->offset;
- 		doutc(cl, "%p %llx.%llx (%d/%d) -> %llx '%.*s' %p\n", inode,
+ 	dout("%s msg %p tid %llu\n", __func__, msg, tid);
 
 
