@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A80F7432E6E;
-	Thu, 30 Jul 2026 14:34:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A90B33D4E2;
+	Thu, 30 Jul 2026 14:34:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422057; cv=none; b=dsjTEiKjLCSzzqJIk42Kcr72hrkpiWaTbplvAGs8XOiLH5SHXFc/71ZN+AbEEpmQ/uZExjC0BhqbaMO01gavmfIyn5Uxrd5syoeNujupCQwzJv8v31B4LZRlSK9NHvHWRwInm1VMlDiGABYWVLCVox7355cPYy9jfcDQemghFdA=
+	t=1785422060; cv=none; b=Zhz0lt13Dfgad5c6ig7NQPE1TnV2Chv7IDIZv4ym2TINi+Ni4kvM3vuy99ltqNuvEriP61hOOP834ZV8gMn/HZeC3F7PfoRcWm0HWKtcHYmr6xQi9o+UTiizGypWZdKApfAcAQg6ktmBPNO44EXuSTAlwChDoKxoRyktuuyowhI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422057; c=relaxed/simple;
-	bh=wdt4vKcKyRs84pHHPOq4lHEQQRCjvcCrS2gvf+Pc5z0=;
+	s=arc-20240116; t=1785422060; c=relaxed/simple;
+	bh=Zu1iMpjFiwS14FutCzwZD5kKyQE0mBgzOrtdH1P/laY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lSRhQaUNYwgIB4QZC49++EYemwFEh0sX3627ur6ngivS/XG20OfWmSThbAQG7fGWoL0f2f/oKJBKqACV0JHNB3p/CrbKaK+E8uq8AoxaBv5CWggIA+bTSv+VspCTITwezi8kNxnaP5gsAxuwkNqjuLIRWKmioHvf2nMc67WLx4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MKAekDCQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TU9WOgM2daHXZhqqKhKJoTumtx1nhr+rcBzruJxQzdJv3ZoCAthO4BbMOVXJnhTAvW7si+DKszL2pfDPx9tqa8RQ6tcSfojIeJjkzVTNdl3G9KPt1WhLi76zlNuDL6TNZrLkOrG/TQK3CAMqAECsYayXsiWWq+gO3JLONhkYj+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DsTFcWCC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MKAekDCQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 068AA1F000E9;
-	Thu, 30 Jul 2026 14:34:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DsTFcWCC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC9F41F00AC4;
+	Thu, 30 Jul 2026 14:34:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422056;
-	bh=fF89+WJnGhj5vxCS1ZO34GdKOXPMXul+7cvaWTAxlDQ=;
+	s=korg; t=1785422059;
+	bh=dU5NNYW/9JWtxv8QgwCIzhv/az0SAM8VqO0Oj4+7Nu0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MKAekDCQMGHQOXJXFhBfAV6k8bVUyP/sHqGtG6KU1L1ltsPXdwqo9oVHbQWF7mI9o
-	 uiuiP79V0BHQyS1kBH445zeTavm5podJpPtDAH4nsUrym8FZJIUFnU7ijMuvizfDdH
-	 YNlOpl+jhEn/zTt/BR4XwnJeqs4eFtyyXMebNTqU=
+	b=DsTFcWCC0+sQDJNzjCphtQRZclkfcyJJjE3Dv+7EMfKLhy4FDF2FUwjuyiaCwTxHx
+	 5Ij6Lux0Oj57H9QANPr73eW5unlSZqIHpMHx4qlzxL+5U1gaE7sQq0aYBS2IZy9bU9
+	 sg73HYd8sNwa3dER+w+qzbDUFPMGxfJje0D1GM9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+456957213f32970c0762@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Felix Maurer <fmaurer@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Chuyi Zhou <zhouchuyi@bytedance.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Muchun Song <muchun.song@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 308/744] net: hsr: fix memory leak on slave unregistration by removing synced VLANs
-Date: Thu, 30 Jul 2026 16:09:41 +0200
-Message-ID: <20260730141450.836115495@linuxfoundation.org>
+Subject: [PATCH 7.1 309/744] smp: Avoid invalid per-CPU CSD lookup with CSD lock debug
+Date: Thu, 30 Jul 2026 16:09:42 +0200
+Message-ID: <20260730141450.856377377@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -54,53 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Chuyi Zhou <zhouchuyi@bytedance.com>
 
-[ Upstream commit dcf15eaf5641812f1cfc5e96537380132a7da89d ]
+[ Upstream commit c58ea9adf7342508c6ac0b7ad79ef10d589f9c6e ]
 
-When an HSR master device is brought UP, it auto-adds VLAN 0 via
-vlan_vid0_add(), which propagates VID 0 to its slave devices (slave A and B).
+Commit b0473dcd4b1d ("smp: Improve smp_call_function_single()
+CSD-lock diagnostics") made smp_call_function_single() use the destination
+CPU's csd_data when CSD lock debugging is enabled. That lets the debug code
+associate a stuck CSD lock with the target CPU, but it also means the CPU
+argument is used in per_cpu_ptr() before generic_exec_single() has a chance
+to validate it.
 
-If a slave device is later unregistered while HSR is active (e.g., during
-netns cleanup or interface destruction), hsr_del_port() is called to
-detach the slave port from the HSR master. However, hsr_del_port() currently
-does not delete the VLAN IDs that were synced to the slave device by HSR.
+This becomes unsafe when smp_call_function_any() cannot find an online CPU
+in the supplied mask. In that case the selected CPU can be nr_cpu_ids, and
+the !wait path calls get_single_csd_data(cpu) before generic_exec_single()
+returns -ENXIO. With csdlock_debug_enabled set, that indexes the per-CPU
+offset array with an invalid CPU number.
 
-As a result, the slave device retains a refcount on VID 0 (and any other
-synced VLANs). When the slave device is destroyed, its vlan_info /
-vlan_vid_info structure remains allocated, leading to a memory leak.
+Use the destination CPU's csd_data only when the CPU number is within
+nr_cpu_ids. For invalid CPU numbers, fall back to the local CPU's csd_data
+and let generic_exec_single() perform the existing validation and return
+-ENXIO.
 
-Fix this by calling vlan_vids_del_by_dev(port->dev, master->dev) in
-hsr_del_port() before unlinking slave A or slave B ports, matching the
-propagation logic in hsr_ndo_vlan_rx_add_vid() / hsr_ndo_vlan_rx_kill_vid()
-and the cleanup behavior in bonding and team drivers.
-
-Fixes: 1a8a63a5305e ("net: hsr: Add VLAN CTAG filter support")
-Reported-by: syzbot+456957213f32970c0762@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6a4cb6ca.57639fcc.86d58.000b.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Reviewed-by: Felix Maurer <fmaurer@redhat.com>
-Link: https://patch.msgid.link/20260721101240.995597-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: b0473dcd4b1d ("smp: Improve smp_call_function_single() CSD-lock diagnostics")
+Signed-off-by: Chuyi Zhou <zhouchuyi@bytedance.com>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
+Acked-by: Muchun Song <muchun.song@linux.dev>
+Link: https://patch.msgid.link/20260716004539.13983-1-paulmck@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/hsr/hsr_slave.c | 2 ++
- 1 file changed, 2 insertions(+)
+ kernel/smp.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/hsr/hsr_slave.c b/net/hsr/hsr_slave.c
-index d9af9e65f72f07..01c73b4b50ddd8 100644
---- a/net/hsr/hsr_slave.c
-+++ b/net/hsr/hsr_slave.c
-@@ -242,6 +242,8 @@ void hsr_del_port(struct hsr_port *port)
- 		netdev_rx_handler_unregister(port->dev);
- 		if (!port->hsr->fwd_offloaded)
- 			dev_set_promiscuity(port->dev, -1);
-+		if (port->type == HSR_PT_SLAVE_A || port->type == HSR_PT_SLAVE_B)
-+			vlan_vids_del_by_dev(port->dev, master->dev);
- 		netdev_upper_dev_unlink(port->dev, master->dev);
- 		if (hsr->prot_version == PRP_V1 &&
- 		    port->type == HSR_PT_SLAVE_B) {
+diff --git a/kernel/smp.c b/kernel/smp.c
+index a0bb56bd8ddadb..dc6582bb35d084 100644
+--- a/kernel/smp.c
++++ b/kernel/smp.c
+@@ -380,7 +380,8 @@ static DEFINE_PER_CPU_SHARED_ALIGNED(call_single_data_t, csd_data);
+ #ifdef CONFIG_CSD_LOCK_WAIT_DEBUG
+ static call_single_data_t *get_single_csd_data(int cpu)
+ {
+-	if (static_branch_unlikely(&csdlock_debug_enabled))
++	if (static_branch_unlikely(&csdlock_debug_enabled) &&
++	    (unsigned int)cpu < nr_cpu_ids)
+ 		return per_cpu_ptr(&csd_data, cpu);
+ 	return this_cpu_ptr(&csd_data);
+ }
 -- 
 2.53.0
 
