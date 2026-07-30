@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7D3C446BEC;
-	Thu, 30 Jul 2026 15:33:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF25644685B;
+	Thu, 30 Jul 2026 15:33:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425636; cv=none; b=GBX4TSxBg9TThHiVVSGOZ1HnEZ4u7lf7GdUcpirg8GCxEmCdqXIsAR3cKwwiI5CFe2OMF4xOquLdrU4X+qrT4wuVmBXS10xOaBmieCyg32JulHIA/ZmAwSy0xS1Lj1pQDAgir0A3KNYOisEtdjnjRwGHpxDZ+7nVJI2OA6cztmI=
+	t=1785425638; cv=none; b=m85fD2uToziJl5UyIZx/rkvGsSQaBWH31kY9r6BAZxEE/d2NtLWNBo82OV8FQJdyUiMCDSo4y6AOuQDl8ZsHLt2YEhw/P/S3rq07GB5VPJVrkyLoiZfsAh6Xx0Zhbi6RZPSUNrquc5ZAZbalNcjQsLy2Uc6+p3x3S0NNJOoPTJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425636; c=relaxed/simple;
-	bh=axHarIGlLggQNQnaSCxMy++bAg7Vt/MYilf7eZvkZqU=;
+	s=arc-20240116; t=1785425638; c=relaxed/simple;
+	bh=rSBfEjhh4xzV320rJv0f3Aob1HujK1f+FxNKdswoaxM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UROqF1Um1eQHEDSFc8BD50GDDyafbIEjxt2HaWzPurQIeCJxaKnZxZNCGArcrxPuAs21nyXTmRiiP0t/PR4xNE8vOfsWPd5yDH0xI/Xv97t4sDJ9qypoTxaLaLioq5VGWQLftnwzRm3+58YojvY9UOhENoSukqIDvLq8PcCn1mQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G8ihq5YI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=I17rPOMtTVgk4A1zOg7ED8a8HaQHJqfJx5DOJwZBs3Os2827d38pDWRDAMdLWuJJjJgeDJpdKYmoZM+HQvdFD7tGf745zeZgFFL1/uhto2OX7eHpLa5c8laBfUbg5G68mePeMPpI00J6h6TBz3QWLWqCcpSznNyX+RC661bCWVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x10dqvD2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G8ihq5YI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D9EE1F000E9;
-	Thu, 30 Jul 2026 15:33:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x10dqvD2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 342881F000E9;
+	Thu, 30 Jul 2026 15:33:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425634;
-	bh=vnrAQ/owzOc7Nk+km3Ke0uKpopveDqhVi3zUxorstjQ=;
+	s=korg; t=1785425637;
+	bh=ccNBAin0N+VqCnh82Xi0DlMrqTUfhbL/uckLYuN45A0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G8ihq5YIq5Kt5uWE3Ax98muyqTChBTrkRJ04lwLbXjGKEloYfDqAMZ9Wxk7tY9Tsl
-	 0U7pa+fnv2u2mKcuVQTZrGiN1ogNSNlasYcg0a+qfq7Qm75SSzYtBWtLgSAfxNCpKs
-	 GlfHAnUKVd7rknFItXAYS7AXJ98sGrmGUmCyrE10=
+	b=x10dqvD23gmkWeXnKzx5sEupU+iqNiiSTa3sgvEWom9MtQApgUUeCbHkcTE06f7r8
+	 eL2y9MUNrL4ZlXfQ1GjcLbX96IwB3rxUaaUZvGpJjGXy2bXtco7A1Sk0mTVgti0tY9
+	 EECdcizYBxi86Bu90VOhcrjWocqdMddF1q6Gk/co=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9eebf5f6544c5e873858@syzkaller.appspotmail.com,
-	Edward Adam Davis <eadavis@qq.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Pauli Virtanen <pav@iki.fi>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 136/602] hwmon: (corsair-psu) Stop device IO before calling hid_hw_stop
-Date: Thu, 30 Jul 2026 16:08:48 +0200
-Message-ID: <20260730141438.839791595@linuxfoundation.org>
+Subject: [PATCH 6.12 094/602] Bluetooth: mgmt: hold reference for hci_conn in mgmt_pending_cmds
+Date: Thu, 30 Jul 2026 16:08:06 +0200
+Message-ID: <20260730141437.970294001@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -52,87 +51,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit 9ab8656548cd737b98d0b19c4253aff8d68e97f4 ]
+[ Upstream commit da55f570191d5d72f10c607a7043b947eb05ea46 ]
 
-hid_hw_stop() does not stop the device IO.
+Dereferencing RCU-protected pointers outside critical sections is
+invalid and may lead to UAF.  Use of hci_conn in hci_sync callbacks also
+needs to hold refcount to avoid UAF.
 
-This results in a race condition between hid_input_report() and the point
-immediately following the execution of hid_device_io_start() within
-corsairpsu_probe(). If the probe operation fails after "io start" has
-been initiated, this race condition will result in a uaf vulnerability
-[1].
+Take appropriate locks for hci_conn lookups, and take refcount for
+hci_conn pointers stored in mgmt_pending_cmd so that the pointer stays
+valid.
 
-CPU0				CPU1
-====				====
-corsairpsu_probe()
- hid_device_io_start()
-  ... unlock driver_input_lock
- hid_hw_stop()
-  kfree(hidraw)			__hid_input_report()
-				 ... acquire driver_input_lock
-				 hid_report_raw_event()
-				  hidraw_report_event()
-				   ... access hidraw's list_lock // trigger uaf
+When accessing conn->state, ensure hdev->lock is held to avoid data
+race.
 
-Consequently, when corsairpsu_probe() fails and hid_hw_stop() needs to
-be executed, the io_started flag is first cleared while holding the
-driver_input_lock to prevent potential race conditions involving input
-reports.
-
-[1]
-BUG: KASAN: slab-use-after-free in rt_spin_lock+0x83/0x400 kernel/locking/spinlock_rt.c:56
-Call Trace:
- hidraw_report_event+0x5d/0x3a0 drivers/hid/hidraw.c:577
- hid_report_raw_event+0x311/0x1730 drivers/hid/hid-core.c:2076
- __hid_input_report drivers/hid/hid-core.c:2152 [inline]
- hid_input_report+0x44e/0x580 drivers/hid/hid-core.c:2174
- hid_irq_in+0x47e/0x6d0 drivers/hid/usbhid/hid-core.c:286
- __usb_hcd_giveback_urb+0x3b3/0x5e0 drivers/usb/core/hcd.c:1657
- dummy_timer+0x8a9/0x47d0 drivers/usb/gadget/udc/dummy_hcd.c:2005
-
-Allocated by task 10:
- hidraw_connect+0x57/0x430 drivers/hid/hidraw.c:606
- hid_connect+0x5bf/0x19d0 drivers/hid/hid-core.c:2277
- hid_hw_start+0xa8/0x120 drivers/hid/hid-core.c:2387
- corsairpsu_probe+0xd9/0x3c0 drivers/hwmon/corsair-psu.c:782
-
-Freed by task 10:
- hidraw_disconnect+0x4f/0x60 drivers/hid/hidraw.c:662
- hid_disconnect drivers/hid/hid-core.c:2362 [inline]
- hid_hw_stop+0x101/0x1e0 drivers/hid/hid-core.c:2407
- corsairpsu_probe+0x327/0x3c0 drivers/hwmon/corsair-psu.c:826
-
-Fix the problem by calling hid_device_io_stop() before calling
-hid_hw_stop().
-
-Fixes: d115b51e0e56 ("hwmon: add Corsair PSU HID controller driver")
-Reported-by: syzbot+9eebf5f6544c5e873858@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=9eebf5f6544c5e873858
-Tested-by: syzbot+9eebf5f6544c5e873858@syzkaller.appspotmail.com
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Link: https://lore.kernel.org/r/tencent_BB7C33EB9EA41B7B4B5F1B8B25C0BA13BB08@qq.com
-[groeck: Updated subject and description;
- call hid_device_io_stop() only if IO has been started]
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 7b445e220db9 ("Bluetooth: MGMT: Fix holding hci_conn reference while command is queued")
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/corsair-psu.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/bluetooth/mgmt.c | 26 ++++++++++++++++++++++----
+ 1 file changed, 22 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/hwmon/corsair-psu.c b/drivers/hwmon/corsair-psu.c
-index 93937e1bce196b..4ab73bcef1d125 100644
---- a/drivers/hwmon/corsair-psu.c
-+++ b/drivers/hwmon/corsair-psu.c
-@@ -831,6 +831,7 @@ static int corsairpsu_probe(struct hid_device *hdev, const struct hid_device_id
+diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
+index a5945cfd71c5a5..f472ce8fb978bd 100644
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -7425,6 +7425,9 @@ static void get_conn_info_complete(struct hci_dev *hdev, void *data, int err)
+ 		rp.max_tx_power = HCI_TX_POWER_INVALID;
+ 	}
  
- fail_and_close:
- 	hid_hw_close(hdev);
-+	hid_device_io_stop(hdev);
- fail_and_stop:
- 	hid_hw_stop(hdev);
- 	return ret;
++	if (conn)
++		hci_conn_put(conn);
++
+ 	mgmt_cmd_complete(cmd->sk, cmd->hdev->id, MGMT_OP_GET_CONN_INFO, status,
+ 			  &rp, sizeof(rp));
+ 
+@@ -7439,6 +7442,8 @@ static int get_conn_info_sync(struct hci_dev *hdev, void *data)
+ 	int err;
+ 	__le16   handle;
+ 
++	hci_dev_lock(hdev);
++
+ 	/* Make sure we are still connected */
+ 	if (cp->addr.type == BDADDR_BREDR)
+ 		conn = hci_conn_hash_lookup_ba(hdev, ACL_LINK,
+@@ -7446,12 +7451,16 @@ static int get_conn_info_sync(struct hci_dev *hdev, void *data)
+ 	else
+ 		conn = hci_conn_hash_lookup_ba(hdev, LE_LINK, &cp->addr.bdaddr);
+ 
+-	if (!conn || conn->state != BT_CONNECTED)
++	if (!conn || conn->state != BT_CONNECTED) {
++		hci_dev_unlock(hdev);
+ 		return MGMT_STATUS_NOT_CONNECTED;
++	}
+ 
+-	cmd->user_data = conn;
++	cmd->user_data = hci_conn_get(conn);
+ 	handle = cpu_to_le16(conn->handle);
+ 
++	hci_dev_unlock(hdev);
++
+ 	/* Refresh RSSI each time */
+ 	err = hci_read_rssi_sync(hdev, handle);
+ 
+@@ -7585,6 +7594,9 @@ static void get_clock_info_complete(struct hci_dev *hdev, void *data, int err)
+ 	}
+ 
+ complete:
++	if (conn)
++		hci_conn_put(conn);
++
+ 	mgmt_cmd_complete(cmd->sk, cmd->hdev->id, cmd->opcode, status, &rp,
+ 			  sizeof(rp));
+ 
+@@ -7601,15 +7613,21 @@ static int get_clock_info_sync(struct hci_dev *hdev, void *data)
+ 	memset(&hci_cp, 0, sizeof(hci_cp));
+ 	hci_read_clock_sync(hdev, &hci_cp);
+ 
++	hci_dev_lock(hdev);
++
+ 	/* Make sure connection still exists */
+ 	conn = hci_conn_hash_lookup_ba(hdev, ACL_LINK, &cp->addr.bdaddr);
+-	if (!conn || conn->state != BT_CONNECTED)
++	if (!conn || conn->state != BT_CONNECTED) {
++		hci_dev_unlock(hdev);
+ 		return MGMT_STATUS_NOT_CONNECTED;
++	}
+ 
+-	cmd->user_data = conn;
++	cmd->user_data = hci_conn_get(conn);
+ 	hci_cp.handle = cpu_to_le16(conn->handle);
+ 	hci_cp.which = 0x01; /* Piconet clock */
+ 
++	hci_dev_unlock(hdev);
++
+ 	return hci_read_clock_sync(hdev, &hci_cp);
+ }
+ 
 -- 
 2.53.0
 
