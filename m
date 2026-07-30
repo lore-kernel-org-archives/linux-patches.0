@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B8F2391836;
-	Thu, 30 Jul 2026 15:17:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D4E3409121;
+	Thu, 30 Jul 2026 15:17:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424661; cv=none; b=cOFLAxwsmksjmYnUG5Dbk3iE+L9AvmuNXGxKtWzNkaX8eNkdvwVmTwPnnnm0i2jHFsyvxqVUUnl9fHdySN+QwXfCaYaLMLSMVqUTVrbvoM8E052kQ0vspSlJQnpVrDd299l8Qr0NF5XYGNWzvXRTJo45eoQgMfKxQNRQotlSY50=
+	t=1785424665; cv=none; b=CLUZGzFaYyke9MzoEqCnPNalPW20tGCK7ecxkLgWoxduwgPOP4zZrr9uBWtAkrGzYn5L5SohuS1C71twPT/5wYZfb/gI42z+i3+AvtcUyaeumXFiPCVp986Df6RiZlSX0CtI+/hvpmuNz0eh7A73k9bjKUokqEG/KS77eO17K+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424661; c=relaxed/simple;
-	bh=UE8Igc/FYfGfJ+UKC1OL+2SIY3EhZ4PCL8fJ2uVTGCE=;
+	s=arc-20240116; t=1785424665; c=relaxed/simple;
+	bh=SCZUlGjLjsgb4+0+zdkstvwUwU87h/g4j1UVYY3Br3c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UFZlFDgKrDF5R/aBysYg8vj+31TqhzflxHyQinSwcCI4r/ieuMqLYqTECUze6Ak++hF4NHn2fFpcRHcXfk60BtbH6B5cwNa8qhT0dgMH31euRCgiKHSBJtWfHS1ekqw6OS3ztHQoQAMfufy67lYaJafIE4n4vrvZ5IxvgNJYz3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LtPAfUD0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TkDk0ZrBXqcMI7nF9yUr6Ga/QdLFErOPCh9NzF9qUXi2OTueUkeX65ufWqe780eMRlZqayZQWB3xwwyGFX3Gk+k/CX1sM5cqySGCjGGmRTxabyytJFJXLyPfy59aZblQ5GZFdjurZ4TorrivSEhHvHyeaNj10800+MLpI9OOPlw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ETEhHjuo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LtPAfUD0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 037001F000E9;
-	Thu, 30 Jul 2026 15:17:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ETEhHjuo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCE4B1F00A3A;
+	Thu, 30 Jul 2026 15:17:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424660;
-	bh=b86MOsojk3MeiIocwDBAdlyVa1VV0C/c7b5rqMo89Jc=;
+	s=korg; t=1785424663;
+	bh=ZsfeXt6U4xA8q3+myueb47G2J5tjQwc6d/yav1MVsoc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LtPAfUD0CgZ25x0deTm7BuCm8G+p2N4xCIxLwO+hpWVZ027ZAw8s2oVUNDgjLCOJh
-	 YxRb+dzsGu0o/YVhvWk3VgsZDJYK5FC0OnyerIthBu8cUpFOSZXMnliWsWe7no15zZ
-	 3y9MwZ2Dy4+VFMe15NLgHTsdCWQxM/Z6jGgypfGc=
+	b=ETEhHjuoezq8LfJb8LYAWBVslmXoE/USRVWkOeNWXfFAEvkEX4tVarmE9d/sND/oZ
+	 Upn2tTRcxjpKxsqwDiO7dubgzoGd5/xnd8Xn0uYy2ywbIzVLSE/I8J+A9KWARCqWFT
+	 3jit0himbfM6rtVjDFHs6UCUVaoUtAVyxXCZAspQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Kexin Liu <liukexin@kylinos.cn>,
-	George Guo <guodongtai@kylinos.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.18 473/675] LoongArch: Fix address space mismatch in kexec command line lookup
-Date: Thu, 30 Jul 2026 16:13:23 +0200
-Message-ID: <20260730141455.181656565@linuxfoundation.org>
+	Devin Wittmayer <lucid_duck@justthetip.ca>,
+	Felix Fietkau <nbd@nbd.name>
+Subject: [PATCH 6.18 456/675] wifi: mt76: mt7615: drop TXRX_NOTIFY on non-mmio buses
+Date: Thu, 30 Jul 2026 16:13:06 +0200
+Message-ID: <20260730141454.824947270@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -52,58 +50,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: George Guo <guodongtai@kylinos.cn>
+From: Devin Wittmayer <lucid_duck@justthetip.ca>
 
-commit 485ed44db5694d8d2e5027f63ad608e705286f30 upstream.
+commit 39afc46c0243d10b7795e6e6cf4ae91f41732120 upstream.
 
-When searching the loaded segments for the "kexec" command line marker,
-the kexec_load(2) path (file_mode == 0) passes the user-space segment
-buffer straight to strncmp() through a bogus (char __user *) cast. This
-dereferences a user pointer in kernel context, which is wrong and is
-flagged by sparse:
+PKT_TYPE_TXRX_NOTIFY is an mmio-only event, but mt7615_rx_check() and
+mt7615_queue_rx_skb() dispatch it to mt7615_mac_tx_free() on every bus.
+mt7615_mac_tx_free() cleans the DMA tx queues with
+mt76_queue_tx_cleanup(), which calls queue_ops->tx_cleanup(). Only the
+mmio queue ops implement that callback; on the mt7663 USB and SDIO
+buses it is NULL, so a TXRX_NOTIFY there calls a NULL pointer in the RX
+worker. Same defect as the mt7921 and mt7925 patches in this series.
 
-  arch/loongarch/kernel/machine_kexec.c:84:51: sparse: incorrect type in
-  argument 2 (different address spaces) @@ expected char const * @@ got
-  char [noderef] __user *
+Drop the event on non-mmio buses via mt76_is_mmio(), as in
+commit 5683e1488aa9 ("wifi: mt76: connac: do not check WED status for
+non-mmio devices").
 
-Here copy the marker-sized prefix of each segment into a small on-stack
-buffer with copy_from_user() before comparing, and skip segments that
-fault. The subsequent copy_from_user() that stages the full command line
-into the safe area is left unchanged.
-
+Fixes: eb99cc95c3b6 ("mt76: mt7615: introduce mt7663u support")
 Cc: stable@vger.kernel.org
-Fixes: 4a03b2ac06a5 ("LoongArch: Add kexec support")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202605051639.aEPioXdD-lkp@intel.com/
-Co-developed-by: Kexin Liu <liukexin@kylinos.cn>
-Signed-off-by: Kexin Liu <liukexin@kylinos.cn>
-Signed-off-by: George Guo <guodongtai@kylinos.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
+Link: https://patch.msgid.link/20260627191336.20223-4-lucid_duck@justthetip.ca
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kernel/machine_kexec.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt7615/mac.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/arch/loongarch/kernel/machine_kexec.c
-+++ b/arch/loongarch/kernel/machine_kexec.c
-@@ -42,6 +42,7 @@ static unsigned long first_ind_entry;
- int machine_kexec_prepare(struct kimage *kimage)
- {
- 	int i;
-+	char head[8];
- 	char *bootloader = "kexec";
- 	void *cmdline_ptr = (void *)KEXEC_CMDLINE_ADDR;
+--- a/drivers/net/wireless/mediatek/mt76/mt7615/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7615/mac.c
+@@ -1601,6 +1601,8 @@ bool mt7615_rx_check(struct mt76_dev *md
  
-@@ -59,7 +60,9 @@ int machine_kexec_prepare(struct kimage
- 	} else {
- 		/* Find the command line */
- 		for (i = 0; i < kimage->nr_segments; i++) {
--			if (!strncmp(bootloader, (char __user *)kimage->segment[i].buf, strlen(bootloader))) {
-+			if (copy_from_user(head, kimage->segment[i].buf, strlen(bootloader)))
-+				continue;
-+			if (!strncmp(bootloader, head, strlen(bootloader))) {
- 				if (!copy_from_user(cmdline_ptr, kimage->segment[i].buf, COMMAND_LINE_SIZE))
- 					kimage->arch.cmdline_ptr = (unsigned long)cmdline_ptr;
- 				break;
+ 	switch (type) {
+ 	case PKT_TYPE_TXRX_NOTIFY:
++		if (!mt76_is_mmio(mdev))
++			return false;
+ 		mt7615_mac_tx_free(dev, data, len);
+ 		return false;
+ 	case PKT_TYPE_TXS:
+@@ -1634,6 +1636,10 @@ void mt7615_queue_rx_skb(struct mt76_dev
+ 		dev_kfree_skb(skb);
+ 		break;
+ 	case PKT_TYPE_TXRX_NOTIFY:
++		if (!mt76_is_mmio(mdev)) {
++			dev_kfree_skb(skb);
++			break;
++		}
+ 		mt7615_mac_tx_free(dev, skb->data, skb->len);
+ 		dev_kfree_skb(skb);
+ 		break;
 
 
