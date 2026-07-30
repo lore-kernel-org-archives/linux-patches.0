@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1884943F0AF;
-	Thu, 30 Jul 2026 15:32:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95B67445AF0;
+	Thu, 30 Jul 2026 15:32:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425536; cv=none; b=SzlAIPW1EbM9zGkfVf3TPlXUso6Fc0VCvTXqeiZRXVMJE3lZdwbA4AADg2uQe+9lX7h7X68YlMTy5ZUyQ/yPK4aRsH453GdwToDt8hyEU9TWHML9Vso/RwtNDQF0QBs5ARR86tEhEX1lWr7kgKBnHagWjvCKdX9QX6a7um4BTVA=
+	t=1785425538; cv=none; b=sYqfjKEKMXtwiyzABRPEXTtBGJQ+lr/viiixnZikhrhwrvFOmG5H7t+qBjLb86szcVnSQPnBy/38ijX7reD8zPOjtTFbw3HsMyi1HY3nOtUTVEdn08pZDHpa4W8gehw0Rlnj0ulCpy1oUYnFuqB2L6yYqf7Thn2t+XDeyKbKRdI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425536; c=relaxed/simple;
-	bh=QkI6t/1+T/DRDxarQDWQmd/vfWGmO2H1qHtcrz95BV0=;
+	s=arc-20240116; t=1785425538; c=relaxed/simple;
+	bh=pGshXu22hYmP8cQK9RFOGVfpeoolBeAz+XWgWC+Nm1w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hfOZA/OQLEZTLmJG9lfLor8WhK87C60VzoYtW90zw9ClqEm1ixONT7anYNrmJwEkJViE99CxBFmSNxhQfUf88BKz835g8uxNxOiQv1DOHlyG8KQSad4gdKj0AOSfEANy2YuvFkAE9Re399L6C1884cz30Qfzr3HK8aC8MeyLkYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SOzL0mpC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ArO2ZLN03ZGbPTEy4YiGloNC29Rlt8FIsCXNcL4pdyVMMz5saXpuJHCNtx1A6fkdmE+JQlO80W5ikVGjgxQSKPkfOV02TZEYhO3TuHikURdpmS7SBDDQTlb/0W8A5PevkC0GmzAgj2CniBUxIlcNe70DCtKqNUwwN58J6y28FtA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BBfz3wQq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SOzL0mpC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 247191F000E9;
-	Thu, 30 Jul 2026 15:32:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BBfz3wQq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3FC71F00A3A;
+	Thu, 30 Jul 2026 15:32:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425534;
-	bh=/EHcoMgw458uBSFILh65Anr3ATsiR6wm2KmMS+eALxs=;
+	s=korg; t=1785425537;
+	bh=i2kWkT0iH0rONUaI3g6bgsQjBGrdyKOBDwS2kNoQbxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SOzL0mpCC6MhCHoAuTZ5eMMU3TEO4xyNu5i3a1MGjYiNVZb4CNdL0ztFtADXbceB0
-	 o46ONM5kAIGuh/Sd/FOBpYCCkYegxqzQR8IipQBGm85mZRN5h+Pg7B39DYOa0DCzdJ
-	 xJjSQ1Qmlpi6681wX+suDMFH0ki7o8TIgsr+K3Jk=
+	b=BBfz3wQqBTmcnqhifMM2YaZ5gb9A3Jg6NT8e3hRrIRmfxFCkIvlBgzI1hSpZUcKW8
+	 e3DLAGvkNXn6SzSciclangMf4IlV9jJ/+iKTtzgqihvx56A8sE2JJUz7clWBxWmt3K
+	 NSLVSjdabe1u+bQilO6R05VmUQ100+UN6AXCrBws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuhao Fu <sfual@cse.ust.hk>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Shuicheng Lin <shuicheng.lin@intel.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 104/602] can: j1939: fix lockless local-destination check
-Date: Thu, 30 Jul 2026 16:08:16 +0200
-Message-ID: <20260730141438.179138833@linuxfoundation.org>
+Subject: [PATCH 6.12 105/602] drm/xe/wopcm: fix WOPCM size for LNL+
+Date: Thu, 30 Jul 2026 16:08:17 +0200
+Message-ID: <20260730141438.199081676@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -46,85 +48,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shuhao Fu <sfual@cse.ust.hk>
+From: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
 
-[ Upstream commit e4e8af62adab2fdcca230006f829407a953070cd ]
+[ Upstream commit ad87e2476b3b246580f407afc8ffa91d621bc849 ]
 
-j1939_priv.ents[].nusers is documented as protected by priv->lock, and
-its updates already happen under that lock. j1939_can_recv() also reads
-it under read_lock_bh(). However, j1939_session_skb_queue() and
-j1939_tp_send() still read priv->ents[da].nusers without taking the
-lock.
+Starting on LNL the WOPCM size is 8MB instead of 4, so we need to avoid
+using the [0, 8MB) range of the GGTT as that can be unaccessible from
+the microcontrollers.
 
-Those transport-side checks decide whether to set J1939_ECU_LOCAL_DST, so
-they can race with j1939_local_ecu_get() and j1939_local_ecu_put() while
-userspace is binding or releasing sockets concurrently with TP traffic.
-This can misclassify TP/ETP sessions as local or remote and take the wrong
-transport path.
+Note that the proper long-term fix here is to read the WOPCM size from
+the HW, but that is a more serious rework that would be difficult to
+backport, so we can do that as a follow-up.
 
-Fix both transport paths by routing the destination-locality check through
-a helper that reads ents[].nusers under read_lock_bh(&priv->lock).
-
-Fixes: 9d71dd0c7009 ("can: add support of SAE J1939 protocol")
-Signed-off-by: Shuhao Fu <sfual@cse.ust.hk>
-Tested-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://patch.msgid.link/20260419140614.GA4041240@chcpu16
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Fixes: 9c57bc08652a ("drm/xe/lnl: Drop force_probe requirement")
+Signed-off-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
+Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Cc: Shuicheng Lin <shuicheng.lin@intel.com>
+Cc: Matt Roper <matthew.d.roper@intel.com>
+Reviewed-by: Shuicheng Lin <shuicheng.lin@intel.com>
+Link: https://patch.msgid.link/20260713221758.3285744-2-daniele.ceraolospurio@intel.com
+(cherry picked from commit 3033b0b24ed0e2f5e56bdd4d9c183417c365a45b)
+Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/can/j1939/transport.c | 18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/xe/xe_wopcm.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/net/can/j1939/transport.c b/net/can/j1939/transport.c
-index 6c37562a50f72e..d8dada03b3cd12 100644
---- a/net/can/j1939/transport.c
-+++ b/net/can/j1939/transport.c
-@@ -350,6 +350,18 @@ static void j1939_session_skb_drop_old(struct j1939_session *session)
- 	}
+diff --git a/drivers/gpu/drm/xe/xe_wopcm.c b/drivers/gpu/drm/xe/xe_wopcm.c
+index d3a99157e52338..b7de817cce8870 100644
+--- a/drivers/gpu/drm/xe/xe_wopcm.c
++++ b/drivers/gpu/drm/xe/xe_wopcm.c
+@@ -47,9 +47,9 @@
+  */
+ 
+ /* Default WOPCM size is 2MB from Gen11, 1MB on previous platforms */
+-/* FIXME: Larger size require for 2 tile PVC, do a proper probe sooner or later */
++/* FIXME: Larger size require for some platforms, do a proper probe sooner or later */
+ #define DGFX_WOPCM_SIZE			SZ_4M
+-/* FIXME: Larger size require for MTL, do a proper probe sooner or later */
++#define LNL_WOPCM_SIZE			SZ_8M
+ #define MTL_WOPCM_SIZE			SZ_4M
+ #define WOPCM_SIZE			SZ_2M
+ 
+@@ -179,9 +179,14 @@ static int __wopcm_init_regs(struct xe_device *xe, struct xe_gt *gt,
+ 
+ u32 xe_wopcm_size(struct xe_device *xe)
+ {
+-	return IS_DGFX(xe) ? DGFX_WOPCM_SIZE :
+-		xe->info.platform == XE_METEORLAKE ? MTL_WOPCM_SIZE :
+-		WOPCM_SIZE;
++	if (xe->info.platform >= XE_LUNARLAKE)
++		return LNL_WOPCM_SIZE;
++	else if (IS_DGFX(xe))
++		return DGFX_WOPCM_SIZE;
++	else if (xe->info.platform == XE_METEORLAKE)
++		return MTL_WOPCM_SIZE;
++	else
++		return WOPCM_SIZE;
  }
  
-+static bool j1939_address_is_local(struct j1939_priv *priv, u8 addr)
-+{
-+	bool local = false;
-+
-+	read_lock_bh(&priv->lock);
-+	if (j1939_address_is_unicast(addr) && priv->ents[addr].nusers)
-+		local = true;
-+	read_unlock_bh(&priv->lock);
-+
-+	return local;
-+}
-+
- void j1939_session_skb_queue(struct j1939_session *session,
- 			     struct sk_buff *skb)
- {
-@@ -358,8 +370,7 @@ void j1939_session_skb_queue(struct j1939_session *session,
- 
- 	j1939_ac_fixup(priv, skb);
- 
--	if (j1939_address_is_unicast(skcb->addr.da) &&
--	    priv->ents[skcb->addr.da].nusers)
-+	if (j1939_address_is_local(priv, skcb->addr.da))
- 		skcb->flags |= J1939_ECU_LOCAL_DST;
- 
- 	skcb->flags |= J1939_ECU_LOCAL_SRC;
-@@ -2021,8 +2032,7 @@ struct j1939_session *j1939_tp_send(struct j1939_priv *priv,
- 		return ERR_PTR(ret);
- 
- 	/* fix DST flags, it may be used there soon */
--	if (j1939_address_is_unicast(skcb->addr.da) &&
--	    priv->ents[skcb->addr.da].nusers)
-+	if (j1939_address_is_local(priv, skcb->addr.da))
- 		skcb->flags |= J1939_ECU_LOCAL_DST;
- 
- 	/* src is always local, I'm sending ... */
+ /**
 -- 
 2.53.0
 
