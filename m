@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75CB94457AF;
-	Thu, 30 Jul 2026 15:11:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11030399350;
+	Thu, 30 Jul 2026 15:11:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424280; cv=none; b=jctbS9uw69+AqQ4kBE+mbAOM3KKGwZdezzgtG1N5j/SnfEOJnX+7ahMSZWvLnawWcdvSeiuzP+A3W05SA8k3MAayBoKdBiuMG8jkJ4eUya39ehrGoj8E39tfTVeD9vEYM6QG3Dwt/xIRXkfwSLbDJdQdGAUxIL+YPnvCZatNvbE=
+	t=1785424283; cv=none; b=Dw9UQ0Dbn/lPJrfm/fkLo+3xUdvDEgU5oq+bGHwnXMW8jVMNZjSsa99XUt7s2qeZ1g/cUEotdOJPYV8MqTcBmTT+YpwF9noVJA1heQKTcTj3JvhdQW4G3Y/phB+rw3JEIe9SWqr7JLu8a/P2qfMd8yHgNl07TPS/+1zHoanykW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424280; c=relaxed/simple;
-	bh=67XRbdVoh9kuw1NRUir+iHkVvwMAljs6sydn6aB9+3Q=;
+	s=arc-20240116; t=1785424283; c=relaxed/simple;
+	bh=wkaukcQKULziB32q1I2EGPP/EK/ELnpvioipicX8F6M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a6mIzIn4rzAb25v7l5rVvN1t1SY9CqS9E5GCce1NurVmHeBBWmmpgGY7k/Ke+ON0mTBfP35mekBdFUmKY/C04fzVj8OG3iQPdDgltzIcvTSS2X8xww6NxCoxYMSTbim3kI2IZap6Ciuh5HYLY3ZyNFFCkzTXpNSM0cgudGCCTLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sQt+R6az; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=R8uvgaEFRNWtTVba5FQzo090yUtsstCU1znyqyPtsSjclfLegOgpW7O9pJaGt3JBg9gQ21IRywoO1j3939I3D+bHergATr5ybdX29QWa3FelETbQrL7hUpRQvTpyfbUydbnAximOA0o/a2ybIwMgAqSLiYd0L8ZDPtsa3Uz1zZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q5LiqKfI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sQt+R6az"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F7E21F000E9;
-	Thu, 30 Jul 2026 15:11:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q5LiqKfI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BC0E1F000E9;
+	Thu, 30 Jul 2026 15:11:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424279;
-	bh=amIN6yEq/bNCB7ZctTnwB+YqJgsAyTkWbtUWEWWBdFM=;
+	s=korg; t=1785424282;
+	bh=S5nT4p+W+fiZG8YzGrDNWskWXjm43Go6BNvcitWKmq4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sQt+R6azac/1PurLVTKTgiFwhNIin8wKy+k5HO1a1kb8Y5VKcoamWRKd9z44RV5NU
-	 tEzM5hVWheSBLMtHcVgFhkCIODDkviqT9rpelxgCPoEdm897joVXqLQRmUZwdRP84U
-	 6KM8gr6vuYQIJPs82p0Y+n+NDHx96FI7g3So9gSk=
+	b=q5LiqKfITrvO6vZEAHNVXizU86nIQCdQ3FnUegqN9M8alCI+L54aACrLx/U1B2W4Q
+	 hogB7dNx+T9yjK5Fao0CUK4AAlxR2hPVc7dGui4zE8gwG1uOUfF5TB3ynXsEDQk3mX
+	 XJR9Or8O+dmgaNh9Og3dYylN5U1Yb8okzzh0Y5Ic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Junrui Luo <moonafterrain@outlook.com>,
-	Danilo Krummrich <dakr@kernel.org>
-Subject: [PATCH 6.18 338/675] drm/nouveau: fix reversed error cleanup order in ucopy functions
-Date: Thu, 30 Jul 2026 16:11:08 +0200
-Message-ID: <20260730141452.313290599@linuxfoundation.org>
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	dri-devel@lists.freedesktop.org
+Subject: [PATCH 6.18 339/675] drm/sysfb: Avoid possible truncation with calculating visible size
+Date: Thu, 30 Jul 2026 16:11:09 +0200
+Message-ID: <20260730141452.335909908@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -51,66 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-commit ab99ead646b1b833ecd57fe577a2816f2e848167 upstream.
+commit b771974988ec7ce077a7246fa0fa588c246fe581 upstream.
 
-nouveau_uvmm_vm_bind_ucopy() and nouveau_exec_ucopy() place their error
-cleanup labels in allocation order rather than reverse allocation order.
-On a u_memcpya() failure for in_sync.s, the goto to err_free_ops (or
-err_free_pushs) frees the first allocation and then falls through to
-err_free_ins, which calls u_free() on args->in_sync.s.
+Calculating the visible size of the system framebuffer can result in
+truncation of the result. The calculation uses 32-bit arithmetics,
+which can overflow if the values for height and stride are large. Fix
+the issue by multiplying with mul_u32_u32().
 
-Since args->in_sync.s still holds the ERR_PTR returned by the failed
-u_memcpya(), and ERR_PTR values are not caught by ZERO_OR_NULL_PTR(),
-kvfree() proceeds to dereference it, which can result in a kernel oops.
-A failure for out_sync.s instead jumps to err_free_ins and skips freeing
-the first allocation, leading to a memory leak.
-
-Fix by swapping the cleanup label order so resources are freed in the
-correct reverse allocation sequence.
-
-Fixes: b88baab82871 ("drm/nouveau: implement new VM_BIND uAPI")
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
-Link: https://patch.msgid.link/SYBPR01MB7881484D91A6F80271415F71AF1A2@SYBPR01MB7881.ausprd01.prod.outlook.com
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Fixes: 32ae90c66fb6 ("drm/sysfb: Add efidrm for EFI displays")
+Fixes: a84eb6abe2b6 ("drm/sysfb: Add vesadrm for VESA displays")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/dri-devel/20260617114027.1F2A71F000E9@smtp.kernel.org/
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Javier Martinez Canillas <javierm@redhat.com>
+Cc: dri-devel@lists.freedesktop.org
+Cc: <stable@vger.kernel.org> # v6.16+
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Link: https://patch.msgid.link/20260618084327.46567-3-tzimmermann@suse.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_exec.c |    4 ++--
- drivers/gpu/drm/nouveau/nouveau_uvmm.c |    4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/sysfb/drm_sysfb_screen_info.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/nouveau/nouveau_exec.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_exec.c
-@@ -331,10 +331,10 @@ nouveau_exec_ucopy(struct nouveau_exec_j
+--- a/drivers/gpu/drm/sysfb/drm_sysfb_screen_info.c
++++ b/drivers/gpu/drm/sysfb/drm_sysfb_screen_info.c
+@@ -2,6 +2,7 @@
  
- 	return 0;
+ #include <linux/export.h>
+ #include <linux/limits.h>
++#include <linux/math64.h>
+ #include <linux/minmax.h>
+ #include <linux/screen_info.h>
  
--err_free_pushs:
--	u_free(args->push.s);
- err_free_ins:
- 	u_free(args->in_sync.s);
-+err_free_pushs:
-+	u_free(args->push.s);
- 	return ret;
+@@ -73,7 +74,7 @@ EXPORT_SYMBOL(drm_sysfb_get_stride_si);
+ u64 drm_sysfb_get_visible_size_si(struct drm_device *dev, const struct screen_info *si,
+ 				  unsigned int height, unsigned int stride, u64 size)
+ {
+-	u64 vsize = height * stride;
++	u64 vsize = mul_u32_u32(height, stride);
+ 
+ 	return drm_sysfb_get_validated_size0(dev, "visible size", vsize, size);
  }
- 
---- a/drivers/gpu/drm/nouveau/nouveau_uvmm.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_uvmm.c
-@@ -1711,10 +1711,10 @@ nouveau_uvmm_vm_bind_ucopy(struct nouvea
- 
- 	return 0;
- 
--err_free_ops:
--	u_free(args->op.s);
- err_free_ins:
- 	u_free(args->in_sync.s);
-+err_free_ops:
-+	u_free(args->op.s);
- 	return ret;
- }
- 
 
 
