@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF99D43F4A9;
-	Thu, 30 Jul 2026 14:21:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26E6E44331B;
+	Thu, 30 Jul 2026 14:21:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421288; cv=none; b=EFriWW6GHnZlk0u18covuCBGWzyCV3yqaAnJPJntVE9/DVyYP094BiN8jYHGxZJtcKpRGaQZlbYQJwP3EujmfFCDv02d4oy4Okeal5SvtEc5nBqB0kQO0GfUY9BdT7aTQY5MUJ+yZFwiJjTICqVSEgXftCZiV8DADYrbSX3TEAg=
+	t=1785421292; cv=none; b=JvZz5wuGh8z3vo6Etv58/LdsuyseJ30MF+h6j6UrfyYvmN5LyItG6QTlQ+ACiooZ0BWMVbOxIlveqlNiZNwoBSCgh1k3lKziMWHqPmbx49CmMmFTfkvEyAvwZtB0Ips9XJmasjl1c+ur0sQ6fXwjgY9NUtLgWVO3Nnd1/EeqRQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421288; c=relaxed/simple;
-	bh=C6/2IUupmXO9Sb6TYt5gEl/SILr+wQfGifx1jbBIypw=;
+	s=arc-20240116; t=1785421292; c=relaxed/simple;
+	bh=i98lV0+D0putd1VocSUVICLMUDRQ1gAb1mWtkbN3LLE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ROD0MWQye8B6f3yegrImaYF9gIt3FTsJG+8vm6gTUjMVGwRq4R3RlQRxz4Ce8lNDsJmZXcNbKGGnih6ZH8QKTAJLzoi5RnLz6I3k2zYrIt+GHN9BW9iNYK+c8TyjpmhqDV4D7yfqCz4I4cjXGAhbcESGB0w7xrCRy1ovP6SjncY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N9cqnkUB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aMtZEdXtXddIInZPvjt69ACMkSdlUpuHw3iUWzhp3CR3KPAHrd+Cma1LbORwgbJ0kkbj9qVmrt+YFcM/KvD9Lx9kZvIkHtoxF4sQxtO/Bt/bXAUkghNIBvVXDLhI8ILJKvZVtkIoQZGCRCT43ogXv0w/rPo+9BSapXZg3iM44mc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WgOXeVk9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N9cqnkUB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 275E61F00A3E;
-	Thu, 30 Jul 2026 14:21:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WgOXeVk9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1149E1F000E9;
+	Thu, 30 Jul 2026 14:21:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421284;
-	bh=xciF2hH5k7Q6Zv/xU0yrqu7u+Vfnl/dHwzzJzgKjNP8=;
+	s=korg; t=1785421287;
+	bh=6jkroXt1Hyu9IND87GrJEPz2vwyzomTX8RzxFxe3jhs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N9cqnkUBpvi8lVXeElRLcbY7it6F6asTMSn6JNAX8o0KtJiMt4S1e6rMa12E+JUSN
-	 /XP6z+QB+wSE2J7j8YlgGKDqzvmq3/B1PP2DGGw5llYlJxygHa3xMroxeZBtwtrrMf
-	 05c/tmUZFHV5zXgim8jjWoo4z2Lb8MVYvSwhqGv4=
+	b=WgOXeVk9n9jl30OD3zXzbE5EK1u1dss1DkdUpdLkh2AXFh48D3KGNJ7N9esU7kSGE
+	 KRx3omuin+sEt/JtNM3P/jLgWH96W5ja98ceTfEo56WVinpRy3Sk7D6iOvrgNuAadR
+	 9YUBrwXTd0SlNNh56bHRL7MDKQKuEFQaG0QLTE58=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 052/744] wifi: cfg80211: Fix an error handling path in cfg80211_wext_siwscan()
-Date: Thu, 30 Jul 2026 16:05:25 +0200
-Message-ID: <20260730141445.385307642@linuxfoundation.org>
+Subject: [PATCH 7.1 053/744] wifi: mac80211_hwsim: clamp virtio RX length before skb_put
+Date: Thu, 30 Jul 2026 16:05:26 +0200
+Message-ID: <20260730141445.405690716@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -51,39 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-[ Upstream commit c6659f66d4ee4841aafae5659d2ef5e4c5c63cb6 ]
+[ Upstream commit 10a2b430f8f06ae14b9590b6f6faa6b588ef0654 ]
 
-If the test against IEEE80211_MAX_SSID_LEN fails, then 'creq' leaks.
-Use the existing error handling path to fix it.
+hwsim_virtio_rx_work() passes the virtqueue used-ring length reported by
+the device straight to skb_put() on a fixed-size receive skb. A backend
+reporting a length larger than the skb tailroom drives skb_put() past the
+buffer end and hits skb_over_panic() -- a host-triggerable guest panic
+(denial of service).
 
-Fixes: 2a5193119269 ("cfg80211/nl80211: scanning (and mac80211 update to use it)")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Link: https://patch.msgid.link/a1be7eea4da0da18f90589af252bb76a18a61978.1781984889.git.christophe.jaillet@wanadoo.fr
+Clamp the length to the skb's available room before skb_put(). A
+conforming device never reports more than the posted buffer size, so valid
+frames are unaffected; a truncated over-report then fails the
+length/header checks in hwsim_virtio_handle_cmd() and is dropped, so
+truncating rather than dropping here cannot be turned into a parsing
+problem.
+
+Fixes: 5d44fe7c9808 ("mac80211_hwsim: add frame transmission support over virtio")
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Link: https://patch.msgid.link/20260620-b4-disp-474bee37-v1-1-1a4d37f3e2d4@proton.me
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/scan.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/wireless/virtual/mac80211_hwsim.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/wireless/scan.c b/net/wireless/scan.c
-index d9f2a77e127ce8..654f3300912dab 100644
---- a/net/wireless/scan.c
-+++ b/net/wireless/scan.c
-@@ -3613,8 +3613,10 @@ int cfg80211_wext_siwscan(struct net_device *dev,
- 	/* translate "Scan for SSID" request */
- 	if (wreq) {
- 		if (wrqu->data.flags & IW_SCAN_THIS_ESSID) {
--			if (wreq->essid_len > IEEE80211_MAX_SSID_LEN)
--				return -EINVAL;
-+			if (wreq->essid_len > IEEE80211_MAX_SSID_LEN) {
-+				err = -EINVAL;
-+				goto out;
-+			}
- 			memcpy(creq->req.ssids[0].ssid, wreq->essid,
- 			       wreq->essid_len);
- 			creq->req.ssids[0].ssid_len = wreq->essid_len;
+diff --git a/drivers/net/wireless/virtual/mac80211_hwsim.c b/drivers/net/wireless/virtual/mac80211_hwsim.c
+index 1fcf5d0d2e13fe..17bf8e547b25be 100644
+--- a/drivers/net/wireless/virtual/mac80211_hwsim.c
++++ b/drivers/net/wireless/virtual/mac80211_hwsim.c
+@@ -7122,6 +7122,7 @@ static void hwsim_virtio_rx_work(struct work_struct *work)
+ 
+ 	skb->data = skb->head;
+ 	skb_reset_tail_pointer(skb);
++	len = min(len, skb_end_offset(skb));
+ 	skb_put(skb, len);
+ 	hwsim_virtio_handle_cmd(skb);
+ 
 -- 
 2.53.0
 
