@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 802C844213E;
-	Thu, 30 Jul 2026 15:05:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60DFD442139;
+	Thu, 30 Jul 2026 15:06:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423960; cv=none; b=hvDpaZIXVSJi8OwUuTDSYRPGFOlQJzUNYleF8niHUaaO6ctuPXbNtMZbX6WwneE5i8PS4t61lvpaSXsJVRipNQJmP+APXNwjVObQ1shvGB4ETo8KHhOLYSQFSNENH3yKAg+1r3XTBdUo1VBkfIwXAUlKnMmR1TX0RmOx452di7I=
+	t=1785423963; cv=none; b=nmnnD5Zd++1bRXmbvIN05IPbx1B922ZFVWAl9njLXshvl+x52ip1eA9Re+G1p/RBT9S/5L0whca8wFi+0/wU0/+VD5ot7ZfHaZXP7l+kiE/G5sSY/UFpFXpUwpDUt2aeGXwTIEsAk6VkWEe55DB/zgWWl+3Wr/pLwUbyfS4Cr90=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423960; c=relaxed/simple;
-	bh=7a8x8NQX4zJeVZYv6bb77ro5sEIgdPpNnBub8OTeawU=;
+	s=arc-20240116; t=1785423963; c=relaxed/simple;
+	bh=HjWYIB0eCrfuVZMWOsIa2lAShtNC7nRRio9jHaWpb1s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fdS6shjL+vNClphPZh4R5gYjRUKMIlZkm0zNXDASIE93Rp0DvJN1eZS4j3xFJwSxU9t4iqTLZYXSiYQoT62sAzuCdhHnNjX1YQUXYQpCD2CXMk8iPNWYcDSGe1ibNaJo/rdlFastOsbvdZF2Jnxd6Q4auk60+fAb/cmdYkUKzd8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O6iVQuxO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=KaReo/OBqL5WVHi+D/Q2TzK1oYwbuBQmm58iQnNcjBng0sCfTfF1qkx9yTEDXJ+jXkOQzIsGJmCU8M10xk10OxjMcWLa0cOjjCq13jkfZgrKQ96c2KszFig9jrJu7d8TytIDhJP7qOLq7S5yn3Qw3V+/WqYNR8xJ+R81E9j73Ek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WYlLWWPn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O6iVQuxO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CCA01F000E9;
-	Thu, 30 Jul 2026 15:05:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WYlLWWPn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73E971F000E9;
+	Thu, 30 Jul 2026 15:06:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423959;
-	bh=S1B9L+I+jz1yr6e06qakXWpZKOmG4gLk/aCLPsONqPo=;
+	s=korg; t=1785423962;
+	bh=A4qtEg3mnRKtSQuxeaweWc4CyS2wUbAsbBgEK+g/f0M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O6iVQuxO4JUOz3Rg7OSBFPZbYk0l/0xFbJlZSzgCY/JReMCRhavexBwMkDev3OLmH
-	 svXugvYLrsI0Mizzp8Fsa5cWAWIUpcBss/sr12n0rtPbuRMxIcl9fkaItMyC1yBeM6
-	 GwwK+i3PYabHsapiA8tzbxjPo+44+/rTl2IABQCY=
+	b=WYlLWWPn3astA+WOIdwyS5OzLMY/HdL9e81j8CTG5+PUp39XM5ieENDL9yK2gTNKH
+	 AzBydnxKAM+hKjwb15yti9Pg9WPODtft8n6oTxKJr7h87+uIiROJ1SXoH+Bq5y7XvA
+	 g54B9k5hXzdOPXHQQDNeQdP8ZPl/2XFz6PrAMcoQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Enrico Zanda <enrico.zanda@arm.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	=?UTF-8?q?HE=20WEI=20 ?= <skyexpoc@gmail.com>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 227/675] vhost-net: fix TX stall when vhost owns virtio-net header
-Date: Thu, 30 Jul 2026 16:09:17 +0200
-Message-ID: <20260730141449.965382728@linuxfoundation.org>
+Subject: [PATCH 6.18 228/675] wifi: mwifiex: bound uAP association event IEs to the event buffer
+Date: Thu, 30 Jul 2026 16:09:18 +0200
+Message-ID: <20260730141449.985541265@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -46,62 +46,106 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Enrico Zanda <enrico.zanda@arm.com>
+From: HE WEI (ギカク) <skyexpoc@gmail.com>
 
-[ Upstream commit 3c0d10f233f19153f81fef685b5c6716776a5af3 ]
+[ Upstream commit f0858bfc7d3cab411a447b88e3ef970e575032c9 ]
 
-When vhost owns the virtio-net header, i.e. when
-VHOST_NET_F_VIRTIO_NET_HDR is negotiated, sock_hlen is 0,
-meaning that no header will be forwarded to the TAP device.
+mwifiex_process_uap_event() handles EVENT_UAP_STA_ASSOC by exposing the
+(re)association request IEs that the firmware copies into the event:
 
-In the current vhost_net_build_xdp() implementation,
-when sock_hlen == 0, the gso pointer can point at the start of the
-Ethernet frame instead of a virtio-net header.
-This results in a wrong interpretation of the destination MAC address
-bytes as struct virtio_net_hdr fields.
+	sinfo->assoc_req_ies = &event->data[len];
+	len = (u8 *)sinfo->assoc_req_ies - (u8 *)&event->frame_control;
+	sinfo->assoc_req_ies_len = le16_to_cpu(event->len) - (u16)len;
 
-This can, for some MAC addresses, trigger -EINVAL and return early
-before the TX descriptor is completed, which can stall vhost-net TX.
+event->len is supplied by the device firmware and is never validated,
+and the subtraction is unchecked.  assoc_req_ies points into
+adapter->event_body[MAX_EVENT_SIZE], a fixed-size array embedded in the
+kmalloc()'d struct mwifiex_adapter.
 
-Before 97b2409f28e0, the gso pointer was set to the zeroed padding area,
-using it as a synthetic virtio-net header. Restore that behavior.
+On the ap_11n_enabled path mwifiex_set_sta_ht_cap() walks these IEs with
+cfg80211_find_ie(), whose for_each_element() loop dereferences each
+element header.  A firmware-reported event->len larger than the bytes
+actually received makes assoc_req_ies_len describe IEs that extend past
+event_body, so the walk reads out of the adapter slab object, a
+slab-out-of-bounds read (KASAN: slab-out-of-bounds in cfg80211_find_ie).
+An event->len smaller than the header instead makes the int subtraction
+negative, which wraps to a huge size_t when stored in assoc_req_ies_len.
+The same length is handed to cfg80211_new_sta(), so a more modest
+over-claim can also copy stale event_body bytes into the
+NL80211_CMD_NEW_STATION notification.
 
-Fixes: 97b2409f28e0 ("vhost-net: reduce one userspace copy when building XDP buff")
-Signed-off-by: Enrico Zanda <enrico.zanda@arm.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Link: https://patch.msgid.link/20260708152242.2268848-1-enrico.zanda@arm.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+A malicious or malfunctioning mwifiex device (USB/SDIO/PCIe) can deliver
+such an event while the interface is in AP/uAP mode.
+
+Validate event->len before use: reject a length that underflows the
+header or that would place the IEs outside the event_body[] buffer the
+event was copied into.  event->len here is struct mwifiex_assoc_event.len,
+a payload field internal to this event, not the transport frame length,
+so it is validated in this handler rather than at the generic
+MWIFIEX_TYPE_EVENT receive path, which only sees the event cause and the
+transport frame length.  The bound is against event_body[MAX_EVENT_SIZE]
+rather than the actually-received length because the transports store the
+event differently (USB and SDIO leave the 4-byte event header in
+event_skb, PCIe strips it via skb_pull), whereas event_body is the single
+fixed buffer all of them copy the event into.  This is the event-path
+analogue of the receive-path bounds checks added in commit 119585281617
+("wifi: mwifiex: Fix OOB and integer underflow when rx packets").
+
+Fixes: e568634ae7ac ("mwifiex: add AP event handling framework")
+Signed-off-by: HE WEI (ギカク) <skyexpoc@gmail.com>
+Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Link: https://patch.msgid.link/20260715135711.34688-1-skyexpoc@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/net.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ .../net/wireless/marvell/mwifiex/uap_event.c  | 24 +++++++++++++++++--
+ 1 file changed, 22 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/vhost/net.c b/drivers/vhost/net.c
-index b2b90732b1d595..89d5438ba7af97 100644
---- a/drivers/vhost/net.c
-+++ b/drivers/vhost/net.c
-@@ -724,10 +724,12 @@ static int vhost_net_build_xdp(struct vhost_net_virtqueue *nvq,
- 		goto err;
- 	}
+diff --git a/drivers/net/wireless/marvell/mwifiex/uap_event.c b/drivers/net/wireless/marvell/mwifiex/uap_event.c
+index 245cb99a3daad2..fc9da9006a782c 100644
+--- a/drivers/net/wireless/marvell/mwifiex/uap_event.c
++++ b/drivers/net/wireless/marvell/mwifiex/uap_event.c
+@@ -123,11 +123,31 @@ int mwifiex_process_uap_event(struct mwifiex_private *priv)
+ 				len = ETH_ALEN;
  
--	gso = buf + pad - sock_hlen;
--
--	if (!sock_hlen)
-+	if (!sock_hlen) {
- 		memset(buf, 0, pad);
-+		gso = buf;
-+	} else {
-+		gso = buf + pad - sock_hlen;
-+	}
- 
- 	if ((gso->flags & VIRTIO_NET_HDR_F_NEEDS_CSUM) &&
- 	    vhost16_to_cpu(vq, gso->csum_start) +
+ 			if (len != -1) {
++				u16 evt_len = le16_to_cpu(event->len);
++
+ 				sinfo->assoc_req_ies = &event->data[len];
+ 				len = (u8 *)sinfo->assoc_req_ies -
+ 				      (u8 *)&event->frame_control;
+-				sinfo->assoc_req_ies_len =
+-					le16_to_cpu(event->len) - (u16)len;
++
++				/*
++				 * event->len is reported by the device firmware
++				 * and is not otherwise validated.  Reject a
++				 * length that underflows the header, or that
++				 * would place the association request IEs
++				 * outside the fixed-size event_body[] buffer the
++				 * event was copied into; otherwise the IE walk
++				 * in mwifiex_set_sta_ht_cap() reads past
++				 * event_body and out of the adapter slab object.
++				 */
++				if (evt_len < len ||
++				    (u8 *)&event->frame_control + evt_len >
++				    adapter->event_body + MAX_EVENT_SIZE) {
++					mwifiex_dbg(adapter, ERROR,
++						    "invalid STA assoc event length\n");
++					kfree(sinfo);
++					return -1;
++				}
++				sinfo->assoc_req_ies_len = evt_len - (u16)len;
+ 			}
+ 		}
+ 		cfg80211_new_sta(priv->netdev, event->sta_addr, sinfo,
 -- 
 2.53.0
 
