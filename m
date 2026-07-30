@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 883B73B5DEE;
-	Thu, 30 Jul 2026 15:19:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A7E6217723;
+	Thu, 30 Jul 2026 15:19:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424764; cv=none; b=DmYBSFVLMiL8CvwQpath9f9oKo0b+vM57QwmzHlAcyI3bY30SDOGaDbVYFHDP1Ma6nDP4qYe2Xqu1YMmIuenMDi/i3+SCgLTEztOILSin1m8xEhTIrmr2tZZKQRddHfMet8fp4iOEfW+l6l1GfvnAqeo8X5wu015C0oTR56V+RM=
+	t=1785424767; cv=none; b=nRYA5QCcPEc/wwteRIrysJ5hYHNJAwEZTaLdQOkksK5p0kznnfMojJrdaqgAgPp5fRl1ecAWmlmuT38V0cZUZUY8TRRFC67pGu8RSSQZFuZEquAASMEam53QrPp9skfg20VnCFpPy80Fw2oRDdd4K7zvuf06SY7qfr1fBHN240M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424764; c=relaxed/simple;
-	bh=GxJOnodrfpirBrcIp43+qI3ARTwCUITu9RnR3OjYo68=;
+	s=arc-20240116; t=1785424767; c=relaxed/simple;
+	bh=IaYKt8D9TeQEkwQAsw+cG7DTLsjI4ZX2NcDKrMkCbFg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VFBvZ+sjRlktWXtfGu9kgwpWRwaVy4IdeBSTd3ECigicxvG+6KD1wR7Th1k1NI5+VGWNZrD61vcdj60FAt6KCmsPqET9qFd3llPpHO9UqNAYGnLuOUS5/Td4ZawFPtr93kFW1jn17c6yG0BkT7Sj5RoEWnSPXDAftR8yph3o1mk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ML7yWePM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dE3WL/xRldxEmuk6oZfLHdE/y2JcMDaR/STwnur4IDIghblOdgThUiIOwaN8C443V8StDtQJjYd63B8reQeRxuAGvfPDG/xRgOTJg0jqK+1PfOGyz/QxMG8+KhSOPItMGGEDhbKlcgNljHIl2JFtn0DY24YfBY10gkwg1J4GD2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uF5S7KTJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ML7yWePM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2E231F000E9;
-	Thu, 30 Jul 2026 15:19:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uF5S7KTJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD47B1F000E9;
+	Thu, 30 Jul 2026 15:19:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424763;
-	bh=X/6lwn/94IC6eZQdDG7ch40hIXIIwMN6ssl9WxW1z4M=;
+	s=korg; t=1785424766;
+	bh=jIQFa90d8BDJpp1+cwX9BDLQLAXF/jLdV3FZTh0ZlB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ML7yWePML+QLPmbvtPgmSgfGvCnxM5AlD7v1JRCTKKRAmLxp6SL5Uo5jIxsWpA5W+
-	 EPYi2cVeRGdwZPKdHZPM0TyXUpKGNxMzR6fJxPOFsEv8AAGun8mxOK8JhK8KN4J/EE
-	 H/dloVEErmxHXIaldr8ea1hq8kI6EKwNcousQJso=
+	b=uF5S7KTJXk3380X2zDsi5KbMPpADfmXwqh5PPF1TXq5YLExFYGz/ZLUgUdxAOSyMY
+	 nydOJsCAXUg5enn4ghogdmlXTo8WG54L44cAGLPqr6dq8sgQBAxCvCxXqHz3lN/dpb
+	 XZ47+2Wt86BbRHtcIR1acRBJ+yNMQeEMRPSt36/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	MinJea Kim <qndkdrnl@gmail.com>
-Subject: [PATCH 6.18 463/675] staging: rtl8723bs: fix inverted HT40 secondary channel offset
-Date: Thu, 30 Jul 2026 16:13:13 +0200
-Message-ID: <20260730141454.970570622@linuxfoundation.org>
+	Doruk Tan Ozturk <doruk@0sec.ai>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.18 454/675] wifi: mwifiex: fix NULL dereference when the AP has HT-cap but no HT-oper
+Date: Thu, 30 Jul 2026 16:13:04 +0200
+Message-ID: <20260730141454.783421703@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -49,59 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: MinJea Kim <qndkdrnl@gmail.com>
+From: Doruk Tan Ozturk <doruk@0sec.ai>
 
-commit 30d49cba27f8905bc288cef5846963f0004f644c upstream.
+commit c3d68e294cbb6a4090bb219d3dcaca85a011809b upstream.
 
-rtw_get_chan_type() maps the driver's channel offset to nl80211 channel
-types the wrong way around.
+mwifiex_tdls_add_ht_oper() gates its follow-the-AP-bandwidth path on
+bss_desc->bcn_ht_cap being present, but then dereferences a different
+pointer, bss_desc->bcn_ht_oper:
 
-In this driver HAL_PRIME_CHNL_OFFSET_LOWER means the primary channel is
-the lower 20 MHz half of the 40 MHz pair, i.e. the secondary channel is
-above the primary one: rtw_get_center_ch() computes the center channel
-as "channel + 2" for OFFSET_LOWER, and bwmode_update_check() sets
-OFFSET_LOWER when the AP's HT operation IE announces SCA (secondary
-channel above). In nl80211 terms that is NL80211_CHAN_HT40PLUS, not
-HT40MINUS.
+	if (ISSUPP_CHANWIDTH40(priv->adapter->hw_dot_11n_dev_cap) &&
+	    bss_desc->bcn_ht_cap &&
+	    ISALLOWED_CHANWIDTH40(bss_desc->bcn_ht_oper->ht_param))
 
-Because of the inversion, cfg80211_rtw_get_channel() reports an HT40+
-association as HT40-. For an HT40+ AP on a low channel (e.g. channel 3)
-the resulting chandef spans below the 2.4 GHz band edge and is invalid,
-so the regulatory core tears the connection down 60 seconds
-(REG_ENFORCE_GRACE_MS) after the AP's country IE triggers a regdomain
-change: reg_check_chans_work() considers the reported chandef unusable
-and calls cfg80211_leave(). The supplicant then reconnects, the country
-IE changes the regdomain again, and the cycle repeats, causing a
-disconnect/reconnect loop every ~65 seconds for as long as the link is
-up.
+bcn_ht_cap and bcn_ht_oper are populated independently while parsing the
+associated AP's beacon in mwifiex_update_bss_desc_with_ie(): an AP that
+advertises an HT Capabilities element but no HT Operation element leaves
+bcn_ht_cap non-NULL and bcn_ht_oper NULL. Setting up a TDLS link to a
+peer while associated to such an AP then dereferences the NULL
+bcn_ht_oper and crashes the kernel. Every other bcn_ht_oper user in the
+driver NULL-checks it first.
 
-Observed on a TECLAST X80 Power tablet (RTL8723BS) associated to an
-HT40+ AP on channel 3 with a KR country IE; a kprobe trace showed
-cfg80211_disconnect() being invoked from reg_check_chans_work(). With
-the mapping fixed, "iw dev wlan0 info" reports the correct
-"width: 40 MHz, center1: 2432 MHz" and the periodic disconnects stop.
+Guard on the pointer that is actually dereferenced.
 
-Fixes: 5402cc178c5d ("staging: rtl8723bs: add get_channel cfg80211 implementation")
+Found by 0sec automated security-research tooling (https://0sec.ai).
+
+Fixes: 396939f94084 ("mwifiex: add HT operation IE in TDLS setup confirm")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude-Code:claude-fable-5 bpftrace
-Signed-off-by: MinJea Kim <qndkdrnl@gmail.com>
-Link: https://patch.msgid.link/20260714131421.3980-1-qndkdrnl@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Assisted-by: 0sec:multi-model
+Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
+Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Link: https://patch.msgid.link/20260716103042.88469-1-doruk@0sec.ai
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c |    2 +-
+ drivers/net/wireless/marvell/mwifiex/tdls.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c
-+++ b/drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c
-@@ -1958,7 +1958,7 @@ static u8 rtw_get_chan_type(struct adapt
- 		else
- 			return NL80211_CHAN_NO_HT;
- 	case CHANNEL_WIDTH_40:
--		if (mlme_ext->cur_ch_offset == HAL_PRIME_CHNL_OFFSET_UPPER)
-+		if (mlme_ext->cur_ch_offset == HAL_PRIME_CHNL_OFFSET_LOWER)
- 			return NL80211_CHAN_HT40PLUS;
- 		else
- 			return NL80211_CHAN_HT40MINUS;
+--- a/drivers/net/wireless/marvell/mwifiex/tdls.c
++++ b/drivers/net/wireless/marvell/mwifiex/tdls.c
+@@ -215,7 +215,7 @@ mwifiex_tdls_add_ht_oper(struct mwifiex_
+ 
+ 	/* follow AP's channel bandwidth */
+ 	if (ISSUPP_CHANWIDTH40(priv->adapter->hw_dot_11n_dev_cap) &&
+-	    bss_desc->bcn_ht_cap &&
++	    bss_desc->bcn_ht_oper &&
+ 	    ISALLOWED_CHANWIDTH40(bss_desc->bcn_ht_oper->ht_param))
+ 		ht_oper->ht_param = bss_desc->bcn_ht_oper->ht_param;
+ 
 
 
