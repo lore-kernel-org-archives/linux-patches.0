@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A400837BE64;
-	Thu, 30 Jul 2026 15:17:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC76B43C04B;
+	Thu, 30 Jul 2026 15:17:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424644; cv=none; b=iYerfJK+66Saqdq7nXclZM/4KcuWAhnj9gn/GICa/LKlrZw296xrBAP2nwe8iWIbH8ubxXNNOZ4AL17OYGyRBYkTqD7fGIiEVkxjgkzhU3OWPdokh5s08kmgpBKSYHRQ34U7AQ6lJawfriV0kuPrDn6wvJT7McFmcfMdPREQ4Do=
+	t=1785424648; cv=none; b=C37VwpkhGuFzYSZZpYaf5rPdOl2b7M6i3HpbkB/tTpmtVR9aNTO6BXQXtR9v8Dgt8FMRQcbZx9aSnx87KGlmWbOPF0m1B8DxGAUH4yYvQik8C+gt1rUu8V2QWJDJcX3ps/kv4oJpDfpKVyeEgTD0mo4CPvJ6/OFVvqRoK/m2hug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424644; c=relaxed/simple;
-	bh=ELWFlE45nT9KKSDyGB8T0OzhPM1idxfKnuuH0PNCVts=;
+	s=arc-20240116; t=1785424648; c=relaxed/simple;
+	bh=0ZxvXvXBdTWZnBAAQv4l7bbwh5latK8mAySYeIPT9T8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TfB3TqorRK6vfSWQy4iG2heZ7UvNNlca9CAtb9kkL/VhJ9+KlnO4vP6TcnLPNnDfLkGqEosaVX0zNXqAGzQaQXI8zzbJy23/P2CHFsLXL0WEh7cG3dV6xf7xmZkFxWqNRqHWGQsCrSPlpX0C3fkEZfxGz+lQRE9H5P3wmK8Bor0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WFqInpLz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MBNGSifIjk6AG70/i4CGxsI23KNXNMvbiBllvOXLWeHO2KB/Gmt0HjzzJCXYAwleNTp3vM1SVrgEYKHG/F9Ye6K7aubQrkYMaH3fxiK40z6o8KqCphbvUSSrd5GVbz6oyV+T/ozobKQTLeMUMXcgxsf/d4qQDXJXHsQQJe3EgOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qr/QZZjA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WFqInpLz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B5CA1F000E9;
-	Thu, 30 Jul 2026 15:17:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qr/QZZjA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D884B1F000E9;
+	Thu, 30 Jul 2026 15:17:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424643;
-	bh=awf0mDXOOgD/5XQq/N63tEjKhy7HD6VXh7Lq5YRC6z8=;
+	s=korg; t=1785424646;
+	bh=idhAudsA4Wt/1704oiBD4goD5u6zs5FauSmYjtLPMuM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WFqInpLzk2UcnrN/ZJzO9lJhgcVvMaU6KLy6jtC5eU+xQi7OcBriIdkEWA0IOHOD1
-	 jBJYuR1KbCSQWvAgtQxOT73eWbzLXA1Scrww7vszB+SP98hoJIy9+Ac9pFm0b/FtMF
-	 r7Ca36U4fK14gCsOzSlFAwsoB/pqYA2IUENjjVJc=
+	b=Qr/QZZjAdfv7s8/BzymWW/DSQDXjQ1q0YUFz6BxkW55/cHgpIWYF5f9WdatUDJ34V
+	 mV18Yp4D+HRTLfPT3C5SZGj2fv7xf66t838i2HHYtvpcC2FEas77dxMoxJJcmiYHQm
+	 srwD5OTX1ct4ZfcNQdRexAijYS61Ei+aWZIoTZSU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.18 467/675] binfmt_misc: set have_execfd only once the interpreter is opened
-Date: Thu, 30 Jul 2026 16:13:17 +0200
-Message-ID: <20260730141455.056169077@linuxfoundation.org>
+	Yao Zi <me@ziyao.cc>,
+	Xi Ruoyao <xry111@xry111.site>,
+	Zixing Liu <liushuyu@aosc.io>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.18 468/675] platform/loongarch: laptop: Explicitly reset bl_powered state when suspend
+Date: Thu, 30 Jul 2026 16:13:18 +0200
+Message-ID: <20260730141455.076518531@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -49,72 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Zixing Liu <liushuyu@aosc.io>
 
-commit bbf5f639918dc011aaf60aab8480218758ee68c5 upstream.
+commit 91a70492c03040d51b36f595530d6491d5d6c541 upstream.
 
-load_misc_binary() raises bprm->have_execfd as soon as it sees the 'O'
-(or 'C') flag. This happens well before it opens the interpreter. If
-that open fails the flag stays set on the bprm. binfmt_misc is at the
-head of the format list so an interpreter open failure that returns
--ENOEXEC lets the search fall through to a later format. This means it
-runs the matched binary directly having never staged an interpreter. So
-bprm->executable is NULL while have_execfd falsely claims a descriptor
-is present.
+On EAECIS NL60R with EC firmware version 1.11, resuming from S3 has a
+very high chance (>90%) of causing the EC to lose the previous backlight
+power state. When this happens, the laptop resumes normally from S3, but
+the backlight remains off (when shining on the screen with a flash light,
+we can see the screen contents are updating normally).
 
-Consequently, begin_new_exec() dereferences the missing executable:
+Since there is no generic way to query the EC's backlight state on
+Loongson laptop platforms, assume the worst-case scenario and restart
+the backlight power inside the kernel each time the system resumes.
 
-  would_dump(bprm, bprm->executable);
-
-and NULL derefs. Had it not, the hand-off later in the same function
-would have failed anyway. FD_ADD(0, bprm->executable) rejects a NULL
-file with -ENOMEM. Both sites are past the point of no return so the
-exec cannot be unwound either way.
-
-This can be reached by unprivileged users as binfmt_misc can be mounted
-in user namespaces. So a user can register an 'O' entry whose
-interpreter lives on a FUSE mount, have the FUSE server fail the open
-with -ENOEXEC and execute a native ELF file that matches the entry.
-
-have_execfd only means anything alongside the executable it describes
-which is not set until the interpreter has been opened and staged.
-So lets raise it there, next to execfd_creds, which is already set at
-that point. An open failure now leaves it clear, so the fallback format
-derives credentials from the binary and emits no AT_EXECFD, as it would
-for any native exec. The argv rewrite load_misc_binary() performs before
-the open is still not undone. This means the binary sees the interpreter
-path in argv[0] and its own path in argv[1] but that predates this
-change and only became observable once the exec stopped faulting.
-
-Link: https://patch.msgid.link/20260720-beglichen-kognitiv-organismus-5e1e55326c56@brauner
-Fixes: bc2bf338d54b ("exec: Remove recursion from search_binary_handler")
 Cc: stable@vger.kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: 53c762b47f72 ("platform/loongarch: laptop: Add backlight power control support")
+Tested-by: Yao Zi <me@ziyao.cc>
+Tested-by: Xi Ruoyao <xry111@xry111.site>
+Signed-off-by: Zixing Liu <liushuyu@aosc.io>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/binfmt_misc.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/platform/loongarch/loongson-laptop.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/binfmt_misc.c
-+++ b/fs/binfmt_misc.c
-@@ -227,9 +227,6 @@ static int load_misc_binary(struct linux
- 			goto ret;
- 	}
+--- a/drivers/platform/loongarch/loongson-laptop.c
++++ b/drivers/platform/loongarch/loongson-laptop.c
+@@ -189,6 +189,7 @@ static int __init setup_acpi_notify(stru
  
--	if (fmt->flags & MISC_FMT_OPEN_BINARY)
--		bprm->have_execfd = 1;
--
- 	/* make argv[1] be the path to the binary */
- 	retval = copy_string_kernel(bprm->interp, bprm);
- 	if (retval < 0)
-@@ -259,6 +256,8 @@ static int load_misc_binary(struct linux
- 		goto ret;
- 
- 	bprm->interpreter = interp_file;
-+	if (fmt->flags & MISC_FMT_OPEN_BINARY)
-+		bprm->have_execfd = 1;
- 	if (fmt->flags & MISC_FMT_CREDENTIALS)
- 		bprm->execfd_creds = 1;
+ static int loongson_hotkey_suspend(struct device *dev)
+ {
++	bl_powered = false;
+ 	return 0;
+ }
  
 
 
