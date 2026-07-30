@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBBBF3B6366;
-	Thu, 30 Jul 2026 15:12:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EEBE3B6366;
+	Thu, 30 Jul 2026 15:12:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424364; cv=none; b=julGbSsWhL6ngpmgLZxwkzgGIlkOSJjixhXB5nYuxhwhzdFIuU9F5dtNitvBEXRaDNSedRl2Wn4xgUj+EQ1UTScaxMp+feuuKRIp8kprUUtWYBbYmOpPgmOz9fVdWT2sCk5I7aiPoI/gQ6zboXBg1f5NgItz/tqgSFp17qSgo8o=
+	t=1785424365; cv=none; b=MMlwY4uh4SI/R5STsga3t4g+9IropZNR/A06P+99mc5wJWRlFIEcXsRLKmaK2xSZt+YiutTy/+vlO1fkNrJ9I/6SMjCBy/vlMjaXHOcBc0jeFjtMcSAxdecoekN+Xt8dQKDwAwHVrQOUxX39id+5U97prAyIZ0E59Tqz8UURpek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424364; c=relaxed/simple;
-	bh=DVQf8/RR70XNBRijlsscRxFtuHXyuv9u8q7MXSsJQ6c=;
+	s=arc-20240116; t=1785424365; c=relaxed/simple;
+	bh=JRDhReXx5buJWhlWP1S9dt7yUn7GL2cIoQa8jpBvdiE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u0qL61tltlweGdvbFwL3soP1NjLJ11iuoQ+RVmCTbC0oeWZJ909K9glvkDERWALgHhCcAgs2OaZLHeSnYta975KeWYl8yy3fqABX4Ls8aat2CUrdjXXpY2wGecTBGBjFHYt8bBCYBh8OCt1AJsTQiGKnCK8MdIHlWe1yPMrxSCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sM2Ye/md; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=J2qhuoVHC5UpUIEh57B5nKW3G4IbyjlPXYGFdIzvU7wR7I1X6KfQ/W08FyG4qi/snMf7Y5myiuOICFGCAa2L+jzxOh9FzA5rWlai2X0CjEIYPc3NtO6j/2IpQuw5IyhCgKqa/+PIVj20u5vSdsi3W2yxHZ8orl1ozJyunmxCj+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B7w/QNO8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sM2Ye/md"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32EFB1F000E9;
-	Thu, 30 Jul 2026 15:12:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B7w/QNO8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F3371F00A3A;
+	Thu, 30 Jul 2026 15:12:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424361;
-	bh=msGSjqgVE+gmp+ErOQkNEfDHovYGjNnbxor+cnqt9h8=;
+	s=korg; t=1785424364;
+	bh=jwqr5wE2TYnGRU9W3ymu9++j17pkdqXl7FawPhbRGeE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sM2Ye/mdEf9eNH6NggB320vW0GG+8La1iqM1WMC+XCo+lMDB3IGY3kfiyAqLEZKxF
-	 Fp7yPpIubk7YihkBGUYj0jrHLcqyOKJFloqRVTGgHvT6kntQf/ssBUFnp2RwYcMP2q
-	 OTIMhy4xK7+u9II3BClLqGiVT3uLtwJ8fssJYMOI=
+	b=B7w/QNO8AZz5Pjrpx3P5JTPo8ip0mhLdsXINYSg0y0sBdcpZl0xKJM+JuoB6prs5+
+	 Lb8Hb+jmM4wOdZbeHu7h+z3RdEJd7TgVwIkgxSz4WLyfL9+/adEWtkOhYHmheLnvy6
+	 otQ4F+kAF3s+qf6gvFzRQZENWZl6ThLI05nis/4U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Martin Hodo <martin.hodo@intel.com>,
-	Anshuman Gupta <anshuman.gupta@intel.com>,
-	Suraj Kandpal <suraj.kandpal@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Subject: [PATCH 6.18 360/675] drm/i915/hdcp: check streams[] bounds before overflow
-Date: Thu, 30 Jul 2026 16:11:30 +0200
-Message-ID: <20260730141452.783243737@linuxfoundation.org>
+	Faith Ekstrand <faith.ekstrand@collabora.com>,
+	Simona Vetter <simona.vetter@ffwll.ch>,
+	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>
+Subject: [PATCH 6.18 369/675] drm/i915/gem: Do not leak siblings[] on proto context error
+Date: Thu, 30 Jul 2026 16:11:39 +0200
+Message-ID: <20260730141452.971855770@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -53,55 +56,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jani Nikula <jani.nikula@intel.com>
+From: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 
-commit bbb15a6b042d02e5508a02b4847e02d2579ee7bc upstream.
+commit eed3de2acf6aa5154d49098b026710b646db67ee upstream.
 
-The data->streams[] overflow check is done after the buffer overflow has
-already happened. Move the overflow check before the write.
+After a successful BALANCE/PARALLEL_SUBMIT extension on context
+creation, error during processing of next user extension leaks
+the siblings[] array. Fix that.
 
-Side note, emitting a warning splat with a backtrace might be overkill
-here, but prefer not changing the behaviour other than not doing the
-overrun.
-
-Discovered using AI-assisted static analysis confirmed by Intel Product
-Security.
+Discovered using AI-assisted static analysis confirmed by
+Intel Product Security.
 
 Reported-by: Martin Hodo <martin.hodo@intel.com>
-Fixes: e03187e12cae ("drm/i915/hdcp: MST streams support in hdcp port_data")
-Cc: stable@vger.kernel.org # v5.12+
-Cc: Anshuman Gupta <anshuman.gupta@intel.com>
-Cc: Suraj Kandpal <suraj.kandpal@intel.com>
-Reviewed-by: Suraj Kandpal <suraj.kandpal@intel.com>
-Link: https://patch.msgid.link/20260625170304.1104723-1-jani.nikula@intel.com
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-(cherry picked from commit 9284ab3b6e776c315883ac2611283d263c9460fd)
+Fixes: d4433c7600f7 ("drm/i915/gem: Use the proto-context to handle create parameters (v5)")
+Cc: Faith Ekstrand <faith.ekstrand@collabora.com>
+Cc: Simona Vetter <simona.vetter@ffwll.ch>
+Cc: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: <stable@vger.kernel.org> # v5.15+
 Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Reviewed-by: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
+Link: https://lore.kernel.org/r/20260701073030.44850-1-joonas.lahtinen@linux.intel.com
+(cherry picked from commit aa65e0a4b51b3b54b53e4142aaa2d997aa1061ff)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_hdcp.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/i915/gem/i915_gem_context.c |   22 ++++++++++++++--------
+ 1 file changed, 14 insertions(+), 8 deletions(-)
 
---- a/drivers/gpu/drm/i915/display/intel_hdcp.c
-+++ b/drivers/gpu/drm/i915/display/intel_hdcp.c
-@@ -140,6 +140,9 @@ intel_hdcp_required_content_stream(struc
- 		if (conn_dig_port != dig_port)
- 			continue;
+--- a/drivers/gpu/drm/i915/gem/i915_gem_context.c
++++ b/drivers/gpu/drm/i915/gem/i915_gem_context.c
+@@ -770,8 +770,8 @@ static int set_proto_ctx_engines(struct
+ 		struct intel_engine_cs *engine;
  
-+		if (drm_WARN_ON(display->drm, data->k >= INTEL_NUM_PIPES(display)))
-+			return -EINVAL;
+ 		if (copy_from_user(&ci, &user->engines[n], sizeof(ci))) {
+-			kfree(set.engines);
+-			return -EFAULT;
++			err = -EFAULT;
++			goto err;
+ 		}
+ 
+ 		memset(&set.engines[n], 0, sizeof(set.engines[n]));
+@@ -787,8 +787,8 @@ static int set_proto_ctx_engines(struct
+ 			drm_dbg(&i915->drm,
+ 				"Invalid engine[%d]: { class:%d, instance:%d }\n",
+ 				n, ci.engine_class, ci.engine_instance);
+-			kfree(set.engines);
+-			return -ENOENT;
++			err = -ENOENT;
++			goto err;
+ 		}
+ 
+ 		set.engines[n].type = I915_GEM_ENGINE_TYPE_PHYSICAL;
+@@ -801,15 +801,21 @@ static int set_proto_ctx_engines(struct
+ 					   set_proto_ctx_engines_extensions,
+ 					   ARRAY_SIZE(set_proto_ctx_engines_extensions),
+ 					   &set);
+-	if (err) {
+-		kfree(set.engines);
+-		return err;
+-	}
++	if (err)
++		goto err_extensions;
+ 
+ 	pc->num_user_engines = set.num_engines;
+ 	pc->user_engines = set.engines;
+ 
+ 	return 0;
 +
- 		data->streams[data->k].stream_id =
- 			intel_conn_to_vcpi(state, connector);
- 		data->k++;
-@@ -150,7 +153,7 @@ intel_hdcp_required_content_stream(struc
- 	}
- 	drm_connector_list_iter_end(&conn_iter);
++err_extensions:
++	for (n = 0; n < set.num_engines; n++)
++		kfree(set.engines[n].siblings);
++err:
++	kfree(set.engines);
++
++	return err;
+ }
  
--	if (drm_WARN_ON(display->drm, data->k > INTEL_NUM_PIPES(display) || data->k == 0))
-+	if (drm_WARN_ON(display->drm, !data->k))
- 		return -EINVAL;
- 
- 	/*
+ static int set_proto_ctx_sseu(struct drm_i915_file_private *fpriv,
 
 
