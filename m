@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C1574432F7;
-	Thu, 30 Jul 2026 15:58:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 694C22D0602;
+	Thu, 30 Jul 2026 15:58:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427119; cv=none; b=k72W0OQdl1+SYeDC0GAE+gdNihWKYQtuVlMUMHYhFU//FhgbMrXqNEDvPDxQvYK4eFv5RAloi32t+8FCUFkX6xQtya4dwukI0GnLnWoWk2QPeRlFxtNsRIHlPL5Sm+InPZVn6exh3XlOKj/ECdrMihGlKc3Mb5ymwb55eIjRUP8=
+	t=1785427122; cv=none; b=IQPgyAtUhq8h5cH1vpcCCR9PCrxm2QEoxl3l/KwEYSFZC52o0BO/+1+5dSbRUMHNKW9BsyyaIxPViCMkGRAtYiWdGQCFXCJGsAmAcDpNHh0svAfV87tCUM/vWtrRg0xTL6Ikh+ogJolMQshZrXi4ewYUxmj3iKACh8mXkIIT8Ss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427119; c=relaxed/simple;
-	bh=bBWBMff3H66dc/V46sCAct5haY+niHWEaYB9hZhgLgk=;
+	s=arc-20240116; t=1785427122; c=relaxed/simple;
+	bh=pNuksOoMYSdCOguZ14zZfxYiP4ojbmkFdzTMaz41sY8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FNgnTIIgge0v0KTB43FphkPSJsOxDdrMLJkC+lfUjebR25OgTzXRzWNXxu297J1XLcCfDZTYAuiLzsKQKEkgtl/14yR4ukZakfDjKJVr6BYOSqD+393Z9zXJ/v3eS0o/o59SWe4MxPKbTBnE0hSinwnlMi45xWDTzfAj8ck45DA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0icWRdi4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p/GYRf6/IxXMRaFVPcxMGW5gHRptAWl6ievI9krzyeBA2gKwte5OQ0fsLZavgzIC7PfAjgqsmQuSYOEBTbL3BsqhnmQ18dKFn2+J89f03mHGH8U3Bwi69rRs8a9bp+u339ddyW1ZY2vMBLTpe/wHhHSaQaiyABF84k0aslospwk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zyx9L+tf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0icWRdi4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 047461F000E9;
-	Thu, 30 Jul 2026 15:58:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zyx9L+tf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5F341F000E9;
+	Thu, 30 Jul 2026 15:58:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427118;
-	bh=d9VJj3nlTjiPvzfgR4DwJ4BvMIYE3NMgMNSFHBRbAcE=;
+	s=korg; t=1785427121;
+	bh=vj78xdjZinNafNBjOPpeUNZp3BoYX0OIsOPenI8IU+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0icWRdi4xaYiAOkg2WFsUpi7PNImywRd1J7I5rkhIzWXNVNI9sA7/eMY9O4Z9HSWg
-	 IZ7FfomJLkA/nKlV47x/P3ClVndkg7wDkPXRPrKNCLC5hfOGQ7IsVVQVQwaw3QZ+W9
-	 SRRHALdazftduaHPCNxHnGUawB0HREWPRqY5kzp8=
+	b=Zyx9L+tfq6IvXC7vUhKfwmt2cymTYSGJB7iXWAbqN1gR1jTjfq+IswCYvQJDzlWPS
+	 R1l15Qoo+PTl/F7iMq/2pk6hwWg39DRge2euS8InJIyMd+gx+X5rXnb95BhkGu+VXj
+	 SwclWhzA4QmvYn+IOhlBvx6hfIfcWGNpuG1nhMI0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Zhao Li <enderaoelyther@gmail.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 058/484] wifi: nl80211: free RNR data on MBSSID mismatch
-Date: Thu, 30 Jul 2026 16:09:15 +0200
-Message-ID: <20260730141424.690099348@linuxfoundation.org>
+Subject: [PATCH 6.6 059/484] wifi: nl80211: validate nested MBSSID IE blobs
+Date: Thu, 30 Jul 2026 16:09:16 +0200
+Message-ID: <20260730141424.713774930@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -53,39 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhao Li <enderaoelyther@gmail.com>
 
-[ Upstream commit 07a95ec2b54774201fdf4ef7ffb0ca2ab19ed29c ]
+[ Upstream commit 7f4b01812323443b55e4c65381c9dc851ff009e3 ]
 
-nl80211_parse_beacon() rejects EMA RNR data when there are fewer RNR
-entries than MBSSID entries.
+Validate each nested NL80211_ATTR_MBSSID_ELEMS entry as a well-formed
+information-element stream before storing it for beacon construction.
 
-The rejected RNR allocation has not been attached to the beacon data yet,
-so free it before returning the error.
+RNR parsing already validates each nested blob with validate_ie_attr()
+before storing it. Apply the same syntactic IE validation to MBSSID
+entries before counting and copying their data and length pointers.
 
-Fixes: dbbb27e183b1 ("cfg80211: support RNR for EMA AP")
+Fixes: dc1e3cb8da8b ("nl80211: MBSSID and EMA support in AP mode")
+Assisted-by: Codex:gpt-5.5
+Assisted-by: Claude:claude-opus-4.8
 Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Link: https://patch.msgid.link/20260610112208.1308-2-enderaoelyther@gmail.com
+Link: https://patch.msgid.link/20260612131854.43575-3-enderaoelyther@gmail.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/nl80211.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/wireless/nl80211.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
 diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
-index e4a490d12b504e..15c8f98bf5e235 100644
+index 15c8f98bf5e235..93dac673f2a348 100644
 --- a/net/wireless/nl80211.c
 +++ b/net/wireless/nl80211.c
-@@ -5651,8 +5651,10 @@ static int nl80211_parse_beacon(struct cfg80211_registered_device *rdev,
- 			if (IS_ERR(rnr))
- 				return PTR_ERR(rnr);
+@@ -5453,7 +5453,8 @@ static int nl80211_parse_mbssid_config(struct wiphy *wiphy,
+ }
  
--			if (rnr && rnr->cnt < bcn->mbssid_ies->cnt)
-+			if (rnr && rnr->cnt < bcn->mbssid_ies->cnt) {
-+				kfree(rnr);
- 				return -EINVAL;
-+			}
+ static struct cfg80211_mbssid_elems *
+-nl80211_parse_mbssid_elems(struct wiphy *wiphy, struct nlattr *attrs)
++nl80211_parse_mbssid_elems(struct wiphy *wiphy, struct nlattr *attrs,
++			   struct netlink_ext_ack *extack)
+ {
+ 	struct nlattr *nl_elems;
+ 	struct cfg80211_mbssid_elems *elems;
+@@ -5464,6 +5465,12 @@ nl80211_parse_mbssid_elems(struct wiphy *wiphy, struct nlattr *attrs)
+ 		return ERR_PTR(-EINVAL);
  
- 			bcn->rnr_ies = rnr;
- 		}
+ 	nla_for_each_nested(nl_elems, attrs, rem_elems) {
++		int ret;
++
++		ret = validate_ie_attr(nl_elems, extack);
++		if (ret)
++			return ERR_PTR(ret);
++
+ 		if (num_elems >= 255)
+ 			return ERR_PTR(-EINVAL);
+ 		num_elems++;
+@@ -5635,7 +5642,8 @@ static int nl80211_parse_beacon(struct cfg80211_registered_device *rdev,
+ 	if (attrs[NL80211_ATTR_MBSSID_ELEMS]) {
+ 		struct cfg80211_mbssid_elems *mbssid =
+ 			nl80211_parse_mbssid_elems(&rdev->wiphy,
+-						   attrs[NL80211_ATTR_MBSSID_ELEMS]);
++						   attrs[NL80211_ATTR_MBSSID_ELEMS],
++						   extack);
+ 
+ 		if (IS_ERR(mbssid))
+ 			return PTR_ERR(mbssid);
 -- 
 2.53.0
 
