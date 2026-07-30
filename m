@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 727493B52EE;
-	Thu, 30 Jul 2026 14:42:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D10F3D75C4;
+	Thu, 30 Jul 2026 14:42:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422544; cv=none; b=QonI1k2m31ga9WMwn4xr3yZkuDzL1bIt1ED6edFuTMLH8UZF9e19S0q4fxMGX/vZhTljOrYWsw4KR8wo0LKJ6pb5gQjkuvdBBwHdVrZ6YDE0vEfoo731g9lrI63UCDjXdZUQbmRQldqq9P3aEPhKxBLsO7TPB7R9bz/tRucxBVg=
+	t=1785422547; cv=none; b=Dc20m+JAa8WYA3Ad3P0oxB/TsVcZZZT2qm9IwZSYfWYVXttwjlEprM9CItd2XCgM9hykRkfVa1UZSQP9D5YMpIb8cVMFw1gXYE4ymlKiSqR7lktv08j29k10H1jtD+2J9LxxRnxHY3nU2NG3aZIdGsStnA/0IcCbFbDPwygESC8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422544; c=relaxed/simple;
-	bh=PsgJWuZXTvmd/Jk4t8OuH8wtTZ1nZoVWi6j+Kw8hHuY=;
+	s=arc-20240116; t=1785422547; c=relaxed/simple;
+	bh=5HPOGKj3157Ib2r4D13wiOImm1bik/lJwDTQtP1ElE4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tZpi5V+2NrpOsWJMf07VQj4gtIUPm2cj6+w6G9SHxOk/fGIc8BrIwtAQKNdXdc6h+GGsVzxQXSRvohvISIkqvKs1Iz5iFqnfrFmdwoMv3yIfKCY2oP4MNG24Igfnbuo7w0lb4jiBXGxNLdC9dB9yrkXC9taWEE8eWNtKaZx58+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lsNeGoYU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Rzvol4GiwIypl/MIrROIebLyCHGu3KNfw+7Xp/KBFqiZorCXPFLAZsoCUijMGki/ptFIHSkRCYsrYwhRcFzpLmY7zDT5gssdQkwPSzheCxzsZ3oLdwt/xlgsqckDxkG8hVSv40ouQTJcfmb1GfO8IxXoPTPz/v5Tqvta1bY/T7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YuCDmqRk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lsNeGoYU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD14F1F000E9;
-	Thu, 30 Jul 2026 14:42:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YuCDmqRk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D620B1F000E9;
+	Thu, 30 Jul 2026 14:42:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422543;
-	bh=UlI8itwZQzoO1cPUI5fyHCrykw7yF+tGZnV9CGbgNSg=;
+	s=korg; t=1785422546;
+	bh=RXI6/BFma8j34x6tMhVXTZrWq5YAkjJ/ttr8M5B0EFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lsNeGoYUxBH4fGSO23bRlDeGRUnNsresDjZOx7alacw6rhRIv7aiz6qQWFh/KbJuM
-	 ryTNQaDQrqptd0k3zMxZ8wuvf00XaNE7T8BlxeO3RjIEwVo+h3dw1IsVtj75XmNF8S
-	 kKrgSUXl1b+GSQ54UOErWhJkNgdRSZ/NaqIwOCcg=
+	b=YuCDmqRkJC0M2lkxeVFs9C62W/7zlhHxTPJGcVBeZ19G3VuNQjKgb4wA2PGcwn9TT
+	 j4YN0gxnxrtzeIcFHpEf7q2dmCRcO9sBvQJfu6avBhuksohTmawVszj7N1S3wObovy
+	 lDrATr/DjS53mY5sBsLPyy2Silom/WSzLp0D5ViI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Carlier <devnexen@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 7.1 476/744] media: aspeed: fix missing of_reserved_mem_device_release() on probe failure
-Date: Thu, 30 Jul 2026 16:12:29 +0200
-Message-ID: <20260730141454.413210265@linuxfoundation.org>
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 7.1 459/744] drm/amdgpu: Disable PCIe dynamic speed switching on Ryzen Pinnacle Ridge
+Date: Thu, 30 Jul 2026 16:12:12 +0200
+Message-ID: <20260730141454.052402483@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -50,41 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Carlier <devnexen@gmail.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit 253c8ef7d57da0c74db251f385324faaa5ae2257 upstream.
+commit 0148ac33547b9af1c5a7f3bb6e5baffcb6e9fac2 upstream.
 
-aspeed_video_init() calls of_reserved_mem_device_init() to associate
-reserved memory regions with the device. When aspeed_video_setup_video()
-subsequently fails in aspeed_video_probe(), the error path frees the
-JPEG buffer and unprepares the clocks but does not release the reserved
-memory association, leaking the rmem_assigned_device entry on the global
-list.
+AMD Ryzen Pinnacle Ridge (Zen+, family 0x17 model 0x08) CPUs have
+PCI controllers that don't support PCIe dynamic speed switching,
+causing system freezes during GPU initialization when enabled.
 
-The normal remove path already calls of_reserved_mem_device_release()
-correctly; only the probe error path was missing it.
+Disable dynamic speed switching when this CPU is detected.
 
-Add the missing of_reserved_mem_device_release() call to the
-aspeed_video_setup_video() failure cleanup.
-
-Fixes: d2b4387f3bdf ("media: platform: Add Aspeed Video Engine driver")
+Assisted-by: Claude:sonnet
+Fixes: 466a7d115326 ("drm/amd: Use the first non-dGPU PCI device for BW limits")
+Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/5436
+Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Link: https://patch.msgid.link/20260709031520.841611-1-mario.limonciello@amd.com
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 9ceb4e034a327a04155f32f1cd1a5031dfa5fe02)
 Cc: stable@vger.kernel.org
-Signed-off-by: David Carlier <devnexen@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/aspeed/aspeed-video.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/media/platform/aspeed/aspeed-video.c
-+++ b/drivers/media/platform/aspeed/aspeed-video.c
-@@ -2343,6 +2343,7 @@ static int aspeed_video_probe(struct pla
- 	rc = aspeed_video_setup_video(video);
- 	if (rc) {
- 		aspeed_video_free_buf(video, &video->jpeg);
-+		of_reserved_mem_device_release(&pdev->dev);
- 		clk_unprepare(video->vclk);
- 		clk_unprepare(video->eclk);
- 		return rc;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -1318,6 +1318,15 @@ static bool amdgpu_device_pcie_dynamic_s
+ 
+ 	if (c->x86_vendor == X86_VENDOR_INTEL)
+ 		return false;
++
++	/*
++	 * AMD Ryzen Pinnacle Ridge (Zen+, family 0x17 model 0x08) CPUs don't
++	 * support PCIe dynamic speed switching.
++	 * https://gitlab.freedesktop.org/drm/amd/-/work_items/5436
++	 */
++	if (c->x86_vendor == X86_VENDOR_AMD && c->x86 == 0x17 &&
++	    c->x86_model == 0x08)
++		return false;
+ #endif
+ 	return true;
+ }
 
 
