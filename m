@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CB0E3914ED;
-	Thu, 30 Jul 2026 15:08:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C65A3769F5;
+	Thu, 30 Jul 2026 15:08:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424134; cv=none; b=nHTcBkD9NeQei5xZn9vRn2i6ckdswTAEp12n4Hu3lCjG8B3ee/vmr5O3lf6y/bPICaiJOM+QFG3yqUb09eSHGOOty/wV0Q27NOQiY1xhIL3RypLl0R9cOdlXRSVsmuOX3KqjH3isVyC5taqCVAKIA90PFjhsu8PKA9kRnla2Gl8=
+	t=1785424137; cv=none; b=H7JU+kz+lghymd5DnrebHaeasohv9rWj/5JHnK1k5OMfUtalP7xZnunvzdkkIOQM3uKDRntb11PSUrwms1gHCwojNmiOhfsx3qOW0sqNububHUhQrH20HO6Qyv8zqQ6n8LvoZuncg/2zJLzoHHVlBx/xB8pWqPY657Rx9SZ7U7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424134; c=relaxed/simple;
-	bh=Xnlsf5YvFjmOFnqxJkCOMlfZzUNpeG1Dm5F2wrN+Im0=;
+	s=arc-20240116; t=1785424137; c=relaxed/simple;
+	bh=IHk40wP5A1HhPW+jKb59js4upuvuxtaixWvvIEKphbg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VfyrY2ko6elIMAeKac5JTwEZcQ4yC02bUCN62vK12wzUfiVY3BSMunTqNsZhvtcyLdKDUhcNkabl85hkUK4jzMehreuIvIGhQ/rBshJlr8z0oiVnrrFPxTnK5SSm9GyARk0pXFaOyqJZbVohbGrHnEhBG64OssDh9fM0XdHVo/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sSg6wnwV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nJkg16nzVJhWlu9pNjpi2Etel2hxnxOfzSkruMM2LSpA3cKp90oLotz/3eo1HqhnBXhPH4U8Vyf7SZ068hw/g5/zIdC3mgNyKw+cTWwpMCtK4b5wtc+X/hniMos7N3IrA6MU4VPl8cFkFwDLjaRDqfdcdgD7rJfSgaGo2vhlWQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RZNK5u/+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sSg6wnwV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CC4B1F000E9;
-	Thu, 30 Jul 2026 15:08:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RZNK5u/+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 674A61F000E9;
+	Thu, 30 Jul 2026 15:08:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424133;
-	bh=nRSmEju/CQjz/iDKjLo86/0h61SYF3u6dRfpHW5jaTg=;
+	s=korg; t=1785424135;
+	bh=GBpSUYXsRcHnBGWjZFHWuxro0oDVdc31NxccJhocDFE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sSg6wnwV3jq5r8JYzoqNU7GqVPQwlwAj0zikbsAkAkQTKvkRWqrAmtkExuceJThPn
-	 hF2Av+eL3dTYLCpwVyTSULcELbS+t3T8SiCPS8dyhn2XB9ZO67WnZObBgfLsmER7kS
-	 EDZJz6DsGpcRoTgxqRXg+/XKkhF6SMOcF3jBlJYM=
+	b=RZNK5u/+NU1v/MkoGtWfllcf11fjh/DF3dW+Ec6PggUFCN2TGAV16pWOaNdvFOJbq
+	 KdC+fGwErtRsr9I88VwkUYR0t+4gFP8/zE7MgzMrQhjCrv/2w0liX6gZTQza5HMqDu
+	 ntwIxR1a+pv7nKiqP735pjcXACNN+qG2Egneg7nY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Rohan G Thomas <rohan.g.thomas@altera.com>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 287/675] net: stmmac: socfpga: Agilex5 EMAC platform configuration
-Date: Thu, 30 Jul 2026 16:10:17 +0200
-Message-ID: <20260730141451.223103417@linuxfoundation.org>
+Subject: [PATCH 6.18 288/675] net: stmmac: socfpga: Enable TBS support for Agilex5
+Date: Thu, 30 Jul 2026 16:10:18 +0200
+Message-ID: <20260730141451.243739029@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -54,100 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Rohan G Thomas <rohan.g.thomas@altera.com>
 
-[ Upstream commit 93d46ea3e984323fae0e5d2919cf5817e1297d41 ]
+[ Upstream commit 4c00476d44804db3c16838299b87a11741cd0dbd ]
 
-Agilex5 HPS EMAC uses the dwxgmac-3.10a IP, unlike previous socfpga
-platforms which use dwmac1000 IP. Due to differences in platform
-configuration, Agilex5 requires a distinct setup.
-
-Introduce a setup_plat_dat() callback in socfpga_dwmac_ops to handle
-platform-specific setup. This callback is invoked before
-stmmac_dvr_probe() to ensure the platform data is correctly
-configured. Also, implemented separate setup_plat_dat() callback for
-current socfpga platforms and Agilex5.
+Agilex5 supports Time-Based Scheduling(TBS) for Tx queue 6 and Tx
+queue 7. This commit enables TBS support for these queues.
 
 Signed-off-by: Rohan G Thomas <rohan.g.thomas@altera.com>
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Tested-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/20251101-agilex5_ext-v2-1-a6b51b4dca4d@altera.com
+Link: https://patch.msgid.link/20251101-agilex5_ext-v2-2-a6b51b4dca4d@altera.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: 9fcf274d93af ("net: stmmac: xgmac: fix l4 filter port overwrite on register update")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/stmicro/stmmac/dwmac-socfpga.c   | 30 +++++++++++++++++--
- 1 file changed, 27 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/dwmac-socfpga.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
 diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-socfpga.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-socfpga.c
-index 2ff5db6d41ca08..5666b017236439 100644
+index 5666b017236439..4f256f0ae05c15 100644
 --- a/drivers/net/ethernet/stmicro/stmmac/dwmac-socfpga.c
 +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-socfpga.c
-@@ -44,6 +44,7 @@
- struct socfpga_dwmac;
- struct socfpga_dwmac_ops {
- 	int (*set_phy_mode)(struct socfpga_dwmac *dwmac_priv);
-+	void (*setup_plat_dat)(struct socfpga_dwmac *dwmac_priv);
- };
+@@ -457,6 +457,19 @@ static void socfpga_agilex5_setup_plat_dat(struct socfpga_dwmac *dwmac)
+ 	struct plat_stmmacenet_data *plat_dat = dwmac->plat_dat;
  
- struct socfpga_dwmac {
-@@ -441,6 +442,23 @@ static int socfpga_dwmac_init(struct platform_device *pdev, void *bsp_priv)
- 	return dwmac->ops->set_phy_mode(dwmac);
+ 	plat_dat->core_type = DWMAC_CORE_XGMAC;
++
++	/* Enable TBS */
++	switch (plat_dat->tx_queues_to_use) {
++	case 8:
++		plat_dat->tx_queues_cfg[7].tbs_en = true;
++		fallthrough;
++	case 7:
++		plat_dat->tx_queues_cfg[6].tbs_en = true;
++		break;
++	default:
++		/* Tx Queues 0 - 5 doesn't support TBS on Agilex5 */
++		break;
++	}
  }
  
-+static void socfpga_gen5_setup_plat_dat(struct socfpga_dwmac *dwmac)
-+{
-+	struct plat_stmmacenet_data *plat_dat = dwmac->plat_dat;
-+
-+	plat_dat->core_type = DWMAC_CORE_GMAC;
-+
-+	/* Rx watchdog timer in dwmac is buggy in this hw */
-+	plat_dat->riwt_off = 1;
-+}
-+
-+static void socfpga_agilex5_setup_plat_dat(struct socfpga_dwmac *dwmac)
-+{
-+	struct plat_stmmacenet_data *plat_dat = dwmac->plat_dat;
-+
-+	plat_dat->core_type = DWMAC_CORE_XGMAC;
-+}
-+
  static int socfpga_dwmac_probe(struct platform_device *pdev)
- {
- 	struct plat_stmmacenet_data *plat_dat;
-@@ -497,25 +515,31 @@ static int socfpga_dwmac_probe(struct platform_device *pdev)
- 	plat_dat->pcs_init = socfpga_dwmac_pcs_init;
- 	plat_dat->pcs_exit = socfpga_dwmac_pcs_exit;
- 	plat_dat->select_pcs = socfpga_dwmac_select_pcs;
--	plat_dat->core_type = DWMAC_CORE_GMAC;
- 
--	plat_dat->riwt_off = 1;
-+	ops->setup_plat_dat(dwmac);
- 
- 	return devm_stmmac_pltfr_probe(pdev, plat_dat, &stmmac_res);
- }
- 
- static const struct socfpga_dwmac_ops socfpga_gen5_ops = {
- 	.set_phy_mode = socfpga_gen5_set_phy_mode,
-+	.setup_plat_dat = socfpga_gen5_setup_plat_dat,
- };
- 
- static const struct socfpga_dwmac_ops socfpga_gen10_ops = {
- 	.set_phy_mode = socfpga_gen10_set_phy_mode,
-+	.setup_plat_dat = socfpga_gen5_setup_plat_dat,
-+};
-+
-+static const struct socfpga_dwmac_ops socfpga_agilex5_ops = {
-+	.set_phy_mode = socfpga_gen10_set_phy_mode,
-+	.setup_plat_dat = socfpga_agilex5_setup_plat_dat,
- };
- 
- static const struct of_device_id socfpga_dwmac_match[] = {
- 	{ .compatible = "altr,socfpga-stmmac", .data = &socfpga_gen5_ops },
- 	{ .compatible = "altr,socfpga-stmmac-a10-s10", .data = &socfpga_gen10_ops },
--	{ .compatible = "altr,socfpga-stmmac-agilex5", .data = &socfpga_gen10_ops },
-+	{ .compatible = "altr,socfpga-stmmac-agilex5", .data = &socfpga_agilex5_ops },
- 	{ }
- };
- MODULE_DEVICE_TABLE(of, socfpga_dwmac_match);
 -- 
 2.53.0
 
