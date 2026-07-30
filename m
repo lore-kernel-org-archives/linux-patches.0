@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB9592E9EC7;
-	Thu, 30 Jul 2026 14:28:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AEE4432E65;
+	Thu, 30 Jul 2026 14:28:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421728; cv=none; b=bVYAqBTUkt9R2P7bxh0I8YJkD2CFGzA+NWb6ZkUMo6oxlwXrT1IZZ3+EsKrPeB+HKPc23Zaxm9X+ezKDFdxhozu5Cxhi3rOVukH5v/U1qlNsGdiRo6KPdE05D+AD3EpIUfPhKnq6UR1W0neZ7Gl4e/eDFUMs7mma78CMteXSEGM=
+	t=1785421731; cv=none; b=VckVO/RwRpsYchMeXt/BXhSquEsdoxHE7xAmXj/FjHGeVjh9iVNoa5OEcoRZ5eJzBx3lBnW0zwj/5BgyAqZ1Ei/OM/J3oUo9LvX5REfq7EdODn5yWfsBoe3jpGtHSgpRIkzBDO/Oyy4WNikB4W0qA8i5+E4Sz/hJUc5VKgtxy1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421728; c=relaxed/simple;
-	bh=RYepU94hp36Ncgfe5ZNe1sEgbqqJCGKqabYjxyyXWXA=;
+	s=arc-20240116; t=1785421731; c=relaxed/simple;
+	bh=u7VgTGUj2n+PczGq11BhUlASqZ9UP+2o+8myG17eu0I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SADJvjmCGLTG11F7u2FT3cewpgnajf114mkOe0F8n8zVgrK8reOeoci5ou+6jFD/bwXuQSgbX3j4YhuNUoN0Zs3fhV5bWm7ChilqV8QQTAFZsHBovf2G3ECZbY8waTdI+HN/PFOMKfj4kfzCdAeF/gDkbM1e2JnjJ8ybq5G2fPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CXO9mRJt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hQI7LFT7HTE50F3A9NwehwrxPMNRMemEt7cYAaUmaieNkNnjvQKa+mDuos8vLPHjJI433WVz8inIO2HnM3L3E6Ms6M+vLotHmPdtVtHiFL6nikIG3oj7ZIUWGtUmDipoMBTUZhP1URRpyvl+LcMkx44e0vqNFfBIyh1OVjPnWsI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hvQ4Jkuh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CXO9mRJt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 439071F00A3E;
-	Thu, 30 Jul 2026 14:28:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hvQ4Jkuh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 499051F000E9;
+	Thu, 30 Jul 2026 14:28:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421726;
-	bh=4/XTvGf71UuU1ALSPO/LReoxeMrdjElwIUq5Nv24OLQ=;
+	s=korg; t=1785421729;
+	bh=kOh0njX40fCXmKWRJbqxpa5k13WqmvJDzdbbEd2XWzI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CXO9mRJtlctFvadRJU9IgHNlLZ+t+ZB3R386Pcagp3X5EkWxNC96pFgvOLA3JwLMD
-	 xO4L54UiPV7s077N9qtlyuQEmfylp63voGZI8eKe61szkhNJElvb9NYnfePVtXlNxi
-	 YZpjTC03hki5jZWqCpZSVckN3aXeZHzIsOcbYf9Q=
+	b=hvQ4JkuhAPSxPGF5ylbWmMJ7mA8AdaByYhJ98uboNPkfJy0ElDYwTWn/kUcHj3aH5
+	 BOs4zmDYzdvafmASpY0KzITkFFFHYxIz81ZPBduwvRZ+OhWYcj0GWK4MKhRwQ28xm+
+	 6NuMBh4JDQT3d7wPCeH+dVRDWdfZJE1pQ1Y1pU0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 201/744] ASoC: bt-sco: fix duplicate DAPM widget names for wideband DAI
-Date: Thu, 30 Jul 2026 16:07:54 +0200
-Message-ID: <20260730141448.552131687@linuxfoundation.org>
+Subject: [PATCH 7.1 175/744] hwmon: (nzxt-kraken3) Stop device IO before calling hid_hw_stop
+Date: Thu, 30 Jul 2026 16:07:28 +0200
+Message-ID: <20260730141448.008016989@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -51,70 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 0b604e886ece11b71c4daaeccc512c784b89b014 ]
+[ Upstream commit f151d0143ac4e086f92f52328ebdbdc50933d8ef ]
 
-The bt-sco-pcm-wb DAI uses the same stream_name strings as bt-sco-pcm
-("Playback" and "Capture"). This causes duplicate DAPM AIF widget
-names within the same component, leading to debugfs warnings:
+Calling hid_hw_stop() does not stop the device IO.
+This results in a race condition between hid_input_report() and the point
+immediately following the execution of hid_device_io_start() within
+the driver probe function. If the probe operation fails after "io start"
+has been initiated, this race condition will result in a UAF vulnerability.
 
-  debugfs: 'Playback' already exists in 'dapm'
-  debugfs: 'Capture' already exists in 'dapm'
+Fix the problem by calling hid_device_io_stop() before calling
+hid_hw_stop().
 
-Give the wideband DAI distinct stream names ("WB Playback" and
-"WB Capture") and add corresponding DAPM AIF widgets and routes for
-them.
-
-Fixes: 5947e1b4992e ("ASoC: bt-sco: extend rate and add a general compatible string")
-Assisted-by: VeroCoder:claude-sonnet-4-5
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Link: https://patch.msgid.link/20260715100620.1387159-1-shengjiu.wang@oss.nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: f3b4b146eb107 ("hwmon: Add driver for NZXT Kraken X and Z series AIO CPU coolers")
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/bt-sco.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/hwmon/nzxt-kraken3.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/codecs/bt-sco.c b/sound/soc/codecs/bt-sco.c
-index 3afcef2dfa3529..c0bf45b76cb8c5 100644
---- a/sound/soc/codecs/bt-sco.c
-+++ b/sound/soc/codecs/bt-sco.c
-@@ -17,11 +17,17 @@ static const struct snd_soc_dapm_widget bt_sco_widgets[] = {
- 			    SND_SOC_NOPM, 0, 0),
- 	SND_SOC_DAPM_AIF_OUT("BT_SCO_TX", "Capture", 0,
- 			     SND_SOC_NOPM, 0, 0),
-+	SND_SOC_DAPM_AIF_IN("BT_SCO_RX_WB", "WB Playback", 0,
-+			    SND_SOC_NOPM, 0, 0),
-+	SND_SOC_DAPM_AIF_OUT("BT_SCO_TX_WB", "WB Capture", 0,
-+			     SND_SOC_NOPM, 0, 0),
- };
+diff --git a/drivers/hwmon/nzxt-kraken3.c b/drivers/hwmon/nzxt-kraken3.c
+index d00409bcab93ad..05525406c5fbb5 100644
+--- a/drivers/hwmon/nzxt-kraken3.c
++++ b/drivers/hwmon/nzxt-kraken3.c
+@@ -948,7 +948,7 @@ static int kraken3_probe(struct hid_device *hdev, const struct hid_device_id *id
+ 	ret = kraken3_init_device(hdev);
+ 	if (ret < 0) {
+ 		hid_err(hdev, "device init failed with %d\n", ret);
+-		goto fail_and_close;
++		goto fail_and_stop_io;
+ 	}
  
- static const struct snd_soc_dapm_route bt_sco_routes[] = {
- 	{ "BT_SCO_TX", NULL, "RX" },
- 	{ "TX", NULL, "BT_SCO_RX" },
-+	{ "BT_SCO_TX_WB", NULL, "RX" },
-+	{ "TX", NULL, "BT_SCO_RX_WB" },
- };
+ 	ret = kraken3_get_fw_ver(hdev);
+@@ -960,13 +960,15 @@ static int kraken3_probe(struct hid_device *hdev, const struct hid_device_id *id
+ 	if (IS_ERR(priv->hwmon_dev)) {
+ 		ret = PTR_ERR(priv->hwmon_dev);
+ 		hid_err(hdev, "hwmon registration failed with %d\n", ret);
+-		goto fail_and_close;
++		goto fail_and_stop_io;
+ 	}
  
- static struct snd_soc_dai_driver bt_sco_dai[] = {
-@@ -45,14 +51,14 @@ static struct snd_soc_dai_driver bt_sco_dai[] = {
- 	{
- 		.name = "bt-sco-pcm-wb",
- 		.playback = {
--			.stream_name = "Playback",
-+			.stream_name = "WB Playback",
- 			.channels_min = 1,
- 			.channels_max = 1,
- 			.rates = SNDRV_PCM_RATE_8000 | SNDRV_PCM_RATE_16000,
- 			.formats = SNDRV_PCM_FMTBIT_S16_LE,
- 		},
- 		.capture = {
--			 .stream_name = "Capture",
-+			 .stream_name = "WB Capture",
- 			.channels_min = 1,
- 			.channels_max = 1,
- 			.rates = SNDRV_PCM_RATE_8000 | SNDRV_PCM_RATE_16000,
+ 	kraken3_debugfs_init(priv, device_name);
+ 
+ 	return 0;
+ 
++fail_and_stop_io:
++	hid_device_io_stop(hdev);
+ fail_and_close:
+ 	hid_hw_close(hdev);
+ fail_and_stop:
 -- 
 2.53.0
 
