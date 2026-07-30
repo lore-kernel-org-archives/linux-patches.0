@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B99844AB84;
-	Thu, 30 Jul 2026 16:12:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39B6244C4F8;
+	Thu, 30 Jul 2026 16:12:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427938; cv=none; b=IgpLZ3UAZdXy4N/cifvE9zS9Byz5nSwYyIoFhR9hAb7ks/rvJ85LGY9tX4S8jCfMGRKxc2gChUGaBI5+pTPP2UfrciFaTWbpHiKrL8M324kM40Ecjkz7TJDiOlE28nOqPblW2hGq9STVM9po254QK9ztXxfuPRXLwxDTld+S67M=
+	t=1785427941; cv=none; b=UmeeZgwAk7/wJ6ceozDi7Ig9nhGD9CXn65PVLvbcJ1FZ9oUzr18rOi9TfommTMoNvDPhMDzoubyZ0mzNMlDMKvHmJlBK9bATinDndjUfmf2gRuviZS19P+LgsbFU1ywDca7DuYmSH642kHXt6uXfGAzxI3QLHmrAFQjctfnvgUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427938; c=relaxed/simple;
-	bh=zLTJvzvzFIMrY8Q5QTYIDeJCmvDcPi8RM/EncCrCAQA=;
+	s=arc-20240116; t=1785427941; c=relaxed/simple;
+	bh=b91AEVANxXZZnVIbdx9wB6CXOhaB0frau2A2pbAG4So=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d2EqzprZ+zCEov2vUCrWKTfCTQxJJcEM3zu85sAi8AK2MCQBBr2CAa3xiZUcS+j0+Don10mqCzJa891ibcESWH2sVrrI4yv/LcAzbqyYS+2eRdYeDxJoOD9gSSIZB7D0qxmZtcVyEOyPRHbxTWRPqoi0at1FldLbgRTgDk6RrYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KdqPxXVF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X9CclEQY29dWBUHGnIuL17od6oWyJN2GVpK671xOWUlMODYDBvrolluxk4dVJECUbaQlIN8C8E59EiZdVAPq1atldGg89PfV0D0oJMc8JfL9gPLl1NvwE7+h+iiopgSNXxkzi7RF2QbtoxPbnOONatOYTkPx/5wOU/LDYrU6u60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lnO0fM9n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KdqPxXVF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A71231F000E9;
-	Thu, 30 Jul 2026 16:12:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lnO0fM9n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85E301F000E9;
+	Thu, 30 Jul 2026 16:12:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427937;
-	bh=z4t9kaBi6+7kP0meiohL5hi1j5dclhxHoftnxbmoqJU=;
+	s=korg; t=1785427940;
+	bh=9UdceSho0qlK3bXZlXJ9D/MCajT1IlWaK+SM7RVYIFU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KdqPxXVF8w0jVPu5658tXYdWK+vjiqR1AwKYErPTajXQ9m9Tr/G4mEKdi1+dltByg
-	 boKHJGnhX+ZmPEIYcH/ZAnw23onMBn3DYrlddjvzWbAzPiPpWmnAluiFyWrYA18tF2
-	 Xy4uaAIQX9jEtqAfY+t5k0Aed8FHLs9qmwhLT/g8=
+	b=lnO0fM9nTxa3dbg/KefmRDZIt3oYoPAvLvW6VHr7QzmiBjWhSuxdWDop097Wi7O91
+	 kMu4Tl5EuNPBzk0sM5LryN/sllgYPa0AtuGp1tCopl8ahPl2bYuYu2yJtmTL0zHWzb
+	 L30m0rSAnPXml/2MYOstUn7GIaPQ6r0/7EOIdZtk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boyuan Zhang <boyuan.zhang@amd.com>,
-	Leo Liu <leo.liu@amd.com>,
+	Ce Sun <cesun102@amd.com>,
+	Tao Zhou <tao.zhou1@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 346/484] drm/amdgpu: fix division by zero with invalid uvd dimensions
-Date: Thu, 30 Jul 2026 16:14:03 +0200
-Message-ID: <20260730141430.998932847@linuxfoundation.org>
+Subject: [PATCH 6.6 347/484] drm/amdgpu: invoke pm_genpd_remove() before freeing genpd
+Date: Thu, 30 Jul 2026 16:14:04 +0200
+Message-ID: <20260730141431.019849421@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -51,48 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boyuan Zhang <boyuan.zhang@amd.com>
+From: Ce Sun <cesun102@amd.com>
 
-commit 0c01c811be47e6b146552dd59bfedbea8f09b8f4 upstream.
+commit 28c9b3c5dc35cc790d11e26ca3fc6e068be63998 upstream.
 
-When width or height is less than 16, width_in_mb or height_in_mb
-becomes 0, leading to fs_in_mb being 0. This causes a division by
-zero when calculating num_dpb_buffer in H264 and H264 Perf decode
-paths.
+Call pm_genpd_remove() to unregister from global list prior to releasing
+acp_genpd memory, and clear the pointer after free.
 
-Add validation to reject frames with width < 16 or height < 16
-before performing any calculations that depend on these values.
-
-V2: Format change - move up all vaiable definitions.
-V3: Use warn_once to avoid spam.
-
-Signed-off-by: Boyuan Zhang <boyuan.zhang@amd.com>
-Reviewed-by: Leo Liu <leo.liu@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Ce Sun <cesun102@amd.com>
+Reviewed-by: Tao Zhou <tao.zhou1@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 3e41d26c70b0a459d041cc19482a226c4b7423cb)
+(cherry picked from commit cd8650d7a91ee8b768e202354672553faa5cc1f2)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_acp.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
-@@ -647,6 +647,14 @@ static int amdgpu_uvd_cs_msg_decode(stru
- 	unsigned int image_size, tmp, min_dpb_size, num_dpb_buffer;
- 	unsigned int min_ctx_size = ~0;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_acp.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_acp.c
+@@ -559,7 +559,9 @@ static int acp_hw_fini(void *handle)
  
-+	/* Reject invalid dimensions to prevent division by zero */
-+	if (width < 16 || height < 16) {
-+		dev_WARN_ONCE(adev->dev, 1,
-+			      "Invalid UVD decoding dimensions (%dx%d)!\n",
-+			      width, height);
-+		return -EINVAL;
-+	}
-+
- 	image_size = width * height;
- 	image_size += image_size / 2;
- 	image_size = ALIGN(image_size, 1024);
+ 	mfd_remove_devices(adev->acp.parent);
+ 	kfree(adev->acp.acp_res);
++	pm_genpd_remove(&adev->acp.acp_genpd->gpd);
+ 	kfree(adev->acp.acp_genpd);
++	adev->acp.acp_genpd = NULL;
+ 	kfree(adev->acp.acp_cell);
+ 
+ 	return 0;
 
 
