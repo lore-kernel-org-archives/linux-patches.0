@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26CDC365A19;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71B4B449EB6;
 	Thu, 30 Jul 2026 16:16:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785428216; cv=none; b=q2ldZVzBhlwOg4/qFRxbAzegLk4G9BRzVR1MBpeGSotEuynJl5NI95lWcqOwJiQFPUC30TNWiT90CDu9dI9kokaE2fbdmW1sLLfBxPt3qUOmJfmxWkpXt7rxB6i1hh0MH+j2RlBXZlAh8OrL3/2+U/cBaT+GJ0x1I4GCuBUnAaI=
+	t=1785428218; cv=none; b=YrdzzZOXf5WUAo2PbiwlB5BScxCSFZOnk87zIaK9JFLqZiNcDxAqm3/ExSyhzoPqH9vEjYDdmlywXQYWkMpp5VueboENUcOT3v+jY3Ru2XJ4EVl1ngcFfTrDXYWxihSsEpjAs3fQtTSZDaxhGSlwmUUDpzwQM7MlAyHQ5mwbC4I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785428216; c=relaxed/simple;
-	bh=ywUi/CuplU4SZQLnKUoXawR+KpcCZgXwpzAiy+fdhEs=;
+	s=arc-20240116; t=1785428218; c=relaxed/simple;
+	bh=GPOeNgTZDRL7h9WgT+lRR+8yM14lWmcnWsqc6yQSWL8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hzchppBQ0QYqkeSyeVF7/D+iTxXtVESXj5HHxD3+7mCrmRh4EOdcfTTWJKoEo2skxHf0mAI98KuJhrsbEbQvao6dYsFHLfzMHEAtK3BWVbrd06RdpbMi96AtsDjqpu8smTrHAUtimJMnkVb08Ek856ItdY9/0gc5+lXleSqL85o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tz3v4yCF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Pk+5qt/QfbCOSDU0neHE9lqKPoS9BIH7eu0Qj7J8XOIQJfye3xm4Hm2R/vbiB9H/jg81xQHG2WaMWb4LM6ZziOx3vmnN4RethQtW7rJ3hXY/ns8rC1zM63MX9xtRauTubG9jHlWoY2Jntt+uVmDGvPnYEziB42Rk44Se+1N7pP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FT/+GXt+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tz3v4yCF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B3D01F00A3D;
-	Thu, 30 Jul 2026 16:16:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FT/+GXt+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 339C91F000E9;
+	Thu, 30 Jul 2026 16:16:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785428204;
-	bh=QgDRqMcubw3ejEE8UaDYgAE6z+TOfU9w1zK11CI1Sn0=;
+	s=korg; t=1785428207;
+	bh=6Q8Sp0CRatTkq178WZBl2NERGzo8wWEyn1rYpZAYwDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Tz3v4yCFFJ1JM9v2lhLD3E/DCu9d5gH0h5XE/WGEgTvo2HYtJNsgukW+amr1NrArX
-	 4xMiv0k9eLNNRNGwvSJO5juB9WECfhopywNaZXMhVA0pNyuCAJmbWwwMJ1o/2C9uVx
-	 3XbXUAIdq80XsWUhGKv+hG8Vjy+wvzHXtWGYUfs4=
+	b=FT/+GXt++K23Z9RyJhX1F8RehVVArf0wQMf7Kz0Nl3LZ1gPVJyPjgdDy1uTg4lsyx
+	 4sI0foHrBMVd6HlhSypRwrC0MDXDuKI6Zi+IlRIQCdqIhsAEWUGzQp+nYr07HypAhT
+	 Tl9MYj31MuN0vV9KTAgIiXnU40TPf7AVXRz3udx0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Lyndon Sanche <lsanche@lyndeno.ca>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 440/484] thunderbolt: Prevent XDomain delayed work use-after-free on disconnect
-Date: Thu, 30 Jul 2026 16:15:37 +0200
-Message-ID: <20260730141433.037810471@linuxfoundation.org>
+Subject: [PATCH 6.6 441/484] platform/x86: dell-smbios: Move request functions for reuse
+Date: Thu, 30 Jul 2026 16:15:38 +0200
+Message-ID: <20260730141433.059446114@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -45,93 +45,112 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Lyndon Sanche <lsanche@lyndeno.ca>
 
-[ Upstream commit 2c5d2d3c3f70cde2565d7b279b544893a2035842 ]
+[ Upstream commit 33245680ae565aaa114d726bf407c8ff38e75e71 ]
 
-tb_xdp_handle_request() runs on system_wq and queues
-xd->state_work via queue_delayed_work() in three request handlers:
-PROPERTIES_CHANGED_REQUEST, UUID_REQUEST (via start_handshake),
-and LINK_STATE_CHANGE_REQUEST.  Similarly, update_xdomain() queues
-xd->properties_changed_work when local properties change.
+Move the dell_send_request and dell_fill_request symbols into smbios-base
+so that they can be used in multiple modules.
 
-Concurrently, tb_xdomain_remove() calls stop_handshake() which does
-cancel_delayed_work_sync() on both delayed works.  Later,
-tb_xdomain_unregister() calls device_unregister() which eventually
-frees the xdomain.  Since commit 559c1e1e0134 ("thunderbolt: Run
-tb_xdp_handle_request() in system workqueue") moved the request
-handler off tb->wq, the handler and the remove path are no longer
-serialized.  If queue_delayed_work() executes after
-cancel_delayed_work_sync() but before the xdomain is freed, the
-delayed work fires on a freed object.
-
-Add xd->removing that tb_xdomain_remove() sets under xd->lock
-before calling stop_handshake().  Each external queue site holds
-the same lock and checks removing before calling
-queue_delayed_work().  This provides the mutual exclusion needed:
-either the queue site acquires the lock first and queues work that
-the subsequent cancel will see, or the remove path acquires the
-lock first and the queue site observes removing == true and skips
-the queue.
-
-Fixes: 559c1e1e0134 ("thunderbolt: Run tb_xdp_handle_request() in system workqueue")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Signed-off-by: Lyndon Sanche <lsanche@lyndeno.ca>
+Link: https://lore.kernel.org/r/20240529174843.13226-3-lsanche@lyndeno.ca
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Stable-dep-of: 6e9cab2247e5 ("platform/x86: dell-laptop: fix missing cleanups in init error path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/xdomain.c |   26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ drivers/platform/x86/dell/dell-laptop.c      |   23 -----------------------
+ drivers/platform/x86/dell/dell-smbios-base.c |   25 +++++++++++++++++++++++++
+ drivers/platform/x86/dell/dell-smbios.h      |    5 +++++
+ 3 files changed, 30 insertions(+), 23 deletions(-)
 
---- a/drivers/thunderbolt/xdomain.c
-+++ b/drivers/thunderbolt/xdomain.c
-@@ -905,6 +905,19 @@ void tb_unregister_service_driver(struct
- }
- EXPORT_SYMBOL_GPL(tb_unregister_service_driver);
+--- a/drivers/platform/x86/dell/dell-laptop.c
++++ b/drivers/platform/x86/dell/dell-laptop.c
+@@ -353,29 +353,6 @@ static const struct dmi_system_id dell_q
+ 	{ }
+ };
  
-+static int update_xdomain(struct device *dev, void *data)
-+{
-+	struct tb_xdomain *xd;
-+
-+	xd = tb_to_xdomain(dev);
-+	if (xd) {
-+		queue_delayed_work(xd->tb->wq, &xd->properties_changed_work,
-+				   msecs_to_jiffies(50));
-+	}
-+
-+	return 0;
-+}
-+
- static ssize_t key_show(struct device *dev, struct device_attribute *attr,
- 			char *buf)
- {
-@@ -2475,19 +2488,6 @@ bool tb_xdomain_handle_request(struct tb
- 	return ret > 0;
- }
- 
--static int update_xdomain(struct device *dev, void *data)
+-static void dell_fill_request(struct calling_interface_buffer *buffer,
+-			       u32 arg0, u32 arg1, u32 arg2, u32 arg3)
 -{
--	struct tb_xdomain *xd;
--
--	xd = tb_to_xdomain(dev);
--	if (xd) {
--		queue_delayed_work(xd->tb->wq, &xd->properties_changed_work,
--				   msecs_to_jiffies(50));
--	}
--
--	return 0;
+-	memset(buffer, 0, sizeof(struct calling_interface_buffer));
+-	buffer->input[0] = arg0;
+-	buffer->input[1] = arg1;
+-	buffer->input[2] = arg2;
+-	buffer->input[3] = arg3;
 -}
 -
- static void update_all_xdomains(void)
+-static int dell_send_request(struct calling_interface_buffer *buffer,
+-			     u16 class, u16 select)
+-{
+-	int ret;
+-
+-	buffer->cmd_class = class;
+-	buffer->cmd_select = select;
+-	ret = dell_smbios_call(buffer);
+-	if (ret != 0)
+-		return ret;
+-	return dell_smbios_error(buffer->output[0]);
+-}
+-
+ /*
+  * Derived from information in smbios-wireless-ctl:
+  *
+--- a/drivers/platform/x86/dell/dell-smbios-base.c
++++ b/drivers/platform/x86/dell/dell-smbios-base.c
+@@ -320,6 +320,31 @@ out_smbios_call:
+ }
+ EXPORT_SYMBOL_GPL(dell_smbios_call);
+ 
++void dell_fill_request(struct calling_interface_buffer *buffer,
++			       u32 arg0, u32 arg1, u32 arg2, u32 arg3)
++{
++	memset(buffer, 0, sizeof(struct calling_interface_buffer));
++	buffer->input[0] = arg0;
++	buffer->input[1] = arg1;
++	buffer->input[2] = arg2;
++	buffer->input[3] = arg3;
++}
++EXPORT_SYMBOL_GPL(dell_fill_request);
++
++int dell_send_request(struct calling_interface_buffer *buffer,
++			     u16 class, u16 select)
++{
++	int ret;
++
++	buffer->cmd_class = class;
++	buffer->cmd_select = select;
++	ret = dell_smbios_call(buffer);
++	if (ret != 0)
++		return ret;
++	return dell_smbios_error(buffer->output[0]);
++}
++EXPORT_SYMBOL_GPL(dell_send_request);
++
+ struct calling_interface_token *dell_smbios_find_token(int tokenid)
  {
- 	bus_for_each_dev(&tb_bus_type, NULL, NULL, update_xdomain);
+ 	int i;
+--- a/drivers/platform/x86/dell/dell-smbios.h
++++ b/drivers/platform/x86/dell/dell-smbios.h
+@@ -64,6 +64,11 @@ int dell_smbios_call_filter(struct devic
+ 	struct calling_interface_buffer *buffer);
+ int dell_smbios_call(struct calling_interface_buffer *buffer);
+ 
++void dell_fill_request(struct calling_interface_buffer *buffer,
++			       u32 arg0, u32 arg1, u32 arg2, u32 arg3);
++int dell_send_request(struct calling_interface_buffer *buffer,
++			     u16 class, u16 select);
++
+ struct calling_interface_token *dell_smbios_find_token(int tokenid);
+ 
+ enum dell_laptop_notifier_actions {
 
 
