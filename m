@@ -1,48 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67334443E24;
-	Thu, 30 Jul 2026 15:29:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D47444AB7F;
+	Thu, 30 Jul 2026 15:29:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425365; cv=none; b=BA/F60cBJN/QgmXlzf6RfxzUPAc/LktUvjesKB7X2HZFh98WSxxcSIPBANoA3+ARQSYjY7Aa9CGwlPxVCxKBZEDz31EnfnATkMPOHtgZ2GEK13gdcDFFNQB1dO/yyV8979vOIWNxF3jqUpPrhhIz/RxOb074mDuBGcvjaIQo2bA=
+	t=1785425368; cv=none; b=dQpCGwrdXEHFleDOZsN3torJEFaEY1/lIsdK0YO/BM+1baD0AnucVpwmoH3Ybuoq++V1PmrPhmEcODpaVgI9ZyvZ7Z6/p+xH4Pojm9xV5L37NPXKqu7bpNVPAHWdv5AHKp4OjB4wm8m2zTYMz0se6c0zIaS5UcCOA/Vhgv6mcyk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425365; c=relaxed/simple;
-	bh=+6Pyxnh2lKEnD3ss2b/sbwjhvG44dNApmWmarKZCyRE=;
+	s=arc-20240116; t=1785425368; c=relaxed/simple;
+	bh=0MWcznPiUOTHiO+Nc/FfmuhSrGRNchii1QQw7LXYDUI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y3daylbswuNnrXm14Q6ir93QaVPXHPO/ROxk6zQVyxbFjON4J/s+8xvuw6MBD8mgFDk4RK9fNyfTai+lZKP7/amhe+Pg3SOoiZubNNv7OHCcVB/KMU0Drp01JgwYBQRVJEdkOKhXPY/T3h0P3TzZcPIAEvVRknoHtn2pXCZ1qiM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yLj0v6ZL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LP/p13llaCwSHEWmqQM8BYLm3q90ENFik4tt7tCDQ/eQZDreyZPxNRqPKTGAw12ZpSuECoGNUmQB/BveLivvU3/rgm2anSfn4KJ7/rvsJKruoGGA8k8eiz2S+MmlEu6zqGIe/9Dm1n/WMByt0G/nzevl0Swt715qtCn9Yvr6l4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=02VcTA+d; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yLj0v6ZL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AE251F000E9;
-	Thu, 30 Jul 2026 15:29:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="02VcTA+d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4953B1F000E9;
+	Thu, 30 Jul 2026 15:29:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425364;
-	bh=TC7QAv2rkIG1ajmcTBo1f7ycsz13LA6XXrAu0QykhtY=;
+	s=korg; t=1785425366;
+	bh=crwZHCWUGnd5GR0Er9kFskMup6OtkAm0JIUOrMGtWRw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yLj0v6ZLvfIebOPYgAOe7GpN9XFrIbr6Nc7lxSN3JH7/hYwLbjRzVTj2N8LsPsCxB
-	 Do1lPgGHRamlZ+aDs0jTG/lajZXw6XDFjsGYjJiY6ANbFZiR4yq/EWJAO5uzZM05x9
-	 ERa0W9cNRPAAsSn2WOTC/Ou075aD/LwWRZy7MmUo=
+	b=02VcTA+d1+ct3VAY+kZh20UKGg6OgZTouJizhCmomK2t7beTzHNATnrIF7I1tnG+x
+	 WvakFElywSrfKgd2dK033amh+g29Z7WUMHVbksqdeJnjtlaBT7jFeHu71yK5aTDKxL
+	 mSrctuTC0pSVjdnTrWj47FGr4cQjtYlQeV5lrCtw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kiryl Shutsemau <kas@kernel.org>,
-	Sashiko AI review <sashiko-bot@kernel.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Dev Jain <dev.jain@arm.com>,
-	David Hildenbrand <david@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Peter Xu <peterx@redhat.com>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Balbir Singh <balbirs@nvidia.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 010/602] fs/proc/task_mmu: fix make_uffd_wp_huge_pte() prot-update race
-Date: Thu, 30 Jul 2026 16:06:42 +0200
-Message-ID: <20260730141436.210729519@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Oleg Nesterov <oleg@redhat.com>
+Subject: [PATCH 6.12 011/602] seqlock: Cure some more scoped_seqlock() optimization fails
+Date: Thu, 30 Jul 2026 16:06:43 +0200
+Message-ID: <20260730141436.233789438@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -61,124 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kiryl Shutsemau <kas@kernel.org>
+From: Peter Zijlstra <peterz@infradead.org>
 
-commit 04718f7c9290f95385f0dd328758753dc1c36dec upstream.
+commit 90dfeef1cd38dff19f8b3a752d13bfd79f0f7694 upstream.
 
-Patch series "userfaultfd/pagemap: pre-existing fixes".
+Arnd reported an x86 randconfig using gcc-15 tripped over
+__scoped_seqlock_bug(). Turns out GCC chose not to inline the
+scoped_seqlock helper functions and as such was not able to optimize
+properly.
 
-These are pre-existing bug fixes that were carried at the front of the
-userfaultfd RWP working-set-tracking series up to v5 [1].  Per review
-feedback that fixes should not sit in the middle of a feature series, they
-are split out and sent on their own; the RWP series is reposted rebased on
-top of this.
+[ mingo: Clang fails the build too in some circumstances. ]
 
-All six were flagged by the Sashiko AI review of the RWP series and carry
-Reported-by: Sashiko AI review <sashiko-bot@kernel.org>.  They are
-independent of RWP, apply to mm-new directly, and carry Cc: stable@.
-
-  1: fs/proc/task_mmu: a missing huge_ptep_modify_prot_start() in
-     make_uffd_wp_huge_pte() can lose hardware Dirty/Accessed updates
-     when PAGEMAP_SCAN write-protects a hugetlb PTE.
-
-  2: fs/proc/task_mmu: pagemap_scan_hugetlb_entry() compares the range
-     against HPAGE_SIZE rather than the hstate page size, so it never
-     write-protects gigantic hugetlb pages.
-
-  3: fs/proc/task_mmu: PAGEMAP_SCAN with PM_SCAN_WP_MATCHING over an
-     unpopulated hugetlb range self-deadlocks -- pagemap_scan_pte_hole()
-     calls uffd_wp_range() while walk_hugetlb_range() holds the hugetlb
-     vma lock for read, and hugetlb_change_protection() then takes it
-     for write. Install the marker inline instead.
-
-  4: mm/huge_memory: change_non_present_huge_pmd() drops pmd_swp_uffd_wp
-     on a device-private PMD permission downgrade, silently losing the
-     uffd-wp marker.
-
-  5: userfaultfd: must_wait() applies pte_write() to a locklessly read
-     PTE without checking pte_present(), so swap/migration entries
-     decode random offset bits and a thread can stay parked on a stale
-     fault.
-
-  6: userfaultfd: __VMA_UFFD_FLAGS feeds VMA_UFFD_MINOR_BIT (41) to
-     mk_vma_flags() unconditionally, an out-of-bounds write into the
-     single-word vma_flags_t on 32-bit. Build the mask from config-gated
-     per-mode masks so an unavailable bit is never materialised.
-
-This patch (of 6):
-
-make_uffd_wp_huge_pte() arms the UFFD_WP bit on a present HugeTLB PTE by
-calling huge_ptep_modify_prot_commit() with a ptent snapshot that was
-fetched without the corresponding huge_ptep_modify_prot_start().  The
-start helper is what atomically clears the entry so the kernel-owned
-snapshot stays consistent until the commit; without it, the hardware may
-set Dirty or Accessed in the live PTE between the original read and the
-commit, and huge_ptep_modify_prot_commit() (whose generic implementation
-just calls set_huge_pte_at()) then writes the stale snapshot back over the
-live hardware bits, losing the update.
-
-The non-hugetlb sibling make_uffd_wp_pte() does this correctly via
-ptep_modify_prot_start() / ptep_modify_prot_commit().  Mirror that pattern
-for the present-PTE branch.  The migration case stays as-is -- migration
-entries are non-present, so there's no hardware update to race against.
-
-Link: https://lore.kernel.org/20260529172331.356655-1-kas@kernel.org
-Link: https://lore.kernel.org/20260529172331.356655-2-kas@kernel.org
-Link: https://lore.kernel.org/all/20260526130509.2748441-1-kirill@shutemov.name/ [1]
-Fixes: 52526ca7fdb9 ("fs/proc/task_mmu: implement IOCTL to get and optionally clear info about PTEs")
-Signed-off-by: Kiryl Shutsemau <kas@kernel.org>
-Reported-by: Sashiko AI review <sashiko-bot@kernel.org>
-Reviewed-by: Lorenzo Stoakes <ljs@kernel.org>
-Reviewed-by: Dev Jain <dev.jain@arm.com>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Balbir Singh <balbirs@nvidia.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[ kas: adapt to the pre-softleaf idiom; apply the
-  huge_ptep_modify_prot_start()/commit() fix to the present-PTE
-  (!huge_pte_none()) branch ]
-Signed-off-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Arnd Bergmann <arnd@arndb.de>
+Tested-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Oleg Nesterov <oleg@redhat.com>
+Link: https://patch.msgid.link/20251204104332.GG2528459@noisy.programming.kicks-ass.net
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/proc/task_mmu.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ include/linux/seqlock.h |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/proc/task_mmu.c b/fs/proc/task_mmu.c
-index 673b7d0fcfd8fa..bc127f1ad4bb28 100644
---- a/fs/proc/task_mmu.c
-+++ b/fs/proc/task_mmu.c
-@@ -2254,15 +2254,19 @@ static void make_uffd_wp_huge_pte(struct vm_area_struct *vma,
+--- a/include/linux/seqlock.h
++++ b/include/linux/seqlock.h
+@@ -1201,7 +1201,7 @@ struct ss_tmp {
+ 	spinlock_t	*lock_irqsave;
+ };
  
- 	psize = huge_page_size(hstate_vma(vma));
+-static inline void __scoped_seqlock_cleanup(struct ss_tmp *sst)
++static __always_inline void __scoped_seqlock_cleanup(struct ss_tmp *sst)
+ {
+ 	if (sst->lock)
+ 		spin_unlock(sst->lock);
+@@ -1226,7 +1226,7 @@ static inline void __scoped_seqlock_bug(
+ extern void __scoped_seqlock_bug(void);
+ #endif
  
--	if (is_hugetlb_entry_migration(ptent))
-+	if (is_hugetlb_entry_migration(ptent)) {
- 		set_huge_pte_at(vma->vm_mm, addr, ptep,
- 				pte_swp_mkuffd_wp(ptent), psize);
--	else if (!huge_pte_none(ptent))
--		huge_ptep_modify_prot_commit(vma, addr, ptep, ptent,
--					     huge_pte_mkuffd_wp(ptent));
--	else
-+	} else if (!huge_pte_none(ptent)) {
-+		pte_t old_pte, new_pte;
-+
-+		old_pte = huge_ptep_modify_prot_start(vma, addr, ptep);
-+		new_pte = huge_pte_mkuffd_wp(old_pte);
-+		huge_ptep_modify_prot_commit(vma, addr, ptep, old_pte, new_pte);
-+	} else {
- 		set_huge_pte_at(vma->vm_mm, addr, ptep,
- 				make_pte_marker(PTE_MARKER_UFFD_WP), psize);
-+	}
- }
- #endif /* CONFIG_HUGETLB_PAGE */
- 
--- 
-2.53.0
-
+-static inline void
++static __always_inline void
+ __scoped_seqlock_next(struct ss_tmp *sst, seqlock_t *lock, enum ss_state target)
+ {
+ 	switch (sst->state) {
 
 
