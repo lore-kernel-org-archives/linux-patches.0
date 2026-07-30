@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E36D38C426;
-	Thu, 30 Jul 2026 16:09:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AB3B38C426;
+	Thu, 30 Jul 2026 16:09:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427759; cv=none; b=A/rzVfbUpZ1MjEm9Y/a1x+z+kUF54jLkI/kIkSyU1rJDNuZhnY49SmAHBW4Ox/fglef26EKrPfk+/X5MaFJHssSpCUltROuvysGLmyDAtDcae0feqnTklDqyDtmL4yhu9K27BMNtU1yGuYbbr+c5ViPqXLA8PgFN2Jb0nYag+GA=
+	t=1785427762; cv=none; b=Cp2BluD9BdgcDID6xprnSIDXMJrR3YRocFaMPnlWGTvUMuYYE/Q/i55W5bbsZvFeFxhPQdH1ujczoTAJMjw4cwifEQTRySFTP19WBQcWRoniDUiXOAQLL/8ctzOMoJYgZNgOvcL5ihaUJEE1B8nCxx99y1jq+jUB+fNZpvIItzI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427759; c=relaxed/simple;
-	bh=VdGoJHHItNwUXc+j+ZqcGh12jo4H3/lQPLPk8dcjTao=;
+	s=arc-20240116; t=1785427762; c=relaxed/simple;
+	bh=gIu4FqPwg/pWoAR6Oa+/1y2nRwT2vJ/l9dxOqQP7Hh4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MGvmx2TDCjxFom6iL6+n7WLfK7uIZWkilCG6AeGaNqgFSa7Ou9RM05lD5+43KK8L/BX1HMx76ZSKZfpbdk51dKaOzMBoWJXjk8etlcuS/ZHpx+RJVRDgN2wmz6QjLRO08NPpXBV6LCgItTgaXAQMTgWYq5cJb8BZrd6V4zlFg5o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KMkMeteP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MA+QM8xLgONOI945lnxnmKDXnhZ+QB/c03rZGyFlSXk89O3SYzB3vDPbYmy1VS1BIWngzAyUg6ilgVgw4ezK0yR1X5XRpiJXd+J/HXBubTXxNPoHTG0b04BlSmuSczSnXUngoBLGS3grq7IwyuzI8sI6+sq9rBZZ3048doTkyo0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RxC7DSLZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KMkMeteP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAE001F000E9;
-	Thu, 30 Jul 2026 16:09:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RxC7DSLZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FEB51F000E9;
+	Thu, 30 Jul 2026 16:09:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427758;
-	bh=Lyex6P13JlLnpQul0YrhKZAbKupBso2WbcfR8CLMVRk=;
+	s=korg; t=1785427761;
+	bh=DvdKynFsvNhGIEBUbipaKuaa/QlNFmc9ILm1edbRnSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KMkMetePNEdQytjmwDLY96adQbWST6Z8kSmN+VgGqYaoVfigt55TGM3a2X9b8PoEb
-	 YH5GJbtm6N5aoEV8v3l/mHV33od40Aw2UPn4X2iwMl428yXN2xHTnEQbyw72wpV0yB
-	 /Q6mNp5nxUS7oSYewkJrrIMjN3QFOmD7UBoSmits=
+	b=RxC7DSLZ74IMZf58jsU7ioXlrAFsK3P2qdNBpm6ER3yasLHnZjBUy8iGKV25cYi4P
+	 aF+4uKfZhXxYf59JsjzMhnzW0WG+M5oZ61ihWu97JzDu5LJw59gKvIHuIBhBTQPhp0
+	 mcoDrGO+TPOH8SGZPdeeOKj8vBleeROZykbptF30=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Rao <raoxu@uniontech.com>,
-	Phillip Potter <phil@philpotter.co.uk>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.6 284/484] cdrom: fix stack out-of-bounds read in CDROMVOLCTRL
-Date: Thu, 30 Jul 2026 16:13:01 +0200
-Message-ID: <20260730141429.660986471@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Bill Wendling <morbo@google.com>,
+	Justin Stitt <justinstitt@google.com>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Peter Zijlstra <peterz@infradead.org>
+Subject: [PATCH 6.6 285/484] x86/boot/compressed: Disable jump tables
+Date: Thu, 30 Jul 2026 16:13:02 +0200
+Message-ID: <20260730141429.681568304@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -51,54 +56,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Rao <raoxu@uniontech.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit b27e195d4db8dea263050bdbeb11881b2999c9c6 upstream.
+commit 4a9ec5ec9555ad62dc5b81a37ac946025c2ea002 upstream.
 
-mmc_ioctl_cdrom_volume() first reads the audio control mode page into a
-32-byte stack buffer with cgc->buflen set to 24.  If the device reports a
-block descriptor, the function increases cgc->buflen to include that
-descriptor and reads the page again.
+After a recent upstream LLVM change to start generating jump and lookup
+tables in switch statements in more instances [1], linking the
+compressed x86 boot image when CONFIG_KERNEL_ZSTD is enabled fails with:
 
-For CDROMVOLCTRL, the function then builds a MODE SELECT parameter list
-by moving cgc->buffer forward by offset - 8 bytes.  This drops the block
-descriptor from the outgoing payload and leaves a new 8-byte mode
-parameter header in front of the audio control page.  However, cgc->buflen
-is left unchanged.
+  ld.lld: error: Unexpected run-time relocations (.rela) detected!
 
-With a standard 8-byte block descriptor, cgc->buffer points at buffer + 8
-but cgc->buflen remains 32.  cdrom_mode_select() therefore asks the low
-level packet path to write 32 bytes from that adjusted pointer, reading 8
-bytes past the end of the 32-byte stack buffer.
+Dumping the relocations in misc.o, which is the only file influenced by
+CONFIG_KERNEL_ZSTD in the decompressor, shows dynamic relocations to
+some string constants, which correspond to the string literals in the
+switch statement in handle_zstd_error():
 
-This is not hit by CDROMVOLREAD, and CDROMVOLCTRL only triggers it on
-drives that return a non-zero block descriptor length, which helps explain
-why it has gone unnoticed.  The overread is also sent to the device as
-extra MODE SELECT payload, so it may not produce an obvious local failure.
+  Relocation section '.rela.data.rel.ro' at offset 0x277b0 contains 31 entries:
+      Offset             Info             Type               Symbol's Value  Symbol's Name + Addend
+  0000000000000000  0000006600000001 R_X86_64_64            0000000000000000 .rodata.str1.1 + 73a
+  0000000000000008  0000006600000001 R_X86_64_64            0000000000000000 .rodata.str1.1 + 78e
+  0000000000000010  0000006600000001 R_X86_64_64            0000000000000000 .rodata.str1.1 + 78e
+  0000000000000018  0000006600000001 R_X86_64_64            0000000000000000 .rodata.str1.1 + 78e
+  ...
 
-Reduce cgc->buflen by the same amount as the buffer pointer adjustment so
-the MODE SELECT transfer covers only the intended parameter list.
+This optimization is problematic for the decompressor environment, as it
+is built as -fPIE without any explicit absolute references (as described
+at the top of misc.c) while not applying any dynamic relocations, hence
+the linker assertion. To opt out of this optimization, which is of
+little value in this special early boot code, and to mirror the other
+x86 startup code in arch/x86/boot/startup, disable jump tables in the
+decompressor.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Acked-by: Ard Biesheuvel <ardb@kernel.org>
+Cc: Bill Wendling <morbo@google.com>
+Cc: Justin Stitt <justinstitt@google.com>
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Xu Rao <raoxu@uniontech.com>
-Signed-off-by: Phillip Potter <phil@philpotter.co.uk>
-Link: https://patch.msgid.link/20260720194421.1497-2-phil@philpotter.co.uk
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Link: https://github.com/llvm/llvm-project/commit/fa02a6ed66b1700c996b49c96c6bc0eb014c9518 [1]
+Link: https://patch.msgid.link/20260722-x86-boot-compressed-disable-jt-clang-v2-1-7373d38482fb@kernel.org
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2165
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cdrom/cdrom.c |    1 +
+ arch/x86/boot/compressed/Makefile |    1 +
  1 file changed, 1 insertion(+)
 
---- a/drivers/cdrom/cdrom.c
-+++ b/drivers/cdrom/cdrom.c
-@@ -3191,6 +3191,7 @@ static noinline int mmc_ioctl_cdrom_volu
- 
- 	/* set volume */
- 	cgc->buffer = buffer + offset - 8;
-+	cgc->buflen -= offset - 8;
- 	memset(cgc->buffer, 0, 8);
- 	return cdrom_mode_select(cdi, cgc);
- }
+--- a/arch/x86/boot/compressed/Makefile
++++ b/arch/x86/boot/compressed/Makefile
+@@ -36,6 +36,7 @@ targets := vmlinux vmlinux.bin vmlinux.b
+ KBUILD_CFLAGS := -m$(BITS) -O2 $(CLANG_FLAGS)
+ KBUILD_CFLAGS += -std=gnu11
+ KBUILD_CFLAGS += -fno-strict-aliasing -fPIE
++KBUILD_CFLAGS += -fno-jump-tables
+ KBUILD_CFLAGS += -Wundef
+ KBUILD_CFLAGS += -DDISABLE_BRANCH_PROFILING
+ cflags-$(CONFIG_X86_32) := -march=i386
 
 
