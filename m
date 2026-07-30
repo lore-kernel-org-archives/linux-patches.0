@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30EC8390CB0;
-	Thu, 30 Jul 2026 15:01:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 097A132B116;
+	Thu, 30 Jul 2026 15:01:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423687; cv=none; b=r5kx2cX6sNSG3+W+x+HHY7hBQbYOPvLyZuIdEeVQBJ4iBWyAy7MutsAtBy+99agNZtXSknniTBkwCCp9jWxPjJkCJsHiJc1MwhSLMQt7JC3ihm8S982t4l2BgUjlEG9x9RhD8VsPeN14g43LOGf6PmPcnAacm3n7N33DZyliKac=
+	t=1785423690; cv=none; b=WCEY4q6kucz2LbdsUWC+bTkcySPMoXtcQ1778QtXi5QHezFp2OzFGtZkoFV4dgWEnGIJr8mV7ubWTbe00DO1jsCItsOCMgAvPJewgC7Z8UP8cAmVXc+cpHqALvhBxCDXoilbX7ww/BA/HIVknZkEcCM8bz04GRzGTwh1J83pOZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423687; c=relaxed/simple;
-	bh=GrMW0n3XAQ0b34aFJNMTdkhaPgx6s05YtBKnLugPdUM=;
+	s=arc-20240116; t=1785423690; c=relaxed/simple;
+	bh=a/XR/seov+aTLCDBqkGAIGrsbM8wyZ6G1B4E39bRzR0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qOyVUzrnZ+3EKmkFe9I4dnv1ifCgaMw4AcDWpvqHurEFWeBmvxm07+ui9LQL5CClc2UIQeBKQJFbvgZNKVZyLtnchTMSuZmq/96/w7csQL6eOm7IQgHFrhF+waWNSVLoYHBmB3mdowNyK8R1QolwztcSsAet5xeOYVsmPzQkIAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fx2DM+YQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DrZaqosJV5ELAn4bTh+m+Y9HBE18t04hQGprikI50aQPcCE1CqSxcb9+ScUTp0BnOIzrSJRz+kXca3v8LFB9gLXhYW6xoons5ew4e6P7PaxcBMj1NOYl5n4F9lPFkYs9Rw/kF1dsi98wVS7URbsWQPAwMZjz9DGomqsDPvPPLYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jRuc4G4f; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fx2DM+YQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C88B1F000E9;
-	Thu, 30 Jul 2026 15:01:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jRuc4G4f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 638911F000E9;
+	Thu, 30 Jul 2026 15:01:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423686;
-	bh=RmN+4zoduAql38usvGEzivvBpdjpa5/Ru77Dim3S3qI=;
+	s=korg; t=1785423688;
+	bh=GHX/j9QTZJmuWNGleP2tJ9z2s4Rp2zt0gLjS5B2qSmc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fx2DM+YQk9uwH/y544STI1B2wG58i3kboEJ3mqjuCeB+Gft0HKZc+Btap1lVjVys3
-	 i2H1O2hYlnjtUXBDT20P5XYurc34l/JtygsOLRuuDsb6TgPJErjV9VSE88U7RUvQZd
-	 0n5ItFzLgq+ila0K4EyAENGWoR+wlppquWb0f2E8=
+	b=jRuc4G4fiN5fuYZbz3PKFdHHlhQL2RchG9fa0u/Q/8f03vkaOb+9SrUlwFqQvyL9e
+	 9swfNwSwHN6Jtydo6dzJHhcrGaYXdhUcj83FExufz3SUEF1eDq+HeCzlzvNf200cT8
+	 f8nirpTEDk+g9LZ0cZ45U2caGEfKBHS+spYMmvbU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emre Cecanpunar <emreleno@gmail.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Max Zhen <max.zhen@amd.com>,
+	Lizhi Hou <lizhi.hou@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 132/675] drm/i915/selftests: Fix GT PM sort comparators
-Date: Thu, 30 Jul 2026 16:07:42 +0200
-Message-ID: <20260730141447.949222559@linuxfoundation.org>
+Subject: [PATCH 6.18 133/675] accel/amdxdna: Fix use-after-free of mm_struct in job scheduler
+Date: Thu, 30 Jul 2026 16:07:43 +0200
+Message-ID: <20260730141447.969028808@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -52,53 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emre Cecanpunar <emreleno@gmail.com>
+From: Lizhi Hou <lizhi.hou@amd.com>
 
-[ Upstream commit 612978b83f45bf7018815209db5395d759db6f26 ]
+[ Upstream commit faebb7ba1ac65fa5810b640df02ce04e509fdc11 ]
 
-Compare the sampled clock values instead of their addresses. Comparing
-addresses leaves the samples unsorted, preventing the code from discarding
-the minimum and maximum samples.
+amdxdna_cmd_submit() stores current->mm in job->mm without holding any
+reference. aie2_sched_job_run() later access job->mm from the DRM
+scheduler worker thread. With only a raw pointer and no structural
+reference, the mm_struct can be freed before the scheduler runs the job.
 
-Fixes: 1a5392479207 ("drm/i915/selftests: Measure CS_TIMESTAMP")
-Signed-off-by: Emre Cecanpunar <emreleno@gmail.com>
-Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
-Link: https://lore.kernel.org/r/20260714220430.238433-1-emreleno@gmail.com
-(cherry picked from commit 682ea2d28d18bb06f9fc663cb5ab7e80dc0e606a)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Fix this by calling mmgrab() to hold a structural mm_count reference for
+the lifetime of the job, paired with mmdrop() in every cleanup path.
+
+Fixes: aac243092b70 ("accel/amdxdna: Add command execution")
+Reviewed-by: Max Zhen <max.zhen@amd.com>
+Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
+Link: https://patch.msgid.link/20260716151305.1595780-1-lizhi.hou@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gt/selftest_gt_pm.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/accel/amdxdna/amdxdna_ctx.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/gpu/drm/i915/gt/selftest_gt_pm.c b/drivers/gpu/drm/i915/gt/selftest_gt_pm.c
-index 33351deeea4f0b..07eaf71955c447 100644
---- a/drivers/gpu/drm/i915/gt/selftest_gt_pm.c
-+++ b/drivers/gpu/drm/i915/gt/selftest_gt_pm.c
-@@ -16,9 +16,9 @@ static int cmp_u64(const void *A, const void *B)
- {
- 	const u64 *a = A, *b = B;
+diff --git a/drivers/accel/amdxdna/amdxdna_ctx.c b/drivers/accel/amdxdna/amdxdna_ctx.c
+index cfee89681ff3cf..347e046d2a0fba 100644
+--- a/drivers/accel/amdxdna/amdxdna_ctx.c
++++ b/drivers/accel/amdxdna/amdxdna_ctx.c
+@@ -393,6 +393,7 @@ void amdxdna_sched_job_cleanup(struct amdxdna_sched_job *job)
+ 	amdxdna_arg_bos_put(job);
+ 	amdxdna_gem_put_obj(job->cmd_bo);
+ 	dma_fence_put(job->fence);
++	mmdrop(job->mm);
+ }
  
--	if (a < b)
-+	if (*a < *b)
- 		return -1;
--	else if (a > b)
-+	else if (*a > *b)
- 		return 1;
- 	else
- 		return 0;
-@@ -28,9 +28,9 @@ static int cmp_u32(const void *A, const void *B)
- {
- 	const u32 *a = A, *b = B;
+ int amdxdna_cmd_submit(struct amdxdna_client *client,
+@@ -443,6 +444,7 @@ int amdxdna_cmd_submit(struct amdxdna_client *client,
  
--	if (a < b)
-+	if (*a < *b)
- 		return -1;
--	else if (a > b)
-+	else if (*a > *b)
- 		return 1;
- 	else
- 		return 0;
+ 	job->hwctx = hwctx;
+ 	job->mm = current->mm;
++	mmgrab(job->mm);
+ 
+ 	job->fence = amdxdna_fence_create(hwctx);
+ 	if (!job->fence) {
+@@ -475,6 +477,8 @@ int amdxdna_cmd_submit(struct amdxdna_client *client,
+ cmd_put:
+ 	amdxdna_gem_put_obj(job->cmd_bo);
+ free_job:
++	if (job->mm)
++		mmdrop(job->mm);
+ 	kfree(job);
+ 	return ret;
+ }
 -- 
 2.53.0
 
