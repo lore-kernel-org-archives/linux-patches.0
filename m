@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 191E42D0602;
-	Thu, 30 Jul 2026 16:18:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE57D409114;
+	Thu, 30 Jul 2026 16:18:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785428295; cv=none; b=mH7G49fEiNq9lSCSHDwJ3Oy9JzsL3N2YzPpdxSmg4Kag4ZSv7XOLajzMDWRACAkXV4Dv1dzbQRUtarTvfBtdf9XEQHkyC5CB7LwHtfLi5IT4uAfbkwTZmS/RCI4MLVqxwjwg9SZ6OcSqhxBNV8dko6k8Azm/NvBNULBVKvXbXBo=
+	t=1785428298; cv=none; b=RVeLplHMmt2fPCd/BqbwlA++cekn3eKGtIF4RIRouBNhL6hBudl+ugQ+olkyHUJSOzfX6jamL7GiKW5XP26LVr7mn0vbvsxzQQggpw+82YcpGDMAznOvjAF5QQtr2okUkapOBPKo/bb6xbkcBV5HsSqow6RET89HE/dr9bO3AA0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785428295; c=relaxed/simple;
-	bh=j35NL+xBvQ1iODAqeQMAapqXrnZbWcJObyoldvT9aNA=;
+	s=arc-20240116; t=1785428298; c=relaxed/simple;
+	bh=2/fOmVnBPP+QVtvOl1RLSk/xXrwgZrwy6HheYlpKy68=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JQAC15B3ePTlo/FIC00P+b+MSixs052qjB95VkDiNjfUfjTz5KRXaJiEr77oUIyPGNhYwpIj28mR/l+mREIDwrijoOJZkfNIXyTcL2O907PTKW5tXEtd00ESvYpgKpV80v6Pu1hrG7V8G+ZX/ZLHhiLjWbtopxnuTwPU5LwSVQQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t7xiCfxV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ue7pmANt3BKyfIw6Mi9kaXabvb0yVx2lrgozrYsVCaUrP6lJwnzXDbSJkX8POSTrTH5br9v9yeSZ/i7mYlwDTiX8R32U3sY2g9D+d8vQGt8Ff7Erx+yH8/jxAuPfWMPucm6WA6jCh1YRS04REnQeAG85ET5oPj4FWD4Ap0HE4LE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vkvw8HyF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t7xiCfxV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B88B1F000E9;
-	Thu, 30 Jul 2026 16:18:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vkvw8HyF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0615F1F000E9;
+	Thu, 30 Jul 2026 16:18:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785428293;
-	bh=sa73Z+ayG2KK2HcaCR61v7b2VGuk83Gz+qtHYU7mvMo=;
+	s=korg; t=1785428296;
+	bh=U87BnqbaoSUtwkHd8QivNv2YbWQ9dCzBN5zOjKwkPo4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t7xiCfxVQ2TCPS5E5CRAJ4hnHobjwQN9zzlg3Vd7ckvPuELtwe4RaDaiulzIGl9KN
-	 oArDFmqjLwvwRcHdCg87cZZflhoWjT5PYkv/TennMY6BbXJCAd5BdAAYGGmL6G0sLT
-	 PSKwbroSW5jd06T7v313AgvLJEYwfryZsIHPNmNI=
+	b=vkvw8HyFqcTgooByHUbC+OAo7nuQoLQHr9bvDTF1Fj9r7KBkkOmnqGrAbhcLGvrEQ
+	 RC1J2w+zdCQ517CWmEugFtrCg0HNZg+lTfDJCOhQ729hTmcLNAA/JK5dSuCZDWXWPG
+	 +V8WoBY3GnIV/7Oby6lODGj9/CNgNrkrCjQNMdr0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Sergio Paracuellos <sergio.paracuellos@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Haoxiang Li <haoxiang_li2024@163.com>,
+	Larysa Zaremba <larysa.zaremba@intel.com>,
+	Alex Elder <elder@riscstar.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 464/484] gpio: mt7621: avoid corruption of shared interrupt trigger state
-Date: Thu, 30 Jul 2026 16:16:01 +0200
-Message-ID: <20260730141433.566050558@linuxfoundation.org>
+Subject: [PATCH 6.6 473/484] net: ipa: fix SMEM state handle leaks in SMP2P init
+Date: Thu, 30 Jul 2026 16:16:10 +0200
+Message-ID: <20260730141433.767977593@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -52,41 +53,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergio Paracuellos <sergio.paracuellos@gmail.com>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-[ Upstream commit 1781172526d1092323af443fa03f00e6de560401 ]
+[ Upstream commit 96ca1e658ae459276292bd6d971ab5d8c7e0379a ]
 
-The bank-shared fields like 'rising' and 'falling' are modified using
-non-atomic read-modify-write operations. Since every gpio chip instance
-represents an entire bank of 32 pins, if 'mediatek_gpio_irq_type()' is
-called concurrently for different IRQs on the same bank a possible overwrite
-of each other's configuration is possible. Thus, protect this state with
-'gpio_generic_lock_irqsave' lock in the same way it is handled in irp_chip
-'mediatek_gpio_irq_mask()' and 'mediatek_gpio_irq_unmask()' callbacks.
+ipa_smp2p_init() acquires two Qualcomm SMEM state handles with
+qcom_smem_state_get(). However, neither the init error paths
+nor ipa_smp2p_exit() release them.
 
+Release both handles with qcom_smem_state_put() in the init
+error paths and in ipa_smp2p_exit().
+
+Fixes: 530f9216a953 ("soc: qcom: ipa: AP/modem communications")
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Fixes: 4ba9c3afda41 ("gpio: mt7621: Add a driver for MT7621")
-Signed-off-by: Sergio Paracuellos <sergio.paracuellos@gmail.com>
-Link: https://patch.msgid.link/20260626060112.2498324-2-sergio.paracuellos@gmail.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-[ Changed `guard(gpio_generic_lock_irqsave)(&rg->chip)` to `guard(spinlock_irqsave)(&rg->lock)` as the generic GPIO chip lock does not exist in this tree. ]
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Reviewed-by: Larysa Zaremba <larysa.zaremba@intel.com>
+Reviewed-by: Alex Elder <elder@riscstar.com>
+Link: https://patch.msgid.link/20260624065955.2822765-1-haoxiang_li2024@163.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ kzalloc_obj() context line kept as kzalloc(sizeof(*smp2p), GFP_KERNEL) since ipa_smp2p.c was not yet converted in this tree ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-mt7621.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ipa/ipa_smp2p.c |   30 ++++++++++++++++++++++--------
+ 1 file changed, 22 insertions(+), 8 deletions(-)
 
---- a/drivers/gpio/gpio-mt7621.c
-+++ b/drivers/gpio/gpio-mt7621.c
-@@ -156,6 +156,8 @@ mediatek_gpio_irq_type(struct irq_data *
- 	int pin = d->hwirq;
- 	u32 mask = BIT(pin);
+--- a/drivers/net/ipa/ipa_smp2p.c
++++ b/drivers/net/ipa/ipa_smp2p.c
+@@ -233,19 +233,27 @@ int ipa_smp2p_init(struct ipa *ipa, bool
+ 					  &valid_bit);
+ 	if (IS_ERR(valid_state))
+ 		return PTR_ERR(valid_state);
+-	if (valid_bit >= 32)		/* BITS_PER_U32 */
+-		return -EINVAL;
++	if (valid_bit >= 32) {		/* BITS_PER_U32 */
++		ret = -EINVAL;
++		goto err_valid_state_put;
++	}
  
-+	guard(spinlock_irqsave)(&rg->lock);
-+
- 	if (type == IRQ_TYPE_PROBE) {
- 		if ((rg->rising | rg->falling |
- 		     rg->hlevel | rg->llevel) & mask)
+ 	enabled_state = qcom_smem_state_get(dev, "ipa-clock-enabled",
+ 					    &enabled_bit);
+-	if (IS_ERR(enabled_state))
+-		return PTR_ERR(enabled_state);
+-	if (enabled_bit >= 32)		/* BITS_PER_U32 */
+-		return -EINVAL;
++	if (IS_ERR(enabled_state)) {
++		ret = PTR_ERR(enabled_state);
++		goto err_valid_state_put;
++	}
++	if (enabled_bit >= 32) {		/* BITS_PER_U32 */
++		ret = -EINVAL;
++		goto err_enabled_state_put;
++	}
+ 
+ 	smp2p = kzalloc(sizeof(*smp2p), GFP_KERNEL);
+-	if (!smp2p)
+-		return -ENOMEM;
++	if (!smp2p) {
++		ret = -ENOMEM;
++		goto err_enabled_state_put;
++	}
+ 
+ 	smp2p->ipa = ipa;
+ 
+@@ -290,6 +298,10 @@ err_null_smp2p:
+ 	ipa->smp2p = NULL;
+ 	mutex_destroy(&smp2p->mutex);
+ 	kfree(smp2p);
++err_enabled_state_put:
++	qcom_smem_state_put(enabled_state);
++err_valid_state_put:
++	qcom_smem_state_put(valid_state);
+ 
+ 	return ret;
+ }
+@@ -306,6 +318,8 @@ void ipa_smp2p_exit(struct ipa *ipa)
+ 	ipa_smp2p_power_release(ipa);
+ 	ipa->smp2p = NULL;
+ 	mutex_destroy(&smp2p->mutex);
++	qcom_smem_state_put(smp2p->enabled_state);
++	qcom_smem_state_put(smp2p->valid_state);
+ 	kfree(smp2p);
+ }
+ 
 
 
