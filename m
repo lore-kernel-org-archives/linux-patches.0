@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0323243F0B5;
-	Thu, 30 Jul 2026 15:04:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E13143F0B4;
+	Thu, 30 Jul 2026 15:04:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423883; cv=none; b=erRkuriv9eRjl1DWvYBwoM7pSpZUYoKqgMmBlewhWvPCWxv4eO0itilVnl0wxE9shYb8i+5V4DYgbS7CV902dy+4EJmiXEgt83mqoBRITB71VIvZm3fcc1ZN8TAWwbvy0I4S+PtKFY03W3Ncy+pAPf6dryNuGDXMaBvYXdJxGGA=
+	t=1785423886; cv=none; b=Xk77/HGHMzrByyAdegFsBOSmf9y8+x30XNB3iJKBIPH/wC2OtcCsbK7/tP4UEUm5JBbmmdTh8aF2cVmFSYdnI8qvuMGlHURiCpxQ6QMvYYT8CljYZNOSDjtbTC4FFCmf+GsfTXpMTktri6M64aGZodLkscSqO1byT62C4cZ/l5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423883; c=relaxed/simple;
-	bh=X8kTRMC6uKKqvTAv2tXzwMOCvVYk5bWKnvBOIngIWC0=;
+	s=arc-20240116; t=1785423886; c=relaxed/simple;
+	bh=H+UvGq4+GF9Xy09/l2KDXHARVtHLssde9gYObqV3NqI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LPiNdUMdOOzskDHagopFLiYAcs2kRnZz5clR/h8ueByuskZVMZmb/qdI7/L/ofwf8Zkvp5twEYRy6tlfqfr08lba9S48TSyVo01uTBK9uIwwGH/njSxDJvZiiGy3Ykx5WB97jWmDOgrwNnEe0GIkefyGHoZ35Qggxs5GwaSEhpM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=msRWIAa1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dkGGolZ/P09IO9kzuGQvvkDWWwEKsRorHrLAjvLqV2OxRHQFz7yIkZWvHURn+mFqBXkSckMGK6CbWX7ntpLz/37YLc7rmo3pAkf9li5Fm4c93qwbbvNSZAQXz0APQbJnmvQicB9AP8n/6UTHf4LnEcZpxwWAKIs/pOrNjDebtVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fv28HNBw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="msRWIAa1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 585E41F000E9;
-	Thu, 30 Jul 2026 15:04:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fv28HNBw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A6701F000E9;
+	Thu, 30 Jul 2026 15:04:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423881;
-	bh=uoNMmdRFJVEoEef8k5UfRs+wbWfzRSckR9Epxm+Utcw=;
+	s=korg; t=1785423884;
+	bh=fjil5Z+Yajwhx0XQ/+KbPl9eDR6dTeOcin8KhVlVNzA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=msRWIAa1TNRCl00/Q/IsORe/Y828depHUwnYIITWxBVGGh6jwyJqVRNJRbz2Lw+F2
-	 AH5TBiEKtJ3vtBUYEbA6vwDjhEFQlHUhS0oUYcTPRUZVQIx4EbL55WwpeknL4mL2p0
-	 FTqka8EnB7qvmp7GW9PgYg0bvlfpaFrZcnSIEIwc=
+	b=Fv28HNBwzDofyz3r4F5Tiddzq3FX9bbBgZ0ASp4lyUwzrKyNgXf32iqGu3hdlVudm
+	 ZJuEr4N2rMerDju/nACoQMERdf79Dd8JwXWHREPprIMY3WgnVw9Gp+rbH35Py97G2a
+	 xGzHe22lhMV44gM8E7qXaDoYlU4JyecSPruDYTVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Guenter Roeck <linux@roeck-us.net>,
+	syzbot+e62a973f8322b3bbe3ac@syzkaller.appspotmail.com,
+	Diego Fernando Mancera Gomez <diegomancera.dev@gmail.com>,
+	Stanislaw Gruszka <stf_xl@wp.pl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 172/675] hwmon: (nzxt-kraken3) Stop device IO before calling hid_hw_stop
-Date: Thu, 30 Jul 2026 16:08:22 +0200
-Message-ID: <20260730141448.793726333@linuxfoundation.org>
+Subject: [PATCH 6.18 199/675] usb: atm: ueagle-atm: reject descriptors that confuse probe and disconnect
+Date: Thu, 30 Jul 2026 16:08:49 +0200
+Message-ID: <20260730141449.373052147@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -51,57 +52,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Diego Fernando Mancera Gomez <diegomancera.dev@gmail.com>
 
-[ Upstream commit f151d0143ac4e086f92f52328ebdbdc50933d8ef ]
+[ Upstream commit 71132cedd1ecbc4032d76e9928c18a10f7e39b80 ]
 
-Calling hid_hw_stop() does not stop the device IO.
-This results in a race condition between hid_input_report() and the point
-immediately following the execution of hid_device_io_start() within
-the driver probe function. If the probe operation fails after "io start"
-has been initiated, this race condition will result in a UAF vulnerability.
+uea_probe() distinguishes a pre-firmware device from a post-firmware one
+using the USB id (UEA_IS_PREFIRM()), and stores a different object as the
+interface data in each case: a 'struct completion' for a pre-firmware
+device (to be waited on in .disconnect()), or a 'struct usbatm_data' for a
+post-firmware one.
 
-Fix the problem by calling hid_device_io_stop() before calling
-hid_hw_stop().
+uea_disconnect() instead tells the two apart by the number of interfaces
+of the active configuration (a pre-firmware device exposes a single
+interface, ADI930 has 2 and eagle has 3), and casts the interface data
+accordingly.
 
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Fixes: f3b4b146eb107 ("hwmon: Add driver for NZXT Kraken X and Z series AIO CPU coolers")
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Because the two handlers use different criteria, a crafted device that
+advertises a pre-firmware id together with a multi-interface descriptor
+(or a post-firmware id with a single interface) makes them disagree: the
+small 'struct completion' stored by uea_probe() is then passed to
+usbatm_usb_disconnect(), which casts it to 'struct usbatm_data' and takes
+instance->serialize, reading past the end of the allocation:
+
+  BUG: KASAN: slab-out-of-bounds in __mutex_lock+0x152a/0x1b80
+  Read of size 8 at addr ffff8880470e2c60 by task kworker/1:2/982
+  ...
+   __mutex_lock+0x152a/0x1b80
+   usbatm_usb_disconnect+0x70/0x820
+   uea_disconnect+0x133/0x2c0
+   usb_unbind_interface+0x1dd/0x9e0
+  ...
+  which belongs to the cache kmalloc-96 of size 96
+  The buggy address is located 0 bytes to the right of
+   allocated 96-byte region [ffff8880470e2c00, ffff8880470e2c60)
+
+Reject such inconsistent descriptors in uea_probe() so that both handlers
+always make the same pre/post-firmware decision.
+
+Reported-by: syzbot+e62a973f8322b3bbe3ac@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=e62a973f8322b3bbe3ac
+Fixes: e2674dfbed8a ("usb: atm: ueagle-atm: wait for pre-firmware load in .disconnect()")
+Signed-off-by: Diego Fernando Mancera Gomez <diegomancera.dev@gmail.com>
+Acked-by: Stanislaw Gruszka <stf_xl@wp.pl>
+Link: https://patch.msgid.link/20260717080704.1264-1-diegomancera.dev@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/nzxt-kraken3.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/usb/atm/ueagle-atm.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/drivers/hwmon/nzxt-kraken3.c b/drivers/hwmon/nzxt-kraken3.c
-index d00409bcab93ad..05525406c5fbb5 100644
---- a/drivers/hwmon/nzxt-kraken3.c
-+++ b/drivers/hwmon/nzxt-kraken3.c
-@@ -948,7 +948,7 @@ static int kraken3_probe(struct hid_device *hdev, const struct hid_device_id *id
- 	ret = kraken3_init_device(hdev);
- 	if (ret < 0) {
- 		hid_err(hdev, "device init failed with %d\n", ret);
--		goto fail_and_close;
-+		goto fail_and_stop_io;
- 	}
+diff --git a/drivers/usb/atm/ueagle-atm.c b/drivers/usb/atm/ueagle-atm.c
+index a943a5257a59fb..f1f1fc16a4711f 100644
+--- a/drivers/usb/atm/ueagle-atm.c
++++ b/drivers/usb/atm/ueagle-atm.c
+@@ -2550,6 +2550,7 @@ static struct usbatm_driver uea_usbatm_driver = {
+ static int uea_probe(struct usb_interface *intf, const struct usb_device_id *id)
+ {
+ 	struct usb_device *usb = interface_to_usbdev(intf);
++	bool single_iface = usb->config->desc.bNumInterfaces == 1;
+ 	int ret;
  
- 	ret = kraken3_get_fw_ver(hdev);
-@@ -960,13 +960,15 @@ static int kraken3_probe(struct hid_device *hdev, const struct hid_device_id *id
- 	if (IS_ERR(priv->hwmon_dev)) {
- 		ret = PTR_ERR(priv->hwmon_dev);
- 		hid_err(hdev, "hwmon registration failed with %d\n", ret);
--		goto fail_and_close;
-+		goto fail_and_stop_io;
- 	}
+ 	uea_dbg(usb, "ADSL device found with vid (%#X) pid (%#X) Rev (%#X): %s\n",
+@@ -2558,6 +2559,22 @@ static int uea_probe(struct usb_interface *intf, const struct usb_device_id *id)
+ 		le16_to_cpu(usb->descriptor.bcdDevice),
+ 		chip_name[UEA_CHIP_VERSION(id)]);
  
- 	kraken3_debugfs_init(priv, device_name);
++	/*
++	 * uea_probe() decides between the pre-firmware and post-firmware case
++	 * from the USB id and stores a different object as interface data in
++	 * each case: a struct completion for a pre-firmware device, a struct
++	 * usbatm_data for a post-firmware one. uea_disconnect() instead tells
++	 * the two apart by the number of interfaces (a pre-firmware device
++	 * exposes a single interface, ADI930 has 2 and eagle has 3). A crafted
++	 * device advertising a pre-firmware id together with a multi-interface
++	 * descriptor (or the other way around) makes the two disagree, so that
++	 * usbatm_usb_disconnect() treats the small completion object as a
++	 * struct usbatm_data and reads out of bounds. Reject such inconsistent
++	 * descriptors so both paths make the same decision.
++	 */
++	if (UEA_IS_PREFIRM(id) != single_iface)
++		return -ENODEV;
++
+ 	usb_reset_device(usb);
  
- 	return 0;
- 
-+fail_and_stop_io:
-+	hid_device_io_stop(hdev);
- fail_and_close:
- 	hid_hw_close(hdev);
- fail_and_stop:
+ 	if (UEA_IS_PREFIRM(id)) {
 -- 
 2.53.0
 
