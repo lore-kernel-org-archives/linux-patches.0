@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CF143769F5;
-	Thu, 30 Jul 2026 15:08:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA3FE2D0602;
+	Thu, 30 Jul 2026 15:08:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424120; cv=none; b=YgA4/2GUpGkxGCTHQSwSGFQ5msXnT73kvp93pDu0IgmLzUS/mb3MQ5IfxpF3MlcRJ/G6vzrtDys93wWqadocSbnCZumQptDI5dMCjSLf9iyGFusf68/u3quCaQc0cdeTf+1r+2to7CORcnHJ+tyLbs8NvHMnmcyCkLszpEM83js=
+	t=1785424123; cv=none; b=YWVPZRDNw2nXGdbDNmySMQY1y4xSmtmI2iSN+/E7K6KOaimILspMZldEyAwcWlUlj1RUH/r4OMep3kBzyH8frTyCexiNQ0rlSEiP9k8Snn2Yw/RtCt/dC8N7llNnEC2usQ0QU+YmqNlUxP2aail4E5Tx9urzNq3E3S7QZI5IJNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424120; c=relaxed/simple;
-	bh=9hgkcHjSYdZaglUBTFbjuZi5k56VQCv3E13K4CCU7vQ=;
+	s=arc-20240116; t=1785424123; c=relaxed/simple;
+	bh=e8y/1LBkx49yjVtFIHBJB1hljfgoeRTRci1gCWNXUbY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TtFCV3rWTtRLIwwueBcv7RBEQPGVe0924UU/GMU+RRefXrtE/eiI/DB4eeaCUqLxYVty3jFFZuM7+eb7O2x/Vna2z9RBmZMfUiv2yNCL9UOzjnttJRp6QVNqGTDWgDF70PB2K/jwIcIZqXjj4oz5wd87CzozqFlBe/ur+eoJ2eA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LLxcOUt6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=f7ZIttQlp40MiRYgXXRkyeGMo8C9LXfFMKo1rTTdAkZB8xuQl1Oh5i9uMbbiyR5WrEyL/yAxQ44G0+Bx9pelTKGFxHDR8H0AXsuFdQrgXoAdtfitDV/ZNNWNPVmCj3w5m6c3hjWQE67HkDnFd7h/KjFRouKoiGUYn1fMZG31FEQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iApwKeXJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LLxcOUt6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F5311F000E9;
-	Thu, 30 Jul 2026 15:08:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iApwKeXJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5169D1F000E9;
+	Thu, 30 Jul 2026 15:08:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424119;
-	bh=01BTXjoAe9mc6Gq52rcpVev3Gx4FU/JDoP9ay3qCb7o=;
+	s=korg; t=1785424121;
+	bh=/QZl0asCDLLCVw3uAYLeD5AohBHWhwf4o4dyeg/vwr0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LLxcOUt6QJckOWwuc/vLAeXyYlc7l6aehRqtDAh0Gef1Vo+d40gh1VhsQeXdsgfTC
-	 6pVhu0yQ526jSZAOCnAjTrC5Z0UFZ4zlW0cFyQn978r2eQyKOlch4Jo+R4bg2Ogrn8
-	 lpmBRsYoXWyHqjnrMl3lkni9gIEYR4it40I4SevA=
+	b=iApwKeXJR/5rlEw5XnxXrBW70dVSU58QDeRO+flQ0+OpVbkzI5zjXSrbx4s4dcm+/
+	 Lba6eMzIBVzB3C37OgoRZ0gAnpXG35DHqoDw9N5ew1ntcsGvZyA6JftgFp85j2okwk
+	 jO2JABTQBfm1iZHJY0ttMgqrw8Kw5JeGFgFFlcgs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	"Cen Zhang (Microsoft)" <blbllhy@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Shelley Yang <shelley.yang@infineon.com>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 283/675] tipc: fix u16 MTU truncation in media and bearer MTU validation
-Date: Thu, 30 Jul 2026 16:10:13 +0200
-Message-ID: <20260730141451.139666313@linuxfoundation.org>
+Subject: [PATCH 6.18 266/675] wifi: brcmfmac: fix 802.1X-SHA256 call trace warning
+Date: Thu, 30 Jul 2026 16:09:56 +0200
+Message-ID: <20260730141450.786790628@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -48,76 +46,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cen Zhang (Microsoft) <blbllhy@gmail.com>
+From: Shelley Yang <shelley.yang@infineon.com>
 
-[ Upstream commit 9f29cd8a8e7901a2617c8064ce9f50fc67b97cb8 ]
+[ Upstream commit 7cb34f6c4fe8a68af621d870abe63bfca2275dd6 ]
 
-Both TIPC_NL_MEDIA_SET and TIPC_NL_BEARER_SET accept user-supplied
-MTU values but only enforce a minimum bound, not a maximum. When a user
-sets the MTU to a value exceeding U16_MAX (65535), it passes validation
-but is silently truncated when assigned to u16 fields l->mtu and
-l->advertised_mtu in tipc_link_create(). Values like 65536 (0x10000)
-truncate to 0, causing a division by zero in tipc_link_set_queue_limits()
-which computes TIPC_MAX_PUBL / (l->mtu / ITEM_SIZE). Other overflowing
-values (e.g. 65537-131071) produce small incorrect MTU values, resulting
-in link malfunction behaviors.
+Based on wpa_auth as 1x_256 mode, need to set up
+"use_fwsup" with BRCMF_PROFILE_FWSUP_1X.
+Or it will happen trace warning when call brcmf_cfg80211_set_pmk().
 
-Crash stack (triggered as unprivileged user via user namespace):
+[ 4481.831101] ------------[ cut here ]------------
+[ 4481.831102] WARNING: CPU: 1 PID: 2997 at
+drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c:7242 brcmf_cfg80211_set_pmk+0x77/0xd0 [brcmfmac]
+[...]
+[ 4481.831202] Call Trace:
+[ 4481.831204]  <TASK>
+[ 4481.831205]  nl80211_set_pmk+0x183/0x250 [cfg80211]
+[ 4481.831233]  genl_family_rcv_msg_doit+0xea/0x150
+[ 4481.831237]  genl_rcv_msg+0x104/0x240
+[ 4481.831239]  ? cfg80211_probe_status+0x2c0/0x2c0 [cfg80211]
+[ 4481.831257]  ? genl_family_rcv_msg_doit+0x150/0x150
+[ 4481.831259]  netlink_rcv_skb+0x4e/0x100
+[ 4481.831261]  genl_rcv+0x24/0x40
+[ 4481.831262]  netlink_unicast+0x236/0x380
+[ 4481.831264]  netlink_sendmsg+0x250/0x4b0
+[ 4481.831266]  sock_sendmsg+0x5c/0x70
+[ 4481.831269]  ____sys_sendmsg+0x236/0x2b0
+[ 4481.831271]  ? copy_msghdr_from_user+0x6d/0xa0
+[ 4481.831272]  ___sys_sendmsg+0x86/0xd0
+[ 4481.831274]  ? avc_has_perm+0x8c/0x1a0
+[ 4481.831276]  ? preempt_count_add+0x6a/0xa0
+[ 4481.831279]  ? sock_has_perm+0x82/0xa0
+[ 4481.831280]  __sys_sendmsg+0x57/0xa0
+[ 4481.831282]  do_syscall_64+0x38/0x90
+[ 4481.831284]  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+[ 4481.831286] RIP: 0033:0x7fd270d369b4
 
-  tipc_link_set_queue_limits  net/tipc/link.c:2531
-  tipc_link_create            net/tipc/link.c:520
-  tipc_node_check_dest        net/tipc/node.c:1279
-  tipc_disc_rcv               net/tipc/discover.c:252
-  tipc_rcv                    net/tipc/node.c:2129
-  tipc_udp_recv               net/tipc/udp_media.c:392
-
-Two independent paths lack the upper bound check:
-1. tipc_udp_mtu_bad() -- called from __tipc_nl_media_set() (MEDIA_SET)
-2. inline check in __tipc_nl_bearer_set() at bearer.c:1160 (BEARER_SET)
-
-Fix both by rejecting MTU values above U16_MAX.
-
-Fixes: 901271e0403a ("tipc: implement configuration of UDP media MTU")
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Closes: https://lore.kernel.org/all/CAB8m9WgETt0AjmFwE=F-CKjGXsK6_WDv0=kbYRcC8-noo+amnA@mail.gmail.com
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Signed-off-by: Cen Zhang (Microsoft) <blbllhy@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260714041541.307702-1-blbllhy@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 2526ff21aa77 ("brcmfmac: support 4-way handshake offloading for 802.1X")
+Signed-off-by: Shelley Yang <shelley.yang@infineon.com>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Link: https://patch.msgid.link/20260525083859.581246-1-shelley.yang@infineon.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/netlink.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/tipc/netlink.c b/net/tipc/netlink.c
-index 8336a9664703fe..1307dd1a961341 100644
---- a/net/tipc/netlink.c
-+++ b/net/tipc/netlink.c
-@@ -113,12 +113,16 @@ const struct nla_policy tipc_nl_node_policy[TIPC_NLA_NODE_MAX + 1] = {
- };
- 
- /* Properties valid for media, bearer and link */
-+static const struct netlink_range_validation tipc_nl_mtu_range = {
-+	.max = U16_MAX,
-+};
-+
- const struct nla_policy tipc_nl_prop_policy[TIPC_NLA_PROP_MAX + 1] = {
- 	[TIPC_NLA_PROP_UNSPEC]		= { .type = NLA_UNSPEC },
- 	[TIPC_NLA_PROP_PRIO]		= { .type = NLA_U32 },
- 	[TIPC_NLA_PROP_TOL]		= { .type = NLA_U32 },
- 	[TIPC_NLA_PROP_WIN]		= { .type = NLA_U32 },
--	[TIPC_NLA_PROP_MTU]		= { .type = NLA_U32 },
-+	[TIPC_NLA_PROP_MTU]		= NLA_POLICY_FULL_RANGE(NLA_U32, &tipc_nl_mtu_range),
- 	[TIPC_NLA_PROP_BROADCAST]	= { .type = NLA_U32 },
- 	[TIPC_NLA_PROP_BROADCAST_RATIO]	= { .type = NLA_U32 }
- };
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+index bb96b87b2a6e56..1fc9ecd86d5d9d 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+@@ -2146,7 +2146,7 @@ brcmf_set_key_mgmt(struct net_device *ndev, struct cfg80211_connect_params *sme)
+ 				 sme->crypto.akm_suites[0]);
+ 			return -EINVAL;
+ 		}
+-	} else if (val & (WPA2_AUTH_PSK | WPA2_AUTH_UNSPECIFIED)) {
++	} else if (val & (WPA2_AUTH_PSK | WPA2_AUTH_UNSPECIFIED | WPA2_AUTH_1X_SHA256)) {
+ 		switch (sme->crypto.akm_suites[0]) {
+ 		case WLAN_AKM_SUITE_8021X:
+ 			val = WPA2_AUTH_UNSPECIFIED;
 -- 
 2.53.0
 
