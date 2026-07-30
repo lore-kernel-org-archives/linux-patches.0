@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DC77217723;
-	Thu, 30 Jul 2026 15:16:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C874030567C;
+	Thu, 30 Jul 2026 15:16:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424599; cv=none; b=lF4yHdSQFqDe+bi/hQnR9iydbQviCiOViMTYA0IBgD2ONktGVH2cmJJhpQKWM+jfIIgpS3P+Q0R3/lxlX5T8h3Dg+OHFc7vnxlNPenR7agaFq9GOKOL7TSLHv0UzQikF5beHMIFiefTYZRhV4kNY5rFsBZl66zC2r5MJ24IBxfM=
+	t=1785424602; cv=none; b=iiQzGoghiLxDIn8kXjxJVg+IhIspGs24rlLWf9sIWlfNcXMG24fzM8Z008PPNNRjQhe/HR2fvHVfpLDTS7h+ZlyxWttBEElTS77Jiezn7Ek4RF3puyrauHu21A5j5zzDfzlMNus6dYGwOyjZtsoj037kky8Byd19l9xo7FG6Zsk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424599; c=relaxed/simple;
-	bh=5bVGGffKAh0+LUHUupyjPuwcIDTX+6ZqiiQqh6tYjCg=;
+	s=arc-20240116; t=1785424602; c=relaxed/simple;
+	bh=xkObtr0NueGdDjAKdHSmmA5KpXFAw3KPgJyTE/fLVek=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mCt++9wSLOxl91Fp/K4JXr2PiOOLqCBJPq8NbPFgAd+lPbNYW1EUOmVzsIX8RfdKWZ8ILJrgbFXTw1bMahm9aSsuBwajoAq/SOR7Oz89H3Ip/q+Ihq4eZzw7uP7bWTSO58b25t3MgLbmC53npD3UCHQiibG/84FZFYYxBxF40XQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MB4MCJ1J; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KOgddqydL+/swDttSJ/IO7kiJbEjBAnBnmsgd9/lHbQvVshPHTvBkQ4kT/bbG02Pzy+npedUUmrzKNtWJINF4ovZchkVfSV9VDTyACAo2IfGiMqbWJWHJ//IvlnUgel4N+oQWJ8jdDz1mn9FReJOiQ4soDXRjCxF3cy1CkA3QaQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Naw8wtG/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MB4MCJ1J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6819A1F000E9;
-	Thu, 30 Jul 2026 15:16:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Naw8wtG/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30B4C1F000E9;
+	Thu, 30 Jul 2026 15:16:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424597;
-	bh=J6fkY3NhnPP+GrO7PZkUr3w3QZZqL/53tSu90eC2sUA=;
+	s=korg; t=1785424600;
+	bh=jbDNdB0LvxqeGJrerMOekLDtrFFmsBiO8jfgazICxUU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MB4MCJ1J8gthB0xWfEdDu5nAVXv8HN+jDmYUaKhaJfd02Lj9NjUSzSJy9mwxzznXB
-	 VeiwfmhtKoOAhTAxg3u8Y5/vHgk5AVdritbgwkeB686tTP5QDRkGbpRWUsLLNZiOlo
-	 qhPeMeSmDmwKCAwBKZHnvJcL+zYG8jq/aDpASyrc=
+	b=Naw8wtG/xPDA49s3+xJXv1xWRMSl5xLid2LgYQJJKAXZ4ph9GApvLJnNxwmt+Xq7m
+	 CZqHXehKIi2xnVTuYDBuJ3+LxZC2pRJoqn5sCbMFJx/1dDn88yuabwHZyvpdCjTf4R
+	 efsROTbxUQBioRj3f9bjYWE+5ljlFJeccB0Ud2GI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Norbert Szetei <norbert@doyensec.com>,
+	Alexander Kaplan <alexander.kaplan@sms-medipool.de>,
+	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.18 448/675] ALSA: seq: close a re-opened queue timer in the destructor
-Date: Thu, 30 Jul 2026 16:12:58 +0200
-Message-ID: <20260730141454.661208466@linuxfoundation.org>
+Subject: [PATCH 6.18 449/675] ALSA: hda: codecs: hdmi: disable keep-alive before audio format change
+Date: Thu, 30 Jul 2026 16:12:59 +0200
+Message-ID: <20260730141454.681584360@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -50,74 +51,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Norbert Szetei <norbert@doyensec.com>
+From: Kai Vehmanen <kai.vehmanen@linux.intel.com>
 
-commit 2c4dc0ed50b05cd847a4b34b8cebf0775f19aeb9 upstream.
+commit a3d6d3cedfe87bbd5a677d52b22ac20d28e59cf8 upstream.
 
-queue_delete() closes the queue timer, then frees it. snd_seq_timer_close()
-clears q->timer->timeri. snd_use_lock_sync() then drains borrowers, and
-snd_seq_timer_delete() frees q->timer.
+When a keep-alive (KAE) silent stream is active on an Intel HDMI/DP
+codec, opening a real PCM stream reprograms the converter format and the
+audio infoframe in snd_hda_hdmi_generic_pcm_prepare(). Part of that
+reprogramming - the converter channel count and the channel mapping in
+snd_hda_hdmi_setup_audio_infoframe() - is not safe to do while a
+keep-alive stream is active. This is most visible when switching to a
+multichannel PCM configuration, where the active channel count actually
+changes. In that case the newly opened PCM stream plays no sound.
 
-A borrower can re-open the timer inside that window. A SET_QUEUE_CLIENT
-that took a queueptr() use_lock reference before the queue was unlinked
-runs snd_seq_timer_open() after the close. Open refuses re-open only while
-timeri is set, and the close just cleared it, so it re-opens timeri.
+Add an optional hdmi_ops .prepare hook, called at the start of the
+PCM prepare sequence (before the format and infoframe are touched), and
+implement it for HSW+ to release keep-alive. Keep-alive is then
+re-enabled as before once the new stream has been set up, in the
+setup_stream op.
 
-snd_seq_timer_delete() does not close that instance. Its snd_seq_timer_stop()
-is a no-op, because running was cleared first. So it frees q->timer with the
-instance still live. The queue is freed next.
-
-The instance stays on the global timer with callback_data pointing at the
-freed queue. A non-owner START on the unlocked queue arms it. The next tick
-derefs the freed queue in snd_seq_timer_interrupt().
-
-Reachable by an unprivileged user with access to /dev/snd/seq. No CAP and
-no queue ownership required.
-
-Close any lingering instance in the destructor. There, ->timeri can no
-longer change: the queue is unlinked and all use_lock borrowers have
-drained, so no snd_seq_queue_use() can re-open it. Close it before clearing
-q->timer. snd_timer_close() waits for any in-flight snd_seq_timer_interrupt()
-to finish, and that callback still reads q->timer (via snd_seq_check_queue()),
-so q->timer must stay valid until it drains.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Norbert Szetei <norbert@doyensec.com>
-Link: https://patch.msgid.link/422FDB81-2A68-47C7-A22D-2D3301E2E86D@doyensec.com
+Fixes: 15175a4f2bbb ("ALSA: hda/hdmi: add keep-alive support for ADL-P and DG2")
+Reported-by: Alexander Kaplan <alexander.kaplan@sms-medipool.de>
+Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/work_items/8412
+Tested-by: Alexander Kaplan <alexander.kaplan@sms-medipool.de>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+Link: https://patch.msgid.link/20260715180610.1371243-1-kai.vehmanen@linux.intel.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/core/seq/seq_timer.c |   13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ sound/hda/codecs/hdmi/hdmi.c       |    3 +++
+ sound/hda/codecs/hdmi/hdmi_local.h |    9 +++++++++
+ sound/hda/codecs/hdmi/intelhdmi.c  |   36 ++++++++++++++++++++++++++++++------
+ 3 files changed, 42 insertions(+), 6 deletions(-)
 
---- a/sound/core/seq/seq_timer.c
-+++ b/sound/core/seq/seq_timer.c
-@@ -61,12 +61,23 @@ struct snd_seq_timer *snd_seq_timer_new(
- void snd_seq_timer_delete(struct snd_seq_timer **tmr)
- {
- 	struct snd_seq_timer *t = *tmr;
--	*tmr = NULL;
-+	struct snd_timer_instance *ti;
+--- a/sound/hda/codecs/hdmi/hdmi.c
++++ b/sound/hda/codecs/hdmi/hdmi.c
+@@ -1688,6 +1688,9 @@ int snd_hda_hdmi_generic_pcm_prepare(str
+ 		per_pin->channels = substream->runtime->channels;
+ 		per_pin->setup = true;
  
- 	if (t == NULL) {
- 		pr_debug("ALSA: seq: snd_seq_timer_delete() called with NULL timer\n");
- 		return;
- 	}
++		if (spec->ops.prepare)
++			spec->ops.prepare(codec, per_pin);
 +
-+	scoped_guard(spinlock_irq, &t->lock) {
-+		ti = t->timeri;
-+		t->timeri = NULL;
-+	}
-+	if (ti) {
-+		snd_timer_close(ti);
-+		snd_timer_instance_free(ti);
-+	}
-+
-+	*tmr = NULL;
- 	t->running = 0;
+ 		if (get_wcaps(codec, cvt_nid) & AC_WCAP_STRIPE) {
+ 			stripe = snd_hdac_get_stream_stripe_ctl(&codec->bus->core,
+ 								substream);
+--- a/sound/hda/codecs/hdmi/hdmi_local.h
++++ b/sound/hda/codecs/hdmi/hdmi_local.h
+@@ -74,6 +74,15 @@ struct hdmi_ops {
+ 			    hda_nid_t pin_nid, int dev_id, u32 stream_tag,
+ 			    int format);
  
- 	/* reset time */
++	/*
++	 * Optional hook invoked at the beginning of the PCM prepare
++	 * sequence, before the audio infoframe and stream format are
++	 * (re)programmed. Used to disable keep-alive / silent stream so
++	 * that the format change is not done while keep-alive is active.
++	 */
++	void (*prepare)(struct hda_codec *codec,
++			struct hdmi_spec_per_pin *per_pin);
++
+ 	void (*pin_cvt_fixup)(struct hda_codec *codec,
+ 			      struct hdmi_spec_per_pin *per_pin,
+ 			      hda_nid_t cvt_nid);
+--- a/sound/hda/codecs/hdmi/intelhdmi.c
++++ b/sound/hda/codecs/hdmi/intelhdmi.c
+@@ -418,6 +418,28 @@ static void intel_not_share_assigned_cvt
+ 		intel_not_share_assigned_cvt(codec, pin_nid, dev_id, mux_idx);
+ }
+ 
++/*
++ * prepare ops override for HSW+
++ *
++ * Disable keep-alive before the converter format and audio infoframe are
++ * reprogrammed by the PCM prepare sequence. Changing the audio format (e.g.
++ * the channel count when switching to multichannel PCM) while a keep-alive
++ * stream is active is not safe, so release keep-alive here, early in the
++ * sequence. It is re-enabled once the new stream has been set up, in
++ * i915_hsw_setup_stream().
++ */
++static void i915_hsw_prepare(struct hda_codec *codec,
++			     struct hdmi_spec_per_pin *per_pin)
++{
++	struct hdmi_spec *spec = codec->spec;
++
++	if (spec->silent_stream_type == SILENT_STREAM_KAE && per_pin->silent_stream) {
++		silent_stream_set_kae(codec, per_pin, false);
++		/* wait for pending transfers in codec to clear */
++		usleep_range(100, 200);
++	}
++}
++
+ /* setup_stream ops override for HSW+ */
+ static int i915_hsw_setup_stream(struct hda_codec *codec, hda_nid_t cvt_nid,
+ 				 hda_nid_t pin_nid, int dev_id, u32 stream_tag,
+@@ -435,15 +457,16 @@ static int i915_hsw_setup_stream(struct
+ 
+ 	haswell_verify_D0(codec, cvt_nid, pin_nid);
+ 
+-	if (spec->silent_stream_type == SILENT_STREAM_KAE && per_pin && per_pin->silent_stream) {
+-		silent_stream_set_kae(codec, per_pin, false);
+-		/* wait for pending transfers in codec to clear */
+-		usleep_range(100, 200);
+-	}
+-
+ 	res = snd_hda_hdmi_setup_stream(codec, cvt_nid, pin_nid, dev_id,
+ 					stream_tag, format);
+ 
++	/*
++	 * Keep-alive was disabled in i915_hsw_prepare(), re-enable it now.
++	 * The pin lookup above resolves to the same per_pin that prepare
++	 * used (pin_nid comes from that per_pin), so this stays balanced; a
++	 * NULL per_pin only occurs on a lookup failure that also implies no
++	 * active keep-alive stream to restore.
++	 */
+ 	if (spec->silent_stream_type == SILENT_STREAM_KAE && per_pin && per_pin->silent_stream) {
+ 		usleep_range(100, 200);
+ 		silent_stream_set_kae(codec, per_pin, true);
+@@ -607,6 +630,7 @@ static int intel_hsw_common_init(struct
+ 	codec->depop_delay = 0;
+ 	codec->auto_runtime_pm = 1;
+ 
++	spec->ops.prepare = i915_hsw_prepare;
+ 	spec->ops.setup_stream = i915_hsw_setup_stream;
+ 	spec->ops.pin_cvt_fixup = i915_pin_cvt_fixup;
+ 	spec->ops.silent_stream = i915_set_silent_stream;
 
 
