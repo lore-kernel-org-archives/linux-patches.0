@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02A39432E94;
-	Thu, 30 Jul 2026 14:26:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BA653A6B7F;
+	Thu, 30 Jul 2026 14:26:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421576; cv=none; b=RqyDRNUmtBPuY0Hd4tUEb0Pc3DwaIFBlj328YxOp8MRQ6n7SVfmOTQPX3Kv85CtvlkymRpifTcDd4bCUcTh141HPQ5E1biVD2/5LrWXWuUmeRLx/US9E+WFLWWu4DshSw4pao79WFJXp/idKGQG0BMEkVeB/koP+Q+XOZumX9Ks=
+	t=1785421580; cv=none; b=P/7/2FA0Cpp/wuKus/nkKhZTrTONlw1uqqDw9M9AJRzaAvjv/Mk19Io/JWF/VGvwLtgzstUJA4iBEl3pPutmxSWBUnpB/NVAFxBXQfDpZM43lNeM3J/5hUL62hvyl5qbVdIr9w9uUF/L+gk0/0XslLT9/ggthiwu//P1c/BlYcw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421576; c=relaxed/simple;
-	bh=p5CQGYwjh8lEgnG56YPVqfJXL+1qhE0xIvjNJbXdqF4=;
+	s=arc-20240116; t=1785421580; c=relaxed/simple;
+	bh=rJN2+Em7/evE/C72qkDDVkAtVcGKqUFJuzcQJlZIAUw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tdxJBw9KTZIA4S6FwVYw0o+07SYPJfc2Do/tb+6RQXDG3tKXFX+DL4OixD5ItiHV8wDuxji0LAMmBKAkG/GYlDrsq6uh30W944xr696e0P48czAvD32voK4jHYclxNYw59vak176q3H8DwfFpMyiUjFn6je1de4M8oZb42r2zAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MbLfQXdc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UEGc1DNqEST9pTIja0ZWFGsHXHrbT2okC8yvFGIU2Cvh75vfo9FfDt4PJnaulhGxDIVsdDjzFWSKDuBJ+pNfmIy6nPln9sfKj2LxyJjGvbm6umHlJKULXmxxT7dKXBFV8syfg1alLVFnxtlzWb7I11LJzdNh4b7gGAJuosyy3vk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZU3vwYNB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MbLfQXdc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DDEF1F00A3A;
-	Thu, 30 Jul 2026 14:26:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZU3vwYNB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB0D51F000E9;
+	Thu, 30 Jul 2026 14:26:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421574;
-	bh=+9cAIHJgsz+ldJfL+jj2RsYwx0EvtTv8HsODfSgiw3c=;
+	s=korg; t=1785421578;
+	bh=FpvgIJHSj2zSsClQdpGv6hZ2kSoUPUni1rr6HgtfXlA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MbLfQXdczZNhQLbXd+PXwyiS+vyxQeEUnndJc2V6lPbC/rZcsPcsKUzlp6mY6uonD
-	 o7RzcnBWQuC4mO156OgPz/+yZ4LPvWfX4fKkcPpyBVtzXmPQIt32Lxw9ABDFMsQm2T
-	 juMU7px64jHSzACGzMRRXH0JEPy/OF/e9V4/zvWQ=
+	b=ZU3vwYNB3f+6ln0MI6I7JMct/QTWfsbpr3V4yCv25R6FAH9tVwf8OVkdSHstKOGNR
+	 LtQkXL8+AVXjdPHszqG20ge2g6l5/so9rOTXXmwIqHyfVQslqKQHj3vC8lGupyX8kd
+	 x0YTRXtAzddDLCaSYoNH8c92XUWOo3dNXtlfjurE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Cen Zhang <zzzccc427@gmail.com>
-Subject: [PATCH 7.1 150/744] usb: gadget: f_tcm: synchronize delayed set_alt with teardown
-Date: Thu, 30 Jul 2026 16:07:03 +0200
-Message-ID: <20260730141447.474454439@linuxfoundation.org>
+	Fan Wu <fanwu01@zju.edu.cn>
+Subject: [PATCH 7.1 151/744] usb: gadget: udc: bdc: free IRQ and drain func_wake_notify before teardown
+Date: Thu, 30 Jul 2026 16:07:04 +0200
+Message-ID: <20260730141447.494950923@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -50,382 +50,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit 79e2d75725c85607f8a9d87ae9cace62a19f767d upstream.
+commit 0583f2fbf8f86ae3a0ce054f96783dd83e65d9bb upstream.
 
-The f_tcm set_alt() path defers endpoint setup to a work item and
-completes the delayed status response from process context. The delayed
-work uses f_tcm private state and may complete the setup request after
-disconnect or function teardown has already moved on.
+The Broadcom BDC UDC driver registers its IRQ handler with
+devm_request_irq() in bdc_udc_init(), so the IRQ is released by devm
+only after bdc_remove() returns.  devm releases resources in reverse
+LIFO order, but bdc_remove() runs bdc_udc_exit() and bdc_hw_exit() ->
+bdc_mem_free() manually before returning: bdc_udc_exit() tears down
+individual endpoint objects via bdc_free_ep(), while bdc_hw_exit() ->
+bdc_mem_free() frees and NULLs the DMA-coherent status-report ring
+(bdc->srr.sr_bds) and kfree()s bdc->bdc_ep_array.  Both happen while
+the IRQ handler (bdc_udc_interrupt, requested with IRQF_SHARED)
+remains deliverable in the window up to the post-remove devm
+free_irq().
 
-Cancel and drain the delayed set_alt work when the function is unbound or
-freed. For disable paths, which are reached under the composite device
-lock, use a small state machine and a non-sleeping cancellation path
-instead of cancel_work_sync(). If the work is already running, mark it
-cancelled and let the worker own the cleanup; otherwise tcm_disable() can
-cancel the queued work and clean up immediately.
+On receipt of a shared interrupt in that window, bdc_udc_interrupt()
+dereferences bdc->srr.sr_bds[bdc->srr.dqp_index] (NULL or freed DMA)
+and dispatches sr_handler callbacks that index into bdc_ep_array,
+causing a NULL-deref or use-after-free.
 
-Also serialize the final delayed-status completion with the cancellation
-check while holding the composite device lock. This prevents a disconnect
-from clearing delayed_status while the worker is about to complete the
-control request.
+The same window affects the delayed_work bdc->func_wake_notify, which is
+armed from the IRQ handler via bdc_sr_uspc() -> handle_link_state_change()
+-> schedule_delayed_work() and may self-rearm from its own callback
+bdc_func_wake_timer().  No cancel exists anywhere in the driver, so a
+queued work item that fires after bdc_remove() returns and the bdc
+structure is devm-freed dereferences freed memory.
 
-Validation reproduced this kernel report:
-BUG: KASAN: slab-use-after-free in tcm_delayed_set_alt+0x6c/0xef0
+Replace devm_request_irq() with request_irq() and add an explicit
+free_irq(bdc->irq, bdc) in bdc_remove().  Clear BDC_GIE before
+free_irq() to stop the device from asserting interrupts, then
+free_irq() drains any in-flight handler, then cancel_delayed_work_sync()
+drains the func_wake_notify delayed work.  This ordering ensures the
+IRQ handler and delayed work cannot interfere with the subsequent
+endpoint and DMA teardown in bdc_udc_exit() and bdc_hw_exit().  Wire the
+matching free_irq() into the bdc_udc_init() error path so the IRQ is
+released on probe failure, and route the bdc_init_ep() failure through
+err0 instead of returning directly.
 
-Call Trace:
- <TASK>
- dump_stack_lvl+0x66/0xa0
- print_report+0xce/0x630
- ? tcm_delayed_set_alt+0x6c/0xef0
- ? srso_alias_return_thunk+0x5/0xfbef5
- ? __virt_addr_valid+0x188/0x320
- ? tcm_delayed_set_alt+0x6c/0xef0
- kasan_report+0xe0/0x110
- ? tcm_delayed_set_alt+0x6c/0xef0
- tcm_delayed_set_alt+0x6c/0xef0
- ? __pfx_tcm_delayed_set_alt+0x10/0x10
- ? process_one_work+0x4cb/0xb90
- ? rcu_is_watching+0x20/0x50
- ? tcm_delayed_set_alt+0x9/0xef0
- process_one_work+0x4d7/0xb90
- ? __pfx_process_one_work+0x10/0x10
- ? srso_alias_return_thunk+0x5/0xfbef5
- ? __list_add_valid_or_report+0x37/0xf0
- ? __pfx_tcm_delayed_set_alt+0x10/0x10
- ? srso_alias_return_thunk+0x5/0xfbef5
- worker_thread+0x2d8/0x570
- ? __pfx_worker_thread+0x10/0x10
- kthread+0x1ad/0x1f0
- ? __pfx_kthread+0x10/0x10
- ret_from_fork+0x3c9/0x540
- ? __pfx_ret_from_fork+0x10/0x10
- ? srso_alias_return_thunk+0x5/0xfbef5
- ? __switch_to+0x2e9/0x730
- ? __pfx_kthread+0x10/0x10
- ret_from_fork_asm+0x1a/0x30
- </TASK>
+This issue was found by an in-house static analysis tool.
 
-Allocated by task 544:
- kasan_save_stack+0x33/0x60
- kasan_save_track+0x14/0x30
- __kasan_kmalloc+0x8f/0xa0
- tcm_alloc+0x68/0x180
- usb_get_function+0x36/0x60
- config_usb_cfg_link+0x125/0x1b0
- configfs_symlink+0x322/0x890
- vfs_symlink+0xc2/0x270
- filename_symlinkat+0x295/0x2f0
- __x64_sys_symlinkat+0x62/0x90
- do_syscall_64+0x115/0x6a0
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Freed by task 661:
- kasan_save_stack+0x33/0x60
- kasan_save_track+0x14/0x30
- kasan_save_free_info+0x3b/0x60
- __kasan_slab_free+0x43/0x70
- kfree+0x2f9/0x530
- config_usb_cfg_unlink+0x173/0x1e0
- configfs_unlink+0x1fa/0x340
- vfs_unlink+0x15c/0x510
- filename_unlinkat+0x2ba/0x450
- __x64_sys_unlinkat+0x63/0x90
- do_syscall_64+0x115/0x6a0
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Fixes: c52661d60f63 ("usb-gadget: Initial merge of target module for UASP + BOT")
+Fixes: efed421a94e6 ("usb: gadget: Add UDC driver for Broadcom USB3.0 device controller IP BDC")
 Cc: stable <stable@kernel.org>
 Assisted-by: Codex:gpt-5.5
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Link: https://patch.msgid.link/20260627104153.3822495-1-zzzccc427@gmail.com
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Link: https://patch.msgid.link/20260709020904.502611-1-fanwu01@zju.edu.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_tcm.c |  192 ++++++++++++++++++++++++++++++------
- drivers/usb/gadget/function/tcm.h   |   13 ++
- 2 files changed, 177 insertions(+), 28 deletions(-)
+ drivers/usb/gadget/udc/bdc/bdc_core.c |   20 ++++++++++++++++++++
+ drivers/usb/gadget/udc/bdc/bdc_udc.c  |    7 ++++---
+ 2 files changed, 24 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/gadget/function/f_tcm.c
-+++ b/drivers/usb/gadget/function/f_tcm.c
-@@ -2363,31 +2363,158 @@ ep_fail:
- 	return -ENOTSUPP;
- }
- 
--struct guas_setup_wq {
--	struct work_struct work;
--	struct f_uas *fu;
--	unsigned int alt;
--};
-+static void tcm_cleanup_old_alt(struct f_uas *fu)
-+{
-+	if (fu->flags & USBG_IS_UAS)
-+		uasp_cleanup_old_alt(fu);
-+	else if (fu->flags & USBG_IS_BOT)
-+		bot_cleanup_old_alt(fu);
-+	fu->flags = 0;
-+}
-+
-+static void tcm_delayed_set_alt_done(struct f_uas *fu)
-+{
-+	unsigned long flags;
-+
-+	spin_lock_irqsave(&fu->delayed_set_alt_lock, flags);
-+	fu->delayed_set_alt_state = USBG_DELAYED_SET_ALT_IDLE;
-+	fu->delayed_set_alt_cancel = false;
-+	spin_unlock_irqrestore(&fu->delayed_set_alt_lock, flags);
-+}
-+
-+static bool tcm_delayed_set_alt_cancelled(struct f_uas *fu)
-+{
-+	bool cancelled;
-+	unsigned long flags;
-+
-+	spin_lock_irqsave(&fu->delayed_set_alt_lock, flags);
-+	cancelled = fu->delayed_set_alt_cancel;
-+	spin_unlock_irqrestore(&fu->delayed_set_alt_lock, flags);
-+
-+	return cancelled;
-+}
-+
-+static bool tcm_complete_delayed_status(struct f_uas *fu)
-+{
-+	struct usb_composite_dev *cdev = fu->function.config->cdev;
-+	struct usb_request *req = cdev->req;
-+	unsigned long cdev_flags;
-+	bool cancelled;
-+	int ret;
-+
-+	spin_lock_irqsave(&cdev->lock, cdev_flags);
-+	spin_lock(&fu->delayed_set_alt_lock);
-+	cancelled = fu->delayed_set_alt_cancel;
-+	if (!cancelled) {
-+		fu->delayed_set_alt_state = USBG_DELAYED_SET_ALT_IDLE;
-+		fu->delayed_set_alt_cancel = false;
-+	}
-+	spin_unlock(&fu->delayed_set_alt_lock);
-+
-+	if (cancelled) {
-+		spin_unlock_irqrestore(&cdev->lock, cdev_flags);
-+		return false;
-+	}
-+
-+	if (cdev->delayed_status == 0) {
-+		WARN(cdev, "%s: Unexpected call\n", __func__);
-+	} else if (--cdev->delayed_status == 0) {
-+		req->length = 0;
-+		req->context = cdev;
-+		ret = usb_ep_queue(cdev->gadget->ep0, req, GFP_ATOMIC);
-+		if (ret == 0) {
-+			cdev->setup_pending = true;
-+		} else {
-+			req->status = 0;
-+			req->complete(cdev->gadget->ep0, req);
-+		}
-+	}
-+
-+	spin_unlock_irqrestore(&cdev->lock, cdev_flags);
-+
-+	return true;
-+}
-+
-+static bool tcm_cancel_delayed_set_alt(struct f_uas *fu)
-+{
-+	bool cleanup = false;
-+	bool cancel = false;
-+	unsigned long flags;
-+
-+	spin_lock_irqsave(&fu->delayed_set_alt_lock, flags);
-+	switch (fu->delayed_set_alt_state) {
-+	case USBG_DELAYED_SET_ALT_IDLE:
-+		cleanup = true;
-+		break;
-+	case USBG_DELAYED_SET_ALT_QUEUED:
-+	case USBG_DELAYED_SET_ALT_RUNNING:
-+		fu->delayed_set_alt_cancel = true;
-+		cancel = true;
-+		break;
-+	}
-+	spin_unlock_irqrestore(&fu->delayed_set_alt_lock, flags);
-+
-+	if (cancel && cancel_work(&fu->delayed_set_alt)) {
-+		spin_lock_irqsave(&fu->delayed_set_alt_lock, flags);
-+		if (fu->delayed_set_alt_state == USBG_DELAYED_SET_ALT_QUEUED) {
-+			fu->delayed_set_alt_state = USBG_DELAYED_SET_ALT_IDLE;
-+			fu->delayed_set_alt_cancel = false;
-+			cleanup = true;
-+		}
-+		spin_unlock_irqrestore(&fu->delayed_set_alt_lock, flags);
-+	}
-+
-+	return cleanup;
-+}
-+
-+static void tcm_cancel_delayed_set_alt_sync(struct f_uas *fu)
-+{
-+	unsigned long flags;
-+
-+	spin_lock_irqsave(&fu->delayed_set_alt_lock, flags);
-+	if (fu->delayed_set_alt_state != USBG_DELAYED_SET_ALT_IDLE)
-+		fu->delayed_set_alt_cancel = true;
-+	spin_unlock_irqrestore(&fu->delayed_set_alt_lock, flags);
-+
-+	cancel_work_sync(&fu->delayed_set_alt);
-+
-+	spin_lock_irqsave(&fu->delayed_set_alt_lock, flags);
-+	fu->delayed_set_alt_state = USBG_DELAYED_SET_ALT_IDLE;
-+	fu->delayed_set_alt_cancel = false;
-+	spin_unlock_irqrestore(&fu->delayed_set_alt_lock, flags);
-+}
- 
- static void tcm_delayed_set_alt(struct work_struct *wq)
+--- a/drivers/usb/gadget/udc/bdc/bdc_core.c
++++ b/drivers/usb/gadget/udc/bdc/bdc_core.c
+@@ -585,9 +585,29 @@ disable_clk:
+ static void bdc_remove(struct platform_device *pdev)
  {
--	struct guas_setup_wq *work = container_of(wq, struct guas_setup_wq,
--			work);
--	struct f_uas *fu = work->fu;
--	int alt = work->alt;
-+	struct f_uas *fu = container_of(wq, struct f_uas, delayed_set_alt);
+ 	struct bdc *bdc;
 +	unsigned long flags;
-+	unsigned int alt;
-+
-+	spin_lock_irqsave(&fu->delayed_set_alt_lock, flags);
-+	if (fu->delayed_set_alt_state != USBG_DELAYED_SET_ALT_QUEUED) {
-+		spin_unlock_irqrestore(&fu->delayed_set_alt_lock, flags);
-+		return;
-+	}
-+	fu->delayed_set_alt_state = USBG_DELAYED_SET_ALT_RUNNING;
-+	alt = fu->delayed_alt;
-+	spin_unlock_irqrestore(&fu->delayed_set_alt_lock, flags);
++	u32 temp;
  
--	kfree(work);
-+	tcm_cleanup_old_alt(fu);
+ 	bdc  = platform_get_drvdata(pdev);
+ 	dev_dbg(bdc->dev, "%s ()\n", __func__);
++	/*
++	 * Disable the device interrupt source before freeing the IRQ:
++	 * clear BDC_GIE so the controller stops asserting interrupts,
++	 * then free_irq drains any in-flight handler.
++	 */
++	spin_lock_irqsave(&bdc->lock, flags);
++	temp = bdc_readl(bdc->regs, BDC_BDCSC);
++	temp &= ~BDC_GIE;
++	bdc_writel(bdc->regs, BDC_BDCSC, temp);
++	spin_unlock_irqrestore(&bdc->lock, flags);
++	free_irq(bdc->irq, bdc);
++	/*
++	 * Drain func_wake_notify after free_irq: the IRQ handler arms this
++	 * delayed_work via bdc_sr_uspc -> handle_link_state_change ->
++	 * schedule_delayed_work (self-rearmed in bdc_func_wake_timer), so
++	 * the IRQ must be released first to prevent re-arm after cancel.
++	 */
++	cancel_delayed_work_sync(&bdc->func_wake_notify);
+ 	bdc_udc_exit(bdc);
+ 	bdc_hw_exit(bdc);
+ 	bdc_phy_exit(bdc);
+--- a/drivers/usb/gadget/udc/bdc/bdc_udc.c
++++ b/drivers/usb/gadget/udc/bdc/bdc_udc.c
+@@ -530,8 +530,8 @@ int bdc_udc_init(struct bdc *bdc)
  
--	if (fu->flags & USBG_IS_BOT)
--		bot_cleanup_old_alt(fu);
--	if (fu->flags & USBG_IS_UAS)
--		uasp_cleanup_old_alt(fu);
-+	if (tcm_delayed_set_alt_cancelled(fu))
-+		goto out_done;
  
- 	if (alt == USB_G_ALT_INT_BBB)
- 		bot_set_alt(fu);
- 	else if (alt == USB_G_ALT_INT_UAS)
- 		uasp_set_alt(fu);
--	usb_composite_setup_continue(fu->function.config->cdev);
-+
-+	if (tcm_complete_delayed_status(fu))
-+		return;
-+
-+	tcm_cleanup_old_alt(fu);
-+out_done:
-+	tcm_delayed_set_alt_done(fu);
- }
- 
- static int tcm_get_alt(struct usb_function *f, unsigned intf)
-@@ -2413,15 +2540,20 @@ static int tcm_set_alt(struct usb_functi
- 		return -EOPNOTSUPP;
- 
- 	if ((alt == USB_G_ALT_INT_BBB) || (alt == USB_G_ALT_INT_UAS)) {
--		struct guas_setup_wq *work;
-+		unsigned long flags;
-+
-+		spin_lock_irqsave(&fu->delayed_set_alt_lock, flags);
-+		if (fu->delayed_set_alt_state != USBG_DELAYED_SET_ALT_IDLE) {
-+			spin_unlock_irqrestore(&fu->delayed_set_alt_lock,
-+					       flags);
-+			return -EBUSY;
-+		}
-+		fu->delayed_alt = alt;
-+		fu->delayed_set_alt_cancel = false;
-+		fu->delayed_set_alt_state = USBG_DELAYED_SET_ALT_QUEUED;
-+		spin_unlock_irqrestore(&fu->delayed_set_alt_lock, flags);
- 
--		work = kmalloc_obj(*work, GFP_ATOMIC);
--		if (!work)
--			return -ENOMEM;
--		INIT_WORK(&work->work, tcm_delayed_set_alt);
--		work->fu = fu;
--		work->alt = alt;
--		schedule_work(&work->work);
-+		schedule_work(&fu->delayed_set_alt);
- 		return USB_GADGET_DELAYED_STATUS;
+ 	bdc->gadget.name = BRCM_BDC_NAME;
+-	ret = devm_request_irq(bdc->dev, bdc->irq, bdc_udc_interrupt,
+-				IRQF_SHARED, BRCM_BDC_NAME, bdc);
++	ret = request_irq(bdc->irq, bdc_udc_interrupt, IRQF_SHARED,
++			  BRCM_BDC_NAME, bdc);
+ 	if (ret) {
+ 		dev_err(bdc->dev,
+ 			"failed to request irq #%d %d\n",
+@@ -542,7 +542,7 @@ int bdc_udc_init(struct bdc *bdc)
+ 	ret = bdc_init_ep(bdc);
+ 	if (ret) {
+ 		dev_err(bdc->dev, "bdc init ep fail: %d\n", ret);
+-		return ret;
++		goto err0;
  	}
- 	return -EOPNOTSUPP;
-@@ -2431,11 +2563,8 @@ static void tcm_disable(struct usb_funct
- {
- 	struct f_uas *fu = to_f_uas(f);
  
--	if (fu->flags & USBG_IS_UAS)
--		uasp_cleanup_old_alt(fu);
--	else if (fu->flags & USBG_IS_BOT)
--		bot_cleanup_old_alt(fu);
--	fu->flags = 0;
-+	if (tcm_cancel_delayed_set_alt(fu))
-+		tcm_cleanup_old_alt(fu);
- }
+ 	ret = usb_add_gadget_udc(bdc->dev, &bdc->gadget);
+@@ -571,6 +571,7 @@ int bdc_udc_init(struct bdc *bdc)
+ err1:
+ 	usb_del_gadget_udc(&bdc->gadget);
+ err0:
++	free_irq(bdc->irq, bdc);
+ 	bdc_free_ep(bdc);
  
- static int tcm_setup(struct usb_function *f,
-@@ -2583,11 +2712,16 @@ static void tcm_free(struct usb_function
- {
- 	struct f_uas *tcm = to_f_uas(f);
- 
-+	tcm_cancel_delayed_set_alt_sync(tcm);
- 	kfree(tcm);
- }
- 
- static void tcm_unbind(struct usb_configuration *c, struct usb_function *f)
- {
-+	struct f_uas *fu = to_f_uas(f);
-+
-+	tcm_cancel_delayed_set_alt_sync(fu);
-+	tcm_cleanup_old_alt(fu);
- 	usb_free_all_descriptors(f);
- }
- 
-@@ -2620,6 +2754,8 @@ static struct usb_function *tcm_alloc(st
- 	fu->function.disable = tcm_disable;
- 	fu->function.free_func = tcm_free;
- 	fu->tpg = tpg_instances[i].tpg;
-+	INIT_WORK(&fu->delayed_set_alt, tcm_delayed_set_alt);
-+	spin_lock_init(&fu->delayed_set_alt_lock);
- 
- 	hash_init(fu->stream_hash);
- 	mutex_unlock(&tpg_instances_lock);
---- a/drivers/usb/gadget/function/tcm.h
-+++ b/drivers/usb/gadget/function/tcm.h
-@@ -3,6 +3,7 @@
- #define __TARGET_USB_GADGET_H__
- 
- #include <linux/kref.h>
-+#include <linux/spinlock.h>
- /* #include <linux/usb/uas.h> */
- #include <linux/hashtable.h>
- #include <linux/usb/composite.h>
-@@ -29,6 +30,12 @@ enum {
- 
- #define USB_G_DEFAULT_SESSION_TAGS	USBG_NUM_CMDS
- 
-+enum {
-+	USBG_DELAYED_SET_ALT_IDLE = 0,
-+	USBG_DELAYED_SET_ALT_QUEUED,
-+	USBG_DELAYED_SET_ALT_RUNNING,
-+};
-+
- struct tcm_usbg_nexus {
- 	struct se_session *tvn_se_sess;
- };
-@@ -132,6 +139,12 @@ struct f_uas {
- #define USBG_BOT_CMD_PEND	(1 << 4)
- #define USBG_BOT_WEDGED		(1 << 5)
- 
-+	struct work_struct	delayed_set_alt;
-+	spinlock_t		delayed_set_alt_lock; /* protects delayed_set_alt_* */
-+	unsigned int		delayed_alt;
-+	unsigned int		delayed_set_alt_state;
-+	bool			delayed_set_alt_cancel;
-+
- 	struct usbg_cdb		cmd[USBG_NUM_CMDS];
- 	struct usb_ep		*ep_in;
- 	struct usb_ep		*ep_out;
+ 	return ret;
 
 
