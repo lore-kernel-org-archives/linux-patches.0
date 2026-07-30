@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E93FF31E833;
-	Thu, 30 Jul 2026 14:41:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4063A3A254B;
+	Thu, 30 Jul 2026 14:41:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422509; cv=none; b=cqkqHLxF+I2nc1ZL+8n1VWTbPOGFZx97T+NhipYEN+gEeUJp763OKNIzjiwQ17blf5zQD9dgWC3Gpsf2HDfMOEISpZFKqOn9IfsoPgeD9sgzbZL/hoUk4GpgG+iuYV2HvK++snRkMtk8noKcvTapubU9eUkpQLB1qruXeWG6iac=
+	t=1785422512; cv=none; b=YMDptWT14V1/kt+G9Tt9AwSjzUjP3uDhn6ieSbhXcLoxX2KnPUZgH8ZNrdNyjyVQUzL6/vtctOeis82Qcaqo53LLy6fE5fImwesJauCi4ydXRquIwbpZSVR36K/6bTt8pB1oM4x4btiaFGCwEiZqXQ27Ruu+zpRfu8pSK6RYUGU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422509; c=relaxed/simple;
-	bh=gZ4tJhdsZpTn/VXMpixEikj8GPhiLxO57+IL69y/32Y=;
+	s=arc-20240116; t=1785422512; c=relaxed/simple;
+	bh=KdNobE4sctZd33s7xnECWw2gUx9cBJxSOki5OgCMWVU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cmRtaO6+DM9nbsfpgZRRxNHcelYFqEmK6AqYs+JVqzD5qJhf6LbTiYTzPdkCDJZe+2zXiGbs9bRKPkf8UgH9L/0l31rRttteM8jWOrIKEx8HcxzYKBlhX6xTGQhkT9w0hwx2m7/7y6M3lgBWTxCf4TBJqL1PPyOT0kPk58Rzfvc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X+aHarjh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mcSbnPrYU/yjQ3wzXhySIjc7HioDNShOHKGx6uDqMxcFcjad1cVvKNMIi09dn1KWh5na414L4Pi7Wr2IDH58KHxI8AGi5Vccnkb4rHfoNmD/mW/gmOzE6xWHEINh90qvYkAsJsCfSAuCMBgaZ+bZtu7GSzRd50Y20DWZgkBczyY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pQn4CyO7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X+aHarjh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F9B71F000E9;
-	Thu, 30 Jul 2026 14:41:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pQn4CyO7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46EEF1F000E9;
+	Thu, 30 Jul 2026 14:41:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422507;
-	bh=F1QjuglObOJunsm1h5tjkC4vxsdXG/7nKvgDXfQisH0=;
+	s=korg; t=1785422510;
+	bh=yLm5A1s1/ph423yxJWdtBGi4awW9+r9+SMIakeihg2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X+aHarjheRbAa2M5KRWWRFS3Sa3jN5kCeqzTk6ZMXNhgzgJWcaxht+uhpTl8cZ1L4
-	 kSL+zEVb1OjCkEYdk82Zr5gYiFqVL3OwaXXjNsnGFwTX6auYe7eVxzS+MQNzGqs1A2
-	 PdzTZZj7Y55Z3ex77fWd1HGKR5rgDiDb0OsbmKi4=
+	b=pQn4CyO7UH3BmAU5AnGBGFgXJEkGcJByveUeox2YNJbvUWX0Y6izScgph9EpILHV7
+	 wbDd9SGlwVkWxU/es03fsc+ACfcASNOfcyeAHywcxDEkQNZJMG4TwIs/Ci7Vra/v4I
+	 3ROFbbVb9FFAXrwWh5sPK2n5aZJaWtIdLeg2GuKM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leorize <leorize+oss@disroot.org>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.1 418/744] drm/amd/display: set MSA MISC1 bit 6 when using VSC SDP for DCE 11.x
-Date: Thu, 30 Jul 2026 16:11:31 +0200
-Message-ID: <20260730141453.181971619@linuxfoundation.org>
+	Luigi Santivetti <luigi.santivetti@imgtec.com>,
+	Alessio Belle <alessio.belle@imgtec.com>
+Subject: [PATCH 7.1 409/744] drm/imagination: fix error checking of pvr_vm_context_lookup()
+Date: Thu, 30 Jul 2026 16:11:22 +0200
+Message-ID: <20260730141452.988987237@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -50,81 +50,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leorize <leorize+oss@disroot.org>
+From: Luigi Santivetti <luigi.santivetti@imgtec.com>
 
-commit da353a6b30086674c77bdbbfd86e9e0c7416ba99 upstream.
+commit cf385cf6e713eba0720651174dac0b2d2f5bb8f8 upstream.
 
-When BT.2020 colorimetry is selected, the driver sends information using
-VSC SDP but does not set "ignore MSA colorimetry" bit on older GPUs with
-DCE-based IPs. This causes certain sinks to prefer colorimetry
-information in DP MSA, resulting in terrible color rendering ("dull"
-colors) when HDR is enabled.
+Since pvr_vm_context_lookup() returns either NULL or a pointer, then stop
+using IS_ERR() for checking the return value.
 
-This commit wires up the MISC1 bit 6 for GPUs with DCE 11.x based IPs to
-correctly configure sinks to ignore colorimetry information in MSA,
-resolving the color rendering issue.
+Using IS_ERR() leads to the kernel oops reported below. It can be
+reproduced by passing an invalid VM context handle from userspace to the
+DRM_IOCTL_PVR_CREATE_CONTEXT ioctl.
 
-Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/4849
-Assisted-by: oh-my-pi:GPT-5.5
-Signed-off-by: Leorize <leorize+oss@disroot.org>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 323a09e56c1d549ce47d4f110de77b0051b4a8bf)
+[   92.733119] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000148
+[   92.742042] Mem abort info:
+[   92.744890]   ESR = 0x0000000096000004
+[   92.748686]   EC = 0x25: DABT (current EL), IL = 32 bits
+[   92.754020]   SET = 0, FnV = 0
+[   92.757154]   EA = 0, S1PTW = 0
+[   92.760337]   FSC = 0x04: level 0 translation fault
+[   92.765243] Data abort info:
+[   92.768129]   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
+[   92.773626]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+[   92.778763]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+[   92.784098] user pgtable: 4k pages, 48-bit VAs, pgdp=000000088ed23000
+[   92.790550] [0000000000000148] pgd=0000000000000000, p4d=0000000000000000
+[   92.797381] Internal error: Oops: 0000000096000004 [#1]  SMP
+[   92.803027] Modules linked in: powervr
+[   92.852533] CPU: 0 UID: 0 PID: 409 Comm: triangle Not tainted 7.1.0-rc5-g98b46e693b91 #1 PREEMPT
+[   92.861385] Hardware name: Texas Instruments AM68 SK (DT)
+[   92.866766] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[   92.873709] pc : pvr_vm_get_fw_mem_context+0x0/0xc [powervr]
+[   92.879376] lr : pvr_queue_create+0x26c/0x440 [powervr]
+[   92.884595] sp : ffff8000837fbb00
+[   92.887895] x29: ffff8000837fbb60 x28: 0000000000000000 x27: ffff8000837fbce8
+[   92.895015] x26: ffff000807f61a40 x25: ffff000807f61a00 x24: ffff000807f64400
+[   92.902135] x23: ffff00080a5ab000 x22: ffff800079b24730 x21: ffff000807f61800
+[   92.909254] x20: ffff00080999e680 x19: 0000000000000000 x18: 0000000000000000
+[   92.916373] x17: 0000000000000000 x16: 0000000000000000 x15: 0000000000000001
+[   92.923492] x14: 0000000000000000 x13: 0000000000000002 x12: ffff80008145b298
+[   92.930611] x11: ffff8000844e5000 x10: ffff80008165a130 x9 : 0000000000000100
+[   92.937730] x8 : 0000000000000001 x7 : ffff0008076b27e0 x6 : ffff00080ec43b7c
+[   92.944850] x5 : ffff00080ec43b78 x4 : 0000000000000000 x3 : ffff00080999e680
+[   92.951968] x2 : 0000000000000000 x1 : 0000000000000000 x0 : 0000000000000000
+[   92.959088] Call trace:
+[   92.961521]  pvr_vm_get_fw_mem_context+0x0/0xc [powervr] (P)
+[   92.967173]  pvr_context_create+0x190/0x410 [powervr]
+[   92.972218]  pvr_ioctl_create_context+0x44/0x8c [powervr]
+[   92.977608]  drm_ioctl_kernel+0xbc/0x124 [drm]
+[   92.982127]  drm_ioctl+0x1f8/0x4dc [drm]
+[   92.986098]  __arm64_sys_ioctl+0xac/0x104
+[   92.990102]  invoke_syscall+0x54/0x10c
+[   92.993842]  el0_svc_common.constprop.0+0x40/0xe0
+[   92.998532]  do_el0_svc+0x1c/0x28
+[   93.001835]  el0_svc+0x38/0x11c
+[   93.004969]  el0t_64_sync_handler+0xa0/0xe4
+[   93.009139]  el0t_64_sync+0x198/0x19c
+[   93.012792] Code: aa1703e0 d2800014 95cb0ba4 17ffffe8 (f940a400)
+[   93.018869] ---[ end trace 0000000000000000 ]---
+
+Fixes: d2d79d29bb98 ("drm/imagination: Implement context creation/destruction ioctls")
 Cc: stable@vger.kernel.org
+Signed-off-by: Luigi Santivetti <luigi.santivetti@imgtec.com>
+Reviewed-by: Alessio Belle <alessio.belle@imgtec.com>
+Link: https://patch.msgid.link/20260707-staging-ddkopsrc-2435-v1-1-24e160d44476@imgtec.com
+Signed-off-by: Alessio Belle <alessio.belle@imgtec.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dce/dce_stream_encoder.c |   15 ++++++++++++++-
- drivers/gpu/drm/amd/display/dc/dce/dce_stream_encoder.h |    3 ++-
- 2 files changed, 16 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/imagination/pvr_context.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/dce/dce_stream_encoder.c
-+++ b/drivers/gpu/drm/amd/display/dc/dce/dce_stream_encoder.c
-@@ -271,7 +271,6 @@ static void dce110_stream_encoder_dp_set
- 	bool use_vsc_sdp_for_colorimetry,
- 	uint32_t enable_sdp_splitting)
- {
--	(void)use_vsc_sdp_for_colorimetry;
- 	(void)enable_sdp_splitting;
- 	uint32_t h_active_start;
- 	uint32_t v_active_start;
-@@ -334,6 +333,16 @@ static void dce110_stream_encoder_dp_set
- 	if (REG(DP_MSA_MISC))
- 		misc1 = REG_READ(DP_MSA_MISC);
+--- a/drivers/gpu/drm/imagination/pvr_context.c
++++ b/drivers/gpu/drm/imagination/pvr_context.c
+@@ -309,8 +309,8 @@ int pvr_context_create(struct pvr_file *
+ 		goto err_free_ctx;
  
-+	/* For YCbCr420 and BT2020 Colorimetry Formats, VSC SDP shall be used.
-+	 * When MISC1, bit 6, is Set to 1, a Source device uses a VSC SDP to indicate the
-+	 * Pixel Encoding/Colorimetry Format and that a Sink device shall ignore MISC1, bit 7,
-+	 * and MISC0, bits 7:1 (MISC1, bit 7, and MISC0, bits 7:1, become "don't care").
-+	 */
-+	if (use_vsc_sdp_for_colorimetry)
-+		misc1 = misc1 | 0x40;
-+	else
-+		misc1 = misc1 & ~0x40;
-+
- 	/* set color depth */
- 
- 	switch (hw_crtc_timing.display_color_depth) {
-@@ -499,6 +508,10 @@ static void dce110_stream_encoder_dp_set
- 				hw_crtc_timing.h_addressable + hw_crtc_timing.h_border_right,
- 				DP_MSA_VHEIGHT, hw_crtc_timing.v_border_top +
- 				hw_crtc_timing.v_addressable + hw_crtc_timing.v_border_bottom);
-+	} else {
-+		/* DCE-only path */
-+		if (REG(DP_MSA_MISC))
-+			REG_WRITE(DP_MSA_MISC, misc1);   /* MSA_MISC1 */
+ 	ctx->vm_ctx = pvr_vm_context_lookup(pvr_file, args->vm_context_handle);
+-	if (IS_ERR(ctx->vm_ctx)) {
+-		err = PTR_ERR(ctx->vm_ctx);
++	if (!ctx->vm_ctx) {
++		err = -EINVAL;
+ 		goto err_free_ctx;
  	}
- }
  
---- a/drivers/gpu/drm/amd/display/dc/dce/dce_stream_encoder.h
-+++ b/drivers/gpu/drm/amd/display/dc/dce/dce_stream_encoder.h
-@@ -96,7 +96,8 @@
- 
- #define SE_COMMON_REG_LIST(id)\
- 	SE_COMMON_REG_LIST_DCE_BASE(id), \
--	SRI(AFMT_CNTL, DIG, id)
-+	SRI(AFMT_CNTL, DIG, id), \
-+	SRI(DP_MSA_MISC, DP, id)
- 
- #define SE_DCN_REG_LIST(id)\
- 	SE_COMMON_REG_LIST_BASE(id),\
 
 
