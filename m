@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD83E358373;
-	Thu, 30 Jul 2026 15:48:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC5A930C143;
+	Thu, 30 Jul 2026 15:49:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426539; cv=none; b=a3Koi957ER9BTLvGPAPpDH9qg1A2CilJi3sGE0P18XtCDaeAdPOg4L613adh8sBjrH9P+l5921390lb+sO1lqGTe9Qm61KLIxIXkqpHogqV1TaNq+9W7TIsp2/KGd3R5SNg3Il/s2962ctCQa9qt0R1/I3vru5m87ZnnPU7Psp4=
+	t=1785426543; cv=none; b=IsiJSFa8wc43BU+QJayw5zpAAFnLzL2lmZZbG/OvVI5chjs+U1c5UiX1mhhofDVnKwXTthvqFYTjTouJMLLHVUCRrHFmf2t1da92Ck3SkdDOSiEQYsj5r/wyExDaI/UFyiL9/KUakgfz0Hx/CoW+ZGQGB3l6rMRtBQefDUEhNrA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426539; c=relaxed/simple;
-	bh=InovPMmftiSt/osFCrfPhcT0xk2G9LnUpmMmXUeX0cE=;
+	s=arc-20240116; t=1785426543; c=relaxed/simple;
+	bh=nPQJP2E11s6B598kkoHTthNKutkR6GkDq3BTiGAvoFI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hrYSZW7/CkosBhnUpghlxRDQIm/Z38RVaEJSGvFsn8FolKXHMkkzfaBE7B3aC6Wry0dwiY6QmmMzqHq2isozt0bodc+Av0VRlz9M4DihD+P3d75fCOBJOkbROIt4GPqeqjS5pTodTEEskLTVwQPs84OX0oZ79D3xgMzzfl/+QdI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WYBhXA8T; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LfnZKZplg8OtUCsucD09QvgCU09GgED8ewuq5fanD5Fyc+7ptwjoDfDqDaoLPS107uJrwsV9mnAJc69J88TLJPx2B9r+scl2Vqmr5MWY3+177hmrij5Q+Io6WUB38OvTGRoORYN6L9LarBqQvck2+oXRVZaCOUSPqIxoo8zbMJQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tia5X8Nj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WYBhXA8T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B99B1F000E9;
-	Thu, 30 Jul 2026 15:48:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tia5X8Nj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F7121F000E9;
+	Thu, 30 Jul 2026 15:49:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426538;
-	bh=4NXEbxf+Ep0MijOESLkpIKSAYjvO/GYet5SjsWoG/zU=;
+	s=korg; t=1785426541;
+	bh=PK4TTc/UfMPjKEOGyBeq9oHcptrZouznwDkpdJSU/8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WYBhXA8TFnBIAL/AobP/HkZTImIG7ap7eBjtnVy6x8ekvXvz83OGQfpug0vxb+Oh6
-	 vDKk7olC3qBm7s2V7VFPyeb0JBhnzxaslWtdFq9yFrgEqCIeUxqzKeioofvK3YAgdN
-	 ScvDXv4/8i2HYXL8lY+Qu2cMyx6uJLPe07YEogRQ=
+	b=tia5X8NjQq1Dafw4dcTYO2salRSFwWgbXDRQLDANcQIAk6QqXSW30htSBGAUZWR2M
+	 WypCFiuc5nBeLdMow+JWquQoz0N81ExOIJaby6ZH+9rYLQcpzqItILCCq4jvxlO8Uj
+	 bvQr7GnnngFAV16pqJwxcDEokFaG2/l9UtKU88qs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Guan <guanwentao@uniontech.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>,
+	Wentao Guan <guanwentao@uniontech.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 454/602] ksmbd: restore DACL size on check_add_overflow() to avoid malformed ACL
-Date: Thu, 30 Jul 2026 16:14:06 +0200
-Message-ID: <20260730141445.498527359@linuxfoundation.org>
+Subject: [PATCH 6.12 455/602] ksmbd: bound DACL dedup walk to copied ACEs
+Date: Thu, 30 Jul 2026 16:14:07 +0200
+Message-ID: <20260730141445.520228900@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -52,88 +52,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Guan <guanwentao@uniontech.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit bbf0a8e931204ecdab494a88d43b0a24a04285c5 upstream.
+commit 58d97fcd0bf1aee694e244cc28635b9df95b543b upstream.
 
-check_add_overflow() unconditionally writes the truncated sum into *d
-even on overflow, per its contract in include/linux/overflow.h.
-The four check_add_overflow() guards in set_posix_acl_entries_dacl()
-and set_ntacl_dacl() break out of the ACE-building loops on overflow,
-but the truncated *size is then consumed downstream at the end of
-set_ntacl_dacl():
+set_ntacl_dacl() can stop copying ACEs before consuming the full input
+DACL when size accounting overflows.
 
-    pndacl->size = cpu_to_le16(le16_to_cpu(pndacl->size) + size);
+When that happens, num_aces reflects only the ACEs that were actually
+copied into the output DACL, but set_posix_acl_entries_dacl() still
+receives nt_num_aces and uses it to walk the existing ACE array during
+dedup.
 
-This produces an on-wire NT ACL whose pndacl->size under-reports the
-bytes actually written by the preceding fill_ace_for_sid()/memcpy()
-calls, yielding a malformed ACL that can trigger out-of-bounds reads
-when re-parsed by clients or ksmbd itself.
+That makes the dedup walk scan past the copied ACE array and inspect
+buffer tail that does not contain valid ACEs.
 
-Restore *size to its pre-addition value on each overflow branch (via
-`*size -= ace_sz` / `size -= nt_ace_size`) so that after the break,
-*size once again holds the cumulative size of the successfully-written
-ACEs. The committed ACL is then truncated-but-self-consistent rather
-than malformed.
+Split the two meanings currently carried by the NT ACE count. Pass the
+number of copied NT ACEs to bound the dedup walk, and preserve the
+original "input DACL had NT ACEs" state separately for the
+Everyone/default ACL fallback.
 
-The ksmbd DACL builders are the only check_add_overflow() sites found
-where an overflow path breaks out of a loop and the destination value
-is consumed afterward. The other nearby break-style cases either
-return -EINVAL on overflow (transport_ipc.c) or break without
-consuming the overflowed destination value afterward (buildid.c).
+This keeps the dedup walk aligned with the ACEs that are actually
+present in the rebuilt DACL.
 
-Fixes: 299f962c0b02 ("ksmbd: use check_add_overflow() to prevent u16 DACL size overflow")
-Assisted-by: atomcode:glm-5.2
-Assisted-by: Codex:gpt-5.5
-Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smbacl.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/smb/server/smbacl.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
 diff --git a/fs/smb/server/smbacl.c b/fs/smb/server/smbacl.c
-index 173469d112f101..ca0e4aab6dd87f 100644
+index ca0e4aab6dd87f..b0677e095c3292 100644
 --- a/fs/smb/server/smbacl.c
 +++ b/fs/smb/server/smbacl.c
-@@ -649,6 +649,7 @@ static void set_posix_acl_entries_dacl(struct mnt_idmap *idmap,
- 		ace_sz = fill_ace_for_sid(ntace, sid, ACCESS_ALLOWED, flags,
- 				pace->e_perm, 0777);
- 		if (check_add_overflow(*size, ace_sz, size)) {
-+			*size -= ace_sz;
- 			kfree(sid);
- 			break;
- 		}
-@@ -663,6 +664,7 @@ static void set_posix_acl_entries_dacl(struct mnt_idmap *idmap,
- 			ace_sz = fill_ace_for_sid(ntace, sid, ACCESS_ALLOWED,
- 					0x03, pace->e_perm, 0777);
- 			if (check_add_overflow(*size, ace_sz, size)) {
-+				*size -= ace_sz;
- 				kfree(sid);
- 				break;
- 			}
-@@ -708,6 +710,7 @@ static void set_posix_acl_entries_dacl(struct mnt_idmap *idmap,
- 		ace_sz = fill_ace_for_sid(ntace, sid, ACCESS_ALLOWED, 0x0b,
- 				pace->e_perm, 0777);
- 		if (check_add_overflow(*size, ace_sz, size)) {
-+			*size -= ace_sz;
- 			kfree(sid);
- 			break;
- 		}
-@@ -750,8 +753,10 @@ static void set_ntacl_dacl(struct mnt_idmap *idmap,
- 				goto next_ace;
+@@ -595,7 +595,8 @@ static void parse_dacl(struct mnt_idmap *idmap,
+ static void set_posix_acl_entries_dacl(struct mnt_idmap *idmap,
+ 				       struct smb_ace *pndace,
+ 				       struct smb_fattr *fattr, u16 *num_aces,
+-				       u16 *size, u32 nt_aces_num)
++				       u16 *size, u16 existing_nt_aces,
++				       bool had_nt_aces)
+ {
+ 	struct posix_acl_entry *pace;
+ 	struct smb_sid *sid;
+@@ -627,14 +628,14 @@ static void set_posix_acl_entries_dacl(struct mnt_idmap *idmap,
  
- 			memcpy((char *)pndace + size, ntace, nt_ace_size);
--			if (check_add_overflow(size, nt_ace_size, &size))
-+			if (check_add_overflow(size, nt_ace_size, &size)) {
-+				size -= nt_ace_size;
- 				break;
-+			}
- 			num_aces++;
+ 			gid = posix_acl_gid_translate(idmap, pace);
+ 			id_to_sid(gid, SIDUNIX_GROUP, sid);
+-		} else if (pace->e_tag == ACL_OTHER && !nt_aces_num) {
++		} else if (pace->e_tag == ACL_OTHER && !had_nt_aces) {
+ 			smb_copy_sid(sid, &sid_everyone);
+ 		} else {
+ 			kfree(sid);
+ 			continue;
+ 		}
+ 		ntace = pndace;
+-		for (j = 0; j < nt_aces_num; j++) {
++		for (j = 0; j < existing_nt_aces; j++) {
+ 			if (ntace->sid.sub_auth[ntace->sid.num_subauth - 1] ==
+ 					sid->sub_auth[sid->num_subauth - 1])
+ 				goto pass_same_sid;
+@@ -678,7 +679,7 @@ static void set_posix_acl_entries_dacl(struct mnt_idmap *idmap,
+ 		kfree(sid);
+ 	}
  
- next_ace:
+-	if (nt_aces_num)
++	if (had_nt_aces)
+ 		return;
+ 
+ posix_default_acl:
+@@ -732,6 +733,7 @@ static void set_ntacl_dacl(struct mnt_idmap *idmap,
+ {
+ 	struct smb_ace *ntace, *pndace;
+ 	u16 nt_num_aces = le16_to_cpu(nt_dacl->num_aces), num_aces = 0;
++	u16 copied_nt_aces;
+ 	unsigned short size = 0;
+ 	int i;
+ 
+@@ -765,8 +767,10 @@ static void set_ntacl_dacl(struct mnt_idmap *idmap,
+ 		}
+ 	}
+ 
++	copied_nt_aces = num_aces;
+ 	set_posix_acl_entries_dacl(idmap, pndace, fattr,
+-				   &num_aces, &size, nt_num_aces);
++				   &num_aces, &size, copied_nt_aces,
++				   nt_num_aces != 0);
+ 	pndacl->num_aces = cpu_to_le16(num_aces);
+ 	pndacl->size = cpu_to_le16(le16_to_cpu(pndacl->size) + size);
+ }
+@@ -784,7 +788,7 @@ static void set_mode_dacl(struct mnt_idmap *idmap,
+ 
+ 	if (fattr->cf_acls) {
+ 		set_posix_acl_entries_dacl(idmap, pndace, fattr,
+-					   &num_aces, &size, num_aces);
++					   &num_aces, &size, num_aces, false);
+ 		goto out;
+ 	}
+ 
 -- 
 2.53.0
 
