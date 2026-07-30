@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82A64411A09;
-	Thu, 30 Jul 2026 15:07:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57F53372ECB;
+	Thu, 30 Jul 2026 15:07:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424028; cv=none; b=nykPIphnxA9tYY+7RFB+xoUyZUmMQycNWh9wr6lxe3rkg7h/d/LTZGIwSqzHj8xFa+C26odZGZFJKCWmX0od/xMzxthf6WcuqAguLqYxp2Pr0lekruyOjecEkD4WabVX6rsOkk9N4N0819i8+oOmhP4+1cY+FdHGfcZqWzSoi3E=
+	t=1785424031; cv=none; b=dUadQvQKxbUlDZ4DK6pYDAYxcJIfbLnYtKBMSFjJETte97cOtjOcU0Gl6hcLk9Oi1Lz57ZCEmY7B8xQbe8EXqqi0oDATSyj9QbXC0X91AwCcvnmfX1AWssEcjPgVaNP8GC2QZCDD3Wo0QgWoKbzGX5QACzLvH/NQPdD/1oVcWwg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424028; c=relaxed/simple;
-	bh=tJbuydDkoubYwKFoZj8EY0UYy9SuI8648nrlUZoYYdY=;
+	s=arc-20240116; t=1785424031; c=relaxed/simple;
+	bh=BOPDQC6LTMU30k4Xo0jg2Ms4Szr7NWtznKW6mvMsJW8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GRh7BYl1nqE7TI3SgtzhoGxW3czJ6F4R1qsVUTLEphyS9VyOwhxYc8k3Svq2Za/r+Gjtb2HsOJVw9lLPrcCT3O2OEytI1nNj4LEyQzeW2S9zC3NvQsuR7/JJ9tCFk/oVrcUvrk1p7xEOQM4/VnOo55CY3iX5Oskrn0wuCzgnMSA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rrb+gZPA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=M32PPevnBidNnue2Z5EGSfn2hhsPJtp17GZVLqJ75iuez5zla9d06TuOQjFv/4XnB5BAGtvBSlPBtgehvSmeeK6FwLYEH5BDejwPbWecReRGR4Yc584LBwSleUUKaFuS2/x00bGOqGdJRWETI4O+kfv1tJ7XR2g8kcp2WpEoT/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AlAt+lMe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rrb+gZPA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD86E1F000E9;
-	Thu, 30 Jul 2026 15:07:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AlAt+lMe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B20421F000E9;
+	Thu, 30 Jul 2026 15:07:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424027;
-	bh=DiXHIQo27lGZFxAW01Py8FmUNz1T2NIybLwyOQ9OJt4=;
+	s=korg; t=1785424030;
+	bh=Bb3Yv5KUuUvD0+NxF2khKBuvpolvJ07nXLUoxshu2/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Rrb+gZPA4YaxhdZwqeEopO++jq+uX/7yK/KFO2HSpZKvR2ACRffrZB8KuAFbQ1bo3
-	 Qi7SMC2E//nNlzKHJliwNqm/8oLevCERJtPL6LXYKyhTPyk1WLfzIixKQLxXAbjdWZ
-	 OuTppRFexO6Xj1XzfyULPUy1Kg0uq0qheYZFahuA=
+	b=AlAt+lMeAcrcLR4tNB7Lq0V8AdYkyIsvA3rmpjDV4W+Pa1TR0TlsTHbMlqZZ/mDIt
+	 KD96oAWo0VHgGEefAM3brX5UMjYT0zFN2x3+r7u7VgFaULE8LMrTsI6gpinWJNggVz
+	 b7QS4gehm/Z+Lwn9cpwbD7Z4zG1MbVsPsKMW8Ykg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Eelco Chaudron <echaudro@redhat.com>,
+	Antonio Quartulli <antonio@openvpn.net>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 249/675] selftests: openvswitch: add config file
-Date: Thu, 30 Jul 2026 16:09:39 +0200
-Message-ID: <20260730141450.428726101@linuxfoundation.org>
+Subject: [PATCH 6.18 250/675] selftests: ovpn: add IPV6 and VETH configs
+Date: Thu, 30 Jul 2026 16:09:40 +0200
+Message-ID: <20260730141450.451453451@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -54,55 +54,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-[ Upstream commit 441a820ccef9af80a9ac5a4c85b9c396e595967c ]
+[ Upstream commit 90c792681a3732caaf7bf5bc435877736baf591a ]
 
-The kselftests doc mentions that a config file should be present "if a
-test needs specific kernel config options enabled". This selftest
-requires some kernel config, but no config file was provided.
+They are required to run the selftests:
 
-We could say that a sub-target could use the parent's config file, but
-the kselftests doc doesn't mention anything about that. Plus the
-net/openvswitch target is the only net target without a config file.
+ - Tests are executed in v4 and v6.
 
-Here is a new config file, which is a trimmed version of the net one,
-with hopefully the minimal required kconfig on top of 'make defconfig'.
+ - Virtual Ethernet are used between the different netns.
 
-The Fixes tag points to the introduction of the net/openvswitch target,
-just to help validating this target on stable kernels.
+This has not been seen on NIPA before, because the 'ovpn' tests are
+executed with the 'tcp_ao' ones, merging their config files. These two
+kernel config are present in tools/testing/selftests/net/tcp_ao/config.
 
-Fixes: 25f16c873fb1 ("selftests: add openvswitch selftest suite")
+This issue is visible when only the ovpn config is used on top of the
+default one. This is the recommended way to execute selftest targets.
+
+Fixes: 959bc330a439 ("testing/selftests: add test tool and scripts for ovpn module")
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Reviewed-by: Eelco Chaudron <echaudro@redhat.com>
-Link: https://patch.msgid.link/20260710-net-sft-fix-containers-v1-2-a2915c294ef5@kernel.org
+Acked-by: Antonio Quartulli <antonio@openvpn.net>
+Link: https://patch.msgid.link/20260710-net-sft-fix-containers-v1-3-a2915c294ef5@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/openvswitch/config | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
- create mode 100644 tools/testing/selftests/net/openvswitch/config
+ tools/testing/selftests/net/ovpn/config | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tools/testing/selftests/net/openvswitch/config b/tools/testing/selftests/net/openvswitch/config
-new file mode 100644
-index 00000000000000..c659749cd086c7
---- /dev/null
-+++ b/tools/testing/selftests/net/openvswitch/config
-@@ -0,0 +1,16 @@
-+CONFIG_GENEVE=m
-+CONFIG_INET_DIAG=y
+diff --git a/tools/testing/selftests/net/ovpn/config b/tools/testing/selftests/net/ovpn/config
+index 42699740936dba..c0a21a43018a22 100644
+--- a/tools/testing/selftests/net/ovpn/config
++++ b/tools/testing/selftests/net/ovpn/config
+@@ -4,7 +4,9 @@ CONFIG_CRYPTO_CHACHA20POLY1305=y
+ CONFIG_CRYPTO_GCM=y
+ CONFIG_DST_CACHE=y
+ CONFIG_INET=y
 +CONFIG_IPV6=y
-+CONFIG_NETFILTER=y
-+CONFIG_NET_IPGRE=m
-+CONFIG_NET_IPGRE_DEMUX=m
-+CONFIG_NF_CONNTRACK=m
-+CONFIG_NF_CONNTRACK_OVS=y
-+CONFIG_OPENVSWITCH=m
-+CONFIG_OPENVSWITCH_GENEVE=m
-+CONFIG_OPENVSWITCH_GRE=m
-+CONFIG_OPENVSWITCH_VXLAN=m
-+CONFIG_PSAMPLE=m
+ CONFIG_NET=y
+ CONFIG_NET_UDP_TUNNEL=y
+ CONFIG_OVPN=m
+ CONFIG_STREAM_PARSER=y
 +CONFIG_VETH=y
-+CONFIG_VLAN_8021Q=y
-+CONFIG_VXLAN=m
 -- 
 2.53.0
 
