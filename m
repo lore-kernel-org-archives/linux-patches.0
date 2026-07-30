@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A288E3A5433;
-	Thu, 30 Jul 2026 14:27:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37D753C3F4C;
+	Thu, 30 Jul 2026 14:28:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421677; cv=none; b=FivrCFs0tL9nd5Bjjtke4xvqNQ5+8/eAEAz1O+hxpYMsqBDB0kdv+s6j0zQkdeAmx9Q1Oc7oUQbhikCIimVPTCkoZzxaWmeXHxBzbgAspdRbNmguFJQ02xAbKJULnKKzczY40I/MKD/9gL+CtAKcWRhYzCaRMgu339kbwzeIVn4=
+	t=1785421681; cv=none; b=T0P33LGTP0vNWvcF134x1ENfrzw4MnkBy7HPfNFy0ekFYbSIm3yivccCpUz4wk5pDVJhe1j8LjdOWYv9BSCRHYBU5FL8iJLzQokQ/k981KvePYjl06t1wOj47EEBJEcC5l/sojMsgZ1Zc9cGqxAMzV+BMdMjDWeHd++qnPDsPjs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421677; c=relaxed/simple;
-	bh=dpan2z+tOT5NAMzAmlnchMlWSejLJ34B2HJUCArpeok=;
+	s=arc-20240116; t=1785421681; c=relaxed/simple;
+	bh=uQeaew4SF5xfHFPOhcBjsl5OgyeWunpRzwAJYjiCVac=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s8Lt3tQ0T46LoSkTQNBKjELk2/5S3y+ADTCvhob2vMedqILPzzQ5zSXF1Z2qcANaoF6Ch4v4N9lvC+FESSGBbh/KYjGtDJn3Da+gnqgXLEOd6Xh4JjwDuaBX+j5Qf2cLPsqnzk+EQAX6UfTg5P+4LXbkzh8ZxyCxYFcdQhpHNDM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OvVz8S9O; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SlBX10kHMRHAhpyEnZPkC1c0esI3UOtvmv1IIXV/bcPHr2FkglSdokmOIOvs91PiI0AnGAqhT2No2uOcN3XcTLo5ufSoZBAfUkZLkpWh3qjTdVnrvYMSARzm9vI9axiFosppk8QArb4Px+SJ09IFHKUD0R/rX8gVqiDdtchGkgY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UvQaqsGw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OvVz8S9O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E49081F000E9;
-	Thu, 30 Jul 2026 14:27:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UvQaqsGw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 818EC1F000E9;
+	Thu, 30 Jul 2026 14:27:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421676;
-	bh=f23iu79Zdl8RxMraOapHFsqfbdVzVbcO9CDg7uSEWsc=;
+	s=korg; t=1785421680;
+	bh=m+CVc9FbQKEwRIDzq7ZwoBx+gqWqdKdfIOEzZyzf8js=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OvVz8S9OOm7HwSbVb/nyHJoq/y5veEEc2KSbBVfxc7mCvq7ssHZMDuX4dFTJPOENE
-	 KvaRBb1FKycgEqBRQ7i8yNCWjaylZNwCXORui3SxGEmWWCtZQDAab4bQEc4z0OiWsE
-	 BCDSPc/gX14F7GXvehjm8T0nPp5t7So3bou4gLeQ=
+	b=UvQaqsGwydUjGaOF5NQFOM8MaVl1YAHLYq/ck9vgy2BSXUEMAds6j/7aK7JzeL80c
+	 FJZ8Z975nKAIuEYJkRfz9DhN9soeIbUbUaPpFo+FBNI99Nj8MXy9noXkqRidP7VwZ6
+	 UGhA8ezyXWTmNewIY6xicVHChewmaOa1x9ohvsHA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
+	Yingying Tang <yingying.tang@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 185/744] firewire: net: Fix fragmented datagram reassembly
-Date: Thu, 30 Jul 2026 16:07:38 +0200
-Message-ID: <20260730141448.218894760@linuxfoundation.org>
+Subject: [PATCH 7.1 186/744] wifi: ath12k: Fix low MLO RX throughput on WCN7850
+Date: Thu, 30 Jul 2026 16:07:39 +0200
+Message-ID: <20260730141448.239418135@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -51,97 +53,292 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Yingying Tang <yingying.tang@oss.qualcomm.com>
 
-[ Upstream commit d52a13adbb8ccbab99cd3bad36804e87d8b5c052 ]
+[ Upstream commit a2fe9dc70f3b8d5716fbcfed5fbfb9cf3948d402 ]
 
-fwnet_frag_new() keeps a sorted list of received fragments for a partial
-datagram. When a new fragment is adjacent to an existing fragment, the
-code checks whether the new fragment also closes the gap to the next or
-previous list entry.
+Commit [1] introduced a regression causing severely degraded MLO RX
+throughput on WCN7850.
 
-Those neighbor lookups currently assume that the current fragment always
-has a real next or previous fragment. At a list edge, the next or
-previous entry is the list head, not a struct fwnet_fragment_info.
+On WCN7850, there is only a single ar instance, but MLO uses two
+link IDs. ath12k_dp_peer->hw_links[] is indexed using ar->hw_link_id,
+which causes both MLO link IDs to be stored at the same index.
 
-The gap checks also compare against the old edge of the current fragment
-instead of the edge after adding the new fragment. As a result, a
-fragment that bridges two existing ranges may leave two adjacent ranges
-unmerged, so fwnet_pd_is_complete() can miss a complete datagram.
+As a result, an incorrect link ID is assigned to MSDUs in
+ath12k_dp_rx_deliver_msdu(), leading to severe MLO RX throughput loss.
 
-Check for the list head before looking up the neighboring fragment, and
-compare the neighbor against the new fragment's far edge when deciding
-whether to merge all three ranges.
+Different chipsets identify the per-MSDU link differently:
 
-This issue was found by a static analysis checker and confirmed by
-manual source review.
+  - On QCN9274 / IPQ5332, the host owns multiple ar instances and the
+    per-MSDU hw_link_id from the RX descriptor maps cleanly through
+    dp_peer->hw_links[hw_link_id] to the IEEE link_id.
 
-Fixes: c76acec6d551 ("firewire: add IPv4 support")
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Link: https://lore.kernel.org/r/20260707150454.2265951-1-ruoyuw560@gmail.com
-Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+  - On single-ar chipsets like WCN7850 / QCC2072, there is only one ar
+    instance for both MLO links, so dp_peer->hw_links[] has just one
+    valid slot and cannot be used to distinguish the two links. To
+    resolve the link, walk dp_peer->link_peers[] and match by
+    rxcb->peer_id, which on the link_peer side identifies the link
+    peer for the MSDU.
+
+Add a new hw_op set_rx_link_id() so each chipset resolves the link
+on the RX fast path using whatever signal it actually has, and let
+the op itself decide whether to populate rx_status::link_valid and
+rx_status::link_id:
+
+  QCN9274 / IPQ5332 : always derive link_id from
+                      dp_peer->hw_links[rxcb->hw_link_id] and set
+                      link_valid.
+  WCN7850 / QCC2072 : walk the link_peers[] of dp_peer to find the
+                      link_peer whose peer_id matches rxcb->peer_id,
+                      and set link_valid only when a match is found.
+                      Otherwise leave link_valid clear so that
+                      mac80211 can fall back to its own link
+                      resolution path (via addr2 / deflink).
+
+For WCN7850 / QCC2072, walking dp_peer->link_peers[] is bounded by
+the number of links actually populated, so introduce a link_peers_map
+bitmap (unsigned long) in struct ath12k_dp_peer that tracks populated
+slots and use for_each_set_bit() to iterate. Non-MLO clients hit one
+slot, current MLO clients hit two; the full ATH12K_NUM_MAX_LINKS
+array is never scanned. The bitmap is maintained with WRITE_ONCE() on
+the write side (under dp_hw->peer_lock) paired with READ_ONCE() on
+both the lockless RX read side and the write-side RMW for KCSAN
+correctness.
+
+Also guard the dp_peer dereference in ath12k_mac_peer_cleanup_all()
+with a NULL check, since peer->dp_peer can be NULL for self-peers or
+peers not yet fully assigned, the pre-existing rcu_assign_pointer()
+call there had the same latent issue.
+
+This restores the correct link ID on WCN7850 without changing the
+QCN9274 / IPQ5332 data path, which keeps its O(1) hw_links[]
+indexing.
+
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.1.c5-00302-QCAHMTSWPL_V1.0_V2.0_SILICONZ-1.115823.3
+
+Fixes: 11157e0910fd ("wifi: ath12k: Use ath12k_dp_peer in per packet Tx & Rx paths") # [1]
+Signed-off-by: Yingying Tang <yingying.tang@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260610053315.2249912-1-yingying.tang@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firewire/net.c | 39 +++++++++++++++++++++------------------
- 1 file changed, 21 insertions(+), 18 deletions(-)
+ drivers/net/wireless/ath/ath12k/dp_peer.c     |  4 +++
+ drivers/net/wireless/ath/ath12k/dp_peer.h     |  1 +
+ drivers/net/wireless/ath/ath12k/dp_rx.c       |  7 ++--
+ drivers/net/wireless/ath/ath12k/hw.h          | 16 +++++++++
+ drivers/net/wireless/ath/ath12k/mac.c         | 10 ++++--
+ drivers/net/wireless/ath/ath12k/wifi7/dp_rx.c | 33 +++++++++++++++++++
+ drivers/net/wireless/ath/ath12k/wifi7/dp_rx.h |  6 ++++
+ drivers/net/wireless/ath/ath12k/wifi7/hw.c    |  3 ++
+ 8 files changed, 73 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/firewire/net.c b/drivers/firewire/net.c
-index 82b3b6d9ed2df6..2a0727935d7367 100644
---- a/drivers/firewire/net.c
-+++ b/drivers/firewire/net.c
-@@ -298,31 +298,34 @@ static struct fwnet_fragment_info *fwnet_frag_new(
- 		if (fi->offset + fi->len == offset) {
- 			/* The new fragment can be tacked on to the end */
- 			/* Did the new fragment plug a hole? */
--			fi2 = list_entry(fi->fi_link.next,
--					 struct fwnet_fragment_info, fi_link);
--			if (fi->offset + fi->len == fi2->offset) {
--				/* glue fragments together */
--				fi->len += len + fi2->len;
--				list_del(&fi2->fi_link);
--				kfree(fi2);
--			} else {
--				fi->len += len;
-+			if (!list_is_last(&fi->fi_link, &pd->fi_list)) {
-+				fi2 = list_next_entry(fi, fi_link);
-+				if (offset + len == fi2->offset) {
-+					/* glue fragments together */
-+					fi->len += len + fi2->len;
-+					list_del(&fi2->fi_link);
-+					kfree(fi2);
-+
-+					return fi;
-+				}
- 			}
-+			fi->len += len;
+diff --git a/drivers/net/wireless/ath/ath12k/dp_peer.c b/drivers/net/wireless/ath/ath12k/dp_peer.c
+index a1100782d45e6b..f57f1483c3e47f 100644
+--- a/drivers/net/wireless/ath/ath12k/dp_peer.c
++++ b/drivers/net/wireless/ath/ath12k/dp_peer.c
+@@ -570,6 +570,8 @@ int ath12k_dp_link_peer_assign(struct ath12k_dp *dp, struct ath12k_dp_hw *dp_hw,
+ 	peerid_index = ath12k_dp_peer_get_peerid_index(dp, peer->peer_id);
  
- 			return fi;
- 		}
- 		if (offset + len == fi->offset) {
- 			/* The new fragment can be tacked on to the beginning */
- 			/* Did the new fragment plug a hole? */
--			fi2 = list_entry(fi->fi_link.prev,
--					 struct fwnet_fragment_info, fi_link);
--			if (fi2->offset + fi2->len == fi->offset) {
--				/* glue fragments together */
--				fi2->len += fi->len + len;
--				list_del(&fi->fi_link);
--				kfree(fi);
--
--				return fi2;
-+			if (!list_is_first(&fi->fi_link, &pd->fi_list)) {
-+				fi2 = list_prev_entry(fi, fi_link);
-+				if (fi2->offset + fi2->len == offset) {
-+					/* glue fragments together */
-+					fi2->len += fi->len + len;
-+					list_del(&fi->fi_link);
-+					kfree(fi);
+ 	rcu_assign_pointer(dp_peer->link_peers[peer->link_id], peer);
++	WRITE_ONCE(dp_peer->link_peers_map,
++		   READ_ONCE(dp_peer->link_peers_map) | BIT(peer->link_id));
+ 
+ 	rcu_assign_pointer(dp_hw->dp_peers[peerid_index], dp_peer);
+ 
+@@ -632,6 +634,8 @@ void ath12k_dp_link_peer_unassign(struct ath12k_dp *dp, struct ath12k_dp_hw *dp_
+ 	peerid_index = ath12k_dp_peer_get_peerid_index(dp, peer->peer_id);
+ 
+ 	rcu_assign_pointer(dp_peer->link_peers[peer->link_id], NULL);
++	WRITE_ONCE(dp_peer->link_peers_map,
++		   READ_ONCE(dp_peer->link_peers_map) & ~BIT(peer->link_id));
+ 
+ 	rcu_assign_pointer(dp_hw->dp_peers[peerid_index], NULL);
+ 
+diff --git a/drivers/net/wireless/ath/ath12k/dp_peer.h b/drivers/net/wireless/ath/ath12k/dp_peer.h
+index 113b8040010fa3..d4d2ff16e83695 100644
+--- a/drivers/net/wireless/ath/ath12k/dp_peer.h
++++ b/drivers/net/wireless/ath/ath12k/dp_peer.h
+@@ -140,6 +140,7 @@ struct ath12k_dp_peer {
+ 
+ 	/* Info used in MMIC verification of * RX fragments */
+ 	struct ieee80211_key_conf *keys[WMI_MAX_KEY_INDEX + 1];
++	unsigned long link_peers_map;
+ 	struct ath12k_dp_link_peer __rcu *link_peers[ATH12K_NUM_MAX_LINKS];
+ 	struct ath12k_reoq_buf reoq_bufs[IEEE80211_NUM_TIDS + 1];
+ 	struct ath12k_dp_rx_tid rx_tid[IEEE80211_NUM_TIDS + 1];
+diff --git a/drivers/net/wireless/ath/ath12k/dp_rx.c b/drivers/net/wireless/ath/ath12k/dp_rx.c
+index b108ccd0f63703..b5dba7c0155f90 100644
+--- a/drivers/net/wireless/ath/ath12k/dp_rx.c
++++ b/drivers/net/wireless/ath/ath12k/dp_rx.c
+@@ -1344,10 +1344,9 @@ void ath12k_dp_rx_deliver_msdu(struct ath12k_pdev_dp *dp_pdev, struct napi_struc
+ 
+ 	pubsta = peer ? peer->sta : NULL;
+ 
+-	if (pubsta && pubsta->valid_links) {
+-		status->link_valid = 1;
+-		status->link_id = peer->hw_links[rxcb->hw_link_id];
+-	}
++	status->link_valid = 0;
++	if (pubsta && pubsta->valid_links)
++		ath12k_hw_set_rx_link_id(dp->hw_params, peer, rxcb, status);
+ 
+ 	ath12k_dbg(dp->ab, ATH12K_DBG_DATA,
+ 		   "rx skb %p len %u peer %pM %d %s sn %u %s%s%s%s%s%s%s%s%s%s rate_idx %u vht_nss %u freq %u band %u flag 0x%x fcs-err %i mic-err %i amsdu-more %i\n",
+diff --git a/drivers/net/wireless/ath/ath12k/hw.h b/drivers/net/wireless/ath/ath12k/hw.h
+index a9888e0521a1d1..da75d19ae1a007 100644
+--- a/drivers/net/wireless/ath/ath12k/hw.h
++++ b/drivers/net/wireless/ath/ath12k/hw.h
+@@ -13,6 +13,10 @@
+ #include "wmi.h"
+ #include "hal.h"
+ 
++struct ath12k_dp_peer;
++struct ath12k_skb_rxcb;
++struct ieee80211_rx_status;
 +
-+					return fi2;
-+				}
- 			}
- 			fi->offset = offset;
- 			fi->len += len;
+ /* Target configuration defines */
+ 
+ /* Num VDEVS per radio */
+@@ -224,6 +228,9 @@ struct ath12k_hw_ops {
+ 	bool (*dp_srng_is_tx_comp_ring)(int ring_num);
+ 	bool (*is_frame_link_agnostic)(struct ath12k_link_vif *arvif,
+ 				       struct ieee80211_mgmt *mgmt);
++	void (*set_rx_link_id)(struct ath12k_dp_peer *dp_peer,
++			       struct ath12k_skb_rxcb *rxcb,
++			       struct ieee80211_rx_status *status);
+ };
+ 
+ static inline
+@@ -254,6 +261,15 @@ static inline int ath12k_hw_mac_id_to_srng_id(const struct ath12k_hw_params *hw,
+ 	return 0;
+ }
+ 
++static inline void ath12k_hw_set_rx_link_id(const struct ath12k_hw_params *hw,
++					    struct ath12k_dp_peer *dp_peer,
++					    struct ath12k_skb_rxcb *rxcb,
++					    struct ieee80211_rx_status *status)
++{
++	if (hw->hw_ops->set_rx_link_id)
++		hw->hw_ops->set_rx_link_id(dp_peer, rxcb, status);
++}
++
+ struct ath12k_fw_ie {
+ 	__le32 id;
+ 	__le32 len;
+diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
+index 7190aafd3ae693..7408c2577dc2e6 100644
+--- a/drivers/net/wireless/ath/ath12k/mac.c
++++ b/drivers/net/wireless/ath/ath12k/mac.c
+@@ -1234,9 +1234,13 @@ void ath12k_mac_peer_cleanup_all(struct ath12k *ar)
+ 		/* cleanup dp peer */
+ 		spin_lock_bh(&dp_hw->peer_lock);
+ 		dp_peer = peer->dp_peer;
+-		peerid_index = ath12k_dp_peer_get_peerid_index(dp, peer->peer_id);
+-		rcu_assign_pointer(dp_peer->link_peers[peer->link_id], NULL);
+-		rcu_assign_pointer(dp_hw->dp_peers[peerid_index], NULL);
++		if (dp_peer) {
++			peerid_index = ath12k_dp_peer_get_peerid_index(dp, peer->peer_id);
++			rcu_assign_pointer(dp_peer->link_peers[peer->link_id], NULL);
++			WRITE_ONCE(dp_peer->link_peers_map,
++				   READ_ONCE(dp_peer->link_peers_map) & ~BIT(peer->link_id));
++			rcu_assign_pointer(dp_hw->dp_peers[peerid_index], NULL);
++		}
+ 		spin_unlock_bh(&dp_hw->peer_lock);
+ 
+ 		ath12k_dp_link_peer_rhash_delete(dp, peer);
+diff --git a/drivers/net/wireless/ath/ath12k/wifi7/dp_rx.c b/drivers/net/wireless/ath/ath12k/wifi7/dp_rx.c
+index a5e290edaa898c..99c56528346940 100644
+--- a/drivers/net/wireless/ath/ath12k/wifi7/dp_rx.c
++++ b/drivers/net/wireless/ath/ath12k/wifi7/dp_rx.c
+@@ -5,6 +5,7 @@
+  */
+ 
+ #include "dp_rx.h"
++#include "../dp_peer.h"
+ #include "../dp_tx.h"
+ #include "../peer.h"
+ #include "hal_qcn9274.h"
+@@ -2242,3 +2243,35 @@ ath12k_wifi7_dp_rxdesc_mpdu_valid(struct ath12k_base *ab,
+ 
+ 	return tlv_tag == HAL_RX_MPDU_START;
+ }
++
++void
++ath12k_wifi7_dp_rx_set_link_id_qcn9274(struct ath12k_dp_peer *dp_peer,
++				       struct ath12k_skb_rxcb *rxcb,
++				       struct ieee80211_rx_status *status)
++{
++	status->link_valid = 1;
++	status->link_id = dp_peer->hw_links[rxcb->hw_link_id];
++}
++
++void
++ath12k_wifi7_dp_rx_set_link_id_wcn7850(struct ath12k_dp_peer *dp_peer,
++				       struct ath12k_skb_rxcb *rxcb,
++				       struct ieee80211_rx_status *status)
++{
++	struct ath12k_dp_link_peer *link_peer;
++	unsigned long links_map;
++	int i;
++
++	RCU_LOCKDEP_WARN(!rcu_read_lock_held(),
++			 "ath12k set rx link id called without rcu lock");
++
++	links_map = READ_ONCE(dp_peer->link_peers_map);
++	for_each_set_bit(i, &links_map, ATH12K_NUM_MAX_LINKS) {
++		link_peer = rcu_dereference(dp_peer->link_peers[i]);
++		if (link_peer && link_peer->peer_id == rxcb->peer_id) {
++			status->link_valid = 1;
++			status->link_id = link_peer->link_id;
++			return;
++		}
++	}
++}
+diff --git a/drivers/net/wireless/ath/ath12k/wifi7/dp_rx.h b/drivers/net/wireless/ath/ath12k/wifi7/dp_rx.h
+index 8aa79faf567fd0..1d3a4788a2dd91 100644
+--- a/drivers/net/wireless/ath/ath12k/wifi7/dp_rx.h
++++ b/drivers/net/wireless/ath/ath12k/wifi7/dp_rx.h
+@@ -57,4 +57,10 @@ ath12k_wifi7_dp_rxdesc_mpdu_valid(struct ath12k_base *ab,
+ 				  struct hal_rx_desc *rx_desc);
+ int ath12k_wifi7_dp_rx_tid_delete_handler(struct ath12k_base *ab,
+ 					  struct ath12k_dp_rx_tid_rxq *rx_tid);
++void ath12k_wifi7_dp_rx_set_link_id_qcn9274(struct ath12k_dp_peer *dp_peer,
++					    struct ath12k_skb_rxcb *rxcb,
++					    struct ieee80211_rx_status *status);
++void ath12k_wifi7_dp_rx_set_link_id_wcn7850(struct ath12k_dp_peer *dp_peer,
++					    struct ath12k_skb_rxcb *rxcb,
++					    struct ieee80211_rx_status *status);
+ #endif
+diff --git a/drivers/net/wireless/ath/ath12k/wifi7/hw.c b/drivers/net/wireless/ath/ath12k/wifi7/hw.c
+index cb3185850439ee..f687eb69ea8da4 100644
+--- a/drivers/net/wireless/ath/ath12k/wifi7/hw.c
++++ b/drivers/net/wireless/ath/ath12k/wifi7/hw.c
+@@ -158,6 +158,7 @@ static const struct ath12k_hw_ops qcn9274_ops = {
+ 	.get_ring_selector = ath12k_wifi7_hw_get_ring_selector_qcn9274,
+ 	.dp_srng_is_tx_comp_ring = ath12k_wifi7_dp_srng_is_comp_ring_qcn9274,
+ 	.is_frame_link_agnostic = ath12k_wifi7_is_frame_link_agnostic_qcn9274,
++	.set_rx_link_id = ath12k_wifi7_dp_rx_set_link_id_qcn9274,
+ };
+ 
+ static const struct ath12k_hw_ops wcn7850_ops = {
+@@ -168,6 +169,7 @@ static const struct ath12k_hw_ops wcn7850_ops = {
+ 	.get_ring_selector = ath12k_wifi7_hw_get_ring_selector_wcn7850,
+ 	.dp_srng_is_tx_comp_ring = ath12k_wifi7_dp_srng_is_comp_ring_wcn7850,
+ 	.is_frame_link_agnostic = ath12k_wifi7_is_frame_link_agnostic_wcn7850,
++	.set_rx_link_id = ath12k_wifi7_dp_rx_set_link_id_wcn7850,
+ };
+ 
+ static const struct ath12k_hw_ops qcc2072_ops = {
+@@ -178,6 +180,7 @@ static const struct ath12k_hw_ops qcc2072_ops = {
+ 	.get_ring_selector = ath12k_wifi7_hw_get_ring_selector_wcn7850,
+ 	.dp_srng_is_tx_comp_ring = ath12k_wifi7_dp_srng_is_comp_ring_wcn7850,
+ 	.is_frame_link_agnostic = ath12k_wifi7_is_frame_link_agnostic_wcn7850,
++	.set_rx_link_id = ath12k_wifi7_dp_rx_set_link_id_wcn7850,
+ };
+ 
+ #define ATH12K_TX_RING_MASK_0 0x1
 -- 
 2.53.0
 
