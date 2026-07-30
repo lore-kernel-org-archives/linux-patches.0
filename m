@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C7BA44331B;
-	Thu, 30 Jul 2026 15:21:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16EAE453A25;
+	Thu, 30 Jul 2026 15:21:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424904; cv=none; b=R9uK/Lq5sHxeYXjmBTyxxAX2OTgbPeoltuH14TjFnYZ46TeZAc+GWGy3EATFuS/0Ec35Nq2GTf+EbPY3KIelIR4M3d3WGcleI2OvviVLY9/cx8WSqeJ+hZP96qSg7v1oQVr45O44VOPWAS631LRinA7iSqichOBxAzlNvwqJ1TA=
+	t=1785424907; cv=none; b=l9OZZ4HU6hn5TTSMCEcBG3T6yoKrLMA1yAI7WwU5w5AsQL+wM1kQQS0X5vXvoQ1SGUfbBecinS6lIWPFBw2kJcrU6hcvN5QJxJFE7VpQbQyWrM7GwN+XaUi6wZThEOgjhbyqANaUnKyfDo6QJzmVloKIf5QRopeTFvd4bjmVyLs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424904; c=relaxed/simple;
-	bh=Dnre8HVa9kbGIJViOpm9Q0bcDNrZ08dni7VwzQJwuZk=;
+	s=arc-20240116; t=1785424907; c=relaxed/simple;
+	bh=RSprM9Xp8o1gknqOvZVHwa1XdSuDkeqTspH9Hf6KSik=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uSCjCRULXqTc7o2C/f5gtyKVChDa7FJuvXxQFPouEBoed9CJawWbewK+Upo6tIiZQ+dPF9kN+w73pMrtFbP1tJ7m/srERQcrVFIYsUqDai45Qab8mFFgtSzcihyAad0Ov77/q3h6yaYqdbCnrPkVe/7P4ipuqdyNHPi0fwvyyT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZFPrB1Kc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TIIW/0jSqeLg5cQoPXcEf98WrIgvoYAAMq8eQAga9f4WxI3OZt64KEVgOFjpieliPQfkiuWSEzXbkd3T96kanWC94KvS38YJ9Kp1thsXEJoS5etv8HCrnDFZeD5CuH6WLMf10p+XGGk/qPigZlkLpdFyZew6bQYtgdKCrDzzzIA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E52iy9W+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZFPrB1Kc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EA931F000E9;
-	Thu, 30 Jul 2026 15:21:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E52iy9W+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D0EC1F000E9;
+	Thu, 30 Jul 2026 15:21:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424903;
-	bh=MzWSR3NtF6t/aF8+mqUI4lpFtSHWfwBPR4+NfKswFR8=;
+	s=korg; t=1785424906;
+	bh=K3NL6hLrtSGCopPirsYWkZecAzUGT68EIi0eZ+9MZ6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZFPrB1KcHE2e2O01IFbiqS3PJUzmP850fLuTeedYG+74pYXn/C//u3QWZMQv+JbHm
-	 4PfvjpNt99H38WvsJTzXMmg4B2ccehnA45DhrMyZIrpH1pRxrJZNPnyK8KdqMwtsh0
-	 G195Wi92vskMoY0a9eGgAltx6WUB7GAXEBFzy9uw=
+	b=E52iy9W+Q0tqC3IQRP5vEckkbtP42x09D4CNI5cooim7noa2innchBBN+Pi/i978L
+	 rO1YNDUWXN0SinNedu6PQhDp5BJRIeRgUqJ2VIB5kq5gM8SjnGAUsfQM8vF80YiHwP
+	 LIcTszARz4le/JSU+sKazOGGo1U8aoGY772NA/sw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Carl Johnson <carl@jpartners.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.18 550/675] smb: client: handle STATUS_STOPPED_ON_SYMLINK responses without a symlink target
-Date: Thu, 30 Jul 2026 16:14:40 +0200
-Message-ID: <20260730141456.830087069@linuxfoundation.org>
+	Kyle Zeng <kylebot@openai.com>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Aaron Conole <aconole@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.18 559/675] openvswitch: fix GSO userspace truncation underflow
+Date: Thu, 30 Jul 2026 16:14:49 +0200
+Message-ID: <20260730141457.016509167@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -45,167 +46,204 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Carl Johnson <carl@jpartners.org>
+From: Kyle Zeng <kylebot@openai.com>
 
-commit 2eb74eef4b7eda8df593d22fb48e94ef959ec8a5 upstream.
+commit 4032f8ed10fcb84d41c508dfb04be96589f78dfe upstream.
 
-The macOS built-in SMB server returns STATUS_STOPPED_ON_SYMLINK for a
-CREATE on a path whose final component is a symlink, but it does not
-include a Symbolic Link Error Response in the error data: both
-ErrorContextCount and ByteCount are zero, so the symlink target is not
-present in the response at all.  Per [MS-SMB2] section 2.2.2 such a
-response should carry a valid Symbolic Link Error Response, so this is a
-server bug, but the target can still be retrieved with
-FSCTL_GET_REPARSE_POINT.
+OVS_ACTION_ATTR_TRUNC currently stores a delta from the original skb
+length in OVS_CB(skb)->cutlen. When a later userspace action segments a
+GSO skb, queue_gso_packets() reuses that delta for each smaller segment.
+A segment can then reach queue_userspace_packet() with cutlen greater
+than skb->len, underflowing the length passed to skb_zerocopy().
 
-Frame from a capture against macOS 26.5.2 (build 25F84):
+Store the maximum preserved length instead and bound each consumer
+against the current skb length. Use U32_MAX as the no-truncation
+sentinel so the value remains valid if skb geometry changes before a
+consumer handles it.
 
-    SMB2 hdr : Status=0x8000002d STATUS_STOPPED_ON_SYMLINK, Cmd=Create
-    Error Rsp: StructureSize=0x0009
-               Error Context Count: 0
-               Byte Count: 0
-               Error Data: 00
-
-symlink_data() cannot find a struct smb2_symlink_err_rsp in such a
-response and returns -EINVAL, which parse_create_response() propagates,
-so smb2_query_path_info() bails out at
-
-	if (rc || !data->reparse_point)
-		goto out;
-
-before it can retry with SMB2_OP_GET_REPARSE.  stat(), readlink() and ls
-of any server-side symlink then fail with -EINVAL:
-
-  $ ls -la Config
-  l????????? ? ? ? ? ? Config.json
-  $ stat Config/Config.json
-  stat: cannot statx 'Config/Config.json': Invalid argument
-
-A 5.10 client resolves these symlinks correctly against the same server
-and share, so this is a regression for Apple SMB servers.
-
-Handle it in several places:
-
- - symlink_data() detects the empty response (ErrorContextCount and
-   ByteCount both zero) and returns a distinct -ENODATA, so that "server
-   did not send the target" can be told apart from a genuinely malformed
-   response and only this case is worked around.
-
- - parse_create_response() treats -ENODATA like
-   STATUS_IO_REPARSE_TAG_NOT_HANDLED, which does not carry the target
-   either: leave the reparse tag unset and clear rc, so the existing
-   SMB2_OP_GET_REPARSE path retrieves the target.
-
- - smb2_query_path_info() only fixes up the symlink target type when the
-   target is already known.  SMB2_OP_GET_REPARSE sets data->reparse.tag
-   but does not parse the target out of the reparse buffer; that happens
-   later, in reparse_info_to_fattr().  Without this check
-   smb2_fix_symlink_target_type() is called with a NULL target and
-   returns -EIO.  This could not happen with servers that send the target
-   inline and therefore skip SMB2_OP_GET_REPARSE.
-
- - smb2_open_file() maps -ENODATA to -EIO, matching
-   STATUS_IO_REPARSE_TAG_NOT_HANDLED, so its callers retrieve the target
-   with SMB2_OP_GET_REPARSE as well.
-
-Tested on Debian 13, kernel 6.18.38 (armv7), against macOS 26.5.2:
-symlinks now resolve, including relative, parent-traversing and directory
-symlinks, and reads through symlinks succeed.
-
+Fixes: f2a4d086ed4c ("openvswitch: Add packet truncation support.")
 Cc: stable@vger.kernel.org
-Co-developed-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Carl Johnson <carl@jpartners.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
+Reviewed-by: Aaron Conole <aconole@redhat.com>
+Link: https://patch.msgid.link/20260707221635.27489-1-kylebot@openai.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2file.c  |   21 +++++++++++++++++++++
- fs/smb/client/smb2inode.c |   23 ++++++++++++++++++++---
- 2 files changed, 41 insertions(+), 3 deletions(-)
+ net/openvswitch/actions.c  |   19 +++++++------------
+ net/openvswitch/datapath.c |   25 ++++++++++++++-----------
+ net/openvswitch/datapath.h |    2 +-
+ net/openvswitch/vport.c    |    2 +-
+ 4 files changed, 23 insertions(+), 25 deletions(-)
 
---- a/fs/smb/client/smb2file.c
-+++ b/fs/smb/client/smb2file.c
-@@ -30,6 +30,19 @@ static struct smb2_symlink_err_rsp *syml
- 	u8 *end = (u8 *)err + iov->iov_len;
- 	u32 len;
+--- a/net/openvswitch/actions.c
++++ b/net/openvswitch/actions.c
+@@ -836,12 +836,8 @@ static void do_output(struct datapath *d
+ 		u16 mru = OVS_CB(skb)->mru;
+ 		u32 cutlen = OVS_CB(skb)->cutlen;
  
-+	/*
-+	 * Per [MS-SMB2] section 2.2.2, a STATUS_STOPPED_ON_SYMLINK response has to
-+	 * carry a Symbolic Link Error Response, so ByteCount cannot be zero.  Some
-+	 * servers (e.g. the macOS built-in SMB server) violate this and return an
-+	 * empty error response, with both ErrorContextCount and ByteCount set to
-+	 * zero, i.e. without the symlink target.  Detect this and return -ENODATA
-+	 * so that callers can tell "server did not send the target" apart from a
-+	 * malformed response, and retrieve the target with FSCTL_GET_REPARSE_POINT
-+	 * instead.
-+	 */
-+	if (!err->ErrorContextCount && !le32_to_cpu(err->ByteCount))
-+		return ERR_PTR(-ENODATA);
-+
- 	if (err->ErrorContextCount) {
- 		struct smb2_error_context_rsp *p;
+-		if (unlikely(cutlen > 0)) {
+-			if (skb->len - cutlen > ovs_mac_header_len(key))
+-				pskb_trim(skb, skb->len - cutlen);
+-			else
+-				pskb_trim(skb, ovs_mac_header_len(key));
+-		}
++		if (unlikely(cutlen < skb->len))
++			pskb_trim(skb, max(cutlen, ovs_mac_header_len(key)));
  
-@@ -200,6 +213,14 @@ int smb2_open_file(const unsigned int xi
- 			rc = smb2_parse_symlink_response(oparms->cifs_sb, &err_iov,
- 							 oparms->path,
- 							 &data->symlink_target);
-+			/*
-+			 * If smb2_parse_symlink_response returned -ENODATA then the
-+			 * symlink_target was not sent. Treat this as if the SMB2_open()
-+			 * failed with STATUS_IO_REPARSE_TAG_NOT_HANDLED status, which is
-+			 * indicated by the -EIO errno.
-+			 */
-+			if (rc == -ENODATA)
-+				rc = -EIO;
- 			if (!rc) {
- 				memset(smb2_data, 0, sizeof(*smb2_data));
- 				oparms->create_options |= OPEN_REPARSE_POINT;
---- a/fs/smb/client/smb2inode.c
-+++ b/fs/smb/client/smb2inode.c
-@@ -896,9 +896,19 @@ static int parse_create_response(struct
- 		rc = smb2_parse_symlink_response(cifs_sb, iov,
- 						 full_path,
- 						 &data->symlink_target);
--		if (rc)
-+		if (rc != 0 && rc != -ENODATA)
- 			return rc;
--		tag = IO_REPARSE_TAG_SYMLINK;
-+		/*
-+		 * -ENODATA means that the response was parsed but did not contain
-+		 * the symlink target at all (see symlink_data()).  Treat it like
-+		 * STATUS_IO_REPARSE_TAG_NOT_HANDLED, which does not contain it
-+		 * either: leave the tag unset and clear rc, so that the caller
-+		 * retrieves the target with SMB2_OP_GET_REPARSE.
-+		 */
-+		if (rc == -ENODATA)
-+			rc = 0;
-+		else
-+			tag = IO_REPARSE_TAG_SYMLINK;
- 		reparse_point = true;
- 		break;
- 	case STATUS_SUCCESS:
-@@ -1091,7 +1101,14 @@ int smb2_query_path_info(const unsigned
- 				rc = -EOPNOTSUPP;
+ 		if (likely(!mru ||
+ 		           (skb->len <= mru + vport->dev->hard_header_len))) {
+@@ -1233,7 +1229,7 @@ static void execute_psample(struct datap
+ 
+ 	psample_group.net = ovs_dp_get_net(dp);
+ 	md.in_ifindex = OVS_CB(skb)->input_vport->dev->ifindex;
+-	md.trunc_size = skb->len - OVS_CB(skb)->cutlen;
++	md.trunc_size = min(skb->len, OVS_CB(skb)->cutlen);
+ 	md.rate_as_probability = 1;
+ 
+ 	rate = OVS_CB(skb)->probability ? OVS_CB(skb)->probability : U32_MAX;
+@@ -1283,22 +1279,21 @@ static int do_execute_actions(struct dat
+ 			clone = skb_clone(skb, GFP_ATOMIC);
+ 			if (clone)
+ 				do_output(dp, clone, port, key);
+-			OVS_CB(skb)->cutlen = 0;
++			OVS_CB(skb)->cutlen = U32_MAX;
+ 			break;
  		}
  
--		if (data->reparse.tag == IO_REPARSE_TAG_SYMLINK && !rc) {
-+		/*
-+		 * If the symlink was already parsed in create response then it is needed to fix
-+		 * its type now (after the second call with OPEN_REPARSE_POINT which filled the
-+		 * data->fi.Attributes). If the symlink was not parsed in create response then
-+		 * the data->symlink_target was not filled yet and then the type will be fixed
-+		 * later after data->symlink_target is filled.
-+		 */
-+		if (data->reparse.tag == IO_REPARSE_TAG_SYMLINK && !rc && data->symlink_target) {
- 			bool directory = le32_to_cpu(data->fi.Attributes) & ATTR_DIRECTORY;
- 			rc = smb2_fix_symlink_target_type(&data->symlink_target, directory, cifs_sb);
+ 		case OVS_ACTION_ATTR_TRUNC: {
+ 			struct ovs_action_trunc *trunc = nla_data(a);
+ 
+-			if (skb->len > trunc->max_len)
+-				OVS_CB(skb)->cutlen = skb->len - trunc->max_len;
++			OVS_CB(skb)->cutlen = trunc->max_len;
+ 			break;
  		}
+ 
+ 		case OVS_ACTION_ATTR_USERSPACE:
+ 			output_userspace(dp, skb, key, a, attr,
+ 						     len, OVS_CB(skb)->cutlen);
+-			OVS_CB(skb)->cutlen = 0;
++			OVS_CB(skb)->cutlen = U32_MAX;
+ 			if (nla_is_last(a, rem)) {
+ 				consume_skb(skb);
+ 				return 0;
+@@ -1452,7 +1447,7 @@ static int do_execute_actions(struct dat
+ 
+ 		case OVS_ACTION_ATTR_PSAMPLE:
+ 			execute_psample(dp, skb, a);
+-			OVS_CB(skb)->cutlen = 0;
++			OVS_CB(skb)->cutlen = U32_MAX;
+ 			if (nla_is_last(a, rem)) {
+ 				consume_skb(skb);
+ 				return 0;
+--- a/net/openvswitch/datapath.c
++++ b/net/openvswitch/datapath.c
+@@ -276,7 +276,7 @@ void ovs_dp_process_packet(struct sk_buf
+ 			upcall.portid = ovs_vport_find_upcall_portid(p, skb);
+ 
+ 		upcall.mru = OVS_CB(skb)->mru;
+-		error = ovs_dp_upcall(dp, skb, key, &upcall, 0);
++		error = ovs_dp_upcall(dp, skb, key, &upcall, U32_MAX);
+ 		switch (error) {
+ 		case 0:
+ 		case -EAGAIN:
+@@ -457,7 +457,8 @@ static int queue_userspace_packet(struct
+ 	struct sk_buff *nskb = NULL;
+ 	struct sk_buff *user_skb = NULL; /* to be queued to userspace */
+ 	struct nlattr *nla;
+-	size_t len;
++	size_t msg_size;
++	size_t skb_len;
+ 	unsigned int hlen;
+ 	int err, dp_ifindex;
+ 	u64 hash;
+@@ -478,7 +479,8 @@ static int queue_userspace_packet(struct
+ 		skb = nskb;
+ 	}
+ 
+-	if (nla_attr_size(skb->len) > USHRT_MAX) {
++	skb_len = min(skb->len, cutlen);
++	if (nla_attr_size(skb_len) > USHRT_MAX) {
+ 		err = -EFBIG;
+ 		goto out;
+ 	}
+@@ -493,13 +495,13 @@ static int queue_userspace_packet(struct
+ 	 * padding logic. Only perform zerocopy if padding is not required.
+ 	 */
+ 	if (dp->user_features & OVS_DP_F_UNALIGNED)
+-		hlen = skb_zerocopy_headlen(skb);
++		hlen = min(skb_zerocopy_headlen(skb), cutlen);
+ 	else
+-		hlen = skb->len;
++		hlen = skb_len;
+ 
+-	len = upcall_msg_size(upcall_info, hlen - cutlen,
+-			      OVS_CB(skb)->acts_origlen);
+-	user_skb = genlmsg_new(len, GFP_ATOMIC);
++	msg_size = upcall_msg_size(upcall_info, hlen,
++				   OVS_CB(skb)->acts_origlen);
++	user_skb = genlmsg_new(msg_size, GFP_ATOMIC);
+ 	if (!user_skb) {
+ 		err = -ENOMEM;
+ 		goto out;
+@@ -560,7 +562,7 @@ static int queue_userspace_packet(struct
+ 	}
+ 
+ 	/* Add OVS_PACKET_ATTR_LEN when packet is truncated */
+-	if (cutlen > 0 &&
++	if (skb_len < skb->len &&
+ 	    nla_put_u32(user_skb, OVS_PACKET_ATTR_LEN, skb->len)) {
+ 		err = -ENOBUFS;
+ 		goto out;
+@@ -585,9 +587,9 @@ static int queue_userspace_packet(struct
+ 		err = -ENOBUFS;
+ 		goto out;
+ 	}
+-	nla->nla_len = nla_attr_size(skb->len - cutlen);
++	nla->nla_len = nla_attr_size(skb_len);
+ 
+-	err = skb_zerocopy(user_skb, skb, skb->len - cutlen, hlen);
++	err = skb_zerocopy(user_skb, skb, skb_len, hlen);
+ 	if (err)
+ 		goto out;
+ 
+@@ -644,6 +646,7 @@ static int ovs_packet_cmd_execute(struct
+ 		packet->ignore_df = 1;
+ 	}
+ 	OVS_CB(packet)->mru = mru;
++	OVS_CB(packet)->cutlen = U32_MAX;
+ 
+ 	if (a[OVS_PACKET_ATTR_HASH]) {
+ 		hash = nla_get_u64(a[OVS_PACKET_ATTR_HASH]);
+--- a/net/openvswitch/datapath.h
++++ b/net/openvswitch/datapath.h
+@@ -118,7 +118,7 @@ struct datapath {
+  * @mru: The maximum received fragement size; 0 if the packet is not
+  * fragmented.
+  * @acts_origlen: The netlink size of the flow actions applied to this skb.
+- * @cutlen: The number of bytes from the packet end to be removed.
++ * @cutlen: The number of bytes in the packet to preserve on output.
+  * @probability: The sampling probability that was applied to this skb; 0 means
+  * no sampling has occurred; U32_MAX means 100% probability.
+  * @upcall_pid: Netlink socket PID to use for sending this packet to userspace;
+--- a/net/openvswitch/vport.c
++++ b/net/openvswitch/vport.c
+@@ -503,7 +503,7 @@ int ovs_vport_receive(struct vport *vpor
+ 
+ 	OVS_CB(skb)->input_vport = vport;
+ 	OVS_CB(skb)->mru = 0;
+-	OVS_CB(skb)->cutlen = 0;
++	OVS_CB(skb)->cutlen = U32_MAX;
+ 	OVS_CB(skb)->probability = 0;
+ 	OVS_CB(skb)->upcall_pid = 0;
+ 	if (unlikely(dev_net(skb->dev) != ovs_dp_get_net(vport->dp))) {
 
 
