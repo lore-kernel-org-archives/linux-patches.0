@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D4613438B7;
-	Thu, 30 Jul 2026 15:39:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7814235DA67;
+	Thu, 30 Jul 2026 15:39:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425993; cv=none; b=kUab7q/nEfMz/UAUV6qKXJt4pNKq4Xa8hjfAgZewrC0Cx9qTsqcNvXnNyaEvApHYwfmwA+HKZ7Kz6kwf1b2TlPw32jhTr0zJAf4jAwOk6WaIzdmKrmu7JWCDMz0R8AbR95k6ZK1xAt+ng65hXBUgWoWOToC93algg7cR2YHWVRg=
+	t=1785425996; cv=none; b=gNu+y7liD7rHFF3Vfx+TLPv6iQ7VCMPTwccDG7TWqIQVNICWLjOPRHgCogS7zmR4b5rsRiDMaNN76rZYRH3YV48IcRilGWSElF9S3fxvj/ZDPmYnJp2P0ipofr4athxzXW+dirq0yUEJp6MjNw5jnJCY6Q8toYCPd0vv2cpezUM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425993; c=relaxed/simple;
-	bh=H9oj828AaniS7CpBp457ZYrqTzxdax7+MFyUWUs+x8I=;
+	s=arc-20240116; t=1785425996; c=relaxed/simple;
+	bh=H2fU+J+wdge+s+jngaWPnwH02Mv0JeaQyy57+6Uuk9s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LqjJkof8LcLlZblZhK1NzjQYac3th11hbCCew8gXvOaNXYfwqsf/WVPusbj3vado/8cqRk2h8gYzwvM5NNpuSBH7uS5zvY+/0xOtxqZ8dafa2Eln/uND4Qq0IwgLHrzwkhjrcfjhVG/1drkTHqi9QpsmRDqBYtQas5TS+aZMjcs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1vweYY7n; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EyiC2VJYAuN6wZ0PQxYgK9/Gu8t4Kcv+baR4bP8u/yP1cefw2PkItcCOnCxHqy4UzvTn2KkBjN1ndzCYMEH3pVqorzW7l2Pupbc/nQUU9vNRaJi0AB/057aLRqJyndAJB4XMcvUcRdyViXIAO7W+5e2QlR/jY65g/Xm5yBozFgY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G4ZMTpoz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1vweYY7n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7FDD1F00A3A;
-	Thu, 30 Jul 2026 15:39:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G4ZMTpoz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9268A1F000E9;
+	Thu, 30 Jul 2026 15:39:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425992;
-	bh=jC6bd1+jGa2aKOLlWKyYnThsRU0QKwpXvsnxb5Yn7Us=;
+	s=korg; t=1785425995;
+	bh=oYgT4chHZax+OISOqF7PjJ2U5yMJUGAZjztNart5O+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1vweYY7nJYmxyBf1ajrdjfdWd9cySHxvkSuteiT6/c+mnRS1M8KSfuGTikCwpTXue
-	 NPCYJKnUAYub+8Rv4CZrNH2fUzmpqRxYiSFrKji9dWQHpC5hblyLNDMD8HdjT+vWQB
-	 v88FkOJSrDgRXasGSb+s2ah+qTVGCk0BBimEajDM=
+	b=G4ZMTpozARKnC6WtnkadesiCWIOwwAhtzRkMJulkvaWcWOUJNRHICqFgfWVx+5DTi
+	 pYIQB2wwCzzBRhmMZw0pcwtUzMGtYmpOD7nT1n6Fz6TQIPcKVNOVEWlyu5avN29jx8
+	 KwclCTXH3K8N/xr6E58slprEidZzWxNzWwUNXJtc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>
-Subject: [PATCH 6.12 262/602] drm/amdgpu: validate CP_GFX_SHADOW chunk size in CS pass1
-Date: Thu, 30 Jul 2026 16:10:54 +0200
-Message-ID: <20260730141441.477098648@linuxfoundation.org>
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Junrui Luo <moonafterrain@outlook.com>,
+	Danilo Krummrich <dakr@kernel.org>
+Subject: [PATCH 6.12 263/602] drm/nouveau: fix reversed error cleanup order in ucopy functions
+Date: Thu, 30 Jul 2026 16:10:55 +0200
+Message-ID: <20260730141441.498575903@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -50,57 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-commit 84c4c36acd5c4b2558b5069f869a165b2c655c84 upstream.
+commit ab99ead646b1b833ecd57fe577a2816f2e848167 upstream.
 
-Add a minimum-length check for the AMDGPU_CHUNK_ID_CP_GFX_SHADOW chunk in
-amdgpu_cs_pass1(), matching the gate already present for the IB, FENCE and
-BO_HANDLES chunk types.
+nouveau_uvmm_vm_bind_ucopy() and nouveau_exec_ucopy() place their error
+cleanup labels in allocation order rather than reverse allocation order.
+On a u_memcpya() failure for in_sync.s, the goto to err_free_ops (or
+err_free_pushs) frees the first allocation and then falls through to
+err_free_ins, which calls u_free() on args->in_sync.s.
 
-The CP_GFX_SHADOW case previously shared a bare break with the dependency
-and syncobj chunk types, which do not dereference a fixed-size struct. When
-userspace submits this chunk with length_dw == 0, vmemdup_array_user() is
-called with size 0 and returns ZERO_SIZE_PTR, which passes the IS_ERR()
-check. amdgpu_cs_p2_shadow() then dereferences chunk->kdata as a struct
-drm_amdgpu_cs_chunk_cp_gfx_shadow (reading shadow->flags), faulting on the
-ZERO_SIZE_PTR and causing a NULL-pointer dereference.
+Since args->in_sync.s still holds the ERR_PTR returned by the failed
+u_memcpya(), and ERR_PTR values are not caught by ZERO_OR_NULL_PTR(),
+kvfree() proceeds to dereference it, which can result in a kernel oops.
+A failure for out_sync.s instead jumps to err_free_ins and skips freeing
+the first allocation, leading to a memory leak.
 
-This is reachable by an unprivileged process in the render group. Reject
-undersized chunks with -EINVAL during pass1 so the bad submission is
-rejected before pass2 ever dereferences the data.
+Fix by swapping the cleanup label order so resources are freed in the
+correct reverse allocation sequence.
 
-Fixes: ac9287055ff1 ("drm/amdgpu: add gfx shadow CS IOCTL support")
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 7f61b2eef7415eccdb40850aca0de94211948657)
+Fixes: b88baab82871 ("drm/nouveau: implement new VM_BIND uAPI")
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
 Cc: stable@vger.kernel.org
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Link: https://patch.msgid.link/SYBPR01MB7881484D91A6F80271415F71AF1A2@SYBPR01MB7881.ausprd01.prod.outlook.com
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/nouveau/nouveau_exec.c |    4 ++--
+ drivers/gpu/drm/nouveau/nouveau_uvmm.c |    4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-@@ -272,13 +272,17 @@ static int amdgpu_cs_pass1(struct amdgpu
- 				goto free_partial_kdata;
- 			break;
+--- a/drivers/gpu/drm/nouveau/nouveau_exec.c
++++ b/drivers/gpu/drm/nouveau/nouveau_exec.c
+@@ -327,10 +327,10 @@ nouveau_exec_ucopy(struct nouveau_exec_j
  
-+		case AMDGPU_CHUNK_ID_CP_GFX_SHADOW:
-+			if (size < sizeof(struct drm_amdgpu_cs_chunk_cp_gfx_shadow))
-+				goto free_partial_kdata;
-+			break;
-+
- 		case AMDGPU_CHUNK_ID_DEPENDENCIES:
- 		case AMDGPU_CHUNK_ID_SYNCOBJ_IN:
- 		case AMDGPU_CHUNK_ID_SYNCOBJ_OUT:
- 		case AMDGPU_CHUNK_ID_SCHEDULED_DEPENDENCIES:
- 		case AMDGPU_CHUNK_ID_SYNCOBJ_TIMELINE_WAIT:
- 		case AMDGPU_CHUNK_ID_SYNCOBJ_TIMELINE_SIGNAL:
--		case AMDGPU_CHUNK_ID_CP_GFX_SHADOW:
- 			break;
+ 	return 0;
  
- 		default:
+-err_free_pushs:
+-	u_free(args->push.s);
+ err_free_ins:
+ 	u_free(args->in_sync.s);
++err_free_pushs:
++	u_free(args->push.s);
+ 	return ret;
+ }
+ 
+--- a/drivers/gpu/drm/nouveau/nouveau_uvmm.c
++++ b/drivers/gpu/drm/nouveau/nouveau_uvmm.c
+@@ -1708,10 +1708,10 @@ nouveau_uvmm_vm_bind_ucopy(struct nouvea
+ 
+ 	return 0;
+ 
+-err_free_ops:
+-	u_free(args->op.s);
+ err_free_ins:
+ 	u_free(args->in_sync.s);
++err_free_ops:
++	u_free(args->op.s);
+ 	return ret;
+ }
+ 
 
 
