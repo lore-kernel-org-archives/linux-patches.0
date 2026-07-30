@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE72937B012;
-	Thu, 30 Jul 2026 15:53:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA5E43B52EE;
+	Thu, 30 Jul 2026 15:53:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426828; cv=none; b=brpLCVTYLNRjOVECCU0AB0hVzkdo086Zgmwr3gmBDaR8q5CotCj7BifK1w0yHSZ1yS/SztxVr1c/SBMFo0eAvIaV+0l98cWvj4PF5wHZ3E3dfwUxOV27xDMMeIRXzfvgsIyA9bZkmtBAk8Vw21/B4+iZG1tKsVXa98U29zO3eIE=
+	t=1785426831; cv=none; b=W3tXY5s+zT5uo05WJy0SPhu+sTSjE5mWOmZ5Ytf+07ezchVk4CIwGv2AnmfKhfhgqS2FVxNMMbZkrKvsKnlCtq4WvK1S92wrC2ywA8rghKdki92ZmRwkA3HWTFn0Gkb3KVRVjCGlZq40muCk3+vKINwlJwn19VY/GuW3OvMVRVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426828; c=relaxed/simple;
-	bh=MEb/jkIWRNZmCHh+aMmQ+OshMKWXcBJxH9jQzCeKC7o=;
+	s=arc-20240116; t=1785426831; c=relaxed/simple;
+	bh=rmjlsYmsxOOaHcYMrYolJjb8C0t0DBR0cftWiGDxMT4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RZy8GUflYr3jZGOEnp91cy07GsxbHPukXjrpDMaY+D1wtM5mh16tfJOjF06zsWCe7pLXycv4L1ACjm8kQeYD8JRy7J+aqZ1/doGefM/nK0oqhqyyCv9vZoIuJ0Jq9HjOhl+jdGdwwDO3Is6CYMDqx2KOuQN5v9zZCFgvFAJXiJw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HQUi9vVS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F2YuaH29UGXdwKsfU5yo1rti8N6G884wSvC2ErOtfSCyE0RV+UH4QQLMlpCqKkKQG7T3hdXp89J/f2dcusU37oy0vnixZkP4Kbn9mxYcyUqFM2A0CW3MaT3duCkawJwd08p5wvGDHGStOT8TLug8DyWUOmGj8QkTTdu7/VRGcgg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o2t1eeah; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HQUi9vVS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5648F1F000E9;
-	Thu, 30 Jul 2026 15:53:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o2t1eeah"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2918C1F000E9;
+	Thu, 30 Jul 2026 15:53:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426826;
-	bh=C6TPUjh/LXCJaDI/xuCO3H8mVQDTWi1w8W1Eyhw9Wv0=;
+	s=korg; t=1785426829;
+	bh=HDNXtGLZ3nz6DsNYS2R/+WvfrJyqfp5csRqo0ouuPU4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HQUi9vVSJLI2I92jOOH4LJlsrEdhSZUQ80PkrxbIgVkMWsUcB4nm2WF5XCCbtXvkC
-	 Dvrd82/AuF1ji7MlFZCSBo4I30NGAb47wpIRWCDhDFvg6RJlPiQk4Mjwiu0SD5r1br
-	 Z3IJVFoBrYA7nRYtBTy8iQfJnWkMLi2cFJHk8tC0=
+	b=o2t1eeahcGc2WqO59X8JBV5FtQeFAuBRdjhI7XrjFsh+zyj3vkhKDV9JSYRtVvkEc
+	 6e3oix1r6IsgwmqKtQaln1xHdSuEig5IaBxYE0TVrO0Finyc22F6OhuGHMPOZHYeFa
+	 i58nCcvvzeQIx7jqSsXdjBeBzg6XM7QMfdF/D54g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
-	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 519/602] landlock: Prepare to use credential instead of domain for fowner
-Date: Thu, 30 Jul 2026 16:15:11 +0200
-Message-ID: <20260730141446.911818740@linuxfoundation.org>
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Johan Hovold <johan@kernel.org>,
+	Ulf Hansson <ulfh@kernel.org>
+Subject: [PATCH 6.12 555/602] mmc: vub300: fix use-after-free on probe failure
+Date: Thu, 30 Jul 2026 16:15:47 +0200
+Message-ID: <20260730141447.700566110@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -45,192 +45,90 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mickaël Salaün <mic@digikod.net>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit 79625f1b3a3df63d3289a0781fdf121bc42966f7 ]
+The vub300 driver lifetime-manages its controller state using
+vub300->kref, with vub300_delete() freeing the mmc host when the last
+reference is dropped. The probe error path after the inactivity timer has
+been armed still bypasses that lifetime rule, however, and falls through
+to mmc_free_host() directly if mmc_add_host() fails.
 
-This cosmetic change is needed for audit support, specifically to be
-able to filter according to cross-execution boundaries.
+The race window is between arming the inactivity timer and reaching the
+probe error unwind after mmc_add_host() fails:
 
-struct landlock_file_security's size stay the same for now but it will
-increase with struct landlock_cred_security's size.
+        probe thread                     timer/workqueue
+        ------------                     ---------------
+        kref_init(&vub300->kref)         ref = 1
+        kref_get(&vub300->kref)          ref = 2, timer ref
+        add_timer(inactivity_timer)      fires after one second
+        |
+        |   race window
+        |<---------------------------------------------------->
+        |
+        mmc_add_host(mmc)
+                                         inactivity timer fires
+                                         vub300_queue_dead_work()
+                                           kref_get()          ref = 3
+                                           queue_work(deadwork)
+        mmc_add_host() fails
+        timer_delete_sync()
+        mmc_free_host(mmc)
+          frees vub300
+                                         deadwork runs
+                                           use-after-free
 
-Only save Landlock domain in hook_file_set_fowner() if the current
-domain has LANDLOCK_SCOPE_SIGNAL, which was previously done for each
-hook_file_send_sigiotask() calls.  This should improve a bit
-performance.
+The inactivity timeout is one second, so this would require
+mmc_add_host() to both fail and take more than one second to do so. This
+is unlikely to happen in practice, but the error path is still wrong.
 
-Replace hardcoded LANDLOCK_SCOPE_SIGNAL with the signal_scope.scope
-variable.
+timer_delete_sync() only waits for the timer callback itself. It does
+not flush deadwork that the callback may already have queued. As a
+result, queued deadwork can still hold a kref while the probe error path
+directly frees the backing mmc host, including the vub300 storage.
 
-Use scoped guards for RCU read-side critical sections.
+Fix this by using the same lifetime mechanism as disconnect. Clear
+vub300->interface so that the timer callback and any queued deadwork
+return early and drop their references, then drop the initial probe
+reference and return without falling through to err_free_host.
 
-Cc: Günther Noack <gnoack@google.com>
-Link: https://lore.kernel.org/r/20250320190717.2287696-8-mic@digikod.net
-Signed-off-by: Mickaël Salaün <mic@digikod.net>
-Stable-dep-of: 4b80320ca7ed ("landlock: Fix LANDLOCK_SCOPE_SIGNAL bypass on the SIGIO path")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 0613ad2401f8 ("mmc: vub300: fix return value check of mmc_add_host()")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Reviewed-by: Johan Hovold <johan@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+(cherry picked from commit a3b5f242997a3be7404112fd48784881560aea57)
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/landlock/fs.c   |   37 +++++++++++++++++++++++++++++++------
- security/landlock/fs.h   |   23 +++++++++++++++++------
- security/landlock/task.c |   25 ++++++++++++++++---------
- 3 files changed, 64 insertions(+), 21 deletions(-)
+ drivers/mmc/host/vub300.c |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/security/landlock/fs.c
-+++ b/security/landlock/fs.c
-@@ -1680,15 +1680,40 @@ static bool control_current_fowner(struc
- static void hook_file_set_fowner(struct file *file)
- {
- 	struct landlock_ruleset *prev_dom;
--	struct landlock_ruleset *new_dom = NULL;
-+	struct landlock_cred_security fown_subject = {};
-+	size_t fown_layer = 0;
+--- a/drivers/mmc/host/vub300.c
++++ b/drivers/mmc/host/vub300.c
+@@ -2343,12 +2343,16 @@ static int vub300_probe(struct usb_inter
+ 			 interface_to_InterfaceNumber(interface));
+ 	retval = mmc_add_host(mmc);
+ 	if (retval)
+-		goto err_delete_timer;
++		goto err_stop_io;
+ 
+ 	return 0;
+ 
+-err_delete_timer:
+-	timer_delete_sync(&vub300->inactivity_timer);
++err_stop_io:
++	vub300->interface = NULL;
++	kref_put(&vub300->kref, vub300_delete);
 +
-+	/*
-+	 * Keep this local to match the layout expected by follow-up changes
-+	 * shared with audit-enabled kernels.
-+	 */
-+	(void)fown_layer;
- 
- 	if (control_current_fowner(file_f_owner(file))) {
--		new_dom = landlock_get_current_domain();
--		landlock_get_ruleset(new_dom);
-+		static const struct access_masks signal_scope = {
-+			.scope = LANDLOCK_SCOPE_SIGNAL,
-+		};
-+		struct landlock_ruleset *const current_domain =
-+			landlock_get_current_domain();
-+		const struct landlock_cred_security applicable_subject = {
-+			.domain = current_domain,
-+		};
-+		const struct landlock_cred_security *new_subject = NULL;
++	return retval;
 +
-+		if (landlock_get_applicable_domain(current_domain, signal_scope))
-+			new_subject = &applicable_subject;
-+
-+		if (new_subject) {
-+			landlock_get_ruleset(new_subject->domain);
-+			fown_subject = *new_subject;
-+		}
- 	}
- 
--	prev_dom = landlock_file(file)->fown_domain;
--	landlock_file(file)->fown_domain = new_dom;
-+	prev_dom = landlock_file(file)->fown_subject.domain;
-+	landlock_file(file)->fown_subject = fown_subject;
-+#ifdef CONFIG_AUDIT
-+	landlock_file(file)->fown_layer = fown_layer;
-+#endif /* CONFIG_AUDIT*/
- 
- 	/* May be called in an RCU read-side critical section. */
- 	landlock_put_ruleset_deferred(prev_dom);
-@@ -1696,7 +1721,7 @@ static void hook_file_set_fowner(struct
- 
- static void hook_file_free_security(struct file *file)
- {
--	landlock_put_ruleset_deferred(landlock_file(file)->fown_domain);
-+	landlock_put_ruleset_deferred(landlock_file(file)->fown_subject.domain);
- }
- 
- static struct security_hook_list landlock_hooks[] __ro_after_init = {
---- a/security/landlock/fs.h
-+++ b/security/landlock/fs.h
-@@ -1,9 +1,10 @@
- /* SPDX-License-Identifier: GPL-2.0-only */
- /*
-- * Landlock LSM - Filesystem management and hooks
-+ * Landlock - Filesystem management and hooks
-  *
-  * Copyright © 2017-2020 Mickaël Salaün <mic@digikod.net>
-  * Copyright © 2018-2020 ANSSI
-+ * Copyright © 2024-2025 Microsoft Corporation
-  */
- 
- #ifndef _SECURITY_LANDLOCK_FS_H
-@@ -13,6 +14,7 @@
- #include <linux/init.h>
- #include <linux/rcupdate.h>
- 
-+#include "cred.h"
- #include "ruleset.h"
- #include "setup.h"
- 
-@@ -52,13 +54,22 @@ struct landlock_file_security {
- 	 * needed to authorize later operations on the open file.
- 	 */
- 	access_mask_t allowed_access;
-+
-+#ifdef CONFIG_AUDIT
-+	/**
-+	 * @fown_layer: Compatibility storage for follow-up fowner changes.
-+	 */
-+	u8 fown_layer;
-+#endif /* CONFIG_AUDIT */
-+
- 	/**
--	 * @fown_domain: Domain of the task that set the PID that may receive a
--	 * signal e.g., SIGURG when writing MSG_OOB to the related socket.
--	 * This pointer is protected by the related file->f_owner->lock, as for
--	 * fown_struct's members: pid, uid, and euid.
-+	 * @fown_subject: Landlock credential of the task that set the PID that
-+	 * may receive a signal e.g., SIGURG when writing MSG_OOB to the
-+	 * related socket.  This pointer is protected by the related
-+	 * file->f_owner->lock, as for fown_struct's members: pid, uid, and
-+	 * euid.
- 	 */
--	struct landlock_ruleset *fown_domain;
-+	struct landlock_cred_security fown_subject;
- };
- 
- /**
---- a/security/landlock/task.c
-+++ b/security/landlock/task.c
-@@ -297,22 +297,29 @@ static int hook_task_kill(struct task_st
- static int hook_file_send_sigiotask(struct task_struct *tsk,
- 				    struct fown_struct *fown, int signum)
- {
--	const struct landlock_ruleset *dom;
-+	const struct landlock_cred_security *subject;
- 	bool is_scoped = false;
- 
- 	/* Lock already held by send_sigio() and send_sigurg(). */
- 	lockdep_assert_held(&fown->lock);
--	dom = landlock_get_applicable_domain(
--		landlock_file(fown->file)->fown_domain, signal_scope);
-+	subject = &landlock_file(fown->file)->fown_subject;
- 
--	/* Quick return for unowned socket. */
--	if (!dom)
-+	/*
-+	 * Quick return for unowned socket.
-+	 *
-+	 * subject->domain has already been filtered when saved by
-+	 * hook_file_set_fowner(), so there is no need to call
-+	 * landlock_get_applicable_subject() here.
-+	 */
-+	if (!subject->domain)
- 		return 0;
- 
--	rcu_read_lock();
--	is_scoped = domain_is_scoped(dom, landlock_get_task_domain(tsk),
--				     LANDLOCK_SCOPE_SIGNAL);
--	rcu_read_unlock();
-+	scoped_guard(rcu)
-+	{
-+		is_scoped = domain_is_scoped(subject->domain,
-+					     landlock_get_task_domain(tsk),
-+					     signal_scope.scope);
-+	}
- 	if (is_scoped)
- 		return -EPERM;
- 
+ err_free_host:
+ 	mmc_free_host(mmc);
+ 	/*
 
 
