@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0FB330567C;
-	Thu, 30 Jul 2026 15:43:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD4BE33438F;
+	Thu, 30 Jul 2026 15:43:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426187; cv=none; b=flAaMWIoA+Ril9qQ0sNl3jf5JAspxBE3pM7dfQnnKbbnDdBofm8j5JRC0pKDXJtUCT8QVKig0cVZ3YtyBEd3ej23moAoWfjCl2gqgZHz4OBHxQgBtRIKLjkz1cHAQVvmzjTR80lcXKsDMsk/VaS40tbRCUgaiMySAvwFGfmqkmY=
+	t=1785426190; cv=none; b=q5UezKZT5y4zKnQi89fNARkGuIyJwf8oHFldB8xnNZbp0uISZbwtLp2z9pFifdwmtw+F9W7jNCL4o1B10Bddo4ETyViphUwwYnmWv1a2sHcSa4nB2TjiPGvZExugUXxsSZ2CHtTQulSPB1gYAxUMjWcX3VJ/xAZXIAdzD2XAI0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426187; c=relaxed/simple;
-	bh=l8mnekUVe8RrWmOPgjNKn4649h9npOh+MGRaTzSizJw=;
+	s=arc-20240116; t=1785426190; c=relaxed/simple;
+	bh=GuoHoHdePvfDF0nBI3omGGkUDwuycPPF7s+c8Mvgx5w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fax6Uqb2Y83wEXN+0iizugKsdWymsaUWrDqi72C4gMNY5X2/z1sZBhFzs7DTSh/5sUI5WXB3cznr2V0EW6HNw2DRAVYEpmtL0I0QxLHXdxvZ85MxpDEibsi3237k+aEpgK2ExtQ3KR2vxv43uPusemniEWmaLXKA3m62i2+PrN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C9aaHJvJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=na6vOXp4bvyRLiop9NNqPV5Q4MFVINKoYRChCe5Spf4zmrassMNgyyXytAFn9ze3tAFz9uW2RECBBkG89NpCvkHeLNaVsI5uUK9w7OdWIjpfSueoL0RCgZd/bFg9iQDnCAYnzjpcKyfausgSsY0cgUQBWGxrxDwNab5ibZclxjc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ifPnYDh8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C9aaHJvJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F9581F000E9;
-	Thu, 30 Jul 2026 15:43:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ifPnYDh8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20B2F1F000E9;
+	Thu, 30 Jul 2026 15:43:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426186;
-	bh=wWqTFb1ZXMcBR+AripgL/al9Tz6qu0Hb2iv4HFBNwvs=;
+	s=korg; t=1785426189;
+	bh=/U91BKg8FnOsdd7cuBjCTMpwx7yT8uKEcS2wEph3Eck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C9aaHJvJvyBG1ZXhZnKDOYjQs0wP9GbTYDXCjVC06Iiv8Nf4EkKwIghSAxctQU/8b
-	 jnqYE/Dp0OYd05vvjwkyWxvQ/Usw71zLjhrcZp7Z5IkQCq0+haBWQNZgGNJy2u4N6w
-	 HtuaQT3pHWjeEHhuAYCBOZ5C3X8PmWUpXjLi7kB4=
+	b=ifPnYDh8w2TPJVMqNpwus9OAoHdDnkLDQMJAS2hS71Kj43m+nXeObv4y4XkI+FQA9
+	 l08xGziYdidnemgVtNEgyUxkoJzBYAYzSlZW7z22NKMJt/SrQmmEIMDL5RcvVIgyvC
+	 FaSGSYrNlvKluFt1eQCSiXh4zBZgAs1LrlXSFKbY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Hodo <martin.hodo@intel.com>,
-	Faith Ekstrand <faith.ekstrand@collabora.com>,
-	Simona Vetter <simona.vetter@ffwll.ch>,
-	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.12 287/602] drm/i915/gem: Fix NULL deref in I915_CONTEXT_PARAM_SSEU
-Date: Thu, 30 Jul 2026 16:11:19 +0200
-Message-ID: <20260730141442.003224333@linuxfoundation.org>
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Subject: [PATCH 6.12 278/602] drm/virtio: bound EDID block reads to the response buffer
+Date: Thu, 30 Jul 2026 16:11:10 +0200
+Message-ID: <20260730141441.814511238@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -56,46 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit 2b56757a9a7456825eb668fde92299e01c5e2721 upstream.
+commit 4e1a53892ba7f8a3e1da6bfc53c83ae7c812dccd upstream.
 
-Setting context engine slot N into I915_ENGINE_CLASS_INVALID /
-I915_ENGINE_CLASS_INVALID_NONE and attempting to apply
-I915_CONTEXT_PARAM_SSEU to the same slot N will deref NULL.
-Fix that.
+virtio_get_edid_block() validates the read offset only against the
+device-supplied resp->size field, never against the fixed-size resp->edid
+array. The EDID block index is driven by the device-supplied extension
+count, so a malicious virtio-gpu backend can advertise a large size
+together with a high block count and read far past the array into adjacent
+kernel memory, which is then surfaced in the parsed EDID (an out-of-bounds
+read / info leak).
 
-Discovered using AI-assisted static analysis confirmed by
-Intel Product Security.
+Also reject any read whose end exceeds the size of the edid array.
+Conforming EDID responses stay within the array and are unaffected.
 
-Reported-by: Martin Hodo <martin.hodo@intel.com>
-Fixes: d4433c7600f7 ("drm/i915/gem: Use the proto-context to handle create parameters (v5)")
-Cc: Faith Ekstrand <faith.ekstrand@collabora.com>
-Cc: Simona Vetter <simona.vetter@ffwll.ch>
-Cc: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Cc: <stable@vger.kernel.org> # v5.15+
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Reviewed-by: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Link: https://patch.msgid.link/20260701075555.52142-1-joonas.lahtinen@linux.intel.com
-(cherry picked from commit 36eda5b5c2d40da41cc0a5403c26986237cf9e87)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Fixes: b4b01b4995fb ("drm/virtio: add edid support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Link: https://patch.msgid.link/20260620-b4-disp-22bba7bf-v1-1-b95924cee742@proton.me
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/gem/i915_gem_context.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/virtio/virtgpu_vq.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/i915/gem/i915_gem_context.c
-+++ b/drivers/gpu/drm/i915/gem/i915_gem_context.c
-@@ -858,7 +858,7 @@ static int set_proto_ctx_sseu(struct drm
- 		pe = &pc->user_engines[idx];
+--- a/drivers/gpu/drm/virtio/virtgpu_vq.c
++++ b/drivers/gpu/drm/virtio/virtgpu_vq.c
+@@ -723,7 +723,8 @@ static int virtio_get_edid_block(void *d
+ 	struct virtio_gpu_resp_edid *resp = data;
+ 	size_t start = block * EDID_LENGTH;
  
- 		/* Only render engine supports RPCS configuration. */
--		if (pe->engine->class != RENDER_CLASS)
-+		if (!pe->engine || pe->engine->class != RENDER_CLASS)
- 			return -EINVAL;
- 
- 		sseu = &pe->sseu;
+-	if (start + len > le32_to_cpu(resp->size))
++	if (start + len > le32_to_cpu(resp->size) ||
++	    start + len > sizeof(resp->edid))
+ 		return -EINVAL;
+ 	memcpy(buf, resp->edid + start, len);
+ 	return 0;
 
 
