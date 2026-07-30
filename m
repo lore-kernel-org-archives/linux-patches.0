@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C77D3438B7;
-	Thu, 30 Jul 2026 15:39:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24ECF30567C;
+	Thu, 30 Jul 2026 15:39:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425959; cv=none; b=BYgY76ckFjaWbWf6njYWZ0yEZlqZDPrukinN6G/1IKdaGPa4Pl3oz10w4YjSxhwM+QrHbUtlgMYpEHxKy60JD+k2XZdApiDVkOHKDV9p2zuuVAyu0/RtCUFGuUFC8t8TCQQNRQ52+y4gdHHFP2aPbNM1pdUk+i64kOZqH5Fa1cI=
+	t=1785425963; cv=none; b=aGrZMNNPCqXvef9ElCdq6sh79iiV6px3mOit7HldKk0XFnMKqF+ss5fO8FiS2LFeK07V8qxsXFVRTx6aEpvP18pGw8Q5kEMaNFd9Nf8JQvJVLr4MgevoKcDMUwvpA3enUbVPK9mt2E5JYnBlnrzkhTKqGa38C8S5I/23rt2SKAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425959; c=relaxed/simple;
-	bh=+ve9j6TdnOtlPatzNu/t9xcUovWseak9aGqYXcrbqck=;
+	s=arc-20240116; t=1785425963; c=relaxed/simple;
+	bh=QvJn/mpFdwnfqkYhGzqe/op/dfLa/sIeBeXHmUtWjRY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eQPU9+uH9sm49hKjfVcWbkB3WYdMl7h2I0r7CeH9BdJ8oWBUuX16ZyrfRHeRARNr0DbK+YThcpvnyIBUzHOwLC1ucEKu8FSraPGWSs71Gkc6bclyeLWFqLQbECpHml+yeEd2bNr8ihUkotIp2slLRId/jtz5cZwALkSY7lAU6tQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rr7d+rQ5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FwSVCwA8+opoTw583f730BNbE8nCUBhJj7RL0T3blv/8tvxq96yt0w7j2TV05kWwWz0zVB2MQqmNpq1slmQyR9WdvJBNrdSCwsJge6gKBESoll/HFYRlwf1ys9tQ888ie52+n0kS0m5NhEeAZ7iy095CAGDW1kKnt2mOyBeJfZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GadkqPOW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rr7d+rQ5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6366D1F000E9;
-	Thu, 30 Jul 2026 15:39:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GadkqPOW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 360341F000E9;
+	Thu, 30 Jul 2026 15:39:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425957;
-	bh=G3m9SQ4ba71ZjZOnwoW5S7bC+LzuuNKmVGsyzIMLMU0=;
+	s=korg; t=1785425960;
+	bh=XFO5mZuMlWZucjMFGinaIW2adzQ7W23d2Bq4NBFpX1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Rr7d+rQ5Zwr3Ink/4aSn1V4t9kW60/sNDG9G0bjqFU1KTGzNUwx4zd9Qs2OimpTzL
-	 FIal8ef6QOP+9yNBgmh+WTF6rdVTdNPIcpachpYMN0PhFhjfTBpOEizMARgE8SHMoJ
-	 2AEDUSoByOe24uvj0vql9LnkUrUFAJkjL+McBNi4=
+	b=GadkqPOWQQZiiYQp0d6UYn6O7WL9U2Zje0kOO3hEP5p2ddbLW6ezplowwHGVoa9yJ
+	 u1OvE65nlnSr364Qj9dQKNvPA1XLLtLx1VBwQTW087v+Ue+jCfVxODzypeyyIbEHz2
+	 R1DcoAjmCy4mIk6K7x52Rn5OkdIKuwYb0TLotabQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>,
-	Biju Das <biju.das.jz@bp.renesas.com>
-Subject: [PATCH 6.12 251/602] drm: renesas: rzg2l_mipi_dsi: Increase reset deassertion delay
-Date: Thu, 30 Jul 2026 16:10:43 +0200
-Message-ID: <20260730141441.245526526@linuxfoundation.org>
+	Sergey Shtylyov <s.shtylyov@auroraos.dev>,
+	Chaoyi Chen <chaoyi.chen@rock-chips.com>,
+	Heiko Stuebner <heiko@sntech.de>
+Subject: [PATCH 6.12 252/602] drm/rockchip: cdn-dp: add missing check in cdn_dp_config_video()
+Date: Thu, 30 Jul 2026 16:10:44 +0200
+Message-ID: <20260730141441.266633926@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -50,36 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Sergey Shtylyov <s.shtylyov@auroraos.dev>
 
-commit 7cbba8a8ba0219a267844d3116dbc77cecb4fcf8 upstream.
+commit 46c31e1604d121221167cb09380de8c7d53290b9 upstream.
 
-The RZ/G2L hardware manual (Rev. 1.50, May 2025), Section 34.4.2.1,
-requires waiting at least 1 msec after deasserting the CMN_RSTB signal
-before the DSI-Tx module is ready. Increase the delay from 1 usec to
-1 msec by replacing udelay(1) with fsleep(1000) for RZ/G2L SoCs.
+The result of cdn_dp_reg_write() is checked everywhere (with the error
+being logged by the callers) except one place in cdn_dp_config_video().
+Add the missing result check, bailing out early on error...
 
-Fixes: 7a043f978ed1 ("drm: rcar-du: Add RZ/G2L DSI driver")
+Found by Linux Verification Center (linuxtesting.org) with the Svace static
+analysis tool.
+
+Fixes: 1a0f7ed3abe2 ("drm/rockchip: cdn-dp: add cdn DP support for rk3399")
+Signed-off-by: Sergey Shtylyov <s.shtylyov@auroraos.dev>
 Cc: stable@vger.kernel.org
-Reviewed-by: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
-Tested-by: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
-Link: https://patch.msgid.link/20260330104450.128512-3-biju.das.jz@bp.renesas.com
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Reviewed-by: Chaoyi Chen <chaoyi.chen@rock-chips.com>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patch.msgid.link/adf6b313-f7db-4d8f-9000-8c65446ba041@auroraos.dev
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/renesas/rz-du/rzg2l_mipi_dsi.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/rockchip/cdn-dp-reg.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/gpu/drm/renesas/rz-du/rzg2l_mipi_dsi.c
-+++ b/drivers/gpu/drm/renesas/rz-du/rzg2l_mipi_dsi.c
-@@ -238,7 +238,7 @@ static int rzg2l_mipi_dsi_dphy_init(stru
- 	if (ret < 0)
- 		return ret;
+--- a/drivers/gpu/drm/rockchip/cdn-dp-reg.c
++++ b/drivers/gpu/drm/rockchip/cdn-dp-reg.c
+@@ -683,6 +683,8 @@ int cdn_dp_config_video(struct cdn_dp_de
+ 	val = div_u64(8 * (symbol + 1), bit_per_pix) - val;
+ 	val += 2;
+ 	ret = cdn_dp_reg_write(dp, DP_VC_TABLE(15), val);
++	if (ret)
++		goto err_config_video;
  
--	udelay(1);
-+	fsleep(1000);
- 
- 	return 0;
- }
+ 	switch (video->color_depth) {
+ 	case 6:
 
 
