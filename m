@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED9C643E9DF;
-	Thu, 30 Jul 2026 15:40:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A2B330567C;
+	Thu, 30 Jul 2026 15:40:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426025; cv=none; b=C1xkbpWxn43u09i+hMZZsTmzthThu+Ody+nMBY9MdRtxWASp8+WyNdnpO9PyT2ZzvCPcfNCsKadf2QG+UaPCN2vFWKRCxBbQuAFMe6sEpfEOwviH9ia6mFiTMjsWRCcU58Jw3v9zTsgMFhq2yt6UQZTJ/CiZoim7QzaJE/ws7ck=
+	t=1785426028; cv=none; b=Uj1BH3JEiWZuIMX+A9Pp6Qn39JBzcxhigHRXVcZDUYemJM9KGKE6kdxrCQcd65aJhd8S8Tuz4f2Pe3N3o30Y0qgSnqhx1QPFOIaJ4MrTDg9sh//qGOkI4emcy8ADujc1cpMT35yXcOsolM6abi4KmVNuPHeKLonBJ0TGsBfiXzk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426025; c=relaxed/simple;
-	bh=4MN+xmdQlapJyJd1gf2hoXjH9dNCUtKhGtKeqomSvj0=;
+	s=arc-20240116; t=1785426028; c=relaxed/simple;
+	bh=ZH/ll3j55Xu0PqmilcqreRXynlDwd3u35cqiWEJqPNA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XvdkUsATqmHcKpfdIoSNQ404BW1nDPTa9B/eihEDJaoOMrrVZKBKJ3+yo+/1NpS5YHh4srsaIhOtsD+S4njCHyvzch4WyZe8xG3a9FvGCgJRFVG95c+UPdnrqrQzRRkxhzPfdEfMShLr34lUo7nIkgEaZVV6jAzkZzj3kbRLTZg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xBcCrMX5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NW//FPV5InamUFZ9PjbrJsuEtzUkOhORI0S2jpmUWMmpT6NAfaKYvLjsi9hNBWkuoG2ei0Fyf7WsLcPCv1H6KNqiobGgUw6o9cqbHIuQ748N/7r5/AA+u5X5BOeg7nvYrE4Jt8XGr581eW5bxWTwt+0FWYGLqlzzu0mbL4OW6rI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XMRz40RB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xBcCrMX5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 460FB1F00A3A;
-	Thu, 30 Jul 2026 15:40:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XMRz40RB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 275AE1F000E9;
+	Thu, 30 Jul 2026 15:40:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426023;
-	bh=o6LZ3RBnpsWDbrfQVJ0w60256f0EjsZXSMJo/Erj2FY=;
+	s=korg; t=1785426026;
+	bh=wDJsJ9L50FUhCVbFJttPuUZVwiWUKispb9TVDb++itU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xBcCrMX5D9nxPGdr6eJKqIcwCrSiKEF1LTQZs7uvKxWrctWB3lbhkGQxLXk9ALeE0
-	 0AUzjMIl1RLTxhZM52wR2wTqxFHKBkd2FfmBRgWH+ziKQwE38FihDZsRDtRIfiq85j
-	 mNbzmoIdayitRZPH73t3TDBaYthqfGGX5CKZSnQg=
+	b=XMRz40RBSHm/JHhP5W1/A2PbM76P6OgZxHu2YYq5y/Jb5T0/8OX9TAxiMZB/EZdGv
+	 OinhZcqUD7k5vh5RswWIPHQ+2F4rP6uGgtwSfh6xseKwXmmwxfLSl8RjDQVuoyxiPm
+	 Xajm3C/6nv3lLIHgRUstXLrC51ASR4ZBXapfv1CE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Icenowy Zheng <zhengxingda@iscas.ac.cn>,
-	Alessio Belle <alessio.belle@imgtec.com>
-Subject: [PATCH 6.12 272/602] drm/imagination: acquire vm_ctx->lock before mapping memory to GPU VM
-Date: Thu, 30 Jul 2026 16:11:04 +0200
-Message-ID: <20260730141441.687061267@linuxfoundation.org>
+	David Francis <David.Francis@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 273/602] drm/amdkfd: Use kvcalloc to allocate arrays
+Date: Thu, 30 Jul 2026 16:11:05 +0200
+Message-ID: <20260730141441.708185152@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -50,67 +50,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Icenowy Zheng <zhengxingda@iscas.ac.cn>
+From: David Francis <David.Francis@amd.com>
 
-commit 17e2030f37600994440f875dc410615d5c66ee6d upstream.
+commit 9c8b85f95c1d4736b967e17b8eb4a463c055bea3 upstream.
 
-The drm gpuvm code doesn't protect find operation against map operation,
-and the driver needs to ensure a map operation shouldn't happen when a
-find operation is in progress.
+There were a few instances in kfd_chardev.c of kvzalloc being
+used to allocate memory for an array.
 
-In some cases a find operation will be in progress when doing map/unmap
-operations, and the find operation will do a NULL pointer dereference.
+Switch those to kvcalloc, which
+- is the standard way of allocating a zero-initialized array
+- does a check for the mul overflowing
 
-An example of the stack trace of such NULL dereference is shown below:
-
-```
-Unable to handle kernel access to user memory without uaccess routines at
-virtual address 0000000000000010
-
-[<ffffffff01e989d4>] drm_gpuva_find+0x28/0x6c [drm_gpuvm]
-[<ffffffff01ed3a40>] pvr_vm_unmap+0x34/0x68 [powervr]
-[<ffffffff01ec69da>] pvr_ioctl_vm_unmap+0x2e/0x50 [powervr]
-[<ffffffff8080ce0a>] drm_ioctl_kernel+0x8e/0xdc
-[<ffffffff8080d016>] drm_ioctl+0x1be/0x3e0
-[<ffffffff802bec3e>] __riscv_sys_ioctl+0xba/0xc4
-[<ffffffff80d858b2>] do_trap_ecall_u+0x23e/0x3f4
-[<ffffffff80d92288>] handle_exception+0x168/0x174
-```
-
-As all occurences of drm_gpuva_find*() are already guarded by
-vm_ctx->lock, make pvr_vm_map() to acquire this lock to prevent
-disturbing any find operation. This fixes the NULL deference problem in
-drm_gpuva_find*().
-
+Signed-off-by: David Francis <David.Francis@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 60b048c93f7a3add39757ad65fe2bb6e58eeae23)
 Cc: stable@vger.kernel.org
-Fixes: ff5f643de0bf ("drm/imagination: Add GEM and VM related code")
-Fixes: 4bc736f890ce ("drm/imagination: vm: make use of GPUVM's drm_exec helper")
-Signed-off-by: Icenowy Zheng <zhengxingda@iscas.ac.cn>
-Reviewed-by: Alessio Belle <alessio.belle@imgtec.com>
-Link: https://patch.msgid.link/20260714073641.1935075-1-zhengxingda@iscas.ac.cn
-Signed-off-by: Alessio Belle <alessio.belle@imgtec.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/imagination/pvr_vm.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/amd/amdkfd/kfd_chardev.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/gpu/drm/imagination/pvr_vm.c
-+++ b/drivers/gpu/drm/imagination/pvr_vm.c
-@@ -741,6 +741,7 @@ pvr_vm_map(struct pvr_vm_context *vm_ctx
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
+@@ -1795,13 +1795,13 @@ static int criu_checkpoint_devices(struc
+ 	struct kfd_criu_device_bucket *device_buckets = NULL;
+ 	int ret = 0, i;
  
- 	pvr_gem_object_get(pvr_obj);
+-	device_buckets = kvzalloc(num_devices * sizeof(*device_buckets), GFP_KERNEL);
++	device_buckets = kvcalloc(num_devices, sizeof(*device_buckets), GFP_KERNEL);
+ 	if (!device_buckets) {
+ 		ret = -ENOMEM;
+ 		goto exit;
+ 	}
  
-+	mutex_lock(&vm_ctx->lock);
- 	err = drm_gpuvm_exec_lock(&vm_exec);
- 	if (err)
- 		goto err_cleanup;
-@@ -750,6 +751,7 @@ pvr_vm_map(struct pvr_vm_context *vm_ctx
- 	drm_gpuvm_exec_unlock(&vm_exec);
+-	device_priv = kvzalloc(num_devices * sizeof(*device_priv), GFP_KERNEL);
++	device_priv = kvcalloc(num_devices, sizeof(*device_priv), GFP_KERNEL);
+ 	if (!device_priv) {
+ 		ret = -ENOMEM;
+ 		goto exit;
+@@ -1921,17 +1921,17 @@ static int criu_checkpoint_bos(struct kf
+ 	int ret = 0, pdd_index, bo_index = 0, id;
+ 	void *mem;
  
- err_cleanup:
-+	mutex_unlock(&vm_ctx->lock);
- 	pvr_vm_bind_op_fini(&bind_op);
+-	bo_buckets = kvzalloc(num_bos * sizeof(*bo_buckets), GFP_KERNEL);
++	bo_buckets = kvcalloc(num_bos, sizeof(*bo_buckets), GFP_KERNEL);
+ 	if (!bo_buckets)
+ 		return -ENOMEM;
  
- 	return err;
+-	bo_privs = kvzalloc(num_bos * sizeof(*bo_privs), GFP_KERNEL);
++	bo_privs = kvcalloc(num_bos, sizeof(*bo_privs), GFP_KERNEL);
+ 	if (!bo_privs) {
+ 		ret = -ENOMEM;
+ 		goto exit;
+ 	}
+ 
+-	files = kvzalloc(num_bos * sizeof(struct file *), GFP_KERNEL);
++	files = kvcalloc(num_bos, sizeof(struct file *), GFP_KERNEL);
+ 	if (!files) {
+ 		ret = -ENOMEM;
+ 		goto exit;
+@@ -2470,7 +2470,7 @@ static int criu_restore_bos(struct kfd_p
+ 	if (!bo_buckets)
+ 		return -ENOMEM;
+ 
+-	files = kvzalloc(args->num_bos * sizeof(struct file *), GFP_KERNEL);
++	files = kvcalloc(args->num_bos, sizeof(struct file *), GFP_KERNEL);
+ 	if (!files) {
+ 		ret = -ENOMEM;
+ 		goto exit;
 
 
