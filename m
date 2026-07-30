@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EBC339A801;
-	Thu, 30 Jul 2026 15:01:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43A5641DED0;
+	Thu, 30 Jul 2026 15:01:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423664; cv=none; b=tZRtOnVoslJv6lLPM2N+pAGNn/wH0xKEOO5yO4gOgSqgsXqJOleSfZKsMkg4rlj5l61XHHqsqAfhxGQWanG+UGzuy1vw+NE/xUQgXKFryJUZ+ASpFHpjihnpdJf3Bz4eiO+lDFPFVFauJdYsdJUL+fRE3G3V+hTFxukQODnsQb0=
+	t=1785423667; cv=none; b=r1hEKv/4W5pZsybUvrrkSQfOhEXftwWlawVS6pviMJR9Nn9To9y6AjYZi0GRIciUuSUS/oukljOqu6p4p2/68QG6topGkAiIUtR/PpXYnKDyg373XUv+zDTnKg1xTo/kRsw2EE6oEhPZv8ex913k7Y22S2HD8sdRG4ZajaJeodw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423664; c=relaxed/simple;
-	bh=u3Vq2UfGVMUo57rGYb5JeSEzIU7poG68lQm+9hLiRu8=;
+	s=arc-20240116; t=1785423667; c=relaxed/simple;
+	bh=4krUNEjtlw4psinQ+hCb7PcreaXCkqd2H5go6LI74QU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PfIu6n40A56BJpEMSApDwzJPjTAXHeYRyNRYJUOE580uV7OEfRO2l9ZHy5Vx0G19CV4Fj7Xo419JQiZfZWDmdPR2TmydSnRH3LDDlgv9EKJVZbZIeCVFQI9zFWsdafp0VShyW9C8dEAqT+0xXrKYfn1hwMzrhasEu+U88v/h8zs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hR6Ld10n; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l/9WzsAi/l3nmuwluSduu7aqiiPJahFdMoEPz82nQhlAwvQ+Gf6nFXBv9XalOzoTRSpbApAh9uQiOh77+sVuBAfuIVJi/rQ056oeDBjhw0lUuMJ3S1wRH2MFgHDxtnB/6MDy7ZWDCoOoALQWatui5Jqt5HEXhZlJ8UED1s2Eg/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iI8MqtnR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hR6Ld10n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1B631F000E9;
-	Thu, 30 Jul 2026 15:01:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iI8MqtnR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98FED1F000E9;
+	Thu, 30 Jul 2026 15:01:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423663;
-	bh=GMSA2Sv8DrfDGhEvRe7RMXJoJkll9vgwRS80pjORn6A=;
+	s=korg; t=1785423666;
+	bh=2vij1chOnPybcTOKSf3WBBx90rPVDb+duy2WnFjAqHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hR6Ld10nSyBlBPhYDb7rDM6x9abRSgRL9h5yLz4bc+BrjgStGwzfYKlmx5zwh1/mw
-	 AGviEqHW21pTU376D4e9HIDgQIXpgikL4hU0x9t1dEPlL5LER+u1CfmhoWi/+9/G8P
-	 6+4QMrd8Xft2qJJcqygfZUF/QQNmPsdSxly0BDTE=
+	b=iI8MqtnRUqmxPIJ14f4VDQdatdgKQL8y1KP6pK+PMBrEz7BeH0sLV0xKeCSkikSq7
+	 tWQEgK5pevUlpO/UpjAllXJazr8IEGpemyKvbTTew00FgQ1maupcNZe4tbJuQ2gj3F
+	 0JWbXhD4HhmFWOju+B59R2SlMezbFLAsg3NVA2q8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
+	Zhao Li <enderaoelyther@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 121/675] s390/checksum: Fix csum_partial() without vector facility
-Date: Thu, 30 Jul 2026 16:07:31 +0200
-Message-ID: <20260730141447.717162525@linuxfoundation.org>
+Subject: [PATCH 6.18 079/675] wifi: cfg80211: validate PMSR measurement type data
+Date: Thu, 30 Jul 2026 16:06:49 +0200
+Message-ID: <20260730141446.810327956@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -51,39 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasily Gorbik <gor@linux.ibm.com>
+From: Zhao Li <enderaoelyther@gmail.com>
 
-[ Upstream commit 4bb06b60d982355e22647b3d12d6619419f8c1fa ]
+[ Upstream commit 41aa973eb05922848dded26875c55ef982ac1c49 ]
 
-Currently csum_partial() calls csum_copy() with copy=false and dst=NULL.
-On machines without the vector facility, csum_copy() falls back to
-cksm(dst, ...), causing the checksum to be calculated from address zero
-instead of the source buffer.
+PMSR request parsing accepts missing or duplicated measurement type
+entries in NL80211_PMSR_REQ_ATTR_DATA.
 
-The VX implementation already checksums data loaded from src. Make the
-fallback do the same by passing src to cksm().
+Track whether one measurement type was already provided, reject a
+second one immediately, and return an error if the request data block
+contains no measurement type at all.
 
-Fixes: dcd3e1de9d17 ("s390/checksum: provide csum_partial_copy_nocheck()")
-Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Fixes: 9bb7e0f24e7e7 ("cfg80211: add peer measurement with FTM initiator API")
+Assisted-by: Codex:gpt-5.5
+Assisted-by: Claude:claude-opus-4.8
+Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
+Link: https://patch.msgid.link/20260612133656.92900-2-enderaoelyther@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/lib/csum-partial.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/wireless/pmsr.c | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
-diff --git a/arch/s390/lib/csum-partial.c b/arch/s390/lib/csum-partial.c
-index 458abd9bac7025..9d74ceff136c54 100644
---- a/arch/s390/lib/csum-partial.c
-+++ b/arch/s390/lib/csum-partial.c
-@@ -23,7 +23,7 @@ static __always_inline __wsum csum_copy(void *dst, const void *src, int len, __w
- 	if (!cpu_has_vx()) {
- 		if (copy)
- 			memcpy(dst, src, len);
--		return cksm(dst, len, sum);
-+		return cksm(src, len, sum);
+diff --git a/net/wireless/pmsr.c b/net/wireless/pmsr.c
+index d2546c27879fa4..fd14a3c2eab45b 100644
+--- a/net/wireless/pmsr.c
++++ b/net/wireless/pmsr.c
+@@ -196,6 +196,7 @@ static int pmsr_parse_peer(struct cfg80211_registered_device *rdev,
+ {
+ 	struct nlattr *tb[NL80211_PMSR_PEER_ATTR_MAX + 1];
+ 	struct nlattr *req[NL80211_PMSR_REQ_ATTR_MAX + 1];
++	bool have_measurement_type = false;
+ 	struct nlattr *treq;
+ 	int err, rem;
+ 
+@@ -248,6 +249,14 @@ static int pmsr_parse_peer(struct cfg80211_registered_device *rdev,
  	}
- 	kernel_fpu_begin(&vxstate, KERNEL_VXR_V16V23);
- 	fpu_vlvgf(16, (__force u32)sum, 1);
+ 
+ 	nla_for_each_nested(treq, req[NL80211_PMSR_REQ_ATTR_DATA], rem) {
++		if (have_measurement_type) {
++			NL_SET_ERR_MSG_ATTR(info->extack, treq,
++					    "multiple measurement types in request data");
++			return -EINVAL;
++		}
++
++		have_measurement_type = true;
++
+ 		switch (nla_type(treq)) {
+ 		case NL80211_PMSR_TYPE_FTM:
+ 			err = pmsr_parse_ftm(rdev, treq, out, info);
+@@ -257,10 +266,16 @@ static int pmsr_parse_peer(struct cfg80211_registered_device *rdev,
+ 					    "unsupported measurement type");
+ 			err = -EINVAL;
+ 		}
++		if (err)
++			return err;
+ 	}
+ 
+-	if (err)
+-		return err;
++	if (!have_measurement_type) {
++		NL_SET_ERR_MSG_ATTR(info->extack,
++				    req[NL80211_PMSR_REQ_ATTR_DATA],
++				    "missing measurement type in request data");
++		return -EINVAL;
++	}
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
