@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07E6437B012;
-	Thu, 30 Jul 2026 15:47:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D83CB3806BD;
+	Thu, 30 Jul 2026 15:47:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426469; cv=none; b=rNjytfOIGAVP4gUDwRX3NfuTTiY6WyBoB5/nFHig/rWk9Y/ViDaszgxY+N217Orrh1U5+TjN+0WMh482CpZ2AVOg5AWuGfzcYhD/t6Eysmr3a4LRTTzjY4KskB86jpNNt4SNDd/U37RTH8IQOuxXvEJQm/pIonYOizpo9wNeHoY=
+	t=1785426472; cv=none; b=quwmqyOZ3vGH32gyTFI53AqlkGF7FOZw8/Sh1sVjP0zTX4YU27y/d+CH8buyPbyiUBjeYlJZCbfaTwx7JpM5KjvaNzo8ZIe96BZN/eLPlia3Leold/RUdJu3tfSscQN/tEPCJ6agG3jug0lO/NKRJRWT/RXZqVDnyasCOHPFpME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426469; c=relaxed/simple;
-	bh=vT+W/zPxWeilEUk6ChtJYetly9xM4twu0Qsx1I1+yPY=;
+	s=arc-20240116; t=1785426472; c=relaxed/simple;
+	bh=jTJl566vB6TLydvSQoZ0rU+OyoanxKSrF65Aepy1Bmk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L0o7/6vT6QqyaozYBWvxAwbrBm93Hy4+GFJvw4lG8ZtRq2lwbF7obdjYTcby2TfqlsUUH58vL3K87c/uOr/WwCwqV/B0CW09xQ2upcK4NaVg876qqQ1LMtVtJ1KIzYGlQFqfqcm8/sl1E6VH4fAG1dwDCJbQc+loTHG8bHLdgxM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YFfqRS3j; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=n9PJ0KzaRqDulyGYeUGkvKnmpxnpS38Cg0vA11O35vxT8xZ2w85xxfvoHKCTjaKmKJiCYxGOA0MqaqZGLFtgpo+9+6Xt64YDpTvpYoK8+RjYLVbD97jLimWahQbyOwwmAZGxc55Iewml3cDL6BGhoqQxX8x1t252doB0Om6PEPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TEe0scBG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YFfqRS3j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BDF41F000E9;
-	Thu, 30 Jul 2026 15:47:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TEe0scBG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C6041F000E9;
+	Thu, 30 Jul 2026 15:47:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426467;
-	bh=07nrHTzah/bemocoCak4z0eeJ947TWOvgvn2cIsxiQU=;
+	s=korg; t=1785426470;
+	bh=tn71IhBYhALy+Lii3TGkmkZDfx2BdIgBKuIPIKzPTds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YFfqRS3j7n/ehO860jCpxJg5/iu28Vg3Cq0t7swM8O+WbUvkYvuP2lT//e2T1eLsc
-	 Ur7CiuSQgqiTbaZjY0KeWWT4H6y7Ox6yhquH1D2CNgSB7XdOMkK7lXDM5BZTPhTffa
-	 julLk+UQNw71ifOFk6cwYKU0NAU21TFRYnlPPKp0=
+	b=TEe0scBGEZCmQWU/jFLGtvi3ydFqTPjxosHkntbYu5jCuHjBTKkQkhff0BmKKnbRb
+	 rtMe5U4eG/Yycyk0XAyPWwLzmpWaeq36JBu7o7yyDBrxXxvqsBBI/ACJlMVxL5mGIb
+	 BJCO59W+hclbYokq7L06vATCsgSl1KRUimiIhxpU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
-	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
-	Ao Wang <wangao@seu.edu.cn>,
-	Xuewei Feng <fengxw06@126.com>,
-	Qi Li <qli01@tsinghua.edu.cn>,
-	Ke Xu <xuke@tsinghua.edu.cn>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 431/602] tcp: initialize standalone TCP-AO response padding
-Date: Thu, 30 Jul 2026 16:13:43 +0200
-Message-ID: <20260730141445.023072989@linuxfoundation.org>
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Breno Leitao <leitao@debian.org>,
+	Daehyeon Ko <4ncienth@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.12 432/602] tipc: clear sock->sk on the failed-insert path in tipc_sk_create()
+Date: Thu, 30 Jul 2026 16:13:44 +0200
+Message-ID: <20260730141445.043787120@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -56,67 +53,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+From: Daehyeon Ko <4ncienth@gmail.com>
 
-commit e1a9d3cc11829c5414a75eb39c704f461936eb24 upstream.
+commit ba0533fc163f905fe817cfabdf8ed4058da44800 upstream.
 
-tcp_v4_send_ack() and tcp_v6_send_response() construct standalone TCP
-responses with TCP-AO options.  The option length carries the actual MAC
-length, but the TCP header length includes the option rounded up to a
-four-byte boundary.
+When tipc_sk_create() fails to insert the new socket (tipc_sk_insert()
+returns non-zero), its error path frees the sk with sk_free() but leaves
+sock->sk pointing at the freed object:
 
-tcp_ao_hash_hdr() writes the MAC only.  Thus, when the MAC length is not
-four-byte aligned, the one to three bytes after the MAC are left
-uninitialized and may be transmitted.  For the normal TCP-AO hashing
-mode, those bytes also have to be initialized before computing the MAC.
+	if (tipc_sk_insert(tsk)) {
+		sk_free(sk);
+		pr_warn("Socket create failed; port number exhausted\n");
+		return -EINVAL;
+	}
 
-Initialize only the alignment padding in the TCP-AO branches, before
-hashing the header.  Use TCPOPT_NOP, as in the normal TCP-AO output path.
-This avoids adding work to non-AO TCP responses while preserving a valid
-authenticated header.
+This is harmless for plain socket(): the syscall layer clears sock->ops
+before releasing, so tipc_release() is never called. It is not harmless
+on the accept() path. tipc_accept() creates the pre-allocated child
+socket with tipc_sk_create(net, new_sock, 0, kern); on failure it leaves
+new_sock->sk dangling and new_sock->ops non-NULL, and do_accept() then
+fput()s the new file, so __sock_release() -> tipc_release() runs
+lock_sock(new_sock->sk) on the freed sk -- a use-after-free write of the
+sk_lock spinlock.
 
-Fixes: decde2586b34 ("net/tcp: Add TCP-AO sign to twsk")
-Fixes: da7dfaa6d6f7 ("net/tcp: Consistently align TCP-AO option in the header")
+tipc_release() already guards this exact "failed accept() releases a
+pre-allocated child" case with "if (sk == NULL) return 0;", but the
+guard is bypassed because tipc_sk_create() left sock->sk non-NULL
+(dangling) rather than NULL.
+
+Clear sock->sk on the failed-insert path so the existing tipc_release()
+NULL check fires and the use-after-free is avoided.
+
+The tipc_sk_insert() failure is reached when the per-netns socket
+rhashtable hits its max_size (tsk_rht_params.max_size = 1048576, ~2M
+elements) -- i.e. once a netns holds ~2M TIPC sockets every insert
+returns -E2BIG.
+
+  BUG: KASAN: slab-use-after-free in lock_sock_nested (net/core/sock.c:3839)
+  Write of size 8 at addr ffff8880047cdc38 by task init/1
+   lock_sock_nested (net/core/sock.c:3839)
+   tipc_release (net/tipc/socket.c:638)
+   __sock_release (net/socket.c:710)
+   sock_close (net/socket.c:1501)
+   __fput (fs/file_table.c:512)
+  Allocated by task 1:
+   sk_alloc (net/core/sock.c:2308)
+   tipc_sk_create (net/tipc/socket.c:487)
+   tipc_accept (net/tipc/socket.c:2744)
+   do_accept (net/socket.c:2034)
+  Freed by task 1:
+   __sk_destruct (net/core/sock.c:2391)
+   tipc_sk_create (net/tipc/socket.c:504)
+   tipc_accept (net/tipc/socket.c:2744)
+   do_accept (net/socket.c:2034)
+
+Fixes: 00aff3590fc0 ("net: tipc: fix possible refcount leak in tipc_sk_create()")
 Cc: stable@vger.kernel.org
-Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
-Reported-by: Ao Wang <wangao@seu.edu.cn>
-Reported-by: Xuewei Feng <fengxw06@126.com>
-Reported-by: Qi Li <qli01@tsinghua.edu.cn>
-Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260713105631.8616-1-zhaoyz24@mails.tsinghua.edu.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Reviewed-by: Breno Leitao <leitao@debian.org>
+Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260714131939.1255974-1-4ncienth@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/tcp_ipv4.c |    3 +++
- net/ipv6/tcp_ipv6.c |    2 ++
- 2 files changed, 5 insertions(+)
+ net/tipc/socket.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/ipv4/tcp_ipv4.c
-+++ b/net/ipv4/tcp_ipv4.c
-@@ -993,6 +993,9 @@ static void tcp_v4_send_ack(const struct
- 					  key->rcv_next);
- 		arg.iov[0].iov_len += tcp_ao_len_aligned(key->ao_key);
- 		rep.th.doff = arg.iov[0].iov_len / 4;
-+		memset((u8 *)&rep.opt[offset] + tcp_ao_maclen(key->ao_key),
-+		       TCPOPT_NOP, tcp_ao_len_aligned(key->ao_key) -
-+				    tcp_ao_len(key->ao_key));
- 
- 		tcp_ao_hash_hdr(AF_INET, (char *)&rep.opt[offset],
- 				key->ao_key, key->traffic_key,
---- a/net/ipv6/tcp_ipv6.c
-+++ b/net/ipv6/tcp_ipv6.c
-@@ -936,6 +936,8 @@ static void tcp_v6_send_response(const s
- 				(tcp_ao_len(key->ao_key) << 16) |
- 				(key->ao_key->sndid << 8) |
- 				(key->rcv_next));
-+		memset((u8 *)topt + tcp_ao_maclen(key->ao_key), TCPOPT_NOP,
-+		       tcp_ao_len_aligned(key->ao_key) - tcp_ao_len(key->ao_key));
- 
- 		tcp_ao_hash_hdr(AF_INET6, (char *)topt, key->ao_key,
- 				key->traffic_key,
+--- a/net/tipc/socket.c
++++ b/net/tipc/socket.c
+@@ -501,6 +501,7 @@ static int tipc_sk_create(struct net *ne
+ 	tipc_set_sk_state(sk, TIPC_OPEN);
+ 	if (tipc_sk_insert(tsk)) {
+ 		sk_free(sk);
++		sock->sk = NULL;
+ 		pr_warn("Socket create failed; port number exhausted\n");
+ 		return -EINVAL;
+ 	}
 
 
