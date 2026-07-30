@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6C95443318;
-	Thu, 30 Jul 2026 15:06:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98C6B442131;
+	Thu, 30 Jul 2026 15:06:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423971; cv=none; b=SgeHz+BIq8JmovzHiPKdjYHLdLMIIttm8rPl7NixBPwYxQGaQA1H96DHiVCDEA4ixx79qeFqmbbla2QCQeFMnOcHm1Z/+UNBruS6AlIxPHDbjEouQ7NhQtwBYXebbNoj6h5Q6LFBv2Tb08Z0wAH1Mw8YcQH5Jh7rb3ZRDCvqc7w=
+	t=1785423974; cv=none; b=gGzUhSdnqXmTdCZNi0vLojhvDWyxySqybfFM0BKnJSeHVFomvfJkUjFt9Q7a/BOq307UlMEMy3e6zX1g2BDLoo5oRNs6fj7toWZ2GJlW+lXj60yjaIZw/9SX3LB5r6w9mziSr7+w9X+j2rg/iMj7M2iOumkZNm5KuSCp9WBG8FM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423971; c=relaxed/simple;
-	bh=lo7GXxpOUHUzGEOGZvrWn+Gw1wHmLdB+/z9MzpBuDq8=;
+	s=arc-20240116; t=1785423974; c=relaxed/simple;
+	bh=Gj4PmBc3wKLQmh8gIvVrzJuPbMq/c4YPKIgvEbQ5fS0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=edmRfVuCpr0xBitniCCDgEC/phC+adqv4C6cfqhDrMJl0ft+Zh2IXNnNBbptswyams03uv5rJC+JDVwBOhzkaEcq9B+ln9Qz/NDaRwblBYULkZYBoGhwuis08bYr8J/kGoHlAUdoswgmanprlcJo3xk3NA8BHp3lctFPXGRDpt0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lRpipHNf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FmPKmI5xi17P2fjqXV2i1i7ulX+sCU9denFd3ZxhN+9w5wEwswOktE41RNP6/FuzWrLH/Jo6aGwAqy+lkATVYeTCxkA4IMHyKMAQ5nn4Z77rQXiVFzYfjV4WRdjJQ/AVX9oxYAP9lnLyysniJKHFZJt3tdgXR+OOZkj/awOFnSQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I1s4UoZi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lRpipHNf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 282E11F000E9;
-	Thu, 30 Jul 2026 15:06:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I1s4UoZi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F34B61F000E9;
+	Thu, 30 Jul 2026 15:06:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423970;
-	bh=cNPih+lOe/qTvNU3Kc1Rf79rAq4gjhkYiykQnpzAO2E=;
+	s=korg; t=1785423973;
+	bh=1dz80WXw7/9vh7aPYx7+X0STi0CG2ec6cGJrjI2Vtx4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lRpipHNfs50UixLSLXami+r+UWpO400W5mPE5KTjjRH6plW4L5+0cwbDVrr+4fW7Y
-	 CcYzwDzYPCMpxVeppZMIYV17YvDg5Cemgg57XQ4Hv/1jPnm1mPhCepURQcMsLBv7d9
-	 RZ+llF3J8h+/j2IByvKCoufTqcWYjxedf+ABsD0o=
+	b=I1s4UoZi5OwFmcvquV/KveDZee/o8UX9nuDaxbIvnUKXwEb09YFLjpondyuKl0/WY
+	 JNk18aVnxDwlzT8DEC2d/yq2xtJvJCFXl7LgBxUAllxYjm8HyYowUZjcnrjRRIi+i1
+	 HcpfwOgUX9DtJZ7j8UNpdmaPOUEqdYzt56a7T+94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Pope <andrew.pope@morsemicro.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	"Nikhil P. Rao" <nikhil.rao@amd.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 231/675] wifi: mac80211: recalculate TIM when a station enters power save
-Date: Thu, 30 Jul 2026 16:09:21 +0200
-Message-ID: <20260730141450.047059000@linuxfoundation.org>
+Subject: [PATCH 6.18 232/675] pds_core: reject component parameter in legacy firmware update
+Date: Thu, 30 Jul 2026 16:09:22 +0200
+Message-ID: <20260730141450.067524257@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -51,54 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Pope <andrew.pope@morsemicro.com>
+From: Nikhil P. Rao <nikhil.rao@amd.com>
 
-[ Upstream commit a007a384c9eb17610f53a53e2f59944c31f1565a ]
+[ Upstream commit 7be2552e601c247a328a5aba6fc06ac844b94a16 ]
 
-When an AP buffers frames for a station on its per-station TXQs and the
-station subsequently enters power save, sta_ps_start() records the
-buffered TIDs in txq_buffered_tids but does not update the TIM. The
-station's TIM bit is only ever set when a further frame is buffered
-while the station is already asleep
-(ieee80211_tx_h_unicast_ps_buf() -> sta_info_recalc_tim()).
+The legacy firmware update path does not support per-component updates.
+If a user specifies a component parameter with devlink flash, reject
+the request with -EOPNOTSUPP rather than silently ignoring the component
+parameter and flashing the entire firmware image.
 
-If no further downlink frame arrives for that station the beacon
-TIM never advertises the buffered traffic. A station relying on the
-TIM then remains in doze indefinitely on top of a non-empty queue. Its
-TXQs were removed from the scheduler's active list at PS entry, nothing
-pages it, and the flow deadlocks until an unrelated event wakes the
-station.
-
-Recalculate the TIM at the end of sta_ps_start(), so traffic
-already buffered at PS entry is advertised immediately.
-sta_info_recalc_tim() already consults txq_buffered_tids, which is
-updated above, and is safe in this context (it is already called
-from equivalent paths such as the tx handlers and
-ieee80211_handle_filtered_frame()).
-
-Fixes: ba8c3d6f16a1 ("mac80211: add an intermediate software queue implementation")
-Signed-off-by: Andrew Pope <andrew.pope@morsemicro.com>
-Link: https://patch.msgid.link/20260717011751.79524-1-andrew.pope@morsemicro.com
-[add wifi: subject prefix]
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 49ce92fbee0b ("pds_core: add FW update feature to devlink")
+Signed-off-by: Nikhil P. Rao <nikhil.rao@amd.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260708163649.128620-1-nikhil.rao@amd.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/rx.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/amd/pds_core/devlink.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/mac80211/rx.c b/net/mac80211/rx.c
-index 0a986607e65922..13b7432d732f87 100644
---- a/net/mac80211/rx.c
-+++ b/net/mac80211/rx.c
-@@ -1612,6 +1612,8 @@ static void sta_ps_start(struct sta_info *sta)
- 		else
- 			clear_bit(tid, &sta->txq_buffered_tids);
- 	}
+diff --git a/drivers/net/ethernet/amd/pds_core/devlink.c b/drivers/net/ethernet/amd/pds_core/devlink.c
+index 621791a3c543be..e35572f099c884 100644
+--- a/drivers/net/ethernet/amd/pds_core/devlink.c
++++ b/drivers/net/ethernet/amd/pds_core/devlink.c
+@@ -89,6 +89,12 @@ int pdsc_dl_flash_update(struct devlink *dl,
+ {
+ 	struct pdsc *pdsc = devlink_priv(dl);
+ 
++	if (params->component) {
++		NL_SET_ERR_MSG_MOD(extack,
++				   "Component update not supported by this device");
++		return -EOPNOTSUPP;
++	}
 +
-+	sta_info_recalc_tim(sta);
+ 	return pdsc_firmware_update(pdsc, params->fw, extack);
  }
  
- static void sta_ps_end(struct sta_info *sta)
 -- 
 2.53.0
 
