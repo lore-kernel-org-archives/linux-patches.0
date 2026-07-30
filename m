@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4273941D625;
-	Thu, 30 Jul 2026 15:04:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 285CF372ECB;
+	Thu, 30 Jul 2026 15:04:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423857; cv=none; b=VtNZcRaLM+jZxCM1HrWHn6QX6R8PF7dLWMbv6CYyEuVyMy/iyn6mhPSuVcSiZZ2HMq3oL58E6jN8YlZTxYM3nopJFEVh4wmA5Wz0aLF1fB57I4YZ0rk9dSe6Q97W17LGjNOFXWbpkhpq00vWGHSknJDV8xuIAaD9zjhexB9ardw=
+	t=1785423860; cv=none; b=gK6DjoqkF4XJ+iIHlx1BU0zMTnDwCsYf2moRduzgCSSMHojQ6V+iaXo6/JGSnF513HP5X90UYsn/dGrfLQ3rEk3um6E9Vce4fDwv+hRtvCux6dhxG4kR3HjP8Mo3b0teWurSuXfoDmKb8svso8T2aXHcVpl9UE94Mm9GZyrR06k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423857; c=relaxed/simple;
-	bh=ivGcsHc8F/weyFXWnSzyeh0s2Acb10GjEcMo/FrdgUI=;
+	s=arc-20240116; t=1785423860; c=relaxed/simple;
+	bh=mzB97QleiFnNrAZldpdDVABL0S4PRAUu5tVP1E/Guf0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lx08c7MfEJFdiJVjVM8ro4EtkerwhuiKnkQdM5CPNoYUBctMM5H1LCT72EWRYdFK/BIGw9OAqzIxrdsCzQMJ1ZvfX6SZDJiAwo0VMBPyX1D+SOiDtEJEWOHDpqwpAZDCkMyWgYTXObRV/imM6LpngKT1vC0UrEknJz0S9mZqhDQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IlE6mbhh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jE3eYCRxfrSnnTzu3vD//ih1LycIgfB3tbvPgAiv9iFQvU/1hWFPDijLFnWNAvFFLRv9MAgjvoa49+uNy7zwr/dx8pbMFl+XQZBvpXpxuo/0AaIxAX8Sm/7PC0ob47mHCF5iznmNLPVWqTdBUiGGF1pSKOc7sczqw2wLcMPBcTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ohKdlVLe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IlE6mbhh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96DB31F000E9;
-	Thu, 30 Jul 2026 15:04:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ohKdlVLe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7893B1F000E9;
+	Thu, 30 Jul 2026 15:04:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423856;
-	bh=YksPQzfI+KNLijx9AtsiImP6y/duT7g6EVB8CBUixz4=;
+	s=korg; t=1785423859;
+	bh=dX1U9NIV+KRa8tQmGxZ0G9DHmNHqaW/CPniTODu00bI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IlE6mbhhhuXVjo6oRBaZbMi44ILFZV/EpDPrvqjnhVsQbS+934kxz00pqcvHsxJn+
-	 Kycd5X71iLuH976TK/H0e3Cz1gojeKMkAkRwj3gL76VGKS8lUBf5PCy9u1mkZbjmd9
-	 bZYA4BP0cotOWoYWhqBie3LJsbDiyV1tHUu/qZ40=
+	b=ohKdlVLeEc45Eh04Xcqi2ZcKZcbC3lxfMvMTqs6Q9ZC+2jr/nIyPmXPKu2okj7lEB
+	 YPG6yo19SMLbBY562sofTHmQ4zYeW6ugG8X+ZkfO9lJmFpbwureVfmvFE+B7r8ZQm/
+	 /E7joOEE2xsNHqnKcCvfz/iF3PPRj00MPubnNCz0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 190/675] ALSA: hda: cs35l41: validate and free ACPI mute object
-Date: Thu, 30 Jul 2026 16:08:40 +0200
-Message-ID: <20260730141449.181850780@linuxfoundation.org>
+Subject: [PATCH 6.18 191/675] ASoC: bt-sco: fix duplicate DAPM widget names for wideband DAI
+Date: Thu, 30 Jul 2026 16:08:41 +0200
+Message-ID: <20260730141449.203583648@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -51,58 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-[ Upstream commit 3b597d24dc0455ae926f1053f97c2725038fc3cd ]
+[ Upstream commit 0b604e886ece11b71c4daaeccc512c784b89b014 ]
 
-cs35l41_get_acpi_mute_state() evaluates a _DSM method to get the ACPI
-mute state and reads the first byte from the returned object.
+The bt-sco-pcm-wb DAI uses the same stream_name strings as bt-sco-pcm
+("Playback" and "Capture"). This causes duplicate DAPM AIF widget
+names within the same component, leading to debugfs warnings:
 
-However, the returned ACPI object is owned by the caller and is never
-freed after use, so each successful query leaks the _DSM result object.
+  debugfs: 'Playback' already exists in 'dapm'
+  debugfs: 'Capture' already exists in 'dapm'
 
-The code also assumes that the returned object is a buffer with at least
-one byte. A malformed firmware response can return a different object
-type or an empty buffer, and the direct ret->buffer.pointer dereference
-can then access an invalid pointer.
+Give the wideband DAI distinct stream names ("WB Playback" and
+"WB Capture") and add corresponding DAPM AIF widgets and routes for
+them.
 
-Use the typed _DSM helper, validate that the returned buffer contains at
-least one byte, and free the ACPI object after reading it.
-
-Fixes: 447106e92a0c ("ALSA: hda: cs35l41: Support mute notifications for CS35L41 HDA")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Link: https://patch.msgid.link/20260708113625.752913-1-lgs201920130244@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 5947e1b4992e ("ASoC: bt-sco: extend rate and add a general compatible string")
+Assisted-by: VeroCoder:claude-sonnet-4-5
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Link: https://patch.msgid.link/20260715100620.1387159-1-shengjiu.wang@oss.nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/codecs/side-codecs/cs35l41_hda.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ sound/soc/codecs/bt-sco.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/sound/hda/codecs/side-codecs/cs35l41_hda.c b/sound/hda/codecs/side-codecs/cs35l41_hda.c
-index 438a19bd979bfe..de2fd6471f0598 100644
---- a/sound/hda/codecs/side-codecs/cs35l41_hda.c
-+++ b/sound/hda/codecs/side-codecs/cs35l41_hda.c
-@@ -1437,10 +1437,19 @@ static int cs35l41_get_acpi_mute_state(struct cs35l41_hda *cs35l41, acpi_handle
- 	guid_parse(CS35L41_UUID, &guid);
+diff --git a/sound/soc/codecs/bt-sco.c b/sound/soc/codecs/bt-sco.c
+index 3afcef2dfa3529..c0bf45b76cb8c5 100644
+--- a/sound/soc/codecs/bt-sco.c
++++ b/sound/soc/codecs/bt-sco.c
+@@ -17,11 +17,17 @@ static const struct snd_soc_dapm_widget bt_sco_widgets[] = {
+ 			    SND_SOC_NOPM, 0, 0),
+ 	SND_SOC_DAPM_AIF_OUT("BT_SCO_TX", "Capture", 0,
+ 			     SND_SOC_NOPM, 0, 0),
++	SND_SOC_DAPM_AIF_IN("BT_SCO_RX_WB", "WB Playback", 0,
++			    SND_SOC_NOPM, 0, 0),
++	SND_SOC_DAPM_AIF_OUT("BT_SCO_TX_WB", "WB Capture", 0,
++			     SND_SOC_NOPM, 0, 0),
+ };
  
- 	if (cs35l41_dsm_supported(handle, CS35L41_DSM_GET_MUTE)) {
--		ret = acpi_evaluate_dsm(handle, &guid, 0, CS35L41_DSM_GET_MUTE, NULL);
-+		ret = acpi_evaluate_dsm_typed(handle, &guid, 0,
-+			      CS35L41_DSM_GET_MUTE, NULL,
-+			      ACPI_TYPE_BUFFER);
-+
- 		if (!ret)
- 			return -EINVAL;
-+		if (!ret->buffer.length || !ret->buffer.pointer) {
-+			ACPI_FREE(ret);
-+			return -EINVAL;
-+		}
-+
- 		mute = *ret->buffer.pointer;
-+		ACPI_FREE(ret);
- 		dev_dbg(cs35l41->dev, "CS35L41_DSM_GET_MUTE: %d\n", mute);
- 	}
+ static const struct snd_soc_dapm_route bt_sco_routes[] = {
+ 	{ "BT_SCO_TX", NULL, "RX" },
+ 	{ "TX", NULL, "BT_SCO_RX" },
++	{ "BT_SCO_TX_WB", NULL, "RX" },
++	{ "TX", NULL, "BT_SCO_RX_WB" },
+ };
  
+ static struct snd_soc_dai_driver bt_sco_dai[] = {
+@@ -45,14 +51,14 @@ static struct snd_soc_dai_driver bt_sco_dai[] = {
+ 	{
+ 		.name = "bt-sco-pcm-wb",
+ 		.playback = {
+-			.stream_name = "Playback",
++			.stream_name = "WB Playback",
+ 			.channels_min = 1,
+ 			.channels_max = 1,
+ 			.rates = SNDRV_PCM_RATE_8000 | SNDRV_PCM_RATE_16000,
+ 			.formats = SNDRV_PCM_FMTBIT_S16_LE,
+ 		},
+ 		.capture = {
+-			 .stream_name = "Capture",
++			 .stream_name = "WB Capture",
+ 			.channels_min = 1,
+ 			.channels_max = 1,
+ 			.rates = SNDRV_PCM_RATE_8000 | SNDRV_PCM_RATE_16000,
 -- 
 2.53.0
 
