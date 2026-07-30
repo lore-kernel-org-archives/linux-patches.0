@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70EE64446E9;
-	Thu, 30 Jul 2026 15:13:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 902E243C7A6;
+	Thu, 30 Jul 2026 15:13:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424385; cv=none; b=aiOYhCZgW8bxZN3x3JYfrpB7gX3OofXW81GCMNxCW+wGg2hi1BmBxhWMQantU0eDxwE9vCHApjP/zXqYJJYOEKNhXgYg2GQqU7+IPpxy16125ccAtgGyt7Y7/iqIFC2U+ysgvC8vJilOHQQL3urkHTAVsxAYo2lOrPSUCOtCbS4=
+	t=1785424388; cv=none; b=nC97jp+ltWwu/1l/hK19FR962yoqz7gl/nxubPsWZtOdRcSqi3rRQzsnDcD/2nmU4bUW3LfZWhLunkpYtYtC/gaN8WzYOfPodt6SET764FhrJdUMstfV4Zez2x6XfRV9SDM2wx7FWl2lf27oh1KWkFnauEnl/58qOjMTVVI4SEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424385; c=relaxed/simple;
-	bh=UtzlMjg7+RHaAt2ONAH95g02AZ7Q8inuYlDENbvtAlQ=;
+	s=arc-20240116; t=1785424388; c=relaxed/simple;
+	bh=vgzghuzz7LPhBfGuCSqYYoyOMzDcG7/IA9b8LmeZqeY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A2S80E3NUw1KtnORXEHabiFqUKgT7vbrybq1Dt0wsJ2G61a0bhG50veGiOJhbqU6GVTvcYET1joan/ddI7o1zhHQTan9erj4nRoN5XCc/FHS4WyKRWhnrT5Fz3whkNOk71W74GztadDUfbtOV8ZSni4gbJ2giQtmE3QlusscMm4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H5WQ17rR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lPrOO4Lx7tRRZINSVDRP2XP1pDGazF5JnS5kiKn9alFWhA+0bE9136s2s+i9FnmKgtt5NTOT8b4FvVJX6yfX04fSXv8us4vA+0VEXAhBBSzEivXXxjfuf3MoZz8ncpsYpTKf2NVpG6T22u/+zj6fBQ873bZ1NyGBssMSTV/xb8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pT8CJDxR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H5WQ17rR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD2911F000E9;
-	Thu, 30 Jul 2026 15:13:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pT8CJDxR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EDC61F000E9;
+	Thu, 30 Jul 2026 15:13:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424384;
-	bh=lGNSE9ubazNOAuhy3bSWmFbWc7yfMezKxYjcfj9toXs=;
+	s=korg; t=1785424387;
+	bh=/4+L0YHhezuRSD+is/Sh/645cLBaEqIIjwyX0mfStsA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H5WQ17rR46dnt//lgPHGN0RwlN1o7R47ldvVoHG3TcHA+b0S1YHuaO+Os2Cq5NVOn
-	 TM9ePD2mGdEt8cHmk2l3lDdigwPPvxEOmCE0eruQ47yl23JiJtQ01LmKlMl6Ha7kfy
-	 ux3FLVhPsgafIS1OAkqb7AQyM2+9sv4KvVaRPoNY=
+	b=pT8CJDxRiW7c4Y451hneG9UnKqja/OxEwz9Z9GhNY6x6JBFhnzbmFwMOOGJ1XR0q4
+	 GNMgTvhQqLivLSArU2qyKkUHgFChvxtMkTokeFn5C5s5cnD0XA4J22dN2c18PDgFIk
+	 9l2cfxn/07WX3M4MDWAuB9M9zHwniUfA1KvjM0oI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Osama Abdelkader <osama.abdelkader@gmail.com>,
-	Liviu Dudau <liviu.dudau@arm.com>,
-	Boris Brezillon <boris.brezillon@collabora.com>
-Subject: [PATCH 6.18 376/675] drm/panthor: return error on truncated firmware
-Date: Thu, 30 Jul 2026 16:11:46 +0200
-Message-ID: <20260730141453.128043308@linuxfoundation.org>
+	Alex Deucher <alexander.deucher@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>
+Subject: [PATCH 6.18 377/675] drm/amdgpu: Release VFCT ACPI table reference
+Date: Thu, 30 Jul 2026 16:11:47 +0200
+Message-ID: <20260730141453.150252681@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -51,38 +50,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Osama Abdelkader <osama.abdelkader@gmail.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit 4a2c8cbe9bcba170706fdf08b1c84b6cbcf5b044 upstream.
+commit 65bff26617607c1331283232016c0e89088c5b78 upstream.
 
-panthor_fw_load() detects truncated firmware images, but jumps to the
-common cleanup path without setting ret. If no previous error was recorded,
-the function can return 0 and treat the invalid firmware as successfully
-loaded.
+amdgpu_acpi_vfct_bios() fetches the VFCT table with acpi_get_table()
+but never releases it. acpi_get_table() takes a reference on the
+table (incrementing its validation_count and mapping it on the 0->1
+transition); without a paired acpi_put_table() the mapping is leaked
+on every call, whether or not a matching VBIOS image is found.
 
-Set ret to -EINVAL before leaving the truncated-image path.
+Route all exit paths after the table is acquired through a common
+acpi_put_table(). The VBIOS image is copied out with kmemdup() before
+the table is released, so it remains valid for the caller.
 
-Fixes: 2718d91816ee ("drm/panthor: Add the FW logical block")
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Link: https://patch.msgid.link/20260708193518.702584-3-mario.limonciello@amd.com
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit ca5988682b4cba4cd125a0fa99b2de1239164ae4)
 Cc: stable@vger.kernel.org
-Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
-Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
-Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
-Link: https://patch.msgid.link/20260714163056.22329-1-osama.abdelkader@gmail.com
-Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/panthor/panthor_fw.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c |   17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
---- a/drivers/gpu/drm/panthor/panthor_fw.c
-+++ b/drivers/gpu/drm/panthor/panthor_fw.c
-@@ -777,6 +777,7 @@ static int panthor_fw_load(struct pantho
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c
+@@ -361,13 +361,14 @@ static bool amdgpu_acpi_vfct_bios(struct
+ 	acpi_size tbl_size;
+ 	UEFI_ACPI_VFCT *vfct;
+ 	unsigned int offset;
++	bool r = false;
+ 
+ 	if (!ACPI_SUCCESS(acpi_get_table("VFCT", 1, &hdr)))
+ 		return false;
+ 	tbl_size = hdr->length;
+ 	if (tbl_size < sizeof(UEFI_ACPI_VFCT)) {
+ 		dev_info(adev->dev, "ACPI VFCT table present but broken (too short #1),skipping\n");
+-		return false;
++		goto out;
  	}
  
- 	if (hdr.size > iter.size) {
-+		ret = -EINVAL;
- 		drm_err(&ptdev->base, "Firmware image is truncated\n");
- 		goto out;
+ 	vfct = (UEFI_ACPI_VFCT *)hdr;
+@@ -380,13 +381,13 @@ static bool amdgpu_acpi_vfct_bios(struct
+ 		offset += sizeof(VFCT_IMAGE_HEADER);
+ 		if (offset > tbl_size) {
+ 			dev_info(adev->dev, "ACPI VFCT image header truncated,skipping\n");
+-			return false;
++			goto out;
+ 		}
+ 
+ 		offset += vhdr->ImageLength;
+ 		if (offset > tbl_size) {
+ 			dev_info(adev->dev, "ACPI VFCT image truncated,skipping\n");
+-			return false;
++			goto out;
+ 		}
+ 
+ 		if (vhdr->ImageLength &&
+@@ -401,15 +402,19 @@ static bool amdgpu_acpi_vfct_bios(struct
+ 
+ 			if (!check_atom_bios(adev, vhdr->ImageLength)) {
+ 				amdgpu_bios_release(adev);
+-				return false;
++				goto out;
+ 			}
+ 			adev->bios_size = vhdr->ImageLength;
+-			return true;
++			r = true;
++			goto out;
+ 		}
  	}
+ 
+ 	dev_info(adev->dev, "ACPI VFCT table present but broken (too short #2),skipping\n");
+-	return false;
++
++out:
++	acpi_put_table(hdr);
++	return r;
+ }
+ #else
+ static inline bool amdgpu_acpi_vfct_bios(struct amdgpu_device *adev)
 
 
