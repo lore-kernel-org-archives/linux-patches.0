@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76F50194A6C;
-	Thu, 30 Jul 2026 16:10:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C1BC194A6C;
+	Thu, 30 Jul 2026 16:10:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427810; cv=none; b=XAkBLWy3U7GL5wMgUrODkiiAkuuUrAdouH168H5NblRxLtx8OntRwgNJkujtafPzk627ys9LMyx3/h16QGaflh7SQiYuKxLcQyiYuhMJhA2Wlr92c9IJ2wcEOZG+NHpxFbk/CrVp4KuBpshYVedMktWw0GAOwAEP+YamgfiUngI=
+	t=1785427813; cv=none; b=YJst4FT9M70BpKg6UpeDUJO5nEYB8t/zeiOkfYQ+6ybyUBIipJMzWqgVC4Sq/boNAoAMuXhpbyUXsN/BBuvkedf1FOrQTMKRDuBi9Diq4TP8Ju60y8DgCaHI9qZbNLgYBkvoyE0FQnWMtj1t5raBk5JIc8CFJ7IisUvqOmw7wOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427810; c=relaxed/simple;
-	bh=1FDQrjSI39hTCORS8tbOIul6iuPKr/YgZh/Z7W6UBXY=;
+	s=arc-20240116; t=1785427813; c=relaxed/simple;
+	bh=U3oPfVghvdlL6qS2mTmmE7EbaiApDXUXYc/IjCUr9c8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QQc6VLpMxx5mYeeBhBUv/RD0lpIaa0bMl33X3QbXSWK50aRqGqM1nJgo5pq8L4hSZd+4CNsfDw2Uz4dZ5Hg+lmFtm9ipvasVRCwXtWYef2Ax/2z4CCBLUtcZl3n+W26kr7yvAVoqa4a4PGjIFvhjV19bVvBljID+mydTYG0abdE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Jq07CNx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MaHIUgtQpbIJkHdoHh3oIq/RpSmcZGzsac5TIGyil3M/0XJZQHAmiAMkqwrPgpdt1wNXMgbybisuRHBu/rEXeiy4l4RlupbNsfSLjk4C7wL36f4xsp62geXfqnZ101187bNusUOidv+hmjrAQIvW30QEHcOK9kwnpZzVW1xnPEg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tgw9xBKU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Jq07CNx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DA211F000E9;
-	Thu, 30 Jul 2026 16:10:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tgw9xBKU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6568D1F000E9;
+	Thu, 30 Jul 2026 16:10:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427809;
-	bh=CDQP4KSGg7JfFaonDM9sSwNJ2k0DSnzuNoadbVpq8ws=;
+	s=korg; t=1785427811;
+	bh=GFf1qgGLk21drbJvp1qVvDOtk4DZ0GMJ0AfF6//h+bg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0Jq07CNxAosm56hzwC0iTbRvL7oNEFYl0JDZNaYynEFDTideZCWVozfZTJbw+FRfO
-	 3DALVCUDBfzE6hCO8foKONfhlJiWebQuI+Ta0EGZh7Lf9PfPCXWqBD8c1VSe6Lk6YT
-	 d676fejl+8YkkAEx91nuZA8McN5Z6zGwox7nIdA4=
+	b=Tgw9xBKUrhabGtDLt19tSFB+9pJY3bGnAgE1NGv4lWZq0drIMNea161sN56mSFZ6K
+	 Ylsj2UlqyaJ0wMgA/K6pQwZOj2RC/2Fdv5kNKtfWbl42q8WG4kNF1Ypzr2XpVZ2xQE
+	 An7Ka+ern+FgIGVg51FFJ3slyGNLu7nkUgwwv11Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Jun Yang <junvyyang@tencent.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 301/484] sctp: dont free the ASCONFs own transport in DEL-IP processing
-Date: Thu, 30 Jul 2026 16:13:18 +0200
-Message-ID: <20260730141430.031143407@linuxfoundation.org>
+	Max Kellermann <max.kellermann@ionos.com>,
+	Xiubo Li <xiubo.li@clyso.com>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 6.6 302/484] ceph: add owner/capability checks for CEPH_IOC_SET_LAYOUT*
+Date: Thu, 30 Jul 2026 16:13:19 +0200
+Message-ID: <20260730141430.052514003@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -52,62 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jun Yang <junvyyang@tencent.com>
+From: Max Kellermann <max.kellermann@ionos.com>
 
-commit 9b2854f86f0b56e9027d68e7a3fc909d1a9b566f upstream.
+commit cee38bbf5556a8e0a232ccae41649580827d7806 upstream.
 
-sctp_process_asconf() caches the transport the ASCONF chunk is processed
-against in asconf->transport (== chunk->transport, set once in sctp_rcv()).
-For an ASCONF located through its Address Parameter by
-__sctp_rcv_asconf_lookup(), that cached transport corresponds to the
-Address Parameter, which need not be the packet's source address.
+These permission checks were already missing in the initial
+impementation of these ioctls.  This Ceph allows any user who owns a
+file descriptor to manipulate the layout of any file, even if they
+don't have write permissions.
 
-sctp_process_asconf_param() rejects a DEL-IP for the packet source address
-(ADDIP D8, SCTP_ERROR_DEL_SRC_IP), but nothing protects asconf->transport.
-A single ASCONF can therefore carry, in order:
+It might be a good idea to guard other ioctls with permission checks
+as well or even disallow regular users (even if they own the file) to
+manipulate layout settings completely, as this may be abused to DoS
+the Ceph servers, but right now, I find it most urgent to have setter
+checks at all.
 
-    [Address Parameter L] [DEL-IP L] [DEL-IP 0.0.0.0]
-
-where L differs from the source. The DEL-IP for L passes the D8 check and
-calls sctp_assoc_rm_peer() on the transport that asconf->transport still
-points at, freeing it (RCU-deferred). The following wildcard DEL-IP then
-reuses the now-dangling asconf->transport in sctp_assoc_set_primary() and
-sctp_assoc_del_nonprimary_peers(): set_primary() dereferences the freed
-transport (->ipaddr, ->state) and plants the dangling pointer into
-asoc->peer.primary_path / active_path, and del_nonprimary_peers(), keeping
-only the pointer that is no longer on the list, removes every real
-transport, leaving the association with a transport_count of 0 and
-primary_path/active_path pointing at freed memory.
-
-Reject a DEL-IP that targets the transport the ASCONF is being processed
-against, mirroring the existing source-address guard, so the wildcard
-branch can never reuse a freed transport.
-
-Fixes: 42e30bf3463c ("[SCTP]: Handle the wildcard ADD-IP Address parameter")
-Cc: stable@kernel.org
-Signed-off-by: Jun Yang <junvyyang@tencent.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/tencent_73762ED1DF08CC9D5F5F61954B01350CFE0A@qq.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 8f4e91dee2a2 ("ceph: ioctls")
+Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
+Reviewed-by: Xiubo Li <xiubo.li@clyso.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/sm_make_chunk.c |    6 ++++++
+ fs/ceph/ioctl.c |    6 ++++++
  1 file changed, 6 insertions(+)
 
---- a/net/sctp/sm_make_chunk.c
-+++ b/net/sctp/sm_make_chunk.c
-@@ -3171,6 +3171,12 @@ static __be16 sctp_process_asconf_param(
- 		if (!peer)
- 			return SCTP_ERROR_DNS_FAILED;
+--- a/fs/ceph/ioctl.c
++++ b/fs/ceph/ioctl.c
+@@ -72,6 +72,9 @@ static long ceph_ioctl_set_layout(struct
+ 	struct ceph_ioctl_layout nl;
+ 	int err;
  
-+		/* Don't free asconf->transport; a later wildcard DEL-IP
-+		 * parameter reuses it.
-+		 */
-+		if (peer == asconf->transport)
-+			return SCTP_ERROR_REQ_REFUSED;
++	if (!inode_owner_or_capable(&nop_mnt_idmap, inode))
++		return -EACCES;
 +
- 		sctp_assoc_rm_peer(asoc, peer);
- 		break;
- 	case SCTP_PARAM_SET_PRIMARY:
+ 	if (copy_from_user(&l, arg, sizeof(l)))
+ 		return -EFAULT;
+ 
+@@ -142,6 +145,9 @@ static long ceph_ioctl_set_layout_policy
+ 	int err;
+ 	struct ceph_mds_client *mdsc = ceph_sb_to_fs_client(inode->i_sb)->mdsc;
+ 
++	if (!inode_owner_or_capable(&nop_mnt_idmap, inode))
++		return -EACCES;
++
+ 	/* copy and validate */
+ 	if (copy_from_user(&l, arg, sizeof(l)))
+ 		return -EFAULT;
 
 
