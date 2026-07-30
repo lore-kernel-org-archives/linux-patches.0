@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95448431E60;
-	Thu, 30 Jul 2026 15:50:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DC6A43C7C4;
+	Thu, 30 Jul 2026 15:50:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426631; cv=none; b=JULmnbtDL5YaTLMnwb9AvzUtUfilENwUAzWFb1fqq1dz77j6YhLSN9xtNyUJlXEb9JABcHtBw10CgiYnXqhxrNwKKFf23R1RJZzG2wy2BEXZVOa0uwdtjkqEtIHMOx815tKBbip3aGaE2kS0LeaufFl3GZfuRAHpWK8iG4da48U=
+	t=1785426634; cv=none; b=SfhG9TzeIgdBh36uGguBdZmCjjd2ncjOdvdNOVeyV9U/lW11aA6KkKMhCBLWFWTl3fMg1rUIVG2lYLqqUcvhUpFSSuS0TnT/HJ0VZQiqPK22bv5PO0+OedZZ4CQy0xbVqx+EaOUuWjvqlB/97DI7F4FsHb3VaS3Kkl7W4s0Z25M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426631; c=relaxed/simple;
-	bh=qeWft5fm0PZwhNnJfwAOTVhBwu7rBtm3Sk7V8L0zhSA=;
+	s=arc-20240116; t=1785426634; c=relaxed/simple;
+	bh=PIbPrC2XkmnNWuGkkRXlhlaMVOQj97g2P5cD1M7gjvk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kAcL1oU48Fnac8G9If4HvmilIZdao13yHwe45VNocAFSfWRWLjoCq7EwulF4T6TGwm2WLdL7JDqI0pHlFFxxA+e1+WkDMvPdjl0VjtYlu7Zw79qx7jFA3LEZFo/lT+3JyT7t3wQL1Zd8qEd6CFPlSrXNyotS3/fWtXVTJC4p0BA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t8HJl/oc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pYEj7A+ViR7JUhGrtteu2+Kuvd1H+fpt9Hn8WabFlhMELFHuWV4km2fT3TgvpBIzOtuaYA9SAQVaG/MYuAeX5hZGf/epbT/+oEnwCFiePtl8UJn8X+b49tducBSOtIHRZ7rgll4vJXna9lU+XWfwKUKuXyLeN69vYlsItXJzT7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MVCBN1r9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t8HJl/oc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B40011F000E9;
-	Thu, 30 Jul 2026 15:50:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MVCBN1r9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8974F1F000E9;
+	Thu, 30 Jul 2026 15:50:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426630;
-	bh=ZczWTfK3LBi45PwJuxCHzxVkU6wI4YUCdR1DK/lPu4Q=;
+	s=korg; t=1785426633;
+	bh=1Q2g6mJtVUrV3xH9I4UNsajfmCN//t4yYssb+sNd/vY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t8HJl/ocepRIzBpQ8lDRyn4vV+FCK0XtWey3JhBp5jegMKAakDGUeZkkY9klEvX+t
-	 8yl9xTVyZCW64d6IasA4SM/IxVytdKkWjLjyEf3q0kx9FBmaYilHzDYDbicNkM2aZ1
-	 0CbuRR60ukEO4BTBDzBBd8Xob2kt+h7bmlBlMR8o=
+	b=MVCBN1r9T2dmfBqLWE9Pi3psmBtEBQStJUDfHviww4H/7IGTWvNmcYEtalb2WpsWL
+	 4wFyBHQWnzVA+EN+wkCnCkfM3QelHeIRqbygdoXdbbgM1PjEMfzQHRsXfYpUlcxjvH
+	 amYNbVmYAHFVp/Tn/7Xuts8GvPVR0Hh9VDBi5Cg0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	NeilBrown <neil@brown.name>,
-	Christian Brauner <brauner@kernel.org>,
+	Li Xiasong <lixiasong1@huawei.com>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 470/602] VFS/audit: introduce kern_path_parent() for audit
-Date: Thu, 30 Jul 2026 16:14:22 +0200
-Message-ID: <20260730141445.839396043@linuxfoundation.org>
+Subject: [PATCH 6.12 488/602] tipc: restrict socket queue dumps in enqueue tracepoints
+Date: Thu, 30 Jul 2026 16:14:40 +0200
+Message-ID: <20260730141446.223211366@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -51,188 +52,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: NeilBrown <neil@brown.name>
+From: Li Xiasong <lixiasong1@huawei.com>
 
-[ Upstream commit 76a53de6f7ff0641570364234fb4489f4d4fc8e9 ]
+[ Upstream commit acd7df8d955480a6f6e5bb809da67b1500cc3cf4 ]
 
-audit_alloc_mark() and audit_get_nd() both need to perform a path
-lookup getting the parent dentry (which must exist) and the final
-target (following a LAST_NORM name) which sometimes doesn't need to
-exist.
+tipc_sk_enqueue() runs with sk->sk_lock.slock held while the socket is
+owned by user context. The spinlock protects the backlog queue in this
+path, but it does not serialize against the socket owner consuming or
+purging sk_receive_queue.
 
-They don't need the parent to be locked, but use kern_path_locked() or
-kern_path_locked_negative() anyway.  This is somewhat misleading to the
-casual reader.
+KASAN reported:
 
-This patch introduces a more targeted function, kern_path_parent(),
-which returns not holding locks.  On success the "path" will
-be set to the parent, which must be found, and the return value is the
-dentry of the target, which might be negative.
+  CPU: 14 UID: 0 PID: 1050 Comm: tipc3 Not tainted 7.1.0-rc6+ #126 PREEMPT(lazy)
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+  Call Trace:
+    <TASK>
+    dump_stack_lvl+0x76/0xa0 lib/dump_stack.c:123
+    print_report+0xce/0x5b0 mm/kasan/report.c:482
+    kasan_report+0xc6/0x100 mm/kasan/report.c:597
+    __asan_report_load4_noabort+0x14/0x30 mm/kasan/report_generic.c:380
+    tipc_skb_dump+0x1327/0x16f0 net/tipc/trace.c:73
+    tipc_list_dump+0x208/0x2e0 net/tipc/trace.c:187
+    tipc_sk_dump+0xaf6/0xd60 net/tipc/socket.c:3996
+    trace_event_raw_event_tipc_sk_class+0x312/0x5a0 net/tipc/trace.h:188
+    tipc_sk_rcv+0xb1d/0x1d50 net/tipc/socket.c:2497
+    tipc_node_xmit+0x1c3/0x1440 net/tipc/node.c:1689
+    __tipc_sendmsg+0x97a/0x1440 net/tipc/socket.c:1512
+    tipc_sendmsg+0x52/0x80 net/tipc/socket.c:1400
+    sock_sendmsg+0x2f6/0x3e0 net/socket.c:825
+    splice_to_socket+0x7f9/0x1010 fs/splice.c:884
+    do_splice+0xe21/0x2330 fs/splice.c:936
+    __do_splice+0x153/0x260 fs/splice.c:1431
+    __x64_sys_splice+0x150/0x230 fs/splice.c:1616
+    x64_sys_call+0xeb5/0x2790 arch/x86/entry/syscall_64.c:41
+    do_syscall_64+0xf3/0x620 arch/x86/entry/syscall_64.c:63
+    entry_SYSCALL_64_after_hwframe+0x76/0x7e arch/x86/entry/entry_64.S:130
+  RIP: 0033:0x71624e8aafe2
+  Code: 08 0f 85 71 3a ff ff 49 89 fb 48 89 f0 48 89 d7 48 89 ce 4c 89 c2 4d 89 ca 4c 8b 44 24 08 4c 8b 4c 24 10 4c 89 5c 24 08 0f 05 <c3> 66 2e 0f 1f 84 00 00 00 00 00 66 2e 0f 1f 84 00 00 00 00 00 66
+  RSP: 002b:0000716157ffed68 EFLAGS: 00000246 ORIG_RAX: 0000000000000113
+  RAX: ffffffffffffffda RBX: 0000716157fff6c0 RCX: 000071624e8aafe2
+  RDX: 000000000000005f RSI: 0000000000000000 RDI: 0000000000000066
+  RBP: 0000716157ffed90 R08: 0000000000008000 R09: 0000000000000001
+  R10: 0000000000000000 R11: 0000000000000246 R12: ffffffffffffff00
+  R13: 0000000000000021 R14: 0000000000000000 R15: 00007fff89799c40
+    </TASK>
 
-This will clear the way to rename kern_path_locked() which is
-otherwise only used to prepare for removing something.
+The TIPC_DUMP_ALL tracepoints in tipc_sk_enqueue() also dump
+sk_receive_queue and can therefore dereference skbs that the socket
+owner has already dequeued or freed. Restrict these dumps to
+TIPC_DUMP_SK_BKLGQ, which matches the queue protected by the held
+spinlock.
 
-It also allows us to remove kern_path_locked_negative(), which is
-transformed into the new kern_path_parent().
+Keep the change limited to the enqueue path, where the unsafe queue dump
+is reachable while the socket is owned by user context.
 
-Signed-off-by: NeilBrown <neil@brown.name>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Stable-dep-of: 81905b5acbe7 ("audit: fix recursive locking deadlock in audit_dupe_exe()")
+Fixes: 01e661ebfbad ("tipc: add trace_events for tipc socket")
+Cc: stable@vger.kernel.org
+Signed-off-by: Li Xiasong <lixiasong1@huawei.com>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/20260611135647.3666727-1-lixiasong1@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/namei.c              |   43 +++++++++++++++++++++++++++++++++++++++++++
- include/linux/namei.h   |    1 +
- kernel/audit.h          |    4 ++--
- kernel/audit_fsnotify.c |    9 +++------
- kernel/audit_watch.c    |    9 ++++++---
- 5 files changed, 55 insertions(+), 11 deletions(-)
+ net/tipc/socket.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/fs/namei.c
-+++ b/fs/namei.c
-@@ -2705,6 +2705,49 @@ static struct dentry *__kern_path_locked
- 	return d;
- }
+--- a/net/tipc/socket.c
++++ b/net/tipc/socket.c
+@@ -2456,17 +2456,17 @@ static void tipc_sk_enqueue(struct sk_bu
+ 			atomic_set(dcnt, 0);
+ 		lim = rcvbuf_limit(sk, skb) + atomic_read(dcnt);
+ 		if (likely(!sk_add_backlog(sk, skb, lim))) {
+-			trace_tipc_sk_overlimit1(sk, skb, TIPC_DUMP_ALL,
++			trace_tipc_sk_overlimit1(sk, skb, TIPC_DUMP_SK_BKLGQ,
+ 						 "bklg & rcvq >90% allocated!");
+ 			continue;
+ 		}
  
-+/**
-+ * kern_path_parent: lookup path returning parent and target
-+ * @name: path name
-+ * @path: path to store parent in
-+ *
-+ * The path @name should end with a normal component, not "." or ".." or "/".
-+ * A lookup is performed and if successful the parent information
-+ * is store in @parent and the dentry is returned.
-+ *
-+ * The dentry maybe negative, the parent will be positive.
-+ *
-+ * Returns:  dentry or error.
-+ */
-+struct dentry *kern_path_parent(const char *name, struct path *path)
-+{
-+	struct filename *filename = getname_kernel(name);
-+	struct path parent_path;
-+	struct dentry *d;
-+	struct qstr last;
-+	int type, error;
-+
-+	error = filename_parentat(AT_FDCWD, filename, 0, &parent_path, &last, &type);
-+	if (error) {
-+		d = ERR_PTR(error);
-+		goto out;
-+	}
-+	if (unlikely(type != LAST_NORM)) {
-+		path_put(&parent_path);
-+		d = ERR_PTR(-EINVAL);
-+		goto out;
-+	}
-+
-+	d = lookup_one_len_unlocked(last.name, parent_path.dentry, last.len);
-+	if (IS_ERR(d)) {
-+		path_put(&parent_path);
-+		goto out;
-+	}
-+	*path = parent_path;
-+out:
-+	putname(filename);
-+	return d;
-+}
-+
- struct dentry *kern_path_locked(const char *name, struct path *path)
- {
- 	struct filename *filename = getname_kernel(name);
---- a/include/linux/namei.h
-+++ b/include/linux/namei.h
-@@ -51,6 +51,7 @@ struct dentry *lookup_one_qstr_excl(cons
- 				    struct dentry *base,
- 				    unsigned int flags);
- extern int kern_path(const char *, unsigned, struct path *);
-+struct dentry *kern_path_parent(const char *name, struct path *parent);
- 
- extern struct dentry *kern_path_create(int, const char *, struct path *, unsigned int);
- extern struct dentry *user_path_create(int, const char __user *, struct path *, unsigned int);
---- a/kernel/audit.h
-+++ b/kernel/audit.h
-@@ -279,8 +279,8 @@ extern struct audit_fsnotify_mark *audit
- extern char *audit_mark_path(struct audit_fsnotify_mark *mark);
- extern void audit_remove_mark(struct audit_fsnotify_mark *audit_mark);
- extern void audit_remove_mark_rule(struct audit_krule *krule);
--extern int audit_mark_compare(struct audit_fsnotify_mark *mark,
--			      unsigned long ino, dev_t dev);
-+extern int audit_mark_compare(struct audit_fsnotify_mark *mark, u64 ino,
-+			      dev_t dev);
- extern int audit_dupe_exe(struct audit_krule *new, struct audit_krule *old);
- extern int audit_exe_compare(struct task_struct *tsk,
- 			     struct audit_fsnotify_mark *mark);
---- a/kernel/audit_fsnotify.c
-+++ b/kernel/audit_fsnotify.c
-@@ -57,7 +57,7 @@ char *audit_mark_path(struct audit_fsnot
- 	return mark->path;
- }
- 
--int audit_mark_compare(struct audit_fsnotify_mark *mark, unsigned long ino, dev_t dev)
-+int audit_mark_compare(struct audit_fsnotify_mark *mark, u64 ino, dev_t dev)
- {
- 	if (mark->ino == AUDIT_INO_UNSET)
- 		return 0;
-@@ -76,17 +76,14 @@ struct audit_fsnotify_mark *audit_alloc_
- 	struct audit_fsnotify_mark *audit_mark;
- 	struct path path;
- 	struct dentry *dentry;
--	struct inode *inode;
- 	int ret;
- 
- 	if (pathname[0] != '/' || pathname[len-1] == '/')
- 		return ERR_PTR(-EINVAL);
- 
--	dentry = kern_path_locked(pathname, &path);
-+	dentry = kern_path_parent(pathname, &path);
- 	if (IS_ERR(dentry))
- 		return ERR_CAST(dentry); /* returning an error */
--	inode = path.dentry->d_inode;
--	inode_unlock(inode);
- 
- 	audit_mark = kzalloc(sizeof(*audit_mark), GFP_KERNEL);
- 	if (unlikely(!audit_mark)) {
-@@ -100,7 +97,7 @@ struct audit_fsnotify_mark *audit_alloc_
- 	audit_update_mark(audit_mark, dentry->d_inode);
- 	audit_mark->rule = krule;
- 
--	ret = fsnotify_add_inode_mark(&audit_mark->mark, inode, 0);
-+	ret = fsnotify_add_inode_mark(&audit_mark->mark, path.dentry->d_inode, 0);
- 	if (ret < 0) {
- 		audit_mark->path = NULL;
- 		fsnotify_put_mark(&audit_mark->mark);
---- a/kernel/audit_watch.c
-+++ b/kernel/audit_watch.c
-@@ -244,7 +244,7 @@ static void audit_watch_log_rule_change(
- /* Update inode info in audit rules based on filesystem event. */
- static void audit_update_watch(struct audit_parent *parent,
- 			       const struct qstr *dname, dev_t dev,
--			       unsigned long ino, unsigned invalidating)
-+			       u64 ino, unsigned int invalidating)
- {
- 	struct audit_watch *owatch, *nwatch, *nextw;
- 	struct audit_krule *r, *nextr;
-@@ -347,15 +347,18 @@ static void audit_remove_parent_watches(
- /* Get path information necessary for adding watches. */
- static int audit_get_nd(struct audit_watch *watch, struct path *parent)
- {
--	struct dentry *d = kern_path_locked(watch->path, parent);
-+	struct dentry *d;
-+
-+	d = kern_path_parent(watch->path, parent);
- 	if (IS_ERR(d))
- 		return PTR_ERR(d);
-+
- 	if (d_is_positive(d)) {
- 		/* update watch filter fields */
- 		watch->dev = d->d_sb->s_dev;
- 		watch->ino = d_backing_inode(d)->i_ino;
- 	}
--	inode_unlock(d_backing_inode(parent->dentry));
-+
- 	dput(d);
- 	return 0;
- }
+-		trace_tipc_sk_dump(sk, skb, TIPC_DUMP_ALL, "err_overload!");
++		trace_tipc_sk_dump(sk, skb, TIPC_DUMP_SK_BKLGQ, "err_overload!");
+ 		/* Overload => reject message back to sender */
+ 		onode = tipc_own_addr(sock_net(sk));
+ 		atomic_inc(&sk->sk_drops);
+ 		if (tipc_msg_reverse(onode, &skb, TIPC_ERR_OVERLOAD)) {
+-			trace_tipc_sk_rej_msg(sk, skb, TIPC_DUMP_ALL,
++			trace_tipc_sk_rej_msg(sk, skb, TIPC_DUMP_SK_BKLGQ,
+ 					      "@sk_enqueue!");
+ 			__skb_queue_tail(xmitq, skb);
+ 		}
 
 
