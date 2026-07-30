@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DB8543F8A6;
-	Thu, 30 Jul 2026 15:21:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3483544BCB8;
+	Thu, 30 Jul 2026 15:21:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424881; cv=none; b=RfLGBB2PqQxDNrDgJ/5iW7YkfpIA68BbM85y09DvrBC0P5WBJryLBQ8M+1+NfSxMMEPq3L/UaGIr2BTR/cuUL6Jh/vSz0ntHdgcpGHrMTo/JtAF1FxLsnMxdnXsM2C5+ldPVnEOFq/392dyj6HTC8/niToO0dAXQi27M2Yva640=
+	t=1785424884; cv=none; b=HTHTV1059Y5PYuror/ZzxSMsqI//RfFDCDVOY2NOoiO4jeXbtforj8YP/+tddU8MjwMYk2FfcmWUuVqB6DjdjB0hhXOETk/hz2wkWIaAY/cz+rNuJLgC7plWwtCnD+VbnOwgLZFpIqERTa9v0EosACUY3OKEVU4XAsuQNUKmCik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424881; c=relaxed/simple;
-	bh=RDZND6fciwj6dOHwZzgiANpsF9RWgNenVW6+IOhmbR8=;
+	s=arc-20240116; t=1785424884; c=relaxed/simple;
+	bh=t1DXTruYe+rKRDGe1x8g4kGQYvHNNvCcW5xu95p6ZvM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JgjWg031MpPsBkU+dm8dUp8Hm1eDtXpCubZ+BFA9p0gOHFpY73DZ8O7QLCeMJ1rhW8bXHTqU3G1lYTwMd8jnJM9W8qwQp84h0N6WYA8kt+BeTF9cIfRy1WN4C+8j6+f3WxU+8ZZ1SKxX25vTV4RGO7F2vyQ1fFa+ebNi/LOkVb0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aRhaFqHV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=d6LJRrwL0xUGpvtbl5lmgHHthWTCMSJ3Cq+Y1DeB4IbhdLa2KWscnlBZOEViLgWeNIK7nZeOHbS0YeypRsKPXX/ZySPBATL81uTaxl/5+InA8RbleZ7tylu9AuuOMiopQJZ1tUBRzDiOYlKuytyrykt1I6biZTIvmcRLaTlL7Po=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qfrbCRgc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aRhaFqHV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4A771F00A3F;
-	Thu, 30 Jul 2026 15:21:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qfrbCRgc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CF271F00ACA;
+	Thu, 30 Jul 2026 15:21:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424880;
-	bh=QA0ZFHX8KDtrlLkTFih4azRCNKY4ToraoKL5mySwvhQ=;
+	s=korg; t=1785424883;
+	bh=DkHMv8yDCdH4UwlcmTlNIFx2QfPr7wUdZGuILV0Fp4Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aRhaFqHVFX1FSqIkmYOFwqq8FZFhVHpSLSaYYWTF3bG6D+4vMjf85/VvaxNUKBbjC
-	 cY/nWAqTtB9ElZf3HuMG6YGkW0RbPkQ+BFKN4nIUSAvYy3xGgJftuoAcZlmxswryfm
-	 yAL2CQ/Vs20hsfnfy0rtmaUE/7CpBWNq5RnxP8P4=
+	b=qfrbCRgc6Vo+RkmmS5t9BpYJz8XJNLw9DPCTGuyuJTVLm4Fcp0VyFSo1RyknbVqtU
+	 m5BvlOVZPIebBaW1CEJfbD6mbrYbG/ox9sMpG2jf4RKFyYcnn3M3DAg24RPcVaPn/+
+	 V+7Fva/uZy0tbLvrR81kWXqJ0rsOSlB28VX1WwGg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 6.18 547/675] selftests/ftrace: Reset triggers at top level before instance loop
-Date: Thu, 30 Jul 2026 16:14:37 +0200
-Message-ID: <20260730141456.769133871@linuxfoundation.org>
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 6.18 548/675] super: fix emergency thaw deadlock on frozen block devices
+Date: Thu, 30 Jul 2026 16:14:38 +0200
+Message-ID: <20260730141456.789360460@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -50,45 +49,144 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Christian Brauner <brauner@kernel.org>
 
-commit 1a087033a6bad73b4140020b40e819b0933aafc3 upstream.
+commit 749d7aa0377aae32af8c0a4ad43371e7bf830ab5 upstream.
 
-When running instance tests, 'ftracetest' creates a new ftrace instance
-and runs the tests inside it. Before starting each test, it executes
-'initialize_system()' to reset the ftrace state to initial-state.
+do_thaw_all_callback() calls bdev_thaw() while holding sb->s_umount
+exclusively. If the block device was frozen via bdev_freeze() dropping
+the last block layer freeze reference calls fs_bdev_thaw() which
+reacquires s_umount:
 
-However, since 'initialize_system()' is executed in the context of the
-instance directory, it only cleans up triggers and filters of that
-instance.
-Any triggers or dynamic events left behind in the top-level instance by
-previous failed top-level tests, are left completely untouched. These
-top-level leftovers can cause subsequent instance-based tests to fail
-or even crash the kernel.
+  do_thaw_all_callback(sb)
+    super_lock_excl(sb)                     # holds sb->s_umount
+    bdev_thaw(sb->s_bdev)
+      mutex_lock(&bdev->bd_fsfreeze_mutex)
+      # bd_fsfreeze_count drops 1 -> 0
+      bd_holder_ops->thaw == fs_bdev_thaw
+        get_bdev_super(bdev)
+          bdev_super_lock(bdev, true)
+            super_lock(sb, true)
+              down_write(&sb->s_umount)     # same task: deadlock
 
-Fix this by executing 'initialize_system()' in the top-level tracing
-directory once before entering the instance loop.
+The emergency thaw worker deadlocks against itself holding both
+s_umount and bd_fsfreeze_mutex. That fscks any subsequent unmount,
+freeze, or thaw of that filesystem and block device.
 
+  [   81.878470] sysrq: Show Blocked State
+  [   81.880140] task:kworker/0:1     state:D stack:0     pid:11    tgid:11    ppid:2      task_flags:0x4208060 flags:0x00080000
+  [   81.884876] Workqueue: events do_thaw_all
+  [   81.886656] Call Trace:
+  [   81.887759]  <TASK>
+  [   81.888763]  __schedule+0x579/0x1420
+  [   81.890372]  schedule+0x3a/0x100
+  [   81.891794]  schedule_preempt_disabled+0x15/0x30
+  [   81.893848]  rwsem_down_write_slowpath+0x1ea/0x900
+  [   81.895191]  ? __pfx_do_thaw_all_callback+0x10/0x10
+  [   81.896528]  down_write+0xbd/0xc0
+  [   81.897505]  super_lock+0x91/0x180
+  [   81.898457]  ? __mutex_lock+0xa99/0x1140
+  [   81.900748]  ? __mutex_unlock_slowpath+0x1f/0x400
+  [   81.902069]  bdev_super_lock+0x5b/0x150
+  [   81.903132]  get_bdev_super+0x10/0x60
+  [   81.904042]  fs_bdev_thaw+0x23/0xf0
+  [   81.904755]  bdev_thaw+0x82/0x100
+  [   81.905484]  do_thaw_all_callback+0x2c/0x50
+  [   81.906298]  __iterate_supers+0x5d/0x130
+  [   81.907067]  do_thaw_all+0x20/0x40
+  [   81.907739]  process_one_work+0x206/0x5e0
+  [   81.908545]  worker_thread+0x1e2/0x3c0
+  [   81.909339]  ? __pfx_worker_thread+0x10/0x10
+  [   81.910171]  kthread+0xf4/0x130
+  [   81.910799]  ? __pfx_kthread+0x10/0x10
+  [   81.911528]  ret_from_fork+0x2e2/0x3b0
+  [   81.912259]  ? __pfx_kthread+0x10/0x10
+  [   81.913010]  ret_from_fork_asm+0x1a/0x30
+  [   81.913806]  </TASK>
+
+bdev_super_lock() even documents the violated requirement with
+lockdep_assert_not_held(&sb->s_umount).
+
+Acquiring bd_fsfreeze_mutex under s_umount also inverts the
+bd_fsfreeze_mutex vs. s_umount ordering established by
+bdev_{freeze,thaw}() and can thus ABBA against a concurrent block-layer
+freeze even when the recursive path isn't hit.
+
+Fix this by not holding s_umount around the bdev_thaw() loop at all. Pin
+the superblock with an active reference instead as
+filesystems_freeze_callback() does. The active reference keeps the
+superblock from being shut down and so ->s_bdev stays valid without
+holding s_umount. The block-layer-held freeze is dropped by
+fs_bdev_thaw() with FREEZE_MAY_NEST | FREEZE_HOLDER_USERSPACE exactly as
+a regular unfreeze would and thaw_super_locked() handles
+filesystem-level freezes as before.
+
+The emergency thaw path has deadlocked like this in one form or
+another for a long long time but the current exclusively-held
+shape dates back to commit [1] where thaw_bdev() already ended in
+thaw_super() with s_umount held by do_thaw_all_callback().
+
+Fixes: 08fdc8a0138a ("buffer.c: call thaw_super during emergency thaw") [1]
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/178425671889.84440.9477850701738666404.stgit@devnote2
-Fixes: b5b77be812de ("selftests: ftrace: Allow some tests to be run in a tracing instance")
-Assisted-by: Antigravity:gemini-3.5-flash
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Link: https://patch.msgid.link/20260723-work-super-emergency_thaw-v1-1-7c315c600245@kernel.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/ftrace/ftracetest |    1 +
- 1 file changed, 1 insertion(+)
+ fs/super.c |   29 ++++++++++++++++-------------
+ 1 file changed, 16 insertions(+), 13 deletions(-)
 
---- a/tools/testing/selftests/ftrace/ftracetest
-+++ b/tools/testing/selftests/ftrace/ftracetest
-@@ -483,6 +483,7 @@ for t in $TEST_CASES; do
- done
+--- a/fs/super.c
++++ b/fs/super.c
+@@ -1139,16 +1139,30 @@ void emergency_remount(void)
+ 	}
+ }
  
- # Test on instance loop
-+(cd $TRACING_DIR; initialize_system)
- INSTANCE=" (instance) "
- for t in $TEST_CASES; do
-   test_on_instance $t || continue
++static inline bool get_active_super(struct super_block *sb)
++{
++	bool active = false;
++
++	if (super_lock_excl(sb)) {
++		active = atomic_inc_not_zero(&sb->s_active);
++		super_unlock_excl(sb);
++	}
++	return active;
++}
++
+ static void do_thaw_all_callback(struct super_block *sb, void *unused)
+ {
+-	if (!super_lock_excl(sb))
++	if (!get_active_super(sb))
+ 		return;
+ 
++	/* fs_bdev_thaw() acquires s_umount so it must not be held here */
+ 	if (IS_ENABLED(CONFIG_BLOCK))
+ 		while (sb->s_bdev && !bdev_thaw(sb->s_bdev))
+ 			pr_warn("Emergency Thaw on %pg\n", sb->s_bdev);
+ 
+-	thaw_super_locked(sb, FREEZE_HOLDER_USERSPACE, NULL);
++	if (super_lock_excl(sb))
++		thaw_super_locked(sb, FREEZE_HOLDER_USERSPACE, NULL);
++	deactivate_super(sb);
+ }
+ 
+ static void do_thaw_all(struct work_struct *work)
+@@ -1174,17 +1188,6 @@ void emergency_thaw_all(void)
+ 	}
+ }
+ 
+-static inline bool get_active_super(struct super_block *sb)
+-{
+-	bool active = false;
+-
+-	if (super_lock_excl(sb)) {
+-		active = atomic_inc_not_zero(&sb->s_active);
+-		super_unlock_excl(sb);
+-	}
+-	return active;
+-}
+-
+ static const char *filesystems_freeze_ptr = "filesystems_freeze";
+ 
+ static void filesystems_freeze_callback(struct super_block *sb, void *freeze_all_ptr)
 
 
