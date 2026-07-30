@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B148449995;
-	Thu, 30 Jul 2026 15:24:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EC3A449999;
+	Thu, 30 Jul 2026 15:24:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425049; cv=none; b=qf3hlUgVrQ8OzMt1oa5J68ycsIF4X5WRPBm9DyP6h40CBpZt1Ci8owVoHclh4+ljCceguEnjsa1PSY1W1okr3yGXpr5QEVzY81iN/1VLHQ65t0fKt7bhuVNn05bQKRhz9bij+zMvbC1rsyrgMoarekQnzKr05LXcQcxmqNR4auc=
+	t=1785425052; cv=none; b=S6wXNedCMzHDKj0M+zNvWNM775yzoSCUBzDMSFfTq4sdbrHgEMT85HpDz0fVtgfeccKjGZ2uGl1CHpXnfNcpkews0Yd1be5zPpJeNDvCvV2H8BUYxUvW+Imnpd1MfN2PuvHTwzSEmar07dK0ZKH4kp7b3N1olhsRhZf1EH0IPEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425049; c=relaxed/simple;
-	bh=3T3z49GX3bv9AKKdMcdkVaj2959P827MDOI9DWUb5Vw=;
+	s=arc-20240116; t=1785425052; c=relaxed/simple;
+	bh=5pj99COxL1s9paw+TrdC1l8AqL5XTveFXjw7pWIh7TM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BCV1dqe+YT4qWaxDxh0E4wMWkArQL6FAsZwitZf6nVZx2ygWbwlZ1wHizo6RpToYSYFbiDo7H/zNvqH2PBuSfxJVAIN/gwi+uzw6IxvjJsJlPloyb1ZUkxtfpGZ1J7HTlSNimI5ZL+PXsXCu9/1RLq3/TEEqUZWX58kj4fiseIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OnhQfIp6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=g0kdlibN5JKNqVmlVI73J2lCML1IlsV1KZpFWjrprQJuYQu+ZHv40NVrae9YWax3q2RPtuSmBcy0wmQ4xJEF7oPSyN9au1qc3BR5hEbu2c24ahPSVR8Kb0wNDv2FiM3qmKsGhwgnNwjT0PZ3k7l1c8ikTq3eQqwBMrAjuGPN7Rc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P5UEx2yD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OnhQfIp6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87F8C1F000E9;
-	Thu, 30 Jul 2026 15:24:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P5UEx2yD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F3C61F000E9;
+	Thu, 30 Jul 2026 15:24:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425048;
-	bh=G/9ocgMJW3BUFeNW/ICTTc+eALZJIeXit99O2rq2cAg=;
+	s=korg; t=1785425051;
+	bh=BKqC0p59gtNVH004/8ml4tDfeC1OfV2KmXGGhItxz58=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OnhQfIp6bCPNpoapti/dA5bqogujFn0VNbYXPvcc2kZOAca4Z7Grf8J0JnHYUO7uz
-	 JC/+/TYZey/Q3609eEWxAXdxV3xuBjJkMX16QFKyL+Aag/gGC8IkY1hw3tTBwGMU6v
-	 COgLZuSCz8y33OlCiapkD6ZBTEZbaX7ZMZA3SIR4=
+	b=P5UEx2yD1GG7R87uegvU8wqCwiPxZRmH/avXRrkAqQPve65+SMC6Nkjd0kmQZlL1Y
+	 LM3oL+SFWGBWuLFBgV3gqyNJZ8hgNR+UDLkjMnqcVMPDS4Zq+KJ58X4eAWFSRr5tJT
+	 D1AIb1B17em8dj7Yw5FvbsxcOMdBk53pOKWRXy9E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Waiman Long <longman@redhat.com>,
-	Richard Guy Briggs <rgb@redhat.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Ricardo Robaina <rrobaina@redhat.com>,
-	Paul Moore <paul@paul-moore.com>,
+	Bernd Schubert <bernd@bsbernd.com>,
+	Joanne Koong <joannelkoong@gmail.com>,
+	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 609/675] audit: fix recursive locking deadlock in audit_dupe_exe()
-Date: Thu, 30 Jul 2026 16:15:39 +0200
-Message-ID: <20260730141458.059323372@linuxfoundation.org>
+Subject: [PATCH 6.18 610/675] fuse-uring: fix race between registration and connection abortion
+Date: Thu, 30 Jul 2026 16:15:40 +0200
+Message-ID: <20260730141458.081759065@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -55,361 +52,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Robaina <rrobaina@redhat.com>
+From: Joanne Koong <joannelkoong@gmail.com>
 
-[ Upstream commit 81905b5acbe77284734438df3fbec1158e6429a3 ]
+[ Upstream commit 952b5d36f6a298f57c52a59e72076c69386a8aaf ]
 
-A deadlock occurs in the audit subsystem when duplicating
-executable-related rules.
+This fixes this race:
+- thread a: io_uring_enter -> register sqe ->
+  fuse_uring_create_ring_ent -> allocate ent but doesn't grab queue_ref
+  yet
+- thread b: fuse_conn_destroy() -> fuse_chan_abort() ->
+  fuse_uring_abort() is a no-op due to queue ref being 0
+- thread a: grabs the queue_ref, queue_ref is now 1, rest of
+  fuse_uring_do_register() logic executes
+- thread b: fuse_chan_abort() returns, fuse_chan_wait_aborted() now runs
+  and calls
+  "wait_event(ring->stop_waitq, atomic_read(&ring->queue_refs) == 0);"
+The abort/unmount thread will hang indefinitely in unkillable state as
+nothing will decrement queue_refs or wake stop_waitq, and the ring,
+queue, and ent are leaked.
 
-When a file is moved (e.g., via do_renameat2()), the VFS layer locks
-the parent directory (I_MUTEX_PARENT), which synchronously triggers an
-fsnotify_move event. If an existing executable audit rule matches the
-file being moved, the audit subsystem catches this event and calls
-audit_dupe_exe() to duplicate the watch and update the rule. Then,
-audit_alloc_mark() would call kern_path_parent() to resolve the path,
-leading to a blind attempt to acquire the exact same I_MUTEX_PARENT lock
-already held by the task, resulting in the following recursive locking
-deadlock:
+Fix this by checking fch->connected under fch->lock after the created
+ent has grabbed a ref count on the queue. This ensures that in the
+scenario above, it is guaranteed that we either release the queue ref
+and wake up stop_waitq (in case fuse_chan_wait_aborted() is already
+waiting) in fuse_uring_do_register() when we detect !fch->connected, or
+if the connection is aborted after the check, it is guaranteed that the
+async teardown worker will be running in the background cleaning up ents
+and decrementing the ent's ref on the queue, which will unblock the
+eventual queue and ring teardown.
 
- ============================================
- WARNING: possible recursive locking detected
- 6.12.0-55.27.1.el10_0.x86_64+debug #1 Not tainted
- --------------------------------------------
- mv/5099 is trying to acquire lock:
- ffff888132845358 (&inode->i_sb->s_type->i_mutex_dir_key/1){+.+.}-{3:3},
- at: __kern_path_locked+0x10a/0x2f0
-
- but task is already holding lock:
- ffff888132846b58 (&inode->i_sb->s_type->i_mutex_dir_key/1){+.+.}-{3:3},
- at: lock_two_directories+0x13f/0x2b0
-
- other info that might help us debug this:
-  Possible unsafe locking scenario:
-
-        CPU0
-        ----
-   lock(&inode->i_sb->s_type->i_mutex_dir_key/1);
-   lock(&inode->i_sb->s_type->i_mutex_dir_key/1);
-
-  *** DEADLOCK ***
-
-  May be due to missing lock nesting notation
-
-  6 locks held by mv/5099:
-  #0: ffff888112a9c440 (sb_writers#13)
-  at: do_renameat2+0x34c/0xbc0
-  #1: ffff888112a9c790 (&type->s_vfs_rename_key#3)
-  at: do_renameat2+0x415/0xbc0
-  #2: ffff888132846b58 (&inode->i_sb->s_type->i_mutex_dir_key/1)
-  at: lock_two_directories+0x13f/0x2b0
-  #3: ffff888132845358 (&inode->i_sb->s_type->i_mutex_dir_key/5)
-  at: lock_two_directories+0x175/0x2b0
-  #4: ffffffffb3a1fb10 (&fsnotify_mark_srcu)
-  at: fsnotify+0x454/0x28a0
-  #5: ffffffffaf886230 (audit_filter_mutex)
-  at: audit_update_watch+0x36/0x11e0
-
- stack backtrace:
- Call Trace:
-  <TASK>
-  dump_stack_lvl+0x6f/0xb0
-  print_deadlock_bug.cold+0xbd/0xca
-  validate_chain+0x83a/0xf00
-  __lock_acquire+0xcac/0x1d20
-  lock_acquire.part.0+0x11b/0x360
-  down_write_nested+0x9f/0x230
-  __kern_path_locked+0x10a/0x2f0
-  kern_path_locked+0x26/0x40
-  audit_alloc_mark+0xfb/0x4f0
-  audit_dupe_exe+0x6c/0xe0
-  audit_dupe_rule+0x6c2/0xc00
-  audit_update_watch+0x4cc/0x11e0
-  audit_watch_handle_event+0x12c/0x1b0
-  send_to_group+0x5d0/0x8b0
-  fsnotify+0x615/0x28a0
-  fsnotify_move+0x1d8/0x630
-  vfs_rename+0xdcd/0x1df0
-  do_renameat2+0x9d4/0xbc0
-  __x64_sys_renameat+0x192/0x260
-  do_syscall_64+0x92/0x180
-  entry_SYSCALL_64_after_hwframe+0x76/0x7e
- RIP: 0033:0x7f0491fe8c4e
- Code: 0f 1f 40 00 48 8b 15 c1 e1 16 00 f7 d8 64 89 02 b8 ff ff ff ff
- c3 66 0f 1f 44 00 00 f3 0f 1e fa 49 89 ca b8 08 01 00 00 0f 05 <48>
- 3d 00 f0 ff ff 77 0a c3 66 0f 1f 84 00 00 00 00 00 48 8b 15 89
- RSP: 002b:00007ffc7210bf38 EFLAGS: 00000246 ORIG_RAX: 0000000000000108
- RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f0491fe8c4e
- RDX: 0000000000000003 RSI: 00007ffc7210e6c8 RDI: 00000000ffffff9c
- RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000001
- R10: 00005575eb2dae2a R11: 0000000000000246 R12: 00005575eb2dae2a
- R13: 00007ffc7210e6c8 R14: 0000000000000003 R15: 00000000ffffff9c
-  </TASK>
-
-The aforementioned deadlock can be consistently reproduced by running
-the script below:
-
- audit-dupe-exe-deadlock.sh
- --------------------------
- #!/bin/bash
- auditctl -D
- mkdir -p /tmp/foo
- touch /tmp/file
- auditctl -a always,exit -F exe=/tmp/file -F path=/tmp/file -S all -k dr
- mv /tmp/file /tmp/foo/file
- rm -Rf /tmp/foo
-
-This patch fixes the issue by introducing struct audit_watch_ctx to pass
-the fsnotify event context down to audit_alloc_mark(). By utilizing the
-already-resolved directory inode provided by the event, we bypass the
-kern_path_parent() path resolution entirely, safely avoiding the
-recursive lock. Furthermore, it explicitly allows duplicate fsnotify
-marks (allow_dups = 1) during the rename update, allowing the new rule's
-mark to safely coexist with the old rule's mark until the old rule is
-freed.
-
-P.S.: This issue was identified and reproduced during a comprehensive
-code coverage analysis of the audit subsystem. The full report is
-available at the link below:
-
-https://people.redhat.com/rrobaina/audit-code-coverage-analysis.pdf
-
-P.P.S: With the permission of both Ricardo and Nathan, I've squashed a
-fixup patch from Nathan that addresses a compile time error when
-CONFIG_AUDITSYSCALL=n.
-
-Cc: stable@kernel.org
-Fixes: 34d99af52ad4 ("audit: implement audit by executable")
-Acked-by: Waiman Long <longman@redhat.com>
-Acked-by: Richard Guy Briggs <rgb@redhat.com>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Ricardo Robaina <rrobaina@redhat.com>
-[PM: move link metadata into the msg, apply fix from NC]
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Fixes: 24fe962c86f5 ("fuse: {io-uring} Handle SQEs - register commands")
+Cc: stable@vger.kernel.org
+Reviewed-by: Bernd Schubert <bernd@bsbernd.com>
+Signed-off-by: Joanne Koong <joannelkoong@gmail.com>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+[ changed fch->lock/fch->connected references to fc->lock/fc->connected since struct fuse_chan does not exist in this tree ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/audit.h          |   17 ++++++++++++-----
- kernel/audit_fsnotify.c |   32 +++++++++++++++++++++++---------
- kernel/audit_watch.c    |   25 +++++++++++++++++--------
- kernel/auditfilter.c    |    9 +++++----
- 4 files changed, 57 insertions(+), 26 deletions(-)
+ fs/fuse/dev_uring.c |   22 ++++++++++++++++------
+ 1 file changed, 16 insertions(+), 6 deletions(-)
 
---- a/kernel/audit.h
-+++ b/kernel/audit.h
-@@ -256,8 +256,13 @@ extern int audit_del_rule(struct audit_e
- extern void audit_free_rule_rcu(struct rcu_head *head);
- extern struct list_head audit_filter_list[];
- 
--extern struct audit_entry *audit_dupe_rule(struct audit_krule *old);
-+struct audit_watch_ctx {
-+	struct inode *dir;
-+	struct inode *child;
-+};
- 
-+extern struct audit_entry *audit_dupe_rule(struct audit_krule *old,
-+					   struct audit_watch_ctx *ctx);
- extern void audit_log_d_path_exe(struct audit_buffer *ab,
- 				 struct mm_struct *mm);
- 
-@@ -280,13 +285,15 @@ extern char *audit_watch_path(struct aud
- extern int audit_watch_compare(struct audit_watch *watch, u64 ino, dev_t dev);
- 
- extern struct audit_fsnotify_mark *audit_alloc_mark(struct audit_krule *krule,
--						    char *pathname, int len);
-+						    char *pathname, int len,
-+						    struct audit_watch_ctx *ctx);
- extern char *audit_mark_path(struct audit_fsnotify_mark *mark);
- extern void audit_remove_mark(struct audit_fsnotify_mark *audit_mark);
- extern void audit_remove_mark_rule(struct audit_krule *krule);
- extern int audit_mark_compare(struct audit_fsnotify_mark *mark, u64 ino,
- 			      dev_t dev);
--extern int audit_dupe_exe(struct audit_krule *new, struct audit_krule *old);
-+extern int audit_dupe_exe(struct audit_krule *new, struct audit_krule *old,
-+			  struct audit_watch_ctx *ctx);
- extern int audit_exe_compare(struct task_struct *tsk,
- 			     struct audit_fsnotify_mark *mark);
- 
-@@ -317,13 +324,13 @@ extern struct list_head *audit_killed_tr
- #define audit_watch_path(w) ""
- #define audit_watch_compare(w, i, d) 0
- 
--#define audit_alloc_mark(k, p, l) (ERR_PTR(-EINVAL))
-+#define audit_alloc_mark(k, p, l, c) (ERR_PTR(-EINVAL))
- #define audit_mark_path(m) ""
- #define audit_remove_mark(m) do { } while (0)
- #define audit_remove_mark_rule(k) do { } while (0)
- #define audit_mark_compare(m, i, d) 0
- #define audit_exe_compare(t, m) (-EINVAL)
--#define audit_dupe_exe(n, o) (-EINVAL)
-+#define audit_dupe_exe(n, o, c) (-EINVAL)
- 
- #define audit_remove_tree_rule(rule) BUG()
- #define audit_add_tree_rule(rule) -EINVAL
---- a/kernel/audit_fsnotify.c
-+++ b/kernel/audit_fsnotify.c
-@@ -71,19 +71,30 @@ static void audit_update_mark(struct aud
- 	audit_mark->ino = inode ? inode->i_ino : AUDIT_INO_UNSET;
- }
- 
--struct audit_fsnotify_mark *audit_alloc_mark(struct audit_krule *krule, char *pathname, int len)
-+struct audit_fsnotify_mark *audit_alloc_mark(struct audit_krule *krule, char *pathname,
-+					     int len, struct audit_watch_ctx *ctx)
+--- a/fs/fuse/dev_uring.c
++++ b/fs/fuse/dev_uring.c
+@@ -998,15 +998,26 @@ static bool is_ring_ready(struct fuse_ri
+ /*
+  * fuse_uring_req_fetch command handling
+  */
+-static void fuse_uring_do_register(struct fuse_ring_ent *ent,
+-				   struct io_uring_cmd *cmd,
+-				   unsigned int issue_flags)
++static int fuse_uring_do_register(struct fuse_ring_ent *ent,
++				  struct io_uring_cmd *cmd,
++				  unsigned int issue_flags)
  {
- 	struct audit_fsnotify_mark *audit_mark;
- 	struct path path;
- 	struct dentry *dentry;
--	int ret;
-+	struct inode *dir, *child;
-+	int ret, allow_dups;
+ 	struct fuse_ring_queue *queue = ent->queue;
+ 	struct fuse_ring *ring = queue->ring;
+ 	struct fuse_conn *fc = ring->fc;
+ 	struct fuse_iqueue *fiq = &fc->iq;
  
- 	if (pathname[0] != '/' || pathname[len-1] == '/')
- 		return ERR_PTR(-EINVAL);
- 
--	dentry = kern_path_parent(pathname, &path);
--	if (IS_ERR(dentry))
--		return ERR_CAST(dentry); /* returning an error */
-+	if (!ctx) {
-+		dentry = kern_path_parent(pathname, &path);
-+		if (IS_ERR(dentry))
-+			return ERR_CAST(dentry); /* returning an error */
-+		dir = d_inode(path.dentry);
-+		child = d_inode(dentry);
-+		allow_dups = 0;
-+	} else {
-+		dir = ctx->dir;
-+		child = ctx->child;
-+		allow_dups = 1;
++	spin_lock(&fc->lock);
++	/* abort teardown path is running or has run */
++	if (!fc->connected) {
++		spin_unlock(&fc->lock);
++		if (atomic_dec_and_test(&ring->queue_refs))
++			wake_up_all(&ring->stop_waitq);
++		kfree(ent);
++		return -ECONNABORTED;
 +	}
- 
- 	audit_mark = kzalloc(sizeof(*audit_mark), GFP_KERNEL);
- 	if (unlikely(!audit_mark)) {
-@@ -94,18 +105,21 @@ struct audit_fsnotify_mark *audit_alloc_
- 	fsnotify_init_mark(&audit_mark->mark, audit_fsnotify_group);
- 	audit_mark->mark.mask = AUDIT_FS_EVENTS;
- 	audit_mark->path = pathname;
--	audit_update_mark(audit_mark, dentry->d_inode);
- 	audit_mark->rule = krule;
- 
--	ret = fsnotify_add_inode_mark(&audit_mark->mark, path.dentry->d_inode, 0);
-+	audit_update_mark(audit_mark, child);
-+	ret = fsnotify_add_inode_mark(&audit_mark->mark, dir, allow_dups);
++	spin_unlock(&fc->lock);
 +
- 	if (ret < 0) {
- 		audit_mark->path = NULL;
- 		fsnotify_put_mark(&audit_mark->mark);
- 		audit_mark = ERR_PTR(ret);
- 	}
- out:
--	dput(dentry);
--	path_put(&path);
-+	if (!ctx) {
-+		dput(dentry);
-+		path_put(&path);
-+	}
- 	return audit_mark;
- }
+ 	fuse_uring_prepare_cancel(cmd, issue_flags, ent);
  
---- a/kernel/audit_watch.c
-+++ b/kernel/audit_watch.c
-@@ -244,7 +244,8 @@ static void audit_watch_log_rule_change(
- /* Update inode info in audit rules based on filesystem event. */
- static void audit_update_watch(struct audit_parent *parent,
- 			       const struct qstr *dname, dev_t dev,
--			       u64 ino, unsigned int invalidating)
-+			       u64 ino, unsigned int invalidating,
-+			       struct audit_watch_ctx *ctx)
- {
- 	struct audit_watch *owatch, *nwatch, *nextw;
- 	struct audit_krule *r, *nextr;
-@@ -280,7 +281,7 @@ static void audit_update_watch(struct au
- 			list_del(&oentry->rule.rlist);
- 			list_del_rcu(&oentry->list);
- 
--			nentry = audit_dupe_rule(&oentry->rule);
-+			nentry = audit_dupe_rule(&oentry->rule, ctx);
- 			if (IS_ERR(nentry)) {
- 				list_del(&oentry->rule.list);
- 				audit_panic("error updating watch, removing");
-@@ -479,10 +480,17 @@ static int audit_watch_handle_event(stru
- 	if (WARN_ON_ONCE(inode_mark->group != audit_watch_group))
- 		return 0;
- 
--	if (mask & (FS_CREATE|FS_MOVED_TO) && inode)
--		audit_update_watch(parent, dname, inode->i_sb->s_dev, inode->i_ino, 0);
--	else if (mask & (FS_DELETE|FS_MOVED_FROM))
--		audit_update_watch(parent, dname, AUDIT_DEV_UNSET, AUDIT_INO_UNSET, 1);
-+	if (mask & (FS_CREATE|FS_MOVED_TO) && inode) {
-+		struct audit_watch_ctx ctx = { .dir = dir, .child = inode };
-+
-+		audit_update_watch(parent, dname, inode->i_sb->s_dev, inode->i_ino, 0,
-+				   &ctx);
-+	} else if (mask & (FS_DELETE|FS_MOVED_FROM)) {
-+		struct audit_watch_ctx ctx = { .dir = dir, .child = NULL };
-+
-+		audit_update_watch(parent, dname, AUDIT_DEV_UNSET, AUDIT_INO_UNSET, 1,
-+				   &ctx);
-+	}
- 	else if (mask & (FS_DELETE_SELF|FS_UNMOUNT|FS_MOVE_SELF))
- 		audit_remove_parent_watches(parent);
- 
-@@ -505,7 +513,8 @@ static int __init audit_watch_init(void)
- }
- device_initcall(audit_watch_init);
- 
--int audit_dupe_exe(struct audit_krule *new, struct audit_krule *old)
-+int audit_dupe_exe(struct audit_krule *new, struct audit_krule *old,
-+		   struct audit_watch_ctx *ctx)
- {
- 	struct audit_fsnotify_mark *audit_mark;
- 	char *pathname;
-@@ -514,7 +523,7 @@ int audit_dupe_exe(struct audit_krule *n
- 	if (!pathname)
- 		return -ENOMEM;
- 
--	audit_mark = audit_alloc_mark(new, pathname, strlen(pathname));
-+	audit_mark = audit_alloc_mark(new, pathname, strlen(pathname), ctx);
- 	if (IS_ERR(audit_mark)) {
- 		kfree(pathname);
- 		return PTR_ERR(audit_mark);
---- a/kernel/auditfilter.c
-+++ b/kernel/auditfilter.c
-@@ -590,7 +590,7 @@ static struct audit_entry *audit_data_to
- 				err = PTR_ERR(str);
- 				goto exit_free;
- 			}
--			audit_mark = audit_alloc_mark(&entry->rule, str, f_val);
-+			audit_mark = audit_alloc_mark(&entry->rule, str, f_val, NULL);
- 			if (IS_ERR(audit_mark)) {
- 				kfree(str);
- 				err = PTR_ERR(audit_mark);
-@@ -818,7 +818,8 @@ static inline int audit_dupe_lsm_field(s
-  * rule with the new rule in the filterlist, then free the old rule.
-  * The rlist element is undefined; list manipulations are handled apart from
-  * the initial copy. */
--struct audit_entry *audit_dupe_rule(struct audit_krule *old)
-+struct audit_entry *audit_dupe_rule(struct audit_krule *old,
-+				    struct audit_watch_ctx *ctx)
- {
- 	u32 fcount = old->field_count;
- 	struct audit_entry *entry;
-@@ -877,7 +878,7 @@ struct audit_entry *audit_dupe_rule(stru
- 				new->filterkey = fk;
- 			break;
- 		case AUDIT_EXE:
--			err = audit_dupe_exe(new, old);
-+			err = audit_dupe_exe(new, old, ctx);
- 			break;
+ 	spin_lock(&queue->lock);
+@@ -1023,6 +1034,7 @@ static void fuse_uring_do_register(struc
+ 			wake_up_all(&fc->blocked_waitq);
  		}
- 		if (err) {
-@@ -1416,7 +1417,7 @@ static int update_lsm_rule(struct audit_
- 	if (!security_audit_rule_known(r))
- 		return 0;
+ 	}
++	return 0;
+ }
  
--	nentry = audit_dupe_rule(r);
-+	nentry = audit_dupe_rule(r, NULL);
- 	if (entry->rule.exe)
- 		audit_remove_mark(entry->rule.exe);
- 	if (IS_ERR(nentry)) {
+ /*
+@@ -1138,9 +1150,7 @@ static int fuse_uring_register(struct io
+ 	if (IS_ERR(ent))
+ 		return PTR_ERR(ent);
+ 
+-	fuse_uring_do_register(ent, cmd, issue_flags);
+-
+-	return 0;
++	return fuse_uring_do_register(ent, cmd, issue_flags);
+ }
+ 
+ /*
 
 
