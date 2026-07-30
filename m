@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EF1A43FD01;
-	Thu, 30 Jul 2026 15:09:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 073DC43F8D3;
+	Thu, 30 Jul 2026 15:09:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424166; cv=none; b=BUaIDxIJpmt6VXelfyRMR/JFZnIwYIcqtd4Uov3AEy6uPpMB3xJr4a/SDMojrySIVWes/bqr9mSfhqcagDEbdzdKfZ7hmObX2SmFEV06LSrOLf2tVmH2R6O/G1UwbF4WHBzpdk4ov346EBXg9EwZXvygKz1vt82UHomEr1YvtlM=
+	t=1785424169; cv=none; b=dqsu59RXYef6DuNcoNq1cTbbOrqcEK9/uQHrfzB55FowFGZsw5J34EzCBpp/ksacOuEqtngcPuKg7vWiqESc+kaaeC0lM3J5OI5Oqh4tCQw3WgDQ4+vef27wqfteaec4RNGln0BqPeYGKme9lk7mcDbwYOWJuRctn+8lmSAyKUo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424166; c=relaxed/simple;
-	bh=HGklyomn/wujaOHGF9v0ah5dnuL7E8Iu6MqKsJ/J8jc=;
+	s=arc-20240116; t=1785424169; c=relaxed/simple;
+	bh=ApNIYC5tS5eee3QT9F1uNH1xpPxCvubTavP0oxsyDeI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LIjunMggCwLJmNV1MTKE7DqPds7eKTwnEg+WQ3Nb2RIhYNHA3DtolklTH5YZBc3H/J4XobY2NE4gauhAz9oX3TgywJtjwWeGkz6twwGeRC5wNLMMKCWqssG08qQWXxHyUUdSzOvUFxIv1cVEK1ZCQDbt//DKbu5XwTARJt0Bo6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PApEVeuW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OH04oT3Kmkxb4OziyJhDx92uEeuK9K2OUy4fFhWRUE4H3T4QN7WMjwacy5Lv4bF4D2RUu4+rFGgEieoyHykjt60VqjSSmFs97DoUFQ9g0BviWqgib+G+JTsq9Pvv6pR1w0bUdMasC1pF7egbMvDzlEGDEA28g4x5g0xd8+Zl/hY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hESvckAc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PApEVeuW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AD311F000E9;
-	Thu, 30 Jul 2026 15:09:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hESvckAc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 239831F000E9;
+	Thu, 30 Jul 2026 15:09:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424164;
-	bh=6+1q64aOGrivM+4xUJw8z0wCAYWNt5b42JyLJ7fPA6s=;
+	s=korg; t=1785424167;
+	bh=oPTJDrY2QVuWF5WQbwB2iDik9b/qs/0gU9XZp84QrU4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PApEVeuWvOv7FDIvB4Er4i2EPiY37CcLKVBRtdb+CvtbO84znJSqhtrPv5OBzKPvG
-	 TdSBXjUROvh9ZdIcVNpZqqsVmPlxc+G0+OHk/dDNmDyIOx2Q0SLXwHR5qF/YUyduVD
-	 L76UW5xfi11EFGvf5+5wAeO3QmkYOtZT307+bq/0=
+	b=hESvckAc8Yml6wDEBVg0eCXlIZ7arDXrZwtKC3hVVUOqJU3ntIlczOnFe6b6vTe2l
+	 gYs7AOswTlY+w1Zou6NZUT+d7ktrKzYZnl5Eyb8hKT5kEWLi0tfkKeJhw8FdGVdpfB
+	 ulhLJxd9QZ8ti9whF67xXYMGwMhGPntKtr2Gjbj8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Ziad <muhzi100@gmail.com>,
 	Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
+	Qingfang Deng <qingfang.deng@linux.dev>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 297/675] ipv4: icmp: fill flow parameters in icmp_route_lookup decoy lookup
-Date: Thu, 30 Jul 2026 16:10:27 +0200
-Message-ID: <20260730141451.435814047@linuxfoundation.org>
+Subject: [PATCH 6.18 298/675] ppp: annotate data races in ppp_generic
+Date: Thu, 30 Jul 2026 16:10:28 +0200
+Message-ID: <20260730141451.457065183@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -55,84 +54,229 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 853e164c2b321f0711361bc23505aaeb7dc432c3 ]
+[ Upstream commit 543adf072165aaf2e3b635c0476204f9658ed3bf ]
 
-When Linux forwards a packet and needs to generate an ICMP error,
-icmp_route_lookup() performs a reverse-path relookup. For non-local
-destinations, it performs a decoy lookup to find the expected egress
-interface (rt2->dst.dev) before validating the path with ip_route_input().
+Several fields in struct ppp can be read or updated concurrently
+from multiple CPUs without synchronization, causing data races:
 
-Currently, the decoy flow structure (fl4_2) only sets .daddr = fl4_dec.saddr,
-leaving .saddr, .flowi4_dscp, .flowi4_proto, .flowi4_mark, .flowi4_oif,
-.fl4_sport, .fl4_dport, and .flowi4_uid zeroed out.
+1. ppp->mru is read concurrently in ppp_receive_nonmp_frame() while
+   being updated via PPPIOCSMRU ioctl. Protect ppp->mru updates in
+   PPPIOCSMRU with ppp_recv_lock(ppp).
 
-When policy routing rules (such as ip rule add from $SRC lookup 100, or
-dscp/fwmark/ipproto/port rules, or VRF bindings) are configured:
-1. The decoy lookup fails to match the policy rule because saddr and other
-   key flow selectors are missing in fl4_2.
-2. It resolves a route using the default table instead, returning an incorrect
-   egress netdev.
-3. Passing the wrong netdev to ip_route_input() causes strict reverse-path
-   filtering (rp_filter=1) to fail, logging false-positive "martian source"
-   warnings and causing the relookup to fail.
+2. PPPIOCGFLAGS reads ppp->flags, ppp->xstate, and ppp->rstate
+   unlocked. Wrap the read in ppp_lock(ppp) to get a consistent
+   snapshot.
 
-Fix this by initializing fl4_2 from fl4_dec and:
-- Swapping source/destination IP addresses.
-- Swapping L4 ports for transport protocols with ports (TCP, UDP, SCTP, DCCP)
-  so port-based policy routing matches correctly. Non-port protocols (such as
-  ICMP or GRE) leave the flowi_uli union fields intact to prevent corruption.
-- Setting .flowi4_oif = l3mdev_master_ifindex(route_lookup_dev) to ensure
-  VRF routing tables are respected.
-- Setting .flowi4_flags |= FLOWI_FLAG_ANYSRC to allow output route lookups
-  for non-local source IP addresses.
-- Using __ip_route_output_key() instead of ip_route_output_key() for fl4_2
-  so that raw FIB routing is used without triggering spurious XFRM policy
-  lookups on the decoy flow (the actual XFRM lookup is performed later using
-  fl4_dec).
+3. ppp->debug is updated via PPPIOCSDEBUG and read concurrently on
+   fast paths. Annotate reads with READ_ONCE() and writes with
+   WRITE_ONCE().
 
-Fixes: 415b3334a21a ("icmp: Fix regression in nexthop resolution during replies.")
-Reported-by: Muhammad Ziad <muhzi100@gmail.com>
-Closes: https://lore.kernel.org/netdev/CAOAwikA60AYKdFr_UDLyja3oU4hqyAE7uFZWqum5uRdaQsgRYg@mail.gmail.com/
+4. ppp->last_xmit and ppp->last_recv are updated on TX/RX data paths
+   and read via PPPIOCGIDLE32 / PPPIOCGIDLE64 ioctls. Annotate with
+   WRITE_ONCE() / READ_ONCE() and use max() to handle jiffies
+   subtraction.
+
+5. ppp->npmode[] is updated via PPPIOCSNPMODE and read on TX/RX
+   paths. Annotate with WRITE_ONCE() / READ_ONCE().
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20260722104236.2938082-1-edumazet@google.com
+Reviewed-by: Qingfang Deng <qingfang.deng@linux.dev>
+Link: https://patch.msgid.link/20260722101605.2868548-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/icmp.c | 18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ drivers/net/ppp/ppp_generic.c | 50 ++++++++++++++++++++---------------
+ 1 file changed, 28 insertions(+), 22 deletions(-)
 
-diff --git a/net/ipv4/icmp.c b/net/ipv4/icmp.c
-index fc0a93f43313d1..691d7b076c620c 100644
---- a/net/ipv4/icmp.c
-+++ b/net/ipv4/icmp.c
-@@ -539,11 +539,23 @@ static struct rtable *icmp_route_lookup(struct net *net, struct flowi4 *fl4,
- 		if (IS_ERR(rt2))
- 			err = PTR_ERR(rt2);
- 	} else {
--		struct flowi4 fl4_2 = {};
-+		struct flowi4 fl4_2 = fl4_dec;
- 		unsigned long orefdst;
+diff --git a/drivers/net/ppp/ppp_generic.c b/drivers/net/ppp/ppp_generic.c
+index a2fe0fe2f3389f..14fa87a8e08345 100644
+--- a/drivers/net/ppp/ppp_generic.c
++++ b/drivers/net/ppp/ppp_generic.c
+@@ -818,7 +818,9 @@ static long ppp_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
+ 	case PPPIOCSMRU:
+ 		if (get_user(val, p))
+ 			break;
++		ppp_recv_lock(ppp);
+ 		ppp->mru = val;
++		ppp_recv_unlock(ppp);
+ 		err = 0;
+ 		break;
  
--		fl4_2.daddr = fl4_dec.saddr;
--		rt2 = ip_route_output_key(net, &fl4_2);
-+		swap(fl4_2.daddr, fl4_2.saddr);
-+		switch (fl4_2.flowi4_proto) {
-+		case IPPROTO_TCP:
-+		case IPPROTO_UDP:
-+		case IPPROTO_SCTP:
-+		case IPPROTO_DCCP:
-+			swap(fl4_2.fl4_sport, fl4_2.fl4_dport);
-+			break;
-+		}
-+
-+		fl4_2.flowi4_oif = l3mdev_master_ifindex(route_lookup_dev);
-+		fl4_2.flowi4_flags |= FLOWI_FLAG_ANYSRC;
-+
-+		rt2 = __ip_route_output_key(net, &fl4_2);
- 		if (IS_ERR(rt2)) {
- 			err = PTR_ERR(rt2);
- 			goto relookup_failed;
+@@ -839,7 +841,9 @@ static long ppp_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
+ 		break;
+ 
+ 	case PPPIOCGFLAGS:
++		ppp_lock(ppp);
+ 		val = ppp->flags | ppp->xstate | ppp->rstate;
++		ppp_unlock(ppp);
+ 		if (put_user(val, p))
+ 			break;
+ 		err = 0;
+@@ -863,7 +867,7 @@ static long ppp_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
+ 	case PPPIOCSDEBUG:
+ 		if (get_user(val, p))
+ 			break;
+-		ppp->debug = val;
++		WRITE_ONCE(ppp->debug, val);
+ 		err = 0;
+ 		break;
+ 
+@@ -874,16 +878,16 @@ static long ppp_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
+ 		break;
+ 
+ 	case PPPIOCGIDLE32:
+-                idle32.xmit_idle = (jiffies - ppp->last_xmit) / HZ;
+-                idle32.recv_idle = (jiffies - ppp->last_recv) / HZ;
+-                if (copy_to_user(argp, &idle32, sizeof(idle32)))
++		idle32.xmit_idle = max(0L, (long)(jiffies - READ_ONCE(ppp->last_xmit))) / HZ;
++		idle32.recv_idle = max(0L, (long)(jiffies - READ_ONCE(ppp->last_recv))) / HZ;
++		if (copy_to_user(argp, &idle32, sizeof(idle32)))
+ 			break;
+ 		err = 0;
+ 		break;
+ 
+ 	case PPPIOCGIDLE64:
+-		idle64.xmit_idle = (jiffies - ppp->last_xmit) / HZ;
+-		idle64.recv_idle = (jiffies - ppp->last_recv) / HZ;
++		idle64.xmit_idle = max(0L, (long)(jiffies - READ_ONCE(ppp->last_xmit))) / HZ;
++		idle64.recv_idle = max(0L, (long)(jiffies - READ_ONCE(ppp->last_recv))) / HZ;
+ 		if (copy_to_user(argp, &idle64, sizeof(idle64)))
+ 			break;
+ 		err = 0;
+@@ -924,7 +928,7 @@ static long ppp_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
+ 			if (copy_to_user(argp, &npi, sizeof(npi)))
+ 				break;
+ 		} else {
+-			ppp->npmode[i] = npi.mode;
++			WRITE_ONCE(ppp->npmode[i], npi.mode);
+ 			/* we may be able to transmit more packets now (??) */
+ 			netif_wake_queue(ppp->dev);
+ 		}
+@@ -1462,7 +1466,7 @@ ppp_start_xmit(struct sk_buff *skb, struct net_device *dev)
+ 		goto outf;
+ 
+ 	/* Drop, accept or reject the packet */
+-	switch (ppp->npmode[npi]) {
++	switch (READ_ONCE(ppp->npmode[npi])) {
+ 	case NPMODE_PASS:
+ 		break;
+ 	case NPMODE_QUEUE:
+@@ -1802,7 +1806,7 @@ ppp_prepare_tx_skb(struct ppp *ppp, struct sk_buff **pskb)
+ 		*(__be16 *)skb_push(skb, 2) = htons(PPP_FILTER_OUTBOUND_TAG);
+ 		if (ppp->pass_filter &&
+ 		    bpf_prog_run(ppp->pass_filter, skb) == 0) {
+-			if (ppp->debug & 1)
++			if (READ_ONCE(ppp->debug) & 1)
+ 				netdev_printk(KERN_DEBUG, ppp->dev,
+ 					      "PPP: outbound frame "
+ 					      "not passed\n");
+@@ -1812,11 +1816,11 @@ ppp_prepare_tx_skb(struct ppp *ppp, struct sk_buff **pskb)
+ 		/* if this packet passes the active filter, record the time */
+ 		if (!(ppp->active_filter &&
+ 		      bpf_prog_run(ppp->active_filter, skb) == 0))
+-			ppp->last_xmit = jiffies;
++			WRITE_ONCE(ppp->last_xmit, jiffies);
+ 		skb_pull(skb, 2);
+ #else
+ 		/* for data packets, record the time */
+-		ppp->last_xmit = jiffies;
++		WRITE_ONCE(ppp->last_xmit, jiffies);
+ #endif /* CONFIG_PPP_FILTER */
+ 	}
+ 
+@@ -2189,7 +2193,7 @@ static int ppp_mp_explode(struct ppp *ppp, struct sk_buff *skb)
+  noskb:
+ 	spin_unlock(&pch->downl);
+  err_linearize:
+-	if (ppp->debug & 1)
++	if (READ_ONCE(ppp->debug) & 1)
+ 		netdev_err(ppp->dev, "PPP: no memory (fragment)\n");
+ 	DEV_STATS_INC(ppp->dev, tx_errors);
+ 	++ppp->nxseq;
+@@ -2548,7 +2552,7 @@ ppp_receive_nonmp_frame(struct ppp *ppp, struct sk_buff *skb)
+ 			*(__be16 *)skb_push(skb, 2) = htons(PPP_FILTER_INBOUND_TAG);
+ 			if (ppp->pass_filter &&
+ 			    bpf_prog_run(ppp->pass_filter, skb) == 0) {
+-				if (ppp->debug & 1)
++				if (READ_ONCE(ppp->debug) & 1)
+ 					netdev_printk(KERN_DEBUG, ppp->dev,
+ 						      "PPP: inbound frame "
+ 						      "not passed\n");
+@@ -2557,14 +2561,14 @@ ppp_receive_nonmp_frame(struct ppp *ppp, struct sk_buff *skb)
+ 			}
+ 			if (!(ppp->active_filter &&
+ 			      bpf_prog_run(ppp->active_filter, skb) == 0))
+-				ppp->last_recv = jiffies;
++				WRITE_ONCE(ppp->last_recv, jiffies);
+ 			__skb_pull(skb, 2);
+ 		} else
+ #endif /* CONFIG_PPP_FILTER */
+-			ppp->last_recv = jiffies;
++			WRITE_ONCE(ppp->last_recv, jiffies);
+ 
+ 		if ((ppp->dev->flags & IFF_UP) == 0 ||
+-		    ppp->npmode[npi] != NPMODE_PASS) {
++		    READ_ONCE(ppp->npmode[npi]) != NPMODE_PASS) {
+ 			kfree_skb(skb);
+ 		} else {
+ 			/* chop off protocol */
+@@ -2817,7 +2821,7 @@ ppp_mp_reconstruct(struct ppp *ppp)
+ 			seq = seq_before(minseq, PPP_MP_CB(p)->sequence)?
+ 				minseq + 1: PPP_MP_CB(p)->sequence;
+ 
+-			if (ppp->debug & 1)
++			if (READ_ONCE(ppp->debug) & 1)
+ 				netdev_printk(KERN_DEBUG, ppp->dev,
+ 					      "lost frag %u..%u\n",
+ 					      oldseq, seq-1);
+@@ -2866,7 +2870,7 @@ ppp_mp_reconstruct(struct ppp *ppp)
+ 			struct sk_buff *tmp2;
+ 
+ 			skb_queue_reverse_walk_from_safe(list, p, tmp2) {
+-				if (ppp->debug & 1)
++				if (READ_ONCE(ppp->debug) & 1)
+ 					netdev_printk(KERN_DEBUG, ppp->dev,
+ 						      "discarding frag %u\n",
+ 						      PPP_MP_CB(p)->sequence);
+@@ -2888,7 +2892,7 @@ ppp_mp_reconstruct(struct ppp *ppp)
+ 			skb_queue_walk_safe(list, p, tmp) {
+ 				if (p == head)
+ 					break;
+-				if (ppp->debug & 1)
++				if (READ_ONCE(ppp->debug) & 1)
+ 					netdev_printk(KERN_DEBUG, ppp->dev,
+ 						      "discarding frag %u\n",
+ 						      PPP_MP_CB(p)->sequence);
+@@ -2896,7 +2900,7 @@ ppp_mp_reconstruct(struct ppp *ppp)
+ 				kfree_skb(p);
+ 			}
+ 
+-			if (ppp->debug & 1)
++			if (READ_ONCE(ppp->debug) & 1)
+ 				netdev_printk(KERN_DEBUG, ppp->dev,
+ 					      "  missed pkts %u..%u\n",
+ 					      ppp->nextseq,
+@@ -3209,7 +3213,8 @@ ppp_ccp_peek(struct ppp *ppp, struct sk_buff *skb, int inbound)
+ 			if (!ppp->rc_state)
+ 				break;
+ 			if (ppp->rcomp->decomp_init(ppp->rc_state, dp, len,
+-					ppp->file.index, 0, ppp->mru, ppp->debug)) {
++						ppp->file.index, 0, ppp->mru,
++						READ_ONCE(ppp->debug))) {
+ 				ppp->rstate |= SC_DECOMP_RUN;
+ 				ppp->rstate &= ~(SC_DC_ERROR | SC_DC_FERROR);
+ 			}
+@@ -3218,7 +3223,8 @@ ppp_ccp_peek(struct ppp *ppp, struct sk_buff *skb, int inbound)
+ 			if (!ppp->xc_state)
+ 				break;
+ 			if (ppp->xcomp->comp_init(ppp->xc_state, dp, len,
+-					ppp->file.index, 0, ppp->debug))
++						  ppp->file.index, 0,
++						  READ_ONCE(ppp->debug)))
+ 				ppp->xstate |= SC_COMP_RUN;
+ 		}
+ 		break;
 -- 
 2.53.0
 
