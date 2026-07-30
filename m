@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B19543A641D;
-	Thu, 30 Jul 2026 15:19:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BB793AA187;
+	Thu, 30 Jul 2026 15:20:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424798; cv=none; b=gz8XLjQ/9+o06A7CSO0Mk0tPFwQnL4xRGxmBBS2rjTjBf6148JYEMzXuxt38AnDNOKABRFKBh/1LAZpJal9wyPdRe/cLzNTeAG0Zq5YhjANkCQZlGGyBjjGrKm0ZP36EPRLUY5CN5LA7DBMqKhkTuENeeRI7AYsuJOMO82M5v5c=
+	t=1785424801; cv=none; b=N/GFjqYcgCk/Me/T4v2IOBpsqcoWOlys0Fu48FFrxc6FZjkgj9oa27ZhO8/EoifYbIlQNvwfGZ7+be8+cLmtZ/lDASW1EkfUKkeR9fcVLUzaS9Zsd02u5ug6faIJIzgI6tvnBsRyKaDxz9I2sq/8v08lECorhddrJOw125mM/P0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424798; c=relaxed/simple;
-	bh=xaFKLX0LJBUomvhZf2//d647eHjZvtlMqGy3gekyYds=;
+	s=arc-20240116; t=1785424801; c=relaxed/simple;
+	bh=bXiuiTmmmmOTUyJHPUztP+oLTvqOxP/6wHV2HK78T5c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hA2k/r2PUXGgyPVSHda1Ph3Xc6OPTFY+di6LKH03XtaIa9pZamsXUVONv3BlIKPAXCTChdh1tPPBFNS+Jx0iHJSW8cKcJL9Kn1vNzdTyr4lfCY6cKtVLPe5mn8GddbehTJHGQu/0HtpkdOjWU69HI80YlClmJgSvf+FMQxWaaKg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UAohtH7j; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aYsY2zPVU8MR7wLkeUDiSMAUZylBr5RVn9DdelMkiau0nXuxveII4kcTK9ciBSchPVkssB5ulvfnd78wmaeBAwD/roH7dTWrHP+II43Ti/NtRvlAS1S1nE/CKhpRcoC6KBuN4TcOy0QUC7P5GyqWskLfty2MyRvpmUTLIPkKr0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P3AYGYoz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UAohtH7j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 144481F00A3A;
-	Thu, 30 Jul 2026 15:19:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P3AYGYoz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E53FC1F000E9;
+	Thu, 30 Jul 2026 15:19:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424797;
-	bh=WuMNNBQik+XwbVJ+PGsLj0MAI4QJIGtZFnqFkZHdOcY=;
+	s=korg; t=1785424800;
+	bh=ytW6hAzXr8qyq0GX2txbDsvR1WL6vrKMMIKe5+gCo6M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UAohtH7jKIz3xEAQY3n8QXVSidQVD3uAVXxRjhr385EQ6+BpotIzs3xNMAf1UH6j0
-	 Uo8YQPoQ/iFJIIR+/5YTQ750z0gHYgCWZlF3I5pczbx5V/5KqCh+gMmr/TrSqXtqtx
-	 g0cuzEICtlzGE5EHsAHEtIErpIDLe60GfNMXILRk=
+	b=P3AYGYozm8P3Tcsceo8aixtExrsoal9FpEZw2r1FctovGcz2Yz0dPvLF+LL5wX9qf
+	 aMCkqAfy7K9z8w3HzAibh+d3OdOuyK5fRM6Xg+sKGdcgWO0PWqLfNKFme9r/K6dSNH
+	 eCkdbZAAmio4LUJ0XosiTNJIJZmiYkP3RWOdl/is=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shihuang Liu <shlomojune6@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Taehee Yoo <ap420073@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 521/675] amt: fix use-after-free in AMT delayed works
-Date: Thu, 30 Jul 2026 16:14:11 +0200
-Message-ID: <20260730141456.211694185@linuxfoundation.org>
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	linux-afs@lists.infradead.org,
+	linux-fsdevel@vger.kernel.org,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 6.18 504/675] afs: Fix afs_edit_dir_remove() to get, not find, block 0
+Date: Thu, 30 Jul 2026 16:13:54 +0200
+Message-ID: <20260730141455.839076418@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -52,89 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shihuang Liu <shlomojune6@gmail.com>
+From: David Howells <dhowells@redhat.com>
 
-commit ea20c44935d6142daecfa9b39d635033a7553e1b upstream.
+commit 62d9853aa4ce6e9797b6949804891be14b219752 upstream.
 
-When an AMT device is removed, pending delayed works can still access
-the freed amt_dev structure, which may result in kernel crashes or
-memory corruption.
+Fix afs_edit_dir_remove() to use afs_dir_get_block() to get block 0 rather
+than afs_dir_find_block() as the latter caches the found block in the
+afs_dir_iter and may[*] switch out the page it's on if another
+afs_dir_find_block() is done.  This parallels what afs_edit_dir_add() does.
 
-amt_dev_stop() cancels req_wq and discovery_wq with
-cancel_delayed_work_sync(), but these works can be scheduled again
-from event_wq after the cancellation. This allows delayed works to
-access the freed amt_dev structure after the netdev has been released.
+[*] There's more than one block per page.
 
-The following is a simple race scenario:
-
-CPU0                         CPU1
-
-amt_dev_stop()
-cancel_delayed_work_sync()
-                             amt_event_work()
-                             mod_delayed_work(req_wq)
-free netdev
-                             req_wq accesses freed amt_dev
-
-Use disable_delayed_work_sync() in amt_dev_stop() to prevent req_wq and
-discovery_wq from being queued again and wait for running work items
-to complete.
-
-The delayed works are disabled after initialization in
-amt_newlink() and enabled only when the device is successfully opened.
-This keeps the delayed work lifecycle synchronized with the lifetime
-of the AMT device.
-
-Fixes: cbc21dc1cfe9 ("amt: add data plane of amt interface")
-Cc: stable@vger.kernel.org
-Signed-off-by: Shihuang Liu <shlomojune6@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Taehee Yoo <ap420073@gmail.com>
-Link: https://patch.msgid.link/20260722113919.7723-1-shlomojune6@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: a5b5beebcf96 ("afs: Use the contained hashtable to search a directory")
+Closes: https://sashiko.dev/#/patchset/20260706153408.1231650-1-dhowells%40redhat.com
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://patch.msgid.link/2380759.1783956175@warthog.procyon.org.uk
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
+cc: linux-fsdevel@vger.kernel.org
+cc: stable@vger.kernel.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/amt.c |   14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ fs/afs/dir_edit.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/amt.c
-+++ b/drivers/net/amt.c
-@@ -3034,9 +3034,15 @@ static int amt_dev_open(struct net_devic
- 	amt->event_idx = 0;
- 	amt->nr_events = 0;
+--- a/fs/afs/dir_edit.c
++++ b/fs/afs/dir_edit.c
+@@ -415,7 +415,7 @@ void afs_edit_dir_remove(struct afs_vnod
+ 	if (!afs_dir_init_iter(&iter, name))
+ 		return;
  
-+	enable_delayed_work(&amt->discovery_wq);
-+	enable_delayed_work(&amt->req_wq);
-+
- 	err = amt_socket_create(amt);
--	if (err)
-+	if (err) {
-+		disable_delayed_work(&amt->req_wq);
-+		disable_delayed_work(&amt->discovery_wq);
- 		return err;
-+	}
+-	meta = afs_dir_find_block(&iter, 0);
++	meta = afs_dir_get_block(&iter, 0);
+ 	if (!meta)
+ 		return;
  
- 	amt->req_cnt = 0;
- 	amt->remote_ip = 0;
-@@ -3062,8 +3068,8 @@ static int amt_dev_stop(struct net_devic
- 	struct sk_buff *skb;
- 	int i;
- 
--	cancel_delayed_work_sync(&amt->req_wq);
--	cancel_delayed_work_sync(&amt->discovery_wq);
-+	disable_delayed_work_sync(&amt->req_wq);
-+	disable_delayed_work_sync(&amt->discovery_wq);
- 	cancel_delayed_work_sync(&amt->secret_wq);
- 
- 	/* shutdown */
-@@ -3317,6 +3323,8 @@ static int amt_newlink(struct net_device
- 	INIT_DELAYED_WORK(&amt->req_wq, amt_req_work);
- 	INIT_DELAYED_WORK(&amt->secret_wq, amt_secret_work);
- 	INIT_WORK(&amt->event_wq, amt_event_work);
-+	disable_delayed_work(&amt->req_wq);
-+	disable_delayed_work(&amt->discovery_wq);
- 	INIT_LIST_HEAD(&amt->tunnel_list);
- 	return 0;
- err:
 
 
