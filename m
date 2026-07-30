@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F61546AA66;
-	Thu, 30 Jul 2026 16:05:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23544451989;
+	Thu, 30 Jul 2026 16:05:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427506; cv=none; b=QWCtP+C8/18OQ1yjySTlCxhciGx5NmW/qgP35AXAKfK2GVFgcU8Y2lx12BeYzAUAyhdddNKiJzaTMFcqUb0raRLSR1zorCaxZWy09mZmcmE3Yb89wS+X4dOMUjZJ9enTDfIhSO2gFoowO3Ed5cNY+NSX2dINhj1hoCgTAB1h0Xw=
+	t=1785427509; cv=none; b=UlUGzN6fOPEhDu4bs0SpkROhNVmTy0dQWdPjG5jseWexRPEAyuyoGq8+Q4wqCrz1UzDtqHkper40RknJm2LADCglu3UQru0d+4R7YSs+1mIOM8MTwEn7vaaZVJjhSMDeoYjM4V8AwI6bGzwqsgj3IoHVDtCYIZMn7x+Kt8pxpsY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427506; c=relaxed/simple;
-	bh=LT07UlgWwW8sm3IF+9YWQ/9nK3vkhqkGvNk/ax1/SjE=;
+	s=arc-20240116; t=1785427509; c=relaxed/simple;
+	bh=6zueL3Gmi+yI8c+7/eVOuGvDVQRadHgiR62ErpSsX+E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MIEMiSFHolsrcGR8AIdUq3N1qpJppbMcSuPNd/GOWrfqYM0SXuwmRFPQ7VS0RtscoBvGr5bSfOIZPyCZpbsKUx+DiEGGT7EwteWWbgYl1NmyGvjKuX8ypUZV2iNZgiagoqfWrRSGoPavt3La4hF3mcmwBrP/mD3pWfZatWr4/X0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AW2o5h+7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TE5kezyn8F2B+wPVzhFwIVOltndIi+93mBzHc7CdqCXt39EnefIkhy2EVXyNE/HREWoKpJ4RY00e7ORmyKQiMkL/SMpPvya1Fqj1YaNEpKojYefgAGHFgehvwPc+sEq62juwYhE5xmab1wReYP2x4hQ08DjKEg7Jl61n3WD0Qhk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1KK1CjC0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AW2o5h+7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A36931F00A3D;
-	Thu, 30 Jul 2026 16:05:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1KK1CjC0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 801961F000E9;
+	Thu, 30 Jul 2026 16:05:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427505;
-	bh=3l3ajR5z/XZgm5LJR67vZRRoXjnQnrC4WAkCXaSJ5ME=;
+	s=korg; t=1785427508;
+	bh=Ie5C+fdh39lu3nH2YyZSPFQxBM/fk6a2xefTnKs3xyU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AW2o5h+7gIng2FBzmy6Sk3q2yVd/bu2oe3Kgo5BYiaQbNSEueo8GFT651pxY83fu1
-	 kZXktL1XVJitOWxjwtczBJGKuQNbR0+xWj+dcQXwW8vdAGM6RGo0Qb8TD3wqPmRaH3
-	 xyaIzvHzfAVYR+Vlhco+zdJd5YS5D3LubmYB3e5I=
+	b=1KK1CjC0RMxECBwlQPir5rJdUwgymubFEUBF4etqfeMBLqk4mVgo90CQ6N0fHem1D
+	 W7L475LL4bhGMTUk3cKCY6y6ZJZ63hV/ULoMujvf4W51xwe1nYmSNuOFP+UA/D03QR
+	 bwud1h0Y2pOcyOWfbabD52VB0KyJ3uSD6n8ANrKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qingfang Deng <dqfext@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Qingfang Deng <qingfang.deng@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 195/484] ppp: enable TX scatter-gather
-Date: Thu, 30 Jul 2026 16:11:32 +0200
-Message-ID: <20260730141427.702966902@linuxfoundation.org>
+Subject: [PATCH 6.6 196/484] ppp: annotate data races in ppp_generic
+Date: Thu, 30 Jul 2026 16:11:33 +0200
+Message-ID: <20260730141427.725206120@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -51,113 +52,231 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qingfang Deng <dqfext@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 42fcb213e58a7da33d5d2d7517b4e521025c68c3 ]
+[ Upstream commit 543adf072165aaf2e3b635c0476204f9658ed3bf ]
 
-PPP channels using chan->direct_xmit prepend the PPP header to a skb and
-call dev_queue_xmit() directly. In this mode the skb does not need to be
-linear, but the PPP netdevice currently does not advertise
-scatter-gather features, causing unnecessary linearization and
-preventing GSO.
+Several fields in struct ppp can be read or updated concurrently
+from multiple CPUs without synchronization, causing data races:
 
-Enable NETIF_F_SG and NETIF_F_FRAGLIST on PPP devices. In case a linear
-buffer is required (PPP compression, multilink, and channels without
-direct_xmit), call skb_linearize() explicitly.
+1. ppp->mru is read concurrently in ppp_receive_nonmp_frame() while
+   being updated via PPPIOCSMRU ioctl. Protect ppp->mru updates in
+   PPPIOCSMRU with ppp_recv_lock(ppp).
 
-Signed-off-by: Qingfang Deng <dqfext@gmail.com>
-Link: https://patch.msgid.link/20260129012902.941-1-dqfext@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: 543adf072165 ("ppp: annotate data races in ppp_generic")
+2. PPPIOCGFLAGS reads ppp->flags, ppp->xstate, and ppp->rstate
+   unlocked. Wrap the read in ppp_lock(ppp) to get a consistent
+   snapshot.
+
+3. ppp->debug is updated via PPPIOCSDEBUG and read concurrently on
+   fast paths. Annotate reads with READ_ONCE() and writes with
+   WRITE_ONCE().
+
+4. ppp->last_xmit and ppp->last_recv are updated on TX/RX data paths
+   and read via PPPIOCGIDLE32 / PPPIOCGIDLE64 ioctls. Annotate with
+   WRITE_ONCE() / READ_ONCE() and use max() to handle jiffies
+   subtraction.
+
+5. ppp->npmode[] is updated via PPPIOCSNPMODE and read on TX/RX
+   paths. Annotate with WRITE_ONCE() / READ_ONCE().
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Qingfang Deng <qingfang.deng@linux.dev>
+Link: https://patch.msgid.link/20260722101605.2868548-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ppp/ppp_generic.c | 30 +++++++++++++++++++++++++-----
- 1 file changed, 25 insertions(+), 5 deletions(-)
+ drivers/net/ppp/ppp_generic.c | 50 ++++++++++++++++++++---------------
+ 1 file changed, 28 insertions(+), 22 deletions(-)
 
 diff --git a/drivers/net/ppp/ppp_generic.c b/drivers/net/ppp/ppp_generic.c
-index 065a99c9d6b3e2..fe4a8bca0c2e8d 100644
+index fe4a8bca0c2e8d..3c42f131e89f26 100644
 --- a/drivers/net/ppp/ppp_generic.c
 +++ b/drivers/net/ppp/ppp_generic.c
-@@ -1636,6 +1636,8 @@ static void ppp_setup(struct net_device *dev)
- 	dev->flags = IFF_POINTOPOINT | IFF_NOARP | IFF_MULTICAST;
- 	dev->priv_destructor = ppp_dev_priv_destructor;
- 	dev->pcpu_stat_type = NETDEV_PCPU_STAT_TSTATS;
-+	dev->features = NETIF_F_SG | NETIF_F_FRAGLIST;
-+	dev->hw_features = dev->features;
- 	netif_keep_dst(dev);
- }
- 
-@@ -1700,6 +1702,10 @@ pad_compress_skb(struct ppp *ppp, struct sk_buff *skb)
- 		ppp->xcomp->comp_extra + ppp->dev->hard_header_len;
- 	int compressor_skb_size = ppp->dev->mtu +
- 		ppp->xcomp->comp_extra + PPP_HDRLEN;
-+
-+	if (skb_linearize(skb))
-+		return NULL;
-+
- 	new_skb = alloc_skb(new_skb_size, GFP_ATOMIC);
- 	if (!new_skb) {
- 		if (net_ratelimit())
-@@ -1787,6 +1793,10 @@ ppp_send_frame(struct ppp *ppp, struct sk_buff *skb)
- 	case PPP_IP:
- 		if (!ppp->vj || (ppp->flags & SC_COMP_TCP) == 0)
+@@ -811,7 +811,9 @@ static long ppp_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
+ 	case PPPIOCSMRU:
+ 		if (get_user(val, p))
  			break;
-+
-+		if (skb_linearize(skb))
-+			goto drop;
-+
- 		/* try to do VJ TCP header compression */
- 		new_skb = alloc_skb(skb->len + ppp->dev->hard_header_len - 2,
- 				    GFP_ATOMIC);
-@@ -1884,19 +1894,26 @@ ppp_push(struct ppp *ppp)
- 	}
++		ppp_recv_lock(ppp);
+ 		ppp->mru = val;
++		ppp_recv_unlock(ppp);
+ 		err = 0;
+ 		break;
  
- 	if ((ppp->flags & SC_MULTILINK) == 0) {
-+		struct ppp_channel *chan;
- 		/* not doing multilink: send it down the first channel */
- 		list = list->next;
- 		pch = list_entry(list, struct channel, clist);
+@@ -832,7 +834,9 @@ static long ppp_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
+ 		break;
  
- 		spin_lock(&pch->downl);
--		if (pch->chan) {
--			if (pch->chan->ops->start_xmit(pch->chan, skb))
--				ppp->xmit_pending = NULL;
--		} else {
--			/* channel got unregistered */
-+		chan = pch->chan;
-+		if (unlikely(!chan || (!chan->direct_xmit && skb_linearize(skb)))) {
-+			/* channel got unregistered, or it requires a linear
-+			 * skb but linearization failed
-+			 */
- 			kfree_skb(skb);
- 			ppp->xmit_pending = NULL;
-+			goto out;
+ 	case PPPIOCGFLAGS:
++		ppp_lock(ppp);
+ 		val = ppp->flags | ppp->xstate | ppp->rstate;
++		ppp_unlock(ppp);
+ 		if (put_user(val, p))
+ 			break;
+ 		err = 0;
+@@ -856,7 +860,7 @@ static long ppp_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
+ 	case PPPIOCSDEBUG:
+ 		if (get_user(val, p))
+ 			break;
+-		ppp->debug = val;
++		WRITE_ONCE(ppp->debug, val);
+ 		err = 0;
+ 		break;
+ 
+@@ -867,16 +871,16 @@ static long ppp_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
+ 		break;
+ 
+ 	case PPPIOCGIDLE32:
+-                idle32.xmit_idle = (jiffies - ppp->last_xmit) / HZ;
+-                idle32.recv_idle = (jiffies - ppp->last_recv) / HZ;
+-                if (copy_to_user(argp, &idle32, sizeof(idle32)))
++		idle32.xmit_idle = max(0L, (long)(jiffies - READ_ONCE(ppp->last_xmit))) / HZ;
++		idle32.recv_idle = max(0L, (long)(jiffies - READ_ONCE(ppp->last_recv))) / HZ;
++		if (copy_to_user(argp, &idle32, sizeof(idle32)))
+ 			break;
+ 		err = 0;
+ 		break;
+ 
+ 	case PPPIOCGIDLE64:
+-		idle64.xmit_idle = (jiffies - ppp->last_xmit) / HZ;
+-		idle64.recv_idle = (jiffies - ppp->last_recv) / HZ;
++		idle64.xmit_idle = max(0L, (long)(jiffies - READ_ONCE(ppp->last_xmit))) / HZ;
++		idle64.recv_idle = max(0L, (long)(jiffies - READ_ONCE(ppp->last_recv))) / HZ;
+ 		if (copy_to_user(argp, &idle64, sizeof(idle64)))
+ 			break;
+ 		err = 0;
+@@ -917,7 +921,7 @@ static long ppp_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
+ 			if (copy_to_user(argp, &npi, sizeof(npi)))
+ 				break;
+ 		} else {
+-			ppp->npmode[i] = npi.mode;
++			WRITE_ONCE(ppp->npmode[i], npi.mode);
+ 			/* we may be able to transmit more packets now (??) */
+ 			netif_wake_queue(ppp->dev);
  		}
-+
-+		if (chan->ops->start_xmit(chan, skb))
-+			ppp->xmit_pending = NULL;
-+
-+out:
- 		spin_unlock(&pch->downl);
- 		return;
+@@ -1454,7 +1458,7 @@ ppp_start_xmit(struct sk_buff *skb, struct net_device *dev)
+ 		goto outf;
+ 
+ 	/* Drop, accept or reject the packet */
+-	switch (ppp->npmode[npi]) {
++	switch (READ_ONCE(ppp->npmode[npi])) {
+ 	case NPMODE_PASS:
+ 		break;
+ 	case NPMODE_QUEUE:
+@@ -1769,7 +1773,7 @@ ppp_send_frame(struct ppp *ppp, struct sk_buff *skb)
+ 		*(__be16 *)skb_push(skb, 2) = htons(PPP_FILTER_OUTBOUND_TAG);
+ 		if (ppp->pass_filter &&
+ 		    bpf_prog_run(ppp->pass_filter, skb) == 0) {
+-			if (ppp->debug & 1)
++			if (READ_ONCE(ppp->debug) & 1)
+ 				netdev_printk(KERN_DEBUG, ppp->dev,
+ 					      "PPP: outbound frame "
+ 					      "not passed\n");
+@@ -1779,11 +1783,11 @@ ppp_send_frame(struct ppp *ppp, struct sk_buff *skb)
+ 		/* if this packet passes the active filter, record the time */
+ 		if (!(ppp->active_filter &&
+ 		      bpf_prog_run(ppp->active_filter, skb) == 0))
+-			ppp->last_xmit = jiffies;
++			WRITE_ONCE(ppp->last_xmit, jiffies);
+ 		skb_pull(skb, 2);
+ #else
+ 		/* for data packets, record the time */
+-		ppp->last_xmit = jiffies;
++		WRITE_ONCE(ppp->last_xmit, jiffies);
+ #endif /* CONFIG_PPP_FILTER */
  	}
-@@ -1981,6 +1998,8 @@ static int ppp_mp_explode(struct ppp *ppp, struct sk_buff *skb)
- 		return 0; /* can't take now, leave it in xmit_pending */
  
- 	/* Do protocol field compression */
-+	if (skb_linearize(skb))
-+		goto err_linearize;
- 	p = skb->data;
- 	len = skb->len;
- 	if (*p == 0 && mp_protocol_compress) {
-@@ -2139,6 +2158,7 @@ static int ppp_mp_explode(struct ppp *ppp, struct sk_buff *skb)
- 
+@@ -2159,7 +2163,7 @@ static int ppp_mp_explode(struct ppp *ppp, struct sk_buff *skb)
   noskb:
  	spin_unlock(&pch->downl);
-+ err_linearize:
- 	if (ppp->debug & 1)
+  err_linearize:
+-	if (ppp->debug & 1)
++	if (READ_ONCE(ppp->debug) & 1)
  		netdev_err(ppp->dev, "PPP: no memory (fragment)\n");
  	++ppp->dev->stats.tx_errors;
+ 	++ppp->nxseq;
+@@ -2505,7 +2509,7 @@ ppp_receive_nonmp_frame(struct ppp *ppp, struct sk_buff *skb)
+ 			*(__be16 *)skb_push(skb, 2) = htons(PPP_FILTER_INBOUND_TAG);
+ 			if (ppp->pass_filter &&
+ 			    bpf_prog_run(ppp->pass_filter, skb) == 0) {
+-				if (ppp->debug & 1)
++				if (READ_ONCE(ppp->debug) & 1)
+ 					netdev_printk(KERN_DEBUG, ppp->dev,
+ 						      "PPP: inbound frame "
+ 						      "not passed\n");
+@@ -2514,14 +2518,14 @@ ppp_receive_nonmp_frame(struct ppp *ppp, struct sk_buff *skb)
+ 			}
+ 			if (!(ppp->active_filter &&
+ 			      bpf_prog_run(ppp->active_filter, skb) == 0))
+-				ppp->last_recv = jiffies;
++				WRITE_ONCE(ppp->last_recv, jiffies);
+ 			__skb_pull(skb, 2);
+ 		} else
+ #endif /* CONFIG_PPP_FILTER */
+-			ppp->last_recv = jiffies;
++			WRITE_ONCE(ppp->last_recv, jiffies);
+ 
+ 		if ((ppp->dev->flags & IFF_UP) == 0 ||
+-		    ppp->npmode[npi] != NPMODE_PASS) {
++		    READ_ONCE(ppp->npmode[npi]) != NPMODE_PASS) {
+ 			kfree_skb(skb);
+ 		} else {
+ 			/* chop off protocol */
+@@ -2774,7 +2778,7 @@ ppp_mp_reconstruct(struct ppp *ppp)
+ 			seq = seq_before(minseq, PPP_MP_CB(p)->sequence)?
+ 				minseq + 1: PPP_MP_CB(p)->sequence;
+ 
+-			if (ppp->debug & 1)
++			if (READ_ONCE(ppp->debug) & 1)
+ 				netdev_printk(KERN_DEBUG, ppp->dev,
+ 					      "lost frag %u..%u\n",
+ 					      oldseq, seq-1);
+@@ -2823,7 +2827,7 @@ ppp_mp_reconstruct(struct ppp *ppp)
+ 			struct sk_buff *tmp2;
+ 
+ 			skb_queue_reverse_walk_from_safe(list, p, tmp2) {
+-				if (ppp->debug & 1)
++				if (READ_ONCE(ppp->debug) & 1)
+ 					netdev_printk(KERN_DEBUG, ppp->dev,
+ 						      "discarding frag %u\n",
+ 						      PPP_MP_CB(p)->sequence);
+@@ -2845,7 +2849,7 @@ ppp_mp_reconstruct(struct ppp *ppp)
+ 			skb_queue_walk_safe(list, p, tmp) {
+ 				if (p == head)
+ 					break;
+-				if (ppp->debug & 1)
++				if (READ_ONCE(ppp->debug) & 1)
+ 					netdev_printk(KERN_DEBUG, ppp->dev,
+ 						      "discarding frag %u\n",
+ 						      PPP_MP_CB(p)->sequence);
+@@ -2853,7 +2857,7 @@ ppp_mp_reconstruct(struct ppp *ppp)
+ 				kfree_skb(p);
+ 			}
+ 
+-			if (ppp->debug & 1)
++			if (READ_ONCE(ppp->debug) & 1)
+ 				netdev_printk(KERN_DEBUG, ppp->dev,
+ 					      "  missed pkts %u..%u\n",
+ 					      ppp->nextseq,
+@@ -3163,7 +3167,8 @@ ppp_ccp_peek(struct ppp *ppp, struct sk_buff *skb, int inbound)
+ 			if (!ppp->rc_state)
+ 				break;
+ 			if (ppp->rcomp->decomp_init(ppp->rc_state, dp, len,
+-					ppp->file.index, 0, ppp->mru, ppp->debug)) {
++						ppp->file.index, 0, ppp->mru,
++						READ_ONCE(ppp->debug))) {
+ 				ppp->rstate |= SC_DECOMP_RUN;
+ 				ppp->rstate &= ~(SC_DC_ERROR | SC_DC_FERROR);
+ 			}
+@@ -3172,7 +3177,8 @@ ppp_ccp_peek(struct ppp *ppp, struct sk_buff *skb, int inbound)
+ 			if (!ppp->xc_state)
+ 				break;
+ 			if (ppp->xcomp->comp_init(ppp->xc_state, dp, len,
+-					ppp->file.index, 0, ppp->debug))
++						  ppp->file.index, 0,
++						  READ_ONCE(ppp->debug)))
+ 				ppp->xstate |= SC_COMP_RUN;
+ 		}
+ 		break;
 -- 
 2.53.0
 
