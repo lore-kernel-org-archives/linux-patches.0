@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F09E344682F;
-	Thu, 30 Jul 2026 15:27:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C576E446BF5;
+	Thu, 30 Jul 2026 15:27:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425269; cv=none; b=O1xinqR2u86BcE5ThJXdmGrQzROeltkXgKI8uaubycpmWpAqXoiLJiT+zSTh/NjlZtzZp7xrN4ZzVBNYSueyzz3cpmJL4JpQ/sylmOo0xpEMaTWBA9+KVxZMkkQzOWOEZt2XwYISgjBsLyZus0KwdkIN2yp+hcWa8GRsXDcwgVo=
+	t=1785425272; cv=none; b=Duzn/2FOnIwLk6HK55WeW3u7M6yYY0NWkmD+txuHXIcO6iCuuaiA3yWLW83tbMOtl/AJSEW3hW/csVAE56/iThQrhfiDFM8BA91tbHNhYif7Q+JFoJvDXt4m33nodOwTcV/uaKF6gzHzAEnksvr8AoURRxUul2QaSdPDDPcAHUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425269; c=relaxed/simple;
-	bh=xbqim+1wtOgnHdPjouUcadNwDywf9Kujv10WqmEuOsw=;
+	s=arc-20240116; t=1785425272; c=relaxed/simple;
+	bh=EccMJgSp0PbJltTBhu4WsEGRZSXBv8rGg8/Ijc8KRHE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qKtJNirRWQX/teugR2/Q6rQ4oAYikuOA6zp6cwFsEAjmgH2wW4ceN5eGxVrQIuNnJF8dJyzeTpz3xqNit0kVb+jFmFCQoTNqA78k/OTLQMDYhidK/SYxawiL1rAJEdXH23x8fERKLtTETBoEMdNlHa1dNWArxJZdvu4bQ9N+9uI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iGPHGqRC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Wn9wJqbxLiKbn+HFX3RYct+vJXhgWATTCo888zzCfc9kMy4S3S8zhmOm7x4/5xiho4oKfU2SFeYP+pasYMftFOVbYb+f9m00/WYggu7tZ1VFP5g9H92Nd20ZnpjHQ22+huD5ohjaQB8nvoXi5W9bOVBJs3lTensbZ+ueXxf1C04=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SLg/Esg7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iGPHGqRC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 465D31F00A3A;
-	Thu, 30 Jul 2026 15:27:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SLg/Esg7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 204191F000E9;
+	Thu, 30 Jul 2026 15:27:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425267;
-	bh=RyIaqpGpQsqnH3rQmVh+/ldwpsKiz7eMFrTgVsF4z9o=;
+	s=korg; t=1785425270;
+	bh=wXF4Q2KjpCATI0DKymf7rhDl21vAREzMSHkl9M5OipI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iGPHGqRCZ6IjswllEzOdrUZu9Pv9dUI97stX88FGu0PXG+MiZaFgyZYCB2s8AOSVu
-	 ecTU9jUOxz4s63c2pn3Xp5QFEMYRLoQsNfy77I1z36gZ/X9wNClEeDCkgH+febBnQl
-	 rBl1V7hH2WdSacqfhgoAc19Qe6i5QIJwGDCWVN10=
+	b=SLg/Esg7yRB5OAQUtyXFy1vRfMs5xxK4QdkqUjHBJFja1BGO3jSXsUZOXQhO1pNc2
+	 kGOTZNGEK499PyDLsBofDhCSamEH+mMCIy9tOyUsWYEQhTgkBR460Km5E7WKcRYsHC
+	 wijwa/v8zQe0qgB8MqYyMwC/En7pa1ClFkbOeWss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Reinette Chatre <reinette.chatre@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 651/675] x86,fs/resctrl: Rename some L3 specific functions
-Date: Thu, 30 Jul 2026 16:16:21 +0200
-Message-ID: <20260730141458.976068366@linuxfoundation.org>
+Subject: [PATCH 6.18 652/675] fs/resctrl: Move allocation/free of closid_num_dirty_rmid[]
+Date: Thu, 30 Jul 2026 16:16:22 +0200
+Message-ID: <20260730141458.999491100@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -54,29 +54,20 @@ Content-Transfer-Encoding: 8bit
 
 From: Tony Luck <tony.luck@intel.com>
 
-[ Upstream commit 9c214d10c50990c7a61b95887493df9ae713eec5 ]
+[ Upstream commit ee7f6af79f0916b6c49e15edd4cba020b3e4c4ac ]
 
-With the arrival of monitor events tied to new domains associated with a
-different resource it would be clearer if the L3 resource specific functions
-are more accurately named.
+closid_num_dirty_rmid[] and rmid_ptrs[] are allocated together during resctrl
+initialization and freed together during resctrl exit.
 
-Rename three groups of functions:
+Telemetry events are enumerated on resctrl mount so only at resctrl mount will
+the number of RMID supported by all monitoring resources and needed as size
+for rmid_ptrs[] be known.
 
-Functions that allocate/free architecture per-RMID MBM state information:
-arch_domain_mbm_alloc()		-> l3_mon_domain_mbm_alloc()
-mon_domain_free()		-> l3_mon_domain_free()
+Separate closid_num_dirty_rmid[] and rmid_ptrs[] allocation and free in
+preparation for rmid_ptrs[] to be allocated on resctrl mount.
 
-Functions that allocate/free filesystem per-RMID MBM state information:
-domain_setup_mon_state()	-> domain_setup_l3_mon_state()
-domain_destroy_mon_state()	-> domain_destroy_l3_mon_state()
-
-Initialization/exit:
-rdt_get_mon_l3_config()		-> rdt_get_l3_mon_config()
-resctrl_mon_resource_init()	-> resctrl_l3_mon_resource_init()
-resctrl_mon_resource_exit()	-> resctrl_l3_mon_resource_exit()
-
-Ensure kernel-doc descriptions of these functions' return values are present
-and correctly formatted.
+Keep the rdtgroup_mutex protection around the allocation and free of
+closid_num_dirty_rmid[] as ARM needs this to guarantee memory ordering.
 
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
@@ -86,255 +77,134 @@ Stable-dep-of: 52fce648607e ("fs/resctrl: Fix use-after-free during unmount")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/resctrl/core.c     |   20 +++++++++++---------
- arch/x86/kernel/cpu/resctrl/internal.h |    2 +-
- arch/x86/kernel/cpu/resctrl/monitor.c  |    2 +-
- fs/resctrl/internal.h                  |    6 +++---
- fs/resctrl/monitor.c                   |    8 ++++----
- fs/resctrl/rdtgroup.c                  |   24 ++++++++++++------------
- 6 files changed, 32 insertions(+), 30 deletions(-)
+ fs/resctrl/monitor.c |   79 ++++++++++++++++++++++++++++++++-------------------
+ 1 file changed, 51 insertions(+), 28 deletions(-)
 
---- a/arch/x86/kernel/cpu/resctrl/core.c
-+++ b/arch/x86/kernel/cpu/resctrl/core.c
-@@ -363,7 +363,7 @@ static void ctrl_domain_free(struct rdt_
- 	kfree(hw_dom);
- }
- 
--static void mon_domain_free(struct rdt_hw_l3_mon_domain *hw_dom)
-+static void l3_mon_domain_free(struct rdt_hw_l3_mon_domain *hw_dom)
- {
- 	int idx;
- 
-@@ -396,11 +396,13 @@ static int domain_setup_ctrlval(struct r
- }
- 
- /**
-- * arch_domain_mbm_alloc() - Allocate arch private storage for the MBM counters
-+ * l3_mon_domain_mbm_alloc() - Allocate arch private storage for the MBM counters
-  * @num_rmid:	The size of the MBM counter array
-  * @hw_dom:	The domain that owns the allocated arrays
-+ *
-+ * Return:	0 for success, or -ENOMEM.
-  */
--static int arch_domain_mbm_alloc(u32 num_rmid, struct rdt_hw_l3_mon_domain *hw_dom)
-+static int l3_mon_domain_mbm_alloc(u32 num_rmid, struct rdt_hw_l3_mon_domain *hw_dom)
- {
- 	size_t tsize = sizeof(*hw_dom->arch_mbm_states[0]);
- 	enum resctrl_event_id eventid;
-@@ -536,7 +538,7 @@ static void domain_add_cpu_mon(int cpu,
- 	ci = get_cpu_cacheinfo_level(cpu, RESCTRL_L3_CACHE);
- 	if (!ci) {
- 		pr_warn_once("Can't find L3 cache for CPU:%d resource %s\n", cpu, r->name);
--		mon_domain_free(hw_dom);
-+		l3_mon_domain_free(hw_dom);
- 		return;
- 	}
- 	d->ci_id = ci->id;
-@@ -548,8 +550,8 @@ static void domain_add_cpu_mon(int cpu,
- 
- 	arch_mon_domain_online(r, d);
- 
--	if (arch_domain_mbm_alloc(r->mon.num_rmid, hw_dom)) {
--		mon_domain_free(hw_dom);
-+	if (l3_mon_domain_mbm_alloc(r->mon.num_rmid, hw_dom)) {
-+		l3_mon_domain_free(hw_dom);
- 		return;
- 	}
- 
-@@ -559,7 +561,7 @@ static void domain_add_cpu_mon(int cpu,
- 	if (err) {
- 		list_del_rcu(&d->hdr.list);
- 		synchronize_rcu();
--		mon_domain_free(hw_dom);
-+		l3_mon_domain_free(hw_dom);
- 	}
- }
- 
-@@ -650,7 +652,7 @@ static void domain_remove_cpu_mon(int cp
- 		resctrl_offline_mon_domain(r, d);
- 		list_del_rcu(&d->hdr.list);
- 		synchronize_rcu();
--		mon_domain_free(hw_dom);
-+		l3_mon_domain_free(hw_dom);
- 
- 		return;
- 	}
-@@ -897,7 +899,7 @@ static __init bool get_rdt_mon_resources
- 	if (!ret)
- 		return false;
- 
--	return !rdt_get_mon_l3_config(r);
-+	return !rdt_get_l3_mon_config(r);
- }
- 
- static __init void __check_quirks_intel(void)
---- a/arch/x86/kernel/cpu/resctrl/internal.h
-+++ b/arch/x86/kernel/cpu/resctrl/internal.h
-@@ -211,7 +211,7 @@ union l3_qos_abmc_cfg {
- 
- void rdt_ctrl_update(void *arg);
- 
--int rdt_get_mon_l3_config(struct rdt_resource *r);
-+int rdt_get_l3_mon_config(struct rdt_resource *r);
- 
- bool rdt_cpu_has(int flag);
- 
---- a/arch/x86/kernel/cpu/resctrl/monitor.c
-+++ b/arch/x86/kernel/cpu/resctrl/monitor.c
-@@ -423,7 +423,7 @@ static __init int snc_get_config(void)
- 	return ret;
- }
- 
--int __init rdt_get_mon_l3_config(struct rdt_resource *r)
-+int __init rdt_get_l3_mon_config(struct rdt_resource *r)
- {
- 	unsigned int mbm_offset = boot_cpu_data.x86_cache_mbm_width_offset;
- 	struct rdt_hw_resource *hw_res = resctrl_to_arch_res(r);
---- a/fs/resctrl/internal.h
-+++ b/fs/resctrl/internal.h
-@@ -355,7 +355,9 @@ int alloc_rmid(u32 closid);
- 
- void free_rmid(u32 closid, u32 rmid);
- 
--void resctrl_mon_resource_exit(void);
-+int resctrl_l3_mon_resource_init(void);
-+
-+void resctrl_l3_mon_resource_exit(void);
- 
- void mon_event_count(void *info);
- 
-@@ -365,8 +367,6 @@ void mon_event_read(struct rmid_read *rr
- 		    struct rdt_l3_mon_domain *d, struct rdtgroup *rdtgrp,
- 		    cpumask_t *cpumask, int evtid, int first);
- 
--int resctrl_mon_resource_init(void);
--
- void mbm_setup_overflow_handler(struct rdt_l3_mon_domain *dom,
- 				unsigned long delay_ms,
- 				int exclude_cpu);
 --- a/fs/resctrl/monitor.c
 +++ b/fs/resctrl/monitor.c
-@@ -1758,7 +1758,7 @@ ssize_t mbm_L3_assignments_write(struct
- }
- 
- /**
-- * resctrl_mon_resource_init() - Initialise global monitoring structures.
-+ * resctrl_l3_mon_resource_init() - Initialise global monitoring structures.
-  *
-  * Allocate and initialise global monitor resources that do not belong to a
-  * specific domain. i.e. the rmid_ptrs[] used for the limbo and free lists.
-@@ -1767,9 +1767,9 @@ ssize_t mbm_L3_assignments_write(struct
-  * Resctrl's cpuhp callbacks may be called before this point to bring a domain
-  * online.
-  *
-- * Returns 0 for success, or -ENOMEM.
-+ * Return: 0 for success, or -ENOMEM.
-  */
--int resctrl_mon_resource_init(void)
-+int resctrl_l3_mon_resource_init(void)
- {
- 	struct rdt_resource *r = resctrl_arch_get_resource(RDT_RESOURCE_L3);
- 	int ret;
-@@ -1819,7 +1819,7 @@ int resctrl_mon_resource_init(void)
- 	return 0;
- }
- 
--void resctrl_mon_resource_exit(void)
-+void resctrl_l3_mon_resource_exit(void)
- {
- 	struct rdt_resource *r = resctrl_arch_get_resource(RDT_RESOURCE_L3);
- 
---- a/fs/resctrl/rdtgroup.c
-+++ b/fs/resctrl/rdtgroup.c
-@@ -4170,7 +4170,7 @@ static void rdtgroup_setup_default(void)
- 	mutex_unlock(&rdtgroup_mutex);
- }
- 
--static void domain_destroy_mon_state(struct rdt_l3_mon_domain *d)
-+static void domain_destroy_l3_mon_state(struct rdt_l3_mon_domain *d)
- {
- 	int idx;
- 
-@@ -4218,13 +4218,13 @@ void resctrl_offline_mon_domain(struct r
- 		cancel_delayed_work(&d->cqm_limbo);
- 	}
- 
--	domain_destroy_mon_state(d);
-+	domain_destroy_l3_mon_state(d);
- 
- 	mutex_unlock(&rdtgroup_mutex);
- }
- 
- /**
-- * domain_setup_mon_state() -  Initialise domain monitoring structures.
-+ * domain_setup_l3_mon_state() -  Initialise domain monitoring structures.
-  * @r:	The resource for the newly online domain.
-  * @d:	The newly online domain.
-  *
-@@ -4232,11 +4232,11 @@ void resctrl_offline_mon_domain(struct r
-  * Called when the first CPU of a domain comes online, regardless of whether
-  * the filesystem is mounted.
-  * During boot this may be called before global allocations have been made by
-- * resctrl_mon_resource_init().
-+ * resctrl_l3_mon_resource_init().
-  *
-- * Returns 0 for success, or -ENOMEM.
-+ * Return: 0 for success, or -ENOMEM.
-  */
--static int domain_setup_mon_state(struct rdt_resource *r, struct rdt_l3_mon_domain *d)
-+static int domain_setup_l3_mon_state(struct rdt_resource *r, struct rdt_l3_mon_domain *d)
+@@ -865,36 +865,14 @@ void mbm_setup_overflow_handler(struct r
+ static int dom_data_init(struct rdt_resource *r)
  {
  	u32 idx_limit = resctrl_arch_system_num_rmid_idx();
- 	size_t tsize = sizeof(*d->mbm_states[0]);
-@@ -4298,7 +4298,7 @@ int resctrl_online_mon_domain(struct rdt
+-	u32 num_closid = resctrl_arch_get_num_closid(r);
+ 	struct rmid_entry *entry = NULL;
+ 	int err = 0, i;
+ 	u32 idx;
  
  	mutex_lock(&rdtgroup_mutex);
+-	if (IS_ENABLED(CONFIG_RESCTRL_RMID_DEPENDS_ON_CLOSID)) {
+-		u32 *tmp;
+-
+-		/*
+-		 * If the architecture hasn't provided a sanitised value here,
+-		 * this may result in larger arrays than necessary. Resctrl will
+-		 * use a smaller system wide value based on the resources in
+-		 * use.
+-		 */
+-		tmp = kcalloc(num_closid, sizeof(*tmp), GFP_KERNEL);
+-		if (!tmp) {
+-			err = -ENOMEM;
+-			goto out_unlock;
+-		}
+-
+-		closid_num_dirty_rmid = tmp;
+-	}
  
--	err = domain_setup_mon_state(r, d);
-+	err = domain_setup_l3_mon_state(r, d);
- 	if (err)
+ 	rmid_ptrs = kcalloc(idx_limit, sizeof(struct rmid_entry), GFP_KERNEL);
+ 	if (!rmid_ptrs) {
+-		if (IS_ENABLED(CONFIG_RESCTRL_RMID_DEPENDS_ON_CLOSID)) {
+-			kfree(closid_num_dirty_rmid);
+-			closid_num_dirty_rmid = NULL;
+-		}
+ 		err = -ENOMEM;
+ 		goto out_unlock;
+ 	}
+@@ -930,11 +908,6 @@ static void dom_data_exit(struct rdt_res
+ 	if (!r->mon_capable)
  		goto out_unlock;
  
-@@ -4413,13 +4413,13 @@ int resctrl_init(void)
+-	if (IS_ENABLED(CONFIG_RESCTRL_RMID_DEPENDS_ON_CLOSID)) {
+-		kfree(closid_num_dirty_rmid);
+-		closid_num_dirty_rmid = NULL;
+-	}
+-
+ 	kfree(rmid_ptrs);
+ 	rmid_ptrs = NULL;
  
- 	thread_throttle_mode_init();
+@@ -1757,6 +1730,45 @@ ssize_t mbm_L3_assignments_write(struct
+ 	return ret ?: nbytes;
+ }
  
--	ret = resctrl_mon_resource_init();
-+	ret = resctrl_l3_mon_resource_init();
++static int closid_num_dirty_rmid_alloc(struct rdt_resource *r)
++{
++	if (IS_ENABLED(CONFIG_RESCTRL_RMID_DEPENDS_ON_CLOSID)) {
++		u32 num_closid = resctrl_arch_get_num_closid(r);
++		u32 *tmp;
++
++		/* For ARM memory ordering access to closid_num_dirty_rmid */
++		mutex_lock(&rdtgroup_mutex);
++
++		/*
++		 * If the architecture hasn't provided a sanitised value here,
++		 * this may result in larger arrays than necessary. Resctrl will
++		 * use a smaller system wide value based on the resources in
++		 * use.
++		 */
++		tmp = kcalloc(num_closid, sizeof(*tmp), GFP_KERNEL);
++		if (!tmp) {
++			mutex_unlock(&rdtgroup_mutex);
++			return -ENOMEM;
++		}
++
++		closid_num_dirty_rmid = tmp;
++
++		mutex_unlock(&rdtgroup_mutex);
++	}
++
++	return 0;
++}
++
++static void closid_num_dirty_rmid_free(void)
++{
++	if (IS_ENABLED(CONFIG_RESCTRL_RMID_DEPENDS_ON_CLOSID)) {
++		mutex_lock(&rdtgroup_mutex);
++		kfree(closid_num_dirty_rmid);
++		closid_num_dirty_rmid = NULL;
++		mutex_unlock(&rdtgroup_mutex);
++	}
++}
++
+ /**
+  * resctrl_l3_mon_resource_init() - Initialise global monitoring structures.
+  *
+@@ -1777,10 +1789,16 @@ int resctrl_l3_mon_resource_init(void)
+ 	if (!r->mon_capable)
+ 		return 0;
+ 
+-	ret = dom_data_init(r);
++	ret = closid_num_dirty_rmid_alloc(r);
  	if (ret)
  		return ret;
  
- 	ret = sysfs_create_mount_point(fs_kobj, "resctrl");
- 	if (ret) {
--		resctrl_mon_resource_exit();
-+		resctrl_l3_mon_resource_exit();
- 		return ret;
- 	}
++	ret = dom_data_init(r);
++	if (ret) {
++		closid_num_dirty_rmid_free();
++		return ret;
++	}
++
+ 	if (resctrl_arch_is_evt_configurable(QOS_L3_MBM_TOTAL_EVENT_ID)) {
+ 		mon_event_all[QOS_L3_MBM_TOTAL_EVENT_ID].configurable = true;
+ 		resctrl_file_fflags_init("mbm_total_bytes_config",
+@@ -1823,5 +1841,10 @@ void resctrl_l3_mon_resource_exit(void)
+ {
+ 	struct rdt_resource *r = resctrl_arch_get_resource(RDT_RESOURCE_L3);
  
-@@ -4454,7 +4454,7 @@ int resctrl_init(void)
- 
- cleanup_mountpoint:
- 	sysfs_remove_mount_point(fs_kobj, "resctrl");
--	resctrl_mon_resource_exit();
-+	resctrl_l3_mon_resource_exit();
- 
- 	return ret;
- }
-@@ -4490,7 +4490,7 @@ static bool resctrl_online_domains_exist
-  * When called by the architecture code, all CPUs and resctrl domains must be
-  * offline. This ensures the limbo and overflow handlers are not scheduled to
-  * run, meaning the data structures they access can be freed by
-- * resctrl_mon_resource_exit().
-+ * resctrl_l3_mon_resource_exit().
-  *
-  * After resctrl_exit() returns, the architecture code should return an
-  * error from all resctrl_arch_ functions that can do this.
-@@ -4517,5 +4517,5 @@ void resctrl_exit(void)
- 	 * it can be used to umount resctrl.
- 	 */
- 
--	resctrl_mon_resource_exit();
-+	resctrl_l3_mon_resource_exit();
++	if (!r->mon_capable)
++		return;
++
++	closid_num_dirty_rmid_free();
++
+ 	dom_data_exit(r);
  }
 
 
