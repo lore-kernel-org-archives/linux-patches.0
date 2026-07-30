@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07E4A43F097;
-	Thu, 30 Jul 2026 14:30:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC18A43C7AB;
+	Thu, 30 Jul 2026 14:30:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421806; cv=none; b=tZudU9SK+iNt1boxDRBiRrKFnXnuthFYCM56u7ikFBRgMDOlMsAHQbnkJk5lEWEcoXyqHOdL5aQQM9PwEB9lw3ez22xvI0OgPUqdRmpD25jZVVDmmes2snNG53kuJyUiIj2q1CEPYh7ZHK37I9zXB818X7gvCsUZAXIzHPuTXWY=
+	t=1785421809; cv=none; b=WfmLmAVGlT72YmwK2PXDqjdB7qG88mv4zZqNs24y7f2eldZz36v4DfxAfWXB1In/yIbqLnsb0UR3PXazuyO18LOVdVq0d3KXAsxCqdBDvG2jFEL2FLg6tNTTjLOZmMdPj+MidGPHzEm4GBAnzRMJxUlKDZJAn+vKaYToWS675Ow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421806; c=relaxed/simple;
-	bh=gSVCoSE/GxCt9mfTxc4ttiKdIyIDkNyKXgP7P0br7OM=;
+	s=arc-20240116; t=1785421809; c=relaxed/simple;
+	bh=83lDVXGJsOzg20oCmR3htASQhdbNO2fG27bzinAK9Pc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rJxvM4iTDTBPUJI+6BtfuCy5heicMoX9R90shJU3OwJsyqZO9QIv7J12CJXynXpfLdAA0d5touaGGUflIxLQZyQ/bPnYP87SRKfdCfQ0OYFTyW5sqIFf1qMZqjmT4zlPD3LVYMbgsXgZaFc1rWz19tA5xwy7j5IE0IqtRVC35uw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tDbIOKXX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kdxUR33A7e0Ii8arzqDBirgadG4jJDRgZ5raoh4/AdPQT46ha1rMS0mnLtJeyY3NYbljbV/fcUH/dpWWS450kNihp8HfCiZAJn8pRW2fCPbrFva94r13MVDniyPDTqdmSdFa/s1Kb5bVmegZ6aXLZPxm9mT1Z1ncv3gNosTRByk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oErYGWMB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tDbIOKXX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61C5A1F000E9;
-	Thu, 30 Jul 2026 14:30:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oErYGWMB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42CC31F000E9;
+	Thu, 30 Jul 2026 14:30:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421804;
-	bh=YS7/dfov0bowMt8j2h1s62V13+2RGGdmxZDUxeF6W74=;
+	s=korg; t=1785421807;
+	bh=MpgPmwqGXMGOEA0rnrJlxmTEN0EgMvmoXDjMMF/STtc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tDbIOKXXNh0POeRvIpFXWjsa4Flq9Lj2whkjKtXuoeH567vLxkFf/CpYveL5SlmSr
-	 eWnSec/+taur6B98pU1Gd8/Pm3N2TVpOPJySfP6q1Vngu7HzZV38hQ/OmENXCqIQhd
-	 1REJoBiLXfCGGyGSDnruWf80MzsBKDnbLfGXmHXo=
+	b=oErYGWMBEEC2Iq7lO4WCponYGYXoAc2llAH89QXzTlB2VzTnweRl2uYgQXy01xx2A
+	 VmIDVMjJUqNsigTZp359x2Dk/mSKy0v0drvPdMe7/EBW1CdOq/Juoht/mk2HuTCWgW
+	 lxAmL5mAkSGypZu9rS/rn9bJW2lHuVxFCL7gHuKE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Williamson <alex@shazbot.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Raj Kumar Bhagat <raj.bhagat@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 181/744] wifi: ath12k: Flush the posted write after writing to PCIE_SOC_GLOBAL_RESET
-Date: Thu, 30 Jul 2026 16:07:34 +0200
-Message-ID: <20260730141448.131724086@linuxfoundation.org>
+Subject: [PATCH 7.1 172/744] hwmon: (corsair-cpro) Stop device IO before calling hid_hw_stop
+Date: Thu, 30 Jul 2026 16:07:25 +0200
+Message-ID: <20260730141447.945819304@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -54,59 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 55f3aa06951cac78b0206bde961c8cf11929a27a ]
+[ Upstream commit 94c87871b051d7ad758828a805215a2ec194512a ]
 
-ath12k_pci_soc_global_reset() tries to reset the device by writing to the
-PCIE_SOC_GLOBAL_RESET register. But it doesn't do a read-back to ensure
-that the write gets flushed to the device before the delay.
+Calling hid_hw_stop() does not stop the device IO.
+This results in a race condition between hid_input_report() and the point
+immediately following the execution of hid_device_io_start() within
+the driver probe function. If the probe operation fails after "io start"
+has been initiated, this race condition will result in a UAF vulnerability.
 
-This may lead to the delay on the host to be insufficient, if the posted
-write doesn't reach the device before the delay.
+Fix the problem by calling hid_device_io_stop() before calling
+hid_hw_stop().
 
-So add a read-back after writing to the PCIE_SOC_GLOBAL_RESET register and
-before the delay.
-
-Compile tested only.
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.6-01243-QCAHKSWPL_SILICONZ-1
-
-Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
-Reported-by: Alex Williamson <alex@shazbot.org>
-Closes: https://lore.kernel.org/linux-pci/20260622160822.09350246@shazbot.org
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Reviewed-by: Raj Kumar Bhagat <raj.bhagat@oss.qualcomm.com>
-Tested-by: Raj Kumar Bhagat <raj.bhagat@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260623141649.41087-2-manivannan.sadhasivam@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: 40c3a44542257 ("hwmon: add Corsair Commander Pro driver")
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/pci.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/hwmon/corsair-cpro.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/ath/ath12k/pci.c b/drivers/net/wireless/ath/ath12k/pci.c
-index d9a22d6afbb020..fee4129ea4055b 100644
---- a/drivers/net/wireless/ath/ath12k/pci.c
-+++ b/drivers/net/wireless/ath/ath12k/pci.c
-@@ -188,6 +188,8 @@ static void ath12k_pci_soc_global_reset(struct ath12k_base *ab)
- 	val |= PCIE_SOC_GLOBAL_RESET_V;
+diff --git a/drivers/hwmon/corsair-cpro.c b/drivers/hwmon/corsair-cpro.c
+index b6e508e43fa17f..8354a002f4c5e1 100644
+--- a/drivers/hwmon/corsair-cpro.c
++++ b/drivers/hwmon/corsair-cpro.c
+@@ -645,6 +645,7 @@ static int ccp_probe(struct hid_device *hdev, const struct hid_device_id *id)
  
- 	ath12k_pci_write32(ab, PCIE_SOC_GLOBAL_RESET, val);
-+	/* Flush the posted write to the device */
-+	ath12k_pci_read32(ab, PCIE_SOC_GLOBAL_RESET);
- 
- 	/* TODO: exact time to sleep is uncertain */
- 	delay = 10;
-@@ -197,6 +199,8 @@ static void ath12k_pci_soc_global_reset(struct ath12k_base *ab)
- 	val &= ~PCIE_SOC_GLOBAL_RESET_V;
- 
- 	ath12k_pci_write32(ab, PCIE_SOC_GLOBAL_RESET, val);
-+	/* Flush the posted write to the device */
-+	ath12k_pci_read32(ab, PCIE_SOC_GLOBAL_RESET);
- 
- 	mdelay(delay);
- 
+ out_hw_close:
+ 	hid_hw_close(hdev);
++	hid_device_io_stop(hdev);
+ out_hw_stop:
+ 	hid_hw_stop(hdev);
+ 	return ret;
 -- 
 2.53.0
 
