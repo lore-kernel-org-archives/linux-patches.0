@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F9A635DA67;
-	Thu, 30 Jul 2026 15:47:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 784693806BD;
+	Thu, 30 Jul 2026 15:47:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426460; cv=none; b=WkTp8OxkfZ3o30abc5gSTJYiq9K81+WGebGnK2Sfo67VyrfXvUicWliABFF4JRfYywZXI1Oj1FpB41at0jhapX19ddP2VBZuX9U5/7pXn2gqaf/41C2pI1RyK6BVQ3fZeycrTFBlg7cdlUxK+0xA1Ygsgs8PuWiRNpt07MAHak8=
+	t=1785426463; cv=none; b=Hm1yotCXtg36D33IiGk1Tw5z9mV0wi4I7QUE+uZzmi+1x+2Y4WdnEwHWIPYGXLWNKTmSEkmlueZBXAs+PF/3Zr9DJYzHGIjP8jiJkXh5Gn6dI8HiYc9Rto5xelzjOd9sM4LnkteP4PlSqzI0oT1Qrl2kBCqWJRgryjJARQhimYg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426460; c=relaxed/simple;
-	bh=E0tym6gFzs+JOZy1jV5V9cWEM2FdmCngyIF3fwqUGzU=;
+	s=arc-20240116; t=1785426463; c=relaxed/simple;
+	bh=gwZQwoZBm95Ae+1kQbKstLzijXH7GuLGbJfExBRpTM4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xb79QLPDYPfYqOHWVOjBnam646X+VVILYv5ufX9QFYs7dOCcj7zrWyx1mRrx/c7ai/tL1liofMS2a9P9tW/J8GFC92rjaWLuUCqH2k89a0bJQYEmJHm0hr1lMCSwmOEvAShFyXOknXqJ3vfOFvlghIB7XzL5LhjwMWymZOHBwPI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eHIqmg/P; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OOYyiiHlXSY9Df8lCOV1hyErUQLQ3dlFEdC9OthBUbF/0VwF24292ZncFo2PdNd2C/3OAab3hsXMPoHv9G002W3AGf7Fd7OWXpNPVUATyvyE7xx5GvfCChCdkqtnwKweVYiAZxChKr8Hf7/FOUY8pp3wNZSLegBDVR6VygWEy4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CRDhvv0y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eHIqmg/P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2AF01F000E9;
-	Thu, 30 Jul 2026 15:47:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CRDhvv0y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC0731F000E9;
+	Thu, 30 Jul 2026 15:47:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426459;
-	bh=yFIMHKBGIOTem7exi2YTeqovczqqfPCfBr6rcyC6qeM=;
+	s=korg; t=1785426462;
+	bh=eMeoBjF2eRqVOnCfcKpNT/11HPuQwq286r3UQtsiihA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eHIqmg/PCoUINUksVm1ygFq96EUBJgZOCiORCwpgxqH+n2jhVDWvL4tutiuxywTIL
-	 Oc6ohxO/rcW/YmUFyM02asEb2FbImvNmc8CfvwhD9BX5ZzCuDsl20riicta+YJk9p9
-	 8vKfayd8tvJmHPHKaX28jlUSXzEaW+85preD+7eo=
+	b=CRDhvv0y72nDyUeiq/RDC+j/C0loBnWDSpDqnYHITz1vCS/aWviLvsXcXqC/zMAs9
+	 6djURTWEw8lXPi9woDT4dGA4mIYiMJf1zgRfNgZZNVXwJwHRfzsc2DmaLswwbMNYfr
+	 q78+JwZS4xb/cyMaWELEBi9fv9gn7yv5njdWRg9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.12 373/602] intel_th: fix MSC output device reference leak
-Date: Thu, 30 Jul 2026 16:12:45 +0200
-Message-ID: <20260730141443.799972550@linuxfoundation.org>
+	James Montgomery <james_montgomery@disroot.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.12 421/602] ksmbd: defer destroy_previous_session() until after NTLM authentication
+Date: Thu, 30 Jul 2026 16:13:33 +0200
+Message-ID: <20260730141444.812587056@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -51,74 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: James Montgomery <james_montgomery@disroot.org>
 
-commit 761b785a0cfbce43761227bc42a7f984f31f8921 upstream.
+commit c74801ee524f477c174a1899782b6c3b6918d407 upstream.
 
-intel_th_output_open() looks up the output device with
-bus_find_device_by_devt(), which returns the device with a reference that
-must be dropped after use.
+In ntlm_authenticate(), destroy_previous_session() is called using a
+user pointer resolved from the client-supplied NTLM blob username field
+before the NTLMv2 response is validated. An authenticated attacker can
+set the NTLM blob username to match a victim account and set
+PreviousSessionId to the victim's session ID; destroy_previous_session()
+destroys the victim's session while ksmbd_decode_ntlmssp_auth_blob()
+subsequently rejects the request with -EPERM.
 
-commit 95fc36a234da ("intel_th: fix device leak on output open()")
-attempted to drop the reference from intel_th_output_release(). However,
-a successful open replaces file->f_op with the output driver file
-operations before returning, so close runs the output driver release
-callback instead.
+Move destroy_previous_session() and the prev_id assignment to after
+ksmbd_decode_ntlmssp_auth_blob() returns success and use sess->user
+rather than the pre-authentication lookup result. This matches the
+ordering already used by krb5_authenticate(), where
+destroy_previous_session() is called only after
+ksmbd_krb5_authenticate() returns success.
 
-For MSC outputs, close runs intel_th_msc_release(), which only removes
-the per-file iterator and does not drop the device reference taken by
-intel_th_output_open(). Consequently, every successful MSC output open
-leaks one device reference.
-
-Drop the device reference from intel_th_msc_release(), which is the
-release path actually used for MSC output files. Remove the now-unused
-intel_th_output_release() callback from intel_th_output_fops.
-
-Fixes: 95fc36a234da ("intel_th: fix device leak on output open()")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Reviewed-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260715070851.2077965-1-lgs201920130244@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/linux-cifs/20260702155449.3639773-1-james_montgomery@disroot.org/
+Signed-off-by: James Montgomery <james_montgomery@disroot.org>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwtracing/intel_th/core.c |   10 ----------
- drivers/hwtracing/intel_th/msu.c  |    2 ++
- 2 files changed, 2 insertions(+), 10 deletions(-)
+ fs/smb/server/smb2pdu.c |    9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
---- a/drivers/hwtracing/intel_th/core.c
-+++ b/drivers/hwtracing/intel_th/core.c
-@@ -843,18 +843,8 @@ out_put_device:
- 	return err;
- }
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -1489,11 +1489,6 @@ static int ntlm_authenticate(struct ksmb
+ 		return -EPERM;
+ 	}
  
--static int intel_th_output_release(struct inode *inode, struct file *file)
--{
--	struct intel_th_device *thdev = file->private_data;
+-	/* Check for previous session */
+-	prev_id = le64_to_cpu(req->PreviousSessionId);
+-	if (prev_id && prev_id != sess->id)
+-		destroy_previous_session(conn, user, prev_id);
 -
--	put_device(&thdev->dev);
--
--	return 0;
--}
--
- static const struct file_operations intel_th_output_fops = {
- 	.open	= intel_th_output_open,
--	.release = intel_th_output_release,
- 	.llseek	= noop_llseek,
- };
+ 	if (sess->state == SMB2_SESSION_VALID) {
+ 		/*
+ 		 * Reuse session if anonymous try to connect
+@@ -1531,6 +1526,10 @@ static int ntlm_authenticate(struct ksmb
+ 		}
+ 	}
  
---- a/drivers/hwtracing/intel_th/msu.c
-+++ b/drivers/hwtracing/intel_th/msu.c
-@@ -1482,8 +1482,10 @@ static int intel_th_msc_release(struct i
- {
- 	struct msc_iter *iter = file->private_data;
- 	struct msc *msc = iter->msc;
-+	struct intel_th_device *thdev = msc->thdev;
- 
- 	msc_iter_remove(iter, msc);
-+	put_device(&thdev->dev);
- 
- 	return 0;
- }
++	prev_id = le64_to_cpu(req->PreviousSessionId);
++	if (prev_id && prev_id != sess->id)
++		destroy_previous_session(conn, sess->user, prev_id);
++
+ 	/*
+ 	 * If session state is SMB2_SESSION_VALID, We can assume
+ 	 * that it is reauthentication. And the user/password
 
 
