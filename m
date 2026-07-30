@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84F8B373BEC;
-	Thu, 30 Jul 2026 15:36:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BC2D374192;
+	Thu, 30 Jul 2026 15:36:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425804; cv=none; b=nqWyXtfs3JD5I3IP99btnfPVtFAItlWbE4j2ugjnk2wjJiOqG7yH7SSY8FYYujKOcTKzhaU53eNAM478UI+T2WOgxx/ihnXlldLj5KEdvUYd3Yn7vRBHEQSYrFY/cBbHanL+2Q7Z6uTdlBZseo+Kg2AWYyRpY01TlyUa9OtcnV0=
+	t=1785425807; cv=none; b=U40jAUm4x1ac6/Tzn8zVkh1zB438t6mNyhu5uXO2dxb/n0QS2M/nzMC/gFfSEn+17jpIBbGt2G+aLS60BMlVKMbLKKpHHBrRbjcFynMsOM+OL73fjNdj7ihkbfuf3GP5Uc4En0X05JqSCeF1M7TbVBTc+XXEWipmHw0i2ANBhi0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425804; c=relaxed/simple;
-	bh=tEoD1Y+X8Pnp3ffd0+IPESWOjinDM86T2U+xmGfDU00=;
+	s=arc-20240116; t=1785425807; c=relaxed/simple;
+	bh=V0Y5edW/aECL74qqZyJDPBfYRf+ijULoIFxYePcj1Vo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Er6Pd95dBLt44f4NENvWxyoWeh7/EG1qdRlgqW+oOl601SKnpOu5QJYq/t/YD3AY4maUWl6d34xxdsVaNqyO3/t25RdPAUezViWqsaMzg+/GiZEO64Qd+9RyN1Vt/DjzztsWgWNqPndRSqR3GvPz2iFvr+WSsCrIAruCEXo6gpE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x8LfvDsN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XN/LJE1rYbMUcdHVFJ8YbiOspEw+iYd3Qp35c0yqtOXXWWnWp7jvmNIqji8yWcXIDehdBa8W5Emq/jibPCFz3tnenhuISnCJKKxHQdRiUBar68v01eyDlXHCDEWH2PT2fCU/lCJwq4KlcKoi0ww2Dzf+mWS0ZpmMYkLRTVxZl9s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v+gcCAo+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x8LfvDsN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E031E1F000E9;
-	Thu, 30 Jul 2026 15:36:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v+gcCAo+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B85B61F000E9;
+	Thu, 30 Jul 2026 15:36:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425803;
-	bh=YPD4doyvHD1zd8WL9cC4rq2L/U4ZSKy8M/hPSmiUm4s=;
+	s=korg; t=1785425806;
+	bh=k1F6u/TyVN10sVEVQCWFxAvCSD1k8KletOPcH9P+XsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x8LfvDsNUF786A0RaU/a5Go8v3mw3Mv3O9e9HOJ/XslPm8GCh1rA4FwnNf+OrsEto
-	 erNLcbNW5os+ZFhCKlsAPaNyStntaq+ej7+IJeo6LEXA8sZzkwCXBd/KZTaDWp0tsr
-	 qFVn8edFEFhivYJGmo/3fiZsB2103Dbw96mT/j60=
+	b=v+gcCAo+uWrLnNOBcnlXxTfpj/dfkEp+aW1msWe5zUwnTIcvRtgh3gQPYcayGsVJp
+	 YDpNBv8uIvOGMRgF5pLCYacf7ZIRubB6MxwOBQdYXWmxhWLBm5iGtXpEhq0zj78aLt
+	 fNllJkrqqP3lnYehZJatbi4ELr0aTRiwL9wpvsrQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Jeremy Kerr <jk@codeconstruct.com.au>,
+	Nils Juenemann <nils.juenemann@gmail.com>,
+	Rishikesh Jethwani <rjethwani@purestorage.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 198/602] net: mctp i3c: clean up notifier and buses if driver register fails
-Date: Thu, 30 Jul 2026 16:09:50 +0200
-Message-ID: <20260730141440.118434356@linuxfoundation.org>
+Subject: [PATCH 6.12 199/602] tls: device: push pending open record on splice EOF
+Date: Thu, 30 Jul 2026 16:09:51 +0200
+Message-ID: <20260730141440.140173424@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -53,66 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Rishikesh Jethwani <rjethwani@purestorage.com>
 
-[ Upstream commit 03d1057305ef17ac3f5936ac1580bc9a1a826e14 ]
+[ Upstream commit eaa39f9f8ac8c1d032cd26b9cd572804e9d7683f ]
 
-mctp_i3c_mod_init() registers the I3C bus notifier and then walks the
-existing buses with i3c_for_each_bus_locked(mctp_i3c_bus_add_new, NULL)
-before registering the I3C device driver.  If i3c_driver_register()
-fails, the function returns the error directly, leaving the notifier
-registered and every mctp_i3c_bus object created for the existing buses
-allocated.  The notifier is left pointing into the module that failed to
-load and the bus list is leaked.
+On kTLS device-offload sockets, sendfile() with count > EOF can reach
+->splice_eof() with a fully assembled but still-open TLS record left
+pending. tls_device_splice_eof() only flushes partially sent records,
+so an abrupt close() can drop the final record and the peer receives
+a short file.
 
-Mirror the module exit path on this failure: unregister the notifier and
-tear down the buses that were added before returning the error.
+Fix tls_device_splice_eof() to also push pending open records.
+This matches the software path, where splice EOF already flushes
+pending open records.
 
-This issue was identified during our ongoing static-analysis research while
-reviewing kernel code.
-
-Fixes: c8755b29b58e ("mctp i3c: MCTP I3C driver")
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Acked-by: Jeremy Kerr <jk@codeconstruct.com.au>
-Link: https://patch.msgid.link/20260715072517.13216-1-mhun512@gmail.com
+Fixes: d4c1e80b0d1b ("tls/device: Use splice_eof() to flush")
+Link: https://lore.kernel.org/netdev/CAMPsyauZ+jzG9AysO0FWv6ZY0kvCUpjX_U7o=oOjCuOQ87BCgg@mail.gmail.com/
+Reported-by: Nils Juenemann <nils.juenemann@gmail.com>
+Signed-off-by: Rishikesh Jethwani <rjethwani@purestorage.com>
+Tested-by: Nils Juenemann <nils.juenemann@gmail.com>
+Link: https://patch.msgid.link/20260709224436.1608993-2-rjethwani@purestorage.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/mctp/mctp-i3c.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ net/tls/tls_device.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/mctp/mctp-i3c.c b/drivers/net/mctp/mctp-i3c.c
-index 47513ebbc68079..fbcd48f1971a45 100644
---- a/drivers/net/mctp/mctp-i3c.c
-+++ b/drivers/net/mctp/mctp-i3c.c
-@@ -731,18 +731,21 @@ static __init int mctp_i3c_mod_init(void)
- 	int rc;
+diff --git a/net/tls/tls_device.c b/net/tls/tls_device.c
+index 5c6a4c9a2df755..942edc9b3157af 100644
+--- a/net/tls/tls_device.c
++++ b/net/tls/tls_device.c
+@@ -594,13 +594,15 @@ void tls_device_splice_eof(struct socket *sock)
+ 	struct tls_context *tls_ctx = tls_get_ctx(sk);
+ 	struct iov_iter iter = {};
  
- 	rc = i3c_register_notifier(&mctp_i3c_notifier);
--	if (rc < 0) {
--		i3c_driver_unregister(&mctp_i3c_driver);
-+	if (rc < 0)
- 		return rc;
--	}
+-	if (!tls_is_partially_sent_record(tls_ctx))
++	if (!tls_is_partially_sent_record(tls_ctx) &&
++	    !tls_is_pending_open_record(tls_ctx))
+ 		return;
  
- 	i3c_for_each_bus_locked(mctp_i3c_bus_add_new, NULL);
+ 	mutex_lock(&tls_ctx->tx_lock);
+ 	lock_sock(sk);
  
- 	rc = i3c_driver_register(&mctp_i3c_driver);
- 	if (rc < 0)
--		return rc;
-+		goto err_unregister_notifier;
- 
- 	return 0;
-+
-+err_unregister_notifier:
-+	i3c_unregister_notifier(&mctp_i3c_notifier);
-+	mctp_i3c_bus_remove_all();
-+	return rc;
- }
- 
- static __exit void mctp_i3c_mod_exit(void)
+-	if (tls_is_partially_sent_record(tls_ctx)) {
++	if (tls_is_partially_sent_record(tls_ctx) ||
++	    tls_is_pending_open_record(tls_ctx)) {
+ 		iov_iter_bvec(&iter, ITER_SOURCE, NULL, 0, 0);
+ 		tls_push_data(sk, &iter, 0, 0, TLS_RECORD_TYPE_DATA);
+ 	}
 -- 
 2.53.0
 
