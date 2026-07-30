@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DB16436BF8;
-	Thu, 30 Jul 2026 14:36:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 533DD4432F2;
+	Thu, 30 Jul 2026 14:36:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422170; cv=none; b=ZAmfVMqVKc2roOC+N3aXXrNfXlK2tuxUM0sSC7PkHUbeqd89AP9bcsjSyuruN70Mawu3CEjGD8In2UkJbIKq7NUmZMsS0RPwfQXD1pfyqf0CoBgbbUMRZX9WSaLaJYt0PohBh5J09zB9Wjh7Lu/0A/msIa17l/LLV7FxrSFWVRQ=
+	t=1785422173; cv=none; b=jakSTN2MTHL5wfXVL01WPKu+FaFKWF9ti0SMi9bOs5p7Tf5h3xKeEdrK5H1AfV17PyRIavRRWclkFaRJShzVjF2ezg5VljgBjZNNda4xSiQPoXyXLAoYE4KmRrk2f2yQb573RxkaKrenwwHDHsXt++P3533O7hFzyioZSvenvOk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422170; c=relaxed/simple;
-	bh=okK2ZdvNFqLf7SkqZSeIaaDtaxdvIYdadeQYvL7bRZI=;
+	s=arc-20240116; t=1785422173; c=relaxed/simple;
+	bh=8wr1k/Jz+TekO1lnwOfYNo1wsWYKiF1eln7Q/jxtJd0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SQ8DyIXadt9C3KF+ApchTFcTF3eL/qYxsxCjKG4LK1BMKpmThd49PVM04l3Mbx/yfYf+Nj9LqzpF3Egoet7AtD6XIPEFaWcRklq4tQ9Hj4DUtMmKwuK5fYGPp1xK/BpUXvwxbDRWsPmcbWgStJN62AFDnwtjuhlsG640L4vMQ28=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vQ5IO5t3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Uq0euGiWr8R98m5JGALBACjdDfohJr5sWLjGwCD673hPmiYyRk8IxWDESpzqVgBuXKQ/Wyl6QcKPPXnGXG4/3o27zLFlIZTQG5tUVIs1vyxq05EbBpfKBkxejTqIzx0u5QxgLY/Shqg5eJMj5FzRyL6NUK1tQxH9geZZUGv18xY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w8Uml2yB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vQ5IO5t3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C49801F00A3A;
-	Thu, 30 Jul 2026 14:36:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w8Uml2yB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CF161F00A3A;
+	Thu, 30 Jul 2026 14:36:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422169;
-	bh=5u4jj/UOr+i+IdJ1sY3ZzXR3WiHbJs9sJd9zPuUxNZM=;
+	s=korg; t=1785422172;
+	bh=CWnKZH7iZ4pBDS2BkMrRAZWDzSwkBk38UHv0K18mNRE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vQ5IO5t3jA+teqxjUr8GSlADc9sW7kd+RKxI3tpDLXW5dwqCeQwRfYUuly13AFZOx
-	 TnElr0AIoDPbfkpNVarIyYUY7yyn5qEsPXI0K9FzPmm6VtzUcFAD2zE21STaW81gtu
-	 RI0P1gRC+heYhAohWh9VgRZkExlsXd0LpvQBugsE=
+	b=w8Uml2yBzRU8V8L06fCBXDZFxq2Mgh9pbDxswFCBlcpCjGPPwIbo9lj48+YEUOX7B
+	 yXoD2YMUbshsbth8DdFFo1v40gobz1JUhnndpJUxYy3OJUY2UvLoQrC4foG7l7LF0W
+	 AePOfek9bM+8Yphtw2TtWF3p1um4TGrGaaRWwYso=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Clark Wang <xiaoning.wang@nxp.com>,
-	Wei Fang <wei.fang@nxp.com>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Breno Leitao <leitao@debian.org>,
+	Minhong He <heminhong@kylinos.cn>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 347/744] ptp: netc: explicitly clear TMR_OFF during initialization
-Date: Thu, 30 Jul 2026 16:10:20 +0200
-Message-ID: <20260730141451.662128132@linuxfoundation.org>
+Subject: [PATCH 7.1 348/744] mctp: check register_netdevice_notifier() error in mctp_device_init()
+Date: Thu, 30 Jul 2026 16:10:21 +0200
+Message-ID: <20260730141451.683504166@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -54,50 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Clark Wang <xiaoning.wang@nxp.com>
+From: Minhong He <heminhong@kylinos.cn>
 
-[ Upstream commit c3f2fc231a39e29fe9f0adc14a3ecc3c1260d3c5 ]
+[ Upstream commit d9a33cadc70a94c1582f65e6042e81027cd200c6 ]
 
-The NETC timer does not support function level reset, so TMR_OFF_L/H
-registers are not cleared by pcie_flr(). If TMR_OFF was set to a
-non-zero value in a previous binding, it will persist across driver
-rebind and cause inaccurate PTP time.
+mctp_device_init() handles errors from rtnl_af_register() and
+rtnl_register_many(), but ignores the return value of
+register_netdevice_notifier(). If notifier registration fails, init can
+still return success while the module is only partially initialized.
 
-There is also a hardware issue: after a warm reset or soft reset,
-TMR_OFF_L/H registers appear to be cleared to zero, but the timer clock
-domain internally retains the stale value. When the timer is re-enabled,
-TMR_CUR_TIME continues to track the old offset until TMR_OFF is written
-explicitly. This can cause incorrect PTP timestamps and even PTP clock
-synchronization failures.
+Check the notifier registration error and fail module init early.
 
-Per the recommendation from the IP team, explicitly write 0 to TMR_OFF
-in netc_timer_init() to flush the internally cached value and ensure
-TMR_CUR_TIME follows the freshly initialized counter.
-
-Fixes: 87a201d59963 ("ptp: netc: add NETC V4 Timer PTP driver support")
-Signed-off-by: Clark Wang <xiaoning.wang@nxp.com>
-Signed-off-by: Wei Fang <wei.fang@nxp.com>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Reviewed-by: Breno Leitao <leitao@debian.org>
-Link: https://patch.msgid.link/20260720012508.23227-1-wei.fang@oss.nxp.com
+Fixes: 583be982d934 ("mctp: Add device handling and netlink interface")
+Signed-off-by: Minhong He <heminhong@kylinos.cn>
+Link: https://patch.msgid.link/20260720072518.112614-1-heminhong@kylinos.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ptp/ptp_netc.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/mctp/device.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/ptp/ptp_netc.c b/drivers/ptp/ptp_netc.c
-index 94e952ee69902e..5e381c354d746a 100644
---- a/drivers/ptp/ptp_netc.c
-+++ b/drivers/ptp/ptp_netc.c
-@@ -779,6 +779,7 @@ static void netc_timer_init(struct netc_timer *priv)
- 	netc_timer_wr(priv, NETC_TMR_FIPER_CTRL, fiper_ctrl);
- 	netc_timer_wr(priv, NETC_TMR_ECTRL, NETC_TMR_DEFAULT_ETTF_THR);
+diff --git a/net/mctp/device.c b/net/mctp/device.c
+index 2c84df674669b2..822120e860c82a 100644
+--- a/net/mctp/device.c
++++ b/net/mctp/device.c
+@@ -536,7 +536,9 @@ int __init mctp_device_init(void)
+ {
+ 	int err;
  
-+	netc_timer_offset_write(priv, 0);
- 	ktime_get_real_ts64(&now);
- 	ns = timespec64_to_ns(&now);
- 	netc_timer_cnt_write(priv, ns);
+-	register_netdevice_notifier(&mctp_dev_nb);
++	err = register_netdevice_notifier(&mctp_dev_nb);
++	if (err)
++		return err;
+ 
+ 	err = rtnl_af_register(&mctp_af_ops);
+ 	if (err)
 -- 
 2.53.0
 
