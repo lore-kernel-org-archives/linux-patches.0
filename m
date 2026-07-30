@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAAE034D385;
-	Thu, 30 Jul 2026 14:45:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F22861FE44A;
+	Thu, 30 Jul 2026 14:45:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422752; cv=none; b=Zfl4pbkQIJABsjQw70rrdfUdWnCPwLMmJsjSQzZkrnItv3/+5tkIfRzB8jXwr/38DllS8cIy1Ls8wvENHqN6pFrGgBH+XIAxeBozU0Gabh74fLNoDjYvHHSTJ7ABL35hqijaTOIPQpnEZpsjS3Hu3p75hcZGDv2QC72g5GWR7Ss=
+	t=1785422755; cv=none; b=cln6MOu5FolbW89hXNKHsvAPTEgIYK690fn7CIB55roM3LRsplc7zTzmanyddCB6HdyfFcmu/JFZpuNfR9Vn51WXX92o0MCLz25AgoEEH61F1JmvMAF74P/KpN7Aj55zpLgjJyzHnf2TZcBpOu1dMQkdIYVjpUFNVKzxv/K9rAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422752; c=relaxed/simple;
-	bh=WglJgg5reqXbKNVm7djSeq3EbWY5i1MuBqYQjTCDGjA=;
+	s=arc-20240116; t=1785422755; c=relaxed/simple;
+	bh=ihBh7Z0h7hVg5pjs/TXfQfb5gTLlHCJuoZZEQOkE8LM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zt3NWnnRxYk3iExLKJYOiEUbrjatttmj+I9RIibbk6hnYM/S4RBLGGSzM1CpQWIEUJxmaB2NHOe2x7uPuMf71bc905YluApdQl7zLqHLC01wTz1aptVbCSS3so76/hiip81UQXsfHahBqAwiSn0jtPhue3pkflN1w5myWEHiQXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RNFuGYMZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UawhqT1TRIyU+hAoMCAcfbeAYKQS5ltQyJvoxvgg9BA9TisxJvHD09i0Ap6QeWrkFHBufnpnVi1HnZuB2jBM6jeInlxRK/Hgr7en1NhnYMLVH1O7uIL33sbYwHpzBoBoQBer8QXJkpgOxOhBcFOiB3ZpXVas4FoJob2pnp1FvJA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tkpa+Ord; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RNFuGYMZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 519C21F000E9;
-	Thu, 30 Jul 2026 14:45:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tkpa+Ord"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A8371F000E9;
+	Thu, 30 Jul 2026 14:45:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422750;
-	bh=R2P5sGU1a9+6cRhQgTU8xknpQVmHIS+qSsPt8LgT5xk=;
+	s=korg; t=1785422753;
+	bh=haV+aLctTrLz3CXkVMhS0hbc71bV4qXoF8tEgOx4wBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RNFuGYMZexPqUi2U2ces1mHOwD2MkQ9MsWhWVsjUg+ESLBaO49+KsbDQ1M/hO37+H
-	 bpvUStqq4kTrLfHQ9n+UhjqimCSuM2gmNWPO0ByEhMYJ2G5/LqeEnKMY6PotA8fqsJ
-	 0ZDms34V5beT4OnW8ZXrboCWvPBJ3hjXFRuwaAT4=
+	b=Tkpa+Ord6Kv7MT5Er+YEMfNA7S4Q2BtPxjluQnCkxZ2QmVu2lfJ9FMWiPdyqRjD2w
+	 OTQOIuUBOp8fu0zUqVhx7+u5ui5Hni+hR7XDwZ/Mu5QAzfSnCr1oyM0bi0fDodfjjH
+	 yU1kn1xmQBi/t+tF/F1Q9ODA5CfrwbA2+bpX9yYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Tristan Madani <tristan@talencesecurity.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Subject: [PATCH 7.1 543/744] wifi: ath6kl: fix OOB access from firmware ADDBA window size
-Date: Thu, 30 Jul 2026 16:13:36 +0200
-Message-ID: <20260730141455.817378352@linuxfoundation.org>
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Bryan ODonoghue <bod@kernel.org>
+Subject: [PATCH 7.1 508/744] media: qcom: camss: Fix RDI streaming for CSID GEN3
+Date: Thu, 30 Jul 2026 16:13:01 +0200
+Message-ID: <20260730141455.077750980@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -51,52 +52,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tristan Madani <tristan@talencesecurity.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
-commit 44126b6994eeb28f2103b638e698f40a1244f327 upstream.
+commit ad136e52634d5a393a9dc93383f8ea1e898faf37 upstream.
 
-aggr_recv_addba_req_evt() logs a debug message when the firmware-supplied
-win_sz is outside [AGGR_WIN_SZ_MIN, AGGR_WIN_SZ_MAX] but does not
-return. The out-of-range win_sz is then used in TID_WINDOW_SZ() to
-compute a kzalloc size and stored in rxtid->hold_q_sz, leading to
-zero-size or overflowed allocations and subsequent out-of-bounds access.
+Fix streaming from CSIDn RDI1 and RDI2 to VFEn RDI1 and RDI2. A pattern we
+have replicated throughout CAMSS where we use the VC number to populate
+both the VC fields and port fields of the CSID means that in practice only
+VC = 0 on CSIDn:RDI0 to VFEn:RDI0 works.
 
-Clean up any previously active aggregation session for the TID first,
-then return early when win_sz is out of the valid range, instead of
-proceeding with a broken allocation size.
+Fix that for CSID gen3 by separating VC and port. Fix to VC zero as a
+bugfix we will look to properly populate the VC field with follow on
+patches later.
 
-Fixes: bdcd81707973 ("Add ath6kl cleaned up driver")
+Fixes: d96fe1808dcc ("media: qcom: camss: Add CSID 780 support")
 Cc: stable@vger.kernel.org
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
-Link: https://patch.msgid.link/20260702005020.708717-1-tristmd@gmail.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath6kl/txrx.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/media/platform/qcom/camss/camss-csid-gen3.c |   28 ++++++++++----------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
 
---- a/drivers/net/wireless/ath/ath6kl/txrx.c
-+++ b/drivers/net/wireless/ath/ath6kl/txrx.c
-@@ -1723,13 +1723,15 @@ void aggr_recv_addba_req_evt(struct ath6
+--- a/drivers/media/platform/qcom/camss/camss-csid-gen3.c
++++ b/drivers/media/platform/qcom/camss/camss-csid-gen3.c
+@@ -145,12 +145,12 @@ static void __csid_configure_wrapper(str
+ 	writel(val, csid->camss->csid_wrapper_base + CSID_IO_PATH_CFG0(csid->id));
+ }
  
- 	rxtid = &aggr_conn->rx_tid[tid];
+-static void __csid_configure_rdi_stream(struct csid_device *csid, u8 enable, u8 vc)
++static void __csid_configure_rdi_stream(struct csid_device *csid, u8 enable, u8 port, u8 vc)
+ {
+ 	u32 val;
+ 	u8 lane_cnt = csid->phy.lane_cnt;
+ 	/* Source pads matching RDI channels on hardware. Pad 1 -> RDI0, Pad 2 -> RDI1, etc. */
+-	struct v4l2_mbus_framefmt *input_format = &csid->fmt[MSM_CSID_PAD_FIRST_SRC + vc];
++	struct v4l2_mbus_framefmt *input_format = &csid->fmt[MSM_CSID_PAD_FIRST_SRC + port];
+ 	const struct csid_format_info *format = csid_get_fmt_entry(csid->res->formats->formats,
+ 								   csid->res->formats->nformats,
+ 								   input_format->code);
+@@ -163,14 +163,14 @@ static void __csid_configure_rdi_stream(
+ 	 * the four least significant bits of the five bit VC
+ 	 * bitfield to generate an internal CID value.
+ 	 *
+-	 * CSID_RDI_CFG0(vc)
++	 * CSID_RDI_CFG0(port)
+ 	 * DT_ID : 28:27
+ 	 * VC    : 26:22
+ 	 * DT    : 21:16
+ 	 *
+ 	 * CID   : VC 3:0 << 2 | DT_ID 1:0
+ 	 */
+-	u8 dt_id = vc & 0x03;
++	u8 dt_id = port & 0x03;
  
--	if (win_sz < AGGR_WIN_SZ_MIN || win_sz > AGGR_WIN_SZ_MAX)
--		ath6kl_dbg(ATH6KL_DBG_WLAN_RX, "%s: win_sz %d, tid %d\n",
--			   __func__, win_sz, tid);
--
- 	if (rxtid->aggr)
- 		aggr_delete_tid_state(aggr_conn, tid);
+ 	val = RDI_CFG0_TIMESTAMP_EN;
+ 	val |= RDI_CFG0_TIMESTAMP_STB_SEL;
+@@ -180,7 +180,7 @@ static void __csid_configure_rdi_stream(
+ 	val |= format->data_type << RDI_CFG0_DT;
+ 	val |= dt_id << RDI_CFG0_DT_ID;
  
-+	if (win_sz < AGGR_WIN_SZ_MIN || win_sz > AGGR_WIN_SZ_MAX) {
-+		ath6kl_dbg(ATH6KL_DBG_WLAN_RX, "%s: win_sz %d, tid %d\n",
-+			   __func__, win_sz, tid);
-+		return;
-+	}
-+
- 	rxtid->seq_next = seq_no;
- 	hold_q_size = TID_WINDOW_SZ(win_sz) * sizeof(struct skb_hold_q);
- 	rxtid->hold_q = kzalloc(hold_q_size, GFP_KERNEL);
+-	writel(val, csid->base + CSID_RDI_CFG0(vc));
++	writel(val, csid->base + CSID_RDI_CFG0(port));
+ 
+ 	val = RDI_CFG1_PACKING_FORMAT_MIPI;
+ 	val |= RDI_CFG1_PIX_STORE;
+@@ -189,22 +189,22 @@ static void __csid_configure_rdi_stream(
+ 	val |= RDI_CFG1_CROP_H_EN;
+ 	val |= RDI_CFG1_CROP_V_EN;
+ 
+-	writel(val, csid->base + CSID_RDI_CFG1(vc));
++	writel(val, csid->base + CSID_RDI_CFG1(port));
+ 
+ 	val = 0;
+-	writel(val, csid->base + CSID_RDI_IRQ_SUBSAMPLE_PERIOD(vc));
++	writel(val, csid->base + CSID_RDI_IRQ_SUBSAMPLE_PERIOD(port));
+ 
+ 	val = 1;
+-	writel(val, csid->base + CSID_RDI_IRQ_SUBSAMPLE_PATTERN(vc));
++	writel(val, csid->base + CSID_RDI_IRQ_SUBSAMPLE_PATTERN(port));
+ 
+ 	val = 0;
+-	writel(val, csid->base + CSID_RDI_CTRL(vc));
++	writel(val, csid->base + CSID_RDI_CTRL(port));
+ 
+-	val = readl(csid->base + CSID_RDI_CFG0(vc));
++	val = readl(csid->base + CSID_RDI_CFG0(port));
+ 
+ 	if (enable)
+ 		val |= RDI_CFG0_EN;
+-	writel(val, csid->base + CSID_RDI_CFG0(vc));
++	writel(val, csid->base + CSID_RDI_CFG0(port));
+ }
+ 
+ static void csid_configure_stream(struct csid_device *csid, u8 enable)
+@@ -213,11 +213,11 @@ static void csid_configure_stream(struct
+ 
+ 	__csid_configure_wrapper(csid);
+ 
+-	/* Loop through all enabled VCs and configure stream for each */
++	/* Loop through all enabled ports and configure a stream for each */
+ 	for (i = 0; i < MSM_CSID_MAX_SRC_STREAMS; i++)
+ 		if (csid->phy.en_vc & BIT(i)) {
+-			__csid_configure_rdi_stream(csid, enable, i);
+-			__csid_configure_rx(csid, &csid->phy, i);
++			__csid_configure_rdi_stream(csid, enable, i, 0);
++			__csid_configure_rx(csid, &csid->phy, 0);
+ 			__csid_ctrl_rdi(csid, enable, i);
+ 		}
+ }
 
 
