@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D13274052DC;
-	Thu, 30 Jul 2026 15:03:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCA4B4052DC;
+	Thu, 30 Jul 2026 15:04:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423839; cv=none; b=QqCPWmFR/2aClxZO3bMkoOzt9Wr+jf6bHRM6gKZcXRsGVzzmzL8++mFkjcFtYgXh317j/l8GFUQ3nEkCn8YTgxOrBaDksZzbsplClVxDK5fDDf4zIqYAlDMVBCbezuqFnmwMgoUujJkUuu5oEKR2AxgwPYSzlhntyzp/4cmIT50=
+	t=1785423842; cv=none; b=DZ3J+uVH0ApV/yPFqCoYLRCoLGCpPMrHovwK35T+Xx2mQ7ODpnmldaHukIvE9WFTTfJfqFWqYXX1iBwpyGtSuOUSJwTiA+PkWqgVyYmVVMs2/k0QlXHJjMgrBv3no5EiZo2kBDJgK48QzliviW+a1dYp7+yyr5RORayizb18E+0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423839; c=relaxed/simple;
-	bh=TV6/f4acIn+GrVPtihnbmTd5vnObp7RJROv2s0tnZHY=;
+	s=arc-20240116; t=1785423842; c=relaxed/simple;
+	bh=FWU7xJoi7rChKIbvkAAl0udkr3qcPj3JAiYPT2nYf4Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o6d+EethEf5k7S/zNvXZjQY/Zhq6MOYkfru7ZJ+XqgSmtxEqi5y3fLaxtK9AHXvU2n96n8vRZXTH4eSVCjQySsDRPduJ0dop1FW635r/gnkE1rH8nak7y4nFxeX6r06xGgWZItSvuexgVctN16xP+E70R00OsvlBaMLVQCJ55zg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C1gyKtgb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bcI1zmSlYa4g88XpTvRb5UylrutQzxQPN7lIsCkPvrR0MjlSSAvjnImC70Jk0Ow5U0fd2D9sjq8ydOwiiXyhMlaj9OLuu+x8iVxYt2YwRsx8OdOOJK1btNSLjK6fxCffJMhle8pg3O434fkpxxppFOOErBrLqR50hZVs7ZBB/eU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p2cvXUHq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C1gyKtgb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3821A1F000E9;
-	Thu, 30 Jul 2026 15:03:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p2cvXUHq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F0A31F000E9;
+	Thu, 30 Jul 2026 15:04:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423838;
-	bh=FIl0R20Y541Ja3hvyvFi2Bt/hEKqlYe2BV/1FrMU38o=;
+	s=korg; t=1785423841;
+	bh=4KqyeEvOClIwigsI13W2bUTq260TxFRhw3E9xxszy6k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C1gyKtgbSlm4lMyfnpN8eIKy1CdeVeB2T4Vt3rinUjelxUzq66OJXrtrfMCqbOb81
-	 ARElYjszYa5EOQbd7InUVsih6InOCVEJTAOgpOQ/j628d4N/3kRX9t2DCPnCGKRRsm
-	 lBrjrOHZ8IDm42HoH9M+nBHvSqQ3srtrz18Io+AM=
+	b=p2cvXUHq0qFyeDo3wgAXoZWOrCoNEFNEA/HkpcO/fxH23Tvif7iJHG+zqG/Dtk/2m
+	 /rirVvh88vqlSbr96OfQpcD6LmQxpZs+fnBzwSHBeqkj9gDxK95+J4Rwn8ku7YmIhu
+	 pONtMlM+Rkfkv699b5skxQRfzlXMkuCTYtLfUlM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Jeff Layton <jlayton@kernel.org>,
 	Filipe Manana <fdmanana@suse.com>,
-	Dave Chen <davechen@synology.com>,
+	Leo Martins <loemra.dev@gmail.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 185/675] btrfs: fix u32 to s64 type conversion in dirty_metadata_bytes accounting
-Date: Thu, 30 Jul 2026 16:08:35 +0200
-Message-ID: <20260730141449.074527528@linuxfoundation.org>
+Subject: [PATCH 6.18 186/675] btrfs: dont propagate EXTENT_FLAG_LOGGING to split extent maps
+Date: Thu, 30 Jul 2026 16:08:36 +0200
+Message-ID: <20260730141449.095391934@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -52,59 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Chen <davechen@synology.com>
+From: Leo Martins <loemra.dev@gmail.com>
 
-[ Upstream commit 8b5a09ceb61b18b1f0797cd30a549d7dc85d8d50 ]
+[ Upstream commit 5eff4d5b17fa1950e80bfd1ba43dc0699e61a644 ]
 
-The percpu_counter dirty_metadata_bytes is updated by negating eb->len
-and passing it to percpu_counter_add_batch(), whose amount parameter is
-s64.  Since commit 84cda1a6087d ("btrfs: cache folio size and shift in
-extent_buffer"), eb->len is u32.  The u32 result of -eb->len, when
-widened to the s64 parameter, becomes a large positive value instead of
-the intended negative value.  For eb->len == 16384 the counter adds
-+4294950912 instead of subtracting 16384.
+When btrfs_drop_extent_map_range() splits an extent map, the new split
+maps inherit the original map's flags through a local 'flags' variable.
+Commit f86f7a75e2fb ("btrfs: use the flags of an extent map to identify
+the compression type") changed the EXTENT_FLAG_LOGGING clearing to
+operate on em->flags instead of that local 'flags' copy, so a split of
+an extent map that is currently being logged wrongly inherits
+EXTENT_FLAG_LOGGING.
 
-The counter therefore grows on every metadata writeback instead of
-shrinking by the extent buffer size, permanently exceeding
-BTRFS_DIRTY_METADATA_THRESH and causing __btrfs_btree_balance_dirty()
-to trigger balance_dirty_pages_ratelimited() unconditionally, adding
-unnecessary writeback pressure.
+The flag is then never cleared on the split, and when it is freed while
+still on the inode's modified_extents list (for example by the extent
+map shrinker) it trips the WARN_ON(!list_empty(&em->list)) in
+btrfs_free_extent_map() and leads to a use-after-free.
 
-Cast eb->len to s64 before negation at both call sites so the
-subtraction is performed in signed 64-bit arithmetic.
+Clear EXTENT_FLAG_LOGGING from the local 'flags' copy used for the
+splits and only clear EXTENT_FLAG_PINNED from em->flags, restoring the
+behaviour prior to f86f7a75e2fb.
 
+CC: Jeff Layton <jlayton@kernel.org>
+Link: https://lore.kernel.org/all/20260629-btrfs-skip-logging-v1-1-4e3a28c1acaf@kernel.org/
+Fixes: f86f7a75e2fb ("btrfs: use the flags of an extent map to identify the compression type")
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Fixes: 84cda1a6087d ("btrfs: cache folio size and shift in extent_buffer")
-Signed-off-by: Dave Chen <davechen@synology.com>
+Signed-off-by: Leo Martins <loemra.dev@gmail.com>
 Signed-off-by: Filipe Manana <fdmanana@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/extent_io.c | 4 ++--
+ fs/btrfs/extent_map.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/btrfs/extent_io.c b/fs/btrfs/extent_io.c
-index f955b4003d4246..80fc2d59bfeb86 100644
---- a/fs/btrfs/extent_io.c
-+++ b/fs/btrfs/extent_io.c
-@@ -1949,7 +1949,7 @@ static noinline_for_stack bool lock_extent_buffer_for_io(struct extent_buffer *e
+diff --git a/fs/btrfs/extent_map.c b/fs/btrfs/extent_map.c
+index 7e38c23a0c1cb6..21eb104ee2aefb 100644
+--- a/fs/btrfs/extent_map.c
++++ b/fs/btrfs/extent_map.c
+@@ -854,13 +854,13 @@ void btrfs_drop_extent_map_range(struct btrfs_inode *inode, u64 start, u64 end,
+ 			goto next;
+ 		}
  
- 		btrfs_set_header_flag(eb, BTRFS_HEADER_FLAG_WRITTEN);
- 		percpu_counter_add_batch(&fs_info->dirty_metadata_bytes,
--					 -eb->len,
-+					 -(s64)eb->len,
- 					 fs_info->dirty_metadata_batch);
- 		ret = true;
- 	} else {
-@@ -3731,7 +3731,7 @@ void btrfs_clear_buffer_dirty(struct btrfs_trans_handle *trans,
- 		return;
+-		flags = em->flags;
+ 		/*
+ 		 * In case we split the extent map, we want to preserve the
+ 		 * EXTENT_FLAG_LOGGING flag on our extent map, but we don't want
+ 		 * it on the new extent maps.
+ 		 */
+-		em->flags &= ~(EXTENT_FLAG_PINNED | EXTENT_FLAG_LOGGING);
++		flags = em->flags & ~EXTENT_FLAG_LOGGING;
++		em->flags &= ~EXTENT_FLAG_PINNED;
+ 		modified = !list_empty(&em->list);
  
- 	buffer_tree_clear_mark(eb, PAGECACHE_TAG_DIRTY);
--	percpu_counter_add_batch(&fs_info->dirty_metadata_bytes, -eb->len,
-+	percpu_counter_add_batch(&fs_info->dirty_metadata_bytes, -(s64)eb->len,
- 				 fs_info->dirty_metadata_batch);
- 
- 	for (int i = 0; i < num_extent_folios(eb); i++) {
+ 		/*
 -- 
 2.53.0
 
