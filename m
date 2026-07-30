@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D70E37475C;
-	Thu, 30 Jul 2026 14:46:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B1341FE44A;
+	Thu, 30 Jul 2026 14:46:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422811; cv=none; b=jmRguFn+9DSkkPKCTfcMWccWS7L1FiPhXGnRy76MibgQQeqiuSvNxVoD8XHnVGnFx4459aQ+bLWq8zb9P+DzLTYtqn+NiURWWI48mVMn6DOduFahWx1zcvnGjCaeB3Q7lSofKsgaeOhZYe5+jcbCn7gJbpv+QZZHcCb9uPQAK4k=
+	t=1785422814; cv=none; b=HS7RM15QezkkCVIMJoMqX44nZvNWPktycV9jG1tl21Hd8fbwWa4DtzqjG2FcOxUe59p6R4kVPhzyIT6HzrbSVsfuwXoeqielJ9+0nbv5mRMQPsIekPoOuseuvk/aBJjtDxjVTxPFS6UMSb4gtkGUIX8CiHlhRbStKl58N/EeZ4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422811; c=relaxed/simple;
-	bh=pvMaPkpzNvmrhE9GmlS5+KtFd0khGGuKSTfUJY+XCT4=;
+	s=arc-20240116; t=1785422814; c=relaxed/simple;
+	bh=6rt2LCJxy3UkAt+drd5w/OS7L8oyYKfIJG7Hrwcfnzg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FTZ33Ttbua2V70r4VfnYv1tj99I0/Zz2khnBtxjtL1g0iTDT6JAnCaBr16YTHRl+sKQQZWICZuhFSz7MH1aKQxuPz73VUogtnokhkHlOKziePobebK5qPBDss/wCtLnlYuD9Ww+VRUkrvA+k0NbIPlu1qQLF1FwYClUs+tE6WZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eIUprlRW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QEhcAzmQncBgsIPAslnaQNes5wGQqT78PdDu94VlakxGM00H/r23nTzWKuSmrdjsiMHqMw28nFFtVMr3PkTrGJB3sgw487Cfbb0+Q0DravL22yOQ2hDI1ono2TMxSPwDtOzoOqz12wUw2DInCJ2ZE5vvM+HiXK6oTX40vcNoVGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PWQez2E8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eIUprlRW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7BB81F000E9;
-	Thu, 30 Jul 2026 14:46:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PWQez2E8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0A351F000E9;
+	Thu, 30 Jul 2026 14:46:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422810;
-	bh=ZgQaq7lV1Z9LJTMYE1fFSM7gMpYa9ytIVOuHMOZ8YhM=;
+	s=korg; t=1785422813;
+	bh=QlXwREh1EMftH2secE6qcQN6eAiBjlq9CzSSD4j1YLQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eIUprlRWqkojbcfly4ejQEY8aAX/M7XVG0Vw4r54mEBf38zzmDhM+gBIsQNSGFpr6
-	 U6Hjf1DI+LX04GLUachQveIY+9/Bu5sTGRDQDZRX1zohOinHk0OxyDjsBnnUvef1OT
-	 lnL0tcc5qwm9UohBlSx1bFPfwzZdmrSONN9Yjbyo=
+	b=PWQez2E8uEpMz2X0eEHTNsYLCOWcq5ibmtZEE3K3WkjkhnpsBa1ZcV6VJTuBYL+Ui
+	 xMncabPVvlk7MZStmgNwsWodWn73ZpzBEavlGrc4cCXttkUVxhlbQG81F21vENnoV+
+	 KX21cZTYJJsqvHVCT1+hS0zvCTWqrQQ2Fqhv3yJY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alice Ryhl <aliceryhl@google.com>,
+	Urgau <urgau@numericable.fr>,
 	Gary Guo <gary@garyguo.net>,
-	Danilo Krummrich <dakr@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Tamir Duberstein <tamird@kernel.org>,
 	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 7.1 565/744] rust: device: avoid trailing ; in printing macros
-Date: Thu, 30 Jul 2026 16:13:58 +0200
-Message-ID: <20260730141456.294389386@linuxfoundation.org>
+Subject: [PATCH 7.1 566/744] rust: allow `suspicious_runtime_symbol_definitions` lint for Rust >= 1.98
+Date: Thu, 30 Jul 2026 16:13:59 +0200
+Message-ID: <20260730141456.315838960@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -52,146 +53,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alice Ryhl <aliceryhl@google.com>
+From: Miguel Ojeda <ojeda@kernel.org>
 
-commit a19bda861b3a79e25417462539df8b0d77c6b322 upstream.
+commit 608045a91d9176d66b2114d0006bc8b57dff2ca9 upstream.
 
-These macros are used like expressions, so they should not emit a
-semicolon. This is being turned into a hard error in a future release of
-Rust.
+Starting with Rust 1.98.0 (expected 2026-08-20), Rust is introducing a
+couple new lints, `invalid_runtime_symbol_definitions` (deny-by-default)
+and `suspicious_runtime_symbol_definitions` (warn-by-default), which check
+the signature of items whose symbol name is a runtime symbol expected by
+`core`.
 
-    error: trailing semicolon in macro used in expression position
-      --> drivers/gpu/nova-core/firmware/fsp.rs:79:34
-       |
-    79 |                 .inspect_err(|_| dev_err!(dev, "FMC firmware missing '{}' section\n", name))
-       |                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-       |
-       = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
-       = note: for more information, see issue #79813 <https://github.com/rust-lang/rust/issues/79813>
-       = note: this error originates in the macro `dev_err` (in Nightly builds, run with -Z macro-backtrace for more info)
+Our build hits the second one, i.e. the warning:
 
-[ I was doubly surprised since upstream made it a deny-by-default lint
-  a year ago for Rust 1.91.0, and yet we didn't see it; plus I hadn't
-  seen this in my CI even yesterday.
+    error: suspicious definition of the runtime `strlen` symbol used by the standard library
+         --> rust/bindings/bindings_generated.rs:20018:5
+          |
+    20018 |     pub fn strlen(s: *const ffi::c_char) -> usize;
+          |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          |
+          = note: expected `unsafe extern "C" fn(*const i8) -> usize`
+                  found    `unsafe extern "C" fn(*const u8) -> usize`
+          = help: either fix the signature or remove any attributes like `#[unsafe(no_mangle)]`, `#[unsafe(export_name = "strlen")]`, or `#[link_name = "strlen"]`
+          = help: allow this lint if the signature is compatible
+          = note: `-D suspicious-runtime-symbol-definitions` implied by `-D warnings`
+          = help: to override `-D warnings` add `#[allow(suspicious_runtime_symbol_definitions)]`
 
-  It turns out this just landed into today's nightly (nightly-2026-07-16,
-  using upstream commit d0babd8b6):
+    error: suspicious definition of the runtime `strlen` symbol used by the standard library
+         --> rust/uapi/uapi_generated.rs:14236:5
+          |
+    14236 |     pub fn strlen(s: *const ffi::c_char) -> usize;
+          |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          |
+          = note: expected `unsafe extern "C" fn(*const i8) -> usize`
+                  found    `unsafe extern "C" fn(*const u8) -> usize`
+          = help: either fix the signature or remove any attributes like `#[unsafe(no_mangle)]`, `#[unsafe(export_name = "strlen")]`, or `#[link_name = "strlen"]`
+          = help: allow this lint if the signature is compatible
+          = note: `-D suspicious-runtime-symbol-definitions` implied by `-D warnings`
+          = help: to override `-D warnings` add `#[allow(suspicious_runtime_symbol_definitions)]`
 
-    Link: https://github.com/rust-lang/rust/pull/159222
+Thus `allow` the lint in `bindings` and `uapi`.
 
-  which says:
+A more targeted alternative to avoid `allow`ing it would be to pass
+`--blocklist-function strlen` to `bindgen`, but we would perhaps need
+to adjust if other C headers end up adding more (or Rust checking more).
+Since it is just the less critical one that we hit, and since eventually
+this should be properly fixed by getting upstream Rust to provide a flag
+like GCC/Clang's `-funsigned-char` [2][3], just `allow` it for now.
 
-    "The `semicolon_in_expressions_from_macros` lint previously
-     suppressed warnings about non-local macros. This masks
-     a lint that will subsequently become a hard error."
-
-  So that explains it. And this is the PR that will make it a hard error
-  at some point in the future:
-
-    Link: https://github.com/rust-lang/rust/pull/159218
-
-  Thus starting with Rust 1.99.0 (expected 2026-10-01), we will be
-  seeing the deny-by-default lint above, so clean it up already.
-
-    - Miguel ]
-
-Cc: stable@vger.kernel.org # Needed in 6.18.y and later.
-Link: https://github.com/rust-lang/rust/issues/79813
-Signed-off-by: Alice Ryhl <aliceryhl@google.com>
+Cc: Urgau <urgau@numericable.fr>
+Cc: stable@vger.kernel.org # Needed in 6.12.y and later (Rust is pinned in older LTSs).
+Link: https://github.com/rust-lang/rust/pull/155521 [1]
+Link: https://github.com/rust-lang/rust/issues/138446 [2]
+Link: https://github.com/Rust-for-Linux/linux/issues/355 [3]
 Reviewed-by: Gary Guo <gary@garyguo.net>
-Acked-by: Danilo Krummrich <dakr@kernel.org>
-Link: https://github.com/rust-lang/rust/pull/159218
-Link: https://github.com/rust-lang/rust/pull/159222
-Link: https://patch.msgid.link/20260716-device-trail-semicolon-v1-1-f48e9dcfae15@google.com
-[ Fixed typo. ]
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Reviewed-by: Tamir Duberstein <tamird@kernel.org>
+Link: https://patch.msgid.link/20260615143225.471756-1-ojeda@kernel.org
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/device.rs |   20 +++++++++-----------
- 1 file changed, 9 insertions(+), 11 deletions(-)
+ init/Kconfig         |    3 +++
+ rust/bindings/lib.rs |    4 ++++
+ rust/uapi/lib.rs     |    4 ++++
+ 3 files changed, 11 insertions(+)
 
---- a/rust/kernel/device.rs
-+++ b/rust/kernel/device.rs
-@@ -737,9 +737,7 @@ macro_rules! impl_device_context_into_ar
- #[macro_export]
- macro_rules! dev_printk {
-     ($method:ident, $dev:expr, $($f:tt)*) => {
--        {
--            $crate::device::Device::$method($dev.as_ref(), $crate::prelude::fmt!($($f)*))
--        }
-+        $crate::device::Device::$method($dev.as_ref(), $crate::prelude::fmt!($($f)*))
-     }
- }
+--- a/init/Kconfig
++++ b/init/Kconfig
+@@ -190,6 +190,9 @@ config RUSTC_HAS_FILE_WITH_NUL
+ config RUSTC_HAS_FILE_AS_C_STR
+ 	def_bool RUSTC_VERSION >= 109100
  
-@@ -766,7 +764,7 @@ macro_rules! dev_printk {
- /// ```
- #[macro_export]
- macro_rules! dev_emerg {
--    ($($f:tt)*) => { $crate::dev_printk!(pr_emerg, $($f)*); }
-+    ($($f:tt)*) => { $crate::dev_printk!(pr_emerg, $($f)*) }
- }
++config RUSTC_HAS_SUSPICIOUS_RUNTIME_SYMBOL_DEFINITIONS
++	def_bool RUSTC_VERSION >= 109800
++
+ config PAHOLE_VERSION
+ 	int
+ 	default "$(PAHOLE_VERSION)"
+--- a/rust/bindings/lib.rs
++++ b/rust/bindings/lib.rs
+@@ -27,6 +27,10 @@
+ #[allow(clippy::ref_as_ptr)]
+ #[allow(clippy::undocumented_unsafe_blocks)]
+ #[cfg_attr(CONFIG_RUSTC_HAS_UNNECESSARY_TRANSMUTES, allow(unnecessary_transmutes))]
++#[cfg_attr(
++    CONFIG_RUSTC_HAS_SUSPICIOUS_RUNTIME_SYMBOL_DEFINITIONS,
++    allow(suspicious_runtime_symbol_definitions)
++)]
+ mod bindings_raw {
+     use pin_init::{MaybeZeroable, Zeroable};
  
- /// Prints an alert-level message (level 1) prefixed with device information.
-@@ -792,7 +790,7 @@ macro_rules! dev_emerg {
- /// ```
- #[macro_export]
- macro_rules! dev_alert {
--    ($($f:tt)*) => { $crate::dev_printk!(pr_alert, $($f)*); }
-+    ($($f:tt)*) => { $crate::dev_printk!(pr_alert, $($f)*) }
- }
+--- a/rust/uapi/lib.rs
++++ b/rust/uapi/lib.rs
+@@ -24,6 +24,10 @@
+     unsafe_op_in_unsafe_fn
+ )]
+ #![cfg_attr(CONFIG_RUSTC_HAS_UNNECESSARY_TRANSMUTES, allow(unnecessary_transmutes))]
++#![cfg_attr(
++    CONFIG_RUSTC_HAS_SUSPICIOUS_RUNTIME_SYMBOL_DEFINITIONS,
++    allow(suspicious_runtime_symbol_definitions)
++)]
+ #![feature(cfi_encoding)]
  
- /// Prints a critical-level message (level 2) prefixed with device information.
-@@ -818,7 +816,7 @@ macro_rules! dev_alert {
- /// ```
- #[macro_export]
- macro_rules! dev_crit {
--    ($($f:tt)*) => { $crate::dev_printk!(pr_crit, $($f)*); }
-+    ($($f:tt)*) => { $crate::dev_printk!(pr_crit, $($f)*) }
- }
- 
- /// Prints an error-level message (level 3) prefixed with device information.
-@@ -844,7 +842,7 @@ macro_rules! dev_crit {
- /// ```
- #[macro_export]
- macro_rules! dev_err {
--    ($($f:tt)*) => { $crate::dev_printk!(pr_err, $($f)*); }
-+    ($($f:tt)*) => { $crate::dev_printk!(pr_err, $($f)*) }
- }
- 
- /// Prints a warning-level message (level 4) prefixed with device information.
-@@ -870,7 +868,7 @@ macro_rules! dev_err {
- /// ```
- #[macro_export]
- macro_rules! dev_warn {
--    ($($f:tt)*) => { $crate::dev_printk!(pr_warn, $($f)*); }
-+    ($($f:tt)*) => { $crate::dev_printk!(pr_warn, $($f)*) }
- }
- 
- /// Prints a notice-level message (level 5) prefixed with device information.
-@@ -896,7 +894,7 @@ macro_rules! dev_warn {
- /// ```
- #[macro_export]
- macro_rules! dev_notice {
--    ($($f:tt)*) => { $crate::dev_printk!(pr_notice, $($f)*); }
-+    ($($f:tt)*) => { $crate::dev_printk!(pr_notice, $($f)*) }
- }
- 
- /// Prints an info-level message (level 6) prefixed with device information.
-@@ -922,7 +920,7 @@ macro_rules! dev_notice {
- /// ```
- #[macro_export]
- macro_rules! dev_info {
--    ($($f:tt)*) => { $crate::dev_printk!(pr_info, $($f)*); }
-+    ($($f:tt)*) => { $crate::dev_printk!(pr_info, $($f)*) }
- }
- 
- /// Prints a debug-level message (level 7) prefixed with device information.
-@@ -948,5 +946,5 @@ macro_rules! dev_info {
- /// ```
- #[macro_export]
- macro_rules! dev_dbg {
--    ($($f:tt)*) => { $crate::dev_printk!(pr_dbg, $($f)*); }
-+    ($($f:tt)*) => { $crate::dev_printk!(pr_dbg, $($f)*) }
- }
+ // Manual definition of blocklisted types.
 
 
