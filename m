@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5EE043E081;
-	Thu, 30 Jul 2026 14:52:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F7862D7393;
+	Thu, 30 Jul 2026 14:52:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423146; cv=none; b=d5aQ/mN1W4iAjNfgAzzveX6FNi9GGDCyj9mF/qMsktPcgfVvFuQK5fDtUGPbf1FCX7jQ9A2HPOXuPnf75Jk775WOX01L6h30ZQAMMxma1R0tX7aSaTab2zlyT1/MY4U2PtcL/6i6zip8H9bKBxHfKW+YS+BiLsAMvgwEEvw+fIo=
+	t=1785423149; cv=none; b=HqNzEDXSPJITscER3PBHkNYemvSSmszpqgwxuv72OWwHB0slVTEgBEbvFzAjGH29oIFOkIDWxr/zD3Q2dMDlbROUpMllTDrl18SyRWRNuRdxWDeHt+ekcrjtN5K01PDMKRwUbNtEs5SLroAA6e/XLip7bvXHMCEXUClFsH+sXFI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423146; c=relaxed/simple;
-	bh=RIy8rMNZ8eBRqxa1kXeGVZiGVnIqgUaolbhHgt8F1CM=;
+	s=arc-20240116; t=1785423149; c=relaxed/simple;
+	bh=32nGRNSVmJ+o3mxvPUPgYdWpGMuVTwjZ5EWiecOQIXc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tvCvpbMti9L5ETDPC7ZI2DQJGWLwl0ktLB0T+lbWgyreA5zpD+afJ0la4JsXD4kipejrm60QpeuaDQiKZtfcQiBHofdugwjcqbdrfcMXBNkPRqalsJOtGJZGfrKPRYn3WIWT6ktyJo8QDKIdMMyw8+nxLNUBojfsthuJGFQvd9I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2W0qOGbv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CUjw2HcdsHsXIrbHDNHUW0o2SlUXn/PnkfUR9Hbth3yByks33x3X0WkP09hd8aZUUc64bFYvLiAfb4DjtXKUedFciuhx2cO8i5PAAjVEdItBqQuG9qnQq/uKXXVHBDTcl0uuRZWOq7Sy/5AKIPgGJ6svrtELsaRdxLOHnL6AgsQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B4vj2q8e; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2W0qOGbv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 077B41F000E9;
-	Thu, 30 Jul 2026 14:52:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B4vj2q8e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA6331F000E9;
+	Thu, 30 Jul 2026 14:52:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423145;
-	bh=UKw4SBSUhOzWOTG+dgXIEaFVARhPF4Pua4Is86TJqNw=;
+	s=korg; t=1785423148;
+	bh=wPWz/NMuh9MMDRTisfMy6IQcEUM2LciDKGHJfXEgRqM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2W0qOGbvdYYtNSQjf+yyXXvjTs9MbKGFvtjp9VfuNOAerIlqI+eBFpknXj0ePsXFs
-	 CeIX7W6EJq80YV3R4fHyGPGXAzFlzYx3C90915yTzHVqZoLyKRUB5KlMGDE4VVrzCJ
-	 SHvK9dx1rsE3wIbkg60IsNuGFFAn5lJWlhwiClDU=
+	b=B4vj2q8eEIbGJL6d/R0hrwIV7oOG5jvmyrKNgX636XlCtkrBpOMN7Q5W8uZP/juTC
+	 81IXdwPE3K+EMxuVnBudcM7Ot1bpm6JEY4iveNkfLJIwwDbealDOMYBP1xvySzmLgD
+	 SaEcnTjvhIlbWqdidriWt37Z5R/P3BNzu6ug5mxk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeremy Kerr <jk@codeconstruct.com.au>,
-	Doruk Tan Ozturk <doruk@0sec.ai>,
-	Simon Horman <horms@kernel.org>,
+	Kyle Zeng <kylebot@openai.com>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Aaron Conole <aconole@redhat.com>,
 	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 7.1 681/744] mctp: serial: handle zero-length frames to prevent rx buffer overflow
-Date: Thu, 30 Jul 2026 16:15:54 +0200
-Message-ID: <20260730141458.738248993@linuxfoundation.org>
+Subject: [PATCH 7.1 682/744] openvswitch: fix GSO userspace truncation underflow
+Date: Thu, 30 Jul 2026 16:15:55 +0200
+Message-ID: <20260730141458.759918557@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -52,93 +52,198 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doruk Tan Ozturk <doruk@0sec.ai>
+From: Kyle Zeng <kylebot@openai.com>
 
-commit 793b9b729f1e8de57be8c8daf1a9838be96cabed upstream.
+commit 4032f8ed10fcb84d41c508dfb04be96589f78dfe upstream.
 
-The MCTP serial receive state machine reads a frame length byte in
-mctp_serial_push_header() case 2 and validates it upper-bound-only:
+OVS_ACTION_ATTR_TRUNC currently stores a delta from the original skb
+length in OVS_CB(skb)->cutlen. When a later userspace action segments a
+GSO skb, queue_gso_packets() reuses that delta for each smaller segment.
+A segment can then reach queue_userspace_packet() with cutlen greater
+than skb->len, underflowing the length passed to skb_zerocopy().
 
-	if (c > MCTP_SERIAL_FRAME_MTU) {
-		dev->rxstate = STATE_ERR;
-	} else {
-		dev->rxlen = c;
-		dev->rxpos = 0;
-		dev->rxstate = STATE_DATA;
-		...
-	}
+Store the maximum preserved length instead and bound each consumer
+against the current skb length. Use U32_MAX as the no-truncation
+sentinel so the value remains valid if skb geometry changes before a
+consumer handles it.
 
-A length of zero passes this check, so rxlen is set to 0 and the state
-machine advances to STATE_DATA. In mctp_serial_push() STATE_DATA, the
-incoming byte is stored and rxpos incremented before the terminator is
-tested:
-
-	dev->rxbuf[dev->rxpos] = c;
-	dev->rxpos++;
-	dev->rxstate = STATE_DATA;
-	if (dev->rxpos == dev->rxlen) {
-		dev->rxpos = 0;
-		dev->rxstate = STATE_TRAILER;
-	}
-
-With rxlen == 0 the "rxpos == rxlen" terminator can never fire (rxpos is
-already 1 on the first data byte), so subsequent bytes are written past
-the end of the fixed 74-byte rxbuf, which is the last member of the
-netdev private area. Every following data byte is an attacker-controlled
-1-byte out-of-bounds heap write, and the overflow continues until a
-frame (0x7e) or escape byte resets the parser -- effectively unbounded.
-
-Reaching this requires CAP_NET_ADMIN to attach the N_MCTP line
-discipline and bring the resulting mctpserialN netdev up, after which
-the bytes arrive via the tty receive path.
-
-Route a zero-length frame straight to STATE_TRAILER instead of
-STATE_DATA. The trailer/framing bytes are still consumed, and the frame
-resolves to a zero-length skb that the MCTP core rejects; the parser
-never enters STATE_DATA with rxlen == 0, so the out-of-bounds write can
-no longer occur.
-
-KASAN, on a frame of 0x7e 0x01 0x00 followed by data bytes (before this
-change):
-
-  UBSAN: array-index-out-of-bounds in drivers/net/mctp/mctp-serial.c:370
-  index 74 is out of range for type 'u8 [74]'
-  BUG: KASAN: slab-out-of-bounds in mctp_serial_tty_receive_buf
-  Write of size 1 at addr ... by task kworker/u16:0
-   mctp_serial_tty_receive_buf
-   tty_ldisc_receive_buf
-   flush_to_ldisc
-  Allocated by task 152:
-   alloc_netdev_mqs
-   mctp_serial_open
-
-v2: route zero-length frames to STATE_TRAILER instead of STATE_ERR so
-    the trailer/framing bytes are still consumed (Jeremy Kerr).
-
-Found by 0sec automated security-research tooling (https://0sec.ai).
-Fixes: a0c2ccd9b5ad ("mctp: Add MCTP-over-serial transport binding")
+Fixes: f2a4d086ed4c ("openvswitch: Add packet truncation support.")
 Cc: stable@vger.kernel.org
-Suggested-by: Jeremy Kerr <jk@codeconstruct.com.au>
-Assisted-by: 0sec:multi-model
-Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260715082021.46315-1-doruk@0sec.ai
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
+Reviewed-by: Aaron Conole <aconole@redhat.com>
+Link: https://patch.msgid.link/20260707221635.27489-1-kylebot@openai.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/mctp/mctp-serial.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/openvswitch/actions.c  |   19 +++++++------------
+ net/openvswitch/datapath.c |   25 ++++++++++++++-----------
+ net/openvswitch/datapath.h |    2 +-
+ net/openvswitch/vport.c    |    2 +-
+ 4 files changed, 23 insertions(+), 25 deletions(-)
 
---- a/drivers/net/mctp/mctp-serial.c
-+++ b/drivers/net/mctp/mctp-serial.c
-@@ -318,7 +318,7 @@ static void mctp_serial_push_header(stru
- 		} else {
- 			dev->rxlen = c;
- 			dev->rxpos = 0;
--			dev->rxstate = STATE_DATA;
-+			dev->rxstate = c > 0 ? STATE_DATA : STATE_TRAILER;
- 			dev->rxfcs = crc_ccitt_byte(dev->rxfcs, c);
+--- a/net/openvswitch/actions.c
++++ b/net/openvswitch/actions.c
+@@ -837,12 +837,8 @@ static void do_output(struct datapath *d
+ 		u16 mru = OVS_CB(skb)->mru;
+ 		u32 cutlen = OVS_CB(skb)->cutlen;
+ 
+-		if (unlikely(cutlen > 0)) {
+-			if (skb->len - cutlen > ovs_mac_header_len(key))
+-				pskb_trim(skb, skb->len - cutlen);
+-			else
+-				pskb_trim(skb, ovs_mac_header_len(key));
+-		}
++		if (unlikely(cutlen < skb->len))
++			pskb_trim(skb, max(cutlen, ovs_mac_header_len(key)));
+ 
+ 		if (likely(!mru ||
+ 		           (skb->len <= mru + vport->dev->hard_header_len))) {
+@@ -1234,7 +1230,7 @@ static void execute_psample(struct datap
+ 
+ 	psample_group.net = ovs_dp_get_net(dp);
+ 	md.in_ifindex = OVS_CB(skb)->input_vport->dev->ifindex;
+-	md.trunc_size = skb->len - OVS_CB(skb)->cutlen;
++	md.trunc_size = min(skb->len, OVS_CB(skb)->cutlen);
+ 	md.rate_as_probability = 1;
+ 
+ 	rate = OVS_CB(skb)->probability ? OVS_CB(skb)->probability : U32_MAX;
+@@ -1284,22 +1280,21 @@ static int do_execute_actions(struct dat
+ 			clone = skb_clone(skb, GFP_ATOMIC);
+ 			if (clone)
+ 				do_output(dp, clone, port, key);
+-			OVS_CB(skb)->cutlen = 0;
++			OVS_CB(skb)->cutlen = U32_MAX;
+ 			break;
  		}
- 		break;
+ 
+ 		case OVS_ACTION_ATTR_TRUNC: {
+ 			struct ovs_action_trunc *trunc = nla_data(a);
+ 
+-			if (skb->len > trunc->max_len)
+-				OVS_CB(skb)->cutlen = skb->len - trunc->max_len;
++			OVS_CB(skb)->cutlen = trunc->max_len;
+ 			break;
+ 		}
+ 
+ 		case OVS_ACTION_ATTR_USERSPACE:
+ 			output_userspace(dp, skb, key, a, attr,
+ 						     len, OVS_CB(skb)->cutlen);
+-			OVS_CB(skb)->cutlen = 0;
++			OVS_CB(skb)->cutlen = U32_MAX;
+ 			if (nla_is_last(a, rem)) {
+ 				consume_skb(skb);
+ 				return 0;
+@@ -1453,7 +1448,7 @@ static int do_execute_actions(struct dat
+ 
+ 		case OVS_ACTION_ATTR_PSAMPLE:
+ 			execute_psample(dp, skb, a);
+-			OVS_CB(skb)->cutlen = 0;
++			OVS_CB(skb)->cutlen = U32_MAX;
+ 			if (nla_is_last(a, rem)) {
+ 				consume_skb(skb);
+ 				return 0;
+--- a/net/openvswitch/datapath.c
++++ b/net/openvswitch/datapath.c
+@@ -276,7 +276,7 @@ void ovs_dp_process_packet(struct sk_buf
+ 			upcall.portid = ovs_vport_find_upcall_portid(p, skb);
+ 
+ 		upcall.mru = OVS_CB(skb)->mru;
+-		error = ovs_dp_upcall(dp, skb, key, &upcall, 0);
++		error = ovs_dp_upcall(dp, skb, key, &upcall, U32_MAX);
+ 		switch (error) {
+ 		case 0:
+ 		case -EAGAIN:
+@@ -457,7 +457,8 @@ static int queue_userspace_packet(struct
+ 	struct sk_buff *nskb = NULL;
+ 	struct sk_buff *user_skb = NULL; /* to be queued to userspace */
+ 	struct nlattr *nla;
+-	size_t len;
++	size_t msg_size;
++	size_t skb_len;
+ 	unsigned int hlen;
+ 	int err, dp_ifindex;
+ 	u64 hash;
+@@ -478,7 +479,8 @@ static int queue_userspace_packet(struct
+ 		skb = nskb;
+ 	}
+ 
+-	if (nla_attr_size(skb->len) > USHRT_MAX) {
++	skb_len = min(skb->len, cutlen);
++	if (nla_attr_size(skb_len) > USHRT_MAX) {
+ 		err = -EFBIG;
+ 		goto out;
+ 	}
+@@ -493,13 +495,13 @@ static int queue_userspace_packet(struct
+ 	 * padding logic. Only perform zerocopy if padding is not required.
+ 	 */
+ 	if (dp->user_features & OVS_DP_F_UNALIGNED)
+-		hlen = skb_zerocopy_headlen(skb);
++		hlen = min(skb_zerocopy_headlen(skb), cutlen);
+ 	else
+-		hlen = skb->len;
++		hlen = skb_len;
+ 
+-	len = upcall_msg_size(upcall_info, hlen - cutlen,
+-			      OVS_CB(skb)->acts_origlen);
+-	user_skb = genlmsg_new(len, GFP_ATOMIC);
++	msg_size = upcall_msg_size(upcall_info, hlen,
++				   OVS_CB(skb)->acts_origlen);
++	user_skb = genlmsg_new(msg_size, GFP_ATOMIC);
+ 	if (!user_skb) {
+ 		err = -ENOMEM;
+ 		goto out;
+@@ -560,7 +562,7 @@ static int queue_userspace_packet(struct
+ 	}
+ 
+ 	/* Add OVS_PACKET_ATTR_LEN when packet is truncated */
+-	if (cutlen > 0 &&
++	if (skb_len < skb->len &&
+ 	    nla_put_u32(user_skb, OVS_PACKET_ATTR_LEN, skb->len)) {
+ 		err = -ENOBUFS;
+ 		goto out;
+@@ -585,9 +587,9 @@ static int queue_userspace_packet(struct
+ 		err = -ENOBUFS;
+ 		goto out;
+ 	}
+-	nla->nla_len = nla_attr_size(skb->len - cutlen);
++	nla->nla_len = nla_attr_size(skb_len);
+ 
+-	err = skb_zerocopy(user_skb, skb, skb->len - cutlen, hlen);
++	err = skb_zerocopy(user_skb, skb, skb_len, hlen);
+ 	if (err)
+ 		goto out;
+ 
+@@ -644,6 +646,7 @@ static int ovs_packet_cmd_execute(struct
+ 		packet->ignore_df = 1;
+ 	}
+ 	OVS_CB(packet)->mru = mru;
++	OVS_CB(packet)->cutlen = U32_MAX;
+ 
+ 	if (a[OVS_PACKET_ATTR_HASH]) {
+ 		hash = nla_get_u64(a[OVS_PACKET_ATTR_HASH]);
+--- a/net/openvswitch/datapath.h
++++ b/net/openvswitch/datapath.h
+@@ -118,7 +118,7 @@ struct datapath {
+  * @mru: The maximum received fragement size; 0 if the packet is not
+  * fragmented.
+  * @acts_origlen: The netlink size of the flow actions applied to this skb.
+- * @cutlen: The number of bytes from the packet end to be removed.
++ * @cutlen: The number of bytes in the packet to preserve on output.
+  * @probability: The sampling probability that was applied to this skb; 0 means
+  * no sampling has occurred; U32_MAX means 100% probability.
+  * @upcall_pid: Netlink socket PID to use for sending this packet to userspace;
+--- a/net/openvswitch/vport.c
++++ b/net/openvswitch/vport.c
+@@ -502,7 +502,7 @@ int ovs_vport_receive(struct vport *vpor
+ 
+ 	OVS_CB(skb)->input_vport = vport;
+ 	OVS_CB(skb)->mru = 0;
+-	OVS_CB(skb)->cutlen = 0;
++	OVS_CB(skb)->cutlen = U32_MAX;
+ 	OVS_CB(skb)->probability = 0;
+ 	OVS_CB(skb)->upcall_pid = 0;
+ 	if (unlikely(dev_net(skb->dev) != ovs_dp_get_net(vport->dp))) {
 
 
