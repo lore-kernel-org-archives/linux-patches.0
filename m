@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25442372ECB;
-	Thu, 30 Jul 2026 15:01:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2A5B41B8CA;
+	Thu, 30 Jul 2026 15:01:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423693; cv=none; b=KftWOrfCTzfdBijeC/EVtCdbbtNU0cNeJLb/EX3RQp7jH1x4/g3flb3XamTSyG3yhQ7/5IsXpAHGmb1XxyyqZXRMFu5/H/7PlxNSAqBL96iWXaSZLsRIfMZHkleb6wUr7hNKESTdMqSixnJDdoNp2wglR2pzGZ7b9DcDEffFR8U=
+	t=1785423696; cv=none; b=PG3iw+vjR3ZSY4VzDgXS2sr6uxYBALqDFw49/e7hqaiwMCWDNqE6uXi+PXtn2Dfq3aMmwjdsjpaWFxkP2G9FJtbpIXbI9KO4txujwuwZAWiHbntiHxXQ3043zzhaLk4G3t2/pkgdstIA3eRe7qGYeupuYNkGF1eRfF4jYXNfENQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423693; c=relaxed/simple;
-	bh=wzGV9GnUi49xLqXJ9u4Zw37F6J+2MR/MMMDfxspgikc=;
+	s=arc-20240116; t=1785423696; c=relaxed/simple;
+	bh=UzClH3+TGiDHNDa614fR2VmMX49OYagMschUIqe/q94=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oCXPZIKBxcj2pNfxnmAHvt0IBe84oEZJZY7sLYZU7X7DpxiANBi3a/vxxUfa/1xzCcmYyLJqobrFGwZXZW3Uhm7q4/NvgU20PyLdkFwBM6r33j/tALxc02xraX9mvoSajNDvWMQrIPx/smpD1m9DW0cGtwSPvDKyzm8EMTOb4TE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JgZagqKP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=abc1bVywM83NJ57h7nbMeKpbdYJ+d43+1i+ShEgCdgfCe5RdyA1CACpB9BEyLexESyKj2ZNTxfgZWmGxN2G428DVluzyiX6k3+ZwXoQJAJlyhNgbOizGw67AFWmEeZDs5BzlykUbg++8tHdGcLYLr1Tqw9+ndkjHjkFtKezNyBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Px68dOrY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JgZagqKP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EFEC1F000E9;
-	Thu, 30 Jul 2026 15:01:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Px68dOrY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3046C1F00A3A;
+	Thu, 30 Jul 2026 15:01:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423691;
-	bh=pdni7gOInC5TYmAVFzXEoilAMDSHlbwKgycFhyIGn8c=;
+	s=korg; t=1785423694;
+	bh=NIOhRy8nM+l9yi+IaxsSJFdniHiteV+N+g2C3l20Feg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JgZagqKPbsp8bXdkB2Ig/T7W+S+ElQgoJERKe3WZRJojTGov8SbQX0q6lXASbu8g1
-	 lunpkzLOv7ZnWvTC0srGAxR4rz4dxeOI3kMZcvL/sRQYJ6mPcnLAYqQNngwFeoubYk
-	 tZBfhZkIPuXw6Hvf6sQoWdS0exzy0wLspxMppzbg=
+	b=Px68dOrY2wXQLTvMv+LMggqgsAAnu7IfcEwnJNi7dMUZxFUHuqWutCybsV3c6aHby
+	 1B23fzDHyX3I8qHVLEtuHimHnuTbhtBs0k5Qa/jZVcjcNjgXEIBgsW9BPpN2mhQ671
+	 BFaJWPytzecWDA3z7ciO7BxQyCYFl8Wfx/smJQsU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Daniel Zahka <daniel.zahka@gmail.com>,
+	Ivan Vecera <ivecera@redhat.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Jiri Pirko <jiri@nvidia.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 134/675] tcp: fix TIME_WAIT socket reference leak on PSP policy failure
-Date: Thu, 30 Jul 2026 16:07:44 +0200
-Message-ID: <20260730141447.988661947@linuxfoundation.org>
+Subject: [PATCH 6.18 135/675] dpll: fix NULL pointer dereference in dpll_msg_add_pin_ref_sync()
+Date: Thu, 30 Jul 2026 16:07:45 +0200
+Message-ID: <20260730141448.009544380@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -53,60 +53,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Ivan Vecera <ivecera@redhat.com>
 
-[ Upstream commit 2c1931a81122c3cdc4c89448fe0442c69e21c0d5 ]
+[ Upstream commit d2e914a4a0d0f753dbae830264850d044026167c ]
 
-Release the TIME_WAIT socket reference and jump to discard_it
-upon PSP policy failure in both IPv4 and IPv6 receive paths.
-This prevents a memory leak of tcp_tw_bucket structures.
+When a dpll_pin is shared across multiple dpll_device instances and
+those devices are being unregistered (e.g. during driver module removal),
+a NULL pointer dereference can occur in dpll_msg_add_pin_ref_sync().
 
-Fixes: 659a2899a57d ("tcp: add datapath logic for PSP with inline key exchange")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Daniel Zahka <daniel.zahka@gmail.com>
-Link: https://patch.msgid.link/20260710181317.4060230-1-edumazet@google.com
+This happens under the following conditions:
+ - A pin is registered with two or more dpll devices (dpll_A, dpll_B)
+ - The pin has ref_sync pairs with other pins
+ - During unregistration of dpll_A's pins, a ref_sync partner pin is
+   unregistered first, removing it from dpll_A->pin_refs
+ - But since the partner pin is still registered with dpll_B, its
+   dpll_refs is not empty, so dpll_pin_ref_sync_pair_del() does NOT
+   run and the partner stays in the pin's ref_sync_pins xarray
+ - When the pin itself is then unregistered from dpll_A, the delete
+   notification calls dpll_msg_add_pin_ref_sync() which finds the
+   partner in ref_sync_pins, passes dpll_pin_available() (partner is
+   still registered with dpll_B), but dpll_pin_on_dpll_priv(dpll_A,
+   partner) returns NULL because partner was already removed from
+   dpll_A->pin_refs
+ - The NULL priv pointer is passed to the driver's ref_sync_get
+   callback, which dereferences it
+
+ BUG: kernel NULL pointer dereference, address: 0000000000000034
+ Oops: Oops: 0000 [#1] SMP NOPTI
+ RIP: 0010:zl3073x_dpll_input_pin_ref_sync_get+0x73/0x80 [zl3073x]
+ Call Trace:
+  dpll_msg_add_pin_ref_sync+0xb8/0x200
+  dpll_cmd_pin_get_one+0x3b6/0x4b0
+  dpll_pin_event_send+0x72/0x140
+  __dpll_pin_unregister+0x5a/0x2b0
+  dpll_pin_unregister+0x49/0x70
+
+Fix this by skipping ref_sync pins whose priv pointer cannot be resolved
+for the current dpll device.
+
+Fixes: 58256a26bfb3 ("dpll: add reference sync get/set")
+Signed-off-by: Ivan Vecera <ivecera@redhat.com>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Link: https://patch.msgid.link/20260710193625.1378822-1-ivecera@redhat.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_ipv4.c | 6 ++++--
- net/ipv6/tcp_ipv6.c | 6 ++++--
- 2 files changed, 8 insertions(+), 4 deletions(-)
+ drivers/dpll/dpll_netlink.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
-index f0106c2be1cf23..a1ed4fa264836d 100644
---- a/net/ipv4/tcp_ipv4.c
-+++ b/net/ipv4/tcp_ipv4.c
-@@ -2452,8 +2452,10 @@ int tcp_v4_rcv(struct sk_buff *skb)
- 		}
- 
- 		drop_reason = psp_twsk_rx_policy_check(inet_twsk(sk), skb);
--		if (drop_reason)
--			break;
-+		if (drop_reason) {
-+			inet_twsk_put(inet_twsk(sk));
-+			goto discard_it;
-+		}
- 	}
- 		/* to ACK */
- 		fallthrough;
-diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
-index 59b5900dd42bd6..ad9f69d49f2e3d 100644
---- a/net/ipv6/tcp_ipv6.c
-+++ b/net/ipv6/tcp_ipv6.c
-@@ -1984,8 +1984,10 @@ INDIRECT_CALLABLE_SCOPE int tcp_v6_rcv(struct sk_buff *skb)
- 		}
- 
- 		drop_reason = psp_twsk_rx_policy_check(inet_twsk(sk), skb);
--		if (drop_reason)
--			break;
-+		if (drop_reason) {
-+			inet_twsk_put(inet_twsk(sk));
-+			goto discard_it;
-+		}
- 	}
- 		/* to ACK */
- 		fallthrough;
+diff --git a/drivers/dpll/dpll_netlink.c b/drivers/dpll/dpll_netlink.c
+index de8b065280d15d..eb23ee401aaef8 100644
+--- a/drivers/dpll/dpll_netlink.c
++++ b/drivers/dpll/dpll_netlink.c
+@@ -486,6 +486,9 @@ dpll_msg_add_pin_ref_sync(struct sk_buff *msg, struct dpll_pin *pin,
+ 		if (!dpll_pin_available(ref_sync_pin))
+ 			continue;
+ 		ref_sync_pin_priv = dpll_pin_on_dpll_priv(dpll, ref_sync_pin);
++		/* Pin may have been unregistered from this dpll already */
++		if (!ref_sync_pin_priv)
++			continue;
+ 		if (WARN_ON(!ops->ref_sync_get))
+ 			return -EOPNOTSUPP;
+ 		ret = ops->ref_sync_get(pin, pin_priv, ref_sync_pin,
 -- 
 2.53.0
 
