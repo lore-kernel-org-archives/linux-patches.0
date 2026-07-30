@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FBFF43801B;
-	Thu, 30 Jul 2026 15:58:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA0D9409114;
+	Thu, 30 Jul 2026 15:58:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427114; cv=none; b=pKaPMcaxXIPd/KcH9m9hO9zbX/Co/0Xf20tPgq52NP/L0dhyKI363GO4NRxZHBRnGaAPTHanMgFbFnFZW/d2sMOSzS8rZEn3YsppMhElXNt5UBte/imXl34qQWu2wtxhZVbsuCZJE8duyM0QMbD84gfeCHVkNifE72DFAUWqPq8=
+	t=1785427117; cv=none; b=IEFPqIsbkC4AvbEgRWK/xw5NKq8f03uCgyXysbqb+OwqPhvq2QqpyVUddVmfI4AFOdCnjQkuWPxu/j8ZknEQ3JvrzyJNOmSRBA1fJRDRzaXO1n7NV2i38XdjjEqFkUstvdEN4jQhEujUOQ7yJuwTKENB49tLdiRJO13VLA5rhiE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427114; c=relaxed/simple;
-	bh=mnCUXdLii8T+xEG+4fCJuktEI94jx4mwqLI27ExRljs=;
+	s=arc-20240116; t=1785427117; c=relaxed/simple;
+	bh=nwkOyXzMDEnEZj0eJIJ01lH6ySfay9wcjEu2215ztlU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MZIktTQGoWxHc8tDIwhm3t0dFs/N/xiSmT3vLftqzjo8FarlLcUw9H7FBr4zSdEuiCcwHqDsHm97KyeV/Q13a/sAv9tjoBILOLy2gCYhaovFoPPVA/dpikDFULbToQbhx2aLlUowrluqNfmLBLQVTaGl58C8GsIBo4pTEfdAghY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RFw5f/FA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ebCQalvtqzDXEEH66iDquteKWq+rpob0k5WW5vhs9SWSPuyhcE/1g7jQtka/hPzuLI48V88w1VDmVRfM7kI4INzFQlRDGwvEWj8dtYhNfA5YyN8dBZ5fOsL7WTSlPjuKD0XXj2NjPDT847ulNUAUg4VguwsuxNyyHma1tAGtr/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fHs/qbte; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RFw5f/FA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42F101F000E9;
-	Thu, 30 Jul 2026 15:58:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fHs/qbte"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AF831F000E9;
+	Thu, 30 Jul 2026 15:58:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427112;
-	bh=SeXuUezClDNAK/lE4wYRmdc1qMi1z8QOfVFD7KSRMzM=;
+	s=korg; t=1785427115;
+	bh=fcX25K3WQR+JNVuSANgXsOyWqZeEe1EZxaqxpjVf63Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RFw5f/FAXLA1WJcW6lPiWdk+AguvRoSGMeC+OCaLFlK6yiFJfYtVK5J87LR3FCG4u
-	 +drxkc2sD+x+1agh78NEz9kSnixv4gD9gQySgZ7xQzQe7CIBP7QNW/rnoCg4l/E5zS
-	 5mR0T2+7DYLO9jg1wl3QdIE1trIDvN1qUq1v0iiA=
+	b=fHs/qbteacAkPcY5VDZN4ucBTgSxhMYTnWgRUBVS08w/vvkyL9lzYsTKms5hQYp42
+	 yK0FPue7KiMiU4cTqGp36MN3Ww1H+8uEbHhCGGcfU101Z+0f9VkUw3u2Wa8g3FgN1Z
+	 Y0NFUAfBi3Jd4wwlYC+MnTUdwN8cCpBCKlAZpxbs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dawei Feng <dawei.feng@seu.edu.cn>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Christian Lamparter <chunkeey@gmail.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 056/484] wifi: libertas: fix memory leak in helper_firmware_cb()
-Date: Thu, 30 Jul 2026 16:09:13 +0200
-Message-ID: <20260730141424.645470445@linuxfoundation.org>
+Subject: [PATCH 6.6 057/484] wifi: p54: validate RX frame length in p54_rx_eeprom_readback()
+Date: Thu, 30 Jul 2026 16:09:14 +0200
+Message-ID: <20260730141424.668025077@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -51,47 +53,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dawei Feng <dawei.feng@seu.edu.cn>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit 63c2391deefb31e1b801b7f32bd502ca4808639b ]
+[ Upstream commit ebd6d37fa94bee929e0b4c9ca19fdf9b1dcf6cea ]
 
-helper_firmware_cb() neglects to free the single-stage firmware image
-after a successful async load, leading to a memory leak in the USB
-firmware-download path.
+p54_rx_eeprom_readback() copies the requested EEPROM slice out of a
+device-supplied readback frame without checking that the skb actually holds
+that many bytes. Commit da1b9a55ff11 ("wifi: p54: prevent buffer-overflow in
+p54_rx_eeprom_readback()") closed the destination overflow by copying a
+fixed priv->eeprom_slice_size (and rejecting a mismatched advertised len),
+but the source side is still unbounded: nothing verifies the frame is long
+enough to supply that many bytes.
 
-Fix this memory leak by calling release_firmware() immediately after
-lbs_fw_loaded() returns.
+A malicious USB device can send a short frame whose advertised len matches
+priv->eeprom_slice_size while the payload is truncated. The equality check
+passes and memcpy() reads past the end of the skb, leaking adjacent heap:
 
-The bug was first flagged by an experimental analysis tool we are
-developing for kernel memory-management bugs while analyzing
-v6.13-rc1. The tool is still under development and is not yet publicly
-available. Manual inspection confirms that the bug is still present in
-the current wireless tree.
+  BUG: KASAN: slab-out-of-bounds in p54_rx (drivers/net/wireless/intersil/p54/txrx.c:507)
+  Read of size 1016 at addr ffff88800f077114 by task swapper/0/0
+  Call Trace:
+   <IRQ>
+   ...
+   __asan_memcpy (mm/kasan/shadow.c:105)
+   p54_rx (drivers/net/wireless/intersil/p54/txrx.c:507)
+   p54u_rx_cb (drivers/net/wireless/intersil/p54/p54usb.c:163)
+   __usb_hcd_giveback_urb (drivers/usb/core/hcd.c:1657)
+   dummy_timer (drivers/usb/gadget/udc/dummy_hcd.c:2005)
+   ...
+   </IRQ>
 
-An x86_64 allyesconfig build showed no new warnings. As we do not have
-compatible Libertas USB hardware for exercising this firmware-download
-path, no runtime testing was able to be performed.
+  The buggy address belongs to the object at ffff88800f0770c0
+   which belongs to the cache skbuff_small_head of size 704
+  The buggy address is located 84 bytes inside of
+   allocated 704-byte region [ffff88800f0770c0, ffff88800f077380)
 
-Fixes: 1dfba3060fe7 ("libertas: move firmware lifetime handling to firmware.c")
-Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
-Link: https://patch.msgid.link/20260624085343.575508-1-dawei.feng@seu.edu.cn
+Check that the slice fits in the skb before copying.
+
+Fixes: 7cb770729ba8 ("p54: move eeprom code into common library")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Acked-by: Christian Lamparter <chunkeey@gmail.com>
+Link: https://patch.msgid.link/20260628000510.4152481-1-xmei5@asu.edu
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/libertas/firmware.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/intersil/p54/txrx.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/net/wireless/marvell/libertas/firmware.c b/drivers/net/wireless/marvell/libertas/firmware.c
-index f124110944b7e9..9bf7d4c207b9ed 100644
---- a/drivers/net/wireless/marvell/libertas/firmware.c
-+++ b/drivers/net/wireless/marvell/libertas/firmware.c
-@@ -78,6 +78,7 @@ static void helper_firmware_cb(const struct firmware *firmware, void *context)
+diff --git a/drivers/net/wireless/intersil/p54/txrx.c b/drivers/net/wireless/intersil/p54/txrx.c
+index 2deb1bb54f24bd..dc7bf54e30bba1 100644
+--- a/drivers/net/wireless/intersil/p54/txrx.c
++++ b/drivers/net/wireless/intersil/p54/txrx.c
+@@ -499,11 +499,19 @@ static void p54_rx_eeprom_readback(struct p54_common *priv,
+ 		if (le16_to_cpu(eeprom->v2.len) != priv->eeprom_slice_size)
+ 			return;
+ 
++		if (eeprom->v2.data + priv->eeprom_slice_size >
++		    skb_tail_pointer(skb))
++			return;
++
+ 		memcpy(priv->eeprom, eeprom->v2.data, priv->eeprom_slice_size);
  	} else {
- 		/* No main firmware needed for this helper --> success! */
- 		lbs_fw_loaded(priv, 0, firmware, NULL);
-+		release_firmware(firmware);
+ 		if (le16_to_cpu(eeprom->v1.len) != priv->eeprom_slice_size)
+ 			return;
+ 
++		if (eeprom->v1.data + priv->eeprom_slice_size >
++		    skb_tail_pointer(skb))
++			return;
++
+ 		memcpy(priv->eeprom, eeprom->v1.data, priv->eeprom_slice_size);
  	}
- }
  
 -- 
 2.53.0
