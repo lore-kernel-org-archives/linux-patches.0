@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91CB244AB85;
-	Thu, 30 Jul 2026 16:11:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 629AC44AB85;
+	Thu, 30 Jul 2026 16:12:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427918; cv=none; b=ZoYBiriLfz55YlUeGfseCShV5e0cDZPnfOVjngobRQoNvCJaerO8uptcdUF19snXIZuk6SiQXW7oAHT0u8am3lz3I2X0S8JDT4YLq2kjUni7214/E7jwSqWY4PcTJb+Qk5oWQZUOuX6jWlPFs8LEEHyQI+4EUtUvtSjHbEM+YNg=
+	t=1785427922; cv=none; b=m0X6SC1Qw/x+WrlsjLN32i6XfgefLEbwGeGlZ2vhNQiihtRjAMFFG7ab8DEdG7fAN+VmzC63Q+iNS07XoiBWeZI3dL87trBWxInWnoaTpZaInUB9VTiHflzi9K4g3vAUlvLR0lNaxkNT/XFCHVumWmvf3/Puc0I4LRrhT8GS3wo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427918; c=relaxed/simple;
-	bh=GX+oXAbm8L4lFnw0mRlqedRmnsimBSOzWQiWd6x7xNw=;
+	s=arc-20240116; t=1785427922; c=relaxed/simple;
+	bh=uL2DneLBfsYKYlGRXrfClY0Be4jX6F/2C3jhc8khIdU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OlzTJaaE1wULLtvP+kSVgTE0rz3WiomFj6C+vNOr2lSUkhmwYQo9dVvVds7sLfNMxp7XzSVSF4JgZZL9VKkAhLvhaBoGWolmIHIEt2lhNQbEmh8H06dt3WcNRkyE9YwLEhoNddFf25pYbI3JjmuwNq93vMAH1sstZFhrIEfbcfM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OZoBMTKI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u4XJcfAoNMQm8K0ocGnDzYeRL0+PyVVAF/zO0IGdzDo3obDLFJgGmAK/sadV9nKS0nd1W13W2fBfzlwVvMqiY2ydAKE/iSXtenmZztjMoK0mIl/lPoTo9ZlQzG/1kLRwBSNJs9JKXM7ACoz4VaSzeXVquHsAVSq75Z3sbhhQIFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=doR0IQ+I; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OZoBMTKI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEC871F000E9;
-	Thu, 30 Jul 2026 16:11:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="doR0IQ+I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6B871F000E9;
+	Thu, 30 Jul 2026 16:11:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427917;
-	bh=QQP+TH2Nv6BZnOIVs9r6UHKvWy6xu+Im3paWfh1/gN4=;
+	s=korg; t=1785427920;
+	bh=mvKMCPbRfvCQHbR3u91Ji6GPSAdPJ/7DhoMCr0wD1NQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OZoBMTKI9ko3SjdsW0J9y5idohN0IfgwSJSWOE2VGd9HwMMH+FomVCjmJUafzT3K7
-	 v6HcWRAoDP93zYFP7xtfc08Xr+ltlB0hxoNXew0X/vtORnMQMKqTpyBoOBBrtMLCFk
-	 P9J4Miplb5anowAX3SMbkCwcshglXJLGh/oNgx7U=
+	b=doR0IQ+IKhkxVGe7vBggrUBQ02B/QD2+OrQPCVFLoBYjoN9plwnz3iqMnD7plJLcq
+	 liTkeXjaEn0OqFoP+GD2rIXzpvM3kkgueZDY8/KDCE7wy0O2W3y4mzCPmAC3XuBupd
+	 JjAV9dLmXG2hiSz21sXwsZRiOlwizaMQou831e6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitaly Prosyak <vitaly.prosyak@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 340/484] drm/amdgpu/gfx9.4.3: replace BUG_ON() with WARN_ON()
-Date: Thu, 30 Jul 2026 16:13:57 +0200
-Message-ID: <20260730141430.867321062@linuxfoundation.org>
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 323/484] net: hip04: fix RX buffer leak on build_skb failure
+Date: Thu, 30 Jul 2026 16:13:40 +0200
+Message-ID: <20260730141430.503742224@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -50,62 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit 00f4050f7c367d7bdce347ca279ce467c434cf15 upstream.
+commit 14fa65d10f5696b063a7d8d26e8291ea84a2c6ed upstream.
 
-There's no need to crash the kernel for these cases.
+When build_skb() fails in hip04_rx_poll(), the driver jumps to the
+refill path without releasing the current RX buffer and its DMA mapping.
+Installing a replacement buffer then overwrites the slot references and
+leaks both resources.
 
-Reviewed-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 5676593d08998d7a6d9e2d51d6b54b3820e3755c)
+Keep the current slot intact and return budget so NAPI retries the same
+buffer.  Also free a newly allocated RX fragment when dma_map_single()
+fails.
+
+This issue was found by an in-house static analysis tool.
+
+Fixes: 701a0fd52318 ("hip04_eth: fix missing error handle for build_skb failed")
 Cc: stable@vger.kernel.org
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20260712142729.2057636-1-fanwu01@zju.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v9_4_3.c |   11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/hisilicon/hip04_eth.c |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v9_4_3.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v9_4_3.c
-@@ -236,7 +236,7 @@ static void gfx_v9_4_3_wait_reg_mem(stru
- 				 WAIT_REG_MEM_ENGINE(eng_sel)));
+--- a/drivers/net/ethernet/hisilicon/hip04_eth.c
++++ b/drivers/net/ethernet/hisilicon/hip04_eth.c
+@@ -594,7 +594,11 @@ static int hip04_rx_poll(struct napi_str
+ 		skb = build_skb(buf, priv->rx_buf_size);
+ 		if (unlikely(!skb)) {
+ 			net_dbg_ratelimited("build_skb failed\n");
+-			goto refill;
++			/* Retain the slot; return budget so NAPI retries this
++			 * buffer. Refill would overwrite rx_buf[]/rx_phys[]
++			 * and leak them.
++			 */
++			return budget;
+ 		}
  
- 	if (mem_space)
--		BUG_ON(addr0 & 0x3); /* Dword align */
-+		WARN_ON(addr0 & 0x3); /* Dword align */
- 	amdgpu_ring_write(ring, addr0);
- 	amdgpu_ring_write(ring, addr1);
- 	amdgpu_ring_write(ring, ref);
-@@ -2529,7 +2529,7 @@ static void gfx_v9_4_3_ring_emit_ib_comp
- 	}
+ 		dma_unmap_single(priv->dev, priv->rx_phys[priv->rx_head],
+@@ -622,14 +626,15 @@ static int hip04_rx_poll(struct napi_str
+ 			rx++;
+ 		}
  
- 	amdgpu_ring_write(ring, PACKET3(PACKET3_INDIRECT_BUFFER, 2));
--	BUG_ON(ib->gpu_addr & 0x3); /* Dword align */
-+	WARN_ON(ib->gpu_addr & 0x3); /* Dword align */
- 	amdgpu_ring_write(ring,
- #ifdef __BIG_ENDIAN
- 				(2 << 0) |
-@@ -2563,9 +2563,9 @@ static void gfx_v9_4_3_ring_emit_fence(s
- 	 * aligned if only send 32bit data low (discard data high)
- 	 */
- 	if (write64bit)
--		BUG_ON(addr & 0x7);
-+		WARN_ON(addr & 0x7);
- 	else
--		BUG_ON(addr & 0x3);
-+		WARN_ON(addr & 0x3);
- 	amdgpu_ring_write(ring, lower_32_bits(addr));
- 	amdgpu_ring_write(ring, upper_32_bits(addr));
- 	amdgpu_ring_write(ring, lower_32_bits(seq));
-@@ -2625,9 +2625,6 @@ static void gfx_v9_4_3_ring_emit_fence_k
- {
- 	struct amdgpu_device *adev = ring->adev;
- 
--	/* we only allocate 32bit for each seq wb address */
--	BUG_ON(flags & AMDGPU_FENCE_FLAG_64BIT);
--
- 	/* write fence seq to the "addr" */
- 	amdgpu_ring_write(ring, PACKET3(PACKET3_WRITE_DATA, 3));
- 	amdgpu_ring_write(ring, (WRITE_DATA_ENGINE_SEL(0) |
+-refill:
+ 		buf = netdev_alloc_frag(priv->rx_buf_size);
+ 		if (!buf)
+ 			goto done;
+ 		phys = dma_map_single(priv->dev, buf,
+ 				      RX_BUF_SIZE, DMA_FROM_DEVICE);
+-		if (dma_mapping_error(priv->dev, phys))
++		if (dma_mapping_error(priv->dev, phys)) {
++			skb_free_frag(buf);
+ 			goto done;
++		}
+ 		priv->rx_buf[priv->rx_head] = buf;
+ 		priv->rx_phys[priv->rx_head] = phys;
+ 		hip04_set_recv_desc(priv, phys);
 
 
