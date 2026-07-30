@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 219613A641D;
-	Thu, 30 Jul 2026 15:20:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E03D73769F5;
+	Thu, 30 Jul 2026 15:20:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424827; cv=none; b=M2AYpQf7eGNTjANKCqJFK/zZ7Pg33sJwQKuXmC3BxeEuOf2ygoIFA4dMyxMmAimhvxPR3IOaa5/DgI0LocAFhGfOuy8Rc9Fat+nw6imVkEshEunYehSgbDQLFm/GH8P9QxI0NouPN8ou1+FhdJEpSrZypYUwljM8iZA9yFRY5h0=
+	t=1785424830; cv=none; b=Rw9lJ//YQvUKxi262VxgKTZRnqpgrmBq+vy8qxsi+QXc7UhxsnmoFjbDVXUwF9C+LIrAh8MDqbrSUs39jxlXj8Noo7EnyjTTd59FtwGjt2oCW+0VWtkcRzEn9mYnIuaMCKRWK8QqrurXzF9oKFS86zbpwBSa3R9i2RmTuc4FCzk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424827; c=relaxed/simple;
-	bh=pxZGuFgzGiUijtUJRMH8XoUhQLBPHg4tMREglngjkv4=;
+	s=arc-20240116; t=1785424830; c=relaxed/simple;
+	bh=4t7Ci3Md/GYf0FGconRI227yBJ2SubnNJ47PsgYAKxc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W+ZtMtk7fQeTeNka2Soec+e9V9NhS2QCgp7bqkPa6X8o7tVrWuYk7WK4J7GgzE/y8KPSTy0HmZJdIDid7aZSSWtzgHkzszXUBXx262r+P7iuixRbMSJBf733lNWFKBKx6Fc228ZAC4RXaCiH3OdVp54Defzjt9xPQCGeIhjOUd4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cvOOa6rd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cuLCi3++6z00UCFW12wp7nDNr1LY3P5NbXik0W0UvDYKR9cFALOTuyQoJKe9oIUCOLloH2HWjzcJfqcyy84g+jAFbnHlXhEtt+P2jXMmMjoLz9UV0FQRRqxOAHOSeFgb8QyKumqvjPG/ggC41TILpOg8X/Nhv2atTmcfJON2IGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WaLjI30K; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cvOOa6rd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6995C1F000E9;
-	Thu, 30 Jul 2026 15:20:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WaLjI30K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 471931F000E9;
+	Thu, 30 Jul 2026 15:20:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424826;
-	bh=ykyhokto1pOXA9Gr2tHJqILCj/hyxPHl9gyCqc32BXE=;
+	s=korg; t=1785424828;
+	bh=+Rfiq7pGC7EeNrBp3+vQTIV1SBhp1Wh/3/FrWWT0khc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cvOOa6rd8Py7dzV9iy+ylmQ2CQOB44Zgy2/XW5yH1DJ53nbptXJkQhwsdT/wQ0tlC
-	 7JQlLLv1xwndDTcj9ukjrHubFIl5adeZNPoNIy4MEh6O5LGaQtyjdbso+PruOoTuOo
-	 /XG9JAFXVAkylFUR3xWevcQ2dpZH/J9oUubrvOAo=
+	b=WaLjI30KCLYMaRTa5zdD1tOlWVAPEnJa2Q2lgy0anQlpfg3dRsspNkKZoKblyCoar
+	 ZSELo7p17LXRL5uHsZKIJkrzzB5Ku0iEhnUylI0hmHyLc2sGQ210IsQQL93UmLp997
+	 R3CBRYwsRFp4WuFogFYfDrfIAcAVyoUJjj05ezhA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Joanne Koong <joannelkoong@gmail.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.18 530/675] iomap: fix out-of-bounds bitmap_set() with zero-length range
-Date: Thu, 30 Jul 2026 16:14:20 +0200
-Message-ID: <20260730141456.407615352@linuxfoundation.org>
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Samiullah Khawaja <skhawaja@google.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 6.18 531/675] iommu/vt-d: Disallow SVA if page walk is not coherent
+Date: Thu, 30 Jul 2026 16:14:21 +0200
+Message-ID: <20260730141456.429848521@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -53,81 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Yi <yi.zhang@huawei.com>
+From: Lu Baolu <baolu.lu@linux.intel.com>
 
-commit 9c7d8f7c8994c790fca501dc45ce66e7356cbe05 upstream.
+commit 780dfed688622ea01be3c9c2c55eec2207f05e04 upstream.
 
-ifs_set_range_dirty() and ifs_set_range_uptodate() compute last_blk
-as (off + len - 1) >> i_blkbits.  When off is 0 and len is 0, the
-unsigned subtraction underflows to SIZE_MAX, producing a huge
-last_blk and nr_blks value that causes bitmap_set() to write far
-beyond the ifs->state allocation.
+Hardware implementations report Scalable-Mode Page-walk Coherency Support
+via the SMPWCS field in the extended capability register. If the hardware
+does not support page-walk coherency, a clflush is required every time
+the page table entries (which are walked by the IOMMU hardware) are
+updated.
 
-Regarding ifs_set_range_uptodate(), it is temporarily safe because len
-cannot be passed in as 0. However, for ifs_set_range_dirty() this is
-reachable from __iomap_write_end(): when copy_folio_from_iter_atomic()
-returns 0 (e.g. user buffer fault) and the folio is already uptodate,
-the guard at the top of __iomap_write_end() does not trigger because
-!folio_test_uptodate() is false, and iomap_set_range_dirty() is called
-with copied == 0.
+In the SVA case, page tables are managed by the CPU mm core, not by the
+IOMMU driver. Because the IOMMU driver has no way of knowing whether the
+CPU page table management code has ensured coherency via clflush, the
+driver must deny SVA if the hardware does not support coherent paging.
 
-Add a !len guard to both functions before the computation, so that a
-zero-length range is a no-op.
-
-Fixes: 4ce02c679722 ("iomap: Add per-block dirty state tracking to improve performance")
-Cc: stable@vger.kernel.org # v6.6
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Link: https://patch.msgid.link/20260714082325.325163-5-yi.zhang@huaweicloud.com
-Reviewed-by: Joanne Koong <joannelkoong@gmail.com>
-Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: ff3dc6521f78 ("iommu/vt-d: Fix CPU and IOMMU SVM feature matching checks")
+Cc: stable@vger.kernel.org
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Reviewed-by: Samiullah Khawaja <skhawaja@google.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/iomap/buffered-io.c |   22 ++++++++++++++--------
- 1 file changed, 14 insertions(+), 8 deletions(-)
+ drivers/iommu/intel/svm.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/iomap/buffered-io.c
-+++ b/fs/iomap/buffered-io.c
-@@ -47,11 +47,13 @@ static bool ifs_set_range_uptodate(struc
- 		struct iomap_folio_state *ifs, size_t off, size_t len)
+--- a/drivers/iommu/intel/svm.c
++++ b/drivers/iommu/intel/svm.c
+@@ -27,7 +27,7 @@
+ 
+ void intel_svm_check(struct intel_iommu *iommu)
  {
- 	struct inode *inode = folio->mapping->host;
--	unsigned int first_blk = off >> inode->i_blkbits;
--	unsigned int last_blk = (off + len - 1) >> inode->i_blkbits;
--	unsigned int nr_blks = last_blk - first_blk + 1;
-+	unsigned int first_blk, last_blk;
+-	if (!pasid_supported(iommu))
++	if (!pasid_supported(iommu) || !ecap_smpwc(iommu->ecap))
+ 		return;
  
--	bitmap_set(ifs->state, first_blk, nr_blks);
-+	if (len) {
-+		first_blk = off >> inode->i_blkbits;
-+		last_blk = (off + len - 1) >> inode->i_blkbits;
-+		bitmap_set(ifs->state, first_blk, last_blk - first_blk + 1);
-+	}
- 	return ifs_is_fully_uptodate(folio, ifs);
- }
- 
-@@ -154,13 +156,17 @@ static void ifs_set_range_dirty(struct f
- {
- 	struct inode *inode = folio->mapping->host;
- 	unsigned int blks_per_folio = i_blocks_per_folio(inode, folio);
--	unsigned int first_blk = (off >> inode->i_blkbits);
--	unsigned int last_blk = (off + len - 1) >> inode->i_blkbits;
--	unsigned int nr_blks = last_blk - first_blk + 1;
-+	unsigned int first_blk, last_blk;
- 	unsigned long flags;
- 
-+	if (!len)
-+		return;
-+
-+	first_blk = off >> inode->i_blkbits;
-+	last_blk = (off + len - 1) >> inode->i_blkbits;
- 	spin_lock_irqsave(&ifs->state_lock, flags);
--	bitmap_set(ifs->state, first_blk + blks_per_folio, nr_blks);
-+	bitmap_set(ifs->state, first_blk + blks_per_folio,
-+		   last_blk - first_blk + 1);
- 	spin_unlock_irqrestore(&ifs->state_lock, flags);
- }
- 
+ 	if (cpu_feature_enabled(X86_FEATURE_GBPAGES) &&
 
 
