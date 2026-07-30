@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71B4B449EB6;
-	Thu, 30 Jul 2026 16:16:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C30E1448CE3;
+	Thu, 30 Jul 2026 16:16:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785428218; cv=none; b=YrdzzZOXf5WUAo2PbiwlB5BScxCSFZOnk87zIaK9JFLqZiNcDxAqm3/ExSyhzoPqH9vEjYDdmlywXQYWkMpp5VueboENUcOT3v+jY3Ru2XJ4EVl1ngcFfTrDXYWxihSsEpjAs3fQtTSZDaxhGSlwmUUDpzwQM7MlAyHQ5mwbC4I=
+	t=1785428218; cv=none; b=iwhRG90dzcz1nm50I7zoJVgaiOEo8L2VnP1Kt2+7cykdZbAMSiGd0w1++8eUhjK/QptJ4LjxCyc7p4nx/KiFFYBT6HDjMhVKm1J+kW7RQsKcE4HPXOxLjVDSx2IBYwSClOIeGNTbsON9mqhjtsU9CtXVpU3Kqu2RTA5RbiPxRBQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1785428218; c=relaxed/simple;
-	bh=GPOeNgTZDRL7h9WgT+lRR+8yM14lWmcnWsqc6yQSWL8=;
+	bh=TmKzFEE0r6EaG5N/ZqSizNlcqPV6Gf6xkYxGfx5qdV0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Pk+5qt/QfbCOSDU0neHE9lqKPoS9BIH7eu0Qj7J8XOIQJfye3xm4Hm2R/vbiB9H/jg81xQHG2WaMWb4LM6ZziOx3vmnN4RethQtW7rJ3hXY/ns8rC1zM63MX9xtRauTubG9jHlWoY2Jntt+uVmDGvPnYEziB42Rk44Se+1N7pP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FT/+GXt+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LJB/GhHsA5NB2vf62325XF9EQaFssyF9NfZU8blLy458WmDIPSdRH754Xgoqf/pAwMoIb0xmvvd6wvPG9xWb8ljGtciKhmJtS9fAU7RnXLZVAy41S1xxGJoUAtB5Ji8IRur93yyBfikQxn7YYteeW1Q1gqLUKWQgQiEwoJyzKcc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kQHPFFzj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FT/+GXt+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 339C91F000E9;
-	Thu, 30 Jul 2026 16:16:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kQHPFFzj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CED591F00ACA;
+	Thu, 30 Jul 2026 16:16:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785428207;
-	bh=6Q8Sp0CRatTkq178WZBl2NERGzo8wWEyn1rYpZAYwDg=;
+	s=korg; t=1785428213;
+	bh=epeD8pnrwEY6oyqlbPGvCQgnIaBz2BV077CDlt8f0z8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FT/+GXt++K23Z9RyJhX1F8RehVVArf0wQMf7Kz0Nl3LZ1gPVJyPjgdDy1uTg4lsyx
-	 4sI0foHrBMVd6HlhSypRwrC0MDXDuKI6Zi+IlRIQCdqIhsAEWUGzQp+nYr07HypAhT
-	 Tl9MYj31MuN0vV9KTAgIiXnU40TPf7AVXRz3udx0=
+	b=kQHPFFzjo3OUPTEPMCGGVbdCFqBNq1ui1K2MaTlReny2DStgLHvNpQ7fhlbHzD/LC
+	 gpMeFwEj4PPYruLtNFMUANlw6ixKdD3tEdtuaiPjC+H97fn1YgxZYei1WN0+ozZn25
+	 00k9Qp+XqVjo4BdtvE9JYbhiVN7whP7R2pHAQLBw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lyndon Sanche <lsanche@lyndeno.ca>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Stefan Eichenberger <stefan.eichenberger@toradex.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 441/484] platform/x86: dell-smbios: Move request functions for reuse
-Date: Thu, 30 Jul 2026 16:15:38 +0200
-Message-ID: <20260730141433.059446114@linuxfoundation.org>
+Subject: [PATCH 6.6 443/484] i2c: imx: separate atomic, dma and non-dma use case
+Date: Thu, 30 Jul 2026 16:15:40 +0200
+Message-ID: <20260730141433.103679713@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -45,112 +47,197 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lyndon Sanche <lsanche@lyndeno.ca>
+From: Stefan Eichenberger <stefan.eichenberger@toradex.com>
 
-[ Upstream commit 33245680ae565aaa114d726bf407c8ff38e75e71 ]
+[ Upstream commit b460b15b3cc23ef3639cc51043bf8b2a70ca1878 ]
 
-Move the dell_send_request and dell_fill_request symbols into smbios-base
-so that they can be used in multiple modules.
+Separate the atomic, dma and non-dma use case as a preparation step for
+moving the non-dma use case to the isr to avoid rescheduling while a
+transfer is in progress.
 
-Signed-off-by: Lyndon Sanche <lsanche@lyndeno.ca>
-Link: https://lore.kernel.org/r/20240529174843.13226-3-lsanche@lyndeno.ca
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Stable-dep-of: 6e9cab2247e5 ("platform/x86: dell-laptop: fix missing cleanups in init error path")
+Signed-off-by: Stefan Eichenberger <stefan.eichenberger@toradex.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Stable-dep-of: cb2fc3785769 ("i2c: imx: fix locked bus on SMBus block-read of 0 (atomic)")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/dell/dell-laptop.c      |   23 -----------------------
- drivers/platform/x86/dell/dell-smbios-base.c |   25 +++++++++++++++++++++++++
- drivers/platform/x86/dell/dell-smbios.h      |    5 +++++
- 3 files changed, 30 insertions(+), 23 deletions(-)
+ drivers/i2c/busses/i2c-imx.c |  107 ++++++++++++++++++++++++++++---------------
+ 1 file changed, 70 insertions(+), 37 deletions(-)
 
---- a/drivers/platform/x86/dell/dell-laptop.c
-+++ b/drivers/platform/x86/dell/dell-laptop.c
-@@ -353,29 +353,6 @@ static const struct dmi_system_id dell_q
- 	{ }
- };
- 
--static void dell_fill_request(struct calling_interface_buffer *buffer,
--			       u32 arg0, u32 arg1, u32 arg2, u32 arg3)
--{
--	memset(buffer, 0, sizeof(struct calling_interface_buffer));
--	buffer->input[0] = arg0;
--	buffer->input[1] = arg1;
--	buffer->input[2] = arg2;
--	buffer->input[3] = arg3;
--}
--
--static int dell_send_request(struct calling_interface_buffer *buffer,
--			     u16 class, u16 select)
--{
--	int ret;
--
--	buffer->cmd_class = class;
--	buffer->cmd_select = select;
--	ret = dell_smbios_call(buffer);
--	if (ret != 0)
--		return ret;
--	return dell_smbios_error(buffer->output[0]);
--}
--
- /*
-  * Derived from information in smbios-wireless-ctl:
-  *
---- a/drivers/platform/x86/dell/dell-smbios-base.c
-+++ b/drivers/platform/x86/dell/dell-smbios-base.c
-@@ -320,6 +320,31 @@ out_smbios_call:
+--- a/drivers/i2c/busses/i2c-imx.c
++++ b/drivers/i2c/busses/i2c-imx.c
+@@ -1011,6 +1011,43 @@ static int i2c_imx_dma_write(struct imx_
+ 	return i2c_imx_acked(i2c_imx);
  }
- EXPORT_SYMBOL_GPL(dell_smbios_call);
  
-+void dell_fill_request(struct calling_interface_buffer *buffer,
-+			       u32 arg0, u32 arg1, u32 arg2, u32 arg3)
++static int i2c_imx_prepare_read(struct imx_i2c_struct *i2c_imx,
++				struct i2c_msg *msgs, bool atomic,
++				bool use_dma)
 +{
-+	memset(buffer, 0, sizeof(struct calling_interface_buffer));
-+	buffer->input[0] = arg0;
-+	buffer->input[1] = arg1;
-+	buffer->input[2] = arg2;
-+	buffer->input[3] = arg3;
++	int result;
++	unsigned int temp = 0;
++
++	/* write slave address */
++	imx_i2c_write_reg(i2c_8bit_addr_from_msg(msgs), i2c_imx, IMX_I2C_I2DR);
++	result = i2c_imx_trx_complete(i2c_imx, atomic);
++	if (result)
++		return result;
++	result = i2c_imx_acked(i2c_imx);
++	if (result)
++		return result;
++
++	dev_dbg(&i2c_imx->adapter.dev, "<%s> setup bus\n", __func__);
++
++	/* setup bus to read data */
++	temp = imx_i2c_read_reg(i2c_imx, IMX_I2C_I2CR);
++	temp &= ~I2CR_MTX;
++
++	/*
++	 * Reset the I2CR_TXAK flag initially for SMBus block read since the
++	 * length is unknown
++	 */
++	if (msgs->len - 1)
++		temp &= ~I2CR_TXAK;
++	if (use_dma)
++		temp |= I2CR_DMAEN;
++
++	imx_i2c_write_reg(temp, i2c_imx, IMX_I2C_I2CR);
++	imx_i2c_read_reg(i2c_imx, IMX_I2C_I2DR); /* dummy read */
++
++	return 0;
 +}
-+EXPORT_SYMBOL_GPL(dell_fill_request);
 +
-+int dell_send_request(struct calling_interface_buffer *buffer,
-+			     u16 class, u16 select)
-+{
-+	int ret;
-+
-+	buffer->cmd_class = class;
-+	buffer->cmd_select = select;
-+	ret = dell_smbios_call(buffer);
-+	if (ret != 0)
-+		return ret;
-+	return dell_smbios_error(buffer->output[0]);
-+}
-+EXPORT_SYMBOL_GPL(dell_send_request);
-+
- struct calling_interface_token *dell_smbios_find_token(int tokenid)
+ static int i2c_imx_dma_read(struct imx_i2c_struct *i2c_imx,
+ 			struct i2c_msg *msgs, bool is_lastmsg)
  {
- 	int i;
---- a/drivers/platform/x86/dell/dell-smbios.h
-+++ b/drivers/platform/x86/dell/dell-smbios.h
-@@ -64,6 +64,11 @@ int dell_smbios_call_filter(struct devic
- 	struct calling_interface_buffer *buffer);
- int dell_smbios_call(struct calling_interface_buffer *buffer);
+@@ -1021,6 +1058,11 @@ static int i2c_imx_dma_read(struct imx_i
+ 	struct imx_i2c_dma *dma = i2c_imx->dma;
+ 	struct device *dev = &i2c_imx->adapter.dev;
  
-+void dell_fill_request(struct calling_interface_buffer *buffer,
-+			       u32 arg0, u32 arg1, u32 arg2, u32 arg3);
-+int dell_send_request(struct calling_interface_buffer *buffer,
-+			     u16 class, u16 select);
++	result = i2c_imx_prepare_read(i2c_imx, msgs, false, true);
++	if (result)
++		return result;
 +
- struct calling_interface_token *dell_smbios_find_token(int tokenid);
++	dev_dbg(&i2c_imx->adapter.dev, "<%s> read data\n", __func__);
  
- enum dell_laptop_notifier_actions {
+ 	dma->chan_using = dma->chan_rx;
+ 	dma->dma_transfer_dir = DMA_DEV_TO_MEM;
+@@ -1131,50 +1173,24 @@ static int i2c_imx_write(struct imx_i2c_
+ 	return 0;
+ }
+ 
++static int i2c_imx_atomic_write(struct imx_i2c_struct *i2c_imx, struct i2c_msg *msgs)
++{
++	return i2c_imx_write(i2c_imx, msgs, true);
++}
++
+ static int i2c_imx_read(struct imx_i2c_struct *i2c_imx, struct i2c_msg *msgs,
+ 			bool is_lastmsg, bool atomic)
+ {
+ 	int i, result;
+ 	unsigned int temp;
+ 	int block_data = msgs->flags & I2C_M_RECV_LEN;
+-	int use_dma = i2c_imx->dma && msgs->flags & I2C_M_DMA_SAFE &&
+-		msgs->len >= DMA_THRESHOLD && !block_data;
+-
+-	dev_dbg(&i2c_imx->adapter.dev,
+-		"<%s> write slave address: addr=0x%x\n",
+-		__func__, i2c_8bit_addr_from_msg(msgs));
+ 
+-	/* write slave address */
+-	imx_i2c_write_reg(i2c_8bit_addr_from_msg(msgs), i2c_imx, IMX_I2C_I2DR);
+-	result = i2c_imx_trx_complete(i2c_imx, atomic);
+-	if (result)
+-		return result;
+-	result = i2c_imx_acked(i2c_imx);
++	result = i2c_imx_prepare_read(i2c_imx, msgs, atomic, false);
+ 	if (result)
+ 		return result;
+ 
+-	dev_dbg(&i2c_imx->adapter.dev, "<%s> setup bus\n", __func__);
+-
+-	/* setup bus to read data */
+-	temp = imx_i2c_read_reg(i2c_imx, IMX_I2C_I2CR);
+-	temp &= ~I2CR_MTX;
+-
+-	/*
+-	 * Reset the I2CR_TXAK flag initially for SMBus block read since the
+-	 * length is unknown
+-	 */
+-	if ((msgs->len - 1) || block_data)
+-		temp &= ~I2CR_TXAK;
+-	if (use_dma)
+-		temp |= I2CR_DMAEN;
+-	imx_i2c_write_reg(temp, i2c_imx, IMX_I2C_I2CR);
+-	imx_i2c_read_reg(i2c_imx, IMX_I2C_I2DR); /* dummy read */
+-
+ 	dev_dbg(&i2c_imx->adapter.dev, "<%s> read data\n", __func__);
+ 
+-	if (use_dma)
+-		return i2c_imx_dma_read(i2c_imx, msgs, is_lastmsg);
+-
+ 	/* read data */
+ 	for (i = 0; i < msgs->len; i++) {
+ 		u8 len = 0;
+@@ -1241,6 +1257,12 @@ static int i2c_imx_read(struct imx_i2c_s
+ 	return 0;
+ }
+ 
++static int i2c_imx_atomic_read(struct imx_i2c_struct *i2c_imx, struct i2c_msg *msgs,
++			       bool is_lastmsg)
++{
++	return i2c_imx_read(i2c_imx, msgs, is_lastmsg, true);
++}
++
+ static int i2c_imx_xfer_common(struct i2c_adapter *adapter,
+ 			       struct i2c_msg *msgs, int num, bool atomic)
+ {
+@@ -1248,6 +1270,7 @@ static int i2c_imx_xfer_common(struct i2
+ 	int result;
+ 	bool is_lastmsg = false;
+ 	struct imx_i2c_struct *i2c_imx = i2c_get_adapdata(adapter);
++	int use_dma = 0;
+ 
+ 	/* Start I2C transfer */
+ 	result = i2c_imx_start(i2c_imx, atomic);
+@@ -1300,15 +1323,25 @@ static int i2c_imx_xfer_common(struct i2
+ 			(temp & I2SR_SRW ? 1 : 0), (temp & I2SR_IIF ? 1 : 0),
+ 			(temp & I2SR_RXAK ? 1 : 0));
+ #endif
++
++		use_dma = i2c_imx->dma && msgs[i].len >= DMA_THRESHOLD &&
++			msgs[i].flags & I2C_M_DMA_SAFE;
+ 		if (msgs[i].flags & I2C_M_RD) {
+-			result = i2c_imx_read(i2c_imx, &msgs[i], is_lastmsg, atomic);
++			int block_data = msgs->flags & I2C_M_RECV_LEN;
++
++			if (atomic)
++				result = i2c_imx_atomic_read(i2c_imx, &msgs[i], is_lastmsg);
++			else if (use_dma && !block_data)
++				result = i2c_imx_dma_read(i2c_imx, &msgs[i], is_lastmsg);
++			else
++				result = i2c_imx_read(i2c_imx, &msgs[i], is_lastmsg, false);
+ 		} else {
+-			if (!atomic &&
+-			    i2c_imx->dma && msgs[i].len >= DMA_THRESHOLD &&
+-				msgs[i].flags & I2C_M_DMA_SAFE)
++			if (atomic)
++				result = i2c_imx_atomic_write(i2c_imx, &msgs[i]);
++			else if (use_dma)
+ 				result = i2c_imx_dma_write(i2c_imx, &msgs[i]);
+ 			else
+-				result = i2c_imx_write(i2c_imx, &msgs[i], atomic);
++				result = i2c_imx_write(i2c_imx, &msgs[i], false);
+ 		}
+ 		if (result)
+ 			goto fail0;
 
 
