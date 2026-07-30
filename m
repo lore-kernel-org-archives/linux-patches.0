@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 893B0435A94;
-	Thu, 30 Jul 2026 15:54:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73E48383983;
+	Thu, 30 Jul 2026 15:54:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426868; cv=none; b=bqj2kPo3xpO6SRaa6bWvreC++76jSeUqvFXr4TDkw8z6+tX9tXwiiAoXKHAv9Dvd9SMOJ2S7VU/V3DINFclS0dKWbu8kOT60jgvaSVLdNmV/4iq6SZSZKsHTKnVmjIX6IEfGmyWPRzT4FWrIY6qGDUX9t22wabjvno8+VMYG47c=
+	t=1785426871; cv=none; b=syAFt3/2JzkXqw2gktH9tV5IJmovdCdD+CP8TzsTQmvBSlMfblCV77FQ1vqFKVGKmWuHwPYpd+QowXcaxOZGahdHIwJw4w5IW1322fj8bWO5KudL8S0zzydKyUvQvyWQvktWJDQ1g+P/CetTXsQR3eMSe+0Fu20/neqW2D+imrs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426868; c=relaxed/simple;
-	bh=DAzzvPpR/NbakUXHMyMCrgCX7PDuc519YMOEO3WX9/c=;
+	s=arc-20240116; t=1785426871; c=relaxed/simple;
+	bh=RwW8GOLwZFuyLKJ4MzhDLaKKisvLeFQxkI7f3cKoiGs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OC14xRUCpPEG9ZVdPrr4c4Fa8LNWnXiaMLe9J4ELHFHFWM4OB+Go7hrdP5mbPMXinT0AlQYNnmv9F8+THFsSEboq7phMFfLbCpeZTYoCVW0P3SraKfXCQUVpK9byXx/u1VdjL+9d9OJrkf7Mvcfbj5L9ayRRP9ZeGycKIXThy9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ezg1fg8p; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TZK2PqN0G3vj1+rSxKfTZeigP6L8mf9GNHPOHaJ2l0HrFmkbgyqrkhSvnZErJR3I9N0MPAAvUHa6fbrrYEx98/EzePHiAciQQaTdF778Ck1v21CYqGJKebxUbmQe+bDRKUko/o4P6vmFIyWoRSumJ/Fc0wSm+bd1EKYNSQqoLdc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Az1tod/L; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ezg1fg8p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E03061F000E9;
-	Thu, 30 Jul 2026 15:54:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Az1tod/L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C935A1F00A3D;
+	Thu, 30 Jul 2026 15:54:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426867;
-	bh=3oYR6gBuxF41xz0L1iqjd/Jzi9V51AZbgNq5LHtGmvo=;
+	s=korg; t=1785426870;
+	bh=PC0Kc+YkbcDNJ2eMA7PLP1E8xRFBGpV5NPxp/mumvIk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ezg1fg8pvFsSiq7490fshKALAunt8xyF3yYpA7Nhz+0juheLeOSyxNHvAJz4qBobv
-	 Jw3tq+ZM5wlSxhuwfXVLGkN/gWkrDx7pIlwXIHVm0772TyS5odNuRKsRzNu/E532ue
-	 TJlEH7mEvbcLmma1eVjog8GooY+caWLf76c38dHU=
+	b=Az1tod/LD1juKBF8+km93EeoGXny1DlhOm3bxLrpBKf3N59WNlmSp7s2B7keEESZt
+	 z0IYqfTMUMvVdlHu/iBuC0SWWF/8kebLdpB/oAvfOOe4l+t/0XkuD3ojZUveRtmDds
+	 Nw+nNRS72CpdPWty3oaem5Hxzc1bV9mTKia86HvM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Yang Li <yang.li@amlogic.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 563/602] bootconfig: fix NULL-pointer arithmetic in xbc_snprint_cmdline()
-Date: Thu, 30 Jul 2026 16:15:55 +0200
-Message-ID: <20260730141447.876216912@linuxfoundation.org>
+Subject: [PATCH 6.12 572/602] Bluetooth: Add PA_LINK to distinguish BIG sync and PA sync connections
+Date: Thu, 30 Jul 2026 16:16:04 +0200
+Message-ID: <20260730141448.068587353@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -51,94 +51,383 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Yang Li <yang.li@amlogic.com>
 
-[ Upstream commit dec4d8118c179b3d12bca7e609054c6011c4f2ce ]
+[ Upstream commit a7bcffc673de219af2698fbb90627016233de67b ]
 
-xbc_snprint_cmdline() is meant to be called twice: first with
-buf=NULL, size=0 to probe the rendered length, then with a real
-buffer to fill it (the standard snprintf() two-pass pattern). The
-probe call makes the function compute "buf + size" (NULL + 0) and,
-on every iteration, advance "buf += ret" from that NULL base and
-pass the result back into snprintf().
+Currently, BIS_LINK is used for both BIG sync and PA sync connections,
+which makes it impossible to distinguish them when searching for a PA
+sync connection.
 
-Pointer arithmetic on a NULL pointer is undefined behavior. It is
-harmless in the in-kernel callers today, but the follow-up patches
-run this same code in the userspace tools/bootconfig parser at kernel
-build time, where host UBSan / FORTIFY_SOURCE abort the build.
+Adding PA_LINK will make the distinction clearer and simplify future
+extensions for PA-related features.
 
-Track a running written length (size_t) instead of mutating @buf, and
-only form "buf + len" when @buf is non-NULL. snprintf(NULL, 0, ...)
-is itself well defined and returns the would-be length, so the
-two-pass "probe then fill" usage returns identical byte counts.
-
-Link: https://lore.kernel.org/all/20260626-bootconfig_using_tools-v7-1-24ab72139c29@debian.org/
-
-Fixes: 51887d03aca1 ("bootconfig: init: Allow admin to use bootconfig for kernel command line")
-Cc: stable@vger.kernel.org
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Yang Li <yang.li@amlogic.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Stable-dep-of: 9d4b01a0bf8d ("Bluetooth: hci_core: Fix not accounting for BIS/CIS/PA links separately")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/bootconfig.c |   23 ++++++++++++++++-------
- 1 file changed, 16 insertions(+), 7 deletions(-)
+ include/net/bluetooth/hci.h      |    1 +
+ include/net/bluetooth/hci_core.h |   10 +++++++---
+ net/bluetooth/hci_conn.c         |   13 ++++++++-----
+ net/bluetooth/hci_core.c         |   27 +++++++++++++++------------
+ net/bluetooth/hci_event.c        |    7 ++++---
+ net/bluetooth/hci_sync.c         |   10 +++++-----
+ net/bluetooth/iso.c              |    6 ++++--
+ net/bluetooth/mgmt.c             |    1 +
+ 8 files changed, 45 insertions(+), 30 deletions(-)
 
---- a/lib/bootconfig.c
-+++ b/lib/bootconfig.c
-@@ -424,10 +424,18 @@ static char xbc_namebuf[XBC_KEYLEN_MAX]
- int __init xbc_snprint_cmdline(char *buf, size_t size, struct xbc_node *root)
- {
- 	struct xbc_node *knode, *vnode;
--	char *end = buf + size;
- 	const char *val, *q;
-+	size_t len = 0;
- 	int ret;
+--- a/include/net/bluetooth/hci.h
++++ b/include/net/bluetooth/hci.h
+@@ -560,6 +560,7 @@ enum {
+ #define LE_LINK		0x80
+ #define CIS_LINK	0x82
+ #define BIS_LINK	0x83
++#define PA_LINK		0x84
+ #define INVALID_LINK	0xff
  
-+	/*
-+	 * Track the running written length rather than advancing @buf, so we
-+	 * never form "buf + size" or "buf += ret" while @buf is NULL (the
-+	 * size-probe call passes buf=NULL, size=0). NULL pointer arithmetic
-+	 * is undefined behavior and trips host UBSan / FORTIFY_SOURCE when
-+	 * this renderer runs at kernel build time. snprintf(NULL, 0, ...)
-+	 * itself is well defined and returns the would-be length.
-+	 */
- 	xbc_node_for_each_key_value(root, knode, val) {
- 		ret = xbc_node_compose_key_after(root, knode,
- 					xbc_namebuf, XBC_KEYLEN_MAX);
-@@ -436,10 +444,11 @@ int __init xbc_snprint_cmdline(char *buf
+ /* LMP features */
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -1001,6 +1001,7 @@ static inline void hci_conn_hash_add(str
+ 		break;
+ 	case CIS_LINK:
+ 	case BIS_LINK:
++	case PA_LINK:
+ 		h->iso_num++;
+ 		break;
+ 	}
+@@ -1028,6 +1029,7 @@ static inline void hci_conn_hash_del(str
+ 		break;
+ 	case CIS_LINK:
+ 	case BIS_LINK:
++	case PA_LINK:
+ 		h->iso_num--;
+ 		break;
+ 	}
+@@ -1046,6 +1048,7 @@ static inline unsigned int hci_conn_num(
+ 		return h->sco_num;
+ 	case CIS_LINK:
+ 	case BIS_LINK:
++	case PA_LINK:
+ 		return h->iso_num;
+ 	default:
+ 		return 0;
+@@ -1128,7 +1131,7 @@ hci_conn_hash_lookup_create_pa_sync(stru
+ 	rcu_read_lock();
  
- 		vnode = xbc_node_get_child(knode);
- 		if (!vnode) {
--			ret = snprintf(buf, rest(buf, end), "%s ", xbc_namebuf);
-+			ret = snprintf(buf ? buf + len : NULL, rest(len, size),
-+				       "%s ", xbc_namebuf);
- 			if (ret < 0)
- 				return ret;
--			buf += ret;
-+			len += ret;
+ 	list_for_each_entry_rcu(c, &h->list, list) {
+-		if (c->type != BIS_LINK)
++		if (c->type != PA_LINK)
  			continue;
- 		}
- 		xbc_array_for_each_value(vnode, val) {
-@@ -449,15 +458,15 @@ int __init xbc_snprint_cmdline(char *buf
- 			 * whitespace.
- 			 */
- 			q = strpbrk(val, " \t\r\n") ? "\"" : "";
--			ret = snprintf(buf, rest(buf, end), "%s=%s%s%s ",
--				       xbc_namebuf, q, val, q);
-+			ret = snprintf(buf ? buf + len : NULL, rest(len, size),
-+				       "%s=%s%s%s ", xbc_namebuf, q, val, q);
- 			if (ret < 0)
- 				return ret;
--			buf += ret;
-+			len += ret;
- 		}
+ 
+ 		if (!test_bit(HCI_CONN_CREATE_PA_SYNC, &c->flags))
+@@ -1344,7 +1347,7 @@ hci_conn_hash_lookup_big_sync_pend(struc
+ 	rcu_read_lock();
+ 
+ 	list_for_each_entry_rcu(c, &h->list, list) {
+-		if (c->type != BIS_LINK)
++		if (c->type != PA_LINK)
+ 			continue;
+ 
+ 		if (handle == c->iso_qos.bcast.big && num_bis == c->num_bis) {
+@@ -1413,7 +1416,7 @@ hci_conn_hash_lookup_pa_sync_handle(stru
+ 	rcu_read_lock();
+ 
+ 	list_for_each_entry_rcu(c, &h->list, list) {
+-		if (c->type != BIS_LINK)
++		if (c->type != PA_LINK)
+ 			continue;
+ 
+ 		/* Ignore the listen hcon, we are looking
+@@ -2025,6 +2028,7 @@ static inline int hci_proto_connect_ind(
+ 
+ 	case CIS_LINK:
+ 	case BIS_LINK:
++	case PA_LINK:
+ 		return iso_connect_ind(hdev, bdaddr, flags);
+ 
+ 	default:
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -785,7 +785,7 @@ static int hci_le_big_terminate(struct h
+ 	d->sync_handle = conn->sync_handle;
+ 
+ 	if (test_and_clear_bit(HCI_CONN_PA_SYNC, &conn->flags)) {
+-		hci_conn_hash_list_flag(hdev, find_bis, BIS_LINK,
++		hci_conn_hash_list_flag(hdev, find_bis, PA_LINK,
+ 					HCI_CONN_PA_SYNC, d);
+ 
+ 		if (!d->count)
+@@ -914,6 +914,7 @@ static struct hci_conn *__hci_conn_add(s
+ 		break;
+ 	case CIS_LINK:
+ 	case BIS_LINK:
++	case PA_LINK:
+ 		if (hdev->iso_mtu)
+ 			/* Dedicated ISO Buffer exists */
+ 			break;
+@@ -980,6 +981,7 @@ static struct hci_conn *__hci_conn_add(s
+ 		break;
+ 	case CIS_LINK:
+ 	case BIS_LINK:
++	case PA_LINK:
+ 		/* conn->src should reflect the local identity address */
+ 		hci_copy_identity_address(hdev, &conn->src, &conn->src_type);
+ 
+@@ -1033,7 +1035,6 @@ static struct hci_conn *__hci_conn_add(s
  	}
  
--	return buf - (end - size);
-+	return len;
+ 	hci_conn_init_sysfs(conn);
+-
+ 	return conn;
  }
- #undef rest
  
+@@ -1077,6 +1078,7 @@ static void hci_conn_cleanup_child(struc
+ 		break;
+ 	case CIS_LINK:
+ 	case BIS_LINK:
++	case PA_LINK:
+ 		if ((conn->state != BT_CONNECTED &&
+ 		    !test_bit(HCI_CONN_CREATE_CIS, &conn->flags)) ||
+ 		    test_bit(HCI_CONN_BIG_CREATED, &conn->flags))
+@@ -1152,7 +1154,8 @@ void hci_conn_del(struct hci_conn *conn)
+ 	} else {
+ 		/* Unacked ISO frames */
+ 		if (conn->type == CIS_LINK ||
+-		    conn->type == BIS_LINK) {
++		    conn->type == BIS_LINK ||
++		    conn->type == PA_LINK) {
+ 			if (hdev->iso_pkts)
+ 				hdev->iso_cnt += conn->sent;
+ 			else if (hdev->le_pkts)
+@@ -2089,7 +2092,7 @@ struct hci_conn *hci_pa_create_sync(stru
+ 
+ 	bt_dev_dbg(hdev, "dst %pMR type %d sid %d", dst, dst_type, sid);
+ 
+-	conn = hci_conn_add_unset(hdev, BIS_LINK, dst, HCI_ROLE_SLAVE);
++	conn = hci_conn_add_unset(hdev, PA_LINK, dst, HCI_ROLE_SLAVE);
+ 	if (IS_ERR(conn))
+ 		return conn;
+ 
+@@ -2266,7 +2269,7 @@ struct hci_conn *hci_connect_bis(struct
+ 	 * the start periodic advertising and create BIG commands have
+ 	 * been queued
+ 	 */
+-	hci_conn_hash_list_state(hdev, bis_mark_per_adv, BIS_LINK,
++	hci_conn_hash_list_state(hdev, bis_mark_per_adv, PA_LINK,
+ 				 BT_BOUND, &data);
+ 
+ 	/* Queue start periodic advertising and create BIG */
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -2960,12 +2960,14 @@ int hci_recv_frame(struct hci_dev *hdev,
+ 	case HCI_ACLDATA_PKT:
+ 		/* Detect if ISO packet has been sent as ACL */
+ 		if (hci_conn_num(hdev, CIS_LINK) ||
+-		    hci_conn_num(hdev, BIS_LINK)) {
++		    hci_conn_num(hdev, BIS_LINK) ||
++			hci_conn_num(hdev, PA_LINK)) {
+ 			__u16 handle = __le16_to_cpu(hci_acl_hdr(skb)->handle);
+ 			__u8 type;
+ 
+ 			type = hci_conn_lookup_type(hdev, hci_handle(handle));
+-			if (type == CIS_LINK || type == BIS_LINK)
++			if (type == CIS_LINK || type == BIS_LINK ||
++			    type == PA_LINK)
+ 				hci_skb_pkt_type(skb) = HCI_ISODATA_PKT;
+ 		}
+ 		break;
+@@ -3402,6 +3404,7 @@ static inline void hci_quote_sent(struct
+ 		break;
+ 	case CIS_LINK:
+ 	case BIS_LINK:
++	case PA_LINK:
+ 		cnt = hdev->iso_mtu ? hdev->iso_cnt :
+ 			hdev->le_mtu ? hdev->le_cnt : hdev->acl_cnt;
+ 		break;
+@@ -3415,7 +3418,7 @@ static inline void hci_quote_sent(struct
+ }
+ 
+ static struct hci_conn *hci_low_sent(struct hci_dev *hdev, __u8 type,
+-				     __u8 type2, int *quote)
++				     int *quote)
+ {
+ 	struct hci_conn_hash *h = &hdev->conn_hash;
+ 	struct hci_conn *conn = NULL, *c;
+@@ -3427,7 +3430,7 @@ static struct hci_conn *hci_low_sent(str
+ 	rcu_read_lock();
+ 
+ 	list_for_each_entry_rcu(c, &h->list, list) {
+-		if ((c->type != type && c->type != type2) ||
++		if (c->type != type ||
+ 		    skb_queue_empty(&c->data_q))
+ 			continue;
+ 
+@@ -3631,7 +3634,7 @@ static void hci_sched_sco(struct hci_dev
+ 	else
+ 		cnt = &hdev->sco_cnt;
+ 
+-	while (*cnt && (conn = hci_low_sent(hdev, type, type, &quote))) {
++	while (*cnt && (conn = hci_low_sent(hdev, type, &quote))) {
+ 		while (quote-- && (skb = skb_dequeue(&conn->data_q))) {
+ 			BT_DBG("skb %p len %d", skb, skb->len);
+ 			hci_send_frame(hdev, skb);
+@@ -3750,8 +3753,8 @@ static void hci_sched_le(struct hci_dev
+ 		hci_prio_recalculate(hdev, LE_LINK);
+ }
+ 
+-/* Schedule CIS */
+-static void hci_sched_iso(struct hci_dev *hdev)
++/* Schedule iso */
++static void hci_sched_iso(struct hci_dev *hdev, __u8 type)
+ {
+ 	struct hci_conn *conn;
+ 	struct sk_buff *skb;
+@@ -3759,14 +3762,12 @@ static void hci_sched_iso(struct hci_dev
+ 
+ 	BT_DBG("%s", hdev->name);
+ 
+-	if (!hci_conn_num(hdev, CIS_LINK) &&
+-	    !hci_conn_num(hdev, BIS_LINK))
++	if (!hci_conn_num(hdev, type))
+ 		return;
+ 
+ 	cnt = hdev->iso_pkts ? &hdev->iso_cnt :
+ 		hdev->le_pkts ? &hdev->le_cnt : &hdev->acl_cnt;
+-	while (*cnt && (conn = hci_low_sent(hdev, CIS_LINK, BIS_LINK,
+-					    &quote))) {
++	while (*cnt && (conn = hci_low_sent(hdev, type, &quote))) {
+ 		while (quote-- && (skb = skb_dequeue(&conn->data_q))) {
+ 			BT_DBG("skb %p len %d", skb, skb->len);
+ 			hci_send_frame(hdev, skb);
+@@ -3791,7 +3792,9 @@ static void hci_tx_work(struct work_stru
+ 		/* Schedule queues and send stuff to HCI driver */
+ 		hci_sched_sco(hdev, SCO_LINK);
+ 		hci_sched_sco(hdev, ESCO_LINK);
+-		hci_sched_iso(hdev);
++		hci_sched_iso(hdev, CIS_LINK);
++		hci_sched_iso(hdev, BIS_LINK);
++		hci_sched_iso(hdev, PA_LINK);
+ 		hci_sched_acl(hdev);
+ 		hci_sched_le(hdev);
+ 	}
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -4455,6 +4455,7 @@ static void hci_num_comp_pkts_evt(struct
+ 
+ 		case CIS_LINK:
+ 		case BIS_LINK:
++		case PA_LINK:
+ 			if (hdev->iso_pkts) {
+ 				hdev->iso_cnt += count;
+ 				if (hdev->iso_cnt > hdev->iso_pkts)
+@@ -6421,7 +6422,7 @@ static void hci_le_pa_sync_estabilished_
+ 	conn->sync_handle = le16_to_cpu(ev->handle);
+ 	conn->sid = HCI_SID_INVALID;
+ 
+-	mask |= hci_proto_connect_ind(hdev, &ev->bdaddr, BIS_LINK,
++	mask |= hci_proto_connect_ind(hdev, &ev->bdaddr, PA_LINK,
+ 				      &flags);
+ 	if (!(mask & HCI_LM_ACCEPT)) {
+ 		hci_le_pa_term_sync(hdev, ev->handle);
+@@ -6432,7 +6433,7 @@ static void hci_le_pa_sync_estabilished_
+ 		goto unlock;
+ 
+ 	/* Add connection to indicate PA sync event */
+-	pa_sync = hci_conn_add_unset(hdev, BIS_LINK, BDADDR_ANY,
++	pa_sync = hci_conn_add_unset(hdev, PA_LINK, BDADDR_ANY,
+ 				     HCI_ROLE_SLAVE);
+ 
+ 	if (IS_ERR(pa_sync))
+@@ -6463,7 +6464,7 @@ static void hci_le_per_adv_report_evt(st
+ 
+ 	hci_dev_lock(hdev);
+ 
+-	mask |= hci_proto_connect_ind(hdev, BDADDR_ANY, BIS_LINK, &flags);
++	mask |= hci_proto_connect_ind(hdev, BDADDR_ANY, PA_LINK, &flags);
+ 	if (!(mask & HCI_LM_ACCEPT))
+ 		goto unlock;
+ 
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -2988,7 +2988,7 @@ static int hci_le_set_ext_scan_param_syn
+ 		if (sent) {
+ 			struct hci_conn *conn;
+ 
+-			conn = hci_conn_hash_lookup_ba(hdev, BIS_LINK,
++			conn = hci_conn_hash_lookup_ba(hdev, PA_LINK,
+ 						       &sent->bdaddr);
+ 			if (conn) {
+ 				struct bt_iso_qos *qos = &conn->iso_qos;
+@@ -5552,7 +5552,7 @@ static int hci_disconnect_sync(struct hc
+ {
+ 	struct hci_cp_disconnect cp;
+ 
+-	if (conn->type == BIS_LINK) {
++	if (conn->type == BIS_LINK || conn->type == PA_LINK) {
+ 		/* This is a BIS connection, hci_conn_del will
+ 		 * do the necessary cleanup.
+ 		 */
+@@ -5621,7 +5621,7 @@ static int hci_connect_cancel_sync(struc
+ 		return HCI_ERROR_LOCAL_HOST_TERM;
+ 	}
+ 
+-	if (conn->type == BIS_LINK) {
++	if (conn->type == BIS_LINK || conn->type == PA_LINK) {
+ 		/* There is no way to cancel a BIS without terminating the BIG
+ 		 * which is done later on connection cleanup.
+ 		 */
+@@ -5686,7 +5686,7 @@ static int hci_reject_conn_sync(struct h
+ 	if (conn->type == CIS_LINK)
+ 		return hci_le_reject_cis_sync(hdev, conn, reason);
+ 
+-	if (conn->type == BIS_LINK)
++	if (conn->type == BIS_LINK || conn->type == PA_LINK)
+ 		return -EINVAL;
+ 
+ 	if (conn->type == SCO_LINK || conn->type == ESCO_LINK)
+@@ -7157,7 +7157,7 @@ static void create_pa_complete(struct hc
+ 		goto unlock;
+ 
+ 	/* Add connection to indicate PA sync error */
+-	pa_sync = hci_conn_add_unset(hdev, BIS_LINK, BDADDR_ANY,
++	pa_sync = hci_conn_add_unset(hdev, PA_LINK, BDADDR_ANY,
+ 				     HCI_ROLE_SLAVE);
+ 
+ 	if (IS_ERR(pa_sync))
+--- a/net/bluetooth/iso.c
++++ b/net/bluetooth/iso.c
+@@ -2211,7 +2211,8 @@ done:
+ 
+ static void iso_connect_cfm(struct hci_conn *hcon, __u8 status)
+ {
+-	if (hcon->type != CIS_LINK && hcon->type != BIS_LINK) {
++	if (hcon->type != CIS_LINK && hcon->type != BIS_LINK &&
++	    hcon->type != PA_LINK) {
+ 		if (hcon->type != LE_LINK)
+ 			return;
+ 
+@@ -2252,7 +2253,8 @@ static void iso_connect_cfm(struct hci_c
+ 
+ static void iso_disconn_cfm(struct hci_conn *hcon, __u8 reason)
+ {
+-	if (hcon->type != CIS_LINK && hcon->type != BIS_LINK)
++	if (hcon->type != CIS_LINK && hcon->type !=  BIS_LINK &&
++	    hcon->type != PA_LINK)
+ 		return;
+ 
+ 	BT_DBG("hcon %p reason %d", hcon, reason);
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -3258,6 +3258,7 @@ static u8 link_to_bdaddr(u8 link_type, u
+ 	switch (link_type) {
+ 	case CIS_LINK:
+ 	case BIS_LINK:
++	case PA_LINK:
+ 	case LE_LINK:
+ 		switch (addr_type) {
+ 		case ADDR_LE_DEV_PUBLIC:
 
 
