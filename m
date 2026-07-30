@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0C0440963F;
-	Thu, 30 Jul 2026 14:36:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E72A44162B;
+	Thu, 30 Jul 2026 14:36:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422209; cv=none; b=BoD+s1HoVJh6Ww8Z0cHBVBdlm6y3uu+9LYYty9+4IULfIDZvYZ7HxefdZrdagOrnEcAsNSyha0qAiQ8MEpI9jmDC9n4B33h4XCq2n7Ef02KV9DkXMUpbvgjzjCkQhotnAReixXL5Bo2yTtn8/kTGnwTcpubMNYQSqaAKaFPUpAA=
+	t=1785422212; cv=none; b=s25D0cruqkUAn+woiT4VAktWvdjEeuxT/Eec3bEN8/Yj2VhO415wrG3suRmUGY8uZPLx/R7sN0QqdLMT4XLu5P+rDap3/we/mb0NlchEpPSiZlZR+I2ooOurQ2v7t8Tj4+5ILg8HOQyCHpfoBX8yapw/3bu9l9PK6giDc70GCX8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422209; c=relaxed/simple;
-	bh=dfYX5OwP485otFWSejc5o+sY5PIgaUgelt9FSzsMQSE=;
+	s=arc-20240116; t=1785422212; c=relaxed/simple;
+	bh=iAiVjfM/NwJxcB062DODBtr7rp3PC+6hQvmDkLMCijw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JCgF60ZQhW5Zu07EpGUAfUef83jMR/Q5j+RIG9IgKqzbZxUoEH2KXS5TMbdmVTfLMxSjk3jRevSPBFN/Lyqf8tYq2cPJzkRTITaNFY1E7JX2+r1jU/GnmHHXWZwNTCapwu5zN78YYOeyHeTMJdmOHkdi11ZoND/KktZl9+yEN6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UB9ZDY4I; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lp4cFs9QNrkdMfN736lepZ63LOVOXfh3UfpsJk1yF53ll5iT4W0flAhPP6ZfB/aVXPynSBnIQJMjJayQQJKLKAcuzpQ3ImskQEDb0mmWRc336ahPdCOYevyPNVpwjdgAasoOwAavjjtZqyOpdTCS+1bRyU8yedDLBdp1AS+zmrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bm3Jpch8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UB9ZDY4I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC4391F000E9;
-	Thu, 30 Jul 2026 14:36:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bm3Jpch8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5E0A1F000E9;
+	Thu, 30 Jul 2026 14:36:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422208;
-	bh=Q0fT3IOopQDHYoebTNj61/l2QO6GKaW+ZMoUIA/x8c4=;
+	s=korg; t=1785422211;
+	bh=mYWpGDNNjUwT/s9WBxh44PxvUBXwbqGlItH7Aoslc/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UB9ZDY4I6qPez3grs8os+20YEtkAXU1GXYHA7lC5y4w8DBBRBfKa8F97YEGyc5tNs
-	 rFEQn9b0v8sJU5uuiBbD+7GDziVQcQPbno6au4Fgn0b+0uu+n7wUPULbZWZ9W1qbO7
-	 WyFIJxNHjI5++rbyd69OEIwsuycDL1Ar+kCmRNJY=
+	b=Bm3Jpch8tPR5M6B2PhNDL3Fsp9bxmWLs23eDneK43N5aKHlAVblPJW9NciBeXbVbQ
+	 GW/9Z8PYWc+zVrU2irTeuJQXLscHUvvKiokfrZ9V6A3SVrw2Peyw3use21MN6FKd+P
+	 ZftKKCwKsYs6nv9zEYOBWirh07vrB+3EGUM2YXEw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>,
 	Biju Das <biju.das.jz@bp.renesas.com>
-Subject: [PATCH 7.1 359/744] drm: renesas: rzg2l_mipi_dsi: Increase reset deassertion delay
-Date: Thu, 30 Jul 2026 16:10:32 +0200
-Message-ID: <20260730141451.916604240@linuxfoundation.org>
+Subject: [PATCH 7.1 360/744] drm: renesas: rzg2l_mipi_dsi: Move rzg2l_mipi_dsi_set_display_timing()
+Date: Thu, 30 Jul 2026 16:10:33 +0200
+Message-ID: <20260730141451.937419793@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -52,34 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 From: Biju Das <biju.das.jz@bp.renesas.com>
 
-commit 7cbba8a8ba0219a267844d3116dbc77cecb4fcf8 upstream.
+commit 5bfa858d53bb252d7a012c2e0a97ae18182edfb1 upstream.
 
 The RZ/G2L hardware manual (Rev. 1.50, May 2025), Section 34.4.2.1,
-requires waiting at least 1 msec after deasserting the CMN_RSTB signal
-before the DSI-Tx module is ready. Increase the delay from 1 usec to
-1 msec by replacing udelay(1) with fsleep(1000) for RZ/G2L SoCs.
+requires display timings to be set after the HS clock is started. Move
+rzg2l_mipi_dsi_set_display_timing() from
+rzg2l_mipi_dsi_atomic_pre_enable() to rzg2l_mipi_dsi_atomic_enable(),
+placing it after rzg2l_mipi_dsi_start_hs_clock(). Drop the unused ret
+variable from rzg2l_mipi_dsi_atomic_pre_enable().
 
+Fixes: 5ce16c169a4c ("drm: renesas: rz-du: Add atomic_pre_enable")
 Fixes: 7a043f978ed1 ("drm: rcar-du: Add RZ/G2L DSI driver")
 Cc: stable@vger.kernel.org
 Reviewed-by: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
 Tested-by: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
-Link: https://patch.msgid.link/20260330104450.128512-3-biju.das.jz@bp.renesas.com
+Link: https://patch.msgid.link/20260330104450.128512-2-biju.das.jz@bp.renesas.com
 Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/renesas/rz-du/rzg2l_mipi_dsi.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/renesas/rz-du/rzg2l_mipi_dsi.c |   16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
 --- a/drivers/gpu/drm/renesas/rz-du/rzg2l_mipi_dsi.c
 +++ b/drivers/gpu/drm/renesas/rz-du/rzg2l_mipi_dsi.c
-@@ -528,7 +528,7 @@ static int rzg2l_mipi_dsi_dphy_init(stru
- 	if (ret < 0)
- 		return ret;
+@@ -1025,29 +1025,33 @@ static void rzg2l_mipi_dsi_atomic_pre_en
+ 	const struct drm_display_mode *mode;
+ 	struct drm_connector *connector;
+ 	struct drm_crtc *crtc;
+-	int ret;
  
--	udelay(1);
-+	fsleep(1000);
+ 	connector = drm_atomic_get_new_connector_for_encoder(state, bridge->encoder);
+ 	crtc = drm_atomic_get_new_connector_state(state, connector)->crtc;
+ 	mode = &drm_atomic_get_new_crtc_state(state, crtc)->adjusted_mode;
  
- 	return 0;
+-	ret = rzg2l_mipi_dsi_startup(dsi, mode);
+-	if (ret < 0)
+-		return;
+-
+-	rzg2l_mipi_dsi_set_display_timing(dsi, mode);
++	rzg2l_mipi_dsi_startup(dsi, mode);
  }
+ 
+ static void rzg2l_mipi_dsi_atomic_enable(struct drm_bridge *bridge,
+ 					 struct drm_atomic_state *state)
+ {
+ 	struct rzg2l_mipi_dsi *dsi = bridge_to_rzg2l_mipi_dsi(bridge);
++	const struct drm_display_mode *mode;
++	struct drm_connector *connector;
++	struct drm_crtc *crtc;
+ 	int ret;
+ 
+ 	ret = rzg2l_mipi_dsi_start_hs_clock(dsi);
+ 	if (ret < 0)
+ 		goto err_stop;
+ 
++	connector = drm_atomic_get_new_connector_for_encoder(state, bridge->encoder);
++	crtc = drm_atomic_get_new_connector_state(state, connector)->crtc;
++	mode = &drm_atomic_get_new_crtc_state(state, crtc)->adjusted_mode;
++
++	rzg2l_mipi_dsi_set_display_timing(dsi, mode);
++
+ 	ret = rzg2l_mipi_dsi_start_video(dsi);
+ 	if (ret < 0)
+ 		goto err_stop_clock;
 
 
