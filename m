@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63B3F43E08C;
-	Thu, 30 Jul 2026 14:17:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E4E243CEC4;
+	Thu, 30 Jul 2026 14:17:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421055; cv=none; b=Y8oEsnrWNQ9MXqvret0fl3zq7T/p5iLarRHHyGvpzTZT4k9KnKkBbXAJPyuASdeMT5p+2PKkf3qgaxrGKobs4T+EqDfhSaK1v7H7Uc7etIujlsaBORAYigv04S7vVLO6+MyWK9lk2IHSLpd/vVJhzHPgy8PAv28D3yYAmbfyJ60=
+	t=1785421058; cv=none; b=WW8sduYOkDMVPjaUHGIbAS7dQuCtFgLdSRWPzM/AV3tJzg2ttz3eOYJi3q+TO+PaIlqqS1zuqcZ8SRRudJMaD7svR+IUKndLnHQs275HVRHYrje2Tp+IY7VkKAzn69j5pdixbwZm+XwzniJnbeQm9205u4zzupOei6os0p62RYg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421055; c=relaxed/simple;
-	bh=ta/DEAzIbQulY6k0CInkHVhzW/iWMQu65/qwpMlYCRw=;
+	s=arc-20240116; t=1785421058; c=relaxed/simple;
+	bh=zNVK1IKnDHC5IN6PGRskIYJM3zREZOCQKomBB4Wl8rs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iFQO2XBzYbdog20KU7m5WU6bB1L5W/0AA+b66kfnxRWKQi/okn4NPRIHZXU5JczsEHI+Lw/5ec5VLino14aWq3JKeCGUSaxrL/G93MQz6BlAsZ2Zj0gWUJonPk3Wzy/rfoJ59dOPvlyvQDAmUgEYmFUVPkXUcszErzUJsJCYzM4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UBVgcUaZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mCw1SrQMJtn3pV0X8gLbCN7VqMFJiwAaOKAB9pmxLXxb85PGvyBphs1pp5GEieYfri6I2TKu4T5kcAVtwtnUeLU23QFuxvyuI1BYMUIsVyd3n4XUHFFSqrcRPgGcLGjpqsRn0O0AkMYBCddkcqF9pB7M+94uWDPzqpjNUJCVEOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qacpP0/h; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UBVgcUaZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 969931F000E9;
-	Thu, 30 Jul 2026 14:17:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qacpP0/h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6DA71F000E9;
+	Thu, 30 Jul 2026 14:17:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421053;
-	bh=iU3TkA15rnr4OrueBIUB5fFotJpi4drotpJPVsYNbSs=;
+	s=korg; t=1785421056;
+	bh=S6frPNbrAPOLdtDH8WoYyadql6r3lx0czSs8MNr31Sk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UBVgcUaZ2RWc7xVL1aTpOsDZpjrJk1Vn5GHCMKU9AuEHucW9MXf3JrmfZ2RxFl5VM
-	 rtQonEE7q67KVVV5rrW3xOjmukV7ukZJgCnmnGF9qKyqJlrdkcK110Yp7QGa+8a68B
-	 +kTGVDU9XBOSzl2Yh5u077bFoTbFT0PgMSvEgEe4=
+	b=qacpP0/hAjD9zFofaTeKH6YLa3hBw0GY9Q5QEkQYwvgLZTaHy3fY4gQkG0Q4S4+Ec
+	 XDgvmfBOQzx0SvPbXJcxMZWlawjg96WHb5L0TF+ksH9ab96MR23A8HCTmlI6mu4rm7
+	 XIGQGVTkIxCvF/h9nlnEajFPECWYyWt8mNexULT0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Guixiong Wei <weiguixiong@bytedance.com>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 001/602] platform/x86/intel-uncore-freq: Fix current_freq_khz after CPU hotplug
-Date: Thu, 30 Jul 2026 16:06:33 +0200
-Message-ID: <20260730141436.017627200@linuxfoundation.org>
+Subject: [PATCH 6.12 002/602] net: airoha: Move airoha_eth driver in a dedicated folder
+Date: Thu, 30 Jul 2026 16:06:34 +0200
+Message-ID: <20260730141436.038788311@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -46,67 +45,131 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guixiong Wei <weiguixiong@bytedance.com>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-commit 6b63520ed14b17bbe9c2103debbd2152dde1fba3 upstream.
+[ Upstream commit fb3dda82fd38ca42140f29b3082324dcdc128293 ]
 
-When the last CPU of a legacy uncore die goes offline,
-uncore_freq_remove_die_entry() clears control_cpu. During CPU hotplug
-re-add, uncore_freq_add_entry() still populates sysfs attributes before
-assigning the new control CPU. As a result, the current frequency read
-returns -ENXIO and current_freq_khz is omitted from the recreated sysfs
-group.
+The airoha_eth driver has no codebase shared with mtk_eth_soc one.
+Moreover, the upcoming features (flowtable hw offloading, PCS, ..) will
+not reuse any code from MediaTek driver. Move the Airoha driver in a
+dedicated folder.
 
-Assign control_cpu before the initial read paths and before
-create_attr_group() so sysfs recreation uses the new online CPU. If
-sysfs creation fails, restore control_cpu to -1 to keep the error path
-state consistent.
-
-Fixes: 4d73c6772ab7 ("platform/x86: intel-uncore-freq: Conditionally create attribute for read frequency")
-Cc: stable@vger.kernel.org
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Link: https://patch.msgid.link/20260602020752.3126-1-weiguixiong@bytedance.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Guixiong Wei <weiguixiong@bytedance.com>
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: 86e51aa24686 ("net: airoha: Fix skb->priority underflow in airoha_dev_select_queue()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../x86/intel/uncore-frequency/uncore-frequency-common.c   | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/Kconfig                   |  2 ++
+ drivers/net/ethernet/Makefile                  |  1 +
+ drivers/net/ethernet/airoha/Kconfig            | 18 ++++++++++++++++++
+ drivers/net/ethernet/airoha/Makefile           |  6 ++++++
+ .../ethernet/{mediatek => airoha}/airoha_eth.c |  0
+ drivers/net/ethernet/mediatek/Kconfig          |  8 --------
+ drivers/net/ethernet/mediatek/Makefile         |  1 -
+ 7 files changed, 27 insertions(+), 9 deletions(-)
+ create mode 100644 drivers/net/ethernet/airoha/Kconfig
+ create mode 100644 drivers/net/ethernet/airoha/Makefile
+ rename drivers/net/ethernet/{mediatek => airoha}/airoha_eth.c (100%)
 
-diff --git a/drivers/platform/x86/intel/uncore-frequency/uncore-frequency-common.c b/drivers/platform/x86/intel/uncore-frequency/uncore-frequency-common.c
-index e22b683a7a434c..2e4e2bcc3c6e71 100644
---- a/drivers/platform/x86/intel/uncore-frequency/uncore-frequency-common.c
-+++ b/drivers/platform/x86/intel/uncore-frequency/uncore-frequency-common.c
-@@ -240,15 +240,20 @@ int uncore_freq_add_entry(struct uncore_data *data, int cpu)
- 		sprintf(data->name, "package_%02d_die_%02d", data->package_id, data->die_id);
- 	}
+diff --git a/drivers/net/ethernet/Kconfig b/drivers/net/ethernet/Kconfig
+index 9a542e3c9b05d8..0875b5706b83ac 100644
+--- a/drivers/net/ethernet/Kconfig
++++ b/drivers/net/ethernet/Kconfig
+@@ -20,6 +20,8 @@ source "drivers/net/ethernet/actions/Kconfig"
+ source "drivers/net/ethernet/adaptec/Kconfig"
+ source "drivers/net/ethernet/aeroflex/Kconfig"
+ source "drivers/net/ethernet/agere/Kconfig"
++source "drivers/net/ethernet/airoha/Kconfig"
++source "drivers/net/ethernet/mellanox/Kconfig"
+ source "drivers/net/ethernet/alacritech/Kconfig"
+ source "drivers/net/ethernet/allwinner/Kconfig"
+ source "drivers/net/ethernet/alteon/Kconfig"
+diff --git a/drivers/net/ethernet/Makefile b/drivers/net/ethernet/Makefile
+index 99fa180dedb805..67182339469a0d 100644
+--- a/drivers/net/ethernet/Makefile
++++ b/drivers/net/ethernet/Makefile
+@@ -10,6 +10,7 @@ obj-$(CONFIG_NET_VENDOR_ADAPTEC) += adaptec/
+ obj-$(CONFIG_GRETH) += aeroflex/
+ obj-$(CONFIG_NET_VENDOR_ADI) += adi/
+ obj-$(CONFIG_NET_VENDOR_AGERE) += agere/
++obj-$(CONFIG_NET_VENDOR_AIROHA) += airoha/
+ obj-$(CONFIG_NET_VENDOR_ALACRITECH) += alacritech/
+ obj-$(CONFIG_NET_VENDOR_ALLWINNER) += allwinner/
+ obj-$(CONFIG_NET_VENDOR_ALTEON) += alteon/
+diff --git a/drivers/net/ethernet/airoha/Kconfig b/drivers/net/ethernet/airoha/Kconfig
+new file mode 100644
+index 00000000000000..b6a131845f13b2
+--- /dev/null
++++ b/drivers/net/ethernet/airoha/Kconfig
+@@ -0,0 +1,18 @@
++# SPDX-License-Identifier: GPL-2.0-only
++config NET_VENDOR_AIROHA
++	bool "Airoha devices"
++	depends on ARCH_AIROHA || COMPILE_TEST
++	help
++	  If you have a Airoha SoC with ethernet, say Y.
++
++if NET_VENDOR_AIROHA
++
++config NET_AIROHA
++	tristate "Airoha SoC Gigabit Ethernet support"
++	depends on NET_DSA || !NET_DSA
++	select PAGE_POOL
++	help
++	  This driver supports the gigabit ethernet MACs in the
++	  Airoha SoC family.
++
++endif #NET_VENDOR_AIROHA
+diff --git a/drivers/net/ethernet/airoha/Makefile b/drivers/net/ethernet/airoha/Makefile
+new file mode 100644
+index 00000000000000..73a6f3680a4c4c
+--- /dev/null
++++ b/drivers/net/ethernet/airoha/Makefile
+@@ -0,0 +1,6 @@
++# SPDX-License-Identifier: GPL-2.0-only
++#
++# Airoha for the Mediatek SoCs built-in ethernet macs
++#
++
++obj-$(CONFIG_NET_AIROHA) += airoha_eth.o
+diff --git a/drivers/net/ethernet/mediatek/airoha_eth.c b/drivers/net/ethernet/airoha/airoha_eth.c
+similarity index 100%
+rename from drivers/net/ethernet/mediatek/airoha_eth.c
+rename to drivers/net/ethernet/airoha/airoha_eth.c
+diff --git a/drivers/net/ethernet/mediatek/Kconfig b/drivers/net/ethernet/mediatek/Kconfig
+index 95c4405b7d7bee..7bfd3f230ff507 100644
+--- a/drivers/net/ethernet/mediatek/Kconfig
++++ b/drivers/net/ethernet/mediatek/Kconfig
+@@ -7,14 +7,6 @@ config NET_VENDOR_MEDIATEK
  
-+	/*
-+	 * Set the control CPU before any read path so entry recreation after CPU
-+	 * hotplug can populate read-only attributes from the new online CPU.
-+	 */
-+	data->control_cpu = cpu;
- 	uncore_read(data, &data->initial_min_freq_khz, UNCORE_INDEX_MIN_FREQ);
- 	uncore_read(data, &data->initial_max_freq_khz, UNCORE_INDEX_MAX_FREQ);
+ if NET_VENDOR_MEDIATEK
  
- 	ret = create_attr_group(data, data->name);
- 	if (ret) {
-+		data->control_cpu = -1;
- 		if (data->domain_id != UNCORE_DOMAIN_ID_INVALID)
- 			ida_free(&intel_uncore_ida, data->instance_id);
- 	} else {
--		data->control_cpu = cpu;
- 		data->valid = true;
- 	}
- 
+-config NET_AIROHA
+-	tristate "Airoha SoC Gigabit Ethernet support"
+-	depends on NET_DSA || !NET_DSA
+-	select PAGE_POOL
+-	help
+-	  This driver supports the gigabit ethernet MACs in the
+-	  Airoha SoC family.
+-
+ config NET_MEDIATEK_SOC_WED
+ 	depends on ARCH_MEDIATEK || COMPILE_TEST
+ 	def_bool NET_MEDIATEK_SOC != n
+diff --git a/drivers/net/ethernet/mediatek/Makefile b/drivers/net/ethernet/mediatek/Makefile
+index ddbb7f4a516cac..03e008fbc859b3 100644
+--- a/drivers/net/ethernet/mediatek/Makefile
++++ b/drivers/net/ethernet/mediatek/Makefile
+@@ -11,4 +11,3 @@ mtk_eth-$(CONFIG_NET_MEDIATEK_SOC_WED) += mtk_wed_debugfs.o
+ endif
+ obj-$(CONFIG_NET_MEDIATEK_SOC_WED) += mtk_wed_ops.o
+ obj-$(CONFIG_NET_MEDIATEK_STAR_EMAC) += mtk_star_emac.o
+-obj-$(CONFIG_NET_AIROHA) += airoha_eth.o
 -- 
 2.53.0
 
