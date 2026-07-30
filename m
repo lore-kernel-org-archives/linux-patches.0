@@ -1,112 +1,165 @@
-Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
+Received: from mail-vk1-f174.google.com (mail-vk1-f174.google.com [209.85.221.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C89A33B52EE
-	for <patches@lists.linux.dev>; Thu, 30 Jul 2026 17:37:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.46
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785433060; cv=none; b=nayykLlghJajOpe3kJITRus9tSRH9plMxHkcZ0wiMXfd8Jtv5Wdt08EKw+l0GAVPBw/Afr+lKzhzWgeWGUx+3Bso4l2BnpUYLDrwuwyFDeTiPk0IOLCGQX24oXLogZy3D1NkIOStyVZY3NRs9f/NxI46vVgjQOIp8FQ+tVUlxCs=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785433060; c=relaxed/simple;
-	bh=KEHws8kTwmKOCb/5Dw26fUo58ySVRtn2uks4rXh1LU4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MrF9MthFf8KkRn4PcSusJX5kO21ltQXjwwHopboLqBB3cR6OvF9KsFyB2LDLPEGW0uDuxUjuee7HaZ68Xdui4oP57ya3hTIBYvjx0L8IM2vj2p8X5VENSIxQzoxoiKI7aBD+eia9wu2WW52nD2LbCBrF4Jtx1Lhow3G/MEhQeU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hjQ2F3jg; arc=none smtp.client-ip=209.85.219.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4F1F3B52EE
+	for <patches@lists.linux.dev>; Thu, 30 Jul 2026 17:39:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.174
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1785433182; cv=pass; b=sAQsbvzGChc/pG1/3UeKmzQAwXIkYF5NghaxwMxMW3KmEGD6giNJEG9RPzGxBn3iz2eJ5YOCP7VGtcqQbaEYpeE/vo4okDcsDkMBgtw6V3fwnX4q1Rig7W5S467SSpwtSWwhbKAijJuDo0e/k914D/3qG27spVHo8JIMunTrcfc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1785433182; c=relaxed/simple;
+	bh=ulAtR4VuLOstpYyjAmbmpLdsktj2jnysAsOiRWaAHY8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=LmBAhA8FGBgjNXu67HoXNO5vkdgJi+b61DSaVh7gPlwJp9yIF2kjhQ2d8FSLoDRlRkIIwLnpx6Hz0LAjV4R/BhdYBU1/7ewDUo1X2jbNtfAgmw5qELrcAiB1/oNa9cGZ1imoi5SMUI8+g5btTemc/3J0G4aTLudFJcfM+3AI2D0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XHXeOVAU; arc=pass smtp.client-ip=209.85.221.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hjQ2F3jg"
-Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-9034b6b7674so1157986d6.0
-        for <patches@lists.linux.dev>; Thu, 30 Jul 2026 10:37:37 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XHXeOVAU"
+Received: by mail-vk1-f174.google.com with SMTP id 71dfb90a1353d-5bf94664327so50524e0c.1
+        for <patches@lists.linux.dev>; Thu, 30 Jul 2026 10:39:39 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1785433178; cv=none;
+        d=google.com; s=arc-20260327;
+        b=PP2VE9j8s/ilH2NbdK7vhpFo1ZYgp2gT2btdYBMJk+BwMrqnFs4cl8Bhu6787lALDG
+         +b/qDHGyhZIrZBzT/lsA60weoXlFjNRYHjzQfj5Gfl350AhX8TKO4lMwOusFZpEtv6W4
+         23jzPso0E65hCDELVjJrnxFgDBYk7Bjz9q9kYuribfMXh20vd4ItFpXrrsduKEjWiZtw
+         asNTpVC0SR9Lpkyy+jYdy2i0GKRp2QdyBWwfkSedov1nep9vqDMgWux03GSXLXXtETri
+         hz/BURHSPlTkJfZ1BrWLznRSd9+4klILnQqeyKrq9CKXuhJ3bIe6KCzVcI7V37McpSlz
+         h74A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=vu6ytu0gT7Wiwkav7oRlErUvDoo+NLXEtZJ0hg7CTow=;
+        fh=L5k8JpgGs6BgRg9rPuDeSdV03vG5wUymAT7/2J0PndA=;
+        b=HufIZ+YMFIhRQdoT8pXVnmvvK72z2Zhw4Nh8HKPqdszVgDEcciadhYMAV6wldqfMYO
+         sslWaX/waoO7X4QRk0MGQrnOFRnLxZ/7CR3hfEd+hXr9ZxYeK+FuQUNxep4ZezkjzNsq
+         J3HYhYqSFr+n/dPvca5PCLN/2Q/D4IT7d3dJDjgyKnorcCjaR5wuvQxee/hmG3SiOGl/
+         +fOawUDHCj0RKUwaR1DGMR5i6GWa+C5UYyxuIs44BMYkdquV5zJ5NKpDToij496ToVBE
+         3o30kvQRwq5i+y3u2f0vIe/w81slCqtjwrtyKdzOLEVg//OvdWKyNkTVS6Mq/s6DdYFY
+         b8gg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785433057; x=1786037857; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=gsJy5cWyjmORQNt6G3D0DpIqpcWadnp4i2dysW8ERHs=;
-        b=hjQ2F3jg2rAbtcuXT4PbihtQWaLIE5tOtNuuSz0Hp5ozsnlY/5n9agem1Kcq67CIaS
-         xYRNhHQvkjOF3Rf+isDVt/jNiUIr9uN+oJ6bnuKdav46NNXwxQBzwJG+aq8a5EiahwcP
-         bQqYPlSxNuBSeopdXsLU2idgjxpxBMzA2RzCOOpAV2Ze2nW5jQuhHzzAgqPe4SBCGmDB
-         oJG4O4k5kv4y4RvF9vmszB2geilZYn6lDYV22SzalX7W0w3Oe6PxuZQ4s5LKeHF9mTq8
-         hC5mns4yV2p1DbwvYkmic0gtK6k0hwBM6Bo94iXvWqS2fs7A9EnB6QyvWomwDfViST+K
-         FjTA==
+        d=gmail.com; s=20251104; t=1785433178; x=1786037978; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=vu6ytu0gT7Wiwkav7oRlErUvDoo+NLXEtZJ0hg7CTow=;
+        b=XHXeOVAUaLWXKpEif0GSztMlU40riQWa/NUGobZteognywBgbkzkWouk3If2NReMo8
+         8ThZPakekB+KxqcnTYEY9DiSFBh54YC/m05Zn6VGSTsRTTZE+4MoiF6JBjjfHuDqpdWj
+         HF+WehXsKaazeIs2bVF65sDT0kR3iePtbvL62eV8oh1/dExp/rutItYclUyZMvtjqL43
+         u+Y2qr7tTrfyBdUsdsZLMf9tbPatZJMEkdZcP8m4WK0BdQuWLZw4IpOOpQ/TnXLM1bDC
+         Y4faRtlVWpOeCP/tlB4fAXMUH17QxamdyHEu39leuj5n/fBNNPehqareS66irICbjzq2
+         j8wQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785433057; x=1786037857;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=gsJy5cWyjmORQNt6G3D0DpIqpcWadnp4i2dysW8ERHs=;
-        b=K/MyOxGl1Qjf6AelYbhUKnSBet+xakza+EgKqIRjYynOK+g4paV87cXD06E3mFj4Vt
-         CsgLMOTD3Zw9IabdwvGd8Vr6gCJD94pg9IlN/N65j2BRkRb9WSBSt2Ah1gEh6h7e4YCP
-         BrGayoIvD4Ig2xkjzss0NCkKHXYxfI0CKxCGdbhB/kBj0n1JUHC+K4euDbxG4icSeMaF
-         OhLn8aK+u3+UrNwsrsQeccLNMgm3d9dwOlgeaDU2Frrvvggxagig5QeMz5iNBpJOCVGX
-         txouFSkvH2JqUT3VIdMsGy1tnh+dczDgPzTJwRmpYDTKOiK9+2zmo9fS5P5feFd4LNEV
-         kX5Q==
-X-Gm-Message-State: AOJu0YymC9Cuhv8pgI9LUFFTRmUg0aDYonr3KAhGcDb3APNSpbLDOt++
-	p83zCmB6iOfixHFGH1tYNgfgUEmjq+7+oJ2PrdsitrzJalOSd6EKiFAY
-X-Gm-Gg: AR+sD13zcKQel8S0z9t/uz9kgv7OQmKvvWv7vLIPVeQdinFyy2Jznb8LzOeZVv8ViMW
-	Ac1WaZzjsfNVjtdWtAnkl4q7nqnfUiFtmBmDNxeRy6e9gWNEPonJmM2w0cCCMWryrksaNjhSiee
-	Cn5Y2Z6USfAcKGXKxWImlnOYDRsnk6+/B9FkgCG+1LCqU5wu99QOaqq8+pvKyENujp14tFCDY79
-	jONWFOZWE2QwoTtdA7Rfvr060J4z5Z4PfMInIXC1s5w5kXRa9HLHvZSew6Ub6evRcm2eivRG08d
-	gJIvMxI+jww0DAsTb0C5ulpnTEe1zoTo0Rx4i1SWxveYk94CMAUp6/3QmJgn7mywfw91Ax8N/hj
-	yk5VOTAyNpw8O5ARz0sZKqIg43891aVtYFFHGz8vOA4GjCwryN0WLkBfGt4Yhe10T3096gpDpcD
-	Tkce4k8oxfXJHb8/eaf9QwBMO2oqdcCmvYjuxCfq8iqbLf4sR52TQR1vqohwcAfX8ne2F81lQNd
-	968f6HbpZnTBkNvGitukBMYtg==
-X-Received: by 2002:a05:6214:c48:b0:8f2:67bb:a37d with SMTP id 6a1803df08f44-9083bdf2959mr10195586d6.57.1785433056435;
-        Thu, 30 Jul 2026 10:37:36 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-908322faa60sm22392056d6.3.2026.07.30.10.37.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Jul 2026 10:37:35 -0700 (PDT)
-Message-ID: <c40caf39-367b-4949-9eca-037a588a4509@gmail.com>
-Date: Thu, 30 Jul 2026 10:37:32 -0700
+        d=1e100.net; s=20251104; t=1785433178; x=1786037978;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=vu6ytu0gT7Wiwkav7oRlErUvDoo+NLXEtZJ0hg7CTow=;
+        b=aqi+v62DGP43Fayr4vn4iH8ZnifQ27WQW18Sus5UJzu+0oeX27LTQGjpwZtBiBrgEB
+         yMJHTXD1gZjVquFGrw3VGnUEx66J1wx197x+LJj8SWIVfSECMMffR8zfhfkhtFhXBOVF
+         AJeHeeX18MdBBE8Ritn3/R4XUIiZNt/pKlZceQgQtxuS8d0oiG4MuPjEw7KGIRjakRzP
+         SwOJBboWOPo1nTB+uZwd/uFNjAmrRLlOlhsuQtz4jTC/wYrZE1Zs+Of7lIglmG+i98Cr
+         0p7tnYgVFPrDFJV/NaJh2aNRpZwTQcfi7mFjLcU/6Y2ct3LGyZU4OfpaoE2nqDtHFJov
+         FMeg==
+X-Forwarded-Encrypted: i=1; AHgh+RqayIJdEJPiCYwawrmzPvr9RB64CbhzRTBikMcdjpModBLsTM++adsiGnxIV3vm3AZ/LQnVlx+o@lists.linux.dev
+X-Gm-Message-State: AOJu0YyjCZS5nc5BqvpDsojrx7BIsd2N1bimnkS4Z3BmHsLv7nMnPwxo
+	x2fZf5AUp+hgdbHnhpaw8KAHfgb6RYfO6zA95dfFQbwMT7ZcJAMdo1v6fft+Xs0c5V0q9WHh3Dp
+	/pLObwGyOlrwlq9bbdQY5sT86ovBJAEI=
+X-Gm-Gg: AR+sD13i6e5vZG0q/+QNgBsyBVXDNQF90FJVjYFcg2E4opAjkxpXPyhgRKoZRzE/MGr
+	7oFsWIjsUHhGKXDoDAHomNVjqWnCmMyi5tZfeOF0QnKowG19P7XebJlf4kEgyNRLDswFpe9q5Oe
+	628ph8liwnO8l+Fq0JuzXdXIVmMOFkqX8WoAjwgmbTVSuBUEwYQst9Mg6NWTPsEWLo5jP/0rV/5
+	vJV5NtI3CZVPCo29ku6821yh9msqdFiyC/L25LqFUC1ssIrv9gF1W4fKpJy0cVAKNMZmAK7nzX/
+	dJE8e3c7wqxwAIoRMEewd15vC5v66AVuxk9l+E+BiAy1gsehK+k/Iz7nr/JdZ8d3fn/3RVQuj10
+	yNQ==
+X-Received: by 2002:a05:6102:3e8d:b0:74a:992e:84f6 with SMTP id
+ ada2fe7eead31-7574e3dbf53mr1246859137.10.1785433178507; Thu, 30 Jul 2026
+ 10:39:38 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.12 000/602] 6.12.101-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
- hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
- sr@sladewatkins.com
-References: <20260730141435.976815864@linuxfoundation.org>
-Content-Language: en-US, fr-FR
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20260730141444.267951807@linuxfoundation.org> <20260730141457.560203325@linuxfoundation.org>
+In-Reply-To: <20260730141457.560203325@linuxfoundation.org>
+From: Ilya Dryomov <idryomov@gmail.com>
+Date: Thu, 30 Jul 2026 19:39:26 +0200
+X-Gm-Features: AUfX_mw8SHaCkrDz--v55sEJJG2F4tGTRrgvqUVHWojV6X3IHM3uGgB0MdQaQTY
+Message-ID: <CAOi1vP8Ka3cbvY-wKg-WE+oTWmuJwgQpwJ1-mxSU6YrbtMRyKQ@mail.gmail.com>
+Subject: Re: [PATCH 7.1 625/744] ceph: add owner/capability checks for CEPH_IOC_SET_LAYOUT*
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	Max Kellermann <max.kellermann@ionos.com>, Xiubo Li <xiubo.li@clyso.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 7/30/26 07:06, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.12.101 release.
-> There are 602 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Sat, 01 Aug 2026 14:13:43 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.101-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+On Thu, Jul 30, 2026 at 4:49=E2=80=AFPM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> 7.1-stable review patch.  If anyone has any objections, please let me kno=
+w.
+>
+> ------------------
+>
+> From: Max Kellermann <max.kellermann@ionos.com>
+>
+> commit cee38bbf5556a8e0a232ccae41649580827d7806 upstream.
+>
+> These permission checks were already missing in the initial
+> impementation of these ioctls.  This Ceph allows any user who owns a
+> file descriptor to manipulate the layout of any file, even if they
+> don't have write permissions.
+>
+> It might be a good idea to guard other ioctls with permission checks
+> as well or even disallow regular users (even if they own the file) to
+> manipulate layout settings completely, as this may be abused to DoS
+> the Ceph servers, but right now, I find it most urgent to have setter
+> checks at all.
+>
+> Cc: stable@vger.kernel.org
+> Fixes: 8f4e91dee2a2 ("ceph: ioctls")
+> Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
+> Reviewed-by: Xiubo Li <xiubo.li@clyso.com>
+> Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> ---
+>  fs/ceph/ioctl.c |    6 ++++++
+>  1 file changed, 6 insertions(+)
+>
+> --- a/fs/ceph/ioctl.c
+> +++ b/fs/ceph/ioctl.c
+> @@ -72,6 +72,9 @@ static long ceph_ioctl_set_layout(struct
+>         struct ceph_ioctl_layout nl;
+>         int err;
+>
+> +       if (!inode_owner_or_capable(&nop_mnt_idmap, inode))
+> +               return -EACCES;
+> +
+>         if (copy_from_user(&l, arg, sizeof(l)))
+>                 return -EFAULT;
+>
+> @@ -142,6 +145,9 @@ static long ceph_ioctl_set_layout_policy
+>         int err;
+>         struct ceph_mds_client *mdsc =3D ceph_sb_to_fs_client(inode->i_sb=
+)->mdsc;
+>
+> +       if (!inode_owner_or_capable(&nop_mnt_idmap, inode))
+> +               return -EACCES;
+> +
+>         /* copy and validate */
+>         if (copy_from_user(&l, arg, sizeof(l)))
+>                 return -EFAULT;
+>
+>
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+Hi Greg,
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
--- 
-Florian
+There is a concern about the correctness of this patch, please drop it
+for now.
+
+Thanks,
+
+                Ilya
