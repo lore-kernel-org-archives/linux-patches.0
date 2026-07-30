@@ -1,51 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7A73383983;
-	Thu, 30 Jul 2026 15:53:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C71C93769FD;
+	Thu, 30 Jul 2026 15:53:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426797; cv=none; b=eQeVzzudpDwQy9ZPLf6SGcvW5v+VH2YTnWkyT/2wn5GYP+K6GQaF95Sv5O6GMX8/xQFjVr7StX3UccrYSmryb4mNpASOfv9dpxMMXj+eZ8TCoaJ2I/ukAv9hhZ4fAUz/xkF8Ez06MYmxLa34kzqT/NMj9rVeIgFd+QeQFFnObH4=
+	t=1785426799; cv=none; b=BeKhRVvE351Ua1npEYjrTS3KZWH313L9swmPUIR0e6Dkn1xb1bBKYSgR86AB6C6vrNjiV+ca9C3SOJevXtoyjcmnBqXeQ8On850I8knXcAlfXJjb5cAjp5dy56p9NoE9hvZUKdrewTRkA8bbsdI+AVN2UOd4YpmXmkOBfjkkY4k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426797; c=relaxed/simple;
-	bh=/y1pqRSRd1Dmd9pJYKiLZtemNIG8lubd71ukwz3oSAg=;
+	s=arc-20240116; t=1785426799; c=relaxed/simple;
+	bh=EbkAj/YEK0NvguOwV6oTqVAGCyTnjAN+yK3XnCcf6Rc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mu4Choiow8SGas1eF/MBM4ysQpQDnaunOSXW+P+wL6jy/5p6x6kFcXmrtJOnP+i94nARTsy5kC4xg5l1dEtcdsUytiqDeoSgxjlOD61eMAUHQr4dopWXoEYkz08t396Iq9BWZBcmX62n8AiHIRZvgHXhHlkqiWfkcWfYue+TJRs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XqSoxFTv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WcbdLShI9uVPU8K/59avw0+BV50Jf2A5B4tWvFjv7hPvUGgM47kmg5+YB1vigSACuJwwX588K4xjvYN1k6txmc3zgp7H9gL0xjOdD4Mh6ZRzqKHnm6bd25Js8+svAazy+U6yH96C05LmWWONLrsyvjXkSSjXYMETCp/SN+WUVSE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X5P5/t9G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XqSoxFTv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C70CD1F000E9;
-	Thu, 30 Jul 2026 15:53:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X5P5/t9G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C824A1F000E9;
+	Thu, 30 Jul 2026 15:53:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426795;
-	bh=A1E/cAfcbA17tJElirxWebr1b27BCs43AaxhYfCjW2s=;
+	s=korg; t=1785426798;
+	bh=mgfcPJt1OYtShYLYDvVhV7+ckm0kWsvYtBGe/BrAYK8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XqSoxFTvLnfrOEEBpDPyhj+SFilwOzOYu5EarB7ZaBM+txLRELJMGQji9k8bB15gl
-	 UPQ9/Z1uL3vXmqzRNhXDJjNnDCvmdX4ojDSKlXFmYoXPnR2rtO/BZu+prJbq/JLfU4
-	 gQ7IbjXtNTcqHgDXz+xjti1IyJcTQpMUcYePSBgk=
+	b=X5P5/t9GsmOFTcHa8ptSffEb8yV1M+ISyxjhXKQ+rgS22Wa9L9w5K5HvukYr0X9//
+	 1FCul6+hhsaR7CTBA9j2YYf1Gri7fPDHeuf8HFdGmQ3VMZmyds91KqQ/BD0S6Q18pA
+	 aCjF5v2++gJ0pXYVAFIld/pS4hf3ExlueapXQ98o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muchun Song <songmuchun@bytedance.com>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	Oscar Salvador <osalvador@suse.de>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
-	Joao Martins <joao.m.martins@oracle.com>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Michal Hocko <mhocko@suse.com>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Connor Williamson <connordw@amazon.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 518/602] mm/sparse-vmemmap: fix vmemmap accounting underflow
-Date: Thu, 30 Jul 2026 16:15:10 +0200
-Message-ID: <20260730141446.890747603@linuxfoundation.org>
+Subject: [PATCH 6.12 545/602] block: remove redundant GD_NEED_PART_SCAN in add_disk_final()
+Date: Thu, 30 Jul 2026 16:15:37 +0200
+Message-ID: <20260730141447.481287799@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -64,168 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muchun Song <songmuchun@bytedance.com>
+From: Connor Williamson <connordw@amazon.com>
 
-[ Upstream commit c373f7f98e6ad591c85d40548cf8b6443be69311 ]
+[ Upstream commit 181bb9c9eae4f69fe510a62a42c2932d0314a800 ]
 
-Patch series "mm: Fix vmemmap optimization accounting and initialization",
-v8.
+add_disk_final() sets GD_NEED_PART_SCAN before calling bdev_add(),
+then calls disk_scan_partitions() which sets the flag itself. The
+early set is redundant and introduces a race.
 
-The series fixes several bugs in vmemmap optimization, mainly around
-incorrect page accounting and memmap initialization in DAX and memory
-hotplug paths.  It also fixes pageblock migratetype initialization and
-struct page initialization for ZONE_DEVICE compound pages.
+Between bdev_add() and disk_scan_partitions(), concurrent openers
+(multipathd, blkid, LVM) see the flag in blkdev_get_whole() and
+trigger bdev_disk_changed(). When disk_scan_partitions() then runs,
+it calls bdev_disk_changed() again, dropping the partitions the
+concurrent opener already created before re-adding them, which can
+result in transient partition disappearances.
 
-Patches 1-4 fix vmemmap accounting issues.  Patch 1 fixes an accounting
-underflow in the section activation failure path by moving vmemmap page
-accounting into the lower-level allocation and freeing helpers.  Patch 2
-fixes incorrect altmap passing in the memory hotplug error path.  Patch 3
-passes pgmap through memory deactivation paths so the teardown side can
-determine whether vmemmap optimization was in effect.  Patch 4 uses that
-information to account the optimized DAX vmemmap size correctly.
+The race is observable by inserting an msleep() between bdev_add()
+and disk_scan_partitions() while running concurrent open() calls
+during device bind. Without artificial delay, it manifests under
+scheduling pressure during boot on systems with aggressive device
+scanners (multipathd, systemd-udevd).
 
-Patches 5-6 fix initialization issues in mm/mm_init.  One makes sure all
-pageblocks in ZONE_DEVICE compound pages get their migratetype
-initialized.  The other fixes a case where DAX memory hotplug reuses an
-unoptimized early-section memmap while compound_nr_pages() still assumes
-vmemmap optimization, leaving tail struct pages uninitialized.
+Therefore, do not set GD_NEED_PART_SCAN in add_disk_final(). Other
+GD_NEED_PART_SCAN consumers (blkdev_get_whole(),
+sd_need_revalidate()) should not be affected as the flag
+is set internally by disk_scan_partitions().
 
-This patch (of 6):
+The retry-on-next-open intention from commit e5cfefa97bcc
+("block: fix scan partition for exclusively open device again")
+should also not be affected as the early return paths in
+disk_scan_partitions() should be unreachable at device registration
+time (bd_holder is NULL and open_partitions is zero).
 
-In section_activate(), if populate_section_memmap() fails, the error
-handling path calls section_deactivate() to roll back the state.  This
-causes a vmemmap accounting imbalance.
-
-Since commit c3576889d87b ("mm: fix accounting of memmap pages"), memmap
-pages are accounted for only after populate_section_memmap() succeeds.
-However, the failure path unconditionally calls section_deactivate(),
-which decreases the vmemmap count.  Consequently, a failure in
-populate_section_memmap() leads to an accounting underflow, incorrectly
-reducing the system's tracked vmemmap usage.
-
-Fix this more thoroughly by moving all accounting calls into the lower
-level functions that actually perform the vmemmap allocation and freeing:
-
-  - populate_section_memmap() accounts for newly allocated vmemmap pages -
-depopulate_section_memmap() unaccounts when vmemmap is freed
-
-This ensures proper accounting in all code paths, including error handling
-and early section cases.
-
-Link: https://lore.kernel.org/20260428081855.1249045-1-songmuchun@bytedance.com
-Link: https://lore.kernel.org/20260428081855.1249045-2-songmuchun@bytedance.com
-Fixes: c3576889d87b ("mm: fix accounting of memmap pages")
-Signed-off-by: Muchun Song <songmuchun@bytedance.com>
-Acked-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Acked-by: Oscar Salvador <osalvador@suse.de>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Acked-by: Liam R. Howlett <liam@infradead.org>
-Cc: "Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>
-Cc: Joao Martins <joao.m.martins@oracle.com>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
-Cc: Michael Ellerman <mpe@ellerman.id.au>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Nicholas Piggin <npiggin@gmail.com>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: e5cfefa97bcc ("block: fix scan partition for exclusively open device again")
+Cc: stable@vger.kernel.org
+Signed-off-by: Connor Williamson <connordw@amazon.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20260615130715.53693-1-connordw@amazon.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/sparse.c |   32 ++++++++++++++++++++++----------
- 1 file changed, 22 insertions(+), 10 deletions(-)
+ block/genhd.c |    4 ----
+ 1 file changed, 4 deletions(-)
 
---- a/mm/sparse.c
-+++ b/mm/sparse.c
-@@ -633,7 +633,12 @@ static struct page * __meminit populate_
- 		unsigned long nr_pages, int nid, struct vmem_altmap *altmap,
- 		struct dev_pagemap *pgmap)
- {
--	return __populate_section_memmap(pfn, nr_pages, nid, altmap, pgmap);
-+	struct page *page = __populate_section_memmap(pfn, nr_pages, nid, altmap,
-+						      pgmap);
-+
-+	memmap_pages_add(DIV_ROUND_UP(nr_pages * sizeof(struct page), PAGE_SIZE));
-+
-+	return page;
- }
+--- a/block/genhd.c
++++ b/block/genhd.c
+@@ -387,10 +387,6 @@ static void add_disk_final(struct gendis
+ 	struct device *ddev = disk_to_dev(disk);
  
- static void depopulate_section_memmap(unsigned long pfn, unsigned long nr_pages,
-@@ -642,13 +647,17 @@ static void depopulate_section_memmap(un
- 	unsigned long start = (unsigned long) pfn_to_page(pfn);
- 	unsigned long end = start + nr_pages * sizeof(struct page);
- 
-+	memmap_pages_add(-1L * (DIV_ROUND_UP(nr_pages * sizeof(struct page), PAGE_SIZE)));
- 	vmemmap_free(start, end, altmap);
- }
-+
- static void free_map_bootmem(struct page *memmap)
- {
- 	unsigned long start = (unsigned long)memmap;
- 	unsigned long end = (unsigned long)(memmap + PAGES_PER_SECTION);
- 
-+	memmap_boot_pages_add(-1L * (DIV_ROUND_UP(PAGES_PER_SECTION * sizeof(struct page),
-+						  PAGE_SIZE)));
- 	vmemmap_free(start, end, NULL);
- }
- 
-@@ -705,13 +714,18 @@ static struct page * __meminit populate_
- 		unsigned long nr_pages, int nid, struct vmem_altmap *altmap,
- 		struct dev_pagemap *pgmap)
- {
--	return kvmalloc_node(array_size(sizeof(struct page),
--					PAGES_PER_SECTION), GFP_KERNEL, nid);
-+	struct page *page = kvmalloc_node(array_size(sizeof(struct page),
-+						PAGES_PER_SECTION), GFP_KERNEL, nid);
-+
-+	memmap_pages_add(DIV_ROUND_UP(nr_pages * sizeof(struct page), PAGE_SIZE));
-+
-+	return page;
- }
- 
- static void depopulate_section_memmap(unsigned long pfn, unsigned long nr_pages,
- 		struct vmem_altmap *altmap)
- {
-+	memmap_pages_add(-1L * (DIV_ROUND_UP(nr_pages * sizeof(struct page), PAGE_SIZE)));
- 	kvfree(pfn_to_page(pfn));
- }
- 
-@@ -724,6 +738,9 @@ static void free_map_bootmem(struct page
- 	nr_pages = PAGE_ALIGN(PAGES_PER_SECTION * sizeof(struct page))
- 		>> PAGE_SHIFT;
- 
-+	memmap_boot_pages_add(-1L * (DIV_ROUND_UP(PAGES_PER_SECTION * sizeof(struct page),
-+						  PAGE_SIZE)));
-+
- 	for (i = 0; i < nr_pages; i++, page++) {
- 		magic = page->index;
- 
-@@ -817,14 +834,10 @@ static void section_deactivate(unsigned
- 	 * The memmap of early sections is always fully populated. See
- 	 * section_activate() and pfn_valid() .
- 	 */
--	if (!section_is_early) {
--		memmap_pages_add(-1L * (DIV_ROUND_UP(nr_pages * sizeof(struct page), PAGE_SIZE)));
-+	if (!section_is_early)
- 		depopulate_section_memmap(pfn, nr_pages, altmap);
--	} else if (memmap) {
--		memmap_boot_pages_add(-1L * (DIV_ROUND_UP(nr_pages * sizeof(struct page),
--							  PAGE_SIZE)));
-+	else if (memmap)
- 		free_map_bootmem(memmap);
--	}
- 
- 	if (empty)
- 		ms->section_mem_map = (unsigned long)NULL;
-@@ -869,7 +882,6 @@ static struct page * __meminit section_a
- 		section_deactivate(pfn, nr_pages, altmap);
- 		return ERR_PTR(-ENOMEM);
- 	}
--	memmap_pages_add(DIV_ROUND_UP(nr_pages * sizeof(struct page), PAGE_SIZE));
- 
- 	return memmap;
- }
+ 	if (!(disk->flags & GENHD_FL_HIDDEN)) {
+-		/* Make sure the first partition scan will be proceed */
+-		if (get_capacity(disk) && disk_has_partscan(disk))
+-			set_bit(GD_NEED_PART_SCAN, &disk->state);
+-
+ 		bdev_add(disk->part0, ddev->devt);
+ 		if (get_capacity(disk))
+ 			disk_scan_partitions(disk, BLK_OPEN_READ);
 
 
