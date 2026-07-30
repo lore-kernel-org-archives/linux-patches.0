@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96638443A8A;
-	Thu, 30 Jul 2026 14:39:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D114B43F8BF;
+	Thu, 30 Jul 2026 14:39:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422342; cv=none; b=L+F0+ER6CY4WCbDLtCP9cCUMvGYr4GOVk0EKMKMEyrTMo/e96u3M21YbHzMIiBCUjKeaBiyOuO+skaDLiNTu6AXoVbkCa31qFoD2bpidwGdaLETT8b4I880vOIhG7oUf3muQBpO8gXlErNxo+Ikvharh3HJCln/ilkLpRsyniUI=
+	t=1785422345; cv=none; b=ocTd6dTfhfmVGf521ElR2dUACkZAoK292ZOzaU4EjjGsS8lNUwBsWCrF0r/5PEllGihjYX/r/yfxT9e0Jxafe5MNlFYxuSqY/gxx+d4vhlUK+8MJ70tgA7omFUA+5EJ8Wlj+bPuSHOJyRFfRku9VinE6Ka5h4XJXURLiUECyJs4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422342; c=relaxed/simple;
-	bh=YqSobrbzejy8zWHfpyLgh/f4LRdcVKGTqc8+RgYsQ6U=;
+	s=arc-20240116; t=1785422345; c=relaxed/simple;
+	bh=5zyJmXzjRgLAVBAN/D61No0AufAf8vCOwu8ETiBz+VE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nL59LYNSF6asRfd2b0ltkjqRCd6xnSS5SJLnqemBeFZnCYkakNN+PslbRIeiJZg4vk6izPQcMbSz+lxYQGK5uGAhhlRKZ0mJ8RQzOPAvPZUczPX/uQIEkdsZn4lGbHOf3OnxZXpYBR89F9PCWVqF1Il0WsWERemR/a80omPYjhg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qRWk4Us4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=LroZJyyveGaGAtL+3JB1pw5xcFxrLApKD6qLYdOvsT6I8kmrOUHEuqgFCSFzpctmbPj4NqwJ4ybx7J+gKWHsIMejL2p9m+ji49/frJId8LsB3ZQ+0lAmvgS99sWQW3gvt70PuEkqsMKxgC/v/WS0azAMC1sQOkRzlzzyyQRUXYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b7SWg0Gm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qRWk4Us4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F07C11F000E9;
-	Thu, 30 Jul 2026 14:39:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b7SWg0Gm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F10001F000E9;
+	Thu, 30 Jul 2026 14:39:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422341;
-	bh=Vpet26Ou2hoYnBg1a2RP8xab9zKxgbZkgA9lUoHZZqI=;
+	s=korg; t=1785422344;
+	bh=vYhcahZpp6GnrNFp13coiZXsBgSzkAMIDp7I5QjsS6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qRWk4Us4RKuYp4IlJB0LZFDns9Y8Ea/4qjafNr/jsbFr2dZXmi5s7WiE3Bkvk3BQZ
-	 1OcNZjrqE/K3sb255iJzQUlpnwVm3/BFm5mrKQIJ5grmnoBmagG4/7t8HrjsZgCPsQ
-	 8H/GLDmIAYdS8A2dUDdNtapbZvMkzdG0OOgPbHcY=
+	b=b7SWg0GmyZuiF/f4YT8ryk1YU+EVU91LCxP7Wx+33bx3HAIHsxctvcY1ma7tZY3B+
+	 m/Qj2oPDwXj4qog9QyNcaUHsT9AbqZsASq3KgMRSBhC/mYtkLrgFHlb+pPW57Ltyyg
+	 GcH97fZIjor6qD9X56E/YRvUE3VHiqKb1gtdAt28=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Hodo <martin.hodo@intel.com>,
+	Matthew Auld <matthew.auld@intel.com>,
+	Zongyao Bai <zongyao.bai@intel.com>,
 	Matthew Brost <matthew.brost@intel.com>,
-	Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
 	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>
-Subject: [PATCH 7.1 403/744] drm/xe/vm: Fix BO prefetch with CONSULT_MEM_ADVISE_PREF_LOC
-Date: Thu, 30 Jul 2026 16:11:16 +0200
-Message-ID: <20260730141452.858712478@linuxfoundation.org>
+Subject: [PATCH 7.1 404/744] drm/xe/pt: Reset current_op in xe_pt_update_ops_init()
+Date: Thu, 30 Jul 2026 16:11:17 +0200
+Message-ID: <20260730141452.879179208@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -53,70 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
+From: Zongyao Bai <zongyao.bai@intel.com>
 
-commit 7bc597ce74bab4153b2009c92eccf889e9d74044 upstream.
+commit 6384271ac1ac0099198d15df79212a19ebdb929d upstream.
 
-When prefetch region is DRM_XE_CONSULT_MEM_ADVISE_PREF_LOC for a BO VMA,
-the code used it as an index into region_to_mem_type[], causing an
-out-of-bounds access since the value is -1.
+xe_pt_update_ops_init() fails to reset current_op to 0. On the
+vm_bind path, ops_execute() calls xe_pt_update_ops_prepare() inside
+the xe_validation_guard() / drm_exec_until_all_locked() loop. When
+that loop retries due to lock contention or OOM eviction
+(drm_exec_retry_on_contention() / xe_validation_retry_on_oom()),
+xe_pt_update_ops_prepare() runs again on the same vops, and each
+call to bind_op_prepare() increments current_op without resetting it.
 
-Resolve the preferred location for BO VMAs directly: local VRAM on dGFX
-(using the BO's tile placement) or system memory on iGPU.
+After N retries current_op exceeds the array size allocated by
+xe_vma_ops_alloc(), causing an out-of-bounds write into
+SLUB-poisoned memory and a subsequent UAF crash in
+xe_migrate_update_pgtables_cpu() when reading the corrupted pt_op->bind.
 
-Discovered using AI-assisted static analysis confirmed by Intel Product
-Security.
+Also reset needs_svm_lock and needs_invalidation which are derived in
+the same prepare pass and would otherwise cause wrong migrate ops
+selection and redundant TLB invalidation on retry.
 
-v2:
--Fix null dereference
+Fix this by resetting current_op, needs_svm_lock and needs_invalidation
+in xe_pt_update_ops_init().
 
-Reported-by: Martin Hodo <martin.hodo@intel.com>
-Fixes: c1bb69a2e8e2 ("drm/xe/svm: Consult madvise preferred location in prefetch")
-Cc: Matthew Brost <matthew.brost@intel.com>
+v2 (Matt):
+   - Add details in commit message.
+   - Add Fixes tag and Cc to stable@vger.kernel.org
+
+Fixes: e8babb280b5e ("drm/xe: Convert multiple bind ops into single job")
+Suggested-by: Matthew Auld <matthew.auld@intel.com>
 Cc: stable@vger.kernel.org
+Assisted-by: GitHub-Copilot:claude-sonnet-4.6
+Signed-off-by: Zongyao Bai <zongyao.bai@intel.com>
 Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20260624174943.2808767-2-himal.prasad.ghimiray@intel.com
-Signed-off-by: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
-(cherry picked from commit d9a4906ac03be9f6ed3f3b45c56c866b867fd75b)
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://patch.msgid.link/20260714232433.2737533-1-zongyao.bai@intel.com
+(cherry picked from commit 046045543e530605c441063535e7dca0075369a6)
 Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_vm.c |   25 ++++++++++++++++++++-----
- 1 file changed, 20 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/xe/xe_pt.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/gpu/drm/xe/xe_vm.c
-+++ b/drivers/gpu/drm/xe/xe_vm.c
-@@ -3256,11 +3256,26 @@ static int op_lock_and_prep(struct drm_e
- 						    .request_decompress = false,
- 						    .check_purged = true,
- 					    });
--		if (!err && !xe_vma_has_no_bo(vma))
--			err = xe_bo_migrate(xe_vma_bo(vma),
--					    region_to_mem_type[region],
--					    NULL,
--					    exec);
-+		if (!err && !xe_vma_has_no_bo(vma)) {
-+			struct xe_bo *bo = xe_vma_bo(vma);
-+			u32 mem_type;
-+
-+			if (region == DRM_XE_CONSULT_MEM_ADVISE_PREF_LOC) {
-+				unsigned int i;
-+
-+				mem_type = XE_PL_TT;
-+				for (i = 0; i < bo->placement.num_placement; i++) {
-+					if (mem_type_is_vram(bo->placements[i].mem_type)) {
-+						mem_type = bo->placements[i].mem_type;
-+						break;
-+					}
-+				}
-+			} else {
-+				mem_type = region_to_mem_type[region];
-+			}
-+
-+			err = xe_bo_migrate(bo, mem_type, NULL, exec);
-+		}
- 		break;
- 	}
- 	default:
+--- a/drivers/gpu/drm/xe/xe_pt.c
++++ b/drivers/gpu/drm/xe/xe_pt.c
+@@ -2364,8 +2364,11 @@ static void
+ xe_pt_update_ops_init(struct xe_vm_pgtable_update_ops *pt_update_ops)
+ {
+ 	init_llist_head(&pt_update_ops->deferred);
++	pt_update_ops->current_op = 0;
+ 	pt_update_ops->start = ~0x0ull;
+ 	pt_update_ops->last = 0x0ull;
++	pt_update_ops->needs_svm_lock = false;
++	pt_update_ops->needs_invalidation = false;
+ 	xe_page_reclaim_list_init(&pt_update_ops->prl);
+ }
+ 
 
 
