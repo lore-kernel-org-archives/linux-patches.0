@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B0B8413D8F;
-	Thu, 30 Jul 2026 14:30:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15308413D8F;
+	Thu, 30 Jul 2026 14:30:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421829; cv=none; b=e4ndBiV2T3S5lrHsMsXkJ0f7JwQppVgDuxtRNvTZ07RtizZTgo/qKlFB2BGyr8NqnLDo2oU5vemtuvX0hEnJ7AM5CadhUXtInphJY4J2akh4gzPSTurfMyEtSKmDLB3cJ1dviNHt0ueodutxPQmyaOMZ2r+hayeVXmPL08dPJt0=
+	t=1785421833; cv=none; b=CRgzpu8pcCZORCdvOO7WwQYp5N5T0h7FiAa3mFKIq7zTfRaHoN6loUSHzlkOvnOgpqp+yLjINawnsi6ISaYzFo+PSEUukZUxQeLNVYObKbjByKOgSoQ8VS2boevChB0tMjjBuUuOVkpETN8wWEjoAMx57BcwV5eSCywdV8utFzE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421829; c=relaxed/simple;
-	bh=jqVXvGUhiPP31K9ApCJApPuvwoCE3H2pSqWx2MxCLVo=;
+	s=arc-20240116; t=1785421833; c=relaxed/simple;
+	bh=roErQdspXCaMJW6Ry4h0umpxKzBA9OmqLsl6enepUOk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I5YMaCeksQPLHVHl/NKHRwQ1xQwgZh7WyJY8WGudj01FVaLXHTMT7ce0ItzRwGECLl3hkZ4K/VBFamIylcho7n6CSB4vtLt8DdnOuPf5VzGh6BGoUBWHbT5h+wr0otDEJQqDJNraHxL6r3P0PBZbp0+87uLj6/H4IYIHNiahihU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Olx8MJvu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZofFs/fit9FmwY6sZn1esUcCJbpY2P2+RfBgKY7kn+uh/BptHMobZ19r3BlG5ZRxsNOkTjCk+v/EcMyLbFClJUxSZ5IbR6kvXzZKn/DCaH1eOHeyK7v0Go5T040IXudH3q50edlF640n2MYq9+yz7HYMgdU7VfeklF2yZLu+pVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vLwBF3oa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Olx8MJvu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86A391F000E9;
-	Thu, 30 Jul 2026 14:30:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vLwBF3oa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39D7A1F000E9;
+	Thu, 30 Jul 2026 14:30:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421828;
-	bh=tKuxo4Yr2zFtdKT0BVwEX4580e9q7xWobUdwCWD9KfY=;
+	s=korg; t=1785421831;
+	bh=HTqC7mbyiZiqqDxSGmlnCpdjgJI69ryzZdY5qx0ovyE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Olx8MJvu2IrErtKb5AkfJCd4P4H+4tOAFqmH/uNMUq6sjeo9SQuE5Yxfdy/bqxOEm
-	 Li4/et/+ZT+kBk8czdtSACMr6eXmwi4cXS29mN5QeokgeGaQ8Mhe4SrbaqTeFj3Tyq
-	 jsrcGxKlIntA3qqwPSXJchHb6FaqpsTliqCI+Y0g=
+	b=vLwBF3oatYgDvrZfCG8kyNc9XErtYR3jIqFf9P91a71ORCopS5JI55T52QXGcx2mh
+	 mrIZChBJmAnHARMZ9XUTfyK+f3ttvaWpLhjKl2f2Jqj/aV14tefhlg5X0i5M7zgvJv
+	 M3kUlcoJMBYY6CB2VXJ1dOMs9+Z6rBvSQ8bOONpc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qianheng Peng <pengqh1@chinatelecom.cn>,
-	Zhaolong Zhang <zhangzl68@chinatelecom.cn>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
+	Allison Henderson <achender@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 235/744] bonding: fix devconf_all NULL dereference when IPv6 is disabled
-Date: Thu, 30 Jul 2026 16:08:28 +0200
-Message-ID: <20260730141449.289224047@linuxfoundation.org>
+Subject: [PATCH 7.1 236/744] rds: drop incoming messages that cross network namespace boundaries
+Date: Thu, 30 Jul 2026 16:08:29 +0200
+Message-ID: <20260730141449.309882194@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -53,72 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhaolong Zhang <zhangzl68@chinatelecom.cn>
+From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
 
-[ Upstream commit 1c975de3343cdef506f2eecc833cc1f14b0401c4 ]
+[ Upstream commit 5521ae71e32a8069ed4ca6e792179dc57bc43ab2 ]
 
-When booting with the 'ipv6.disable=1' parameter, the devconf_all is
-never initialized because inet6_init() exits before addrconf_init() is
-called which initializes it. bond_send_validate(), however, will still
-call bond_ns_send_all() even ipv6 is indeed disabled. It will lead to
-NULL derefence of net->ipv6.devconf_all in ip6_pol_route().
+rds_find_bound() looks up the destination socket using a global
+rhashtable keyed solely on (addr, port, scope_id).  Network namespaces
+are not part of the key, so a sender in netns A can deliver an incoming
+message (inc) to a socket that lives in a different netns B.
 
- BUG: kernel NULL pointer dereference, address: 000000000000000c
- [...]
- Workqueue: bond0 bond_arp_monitor [bonding]
- RIP: 0010:ip6_pol_route+0x69/0x480
- [...]
- Call Trace:
-  <TASK>
-  ? srso_return_thunk+0x5/0x5f
-  ? __pfx_ip6_pol_route_output+0x10/0x10
-  fib6_rule_lookup+0xfe/0x260
-  ? wakeup_preempt+0x8a/0x90
-  ? srso_return_thunk+0x5/0x5f
-  ? srso_return_thunk+0x5/0x5f
-  ? sched_balance_rq+0x369/0x810
-  ip6_route_output_flags+0xd7/0x170
-  bond_ns_send_all+0xde/0x280 [bonding]
-  bond_ab_arp_probe+0x296/0x320 [bonding]
-  ? srso_return_thunk+0x5/0x5f
-  bond_activebackup_arp_mon+0xb4/0x2c0 [bonding]
-  process_one_work+0x196/0x370
-  worker_thread+0x1af/0x320
-  ? srso_return_thunk+0x5/0x5f
-  ? __pfx_worker_thread+0x10/0x10
-  kthread+0xe3/0x120
-  ? __pfx_kthread+0x10/0x10
-  ret_from_fork+0x199/0x260
-  ? __pfx_kthread+0x10/0x10
-  ret_from_fork_asm+0x1a/0x30
-  </TASK>
+When this happens, inc->i_conn points to an rds_connection whose c_net
+is netns A, but the receiving rs lives in netns B.  Once the child
+process that created netns A exits, cleanup_net() calls
+rds_loop_exit_net() -> rds_loop_kill_conns() -> rds_conn_destroy(),
+freeing that connection.  If the survivor socket in netns B still holds
+the inc, any subsequent dereference of inc->i_conn is a use-after-free.
 
-Fix this by adding ipv6_mod_enabled() condition check in the caller.
+There are two dangerous sites in rds_clear_recv_queue():
+  1. inc->i_conn->c_lcong (offset 88 of freed rds_connection, size 200)
+     read via rds_recv_rcvbuf_delta() -- confirmed by KASAN.
+  2. inc->i_conn->c_trans->inc_free(inc) (function pointer at offset 80)
+     called via rds_inc_put() when the inc refcount reaches zero -- same
+     race window, potential call-through-freed-object primitive.
 
-Fixes: 4e24be018eb9 ("bonding: add new parameter ns_targets")
-Signed-off-by: Qianheng Peng <pengqh1@chinatelecom.cn>
-Signed-off-by: Zhaolong Zhang <zhangzl68@chinatelecom.cn>
-Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
-Link: https://patch.msgid.link/20260707010622.487333-1-zhangzl2013@126.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+The bug is reachable from unprivileged user namespaces
+(CLONE_NEWUSER + CLONE_NEWNET), available since Linux 3.8.
+
+Fix this by rejecting the delivery in rds_recv_incoming() when the
+socket returned by rds_find_bound() belongs to a different network
+namespace than the connection that carried the message.  Use the
+existing rds_conn_net() / sock_net() helpers and net_eq() for the
+comparison.
+
+Fixes: c809195f5523 ("rds: clean up loopback rds_connections on netns deletion")
+Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+Reviewed-by: Allison Henderson <achender@kernel.org>
+Tested-by: Allison Henderson <achender@kernel.org>
+Signed-off-by: Allison Henderson <achender@kernel.org>
+Link: https://patch.msgid.link/20260708024314.601139-1-achender@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_main.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/rds/recv.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index cd9b0a6d652174..75abd6d9af3a4e 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -3446,7 +3446,8 @@ static void bond_send_validate(struct bonding *bond, struct slave *slave)
- {
- 	bond_arp_send_all(bond, slave);
- #if IS_ENABLED(CONFIG_IPV6)
--	bond_ns_send_all(bond, slave);
-+	if (likely(ipv6_mod_enabled()))
-+		bond_ns_send_all(bond, slave);
- #endif
- }
+diff --git a/net/rds/recv.c b/net/rds/recv.c
+index 4b3f9e4a8bfda5..cf3884d8793195 100644
+--- a/net/rds/recv.c
++++ b/net/rds/recv.c
+@@ -399,6 +399,21 @@ void rds_recv_incoming(struct rds_connection *conn, struct in6_addr *saddr,
+ 		goto out;
+ 	}
+ 
++	/*
++	 * rds_find_bound() uses a global (netns-agnostic) hash table.
++	 * An RDS connection created in netns A can match a socket bound
++	 * in the init netns, delivering inc cross-netns with inc->i_conn
++	 * pointing into netns A.  When cleanup_net() then frees that conn,
++	 * any subsequent dereference of inc->i_conn is a use-after-free.
++	 * Drop the inc if the receiving socket lives in a different netns.
++	 */
++	if (!net_eq(sock_net(rds_rs_to_sk(rs)), rds_conn_net(conn))) {
++		rds_stats_inc(s_recv_drop_no_sock);
++		rds_sock_put(rs);
++		rs = NULL;
++		goto out;
++	}
++
+ 	/* Process extension headers */
+ 	rds_recv_incoming_exthdrs(inc, rs);
  
 -- 
 2.53.0
