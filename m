@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D10F3D75C4;
-	Thu, 30 Jul 2026 14:42:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C4C433D4E2;
+	Thu, 30 Jul 2026 14:42:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422547; cv=none; b=Dc20m+JAa8WYA3Ad3P0oxB/TsVcZZZT2qm9IwZSYfWYVXttwjlEprM9CItd2XCgM9hykRkfVa1UZSQP9D5YMpIb8cVMFw1gXYE4ymlKiSqR7lktv08j29k10H1jtD+2J9LxxRnxHY3nU2NG3aZIdGsStnA/0IcCbFbDPwygESC8=
+	t=1785422550; cv=none; b=kuq12BYi+dgZToHhf0sgg6bO+3YECplLrZHvMvYPptXydOZ8p9FxiSvRqa2EFDwTo8iQe4lJTug24HV+1vK3H2jzBuDtWWK07EmjHYC1CTrMNq+WMS/pugLYrPU2jX/7vocP9f44lNuV3/Q+HX0731lecVVbP2W6cWaiLSJIBvY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422547; c=relaxed/simple;
-	bh=5HPOGKj3157Ib2r4D13wiOImm1bik/lJwDTQtP1ElE4=;
+	s=arc-20240116; t=1785422550; c=relaxed/simple;
+	bh=iU3XaNIuDRvTlFZTW3igLQ0CeQvRYRRzMf85z9LiqKI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rzvol4GiwIypl/MIrROIebLyCHGu3KNfw+7Xp/KBFqiZorCXPFLAZsoCUijMGki/ptFIHSkRCYsrYwhRcFzpLmY7zDT5gssdQkwPSzheCxzsZ3oLdwt/xlgsqckDxkG8hVSv40ouQTJcfmb1GfO8IxXoPTPz/v5Tqvta1bY/T7A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YuCDmqRk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cf1Lu9S/nIoLnQ/Sj/mu/0FsIVIwvYMhGjawYEIkd2Bz7F/+yX/Io9KbRoAMsdP2BsKDDhDHPiBWjaWDrWfCMDkcxKHuBUFMfTD0iPPF6WN39FdPHEIzwgt45gv9NsyNB2m9hoA+9pqYVhYhUbFzSQKBMXIzpYgg20PEnGOS6R4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1PJKdguS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YuCDmqRk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D620B1F000E9;
-	Thu, 30 Jul 2026 14:42:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1PJKdguS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8A341F000E9;
+	Thu, 30 Jul 2026 14:42:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422546;
-	bh=RXI6/BFma8j34x6tMhVXTZrWq5YAkjJ/ttr8M5B0EFk=;
+	s=korg; t=1785422549;
+	bh=kezxludmddGz5kuzLZTX3fsvYNHnImGpqQe4p6iIXFE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YuCDmqRkJC0M2lkxeVFs9C62W/7zlhHxTPJGcVBeZ19G3VuNQjKgb4wA2PGcwn9TT
-	 j4YN0gxnxrtzeIcFHpEf7q2dmCRcO9sBvQJfu6avBhuksohTmawVszj7N1S3wObovy
-	 lDrATr/DjS53mY5sBsLPyy2Silom/WSzLp0D5ViI=
+	b=1PJKdguST7eXWmbhT6uwM3GJM5yS22N9Sdq1LyVooeNi/QvqVX9bx5igYwRk8QVe+
+	 RgIsFeVMqLfDxMtvJD6CVNQTgv0e/G2X6jHMhIq219bLuUjdQscLtBiuCB7Ngvsjer
+	 +c7uX9GRhe+4rzGv4qI2ky42qmmFN5eqXT2gKHTI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.1 459/744] drm/amdgpu: Disable PCIe dynamic speed switching on Ryzen Pinnacle Ridge
-Date: Thu, 30 Jul 2026 16:12:12 +0200
-Message-ID: <20260730141454.052402483@linuxfoundation.org>
+	Myeonghun Pak <mhun512@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 7.1 477/744] media: cec: seco: unregister adapter on IR probe failure
+Date: Thu, 30 Jul 2026 16:12:30 +0200
+Message-ID: <20260730141454.433445758@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -51,47 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-commit 0148ac33547b9af1c5a7f3bb6e5baffcb6e9fac2 upstream.
+commit c3a78691be8245e52ced489f268e413f18061ac2 upstream.
 
-AMD Ryzen Pinnacle Ridge (Zen+, family 0x17 model 0x08) CPUs have
-PCI controllers that don't support PCIe dynamic speed switching,
-causing system freezes during GPU initialization when enabled.
+If secocec_ir_probe() fails after cec_register_adapter() succeeds,
+probe returns an error and the driver remove callback is not called.
+The current unwind path unregisters the notifier and then falls through
+to cec_delete_adapter(), which violates the CEC adapter lifetime rules
+after a successful registration.
 
-Disable dynamic speed switching when this CPU is detected.
+Add a registered-adapter unwind path that unregisters the notifier and
+the adapter instead.
 
-Assisted-by: Claude:sonnet
-Fixes: 466a7d115326 ("drm/amd: Use the first non-dGPU PCI device for BW limits")
-Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/5436
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
-Link: https://patch.msgid.link/20260709031520.841611-1-mario.limonciello@amd.com
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 9ceb4e034a327a04155f32f1cd1a5031dfa5fe02)
+Fixes: daef95769b3a ("media: seco-cec: add Consumer-IR support")
 Cc: stable@vger.kernel.org
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/media/cec/platform/seco/seco-cec.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -1318,6 +1318,15 @@ static bool amdgpu_device_pcie_dynamic_s
+--- a/drivers/media/cec/platform/seco/seco-cec.c
++++ b/drivers/media/cec/platform/seco/seco-cec.c
+@@ -649,7 +649,7 @@ static int secocec_probe(struct platform
  
- 	if (c->x86_vendor == X86_VENDOR_INTEL)
- 		return false;
-+
-+	/*
-+	 * AMD Ryzen Pinnacle Ridge (Zen+, family 0x17 model 0x08) CPUs don't
-+	 * support PCIe dynamic speed switching.
-+	 * https://gitlab.freedesktop.org/drm/amd/-/work_items/5436
-+	 */
-+	if (c->x86_vendor == X86_VENDOR_AMD && c->x86 == 0x17 &&
-+	    c->x86_model == 0x08)
-+		return false;
- #endif
- 	return true;
- }
+ 	ret = secocec_ir_probe(secocec);
+ 	if (ret)
+-		goto err_notifier;
++		goto err_unregister_adapter;
+ 
+ 	platform_set_drvdata(pdev, secocec);
+ 
+@@ -657,6 +657,10 @@ static int secocec_probe(struct platform
+ 
+ 	return ret;
+ 
++err_unregister_adapter:
++	cec_notifier_cec_adap_unregister(secocec->notifier, secocec->cec_adap);
++	cec_unregister_adapter(secocec->cec_adap);
++	goto err;
+ err_notifier:
+ 	cec_notifier_cec_adap_unregister(secocec->notifier, secocec->cec_adap);
+ err_delete_adapter:
 
 
