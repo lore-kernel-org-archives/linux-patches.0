@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2C0B441600;
-	Thu, 30 Jul 2026 15:55:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C98EC4418D7;
+	Thu, 30 Jul 2026 15:55:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426906; cv=none; b=t5t3SyW0APhcfmtHOl7Thh/jXlHfs/jKpcMbOzmP+jeShBXXaR+ymRGs/p/MCcF2kAJ0f6S08FNOLPihTQQ5vd+dmTEdiQbYX9p2vEEBRUOSD7Tq6rPPvSyEGTwbdomw2kOl6tEaNFVqm8NnbsjvSlK0ZONajcKK1ojOSq4PWiY=
+	t=1785426909; cv=none; b=fnIN9lxQwk5AkwuvQDKA/V7Og8TGzPOt2ONs0iLrIrTvJoKpsnhhQ/FklKWnS24pAS2xcceo9/Gb+ffxxbbxGisqqADkgv4tXBvbTQIv8froFFiLg/DRHrYQGnrgOSY47ABUMBUAdDeN23Qxn/w9/SYF5uYe0GmgnhkZrxbFcRU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426906; c=relaxed/simple;
-	bh=salZJJtpE/TxYhiooDc5IBqrUzCiYkx+1H0cX6ZhGwM=;
+	s=arc-20240116; t=1785426909; c=relaxed/simple;
+	bh=TlYN2ZNCJ/tpOYo7pWkkeOyzwSUxYl2pTCPrtJt5yew=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gr6vFmP1kC/FQVzXF9F35/bF3QRfJKZh+4CwIDrKLKPF4ClVWdpMEe6bER1mqp8wGup8xVATMrT/4nbJCj4iCSdI3ZHKgLwyjeRFieraYoIFFm3kInr7ALxs6hg8RBIOwIi+20qTiZ/DpVIPA1rwFzKDWFLobX7reBgdLJKIQtk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=APrLw9XR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ADVFzJtWT+z+GhZQtPrWbVPhDlv1wyfPuS4ECZSCXSiJlYmyo+J0PE5dp8Mwb6bUIe8EBC5XOcr2b0RTmyQWiMUQtbgASsshaHM001qIPgAiXwyL7QqXuMKX2hrnlXD9seCYYs8pWG3h98j5f829KoLbIs4hBXtA/wf6swXafY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RB7waQul; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="APrLw9XR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3816C1F00A3A;
-	Thu, 30 Jul 2026 15:55:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RB7waQul"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 284D51F000E9;
+	Thu, 30 Jul 2026 15:55:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426904;
-	bh=Aosop07yeNEoiLA9tvGT8w/m4WrgB/VqBZSIjpiNGLg=;
+	s=korg; t=1785426907;
+	bh=EIFlEO7M0f2JN7e7m+d75GI/pu/R8RpIXLU+2CElomM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=APrLw9XRhHZzwqwehn5A8/UeDvRG+hIIcbAbJi4zluGm/AnUY8Bgv2ATq5CTsOBrU
-	 YywyN0ak4HxaO40AAYg4BFvYJVOGXufWWcVx/69Ljdu5SwaSUhVBK8/NWn3fpRyH/U
-	 eoRSRAbdagkpHRuD01oM1c0dRrSKuONGU4eAdnEE=
+	b=RB7waQulT2ijGbNyuAdksCr38qnaL5HonHJiY8WWMXdPOci6Ef35panZw9e3kDolc
+	 zJLYONnrGGTmfE501Kibw90QQ/jyJZjd0q/+bjw0xcfn0FjxgfGWL+5m1e5QLDOKth
+	 NbWDSiXViR1vPHl84WZfDjGiQGoGsWrVhukhri4Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	stable <stable@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	Johan Hovold <johan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 583/602] USB: gadget: Use str_enable_disable-like helpers
-Date: Thu, 30 Jul 2026 16:16:15 +0200
-Message-ID: <20260730141448.305600557@linuxfoundation.org>
+Subject: [PATCH 6.12 584/602] USB: gadget: fsl-udc: fix dev_printk() device
+Date: Thu, 30 Jul 2026 16:16:16 +0200
+Message-ID: <20260730141448.326925464@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -44,265 +46,426 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 5b6dc50e9ed870fffbf2ae6de77b30fb0d15eab8 ]
+[ Upstream commit c4dd150fceab281496acb3a643ae712aacb74864 ]
 
-Replace ternary (condition ? "enable" : "disable") syntax with helpers
-from string_choices.h because:
-1. Simple function call with one argument is easier to read.  Ternary
-   operator has three arguments and with wrapping might lead to quite
-   long code.
-2. Is slightly shorter thus also easier to read.
-3. It brings uniformity in the text - same string.
-4. Allows deduping by the linker, which results in a smaller binary
-   file.
+A change replacing custom printk() macros with dev_printk() incorrectly
+used the gadget struct device instead of the controller struct device
+(including for messages printed before the gadget device name has been
+initialised).
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20250114-str-enable-disable-usb-v1-5-c8405df47c19@linaro.org
+Switch to using the controller platform device with dev_printk() so that
+the controller device and driver names are included in log messages as
+expected.
+
+Fixes: 6025f20f16c2 ("usb: gadget: fsl-udc: Replace custom log wrappers by dev_{err,warn,dbg,vdbg}")
+Cc: stable <stable@kernel.org>
+Cc: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Acked-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Link: https://patch.msgid.link/20260702141536.90887-4-johan@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: c4dd150fceab ("USB: gadget: fsl-udc: fix dev_printk() device")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_ecm.c         |    4 ++--
- drivers/usb/gadget/function/f_ncm.c         |    3 ++-
- drivers/usb/gadget/function/u_serial.c      |    3 ++-
- drivers/usb/gadget/legacy/inode.c           |    3 ++-
- drivers/usb/gadget/udc/aspeed-vhub/hub.c    |    3 ++-
- drivers/usb/gadget/udc/at91_udc.c           |    3 ++-
- drivers/usb/gadget/udc/cdns2/cdns2-gadget.c |   13 +++++++------
- drivers/usb/gadget/udc/dummy_hcd.c          |    3 ++-
- drivers/usb/gadget/udc/fsl_udc_core.c       |    3 ++-
- drivers/usb/gadget/udc/omap_udc.c           |    3 ++-
- drivers/usb/gadget/udc/pxa27x_udc.c         |    3 ++-
- 11 files changed, 27 insertions(+), 17 deletions(-)
+ drivers/usb/gadget/udc/fsl_udc_core.c |   92 +++++++++++++++-------------------
+ drivers/usb/gadget/udc/fsl_usb2_udc.h |    1 
+ 2 files changed, 43 insertions(+), 50 deletions(-)
 
---- a/drivers/usb/gadget/function/f_ecm.c
-+++ b/drivers/usb/gadget/function/f_ecm.c
-@@ -14,6 +14,7 @@
- #include <linux/module.h>
- #include <linux/device.h>
- #include <linux/etherdevice.h>
-+#include <linux/string_choices.h>
- 
- #include <linux/usb/gadget.h>
- 
-@@ -390,8 +391,7 @@ static void ecm_do_notify(struct f_ecm *
- 		event->wLength = 0;
- 		req->length = sizeof *event;
- 
--		DBG(cdev, "notify connect %s\n",
--				ecm->is_open ? "true" : "false");
-+		DBG(cdev, "notify connect %s\n", str_true_false(ecm->is_open));
- 		ecm->notify_state = ECM_NOTIFY_SPEED;
- 		break;
- 
---- a/drivers/usb/gadget/function/f_ncm.c
-+++ b/drivers/usb/gadget/function/f_ncm.c
-@@ -18,6 +18,7 @@
- #include <linux/device.h>
- #include <linux/etherdevice.h>
- #include <linux/crc32.h>
-+#include <linux/string_choices.h>
- 
- #include <linux/usb/cdc.h>
- #include <linux/usb/gadget.h>
-@@ -560,7 +561,7 @@ static void ncm_do_notify(struct f_ncm *
- 		req->length = sizeof *event;
- 
- 		DBG(cdev, "notify connect %s\n",
--				ncm->is_open ? "true" : "false");
-+				str_true_false(ncm->is_open));
- 		ncm->notify_state = NCM_NOTIFY_NONE;
- 		break;
- 
---- a/drivers/usb/gadget/function/u_serial.c
-+++ b/drivers/usb/gadget/function/u_serial.c
-@@ -21,6 +21,7 @@
- #include <linux/tty.h>
- #include <linux/tty_flip.h>
- #include <linux/slab.h>
-+#include <linux/string_choices.h>
- #include <linux/export.h>
- #include <linux/module.h>
- #include <linux/console.h>
-@@ -1541,7 +1542,7 @@ static int __init userial_init(void)
- 
- 	pr_debug("%s: registered %d ttyGS* device%s\n", __func__,
- 			MAX_U_SERIAL_PORTS,
--			(MAX_U_SERIAL_PORTS == 1) ? "" : "s");
-+			str_plural(MAX_U_SERIAL_PORTS));
- 
- 	return status;
- fail:
---- a/drivers/usb/gadget/legacy/inode.c
-+++ b/drivers/usb/gadget/legacy/inode.c
-@@ -20,6 +20,7 @@
- #include <linux/uaccess.h>
- #include <linux/sched.h>
- #include <linux/slab.h>
-+#include <linux/string_choices.h>
- #include <linux/poll.h>
- #include <linux/kthread.h>
- #include <linux/aio.h>
-@@ -1182,7 +1183,7 @@ ep0_fasync (int f, struct file *fd, int
- {
- 	struct dev_data		*dev = fd->private_data;
- 	// caller must F_SETOWN before signal delivery happens
--	VDEBUG (dev, "%s %s\n", __func__, on ? "on" : "off");
-+	VDEBUG(dev, "%s %s\n", __func__, str_on_off(on));
- 	return fasync_helper (f, fd, on, &dev->fasync);
- }
- 
---- a/drivers/usb/gadget/udc/aspeed-vhub/hub.c
-+++ b/drivers/usb/gadget/udc/aspeed-vhub/hub.c
-@@ -22,6 +22,7 @@
- #include <linux/usb/gadget.h>
- #include <linux/of.h>
- #include <linux/regmap.h>
-+#include <linux/string_choices.h>
- #include <linux/dma-mapping.h>
- #include <linux/bcd.h>
- #include <linux/version.h>
-@@ -219,7 +220,7 @@ static int ast_vhub_hub_dev_feature(stru
- 	if (wValue == USB_DEVICE_REMOTE_WAKEUP) {
- 		ep->vhub->wakeup_en = is_set;
- 		EPDBG(ep, "Hub remote wakeup %s\n",
--		      is_set ? "enabled" : "disabled");
-+		      str_enabled_disabled(is_set));
- 		return std_req_complete;
- 	}
- 
---- a/drivers/usb/gadget/udc/at91_udc.c
-+++ b/drivers/usb/gadget/udc/at91_udc.c
-@@ -16,6 +16,7 @@
- #include <linux/delay.h>
- #include <linux/ioport.h>
- #include <linux/slab.h>
-+#include <linux/string_choices.h>
- #include <linux/errno.h>
- #include <linux/list.h>
- #include <linux/interrupt.h>
-@@ -131,7 +132,7 @@ static void proc_ep_show(struct seq_file
- 	seq_printf(s, "csr %08x rxbytes=%d %s %s %s" EIGHTBITS "\n",
- 		csr,
- 		(csr & 0x07ff0000) >> 16,
--		(csr & (1 << 15)) ? "enabled" : "disabled",
-+		str_enabled_disabled(csr & (1 << 15)),
- 		(csr & (1 << 11)) ? "DATA1" : "DATA0",
- 		types[(csr & 0x700) >> 8],
- 
---- a/drivers/usb/gadget/udc/cdns2/cdns2-gadget.c
-+++ b/drivers/usb/gadget/udc/cdns2/cdns2-gadget.c
-@@ -29,6 +29,7 @@
- #include <linux/pm_runtime.h>
- #include <linux/interrupt.h>
- #include <linux/property.h>
-+#include <linux/string_choices.h>
- #include <linux/dmapool.h>
- #include <linux/iopoll.h>
- 
-@@ -2233,12 +2234,12 @@ static int cdns2_init_eps(struct cdns2_d
- 		dev_dbg(pdev->dev, "Init %s, SupType: CTRL: %s, INT: %s, "
- 			"BULK: %s, ISOC %s, SupDir IN: %s, OUT: %s\n",
- 			pep->name,
--			(pep->endpoint.caps.type_control) ? "yes" : "no",
--			(pep->endpoint.caps.type_int) ? "yes" : "no",
--			(pep->endpoint.caps.type_bulk) ? "yes" : "no",
--			(pep->endpoint.caps.type_iso) ? "yes" : "no",
--			(pep->endpoint.caps.dir_in) ? "yes" : "no",
--			(pep->endpoint.caps.dir_out) ? "yes" : "no");
-+			str_yes_no(pep->endpoint.caps.type_control),
-+			str_yes_no(pep->endpoint.caps.type_int),
-+			str_yes_no(pep->endpoint.caps.type_bulk),
-+			str_yes_no(pep->endpoint.caps.type_iso),
-+			str_yes_no(pep->endpoint.caps.dir_in),
-+			str_yes_no(pep->endpoint.caps.dir_out));
- 
- 		INIT_LIST_HEAD(&pep->pending_list);
- 		INIT_LIST_HEAD(&pep->deferred_list);
---- a/drivers/usb/gadget/udc/dummy_hcd.c
-+++ b/drivers/usb/gadget/udc/dummy_hcd.c
-@@ -28,6 +28,7 @@
- #include <linux/delay.h>
- #include <linux/ioport.h>
- #include <linux/slab.h>
-+#include <linux/string_choices.h>
- #include <linux/errno.h>
- #include <linux/init.h>
- #include <linux/hrtimer.h>
-@@ -649,7 +650,7 @@ static int dummy_enable(struct usb_ep *_
- 		desc->bEndpointAddress & 0x0f,
- 		(desc->bEndpointAddress & USB_DIR_IN) ? "in" : "out",
- 		usb_ep_type_string(usb_endpoint_type(desc)),
--		max, ep->stream_en ? "enabled" : "disabled");
-+		max, str_enabled_disabled(ep->stream_en));
- 
- 	/* at this point real hardware should be NAKing transfers
- 	 * to that endpoint, until a buffer is queued to it.
 --- a/drivers/usb/gadget/udc/fsl_udc_core.c
 +++ b/drivers/usb/gadget/udc/fsl_udc_core.c
-@@ -22,6 +22,7 @@
- #include <linux/errno.h>
- #include <linux/err.h>
- #include <linux/slab.h>
-+#include <linux/string_choices.h>
- #include <linux/init.h>
- #include <linux/list.h>
- #include <linux/interrupt.h>
-@@ -1181,7 +1182,7 @@ static int fsl_vbus_session(struct usb_g
+@@ -184,7 +184,7 @@ __acquires(ep->udc->lock)
+ 	usb_gadget_unmap_request(&ep->udc->gadget, &req->req, ep_is_in(ep));
+ 
+ 	if (status && (status != -ESHUTDOWN))
+-		dev_vdbg(&udc->gadget.dev, "complete %s req %p stat %d len %u/%u\n",
++		dev_vdbg(udc->dev, "complete %s req %p stat %d len %u/%u\n",
+ 			 ep->ep.name, &req->req, status,
+ 			 req->req.actual, req->req.length);
+ 
+@@ -286,7 +286,7 @@ static int dr_controller_setup(struct fs
+ 	timeout = jiffies + FSL_UDC_RESET_TIMEOUT;
+ 	while (fsl_readl(&dr_regs->usbcmd) & USB_CMD_CTRL_RESET) {
+ 		if (time_after(jiffies, timeout)) {
+-			dev_err(&udc->gadget.dev, "udc reset timeout!\n");
++			dev_err(udc->dev, "udc reset timeout!\n");
+ 			return -ETIMEDOUT;
+ 		}
+ 		cpu_relax();
+@@ -309,7 +309,7 @@ static int dr_controller_setup(struct fs
+ 	tmp &= USB_EP_LIST_ADDRESS_MASK;
+ 	fsl_writel(tmp, &dr_regs->endpointlistaddr);
+ 
+-	dev_vdbg(&udc->gadget.dev,
++	dev_vdbg(udc->dev,
+ 		 "vir[qh_base] is %p phy[qh_base] is 0x%8x reg is 0x%8x\n",
+ 		 udc->ep_qh, (int)tmp,
+ 		 fsl_readl(&dr_regs->endpointlistaddr));
+@@ -500,7 +500,7 @@ static void struct_ep_qh_setup(struct fs
+ 		tmp = max_pkt_len << EP_QUEUE_HEAD_MAX_PKT_LEN_POS;
+ 		break;
+ 	default:
+-		dev_vdbg(&udc->gadget.dev, "error ep type is %d\n", ep_type);
++		dev_vdbg(udc->dev, "error ep type is %d\n", ep_type);
+ 		return;
+ 	}
+ 	if (zlt)
+@@ -613,7 +613,7 @@ static int fsl_ep_enable(struct usb_ep *
+ 	spin_unlock_irqrestore(&udc->lock, flags);
+ 	retval = 0;
+ 
+-	dev_vdbg(&udc->gadget.dev, "enabled %s (ep%d%s) maxpacket %d\n",
++	dev_vdbg(udc->dev, "enabled %s (ep%d%s) maxpacket %d\n",
+ 		 ep->ep.name, ep->ep.desc->bEndpointAddress & 0x0f,
+ 		 (desc->bEndpointAddress & USB_DIR_IN) ? "in" : "out",
+ 		 max);
+@@ -634,13 +634,8 @@ static int fsl_ep_disable(struct usb_ep
+ 	int ep_num;
+ 
+ 	ep = container_of(_ep, struct fsl_ep, ep);
+-	if (!_ep || !ep->ep.desc) {
+-		/*
+-		 * dev_vdbg(&udc->gadget.dev, "%s not enabled\n",
+-		 *	 _ep ? ep->ep.name : NULL);
+-		 */
++	if (!_ep || !ep->ep.desc)
+ 		return -EINVAL;
+-	}
+ 
+ 	/* disable ep on controller */
+ 	ep_num = ep_index(ep);
+@@ -664,7 +659,7 @@ static int fsl_ep_disable(struct usb_ep
+ 	ep->stopped = 1;
+ 	spin_unlock_irqrestore(&udc->lock, flags);
+ 
+-	dev_vdbg(&udc->gadget.dev, "disabled %s OK\n", _ep->name);
++	dev_vdbg(udc->dev, "disabled %s OK\n", _ep->name);
+ 	return 0;
+ }
+ 
+@@ -724,9 +719,6 @@ static void fsl_queue_td(struct fsl_ep *
+ {
+ 	u32 temp, bitmask, tmp_stat;
+ 
+-	/* dev_vdbg(&udc->gadget.dev, "QH addr Register 0x%8x\n", dr_regs->endpointlistaddr);
+-	dev_vdbg(&udc->gadget.dev, "ep_qh[%d] addr is 0x%8x\n", i, (u32)&(ep->udc->ep_qh[i])); */
+-
+ 	bitmask = ep_is_in(ep)
+ 		? (1 << (ep_index(ep) + 16))
+ 		: (1 << (ep_index(ep)));
+@@ -813,7 +805,7 @@ static struct ep_td_struct *fsl_build_dt
+ 		*is_last = 0;
+ 
+ 	if ((*is_last) == 0)
+-		dev_vdbg(&udc_controller->gadget.dev, "multi-dtd request!\n");
++		dev_vdbg(udc_controller->dev, "multi-dtd request!\n");
+ 	/* Fill in the transfer size; set active bit */
+ 	swap_temp = ((*length << DTD_LENGTH_BIT_POS) | DTD_STATUS_ACTIVE);
+ 
+@@ -825,7 +817,7 @@ static struct ep_td_struct *fsl_build_dt
+ 
+ 	mb();
+ 
+-	dev_vdbg(&udc_controller->gadget.dev, "length = %d address= 0x%x\n", *length, (int)*dma);
++	dev_vdbg(udc_controller->dev, "length = %d address= 0x%x\n", *length, (int)*dma);
+ 
+ 	return dtd;
+ }
+@@ -876,11 +868,11 @@ fsl_ep_queue(struct usb_ep *_ep, struct
+ 	/* catch various bogus parameters */
+ 	if (!_req || !req->req.complete || !req->req.buf
+ 			|| !list_empty(&req->queue)) {
+-		dev_vdbg(&udc->gadget.dev, "%s, bad params\n", __func__);
++		dev_vdbg(udc->dev, "%s, bad params\n", __func__);
+ 		return -EINVAL;
+ 	}
+ 	if (unlikely(!ep->ep.desc)) {
+-		dev_vdbg(&udc->gadget.dev, "%s, bad ep\n", __func__);
++		dev_vdbg(udc->dev, "%s, bad ep\n", __func__);
+ 		return -EINVAL;
+ 	}
+ 	if (usb_endpoint_xfer_isoc(ep->ep.desc)) {
+@@ -1040,7 +1032,7 @@ static int fsl_ep_set_halt(struct usb_ep
+ 		udc->ep0_dir = 0;
+ 	}
+ out:
+-	dev_vdbg(&udc->gadget.dev, "%s %s halt stat %d\n", ep->ep.name,
++	dev_vdbg(udc->dev, "%s %s halt stat %d\n", ep->ep.name,
+ 		 value ?  "set" : "clear", status);
+ 
+ 	return status;
+@@ -1109,7 +1101,7 @@ static void fsl_ep_fifo_flush(struct usb
+ 		/* Wait until flush complete */
+ 		while (fsl_readl(&dr_regs->endptflush)) {
+ 			if (time_after(jiffies, timeout)) {
+-				dev_err(&udc_controller->gadget.dev,
++				dev_err(udc_controller->dev,
+ 					"ep flush timeout\n");
+ 				return;
+ 			}
+@@ -1182,7 +1174,7 @@ static int fsl_vbus_session(struct usb_g
  
  	udc = container_of(gadget, struct fsl_udc, gadget);
  	spin_lock_irqsave(&udc->lock, flags);
--	dev_vdbg(&gadget->dev, "VBUS %s\n", is_active ? "on" : "off");
-+	dev_vdbg(&gadget->dev, "VBUS %s\n", str_on_off(is_active));
+-	dev_vdbg(&gadget->dev, "VBUS %s\n", str_on_off(is_active));
++	dev_vdbg(udc->dev, "VBUS %s\n", str_on_off(is_active));
  	udc->vbus_active = (is_active != 0);
  	if (can_pullup(udc))
  		fsl_writel((fsl_readl(&dr_regs->usbcmd) | USB_CMD_RUN_STOP),
---- a/drivers/usb/gadget/udc/omap_udc.c
-+++ b/drivers/usb/gadget/udc/omap_udc.c
-@@ -18,6 +18,7 @@
- #include <linux/errno.h>
- #include <linux/delay.h>
- #include <linux/slab.h>
-+#include <linux/string_choices.h>
- #include <linux/timer.h>
- #include <linux/list.h>
- #include <linux/interrupt.h>
-@@ -1248,7 +1249,7 @@ static int omap_vbus_session(struct usb_
+@@ -1548,7 +1540,7 @@ static void ep0_req_complete(struct fsl_
+ 		udc->ep0_state = WAIT_FOR_SETUP;
+ 		break;
+ 	case WAIT_FOR_SETUP:
+-		dev_err(&udc->gadget.dev, "Unexpected ep0 packets\n");
++		dev_err(udc->dev, "Unexpected ep0 packets\n");
+ 		break;
+ 	default:
+ 		ep0stall(udc);
+@@ -1617,7 +1609,7 @@ static int process_ep_req(struct fsl_udc
+ 		errors = hc32_to_cpu(curr_td->size_ioc_sts);
+ 		if (errors & DTD_ERROR_MASK) {
+ 			if (errors & DTD_STATUS_HALTED) {
+-				dev_err(&udc->gadget.dev, "dTD error %08x QH=%d\n", errors, pipe);
++				dev_err(udc->dev, "dTD error %08x QH=%d\n", errors, pipe);
+ 				/* Clear the errors and Halt condition */
+ 				tmp = hc32_to_cpu(curr_qh->size_ioc_int_sts);
+ 				tmp &= ~errors;
+@@ -1628,26 +1620,26 @@ static int process_ep_req(struct fsl_udc
+ 				break;
+ 			}
+ 			if (errors & DTD_STATUS_DATA_BUFF_ERR) {
+-				dev_vdbg(&udc->gadget.dev, "Transfer overflow\n");
++				dev_vdbg(udc->dev, "Transfer overflow\n");
+ 				status = -EPROTO;
+ 				break;
+ 			} else if (errors & DTD_STATUS_TRANSACTION_ERR) {
+-				dev_vdbg(&udc->gadget.dev, "ISO error\n");
++				dev_vdbg(udc->dev, "ISO error\n");
+ 				status = -EILSEQ;
+ 				break;
+ 			} else
+-				dev_err(&udc->gadget.dev,
++				dev_err(udc->dev,
+ 					"Unknown error has occurred (0x%x)!\n",
+ 					errors);
  
- 	udc = container_of(gadget, struct omap_udc, gadget);
- 	spin_lock_irqsave(&udc->lock, flags);
--	VDBG("VBUS %s\n", is_active ? "on" : "off");
-+	VDBG("VBUS %s\n", str_on_off(is_active));
- 	udc->vbus_active = (is_active != 0);
- 	if (cpu_is_omap15xx()) {
- 		/* "software" detect, ignored if !VBUS_MODE_1510 */
---- a/drivers/usb/gadget/udc/pxa27x_udc.c
-+++ b/drivers/usb/gadget/udc/pxa27x_udc.c
-@@ -20,6 +20,7 @@
- #include <linux/gpio.h>
- #include <linux/gpio/consumer.h>
- #include <linux/slab.h>
-+#include <linux/string_choices.h>
- #include <linux/prefetch.h>
- #include <linux/byteorder/generic.h>
- #include <linux/platform_data/pxa2xx_udc.h>
-@@ -1083,7 +1084,7 @@ static int pxa_ep_queue(struct usb_ep *_
+ 		} else if (hc32_to_cpu(curr_td->size_ioc_sts)
+ 				& DTD_STATUS_ACTIVE) {
+-			dev_vdbg(&udc->gadget.dev, "Request not complete\n");
++			dev_vdbg(udc->dev, "Request not complete\n");
+ 			status = REQ_UNCOMPLETE;
+ 			return status;
+ 		} else if (remaining_length) {
+ 			if (direction) {
+-				dev_vdbg(&udc->gadget.dev,
++				dev_vdbg(udc->dev,
+ 					 "Transmit dTD remaining length not zero\n");
+ 				status = -EPROTO;
+ 				break;
+@@ -1655,8 +1647,7 @@ static int process_ep_req(struct fsl_udc
+ 				break;
+ 			}
+ 		} else {
+-			dev_vdbg(&udc->gadget.dev,
+-				 "dTD transmitted successful\n");
++			dev_vdbg(udc->dev, "dTD transmitted successful\n");
+ 		}
  
- 	is_first_req = list_empty(&ep->queue);
- 	ep_dbg(ep, "queue req %p(first=%s), len %d buf %p\n",
--			_req, is_first_req ? "yes" : "no",
-+			_req, str_yes_no(is_first_req),
- 			_req->length, _req->buf);
+ 		if (j != curr_req->dtd_count - 1)
+@@ -1699,7 +1690,7 @@ static void dtd_complete_irq(struct fsl_
  
- 	if (!ep->enabled) {
+ 		/* If the ep is configured */
+ 		if (!curr_ep->ep.name) {
+-			dev_warn(&udc->gadget.dev, "Invalid EP?\n");
++			dev_warn(udc->dev, "Invalid EP?\n");
+ 			continue;
+ 		}
+ 
+@@ -1708,7 +1699,7 @@ static void dtd_complete_irq(struct fsl_
+ 				queue) {
+ 			status = process_ep_req(udc, i, curr_req);
+ 
+-			dev_vdbg(&udc->gadget.dev,
++			dev_vdbg(udc->dev,
+ 				 "status of process_ep_req= %d, ep = %d\n",
+ 				 status, ep_num);
+ 			if (status == REQ_UNCOMPLETE)
+@@ -1829,7 +1820,7 @@ static void reset_irq(struct fsl_udc *ud
+ 	while (fsl_readl(&dr_regs->endpointprime)) {
+ 		/* Wait until all endptprime bits cleared */
+ 		if (time_after(jiffies, timeout)) {
+-			dev_err(&udc->gadget.dev, "Timeout for reset\n");
++			dev_err(udc->dev, "Timeout for reset\n");
+ 			break;
+ 		}
+ 		cpu_relax();
+@@ -1839,7 +1830,7 @@ static void reset_irq(struct fsl_udc *ud
+ 	fsl_writel(0xffffffff, &dr_regs->endptflush);
+ 
+ 	if (fsl_readl(&dr_regs->portsc1) & PORTSCX_PORT_RESET) {
+-		dev_vdbg(&udc->gadget.dev, "Bus reset\n");
++		dev_vdbg(udc->dev, "Bus reset\n");
+ 		/* Bus is reseting */
+ 		udc->bus_reset = 1;
+ 		/* Reset all the queues, include XD, dTD, EP queue
+@@ -1847,7 +1838,7 @@ static void reset_irq(struct fsl_udc *ud
+ 		reset_queues(udc, true);
+ 		udc->usb_state = USB_STATE_DEFAULT;
+ 	} else {
+-		dev_vdbg(&udc->gadget.dev, "Controller reset\n");
++		dev_vdbg(udc->dev, "Controller reset\n");
+ 		/* initialize usb hw reg except for regs for EP, not
+ 		 * touch usbintr reg */
+ 		dr_controller_setup(udc);
+@@ -1881,7 +1872,7 @@ static irqreturn_t fsl_udc_irq(int irq,
+ 	/* Clear notification bits */
+ 	fsl_writel(irq_src, &dr_regs->usbsts);
+ 
+-	/* dev_vdbg(&udc->gadget.dev, "irq_src [0x%8x]", irq_src); */
++	/* dev_vdbg(udc->dev, "irq_src [0x%8x]", irq_src); */
+ 
+ 	/* Need to resume? */
+ 	if (udc->usb_state == USB_STATE_SUSPENDED)
+@@ -1890,7 +1881,7 @@ static irqreturn_t fsl_udc_irq(int irq,
+ 
+ 	/* USB Interrupt */
+ 	if (irq_src & USB_STS_INT) {
+-		dev_vdbg(&udc->gadget.dev, "Packet int\n");
++		dev_vdbg(udc->dev, "Packet int\n");
+ 		/* Setup package, we only support ep0 as control ep */
+ 		if (fsl_readl(&dr_regs->endptsetupstat) & EP_SETUP_STATUS_EP0) {
+ 			tripwire_handler(udc, 0,
+@@ -1919,7 +1910,7 @@ static irqreturn_t fsl_udc_irq(int irq,
+ 
+ 	/* Reset Received */
+ 	if (irq_src & USB_STS_RESET) {
+-		dev_vdbg(&udc->gadget.dev, "reset int\n");
++		dev_vdbg(udc->dev, "reset int\n");
+ 		reset_irq(udc);
+ 		status = IRQ_HANDLED;
+ 	}
+@@ -1931,7 +1922,7 @@ static irqreturn_t fsl_udc_irq(int irq,
+ 	}
+ 
+ 	if (irq_src & (USB_STS_ERR | USB_STS_SYS_ERR)) {
+-		dev_vdbg(&udc->gadget.dev, "Error IRQ %x\n", irq_src);
++		dev_vdbg(udc->dev, "Error IRQ %x\n", irq_src);
+ 	}
+ 
+ 	spin_unlock_irqrestore(&udc->lock, flags);
+@@ -1967,7 +1958,7 @@ static int fsl_udc_start(struct usb_gadg
+ 					udc_controller->transceiver->otg,
+ 						    &udc_controller->gadget);
+ 			if (retval < 0) {
+-				dev_err(&udc_controller->gadget.dev, "can't bind to transceiver\n");
++				dev_err(udc_controller->dev, "can't bind to transceiver\n");
+ 				udc_controller->driver = NULL;
+ 				return retval;
+ 			}
+@@ -2252,7 +2243,7 @@ static int struct_udc_setup(struct fsl_u
+ 
+ 	udc->eps = kcalloc(udc->max_ep, sizeof(struct fsl_ep), GFP_KERNEL);
+ 	if (!udc->eps) {
+-		dev_err(&udc->gadget.dev, "kmalloc udc endpoint status failed\n");
++		dev_err(udc->dev, "kmalloc udc endpoint status failed\n");
+ 		goto eps_alloc_failed;
+ 	}
+ 
+@@ -2267,7 +2258,7 @@ static int struct_udc_setup(struct fsl_u
+ 	udc->ep_qh = dma_alloc_coherent(&pdev->dev, size,
+ 					&udc->ep_qh_dma, GFP_KERNEL);
+ 	if (!udc->ep_qh) {
+-		dev_err(&udc->gadget.dev, "malloc QHs for udc failed\n");
++		dev_err(udc->dev, "malloc QHs for udc failed\n");
+ 		goto ep_queue_alloc_failed;
+ 	}
+ 
+@@ -2278,14 +2269,14 @@ static int struct_udc_setup(struct fsl_u
+ 	udc->status_req = container_of(fsl_alloc_request(NULL, GFP_KERNEL),
+ 			struct fsl_req, req);
+ 	if (!udc->status_req) {
+-		dev_err(&udc->gadget.dev, "kzalloc for udc status request failed\n");
++		dev_err(udc->dev, "kzalloc for udc status request failed\n");
+ 		goto udc_status_alloc_failed;
+ 	}
+ 
+ 	/* allocate a small amount of memory to get valid address */
+ 	udc->status_req->req.buf = kmalloc(8, GFP_KERNEL);
+ 	if (!udc->status_req->req.buf) {
+-		dev_err(&udc->gadget.dev, "kzalloc for udc request buffer failed\n");
++		dev_err(udc->dev, "kzalloc for udc request buffer failed\n");
+ 		goto udc_req_buf_alloc_failed;
+ 	}
+ 
+@@ -2373,6 +2364,7 @@ static int fsl_udc_probe(struct platform
+ 	if (udc_controller == NULL)
+ 		return -ENOMEM;
+ 
++	udc_controller->dev = &pdev->dev;
+ 	pdata = dev_get_platdata(&pdev->dev);
+ 	udc_controller->pdata = pdata;
+ 	spin_lock_init(&udc_controller->lock);
+@@ -2382,7 +2374,7 @@ static int fsl_udc_probe(struct platform
+ 	if (pdata->operating_mode == FSL_USB2_DR_OTG) {
+ 		udc_controller->transceiver = usb_get_phy(USB_PHY_TYPE_USB2);
+ 		if (IS_ERR_OR_NULL(udc_controller->transceiver)) {
+-			dev_err(&udc_controller->gadget.dev, "Can't find OTG driver!\n");
++			dev_err(&pdev->dev, "Can't find OTG driver!\n");
+ 			ret = -ENODEV;
+ 			goto err_kfree;
+ 		}
+@@ -2398,7 +2390,7 @@ static int fsl_udc_probe(struct platform
+ 	if (pdata->operating_mode == FSL_USB2_DR_DEVICE) {
+ 		if (!request_mem_region(res->start, resource_size(res),
+ 					driver_name)) {
+-			dev_err(&udc_controller->gadget.dev, "request mem region for %s failed\n", pdev->name);
++			dev_err(&pdev->dev, "failed to request mem region\n");
+ 			ret = -EBUSY;
+ 			goto err_kfree;
+ 		}
+@@ -2429,7 +2421,7 @@ static int fsl_udc_probe(struct platform
+ 	/* Read Device Controller Capability Parameters register */
+ 	dccparams = fsl_readl(&dr_regs->dccparams);
+ 	if (!(dccparams & DCCPARAMS_DC)) {
+-		dev_err(&udc_controller->gadget.dev, "This SOC doesn't support device role\n");
++		dev_err(&pdev->dev, "This SOC doesn't support device role\n");
+ 		ret = -ENODEV;
+ 		goto err_exit;
+ 	}
+@@ -2447,14 +2439,14 @@ static int fsl_udc_probe(struct platform
+ 	ret = request_irq(udc_controller->irq, fsl_udc_irq, IRQF_SHARED,
+ 			driver_name, udc_controller);
+ 	if (ret != 0) {
+-		dev_err(&udc_controller->gadget.dev, "cannot request irq %d err %d\n",
++		dev_err(&pdev->dev, "cannot request irq %d err %d\n",
+ 				udc_controller->irq, ret);
+ 		goto err_exit;
+ 	}
+ 
+ 	/* Initialize the udc structure including QH member and other member */
+ 	if (struct_udc_setup(udc_controller, pdev)) {
+-		dev_err(&udc_controller->gadget.dev, "Can't initialize udc data structure\n");
++		dev_err(&pdev->dev, "Can't initialize udc data structure\n");
+ 		ret = -ENOMEM;
+ 		goto err_free_irq;
+ 	}
+--- a/drivers/usb/gadget/udc/fsl_usb2_udc.h
++++ b/drivers/usb/gadget/udc/fsl_usb2_udc.h
+@@ -470,6 +470,7 @@ struct fsl_ep {
+ #define EP_DIR_OUT	0
+ 
+ struct fsl_udc {
++	struct device *dev;
+ 	struct usb_gadget gadget;
+ 	struct usb_gadget_driver *driver;
+ 	struct fsl_usb2_platform_data *pdata;
 
 
