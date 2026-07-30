@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A146B442FBC;
-	Thu, 30 Jul 2026 15:26:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A14EB43DA26;
+	Thu, 30 Jul 2026 15:26:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425211; cv=none; b=ilTcAomkqOnAJNx5HAMgpxv7bqYJbIzgwtzNFmnu0jF+Hyugz2EDbMzZcnmNNmOl67eAlHm4o9F/Wv6APV6QpOzvcHpxPDDaeG6rgyHMaRJMEoNul0gE4U2M5Txsy63yKkn3ETJ/pl9YluXJN8NaYCbmwrs9MEnEYpXEiXE2E5Q=
+	t=1785425214; cv=none; b=QusWbUUalxQF2DIdHC3oni183e4I85kBVA+yZoi2lStc9OASUb1TxhRlQ5+ouNilj9ynCGgJsaBxmp3aekH6UlqXkKLf8VnJJHW4yDuiCgq4tDUsyK+mbmwBc8rLQG5Vq7/chSdYTDVYuoKRxEk+QHVmeHZXXfZkglbp8EwPZV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425211; c=relaxed/simple;
-	bh=VQpXPv6AWnd1EBncNAOc6OPTLJdTg13mPzSCR28nOew=;
+	s=arc-20240116; t=1785425214; c=relaxed/simple;
+	bh=9iZcv4eDOf+224qSN7gp6u/FETewJjn4JrRsUkvPI84=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cthB7W/iDTr7fXXXwJ8brNODyNmfHlTnKULuDYn8LIbKcMUsohsmL5v5w1akrcDfjEmrxLABrf8YCsmRPxJdjRU5L0OwCu+a3eKoucOF3ZLXR8N+SNQc0u1fVfa7TzODyNGWGMJinGsB8QXtDxi7aIWFgvMyquALYWpBmFwzG8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R0Thd3qn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BZLHqJ28Lals63H554Dbb3l9cwtM3vj2wY0P3A+OokqCUhVwqVteNBmXMmNp96dlLab0ziTs7gJY3T500VoIBUnTwk0Ev77tfCR9d8nX0+yP/pOMmSKg/j7rhV9+bURma23NBT18RHlMOItvgc5joPQ+iXisbrK1HY2kfLzFPkM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oXg4NLyW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R0Thd3qn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04D711F00A3E;
-	Thu, 30 Jul 2026 15:26:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oXg4NLyW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDFC71F000E9;
+	Thu, 30 Jul 2026 15:26:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425210;
-	bh=BRaz1sxelUyIItOx5VX4LaQvjFNl6b2k92rTDCT0XVk=;
+	s=korg; t=1785425213;
+	bh=/a1N/Lko3SAcVpZajDleQg9Q9yahtUB7YQOKfARdCy4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R0Thd3qnfK4A+Kau41dYznarRts+nhlh1FyxEK9NRf8d9Q1VRh3eFZtnmD4E/in+o
-	 UHxJfYk5BJ17W7LZo3VSAVi5cZTRJhBkpy+V5Vf5tIB6M3H/pQOfCvWOYGMvWU2+r3
-	 80UUVglq8jq4Dgy/8EK4Zo+1wP3F2xU7SnpT5zBY=
+	b=oXg4NLyWjg9C41GSMWKVotzO+TbUR6bHQTaAdpikKJuW4Ab4RvtJUs+jmNXUcURsd
+	 LDlC25Aup2MQP8rFz+R6qPFhipojsZ6Ya4+rm6vOKraGvJS2/vgYtdhia1ngc9PIvS
+	 gyAE90aWYNSwEkDBDzqJPjZcyZNv9voALqtDcGeA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>,
-	Christian Brauner <brauner@kernel.org>,
+	Frank Li <Frank.Li@nxp.com>,
+	Marco Felsch <m.felsch@pengutronix.de>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 645/675] cred: add kernel_cred() helper
-Date: Thu, 30 Jul 2026 16:16:15 +0200
-Message-ID: <20260730141458.845070833@linuxfoundation.org>
+Subject: [PATCH 6.18 663/675] pmdomain: imx93-blk-ctrl: convert to devm_* only
+Date: Thu, 30 Jul 2026 16:16:33 +0200
+Message-ID: <20260730141459.244345174@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -51,45 +52,136 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Marco Felsch <m.felsch@pengutronix.de>
 
-[ Upstream commit 4c7ceeb62d3330b6fb2b549ae833a92c0f481f3e ]
+[ Upstream commit 52becc142280eeef828d19f9cd01fd653b588786 ]
 
-Access kernel creds based off of init_task. This will let us avoid any
-direct access to init_cred.
+Convert the driver to devm_ APIs only by making use of
+devm_add_action_or_reset() and devm_pm_runtime_enable() to simplify the
+probe error path and to drop the .remove() callback. This also ensures
+that the device release order equals the device probe error path order.
 
-Link: https://patch.msgid.link/20251103-work-creds-init_cred-v1-2-cb3ec8711a6a@kernel.org
-Reviewed-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Stable-dep-of: 981ccd97f715 ("dm: avoid leaking the caller's thread keyring via the table device file")
+Furthermore drop the dev_set_drvdata() usage since the only user was the
+.remove() callback which is removed by this commit.
+
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Marco Felsch <m.felsch@pengutronix.de>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Stable-dep-of: 99611233f8cd ("pmdomain: imx93-blk-ctrl: Extract PHY as shared domain for DSI/CSI")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/cred.h |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/pmdomain/imx/imx93-blk-ctrl.c |   66 ++++++++++++++--------------------
+ 1 file changed, 29 insertions(+), 37 deletions(-)
 
---- a/include/linux/cred.h
-+++ b/include/linux/cred.h
-@@ -20,6 +20,8 @@
- struct cred;
- struct inode;
+--- a/drivers/pmdomain/imx/imx93-blk-ctrl.c
++++ b/drivers/pmdomain/imx/imx93-blk-ctrl.c
+@@ -188,6 +188,20 @@ static int imx93_blk_ctrl_power_off(stru
+ 	return 0;
+ }
  
-+extern struct task_struct init_task;
-+
- /*
-  * COW Supplementary groups list
-  */
-@@ -156,6 +158,11 @@ extern struct cred *prepare_exec_creds(v
- extern int commit_creds(struct cred *);
- extern void abort_creds(struct cred *);
- extern struct cred *prepare_kernel_cred(struct task_struct *);
-+static inline const struct cred *kernel_cred(void)
++static void imx93_release_genpd_provider(void *data)
 +{
-+	/* shut up sparse */
-+	return rcu_dereference_raw(init_task.cred);
++	struct device_node *of_node = data;
++
++	of_genpd_del_provider(of_node);
 +}
- extern int set_security_override(struct cred *, u32);
- extern int set_security_override_from_ctx(struct cred *, const char *);
- extern int set_create_files_as(struct cred *, struct inode *);
++
++static void imx93_release_pm_genpd(void *data)
++{
++	struct generic_pm_domain *genpd = data;
++
++	pm_genpd_remove(genpd);
++}
++
+ static struct lock_class_key blk_ctrl_genpd_lock_class;
+ 
+ static int imx93_blk_ctrl_probe(struct platform_device *pdev)
+@@ -258,10 +272,8 @@ static int imx93_blk_ctrl_probe(struct p
+ 			domain->clks[j].id = data->clk_names[j];
+ 
+ 		ret = devm_clk_bulk_get(dev, data->num_clks, domain->clks);
+-		if (ret) {
+-			dev_err_probe(dev, ret, "failed to get clock\n");
+-			goto cleanup_pds;
+-		}
++		if (ret)
++			return dev_err_probe(dev, ret, "failed to get clock\n");
+ 
+ 		domain->genpd.name = data->name;
+ 		domain->genpd.power_on = imx93_blk_ctrl_power_on;
+@@ -269,11 +281,12 @@ static int imx93_blk_ctrl_probe(struct p
+ 		domain->bc = bc;
+ 
+ 		ret = pm_genpd_init(&domain->genpd, NULL, true);
+-		if (ret) {
+-			dev_err_probe(dev, ret, "failed to init power domain\n");
+-			goto cleanup_pds;
+-		}
++		if (ret)
++			return dev_err_probe(dev, ret, "failed to init power domain\n");
+ 
++		ret = devm_add_action_or_reset(dev, imx93_release_pm_genpd, &domain->genpd);
++		if (ret)
++			return dev_err_probe(dev, ret, "failed to add pm_genpd release callback\n");
+ 		/*
+ 		 * We use runtime PM to trigger power on/off of the upstream GPC
+ 		 * domain, as a strict hierarchical parent/child power domain
+@@ -290,39 +303,19 @@ static int imx93_blk_ctrl_probe(struct p
+ 		bc->onecell_data.domains[i] = &domain->genpd;
+ 	}
+ 
+-	pm_runtime_enable(dev);
++	ret = devm_pm_runtime_enable(dev);
++	if (ret)
++		return dev_err_probe(dev, ret, "failed to enable pm-runtime\n");
+ 
+ 	ret = of_genpd_add_provider_onecell(dev->of_node, &bc->onecell_data);
+-	if (ret) {
+-		dev_err_probe(dev, ret, "failed to add power domain provider\n");
+-		goto cleanup_pds;
+-	}
++	if (ret)
++		return dev_err_probe(dev, ret, "failed to add power domain provider\n");
+ 
+-	dev_set_drvdata(dev, bc);
++	ret = devm_add_action_or_reset(dev, imx93_release_genpd_provider, dev->of_node);
++	if (ret)
++		return dev_err_probe(dev, ret, "failed to add genpd_provider release callback\n");
+ 
+ 	return 0;
+-
+-cleanup_pds:
+-	for (i--; i >= 0; i--)
+-		pm_genpd_remove(&bc->domains[i].genpd);
+-
+-	return ret;
+-}
+-
+-static void imx93_blk_ctrl_remove(struct platform_device *pdev)
+-{
+-	struct imx93_blk_ctrl *bc = dev_get_drvdata(&pdev->dev);
+-	int i;
+-
+-	of_genpd_del_provider(pdev->dev.of_node);
+-
+-	pm_runtime_disable(&pdev->dev);
+-
+-	for (i = 0; i < bc->onecell_data.num_domains; i++) {
+-		struct imx93_blk_ctrl_domain *domain = &bc->domains[i];
+-
+-		pm_genpd_remove(&domain->genpd);
+-	}
+ }
+ 
+ static const struct imx93_blk_ctrl_domain_data imx93_media_blk_ctl_domain_data[] = {
+@@ -457,7 +450,6 @@ MODULE_DEVICE_TABLE(of, imx93_blk_ctrl_o
+ 
+ static struct platform_driver imx93_blk_ctrl_driver = {
+ 	.probe = imx93_blk_ctrl_probe,
+-	.remove = imx93_blk_ctrl_remove,
+ 	.driver = {
+ 		.name = "imx93-blk-ctrl",
+ 		.of_match_table = imx93_blk_ctrl_of_match,
 
 
