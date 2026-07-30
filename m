@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A967B432E98;
-	Thu, 30 Jul 2026 15:11:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ADD9399350;
+	Thu, 30 Jul 2026 15:11:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424269; cv=none; b=WbrtD8cX0taXaUDd6+1IIfgaOQYTHKbRwpzl5SdSfvyt20H5i5hl+W0iMK6KGwql6dK5+wlqrpX7UN9B8C+UUV3eAAiFJPsNnrcWHINjl0kkvMmj1k/oVTxOaMKJE53siHX88K2ub0LyEzDAYYymrpR//2y8RVHUaYEodMpzX/s=
+	t=1785424271; cv=none; b=T9MkjaF/ilugzlQsRSvScdpf0GKkRzpfmyuM0qbZuroDEDk3JUfAtq6TsASVe++shpgb1A+a3qB6JYEL1z5/Uy6Yi4aXnqLKyO30OxcDR/i32H0SUrGMD7IlBCy1R59cUG3V3qP8O3LP9csSOgDvyISuQTPYsgWHcAwho0MTAIQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424269; c=relaxed/simple;
-	bh=GY1XN02zuXK5Fxn9wYOkxyjo6MyiSMXZUCeqGDfykik=;
+	s=arc-20240116; t=1785424271; c=relaxed/simple;
+	bh=j3Bwi7r3xbxQGDHfa/afd4ZaFdA4FRo6zqoXT6OtFII=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A+n8DccmfAOiQejwfrlZUgonu4Q4y41HQwugbqvn91/MFWZNSjOBS5c856AvCRtVkzBPq+PgoHUvcur60+qS//BNw93mCPC94xIphg7wCgl/eGdQ13n3XJmz2UVcls2OL4SS4pJ5zCTfP49Y5fk6ka2affGoWPsI1ngWJ8Nnoxw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RV+szUFv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=J2DzSwDJplPXtvIex2b3mqaZi6amdHODqnmwJV0H/aDDPgH3pYBInxdfwhZMrLdQ2rebjVrWli8zTz7lKANC/MVExp7mEXuSxodwFq+lgexlCsr4GQCth2M8lt8Hs1LVj4DX0r++kmt9AM9oUfBFet5sGn3BEClCpzFkPcbb5Ps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JMK/JNpw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RV+szUFv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04FC11F000E9;
-	Thu, 30 Jul 2026 15:11:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JMK/JNpw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB60A1F00A3A;
+	Thu, 30 Jul 2026 15:11:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424267;
-	bh=9hCoRFFr6ONgyGLppSGIhHoOh7RFE2PJ8UT1C+jb5F8=;
+	s=korg; t=1785424270;
+	bh=4TDgzMqFVJmRO/iTJAYh/ow9L+qTR6H6lMQrVX32GxE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RV+szUFvshwgHlPwecgHaFo/0MOVSyIa8BHi9vOk5N1kGV2XD4T+Ymg3RXGCy4FiM
-	 2OLCiOSCqZ7ShZW7FUOLlzCkVrz87cmpMR90HGrYdBNONtN8+vhm3RZaQdZprrkwof
-	 Qf8pUpIb7g4ByJEc1BemrDqNYGkXT1KCkqRms4MI=
+	b=JMK/JNpwwk2Igkq39CQPfdQIitxXs6viXt6v/3u1DfY0/czPU/quh3W4JUXinPqMn
+	 P8AkywG1Vca5JQLHpC5zYhOMJgJBDqg1OPx0ATWw6E9jAdqmHtR+nAcp4SqzMfc71N
+	 qE+TmGWCiozffzjDXNpkCcNgEMP1MS4oA8/GWYuU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Sashiko <sashiko-bot@kernel.org>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	dri-devel@lists.freedesktop.org
-Subject: [PATCH 6.18 334/675] drm/sysfb: Avoid truncating maximum stride
-Date: Thu, 30 Jul 2026 16:11:04 +0200
-Message-ID: <20260730141452.227299335@linuxfoundation.org>
+	Jiqian Chen <Jiqian.Chen@amd.com>,
+	Huang Rui <ray.huang@amd.com>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.18 335/675] drm/amdgpu/gfx9: Fix Ring and IB test fail after mode2
+Date: Thu, 30 Jul 2026 16:11:05 +0200
+Message-ID: <20260730141452.249786805@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -46,58 +46,101 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Jiqian Chen <Jiqian.Chen@amd.com>
 
-commit 9206b22fb959f4a9cf1921f34aed0df1dcb1ab04 upstream.
+commit 85ed06d990ff73212b5a91a406671cabd962e521 upstream.
 
-Passing a maximum as 64-bit type to drm_sysfb_get_validated_int0()
-can truncate the value to 32 bits. Use drm_sysfb_get_validated_size0(),
-which uses 64-bit arithmetics. Then test the returned stride against
-the limits of int to avoid truncations in the returned value. A valid
-stride is in the range of [1, INT_MAX] inclusive.
+For Renior APU with gfx9, in some test scenarios with disabling
+ring_reset, like accessing an unmapped invalid address, it can
+trigger a gpu job timeout event, then driver uses Mode2 reset
+to reset GPU, but after Mode2 compute Ring test and IB test fail
+randomly. It because the HQDs of MECs are always active before or
+after Mode2, that causes MECs use stale HQDs when MECs are unhalted
+before driver restore MQDs, and causes CPC and CPF are still stuck
+after Mode2, then causes compute Ring and IB tests fail.
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/dri-devel/20260617114016.5A5991F000E9@smtp.kernel.org/
-Fixes: 32ae90c66fb6 ("drm/sysfb: Add efidrm for EFI displays")
-Fixes: a84eb6abe2b6 ("drm/sysfb: Add vesadrm for VESA displays")
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Javier Martinez Canillas <javierm@redhat.com>
-Cc: dri-devel@lists.freedesktop.org
-Cc: <stable@vger.kernel.org> # v6.16+
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Link: https://patch.msgid.link/20260618084327.46567-5-tzimmermann@suse.de
+So, add sequences to deactivate HQDs of MECs in suspend IP function
+of the resetting process.
+
+v2: Move all sequences into a new function gfx_v9_0_cp_mode2_clear_state (Ray Huang)
+    To check reset Mode2 method in the if condition (Ray Huang)
+v3: Move all sequences before Mode2 instead of after Mode2 (Timur Kristóf)
+v4: Call amdgpu_gfx_rlc_enter/exit_safe_mode int the begin and end of
+    gfx_v9_0_deactivate_kcq_hqd (Alex Deucher)
+
+Signed-off-by: Jiqian Chen <Jiqian.Chen@amd.com>
+Reviewed-by: Huang Rui <ray.huang@amd.com>
+Reviewed-by: Timur Kristóf <timur.kristof@gmail.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit c3988a7ad4799514447294f04f063b422e0551df)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/sysfb/drm_sysfb_screen_info.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c |   39 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 39 insertions(+)
 
---- a/drivers/gpu/drm/sysfb/drm_sysfb_screen_info.c
-+++ b/drivers/gpu/drm/sysfb/drm_sysfb_screen_info.c
-@@ -56,11 +56,17 @@ int drm_sysfb_get_stride_si(struct drm_d
- 			    unsigned int width, unsigned int height, u64 size)
- {
- 	u64 lfb_linelength = si->lfb_linelength;
-+	s64 stride;
- 
- 	if (!lfb_linelength)
- 		lfb_linelength = drm_format_info_min_pitch(format, 0, width);
- 
--	return drm_sysfb_get_validated_int0(dev, "stride", lfb_linelength, div64_u64(size, height));
-+	stride = drm_sysfb_get_validated_size0(dev, "stride", lfb_linelength,
-+					       div64_u64(size, height));
-+	if (stride < INT_MIN || stride > INT_MAX)
-+		return -EINVAL;
-+
-+	return (int)stride; /* stride or negative errno code */
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
+@@ -4045,6 +4045,41 @@ static int gfx_v9_0_hw_init(struct amdgp
+ 	return r;
  }
- EXPORT_SYMBOL(drm_sysfb_get_stride_si);
  
++static void gfx_v9_0_deactivate_kcq_hqd(struct amdgpu_device *adev)
++{
++	amdgpu_gfx_rlc_enter_safe_mode(adev, 0);
++	for (int i = 0; i < adev->gfx.num_compute_rings; i++) {
++		u32 tmp;
++		struct amdgpu_ring *ring = &adev->gfx.compute_ring[i];
++
++		mutex_lock(&adev->srbm_mutex);
++		soc15_grbm_select(adev, ring->me, ring->pipe, ring->queue, 0, 0);
++		tmp = RREG32_SOC15(GC, 0, mmCP_HQD_ACTIVE);
++		/* disable the queue if it's active */
++		if (tmp & CP_HQD_ACTIVE__ACTIVE_MASK) {
++			int j;
++
++			WREG32_SOC15(GC, 0, mmCP_HQD_DEQUEUE_REQUEST, 1);
++			for (j = 0; j < adev->usec_timeout; j++) {
++				tmp = RREG32_SOC15(GC, 0, mmCP_HQD_ACTIVE);
++				if (!(tmp & CP_HQD_ACTIVE__ACTIVE_MASK))
++					break;
++				udelay(1);
++			}
++			if (j == AMDGPU_MAX_USEC_TIMEOUT) {
++				DRM_DEBUG("comp_%u_%u_%u dequeue request failed.\n",
++							ring->me, ring->pipe, ring->queue);
++				/* Manual disable if dequeue request times out */
++				WREG32_SOC15(GC, 0, mmCP_HQD_ACTIVE, 0);
++			}
++			WREG32_SOC15(GC, 0, mmCP_HQD_DEQUEUE_REQUEST, 0);
++		}
++		soc15_grbm_select(adev, 0, 0, 0, 0, 0);
++		mutex_unlock(&adev->srbm_mutex);
++	}
++	amdgpu_gfx_rlc_exit_safe_mode(adev, 0);
++}
++
+ static int gfx_v9_0_hw_fini(struct amdgpu_ip_block *ip_block)
+ {
+ 	struct amdgpu_device *adev = ip_block->adev;
+@@ -4071,6 +4106,10 @@ static int gfx_v9_0_hw_fini(struct amdgp
+ 		return 0;
+ 	}
+ 
++	if ((adev->flags & AMD_IS_APU) && amdgpu_in_reset(adev) &&
++		amdgpu_asic_reset_method(adev) == AMD_RESET_METHOD_MODE2)
++		gfx_v9_0_deactivate_kcq_hqd(adev);
++
+ 	/* Use deinitialize sequence from CAIL when unbinding device from driver,
+ 	 * otherwise KIQ is hanging when binding back
+ 	 */
 
 
