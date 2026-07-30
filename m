@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 595C5380FD6;
-	Thu, 30 Jul 2026 15:52:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D7F13806BD;
+	Thu, 30 Jul 2026 15:52:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426748; cv=none; b=smPp9maTC8rFoYIMyjKjyVdDX2O+IXgLC7zVFPRs3+0nZeReaNrNBeVo/X8NyjDMwJmt0IMb0blmebjn080pkLVebBrFCu/ABbkFXg/5LJevz3Dtk7a4LXxyioRkIX79OWZXCLhPvxLQuULl//GKHroq9ijOzisDjuHE9J8hXNQ=
+	t=1785426751; cv=none; b=RLKvYY850Xdwnb67ys/wobKY/1UVZlDgD62IM3tjhym5FgPsqPzAwEJuN4mxgwGE99xjEvU3iPhxs56I8hTEo8Dvcxy5UXrg/Zjw3JYg4d2Qk3N/p5NBAhvd10o2MgePvxjnc5vrbdWFx7Ol9vDPRXG5x2Eja2euQLhA8HB9+I8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426748; c=relaxed/simple;
-	bh=9feej9y2gpEUCYAX9Pbqi8F37YyWoxmT/ComARh35sM=;
+	s=arc-20240116; t=1785426751; c=relaxed/simple;
+	bh=UZVUMriEtrw+UsP8hLKmtO/6SnsuSq8HTRR5UTMRikg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dGjnd/PxRSxcPt9Ie/E61sncV5jF4oGTEu2tX7biiRPQlAz8lECXs16lvVmeGkDSzOiGMpj0nY9WRTLfvsgIEVb+TkrGFXoguSeRC8zm5h4IICk/KOLR760YhPZeesO+1ne8ncidsofU2x30P0fGpsETuodwfphLdzSdZ58OLio=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VYj6oRzz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tRratqcvBzFCShl1ihAxKc9ElQKuI7X86WK0wc5BqJiO57czt+aP6Jr+BmmIALjOev3bQ/Asgtab/dTQMJUUtp8o8P/FtrQrA3HrbIXV9UV3uB1AJ1AZ169L5dUSq1y+eu3qQKoGqJ4ygHyaaUA3vXLw4B9ICRND3Debq6yYIpA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qp40Pftc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VYj6oRzz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3B6A1F000E9;
-	Thu, 30 Jul 2026 15:52:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qp40Pftc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0BB01F000E9;
+	Thu, 30 Jul 2026 15:52:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426747;
-	bh=BgUHbFShZ8nghfcf4k6BeIefMYBpyFMvUNBqVnwhuuM=;
+	s=korg; t=1785426750;
+	bh=w6ABnsv2+7HUkOMZJdYvDrPdIVIly8WsIOWAQva6FTk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VYj6oRzzgfc87L1my3FrPRBWk+Wiu+J+/bBAOGeXF0Vx57npMnvi55Rt0dWBXRrV8
-	 sgAIrUqcs6ZfwuWBQ4Yxqhw6bq2aO1i9RTTqDk/iUnCC3kYRAglYS4Yyivj97u7B9/
-	 VQOTDjlg/CAoKN7/4AKd+wr+kGqiuXDnHQfuyiPs=
+	b=Qp40PftcOyp4/5hyW9DHb2p6Nnw2aEzqqrG7iLsiAbhiIV1Brx3EDrgcEnGkUro2Y
+	 ma2kJT4x0Z6MsoZaBss4iOEqJggagpGbaseC9uaE9vt6xailRrcvvkoKqOJc5gk9eh
+	 +n27br8PNcNBM8kq9tr6POX5HqEDntB86sZUoUzo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abinash Singh <abinashsinghlalotra@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
 	Manivannan Sadhasivam <mani@kernel.org>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 529/602] dma: dw-edma: Fix build warning in dw_edma_pcie_probe()
-Date: Thu, 30 Jul 2026 16:15:21 +0200
-Message-ID: <20260730141447.129402640@linuxfoundation.org>
+Subject: [PATCH 6.12 530/602] dmaengine: dw-edma: Fix confusing cleanup.h syntax
+Date: Thu, 30 Jul 2026 16:15:22 +0200
+Message-ID: <20260730141447.151570992@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -52,174 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abinash Singh <abinashlalotra@gmail.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-[ Upstream commit 3df63fa8f2afd051848e37ef1b8299dee28d4f87 ]
+[ Upstream commit f9ef8dedee34e2d7828d5a6a0643cd969aaa8437 ]
 
-The function dw_edma_pcie_probe() in dw-edma-pcie.c triggered a
-frame size warning:
-ld.lld:warning:
-  drivers/dma/dw-edma/dw-edma-pcie.c:162:0: stack frame size (1040) exceeds limit (1024) in function 'dw_edma_pcie_probe'
+Initializing automatic __free variables to NULL without need (e.g.
+branches with different allocations), followed by actual allocation is
+in contrary to explicit coding rules guiding cleanup.h:
 
-This patch reduces the stack usage by dynamically allocating the
-`vsec_data` structure using kmalloc(), rather than placing it on
-the stack. This eliminates the overflow warning and improves kernel
-robustness.
+"Given that the "__free(...) = NULL" pattern for variables defined at
+the top of the function poses this potential interdependency problem the
+recommendation is to always define and assign variables in one statement
+and not group variable definitions at the top of the function when
+__free() is used."
 
-Signed-off-by: Abinash Singh <abinashsinghlalotra@gmail.com>
-Acked-by: Manivannan Sadhasivam <mani@kernel.org>
-Link: https://lore.kernel.org/r/20250705160055.808165-1-abinashsinghlalotra@gmail.com
+Code does not have a bug, but is less readable and uses discouraged
+coding practice, so fix that by moving declaration to the place of
+assignment.
+
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Link: https://patch.msgid.link/20251208020729.4654-2-krzysztof.kozlowski@oss.qualcomm.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Stable-dep-of: 11d7cfe0c119 ("dmaengine: dw-edma-pcie: Reject devices without driver data")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/dw-edma/dw-edma-pcie.c |   62 +++++++++++++++++++------------------
- 1 file changed, 33 insertions(+), 29 deletions(-)
+ drivers/dma/dw-edma/dw-edma-pcie.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 --- a/drivers/dma/dw-edma/dw-edma-pcie.c
 +++ b/drivers/dma/dw-edma/dw-edma-pcie.c
-@@ -160,12 +160,16 @@ static int dw_edma_pcie_probe(struct pci
+@@ -160,13 +160,13 @@ static int dw_edma_pcie_probe(struct pci
  			      const struct pci_device_id *pid)
  {
  	struct dw_edma_pcie_data *pdata = (void *)pid->driver_data;
--	struct dw_edma_pcie_data vsec_data;
-+	struct dw_edma_pcie_data *vsec_data __free(kfree) = NULL;
+-	struct dw_edma_pcie_data *vsec_data __free(kfree) = NULL;
  	struct device *dev = &pdev->dev;
  	struct dw_edma_chip *chip;
  	int err, nr_irqs;
  	int i, mask;
  
-+	vsec_data = kmalloc(sizeof(*vsec_data), GFP_KERNEL);
-+	if (!vsec_data)
-+		return -ENOMEM;
-+
- 	/* Enable PCI device */
- 	err = pcim_enable_device(pdev);
- 	if (err) {
-@@ -173,23 +177,23 @@ static int dw_edma_pcie_probe(struct pci
- 		return err;
- 	}
- 
--	memcpy(&vsec_data, pdata, sizeof(struct dw_edma_pcie_data));
-+	memcpy(vsec_data, pdata, sizeof(struct dw_edma_pcie_data));
- 
- 	/*
- 	 * Tries to find if exists a PCIe Vendor-Specific Extended Capability
- 	 * for the DMA, if one exists, then reconfigures it.
- 	 */
--	dw_edma_pcie_get_vsec_dma_data(pdev, &vsec_data);
-+	dw_edma_pcie_get_vsec_dma_data(pdev, vsec_data);
- 
- 	/* Mapping PCI BAR regions */
--	mask = BIT(vsec_data.rg.bar);
--	for (i = 0; i < vsec_data.wr_ch_cnt; i++) {
--		mask |= BIT(vsec_data.ll_wr[i].bar);
--		mask |= BIT(vsec_data.dt_wr[i].bar);
--	}
--	for (i = 0; i < vsec_data.rd_ch_cnt; i++) {
--		mask |= BIT(vsec_data.ll_rd[i].bar);
--		mask |= BIT(vsec_data.dt_rd[i].bar);
-+	mask = BIT(vsec_data->rg.bar);
-+	for (i = 0; i < vsec_data->wr_ch_cnt; i++) {
-+		mask |= BIT(vsec_data->ll_wr[i].bar);
-+		mask |= BIT(vsec_data->dt_wr[i].bar);
-+	}
-+	for (i = 0; i < vsec_data->rd_ch_cnt; i++) {
-+		mask |= BIT(vsec_data->ll_rd[i].bar);
-+		mask |= BIT(vsec_data->dt_rd[i].bar);
- 	}
- 	err = pcim_iomap_regions(pdev, mask, pci_name(pdev));
- 	if (err) {
-@@ -212,7 +216,7 @@ static int dw_edma_pcie_probe(struct pci
+-	vsec_data = kmalloc(sizeof(*vsec_data), GFP_KERNEL);
++	struct dw_edma_pcie_data *vsec_data __free(kfree) =
++		kmalloc(sizeof(*vsec_data), GFP_KERNEL);
+ 	if (!vsec_data)
  		return -ENOMEM;
- 
- 	/* IRQs allocation */
--	nr_irqs = pci_alloc_irq_vectors(pdev, 1, vsec_data.irqs,
-+	nr_irqs = pci_alloc_irq_vectors(pdev, 1, vsec_data->irqs,
- 					PCI_IRQ_MSI | PCI_IRQ_MSIX);
- 	if (nr_irqs < 1) {
- 		pci_err(pdev, "fail to alloc IRQ vector (number of IRQs=%u)\n",
-@@ -223,22 +227,22 @@ static int dw_edma_pcie_probe(struct pci
- 	/* Data structure initialization */
- 	chip->dev = dev;
- 
--	chip->mf = vsec_data.mf;
-+	chip->mf = vsec_data->mf;
- 	chip->nr_irqs = nr_irqs;
- 	chip->ops = &dw_edma_pcie_plat_ops;
- 
--	chip->ll_wr_cnt = vsec_data.wr_ch_cnt;
--	chip->ll_rd_cnt = vsec_data.rd_ch_cnt;
-+	chip->ll_wr_cnt = vsec_data->wr_ch_cnt;
-+	chip->ll_rd_cnt = vsec_data->rd_ch_cnt;
- 
--	chip->reg_base = pcim_iomap_table(pdev)[vsec_data.rg.bar];
-+	chip->reg_base = pcim_iomap_table(pdev)[vsec_data->rg.bar];
- 	if (!chip->reg_base)
- 		return -ENOMEM;
- 
- 	for (i = 0; i < chip->ll_wr_cnt; i++) {
- 		struct dw_edma_region *ll_region = &chip->ll_region_wr[i];
- 		struct dw_edma_region *dt_region = &chip->dt_region_wr[i];
--		struct dw_edma_block *ll_block = &vsec_data.ll_wr[i];
--		struct dw_edma_block *dt_block = &vsec_data.dt_wr[i];
-+		struct dw_edma_block *ll_block = &vsec_data->ll_wr[i];
-+		struct dw_edma_block *dt_block = &vsec_data->dt_wr[i];
- 
- 		ll_region->vaddr.io = pcim_iomap_table(pdev)[ll_block->bar];
- 		if (!ll_region->vaddr.io)
-@@ -262,8 +266,8 @@ static int dw_edma_pcie_probe(struct pci
- 	for (i = 0; i < chip->ll_rd_cnt; i++) {
- 		struct dw_edma_region *ll_region = &chip->ll_region_rd[i];
- 		struct dw_edma_region *dt_region = &chip->dt_region_rd[i];
--		struct dw_edma_block *ll_block = &vsec_data.ll_rd[i];
--		struct dw_edma_block *dt_block = &vsec_data.dt_rd[i];
-+		struct dw_edma_block *ll_block = &vsec_data->ll_rd[i];
-+		struct dw_edma_block *dt_block = &vsec_data->dt_rd[i];
- 
- 		ll_region->vaddr.io = pcim_iomap_table(pdev)[ll_block->bar];
- 		if (!ll_region->vaddr.io)
-@@ -295,31 +299,31 @@ static int dw_edma_pcie_probe(struct pci
- 		pci_dbg(pdev, "Version:\tUnknown (0x%x)\n", chip->mf);
- 
- 	pci_dbg(pdev, "Registers:\tBAR=%u, off=0x%.8lx, sz=0x%zx bytes, addr(v=%p)\n",
--		vsec_data.rg.bar, vsec_data.rg.off, vsec_data.rg.sz,
-+		vsec_data->rg.bar, vsec_data->rg.off, vsec_data->rg.sz,
- 		chip->reg_base);
- 
- 
- 	for (i = 0; i < chip->ll_wr_cnt; i++) {
- 		pci_dbg(pdev, "L. List:\tWRITE CH%.2u, BAR=%u, off=0x%.8lx, sz=0x%zx bytes, addr(v=%p, p=%pa)\n",
--			i, vsec_data.ll_wr[i].bar,
--			vsec_data.ll_wr[i].off, chip->ll_region_wr[i].sz,
-+			i, vsec_data->ll_wr[i].bar,
-+			vsec_data->ll_wr[i].off, chip->ll_region_wr[i].sz,
- 			chip->ll_region_wr[i].vaddr.io, &chip->ll_region_wr[i].paddr);
- 
- 		pci_dbg(pdev, "Data:\tWRITE CH%.2u, BAR=%u, off=0x%.8lx, sz=0x%zx bytes, addr(v=%p, p=%pa)\n",
--			i, vsec_data.dt_wr[i].bar,
--			vsec_data.dt_wr[i].off, chip->dt_region_wr[i].sz,
-+			i, vsec_data->dt_wr[i].bar,
-+			vsec_data->dt_wr[i].off, chip->dt_region_wr[i].sz,
- 			chip->dt_region_wr[i].vaddr.io, &chip->dt_region_wr[i].paddr);
- 	}
- 
- 	for (i = 0; i < chip->ll_rd_cnt; i++) {
- 		pci_dbg(pdev, "L. List:\tREAD CH%.2u, BAR=%u, off=0x%.8lx, sz=0x%zx bytes, addr(v=%p, p=%pa)\n",
--			i, vsec_data.ll_rd[i].bar,
--			vsec_data.ll_rd[i].off, chip->ll_region_rd[i].sz,
-+			i, vsec_data->ll_rd[i].bar,
-+			vsec_data->ll_rd[i].off, chip->ll_region_rd[i].sz,
- 			chip->ll_region_rd[i].vaddr.io, &chip->ll_region_rd[i].paddr);
- 
- 		pci_dbg(pdev, "Data:\tREAD CH%.2u, BAR=%u, off=0x%.8lx, sz=0x%zx bytes, addr(v=%p, p=%pa)\n",
--			i, vsec_data.dt_rd[i].bar,
--			vsec_data.dt_rd[i].off, chip->dt_region_rd[i].sz,
-+			i, vsec_data->dt_rd[i].bar,
-+			vsec_data->dt_rd[i].off, chip->dt_region_rd[i].sz,
- 			chip->dt_region_rd[i].vaddr.io, &chip->dt_region_rd[i].paddr);
- 	}
  
 
 
