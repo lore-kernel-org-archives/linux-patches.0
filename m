@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5AAA3A641D;
-	Thu, 30 Jul 2026 15:10:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D22264302F6;
+	Thu, 30 Jul 2026 15:10:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424212; cv=none; b=VqT7rGKU55iol3E2o+GP9ftDHK5MohQCF7suM8Np6qBh7x6Fy0PZPMqCQ3JQg7AaIPCrQucVILBAmF1thP1ZxCEtrqY802sW5yl0MeP1RtTTPjB+RSXaPSNPFkiB44SOu2ECP1iUwNRRon+lREeva9p3KjSWqCRrHNBSmBjavsk=
+	t=1785424215; cv=none; b=dRoqUgiiK6fXJSrJgbeI4ffuL7iGFFvHI1UyF2FwFZgCEQelZdTlH77wMtMffGD7b+/Xnbixb+hLXF3qGW0wYWTaYJaSL/OVen3AXtpHA+iDtxjoufIuJ1f7a/5v0sOr/fzUIb1KkCansZM49EAI6vagIGcjbBdGfktuXyxxY/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424212; c=relaxed/simple;
-	bh=KYBRMIX2GHWz9yEXfgfmCmigOladiYg345se0pXSKcc=;
+	s=arc-20240116; t=1785424215; c=relaxed/simple;
+	bh=KMzrLfFHIoq6GOnfEyRA/N+Gd7Cd/gRmCYoymKaLBYk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B3trWx8BplmY6LBJFs/yXyQcmfME0oE2G1X0elgWGr8Z6DY9c5aXSD7db7lBAw0qKAcftcsBhaUK1m+OAGjEPWeiuKwkwVHZcdgzBITEwqn+NTQAv7ROvdlYWI2ztOb2kGaTlGG3zsbN5NgZhrzxbCwxJ7FWEKNZunem7/QCb4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X9HF7fKU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tOxfNdwoWmUoYEy6+rKvRgnAKcwof5bJvJLyRRFGvTbcjGXd+0eKEx6LjO5vi4YoZvp0+HUqtYcAlrcJe3Ilce3rcjJjGVCDUpKI1c83pcPHSAVHAuHCXuYsTwPRKZRuigwBo4ekX0Q32sjNhFURT8DK0St0q+jQ6eef4sSINXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fGoGJNJr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X9HF7fKU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D89B1F000E9;
-	Thu, 30 Jul 2026 15:10:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fGoGJNJr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D43CF1F000E9;
+	Thu, 30 Jul 2026 15:10:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424210;
-	bh=VkdV6QaYch+3PTcAhh2x9LZIZ1ZHeOMJNiy2MhI0NOo=;
+	s=korg; t=1785424213;
+	bh=bA5sLQv+c538UNlnk0Ro6Xasdz5THep6X6d0TdhGudQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X9HF7fKU6xiux6Hnm5tU1i1eUI/Vlsp3QWRFmryIVn95ho2i1D53KuQe1c/5W9gjf
-	 +rU1PmPtUNT6OEI+uAicCOWU9p7j/lUmy7KU7FyxwroM91acpK4kL/rfDO32DUVhup
-	 U1gmvCXwY1ADsdv2aJGa6wQ25gBevi32+IftXlrk=
+	b=fGoGJNJrNuq18KUGqgQx6eubeOXw9rNEZqa5FhuSd0RTenh/vv52VtQDKrOB5kYhn
+	 6rB/xo4kVcdqJbVAH80Fomo5m6tskmxwhfuzeZN2G2t493SJjl46S7RJ+97h0bRg6i
+	 L9ejxKDrKM6CI1VkXMxcoBd08aadiD69cvLjWAJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Amir Goldstein <amir73il@gmail.com>,
 	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 270/675] ovl: add override_creds cleanup guard extension for overlayfs
-Date: Thu, 30 Jul 2026 16:10:00 +0200
-Message-ID: <20260730141450.869073160@linuxfoundation.org>
+Subject: [PATCH 6.18 271/675] ovl: port ovl_copyfile() to cred guard
+Date: Thu, 30 Jul 2026 16:10:01 +0200
+Message-ID: <20260730141450.889575924@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -53,38 +53,75 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit 6f5c84162a30514a795eab3495a12c19306d6f6c ]
+[ Upstream commit 14d35fda5b1139bacefb47c69f083fe2cfad211b ]
 
-Overlayfs plucks the relevant creds from the superblock. Extend the
-override_creds cleanup class I added to override_creds_ovl which uses
-the ovl_override_creds() function as initialization helper. Add
-with_ovl_creds() based on this new class.
+Use the scoped ovl cred guard.
 
-Link: https://patch.msgid.link/20251117-work-ovl-cred-guard-v4-1-b31603935724@kernel.org
+Link: https://patch.msgid.link/20251117-work-ovl-cred-guard-v4-36-b31603935724@kernel.org
 Reviewed-by: Amir Goldstein <amir73il@gmail.com>
 Signed-off-by: Christian Brauner <brauner@kernel.org>
 Stable-dep-of: a1e0eb8f55cf ("ovl: check access to copy_file_range source with src mounter creds")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/overlayfs/overlayfs.h | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/overlayfs/file.c | 37 ++++++++++++++++++-------------------
+ 1 file changed, 18 insertions(+), 19 deletions(-)
 
-diff --git a/fs/overlayfs/overlayfs.h b/fs/overlayfs/overlayfs.h
-index d1eb1cbe7a4561..696b13d9e1f102 100644
---- a/fs/overlayfs/overlayfs.h
-+++ b/fs/overlayfs/overlayfs.h
-@@ -445,6 +445,11 @@ struct dentry *ovl_workdir(struct dentry *dentry);
- const struct cred *ovl_override_creds(struct super_block *sb);
- void ovl_revert_creds(const struct cred *old_cred);
- 
-+EXTEND_CLASS(override_creds, _ovl, ovl_override_creds(sb), struct super_block *sb)
-+
-+#define with_ovl_creds(sb) \
-+	scoped_class(override_creds_ovl, __UNIQUE_ID(label), sb)
-+
- static inline const struct cred *ovl_creds(struct super_block *sb)
+diff --git a/fs/overlayfs/file.c b/fs/overlayfs/file.c
+index 3fedfdddfa7584..4374fbad3fc437 100644
+--- a/fs/overlayfs/file.c
++++ b/fs/overlayfs/file.c
+@@ -543,7 +543,6 @@ static loff_t ovl_copyfile(struct file *file_in, loff_t pos_in,
  {
- 	return OVL_FS(sb)->creator_cred;
+ 	struct inode *inode_out = file_inode(file_out);
+ 	struct file *realfile_in, *realfile_out;
+-	const struct cred *old_cred;
+ 	loff_t ret;
+ 
+ 	inode_lock(inode_out);
+@@ -565,25 +564,25 @@ static loff_t ovl_copyfile(struct file *file_in, loff_t pos_in,
+ 	if (IS_ERR(realfile_in))
+ 		goto out_unlock;
+ 
+-	old_cred = ovl_override_creds(file_inode(file_out)->i_sb);
+-	switch (op) {
+-	case OVL_COPY:
+-		ret = vfs_copy_file_range(realfile_in, pos_in,
+-					  realfile_out, pos_out, len, flags);
+-		break;
+-
+-	case OVL_CLONE:
+-		ret = vfs_clone_file_range(realfile_in, pos_in,
+-					   realfile_out, pos_out, len, flags);
+-		break;
+-
+-	case OVL_DEDUPE:
+-		ret = vfs_dedupe_file_range_one(realfile_in, pos_in,
+-						realfile_out, pos_out, len,
+-						flags);
+-		break;
++	with_ovl_creds(file_inode(file_out)->i_sb) {
++		switch (op) {
++		case OVL_COPY:
++			ret = vfs_copy_file_range(realfile_in, pos_in,
++						  realfile_out, pos_out, len, flags);
++			break;
++
++		case OVL_CLONE:
++			ret = vfs_clone_file_range(realfile_in, pos_in,
++						   realfile_out, pos_out, len, flags);
++			break;
++
++		case OVL_DEDUPE:
++			ret = vfs_dedupe_file_range_one(realfile_in, pos_in,
++							realfile_out, pos_out, len,
++							flags);
++			break;
++		}
+ 	}
+-	ovl_revert_creds(old_cred);
+ 
+ 	/* Update size */
+ 	ovl_file_modified(file_out);
 -- 
 2.53.0
 
