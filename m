@@ -1,39 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEE1539478B;
-	Thu, 30 Jul 2026 16:18:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E3824503ED;
+	Thu, 30 Jul 2026 16:18:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785428287; cv=none; b=lQKVkUHuumAT7vuzoyAI/UXQ93Css2rTgbISX9+5H2qOzGhFXpHWbzuSJb6C2FHpgkdya8/cF/M8HJCowdIdYPk2+OeNNk4w7Z2AMCZT/vS6E5SYz1G8V8qV1na1Z3ahkzgBbsdhWuc7bXVIMP2oLOfA7ytnnTR+ip+599WDSzU=
+	t=1785428289; cv=none; b=MQ/SUfY5BZUHIlQaP7iQx9mvOlkiiycj9PqjzJjzDgcrTuHRntaZ9TRp8fkcxdbtdcXKcsnxhbp3s+Mre4umbTcx6NIuKUYMbFXA5cXSa2Io820qOjZADByP8DEJ/l+fJpGYXirshehONN5TD7SY+z0T4tHWzq369LODQGbr7F8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785428287; c=relaxed/simple;
-	bh=4hx7kwzwZKpRyzTvfbnpyLfLKYab/STToMkvGYwJYwQ=;
+	s=arc-20240116; t=1785428289; c=relaxed/simple;
+	bh=qZMXbqdvwm6FoYO7lCd4PTjiRucAKQQ/sbK9CD38Lao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fv+E7U9OujlQaVCH9uDosD2aJ4bENzwkgGEm3nKvdGlbwSnaZVco/O4vDCaQV/vGGlNxyQ4bmLA0CGZcFBQiitaRC0EfQRGRYYiD6jeLieKOOHA8JigDzjVX/d4B48wF6PbqAkOCgYHZUUiPOii6N4Xjlz+L60sXZo56/WgyZh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gvNbQkcV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ngQG0UQOMAsXyal5YNnG8nQ1pQcdIfu0Ksuj6C0deYK5w9l5Cd5ZwA7BX7nwEsVoLtl+qh1SyxPXLx6zhnviTj3yMq9RxT0piW7ACLfXDRQlFIcAV5oro/5eDTfI8Z6SRlAdgKifoTDCKETcOfemJwMC+CwZGjhPeyBgZjQSJnk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ifaVsQzf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gvNbQkcV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 982AC1F000E9;
-	Thu, 30 Jul 2026 16:18:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ifaVsQzf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CAB21F000E9;
+	Thu, 30 Jul 2026 16:18:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785428285;
-	bh=w+Ds7H8qhvBkKNkGH+iEJZ2fFrPD8xtXk5ToADlPBHQ=;
+	s=korg; t=1785428288;
+	bh=dTuRWpq5TSFXQ46OedgqaNu/3+1GjzOEeRp88s34kEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gvNbQkcVfFh1DpL3lF4RWQZcLLq7qwB6BAAYPYU6B6YDrl8rh2/Tjt6XyRCJv/wXw
-	 RbBqme6YwQuYGITDgjTlLqm5YTC79LAabP9E7EfRGUTQM91/n5Opcik4rvUE+1RDEs
-	 srLfBpT/752flyX/XS51Fe5OhaprdQFpZwZUmpCY=
+	b=ifaVsQzfcDMh5F7KDeJB49/u+Oc8D90rYyO1kzJUrmrBJ1KyVCOtoNcb99no6uclt
+	 d+uOMA5tw92nIaXfmmKoAZOGz4jq5JcVnn6dZYgdwycI+bWpo0pnO6J0CSHhlsFp0D
+	 bSZssu37TYlDFJZ/u0ViYR/gskjpW54FkMo76msE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Muchun Song <songmuchun@bytedance.com>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Oscar Salvador <osalvador@suse.de>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
+	Joao Martins <joao.m.martins@oracle.com>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Michal Hocko <mhocko@suse.com>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 423/484] SUNRPC: Return an error from xdr_buf_to_bvec() on overflow
-Date: Thu, 30 Jul 2026 16:15:20 +0200
-Message-ID: <20260730141432.669907446@linuxfoundation.org>
+Subject: [PATCH 6.6 424/484] mm/mm_init: fix pageblock migratetype for ZONE_DEVICE compound pages
+Date: Thu, 30 Jul 2026 16:15:21 +0200
+Message-ID: <20260730141432.691911602@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -52,139 +64,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Muchun Song <songmuchun@bytedance.com>
 
-[ Upstream commit 18c1cc69886192e33536498289d26dba6894e3d5 ]
+[ Upstream commit 94405c6136839f7c462249c8b4b957bcb9527a9d ]
 
-xdr_buf_to_bvec() returns a slot count even when the caller's bvec
-budget is exhausted partway through the xdr_buf. Callers feed that
-count into iov_iter_bvec() and continue as if the conversion had
-succeeded, silently sending or writing fewer bytes than the data
-length declares. For an NFS WRITE the server reports the truncated
-transfer to the client as full success.
+The memmap_init_zone_device() function only initializes the migratetype of
+the first pageblock of a compound page.  If the compound page size exceeds
+pageblock_nr_pages (e.g., 1GB hugepages with 2MB pageblocks), subsequent
+pageblocks in the compound page remain uninitialized.
 
-The overflow represents an internal invariant violation: a higher
-layer reserved a bvec budget too small for the xdr_buf it then
-asked the encoder to convert. That is a server-side fault, not a
-media I/O failure and not a malformed client argument.
+Move the migratetype initialization out of __init_zone_device_page() and
+into a separate pageblock_migratetype_init_range() function.  This
+iterates over the entire PFN range of the memory, ensuring that all
+pageblocks are correctly initialized.
 
-Change xdr_buf_to_bvec() to return a signed int and have the
-overflow label return -ESERVERFAULT. Update the three callers to
-detect the negative return and fail the request: nfsd_vfs_write()
-folds the error into host_err, which nfserrno() translates to
-nfserr_serverfault for the WRITE reply; svc_udp_sendto() and
-svc_tcp_sendmsg() propagate the error out of the send path.
+Also remove the stale confusing comment about MEMINIT_HOTPLUG above the
+migratetype setting since it is an obsolete relic from commit 966cf44f637e
+("mm: defer ZONE_DEVICE page initialization to the point where we init
+pgmap") and no longer makes sense here.
 
-Reported-by: Chris Mason <clm@meta.com>
-Fixes: 2eb2b9358181 ("SUNRPC: Convert svc_tcp_sendmsg to use bio_vecs directly")
-Cc: stable@vger.kernel.org
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Link: https://lore.kernel.org/20260428081855.1249045-6-songmuchun@bytedance.com
+Fixes: c4386bd8ee3a ("mm/memremap: add ZONE_DEVICE support for compound pages")
+Signed-off-by: Muchun Song <songmuchun@bytedance.com>
+Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Reviewed-by: Oscar Salvador <osalvador@suse.de>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Acked-by: Liam R. Howlett <liam@infradead.org>
+Cc: "Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>
+Cc: Joao Martins <joao.m.martins@oracle.com>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
+Cc: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/sunrpc/xdr.h |    4 ++--
- net/sunrpc/svcsock.c       |   14 ++++++++++++--
- net/sunrpc/xdr.c           |   11 ++++++-----
- 3 files changed, 20 insertions(+), 9 deletions(-)
+ mm/mm_init.c |   34 +++++++++++++++++++---------------
+ 1 file changed, 19 insertions(+), 15 deletions(-)
 
---- a/include/linux/sunrpc/xdr.h
-+++ b/include/linux/sunrpc/xdr.h
-@@ -139,8 +139,8 @@ void	xdr_terminate_string(const struct x
- size_t	xdr_buf_pagecount(const struct xdr_buf *buf);
- int	xdr_alloc_bvec(struct xdr_buf *buf, gfp_t gfp);
- void	xdr_free_bvec(struct xdr_buf *buf);
--unsigned int xdr_buf_to_bvec(struct bio_vec *bvec, unsigned int bvec_size,
--			     const struct xdr_buf *xdr);
-+int xdr_buf_to_bvec(struct bio_vec *bvec, unsigned int bvec_size,
-+		    const struct xdr_buf *xdr);
- int xdr_buf_to_sg(const struct xdr_buf *buf, unsigned int offset,
- 		  unsigned int len, struct scatterlist *sg, unsigned int nsg);
- int xdr_buf_to_sg_alloc(const struct xdr_buf *buf, unsigned int offset,
---- a/net/sunrpc/svcsock.c
-+++ b/net/sunrpc/svcsock.c
-@@ -748,7 +748,7 @@ static int svc_udp_sendto(struct svc_rqs
- 		.msg_flags	= MSG_SPLICE_PAGES,
- 		.msg_controllen	= sizeof(buffer),
- 	};
--	unsigned int count;
-+	int count;
- 	int err;
+--- a/mm/mm_init.c
++++ b/mm/mm_init.c
+@@ -649,6 +649,20 @@ static inline void fixup_hashdist(void)
+ static inline void fixup_hashdist(void) {}
+ #endif /* CONFIG_NUMA */
  
- 	svc_udp_release_ctxt(xprt, rqstp->rq_xprt_ctxt);
-@@ -762,6 +762,10 @@ static int svc_udp_sendto(struct svc_rqs
- 		goto out_notconn;
- 
- 	count = xdr_buf_to_bvec(svsk->sk_bvec, SUNRPC_MAX_UDP_SENDPAGES, xdr);
-+	if (count < 0) {
-+		err = count;
-+		goto out_trace;
++#ifdef CONFIG_ZONE_DEVICE
++static __meminit void pageblock_migratetype_init_range(unsigned long pfn,
++		unsigned long nr_pages, int migratetype)
++{
++	const unsigned long end = pfn + nr_pages;
++
++	for (pfn = pageblock_align(pfn); pfn < end; pfn += pageblock_nr_pages) {
++		set_pageblock_migratetype(pfn_to_page(pfn), migratetype);
++		if (IS_ALIGNED(pfn, PAGES_PER_SECTION))
++			cond_resched();
 +	}
++}
++#endif
++
+ #ifdef CONFIG_DEFERRED_STRUCT_PAGE_INIT
+ static inline void pgdat_set_deferred_range(pg_data_t *pgdat)
+ {
+@@ -993,21 +1007,6 @@ static void __ref __init_zone_device_pag
+ 	page->zone_device_data = NULL;
  
- 	iov_iter_bvec(&msg.msg_iter, ITER_SOURCE, svsk->sk_bvec,
- 		      count, rqstp->rq_res.len);
-@@ -773,6 +777,7 @@ static int svc_udp_sendto(struct svc_rqs
- 		err = sock_sendmsg(svsk->sk_sock, &msg);
+ 	/*
+-	 * Mark the block movable so that blocks are reserved for
+-	 * movable at startup. This will force kernel allocations
+-	 * to reserve their blocks rather than leaking throughout
+-	 * the address space during boot when many long-lived
+-	 * kernel allocations are made.
+-	 *
+-	 * Please note that MEMINIT_HOTPLUG path doesn't clear memmap
+-	 * because this is done early in section_activate()
+-	 */
+-	if (pageblock_aligned(pfn)) {
+-		set_pageblock_migratetype(page, MIGRATE_MOVABLE);
+-		cond_resched();
+-	}
+-
+-	/*
+ 	 * ZONE_DEVICE pages are released directly to the driver page allocator
+ 	 * which will set the page count to 1 when allocating the page.
+ 	 */
+@@ -1098,6 +1097,9 @@ void __ref memmap_init_zone_device(struc
+ 
+ 		__init_zone_device_page(page, pfn, zone_idx, nid, pgmap);
+ 
++		if (IS_ALIGNED(pfn, PAGES_PER_SECTION))
++			cond_resched();
++
+ 		if (pfns_per_compound == 1)
+ 			continue;
+ 
+@@ -1105,6 +1107,8 @@ void __ref memmap_init_zone_device(struc
+ 				     compound_nr_pages(pfn, altmap, pgmap));
  	}
  
-+out_trace:
- 	trace_svcsock_udp_send(xprt, err);
- 
- 	mutex_unlock(&xprt->xpt_mutex);
-@@ -1260,7 +1265,7 @@ static int svc_tcp_sendmsg(struct svc_so
- 	struct msghdr msg = {
- 		.msg_flags	= MSG_SPLICE_PAGES,
- 	};
--	unsigned int count;
-+	int count;
- 	void *buf;
- 	int ret;
- 
-@@ -1278,10 +1283,15 @@ static int svc_tcp_sendmsg(struct svc_so
- 
- 	count = xdr_buf_to_bvec(svsk->sk_bvec + 1, RPCSVC_MAXPAGES,
- 				&rqstp->rq_res);
-+	if (count < 0) {
-+		ret = count;
-+		goto out;
-+	}
- 
- 	iov_iter_bvec(&msg.msg_iter, ITER_SOURCE, svsk->sk_bvec,
- 		      1 + count, sizeof(marker) + rqstp->rq_res.len);
- 	ret = sock_sendmsg(svsk->sk_sock, &msg);
-+out:
- 	page_frag_free(buf);
- 	if (ret < 0)
- 		return ret;
---- a/net/sunrpc/xdr.c
-+++ b/net/sunrpc/xdr.c
-@@ -167,13 +167,14 @@ xdr_free_bvec(struct xdr_buf *buf)
- /**
-  * xdr_buf_to_bvec - Copy components of an xdr_buf into a bio_vec array
-  * @bvec: bio_vec array to populate
-- * @bvec_size: element count of @bio_vec
-+ * @bvec_size: element count of @bvec
-  * @xdr: xdr_buf to be copied
-  *
-- * Returns the number of entries consumed in @bvec.
-+ * Returns the number of entries consumed in @bvec on success, or
-+ * -ESERVERFAULT when @xdr does not fit within @bvec_size entries.
-  */
--unsigned int xdr_buf_to_bvec(struct bio_vec *bvec, unsigned int bvec_size,
--			     const struct xdr_buf *xdr)
-+int xdr_buf_to_bvec(struct bio_vec *bvec, unsigned int bvec_size,
-+		    const struct xdr_buf *xdr)
- {
- 	const struct kvec *head = xdr->head;
- 	const struct kvec *tail = xdr->tail;
-@@ -215,7 +216,7 @@ unsigned int xdr_buf_to_bvec(struct bio_
- 
- bvec_overflow:
- 	pr_warn_once("%s: bio_vec array overflow\n", __func__);
--	return count;
-+	return -ESERVERFAULT;
++	pageblock_migratetype_init_range(start_pfn, nr_pages, MIGRATE_MOVABLE);
++
+ 	pr_debug("%s initialised %lu pages in %ums\n", __func__,
+ 		nr_pages, jiffies_to_msecs(jiffies - start));
  }
- 
- /**
 
 
