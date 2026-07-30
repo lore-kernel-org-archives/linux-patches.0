@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCAB043E08C;
-	Thu, 30 Jul 2026 14:22:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AD8E440A2C;
+	Thu, 30 Jul 2026 14:22:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421322; cv=none; b=jvSBb3cQVjprvsMvWRq1ucrhmIVjjeC0Xbk+yZIwBG/Dlb0Dh++bsiQutKGZ3PR51lgN8FuuiH+cQq1DvjnWrsoWFTaML5QF8apaFSAc2xq09zE+13GlKwDZUTuNbcqWTLi+Ayi7p98i0dg7SA9JFowDrrz+Xy5E2NwxIBYX0Dk=
+	t=1785421324; cv=none; b=m36jGdkcFS2L9GpQCBBAGXe+FqWpBr0xPrvaefiG6UvqeA4tUHBLtXswvz33lugqttHJk+D8ESZvyKkWqDkGqP0CCeWlA6yR1jkqZsUg9oCDWMmQIc1IQShIoz95Vc4gFUv1G6TqcZCDQb7KwjWLOsBlDqzM+jNKuc91csUtthA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421322; c=relaxed/simple;
-	bh=nSky7C/iQbPmStt0zFZjs3z8fDIUwtWiJLBTYNMbqxY=;
+	s=arc-20240116; t=1785421324; c=relaxed/simple;
+	bh=BEbeFeIu8Wy15QkQtRJhOl9GbbrL/jt8j6msxQskhsc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RnbJF/gNlCNJeQoAVmhlyXNT73bibVTjNcyRp15P505oLgsdud7kBoPDN128Ghm2ubF3Q855haCBMS3cctf/eWriRR8odmxKOLTwFjRJZ1KtrLHGs/Y0HOHNE/cNj901uQgzfBM0W+B0qT5Idsm2PG+pM6/OV7fZ8FL8bPV/CP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T0PvXJKM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qMs6MG80/DgDHgE4If5QNYMzb6D9DVTaGTa6Y9BhvJDkuVuGFWo5y/IVdgIInDM49qkbPH4C9U6AL9pzDB4rVizw/M3Azo9leskAhpEZEsBLCtM/vxN8SvKdnc9TsZM2AUJKSig00HhCecSla2yF51H5st+Wa6hubDMjcb1A3q4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m0cihmQw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T0PvXJKM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35F521F000E9;
-	Thu, 30 Jul 2026 14:22:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m0cihmQw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D5311F000E9;
+	Thu, 30 Jul 2026 14:22:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421320;
-	bh=JwiofZ3JOjY35ApKihY6sJAZFdpsOOtRgZb1eoh6eTo=;
+	s=korg; t=1785421323;
+	bh=JJACowtj2O0+W/G/8xLwNMorc15WX3THv4BoN2yk2z8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T0PvXJKMhSMsxxrypZT0LRhi/yEtW/+5TKE46fBT8Q7rrkIDpvB3ZcntE4Rb6OZau
-	 NItzN+BxkkdNJGX/O5qoRfcl2r6ecwDYqHVAHZiTgkN6nxizHpwd6/C3la+HDRV84m
-	 p4LeBaBZYSlK4HdBT+1RtAyWqFGiVPXlFV+ABnbA=
+	b=m0cihmQw4sBFhQOqj1/dN1Mw3IN9L8eMN8VDaN+07lJdONRvwp4iW2m9hTP5GkOyc
+	 Q6S3Ho19mJ8T8cQOKq9o9KqaRuEG7kR4zsleW2l30M88W0kz6XBseg950MK6BblRZc
+	 2/I4rhrPQr86DnynnWOs93CKRb/86X2OzOjTM+ws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Zhao Li <enderaoelyther@gmail.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 063/744] wifi: nl80211: constrain MBSSID TX link ID range
-Date: Thu, 30 Jul 2026 16:05:36 +0200
-Message-ID: <20260730141445.617524341@linuxfoundation.org>
+Subject: [PATCH 7.1 064/744] wifi: cfg80211: validate PMSR measurement type data
+Date: Thu, 30 Jul 2026 16:05:37 +0200
+Message-ID: <20260730141445.637747776@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -53,36 +53,72 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhao Li <enderaoelyther@gmail.com>
 
-[ Upstream commit 172f06023669f0a96d32511669ff45c600731380 ]
+[ Upstream commit 41aa973eb05922848dded26875c55ef982ac1c49 ]
 
-MBSSID transmitted-profile link IDs are valid only in the range
-0..IEEE80211_MLD_MAX_NUM_LINKS - 1. Constrain the nl80211 policy to
-reject out-of-range values during attribute validation.
+PMSR request parsing accepts missing or duplicated measurement type
+entries in NL80211_PMSR_REQ_ATTR_DATA.
 
-Fixes: 37523c3c47b3 ("wifi: nl80211: add link id of transmitted profile for MLO MBSSID")
+Track whether one measurement type was already provided, reject a
+second one immediately, and return an error if the request data block
+contains no measurement type at all.
+
+Fixes: 9bb7e0f24e7e7 ("cfg80211: add peer measurement with FTM initiator API")
 Assisted-by: Codex:gpt-5.5
 Assisted-by: Claude:claude-opus-4.8
 Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Link: https://patch.msgid.link/20260612131854.43575-4-enderaoelyther@gmail.com
+Link: https://patch.msgid.link/20260612133656.92900-2-enderaoelyther@gmail.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/nl80211.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/wireless/pmsr.c | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
-diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
-index 264ae4e742a1c4..3024fa8dd78021 100644
---- a/net/wireless/nl80211.c
-+++ b/net/wireless/nl80211.c
-@@ -616,7 +616,7 @@ nl80211_mbssid_config_policy[NL80211_MBSSID_CONFIG_ATTR_MAX + 1] = {
- 	[NL80211_MBSSID_CONFIG_ATTR_TX_IFINDEX] = { .type = NLA_U32 },
- 	[NL80211_MBSSID_CONFIG_ATTR_EMA] = { .type = NLA_FLAG },
- 	[NL80211_MBSSID_CONFIG_ATTR_TX_LINK_ID] =
--		NLA_POLICY_MAX(NLA_U8, IEEE80211_MLD_MAX_NUM_LINKS),
-+		NLA_POLICY_RANGE(NLA_U8, 0, IEEE80211_MLD_MAX_NUM_LINKS - 1),
- };
+diff --git a/net/wireless/pmsr.c b/net/wireless/pmsr.c
+index 1ee7a9e2cdef21..4b10ce0486f4a6 100644
+--- a/net/wireless/pmsr.c
++++ b/net/wireless/pmsr.c
+@@ -214,6 +214,7 @@ static int pmsr_parse_peer(struct cfg80211_registered_device *rdev,
+ {
+ 	struct nlattr *tb[NL80211_PMSR_PEER_ATTR_MAX + 1];
+ 	struct nlattr *req[NL80211_PMSR_REQ_ATTR_MAX + 1];
++	bool have_measurement_type = false;
+ 	struct nlattr *treq;
+ 	int err, rem;
  
- static const struct nla_policy
+@@ -267,6 +268,14 @@ static int pmsr_parse_peer(struct cfg80211_registered_device *rdev,
+ 	}
+ 
+ 	nla_for_each_nested(treq, req[NL80211_PMSR_REQ_ATTR_DATA], rem) {
++		if (have_measurement_type) {
++			NL_SET_ERR_MSG_ATTR(info->extack, treq,
++					    "multiple measurement types in request data");
++			return -EINVAL;
++		}
++
++		have_measurement_type = true;
++
+ 		switch (nla_type(treq)) {
+ 		case NL80211_PMSR_TYPE_FTM:
+ 			err = pmsr_parse_ftm(rdev, treq, out, info);
+@@ -276,10 +285,16 @@ static int pmsr_parse_peer(struct cfg80211_registered_device *rdev,
+ 					    "unsupported measurement type");
+ 			err = -EINVAL;
+ 		}
++		if (err)
++			return err;
+ 	}
+ 
+-	if (err)
+-		return err;
++	if (!have_measurement_type) {
++		NL_SET_ERR_MSG_ATTR(info->extack,
++				    req[NL80211_PMSR_REQ_ATTR_DATA],
++				    "missing measurement type in request data");
++		return -EINVAL;
++	}
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
