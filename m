@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D76037CD59;
-	Thu, 30 Jul 2026 15:40:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C93A37B012;
+	Thu, 30 Jul 2026 15:40:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426039; cv=none; b=sUAJVIyf43j7YTPj5oXc1qrYmoSFsbgMUk/i6EILpX3gS3DcXw/Y7QutKI2EmESWXmoQgPoQ5QAI6ybzkkqMiim3292tiU+9p57puhoLK0Ww9u8XTlc+NQmXaMGyIj2H1ZV7gBMeS5l5DlBzQ7VyemZw//Cy4G7/Akt9ezkfCsc=
+	t=1785426042; cv=none; b=BXI2ScPlpE1d3PVcQvBO7gw2LQ5W+8GOV+hOvffRjXxHVl+oXsoXrl3hL6gW+G4i/I7VWkkds3falzoIPpyHWrbvsBZ+1car76BViiHQTBi74oIxFNqWcRvbmVLlIEVvQGE0vZYE4uyF6ffsZOQLU4QZ7j2tilPKss0wfzylBcc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426039; c=relaxed/simple;
-	bh=s7lgS1fzVvb0dnO1mPaB4Qz22tEs4Ct7OPvpZqpodeY=;
+	s=arc-20240116; t=1785426042; c=relaxed/simple;
+	bh=8zg+lhe5S2HITCHiwW7NcLFcJStVHlbW4Et6SM9aX7M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lqdfKU1eyA8gh4k2jRy1GTu6YA3NWBfk0LNkyfwLyM3FPUpSQnck0OHmjKPPllJWlWOX1xBcHq605T1nbcIlDaHFN0XOCRV4SqS/thznFFJFmnt7AqIlmhDJcxTn3YznPivccXwTZy1Z83GkstA4j8HkvsOrGncYy5CqamVPXJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vs6pqQDC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ascpZYgJfMR4ZqAg5jqjVGv5UL/7c0o1KBJNqtUbITDOwpa6vpTF2DAXKjc5ZVecoMDb48mv7hvhoacwBm+yVwBwmvGN1tBk3Kr75Ek+Ee3TJiGWSNGOurcn9iyuoAa/t8UF5QNZ6gQ/mVU6oOfbsCEzixfRsKXxJ0g+2MfNJRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gPzxJmCC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vs6pqQDC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BC3E1F000E9;
-	Thu, 30 Jul 2026 15:40:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gPzxJmCC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C5AD1F00A3A;
+	Thu, 30 Jul 2026 15:40:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426038;
-	bh=KQGvBkdnsaq9Rz7IA/tnY8XW+vyUe3J7yVxVK+42qdI=;
+	s=korg; t=1785426041;
+	bh=dDmebe7phBy2wRKCX9+uxPy/YLYlgJ0ta+E0XXuVZOI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vs6pqQDCRI+2iOSjRWIkLR9zcmzIDJ4oCJ27U+qS2+sOQYJ6+1s2/KFSzPnHEXBQn
-	 tmi2sVVWp94s5qnr9Sx5VaeSci5acy3uRBopKgMbsf/v3GWOIp9fRkJ9Y5vx50ipx5
-	 BUsrru3p+iwjveISUJZIaBxa7FXhemNRBNOjfid0=
+	b=gPzxJmCCwvsTfrcwK88fbedLF8Z/ZLwF7K7jY1JBZORiPKkkY1dSPWhjTawHS9uZH
+	 KKn1kvqsxvRS1FM5or5ZuTNVIyw6f04cPQ6DxRmnOohQZM4TXPCnn+nc7HnOsH6c6u
+	 OFJ2NjhO7sk81nDhgsz5qXZF3uV28TlP/3OvJd24=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	WenTao Liang <vulab@iscas.ac.cn>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 277/602] drm/amd/display: detect_link_and_local_sink: DP alt mode timeout path leaks prev_sink reference
-Date: Thu, 30 Jul 2026 16:11:09 +0200
-Message-ID: <20260730141441.793198640@linuxfoundation.org>
+	Jiri Pirko <jiri@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 236/602] dpll: add clock quality level attribute and op
+Date: Thu, 30 Jul 2026 16:10:28 +0200
+Message-ID: <20260730141440.931144311@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -52,43 +51,187 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: WenTao Liang <vulab@iscas.ac.cn>
+From: Jiri Pirko <jiri@nvidia.com>
 
-commit a6e14b976be48eebd8769cb5b883a6af7fc5ade1 upstream.
+[ Upstream commit a1afb959add1fad43cb337448c244ed70bac3109 ]
 
-prev_sink is unconditionally retained via dc_sink_retain at function
-  entry, but the DP alt mode timeout path inside SIGNAL_TYPE_DISPLAY_PORT
-  returns false without releasing prev_sink. All other return paths in the
-  function correctly call dc_sink_release(prev_sink), making this the only
-  missing cleanup.
+In order to allow driver expose quality level of the clock it is
+running, introduce a new netlink attr with enum to carry it to the
+userspace. Also, introduce an op the dpll netlink code calls into the
+driver to obtain the value.
 
-Fixes: 54618888d1ea ("drm/amd/display: break down dc_link.c")
-Signed-off-by: WenTao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Link: https://patch.msgid.link/20260626124555.36910-1-vulab@iscas.ac.cn
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 45510cf662dcf46b5d8926d454f338809f107b9d)
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Jiri Pirko <jiri@nvidia.com>
+Link: https://patch.msgid.link/20241030081157.966604-2-jiri@resnulli.us
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 11c057d23465 ("net/mlx5: Fix MCIA register buffer overflow on 32 dword reads")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/link/link_detection.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ Documentation/netlink/specs/dpll.yaml | 41 +++++++++++++++++++++++++++
+ drivers/dpll/dpll_netlink.c           | 24 ++++++++++++++++
+ include/linux/dpll.h                  |  4 +++
+ include/uapi/linux/dpll.h             | 24 ++++++++++++++++
+ 4 files changed, 93 insertions(+)
 
---- a/drivers/gpu/drm/amd/display/dc/link/link_detection.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/link_detection.c
-@@ -961,8 +961,11 @@ static bool detect_link_and_local_sink(s
- 			    link->link_enc->features.flags.bits.DP_IS_USB_C == 1) {
+diff --git a/Documentation/netlink/specs/dpll.yaml b/Documentation/netlink/specs/dpll.yaml
+index cb5763f79ac2ae..c799d43b8833d1 100644
+--- a/Documentation/netlink/specs/dpll.yaml
++++ b/Documentation/netlink/specs/dpll.yaml
+@@ -85,6 +85,36 @@ definitions:
+           This may happen for example if dpll device was previously
+           locked on an input pin of type PIN_TYPE_SYNCE_ETH_PORT.
+     render-max: true
++  -
++    type: enum
++    name: clock-quality-level
++    doc: |
++      level of quality of a clock device. This mainly applies when
++      the dpll lock-status is DPLL_LOCK_STATUS_HOLDOVER.
++      The current list is defined according to the table 11-7 contained
++      in ITU-T G.8264/Y.1364 document. One may extend this list freely
++      by other ITU-T defined clock qualities, or different ones defined
++      by another standardization body (for those, please use
++      different prefix).
++    entries:
++      -
++        name: itu-opt1-prc
++        value: 1
++      -
++        name: itu-opt1-ssu-a
++      -
++        name: itu-opt1-ssu-b
++      -
++        name: itu-opt1-eec1
++      -
++        name: itu-opt1-prtc
++      -
++        name: itu-opt1-eprtc
++      -
++        name: itu-opt1-eeec
++      -
++        name: itu-opt1-eprc
++    render-max: true
+   -
+     type: const
+     name: temp-divider
+@@ -252,6 +282,17 @@ attribute-sets:
+         name: lock-status-error
+         type: u32
+         enum: lock-status-error
++      -
++        name: clock-quality-level
++        type: u32
++        enum: clock-quality-level
++        multi-attr: true
++        doc: |
++          Level of quality of a clock device. This mainly applies when
++          the dpll lock-status is DPLL_LOCK_STATUS_HOLDOVER. This could
++          be put to message multiple times to indicate possible parallel
++          quality levels (e.g. one specified by ITU option 1 and another
++          one specified by option 2).
+   -
+     name: pin
+     enum-name: dpll_a_pin
+diff --git a/drivers/dpll/dpll_netlink.c b/drivers/dpll/dpll_netlink.c
+index e3fb08e1578d85..c66f57a5814c8c 100644
+--- a/drivers/dpll/dpll_netlink.c
++++ b/drivers/dpll/dpll_netlink.c
+@@ -187,6 +187,27 @@ dpll_msg_add_temp(struct sk_buff *msg, struct dpll_device *dpll,
+ 	return 0;
+ }
  
- 				/* if alt mode times out, return false */
--				if (!wait_for_entering_dp_alt_mode(link))
-+				if (!wait_for_entering_dp_alt_mode(link)) {
-+					if (prev_sink)
-+						dc_sink_release(prev_sink);
- 					return false;
-+				}
- 			}
++static int
++dpll_msg_add_clock_quality_level(struct sk_buff *msg, struct dpll_device *dpll,
++				 struct netlink_ext_ack *extack)
++{
++	const struct dpll_device_ops *ops = dpll_device_ops(dpll);
++	DECLARE_BITMAP(qls, DPLL_CLOCK_QUALITY_LEVEL_MAX) = { 0 };
++	enum dpll_clock_quality_level ql;
++	int ret;
++
++	if (!ops->clock_quality_level_get)
++		return 0;
++	ret = ops->clock_quality_level_get(dpll, dpll_priv(dpll), qls, extack);
++	if (ret)
++		return ret;
++	for_each_set_bit(ql, qls, DPLL_CLOCK_QUALITY_LEVEL_MAX)
++		if (nla_put_u32(msg, DPLL_A_CLOCK_QUALITY_LEVEL, ql))
++			return -EMSGSIZE;
++
++	return 0;
++}
++
+ static int
+ dpll_msg_add_pin_prio(struct sk_buff *msg, struct dpll_pin *pin,
+ 		      struct dpll_pin_ref *ref,
+@@ -623,6 +644,9 @@ dpll_device_get_one(struct dpll_device *dpll, struct sk_buff *msg,
+ 	if (ret)
+ 		return ret;
+ 	ret = dpll_msg_add_lock_status(msg, dpll, extack);
++	if (ret)
++		return ret;
++	ret = dpll_msg_add_clock_quality_level(msg, dpll, extack);
+ 	if (ret)
+ 		return ret;
+ 	ret = dpll_msg_add_mode(msg, dpll, extack);
+diff --git a/include/linux/dpll.h b/include/linux/dpll.h
+index 3c03b19d939070..5d62e9a0b8243c 100644
+--- a/include/linux/dpll.h
++++ b/include/linux/dpll.h
+@@ -28,6 +28,10 @@ struct dpll_device_ops {
+ 			       struct netlink_ext_ack *extack);
+ 	int (*temp_get)(const struct dpll_device *dpll, void *dpll_priv,
+ 			s32 *temp, struct netlink_ext_ack *extack);
++	int (*clock_quality_level_get)(const struct dpll_device *dpll,
++				       void *dpll_priv,
++				       unsigned long *qls,
++				       struct netlink_ext_ack *extack);
+ };
  
- 			if (!detect_dp(link, &sink_caps, reason)) {
+ struct dpll_pin_ops {
+diff --git a/include/uapi/linux/dpll.h b/include/uapi/linux/dpll.h
+index 7fa641b3a20adb..12a43bf9a863bc 100644
+--- a/include/uapi/linux/dpll.h
++++ b/include/uapi/linux/dpll.h
+@@ -79,6 +79,29 @@ enum dpll_lock_status_error {
+ 	DPLL_LOCK_STATUS_ERROR_MAX = (__DPLL_LOCK_STATUS_ERROR_MAX - 1)
+ };
+ 
++/**
++ * enum dpll_clock_quality_level - level of quality of a clock device. This
++ *   mainly applies when the dpll lock-status is DPLL_LOCK_STATUS_HOLDOVER. The
++ *   current list is defined according to the table 11-7 contained in ITU-T
++ *   G.8264/Y.1364 document. One may extend this list freely by other ITU-T
++ *   defined clock qualities, or different ones defined by another
++ *   standardization body (for those, please use different prefix).
++ */
++enum dpll_clock_quality_level {
++	DPLL_CLOCK_QUALITY_LEVEL_ITU_OPT1_PRC = 1,
++	DPLL_CLOCK_QUALITY_LEVEL_ITU_OPT1_SSU_A,
++	DPLL_CLOCK_QUALITY_LEVEL_ITU_OPT1_SSU_B,
++	DPLL_CLOCK_QUALITY_LEVEL_ITU_OPT1_EEC1,
++	DPLL_CLOCK_QUALITY_LEVEL_ITU_OPT1_PRTC,
++	DPLL_CLOCK_QUALITY_LEVEL_ITU_OPT1_EPRTC,
++	DPLL_CLOCK_QUALITY_LEVEL_ITU_OPT1_EEEC,
++	DPLL_CLOCK_QUALITY_LEVEL_ITU_OPT1_EPRC,
++
++	/* private: */
++	__DPLL_CLOCK_QUALITY_LEVEL_MAX,
++	DPLL_CLOCK_QUALITY_LEVEL_MAX = (__DPLL_CLOCK_QUALITY_LEVEL_MAX - 1)
++};
++
+ #define DPLL_TEMP_DIVIDER	1000
+ 
+ /**
+@@ -180,6 +203,7 @@ enum dpll_a {
+ 	DPLL_A_TEMP,
+ 	DPLL_A_TYPE,
+ 	DPLL_A_LOCK_STATUS_ERROR,
++	DPLL_A_CLOCK_QUALITY_LEVEL,
+ 
+ 	__DPLL_A_MAX,
+ 	DPLL_A_MAX = (__DPLL_A_MAX - 1)
+-- 
+2.53.0
+
 
 
