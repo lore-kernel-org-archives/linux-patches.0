@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC0433A5433;
-	Thu, 30 Jul 2026 14:29:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A80632E9EC7;
+	Thu, 30 Jul 2026 14:29:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421758; cv=none; b=J7gHH6+z2gycaHf7u9VT3fb+YSrN3EATb8eiEhB+cQYjdD0V5B5wDymeIz1FU1RRB6DcQwCSWzYXYm/WU5lhMpWLcZrCcK78rb897A/iVJT690+9ns42ey5Voaff+Q9rdGdwgvWwjEeU9Ox6BgBu/o86MbhjHpTyvenAnTTiGNQ=
+	t=1785421761; cv=none; b=b6AGZ85HiozOFmebaTgPaFuYJJMjS3yWNrbwh6kW+Aa8aos+g85kRCcrr7bud6jgjIQcnZyMIvKQU+pJw9yvFLTSnAzRpp/jqmv6DoaLo14kQqIS2Z46tXNecc8N1lg1xKuefo+xrYBO4rn7Gsc1AQJUsU1DuI8pbo10NhxXI7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421758; c=relaxed/simple;
-	bh=c+Hn9GyFlDwupJs0LmKrtwg9AjjTQ3BhGVwAUwXWVYo=;
+	s=arc-20240116; t=1785421761; c=relaxed/simple;
+	bh=EIbnKSjyysSlDb0slOdTsrI+Yp8bxvaBjAUwiMxHgm4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ILGdFWLpDm2/OPVwfHkas8DICn2Iz2UnPalFxbRvaJpdC/JE3Jzj8epPsFxGIZWeg+gTK5Kn0mk3xkGd6KdLq3Bl0hwSowP2D+AXVC1PfmkV3+zzXBx1Ti9cy9EKTRABhUi4xbd7OK8dG+La22RAb8SH+fAi6gwqZDayzyUoBjc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gJtFXXT5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bMdCAIpYqpVSjGPBuwa7aX0DEtAzA8r67qmz4ftSB4I+WNWbF8ePDV+vlYhUZK/oBViaU9FC8C65OAoM07/eJBPH61iYyNK3+OlDuuvSevmzyAp+VqCxiJd5ewJrI4gGumNfjgFkuvBTjiFY+k2K2K431Va6s3SKnVyZIZ6Dwxc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xogXOUVi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gJtFXXT5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20F341F000E9;
-	Thu, 30 Jul 2026 14:29:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xogXOUVi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E54B1F000E9;
+	Thu, 30 Jul 2026 14:29:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421757;
-	bh=UAvuHd6jTcAmCJbU8xIAlnHtrk53DmADLkYkK30AUXU=;
+	s=korg; t=1785421760;
+	bh=DdRhfheTBioh4OIxMxEuiB/h4wxA7PRcvqS0uMi3bts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gJtFXXT5JKLF5znqrCrB+ne7Vq1xkoCFW+ThXug7BATfbUL29qMM0qngPVgVuz0Ed
-	 FVzVJ7/aA3z6zXIaJr5ehFdTBxRbFaMAS/gBqOe2Rhu/ufSFoI0f7FSfAboKEi5UXM
-	 G+hYpVn4k/ShLE6P2jICcRfKQwQL7En6or57DUe0=
+	b=xogXOUViM/cgk8kRAuQzvhlZrLJ9HQ5gzYvpM5kq38419XGG0hYniTVSMJuf+UnF9
+	 V8+7B7h1WpMrlF4Q7LFP7yYgkPzCwIuikNHEjY4RZIoYDOYQaLgfyNSx9sfaZ9for/
+	 HT/4hcrzc7Aeulrg7KeLSDh0itM7BBZE1NQ6Z+Aw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shahar Tzarfati <shahar.tzarfati@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	syzbot+e62a973f8322b3bbe3ac@syzkaller.appspotmail.com,
+	Diego Fernando Mancera Gomez <diegomancera.dev@gmail.com>,
+	Stanislaw Gruszka <stf_xl@wp.pl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 210/744] wifi: iwlwifi: mvm: fix read in wake packet notification handler
-Date: Thu, 30 Jul 2026 16:08:03 +0200
-Message-ID: <20260730141448.744626484@linuxfoundation.org>
+Subject: [PATCH 7.1 211/744] usb: atm: ueagle-atm: reject descriptors that confuse probe and disconnect
+Date: Thu, 30 Jul 2026 16:08:04 +0200
+Message-ID: <20260730141448.767449939@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -51,48 +52,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shahar Tzarfati <shahar.tzarfati@intel.com>
+From: Diego Fernando Mancera Gomez <diegomancera.dev@gmail.com>
 
-[ Upstream commit 9d7657aae8c1579584c67b0b66114a6a98db8b2f ]
+[ Upstream commit 71132cedd1ecbc4032d76e9928c18a10f7e39b80 ]
 
-In iwl_mvm_wowlan_store_wake_pkt(), packet_len was initialized from
-notif->wake_packet_length before the explicit check that len >=
-sizeof(*notif).
+uea_probe() distinguishes a pre-firmware device from a post-firmware one
+using the USB id (UEA_IS_PREFIRM()), and stores a different object as the
+interface data in each case: a 'struct completion' for a pre-firmware
+device (to be waited on in .disconnect()), or a 'struct usbatm_data' for a
+post-firmware one.
 
-Move the assignment of packet_len to after the size check so that
-notif->wake_packet_length is only accessed once the payload length
-has been validated.
+uea_disconnect() instead tells the two apart by the number of interfaces
+of the active configuration (a pre-firmware device exposes a single
+interface, ADI930 has 2 and eagle has 3), and casts the interface data
+accordingly.
 
-Fixes: 219ed58feda9 ("wifi: iwlwifi: mvm: Add support for wowlan wake packet notification")
-Signed-off-by: Shahar Tzarfati <shahar.tzarfati@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20260715215523.99d5cf85a528.Ic4aa736011d4fe88e0cd19723d1d48bb24642198@changeid
+Because the two handlers use different criteria, a crafted device that
+advertises a pre-firmware id together with a multi-interface descriptor
+(or a post-firmware id with a single interface) makes them disagree: the
+small 'struct completion' stored by uea_probe() is then passed to
+usbatm_usb_disconnect(), which casts it to 'struct usbatm_data' and takes
+instance->serialize, reading past the end of the allocation:
+
+  BUG: KASAN: slab-out-of-bounds in __mutex_lock+0x152a/0x1b80
+  Read of size 8 at addr ffff8880470e2c60 by task kworker/1:2/982
+  ...
+   __mutex_lock+0x152a/0x1b80
+   usbatm_usb_disconnect+0x70/0x820
+   uea_disconnect+0x133/0x2c0
+   usb_unbind_interface+0x1dd/0x9e0
+  ...
+  which belongs to the cache kmalloc-96 of size 96
+  The buggy address is located 0 bytes to the right of
+   allocated 96-byte region [ffff8880470e2c00, ffff8880470e2c60)
+
+Reject such inconsistent descriptors in uea_probe() so that both handlers
+always make the same pre/post-firmware decision.
+
+Reported-by: syzbot+e62a973f8322b3bbe3ac@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=e62a973f8322b3bbe3ac
+Fixes: e2674dfbed8a ("usb: atm: ueagle-atm: wait for pre-firmware load in .disconnect()")
+Signed-off-by: Diego Fernando Mancera Gomez <diegomancera.dev@gmail.com>
+Acked-by: Stanislaw Gruszka <stf_xl@wp.pl>
+Link: https://patch.msgid.link/20260717080704.1264-1-diegomancera.dev@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/d3.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/usb/atm/ueagle-atm.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/d3.c b/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
-index 9a74f60c91850f..72d7403de04d82 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
-@@ -2756,7 +2756,7 @@ static int iwl_mvm_wowlan_store_wake_pkt(struct iwl_mvm *mvm,
- 					 struct iwl_wowlan_status_data *status,
- 					 u32 len)
+diff --git a/drivers/usb/atm/ueagle-atm.c b/drivers/usb/atm/ueagle-atm.c
+index 1e12fc19f8726d..ee77c38f4ed145 100644
+--- a/drivers/usb/atm/ueagle-atm.c
++++ b/drivers/usb/atm/ueagle-atm.c
+@@ -2551,6 +2551,7 @@ static struct usbatm_driver uea_usbatm_driver = {
+ static int uea_probe(struct usb_interface *intf, const struct usb_device_id *id)
  {
--	u32 data_size, packet_len = le32_to_cpu(notif->wake_packet_length);
-+	u32 data_size, packet_len;
+ 	struct usb_device *usb = interface_to_usbdev(intf);
++	bool single_iface = usb->config->desc.bNumInterfaces == 1;
+ 	int ret;
  
- 	if (len < sizeof(*notif)) {
- 		IWL_ERR(mvm, "Invalid WoWLAN wake packet notification!\n");
-@@ -2775,6 +2775,7 @@ static int iwl_mvm_wowlan_store_wake_pkt(struct iwl_mvm *mvm,
- 		return -EIO;
- 	}
+ 	uea_dbg(usb, "ADSL device found with vid (%#X) pid (%#X) Rev (%#X): %s\n",
+@@ -2559,6 +2560,22 @@ static int uea_probe(struct usb_interface *intf, const struct usb_device_id *id)
+ 		le16_to_cpu(usb->descriptor.bcdDevice),
+ 		chip_name[UEA_CHIP_VERSION(id)]);
  
-+	packet_len = le32_to_cpu(notif->wake_packet_length);
- 	data_size = len - offsetof(struct iwl_wowlan_wake_pkt_notif, wake_packet);
++	/*
++	 * uea_probe() decides between the pre-firmware and post-firmware case
++	 * from the USB id and stores a different object as interface data in
++	 * each case: a struct completion for a pre-firmware device, a struct
++	 * usbatm_data for a post-firmware one. uea_disconnect() instead tells
++	 * the two apart by the number of interfaces (a pre-firmware device
++	 * exposes a single interface, ADI930 has 2 and eagle has 3). A crafted
++	 * device advertising a pre-firmware id together with a multi-interface
++	 * descriptor (or the other way around) makes the two disagree, so that
++	 * usbatm_usb_disconnect() treats the small completion object as a
++	 * struct usbatm_data and reads out of bounds. Reject such inconsistent
++	 * descriptors so both paths make the same decision.
++	 */
++	if (UEA_IS_PREFIRM(id) != single_iface)
++		return -ENODEV;
++
+ 	usb_reset_device(usb);
  
- 	/* data_size got the padding from the notification, remove it. */
+ 	if (UEA_IS_PREFIRM(id)) {
 -- 
 2.53.0
 
