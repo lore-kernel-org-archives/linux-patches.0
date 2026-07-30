@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49437449B38;
-	Thu, 30 Jul 2026 16:11:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2526A449B2B;
+	Thu, 30 Jul 2026 16:11:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427887; cv=none; b=Rent4jS/PEYACKBGR3bL3XQXqAwY6lWrZ12N+10dIuBpdkPg9rHtQYDGH8SB+76mKqRgxTN7A5s4z34ItUPJT67B3KVPQOEmeCSj2wRVU8ElTz5dNQERNkfQhU/mNSqI9Z+hXNSunwcGw6g0TTzBOYVT652M3OB75Nx27fuqHnY=
+	t=1785427890; cv=none; b=dFlLSTMGyf8zv7fg3jPU3tRWZvT273Zla3+GUruGnneUSBPMgj1JDeBNNvp5NMEbXO13a95ElYNASHPml4NpDkcWwSnns9QW9g3VGjyCY6UafcI7uTmeWTx9m5LX4ojyOqKbTssspHqk8vortt8wYbjWlFFgTIa7Arf6MYM2OeI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427887; c=relaxed/simple;
-	bh=zbIBFaub8prK/1RmQ26sQ1jIoEVTY9b+xX5rHCADwtA=;
+	s=arc-20240116; t=1785427890; c=relaxed/simple;
+	bh=If/e3+GV/UYU0JKUM8kg9D+8ZNbz5sSRH2hbMqjnLbQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rCIupAukkFz2jRAR4Nen1D9E3hhEgq7wPaVjUdhqQRLls7JQ6wwvo7X7AO6a5QaYiURCg627UOJs+fK6wxUdgA/Bbj3Q2YIhmdk2GtL6k0xjfDZh+eWn0gQliGCo7b8I6nLucRh60tIFoE+Ntxo+3o9OFswq4l/BgMrMAldzO6A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xlCTpz0k; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tlJUvWd+Gyfub3U10S+rCNxcZtOo0dAdWeeFo7DzDsZ7H/GaWehZq3Q6WA9uarI3MEU63KWFRDRvxaE9kWSFVmAvJU3A4bPPRtuVMtd36x+wl1QD51iyXLpoUfVyC52ZvYSLOUjNfl3G3AcXFN+LOH7D+6rNQ/0qBqwDaVUgQqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sej+aYLu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xlCTpz0k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F3871F000E9;
-	Thu, 30 Jul 2026 16:11:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sej+aYLu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E6551F000E9;
+	Thu, 30 Jul 2026 16:11:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427886;
-	bh=ecA+l01TP1xzyY/VR+w+7wuM6mmVGKTZ7aTAObVgBt0=;
+	s=korg; t=1785427889;
+	bh=9qhrisVVtqRlMBGN4dbrgSCTNhLbAXHZthvqCjroeZ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xlCTpz0kOyYuvSkwBqr9vS/3XopkRFsby5UiJV55hX3uMESh/t8eVJklCat+wNYco
-	 5p9IHSDH4TkVOwcEwDR7OU8QRUNrD3LLe7MK5okOMos/ckVwMn58KJKyADWDNE619r
-	 w+WuoO4gaBPaPMfo6EFdVVrO8XQw6ErOpiF5IgcU=
+	b=sej+aYLuuxWeRPX57awiANNCwYhlC5Q70m9fupJqygcFlMcDgYdErjv/wjfnnRaPO
+	 +tj6LjdnnmJlwGgyar6UN+REAdrQEfJwe/zGsNStTCmkuaoE6FzdlBB8kWO1O+JZBr
+	 XggzemGD/M5XqBlfGbOb442k+Ya8jP//wqp96jb4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Devin Wittmayer <lucid_duck@justthetip.ca>,
-	Felix Fietkau <nbd@nbd.name>
-Subject: [PATCH 6.6 273/484] wifi: mt76: mt7615: drop TXRX_NOTIFY on non-mmio buses
-Date: Thu, 30 Jul 2026 16:12:50 +0200
-Message-ID: <20260730141429.424037364@linuxfoundation.org>
+	David Lee <david.lee@trailofbits.com>,
+	Martin Schiller <ms@dev.tdt.de>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.6 322/484] net/x25: fix use-after-free in x25_kill_by_neigh()
+Date: Thu, 30 Jul 2026 16:13:39 +0200
+Message-ID: <20260730141430.481128013@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -50,53 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Devin Wittmayer <lucid_duck@justthetip.ca>
+From: David Lee <david.lee@trailofbits.com>
 
-commit 39afc46c0243d10b7795e6e6cf4ae91f41732120 upstream.
+commit 5499e0602d2faafd42c580d25f615903c3fbe11b upstream.
 
-PKT_TYPE_TXRX_NOTIFY is an mmio-only event, but mt7615_rx_check() and
-mt7615_queue_rx_skb() dispatch it to mt7615_mac_tx_free() on every bus.
-mt7615_mac_tx_free() cleans the DMA tx queues with
-mt76_queue_tx_cleanup(), which calls queue_ops->tx_cleanup(). Only the
-mmio queue ops implement that callback; on the mt7663 USB and SDIO
-buses it is NULL, so a TXRX_NOTIFY there calls a NULL pointer in the RX
-worker. Same defect as the mt7921 and mt7925 patches in this series.
+x25_kill_by_neigh() walks the global X.25 socket list looking for sockets
+attached to a terminating neighbour. x25_list_lock protects list membership
+while the lookup is in progress, but it does not pin a socket's lifetime
+after the lock is dropped.
 
-Drop the event on non-mmio buses via mt76_is_mmio(), as in
-commit 5683e1488aa9 ("wifi: mt76: connac: do not check WED status for
-non-mmio devices").
+The function currently drops x25_list_lock before calling lock_sock(s). A
+concurrent close can run x25_release(), remove the same socket from
+x25_list, and drop the last socket reference in that window. The neighbour
+teardown path can then lock or inspect a freed struct sock/struct x25_sock.
 
-Fixes: eb99cc95c3b6 ("mt76: mt7615: introduce mt7663u support")
+Take sock_hold(s) while x25_list_lock still proves that the list entry is
+live, then drop the temporary reference after the socket has been locked,
+rechecked, and released. Recheck x25_sk(s)->neighbour after lock_sock(),
+because another path may have disconnected the socket before this path
+acquired the socket lock. Restart the list walk after each disconnect
+because the list lock was dropped and the previous iterator state may no
+longer be valid.
+
+A QEMU/KASAN run against origin/master reproduced a slab-use-after-free in
+x25_kill_by_neigh().
+
+Fixes: 7781607938c8 ("net/x25: Fix null-ptr-deref caused by x25_disconnect")
 Cc: stable@vger.kernel.org
-Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
-Link: https://patch.msgid.link/20260627191336.20223-4-lucid_duck@justthetip.ca
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: David Lee <david.lee@trailofbits.com>
+Assisted-by: Codex:gpt-5.5
+Acked-by: Martin Schiller <ms@dev.tdt.de>
+Link: https://patch.msgid.link/20260713104752.241175-1-david.lee@trailofbits.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7615/mac.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ net/x25/af_x25.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/net/wireless/mediatek/mt76/mt7615/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7615/mac.c
-@@ -1612,6 +1612,8 @@ bool mt7615_rx_check(struct mt76_dev *md
+--- a/net/x25/af_x25.c
++++ b/net/x25/af_x25.c
+@@ -1772,15 +1772,19 @@ void x25_kill_by_neigh(struct x25_neigh
+ {
+ 	struct sock *s;
  
- 	switch (type) {
- 	case PKT_TYPE_TXRX_NOTIFY:
-+		if (!mt76_is_mmio(mdev))
-+			return false;
- 		mt7615_mac_tx_free(dev, data, len);
- 		return false;
- 	case PKT_TYPE_TXS:
-@@ -1645,6 +1647,10 @@ void mt7615_queue_rx_skb(struct mt76_dev
- 		dev_kfree_skb(skb);
- 		break;
- 	case PKT_TYPE_TXRX_NOTIFY:
-+		if (!mt76_is_mmio(mdev)) {
-+			dev_kfree_skb(skb);
-+			break;
-+		}
- 		mt7615_mac_tx_free(dev, skb->data, skb->len);
- 		dev_kfree_skb(skb);
- 		break;
++again:
+ 	write_lock_bh(&x25_list_lock);
+ 
+ 	sk_for_each(s, &x25_list) {
+ 		if (x25_sk(s)->neighbour == nb) {
++			sock_hold(s);
+ 			write_unlock_bh(&x25_list_lock);
+ 			lock_sock(s);
+-			x25_disconnect(s, ENETUNREACH, 0, 0);
++			if (x25_sk(s)->neighbour == nb)
++				x25_disconnect(s, ENETUNREACH, 0, 0);
+ 			release_sock(s);
+-			write_lock_bh(&x25_list_lock);
++			sock_put(s);
++			goto again;
+ 		}
+ 	}
+ 	write_unlock_bh(&x25_list_lock);
 
 
