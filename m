@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8709519CD1D;
-	Thu, 30 Jul 2026 15:40:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0E9D409114;
+	Thu, 30 Jul 2026 15:40:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426019; cv=none; b=EtWuLJychrgq5i1MPEDD426W2ukRabBQScPKqllGcggCrEzpKwSWVc5lZVKd64bfhaI1+20s+VzQ3QyDnjsFFnxUQyYTr5UuG0QD3ZxtgDhKb+HesoSe11RX53KKS5+SZaY/3eqMu+Xk3ErM+0W8OHAxmroppcrSy+2Lckj1MfY=
+	t=1785426023; cv=none; b=mot6Hvyha0JcDTu4eYf/2I2bbkiUtRCYVuCAtkiUFGQlq5hWXDl4UG3lQEhyL7tv388mgLUh+GOEUraIeBlphIe/xDyjK0UIlYjdyhiafy9xTRUMUhmRvRnkd3PSh6iisk+zcDJxHlBdy0/uBbZQUDyPdTMxDzTngORT3bIfBok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426019; c=relaxed/simple;
-	bh=fwYf61/MP40z0n2VMIEnW1BW0ytBP38X+YKK1/w2sH8=;
+	s=arc-20240116; t=1785426023; c=relaxed/simple;
+	bh=gGezIfmM1WbWjh8AimMEAO83IZH+I2uW4hWHiM+xepI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BPCd2rCLxsoklCRvaJn+K8gq7mWR/ao5PNLZgYMZ4bQHdD24Qm+f2Ofb0T2TgVJkHZZvmUMcNM4XqQSg5THaq5b2CHmoEINYLpmFNP+uNYeOSB5tbxzU+//8ocWSnh97aZ4mrA31bh/0VafJ4C5Vc0UHTwRsefqF+xfmKe68cwM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=00rYe6ST; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=N0IWMs9yQOqEO2/iMFsGiHYE/mdf1UyV+YOOgP6y2SEevA/iBAU1MI/POfqQyi4PjwC2OxXkuJisijsDX+m6ZW/aHuTVPcqRQvdIA2zYO2NCEv0Jav5xl4d8eRWzJNrSb14O+JT5LLUu7i9cbxfquzcP91xDjF3hzQYpWTDZ8Po=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DIFLpvYq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="00rYe6ST"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8041C1F000E9;
-	Thu, 30 Jul 2026 15:40:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DIFLpvYq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 584FA1F000E9;
+	Thu, 30 Jul 2026 15:40:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426018;
-	bh=OpwMKo5AqqmlIi5LQwo3ZOJIoMtZazfoVCEGpnwhKKE=;
+	s=korg; t=1785426020;
+	bh=pF71C5juXWcW7Uud7bLR02+GaXUrdnsmsLuVnX77HG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=00rYe6STl5HmvtF8M0S5MRx36pZplN9ucl5APsfvteJgox3AYQoQLR+37xpFkjxd/
-	 MIVmcVYo+dVtD0ZlG0qIN7IaScOfGtnJomrVUGp5xTyzDpOwU723+dl2+WljQre2yP
-	 XLR9ZEQR5m98dhZrOFBvyGrY+75a1h2hLaaF2pkk=
+	b=DIFLpvYq3fUejtWEVVGSeLJrpce+oupngA/2dehSs/vPOBnrhh1LhhutKTUlRjOq7
+	 h/fXgC93QQ8+gAbMQq5JxMoZzr0aCEzjxuvZN1nfbw4EGi2csDifouMXwjpEJGd9vJ
+	 Df898YvHdPx7idceHM5CQJIhUYGNvwN/cTKppnT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 235/602] net: qrtr: restrict socket creation to the initial network namespace
-Date: Thu, 30 Jul 2026 16:10:27 +0200
-Message-ID: <20260730141440.911196069@linuxfoundation.org>
+	Luigi Santivetti <luigi.santivetti@imgtec.com>,
+	Alessio Belle <alessio.belle@imgtec.com>
+Subject: [PATCH 6.12 271/602] drm/imagination: fix error checking of pvr_vm_context_lookup()
+Date: Thu, 30 Jul 2026 16:11:03 +0200
+Message-ID: <20260730141441.666279004@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -51,63 +50,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+From: Luigi Santivetti <luigi.santivetti@imgtec.com>
 
-[ Upstream commit 3b536db8fb32da9e9c62f2bb45e2e319331f0426 ]
+commit cf385cf6e713eba0720651174dac0b2d2f5bb8f8 upstream.
 
-QRTR keeps its entire port and node state in module-global variables
-that are not partitioned per network namespace: qrtr_local_nid is a
-single global node id (always 1) and qrtr_ports is a single global
-xarray. qrtr_port_lookup() and qrtr_local_enqueue() operate on that
-global state with no network-namespace check, and qrtr_create() places
-no restriction on the namespace a socket is created in.
+Since pvr_vm_context_lookup() returns either NULL or a pointer, then stop
+using IS_ERR() for checking the return value.
 
-As a result an unprivileged process that creates an AF_QIPCRTR socket
-in a separate network namespace, e.g. via
-unshare(CLONE_NEWUSER | CLONE_NEWNET), can send QRTR datagrams -
-including control-plane messages such as QRTR_TYPE_NEW_SERVER - to QRTR
-sockets owned by another namespace, and vice versa. The receiving
-socket sees such a message as coming from node id 1, indistinguishable
-from a legitimate local client, breaking the isolation that network
-namespaces are expected to provide.
+Using IS_ERR() leads to the kernel oops reported below. It can be
+reproduced by passing an invalid VM context handle from userspace to the
+DRM_IOCTL_PVR_CREATE_CONTEXT ioctl.
 
-QRTR is a transport to global hardware endpoints (the modem and other
-remote processors) and has no per-namespace semantics; its in-kernel
-name service already creates its socket in init_net only. Confine the
-socket family to the initial network namespace, as other
-non-namespace-aware socket families do (see llc_ui_create() and the
-ieee802154 socket code).
+[   92.733119] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000148
+[   92.742042] Mem abort info:
+[   92.744890]   ESR = 0x0000000096000004
+[   92.748686]   EC = 0x25: DABT (current EL), IL = 32 bits
+[   92.754020]   SET = 0, FnV = 0
+[   92.757154]   EA = 0, S1PTW = 0
+[   92.760337]   FSC = 0x04: level 0 translation fault
+[   92.765243] Data abort info:
+[   92.768129]   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
+[   92.773626]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+[   92.778763]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+[   92.784098] user pgtable: 4k pages, 48-bit VAs, pgdp=000000088ed23000
+[   92.790550] [0000000000000148] pgd=0000000000000000, p4d=0000000000000000
+[   92.797381] Internal error: Oops: 0000000096000004 [#1]  SMP
+[   92.803027] Modules linked in: powervr
+[   92.852533] CPU: 0 UID: 0 PID: 409 Comm: triangle Not tainted 7.1.0-rc5-g98b46e693b91 #1 PREEMPT
+[   92.861385] Hardware name: Texas Instruments AM68 SK (DT)
+[   92.866766] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[   92.873709] pc : pvr_vm_get_fw_mem_context+0x0/0xc [powervr]
+[   92.879376] lr : pvr_queue_create+0x26c/0x440 [powervr]
+[   92.884595] sp : ffff8000837fbb00
+[   92.887895] x29: ffff8000837fbb60 x28: 0000000000000000 x27: ffff8000837fbce8
+[   92.895015] x26: ffff000807f61a40 x25: ffff000807f61a00 x24: ffff000807f64400
+[   92.902135] x23: ffff00080a5ab000 x22: ffff800079b24730 x21: ffff000807f61800
+[   92.909254] x20: ffff00080999e680 x19: 0000000000000000 x18: 0000000000000000
+[   92.916373] x17: 0000000000000000 x16: 0000000000000000 x15: 0000000000000001
+[   92.923492] x14: 0000000000000000 x13: 0000000000000002 x12: ffff80008145b298
+[   92.930611] x11: ffff8000844e5000 x10: ffff80008165a130 x9 : 0000000000000100
+[   92.937730] x8 : 0000000000000001 x7 : ffff0008076b27e0 x6 : ffff00080ec43b7c
+[   92.944850] x5 : ffff00080ec43b78 x4 : 0000000000000000 x3 : ffff00080999e680
+[   92.951968] x2 : 0000000000000000 x1 : 0000000000000000 x0 : 0000000000000000
+[   92.959088] Call trace:
+[   92.961521]  pvr_vm_get_fw_mem_context+0x0/0xc [powervr] (P)
+[   92.967173]  pvr_context_create+0x190/0x410 [powervr]
+[   92.972218]  pvr_ioctl_create_context+0x44/0x8c [powervr]
+[   92.977608]  drm_ioctl_kernel+0xbc/0x124 [drm]
+[   92.982127]  drm_ioctl+0x1f8/0x4dc [drm]
+[   92.986098]  __arm64_sys_ioctl+0xac/0x104
+[   92.990102]  invoke_syscall+0x54/0x10c
+[   92.993842]  el0_svc_common.constprop.0+0x40/0xe0
+[   92.998532]  do_el0_svc+0x1c/0x28
+[   93.001835]  el0_svc+0x38/0x11c
+[   93.004969]  el0t_64_sync_handler+0xa0/0xe4
+[   93.009139]  el0t_64_sync+0x198/0x19c
+[   93.012792] Code: aa1703e0 d2800014 95cb0ba4 17ffffe8 (f940a400)
+[   93.018869] ---[ end trace 0000000000000000 ]---
 
-Fixes: bdabad3e363d ("net: Add Qualcomm IPC router")
-Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
-Link: https://patch.msgid.link/20260716154319.3297699-1-qwe.aldo@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: d2d79d29bb98 ("drm/imagination: Implement context creation/destruction ioctls")
+Cc: stable@vger.kernel.org
+Signed-off-by: Luigi Santivetti <luigi.santivetti@imgtec.com>
+Reviewed-by: Alessio Belle <alessio.belle@imgtec.com>
+Link: https://patch.msgid.link/20260707-staging-ddkopsrc-2435-v1-1-24e160d44476@imgtec.com
+Signed-off-by: Alessio Belle <alessio.belle@imgtec.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/qrtr/af_qrtr.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/gpu/drm/imagination/pvr_context.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/qrtr/af_qrtr.c b/net/qrtr/af_qrtr.c
-index 305523cebe3baa..fcd24a7df3f00d 100644
---- a/net/qrtr/af_qrtr.c
-+++ b/net/qrtr/af_qrtr.c
-@@ -1261,6 +1261,14 @@ static int qrtr_create(struct net *net, struct socket *sock,
- 	if (sock->type != SOCK_DGRAM)
- 		return -EPROTOTYPE;
+--- a/drivers/gpu/drm/imagination/pvr_context.c
++++ b/drivers/gpu/drm/imagination/pvr_context.c
+@@ -321,8 +321,8 @@ int pvr_context_create(struct pvr_file *
+ 		goto err_free_ctx;
  
-+	/* QRTR keeps its port and node state in module-global variables that
-+	 * are not partitioned per network namespace, and the in-kernel name
-+	 * service only operates in init_net. Confine the family to init_net so
-+	 * a socket in another namespace cannot reach the global control plane.
-+	 */
-+	if (!net_eq(net, &init_net))
-+		return -EAFNOSUPPORT;
-+
- 	sk = sk_alloc(net, AF_QIPCRTR, GFP_KERNEL, &qrtr_proto, kern);
- 	if (!sk)
- 		return -ENOMEM;
--- 
-2.53.0
-
+ 	ctx->vm_ctx = pvr_vm_context_lookup(pvr_file, args->vm_context_handle);
+-	if (IS_ERR(ctx->vm_ctx)) {
+-		err = PTR_ERR(ctx->vm_ctx);
++	if (!ctx->vm_ctx) {
++		err = -EINVAL;
+ 		goto err_free_ctx;
+ 	}
+ 
 
 
