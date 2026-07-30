@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38B7139060A;
-	Thu, 30 Jul 2026 16:06:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27EF5446070;
+	Thu, 30 Jul 2026 16:06:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427580; cv=none; b=SDPHSjkAzKBQ7cMbDL4DPG7YShhZiQLAQ/yRvvs3olAHr6i/VQLEv5i2jzAqKZUNzazWzk7eg8i40eDzX8O8DlzhXAesW9A+MNNyrELzh7Us3Xu7opVyAPIh35Fy8tw8LXZ8Odl9Fb/VUgycr38ryETRYTKyTX933/NKxJ1foeU=
+	t=1785427583; cv=none; b=aSysvbD6UNsVr2ZVMa0pV0v8v2NFJttK2a7JCEo4joEiq2srHuwJDOX6D0uyy4OWDynfa63RAhZNNIJT8llPU61Zi8dj1bm/xVJsNgQ4ilT/o6w04Qpqg7w5Lz16xRJoMx3z0qqGR/LBLs42pZvkvy/l3/eetwIMlTm5+byc3Cw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427580; c=relaxed/simple;
-	bh=a0TpuGClg7+Ts3QWg1De2EBZFO3cMLpSdI9cxmaDg38=;
+	s=arc-20240116; t=1785427583; c=relaxed/simple;
+	bh=fXYON/iu8E1KK7zekaewlo/wJJ1i/LQ4to5DM61OOjQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E0PR/SJFawcqWpHF57e4oFjmndJvEo0tirfzIvzhs78egTl83u+qi8QaoPr+TFR6bFOdu7AVAVWxq+Zg2byXrfS4hggOLGVfdd9PKESo2nbE4PRGFgt2/sLytJV6wTGUcPb3LjIHRyl9HX8ak/TfwPvctu/Xds6+/1L1FIuHvD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DBSP6G4R; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QFiDs8YLCoeNczEyc5Xfa7fjWAcU1Z4tG3BM2FZueESaGsVbeqRhOLsjXkwdTf+Ok0RtjOTSylNk9+wFu96Va7SantcbKrn6m4Dtric0vNynoK+s3IBCSc07CH3K9neefh9ymKv5Mredw+rnbqSRd/6ffPGJXQVisu4kPfmu7uc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QBb7b1lm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DBSP6G4R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93DEE1F000E9;
-	Thu, 30 Jul 2026 16:06:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QBb7b1lm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DDD11F000E9;
+	Thu, 30 Jul 2026 16:06:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427579;
-	bh=YL7quch1hzahQdzPpKoly+bAhBh5o/9N9Fk+YEvmZcQ=;
+	s=korg; t=1785427581;
+	bh=BO0yjRlSYq6X/n1YuPnObJR/q3F6/ZmJgkHOmqeynwo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DBSP6G4RX/ujSLwGCdngkNIvet8yJ1+gEfmx48j6W6spmmNdMlP+jehFhT7kDQnNH
-	 46DWj6etgsRtcSpFC8G2Dvnh0DLsBl8s2yiaJTFtKXUR1fOh0avCFeeTJ+RF6fjGDK
-	 Fn9BNd4ZH6MAtJ9urSqJBQPqFYOrNHEbxAyoyZbk=
+	b=QBb7b1lmLR7u7G/MXlyEnJzKB1jhkJWw6p2a739bnizQ2TUd6PdUpBqb8x1TooSyE
+	 6EGa1/KYdmWZlS7mZvHcQgfUOx1eB8UD06CpZsMl4F+GSvgYThOvXRa2WfNsNI/Lle
+	 cmVv0oow4yj7qmBBfDSr7cSsDkowkkUecLlqPlnc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Francis <David.Francis@amd.com>,
-	David Yat Sin <david.yatsin@amd.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	Zack Rusin <zackr@vmware.com>,
+	dri-devel@lists.freedesktop.org,
+	Harry Wentland <harry.wentland@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 218/484] drm/amdkfd: Check bounds in allocate_event_notification_slot
-Date: Thu, 30 Jul 2026 16:11:55 +0200
-Message-ID: <20260730141428.208497505@linuxfoundation.org>
+Subject: [PATCH 6.6 219/484] drm/amd/display: Handle struct drm_plane_state.ignore_damage_clips
+Date: Thu, 30 Jul 2026 16:11:56 +0200
+Message-ID: <20260730141428.230421951@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -51,44 +54,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Francis <David.Francis@amd.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-commit bb52249fbbe948875155ccd45cd8d74bf4ae747b upstream.
+commit ac11060c6d4959e2d4ceada037d2e1e1bfcf6645 upstream.
 
-The valid event ids go from 0 to KFD_SIGNAL_EVENT_LIMIT
+The mode-setting pipeline can disabled damage clippings for a commit
+by setting ignore_damage_clips in struct drm_plane_state. The commit
+will then do a full display update.
 
-allocate_event_notification_slot has an option to specify
-an event id to allocate at, used by CRIU. We weren't checking
-the bounds on that value.
+Test the flag in DCN code and do a full update in DCN code if it has
+been set.
 
-Check them.
+Commit 35ed38d58257 ("drm: Allow drivers to indicate the damage helpers
+to ignore damage clips") introduced ignore_damage_clips to selectively
+ignore damage clipping in certain framebuffer changes. This driver does
+not do that, but DRM's damage iterator will soon rely on the flag.
+Therefore supporting it here as well make sense for consistency.
 
-v2: Lower bounds check is unecessary because of idr_alloc
-already rejecting negative numbers. Upper bounds check should
-be KFD_SIGNAL_EVENT_LIMIT since the signal mode mappings might
-not yet exist
-
-Signed-off-by: David Francis <David.Francis@amd.com>
-Reviewed-by: David Yat Sin <david.yatsin@amd.com>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Fixes: 35ed38d58257 ("drm: Allow drivers to indicate the damage helpers to ignore damage clips")
+Cc: Javier Martinez Canillas <javierm@redhat.com>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Zack Rusin <zackr@vmware.com>
+Cc: dri-devel@lists.freedesktop.org
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 6853f1f6cbbeb3f53ebbbd7286536aeb2c5d5f50)
-Cc: stable@vger.kernel.org
+(cherry picked from commit a24019f6480fad5c077b5956eed942c8960323d6)
+Cc: <stable@vger.kernel.org> # v6.8+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_events.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdkfd/kfd_events.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_events.c
-@@ -106,6 +106,9 @@ static int allocate_event_notification_s
- 	}
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -5180,8 +5180,8 @@ static void fill_dc_dirty_rects(struct d
+ {
+ 	struct dm_crtc_state *dm_crtc_state = to_dm_crtc_state(crtc_state);
+ 	struct rect *dirty_rects = flip_addrs->dirty_rects;
+-	u32 num_clips;
+-	struct drm_mode_rect *clips;
++	u32 num_clips = 0;
++	struct drm_mode_rect *clips = NULL;
+ 	bool bb_changed;
+ 	bool fb_changed;
+ 	u32 i = 0;
+@@ -5197,8 +5197,10 @@ static void fill_dc_dirty_rects(struct d
+ 	if (new_plane_state->rotation != DRM_MODE_ROTATE_0)
+ 		goto ffu;
  
- 	if (restore_id) {
-+		if (*restore_id >= KFD_SIGNAL_EVENT_LIMIT)
-+			return -EINVAL;
-+
- 		id = idr_alloc(&p->event_idr, ev, *restore_id, *restore_id + 1,
- 				GFP_KERNEL);
- 	} else {
+-	num_clips = drm_plane_get_damage_clips_count(new_plane_state);
+-	clips = drm_plane_get_damage_clips(new_plane_state);
++	if (!new_plane_state->ignore_damage_clips) {
++		num_clips = drm_plane_get_damage_clips_count(new_plane_state);
++		clips = drm_plane_get_damage_clips(new_plane_state);
++	}
+ 
+ 	if (!dm_crtc_state->mpo_requested) {
+ 		if (!num_clips || num_clips > DC_MAX_DIRTY_RECTS)
 
 
