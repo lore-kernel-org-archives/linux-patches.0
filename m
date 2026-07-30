@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3F6B43DA3C;
-	Thu, 30 Jul 2026 14:37:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAB3043E09D;
+	Thu, 30 Jul 2026 14:37:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422251; cv=none; b=WxLL/Vp3Hma6FuoUPE2cr1FEwBLp8yhHfn8q+gj9VRtyVPA1Mo5X1hQCFNnFH0KE2KhLceqaDWZiAR/Cg8JONxh//jMgiDe4hiI5grXpkSDJq3+3M90GYA9L9sO9L2EG2heGhQOrEIYZCZL9uo65SizAz6Xie1UJ7senr6rjnc8=
+	t=1785422254; cv=none; b=K52NNapKQxjwUKegw75plyasbs9cIgWR8NaJYAFGg5JxOWex2sYTEgqAh+NRXHsehTqv0Jwzj2QvRH4gSnGhwdCJOwqbpaWdxrDbC/oVNnhHACoh5jAlvbOt2Eq5kmonRJu4HSyTsOiLOOr+91ElGP5DBmbIHZPznSpzsXI7f5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422251; c=relaxed/simple;
-	bh=EI/GDENuvlMubXZt6QXYARUFm2DPBZux3ywGuDX0BLc=;
+	s=arc-20240116; t=1785422254; c=relaxed/simple;
+	bh=Pp7w853mdLOlGAik70wjwisJt32/Yj9YCS+BCjrQgmk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mPD76ezflanTDsDJHEAmjygGfxGH/gpokYe++tioHitMFnUda/e6k1JqcgcVMBsgUx6KDwlmS1FcVMF3ts/XlNDuzNJH2N1ziB7VrlWdU+mJFM1W1fR3FsTrjtFfIDRciABPP9k/lKUX+sruYjQcQxe8O1yhfh/TyAMtQSY8OMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oXttNagg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dlefaOusTmbDwCLsZbNj/DOWu4FXlkFct1d/EJG8UEYeTzzitK44qQP4Da8q2RbhHqzEIy6ucZ1Gudelc2JwGQ0wfgsLg09EoFfV+yoLvRk+StCbthbtqXQXdDclRPMySIYtSSFnBWY0Qcqij53yAcGS7Ky3T8PIxN7218QaB44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k3+2s/7U; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oXttNagg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BC0B1F000E9;
-	Thu, 30 Jul 2026 14:37:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k3+2s/7U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 200AC1F000E9;
+	Thu, 30 Jul 2026 14:37:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422250;
-	bh=UwAK5+P35P7t3Qywv6VmwbWHPSP6JLg0o/UKTmMhvqs=;
+	s=korg; t=1785422253;
+	bh=ACP9giVafcSkO5hsxsSmdOqE4kGKfuOqTednSXOdojM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oXttNaggaRnSIsp2riHCnswj17Es7j/H7ZE+xAy1UfnIVpxDNzDCbayDzr+xVa9i/
-	 ZCqX616DTHhDi3ppNSvp7oedNsR07VKt+GimfMPLMnnHWaWpf5Z5CEaPuKeyUOIGjc
-	 YzbSzG+nDXNxywjOWQPYDpjwjk7JubXGpwqozcGQ=
+	b=k3+2s/7U/0a79VVkhSRNfOJt1URnHdJ6chOIJaGfbTPQc15Js30OLp4IP0xLG2/o/
+	 dFosS0wNax939ipEmO4/i6XQriKhu2xxIXFnou8jQpPsWjWoVymP01oafjFyhjqLuh
+	 11Cjt//OJYYIUsvuBkIP/7nvVhb7SAaQiV9T6ny0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.1 376/744] drm/amdgpu/uvd: Place VCPU BO only in VRAM for UVD 4.x and older
-Date: Thu, 30 Jul 2026 16:10:49 +0200
-Message-ID: <20260730141452.278363580@linuxfoundation.org>
+	Alex Deucher <alexander.deucher@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>
+Subject: [PATCH 7.1 377/744] drm/amdgpu: check amdgpu_vm_bo_find() result in GET_MAPPING_INFO
+Date: Thu, 30 Jul 2026 16:10:50 +0200
+Message-ID: <20260730141452.298721927@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -45,73 +44,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit 8002b744ad70055ef11ff7d0a7d685bfe8ffe6e4 upstream.
+commit 93475c34111916df71c63e510fc52db01351f809 upstream.
 
-These UVD versions don't fully support GPUVM and are only
-validated to work when their VCPU BO is placed in VRAM.
+The AMDGPU_GEM_OP_GET_MAPPING_INFO path of amdgpu_gem_op_ioctl() looks
+up the bo_va for the buffer object in the caller's VM via
+amdgpu_vm_bo_find(), but uses the returned pointer without checking it.
 
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
+amdgpu_vm_bo_find() returns NULL when the BO has no bo_va in that VM,
+which is the normal case for a BO that has never been mapped. The result
+is fed straight into amdgpu_vm_bo_va_for_each_valid_mapping(), which
+expands to list_for_each_entry(mapping, &(bo_va)->valids, list) and
+dereferences bo_va, causing a NULL pointer dereference.
+
+This is reachable by any process able to issue the ioctl (render group)
+simply by requesting mapping info for an unmapped BO.
+
+Return -ENOENT when no bo_va is found, jumping to out_exec so the
+drm_exec context and GEM object reference are released.
+
+Fixes: 4d82724f7f2b ("drm/amdgpu: Add mapping info option for GEM_OP ioctl")
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 01b8dfc0660db5d6cdd62c22dc20f774a26ce853)
+(cherry picked from commit 528b19377affc1cc7362a70a254c1dda793595f9)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c |   17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
-@@ -188,6 +188,7 @@ int amdgpu_uvd_sw_init(struct amdgpu_dev
- 	const struct common_firmware_header *hdr;
- 	unsigned int family_id;
- 	int i, j, r;
-+	u32 vcpu_bo_domain;
- 
- 	INIT_DELAYED_WORK(&adev->uvd.idle_work, amdgpu_uvd_idle_work_handler);
- 
-@@ -319,12 +320,20 @@ int amdgpu_uvd_sw_init(struct amdgpu_dev
- 	if (adev->firmware.load_type != AMDGPU_FW_LOAD_PSP)
- 		bo_size += AMDGPU_GPU_PAGE_ALIGN(le32_to_cpu(hdr->ucode_size_bytes) + 8);
- 
-+	/* UVD 5.0 and newer HW can use 64 bit addressing. */
-+	adev->uvd.address_64_bit =
-+		!amdgpu_device_ip_block_version_cmp(adev, AMD_IP_BLOCK_TYPE_UVD, 5, 0);
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c
+@@ -1094,6 +1094,11 @@ int amdgpu_gem_op_ioctl(struct drm_devic
+ 		 * If that number is larger than the size of the array, the ioctl must
+ 		 * be retried.
+ 		 */
++		if (!bo_va) {
++			r = -ENOENT;
++			goto out_exec;
++		}
 +
-+	vcpu_bo_domain = AMDGPU_GEM_DOMAIN_VRAM;
-+	if (adev->uvd.address_64_bit)
-+		vcpu_bo_domain |= AMDGPU_GEM_DOMAIN_GTT;
-+
- 	for (j = 0; j < adev->uvd.num_uvd_inst; j++) {
- 		if (adev->uvd.harvest_config & (1 << j))
- 			continue;
-+
- 		r = amdgpu_bo_create_kernel(adev, bo_size, PAGE_SIZE,
--					    AMDGPU_GEM_DOMAIN_VRAM |
--					    AMDGPU_GEM_DOMAIN_GTT,
-+					    vcpu_bo_domain,
- 					    &adev->uvd.inst[j].vcpu_bo,
- 					    &adev->uvd.inst[j].gpu_addr,
- 					    &adev->uvd.inst[j].cpu_addr);
-@@ -339,10 +348,6 @@ int amdgpu_uvd_sw_init(struct amdgpu_dev
- 		adev->uvd.filp[i] = NULL;
- 	}
- 
--	/* from uvd v5.0 HW addressing capacity increased to 64 bits */
--	if (!amdgpu_device_ip_block_version_cmp(adev, AMD_IP_BLOCK_TYPE_UVD, 5, 0))
--		adev->uvd.address_64_bit = true;
--
- 	r = amdgpu_uvd_create_msg_bo_helper(adev, 128 << 10, &adev->uvd.ib_bo);
- 	if (r)
- 		return r;
+ 		if (args->num_entries > INT_MAX / sizeof(*vm_entries)) {
+ 			r = -EINVAL;
+ 			goto out_exec;
 
 
