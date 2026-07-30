@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9DDD5C613;
-	Thu, 30 Jul 2026 14:33:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D07B43B6D1;
+	Thu, 30 Jul 2026 14:33:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422022; cv=none; b=N2+Hp5mzeQBNC65WHu7lzwH1469ryaGGD3E0DfXVvBSIJt6I0yEREOsDFYGyQWjYDRVpSK7y+GCN+YoFB9pd2I9AV55ttE3XUk+YUftSWxHwHeMpd9bVDI/5Su5wUC+eRTgTRyOLZv8zNEMWA6hTOmtEJpNLhmmYsWKXbb3dKOY=
+	t=1785422024; cv=none; b=MbwAYMcHLKqcAMcD02CcRcLuHg4vtjQcMTTTo6PZFv0jQaLKSxJvOu/NjXq7mr8dUXvH5NOD5zzuSfYwnNNNe2uYcM3j2b1zdlYO9TLSpePXrz7QiNUHRj0xlH3Y+/m/ocGjtpSJGZMtuFpofwxIKDrbLXc753ThOqOXSA1VuGc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422022; c=relaxed/simple;
-	bh=8OnA3u3Gd3BwK2zLgOqeokLyicQhJOjzerbZLBH1XBo=;
+	s=arc-20240116; t=1785422024; c=relaxed/simple;
+	bh=3XVnEcKiLLqAvOboAX6H3/g4IJxTSeBgWfjflErJ7NY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=m0DJyXQfeTdDB0A2zS+AtJZTGMGnKnB2S4gULUJYiZ2el39ypJ2qfSWvAWl9EeuYr8tJ6PRsEtSq3cflxLP6RZ3ewQ2NeLilVdPWSf8KDnVjxtES4rKnA7ajGhrLcKgADoHdzwpzE+KevHFMqwx3XRBDORaYpJhgDS9FytNLYR4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nGJ4WsJ9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Ef/WJze/3KjYPoWZoyDCGb24vMtDaOZSbFl3dzdFumGwBVWfgI+SFBvIGEzvGUZ86QyBQ16JpcMivPwtcoWSsofuFoygq1KxfJTwfx6uP2HS7k+ad6uM/TsCb9aut7k5SLxDf2Mvfkt1GFWo4vR2/R9FlrYqTXO51xM0AAztn5U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C9pvI1iX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nGJ4WsJ9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F89E1F000E9;
-	Thu, 30 Jul 2026 14:33:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C9pvI1iX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 028921F000E9;
+	Thu, 30 Jul 2026 14:33:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422020;
-	bh=JIFtjmwqey1P6/UdCldYjBxDAssU2LGEFgsEYf8J2QM=;
+	s=korg; t=1785422023;
+	bh=xhiQm42ZFKymgtLT72qEZ+wjHPHamLDhU82TskGoc9I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nGJ4WsJ91Z6Bd0aIkCA6fOceMKWULX3Z6wY2YdKLgJp52IZELbwKbdN+xbjvGExIW
-	 JYSn3WnctHewvAvpx4alevFyIMlmWq31I6Aybq8JRYw3jWWImaSrdonBYc08Wiwzhu
-	 quxHdMLUyiy0wXV8hG1VbAHcw7pYzE714pPHR5Dg=
+	b=C9pvI1iXOd9EcO6TaBB8r/qXO2ZKckPWu6deO/zKMHkyi3Aoq89jDBLZO8Pwl33bK
+	 /Qpit2cgTTLZgVack/KhbjS75+YzVsOViJ/4Wm/WXdIbb4ImZqpjZUk/RnZyGrQv5H
+	 oRKRSsKH8ZA435TJrBq5O582XmtmpZdUhWziTyFc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Satyanarayana K V P <satyanarayana.k.v.p@intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Michal Wajdeczko <michal.wajdeczko@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Shelley Yang <shelley.yang@infineon.com>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 297/744] drm/xe/vf: Add drm_dev guards when detaching CCS read/write buffers
-Date: Thu, 30 Jul 2026 16:09:30 +0200
-Message-ID: <20260730141450.606690232@linuxfoundation.org>
+Subject: [PATCH 7.1 298/744] wifi: brcmfmac: fix 802.1X-SHA256 call trace warning
+Date: Thu, 30 Jul 2026 16:09:31 +0200
+Message-ID: <20260730141450.628200557@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -54,178 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Satyanarayana K V P <satyanarayana.k.v.p@intel.com>
+From: Shelley Yang <shelley.yang@infineon.com>
 
-[ Upstream commit 4c92afb4c143526d340545ca581e88e6952ea511 ]
+[ Upstream commit 7cb34f6c4fe8a68af621d870abe63bfca2275dd6 ]
 
-CCS read/write buffers are freed during BO destruction. In some cases,
-BOs may be destroyed after the device is unbound but while the DRM
-structure remains valid, leading to NULL pointer dereferences when
-accessing device resources.
+Based on wpa_auth as 1x_256 mode, need to set up
+"use_fwsup" with BRCMF_PROFILE_FWSUP_1X.
+Or it will happen trace warning when call brcmf_cfg80211_set_pmk().
 
-BUG: kernel NULL pointer dereference, address: 0000000000000000
-PGD 0 P4D 0
-Oops: Oops: 0000 [#1] SMP NOPTI
-CPU: 0 UID: 0 PID: 9376 Comm: xe_pat Not tainted 7.2.0-rc2+ #1 PREEMPT(lazy)
-RIP: 0010:xe_sriov_vf_ccs_rw_update_bb_addr+0x4d/0xa0 [xe]
-RSP: 0018:ffffcf304110b9c8 EFLAGS: 00010246
-RAX: ffff8a85c38a0a00 RBX: 00000000810ef000 RCX: 0000000000000000
-RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffff8a85c39c1888
-RBP: ffffcf304110b9e8 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000000 R12: ffff8a85c39c1888
-R13: 0000000000000000 R14: ffff8a85c39b4f28 R15: ffff8a85c3885000
-FS:  0000000000000000(0000) GS:ffff8a878b809000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000000000000 CR3: 000000010314a002 CR4: 0000000000772ef0
-PKRU: 55555554
-Call Trace:
- <TASK>
- xe_migrate_ccs_rw_copy_clear+0x98/0x120 [xe]
- xe_sriov_vf_ccs_detach_bo+0x2c/0x60 [xe]
- xe_ttm_bo_delete_mem_notify+0xc8/0xe0 [xe]
- ttm_bo_cleanup_memtype_use+0x26/0x80 [ttm]
- ttm_bo_release+0x29e/0x2d0 [ttm]
- ttm_bo_fini+0x39/0x70 [ttm]
- xe_gem_object_free+0x1f/0x30 [xe]
- drm_gem_object_free+0x1d/0x40
- ttm_bo_vm_close+0x5f/0x90 [ttm]
- remove_vma+0x2c/0x70
- tear_down_vmas+0x63/0xf0
- exit_mmap+0x20d/0x3f0
- __mmput+0x45/0x170
- mmput+0x31/0x40
- do_exit+0x2ba/0xac0
- do_group_exit+0x2d/0xb0
- __x64_sys_exit_group+0x18/0x20
- x64_sys_call+0x14a0/0x2390
- do_syscall_64+0xdd/0x640
- ? count_memcg_events+0xea/0x240
- ? handle_mm_fault+0x1ec/0x2f0
+[ 4481.831101] ------------[ cut here ]------------
+[ 4481.831102] WARNING: CPU: 1 PID: 2997 at
+drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c:7242 brcmf_cfg80211_set_pmk+0x77/0xd0 [brcmfmac]
+[...]
+[ 4481.831202] Call Trace:
+[ 4481.831204]  <TASK>
+[ 4481.831205]  nl80211_set_pmk+0x183/0x250 [cfg80211]
+[ 4481.831233]  genl_family_rcv_msg_doit+0xea/0x150
+[ 4481.831237]  genl_rcv_msg+0x104/0x240
+[ 4481.831239]  ? cfg80211_probe_status+0x2c0/0x2c0 [cfg80211]
+[ 4481.831257]  ? genl_family_rcv_msg_doit+0x150/0x150
+[ 4481.831259]  netlink_rcv_skb+0x4e/0x100
+[ 4481.831261]  genl_rcv+0x24/0x40
+[ 4481.831262]  netlink_unicast+0x236/0x380
+[ 4481.831264]  netlink_sendmsg+0x250/0x4b0
+[ 4481.831266]  sock_sendmsg+0x5c/0x70
+[ 4481.831269]  ____sys_sendmsg+0x236/0x2b0
+[ 4481.831271]  ? copy_msghdr_from_user+0x6d/0xa0
+[ 4481.831272]  ___sys_sendmsg+0x86/0xd0
+[ 4481.831274]  ? avc_has_perm+0x8c/0x1a0
+[ 4481.831276]  ? preempt_count_add+0x6a/0xa0
+[ 4481.831279]  ? sock_has_perm+0x82/0xa0
+[ 4481.831280]  __sys_sendmsg+0x57/0xa0
+[ 4481.831282]  do_syscall_64+0x38/0x90
+[ 4481.831284]  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+[ 4481.831286] RIP: 0033:0x7fd270d369b4
 
-Fixes: 864690cf4dd6 ("drm/xe/vf: Attach and detach CCS copy commands with BO")
-Signed-off-by: Satyanarayana K V P <satyanarayana.k.v.p@intel.com>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Michal Wajdeczko <michal.wajdeczko@intel.com>
-Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
-Link: https://patch.msgid.link/20260721052215.2267228-2-satyanarayana.k.v.p@intel.com
-(cherry picked from commit 1ae415a6eefe5004954a1d352b1718faca8844ef)
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Fixes: 2526ff21aa77 ("brcmfmac: support 4-way handshake offloading for 802.1X")
+Signed-off-by: Shelley Yang <shelley.yang@infineon.com>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Link: https://patch.msgid.link/20260525083859.581246-1-shelley.yang@infineon.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_migrate.c      | 16 ++++++++++------
- drivers/gpu/drm/xe/xe_migrate.h      |  3 ++-
- drivers/gpu/drm/xe/xe_sriov_vf_ccs.c | 14 ++++++++++++--
- 3 files changed, 24 insertions(+), 9 deletions(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_migrate.c b/drivers/gpu/drm/xe/xe_migrate.c
-index f4160e844b4c33..5dd03d4cbf5bb2 100644
---- a/drivers/gpu/drm/xe/xe_migrate.c
-+++ b/drivers/gpu/drm/xe/xe_migrate.c
-@@ -1292,6 +1292,7 @@ int xe_migrate_ccs_rw_copy(struct xe_tile *tile, struct xe_exec_queue *q,
-  * content.
-  * @src_bo: The buffer object @src is currently bound to.
-  * @read_write : Creates BB commands for CCS read/write.
-+ * @bound: Device is bound
-  *
-  * Directly clearing the BB lacks atomicity and can lead to undefined
-  * behavior if the vCPU is halted mid-operation during the clearing
-@@ -1304,7 +1305,8 @@ int xe_migrate_ccs_rw_copy(struct xe_tile *tile, struct xe_exec_queue *q,
-  * Returns: None.
-  */
- void xe_migrate_ccs_rw_copy_clear(struct xe_bo *src_bo,
--				  enum xe_sriov_vf_ccs_rw_ctxs read_write)
-+				  enum xe_sriov_vf_ccs_rw_ctxs read_write,
-+				  bool bound)
- {
- 	struct xe_mem_pool_node *bb = src_bo->bb_ccs[read_write];
- 	struct xe_device *xe = xe_bo_device(src_bo);
-@@ -1318,13 +1320,15 @@ void xe_migrate_ccs_rw_copy_clear(struct xe_bo *src_bo,
- 	bb_pool = ctx->mem.ccs_bb_pool;
- 
- 	scoped_guard(mutex, xe_mem_pool_bo_swap_guard(bb_pool)) {
--		xe_mem_pool_swap_shadow_locked(bb_pool);
-+		if (bound) {
-+			xe_mem_pool_swap_shadow_locked(bb_pool);
- 
--		cs = xe_mem_pool_node_cpu_addr(bb);
--		memset(cs, MI_NOOP, bb->sa_node.size);
--		xe_sriov_vf_ccs_rw_update_bb_addr(ctx);
-+			cs = xe_mem_pool_node_cpu_addr(bb);
-+			memset(cs, MI_NOOP, bb->sa_node.size);
-+			xe_sriov_vf_ccs_rw_update_bb_addr(ctx);
- 
--		xe_mem_pool_sync_shadow_locked(bb);
-+			xe_mem_pool_sync_shadow_locked(bb);
-+		}
- 		xe_mem_pool_free_node(bb);
- 		src_bo->bb_ccs[read_write] = NULL;
- 	}
-diff --git a/drivers/gpu/drm/xe/xe_migrate.h b/drivers/gpu/drm/xe/xe_migrate.h
-index 7761c02b4d86d6..0bcc122c1c3434 100644
---- a/drivers/gpu/drm/xe/xe_migrate.h
-+++ b/drivers/gpu/drm/xe/xe_migrate.h
-@@ -142,7 +142,8 @@ int xe_migrate_ccs_rw_copy(struct xe_tile *tile, struct xe_exec_queue *q,
- 			   enum xe_sriov_vf_ccs_rw_ctxs read_write);
- 
- void xe_migrate_ccs_rw_copy_clear(struct xe_bo *src_bo,
--				  enum xe_sriov_vf_ccs_rw_ctxs read_write);
-+				  enum xe_sriov_vf_ccs_rw_ctxs read_write,
-+				  bool bound);
- 
- struct xe_lrc *xe_migrate_lrc(struct xe_migrate *migrate);
- struct xe_exec_queue *xe_migrate_exec_queue(struct xe_migrate *migrate);
-diff --git a/drivers/gpu/drm/xe/xe_sriov_vf_ccs.c b/drivers/gpu/drm/xe/xe_sriov_vf_ccs.c
-index 6787564629c65f..a8c831fbee3b5a 100644
---- a/drivers/gpu/drm/xe/xe_sriov_vf_ccs.c
-+++ b/drivers/gpu/drm/xe/xe_sriov_vf_ccs.c
-@@ -3,6 +3,8 @@
-  * Copyright © 2025 Intel Corporation
-  */
- 
-+#include <drm/drm_drv.h>
-+
- #include "instructions/xe_mi_commands.h"
- #include "instructions/xe_gpu_commands.h"
- #include "xe_bb.h"
-@@ -446,7 +448,7 @@ int xe_sriov_vf_ccs_attach_bo(struct xe_bo *bo, struct ttm_resource *new_mem)
- 	 */
- 	for_each_ccs_rw_ctx(ctx_id) {
- 		if (bo->bb_ccs[ctx_id])
--			xe_migrate_ccs_rw_copy_clear(bo, ctx_id);
-+			xe_migrate_ccs_rw_copy_clear(bo, ctx_id, true);
- 	}
- 	return err;
- }
-@@ -466,19 +468,27 @@ int xe_sriov_vf_ccs_detach_bo(struct xe_bo *bo)
- 	struct xe_device *xe = xe_bo_device(bo);
- 	enum xe_sriov_vf_ccs_rw_ctxs ctx_id;
- 	struct xe_mem_pool_node *bb;
-+	bool bound;
-+	int idx;
- 
- 	xe_assert(xe, IS_VF_CCS_READY(xe));
- 
- 	if (!xe_bo_has_valid_ccs_bb(bo))
- 		return 0;
- 
-+	bound = drm_dev_enter(&xe->drm, &idx);
-+
- 	for_each_ccs_rw_ctx(ctx_id) {
- 		bb = bo->bb_ccs[ctx_id];
- 		if (!bb)
- 			continue;
- 
--		xe_migrate_ccs_rw_copy_clear(bo, ctx_id);
-+		xe_migrate_ccs_rw_copy_clear(bo, ctx_id, bound);
- 	}
-+
-+	if (bound)
-+		drm_dev_exit(idx);
-+
- 	return 0;
- }
- 
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+index 0b55d445895f20..89f61710a21045 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+@@ -2146,7 +2146,7 @@ brcmf_set_key_mgmt(struct net_device *ndev, struct cfg80211_connect_params *sme)
+ 				 sme->crypto.akm_suites[0]);
+ 			return -EINVAL;
+ 		}
+-	} else if (val & (WPA2_AUTH_PSK | WPA2_AUTH_UNSPECIFIED)) {
++	} else if (val & (WPA2_AUTH_PSK | WPA2_AUTH_UNSPECIFIED | WPA2_AUTH_1X_SHA256)) {
+ 		switch (sme->crypto.akm_suites[0]) {
+ 		case WLAN_AKM_SUITE_8021X:
+ 			val = WPA2_AUTH_UNSPECIFIED;
 -- 
 2.53.0
 
