@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AB2A44211B;
-	Thu, 30 Jul 2026 15:22:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBD8A443A9D;
+	Thu, 30 Jul 2026 15:22:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424927; cv=none; b=rCak3gNhWd0HyBCyysPzgU33glsUzbuT5Hvm1eHCq4QhYWIHEs3L9aPEHAObfqZNwM1eDEihzvvg/8m9r5CG9tlE5tdkjcUGv53zc95gegxYE4qR4UMKp4Rlt0tM2zBTcqLpA0Zq6/il/aq4uR+7yAWTBB0TfxDd7h0VpWdLuBY=
+	t=1785424930; cv=none; b=PHgNaPf8x7w7JNfqJT/1kc3aul10v/Ffk2wbk09z3KONbKB0ue+3UogxWqM8zTZSimv/lzwO37fBG+JqEt4QieaQcZ1rlHxrVulK/vbl8MPBJU9r8CpRO87qGwq5gqIPrOI/CwaVIJTSuZmA+G5lGIl7WJQobbJAjCRDPScBdKc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424927; c=relaxed/simple;
-	bh=Rp7SBgWRWbWjmFk+i1T445oTulHbpHVNFLejJfxvaWc=;
+	s=arc-20240116; t=1785424930; c=relaxed/simple;
+	bh=5OnEaYD6rb1LsOkacppnt+7BKdj1ekQCxgNO0DIe860=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N17ImbEAFiLLXo6exHoVtdY7MRhW826+waMeeEETX5gl3+1bjcYBk6TceZ9B3cM5iAaf8a/Jd1BNQzxel8P4BTMvo6TBSgd+waNGsXyr/tg+UBUbJ8rLP5L+AepkZ/LScGtdJ9Wd0XwCFAXUsghpEyomCnR2IrQoi9Iz013ZN6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=moKM3kz9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=B7gDr2aXW/IietvUpyDDKkAyGbXNjFNBp6cGyEKyVMjHBjQPHzuCJSikS/a3MV+Fq311nHD2Cc10rxTuLAggAc/HCDrParAFAJomPaDVLqDemnYAMC8UI0ZnThbMysRbQXLnGmVyht/thal/u6nxhPNw1smN7fyOFPrmO3KxRWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GnCR2T+G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="moKM3kz9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C9C71F000E9;
-	Thu, 30 Jul 2026 15:22:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GnCR2T+G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31F531F000E9;
+	Thu, 30 Jul 2026 15:22:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424925;
-	bh=hiTSAm9lLwp+7pKYjePAebdNqK6pgtiRcu/D5xHD8Ac=;
+	s=korg; t=1785424928;
+	bh=0QpP2/h2xScoes+HezjXElBnEvyaIOc8oL4IkmhbN0s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=moKM3kz9k2JLgVmdIh4V2Fd9RNmT9GB9UYhm00WMW2mdwM73w0rFGNDZhIUsIXMWF
-	 DmI/vF3P+inNXcxJe4Bg8efABSrw/vFwJbhO/4KrrPraXcPsv5V6RY0uj6HyPbsRj0
-	 G109C1Kp93EIBXh4ZFYoyGA31jmlE4GEpb+z3X1k=
+	b=GnCR2T+Gsq8zZdh1wUMQM0s9gtAu6Jrsgv20LXGPnIP6lvy7+2mG6unVYXZMXJ+N2
+	 9LkePBa35+nKaErm4Z2LxbAenoE4iYioxh0j2R97RUSkCpvASAzMm7c9UdzaRG66h4
+	 Tfnrs0i6E2i6INfGpePpzXWffCFByeG6V1IGyye4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tung Nguyen <tung.quang.nguyen@est.tech>,
-	Breno Leitao <leitao@debian.org>,
-	Daehyeon Ko <4ncienth@gmail.com>,
-	Simon Horman <horms@kernel.org>,
+	Brien Oberstein <brienpub@gmail.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Bobby Eshleman <bobbyeshleman@meta.com>,
 	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.18 566/675] tipc: clear sock->sk on the failed-insert path in tipc_sk_create()
-Date: Thu, 30 Jul 2026 16:14:56 +0200
-Message-ID: <20260730141457.161375052@linuxfoundation.org>
+Subject: [PATCH 6.18 567/675] vsock/virtio: collapse receive queue under memory pressure
+Date: Thu, 30 Jul 2026 16:14:57 +0200
+Message-ID: <20260730141457.181653730@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -53,82 +53,250 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daehyeon Ko <4ncienth@gmail.com>
+From: Stefano Garzarella <sgarzare@redhat.com>
 
-commit ba0533fc163f905fe817cfabdf8ed4058da44800 upstream.
+commit 2a12c05aef213ff304ecc9e2f351de20731946b8 upstream.
 
-When tipc_sk_create() fails to insert the new socket (tipc_sk_insert()
-returns non-zero), its error path frees the sk with sk_free() but leaves
-sock->sk pointing at the freed object:
+When many small packets accumulate in the receive queue, the skb overhead
+can exceed buf_alloc even while the payload is within bounds. This causes
+virtio_transport_inc_rx_pkt() to reject packets, leading to connection
+resets during large transfers under backpressure.
 
-	if (tipc_sk_insert(tsk)) {
-		sk_free(sk);
-		pr_warn("Socket create failed; port number exhausted\n");
-		return -EINVAL;
-	}
+The issue was reported by Brien, who has a reproducer, but it is also
+easily reproducible with iperf-vsock [1] using a small packet size:
 
-This is harmless for plain socket(): the syscall layer clears sock->ops
-before releasing, so tipc_release() is never called. It is not harmless
-on the accept() path. tipc_accept() creates the pre-allocated child
-socket with tipc_sk_create(net, new_sock, 0, kern); on failure it leaves
-new_sock->sk dangling and new_sock->ops non-NULL, and do_accept() then
-fput()s the new file, so __sock_release() -> tipc_release() runs
-lock_sock(new_sock->sk) on the freed sk -- a use-after-free write of the
-sk_lock spinlock.
+  iperf3 --vsock -c $CID -l 129
 
-tipc_release() already guards this exact "failed accept() releases a
-pre-allocated child" case with "if (sk == NULL) return 0;", but the
-guard is bypassed because tipc_sk_create() left sock->sk non-NULL
-(dangling) rather than NULL.
+which fails immediately without this patch but with commit 059b7dbd20a6
+("vsock/virtio: fix potential unbounded skb queue").
 
-Clear sock->sk on the failed-insert path so the existing tipc_release()
-NULL check fires and the use-after-free is avoided.
+Inspired by TCP's tcp_collapse() which solves a similar problem, add
+virtio_transport_collapse_rx_queue() that walks the receive queue and
+re-copies data into compact linear skbs to reduce the overhead.
 
-The tipc_sk_insert() failure is reached when the per-netns socket
-rhashtable hits its max_size (tsk_rht_params.max_size = 1048576, ~2M
-elements) -- i.e. once a netns holds ~2M TIPC sockets every insert
-returns -E2BIG.
+The collapse is triggered proactively from when the number of skb queued
+is close to exceeding the overhead budget.
 
-  BUG: KASAN: slab-use-after-free in lock_sock_nested (net/core/sock.c:3839)
-  Write of size 8 at addr ffff8880047cdc38 by task init/1
-   lock_sock_nested (net/core/sock.c:3839)
-   tipc_release (net/tipc/socket.c:638)
-   __sock_release (net/socket.c:710)
-   sock_close (net/socket.c:1501)
-   __fput (fs/file_table.c:512)
-  Allocated by task 1:
-   sk_alloc (net/core/sock.c:2308)
-   tipc_sk_create (net/tipc/socket.c:487)
-   tipc_accept (net/tipc/socket.c:2744)
-   do_accept (net/socket.c:2034)
-  Freed by task 1:
-   __sk_destruct (net/core/sock.c:2391)
-   tipc_sk_create (net/tipc/socket.c:504)
-   tipc_accept (net/tipc/socket.c:2744)
-   do_accept (net/socket.c:2034)
+A pre-scan counts the eligible bytes to size each allocation precisely,
+avoiding waste for isolated small packets. Partially consumed skbs are
+kept as-is to preserve buf_used/fwd_cnt accounting, EOM-marked skbs to
+maintain SEQPACKET message boundaries, and skbs already larger than the
+collapse target because they already have a good data-to-overhead ratio.
 
-Fixes: 00aff3590fc0 ("net: tipc: fix possible refcount leak in tipc_sk_create()")
+Walking a large queue may take a significant amount of time and cache
+misses, causing traffic burstiness. To limit this, the collapse stops
+once enough room is freed for this packet and the next one, but may
+opportunistically free more to fill each collapsed skb to capacity.
+
+[1] https://github.com/stefano-garzarella/iperf-vsock
+
+Fixes: 059b7dbd20a6 ("vsock/virtio: fix potential unbounded skb queue")
 Cc: stable@vger.kernel.org
-Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
-Reviewed-by: Breno Leitao <leitao@debian.org>
-Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260714131939.1255974-1-4ncienth@gmail.com
+Reported-by: Brien Oberstein <brienpub@gmail.com>
+Closes: https://lore.kernel.org/netdev/618701dd023e$063de350$12b9a9f0$@gmail.com/
+Tested-by: Brien Oberstein <brienpub@gmail.com>
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Bobby Eshleman <bobbyeshleman@meta.com>
+Link: https://patch.msgid.link/20260708102904.50732-2-sgarzare@redhat.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/tipc/socket.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/vmw_vsock/virtio_transport_common.c |  165 +++++++++++++++++++++++++++++++-
+ 1 file changed, 164 insertions(+), 1 deletion(-)
 
---- a/net/tipc/socket.c
-+++ b/net/tipc/socket.c
-@@ -501,6 +501,7 @@ static int tipc_sk_create(struct net *ne
- 	tipc_set_sk_state(sk, TIPC_OPEN);
- 	if (tipc_sk_insert(tsk)) {
- 		sk_free(sk);
-+		sock->sk = NULL;
- 		pr_warn("Socket create failed; port number exhausted\n");
- 		return -EINVAL;
- 	}
+--- a/net/vmw_vsock/virtio_transport_common.c
++++ b/net/vmw_vsock/virtio_transport_common.c
+@@ -26,6 +26,13 @@
+ /* Threshold for detecting small packets to copy */
+ #define GOOD_COPY_LEN  128
+ 
++/* Max payload that can be collapsed into a single linear skb, using the same
++ * allocation threshold as virtio_vsock_alloc_skb() to avoid adding pressure
++ * on the page allocator.
++ */
++#define MAX_COLLAPSE_LEN \
++	SKB_MAX_ORDER(VIRTIO_VSOCK_SKB_HEADROOM, PAGE_ALLOC_COSTLY_ORDER)
++
+ static void virtio_transport_cancel_close_work(struct vsock_sock *vsk,
+ 					       bool cancel_timeout);
+ static s64 virtio_transport_has_space(struct virtio_vsock_sock *vvs);
+@@ -422,6 +429,145 @@ static int virtio_transport_send_pkt_inf
+ 	return ret;
+ }
+ 
++static bool virtio_transport_can_collapse(struct sk_buff *skb)
++{
++	/* skbs that are partially consumed, mark a SEQPACKET message boundary,
++	 * or are already large enough should not be collapsed: they either
++	 * need special accounting, carry protocol state, or already have a
++	 * good data-to-overhead ratio.
++	 */
++	if (VIRTIO_VSOCK_SKB_CB(skb)->offset)
++		return false;
++	if (le32_to_cpu(virtio_vsock_hdr(skb)->flags) & VIRTIO_VSOCK_SEQ_EOM)
++		return false;
++	if (skb->len >= MAX_COLLAPSE_LEN)
++		return false;
++	return true;
++}
++
++/* Iterate through the packets in the queue starting from the current skb to
++ * count the number of bytes we can collapse.
++ */
++static unsigned int
++virtio_transport_collapse_size(struct sk_buff *skb, struct sk_buff_head *queue)
++{
++	unsigned int target = skb->len - VIRTIO_VSOCK_SKB_CB(skb)->offset;
++
++	while ((skb = skb_peek_next(skb, queue)) &&
++	       virtio_transport_can_collapse(skb)) {
++		unsigned int len = skb->len - VIRTIO_VSOCK_SKB_CB(skb)->offset;
++
++		if (len > MAX_COLLAPSE_LEN - target)
++			return target;
++
++		target += len;
++	}
++
++	return target;
++}
++
++/* Called under lock_sock to compact the receive queue by merging small skbs.
++ * @min_to_free: minimum number of skbs to eliminate from the queue. May free
++ *               more to fill each collapsed skb to capacity.
++ */
++static void
++virtio_transport_collapse_rx_queue(struct virtio_vsock_sock *vvs,
++				   u32 min_to_free)
++{
++	struct sk_buff *skb, *next_skb, *new_skb = NULL;
++	struct sk_buff_head new_queue;
++	u32 saved = 0;
++
++	__skb_queue_head_init(&new_queue);
++
++	skb_queue_walk_safe(&vvs->rx_queue, skb, next_skb) {
++		struct virtio_vsock_hdr *hdr = virtio_vsock_hdr(skb);
++		u32 src_off = VIRTIO_VSOCK_SKB_CB(skb)->offset;
++		u32 src_len = skb->len - src_off;
++		bool keep;
++
++		keep = !virtio_transport_can_collapse(skb);
++		if (keep) {
++			/* Finalize pending collapsed skb to preserve packet
++			 * ordering.
++			 */
++			if (new_skb) {
++				__skb_queue_tail(&new_queue, new_skb);
++				new_skb = NULL;
++				saved--;
++			}
++			goto next;
++		}
++
++		/* Finalize if this packet won't fit in the remaining tailroom,
++		 * so we can allocate a right-sized new_skb.
++		 */
++		if (new_skb && src_len > skb_tailroom(new_skb)) {
++			__skb_queue_tail(&new_queue, new_skb);
++			new_skb = NULL;
++			saved--;
++		}
++
++		if (!new_skb) {
++			unsigned int alloc_size;
++
++			/* Check after finalizing to opportunistically fill
++			 * each collapsed skb to capacity, merging more skbs
++			 * than strictly required.
++			 */
++			if (saved >= min_to_free)
++				break;
++
++			alloc_size = virtio_transport_collapse_size(skb, &vvs->rx_queue);
++
++			/* Only this skb's data is eligible, nothing to merge
++			 * with. Keep as-is.
++			 */
++			if (alloc_size <= src_len) {
++				keep = true;
++				goto next;
++			}
++
++			new_skb = virtio_vsock_alloc_linear_skb(alloc_size +
++					VIRTIO_VSOCK_SKB_HEADROOM, GFP_KERNEL);
++			if (!new_skb)
++				break;
++
++			memcpy(virtio_vsock_hdr(new_skb), hdr,
++			       sizeof(struct virtio_vsock_hdr));
++			virtio_vsock_hdr(new_skb)->len = 0;
++		}
++
++		/* Cannot fail since src_off/src_len are within bounds, but if
++		 * it does, discard new_skb to avoid queuing corrupted data.
++		 */
++		if (WARN_ON_ONCE(skb_copy_bits(skb, src_off,
++					       skb_put(new_skb, src_len),
++					       src_len))) {
++			kfree_skb(new_skb);
++			new_skb = NULL;
++			break;
++		}
++
++		le32_add_cpu(&virtio_vsock_hdr(new_skb)->len, src_len);
++		virtio_vsock_hdr(new_skb)->flags |= hdr->flags;
++
++next:
++		__skb_unlink(skb, &vvs->rx_queue);
++		if (keep) {
++			__skb_queue_tail(&new_queue, skb);
++		} else {
++			consume_skb(skb);
++			saved++;
++		}
++	}
++
++	if (new_skb)
++		__skb_queue_tail(&new_queue, new_skb);
++
++	skb_queue_splice(&new_queue, &vvs->rx_queue);
++}
++
+ static bool virtio_transport_inc_rx_pkt(struct virtio_vsock_sock *vvs,
+ 					u32 len)
+ {
+@@ -1341,12 +1487,29 @@ virtio_transport_recv_enqueue(struct vso
+ {
+ 	struct virtio_vsock_sock *vvs = vsk->trans;
+ 	bool can_enqueue, free_pkt = false;
++	u32 len, queue_max, queue_len;
+ 	struct virtio_vsock_hdr *hdr;
+-	u32 len;
+ 
+ 	hdr = virtio_vsock_hdr(skb);
+ 	len = le32_to_cpu(hdr->len);
+ 
++	/* virtio_transport_inc_rx_pkt() rejects packets when the per-skb
++	 * overhead (skb_queue_len * SKB_TRUESIZE(0)) exceeds buf_alloc.
++	 * Proactively collapse the queue before that happens.
++	 * No rx_lock needed: lock_sock is held by caller, preventing
++	 * concurrent enqueue or dequeue.
++	 */
++	queue_max = vvs->buf_alloc / SKB_TRUESIZE(0);
++	queue_len = skb_queue_len(&vvs->rx_queue);
++	if (queue_len >= queue_max) {
++		/* Walking a large queue may take a significant amount of time
++		 * and cache misses, causing traffic burstiness. Limit the
++		 * collapse to freeing room for this packet and the next one.
++		 * It may free more to fill each collapsed skb to capacity.
++		 */
++		virtio_transport_collapse_rx_queue(vvs, queue_len + 2 - queue_max);
++	}
++
+ 	spin_lock_bh(&vvs->rx_lock);
+ 
+ 	can_enqueue = virtio_transport_inc_rx_pkt(vvs, len);
 
 
