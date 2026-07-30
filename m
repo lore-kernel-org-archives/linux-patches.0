@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDDA43769FD;
-	Thu, 30 Jul 2026 15:41:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D27EA270545;
+	Thu, 30 Jul 2026 15:41:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426082; cv=none; b=c3OoPSp1QV2v5noqI3rif/f/iUW7Q1ZLeqjf0g8uGpg4bYmxuP1UERAfGVG/DNyRZygUPQEP/BanSapqwOVp9Lif4VsCSqNBZ7Lb9XBSWJckCOBLf4Gs1IQJChngAHXMuUgT0P1TxMo7fWLdCMdGnvDSPDdk4odAyi9/cLQkMtE=
+	t=1785426084; cv=none; b=W1t5CsznDrdqAuvO6F2wdNqxHJQpZ7kzrrzz7ixRKW0/G6kOz0m4QSuuYkq6R3Mh5sQAhFmmDqvDmTplGyx08cV2ceFupD+zeeXKrjLYJfuw8ubog6tIT/E6suPUvs8+2mfkxDdnQOMRts/YIR0mtGi7PtIQpkAEE0VyYEQPC54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426082; c=relaxed/simple;
-	bh=m3L6UcMpcqUbyUDnPySBqKgPBwxP6Zf2n/RcR8zeGJU=;
+	s=arc-20240116; t=1785426084; c=relaxed/simple;
+	bh=dAYd+RhdZHqo8In5UnqNKVD5lNTl1t+USBrEgdIlYPk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UzQbCnS34yNa3MxXCd4MyfKvcn9CzWyYUwmPjHNcmxNnl+rk5LQ8vsZR5s/hj9IK/uFE4M/cmo+QcyRnmJw1VupK8QdCTRzKH6jPQcYJkWUkRUUFciJj96fgANm2GAnvpgscRLVpUHJFKsHiB4iZrITISdUaDfvWJqofBWdEFvg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AgbQBL0M; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=mx2shSyp5MLZ9gxWTV1+H6Kdtmhy0Bbdc+fDsj4xOd2+FWGW6x3UbYAJKc16m06+lMW4mBG8XtiMppCaEZilwrIh7FbxGHBpVo3co0HlgXI1Ec63c8D2BH22AKIZKGL9/cHBynV0gXh/NpaG5Jkac06mD9Fo0N+C95QXnSpUdEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O3iMuWoY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AgbQBL0M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52ECE1F000E9;
-	Thu, 30 Jul 2026 15:41:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O3iMuWoY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31D251F000E9;
+	Thu, 30 Jul 2026 15:41:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426080;
-	bh=6vPG846Qb1oOY4ijaCMmnqLMQ6heiwG/8hcDVDAynAE=;
+	s=korg; t=1785426083;
+	bh=ikjOpqqpuWkJFD11JPNppAmDvYTNoygd6o8L3sep65M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AgbQBL0MKRRKrq/zvFRt6oZSc8dvUbCAbDtmexYaIGYsJ5+ax/wDb3GHEiKG9/cxF
-	 GKDB7TN1wrjtfDFmHnpvct9hLRvfmZQ+LOYrtMLRqQXO+4JFrHeyXxjhg/nLR97hcq
-	 FOMTEA7pfhQF5h6qkxpacU2VIPOwCLGA5ujtB/fs=
+	b=O3iMuWoYKCFMl6OjPEZdu2/AryDqGAPV1ti//kAKJ/9gFDypqEyTML7E4hsURrCtX
+	 MbHh7w3x4ruyix+s0OKWbZ3hC3JjWCGwPvrrsC0EslEau2WtOqVbxdh38md4+Hj2Au
+	 9HsqDk3m1LP67BHLveoTilKAUS6qrsUwR0WSvwVw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 295/602] drm/amdgpu: Disable PCIe dynamic speed switching on Ryzen Pinnacle Ridge
-Date: Thu, 30 Jul 2026 16:11:27 +0200
-Message-ID: <20260730141442.169667694@linuxfoundation.org>
+	Zhu Lingshan <lingshan.zhu@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>
+Subject: [PATCH 6.12 296/602] drm/amdgpu: fix bo->pin leaking in amdgpu_bo_create_reserved
+Date: Thu, 30 Jul 2026 16:11:28 +0200
+Message-ID: <20260730141442.189953122@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -45,53 +45,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Zhu Lingshan <lingshan.zhu@amd.com>
 
-commit 0148ac33547b9af1c5a7f3bb6e5baffcb6e9fac2 upstream.
+commit a2f895f3c852063258d62e9f74b081de07ca95df upstream.
 
-AMD Ryzen Pinnacle Ridge (Zen+, family 0x17 model 0x08) CPUs have
-PCI controllers that don't support PCIe dynamic speed switching,
-causing system freezes during GPU initialization when enabled.
+amdgpu_bo_create_reserved() only allocates a new BO when
+*bo_ptr (struct amdgpu_bo **bo_ptr as input parameter) is
+NULL, it simply skips creation when *bo_ptr is non-NULL.
+But it unconditionally reserves, pins, gart allocates
+and maps the BO afterwards.
 
-Disable dynamic speed switching when this CPU is detected.
+When the same non-NULL BO pointer is passed in again,
+for example firmware buffers that live in adev and are
+re-loaded on every resume / cp_resume / start
+under AMDGPU_FW_LOAD_DIRECT, amdgpu_bo_pin() just increases
+pin_count unconditionally, however the matching teardown only unpins
+once, so pin_count never drops to zero, so TTM is not able
+to move, swap or evict a BO, causing BO leaks.
 
-Assisted-by: Claude:sonnet
-Fixes: 466a7d115326 ("drm/amd: Use the first non-dGPU PCI device for BW limits")
-Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/5436
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
-Link: https://patch.msgid.link/20260709031520.841611-1-mario.limonciello@amd.com
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+This commit fixes this issue by only pinning the bo
+once at creation, and repeated calls no longer
+take additional pin references.
+
+Signed-off-by: Zhu Lingshan <lingshan.zhu@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 9ceb4e034a327a04155f32f1cd1a5031dfa5fe02)
+(cherry picked from commit 3ddc0ae76202c447b6aec61e907b852bc94671cf)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_object.c |   13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -1757,6 +1757,15 @@ static bool amdgpu_device_pcie_dynamic_s
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
+@@ -273,10 +273,12 @@ int amdgpu_bo_create_reserved(struct amd
+ 		goto error_free;
+ 	}
  
- 	if (c->x86_vendor == X86_VENDOR_INTEL)
- 		return false;
-+
-+	/*
-+	 * AMD Ryzen Pinnacle Ridge (Zen+, family 0x17 model 0x08) CPUs don't
-+	 * support PCIe dynamic speed switching.
-+	 * https://gitlab.freedesktop.org/drm/amd/-/work_items/5436
-+	 */
-+	if (c->x86_vendor == X86_VENDOR_AMD && c->x86 == 0x17 &&
-+	    c->x86_model == 0x08)
-+		return false;
- #endif
- 	return true;
- }
+-	r = amdgpu_bo_pin(*bo_ptr, domain);
+-	if (r) {
+-		dev_err(adev->dev, "(%d) kernel bo pin failed\n", r);
+-		goto error_unreserve;
++	if (free) {
++		r = amdgpu_bo_pin(*bo_ptr, domain);
++		if (r) {
++			dev_err(adev->dev, "(%d) kernel bo pin failed\n", r);
++			goto error_unreserve;
++		}
+ 	}
+ 
+ 	r = amdgpu_ttm_alloc_gart(&(*bo_ptr)->tbo);
+@@ -299,7 +301,8 @@ int amdgpu_bo_create_reserved(struct amd
+ 	return 0;
+ 
+ error_unpin:
+-	amdgpu_bo_unpin(*bo_ptr);
++	if (free)
++		amdgpu_bo_unpin(*bo_ptr);
+ error_unreserve:
+ 	amdgpu_bo_unreserve(*bo_ptr);
+ 
 
 
