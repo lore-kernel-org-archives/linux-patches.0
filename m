@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 523B0411689;
-	Thu, 30 Jul 2026 15:57:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AA18435A9E;
+	Thu, 30 Jul 2026 15:57:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427071; cv=none; b=VPL6g7MkqbO7WypPoymFIbCNqgoR9A2xjhLLUePetB8aBKyGm7odyiZg4OKXZm7CwoEkHtkgAPywHMLhFrBQh7dZwhUyHTO1ZV6hZH8WOPHN5PXijGO8utHuwGVQGJWg2IgF1qhDMZkDDO56u5MOCBQq/jF2k9E0fso3XQ4sFQo=
+	t=1785427074; cv=none; b=kVVtzNyjnPFBxU6B4bnynpuVkChyKIpRL12WVVKeSqAWiHH+4XpUghrcJF5I3CpcJieSgiB+OFsVd7UXyCsO7Cu3hm6/xllZ2ErzbMIWrC74u/WGiGDJqlIhxXi0a/eSm08lGmyqkSPVt4E3m6swmMi4cH1RXfftgicxA+0YnG8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427071; c=relaxed/simple;
-	bh=+PjmlgiSVtYECBCi0H/O82lYoWflDj4ZAn5K14yId3s=;
+	s=arc-20240116; t=1785427074; c=relaxed/simple;
+	bh=NvaAWFB33astOOkfpdvqUHRHYkldg44aXr2WUalkFig=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m8x7f0IrIRw14H3zQ4At8DimnUIkQUeu1wt7zAZqxuX6tIVlBbUgAEfdnrQcrE56q/r+HxM+zCr91oynfdA8ipD7hYizj1XevXpb9oJzM9vZru9238VqWNK5Wa5h0FpCEINR/swecAE3zLW6k9pxgedzw6x099VG6u5vKOePOeE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OqBDbm5R; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EM4roZ3NqrIB2VY+sVZu1+Df3liO8wiEoBBTA7rxYOBfXhPfE1z/IEpJcaMKxaRmFTH1SXY1EwProLGDMbSiGAUAn1O61QqY+HQVRRFnjM5kMRZVhoippxYWFEMxitAZipF000veGuL5MOAHWROuAMN9KH1undG+6mi6rRbRGKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QExd0CfX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OqBDbm5R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F7A21F000E9;
-	Thu, 30 Jul 2026 15:57:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QExd0CfX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F29D1F00A3D;
+	Thu, 30 Jul 2026 15:57:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427070;
-	bh=xdXETsPm+NIeSLccxRtZhEFCepeJ2IuwjdI60o6lCts=;
+	s=korg; t=1785427072;
+	bh=2jADwRKFeWsuZr+/kOdb3MWHGvSBYkNfVQUxifBAAi8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OqBDbm5RjGaWNy/SZlm+fExYvoitVm+GxHUZfLxs9a0yzQH6dxdC+ShDQvo3txWxm
-	 8POXRNwEMR8+Fr2gGzLHN4DpiA217nTJQy0G9slRSKW/GVXvUbrbeDBNTiFxu2FLxq
-	 5FXhg2IFWEn4mA7UEJSUuGZnz3XmfjNz9Vno4flA=
+	b=QExd0CfXeEC4ntAGeyt2rLzx0t3WSekFA4MQp8xJY7mA0BryEm+UxbiOLqiFQ4DBv
+	 iFLZdRmc8zwB1eLzaQtDLhjbq8zYS7ZVggvhX+oAzzpfGRdOsaCHW/uT0XU831icCQ
+	 qDK31LvHE5wjVUx+XkZjClgoqwayshzId2THIoNU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Phil Rosenthal <phil@phil.gs>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.6 012/484] KVM: x86/mmu: Fix use-after-free on vendor module reload
-Date: Thu, 30 Jul 2026 16:08:29 +0200
-Message-ID: <20260730141423.677607185@linuxfoundation.org>
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Philo Lu <lulie@linux.alibaba.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 003/484] selftests/bpf: Add tests for ld_{abs,ind} failure path in subprogs
+Date: Thu, 30 Jul 2026 16:08:20 +0200
+Message-ID: <20260730141423.473992178@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -50,76 +52,200 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Phil Rosenthal <phil@phil.gs>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-commit 52f2f7c30126037975389aa04d24c506a5177c35 upstream.
+commit e0fcb42bc6f41bab2895757d6610616b3820eff7 upstream.
 
-mmu_destroy_caches() destroys pte_list_desc_cache and
-mmu_page_header_cache, but leaves both pointers unchanged.  The pointers
-live in kvm.ko, and therefore survive when a vendor module is unloaded
-while kvm.ko remains loaded.
+Extend the verifier_ld_ind BPF selftests with subprogs containing
+ld_{abs,ind} and craft the test in a way where the invalid register
+read is rejected in the fixed case. Also add a success case each,
+and add additional coverage related to the BTF return type enforcement.
 
-If creation of pte_list_desc_cache fails during a subsequent vendor
-module load, its assignment sets pte_list_desc_cache to NULL and the
-error path calls mmu_destroy_caches().  mmu_page_header_cache still
-points to the cache destroyed during the preceding vendor module
-unload.  Passing that stale pointer to kmem_cache_destroy() causes a
-slab use-after-free.
+  # LDLIBS=-static PKG_CONFIG='pkg-config --static' ./vmtest.sh -- ./test_progs -t verifier_ld_ind
+  [...]
+  #611/1   verifier_ld_ind/ld_ind: check calling conv, r1:OK
+  #611/2   verifier_ld_ind/ld_ind: check calling conv, r1 @unpriv:OK
+  #611/3   verifier_ld_ind/ld_ind: check calling conv, r2:OK
+  #611/4   verifier_ld_ind/ld_ind: check calling conv, r2 @unpriv:OK
+  #611/5   verifier_ld_ind/ld_ind: check calling conv, r3:OK
+  #611/6   verifier_ld_ind/ld_ind: check calling conv, r3 @unpriv:OK
+  #611/7   verifier_ld_ind/ld_ind: check calling conv, r4:OK
+  #611/8   verifier_ld_ind/ld_ind: check calling conv, r4 @unpriv:OK
+  #611/9   verifier_ld_ind/ld_ind: check calling conv, r5:OK
+  #611/10  verifier_ld_ind/ld_ind: check calling conv, r5 @unpriv:OK
+  #611/11  verifier_ld_ind/ld_ind: check calling conv, r7:OK
+  #611/12  verifier_ld_ind/ld_ind: check calling conv, r7 @unpriv:OK
+  #611/13  verifier_ld_ind/ld_abs: subprog early exit on ld_abs failure:OK
+  #611/14  verifier_ld_ind/ld_ind: subprog early exit on ld_ind failure:OK
+  #611/15  verifier_ld_ind/ld_abs: subprog with both paths safe:OK
+  #611/16  verifier_ld_ind/ld_ind: subprog with both paths safe:OK
+  #611/17  verifier_ld_ind/ld_abs: reject void return subprog:OK
+  #611/18  verifier_ld_ind/ld_ind: reject void return subprog:OK
+  #611     verifier_ld_ind:OK
+  Summary: 1/18 PASSED, 0 SKIPPED, 0 FAILED
 
-Reproduce the issue on a v7.1.3 kernel with CONFIG_KASAN=y,
-CONFIG_KASAN_GENERIC=y, CONFIG_KVM=m, and CONFIG_KVM_INTEL=m.  A
-one-shot test hook forces pte_list_desc_cache to NULL on the second
-invocation of kvm_mmu_vendor_module_init():
-
-  1. Load kvm.ko and kvm-intel.ko, creating both caches.
-  2. Unload only kvm_intel, leaving kvm.ko loaded.
-  3. Reload kvm_intel and force initialization through the -ENOMEM path.
-
-KASAN reports:
-
-  BUG: KASAN: slab-use-after-free in
-  kvm_mmu_vendor_module_init+0x5b/0x170 [kvm]
-  ...
-  kmem_cache_destroy+0x21/0x1d0
-  kvm_mmu_vendor_module_init+0x5b/0x170 [kvm]
-  ...
-  Allocated by task 16817:
-  __kmem_cache_create_args+0x12c/0x3b0
-  __kmem_cache_create.constprop.0+0xb6/0xf0 [kvm]
-  kvm_mmu_vendor_module_init+0x13b/0x170 [kvm]
-  ...
-  Freed by task 16820:
-  kmem_cache_destroy+0x117/0x1d0
-  kvm_mmu_vendor_module_exit+0x21/0x30 [kvm]
-
-Clear both pointers immediately after destroying their caches so that
-the stored state reflects the caches' lifetime and repeated cleanup is
-safe.
-
-With the fix applied, the same injected vendor module reload fails with
--ENOMEM as expected and produces no KASAN report.
-
-Fixes: cb498ea2ce1d ("KVM: Portability: Combine kvm_init and kvm_init_x86")
-Cc: stable@vger.kernel.org
-Signed-off-by: Phil Rosenthal <phil@phil.gs>
-Message-ID: <20260718-kvm-mmu-cache-uaf-v3-1-e103b93c74e1@phil.gs>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/r/20260408191242.526279-4-daniel@iogearbox.net
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Philo Lu <lulie@linux.alibaba.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/mmu/mmu.c |    2 ++
- 1 file changed, 2 insertions(+)
+ .../selftests/bpf/progs/verifier_ld_ind.c     | 142 ++++++++++++++++++
+ 1 file changed, 142 insertions(+)
 
---- a/arch/x86/kvm/mmu/mmu.c
-+++ b/arch/x86/kvm/mmu/mmu.c
-@@ -6804,7 +6804,9 @@ static struct shrinker mmu_shrinker = {
- static void mmu_destroy_caches(void)
- {
- 	kmem_cache_destroy(pte_list_desc_cache);
-+	pte_list_desc_cache = NULL;
- 	kmem_cache_destroy(mmu_page_header_cache);
-+	mmu_page_header_cache = NULL;
+diff --git a/tools/testing/selftests/bpf/progs/verifier_ld_ind.c b/tools/testing/selftests/bpf/progs/verifier_ld_ind.c
+index c925ba9a2e74c2..09e81b99eecb4e 100644
+--- a/tools/testing/selftests/bpf/progs/verifier_ld_ind.c
++++ b/tools/testing/selftests/bpf/progs/verifier_ld_ind.c
+@@ -107,4 +107,146 @@ __naked void ind_check_calling_conv_r7(void)
+ 	: __clobber_all);
  }
  
- static int get_nx_huge_pages(char *buffer, const struct kernel_param *kp)
++/*
++ * ld_{abs,ind} subprog that always sets r0=1 on the success path.
++ * bpf_gen_ld_abs() emits a hidden exit with r0=0 when the load helper
++ * fails. The verifier must model this failure return so that callers
++ * account for r0=0 as a possible return value.
++ */
++__naked __noinline __used
++static int ldabs_subprog(void)
++{
++	asm volatile (
++	"r6 = r1;"
++	".8byte %[ld_abs];"
++	"r0 = 1;"
++	"exit;"
++	:
++	: __imm_insn(ld_abs, BPF_LD_ABS(BPF_W, 0))
++	: __clobber_all);
++}
++
++__naked __noinline __used
++static int ldind_subprog(void)
++{
++	asm volatile (
++	"r6 = r1;"
++	"r7 = 0;"
++	".8byte %[ld_ind];"
++	"r0 = 1;"
++	"exit;"
++	:
++	: __imm_insn(ld_ind, BPF_LD_IND(BPF_W, BPF_REG_7, 0))
++	: __clobber_all);
++}
++
++SEC("socket")
++__description("ld_abs: subprog early exit on ld_abs failure")
++__failure __msg("R9 !read_ok")
++__naked void ld_abs_subprog_early_exit(void)
++{
++	asm volatile (
++	"call ldabs_subprog;"
++	"if r0 != 0 goto l_exit_%=;"
++	"r0 = r9;"
++	"l_exit_%=:"
++	"r0 = 0;"
++	"exit;"
++	::: __clobber_all);
++}
++
++SEC("socket")
++__description("ld_ind: subprog early exit on ld_ind failure")
++__failure __msg("R9 !read_ok")
++__naked void ld_ind_subprog_early_exit(void)
++{
++	asm volatile (
++	"call ldind_subprog;"
++	"if r0 != 0 goto l_exit_%=;"
++	"r0 = r9;"
++	"l_exit_%=:"
++	"r0 = 0;"
++	"exit;"
++	::: __clobber_all);
++}
++
++SEC("socket")
++__description("ld_abs: subprog with both paths safe")
++__success
++__naked void ld_abs_subprog_both_paths_safe(void)
++{
++	asm volatile (
++	"call ldabs_subprog;"
++	"r0 = 0;"
++	"exit;"
++	::: __clobber_all);
++}
++
++SEC("socket")
++__description("ld_ind: subprog with both paths safe")
++__success
++__naked void ld_ind_subprog_both_paths_safe(void)
++{
++	asm volatile (
++	"call ldind_subprog;"
++	"r0 = 0;"
++	"exit;"
++	::: __clobber_all);
++}
++
++/*
++ * ld_{abs,ind} in subprogs require scalar (int) return type in BTF.
++ * A test with void return must be rejected.
++ */
++__naked __noinline __used
++static void ldabs_void_subprog(void)
++{
++	asm volatile (
++	"r6 = r1;"
++	".8byte %[ld_abs];"
++	"r0 = 1;"
++	"exit;"
++	:
++	: __imm_insn(ld_abs, BPF_LD_ABS(BPF_W, 0))
++	: __clobber_all);
++}
++
++SEC("socket")
++__description("ld_abs: reject void return subprog")
++__failure __msg("LD_ABS is only allowed in functions that return 'int'")
++__naked void ld_abs_void_subprog_reject(void)
++{
++	asm volatile (
++	"call ldabs_void_subprog;"
++	"r0 = 0;"
++	"exit;"
++	::: __clobber_all);
++}
++
++__naked __noinline __used
++static void ldind_void_subprog(void)
++{
++	asm volatile (
++	"r6 = r1;"
++	"r7 = 0;"
++	".8byte %[ld_ind];"
++	"r0 = 1;"
++	"exit;"
++	:
++	: __imm_insn(ld_ind, BPF_LD_IND(BPF_W, BPF_REG_7, 0))
++	: __clobber_all);
++}
++
++SEC("socket")
++__description("ld_ind: reject void return subprog")
++__failure __msg("LD_ABS is only allowed in functions that return 'int'")
++__naked void ld_ind_void_subprog_reject(void)
++{
++	asm volatile (
++	"call ldind_void_subprog;"
++	"r0 = 0;"
++	"exit;"
++	::: __clobber_all);
++}
++
+ char _license[] SEC("license") = "GPL";
+-- 
+2.53.0
+
 
 
