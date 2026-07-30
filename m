@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16144442FBC;
-	Thu, 30 Jul 2026 14:56:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33D16442139;
+	Thu, 30 Jul 2026 14:56:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423411; cv=none; b=TU79QBO1XJ+iz47CV5ceR0u8b0WqPDA40QgS8oglX2Aacxc3+T8W7wreO5AloRSaity7I6U7jU4M7RYnQkV2lPePrWLzbV/KwtMEIesIwJTXEeY3+sMR0B+tl59qI4+wiDzJZPnxWd3BlvcqVJntyYUHT2RenPLni/A2p7XyYos=
+	t=1785423414; cv=none; b=m2zvZKR1jxPXU/zUz2EwZKXXDkxp7xckE00EcXrB3xHT+7wAH1tLRZJbW7Mj5ogBi62kMTCVg0ovWxPQF4h27/QjOtS3ztwax4Qbh+t+RJp2wHElbAnBBcvhPs5F9AHI5dc7WrHxCpdbR1AxDcSWNTYf6xx21V7NBAzEb0QCL/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423411; c=relaxed/simple;
-	bh=tJYEamZC8z8011HS2LWXfzKOqLoJghOdIC1fIosR4ys=;
+	s=arc-20240116; t=1785423414; c=relaxed/simple;
+	bh=SqOy1L0WSjUlFP1UGfRA5BWb8Hsm2jVyWpflCd1rHWg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RvMMckud7UWM8vcOvfjIUwaau+cf+XgwZy6qeqksT4NuN5YwGJ34w8/ku+z6PvJ3HPmBjrUr6NKVReUsl8EqvxKDy0jtFR+sNoxwS2iphHtheQMYFJMVKmw/o65NTHOAmBc8BCRtwMuBMuUkPmij5qbKfbQPe7WstX63yw/pu/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xMJgJiAV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uELH1BHfzKxdr5KGQQYD4wSeZkH9K33am9lorQzCHBKTBijanoSSKjTJqhwt1U5oR0loDq0TpKrwdAScS6ktk59oNNXmm9etiu7EF017if3bivwvFLoZeoXlt7jvUslpbL9l2+h/QEwEFF5SSZpsDjFdcFz9hXqsCVBqywkQ2Bs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LwCQDXta; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xMJgJiAV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 712001F000E9;
-	Thu, 30 Jul 2026 14:56:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LwCQDXta"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E4B71F000E9;
+	Thu, 30 Jul 2026 14:56:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423410;
-	bh=6TWWjJTIWiVJJYYds55kD4Y613lsKDJXwhzDQSo7GDA=;
+	s=korg; t=1785423412;
+	bh=4J559FOxM6F7QqnXYrEIqzqU7JzE6TF/yIigoIt7ktw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xMJgJiAVqfWddEd14b2lBjKlHcW7edXmpHZrnvAFaKRZ/RtxhOMnyRgFPLCfMooqW
-	 sE7K21dFLM2ai1bgrxkoeW4ctI4PfHx9ISF0usdRIi9NuW+gEkMkE9MyNr04NOUWtW
-	 W157x0WSnNjJhT1mhhP0EtrEn731dxOqECf2pfkA=
+	b=LwCQDXtal1zMftOeqBDu8095ToHJgboOkEHPSDbacU0I8KuGxDLqgwGe0FBJUwHLq
+	 v6z2AahY+HvE3kRjaz0Y0N4GHPJsDV7RXJyYi5qu6aQWQksMLZisKYfewK4ijLeSdY
+	 5dUIirCNL8/kibDR5S0CJHSD4udF5VMvuPrynYUc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Brian Witte <brianwitte@mailfence.com>,
+	Sanghoon Choi <csh0052@gmail.com>,
+	Seungjin Bae <eeodqql09@gmail.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 004/675] netfilter: nft_counter: serialize reset with spinlock
-Date: Thu, 30 Jul 2026 16:05:34 +0200
-Message-ID: <20260730141445.209130040@linuxfoundation.org>
+Subject: [PATCH 6.18 028/675] Input: ims-pcu - fix heap-buffer-overflow in ims_pcu_process_data()
+Date: Thu, 30 Jul 2026 16:05:58 +0200
+Message-ID: <20260730141445.719043036@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -51,84 +52,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brian Witte <brianwitte@mailfence.com>
+From: Seungjin Bae <eeodqql09@gmail.com>
 
-[ Upstream commit 779c60a5190c42689534172f4b49e927c9959e4e ]
+[ Upstream commit 875115b82c295277b81b6dfee7debc725f44e854 ]
 
-Add a global static spinlock to serialize counter fetch+reset
-operations, preventing concurrent dump-and-reset from underrunning
-values.
+The `ims_pcu_process_data()` processes incoming URB data byte by byte.
+However, it fails to check if the `read_pos` index exceeds
+IMS_PCU_BUF_SIZE.
 
-The lock is taken before fetching the total so that two parallel
-resets cannot both read the same counter values and then both
-subtract them.
+If a malicious USB device sends a packet larger than IMS_PCU_BUF_SIZE,
+`read_pos` will increment indefinitely. Moreover, since `read_pos` is
+located immediately after `read_buf`, the attacker can overwrite
+`read_pos` itself to arbitrarily control the index.
 
-A global lock is used for simplicity since resets are infrequent.
-If this becomes a bottleneck, it can be replaced with a per-net
-lock later.
+This manipulated `read_pos` is subsequently used in
+`ims_pcu_handle_response()` to copy data into `cmd_buf`, leading to a
+heap buffer overflow.
 
-Fixes: bd662c4218f9 ("netfilter: nf_tables: Add locking for NFT_MSG_GETOBJ_RESET requests")
-Fixes: 3d483faa6663 ("netfilter: nf_tables: Add locking for NFT_MSG_GETSETELEM_RESET requests")
-Fixes: 3cb03edb4de3 ("netfilter: nf_tables: Add locking for NFT_MSG_GETRULE_RESET requests")
-Suggested-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Brian Witte <brianwitte@mailfence.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Specifically, an attacker can overwrite the `cmd_done.wait.head` located
+at offset 136 relative to `cmd_buf` in the `ims_pcu_handle_response()`.
+Consequently, when the driver calls `complete(&pcu->cmd_done)`, it
+triggers a control flow hijack by using the manipulated pointer.
+
+Fix this by adding a bounds check for `read_pos` before writing to
+`read_buf`. If the packet is too long, discard it, log a warning,
+and reset the parser state.
+
+Fixes: 628329d524743 ("Input: add IMS Passenger Control Unit driver")
+Co-developed-by: Sanghoon Choi <csh0052@gmail.com>
+Signed-off-by: Sanghoon Choi <csh0052@gmail.com>
+Signed-off-by: Seungjin Bae <eeodqql09@gmail.com>
+Link: https://patch.msgid.link/20251221211442.841549-2-eeodqql09@gmail.com
+[dtor: factor out resetting packet state, reset checksum as well]
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_counter.c | 20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
+ drivers/input/misc/ims-pcu.c | 32 ++++++++++++++++++++++++++------
+ 1 file changed, 26 insertions(+), 6 deletions(-)
 
-diff --git a/net/netfilter/nft_counter.c b/net/netfilter/nft_counter.c
-index 0d70325280cc57..169ae93688bcc5 100644
---- a/net/netfilter/nft_counter.c
-+++ b/net/netfilter/nft_counter.c
-@@ -32,6 +32,9 @@ struct nft_counter_percpu_priv {
- 
- static DEFINE_PER_CPU(struct u64_stats_sync, nft_counter_sync);
- 
-+/* control plane only: sync fetch+reset */
-+static DEFINE_SPINLOCK(nft_counter_lock);
-+
- static inline void nft_counter_do_eval(struct nft_counter_percpu_priv *priv,
- 				       struct nft_regs *regs,
- 				       const struct nft_pktinfo *pkt)
-@@ -148,13 +151,25 @@ static void nft_counter_fetch(struct nft_counter_percpu_priv *priv,
+diff --git a/drivers/input/misc/ims-pcu.c b/drivers/input/misc/ims-pcu.c
+index 94113e14bf5995..7c837094c498ed 100644
+--- a/drivers/input/misc/ims-pcu.c
++++ b/drivers/input/misc/ims-pcu.c
+@@ -448,6 +448,14 @@ static void ims_pcu_handle_response(struct ims_pcu *pcu)
  	}
  }
  
-+static void nft_counter_fetch_and_reset(struct nft_counter_percpu_priv *priv,
-+					struct nft_counter_tot *total)
++static void ims_pcu_reset_packet(struct ims_pcu *pcu)
 +{
-+	spin_lock(&nft_counter_lock);
-+	nft_counter_fetch(priv, total);
-+	nft_counter_reset(priv, total);
-+	spin_unlock(&nft_counter_lock);
++	pcu->have_stx = true;
++	pcu->have_dle = false;
++	pcu->read_pos = 0;
++	pcu->check_sum = 0;
 +}
 +
- static int nft_counter_do_dump(struct sk_buff *skb,
- 			       struct nft_counter_percpu_priv *priv,
- 			       bool reset)
+ static void ims_pcu_process_data(struct ims_pcu *pcu, struct urb *urb)
  {
- 	struct nft_counter_tot total;
+ 	int i;
+@@ -460,6 +468,14 @@ static void ims_pcu_process_data(struct ims_pcu *pcu, struct urb *urb)
+ 			continue;
  
--	nft_counter_fetch(priv, &total);
-+	if (unlikely(reset))
-+		nft_counter_fetch_and_reset(priv, &total);
-+	else
-+		nft_counter_fetch(priv, &total);
+ 		if (pcu->have_dle) {
++			if (pcu->read_pos >= IMS_PCU_BUF_SIZE) {
++				dev_warn(pcu->dev,
++					 "Packet too long (%d bytes), discarding\n",
++					 pcu->read_pos);
++				ims_pcu_reset_packet(pcu);
++				continue;
++			}
++
+ 			pcu->have_dle = false;
+ 			pcu->read_buf[pcu->read_pos++] = data;
+ 			pcu->check_sum += data;
+@@ -472,10 +488,8 @@ static void ims_pcu_process_data(struct ims_pcu *pcu, struct urb *urb)
+ 				dev_warn(pcu->dev,
+ 					 "Unexpected STX at byte %d, discarding old data\n",
+ 					 pcu->read_pos);
++			ims_pcu_reset_packet(pcu);
+ 			pcu->have_stx = true;
+-			pcu->have_dle = false;
+-			pcu->read_pos = 0;
+-			pcu->check_sum = 0;
+ 			break;
  
- 	if (nla_put_be64(skb, NFTA_COUNTER_BYTES, cpu_to_be64(total.bytes),
- 			 NFTA_COUNTER_PAD) ||
-@@ -162,9 +177,6 @@ static int nft_counter_do_dump(struct sk_buff *skb,
- 			 NFTA_COUNTER_PAD))
- 		goto nla_put_failure;
+ 		case IMS_PCU_PROTOCOL_DLE:
+@@ -495,12 +509,18 @@ static void ims_pcu_process_data(struct ims_pcu *pcu, struct urb *urb)
+ 				ims_pcu_handle_response(pcu);
+ 			}
  
--	if (reset)
--		nft_counter_reset(priv, &total);
--
- 	return 0;
+-			pcu->have_stx = false;
+-			pcu->have_dle = false;
+-			pcu->read_pos = 0;
++			ims_pcu_reset_packet(pcu);
+ 			break;
  
- nla_put_failure:
+ 		default:
++			if (pcu->read_pos >= IMS_PCU_BUF_SIZE) {
++				dev_warn(pcu->dev,
++					 "Packet too long (%d bytes), discarding\n",
++					 pcu->read_pos);
++				ims_pcu_reset_packet(pcu);
++				continue;
++			}
++
+ 			pcu->read_buf[pcu->read_pos++] = data;
+ 			pcu->check_sum += data;
+ 			break;
 -- 
 2.53.0
 
