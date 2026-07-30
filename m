@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 418D343F0A2;
-	Thu, 30 Jul 2026 14:22:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12AB140926C;
+	Thu, 30 Jul 2026 14:22:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421330; cv=none; b=PelkYxGa3CSX9vArAKm0ivxACx5z5tjtj/LKvCN0cbqEb476tvUBSsy1xVqC1Xc7n+sJf46leouy0MWpv34HJCVZoYop+C+ywDuTmZXlta95MS84dKjz1naF/FrdNxoFvcWBG7da71plxYmfkancMtfKoIyVT8XNqSRvcYe5Qho=
+	t=1785421333; cv=none; b=cYM/MCvPiw4ZBh77SE/4sSZCySzh16QtGToN1b2bi7vzzHBVRoTx6K7CYlWOznm3M/yg37rZmGjChOY9oZpwRD5uetYFU0C6vxHfiOqDsiQWL6N1VgjP7mda4b31bAG44OLEMoueAa8BFsHioK3z8HVEOucQKncG7UB/nZGIjlc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421330; c=relaxed/simple;
-	bh=Os5bhnfr4Shap/MvQ1UvJFlUPS2KuC17SGLq9Eqrf24=;
+	s=arc-20240116; t=1785421333; c=relaxed/simple;
+	bh=MHEFyROYm7PG1pka/IY51ffe4GlEvK/z5b4WuwYHcGo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VpxDRyrbJPp0PdZLLQzCisTPS9uz2RbqO4Lr5gEF6LvjHFpYGvK0hXApK3n66cONlLYNQuRD7FUjxxE8o+KNbUqO7m23nY72Bb49+a1epEIltf/T7I3v5re5NdNj48L4l+6hM+nPh/sd5XnX1pnbtVDhsg9BWliGoemiKXz9nYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rBKMZlq0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l+66NOhlU+k2r4+oy2Gc9PqQnP6eJ4ztfODkxnUh95W0PbbjNTxuR4vExcShkTj0ZAEVejczv6XqOP3C6+6cFUy+GhOLkr4rYxn8Xea/BYEUNRTNhAtaMzDWyqwpIz1GyQpRM6Nb9hgpi8/DDBIxZHiu/Ddyat/Uaw7pQZU/cGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zevQWpSL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rBKMZlq0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B5211F00A3A;
-	Thu, 30 Jul 2026 14:22:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zevQWpSL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70E901F00A3A;
+	Thu, 30 Jul 2026 14:22:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421329;
-	bh=zLLjbfmQ9FRT18A+sUXXeKmaAX8HLHqTNoy4X8MPwME=;
+	s=korg; t=1785421332;
+	bh=0YsVcLcNEFY7e19DyulvaUJA0wy+SS2G+/dWgoohdwk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rBKMZlq0Td0uzoF2sJGqFIQMy3+IZ0tvSYQWj7ma+nc7J2T22JP5i5wxZRLVefEM/
-	 77E0ZykZcvEuI1v3VOd9CGFy1cpSmCSJ03b3Ie66RHxOVKs0shmfPo2jUfRlhG0dty
-	 FS0wzQWOLj3ZF0oykY7PUhL9LkfFfu/k6cKg8Z48=
+	b=zevQWpSL5kbMAa32Hfy8mE/ecwLWog43a/8u6jsBWZpsMvoHAl9IApIhdSKw1veiF
+	 7Q8LPrVj6l/PNTZYE0+XUEXzegf3Q6gB7B2SSOy5G8ppzZ/eCszajUfbRjzDuteZG6
+	 Eb5vmLolYw7bYFOIKinaa7F3dZR1YiGxrTDl1dnc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Zhao Li <enderaoelyther@gmail.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 066/744] wifi: cfg80211: reject unsupported PMSR FTM location requests
-Date: Thu, 30 Jul 2026 16:05:39 +0200
-Message-ID: <20260730141445.679907244@linuxfoundation.org>
+Subject: [PATCH 7.1 067/744] wifi: cfg80211: reject empty PMSR peer lists
+Date: Thu, 30 Jul 2026 16:05:40 +0200
+Message-ID: <20260730141445.701899972@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -53,46 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhao Li <enderaoelyther@gmail.com>
 
-[ Upstream commit 69ef6a7ec277f16d216be8da2b3cbe872786c999 ]
+[ Upstream commit 57c05ce14fea03df01288fe1250f49197e161710 ]
 
-PMSR FTM location request flags are syntactically valid, but they must
-be rejected when the device capability does not advertise support for
-them.
+A PMSR request with an empty peers array is not a useful request and
+weakens the cfg80211-to-driver contract by allowing start_pmsr() with
+no target peer.
 
-Return an error immediately after rejecting unsupported LCI or civic
-location request bits so the request cannot reach the driver.
+Reject empty peer lists before allocating the request object or calling
+into the driver.
 
 Fixes: 9bb7e0f24e7e7 ("cfg80211: add peer measurement with FTM initiator API")
 Assisted-by: Codex:gpt-5.5
 Assisted-by: Claude:claude-opus-4.8
 Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Link: https://patch.msgid.link/20260612133710.93544-2-enderaoelyther@gmail.com
+Link: https://patch.msgid.link/20260612133717.93783-2-enderaoelyther@gmail.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/pmsr.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/wireless/pmsr.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
 diff --git a/net/wireless/pmsr.c b/net/wireless/pmsr.c
-index 4b10ce0486f4a6..9246640d2eedfd 100644
+index 9246640d2eedfd..feced0f762e01d 100644
 --- a/net/wireless/pmsr.c
 +++ b/net/wireless/pmsr.c
-@@ -109,6 +109,7 @@ static int pmsr_parse_ftm(struct cfg80211_registered_device *rdev,
- 		NL_SET_ERR_MSG_ATTR(info->extack,
- 				    tb[NL80211_PMSR_FTM_REQ_ATTR_REQUEST_LCI],
- 				    "FTM: LCI request not supported");
-+		return -EOPNOTSUPP;
+@@ -332,6 +332,11 @@ int nl80211_pmsr_start(struct sk_buff *skb, struct genl_info *info)
+ 		}
  	}
  
- 	out->ftm.request_civicloc =
-@@ -117,6 +118,7 @@ static int pmsr_parse_ftm(struct cfg80211_registered_device *rdev,
- 		NL_SET_ERR_MSG_ATTR(info->extack,
- 				    tb[NL80211_PMSR_FTM_REQ_ATTR_REQUEST_CIVICLOC],
- 			    "FTM: civic location request not supported");
-+		return -EOPNOTSUPP;
- 	}
- 
- 	out->ftm.trigger_based =
++	if (!count) {
++		NL_SET_ERR_MSG_ATTR(info->extack, peers, "No peers specified");
++		return -EINVAL;
++	}
++
+ 	req = kzalloc_flex(*req, peers, count);
+ 	if (!req)
+ 		return -ENOMEM;
 -- 
 2.53.0
 
