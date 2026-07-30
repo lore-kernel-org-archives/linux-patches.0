@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8D233A6B7F;
-	Thu, 30 Jul 2026 14:25:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A82CC3C1D6D;
+	Thu, 30 Jul 2026 14:25:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421543; cv=none; b=oAljInsQpFkZNx/JS8YNH7BZngdcN3v6bbG3OnlQ51Z0ypf5ViHiPXAcucKbEo1g57sOI+x1T0tBsVJ4CRr/aIcxg1TI6w+Gu/xBEl/MpkhVErGUtdF42ERvL+6wnqysjgn2Jo12D2THw+lPnEKbQjqE+YtNdV+/u5V9CYbzLB4=
+	t=1785421546; cv=none; b=qaJDXBzN7+5wAnzPqtGUZI27oh27mohg5kHDnPRMzKgeZf4sMQrZRdVJ3ngax1hUoDOUu92O3E8SK8Ac3ddrrFEkwkhxY4Nc8PCMP0NOhqVwPDmqw/bf5p243yTCiKgUZIdL8W8I7sody/SaT7M8P64nsGPe25bcfp6fZw9f0yo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421543; c=relaxed/simple;
-	bh=FhgkGMj523oao3TzN7mB2COGfFAptm/72I6BsqX+/II=;
+	s=arc-20240116; t=1785421546; c=relaxed/simple;
+	bh=goHyoKXtt3s5oJ2YlmXcPyDFkMQqzgDxKRIx7vVzVqc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FyK/08Oz/gLE7nAn0eczkyJhSkhZXu26y94oLsQ/rh3DWfvd28y7hO5HsQb0D0GjdCBFEnFSS7zUZR6Tn6t6jJVS6LvfykLn3bkWLOoRQkkZUgqArjikr3MyakIIV71u5Y8QnBNbYig22r2bAGVBADqiHay9FVehJXnKy1xoVyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r8ikBeqb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TjaFiQk00JlWdJWEHWDkBuRngnrWEkvdkxGAn+JlNqS4pqZkjFueztBKdw5flDTsy9xFKye3uw8tlgW+33F9AGWASVM/W9FMhLh/watxYMrXbyFUJ9AJzEsemUFLSbsBPOOMikWzX16miKapVCnGOHEVTuJULe5UO7QhD2umNE4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SUEf9wVR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r8ikBeqb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D8981F000E9;
-	Thu, 30 Jul 2026 14:25:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SUEf9wVR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F88B1F000E9;
+	Thu, 30 Jul 2026 14:25:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421542;
-	bh=PCZE3d0/ePapUhozN5FmoOLRmAqSsgu35o73eAr1GYc=;
+	s=korg; t=1785421545;
+	bh=aJ+r2gb5ds3nJpMzaqFjhOfCq0gyr+NNzPNkzJ6ZRfQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r8ikBeqb8ITFRkADIiNJmhomgNOxChJ8WP0N6C+jHk424d+BSkSI5OgoQebCFwEq1
-	 MB5ooe5QrTFEytxRebD3dCupgIS+4MqpSeyEiiSH0LE+uqdgPHExFfBmjli3CH/Ucj
-	 GyBIZFFPQwC9wOAjwAHUglio1aXbwuWSXhMS3kbs=
+	b=SUEf9wVRsGR0p9NJV0qeLJ48jP0hJyjyDv076Amm/WuL6ovztswTcsC/TApdRsMsz
+	 LyTau06fTom63qBd7UoOJMZJbEnWxUS7iUWQjcyVuc3MLpEGP2KFdwPYEqVDP94oD1
+	 hCF4GKh4N1g1O6DGnCTFxaNvj+aAobM9La/aiUsk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Ai Chao <aichao@kylinos.cn>,
 	stable <stable@kernel.org>,
-	Johan Hovold <johan@kernel.org>,
-	Guangshuo Li <lgs201920130244@gmail.com>
-Subject: [PATCH 7.1 140/744] usb: musb: omap2430: Do not put borrowed of_node in probe
-Date: Thu, 30 Jul 2026 16:06:53 +0200
-Message-ID: <20260730141447.258808135@linuxfoundation.org>
+	Huang Wei <huangwei@kylinos.cn>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 7.1 141/744] USB: storage: add NO_ATA_1X quirk for Longmai USB Key
+Date: Thu, 30 Jul 2026 16:06:54 +0200
+Message-ID: <20260730141447.282050848@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -51,49 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Huang Wei <huangwei@kylinos.cn>
 
-commit c947360ae63eee1c9eacc030dd6f5a53f717addf upstream.
+commit 3b4ca2e01c1dd8c00b675b794732945f460a471b upstream.
 
-omap2430_probe() stores pdev->dev.of_node in a local np variable. This is
-a borrowed pointer and the probe function does not take a reference to
-it.
+The Longmai Technologies USB Key (0x04b4:0xb708) advertises itself as a
+SCSI/Bulk-only mass storage device but does not correctly handle ATA
+pass-through commands. When such a command (ATA_12 or ATA_16) is sent to
+the device it fails to respond and the transfer eventually times out,
+leaving the device unusable.
 
-The success and error paths nevertheless call of_node_put(np). This drops
-a reference that is owned by the platform device, and can leave
-pdev->dev.of_node with an unbalanced reference count.
+Add an unusual_devs entry for this device that sets the US_FL_NO_ATA_1X
+flag, so usb-storage short-circuits ATA pass-through commands and returns
+INVALID COMMAND OPERATION CODE (0x20 0x05 0x24 0x00) instead of forwarding
+them to the device.
 
-Do not put the borrowed platform device node from omap2430_probe().
-References taken for the child MUSB device are handled by the device core,
-and the ctrl-module phandle reference is still released separately.
+Information about the device in /sys/kernel/debug/usb/devices:
 
-Fixes: ffbe2feac59b ("usb: musb: omap2430: Fix probe regression for missing resources")
+T:  Bus=02 Lev=01 Prnt=01 Port=01 Cnt=01 Dev#= 12 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=06 Prot=50 MxPS=64 #Cfgs=  1
+P:  Vendor=04b4 ProdID=b708 Rev= 1.00
+S:  Manufacturer=Longmai Technologies
+S:  Product=USB Key
+C:* #Ifs= 1 Cfg#= 1 Atr=80 MxPwr=100mA
+I:* If#= 0 Alt= 0 #EPs= 2 Cls=08(stor.) Sub=06 Prot=50 Driver=usb-storage
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+
+Reported-by: Ai Chao <aichao@kylinos.cn>
 Cc: stable <stable@kernel.org>
-Reviewed-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Link: https://patch.msgid.link/20260713114711.955253-1-lgs201920130244@gmail.com
+Signed-off-by: Huang Wei <huangwei@kylinos.cn>
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://patch.msgid.link/20260716033341.2830872-1-huangwei@kylinos.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/musb/omap2430.c |    2 --
- 1 file changed, 2 deletions(-)
+ drivers/usb/storage/unusual_devs.h |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/usb/musb/omap2430.c
-+++ b/drivers/usb/musb/omap2430.c
-@@ -454,7 +454,6 @@ static int omap2430_probe(struct platfor
- 		dev_err(&pdev->dev, "failed to register musb device\n");
- 		goto err_disable_rpm;
- 	}
--	of_node_put(np);
+--- a/drivers/usb/storage/unusual_devs.h
++++ b/drivers/usb/storage/unusual_devs.h
+@@ -395,6 +395,13 @@ UNUSUAL_DEV(  0x04b3, 0x4001, 0x0110, 0x
+ 		USB_SC_DEVICE, USB_PR_CB, NULL,
+ 		US_FL_MAX_SECTORS_MIN),
  
- 	return 0;
- 
-@@ -464,7 +463,6 @@ err_put_control_otghs:
- 	if (!IS_ERR(glue->control_otghs))
- 		put_device(glue->control_otghs);
- err_put_musb:
--	of_node_put(np);
- 	platform_device_put(musb);
- 
- 	return ret;
++/* Reported by Ai Chao <aichao@kylinos.cn> */
++UNUSUAL_DEV(  0x04b4, 0xb708, 0x0000, 0xffff,
++		"Longmai Technologies",
++		"USB Key",
++		USB_SC_SCSI, USB_PR_BULK, NULL,
++		US_FL_NO_ATA_1X),
++
+ /*
+  * Reported by Simon Levitt <simon@whattf.com>
+  * This entry needs Sub and Proto fields
 
 
