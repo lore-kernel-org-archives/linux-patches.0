@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6C4E3E0091;
-	Thu, 30 Jul 2026 15:26:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A146B442FBC;
+	Thu, 30 Jul 2026 15:26:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425208; cv=none; b=qZXaJh6vPGCt78Ak9JmFo+UmBCOgXcfrGKySyYdla9phrqnudny94na42Gm45LdF0S3como9QKl3MaJMbACHVwZISEXOCKTiQVQ/ilfZm1UnYh9T+SqAit62f1Mqqk+MRxhW6XqrH+ZO2OJCFQs3L85IOMRpSzjkSTdsQBE5QxQ=
+	t=1785425211; cv=none; b=ilTcAomkqOnAJNx5HAMgpxv7bqYJbIzgwtzNFmnu0jF+Hyugz2EDbMzZcnmNNmOl67eAlHm4o9F/Wv6APV6QpOzvcHpxPDDaeG6rgyHMaRJMEoNul0gE4U2M5Txsy63yKkn3ETJ/pl9YluXJN8NaYCbmwrs9MEnEYpXEiXE2E5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425208; c=relaxed/simple;
-	bh=nMaLwKJVnq2qY32T2v1GgSql/YSjUGdpR5goZUYi/yI=;
+	s=arc-20240116; t=1785425211; c=relaxed/simple;
+	bh=VQpXPv6AWnd1EBncNAOc6OPTLJdTg13mPzSCR28nOew=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pEU4l6d9iOburIut+bf/W5wLZorLAHVd63KB8S97mCWbbpQcp/4K5YGL6nQg6S48jm/vxaBe2rW6j2AxEe0wZQ1wfsRXaVDNjLzJ+VtK5oV07wAWFjGZs3PhOa6RQ2f5SKMI5Exn1oMBv7dqpcEbT1Wu8/hKtltLDVCwhOpXTJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DPqp7Rfb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cthB7W/iDTr7fXXXwJ8brNODyNmfHlTnKULuDYn8LIbKcMUsohsmL5v5w1akrcDfjEmrxLABrf8YCsmRPxJdjRU5L0OwCu+a3eKoucOF3ZLXR8N+SNQc0u1fVfa7TzODyNGWGMJinGsB8QXtDxi7aIWFgvMyquALYWpBmFwzG8I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R0Thd3qn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DPqp7Rfb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DE4E1F00A3D;
-	Thu, 30 Jul 2026 15:26:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R0Thd3qn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04D711F00A3E;
+	Thu, 30 Jul 2026 15:26:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425207;
-	bh=RxRbJUnORBWAGKNrEvgG2zCCTg+9o+NJ3uWq1R8E8iY=;
+	s=korg; t=1785425210;
+	bh=BRaz1sxelUyIItOx5VX4LaQvjFNl6b2k92rTDCT0XVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DPqp7RfbvayldCWxaIrjEYXwTvMwXQWxj4mMa1iU4vnif6PT/IXNbBNIwKRVee4KL
-	 +cr7POgdmtHzvPqQi7dk75KEnKdHj67cNwvfKdWAprxTSwOEmTvPp+/BIvgKbe2J8e
-	 AxMjtRuB5oAhHZsKnQViWO8tqVibebNwEM0lgUyk=
+	b=R0Thd3qnfK4A+Kau41dYznarRts+nhlh1FyxEK9NRf8d9Q1VRh3eFZtnmD4E/in+o
+	 UHxJfYk5BJ17W7LZo3VSAVi5cZTRJhBkpy+V5Vf5tIB6M3H/pQOfCvWOYGMvWU2+r3
+	 80UUVglq8jq4Dgy/8EK4Zo+1wP3F2xU7SnpT5zBY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
-	Larysa Zaremba <larysa.zaremba@intel.com>,
-	Alex Elder <elder@riscstar.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 662/675] net: ipa: fix SMEM state handle leaks in SMP2P init
-Date: Thu, 30 Jul 2026 16:16:32 +0200
-Message-ID: <20260730141459.221926888@linuxfoundation.org>
+Subject: [PATCH 6.18 645/675] cred: add kernel_cred() helper
+Date: Thu, 30 Jul 2026 16:16:15 +0200
+Message-ID: <20260730141458.845070833@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -53,88 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit 96ca1e658ae459276292bd6d971ab5d8c7e0379a ]
+[ Upstream commit 4c7ceeb62d3330b6fb2b549ae833a92c0f481f3e ]
 
-ipa_smp2p_init() acquires two Qualcomm SMEM state handles with
-qcom_smem_state_get(). However, neither the init error paths
-nor ipa_smp2p_exit() release them.
+Access kernel creds based off of init_task. This will let us avoid any
+direct access to init_cred.
 
-Release both handles with qcom_smem_state_put() in the init
-error paths and in ipa_smp2p_exit().
-
-Fixes: 530f9216a953 ("soc: qcom: ipa: AP/modem communications")
-Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Reviewed-by: Larysa Zaremba <larysa.zaremba@intel.com>
-Reviewed-by: Alex Elder <elder@riscstar.com>
-Link: https://patch.msgid.link/20260624065955.2822765-1-haoxiang_li2024@163.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ kzalloc_obj() context line kept as kzalloc(sizeof(*smp2p), GFP_KERNEL) since ipa_smp2p.c was not yet converted in this tree ]
+Link: https://patch.msgid.link/20251103-work-creds-init_cred-v1-2-cb3ec8711a6a@kernel.org
+Reviewed-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Stable-dep-of: 981ccd97f715 ("dm: avoid leaking the caller's thread keyring via the table device file")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ipa/ipa_smp2p.c |   30 ++++++++++++++++++++++--------
- 1 file changed, 22 insertions(+), 8 deletions(-)
+ include/linux/cred.h |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/net/ipa/ipa_smp2p.c
-+++ b/drivers/net/ipa/ipa_smp2p.c
-@@ -234,19 +234,27 @@ ipa_smp2p_init(struct ipa *ipa, struct p
- 					  &valid_bit);
- 	if (IS_ERR(valid_state))
- 		return PTR_ERR(valid_state);
--	if (valid_bit >= 32)		/* BITS_PER_U32 */
--		return -EINVAL;
-+	if (valid_bit >= 32) {		/* BITS_PER_U32 */
-+		ret = -EINVAL;
-+		goto err_valid_state_put;
-+	}
+--- a/include/linux/cred.h
++++ b/include/linux/cred.h
+@@ -20,6 +20,8 @@
+ struct cred;
+ struct inode;
  
- 	enabled_state = qcom_smem_state_get(dev, "ipa-clock-enabled",
- 					    &enabled_bit);
--	if (IS_ERR(enabled_state))
--		return PTR_ERR(enabled_state);
--	if (enabled_bit >= 32)		/* BITS_PER_U32 */
--		return -EINVAL;
-+	if (IS_ERR(enabled_state)) {
-+		ret = PTR_ERR(enabled_state);
-+		goto err_valid_state_put;
-+	}
-+	if (enabled_bit >= 32) {		/* BITS_PER_U32 */
-+		ret = -EINVAL;
-+		goto err_enabled_state_put;
-+	}
- 
- 	smp2p = kzalloc(sizeof(*smp2p), GFP_KERNEL);
--	if (!smp2p)
--		return -ENOMEM;
-+	if (!smp2p) {
-+		ret = -ENOMEM;
-+		goto err_enabled_state_put;
-+	}
- 
- 	smp2p->ipa = ipa;
- 
-@@ -291,6 +299,10 @@ err_null_smp2p:
- 	ipa->smp2p = NULL;
- 	mutex_destroy(&smp2p->mutex);
- 	kfree(smp2p);
-+err_enabled_state_put:
-+	qcom_smem_state_put(enabled_state);
-+err_valid_state_put:
-+	qcom_smem_state_put(valid_state);
- 
- 	return ret;
- }
-@@ -307,6 +319,8 @@ void ipa_smp2p_exit(struct ipa *ipa)
- 	ipa_smp2p_power_release(ipa);
- 	ipa->smp2p = NULL;
- 	mutex_destroy(&smp2p->mutex);
-+	qcom_smem_state_put(smp2p->enabled_state);
-+	qcom_smem_state_put(smp2p->valid_state);
- 	kfree(smp2p);
- }
- 
++extern struct task_struct init_task;
++
+ /*
+  * COW Supplementary groups list
+  */
+@@ -156,6 +158,11 @@ extern struct cred *prepare_exec_creds(v
+ extern int commit_creds(struct cred *);
+ extern void abort_creds(struct cred *);
+ extern struct cred *prepare_kernel_cred(struct task_struct *);
++static inline const struct cred *kernel_cred(void)
++{
++	/* shut up sparse */
++	return rcu_dereference_raw(init_task.cred);
++}
+ extern int set_security_override(struct cred *, u32);
+ extern int set_security_override_from_ctx(struct cred *, const char *);
+ extern int set_create_files_as(struct cred *, struct inode *);
 
 
