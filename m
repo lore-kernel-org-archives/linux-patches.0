@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 895674052DC;
-	Thu, 30 Jul 2026 14:52:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5122C3C3F4C;
+	Thu, 30 Jul 2026 14:52:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423169; cv=none; b=Go0t7Kf5rLZWbN4mpgyyWqa04WW1Ij+vNfXQSASdwmb/8lV+Y+ODb/eCug/vm6fPfXR506QlYzDIYKkY7l+sPUdZ6Yd//FA+576QPw3Y5PaTnaA6Q65NXMjgM9uaGS+RdIdZOANhlwVtuga/CbIDj4VgcwGPDgB0J8tkHaS7u0o=
+	t=1785423172; cv=none; b=R8c7aa21/ohBL6KSFYUPFeqiAdpZJFGfrcBHfIYj35e+uSjyFkG0JZsHESdJsrDzWmPygDMv74r8MpVh6uxWPm7cUiKmNkY5aaJ4olBZ2ZrnOM5kSccN0MP8GOclHv6EEiWps5AFgR3SXQdAHudtocHWIKxZkTFNSgyvXnmyDs0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423169; c=relaxed/simple;
-	bh=UTwmx9MZdSo9S7Mu3C8OlZpfVRD7w1zCyGK06+n5mu4=;
+	s=arc-20240116; t=1785423172; c=relaxed/simple;
+	bh=B8OwLB0O31d+tHfyt6g0siZ/PTqaSP8QJBL9Xuekaj0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f7GuJCP0tZ9RrggqAE5Byp2Qn2T5UOv29/ZY7PJTqlzYEHUhVZM+j60I1RZp+VXBc49CkicsmitErrK+4N/0aO1qav+zFyaPoW0DKUich6MuduYtEe2iF0eubDO0XdLuJbqnbANUIadTfVCUrg7D3MwvL4+NiChAoUVugx8OKYs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kLpPUzpm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pjHEY7a1mToOQzvSW1c1p/90u2avBsTrvHcg0toPoJF3qX+CHB5V5DiJSKfBQBMtO+eYkyFFDt6EvC0O4hPLI7gTnn/t4tY7ZVyE5MX1BU11HqpbwL1iYvCa1rzzvapBKNQ0uqxMRYwJsNEwF1dEnfmZoOjZWH9HfZV5b7aOb6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mVkGIIPU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kLpPUzpm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6D411F000E9;
-	Thu, 30 Jul 2026 14:52:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mVkGIIPU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A76F21F000E9;
+	Thu, 30 Jul 2026 14:52:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423168;
-	bh=FiZHejhWy2fK8dKftvv4jxL2dPcKqzi6/22kwxZzTaI=;
+	s=korg; t=1785423171;
+	bh=+zFKGPu3oUBwiNUX1zlO+yDVFN4e5SefwPsAFwAd6e0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kLpPUzpmWVVGhZi+iK4Ky/Xaa0v+sV/ekQ6oSvGqnzyMNk+hjfGfjZ+iScAsh2eJo
-	 zlkjmeca0v6aRBGwfupq+Eu0nMg0Bqobhs8wvF6IJbjZeDrfQOJXVw4OONQe0bG6ZJ
-	 uAsRYLHUSutOrZAC69cCGw232Mfu0gEtweUNDGcg=
+	b=mVkGIIPUADRGwoBT5b9BVtst8VerhdXjt00K941uPU0SVenoL2gJRRkDSXwf6BADe
+	 PI5aHP7ob+QN0wa3bc1d0MQuHIesoNqcemWtQqq5lBLYkle6BMY7SyUa7sD4ddEjjM
+	 NekN+mr7p8v3XGUNpDNdAE2BGhidkFgQOX30OCOE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
-	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
-	Ao Wang <wangao@seu.edu.cn>,
-	Xuewei Feng <fengxw06@126.com>,
-	Qi Li <qli01@tsinghua.edu.cn>,
-	Ke Xu <xuke@tsinghua.edu.cn>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.1 688/744] tcp: challenge ACK for non-exact RST in SYN-RECEIVED
-Date: Thu, 30 Jul 2026 16:16:01 +0200
-Message-ID: <20260730141458.889405764@linuxfoundation.org>
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Breno Leitao <leitao@debian.org>,
+	Daehyeon Ko <4ncienth@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 7.1 689/744] tipc: clear sock->sk on the failed-insert path in tipc_sk_create()
+Date: Thu, 30 Jul 2026 16:16:02 +0200
+Message-ID: <20260730141458.910028708@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -56,165 +53,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
+From: Daehyeon Ko <4ncienth@gmail.com>
 
-commit a28c4fcbf774e23b4779cae468e3497a5ad1f4a1 upstream.
+commit ba0533fc163f905fe817cfabdf8ed4058da44800 upstream.
 
-The SYN-RECEIVED request-socket path in tcp_check_req() accepts an
-in-window RST without requiring SEG.SEQ to exactly match RCV.NXT.  A
-non-exact RST therefore removes the request instead of eliciting a
-challenge ACK.
+When tipc_sk_create() fails to insert the new socket (tipc_sk_insert()
+returns non-zero), its error path frees the sk with sk_free() but leaves
+sock->sk pointing at the freed object:
 
-RFC 9293 section 3.10.7.4 applies the RFC 5961 reset check in
-SYN-RECEIVED: an exact RST resets the connection, while a non-exact
-in-window RST must trigger a challenge ACK and be dropped.
+	if (tipc_sk_insert(tsk)) {
+		sk_free(sk);
+		pr_warn("Socket create failed; port number exhausted\n");
+		return -EINVAL;
+	}
 
-Apply that check before the ACK-field validation, following the RFC
-sequence-number, RST, then ACK processing order.  Factor the per-netns
-challenge ACK quota out of tcp_send_challenge_ack() so request sockets
-can share it.  Use the request socket's send_ack() callback and its own
-out-of-window ACK timestamp to send and rate-limit the response.
+This is harmless for plain socket(): the syscall layer clears sock->ops
+before releasing, so tipc_release() is never called. It is not harmless
+on the accept() path. tipc_accept() creates the pre-allocated child
+socket with tipc_sk_create(net, new_sock, 0, kern); on failure it leaves
+new_sock->sk dangling and new_sock->ops non-NULL, and do_accept() then
+fput()s the new file, so __sock_release() -> tipc_release() runs
+lock_sock(new_sock->sk) on the freed sk -- a use-after-free write of the
+sk_lock spinlock.
 
-Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
-Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Reported-by: Ao Wang <wangao@seu.edu.cn>
-Reported-by: Xuewei Feng <fengxw06@126.com>
-Reported-by: Qi Li <qli01@tsinghua.edu.cn>
-Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
-Fixes: 282f23c6ee34 ("tcp: implement RFC 5961 3.2")
+tipc_release() already guards this exact "failed accept() releases a
+pre-allocated child" case with "if (sk == NULL) return 0;", but the
+guard is bypassed because tipc_sk_create() left sock->sk non-NULL
+(dangling) rather than NULL.
+
+Clear sock->sk on the failed-insert path so the existing tipc_release()
+NULL check fires and the use-after-free is avoided.
+
+The tipc_sk_insert() failure is reached when the per-netns socket
+rhashtable hits its max_size (tsk_rht_params.max_size = 1048576, ~2M
+elements) -- i.e. once a netns holds ~2M TIPC sockets every insert
+returns -E2BIG.
+
+  BUG: KASAN: slab-use-after-free in lock_sock_nested (net/core/sock.c:3839)
+  Write of size 8 at addr ffff8880047cdc38 by task init/1
+   lock_sock_nested (net/core/sock.c:3839)
+   tipc_release (net/tipc/socket.c:638)
+   __sock_release (net/socket.c:710)
+   sock_close (net/socket.c:1501)
+   __fput (fs/file_table.c:512)
+  Allocated by task 1:
+   sk_alloc (net/core/sock.c:2308)
+   tipc_sk_create (net/tipc/socket.c:487)
+   tipc_accept (net/tipc/socket.c:2744)
+   do_accept (net/socket.c:2034)
+  Freed by task 1:
+   __sk_destruct (net/core/sock.c:2391)
+   tipc_sk_create (net/tipc/socket.c:504)
+   tipc_accept (net/tipc/socket.c:2744)
+   do_accept (net/socket.c:2034)
+
+Fixes: 00aff3590fc0 ("net: tipc: fix possible refcount leak in tipc_sk_create()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260717081443.809393-2-yangyx22@mails.tsinghua.edu.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Reviewed-by: Breno Leitao <leitao@debian.org>
+Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260714131939.1255974-1-4ncienth@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/tcp.h        |    2 +
- net/ipv4/tcp_input.c     |   56 ++++++++++++++++++++++++++++++++++++-----------
- net/ipv4/tcp_minisocks.c |   12 +++++++++-
- 3 files changed, 56 insertions(+), 14 deletions(-)
+ net/tipc/socket.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/include/net/tcp.h
-+++ b/include/net/tcp.h
-@@ -1965,6 +1965,8 @@ static inline void tcp_fast_path_check(s
- 
- bool tcp_oow_rate_limited(struct net *net, const struct sk_buff *skb,
- 			  int mib_idx, u32 *last_oow_ack_time);
-+void tcp_reqsk_send_challenge_ack(struct sock *sk, struct sk_buff *skb,
-+				  struct request_sock *req);
- 
- static inline void tcp_mib_init(struct net *net)
- {
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -4038,24 +4038,17 @@ static void tcp_send_ack_reflect_ect(str
- 	__tcp_send_ack(sk, tp->rcv_nxt, flags);
- }
- 
--/* RFC 5961 7 [ACK Throttling] */
--static void tcp_send_challenge_ack(struct sock *sk, bool accecn_reflector)
-+/* Consume one slot from the per-netns RFC 5961 challenge ACK quota.
-+ * Returns true if a challenge ACK may be sent.
-+ */
-+static bool tcp_challenge_ack_allowed(struct net *net)
- {
--	struct tcp_sock *tp = tcp_sk(sk);
--	struct net *net = sock_net(sk);
- 	u32 count, now, ack_limit;
- 
--	/* First check our per-socket dupack rate limit. */
--	if (__tcp_oow_rate_limited(net,
--				   LINUX_MIB_TCPACKSKIPPEDCHALLENGE,
--				   &tp->last_oow_ack_time))
--		return;
--
- 	ack_limit = READ_ONCE(net->ipv4.sysctl_tcp_challenge_ack_limit);
- 	if (ack_limit == INT_MAX)
--		goto send_ack;
-+		return true;
- 
--	/* Then check host-wide RFC 5961 rate limit. */
- 	now = jiffies / HZ;
- 	if (now != READ_ONCE(net->ipv4.tcp_challenge_timestamp)) {
- 		u32 half = (ack_limit + 1) >> 1;
-@@ -4067,12 +4060,49 @@ static void tcp_send_challenge_ack(struc
- 	count = READ_ONCE(net->ipv4.tcp_challenge_count);
- 	if (count > 0) {
- 		WRITE_ONCE(net->ipv4.tcp_challenge_count, count - 1);
--send_ack:
-+		return true;
-+	}
-+	return false;
-+}
-+
-+/* RFC 5961 7 [ACK Throttling] */
-+static void tcp_send_challenge_ack(struct sock *sk, bool accecn_reflector)
-+{
-+	struct tcp_sock *tp = tcp_sk(sk);
-+	struct net *net = sock_net(sk);
-+
-+	/* First check our per-socket dupack rate limit. */
-+	if (__tcp_oow_rate_limited(net,
-+				   LINUX_MIB_TCPACKSKIPPEDCHALLENGE,
-+				   &tp->last_oow_ack_time))
-+		return;
-+
-+	/* Then check the per-netns RFC 5961 rate limit. */
-+	if (tcp_challenge_ack_allowed(net)) {
- 		NET_INC_STATS(net, LINUX_MIB_TCPCHALLENGEACK);
- 		tcp_send_ack_reflect_ect(sk, accecn_reflector);
+--- a/net/tipc/socket.c
++++ b/net/tipc/socket.c
+@@ -501,6 +501,7 @@ static int tipc_sk_create(struct net *ne
+ 	tipc_set_sk_state(sk, TIPC_OPEN);
+ 	if (tipc_sk_insert(tsk)) {
+ 		sk_free(sk);
++		sock->sk = NULL;
+ 		pr_warn("Socket create failed; port number exhausted\n");
+ 		return -EINVAL;
  	}
- }
- 
-+/* Send a challenge ACK from a SYN-RECEIVED request socket. Uses
-+ * __tcp_oow_rate_limited() directly so that an RST carrying payload
-+ * cannot bypass the per-request rate limit.
-+ */
-+void tcp_reqsk_send_challenge_ack(struct sock *sk, struct sk_buff *skb,
-+				  struct request_sock *req)
-+{
-+	struct net *net = sock_net(sk);
-+
-+	if (__tcp_oow_rate_limited(net, LINUX_MIB_TCPACKSKIPPEDCHALLENGE,
-+				   &tcp_rsk(req)->last_oow_ack_time))
-+		return;
-+
-+	if (tcp_challenge_ack_allowed(net)) {
-+		NET_INC_STATS(net, LINUX_MIB_TCPCHALLENGEACK);
-+		req->rsk_ops->send_ack(sk, skb, req);
-+	}
-+}
-+
- static void tcp_store_ts_recent(struct tcp_sock *tp)
- {
- 	tp->rx_opt.ts_recent = tp->rx_opt.rcv_tsval;
---- a/net/ipv4/tcp_minisocks.c
-+++ b/net/ipv4/tcp_minisocks.c
-@@ -835,7 +835,7 @@ struct sock *tcp_check_req(struct sock *
- 	 * elsewhere and is checked directly against the child socket rather
- 	 * than req because user data may have been sent out.
- 	 */
--	if ((flg & TCP_FLAG_ACK) && !fastopen &&
-+	if ((flg & TCP_FLAG_ACK) && !(flg & TCP_FLAG_RST) && !fastopen &&
- 	    (TCP_SKB_CB(skb)->ack_seq !=
- 	     tcp_rsk(req)->snt_isn + 1))
- 		return sk;
-@@ -874,6 +874,16 @@ struct sock *tcp_check_req(struct sock *
- 		flg &= ~TCP_FLAG_SYN;
- 	}
- 
-+	/* RFC 5961 section 3.2, as clarified by RFC 9293 section
-+	 * 3.10.7.4, requires a challenge ACK for a non-exact
-+	 * in-window RST in SYN-RECEIVED.
-+	 */
-+	if ((flg & TCP_FLAG_RST) &&
-+	    TCP_SKB_CB(skb)->seq != tcp_rsk(req)->rcv_nxt) {
-+		tcp_reqsk_send_challenge_ack(sk, skb, req);
-+		return NULL;
-+	}
-+
- 	/* RFC793: "second check the RST bit" and
- 	 *	   "fourth, check the SYN bit"
- 	 */
 
 
