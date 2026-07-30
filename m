@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3817D42047A;
-	Thu, 30 Jul 2026 14:50:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2345D365A19;
+	Thu, 30 Jul 2026 14:50:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423024; cv=none; b=D5X+lZ72UfL/3unLLMW154vvCtxNL1hSjC2d/9/3xWhTC50W7Z7VSFgUIozCYsJ+8qbSb3UhPZh86i4JjSmRJW2vvKVh6x3HQdVOseT33enVJnjM9h6jfJqxEzr9J93p0HTnuIq9Rt1PeVGvXtV2HHsdQByKk7aoPOkiUMX4EoI=
+	t=1785423027; cv=none; b=N+/AbSOkcGWAgoiKnoap3cLr4gZBPneqDm0Df8hrcQfJ+hacKjgocCrJg5pud9+ifqPBjgyQtgSvGiV9pcBh9X+hzwGis/WH2dD2lk0IpC9ejYzGtdXQL9kRvRzSG/GS8NK7TW4yidJ+QXO4jeeGnu9Qn1xdH87r2JDhZ1Rd6/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423024; c=relaxed/simple;
-	bh=mPURS9jdtkATQqyFezC8QQzO1E7yWnvgHpVCk9HKLbQ=;
+	s=arc-20240116; t=1785423027; c=relaxed/simple;
+	bh=XO4Bnq3j5ZyRWaFBzRyYWu+nP2WiO2v+j1Nf+8jVWVc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a4yUmu7bhzOuJoz0CVdA3elVuSx5fIMCSjMDFjALbIIDbSPdSPoOuNQaaqeIIMfjnSaFs3Okw+VAD3g1X+oz54dV7wS0HJFBCaISkT10wGxdtSpzTXwODz1IwsMSS7FRQ7mxz5YU8votg1QxFiFCmBJqXvcCS52U17c9qxYTdlc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aBOb8Nlu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hjhkNUl2qSI1N/YR19XuxjEOjjN/5/A1Da1MPnZRSm1ZmQrJ/3aFB5Dq0vHNf98nr5Sz3DzJIhByzro5FjADQXXR6SU2Kmp8GhL00DarYGWthjKh4/cKQhSotnI/28RrRgQUCArHNdeyADlSNDI33mpEOl8+q+fII92iyK7GsWw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xfkF6aDd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aBOb8Nlu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 926B41F000E9;
-	Thu, 30 Jul 2026 14:50:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xfkF6aDd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A6BA1F000E9;
+	Thu, 30 Jul 2026 14:50:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423023;
-	bh=3Vsa6GiPmuddetefbDIVOyemQaNWjTZo2PUpwOIUrkg=;
+	s=korg; t=1785423026;
+	bh=Xjw7gQ3cnc/H/xzCLEXRBD9vcTmzTc/uCbZwUMi/Nyo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aBOb8Nlu6QGnjjQEADs6A20mRAj8BD7HhkzN+jzgrRnzMz/dqIWktRhB/snhonoOk
-	 SvKmSF08JMDVY2aOaZieLW9HtE9skpa3XbywkPKrDo3D144gKTRfrpZsQ6g3BnU+qP
-	 5S+a5pX6zN90Hjv1dMTrCWOWq+C9zizhmi2t3H6o=
+	b=xfkF6aDdYzSWWDQvTsDYj+ZhgYWFAYx5TsorQ8a5lqyClKfxSJpfJ6BBiDQsXCAL5
+	 Kv0CEvJYnWxQdWxbQhF1s3HZ0TGLs8oWNwqunn8yntcLfPEaXV7IhNiO6XUEdTDC5X
+	 GsAApCsxs346bhcaBfQGhIB3qSqWP+wjhUQAtHcc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shihuang Liu <shlomojune6@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Taehee Yoo <ap420073@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.1 638/744] amt: fix use-after-free in AMT delayed works
-Date: Thu, 30 Jul 2026 16:15:11 +0200
-Message-ID: <20260730141457.832557279@linuxfoundation.org>
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Dev Jain <dev.jain@arm.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 7.1 603/744] arm64: make huge_ptep_get handled unaligned addresses
+Date: Thu, 30 Jul 2026 16:14:36 +0200
+Message-ID: <20260730141457.093629826@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -52,89 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shihuang Liu <shlomojune6@gmail.com>
+From: Dev Jain <dev.jain@arm.com>
 
-commit ea20c44935d6142daecfa9b39d635033a7553e1b upstream.
+commit f73a8edc2ccc6ec72c37d5c578e7592d2e1f9922 upstream.
 
-When an AMT device is removed, pending delayed works can still access
-the freed amt_dev structure, which may result in kernel crashes or
-memory corruption.
+huge_ptep_get() can be handed a virtual address pointing to the middle
+of a contpmd/contpte mapped hugetlb folio (examples of callers are
+pagemap_hugetlb_range, page_mapped_in_vma).
 
-amt_dev_stop() cancels req_wq and discovery_wq with
-cancel_delayed_work_sync(), but these works can be scheduled again
-from event_wq after the cancellation. This allows delayed works to
-access the freed amt_dev structure after the netdev has been released.
+The arm64 helper rewalks the pgtables in find_num_contig to answer
+whether the huge pte we have maps a contpmd or a contpte hugetlb folio,
+and returns CONT_PMDS or CONT_PTES, so that it can collect a/d bits over
+the contiguous ptes. We can falsely return CONT_PTES instead of
+CONT_PMDS if the addr is not aligned. On systems where CONT_PTES !=
+CONT_PMDS (meaning page size is 16K), we could collect excess A/D bit
+state, meaning extra work for the kernel. Even worse, we may iterate
+beyond the PTE table and dereference a garbage ptep pointer to access
+physical memory we don't own. Since the ptep pointer is a linear map
+address, we may run off the end of the linear map or into a hole,
+dereference a VA not mapped into the kernel pgtables and cause kernel
+panic.
 
-The following is a simple race scenario:
+Fix this by aligning the pmdp pointer down to a contpmd base before
+checking equality with the passed huge pte pointer, to correctly answer
+whether the huge pte is the base of a contpmd block.
 
-CPU0                         CPU1
-
-amt_dev_stop()
-cancel_delayed_work_sync()
-                             amt_event_work()
-                             mod_delayed_work(req_wq)
-free netdev
-                             req_wq accesses freed amt_dev
-
-Use disable_delayed_work_sync() in amt_dev_stop() to prevent req_wq and
-discovery_wq from being queued again and wait for running work items
-to complete.
-
-The delayed works are disabled after initialization in
-amt_newlink() and enabled only when the device is successfully opened.
-This keeps the delayed work lifecycle synchronized with the lifetime
-of the AMT device.
-
-Fixes: cbc21dc1cfe9 ("amt: add data plane of amt interface")
+Fixes: 29cb80519689 ("arm64: hugetlb: Cleanup huge_pte size discovery mechanisms")
 Cc: stable@vger.kernel.org
-Signed-off-by: Shihuang Liu <shlomojune6@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Taehee Yoo <ap420073@gmail.com>
-Link: https://patch.msgid.link/20260722113919.7723-1-shlomojune6@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Signed-off-by: Dev Jain <dev.jain@arm.com>
+Acked-by: Muchun Song <muchun.song@linux.dev>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/amt.c |   14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ arch/arm64/mm/hugetlbpage.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/amt.c
-+++ b/drivers/net/amt.c
-@@ -3034,9 +3034,15 @@ static int amt_dev_open(struct net_devic
- 	amt->event_idx = 0;
- 	amt->nr_events = 0;
- 
-+	enable_delayed_work(&amt->discovery_wq);
-+	enable_delayed_work(&amt->req_wq);
-+
- 	err = amt_socket_create(amt);
--	if (err)
-+	if (err) {
-+		disable_delayed_work(&amt->req_wq);
-+		disable_delayed_work(&amt->discovery_wq);
- 		return err;
-+	}
- 
- 	amt->req_cnt = 0;
- 	amt->remote_ip = 0;
-@@ -3062,8 +3068,8 @@ static int amt_dev_stop(struct net_devic
- 	struct sk_buff *skb;
- 	int i;
- 
--	cancel_delayed_work_sync(&amt->req_wq);
--	cancel_delayed_work_sync(&amt->discovery_wq);
-+	disable_delayed_work_sync(&amt->req_wq);
-+	disable_delayed_work_sync(&amt->discovery_wq);
- 	cancel_delayed_work_sync(&amt->secret_wq);
- 
- 	/* shutdown */
-@@ -3317,6 +3323,8 @@ static int amt_newlink(struct net_device
- 	INIT_DELAYED_WORK(&amt->req_wq, amt_req_work);
- 	INIT_DELAYED_WORK(&amt->secret_wq, amt_secret_work);
- 	INIT_WORK(&amt->event_wq, amt_event_work);
-+	disable_delayed_work(&amt->req_wq);
-+	disable_delayed_work(&amt->discovery_wq);
- 	INIT_LIST_HEAD(&amt->tunnel_list);
- 	return 0;
- err:
+--- a/arch/arm64/mm/hugetlbpage.c
++++ b/arch/arm64/mm/hugetlbpage.c
+@@ -87,7 +87,7 @@ static int find_num_contig(struct mm_str
+ 	p4dp = p4d_offset(pgdp, addr);
+ 	pudp = pud_offset(p4dp, addr);
+ 	pmdp = pmd_offset(pudp, addr);
+-	if ((pte_t *)pmdp == ptep) {
++	if ((pte_t *)PTR_ALIGN_DOWN(pmdp, sizeof(*pmdp) * CONT_PMDS) == ptep) {
+ 		*pgsize = PMD_SIZE;
+ 		return CONT_PMDS;
+ 	}
 
 
