@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72E0245FFB6;
-	Thu, 30 Jul 2026 16:04:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 403F544AB81;
+	Thu, 30 Jul 2026 16:04:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427446; cv=none; b=oyFDLiz5l6LRSKckMkfQ9bPMfKiZ0Uijl3DdYA5huv3biO7F3Kg4JMqiL0lUPL6q6wNV4fZiBpfBZxyvY0Skv0qpBg7fxbHYJ7LmemcaVtqlNgB28Yj+gGImo4js5brAVsN6hxDcpvCh5uHEQmLWhGwwhBoZsuTwcRCzIrgQkkQ=
+	t=1785427449; cv=none; b=bYfnLNlpYVRQZ3CiBEJUE4th1WWXJVOyJ1+hXTWGUKZh2ADkSfVyBjF4cjhW2/w4TH2wJv2joppuMGefPWtcq3A9IEkG3CvM8LC89qfKenJFBF2G06ucyx6qjmg84dMeeOAeCGUDlJoTI6r2MqwPRowh3+DdQEQz/eOwSV66RD4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427446; c=relaxed/simple;
-	bh=fwSmDoGgW1QCBuEcO0nv2Tk37LpgMiGBrVWWA3xp31M=;
+	s=arc-20240116; t=1785427449; c=relaxed/simple;
+	bh=Ocrh86hxgmUc40Cyu0IwxFAA10BZ7JrAF1Mzx94+WsY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fFi3fZHNzHv9sFtaO4nso7DjACvgvJ36wY2VSbbYzG1OL4CO9v95vPYRtahsxLc2wqfOiJGA+84GDJHXzPk2K1QMOada9v9M3DkNnbkSm3BpkVKRVLkEbAsXPP+Th09tyn72m2UPtrPF4lMVAfCtZk5g30Mj0HW0PFNSqrN96I8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LPrP1JBZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gcej6z4JJakTfGR4VDrf22ISRcVY0T1S0U7XHBj5WIdbAJ1EMknwWeeVbvNWGqJFaA/qu/yeqxsFzzQabj7MQYphJWigxNqFFFoapQEbfmBDX0ZZMcnCWA5l/OWqY86JyAx1wIZXTGTrCaaHMHX+gZ7uK5vohCcIf96F4rXnvoM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WIhJz/zL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LPrP1JBZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCD251F00A3A;
-	Thu, 30 Jul 2026 16:04:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WIhJz/zL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C79A1F000E9;
+	Thu, 30 Jul 2026 16:04:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427445;
-	bh=gQQi/YfeFU9AlS3WRO1pKb9nDM/rmcGcOJ7e5cjWW+g=;
+	s=korg; t=1785427448;
+	bh=Bd7dwT8HTxvkziFZAQOPeN2l3fcxj7SBiGK62aepbTA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LPrP1JBZFrlVNEs5lJ+kULjhZaFUFtiXdzmJ2ZtyHAw1RRLFvyKarQO39n2+ld9pQ
-	 BEOm2AnPbgcR7glV0+ie/eppFuvpuybBbG7OJpHeg+tzVFURFhz/7SrS5dRc7whteN
-	 fN5aELJc9wnoV+2RZVdJlIIVnL51X1gr6VxYCoIk=
+	b=WIhJz/zLFYjSa3xkMtXU+oA4nznZNYy+/T8B4qRAflG422Nzm1LmoL+OgMWXIAk3k
+	 IXdByLWzRvBdjSEJ4Iof+gUWa3DX+6GjKuGBsvPoP52le4OdboG2JjuZ6OG4v+oxti
+	 oZff4Kz69+41/Sfm7SJdpSM4CE0uj8p8Jz2IhnNw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	AutonomousCodeSecurity@microsoft.com,
 	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 171/484] gtp: check skb_pull_data() return in gtp1u_send_echo_resp()
-Date: Thu, 30 Jul 2026 16:11:08 +0200
-Message-ID: <20260730141427.183487506@linuxfoundation.org>
+Subject: [PATCH 6.6 172/484] nexthop: initialize extack in nh_res_bucket_migrate()
+Date: Thu, 30 Jul 2026 16:11:09 +0200
+Message-ID: <20260730141427.204504361@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -54,54 +55,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Xiang Mei (Microsoft) <xmei5@asu.edu>
 
-[ Upstream commit cd170f051dba9ac146fabcd1b91726487c0cb9fa ]
+[ Upstream commit 6347c5314cee49f364aaf2e40ff15415a57a116e ]
 
-gtp1u_send_echo_resp() ignores skb_pull_data()'s return value. Its
-caller gtp1u_udp_encap_recv() only guarantees 16 bytes (udphdr +
-gtp1_header), but the pull requests 20 (gtp1_header_long + udphdr). For
-a 16-19 byte echo request the pull fails and returns NULL without
-advancing skb->data; execution continues, and the following skb_push()
-plus the IP header pushed by iptunnel_xmit() move skb->data below
-skb->head, tripping skb_under_panic().
+nh_res_bucket_migrate() passes an uninitialized netlink_ext_ack to
+call_nexthop_res_bucket_notifiers(). When
+nh_notifier_res_bucket_info_init() fails (e.g. the kzalloc returns
+-ENOMEM), the error is propagated back before any notifier sets
+extack._msg, and the error path formats the stale pointer with
+pr_err_ratelimited("%s\n", extack._msg). With CONFIG_INIT_STACK_NONE
+this dereferences uninitialized stack memory:
 
-Fix it by dropping the packet when skb_pull_data() fails.
+  Oops: general protection fault, probably for non-canonical address ...
+  KASAN: maybe wild-memory-access in range [...]
+  RIP: 0010:string (lib/vsprintf.c:730)
+   vsnprintf (lib/vsprintf.c:2945)
+   _printk (kernel/printk/printk.c:2504)
+   nh_res_bucket_migrate (net/ipv4/nexthop.c:1816)
+   nh_res_table_upkeep (net/ipv4/nexthop.c:1866)
+   rtm_new_nexthop (net/ipv4/nexthop.c:3323)
+   rtnetlink_rcv_msg (net/core/rtnetlink.c:7076)
+   netlink_sendmsg (net/netlink/af_netlink.c:1900)
+  Kernel panic - not syncing: Fatal exception
 
-  skbuff: skb_under_panic: ...
-  kernel BUG at net/core/skbuff.c:214!
-  Call Trace:
-   skb_push (net/core/skbuff.c:2648)
-   iptunnel_xmit (net/ipv4/ip_tunnel_core.c:82)
-   gtp_encap_recv (drivers/net/gtp.c:701 drivers/net/gtp.c:808 drivers/net/gtp.c:920)
-   udp_queue_rcv_one_skb (net/ipv4/udp.c:2388)
-   ...
-  Kernel panic - not syncing: Fatal exception in interrupt
+Zero-initialize extack so _msg is NULL on error paths that never set it.
 
-Fixes: 9af41cc33471 ("gtp: Implement GTP echo response")
+Fixes: 7c37c7e00411 ("nexthop: Implement notifiers for resilient nexthop groups")
 Reported-by: AutonomousCodeSecurity@microsoft.com
 Signed-off-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
-Link: https://patch.msgid.link/20260710230724.942574-1-xmei5@asu.edu
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260713221551.3344650-1-xmei5@asu.edu
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/gtp.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/ipv4/nexthop.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/gtp.c b/drivers/net/gtp.c
-index 55160a5fc90fc6..7bb3da8f253635 100644
---- a/drivers/net/gtp.c
-+++ b/drivers/net/gtp.c
-@@ -490,8 +490,9 @@ static int gtp1u_send_echo_resp(struct gtp_dev *gtp, struct sk_buff *skb)
- 		return -1;
+diff --git a/net/ipv4/nexthop.c b/net/ipv4/nexthop.c
+index 4f30ddd2016b68..e751464f4fad9e 100644
+--- a/net/ipv4/nexthop.c
++++ b/net/ipv4/nexthop.c
+@@ -1527,8 +1527,8 @@ static bool nh_res_bucket_migrate(struct nh_res_table *res_table,
+ 				  bool notify_nl, bool force)
+ {
+ 	struct nh_res_bucket *bucket = &res_table->nh_buckets[bucket_index];
++	struct netlink_ext_ack extack = {};
+ 	struct nh_grp_entry *new_nhge;
+-	struct netlink_ext_ack extack;
+ 	int err;
  
- 	/* pull GTP and UDP headers */
--	skb_pull_data(skb,
--		      sizeof(struct gtp1_header_long) + sizeof(struct udphdr));
-+	if (!skb_pull_data(skb, sizeof(struct gtp1_header_long) +
-+				sizeof(struct udphdr)))
-+		return -1;
- 
- 	gtp_pkt = skb_push(skb, sizeof(struct gtp1u_packet));
- 	memset(gtp_pkt, 0, sizeof(struct gtp1u_packet));
+ 	new_nhge = list_first_entry_or_null(&res_table->uw_nh_entries,
 -- 
 2.53.0
 
