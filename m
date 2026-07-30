@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51D513806BD;
-	Thu, 30 Jul 2026 15:49:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E5EC40FD86;
+	Thu, 30 Jul 2026 15:49:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426571; cv=none; b=PEmm0rhFhL+rDC4aRcz+TGuiEDhY5ZJgW9D9dtxkSRww8gF6NveeRRAtG+ZVYiOBgJdzL+1o18BOVuXTG/tDn47DCJoqMRekz5jKoq6bPA4RCdLjJIy7Lm4fVkcQ4otsJU+2k0l09ItwpAQNekXPLikURta1XsZsv9WCBXSI3Wc=
+	t=1785426575; cv=none; b=nxdKY24LGldsR6qOsOfyCg+s2YPtWY69yy56pJqM4oiMh5jcBdt3XWDONp05QtrpLrS6GhDxTAqDjOvDK3NdORs1g8zNbOhPsUVH58aRZWIuHl+T7S+D+y9JOMjbvhRqD71FHSPDbUEBY4fG4eIkWaBioArTNxzRcbzEvyTWuVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426571; c=relaxed/simple;
-	bh=5mdcFPCnxEfNEQ8iqTojuIX4BwQqjY3xWhlGTAHxmG0=;
+	s=arc-20240116; t=1785426575; c=relaxed/simple;
+	bh=AezXpYofsilQQesi2acaOjkxQ/ooabYy06xEpq+uPIE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hokjTa+jADSxLMoUzPcd2iQxwGegGwjSEKP6tZqinS18oi28PYUcOvFk8Z3kTQqkYGJGCRWWLWd8p/LB5ULy1w6rBg//gy1Mkdg97TsOmEu1mNb3xI1ciu1LfKqVdb1c+iWWuJcBPS9BlBQF/Q4u7m+3Qo0qjUQQzIVbncT0RlU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yZ7m61A/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LkON98H/dDXdGByKBhmrZsthB5ZcZJhte8pIVbvqAeKydpGs9tTKghC9s0ekOkDOy9NVkp44pTFZw34GklIHuuYrpC3zf8mF3iQCpG/RZNILU1Yx47jdUuGiKfe9QcP+6frL3rvVsEETe16MQ47vL0v9r7fSMZA27eOq9sjuLpo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nx00dOw6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yZ7m61A/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D5711F00A3A;
-	Thu, 30 Jul 2026 15:49:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nx00dOw6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55F9D1F000E9;
+	Thu, 30 Jul 2026 15:49:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426570;
-	bh=8E4XVKbHsRBqjSEbUR5lS+LE5rpVF46FEzOnoOc6Zu0=;
+	s=korg; t=1785426572;
+	bh=/ZkXZyVoH46+uP0MiD7wZYrdb3yNMbkx7GtBmdJV1dU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yZ7m61A/0J0rIKQb3MrGKo/CeIth0aypYSvfImH3NxlQNF6j5+75cc/VmTSaXd/TH
-	 Ky0nI3s0YDT39EOl5JlE5y02c8LvDeqUMO+G81OpGx2PVyyTAUlwGQFb79N7DRrXy7
-	 q8SRpdAaLNp3OhFaFA0AugLxEkyiHzY6FHiY0/VI=
+	b=Nx00dOw6DrIhGliFVV6p65Qy/1ASBjBRn5yQrY2wvdCog9j0zqSnOt2MtQuBQWJ3C
+	 flhPmNlml2bKoRz47gIgdQ2/7obgrLLpj52LmsS5zXYHGmiDwbv3PiA0trIXC4XU3K
+	 uKA5AU/tpOWrbsbVyL1nIyRCKbG4OnwlQV9PDMn8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 464/602] mm/damon/core: disallow overlapping input ranges for damon_set_regions()
-Date: Thu, 30 Jul 2026 16:14:16 +0200
-Message-ID: <20260730141445.711232841@linuxfoundation.org>
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Pranjal Shrivastava <praan@google.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 465/602] iommufd: Reject invalid read count in iommufd_fault_fops_read()
+Date: Thu, 30 Jul 2026 16:14:17 +0200
+Message-ID: <20260730141445.732344959@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -50,70 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SJ Park <sj@kernel.org>
+From: Nicolin Chen <nicolinc@nvidia.com>
 
-commit 954157679ec34661c2e87e7eb796104a797c32db upstream.
+[ Upstream commit 47916a54eeb2a9e654512ee609f71bd5b29db702 ]
 
-damon_set_regions() assumes the input ranges are sorted by the address and
-don't overlap each other.  Hence the assumption was initially to be
-explicitly validated.  But commit 97d482f4592f ("mm/damon/sysfs: reuse
-damon_set_regions() for regions setting") has mistakenly removed the
-validation.
+The read count must be large enough to hold one fault or a group's faults.
 
-This can make DAMON behave in unexpected ways.  At the best, the
-monitoring results snapshot will just look weird since there will be
-overlapping regions.  DAMOS will also work weirdly, applying the same
-action multiple times for overlapping regions, and make DAMOS quota weird.
-More seriously, depending on the setup and regions updates sequence,
-negative size regions can be made.  It will trigger WARN_ONCE() if the
-kernel is built with CONFIG_DAMON_DEBUG_SANITY=y.  Depending on the
-monitoring results, the negative size region can further trigger division
-by zero in damon_merge_two_regions().
+iommufd_fault_fops_read() does not validate the count, but returns 0 as if
+the read had succeeded while leaving the pending fault in the queue.
 
-Note that some of the consequences including the WARN_ONCE() and the
-divide by zero depend on commits that were introduced after the root cause
-commit 97d482f4592f ("mm/damon/sysfs: reuse damon_set_regions() for
-regions setting").
+Return -EINVAL in the undersize cases.
 
-Fix the problems by checking the assumption and returning an error if
-the input ranges don't meet the assumption.
-
-The issue was discovered [1] by Sashiko.
-
-Link: https://lore.kernel.org/20260703165610.92894-1-sj@kernel.org
-Link: https://lore.kernel.org/20260630041806.151124-1-sj@kernel.org [1]
-Fixes: 97d482f4592f ("mm/damon/sysfs: reuse damon_set_regions() for regions setting")
-Signed-off-by: SJ Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org> # 5.19.x
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 07838f7fd529 ("iommufd: Add iommufd fault object")
+Link: https://patch.msgid.link/r/85c118a606fbedc5c132a1f5ec223a5ba23b92d2.1780343944.git.nicolinc@nvidia.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Pranjal Shrivastava <praan@google.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/core.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/iommu/iommufd/fault.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -212,12 +212,19 @@ int damon_set_regions(struct damon_targe
- {
- 	struct damon_region *r, *next;
- 	unsigned int i;
-+	unsigned long last_end;
- 	int err;
+--- a/drivers/iommu/iommufd/fault.c
++++ b/drivers/iommu/iommufd/fault.c
+@@ -273,6 +273,9 @@ static ssize_t iommufd_fault_fops_read(s
+ 		if (done >= count ||
+ 		    group->fault_count * fault_size > count - done) {
+ 			iommufd_fault_deliver_restore(fault, group);
++			/* Read count doesn't fit the first fault group */
++			if (done == 0)
++				rc = -EINVAL;
+ 			break;
+ 		}
  
- 	for (i = 0; i < nr_ranges; i++) {
--		if (ALIGN_DOWN(ranges[i].start, DAMON_MIN_REGION) >=
--				ALIGN(ranges[i].end, DAMON_MIN_REGION))
-+		unsigned long start, end;
-+
-+		start = ALIGN_DOWN(ranges[i].start, DAMON_MIN_REGION);
-+		end = ALIGN(ranges[i].end, DAMON_MIN_REGION);
-+		if (start >= end)
-+			return -EINVAL;
-+		if (i > 0 && last_end > start)
- 			return -EINVAL;
-+		last_end = end;
- 	}
- 
- 	/* Remove regions which are not in the new ranges */
 
 
