@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEBFA392831;
-	Thu, 30 Jul 2026 15:18:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF46337C92C;
+	Thu, 30 Jul 2026 15:18:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424736; cv=none; b=AkL4Nk3Q5HViSHZ/OfUjsYFzGNdewQH4ihVGTSqa52tQ31YYBiVYg+Z7poYxjdhrU4n6sHBwv/BWFsDozT63Z0Gw4iBuE98QWgixVqq2zZ5eo7PxEwwrZ158KN7WK8W2bzDKCawhNZJzeMmQ6ZxURoNp+A1xc6QalMvuCjoub4c=
+	t=1785424738; cv=none; b=JK9Mz87FnAslT2hzOLpkKmXjvSjYRhTJAh0/OwPWavCtj7zebWUQnwzLszfn8rk/3g26L08vC4jm7KeVJ2a9USK1pCQB6FdbAZhGGNnwWeQq+OsTgbxkWxsXAjb3myvE4dfMQAROTaWYD+/xebZcqn9BdaL/sAKBhN1L307A6Jc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424736; c=relaxed/simple;
-	bh=QSi50wikQLpiVzGfkdB3508DVryX2D0BGkTQQUuqcek=;
+	s=arc-20240116; t=1785424738; c=relaxed/simple;
+	bh=mO363elRc2z/4yl4VNbPMRDnKG9ZzP9+OQc2kpBQ070=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OJn6CznreUjggvTAELr++qW6NLY4W7dpRLwA+BbbpJHZVqUVdbcsMPjodYd9+zK60yv0KbR4IWctG9JGt1vnBmKUAMt0TgI9UYVAjiEk+83N/e2a+dYi6wqQVUnAP3ZJXElWaokHELxnadJ+hqjZat3F2uWTmTHM29bntwIh0f8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WcEOEMWT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OWHQ7mZeJ8S52310HYMaqtOFGV32i24zxArf0B1P3Oorf0NRdZfOmtmLbHAqb/CF8iIo4HIymwgn6ks2u3UKQz9haqYXrfLB5j3Nh4604umiDsGDk0w8R3s02cOpuVy6nPJ1c0Edcu7BQhfTsKca8VzgI6AkagwKxKzmMSdnzBQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qsb1wY9N; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WcEOEMWT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 512FF1F00A3F;
-	Thu, 30 Jul 2026 15:18:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qsb1wY9N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 283301F000E9;
+	Thu, 30 Jul 2026 15:18:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424734;
-	bh=iuFjjHv19B0Fz1oNtVAtf8KEv46FRV/+h5MD5g20Qxc=;
+	s=korg; t=1785424737;
+	bh=jz9DMFJg3F6ooTQh8aH9odicyCATz0aeAUhJ+NLIud8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WcEOEMWTixHJSiGazK0SVJNutxjXDqvCqxP4onDseR9SY9I9VXCDtz6OwrvMove58
-	 CrXoFyCEZ3CG6EeGuoIcQqViW32onF/Zy4uO3N45SiMp5I89PuUJj3/jA73h+bG+Vp
-	 FqOCXHoWlxRvfR4DKGy44rkPzAqrhYgwNmhzArtI=
+	b=Qsb1wY9NEct0zd5YY5l5VA6kD6MhgWsqsiH+NIWiJJ6d16ZE5nJSxX3gnpUJ2uAg0
+	 IvGegDKRlKa+AC6GoEgskuJfaHpIaJ+ymDChhdHJrXWOZ9vLps7StMXcfZfF8cF96n
+	 lFL6xVzg3WCyEDh++VCQm/jGnMAXArgV/EOixj0E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 6.18 496/675] tracing/probes: Fix potential underflow in LEN_OR_ZERO macro
-Date: Thu, 30 Jul 2026 16:13:46 +0200
-Message-ID: <20260730141455.667452196@linuxfoundation.org>
+Subject: [PATCH 6.18 497/675] tracing/probes: Prevent out-of-bounds write in __trace_probe_log_err()
+Date: Thu, 30 Jul 2026 16:13:47 +0200
+Message-ID: <20260730141455.689591344@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -51,18 +51,18 @@ Content-Transfer-Encoding: 8bit
 
 From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit 8ce20bfba48902e1382187cd1a852f7cf3a1e739 upstream.
+commit a9d6fb284039a5d3858a1d9f9a0d7e46cfb7c2d4 upstream.
 
-In __set_print_fmt(), LEN_OR_ZERO is defined as (len ? len - pos : 0).
-If len is non-zero but smaller than pos, len - pos evaluates to a negative
-integer. When passed as a size argument to snprintf(), this negative value
-is cast to a large unsigned size_t, bypassing buffer size limits.
+If trace_probe_log.argc is 0 in __trace_probe_log_err(), the loop
+constructing the command string will not execute and p will remain equal to
+command. Writing to *(p - 1) will cause an out-of-bounds access before
+command. This should not happen, but better to be treated.
 
-Ensure len > pos before subtracting to avoid integer underflow.
+Reject if trace_probe_log.argc is 0.
 
-Link: https://lore.kernel.org/all/178454234934.290363.15247317871499514139.stgit@devnote2/
+Link: https://lore.kernel.org/all/178454233992.290363.18323091580600697731.stgit@devnote2/
 
-Fixes: 5bf652aaf46c ("tracing/probes: Integrate duplicate set_print_fmt()")
+Fixes: ab105a4fb894 ("tracing: Use tracing error_log with probe events")
 Cc: stable@vger.kernel.org
 Assisted-by: Antigravity:gemini-3.5-flash
 Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
@@ -73,14 +73,14 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/kernel/trace/trace_probe.c
 +++ b/kernel/trace/trace_probe.c
-@@ -2018,7 +2018,7 @@ int traceprobe_update_arg(struct probe_a
- }
+@@ -187,7 +187,7 @@ void __trace_probe_log_err(int offset, i
  
- /* When len=0, we just calculate the needed length */
--#define LEN_OR_ZERO (len ? len - pos : 0)
-+#define LEN_OR_ZERO (len > pos ? len - pos : 0)
- static int __set_print_fmt(struct trace_probe *tp, char *buf, int len,
- 			   enum probe_print_type ptype)
- {
+ 	lockdep_assert_held(&dyn_event_ops_mutex);
+ 
+-	if (!trace_probe_log.argv)
++	if (!trace_probe_log.argv || !trace_probe_log.argc)
+ 		return;
+ 
+ 	/* Recalculate the length and allocate buffer */
 
 
