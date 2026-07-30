@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3AFE446050;
-	Thu, 30 Jul 2026 16:09:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 037EA38C426;
+	Thu, 30 Jul 2026 16:09:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427751; cv=none; b=SByrUTApvPT30/LnU/+kCB0sdi0hZlB4/Kt15kgKZOZclkVEkDBe2MVD6B8GreXj+77onndx+G5ghfgfJqTKWyEy3j+2LlulD1ao9M9pexAR1MRaZwg1BkSZN3MfFJHUPQYMuOSxxA4kXTWUeitUfhz79aUJyBi/wDeheGk4fgk=
+	t=1785427754; cv=none; b=tzoYAB+6IHYeBBlm+55CjeGJBoEYDa7npDFnA2TSpzfQTJ2FPh1c83sRh58SCjnVQtV81+r5w96GYCq12cjW1DB/CcZZacR3LR4Iic7+T9Hl+Tye0c3nrAFE1dkLoQ3orebRavP1HnRsH9BVs1UNJmiwyP0v9myUTv+Bu3Xh4gE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427751; c=relaxed/simple;
-	bh=edHoF1ORfkocVh+ciS5FXcu/9+dXWZWInEiLXyVwCZk=;
+	s=arc-20240116; t=1785427754; c=relaxed/simple;
+	bh=WnKyp5+idzikhthtgWus3MY8LSZrFNVhhtRBl4QeArQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T6tm2KcRejchXAG5x1x4eHs/IAk7P9c9opOZ1gH1LZCyHo5e31wjGWlGQ6RyErltRQtJKBH6Y7X26hzy68KIBhV9ma+GCwwyL7ISVI1ZnBMysbJoE1W6WFZqiaJuFKTmMIRmLVv+oa7XQHNYJwY+AtvGhqpVWMk8g881TAPBV+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nfVe1WBd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Dbo6ucuPX40cBCYevzrwqCfRpD9V+GdSavKq48gs4aslLR1mBpzmz9EDtRt2hDWFgsuheahqZHjqwQoe2DJ7cKwgjcxqmmqEixPfJfWGc1IJ3hcXdER/9dZBA3N5CJqnplTTnP673cpBb7UaQXLCWMsFoIOeORakt8sBqigegjg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qyGVBLbi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nfVe1WBd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 447CC1F000E9;
-	Thu, 30 Jul 2026 16:09:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qyGVBLbi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F4BE1F000E9;
+	Thu, 30 Jul 2026 16:09:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427749;
-	bh=TfxWCLMfPv4+yCzQjZYjO6aKl7FhhiaBhJhTcnjEgio=;
+	s=korg; t=1785427752;
+	bh=TDgSu1MK/6VQUMkRvxYSPutTmEG0duENk9ud5wwg43E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nfVe1WBdSONOPXv7mI/KTXCzO3RSHAuDlb3xVcytnDUl2bwcEnyvpgNcZLOVya/H4
-	 t+O2/NL4XR+RFLSRU1jpPBWWjEqFa4Ncbjy8eY/e1meNvWt+Sd9SWoOUGAwwfCOE4e
-	 YVIRkeQILGIzjoEH0D5ZuXAeZuLEYc+Kug91sH7E=
+	b=qyGVBLbiBvEMK0zUcR9qR3oBcMrsjEHS3fYt68BgnCGu2ZCC6X20uur4jwtA1TaMZ
+	 dv9OFkoMcme1ZLfceidVs0Eh/JqNXBzRaLI4qQjr27scRCE/YUkSCkDEcHXHIRzzeN
+	 NW/N0JomCWEGfbpC3/GrpXvlrumhzwAhD4ATRhvk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Hodo <martin.hodo@intel.com>,
-	Faith Ekstrand <faith.ekstrand@collabora.com>,
-	Simona Vetter <simona.vetter@ffwll.ch>,
-	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.6 226/484] drm/i915/gem: Do not leak siblings[] on proto context error
-Date: Thu, 30 Jul 2026 16:12:03 +0200
-Message-ID: <20260730141428.383517561@linuxfoundation.org>
+	Devin Wittmayer <lucid_duck@justthetip.ca>,
+	Felix Fietkau <nbd@nbd.name>
+Subject: [PATCH 6.6 274/484] wifi: mt76: mt7921: drop TXRX_NOTIFY on non-mmio buses
+Date: Thu, 30 Jul 2026 16:12:51 +0200
+Message-ID: <20260730141429.446060838@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -56,84 +50,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+From: Devin Wittmayer <lucid_duck@justthetip.ca>
 
-commit eed3de2acf6aa5154d49098b026710b646db67ee upstream.
+commit da4082e91acabc1498611ed8ccc53f0610baefc6 upstream.
 
-After a successful BALANCE/PARALLEL_SUBMIT extension on context
-creation, error during processing of next user extension leaks
-the siblings[] array. Fix that.
+PKT_TYPE_TXRX_NOTIFY is an mmio-only event, but mt7921_rx_check() and
+mt7921_queue_rx_skb() dispatch it to mt7921_mac_tx_free() on every bus.
+mt7921_mac_tx_free() cleans the DMA tx queues with
+mt76_queue_tx_cleanup(), which calls queue_ops->tx_cleanup(). Only the
+mmio queue ops implement that callback; on USB and SDIO it is NULL, so
+a TXRX_NOTIFY there calls a NULL pointer in the RX worker:
 
-Discovered using AI-assisted static analysis confirmed by
-Intel Product Security.
+  BUG: kernel NULL pointer dereference, address: 0000000000000000
+  RIP: 0010:0x0
+  Call Trace:
+   mt7921_mac_tx_free+0x64/0x310 [mt7921_common]
+   mt7921_rx_check+0x5f/0xf0 [mt7921_common]
+   mt76u_rx_worker+0x1b9/0x620 [mt76_usb]
 
-Reported-by: Martin Hodo <martin.hodo@intel.com>
-Fixes: d4433c7600f7 ("drm/i915/gem: Use the proto-context to handle create parameters (v5)")
-Cc: Faith Ekstrand <faith.ekstrand@collabora.com>
-Cc: Simona Vetter <simona.vetter@ffwll.ch>
-Cc: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Cc: <stable@vger.kernel.org> # v5.15+
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Reviewed-by: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
-Link: https://lore.kernel.org/r/20260701073030.44850-1-joonas.lahtinen@linux.intel.com
-(cherry picked from commit aa65e0a4b51b3b54b53e4142aaa2d997aa1061ff)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Drop the event on non-mmio buses via mt76_is_mmio(), as in
+commit 5683e1488aa9 ("wifi: mt76: connac: do not check WED status for
+non-mmio devices").
+
+Fixes: 48fab5bbef40 ("mt76: mt7921: introduce mt7921s support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
+Link: https://patch.msgid.link/20260627191336.20223-2-lucid_duck@justthetip.ca
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/gem/i915_gem_context.c |   22 ++++++++++++++--------
- 1 file changed, 14 insertions(+), 8 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7921/mac.c |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/i915/gem/i915_gem_context.c
-+++ b/drivers/gpu/drm/i915/gem/i915_gem_context.c
-@@ -768,8 +768,8 @@ static int set_proto_ctx_engines(struct
- 		struct intel_engine_cs *engine;
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/mac.c
+@@ -575,8 +575,9 @@ bool mt7921_rx_check(struct mt76_dev *md
  
- 		if (copy_from_user(&ci, &user->engines[n], sizeof(ci))) {
--			kfree(set.engines);
--			return -EFAULT;
-+			err = -EFAULT;
-+			goto err;
- 		}
+ 	switch (type) {
+ 	case PKT_TYPE_TXRX_NOTIFY:
+-		/* PKT_TYPE_TXRX_NOTIFY can be received only by mmio devices */
+-		mt7921_mac_tx_free(dev, data, len); /* mmio */
++		if (!mt76_is_mmio(mdev))
++			return false;
++		mt7921_mac_tx_free(dev, data, len);
+ 		return false;
+ 	case PKT_TYPE_TXS:
+ 		for (rxd += 2; rxd + 8 <= end; rxd += 8)
+@@ -605,7 +606,10 @@ void mt7921_queue_rx_skb(struct mt76_dev
  
- 		memset(&set.engines[n], 0, sizeof(set.engines[n]));
-@@ -785,8 +785,8 @@ static int set_proto_ctx_engines(struct
- 			drm_dbg(&i915->drm,
- 				"Invalid engine[%d]: { class:%d, instance:%d }\n",
- 				n, ci.engine_class, ci.engine_instance);
--			kfree(set.engines);
--			return -ENOENT;
-+			err = -ENOENT;
-+			goto err;
- 		}
- 
- 		set.engines[n].type = I915_GEM_ENGINE_TYPE_PHYSICAL;
-@@ -799,15 +799,21 @@ static int set_proto_ctx_engines(struct
- 					   set_proto_ctx_engines_extensions,
- 					   ARRAY_SIZE(set_proto_ctx_engines_extensions),
- 					   &set);
--	if (err) {
--		kfree(set.engines);
--		return err;
--	}
-+	if (err)
-+		goto err_extensions;
- 
- 	pc->num_user_engines = set.num_engines;
- 	pc->user_engines = set.engines;
- 
- 	return 0;
-+
-+err_extensions:
-+	for (n = 0; n < set.num_engines; n++)
-+		kfree(set.engines[n].siblings);
-+err:
-+	kfree(set.engines);
-+
-+	return err;
- }
- 
- static int set_proto_ctx_sseu(struct drm_i915_file_private *fpriv,
+ 	switch (type) {
+ 	case PKT_TYPE_TXRX_NOTIFY:
+-		/* PKT_TYPE_TXRX_NOTIFY can be received only by mmio devices */
++		if (!mt76_is_mmio(mdev)) {
++			napi_consume_skb(skb, 1);
++			break;
++		}
+ 		mt7921_mac_tx_free(dev, skb->data, skb->len);
+ 		napi_consume_skb(skb, 1);
+ 		break;
 
 
