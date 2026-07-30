@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 568C9423782;
-	Thu, 30 Jul 2026 15:45:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1455C408615;
+	Thu, 30 Jul 2026 15:45:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426339; cv=none; b=ESD2cxF9wLvjz7TdysL29rU0JRgtGHj3PyhJRrNZf0jb8/m4iIvkR0sZW1j6jzi8AhEfhia+Z7vDZqEopWyX9MJusMBuGMDPU4iZOUA+RWPYCFJUwt4V+46V7v8l3kJNFyvNiU8oAAphTU8Ey6jSW1L4xAMOBs64VrVWvw9kcHk=
+	t=1785426342; cv=none; b=WVvQp3qPNUsysl4jNPyzc3Gi4GwY4M4ckOzEwP7Ay/5rYs6p9feiCWLasmc1DKGZnauF8C+wp3QH8xPYKhxyC2ZmFIkF6jkNoyJ1o8hspscd1iEqJ7DeS+GqeKDJEIP77OpOBXOGX3yinwWDmeqXz8EAT+XKM6nrW2jsAEsofII=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426339; c=relaxed/simple;
-	bh=nK1H5rNXWgxAHcAeCNMrTG59s3qTSnXg/I6eJCSeNs0=;
+	s=arc-20240116; t=1785426342; c=relaxed/simple;
+	bh=d57+Q/3CHxnFhXOUV1rr3X+BegMIdlX6On/79RAB9+A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bta8DBQQqCcEgTO618wzi9zw30LGOblmRztfFMLnxbdMcNnPIJ3ecmXg7UHxGlhTXcZT2tUApLXLJMv+bXbOLXPZN02/Gx4K+s1H65kEie5UyzEd5g3n8osM5PAcF47lNq3jDNL9aryzr/5MoHO+LywGXTUH4+lx2+Kphjfloy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YEkXo+v9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dMYM7lbMHrxZJEbBJmdxuf5Azz5o5WgTEeqF9JjhSRPAr6PbeRqGcpCiE6zGB1N6xx71s8cPkjL2Oc6BYybnC9ANXcmdCgAbo0HhMekhlGeT/KkFVLLEc5KkmGR0ADT78k8whjTyFKwgLyG67t9RYBrnKU5CeqG3AOCRRK/3cAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yNF9Xnub; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YEkXo+v9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E3381F000E9;
-	Thu, 30 Jul 2026 15:45:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yNF9Xnub"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3681B1F000E9;
+	Thu, 30 Jul 2026 15:45:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426337;
-	bh=0Kdbsq5XsGj7tpftnjuObHmFe4iWUPWjO+prRtLyeh0=;
+	s=korg; t=1785426340;
+	bh=h/E1G8dJitZNp+vnb3slqYQ+YQEz53DMLHFvC1RtyAc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YEkXo+v9TYTOgq7cm6lEbJ/lT/t7fqVOREK42Vx2FDUQJruSE0TTRyszgaxCG6V6H
-	 pomdvWxsAGMn2iCPI1XCalGAN59ERe63+JbBDLAL6cLXJNXAflNKEh9uwtJWnxjxFO
-	 22u8tHfLUCEOGDjrDI3RuV28yuTCpD08swHlupW8=
+	b=yNF9Xnubs8g/YHN5GB1oaM6kFf6eXIufexd6WgImcmU2mg+8XBAA18KbE4k9oLK6S
+	 Z+VFmGEigFYXnbYqOdFxfpUmPZEulgw7iMfQlHk+G4vBU5PMLySbW3QniACBHnGR+f
+	 3AW9YcVTNi+pL6xmS7i8TA7wxMMYuAqYH6f3J5gg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	stable@kernel.org,
+	Jun Yang <junvyyang@tencent.com>,
+	Xin Long <lucien.xin@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 385/602] mptcp: only set DATA_FIN when a mapping is present
-Date: Thu, 30 Jul 2026 16:12:57 +0200
-Message-ID: <20260730141444.050120685@linuxfoundation.org>
+Subject: [PATCH 6.12 386/602] sctp: dont free the ASCONFs own transport in DEL-IP processing
+Date: Thu, 30 Jul 2026 16:12:58 +0200
+Message-ID: <20260730141444.070020855@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -52,89 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Jun Yang <junvyyang@tencent.com>
 
-commit b2ff91b752b0d85e8815e7f44fd85205c4268094 upstream.
+commit 9b2854f86f0b56e9027d68e7a3fc909d1a9b566f upstream.
 
-mptcp_get_options() clears only the status group of struct
-mptcp_options_received; data_seq, subflow_seq and data_len are filled in
-by mptcp_parse_option() exclusively inside the DSS mapping block, which
-runs only when the DSS M (mapping present) bit is set.
+sctp_process_asconf() caches the transport the ASCONF chunk is processed
+against in asconf->transport (== chunk->transport, set once in sctp_rcv()).
+For an ASCONF located through its Address Parameter by
+__sctp_rcv_asconf_lookup(), that cached transport corresponds to the
+Address Parameter, which need not be the packet's source address.
 
-A peer can send a DSS option with the DATA_FIN flag set but the mapping
-bit clear. The parser then records mp_opt->data_fin while leaving
-data_len and data_seq uninitialized. For a zero-length segment
-mptcp_incoming_options() evaluates
+sctp_process_asconf_param() rejects a DEL-IP for the packet source address
+(ADDIP D8, SCTP_ERROR_DEL_SRC_IP), but nothing protects asconf->transport.
+A single ASCONF can therefore carry, in order:
 
-	if (mp_opt.data_fin && mp_opt.data_len == 1 &&
-	    mptcp_update_rcv_data_fin(msk, mp_opt.data_seq, mp_opt.dsn64))
+    [Address Parameter L] [DEL-IP L] [DEL-IP 0.0.0.0]
 
-which reads the uninitialized data_len and data_seq; KMSAN reports an
-uninit-value in mptcp_incoming_options(). The stale data_seq can also be
-fed into the receive-side DATA_FIN sequence tracking.
+where L differs from the source. The DEL-IP for L passes the D8 check and
+calls sctp_assoc_rm_peer() on the transport that asconf->transport still
+points at, freeing it (RCU-deferred). The following wildcard DEL-IP then
+reuses the now-dangling asconf->transport in sctp_assoc_set_primary() and
+sctp_assoc_del_nonprimary_peers(): set_primary() dereferences the freed
+transport (->ipaddr, ->state) and plants the dangling pointer into
+asoc->peer.primary_path / active_path, and del_nonprimary_peers(), keeping
+only the pointer that is no longer on the list, removes every real
+transport, leaving the association with a transport_count of 0 and
+primary_path/active_path pointing at freed memory.
 
-Record the DATA_FIN flag only when the DSS option carries a mapping, so
-data_fin is never set without data_seq and data_len also being present.
-data_fin is part of the status group that mptcp_get_options() clears up
-front, so on the no-map path it stays zero and the zero-length DATA_FIN
-branch is simply skipped. A DATA_FIN is always transmitted together with
-a mapping (mptcp_write_data_fin() sets use_map along with data_seq and
-data_len), so legitimate DATA_FIN handling is unaffected.
+Reject a DEL-IP that targets the transport the ASCONF is being processed
+against, mirroring the existing source-address guard, so the wildcard
+branch can never reuse a freed transport.
 
-Move the pr_debug() that logs the parsed DSS flags below the mapping
-block, so it reports the final data_fin value instead of the stale one
-it would otherwise print before the assignment.
-
-Fixes: 43b54c6ee382 ("mptcp: Use full MPTCP-level disconnect state machine")
-Suggested-by: Paolo Abeni <pabeni@redhat.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260709191925.2811195-1-michael.bommarito@gmail.com
+Fixes: 42e30bf3463c ("[SCTP]: Handle the wildcard ADD-IP Address parameter")
+Cc: stable@kernel.org
+Signed-off-by: Jun Yang <junvyyang@tencent.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/tencent_73762ED1DF08CC9D5F5F61954B01350CFE0A@qq.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/options.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ net/sctp/sm_make_chunk.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/net/mptcp/options.c
-+++ b/net/mptcp/options.c
-@@ -157,17 +157,11 @@ static void mptcp_parse_option(const str
- 		ptr++;
+--- a/net/sctp/sm_make_chunk.c
++++ b/net/sctp/sm_make_chunk.c
+@@ -3171,6 +3171,12 @@ static __be16 sctp_process_asconf_param(
+ 		if (!peer)
+ 			return SCTP_ERROR_DNS_FAILED;
  
- 		flags = (*ptr++) & MPTCP_DSS_FLAG_MASK;
--		mp_opt->data_fin = (flags & MPTCP_DSS_DATA_FIN) != 0;
- 		mp_opt->dsn64 = (flags & MPTCP_DSS_DSN64) != 0;
- 		mp_opt->use_map = (flags & MPTCP_DSS_HAS_MAP) != 0;
- 		mp_opt->ack64 = (flags & MPTCP_DSS_ACK64) != 0;
- 		mp_opt->use_ack = (flags & MPTCP_DSS_HAS_ACK);
- 
--		pr_debug("data_fin=%d dsn64=%d use_map=%d ack64=%d use_ack=%d\n",
--			 mp_opt->data_fin, mp_opt->dsn64,
--			 mp_opt->use_map, mp_opt->ack64,
--			 mp_opt->use_ack);
--
- 		expected_opsize = TCPOLEN_MPTCP_DSS_BASE;
- 
- 		if (mp_opt->use_ack) {
-@@ -178,12 +172,18 @@ static void mptcp_parse_option(const str
- 		}
- 
- 		if (mp_opt->use_map) {
-+			mp_opt->data_fin = (flags & MPTCP_DSS_DATA_FIN) != 0;
- 			if (mp_opt->dsn64)
- 				expected_opsize += TCPOLEN_MPTCP_DSS_MAP64;
- 			else
- 				expected_opsize += TCPOLEN_MPTCP_DSS_MAP32;
- 		}
- 
-+		pr_debug("data_fin=%d dsn64=%d use_map=%d ack64=%d use_ack=%d\n",
-+			 mp_opt->data_fin, mp_opt->dsn64,
-+			 mp_opt->use_map, mp_opt->ack64,
-+			 mp_opt->use_ack);
++		/* Don't free asconf->transport; a later wildcard DEL-IP
++		 * parameter reuses it.
++		 */
++		if (peer == asconf->transport)
++			return SCTP_ERROR_REQ_REFUSED;
 +
- 		/* Always parse any csum presence combination, we will enforce
- 		 * RFC 8684 Section 3.3.0 checks later in subflow_data_ready
- 		 */
+ 		sctp_assoc_rm_peer(asoc, peer);
+ 		break;
+ 	case SCTP_PARAM_SET_PRIMARY:
 
 
