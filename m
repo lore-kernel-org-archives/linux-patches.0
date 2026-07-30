@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E2F2453A39;
-	Thu, 30 Jul 2026 16:05:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD2F83932C8;
+	Thu, 30 Jul 2026 16:05:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427557; cv=none; b=E3CF7qcO45yafYNKvnTc2qicCP0zbLxfdfEUxupiJ5R1IuWtp12dqLGuJOyjlsdtBbLrqGt0ltvSJ7vqqt+0Am2BXzcKrLguQ341u3euy1Xq7K8Pp9+FXlgCVNejIiVTyBIkA13fvLcxvC1ciVWZMsegAoZnNYuhLIef89xM7mY=
+	t=1785427560; cv=none; b=hK+k7Enk3xobg854CHC1TnCRXOKC9hxJT/hu25Ok1aNgyMx5YGkCxs1qpKbOmy4NpHfZk2qdIWsv7gkWcX0fXkL9mb5JXv0hjrYb6JCAZZZoMLp0yH1pHcLjdb8Lgerar1eujT8aiM8dV0ehG0TEqTlw6iFrivIl64XwicSwFDk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427557; c=relaxed/simple;
-	bh=BqAjMJ4PSvgy+1Diq4xbgJOXtfQT5UTEaLm2PLybwDU=;
+	s=arc-20240116; t=1785427560; c=relaxed/simple;
+	bh=oiyJL3TAmIdP9guSYBvyDIbFuw8P4MKzZtFulXcQDpQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kpL8IG5Q8VTC2YnpE8SAdPtrlYK6+9Ut+k76lriZGCNbTRDR77O9bcAVh/knErWVmQW18wIU4KXUhWcKbZVrB+uxU9y83+/nafncwcSGu2XRvsmC7zenXKoNsXwoq5+NaqJ5s4dHU+0JocsnMXtBsJ+56AxLcabeiKynRqdyMAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZsuzRAJb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=RxLTZdENC6mac42I4GlXqGjtGJu5kSVuTNlkEwUpR1ebqfwfYuNdPYukAQhcyc9N9+DwYYcZvC4QsmRzSzG3uQZBRmUWSUb+Q6NmJ8O6pRQM3GT/m0iI65Mim1Sx5VRNegf63Eg185iRnyeoWc59uX3PELfQk0f2YbF2Kl/2R0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rWCjjaz+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZsuzRAJb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED1B01F000E9;
-	Thu, 30 Jul 2026 16:05:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rWCjjaz+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3B961F000E9;
+	Thu, 30 Jul 2026 16:05:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427556;
-	bh=gonRpoC7v1JE1JlEn2/rBu+1JpRvu36AB/oUkK3L88I=;
+	s=korg; t=1785427559;
+	bh=iQcRHSJBNDkgP8Tvgdjch6sLiKcT9qa4jFbj3YtPmXQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZsuzRAJbBpwCa4WcsiYwaqCGj+1hSFbMD8pkO1kxGLfl9n4FTVCJbMk5Mp63eXWVv
-	 J0Gy+NWtsL1il4YFjNLGz7zoCA3cw2hQ0TJI/pLrovZMhrtuTy867fSEVlaI994jez
-	 VJtREXW3iyI16Atg2VxVWxW7x3uk/2PxJHO2KhoM=
+	b=rWCjjaz+eIcTJgMhCDg70uCxFouBDkEv5NCr/Z9eGxlLJ0HZEKwyzDobsyfTN0tMP
+	 +CARuKPkOdUCGcHTq0XCjN61wls20B3rl9uw7/MwZoh36sk2CCtMIhg+zpy4woDJ0w
+	 BvCHmIHNp3PV65zkcelCrKcR+D9b1UnwqjcC7Hp0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
 	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 211/484] drm/amdgpu/uvd: Place VCPU BO only in VRAM for UVD 4.x and older
-Date: Thu, 30 Jul 2026 16:11:48 +0200
-Message-ID: <20260730141428.053914715@linuxfoundation.org>
+Subject: [PATCH 6.6 212/484] drm/amdgpu: Fix amdgpu_bo_move() when old_mem and new_mem are both GTT
+Date: Thu, 30 Jul 2026 16:11:49 +0200
+Message-ID: <20260730141428.077738750@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -54,64 +54,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Timur Kristóf <timur.kristof@gmail.com>
 
-commit 8002b744ad70055ef11ff7d0a7d685bfe8ffe6e4 upstream.
+commit ee94a65f192c05c543b4d3ad7137cd696b5c18fc upstream.
 
-These UVD versions don't fully support GPUVM and are only
-validated to work when their VCPU BO is placed in VRAM.
+The UVD code relies on GTT to GTT moves in order to ensure
+that its BOs don't cross 256M segments.
 
+Fixes: bfe5e585b44f ("drm/ttm: move last binding into the drivers.")
 Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
 Reviewed-by: Christian König <christian.koenig@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 01b8dfc0660db5d6cdd62c22dc20f774a26ce853)
+(cherry picked from commit 21fd45e5e2628d00b478590bcc3d14d3de5d45b6)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c |   17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c |   18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
-@@ -188,6 +188,7 @@ int amdgpu_uvd_sw_init(struct amdgpu_dev
- 	const struct common_firmware_header *hdr;
- 	unsigned int family_id;
- 	int i, j, r;
-+	u32 vcpu_bo_domain;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
+@@ -479,6 +479,15 @@ static int amdgpu_bo_move(struct ttm_buf
  
- 	INIT_DELAYED_WORK(&adev->uvd.idle_work, amdgpu_uvd_idle_work_handler);
- 
-@@ -319,12 +320,20 @@ int amdgpu_uvd_sw_init(struct amdgpu_dev
- 	if (adev->firmware.load_type != AMDGPU_FW_LOAD_PSP)
- 		bo_size += AMDGPU_GPU_PAGE_ALIGN(le32_to_cpu(hdr->ucode_size_bytes) + 8);
- 
-+	/* UVD 5.0 and newer HW can use 64 bit addressing. */
-+	adev->uvd.address_64_bit =
-+		!amdgpu_device_ip_block_version_cmp(adev, AMD_IP_BLOCK_TYPE_UVD, 5, 0);
+ 	if (new_mem->mem_type == TTM_PL_TT ||
+ 	    new_mem->mem_type == AMDGPU_PL_PREEMPT) {
++		if (old_mem && (old_mem->mem_type == TTM_PL_TT ||
++				old_mem->mem_type == AMDGPU_PL_PREEMPT)) {
++			r = ttm_bo_wait_ctx(bo, ctx);
++			if (r)
++				return r;
 +
-+	vcpu_bo_domain = AMDGPU_GEM_DOMAIN_VRAM;
-+	if (adev->uvd.address_64_bit)
-+		vcpu_bo_domain |= AMDGPU_GEM_DOMAIN_GTT;
++			amdgpu_ttm_backend_unbind(bo->bdev, bo->ttm);
++		}
 +
- 	for (j = 0; j < adev->uvd.num_uvd_inst; j++) {
- 		if (adev->uvd.harvest_config & (1 << j))
- 			continue;
-+
- 		r = amdgpu_bo_create_kernel(adev, bo_size, PAGE_SIZE,
--					    AMDGPU_GEM_DOMAIN_VRAM |
--					    AMDGPU_GEM_DOMAIN_GTT,
-+					    vcpu_bo_domain,
- 					    &adev->uvd.inst[j].vcpu_bo,
- 					    &adev->uvd.inst[j].gpu_addr,
- 					    &adev->uvd.inst[j].cpu_addr);
-@@ -339,10 +348,6 @@ int amdgpu_uvd_sw_init(struct amdgpu_dev
- 		adev->uvd.filp[i] = NULL;
+ 		r = amdgpu_ttm_backend_bind(bo->bdev, bo->ttm, new_mem);
+ 		if (r)
+ 			return r;
+@@ -511,6 +520,15 @@ static int amdgpu_bo_move(struct ttm_buf
+ 		amdgpu_bo_move_notify(bo, evict, new_mem);
+ 		ttm_resource_free(bo, &bo->resource);
+ 		ttm_bo_assign_mem(bo, new_mem);
++		return 0;
++	}
++	if ((old_mem->mem_type == TTM_PL_TT ||
++	     old_mem->mem_type == AMDGPU_PL_PREEMPT) &&
++	    (new_mem->mem_type == TTM_PL_TT ||
++	     new_mem->mem_type == AMDGPU_PL_PREEMPT)) {
++		amdgpu_bo_move_notify(bo, evict, new_mem);
++		ttm_resource_free(bo, &bo->resource);
++		ttm_bo_assign_mem(bo, new_mem);
+ 		return 0;
  	}
  
--	/* from uvd v5.0 HW addressing capacity increased to 64 bits */
--	if (!amdgpu_device_ip_block_version_cmp(adev, AMD_IP_BLOCK_TYPE_UVD, 5, 0))
--		adev->uvd.address_64_bit = true;
--
- 	r = amdgpu_uvd_create_msg_bo_helper(adev, 128 << 10, &adev->uvd.ib_bo);
- 	if (r)
- 		return r;
 
 
