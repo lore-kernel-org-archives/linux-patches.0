@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26E2C43E9F9;
-	Thu, 30 Jul 2026 14:19:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04664429838;
+	Thu, 30 Jul 2026 14:19:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421172; cv=none; b=CxWCmq0HhdjrGznnqQCnS88i9dQrv2PWQ9xxxhgPgFjiFYHNyYBwR71TQWT81HbvlihdH6vWm+ro7qytC8VcqpArA1Tx49LwbZwglWJa6UbGpmIRV7CfhFgoqf97kimCWdsq9+7LbMCr0hU9MGMiN+Xf5ofx+NeR/PPZXEqhHo4=
+	t=1785421175; cv=none; b=CM/rLtp0jigzBJsxk+DkZg/EXwfvAfEzLf8Jbsd2aPZxGROQ6QQwsB3pixpd2CRWtUQ83rpxn2vV3QZ9YfYpAmrgQHeArZUEPB4M/xSaQW0VCpWCShVSnVypLk+byKg42RXecVWvfufvNAtJ8aYS4HFgweciBBERB4juVPJjq7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421172; c=relaxed/simple;
-	bh=DGAKmOVLMPBaC2bV+nM36ozETKIubBkGdKO9w/BxGds=;
+	s=arc-20240116; t=1785421175; c=relaxed/simple;
+	bh=s52NQi2oPwBTOSIQch8chB04vw+KyXp9NCSTbHkHw/Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M0ZfyVBrAACZhffHVwMhMnggfxupHG8Kvq/Gc8S7KbS40d/yDZKvnzVGXOkBvDVmex/LW9yHeTFa8bBUFyv7RWDylD7oaASASV2PyrdIi0Ati51z9aOpoZfTnmQTatQcQW3sq8sKn2WEeT0kcWwUBGHB9yZ0g52WRBudJgBNmEg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W5kB0v5w; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ad6Ujpv9oA1tpLthV/hvAXxkihYEqVhktkr2CvwAsHNU8zonPACLbl7iVb6Cs55VoIICjYGXSzDs6cHuBOSDEfT9XrVCpQcqfpFlMNRf3ThoSmgub4qVoubbV9Xh87jpiaenRYatzDa2HZ4eJsJHGnQRaFP71q0TzDhyaUJxfxI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0l1rAVTn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W5kB0v5w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DB061F00A3D;
-	Thu, 30 Jul 2026 14:19:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0l1rAVTn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F48C1F00A3A;
+	Thu, 30 Jul 2026 14:19:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421170;
-	bh=qlR8QR7HFJiecCo7Z+6+MjJaY66+sVsTHKa3zSqykFA=;
+	s=korg; t=1785421173;
+	bh=f41M/e9AeEpahvUKEuKY664gtFIVXymJLabV2GPCnOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W5kB0v5wWJAJ9pulZdWH+osFmQhhwM2T0iZfJQnTAPbrrn2Wo8J8glANwTQ/0K70V
-	 TZYtkwbPMW9TwYeokr0u7COrVSJ36+krCpeWkLPZGUHt2eKf6cP71/hpMVnoeOXA14
-	 s8QbdcKNfMR/bFjBCNF+lYk+fQ4hKimKUiBefwDA=
+	b=0l1rAVTnxQpmHzVf8ab76t+8hwEkCEQF6sUmw0Z/V5OiWHc7W9Nm81BeSPKobFuw6
+	 Le+XM+w/Lekg+uMBvEYS0ZERR4BgwiLOXPuKLyKZPxO14dTBhIRwRPQT/qAsB8Y0pa
+	 Xfxgx2UZKDILnnCjTNyDCPZzwwSQIlLPxpULpUEU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sumit Gupta <sumitg@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Petr Wozniak <petr.wozniak@gmail.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 015/744] arm64: tegra: Fix CPU compatible string to cortex-a78ae on Tegra234
-Date: Thu, 30 Jul 2026 16:04:48 +0200
-Message-ID: <20260730141444.606922274@linuxfoundation.org>
+Subject: [PATCH 7.1 016/744] xfrm: propagate -EINPROGRESS from validate_xmit_xfrm()
+Date: Thu, 30 Jul 2026 16:04:49 +0200
+Message-ID: <20260730141444.628568072@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -51,141 +52,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sumit Gupta <sumitg@nvidia.com>
+From: Petr Wozniak <petr.wozniak@gmail.com>
 
-[ Upstream commit 0dfa1e960f86e032007882b032c5cc7d14ebe73e ]
+[ Upstream commit 6860b467f569f732b11cbc588ae7e195e90e7e23 ]
 
-The Tegra234 SoC uses Cortex-A78AE cores, not Cortex-A78. Update the
-compatible string for all CPU nodes to match the actual hardware.
+validate_xmit_xfrm() returns NULL both when a packet is dropped and
+when it is stolen by async crypto (-EINPROGRESS from ->xmit()).
+Callers cannot distinguish the two cases.
 
-Tegra234 hardware reports:
-  # head /proc/cpuinfo | egrep 'implementer|part'
-  CPU implementer : 0x41
-  CPU part        : 0xd42
+f53c723902d1 ("net: Add asynchronous callbacks for xfrm on layer 2.")
+changed the semantics of a NULL return from "dropped" to "stolen or
+dropped", but __dev_queue_xmit() was not updated.  On virtual/bridge
+interfaces (noqueue qdisc) __dev_queue_xmit() initialises rc=-ENOMEM
+and jumps to out: when skb is NULL, returning -ENOMEM to the caller
+even though the packet will be delivered correctly via xfrm_dev_resume().
 
-Which maps to (from arch/arm64/include/asm/cputype.h):
-  #define ARM_CPU_IMP_ARM              0x41
-  #define ARM_CPU_PART_CORTEX_A78AE    0xD42
+Return ERR_PTR(-EINPROGRESS) from validate_xmit_xfrm() for the async
+case so callers can tell it apart from a real drop.  Update
+__dev_queue_xmit() to handle ERR_PTR(-EINPROGRESS) from
+validate_xmit_skb() correctly.  Update validate_xmit_skb_list() to
+use IS_ERR_OR_NULL() so that ERR_PTR(-EINPROGRESS) is not mistakenly
+added to the transmitted list.
 
-Fixes: a12cf5c339b08 ("arm64: tegra: Describe Tegra234 CPU hierarchy")
-Signed-off-by: Sumit Gupta <sumitg@nvidia.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
+Fixes: f53c723902d1 ("net: Add asynchronous callbacks for xfrm on layer 2.")
+Suggested-by: Sabrina Dubroca <sd@queasysnail.net>
+Signed-off-by: Petr Wozniak <petr.wozniak@gmail.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/nvidia/tegra234.dtsi | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ net/core/dev.c         | 10 ++++++++--
+ net/xfrm/xfrm_device.c |  4 ++--
+ 2 files changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/nvidia/tegra234.dtsi b/arch/arm64/boot/dts/nvidia/tegra234.dtsi
-index 18220cdac9f9bb..eda23431ed05ea 100644
---- a/arch/arm64/boot/dts/nvidia/tegra234.dtsi
-+++ b/arch/arm64/boot/dts/nvidia/tegra234.dtsi
-@@ -5339,7 +5339,7 @@ cpus {
- 		#size-cells = <0>;
+diff --git a/net/core/dev.c b/net/core/dev.c
+index f81ce83fb3250d..31741169cb0ba6 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -4016,6 +4016,9 @@ static struct sk_buff *validate_xmit_unreadable_skb(struct sk_buff *skb,
+ 	return NULL;
+ }
  
- 		cpu0_0: cpu@0 {
--			compatible = "arm,cortex-a78";
-+			compatible = "arm,cortex-a78ae";
- 			device_type = "cpu";
- 			reg = <0x00000>;
++/* Returns the skb on success, NULL if dropped, or ERR_PTR(-EINPROGRESS)
++ * if stolen by async xfrm crypto (delivered via xfrm_dev_resume()).
++ */
+ static struct sk_buff *validate_xmit_skb(struct sk_buff *skb, struct net_device *dev, bool *again)
+ {
+ 	netdev_features_t features;
+@@ -4087,7 +4090,7 @@ struct sk_buff *validate_xmit_skb_list(struct sk_buff *skb, struct net_device *d
+ 		skb->prev = skb;
  
-@@ -5358,7 +5358,7 @@ cpu0_0: cpu@0 {
- 		};
+ 		skb = validate_xmit_skb(skb, dev, again);
+-		if (!skb)
++		if (IS_ERR_OR_NULL(skb))
+ 			continue;
  
- 		cpu0_1: cpu@100 {
--			compatible = "arm,cortex-a78";
-+			compatible = "arm,cortex-a78ae";
- 			device_type = "cpu";
- 			reg = <0x00100>;
+ 		if (!head)
+@@ -4858,8 +4861,11 @@ int __dev_queue_xmit(struct sk_buff *skb, struct net_device *sb_dev)
+ 			goto recursion_alert;
  
-@@ -5377,7 +5377,7 @@ cpu0_1: cpu@100 {
- 		};
+ 		skb = validate_xmit_skb(skb, dev, &again);
+-		if (!skb)
++		if (IS_ERR_OR_NULL(skb)) {
++			if (PTR_ERR(skb) == -EINPROGRESS)
++				rc = NET_XMIT_SUCCESS;
+ 			goto out;
++		}
  
- 		cpu0_2: cpu@200 {
--			compatible = "arm,cortex-a78";
-+			compatible = "arm,cortex-a78ae";
- 			device_type = "cpu";
- 			reg = <0x00200>;
+ 		HARD_TX_LOCK(dev, txq, cpu);
  
-@@ -5396,7 +5396,7 @@ cpu0_2: cpu@200 {
- 		};
+diff --git a/net/xfrm/xfrm_device.c b/net/xfrm/xfrm_device.c
+index 550457e4c4f01d..8b526e3676389a 100644
+--- a/net/xfrm/xfrm_device.c
++++ b/net/xfrm/xfrm_device.c
+@@ -182,7 +182,7 @@ struct sk_buff *validate_xmit_xfrm(struct sk_buff *skb, netdev_features_t featur
+ 		err = x->type_offload->xmit(x, skb, esp_features);
+ 		if (err) {
+ 			if (err == -EINPROGRESS)
+-				return NULL;
++				return ERR_PTR(-EINPROGRESS);
  
- 		cpu0_3: cpu@300 {
--			compatible = "arm,cortex-a78";
-+			compatible = "arm,cortex-a78ae";
- 			device_type = "cpu";
- 			reg = <0x00300>;
+ 			XFRM_INC_STATS(xs_net(x), LINUX_MIB_XFRMOUTSTATEPROTOERROR);
+ 			kfree_skb(skb);
+@@ -224,7 +224,7 @@ struct sk_buff *validate_xmit_xfrm(struct sk_buff *skb, netdev_features_t featur
+ 		pskb = skb2;
+ 	}
  
-@@ -5415,7 +5415,7 @@ cpu0_3: cpu@300 {
- 		};
- 
- 		cpu1_0: cpu@10000 {
--			compatible = "arm,cortex-a78";
-+			compatible = "arm,cortex-a78ae";
- 			device_type = "cpu";
- 			reg = <0x10000>;
- 
-@@ -5434,7 +5434,7 @@ cpu1_0: cpu@10000 {
- 		};
- 
- 		cpu1_1: cpu@10100 {
--			compatible = "arm,cortex-a78";
-+			compatible = "arm,cortex-a78ae";
- 			device_type = "cpu";
- 			reg = <0x10100>;
- 
-@@ -5453,7 +5453,7 @@ cpu1_1: cpu@10100 {
- 		};
- 
- 		cpu1_2: cpu@10200 {
--			compatible = "arm,cortex-a78";
-+			compatible = "arm,cortex-a78ae";
- 			device_type = "cpu";
- 			reg = <0x10200>;
- 
-@@ -5472,7 +5472,7 @@ cpu1_2: cpu@10200 {
- 		};
- 
- 		cpu1_3: cpu@10300 {
--			compatible = "arm,cortex-a78";
-+			compatible = "arm,cortex-a78ae";
- 			device_type = "cpu";
- 			reg = <0x10300>;
- 
-@@ -5491,7 +5491,7 @@ cpu1_3: cpu@10300 {
- 		};
- 
- 		cpu2_0: cpu@20000 {
--			compatible = "arm,cortex-a78";
-+			compatible = "arm,cortex-a78ae";
- 			device_type = "cpu";
- 			reg = <0x20000>;
- 
-@@ -5510,7 +5510,7 @@ cpu2_0: cpu@20000 {
- 		};
- 
- 		cpu2_1: cpu@20100 {
--			compatible = "arm,cortex-a78";
-+			compatible = "arm,cortex-a78ae";
- 			device_type = "cpu";
- 			reg = <0x20100>;
- 
-@@ -5529,7 +5529,7 @@ cpu2_1: cpu@20100 {
- 		};
- 
- 		cpu2_2: cpu@20200 {
--			compatible = "arm,cortex-a78";
-+			compatible = "arm,cortex-a78ae";
- 			device_type = "cpu";
- 			reg = <0x20200>;
- 
-@@ -5548,7 +5548,7 @@ cpu2_2: cpu@20200 {
- 		};
- 
- 		cpu2_3: cpu@20300 {
--			compatible = "arm,cortex-a78";
-+			compatible = "arm,cortex-a78ae";
- 			device_type = "cpu";
- 			reg = <0x20300>;
+-	return skb;
++	return skb ? skb : ERR_PTR(-EINPROGRESS);
+ }
+ EXPORT_SYMBOL_GPL(validate_xmit_xfrm);
  
 -- 
 2.53.0
