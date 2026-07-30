@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0C4730C618;
-	Thu, 30 Jul 2026 15:02:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1FA5379988;
+	Thu, 30 Jul 2026 15:02:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423737; cv=none; b=eo8NoGp3c3eKhFYo30lvWklSYvajcqvxJR+H2oZJfe2YEDvM7OWAQ6fxv6V7ouUgzgQxEvyx+b9qJct521b7yTFMSHz233xQv0s1RV/iSmQF+fFpgVE/n5dm2X1DQquQGtOgnUREAMAwOWtTzMuF6jKoF8KdOEiDDKL3mmBPvzc=
+	t=1785423739; cv=none; b=kwsP3iO6cVOJAmD3OuAFn1yqHorDAIefhA6DtNTHIQeotyR25l/chrhinVkt+HbGr30tGWw5GMFRCqHWAbiIBZKeVGmuGn+bGO00hESm8lqQu3qi6uAS8Zyg61ZmrwOLjJG4KBXCXvu18iBP7kAZg5Pq6PXDZyHnRPpAuUw++hw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423737; c=relaxed/simple;
-	bh=XFRsFuS+C2nS2+T1nqI4I5O2Lqt/uBQXc+M+bKyb90I=;
+	s=arc-20240116; t=1785423739; c=relaxed/simple;
+	bh=M9jA3VVM2UYctwu6Jm96AdnvAEZdmdXrcRybZ7s1ESw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BFPSi4w45R1KrvhPS6D3C8Uw/NeDDRaXBSFX+0EUaGoGk5h2otneYf57dCADi7UKWy9QmInFIs7n10FLZGwCvGfvzTs4iSE2bCHzBEbRE2puh1YnvqgzfEFjXt1DyoSY4gDsHkQnbQAp6w2QBC6BCBKwhg8jH4jes4/SIS8HS4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wlf0MQwe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ag4UIVu0QisjYjm2Igk1tZsonILqGYNRZYqui1VvNanqjIIsv1DzUDdHb79KGa9pehsA3KCDtkhBmMb8+R7QJhy0lmWjDyIYEU3BVq0G6uEB7yTdXCTIkJqincw4Z4uObdI8/9Psbg1dwG2h0iY2zfKUsM3TsLGjUNHOdllVPbw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k04vlLwV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wlf0MQwe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85F181F000E9;
-	Thu, 30 Jul 2026 15:02:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k04vlLwV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2898D1F00A3A;
+	Thu, 30 Jul 2026 15:02:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423735;
-	bh=fGFSBaaTGJnwxvKQ0PGv3HXM1Izx4VUNJKUWQUzW7rw=;
+	s=korg; t=1785423738;
+	bh=kDUGn8AqsZLt0sICJXFJlAT1KGCtg7PoAZlCOw1PMOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wlf0MQwetpb2aanwg4GYx7AwQ/GtQo2QxFg5u6fI54j2U1cYVRqdvT2TQocIZjvsR
-	 As+L0wBOl5evoM8/HwRfwZDZ3/BVPI8SS0f5G2CQRmVDWdmWLVRlIvhTHyHxqmWwd7
-	 cf2TXuczdju8f+/Yuoysqr0Gd0EksVUQtvOwbG3o=
+	b=k04vlLwVtNbu6pwInFevBID0ZpDFLPmOh6T9obBcXGVq/RpQvOmMvyIYnmteJ7mlM
+	 8xAF72v1ld596vYr4U7TElv9eGnbY1WyrtyclsJ77kLllufO4/5OekMK2smFBius5C
+	 OidUxhsuO9sOXmD+3HPsYwr+WWCSxPIZH+TIalSI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
 	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.18 148/675] USB: gadget: snps-udc: fix device name leak on probe failure
-Date: Thu, 30 Jul 2026 16:07:58 +0200
-Message-ID: <20260730141448.283324123@linuxfoundation.org>
+Subject: [PATCH 6.18 149/675] USB: gadget: fsl-udc: fix device name leak on probe failure
+Date: Thu, 30 Jul 2026 16:07:59 +0200
+Message-ID: <20260730141448.303558043@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -52,30 +52,30 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit 29a142d3e8b35ebc9e0bcc78f4bc26c9b6a9ac0b upstream.
+commit 6b874d00c466e73c6448a89856407fe46b2f50e4 upstream.
 
 The gadget device name is set by UDC core when registering the gadget
 and must not be set before to avoid leaking the name in intermediate
-error paths (e.g. when detecting an older chip revision).
+error paths (e.g. on dma pool creation failure).
 
-Fixes: 12ad0fcaf2fb ("usb: gadget: amd5536udc: let udc-core manage gadget->dev")
+Fixes: eab35c4e6d95 ("usb: gadget: fsl_udc_core: let udc-core manage gadget->dev")
 Cc: stable <stable@kernel.org>
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260702141536.90887-3-johan@kernel.org
+Link: https://patch.msgid.link/20260702141536.90887-2-johan@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/udc/snps_udc_core.c |    1 -
+ drivers/usb/gadget/udc/fsl_udc_core.c |    1 -
  1 file changed, 1 deletion(-)
 
---- a/drivers/usb/gadget/udc/snps_udc_core.c
-+++ b/drivers/usb/gadget/udc/snps_udc_core.c
-@@ -3133,7 +3133,6 @@ int udc_probe(struct udc *dev)
- 	/* device struct setup */
- 	dev->gadget.ops = &udc_ops;
+--- a/drivers/usb/gadget/udc/fsl_udc_core.c
++++ b/drivers/usb/gadget/udc/fsl_udc_core.c
+@@ -2474,7 +2474,6 @@ static int fsl_udc_probe(struct platform
+ 	udc_controller->gadget.name = driver_name;
  
--	dev_set_name(&dev->gadget.dev, "gadget");
- 	dev->gadget.name = name;
- 	dev->gadget.max_speed = USB_SPEED_HIGH;
+ 	/* Setup gadget.dev and register with kernel */
+-	dev_set_name(&udc_controller->gadget.dev, "gadget");
+ 	udc_controller->gadget.dev.of_node = pdev->dev.of_node;
  
+ 	if (!IS_ERR_OR_NULL(udc_controller->transceiver))
 
 
