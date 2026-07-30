@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C0F03B52EE;
-	Thu, 30 Jul 2026 14:44:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4B0E3B52EE;
+	Thu, 30 Jul 2026 14:44:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422697; cv=none; b=hWKgwCvdPW2SwPdmH+w2QSJQZCXygm1lXVpeu0ZJx0pkbQJ70cXoUHrldMYl3GbfLhfkrEn8fegnPOURnlBMLqY+ue1BSLX7NVBN91TD0olwc5aR/rR8EoDdjRzS+tBK/pNtgbEd1k29gcM79NJbbN7dZqeg0uZ1rEvK0710uuU=
+	t=1785422700; cv=none; b=FCW0T3c911X22kbnZmgMudcDAL68E7njmkaHnFPDdapwNYrhvMaMl5DSxyx3el/EcaIJV5+tvJNj850w9tdoiYqep9U8fJkrH5y32h5fFsp/trlXPE7VKgjgWW6I12OYr7Jqp0hPLnlaa3dRdRTBhMWZWfXbD1HG2Ij0nXrRVu0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422697; c=relaxed/simple;
-	bh=NqLs9vKAaCxBhG8YLO0rP+7mMVln8cwUh9A9ATwpFjQ=;
+	s=arc-20240116; t=1785422700; c=relaxed/simple;
+	bh=BZEINygPJ7cou+xpDrVMtD5Z1OMZVXiYnWUmEOZwfLA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=goTHyXm/Fs9i+eBmoBn54sgZ+pxbmrfYttkr8xHIYPotBuTpUtAu0mou5p9+4Rxipl4cbUDJQgy6yMvC+3AYzkIYnFtnPgRkn74ttC5J+7W7M+H3lGKWcwIzVGvjpX3EzOiuBXAJwGqbCGx1mIndm1VeqR9/ARej1vYVkpod2q4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jKZCkAF9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jW+fsjQGEXePMR+CKZKL0H1+nH0Zh4i/Q8/PBX7hjLOx70FP+l/YmzkSkAGsDFOM9m3Vidvu21Y3B68uKjwlzivbZP0Z+NuJPZWiyYPaLkByefqwj9RcIYw06Ki4UhMqp3/mD2yGR37DkY6OIIpJCJKf0wQsX8V7Ot+VVFqEPXY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DmPEKsyV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jKZCkAF9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6D751F000E9;
-	Thu, 30 Jul 2026 14:44:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DmPEKsyV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFB3F1F000E9;
+	Thu, 30 Jul 2026 14:44:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422695;
-	bh=NjV3TbjpaBOSg7ix0aKiE3zuMKkeqAyVK4ZvQF9/2rs=;
+	s=korg; t=1785422698;
+	bh=x+2Qf/Z5srkmyVUtGYAq5NmWuBJ3L8e+5uaBwcR7Vxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jKZCkAF9vaqMoBzXAhtbwX5IkMf4dGMyjbvTxLtS4LMY2WeL+CA3PmqRk7xW/ghjj
-	 kF3DJwjHWGXjziU+NDq/2vcY7Kz55afDlKI2Qiw0k2CN3JoAfrFV49ao/DTl1lQaDV
-	 GarlZYv9Hmr4NXSQS3Sb9TYVyUPmkqn8ynjvtmVU=
+	b=DmPEKsyVjCzjYx09b7jfnozaan9VvMJeqYgoUuBYjls828NWCcM6XFIQjdYEQMvFJ
+	 fQn5eTU4dFeG8alnZ4dc1juYu6XPLowQHRdy8GRTKoy6j5dT9GiLI9XGe0CoR6L9zR
+	 AGlGB0ECYcEjDOfWFQE7eM9QXwhOneucZUCfYZ04=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Shtylyov <s.shtylyov@auroraos.dev>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 7.1 526/744] media: v4l2-ctrls-request: add NULL check in v4l2_ctrl_request_complete()
-Date: Thu, 30 Jul 2026 16:13:19 +0200
-Message-ID: <20260730141455.454336939@linuxfoundation.org>
+Subject: [PATCH 7.1 527/744] media: v4l2-ctrls: validate HEVC active reference counts
+Date: Thu, 30 Jul 2026 16:13:20 +0200
+Message-ID: <20260730141455.475289567@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -50,60 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergey Shtylyov <s.shtylyov@auroraos.dev>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-commit caced3578bf9f104a4aaad8f46c4c719e705d9a6 upstream.
+commit afbe4bc252d90a6f8fad869b06d5430f615f22f9 upstream.
 
-If CONFIG_MEDIA_CONTROLLER is undefined, media_request_object_find() will
-always return NULL, so its 2nd call in v4l2_ctrl_request_complete() would
-fail as well as the 1st one and thus cause hdl to have a wrong value (at
-the top of memory) and list_for_each_entry() to iterate over the garbage
-data located there. Add NULL check for the 2nd call and place the error
-cleanup at the end of v4l2_ctrl_request_complete()...
+HEVC slice parameters are shared stateless V4L2 controls, but the common
+validation path does not verify the active L0/L1 reference counts before
+driver-specific code consumes them.
 
-Found by Linux Verification Center (linuxtesting.org) with the Svace static
-analysis tool.
+The original report came from Cedrus, but the active count bounds are
+not Cedrus-specific. Validate them in the common HEVC slice control path
+so stateless HEVC drivers get the same basic guarantees as soon as the
+control is queued.
 
-Fixes: c3bf5129f339 ("media: v4l2-ctrls: always copy the controls on completion")
+Do not reject ref_idx_l0/ref_idx_l1 entries here. Existing userspace may
+use out-of-range sentinel values such as 0xff for missing references, and
+some hardware can use that information for concealment. Keep this common
+check limited to the active reference counts.
+
+Fixes: d395a78db9eab ("media: hevc: Add decode params control")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sergey Shtylyov <s.shtylyov@auroraos.dev>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/v4l2-core/v4l2-ctrls-request.c |   14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ drivers/media/v4l2-core/v4l2-ctrls-core.c |   13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
---- a/drivers/media/v4l2-core/v4l2-ctrls-request.c
-+++ b/drivers/media/v4l2-core/v4l2-ctrls-request.c
-@@ -348,13 +348,12 @@ void v4l2_ctrl_request_complete(struct m
- 		ret = v4l2_ctrl_handler_init(hdl, (main_hdl->nr_of_buckets - 1) * 8);
- 		if (!ret)
- 			ret = v4l2_ctrl_request_bind(req, hdl, main_hdl);
--		if (ret) {
--			v4l2_ctrl_handler_free(hdl);
--			kfree(hdl);
--			return;
--		}
-+		if (ret)
-+			goto error;
- 		hdl->request_is_queued = true;
- 		obj = media_request_object_find(req, &req_ops, main_hdl);
-+		if (!obj)
-+			goto error;
- 	}
- 	hdl = container_of(obj, struct v4l2_ctrl_handler, req_obj);
+--- a/drivers/media/v4l2-core/v4l2-ctrls-core.c
++++ b/drivers/media/v4l2-core/v4l2-ctrls-core.c
+@@ -971,6 +971,7 @@ static int std_validate_compound(const s
+ 	struct v4l2_ctrl_hevc_ext_sps_st_rps *p_hevc_st_rps;
+ 	struct v4l2_ctrl_hevc_sps *p_hevc_sps;
+ 	struct v4l2_ctrl_hevc_pps *p_hevc_pps;
++	struct v4l2_ctrl_hevc_slice_params *p_hevc_slice_params;
+ 	struct v4l2_ctrl_hdr10_mastering_display *p_hdr10_mastering;
+ 	struct v4l2_ctrl_hevc_decode_params *p_hevc_decode_params;
+ 	struct v4l2_area *area;
+@@ -1260,6 +1261,18 @@ static int std_validate_compound(const s
+ 		break;
  
-@@ -389,6 +388,11 @@ void v4l2_ctrl_request_complete(struct m
- 	mutex_unlock(main_hdl->lock);
- 	media_request_object_complete(obj);
- 	media_request_object_put(obj);
-+	return;
+ 	case V4L2_CTRL_TYPE_HEVC_SLICE_PARAMS:
++		p_hevc_slice_params = p;
 +
-+error:
-+	v4l2_ctrl_handler_free(hdl);
-+	kfree(hdl);
- }
- EXPORT_SYMBOL(v4l2_ctrl_request_complete);
++		if (p_hevc_slice_params->num_ref_idx_l0_active_minus1 >=
++		    V4L2_HEVC_DPB_ENTRIES_NUM_MAX)
++			return -EINVAL;
++
++		if (p_hevc_slice_params->slice_type != V4L2_HEVC_SLICE_TYPE_B)
++			break;
++
++		if (p_hevc_slice_params->num_ref_idx_l1_active_minus1 >=
++		    V4L2_HEVC_DPB_ENTRIES_NUM_MAX)
++			return -EINVAL;
+ 		break;
  
+ 	case V4L2_CTRL_TYPE_HEVC_EXT_SPS_ST_RPS:
 
 
