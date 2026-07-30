@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4334D40963F;
-	Thu, 30 Jul 2026 14:40:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BFC733D4E2;
+	Thu, 30 Jul 2026 14:40:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422452; cv=none; b=cu/EZJ4TI1jKw6UqiFeIw3npqKCOs/vt8b8coW0FWYinPCC5GCkETf2R/CoC/llrsdlPx5+K+VhPQAmG9v6dGgKGF3KXbwTgVMdhV+3EhZ7CmjTMuMJ7jnnnS/zFiRQ1SskXJQ5F+MuOJ4xl4VASAird33EM8C+qRSozPBkC78Y=
+	t=1785422455; cv=none; b=ius8V1+ESZwQRJEYQk2qe7yMHiE9sKuF3gKLc89rxCZF2bR+IDHNYXYi+jC+DE5/8oD60ljVwcvMDJxMoWM9w7Gbont6SnoMhGnzFr1NfwDuiTyTBEJOzJcOq7gymJa1Axe71/6pbhjsjW28m2Wxa+kChQQg15n9bgRL9joLOGk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422452; c=relaxed/simple;
-	bh=cdqA1B/eGHMeof4M8rAt0ZjS4cN+NpA0CrPYVhRTY+k=;
+	s=arc-20240116; t=1785422455; c=relaxed/simple;
+	bh=L0Aa75UmQ8mw3PJzWqPM2vAmo/DzGoIk/GvRbuldWsQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dKq5p5hPOP3T5QdIiE52vR4h3sW7jlGyBFQ8oyW1HKzNndo9dgYyRM44mPRYo9FFu4TF985/GG8mNYoLNUPIAuvRwRaq6FDvduev/NBO5I1H44ixT3wgVV7pyJpa8Mx24oPlraMfrrSb+JpBINMbo6Ssdr0Y6iYi7a76K0XC/U8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fMYsztKo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pGF9dAEeDNUFmilMDvSYZKmuZ6zb7wRPh/OiHB7zAS8KIHTqsEKAfNYSy+0kGiYH/OM0lokjBlQcggSKCNxNYrh2gM3Mk7PDGkuWzluOPvslq/U2SKjOTqPw8KMuzj0soAxXXTay/WTqzkRASxz8H6yYPlxr5rsJAuxxo+5LSR0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1vR8wB6d; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fMYsztKo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DCD21F000E9;
-	Thu, 30 Jul 2026 14:40:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1vR8wB6d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 773101F00A3A;
+	Thu, 30 Jul 2026 14:40:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422451;
-	bh=cNDph0h1toIPL7tDtDEv9pepH93YYRaSPSdRRkqw9K0=;
+	s=korg; t=1785422454;
+	bh=Auy/xqYuj+exZHt+OZgWjWWHjyzk40PyEU9nNV91dNg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fMYsztKoaH6f05CES8Nzouw3PivuMojVRu57ruHbE1lB8FnOUZaz57PuDCESuxQer
-	 Ne+QzHVtLgShlsH/JxkFQZkOZHn4bDzkZAkPAu5hguSQv6iLZEP/TgoeD1BzvNM5Zj
-	 nY0bMkEPJJCifJh7o/CMWu/Sp2eHDbjcyAEh26ok=
+	b=1vR8wB6d/BM+6przNrt6+dlrcNevrLNz/Rfj+UGnXRdngFkO8P52utfCCIC8+SGlL
+	 f6xfR3tCLWpPO+Qfe87P3VvrsgBYrv/ratwFb1YYgWQylwyK5Du07tGMFoiQmZ1rqo
+	 UFOKZW+/oYPbJO0OZtZevu05CTQkfV2K8YY9pxXw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Hodo <martin.hodo@intel.com>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Imre Deak <imre.deak@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 7.1 442/744] drm/i915/mst: limit DP MST ESI service loop
-Date: Thu, 30 Jul 2026 16:11:55 +0200
-Message-ID: <20260730141453.694498837@linuxfoundation.org>
+	Yang Wang <kevinyang.wang@amd.com>,
+	Kenneth Feng <kenneth.feng@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 7.1 443/744] drm/amd/pm: fix smu14 power limit range calculation
+Date: Thu, 30 Jul 2026 16:11:56 +0200
+Message-ID: <20260730141453.716248270@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -47,69 +45,89 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jani Nikula <jani.nikula@intel.com>
+From: Yang Wang <kevinyang.wang@amd.com>
 
-commit 005771c18c5b2c98cb4e7517661aea460990fd3f upstream.
+commit e987eabc02646920cd13ab75902693e99735eca0 upstream.
 
-The loop in intel_dp_check_mst_status() keeps servicing interrupts
-originating from the sink without bound. Add an upper bound to the new
-interrupts occurring during interrupt processing to not get stuck on
-potentially stuck sink devices. Use arbitrary 32 tries to clear incoming
-interrupts in one go.
+SMU14 derives the default PPT limit from SocketPowerLimitAc/Dc, but
+MsgLimits.Power may expose a different firmware limit for the same PPT0
+throttler. Using those values independently as fixed min/max bases can
+report an incorrect configurable power range.
 
-Discovered using AI-assisted static analysis confirmed by Intel Product
-Security.
+Keep the socket power limit as the default value and as the fallback for
+current-limit queries. Calculate the reported range from both firmware
+values instead, using the lower value as the minimum base and the higher
+value as the maximum base before applying OD percentages.
 
-Note: The condition likely pre-dates the commit in the Fixes: tag, but
-this is about as far back as a backport has any chance of
-succeeding. Before that, the retry had a goto.
-
-Reported-by: Martin Hodo <martin.hodo@intel.com>
-Fixes: 3c0ec2c2d594 ("drm/i915: Flatten intel_dp_check_mst_status() a bit")
-Cc: stable@vger.kernel.org # v5.8+
-Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Cc: Imre Deak <imre.deak@intel.com>
-Reviewed-by: Imre Deak <imre.deak@intel.com>
-Link: https://patch.msgid.link/20260625142204.1078287-1-jani.nikula@intel.com
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-(cherry picked from commit b4ea5272133059acb493cc36599071a9e852ec2e)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
+Reviewed-by: Kenneth Feng <kenneth.feng@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit c936b8126b444401318fcbeb1828488cc5312dee)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_dp.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c |   28 ++++++++++---------
+ 1 file changed, 16 insertions(+), 12 deletions(-)
 
---- a/drivers/gpu/drm/i915/display/intel_dp.c
-+++ b/drivers/gpu/drm/i915/display/intel_dp.c
-@@ -5589,8 +5589,9 @@ intel_dp_check_mst_status(struct intel_d
- 	struct intel_display *display = to_intel_display(intel_dp);
- 	bool force_retrain = intel_dp->link.force_retrain;
- 	bool reprobe_needed = false;
-+	int tries = 33;
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c
+@@ -1621,19 +1621,23 @@ static int smu_v14_0_2_get_power_limit(s
+ 		table_context->power_play_table;
+ 	PPTable_t *pptable = table_context->driver_pptable;
+ 	CustomSkuTable_t *skutable = &pptable->CustomSkuTable;
+-	int16_t od_percent_upper = 0, od_percent_lower = 0;
++	uint32_t pp_limit = smu->adev->pm.ac_power ?
++		skutable->SocketPowerLimitAc[PPT_THROTTLER_PPT0] :
++		skutable->SocketPowerLimitDc[PPT_THROTTLER_PPT0];
+ 	uint32_t msg_limit = pptable->SkuTable.MsgLimits.Power[PPT_THROTTLER_PPT0][POWER_SOURCE_AC];
+-	uint32_t power_limit;
++	uint32_t min_limit = min_t(uint32_t, pp_limit, msg_limit);
++	uint32_t max_limit = max_t(uint32_t, pp_limit, msg_limit);
++	int16_t od_percent_upper = 0, od_percent_lower = 0;
++	int ret;
  
--	for (;;) {
-+	while (--tries) {
- 		u8 esi[4] = {};
- 		u8 ack[4] = {};
- 		bool new_irqs;
-@@ -5633,6 +5634,11 @@ intel_dp_check_mst_status(struct intel_d
- 			break;
+-	if (smu_v14_0_get_current_power_limit(smu, &power_limit))
+-		power_limit = smu->adev->pm.ac_power ?
+-			      skutable->SocketPowerLimitAc[PPT_THROTTLER_PPT0] :
+-			      skutable->SocketPowerLimitDc[PPT_THROTTLER_PPT0];
++	if (current_power_limit) {
++		ret = smu_v14_0_get_current_power_limit(smu, current_power_limit);
++		if (ret)
++			*current_power_limit = pp_limit;
++	}
+ 
+-	if (current_power_limit)
+-		*current_power_limit = power_limit;
+ 	if (default_power_limit)
+-		*default_power_limit = power_limit;
++		*default_power_limit = pp_limit;
+ 
+ 	if (powerplay_table) {
+ 		if (smu->od_enabled &&
+@@ -1647,15 +1651,15 @@ static int smu_v14_0_2_get_power_limit(s
  	}
  
-+	if (!tries) {
-+		drm_dbg_kms(display->drm, "DPRX ESI not clearing, device may be stuck\n");
-+		reprobe_needed = true;
-+	}
-+
- 	return !reprobe_needed;
- }
+ 	dev_dbg(smu->adev->dev, "od percent upper:%d, od percent lower:%d (default power: %d)\n",
+-					od_percent_upper, od_percent_lower, power_limit);
++					od_percent_upper, od_percent_lower, pp_limit);
+ 
+ 	if (max_power_limit) {
+-		*max_power_limit = msg_limit * (100 + od_percent_upper);
++		*max_power_limit = max_limit * (100 + od_percent_upper);
+ 		*max_power_limit /= 100;
+ 	}
+ 
+ 	if (min_power_limit) {
+-		*min_power_limit = power_limit * (100 + od_percent_lower);
++		*min_power_limit = min_limit * (100 + od_percent_lower);
+ 		*min_power_limit /= 100;
+ 	}
  
 
 
