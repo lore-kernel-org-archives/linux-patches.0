@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24A983845D8;
-	Thu, 30 Jul 2026 15:30:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B06B6380FEB;
+	Thu, 30 Jul 2026 15:30:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425434; cv=none; b=aqTBRSo88a8Xa5Q0THhyrsdO4UtgOKvtJtqF3G1XjZ2bSEHGIAce+RZvoFusheGl5r++/oWQrWfiM/juwPw/Z8pgqJvWayovJWQbtMVo8rCjBSIwr5q/UEcdhB+fdFqR2DWMTu404JiB/njDt9Qvl9LBla0yMq0ymL7mihKbvT0=
+	t=1785425438; cv=none; b=iZpjX/0GbkqKYnVvRhyWuBF4cg2aWuK+5swTmGOezvkONiatAoOwdvwQQILE5DnLiD82jAO+oTCMBmvAHxOmmopYlaq17fbWucqBbDdHAzeIGIUG94uylh4kgqOf0orL2XKedOazWK9iHLQE4nXfDsaJcQnOpshdKnbKV/AI3zc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425434; c=relaxed/simple;
-	bh=wdj+36Uit0DWgUViN4PIPrx44rPS1IPokqcFi9kY9Zc=;
+	s=arc-20240116; t=1785425438; c=relaxed/simple;
+	bh=43HZHicnUyyK8Ig49ZmiTAnK9S0f7FFNtd04pFN7d70=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NvihCygQizANwCxpHlSfeU6e2SoNnK9S/EhHzh8GOacvB1TLrH2t4Us9BxYJAQmPc4xW69MU8sNt90Dyn4Tkx95BNBcQ0w2D5iWDqRUt3Dh+XB1eto+S2wInNfcBEOZstkuppFvQomX8HLs3ASqAa6Gy79v+V4ssG/W8388Pr4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wjgYdQ+V; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EEqTKXlP13xYPGSadvPAktgN0pzNR23XryiuedM9q/QKS3Do/aQ7qnpCd8Y6y5eFRvnW3mjRkszYtaDoxSXU55lv4Ox2gEjM6Is18DuHhCqMamdsu4LR7sUFKzwALyIwcDb70ZIpYwz1wFUKPcSxzPtFmDabAS2bY+nJJmlWndg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lw3AN+HF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wjgYdQ+V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D08651F00A3D;
-	Thu, 30 Jul 2026 15:30:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lw3AN+HF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2BD01F000E9;
+	Thu, 30 Jul 2026 15:30:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425429;
-	bh=rovBqw/BMF9rXMjox357KqIlBN0LLRGG+ENg8cSMy6o=;
+	s=korg; t=1785425432;
+	bh=2T8Nnl2tdCq9nY2ekTt6vd2tkpjY7C8apcSa39SQ8Eg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wjgYdQ+VeJWjN+X821pepV7IiiHQ+kEy4l90ulxpBUu7rJEOlzHy/N0LGdBso+tbO
-	 C4SjgSCn3vUkqw7+FR2YZZgxvf4C2HIT0Qab9lzyNPSdsv6OrN+/VsvBZvqleeKd9q
-	 NBsQTsq7lJIcoVHaOqQ29PrRzz/Hin0XwrYwlT9I=
+	b=Lw3AN+HFO8/FRhDtUPoeSuKoyCMW9yIpc8saKirFjnNqfx72FCLGFq75yNBUksP6l
+	 YLwe+aDyiFrtMxyqSXVlmhpsG5mnrMJXpSAdkarKyLfpl+1MtuRer5pEPbTpKDxT1O
+	 jr/KNshoWCzEewKbqZJnx4xfeDEtUm7fmUm1NJSo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Zhao Li <enderaoelyther@gmail.com>,
-	Lachlan Hodges <lachlan.hodges@morsemicro.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 066/602] wifi: cfg80211: derive S1G beacon TSF from S1G fields
-Date: Thu, 30 Jul 2026 16:07:38 +0200
-Message-ID: <20260730141437.389110090@linuxfoundation.org>
+Subject: [PATCH 6.12 067/602] wifi: nl80211: validate nested MBSSID IE blobs
+Date: Thu, 30 Jul 2026 16:07:39 +0200
+Message-ID: <20260730141437.409030780@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -54,50 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhao Li <enderaoelyther@gmail.com>
 
-[ Upstream commit 4e5a4641e7b4763656336b7891d01359aaf363cd ]
+[ Upstream commit 7f4b01812323443b55e4c65381c9dc851ff009e3 ]
 
-cfg80211_inform_bss_frame_data() parses S1G beacons with the extension
-frame layout, but still reads the TSF from the regular probe response
-layout after the S1G branch. For S1G beacons that reads bytes at the
-regular management-frame timestamp offset instead of the S1G timestamp.
+Validate each nested NL80211_ATTR_MBSSID_ELEMS entry as a well-formed
+information-element stream before storing it for beacon construction.
 
-Use the 32-bit S1G beacon timestamp and the S1G Beacon Compatibility
-element's TSF completion field when informing an S1G BSS. Keep the
-regular management-frame timestamp read in the non-S1G branch.
+RNR parsing already validates each nested blob with validate_ie_attr()
+before storing it. Apply the same syntactic IE validation to MBSSID
+entries before counting and copying their data and length pointers.
 
-Fixes: 9eaffe5078ca ("cfg80211: convert S1G beacon to scan results")
+Fixes: dc1e3cb8da8b ("nl80211: MBSSID and EMA support in AP mode")
+Assisted-by: Codex:gpt-5.5
+Assisted-by: Claude:claude-opus-4.8
 Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Tested-by: Lachlan Hodges <lachlan.hodges@morsemicro.com>
-Reviewed-by: Lachlan Hodges <lachlan.hodges@morsemicro.com>
-Link: https://patch.msgid.link/20260611161943.91069-6-enderaoelyther@gmail.com
+Link: https://patch.msgid.link/20260612131854.43575-3-enderaoelyther@gmail.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/scan.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/wireless/nl80211.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/net/wireless/scan.c b/net/wireless/scan.c
-index 44973529687486..b249f29454f9e1 100644
---- a/net/wireless/scan.c
-+++ b/net/wireless/scan.c
-@@ -3262,14 +3262,15 @@ cfg80211_inform_bss_frame_data(struct wiphy *wiphy,
- 		bssid = ext->u.s1g_beacon.sa;
- 		capability = le16_to_cpu(compat->compat_info);
- 		beacon_interval = le16_to_cpu(compat->beacon_int);
-+		tsf = le32_to_cpu(ext->u.s1g_beacon.timestamp);
-+		tsf |= (u64)le32_to_cpu(compat->tsf_completion) << 32;
- 	} else {
- 		bssid = mgmt->bssid;
- 		beacon_interval = le16_to_cpu(mgmt->u.probe_resp.beacon_int);
- 		capability = le16_to_cpu(mgmt->u.probe_resp.capab_info);
-+		tsf = le64_to_cpu(mgmt->u.probe_resp.timestamp);
- 	}
+diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
+index 60e00a24bc249a..1702616d9e1c9a 100644
+--- a/net/wireless/nl80211.c
++++ b/net/wireless/nl80211.c
+@@ -5513,7 +5513,8 @@ static int nl80211_parse_mbssid_config(struct wiphy *wiphy,
+ }
  
--	tsf = le64_to_cpu(mgmt->u.probe_resp.timestamp);
--
- 	if (ieee80211_is_probe_resp(mgmt->frame_control))
- 		ftype = CFG80211_BSS_FTYPE_PRESP;
- 	else if (ext)
+ static struct cfg80211_mbssid_elems *
+-nl80211_parse_mbssid_elems(struct wiphy *wiphy, struct nlattr *attrs)
++nl80211_parse_mbssid_elems(struct wiphy *wiphy, struct nlattr *attrs,
++			   struct netlink_ext_ack *extack)
+ {
+ 	struct nlattr *nl_elems;
+ 	struct cfg80211_mbssid_elems *elems;
+@@ -5524,6 +5525,12 @@ nl80211_parse_mbssid_elems(struct wiphy *wiphy, struct nlattr *attrs)
+ 		return ERR_PTR(-EINVAL);
+ 
+ 	nla_for_each_nested(nl_elems, attrs, rem_elems) {
++		int ret;
++
++		ret = validate_ie_attr(nl_elems, extack);
++		if (ret)
++			return ERR_PTR(ret);
++
+ 		if (num_elems >= 255)
+ 			return ERR_PTR(-EINVAL);
+ 		num_elems++;
+@@ -5695,7 +5702,8 @@ static int nl80211_parse_beacon(struct cfg80211_registered_device *rdev,
+ 	if (attrs[NL80211_ATTR_MBSSID_ELEMS]) {
+ 		struct cfg80211_mbssid_elems *mbssid =
+ 			nl80211_parse_mbssid_elems(&rdev->wiphy,
+-						   attrs[NL80211_ATTR_MBSSID_ELEMS]);
++						   attrs[NL80211_ATTR_MBSSID_ELEMS],
++						   extack);
+ 
+ 		if (IS_ERR(mbssid))
+ 			return PTR_ERR(mbssid);
 -- 
 2.53.0
 
