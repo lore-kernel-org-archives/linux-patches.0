@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C1BC194A6C;
-	Thu, 30 Jul 2026 16:10:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8E8A194A6C;
+	Thu, 30 Jul 2026 16:10:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427813; cv=none; b=YJst4FT9M70BpKg6UpeDUJO5nEYB8t/zeiOkfYQ+6ybyUBIipJMzWqgVC4Sq/boNAoAMuXhpbyUXsN/BBuvkedf1FOrQTMKRDuBi9Diq4TP8Ju60y8DgCaHI9qZbNLgYBkvoyE0FQnWMtj1t5raBk5JIc8CFJ7IisUvqOmw7wOY=
+	t=1785427815; cv=none; b=Wroggp/VE9uZUczrXVZVcfSUFNsUthGHM/koKJHPPtQ4EN9D74kF3hSRK9nEVXPQGsnRO96HEOWIDNEfvJkUJ7QpLgrdvq7OcRiwHjOUxJMzH+WictQ64BxUtWgqumG+wg7AMQi/XNUqPneB4aAcv0/n4Uns/7eGDOatKKhaI5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427813; c=relaxed/simple;
-	bh=U3oPfVghvdlL6qS2mTmmE7EbaiApDXUXYc/IjCUr9c8=;
+	s=arc-20240116; t=1785427815; c=relaxed/simple;
+	bh=A7+UeWR3miayUasAYV52h91GslDW+ztyEUIL0RyGCl0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MaHIUgtQpbIJkHdoHh3oIq/RpSmcZGzsac5TIGyil3M/0XJZQHAmiAMkqwrPgpdt1wNXMgbybisuRHBu/rEXeiy4l4RlupbNsfSLjk4C7wL36f4xsp62geXfqnZ101187bNusUOidv+hmjrAQIvW30QEHcOK9kwnpZzVW1xnPEg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tgw9xBKU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=W7LDHQlAr2mp20kBt4Iej9N2drDuVJJ66Be6/rGbt1mHxkvwBuV8nI4bkvuAd0Vp0IndFK4+6bG+MIMj/HUHPGNDeQkqBpJHVsvcifoJoFz93LQ4gqo/UoCKDduNbIqY75/X6A8KPIyh9vSu2NFXRfn/HxtJYkM6R76k8Y0uSUM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GN9OAKji; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tgw9xBKU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6568D1F000E9;
-	Thu, 30 Jul 2026 16:10:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GN9OAKji"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 305DB1F000E9;
+	Thu, 30 Jul 2026 16:10:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427811;
-	bh=GFf1qgGLk21drbJvp1qVvDOtk4DZ0GMJ0AfF6//h+bg=;
+	s=korg; t=1785427814;
+	bh=lSIyWrLbMY1g4LJR9Afd2sDTJCHrLZnSPYOrH7rjgl4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Tgw9xBKUrhabGtDLt19tSFB+9pJY3bGnAgE1NGv4lWZq0drIMNea161sN56mSFZ6K
-	 Ylsj2UlqyaJ0wMgA/K6pQwZOj2RC/2Fdv5kNKtfWbl42q8WG4kNF1Ypzr2XpVZ2xQE
-	 An7Ka+ern+FgIGVg51FFJ3slyGNLu7nkUgwwv11Y=
+	b=GN9OAKji9TjhKrAqcHm5P3SJCO5EnKF2d7zmZ9IeozSoYTMUmPwJHk3PX2rc1ApSW
+	 yg2ZzyrnO9+SRa+TmP9C2HklrFyZnoGzFUtTs2r6CmxN2kJS07OsTaNtGY2/q0LmdR
+	 tRKd21zOEME6oJTzzvVBCkvRJMMqQiIrN+vGhRAo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Kellermann <max.kellermann@ionos.com>,
-	Xiubo Li <xiubo.li@clyso.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 6.6 302/484] ceph: add owner/capability checks for CEPH_IOC_SET_LAYOUT*
-Date: Thu, 30 Jul 2026 16:13:19 +0200
-Message-ID: <20260730141430.052514003@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Moksh Panicker <mokshpanicker.7@gmail.com>
+Subject: [PATCH 6.6 276/484] staging: rtl8723bs: fix OOB reads in rtw_get_wps_ie()
+Date: Thu, 30 Jul 2026 16:12:53 +0200
+Message-ID: <20260730141429.490193496@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -51,52 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Max Kellermann <max.kellermann@ionos.com>
+From: Moksh Panicker <mokshpanicker.7@gmail.com>
 
-commit cee38bbf5556a8e0a232ccae41649580827d7806 upstream.
+commit 0e95ff792ae0aa6fbad9455943e9e1e4062670e9 upstream.
 
-These permission checks were already missing in the initial
-impementation of these ioctls.  This Ceph allows any user who owns a
-file descriptor to manipulate the layout of any file, even if they
-don't have write permissions.
+rtw_get_wps_ie() iterates over IE data from network frames without
+validating that the IE header and payload fit within the remaining
+buffer before reading them. Specifically:
 
-It might be a good idea to guard other ioctls with permission checks
-as well or even disallow regular users (even if they own the file) to
-manipulate layout settings completely, as this may be abused to DoS
-the Ceph servers, but right now, I find it most urgent to have setter
-checks at all.
+- in_ie[cnt + 1] is read without checking cnt + 1 < in_len
+- memcmp(&in_ie[cnt + 2], ...) accesses cnt + 2 without bounds check
+- in_ie[cnt + 1] is used as length without verifying payload fits
 
-Cc: stable@vger.kernel.org
-Fixes: 8f4e91dee2a2 ("ceph: ioctls")
-Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
-Reviewed-by: Xiubo Li <xiubo.li@clyso.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Add bounds checks at the top of the loop body to break early if fewer
+than 2 bytes remain for the IE header, or if the declared payload
+extends past the end of the buffer. Also require at least 4 bytes of
+payload before comparing the WPS OUI.
+
+Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Moksh Panicker <mokshpanicker.7@gmail.com>
+Link: https://patch.msgid.link/20260625202911.26782-1-mokshpanicker.7@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/ioctl.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/staging/rtl8723bs/core/rtw_ieee80211.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/fs/ceph/ioctl.c
-+++ b/fs/ceph/ioctl.c
-@@ -72,6 +72,9 @@ static long ceph_ioctl_set_layout(struct
- 	struct ceph_ioctl_layout nl;
- 	int err;
+--- a/drivers/staging/rtl8723bs/core/rtw_ieee80211.c
++++ b/drivers/staging/rtl8723bs/core/rtw_ieee80211.c
+@@ -678,7 +678,14 @@ u8 *rtw_get_wps_ie(u8 *in_ie, uint in_le
+ 	while (cnt < in_len) {
+ 		eid = in_ie[cnt];
  
-+	if (!inode_owner_or_capable(&nop_mnt_idmap, inode))
-+		return -EACCES;
+-		if ((eid == WLAN_EID_VENDOR_SPECIFIC) && (!memcmp(&in_ie[cnt + 2], wps_oui, 4))) {
++		if (cnt + 2 > in_len)
++			break;
 +
- 	if (copy_from_user(&l, arg, sizeof(l)))
- 		return -EFAULT;
- 
-@@ -142,6 +145,9 @@ static long ceph_ioctl_set_layout_policy
- 	int err;
- 	struct ceph_mds_client *mdsc = ceph_sb_to_fs_client(inode->i_sb)->mdsc;
- 
-+	if (!inode_owner_or_capable(&nop_mnt_idmap, inode))
-+		return -EACCES;
++		if (in_ie[cnt + 1] + 2 > in_len - cnt)
++			break;
 +
- 	/* copy and validate */
- 	if (copy_from_user(&l, arg, sizeof(l)))
- 		return -EFAULT;
++		if ((eid == WLAN_EID_VENDOR_SPECIFIC) && (in_ie[cnt + 1] >= 4) &&
++		    (!memcmp(&in_ie[cnt + 2], wps_oui, 4))) {
+ 			wpsie_ptr = &in_ie[cnt];
+ 
+ 			if (wps_ie)
 
 
