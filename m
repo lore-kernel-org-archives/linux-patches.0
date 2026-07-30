@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B02737A494;
-	Thu, 30 Jul 2026 16:07:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B16937A494;
+	Thu, 30 Jul 2026 16:07:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427668; cv=none; b=uWee/TSFZOFlEtfRVsuQtNGibC0dfcaMc/YxmmpdOfkLohIau3y8AZ0IS+rw/pgzGnjNdbhhwrmGzm1r/5/9nVEixBFCoZzgorqacaNR5Rp3k4NGjY/qE3Sr4vCmbgziSJ7UdC2q/IbcLbcJhwqeIFngR7u3ibHKS++5DT4DD/Q=
+	t=1785427671; cv=none; b=j93BI6f9UDTn5JpxvNvX44OiIWtsf5JRIzRZFCcYF8WR4KlyWYwvu3QmSEPs7ybLxjVNxFJWQlgc8FIyLc8y2D9bts1X6iSDkE/btrJ/JbEerRjlGAQnddwb+r03pcWC6BJAMDZZNFIqriJqtI9Auw+pomstNYgPLuRe2o0o478=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427668; c=relaxed/simple;
-	bh=1LE6YzqWUj9IwoH1nYP2lHSFCzXpo3+YokC2j4kCRXM=;
+	s=arc-20240116; t=1785427671; c=relaxed/simple;
+	bh=keXMFthYaheBNFoC8v1tlqD7VJt0AKEpu6DFMqEnUxo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BxPirKLhW2QAB+j1s2UAmMomsc8nZGfeenMDEU5RqXPhwinMwM32AtitBD53nEgkHvLFGlPODpJ8t0Ce0zA+M6HBJWab8RzBcNsbjY7iZTaYtb0ER8ggX3pk+zoHXqZOZAac6UkHhng7WUswF6+GgYxL3KTUYXnb8meBTHbYwHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uAqSmQsi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DS++HGqOiUewMr4A37HD1q18Ad9BccKraxO6xcQdARgOtOIh7Ded+KH2cSuDcgKbRORvq5ifhVi1i86tyQvA5QAyf/YY6QtJU2DDBQQ5nY0GrM25yaMNhJZ6OSjSIkP7zg+p/XGqp9AD5pkOkpL3scmqx5CsHyUS7VtokB1Sl7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P/2i/fCP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uAqSmQsi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B01491F000E9;
-	Thu, 30 Jul 2026 16:07:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P/2i/fCP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 875F11F000E9;
+	Thu, 30 Jul 2026 16:07:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427667;
-	bh=TIhxrYc+pZdwLHl76kgeh1d+wZ0kwfKMmREkoSu4vVM=;
+	s=korg; t=1785427670;
+	bh=ZhJ47h5Pi+wM76fIjeJZ2lzlxmPYquTEAe42E1+SoNA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uAqSmQsiu4JhjDPAdxGqhnR61r9LPWoWbdv68WJz8F0vLvgwIt0QiAV1k0Noq2dce
-	 JpJldGJo6sgTHX2/apvLqYcr98DNdSEBjFi3CQROAMXiTlyq+gpCQKse7iA9upqP2y
-	 DAXgs+gXNlZIZBgxSNBXulxJNlt1HLl8i6vkszT4=
+	b=P/2i/fCPQqLc9ea/BzRCxEsKVEAjHCOjDFVo/ySXLVn+VmJVzfn9fKVuSCeo2btQB
+	 E2ituDyjeFWyFCpgAOCjEWp7Oespu+3v3cEHX1qSA43Jkg0PXclfB0sERalLgh6bQJ
+	 J9HYKptNc6+Ng25OWNlKxGm7Q+84rUuhaO2LPsJw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Valery Borovsky <vebohr@gmail.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.6 251/484] media: pwc: Drain fill_buf on start_streaming() failure
-Date: Thu, 30 Jul 2026 16:12:28 +0200
-Message-ID: <20260730141428.940722774@linuxfoundation.org>
+Subject: [PATCH 6.6 252/484] media: pwc: Return queued buffers on start_streaming() failure
+Date: Thu, 30 Jul 2026 16:12:29 +0200
+Message-ID: <20260730141428.963080300@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -52,61 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Valery Borovsky <vebohr@gmail.com>
 
-commit 906e410dcffbbd99fb4081abab817a830033aa28 upstream.
+commit 975b2ee20e569d47821e4f6c9761b4664d48a6a4 upstream.
 
-pwc_isoc_init() submits its isochronous URBs with
-usb_submit_urb(.., GFP_KERNEL) in a loop. After the first URB is
-submitted, its completion handler pwc_isoc_handler() can run on another
-CPU before the loop finishes:
+The vb2 framework hands buffers to the driver via buf_queue() before
+calling start_streaming().  If start_streaming() returns an error
+without first returning those buffers via vb2_buffer_done(),
+vb2_start_streaming() fires WARN_ON(owned_by_drv_count) and the queued
+buffers leak.
 
-  start_streaming()
-    pwc_isoc_init()
-      usb_submit_urb(urbs[0], GFP_KERNEL)
-                                  pwc_isoc_handler(urbs[0])
-                                    pdev->fill_buf =
-                                      pwc_get_next_fill_buf(pdev)
-      usb_submit_urb(urbs[i>0], ..)  -> fails
-      pwc_isoc_cleanup(pdev)           /* kills URBs */
-      return ret;
-    pwc_cleanup_queued_bufs(pdev, VB2_BUF_STATE_QUEUED)
+pwc's start_streaming() had two early returns that hit this trap:
+-ENODEV when the USB device was already disconnected, and -ERESTARTSYS
+when mutex_lock_interruptible() was interrupted by a signal.  Call the
+existing pwc_cleanup_queued_bufs() helper with VB2_BUF_STATE_QUEUED
+before returning (matching the state already used by the
+pwc_isoc_init() error path in the same function).
 
-pwc_get_next_fill_buf() detaches a buffer from pdev->queued_bufs and
-stores it in pdev->fill_buf. The error path in start_streaming() only
-drains pdev->queued_bufs, so the buffer parked in pdev->fill_buf is
-leaked. vb2_start_streaming() then triggers
-WARN_ON(owned_by_drv_count).
+This mirrors the uvcvideo fix in commit 4cf3b6fd54eb ("media: uvcvideo:
+Return queued buffers on start_streaming() failure").
 
-stop_streaming() already handles this since commit 80b0963e1698
-("[media] pwc: fix WARN_ON"), which added the fill_buf drain in the
-teardown path but not in the start_streaming() error path. Mirror that
-handling on failure so start_streaming() returns with no buffer owned
-by the driver.
-
-Issue identified by automated review of the INV-003 series at
-https://sashiko.dev/
-
-Fixes: 885fe18f5542 ("[media] pwc: Replace private buffer management code with videobuf2")
+Fixes: ceede9fa8939 ("[media] pwc: Fix locking")
 Cc: stable@vger.kernel.org
 Signed-off-by: Valery Borovsky <vebohr@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/pwc/pwc-if.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/media/usb/pwc/pwc-if.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
 --- a/drivers/media/usb/pwc/pwc-if.c
 +++ b/drivers/media/usb/pwc/pwc-if.c
-@@ -727,6 +727,11 @@ static int start_streaming(struct vb2_qu
- 		pwc_camera_power(pdev, 0);
- 		/* And cleanup any queued bufs!! */
- 		pwc_cleanup_queued_bufs(pdev, VB2_BUF_STATE_QUEUED);
-+		if (pdev->fill_buf) {
-+			vb2_buffer_done(&pdev->fill_buf->vb.vb2_buf,
-+					VB2_BUF_STATE_QUEUED);
-+			pdev->fill_buf = NULL;
-+		}
- 	}
- 	mutex_unlock(&pdev->v4l2_lock);
+@@ -711,11 +711,15 @@ static int start_streaming(struct vb2_qu
+ 	struct pwc_device *pdev = vb2_get_drv_priv(vq);
+ 	int r;
  
+-	if (!pdev->udev)
++	if (!pdev->udev) {
++		pwc_cleanup_queued_bufs(pdev, VB2_BUF_STATE_QUEUED);
+ 		return -ENODEV;
++	}
+ 
+-	if (mutex_lock_interruptible(&pdev->v4l2_lock))
++	if (mutex_lock_interruptible(&pdev->v4l2_lock)) {
++		pwc_cleanup_queued_bufs(pdev, VB2_BUF_STATE_QUEUED);
+ 		return -ERESTARTSYS;
++	}
+ 	/* Turn on camera and set LEDS on */
+ 	pwc_camera_power(pdev, 1);
+ 	pwc_set_leds(pdev, leds[0], leds[1]);
 
 
