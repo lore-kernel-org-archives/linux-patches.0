@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B0A0431E60;
-	Thu, 30 Jul 2026 15:54:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BE9F35BDAA;
+	Thu, 30 Jul 2026 15:54:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426848; cv=none; b=UhNpTi5Hm0teiQNP5tkzotAYEYDWMBUUHj+Aw67iKJYblfOwoI0UDrF9taB4zlXJbiKgPoUKNk3RgKuoDb/BhZV8XL4DN5Fp3qn1tT+Ba5BvcvYTmf1OIWl8RpWngtGiF/e/i27v0TI9D50rvg9b9gXQOTXzYG6Zb2vfbqX/o8M=
+	t=1785426851; cv=none; b=QFRhlRCQijy1PG8TOygnUj6FctY+7QZtun4VCSvsJJPHKoDuHlr0Ke1VVP5QNOaKmINqxQ3W5APmQ0DGIur4AReL9OBrH7Qp84imW3/jh75R5NSqeIziblkIh56HYFOQLLEKPEjnheLI3Q42q1EhIiri4/k2P1pdoTNNgEt1xcM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426848; c=relaxed/simple;
-	bh=kEOZhmpFiTQK4WuSoC9KRvSvZesjCrLyeaByQziLeKg=;
+	s=arc-20240116; t=1785426851; c=relaxed/simple;
+	bh=pksBRTWceaZ3u1IjoWIO29bubHx1RPmLA8cXHfpPPdY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nYU42MBaOkhVJc3w0VE6i70PsrqROLp6BQbHRhh0ACCgiNP8rmZVjeZOJaMA5/ifJ+fweRL71NPV8iQGGdIJ6rluBcKxiHONAwLT4WbGMJv+7J6cvBHn7acd5yHgR6h/tH7pbY+mDiHELfIXHs1ZT1zM2spNlaNDMTM0t4Ixsfg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M0xJ4s6G; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=LWD1/nUR7Of/tyFBe+EgvikwHdjKVbjII/9IuZwn4EmzVRUaX8ZBzVPazhZ7vbxkZXBs4RQXCyv7K27SsmEEa2+ChgdBvCFMaShqDb7ieyjRyqQpd5tjdAr6YglWHEK95FK4O6mimoJnZ6mK0cfQlssaStMGwBC5Iqu/y9SzO0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lgn3fSnX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M0xJ4s6G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EA701F000E9;
-	Thu, 30 Jul 2026 15:54:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lgn3fSnX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6817C1F000E9;
+	Thu, 30 Jul 2026 15:54:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426847;
-	bh=UEsioLppoehKruWIlcdhLP8WcLZxFSbGcHYu9wz6aLU=;
+	s=korg; t=1785426849;
+	bh=XbWvVsKHIz3B3qew2FIlij7erT+Bed1xkTS5O1BjX10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M0xJ4s6GCaGHEWSbydZI4UZ1j+frmyWIfZJmYlM/ZMcz+FaJcvbetBVUFb/DXNWR3
-	 vvpQ9jvYpPal1y1aBImAjADgb0ksXlNH+vx7RFg5Q17gM7Qy4gMS1h3tbrND3ZLe2D
-	 tDO0X36+JzZJ0tHCB9FD91UbsWceHBHNeSAtNlJU=
+	b=lgn3fSnX9GRdhSZz/USj1MXSOjOVy8ZShGjZvIIz0hpczJGZNZpCydhNQ2v2zULT9
+	 +k8qpqT1RNUpQrB6A3PSFPE/nqgCkLq62PZAyEwDkAkJBL9tZUaLR6e5zunR8lj0pL
+	 w/lqAa8GzNIWqnOvB0Lw0iRNEjPYZnkjTgr1ZhtE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Junrui Luo <moonafterrain@outlook.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack3000@gmail.com>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 561/602] octeontx2-af: cn10k: restrict VF LMTLINE sharing to its own PF
-Date: Thu, 30 Jul 2026 16:15:53 +0200
-Message-ID: <20260730141447.831265496@linuxfoundation.org>
+Subject: [PATCH 6.12 520/602] landlock: Fix LANDLOCK_SCOPE_SIGNAL bypass on the SIGIO path
+Date: Thu, 30 Jul 2026 16:15:12 +0200
+Message-ID: <20260730141446.934183746@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -46,81 +46,168 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-[ Upstream commit 8cdcf3d2caacdee7ddd363705fb4d93b0c1a0915 ]
+[ Upstream commit 4b80320ca7ed03d6e683f95b6066565dc97b9f92 ]
 
-rvu_mbox_handler_lmtst_tbl_setup() uses req->base_pcifunc as a direct
-index into the LMT map table to read another function's LMTLINE
-physical base address and copy it into the caller's own LMT map table
-entry. The mailbox dispatcher authenticates req->hdr.pcifunc from the
-IRQ source, but req->base_pcifunc is a separate payload field and is
-not sanitized.
+LANDLOCK_SCOPE_SIGNAL must prevent a sandboxed process from signaling
+processes outside its Landlock domain.  It can be bypassed through the
+asynchronous SIGIO delivery path.
 
-Reject the request with -EPERM when a VF caller's base_pcifunc is not a
-valid function under its own PF. is_pf_func_valid() bounds the FUNC field
-to the PF's configured VF count, keeping the computed index inside the
-caller's own slot block.
+A sandboxed process that owns any file or socket can arm it with
+fcntl(fd, F_SETOWN, -pgid), fcntl(fd, F_SETSIG, SIGKILL) and O_ASYNC, so
+that an I/O event makes the kernel deliver the chosen signal to the
+whole process group.  As the head of its process group's task list (the
+default position right after fork()) that group can also hold the
+non-sandboxed process that launched it, e.g. a supervisor or a security
+monitor.  The sandbox can thus kill or signal the processes
+LANDLOCK_SCOPE_SIGNAL is meant to protect from it.
 
-Fixes: 893ae97214c3 ("octeontx2-af: cn10k: Support configurable LMTST regions")
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+The scope is enforced in hook_file_send_sigiotask() against the Landlock
+domain recorded at F_SETOWN time, not the live domain of the sender.
+control_current_fowner() decides whether to record that domain and skips
+recording it when the fowner target is in the caller's thread group,
+which is safe only for a single-task target (PIDTYPE_PID, PIDTYPE_TGID).
+For a process group (PIDTYPE_PGID) pid_task() returns only one member;
+recording is skipped whenever that member shares the caller's thread
+group, and hook_file_send_sigiotask() then lets the signal fan out to
+the whole group unchecked.
+
+Record the domain for every non single-process target so the scope is
+enforced against each group member at delivery time.
+
+That recording is necessary but not sufficient on its own: the kernel
+signals a process group through its members' thread-group leaders, and
+the leader of the registrant's own process can carry a different
+Landlock domain than the sibling thread that armed the owner.
+domain_is_scoped() would then deny that leader, even though commit
+18eb75f3af40 ("landlock: Always allow signals between threads of the
+same process") requires same-process delivery to be allowed.
+hook_task_kill() avoids this by evaluating same_thread_group() live, per
+recipient; the SIGIO path instead delegates the whole decision to a
+single registration-time check, which a process-group fan-out cannot
+honor.
+
+So also record the registrant's thread group next to its domain and
+exempt it at delivery: hook_file_send_sigiotask() allows the signal
+whenever the recipient belongs to the registrant's own process,
+restoring the same-process guarantee while keeping out-of-domain group
+members blocked.  The direct kill() path (hook_task_kill) already
+evaluates the live domain and is unaffected.
+
+Fixes: 18eb75f3af40 ("landlock: Always allow signals between threads of the same process")
 Cc: stable@vger.kernel.org
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
-Link: https://patch.msgid.link/SYBPR01MB78811656934E713B77DA6CEDAFE62@SYBPR01MB7881.ausprd01.prod.outlook.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Dropped `rvu->pdev` argument from `rvu_get_pf()` calls and folded in the `is_pf_func_valid()` de-static plus its `rvu.h` declaration from commit 2156a29aecff. ]
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Reviewed-by: Günther Noack <gnoack3000@gmail.com>
+Link: https://patch.msgid.link/56bffc24f3d0d08b45a686a48e99766b0a0821fa.1780614610.git.hexlabsecurity@proton.me
+[mic: Check pid_type earlier and improve comment, fix commit message,
+fix comment formatting]
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/rvu.c       |    2 +-
- drivers/net/ethernet/marvell/octeontx2/af/rvu.h       |    1 +
- drivers/net/ethernet/marvell/octeontx2/af/rvu_cn10k.c |    9 +++++++++
- 3 files changed, 11 insertions(+), 1 deletion(-)
+ security/landlock/fs.c   |   14 ++++++++++++++
+ security/landlock/fs.h   |   10 ++++++++++
+ security/landlock/task.c |   11 +++++++++++
+ 3 files changed, 35 insertions(+)
 
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
-@@ -440,7 +440,7 @@ struct rvu_pfvf *rvu_get_pfvf(struct rvu
- 		return &rvu->pf[rvu_get_pf(pcifunc)];
+--- a/security/landlock/fs.c
++++ b/security/landlock/fs.c
+@@ -1666,6 +1666,14 @@ static bool control_current_fowner(struc
+ 	lockdep_assert_held(&fown->lock);
+ 
+ 	/*
++	 * A process-group or session owner (PIDTYPE_PGID/PIDTYPE_SID) fans the
++	 * signal out to every member at delivery time, so record the domain and
++	 * let hook_file_send_sigiotask() check the live scope per recipient.
++	 */
++	if (fown->pid_type != PIDTYPE_PID && fown->pid_type != PIDTYPE_TGID)
++		return true;
++
++	/*
+ 	 * Some callers (e.g. fcntl_dirnotify) may not be in an RCU read-side
+ 	 * critical section.
+ 	 */
+@@ -1681,6 +1689,7 @@ static void hook_file_set_fowner(struct
+ {
+ 	struct landlock_ruleset *prev_dom;
+ 	struct landlock_cred_security fown_subject = {};
++	struct pid *prev_tg, *fown_tg = NULL;
+ 	size_t fown_layer = 0;
+ 
+ 	/*
+@@ -1706,21 +1715,26 @@ static void hook_file_set_fowner(struct
+ 		if (new_subject) {
+ 			landlock_get_ruleset(new_subject->domain);
+ 			fown_subject = *new_subject;
++			fown_tg = get_pid(task_tgid(current));
+ 		}
+ 	}
+ 
+ 	prev_dom = landlock_file(file)->fown_subject.domain;
++	prev_tg = landlock_file(file)->fown_tg;
+ 	landlock_file(file)->fown_subject = fown_subject;
++	landlock_file(file)->fown_tg = fown_tg;
+ #ifdef CONFIG_AUDIT
+ 	landlock_file(file)->fown_layer = fown_layer;
+ #endif /* CONFIG_AUDIT*/
+ 
+ 	/* May be called in an RCU read-side critical section. */
+ 	landlock_put_ruleset_deferred(prev_dom);
++	put_pid(prev_tg);
  }
  
--static bool is_pf_func_valid(struct rvu *rvu, u16 pcifunc)
-+bool is_pf_func_valid(struct rvu *rvu, u16 pcifunc)
+ static void hook_file_free_security(struct file *file)
  {
- 	int pf, vf, nvfs;
- 	u64 cfg;
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
-@@ -825,6 +825,7 @@ int rvu_get_pf(u16 pcifunc);
- struct rvu_pfvf *rvu_get_pfvf(struct rvu *rvu, int pcifunc);
- void rvu_get_pf_numvfs(struct rvu *rvu, int pf, int *numvfs, int *hwvf);
- bool is_block_implemented(struct rvu_hwinfo *hw, int blkaddr);
-+bool is_pf_func_valid(struct rvu *rvu, u16 pcifunc);
- bool is_pffunc_map_valid(struct rvu *rvu, u16 pcifunc, int blktype);
- int rvu_get_lf(struct rvu *rvu, struct rvu_block *block, u16 pcifunc, u16 slot);
- int rvu_lf_reset(struct rvu *rvu, struct rvu_block *block, int lf);
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_cn10k.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_cn10k.c
-@@ -178,6 +178,15 @@ int rvu_mbox_handler_lmtst_tbl_setup(str
- 	 * pcifunc (will be the one who is calling this mailbox).
++	put_pid(landlock_file(file)->fown_tg);
+ 	landlock_put_ruleset_deferred(landlock_file(file)->fown_subject.domain);
+ }
+ 
+--- a/security/landlock/fs.h
++++ b/security/landlock/fs.h
+@@ -70,6 +70,16 @@ struct landlock_file_security {
+ 	 * euid.
  	 */
- 	if (req->base_pcifunc) {
-+		/* A VF is untrusted and must not redirect its LMTLINE to
-+		 * another PF's region, so confine VF callers to their own PF.
-+		 */
-+		if (is_vf(req->hdr.pcifunc) &&
-+		    (!is_pf_func_valid(rvu, req->base_pcifunc) ||
-+		     rvu_get_pf(req->hdr.pcifunc) !=
-+		     rvu_get_pf(req->base_pcifunc)))
-+			return -EPERM;
+ 	struct landlock_cred_security fown_subject;
++	/**
++	 * @fown_tg: Thread group of the task that set the file owner, pinned
++	 * while @fown_subject holds a domain.  It lets
++	 * hook_file_send_sigiotask() always allow a SIGIO delivered to the
++	 * owner's own process -- e.g. the thread-group leader reached through a
++	 * process-group owner -- matching the same-process exemption of
++	 * hook_task_kill().  NULL when no domain is recorded.  Protected by
++	 * file->f_owner->lock, like @fown_subject.
++	 */
++	struct pid *fown_tg;
+ };
+ 
+ /**
+--- a/security/landlock/task.c
++++ b/security/landlock/task.c
+@@ -314,6 +314,17 @@ static int hook_file_send_sigiotask(stru
+ 	if (!subject->domain)
+ 		return 0;
+ 
++	/*
++	 * Always allow delivery to the file owner's own process, including a
++	 * thread-group leader reached through a process-group owner.  This
++	 * mirrors hook_task_kill()'s same-process exemption and preserves the
++	 * guarantee of commit 18eb75f3af40 ("landlock: Always allow signals
++	 * between threads of the same process"), which the registration-time
++	 * check cannot honor for a process-group target.
++	 */
++	if (task_tgid(tsk) == landlock_file(fown->file)->fown_tg)
++		return 0;
 +
- 		/* Calculating the LMT table index equivalent to primary
- 		 * pcifunc.
- 		 */
+ 	scoped_guard(rcu)
+ 	{
+ 		is_scoped = domain_is_scoped(subject->domain,
 
 
