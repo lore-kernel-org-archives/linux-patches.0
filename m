@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 779CF40963F;
-	Thu, 30 Jul 2026 14:40:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ED9A43B6D1;
+	Thu, 30 Jul 2026 14:40:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422401; cv=none; b=RC3FJhXaAEGRzik698UI/gk8oqOvzMfytrrPkDsCqEyUMrBVtLROlWGPUDo3UAPdoIJ81TtPgDWwdCcIGD4t6zfilc9uZkxEv8+s2qOQt9049dT1XSWU2XAOm24H7Q55wkRslyQjwWLXGs6uGvO9A3jLosJZlJAi64wFx23zy+g=
+	t=1785422404; cv=none; b=DutH07iqL7pgjk2eAnQrhIe0xnwdd8Vg8dts/1MEK+v+0XQJDknymxKty+6I/V09mL5aQkjgwHiNc6HWPANmlJPSdtAQou0aObe4h2OrwUf9BuiPiFvNF0wxtwx7hLFqmbH6FvaZ6lAFeDf2MPTIn6leiEXK6nTYpcaM2Y9xWlM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422401; c=relaxed/simple;
-	bh=wuXcvpMbGc//w+48ZUbp/BdZnxL72UCZrkEHi8UzqhQ=;
+	s=arc-20240116; t=1785422404; c=relaxed/simple;
+	bh=C8FjrQdG46jedidf4SH9IPVOyYYOzYrLX/i8gK0ulng=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qJt4agsWuAhQOHhpwchHl2EdCV1FfitZ8Xq8pQwwILqmDW46/rWGO2xU6w6WhztQsv0OgwwFmwvzrPPNnig44QGpccrRbubSWaoaGVkKUdYw3Rq3/TOKoVW+rFFZOLB11PvZDgfXcysQyBBHMCj5sU1GTvmBk1JcMHbq0+9x6zI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XVyH1D6f; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=LoAqfO0qk78yDoL4fHClZZIFsY1OYrYMjz3s5p+nLwoNq9TpWJF8fBig8Ugq33+8EJuUzoWZ2a4HX5u2zbd8jNhFO9cYwlkChKng8/L/ft7F6Y1j+7v7Xk6zv7CA60OatNSWCsB7uw8rh8X+54dI9BJHKQLbOCRO5SiVt02uBs4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mpum04Tf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XVyH1D6f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9B381F000E9;
-	Thu, 30 Jul 2026 14:39:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mpum04Tf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C14471F000E9;
+	Thu, 30 Jul 2026 14:40:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422400;
-	bh=BErgptXc3HTs+B+GRilAfUvZtf55H8sL8qwD5HH/QEs=;
+	s=korg; t=1785422403;
+	bh=nqHnyx9kePjldhTQqo5t22WrKCYHjvzht9uyz1NpHjU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XVyH1D6feDiq7np1UUaSG+JdIm1KM3l9mu2Xs1ksXlcEO+vKgpTWpn85UzGSI/De0
-	 q9mX8GkIm1aIQuM4AcHB+08vN6oHCcs/pPptx7gx3l3ZQmOcQEJE7NcmHxAmoaAO36
-	 t3EVYJW9LbiUTIfM81dG0w6RdDEtPyumSn29XbJ4=
+	b=mpum04TfUSlJbOz+b9UZ8NsHkUcACEJb5rFehwNcdbK8k/SV/XFMHtQrBypYqk5Y3
+	 WplAnW7n51EZXVCf7Xv+z9AVwIIFbP4WL6yOlpvBWSzElyeo9fsplhL2TqfWhZ8qii
+	 ECD+Tz8ocynaB7W7kd+x9GdtSgmQ4yDTZ2zH7GRw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Hodo <martin.hodo@intel.com>,
-	Anshuman Gupta <anshuman.gupta@intel.com>,
-	Suraj Kandpal <suraj.kandpal@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Subject: [PATCH 7.1 426/744] drm/i915/hdcp: check streams[] bounds before overflow
-Date: Thu, 30 Jul 2026 16:11:39 +0200
-Message-ID: <20260730141453.351422170@linuxfoundation.org>
+	Prike Liang <Prike.Liang@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 7.1 427/744] drm/amdgpu: add the doorbell index input for suspending userq
+Date: Thu, 30 Jul 2026 16:11:40 +0200
+Message-ID: <20260730141453.373742360@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -47,61 +45,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jani Nikula <jani.nikula@intel.com>
+From: Prike Liang <Prike.Liang@amd.com>
 
-commit bbb15a6b042d02e5508a02b4847e02d2579ee7bc upstream.
+commit b181bf68d11f034efe27ae1377a0f659605f040f upstream.
 
-The data->streams[] overflow check is done after the buffer overflow has
-already happened. Move the overflow check before the write.
+It requires inputing the doorbell offset for MES firmware preempts the
+userq, and adding the doorbell offset also keep aliging with the
+union MESAPI__SUSPEND in MES firmware.
 
-Side note, emitting a warning splat with a backtrace might be overkill
-here, but prefer not changing the behaviour other than not doing the
-overrun.
-
-Discovered using AI-assisted static analysis confirmed by Intel Product
-Security.
-
-Reported-by: Martin Hodo <martin.hodo@intel.com>
-Fixes: e03187e12cae ("drm/i915/hdcp: MST streams support in hdcp port_data")
-Cc: stable@vger.kernel.org # v5.12+
-Cc: Anshuman Gupta <anshuman.gupta@intel.com>
-Cc: Suraj Kandpal <suraj.kandpal@intel.com>
-Reviewed-by: Suraj Kandpal <suraj.kandpal@intel.com>
-Link: https://patch.msgid.link/20260625170304.1104723-1-jani.nikula@intel.com
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-(cherry picked from commit 9284ab3b6e776c315883ac2611283d263c9460fd)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Signed-off-by: Prike Liang <Prike.Liang@amd.com>
+Acked-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit bc434335ab3c096a33a9e88c7951b4ac574db458)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_hdcp.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_mes.h |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/gpu/drm/i915/display/intel_hdcp.c
-+++ b/drivers/gpu/drm/i915/display/intel_hdcp.c
-@@ -132,6 +132,9 @@ intel_hdcp_required_content_stream(struc
- 		if (conn_dig_port != dig_port)
- 			continue;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.h
+@@ -288,12 +288,14 @@ struct mes_suspend_gang_input {
+ 	uint64_t	gang_context_addr;
+ 	uint64_t	suspend_fence_addr;
+ 	uint32_t	suspend_fence_value;
++	uint32_t	doorbell_offset;
+ };
  
-+		if (drm_WARN_ON(display->drm, data->k >= INTEL_NUM_PIPES(display)))
-+			return -EINVAL;
-+
- 		data->streams[data->k].stream_id =
- 			intel_conn_to_vcpi(state, connector);
- 		data->k++;
-@@ -142,7 +145,7 @@ intel_hdcp_required_content_stream(struc
- 	}
- 	drm_connector_list_iter_end(&conn_iter);
+ struct mes_resume_gang_input {
+ 	uint32_t	xcc_id;
+ 	bool		resume_all_gangs;
+ 	uint64_t	gang_context_addr;
++	uint32_t	doorbell_offset;
+ };
  
--	if (drm_WARN_ON(display->drm, data->k > INTEL_NUM_PIPES(display) || data->k == 0))
-+	if (drm_WARN_ON(display->drm, !data->k))
- 		return -EINVAL;
- 
- 	/*
+ struct mes_reset_queue_input {
 
 
