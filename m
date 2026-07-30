@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9B533B0598;
-	Thu, 30 Jul 2026 15:10:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C23D2372ECB;
+	Thu, 30 Jul 2026 15:11:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424260; cv=none; b=FTrHFtPoqWBhaBvAjQr43ob5ghijXRD5FP1m/8Z6r00fXBcFJleRE9omFybJ7jJ8W3j39twxuddRBY9Nc5OPe2rHlMHzyKQOOGZvdtTwE4Pi1I322SagKkKCqdc6tQjP6PfWXuXtaoF/6UZ+DlJn2J6eyG7xaecBz39CFp3QhIQ=
+	t=1785424266; cv=none; b=Ai8Gn4kQG0a6f7WzMYQgxdfDNm4pktd837QToxUqq5ILHPpDUKuZk0om/WOTGF3oAmttKIAd0c5aBX19IGaM6S7AOThlTu99jbKzd1GotHfGcpwdcl0sIXNTQySdiA99OjnnWgao8ayk+QZjj9YOZTmk8EiELfOqFDe5M4Vm1N8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424260; c=relaxed/simple;
-	bh=I/0pgiYqAd7DpA2J0Ph0WNSpODsV2QsQBHjqYNWZGwY=;
+	s=arc-20240116; t=1785424266; c=relaxed/simple;
+	bh=Qqu62GrBi2YQxAS+Vt9tyfeTFKebnanOo+RyQlQ3/JE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VOaixXzNPZzciOR7M5QxEVieUk7qwxKCbQE52xcZaWAKg3GLiQmAqRK0kYEndtldQKjRFGRdM1xY1j7840bS+5v739Kfq+mpwdylmx/RqlOtx6w8hJsNaCeRhdBBv4qaYx+QqyiixwNxb7730fUBHHKwZNxrvtinOge4p8GFik8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kYBQr8li; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=a6uHOr3MS4EUAvc8vF+j/u7GhGWFX/ILnNCST5n04jO4mtbXBWVXq+2PR6kgT0SbkgRtNLFN605KS6PYeAe0HLMjNXOMwFco55tVZJR3ydBGgbA6jtdYvxLRB822rZY9MMEIhi+Npm5EF1tGFMJFxi8dq+abTCl3z79mGcWIjic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=idZc3AFY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kYBQr8li"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D48D71F00A3E;
-	Thu, 30 Jul 2026 15:10:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="idZc3AFY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C0E71F00A3A;
+	Thu, 30 Jul 2026 15:10:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424253;
-	bh=bkhqC1y4o7ickYW4snwvJcG0lcNaa1eKAhU/UiR3kVE=;
+	s=korg; t=1785424259;
+	bh=+oKmrJEGen2mXaKqs69FQD/tgYFgeiYeML5FmWOhZvw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kYBQr8li8SLETQ7MvVj7Gfi83GX+rRQFIjaaNKLK17pH8h7xKlqjE8gZMUCOO2KMc
-	 ZUL1RGlKydb+5kIi+3hGVjIyPh5LzKLwhs5RrxZ2smQOk7yR8xweybs8MCo6I7a3jP
-	 HHBoCWKoAGj9jgKjDxq7SjJKgrm5jAXUr2URmYZQ=
+	b=idZc3AFYuhzcEhIySicva4n0epp59H4JHMvy8OAsjSRXU1xFgAmo8vLiWcBKxjiAv
+	 JUkQ90r88u81d65ahouk7KPbzVGNCjlEUoFgCAD1U856/74O4X6lZ1ardiiNWBP5JV
+	 BZIboFsEVJwVeYnwoEGpEaGd8ohFW3fE1nb3+5Sw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 330/675] drm/amdgpu/uvd: Fix forcing MSG, FB BOs into VCPU segment when it isnt at 0 (v2)
-Date: Thu, 30 Jul 2026 16:11:00 +0200
-Message-ID: <20260730141452.142971435@linuxfoundation.org>
+Subject: [PATCH 6.18 331/675] drm/amdgpu/uvd: Place VCPU BO only in VRAM for UVD 4.x and older
+Date: Thu, 30 Jul 2026 16:11:01 +0200
+Message-ID: <20260730141452.164152867@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -54,101 +54,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Timur Kristóf <timur.kristof@gmail.com>
 
-commit 32bd35f068a3507a1b3922cd12ea2985fc58c85b upstream.
+commit 8002b744ad70055ef11ff7d0a7d685bfe8ffe6e4 upstream.
 
-UVD 4.x and older can only access MSG, FEEDBACK buffers from a
-specific 256M VRAM segment that the VCPU BO is also located in.
-We already modify all placements of the given BO to ensure
-the BO is placed within this segment.
+These UVD versions don't fully support GPUVM and are only
+validated to work when their VCPU BO is placed in VRAM.
 
-Previously, it always assumed that the VCPU segment is
-the first 256M of VRAM, even though under some conditions
-the VCPU BO could be allocated outside this segment,
-which made UVD non-functional as the BOs were
-not inside the same segment as the UVD VCPU BO.
-
-Solve that by using the segment where the VCPU BO actually is.
-
-This fixes an issue with UVD failing to initialize on SI/CIK
-when resizable BAR is enabled and the VCPU BO is allocated
-in a different segment.
-
-v2:
-- For other BOs, keep using the same UVD segment as before.
-
-Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/3851
-Reviewed-by: Christian König <christian.koenig@amd.com>
 Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit cbfd4d3fc2061a1ec8e9d36e65973ac3e813358a)
+(cherry picked from commit 01b8dfc0660db5d6cdd62c22dc20f774a26ce853)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c |   33 +++++++++++++++++++++++---------
- 1 file changed, 24 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c |   17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
 --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
 +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
-@@ -135,7 +135,7 @@ MODULE_FIRMWARE(FIRMWARE_VEGA12);
- MODULE_FIRMWARE(FIRMWARE_VEGA20);
+@@ -188,6 +188,7 @@ int amdgpu_uvd_sw_init(struct amdgpu_dev
+ 	const struct common_firmware_header *hdr;
+ 	unsigned int family_id;
+ 	int i, j, r;
++	u32 vcpu_bo_domain;
  
- static void amdgpu_uvd_idle_work_handler(struct work_struct *work);
--static void amdgpu_uvd_force_into_uvd_segment(struct amdgpu_bo *abo);
-+static void amdgpu_uvd_force_into_vcpu_segment(struct amdgpu_bo *abo);
+ 	INIT_DELAYED_WORK(&adev->uvd.idle_work, amdgpu_uvd_idle_work_handler);
  
- static int amdgpu_uvd_create_msg_bo_helper(struct amdgpu_device *adev,
- 					   uint32_t size,
-@@ -158,7 +158,7 @@ static int amdgpu_uvd_create_msg_bo_help
- 	amdgpu_bo_kunmap(bo);
- 	amdgpu_bo_unpin(bo);
- 	amdgpu_bo_placement_from_domain(bo, AMDGPU_GEM_DOMAIN_VRAM);
--	amdgpu_uvd_force_into_uvd_segment(bo);
-+	amdgpu_uvd_force_into_vcpu_segment(bo);
- 	r = ttm_bo_validate(&bo->tbo, &bo->placement, &ctx);
- 	if (r)
- 		goto err;
-@@ -544,6 +544,24 @@ void amdgpu_uvd_free_handles(struct amdg
+@@ -319,12 +320,20 @@ int amdgpu_uvd_sw_init(struct amdgpu_dev
+ 	if (adev->firmware.load_type != AMDGPU_FW_LOAD_PSP)
+ 		bo_size += AMDGPU_GPU_PAGE_ALIGN(le32_to_cpu(hdr->ucode_size_bytes) + 8);
+ 
++	/* UVD 5.0 and newer HW can use 64 bit addressing. */
++	adev->uvd.address_64_bit =
++		!amdgpu_device_ip_block_version_cmp(adev, AMD_IP_BLOCK_TYPE_UVD, 5, 0);
++
++	vcpu_bo_domain = AMDGPU_GEM_DOMAIN_VRAM;
++	if (adev->uvd.address_64_bit)
++		vcpu_bo_domain |= AMDGPU_GEM_DOMAIN_GTT;
++
+ 	for (j = 0; j < adev->uvd.num_uvd_inst; j++) {
+ 		if (adev->uvd.harvest_config & (1 << j))
+ 			continue;
++
+ 		r = amdgpu_bo_create_kernel(adev, bo_size, PAGE_SIZE,
+-					    AMDGPU_GEM_DOMAIN_VRAM |
+-					    AMDGPU_GEM_DOMAIN_GTT,
++					    vcpu_bo_domain,
+ 					    &adev->uvd.inst[j].vcpu_bo,
+ 					    &adev->uvd.inst[j].gpu_addr,
+ 					    &adev->uvd.inst[j].cpu_addr);
+@@ -339,10 +348,6 @@ int amdgpu_uvd_sw_init(struct amdgpu_dev
+ 		adev->uvd.filp[i] = NULL;
  	}
- }
  
-+static void amdgpu_uvd_force_into_vcpu_segment(struct amdgpu_bo *bo)
-+{
-+	struct amdgpu_device *adev = amdgpu_ttm_adev(bo->tbo.bdev);
-+	struct amdgpu_bo *vcpu_bo = adev->uvd.inst[0].vcpu_bo;
-+	struct amdgpu_res_cursor vcpu_cur;
-+
-+	amdgpu_res_first(vcpu_bo->tbo.resource, 0,
-+			 amdgpu_bo_size(vcpu_bo), &vcpu_cur);
-+
-+	bo->placement.num_placement = 1;
-+	bo->placement.placement = &bo->placements[0];
-+	bo->placements[0].fpfn = ALIGN_DOWN(vcpu_cur.start, SZ_256M) >> PAGE_SHIFT;
-+	bo->placements[0].lpfn = bo->placements[0].fpfn + (SZ_256M >> PAGE_SHIFT);
-+	bo->placements[0].mem_type = vcpu_bo->tbo.resource->mem_type;
-+	if (bo->placements[0].mem_type == TTM_PL_VRAM)
-+		bo->placements[0].flags |= TTM_PL_FLAG_CONTIGUOUS;
-+}
-+
- static void amdgpu_uvd_force_into_uvd_segment(struct amdgpu_bo *abo)
- {
- 	int i;
-@@ -594,13 +612,10 @@ static int amdgpu_uvd_cs_pass1(struct am
- 	if (!ctx->parser->adev->uvd.address_64_bit) {
- 		/* check if it's a message or feedback command */
- 		cmd = amdgpu_ib_get_value(ctx->ib, ctx->idx) >> 1;
--		if (cmd == 0x0 || cmd == 0x3) {
--			/* yes, force it into VRAM */
--			uint32_t domain = AMDGPU_GEM_DOMAIN_VRAM;
+-	/* from uvd v5.0 HW addressing capacity increased to 64 bits */
+-	if (!amdgpu_device_ip_block_version_cmp(adev, AMD_IP_BLOCK_TYPE_UVD, 5, 0))
+-		adev->uvd.address_64_bit = true;
 -
--			amdgpu_bo_placement_from_domain(bo, domain);
--		}
--		amdgpu_uvd_force_into_uvd_segment(bo);
-+		if (cmd == 0x0 || cmd == 0x3)
-+			amdgpu_uvd_force_into_vcpu_segment(bo);
-+		else
-+			amdgpu_uvd_force_into_uvd_segment(bo);
- 
- 		r = ttm_bo_validate(&bo->tbo, &bo->placement, &tctx);
- 	}
+ 	r = amdgpu_uvd_create_msg_bo_helper(adev, 128 << 10, &adev->uvd.ib_bo);
+ 	if (r)
+ 		return r;
 
 
