@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FB5F30C143;
-	Thu, 30 Jul 2026 15:51:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27BB0418A44;
+	Thu, 30 Jul 2026 15:51:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426714; cv=none; b=eJFxWPFaI2GLP/JVdMW5cI239VhZp2ona/WH33pCNGdjFKAvt0nZRKc4pCkPYfNjwtNklZQUJkFwYnspvvuN8WurZDrQWZUGTMQ56MrRNRJ78KuHMTMScOUy+cqGkCYR+aqJpNxEwkuFmdVlv8Y1cWigSfFS/MIElAoJB3z0ooE=
+	t=1785426717; cv=none; b=U5V7jnkvysdJL3E7P/kMPfPBjKsX2goBTDexIp/UZI5C70NeOg+HZsqL7K9RMb7P6ipIkl57H4fW8O4wk7c1R0Zqn2JCCi2zlvqk1vrJnKxQjrluPjyL11fIZfFNyuRK4EhLfoEIcAVFU1BNYQkjUw0aIgW6VXgWHnTTG1MBa04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426714; c=relaxed/simple;
-	bh=DsVwZygtuCMtbNQX+HRJuz4bBeBhaQupjZzmeeKQXLw=;
+	s=arc-20240116; t=1785426717; c=relaxed/simple;
+	bh=u32Ov6QjAegmU9OZYJDIxQk0yd/qiH4+vsbhjj5vk0c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CI2srGccxo886bUOvbL9GuCL22G6IXKnL24znOSKCQ5fsSAZnEhmXNn4mbADCmNohowOWfrlTRHN6Q+VlefWVfrNH/j7+ngFRVuyMt5ISMcyJ4hebUwdSF72m6/BKIDWQuk0e2L4Nzn4MX57tJw0gMOwrxIMq+ecYJSFDRD5joU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SWca0Rl7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RyXSjBdUv9H7vHl+Us2dbaiR0aNr7GTd0u1m5GZGjVSWMN4sS3gVWkkIWykSiQfvFbaM+NH66KUwGFroj1vYhg3rZP6slDvTnZd6ajqJLW6q/DGO/QEI72KS+JAS18ssp+NR6OOdQeED9HZ5mAjwsnE8P7cVpSBZbDQ+CvIqw5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FCm/N6GV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SWca0Rl7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A37441F00A3A;
-	Thu, 30 Jul 2026 15:51:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FCm/N6GV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74E851F000E9;
+	Thu, 30 Jul 2026 15:51:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426713;
-	bh=30jE9ysLV+mYjU20P+3Yr5TgPspuisKERaYk+qC/nK4=;
+	s=korg; t=1785426716;
+	bh=tZYc6C0n97/zenS5St86Hqu/64gXcoYtlOAS4gPhUh8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SWca0Rl7U09aKNETFvPBVhwHu4ROjtJcB4dhJ3oZ3zXIF2V320P9NnVvQ7i1xjfE4
-	 yyCIOJu9OKopoZMynOkY5bwV5DyXDB4y/dqAhby2NupaJW1bPHVIKvoxoxBbD1BVKZ
-	 AtueU/KTmLVHIT/SaaZQVPTIlQROnaPoe3mG7OMI=
+	b=FCm/N6GVmfApF+yDLqnF88MTUk/rldKGaRgQGegCjbxL5wOLz78yWSi3oNAlDmo2l
+	 xhQr75mjhtmVKNr3HaBzQjb7qPkJ8L2fitGWKls07RqSxm7fUgaqLrUXFkras1gmwB
+	 ZUi7RTFYRNj1qtB6SAJPthi7Ny1/Ptn9b6HD9VIQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	stable@kernel.org,
+	Waiman Long <longman@redhat.com>,
+	Richard Guy Briggs <rgb@redhat.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Ricardo Robaina <rrobaina@redhat.com>,
+	Paul Moore <paul@paul-moore.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 514/602] SUNRPC: Add helpers to convert xdr_buf byte ranges to scatterlists
-Date: Thu, 30 Jul 2026 16:15:06 +0200
-Message-ID: <20260730141446.803546294@linuxfoundation.org>
+Subject: [PATCH 6.12 473/602] audit: fix recursive locking deadlock in audit_dupe_exe()
+Date: Thu, 30 Jul 2026 16:14:25 +0200
+Message-ID: <20260730141445.902321920@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -52,276 +55,361 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Ricardo Robaina <rrobaina@redhat.com>
 
-[ Upstream commit e9be933959b581effd426f93b86654f5fbf0c574 ]
+[ Upstream commit 81905b5acbe77284734438df3fbec1158e6429a3 ]
 
-The crypto/krb5 library accepts data in scatterlist form, but
-the GSS-API layer presents RPC payloads as struct xdr_buf.
-Bridge that gap with a pair of helper functions:
+A deadlock occurs in the audit subsystem when duplicating
+executable-related rules.
 
-  xdr_buf_to_sg()        - populate a caller-supplied scatterlist
-                           array from a byte range
-  xdr_buf_to_sg_alloc()  - populate a caller-supplied inline
-                           scatterlist, chaining to a heap-
-                           allocated overflow for large payloads
+When a file is moved (e.g., via do_renameat2()), the VFS layer locks
+the parent directory (I_MUTEX_PARENT), which synchronously triggers an
+fsnotify_move event. If an existing executable audit rule matches the
+file being moved, the audit subsystem catches this event and calls
+audit_dupe_exe() to duplicate the watch and update the rule. Then,
+audit_alloc_mark() would call kern_path_parent() to resolve the path,
+leading to a blind attempt to acquire the exact same I_MUTEX_PARENT lock
+already held by the task, resulting in the following recursive locking
+deadlock:
 
-The inline array (typically stack-allocated at eight entries)
-covers the common case of small RPCs with no heap allocation
-on the encrypt/decrypt path. Only buffers spanning many pages
-incur a kmalloc for the chained extension.
+ ============================================
+ WARNING: possible recursive locking detected
+ 6.12.0-55.27.1.el10_0.x86_64+debug #1 Not tainted
+ --------------------------------------------
+ mv/5099 is trying to acquire lock:
+ ffff888132845358 (&inode->i_sb->s_type->i_mutex_dir_key/1){+.+.}-{3:3},
+ at: __kern_path_locked+0x10a/0x2f0
 
-The segment-walking logic follows the same head, page array,
-tail traversal as xdr_process_buf(), but populates a
-scatterlist directly rather than invoking a per-segment
-callback. sg_next() traversal makes the walker safe for
-chained scatterlists. Once subsequent patches reroute all
-per-message crypto operations through crypto/krb5,
-xdr_process_buf() loses its last callers and is removed.
+ but task is already holding lock:
+ ffff888132846b58 (&inode->i_sb->s_type->i_mutex_dir_key/1){+.+.}-{3:3},
+ at: lock_two_directories+0x13f/0x2b0
 
-Assisted-by: Claude:claude-opus-4-6
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Acked-by: Anna Schumaker <anna.schumaker@hammerspace.com>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Stable-dep-of: 18c1cc698861 ("SUNRPC: Return an error from xdr_buf_to_bvec() on overflow")
+ other info that might help us debug this:
+  Possible unsafe locking scenario:
+
+        CPU0
+        ----
+   lock(&inode->i_sb->s_type->i_mutex_dir_key/1);
+   lock(&inode->i_sb->s_type->i_mutex_dir_key/1);
+
+  *** DEADLOCK ***
+
+  May be due to missing lock nesting notation
+
+  6 locks held by mv/5099:
+  #0: ffff888112a9c440 (sb_writers#13)
+  at: do_renameat2+0x34c/0xbc0
+  #1: ffff888112a9c790 (&type->s_vfs_rename_key#3)
+  at: do_renameat2+0x415/0xbc0
+  #2: ffff888132846b58 (&inode->i_sb->s_type->i_mutex_dir_key/1)
+  at: lock_two_directories+0x13f/0x2b0
+  #3: ffff888132845358 (&inode->i_sb->s_type->i_mutex_dir_key/5)
+  at: lock_two_directories+0x175/0x2b0
+  #4: ffffffffb3a1fb10 (&fsnotify_mark_srcu)
+  at: fsnotify+0x454/0x28a0
+  #5: ffffffffaf886230 (audit_filter_mutex)
+  at: audit_update_watch+0x36/0x11e0
+
+ stack backtrace:
+ Call Trace:
+  <TASK>
+  dump_stack_lvl+0x6f/0xb0
+  print_deadlock_bug.cold+0xbd/0xca
+  validate_chain+0x83a/0xf00
+  __lock_acquire+0xcac/0x1d20
+  lock_acquire.part.0+0x11b/0x360
+  down_write_nested+0x9f/0x230
+  __kern_path_locked+0x10a/0x2f0
+  kern_path_locked+0x26/0x40
+  audit_alloc_mark+0xfb/0x4f0
+  audit_dupe_exe+0x6c/0xe0
+  audit_dupe_rule+0x6c2/0xc00
+  audit_update_watch+0x4cc/0x11e0
+  audit_watch_handle_event+0x12c/0x1b0
+  send_to_group+0x5d0/0x8b0
+  fsnotify+0x615/0x28a0
+  fsnotify_move+0x1d8/0x630
+  vfs_rename+0xdcd/0x1df0
+  do_renameat2+0x9d4/0xbc0
+  __x64_sys_renameat+0x192/0x260
+  do_syscall_64+0x92/0x180
+  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+ RIP: 0033:0x7f0491fe8c4e
+ Code: 0f 1f 40 00 48 8b 15 c1 e1 16 00 f7 d8 64 89 02 b8 ff ff ff ff
+ c3 66 0f 1f 44 00 00 f3 0f 1e fa 49 89 ca b8 08 01 00 00 0f 05 <48>
+ 3d 00 f0 ff ff 77 0a c3 66 0f 1f 84 00 00 00 00 00 48 8b 15 89
+ RSP: 002b:00007ffc7210bf38 EFLAGS: 00000246 ORIG_RAX: 0000000000000108
+ RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f0491fe8c4e
+ RDX: 0000000000000003 RSI: 00007ffc7210e6c8 RDI: 00000000ffffff9c
+ RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000001
+ R10: 00005575eb2dae2a R11: 0000000000000246 R12: 00005575eb2dae2a
+ R13: 00007ffc7210e6c8 R14: 0000000000000003 R15: 00000000ffffff9c
+  </TASK>
+
+The aforementioned deadlock can be consistently reproduced by running
+the script below:
+
+ audit-dupe-exe-deadlock.sh
+ --------------------------
+ #!/bin/bash
+ auditctl -D
+ mkdir -p /tmp/foo
+ touch /tmp/file
+ auditctl -a always,exit -F exe=/tmp/file -F path=/tmp/file -S all -k dr
+ mv /tmp/file /tmp/foo/file
+ rm -Rf /tmp/foo
+
+This patch fixes the issue by introducing struct audit_watch_ctx to pass
+the fsnotify event context down to audit_alloc_mark(). By utilizing the
+already-resolved directory inode provided by the event, we bypass the
+kern_path_parent() path resolution entirely, safely avoiding the
+recursive lock. Furthermore, it explicitly allows duplicate fsnotify
+marks (allow_dups = 1) during the rename update, allowing the new rule's
+mark to safely coexist with the old rule's mark until the old rule is
+freed.
+
+P.S.: This issue was identified and reproduced during a comprehensive
+code coverage analysis of the audit subsystem. The full report is
+available at the link below:
+
+https://people.redhat.com/rrobaina/audit-code-coverage-analysis.pdf
+
+P.P.S: With the permission of both Ricardo and Nathan, I've squashed a
+fixup patch from Nathan that addresses a compile time error when
+CONFIG_AUDITSYSCALL=n.
+
+Cc: stable@kernel.org
+Fixes: 34d99af52ad4 ("audit: implement audit by executable")
+Acked-by: Waiman Long <longman@redhat.com>
+Acked-by: Richard Guy Briggs <rgb@redhat.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Ricardo Robaina <rrobaina@redhat.com>
+[PM: move link metadata into the msg, apply fix from NC]
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/sunrpc/xdr.h |   15 +++
- net/sunrpc/xdr.c           |  199 +++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 214 insertions(+)
+ kernel/audit.h          |   17 ++++++++++++-----
+ kernel/audit_fsnotify.c |   32 +++++++++++++++++++++++---------
+ kernel/audit_watch.c    |   25 +++++++++++++++++--------
+ kernel/auditfilter.c    |    9 +++++----
+ 4 files changed, 57 insertions(+), 26 deletions(-)
 
---- a/include/linux/sunrpc/xdr.h
-+++ b/include/linux/sunrpc/xdr.h
-@@ -141,6 +141,21 @@ int	xdr_alloc_bvec(struct xdr_buf *buf,
- void	xdr_free_bvec(struct xdr_buf *buf);
- unsigned int xdr_buf_to_bvec(struct bio_vec *bvec, unsigned int bvec_size,
- 			     const struct xdr_buf *xdr);
-+int xdr_buf_to_sg(const struct xdr_buf *buf, unsigned int offset,
-+		  unsigned int len, struct scatterlist *sg, unsigned int nsg);
-+int xdr_buf_to_sg_alloc(const struct xdr_buf *buf, unsigned int offset,
-+			unsigned int len, struct scatterlist *sg_head,
-+			unsigned int sg_head_nents,
-+			struct scatterlist **sg_overflow, gfp_t gfp);
-+
-+/*
-+ * Inline scatterlist entries for xdr_buf_to_sg_alloc().  Sized to cover the
-+ * head kvec, tail kvec, and a few page fragments without any heap allocation.
-+ */
-+enum {
-+	XDR_BUF_TO_SG_NENTS	= 8,
-+};
-+
+--- a/kernel/audit.h
++++ b/kernel/audit.h
+@@ -250,8 +250,13 @@ extern int audit_del_rule(struct audit_e
+ extern void audit_free_rule_rcu(struct rcu_head *head);
+ extern struct list_head audit_filter_list[];
  
- static inline __be32 *xdr_encode_array(__be32 *p, const void *s, unsigned int len)
- {
---- a/net/sunrpc/xdr.c
-+++ b/net/sunrpc/xdr.c
-@@ -219,6 +219,205 @@ bvec_overflow:
+-extern struct audit_entry *audit_dupe_rule(struct audit_krule *old);
++struct audit_watch_ctx {
++	struct inode *dir;
++	struct inode *child;
++};
+ 
++extern struct audit_entry *audit_dupe_rule(struct audit_krule *old,
++					   struct audit_watch_ctx *ctx);
+ extern void audit_log_d_path_exe(struct audit_buffer *ab,
+ 				 struct mm_struct *mm);
+ 
+@@ -274,13 +279,15 @@ extern char *audit_watch_path(struct aud
+ extern int audit_watch_compare(struct audit_watch *watch, u64 ino, dev_t dev);
+ 
+ extern struct audit_fsnotify_mark *audit_alloc_mark(struct audit_krule *krule,
+-						    char *pathname, int len);
++						    char *pathname, int len,
++						    struct audit_watch_ctx *ctx);
+ extern char *audit_mark_path(struct audit_fsnotify_mark *mark);
+ extern void audit_remove_mark(struct audit_fsnotify_mark *audit_mark);
+ extern void audit_remove_mark_rule(struct audit_krule *krule);
+ extern int audit_mark_compare(struct audit_fsnotify_mark *mark, u64 ino,
+ 			      dev_t dev);
+-extern int audit_dupe_exe(struct audit_krule *new, struct audit_krule *old);
++extern int audit_dupe_exe(struct audit_krule *new, struct audit_krule *old,
++			  struct audit_watch_ctx *ctx);
+ extern int audit_exe_compare(struct task_struct *tsk,
+ 			     struct audit_fsnotify_mark *mark);
+ 
+@@ -311,13 +318,13 @@ extern struct list_head *audit_killed_tr
+ #define audit_watch_path(w) ""
+ #define audit_watch_compare(w, i, d) 0
+ 
+-#define audit_alloc_mark(k, p, l) (ERR_PTR(-EINVAL))
++#define audit_alloc_mark(k, p, l, c) (ERR_PTR(-EINVAL))
+ #define audit_mark_path(m) ""
+ #define audit_remove_mark(m) do { } while (0)
+ #define audit_remove_mark_rule(k) do { } while (0)
+ #define audit_mark_compare(m, i, d) 0
+ #define audit_exe_compare(t, m) (-EINVAL)
+-#define audit_dupe_exe(n, o) (-EINVAL)
++#define audit_dupe_exe(n, o, c) (-EINVAL)
+ 
+ #define audit_remove_tree_rule(rule) BUG()
+ #define audit_add_tree_rule(rule) -EINVAL
+--- a/kernel/audit_fsnotify.c
++++ b/kernel/audit_fsnotify.c
+@@ -71,19 +71,30 @@ static void audit_update_mark(struct aud
+ 	audit_mark->ino = inode ? inode->i_ino : AUDIT_INO_UNSET;
  }
  
- /**
-+ * xdr_buf_to_sg - Populate a scatterlist from an xdr_buf range
-+ * @buf: xdr_buf to map
-+ * @offset: starting byte offset within @buf
-+ * @len: number of bytes to cover
-+ * @sg: scatterlist array initialized with sg_init_table()
-+ * @nsg: number of entries available in @sg
-+ *
-+ * @sg is traversed with sg_next(), so callers may pass a list
-+ * assembled with sg_chain().
-+ *
-+ * Return: on success, the number of scatterlist entries used; the
-+ * last used entry is marked with sg_mark_end().  On failure, a
-+ * negative errno.
-+ */
-+int xdr_buf_to_sg(const struct xdr_buf *buf, unsigned int offset,
-+		  unsigned int len, struct scatterlist *sg, unsigned int nsg)
-+{
-+	unsigned int page_len, thislen, page_offset;
-+	struct scatterlist *cur = sg, *prev = NULL;
-+	int nents = 0;
-+	int i;
-+
-+	if (len == 0)
-+		return 0;
-+
-+	if (offset >= buf->head[0].iov_len) {
-+		offset -= buf->head[0].iov_len;
+-struct audit_fsnotify_mark *audit_alloc_mark(struct audit_krule *krule, char *pathname, int len)
++struct audit_fsnotify_mark *audit_alloc_mark(struct audit_krule *krule, char *pathname,
++					     int len, struct audit_watch_ctx *ctx)
+ {
+ 	struct audit_fsnotify_mark *audit_mark;
+ 	struct path path;
+ 	struct dentry *dentry;
+-	int ret;
++	struct inode *dir, *child;
++	int ret, allow_dups;
+ 
+ 	if (pathname[0] != '/' || pathname[len-1] == '/')
+ 		return ERR_PTR(-EINVAL);
+ 
+-	dentry = kern_path_parent(pathname, &path);
+-	if (IS_ERR(dentry))
+-		return ERR_CAST(dentry); /* returning an error */
++	if (!ctx) {
++		dentry = kern_path_parent(pathname, &path);
++		if (IS_ERR(dentry))
++			return ERR_CAST(dentry); /* returning an error */
++		dir = d_inode(path.dentry);
++		child = d_inode(dentry);
++		allow_dups = 0;
 +	} else {
-+		thislen = min_t(unsigned int,
-+				buf->head[0].iov_len - offset, len);
-+		if (nents >= nsg)
-+			return -ENOSPC;
-+		sg_set_buf(cur, buf->head[0].iov_base + offset,
-+			   thislen);
-+		prev = cur;
-+		cur = sg_next(cur);
-+		nents++;
-+		len -= thislen;
-+		offset = 0;
++		dir = ctx->dir;
++		child = ctx->child;
++		allow_dups = 1;
 +	}
-+	if (len == 0)
-+		goto done;
+ 
+ 	audit_mark = kzalloc(sizeof(*audit_mark), GFP_KERNEL);
+ 	if (unlikely(!audit_mark)) {
+@@ -94,18 +105,21 @@ struct audit_fsnotify_mark *audit_alloc_
+ 	fsnotify_init_mark(&audit_mark->mark, audit_fsnotify_group);
+ 	audit_mark->mark.mask = AUDIT_FS_EVENTS;
+ 	audit_mark->path = pathname;
+-	audit_update_mark(audit_mark, dentry->d_inode);
+ 	audit_mark->rule = krule;
+ 
+-	ret = fsnotify_add_inode_mark(&audit_mark->mark, path.dentry->d_inode, 0);
++	audit_update_mark(audit_mark, child);
++	ret = fsnotify_add_inode_mark(&audit_mark->mark, dir, allow_dups);
 +
-+	if (offset >= buf->page_len) {
-+		offset -= buf->page_len;
-+	} else {
-+		page_len = min(buf->page_len - offset, len);
-+		len -= page_len;
-+		page_offset = (offset + buf->page_base) & (PAGE_SIZE - 1);
-+		i = (offset + buf->page_base) >> PAGE_SHIFT;
-+		thislen = PAGE_SIZE - page_offset;
-+		do {
-+			if (thislen > page_len)
-+				thislen = page_len;
-+			if (nents >= nsg)
-+				return -ENOSPC;
-+			sg_set_page(cur, buf->pages[i],
-+				    thislen, page_offset);
-+			prev = cur;
-+			cur = sg_next(cur);
-+			nents++;
-+			page_len -= thislen;
-+			i++;
-+			page_offset = 0;
-+			thislen = PAGE_SIZE;
-+		} while (page_len != 0);
-+		offset = 0;
+ 	if (ret < 0) {
+ 		audit_mark->path = NULL;
+ 		fsnotify_put_mark(&audit_mark->mark);
+ 		audit_mark = ERR_PTR(ret);
+ 	}
+ out:
+-	dput(dentry);
+-	path_put(&path);
++	if (!ctx) {
++		dput(dentry);
++		path_put(&path);
 +	}
-+	if (len == 0)
-+		goto done;
+ 	return audit_mark;
+ }
+ 
+--- a/kernel/audit_watch.c
++++ b/kernel/audit_watch.c
+@@ -244,7 +244,8 @@ static void audit_watch_log_rule_change(
+ /* Update inode info in audit rules based on filesystem event. */
+ static void audit_update_watch(struct audit_parent *parent,
+ 			       const struct qstr *dname, dev_t dev,
+-			       u64 ino, unsigned int invalidating)
++			       u64 ino, unsigned int invalidating,
++			       struct audit_watch_ctx *ctx)
+ {
+ 	struct audit_watch *owatch, *nwatch, *nextw;
+ 	struct audit_krule *r, *nextr;
+@@ -280,7 +281,7 @@ static void audit_update_watch(struct au
+ 			list_del(&oentry->rule.rlist);
+ 			list_del_rcu(&oentry->list);
+ 
+-			nentry = audit_dupe_rule(&oentry->rule);
++			nentry = audit_dupe_rule(&oentry->rule, ctx);
+ 			if (IS_ERR(nentry)) {
+ 				list_del(&oentry->rule.list);
+ 				audit_panic("error updating watch, removing");
+@@ -479,10 +480,17 @@ static int audit_watch_handle_event(stru
+ 	if (WARN_ON_ONCE(inode_mark->group != audit_watch_group))
+ 		return 0;
+ 
+-	if (mask & (FS_CREATE|FS_MOVED_TO) && inode)
+-		audit_update_watch(parent, dname, inode->i_sb->s_dev, inode->i_ino, 0);
+-	else if (mask & (FS_DELETE|FS_MOVED_FROM))
+-		audit_update_watch(parent, dname, AUDIT_DEV_UNSET, AUDIT_INO_UNSET, 1);
++	if (mask & (FS_CREATE|FS_MOVED_TO) && inode) {
++		struct audit_watch_ctx ctx = { .dir = dir, .child = inode };
 +
-+	if (offset < buf->tail[0].iov_len) {
-+		thislen = min_t(unsigned int,
-+				buf->tail[0].iov_len - offset, len);
-+		if (nents >= nsg)
-+			return -ENOSPC;
-+		sg_set_buf(cur, buf->tail[0].iov_base + offset,
-+			   thislen);
-+		prev = cur;
-+		nents++;
-+		len -= thislen;
++		audit_update_watch(parent, dname, inode->i_sb->s_dev, inode->i_ino, 0,
++				   &ctx);
++	} else if (mask & (FS_DELETE|FS_MOVED_FROM)) {
++		struct audit_watch_ctx ctx = { .dir = dir, .child = NULL };
++
++		audit_update_watch(parent, dname, AUDIT_DEV_UNSET, AUDIT_INO_UNSET, 1,
++				   &ctx);
 +	}
-+	if (len != 0)
-+		return -EINVAL;
-+
-+done:
-+	if (prev)
-+		sg_mark_end(prev);
-+	return nents;
-+}
-+EXPORT_SYMBOL_GPL(xdr_buf_to_sg);
-+
-+/*
-+ * Count the scatterlist entries needed to cover [offset, offset + len)
-+ * within @buf.  Mirrors the walk in xdr_buf_to_sg() so the caller can
-+ * size an allocation that matches the requested sub-range rather than
-+ * the full xdr_buf.
-+ */
-+static unsigned int xdr_buf_sg_nents(const struct xdr_buf *buf,
-+				     unsigned int offset, unsigned int len)
-+{
-+	unsigned int nsg = 0, thislen, page_offset;
-+
-+	if (len == 0)
-+		return 0;
-+
-+	if (offset < buf->head[0].iov_len) {
-+		thislen = min_t(unsigned int,
-+				buf->head[0].iov_len - offset, len);
-+		nsg++;
-+		len -= thislen;
-+		offset = 0;
-+	} else {
-+		offset -= buf->head[0].iov_len;
-+	}
-+	if (len == 0)
-+		return nsg;
-+
-+	if (offset < buf->page_len) {
-+		thislen = min(buf->page_len - offset, len);
-+		page_offset = (offset + buf->page_base) & (PAGE_SIZE - 1);
-+		nsg += DIV_ROUND_UP(page_offset + thislen, PAGE_SIZE);
-+		len -= thislen;
-+		offset = 0;
-+	} else {
-+		offset -= buf->page_len;
-+	}
-+	if (len == 0)
-+		return nsg;
-+
-+	if (offset < buf->tail[0].iov_len)
-+		nsg++;
-+	return nsg;
-+}
-+
-+/**
-+ * xdr_buf_to_sg_alloc - Populate a scatterlist for an xdr_buf range
-+ * @buf: xdr_buf to map
-+ * @offset: starting byte offset within @buf
-+ * @len: number of bytes to cover
-+ * @sg_head: caller-provided scatterlist array (typically stack-allocated)
-+ * @sg_head_nents: number of entries in @sg_head
-+ * @sg_overflow: OUT: chained extension, or NULL when @sg_head sufficed
-+ * @gfp: memory allocation flags for overflow
-+ *
-+ * Populates @sg_head directly when the xdr_buf fits.  When more
-+ * entries are needed, an overflow scatterlist is allocated and
-+ * chained from @sg_head so that the result is traversable with
-+ * sg_next().
-+ *
-+ * Return: on success, the number of populated scatterlist entries
-+ * (counting only data entries, not chain entries).  @sg_head is
-+ * the head of the resulting list.  Caller must kfree @sg_overflow
-+ * when done.  On failure, a negative errno.
-+ */
-+int xdr_buf_to_sg_alloc(const struct xdr_buf *buf, unsigned int offset,
-+			unsigned int len, struct scatterlist *sg_head,
-+			unsigned int sg_head_nents,
-+			struct scatterlist **sg_overflow, gfp_t gfp)
-+{
-+	unsigned int nsg;
-+	int ret;
-+
-+	*sg_overflow = NULL;
-+	if (len == 0)
-+		return 0;
-+
-+	nsg = xdr_buf_sg_nents(buf, offset, len);
-+	if (nsg == 0)
-+		return -EINVAL;
-+
-+	if (nsg <= sg_head_nents) {
-+		sg_init_table(sg_head, nsg);
-+	} else {
-+		/* +1 replaces the slot sg_chain() consumes as the link. */
-+		unsigned int overflow_nents = nsg - sg_head_nents + 1;
-+		struct scatterlist *overflow;
-+
-+		overflow = kmalloc_array(overflow_nents, sizeof(*overflow),
-+					 gfp);
-+		if (!overflow)
-+			return -ENOMEM;
-+
-+		sg_init_table(sg_head, sg_head_nents);
-+		sg_init_table(overflow, overflow_nents);
-+		sg_chain(sg_head, sg_head_nents, overflow);
-+		*sg_overflow = overflow;
-+	}
-+
-+	ret = xdr_buf_to_sg(buf, offset, len, sg_head, nsg);
-+	if (ret < 0) {
-+		kfree(*sg_overflow);
-+		*sg_overflow = NULL;
-+	}
-+	return ret;
-+}
-+EXPORT_SYMBOL_GPL(xdr_buf_to_sg_alloc);
-+
-+/**
-  * xdr_inline_pages - Prepare receive buffer for a large reply
-  * @xdr: xdr_buf into which reply will be placed
-  * @offset: expected offset where data payload will start, in bytes
+ 	else if (mask & (FS_DELETE_SELF|FS_UNMOUNT|FS_MOVE_SELF))
+ 		audit_remove_parent_watches(parent);
+ 
+@@ -505,7 +513,8 @@ static int __init audit_watch_init(void)
+ }
+ device_initcall(audit_watch_init);
+ 
+-int audit_dupe_exe(struct audit_krule *new, struct audit_krule *old)
++int audit_dupe_exe(struct audit_krule *new, struct audit_krule *old,
++		   struct audit_watch_ctx *ctx)
+ {
+ 	struct audit_fsnotify_mark *audit_mark;
+ 	char *pathname;
+@@ -514,7 +523,7 @@ int audit_dupe_exe(struct audit_krule *n
+ 	if (!pathname)
+ 		return -ENOMEM;
+ 
+-	audit_mark = audit_alloc_mark(new, pathname, strlen(pathname));
++	audit_mark = audit_alloc_mark(new, pathname, strlen(pathname), ctx);
+ 	if (IS_ERR(audit_mark)) {
+ 		kfree(pathname);
+ 		return PTR_ERR(audit_mark);
+--- a/kernel/auditfilter.c
++++ b/kernel/auditfilter.c
+@@ -590,7 +590,7 @@ static struct audit_entry *audit_data_to
+ 				err = PTR_ERR(str);
+ 				goto exit_free;
+ 			}
+-			audit_mark = audit_alloc_mark(&entry->rule, str, f_val);
++			audit_mark = audit_alloc_mark(&entry->rule, str, f_val, NULL);
+ 			if (IS_ERR(audit_mark)) {
+ 				kfree(str);
+ 				err = PTR_ERR(audit_mark);
+@@ -818,7 +818,8 @@ static inline int audit_dupe_lsm_field(s
+  * rule with the new rule in the filterlist, then free the old rule.
+  * The rlist element is undefined; list manipulations are handled apart from
+  * the initial copy. */
+-struct audit_entry *audit_dupe_rule(struct audit_krule *old)
++struct audit_entry *audit_dupe_rule(struct audit_krule *old,
++				    struct audit_watch_ctx *ctx)
+ {
+ 	u32 fcount = old->field_count;
+ 	struct audit_entry *entry;
+@@ -877,7 +878,7 @@ struct audit_entry *audit_dupe_rule(stru
+ 				new->filterkey = fk;
+ 			break;
+ 		case AUDIT_EXE:
+-			err = audit_dupe_exe(new, old);
++			err = audit_dupe_exe(new, old, ctx);
+ 			break;
+ 		}
+ 		if (err) {
+@@ -1408,7 +1409,7 @@ static int update_lsm_rule(struct audit_
+ 	if (!security_audit_rule_known(r))
+ 		return 0;
+ 
+-	nentry = audit_dupe_rule(r);
++	nentry = audit_dupe_rule(r, NULL);
+ 	if (entry->rule.exe)
+ 		audit_remove_mark(entry->rule.exe);
+ 	if (IS_ERR(nentry)) {
 
 
