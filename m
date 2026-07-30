@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7818742E8FF;
-	Thu, 30 Jul 2026 14:23:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EFC042E8C9;
+	Thu, 30 Jul 2026 14:23:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421434; cv=none; b=A54QuDlg5PwfhzV+8gtn6eZAKmI4Hgag19yD0k0/FnQhoYmNBFv5KHxEoreTpN4Q/+dUU7tMwGKBZd+ii06u9VIvnCHSFW0D+Y0q6WqIVetQk7nQG2g04n3xo8yo9/bSj+HiCWh3ykZHkODOwgSQv3CE/VBxf5HjGEweGb3ZEyY=
+	t=1785421437; cv=none; b=rKBXN47seMpdsz7o8sPII/8nn34wfSwgb5MdWGKcfNuKZpbpiZlIMbGWieP4PpTfDVjX2FWkvsLueRuzIymKaXW30K3DsXb7K2fcfsUcW8OkAI2U4xOjfa0XitwukncrP5tMThEFzTJQ6sbAhj6kYXddFe6V5o5GnJBBbPmoOas=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421434; c=relaxed/simple;
-	bh=kOgenngjBH6cUwIxPC1ooJ9BnWBrF9nA15uQ5tAT/d0=;
+	s=arc-20240116; t=1785421437; c=relaxed/simple;
+	bh=MKJAK8JawavZjr1h/bY1rM1N8A5wNzREwPFVliXqUyw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rRy/fNEOPyUsEA74xPppfpQuw6xPCJo+2o17NIwvjmBXxlAGpZZsFolLkENWO7o20mNMNdt0K8CNhB+FEypsvld/BvtJ9gfeHqOkL8RufUx52esXf+TY5m3Q2aHqNpmKzea9irocEZKF+4IcSsACLc4q7WGkPuB/AOiCPx9GYW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Isg7Ph/m; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G1u0ZJ/SA6MbJ3s76MvVb/byasLyojSvNbpHHeE2w3cHPR6FxYgXdrVpaljHCh+o4WFtIm8XqyatMx7dOe51NoJF/rc9F23obq9DINan8ZJnrBjrwUQoFNCqAmfoRw0lRqwYEydwnISuQtK7/GmJXtREZPLENZ5jeridMEwhQbM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qXKLfi0O; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Isg7Ph/m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C98F31F000E9;
-	Thu, 30 Jul 2026 14:23:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qXKLfi0O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2C551F000E9;
+	Thu, 30 Jul 2026 14:23:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421433;
-	bh=4w8x//q5ZIq/yW9fqrNnOSLom8UpWyHY1jztvMR5eIg=;
+	s=korg; t=1785421436;
+	bh=ymgL4ifOc/H6gITpmD/pg31pPYVAB96vggj5eWMIJgg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Isg7Ph/mYLYgtOs8dUStXHmqINLqxIrenxlovGJySrr+F1/uTrAijQBCpm9S/1prU
-	 MRcZ7NiZcLHgBeFr31Uq7+LNUEMftvl2jtTiSgt/lPlSGR/EWLTp5hp2VOSN3UVy62
-	 AuSl7+vrI0LhHqyVy6ZU2fqM9yG6HfaXEQkyb5m8=
+	b=qXKLfi0OLHZ6gKPSSmpyw/9Tni3ySG+sqodaVF2pErnaOE9fAejjeH5X/IAcNnt/8
+	 320gIBvmo1bfHKSo7nANDYYxic8uwQEJ0x/2byQSa7QYnk/NxkeuviiKs4JRepbXac
+	 Jfm8f3hTsJ91W+VSvi6PKawHwMH7QS4JzEE1jAk4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Pauli Virtanen <pav@iki.fi>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 102/744] Bluetooth: mgmt: fix locking in unpair_device/disconnect_sync
-Date: Thu, 30 Jul 2026 16:06:15 +0200
-Message-ID: <20260730141446.438721275@linuxfoundation.org>
+Subject: [PATCH 7.1 103/744] Bluetooth: mgmt: hold reference for hci_conn in mgmt_pending_cmds
+Date: Thu, 30 Jul 2026 16:06:16 +0200
+Message-ID: <20260730141446.464154164@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -53,84 +53,103 @@ Content-Transfer-Encoding: 8bit
 
 From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit 16cd66443957e4ad42155c6fec401012f600c6f8 ]
+[ Upstream commit da55f570191d5d72f10c607a7043b947eb05ea46 ]
 
 Dereferencing RCU-protected pointers outside critical sections is
-invalid and may lead to UAF.
+invalid and may lead to UAF.  Use of hci_conn in hci_sync callbacks also
+needs to hold refcount to avoid UAF.
 
-Take hdev->lock for hci_conn lookup and hci_abort_conn().  Don't use RCU
-to ensure the conn is fully initialized at this point.
+Take appropriate locks for hci_conn lookups, and take refcount for
+hci_conn pointers stored in mgmt_pending_cmd so that the pointer stays
+valid.
 
-Fixes: 227a0cdf4a028 ("Bluetooth: MGMT: Fix not generating command complete for MGMT_OP_DISCONNECT")
+When accessing conn->state, ensure hdev->lock is held to avoid data
+race.
+
+Fixes: 7b445e220db9 ("Bluetooth: MGMT: Fix holding hci_conn reference while command is queued")
 Signed-off-by: Pauli Virtanen <pav@iki.fi>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/mgmt.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ net/bluetooth/mgmt.c | 26 ++++++++++++++++++++++----
+ 1 file changed, 22 insertions(+), 4 deletions(-)
 
 diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index f24b7bbfcb5b6f..186850538a8bb5 100644
+index 186850538a8bb5..9604c3025f7b7c 100644
 --- a/net/bluetooth/mgmt.c
 +++ b/net/bluetooth/mgmt.c
-@@ -3094,6 +3094,8 @@ static int unpair_device_sync(struct hci_dev *hdev, void *data)
- 	struct mgmt_cp_unpair_device *cp = cmd->param;
- 	struct hci_conn *conn;
+@@ -7407,6 +7407,9 @@ static void get_conn_info_complete(struct hci_dev *hdev, void *data, int err)
+ 		rp.max_tx_power = HCI_TX_POWER_INVALID;
+ 	}
+ 
++	if (conn)
++		hci_conn_put(conn);
++
+ 	mgmt_cmd_complete(cmd->sk, cmd->hdev->id, MGMT_OP_GET_CONN_INFO, status,
+ 			  &rp, sizeof(rp));
+ 
+@@ -7421,6 +7424,8 @@ static int get_conn_info_sync(struct hci_dev *hdev, void *data)
+ 	int err;
+ 	__le16   handle;
  
 +	hci_dev_lock(hdev);
 +
+ 	/* Make sure we are still connected */
  	if (cp->addr.type == BDADDR_BREDR)
  		conn = hci_conn_hash_lookup_ba(hdev, ACL_LINK,
- 					       &cp->addr.bdaddr);
-@@ -3101,6 +3103,11 @@ static int unpair_device_sync(struct hci_dev *hdev, void *data)
- 		conn = hci_conn_hash_lookup_le(hdev, &cp->addr.bdaddr,
- 					       le_addr_type(cp->addr.type));
+@@ -7428,12 +7433,16 @@ static int get_conn_info_sync(struct hci_dev *hdev, void *data)
+ 	else
+ 		conn = hci_conn_hash_lookup_ba(hdev, LE_LINK, &cp->addr.bdaddr);
  
-+	if (conn)
-+		hci_conn_get(conn);
-+
+-	if (!conn || conn->state != BT_CONNECTED)
++	if (!conn || conn->state != BT_CONNECTED) {
++		hci_dev_unlock(hdev);
+ 		return MGMT_STATUS_NOT_CONNECTED;
++	}
+ 
+-	cmd->user_data = conn;
++	cmd->user_data = hci_conn_get(conn);
+ 	handle = cpu_to_le16(conn->handle);
+ 
 +	hci_dev_unlock(hdev);
 +
- 	if (!conn)
- 		return 0;
+ 	/* Refresh RSSI each time */
+ 	err = hci_read_rssi_sync(hdev, handle);
  
-@@ -3108,6 +3115,7 @@ static int unpair_device_sync(struct hci_dev *hdev, void *data)
- 	 * will clean up the connection no matter the error.
- 	 */
- 	hci_abort_conn(conn, HCI_ERROR_REMOTE_USER_TERM);
-+	hci_conn_put(conn);
+@@ -7567,6 +7576,9 @@ static void get_clock_info_complete(struct hci_dev *hdev, void *data, int err)
+ 	}
  
- 	return 0;
- }
-@@ -3255,6 +3263,8 @@ static int disconnect_sync(struct hci_dev *hdev, void *data)
- 	struct mgmt_cp_disconnect *cp = cmd->param;
- 	struct hci_conn *conn;
+ complete:
++	if (conn)
++		hci_conn_put(conn);
++
+ 	mgmt_cmd_complete(cmd->sk, cmd->hdev->id, cmd->opcode, status, &rp,
+ 			  sizeof(rp));
+ 
+@@ -7583,15 +7595,21 @@ static int get_clock_info_sync(struct hci_dev *hdev, void *data)
+ 	memset(&hci_cp, 0, sizeof(hci_cp));
+ 	hci_read_clock_sync(hdev, &hci_cp);
  
 +	hci_dev_lock(hdev);
 +
- 	if (cp->addr.type == BDADDR_BREDR)
- 		conn = hci_conn_hash_lookup_ba(hdev, ACL_LINK,
- 					       &cp->addr.bdaddr);
-@@ -3262,6 +3272,11 @@ static int disconnect_sync(struct hci_dev *hdev, void *data)
- 		conn = hci_conn_hash_lookup_le(hdev, &cp->addr.bdaddr,
- 					       le_addr_type(cp->addr.type));
+ 	/* Make sure connection still exists */
+ 	conn = hci_conn_hash_lookup_ba(hdev, ACL_LINK, &cp->addr.bdaddr);
+-	if (!conn || conn->state != BT_CONNECTED)
++	if (!conn || conn->state != BT_CONNECTED) {
++		hci_dev_unlock(hdev);
+ 		return MGMT_STATUS_NOT_CONNECTED;
++	}
  
-+	if (conn)
-+		hci_conn_get(conn);
-+
+-	cmd->user_data = conn;
++	cmd->user_data = hci_conn_get(conn);
+ 	hci_cp.handle = cpu_to_le16(conn->handle);
+ 	hci_cp.which = 0x01; /* Piconet clock */
+ 
 +	hci_dev_unlock(hdev);
 +
- 	if (!conn)
- 		return -ENOTCONN;
- 
-@@ -3269,6 +3284,7 @@ static int disconnect_sync(struct hci_dev *hdev, void *data)
- 	 * will clean up the connection no matter the error.
- 	 */
- 	hci_abort_conn(conn, HCI_ERROR_REMOTE_USER_TERM);
-+	hci_conn_put(conn);
- 
- 	return 0;
+ 	return hci_read_clock_sync(hdev, &hci_cp);
  }
+ 
 -- 
 2.53.0
 
