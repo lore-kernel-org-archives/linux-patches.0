@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B37542F715;
-	Thu, 30 Jul 2026 14:24:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6645E43F080;
+	Thu, 30 Jul 2026 14:24:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421484; cv=none; b=t7uQsgpD7ApnNVWxgjJQ3Fko7mWrBHO1C3gccN/ThBaUn+37xK+G6/zXbbwr5ogdcpN40VsgXW9wCsc0uHWU74KTz3kbRMgV3rqX3V2diy/EtDHb5wyKRuqzmppwO4+fXrplizgInZJ0g2hCXYAS1rcoDxKqYHlVRcSw1LWvAVg=
+	t=1785421487; cv=none; b=MS71X5YOxq24p0uc3yTyZkJqC6DoVQEVOKFOOFJNESBlYuUVUwml/8QONeKg6TxE3eKtOYIxISaD/Icz8pzAbReKyawTPAzIBV47g2hkkmlWNB1g6UI3ZO39E6XOSIkfdu8VEn/2q+dK7ZZzokWUgo+sB5UatCs5mxNHD6P2dNk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421484; c=relaxed/simple;
-	bh=mRwpPyFMdcZhlWihQmAx3zpVMz3oy6lKScvke8jqmFQ=;
+	s=arc-20240116; t=1785421487; c=relaxed/simple;
+	bh=fsHncDOk15yRCsJJWOvJldT4gVwQh2rZ+qc52Vy4S7E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pIpvTWgZCz8ne/9CBmfbPr2P8ETr2UdRIjj7zeYRSEIlELN/ZYmoEpetaD92swbz4FNkrtlOHLC+aOuS8I6MW9+dgimOhuFv+i4eltnXWebSHPGGAlyqwz+beeDmfndya6ajszoMqmP1axxyYnXUEYYrG63uQhmPkfieafhbwqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=myXQBaz3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UDGfk6p16KTZBwNGgeM6njS2xcnr3nPOtWjQOSnz0eMM7+nOmiCSyQYWgRGUqVfz/LA8/lQ56r/JJ7wtYTdHdYu6g2ebbSJezslpoT+Mmzmz+gktwp/DZE2Q8HIEN6Myc6zW2i/ZftF8k6Nyc7+H3cgRl/lXJB6cSuNUjA+kS08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E94EF7/Z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="myXQBaz3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCD801F000E9;
-	Thu, 30 Jul 2026 14:24:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E94EF7/Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B688B1F000E9;
+	Thu, 30 Jul 2026 14:24:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421483;
-	bh=mMimzRaUUVkinNfAFk99vmocN9/kFiUV5DW3/Mapq8k=;
+	s=korg; t=1785421486;
+	bh=28ekxkUadN9JOLI1aP4MC3B1wEcvVCh3KChsoehxxCo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=myXQBaz3I2UHCBvBu+kAIg5EwvoIIKqIjvpXtSfTPUt+pUxhZoRTIZaiY2Z3tSRrS
-	 j1DvCZJXALBvYqjOa8tpPEEG/0OE0td+sR1aooQ7CY4ub8+NchE6azLslSSOqruQHb
-	 qvY+KZHIJZSmtnSffM0OZqq/+BWe+ELJVEng/bqw=
+	b=E94EF7/ZP6LRUg0pPNI1w6MOaGeG5zOjwuUx9s3Bde7Q6wwV/XKbuEvqVtf2n7l1c
+	 PlMBLwMkXEkuxFer0cen3B9HBHELIOsAq1jIDvHTfDxPX6l4v2M2p/XMWQLsG69ryy
+	 0EqRPFjbiJranIEObltWgxbzLgnbZIIn+lY2ZyKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
+	Mark Harris <mark.hsj@gmail.com>,
+	Nam Cao <namcao@linutronix.de>,
+	Michael Ellerman <mpe@kernel.org>,
+	Paul Walmsley <pjw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 117/744] s390/checksum: Fix csum_partial() without vector facility
-Date: Thu, 30 Jul 2026 16:06:30 +0200
-Message-ID: <20260730141446.766901427@linuxfoundation.org>
+Subject: [PATCH 7.1 118/744] riscv: hwprobe: Avoid uninitialized read in hwprobe_get_cpus()
+Date: Thu, 30 Jul 2026 16:06:31 +0200
+Message-ID: <20260730141446.788653315@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -51,39 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasily Gorbik <gor@linux.ibm.com>
+From: Mark Harris <mark.hsj@gmail.com>
 
-[ Upstream commit 4bb06b60d982355e22647b3d12d6619419f8c1fa ]
+[ Upstream commit 5caae1deee89a6582c761d5dcd4b924b744426cc ]
 
-Currently csum_partial() calls csum_copy() with copy=false and dst=NULL.
-On machines without the vector facility, csum_copy() falls back to
-cksm(dst, ...), causing the checksum to be calculated from address zero
-instead of the source buffer.
+When cpusetsize < cpumask_size(), hwprobe_get_cpus() did not fully
+initialize its copy of the cpu mask, which could cause non-deterministic
+results from the riscv_hwprobe syscall on a system with more than 8 CPUs
+when the supplied cpu mask is empty.  Address this by fully initializing
+the cpu mask.
 
-The VX implementation already checksums data loaded from src. Make the
-fallback do the same by passing src to cksm().
-
-Fixes: dcd3e1de9d17 ("s390/checksum: provide csum_partial_copy_nocheck()")
-Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Fixes: e178bf146e4b ("RISC-V: hwprobe: Introduce which-cpus flag")
+Signed-off-by: Mark Harris <mark.hsj@gmail.com>
+Reviewed-by: Nam Cao <namcao@linutronix.de>
+Reviewed-by: Michael Ellerman <mpe@kernel.org>
+Link: https://patch.msgid.link/20260714003056.73707-1-mark.hsj@gmail.com
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/lib/csum-partial.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/riscv/kernel/sys_hwprobe.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/s390/lib/csum-partial.c b/arch/s390/lib/csum-partial.c
-index 458abd9bac7025..9d74ceff136c54 100644
---- a/arch/s390/lib/csum-partial.c
-+++ b/arch/s390/lib/csum-partial.c
-@@ -23,7 +23,7 @@ static __always_inline __wsum csum_copy(void *dst, const void *src, int len, __w
- 	if (!cpu_has_vx()) {
- 		if (copy)
- 			memcpy(dst, src, len);
--		return cksm(dst, len, sum);
-+		return cksm(src, len, sum);
- 	}
- 	kernel_fpu_begin(&vxstate, KERNEL_VXR_V16V23);
- 	fpu_vlvgf(16, (__force u32)sum, 1);
+diff --git a/arch/riscv/kernel/sys_hwprobe.c b/arch/riscv/kernel/sys_hwprobe.c
+index 1659d31fd288fc..caf6762427c87e 100644
+--- a/arch/riscv/kernel/sys_hwprobe.c
++++ b/arch/riscv/kernel/sys_hwprobe.c
+@@ -450,6 +450,7 @@ static int hwprobe_get_cpus(struct riscv_hwprobe __user *pairs,
+ 	if (cpusetsize > cpumask_size())
+ 		cpusetsize = cpumask_size();
+ 
++	cpumask_clear(&cpus);
+ 	ret = copy_from_user(&cpus, cpus_user, cpusetsize);
+ 	if (ret)
+ 		return -EFAULT;
 -- 
 2.53.0
 
