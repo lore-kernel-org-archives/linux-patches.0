@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C94E35E92B;
-	Thu, 30 Jul 2026 15:36:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBEB237F011;
+	Thu, 30 Jul 2026 15:36:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425813; cv=none; b=iBaDYWKvF/ZZRjLYHIyu98nsp5xEV5VYK64SaeucZOskvTS7yXhPBq7eaXLDf24IcAiOLcXd9ZTqjzJ65UbO+iOsQAVRoezw+a0Vvq/535zVDnIdkWfzradC2hUm9BBXyvsLbHrpCAtXygkyyI/uA+xuzjvSBMOvZO4CHXTMdoo=
+	t=1785425816; cv=none; b=LxuA9Je5y/wgoMcNi5cdIFgkgE5Sc8CwF6Z2AAiDoPDp2QL8O8boslW0r9vnBcBaDJqAKfioAFc2ZKIZT+RPcHdSYbcpDXNBFIhDTcBpn9+4Ztrc8EjsJBhCi46iKNgqfDUsDDziWXKOiiDdGXVQo9Je1Gof/mn3e+6DFRvqOt8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425813; c=relaxed/simple;
-	bh=a9AGaoAVDoPVdkjLaOmuVdhO8PSTUvinv1YBcTfsYL8=;
+	s=arc-20240116; t=1785425816; c=relaxed/simple;
+	bh=ViIgnr2DatSy6Pxdug19x/VY5JZUwt0gtKwsIwOT3aU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=un/MSICrIqNB1+Bb3Meo+bN1mzWawiCgEolP2Y7ZDTDB8TXOoAcv19bYHFCGMUl942Pidu0G9eVB52WZXIAOlMI/e9urMnLyPw+OEUsyDi8UDZoisiygmF+2VjtlFeQpOVwfQNdyvDOQriKOfxgo/3eebw/MmFKj00H0YJ6agRM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JfBr7POG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TLuPifJA906msSTgsjXODRUBf1WUgBY6OZyE7CX7julZMMl8Q4k/dysl1jYIgwenHm//ToeuunlDahOggb5avqNisPhj/Gd2GrNrWwO6LNIxRhcME6bVkUfyejZGXXziUqWuFNXRZ+BWExrR5xK+hAC4oZiuCvis4OHv0UxcJYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L+R7ghbp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JfBr7POG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 680FD1F000E9;
-	Thu, 30 Jul 2026 15:36:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L+R7ghbp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 438361F000E9;
+	Thu, 30 Jul 2026 15:36:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425811;
-	bh=wUYHSNLtyjLW83hk5B6TsMzHbbHgoIX7HvTTudgx5pU=;
+	s=korg; t=1785425814;
+	bh=TuzfQBwvEnpU6ilsBDBpizpJOHICjco88+2Ip6JyRio=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JfBr7POGh+zwjdnUmGt4bLhmX7mIX9HhEC0fFCBMQKeN+ULMuZdZ/Gowdw6E71GFV
-	 XNgRT7rxeIRgSVGxDFLx4C8NF5Vq2wifT27WFCSSDZKVJ94HFZudo1No91AebYanQs
-	 BsUcNUccyiNWlU/tQrcWO89q3YfbGXf7oQ4Z1+1U=
+	b=L+R7ghbpfQBz2Vd8O2Hc9pvx7RcO7Y7S31nfImRwh6pRfPUKiu3xLnmLVZTXx2atb
+	 Nd/b4ROwzvoa+Gus7VaxZZLIY0xFskwJG/OvonhJNGQd9DxhlSt2IDgwWiJHD99W0D
+	 zlVC5dh6RoB4qs1ODCFcnQqVF/aqBR/6rSc6aG48=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Eelco Chaudron <echaudro@redhat.com>,
+	AutonomousCodeSecurity@microsoft.com,
+	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 201/602] selftests: openvswitch: add config file
-Date: Thu, 30 Jul 2026 16:09:53 +0200
-Message-ID: <20260730141440.182150769@linuxfoundation.org>
+Subject: [PATCH 6.12 202/602] gtp: check skb_pull_data() return in gtp1u_send_echo_resp()
+Date: Thu, 30 Jul 2026 16:09:54 +0200
+Message-ID: <20260730141440.202078110@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -52,57 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Xiang Mei (Microsoft) <xmei5@asu.edu>
 
-[ Upstream commit 441a820ccef9af80a9ac5a4c85b9c396e595967c ]
+[ Upstream commit cd170f051dba9ac146fabcd1b91726487c0cb9fa ]
 
-The kselftests doc mentions that a config file should be present "if a
-test needs specific kernel config options enabled". This selftest
-requires some kernel config, but no config file was provided.
+gtp1u_send_echo_resp() ignores skb_pull_data()'s return value. Its
+caller gtp1u_udp_encap_recv() only guarantees 16 bytes (udphdr +
+gtp1_header), but the pull requests 20 (gtp1_header_long + udphdr). For
+a 16-19 byte echo request the pull fails and returns NULL without
+advancing skb->data; execution continues, and the following skb_push()
+plus the IP header pushed by iptunnel_xmit() move skb->data below
+skb->head, tripping skb_under_panic().
 
-We could say that a sub-target could use the parent's config file, but
-the kselftests doc doesn't mention anything about that. Plus the
-net/openvswitch target is the only net target without a config file.
+Fix it by dropping the packet when skb_pull_data() fails.
 
-Here is a new config file, which is a trimmed version of the net one,
-with hopefully the minimal required kconfig on top of 'make defconfig'.
+  skbuff: skb_under_panic: ...
+  kernel BUG at net/core/skbuff.c:214!
+  Call Trace:
+   skb_push (net/core/skbuff.c:2648)
+   iptunnel_xmit (net/ipv4/ip_tunnel_core.c:82)
+   gtp_encap_recv (drivers/net/gtp.c:701 drivers/net/gtp.c:808 drivers/net/gtp.c:920)
+   udp_queue_rcv_one_skb (net/ipv4/udp.c:2388)
+   ...
+  Kernel panic - not syncing: Fatal exception in interrupt
 
-The Fixes tag points to the introduction of the net/openvswitch target,
-just to help validating this target on stable kernels.
-
-Fixes: 25f16c873fb1 ("selftests: add openvswitch selftest suite")
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Reviewed-by: Eelco Chaudron <echaudro@redhat.com>
-Link: https://patch.msgid.link/20260710-net-sft-fix-containers-v1-2-a2915c294ef5@kernel.org
+Fixes: 9af41cc33471 ("gtp: Implement GTP echo response")
+Reported-by: AutonomousCodeSecurity@microsoft.com
+Signed-off-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
+Link: https://patch.msgid.link/20260710230724.942574-1-xmei5@asu.edu
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/openvswitch/config | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
- create mode 100644 tools/testing/selftests/net/openvswitch/config
+ drivers/net/gtp.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/net/openvswitch/config b/tools/testing/selftests/net/openvswitch/config
-new file mode 100644
-index 00000000000000..c659749cd086c7
---- /dev/null
-+++ b/tools/testing/selftests/net/openvswitch/config
-@@ -0,0 +1,16 @@
-+CONFIG_GENEVE=m
-+CONFIG_INET_DIAG=y
-+CONFIG_IPV6=y
-+CONFIG_NETFILTER=y
-+CONFIG_NET_IPGRE=m
-+CONFIG_NET_IPGRE_DEMUX=m
-+CONFIG_NF_CONNTRACK=m
-+CONFIG_NF_CONNTRACK_OVS=y
-+CONFIG_OPENVSWITCH=m
-+CONFIG_OPENVSWITCH_GENEVE=m
-+CONFIG_OPENVSWITCH_GRE=m
-+CONFIG_OPENVSWITCH_VXLAN=m
-+CONFIG_PSAMPLE=m
-+CONFIG_VETH=y
-+CONFIG_VLAN_8021Q=y
-+CONFIG_VXLAN=m
+diff --git a/drivers/net/gtp.c b/drivers/net/gtp.c
+index dc4770e79990f0..b99cab7f10ce7a 100644
+--- a/drivers/net/gtp.c
++++ b/drivers/net/gtp.c
+@@ -665,8 +665,9 @@ static int gtp1u_send_echo_resp(struct gtp_dev *gtp, struct sk_buff *skb)
+ 		return -1;
+ 
+ 	/* pull GTP and UDP headers */
+-	skb_pull_data(skb,
+-		      sizeof(struct gtp1_header_long) + sizeof(struct udphdr));
++	if (!skb_pull_data(skb, sizeof(struct gtp1_header_long) +
++				sizeof(struct udphdr)))
++		return -1;
+ 
+ 	gtp_pkt = skb_push(skb, sizeof(struct gtp1u_packet));
+ 	memset(gtp_pkt, 0, sizeof(struct gtp1u_packet));
 -- 
 2.53.0
 
