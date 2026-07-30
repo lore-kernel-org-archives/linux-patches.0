@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAD3F30C143;
-	Thu, 30 Jul 2026 15:48:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD83E358373;
+	Thu, 30 Jul 2026 15:48:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426537; cv=none; b=KC52yUsPaAoZAasGOg465gZ7Fvquuz6l5pIGQx4ZYogbmpw0T9cS9lmRZ92Pg2ZVx1LyxKQUs2QsourPIzzNdYViYrk3WpNKsx8JOFpunX0mjxxPq/tzJe1ayo6TZ77dMSnWPxpVV9MkcFYXLAVQInCPFkOsGpfOiv6oRg7AlY4=
+	t=1785426539; cv=none; b=a3Koi957ER9BTLvGPAPpDH9qg1A2CilJi3sGE0P18XtCDaeAdPOg4L613adh8sBjrH9P+l5921390lb+sO1lqGTe9Qm61KLIxIXkqpHogqV1TaNq+9W7TIsp2/KGd3R5SNg3Il/s2962ctCQa9qt0R1/I3vru5m87ZnnPU7Psp4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426537; c=relaxed/simple;
-	bh=KCk1Z/ZXEqD1cPIe/KNQS8Gll3Te93bvOsZPihjnixI=;
+	s=arc-20240116; t=1785426539; c=relaxed/simple;
+	bh=InovPMmftiSt/osFCrfPhcT0xk2G9LnUpmMmXUeX0cE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nDECdBb3ciNgXVATgwhUsHb/WPTf5GL8hVx4jRGI/B9lXuGItk2fRyFYp5/Ee63wOQloW3zT/BuhNO7JCOmA3ZeqROrLsGAFKkXq43IgZ+Qg8QhC//HVqxfjbYndT3GmchDxUw+EPXf5AwI6js0sEpiiBSBL33WcVPjhYSyz/nk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jHqJ8WI1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hrYSZW7/CkosBhnUpghlxRDQIm/Z38RVaEJSGvFsn8FolKXHMkkzfaBE7B3aC6Wry0dwiY6QmmMzqHq2isozt0bodc+Av0VRlz9M4DihD+P3d75fCOBJOkbROIt4GPqeqjS5pTodTEEskLTVwQPs84OX0oZ79D3xgMzzfl/+QdI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WYBhXA8T; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jHqJ8WI1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57B3F1F000E9;
-	Thu, 30 Jul 2026 15:48:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WYBhXA8T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B99B1F000E9;
+	Thu, 30 Jul 2026 15:48:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426535;
-	bh=gU27Mx6dOzpXTYbDOUZAWmPt8YRUpw/ZeS0yAjL1Ed0=;
+	s=korg; t=1785426538;
+	bh=4NXEbxf+Ep0MijOESLkpIKSAYjvO/GYet5SjsWoG/zU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jHqJ8WI1zbx64stz3pYJm8NWTnpxPFBM1RITeyJO1R+7FPecHvcNd8jwoi+L7pQSA
-	 ww5feUFCUg1I82XHz8fDIuXVH32omei7d8C8Q4poGsE7evc6MyVNFFphQPcBEjORrW
-	 AByReXIwL3D4ZAnmkJ3eCA4FQO/ibQClFc8pax5M=
+	b=WYBhXA8TFnBIAL/AobP/HkZTImIG7ap7eBjtnVy6x8ekvXvz83OGQfpug0vxb+Oh6
+	 vDKk7olC3qBm7s2V7VFPyeb0JBhnzxaslWtdFq9yFrgEqCIeUxqzKeioofvK3YAgdN
+	 ScvDXv4/8i2HYXL8lY+Qu2cMyx6uJLPe07YEogRQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haofeng Li <lihaofeng@kylinos.cn>,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Wentao Guan <guanwentao@uniontech.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>,
-	Wentao Guan <guanwentao@uniontech.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 453/602] ksmbd: validate num_subauth when copying ACE in set_ntacl_dacl
-Date: Thu, 30 Jul 2026 16:14:05 +0200
-Message-ID: <20260730141445.477574700@linuxfoundation.org>
+Subject: [PATCH 6.12 454/602] ksmbd: restore DACL size on check_add_overflow() to avoid malformed ACL
+Date: Thu, 30 Jul 2026 16:14:06 +0200
+Message-ID: <20260730141445.498527359@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -54,73 +52,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haofeng Li <lihaofeng@kylinos.cn>
+From: Wentao Guan <guanwentao@uniontech.com>
 
-commit 47f0b34f6bc98ed85bfdc293e8f3e432ec24958d upstream.
+commit bbf0a8e931204ecdab494a88d43b0a24a04285c5 upstream.
 
-set_ntacl_dacl() copies each ACE from the attacker-controlled stored
-security descriptor verbatim into the response DACL without checking
-sid.num_subauth. The ACE bytes (including an unchecked num_subauth)
-originate from an authenticated SMB2_SET_INFO(SecInfo=DACL) that is
-stored raw via ksmbd_vfs_set_sd_xattr(); parse_dacl() rejects a bad ACE
-with `break` rather than an error, so parse_sec_desc() still returns
-success and the malformed SD reaches the xattr intact.
+check_add_overflow() unconditionally writes the truncated sum into *d
+even on overflow, per its contract in include/linux/overflow.h.
+The four check_add_overflow() guards in set_posix_acl_entries_dacl()
+and set_ntacl_dacl() break out of the ACE-building loops on overflow,
+but the truncated *size is then consumed downstream at the end of
+set_ntacl_dacl():
 
-On a subsequent SMB2_QUERY_INFO(SecInfo=DACL) for an inode carrying a
-POSIX access ACL, build_sec_desc() -> set_ntacl_dacl() ->
-set_posix_acl_entries_dacl() walks the copied ACEs and reads
+    pndacl->size = cpu_to_le16(le16_to_cpu(pndacl->size) + size);
 
-    ntace->sid.sub_auth[ntace->sid.num_subauth - 1]
+This produces an on-wire NT ACL whose pndacl->size under-reports the
+bytes actually written by the preceding fill_ace_for_sid()/memcpy()
+calls, yielding a malformed ACL that can trigger out-of-bounds reads
+when re-parsed by clients or ksmbd itself.
 
-with num_subauth taken straight from the stored SD. Since sub_auth[]
-is fixed at SID_MAX_SUB_AUTHORITIES (15), a crafted num_subauth (e.g.
-255) drives an out-of-bounds heap read of ~1 KB with an offset fully
-controlled by an authenticated client.
+Restore *size to its pre-addition value on each overflow branch (via
+`*size -= ace_sz` / `size -= nt_ace_size`) so that after the break,
+*size once again holds the cumulative size of the successfully-written
+ACEs. The committed ACL is then truncated-but-self-consistent rather
+than malformed.
 
-The sibling functions already gate this field:
-  parse_dacl()    -- num_subauth == 0 || > SID_MAX_SUB_AUTHORITIES
-  parse_sid()     -- num_subauth > SID_MAX_SUB_AUTHORITIES
-  smb_copy_sid()  -- min_t(u8, num_subauth, SID_MAX_SUB_AUTHORITIES)
-set_ntacl_dacl() is the lone inconsistent path that omits the check.
+The ksmbd DACL builders are the only check_add_overflow() sites found
+where an overflow path breaks out of a loop and the destination value
+is consumed afterward. The other nearby break-style cases either
+return -EINVAL on overflow (transport_ipc.c) or break without
+consuming the overflowed destination value afterward (buildid.c).
 
-Add the same num_subauth validation in set_ntacl_dacl() before copying
-the ACE, matching the gate already enforced by parse_dacl().
-
-Signed-off-by: Haofeng Li <lihaofeng@kylinos.cn>
-Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Suggested-by: Namjae Jeon <linkinjeon@kernel.org>
+Fixes: 299f962c0b02 ("ksmbd: use check_add_overflow() to prevent u16 DACL size overflow")
+Assisted-by: atomcode:glm-5.2
+Assisted-by: Codex:gpt-5.5
+Cc: stable@vger.kernel.org
+Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
 Acked-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smbacl.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ fs/smb/server/smbacl.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
 diff --git a/fs/smb/server/smbacl.c b/fs/smb/server/smbacl.c
-index b09bc8d9389a2a..173469d112f101 100644
+index 173469d112f101..ca0e4aab6dd87f 100644
 --- a/fs/smb/server/smbacl.c
 +++ b/fs/smb/server/smbacl.c
-@@ -745,12 +745,18 @@ static void set_ntacl_dacl(struct mnt_idmap *idmap,
- 			if (nt_ace_size > aces_size)
- 				break;
- 
-+			if (ntace->sid.num_subauth == 0 ||
-+			    ntace->sid.num_subauth > SID_MAX_SUB_AUTHORITIES)
-+				goto next_ace;
-+
- 			memcpy((char *)pndace + size, ntace, nt_ace_size);
- 			if (check_add_overflow(size, nt_ace_size, &size))
- 				break;
-+			num_aces++;
-+
-+next_ace:
- 			aces_size -= nt_ace_size;
- 			ntace = (struct smb_ace *)((char *)ntace + nt_ace_size);
--			num_aces++;
+@@ -649,6 +649,7 @@ static void set_posix_acl_entries_dacl(struct mnt_idmap *idmap,
+ 		ace_sz = fill_ace_for_sid(ntace, sid, ACCESS_ALLOWED, flags,
+ 				pace->e_perm, 0777);
+ 		if (check_add_overflow(*size, ace_sz, size)) {
++			*size -= ace_sz;
+ 			kfree(sid);
+ 			break;
  		}
- 	}
+@@ -663,6 +664,7 @@ static void set_posix_acl_entries_dacl(struct mnt_idmap *idmap,
+ 			ace_sz = fill_ace_for_sid(ntace, sid, ACCESS_ALLOWED,
+ 					0x03, pace->e_perm, 0777);
+ 			if (check_add_overflow(*size, ace_sz, size)) {
++				*size -= ace_sz;
+ 				kfree(sid);
+ 				break;
+ 			}
+@@ -708,6 +710,7 @@ static void set_posix_acl_entries_dacl(struct mnt_idmap *idmap,
+ 		ace_sz = fill_ace_for_sid(ntace, sid, ACCESS_ALLOWED, 0x0b,
+ 				pace->e_perm, 0777);
+ 		if (check_add_overflow(*size, ace_sz, size)) {
++			*size -= ace_sz;
+ 			kfree(sid);
+ 			break;
+ 		}
+@@ -750,8 +753,10 @@ static void set_ntacl_dacl(struct mnt_idmap *idmap,
+ 				goto next_ace;
  
+ 			memcpy((char *)pndace + size, ntace, nt_ace_size);
+-			if (check_add_overflow(size, nt_ace_size, &size))
++			if (check_add_overflow(size, nt_ace_size, &size)) {
++				size -= nt_ace_size;
+ 				break;
++			}
+ 			num_aces++;
+ 
+ next_ace:
 -- 
 2.53.0
 
