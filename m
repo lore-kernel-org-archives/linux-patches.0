@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E7E9429802;
-	Thu, 30 Jul 2026 15:39:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29895390C9F;
+	Thu, 30 Jul 2026 15:39:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425953; cv=none; b=i1FTSPUZh1Q44JsVpHNyAvHPkYUgNCIMxiLWpU6V+s4WH3vKzRX6ZXHyc99KKOExJzkeMmLNCS0urSQpnTr4cHodUZvXzYw0DRa92WzJT87jLHGV3lrzTyVi2j7KUq9fVdD8e85C6xjKFESwdqd8dlJ53wJ7Icw47p8Zov6y2L4=
+	t=1785425956; cv=none; b=MH0CfVKz12qx6JQPBpeprsx054JTK/putOmd2vGZVO5ngcnXbZGsD+wi+gTpv2NGfWAv12UjOM0Q4r2pisnF1IQOcY7ULcIAUMh+2VTJlTZRW3qHEX5O6UEjVqVcrB6d6GnME2jMX8JMFqON0tDZBrn0Vctm+I8jqK9+8WVSAg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425953; c=relaxed/simple;
-	bh=fX5fqgSZZkichf1GoVWJ3bVuMqnK4hKqgUUgcvQhrW8=;
+	s=arc-20240116; t=1785425956; c=relaxed/simple;
+	bh=RsjwbdW2/ssYpAxpO0G7FVcn73C/jMloH687fVcRDFM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lfdAeTJPyChtPGd3Pk8bD53xnHlioJK1jNwLPlIHFjF99nNUVSXh6BTBpoCpzOJiAkNhOsIEwOMIHNjNqPEREyHAv2vrceR7IwJfx/6/xi/U6mxsfBtPsY3SGTNG/80zORZaTFd8KwdU1vRPs+Qm726bl5jmmgeKWUHIqdWm3NY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QMDbSXHK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KfoTMBOIklKMr7ED3aBq6EAUMKaGFGN16YfsFofUdk6nL7N9GrCGdEdgFau3J8KYvrMcqxd5rNq9fe8fWlBAv3YYAHux2jFvGl21WJf5Hshx7QytlGb+nQgimR8JG7AyH1DOklXQDK+GhtbsbDiRZYQePLILZQCxav+W+kjbkNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dyH2kozG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QMDbSXHK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A03421F00A3A;
-	Thu, 30 Jul 2026 15:39:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dyH2kozG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BC711F000E9;
+	Thu, 30 Jul 2026 15:39:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425952;
-	bh=MI0tu0DKrzBAxi3DW2GTzu0AiB3cIoDz7u++GoUR140=;
+	s=korg; t=1785425955;
+	bh=Xcld+7w/Fp2bjxlLhxg7OIxmCpbkZoJWiO6KYwgzH0o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QMDbSXHK5bIpnadKemma9ckTxYK2O+tVxFoFAi1t9S9Xm2fCw5s6Tz4kfHCg1PPWQ
-	 3hGX4nkkWG8dZDz4b+Z9+YSLlmYIgZL8Fhu8gRVdi8YONBH5YtdJHD7A3cPjDOgJTz
-	 DJqK+1uRpt8zZQzKyWYl4RPJIhGoU/Ayy29buUew=
+	b=dyH2kozGI4VxE8LvPjHChBkRW4uhqD6DxYjxwNFdDDnOnhvQBlbjIKNjCOmo+NbSA
+	 QI1O3IqNUWQAoIX9BaANzA4Rj2jntLtsXzHaQBkHwttx5fPeifQpvMtM23AZU1IIf3
+	 DSAK9GMRAgk32jZspQTFjslrvzu7+4YFVKlO2HZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Qingfang Deng <qingfang.deng@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 250/602] bpf, sockmap: Fix cork use-after-free in tcp_bpf_sendmsg()
-Date: Thu, 30 Jul 2026 16:10:42 +0200
-Message-ID: <20260730141441.225422671@linuxfoundation.org>
+Subject: [PATCH 6.12 233/602] ppp: annotate data races in ppp_generic
+Date: Thu, 30 Jul 2026 16:10:25 +0200
+Message-ID: <20260730141440.870731563@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -53,77 +52,231 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <nicoyip.dev@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 2d66a033864e27ab8d5e44cb36f31d9d2413bee4 ]
+[ Upstream commit 543adf072165aaf2e3b635c0476204f9658ed3bf ]
 
-tcp_bpf_sendmsg() keeps msg_tx across sk_stream_wait_memory(), which
-drops and reacquires the socket lock.  Its error path tries to decide
-whether msg_tx names the local temporary message by comparing it with
-the current value of psock->cork.
+Several fields in struct ppp can be read or updated concurrently
+from multiple CPUs without synchronization, causing data races:
 
-This comparison is unsafe when two threads send on the same socket:
+1. ppp->mru is read concurrently in ppp_receive_nonmp_frame() while
+   being updated via PPPIOCSMRU ioctl. Protect ppp->mru updates in
+   PPPIOCSMRU with ppp_recv_lock(ppp).
 
-  Thread A                         Thread B
-  msg_tx = psock->cork
-  sk_msg_alloc() fails
-  sk_stream_wait_memory()
-    releases the socket lock      acquires the socket lock
-                                  completes the cork
-                                  psock->cork = NULL
-                                  frees the cork
-    reacquires the socket lock
-  msg_tx != psock->cork
-  sk_msg_free(msg_tx)
+2. PPPIOCGFLAGS reads ppp->flags, ppp->xstate, and ppp->rstate
+   unlocked. Wrap the read in ppp_lock(ppp) to get a consistent
+   snapshot.
 
-The stale cork is therefore mistaken for the local temporary message
-and freed again.  KASAN reported:
+3. ppp->debug is updated via PPPIOCSDEBUG and read concurrently on
+   fast paths. Annotate reads with READ_ONCE() and writes with
+   WRITE_ONCE().
 
-  BUG: KASAN: slab-use-after-free in sk_msg_free+0x49/0x50
-  Read of size 4 at addr ffff88810c908800 by task poc/90
-  Call Trace:
-   sk_msg_free+0x49/0x50
-   tcp_bpf_sendmsg+0x14f5/0x1cc0
-   __sys_sendto+0x32c/0x3a0
-   __x64_sys_sendto+0xdb/0x1b0
-  Allocated by task 89:
-   __kasan_kmalloc+0x8f/0xa0
-   tcp_bpf_sendmsg+0x16b3/0x1cc0
-  Freed by task 91:
-   __kasan_slab_free+0x43/0x70
-   kfree+0x131/0x3c0
-   tcp_bpf_sendmsg+0xec3/0x1cc0
+4. ppp->last_xmit and ppp->last_recv are updated on TX/RX data paths
+   and read via PPPIOCGIDLE32 / PPPIOCGIDLE64 ioctls. Annotate with
+   WRITE_ONCE() / READ_ONCE() and use max() to handle jiffies
+   subtraction.
 
-msg_tx can only name the stack-local tmp or the shared cork. Check for
-tmp directly so a changed psock->cork cannot turn a shared message into
-an apparent local one.
+5. ppp->npmode[] is updated via PPPIOCSNPMODE and read on TX/RX
+   paths. Annotate with WRITE_ONCE() / READ_ONCE().
 
-Fixes: 604326b41a6f ("bpf, sockmap: convert to generic sk_msg interface")
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
-Link: https://lore.kernel.org/bpf/87fr18lmzo.fsf%40cloudflare.com/
-Link: https://lore.kernel.org/netdev/20260719161630.2901208-1-nicoyip.dev%40gmail.com/ [v1]
-Link: https://patch.msgid.link/20260724103856.3399001-1-nicoyip.dev@gmail.com
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Qingfang Deng <qingfang.deng@linux.dev>
+Link: https://patch.msgid.link/20260722101605.2868548-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_bpf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ppp/ppp_generic.c | 50 ++++++++++++++++++++---------------
+ 1 file changed, 28 insertions(+), 22 deletions(-)
 
-diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
-index b9a58fde9c31b7..132ffc13087f5a 100644
---- a/net/ipv4/tcp_bpf.c
-+++ b/net/ipv4/tcp_bpf.c
-@@ -590,7 +590,7 @@ static int tcp_bpf_sendmsg(struct sock *sk, struct msghdr *msg, size_t size)
- wait_for_memory:
- 		err = sk_stream_wait_memory(sk, &timeo);
- 		if (err) {
--			if (msg_tx && msg_tx != psock->cork)
-+			if (msg_tx == &tmp)
- 				sk_msg_free(sk, msg_tx);
- 			goto out_err;
+diff --git a/drivers/net/ppp/ppp_generic.c b/drivers/net/ppp/ppp_generic.c
+index f217f6dee38f10..5d6d69632c847a 100644
+--- a/drivers/net/ppp/ppp_generic.c
++++ b/drivers/net/ppp/ppp_generic.c
+@@ -813,7 +813,9 @@ static long ppp_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
+ 	case PPPIOCSMRU:
+ 		if (get_user(val, p))
+ 			break;
++		ppp_recv_lock(ppp);
+ 		ppp->mru = val;
++		ppp_recv_unlock(ppp);
+ 		err = 0;
+ 		break;
+ 
+@@ -834,7 +836,9 @@ static long ppp_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
+ 		break;
+ 
+ 	case PPPIOCGFLAGS:
++		ppp_lock(ppp);
+ 		val = ppp->flags | ppp->xstate | ppp->rstate;
++		ppp_unlock(ppp);
+ 		if (put_user(val, p))
+ 			break;
+ 		err = 0;
+@@ -858,7 +862,7 @@ static long ppp_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
+ 	case PPPIOCSDEBUG:
+ 		if (get_user(val, p))
+ 			break;
+-		ppp->debug = val;
++		WRITE_ONCE(ppp->debug, val);
+ 		err = 0;
+ 		break;
+ 
+@@ -869,16 +873,16 @@ static long ppp_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
+ 		break;
+ 
+ 	case PPPIOCGIDLE32:
+-                idle32.xmit_idle = (jiffies - ppp->last_xmit) / HZ;
+-                idle32.recv_idle = (jiffies - ppp->last_recv) / HZ;
+-                if (copy_to_user(argp, &idle32, sizeof(idle32)))
++		idle32.xmit_idle = max(0L, (long)(jiffies - READ_ONCE(ppp->last_xmit))) / HZ;
++		idle32.recv_idle = max(0L, (long)(jiffies - READ_ONCE(ppp->last_recv))) / HZ;
++		if (copy_to_user(argp, &idle32, sizeof(idle32)))
+ 			break;
+ 		err = 0;
+ 		break;
+ 
+ 	case PPPIOCGIDLE64:
+-		idle64.xmit_idle = (jiffies - ppp->last_xmit) / HZ;
+-		idle64.recv_idle = (jiffies - ppp->last_recv) / HZ;
++		idle64.xmit_idle = max(0L, (long)(jiffies - READ_ONCE(ppp->last_xmit))) / HZ;
++		idle64.recv_idle = max(0L, (long)(jiffies - READ_ONCE(ppp->last_recv))) / HZ;
+ 		if (copy_to_user(argp, &idle64, sizeof(idle64)))
+ 			break;
+ 		err = 0;
+@@ -919,7 +923,7 @@ static long ppp_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
+ 			if (copy_to_user(argp, &npi, sizeof(npi)))
+ 				break;
+ 		} else {
+-			ppp->npmode[i] = npi.mode;
++			WRITE_ONCE(ppp->npmode[i], npi.mode);
+ 			/* we may be able to transmit more packets now (??) */
+ 			netif_wake_queue(ppp->dev);
  		}
+@@ -1454,7 +1458,7 @@ ppp_start_xmit(struct sk_buff *skb, struct net_device *dev)
+ 		goto outf;
+ 
+ 	/* Drop, accept or reject the packet */
+-	switch (ppp->npmode[npi]) {
++	switch (READ_ONCE(ppp->npmode[npi])) {
+ 	case NPMODE_PASS:
+ 		break;
+ 	case NPMODE_QUEUE:
+@@ -1769,7 +1773,7 @@ ppp_send_frame(struct ppp *ppp, struct sk_buff *skb)
+ 		*(__be16 *)skb_push(skb, 2) = htons(PPP_FILTER_OUTBOUND_TAG);
+ 		if (ppp->pass_filter &&
+ 		    bpf_prog_run(ppp->pass_filter, skb) == 0) {
+-			if (ppp->debug & 1)
++			if (READ_ONCE(ppp->debug) & 1)
+ 				netdev_printk(KERN_DEBUG, ppp->dev,
+ 					      "PPP: outbound frame "
+ 					      "not passed\n");
+@@ -1779,11 +1783,11 @@ ppp_send_frame(struct ppp *ppp, struct sk_buff *skb)
+ 		/* if this packet passes the active filter, record the time */
+ 		if (!(ppp->active_filter &&
+ 		      bpf_prog_run(ppp->active_filter, skb) == 0))
+-			ppp->last_xmit = jiffies;
++			WRITE_ONCE(ppp->last_xmit, jiffies);
+ 		skb_pull(skb, 2);
+ #else
+ 		/* for data packets, record the time */
+-		ppp->last_xmit = jiffies;
++		WRITE_ONCE(ppp->last_xmit, jiffies);
+ #endif /* CONFIG_PPP_FILTER */
+ 	}
+ 
+@@ -2159,7 +2163,7 @@ static int ppp_mp_explode(struct ppp *ppp, struct sk_buff *skb)
+  noskb:
+ 	spin_unlock(&pch->downl);
+  err_linearize:
+-	if (ppp->debug & 1)
++	if (READ_ONCE(ppp->debug) & 1)
+ 		netdev_err(ppp->dev, "PPP: no memory (fragment)\n");
+ 	++ppp->dev->stats.tx_errors;
+ 	++ppp->nxseq;
+@@ -2505,7 +2509,7 @@ ppp_receive_nonmp_frame(struct ppp *ppp, struct sk_buff *skb)
+ 			*(__be16 *)skb_push(skb, 2) = htons(PPP_FILTER_INBOUND_TAG);
+ 			if (ppp->pass_filter &&
+ 			    bpf_prog_run(ppp->pass_filter, skb) == 0) {
+-				if (ppp->debug & 1)
++				if (READ_ONCE(ppp->debug) & 1)
+ 					netdev_printk(KERN_DEBUG, ppp->dev,
+ 						      "PPP: inbound frame "
+ 						      "not passed\n");
+@@ -2514,14 +2518,14 @@ ppp_receive_nonmp_frame(struct ppp *ppp, struct sk_buff *skb)
+ 			}
+ 			if (!(ppp->active_filter &&
+ 			      bpf_prog_run(ppp->active_filter, skb) == 0))
+-				ppp->last_recv = jiffies;
++				WRITE_ONCE(ppp->last_recv, jiffies);
+ 			__skb_pull(skb, 2);
+ 		} else
+ #endif /* CONFIG_PPP_FILTER */
+-			ppp->last_recv = jiffies;
++			WRITE_ONCE(ppp->last_recv, jiffies);
+ 
+ 		if ((ppp->dev->flags & IFF_UP) == 0 ||
+-		    ppp->npmode[npi] != NPMODE_PASS) {
++		    READ_ONCE(ppp->npmode[npi]) != NPMODE_PASS) {
+ 			kfree_skb(skb);
+ 		} else {
+ 			/* chop off protocol */
+@@ -2774,7 +2778,7 @@ ppp_mp_reconstruct(struct ppp *ppp)
+ 			seq = seq_before(minseq, PPP_MP_CB(p)->sequence)?
+ 				minseq + 1: PPP_MP_CB(p)->sequence;
+ 
+-			if (ppp->debug & 1)
++			if (READ_ONCE(ppp->debug) & 1)
+ 				netdev_printk(KERN_DEBUG, ppp->dev,
+ 					      "lost frag %u..%u\n",
+ 					      oldseq, seq-1);
+@@ -2823,7 +2827,7 @@ ppp_mp_reconstruct(struct ppp *ppp)
+ 			struct sk_buff *tmp2;
+ 
+ 			skb_queue_reverse_walk_from_safe(list, p, tmp2) {
+-				if (ppp->debug & 1)
++				if (READ_ONCE(ppp->debug) & 1)
+ 					netdev_printk(KERN_DEBUG, ppp->dev,
+ 						      "discarding frag %u\n",
+ 						      PPP_MP_CB(p)->sequence);
+@@ -2845,7 +2849,7 @@ ppp_mp_reconstruct(struct ppp *ppp)
+ 			skb_queue_walk_safe(list, p, tmp) {
+ 				if (p == head)
+ 					break;
+-				if (ppp->debug & 1)
++				if (READ_ONCE(ppp->debug) & 1)
+ 					netdev_printk(KERN_DEBUG, ppp->dev,
+ 						      "discarding frag %u\n",
+ 						      PPP_MP_CB(p)->sequence);
+@@ -2853,7 +2857,7 @@ ppp_mp_reconstruct(struct ppp *ppp)
+ 				kfree_skb(p);
+ 			}
+ 
+-			if (ppp->debug & 1)
++			if (READ_ONCE(ppp->debug) & 1)
+ 				netdev_printk(KERN_DEBUG, ppp->dev,
+ 					      "  missed pkts %u..%u\n",
+ 					      ppp->nextseq,
+@@ -3163,7 +3167,8 @@ ppp_ccp_peek(struct ppp *ppp, struct sk_buff *skb, int inbound)
+ 			if (!ppp->rc_state)
+ 				break;
+ 			if (ppp->rcomp->decomp_init(ppp->rc_state, dp, len,
+-					ppp->file.index, 0, ppp->mru, ppp->debug)) {
++						ppp->file.index, 0, ppp->mru,
++						READ_ONCE(ppp->debug))) {
+ 				ppp->rstate |= SC_DECOMP_RUN;
+ 				ppp->rstate &= ~(SC_DC_ERROR | SC_DC_FERROR);
+ 			}
+@@ -3172,7 +3177,8 @@ ppp_ccp_peek(struct ppp *ppp, struct sk_buff *skb, int inbound)
+ 			if (!ppp->xc_state)
+ 				break;
+ 			if (ppp->xcomp->comp_init(ppp->xc_state, dp, len,
+-					ppp->file.index, 0, ppp->debug))
++						  ppp->file.index, 0,
++						  READ_ONCE(ppp->debug)))
+ 				ppp->xstate |= SC_COMP_RUN;
+ 		}
+ 		break;
 -- 
 2.53.0
 
