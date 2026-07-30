@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAAFB3E0091;
-	Thu, 30 Jul 2026 14:52:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D693440FD86;
+	Thu, 30 Jul 2026 14:52:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423161; cv=none; b=RZXXGwJVR79iuQntHXiisCKlEsRXAkfpWb5ijjk1ivuU7BT/bxU++MSkM0pIqRAVN6fvWw39E1sCikjBXYd72MJRn3nEJIMjiBZcSRsatSh6m4HFG5aMXLJHCEhZkw4D/DWepSMbQfhfs7ZBK+de/p35/M9Krca3tXbnyvZLELQ=
+	t=1785423164; cv=none; b=MZCU3T2WAG1TbG47UMDXcX8j1Bjag99fLmBjZKUfZwVTR62/zHcqTJTB0iJwbRYq4zeXYNEE2ghfzLZCjAxC5XWnorw18obMFvFLpAvQ9MKlrxQUVz8mj4mNF4YGgG1f1zdKJwnugfxpW37myNTPMgEvm4Q4f601OrEF/hCa+fI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423161; c=relaxed/simple;
-	bh=nWpib6+sDXCh+9f5f3rFfyDPpK6PXFDe1p/JuYHaG/Y=;
+	s=arc-20240116; t=1785423164; c=relaxed/simple;
+	bh=n29IE3xNzG4QYGRghatQhevoNfFuiX3sJ1ifn0XlYXQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oL9nQQz0HKLe8Dovni33bhz+SWX56LkkLD652IPvMUvWKnx+/6Mti2GBX0Vi3nFN9MLX6dzARErEWTG9wjSBpE+UfDqLVj7LTY71o9tmIC4oe+smc0/0VtDxn55xYF+osXk6y4867EvzgAaWVEaDnFvcwUMJr1IUknLd5QQ+TC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WhCaM7KR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rG8gh5wFG1JH34LHOr0mLBSYnirs21Hth1XynEDKs3FE2htZGTDtj/ZlXfanAfLpNqd+5Gxq0Vu0rPW+7+L9vGpvhsjZN05qNuKENe1eEhIoIZzH58qNgFTbQL0Ohu748RbKYoXocyHwTJnubMGZ1L6PvPEs8D9bbn+tSRoICqY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ruhYuv+d; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WhCaM7KR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 376F51F000E9;
-	Thu, 30 Jul 2026 14:52:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ruhYuv+d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 258111F00A3D;
+	Thu, 30 Jul 2026 14:52:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423159;
-	bh=B0XeB/MY6j594dBQBclKjhVyy+AmXdEOsEf55UTsixM=;
+	s=korg; t=1785423162;
+	bh=HSF95Dnhxmz+1MS3YKSW+zMwGQ0syV4TcDjhdc0YY9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WhCaM7KRUTMhLvuEgkpZc91s5TtWJAuUNIZycq3IO1lJyioWvSFuK5nW6zCS2kJ4R
-	 +OtKs67ziLylsjCyLvkXzc+ohXqbL6rlTVV2OitzhnBRE0wuARe2vcM0zUvXRk0mD1
-	 RVH5oGGUxXnRErbH+PANh7kryHlzx92UGflaAI1M=
+	b=ruhYuv+dZ2A0AhPhHXHaeW7OTKwBoAlmce+2bm4dk/nvqvM8JB4nzaEN0/7s+eCml
+	 plaT87k+kX3R6qqamlHp/19grkfnfQujcDcvbZXeWOUHvVGX/SeODQGbJQKBY9spfd
+	 n1uNfIIO7FvA21oCZr1Gw6CsHuwPilSyHTp0OLl4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengming Hu <hu.shengming@zte.com.cn>,
-	"Harry Yoo (Oracle)" <harry@kernel.org>,
-	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>
-Subject: [PATCH 7.1 650/744] mm/slub: fix lost local objects when bulk remote free batch fills
-Date: Thu, 30 Jul 2026 16:15:23 +0200
-Message-ID: <20260730141458.085445254@linuxfoundation.org>
+	Justin Lai <justinlai0215@realtek.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.1 686/744] rtase: Workaround for TX hang caused by hardware packet parsing
+Date: Thu, 30 Jul 2026 16:15:59 +0200
+Message-ID: <20260730141458.846786416@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -51,95 +51,301 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengming Hu <hu.shengming@zte.com.cn>
+From: Justin Lai <justinlai0215@realtek.com>
 
-commit af9ea231c0b4530edc389a3126a69e0699b7699d upstream.
+commit 1c50efa1faf3a1a96e100b07ec7a2f3164d90bee upstream.
 
-In free_to_pcs_bulk(), when remote_objects[] fills to PCS_BATCH_MAX,
-the code jumps to flush_remote to free the batch. If all remote entries
-have already been compacted out of p[] via tail swaps while local objects
-remain, the flush_remote path returns early since `i < size` no longer
-holds. The leftover local objects are then neither cached in the sheaf
-nor returned to the slab freelist, causing a memory leak.
+The hardware performs packet parsing before packet transmission.
+Parsing incomplete IPv4, IPv6, TCP, or UDP headers may trigger a TX
+hang because the hardware parser expects additional protocol header
+data that is not present in the packet.
 
-For illustration:
- size = 64, local objects at p[0..31], remote objects at p[32..63]
- After scanning all remotes: i = 32, size = 32
- p[0..31] local objects are dropped.
+The hardware performs additional PTP parsing on UDP packets identified
+by destination ports 319/320 at the expected UDP destination port
+offset.
 
-Harry pointed out that, although the logic contains a real leak, it does
-not appear to be triggerable with the current in-tree users. To hit this
-path, at least PCS_BATCH_MAX objects, currently hardcoded to 32, need to
-be collected in remote_objects[]. Looking at current kmem_cache_free_bulk()
-users:
+If such a packet has transport data smaller than RTASE_MIN_PAD_LEN,
+the hardware parser expects additional packet data and may trigger a
+TX hang.
 
-* maple_node has sheaf_capacity = 32
-* skbuff_head_cache has sheaf_capacity = 28
-* panthor and msm drivers have sheaf_capacity = 4
+To avoid these hardware issues, the driver applies the following
+workarounds.
 
-The sheaf capacity is, at least for now, derived purely from the object
-size, with the user-requested capacity used as a minimum. Therefore, among
-the current users, only maple_node has a sheaf_capacity large enough to
-reach PCS_BATCH_MAX.
+Drop malformed packets that may trigger this hardware issue before
+transmission.
 
-However, for the bug to trigger in maple_node, all objects in the sheaf
-would have to be from remote nodes. In that case, there would be no local
-objects left to leak. So this issue was found by code review rather than
-from a runtime report, and it does not seem to be triggerable by current
-users.
+For IPv4 non-initial fragments, the hardware does not check the
+fragment offset before parsing the expected transport header location.
+As a result, these packets are still subject to transport header
+parsing even though they do not contain a transport header. If the
+transport data is shorter than the minimum transport header required
+by the hardware parser, pad the transport data to the minimum
+transport header length required by the hardware parser. Packets that
+also match the hardware PTP parsing conditions continue to follow the
+corresponding workaround.
 
-Still, the bug could become reachable with future users, a different sheaf
-capacity, or a change to PCS_BATCH_MAX. Fix the logic by freeing a full
-remote batch in place during the scan and then continuing to process the
-compacted array. This keeps all local objects on the normal fast path,
-while the tail path only handles any leftover partial remote batch. The
-redundant next_remote_batch jump label is removed as well.
+For IPv6 fragmented packets, neither of the above hardware issues
+occurs because the hardware only continues packet parsing when the
+IPv6 Base Header Next Header field directly indicates UDP. Packets
+carrying a Fragment Header do not continue through the subsequent
+packet parsing stages.
 
-Fixes: 989b09b73978 ("slab: skip percpu sheaves for remote object freeing")
-Signed-off-by: Shengming Hu <hu.shengming@zte.com.cn>
-Link: https://patch.msgid.link/202607062139095043SOsLi6TIf403tcjPf8fm@zte.com.cn
+For packets identified for hardware PTP parsing, pad the transport
+data so it reaches RTASE_MIN_PAD_LEN before transmission.
+
+Fixes: d6e882b89fdf ("rtase: Implement .ndo_start_xmit function")
 Cc: stable@vger.kernel.org
-Reviewed-by: Harry Yoo (Oracle) <harry@kernel.org>
-Signed-off-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+Signed-off-by: Justin Lai <justinlai0215@realtek.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260709103456.83789-1-justinlai0215@realtek.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/slub.c |   12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/realtek/rtase/rtase.h      |    8 
+ drivers/net/ethernet/realtek/rtase/rtase_main.c |  197 ++++++++++++++++++++++++
+ 2 files changed, 205 insertions(+)
 
---- a/mm/slub.c
-+++ b/mm/slub.c
-@@ -6066,7 +6066,6 @@ static void free_to_pcs_bulk(struct kmem
- 	void *remote_objects[PCS_BATCH_MAX];
- 	unsigned int remote_nr = 0;
+--- a/drivers/net/ethernet/realtek/rtase/rtase.h
++++ b/drivers/net/ethernet/realtek/rtase/rtase.h
+@@ -188,6 +188,12 @@ enum rtase_sw_flag_content {
+ 	RTASE_SWF_MSIX_ENABLED = BIT(2),
+ };
  
--next_remote_batch:
- 	while (i < size) {
- 		struct slab *slab = virt_to_slab(p[i]);
++enum rtase_parse_result {
++	RTASE_PARSE_OK,
++	RTASE_PARSE_SKIP,
++	RTASE_PARSE_DROP,
++};
++
+ #define RSVD_MASK 0x3FFFC000
  
-@@ -6081,8 +6080,11 @@ next_remote_batch:
- 		if (unlikely(!can_free_to_pcs(slab))) {
- 			remote_objects[remote_nr] = p[i];
- 			p[i] = p[--size];
--			if (++remote_nr >= PCS_BATCH_MAX)
--				goto flush_remote;
-+			if (++remote_nr >= PCS_BATCH_MAX) {
-+				__kmem_cache_free_bulk(s, remote_nr, &remote_objects[0]);
-+				stat_add(s, FREE_SLOWPATH, remote_nr);
-+				remote_nr = 0;
-+			}
- 			continue;
- 		}
+ struct rtase_tx_desc {
+@@ -359,4 +365,6 @@ struct rtase_private {
  
-@@ -6166,10 +6168,6 @@ flush_remote:
- 	if (remote_nr) {
- 		__kmem_cache_free_bulk(s, remote_nr, &remote_objects[0]);
- 		stat_add(s, FREE_SLOWPATH, remote_nr);
--		if (i < size) {
--			remote_nr = 0;
--			goto next_remote_batch;
--		}
- 	}
+ #define RTASE_MSS_MASK GENMASK(28, 18)
+ 
++#define RTASE_MIN_PAD_LEN 47
++
+ #endif /* RTASE_H */
+--- a/drivers/net/ethernet/realtek/rtase/rtase_main.c
++++ b/drivers/net/ethernet/realtek/rtase/rtase_main.c
+@@ -61,6 +61,7 @@
+ #include <linux/pci.h>
+ #include <linux/pm_runtime.h>
+ #include <linux/prefetch.h>
++#include <linux/ptp_classify.h>
+ #include <linux/rtnetlink.h>
+ #include <linux/tcp.h>
+ #include <asm/irq.h>
+@@ -1249,6 +1250,199 @@ static u32 rtase_tx_csum(struct sk_buff
+ 	return csum_cmd;
  }
  
++static enum rtase_parse_result rtase_get_l3_proto(struct sk_buff *skb,
++						  __be16 *proto,
++						  u32 *network_offset)
++{
++	struct vlan_hdr *vh, _vh;
++	struct ethhdr *eh, _eh;
++	u32 offset = ETH_HLEN;
++
++	eh = skb_header_pointer(skb, 0, sizeof(_eh), &_eh);
++	if (!eh)
++		return RTASE_PARSE_DROP;
++
++	*proto = eh->h_proto;
++
++	while (eth_type_vlan(*proto)) {
++		vh = skb_header_pointer(skb, offset, sizeof(_vh), &_vh);
++		if (!vh)
++			return RTASE_PARSE_DROP;
++
++		*proto = vh->h_vlan_encapsulated_proto;
++		offset += VLAN_HLEN;
++	}
++
++	*network_offset = offset;
++
++	return RTASE_PARSE_OK;
++}
++
++static bool rtase_pad_to_transport_len(struct sk_buff *skb,
++				       u32 transport_offset,
++				       u32 pad_to_len)
++{
++	u32 trans_data_len;
++	u32 pad_len;
++
++	trans_data_len = skb->len - transport_offset;
++	if (trans_data_len >= pad_to_len)
++		return true;
++
++	if (skb_is_nonlinear(skb)) {
++		if (skb_linearize(skb))
++			return false;
++	}
++
++	pad_len = pad_to_len - trans_data_len;
++	if (__skb_put_padto(skb, skb->len + pad_len, false))
++		return false;
++
++	return true;
++}
++
++static enum rtase_parse_result rtase_get_transport_offset(struct sk_buff *skb,
++							  u32 *transport_offset,
++							  u8 *transport_proto,
++							  u32 *pad_to_len)
++{
++	enum rtase_parse_result ret;
++	struct ipv6hdr *i6h, _i6h;
++	struct iphdr *ih, _ih;
++	bool non_first_frag;
++	__be16 proto;
++	u32 offset;
++	u32 no;
++
++	ret = rtase_get_l3_proto(skb, &proto, &no);
++	if (ret != RTASE_PARSE_OK)
++		return ret;
++
++	switch (proto) {
++	case htons(ETH_P_IP):
++		ih = skb_header_pointer(skb, no, sizeof(_ih), &_ih);
++		if (!ih)
++			return RTASE_PARSE_DROP;
++
++		if (ih->ihl < 5)
++			return RTASE_PARSE_DROP;
++
++		offset = no + ih->ihl * 4;
++		if (offset > skb->len)
++			return RTASE_PARSE_DROP;
++
++		non_first_frag = ntohs(ih->frag_off) & IP_OFFSET;
++
++		if (ih->protocol == IPPROTO_TCP) {
++			if (skb->len - offset < sizeof(struct tcphdr)) {
++				if (non_first_frag) {
++					*transport_offset = offset;
++					*transport_proto = IPPROTO_TCP;
++					*pad_to_len = sizeof(struct tcphdr);
++
++					return RTASE_PARSE_OK;
++				}
++
++				return RTASE_PARSE_DROP;
++			}
++
++			return RTASE_PARSE_SKIP;
++		}
++
++		if (ih->protocol != IPPROTO_UDP)
++			return RTASE_PARSE_SKIP;
++
++		*transport_offset = offset;
++		*transport_proto = IPPROTO_UDP;
++
++		if (skb->len - offset < sizeof(struct udphdr)) {
++			if (non_first_frag) {
++				*pad_to_len = sizeof(struct udphdr);
++
++				return RTASE_PARSE_OK;
++			}
++
++			return RTASE_PARSE_DROP;
++		}
++
++		return RTASE_PARSE_OK;
++
++	case htons(ETH_P_IPV6):
++		i6h = skb_header_pointer(skb, no, sizeof(_i6h), &_i6h);
++		if (!i6h)
++			return RTASE_PARSE_DROP;
++
++		offset = no + sizeof(*i6h);
++
++		if (i6h->nexthdr == IPPROTO_TCP) {
++			if (skb->len - offset < sizeof(struct tcphdr))
++				return RTASE_PARSE_DROP;
++
++			return RTASE_PARSE_SKIP;
++		}
++
++		if (i6h->nexthdr != IPPROTO_UDP)
++			return RTASE_PARSE_SKIP;
++
++		if (skb->len - offset < sizeof(struct udphdr))
++			return RTASE_PARSE_DROP;
++
++		*transport_offset = offset;
++		*transport_proto = IPPROTO_UDP;
++
++		return RTASE_PARSE_OK;
++
++	default:
++		return RTASE_PARSE_SKIP;
++	}
++}
++
++static bool rtase_skb_pad(struct sk_buff *skb)
++{
++	enum rtase_parse_result ret;
++	u32 transport_offset;
++	__be16 *dest, _dest;
++	u32 trans_data_len;
++	u32 pad_to_len = 0;
++	u8 transport_proto;
++	u16 dest_port;
++
++	ret = rtase_get_transport_offset(skb, &transport_offset,
++					 &transport_proto, &pad_to_len);
++	if (ret == RTASE_PARSE_SKIP) {
++		return true;
++	} else if (ret == RTASE_PARSE_DROP) {
++		netdev_dbg(skb->dev, "drop malformed packet\n");
++		return false;
++	}
++
++	if (pad_to_len &&
++	    !rtase_pad_to_transport_len(skb, transport_offset, pad_to_len))
++		return false;
++
++	if (transport_proto != IPPROTO_UDP)
++		return true;
++
++	trans_data_len = skb->len - transport_offset;
++	if (trans_data_len < offsetof(struct udphdr, len) ||
++	    trans_data_len >= RTASE_MIN_PAD_LEN)
++		return true;
++
++	dest = skb_header_pointer(skb,
++				  transport_offset +
++				  offsetof(struct udphdr, dest),
++				  sizeof(_dest), &_dest);
++	if (!dest)
++		return true;
++
++	dest_port = ntohs(*dest);
++	if (dest_port != PTP_EV_PORT && dest_port != PTP_GEN_PORT)
++		return true;
++
++	return rtase_pad_to_transport_len(skb, transport_offset,
++					  RTASE_MIN_PAD_LEN);
++}
++
+ static int rtase_xmit_frags(struct rtase_ring *ring, struct sk_buff *skb,
+ 			    u32 opts1, u32 opts2)
+ {
+@@ -1362,6 +1556,9 @@ static netdev_tx_t rtase_start_xmit(stru
+ 		opts2 |= rtase_tx_csum(skb, dev);
+ 	}
+ 
++	if (!rtase_skb_pad(skb))
++		goto err_dma_0;
++
+ 	frags = rtase_xmit_frags(ring, skb, opts1, opts2);
+ 	if (unlikely(frags < 0))
+ 		goto err_dma_0;
 
 
