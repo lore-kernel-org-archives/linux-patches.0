@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25B221FE44A;
-	Thu, 30 Jul 2026 14:46:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01BAA37475C;
+	Thu, 30 Jul 2026 14:46:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422773; cv=none; b=sB6GJyNGj5dYJ0Lp1+U/3IPmp8SDiyEMmNKiiLIJnIOBbVu9lU/qOiOJd+gqXz6b7oEgkdK/P2QONOxxB11jHAOnOVOuJU9yNwEHBxhTGiMu/N5w3PZqNFqBwAsWTWVlEizPCdIcUy0XQ6w9Xl+HJAGwGJ+aA3PW33CJsx2aq3k=
+	t=1785422776; cv=none; b=j3yoquqe3SEByd9PFBuf0DmFihiTVRgHX/J142vXyz4zcVm0VSM3t9+YvYIV+U+TRrOwu4Ui2H2TpY6nuJwpgscEb9W1ZbB678xwADewaQTjtdneEHRID1ruHREuZJvDcXxeovw9yfqA3oILfnWcs3/GyOX17S7eqMUJBJntFPI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422773; c=relaxed/simple;
-	bh=SdPHUWKMncNjmDmeeawou0KHTGs4e83XjL83/ZHBMVc=;
+	s=arc-20240116; t=1785422776; c=relaxed/simple;
+	bh=ZYmenxw408Fbz7aXQC+NEwXLGgRNFxSdtdG5Ld++CdA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N6F/2txFLDb9/lzEcQEf4icNIFhGJAfDVjt/K8V1xk0sw65380/uMiLZHwmwR8QvGHGUepP6bspU4JFlVmCLfj3dCTH59WOL6C9pIqDXrOTeNG6AhOJiHSD+1c5GJCLFLbYnMP9uTUE0ahJ1bHbnfp9gd2iaEA9EWObGl8alK3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z8Clu+NP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=T4+tAWyg8Z+azWA6YV1wxNLc6S13v1axpD+6yyGrND/AjN+mEZwIx9o4RXOlwko/3v1voTLfpbtT/3iYp0lDkIPrknsN4ba6CCF0bbunwlQQMjgA2aq7q7oNgd3MUEm7a0gqVUUDPihhIKOdTGijssDqLl8AX4P62wZ6+eM+Omg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DV51DESy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z8Clu+NP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 805C51F00A3A;
-	Thu, 30 Jul 2026 14:46:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DV51DESy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 575691F000E9;
+	Thu, 30 Jul 2026 14:46:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422772;
-	bh=DNMMYb9lFexRHbBCIks7Lr2OA6JcpB3qWLQtrWR+rw8=;
+	s=korg; t=1785422774;
+	bh=gkf+xZMyDEnNphDwjufkAOQFO647iJDlaEIlmgQ46fc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z8Clu+NP0zsO3agUdJDe3rgIT5wvmDucr/i3tW/NOK/S8b81mzyYXBu0sJMdbv1QE
-	 E/P/aN9I6RBPjmHraVN2dcKOkgnDHuytUzSDrFqtGXFT2PNtaxFeOM7JpmtyJ7mVYO
-	 DUtmmSLNSpt8gtkh9doxHurDJVfVQ/StCr79CZfw=
+	b=DV51DESyM5VP4MEbanJW9+9mRImafkvj5DhDPQRs12lIBxr++QnE1d5mpae12d4Nu
+	 lSv0Tswz/tRqjPOIxAV03cgTeBo0FNQpozRyzFsFIB74NiL90LfRp91b7iSU228R9I
+	 txmmorYz0UyE+XwwyUwB2ZU4qTkfL/OWjd/yfC+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Nick Morrow <morrownr@gmail.com>,
 	Devin Wittmayer <lucid_duck@justthetip.ca>,
 	Felix Fietkau <nbd@nbd.name>
-Subject: [PATCH 7.1 549/744] wifi: mt76: mt7925: drop TXRX_NOTIFY on non-mmio buses
-Date: Thu, 30 Jul 2026 16:13:42 +0200
-Message-ID: <20260730141455.944325709@linuxfoundation.org>
+Subject: [PATCH 7.1 550/744] wifi: mt76: restrict NPU/PPE active checks to MMIO devices
+Date: Thu, 30 Jul 2026 16:13:43 +0200
+Message-ID: <20260730141455.966215914@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -52,61 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Devin Wittmayer <lucid_duck@justthetip.ca>
 
-commit feeff151c83e7f0ffcdedcad5343852d23d1f6e1 upstream.
+commit 7981aca2bd28a1f7ad7eeab89715442a95b1f72e upstream.
 
-PKT_TYPE_TXRX_NOTIFY is an mmio-only event, but mt7925_rx_check() and
-mt7925_queue_rx_skb() dispatch it to mt7925_mac_tx_free() on every bus.
-mt7925_mac_tx_free() cleans the DMA tx queues with
-mt76_queue_tx_cleanup(), which calls queue_ops->tx_cleanup(). Only the
-mmio queue ops implement that callback; on USB it is NULL, so a
-TXRX_NOTIFY there calls a NULL pointer in the RX worker:
+mt76_npu_device_active() and mt76_ppe_device_active() read dev->mmio.npu
+and dev->mmio.ppe_dev. The mmio, usb and sdio bus structs share a union in
+struct mt76_dev, so on USB and SDIO these read unrelated data from the
+usb/sdio struct, which is non-NULL in practice.
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000000
-  RIP: 0010:0x0
-  Call Trace:
-   mt7925_mac_tx_free+0x58/0x350 [mt7925_common]
-   mt7925_rx_check+0xe2/0x130 [mt7925_common]
-   mt76u_rx_worker+0x1b9/0x620 [mt76_usb]
+mt76_npu_device_active() then returns true on USB, and
+mt76_rx_poll_complete() takes the offload path and skips
+mt76_rx_aggr_reorder(). RX A-MPDU subframes are delivered out of order and
+the peer's TCP stack treats that as loss: heavy retransmissions and reduced
+throughput in AP mode. Seen on mt7921u, mt7925u, mt76x2u and mt76x0u.
 
-Drop the event on non-mmio buses via mt76_is_mmio(), as in
-commit 5683e1488aa9 ("wifi: mt76: connac: do not check WED status for
-non-mmio devices").
+Gate both helpers on mt76_is_mmio() so they only run for the bus type that
+owns the mmio union member.
 
-Fixes: c948b5da6bbe ("wifi: mt76: mt7925: add Mediatek Wi-Fi7 driver for mt7925 chips")
+Fixes: 7fb554b1b623 ("wifi: mt76: Introduce the NPU generic layer")
 Cc: stable@vger.kernel.org
+Tested-by: Nick Morrow <morrownr@gmail.com>
 Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
-Link: https://patch.msgid.link/20260627191336.20223-3-lucid_duck@justthetip.ca
+Link: https://patch.msgid.link/20260720232640.41293-1-lucid_duck@justthetip.ca
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7925/mac.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt76.h |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
-@@ -1194,8 +1194,9 @@ bool mt7925_rx_check(struct mt76_dev *md
+--- a/drivers/net/wireless/mediatek/mt76/mt76.h
++++ b/drivers/net/wireless/mediatek/mt76/mt76.h
+@@ -1735,12 +1735,12 @@ static inline int mt76_npu_send_txrx_add
  
- 	switch (type) {
- 	case PKT_TYPE_TXRX_NOTIFY:
--		/* PKT_TYPE_TXRX_NOTIFY can be received only by mmio devices */
--		mt7925_mac_tx_free(dev, data, len); /* mmio */
-+		if (!mt76_is_mmio(mdev))
-+			return false;
-+		mt7925_mac_tx_free(dev, data, len);
- 		return false;
- 	case PKT_TYPE_TXS:
- 		for (rxd += 4; rxd + 12 <= end; rxd += 12)
-@@ -1231,7 +1232,10 @@ void mt7925_queue_rx_skb(struct mt76_dev
+ static inline bool mt76_npu_device_active(struct mt76_dev *dev)
+ {
+-	return !!rcu_access_pointer(dev->mmio.npu);
++	return mt76_is_mmio(dev) && !!rcu_access_pointer(dev->mmio.npu);
+ }
  
- 	switch (type) {
- 	case PKT_TYPE_TXRX_NOTIFY:
--		/* PKT_TYPE_TXRX_NOTIFY can be received only by mmio devices */
-+		if (!mt76_is_mmio(mdev)) {
-+			napi_consume_skb(skb, 1);
-+			break;
-+		}
- 		mt7925_mac_tx_free(dev, skb->data, skb->len);
- 		napi_consume_skb(skb, 1);
- 		break;
+ static inline bool mt76_ppe_device_active(struct mt76_dev *dev)
+ {
+-	return !!rcu_access_pointer(dev->mmio.ppe_dev);
++	return mt76_is_mmio(dev) && !!rcu_access_pointer(dev->mmio.ppe_dev);
+ }
+ 
+ static inline int mt76_npu_send_msg(struct airoha_npu *npu, int ifindex,
 
 
