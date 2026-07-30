@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FB533C1D6D;
-	Thu, 30 Jul 2026 14:28:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F179A27A476;
+	Thu, 30 Jul 2026 14:28:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421684; cv=none; b=MjOmfFZ6j3aQPSSA6qx2ti/TxNINzHU8pJrcAhhPujnbeDEuv23XpkQ2QjXZ8XjEPxm7CLCI69sRi7ibHCm+I+wJr2m5c6cxx24UENSvwXc4IKmP2LTPF6t4RlUgwK1/2uDnRzfJUigo1KY6udU7UwVoQ77syrwEyhA2P3icFJ0=
+	t=1785421687; cv=none; b=gqSszwWpa43j5GUqyxmS52i3yvT/uwc7a0I69rxSCafiNjHANM+LU0ridzmrjqgmLxU52gPHtTJ88KeeDg3NikC9kSVjYxqSvoVAvvLgSXmwTfZF88bK/gP+8r9VMXRIXRYr6uewIsipImGDwRKGJO/I9r0N08OTR/TCQbhtoIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421684; c=relaxed/simple;
-	bh=YneAF2vY6mpTU/1liqTHPjx/fKg3rutrJB/EBInQeJE=;
+	s=arc-20240116; t=1785421687; c=relaxed/simple;
+	bh=avXVuUQm8FBD8MhPhlaaf/21TPjd3/wV9IA3xILiGN4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bzqyUphWCadL1+rnoG5+/FYj47jukt5KZlH+zrtXFI1Ovvue8Hw5QbjB0ENILG2rkSBgptJWzF5+9n2XQtbk6K5Q0KkkHpGDCt33ZSXXm/yYExjLxJFzABYWkNmtqEp/pNgKqclfluXad4ud3BRhJ0kxTYzPgUhQkf4RIQz1Fi4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h3PzgIH/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RpHzzo5ubZjiqp+dTiOs/0eyy6SW5W18zUnwsGTBU322wCnJJleLLTC4U3x9Rl3JZ4lIgeU+iILaqWwVHvT5AW+8sDoCJvKWBpl4b2OABugr5zNx6oumTWDeYPUx5fEaE1te3YGgPzI6vPetd+qzJCnvecOhtDNiFN+58Zw3Crs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DpvGuz4L; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h3PzgIH/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A2861F000E9;
-	Thu, 30 Jul 2026 14:28:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DpvGuz4L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51B431F00A3A;
+	Thu, 30 Jul 2026 14:28:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421683;
-	bh=e/p6I8kLNQGcVzQkuG0wKmEC+qf0+XI/bdGBYrmg6XY=;
+	s=korg; t=1785421685;
+	bh=KmbxJSTuo+bmwZqC81MG6/DqHb19vCkoYtMTcT8tQnM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h3PzgIH/ULcZrMilQZA1GhyZGw7dzCXgbzp7gWE+AfhWq0VPO+28jE3GeRvg1ZLF6
-	 IFxfpKl6Q+Jgg2IGlRO3cuT7kIvvX/XjsaHBiP/qQB9xzje9x5W0LUf/xWQGmNRUxk
-	 lCLvMkKVb01yMwRHeRTq721nkSi7VbXwZRZwrkHw=
+	b=DpvGuz4LsKP7QPjll0z6H9+QrfJq1AmEhQthTXGCFaUGpSz1hMcjjiFs+c/bzjTEk
+	 H/Kg111f8be3eC7+3xwc3Lrk6bgCls8P1bkn3zK0iikUfrFKiZwQXnHq5skXsv8ikk
+	 zf4cvvHGRlv1oRbB10SGNy7Zy2bw5SsS5E0/ZbFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Tristan Madani <tristan@talencesecurity.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
 	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 187/744] wifi: ath6kl: fix OOB read from firmware num_msg in TX complete handler
-Date: Thu, 30 Jul 2026 16:07:40 +0200
-Message-ID: <20260730141448.260704163@linuxfoundation.org>
+Subject: [PATCH 7.1 188/744] wifi: ath6kl: fix OOB read from firmware IE lengths in connect event
+Date: Thu, 30 Jul 2026 16:07:41 +0200
+Message-ID: <20260730141448.281295490@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -53,48 +54,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Tristan Madani <tristan@talencesecurity.com>
 
-[ Upstream commit 3a21c89215cc18f1a97c5e5bfd1da6d4f3d44495 ]
+[ Upstream commit 6b47b29730de3232b919d8362749f6814c5f2a33 ]
 
-The firmware-controlled num_msg field (u8, 0-255) drives the loop in
-ath6kl_wmi_tx_complete_event_rx() without validation against the buffer
-length. This allows out-of-bounds reads of up to 1020 bytes past the
-WMI event buffer when the firmware sends an inflated num_msg.
+The firmware-controlled beacon_ie_len, assoc_req_len, and assoc_resp_len
+fields in ath6kl_wmi_connect_event_rx() are not validated against the
+buffer length. Their sum (up to 765) can exceed the actual WMI event
+data, causing out-of-bounds reads during IE parsing and state corruption
+of wmi->is_wmm_enabled.
 
-Add a check that the buffer is large enough to hold the fixed struct
-and the num_msg variable-length entries.
+Add a check that the total IE length fits within the buffer.
 
 Fixes: bdcd81707973 ("Add ath6kl cleaned up driver")
 Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
-Link: https://patch.msgid.link/20260625232907.3620746-1-tristmd@gmail.com
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260421135009.348084-3-tristmd@gmail.com
 Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath6kl/wmi.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/net/wireless/ath/ath6kl/wmi.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 diff --git a/drivers/net/wireless/ath/ath6kl/wmi.c b/drivers/net/wireless/ath/ath6kl/wmi.c
-index 72611a2ceb9d8e..7e65a03be0b7bb 100644
+index 7e65a03be0b7bb..2b0c5038ae0403 100644
 --- a/drivers/net/wireless/ath/ath6kl/wmi.c
 +++ b/drivers/net/wireless/ath/ath6kl/wmi.c
-@@ -484,6 +484,18 @@ static int ath6kl_wmi_tx_complete_event_rx(u8 *datap, int len)
+@@ -874,6 +874,14 @@ static int ath6kl_wmi_connect_event_rx(struct wmi *wmi, u8 *datap, int len,
  
- 	evt = (struct wmi_tx_complete_event *) datap;
+ 	ev = (struct wmi_connect_event *) datap;
  
-+	if (len < sizeof(*evt)) {
-+		ath6kl_dbg(ATH6KL_DBG_WMI, "tx complete: invalid len %d\n",
-+			   len);
++	if (len < sizeof(*ev) + ev->beacon_ie_len +
++	    ev->assoc_req_len + ev->assoc_resp_len) {
++		ath6kl_dbg(ATH6KL_DBG_WMI,
++			   "connect event: IE lengths %u+%u+%u exceed buffer %d\n",
++			   ev->beacon_ie_len, ev->assoc_req_len,
++			   ev->assoc_resp_len, len);
 +		return -EINVAL;
 +	}
-+
-+	if (len < sizeof(*evt) + evt->num_msg * sizeof(struct tx_complete_msg_v1)) {
-+		ath6kl_dbg(ATH6KL_DBG_WMI, "tx complete: invalid len %d for %u msgs\n",
-+			   len, evt->num_msg);
-+		return -EINVAL;
-+	}
-+
- 	ath6kl_dbg(ATH6KL_DBG_WMI, "comp: %d %d %d\n",
- 		   evt->num_msg, evt->msg_len, evt->msg_type);
- 
+ 	if (vif->nw_type == AP_NETWORK) {
+ 		/* AP mode start/STA connected event */
+ 		struct net_device *dev = vif->ndev;
 -- 
 2.53.0
 
