@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E4F37F011;
-	Thu, 30 Jul 2026 15:38:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0B4A37B012;
+	Thu, 30 Jul 2026 15:38:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425933; cv=none; b=LTrxHMkTL27Zuy3cAOe0GeYaB1w0+VKnB+grHGJxQv3o+5ljRRHKlm4it096ibRcEZLydT5jNHu+23A9vEF/YrIjKA3zKceCbkh3KL8r2XTGwBRd8yKal3Jo33lROqNCMshbhJhPK6wc5j9xLmwByHqLlA1hBLFEdnt91EzxX98=
+	t=1785425936; cv=none; b=glDiD5C2H+9hXWi52XsO8ZirVY3rCCuZpnUZ0f3CW2Himp2bSIW3GG8eL/fa7z/5RAQkXBkKW1c6XXczjqwFYe9UA9pJzcqrhLNeC8OjcU7AQBOuhM7Cdt+SJ+wgWWtP63esNLEE9izdfSbGJxxAb4+iqQyHi88ymJKQVc62N28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425933; c=relaxed/simple;
-	bh=wMJ2acNLZyb8hEPjchOETRfBzZNlII42DCZ4cUSdcpw=;
+	s=arc-20240116; t=1785425936; c=relaxed/simple;
+	bh=pOm5qX1c55a5JjyXgPqFryS75fSeFvAj43NAJ2mnK/0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bw6d6I82CUFjUbuSGvnZ/S1phmaww922FuC3kVgxLUS+uLWgcWIX6CIHTTRo7OPFk7M4kAQ6Z2qATVNma2G1mC4JQ12len83wql7FYcYFxGRhcJioQaGVt+bMV4tClJc2YzrrpqokKu9no6JnXJedBaiJEBg4C9Ae5+I5OMnJZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UjI5LiqJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ealKpeBY9+VcVFurwf2LmAjxrt0ZAf8By7b6iCVtZpLCCbKZ+pJqR1PHSmPEW/kCh8r6LaSL790qgKmSb9l5gS/fDePrA939k0AjwzIBs7aTMeo3pRdBY0QbL6AGWlqHVy9WaA4aZVC/GdjeUg6Ip2QEYfsfjUbakWgAvhkkMSU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sQKrq4MA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UjI5LiqJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AA661F000E9;
-	Thu, 30 Jul 2026 15:38:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sQKrq4MA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 590751F000E9;
+	Thu, 30 Jul 2026 15:38:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425932;
-	bh=7yLPXZeLZn87AxzB77GDVadJAFZbOFOFzEWQZaS7M5I=;
+	s=korg; t=1785425934;
+	bh=eLJQj81wOi6yAA3jgjaz6eF9+F9cAiiL6UZOe47/zTQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UjI5LiqJSuaIigjJJ6Ea8I60ecMVOaPkh9sNfQkpNrI/UV3iNj70cduV2qA4T+sfm
-	 EHZa7R7BgbkGQ2Xbckn7S4/WfzbwA994l50WLgLJOzaqxCNZm+SxeVNjCZ9Z/KP6tM
-	 2AqERHyyNNwXa8LijH83jVJapMmoMJXOshcDitU0=
+	b=sQKrq4MAMqQbHE0KH1wtElJJHA5W6DkIxfYbt+/qSLw400YNDGr+S9a9KnVXShCZm
+	 5VWYhpsoZ+G7uekNc0rBSm9bT21Yem3rFpkMPU1qGT9WnHngcMBHdNj7aO6DoCnZej
+	 lUnzoFwTZ4yja9VV6Nn3EnnZCOW41LK0gHP7EBFM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexei Lazar <alazar@nvidia.com>,
-	Carolina Jubran <cjubran@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Hariprasad Kelam <hkelam@marvell.com>,
+	Nitin Shetty J <nshettyj@marvell.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 243/602] net/mlx5e: Reject unsupported CB Shaper TSA in ETS validation
-Date: Thu, 30 Jul 2026 16:10:35 +0200
-Message-ID: <20260730141441.078265849@linuxfoundation.org>
+Subject: [PATCH 6.12 244/602] octeontx2-pf: tc: fix egress ratelimiting
+Date: Thu, 30 Jul 2026 16:10:36 +0200
+Message-ID: <20260730141441.099348122@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -54,44 +52,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexei Lazar <alazar@nvidia.com>
+From: Hariprasad Kelam <hkelam@marvell.com>
 
-[ Upstream commit 9173e1d3c7c7d49a71eee813091f9e834ec7cee5 ]
+[ Upstream commit bb0d96ebe5f4d1acccf4dc36ca7f01f9a8fa1ba1 ]
 
-Credit Based (CB) TSA is not supported by the mlx5 driver, so reject
-any configurations that specify it.
+The egress rate calculation computes an incorrect mantissa and exponent,
+causing up to ~50% deviation from the configured rate at lower speeds.
 
-Fixes: 08fb1dacdd76 ("net/mlx5e: Support DCBNL IEEE ETS")
-Signed-off-by: Alexei Lazar <alazar@nvidia.com>
-Reviewed-by: Carolina Jubran <cjubran@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Link: https://patch.msgid.link/20260717075125.1244877-3-tariqt@nvidia.com
+Rework the computation to follow the hardware rate formula:
+
+	rate = 2 * (1 + mantissa/256) * 2^exp / (1 << div_exp)
+
+Keep div_exp = 0 and derive exp and mantissa from half of the requested
+rate. Rates below 2 Mbps are floored to the smallest encodable step
+(exp = 0, mantissa = 0).
+
+Fixes: e638a83f167e ("octeontx2-pf: TC_MATCHALL egress ratelimiting offload")
+Signed-off-by: Hariprasad Kelam <hkelam@marvell.com>
+Signed-off-by: Nitin Shetty J <nshettyj@marvell.com>
+Link: https://patch.msgid.link/20260717084349.2227796-1-nshettyj@marvell.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ .../ethernet/marvell/octeontx2/nic/otx2_tc.c  | 29 ++++++++++---------
+ 1 file changed, 16 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c b/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
-index d74ff20f825954..98ca8f486d52cd 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
-@@ -309,6 +309,14 @@ static int mlx5e_dbcnl_validate_ets(struct net_device *netdev,
- 		}
- 	}
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c
+index ed041c3f714f26..b26fc848430f50 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c
+@@ -30,6 +30,7 @@
+ #define OTX2_UNSUPP_LSE_DEPTH		GENMASK(6, 4)
  
-+	for (i = 0; i < IEEE_8021QAZ_MAX_TCS; i++) {
-+		if (ets->tc_tsa[i] == IEEE_8021QAZ_TSA_CB_SHAPER) {
-+			netdev_err(netdev,
-+				   "Failed to validate ETS: CB Shaper is not supported\n");
-+			return -EOPNOTSUPP;
+ #define MCAST_INVALID_GRP		(-1U)
++#define RATE_MANTISSA_BITS		8
+ 
+ struct otx2_tc_flow_stats {
+ 	u64 bytes;
+@@ -90,28 +91,30 @@ static void otx2_get_egress_burst_cfg(struct otx2_nic *nic, u32 burst,
+ static void otx2_get_egress_rate_cfg(u64 maxrate, u32 *exp,
+ 				     u32 *mantissa, u32 *div_exp)
+ {
+-	u64 tmp;
+-
+ 	/* Rate calculation by hardware
+ 	 *
+ 	 * PIR_ADD = ((256 + mantissa) << exp) / 256
+ 	 * rate = (2 * PIR_ADD) / ( 1 << div_exp)
+ 	 * The resultant rate is in Mbps.
++	 *
++	 * Use div_exp = 0 and compute exp/mantissa for maxrate / 2; the
++	 * leading factor of two yields the full rate. Rates below 2 Mbps
++	 * are floored to the smallest step (exp = 0, mantissa = 0).
+ 	 */
+ 
+-	/* 2Mbps to 100Gbps can be expressed with div_exp = 0.
+-	 * Setting this to '0' will ease the calculation of
+-	 * exponent and mantissa.
+-	 */
+ 	*div_exp = 0;
+-
+ 	if (maxrate) {
+-		*exp = ilog2(maxrate) ? ilog2(maxrate) - 1 : 0;
+-		tmp = maxrate - rounddown_pow_of_two(maxrate);
+-		if (maxrate < MAX_RATE_MANTISSA)
+-			*mantissa = tmp * 2;
+-		else
+-			*mantissa = tmp / (1ULL << (*exp - 7));
++		maxrate = maxrate / 2;
++		if (!maxrate) {
++			/* Rates below 2 Mbps map to the smallest step */
++			*exp = 0;
++			*mantissa = 0;
++		} else {
++			*exp = ilog2(maxrate);
++			/* Clear MSB and derive fractional bits */
++			maxrate &= ~BIT(*exp);
++			*mantissa = (maxrate << RATE_MANTISSA_BITS) >> *exp;
 +		}
-+	}
-+
- 	/* Validate Bandwidth Sum */
- 	for (i = 0; i < IEEE_8021QAZ_MAX_TCS; i++) {
- 		if (ets->tc_tsa[i] == IEEE_8021QAZ_TSA_ETS) {
+ 	} else {
+ 		/* Instead of disabling rate limiting, set all values to max */
+ 		*exp = MAX_RATE_EXPONENT;
 -- 
 2.53.0
 
