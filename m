@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C601373C1A;
-	Thu, 30 Jul 2026 15:39:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 575853806D9;
+	Thu, 30 Jul 2026 15:39:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425947; cv=none; b=UcdcybeWV0+UmfgwbTlhX1TqjJZDxNeevyJuY0UufNziFqnzXuwAUZ+RZhOUC3HLRxl4r/nauhyCrialLiarIS2EKsLly1kBaT9ofB9x8dwMepOELb96c9uAn14sYuzq5ntKLm1pa7hLGgwHQmW+p3/BoIszCk0ZAv5mbOOcrIY=
+	t=1785425950; cv=none; b=OmOk1DFGcg4kEHYs6Bdwd5qybHGNKeeVuFPq+Iw4WX77kIIN0wFv/y+8k0pDf15Sr3qgLKCLwHoRO2vYhrKDM4Y2GMWnS5z01I+F1l9U7tIR5HI9OYGyFgEcK/J6tzsbpR+rQi7fVtEZKdpfsQQL0CdS9JW7nbZoH0Q7vvHv3JQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425947; c=relaxed/simple;
-	bh=1v3z7tUcGuiyyy4ygIFlz+SIoJ09YlT1YjaY8EK9r2Y=;
+	s=arc-20240116; t=1785425950; c=relaxed/simple;
+	bh=aLgiFyNFWxGAKVkaRo9znooKF048RxLZeT120ICislk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p+t4Eqa+y/2pL5j1PxsOJ6o6t4sevASMeriCqgz7xAM/6iqQLDwhw1/9ILUxIss2ZL7FRAuaVmXBmOq5NvGYg60eQz8Y6gwuagKNyytUe5ZOsK9zg07923E+HnjnHjjRGP/rPhF5ntISvC1gy/H+1uEmGFgWb/W6yhR28zKlOv4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X+oqevD5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CLMTiFMjGCTd6+ELvAB8n6Tnt+D82zINEGEKLj+nFAUffPSGT0L8zPBPVEbR3HUJNLOIpcGyEZRkCK/2nzWygu5O2P0DaR3ctzDGYAFVNdknbmiiCZ0dK/vYB1PMQxfObYy736ylz7c+1hTkWB2a3RqlQXv7+sLw6GLY2ovrdl0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RIYRcNiL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X+oqevD5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D69D41F000E9;
-	Thu, 30 Jul 2026 15:39:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RIYRcNiL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B12731F000E9;
+	Thu, 30 Jul 2026 15:39:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425946;
-	bh=cz1PS4M4dvfeal4JEI/N6R71nZQT6AUWHDxa8G1YoeQ=;
+	s=korg; t=1785425949;
+	bh=g7EQ0L0b0bRNY502509SR6ct1tZUCpzmSfPENR6aIHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X+oqevD5pU+Lnd206eSLaKnp8QC2tr/wyOfLXMVLj9ZgYyE3GKt08w0qNXlXk9h9V
-	 U74VLQHUuT8MsdEaUAA+NnmVgaMIbeviDTP5/xjRFRkiyKuBSTdx/1EMJ3OTfvtlt8
-	 AD5cyrnbY0jz5+ZtU3+1Hp2RHxYzbylQPe03Z50Y=
+	b=RIYRcNiLQREtXSrfXVeh4LGpJiCNjQpWbXOBxQ6nb482eHYikECacsbFGxntASnc2
+	 9JnyydSW4IG4j7sJCspKWqxhu1WFQDpeOwLp32H5fT1NKMd/5K1ns/b+q57Zj3hH74
+	 wV1s8zkuSvyBKHnJrlbrm8nLllnVbUyc4b+AznLI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	Allison Henderson <achender@kernel.org>,
-	"Cen Zhang (Microsoft)" <blbllhy@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 248/602] rds: tcp: unregister sysctl before tearing down listen socket
-Date: Thu, 30 Jul 2026 16:10:40 +0200
-Message-ID: <20260730141441.184355521@linuxfoundation.org>
+Subject: [PATCH 6.12 249/602] net: airoha: fix ETS channel derivation in airoha_tc_setup_qdisc_ets()
+Date: Thu, 30 Jul 2026 16:10:41 +0200
+Message-ID: <20260730141441.205061820@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -53,62 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang (Microsoft) <blbllhy@gmail.com>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit 167e54c703ccd4fa028feb568b0d1002020cff86 ]
+[ Upstream commit 649ea07fc25a17aa51bff710baac1ab161022a7c ]
 
-rds_tcp_exit_net() frees the per-netns RDS TCP listen socket via
-rds_tcp_kill_sock() before unregistering the per-netns sysctl table.  Since
-rds_tcp_skbuf_handler() derives the netns from
-rtn->rds_tcp_listen_sock->sk, a concurrent sysctl write can race with
-netns teardown and dereference the freed socket/sk.
+Derive the hardware QoS channel from opt->parent instead of opt->handle
+in airoha_tc_setup_qdisc_ets(). The ETS qdisc handle is either
+user-specified or auto-allocated by qdisc_alloc_handle() and bears no
+relation to the HTB leaf classid that identifies the hardware channel.
+HTB derives the channel from TC_H_MIN(opt->classid), and ETS is always
+attached as a child of an HTB leaf, so its opt->parent matches that
+classid. Using opt->handle instead can cause two ETS qdiscs on different
+HTB leaves to collide on the same hardware channel, corrupting scheduler
+configuration and stats.
 
-KASAN reports the race as:
-
-  BUG: KASAN: slab-use-after-free in rds_tcp_skbuf_handler+0x2aa/0x2e0
-  rds_tcp_skbuf_handler              net/rds/tcp.c:721
-  proc_sys_call_handler              fs/proc/proc_sysctl.c
-  vfs_write                          fs/read_write.c
-  __x64_sys_pwrite64                 fs/read_write.c
-
-Fix this by unregistering the RDS TCP sysctl table before calling
-rds_tcp_kill_sock().  unregister_net_sysctl_table() prevents new sysctl
-handlers from starting and waits for in-flight handlers to finish, so
-the listen socket can then be released safely. The fix was tested
-against the linked reproducer.
-
-Fixes: 7f5611cbc487 ("rds: sysctl: rds_tcp_{rcv,snd}buf: avoid using current->nsproxy")
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Link: https://lore.kernel.org/all/20260719203718.9680-1-blbllhy@gmail.com
-Reviewed-by: Allison Henderson <achender@kernel.org>
-Signed-off-by: Cen Zhang (Microsoft) <blbllhy@gmail.com>
-Link: https://patch.msgid.link/20260719210357.10179-1-blbllhy@gmail.com
+Fixes: 20bf7d07c956 ("net: airoha: Add sched ETS offload support")
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Link: https://patch.msgid.link/20260720-airoha-ets-handle-fix-v2-1-6f7129ddc06f@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/tcp.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/airoha/airoha_eth.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/net/rds/tcp.c b/net/rds/tcp.c
-index b66dfcc3efaa0f..06a2d8d48bbacf 100644
---- a/net/rds/tcp.c
-+++ b/net/rds/tcp.c
-@@ -637,13 +637,13 @@ static void __net_exit rds_tcp_exit_net(struct net *net)
- {
- 	struct rds_tcp_net *rtn = net_generic(net, rds_tcp_netid);
+diff --git a/drivers/net/ethernet/airoha/airoha_eth.c b/drivers/net/ethernet/airoha/airoha_eth.c
+index db4b87c17a2864..58e5791e9cd4d4 100644
+--- a/drivers/net/ethernet/airoha/airoha_eth.c
++++ b/drivers/net/ethernet/airoha/airoha_eth.c
+@@ -2803,8 +2803,7 @@ static int airoha_tc_setup_qdisc_ets(struct airoha_gdm_port *port,
+ 	if (opt->parent == TC_H_ROOT)
+ 		return -EINVAL;
  
--	rds_tcp_kill_sock(net);
--
- 	if (rtn->rds_tcp_sysctl)
- 		unregister_net_sysctl_table(rtn->rds_tcp_sysctl);
+-	channel = TC_H_MAJ(opt->handle) >> 16;
+-	channel = channel % AIROHA_NUM_QOS_CHANNELS;
++	channel = TC_H_MIN(opt->parent) % AIROHA_NUM_QOS_CHANNELS;
  
- 	if (net != &init_net)
- 		kfree(rtn->ctl_table);
-+
-+	rds_tcp_kill_sock(net);
- }
- 
- static struct pernet_operations rds_tcp_net_ops = {
+ 	switch (opt->command) {
+ 	case TC_ETS_REPLACE:
 -- 
 2.53.0
 
