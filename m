@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AE67411A09;
-	Thu, 30 Jul 2026 14:50:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D64843793A9;
+	Thu, 30 Jul 2026 14:50:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423044; cv=none; b=fIp6zidXwFieVVjxY1EutVmP8t7LsgV3qxlzlORETRo1DvEjUzP9yKRHkmdWF6jiAewqlVef6CaAIARukG2Q3gSQQn9xleBq91cRXTcRzvm/I8TiCBLKUkXRBBsEBZJWhq66u21yf7z9HvR613Bv8n0H/UEBGHIO2+u38m1F6Tc=
+	t=1785423047; cv=none; b=oSSvdTsqkKhgSVZbeYVUTxuP0Dw2eraSg5inCCIRFso098eXnNpxqxIXr6WUvBja5ezmDkWuidJzWlRTuqBFQYYP3iHc3906fexT3ZLW1cg9QcvDElYzJOOYDfrogGGi8lsKGRWXEwmb2QKOHg4zl8PVmKKQ6xez71hdTRqN21E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423044; c=relaxed/simple;
-	bh=qHmbYNaoESmBJ6lPddS8yVOnFV6X4OV6GRwZ2WmaMKA=;
+	s=arc-20240116; t=1785423047; c=relaxed/simple;
+	bh=ZfrPJYOId4xTfDeOqhbIZ6xkOu+fmn7vcJUDuO0uDbA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jXdXzBtoq5yXiPAM4zvzJykdqosBeHMumhoVPqsoKZ2E+jSJ0U8RIglaG0+nurMbBY6+9Fc3+zFOq/bbqlIDa7+zYQNFvpNN8n/4FPUFohf44Usauz4e5g+KiOuSs1B8EZVj2FdTHY21SCyNXUacQCU2R+h7pNuNxpV9SVJnC7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gEQI5l2N; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pXBYw5cNIac+kBgZPvzS0uybl4bAMNxzhlwfcvLznnNen0iEyUQdzaMFXgb3LpKmCKR4S5JfPmJeOcdrUheAF6W+g8s6u+5s+KuuLlVUy8kE42o6Ki+w7UIMVCtMI09Kp05IR1d9m2S0QdwnEP96fH68uwl8ACsfyEVPTfYBRpE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xy+0Y+qr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gEQI5l2N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68AF91F000E9;
-	Thu, 30 Jul 2026 14:50:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xy+0Y+qr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DE041F000E9;
+	Thu, 30 Jul 2026 14:50:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423043;
-	bh=OOdU39ge77KGD21anU7LbbynpsVafsQ6PogI+jt+JHE=;
+	s=korg; t=1785423045;
+	bh=D9DUoPozoNB+BsMJ2TQaTXYMVpAyARvF4wS0LDBv9hs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gEQI5l2NuvK9DGJRqi13UtUmPnYYPzi1eOnWQq1tb3VYETZjccIS3SdH48Hz7SLDC
-	 IO3DeQrgYDL/CVqTx0odNpV5axnJzp27vHppFgVFOw0RkkThA6DMSSkZEtHLZ11SbM
-	 Gj4XH9HmFm0PGB/1lXHteXfG3QmHjyp/Q0pw+v/I=
+	b=xy+0Y+qrDgF9ojWXxQveoYU7hGeNm1WSup6BEb1Cl0HnS1anAvVE2aE7ZbaFNk2MU
+	 Ss+8aUSGjxTQp10Tn20qrcJt0eI7oi6gWTekRCIrmpdjLrY85tl7G24vGnsZoR4mjg
+	 aUpwS5YX6fEyR8YohszmOOHhKYh0wdYRme6yVdJk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sashiko <sashiko-bot@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Eric Biggers <ebiggers@kernel.org>
-Subject: [PATCH 7.1 644/744] fscrypt: Add missing superblock check in find_or_insert_direct_key()
-Date: Thu, 30 Jul 2026 16:15:17 +0200
-Message-ID: <20260730141457.959347981@linuxfoundation.org>
+Subject: [PATCH 7.1 645/744] fscrypt: Avoid dynamic allocation in fscrypt_get_devices()
+Date: Thu, 30 Jul 2026 16:15:18 +0200
+Message-ID: <20260730141457.981220950@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -53,64 +53,251 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Biggers <ebiggers@kernel.org>
 
-commit b5fa40226e71c17847b9ff2816c6ca4133d0d994 upstream.
+commit 6fe4e4b8259e1330945b5f3c9476e08473b8e0e8 upstream.
 
-The legacy 'fscrypt_direct_keys' table caches master keys that are used
-by v1 encryption policies that have FSCRYPT_POLICY_FLAG_DIRECT_KEY.
-It's just a global table for all filesystems (since the keys can be
-provided by the legacy process-subscribed keyrings mechanism, which
-makes it difficult to reuse super_block::s_master_keys).
+When a blk_crypto_key starts being used or is evicted, fs/crypto/ calls
+fscrypt_get_devices() to get the filesystem's list of block devices,
+then iterates over them and calls blk_crypto_config_supported(),
+blk_crypto_start_using_key(), or blk_crypto_evict_key() on each one.
 
-The entries in it ('struct fscrypt_direct_key') do contain a super_block
-pointer, though, for passing to fscrypt_destroy_inline_crypt_key() when
-the last inode that references the key is evicted.
+Currently, the block device pointers are placed in a dynamically
+allocated array.  This dynamic allocation is problematic because:
 
-However, when finding the fscrypt_direct_key for an inode, we weren't
-actually comparing the super_block pointer.  As a result, inodes with
-different super_blocks could point to the same fscrypt_direct_key.  That
-could extend the lifetime of a fscrypt_direct_key beyond the
-super_block it points to, causing a use-after-free later.
+- It can fail, especially at the fscrypt_destroy_inline_crypt_key() call
+  site when it's invoked for inode eviction under direct reclaim.
 
-Fix this by creating distinct fscrypt_direct_key structs for distinct
-super_block structs.
+- fscrypt_destroy_inline_crypt_key() doesn't handle the failure.  It
+  just zeroizes and frees the blk_crypto_key without calling
+  blk_crypto_evict_key().  That causes a use-after-free.
 
-Note that this problem doesn't exist in the v2 policy equivalent
-("per-mode keys"), since the data structures there are per super_block.
+For now, let's fix this in the straightforward and easily-backportable
+way by switching to an on-stack array.  Currently the fscrypt
+multi-device functionality is used only by f2fs, which has a hardcoded
+limit of 8 block devices.  An on-stack array works fine for that.
+
+(Of course, this solution won't scale up to large number of block
+devices.  For that we'd need a different solution, like moving the block
+device iteration into the filesystem.  Or in the case of btrfs, which
+will only support blk-crypto-fallback, we should make it just call
+blk-crypto-fallback directly, so the block devices won't be needed.)
 
 Fixes: 22e9947a4b2b ("fscrypt: stop holding extra request_queue references")
 Cc: stable@vger.kernel.org
 Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260717044303.425265-1-ebiggers%40kernel.org
+Closes: https://sashiko.dev/#/patchset/20260713023708.9245-1-ebiggers%40kernel.org
 Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20260719033120.122120-1-ebiggers@kernel.org
+Link: https://patch.msgid.link/20260719055602.78828-1-ebiggers@kernel.org
 Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/crypto/keysetup_v1.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ fs/crypto/inline_crypt.c |   57 ++++++++++++++++-------------------------------
+ fs/f2fs/super.c          |   25 +++++++++++---------
+ include/linux/fscrypt.h  |   20 +++++++++-------
+ 3 files changed, 45 insertions(+), 57 deletions(-)
 
---- a/fs/crypto/keysetup_v1.c
-+++ b/fs/crypto/keysetup_v1.c
-@@ -147,13 +147,19 @@ find_or_insert_direct_key(struct fscrypt
- 		if (memcmp(ci->ci_policy.v1.master_key_descriptor,
- 			   dk->dk_descriptor, FSCRYPT_KEY_DESCRIPTOR_SIZE) != 0)
- 			continue;
-+		/* The sb is used at eviction time, so it must be the same. */
-+		if (ci->ci_inode->i_sb != dk->dk_sb)
-+			continue;
- 		if (ci->ci_mode != dk->dk_mode)
- 			continue;
- 		if (!fscrypt_is_key_prepared(&dk->dk_key, ci))
- 			continue;
- 		if (crypto_memneq(raw_key, dk->dk_raw, ci->ci_mode->keysize))
- 			continue;
--		/* using existing tfm with same (descriptor, mode, raw_key) */
-+		/*
-+		 * Use an existing prepared key with the same (descriptor, sb,
-+		 * mode, inlinecrypt, raw_key) combination.
-+		 */
- 		refcount_inc(&dk->dk_refcount);
- 		spin_unlock(&fscrypt_direct_keys_lock);
- 		free_direct_key(to_insert);
+--- a/fs/crypto/inline_crypt.c
++++ b/fs/crypto/inline_crypt.c
+@@ -22,22 +22,14 @@
+ 
+ #include "fscrypt_private.h"
+ 
+-static struct block_device **fscrypt_get_devices(struct super_block *sb,
+-						 unsigned int *num_devs)
++static unsigned int
++fscrypt_get_devices(struct super_block *sb,
++		    struct block_device *devs[FSCRYPT_MAX_DEVICES])
+ {
+-	struct block_device **devs;
+-
+-	if (sb->s_cop->get_devices) {
+-		devs = sb->s_cop->get_devices(sb, num_devs);
+-		if (devs)
+-			return devs;
+-	}
+-	devs = kmalloc_obj(*devs);
+-	if (!devs)
+-		return ERR_PTR(-ENOMEM);
++	if (sb->s_cop->get_devices)
++		return sb->s_cop->get_devices(sb, devs);
+ 	devs[0] = sb->s_bdev;
+-	*num_devs = 1;
+-	return devs;
++	return 1;
+ }
+ 
+ static unsigned int fscrypt_get_dun_bytes(const struct fscrypt_inode_info *ci)
+@@ -96,7 +88,7 @@ int fscrypt_select_encryption_impl(struc
+ 	const struct inode *inode = ci->ci_inode;
+ 	struct super_block *sb = inode->i_sb;
+ 	struct blk_crypto_config crypto_cfg;
+-	struct block_device **devs;
++	struct block_device *devs[FSCRYPT_MAX_DEVICES];
+ 	unsigned int num_devs;
+ 	unsigned int i;
+ 
+@@ -135,20 +127,15 @@ int fscrypt_select_encryption_impl(struc
+ 	crypto_cfg.key_type = is_hw_wrapped_key ?
+ 		BLK_CRYPTO_KEY_TYPE_HW_WRAPPED : BLK_CRYPTO_KEY_TYPE_RAW;
+ 
+-	devs = fscrypt_get_devices(sb, &num_devs);
+-	if (IS_ERR(devs))
+-		return PTR_ERR(devs);
+-
++	num_devs = fscrypt_get_devices(sb, devs);
+ 	for (i = 0; i < num_devs; i++) {
+ 		if (!blk_crypto_config_supported(devs[i], &crypto_cfg))
+-			goto out_free_devs;
++			return 0;
+ 	}
+ 
+ 	fscrypt_log_blk_crypto_impl(ci->ci_mode, devs, num_devs, &crypto_cfg);
+ 
+ 	ci->ci_inlinecrypt = true;
+-out_free_devs:
+-	kfree(devs);
+ 
+ 	return 0;
+ }
+@@ -164,7 +151,7 @@ int fscrypt_prepare_inline_crypt_key(str
+ 	enum blk_crypto_key_type key_type = is_hw_wrapped ?
+ 		BLK_CRYPTO_KEY_TYPE_HW_WRAPPED : BLK_CRYPTO_KEY_TYPE_RAW;
+ 	struct blk_crypto_key *blk_key;
+-	struct block_device **devs;
++	struct block_device *devs[FSCRYPT_MAX_DEVICES];
+ 	unsigned int num_devs;
+ 	unsigned int i;
+ 	int err;
+@@ -182,17 +169,12 @@ int fscrypt_prepare_inline_crypt_key(str
+ 	}
+ 
+ 	/* Start using blk-crypto on all the filesystem's block devices. */
+-	devs = fscrypt_get_devices(sb, &num_devs);
+-	if (IS_ERR(devs)) {
+-		err = PTR_ERR(devs);
+-		goto fail;
+-	}
++	num_devs = fscrypt_get_devices(sb, devs);
+ 	for (i = 0; i < num_devs; i++) {
+ 		err = blk_crypto_start_using_key(devs[i], blk_key);
+ 		if (err)
+ 			break;
+ 	}
+-	kfree(devs);
+ 	if (err) {
+ 		fscrypt_err(inode, "error %d starting to use blk-crypto", err);
+ 		goto fail;
+@@ -210,20 +192,21 @@ void fscrypt_destroy_inline_crypt_key(st
+ 				      struct fscrypt_prepared_key *prep_key)
+ {
+ 	struct blk_crypto_key *blk_key = prep_key->blk_key;
+-	struct block_device **devs;
++	struct block_device *devs[FSCRYPT_MAX_DEVICES];
+ 	unsigned int num_devs;
+ 	unsigned int i;
+ 
+ 	if (!blk_key)
+ 		return;
+ 
+-	/* Evict the key from all the filesystem's block devices. */
+-	devs = fscrypt_get_devices(sb, &num_devs);
+-	if (!IS_ERR(devs)) {
+-		for (i = 0; i < num_devs; i++)
+-			blk_crypto_evict_key(devs[i], blk_key);
+-		kfree(devs);
+-	}
++	/*
++	 * Evict the key from all the filesystem's block devices.
++	 * This *must* be done before the key is freed.
++	 */
++	num_devs = fscrypt_get_devices(sb, devs);
++	for (i = 0; i < num_devs; i++)
++		blk_crypto_evict_key(devs[i], blk_key);
++
+ 	kfree_sensitive(blk_key);
+ }
+ 
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -3731,24 +3731,27 @@ static bool f2fs_has_stable_inodes(struc
+ 	return true;
+ }
+ 
+-static struct block_device **f2fs_get_devices(struct super_block *sb,
+-					      unsigned int *num_devs)
++static unsigned int
++f2fs_get_devices(struct super_block *sb,
++		 struct block_device *devs[FSCRYPT_MAX_DEVICES])
+ {
+ 	struct f2fs_sb_info *sbi = F2FS_SB(sb);
+-	struct block_device **devs;
++	int ndevs;
+ 	int i;
+ 
+-	if (!f2fs_is_multi_device(sbi))
+-		return NULL;
++	static_assert(MAX_DEVICES <= FSCRYPT_MAX_DEVICES);
+ 
+-	devs = kmalloc_objs(*devs, sbi->s_ndevs);
+-	if (!devs)
+-		return ERR_PTR(-ENOMEM);
++	if (!f2fs_is_multi_device(sbi)) {
++		devs[0] = sb->s_bdev;
++		return 1;
++	}
++	ndevs = sbi->s_ndevs;
++	if (WARN_ON_ONCE(ndevs > FSCRYPT_MAX_DEVICES))
++		ndevs = FSCRYPT_MAX_DEVICES;
+ 
+-	for (i = 0; i < sbi->s_ndevs; i++)
++	for (i = 0; i < ndevs; i++)
+ 		devs[i] = FDEV(i).bdev;
+-	*num_devs = sbi->s_ndevs;
+-	return devs;
++	return ndevs;
+ }
+ 
+ static const struct fscrypt_operations f2fs_cryptops = {
+--- a/include/linux/fscrypt.h
++++ b/include/linux/fscrypt.h
+@@ -57,6 +57,9 @@ struct fscrypt_name {
+ /* Maximum value for the third parameter of fscrypt_operations.set_context(). */
+ #define FSCRYPT_SET_CONTEXT_MAX_SIZE	40
+ 
++/* Maximum supported number of block devices per filesystem */
++#define FSCRYPT_MAX_DEVICES	8
++
+ #ifdef CONFIG_FS_ENCRYPTION
+ 
+ /* Crypto operations for filesystems */
+@@ -181,21 +184,20 @@ struct fscrypt_operations {
+ 	bool (*has_stable_inodes)(struct super_block *sb);
+ 
+ 	/*
+-	 * Return an array of pointers to the block devices to which the
+-	 * filesystem may write encrypted file contents, NULL if the filesystem
+-	 * only has a single such block device, or an ERR_PTR() on error.
+-	 *
+-	 * On successful non-NULL return, *num_devs is set to the number of
+-	 * devices in the returned array.  The caller must free the returned
+-	 * array using kfree().
++	 * Retrieve the list of block devices to which the filesystem may write
++	 * encrypted file contents.
++	 *
++	 * This writes the block_device pointers to @devs and returns the count
++	 * (between 1 and FSCRYPT_MAX_DEVICES inclusively).
+ 	 *
+ 	 * If the filesystem can use multiple block devices (other than block
+ 	 * devices that aren't used for encrypted file contents, such as
+ 	 * external journal devices), and wants to support inline encryption,
+ 	 * then it must implement this function.  Otherwise it's not needed.
+ 	 */
+-	struct block_device **(*get_devices)(struct super_block *sb,
+-					     unsigned int *num_devs);
++	unsigned int (*get_devices)(
++		struct super_block *sb,
++		struct block_device *devs[FSCRYPT_MAX_DEVICES]);
+ };
+ 
+ int fscrypt_d_revalidate(struct inode *dir, const struct qstr *name,
 
 
