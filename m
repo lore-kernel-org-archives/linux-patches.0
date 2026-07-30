@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8037F374A0E;
-	Thu, 30 Jul 2026 15:16:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5696C30C618;
+	Thu, 30 Jul 2026 15:16:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424590; cv=none; b=PdV6Ce3GFVI0Xs9SZhzETEOGEdS0NHLCetFPinTdkycqnV+j38knxJUc4F5LCrRQuimvWTvHo0ouOQO0H4cg601IauyzGZy7ETL5rd8r3ydpLothGagsblM7pjrrlsvlP7EC7ayw5iuwuesMGSa7Po/Qv/QuSbQs0sKPZupRMYA=
+	t=1785424593; cv=none; b=pFqK7R8rsa/ivJDmNawImHXY8vPQ+ATOB87pEiwISLUwvdHOBIrmlnmDCBvmxU7UpO1J5MQu1F2S0VQ+rUzELdsdb0KiAAf/WmWLZxUeVuWnEDG8xd1jRlL9aetpx5vZBgtbtLGhRUvSPZbRWadGVv1/zWWYVnkc+f/b2TgS/ME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424590; c=relaxed/simple;
-	bh=33WcEeS5Y4DcNmMxXizzqerQ5oW2OLKGG+eSkk1kW/w=;
+	s=arc-20240116; t=1785424593; c=relaxed/simple;
+	bh=ZTIIO6277006gcp6jOiaa3x+fhMV7cm6AaELScC8B7o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y66BVrdMYuSe06soQ7ve/P9L2qa5h4A8pQMPC/PwLX+8i8wF//cVsz0WOpr+pSDVfgHj8MEbD98OCGrUZkrHg/BGJZs+ykt8Ue5rDiZ/xGiZIAQjhEG729gmGmU5jBACrOlJKH2wnhAH7sMKcdEut4iwzV7CcmLlppFe48fO+s4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZL2okJZB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=m9hJ8eF/7uw5v0wgLGpqENapFQHdw1SDianoCfiwDgKP1ZsbjQ6Cwi8axFL7aZJChOxLoR0BS5fzKsqCbL716Q2BjPuNYT2eKsBsYp7FIQ8hwgLhGOw3/0eMxg13cmVLlJKje1srw2nWsqK+A3mWTno7oM9iHs2NKnYNBk52E58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0NnVVgk2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZL2okJZB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C50381F000E9;
-	Thu, 30 Jul 2026 15:16:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0NnVVgk2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BC031F000E9;
+	Thu, 30 Jul 2026 15:16:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424589;
-	bh=YcXUkIjDQjMtPdye74Cbwg+bQWWEvfePv5eY0h1+0V0=;
+	s=korg; t=1785424592;
+	bh=8JbZQsUe1ydQbhC2pdL/uG5CuXUFeaEpSgQ/dcYC5e8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZL2okJZBUyEQ8GZAJMc98lI2HWYUDGapC660GuXBE5GIuWt66OicEndBOZS/uX9Rb
-	 1HiotI4bMw8oqMOFRNBteaiJ4maxwdfknN7RUCPDdzZ2QWqCQ29wGICgStAH+clrtr
-	 E2/4gK4RISKApSQv6i6/TB/o4iyi0tdcZYh4D9J8=
+	b=0NnVVgk25jzXRBmeJUVO1OQ83vkxo3188+RnnypheHr1mJfLecnpsaRI1jIwSAMmq
+	 V6TJVvtLza4pIImSOaLpKxoZ5X4HT9X7PLo1/15uyg8gpwZghZm8FzKhD4ExX7+wzi
+	 xoJSujofzvM/RiyyID9zdtGoaNny8isoVVkrEb20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Hilman <khilman@baylibre.com>,
-	Johan Hovold <johan@kernel.org>,
+	David Carlier <devnexen@gmail.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.18 446/675] media: vpif_capture: fix OF node reference imbalance
-Date: Thu, 30 Jul 2026 16:12:56 +0200
-Message-ID: <20260730141454.618236540@linuxfoundation.org>
+Subject: [PATCH 6.18 411/675] media: nuvoton: npcm-video: fix error handling in npcm_video_init()
+Date: Thu, 30 Jul 2026 16:12:21 +0200
+Message-ID: <20260730141453.868268437@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -51,36 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: David Carlier <devnexen@gmail.com>
 
-commit 2282f979560af6bbc8ee2c1ee8663197312cee5b upstream.
+commit 60ca00792bce46ec170c7ed101f376186d4cf8a9 upstream.
 
-The driver reuses the OF node of the parent device but fails to take
-another reference to balance the one dropped by the platform bus code
-when unbinding the parent and releasing the child devices.
+npcm_video_init() has two error handling issues after
+of_reserved_mem_device_init() is called:
 
-Fix this by using the intended helper for reusing OF nodes.
+When dma_set_mask_and_coherent() fails, the function releases the
+reserved memory but does not return, allowing execution to fall through
+into npcm_video_ece_init() with a failed DMA configuration.
 
-Fixes: 4a5f8ae50b66 ("[media] davinci: vpif_capture: get subdevs from DT when available")
-Cc: stable@vger.kernel.org	# 4.13
-Cc: Kevin Hilman <khilman@baylibre.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
+When npcm_video_ece_init() fails, the function returns an error without
+calling of_reserved_mem_device_release(), leaking the reserved memory
+association.
+
+Fix both by adding the missing return after the DMA mask failure and
+adding the missing of_reserved_mem_device_release() call on the ECE init
+error path.
+
+Fixes: 46c15a4ff1f4 ("media: nuvoton: Add driver for NPCM video capture and encoding engine")
+Cc: stable@vger.kernel.org
+Signed-off-by: David Carlier <devnexen@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/ti/davinci/vpif_capture.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/platform/nuvoton/npcm-video.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/media/platform/ti/davinci/vpif_capture.c
-+++ b/drivers/media/platform/ti/davinci/vpif_capture.c
-@@ -1499,7 +1499,7 @@ vpif_capture_get_pdata(struct platform_d
- 	 * video ports & endpoints data.
- 	 */
- 	if (pdev->dev.parent && pdev->dev.parent->of_node)
--		pdev->dev.of_node = pdev->dev.parent->of_node;
-+		device_set_of_node_from_dev(&pdev->dev, pdev->dev.parent);
- 	if (!IS_ENABLED(CONFIG_OF) || !pdev->dev.of_node)
- 		return pdev->dev.platform_data;
+--- a/drivers/media/platform/nuvoton/npcm-video.c
++++ b/drivers/media/platform/nuvoton/npcm-video.c
+@@ -1720,10 +1720,12 @@ static int npcm_video_init(struct npcm_v
+ 	if (rc) {
+ 		dev_err(dev, "Failed to set DMA mask\n");
+ 		of_reserved_mem_device_release(dev);
++		return rc;
+ 	}
  
+ 	rc = npcm_video_ece_init(video);
+ 	if (rc) {
++		of_reserved_mem_device_release(dev);
+ 		dev_err(dev, "Failed to initialize ECE\n");
+ 		return rc;
+ 	}
 
 
