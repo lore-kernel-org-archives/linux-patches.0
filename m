@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF851383983;
-	Thu, 30 Jul 2026 15:57:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35C32365A19;
+	Thu, 30 Jul 2026 15:57:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427028; cv=none; b=AwlP8+sqkjTIBhuxhnHyknlfeFD7a/SiIG6xNt7ozJB6lJy9medE+IX+ofbFYjv3x6SSif9/ZJPCdO3zacLKAGK6s3rXCxmupgjPaCfl6r9jeN9jya35iIvrXX7vSQ+/+1AvVrrUbqDsetUN+x7Y1OU3tA8+1Tc2rq3fv4qoRTI=
+	t=1785427031; cv=none; b=bO1wJ43dchv1GN7XorlMSVNf9cPFoXINiNLJcS1qBw9wOp3r00rfa0TscY0R2lxacmd8Fi5Pbhg96y1ty8Miu29AtgW/S4lRLzgRDwR1f+24P28FC2ogAKsR+knHpPXPfTvYT7zmWIrCDppQ0aTzH+lrGvFTqSzvvEJVYhwWxuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427028; c=relaxed/simple;
-	bh=KaV49u2SHrFuDFO489mdKf3t0TG2d32UA5/hBSFUirQ=;
+	s=arc-20240116; t=1785427031; c=relaxed/simple;
+	bh=1GPi2ZawAVMT+fU132jKsnlCIWFZlkwXVDPf1i73nAo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nj4ObjmmiCsp4YIRjq0euhcd7cjCoegJCGIQ2AdGeWwucG17OcEjlAGRntcjMdM3lEtT8REeOVKimrSLtGQ/r7KX1F+s5XMcCbv45SOT0mmNgOiV8yRX+1ms9ZB/z/9gZx6mMNEtvZquBq1pbXQ8uS/iXa34J8+aa/OxvvSiCTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SRDMyBib; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WxAtzpbmBzp6BKcdOQxB3Ji6ZQb5QSPQ6W4dh/Xyhzwa1uUTgR/kkNI5TQ0xtCrXGZYc2SwjVAx5GIHkBHZsnneBRN62JFzmDEMpT/e7FypNWJTN+F7iKUd4sjgxnJxrp/a33ZOCuZvPSsFxbrXGcDtbuJKXH8JWhFAVaPC2cC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u4B1LU4S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SRDMyBib"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9CCB1F000E9;
-	Thu, 30 Jul 2026 15:57:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u4B1LU4S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 903751F000E9;
+	Thu, 30 Jul 2026 15:57:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427027;
-	bh=K+UJFaCoCbDutAPwQQxFQJgRqvACbV3sTdLPCvKI04A=;
+	s=korg; t=1785427030;
+	bh=NHiJs4r2hcDDvZU7LqyGP4P1CLWoFeDNxtmCBc7ZvJs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SRDMyBibI3Q8rxrPRhXDzaRmStHB8lpyqs5K2c+urmbTTQXZAUO/LRp6+qJMkZ8O0
-	 kZvuD7feJ7how0CWgcu1ydWMRop4HnxGgCZNHR6bd85OegOgs+C6rHmUna6lBmXPEv
-	 /R9ZVQFBmgDE2sSYPEjD4VlWnOQEe+gibFD0sduw=
+	b=u4B1LU4S7MuO36QyzBk/YkGT26Y0UVO5FMqpnRFRLu2QIE3+XKaXOHT/8a2SAMYnf
+	 e/vzduLP4UhUSxd+elcE9jLqBxImjuuwMLV2pKTHZ3uIXo7sp9LE36nIw5b+oOko1D
+	 2d04QRaVQnznBrFXsHLv/Co3RC0ifXJuQ+psxA58=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>,
+	Sanghoon Choi <csh0052@gmail.com>,
+	Seungjin Bae <eeodqql09@gmail.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 026/484] xprtrdma: Clear receive-side ownership pointers on release
-Date: Thu, 30 Jul 2026 16:08:43 +0200
-Message-ID: <20260730141423.994242340@linuxfoundation.org>
+Subject: [PATCH 6.6 027/484] Input: ims-pcu - fix heap-buffer-overflow in ims_pcu_process_data()
+Date: Thu, 30 Jul 2026 16:08:44 +0200
+Message-ID: <20260730141424.015752905@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -51,108 +52,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Seungjin Bae <eeodqql09@gmail.com>
 
-[ Upstream commit 2ae8e7afbc63bf84243367f89eb43571f0345a74 ]
+[ Upstream commit 875115b82c295277b81b6dfee7debc725f44e854 ]
 
-Three small ownership-state cleanups land the transport in a
-state that lets future reviewers reason about each pointer
-locally rather than tracing the whole reply path:
+The `ims_pcu_process_data()` processes incoming URB data byte by byte.
+However, it fails to check if the `read_pos` index exceeds
+IMS_PCU_BUF_SIZE.
 
-rpcrdma_rep_put() clears rep->rr_rqst before the rep enters
-rb_free_reps so that no rep on the free list still carries a
-stale rqst pointer.  rpcrdma_reply_handler() and
-rpcrdma_unpin_rqst() are the only sites that set rr_rqst;
-rpcrdma_reply_handler() hands the rep through
-rpcrdma_rep_put(), and rpcrdma_unpin_rqst() NULLs rr_rqst
-directly because its error path abandons the rep for
-teardown cleanup rather than returning it to rb_free_reps.
+If a malicious USB device sends a packet larger than IMS_PCU_BUF_SIZE,
+`read_pos` will increment indefinitely. Moreover, since `read_pos` is
+located immediately after `read_buf`, the attacker can overwrite
+`read_pos` itself to arbitrarily control the index.
 
-rpcrdma_reply_put() NULLs req->rl_reply before calling
-rpcrdma_rep_put().  The previous order placed the rep on
-rb_free_reps while req->rl_reply still pointed at it; the
-window was harmless because xprt_rdma_free_slot() holds the
-req exclusively across the pair, but closing it makes the
-invariant 'rep on rb_free_reps implies no req references it'
-strictly checkable.
+This manipulated `read_pos` is subsequently used in
+`ims_pcu_handle_response()` to copy data into `cmd_buf`, leading to a
+heap buffer overflow.
 
-rpcrdma_sendctx_unmap() and rpcrdma_sendctx_cancel() clear
-req->rl_sendctx after dropping the sendctx pointer in the
-sendctx ring.  Without this, req->rl_sendctx survives across
-Send completion and points at a sendctx that may already have
-been reassigned by rpcrdma_sendctx_get_locked() to a different
-req.  No caller dereferences the stale pointer today --
-rpcrdma_prepare_send_sges() overwrites it before the next
-Send -- but a NULL is a more honest representation of 'the
-Send is no longer outstanding' and lets the assertion patch
-that follows trip on any future regression.
+Specifically, an attacker can overwrite the `cmd_done.wait.head` located
+at offset 136 relative to `cmd_buf` in the `ims_pcu_handle_response()`.
+Consequently, when the driver calls `complete(&pcu->cmd_done)`, it
+triggers a control flow hijack by using the manipulated pointer.
 
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
+Fix this by adding a bounds check for `read_pos` before writing to
+`read_buf`. If the packet is too long, discard it, log a warning,
+and reset the parser state.
+
+Fixes: 628329d524743 ("Input: add IMS Passenger Control Unit driver")
+Co-developed-by: Sanghoon Choi <csh0052@gmail.com>
+Signed-off-by: Sanghoon Choi <csh0052@gmail.com>
+Signed-off-by: Seungjin Bae <eeodqql09@gmail.com>
+Link: https://patch.msgid.link/20251221211442.841549-2-eeodqql09@gmail.com
+[dtor: factor out resetting packet state, reset checksum as well]
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtrdma/rpc_rdma.c |  4 ++++
- net/sunrpc/xprtrdma/verbs.c    | 12 ++++++++++--
- 2 files changed, 14 insertions(+), 2 deletions(-)
+ drivers/input/misc/ims-pcu.c | 32 ++++++++++++++++++++++++++------
+ 1 file changed, 26 insertions(+), 6 deletions(-)
 
-diff --git a/net/sunrpc/xprtrdma/rpc_rdma.c b/net/sunrpc/xprtrdma/rpc_rdma.c
-index e201b37578a70e..aa57e057ff451f 100644
---- a/net/sunrpc/xprtrdma/rpc_rdma.c
-+++ b/net/sunrpc/xprtrdma/rpc_rdma.c
-@@ -542,6 +542,7 @@ void rpcrdma_sendctx_unmap(struct rpcrdma_sendctx *sc)
- 
- 	rpcrdma_sendctx_dma_unmap(sc);
- 	sc->sc_req = NULL;
-+	req->rl_sendctx = NULL;
- 	rpcrdma_req_put(req);
- }
- 
-@@ -550,8 +551,11 @@ void rpcrdma_sendctx_unmap(struct rpcrdma_sendctx *sc)
-  */
- static void rpcrdma_sendctx_cancel(struct rpcrdma_sendctx *sc)
- {
-+	struct rpcrdma_req *req = sc->sc_req;
-+
- 	rpcrdma_sendctx_dma_unmap(sc);
- 	sc->sc_req = NULL;
-+	req->rl_sendctx = NULL;
- }
- 
- /* Prepare an SGE for the RPC-over-RDMA transport header.
-diff --git a/net/sunrpc/xprtrdma/verbs.c b/net/sunrpc/xprtrdma/verbs.c
-index 27bb176f082f63..a97f0b18ac4294 100644
---- a/net/sunrpc/xprtrdma/verbs.c
-+++ b/net/sunrpc/xprtrdma/verbs.c
-@@ -1067,9 +1067,15 @@ static struct rpcrdma_rep *rpcrdma_rep_get_locked(struct rpcrdma_buffer *buf)
-  * @buf: buffer pool
-  * @rep: rep to release
-  *
-+ * The rep's transient association with an rpc_rqst, established
-+ * by rpcrdma_reply_handler() and torn down here, must not survive
-+ * onto rb_free_reps: rpcrdma_post_recvs() pulls reps from the free
-+ * list to re-post them, and a non-NULL rr_rqst on a free-listed rep
-+ * would imply the rep is still referenced by a req.
-  */
- void rpcrdma_rep_put(struct rpcrdma_buffer *buf, struct rpcrdma_rep *rep)
- {
-+	rep->rr_rqst = NULL;
- 	llist_add(&rep->rr_node, &buf->rb_free_reps);
- }
- 
-@@ -1252,9 +1258,11 @@ rpcrdma_mr_get(struct rpcrdma_xprt *r_xprt)
-  */
- void rpcrdma_reply_put(struct rpcrdma_buffer *buffers, struct rpcrdma_req *req)
- {
--	if (req->rl_reply) {
--		rpcrdma_rep_put(buffers, req->rl_reply);
-+	struct rpcrdma_rep *rep = req->rl_reply;
-+
-+	if (rep) {
- 		req->rl_reply = NULL;
-+		rpcrdma_rep_put(buffers, rep);
+diff --git a/drivers/input/misc/ims-pcu.c b/drivers/input/misc/ims-pcu.c
+index 2bac9d9c7b0c9c..af1dfc08b10b25 100644
+--- a/drivers/input/misc/ims-pcu.c
++++ b/drivers/input/misc/ims-pcu.c
+@@ -448,6 +448,14 @@ static void ims_pcu_handle_response(struct ims_pcu *pcu)
  	}
- 	/* I2: rl_reply NULL after the put closes the
- 	 * 'rep on rb_free_reps still referenced by req' window.
+ }
+ 
++static void ims_pcu_reset_packet(struct ims_pcu *pcu)
++{
++	pcu->have_stx = true;
++	pcu->have_dle = false;
++	pcu->read_pos = 0;
++	pcu->check_sum = 0;
++}
++
+ static void ims_pcu_process_data(struct ims_pcu *pcu, struct urb *urb)
+ {
+ 	int i;
+@@ -460,6 +468,14 @@ static void ims_pcu_process_data(struct ims_pcu *pcu, struct urb *urb)
+ 			continue;
+ 
+ 		if (pcu->have_dle) {
++			if (pcu->read_pos >= IMS_PCU_BUF_SIZE) {
++				dev_warn(pcu->dev,
++					 "Packet too long (%d bytes), discarding\n",
++					 pcu->read_pos);
++				ims_pcu_reset_packet(pcu);
++				continue;
++			}
++
+ 			pcu->have_dle = false;
+ 			pcu->read_buf[pcu->read_pos++] = data;
+ 			pcu->check_sum += data;
+@@ -472,10 +488,8 @@ static void ims_pcu_process_data(struct ims_pcu *pcu, struct urb *urb)
+ 				dev_warn(pcu->dev,
+ 					 "Unexpected STX at byte %d, discarding old data\n",
+ 					 pcu->read_pos);
++			ims_pcu_reset_packet(pcu);
+ 			pcu->have_stx = true;
+-			pcu->have_dle = false;
+-			pcu->read_pos = 0;
+-			pcu->check_sum = 0;
+ 			break;
+ 
+ 		case IMS_PCU_PROTOCOL_DLE:
+@@ -495,12 +509,18 @@ static void ims_pcu_process_data(struct ims_pcu *pcu, struct urb *urb)
+ 				ims_pcu_handle_response(pcu);
+ 			}
+ 
+-			pcu->have_stx = false;
+-			pcu->have_dle = false;
+-			pcu->read_pos = 0;
++			ims_pcu_reset_packet(pcu);
+ 			break;
+ 
+ 		default:
++			if (pcu->read_pos >= IMS_PCU_BUF_SIZE) {
++				dev_warn(pcu->dev,
++					 "Packet too long (%d bytes), discarding\n",
++					 pcu->read_pos);
++				ims_pcu_reset_packet(pcu);
++				continue;
++			}
++
+ 			pcu->read_buf[pcu->read_pos++] = data;
+ 			pcu->check_sum += data;
+ 			break;
 -- 
 2.53.0
 
