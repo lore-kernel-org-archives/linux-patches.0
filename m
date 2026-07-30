@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05DFD30C618;
-	Thu, 30 Jul 2026 15:19:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5EBC217723;
+	Thu, 30 Jul 2026 15:19:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424793; cv=none; b=gCAYm8ZprfjcTnn40SyIvDZJeuRqu12QTnTXXV3bmc1JjLeDRgI+KYOdB2bPWzx4rUgfloU9rmVXr2N0FOg6UUh/hu+E+OBWmI07mMLXLvLgcimlzr7uVh8CeaRRHlXd7vl3hYYxCEnvMbETfnBl7b+UL8RvJgJeSBpEJYmQous=
+	t=1785424795; cv=none; b=TC8kr1V/oH345hKqJQj2Ej2fs+1wnkk7zCODeo8Bsy/H/2S7OI/alYsr9+AaldQwecEKiSzCXc+Cr7VYwP/1nSJHKjAMNM5SMjviMspbeMmByc1jDArR+9esVzXiC0H2550zYtZ9Nxq5Ig9bVV7cR9xCA/wXrN42LCgBeGuBJFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424793; c=relaxed/simple;
-	bh=F5bORJ27yTne6qmdM9kW90K0iSGJp8ZKbkGjKtK8n7g=;
+	s=arc-20240116; t=1785424795; c=relaxed/simple;
+	bh=Z+DevC9XIkctLxrVo857vbkaU2zoKT60QAhdvkrbQJA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BTmlcrPHAHmAw2hVMR7XmGpt4/z9Pm1BunAXLDu/sFpBCjDGIDA85nQzErtHlJTnuDBPDYHeAvJcTFW/V7tnA6CprlmxgIHmwQaGVDYYFAf+o0/JO2+sh3ZwfgwQs+DFGKBJ+Pv/yegORjKwXCeXHlNNlyoEoIa2GiGFzm5oCZw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TVWnBtUo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BoKeQrKti4da0iPlXGwt1yN47U2w9qTIS/Id/pW7WWyDzyJ3QXbPeW4UhoOTpRYxqCZU9Ry74BhDmaTrOO2VADkW2No6WZOzOpfeN0k9pv/0oNc6ozYyFjfY1CkFwypPfCy8to7ocZknUXhVH/lS3bnPL49BtbOoWipjrgKn2xo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ADqMqmkN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TVWnBtUo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66E771F000E9;
-	Thu, 30 Jul 2026 15:19:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ADqMqmkN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35AA41F000E9;
+	Thu, 30 Jul 2026 15:19:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424791;
-	bh=bx2OBzGGjALJKdt0DrOHqHPE/9tsWXDsesMcKgd307g=;
+	s=korg; t=1785424794;
+	bh=JMxAelb6SlNcrwt0qICFtTdiMBI2WDd+J0oRT16xXS4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TVWnBtUo0LyW0rszY3J++Iw+ZBBVDGvvbvQ/UUuksadQMw4C64eYIsw4h3lt0FtHp
-	 MjDxf+8Wi6yONbdtaUoNbLgA0/CZwR7jAMwcEU2WszndYcGIIZnWwTVQrbdTg8giwT
-	 uXz6MUQCpOFD333wFrywQU9NJKbksYWqV/5TP+LE=
+	b=ADqMqmkN7PF1A2tanOocMCsJ44t6dCM+rMggw3V3wJE7uWl/SAzVhTGLzTftoJDrU
+	 KgnDhjSazmAlJ4jp38M0a/w7/V1FJj/ZIhdl5ETPaONaZvE1h54BF2dJaAKmiq6bDe
+	 wUaZiZYHOqXpaW2Ka5mbrEblE34iGLukpzaIS4sw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,10 +32,11 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Xin Liu <bird@lzu.edu.cn>,
 	Douya Le <ldy3087146292@gmail.com>,
 	Ren Wei <n05ec@lzu.edu.cn>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 6.18 519/675] libceph: reject zero bucket types in crush_decode
-Date: Thu, 30 Jul 2026 16:14:09 +0200
-Message-ID: <20260730141456.169303581@linuxfoundation.org>
+Subject: [PATCH 6.18 520/675] libceph: remove debugfs files before client teardown
+Date: Thu, 30 Jul 2026 16:14:10 +0200
+Message-ID: <20260730141456.191189940@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -56,44 +57,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Douya Le <ldy3087146292@gmail.com>
 
-commit 05f90284223381005d6bcddab3fda4a97f9c3401 upstream.
+commit e4c804726c4afce3ba648b982d564f6af2cfa328 upstream.
 
-CRUSH bucket type 0 is reserved for devices.  The mapper relies on
-that invariant and uses type 0 to identify leaf devices.
+ceph_destroy_client() tears down the monitor client before removing
+the per-client debugfs files. A concurrent read of the monmap debugfs
+file can enter monmap_show() after ceph_monc_stop() has freed
+monc->monmap, triggering a use-after-free.
 
-If crush_decode() accepts a bucket with type 0, a malformed CRUSH map
-can make the mapper treat a negative bucket ID as a device and pass it
-to is_out(), which then indexes the OSD weight array with a negative
-value.
-
-Reject zero bucket types while decoding the CRUSH map so the invalid
-state never reaches the mapper.
+Remove the debugfs files before stopping the OSD and monitor clients.
+debugfs_remove() drains active handlers and prevents new accesses, so
+the debugfs callbacks can no longer race the rest of client teardown.
 
 Cc: stable@vger.kernel.org
-Fixes: f24e9980eb86 ("ceph: OSD client")
+Fixes: 76aa844d5b2f ("ceph: debugfs")
 Reported-by: Yuan Tan <yuantan098@gmail.com>
 Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
 Reported-by: Xin Liu <bird@lzu.edu.cn>
 Assisted-by: Codex:GPT-5.4
 Signed-off-by: Douya Le <ldy3087146292@gmail.com>
 Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/osdmap.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/ceph/ceph_common.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/ceph/osdmap.c
-+++ b/net/ceph/osdmap.c
-@@ -520,6 +520,8 @@ static struct crush_map *crush_decode(vo
- 		ceph_decode_need(p, end, 4*sizeof(u32), bad);
- 		b->id = ceph_decode_32(p);
- 		b->type = ceph_decode_16(p);
-+		if (b->type == 0)
-+			goto bad;
- 		b->alg = ceph_decode_8(p);
- 		if (b->alg != alg) {
- 			b->alg = 0;
+--- a/net/ceph/ceph_common.c
++++ b/net/ceph/ceph_common.c
+@@ -763,13 +763,13 @@ void ceph_destroy_client(struct ceph_cli
+ 
+ 	atomic_set(&client->msgr.stopping, 1);
+ 
++	ceph_debugfs_client_cleanup(client);
++
+ 	/* unmount */
+ 	ceph_osdc_stop(&client->osdc);
+ 	ceph_monc_stop(&client->monc);
+ 	ceph_messenger_fini(&client->msgr);
+ 
+-	ceph_debugfs_client_cleanup(client);
+-
+ 	ceph_destroy_options(client->options);
+ 
+ 	kfree(client);
 
 
