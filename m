@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77958436BF8;
-	Thu, 30 Jul 2026 15:35:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F41430567C;
+	Thu, 30 Jul 2026 15:35:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425744; cv=none; b=jcf1usegw3V/jtdFCcngs1uI51i195oJ1y9B4+cbSqG3LyLZdgzqB2h9XzAx+D+7n34Kls4/UmpKTFC7DUZG578DVa21h68G/35JuBZnm2uwFEdPmRfRosZP7QNyiCcbLY+9Eu933CN8gsiv/n46KmkmkyRhKb4r+AdyA3CnLGM=
+	t=1785425747; cv=none; b=T/aBoV+aBG0YqFH/laXhDr7vQnODRXl0Y1Euk9bM9PTAH1/H3xe5zysd6KZpvABDmmiu3aDTA8QmAxWGfru+GEOPVhAvscYYJcIaZmYIM/X6jzDZ1jukpoCrSUuwx21wfJ8qZ5qcdBD3VEwhWqfFwEX7T6amPEl38BHfNWMlprA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425744; c=relaxed/simple;
-	bh=w5r/y/KWNSd5rw6nMbDOVJNCrfUDA/YyATu3zwzy914=;
+	s=arc-20240116; t=1785425747; c=relaxed/simple;
+	bh=84A9bBmuLb+YgEQ8grlfMamia5cLhNYZqEQAh+bNzIc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=su0mlYXQfH6p1TlgtSsSqJzBmT5GPoVO14WebZNZMHVVdF/kOg/4iEduzZRtshmbBpcHuH5N/eBqKcBrOB9HwRabq1giuIaV/C4YRhvsg1eOUEcGodghWwmLC+/5AjNWQEAIItHa00gcIlVbAHfp/xYgGT5BtznhC65OKv25NGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=seSv4sQ0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fm6eCqoBsrBtVgH4xo/jR3+uh3FiKhHgKrYzXyPZa/g/Z6ddYN0z50Xr2wdJDOf+9qoBpJdh04I/1Kc5DwKn4vrO9Vq+xEX4g5Xdxtipv5d5fId0EN3zWl1o5N9hFFaZTW6EatJ8R4BU3KTXjw9KQMlQiUEgjnSTqLT4Rm6PV/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pdPY2KUS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="seSv4sQ0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D556A1F000E9;
-	Thu, 30 Jul 2026 15:35:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pdPY2KUS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9A1C1F000E9;
+	Thu, 30 Jul 2026 15:35:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425743;
-	bh=InKauXRGl7F7gKbcZVVy4Dg2xX03YMa1O18dLONtMUM=;
+	s=korg; t=1785425746;
+	bh=q1mFy66LGfosIdzJU7T0HEzoCUl7gSah4GD2L0reV2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=seSv4sQ0zoklIt1h9ib2MKhU922hX6xN5ZQsetgC4bHqkOwg2iKo9r2A1brqMeAxr
-	 PhOwDCF61CB10cLJKOSjuspZm2ozsn3vmFl37e+9dOCbND6KLC7OpX8Mx+DyNw7WPL
-	 9QwdK1oTBceYP6iXbcruukW06G09C+bs8qQ76ljI=
+	b=pdPY2KUSpxTmOD+HopnUNu4+aU9/bNV/mqh/yfL6TtxNxDEBtjU+7vpUZEAm9V1KE
+	 zyyAoPp6nEjHe1RGRbohyEHIrAmtQrsO2eq+qcGd6oY/xeUl8OYlLX9VaNJxRHedk9
+	 IcG0Z4x4kHt0Mg6hnTDoBs2KFBqMVBj3p3U15R3U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
-	Allison Henderson <achender@kernel.org>,
+	Zhixing Chen <running910@gmail.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 175/602] rds: drop incoming messages that cross network namespace boundaries
-Date: Thu, 30 Jul 2026 16:09:27 +0200
-Message-ID: <20260730141439.645610623@linuxfoundation.org>
+Subject: [PATCH 6.12 176/602] gtp: parse extension headers before reading inner protocol
+Date: Thu, 30 Jul 2026 16:09:28 +0200
+Message-ID: <20260730141439.665951283@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -52,75 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+From: Zhixing Chen <running910@gmail.com>
 
-[ Upstream commit 5521ae71e32a8069ed4ca6e792179dc57bc43ab2 ]
+[ Upstream commit 96e37e2f618e931aa97af95e707dcdfb1ec41264 ]
 
-rds_find_bound() looks up the destination socket using a global
-rhashtable keyed solely on (addr, port, scope_id).  Network namespaces
-are not part of the key, so a sender in netns A can deliver an incoming
-message (inc) to a socket that lives in a different netns B.
+GTPv1-U packets may carry a chain of extension headers before the inner
+IP packet. The receive path already parses and skips these extension
+headers, but it currently reads the inner protocol before doing so.
 
-When this happens, inc->i_conn points to an rds_connection whose c_net
-is netns A, but the receiving rs lives in netns B.  Once the child
-process that created netns A exits, cleanup_net() calls
-rds_loop_exit_net() -> rds_loop_kill_conns() -> rds_conn_destroy(),
-freeing that connection.  If the survivor socket in netns B still holds
-the inc, any subsequent dereference of inc->i_conn is a use-after-free.
+As a result, the first extension header byte is interpreted as the inner
+IP version. Packets with extension headers are then dropped before PDP
+lookup.
 
-There are two dangerous sites in rds_clear_recv_queue():
-  1. inc->i_conn->c_lcong (offset 88 of freed rds_connection, size 200)
-     read via rds_recv_rcvbuf_delta() -- confirmed by KASAN.
-  2. inc->i_conn->c_trans->inc_free(inc) (function pointer at offset 80)
-     called via rds_inc_put() when the inc refcount reaches zero -- same
-     race window, potential call-through-freed-object primitive.
+Parse the extension header chain before calling gtp_inner_proto(), so the
+inner protocol is read from the actual inner IP header.
 
-The bug is reachable from unprivileged user namespaces
-(CLONE_NEWUSER + CLONE_NEWNET), available since Linux 3.8.
-
-Fix this by rejecting the delivery in rds_recv_incoming() when the
-socket returned by rds_find_bound() belongs to a different network
-namespace than the connection that carried the message.  Use the
-existing rds_conn_net() / sock_net() helpers and net_eq() for the
-comparison.
-
-Fixes: c809195f5523 ("rds: clean up loopback rds_connections on netns deletion")
-Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
-Reviewed-by: Allison Henderson <achender@kernel.org>
-Tested-by: Allison Henderson <achender@kernel.org>
-Signed-off-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20260708024314.601139-1-achender@kernel.org
+Fixes: c75fc0b9e5be ("gtp: identify tunnel via GTP device + GTP version + TEID + family")
+Signed-off-by: Zhixing Chen <running910@gmail.com>
+Link: https://patch.msgid.link/20260708042244.120898-1-running910@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/recv.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/net/gtp.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/net/rds/recv.c b/net/rds/recv.c
-index 5627f80013f8b1..bd9d00326e94fd 100644
---- a/net/rds/recv.c
-+++ b/net/rds/recv.c
-@@ -366,6 +366,21 @@ void rds_recv_incoming(struct rds_connection *conn, struct in6_addr *saddr,
- 		goto out;
+diff --git a/drivers/net/gtp.c b/drivers/net/gtp.c
+index d7f644dfaa8d9e..dc4770e79990f0 100644
+--- a/drivers/net/gtp.c
++++ b/drivers/net/gtp.c
+@@ -821,13 +821,17 @@ static int gtp1u_udp_encap_recv(struct gtp_dev *gtp, struct sk_buff *skb)
+ 	if (!pskb_may_pull(skb, hdrlen))
+ 		return -1;
+ 
++	gtp1 = (struct gtp1_header *)(skb->data + sizeof(struct udphdr));
++
++	if (gtp1->flags & GTP1_F_EXTHDR &&
++	    gtp_parse_exthdrs(skb, &hdrlen) < 0)
++		return -1;
++
+ 	if (gtp_inner_proto(skb, hdrlen, &inner_proto) < 0) {
+ 		netdev_dbg(gtp->dev, "GTP packet does not encapsulate an IP packet\n");
+ 		return -1;
  	}
  
-+	/*
-+	 * rds_find_bound() uses a global (netns-agnostic) hash table.
-+	 * An RDS connection created in netns A can match a socket bound
-+	 * in the init netns, delivering inc cross-netns with inc->i_conn
-+	 * pointing into netns A.  When cleanup_net() then frees that conn,
-+	 * any subsequent dereference of inc->i_conn is a use-after-free.
-+	 * Drop the inc if the receiving socket lives in a different netns.
-+	 */
-+	if (!net_eq(sock_net(rds_rs_to_sk(rs)), rds_conn_net(conn))) {
-+		rds_stats_inc(s_recv_drop_no_sock);
-+		rds_sock_put(rs);
-+		rs = NULL;
-+		goto out;
-+	}
-+
- 	/* Process extension headers */
- 	rds_recv_incoming_exthdrs(inc, rs);
+-	gtp1 = (struct gtp1_header *)(skb->data + sizeof(struct udphdr));
+-
+ 	pctx = gtp1_pdp_find(gtp, ntohl(gtp1->tid),
+ 			     gtp_proto_to_family(inner_proto));
+ 	if (!pctx) {
+@@ -835,10 +839,6 @@ static int gtp1u_udp_encap_recv(struct gtp_dev *gtp, struct sk_buff *skb)
+ 		return 1;
+ 	}
+ 
+-	if (gtp1->flags & GTP1_F_EXTHDR &&
+-	    gtp_parse_exthdrs(skb, &hdrlen) < 0)
+-		return -1;
+-
+ 	return gtp_rx(pctx, skb, hdrlen, gtp->role, inner_proto);
+ }
  
 -- 
 2.53.0
