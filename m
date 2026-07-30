@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED6A7441041;
-	Thu, 30 Jul 2026 14:48:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8A4D442FA2;
+	Thu, 30 Jul 2026 14:48:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422911; cv=none; b=ffr/eD2rs8kFuZ81AuZMDRDHmO+LLUF66em7POICZnYaJSTpz938bsvhUzIXvW5nlVXrJCNV9c7jmHtYWhzI4Fnr/GhUwz1SDJgg0IbuNa/TZJDdy2piGmSimfxEsiwBsyVxj0NYR9cUos2YH//Ne4DcLWj3c3tyv72RUDpvGys=
+	t=1785422914; cv=none; b=q7L3uHcFWQqjz/tO167Y6pwYW1llRVb4HiXBqUWzP7ca+qHHwNXOYqlDsT+wsXn7t4UMlc+Adoj8KpPG/dhVfqVOAoVRZ/GthCAV7aMR2S/apgz5vBgRa2Vm+YG3xRuFmq0EdvRD6VafTx1RPcK4OuTlYvI/+BEbPsV4YUzRcNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422911; c=relaxed/simple;
-	bh=Sb/vHi2KASCUIFtvAKkMLUYAbJkkinKENyHrg6nOb+w=;
+	s=arc-20240116; t=1785422914; c=relaxed/simple;
+	bh=TvHaEDHFuhk2esQunJvK0TsMNg+8DokjBlKC3YyyuHk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=enGhYy4J/Jj7+UtzVorEQbKvRzpL49UBqoxUslgKD+yCADPMoXqygjqqzVBZEObenW9dcPqEw0CFx2hXVd+wN6yhk1t6ZY5KEOpAF4/Y0vZ/8qlMGMWtXsq+peTk8wti3jxC2+FV+PMBK7+LOGv+NMSV/+53ntk9p3QHdn212hI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b9AkoCFN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=D5hzD/6MayYjl7CHrutjhyJLvBNe7tA4tcDgc2KgpJCK+h5UpyzXP3+qCxKV6lzjdZA/q/0yTxTyMET18GrjNbA6c9cncrO4tnukVQQ1IkVK2JTFpW6/O2vt9QExOWqOeqSX41I3Hqml416oWp4+IHPaMCd1VN6a+0fJQj7K6a0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y+pUpoJ9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b9AkoCFN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 558331F000E9;
-	Thu, 30 Jul 2026 14:48:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y+pUpoJ9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C2231F000E9;
+	Thu, 30 Jul 2026 14:48:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422909;
-	bh=bo0yXf1fR/CyyOyUoXqyGulhv8luZ1CN130QzyZx4Mg=;
+	s=korg; t=1785422912;
+	bh=WAxBiCzqryZO1icBwthoU5609ar7hgWgxg6mcv3rDic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b9AkoCFNoLwRB7gSUKwWg1+l4h7f6TdyvIBSXeCZTkNID2dIHwZjjGnMcZ2ucTIEP
-	 TjL+86fAeNvDmHS3A6WPmTnjY2/DjY+OT9HdSZhlAdfM2+4cfpvBhRDZ4nMlegt7xn
-	 Brw+ZH1IID5cMi7LPN5RQizRJ/FXsZhSmGKQ5I54=
+	b=y+pUpoJ9YpyQBN+Vb7j00Ubu0nffRvrKLF/81Ev9oBo0uJZVBZ5VYS2dWS1hnYl0+
+	 7mwFdiTag83unUFTsVAOwAv5vk7FQ0tilegziQ8PjoV8tgB2d0xk7Y7+YXmlwHkbwI
+	 9kX4ZzTR91jaGXkGGrPrYsomYiXwxynJqWadBoGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	George Salisbury <gsalisbury@apnic.net>,
-	Ming Lei <tom.leiming@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 7.1 597/744] ublk: wait on ublk_dev_ready() instead of ub->completion
-Date: Thu, 30 Jul 2026 16:14:30 +0200
-Message-ID: <20260730141456.968368868@linuxfoundation.org>
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 7.1 598/744] tracing/eprobe: Fix exact system name matching in eprobe_dyn_event_match()
+Date: Thu, 30 Jul 2026 16:14:31 +0200
+Message-ID: <20260730141456.989701186@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -51,175 +49,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Lei <tom.leiming@gmail.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit 432a9b2780c0a01caf547bd1fc2fcf28aeb8d173 upstream.
+commit f418d68d71fd4a0a9cef92377bc8c4c3334b5b53 upstream.
 
-ub->completion is only re-armed by a successful START_USER_RECOVERY. If
-the ublk server sends END_USER_RECOVERY without one - e.g. its START
-failed with -EBUSY and the error was ignored - the wait is satisfied by
-the stale completion of the previous recovery cycle, and the device is
-marked LIVE and the requeue list kicked while the FETCH stream is still
-running and ubq->canceling is still set. The kick redispatches a
-previously requeued request, __ublk_queue_rq_common() sees ->canceling
-and parks it again via __ublk_abort_rq(), and after the last FETCH
-clears ->canceling nothing ever kicks the requeue list again: the
-request is stranded there while holding its tag. If it is the flush
-machinery's flush_rq, every subsequent fsync piles up in uninterruptible
-sleep and teardown hangs on tag draining. This matches a report of a
-lost PREFLUSH with ext4 on top of ublk after daemon crash recovery.
+eprobe_dyn_event_match() checks if the target event system in argv[0]
+matches ep->event_system using strncmp(ep->event_system, argv[0], len).
+However, if ep->event_system is longer than len (e.g. "eprobes" vs
+"ep/event"), strncmp() still returns 0 because the first len characters
+match.
 
-ub->completion is an edge-triggered latch used as a proxy for the level
-condition "every queue has fetched all I/O commands", which can regress
-(F_BATCH's UNPREP, daemon death) and whose re-arm can be skipped. Drop
-it and wait on the real condition instead: the new helper
-ublk_wait_dev_ready_and_lock() waits on ublk_dev_ready() via
-wait_var_event_interruptible(), woken from ublk_mark_io_ready(), then
-re-checks it under ub->mutex, waiting again on regression, and returns
-with the mutex held and readiness guaranteed.
+Check that ep->event_system[len] is '\0' to ensure exact system name
+matching.
 
-Readiness becomes true in the same ub->mutex critical section that
-clears the last queue's ->canceling, so END_USER_RECOVERY marks the
-device LIVE and kicks the requeue list strictly after ->canceling
-clears. The wait stays interruptible, so a server whose daemon died can
-still be signalled out. For ublk_ctrl_start_dev() this replaces the
-fail-fast -EINVAL on an F_BATCH ready->UNPREP regression with waiting
-until the device is ready again.
+Link: https://lore.kernel.org/all/178454235856.290363.14872590900774231133.stgit@devnote2/
 
-Reported-by: George Salisbury <gsalisbury@apnic.net>
-Fixes: 728cbac5fe21 ("ublk: move device reset into ublk_ch_release()")
+Fixes: 7d5fda1c841f ("tracing: Fix event probe removal from dynamic events")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ming Lei <tom.leiming@gmail.com>
-Link: https://patch.msgid.link/20260719134540.120269-1-tom.leiming@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Assisted-by: Antigravity:gemini-3.5-flash
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/ublk_drv.c |   47 ++++++++++++++++++++++++++++++-----------------
- 1 file changed, 30 insertions(+), 17 deletions(-)
+ kernel/trace/trace_eprobe.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/block/ublk_drv.c
-+++ b/drivers/block/ublk_drv.c
-@@ -19,6 +19,7 @@
- #include <linux/errno.h>
- #include <linux/major.h>
- #include <linux/wait.h>
-+#include <linux/wait_bit.h>
- #include <linux/blkdev.h>
- #include <linux/init.h>
- #include <linux/swap.h>
-@@ -26,7 +27,6 @@
- #include <linux/compat.h>
- #include <linux/mutex.h>
- #include <linux/writeback.h>
--#include <linux/completion.h>
- #include <linux/highmem.h>
- #include <linux/sysfs.h>
- #include <linux/miscdevice.h>
-@@ -327,7 +327,6 @@ struct ublk_device {
+--- a/kernel/trace/trace_eprobe.c
++++ b/kernel/trace/trace_eprobe.c
+@@ -172,7 +172,8 @@ static bool eprobe_dyn_event_match(const
+ 	if (!slash)
+ 		return false;
  
- 	struct ublk_params	params;
- 
--	struct completion	completion;
- 	u32			nr_queue_ready;
- 	bool 			unprivileged_daemons;
- 	struct mutex cancel_mutex;
-@@ -3058,12 +3057,12 @@ static void ublk_mark_io_ready(struct ub
- 	if (ublk_dev_ready(ub)) {
- 		/*
- 		 * All queues ready - clear device-level canceling flag
--		 * and complete the recovery/initialization.
-+		 * and wake ublk_dev_ready() waiters.
- 		 */
- 		mutex_lock(&ub->cancel_mutex);
- 		ub->canceling = false;
- 		mutex_unlock(&ub->cancel_mutex);
--		complete_all(&ub->completion);
-+		wake_up_var(&ub->nr_queue_ready);
- 	}
- }
- 
-@@ -4266,7 +4265,6 @@ static int ublk_init_queues(struct ublk_
- 			goto fail;
- 	}
- 
--	init_completion(&ub->completion);
- 	return 0;
- 
-  fail:
-@@ -4410,6 +4408,26 @@ static bool ublk_validate_user_pid(struc
- 	return ub->ublksrv_tgid == ublksrv_pid;
- }
- 
-+/*
-+ * Wait until all queues have fetched their I/O commands, and return with
-+ * ub->mutex held and readiness guaranteed: then every queue's ->canceling
-+ * is cleared. Ready may regress between wakeup and mutex_lock() (F_BATCH
-+ * UNPREP, daemon death), so re-check it under the mutex and wait again.
-+ */
-+static int ublk_wait_dev_ready_and_lock(struct ublk_device *ub)
-+{
-+	while (true) {
-+		if (wait_var_event_interruptible(&ub->nr_queue_ready,
-+						 ublk_dev_ready(ub)))
-+			return -EINTR;
-+
-+		mutex_lock(&ub->mutex);
-+		if (ublk_dev_ready(ub))
-+			return 0;
-+		mutex_unlock(&ub->mutex);
-+	}
-+}
-+
- static int ublk_ctrl_start_dev(struct ublk_device *ub,
- 		const struct ublksrv_ctrl_cmd *header)
- {
-@@ -4492,15 +4510,10 @@ static int ublk_ctrl_start_dev(struct ub
- 		};
- 	}
- 
--	if (wait_for_completion_interruptible(&ub->completion) != 0)
-+	if (ublk_wait_dev_ready_and_lock(ub))
- 		return -EINTR;
- 
--	if (!ublk_validate_user_pid(ub, ublksrv_pid))
--		return -EINVAL;
--
--	mutex_lock(&ub->mutex);
--	/* device may become not ready in case of F_BATCH */
--	if (!ublk_dev_ready(ub)) {
-+	if (!ublk_validate_user_pid(ub, ublksrv_pid)) {
- 		ret = -EINVAL;
- 		goto out_unlock;
- 	}
-@@ -5064,7 +5077,6 @@ static int ublk_ctrl_start_recovery(stru
- 		goto out_unlock;
- 	}
- 	pr_devel("%s: start recovery for dev id %d\n", __func__, ub->ub_number);
--	init_completion(&ub->completion);
- 	ret = 0;
-  out_unlock:
- 	mutex_unlock(&ub->mutex);
-@@ -5080,16 +5092,17 @@ static int ublk_ctrl_end_recovery(struct
- 	pr_devel("%s: Waiting for all FETCH_REQs, dev id %d...\n", __func__,
- 		 header->dev_id);
- 
--	if (wait_for_completion_interruptible(&ub->completion))
-+	if (ublk_wait_dev_ready_and_lock(ub))
- 		return -EINTR;
- 
- 	pr_devel("%s: All FETCH_REQs received, dev id %d\n", __func__,
- 		 header->dev_id);
- 
--	if (!ublk_validate_user_pid(ub, ublksrv_pid))
--		return -EINVAL;
-+	if (!ublk_validate_user_pid(ub, ublksrv_pid)) {
-+		ret = -EINVAL;
-+		goto out_unlock;
-+	}
- 
--	mutex_lock(&ub->mutex);
- 	if (ublk_nosrv_should_stop_dev(ub))
- 		goto out_unlock;
- 
+-	if (strncmp(ep->event_system, argv[0], slash - argv[0]))
++	if (strncmp(ep->event_system, argv[0], slash - argv[0]) ||
++	    ep->event_system[slash - argv[0]] != '\0')
+ 		return false;
+ 	if (strcmp(ep->event_name, slash + 1))
+ 		return false;
 
 
