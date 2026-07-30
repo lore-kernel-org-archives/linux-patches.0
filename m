@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DD75449ED6;
-	Thu, 30 Jul 2026 16:17:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B04993B19B3;
+	Thu, 30 Jul 2026 16:17:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785428249; cv=none; b=dMN0C0pubWntXJ8uHPXUzYR0wJEjxTMdxUFg0Y185GlP5dXdXLUHdvzsIlyZGyQsDUzeiVFuVZx69/VHEuG81sWFUr8xuRGdcnLwb5C2X37GI5SW6ytH957ZZ4TO6fl/aiWChiTTREclVJkZ0rZZYkLeaBza/y0KqCvdqj4sl08=
+	t=1785428251; cv=none; b=Wc6BntG5s1hdTwOgFgJK1yCLgklH1QJiLfhQPuqOm4pJk5bR05gzaUWUXfmYNiXWRWAr4x5PBv9TRFGsaTVOFHp766AfY+8QqLcReaYTJAxHq2ec95IQAq3npBHPTVi3RAQXxpAVQNQVCOvQlEQWq0ngrdjC7nBu01rtb6frtkQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785428249; c=relaxed/simple;
-	bh=MAc1STfNG+aubb6fLR8Gbs+OicmjKA1os/dtTK73+1Q=;
+	s=arc-20240116; t=1785428251; c=relaxed/simple;
+	bh=fzFOrWa75sOHH4pCAKyjQu8Z5HWXvikWqRKXKXI2iUQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rz7l6DhQ00k2SwucM9TSOHu/duzXgeE5Uc8BcC1eFwFtX3wHJNSse46L2bKu4jrygwSBzyzjRjHmCVrpg4/sixCAFJbMbEHZdzmP1g0W/7ts8FSD+c2EFjgVRSWDU8fUtHZ/ADK3DXL2dYfhBuzgbEO1S9z0SFIKAM0L3PUz3/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q0Ws8gz1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cukwJmFpo2xMOgsfkowxd0vEPV/EvsrJs1z9eQzqH+wI50LR8RRHXQcZa61HkTUepkRK5BmFg+qFr/8WDowHbcAmlFToGYwTaJF+gskOLZW1A2u3J5xFSNPCHUQSwOYR88jEsI4vl4qaFWGpWD+y/UJjjfquVMCCPbeHi2L7N4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AfQygQ1C; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q0Ws8gz1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CE561F000E9;
-	Thu, 30 Jul 2026 16:17:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AfQygQ1C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 182831F000E9;
+	Thu, 30 Jul 2026 16:17:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785428247;
-	bh=udnOdBrH9e6fuyieGfm6a0btB+Yw6FyaWFTWf7zX5ro=;
+	s=korg; t=1785428250;
+	bh=U/YlZFl1DQujhlbBj381x4akJauGvLI7afp3xefXsck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q0Ws8gz1D0C99JpLlp+OUY0+khNV+klpVMOYKuVc4abRct3ScHO+zXTmlHx87CyYl
-	 sdzIHMkk7S8pUHmSJwWXGjRJf8rF3ahRPDOpbbJuiRQwj33Da7lyGESP3YnD1SKzL1
-	 JKSMdHz21JtjQJLVGZovZe+D6aDJ/vzBGSXfRHCM=
+	b=AfQygQ1CUUnV0GVIs77iLurPxDSor5X84YM75x+u9unKQaqZBOtr801AiufJF2uNr
+	 5qXhzGI99HChiXWbYz+ShDA8iKQvEe+FN0Gp5btHPS4W+flyNtlHeqRUX7XSQCe7dB
+	 zh82klI7m8vsLyrBGzYFqBhae0UcX1aGqB0DXZ+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	XIAO WU <xiaowu.417@qq.com>,
-	Beau Belgrave <beaub@linux.microsoft.com>,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	Theodor Arsenij Larionov-Trichkine <theodorlarionov@gmail.com>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 454/484] tracing/user_events: Fix use-after-free in user_event_mm_dup()
-Date: Thu, 30 Jul 2026 16:15:51 +0200
-Message-ID: <20260730141433.345066057@linuxfoundation.org>
+Subject: [PATCH 6.6 419/484] netfilter: nft_fib: reject fib expression on the netdev egress hook
+Date: Thu, 30 Jul 2026 16:15:16 +0200
+Message-ID: <20260730141432.579875160@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -53,145 +51,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Theodor Arsenij Larionov-Trichkine <theodorlarionov@gmail.com>
 
-[ Upstream commit 50fd6dd755c6e48a38af2fa4621167eea56829c2 ]
+[ Upstream commit d07955dd34ecae17d35d8c7d0a273a3fba653a8c ]
 
-user_event_mm_dup() walks the parent mm's enabler list locklessly under
-rcu_read_lock() during fork() (from copy_process()); it does not take
-event_mutex:
+A fib expression in a netdev egress base chain dereferences nft_in(pkt),
+NULL on the transmit path, causing a NULL pointer dereference at eval.
+nft_fib_validate() masks the hook with NF_INET_* values, but netdev hook
+numbers are a separate enum that aliases them (NF_NETDEV_EGRESS ==
+NF_INET_LOCAL_IN), so an egress chain passes validation and then faults.
 
-	rcu_read_lock();
-	list_for_each_entry_rcu(enabler, &old_mm->enablers, mm_enablers_link)
-		enabler->event = user_event_get(orig->event);
+Add nft_fib_netdev_validate() that limits each result/flag to the netdev
+hook where the device it reads exists: the input-device cases (OIF,
+OIFNAME, ADDRTYPE with F_IIF) to ingress, the output-device case (ADDRTYPE
+with F_OIF) to egress, ADDRTYPE with no device flag to both. Also restrict
+nft_fib_validate() to NFPROTO_IPV4/IPV6/INET so its NF_INET_* masks are
+not applied to another family's hooks.
 
-user_event_enabler_destroy() removes an enabler from that list with
-list_del_rcu() and then, without waiting for a grace period, drops the
-enabler's user_event reference with user_event_put() and frees the enabler
-with kfree(). A reader that loaded the enabler before the list_del_rcu()
-can still be walking it, which leads to two use-after-frees:
-
- - kfree(enabler) frees the enabler while that reader dereferences
-   enabler->event.
-
- - user_event_put() may drop the last reference to the user_event, which
-   is then freed (via delayed_destroy_user_event() on a work queue), while
-   the same reader does user_event_get(orig->event) on it.
-
-Both are reachable by an unprivileged task that can open user_events_data:
-one multithreaded process that registers an enabler and then concurrently
-unregisters it and calls fork() triggers the race. KASAN reports a
-slab-use-after-free in user_event_mm_dup() during clone(), with a
-"refcount_t: addition on 0" warning when the user_event is freed.
-
-The enabler use-after-free was found first; the user_event one was reported
-by XIAO WU, and the earlier enabler-only fix did not address it.
-
-Defer both the user_event_put() and the kfree(enabler) to a work item
-queued with queue_rcu_work(), so they run only after an RCU grace period,
-once all readers walking the enabler list have finished. The put must run
-in process context because user_event_put() takes event_mutex on the last
-reference, so a work queue is used rather than call_rcu(). The now-unlocked
-put lets the locked argument of user_event_enabler_destroy() be removed;
-all callers are updated.
-
-Fixes: 7235759084a4 ("tracing/user_events: Use remote writes for event enablement")
+Fixes: 42df6e1d221d ("netfilter: Introduce egress hook")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260707165912.2560537-2-michael.bommarito@gmail.com
-Reported-by: XIAO WU <xiaowu.417@qq.com>
-Closes: https://lore.kernel.org/all/tencent_89647CE40DC452B891C65C94D1B271DE8E07@qq.com/
-Suggested-by: Beau Belgrave <beaub@linux.microsoft.com>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Link: https://lore.kernel.org/netfilter-devel/ajxsjcDOnwllMfoR@strlen.de/
+Signed-off-by: Theodor Arsenij Larionov-Trichkine <theodorlarionov@gmail.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_user.c |   39 ++++++++++++++++++++++++++++++++-------
- 1 file changed, 32 insertions(+), 7 deletions(-)
+ net/netfilter/nft_fib.c        |    9 +++++++++
+ net/netfilter/nft_fib_netdev.c |   29 ++++++++++++++++++++++++++++-
+ 2 files changed, 37 insertions(+), 1 deletion(-)
 
---- a/kernel/trace/trace_events_user.c
-+++ b/kernel/trace/trace_events_user.c
-@@ -104,6 +104,9 @@ struct user_event_enabler {
+--- a/net/netfilter/nft_fib.c
++++ b/net/netfilter/nft_fib.c
+@@ -31,6 +31,15 @@ int nft_fib_validate(const struct nft_ct
+ 	const struct nft_fib *priv = nft_expr_priv(expr);
+ 	unsigned int hooks;
  
- 	/* Track enable bit, flags, etc. Aligned for bitops. */
- 	unsigned long		values;
++	switch (ctx->family) {
++	case NFPROTO_IPV4:
++	case NFPROTO_IPV6:
++	case NFPROTO_INET:
++		break;
++	default:
++		return -EOPNOTSUPP;
++	}
 +
-+	/* Defer the event put and enabler free past an RCU grace period. */
-+	struct rcu_work		put_rwork;
- };
- 
- /* Bits 0-5 are for the bit to update upon enable/disable (0-63 allowed) */
-@@ -378,17 +381,39 @@ error:
- 	return NULL;
- };
- 
--static void user_event_enabler_destroy(struct user_event_enabler *enabler,
--				       bool locked)
-+static void delayed_user_event_enabler_put(struct work_struct *work)
- {
--	list_del_rcu(&enabler->mm_enablers_link);
-+	struct user_event_enabler *enabler = container_of(to_rcu_work(work),
-+			struct user_event_enabler, put_rwork);
- 
- 	/* No longer tracking the event via the enabler */
--	user_event_put(enabler->event, locked);
-+	user_event_put(enabler->event, false);
- 
-+	/* Run from queue_rcu_work(), the RCU grace period has elapsed */
- 	kfree(enabler);
+ 	switch (priv->result) {
+ 	case NFT_FIB_RESULT_OIF:
+ 	case NFT_FIB_RESULT_OIFNAME:
+--- a/net/netfilter/nft_fib_netdev.c
++++ b/net/netfilter/nft_fib_netdev.c
+@@ -50,6 +50,33 @@ static void nft_fib_netdev_eval(const st
+ 	regs->verdict.code = NFT_BREAK;
  }
  
-+static void user_event_enabler_destroy(struct user_event_enabler *enabler)
++static int nft_fib_netdev_validate(const struct nft_ctx *ctx,
++				   const struct nft_expr *expr)
 +{
-+	list_del_rcu(&enabler->mm_enablers_link);
++	const struct nft_fib *priv = nft_expr_priv(expr);
++	unsigned int hooks;
 +
-+	/*
-+	 * The enabler is removed from an RCU-traversed list
-+	 * (user_event_mm_dup() walks mm->enablers under rcu_read_lock() only),
-+	 * and readers there dereference enabler->event and take a new ref on
-+	 * it. Both the put of that event reference and the free of the enabler
-+	 * therefore have to wait for a grace period so no reader can be looking
-+	 * at the enabler or racing the last put of its event.
-+	 *
-+	 * The put itself must not run in RCU context: when it drops the last
-+	 * reference user_event_put() takes event_mutex, which cannot be taken
-+	 * from a softirq/RCU callback. Defer both to a work item scheduled
-+	 * after a grace period via queue_rcu_work().
-+	 */
-+	INIT_RCU_WORK(&enabler->put_rwork, delayed_user_event_enabler_put);
-+	queue_rcu_work(system_percpu_wq, &enabler->put_rwork);
++	switch (priv->result) {
++	case NFT_FIB_RESULT_OIF:
++	case NFT_FIB_RESULT_OIFNAME:
++		hooks = (1 << NF_NETDEV_INGRESS);
++		break;
++	case NFT_FIB_RESULT_ADDRTYPE:
++		if (priv->flags & NFTA_FIB_F_IIF)
++			hooks = (1 << NF_NETDEV_INGRESS);
++		else if (priv->flags & NFTA_FIB_F_OIF)
++			hooks = (1 << NF_NETDEV_EGRESS);
++		else
++			hooks = (1 << NF_NETDEV_INGRESS) |
++				(1 << NF_NETDEV_EGRESS);
++		break;
++	default:
++		return -EINVAL;
++	}
++
++	return nft_chain_validate_hooks(ctx->chain, hooks);
 +}
 +
- static int user_event_mm_fault_in(struct user_event_mm *mm, unsigned long uaddr,
- 				  int attempt)
- {
-@@ -446,7 +471,7 @@ static void user_event_enabler_fault_fix
+ static struct nft_expr_type nft_fib_netdev_type;
+ static const struct nft_expr_ops nft_fib_netdev_ops = {
+ 	.type		= &nft_fib_netdev_type,
+@@ -57,7 +84,7 @@ static const struct nft_expr_ops nft_fib
+ 	.eval		= nft_fib_netdev_eval,
+ 	.init		= nft_fib_init,
+ 	.dump		= nft_fib_dump,
+-	.validate	= nft_fib_validate,
++	.validate	= nft_fib_netdev_validate,
+ };
  
- 	/* User asked for enabler to be removed during fault */
- 	if (test_bit(ENABLE_VAL_FREEING_BIT, ENABLE_BITOPS(enabler))) {
--		user_event_enabler_destroy(enabler, true);
-+		user_event_enabler_destroy(enabler);
- 		goto out;
- 	}
- 
-@@ -746,7 +771,7 @@ static void user_event_mm_destroy(struct
- 	struct user_event_enabler *enabler, *next;
- 
- 	list_for_each_entry_safe(enabler, next, &mm->enablers, mm_enablers_link)
--		user_event_enabler_destroy(enabler, false);
-+		user_event_enabler_destroy(enabler);
- 
- 	mmdrop(mm->mm);
- 	kfree(mm);
-@@ -2579,7 +2604,7 @@ static long user_events_ioctl_unreg(unsi
- 			flags |= enabler->values & ENABLE_VAL_COMPAT_MASK;
- 
- 			if (!test_bit(ENABLE_VAL_FAULTING_BIT, ENABLE_BITOPS(enabler)))
--				user_event_enabler_destroy(enabler, true);
-+				user_event_enabler_destroy(enabler);
- 
- 			/* Removed at least one */
- 			ret = 0;
+ static struct nft_expr_type nft_fib_netdev_type __read_mostly = {
 
 
