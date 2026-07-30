@@ -1,37 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01730441600;
-	Thu, 30 Jul 2026 15:12:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D5BE43C04D;
+	Thu, 30 Jul 2026 15:13:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424380; cv=none; b=Q+77elETpE72mhl1/mRI1qysnKj7fJdCRTnU5Sz3N4/Eap9NVeHkAlMEvcyIY1OvtUaHrdUKJSuHL+DT/Q6wBLfmjG9AQpLu3nkcjPUUxUpZQrHFNiVmeGNjlwMPK1ie7+eCrl9s5ds+Zv9FHoh1aT/9Opem40ETeYQmnrK+qcE=
+	t=1785424382; cv=none; b=YZ9Fjw+Ru2134N0Awbsxsnal4cp+oxsaxkZCcmktg+DX4jX7d4ILtOep0xfhfK5n3t4mlXHuo8LlEBmehahWL4B7Q+uuZaj4knN/EnjBS/rcO7F5j7rARIl3VkYRG7H3nnRQTMCHdzxKZaKmsDcP/zbyXtrwiZ+XIjrwSNJZnRs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424380; c=relaxed/simple;
-	bh=18fXxoU4Pq++4Cu3lf/KdoyaZPAJW395G0TDkOF84OU=;
+	s=arc-20240116; t=1785424382; c=relaxed/simple;
+	bh=XzYNMX92IlCevxgrl2A6+P8Dgcz92+xCFP5tZsgBzLg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OHUmq+rET0OT86hHdpcvAImrTb0MKI9OvVez4NiM8GQlBN19BT75HvXuwerqPRS0DeiYLeOYG8l6fZq/tRIlT5TsxuOLsPSu3njoOq+EVBv8RAeqw0ESumZrK+bQGYyMCtzBXl00rlVSdzt+x11b/ehMfun8wsqBhjzqrLIfJXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DIbRHZDp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=DwO4cCHfymNjBaaRjJpAlK25Y7DJR3DNErLm+Ieflgklo+JSBud8AfChxXzVbq+64OHxoJARlup/EruWcIg388dQ4ZBn0jtx9lOJE7Wbz87TZueDmTX8Rx8cwNtWBKj5uPWXGdqVjQkAJ579ak9cBkAskR7ZSIveHu6aMRj5jNE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0rCysXWn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DIbRHZDp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 586861F000E9;
-	Thu, 30 Jul 2026 15:12:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0rCysXWn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D2CC1F000E9;
+	Thu, 30 Jul 2026 15:13:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424378;
-	bh=B5g50TovnSuQBDAyS7t2h5rNqBgwvXQDZIVtH9ZPqZ0=;
+	s=korg; t=1785424381;
+	bh=RihudVo5cMe2Uf1hutkTduDNgC3DGVuP4aLoaWAT4fE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DIbRHZDpuSS9oaX/iD2AN8Wa1dKOt15+3vTz4VxL5jw27os5eX+xWW56i6oXBWEcB
-	 UN/s2wg8XmEe06lf4MRCttmC+m2EMbr5xj81aZGUbQAAnoHuOFpsADDFx+8gppVMEp
-	 Fwab8F/zGMo7mJ5tNlJODiOed9eklPIvOEB6UHYc=
+	b=0rCysXWnMIeIEDi3CwWrWqUWiZT4WmUBtk5iO4K43Id3QUlHSyBtls412eI9p/htC
+	 uA00AQUn5bs7GVA1tBEbgGScXxFOIUuvSF3gIayBlDiDezv7RK+OUfogg8rb4u6Ty8
+	 UvCZahqqQKBxcnvrleexqwOn790PCzjNGCKY0Gj4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Macnak <natsu@google.com>,
-	Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Subject: [PATCH 6.18 374/675] drm/virtio: Dont detach GEM from a non-created context
-Date: Thu, 30 Jul 2026 16:11:44 +0200
-Message-ID: <20260730141453.083665242@linuxfoundation.org>
+	Christian Koenig <christian.koenig@amd.com>,
+	Huang Rui <ray.huang@amd.com>,
+	Matthew Auld <matthew.auld@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	dri-devel@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH 6.18 375/675] drm/ttm: Account for NULL and handle pages in ttm_pool_backup
+Date: Thu, 30 Jul 2026 16:11:45 +0200
+Message-ID: <20260730141453.105789167@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -44,55 +54,148 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jason Macnak <natsu@google.com>
+From: Matthew Brost <matthew.brost@intel.com>
 
-commit d489a5305b9d5480d6fb97d5636f5f4b1e0b3827 upstream.
+commit 5b7b3b6595ee77d01c7463757baed114786094dd upstream.
 
-Applies the same treatment as commit 7cf6dd467e87 ("drm/virtio:
-Don't attach GEM to a non-created context in gem_object_open()")
-to virtio_gpu_gem_object_close() to avoid trying to detach
-a resource that was never attached due to a context
-never being created when context_init is supported.
+Pages in ttm_pool_backup can be NULL or backup handles
+(ttm_backup_page_ptr_is_handle()), neither of which can be passed to
+set_pages_array_wb() or freed. Add a dedicated WB pass before the
+dma/purge loop that walks allocations using the same i += num_pages
+stride, skipping NULL and handle entries, and calls set_pages_array_wb()
+once per contiguous run of real pages. Apply the same NULL/handle guard
+to the dma/purge loop.
 
-Fixes: 086b9f27f0ab ("drm/virtio: Don't create a context with default param if context_init is supported")
-Cc: <stable@vger.kernel.org> # v6.14+
-Signed-off-by: Jason Macnak <natsu@google.com>
-Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Link: https://patch.msgid.link/20260625170828.3335431-1-natsu@google.com
+Fixes the following oops:
+
+Oops: general protection fault, kernel NULL pointer dereference 0x0: 0000 [#1] SMP NOPTI
+RIP: 0010:__cpa_process_fault+0xf8/0x770
+RSP: 0018:ffffc90000a87718 EFLAGS: 00010287
+RAX: 0000000000000000 RBX: ffffc90000a87868 RCX: 0000000000000000
+RDX: 0000000000001000 RSI: 0005088000000000 RDI: ffffffff827c5f34
+RBP: 0005088000000000 R08: ffffc90000a877cb R09: ffffc90000a877d0
+R10: 0000000000000000 R11: 000000000000001b R12: 000ffffffffff000
+R13: ffffc90000a87868 R14: ffffc90000a87868 R15: ffff88815b882ae0
+FS:  0000000000000000(0000) GS:ffff8884ec840000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f930b844000 CR3: 000000000262e003 CR4: 0000000008f70ef0
+PKRU: 55555554
+Call Trace:
+ <TASK>
+ __change_page_attr_set_clr+0x989/0xe90
+ ? __purge_vmap_area_lazy+0x6c/0x3a0
+ ? _vm_unmap_aliases+0x250/0x2a0
+ set_pages_array_wb+0x7f/0x120
+ ttm_pool_backup+0x4c9/0x5b0 [ttm]
+ ? dma_resv_wait_timeout+0x3b/0xf0
+ ttm_tt_backup+0x32/0x60 [ttm]
+ ttm_bo_shrink+0x66/0x110 [ttm]
+ xe_bo_shrink_purge+0x12b/0x1b0 [xe]
+ xe_bo_shrink+0xbb/0x270 [xe]
+ __xe_shrinker_walk+0xf7/0x160 [xe]
+ xe_shrinker_walk+0x9d/0xc0 [xe]
+ xe_shrinker_scan+0x11f/0x210 [xe]
+ do_shrink_slab+0x13b/0x270
+ shrink_slab+0xf1/0x400
+ shrink_node+0x352/0x8a0
+ balance_pgdat+0x32c/0x700
+ kswapd+0x205/0x2f0
+ ? __pfx_autoremove_wake_function+0x10/0x10
+ ? __pfx_kswapd+0x10/0x10
+ kthread+0xd1/0x110
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork+0x1b1/0x200
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork_asm+0x1a/0x30
+ </TASK>
+
+Cc: Christian Koenig <christian.koenig@amd.com>
+Cc: Huang Rui <ray.huang@amd.com>
+Cc: Matthew Auld <matthew.auld@intel.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: David Airlie <airlied@gmail.com>
+Cc: Simona Vetter <simona@ffwll.ch>
+Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Cc: dri-devel@lists.freedesktop.org
+Cc: linux-kernel@vger.kernel.org
+Cc: stable@vger.kernel.org
+Fixes: b63d715b8090 ("drm/ttm/pool, drm/ttm/tt: Provide a helper to shrink pages")
+Cc: stable@vger.kernel.org
+Assisted-by: GitHub_Copilot:claude-opus-4.8
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Reviewed-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Link: https://patch.msgid.link/20260702214815.4009271-1-matthew.brost@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/virtio/virtgpu_gem.c |   14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/ttm/ttm_pool.c |   34 ++++++++++++++++++++++++++++++----
+ 1 file changed, 30 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/virtio/virtgpu_gem.c
-+++ b/drivers/gpu/drm/virtio/virtgpu_gem.c
-@@ -139,13 +139,15 @@ void virtio_gpu_gem_object_close(struct
- 	if (!vgdev->has_virgl_3d)
- 		return;
+--- a/drivers/gpu/drm/ttm/ttm_pool.c
++++ b/drivers/gpu/drm/ttm/ttm_pool.c
+@@ -981,9 +981,31 @@ long ttm_pool_backup(struct ttm_pool *po
+ 		return -EBUSY;
  
--	objs = virtio_gpu_array_alloc(1);
--	if (!objs)
--		return;
--	virtio_gpu_array_add_obj(objs, obj);
-+	if (vfpriv->context_created) {
-+		objs = virtio_gpu_array_alloc(1);
-+		if (!objs)
-+			return;
-+		virtio_gpu_array_add_obj(objs, obj);
- 
--	virtio_gpu_cmd_context_detach_resource(vgdev, vfpriv->ctx_id,
--					       objs);
-+		virtio_gpu_cmd_context_detach_resource(vgdev, vfpriv->ctx_id,
-+						       objs);
+ #ifdef CONFIG_X86
+-	/* Anything returned to the system needs to be cached. */
+-	if (tt->caching != ttm_cached)
+-		set_pages_array_wb(tt->pages, tt->num_pages);
++	/* Anything returned to the system needs to be cached. Walk allocations
++	 * skipping NULL pages and issue set_pages_array_wb() per contiguous run.
++	 */
++	if (tt->caching != ttm_cached) {
++		pgoff_t run_start = 0, run_count = 0;
++
++		for (i = 0; i < tt->num_pages; i += num_pages) {
++			page = tt->pages[i];
++			if (unlikely(!page || ttm_backup_page_ptr_is_handle(page))) {
++				if (run_count) {
++					set_pages_array_wb(&tt->pages[run_start],
++							   run_count);
++					run_count = 0;
++				}
++				num_pages = 1;
++				continue;
++			}
++			num_pages = 1UL << ttm_pool_page_order(pool, page);
++			if (!run_count)
++				run_start = i;
++			run_count += num_pages;
++		}
++		if (run_count)
++			set_pages_array_wb(&tt->pages[run_start], run_count);
 +	}
- 	virtio_gpu_notify(vgdev);
- }
+ #endif
  
+ 	if (tt->dma_address || flags->purge) {
+@@ -991,7 +1013,7 @@ long ttm_pool_backup(struct ttm_pool *po
+ 			unsigned int order;
+ 
+ 			page = tt->pages[i];
+-			if (unlikely(!page)) {
++			if (unlikely(!page || ttm_backup_page_ptr_is_handle(page))) {
+ 				num_pages = 1;
+ 				continue;
+ 			}
+@@ -1034,6 +1056,10 @@ long ttm_pool_backup(struct ttm_pool *po
+ 		if (unlikely(!page))
+ 			continue;
+ 
++		/* Already-handled entry from a previous attempt. */
++		if (unlikely(ttm_backup_page_ptr_is_handle(page)))
++			continue;
++
+ 		ttm_pool_split_for_swap(pool, page);
+ 
+ 		shandle = ttm_backup_backup_page(backup, page, flags->writeback, i,
 
 
