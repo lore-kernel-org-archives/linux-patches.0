@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 825C537F8D7;
-	Thu, 30 Jul 2026 15:45:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A17FE36A03A;
+	Thu, 30 Jul 2026 15:45:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426313; cv=none; b=Zm/SaAwE9cTSqDVUD4nY9HW7xDaI7008dFKZsu0uNr+VvsfMTnez3ZSkhwzLgzao469RdsmUaE7WzzQvwfRZQqc0JOlGP9epuTmJW4zsc2u4+DzDqXiIcaoxh90Hiy+dB+v4B0osd4Ao6+6ygqg6AV0AbNf/3lVyf5MKr3z6t/s=
+	t=1785426316; cv=none; b=W01p7wwOBizXEc4hGILhXTWswirPwku8ObWqb9ZSYA3VGYz7L1IaX5/c0Iu3o0/hXez5u746iVkWmo2oQqSzzUj9hDXeGVC8pXXwbA/zMi8WDl4/6mJCBPW958nX5yND2n2CgGs2EPkTU8kwJs/UqeKw5Rnqh93PSyNaT2788uo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426313; c=relaxed/simple;
-	bh=QBQqU9pUdrD6RLIAUNtIl0jZAT6Ollm95IeIeyTS1Ws=;
+	s=arc-20240116; t=1785426316; c=relaxed/simple;
+	bh=W3PllEuJ0Z8rTWN3yMxo3SoWaH19f8ut0rJrslHaDPw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bGdn2k0mibYPFh7rj1u6WLU7w4QnyiQ7g7MZYN5H20K97+ws4M3NlDU8HD/4i+sFi4P4IZReeMvNxdnoTrONf3tuD8OvLIXFSOKSLaPbMN094n7uOUUetrNvxOgPjZJe16++/MMWHSpgN7WPbbenAEuVcKKmQGLri9eXZ2fAvRA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UkUCLkG4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=V6QJOHy2T6jGMJ4orTkXije2XIEw/gfbvGfnuL4bpp3pVt/SZbMMhQmZjcXh9Fxn9+6OtqTrCEhv1qeV6Z0V1cLAGMqgaLQ7VUouzH4LwfwHLBW5d5aEp+16oPPjubTMrTn0Tr3CymzR/i26Hxz26U+fp7AkfIlLVhMcBvO/7bA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G5DNmNNT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UkUCLkG4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D419D1F000E9;
-	Thu, 30 Jul 2026 15:45:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G5DNmNNT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B61F11F000E9;
+	Thu, 30 Jul 2026 15:45:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426312;
-	bh=e/8qmB7w2/d9hGNMq6VvQe8bqfQNqaiDfk3pD88aGpQ=;
+	s=korg; t=1785426315;
+	bh=td7jeobxEE47lcYKX0CPNBZUvyS2svlaADOYDZeP9CA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UkUCLkG48KyhV9KE9Voat69w6CQGucVEL9XXKqBMfgyXYIRw+vniBwCzpZxVZj+oi
-	 HDxUEea+qAQG7BRtB9afSKjJ70R7+fofMx7MFM9+T+jAsvj03tA5Hv7ZQObRvJp5Zh
-	 GG/FBivio7IhYpgwEUpMwZhlxXykFUJ9hR69dz7E=
+	b=G5DNmNNTQQEhbnBOH/Y/XWUDczMlSkpwbXpIMDTn6+Xh9Vp5VHcSXE7ygHSDS/vyl
+	 BujYEyzaX5bh2KmH8CJ6l1UALXnB7ZYBmy/RSF8Y3UQSVvM/2pi9ZbZIvpP8GE0nCS
+	 WzrmpVJ7brqrRSbymFfQxaUjEMkqDdqDkb99WZmQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	Hungyu Lin <dennylin0707@gmail.com>
-Subject: [PATCH 6.12 330/602] media: tegra-video: vi: fix invalid u32 return value in format lookup
-Date: Thu, 30 Jul 2026 16:12:02 +0200
-Message-ID: <20260730141442.897936449@linuxfoundation.org>
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Yemike Abhilash Chandra <y-abhilashchandra@ti.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.12 331/602] media: ti: vpe: unwind v4l2 device registration on probe error
+Date: Thu, 30 Jul 2026 16:12:03 +0200
+Message-ID: <20260730141442.918340744@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -51,41 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hungyu Lin <dennylin0707@gmail.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-commit d5b50055338e131a1a99f923ebb0361974a00f36 upstream.
+commit e0f1c9a90ef665f2587c274a8fed59f2dfc575a6 upstream.
 
-tegra_get_format_fourcc_by_idx() returns a u32 but uses -EINVAL to
-signal an out-of-bounds index. This results in a large unsigned
-value being returned, which may be interpreted as a valid fourcc.
+If the vpe_top resource is missing, vpe_probe() returns -ENODEV after
+v4l2_device_register() has succeeded. Probe failures do not call the
+driver's remove callback, so the v4l2 device remains registered on that
+error path.
 
-Returning 0 is not a valid fourcc either. This condition should
-never happen, so use WARN_ON_ONCE() to catch unexpected out-of-bounds
-access and return a valid fallback format instead.
+Route that failure through the existing v4l2_device_unregister() unwind
+label, matching the other errors after v4l2_device_register().
 
-Suggested-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-Fixes: 3d8a97eabef0 ("media: tegra-video: Add Tegra210 Video input driver")
+Fixes: 4d59c7d45585 ("media: ti-vpe: vpe: Add missing null pointer checks")
 Cc: stable@vger.kernel.org
-Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Reviewed-by: Yemike Abhilash Chandra <y-abhilashchandra@ti.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/media/tegra-video/vi.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/media/platform/ti/vpe/vpe.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/staging/media/tegra-video/vi.c
-+++ b/drivers/staging/media/tegra-video/vi.c
-@@ -80,8 +80,8 @@ static int tegra_get_format_idx_by_code(
- static u32 tegra_get_format_fourcc_by_idx(struct tegra_vi *vi,
- 					  unsigned int index)
- {
--	if (index >= vi->soc->nformats)
--		return -EINVAL;
-+	if (WARN_ON_ONCE(index >= vi->soc->nformats))
-+		return vi->soc->video_formats[0].fourcc;
+--- a/drivers/media/platform/ti/vpe/vpe.c
++++ b/drivers/media/platform/ti/vpe/vpe.c
+@@ -2545,7 +2545,8 @@ static int vpe_probe(struct platform_dev
+ 						"vpe_top");
+ 	if (!dev->res) {
+ 		dev_err(&pdev->dev, "missing 'vpe_top' resources data\n");
+-		return -ENODEV;
++		ret = -ENODEV;
++		goto v4l2_dev_unreg;
+ 	}
  
- 	return vi->soc->video_formats[index].fourcc;
- }
+ 	/*
 
 
