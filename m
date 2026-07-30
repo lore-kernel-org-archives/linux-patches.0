@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6BF433438F;
-	Thu, 30 Jul 2026 15:41:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB33419CD1D;
+	Thu, 30 Jul 2026 15:41:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426110; cv=none; b=ixof5jJIif8WRSnPw8HMKtMkdT2GcgZrWO0uMPc8HgcgRqOgVicXRCy9l7hRLup9oJcxgQVtst3T+OIjKhbPQYYNNhIwHBXV8TsGC6ZdiLRs3Zfz9R/vDUEjZL7wF5A7ErS5BOGCiW4eWo/UVgjUpHkPFL+jcHsRkgdyY9rPYGE=
+	t=1785426114; cv=none; b=OEmnQLoenxk6d3efJU5xFa3jtvXQLQUOMRUGgslk3WSnQqyGiVZaTixgysR5ZuC7XEOV3EDxxxqPhPkpwAgEjJjXPwkVZWR80FavHD8s/2cMjuhuvH+8Xe25btuVDWZDdq7VnkIhpYH1qJfcPHZswIZ7U4Fr5yZpxv8ux2RgRkw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426110; c=relaxed/simple;
-	bh=oBJopeP49lYO2EJ4C0twLdoChOdwjqqr8MVKmFL6B/o=;
+	s=arc-20240116; t=1785426114; c=relaxed/simple;
+	bh=ItAYGQXbTaigrgm2Pc1VJqS/41/aw9plJd3Z9VW+ypU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OhBL+cOSG9CWwXmkk61USs9BStRmWEmRfzzeJ8JR6xAsrqHLNJzikl0cspcFtdDlqqU/oaY0HoKXhgdJSO81mn4dWT5/mERPMgbjdXSAZ92Q+4TZXgGZBe7wClhYPuTxVzLvp1hzprTOd5/9NAfGo5G09/QbCag7ky2REV4htIY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j3OXXY9t; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a778LTMN27y6eAWOnsdMfG+4d8kkFf4dAky5yBq/1mIO2XUSQCXK3zmK4afoc2R9JVjyOecxPC0ld+r8iBs1o5KP/p4dQMd2mO/VNKg2BMGDrKy9p3c/PrT4YFiKkjw8+0tzNBHDrgPUHjWMdFrs6qZFK7GlaFG84WKGMR+MOBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l6ZVfXRt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j3OXXY9t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CD5E1F000E9;
-	Thu, 30 Jul 2026 15:41:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l6ZVfXRt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 113AC1F000E9;
+	Thu, 30 Jul 2026 15:41:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426109;
-	bh=CfTG65PHbKxVLAR3IpkZ6NkZ9+lVl1toR4o3xRG1JVU=;
+	s=korg; t=1785426112;
+	bh=OFRYImY0uFD6WuLfVn8iLMRu5blWDM167QouQeb5YlQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j3OXXY9t+tSpmliobW4LZZhQIJKWvTG+0AiN5Ir5MRZsBfBd3/wJJHU2FUeCShcGd
-	 MQxGMIwr50WLscEwjYSz+mHYTvh+bUwwaw8kkmKgTwU+58WmC9cNmTchWVQrGLCo96
-	 CYZGOOT//XrZLrLbXHeRsCu37nAs8IhLm81Ht/Bs=
+	b=l6ZVfXRtNg4V0X2qZqHuZBtyMfWBfmoLIRBik3F2l40nOu3RHGOh42YnbTW25y53y
+	 RuQRGab1pSKlf5VAV4nkZLKf+FDLKRMMUeAjpiVMttaftO9Al45TJMnxv1eShJD5zG
+	 9Z2dQrVuEcdxSmt/4ANLGutO6uhLgm6WENO2ILs0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Brandon Brnich <b-brnich@ti.com>,
+	Jackson Lee <jackson.lee@chipsnmedia.com>,
 	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Chen-Yu Tsai <wens@kernel.org>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.12 304/602] media: cedrus: skip invalid H.264 reference list entries
-Date: Thu, 30 Jul 2026 16:11:36 +0200
-Message-ID: <20260730141442.356771225@linuxfoundation.org>
+Subject: [PATCH 6.12 305/602] media: chips-media: wave5: Move src_buf Removal to finish_encode
+Date: Thu, 30 Jul 2026 16:11:37 +0200
+Message-ID: <20260730141442.377619406@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -53,47 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Brandon Brnich <b-brnich@ti.com>
 
-commit 10358ea986c3c85516d1c8206486464f79d36e76 upstream.
+commit b20157147089a9c16a38c7810e2fe6f2df8e3277 upstream.
 
-Cedrus consumes H.264 ref_pic_list0/ref_pic_list1 entries from the
-stateless slice control and later uses their indices to look up
-decode->dpb[] in _cedrus_write_ref_list().
+During encoder processing, there is a case where the IRQ response could
+return the buffer back to userspace via v4l2_m2m_buf_done call. In this
+time, userspace could queue up this same buffer before start_encode removes
+the index from the ready queue. This would then lead to a case where the
+buffer in the ready queue could be a self loop due to the
+WRITE_ONCE(prev->next, new) call in __list_add.
 
-Rejecting such controls in cedrus_try_ctrl() would break existing
-userspace, since stateless H.264 reference lists may legitimately carry
-out-of-range indices for missing references. Instead, guard the actual
-DPB lookup in Cedrus and skip entries whose indices do not fit the fixed
-V4L2_H264_NUM_DPB_ENTRIES array.
+When __list_del is finally called, the loop is already made so nothing
+points back to ready queue list head and pointers are poisoned.
 
-This keeps the fix local to the driver use site and avoids out-of-bounds
-reads from malformed or unsupported reference list entries.
+A buffer should not be marked as DONE before the buffer is removed from
+m2m ready queue. Move removal entirely to finish_encode.
 
-Fixes: e000e1fa4bdbd ("media: uapi: h264: Update reference lists")
+Fixes: 9707a6254a8a6 ("media: chips-media: wave5: Add the v4l2 layer")
 Cc: stable@vger.kernel.org
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Tested-by: Chen-Yu Tsai <wens@kernel.org>
+Signed-off-by: Brandon Brnich <b-brnich@ti.com>
+Tested-by: Jackson Lee <jackson.lee@chipsnmedia.com>
 Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/media/sunxi/cedrus/cedrus_h264.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/media/platform/chips-media/wave5/wave5-vpu-enc.c |   29 ++-------------
+ 1 file changed, 4 insertions(+), 25 deletions(-)
 
---- a/drivers/staging/media/sunxi/cedrus/cedrus_h264.c
-+++ b/drivers/staging/media/sunxi/cedrus/cedrus_h264.c
-@@ -210,6 +210,9 @@ static void _cedrus_write_ref_list(struc
- 		u8 dpb_idx;
+--- a/drivers/media/platform/chips-media/wave5/wave5-vpu-enc.c
++++ b/drivers/media/platform/chips-media/wave5/wave5-vpu-enc.c
+@@ -233,13 +233,6 @@ static int start_encode(struct vpu_insta
+ 	} else {
+ 		dev_dbg(inst->dev->dev, "%s: wave5_vpu_enc_start_one_frame success\n",
+ 			__func__);
+-		/*
+-		 * Remove the source buffer from the ready-queue now and finish
+-		 * it in the videobuf2 framework once the index is returned by the
+-		 * firmware in finish_encode
+-		 */
+-		if (src_buf)
+-			v4l2_m2m_src_buf_remove_by_idx(m2m_ctx, src_buf->vb2_buf.index);
+ 	}
  
- 		dpb_idx = ref_list[i].index;
-+		if (dpb_idx >= V4L2_H264_NUM_DPB_ENTRIES)
-+			continue;
-+
- 		dpb = &decode->dpb[dpb_idx];
+ 	return 0;
+@@ -266,27 +259,13 @@ static void wave5_vpu_enc_finish_encode(
+ 		__func__,  enc_output_info.pic_type, enc_output_info.recon_frame_index,
+ 		enc_output_info.enc_src_idx, enc_output_info.enc_pic_byte, enc_output_info.pts);
  
- 		if (!(dpb->flags & V4L2_H264_DPB_ENTRY_FLAG_ACTIVE))
+-	/*
+-	 * The source buffer will not be found in the ready-queue as it has been
+-	 * dropped after sending of the encode firmware command, locate it in
+-	 * the videobuf2 queue directly
+-	 */
+ 	if (enc_output_info.enc_src_idx >= 0) {
+-		struct vb2_buffer *vb = vb2_get_buffer(v4l2_m2m_get_src_vq(m2m_ctx),
+-						       enc_output_info.enc_src_idx);
+-		if (vb->state != VB2_BUF_STATE_ACTIVE)
+-			dev_warn(inst->dev->dev,
+-				 "%s: encoded buffer (%d) was not in ready queue %i.",
+-				 __func__, enc_output_info.enc_src_idx, vb->state);
+-		else
+-			src_buf = to_vb2_v4l2_buffer(vb);
+-
+-		if (src_buf) {
++		src_buf = v4l2_m2m_src_buf_remove_by_idx(m2m_ctx, enc_output_info.enc_src_idx);
++		if (!src_buf) {
++			dev_warn(inst->dev->dev, "%s: no source buffer found\n", __func__);
++		} else {
+ 			inst->timestamp = src_buf->vb2_buf.timestamp;
+ 			v4l2_m2m_buf_done(src_buf, VB2_BUF_STATE_DONE);
+-		} else {
+-			dev_warn(inst->dev->dev, "%s: no source buffer with index: %d found\n",
+-				 __func__, enc_output_info.enc_src_idx);
+ 		}
+ 	}
+ 
 
 
