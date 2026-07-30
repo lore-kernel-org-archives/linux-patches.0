@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21CFD3806BD;
-	Thu, 30 Jul 2026 15:35:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED9D942047A;
+	Thu, 30 Jul 2026 15:35:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425716; cv=none; b=Ompq2D2/9laFPn0IAC6xkNuw8p2uh5oYxHakfD8i68fMRgeeVndeK1aEnhgXYKGnO6S6Q3hZ2CQ9qh0NV8d0PNjxcL5g/WVLB9KVGsnY100EVHSJ8XPeRZCu3srFFljtVYoQ13qD3dauoFY+/KCnlcWe6BAcjxhGYCGTZb+Lfus=
+	t=1785425719; cv=none; b=Np0bYEDSK16iC5h1/2KXt/EzWK9lQ6KfC4YOPNng2/n0jC/cmS176tcVs35TB++1omocBzeWjZekckaG4ueLuN8fG4Zu+cQIwvpATBe/tMeGCw1z3E3j8NydA18c/PjTUsEQw34lYTATsdY/htstw4lJyCFrSbTE1HL4EmsSV9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425716; c=relaxed/simple;
-	bh=5XHPbzqFBmIWWNPi/sM8pxklxJwrh9AvnUkB/5g9o5E=;
+	s=arc-20240116; t=1785425719; c=relaxed/simple;
+	bh=Y6BYBSPLWS0YfAIHZIXt/trmZkVyp6m4Q1Y2vQl95qk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F76F92miH0xRfD2J0KqDOigLBKe+bdYX48dvWCdVeIHZs/3X5CTqVKD91V/chdnR+hpKXUnYqJRAGJuDcFGoXwSKl3h1NSFLESPRt6eXe/D2pIkodM28yIbUzym+jlB54bnU/lsULmH7GvENc5zIjWnqR4phD+4P0G4LB1vRON0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kw2L3/Zp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rC5WjBWbH5UickLGCHMFJIzGQfjutC4LbIj2MyF9N+JLjzy/cqVGUzeDgHvLG/Uiry3HSzI4yOfImtXYht3sjY56B9z+0jH99ZDv7kF8YcfxkSZWSi7uSKuIcb1XQ2U9JiMswRNJBgdU+kyuek/xr85X2K6UtXkwROIBxSScdDA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P1TJBzF1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kw2L3/Zp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E4F31F000E9;
-	Thu, 30 Jul 2026 15:35:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P1TJBzF1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 550D91F000E9;
+	Thu, 30 Jul 2026 15:35:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425715;
-	bh=ojprc2pWhX9EOQKdhjrn1NgcHNL//J6wmynrMHS/kUo=;
+	s=korg; t=1785425717;
+	bh=EVZ8fvlt78e4PcPncEnoV2slGf4pUMxyhEz/W+VVC04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kw2L3/ZplHk1xNHRi/TM7vBW9vXMujppvqh0JHMi0SSHuP6y1yP6UXw+0H9Hd2Hkv
-	 f23UTIT8CSXQUADQIHaD+BkMpziDacwZMYvJ9eVq3Ia4wc90wOxM4HWRXO85cERi3t
-	 7G21Ac9SOQqWJHPdUjcrUIXTBZcmIKwWvg+MdUEY=
+	b=P1TJBzF17j5lrDHTSYx7kLK3wIxO3q9aQDNlMbnvc7hvgw48Yq4s+czrzU/5rbXPP
+	 Gp0a4aEr7HMMEUW1Kl97I9KUA1GflJ654CFrTBkZKtvOV4eMGdxjg5KFs6TRfE7Z+Q
+	 lMm4lSfbl94SDXq75OEhaCCXMa+lFwIAjbgf61GA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eugene Shalygin <eugene.shalygin@gmail.com>,
+	Sashiko <sashiko-bot@kernel.org>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 166/602] hwmon: (asus-ec-sensors) fix EC read intervals
-Date: Thu, 30 Jul 2026 16:09:18 +0200
-Message-ID: <20260730141439.459865310@linuxfoundation.org>
+Subject: [PATCH 6.12 140/602] hwmon: (nzxt-kraken3) Stop device IO before calling hid_hw_stop
+Date: Thu, 30 Jul 2026 16:08:52 +0200
+Message-ID: <20260730141438.922191052@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -51,58 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eugene Shalygin <eugene.shalygin@gmail.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 60710b2af13b81da71b429d3f8b19dd70310729d ]
+[ Upstream commit f151d0143ac4e086f92f52328ebdbdc50933d8ef ]
 
-Take INITIAL_JIFFIES into account when setting up next update time.
+Calling hid_hw_stop() does not stop the device IO.
+This results in a race condition between hid_input_report() and the point
+immediately following the execution of hid_device_io_start() within
+the driver probe function. If the probe operation fails after "io start"
+has been initiated, this race condition will result in a UAF vulnerability.
 
-Fixes: d0ddfd241e57 ("hwmon: (asus-ec-sensors) add driver for ASUS EC")
-Signed-off-by: Eugene Shalygin <eugene.shalygin@gmail.com>
-Link: https://lore.kernel.org/r/20260712110650.1240071-2-eugene.shalygin@gmail.com
+Fix the problem by calling hid_device_io_stop() before calling
+hid_hw_stop().
+
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: f3b4b146eb107 ("hwmon: Add driver for NZXT Kraken X and Z series AIO CPU coolers")
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/asus-ec-sensors.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/hwmon/nzxt-kraken3.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hwmon/asus-ec-sensors.c b/drivers/hwmon/asus-ec-sensors.c
-index 909720fbf2685f..d08abd1adc0812 100644
---- a/drivers/hwmon/asus-ec-sensors.c
-+++ b/drivers/hwmon/asus-ec-sensors.c
-@@ -596,7 +596,7 @@ struct ec_sensors_data {
- 	/* sorted list of unique register banks */
- 	u8 banks[ASUS_EC_MAX_BANK + 1];
- 	/* in jiffies */
--	unsigned long last_updated;
-+	u64 next_update;
- 	struct lock_data lock_data;
- 	/* number of board EC sensors */
- 	u8 nr_sensors;
-@@ -865,13 +865,12 @@ static int get_cached_value_or_update(const struct device *dev,
- 				      int sensor_index,
- 				      struct ec_sensors_data *state, s32 *value)
- {
--	if (time_after(jiffies, state->last_updated + HZ)) {
-+	if (time_after64(get_jiffies_64(), state->next_update)) {
- 		if (update_ec_sensors(dev, state)) {
- 			dev_err(dev, "update_ec_sensors() failure\n");
- 			return -EIO;
- 		}
--
--		state->last_updated = jiffies;
-+		state->next_update = get_jiffies_64() + HZ;
+diff --git a/drivers/hwmon/nzxt-kraken3.c b/drivers/hwmon/nzxt-kraken3.c
+index d00409bcab93ad..05525406c5fbb5 100644
+--- a/drivers/hwmon/nzxt-kraken3.c
++++ b/drivers/hwmon/nzxt-kraken3.c
+@@ -948,7 +948,7 @@ static int kraken3_probe(struct hid_device *hdev, const struct hid_device_id *id
+ 	ret = kraken3_init_device(hdev);
+ 	if (ret < 0) {
+ 		hid_err(hdev, "device init failed with %d\n", ret);
+-		goto fail_and_close;
++		goto fail_and_stop_io;
  	}
  
- 	*value = state->sensors[sensor_index].cached_value;
-@@ -989,6 +988,7 @@ static int asus_ec_probe(struct platform_device *pdev)
- 	if (!ec_data)
- 		return -ENOMEM;
+ 	ret = kraken3_get_fw_ver(hdev);
+@@ -960,13 +960,15 @@ static int kraken3_probe(struct hid_device *hdev, const struct hid_device_id *id
+ 	if (IS_ERR(priv->hwmon_dev)) {
+ 		ret = PTR_ERR(priv->hwmon_dev);
+ 		hid_err(hdev, "hwmon registration failed with %d\n", ret);
+-		goto fail_and_close;
++		goto fail_and_stop_io;
+ 	}
  
-+	ec_data->next_update = INITIAL_JIFFIES;
- 	dev_set_drvdata(dev, ec_data);
- 	ec_data->board_info = pboard_info;
+ 	kraken3_debugfs_init(priv, device_name);
  
+ 	return 0;
+ 
++fail_and_stop_io:
++	hid_device_io_stop(hdev);
+ fail_and_close:
+ 	hid_hw_close(hdev);
+ fail_and_stop:
 -- 
 2.53.0
 
