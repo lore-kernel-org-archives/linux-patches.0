@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B374D42047A;
-	Thu, 30 Jul 2026 14:53:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89A9F411A07;
+	Thu, 30 Jul 2026 14:53:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423200; cv=none; b=dAZ7IGC5BKpXdxVQws5JJ9qjNadhPHuIQ+YRbVzzHlrKsiEUQ6F4s5X7xo5JdwUcdYyZA53OCzs2lUa/NOi5b6uqHOZQw9RJh7j8ZKMWW553wOWK/ZmYOrFgp47qVgRjcx8oHN787c7l6M/Tv2/+/8abvOmUbgx7G1bwmuuaGZ4=
+	t=1785423203; cv=none; b=PebV7jSqWlzBvQlZm2WMIXwR5D1aw6DwQMPiNKyvjjmD+GwqNXZcNudB/UGtM8Bts0aQWR30AnzPShPWZHUqcHqKP309OjCiegfbyCH6v6bGBOUxxYOONa2wzo8Vt8n/ihSKCG1IohyjXBzmDSzw+CBoRZtag6uUEBPIyfQRLbw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423200; c=relaxed/simple;
-	bh=ExY6vUAbwlFO0NMZYFc2GuEC7YJnIzMyy9FdZry3on0=;
+	s=arc-20240116; t=1785423203; c=relaxed/simple;
+	bh=5Q/8aGTQVUAg9ywfiLqUxyhAIrBwO6OLzcV8FHRjXpY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ot6MI8/tqaiCU3kc9INNocwJgdOlJhA83kDY7IK3GvZ/tT2qW5FYI8mDJWQLWYxlU/QYrIs3IyuDg/RkPECEjpfVk0vTTSUyfn7zQbj3xEXDFFZYNFnY1KYxZX6ve9sgLOUieysgCtZsRfNGxBn1Sk7UkfkFudOozBfvojJaBcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PAOozcM+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fzIrdcltTRyxQgYk5awbr8aywJk9q9tkWmjpLFOUrBXviLTdxpt9H6iRMFEt98NGZqFtQesliNaLdZANW8DXa+w5T6fo4m7pzyq3k3WwRBsnPDS5NOqNg0zqLZCXFwmtWHuRmH5OsQqEmG5G/mgszNgjjCsL/wJflItPl4MOhJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zeciJ9xI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PAOozcM+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AF051F000E9;
-	Thu, 30 Jul 2026 14:53:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zeciJ9xI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E608F1F000E9;
+	Thu, 30 Jul 2026 14:53:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423199;
-	bh=/A1peeF2PLFqMmVknVNqq+/zysOipagsVxJkI4vglSY=;
+	s=korg; t=1785423202;
+	bh=eIOnpVXQ8Y4SrLglgnRjIwFSPiCT5GBoueZLh/DNOV4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PAOozcM+KE9Mq4d1+KdcZSjydceOAzZAeoQG2F3VFCyrQgUwZJmg3zKucaW1+5gz8
-	 M7EXWMEGq+B+Dz/nN4+97+Oon1aqyb0ENgfanMnJdyanSULUFruMHpCQg5LcY4CbJH
-	 xuG9O1M/2QhNcIQyJHmNc1IBtToeHfebpLR4/EKE=
+	b=zeciJ9xIoz5VED2mgXKKEvVHNnlxmoPBBE8hfjuRhjdCKuY3mG3ZRGPUzcqujoZd2
+	 tLnK9eHLPCP1geIF4G7PPDdjq9IRS6pJXvbVvCwhpu8cqa3/N0J2vwM4of94ViJePD
+	 9/ILsI3CVTZJgvHhGxmy2jiwQF0+9fOfa6WJxf18=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tengda Wu <wutengda@huaweicloud.com>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 7.1 646/744] ftrace: Add global mutex to serialize trace_parser access
-Date: Thu, 30 Jul 2026 16:15:19 +0200
-Message-ID: <20260730141458.001700840@linuxfoundation.org>
+	Vitaly Prosyak <vitaly.prosyak@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 7.1 695/744] drm/amdgpu/gfx10: replace BUG_ON() with WARN_ON()
+Date: Thu, 30 Jul 2026 16:16:08 +0200
+Message-ID: <20260730141459.042592290@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -50,98 +50,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tengda Wu <wutengda@huaweicloud.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit 7720b63bcef3f54c7fe288774b720a227d54a306 upstream.
+commit d06c4173a7c38c7a39e98859f839ce714c7af2c9 upstream.
 
-In ftrace, the trace_parser structure is allocated and initialized when
-a trace file is opened, and is subsequently used across write and release
-handlers to parse user input.
+There's no need to crash the kernel for these cases.
 
-The affected handler paths and their specific functions are:
-  - Open paths: ftrace_regex_open(), ftrace_graph_open()
-  - Write paths: ftrace_regex_write(), ftrace_graph_write()
-  - Release paths: ftrace_regex_release(), ftrace_graph_release()
-
-If userspace opens a trace file descriptor and shares it across multiple
-threads, concurrent write calls will race on the parser's internal state,
-specifically the 'idx', 'cont', and 'buffer' fields, leading to corrupted
-input or undefined behavior.
-
-Fix this by adding a global mutex, parser_lock, to serialize all access
-to trace_parser across write and release paths, preventing concurrent
-corruption of parser state.
-
-Fixes: e704eff3ff51 ("ftrace: Have set_graph_function handle multiple functions in one write")
-Fixes: 689fd8b65d66 ("tracing: trace parser support for function and graph")
+Reviewed-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit ac6f00beb658239bced4aaed9efbb04a35348d48)
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260725024721.1983675-1-wutengda@huaweicloud.com
-Signed-off-by: Tengda Wu <wutengda@huaweicloud.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ftrace.c |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c |   13 +++++--------
+ 1 file changed, 5 insertions(+), 8 deletions(-)
 
---- a/kernel/trace/ftrace.c
-+++ b/kernel/trace/ftrace.c
-@@ -1098,6 +1098,12 @@ struct ftrace_ops global_ops = {
- };
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c
+@@ -4022,7 +4022,7 @@ static void gfx_v10_0_wait_reg_mem(struc
+ 			   WAIT_REG_MEM_ENGINE(eng_sel)));
  
- /*
-+ * parser_lock - Protects trace_parser state against concurrent operations.
-+ * Held across trace_get_user() and subsequent buffer parsing to prevent races.
-+ */
-+static DEFINE_MUTEX(parser_lock);
-+
-+/*
-  * Used by the stack unwinder to know about dynamic ftrace trampolines.
-  */
- struct ftrace_ops *ftrace_ops_trampoline(unsigned long addr)
-@@ -5824,6 +5830,8 @@ ftrace_regex_write(struct file *file, co
- 	/* iter->hash is a local copy, so we don't need regex_lock */
- 
- 	parser = &iter->parser;
-+
-+	guard(mutex)(&parser_lock);
- 	read = trace_get_user(parser, ubuf, cnt, ppos);
- 
- 	if (read >= 0 && trace_parser_loaded(parser) &&
-@@ -6961,12 +6969,14 @@ int ftrace_regex_release(struct inode *i
- 		iter = file->private_data;
- 
- 	parser = &iter->parser;
-+	mutex_lock(&parser_lock);
- 	if (trace_parser_loaded(parser)) {
- 		int enable = !(iter->flags & FTRACE_ITER_NOTRACE);
- 
- 		ftrace_process_regex(iter, parser->buffer,
- 				     parser->idx, enable);
+ 	if (mem_space)
+-		BUG_ON(addr0 & 0x3); /* Dword align */
++		WARN_ON(addr0 & 0x3); /* Dword align */
+ 	amdgpu_ring_write(ring, addr0);
+ 	amdgpu_ring_write(ring, addr1);
+ 	amdgpu_ring_write(ring, ref);
+@@ -8664,7 +8664,7 @@ static void gfx_v10_0_ring_emit_ib_gfx(s
  	}
-+	mutex_unlock(&parser_lock);
  
- 	trace_parser_put(parser);
+ 	amdgpu_ring_write(ring, header);
+-	BUG_ON(ib->gpu_addr & 0x3); /* Dword align */
++	WARN_ON(ib->gpu_addr & 0x3); /* Dword align */
+ 	amdgpu_ring_write(ring,
+ #ifdef __BIG_ENDIAN
+ 		(2 << 0) |
+@@ -8699,7 +8699,7 @@ static void gfx_v10_0_ring_emit_ib_compu
+ 	}
  
-@@ -7298,10 +7308,12 @@ ftrace_graph_release(struct inode *inode
+ 	amdgpu_ring_write(ring, PACKET3(PACKET3_INDIRECT_BUFFER, 2));
+-	BUG_ON(ib->gpu_addr & 0x3); /* Dword align */
++	WARN_ON(ib->gpu_addr & 0x3); /* Dword align */
+ 	amdgpu_ring_write(ring,
+ #ifdef __BIG_ENDIAN
+ 				(2 << 0) |
+@@ -8732,9 +8732,9 @@ static void gfx_v10_0_ring_emit_fence(st
+ 	 * aligned if only send 32bit data low (discard data high)
+ 	 */
+ 	if (write64bit)
+-		BUG_ON(addr & 0x7);
++		WARN_ON(addr & 0x7);
+ 	else
+-		BUG_ON(addr & 0x3);
++		WARN_ON(addr & 0x3);
+ 	amdgpu_ring_write(ring, lower_32_bits(addr));
+ 	amdgpu_ring_write(ring, upper_32_bits(addr));
+ 	amdgpu_ring_write(ring, lower_32_bits(seq));
+@@ -8782,9 +8782,6 @@ static void gfx_v10_0_ring_emit_fence_ki
+ {
+ 	struct amdgpu_device *adev = ring->adev;
  
- 		parser = &fgd->parser;
- 
-+		mutex_lock(&parser_lock);
- 		if (trace_parser_loaded((parser))) {
- 			ret = ftrace_graph_set_hash(fgd->new_hash,
- 						    parser->buffer);
- 		}
-+		mutex_unlock(&parser_lock);
- 
- 		trace_parser_put(parser);
- 
-@@ -7414,6 +7426,7 @@ ftrace_graph_write(struct file *file, co
- 
- 	parser = &fgd->parser;
- 
-+	guard(mutex)(&parser_lock);
- 	read = trace_get_user(parser, ubuf, cnt, ppos);
- 
- 	if (read >= 0 && trace_parser_loaded(parser) &&
+-	/* we only allocate 32bit for each seq wb address */
+-	BUG_ON(flags & AMDGPU_FENCE_FLAG_64BIT);
+-
+ 	/* write fence seq to the "addr" */
+ 	amdgpu_ring_write(ring, PACKET3(PACKET3_WRITE_DATA, 3));
+ 	amdgpu_ring_write(ring, (WRITE_DATA_ENGINE_SEL(0) |
 
 
