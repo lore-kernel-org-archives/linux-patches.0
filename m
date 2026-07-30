@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B870840861E;
-	Thu, 30 Jul 2026 15:20:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91ED6417D7E;
+	Thu, 30 Jul 2026 15:21:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424859; cv=none; b=vABMzCprjlV00OOcG0kJkBHmTWYXBI3kSmVGo/S0DTq1/TGZCxwzbldB/De/SR3W+7423mv8yG9t5ZfcNdrxQXJtdgWTsoJeJ+7CnPN9KI1vL2mctGbZQ9LCK2fGrjeEl0dewcNMw56QqWmNGHhMFXsCKgLvTxysQHF6g6VBJKI=
+	t=1785424861; cv=none; b=Y9x+cF5uYjCHIgN7HEG7iJlUTELSIOXHPnTeYVRIHHLPLUr2bJ4zfnyEuIVvwC8/F4AgoCHM0cm9TCw1znL1H8cKySuevGMDXr6q8xdWcoN9Edau3c0DzguxF/BCfIfGM2/j99hhhYUNR97Yqk5reF5wjuMXx1s2pztf8EpAPYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424859; c=relaxed/simple;
-	bh=cOWTjtYVCAAUvKQLVEPkwML9cvpGZm3iXezvNR+QNaI=;
+	s=arc-20240116; t=1785424861; c=relaxed/simple;
+	bh=XnjMvshd75d6/0R3OvyzP5/7z+ADQTJAXwGXud1n+dc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t24UlUr/FHiKSPzd+gceE78MtYBZtCm7Wx0r9agP4GAH1UGSB2+n7HqdMY20ovHhiWDhrckL+JYjJZWxo/AU1YfqiWfENxUBHTdoRKMJu1fmyLsPiGJHFtrOvexioiRKRpEQnBnPJqA2hK+TzhVSHECFogrhlCTekZ7bNakk2eQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y48YM9vQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MvAn/ADidcdfLcqkN8i8fId5I8ELKYpmaNdZ5KsT2cl7SjLMus591heVgsk7Thy9kG4k1YmN+sx+L5qHczYl4/oO4Lo2x2r8wMzrXdvSeVSZJKTgJccEAZ8/JxnRWlgqZM+Aa42cP03AM7o1X8xhm6T7/R06G1l1vt4zjOp7y78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bTR8mqfR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y48YM9vQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 177F01F00ACF;
-	Thu, 30 Jul 2026 15:20:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bTR8mqfR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC5801F00ACF;
+	Thu, 30 Jul 2026 15:20:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424857;
-	bh=IoorUTrgfR5M5n/nHkphIekD5gkOdvKuFlwvOkcT+eI=;
+	s=korg; t=1785424860;
+	bh=xYpgfKiSC8PpxDZwvBM0XG/ss99tMruo3LJkgW+kgmU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y48YM9vQ8dH4wutjO6WFyZRycoFm/g9295c7MgiuUNTJm6nP2R9T4zcsiJvAE1mTE
-	 sI7s7D6GkPF9P9ZLKVdItdBq6RmIMIzM/J+ZgE3fxI1V+OAvZwjdBH7g62ftgv27W3
-	 naZznCilvi/OlmNCAeXn12T++7/ZG6rQBP9b3aVw=
+	b=bTR8mqfR7/xZ17j9ouB83EVbbKYEHenxzuPogDQEZmkdH2TnmrRcOaBsU2NHs6EU4
+	 ifqcvl7ohOwlP6koiE7RiyIfuF7yGTT2jByt4dyLuwIEIE8GwRp88ZJPeqYIBcMjLE
+	 kt5f7DOQfPe1wDXO17lH5sWFnjMAh6P57cP1fwtc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lee <david.lee@trailofbits.com>,
-	Martin Schiller <ms@dev.tdt.de>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.18 540/675] net/x25: fix use-after-free in x25_kill_by_neigh()
-Date: Thu, 30 Jul 2026 16:14:30 +0200
-Message-ID: <20260730141456.621272873@linuxfoundation.org>
+	Shiming Cheng <shiming.cheng@mediatek.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 541/675] net: gro: fix double aggregation of flush-marked skbs
+Date: Thu, 30 Jul 2026 16:14:31 +0200
+Message-ID: <20260730141456.642338100@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -51,66 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Lee <david.lee@trailofbits.com>
+From: Shiming Cheng <shiming.cheng@mediatek.com>
 
-commit 5499e0602d2faafd42c580d25f615903c3fbe11b upstream.
+commit e751256486d0ded20f5a9f9863467f1dce65142f upstream.
 
-x25_kill_by_neigh() walks the global X.25 socket list looking for sockets
-attached to a terminating neighbour. x25_list_lock protects list membership
-while the lookup is in progress, but it does not pin a socket's lifetime
-after the lock is dropped.
+Commit 0ab03f353d36 ("net-gro: Fix GRO flush when receiving a GSO
+packet.") added a flush check to skb_gro_receive(), but
+skb_gro_receive_list() lacks the same validation.
 
-The function currently drops x25_list_lock before calling lock_sock(s). A
-concurrent close can run x25_release(), remove the same socket from
-x25_list, and drop the last socket reference in that window. The neighbour
-teardown path can then lock or inspect a freed struct sock/struct x25_sock.
+As a result, packets marked with NAPI_GRO_CB(skb)->flush may still be
+re-aggregated.
 
-Take sock_hold(s) while x25_list_lock still proves that the list entry is
-live, then drop the temporary reference after the socket has been locked,
-rechecked, and released. Recheck x25_sk(s)->neighbour after lock_sock(),
-because another path may have disconnected the socket before this path
-acquired the socket lock. Restart the list walk after each disconnect
-because the list lock was dropped and the previous iterator state may no
-longer be valid.
+This allows already-GRO'd packets with existing frag_list to be
+re-aggregated into a new GRO session, corrupting the frag_list chain
+structure. When skb_segment() attempts to unpack these malformed packets,
+it encounters invalid state and triggers a kernel panic.
 
-A QEMU/KASAN run against origin/master reproduced a slab-use-after-free in
-x25_kill_by_neigh().
+Scenario (Tethering/Device forwarding):
+  1. Driver: Generated aggregated packet P1 via LRO with frag_list
+  2. Dev A: Receives aggregated fraglist packet and flush flag set
+  3. Dev A: Re-enters GRO, skb_gro_receive_list() is called
+  4. Missing flush check allows re-aggregation despite flush flag
+  5. Frag_list chain becomes corrupted (loops or dangling refs)
+  6. Dev B: TX path calls skb_segment(), crashes on corrupted frag_list
 
-Fixes: 7781607938c8 ("net/x25: Fix null-ptr-deref caused by x25_disconnect")
+Root cause in skb_segment():
+  The check at line ~4891:
+    if (hsize <= 0 && i >= nfrags && skb_headlen(list_skb) &&
+        (skb_headlen(list_skb) == len || sg)) {
+
+  When frag_list is corrupted by double aggregation, when list_skb is
+  a NULL pointer from skb->next, skb_headlen(list_skb) dereference
+  NULL/corrupted pointers occurs.
+
+Call Trace:
+ skb_headlen(NULL skb)
+ skb_segment
+ tcp_gso_segment
+ tcp4_gso_segment
+ inet_gso_segment
+ skb_mac_gso_segment
+ __skb_gso_segment
+ skb_gso_segment
+ validate_xmit_skb
+ validate_xmit_skb_list
+ sch_direct_xmit
+ qdisc_restart
+ __qdisc_run
+ qdisc_run
+ net_tx_action
+
+Fix: Add NAPI_GRO_CB(skb)->flush validation to the early-return check in
+skb_gro_receive_list(), matching the defensive programming pattern of
+skb_gro_receive().
+
+Fixes: 3a1296a38d0c ("net: Support GRO/GSO fraglist chaining.")
 Cc: stable@vger.kernel.org
-Signed-off-by: David Lee <david.lee@trailofbits.com>
-Assisted-by: Codex:gpt-5.5
-Acked-by: Martin Schiller <ms@dev.tdt.de>
-Link: https://patch.msgid.link/20260713104752.241175-1-david.lee@trailofbits.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Shiming Cheng <shiming.cheng@mediatek.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260709014704.3625-1-shiming.cheng@mediatek.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/x25/af_x25.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ net/core/gro.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/net/x25/af_x25.c
-+++ b/net/x25/af_x25.c
-@@ -1772,15 +1772,19 @@ void x25_kill_by_neigh(struct x25_neigh
+--- a/net/core/gro.c
++++ b/net/core/gro.c
+@@ -231,7 +231,9 @@ done:
+ 
+ int skb_gro_receive_list(struct sk_buff *p, struct sk_buff *skb)
  {
- 	struct sock *s;
+-	if (unlikely(p->len + skb->len >= 65536))
++	/* make sure to check flush flag and to not merge */
++	if (unlikely(p->len + skb->len >= 65536 ||
++		     NAPI_GRO_CB(skb)->flush))
+ 		return -E2BIG;
  
-+again:
- 	write_lock_bh(&x25_list_lock);
- 
- 	sk_for_each(s, &x25_list) {
- 		if (x25_sk(s)->neighbour == nb) {
-+			sock_hold(s);
- 			write_unlock_bh(&x25_list_lock);
- 			lock_sock(s);
--			x25_disconnect(s, ENETUNREACH, 0, 0);
-+			if (x25_sk(s)->neighbour == nb)
-+				x25_disconnect(s, ENETUNREACH, 0, 0);
- 			release_sock(s);
--			write_lock_bh(&x25_list_lock);
-+			sock_put(s);
-+			goto again;
- 		}
- 	}
- 	write_unlock_bh(&x25_list_lock);
+ 	if (!pskb_may_pull(skb, skb_gro_offset(skb))) {
 
 
