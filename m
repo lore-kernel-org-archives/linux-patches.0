@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BB8A43C04B;
-	Thu, 30 Jul 2026 14:26:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51D2843E492;
+	Thu, 30 Jul 2026 14:26:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421589; cv=none; b=pyBop9d2/dVI/OLt7u339s7yk3mKgFAU2Lxe4IAjT54f6h8sKe67YTzePZPKxtOrEmAR/UL1HBuujoQwuF/5METGfEFwXduHATTcJyOigkJ22CJhSracnf189glWt/pdDy53mr1vnvMyfgHgocfRrcyF9omvW4lCTN7oYsTQ0qE=
+	t=1785421591; cv=none; b=Iw4r5oFZmI7EQZNoigAIhLJrNzBdIVcBhMXLwG3r8sSX+Mr232aph9OOueDqzVca0NIwscxf58KMfUOt+n8FnigGKZ61VQP2xNDnxGTQAioKV14iU1zixX+fckODMAj1vmAXBxlMpvhdcG8lRSrutG1Kl+XF4Yjbye2CHkvqV4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421589; c=relaxed/simple;
-	bh=vPkIN5yFKJYUSHS069xC0nt2KtO/jNiQfoxRA+h4o4k=;
+	s=arc-20240116; t=1785421591; c=relaxed/simple;
+	bh=FQiEBHnRDNMh5WCClbNB0uyqri2qJ3okl2W3wboH1yc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I9PuSi37P1W7A5ITT3Tko42TeKIPv6/7IijCF19w4CDWS+kKsGMZ2ZibKzZotOfl+aU4sSUMq3hfL0slJLITvQPBhrERCrmSNUs8YCpGJ7M6JfAJpgAXiNnGiPpKcS1aTriokNmsu34Viewe43hc9vMFSw8OB8yFNJp9ZqJRv9Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oHG+eDmg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aFWTOaYd/nMURMPG1Nq/maZSh0qRceMwWmGR4DgHQt8RgEg+41jk/KiYG5lAgIO4xkSKD3C0iy5pOdtnojrNH/w43hfc/0XCnrz2gTqTKKeGd5Dr9fuwIxNO3dW81vtnPfHUMYBidhxsXPyjywHZ+PolHzWFyvIpsD4jAMYMlYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=itw0GpFb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oHG+eDmg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6D721F00A3A;
-	Thu, 30 Jul 2026 14:26:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="itw0GpFb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 766D61F000E9;
+	Thu, 30 Jul 2026 14:26:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421587;
-	bh=8wr4yhUmMVjOJ99AgT/5H38aSkdBDQOj064rji2AyCM=;
+	s=korg; t=1785421590;
+	bh=lw92oDtCNyBXAOTz5zKw39b355i8hKU8OntRpZ5je+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oHG+eDmgwcUzTrP6NjjaqnWeLfIJohsdtaf4YVM9sBvJwARmJ0Wy7MlN76kgQkXtM
-	 TmqIHz4/71EoOcpgo60DmMtO6XNnzQZFhYUeVQWwwkFsYs4YxMvA+s8vi8YuOWJoBx
-	 idt61zxIuXXn5rb9++cE1/HtAc8Bls82xh4DmXEI=
+	b=itw0GpFbCGzq1MO1umeB4LR+qZ28HUpXtMClLyXfzTPYcUuB18LvRbW1TSTdbeX8D
+	 o1v70Mxgbm5cibPGb2tHqMwm/jt/2oJ9F840Iv2Iu6yKmdxm26+MEaEnpkQ7cwslYb
+	 dwZUJUSbI3jozRlrKAWkWY0dlO18f4kzNHcUXaSg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sunho Park <shpark061104@gmail.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 7.1 154/744] USB: serial: io_edgeport: cap received transmit credits
-Date: Thu, 30 Jul 2026 16:07:07 +0200
-Message-ID: <20260730141447.561125313@linuxfoundation.org>
+	Emre Cecanpunar <emreleno@gmail.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.1 128/744] drm/i915/selftests: Fix GT PM sort comparators
+Date: Thu, 30 Jul 2026 16:06:41 +0200
+Message-ID: <20260730141447.002337966@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -50,42 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sunho Park <shpark061104@gmail.com>
+From: Emre Cecanpunar <emreleno@gmail.com>
 
-commit faaddd811c5099f11a5f52e68a6b31a5898cda4f upstream.
+[ Upstream commit 612978b83f45bf7018815209db5395d759db6f26 ]
 
-The interrupt-status packet reports transmit credits returned by the
-device. edge_interrupt_callback() adds the 16-bit value to txCredits
-without checking maxTxCredits.
+Compare the sampled clock values instead of their addresses. Comparing
+addresses leaves the samples unsorted, preventing the code from discarding
+the minimum and maximum samples.
 
-edge_write() uses txCredits minus the software FIFO count as the amount
-of data that fits. Since the FIFO is allocated with maxTxCredits bytes,
-txCredits exceeding maxTxCredits can cause OOB write in ring buffer.
-
-Cap accumulated credits at maxTxCredits. Conforming devices should never
-hit the cap.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Assisted-by: Codex:GPT-5
-Signed-off-by: Sunho Park <shpark061104@gmail.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 1a5392479207 ("drm/i915/selftests: Measure CS_TIMESTAMP")
+Signed-off-by: Emre Cecanpunar <emreleno@gmail.com>
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
+Link: https://lore.kernel.org/r/20260714220430.238433-1-emreleno@gmail.com
+(cherry picked from commit 682ea2d28d18bb06f9fc663cb5ab7e80dc0e606a)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/io_edgeport.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/i915/gt/selftest_gt_pm.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/serial/io_edgeport.c
-+++ b/drivers/usb/serial/io_edgeport.c
-@@ -646,7 +646,8 @@ static void edge_interrupt_callback(stru
- 				if (edge_port && edge_port->open) {
- 					spin_lock_irqsave(&edge_port->ep_lock,
- 							  flags);
--					edge_port->txCredits += txCredits;
-+					edge_port->txCredits = min(edge_port->txCredits + txCredits,
-+								   edge_port->maxTxCredits);
- 					spin_unlock_irqrestore(&edge_port->ep_lock,
- 							       flags);
- 					dev_dbg(dev, "%s - txcredits for port%d = %d\n",
+diff --git a/drivers/gpu/drm/i915/gt/selftest_gt_pm.c b/drivers/gpu/drm/i915/gt/selftest_gt_pm.c
+index 33351deeea4f0b..07eaf71955c447 100644
+--- a/drivers/gpu/drm/i915/gt/selftest_gt_pm.c
++++ b/drivers/gpu/drm/i915/gt/selftest_gt_pm.c
+@@ -16,9 +16,9 @@ static int cmp_u64(const void *A, const void *B)
+ {
+ 	const u64 *a = A, *b = B;
+ 
+-	if (a < b)
++	if (*a < *b)
+ 		return -1;
+-	else if (a > b)
++	else if (*a > *b)
+ 		return 1;
+ 	else
+ 		return 0;
+@@ -28,9 +28,9 @@ static int cmp_u32(const void *A, const void *B)
+ {
+ 	const u32 *a = A, *b = B;
+ 
+-	if (a < b)
++	if (*a < *b)
+ 		return -1;
+-	else if (a > b)
++	else if (*a > *b)
+ 		return 1;
+ 	else
+ 		return 0;
+-- 
+2.53.0
+
 
 
