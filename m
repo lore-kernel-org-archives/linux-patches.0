@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B757443A89;
-	Thu, 30 Jul 2026 15:21:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFE87443A9D;
+	Thu, 30 Jul 2026 15:21:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424910; cv=none; b=odbCVTw64oIzgTpVR1vdxjD6sDTJnS0Nz78hkAKP1MbyuR7BrnRdtmQeQ8icnzFCtcJCMxLZKbjLOOqZAxRextV6OBkYcfss+31l+u3mSWHUeDbpo1UgCOzrLoQAX8Yi4wZasXY6gmNG+Je003f/u+GoEsDPeElZRRDEVlEirb8=
+	t=1785424913; cv=none; b=WlpTOa/3GNtrpy8yzt7nkIX2mp1XkAY9zFBSpQvy26H1rMzdIDHtFbKXNP/HE0DwSdQSRQHMrCrWu61Oj/VOnZfNjUEg6DKfPXRWIl7UwfvoebYViBsS1S155W+f1Tgtu/+mmmL7Z6/fvGCRAlqaaygVJ+sqSQzGaqhZvjgNAPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424910; c=relaxed/simple;
-	bh=KN8fU/k2FX9Sw8g0q4XDsp7M/08rp72NH/CwcTaAbL0=;
+	s=arc-20240116; t=1785424913; c=relaxed/simple;
+	bh=cFiI00n5pryNbK27TuRKk47l4k088tF6Aq4mug1gpAQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SLU1ILXv2tPmRwuBFi+oCIsicOGEIogWduEHyEFBdBij3bTTGw2s5pv0tyH4So4rk6uQcN9r4D3ZA1jkAlXAWMVDrhLS6l4Arj0VKBJerrS8IjhptWKBU127wCmiEAeeuzdLN5s3cBQ0pFvhi8qLrIFqO5BkzFjga0OjWnBxZdg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S7RJjNqn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jDoEWDFgK962V8/zHj5JoKUe3VcRDpm3Dpbs+ra2uA0BE36xGreXooZR6gX0agQ+9CCdYy+ca/C/CHMgLUFyFVB4Kch31mbsWaFiF+JVh3jBh4L/t1l8IBrPRGxDo+DvflLnqX7gRUuHheTdUY9cwy2uAIEbKXA+hNNVKTB+lhI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X7Tu1GYW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S7RJjNqn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 464E41F000E9;
-	Thu, 30 Jul 2026 15:21:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X7Tu1GYW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30D371F000E9;
+	Thu, 30 Jul 2026 15:21:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424908;
-	bh=vF68PUFwStxsnSFZFBy1Aw4q/wdsB/rBcQAmymCNRKs=;
+	s=korg; t=1785424911;
+	bh=oaWwEmC7GLI7mBG1odeS3QJYsx8dyP1dxsMtUQOTDE0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S7RJjNqnTXZRYoL6vkVV2uUzbat0T0jw5yqaPdt3nNUNj8ppAv3E7xNzp5Uf93c46
-	 snUs3v/pIrD2YD3OHa0k1KCw5nnnPw/FJUeeG+RRP68K5xQRywbJsdxKbQCtIe+0Aq
-	 N0YIqcM1SbeiimAt8LFut4e6i93PDQN0txUSIQds=
+	b=X7Tu1GYWGCZ2B94YjvHyYAD1itUaZMxvVoQS7iaEi6D3KMIkHiZ0O6fKMKY1GmIhv
+	 bpR1mE7ot9aoFORUtwa8zX0P8avXZ1sT6gVQc1qyS5RZZWjg31PPZM0PnuXI+7KnDb
+	 nHqlBkYTv9ugeZp4l3oay0Qo5hKut6F6nxeJmeJs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavitra Jha <jhapavitra98@gmail.com>,
+	Shuvam Pandey <shuvampandey1@gmail.com>,
 	Sabrina Dubroca <sd@queasysnail.net>,
 	Antonio Quartulli <antonio@openvpn.net>
-Subject: [PATCH 6.18 560/675] ovpn: fix peer refcount leak in TCP error paths
-Date: Thu, 30 Jul 2026 16:14:50 +0200
-Message-ID: <20260730141457.036643959@linuxfoundation.org>
+Subject: [PATCH 6.18 561/675] ovpn: hold peer before scheduling keepalive work
+Date: Thu, 30 Jul 2026 16:14:51 +0200
+Message-ID: <20260730141457.057499642@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -51,69 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavitra Jha <jhapavitra98@gmail.com>
+From: Shuvam Pandey <shuvampandey1@gmail.com>
 
-commit 63bbe18fc03062f483c627838a566a707b62da79 upstream.
+commit a4710ae2e7e322fdaefb4be8604228279cfaf48c upstream.
 
-When either the TCP RX or TX error path calls ovpn_peer_hold() followed
-by schedule_work(&peer->tcp.defer_del_work), and the work item is already
-pending from the other path, schedule_work() returns false and the work
-runs only once. Since ovpn_tcp_peer_del_work() calls ovpn_peer_put()
-exactly once, the extra reference taken by the losing path is never
-dropped, leaking the peer object.
+ovpn_peer_keepalive_send() passes its peer reference to
+ovpn_xmit_special(), which ultimately drops it. The keepalive scheduler
+currently queues the work first and takes the reference only after
+schedule_work() reports that the work was queued.
 
-The race window:
+Once schedule_work() queues the item, another CPU may run the worker
+before the caller gets to ovpn_peer_hold(). In that case the worker can
+consume a reference that was not acquired for it, corrupting the peer
+lifetime accounting.
 
-  CPU0 (strparser/RX error):       CPU1 (tcp_tx_work/TX error):
-  ovpn_peer_hold()   <- refcnt+1   ovpn_peer_hold()   <- refcnt+2
-  schedule_work()    <- queued      schedule_work()    <- NO-OP
-                                    (work already pending)
-  ovpn_tcp_peer_del_work runs:
-    ovpn_peer_del()
-    ovpn_peer_put()  <- refcnt+1
-                                   <- peer never freed
+Take the peer reference before queueing the work and drop it again when
+the work was already pending.
 
-Fix by checking the return value of schedule_work() in both paths and
-calling ovpn_peer_put() to drop the extra reference if the work was
-already pending. ovpn_peer_hold() is kept unconditional in the TX path
-as it cannot fail at that point.
-
-Fixes: a6a5e87b3ee4 ("ovpn: avoid sleep in atomic context in TCP RX error path")
+Fixes: 3ecfd9349f40 ("ovpn: implement keepalive mechanism")
 Cc: stable@vger.kernel.org
-Signed-off-by: Pavitra Jha <jhapavitra98@gmail.com>
+Signed-off-by: Shuvam Pandey <shuvampandey1@gmail.com>
 Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
 Signed-off-by: Antonio Quartulli <antonio@openvpn.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ovpn/tcp.c | 6 ++++--
+ drivers/net/ovpn/peer.c |    6 ++++--
  1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ovpn/tcp.c b/drivers/net/ovpn/tcp.c
-index 433bd07a4f1b..0af14055c39a 100644
---- a/drivers/net/ovpn/tcp.c
-+++ b/drivers/net/ovpn/tcp.c
-@@ -151,7 +151,8 @@ static void ovpn_tcp_rcv(struct strparser *strp, struct sk_buff *skb)
- 	/* take reference for deferred peer deletion. should never fail */
- 	if (WARN_ON(!ovpn_peer_hold(peer)))
- 		goto err_nopeer;
--	schedule_work(&peer->tcp.defer_del_work);
-+	if (!schedule_work(&peer->tcp.defer_del_work))
-+		ovpn_peer_put(peer);
- 	ovpn_dev_dstats_rx_dropped(peer->ovpn->dev);
- err_nopeer:
- 	kfree_skb(skb);
-@@ -283,7 +284,8 @@ static void ovpn_tcp_send_sock(struct ovpn_peer *peer, struct sock *sk)
- 			 * stream therefore we abort the connection
- 			 */
- 			ovpn_peer_hold(peer);
--			schedule_work(&peer->tcp.defer_del_work);
-+			if (!schedule_work(&peer->tcp.defer_del_work))
-+				ovpn_peer_put(peer);
+--- a/drivers/net/ovpn/peer.c
++++ b/drivers/net/ovpn/peer.c
+@@ -1280,8 +1280,10 @@ static time64_t ovpn_peer_keepalive_work
+ 		netdev_dbg(peer->ovpn->dev,
+ 			   "sending keepalive to peer %u\n",
+ 			   peer->id);
+-		if (schedule_work(&peer->keepalive_work))
+-			ovpn_peer_hold(peer);
++		if (WARN_ON(!ovpn_peer_hold(peer)))
++			return 0;
++		if (!schedule_work(&peer->keepalive_work))
++			ovpn_peer_put(peer);
+ 	}
  
- 			/* we bail out immediately and keep tx_in_progress set
- 			 * to true. This way we prevent more TX attempts
--- 
-2.55.0
-
+ 	if (next_run1 < next_run2)
 
 
