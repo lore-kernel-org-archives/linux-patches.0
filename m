@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B66F041DED0;
-	Thu, 30 Jul 2026 14:57:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89ACA443A83;
+	Thu, 30 Jul 2026 14:57:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423434; cv=none; b=HW/3xS2Noi8yEHg1ySkkR/8imJn4NNrStKqGc5XcjVjJdgpzrVfUIpY/sVjJTfoezGzS0NZGgFQoP2rHpTrGJ75gRjQXDSleYP4BnxBvOIfA63mFprrkoAUrFC0/xLEYw1pTISNQCP2qUqn4YIEtpUc/fxrS2yCkat9Vow4bcwU=
+	t=1785423436; cv=none; b=OGpwoKZ4Upd6FdlaHJvqKCREgjPQFayySdKvpDR38hSVeDethkDL4ACXJXZqq8Et/ACHhDH+P6WULP75oO43HbpVJV7U2YlN4Kq9RhAX+ob+eAKpnkyN29ZNIQ1fkh3mPN9VWWo2LbYDFJoK4f+P1Q384UNRTSQjYLfmPursLS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423434; c=relaxed/simple;
-	bh=P/8b7bA+CX13DmpgYOkVSCKlRJYYy/7swCPDrUagWfg=;
+	s=arc-20240116; t=1785423436; c=relaxed/simple;
+	bh=Xg/Rd0LVDnJ10VDAHCd7kZA4sQk9p1mkKttMnvn9f7Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L9Z2xCAAaKvQkMF0lRE6Mwg77whLsAfxcIhpQMHOxJWN5IlNn9UScy/mSKAUw6V2nG05c1+AQNPf5gkvx9aZXstHyxaNMcAgSzERg1ZfoitjUDSeYJx8URGYE2ZSqTFfY0q4aa5BOiNyL3AG7tli7rRm+FVOBZCo92zXHOWC/+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pLqalkZ+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=t0vT0RDuj77TioXP7ihOk5d+2DDUYS+Dy0s2H4FlrOVp5LZLZZMM2T4bARx7xmjU/SLYOGMWlyF2lAEO+iaFeZ1hZZOFash4fVwI6UCBmeNYJa5gU6AUcbN1wimaYM0Zo8L/8Z0CsPCpeJm4lIp10FROQlEfbinSCJfwvehL8NY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E55avvqL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pLqalkZ+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B2A11F000E9;
-	Thu, 30 Jul 2026 14:57:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E55avvqL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E541E1F000E9;
+	Thu, 30 Jul 2026 14:57:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423432;
-	bh=HbXX2jZHx5SYfdUYDWLs4WUVXH6OD5yd5pKMoGASJ7c=;
+	s=korg; t=1785423435;
+	bh=yJqa33pYLIiRUMx70a0ur+s8k5bWY1ImwaNhB2GDPds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pLqalkZ+1W92GByN/ceT9CLdo1p+Qn7xhZopitV2xd8YHhjBt7fsHCNeBwTdHLbI3
-	 REHJSb8vDh+E8YtTnsAxxO4rreDtBI4H8gNeQ1pbM4dv16hHsqvpm1hAvPo7sXENLy
-	 js362Tm9EBQQsCwNOXtXdd+QCodiH36J9qBhwKLM=
+	b=E55avvqLKjvbT4ZA4ASmOK8D5Vlwj/sQf3zd69X4lZu0av/OhhsxtEece6qbl2qho
+	 EkfeBxPfvZswJMWi3z5STdSD/8yU6TywZhSK2prsel404oR/008C1XBR3+4SriIOna
+	 C2hDeQJt6KAMQtV0hD1fRQvz2zp/63FeGuCVn/sg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
 	Filipe Manana <fdmanana@suse.com>,
+	Boris Burkov <boris@bur.io>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 043/675] btrfs: use bool type for btrfs_path members used as booleans
-Date: Thu, 30 Jul 2026 16:06:13 +0200
-Message-ID: <20260730141446.036875727@linuxfoundation.org>
+Subject: [PATCH 6.18 044/675] btrfs: fallback to transaction csum tree on a commit root csum miss
+Date: Thu, 30 Jul 2026 16:06:14 +0200
+Message-ID: <20260730141446.057167785@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -52,658 +52,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Boris Burkov <boris@bur.io>
 
-[ Upstream commit d7fe41044b3ac8f9b5965de499a13ac9ae947e79 ]
+[ Upstream commit 3dcd50730814e5220072d2b26d0587af6bfb6dbe ]
 
-Many fields of struct btrfs_path are used as booleans but their type is
-an unsigned int (of one 1 bit width to save space). Change the type to
-bool keeping the :1 suffix so that they combine with the previous u8
-fields in order to save space. This makes the code more clear by using
-explicit true/false and more in line with the preferred style, preserving
-the size of the structure.
+We have been running with commit root csums enabled for some time and
+have noticed a slight uptick in zero csum errors. Investigating those
+revealed that they were same transaction reads of extents that were just
+relocated, but the extent map generation was long ago.
 
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
+It turns out that relocation intentionally does not update the extent
+generation (replace_file_extents()), but must write a new csum since the
+data has moved, so we must account for this with commit root csum reading.
+
+Luckily this is a short lived condition: after the relocation transaction
+the commit root will once again have the csum. So we can add a generic
+fallback to the lookup to try again with the transaction csum root.
+
+Fixes: f07b855c56b1 ("btrfs: try to search for data csums in commit root")
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Boris Burkov <boris@bur.io>
 Signed-off-by: David Sterba <dsterba@suse.com>
-Stable-dep-of: 3dcd50730814 ("btrfs: fallback to transaction csum tree on a commit root csum miss")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/backref.c          | 16 ++++++++--------
- fs/btrfs/block-group.c      |  8 ++++----
- fs/btrfs/ctree.c            | 28 ++++++++++++++--------------
- fs/btrfs/ctree.h            | 16 ++++++++--------
- fs/btrfs/defrag.c           |  4 ++--
- fs/btrfs/dev-replace.c      |  4 ++--
- fs/btrfs/extent-tree.c      |  8 ++++----
- fs/btrfs/file-item.c        | 12 ++++++------
- fs/btrfs/free-space-cache.c |  4 ++--
- fs/btrfs/free-space-tree.c  |  4 ++--
- fs/btrfs/inode-item.c       |  2 +-
- fs/btrfs/inode.c            |  4 ++--
- fs/btrfs/qgroup.c           |  4 ++--
- fs/btrfs/raid-stripe-tree.c |  4 ++--
- fs/btrfs/relocation.c       |  8 ++++----
- fs/btrfs/scrub.c            | 20 ++++++++++----------
- fs/btrfs/send.c             | 14 +++++++-------
- fs/btrfs/tree-log.c         | 20 ++++++++++----------
- fs/btrfs/volumes.c          |  6 +++---
- fs/btrfs/xattr.c            |  2 +-
- 20 files changed, 94 insertions(+), 94 deletions(-)
+ fs/btrfs/file-item.c | 26 +++++++++++++++++++++++++-
+ 1 file changed, 25 insertions(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/backref.c b/fs/btrfs/backref.c
-index e050d0938dc45f..0c47b4570a7bf8 100644
---- a/fs/btrfs/backref.c
-+++ b/fs/btrfs/backref.c
-@@ -1408,12 +1408,12 @@ static int find_parent_nodes(struct btrfs_backref_walk_ctx *ctx,
- 	if (!path)
- 		return -ENOMEM;
- 	if (!ctx->trans) {
--		path->search_commit_root = 1;
--		path->skip_locking = 1;
-+		path->search_commit_root = true;
-+		path->skip_locking = true;
- 	}
- 
- 	if (ctx->time_seq == BTRFS_SEQ_LAST)
--		path->skip_locking = 1;
-+		path->skip_locking = true;
- 
- again:
- 	head = NULL;
-@@ -1560,7 +1560,7 @@ static int find_parent_nodes(struct btrfs_backref_walk_ctx *ctx,
- 
- 	btrfs_release_path(path);
- 
--	ret = add_missing_keys(ctx->fs_info, &preftrees, path->skip_locking == 0);
-+	ret = add_missing_keys(ctx->fs_info, &preftrees, !path->skip_locking);
- 	if (ret)
- 		goto out;
- 
-@@ -2833,8 +2833,8 @@ struct btrfs_backref_iter *btrfs_backref_iter_alloc(struct btrfs_fs_info *fs_inf
- 	}
- 
- 	/* Current backref iterator only supports iteration in commit root */
--	ret->path->search_commit_root = 1;
--	ret->path->skip_locking = 1;
-+	ret->path->search_commit_root = true;
-+	ret->path->skip_locking = true;
- 	ret->fs_info = fs_info;
- 
- 	return ret;
-@@ -3307,8 +3307,8 @@ static int handle_indirect_tree_backref(struct btrfs_trans_handle *trans,
- 	level = cur->level + 1;
- 
- 	/* Search the tree to find parent blocks referring to the block */
--	path->search_commit_root = 1;
--	path->skip_locking = 1;
-+	path->search_commit_root = true;
-+	path->skip_locking = true;
- 	path->lowest_level = level;
- 	ret = btrfs_search_slot(NULL, root, tree_key, path, 0, 0);
- 	path->lowest_level = 0;
-diff --git a/fs/btrfs/block-group.c b/fs/btrfs/block-group.c
-index 1e57f7d04c47ec..e6bac34ebe83d6 100644
---- a/fs/btrfs/block-group.c
-+++ b/fs/btrfs/block-group.c
-@@ -613,8 +613,8 @@ static int sample_block_group_extent_item(struct btrfs_caching_control *caching_
- 	extent_root = btrfs_extent_root(fs_info, max_t(u64, block_group->start,
- 						       BTRFS_SUPER_INFO_OFFSET));
- 
--	path->skip_locking = 1;
--	path->search_commit_root = 1;
-+	path->skip_locking = true;
-+	path->search_commit_root = true;
- 	path->reada = READA_FORWARD;
- 
- 	search_offset = index * div_u64(block_group->length, max_index);
-@@ -744,8 +744,8 @@ static int load_extent_tree_free(struct btrfs_caching_control *caching_ctl)
- 	 * root to add free space.  So we skip locking and search the commit
- 	 * root, since its read-only
- 	 */
--	path->skip_locking = 1;
--	path->search_commit_root = 1;
-+	path->skip_locking = true;
-+	path->search_commit_root = true;
- 	path->reada = READA_FORWARD;
- 
- 	key.objectid = last;
-diff --git a/fs/btrfs/ctree.c b/fs/btrfs/ctree.c
-index 27e2adc2ee717b..0f2e9f33dd0cbc 100644
---- a/fs/btrfs/ctree.c
-+++ b/fs/btrfs/ctree.c
-@@ -1709,9 +1709,9 @@ static struct extent_buffer *btrfs_search_slot_get_root(struct btrfs_root *root,
- 		level = btrfs_header_level(b);
- 		/*
- 		 * Ensure that all callers have set skip_locking when
--		 * p->search_commit_root = 1.
-+		 * p->search_commit_root is true.
- 		 */
--		ASSERT(p->skip_locking == 1);
-+		ASSERT(p->skip_locking);
- 
- 		goto out;
- 	}
-@@ -3858,10 +3858,10 @@ static noinline int setup_leaf_for_split(struct btrfs_trans_handle *trans,
- 	}
- 	btrfs_release_path(path);
- 
--	path->keep_locks = 1;
--	path->search_for_split = 1;
-+	path->keep_locks = true;
-+	path->search_for_split = true;
- 	ret = btrfs_search_slot(trans, root, &key, path, 0, 1);
--	path->search_for_split = 0;
-+	path->search_for_split = false;
- 	if (ret > 0)
- 		ret = -EAGAIN;
- 	if (ret < 0)
-@@ -3888,11 +3888,11 @@ static noinline int setup_leaf_for_split(struct btrfs_trans_handle *trans,
- 	if (ret)
- 		goto err;
- 
--	path->keep_locks = 0;
-+	path->keep_locks = false;
- 	btrfs_unlock_up_safe(path, 1);
- 	return 0;
- err:
--	path->keep_locks = 0;
-+	path->keep_locks = false;
- 	return ret;
- }
- 
-@@ -4610,11 +4610,11 @@ int btrfs_search_forward(struct btrfs_root *root, struct btrfs_key *min_key,
- 	u32 nritems;
- 	int level;
- 	int ret = 1;
--	int keep_locks = path->keep_locks;
-+	const bool keep_locks = path->keep_locks;
- 
- 	ASSERT(!path->nowait);
- 	ASSERT(path->lowest_level == 0);
--	path->keep_locks = 1;
-+	path->keep_locks = true;
- again:
- 	cur = btrfs_read_lock_root_node(root);
- 	level = btrfs_header_level(cur);
-@@ -4704,7 +4704,7 @@ int btrfs_search_forward(struct btrfs_root *root, struct btrfs_key *min_key,
-  * 0 is returned if another key is found, < 0 if there are any errors
-  * and 1 is returned if there are no higher keys in the tree
-  *
-- * path->keep_locks should be set to 1 on the search made before
-+ * path->keep_locks should be set to true on the search made before
-  * calling this function.
-  */
- int btrfs_find_next_key(struct btrfs_root *root, struct btrfs_path *path,
-@@ -4803,13 +4803,13 @@ int btrfs_next_old_leaf(struct btrfs_root *root, struct btrfs_path *path,
- 	next = NULL;
- 	btrfs_release_path(path);
- 
--	path->keep_locks = 1;
-+	path->keep_locks = true;
- 
- 	if (time_seq) {
- 		ret = btrfs_search_old_slot(root, &key, path, time_seq);
- 	} else {
- 		if (path->need_commit_sem) {
--			path->need_commit_sem = 0;
-+			path->need_commit_sem = false;
- 			need_commit_sem = true;
- 			if (path->nowait) {
- 				if (!down_read_trylock(&fs_info->commit_root_sem)) {
-@@ -4822,7 +4822,7 @@ int btrfs_next_old_leaf(struct btrfs_root *root, struct btrfs_path *path,
- 		}
- 		ret = btrfs_search_slot(NULL, root, &key, path, 0, 0);
- 	}
--	path->keep_locks = 0;
-+	path->keep_locks = false;
- 
- 	if (ret < 0)
- 		goto done;
-@@ -4961,7 +4961,7 @@ int btrfs_next_old_leaf(struct btrfs_root *root, struct btrfs_path *path,
- 	if (need_commit_sem) {
- 		int ret2;
- 
--		path->need_commit_sem = 1;
-+		path->need_commit_sem = true;
- 		ret2 = finish_need_commit_sem_search(path);
- 		up_read(&fs_info->commit_root_sem);
- 		if (ret2)
-diff --git a/fs/btrfs/ctree.h b/fs/btrfs/ctree.h
-index 16dd11c4853130..692370fc07b280 100644
---- a/fs/btrfs/ctree.h
-+++ b/fs/btrfs/ctree.h
-@@ -65,21 +65,21 @@ struct btrfs_path {
- 	 * set by btrfs_split_item, tells search_slot to keep all locks
- 	 * and to force calls to keep space in the nodes
- 	 */
--	unsigned int search_for_split:1;
-+	bool search_for_split:1;
- 	/* Keep some upper locks as we walk down. */
--	unsigned int keep_locks:1;
--	unsigned int skip_locking:1;
--	unsigned int search_commit_root:1;
--	unsigned int need_commit_sem:1;
--	unsigned int skip_release_on_error:1;
-+	bool keep_locks:1;
-+	bool skip_locking:1;
-+	bool search_commit_root:1;
-+	bool need_commit_sem:1;
-+	bool skip_release_on_error:1;
- 	/*
- 	 * Indicate that new item (btrfs_search_slot) is extending already
- 	 * existing item and ins_len contains only the data size and not item
- 	 * header (ie. sizeof(struct btrfs_item) is not included).
- 	 */
--	unsigned int search_for_extension:1;
-+	bool search_for_extension:1;
- 	/* Stop search if any locks need to be taken (for read) */
--	unsigned int nowait:1;
-+	bool nowait:1;
- };
- 
- #define BTRFS_PATH_AUTO_FREE(path_name)					\
-diff --git a/fs/btrfs/defrag.c b/fs/btrfs/defrag.c
-index a4cc1bc6356227..2e3c011d410a6f 100644
---- a/fs/btrfs/defrag.c
-+++ b/fs/btrfs/defrag.c
-@@ -472,7 +472,7 @@ static int btrfs_defrag_leaves(struct btrfs_trans_handle *trans,
- 		memcpy(&key, &root->defrag_progress, sizeof(key));
- 	}
- 
--	path->keep_locks = 1;
-+	path->keep_locks = true;
- 
- 	ret = btrfs_search_forward(root, &key, path, BTRFS_OLDEST_GENERATION);
- 	if (ret < 0)
-@@ -515,7 +515,7 @@ static int btrfs_defrag_leaves(struct btrfs_trans_handle *trans,
- 	/*
- 	 * Now that we reallocated the node we can find the next key. Note that
- 	 * btrfs_find_next_key() can release our path and do another search
--	 * without COWing, this is because even with path->keep_locks = 1,
-+	 * without COWing, this is because even with path->keep_locks == true,
- 	 * btrfs_search_slot() / ctree.c:unlock_up() does not keeps a lock on a
- 	 * node when path->slots[node_level - 1] does not point to the last
- 	 * item or a slot beyond the last item (ctree.c:unlock_up()). Therefore
-diff --git a/fs/btrfs/dev-replace.c b/fs/btrfs/dev-replace.c
-index a4eaef60549eed..b6c7da8e1bc8b1 100644
---- a/fs/btrfs/dev-replace.c
-+++ b/fs/btrfs/dev-replace.c
-@@ -489,8 +489,8 @@ static int mark_block_group_to_copy(struct btrfs_fs_info *fs_info,
- 	}
- 
- 	path->reada = READA_FORWARD;
--	path->search_commit_root = 1;
--	path->skip_locking = 1;
-+	path->search_commit_root = true;
-+	path->skip_locking = true;
- 
- 	key.objectid = src_dev->devid;
- 	key.type = BTRFS_DEV_EXTENT_KEY;
-diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
-index 6ef7cc116bfcca..d2d96f366dac31 100644
---- a/fs/btrfs/extent-tree.c
-+++ b/fs/btrfs/extent-tree.c
-@@ -788,7 +788,7 @@ int lookup_inline_extent_backref(struct btrfs_trans_handle *trans,
- 	want = extent_ref_type(parent, owner);
- 	if (insert) {
- 		extra_size = btrfs_extent_inline_ref_size(want);
--		path->search_for_extension = 1;
-+		path->search_for_extension = true;
- 	} else
- 		extra_size = -1;
- 
-@@ -954,7 +954,7 @@ int lookup_inline_extent_backref(struct btrfs_trans_handle *trans,
- 
- 		if (!path->keep_locks) {
- 			btrfs_release_path(path);
--			path->keep_locks = 1;
-+			path->keep_locks = true;
- 			goto again;
- 		}
- 
-@@ -975,11 +975,11 @@ int lookup_inline_extent_backref(struct btrfs_trans_handle *trans,
- 	*ref_ret = (struct btrfs_extent_inline_ref *)ptr;
- out:
- 	if (path->keep_locks) {
--		path->keep_locks = 0;
-+		path->keep_locks = false;
- 		btrfs_unlock_up_safe(path, 1);
- 	}
- 	if (insert)
--		path->search_for_extension = 0;
-+		path->search_for_extension = false;
- 	return ret;
- }
- 
 diff --git a/fs/btrfs/file-item.c b/fs/btrfs/file-item.c
-index 4b7c40f05e8f9e..a2f851eaadca06 100644
+index a2f851eaadca06..9b19b33e85b687 100644
 --- a/fs/btrfs/file-item.c
 +++ b/fs/btrfs/file-item.c
-@@ -394,8 +394,8 @@ int btrfs_lookup_bio_sums(struct btrfs_bio *bbio)
- 	 * between reading the free space cache and updating the csum tree.
- 	 */
- 	if (btrfs_is_free_space_inode(inode)) {
--		path->search_commit_root = 1;
--		path->skip_locking = 1;
-+		path->search_commit_root = true;
-+		path->skip_locking = true;
- 	}
+@@ -350,6 +350,7 @@ int btrfs_lookup_bio_sums(struct btrfs_bio *bbio)
+ 	const unsigned int nblocks = orig_len >> fs_info->sectorsize_bits;
+ 	int ret = 0;
+ 	u32 bio_offset = 0;
++	bool using_commit_root = false;
  
- 	/*
-@@ -423,8 +423,8 @@ int btrfs_lookup_bio_sums(struct btrfs_bio *bbio)
+ 	if ((inode->flags & BTRFS_INODE_NODATASUM) ||
+ 	    test_bit(BTRFS_FS_STATE_NO_DATA_CSUMS, &fs_info->fs_state))
+@@ -423,6 +424,7 @@ int btrfs_lookup_bio_sums(struct btrfs_bio *bbio)
  	 * from across transactions.
  	 */
  	if (bbio->csum_search_commit_root) {
--		path->search_commit_root = 1;
--		path->skip_locking = 1;
-+		path->search_commit_root = true;
-+		path->skip_locking = true;
++		using_commit_root = true;
+ 		path->search_commit_root = true;
+ 		path->skip_locking = true;
  		down_read(&fs_info->commit_root_sem);
+@@ -455,6 +457,28 @@ int btrfs_lookup_bio_sums(struct btrfs_bio *bbio)
+ 		 * assume this is the case.
+ 		 */
+ 		if (count == 0) {
++			/*
++			 * If an extent is relocated in the current transaction
++			 * then relocation writes a new csum without updating
++			 * the extent map generation. Until the next commit, we
++			 * will see a hole in that case, so we need to fallback
++			 * to searching the transaction csum root.
++			 *
++			 * Note that a commit root lookup of a referenced extent can
++			 * only miss, not return a stale csum. A freed extent's csum
++			 * is deleted in the same transaction and its bytenr is not
++			 * reusable until that transaction has committed and the
++			 * extent is unpinned.
++			 */
++			if (using_commit_root) {
++				up_read(&fs_info->commit_root_sem);
++				using_commit_root = false;
++				path->search_commit_root = false;
++				path->skip_locking = false;
++				btrfs_release_path(path);
++				continue;
++			}
++
+ 			memset(csum_dst, 0, csum_size);
+ 			count = 1;
+ 
+@@ -473,7 +497,7 @@ int btrfs_lookup_bio_sums(struct btrfs_bio *bbio)
+ 		bio_offset += count * sectorsize;
  	}
  
-@@ -1168,10 +1168,10 @@ int btrfs_csum_file_blocks(struct btrfs_trans_handle *trans,
- 	}
- 
- 	btrfs_release_path(path);
--	path->search_for_extension = 1;
-+	path->search_for_extension = true;
- 	ret = btrfs_search_slot(trans, root, &file_key, path,
- 				csum_size, 1);
--	path->search_for_extension = 0;
-+	path->search_for_extension = false;
- 	if (ret < 0)
- 		goto out;
- 
-diff --git a/fs/btrfs/free-space-cache.c b/fs/btrfs/free-space-cache.c
-index 9828da12765f5c..7ee3d8f05c1a21 100644
---- a/fs/btrfs/free-space-cache.c
-+++ b/fs/btrfs/free-space-cache.c
-@@ -971,8 +971,8 @@ int load_free_space_cache(struct btrfs_block_group *block_group)
- 	path = btrfs_alloc_path();
- 	if (!path)
- 		return 0;
--	path->search_commit_root = 1;
--	path->skip_locking = 1;
-+	path->search_commit_root = true;
-+	path->skip_locking = true;
- 
- 	/*
- 	 * We must pass a path with search_commit_root set to btrfs_iget in
-diff --git a/fs/btrfs/free-space-tree.c b/fs/btrfs/free-space-tree.c
-index c3734892d6548b..f9ffb1c8988d90 100644
---- a/fs/btrfs/free-space-tree.c
-+++ b/fs/btrfs/free-space-tree.c
-@@ -1699,8 +1699,8 @@ int btrfs_load_free_space_tree(struct btrfs_caching_control *caching_ctl)
- 	 * Just like caching_thread() doesn't want to deadlock on the extent
- 	 * tree, we don't want to deadlock on the free space tree.
- 	 */
--	path->skip_locking = 1;
--	path->search_commit_root = 1;
-+	path->skip_locking = true;
-+	path->search_commit_root = true;
- 	path->reada = READA_FORWARD;
- 
- 	info = btrfs_search_free_space_info(NULL, block_group, path, 0);
-diff --git a/fs/btrfs/inode-item.c b/fs/btrfs/inode-item.c
-index 7e14e1bbcf389b..b73e1dd97208a8 100644
---- a/fs/btrfs/inode-item.c
-+++ b/fs/btrfs/inode-item.c
-@@ -312,7 +312,7 @@ int btrfs_insert_inode_ref(struct btrfs_trans_handle *trans,
- 	if (!path)
- 		return -ENOMEM;
- 
--	path->skip_release_on_error = 1;
-+	path->skip_release_on_error = true;
- 	ret = btrfs_insert_empty_item(trans, root, path, &key,
- 				      ins_len);
- 	if (ret == -EEXIST) {
-diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
-index 30a34cd905ba48..36f75c6a8344d4 100644
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -7170,8 +7170,8 @@ struct extent_map *btrfs_get_extent(struct btrfs_inode *inode,
- 	 * point the commit_root has everything we need.
- 	 */
- 	if (btrfs_is_free_space_inode(inode)) {
--		path->search_commit_root = 1;
--		path->skip_locking = 1;
-+		path->search_commit_root = true;
-+		path->skip_locking = true;
- 	}
- 
- 	ret = btrfs_lookup_file_extent(NULL, root, path, objectid, start, 0);
-diff --git a/fs/btrfs/qgroup.c b/fs/btrfs/qgroup.c
-index 261aa65019207f..b4c6cbbcd168e6 100644
---- a/fs/btrfs/qgroup.c
-+++ b/fs/btrfs/qgroup.c
-@@ -3882,8 +3882,8 @@ static void btrfs_qgroup_rescan_worker(struct btrfs_work *work)
- 	 * Rescan should only search for commit root, and any later difference
- 	 * should be recorded by qgroup
- 	 */
--	path->search_commit_root = 1;
--	path->skip_locking = 1;
-+	path->search_commit_root = true;
-+	path->skip_locking = true;
- 
- 	while (!ret && !(stopped = rescan_should_stop(fs_info))) {
- 		trans = btrfs_start_transaction(fs_info->fs_root, 0);
-diff --git a/fs/btrfs/raid-stripe-tree.c b/fs/btrfs/raid-stripe-tree.c
-index cc6f6095cc9fd0..f6f02463dd1a9b 100644
---- a/fs/btrfs/raid-stripe-tree.c
-+++ b/fs/btrfs/raid-stripe-tree.c
-@@ -394,8 +394,8 @@ int btrfs_get_raid_extent_offset(struct btrfs_fs_info *fs_info,
- 		return -ENOMEM;
- 
- 	if (stripe->rst_search_commit_root) {
--		path->skip_locking = 1;
--		path->search_commit_root = 1;
-+		path->skip_locking = true;
-+		path->search_commit_root = true;
- 	}
- 
- 	ret = btrfs_search_slot(NULL, stripe_root, &stripe_key, path, 0, 0);
-diff --git a/fs/btrfs/relocation.c b/fs/btrfs/relocation.c
-index ea68328d289cba..86430435d3acc7 100644
---- a/fs/btrfs/relocation.c
-+++ b/fs/btrfs/relocation.c
-@@ -3176,8 +3176,8 @@ static int __add_tree_block(struct reloc_control *rc,
- 		key.offset = blocksize;
- 	}
- 
--	path->search_commit_root = 1;
--	path->skip_locking = 1;
-+	path->search_commit_root = true;
-+	path->skip_locking = true;
- 	ret = btrfs_search_slot(NULL, rc->extent_root, &key, path, 0, 0);
- 	if (ret < 0)
- 		return ret;
-@@ -3369,8 +3369,8 @@ int find_next_extent(struct reloc_control *rc, struct btrfs_path *path,
- 		key.type = BTRFS_EXTENT_ITEM_KEY;
- 		key.offset = 0;
- 
--		path->search_commit_root = 1;
--		path->skip_locking = 1;
-+		path->search_commit_root = true;
-+		path->skip_locking = true;
- 		ret = btrfs_search_slot(NULL, rc->extent_root, &key, path,
- 					0, 0);
- 		if (ret < 0)
-diff --git a/fs/btrfs/scrub.c b/fs/btrfs/scrub.c
-index 16936d17166eef..368f1d44449351 100644
---- a/fs/btrfs/scrub.c
-+++ b/fs/btrfs/scrub.c
-@@ -463,10 +463,10 @@ static noinline_for_stack struct scrub_ctx *scrub_setup_ctx(
- 	refcount_set(&sctx->refs, 1);
- 	sctx->is_dev_replace = is_dev_replace;
- 	sctx->fs_info = fs_info;
--	sctx->extent_path.search_commit_root = 1;
--	sctx->extent_path.skip_locking = 1;
--	sctx->csum_path.search_commit_root = 1;
--	sctx->csum_path.skip_locking = 1;
-+	sctx->extent_path.search_commit_root = true;
-+	sctx->extent_path.skip_locking = true;
-+	sctx->csum_path.search_commit_root = true;
-+	sctx->csum_path.skip_locking = true;
- 	for (i = 0; i < SCRUB_TOTAL_STRIPES; i++) {
- 		int ret;
- 
-@@ -2103,10 +2103,10 @@ static int scrub_raid56_parity_stripe(struct scrub_ctx *sctx,
- 	 * as the data stripe bytenr may be smaller than previous extent.  Thus
- 	 * we have to use our own extent/csum paths.
- 	 */
--	extent_path.search_commit_root = 1;
--	extent_path.skip_locking = 1;
--	csum_path.search_commit_root = 1;
--	csum_path.skip_locking = 1;
-+	extent_path.search_commit_root = true;
-+	extent_path.skip_locking = true;
-+	csum_path.search_commit_root = true;
-+	csum_path.skip_locking = true;
- 
- 	for (int i = 0; i < data_stripes; i++) {
- 		int stripe_index;
-@@ -2630,8 +2630,8 @@ int scrub_enumerate_chunks(struct scrub_ctx *sctx,
- 		return -ENOMEM;
- 
- 	path->reada = READA_FORWARD;
--	path->search_commit_root = 1;
--	path->skip_locking = 1;
-+	path->search_commit_root = true;
-+	path->skip_locking = true;
- 
- 	key.objectid = scrub_dev->devid;
- 	key.type = BTRFS_DEV_EXTENT_KEY;
-diff --git a/fs/btrfs/send.c b/fs/btrfs/send.c
-index 04473387ee8bf0..34a57f11e4bb9c 100644
---- a/fs/btrfs/send.c
-+++ b/fs/btrfs/send.c
-@@ -633,9 +633,9 @@ static struct btrfs_path *alloc_path_for_send(void)
- 	path = btrfs_alloc_path();
- 	if (!path)
- 		return NULL;
--	path->search_commit_root = 1;
--	path->skip_locking = 1;
--	path->need_commit_sem = 1;
-+	path->search_commit_root = true;
-+	path->skip_locking = true;
-+	path->need_commit_sem = true;
- 	return path;
- }
- 
-@@ -7643,10 +7643,10 @@ static int btrfs_compare_trees(struct btrfs_root *left_root,
- 		goto out;
- 	}
- 
--	left_path->search_commit_root = 1;
--	left_path->skip_locking = 1;
--	right_path->search_commit_root = 1;
--	right_path->skip_locking = 1;
-+	left_path->search_commit_root = true;
-+	left_path->skip_locking = true;
-+	right_path->search_commit_root = true;
-+	right_path->skip_locking = true;
- 
- 	/*
- 	 * Strategy: Go to the first items of both trees. Then do
-diff --git a/fs/btrfs/tree-log.c b/fs/btrfs/tree-log.c
-index a0e12b4fb95614..f84065b69464c7 100644
---- a/fs/btrfs/tree-log.c
-+++ b/fs/btrfs/tree-log.c
-@@ -602,9 +602,9 @@ static int overwrite_item(struct walk_control *wc)
- insert:
- 	btrfs_release_path(wc->subvol_path);
- 	/* try to insert the key into the destination tree */
--	wc->subvol_path->skip_release_on_error = 1;
-+	wc->subvol_path->skip_release_on_error = true;
- 	ret = btrfs_insert_empty_item(trans, root, wc->subvol_path, &wc->log_key, item_size);
--	wc->subvol_path->skip_release_on_error = 0;
-+	wc->subvol_path->skip_release_on_error = false;
- 
- 	dst_eb = wc->subvol_path->nodes[0];
- 	dst_slot = wc->subvol_path->slots[0];
-@@ -5734,8 +5734,8 @@ static int btrfs_check_ref_name_override(struct extent_buffer *eb,
- 	search_path = btrfs_alloc_path();
- 	if (!search_path)
- 		return -ENOMEM;
--	search_path->search_commit_root = 1;
--	search_path->skip_locking = 1;
-+	search_path->search_commit_root = true;
-+	search_path->skip_locking = true;
- 
- 	while (cur_offset < item_size) {
- 		u64 parent;
-@@ -6052,8 +6052,8 @@ static int conflicting_inode_is_dir(struct btrfs_root *root, u64 ino,
- 	key.type = BTRFS_INODE_ITEM_KEY;
- 	key.offset = 0;
- 
--	path->search_commit_root = 1;
--	path->skip_locking = 1;
-+	path->search_commit_root = true;
-+	path->skip_locking = true;
- 
- 	ret = btrfs_search_slot(NULL, root, &key, path, 0, 0);
- 	if (WARN_ON_ONCE(ret > 0)) {
-@@ -6073,8 +6073,8 @@ static int conflicting_inode_is_dir(struct btrfs_root *root, u64 ino,
- 	}
- 
- 	btrfs_release_path(path);
--	path->search_commit_root = 0;
--	path->skip_locking = 0;
-+	path->search_commit_root = false;
-+	path->skip_locking = false;
- 
+-	if (bbio->csum_search_commit_root)
++	if (using_commit_root)
+ 		up_read(&fs_info->commit_root_sem);
  	return ret;
  }
-@@ -7232,8 +7232,8 @@ static int btrfs_log_all_parents(struct btrfs_trans_handle *trans,
- 	path = btrfs_alloc_path();
- 	if (!path)
- 		return -ENOMEM;
--	path->skip_locking = 1;
--	path->search_commit_root = 1;
-+	path->skip_locking = true;
-+	path->search_commit_root = true;
- 
- 	key.objectid = ino;
- 	key.type = BTRFS_INODE_REF_KEY;
-diff --git a/fs/btrfs/volumes.c b/fs/btrfs/volumes.c
-index 630fb5885692b1..863f69b9cf14bd 100644
---- a/fs/btrfs/volumes.c
-+++ b/fs/btrfs/volumes.c
-@@ -1839,8 +1839,8 @@ static int find_free_dev_extent(struct btrfs_device *device, u64 num_bytes,
- 	}
- 
- 	path->reada = READA_FORWARD;
--	path->search_commit_root = 1;
--	path->skip_locking = 1;
-+	path->search_commit_root = true;
-+	path->skip_locking = true;
- 
- 	key.objectid = device->devid;
- 	key.type = BTRFS_DEV_EXTENT_KEY;
-@@ -7627,7 +7627,7 @@ int btrfs_read_chunk_tree(struct btrfs_fs_info *fs_info)
- 	 * chunk tree, to keep it simple, just skip locking on the chunk tree.
- 	 */
- 	ASSERT(!test_bit(BTRFS_FS_OPEN, &fs_info->flags));
--	path->skip_locking = 1;
-+	path->skip_locking = true;
- 
- 	/*
- 	 * Read all device items, and then all the chunk items. All
-diff --git a/fs/btrfs/xattr.c b/fs/btrfs/xattr.c
-index b6f01d6c79e7f3..b6e91e8fb7e388 100644
---- a/fs/btrfs/xattr.c
-+++ b/fs/btrfs/xattr.c
-@@ -97,7 +97,7 @@ int btrfs_setxattr(struct btrfs_trans_handle *trans, struct inode *inode,
- 	path = btrfs_alloc_path();
- 	if (!path)
- 		return -ENOMEM;
--	path->skip_release_on_error = 1;
-+	path->skip_release_on_error = true;
- 
- 	if (!value) {
- 		di = btrfs_lookup_xattr(trans, root, path,
 -- 
 2.53.0
 
