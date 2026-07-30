@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4EE73769FD;
-	Thu, 30 Jul 2026 15:47:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A64CC37B012;
+	Thu, 30 Jul 2026 15:47:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426432; cv=none; b=Kb4equthzR7js7olicKgGHUSlnDC7XtE8VMr84DOc/9p8x5m7bOseHjI7fVTV3OaA50zp0oiGNeIsX+rJ141z9R5SDKaULjpUieU2xtM/8cPJ7sfkhhLJbv4m2a1uAzwrWx61soB5hgpYBXWZ0yghXjlgyUC5Njj02YCdWVeQWo=
+	t=1785426435; cv=none; b=XTXU9PolLikCUZvEfxZ3hccShAeglp9IhRY0PCPrYFrXb2s5nJwjyXmUK13XKbUNWzSrRmHM4zo2axYGDRs1r9pPRgrllEZhjnjlmmOHpDXqE3S5XVXH4lENXHB9GcbOCiOP4mHn/auCwh9KtEQ5n6Kt97arloQBRWqQ0DmhsPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426432; c=relaxed/simple;
-	bh=ZoaKAgHCPLKwM0k5gXldArrVvhI8x2OSbSliT/lXCd4=;
+	s=arc-20240116; t=1785426435; c=relaxed/simple;
+	bh=EZr2++cNNWDoO124uoK3Zo5dSv0VYQO4xNALmu9n4LI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iHvzNZXHQPd/WYLfeTUlk+6lmKLm091TjA92zUomZ6ftE+Gsuq6tvY8OXkSgbN41gG/zrDwEneVOH4oF1yQ4/yAe3RDYJ5n4m2Iuu7XDYXi4VXQsTLyjJsLdYb2iOJwhYGY7dQHq9DHLbTx46PxCioLFBSvTZFnK+z88LDbAScI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dlEUA7a9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=vCn2WxJP97ACltCP1i7Qfb0QNNzjGS/21je4woIY2w8Q1MIjmtReH1VGLmcn6Chbj9N+2xn2z39VG/aLB9jDWQfHOIzK/tv7qOrQaMgtbiFJC42WGsGT6EF852uASc21lWiAJxTl2oFyge2nofcVwTfPHBQueD8Rm9EWf4rb5wQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ty1cJZv4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dlEUA7a9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B78A1F000E9;
-	Thu, 30 Jul 2026 15:47:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ty1cJZv4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EACD1F000E9;
+	Thu, 30 Jul 2026 15:47:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426430;
-	bh=nObw4UO2RKK2TpC9zRH1YT/jYlcqqjAHVrVgsr/0SCI=;
+	s=korg; t=1785426433;
+	bh=4SHuOoPxSe6edhO6BR/12s5nNpb263rYRo3ZrH51n/Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dlEUA7a9ox4Mai53tQxETueiFm82KSF3XCopJCnFLz4Eh8XlUOKg2rolqbXhDChDQ
-	 DnPyCZ1p1ejI/KeRwb29qp00fkhcNSBca0eqkl/GXl8fChEbG+tf0DhMHUnSvzA/GK
-	 TYB1W4E+mFy/oARTdNMsOx8fDodlbbrZb6vRr9UI=
+	b=ty1cJZv46fDY72E8gOEhT12U8q5Ufb4jWk9MRM28n16Zh4vAwopX1PzVAiHgA4leg
+	 jVdmR2eIHBLD6GSBRyyoZnU+/z6zubpNECYaF5EQ7Dxw21crcI9ETTxc5ji8yOkJCr
+	 0BFZ2C3c9CmEMNdhQvZDn4MQkvdKAOR1SKw2VrSU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shiming Cheng <shiming.cheng@mediatek.com>,
-	Willem de Bruijn <willemb@google.com>,
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Jacob Keller <jacob.e.keller@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 415/602] net: gro: fix double aggregation of flush-marked skbs
-Date: Thu, 30 Jul 2026 16:13:27 +0200
-Message-ID: <20260730141444.685871576@linuxfoundation.org>
+Subject: [PATCH 6.12 416/602] net: hip04: fix RX buffer leak on build_skb failure
+Date: Thu, 30 Jul 2026 16:13:28 +0200
+Message-ID: <20260730141444.706630133@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -51,83 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shiming Cheng <shiming.cheng@mediatek.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit e751256486d0ded20f5a9f9863467f1dce65142f upstream.
+commit 14fa65d10f5696b063a7d8d26e8291ea84a2c6ed upstream.
 
-Commit 0ab03f353d36 ("net-gro: Fix GRO flush when receiving a GSO
-packet.") added a flush check to skb_gro_receive(), but
-skb_gro_receive_list() lacks the same validation.
+When build_skb() fails in hip04_rx_poll(), the driver jumps to the
+refill path without releasing the current RX buffer and its DMA mapping.
+Installing a replacement buffer then overwrites the slot references and
+leaks both resources.
 
-As a result, packets marked with NAPI_GRO_CB(skb)->flush may still be
-re-aggregated.
+Keep the current slot intact and return budget so NAPI retries the same
+buffer.  Also free a newly allocated RX fragment when dma_map_single()
+fails.
 
-This allows already-GRO'd packets with existing frag_list to be
-re-aggregated into a new GRO session, corrupting the frag_list chain
-structure. When skb_segment() attempts to unpack these malformed packets,
-it encounters invalid state and triggers a kernel panic.
+This issue was found by an in-house static analysis tool.
 
-Scenario (Tethering/Device forwarding):
-  1. Driver: Generated aggregated packet P1 via LRO with frag_list
-  2. Dev A: Receives aggregated fraglist packet and flush flag set
-  3. Dev A: Re-enters GRO, skb_gro_receive_list() is called
-  4. Missing flush check allows re-aggregation despite flush flag
-  5. Frag_list chain becomes corrupted (loops or dangling refs)
-  6. Dev B: TX path calls skb_segment(), crashes on corrupted frag_list
-
-Root cause in skb_segment():
-  The check at line ~4891:
-    if (hsize <= 0 && i >= nfrags && skb_headlen(list_skb) &&
-        (skb_headlen(list_skb) == len || sg)) {
-
-  When frag_list is corrupted by double aggregation, when list_skb is
-  a NULL pointer from skb->next, skb_headlen(list_skb) dereference
-  NULL/corrupted pointers occurs.
-
-Call Trace:
- skb_headlen(NULL skb)
- skb_segment
- tcp_gso_segment
- tcp4_gso_segment
- inet_gso_segment
- skb_mac_gso_segment
- __skb_gso_segment
- skb_gso_segment
- validate_xmit_skb
- validate_xmit_skb_list
- sch_direct_xmit
- qdisc_restart
- __qdisc_run
- qdisc_run
- net_tx_action
-
-Fix: Add NAPI_GRO_CB(skb)->flush validation to the early-return check in
-skb_gro_receive_list(), matching the defensive programming pattern of
-skb_gro_receive().
-
-Fixes: 3a1296a38d0c ("net: Support GRO/GSO fraglist chaining.")
+Fixes: 701a0fd52318 ("hip04_eth: fix missing error handle for build_skb failed")
 Cc: stable@vger.kernel.org
-Signed-off-by: Shiming Cheng <shiming.cheng@mediatek.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260709014704.3625-1-shiming.cheng@mediatek.com
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20260712142729.2057636-1-fanwu01@zju.edu.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/gro.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/hisilicon/hip04_eth.c |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/net/core/gro.c
-+++ b/net/core/gro.c
-@@ -230,7 +230,9 @@ done:
+--- a/drivers/net/ethernet/hisilicon/hip04_eth.c
++++ b/drivers/net/ethernet/hisilicon/hip04_eth.c
+@@ -594,7 +594,11 @@ static int hip04_rx_poll(struct napi_str
+ 		skb = build_skb(buf, priv->rx_buf_size);
+ 		if (unlikely(!skb)) {
+ 			net_dbg_ratelimited("build_skb failed\n");
+-			goto refill;
++			/* Retain the slot; return budget so NAPI retries this
++			 * buffer. Refill would overwrite rx_buf[]/rx_phys[]
++			 * and leak them.
++			 */
++			return budget;
+ 		}
  
- int skb_gro_receive_list(struct sk_buff *p, struct sk_buff *skb)
- {
--	if (unlikely(p->len + skb->len >= 65536))
-+	/* make sure to check flush flag and to not merge */
-+	if (unlikely(p->len + skb->len >= 65536 ||
-+		     NAPI_GRO_CB(skb)->flush))
- 		return -E2BIG;
+ 		dma_unmap_single(priv->dev, priv->rx_phys[priv->rx_head],
+@@ -622,14 +626,15 @@ static int hip04_rx_poll(struct napi_str
+ 			rx++;
+ 		}
  
- 	if (!pskb_may_pull(skb, skb_gro_offset(skb))) {
+-refill:
+ 		buf = netdev_alloc_frag(priv->rx_buf_size);
+ 		if (!buf)
+ 			goto done;
+ 		phys = dma_map_single(priv->dev, buf,
+ 				      RX_BUF_SIZE, DMA_FROM_DEVICE);
+-		if (dma_mapping_error(priv->dev, phys))
++		if (dma_mapping_error(priv->dev, phys)) {
++			skb_free_frag(buf);
+ 			goto done;
++		}
+ 		priv->rx_buf[priv->rx_head] = buf;
+ 		priv->rx_phys[priv->rx_head] = phys;
+ 		hip04_set_recv_desc(priv, phys);
 
 
