@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C66F943CE6E;
-	Thu, 30 Jul 2026 14:35:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEEB635BDAA;
+	Thu, 30 Jul 2026 14:35:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422102; cv=none; b=Zrl88RyGiEDOvCsdyylKR5gSYNpDjumAzU8vfkUjVzFZRyuNs1GJS4YLCsyJhgVuQbdkrHByUjUGPpJ7ijeAUN/Z4nynBdzHrqfSfhdFAhmkbSwEN7kGXWQ/PMOzbI8FRla1O9y8BhQ5jFekDxDGum1Q87/P4kKeJnXBQTHSSzM=
+	t=1785422106; cv=none; b=sDGq9Dg15YAw0Oc8cp2Z770ndob/qZ6lMhVbODvo0oW1SqUEvTTFp1dyAFqT96reeaiRJkuNw1XMtP1fPS2K+AOlRspvnllXgMBFZCeoCY+YlXaf3kyEoq/v8mrx4/6rxQmUnwa3zk6dpxVng9MSnxcRhliKcYc1QAwnRZ6KYrE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422102; c=relaxed/simple;
-	bh=uu+XeNHmxoE+inIo/8TIA4qabv+Pg3Eq7FDweMS7VhA=;
+	s=arc-20240116; t=1785422106; c=relaxed/simple;
+	bh=MB7+bUYdTUXB4rnl2gdTPPk2UZKs41brKZPOBsUKKGQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FBv1kgdt3j0cGoYk5UkDwYeBNCJosCcC/6XT7Xczp/hQrqEAxk2Ccxx7WxgTdQoVOH11t/Zrumzn3HMHs/ZDqFzbkb6woDrhBJI+AQyv/j3eFD8Nz3U6bnoLTqnrEAr5FEUBm2eakDbUAq3kKZglp+VgTDqzaXjuTPvdHuw9KsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oDvaY3sU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IwYIhPuRGZ93OSB9O3m9SNGS06a1kVVPv8LNHgISl43G7fEkng9CjTDqO/pSfobve0FONlFm0xRXLnAE4bZwnbuAuzm4sBPw/sA8iHOMt4M7dGDZtddW9GbTrOiUi8rvvQXDvGPVCxlNZiZ3fNSkSsLfN9PC8eOeBXs2MSRNOeM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VdFAN6tZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oDvaY3sU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22C7D1F00A3D;
-	Thu, 30 Jul 2026 14:35:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VdFAN6tZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DF1F1F000E9;
+	Thu, 30 Jul 2026 14:35:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422101;
-	bh=rdbnhV0r72866f2YNYfnUjf2cEIxHHYKuIzplph5Beg=;
+	s=korg; t=1785422104;
+	bh=jn1nNBKHCiia0M69YIVq4/koS4eVhQsFipcUxfv6AWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oDvaY3sU3V6YXGATah2Mim6Tc+NirSTE+6nhuqyWa6+iCF5m9rtSKyW9hf6y5AL8D
-	 kpSJBFlaa7argfter2m8H1yGVPO8MApWiYZ9GbDrYfIl91aiqzX6UXiSVZyN17G289
-	 CpTpGc1bRtJ8aBOd2l3YeuHEaoT87xPWSEGngxCc=
+	b=VdFAN6tZCpD7qIjMQOr7FpT8jeQQ1ZA8xdMavff69MlJ3VZKX4rjyPopalgyMZuux
+	 2BQ0ZnJp8nhd9l0R1bMfgqJkRtJuBgwg85QXNMxWbhTuq4XiIuIDvaxlcfnXCXYNst
+	 +FsDKxOQhVc3r/IXdXDKCy66lDg4CDNX/sJRVvNU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yun Zhou <yun.zhou@windriver.com>,
-	Ido Schimmel <idosch@nvidia.com>,
+	Anthony Doeraene <anthony.doeraene@uclouvain.be>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 326/744] net: gre: fix lltx regression for GRE tunnels with SEQ/CSUM
-Date: Thu, 30 Jul 2026 16:09:59 +0200
-Message-ID: <20260730141451.214157788@linuxfoundation.org>
+Subject: [PATCH 7.1 327/744] mpls: Set rt->rt_nhn just before returning from mpls_nh_build_multi().
+Date: Thu, 30 Jul 2026 16:10:00 +0200
+Message-ID: <20260730141451.234782174@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -52,90 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yun Zhou <yun.zhou@windriver.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 675ed582c1aa4d919dd535490de08c015005c653 ]
+[ Upstream commit 3671f0419d90b98a02f313830595ab958c8b2025 ]
 
-Before commit 00d066a4d4ed ("netdev_features: convert NETIF_F_LLTX to
-dev->lltx"), NETIF_F_LLTX was set unconditionally in both
-__gre_tunnel_init() and ip6gre_tnl_init_features() alongside
-GRE_FEATURES:
+Commit f0914b8436c5 ("mpls: Hold dev refcnt for mpls_nh.") added
+change_nexthops() loop to call netdev_put() for the nexthop devices
+before freeing mpls_route.
 
-    dev->features |= GRE_FEATURES | NETIF_F_LLTX;
+Then, mpls_nh_build_multi() was also changed to avoid iterating
+uninitialised nexthops in mpls_rt_free_rcu().
 
-When that commit converted NETIF_F_LLTX to the dev->lltx flag, it
-placed 'dev->lltx = true' after the SEQ/CSUM early returns instead
-of before them. This causes GRE/GRETAP/ip6gre tunnels with SEQ or
-CSUM+encap to lose lockless TX, reintroducing _xmit_lock acquisition
-around their ndo_start_xmit. Since GRE xmit re-enters the stack via
-ip_tunnel_xmit(), holding _xmit_lock risks ABBA deadlock with the
-underlay device.
+However, setting rt->rt_nhn to 0 at the entry of mpls_nh_build_multi()
+makes the following change_nexthops() no-op.
 
-  CPU0                        CPU1
-  ----                        ----
-  lock(&qdisc_xmit_lock_key#6);
-                              lock(&qdisc_xmit_lock_key#3);
-                              lock(&qdisc_xmit_lock_key#6);
-  lock(&qdisc_xmit_lock_key#3);
+Let's set rt->rt_nhn just before returning from mpls_nh_build_multi().
 
-Fix by moving dev->lltx = true before the early returns in both
-functions, restoring the original unconditional behavior.
-
-Fixes: 00d066a4d4ed ("netdev_features: convert NETIF_F_LLTX to dev->lltx")
-Signed-off-by: Yun Zhou <yun.zhou@windriver.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260713150945.1779628-1-yun.zhou@windriver.com
+Fixes: f0914b8436c5 ("mpls: Hold dev refcnt for mpls_nh.")
+Reported-by: Anthony Doeraene <anthony.doeraene@uclouvain.be>
+Closes: https://lore.kernel.org/netdev/036a0c95-f5d4-46ab-88e7-1eab567d7a84@uclouvain.be/
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260716170609.804629-1-kuniyu@google.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ip_gre.c  | 4 ++--
- net/ipv6/ip6_gre.c | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ net/mpls/af_mpls.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/net/ipv4/ip_gre.c b/net/ipv4/ip_gre.c
-index 0ebed1438f6c51..739b7fae8d3da2 100644
---- a/net/ipv4/ip_gre.c
-+++ b/net/ipv4/ip_gre.c
-@@ -1018,6 +1018,8 @@ static void __gre_tunnel_init(struct net_device *dev)
- 	dev->features		|= GRE_FEATURES;
- 	dev->hw_features	|= GRE_FEATURES;
- 
-+	dev->lltx = true;
-+
- 	/* TCP offload with GRE SEQ is not supported, nor can we support 2
- 	 * levels of outer headers requiring an update.
- 	 */
-@@ -1029,8 +1031,6 @@ static void __gre_tunnel_init(struct net_device *dev)
- 
- 	dev->features |= NETIF_F_GSO_SOFTWARE;
- 	dev->hw_features |= NETIF_F_GSO_SOFTWARE;
+diff --git a/net/mpls/af_mpls.c b/net/mpls/af_mpls.c
+index b64a8b1bac0961..35069183f59c3e 100644
+--- a/net/mpls/af_mpls.c
++++ b/net/mpls/af_mpls.c
+@@ -922,8 +922,7 @@ static int mpls_nh_build_multi(struct mpls_route_config *cfg,
+ 	struct nlattr *nla_via, *nla_newdst;
+ 	int remaining = cfg->rc_mp_len;
+ 	int err = 0;
 -
--	dev->lltx = true;
+-	rt->rt_nhn = 0;
++	u8 nhs = 0;
+ 
+ 	change_nexthops(rt) {
+ 		int attrlen;
+@@ -959,12 +958,15 @@ static int mpls_nh_build_multi(struct mpls_route_config *cfg,
+ 			rt->rt_nhn_alive--;
+ 
+ 		rtnh = rtnh_next(rtnh, &remaining);
+-		rt->rt_nhn++;
++		nhs++;
+ 	} endfor_nexthops(rt);
+ 
++	rt->rt_nhn = nhs;
++
+ 	return 0;
+ 
+ errout:
++	rt->rt_nhn = nhs;
+ 	return err;
  }
  
- static int ipgre_tunnel_init(struct net_device *dev)
-diff --git a/net/ipv6/ip6_gre.c b/net/ipv6/ip6_gre.c
-index 8ebc99a299c954..1a81e80a124aac 100644
---- a/net/ipv6/ip6_gre.c
-+++ b/net/ipv6/ip6_gre.c
-@@ -1455,6 +1455,8 @@ static void ip6gre_tnl_init_features(struct net_device *dev)
- 	dev->features		|= GRE6_FEATURES;
- 	dev->hw_features	|= GRE6_FEATURES;
- 
-+	dev->lltx = true;
-+
- 	/* TCP offload with GRE SEQ is not supported, nor can we support 2
- 	 * levels of outer headers requiring an update.
- 	 */
-@@ -1466,8 +1468,6 @@ static void ip6gre_tnl_init_features(struct net_device *dev)
- 
- 	dev->features |= NETIF_F_GSO_SOFTWARE;
- 	dev->hw_features |= NETIF_F_GSO_SOFTWARE;
--
--	dev->lltx = true;
- }
- 
- static int ip6gre_tunnel_init_common(struct net_device *dev)
 -- 
 2.53.0
 
