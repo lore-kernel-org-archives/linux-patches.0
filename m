@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23442445AF7;
-	Thu, 30 Jul 2026 14:56:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E812D42F707;
+	Thu, 30 Jul 2026 14:56:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423380; cv=none; b=NO1MIgITpexSHy17yMmMIuu0XvJ8sevvwuxwnXG4DuckyExGbuuAm3x9in262lgRVq64p0bF6vJ8Ls+RvNkEVKw8VA0Jd31+t5R8aMLYp4hT2bHGQxtHjQjHAz4VjURdYJ86dFs2f+C5VNciJviHEdzOgbcLtKVje2JJ9Ik2UbU=
+	t=1785423383; cv=none; b=tmq23/o82vebhlvPBnR+aVwVcT2sGwRmoVjEjvq8lA/ojlzHPOz3hukvuVg4A4f9sZNQPROwyp9IJILjD5XmWY1h9WNlf8mPb8Y0DfGCNTTXg/N4BjJte0SiXgT0K9J3at90oosYedAApZVpW3I4PR5bm37+R8Weep2SO9Gap04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423380; c=relaxed/simple;
-	bh=L9jg0FBpRpLm8LR4nNV7XuPhVP3xn++FImYB+Rbyo8w=;
+	s=arc-20240116; t=1785423383; c=relaxed/simple;
+	bh=rade6jpfBJeM7SHX6r42L4suI6mckuDH3oQDuPQIWt0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kx46VIDp90Kly3ylnX8xpvpMQ9O50F6MFhNckoyCQc/mGOWwv71M5BnSwgucL7p4dp56TjVE3Xt6OvL19j7+GN4H7Vw4oDov6asBgqNq0YEGOjsZquVQ243UJsHW1AJ/UZDV2m/aIX/1bwrvoCNjSV6QlrH59eoTryGz2IBslhQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BY/qMSLG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HUzTEMcpzToblbHdphwfdWK3foouaX1fzbyD6iOZ0w/UTCUBnrcRMoHTO63Dsq8kuLoTMuT5sYPzm6X9HqWeughbR1ZPVzkh8VXJZ3rN4x8WH9xiSfdxL2djdDIPvy2T364K0FIq9tzZWOQFCQ7CpHspdH0J5GBgrzi+j6sAhoc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y8HgT+D5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BY/qMSLG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7722D1F000E9;
-	Thu, 30 Jul 2026 14:56:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y8HgT+D5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 557A21F000E9;
+	Thu, 30 Jul 2026 14:56:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423379;
-	bh=k44xzHBVTkdC+I+RHAPJkYEkCxer2nEUpHE1xC7GKYw=;
+	s=korg; t=1785423381;
+	bh=W1Qybhq4QjCx7+nyzgSvIqKA9XRxbgQnUgke4YQr534=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BY/qMSLGLR/OZ4OrUE6VKd6rQe9a3GMtMXzGxOdiW3jpXDgSItF9llDbPbkFeydFs
-	 E/tYPuRxpz27ACTNWbwLKSs52ViUOxjD3uGwb17dizge2dY4vxwXmG2PHbF31HqVhC
-	 2gix0dEAXX6VQXTlmWQdloNxX5HNueIFSJdhcJsI=
+	b=y8HgT+D5kuw/OKzZ3sGdrv/JIb96TK0VbIOK/b51VY4quZsowq7o0Gc3rFRbEuWhO
+	 peYwu9CH2AC6nsylzn2xVs4QJ6dtDlBthdFm+6ve4N6nRoWBDZvdX6CrVR2bZG/aev
+	 wy9/D/bnaROQt3clX9SX2ASsZWQNC/2JRlhEAKSc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+ff16b505ec9152e5f448@syzkaller.appspotmail.com,
-	Brian Witte <brianwitte@mailfence.com>,
-	Florian Westphal <fw@strlen.de>,
+	Frank Li <Frank.Li@nxp.com>,
+	John Madieu <john.madieu.xa@bp.renesas.com>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 006/675] netfilter: nf_tables: revert commit_mutex usage in reset path
-Date: Thu, 30 Jul 2026 16:05:36 +0200
-Message-ID: <20260730141445.251442197@linuxfoundation.org>
+Subject: [PATCH 6.18 024/675] dmaengine: sh: rz-dmac: Move interrupt request after everything is set up
+Date: Thu, 30 Jul 2026 16:05:54 +0200
+Message-ID: <20260730141445.633763089@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -52,422 +54,200 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brian Witte <brianwitte@mailfence.com>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-[ Upstream commit 7f261bb906bf527c4a6e2a646e2d5f3679f2a8bc ]
+commit 731712403ddb39d1a76a11abf339a0615bc85de7 upstream.
 
-It causes circular lock dependency between commit_mutex, nfnl_subsys_ipset
-and nlk_cb_mutex when nft reset, ipset list, and iptables-nft with '-m set'
-rule run at the same time.
+Once the interrupt is requested, the interrupt handler may run immediately.
+Since the IRQ handler can access channel->ch_base, which is initialized
+only after requesting the IRQ, this may lead to invalid memory access.
+Likewise, the IRQ thread may access uninitialized data (the ld_free,
+ld_queue, and ld_active lists), which may also lead to issues.
 
-Previous patches made it safe to run individual reset handlers concurrently
-so commit_mutex is no longer required to prevent this.
+Request the interrupts only after everything is set up. To keep the error
+path simpler, use dmam_alloc_coherent() instead of dma_alloc_coherent().
 
-Fixes: bd662c4218f9 ("netfilter: nf_tables: Add locking for NFT_MSG_GETOBJ_RESET requests")
-Fixes: 3d483faa6663 ("netfilter: nf_tables: Add locking for NFT_MSG_GETSETELEM_RESET requests")
-Fixes: 3cb03edb4de3 ("netfilter: nf_tables: Add locking for NFT_MSG_GETRULE_RESET requests")
-Link: https://lore.kernel.org/all/aUh_3mVRV8OrGsVo@strlen.de/
-Reported-by: <syzbot+ff16b505ec9152e5f448@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=ff16b505ec9152e5f448
-Signed-off-by: Brian Witte <brianwitte@mailfence.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: 5000d37042a6 ("dmaengine: sh: Add DMAC driver for RZ/G2L SoC")
+Cc: stable@vger.kernel.org
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Tested-by: John Madieu <john.madieu.xa@bp.renesas.com>
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Tested-by: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
+Link: https://patch.msgid.link/20260526084710.3491480-2-claudiu.beznea@kernel.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+[tm: Kept the channel->irq field in rz_dmac_chan_probe() instead of
+ upstream's local `irq` variable, as commit 04e227718ab8
+ ("dmaengine: sh: rz-dmac: Make channel irq local") is not present
+ in this tree. Likewise kept platform_get_irq_byname() instead of
+ platform_get_irq_byname_optional() for the error IRQ in rz_dmac_probe(),
+ as commit 6b3a6b6dc074 ("dmaengine: sh: rz_dmac: make error interrupt
+ optional") is not present in this tree either; its early return on
+ failure becomes a goto err jump to match the new call order.]
+Signed-off-by: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 248 ++++++----------------------------
- 1 file changed, 42 insertions(+), 206 deletions(-)
+ drivers/dma/sh/rz-dmac.c | 96 ++++++++++++++++------------------------
+ 1 file changed, 38 insertions(+), 58 deletions(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 0842916c19f503..c82c16bd4257e4 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -3908,23 +3908,6 @@ static int nf_tables_dump_rules(struct sk_buff *skb,
- 	return skb->len;
- }
+diff --git a/drivers/dma/sh/rz-dmac.c b/drivers/dma/sh/rz-dmac.c
+index 818d1ef6f0bf94..4db84b83177a6d 100644
+--- a/drivers/dma/sh/rz-dmac.c
++++ b/drivers/dma/sh/rz-dmac.c
+@@ -811,27 +811,6 @@ static int rz_dmac_chan_probe(struct rz_dmac *dmac,
+ 	channel->index = index;
+ 	channel->mid_rid = -EINVAL;
  
--static int nf_tables_dumpreset_rules(struct sk_buff *skb,
--				     struct netlink_callback *cb)
--{
--	struct nftables_pernet *nft_net = nft_pernet(sock_net(skb->sk));
--	int ret;
+-	/* Request the channel interrupt. */
+-	scnprintf(pdev_irqname, sizeof(pdev_irqname), "ch%u", index);
+-	channel->irq = platform_get_irq_byname(pdev, pdev_irqname);
+-	if (channel->irq < 0)
+-		return channel->irq;
 -
--	/* Mutex is held is to prevent that two concurrent dump-and-reset calls
--	 * do not underrun counters and quotas. The commit_mutex is used for
--	 * the lack a better lock, this is not transaction path.
--	 */
--	mutex_lock(&nft_net->commit_mutex);
--	ret = nf_tables_dump_rules(skb, cb);
--	mutex_unlock(&nft_net->commit_mutex);
+-	irqname = devm_kasprintf(dmac->dev, GFP_KERNEL, "%s:%u",
+-				 dev_name(dmac->dev), index);
+-	if (!irqname)
+-		return -ENOMEM;
 -
--	return ret;
--}
--
- static int nf_tables_dump_rules_start(struct netlink_callback *cb)
- {
- 	struct nft_rule_dump_ctx *ctx = (void *)cb->ctx;
-@@ -3944,16 +3927,10 @@ static int nf_tables_dump_rules_start(struct netlink_callback *cb)
- 			return -ENOMEM;
- 		}
- 	}
--	return 0;
--}
--
--static int nf_tables_dumpreset_rules_start(struct netlink_callback *cb)
--{
--	struct nft_rule_dump_ctx *ctx = (void *)cb->ctx;
--
--	ctx->reset = true;
-+	if (NFNL_MSG_TYPE(cb->nlh->nlmsg_type) == NFT_MSG_GETRULE_RESET)
-+		ctx->reset = true;
- 
--	return nf_tables_dump_rules_start(cb);
-+	return 0;
- }
- 
- static int nf_tables_dump_rules_done(struct netlink_callback *cb)
-@@ -4019,6 +3996,8 @@ static int nf_tables_getrule(struct sk_buff *skb, const struct nfnl_info *info,
- 	u32 portid = NETLINK_CB(skb).portid;
- 	struct net *net = info->net;
- 	struct sk_buff *skb2;
-+	bool reset = false;
-+	char *buf;
- 
- 	if (info->nlh->nlmsg_flags & NLM_F_DUMP) {
- 		struct netlink_dump_control c = {
-@@ -4032,47 +4011,16 @@ static int nf_tables_getrule(struct sk_buff *skb, const struct nfnl_info *info,
- 		return nft_netlink_dump_start_rcu(info->sk, skb, info->nlh, &c);
- 	}
- 
--	skb2 = nf_tables_getrule_single(portid, info, nla, false);
--	if (IS_ERR(skb2))
--		return PTR_ERR(skb2);
--
--	return nfnetlink_unicast(skb2, net, portid);
--}
--
--static int nf_tables_getrule_reset(struct sk_buff *skb,
--				   const struct nfnl_info *info,
--				   const struct nlattr * const nla[])
--{
--	struct nftables_pernet *nft_net = nft_pernet(info->net);
--	u32 portid = NETLINK_CB(skb).portid;
--	struct net *net = info->net;
--	struct sk_buff *skb2;
--	char *buf;
--
--	if (info->nlh->nlmsg_flags & NLM_F_DUMP) {
--		struct netlink_dump_control c = {
--			.start= nf_tables_dumpreset_rules_start,
--			.dump = nf_tables_dumpreset_rules,
--			.done = nf_tables_dump_rules_done,
--			.module = THIS_MODULE,
--			.data = (void *)nla,
--		};
--
--		return nft_netlink_dump_start_rcu(info->sk, skb, info->nlh, &c);
+-	ret = devm_request_threaded_irq(dmac->dev, channel->irq,
+-					rz_dmac_irq_handler,
+-					rz_dmac_irq_handler_thread, 0,
+-					irqname, channel);
+-	if (ret) {
+-		dev_err(dmac->dev, "failed to request IRQ %u (%d)\n",
+-			channel->irq, ret);
+-		return ret;
 -	}
 -
--	if (!try_module_get(THIS_MODULE))
--		return -EINVAL;
--	rcu_read_unlock();
--	mutex_lock(&nft_net->commit_mutex);
--	skb2 = nf_tables_getrule_single(portid, info, nla, true);
--	mutex_unlock(&nft_net->commit_mutex);
--	rcu_read_lock();
--	module_put(THIS_MODULE);
-+	if (NFNL_MSG_TYPE(info->nlh->nlmsg_type) == NFT_MSG_GETRULE_RESET)
-+		reset = true;
- 
-+	skb2 = nf_tables_getrule_single(portid, info, nla, reset);
- 	if (IS_ERR(skb2))
- 		return PTR_ERR(skb2);
- 
-+	if (!reset)
-+		return nfnetlink_unicast(skb2, net, portid);
-+
- 	buf = kasprintf(GFP_ATOMIC, "%.*s:%u",
- 			nla_len(nla[NFTA_RULE_TABLE]),
- 			(char *)nla_data(nla[NFTA_RULE_TABLE]),
-@@ -6332,6 +6280,10 @@ static int nf_tables_dump_set(struct sk_buff *skb, struct netlink_callback *cb)
- 	nla_nest_end(skb, nest);
- 	nlmsg_end(skb, nlh);
- 
-+	if (dump_ctx->reset && args.iter.count > args.iter.skip)
-+		audit_log_nft_set_reset(table, cb->seq,
-+					args.iter.count - args.iter.skip);
-+
- 	rcu_read_unlock();
- 
- 	if (args.iter.err && args.iter.err != -EMSGSIZE)
-@@ -6347,26 +6299,6 @@ static int nf_tables_dump_set(struct sk_buff *skb, struct netlink_callback *cb)
- 	return -ENOSPC;
- }
- 
--static int nf_tables_dumpreset_set(struct sk_buff *skb,
--				   struct netlink_callback *cb)
--{
--	struct nftables_pernet *nft_net = nft_pernet(sock_net(skb->sk));
--	struct nft_set_dump_ctx *dump_ctx = cb->data;
--	int ret, skip = cb->args[0];
--
--	mutex_lock(&nft_net->commit_mutex);
--
--	ret = nf_tables_dump_set(skb, cb);
--
--	if (cb->args[0] > skip)
--		audit_log_nft_set_reset(dump_ctx->ctx.table, cb->seq,
--					cb->args[0] - skip);
--
--	mutex_unlock(&nft_net->commit_mutex);
--
--	return ret;
--}
--
- static int nf_tables_dump_set_start(struct netlink_callback *cb)
- {
- 	struct nft_set_dump_ctx *dump_ctx = cb->data;
-@@ -6613,8 +6545,13 @@ static int nf_tables_getsetelem(struct sk_buff *skb,
- {
- 	struct netlink_ext_ack *extack = info->extack;
- 	struct nft_set_dump_ctx dump_ctx;
-+	int rem, err = 0, nelems = 0;
-+	struct net *net = info->net;
- 	struct nlattr *attr;
--	int rem, err = 0;
-+	bool reset = false;
-+
-+	if (NFNL_MSG_TYPE(info->nlh->nlmsg_type) == NFT_MSG_GETSETELEM_RESET)
-+		reset = true;
- 
- 	if (info->nlh->nlmsg_flags & NLM_F_DUMP) {
- 		struct netlink_dump_control c = {
-@@ -6624,7 +6561,7 @@ static int nf_tables_getsetelem(struct sk_buff *skb,
- 			.module = THIS_MODULE,
- 		};
- 
--		err = nft_set_dump_ctx_init(&dump_ctx, skb, info, nla, false);
-+		err = nft_set_dump_ctx_init(&dump_ctx, skb, info, nla, reset);
- 		if (err)
- 			return err;
- 
-@@ -6635,75 +6572,21 @@ static int nf_tables_getsetelem(struct sk_buff *skb,
- 	if (!nla[NFTA_SET_ELEM_LIST_ELEMENTS])
- 		return -EINVAL;
- 
--	err = nft_set_dump_ctx_init(&dump_ctx, skb, info, nla, false);
-+	err = nft_set_dump_ctx_init(&dump_ctx, skb, info, nla, reset);
- 	if (err)
- 		return err;
- 
- 	nla_for_each_nested(attr, nla[NFTA_SET_ELEM_LIST_ELEMENTS], rem) {
--		err = nft_get_set_elem(&dump_ctx.ctx, dump_ctx.set, attr, false);
--		if (err < 0) {
--			NL_SET_BAD_ATTR(extack, attr);
--			break;
--		}
--	}
--
--	return err;
--}
--
--static int nf_tables_getsetelem_reset(struct sk_buff *skb,
--				      const struct nfnl_info *info,
--				      const struct nlattr * const nla[])
--{
--	struct nftables_pernet *nft_net = nft_pernet(info->net);
--	struct netlink_ext_ack *extack = info->extack;
--	struct nft_set_dump_ctx dump_ctx;
--	int rem, err = 0, nelems = 0;
--	struct nlattr *attr;
--
--	if (info->nlh->nlmsg_flags & NLM_F_DUMP) {
--		struct netlink_dump_control c = {
--			.start = nf_tables_dump_set_start,
--			.dump = nf_tables_dumpreset_set,
--			.done = nf_tables_dump_set_done,
--			.module = THIS_MODULE,
--		};
--
--		err = nft_set_dump_ctx_init(&dump_ctx, skb, info, nla, true);
--		if (err)
--			return err;
--
--		c.data = &dump_ctx;
--		return nft_netlink_dump_start_rcu(info->sk, skb, info->nlh, &c);
--	}
--
--	if (!nla[NFTA_SET_ELEM_LIST_ELEMENTS])
--		return -EINVAL;
--
--	if (!try_module_get(THIS_MODULE))
--		return -EINVAL;
--	rcu_read_unlock();
--	mutex_lock(&nft_net->commit_mutex);
--	rcu_read_lock();
--
--	err = nft_set_dump_ctx_init(&dump_ctx, skb, info, nla, true);
--	if (err)
--		goto out_unlock;
--
--	nla_for_each_nested(attr, nla[NFTA_SET_ELEM_LIST_ELEMENTS], rem) {
--		err = nft_get_set_elem(&dump_ctx.ctx, dump_ctx.set, attr, true);
-+		err = nft_get_set_elem(&dump_ctx.ctx, dump_ctx.set, attr, reset);
- 		if (err < 0) {
- 			NL_SET_BAD_ATTR(extack, attr);
- 			break;
- 		}
- 		nelems++;
+ 	/* Set io base address for each channel */
+ 	if (index < 8) {
+ 		channel->ch_base = dmac->base + CHANNEL_0_7_OFFSET +
+@@ -844,9 +823,9 @@ static int rz_dmac_chan_probe(struct rz_dmac *dmac,
  	}
--	audit_log_nft_set_reset(dump_ctx.ctx.table, nft_base_seq(info->net), nelems);
--
--out_unlock:
--	rcu_read_unlock();
--	mutex_unlock(&nft_net->commit_mutex);
--	rcu_read_lock();
--	module_put(THIS_MODULE);
-+	if (reset)
-+		audit_log_nft_set_reset(dump_ctx.ctx.table, nft_base_seq(net),
-+					nelems);
  
- 	return err;
- }
-@@ -8567,19 +8450,6 @@ static int nf_tables_dump_obj(struct sk_buff *skb, struct netlink_callback *cb)
- 	return skb->len;
- }
- 
--static int nf_tables_dumpreset_obj(struct sk_buff *skb,
--				   struct netlink_callback *cb)
--{
--	struct nftables_pernet *nft_net = nft_pernet(sock_net(skb->sk));
--	int ret;
--
--	mutex_lock(&nft_net->commit_mutex);
--	ret = nf_tables_dump_obj(skb, cb);
--	mutex_unlock(&nft_net->commit_mutex);
--
--	return ret;
--}
--
- static int nf_tables_dump_obj_start(struct netlink_callback *cb)
- {
- 	struct nft_obj_dump_ctx *ctx = (void *)cb->ctx;
-@@ -8596,16 +8466,10 @@ static int nf_tables_dump_obj_start(struct netlink_callback *cb)
- 	if (nla[NFTA_OBJ_TYPE])
- 		ctx->type = ntohl(nla_get_be32(nla[NFTA_OBJ_TYPE]));
+ 	/* Allocate descriptors */
+-	lmdesc = dma_alloc_coherent(&pdev->dev,
+-				    sizeof(struct rz_lmdesc) * DMAC_NR_LMDESC,
+-				    &channel->lmdesc.base_dma, GFP_KERNEL);
++	lmdesc = dmam_alloc_coherent(&pdev->dev,
++				     sizeof(struct rz_lmdesc) * DMAC_NR_LMDESC,
++				     &channel->lmdesc.base_dma, GFP_KERNEL);
+ 	if (!lmdesc) {
+ 		dev_err(&pdev->dev, "Can't allocate memory (lmdesc)\n");
+ 		return -ENOMEM;
+@@ -862,7 +841,26 @@ static int rz_dmac_chan_probe(struct rz_dmac *dmac,
+ 	INIT_LIST_HEAD(&channel->ld_free);
+ 	INIT_LIST_HEAD(&channel->ld_active);
  
 -	return 0;
--}
--
--static int nf_tables_dumpreset_obj_start(struct netlink_callback *cb)
--{
--	struct nft_obj_dump_ctx *ctx = (void *)cb->ctx;
--
--	ctx->reset = true;
-+	if (NFNL_MSG_TYPE(cb->nlh->nlmsg_type) == NFT_MSG_GETOBJ_RESET)
-+		ctx->reset = true;
- 
--	return nf_tables_dump_obj_start(cb);
-+	return 0;
++	/* Request the channel interrupt. */
++	scnprintf(pdev_irqname, sizeof(pdev_irqname), "ch%u", index);
++	channel->irq = platform_get_irq_byname(pdev, pdev_irqname);
++	if (channel->irq < 0)
++		return channel->irq;
++
++	irqname = devm_kasprintf(dmac->dev, GFP_KERNEL, "%s:%u",
++				 dev_name(dmac->dev), index);
++	if (!irqname)
++		return -ENOMEM;
++
++	ret = devm_request_threaded_irq(dmac->dev, channel->irq,
++					rz_dmac_irq_handler,
++					rz_dmac_irq_handler_thread, 0,
++					irqname, channel);
++	if (ret)
++		dev_err(dmac->dev, "failed to request IRQ %u (%d)\n",
++			channel->irq, ret);
++
++	return ret;
  }
  
- static int nf_tables_dump_obj_done(struct netlink_callback *cb)
-@@ -8667,42 +8531,16 @@ nf_tables_getobj_single(u32 portid, const struct nfnl_info *info,
- static int nf_tables_getobj(struct sk_buff *skb, const struct nfnl_info *info,
- 			    const struct nlattr * const nla[])
- {
--	u32 portid = NETLINK_CB(skb).portid;
--	struct sk_buff *skb2;
--
--	if (info->nlh->nlmsg_flags & NLM_F_DUMP) {
--		struct netlink_dump_control c = {
--			.start = nf_tables_dump_obj_start,
--			.dump = nf_tables_dump_obj,
--			.done = nf_tables_dump_obj_done,
--			.module = THIS_MODULE,
--			.data = (void *)nla,
--		};
--
--		return nft_netlink_dump_start_rcu(info->sk, skb, info->nlh, &c);
--	}
--
--	skb2 = nf_tables_getobj_single(portid, info, nla, false);
--	if (IS_ERR(skb2))
--		return PTR_ERR(skb2);
--
--	return nfnetlink_unicast(skb2, info->net, portid);
--}
--
--static int nf_tables_getobj_reset(struct sk_buff *skb,
--				  const struct nfnl_info *info,
--				  const struct nlattr * const nla[])
--{
--	struct nftables_pernet *nft_net = nft_pernet(info->net);
- 	u32 portid = NETLINK_CB(skb).portid;
- 	struct net *net = info->net;
- 	struct sk_buff *skb2;
-+	bool reset = false;
- 	char *buf;
- 
- 	if (info->nlh->nlmsg_flags & NLM_F_DUMP) {
- 		struct netlink_dump_control c = {
--			.start = nf_tables_dumpreset_obj_start,
--			.dump = nf_tables_dumpreset_obj,
-+			.start = nf_tables_dump_obj_start,
-+			.dump = nf_tables_dump_obj,
- 			.done = nf_tables_dump_obj_done,
- 			.module = THIS_MODULE,
- 			.data = (void *)nla,
-@@ -8711,18 +8549,16 @@ static int nf_tables_getobj_reset(struct sk_buff *skb,
- 		return nft_netlink_dump_start_rcu(info->sk, skb, info->nlh, &c);
+ static void rz_dmac_put_device(void *_dev)
+@@ -932,7 +930,6 @@ static int rz_dmac_probe(struct platform_device *pdev)
+ 	const char *irqname = "error";
+ 	struct dma_device *engine;
+ 	struct rz_dmac *dmac;
+-	int channel_num;
+ 	int ret;
+ 	int irq;
+ 	u8 i;
+@@ -964,19 +961,6 @@ static int rz_dmac_probe(struct platform_device *pdev)
+ 			return PTR_ERR(dmac->ext_base);
  	}
  
--	if (!try_module_get(THIS_MODULE))
--		return -EINVAL;
--	rcu_read_unlock();
--	mutex_lock(&nft_net->commit_mutex);
--	skb2 = nf_tables_getobj_single(portid, info, nla, true);
--	mutex_unlock(&nft_net->commit_mutex);
--	rcu_read_lock();
--	module_put(THIS_MODULE);
-+	if (NFNL_MSG_TYPE(info->nlh->nlmsg_type) == NFT_MSG_GETOBJ_RESET)
-+		reset = true;
+-	/* Register interrupt handler for error */
+-	irq = platform_get_irq_byname(pdev, irqname);
+-	if (irq < 0)
+-		return irq;
+-
+-	ret = devm_request_irq(&pdev->dev, irq, rz_dmac_irq_handler, 0,
+-			       irqname, NULL);
+-	if (ret) {
+-		dev_err(&pdev->dev, "failed to request IRQ %u (%d)\n",
+-			irq, ret);
+-		return ret;
+-	}
+-
+ 	/* Initialize the channels. */
+ 	INIT_LIST_HEAD(&dmac->engine.channels);
  
-+	skb2 = nf_tables_getobj_single(portid, info, nla, reset);
- 	if (IS_ERR(skb2))
- 		return PTR_ERR(skb2);
+@@ -1002,6 +986,21 @@ static int rz_dmac_probe(struct platform_device *pdev)
+ 			goto err;
+ 	}
  
-+	if (!reset)
-+		return nfnetlink_unicast(skb2, net, NETLINK_CB(skb).portid);
++	/* Register interrupt handler for error */
++	irq = platform_get_irq_byname(pdev, irqname);
++	if (irq < 0) {
++		ret = irq;
++		goto err;
++	}
 +
- 	buf = kasprintf(GFP_ATOMIC, "%.*s:%u",
- 			nla_len(nla[NFTA_OBJ_TABLE]),
- 			(char *)nla_data(nla[NFTA_OBJ_TABLE]),
-@@ -10030,7 +9866,7 @@ static const struct nfnl_callback nf_tables_cb[NFT_MSG_MAX] = {
- 		.policy		= nft_rule_policy,
- 	},
- 	[NFT_MSG_GETRULE_RESET] = {
--		.call		= nf_tables_getrule_reset,
-+		.call		= nf_tables_getrule,
- 		.type		= NFNL_CB_RCU,
- 		.attr_count	= NFTA_RULE_MAX,
- 		.policy		= nft_rule_policy,
-@@ -10084,7 +9920,7 @@ static const struct nfnl_callback nf_tables_cb[NFT_MSG_MAX] = {
- 		.policy		= nft_set_elem_list_policy,
- 	},
- 	[NFT_MSG_GETSETELEM_RESET] = {
--		.call		= nf_tables_getsetelem_reset,
-+		.call		= nf_tables_getsetelem,
- 		.type		= NFNL_CB_RCU,
- 		.attr_count	= NFTA_SET_ELEM_LIST_MAX,
- 		.policy		= nft_set_elem_list_policy,
-@@ -10130,7 +9966,7 @@ static const struct nfnl_callback nf_tables_cb[NFT_MSG_MAX] = {
- 		.policy		= nft_obj_policy,
- 	},
- 	[NFT_MSG_GETOBJ_RESET] = {
--		.call		= nf_tables_getobj_reset,
-+		.call		= nf_tables_getobj,
- 		.type		= NFNL_CB_RCU,
- 		.attr_count	= NFTA_OBJ_MAX,
- 		.policy		= nft_obj_policy,
++	ret = devm_request_irq(&pdev->dev, irq, rz_dmac_irq_handler, 0,
++			       irqname, NULL);
++	if (ret) {
++		dev_err(&pdev->dev, "failed to request IRQ %u (%d)\n",
++			irq, ret);
++		goto err;
++	}
++
+ 	/* Register the DMAC as a DMA provider for DT. */
+ 	ret = of_dma_controller_register(pdev->dev.of_node, rz_dmac_of_xlate,
+ 					 NULL);
+@@ -1040,16 +1039,6 @@ static int rz_dmac_probe(struct platform_device *pdev)
+ dma_register_err:
+ 	of_dma_controller_free(pdev->dev.of_node);
+ err:
+-	channel_num = i ? i - 1 : 0;
+-	for (i = 0; i < channel_num; i++) {
+-		struct rz_dmac_chan *channel = &dmac->channels[i];
+-
+-		dma_free_coherent(&pdev->dev,
+-				  sizeof(struct rz_lmdesc) * DMAC_NR_LMDESC,
+-				  channel->lmdesc.base,
+-				  channel->lmdesc.base_dma);
+-	}
+-
+ 	reset_control_assert(dmac->rstc);
+ err_pm_runtime_put:
+ 	pm_runtime_put(&pdev->dev);
+@@ -1062,18 +1051,9 @@ static int rz_dmac_probe(struct platform_device *pdev)
+ static void rz_dmac_remove(struct platform_device *pdev)
+ {
+ 	struct rz_dmac *dmac = platform_get_drvdata(pdev);
+-	unsigned int i;
+ 
+ 	dma_async_device_unregister(&dmac->engine);
+ 	of_dma_controller_free(pdev->dev.of_node);
+-	for (i = 0; i < dmac->n_channels; i++) {
+-		struct rz_dmac_chan *channel = &dmac->channels[i];
+-
+-		dma_free_coherent(&pdev->dev,
+-				  sizeof(struct rz_lmdesc) * DMAC_NR_LMDESC,
+-				  channel->lmdesc.base,
+-				  channel->lmdesc.base_dma);
+-	}
+ 	reset_control_assert(dmac->rstc);
+ 	pm_runtime_put(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
 -- 
 2.53.0
 
