@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19E9643B6D1;
-	Thu, 30 Jul 2026 14:33:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67EF843B6D1;
+	Thu, 30 Jul 2026 14:34:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422040; cv=none; b=RT8IX21SGBzH17OERjgUttbbM/Fhd/XkEwhDEzuNsBcr7UccRDLFsePHfl+hma2maP61QWkYGVChfHFZ/1qXBdZljla6p5vdYRiD9SW5fZYPWDw23pMsRwbs/sSygsMML78Co98s8NQvEOKqk5f/BCBdpcqZrXood7gcyRo06MQ=
+	t=1785422043; cv=none; b=jc5hVhX8eLirFW0qSOM6Yzt2KfoBpOTufiOkUYLhmQ217Z45gtg7budFi7F6Cz3+TXVwxMIrnCapYAY3TNsSpRF63bbxcMb6P9On3JHMYJiRROS2U3e5u4qxT7QWm8ORQQqvp2IeldrfuzpbqX/y2A8Mq4dDJ1rRSgTkx5tyJ9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422040; c=relaxed/simple;
-	bh=ewjWWQx6SBUPVIbP8xS1EG+D3H8j91sJuZ2ePIMCaac=;
+	s=arc-20240116; t=1785422043; c=relaxed/simple;
+	bh=9gpch5OU27zuMPP4RWxsm85zM0MC7ZFRFH8vjNBIPx8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ln027Y/0YOCY7oWBRoT2MmfUrUQUIFJPlWWv6M7dWQLBxNH8qCmaaHuaDyD1pUhbnc5laWd+lWptyLA8vinWe2ePCbu6fEGdL8VkQwh7l0/bCtLzj/l69FOqDqT0Tj6R4uj+WyHTZ/uuV4XYQtxBX3kaxrvHFqNUPYc2FSfJUFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UgfDDmSf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HUTtfjTCF/A7mCmYMgmeVKuz9WZqsxb/oZqrZBkurfHTAIYrSyn/X0F1bbOey5R6Bd2bJYN/s7eIQFZhj/gpbKyYadM8s/lcNUOveK1B/f2Qs1XD06+PHKx311alJl7a0EYLZmmgmojg2A7l4r5UBOvomk4NQ4Na5lddA4mmKPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TPMyOi4w; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UgfDDmSf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B7041F000E9;
-	Thu, 30 Jul 2026 14:33:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TPMyOi4w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7555A1F000E9;
+	Thu, 30 Jul 2026 14:34:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422039;
-	bh=ArTVukRAoy6SLXmK7UnY8HiWb/SoiSt0fewG+TKDWFw=;
+	s=korg; t=1785422042;
+	bh=SXTtY01KPPTFMp64FrzbVAQCxYhutzf8i8DXyzNioHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UgfDDmSfb/XKTl+E7RLEIOlU4i7rUbXf6C3nMFoqwtxwtWVswG7IXAmlb0OlLzAIF
-	 P8G0sk02ayc6DubZmn7q3xfWBdBmxujsZklbAEtNSrGf4lTBTdIch4j1in9iksjmBF
-	 dZTCItLZQpN/+NuE0hiXa4q+wU9w9WsIaWHl1+Eg=
+	b=TPMyOi4w1Qd0JE45Q3Ud0I2YADG7diPzGG4/Z94fQhTb56SIAFugd0OnqdCoWcpxW
+	 rthirjUrTnpxiDdBxiIe44zUiJ87yc4UqY/3NU8QZp9fZtZqEYi2OTRNIZcXD6VQ8p
+	 fBtP2yJ6kSj05/B3oOq+S5aPNsm8zxw08WCRCK10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gregor Herburger <gregor.herburger@linutronix.de>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	Amir Goldstein <amir73il@gmail.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 303/744] drm/vc4: hvs/v3d: Fix null dereference in unbind
-Date: Thu, 30 Jul 2026 16:09:36 +0200
-Message-ID: <20260730141450.730701406@linuxfoundation.org>
+Subject: [PATCH 7.1 304/744] ovl: check access to copy_file_range source with src mounter creds
+Date: Thu, 30 Jul 2026 16:09:37 +0200
+Message-ID: <20260730141450.752377269@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -45,63 +45,86 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gregor Herburger <gregor.herburger@linutronix.de>
+From: Amir Goldstein <amir73il@gmail.com>
 
-[ Upstream commit 7dc3680b7ffe01add3e9299fde8471d2dd53a8ae ]
+[ Upstream commit a1e0eb8f55cfe09bb31a202a388babc411292656 ]
 
-The hvs and v3d drivers use dev_get_drvdata(master) in their unbind
-functions. Since the vc4-drm gets removed before its dependent drivers
-(vc4_hvs/vc4_v3d) the vc4_hvs_unbind/vc4_v3d_unbind functions try to
-get drvdata of its master and fails with a null dereference error.
+Commit 5dae222a5ff0c ("vfs: allow copy_file_range to copy across devices")
+allowed filesystems that implement the copy_file_range() f_op to decide
+if they want to access cross-sb copy from/to the same fs type.
 
-Use the data pointer passed to the unbind functions directly instead of
-dev_get_drvdata(master). This avoids using potentially freed memory.
+The same commit added checks to verify same sb copy for filesystems that
+implement ->copy_file_range() and do not support cross-sb copy at the
+time, namely, to ceph, fuse and nfs.
 
-Fixes: d3f5168a0810 ("drm/vc4: Bind and initialize the V3D engine.")
-Fixes: c8b75bca92cb ("drm/vc4: Add KMS support for Raspberry Pi.")
-Signed-off-by: Gregor Herburger <gregor.herburger@linutronix.de>
-Link: https://patch.msgid.link/20260721-rpi-vc4-fix-v2-1-b813dcd01dc7@linutronix.de
-Reviewed-by: Maíra Canal <mcanal@igalia.com>
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
+The two remaining fs which implement ->copy_file_range(), cifs and
+overlayfs started to support cross-sb copy from this time.
+
+While overlayfs does support cross-sb copy when the two underlying files
+are on the same base fs, the copy operation on the two real files from
+two different overalyfs filesystems is performed with the mounter
+creds of the destination overlayfs and the read permission access hook
+for the source file was called with the wrong creds.
+
+This could cause either deny of access to copy which would otherwise be
+allowed (e.g. with splice) or allow read access to file which would
+otherwise be denied.
+
+Fix the latter case by explicitly verifying read access to source file
+with the source overlayfs mounter creds.
+
+The former case remains a quirk of cross-sb overlayfs copy, but
+userspace could fall back to regular copy so no harm done.
+
+Fixes: 5dae222a5ff0c ("vfs: allow copy_file_range to copy across devices")
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Link: https://patch.msgid.link/20260712122421.203113-1-amir73il@gmail.com
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vc4/vc4_hvs.c | 2 +-
- drivers/gpu/drm/vc4/vc4_v3d.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ fs/overlayfs/file.c | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/vc4/vc4_hvs.c b/drivers/gpu/drm/vc4/vc4_hvs.c
-index ee8d0738501b87..89359d1900087d 100644
---- a/drivers/gpu/drm/vc4/vc4_hvs.c
-+++ b/drivers/gpu/drm/vc4/vc4_hvs.c
-@@ -1752,7 +1752,7 @@ static int vc4_hvs_bind(struct device *dev, struct device *master, void *data)
- static void vc4_hvs_unbind(struct device *dev, struct device *master,
- 			   void *data)
+diff --git a/fs/overlayfs/file.c b/fs/overlayfs/file.c
+index 27cc07738f33bf..f3d97eb146e85b 100644
+--- a/fs/overlayfs/file.c
++++ b/fs/overlayfs/file.c
+@@ -528,6 +528,7 @@ static loff_t ovl_copyfile(struct file *file_in, loff_t pos_in,
+ 			    struct file *file_out, loff_t pos_out,
+ 			    loff_t len, unsigned int flags, enum ovl_copyop op)
  {
--	struct drm_device *drm = dev_get_drvdata(master);
-+	struct drm_device *drm = data;
- 	struct vc4_dev *vc4 = to_vc4_dev(drm);
- 	struct vc4_hvs *hvs = vc4->hvs;
- 	struct drm_mm_node *node, *next;
-diff --git a/drivers/gpu/drm/vc4/vc4_v3d.c b/drivers/gpu/drm/vc4/vc4_v3d.c
-index d31b906cb8e787..f32410420d3e4d 100644
---- a/drivers/gpu/drm/vc4/vc4_v3d.c
-+++ b/drivers/gpu/drm/vc4/vc4_v3d.c
-@@ -494,7 +494,7 @@ static int vc4_v3d_bind(struct device *dev, struct device *master, void *data)
- static void vc4_v3d_unbind(struct device *dev, struct device *master,
- 			   void *data)
- {
--	struct drm_device *drm = dev_get_drvdata(master);
-+	struct drm_device *drm = data;
- 	struct vc4_dev *vc4 = to_vc4_dev(drm);
++	struct inode *inode_in = file_inode(file_in);
+ 	struct inode *inode_out = file_inode(file_out);
+ 	struct file *realfile_in, *realfile_out;
+ 	loff_t ret;
+@@ -551,7 +552,20 @@ static loff_t ovl_copyfile(struct file *file_in, loff_t pos_in,
+ 	if (IS_ERR(realfile_in))
+ 		goto out_unlock;
  
- 	vc4_irq_uninstall(drm);
+-	with_ovl_creds(file_inode(file_out)->i_sb) {
++	/*
++	 * For cross-sb copy, vfs_copy_file_range() will verify read access with
++	 * the mounter creds of the dest fs mounter, so we need to explicitly
++	 * verify read access with the source mounter creds.
++	 */
++	if (unlikely(inode_in->i_sb != inode_out->i_sb)) {
++		with_ovl_creds(inode_in->i_sb) {
++			ret = rw_verify_area(READ, realfile_in, &pos_in, len);
++			if (unlikely(ret))
++				goto out_unlock;
++		}
++	}
++
++	with_ovl_creds(inode_out->i_sb) {
+ 		switch (op) {
+ 		case OVL_COPY:
+ 			ret = vfs_copy_file_range(realfile_in, pos_in,
 -- 
 2.53.0
 
