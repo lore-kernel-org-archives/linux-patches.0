@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D64843793A9;
-	Thu, 30 Jul 2026 14:50:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A41743793A9;
+	Thu, 30 Jul 2026 14:50:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423047; cv=none; b=oSSvdTsqkKhgSVZbeYVUTxuP0Dw2eraSg5inCCIRFso098eXnNpxqxIXr6WUvBja5ezmDkWuidJzWlRTuqBFQYYP3iHc3906fexT3ZLW1cg9QcvDElYzJOOYDfrogGGi8lsKGRWXEwmb2QKOHg4zl8PVmKKQ6xez71hdTRqN21E=
+	t=1785423049; cv=none; b=hNnY6zQRpnp7H5LUZ7JgLw4Jn01s4SfLLDIVRIG2IST10/kDjIhBir/DLp4JtXbpnfVNcm/zF34T8j8q2vmDim7wE2GQYWhCogaIOS+8MLg7fL8kS3IxWupNn+s3BVKftozmbdP/nJwCWFjAMpWlk/d4gY9AOuPCUGgHRp5E3n0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423047; c=relaxed/simple;
-	bh=ZfrPJYOId4xTfDeOqhbIZ6xkOu+fmn7vcJUDuO0uDbA=;
+	s=arc-20240116; t=1785423049; c=relaxed/simple;
+	bh=pkRgziKZTXv9ypTQi+tlONUBfSsqSlgssq/88UwwXY4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pXBYw5cNIac+kBgZPvzS0uybl4bAMNxzhlwfcvLznnNen0iEyUQdzaMFXgb3LpKmCKR4S5JfPmJeOcdrUheAF6W+g8s6u+5s+KuuLlVUy8kE42o6Ki+w7UIMVCtMI09Kp05IR1d9m2S0QdwnEP96fH68uwl8ACsfyEVPTfYBRpE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xy+0Y+qr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=I1iJlw9cMbtxONx8ZftMoLuyEnnsjw+y2KCQ5PvQPy/n8pZYMUYVUymje949PzT5DothXizpkbZGxfxNyZd0oY0Z/GNl/Hq5zqS7RJgrz8TCE3HjZa3Y+Fv9KPdieJYlpLOC0+FwjiaolXvl6VxobhGEsRi9n9MAikWeGdodvn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uUVggTaK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xy+0Y+qr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DE041F000E9;
-	Thu, 30 Jul 2026 14:50:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uUVggTaK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11E351F000E9;
+	Thu, 30 Jul 2026 14:50:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423045;
-	bh=D9DUoPozoNB+BsMJ2TQaTXYMVpAyARvF4wS0LDBv9hs=;
+	s=korg; t=1785423048;
+	bh=9jkgB8ObbxO/GDhdlSCIWLBH1PSZKsJJhF6LgDv3oPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xy+0Y+qrDgF9ojWXxQveoYU7hGeNm1WSup6BEb1Cl0HnS1anAvVE2aE7ZbaFNk2MU
-	 Ss+8aUSGjxTQp10Tn20qrcJt0eI7oi6gWTekRCIrmpdjLrY85tl7G24vGnsZoR4mjg
-	 aUpwS5YX6fEyR8YohszmOOHhKYh0wdYRme6yVdJk=
+	b=uUVggTaKrozZMLObCfc9DsaRkhAIuheQTyUsGpzUzmx4wP+0YaPTY+2h+f15wQzJH
+	 ZqX4LRP97tirMABrCSljl/IwRqXZ66ohYY5ne3ftl6ZsO+1r6dh+uAYpxzoLO0wRgF
+	 gomJxmbhuIPOCgp6VxcGi69qAtC9bjU+oQx9TPds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Eric Biggers <ebiggers@kernel.org>
-Subject: [PATCH 7.1 645/744] fscrypt: Avoid dynamic allocation in fscrypt_get_devices()
-Date: Thu, 30 Jul 2026 16:15:18 +0200
-Message-ID: <20260730141457.981220950@linuxfoundation.org>
+	Kees Cook <kees@kernel.org>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Yiqi Sun <sunyiqixm@gmail.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 7.1 604/744] arm64: syscall: Ensure saved x0 is kept in-sync with tracer updates
+Date: Thu, 30 Jul 2026 16:14:37 +0200
+Message-ID: <20260730141457.114603196@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -51,253 +54,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Will Deacon <will@kernel.org>
 
-commit 6fe4e4b8259e1330945b5f3c9476e08473b8e0e8 upstream.
+commit e057b94772328221405b067c3a85fe479b915dc8 upstream.
 
-When a blk_crypto_key starts being used or is evicted, fs/crypto/ calls
-fscrypt_get_devices() to get the filesystem's list of block devices,
-then iterates over them and calls blk_crypto_config_supported(),
-blk_crypto_start_using_key(), or blk_crypto_evict_key() on each one.
+When seccomp support was originally added to arm64 in a1ae65b21941
+("arm64: add seccomp support"), seccomp was erroneously called _before_
+the ptrace syscall-enter-stop and therefore the tracer could trivially
+manipulate the syscall register state after the seccomp check had
+passed. This was subsequently fixed in a5cd110cb836 ("arm64/ptrace: run
+seccomp after ptrace") by moving the seccomp check after the tracer has
+run. Unfortunately, a decade later, that fix has been reported to be
+incomplete.
 
-Currently, the block device pointers are placed in a dynamically
-allocated array.  This dynamic allocation is problematic because:
+On arm64, both the first argument to a syscall and its eventual return
+value are allocated to register x0. In order to facilitate syscall
+restarting and querying of syscall arguments on the syscall exit path,
+the original value of x0 is stashed in 'struct pt_regs::orig_x0' early
+during the syscall entry path and is returned for the first argument by
+syscall_get_arguments(). Unlike 32-bit Arm, this stashed value is not
+directly exposed via ptrace() and so changes to register x0 made by the
+tracer on a syscall-enter-stop are not reflected in 'orig_x0'. This
+means that seccomp, syscall tracepoints and audit can observe a stale
+value for the register compared to the argument that will be observed by
+the actual syscall.
 
-- It can fail, especially at the fscrypt_destroy_inline_crypt_key() call
-  site when it's invoked for inode eviction under direct reclaim.
+Re-sync 'orig_x0' from x0 on the syscall entry path following a
+potential ptrace stop (i.e. PTRACE_EVENTMSG_SYSCALL_ENTRY or
+SECCOMP_RET_TRACE). This behaviour is limited to native tasks (because
+compat tasks expose 'orig_r0' to ptrace) where the syscall is not being
+skipped (because x0 is updated to hold the return value of -ENOSYS in
+that case).
 
-- fscrypt_destroy_inline_crypt_key() doesn't handle the failure.  It
-  just zeroizes and frees the blk_crypto_key without calling
-  blk_crypto_evict_key().  That causes a use-after-free.
-
-For now, let's fix this in the straightforward and easily-backportable
-way by switching to an on-stack array.  Currently the fscrypt
-multi-device functionality is used only by f2fs, which has a hardcoded
-limit of 8 block devices.  An on-stack array works fine for that.
-
-(Of course, this solution won't scale up to large number of block
-devices.  For that we'd need a different solution, like moving the block
-device iteration into the filesystem.  Or in the case of btrfs, which
-will only support blk-crypto-fallback, we should make it just call
-blk-crypto-fallback directly, so the block devices won't be needed.)
-
-Fixes: 22e9947a4b2b ("fscrypt: stop holding extra request_queue references")
+Cc: Kees Cook <kees@kernel.org>
+Cc: Jinjie Ruan <ruanjinjie@huawei.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260713023708.9245-1-ebiggers%40kernel.org
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20260719055602.78828-1-ebiggers@kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Reported-by: Yiqi Sun <sunyiqixm@gmail.com>
+Link: https://lore.kernel.org/all/20260529065444.1336608-1-sunyiqixm@gmail.com/
+Suggested-by: Catalin Marinas <catalin.marinas@arm.com>
+Fixes: a5cd110cb836 ("arm64/ptrace: run seccomp after ptrace")
+Reviewed-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Tested-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/crypto/inline_crypt.c |   57 ++++++++++++++++-------------------------------
- fs/f2fs/super.c          |   25 +++++++++++---------
- include/linux/fscrypt.h  |   20 +++++++++-------
- 3 files changed, 45 insertions(+), 57 deletions(-)
+ arch/arm64/kernel/ptrace.c |   29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
 
---- a/fs/crypto/inline_crypt.c
-+++ b/fs/crypto/inline_crypt.c
-@@ -22,22 +22,14 @@
- 
- #include "fscrypt_private.h"
- 
--static struct block_device **fscrypt_get_devices(struct super_block *sb,
--						 unsigned int *num_devs)
-+static unsigned int
-+fscrypt_get_devices(struct super_block *sb,
-+		    struct block_device *devs[FSCRYPT_MAX_DEVICES])
- {
--	struct block_device **devs;
--
--	if (sb->s_cop->get_devices) {
--		devs = sb->s_cop->get_devices(sb, num_devs);
--		if (devs)
--			return devs;
--	}
--	devs = kmalloc_obj(*devs);
--	if (!devs)
--		return ERR_PTR(-ENOMEM);
-+	if (sb->s_cop->get_devices)
-+		return sb->s_cop->get_devices(sb, devs);
- 	devs[0] = sb->s_bdev;
--	*num_devs = 1;
--	return devs;
-+	return 1;
+--- a/arch/arm64/kernel/ptrace.c
++++ b/arch/arm64/kernel/ptrace.c
+@@ -2408,6 +2408,21 @@ static void report_syscall_exit(struct p
+ 	}
  }
  
- static unsigned int fscrypt_get_dun_bytes(const struct fscrypt_inode_info *ci)
-@@ -96,7 +88,7 @@ int fscrypt_select_encryption_impl(struc
- 	const struct inode *inode = ci->ci_inode;
- 	struct super_block *sb = inode->i_sb;
- 	struct blk_crypto_config crypto_cfg;
--	struct block_device **devs;
-+	struct block_device *devs[FSCRYPT_MAX_DEVICES];
- 	unsigned int num_devs;
- 	unsigned int i;
- 
-@@ -135,20 +127,15 @@ int fscrypt_select_encryption_impl(struc
- 	crypto_cfg.key_type = is_hw_wrapped_key ?
- 		BLK_CRYPTO_KEY_TYPE_HW_WRAPPED : BLK_CRYPTO_KEY_TYPE_RAW;
- 
--	devs = fscrypt_get_devices(sb, &num_devs);
--	if (IS_ERR(devs))
--		return PTR_ERR(devs);
--
-+	num_devs = fscrypt_get_devices(sb, devs);
- 	for (i = 0; i < num_devs; i++) {
- 		if (!blk_crypto_config_supported(devs[i], &crypto_cfg))
--			goto out_free_devs;
-+			return 0;
- 	}
- 
- 	fscrypt_log_blk_crypto_impl(ci->ci_mode, devs, num_devs, &crypto_cfg);
- 
- 	ci->ci_inlinecrypt = true;
--out_free_devs:
--	kfree(devs);
- 
- 	return 0;
- }
-@@ -164,7 +151,7 @@ int fscrypt_prepare_inline_crypt_key(str
- 	enum blk_crypto_key_type key_type = is_hw_wrapped ?
- 		BLK_CRYPTO_KEY_TYPE_HW_WRAPPED : BLK_CRYPTO_KEY_TYPE_RAW;
- 	struct blk_crypto_key *blk_key;
--	struct block_device **devs;
-+	struct block_device *devs[FSCRYPT_MAX_DEVICES];
- 	unsigned int num_devs;
- 	unsigned int i;
- 	int err;
-@@ -182,17 +169,12 @@ int fscrypt_prepare_inline_crypt_key(str
- 	}
- 
- 	/* Start using blk-crypto on all the filesystem's block devices. */
--	devs = fscrypt_get_devices(sb, &num_devs);
--	if (IS_ERR(devs)) {
--		err = PTR_ERR(devs);
--		goto fail;
--	}
-+	num_devs = fscrypt_get_devices(sb, devs);
- 	for (i = 0; i < num_devs; i++) {
- 		err = blk_crypto_start_using_key(devs[i], blk_key);
- 		if (err)
- 			break;
- 	}
--	kfree(devs);
- 	if (err) {
- 		fscrypt_err(inode, "error %d starting to use blk-crypto", err);
- 		goto fail;
-@@ -210,20 +192,21 @@ void fscrypt_destroy_inline_crypt_key(st
- 				      struct fscrypt_prepared_key *prep_key)
- {
- 	struct blk_crypto_key *blk_key = prep_key->blk_key;
--	struct block_device **devs;
-+	struct block_device *devs[FSCRYPT_MAX_DEVICES];
- 	unsigned int num_devs;
- 	unsigned int i;
- 
- 	if (!blk_key)
- 		return;
- 
--	/* Evict the key from all the filesystem's block devices. */
--	devs = fscrypt_get_devices(sb, &num_devs);
--	if (!IS_ERR(devs)) {
--		for (i = 0; i < num_devs; i++)
--			blk_crypto_evict_key(devs[i], blk_key);
--		kfree(devs);
--	}
++static void update_syscall_orig_x0_after_ptrace(struct pt_regs *regs)
++{
 +	/*
-+	 * Evict the key from all the filesystem's block devices.
-+	 * This *must* be done before the key is freed.
++	 * Keep orig_x0 authoritative so that seccomp (via
++	 * syscall_get_arguments()), audit and the restart path all see the same
++	 * first argument the syscall is dispatched with, even if it has been
++	 * updated by a tracer. Skip this for NO_SYSCALL (set either by the user
++	 * or the tracer), as regs[0] holds the return value (see the comment in
++	 * el0_svc_common()) and can be unwound using syscall_rollback().
++	 * For compat tasks, orig_r0 is provided directly through GPR index 17.
 +	 */
-+	num_devs = fscrypt_get_devices(sb, devs);
-+	for (i = 0; i < num_devs; i++)
-+		blk_crypto_evict_key(devs[i], blk_key);
++	if (!is_compat_task() && regs->syscallno != NO_SYSCALL)
++		regs->orig_x0 = regs->regs[0];
++}
 +
- 	kfree_sensitive(blk_key);
- }
- 
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -3731,24 +3731,27 @@ static bool f2fs_has_stable_inodes(struc
- 	return true;
- }
- 
--static struct block_device **f2fs_get_devices(struct super_block *sb,
--					      unsigned int *num_devs)
-+static unsigned int
-+f2fs_get_devices(struct super_block *sb,
-+		 struct block_device *devs[FSCRYPT_MAX_DEVICES])
+ int syscall_trace_enter(struct pt_regs *regs)
  {
- 	struct f2fs_sb_info *sbi = F2FS_SB(sb);
--	struct block_device **devs;
-+	int ndevs;
- 	int i;
- 
--	if (!f2fs_is_multi_device(sbi))
--		return NULL;
-+	static_assert(MAX_DEVICES <= FSCRYPT_MAX_DEVICES);
- 
--	devs = kmalloc_objs(*devs, sbi->s_ndevs);
--	if (!devs)
--		return ERR_PTR(-ENOMEM);
-+	if (!f2fs_is_multi_device(sbi)) {
-+		devs[0] = sb->s_bdev;
-+		return 1;
-+	}
-+	ndevs = sbi->s_ndevs;
-+	if (WARN_ON_ONCE(ndevs > FSCRYPT_MAX_DEVICES))
-+		ndevs = FSCRYPT_MAX_DEVICES;
- 
--	for (i = 0; i < sbi->s_ndevs; i++)
-+	for (i = 0; i < ndevs; i++)
- 		devs[i] = FDEV(i).bdev;
--	*num_devs = sbi->s_ndevs;
--	return devs;
-+	return ndevs;
- }
- 
- static const struct fscrypt_operations f2fs_cryptops = {
---- a/include/linux/fscrypt.h
-+++ b/include/linux/fscrypt.h
-@@ -57,6 +57,9 @@ struct fscrypt_name {
- /* Maximum value for the third parameter of fscrypt_operations.set_context(). */
- #define FSCRYPT_SET_CONTEXT_MAX_SIZE	40
- 
-+/* Maximum supported number of block devices per filesystem */
-+#define FSCRYPT_MAX_DEVICES	8
+ 	unsigned long flags = read_thread_flags();
+@@ -2417,12 +2432,26 @@ int syscall_trace_enter(struct pt_regs *
+ 		ret = report_syscall_entry(regs);
+ 		if (ret || (flags & _TIF_SYSCALL_EMU))
+ 			return NO_SYSCALL;
 +
- #ifdef CONFIG_FS_ENCRYPTION
++		/*
++		 * Ensure ptrace changes to x0 during a regular
++		 * syscall-enter-stop (PTRACE_SYSCALL) are visible to
++		 * subsequent seccomp checks, tracepoints and audit.
++		 */
++		update_syscall_orig_x0_after_ptrace(regs);
+ 	}
  
- /* Crypto operations for filesystems */
-@@ -181,21 +184,20 @@ struct fscrypt_operations {
- 	bool (*has_stable_inodes)(struct super_block *sb);
+ 	/* Do the secure computing after ptrace; failures should be fast. */
+ 	if (secure_computing() == -1)
+ 		return NO_SYSCALL;
  
- 	/*
--	 * Return an array of pointers to the block devices to which the
--	 * filesystem may write encrypted file contents, NULL if the filesystem
--	 * only has a single such block device, or an ERR_PTR() on error.
--	 *
--	 * On successful non-NULL return, *num_devs is set to the number of
--	 * devices in the returned array.  The caller must free the returned
--	 * array using kfree().
-+	 * Retrieve the list of block devices to which the filesystem may write
-+	 * encrypted file contents.
-+	 *
-+	 * This writes the block_device pointers to @devs and returns the count
-+	 * (between 1 and FSCRYPT_MAX_DEVICES inclusively).
- 	 *
- 	 * If the filesystem can use multiple block devices (other than block
- 	 * devices that aren't used for encrypted file contents, such as
- 	 * external journal devices), and wants to support inline encryption,
- 	 * then it must implement this function.  Otherwise it's not needed.
- 	 */
--	struct block_device **(*get_devices)(struct super_block *sb,
--					     unsigned int *num_devs);
-+	unsigned int (*get_devices)(
-+		struct super_block *sb,
-+		struct block_device *devs[FSCRYPT_MAX_DEVICES]);
- };
++	/*
++	 * Ensure tracer changes to x0 during seccomp ptrace exit
++	 * processing (SECCOMP_RET_TRACE) are visible to tracepoints and
++	 * audit.
++	 */
++	update_syscall_orig_x0_after_ptrace(regs);
++
+ 	if (test_thread_flag(TIF_SYSCALL_TRACEPOINT))
+ 		trace_sys_enter(regs, regs->syscallno);
  
- int fscrypt_d_revalidate(struct inode *dir, const struct qstr *name,
 
 
