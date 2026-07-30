@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FE544302F6;
-	Thu, 30 Jul 2026 14:56:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16144442FBC;
+	Thu, 30 Jul 2026 14:56:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423408; cv=none; b=Kv5Y5AAx59Kz1c5RcbAa4kgpfvc1JUUKNZqPHekVdHDYZZa/hiLAXGKzVCnTcD2tPYY50m+k2xzgb+AwTZ6s0Tmalb9KY2WmizFq7vymwFefkoBQMoKiOdc5LYbbGTNyucydjoMvc87JEfgvsZp+nEMfLV6YGHxrJNL4oA1klww=
+	t=1785423411; cv=none; b=TU79QBO1XJ+iz47CV5ceR0u8b0WqPDA40QgS8oglX2Aacxc3+T8W7wreO5AloRSaity7I6U7jU4M7RYnQkV2lPePrWLzbV/KwtMEIesIwJTXEeY3+sMR0B+tl59qI4+wiDzJZPnxWd3BlvcqVJntyYUHT2RenPLni/A2p7XyYos=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423408; c=relaxed/simple;
-	bh=kfFjW3ElC78nrIZ/mIsMANwKkWirZE8l73AvrydMV0E=;
+	s=arc-20240116; t=1785423411; c=relaxed/simple;
+	bh=tJYEamZC8z8011HS2LWXfzKOqLoJghOdIC1fIosR4ys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lOrD6916lRiUMA6qRZGI7Oa+xNXKTfEgK2skpj89CJHItI0V934nQsD14pZTrwWOXS1cMo2FJyIxXSTIm5NQloGxVQuSxtrEz8YjEVelA5dojUj5mCIyTgixS6iisgLluB3ULFxaQUu4wFYSq7YhHtfGizpIXUdaA3llMNN8loI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sjqyfzbA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RvMMckud7UWM8vcOvfjIUwaau+cf+XgwZy6qeqksT4NuN5YwGJ34w8/ku+z6PvJ3HPmBjrUr6NKVReUsl8EqvxKDy0jtFR+sNoxwS2iphHtheQMYFJMVKmw/o65NTHOAmBc8BCRtwMuBMuUkPmij5qbKfbQPe7WstX63yw/pu/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xMJgJiAV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sjqyfzbA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2D221F000E9;
-	Thu, 30 Jul 2026 14:56:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xMJgJiAV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 712001F000E9;
+	Thu, 30 Jul 2026 14:56:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423407;
-	bh=zE+HtQTwI/TFhUgPUOzN0DzBd9G11fer3uWPU+anNiQ=;
+	s=korg; t=1785423410;
+	bh=6TWWjJTIWiVJJYYds55kD4Y613lsKDJXwhzDQSo7GDA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sjqyfzbA7OQ3qefAsXouh5767aYjIqcpCgzrxEj/wKYRZCkNmefe899ARr4MZlEHi
-	 TBQ1WcxkxJ+UbLmmGpmE3jhGNAR47TVqoy8bC5S2QDT4oo0TZpWVZxEKHybI7gcFVj
-	 Q4b7mE6T3wHFwmsvA/rLNQEMAvv04GLwpkqZWzLo=
+	b=xMJgJiAVqfWddEd14b2lBjKlHcW7edXmpHZrnvAFaKRZ/RtxhOMnyRgFPLCfMooqW
+	 sE7K21dFLM2ai1bgrxkoeW4ctI4PfHx9ISF0usdRIi9NuW+gEkMkE9MyNr04NOUWtW
+	 W157x0WSnNjJhT1mhhP0EtrEn731dxOqECf2pfkA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Venkatesh Srinivas <venkateshs@chromium.org>,
-	James Houghton <jthoughton@google.com>,
-	Chao Gao <chao.gao@intel.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	David Matlack <dmatlack@google.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Jim Mattson <jmattson@google.com>
-Subject: [PATCH 6.18 013/675] KVM: x86: Only reset TSC Deadline Timer in apic_timer_expired on KVM_RUN
-Date: Thu, 30 Jul 2026 16:05:43 +0200
-Message-ID: <20260730141445.401244016@linuxfoundation.org>
+	Florian Westphal <fw@strlen.de>,
+	Brian Witte <brianwitte@mailfence.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 004/675] netfilter: nft_counter: serialize reset with spinlock
+Date: Thu, 30 Jul 2026 16:05:34 +0200
+Message-ID: <20260730141445.209130040@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -55,64 +51,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Venkatesh Srinivas <venkateshs@chromium.org>
+From: Brian Witte <brianwitte@mailfence.com>
 
-commit e800decd9c0ac4349bcd8f8f9b29fd21fe93165e upstream.
+[ Upstream commit 779c60a5190c42689534172f4b49e927c9959e4e ]
 
-On Intel platforms with a VMX preemption timer and APICv, if a VMM
-calls KVM_GET_LAPIC before KVM_GET_MSRS to save the vCPU state, it is
-possible to lose a pending timer interrupt.
+Add a global static spinlock to serialize counter fetch+reset
+operations, preventing concurrent dump-and-reset from underrunning
+values.
 
-If the thread running these ioctls is migrated to another core after
-calling KVM_GET_LAPIC but before KVM_GET_MSRS and the guest is using
-their LAPIC timer in TSC-deadline mode, not only does the save LAPIC
-state not carry the pending interrupt, the TSCDEADLINE MSR will be
-zeroed.
+The lock is taken before fetching the total so that two parallel
+resets cannot both read the same counter values and then both
+subtract them.
 
-After migration across CPUs, KVM_GET_MSRS calls vcpu_load, posting the
-interrupt and clearing the MSR:
-vcpu_load() ->
-  kvm_arch_vcpu_load() ->
-    kvm_lapic_restart_hv_timer() ->
-      start_hv_timer() ->
-        apic_timer_expired() ->
-          kvm_apic_inject_pending_timer_irqs()
-            . post interrupt into the LAPIC state
-            . clear IA32_TSCDEADLINE
+A global lock is used for simplicity since resets are infrequent.
+If this becomes a bottleneck, it can be replaced with a per-net
+lock later.
 
-The saved LAPIC state will be missing the pending interrupt and the saved
-MSR will be zero. Oops.
-
-Fix by only posting an interrupt when we're attempting to enter the guest
-(vcpu->wants_to_run == true), not for vcpu_load from other paths.
-
-Assisted-by: gemini:gemini-3.1-pro-preview
-Debugged-by: David Matlack <dmatlack@google.com>
-Debugged-by: Sean Christopherson <seanjc@google.com>
-Debugged-by: Jim Mattson <jmattson@google.com>
-Debugged-by: James Houghton <jthoughton@google.com>
-Signed-off-by: Venkatesh Srinivas <venkateshs@chromium.org>
-Message-ID: <20260715234234.15382-2-venkateshs@chromium.org>
-Reviewed-by: James Houghton <jthoughton@google.com>
-Reviewed-by: Chao Gao <chao.gao@intel.com>
-Cc: stable@vger.kernel.org
-Fixes: ae95f566b3d2 ("KVM: X86: TSCDEADLINE MSR emulation fastpath", 2020-05-15)
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: bd662c4218f9 ("netfilter: nf_tables: Add locking for NFT_MSG_GETOBJ_RESET requests")
+Fixes: 3d483faa6663 ("netfilter: nf_tables: Add locking for NFT_MSG_GETSETELEM_RESET requests")
+Fixes: 3cb03edb4de3 ("netfilter: nf_tables: Add locking for NFT_MSG_GETRULE_RESET requests")
+Suggested-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Brian Witte <brianwitte@mailfence.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/lapic.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/nft_counter.c | 20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
---- a/arch/x86/kvm/lapic.c
-+++ b/arch/x86/kvm/lapic.c
-@@ -2065,7 +2065,7 @@ static void apic_timer_expired(struct kv
- 	if (apic_lvtt_tscdeadline(apic) || ktimer->hv_timer_in_use)
- 		ktimer->expired_tscdeadline = ktimer->tscdeadline;
+diff --git a/net/netfilter/nft_counter.c b/net/netfilter/nft_counter.c
+index 0d70325280cc57..169ae93688bcc5 100644
+--- a/net/netfilter/nft_counter.c
++++ b/net/netfilter/nft_counter.c
+@@ -32,6 +32,9 @@ struct nft_counter_percpu_priv {
  
--	if (!from_timer_fn && apic->apicv_active) {
-+	if (!from_timer_fn && apic->apicv_active && vcpu->wants_to_run) {
- 		WARN_ON(kvm_get_running_vcpu() != vcpu);
- 		kvm_apic_inject_pending_timer_irqs(apic);
- 		return;
+ static DEFINE_PER_CPU(struct u64_stats_sync, nft_counter_sync);
+ 
++/* control plane only: sync fetch+reset */
++static DEFINE_SPINLOCK(nft_counter_lock);
++
+ static inline void nft_counter_do_eval(struct nft_counter_percpu_priv *priv,
+ 				       struct nft_regs *regs,
+ 				       const struct nft_pktinfo *pkt)
+@@ -148,13 +151,25 @@ static void nft_counter_fetch(struct nft_counter_percpu_priv *priv,
+ 	}
+ }
+ 
++static void nft_counter_fetch_and_reset(struct nft_counter_percpu_priv *priv,
++					struct nft_counter_tot *total)
++{
++	spin_lock(&nft_counter_lock);
++	nft_counter_fetch(priv, total);
++	nft_counter_reset(priv, total);
++	spin_unlock(&nft_counter_lock);
++}
++
+ static int nft_counter_do_dump(struct sk_buff *skb,
+ 			       struct nft_counter_percpu_priv *priv,
+ 			       bool reset)
+ {
+ 	struct nft_counter_tot total;
+ 
+-	nft_counter_fetch(priv, &total);
++	if (unlikely(reset))
++		nft_counter_fetch_and_reset(priv, &total);
++	else
++		nft_counter_fetch(priv, &total);
+ 
+ 	if (nla_put_be64(skb, NFTA_COUNTER_BYTES, cpu_to_be64(total.bytes),
+ 			 NFTA_COUNTER_PAD) ||
+@@ -162,9 +177,6 @@ static int nft_counter_do_dump(struct sk_buff *skb,
+ 			 NFTA_COUNTER_PAD))
+ 		goto nla_put_failure;
+ 
+-	if (reset)
+-		nft_counter_reset(priv, &total);
+-
+ 	return 0;
+ 
+ nla_put_failure:
+-- 
+2.53.0
+
 
 
