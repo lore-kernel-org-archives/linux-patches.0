@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CA5F35BDAA;
-	Thu, 30 Jul 2026 15:52:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 595C5380FD6;
+	Thu, 30 Jul 2026 15:52:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426745; cv=none; b=UJ4cRnGd/z4SMm5WvHh9I/kmNWJCOD5lvY9u23O5JgGnLPiWn64EC/Wpxo0NgnWSfRz0GwUfk4ADAfK7VB7CwpKLCnau55MRwGiNDmcqMlXTk0aKHPTmY/5RTQmVjDgIa9wymXAxRGTpb5GZRmnuWqsWGwm/IZ0nkigKkCzAPiw=
+	t=1785426748; cv=none; b=smPp9maTC8rFoYIMyjKjyVdDX2O+IXgLC7zVFPRs3+0nZeReaNrNBeVo/X8NyjDMwJmt0IMb0blmebjn080pkLVebBrFCu/ABbkFXg/5LJevz3Dtk7a4LXxyioRkIX79OWZXCLhPvxLQuULl//GKHroq9ijOzisDjuHE9J8hXNQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426745; c=relaxed/simple;
-	bh=EvUYL9LyORzYHSMDa0mHHtBd1ly58yC8cDA4ky+bcaA=;
+	s=arc-20240116; t=1785426748; c=relaxed/simple;
+	bh=9feej9y2gpEUCYAX9Pbqi8F37YyWoxmT/ComARh35sM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i2EVn/rGgRZIhcxssAonmi8yjkD+04V0ZJ6330ycFTZDVr/vac7ZyApHRh83FUoNS351udSVFUxP3r6dPDQGffeTz91uAajZ5VXRrSDrCb5zatty9EEIPp1hjWuo9fFw9Y5GnFu/nozIXwYaPjGwnp2NKhXyg3m2U3ijYDbT/+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p8qUs1vu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dGjnd/PxRSxcPt9Ie/E61sncV5jF4oGTEu2tX7biiRPQlAz8lECXs16lvVmeGkDSzOiGMpj0nY9WRTLfvsgIEVb+TkrGFXoguSeRC8zm5h4IICk/KOLR760YhPZeesO+1ne8ncidsofU2x30P0fGpsETuodwfphLdzSdZ58OLio=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VYj6oRzz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p8qUs1vu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D46511F000E9;
-	Thu, 30 Jul 2026 15:52:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VYj6oRzz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3B6A1F000E9;
+	Thu, 30 Jul 2026 15:52:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426744;
-	bh=kt3WLenbtDmEXW62dnWBLCb+aWY8yYZ8R3BMf9lXWY0=;
+	s=korg; t=1785426747;
+	bh=BgUHbFShZ8nghfcf4k6BeIefMYBpyFMvUNBqVnwhuuM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p8qUs1vu1Lx57AoM2P0oxNHzEHo88T1swM7rECj7nyufuW40N4u+iZBcmpNrsE+cR
-	 p8/OaRIoHhovY2WnTrHheRHgIFOt/NcccHUn/aXePW/ubedZncMwnFfZu4TqeLqwzj
-	 ZqliFWK8W1Y5hPYmkH0UAb1GuDennraEg+mWaaC4=
+	b=VYj6oRzzgfc87L1my3FrPRBWk+Wiu+J+/bBAOGeXF0Vx57npMnvi55Rt0dWBXRrV8
+	 sgAIrUqcs6ZfwuWBQ4Yxqhw6bq2aO1i9RTTqDk/iUnCC3kYRAglYS4Yyivj97u7B9/
+	 VQOTDjlg/CAoKN7/4AKd+wr+kGqiuXDnHQfuyiPs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Abinash Singh <abinashsinghlalotra@gmail.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 528/602] thunderbolt: Prevent XDomain delayed work use-after-free on disconnect
-Date: Thu, 30 Jul 2026 16:15:20 +0200
-Message-ID: <20260730141447.107046386@linuxfoundation.org>
+Subject: [PATCH 6.12 529/602] dma: dw-edma: Fix build warning in dw_edma_pcie_probe()
+Date: Thu, 30 Jul 2026 16:15:21 +0200
+Message-ID: <20260730141447.129402640@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -51,87 +52,174 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Abinash Singh <abinashlalotra@gmail.com>
 
-[ Upstream commit 2c5d2d3c3f70cde2565d7b279b544893a2035842 ]
+[ Upstream commit 3df63fa8f2afd051848e37ef1b8299dee28d4f87 ]
 
-tb_xdp_handle_request() runs on system_wq and queues
-xd->state_work via queue_delayed_work() in three request handlers:
-PROPERTIES_CHANGED_REQUEST, UUID_REQUEST (via start_handshake),
-and LINK_STATE_CHANGE_REQUEST.  Similarly, update_xdomain() queues
-xd->properties_changed_work when local properties change.
+The function dw_edma_pcie_probe() in dw-edma-pcie.c triggered a
+frame size warning:
+ld.lld:warning:
+  drivers/dma/dw-edma/dw-edma-pcie.c:162:0: stack frame size (1040) exceeds limit (1024) in function 'dw_edma_pcie_probe'
 
-Concurrently, tb_xdomain_remove() calls stop_handshake() which does
-cancel_delayed_work_sync() on both delayed works.  Later,
-tb_xdomain_unregister() calls device_unregister() which eventually
-frees the xdomain.  Since commit 559c1e1e0134 ("thunderbolt: Run
-tb_xdp_handle_request() in system workqueue") moved the request
-handler off tb->wq, the handler and the remove path are no longer
-serialized.  If queue_delayed_work() executes after
-cancel_delayed_work_sync() but before the xdomain is freed, the
-delayed work fires on a freed object.
+This patch reduces the stack usage by dynamically allocating the
+`vsec_data` structure using kmalloc(), rather than placing it on
+the stack. This eliminates the overflow warning and improves kernel
+robustness.
 
-Add xd->removing that tb_xdomain_remove() sets under xd->lock
-before calling stop_handshake().  Each external queue site holds
-the same lock and checks removing before calling
-queue_delayed_work().  This provides the mutual exclusion needed:
-either the queue site acquires the lock first and queues work that
-the subsequent cancel will see, or the remove path acquires the
-lock first and the queue site observes removing == true and skips
-the queue.
-
-Fixes: 559c1e1e0134 ("thunderbolt: Run tb_xdp_handle_request() in system workqueue")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Signed-off-by: Abinash Singh <abinashsinghlalotra@gmail.com>
+Acked-by: Manivannan Sadhasivam <mani@kernel.org>
+Link: https://lore.kernel.org/r/20250705160055.808165-1-abinashsinghlalotra@gmail.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Stable-dep-of: 11d7cfe0c119 ("dmaengine: dw-edma-pcie: Reject devices without driver data")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/xdomain.c |   26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ drivers/dma/dw-edma/dw-edma-pcie.c |   62 +++++++++++++++++++------------------
+ 1 file changed, 33 insertions(+), 29 deletions(-)
 
---- a/drivers/thunderbolt/xdomain.c
-+++ b/drivers/thunderbolt/xdomain.c
-@@ -905,6 +905,19 @@ void tb_unregister_service_driver(struct
- }
- EXPORT_SYMBOL_GPL(tb_unregister_service_driver);
- 
-+static int update_xdomain(struct device *dev, void *data)
-+{
-+	struct tb_xdomain *xd;
-+
-+	xd = tb_to_xdomain(dev);
-+	if (xd) {
-+		queue_delayed_work(xd->tb->wq, &xd->properties_changed_work,
-+				   msecs_to_jiffies(50));
-+	}
-+
-+	return 0;
-+}
-+
- static ssize_t key_show(struct device *dev, struct device_attribute *attr,
- 			char *buf)
+--- a/drivers/dma/dw-edma/dw-edma-pcie.c
++++ b/drivers/dma/dw-edma/dw-edma-pcie.c
+@@ -160,12 +160,16 @@ static int dw_edma_pcie_probe(struct pci
+ 			      const struct pci_device_id *pid)
  {
-@@ -2480,19 +2493,6 @@ bool tb_xdomain_handle_request(struct tb
- 	return ret > 0;
- }
+ 	struct dw_edma_pcie_data *pdata = (void *)pid->driver_data;
+-	struct dw_edma_pcie_data vsec_data;
++	struct dw_edma_pcie_data *vsec_data __free(kfree) = NULL;
+ 	struct device *dev = &pdev->dev;
+ 	struct dw_edma_chip *chip;
+ 	int err, nr_irqs;
+ 	int i, mask;
  
--static int update_xdomain(struct device *dev, void *data)
--{
--	struct tb_xdomain *xd;
--
--	xd = tb_to_xdomain(dev);
--	if (xd) {
--		queue_delayed_work(xd->tb->wq, &xd->properties_changed_work,
--				   msecs_to_jiffies(50));
++	vsec_data = kmalloc(sizeof(*vsec_data), GFP_KERNEL);
++	if (!vsec_data)
++		return -ENOMEM;
++
+ 	/* Enable PCI device */
+ 	err = pcim_enable_device(pdev);
+ 	if (err) {
+@@ -173,23 +177,23 @@ static int dw_edma_pcie_probe(struct pci
+ 		return err;
+ 	}
+ 
+-	memcpy(&vsec_data, pdata, sizeof(struct dw_edma_pcie_data));
++	memcpy(vsec_data, pdata, sizeof(struct dw_edma_pcie_data));
+ 
+ 	/*
+ 	 * Tries to find if exists a PCIe Vendor-Specific Extended Capability
+ 	 * for the DMA, if one exists, then reconfigures it.
+ 	 */
+-	dw_edma_pcie_get_vsec_dma_data(pdev, &vsec_data);
++	dw_edma_pcie_get_vsec_dma_data(pdev, vsec_data);
+ 
+ 	/* Mapping PCI BAR regions */
+-	mask = BIT(vsec_data.rg.bar);
+-	for (i = 0; i < vsec_data.wr_ch_cnt; i++) {
+-		mask |= BIT(vsec_data.ll_wr[i].bar);
+-		mask |= BIT(vsec_data.dt_wr[i].bar);
 -	}
--
--	return 0;
--}
--
- static void update_all_xdomains(void)
- {
- 	bus_for_each_dev(&tb_bus_type, NULL, NULL, update_xdomain);
+-	for (i = 0; i < vsec_data.rd_ch_cnt; i++) {
+-		mask |= BIT(vsec_data.ll_rd[i].bar);
+-		mask |= BIT(vsec_data.dt_rd[i].bar);
++	mask = BIT(vsec_data->rg.bar);
++	for (i = 0; i < vsec_data->wr_ch_cnt; i++) {
++		mask |= BIT(vsec_data->ll_wr[i].bar);
++		mask |= BIT(vsec_data->dt_wr[i].bar);
++	}
++	for (i = 0; i < vsec_data->rd_ch_cnt; i++) {
++		mask |= BIT(vsec_data->ll_rd[i].bar);
++		mask |= BIT(vsec_data->dt_rd[i].bar);
+ 	}
+ 	err = pcim_iomap_regions(pdev, mask, pci_name(pdev));
+ 	if (err) {
+@@ -212,7 +216,7 @@ static int dw_edma_pcie_probe(struct pci
+ 		return -ENOMEM;
+ 
+ 	/* IRQs allocation */
+-	nr_irqs = pci_alloc_irq_vectors(pdev, 1, vsec_data.irqs,
++	nr_irqs = pci_alloc_irq_vectors(pdev, 1, vsec_data->irqs,
+ 					PCI_IRQ_MSI | PCI_IRQ_MSIX);
+ 	if (nr_irqs < 1) {
+ 		pci_err(pdev, "fail to alloc IRQ vector (number of IRQs=%u)\n",
+@@ -223,22 +227,22 @@ static int dw_edma_pcie_probe(struct pci
+ 	/* Data structure initialization */
+ 	chip->dev = dev;
+ 
+-	chip->mf = vsec_data.mf;
++	chip->mf = vsec_data->mf;
+ 	chip->nr_irqs = nr_irqs;
+ 	chip->ops = &dw_edma_pcie_plat_ops;
+ 
+-	chip->ll_wr_cnt = vsec_data.wr_ch_cnt;
+-	chip->ll_rd_cnt = vsec_data.rd_ch_cnt;
++	chip->ll_wr_cnt = vsec_data->wr_ch_cnt;
++	chip->ll_rd_cnt = vsec_data->rd_ch_cnt;
+ 
+-	chip->reg_base = pcim_iomap_table(pdev)[vsec_data.rg.bar];
++	chip->reg_base = pcim_iomap_table(pdev)[vsec_data->rg.bar];
+ 	if (!chip->reg_base)
+ 		return -ENOMEM;
+ 
+ 	for (i = 0; i < chip->ll_wr_cnt; i++) {
+ 		struct dw_edma_region *ll_region = &chip->ll_region_wr[i];
+ 		struct dw_edma_region *dt_region = &chip->dt_region_wr[i];
+-		struct dw_edma_block *ll_block = &vsec_data.ll_wr[i];
+-		struct dw_edma_block *dt_block = &vsec_data.dt_wr[i];
++		struct dw_edma_block *ll_block = &vsec_data->ll_wr[i];
++		struct dw_edma_block *dt_block = &vsec_data->dt_wr[i];
+ 
+ 		ll_region->vaddr.io = pcim_iomap_table(pdev)[ll_block->bar];
+ 		if (!ll_region->vaddr.io)
+@@ -262,8 +266,8 @@ static int dw_edma_pcie_probe(struct pci
+ 	for (i = 0; i < chip->ll_rd_cnt; i++) {
+ 		struct dw_edma_region *ll_region = &chip->ll_region_rd[i];
+ 		struct dw_edma_region *dt_region = &chip->dt_region_rd[i];
+-		struct dw_edma_block *ll_block = &vsec_data.ll_rd[i];
+-		struct dw_edma_block *dt_block = &vsec_data.dt_rd[i];
++		struct dw_edma_block *ll_block = &vsec_data->ll_rd[i];
++		struct dw_edma_block *dt_block = &vsec_data->dt_rd[i];
+ 
+ 		ll_region->vaddr.io = pcim_iomap_table(pdev)[ll_block->bar];
+ 		if (!ll_region->vaddr.io)
+@@ -295,31 +299,31 @@ static int dw_edma_pcie_probe(struct pci
+ 		pci_dbg(pdev, "Version:\tUnknown (0x%x)\n", chip->mf);
+ 
+ 	pci_dbg(pdev, "Registers:\tBAR=%u, off=0x%.8lx, sz=0x%zx bytes, addr(v=%p)\n",
+-		vsec_data.rg.bar, vsec_data.rg.off, vsec_data.rg.sz,
++		vsec_data->rg.bar, vsec_data->rg.off, vsec_data->rg.sz,
+ 		chip->reg_base);
+ 
+ 
+ 	for (i = 0; i < chip->ll_wr_cnt; i++) {
+ 		pci_dbg(pdev, "L. List:\tWRITE CH%.2u, BAR=%u, off=0x%.8lx, sz=0x%zx bytes, addr(v=%p, p=%pa)\n",
+-			i, vsec_data.ll_wr[i].bar,
+-			vsec_data.ll_wr[i].off, chip->ll_region_wr[i].sz,
++			i, vsec_data->ll_wr[i].bar,
++			vsec_data->ll_wr[i].off, chip->ll_region_wr[i].sz,
+ 			chip->ll_region_wr[i].vaddr.io, &chip->ll_region_wr[i].paddr);
+ 
+ 		pci_dbg(pdev, "Data:\tWRITE CH%.2u, BAR=%u, off=0x%.8lx, sz=0x%zx bytes, addr(v=%p, p=%pa)\n",
+-			i, vsec_data.dt_wr[i].bar,
+-			vsec_data.dt_wr[i].off, chip->dt_region_wr[i].sz,
++			i, vsec_data->dt_wr[i].bar,
++			vsec_data->dt_wr[i].off, chip->dt_region_wr[i].sz,
+ 			chip->dt_region_wr[i].vaddr.io, &chip->dt_region_wr[i].paddr);
+ 	}
+ 
+ 	for (i = 0; i < chip->ll_rd_cnt; i++) {
+ 		pci_dbg(pdev, "L. List:\tREAD CH%.2u, BAR=%u, off=0x%.8lx, sz=0x%zx bytes, addr(v=%p, p=%pa)\n",
+-			i, vsec_data.ll_rd[i].bar,
+-			vsec_data.ll_rd[i].off, chip->ll_region_rd[i].sz,
++			i, vsec_data->ll_rd[i].bar,
++			vsec_data->ll_rd[i].off, chip->ll_region_rd[i].sz,
+ 			chip->ll_region_rd[i].vaddr.io, &chip->ll_region_rd[i].paddr);
+ 
+ 		pci_dbg(pdev, "Data:\tREAD CH%.2u, BAR=%u, off=0x%.8lx, sz=0x%zx bytes, addr(v=%p, p=%pa)\n",
+-			i, vsec_data.dt_rd[i].bar,
+-			vsec_data.dt_rd[i].off, chip->dt_region_rd[i].sz,
++			i, vsec_data->dt_rd[i].bar,
++			vsec_data->dt_rd[i].off, chip->dt_region_rd[i].sz,
+ 			chip->dt_region_rd[i].vaddr.io, &chip->dt_region_rd[i].paddr);
+ 	}
+ 
 
 
