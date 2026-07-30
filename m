@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37088439343;
-	Thu, 30 Jul 2026 14:42:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 539E943C7A2;
+	Thu, 30 Jul 2026 14:42:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422556; cv=none; b=uAYhg6ujuEC3UbwsY5j8P8RLENn+wm6dlpIOb9eMsEn43qjlACw+bKe9DniBo2ypmM4i1BjoBhIOYcvo2HNXGNK4L8YWGAElEpIw714pNw9arGgkn3Oo9ADqgBnKy34MV3U+7DkDPpJ/7xlBTkMTBbtF808OIwouMA8V2wdFfPw=
+	t=1785422559; cv=none; b=obYPoe5CdKqAgW24gLmeIwujlreIbJnXwJxBrlYi/1ghPzU4avV/DNVk1D2JbM/DMS44vWe7mbH68ey7CRH1kexfbRjrSSVXkauvp9vJbzxTMTpDjalkZl89dvF6b7isMnM3T9YankZenZIzyyXbdgMcCLU6vfva/1FKbRU9LpE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422556; c=relaxed/simple;
-	bh=vVe9lOehxk4FYYlX6SRfQtHRlHtBzJnkxpMEUG0RgGU=;
+	s=arc-20240116; t=1785422559; c=relaxed/simple;
+	bh=AvXLLQg87KznHvmfrOkrwPG2KDj9tba/HVGbsUCRxz0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J/7JCEgLU6mWv/1VqqM67BvjmxdP+IyNE2KvkL8KGfsdiv/xaYGwZITDak2WHmbFhMXpTe7Y+Ym94svKlHJCzcVkTH4gFniQEj87Hm4e75wWA8/9cPoM70GpVlgYI7OE3mFzZhUsdoAEGDCEGvQdOoSk7DG61mBURbAknEYxVv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bMwXqX0I; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VdVNl4MWSrfDGS97308WfNkNfa0HPb3N7skeuIDaPw22wQ4pnUavRsla8GR2ydRuQDdhofbnJS4BEfi76ttTDioeVUiyk6XzqTxa0Cveb02MacJCfeES7U/G+9/1wjVtULcaQ7STWeDGyRmHEHG2sxgquuW00VoWhHNsEJTqTvg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xBBh6E83; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bMwXqX0I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FB4D1F000E9;
-	Thu, 30 Jul 2026 14:42:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xBBh6E83"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68B641F000E9;
+	Thu, 30 Jul 2026 14:42:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422554;
-	bh=uwo9rCO+i4WbxMb/eTeY3YebOlal6IctabHRcZT/Vrk=;
+	s=korg; t=1785422558;
+	bh=4AhKdUXlm1hNoprPIB+mhdKSH8c/XfdmtOxUIp9bGe4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bMwXqX0IDWucKcvMWXGrFyAa4JuiaBgiCHwIpYq6R9LDD3FIz8h2Iq1Jr4ONnhBsP
-	 NCc5SzIE1eLxxjUwkDfvdgJEfTCq8bau//Sn9UPi2rFg8FgESdjj96xJv4Ec4DKbUF
-	 hrHyu6X8zngUkvrBSBDz5+VGvrziSd0v1hrpBjhE=
+	b=xBBh6E83XVbbSJbNFHBQ/J0v8vY51M6P/WoXm2W8c8K66UAMSGVItfTsNjEgUe+C/
+	 63JTvzPmFGfMDQuAxJ3MhYVNbJ7qCq23Huoa2p1hGXCUDIJtqizQ5DYQh733uITJkV
+	 54Cf+XPexcDxK6gFrRZUVaKY9OQU0kItMiKMxD9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Holland <samuel@sholland.org>,
-	Andrey Skvortsov <andrej.skvortzov@gmail.com>,
-	Paul Kocialkowski <paulk@sys-base.io>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
 	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Chen-Yu Tsai <wens@kernel.org>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 7.1 479/744] media: cedrus: Fix missing cleanup in error path
-Date: Thu, 30 Jul 2026 16:12:32 +0200
-Message-ID: <20260730141454.475886999@linuxfoundation.org>
+Subject: [PATCH 7.1 480/744] media: cedrus: skip invalid H.264 reference list entries
+Date: Thu, 30 Jul 2026 16:12:33 +0200
+Message-ID: <20260730141454.497799928@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -53,39 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samuel Holland <samuel@sholland.org>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-commit d99732334aaf33b9f93926b70b6a11c2cef3de39 upstream.
+commit 10358ea986c3c85516d1c8206486464f79d36e76 upstream.
 
-According to the documentation struct v4l2_fh has to be cleaned up with
-v4l2_fh_exit() before being freed. [1]
-Currently there is no actual bug here, when v4l2_fh_exit() isn't called.
-v4l2_fh_exit() in this case only destroys internal mutex. But it may
-change in the future, when v4l2_fh_init/v4l2_fh_exit will be enhanced.
+Cedrus consumes H.264 ref_pic_list0/ref_pic_list1 entries from the
+stateless slice control and later uses their indices to look up
+decode->dpb[] in _cedrus_write_ref_list().
 
-1. https://docs.kernel.org/driver-api/media/v4l2-fh.html
+Rejecting such controls in cedrus_try_ctrl() would break existing
+userspace, since stateless H.264 reference lists may legitimately carry
+out-of-range indices for missing references. Instead, guard the actual
+DPB lookup in Cedrus and skip entries whose indices do not fit the fixed
+V4L2_H264_NUM_DPB_ENTRIES array.
 
-Signed-off-by: Samuel Holland <samuel@sholland.org>
-Signed-off-by: Andrey Skvortsov <andrej.skvortzov@gmail.com>
-Fixes: 50e761516f2b ("media: platform: Add Cedrus VPU decoder driver")
+This keeps the fix local to the driver use site and avoids out-of-bounds
+reads from malformed or unsupported reference list entries.
+
+Fixes: e000e1fa4bdbd ("media: uapi: h264: Update reference lists")
 Cc: stable@vger.kernel.org
-Acked-by: Paul Kocialkowski <paulk@sys-base.io>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Tested-by: Chen-Yu Tsai <wens@kernel.org>
 Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/media/sunxi/cedrus/cedrus.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/staging/media/sunxi/cedrus/cedrus_h264.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/staging/media/sunxi/cedrus/cedrus.c
-+++ b/drivers/staging/media/sunxi/cedrus/cedrus.c
-@@ -391,6 +391,7 @@ static int cedrus_open(struct file *file
- err_m2m_release:
- 	v4l2_m2m_ctx_release(ctx->fh.m2m_ctx);
- err_free:
-+	v4l2_fh_exit(&ctx->fh);
- 	kfree(ctx);
- 	mutex_unlock(&dev->dev_mutex);
+--- a/drivers/staging/media/sunxi/cedrus/cedrus_h264.c
++++ b/drivers/staging/media/sunxi/cedrus/cedrus_h264.c
+@@ -210,6 +210,9 @@ static void _cedrus_write_ref_list(struc
+ 		u8 dpb_idx;
  
+ 		dpb_idx = ref_list[i].index;
++		if (dpb_idx >= V4L2_H264_NUM_DPB_ENTRIES)
++			continue;
++
+ 		dpb = &decode->dpb[dpb_idx];
+ 
+ 		if (!(dpb->flags & V4L2_H264_DPB_ENTRY_FLAG_ACTIVE))
 
 
