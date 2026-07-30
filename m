@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD448421EF8;
-	Thu, 30 Jul 2026 14:47:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A894C4119E0;
+	Thu, 30 Jul 2026 14:48:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422880; cv=none; b=ELi1/r0bWcV3Bx9PZ4aacrGbrR3PvD6NkVnAVxFw+oTUxZSRABbcVDUMmQ2wkiPz+esbY+DI/k3S1Er1n3Sa2l8pG/TlIq/cgveDZjs1BA/9I4u8ks+UumRWyGfB7umkdsLO9uCZHIF+F1MmDParg6Be7WpMS3o85eyHT4ZQsj4=
+	t=1785422882; cv=none; b=tzTHeQZQvw7FKEASCL24PxI1Hr9rwd197pgliH5kUIvVpqMNBtEzVCVCIshADCxECFS05NFTu+9OVAWq6dXu8h6ruWdw6ybLalizx6hovkX8I2F2f9TUUPJp9a+2KyCbVROJrkjIbYztu6qs4bDUNU4qjnhRFeOfSBP5MgOyTlI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422880; c=relaxed/simple;
-	bh=F/Tw0otRv4TybJ1Edrvg3U1c3GCYLEexj7EhyiQXxFU=;
+	s=arc-20240116; t=1785422882; c=relaxed/simple;
+	bh=/eiO7hVkTszSLIR+6Fnehd+pkOWMgUiKdNZFcE55uPM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vb2HPQxMRG9Ju/PFS3UC/091ANhm6kKd+xv5l7lR0oqChR1yU/oQYOrXHJ7/+3fC8kUe30lI44PopKA/BLDWg1bUNWwY/mGW0uR70yQ7i3Per38FL97GjzC9H1DS6qOum7boAEIr0hl0/Q1YtbpZtsPQDJdPLM13KujgfwVm9Lo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uVU/0pxn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CFnIz0DWWXJ/3WRYIB0IEipFY6BuxyG2t1rgz47sc+BPlQqXR5hdL2RWfsfiWk8+dp0T62WRFfJMBrSC+o5J0MgGm1FHclJyre/bNlovtYnyvlbuZXvhzhtxA++lgm33M4aA+CpL2UxdST//PqTOJIM2Fi9IqY7eEynrDS6Bifs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ReTeVvxW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uVU/0pxn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BC4E1F000E9;
-	Thu, 30 Jul 2026 14:47:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ReTeVvxW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 105B11F000E9;
+	Thu, 30 Jul 2026 14:48:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422878;
-	bh=45U7JPm7cmUO78v6bn7cwBGZ80ZSGzA3ItILe2iq5BE=;
+	s=korg; t=1785422881;
+	bh=w5bUO/2XvtuntelfOaM5kgsNJMNVd6fWi/YCLGOVCCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uVU/0pxnKQzcBHOWXm5PhYHtZfl5PS+TkdvWxHsHCTOYOZxoOlyMZz/4xTaAGa3gZ
-	 QjgprTERt1d1ZSktcdntLobDeYup2gjtxcCagzEi/WBBi012/sloCGxTDw1r2p+In+
-	 gxX9haxcPrwiIgVZWrcP1niC+QxjJYdckrup+eFY=
+	b=ReTeVvxW7GEjVrTjvi98wpBTzv1B+18Y7Nm4fPyc0DKAMnkHcQAoGZ8pyedsei6dA
+	 H+sLOMmgwch2DXYc+w+0ljV41t2QX9ll6T3Z05/NtPKjlfq8WBUELZSDLCnWi5VIjh
+	 7Ll68qQ9M3x9tQEffniDB4qx3/NWFUVJJiX6fN1Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 7.1 587/744] intel_th: fix MSC output device reference leak
-Date: Thu, 30 Jul 2026 16:14:20 +0200
-Message-ID: <20260730141456.759988843@linuxfoundation.org>
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Alexander Graf <graf@amazon.com>
+Subject: [PATCH 7.1 588/744] misc: nsm: only unlock nsm_dev on post-lock error paths
+Date: Thu, 30 Jul 2026 16:14:21 +0200
+Message-ID: <20260730141456.781281732@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -51,74 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-commit 761b785a0cfbce43761227bc42a7f984f31f8921 upstream.
+commit ce1fed11d18e163baf7f875152a33bf80f625c1a upstream.
 
-intel_th_output_open() looks up the output device with
-bus_find_device_by_devt(), which returns the device with a reference that
-must be dropped after use.
+nsm_dev_ioctl() jumps to the common out label even when the initial
+copy_from_user() fails before nsm->lock has been taken.  The error path
+then blindly unlocks a mutex that was never acquired.
 
-commit 95fc36a234da ("intel_th: fix device leak on output open()")
-attempted to drop the reference from intel_th_output_release(). However,
-a successful open replaces file->f_op with the output driver file
-operations before returning, so close runs the output driver release
-callback instead.
+This issue was found by our static analysis tool and then manually
+reviewed against the current tree.
 
-For MSC outputs, close runs intel_th_msc_release(), which only removes
-the per-file iterator and does not drop the device reference taken by
-intel_th_output_open(). Consequently, every successful MSC output open
-leaks one device reference.
+The grounded PoC kept the miscdevice ioctl entry and the pre-lock
+copy_from_user(&raw, argp, _IOC_SIZE(cmd)) failure path by issuing
+NSM_IOCTL_RAW with an invalid user pointer.  That failure reaches the
+shared out label before mutex_lock(&nsm->lock).  Lockdep reported:
 
-Drop the device reference from intel_th_msc_release(), which is the
-release path actually used for MSC output files. Remove the now-unused
-intel_th_output_release() callback from intel_th_output_fops.
+  WARNING: bad unlock balance detected!
+  exploit/193 is trying to release lock (&global_nsm.lock) at:
+  nsm_dev_ioctl+0x5f/0xcf [vuln_msv]
+  but there are no more locks to release!
+  no locks held by exploit/193.
 
-Fixes: 95fc36a234da ("intel_th: fix device leak on output open()")
+Return immediately on the pre-lock copy_from_user() failure and keep the
+common unlock label for the post-lock paths only.
+
+Fixes: b9873755a6c8 ("misc: Add Nitro Secure Module driver")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Reviewed-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260715070851.2077965-1-lgs201920130244@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Reviewed-by: Alexander Graf <graf@amazon.com>
+Link: https://patch.msgid.link/20260617145350.513875-1-runyu.xiao@seu.edu.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwtracing/intel_th/core.c |   10 ----------
- drivers/hwtracing/intel_th/msu.c  |    2 ++
- 2 files changed, 2 insertions(+), 10 deletions(-)
+ drivers/misc/nsm.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/hwtracing/intel_th/core.c
-+++ b/drivers/hwtracing/intel_th/core.c
-@@ -843,18 +843,8 @@ err_put_dev:
- 	return err;
- }
+--- a/drivers/misc/nsm.c
++++ b/drivers/misc/nsm.c
+@@ -367,7 +367,7 @@ static long nsm_dev_ioctl(struct file *f
+ 	/* Copy user argument struct to kernel argument struct */
+ 	r = -EFAULT;
+ 	if (copy_from_user(&raw, argp, _IOC_SIZE(cmd)))
+-		goto out;
++		return r;
  
--static int intel_th_output_release(struct inode *inode, struct file *file)
--{
--	struct intel_th_device *thdev = file->private_data;
--
--	put_device(&thdev->dev);
--
--	return 0;
--}
--
- static const struct file_operations intel_th_output_fops = {
- 	.open	= intel_th_output_open,
--	.release = intel_th_output_release,
- 	.llseek	= noop_llseek,
- };
+ 	mutex_lock(&nsm->lock);
  
---- a/drivers/hwtracing/intel_th/msu.c
-+++ b/drivers/hwtracing/intel_th/msu.c
-@@ -1490,8 +1490,10 @@ static int intel_th_msc_release(struct i
- {
- 	struct msc_iter *iter = file->private_data;
- 	struct msc *msc = iter->msc;
-+	struct intel_th_device *thdev = msc->thdev;
- 
- 	msc_iter_remove(iter, msc);
-+	put_device(&thdev->dev);
- 
- 	return 0;
- }
 
 
