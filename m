@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 374BC468C08;
-	Thu, 30 Jul 2026 16:04:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D1AA468C27;
+	Thu, 30 Jul 2026 16:04:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427489; cv=none; b=BNBWWngg4mengFdNbTvidBYf4P5CMkEriDczg0arJeQxCHvZGzIua0GbsnFeghv4Z87vJqzslU47uFeLrDKlxsLoQBpgyIdrVlh7KC/UydYI27YQj9mcwRPbSDe8vSANG5efzVZhW0lVRzopozg8i+uBG12fuaR/F+cZb+sK6mk=
+	t=1785427492; cv=none; b=l+L7068UJrvE/5Oy2/LkaMHX6zWOz6y6e6vc2m1olkbUAGWzEdg7XRyKbczNgC0nk/+sG+iyBCKlHH7AnBw/aiHAnHExmfr/PoUpjjBz+xr1VgS6watcofWElcv4lpXjdN/CHjGxZ1m6WXjceuWd5P+DELsQ+FGym1qv+RP+EtQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427489; c=relaxed/simple;
-	bh=K+TIy7XFPg5RYkhiihbwMrgDvx8rwXSMFaIyiUQ13sw=;
+	s=arc-20240116; t=1785427492; c=relaxed/simple;
+	bh=rMnRrqkkoJjxZYfUtG63RDMnFUUmuK78MEQNMs+25ZU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k49xI7MkUAZyJneJ53PJri1hgSbcoqyn5hkgaZMiDdPXcWQ19MNWqXdvncGHApbYW+xOIPxiHZYQ/FH2gJ6YnIy4GaDJJyOFa036wv6RasRIGBzqvphxYog5rE6gqNglxMsS75svK1tznA57oj3EDEZvh4wXt8IbTvGKhKCfh1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s3oj8afb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uNtP/jQHp4oetQPGVmElSvcSYwmPeF3FKR1DRkGD76o8sr6VE5TOgRUtK41qgDqo9nlHiBvMEVSUOgfKjWMIS+YGBcQOsMCRQT8wz8QY8ABY8tpn29AnNczkUv56XoIXMGMncyvMVdA+FDYb8yxPlQr/h3WZ+T46S9Gkg63JF2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nQVJrXSJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s3oj8afb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 938E31F00A3A;
-	Thu, 30 Jul 2026 16:04:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nQVJrXSJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66EBB1F000E9;
+	Thu, 30 Jul 2026 16:04:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427488;
-	bh=NQLw2PXmO2AqZO/+Ehg/zk8zEbp4kVVPw8tVfKGn8/U=;
+	s=korg; t=1785427490;
+	bh=j+Njalzbrc39LS/ZujL0UXTXYmId+CuQTM/VXimqIR4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s3oj8afb5alJq4e2M0Rr/8oI5pJ6Wp3YM7k+L9cuYRJ26ryX06m5tRgep68spHnVO
-	 nL1jDsf0Dxr7ppoK4HP4+iqCor78ipBYFo8jAm8i2r4I/3F6am/HaVzeU+mGDJ4fbw
-	 IqGuZYRkP6glhA6D/P6tIPmxxewxv2vd+wbIhFRM=
+	b=nQVJrXSJSDb4IMKgn5VhwkxDFpFzX5tacKpaTjhjH0smUzNG+O4b3dieRJFnI+807
+	 0e38qdZjm3D67jwhKRjwd+OkH9Eo3Z5OlXehG4gfwGMPYfbXQM+GA+T1IqeqvK13j9
+	 VsiDm+AO+MnjYBw/h/0/pVi8l0ZFbunjpyW5l9Zc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rohan G Thomas <rohan.g.thomas@altera.com>,
-	Nazim Amirul <muhammad.nazim.amirul.nazle.asmade@altera.com>,
 	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Jakub Raczynski <j.raczynski@samsung.com>,
+	vadik likholetov <vadikas@gmail.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 189/484] net: stmmac: reset residual action in L3L4 filters on delete
-Date: Thu, 30 Jul 2026 16:11:26 +0200
-Message-ID: <20260730141427.573571903@linuxfoundation.org>
+Subject: [PATCH 6.6 190/484] net: stmmac: enable the MAC on link up for all supported speeds
+Date: Thu, 30 Jul 2026 16:11:27 +0200
+Message-ID: <20260730141427.595010941@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -54,41 +53,184 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nazim Amirul <muhammad.nazim.amirul.nazle.asmade@altera.com>
+From: vadik likholetov <vadikas@gmail.com>
 
-[ Upstream commit a448f821289934b961dd9d8d0beb006cc8937ba2 ]
+[ Upstream commit 9c99db3a2080b8c2cbbb1100369586a9bea43321 ]
 
-When deleting an L3/L4 flower filter entry, the action field is not
-reset. If a filter was previously configured with a drop action, that
-action may persist and affect subsequent filter configurations
-unintentionally.
+stmmac_mac_link_down() clears the MAC's transmit and receive enable bits.
+stmmac_mac_link_up() is expected to set them again through
+stmmac_mac_set(..., true), but it first switches on the negotiated speed
+and returns early for a speed the switch does not list. The MAC is then
+left gated off.
 
-Clear the action field when the filter entry is deleted.
+The speed selection is split into three switches, keyed on the interface.
+The generic branch -- taken for everything that is neither USXGMII nor
+XLGMII, so including PHY_INTERFACE_MODE_10GBASER -- lists only SPEED_2500,
+SPEED_1000, SPEED_100 and SPEED_10.
 
-Fixes: 425eabddaf0f ("net: stmmac: Implement L3/L4 Filters using TC Flower")
-Signed-off-by: Rohan G Thomas <rohan.g.thomas@altera.com>
-Signed-off-by: Nazim Amirul <muhammad.nazim.amirul.nazle.asmade@altera.com>
+MGBE on Tegra234 runs 10GBASE-R into an Aquantia AQR113C. That PHY does
+rate matching, so phylink_link_up() replaces the media speed with the
+MAC-side interface speed before calling into the MAC:
+
+	case RATE_MATCH_PAUSE:
+		speed = phylink_interface_max_speed(link_state.interface);
+		duplex = DUPLEX_FULL;
+
+The driver is therefore called as
+
+	stmmac_mac_link_up(interface=10GBASER, speed=10000, duplex=1)
+
+which falls through to "default: return;". The interface stops passing
+traffic after the first link flap.
+
+The failure is easy to misread. The link still comes up, because the PHY
+is polled over MDIO and needs no MAC, so the interface reports carrier 1
+at the media speed. The DMA is untouched, so its start bits stay set and
+descriptors are still consumed. Only the MAC itself is gated off: the
+receiver counts nothing (mmc_rx_framecount_gb stops advancing, RE is 0)
+and nothing reaches the wire (TE is 0). The interface survives boot only
+because stmmac_hw_setup(), called from ndo_open, enables the MAC
+unconditionally -- so the problem appears only once the cable has been
+unplugged and plugged back in, and "ip link set dev <ethX> down && ip
+link set dev <ethX> up" appears to fix it.
+
+The interface is not what the speed bits depend on: with the single
+exception of 2.5G, which is selected through the XGMII block on USXGMII
+and through the regular speed bits otherwise, each speed maps to one
+field of struct mac_link. The per-interface switches are speed
+validation, and phylink already validates the speed against
+priv->hw->link.caps. So collapse the three switches into one keyed on the
+speed alone, keeping the interface test only for the 2.5G case. This
+covers 10G on 10GBASE-R, and equally 5G, and 1G/100/10 on USXGMII, all of
+which hit "default: return;" today.
+
+A core that does not support a speed leaves the corresponding mac_link
+field at 0, and phylink will not offer it that speed in the first place.
+For dwxgmac2 at 10G, link.xgmii.speed10000 is XGMAC_CONFIG_SS_10000,
+which is 0 and is the correct speed selection for a 10GBASE-R MAC: ctrl
+then equals old_ctrl, the register write is skipped, and execution
+reaches stmmac_mac_set(..., true).
+
+Log an error in the default case, since a speed with no entry here leaves
+the MAC disabled and the symptom does not point at the cause.
+
+Fixes: d8ca113724e7 ("net: stmmac: tegra: Add MGBE support")
+Suggested-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Signed-off-by: vadik likholetov <vadikas@gmail.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
 Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/20260714023716.29865-5-muhammad.nazim.amirul.nazle.asmade@altera.com
-Reviewed-by: Jakub Raczynski <j.raczynski@samsung.com>
+Link: https://patch.msgid.link/20260713074911.30090-1-vadikas@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c | 1 +
- 1 file changed, 1 insertion(+)
+ .../net/ethernet/stmicro/stmmac/stmmac_main.c | 92 ++++++++-----------
+ 1 file changed, 37 insertions(+), 55 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
-index 8eef993c47e968..9b58a91cce7e4d 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
-@@ -671,6 +671,7 @@ static int tc_del_flow(struct stmmac_priv *priv,
- 	entry->in_use = false;
- 	entry->cookie = 0;
- 	entry->is_l4 = false;
-+	entry->action = 0;
- 	return ret;
- }
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index dea3d66619ce3c..2fc0a87534c72a 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -1009,63 +1009,45 @@ static void stmmac_mac_link_up(struct phylink_config *config,
+ 	old_ctrl = readl(priv->ioaddr + MAC_CTRL_REG);
+ 	ctrl = old_ctrl & ~priv->hw->link.speed_mask;
  
+-	if (interface == PHY_INTERFACE_MODE_USXGMII) {
+-		switch (speed) {
+-		case SPEED_10000:
+-			ctrl |= priv->hw->link.xgmii.speed10000;
+-			break;
+-		case SPEED_5000:
+-			ctrl |= priv->hw->link.xgmii.speed5000;
+-			break;
+-		case SPEED_2500:
++	switch (speed) {
++	case SPEED_100000:
++		ctrl |= priv->hw->link.xlgmii.speed100000;
++		break;
++	case SPEED_50000:
++		ctrl |= priv->hw->link.xlgmii.speed50000;
++		break;
++	case SPEED_40000:
++		ctrl |= priv->hw->link.xlgmii.speed40000;
++		break;
++	case SPEED_25000:
++		ctrl |= priv->hw->link.xlgmii.speed25000;
++		break;
++	case SPEED_10000:
++		ctrl |= priv->hw->link.xgmii.speed10000;
++		break;
++	case SPEED_5000:
++		ctrl |= priv->hw->link.xgmii.speed5000;
++		break;
++	case SPEED_2500:
++		if (interface == PHY_INTERFACE_MODE_USXGMII)
+ 			ctrl |= priv->hw->link.xgmii.speed2500;
+-			break;
+-		default:
+-			return;
+-		}
+-	} else if (interface == PHY_INTERFACE_MODE_XLGMII) {
+-		switch (speed) {
+-		case SPEED_100000:
+-			ctrl |= priv->hw->link.xlgmii.speed100000;
+-			break;
+-		case SPEED_50000:
+-			ctrl |= priv->hw->link.xlgmii.speed50000;
+-			break;
+-		case SPEED_40000:
+-			ctrl |= priv->hw->link.xlgmii.speed40000;
+-			break;
+-		case SPEED_25000:
+-			ctrl |= priv->hw->link.xlgmii.speed25000;
+-			break;
+-		case SPEED_10000:
+-			ctrl |= priv->hw->link.xgmii.speed10000;
+-			break;
+-		case SPEED_2500:
+-			ctrl |= priv->hw->link.speed2500;
+-			break;
+-		case SPEED_1000:
+-			ctrl |= priv->hw->link.speed1000;
+-			break;
+-		default:
+-			return;
+-		}
+-	} else {
+-		switch (speed) {
+-		case SPEED_2500:
++		else
+ 			ctrl |= priv->hw->link.speed2500;
+-			break;
+-		case SPEED_1000:
+-			ctrl |= priv->hw->link.speed1000;
+-			break;
+-		case SPEED_100:
+-			ctrl |= priv->hw->link.speed100;
+-			break;
+-		case SPEED_10:
+-			ctrl |= priv->hw->link.speed10;
+-			break;
+-		default:
+-			return;
+-		}
++		break;
++	case SPEED_1000:
++		ctrl |= priv->hw->link.speed1000;
++		break;
++	case SPEED_100:
++		ctrl |= priv->hw->link.speed100;
++		break;
++	case SPEED_10:
++		ctrl |= priv->hw->link.speed10;
++		break;
++	default:
++		netdev_err(priv->dev,
++			   "unsupported speed %s on %s, leaving the MAC disabled\n",
++			   phy_speed_to_str(speed), phy_modes(interface));
++		return;
+ 	}
+ 
+ 	priv->speed = speed;
 -- 
 2.53.0
 
