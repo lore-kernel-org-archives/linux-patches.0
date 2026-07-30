@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6222C38C426;
-	Thu, 30 Jul 2026 16:00:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1624744AB66;
+	Thu, 30 Jul 2026 16:00:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427256; cv=none; b=cLr84R2W9GyZeOZm78CgXYzk5ELgKyu2cWEdbDGekpJqIiHutgrbvxEeTToLttBQ//xWQ3tK9tWwYiZcOzVuQH5Du4vXB1A2MeNGp0KxysQVv3m0vjr5uHp7NwFq+dMkUu1QW7rwIZoKQaz+HPDJKFHhManoYLkCZhzNvPoAc2A=
+	t=1785427259; cv=none; b=JO1oOBvRkVM8Rtop58TUUFp+oVWg0IzVideVyZ/auSFUSbMcxfZMXDOUulWQCDqxhxudFhnEKY6emD+9biYTu2s8kCN4OFxjoOWINjvFAwU+9czbTN/ppslJWOp0egpac0LaTKCEqt4pYz3hJgatEfzgRQCjZ9q52IEDFb0G3a4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427256; c=relaxed/simple;
-	bh=3Ed9iOyeM5Xhc35btZmBvW3u58ArCrSkhtSk65o0fl0=;
+	s=arc-20240116; t=1785427259; c=relaxed/simple;
+	bh=AuTJm0U0rBhmoS+P/qHALiSIRfNbkveKNUB2kMwQj1Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q1zOiqc+R7WLBliOxjHJzapMibIKn40Uht+cDEoLLnD6RyQSrdpkLuRzoGVb3exoaw/t5A4jYfmMNB7syLTVYG8f/5viuA0jlsFx9svtwt0yHAhHJNKFAEPB7NW+faUKz+cIX+daIfmiaUCg3+DGs45SRBVv1G/cya/K7VPR2lE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oe2oalgb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pMUsLvfd4ol9xYqo+GY1qWQjfkgDSFUjqaXT6dmiVRWEDweVKnIWenLdKbY4QOnUnEJXc78NG0xyo2qItg/xt84s9kBI3VQhWtUI0bFckp4KbLwMQjEdDpO7DCz5czZz2bLHzbTw2FM1XRWqKWO8Uln602xlSJgQBH2G89EAteY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KzF+mfQc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oe2oalgb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 532D21F00ACA;
-	Thu, 30 Jul 2026 16:00:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KzF+mfQc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FF281F00ACA;
+	Thu, 30 Jul 2026 16:00:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427254;
-	bh=HDPM3DTH+FNPv2t2YgXpKAxQnzDDa2WXBvr3bjNOriU=;
+	s=korg; t=1785427257;
+	bh=ZvT3gFp1BL/Q0rYOIqKmaOGfGqMcRrpzyjINI8E2XaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Oe2oalgbdHcu9vO1z4/qnO5tgee3BMAKipr+eE/jd17v7/mD6yBjbnnWhVSnCIsv/
-	 5/PtGlF6bJeREcgXDRXAE5RKn7jyDCe7wiGxFXNBvdBGyFXZbi0RGs+oRHH8AaU73P
-	 XQxCBlzxVL0/mVl0msYiFEOwbOJKwmgIITff3TRY=
+	b=KzF+mfQcQF4Z8CgLRDOqs3PCpN5gHcpVoS+bNVfujHaOh5kmiGrB5Lk+iKYZr8JcH
+	 BGBBvh87PuRBa5+5E34269d7XbJplmSgmKHbXpgGCKFWXr8F/txPfw+xLJMCiAOwUT
+	 3+MBuUN86qU2hOrWdIESmkiqRSgK++SJohVL0v+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Muhammad Bilal <meatuni001@gmail.com>
-Subject: [PATCH 6.6 106/484] usb: gadget: uvc: clamp SEND_RESPONSE length to the response buffer
-Date: Thu, 30 Jul 2026 16:10:03 +0200
-Message-ID: <20260730141425.762431979@linuxfoundation.org>
+	Tim Pambor <timpambor@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.6 107/484] USB: serial: ftdi_sio: add support for E+H FXA291
+Date: Thu, 30 Jul 2026 16:10:04 +0200
+Message-ID: <20260730141425.783300311@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -50,46 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muhammad Bilal <meatuni001@gmail.com>
+From: Tim Pambor <timpambor@gmail.com>
 
-commit b70dc75e85ba968b7b76eebfe5d63000080b875b upstream.
+commit fad0fd120e29041b3e6cdf41bb12e3184fb524a2 upstream.
 
-uvc_send_response() builds the UVC control response from a user-supplied
-struct uvc_request_data:
+The Commubox FXA291 by Endress+Hauser AG is a USB serial converter
+based on FT232B which is used to communicate with field devices.
 
-	req->length = min_t(unsigned int, uvc->event_length, data->length);
-	...
-	memcpy(req->buf, data->data, req->length);
+It enumerates using the FTDI vendor ID and a custom PID.
 
-req->length is clamped to uvc->event_length, which is taken from the
-host control request wLength (up to UVC_MAX_REQUEST_SIZE, 64), and to
-data->length, which comes from the UVCIOC_SEND_RESPONSE ioctl and is
-only checked for being negative.  The source buffer data->data is only
-60 bytes, so a response with uvc->event_length and data->length both
-greater than 60 makes memcpy() read past the end of data->data.
+usb 1-9: New USB device found, idVendor=0403, idProduct=e510, bcdDevice= 4.00
+usb 1-9: New USB device strings: Mfr=1, Product=2, SerialNumber=0
+usb 1-9: Product: FXA291
+usb 1-9: Manufacturer: Endress+Hauser
+usb 1-9: SerialNumber: 00000000
+ftdi_sio 1-9:1.0: FTDI USB Serial Device converter detected
+usb 1-9: Detected FT232B
+usb 1-9: FTDI USB Serial Device converter now attached to ttyUSB0
 
-Clamp req->length to sizeof(data->data) as well.
-
-Fixes: a5eaaa1f33e7 ("usb: gadget: uvc: use capped length value")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-Link: https://patch.msgid.link/20260629195004.148405-1-meatuni001@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Tim Pambor <timpambor@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/uvc_v4l2.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/serial/ftdi_sio.c     |    2 ++
+ drivers/usb/serial/ftdi_sio_ids.h |    5 +++++
+ 2 files changed, 7 insertions(+)
 
---- a/drivers/usb/gadget/function/uvc_v4l2.c
-+++ b/drivers/usb/gadget/function/uvc_v4l2.c
-@@ -191,6 +191,8 @@ uvc_send_response(struct uvc_device *uvc
- 		return usb_ep_set_halt(cdev->gadget->ep0);
+--- a/drivers/usb/serial/ftdi_sio.c
++++ b/drivers/usb/serial/ftdi_sio.c
+@@ -1075,6 +1075,8 @@ static const struct usb_device_id id_tab
+ 	{ USB_DEVICE_INTERFACE_NUMBER(ALTERA_VID, ALTERA_UB3_602E_PID, 3) },
+ 	/* Abacus Electrics */
+ 	{ USB_DEVICE(FTDI_VID, ABACUS_OPTICAL_PROBE_PID) },
++	/* Endress+Hauser AG devices */
++	{ USB_DEVICE(FTDI_VID, FTDI_EH_FXA291_PID) },
+ 	{ }					/* Terminating entry */
+ };
  
- 	req->length = min_t(unsigned int, uvc->event_length, data->length);
-+	if (req->length > sizeof(data->data))
-+		req->length = sizeof(data->data);
- 	req->zero = data->length < uvc->event_length;
+--- a/drivers/usb/serial/ftdi_sio_ids.h
++++ b/drivers/usb/serial/ftdi_sio_ids.h
+@@ -314,6 +314,11 @@
+ #define FTDI_ELV_UIO88_PID	0xFB5F	/* USB-I/O Interface (UIO 88) */
  
- 	memcpy(req->buf, data->data, req->length);
+ /*
++ * Endress+Hauser AG product ids (FTDI_VID)
++ */
++#define FTDI_EH_FXA291_PID	0xE510
++
++/*
+  * EVER Eco Pro UPS (http://www.ever.com.pl/)
+  */
+ 
 
 
