@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 412CC3B52EE;
-	Thu, 30 Jul 2026 15:55:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01054384CC3;
+	Thu, 30 Jul 2026 15:55:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426957; cv=none; b=LdP+2pJD0C8VVrhUDF1SbcsiozwiuNA7Hvg5RG2UZfstKQreTrAXocTgszJ6IKA4E6Vgk+Ezp2sYKUE0qfu4zEC9CO6X5n+xQE4alAW3D31NfMt7TVeS6XJKxaAkAGFUTU3PdNkf6JjfeRu8duvP52/gzgsJjC5dxClPGdp3DX8=
+	t=1785426960; cv=none; b=D9VZV0plTd9jqe8CwD4tVCn8pp5MN3YMTbLTLiOuMF+nEQwKsdozVIvNpS3bdPgPC51uO+ALp3MIUnbOAcfAPna9/Mj7eLt3wj7FP9tgq2wDmNe8+d6nVHwXkEz/Bzrr5Vqw5/Dm7xIsBo0CKda2NccpP3zrkcYJpfRiZH7p428=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426957; c=relaxed/simple;
-	bh=6il7SY8ao8sxm9B8c0OyFGVW/TzXH2ZKUWZMLIT56r0=;
+	s=arc-20240116; t=1785426960; c=relaxed/simple;
+	bh=eeJLqaI6dVvV6Hl7uIVjIWVzyPiyZ180mVgJPByX/+s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AWdlQAhshvvXc1AOWgCTblQro9FkgwMH/CQxukAVp5OWaZhv4naS1KaH7k7H3Zgb4sm62uq5LQ8/1tpdqcBoUvTjrIEhMBBvbFwcQYyiAsRO4kFtoFx0+JKHdnP+eRew/NoZ8YyjAgvcZVyv61NTN1uM/YQBtYWypHyZmWQPG1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e8HJMnLr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cbiyVL462RPXMXsOW8O0L1Q8QJTFOLif/6WDooatAi3mMQwQyzKz5WwRgwpe7Z6Qz4ivIM1YeMOM9lS7630o3qHUPdVBcALXcHk62Ht7mLLPIJZviH8SSHnxZCuzIiSi4p3lCkHsjWzXP1gYWXWrkP3Erp6iCpCpQNgLIS63nuQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hdhp+zoI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e8HJMnLr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D40D1F00A3A;
-	Thu, 30 Jul 2026 15:55:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hdhp+zoI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 666781F000E9;
+	Thu, 30 Jul 2026 15:55:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426956;
-	bh=+ykH/2zy9gMvlB5BMrMADIw9wd89Eoj/EmIAGEKC8HI=;
+	s=korg; t=1785426958;
+	bh=VXxNnc2fhRKn5l44IlouTIC9YAh1KE0ydU7WsuNRoho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e8HJMnLrQm0gBFxXWMaMp403tkvQ5NQ/2Hg0lRU8Mt8eJ57JnMZ13CSN8n2QlmSib
-	 DTJv0lRkHFGjkONdnC3ikY6wqnuajd7zxuu7KjHbDjNX9GnXpQtZV7175+VrmDV6M+
-	 GPRMuimWcjVDGFrMUkDSu5S5OqEZj48Jc9hVu6Wc=
+	b=hdhp+zoIcNKoNAR9uoESkoLeFOxR4jke1ToFZD9SqiUCQdJ7F1Yc+BiHNfX5MsE7q
+	 J9162rvkO16rrliCn1RN3Qh8nuu/kboD/XbNDQvs/Ybz149n1lm7D5Ug2s/6TwyUkm
+	 oj4udyhLeMPRLeU0hdjs0a20ZO14bbhvFMDBESXU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavitra Jha <jhapavitra98@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.12 600/602] Bluetooth: hci_conn: Fix memory leak in hci_le_big_terminate()
-Date: Thu, 30 Jul 2026 16:16:32 +0200
-Message-ID: <20260730141448.663593557@linuxfoundation.org>
+	Paulo Alcantra <pc@manguebit.org>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	syzbot+41c68824eefb67cdf00c@syzkaller.appspotmail.com,
+	linux-afs@lists.infradead.org,
+	linux-fsdevel@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.12 601/602] afs: Fix uninit var in afs_alloc_anon_key()
+Date: Thu, 30 Jul 2026 16:16:33 +0200
+Message-ID: <20260730141448.683554378@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -50,41 +55,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavitra Jha <jhapavitra98@gmail.com>
+From: David Howells <dhowells@redhat.com>
 
-commit bfa9d28960ed677d556bdf097073bc3129686229 upstream.
+commit 19eef1d98eeda3745df35839190b7d4a4adea656 upstream.
 
-hci_le_big_terminate() allocates iso_list_data via kzalloc_obj but
-returns 0 without freeing it when neither pa_sync_term nor big_sync_term
-flags are set after evaluating the PA and BIG sync connection state.
+Fix an uninitialised variable (key) in afs_alloc_anon_key() by setting it
+to cell->anonymous_key.  Without this change, the error check may return a
+false failure with a bad error number.
 
-This early-return path was introduced when hci_le_big_terminate() was
-refactored to take struct hci_conn instead of raw u8 parameters, adding
-PA/BIG flag evaluation logic. The existing kfree() on hci_cmd_sync_queue
-failure does not cover this path.
+Most of the time this is unlikely to happen because the first encounter
+with afs_alloc_anon_key() will usually be from (auto)mount, for which all
+subsequent operations must wait - apart from other (auto)mounts.  Once the
+call->anonymous_key is allocated, all further calls to afs_request_key()
+will skip the call to afs_alloc_anon_key() for that cell.
 
-Fixes: a7bcffc673de ("Bluetooth: Add PA_LINK to distinguish BIG sync and PA sync connections")
-Cc: stable@vger.kernel.org
-Signed-off-by: Pavitra Jha <jhapavitra98@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: d27c71257825 ("afs: Fix delayed allocation of a cell's anonymous key")
+Reported-by: Paulo Alcantra <pc@manguebit.org>
+Signed-off-by: David Howells <dhowells@redhat.com>
+Reviewed-by: Paulo Alcantara <pc@manguebit.org>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: syzbot+41c68824eefb67cdf00c@syzkaller.appspotmail.com
+cc: linux-afs@lists.infradead.org
+cc: linux-fsdevel@vger.kernel.org
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_conn.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/afs/security.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/bluetooth/hci_conn.c
-+++ b/net/bluetooth/hci_conn.c
-@@ -804,8 +804,10 @@ static int hci_le_big_terminate(struct h
- 			d->big_sync_term = true;
- 	}
+--- a/fs/afs/security.c
++++ b/fs/afs/security.c
+@@ -26,7 +26,8 @@ static int afs_alloc_anon_key(struct afs
+ 	struct key *key;
  
--	if (!d->pa_sync_term && !d->big_sync_term)
-+	if (!d->pa_sync_term && !d->big_sync_term) {
-+		kfree(d);
- 		return 0;
-+	}
- 
- 	ret = hci_cmd_sync_queue(hdev, big_terminate_sync, d,
- 				 terminate_big_destroy);
+ 	mutex_lock(&afs_key_lock);
+-	if (!cell->anonymous_key) {
++	key = cell->anonymous_key;
++	if (!key) {
+ 		key = rxrpc_get_null_key(cell->key_desc);
+ 		if (!IS_ERR(key))
+ 			cell->anonymous_key = key;
 
 
