@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B79A83769F5;
-	Thu, 30 Jul 2026 15:16:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE6B737BE64;
+	Thu, 30 Jul 2026 15:16:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424564; cv=none; b=flAsq1D3PtTDhLK6veBuBhCF1CjbNFE0mAUSJMt2s6GVeOjCES/mzCf33wlmsb8KJPRKUOhhtbI2QRhr+bYtYEdwU6cX8pxtXPE7KkzecDshAJ/5gLgfcQtNDGqjYvPEQyGWNPED3uX2RihRh2R+wL/T9Jq1alPDQlkeSbnwCLY=
+	t=1785424567; cv=none; b=VeLhqBd/0kIv4Sh+k60XOLmKf/KIPybGhlC80h25JS7PJxzInDD9f+tY1o5sPLTS///TR21Xnc5MxJ8pcQ2Q6L4DFrY1lMSL1lxMzAQxgT4bOOgtRKY+wyb7eL+civW3jYOGYTc83ovoteedf+boZyRCitUsIkdWFDZHMN0x+y4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424564; c=relaxed/simple;
-	bh=0Akqm2FuBgNg5SU2bOItGKbrq9r7Omvpp6J+5sDWtUU=;
+	s=arc-20240116; t=1785424567; c=relaxed/simple;
+	bh=kO8KNZc87+bKvB+6IXniv7uMPbJG1fWeXYGD0BoCGnY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dgVHF7gVW4aSQEGDqJUtTdnep+bo6thubB9gynBSOM98kM6W7UiESCi+TNIfEFLXrb+Zs5hcs1kw9gtLQ5FiBhAYC8gqSuo6I8boIAVEJ4yKoabz9bLBSVdMzjH6FiEeHzeXeWcj6bc89X7KrtTjTzE2LbvhQwuKYfURV2VVQYE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YVPJnpKo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P/+SPYL9nGaneolLgEBOhwjfJ2eRz6fWyywnyzjpn+mJwcVhsrVsv4LeXE+UDOGNSkpIwazR0FCuzlXeBwAbwAshdxRlWIowwrEEiYbXiglWHH5xkixhP9NU79ctLhr3PBaxGgCgKJZ98z78a6Zrcj99B68vRnAU/BEhcTa7+TU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OAQY+STZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YVPJnpKo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E3501F000E9;
-	Thu, 30 Jul 2026 15:16:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OAQY+STZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EA411F000E9;
+	Thu, 30 Jul 2026 15:16:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424563;
-	bh=QMGwPc9nSfLVEzaM8VWMMnCSrY+AW42N8LkrPlDofFU=;
+	s=korg; t=1785424566;
+	bh=888ZFrHOj1XOlm8F8yJn1OfNsfJijJ6dO48o6hfJNx8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YVPJnpKoA2Sv/W3fjx+6npGOv5OJNY1R9Y8PIN9f+cIggsy0t+A7NXX9IBzYkcRYY
-	 IlJOdzDEfQ+Hv9G/+97OACw1E3jSVF/A7DuibR5aOf8TRQ0zYpUZNJKieOqBp2uuz2
-	 CmfJNo+Q7FxZjEbjKKhAw/+keD+MRVUDX7W/1nvg=
+	b=OAQY+STZci//yms9WAVOhVJLKN/tU3QOUWhyQyH+0yPel3rNaJ4keyOs+K3VKGTT0
+	 qwOtf79dAXsJx7TEKY30gC+7Xv04J7iuV7c0tbBrX5zdDiZcM4nhjvRm4oJDXfxwBk
+	 f+MKC7Hoj3nLcRsoFUv76xn/BAH3aztxgDUrakps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Mirela Rabulea <mirela.rabulea@nxp.com>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>
-Subject: [PATCH 6.18 437/675] media: v4l2-fwnode: Fix subdev owner overwritten in v4l2_async_register_subdev_sensor()
-Date: Thu, 30 Jul 2026 16:12:47 +0200
-Message-ID: <20260730141454.428218127@linuxfoundation.org>
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Subject: [PATCH 6.18 438/675] media: v4l2-subdev: Fail {enable,disable}_streams and s_streaming nicely
+Date: Thu, 30 Jul 2026 16:12:48 +0200
+Message-ID: <20260730141454.448682753@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -52,89 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mirela Rabulea <mirela.rabulea@nxp.com>
+From: Sakari Ailus <sakari.ailus@linux.intel.com>
 
-commit 06cb687a5132fcffe624c0070576ab852ac6b568 upstream.
+commit 0bcbfd1c1142d85faef8df5cb679d37f71394c5f upstream.
 
-The v4l2 helper v4l2_async_register_subdev_sensor() calls
-v4l2_async_register_subdev(), which is a macro that expands to
-__v4l2_async_register_subdev(sd,THIS_MODULE). Since the macro is expanded
-inside v4l2-fwnode.c, THIS_MODULE resolves to the v4l2-fwnode module
-rather than the sensor driver module that originally set sd->owner. When
-v4l2-fwnode is built-in, THIS_MODULE evaluates to NULL, which then
-overwrites the sensor driver's owner with NULL.
+If a sub-device does not set enable_streams() and disable_streams() pad
+ops while it sets the s_stream() video op to
+v4l2_subdev_s_stream_helper(), enabling or disabling streaming either way
+on the sub-device will result calling v4l2_subdev_s_stream_helper() and
+v4l2_subdev_{enable,disable}_streams() recursively, exhausting the stack.
+Return -ENOIOCTLCMD in this case to handle the situation gracefully.
 
-This causes the problem that the sensor module's reference count is never
-incremented during async registration, so the module can be removed while
-the subdevice is still in use by a notifier (e.g., a CSI-2 receiver
-bridge driver).
-
-Fix this by renaming v4l2_async_register_subdev_sensor() to
-__v4l2_async_register_subdev_sensor() with an added explicit module
-argument and introducing a wrapper macro:
-    #define v4l2_async_register_subdev_sensor(sd) \
-        __v4l2_async_register_subdev_sensor(sd, THIS_MODULE)
-
-This ensures the sensor driver module is properly referenced even when
-the sensor driver does not init the owner field before calling
-v4l2_async_register_subdev_sensor() and prevents premature module removal.
-
-Fixes: aef69d54755d ("media: v4l: fwnode: Add a convenience function for registering sensors")
+Fixes: b62949ddaa52 ("media: subdev: Support single-stream case in v4l2_subdev_enable/disable_streams()")
 Cc: stable@vger.kernel.org
-Suggested-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/linux-media/20240315073125.275501-2-sakari.ailus@linux.intel.com/
-Signed-off-by: Mirela Rabulea <mirela.rabulea@nxp.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/v4l2-core/v4l2-fwnode.c |    6 +++---
- include/media/v4l2-async.h            |    4 +++-
- 2 files changed, 6 insertions(+), 4 deletions(-)
+ drivers/media/v4l2-core/v4l2-subdev.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/media/v4l2-core/v4l2-fwnode.c
-+++ b/drivers/media/v4l2-core/v4l2-fwnode.c
-@@ -1246,7 +1246,7 @@ v4l2_async_nf_parse_fwnode_sensor(struct
- 	return 0;
- }
+--- a/drivers/media/v4l2-core/v4l2-subdev.c
++++ b/drivers/media/v4l2-core/v4l2-subdev.c
+@@ -2506,6 +2506,10 @@ int v4l2_subdev_s_stream_helper(struct v
+ 	u64 source_mask = 0;
+ 	int pad_index = -1;
  
--int v4l2_async_register_subdev_sensor(struct v4l2_subdev *sd)
-+int __v4l2_async_register_subdev_sensor(struct v4l2_subdev *sd, struct module *module)
- {
- 	struct v4l2_async_notifier *notifier;
- 	int ret;
-@@ -1272,7 +1272,7 @@ int v4l2_async_register_subdev_sensor(st
- 	if (ret < 0)
- 		goto out_cleanup;
- 
--	ret = v4l2_async_register_subdev(sd);
-+	ret = __v4l2_async_register_subdev(sd, module);
- 	if (ret < 0)
- 		goto out_unregister;
- 
-@@ -1290,7 +1290,7 @@ out_cleanup:
- 
- 	return ret;
- }
--EXPORT_SYMBOL_GPL(v4l2_async_register_subdev_sensor);
-+EXPORT_SYMBOL_GPL(__v4l2_async_register_subdev_sensor);
- 
- MODULE_DESCRIPTION("V4L2 fwnode binding parsing library");
- MODULE_LICENSE("GPL");
---- a/include/media/v4l2-async.h
-+++ b/include/media/v4l2-async.h
-@@ -333,8 +333,10 @@ int __v4l2_async_register_subdev(struct
-  * An error is returned if the module is no longer loaded on any attempts
-  * to register it.
-  */
-+#define v4l2_async_register_subdev_sensor(sd) \
-+	__v4l2_async_register_subdev_sensor(sd, THIS_MODULE)
- int __must_check
--v4l2_async_register_subdev_sensor(struct v4l2_subdev *sd);
-+__v4l2_async_register_subdev_sensor(struct v4l2_subdev *sd, struct module *module);
- 
- /**
-  * v4l2_async_unregister_subdev - unregisters a sub-device to the asynchronous
++	if (WARN_ON(!v4l2_subdev_has_op(sd, pad, enable_streams) ||
++		    !v4l2_subdev_has_op(sd, pad, disable_streams)))
++		return -ENOIOCTLCMD;
++
+ 	/*
+ 	 * Find the source pad. This helper is meant for subdevs that have a
+ 	 * single source pad, so failures shouldn't happen, but catch them
 
 
