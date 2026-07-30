@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9295C43F0A7;
-	Thu, 30 Jul 2026 15:11:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D990445AFB;
+	Thu, 30 Jul 2026 15:11:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424314; cv=none; b=Ye9reKlzcvMpXcU4WNJHYTG8IdfpH9vqtERM7E99fL4PEaFHWBQexN3ABRgxO8GyuIEhF76MxvPQ/sSUM9uN+7Bt3eb8RAkVMHFCx1SYw3iM8ZVF4HdCAMufpM5bfxVaojEorRCI61+XzxBbjdA2Lvbqmuvj/wZfHQW0YvpHkYc=
+	t=1785424317; cv=none; b=XrpnyWBs4D4ua6Z3wJ9Iyt1WmrmoHvxXRoxfQ2RPPCO31SdlC/Xkdo2ava8kDHNPMB6A21ALaulgPHECJEoIy1KhyYxv1MNjDdtzmDMgvFyP3ZC2t0wSoifR73H+t7j0ZOXP1PgdFtC12Nl92tKmboNa4nCvTS+4Rf57HHmcV1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424314; c=relaxed/simple;
-	bh=A/i34Hx/8ca8sk2pG5cfznb3Q77ExqzjsAJCO+2RWm0=;
+	s=arc-20240116; t=1785424317; c=relaxed/simple;
+	bh=1kdD+nsIxWDzkRMjDIU8pkTBwLsn7PdwRtK+mg3fmX8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qNp0Pbu2c3mqacjgiuWF76bZPDx3HGjT1sBOHYQRMHFDbUTb/xriIGGhezODkvbcGjgxYqo6rLywjqVwwkycq4UpikEhwo9RwRtv5jIQYxZjmlEEJYC7ODfUCevdlSNguOKOOPq1s+sEUT9am2b5z9DZDcE8Gp9w5k8LIB1jjlk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W8kLV1RN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JhsGiNxGD843pWm9qDeUab9yWOhE28wN8CYNptN+dqQToTpOC8e2qfHC3qC+RseQL6HQE6a/MOhes7CaFq86+oRkuzFhX+g9FItinAbKT9QFeg/93MI9TdLoyPHjT1rVm5t2Q6VfaSJxVAooZApKqKqyoepD8xxpOzOeXZWsZ7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ch1bMzcj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W8kLV1RN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDBD71F000E9;
-	Thu, 30 Jul 2026 15:11:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ch1bMzcj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB8F51F000E9;
+	Thu, 30 Jul 2026 15:11:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424313;
-	bh=iDNfa/vAd+VVatdRGVmHEVoz/4IW2We/JjW3MihKHhY=;
+	s=korg; t=1785424316;
+	bh=L+eEmhwNWR8LBRpXIM4mQuB5wHjTeg7un4khQ/ZIVLE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W8kLV1RN8m5fZI/PrWI011eupJLB5xYEoMJCjmBzC1zLcRONjvuZZ4Bp4wfTnpYgv
-	 i1QWoJBQBRLx4wiQSz7hMh6Pp4d2N0uWQ5nePsBVIze0Q78CgQHh//hxmS9yefVo50
-	 Lhi8eQx4RtcsH7QSy9y+8H7KwnUB0XY2HzGQCmU0=
+	b=Ch1bMzcjvfa/qJi0ftkRKtVKTbpxGF6+JXCA6tz6YLJJ4JfMAnkKidlQ6Saop/nW+
+	 iXO0er9UTPCU29sPa8ED/Lpjo34p/Pn/+ys8Q4NF2K4LDlOYlgl/1mfLJJH464PMv+
+	 lvNZNWpreBhCe7putm7KZ7AWqVuCECbs04C59Ogc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alessio Belle <alessio.belle@imgtec.com>,
-	Shuvam Pandey <shuvampandey1@gmail.com>
-Subject: [PATCH 6.18 349/675] drm/imagination: Fix user array stride in pvr_set_uobj_array()
-Date: Thu, 30 Jul 2026 16:11:19 +0200
-Message-ID: <20260730141452.551380238@linuxfoundation.org>
+	Luigi Santivetti <luigi.santivetti@imgtec.com>,
+	Alessio Belle <alessio.belle@imgtec.com>
+Subject: [PATCH 6.18 350/675] drm/imagination: fix error checking of pvr_vm_context_lookup()
+Date: Thu, 30 Jul 2026 16:11:20 +0200
+Message-ID: <20260730141452.574539126@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -50,58 +50,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuvam Pandey <shuvampandey1@gmail.com>
+From: Luigi Santivetti <luigi.santivetti@imgtec.com>
 
-commit 8dc8f3f4c2382fb7d1b1986ba8f33a2466cd3d7a upstream.
+commit cf385cf6e713eba0720651174dac0b2d2f5bb8f8 upstream.
 
-pvr_set_uobj_array() copies an array of kernel objects to a userspace
-array whose element size is described by out->stride. When out->stride
-is different from the kernel object size, the slow path advances the
-userspace pointer by the kernel object size and the kernel pointer by the
-userspace stride.
+Since pvr_vm_context_lookup() returns either NULL or a pointer, then stop
+using IS_ERR() for checking the return value.
 
-This reverses the intended layout. For larger userspace strides, later
-copies read from the wrong kernel addresses. For smaller userspace
-strides, later copies are written at the wrong userspace offsets. The
-padding clear is also done only for the first element instead of the
-padding area for each element.
+Using IS_ERR() leads to the kernel oops reported below. It can be
+reproduced by passing an invalid VM context handle from userspace to the
+DRM_IOCTL_PVR_CREATE_CONTEXT ioctl.
 
-Advance the userspace pointer by out->stride and the kernel pointer by
-obj_size, and clear per-element padding while the current userspace
-pointer is still available.
+[   92.733119] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000148
+[   92.742042] Mem abort info:
+[   92.744890]   ESR = 0x0000000096000004
+[   92.748686]   EC = 0x25: DABT (current EL), IL = 32 bits
+[   92.754020]   SET = 0, FnV = 0
+[   92.757154]   EA = 0, S1PTW = 0
+[   92.760337]   FSC = 0x04: level 0 translation fault
+[   92.765243] Data abort info:
+[   92.768129]   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
+[   92.773626]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+[   92.778763]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+[   92.784098] user pgtable: 4k pages, 48-bit VAs, pgdp=000000088ed23000
+[   92.790550] [0000000000000148] pgd=0000000000000000, p4d=0000000000000000
+[   92.797381] Internal error: Oops: 0000000096000004 [#1]  SMP
+[   92.803027] Modules linked in: powervr
+[   92.852533] CPU: 0 UID: 0 PID: 409 Comm: triangle Not tainted 7.1.0-rc5-g98b46e693b91 #1 PREEMPT
+[   92.861385] Hardware name: Texas Instruments AM68 SK (DT)
+[   92.866766] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[   92.873709] pc : pvr_vm_get_fw_mem_context+0x0/0xc [powervr]
+[   92.879376] lr : pvr_queue_create+0x26c/0x440 [powervr]
+[   92.884595] sp : ffff8000837fbb00
+[   92.887895] x29: ffff8000837fbb60 x28: 0000000000000000 x27: ffff8000837fbce8
+[   92.895015] x26: ffff000807f61a40 x25: ffff000807f61a00 x24: ffff000807f64400
+[   92.902135] x23: ffff00080a5ab000 x22: ffff800079b24730 x21: ffff000807f61800
+[   92.909254] x20: ffff00080999e680 x19: 0000000000000000 x18: 0000000000000000
+[   92.916373] x17: 0000000000000000 x16: 0000000000000000 x15: 0000000000000001
+[   92.923492] x14: 0000000000000000 x13: 0000000000000002 x12: ffff80008145b298
+[   92.930611] x11: ffff8000844e5000 x10: ffff80008165a130 x9 : 0000000000000100
+[   92.937730] x8 : 0000000000000001 x7 : ffff0008076b27e0 x6 : ffff00080ec43b7c
+[   92.944850] x5 : ffff00080ec43b78 x4 : 0000000000000000 x3 : ffff00080999e680
+[   92.951968] x2 : 0000000000000000 x1 : 0000000000000000 x0 : 0000000000000000
+[   92.959088] Call trace:
+[   92.961521]  pvr_vm_get_fw_mem_context+0x0/0xc [powervr] (P)
+[   92.967173]  pvr_context_create+0x190/0x410 [powervr]
+[   92.972218]  pvr_ioctl_create_context+0x44/0x8c [powervr]
+[   92.977608]  drm_ioctl_kernel+0xbc/0x124 [drm]
+[   92.982127]  drm_ioctl+0x1f8/0x4dc [drm]
+[   92.986098]  __arm64_sys_ioctl+0xac/0x104
+[   92.990102]  invoke_syscall+0x54/0x10c
+[   92.993842]  el0_svc_common.constprop.0+0x40/0xe0
+[   92.998532]  do_el0_svc+0x1c/0x28
+[   93.001835]  el0_svc+0x38/0x11c
+[   93.004969]  el0t_64_sync_handler+0xa0/0xe4
+[   93.009139]  el0t_64_sync+0x198/0x19c
+[   93.012792] Code: aa1703e0 d2800014 95cb0ba4 17ffffe8 (f940a400)
+[   93.018869] ---[ end trace 0000000000000000 ]---
 
-Fixes: f99f5f3ea7ef ("drm/imagination: Add GPU ID parsing and firmware loading")
-Cc: stable@vger.kernel.org # v6.8+
+Fixes: d2d79d29bb98 ("drm/imagination: Implement context creation/destruction ioctls")
+Cc: stable@vger.kernel.org
+Signed-off-by: Luigi Santivetti <luigi.santivetti@imgtec.com>
 Reviewed-by: Alessio Belle <alessio.belle@imgtec.com>
-Signed-off-by: Shuvam Pandey <shuvampandey1@gmail.com>
-Link: https://patch.msgid.link/6a456012.eb165e5c.113c2a.b71d@mx.google.com
+Link: https://patch.msgid.link/20260707-staging-ddkopsrc-2435-v1-1-24e160d44476@imgtec.com
 Signed-off-by: Alessio Belle <alessio.belle@imgtec.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/imagination/pvr_drv.c |   13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/imagination/pvr_context.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/imagination/pvr_drv.c
-+++ b/drivers/gpu/drm/imagination/pvr_drv.c
-@@ -1252,14 +1252,13 @@ pvr_set_uobj_array(const struct drm_pvr_
- 			if (copy_to_user(out_ptr, in_ptr, cpy_elem_size))
- 				return -EFAULT;
+--- a/drivers/gpu/drm/imagination/pvr_context.c
++++ b/drivers/gpu/drm/imagination/pvr_context.c
+@@ -309,8 +309,8 @@ int pvr_context_create(struct pvr_file *
+ 		goto err_free_ctx;
  
--			out_ptr += obj_size;
--			in_ptr += out->stride;
--		}
-+			if (out->stride > obj_size &&
-+			    clear_user(out_ptr + cpy_elem_size, out->stride - obj_size)) {
-+				return -EFAULT;
-+			}
- 
--		if (out->stride > obj_size &&
--		    clear_user(u64_to_user_ptr(out->array + obj_size),
--			       out->stride - obj_size)) {
--			return -EFAULT;
-+			out_ptr += out->stride;
-+			in_ptr += obj_size;
- 		}
+ 	ctx->vm_ctx = pvr_vm_context_lookup(pvr_file, args->vm_context_handle);
+-	if (IS_ERR(ctx->vm_ctx)) {
+-		err = PTR_ERR(ctx->vm_ctx);
++	if (!ctx->vm_ctx) {
++		err = -EINVAL;
+ 		goto err_free_ctx;
  	}
  
 
