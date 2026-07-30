@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CA2E37475C;
-	Thu, 30 Jul 2026 14:46:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7C3137883C;
+	Thu, 30 Jul 2026 14:46:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422764; cv=none; b=FkPw+Y7atWguk1gUGtFTrz8RX2aLB1c50SqpgokYu8mp2TEv3R5BsfczzStCUimsXtfdHoB48wCQzhACd8ZNOa2sXqoqAh+twMHd9miB8M4hgoK8kWjHUOOlcnh4x6VOg5mEkAw1hERELhkdzvmyhfzK2NQ4w88NVdNodS87WMQ=
+	t=1785422767; cv=none; b=hPG/XEYUsGn+22tjtid1wJpGfGHFTowPzws6+/o2Ml1MMxr9NMiL9qedN2D1XqCXFCykOsrHELWj9W6LJhfjN425Ra2GFYrUzhphKV1fwKjbq0UwNXZlA/be0Kc6Irkl4ATY7B+/9Hln9AuhHg/dVtbNjlfKn5fu2Sj8C0f4kaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422764; c=relaxed/simple;
-	bh=nKkPrNuCSXvMxYDkcINyxWAzgiTGVVbT7yb5kg/kzrk=;
+	s=arc-20240116; t=1785422767; c=relaxed/simple;
+	bh=frgPghkbV264b9hg01edNAgTIrt5ihcfRJeo8Nnslhw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bXVvYXMhJI9S4qon3kxfxnTcBH8eCqi6SAzDOpo8DpExPN9pdkn9Fs/5HXdFcYolqFqmT+UVhBfRsKvmbFFayKzKI+WUhKB9YLcRNYn1tkqtra4rKIr5icUaclv38PXK1lKjGMLNxsR7Jq1b+x+yIf6/ChEa8HyLqSuiG68ngso=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oL/rSafZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=D4ylcd4vaxktx9KQl9i4g0Me8xifahnvw8kNvzWkz/qjvwkoatFPBRuo7mIIfHziYC4zidR15oFZ7tRDxPYwki3gb3O3Z5gboOlbhU3nT2GGRwUcY4vIXKYtSTiU8KkUe03VrCI8I0PFpPoaiiTZ9euKVSzIrPmdYXIi8S1xYB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SvI1WrLF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oL/rSafZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96FFF1F000E9;
-	Thu, 30 Jul 2026 14:46:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SvI1WrLF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B31C31F00A3A;
+	Thu, 30 Jul 2026 14:46:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422763;
-	bh=TgThtRg4jFkxPTDexX0uLzqKqZBOOKIsFWi09QlBjiQ=;
+	s=korg; t=1785422766;
+	bh=KX3ElT5MRfQHQsaa+nQVW4nfHJ4TVOnT7tGQeAzHoGo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oL/rSafZ4T9/v++BCVMZunydTHuvJDMmV/vw3tJZPOR6x1k1O6a5oTo/rwQ8xLJWy
-	 1KUDJoCnb+nhge0aijoz2bHZM3G8Jn2Qdl2l0+olRyWZotzDrvQHH85k7lKA3hEqQ5
-	 j7HqwEak156naz6B1rTl5ZgdK21hggoPfRu/wp3U=
+	b=SvI1WrLFvql3McTE0ASiL+Mg2kgba59BPtqPV41pJggBerG6d9pPE26F65HG+fMKF
+	 gRRenjD3n5Oc7Q27a1o9X2u1eiXbl0fGoaQXJnpGtED228iib88tJBtDQs6inHbXpq
+	 bHesA9pFz8vPyBCYnB34/PFQIzko+Bi/9R4RunDc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huihui Huang <hhhuang@smu.edu.sg>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 7.1 546/744] wifi: wilc1000: validate assoc response length before subtracting header
-Date: Thu, 30 Jul 2026 16:13:39 +0200
-Message-ID: <20260730141455.881457349@linuxfoundation.org>
+	Devin Wittmayer <lucid_duck@justthetip.ca>,
+	Felix Fietkau <nbd@nbd.name>
+Subject: [PATCH 7.1 547/744] wifi: mt76: mt7615: drop TXRX_NOTIFY on non-mmio buses
+Date: Thu, 30 Jul 2026 16:13:40 +0200
+Message-ID: <20260730141455.902854243@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -50,58 +50,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huihui Huang <hhhuang@smu.edu.sg>
+From: Devin Wittmayer <lucid_duck@justthetip.ca>
 
-commit 4c4c97b60a5e978121d9ee8cb0ab3916e5d6a8de upstream.
+commit 39afc46c0243d10b7795e6e6cf4ae91f41732120 upstream.
 
-wilc_parse_assoc_resp_info() computes the trailing IE length as
+PKT_TYPE_TXRX_NOTIFY is an mmio-only event, but mt7615_rx_check() and
+mt7615_queue_rx_skb() dispatch it to mt7615_mac_tx_free() on every bus.
+mt7615_mac_tx_free() cleans the DMA tx queues with
+mt76_queue_tx_cleanup(), which calls queue_ops->tx_cleanup(). Only the
+mmio queue ops implement that callback; on the mt7663 USB and SDIO
+buses it is NULL, so a TXRX_NOTIFY there calls a NULL pointer in the RX
+worker. Same defect as the mt7921 and mt7925 patches in this series.
 
-	ies_len = buffer_len - sizeof(*res);
+Drop the event on non-mmio buses via mt76_is_mmio(), as in
+commit 5683e1488aa9 ("wifi: mt76: connac: do not check WED status for
+non-mmio devices").
 
-without first checking that buffer_len is at least sizeof(struct
-wilc_assoc_resp) (6 bytes). buffer_len is the length reported for a
-received association response (host_int_parse_assoc_resp_info() passes
-hif_drv->assoc_resp / assoc_resp_info_len straight in) and must be
-validated before the driver accesses the fixed header.
-
-For a frame shorter than the 6-byte fixed header, the subtraction wraps.
-For a four-byte response the result is truncated to a u16 ies_len of
-65534, so kmemdup() then attempts to copy 65534 bytes starting at
-buffer + sizeof(*res), beyond the valid association-response data
-(CWE-125). A response shorter than four bytes can also cause an
-out-of-bounds read of res->status_code at offsets 2 and 3.
-
-Reject frames too short to hold the fixed header before touching the
-header or computing ies_len. Also set the connection status to a failure
-on this path: the caller falls through to a
-"conn_info->status == WLAN_STATUS_SUCCESS" check after the parser
-returns, so leaving the status untouched could let a malformed short
-response be treated as a successful association.
-
-Fixes: c5c77ba18ea6 ("staging: wilc1000: Add SDIO/SPI 802.11 driver")
+Fixes: eb99cc95c3b6 ("mt76: mt7615: introduce mt7663u support")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Huihui Huang <hhhuang@smu.edu.sg>
-Link: https://patch.msgid.link/20260714091811.3596126-1-hhhuang@smu.edu.sg
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
+Link: https://patch.msgid.link/20260627191336.20223-4-lucid_duck@justthetip.ca
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/microchip/wilc1000/hif.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/wireless/mediatek/mt76/mt7615/mac.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/net/wireless/microchip/wilc1000/hif.c
-+++ b/drivers/net/wireless/microchip/wilc1000/hif.c
-@@ -600,6 +600,11 @@ static s32 wilc_parse_assoc_resp_info(u8
- 	u16 ies_len;
- 	struct wilc_assoc_resp *res = (struct wilc_assoc_resp *)buffer;
+--- a/drivers/net/wireless/mediatek/mt76/mt7615/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7615/mac.c
+@@ -1601,6 +1601,8 @@ bool mt7615_rx_check(struct mt76_dev *md
  
-+	if (buffer_len < sizeof(*res)) {
-+		ret_conn_info->status = WLAN_STATUS_UNSPECIFIED_FAILURE;
-+		return -EINVAL;
-+	}
-+
- 	ret_conn_info->status = le16_to_cpu(res->status_code);
- 	if (ret_conn_info->status == WLAN_STATUS_SUCCESS) {
- 		ies = &buffer[sizeof(*res)];
+ 	switch (type) {
+ 	case PKT_TYPE_TXRX_NOTIFY:
++		if (!mt76_is_mmio(mdev))
++			return false;
+ 		mt7615_mac_tx_free(dev, data, len);
+ 		return false;
+ 	case PKT_TYPE_TXS:
+@@ -1634,6 +1636,10 @@ void mt7615_queue_rx_skb(struct mt76_dev
+ 		dev_kfree_skb(skb);
+ 		break;
+ 	case PKT_TYPE_TXRX_NOTIFY:
++		if (!mt76_is_mmio(mdev)) {
++			dev_kfree_skb(skb);
++			break;
++		}
+ 		mt7615_mac_tx_free(dev, skb->data, skb->len);
+ 		dev_kfree_skb(skb);
+ 		break;
 
 
