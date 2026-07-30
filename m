@@ -1,38 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91ED6417D7E;
-	Thu, 30 Jul 2026 15:21:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E6F4442FDA;
+	Thu, 30 Jul 2026 15:21:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424861; cv=none; b=Y9x+cF5uYjCHIgN7HEG7iJlUTELSIOXHPnTeYVRIHHLPLUr2bJ4zfnyEuIVvwC8/F4AgoCHM0cm9TCw1znL1H8cKySuevGMDXr6q8xdWcoN9Edau3c0DzguxF/BCfIfGM2/j99hhhYUNR97Yqk5reF5wjuMXx1s2pztf8EpAPYA=
+	t=1785424865; cv=none; b=pnTsF41/KB9xGmqkwt5JWvFg+dnhKuC2cn/g4m96K49WQJ9FhTISXGiVZGbGs1XC/g2DHLrmgDPFCXQiQrVDe+hvDIU9ue7TvHExLphn/wnozICjbXBsrS2hmhCHQYy6G5VVfGoI5o1ep/6ym454XKOyk4LpbBsKJO6F4SwTRzE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424861; c=relaxed/simple;
-	bh=XnjMvshd75d6/0R3OvyzP5/7z+ADQTJAXwGXud1n+dc=;
+	s=arc-20240116; t=1785424865; c=relaxed/simple;
+	bh=UPNIHN35LEizrQlVJX0CIUI68bUICmH9qtwqAifZhBY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MvAn/ADidcdfLcqkN8i8fId5I8ELKYpmaNdZ5KsT2cl7SjLMus591heVgsk7Thy9kG4k1YmN+sx+L5qHczYl4/oO4Lo2x2r8wMzrXdvSeVSZJKTgJccEAZ8/JxnRWlgqZM+Aa42cP03AM7o1X8xhm6T7/R06G1l1vt4zjOp7y78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bTR8mqfR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=J9xi4Ij+8ISGbdAAcM0XluewtpkJWuNgtSxNETozaBFBi6Mw0+a/9fo62frdoZ2SKuZPNHFuG+4zH1u6z98lxOSAX4UqsC1fBkj6kwu+TODPmvseTv9ynSTHUBfZLydb7oa/6Sfbdp8b6njkOQxFvsd3UXC8fVNIgO3Lbjo8oK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AgKKnuTv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bTR8mqfR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC5801F00ACF;
-	Thu, 30 Jul 2026 15:20:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AgKKnuTv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B0FC1F00ACF;
+	Thu, 30 Jul 2026 15:21:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424860;
-	bh=xYpgfKiSC8PpxDZwvBM0XG/ss99tMruo3LJkgW+kgmU=;
+	s=korg; t=1785424863;
+	bh=BHUXSlkq+F7XZusUtZ43ZskoX8vfdcCJ25dehEDp2QI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bTR8mqfR7/xZ17j9ouB83EVbbKYEHenxzuPogDQEZmkdH2TnmrRcOaBsU2NHs6EU4
-	 ifqcvl7ohOwlP6koiE7RiyIfuF7yGTT2jByt4dyLuwIEIE8GwRp88ZJPeqYIBcMjLE
-	 kt5f7DOQfPe1wDXO17lH5sWFnjMAh6P57cP1fwtc=
+	b=AgKKnuTvX10kPagww8nRp77NhtoDYb3b/ZCT5wbHrHcjty+0lNOvM1j47StUFYwVR
+	 8H4z31iwD6U3fKP35Le98K3iDR7EagwQ4wVXkExWTtDq60drMBiDgL9PBm+Vgr9kNw
+	 24+qOO+vkziUt4zbO+O2stBOXhO1Kh+k72f8PJh8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shiming Cheng <shiming.cheng@mediatek.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 541/675] net: gro: fix double aggregation of flush-marked skbs
-Date: Thu, 30 Jul 2026 16:14:31 +0200
-Message-ID: <20260730141456.642338100@linuxfoundation.org>
+	Rik van Riel <riel@surriel.com>,
+	Zi Yan <ziy@nvidia.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Lance Yang <lance.yang@linux.dev>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Barry Song <baohua@kernel.org>,
+	Dev Jain <dev.jain@arm.com>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Nico Pache <npache@redhat.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Yang Shi <yang@os.amperecomputing.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 506/675] mm/huge_memory: set PG_has_hwpoisoned only after new folio head is established
+Date: Thu, 30 Jul 2026 16:13:56 +0200
+Message-ID: <20260730141455.882578881@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -51,83 +61,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shiming Cheng <shiming.cheng@mediatek.com>
+From: Rik van Riel <riel@surriel.com>
 
-commit e751256486d0ded20f5a9f9863467f1dce65142f upstream.
+commit e1cd30eceb6908fc13bebce41283b885d71ee8d6 upstream.
 
-Commit 0ab03f353d36 ("net-gro: Fix GRO flush when receiving a GSO
-packet.") added a flush check to skb_gro_receive(), but
-skb_gro_receive_list() lacks the same validation.
+__split_folio_to_order() copies the hwpoison state onto each new sub-folio
+while splitting a folio to a non-zero order.  It does so via
 
-As a result, packets marked with NAPI_GRO_CB(skb)->flush may still be
-re-aggregated.
+	if (handle_hwpoison && page_range_has_hwpoisoned(new_head, new_nr_pages))
+		folio_set_has_hwpoisoned(new_folio);
 
-This allows already-GRO'd packets with existing frag_list to be
-re-aggregated into a new GRO session, corrupting the frag_list chain
-structure. When skb_segment() attempts to unpack these malformed packets,
-it encounters invalid state and triggers a kernel panic.
+*before* clear_compound_head(new_head)/prep_compound_page(new_head, ...)
+turns @new_head from a tail page into a proper folio head.
 
-Scenario (Tethering/Device forwarding):
-  1. Driver: Generated aggregated packet P1 via LRO with frag_list
-  2. Dev A: Receives aggregated fraglist packet and flush flag set
-  3. Dev A: Re-enters GRO, skb_gro_receive_list() is called
-  4. Missing flush check allows re-aggregation despite flush flag
-  5. Frag_list chain becomes corrupted (loops or dangling refs)
-  6. Dev B: TX path calls skb_segment(), crashes on corrupted frag_list
+PG_has_hwpoisoned is a FOLIO_SECOND_PAGE flag, so
+folio_set_has_hwpoisoned() resolves to folio_flags(folio, 1).  With the
+new compound_info-based page-flags layout, folio_flags() asserts the page
+is not a tail:
 
-Root cause in skb_segment():
-  The check at line ~4891:
-    if (hsize <= 0 && i >= nfrags && skb_headlen(list_skb) &&
-        (skb_headlen(list_skb) == len || sg)) {
+	VM_BUG_ON_PGFLAGS(page->compound_info & 1, page);
+	VM_BUG_ON_PGFLAGS(n > 0 && !test_bit(PG_head, &page->flags.f), page);
 
-  When frag_list is corrupted by double aggregation, when list_skb is
-  a NULL pointer from skb->next, skb_headlen(list_skb) dereference
-  NULL/corrupted pointers occurs.
+At the current call site @new_head still has the tail marker
+(compound_info bit 0 set, PG_head clear), so on CONFIG_DEBUG_VM kernels
+this hits:
 
-Call Trace:
- skb_headlen(NULL skb)
- skb_segment
- tcp_gso_segment
- tcp4_gso_segment
- inet_gso_segment
- skb_mac_gso_segment
- __skb_gso_segment
- skb_gso_segment
- validate_xmit_skb
- validate_xmit_skb_list
- sch_direct_xmit
- qdisc_restart
- __qdisc_run
- qdisc_run
- net_tx_action
+  kernel BUG at include/linux/page-flags.h:354
+  folio_flags+0x82
+  folio_set_has_hwpoisoned
+  __split_folio_to_order
+  __split_unmapped_folio
+  __folio_split
+  truncate_inode_partial_folio  (shmem hole-punch / MADV_REMOVE)
 
-Fix: Add NAPI_GRO_CB(skb)->flush validation to the early-return check in
-skb_gro_receive_list(), matching the defensive programming pattern of
-skb_gro_receive().
+Reproduced by syzkaller: hwpoison-inject a few subpages of a large shmem
+folio, then MADV_REMOVE (fallocate punch hole) on the same range, which
+splits the partial folio to a non-zero order.
 
-Fixes: 3a1296a38d0c ("net: Support GRO/GSO fraglist chaining.")
-Cc: stable@vger.kernel.org
-Signed-off-by: Shiming Cheng <shiming.cheng@mediatek.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260709014704.3625-1-shiming.cheng@mediatek.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+memory_failure() tries to split the poisoned folio to order 0 first, but
+that split is best-effort; when it fails the folio is left large with
+PG_has_hwpoisoned set, the case fa5a06170036 added this hwpoison copying
+for.
+
+Move the folio_set_has_hwpoisoned() call to after
+clear_compound_head()/prep_compound_page(), where @new_folio is a real
+order-new_order head folio (handle_hwpoison implies new_order != 0, so a
+second page always exists).  The flag still lands on the same struct page
+(page[1] of the new folio); only the ordering relative to compound-head
+setup changes, satisfying the FOLIO_SECOND_PAGE precondition.
+
+Link: https://lore.kernel.org/20260701174235.3173401-1-riel@surriel.com
+Fixes: fa5a06170036 ("mm/huge_memory: preserve PG_has_hwpoisoned if a folio is split to >0 order")
+Signed-off-by: Rik van Riel <riel@surriel.com>
+Assisted-by: Claude:claude-opus-4-8
+Reviewed-by: Zi Yan <ziy@nvidia.com>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Tested-by: Lance Yang <lance.yang@linux.dev>
+Reviewed-by: Lorenzo Stoakes <ljs@kernel.org>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Dev Jain <dev.jain@arm.com>
+Cc: Lance Yang <lance.yang@linux.dev>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Nico Pache <npache@redhat.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Yang Shi <yang@os.amperecomputing.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/gro.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ mm/huge_memory.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/net/core/gro.c
-+++ b/net/core/gro.c
-@@ -231,7 +231,9 @@ done:
+--- a/mm/huge_memory.c
++++ b/mm/huge_memory.c
+@@ -3344,10 +3344,6 @@ static void __split_folio_to_order(struc
+ 				 (1L << PG_dirty) |
+ 				 LRU_GEN_MASK | LRU_REFS_MASK));
  
- int skb_gro_receive_list(struct sk_buff *p, struct sk_buff *skb)
- {
--	if (unlikely(p->len + skb->len >= 65536))
-+	/* make sure to check flush flag and to not merge */
-+	if (unlikely(p->len + skb->len >= 65536 ||
-+		     NAPI_GRO_CB(skb)->flush))
- 		return -E2BIG;
+-		if (handle_hwpoison &&
+-		    page_range_has_hwpoisoned(new_head, new_nr_pages))
+-			folio_set_has_hwpoisoned(new_folio);
+-
+ 		new_folio->mapping = folio->mapping;
+ 		new_folio->index = folio->index + i;
  
- 	if (!pskb_may_pull(skb, skb_gro_offset(skb))) {
+@@ -3378,6 +3374,14 @@ static void __split_folio_to_order(struc
+ 			folio_set_large_rmappable(new_folio);
+ 		}
+ 
++		/*
++		 * PG_has_hwpoisoned is on the 2nd page, so set it after
++		 * the compound head is prepped.
++		 */
++		if (handle_hwpoison &&
++		    page_range_has_hwpoisoned(new_head, new_nr_pages))
++			folio_set_has_hwpoisoned(new_folio);
++
+ 		if (folio_test_young(folio))
+ 			folio_set_young(new_folio);
+ 		if (folio_test_idle(folio))
 
 
