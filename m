@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D97B94052DC;
-	Thu, 30 Jul 2026 15:07:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74A66372ECB;
+	Thu, 30 Jul 2026 15:07:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424049; cv=none; b=kFvi2ibv8mhWYShPqU4KvFln8ZC5gYFgk4QnCTxfcTF3VHKYuAVb04J00xYZqywR3v5jXMYJORNp4Jki/XjddjGPdU2KD3Hfd603Tous6ETqOwUmx6+rjneoMw99ZTJa6NreD2T8kDw9ZJJ3dul2uUd3AdnXKfvdb16qZ/+Xc0o=
+	t=1785424051; cv=none; b=jc4jGfgPtrkCsfiPYi529E2pjZOVltcrKZ8UcGY+Uq+X+fn0EOnvLJqQRBwsxtnAub6sP5wXe2c7huinf+tOTOITtd+rDsnreMVcxaVGlvToI93OkKWpkO53tT4qS4AEosgkM8OwC4XDntgwgWBPNepCMQAJVrx+2vp2LizVRis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424049; c=relaxed/simple;
-	bh=NTmRDgTirkoPzZMVoxFcFeahTZC5VIU4Hh4/BWK6HNs=;
+	s=arc-20240116; t=1785424051; c=relaxed/simple;
+	bh=LvGn8mwYxF04ivZWkmGvIXtOHdUQuB0l4LNZBSJeK3o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=asxI2GLgV5e5J9B0VDVAr2Qyaobj91d+1GJMsUwrCZF7fGgq9qW9xWy6TPo1M4N1ECO8YCQBq6XATIuQRvP/ndVz7ErvrdNHiksVyFZsXtMe/rZS4gGJoRam7ORGvg+GNfecFDW25FlmjdiQSXUVU05ZyWhQrTvIKx+XLHlou/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eqTJawJw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FvpNF4qdf0FvDzqmHu/Ch1JhdNMPJT6+D7oHhFu7lxbfDP06KnbVLmVTbsDD8H6M+Ko+vJnE8KTdfR9z8UZ0RabzXD4apRVg+tJ2Q+4xN++9oF4tnqzgape/vIs+4HCRiclcOPb8JJ071t6qRxXr2S890VVDHBscSxmin88pi1k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kBWRB9H9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eqTJawJw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED93D1F000E9;
-	Thu, 30 Jul 2026 15:07:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kBWRB9H9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF8E91F000E9;
+	Thu, 30 Jul 2026 15:07:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424047;
-	bh=UFBEA7y6mcqEs4v2rgVm4k77tN3CsQausLC6gI/2bCA=;
+	s=korg; t=1785424050;
+	bh=weHtbOpzwsetFc2HyyK1kEG4czAx9KHJXgidNYFodaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eqTJawJwv6g4lhON8smOBA4Gfkd9w9xQhhBS3wS20ThN5l5POE6IhoCoqwmOmvFFj
-	 /lsUb35t5b9N0oFxe2RLmnsonrtlQ8wyFcK3dprCoRcwCR/vX5RZGYnY1xGK4BOauI
-	 JYeFgizSkXSDgAgKzPvFFYCYn+EmD2fPMpbOx18I=
+	b=kBWRB9H9OPMOg8v4T8cvfWAiaBhI70R2pwqK4FwT9WhPPyyU2PL5Z5+xU9pu0WlB9
+	 EfS+SKHhRH4TgO28BsjacgN9251KX71rWFSQ67bCdnSkZpDFIvPnqZwjLFNil1/riO
+	 zCPqWqWPLRb1psSqmF89nvPdbbuiHYM9G6OCWIXg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qingfang Deng <dqfext@gmail.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Ioana Ciornei <ioana.ciornei@nxp.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 256/675] ppp: enable TX scatter-gather
-Date: Thu, 30 Jul 2026 16:09:46 +0200
-Message-ID: <20260730141450.579186578@linuxfoundation.org>
+Subject: [PATCH 6.18 221/675] dpaa2-eth: put MAC endpoint device on disconnect
+Date: Thu, 30 Jul 2026 16:09:11 +0200
+Message-ID: <20260730141449.839637463@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -51,113 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qingfang Deng <dqfext@gmail.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit 42fcb213e58a7da33d5d2d7517b4e521025c68c3 ]
+[ Upstream commit b4b201cc93ff70150853aba03e14d314d1980ca0 ]
 
-PPP channels using chan->direct_xmit prepend the PPP header to a skb and
-call dev_queue_xmit() directly. In this mode the skb does not need to be
-linear, but the PPP netdevice currently does not advertise
-scatter-gather features, causing unnecessary linearization and
-preventing GSO.
+fsl_mc_get_endpoint() returns the MAC endpoint device with a reference
+taken through device_find_child(). The Ethernet connect path stores that
+device in mac->mc_dev and keeps it for the lifetime of the connected MAC
+object.
 
-Enable NETIF_F_SG and NETIF_F_FRAGLIST on PPP devices. In case a linear
-buffer is required (PPP compression, multilink, and channels without
-direct_xmit), call skb_linearize() explicitly.
+However, the disconnect path only disconnects and closes the MAC before
+freeing the dpaa2_mac object. It does not drop the endpoint device
+reference stored in mac->mc_dev, so every successful connect leaks that
+device reference when the MAC is later disconnected.
 
-Signed-off-by: Qingfang Deng <dqfext@gmail.com>
-Link: https://patch.msgid.link/20260129012902.941-1-dqfext@gmail.com
+Drop the endpoint device reference after closing the MAC and before
+freeing the dpaa2_mac object.
+
+Fixes: 719479230893 ("dpaa2-eth: add MAC/PHY support through phylink")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Reviewed-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Reviewed-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Link: https://patch.msgid.link/20260708111738.750391-1-lgs201920130244@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: ba712ecfd942 ("ppp: annotate concurrent dev->stats accesses")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ppp/ppp_generic.c | 30 +++++++++++++++++++++++++-----
- 1 file changed, 25 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ppp/ppp_generic.c b/drivers/net/ppp/ppp_generic.c
-index 72e98286fba2fe..6d001fb1462d30 100644
---- a/drivers/net/ppp/ppp_generic.c
-+++ b/drivers/net/ppp/ppp_generic.c
-@@ -1645,6 +1645,8 @@ static void ppp_setup(struct net_device *dev)
- 	dev->flags = IFF_POINTOPOINT | IFF_NOARP | IFF_MULTICAST;
- 	dev->priv_destructor = ppp_dev_priv_destructor;
- 	dev->pcpu_stat_type = NETDEV_PCPU_STAT_TSTATS;
-+	dev->features = NETIF_F_SG | NETIF_F_FRAGLIST;
-+	dev->hw_features = dev->features;
- 	netif_keep_dst(dev);
+diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
+index 18d86badd6ea73..6fd478572ef8ff 100644
+--- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
++++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
+@@ -4732,6 +4732,7 @@ static void dpaa2_eth_disconnect_mac(struct dpaa2_eth_priv *priv)
+ 		dpaa2_mac_disconnect(mac);
+ 
+ 	dpaa2_mac_close(mac);
++	put_device(&mac->mc_dev->dev);
+ 	kfree(mac);
  }
  
-@@ -1714,6 +1716,10 @@ pad_compress_skb(struct ppp *ppp, struct sk_buff *skb)
- 		ppp->xcomp->comp_extra + ppp->dev->hard_header_len;
- 	int compressor_skb_size = ppp->dev->mtu +
- 		ppp->xcomp->comp_extra + PPP_HDRLEN;
-+
-+	if (skb_linearize(skb))
-+		return NULL;
-+
- 	new_skb = alloc_skb(new_skb_size, GFP_ATOMIC);
- 	if (!new_skb) {
- 		if (net_ratelimit())
-@@ -1801,6 +1807,10 @@ ppp_send_frame(struct ppp *ppp, struct sk_buff *skb)
- 	case PPP_IP:
- 		if (!ppp->vj || (ppp->flags & SC_COMP_TCP) == 0)
- 			break;
-+
-+		if (skb_linearize(skb))
-+			goto drop;
-+
- 		/* try to do VJ TCP header compression */
- 		new_skb = alloc_skb(skb->len + ppp->dev->hard_header_len - 2,
- 				    GFP_ATOMIC);
-@@ -1898,19 +1908,26 @@ ppp_push(struct ppp *ppp)
- 	}
- 
- 	if ((ppp->flags & SC_MULTILINK) == 0) {
-+		struct ppp_channel *chan;
- 		/* not doing multilink: send it down the first channel */
- 		list = list->next;
- 		pch = list_entry(list, struct channel, clist);
- 
- 		spin_lock(&pch->downl);
--		if (pch->chan) {
--			if (pch->chan->ops->start_xmit(pch->chan, skb))
--				ppp->xmit_pending = NULL;
--		} else {
--			/* channel got unregistered */
-+		chan = pch->chan;
-+		if (unlikely(!chan || (!chan->direct_xmit && skb_linearize(skb)))) {
-+			/* channel got unregistered, or it requires a linear
-+			 * skb but linearization failed
-+			 */
- 			kfree_skb(skb);
- 			ppp->xmit_pending = NULL;
-+			goto out;
- 		}
-+
-+		if (chan->ops->start_xmit(chan, skb))
-+			ppp->xmit_pending = NULL;
-+
-+out:
- 		spin_unlock(&pch->downl);
- 		return;
- 	}
-@@ -1995,6 +2012,8 @@ static int ppp_mp_explode(struct ppp *ppp, struct sk_buff *skb)
- 		return 0; /* can't take now, leave it in xmit_pending */
- 
- 	/* Do protocol field compression */
-+	if (skb_linearize(skb))
-+		goto err_linearize;
- 	p = skb->data;
- 	len = skb->len;
- 	if (*p == 0 && mp_protocol_compress) {
-@@ -2153,6 +2172,7 @@ static int ppp_mp_explode(struct ppp *ppp, struct sk_buff *skb)
- 
-  noskb:
- 	spin_unlock(&pch->downl);
-+ err_linearize:
- 	if (ppp->debug & 1)
- 		netdev_err(ppp->dev, "PPP: no memory (fragment)\n");
- 	++ppp->dev->stats.tx_errors;
 -- 
 2.53.0
 
