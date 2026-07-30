@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18F0E435536;
-	Thu, 30 Jul 2026 15:23:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA10D446820;
+	Thu, 30 Jul 2026 15:23:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424995; cv=none; b=WT9AuZ/bF0/eS1ZaSC13wqSnezXRBrisFiwBorWec675oLMkd0s4QQryl1yTyRE76zsocrwq2G4iRwunZ06qc3WQ+QDI3+vFDO1BJxfeU3+K2qgx97/j7wpuThCG/sYBCnxR/cYzIe47PV5ROCOL00gcbKkZAPVLsg/WqqIbhOg=
+	t=1785424998; cv=none; b=PW/hQy+yPk+AlwhBpIcskk5n9XDWp9T85j/2Kw/5o4MAgo/YtEa+CtTQCcAAluoS65T+nDBldnLHibb49m+h6nid5wi8NXxs9/vogaN/nOrLrMG72kJKTiVw3Mxi+v+c4QqT2I9qipjA6TvshvzwfSnq9UhbodKEN7HGtaCV8XA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424995; c=relaxed/simple;
-	bh=8k+HXAd9M5/wbREgCvhtoDRpH4QB2nkVqkJ/Qami6To=;
+	s=arc-20240116; t=1785424998; c=relaxed/simple;
+	bh=1G+J8A/psfOlTRhwODCs+YmVrprmIPSIrEgG7xmvChE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dA7D3gLJirWpylZF/GMow5r7pZKK5sShdVFVS26QGHUYNj8oQKPVb7seiPIFvho3IHApgXnjRqUGDbsbDveLUTycsL8J2FBUFAAs0kva/Q/VcwmLdctWA58+cs3lU6NykEdVqf+tyTVI1an2p8fxieWciVnwx/umGJLrj1AC1hM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QfcUdBqR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XxzC5nS0LhsKbISQjRBauRUsUPyXQtPCTiFoPsRYrjbwucJtnycreKu+i2m/YSAlV/9SkbSrQoRKpoI6Ih0spHPyuNQ6QBZt6aHufe3+6WTpU5hLcLzr8bnZWSXVQDOMthfK4Ysq6WNM6n378JOFvav8hyoK9gDpYS7LjUOuMco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XH7Au14A; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QfcUdBqR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 751B91F000E9;
-	Thu, 30 Jul 2026 15:23:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XH7Au14A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F3321F000E9;
+	Thu, 30 Jul 2026 15:23:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424994;
-	bh=3vhOz9tCdlL8rDR9BTG2UNfB/uOA/gMhn6RwcMGCXPs=;
+	s=korg; t=1785424996;
+	bh=dVT6N/lj4uelcwMyTCaryxUFYnty1fXD5+8/l8xrD4E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QfcUdBqRtzurN3NRe9nyMHcFTZESa5HVQbFIK4/cIEvHZFues9Z1OBW/HuBKPJekr
-	 1ao9QiTTEAg2m2gq/lh2kZzl/82M2KEDS0aUHw5pbzKqJ5LZKQLDBUjZsWzraT2FF/
-	 82FTGLIITS2alYn8+ZnYv1yb09dqfC67A54aZ0u8=
+	b=XH7Au14AvgQsE7i12SdXNm26pIlrcDknyN1mnl1Nfz/0b/LPMJAXPIwcXthp1sxgG
+	 3sZc5G0gHgpLurGMrVLHf8msM4jMlu55A3BTVK+YYyQPh0VxKyy8xRWjpx/S5isNP6
+	 N0/18EsGu6lGhUK/1LrJwK1Aq/yL4yJhLqy9o4Xg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Asad Kamal <asad.kamal@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 588/675] drm/amdgpu: fix aperture mapping leak
-Date: Thu, 30 Jul 2026 16:15:18 +0200
-Message-ID: <20260730141457.620384996@linuxfoundation.org>
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Marcin Szycik <marcin.szycik@linux.intel.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 553/675] ice: reject out-of-range ptype in ice_parser_profile_init
+Date: Thu, 30 Jul 2026 16:14:43 +0200
+Message-ID: <20260730141456.890797062@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -46,129 +47,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Asad Kamal <asad.kamal@amd.com>
+From: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
 
-commit ea772a440d56b285f4d491affac50ecd41f6b402 upstream.
+commit 59abb87159c53605c063f6e2ceb215b5eba43ee6 upstream.
 
-amdgpu_pci_remove() calls drm_dev_unplug() before invoking the driver
-fini routines. This causes drm_dev_enter() in amdgpu_ttm_fini() to
-always return false, so iounmap(aper_base_kaddr) never runs on normal
-driver unload, leaving an orphaned entry in the x86 PAT interval tree.
+set_bit(rslt->ptype, prof->ptypes) operates on a DECLARE_BITMAP of
+ICE_FLOW_PTYPE_MAX (1024) bits. Nothing prevents a malicious VF from
+providing ptype >= 1024 through VIRTCHNL, resulting in a write past
+the end of the bitmap and a kernel page fault.
 
-On connected_to_cpu hardware, the aperture is mapped write-back (WB) via
-ioremap_cache(). On reload, IP discovery calls memremap(..., MEMREMAP_WC)
-over the same range. The WC vs WB conflict causes:
+Reproduced with a custom kernel module injecting a crafted
+VIRTCHNL_OP_ADD_RSS_CFG on E810-C QSFP (8086:1592),
+FW 4.91 0x800214af 1.3909.0, ICE COMMS DDP 1.3.53.0,
+kernel 7.1.0-rc1.
 
-  ioremap error for 0x..., requested 0x1, got 0x0
-  amdgpu: discovery failed: -2
+crash_parser: ice_parser_profile_init @ ffffffffc0d61b60
+crash_parser: setting ptype=0xffff (max valid=1023)
+crash_parser: calling ice_parser_profile_init -- expect OOB crash!
+BUG: kernel NULL pointer dereference, address: 0000000000000000
+Oops: Oops: 0002 [#1] SMP NOPTI
+CPU: 56 UID: 0 PID: 165011 Comm: insmod Kdump: loaded Tainted: G S U OE 7.1.0-rc1 #1
+Hardware name: Intel Corporation S2600BPB/S2600BPB
+RIP: 0010:ice_parser_profile_init+0x2d/0x1d0 [ice]
+Call Trace:
+ <TASK>
+ ? __pfx_ice_parser_profile_init+0x10/0x10 [ice]
+ crash_init+0x127/0xff0 [crash_parser]
+ do_one_initcall+0x45/0x310
+ do_init_module+0x64/0x270
+ init_module_from_file+0xcc/0xf0
+ idempotent_init_module+0x17b/0x280
+ __x64_sys_finit_module+0x6e/0xe0
 
-Fix by switching to devres-managed mappings so cleanup is guaranteed
-regardless of drm_dev_enter() state:
+Bail out early with -EINVAL when ptype is out of range.
 
-- connected_to_cpu path: devm_memremap(MEMREMAP_WB). For
-  IORESOURCE_SYSTEM_RAM ranges this takes the try_ram_remap() shortcut,
-  returning __va(offset) from the existing kernel direct map. No new
-  ioremap VA or PAT entry is created, so there is nothing to orphan.
-
-- dGPU path: devm_ioremap_wc() registers iounmap() as a devres action,
-  guaranteeing cleanup at device_del() time.
-
-Also remove iounmap(aper_base_kaddr) from amdgpu_device_unmap_mmio()
-since the mapping is now devres-owned.
-
-v2: Remove redundant x86_64 guard (Lijo)
-
-Fixes: 9d0af8b4def0 ("drm/amdgpu: pre-map device buffer as cached for A+A config")
-Signed-off-by: Asad Kamal <asad.kamal@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit d871e99879cb5fd1fa798b006b4888887e63a17a)
+Fixes: e312b3a1e209 ("ice: add API for parser profile initialization")
 Cc: stable@vger.kernel.org
+Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Marcin Szycik <marcin.szycik@linux.intel.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://patch.msgid.link/20260717185340.3595286-12-anthony.l.nguyen@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |    2 -
- drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c    |   36 ++++++++++++-----------------
- 2 files changed, 16 insertions(+), 22 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_parser.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -4946,8 +4946,6 @@ static void amdgpu_device_unmap_mmio(str
+--- a/drivers/net/ethernet/intel/ice/ice_parser.c
++++ b/drivers/net/ethernet/intel/ice/ice_parser.c
+@@ -2368,6 +2368,9 @@ int ice_parser_profile_init(struct ice_p
+ 	u16 proto_off = 0;
+ 	u16 off;
  
- 	iounmap(adev->rmmio);
- 	adev->rmmio = NULL;
--	if (adev->mman.aper_base_kaddr)
--		iounmap(adev->mman.aper_base_kaddr);
- 	adev->mman.aper_base_kaddr = NULL;
- 
- 	/* Memory manager related */
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-@@ -1980,18 +1980,23 @@ int amdgpu_ttm_init(struct amdgpu_device
- 	/* Change the size here instead of the init above so only lpfn is affected */
- 	amdgpu_ttm_set_buffer_funcs_status(adev, false);
- #ifdef CONFIG_64BIT
--#ifdef CONFIG_X86
--	if (adev->gmc.xgmi.connected_to_cpu)
--		adev->mman.aper_base_kaddr = ioremap_cache(adev->gmc.aper_base,
--				adev->gmc.visible_vram_size);
--
--	else if (adev->gmc.is_app_apu)
-+	if (adev->gmc.xgmi.connected_to_cpu) {
-+		void *kaddr = devm_memremap(adev->dev, adev->gmc.aper_base,
-+					    adev->gmc.visible_vram_size,
-+					    MEMREMAP_WB);
-+		if (IS_ERR(kaddr))
-+			return PTR_ERR(kaddr);
-+		adev->mman.aper_base_kaddr = (__force void __iomem *)kaddr;
-+	} else if (adev->gmc.is_app_apu) {
- 		DRM_DEBUG_DRIVER(
- 			"No need to ioremap when real vram size is 0\n");
--	else
--#endif
--		adev->mman.aper_base_kaddr = ioremap_wc(adev->gmc.aper_base,
--				adev->gmc.visible_vram_size);
-+	} else {
-+		adev->mman.aper_base_kaddr = devm_ioremap_wc(adev->dev,
-+							     adev->gmc.aper_base,
-+							     adev->gmc.visible_vram_size);
-+		if (!adev->mman.aper_base_kaddr)
-+			return -ENOMEM;
-+	}
- #endif
- 
- 	/*
-@@ -2152,8 +2157,6 @@ int amdgpu_ttm_init(struct amdgpu_device
-  */
- void amdgpu_ttm_fini(struct amdgpu_device *adev)
- {
--	int idx;
--
- 	if (!adev->mman.initialized)
- 		return;
- 
-@@ -2180,14 +2183,7 @@ void amdgpu_ttm_fini(struct amdgpu_devic
- 	amdgpu_ttm_fw_reserve_vram_fini(adev);
- 	amdgpu_ttm_drv_reserve_vram_fini(adev);
- 
--	if (drm_dev_enter(adev_to_drm(adev), &idx)) {
--
--		if (adev->mman.aper_base_kaddr)
--			iounmap(adev->mman.aper_base_kaddr);
--		adev->mman.aper_base_kaddr = NULL;
--
--		drm_dev_exit(idx);
--	}
-+	adev->mman.aper_base_kaddr = NULL;
- 
- 	if (!adev->gmc.is_app_apu)
- 		amdgpu_vram_mgr_fini(adev);
++	if (rslt->ptype >= ICE_FLOW_PTYPE_MAX)
++		return -EINVAL;
++
+ 	memset(prof, 0, sizeof(*prof));
+ 	set_bit(rslt->ptype, prof->ptypes);
+ 	if (blk == ICE_BLK_SW) {
 
 
