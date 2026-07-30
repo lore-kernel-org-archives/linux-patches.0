@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CE0D3630BE;
-	Thu, 30 Jul 2026 14:39:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B4FB4314B5;
+	Thu, 30 Jul 2026 14:39:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422364; cv=none; b=ZJbZj8ozTZD7BRi0DsB1UHkL5YwJ68AYZgkhkIkof6GwRD0hoGfHZbH5+/tzg9xgrnYZoaZgdCkeAWJD92GyevaWggaf+KLBtGBgA9vQ7X6E2vS7Gp4ov2ToBQjdOI4f9BglPb5I3i9uUmIXu/yjh/ko7ZLQsNjlvCYolmirSYE=
+	t=1785422367; cv=none; b=ZxFYZg38rGKxppNP3dx+lN/sIsk7DAokThizbKdMk5CJB6uXjvMkXWCHUHQonvaCzekLY7+8Y/r9+Mbs8+ofI2cl7ULBBHDo7PluJm2t3q6QHjxIW10DjTmJXclILY0T2Mb/10VzG+dKdOVJVF6AW7lJlMAwtToV2IrBdcsgd3U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422364; c=relaxed/simple;
-	bh=sTO1X8kelHSBsKawriVj/p9hiew8+0ZOS9b/wkFo/xI=;
+	s=arc-20240116; t=1785422367; c=relaxed/simple;
+	bh=PGe2pDue1qu4xyGfn8T5bI+eGulFB+nAvlNERoVdhjo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OF6rTmUqC42dUVW5cM+kNauC6qoKGUw+cS0wlhmA5Ga897tuvrYhy9pwLNIvd8nioLprvZn8yK+7t40rEtnrTlQUckfQXkZQ6OIKBgcWnq98EWs127g8FkJ7CJgVPkVIpoNy5K2I0uUlJ5OzQVd+87XSjk2BaeSLeSayvNiiYa8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fz6o5NXk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fmAZF9cRT/n1kwyeDwO1b8/wqsh10qQaBLi8Hvx45DMcV6q9boK1SmNrvYB10AtdhzMMotEvL/WJ8ZB8m3tINhAgHlHHQZ0Nsd38UeIqLHvx3ZScUBo8s2YsUu7z9jXXIYgX4IGwfXxPRQVloAknJ2rEcQ6ZzJ8pLtytyyv2PmE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aH/LWaaC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fz6o5NXk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C196C1F000E9;
-	Thu, 30 Jul 2026 14:39:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aH/LWaaC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD1571F000E9;
+	Thu, 30 Jul 2026 14:39:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422363;
-	bh=PfAO9zPd1ezhXpEi65A2hX4+GbM9CFR78Qi6A6SzHGM=;
+	s=korg; t=1785422366;
+	bh=9nRjBa2LBQWItYFoD3xn1W/FOWLzIBvigFF73kkfcsI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fz6o5NXkrKG685vSjbl5b/wdnXlEbhJY3jOZDzIBUWKbJwI6cQOFxus1KNCpY5LJo
-	 wSIA+fe3Nhjj/tiybY/QkEk8spxbmBzDR97CEkDNdWBHYpNtVqIGQfjF6S7XjBhIjN
-	 zDa9+oeXHBGsbEOv8UK2A08+XCUlQXJcZAA0BZB4=
+	b=aH/LWaaC+M8tN5wYMCybbK23yzrByHB4sxmALNegNsB6IUVDHNrgjnBBwWQ4zGAeB
+	 2UJGP7MTojatKp1RLG9Fbj1ZDU1LRWKy8gLkOWNRI4bxm4Azp70usBI/xsOz2CjuCl
+	 qnNaqBIqjxocO1Vs+lMEDhPL76ZwnE7rwZayDc1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ashutosh Desai <ashutoshdesai993@gmail.com>,
-	Lyude Paul <lyude@redhat.com>
-Subject: [PATCH 7.1 368/744] drm/dp/mst: fix buffer overflows in sideband chunk accumulation
-Date: Thu, 30 Jul 2026 16:10:41 +0200
-Message-ID: <20260730141452.106899799@linuxfoundation.org>
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	dri-devel@lists.freedesktop.org,
+	linux-tegra@vger.kernel.org,
+	Thierry Reding <treding@nvidia.com>
+Subject: [PATCH 7.1 369/744] drm/tegra: fbdev: Remove offset into framebuffer memory
+Date: Thu, 30 Jul 2026 16:10:42 +0200
+Message-ID: <20260730141452.130617945@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -50,67 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ashutosh Desai <ashutoshdesai993@gmail.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-commit 55bd5e685bda455b9b50c835f8c8442d52a344a3 upstream.
+commit a18b6e30ecd69096beda4a0c96d2570900c3879a upstream.
 
-drm_dp_sideband_append_payload() has three related bugs when processing
-device-provided sideband reply data:
+The screen_buffer field in struct fb_info contains the kernel address
+of the first byte of framebuffer memory. Do not add the display offset.
+This offset only describes scrolling during scanout.
 
-1. Zero-length curchunk_len underflow: msg_len is a 6-bit field taken
-   directly from the DP sideband header. If a device sends msg_len=0,
-   curchunk_len is set to zero. The condition (curchunk_idx >= curchunk_len)
-   is immediately true, and curchunk_len-1 wraps to 255 (u8 underflow).
-   drm_dp_msg_data_crc4() reads 255 bytes from chunk[48], then memcpy()
-   writes 255 bytes into msg[], both far out of bounds.
-
-2. chunk[48] overflow: curchunk_len can reach 63 (6-bit field). chunk[] is
-   only 48 bytes. Multi-iteration payload assembly appends 16-byte blocks
-   until curchunk_idx reaches curchunk_len, writing up to 15 bytes past
-   the end of chunk[] into msg[].
-
-3. msg[256] overflow: each chunk contributes (curchunk_len-1) bytes to
-   msg[]. No check ensures curlen + (curchunk_len-1) stays within msg[256],
-   so the memcpy can spill into adjacent struct fields.
-
-All three are reachable from any DP MST device that can forge sideband
-reply messages on a physical connection.
-
-Fixes: ad7f8a1f9ced ("drm/helper: add Displayport multi-stream helper (v0.6)")
-Cc: <stable@vger.kernel.org> # v3.17+
-Signed-off-by: Ashutosh Desai <ashutoshdesai993@gmail.com>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patch.msgid.link/20260410041901.2438960-1-ashutoshdesai993@gmail.com
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Fixes: de2ba664c30f ("gpu: host1x: drm: Add memory manager and fb")
+Cc: dri-devel@lists.freedesktop.org
+Cc: linux-tegra@vger.kernel.org
+Cc: <stable@vger.kernel.org> # v3.10+
+Signed-off-by: Thierry Reding <treding@nvidia.com>
+Link: https://patch.msgid.link/20260421073646.144712-3-tzimmermann@suse.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/display/drm_dp_mst_topology.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/gpu/drm/tegra/fbdev.c |    8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
---- a/drivers/gpu/drm/display/drm_dp_mst_topology.c
-+++ b/drivers/gpu/drm/display/drm_dp_mst_topology.c
-@@ -789,6 +789,12 @@ static bool drm_dp_sideband_append_paylo
- {
- 	u8 crc4;
+--- a/drivers/gpu/drm/tegra/fbdev.c
++++ b/drivers/gpu/drm/tegra/fbdev.c
+@@ -76,7 +76,6 @@ int tegra_fbdev_driver_fbdev_probe(struc
+ 	struct fb_info *info = helper->info;
+ 	unsigned int bytes_per_pixel;
+ 	struct drm_framebuffer *fb;
+-	unsigned long offset;
+ 	struct tegra_bo *bo;
+ 	size_t size;
+ 	int err;
+@@ -115,9 +114,6 @@ int tegra_fbdev_driver_fbdev_probe(struc
  
-+	/* curchunk_len must be >= 1 (min 1 CRC byte) and fit in chunk[] */
-+	if (!msg->curchunk_len ||
-+	    msg->curchunk_len > ARRAY_SIZE(msg->chunk) ||
-+	    msg->curchunk_idx + replybuflen > ARRAY_SIZE(msg->chunk))
-+		return false;
-+
- 	memcpy(&msg->chunk[msg->curchunk_idx], replybuf, replybuflen);
- 	msg->curchunk_idx += replybuflen;
+ 	drm_fb_helper_fill_info(info, helper, sizes);
  
-@@ -799,6 +805,9 @@ static bool drm_dp_sideband_append_paylo
- 			print_hex_dump(KERN_DEBUG, "wrong crc",
- 				       DUMP_PREFIX_NONE, 16, 1,
- 				       msg->chunk,  msg->curchunk_len, false);
-+		/* Guard against accumulated msg[] overflow */
-+		if (msg->curlen + msg->curchunk_len - 1 > ARRAY_SIZE(msg->msg))
-+			return false;
- 		/* copy chunk into bigger msg */
- 		memcpy(&msg->msg[msg->curlen], msg->chunk, msg->curchunk_len - 1);
- 		msg->curlen += msg->curchunk_len - 1;
+-	offset = info->var.xoffset * bytes_per_pixel +
+-		 info->var.yoffset * fb->pitches[0];
+-
+ 	if (bo->pages) {
+ 		bo->vaddr = vmap(bo->pages, bo->num_pages, VM_MAP,
+ 				 pgprot_writecombine(PAGE_KERNEL));
+@@ -129,9 +125,9 @@ int tegra_fbdev_driver_fbdev_probe(struc
+ 	}
+ 
+ 	info->flags |= FBINFO_VIRTFB;
+-	info->screen_buffer = bo->vaddr + offset;
++	info->screen_buffer = bo->vaddr;
+ 	info->screen_size = size;
+-	info->fix.smem_start = (unsigned long)(bo->iova + offset);
++	info->fix.smem_start = (unsigned long)(bo->iova);
+ 	info->fix.smem_len = size;
+ 
+ 	return 0;
 
 
