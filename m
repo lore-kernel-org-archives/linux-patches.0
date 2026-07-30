@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D82F243C7C4;
-	Thu, 30 Jul 2026 15:45:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 825C537F8D7;
+	Thu, 30 Jul 2026 15:45:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426311; cv=none; b=SgDSR27g9URqVWnc6QaHtHmws0Cs5UEL+G3lsLa0r21zym2FkwLTT+iqks2Z78b/N3PmDMY78EMV7PVTOVzkB8TW2tAz9UD9aZHhCDWZrnfonl7eDllP6C4pOBgF7vTi5D+x8TO9CYlXjOjsxCFEP5YqvsmDAYsuFU5UWbrDrPs=
+	t=1785426313; cv=none; b=Zm/SaAwE9cTSqDVUD4nY9HW7xDaI7008dFKZsu0uNr+VvsfMTnez3ZSkhwzLgzao469RdsmUaE7WzzQvwfRZQqc0JOlGP9epuTmJW4zsc2u4+DzDqXiIcaoxh90Hiy+dB+v4B0osd4Ao6+6ygqg6AV0AbNf/3lVyf5MKr3z6t/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426311; c=relaxed/simple;
-	bh=k+gpfvrIbpdL6U1ZSKGrSIpUv6WfdPPgm6txJus3gP8=;
+	s=arc-20240116; t=1785426313; c=relaxed/simple;
+	bh=QBQqU9pUdrD6RLIAUNtIl0jZAT6Ollm95IeIeyTS1Ws=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WhZT1AVgdyUnlzBSgYN1M4lm/8pRmrC3ef9BQnkH5DkcNPVk0pHC5ulpBzRwOV5shMiwO5Zn0vv4VW3NnjAY/rRYNuNQYcHP4g0zY3ObFgdP47tuhOSu0pm/MJtlCgYChKR6vNJK4H9GZYXGNSVPBwx00kKGPjDMVRxFVQ7+aqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0XMxXJpP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bGdn2k0mibYPFh7rj1u6WLU7w4QnyiQ7g7MZYN5H20K97+ws4M3NlDU8HD/4i+sFi4P4IZReeMvNxdnoTrONf3tuD8OvLIXFSOKSLaPbMN094n7uOUUetrNvxOgPjZJe16++/MMWHSpgN7WPbbenAEuVcKKmQGLri9eXZ2fAvRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UkUCLkG4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0XMxXJpP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3D711F000E9;
-	Thu, 30 Jul 2026 15:45:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UkUCLkG4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D419D1F000E9;
+	Thu, 30 Jul 2026 15:45:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426309;
-	bh=BzKUQGQR3GiUXU9nOHrxEqGwCs6UiNwPAAaxsZx424M=;
+	s=korg; t=1785426312;
+	bh=e/8qmB7w2/d9hGNMq6VvQe8bqfQNqaiDfk3pD88aGpQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0XMxXJpPlpP6BCUBvZLvNYDH5PI0G8VJ4dqgs2dcNtYqFD6ikae0PWiA9JZDMqjjQ
-	 34ymUmKwL56BKPKR6FQVoimwQh79RmpTsw/gM7Q7kkERXsN2n9MZDWy1w6Gw9cf5PC
-	 pp4aH3FD+49RjNFRFsVbuHRVntXf9GUQSi/pYsU0=
+	b=UkUCLkG48KyhV9KE9Voat69w6CQGucVEL9XXKqBMfgyXYIRw+vniBwCzpZxVZj+oi
+	 HDxUEea+qAQG7BRtB9afSKjJ70R7+fofMx7MFM9+T+jAsvj03tA5Hv7ZQObRvJp5Zh
+	 GG/FBivio7IhYpgwEUpMwZhlxXykFUJ9hR69dz7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Menachem Adin <menachem.adin@intel.com>,
-	Alexander Usyskin <alexander.usyskin@intel.com>
-Subject: [PATCH 6.12 372/602] mei: bus: access mei_device under device_lock on cleanup
-Date: Thu, 30 Jul 2026 16:12:44 +0200
-Message-ID: <20260730141443.777823957@linuxfoundation.org>
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Hungyu Lin <dennylin0707@gmail.com>
+Subject: [PATCH 6.12 330/602] media: tegra-video: vi: fix invalid u32 return value in format lookup
+Date: Thu, 30 Jul 2026 16:12:02 +0200
+Message-ID: <20260730141442.897936449@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -51,67 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Usyskin <alexander.usyskin@intel.com>
+From: Hungyu Lin <dennylin0707@gmail.com>
 
-commit f112ea910e554d58b4b39a4492b7d302f0f4204f upstream.
+commit d5b50055338e131a1a99f923ebb0361974a00f36 upstream.
 
-Fix couple of problems in mei_cl_bus_dev_release():
+tegra_get_format_fourcc_by_idx() returns a u32 but uses -EINVAL to
+signal an out-of-bounds index. This results in a large unsigned
+value being returned, which may be interpreted as a valid fourcc.
 
-mei_cl_flush_queues() is running without lock.
-bus->file_list access after mei_dev_bus_put(bus) can become a
-use-after-free if this was the last reference to bus.
+Returning 0 is not a valid fourcc either. This condition should
+never happen, so use WARN_ON_ONCE() to catch unexpected out-of-bounds
+access and return a valid fallback format instead.
 
-Protect queues cleanup and WARN traversal by device lock there
-to avoid the concurrent access problems.
-Move WARN traversal before mei_dev_bus_put(bus).
-
-This file uses bus variable name for mei_device, adjust
-code of mei_cl_bus_dev_release() to use bus variable too.
-
-Cc: stable <stable@kernel.org>
-Fixes: 35e8a426b16a ("mei: bus: Check for still connected devices in mei_cl_bus_dev_release()")
-Reviewed-by: Menachem Adin <menachem.adin@intel.com>
-Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
-Link: https://patch.msgid.link/20260705151259.3054795-1-alexander.usyskin@intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Suggested-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Fixes: 3d8a97eabef0 ("media: tegra-video: Add Tegra210 Video input driver")
+Cc: stable@vger.kernel.org
+Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/mei/bus.c |   16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ drivers/staging/media/tegra-video/vi.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/misc/mei/bus.c
-+++ b/drivers/misc/mei/bus.c
-@@ -4,6 +4,7 @@
-  * Intel Management Engine Interface (Intel MEI) Linux driver
-  */
- 
-+#include <linux/cleanup.h>
- #include <linux/module.h>
- #include <linux/device.h>
- #include <linux/kernel.h>
-@@ -1353,15 +1354,16 @@ static void mei_dev_bus_put(struct mei_d
- static void mei_cl_bus_dev_release(struct device *dev)
+--- a/drivers/staging/media/tegra-video/vi.c
++++ b/drivers/staging/media/tegra-video/vi.c
+@@ -80,8 +80,8 @@ static int tegra_get_format_idx_by_code(
+ static u32 tegra_get_format_fourcc_by_idx(struct tegra_vi *vi,
+ 					  unsigned int index)
  {
- 	struct mei_cl_device *cldev = to_mei_cl_device(dev);
--	struct mei_device *mdev = cldev->cl->dev;
-+	struct mei_device *bus = cldev->bus;
- 	struct mei_cl *cl;
+-	if (index >= vi->soc->nformats)
+-		return -EINVAL;
++	if (WARN_ON_ONCE(index >= vi->soc->nformats))
++		return vi->soc->video_formats[0].fourcc;
  
--	mei_cl_flush_queues(cldev->cl, NULL);
--	mei_me_cl_put(cldev->me_cl);
--	mei_dev_bus_put(cldev->bus);
--
--	list_for_each_entry(cl, &mdev->file_list, link)
--		WARN_ON(cl == cldev->cl);
-+	scoped_guard(mutex, &bus->device_lock) {
-+		mei_cl_flush_queues(cldev->cl, NULL);
-+		mei_me_cl_put(cldev->me_cl);
-+		list_for_each_entry(cl, &bus->file_list, link)
-+			WARN_ON(cl == cldev->cl);
-+	}
-+	mei_dev_bus_put(bus);
- 
- 	kfree(cldev->cl);
- 	kfree(cldev);
+ 	return vi->soc->video_formats[index].fourcc;
+ }
 
 
