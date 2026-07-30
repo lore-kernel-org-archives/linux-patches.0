@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F28B40EB9B;
-	Thu, 30 Jul 2026 15:52:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DE18439359;
+	Thu, 30 Jul 2026 15:52:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426768; cv=none; b=hHJHdb+/nmFZYctJyMnu9GUZ7vlUzJS0mulgB5Mihx1RtV3F5uS3EHxnFlYCiHkpnw05zqLA7IVPXFieX7g445l10ujNAlALYzTeS4RFhzxoTza5b9YhuNV35lEjgS64SatWu8gTD6el45YS7R63Xb+Z8SZgYsQsONx3wzf6bcg=
+	t=1785426771; cv=none; b=cVLTMeuQ14vQfSOFFEEvQepkjjkEy1RTTXuQgZl046ygp89I2V0rncL/JZJExOuOyKT58RhnYiDgF8T+7iF0ivoJhcqbtEbAc1G+4Jv5uIGKBxjPgP+dmQudIswh+oPyzjOHyRRFeyBba9apNkMGkr63IADauXCJNjNwGrKXg/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426768; c=relaxed/simple;
-	bh=Hszp5Ihd0uJ5Ai3i6qglhVHrMe1IjuVkVxQNtWRUzS8=;
+	s=arc-20240116; t=1785426771; c=relaxed/simple;
+	bh=z6AZs6363zg0+Ht5xT5YDIGYfaf4ZhoBv0FaDYg/xxU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YXKLt2TZV6hK4bplLB+fMaYQMx/ZHB0To4o8jduatOzb5t6aS9+6jIS8JRgdnseFF24hG+pwGsntzUPr7tXGqGkuNY7xrhRPkQ0ZbnDbRO9VI/yk2lswqK+ayJSh16hNHihsxcyscDf4bbu3Z/ZiRV8gqC6k/hR1G07C8gFuGn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=leicmBOM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QHF2MUGASi6oZxIZOGt9jZzbvnVoKlBWOh2F74qRqX86UYw8NZeH3bWzBr24a6KQ6gtiiUJO7Wo54XUU2itKnw6ntwWcovm6pYbb7hijEAbpE3BhRM++ptA8urIVZ384B6lRehqvF0rC3hTWHEM3ZucvCQiQqE0Eir4eKTpSnCw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=URKBXs6S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="leicmBOM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D29D1F000E9;
-	Thu, 30 Jul 2026 15:52:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="URKBXs6S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D7731F000E9;
+	Thu, 30 Jul 2026 15:52:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426767;
-	bh=zduzq953dsxf6387/qdF0dG5VXs2ugVcGFyzFh6jfOc=;
+	s=korg; t=1785426770;
+	bh=UF8yKzC6AdyWIwy2wxCv6xvbNE1CufoGwZ7Otb337nc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=leicmBOM4EpxSOfnZpyoLAz/si0S07oXuIce15kjdt1MaisuXn/Ert1i0wL7cO7/x
-	 MI47a3OEciJN0N3M3VWhNcZSJM1sSKR/CClE1DmHKfFaU+yPDup+Ok+N2o9emEZiLP
-	 aLAaUGEoY0uEdXrzG0ojgui4CGac6ATxDXd/Ss/Y=
+	b=URKBXs6S4oCgoAPlq1of9iyFa0vkPSnzE4uvytPyf+hR1fXIUdY3G2Tv4xY9CD5qG
+	 HTZKd9CYWmSWN1wHj54LIgSjFf6kqUmR/4HpbmKVN8MetUD6U3offF+GOpuxPPJCE6
+	 p33Cs/PKwVXwgt26LZCI62XzVreE68ZusGtOO32A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <yuantan098@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Qianyu Luo <qianyuluo3@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Eyal Birger <eyal.birger@gmail.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Dmitry Safonov <dima@arista.com>,
+	Qihang <q.h.hack.winter@gmail.com>,
+	Dmitry Safonov <0x7f454c46@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 535/602] xfrm: nat_keepalive: avoid double free on send error
-Date: Thu, 30 Jul 2026 16:15:27 +0200
-Message-ID: <20260730141447.261741745@linuxfoundation.org>
+Subject: [PATCH 6.12 536/602] tcp: defer md5sig_info kfree past RCU grace period in tcp_connect
+Date: Thu, 30 Jul 2026 16:15:28 +0200
+Message-ID: <20260730141447.284647443@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -55,88 +55,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qianyu Luo <qianyuluo3@gmail.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit 226f4a490d1a938fc838d8f8c46a4eca864c0d78 ]
+[ Upstream commit b74cd55038905d5e74c1de109ab78a30b2ea0e1f ]
 
-nat_keepalive_send() frees the keepalive skb whenever the IPv4 or IPv6
-send helper reports an error.
+The md5+ao reconciliation in tcp_connect() (net/ipv4/tcp_output.c)
+has two symmetric branches:
 
-That cleanup is only correct before the skb is handed to the output
-path. Once ip_build_and_send_pkt() or ip6_xmit() takes ownership, the
-networking stack may already have consumed the skb before returning an
-error, so freeing it again is unsafe.
+	if (needs_md5) {
+		tcp_ao_destroy_sock(sk, false);
+	} else if (needs_ao) {
+		tcp_clear_md5_list(sk);
+		kfree(rcu_replace_pointer(tp->md5sig_info, NULL, ...));
+	}
 
-Handle the pre-handoff failure cases inside nat_keepalive_send_ipv4()
-and nat_keepalive_send_ipv6(), where the caller still owns the skb, and
-keep nat_keepalive_send() responsible only for family dispatch and the
-unsupported-family cleanup path.
+Both branches free a per-socket auth-info object while the socket is
+in TCP_SYN_SENT and is already on the inet ehash (inserted by
+inet_hash_connect() in tcp_v4_connect()). Both branches are reachable
+by softirq RX-path readers that load the corresponding info pointer
+via implicit RCU before bh_lock_sock_nested() is taken.
 
-Fixes: f531d13bdfe3 ("xfrm: support sending NAT keepalives in ESP in UDP states")
-Cc: stable@vger.kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Qianyu Luo <qianyuluo3@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Reviewed-by: Eyal Birger <eyal.birger@gmail.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+The needs_md5 branch is fixed in the prior patch by re-introducing
+the call_rcu() free in tcp_ao_destroy_sock(): the equivalent per-key
+loop runs inside tcp_ao_info_free_rcu(), the RCU callback, so by the
+time it frees each tcp_ao_key all softirq readers that captured the
+container have already completed rcu_read_unlock().
+
+The needs_ao branch is not symmetric in the same way. The container
+free can be deferred via kfree_rcu(md5sig, rcu) -- struct
+tcp_md5sig_info already has the required rcu member
+(include/net/tcp.h:1999-2002), and the rest of the tree already does
+this in the tcp_md5sig_info_add() rollback paths
+(net/ipv4/tcp_ipv4.c:1410, 1436). But the per-key teardown is done
+by tcp_clear_md5_list() in process context BEFORE the container's
+RCU grace period: it walks &md5sig->head and frees each
+tcp_md5sig_key with bare hlist_del + kfree. A concurrent softirq
+reader in __tcp_md5_do_lookup() / __tcp_md5_do_lookup_exact()
+(tcp_ipv4.c:1253, 1298) walks the same list via
+hlist_for_each_entry_rcu() and races with that bare kfree on the
+keys themselves -- a per-key slab use-after-free of the same class
+as the TCP-AO bug, on the same race window.
+
+Fix this in two halves:
+
+  1. Convert the bare kfree() in tcp_connect() to kfree_rcu() so the
+     md5sig_info container joins the rest of the md5sig lifecycle.
+     The local-variable lift is mechanical and required because
+     kfree_rcu() is a macro that expects an lvalue.
+
+  2. Make tcp_clear_md5_list() RCU-safe by replacing hlist_del +
+     kfree(key) with hlist_del_rcu + kfree_rcu(key, rcu). struct
+     tcp_md5sig_key already carries the rcu member
+     (include/net/tcp.h:1995) and tcp_md5_do_del()
+     (net/ipv4/tcp_ipv4.c:1456) already uses kfree_rcu, so this
+     restores the lifecycle invariant the rest of the file follows
+     rather than introducing a one-off.
+
+The other caller of tcp_clear_md5_list() is tcp_md5_destruct_sock()
+(net/ipv4/tcp.c:412), which runs from the sock destructor when the
+socket is already unhashed and unreachable; the extra grace period
+there is unnecessary but harmless. Making the helper unconditionally
+RCU-safe is the cleaner contract.
+
+The needs_ao branch is not reachable by the userns reproducer used
+to demonstrate the AO-side splat (the repro installs both keys but
+ends up in the needs_md5 branch because the connect peer matches
+the MD5 key, not the AO key); however the symmetric race exists
+and a maintainer touching this code should not have to think about
+which branch escapes RCU and which one does not.
+
+Fixes: 51e547e8c89c ("tcp: Free TCP-AO/TCP-MD5 info/keys without RCU")
+Cc: stable@vger.kernel.org # v6.18+
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Reviewed-by: Dmitry Safonov <dima@arista.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+[also credits to Qihang, who found that this races with tcp-diag]
+Reported-by: Qihang <q.h.hack.winter@gmail.com>
+Signed-off-by: Dmitry Safonov <0x7f454c46@gmail.com>
+Link: https://patch.msgid.link/20260625-tcp-md5-connect-v3-2-1fd313d6c1e0@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 6f6e860e370c ("tcp: Decrement tcp_md5_needed static branch")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/xfrm/xfrm_nat_keepalive.c |   15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ net/ipv4/tcp_output.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/net/xfrm/xfrm_nat_keepalive.c
-+++ b/net/xfrm/xfrm_nat_keepalive.c
-@@ -55,8 +55,10 @@ static int nat_keepalive_send_ipv4(struc
- 			   ka->encap_sport, sock_net_uid(net, NULL));
- 
- 	rt = ip_route_output_key(net, &fl4);
--	if (IS_ERR(rt))
-+	if (IS_ERR(rt)) {
-+		kfree_skb(skb);
- 		return PTR_ERR(rt);
-+	}
- 
- 	skb_dst_set(skb, &rt->dst);
- 
-@@ -101,6 +103,7 @@ static int nat_keepalive_send_ipv6(struc
- 	dst = ipv6_stub->ipv6_dst_lookup_flow(net, sk, &fl6, NULL);
- 	if (IS_ERR(dst)) {
- 		local_unlock_nested_bh(&nat_keepalive_sk_ipv6.bh_lock);
-+		kfree_skb(skb);
- 		return PTR_ERR(dst);
+--- a/net/ipv4/tcp_output.c
++++ b/net/ipv4/tcp_output.c
+@@ -4119,9 +4119,13 @@ int tcp_connect(struct sock *sk)
+ 		if (needs_md5) {
+ 			tcp_ao_destroy_sock(sk, false);
+ 		} else if (needs_ao) {
++			struct tcp_md5sig_info *md5sig;
++
+ 			tcp_clear_md5_list(sk);
+-			kfree(rcu_replace_pointer(tp->md5sig_info, NULL,
+-						  lockdep_sock_is_held(sk)));
++			md5sig = rcu_replace_pointer(tp->md5sig_info, NULL,
++						     lockdep_sock_is_held(sk));
++			if (md5sig)
++				kfree_rcu(md5sig, rcu);
+ 		}
  	}
- 
-@@ -118,7 +121,6 @@ static void nat_keepalive_send(struct na
- 					sizeof(struct ipv6hdr)) +
- 				    sizeof(struct udphdr);
- 	const u8 nat_ka_payload = 0xFF;
--	int err = -EAFNOSUPPORT;
- 	struct sk_buff *skb;
- 	struct udphdr *uh;
- 
-@@ -140,16 +142,17 @@ static void nat_keepalive_send(struct na
- 
- 	switch (ka->family) {
- 	case AF_INET:
--		err = nat_keepalive_send_ipv4(skb, ka);
-+		nat_keepalive_send_ipv4(skb, ka);
- 		break;
- #if IS_ENABLED(CONFIG_IPV6)
- 	case AF_INET6:
--		err = nat_keepalive_send_ipv6(skb, ka, uh);
-+		nat_keepalive_send_ipv6(skb, ka, uh);
- 		break;
  #endif
--	}
--	if (err)
-+	default:
- 		kfree_skb(skb);
-+		break;
-+	}
- }
- 
- struct nat_keepalive_work_ctx {
 
 
