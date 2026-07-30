@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79C3A44163B;
-	Thu, 30 Jul 2026 15:08:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57E48442120;
+	Thu, 30 Jul 2026 15:08:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424091; cv=none; b=A+V5XGm1CP+JUKS4RHWPXa+veKdftVevUSTI1h9XcwtCNaGvAsV/AZwN/tcXk5WpZhMfdhXJzuPvMGwopz/gqDy8UQS2OEf45JxyY4KxJLDwzO2HKRbLshqPunkuyEu0+VzPn2uLE1PsteaY1/RWNIT9kj+RK+eSGsKE81Hf5Wg=
+	t=1785424094; cv=none; b=rCgH3dsc1CQdP9VfNPz7iDXkst34YkKtedWOO9UTB06FdmUnsEtU24leymGpZ39EI2/xZS+R8G91uYiOE9xuk8HcbbHHr87t0YjOIXyDATSmNW4Cw97RM2Ryhg8mOL3fU2h+Zt7kxF9/IaxRuyPLqBUjJpF2/Kb1cg6BX+mBoSo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424091; c=relaxed/simple;
-	bh=CKtX98+gHJVZOohMLrd06I8g27c84rOOGGtOn+YbSPI=;
+	s=arc-20240116; t=1785424094; c=relaxed/simple;
+	bh=eGWrRx2AKSLmumSiMJI8oZhpUzLS9rU5f6i9qTFTEDM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IAk2xBq71aQzQS/d1TNpvkZTc9XqoquKuZTVeuYZPUBNNaMoX3XR0i8kwyIqDUcrKfb08Yfj+BLpfzQVBuh0hrqo9U1IZbTsMRZoxo8M1rTTZKb1983zgnwxZdClj7LHD/nD5ErhA93MV/PQjuCj5087gMiREDtEleZybJQCxKY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ogXEa5kR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bdyPwQDBHiqtXq+VE6GpZPhDj0cUQN+25khxOnocprYFzORI/UKDo86/vZVkjMd5VSgz7CSPcPtAvu+h7TIY796SebhZcYqRfHcppmpgwe/nQt0CyQ0Vk5L/zq0uT5gXaabh+Q+bxQP7vz8ugtlnGGiOHf98/5fK0qpdFRV7Zv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O+E4JIZ5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ogXEa5kR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D40D31F000E9;
-	Thu, 30 Jul 2026 15:08:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O+E4JIZ5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE9AD1F000E9;
+	Thu, 30 Jul 2026 15:08:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424090;
-	bh=8YTXA9B6PXIcubvoee1G/8kInMfH72kKFphNsfPhLYY=;
+	s=korg; t=1785424093;
+	bh=W26pkmDEzD2OaeXZ5uhCdBc3Z+IdBVNA5HgBMYiOA0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ogXEa5kR633aXdBTUyspxG2IOKSxTT85fwuNnpxamx2lO6Vxfzm3fbBHrDFImnKFX
-	 yIjavV/vUgdn8OulF9hmta5NxqgGjtKriu5D9eH0S0qgblf9J+Jm8azY2tEo0HfjQX
-	 n516g7Q9wNPB34jhh0yQsnckatSLmPtO5Ulus/6w=
+	b=O+E4JIZ5EHhqv/jC/XdNdfp+nZMWztOiKcL1g2ck/WbLMlNip84tn0D54cWqVoSsf
+	 YH7bJ1ufAbY4Y8cNA9ida96jiZ/Lm6gOnxzR5YEVvswwcdDlxWMN5rEXYKz4HGGx/U
+	 d6quEyglhU4xVu2XEyz4zJX8N8s29WsTveLcMN60=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Felix Fietkau <nbd@nbd.name>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Taehee Yoo <ap420073@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 265/675] wifi: mt76: mt7996: fix possible NULL-pointer deref in mt7996_mcu_sta_bfer_eht()
-Date: Thu, 30 Jul 2026 16:09:55 +0200
-Message-ID: <20260730141450.765269187@linuxfoundation.org>
+Subject: [PATCH 6.18 274/675] amt: make the head writable before rewriting the L2 header
+Date: Thu, 30 Jul 2026 16:10:04 +0200
+Message-ID: <20260730141450.951356433@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -51,48 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit 2fffc472bec490c8357defcee9c075ca74467352 ]
+[ Upstream commit 53969d704fa5b7c1751e277fac96bfc22b435eac ]
 
-mt76_connac_get_eht_phy_cap routine can theoretically return NULL so
-check cap pointer before dereferencing it.
+amt_multicast_data_handler(), amt_membership_query_handler() and
+amt_update_handler() rewrite the ethernet header of the decapsulated skb
+in place (eth->h_proto, eth->h_dest and, for the query, also
+eth->h_source) before handing it up the stack.  The skb head may be
+shared, for example when a packet tap has cloned it on the underlay
+interface, so writing through it corrupts the other reader's copy.
 
-Fixes: ba01944adee9f ("wifi: mt76: mt7996: add EHT beamforming support")
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20260621-mt76_connac_get_he_phy_cap-fix-v1-4-ed4ccf7a0363@kernel.org
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Call skb_cow_head() before the rewrite so the head is private.  It is
+placed before the pointers into the head are (re-)derived, so a
+reallocation caused by the copy is picked up by those derivations.
+
+Fixes: cbc21dc1cfe9 ("amt: add data plane of amt interface")
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Taehee Yoo <ap420073@gmail.com>
+Link: https://patch.msgid.link/20260711151934.2955226-3-michael.bommarito@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/mcu.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/net/amt.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-index 87ec7e90dfeebe..72851399575f9d 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-@@ -1728,14 +1728,18 @@ mt7996_mcu_sta_bfer_eht(struct ieee80211_link_sta *link_sta,
- 	struct ieee80211_sta_eht_cap *pc = &link_sta->eht_cap;
- 	struct ieee80211_eht_cap_elem_fixed *pe = &pc->eht_cap_elem;
- 	struct ieee80211_eht_mcs_nss_supp *eht_nss = &pc->eht_mcs_nss_supp;
--	const struct ieee80211_sta_eht_cap *vc =
--		mt76_connac_get_eht_phy_cap(phy->mt76, vif);
--	const struct ieee80211_eht_cap_elem_fixed *ve = &vc->eht_cap_elem;
- 	u8 nss_mcs = u8_get_bits(eht_nss->bw._80.rx_tx_mcs9_max_nss,
- 				 IEEE80211_EHT_MCS_NSS_RX) - 1;
-+	const struct ieee80211_eht_cap_elem_fixed *ve;
-+	const struct ieee80211_sta_eht_cap *vc;
- 	u8 snd_dim, sts;
+diff --git a/drivers/net/amt.c b/drivers/net/amt.c
+index 76e0ab70d8273d..cddcad172bbce0 100644
+--- a/drivers/net/amt.c
++++ b/drivers/net/amt.c
+@@ -2320,6 +2320,9 @@ static bool amt_multicast_data_handler(struct amt_dev *amt, struct sk_buff *skb)
+ 	skb_reset_mac_header(skb);
+ 	skb_pull(skb, sizeof(*eth));
  
-+	vc = mt76_connac_get_eht_phy_cap(phy->mt76, vif);
-+	if (!vc)
-+		return;
++	if (skb_cow_head(skb, 0))
++		return true;
 +
- 	bf->tx_mode = MT_PHY_TYPE_EHT_MU;
-+	ve = &vc->eht_cap_elem;
+ 	if (!pskb_may_pull(skb, sizeof(*iph)))
+ 		return true;
+ 	iph = ip_hdr(skb);
+@@ -2396,6 +2399,8 @@ static bool amt_membership_query_handler(struct amt_dev *amt,
+ 	skb_reset_network_header(skb);
+ 	eth = eth_hdr(skb);
+ 	ether_addr_copy(h_source, oeth->h_source);
++	if (skb_cow_head(skb, 0))
++		return true;
+ 	if (!pskb_may_pull(skb, sizeof(*iph)))
+ 		return true;
  
- 	mt7996_mcu_sta_sounding_rate(bf, phy);
+@@ -2521,6 +2526,9 @@ static bool amt_update_handler(struct amt_dev *amt, struct sk_buff *skb)
+ 	if (!pskb_may_pull(skb, sizeof(*iph)))
+ 		return true;
  
++	if (skb_cow_head(skb, 0))
++		return true;
++
+ 	iph = ip_hdr(skb);
+ 	if (iph->version == 4) {
+ 		if (ip_mc_check_igmp(skb)) {
 -- 
 2.53.0
 
