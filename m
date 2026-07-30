@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCC3F413D8F;
-	Thu, 30 Jul 2026 14:27:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EB9A3FF1B5;
+	Thu, 30 Jul 2026 14:27:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421645; cv=none; b=etgy5Etccx2blAJAiU8cVLq7l32cpVkTFnAuIYKS5D0Bwk3eJ5D0wMMFfTY2AfQavFHu1oFAnUM71Rxv1DZu8he7kFt7WCathWXJrykHRGVL87Xrw/DzVQ0a9NUiBqhG5J8ZomtmX13pzCzxmCsyCPqRcQQsqSB96e1diONDanU=
+	t=1785421647; cv=none; b=YlRoheA+QS2yPSkBqhidj9AaJwlODxfHYov30jeDV9M/4EWR2N2Cutkv5UOZtIw2thlgH5vOkq738Q0d1tw2IcbG7qQUdLczSCyQ0b5Rlxzfc2S5XDauN01QAvatwkxHP9vnN5o/bAdyIdyECkyqTjA3XvPDefvM5JV1Qe9Cbzs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421645; c=relaxed/simple;
-	bh=bM1illokgh9F+gT2+6eMiu6mWW1+fwA2Ry3/xXKrQAo=;
+	s=arc-20240116; t=1785421647; c=relaxed/simple;
+	bh=eFuiyWgBH0V1j5nMI8oS+bN43e2QzV17ltWZ3KIcbFU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tRaqbagqUg7sefVv8w+8yyGlWcH6LXeQiKMHyxNPdMEuTLUwZHc/7L/0GwRLZK7RbuO0Nk2zos6NDWAAHnhNOIG21WLBMRkknBeRhRNxvxaJni7tuw1KbWEe2TNA56Mp4vN2tF2nEMo7/n5YsWAZVEv0JAlvkf1GI2kulO+Tpzc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nwZnwOGm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nNYPOIFhNtp/aEtIINIs1+dW44UXlCYMP3KU+hTenEV/YZKfevUqK1MJAmdtsX6pQVaBMX04rm/HaCl2OS9NJKHQJmPBwA5OgMMA18jiMhjyU0Kq2UOqB79i4RbSprm+AI+B9Grm5TWKpG6VYXALH3YqhjYSxU7C0hJQ4lU4Y8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KufnqXwi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nwZnwOGm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEE821F000E9;
-	Thu, 30 Jul 2026 14:27:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KufnqXwi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E387C1F000E9;
+	Thu, 30 Jul 2026 14:27:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421643;
-	bh=Vx62+EyUGcFTqsppptsUuRHMif+2hiLIQa2tqqffO4g=;
+	s=korg; t=1785421646;
+	bh=07cAFS4y4oIb2/kAWa9M3HXRweTW8ICXh45JSBMDfVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nwZnwOGmLIsMkjkA8GPIjKeGbCQpOopVuGScZelqqbVB4KtTfEC2qm2bsJsYO5bNg
-	 Xqv0KWObCMhxfHdhoHA2SwLH/H4lgirP3GpFtqKy4ythm7dZ71Z+vFd6wqBwLJIQm8
-	 XAW+mEJjuBvnLaMJ4dswi6h+SttUMsJH7wh9dUM0=
+	b=KufnqXwis+UZBouDmerIJHKg0JNDoeg/KaAk+5ReRz2VsHXOUTeCOuRPHJzDBp4gZ
+	 1lyjX1Z31XBKXKcjkVO7hS8zuhNFJjY6c8NTFh7Y11Vt0RpUq+JdBOrdeX0sh22y19
+	 lkLER6U6zZx2gKoFft5a5lzvOLQyiLkgbxRgqBcQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9eebf5f6544c5e873858@syzkaller.appspotmail.com,
-	Edward Adam Davis <eadavis@qq.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Daniel Zahka <daniel.zahka@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 171/744] hwmon: (corsair-psu) Stop device IO before calling hid_hw_stop
-Date: Thu, 30 Jul 2026 16:07:24 +0200
-Message-ID: <20260730141447.925405273@linuxfoundation.org>
+Subject: [PATCH 7.1 130/744] tcp: fix TIME_WAIT socket reference leak on PSP policy failure
+Date: Thu, 30 Jul 2026 16:06:43 +0200
+Message-ID: <20260730141447.043656803@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -52,87 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 9ab8656548cd737b98d0b19c4253aff8d68e97f4 ]
+[ Upstream commit 2c1931a81122c3cdc4c89448fe0442c69e21c0d5 ]
 
-hid_hw_stop() does not stop the device IO.
+Release the TIME_WAIT socket reference and jump to discard_it
+upon PSP policy failure in both IPv4 and IPv6 receive paths.
+This prevents a memory leak of tcp_tw_bucket structures.
 
-This results in a race condition between hid_input_report() and the point
-immediately following the execution of hid_device_io_start() within
-corsairpsu_probe(). If the probe operation fails after "io start" has
-been initiated, this race condition will result in a uaf vulnerability
-[1].
-
-CPU0				CPU1
-====				====
-corsairpsu_probe()
- hid_device_io_start()
-  ... unlock driver_input_lock
- hid_hw_stop()
-  kfree(hidraw)			__hid_input_report()
-				 ... acquire driver_input_lock
-				 hid_report_raw_event()
-				  hidraw_report_event()
-				   ... access hidraw's list_lock // trigger uaf
-
-Consequently, when corsairpsu_probe() fails and hid_hw_stop() needs to
-be executed, the io_started flag is first cleared while holding the
-driver_input_lock to prevent potential race conditions involving input
-reports.
-
-[1]
-BUG: KASAN: slab-use-after-free in rt_spin_lock+0x83/0x400 kernel/locking/spinlock_rt.c:56
-Call Trace:
- hidraw_report_event+0x5d/0x3a0 drivers/hid/hidraw.c:577
- hid_report_raw_event+0x311/0x1730 drivers/hid/hid-core.c:2076
- __hid_input_report drivers/hid/hid-core.c:2152 [inline]
- hid_input_report+0x44e/0x580 drivers/hid/hid-core.c:2174
- hid_irq_in+0x47e/0x6d0 drivers/hid/usbhid/hid-core.c:286
- __usb_hcd_giveback_urb+0x3b3/0x5e0 drivers/usb/core/hcd.c:1657
- dummy_timer+0x8a9/0x47d0 drivers/usb/gadget/udc/dummy_hcd.c:2005
-
-Allocated by task 10:
- hidraw_connect+0x57/0x430 drivers/hid/hidraw.c:606
- hid_connect+0x5bf/0x19d0 drivers/hid/hid-core.c:2277
- hid_hw_start+0xa8/0x120 drivers/hid/hid-core.c:2387
- corsairpsu_probe+0xd9/0x3c0 drivers/hwmon/corsair-psu.c:782
-
-Freed by task 10:
- hidraw_disconnect+0x4f/0x60 drivers/hid/hidraw.c:662
- hid_disconnect drivers/hid/hid-core.c:2362 [inline]
- hid_hw_stop+0x101/0x1e0 drivers/hid/hid-core.c:2407
- corsairpsu_probe+0x327/0x3c0 drivers/hwmon/corsair-psu.c:826
-
-Fix the problem by calling hid_device_io_stop() before calling
-hid_hw_stop().
-
-Fixes: d115b51e0e56 ("hwmon: add Corsair PSU HID controller driver")
-Reported-by: syzbot+9eebf5f6544c5e873858@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=9eebf5f6544c5e873858
-Tested-by: syzbot+9eebf5f6544c5e873858@syzkaller.appspotmail.com
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Link: https://lore.kernel.org/r/tencent_BB7C33EB9EA41B7B4B5F1B8B25C0BA13BB08@qq.com
-[groeck: Updated subject and description;
- call hid_device_io_stop() only if IO has been started]
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 659a2899a57d ("tcp: add datapath logic for PSP with inline key exchange")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Daniel Zahka <daniel.zahka@gmail.com>
+Link: https://patch.msgid.link/20260710181317.4060230-1-edumazet@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/corsair-psu.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/ipv4/tcp_ipv4.c | 6 ++++--
+ net/ipv6/tcp_ipv6.c | 6 ++++--
+ 2 files changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/hwmon/corsair-psu.c b/drivers/hwmon/corsair-psu.c
-index 76f3e1da68d09e..ce958cdaef58a3 100644
---- a/drivers/hwmon/corsair-psu.c
-+++ b/drivers/hwmon/corsair-psu.c
-@@ -822,6 +822,7 @@ static int corsairpsu_probe(struct hid_device *hdev, const struct hid_device_id
+diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
+index bfdabad01fa765..d5cd238358ef04 100644
+--- a/net/ipv4/tcp_ipv4.c
++++ b/net/ipv4/tcp_ipv4.c
+@@ -2319,8 +2319,10 @@ int tcp_v4_rcv(struct sk_buff *skb)
+ 		}
  
- fail_and_close:
- 	hid_hw_close(hdev);
-+	hid_device_io_stop(hdev);
- fail_and_stop:
- 	hid_hw_stop(hdev);
- 	return ret;
+ 		drop_reason = psp_twsk_rx_policy_check(inet_twsk(sk), skb);
+-		if (drop_reason)
+-			break;
++		if (drop_reason) {
++			inet_twsk_put(inet_twsk(sk));
++			goto discard_it;
++		}
+ 	}
+ 		/* to ACK */
+ 		fallthrough;
+diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
+index 36d75fb50a70b7..71cca3c74423f5 100644
+--- a/net/ipv6/tcp_ipv6.c
++++ b/net/ipv6/tcp_ipv6.c
+@@ -1962,8 +1962,10 @@ INDIRECT_CALLABLE_SCOPE int tcp_v6_rcv(struct sk_buff *skb)
+ 		}
+ 
+ 		drop_reason = psp_twsk_rx_policy_check(inet_twsk(sk), skb);
+-		if (drop_reason)
+-			break;
++		if (drop_reason) {
++			inet_twsk_put(inet_twsk(sk));
++			goto discard_it;
++		}
+ 	}
+ 		/* to ACK */
+ 		fallthrough;
 -- 
 2.53.0
 
