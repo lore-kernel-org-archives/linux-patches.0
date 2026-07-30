@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F261A44D6AC;
-	Thu, 30 Jul 2026 16:13:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD30F395266;
+	Thu, 30 Jul 2026 16:13:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785428006; cv=none; b=oAOdRjARWUfEAMT8i+3ml9N+RcGhhh1mrO/FclgFx2SRiTaznl/EcU/dIaT8iS8R0cT3TTXwr6gWFn8PYiFMbDB7GAp99c4o5Z/K4n/yKLYjYon4cKZnITZ40WLgGZhWkPyf1B70op1yfVLXcCj7DB/Q12DPOZBsRwtlcgx3OYw=
+	t=1785428009; cv=none; b=KINkCPFWYxQrE/6IeifQLOnKPXfV6jqudvQSorQ2jq4vMJa4NwMy5Q0oiPeS4Giqi5UZNIvJ3NpFdjjEYrpQjNeRF7OIV2x29/4ql3/TsaCZBnNlV2NEXNOeyPt4leuPGWiJoVrP6v5GGcMyRFNF54+aB/r4/o8SDoFS0J90p7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785428006; c=relaxed/simple;
-	bh=WDJzyTEFKm6k6zGgBnlGoxG2M7rh1UZEFY4U5+7ka4s=;
+	s=arc-20240116; t=1785428009; c=relaxed/simple;
+	bh=tGogQW9TZYifwBLOInxtRao4Q90Gtf5lOhWDCQS3qlI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dDSqKkDtJtEjxWl1FWVGyjrw5oqIkeXhEMAVd9cL7IrQ8Tqo0ig94R3URYqtzwYOKzLuOZ0VE52VRl8TZfeL/3zFuNEFw2cLrMC6T1qOwSVhAnnJNXVb+tD0UCs2mgUlTrPzu8RRQGrIWDlx3RXfaRWUf4aES1coYKa9tK87eZc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RQsvSHHn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nC7onxZbx7mtGlE46ySY7Vo/6W0MlOyhXlh75cPs9KHvj/IBbhew1+Ew9VBTxcrgkqv1h3tjdQ+LZnzyf8mnrTlLaABM0qdi0APryVN0PaQ2gEjdjiZkIBSQ4gArnTYf/h/seaK/PlMAsXgpkJeSbt+FcK9wXV2huzCOkxhoBl8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UlFkoelu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RQsvSHHn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59CF81F00A3A;
-	Thu, 30 Jul 2026 16:13:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UlFkoelu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E0BF1F00A3A;
+	Thu, 30 Jul 2026 16:13:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785428004;
-	bh=cfNFRBn9CJ1I1EPTXkUoc9P9nb7iX9P23rAyYcGSDZ8=;
+	s=korg; t=1785428007;
+	bh=JG6jHOq332LxFMxyllhf9/hrk/F+RaP4vhex4ReBPu8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RQsvSHHnRY62bmXxPPYncFaBub1Be7541Gxqg12QhvspqJu3lhemWnXLc+hL+otzQ
-	 tYfj12/JMfrui5PieOiKKvJyKmAZ7Qq6R0wMOhJ4ufKjrXNPqbPzsJEfiw//IYiwFc
-	 0ueGIio3pWR4fbqnkk6c0TFyZIzzF7klttJ4lAj4=
+	b=UlFkoeluELO/5ljnU+/7pnOxR3k8hv/rwFR38UNI6OTVceZ6YmpvUHPAkgD0J3cq0
+	 mNkZsY5UvqaV/1+Kl4etlBAz3KzZtEtw32+YZICuTOKkpCo5ZQVsgL/yqQUqJPfDMt
+	 VK4+bUfdttkq4tRJxAoWt7zPl1mkd9HXQwwKtYq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 6.6 326/484] rbd: Reset positive result codes to zero in object map update path
-Date: Thu, 30 Jul 2026 16:13:43 +0200
-Message-ID: <20260730141430.569071255@linuxfoundation.org>
+	James Montgomery <james_montgomery@disroot.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.6 327/484] ksmbd: defer destroy_previous_session() until after NTLM authentication
+Date: Thu, 30 Jul 2026 16:13:44 +0200
+Message-ID: <20260730141430.590658376@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -50,58 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
+From: James Montgomery <james_montgomery@disroot.org>
 
-commit a6c4250b81bd30beae94e1b7a4b26fa1193ad2e4 upstream.
+commit c74801ee524f477c174a1899782b6c3b6918d407 upstream.
 
-In a reply message to an RBD request, a positive result code indicates
-a data payload, which is not allowed for writes. While
-rbd_osd_req_callback() already resets a positive result code for writes
-to zero, rbd_object_map_callback() does not. This allows a corrupted
-reply to an object map update to trigger the rbd_assert(*result < 0) in
-__rbd_obj_handle_request(). This happens, because
-rbd_object_map_callback() calls rbd_obj_handle_request() ->
-__rbd_obj_handle_request() and passes this positive result code. From
-__rbd_obj_handle_request(), rbd_obj_advance_write() is called, which
-leaves the positive result code unchanged and returns true. Therefore,
-the if(done && *result) branch is executed in __rbd_obj_handle_request()
-and the assertion triggers.
+In ntlm_authenticate(), destroy_previous_session() is called using a
+user pointer resolved from the client-supplied NTLM blob username field
+before the NTLMv2 response is validated. An authenticated attacker can
+set the NTLM blob username to match a victim account and set
+PreviousSessionId to the victim's session ID; destroy_previous_session()
+destroys the victim's session while ksmbd_decode_ntlmssp_auth_blob()
+subsequently rejects the request with -EPERM.
 
-This patch fixes the issue by adjusting the logic in the
-rbd_object_map_callback() path. A positive result code for an object map
-update is now reset to zero (similar to rbd_osd_req_callback()), and the
-message is subsequently handled the same way as if the result code was
-zero from the beginning. Additionally, a WARN_ON_ONCE() is added for
-this case.
+Move destroy_previous_session() and the prev_id assignment to after
+ksmbd_decode_ntlmssp_auth_blob() returns success and use sess->user
+rather than the pre-authentication lookup result. This matches the
+ordering already used by krb5_authenticate(), where
+destroy_previous_session() is called only after
+ksmbd_krb5_authenticate() returns success.
 
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
 Cc: stable@vger.kernel.org
-Fixes: 22e8bd51bb04 ("rbd: support for object-map and fast-diff")
-Signed-off-by: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
-Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Link: https://lore.kernel.org/linux-cifs/20260702155449.3639773-1-james_montgomery@disroot.org/
+Signed-off-by: James Montgomery <james_montgomery@disroot.org>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/rbd.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/smb/server/smb2pdu.c |    9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
---- a/drivers/block/rbd.c
-+++ b/drivers/block/rbd.c
-@@ -1957,10 +1957,15 @@ static int rbd_object_map_update_finish(
- 	bool has_current_state;
- 	void *p;
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -1483,11 +1483,6 @@ static int ntlm_authenticate(struct ksmb
+ 		return -EPERM;
+ 	}
  
--	if (osd_req->r_result)
-+	if (osd_req->r_result < 0)
- 		return osd_req->r_result;
+-	/* Check for previous session */
+-	prev_id = le64_to_cpu(req->PreviousSessionId);
+-	if (prev_id && prev_id != sess->id)
+-		destroy_previous_session(conn, user, prev_id);
+-
+ 	if (sess->state == SMB2_SESSION_VALID) {
+ 		/*
+ 		 * Reuse session if anonymous try to connect
+@@ -1525,6 +1520,10 @@ static int ntlm_authenticate(struct ksmb
+ 		}
+ 	}
  
- 	/*
-+	 * Writes aren't allowed to return a data payload.
-+	 */
-+	WARN_ON_ONCE(osd_req->r_result > 0);
++	prev_id = le64_to_cpu(req->PreviousSessionId);
++	if (prev_id && prev_id != sess->id)
++		destroy_previous_session(conn, sess->user, prev_id);
 +
-+	/*
- 	 * Nothing to do for a snapshot object map.
- 	 */
- 	if (osd_req->r_num_ops == 1)
+ 	/*
+ 	 * If session state is SMB2_SESSION_VALID, We can assume
+ 	 * that it is reauthentication. And the user/password
 
 
