@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89A90431488;
-	Thu, 30 Jul 2026 14:35:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73D83431488;
+	Thu, 30 Jul 2026 14:35:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422149; cv=none; b=S7wJIVfImJ7Nw2Cdfleyv7nD+Yr4bGwaZRntG94E8OAgZPwjKqsPSpVNqz+6fy108/mfCOlIxSuYsVrTgg6Xk1vXKbaXRr8c7uZlufplB0VF4NbjgEmmlBZZYSFoeiEpfy+iVtJ4zHa5ujZbalCnZ5zf0QeHNenQTp5+BFjUOnE=
+	t=1785422154; cv=none; b=ZdDyf+DffRttTn3SCj//KQQNPCSjhBwljEYqk77GMgyXygDmEb1MkHrS8NGBg4OoRCEemcLselRyfi4d5l7NLvOkW+mlVyZGTeEbgqWXKCy/SbspwZzU3WO1enktWs64TkB3oCZfJsPIFQq0CQnlLS+kYDDq70iM3gtNC789uHs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422149; c=relaxed/simple;
-	bh=0gThCZP6sm9QTgFORA2y2mFTDhFXH53XnNhAoFDjlVo=;
+	s=arc-20240116; t=1785422154; c=relaxed/simple;
+	bh=f2Icz+w6c0HuwDiyvjhiG6Gr1DlvT4rn4vur2Cd9aDM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GRpi2Lq1l8WlhIo0GNdkjwt1GJR3JLh+r15L5sJS1ORlsKQ6Bn8DntX8qK6vwB8QxRzNKkJQZLctxuoCaEoxuK2rZbH5vAwmK4h4/h4c0jJrajBjeBCh7kT1hquUuMqnNtYA+/OnkqglTcmJ8t+ym6Sf5H5Rr0tazDGlTF8R04E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QsF1vQKz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j8tQEgs0UtsRwaAwjiWLAKGUv/+Rm6hjjjnuTwwOyDhumbqv/fG2rwWVHkKqjEFxMLrR3vVsQSaG/bI4mnw/sy9lpqwn0gJOWEnYDYUmgJ+J8Odzuln3Nl5Xc2oXb6JMqjIv7iz3waI5G+fn9D54hsndAkY10PUDi8smdt8WLDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TnxsnHL9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QsF1vQKz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E492C1F000E9;
-	Thu, 30 Jul 2026 14:35:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TnxsnHL9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC2CA1F000E9;
+	Thu, 30 Jul 2026 14:35:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422148;
-	bh=AvYDxQ5uZHzA0I+6T6d75TbS6tSkEwMztWhz4emFxFA=;
+	s=korg; t=1785422151;
+	bh=SgrGR7AupU/n7hHoOVcKPNiPpiQmyILAd8OHySfYoh4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QsF1vQKzn9oMqm7LoJQz9yZj3z8+lv7qNMQsgzu7wDvyGNQQacbRBSZ9u3B0UEBdT
-	 vwrLdlORKt7SeA4Aw4ZJuZd0LUG+vMikuI3fAKOd8h9WvC4jq9MzC/zcIVTb25V8um
-	 JWwSL3rpU6DzQvAoky8p5dC+LrruU8LMzRHIysnA=
+	b=TnxsnHL9ChqPd79SoMzIOPshU6+C8RA4b+deG0MKRIf9/16dRCgYwNWbsykIbNByt
+	 qyMc1tUd0Rd/mgUKV3U2zh4nNIws3luhoYWhI1eM2MjKSUctP58ne+5cUwKZIeOswJ
+	 LPSsofpDNhVnWlNqvSNUMzvT9Q6WCywAeiYUNJiQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Chen <vincent.chen@sifive.com>,
+	Marcin Szycik <marcin.szycik@linux.intel.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
 	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Dave Ertman <david.m.ertman@intel.com>,
+	Simon Horman <horms@kernel.org>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 341/744] ice: allow creating VFs when !CONFIG_ICE_SWITCHDEV
-Date: Thu, 30 Jul 2026 16:10:14 +0200
-Message-ID: <20260730141451.530200194@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Rinitha S <sx.rinitha@intel.com>
+Subject: [PATCH 7.1 342/744] ice: fix LAG recipe to profile association
+Date: Thu, 30 Jul 2026 16:10:15 +0200
+Message-ID: <20260730141451.550058511@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -54,88 +57,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vincent Chen <vincent.chen@sifive.com>
+From: Marcin Szycik <marcin.szycik@linux.intel.com>
 
-[ Upstream commit 99d0f42b0e5c57e4c02070a908aaff082881293a ]
+[ Upstream commit d6da9b7d48599db078aea6144997a381f8d90d45 ]
 
-Currently ice_eswitch_attach_vf() is called unconditionally in
-ice_start_vfs(), which causes VF creation to fail when CONFIG_ICE_SWITCHDEV
-is not defined.
+ice_init_lag() associates recipes to profiles, assuming that Link
+Aggregation-related profiles will always have profile ID lower than 70
+(ICE_PROFID_IPV6_GTPU_IPV6_TCP_INNER). This value seems arbitrary and
+might not always be valid for some versions of DDP package, i.e. LAG
+profiles may have profile ID greater than 70. This would lead to
+misconfigured switch and LAG not working properly.
 
-Fix this by adding switchdev mode checks at the call sites before
-calling ice_eswitch_attach_vf(), consistent with how
-ice_eswitch_attach_sf() is already handled in ice_devlink_port_new().
-This is similar to commit aacca7a83b97 ("ice: allow creating VFs for
-!CONFIG_NET_SWITCHDEV") which fixed the same issue for the previous
-ice_eswitch_configure() API.
+Fix it by checking up to maximum profile ID.
 
-Fixes: 415db8399d06 ("ice: make representor code generic")
-Signed-off-by: Vincent Chen <vincent.chen@sifive.com>
+Fixes: 1e0f9881ef79 ("ice: Flesh out implementation of support for SRIOV on bonded interface")
+Signed-off-by: Marcin Szycik <marcin.szycik@linux.intel.com>
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
 Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Reviewed-by: Dave Ertman <david.m.ertman@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://patch.msgid.link/20260717185340.3595286-2-anthony.l.nguyen@intel.com
+Link: https://patch.msgid.link/20260717185340.3595286-7-anthony.l.nguyen@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_eswitch.c |  3 ---
- drivers/net/ethernet/intel/ice/ice_sriov.c   | 14 ++++++++------
- drivers/net/ethernet/intel/ice/ice_vf_lib.c  |  3 ++-
- 3 files changed, 10 insertions(+), 10 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_lag.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_eswitch.c b/drivers/net/ethernet/intel/ice/ice_eswitch.c
-index c30e27bbfe6e25..b069e6c514fb12 100644
---- a/drivers/net/ethernet/intel/ice/ice_eswitch.c
-+++ b/drivers/net/ethernet/intel/ice/ice_eswitch.c
-@@ -512,9 +512,6 @@ int ice_eswitch_attach_vf(struct ice_pf *pf, struct ice_vf *vf)
- 	struct ice_repr *repr;
- 	int err;
+diff --git a/drivers/net/ethernet/intel/ice/ice_lag.c b/drivers/net/ethernet/intel/ice/ice_lag.c
+index 310e8fe2925c7d..08a17ded0ad556 100644
+--- a/drivers/net/ethernet/intel/ice/ice_lag.c
++++ b/drivers/net/ethernet/intel/ice/ice_lag.c
+@@ -2623,7 +2623,7 @@ int ice_init_lag(struct ice_pf *pf)
+ 		goto  free_lport_res;
  
--	if (!ice_is_eswitch_mode_switchdev(pf))
--		return 0;
--
- 	repr = ice_repr_create_vf(vf);
- 	if (IS_ERR(repr))
- 		return PTR_ERR(repr);
-diff --git a/drivers/net/ethernet/intel/ice/ice_sriov.c b/drivers/net/ethernet/intel/ice/ice_sriov.c
-index 7e00e091756ddc..e04de021559665 100644
---- a/drivers/net/ethernet/intel/ice/ice_sriov.c
-+++ b/drivers/net/ethernet/intel/ice/ice_sriov.c
-@@ -484,12 +484,14 @@ static int ice_start_vfs(struct ice_pf *pf)
- 			goto teardown;
- 		}
- 
--		retval = ice_eswitch_attach_vf(pf, vf);
--		if (retval) {
--			dev_err(ice_pf_to_dev(pf), "Failed to attach VF %d to eswitch, error %d",
--				vf->vf_id, retval);
--			ice_vf_vsi_release(vf);
--			goto teardown;
-+		if (ice_is_eswitch_mode_switchdev(pf)) {
-+			retval = ice_eswitch_attach_vf(pf, vf);
-+			if (retval) {
-+				dev_err(ice_pf_to_dev(pf), "Failed to attach VF %d to eswitch, error %d",
-+					vf->vf_id, retval);
-+				ice_vf_vsi_release(vf);
-+				goto teardown;
-+			}
- 		}
- 
- 		set_bit(ICE_VF_STATE_INIT, vf->vf_states);
-diff --git a/drivers/net/ethernet/intel/ice/ice_vf_lib.c b/drivers/net/ethernet/intel/ice/ice_vf_lib.c
-index 27e4acb1620f0c..9052e71e9c99e3 100644
---- a/drivers/net/ethernet/intel/ice/ice_vf_lib.c
-+++ b/drivers/net/ethernet/intel/ice/ice_vf_lib.c
-@@ -812,7 +812,8 @@ void ice_reset_all_vfs(struct ice_pf *pf)
- 		}
- 		ice_vf_post_vsi_rebuild(vf);
- 
--		ice_eswitch_attach_vf(pf, vf);
-+		if (ice_is_eswitch_mode_switchdev(pf))
-+			ice_eswitch_attach_vf(pf, vf);
- 
- 		mutex_unlock(&vf->cfg_lock);
- 	}
+ 	/* associate recipes to profiles */
+-	for (n = 0; n < ICE_PROFID_IPV6_GTPU_IPV6_TCP_INNER; n++) {
++	for (n = 0; n < ICE_MAX_NUM_PROFILES; n++) {
+ 		err = ice_aq_get_recipe_to_profile(&pf->hw, n,
+ 						   &recipe_bits, NULL);
+ 		if (err)
 -- 
 2.53.0
 
