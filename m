@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D264C43C7C4;
-	Thu, 30 Jul 2026 14:42:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0310D43C7C4;
+	Thu, 30 Jul 2026 14:42:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422530; cv=none; b=E5/vU7D2ietlfirvYkm4yJEW1Qyhnyx6aZHAIOAQ0TQOw8DSlcnp0U6CXDBrhUm9DmigWPHPoxQUea6EXOJTcptwa0jYO27k2oOHarkrMLp/PZ7nHbAhbIOAiEeBc2p1zPt8shcbJAKFSLPR0ogI0HcIjXMSIM6RZQfZDndh/0Q=
+	t=1785422533; cv=none; b=LPiisdjgwyiM5fx7ne+AiX5gOXOBpepjFfv+hERPZtJK0QIh9OnEBVZC5tc/7R892WdvgydOvaEUOnmO13MS+yGsiCFf6y80weLWZroa2x/80pWBkZOr+x6fAUsWkH+OA9kV2McZow5LRUW1R3Rf1lUqmJUpx6Gmi2wAd+vPbyE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422530; c=relaxed/simple;
-	bh=alwPSHOfl5lu233D28T86COfhiak+/skC/DjOKs6KTU=;
+	s=arc-20240116; t=1785422533; c=relaxed/simple;
+	bh=FL0u0ZCHNcEnjzLRepaE67RA5sy0pHB4QJehNq9oYWQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K5LPqU0DkfHBhi3Q8oCpobCFY2ZiFoNJOh/lbAoFPcRibI87usBVACR7sx0CtGbt3S6Yhr4z9y68JmZ2LDqinnQkRMXqZbO0bqby75L5vY04U3y/SCaqv2ynzqIi8MwgaRaPZD3ge7Mcr2iO4Z5UqnR3Z05l9FRtDgGT6DiEI8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cTwAZWq6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jmTTOtPWbkr2br3Gaw/eGbKMtDR3kXQt9xRh/lXk+WJQoMEA4l9Ms/wulhtdqY2JsQWHUfFUut76S6Eis6MCqLtRQq3w3efvFaU3yryF5uvKHYtDW/45M4TXNO3rVc+yK28fbJPazJ5FJSLfJiK7P6YnCNA5cYlKD0b7OWulcGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pnp1sIUp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cTwAZWq6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD82B1F00A3D;
-	Thu, 30 Jul 2026 14:42:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pnp1sIUp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0A5D1F000E9;
+	Thu, 30 Jul 2026 14:42:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422528;
-	bh=w0A2OcyqLSZYgKVdE3Ohgh5DlZaGCbBMYXF1k0dS8cE=;
+	s=korg; t=1785422531;
+	bh=VCratDyy1xP4dkCwpsrVPpWTNiNImVpOoSZxNnNPGuA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cTwAZWq66L7SBjBIYYlJy7wM/X7OdZusoezHDlZH2+tEt/n2RF77MrHHxdDA+maoO
-	 /fjNErN0Sdyfusi75GQaA7PC2DLrzGFrRpl4LNtkz+uf4plOVqCXnBTUKAmj59czXJ
-	 l1S9PRyInRFISyxDr8oUkujryoDy9Zsun97x7eog=
+	b=pnp1sIUpZpwSkilGNVc1plS0/svWkmb3KJqRt1OecdWTvMAByRo7kHsVJgRGR6p+k
+	 ioA/0u8lXqOH3udrHZOrBJNsLdT7/Q+QsB2mQZbSY/RI54JtTGENTrXnRLxMd2OKU/
+	 NSSstXZuFNdXFqXlhHYcE1Lx3BIWtWl6f1AnFfsE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanislav Kinsburskii <skinsburskii@gmail.com>,
-	Matthew Brost <matthew.brost@intel.com>
-Subject: [PATCH 7.1 471/744] drm/gpusvm: Zero HMM PFNs before scanning ranges
-Date: Thu, 30 Jul 2026 16:12:24 +0200
-Message-ID: <20260730141454.307513523@linuxfoundation.org>
+	Matthew Brost <matthew.brost@intel.com>,
+	Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
+Subject: [PATCH 7.1 472/744] drm/gpusvm: Fix MM reference leak in drm_gpusvm_range_evict
+Date: Thu, 30 Jul 2026 16:12:25 +0200
+Message-ID: <20260730141454.328345841@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -50,43 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanislav Kinsburskii <skinsburskii@gmail.com>
+From: Matthew Brost <matthew.brost@intel.com>
 
-commit 67b8bfd4ec7dac6e79a7ad9ad19a7a9d6fc35a26 upstream.
+commit 847b371debf3c8c72384ab7b9a0c4123a74cc925 upstream.
 
-drm_gpusvm_scan_mm() asks HMM to report the current CPU page-table
-state without faulting missing entries by leaving default_flags set to
-zero. The HMM PFN array is still caller-owned input/output state, and
-the framework may preserve input bits while filling entries. It is not
-safe for the caller to hand HMM an uninitialized array and then treat
-entries without HMM_PFN_VALID as an authoritative unpopulated result.
+If kvmalloc_array() fails in drm_gpusvm_range_evict(), the MM
+reference acquired earlier is not released, resulting in a reference
+leak.
 
-Use kvcalloc() for the temporary PFN array so entries that are not
-reported as valid start from the documented zero state. This prevents
-random stack or heap contents from being interpreted as HMM PFN flags or
-PFN values during the scan.
+Fix this by dropping the MM reference on the kvmalloc_array()
+failure path.
 
-Fixes: f1d08a586482 ("drm/gpusvm: Introduce a function to scan the current migration state")
+Fixes: 99624bdff867 ("drm/gpusvm: Add support for GPU Shared Virtual Memory")
 Cc: stable@vger.kernel.org
-Signed-off-by: Stanislav Kinsburskii <skinsburskii@gmail.com>
-Reviewed-by: Matthew Brost <matthew.brost@intel.com>
 Signed-off-by: Matthew Brost <matthew.brost@intel.com>
-Link: https://patch.msgid.link/178406967042.1113483.2116704310277917086.stgit@skinsburskii
+Reviewed-by: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
+Link: https://patch.msgid.link/20260714170025.3487974-1-matthew.brost@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_gpusvm.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/drm_gpusvm.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 --- a/drivers/gpu/drm/drm_gpusvm.c
 +++ b/drivers/gpu/drm/drm_gpusvm.c
-@@ -781,7 +781,7 @@ enum drm_gpusvm_scan_result drm_gpusvm_s
- 	const struct dev_pagemap *other = NULL;
- 	int err, i;
+@@ -1704,8 +1704,10 @@ int drm_gpusvm_range_evict(struct drm_gp
+ 		return -EFAULT;
  
--	pfns = kvmalloc_array(npages, sizeof(*pfns), GFP_KERNEL);
-+	pfns = kvcalloc(npages, sizeof(*pfns), GFP_KERNEL);
- 	if (!pfns)
- 		return DRM_GPUSVM_SCAN_UNPOPULATED;
+ 	pfns = kvmalloc_array(npages, sizeof(*pfns), GFP_KERNEL);
+-	if (!pfns)
++	if (!pfns) {
++		mmput(mm);
+ 		return -ENOMEM;
++	}
  
+ 	hmm_range.hmm_pfns = pfns;
+ 	while (!time_after(jiffies, timeout)) {
 
 
