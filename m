@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88F2040B360;
-	Thu, 30 Jul 2026 14:27:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66FF742FCD8;
+	Thu, 30 Jul 2026 14:27:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421623; cv=none; b=oFRo3mPhnK76XXw+AK8i4eYXCOQJ9wnxg+LLgql7X/J8h+fBdKDQWscfw6KGpLsBlUnzCK2e6pLG2v44iYxfUYAyVXwMuLdMn8Spld3IWCPvcmJa9e7XDpBbNsosto71rWEKWO1GL+nptpyMW0vVK5vwRxT+sG99g8rEg2WdFAE=
+	t=1785421626; cv=none; b=EdSBsB++s1q/i36mpOilEt/uFgl82zQWEksNenyyEXMgPz1KtXPp82usJiXRNBB54anDAwZ7bEN5KYW5g8oDVvRkVX9aic/3gZNg/SSCF6tLsEqw/K6QqTSLJLovYdpU13vjG8gRPMAwpA39JPH9WjkzjJpZP3ug163/NKwk6Zw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421623; c=relaxed/simple;
-	bh=scn4K3OCXbdeL72XIyFmrB+0fAV2V9jAAWlZ5vQhjzM=;
+	s=arc-20240116; t=1785421626; c=relaxed/simple;
+	bh=17UoiWVXGCYfd9Fhp8PX5SGUfXx2cIw24CSd9KvehAQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=trKvRxYmGYFuhD3oDTJE/SrNIT1m+l7ByouHa9tX6UWAhUqIAqq1t15jOTsygGXTiAUzJRZRvt0Bw8sTtDkimEylbcr4L6PDIVg0Mhb4/3pCwoJzUmx7UW/kCqbrnLo7kAv5AjhRKjXBYlHWx3DjIxWbfQGWjslDH9P5DALfKfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iYROQIKz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ebowyjuWxbZNDlp6JRyRCuGjP0WMRaCAdxPtE21zcX/uJoolkZMid3Z7+L0HzOo2MYvnVULNNUP/qnWwnxtu0KvupOg2TTb2oe285bN57LRg/zCqxr8LxKCkMY4bjTCWkjziOKSot5L+PVfXUbIq5n4HYJGv2PA+CaYE2Cef7GE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bbomf5G1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iYROQIKz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ED7A1F000E9;
-	Thu, 30 Jul 2026 14:27:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bbomf5G1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1E741F000E9;
+	Thu, 30 Jul 2026 14:27:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421622;
-	bh=jLPoiQYUuKW9yBgWLucRJUt+Jr34YQ3iKYvg/J6KOQU=;
+	s=korg; t=1785421625;
+	bh=HWSIKdnXt1i+wlxrGQV9JE5Rp/EaUywJNSa7bAzKle8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iYROQIKz8O9mKdlV82v6LdV22YibQRL10q6qZQrXxtUv6GD8vaWvJXhq5i0bDb6z4
-	 3Mi3ey1QmD7kUnWER2UZhmbwBQ/yezU8M4DK/3hNmb7X/bQEIyYQXEbMfSTHgmB/Mm
-	 ApDQFSq0WoXELQdt22LUjbh94YwIEYwszu3nAhEE=
+	b=Bbomf5G1jyuCtQwyx6ceOn5Z64JgXTaFTHFEr4dtWo9KM508Z/nzI/z3tNIop9zQX
+	 JztMBsRkLiyAjdV3aydQIMuvO6choZaWKd2kzRX6lGa4pdRi1/XgzKIEqjO2RcftqF
+	 z3kGW9if0HyXfDNtCKXUkE/ZLX7M4h5HXUhcMJFs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Zhen <max.zhen@amd.com>,
-	Lizhi Hou <lizhi.hou@amd.com>,
+	stable@kernel.org,
+	Xincheng Zhang <zhangxincheng@ultrarisc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 129/744] accel/amdxdna: Fix use-after-free of mm_struct in job scheduler
-Date: Thu, 30 Jul 2026 16:06:42 +0200
-Message-ID: <20260730141447.022671616@linuxfoundation.org>
+Subject: [PATCH 7.1 165/744] usb: xhci-pci: Limit VIA VL805 DMA addressing to 36 bits
+Date: Thu, 30 Jul 2026 16:07:18 +0200
+Message-ID: <20260730141447.800399899@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -51,56 +51,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lizhi Hou <lizhi.hou@amd.com>
+From: Xincheng Zhang <zhangxincheng@ultrarisc.com>
 
-[ Upstream commit faebb7ba1ac65fa5810b640df02ce04e509fdc11 ]
+commit 1fc50f1ecde39feb4fccdaf4bc71aa6c0eb25c49 upstream.
 
-amdxdna_cmd_submit() stores current->mm in job->mm without holding any
-reference. aie2_sched_job_run() later access job->mm from the DRM
-scheduler worker thread. With only a raw pointer and no structural
-reference, the mm_struct can be freed before the scheduler runs the job.
+The VIA VL805/806 xHCI controller advertises AC64, but fails to handle
+DMA addresses at or above 0x1000000000. On systems with large amounts of
+RAM, this can cause USB device failures when the controller is given DMA
+addresses beyond its usable address width.
 
-Fix this by calling mmgrab() to hold a structural mm_count reference for
-the lifetime of the job, paired with mmdrop() in every cleanup path.
+Do not use XHCI_NO_64BIT_SUPPORT for this controller. That quirk clears
+the cached AC64 capability and limits DMA to 32 bits, causing unnecessary
+bouncing for addresses between 4GiB and 64GiB and hiding the controller's
+real AC64 capability from code that may need to distinguish register
+access width from usable DMA address width.
 
-Fixes: aac243092b70 ("accel/amdxdna: Add command execution")
-Reviewed-by: Max Zhen <max.zhen@amd.com>
-Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
-Link: https://patch.msgid.link/20260716151305.1595780-1-lizhi.hou@amd.com
+Track the usable DMA address width separately from the AC64 capability.
+Initialize the generic xhci->dma_mask_bits field to 64 and let PCI quirks
+reduce it for controllers with narrower DMA support. Set VIA VL805/806 to
+36 bits so the DMA API only hands it addresses in the range it can handle
+while keeping HCCPARAMS1.AC64 visible.
+
+Cc: stable@kernel.org
+Signed-off-by: Xincheng Zhang <zhangxincheng@ultrarisc.com>
+Link: https://patch.msgid.link/20260630-xhci-via-dma-fix-v3-1-690dcb8cf75a@ultrarisc.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/amdxdna/amdxdna_ctx.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/usb/host/xhci-pci.c |  1 +
+ drivers/usb/host/xhci.c     | 15 ++++++++++-----
+ drivers/usb/host/xhci.h     |  1 +
+ 3 files changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/accel/amdxdna/amdxdna_ctx.c b/drivers/accel/amdxdna/amdxdna_ctx.c
-index 5315466f137b55..f6fece060dfedf 100644
---- a/drivers/accel/amdxdna/amdxdna_ctx.c
-+++ b/drivers/accel/amdxdna/amdxdna_ctx.c
-@@ -483,6 +483,7 @@ void amdxdna_sched_job_cleanup(struct amdxdna_sched_job *job)
- 	amdxdna_arg_bos_put(job);
- 	amdxdna_gem_put_obj(job->cmd_bo);
- 	dma_fence_put(job->fence);
-+	mmdrop(job->mm);
- }
+diff --git a/drivers/usb/host/xhci-pci.c b/drivers/usb/host/xhci-pci.c
+index 585b2f3117b08a..b0377701a94042 100644
+--- a/drivers/usb/host/xhci-pci.c
++++ b/drivers/usb/host/xhci-pci.c
+@@ -448,6 +448,7 @@ static void xhci_pci_quirks(struct device *dev, struct xhci_hcd *xhci)
+ 	if (pdev->vendor == PCI_VENDOR_ID_VIA && pdev->device == PCI_DEVICE_ID_VIA_VL805) {
+ 		xhci->quirks |= XHCI_LPM_SUPPORT;
+ 		xhci->quirks |= XHCI_TRB_OVERFETCH;
++		xhci->dma_mask_bits = 36;
+ 	}
  
- int amdxdna_cmd_submit(struct amdxdna_client *client,
-@@ -549,6 +550,7 @@ int amdxdna_cmd_submit(struct amdxdna_client *client,
+ 	if (pdev->vendor == PCI_VENDOR_ID_ASMEDIA &&
+diff --git a/drivers/usb/host/xhci.c b/drivers/usb/host/xhci.c
+index 15346fdd66bc43..5b15eae233d3f6 100644
+--- a/drivers/usb/host/xhci.c
++++ b/drivers/usb/host/xhci.c
+@@ -5469,6 +5469,7 @@ int xhci_gen_setup(struct usb_hcd *hcd, xhci_get_quirks_t get_quirks)
+ 	if (xhci->hci_version > 0x100)
+ 		xhci->hcc_params2 = readl(&xhci->cap_regs->hcc_params2);
  
- 	job->hwctx = hwctx;
- 	job->mm = current->mm;
-+	mmgrab(job->mm);
++	xhci->dma_mask_bits = 64;
+ 	xhci->max_slots = HCS_MAX_SLOTS(hcs_params1);
+ 	xhci->max_ports = min(HCS_MAX_PORTS(hcs_params1), MAX_HC_PORTS);
+ 	/* xhci-plat or xhci-pci might have set max_interrupters already */
+@@ -5518,12 +5519,16 @@ int xhci_gen_setup(struct usb_hcd *hcd, xhci_get_quirks_t get_quirks)
+ 	if (xhci->quirks & XHCI_NO_64BIT_SUPPORT)
+ 		xhci->hcc_params &= ~BIT(0);
  
- 	job->fence = amdxdna_fence_create(hwctx);
- 	if (!job->fence) {
-@@ -583,6 +585,8 @@ int amdxdna_cmd_submit(struct amdxdna_client *client,
- cmd_put:
- 	amdxdna_gem_put_obj(job->cmd_bo);
- free_job:
-+	if (job->mm)
-+		mmdrop(job->mm);
- 	kfree(job);
- 	return ret;
- }
+-	/* Set dma_mask and coherent_dma_mask to 64-bits,
+-	 * if xHC supports 64-bit addressing */
++	/*
++	 * Set dma_mask and coherent_dma_mask to 64-bits if xHC supports
++	 * 64-bit addressing, unless a controller-specific quirk callback
++	 * limits the usable address width.
++	 */
+ 	if ((xhci->hcc_params & HCC_64BIT_ADDR) &&
+-			!dma_set_mask(dev, DMA_BIT_MASK(64))) {
+-		xhci_dbg(xhci, "Enabling 64-bit DMA addresses.\n");
+-		dma_set_coherent_mask(dev, DMA_BIT_MASK(64));
++	    !dma_set_mask(dev, DMA_BIT_MASK(xhci->dma_mask_bits))) {
++		xhci_dbg(xhci, "Enabling %u-bit DMA addresses.\n",
++			 xhci->dma_mask_bits);
++		dma_set_coherent_mask(dev, DMA_BIT_MASK(xhci->dma_mask_bits));
+ 	} else {
+ 		/*
+ 		 * This is to avoid error in cases where a 32-bit USB
+diff --git a/drivers/usb/host/xhci.h b/drivers/usb/host/xhci.h
+index aeecd301f20707..d0f14fc2324572 100644
+--- a/drivers/usb/host/xhci.h
++++ b/drivers/usb/host/xhci.h
+@@ -1524,6 +1524,7 @@ struct xhci_hcd {
+ 	/* imod_interval in ns (I * 250ns) */
+ 	u32		imod_interval;
+ 	u32		page_size;
++	unsigned int	dma_mask_bits;
+ 	/* MSI-X/MSI vectors */
+ 	int		nvecs;
+ 	/* optional clocks */
 -- 
 2.53.0
 
