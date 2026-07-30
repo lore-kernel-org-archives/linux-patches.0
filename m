@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C97D2E4257;
-	Thu, 30 Jul 2026 15:34:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FBD736607D;
+	Thu, 30 Jul 2026 15:34:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425673; cv=none; b=CahK5W2ZxkLNKzedIwCSVv8yKFepGsUOVQFOpwDS3peNadPTQjVnlV/6rlE/i6Zywmq9+4/w2b7wTvHjXIdPRG66hk+evo6TfaJUNWvVeZrtXcFxBvT8r13MfcY9S9MgidB3wWa1x3NtfLqEvfhSlEPjccZd1TJ92E63hSkkvHk=
+	t=1785425676; cv=none; b=KScTfiTg7MFH8i8uNBe7/rsLeuQ8QakWXmDyt4a4x4oYjoom0WT47SMd115yzW39vy5z/NUrzQLgfoAEuq5j4ZRHzCSxPlVNcjE7nFyts8/F/zpnvg2480QhJtndffeodFEGQHcIlOmJB01AZIhNUh3+8LaWiXSHpSE5fcKsmpc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425673; c=relaxed/simple;
-	bh=udlaV8n06xHqy7ywH8aGfUJDLiVIbB0vbr86uobTNOU=;
+	s=arc-20240116; t=1785425676; c=relaxed/simple;
+	bh=lvwb0cE1GXJzjLsvN/SV12E2WnyTSlNOG5ZtkrizJeU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NSNDiJsXOGtYmUGEk3aDuG2DRTje6FH6lSTGTqy6C7xiO6jAziqhzEGMEd2B5iTVPJp06wwTiJQU2VDoNLPx1rKqANwGDVq86LoILQO1sqx0q6uDzjHBMB3bSKHM9vxQORYy+Ae2TmElxogTTucMO9aOT3YcOCjdlZ0cD+BSZVk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RiCFBZzE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PA0eQhIJHi6pnUzhVyBU5sDOLfrQfTl3sG6sU5x9SJ6ZaBxex71AM9VDlnokO0rxcJ5ocg2efO9KyEVQKeWy/jPMQS0tbm0+Q5e9su57P1qt1J0v39ezOOjzEh9EJEFEDYOese35PyMehaHKgUtJxtvLIWWqf0IsNmDAygD3ego=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C2HxITUA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RiCFBZzE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98ED51F000E9;
-	Thu, 30 Jul 2026 15:34:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C2HxITUA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D14E1F000E9;
+	Thu, 30 Jul 2026 15:34:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425672;
-	bh=0OV9MAGm5L/yxuEZxRJBvOtNnDnCs9gehCaDhVnS1RE=;
+	s=korg; t=1785425675;
+	bh=oNeK8hssAoEnuHQz4w7mW1H6xruOBG+uFTKRjHAckeQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RiCFBZzE0uJ6ruSE2hs75bQIgGxWISp6OLOMH+NGu/gFemWPSovOEZvZJ/QY2uG/g
-	 TnKv8ijseLqotXnfgtYcMMAlVMFUgRzNvbTjj8kd2G333jxLV02eZBWShw/n3PkBsv
-	 9Vp3yaJ/37/kE0atK53EWlo920ejvtpFo0M7mLG8=
+	b=C2HxITUAkBAmvhSlyU0bOHtcovEx2ysDXuhcFIbHbboqSgZjz7li3QJIk5de2LE72
+	 qfF1gPHvcCpudvXm2Ue/OzXi6YbkE593x3GCvzk1lYMYw2MznfgDLPJmskcN7jokCm
+	 xlurXCvIUArkvWHzwkhcygiV2sn6ublAbKHaIoTQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Filipe Manana <fdmanana@suse.com>,
-	Leo Martins <loemra.dev@gmail.com>,
+	Qu Wenruo <wqu@suse.com>,
+	Guanghui Yang <3497809730@qq.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 152/602] btrfs: dont propagate EXTENT_FLAG_LOGGING to split extent maps
-Date: Thu, 30 Jul 2026 16:09:04 +0200
-Message-ID: <20260730141439.171306298@linuxfoundation.org>
+Subject: [PATCH 6.12 153/602] btrfs: free mapping node on duplicate reloc root insert
+Date: Thu, 30 Jul 2026 16:09:05 +0200
+Message-ID: <20260730141439.191461781@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -53,60 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leo Martins <loemra.dev@gmail.com>
+From: Guanghui Yang <3497809730@qq.com>
 
-[ Upstream commit 5eff4d5b17fa1950e80bfd1ba43dc0699e61a644 ]
+[ Upstream commit 6a8269b6459ed870a8156c106a0f597383907872 ]
 
-When btrfs_drop_extent_map_range() splits an extent map, the new split
-maps inherit the original map's flags through a local 'flags' variable.
-Commit f86f7a75e2fb ("btrfs: use the flags of an extent map to identify
-the compression type") changed the EXTENT_FLAG_LOGGING clearing to
-operate on em->flags instead of that local 'flags' copy, so a split of
-an extent map that is currently being logged wrongly inherits
-EXTENT_FLAG_LOGGING.
+__add_reloc_root() allocates a mapping_node before inserting it into
+rc->reloc_root_tree.  If rb_simple_insert() finds an existing entry, it
+returns the existing rb_node and leaves the newly allocated node unlinked.
 
-The flag is then never cleared on the split, and when it is freed while
-still on the inode's modified_extents list (for example by the extent
-map shrinker) it trips the WARN_ON(!list_empty(&em->list)) in
-btrfs_free_extent_map() and leads to a use-after-free.
+The error path then returns -EEXIST without freeing the new node.  Since
+the node was never inserted into reloc_root_tree, the later cleanup in
+put_reloc_control() cannot find it either.
 
-Clear EXTENT_FLAG_LOGGING from the local 'flags' copy used for the
-splits and only clear EXTENT_FLAG_PINNED from em->flags, restoring the
-behaviour prior to f86f7a75e2fb.
+Free the newly allocated node before returning -EEXIST.
 
-CC: Jeff Layton <jlayton@kernel.org>
-Link: https://lore.kernel.org/all/20260629-btrfs-skip-logging-v1-1-4e3a28c1acaf@kernel.org/
-Fixes: f86f7a75e2fb ("btrfs: use the flags of an extent map to identify the compression type")
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Leo Martins <loemra.dev@gmail.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
+The callers currently assert that -EEXIST should not happen, so this is a
+defensive cleanup for an unexpected duplicate insert path.  If the path is
+ever reached, the local allocation should still be released.
+
+Fixes: 57a304cfd43b ("btrfs: do not panic in __add_reloc_root")
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Guanghui Yang <3497809730@qq.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/extent_map.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/btrfs/relocation.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/btrfs/extent_map.c b/fs/btrfs/extent_map.c
-index 36af9aa9aab13f..044970109c7b58 100644
---- a/fs/btrfs/extent_map.c
-+++ b/fs/btrfs/extent_map.c
-@@ -859,13 +859,13 @@ void btrfs_drop_extent_map_range(struct btrfs_inode *inode, u64 start, u64 end,
- 			goto next;
- 		}
+diff --git a/fs/btrfs/relocation.c b/fs/btrfs/relocation.c
+index d2a1323e8b1034..8130bfd1abbf2b 100644
+--- a/fs/btrfs/relocation.c
++++ b/fs/btrfs/relocation.c
+@@ -580,6 +580,7 @@ static int __add_reloc_root(struct btrfs_root *root)
+ 		btrfs_err(fs_info,
+ 			    "Duplicate root found for start=%llu while inserting into relocation tree",
+ 			    node->bytenr);
++		kfree(node);
+ 		return -EEXIST;
+ 	}
  
--		flags = em->flags;
- 		/*
- 		 * In case we split the extent map, we want to preserve the
- 		 * EXTENT_FLAG_LOGGING flag on our extent map, but we don't want
- 		 * it on the new extent maps.
- 		 */
--		em->flags &= ~(EXTENT_FLAG_PINNED | EXTENT_FLAG_LOGGING);
-+		flags = em->flags & ~EXTENT_FLAG_LOGGING;
-+		em->flags &= ~EXTENT_FLAG_PINNED;
- 		modified = !list_empty(&em->list);
- 
- 		/*
 -- 
 2.53.0
 
