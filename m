@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BEFC440A0A;
-	Thu, 30 Jul 2026 14:36:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B5C543E095;
+	Thu, 30 Jul 2026 14:36:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422197; cv=none; b=Ln/lOoR45zSWE0o5fOLD0SoBod41W0r2dCz+bt/lI3jM6fAtYCUz1io0NnBw+qgLW6D2whtu4g8+PG0L5gBT6MAVP6bAbH6cIvd01KqTBjouizJU3YOjEoWXHlImxHNXzqWNebISGTeYLzgikQhb64k/pfxZ+w154613i7KPH1g=
+	t=1785422200; cv=none; b=L2xqckfKwwACYuqNuMzH0ubPAIC8LNvthVWSBUqcE6JAOhvxhclsYLlnX6ozMs+IlOr92fCLpS0kgBxoYINJahJhSxpHQhYHLSIECS+dfkUAO85VQuAE0xXBXWIBdpdTl7LjLU6B6CZOobT0QvZr9r0WmPnIaeZnDp7klWutRXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422197; c=relaxed/simple;
-	bh=nuZupZP1bPCJ8zJyJDB0d1nclFplVDX6jUvEoL/YKPY=;
+	s=arc-20240116; t=1785422200; c=relaxed/simple;
+	bh=YTxHgmhK2+wbIf1xC4zUnUNGHWOlgAb6SYqQerq2lww=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iWMtyvmjjijvxJP5Le48yAPs9ZNxJxHuf9DOeHjhegVgwozgkL4vWixaJGtfPNh6aaJZLSeHphrpFvriR7oPD3mFYF81OTMvZrXoIiZ41qkVWrQJhp7fLD3w2cWjOX1fKx0ANLSPiwU1qZLS9RLjKi9l9ER2SFaBW4cmKYBbv4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v52/kQHJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cQQlgR+Y7uj0TDCCFd9GtMEFrF8NZtHMiBcc7bTt1Pftxugdk/NYB8vWCJZxoObI0JdGeJxQKxwg8fsNk6tL28+qb6HDhqYnTvVhmOeT48QgY2l/PkZFlocxqqTeqa9A6hCM1lWVYXCqsvtL165kz7gAgLu8eSN9pMgno+RrslE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vU8DhE47; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v52/kQHJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAE171F000E9;
-	Thu, 30 Jul 2026 14:36:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vU8DhE47"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D64FF1F000E9;
+	Thu, 30 Jul 2026 14:36:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422196;
-	bh=M5HqrvrPubffvWx8tXFLz8KB59OWJ0edKIInURhXCIw=;
+	s=korg; t=1785422199;
+	bh=IenCo4MPLY5FCGTeOR5Oo5pR0jiIKSNRb5TycNK51k0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v52/kQHJDajGgD0eljATvn8bAFR5C8Kb5WQ8xmICx4luwUC3Ygz9fyDBkGgV40XDh
-	 vi9Xg9lcQCukyFZ0fFrA8XEKONM+ZzDXNhc75ZebHXHPp6pc7kEAtDk548eEd5FChb
-	 Uxus96NYLZPBlgL4ktWNMw7uRrjzq0P/luzwLRXw=
+	b=vU8DhE47/3mXdE1/kSydmBYFMVzKGdhmz9Vp/Ge/q1zOlmjdVua/ep3zeJo7VaoG4
+	 A/rt6HdItRlO1hbhYIiCx6Rol25f03VoRuY+TrEGnqDypphGfxprSZ4cLN18XAX8eZ
+	 hfIxQ1837/QPnxqh/nhAGK40DFbKuBQD0/+1oBJs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Mateusz Guzik <mjguzik@gmail.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Pu Lehui <pulehui@huawei.com>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 355/744] pidfs: make pidfs_ino_lock static
-Date: Thu, 30 Jul 2026 16:10:28 +0200
-Message-ID: <20260730141451.830028829@linuxfoundation.org>
+Subject: [PATCH 7.1 356/744] LoongArch: BPF: Fix memory leak in bpf_jit_free()
+Date: Thu, 30 Jul 2026 16:10:29 +0200
+Message-ID: <20260730141451.851791242@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -52,35 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mateusz Guzik <mjguzik@gmail.com>
+From: Pu Lehui <pulehui@huawei.com>
 
-[ Upstream commit c1d04c1bce98f9dd984a9c6657278a7761854c9c ]
+[ Upstream commit 47e20d4b3da97ef3881d1e55e43545c22424f3fc ]
 
-Fixes: 87caaeef7995 ("pidfs: implement ino allocation without the pidmap lock")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202607231547.ehCQxi0L-lkp@intel.com/
+When bpf_int_jit_compile() is called for subprograms, it returns early
+during the first pass (!prog->is_func || extra_pass is false), keeping
+ctx->offset alive for the subsequent extra pass.
 
-Signed-off-by: Mateusz Guzik <mjguzik@gmail.com>
-Link: https://patch.msgid.link/20260723160114.291515-1-mjguzik@gmail.com
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+If JIT compilation fails for a later subprogram, the BPF core aborts and
+calls bpf_jit_free() to clean up the first subprogram. However,
+bpf_jit_free() fails to free jit_data->ctx.offset, which causes a memory
+leak of the JIT context offsets array.
+
+So fix this by adding the missing kvfree(jit_data->ctx.offset) in
+bpf_jit_free().
+
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: 4ab17e762b34 ("LoongArch: BPF: Use BPF prog pack allocator")
+Acked-by: Tiezhu Yang <yangtiezhu@loongson.cn>
+Signed-off-by: Pu Lehui <pulehui@huawei.com>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/pidfs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/loongarch/net/bpf_jit.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/pidfs.c b/fs/pidfs.c
-index 143d0aec16af10..33874c891d285e 100644
---- a/fs/pidfs.c
-+++ b/fs/pidfs.c
-@@ -107,7 +107,7 @@ struct pidfs_attr {
- 
- #if BITS_PER_LONG == 32
- 
--DEFINE_SPINLOCK(pidfs_ino_lock);
-+static DEFINE_SPINLOCK(pidfs_ino_lock);
- static u64 pidfs_ino_nr = 1;
- 
- static inline unsigned long pidfs_ino(u64 ino)
+diff --git a/arch/loongarch/net/bpf_jit.c b/arch/loongarch/net/bpf_jit.c
+index 22c03c02dae6ed..4933869b2c11fb 100644
+--- a/arch/loongarch/net/bpf_jit.c
++++ b/arch/loongarch/net/bpf_jit.c
+@@ -2347,6 +2347,7 @@ void bpf_jit_free(struct bpf_prog *prog)
+ 		 */
+ 		if (jit_data) {
+ 			bpf_jit_binary_pack_finalize(jit_data->ro_header, jit_data->header);
++			kvfree(jit_data->ctx.offset);
+ 			kfree(jit_data);
+ 		}
+ 		hdr = bpf_jit_binary_pack_hdr(prog);
 -- 
 2.53.0
 
