@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B22C143C7DA;
-	Thu, 30 Jul 2026 14:33:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD25143F8AD;
+	Thu, 30 Jul 2026 14:33:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421987; cv=none; b=WzMHKQxkzjklAbFtU5soqmmrP/BA35Dgqt3zIG8NI1kL6RNSQrnmYY4N10bHM57B3WHDHJ+3Mng9SVIBrNsrJMxsz61sQMlTC63qH72jDaL3YtIjC6X8SHh1NsU50n59iZOaEbd0LJFamzpXd3pz1bGET1Da8YAoWIsEPcFVW4Q=
+	t=1785421990; cv=none; b=ExMYaRJIgbAPol2L3YW6pqi1th8uWG+UbwQVLBl9i6lRZmECUqp3YsmtrAdV8hauNUStXOQnZl6n2r1rdM0bkPgUHMIX04TLw239Rf/GzaSUhRXvUrH4thHG1Ik9bX6eqlJRVElMnQSNPtzB2fJSv/RW++BXIeGYRnh/Ca7kVKA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421987; c=relaxed/simple;
-	bh=oW57Tw9xgkFrWr+wJDbIkOFovqsgn90jNj7y/DhHvTs=;
+	s=arc-20240116; t=1785421990; c=relaxed/simple;
+	bh=nOgkhZQNvXcxjTq75aizYu+xfNGZj3dB59RWjEV/8GM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MxnyyzYT3KrHdyd8fTBDbRD5fCI1/FNbKbp8eRpn3BrssQcSsPAeBYjJGddTy6DdZjGtkSI9EGNzqEZ5EQYZuyF1NqnEVGsNCBleB8e4xanz8/F9ExymiVjPg+uv0CZCxxWzX+mVhSt+oHAZFjDnfxtLJ6yLCBY+fqTTv30Vy9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sSjwftOu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PxHs+TLxMbjNFhdJJ95IHcKJCfCXkMCCAvZTYN/DQ6cUuvRpvxEvNnvg+Z1VTZVEjVBxTWekhxG3HAsFtpoEwrRldRAVNGLKvCrs8VdheRu5IjsVMOYVMD5FNs1MSnlZGDaE/xFtt8fRk+0j/6s03v01kQe14fGFSHFk8z1nq9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xa5KCbD3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sSjwftOu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 985A51F000E9;
-	Thu, 30 Jul 2026 14:33:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xa5KCbD3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91F5F1F00A3A;
+	Thu, 30 Jul 2026 14:33:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421985;
-	bh=jAvKAwuQwx6CV/FTOmRzJVz6m2PmMfXUvf/Ptll1zbo=;
+	s=korg; t=1785421988;
+	bh=Jdz2jw8ZJ7m1qkZEgf9ApIWoGsEPLfvb6tRW6zOwH4U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sSjwftOuB4eclBykCEvCT+SCGesGZ1yLiSZ9mRCvI0BFfZGE2m04KLM9MMPMBDpKf
-	 VGte0ZN/RtVRF6tzpLd514cDICiDDGAtWzl5IT6UyKCZQS5xdqZ+i61FSmePcddv5X
-	 CW5MsCGtOSxyRjbg5UJ/Pj2NBHnaiYu9vWPcxZ9k=
+	b=Xa5KCbD34wRBY7il91auYePfdITl+EtiIoIVt6qOXo1ImG1KbwyUK1MbPTXJSkPgN
+	 j5x1LyPcEc/nd+ztfRjt0p2LMdPzh6WV4HnqCfXYaXmzZkbunzM7lRsBngaNcg4bWk
+	 NNEfIHWs56SLo64ObYCkpYzRW1E+WaKEB7nOwfx0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	"Nikhil P. Rao" <nikhil.rao@amd.com>,
-	Eric Joyner <eric.joyner@amd.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Frank Sorenson <sorenson@redhat.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 269/744] pds_core: order completion reads after the ownership check
-Date: Thu, 30 Jul 2026 16:09:02 +0200
-Message-ID: <20260730141450.010371019@linuxfoundation.org>
+Subject: [PATCH 7.1 287/744] cifs: fix cifsFileInfo leak on kmalloc failure in deferred close drain paths
+Date: Thu, 30 Jul 2026 16:09:20 +0200
+Message-ID: <20260730141450.390000654@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -53,59 +51,145 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikhil P. Rao <nikhil.rao@amd.com>
+From: Frank Sorenson <sorenson@redhat.com>
 
-[ Upstream commit dd6b1cc748cd28147c113f9daa76393916ad9494 ]
+[ Upstream commit c2f2e83e3bbc5483730fd4ee903182761f1ae50f ]
 
-pdsc_process_adminq() and pdsc_process_notifyq() decide a completion is
-valid from its ownership field - the color bit for the adminq, the event
-id for the notifyq - then read the rest of the descriptor, with no
-barrier in between.
+In cifs_close_deferred_file(), cifs_close_all_deferred_files(), and
+cifs_close_deferred_file_under_dentry(), when a pending deferred close
+is cancelled via cancel_delayed_work(), the subsequent kmalloc_obj() to
+add the file to the local processing list may fail under memory pressure.
+The loop breaks immediately, but the cancelled work is no longer pending
+(it would have called _cifsFileInfo_put()), and the cfile is never added
+to file_head for processing.  The cifsFileInfo reference and the open
+server handle both leak.
 
-On a weakly ordered architecture the CPU may read the payload first. Add
-dma_rmb() between the ownership read and the payload reads.
+Fix by saving the cfile that failed allocation in a local variable,
+breaking as before, and calling _cifsFileInfo_put() on it after
+releasing the lock.  Any files later in the iteration are unaffected
+since their deferred work is still pending and will fire normally.
 
-Fixes: 7e82a8745b95 ("pds_core: Prevent race issues involving the adminq")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260629200358.2626129-1-nikhil.rao%40amd.com?part=2
-Signed-off-by: Nikhil P. Rao <nikhil.rao@amd.com>
-Reviewed-by: Eric Joyner <eric.joyner@amd.com>
-Link: https://patch.msgid.link/20260714204145.1782390-1-nikhil.rao@amd.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: e3fc065682eb ("cifs: Deferred close performance improvements")
+Signed-off-by: Frank Sorenson <sorenson@redhat.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/pds_core/adminq.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ fs/smb/client/misc.c | 45 ++++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 39 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/amd/pds_core/adminq.c b/drivers/net/ethernet/amd/pds_core/adminq.c
-index 097bb092bdb8cd..eadb4b604fbe3c 100644
---- a/drivers/net/ethernet/amd/pds_core/adminq.c
-+++ b/drivers/net/ethernet/amd/pds_core/adminq.c
-@@ -18,7 +18,13 @@ static int pdsc_process_notifyq(struct pdsc_qcq *qcq)
- 	comp = cq_info->comp;
- 	eid = le64_to_cpu(comp->event.eid);
- 	while (eid > pdsc->last_eid) {
--		u16 ecode = le16_to_cpu(comp->event.ecode);
-+		u16 ecode;
-+
-+		/* Order the payload read after the event id, the field the
-+		 * driver uses to detect a new completion.
-+		 */
-+		dma_rmb();
-+		ecode = le16_to_cpu(comp->event.ecode);
+diff --git a/fs/smb/client/misc.c b/fs/smb/client/misc.c
+index 8afa746ee19e0d..ce9927b666af7a 100644
+--- a/fs/smb/client/misc.c
++++ b/fs/smb/client/misc.c
+@@ -493,7 +493,7 @@ cifs_del_deferred_close(struct cifsFileInfo *cfile)
+ void
+ cifs_close_deferred_file(struct cifsInodeInfo *cifs_inode)
+ {
+-	struct cifsFileInfo *cfile = NULL;
++	struct cifsFileInfo *cfile = NULL, *failed_cfile = NULL;
+ 	struct file_list *tmp_list, *tmp_next_list;
+ 	LIST_HEAD(file_head);
  
- 		switch (ecode) {
- 		case PDS_EVENT_LINK_CHANGE:
-@@ -101,6 +107,10 @@ void pdsc_process_adminq(struct pdsc_qcq *qcq)
- 	spin_lock_irqsave(&pdsc->adminq_lock, irqflags);
- 	comp = cq->info[cq->tail_idx].comp;
- 	while (pdsc_color_match(comp->color, cq->done_color)) {
-+		/* Order the payload reads after the color bit, the field the
-+		 * driver uses to detect a new completion.
-+		 */
-+		dma_rmb();
- 		q_info = &q->info[q->tail_idx];
- 		q->tail_idx = (q->tail_idx + 1) & (q->num_descs - 1);
+@@ -510,8 +510,10 @@ cifs_close_deferred_file(struct cifsInodeInfo *cifs_inode)
+ 
+ 				tmp_list = kmalloc_obj(struct file_list,
+ 						       GFP_ATOMIC);
+-				if (tmp_list == NULL)
++				if (tmp_list == NULL) {
++					failed_cfile = cfile;
+ 					break;
++				}
+ 				tmp_list->cfile = cfile;
+ 				list_add_tail(&tmp_list->list, &file_head);
+ 			}
+@@ -519,6 +521,15 @@ cifs_close_deferred_file(struct cifsInodeInfo *cifs_inode)
+ 	}
+ 	spin_unlock(&cifs_inode->open_file_lock);
+ 
++	if (failed_cfile) {
++		if (OPEN_FMODE(failed_cfile->f_flags) & FMODE_WRITE) {
++			/* Pairs with smp_load_acquire() in is_size_safe_to_change(). */
++			smp_store_release(&CIFS_I(d_inode(failed_cfile->dentry))->time_last_write,
++					  jiffies);
++		}
++		_cifsFileInfo_put(failed_cfile, false, false);
++	}
++
+ 	list_for_each_entry_safe(tmp_list, tmp_next_list, &file_head, list) {
+ 		struct cifsFileInfo *cfile = tmp_list->cfile;
+ 
+@@ -536,7 +547,7 @@ cifs_close_deferred_file(struct cifsInodeInfo *cifs_inode)
+ void
+ cifs_close_all_deferred_files(struct cifs_tcon *tcon)
+ {
+-	struct cifsFileInfo *cfile;
++	struct cifsFileInfo *cfile, *failed_cfile = NULL;
+ 	struct file_list *tmp_list, *tmp_next_list;
+ 	LIST_HEAD(file_head);
+ 
+@@ -550,8 +561,10 @@ cifs_close_all_deferred_files(struct cifs_tcon *tcon)
+ 
+ 				tmp_list = kmalloc_obj(struct file_list,
+ 						       GFP_ATOMIC);
+-				if (tmp_list == NULL)
++				if (tmp_list == NULL) {
++					failed_cfile = cfile;
+ 					break;
++				}
+ 				tmp_list->cfile = cfile;
+ 				list_add_tail(&tmp_list->list, &file_head);
+ 			}
+@@ -559,6 +572,15 @@ cifs_close_all_deferred_files(struct cifs_tcon *tcon)
+ 	}
+ 	spin_unlock(&tcon->open_file_lock);
+ 
++	if (failed_cfile) {
++		if (OPEN_FMODE(failed_cfile->f_flags) & FMODE_WRITE) {
++			/* Pairs with smp_load_acquire() in is_size_safe_to_change(). */
++			smp_store_release(&CIFS_I(d_inode(failed_cfile->dentry))->time_last_write,
++					  jiffies);
++		}
++		_cifsFileInfo_put(failed_cfile, true, false);
++	}
++
+ 	list_for_each_entry_safe(tmp_list, tmp_next_list, &file_head, list) {
+ 		struct cifsFileInfo *cfile = tmp_list->cfile;
+ 
+@@ -614,7 +636,7 @@ void cifs_close_deferred_file_under_dentry(struct cifs_tcon *tcon,
+ 					   struct dentry *dentry)
+ {
+ 	struct file_list *tmp_list, *tmp_next_list;
+-	struct cifsFileInfo *cfile;
++	struct cifsFileInfo *cfile, *failed_cfile = NULL;
+ 	LIST_HEAD(file_head);
+ 
+ 	spin_lock(&tcon->open_file_lock);
+@@ -627,14 +649,25 @@ void cifs_close_deferred_file_under_dentry(struct cifs_tcon *tcon,
+ 			spin_unlock(&CIFS_I(d_inode(cfile->dentry))->deferred_lock);
+ 
+ 			tmp_list = kmalloc_obj(struct file_list, GFP_ATOMIC);
+-			if (tmp_list == NULL)
++			if (tmp_list == NULL) {
++				failed_cfile = cfile;
+ 				break;
++			}
+ 			tmp_list->cfile = cfile;
+ 			list_add_tail(&tmp_list->list, &file_head);
+ 		}
+ 	}
+ 	spin_unlock(&tcon->open_file_lock);
+ 
++	if (failed_cfile) {
++		if (OPEN_FMODE(failed_cfile->f_flags) & FMODE_WRITE) {
++			/* Pairs with smp_load_acquire() in is_size_safe_to_change(). */
++			smp_store_release(&CIFS_I(d_inode(failed_cfile->dentry))->time_last_write,
++					  jiffies);
++		}
++		_cifsFileInfo_put(failed_cfile, true, false);
++	}
++
+ 	list_for_each_entry_safe(tmp_list, tmp_next_list, &file_head, list) {
+ 		struct cifsFileInfo *cfile = tmp_list->cfile;
  
 -- 
 2.53.0
