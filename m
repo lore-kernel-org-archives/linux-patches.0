@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96AFF446070;
-	Thu, 30 Jul 2026 16:06:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61EC0446070;
+	Thu, 30 Jul 2026 16:06:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427574; cv=none; b=CiJJitPhFTuplxFytHPL1W5I+gJNEIdS9psbHKbD2cvDj4Sku9E455ODA+R/xyMVx2VlwuUwaS9euIZUKaO4AiK/5FTMXGkjUDf5N/RejiKnSADbqdKtTOSzmH61Ttrs8JSehsZbgziOPczWlSKPL0ekyyPp6GBKcY+12z/+Swc=
+	t=1785427577; cv=none; b=Lk0nBeL8W4KP/FkrutVXM1g08ZfPqK2dLzgY5P6xlAX5qzga1e83sROCniuPaoo/OJ6jm26I1XMJjLzAWgKn1GDMVnQx6m204hDlM1AVWA04I/gT6mS4C1Tg/LukPNIFTFWbAP/CJsq1NPWSBUQK7DHgiz4CgQM8+JvZERNi0Pc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427574; c=relaxed/simple;
-	bh=38QzAYpjXaDk6kL1md19yEpundEhq9D2NAp6vL9E0uk=;
+	s=arc-20240116; t=1785427577; c=relaxed/simple;
+	bh=YgVlJ7faYg1NVujdDfE9QluuOyOyQJNyFkNDgo932z8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ytl2TPqmGOh36ejTBP+LfT6pg+TnnfYPiWIdvvmwJXjdgCZ4NDuxKvYToZt1751Hl2ce/pDb/Vz17OPhSstGz32RLXSMVYSfe/7LGTQSUIhSTuErVZYtEtnenCRgSZxO+efpt4+PiaX3sJeSiOogO4zdsBXu/ETfS3ypRpscPzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WNaJCTuk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=esfPEaGwpCO94mrul/UlvLbh54FK4ynzaHmy5OrKzL7MUktcfKcZT0UmZLgAC/HzA9mj5NAny62GC2qxnI+k/+qd9HeGSgE3YAe5gHCv4bJcjib3YoEbOONJrqM04nFQ+Wlv+8Zu5lBJitbh5kCGcO618Tz+v9W6B2vk/2KFy5U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TUGohFIG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WNaJCTuk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F38F61F000E9;
-	Thu, 30 Jul 2026 16:06:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TUGohFIG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4B901F000E9;
+	Thu, 30 Jul 2026 16:06:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427573;
-	bh=HkNwbFubCDRMj7/mQqj8/2Kf4sR1F1HV8+TrQ5frMxE=;
+	s=korg; t=1785427576;
+	bh=WJS66/EvLsymgCN1WWSPLBc3mLZe/OLsRRN7cF8Ieag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WNaJCTukK7A9hw+zPCwGsDtyYmIvelPGZeF3pXe9xA1xmehE55q9xWKyBopllng8X
-	 Q6nFEbOePUBZpEFcHbCk9l00kh3SVhicLWqvQZ/w4d/ffsPxBLs/aP1bHe+C1ru4YJ
-	 nGLonO8YAJsgOferOOe92MJB66TzN77R4DF3TfcM=
+	b=TUGohFIGZdTwV4vN5nmHbJUtTeQAEyUs22YE915VDXpCHvjzibjHiXjStUQ7Y/LQ+
+	 TCZq9fUI0/Jh31uWHGVHs7G6Aez/RS0HkqO7D4oRDt9Hlob0emRpy5Vjma3Wnkcixm
+	 8gn+a9wYFR6obXFamyVf+EuSS2pXrwO/hx30XPz4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	=?UTF-8?q?Pavel=20Ondra=C4=8Dka?= <pavel.ondracka@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 217/484] drm/radeon: fix r100_copy_blit for large BOs
-Date: Thu, 30 Jul 2026 16:11:54 +0200
-Message-ID: <20260730141428.187645017@linuxfoundation.org>
+	syzbot+456957213f32970c0762@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Felix Maurer <fmaurer@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 182/484] net: hsr: fix memory leak on slave unregistration by removing synced VLANs
+Date: Thu, 30 Jul 2026 16:11:19 +0200
+Message-ID: <20260730141427.421273179@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -45,86 +48,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pavel Ondračka <pavel.ondracka@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit f896e86273dbbebb5eac966b4a201b5c62a02e9a upstream.
+[ Upstream commit dcf15eaf5641812f1cfc5e96537380132a7da89d ]
 
-r100_copy_blit() copies BOs as 1024-pixel-wide ARGB8888 blits, so one
-GPU page becomes one blit row. Large copies are split into chunks of at
-most 8191 rows.
+When an HSR master device is brought UP, it auto-adds VLAN 0 via
+vlan_vid0_add(), which propagates VID 0 to its slave devices (slave A and B).
 
-The kernel register header names the packet coordinate dwords SRC_Y_X
-and DST_Y_X. In the BITBLT_MULTI description in
-R5xx_Acceleration_v1.5.pdf docs, these correspond to [SRC_X1 | SRC_Y1]
-and [DST_X1 | DST_Y1], which are signed 13-bit coordinates in the
--8192..8191 range. The old code kept SRC/DST_PITCH_OFFSET at the BO base
-and used SRC_Y_X/DST_Y_X as the chunk address, so large BO moves could
-exceed that coordinate range.
+If a slave device is later unregistered while HSR is active (e.g., during
+netns cleanup or interface destruction), hsr_del_port() is called to
+detach the slave port from the HSR master. However, hsr_del_port() currently
+does not delete the VLAN IDs that were synced to the slave device by HSR.
 
-Compute per-chunk SRC/DST_PITCH_OFFSET bases and emit zero source and
-destination coordinates. r100_copy_blit() already packs
-SRC/DST_PITCH_OFFSET as pitch plus base offset, so large chunk addresses
-belong there rather than in the coordinate fields.
+As a result, the slave device retains a refcount on VID 0 (and any other
+synced VLANs). When the slave device is destroyed, its vlan_info /
+vlan_vid_info structure remains allocated, leading to a memory leak.
 
-This fixes Prison Architect corruption with 4096x4096 mipped textures
-after they are evicted to GTT under memory pressure on RV530.
+Fix this by calling vlan_vids_del_by_dev(port->dev, master->dev) in
+hsr_del_port() before unlinking slave A or slave B ports, matching the
+propagation logic in hsr_ndo_vlan_rx_add_vid() / hsr_ndo_vlan_rx_kill_vid()
+and the cleanup behavior in bonding and team drivers.
 
-Closes: https://gitlab.freedesktop.org/mesa/mesa/-/work_items/6716
-Acked-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Pavel Ondračka <pavel.ondracka@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 87be26aee76239c6da03e599f238a426897f78ad)
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 1a8a63a5305e ("net: hsr: Add VLAN CTAG filter support")
+Reported-by: syzbot+456957213f32970c0762@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6a4cb6ca.57639fcc.86d58.000b.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Reviewed-by: Felix Maurer <fmaurer@redhat.com>
+Link: https://patch.msgid.link/20260721101240.995597-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/radeon/r100.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ net/hsr/hsr_slave.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/gpu/drm/radeon/r100.c
-+++ b/drivers/gpu/drm/radeon/r100.c
-@@ -905,6 +905,7 @@ struct radeon_fence *r100_copy_blit(stru
- {
- 	struct radeon_ring *ring = &rdev->ring[RADEON_RING_TYPE_GFX_INDEX];
- 	struct radeon_fence *fence;
-+	uint64_t cur_src_offset, cur_dst_offset;
- 	uint32_t cur_pages;
- 	uint32_t stride_bytes = RADEON_GPU_PAGE_SIZE;
- 	uint32_t pitch;
-@@ -933,6 +934,10 @@ struct radeon_fence *r100_copy_blit(stru
- 			cur_pages = 8191;
- 		}
- 		num_gpu_pages -= cur_pages;
-+		cur_src_offset = src_offset +
-+			(uint64_t)num_gpu_pages * RADEON_GPU_PAGE_SIZE;
-+		cur_dst_offset = dst_offset +
-+			(uint64_t)num_gpu_pages * RADEON_GPU_PAGE_SIZE;
- 
- 		/* pages are in Y direction - height
- 		   page width in X direction - width */
-@@ -949,13 +954,13 @@ struct radeon_fence *r100_copy_blit(stru
- 				  RADEON_DP_SRC_SOURCE_MEMORY |
- 				  RADEON_GMC_CLR_CMP_CNTL_DIS |
- 				  RADEON_GMC_WR_MSK_DIS);
--		radeon_ring_write(ring, (pitch << 22) | (src_offset >> 10));
--		radeon_ring_write(ring, (pitch << 22) | (dst_offset >> 10));
-+		radeon_ring_write(ring, (pitch << 22) | (cur_src_offset >> 10));
-+		radeon_ring_write(ring, (pitch << 22) | (cur_dst_offset >> 10));
- 		radeon_ring_write(ring, (0x1fff) | (0x1fff << 16));
- 		radeon_ring_write(ring, 0);
- 		radeon_ring_write(ring, (0x1fff) | (0x1fff << 16));
--		radeon_ring_write(ring, num_gpu_pages);
--		radeon_ring_write(ring, num_gpu_pages);
-+		radeon_ring_write(ring, 0);
-+		radeon_ring_write(ring, 0);
- 		radeon_ring_write(ring, cur_pages | (stride_pixels << 16));
+diff --git a/net/hsr/hsr_slave.c b/net/hsr/hsr_slave.c
+index b8230faa567f77..58e757dc555461 100644
+--- a/net/hsr/hsr_slave.c
++++ b/net/hsr/hsr_slave.c
+@@ -228,6 +228,8 @@ void hsr_del_port(struct hsr_port *port)
+ 		netdev_rx_handler_unregister(port->dev);
+ 		if (!port->hsr->fwd_offloaded)
+ 			dev_set_promiscuity(port->dev, -1);
++		if (port->type == HSR_PT_SLAVE_A || port->type == HSR_PT_SLAVE_B)
++			vlan_vids_del_by_dev(port->dev, master->dev);
+ 		netdev_upper_dev_unlink(port->dev, master->dev);
  	}
- 	radeon_ring_write(ring, PACKET0(RADEON_DSTCACHE_CTLSTAT, 0));
+ 
+-- 
+2.53.0
+
 
 
