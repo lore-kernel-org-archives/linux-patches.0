@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57F46441638;
-	Thu, 30 Jul 2026 15:24:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C1164499B8;
+	Thu, 30 Jul 2026 15:24:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425067; cv=none; b=kaxst9b8Fob9sPN2dTiicf/Vim29UFpB6tkGDX5hl3LVQRNVAppV0azK8F3usV0mRvOlqLqRMWYQjJajL5SZwGGMhhJUY86YezUDXGMps2okWisT7675Cm22mJQRwZIeNRrJvF6/7AQrzObwiyi2YwQdshcEm/SASbIpEoBFMXo=
+	t=1785425070; cv=none; b=uBeoaGxnTkcAGrBo1c88B3MmEc8IEkQDsw+T7kMl2tRcPQqRLfSx4JHHDC+82i6YedsCZBvufeMA1no2WSvgF1W/RT2R54NM8Ja9u00qYUYh46S6Tv4vUbeFInVuU3OBrMdpKrmRWDJB2bXDyt1hZcAdVk7y0FO5BmavqJH7pzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425067; c=relaxed/simple;
-	bh=9G5lmVQBEWwJewDc0yi0zS4JXgbdvE1YrxgaY8RS82U=;
+	s=arc-20240116; t=1785425070; c=relaxed/simple;
+	bh=2aYJ1hmwv74OwQeHzaViaM/rPtOg7ObE2y4zlTJHyDQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XzL1sw7FfvoUaEpw4vrv8XzZB2A55MqCP2WFAJsohqy8+7yufXY6agFVFOyKzM3vNDsbYws8oZ7JLMcLyq7YStjT9mTYvmRrUxBb1O2Fk4cmGTYfoQgFQAGOHKUdgpJDPLwXh670RCuuMQxNoFW+TW5FzBMXCnyNmPEOTxKH9ms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IZiXjCxk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JlW6yYddB0bgnP/q1whE+diiO4vlxadGXakpfvQRBxfRaBWqqjBj6/ufo0dFVXBfV1iW5NShgDtypeiN//CpwyZEZ1ucTal9T1Ry05A1G7UBMnCi28OkzJb9/WSpCiWIwXlUHY6nmuPH62EcjaBGgb6VjeOS7z1//k/SKt4stsk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mssVLfNG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IZiXjCxk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C40D1F000E9;
-	Thu, 30 Jul 2026 15:24:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mssVLfNG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FF9D1F000E9;
+	Thu, 30 Jul 2026 15:24:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425066;
-	bh=yh8UU+1BnOj3kaRPB3fz7Rwuaz616eXhveZOQLeuHL4=;
+	s=korg; t=1785425069;
+	bh=6M24H4Sh4MBmNfpZ2PYHp6abwdbbDBxaQAfI+Wmh89w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IZiXjCxkv6YHANH3W55nkLwLB4RzgljMw9JlU5mJ7C6tR23X1PJs9zg/aoYazU20q
-	 detknrX/t9XjCptwoZC3HyLcJnuB589V3jo+vr65pMK8+i1K0XIp8pJeUxMZDsfghO
-	 osEH2s/KdYw1mf2RxrlFu5/2KVyCNeS3D4vDNJt8=
+	b=mssVLfNGKOmpt3ZM0pl4rfZTWFMWpRnGAzJ4NkJQREsglf64QrJ5mH9w5Y7WYZS9s
+	 lexlo0ZjoTdcVjCZBjidqJEJJN+28nOFga8FjHtT85VfH5tOPx+eGXAbRs2VVVJnLJ
+	 oR6GScKCMn6nuevH8aDknXmoG/S8NSlOBlrbNtX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Wang <jasowang@redhat.com>,
-	Xie Yongji <xieyongji@bytedance.com>,
-	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 615/675] VDUSE: avoid leaking information to userspace
-Date: Thu, 30 Jul 2026 16:15:45 +0200
-Message-ID: <20260730141458.187905492@linuxfoundation.org>
+Subject: [PATCH 6.18 598/675] net: qrtr: ns: Raise node count limit to 512
+Date: Thu, 30 Jul 2026 16:15:28 +0200
+Message-ID: <20260730141457.828226302@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -47,57 +45,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jason Wang <jasowang@redhat.com>
+From: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>
 
-[ Upstream commit 9c1523803445ee0348f62b77793266dd981596e0 ]
+commit ff194cffd586cbd4cc49eccb002c65f2a902a277 upstream.
 
-The bounceing is not necessarily page aligned, so current VDUSE can
-leak kernel information through mapping bounce pages to
-userspace. Allocate bounce pages with __GFP_ZERO to avoid leaking
-information to userspace.
+The current node limit of 64 breaks the functionality for a number of AI200
+deployments that have up to 384 nodes. Raise the limit to 512.
 
-Fixes: 8c773d53fb7b ("vduse: Implement an MMU-based software IOTLB")
+Fixes: 27d5e84e810b ("net: qrtr: ns: Limit the total number of nodes")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jason Wang <jasowang@redhat.com>
-Reviewed-by: Xie Yongji <xieyongji@bytedance.com>
-Reviewed-by: Eugenio Pérez <eperezma@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260130050750.4050-1-jasowang@redhat.com>
+Signed-off-by: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260713145901.212396-1-youssef.abdulrahman@oss.qualcomm.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vdpa/vdpa_user/iova_domain.c |    2 +-
- drivers/vdpa/vdpa_user/vduse_dev.c   |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ net/qrtr/ns.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/vdpa/vdpa_user/iova_domain.c
-+++ b/drivers/vdpa/vdpa_user/iova_domain.c
-@@ -124,7 +124,7 @@ static int vduse_domain_map_bounce_page(
- 		if (!map->bounce_page) {
- 			head_map = &domain->bounce_maps[(iova & PAGE_MASK) >> BOUNCE_MAP_SHIFT];
- 			if (!head_map->bounce_page) {
--				tmp_page = alloc_page(GFP_ATOMIC);
-+				tmp_page = alloc_page(GFP_ATOMIC | __GFP_ZERO);
- 				if (!tmp_page)
- 					return -ENOMEM;
- 				if (cmpxchg(&head_map->bounce_page, NULL, tmp_page))
---- a/drivers/vdpa/vdpa_user/vduse_dev.c
-+++ b/drivers/vdpa/vdpa_user/vduse_dev.c
-@@ -930,7 +930,7 @@ static void *vduse_dev_alloc_coherent(un
- 	if (!token.group)
- 		return NULL;
+diff --git a/net/qrtr/ns.c b/net/qrtr/ns.c
+index a10e8de4f7e105..e8e3ba1b3b8239 100644
+--- a/net/qrtr/ns.c
++++ b/net/qrtr/ns.c
+@@ -85,9 +85,9 @@ struct qrtr_node {
+ /* Max nodes limit is chosen based on the current platform requirements.
+  * If the requirement changes in the future, this value can be increased.
+  */
+-#define QRTR_NS_MAX_NODES   64
++#define QRTR_NS_MAX_NODES   512
  
--	addr = alloc_pages_exact(size, flag);
-+	addr = alloc_pages_exact(size, flag | __GFP_ZERO);
- 	if (!addr)
- 		return NULL;
+-static u8 node_count;
++static u16 node_count;
  
+ static struct qrtr_node *node_get(unsigned int node_id)
+ {
+-- 
+2.53.0
+
 
 
