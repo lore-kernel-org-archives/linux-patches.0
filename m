@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E288440A06;
-	Thu, 30 Jul 2026 15:23:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39524448CF9;
+	Thu, 30 Jul 2026 15:24:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425040; cv=none; b=mf3BgyvFSY4cNyVFU6jWgY+0m8t9mXpy/9vaVZhWTCXFJcvluqumtG77tcDKUgtKzU56t2dx4SGpVU0igd1br1dxy5bJusB5rZlaSJBVszc7UAvlTVc706OWeQCk/0Nq8FEE3nuYxezYC4LEn51HqjVeUNLRffdYSEgmHEH+LBI=
+	t=1785425043; cv=none; b=lfpk7SGbXglJLMxK4zr+aN+9waE+u9kFMmpJG87+0NZh8jKgl0LV1pAyzgEVD85t/DZHhOATc3l77+woZfRyZ1CWhxwc5UXel6HOK8b4kr9nvh+k1hbzxG+Kf6Yp90vDltvQOGEimyH1Jv4RwurWvp/q11Lyv0qOX7Uc3wwVjyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425040; c=relaxed/simple;
-	bh=aW+WC46HyqHmk0FstIPGMEJB2gX3V8WtikSP3nFkv70=;
+	s=arc-20240116; t=1785425043; c=relaxed/simple;
+	bh=xAeZg6Euo9IOvfo2asWwLMTBORzHHNXTJx6qe6Pa5uY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Weh1o3R07E9wZAQQ97xaR/rnW/ApSO1Cfji2GtcRNp7USTrwP+iOqPMlXKfxUZxNnY3xLQXET5PFtZi0KiXKPflzNL60vzd0QEXZURXSI7/3GSADrwZu7T8HLW1SmiJ2wvP3YjUI2bY8EcZCiZtocDzYdo9Ue2gDj4X2nlsOQw8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pwqD5y2b; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NQO5F/dAblZCWuJWP2FD+pBIEk8qnqb2tomUuTnPc+Qya+s1IOnk6q7g0AcZLG5hwZDQsPJfY+HBnINO6vpcEdmzpoJi0clL90v53BQEjZV9KV09p9CzuhmaMfZQSWCzEd6g2WcvGUPjNATxunquiE03OTz+yJovc1L7UchvQgY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=velD1YiL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pwqD5y2b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A9871F00A3D;
-	Thu, 30 Jul 2026 15:23:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="velD1YiL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 808851F000E9;
+	Thu, 30 Jul 2026 15:24:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425039;
-	bh=plRuVDwUQrJYTDsJzpkkA6WRo2xalICPRAZThQqTefg=;
+	s=korg; t=1785425042;
+	bh=1zLHo85JM9mCv4wNHqsYYm9UjpG8MqhmgS5YuhRvvr0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pwqD5y2b0nPB+G4lU3TanS/N/Xka2MQ9MPMYI1ZIBXtML9dI5l5Ym1kEI+olt6wai
-	 HXJw8iNlG3CYULx+EkWZNnMCjfGgvqpxMp6cBQf/KydL41BMXj/ybrliMH9X26Zrrj
-	 TQnl+7DTySfW/9phbDk+CNnL6uF3Qdj6nFgLHvr8=
+	b=velD1YiLxwNw6su5hYI97vclUwzSu/Q6Ueb9NSDgQFyMJc/F9lBRzvSPprKoFGfTX
+	 RBDOtZu7jsY3DpC9kGaHEklBd9RNOkmscnX2OfqCPmcnQYEdChHKcke+9P9VpdLsy9
+	 EdPUqz54M6GHoxY3P/8iR0lWMdkgxW+WeUnJXKkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
+	Jeff Layton <jlayton@kernel.org>,
 	Paul Moore <paul@paul-moore.com>,
-	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 606/675] landlock: Account all audit data allocations to user space
-Date: Thu, 30 Jul 2026 16:15:36 +0200
-Message-ID: <20260730141457.994651926@linuxfoundation.org>
+Subject: [PATCH 6.18 607/675] audit: widen ino fields to u64
+Date: Thu, 30 Jul 2026 16:15:37 +0200
+Message-ID: <20260730141458.016235411@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -46,84 +46,190 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mickaël Salaün <mic@digikod.net>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit b232bd12789fa57405b5092f28788be97aae9999 ]
+[ Upstream commit 125dfa218134df7cc112667e92984de9d8cd0bf6 ]
 
-Mark the kzalloc_flex() of struct landlock_details with
-GFP_KERNEL_ACCOUNT so the allocation is charged to the calling task,
-like the other Landlock per-domain allocations which have used
-GFP_KERNEL_ACCOUNT forever.
+inode->i_ino is being widened from unsigned long to u64. The audit
+subsystem uses unsigned long ino in struct fields, function parameters,
+and local variables that store inode numbers from arbitrary filesystems.
+On 32-bit platforms this truncates inode numbers that exceed 32 bits,
+which will cause incorrect audit log entries and broken watch/mark
+comparisons.
 
-Every property of landlock_details is caller-attributable: allocated by
-landlock_restrict_self(2), owned by the caller's landlock_hierarchy,
-contents are the caller's pid, uid, comm, and exe_path, lifetime bounded
-by the caller's domain.  While the caller may not know nor control the
-size of this allocation (i.e. exe_path), this data should still be
-accounted for it.
+Widen all audit ino fields, parameters, and locals to u64, and update
+the inode format string from %lu to %llu to match.
 
-The deciding factor is whether userspace can trigger the allocation, not
-whether the size of the data is known nor controlled by the caller.
-This aligns with the kmemcg accounting policy established by commit
-5d097056c9a0 ("kmemcg: account certain kmem allocations to memcg").
-
-No new failure modes: the hierarchy and ruleset are allocated before
-details and are already accounted, so landlock_restrict_self(2) already
-returns -ENOMEM under memcg pressure.  This change widens that existing
-failure window slightly; it does not introduce a new error code.
-
-Cc: Günther Noack <gnoack@google.com>
-Cc: Paul Moore <paul@paul-moore.com>
-Cc: stable@vger.kernel.org
-Fixes: 1d636984e088 ("landlock: Add AUDIT_LANDLOCK_DOMAIN and log domain status")
-Link: https://patch.msgid.link/20260513180309.165840-1-mic@digikod.net
-Signed-off-by: Mickaël Salaün <mic@digikod.net>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260304-iino-u64-v3-2-2257ad83d372@kernel.org
+Acked-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Stable-dep-of: 81905b5acbe7 ("audit: fix recursive locking deadlock in audit_dupe_exe()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/landlock/domain.c |    9 +++++----
- security/landlock/domain.h |    5 +----
- 2 files changed, 6 insertions(+), 8 deletions(-)
+ include/linux/audit.h   |    2 +-
+ kernel/audit.h          |   13 ++++++-------
+ kernel/audit_fsnotify.c |    4 ++--
+ kernel/audit_watch.c    |   12 ++++++------
+ kernel/auditsc.c        |    4 ++--
+ 5 files changed, 17 insertions(+), 18 deletions(-)
 
---- a/security/landlock/domain.c
-+++ b/security/landlock/domain.c
-@@ -90,11 +90,12 @@ static struct landlock_details *get_curr
- 		return ERR_CAST(buffer);
+--- a/include/linux/audit.h
++++ b/include/linux/audit.h
+@@ -16,7 +16,7 @@
+ #include <uapi/linux/netfilter/nf_tables.h>
+ #include <uapi/linux/fanotify.h>
  
- 	/*
--	 * Create the new details according to the path's length.  Do not
--	 * allocate with GFP_KERNEL_ACCOUNT because it is independent from the
--	 * caller.
-+	 * Create the new details according to the path's length.  Account to
-+	 * the calling task's memcg, like the other Landlock per-domain
-+	 * allocations, even if it may not control the related size.
- 	 */
--	details = kzalloc_flex(*details, exe_path, path_size);
-+	details =
-+		kzalloc_flex(*details, exe_path, path_size, GFP_KERNEL_ACCOUNT);
- 	if (!details)
- 		return ERR_PTR(-ENOMEM);
+-#define AUDIT_INO_UNSET ((unsigned long)-1)
++#define AUDIT_INO_UNSET ((u64)-1)
+ #define AUDIT_DEV_UNSET ((dev_t)-1)
  
---- a/security/landlock/domain.h
-+++ b/security/landlock/domain.h
-@@ -33,10 +33,7 @@ enum landlock_log_status {
-  * Rarely accessed, mainly when logging the first domain's denial.
-  *
-  * The contained pointers are initialized at the domain creation time and never
-- * changed again.  Contrary to most other Landlock object types, this one is
-- * not allocated with GFP_KERNEL_ACCOUNT because its size may not be under the
-- * caller's control (e.g. unknown exe_path) and the data is not explicitly
-- * requested nor used by tasks.
-+ * changed again.
+ struct audit_sig_info {
+--- a/kernel/audit.h
++++ b/kernel/audit.h
+@@ -76,7 +76,7 @@ struct audit_names {
+ 	int			name_len;	/* number of chars to log */
+ 	bool			hidden;		/* don't log this record */
+ 
+-	unsigned long		ino;
++	u64			ino;
+ 	dev_t			dev;
+ 	umode_t			mode;
+ 	kuid_t			uid;
+@@ -225,9 +225,9 @@ extern int auditd_test_task(struct task_
+ #define AUDIT_INODE_BUCKETS	32
+ extern struct list_head audit_inode_hash[AUDIT_INODE_BUCKETS];
+ 
+-static inline int audit_hash_ino(u32 ino)
++static inline int audit_hash_ino(u64 ino)
+ {
+-	return (ino & (AUDIT_INODE_BUCKETS-1));
++	return ((u32)ino & (AUDIT_INODE_BUCKETS-1));
+ }
+ 
+ /* Indicates that audit should log the full pathname. */
+@@ -277,16 +277,15 @@ extern int audit_to_watch(struct audit_k
+ extern int audit_add_watch(struct audit_krule *krule, struct list_head **list);
+ extern void audit_remove_watch_rule(struct audit_krule *krule);
+ extern char *audit_watch_path(struct audit_watch *watch);
+-extern int audit_watch_compare(struct audit_watch *watch, unsigned long ino,
+-			       dev_t dev);
++extern int audit_watch_compare(struct audit_watch *watch, u64 ino, dev_t dev);
+ 
+ extern struct audit_fsnotify_mark *audit_alloc_mark(struct audit_krule *krule,
+ 						    char *pathname, int len);
+ extern char *audit_mark_path(struct audit_fsnotify_mark *mark);
+ extern void audit_remove_mark(struct audit_fsnotify_mark *audit_mark);
+ extern void audit_remove_mark_rule(struct audit_krule *krule);
+-extern int audit_mark_compare(struct audit_fsnotify_mark *mark,
+-			      unsigned long ino, dev_t dev);
++extern int audit_mark_compare(struct audit_fsnotify_mark *mark, u64 ino,
++			      dev_t dev);
+ extern int audit_dupe_exe(struct audit_krule *new, struct audit_krule *old);
+ extern int audit_exe_compare(struct task_struct *tsk,
+ 			     struct audit_fsnotify_mark *mark);
+--- a/kernel/audit_fsnotify.c
++++ b/kernel/audit_fsnotify.c
+@@ -25,7 +25,7 @@
   */
- struct landlock_details {
- 	/**
+ struct audit_fsnotify_mark {
+ 	dev_t dev;		/* associated superblock device */
+-	unsigned long ino;	/* associated inode number */
++	u64 ino;		/* associated inode number */
+ 	char *path;		/* insertion path */
+ 	struct fsnotify_mark mark; /* fsnotify mark on the inode */
+ 	struct audit_krule *rule;
+@@ -57,7 +57,7 @@ char *audit_mark_path(struct audit_fsnot
+ 	return mark->path;
+ }
+ 
+-int audit_mark_compare(struct audit_fsnotify_mark *mark, unsigned long ino, dev_t dev)
++int audit_mark_compare(struct audit_fsnotify_mark *mark, u64 ino, dev_t dev)
+ {
+ 	if (mark->ino == AUDIT_INO_UNSET)
+ 		return 0;
+--- a/kernel/audit_watch.c
++++ b/kernel/audit_watch.c
+@@ -37,7 +37,7 @@ struct audit_watch {
+ 	refcount_t		count;	/* reference count */
+ 	dev_t			dev;	/* associated superblock device */
+ 	char			*path;	/* insertion path */
+-	unsigned long		ino;	/* associated inode number */
++	u64			ino;	/* associated inode number */
+ 	struct audit_parent	*parent; /* associated parent */
+ 	struct list_head	wlist;	/* entry in parent->watches list */
+ 	struct list_head	rules;	/* anchor for krule->rlist */
+@@ -125,7 +125,7 @@ char *audit_watch_path(struct audit_watc
+ 	return watch->path;
+ }
+ 
+-int audit_watch_compare(struct audit_watch *watch, unsigned long ino, dev_t dev)
++int audit_watch_compare(struct audit_watch *watch, u64 ino, dev_t dev)
+ {
+ 	return (watch->ino != AUDIT_INO_UNSET) &&
+ 		(watch->ino == ino) &&
+@@ -244,7 +244,7 @@ static void audit_watch_log_rule_change(
+ /* Update inode info in audit rules based on filesystem event. */
+ static void audit_update_watch(struct audit_parent *parent,
+ 			       const struct qstr *dname, dev_t dev,
+-			       unsigned long ino, unsigned invalidating)
++			       u64 ino, unsigned invalidating)
+ {
+ 	struct audit_watch *owatch, *nwatch, *nextw;
+ 	struct audit_krule *r, *nextr;
+@@ -285,7 +285,7 @@ static void audit_update_watch(struct au
+ 				list_del(&oentry->rule.list);
+ 				audit_panic("error updating watch, removing");
+ 			} else {
+-				int h = audit_hash_ino((u32)ino);
++				int h = audit_hash_ino(ino);
+ 
+ 				/*
+ 				 * nentry->rule.watch == oentry->rule.watch so
+@@ -439,7 +439,7 @@ int audit_add_watch(struct audit_krule *
+ 
+ 	audit_add_to_parent(krule, parent);
+ 
+-	h = audit_hash_ino((u32)watch->ino);
++	h = audit_hash_ino(watch->ino);
+ 	*list = &audit_inode_hash[h];
+ error:
+ 	path_put(&parent_path);
+@@ -527,7 +527,7 @@ int audit_dupe_exe(struct audit_krule *n
+ int audit_exe_compare(struct task_struct *tsk, struct audit_fsnotify_mark *mark)
+ {
+ 	struct file *exe_file;
+-	unsigned long ino;
++	u64 ino;
+ 	dev_t dev;
+ 
+ 	/* only do exe filtering if we are recording @current events/records */
+--- a/kernel/auditsc.c
++++ b/kernel/auditsc.c
+@@ -886,7 +886,7 @@ static int audit_filter_inode_name(struc
+ 				   struct audit_names *n,
+ 				   struct audit_context *ctx)
+ {
+-	int h = audit_hash_ino((u32)n->ino);
++	int h = audit_hash_ino(n->ino);
+ 	struct list_head *list = &audit_inode_hash[h];
+ 
+ 	return __audit_filter_op(tsk, ctx, list, n, ctx->major);
+@@ -1534,7 +1534,7 @@ static void audit_log_name(struct audit_
+ 		audit_log_format(ab, " name=(null)");
+ 
+ 	if (n->ino != AUDIT_INO_UNSET)
+-		audit_log_format(ab, " inode=%lu dev=%02x:%02x mode=%#ho ouid=%u ogid=%u rdev=%02x:%02x",
++		audit_log_format(ab, " inode=%llu dev=%02x:%02x mode=%#ho ouid=%u ogid=%u rdev=%02x:%02x",
+ 				 n->ino,
+ 				 MAJOR(n->dev),
+ 				 MINOR(n->dev),
 
 
