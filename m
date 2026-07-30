@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB4C630C618;
-	Thu, 30 Jul 2026 15:16:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB250217723;
+	Thu, 30 Jul 2026 15:17:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424619; cv=none; b=r2zY5k5IpZU5HCTX4yu08JQLd7ro443Ean315G7O+OldU14IAQhceZ8UEEe2HMYorkt3It81NfMQ2qPm61u4PqsjCDN6SuuZWcJ3Zz3dfvYnL/x7xqWchtV1UvrARWWb0aTbX74WQMMANbCvoDFVDeFZihsmuj/zSKSvkbTN8Nc=
+	t=1785424621; cv=none; b=KAFKd/4QfkFGKvLybwmKygTV1x8YTiKl3MR9tNQUhjzJz6RaSyXMPP7jbRnx9NuwsfZ9Rq1VzzMlozOCHgCsegMV2owaSXwSvhEgl3QXMTn0vWex8L6hM5KI8z/5OsYEunxG9miGaRc4rQ14ufsnFtdaNEVp+saLLRED7XIZAUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424619; c=relaxed/simple;
-	bh=scKoOQJ1v3OIAUZv//SL5+1e3AYrSavlcm6TeCBE/+8=;
+	s=arc-20240116; t=1785424621; c=relaxed/simple;
+	bh=MS8YeAuWxLxBjxHsiLGuPgrf6ajIPxzvCk74ZXxei6M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gdwomoU3bpK7KmgIShQzrbpxB9R9/mbDGUQ7Ke5f0MIP0egFn+7pPP1FXyfYJPg+31GbQA17MHndKdcOsLWbmQ6uqCgpSY2W2QwEHw7WpLqdnLS4O2/NWq32621ekM2SiSuY2fJtL+Bm2xsrmBVSwQLvXtTkENcmdghIyfkbjDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GqAX/qwS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iv+wQADj1QqQMErr4azzNmlJQC7ffHs9NRXjpgbL/cLA4+IuypskOh/RCIYCYxA5N7uOrlG8DJHB7IKre61kItajmhDVE6egr9+cwF4AafjSVJA2Tjf++nIURPQJsTvB8/lhW/2jLxy7o0md48ceJbTnazBpPttDVzJfV4meqj4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MEDaHZ8X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GqAX/qwS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AB261F000E9;
-	Thu, 30 Jul 2026 15:16:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MEDaHZ8X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 213F21F000E9;
+	Thu, 30 Jul 2026 15:16:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424617;
-	bh=/P7DiGIsHhc2/8wgAum3zu7WYf9f83/GGUQ0MZGO+yk=;
+	s=korg; t=1785424620;
+	bh=xsW8uNbyrZ78+IxhUOa2c04dYY61TnCXNjGf19q0N7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GqAX/qwSJO+L2w7YbuiEZUxp9Hi5780NX4RNXzk67w8U9FDzu6p8RbItFgBycbvRQ
-	 Vh+tOlIh2C3eoCYgovuM2Um+DitPeLcvtvVqJF4pstjZ5aK2m/OY+HhWi+diSuT7qj
-	 8I/yyBOfg+b5GomlWhSVp3n9e/PQSBooROITQkUk=
+	b=MEDaHZ8XAQ0hZzt9ViYf3JXTAvOcF/xL/DgrzzLVkSMdLu3yGZ5Y2OeM4z1vZq1yu
+	 goPFeHYYBHrSrPKYdz0A5rqdxlZO2w+btI5ccXubpQSvWBmHawCz1DlXb7znk0vPfN
+	 lbGc0DasEHw7+tRORwYAXjiKWL4/tiI2DGIkKURE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Xiaolei Wang <xiaolei.wang@windriver.com>,
-	Frank Li <Frank.Li@nxp.com>,
 	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.18 413/675] media: nxp: imx8-isi: Add missing v4l2_subdev_cleanup() in crossbar and pipe
-Date: Thu, 30 Jul 2026 16:12:23 +0200
-Message-ID: <20260730141453.910695376@linuxfoundation.org>
+Subject: [PATCH 6.18 414/675] media: nxp: imx8-isi: Clean up already-initialized pipes on probe failure
+Date: Thu, 30 Jul 2026 16:12:24 +0200
+Message-ID: <20260730141453.931498129@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -54,59 +54,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Xiaolei Wang <xiaolei.wang@windriver.com>
 
-commit 567418eedd25b3d86d489807682030b4b98b73d9 upstream.
+commit d970b27cc48ec42f8a72bc3a4a4ad2e5c7a36395 upstream.
 
-Both mxc_isi_crossbar_init() and mxc_isi_pipe_init() call
-v4l2_subdev_init_finalize() which allocates the subdev active state,
-but neither mxc_isi_crossbar_cleanup() nor mxc_isi_pipe_cleanup()
-calls v4l2_subdev_cleanup() to free it.
+When mxc_isi_pipe_init() fails partway through the channel loop or
+when mxc_isi_v4l2_init() fails, the already initialized pipes are
+not cleaned up.
 
-This causes a memory leak on every rmmod, reported by kmemleak:
-
-  unreferenced object 0xffff0000d06fc800 (size 192):
-    comm "(udev-worker)", pid 254, jiffies 4294913455
-    backtrace (crc 36eeae58):
-      kmemleak_alloc+0x34/0x40
-      __kvmalloc_node_noprof+0x5f8/0x7d8
-      __v4l2_subdev_state_alloc+0x1fc/0x30c
-      __v4l2_subdev_init_finalize+0x178/0x368
-
-Add the missing v4l2_subdev_cleanup() calls before media_entity_cleanup()
-in both crossbar and pipe cleanup paths.
+Fix this by calling mxc_isi_pipe_cleanup() for each already-initialized
+pipe in the err_xbar error path.
 
 Fixes: cf21f328fcaf ("media: nxp: Add i.MX8 ISI driver")
 Cc: stable@vger.kernel.org
 Signed-off-by: Xiaolei Wang <xiaolei.wang@windriver.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Link: https://patch.msgid.link/20260507041318.491594-3-xiaolei.wang@windriver.com
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260507041318.491594-5-xiaolei.wang@windriver.com
 Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/nxp/imx8-isi/imx8-isi-crossbar.c |    1 +
- drivers/media/platform/nxp/imx8-isi/imx8-isi-pipe.c     |    1 +
- 2 files changed, 2 insertions(+)
+ drivers/media/platform/nxp/imx8-isi/imx8-isi-core.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/media/platform/nxp/imx8-isi/imx8-isi-crossbar.c
-+++ b/drivers/media/platform/nxp/imx8-isi/imx8-isi-crossbar.c
-@@ -492,6 +492,7 @@ err_free:
+--- a/drivers/media/platform/nxp/imx8-isi/imx8-isi-core.c
++++ b/drivers/media/platform/nxp/imx8-isi/imx8-isi-core.c
+@@ -517,6 +517,8 @@ static int mxc_isi_probe(struct platform
+ 	return 0;
  
- void mxc_isi_crossbar_cleanup(struct mxc_isi_crossbar *xbar)
- {
-+	v4l2_subdev_cleanup(&xbar->sd);
- 	media_entity_cleanup(&xbar->sd.entity);
- 	kfree(xbar->pads);
- 	kfree(xbar->inputs);
---- a/drivers/media/platform/nxp/imx8-isi/imx8-isi-pipe.c
-+++ b/drivers/media/platform/nxp/imx8-isi/imx8-isi-pipe.c
-@@ -819,6 +819,7 @@ void mxc_isi_pipe_cleanup(struct mxc_isi
- {
- 	struct v4l2_subdev *sd = &pipe->sd;
+ err_xbar:
++	while (i--)
++		mxc_isi_pipe_cleanup(&isi->pipes[i]);
+ 	mxc_isi_crossbar_cleanup(&isi->crossbar);
  
-+	v4l2_subdev_cleanup(sd);
- 	media_entity_cleanup(&sd->entity);
- 	mutex_destroy(&pipe->lock);
- }
+ 	return ret;
 
 
