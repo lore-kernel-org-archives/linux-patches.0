@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEEB635BDAA;
-	Thu, 30 Jul 2026 14:35:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF22F442FBC;
+	Thu, 30 Jul 2026 14:35:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422106; cv=none; b=sDGq9Dg15YAw0Oc8cp2Z770ndob/qZ6lMhVbODvo0oW1SqUEvTTFp1dyAFqT96reeaiRJkuNw1XMtP1fPS2K+AOlRspvnllXgMBFZCeoCY+YlXaf3kyEoq/v8mrx4/6rxQmUnwa3zk6dpxVng9MSnxcRhliKcYc1QAwnRZ6KYrE=
+	t=1785422110; cv=none; b=sutFt1pmaBs4ihOPsD5x8AWWA2ItL2PZnZ1kvMF4DwB0qzyhTYInE+zCzndzIFvkkkgVwCP8jmzAnpjXTGvJ1hMiPGYvL0a6VrspK40fheywoFvMgn/LHxTDRdB/Lx2WZORrBbj/XmBUNC9nwdaGrR2A9g+MMJxLAzSrP8eHSoM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422106; c=relaxed/simple;
-	bh=MB7+bUYdTUXB4rnl2gdTPPk2UZKs41brKZPOBsUKKGQ=;
+	s=arc-20240116; t=1785422110; c=relaxed/simple;
+	bh=sGWuT6RqzVcKqwaHG8ep461ZJAEJFsPRrgWesfC61Ts=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IwYIhPuRGZ93OSB9O3m9SNGS06a1kVVPv8LNHgISl43G7fEkng9CjTDqO/pSfobve0FONlFm0xRXLnAE4bZwnbuAuzm4sBPw/sA8iHOMt4M7dGDZtddW9GbTrOiUi8rvvQXDvGPVCxlNZiZ3fNSkSsLfN9PC8eOeBXs2MSRNOeM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VdFAN6tZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GaKUjCY2vLHkrfjWTFL7ooNCIsa0oBpWgbTjt2gdtq2KFQWXY5EeNOgD3IKZF+mRnNHEHMz3rU7AIG69fyPA3ftVI1GakpuAjFRoflFVkE4EIeGhaBxL3a3gXDtZ7WQMgVDMyC7jDSNL/1y6fVQlDlRR7BloyM3GXzlX2hVqKGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tIA/Jlog; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VdFAN6tZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DF1F1F000E9;
-	Thu, 30 Jul 2026 14:35:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tIA/Jlog"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2F391F00A3E;
+	Thu, 30 Jul 2026 14:35:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422104;
-	bh=jn1nNBKHCiia0M69YIVq4/koS4eVhQsFipcUxfv6AWk=;
+	s=korg; t=1785422107;
+	bh=pjqvPEHYrDQTAgPcl0G1O/LvTQDKEQ0zFf9bsobDUv4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VdFAN6tZCpD7qIjMQOr7FpT8jeQQ1ZA8xdMavff69MlJ3VZKX4rjyPopalgyMZuux
-	 2BQ0ZnJp8nhd9l0R1bMfgqJkRtJuBgwg85QXNMxWbhTuq4XiIuIDvaxlcfnXCXYNst
-	 +FsDKxOQhVc3r/IXdXDKCy66lDg4CDNX/sJRVvNU=
+	b=tIA/JlogeIdLvGo8mUF8UIyFpRq4jUnpbRTPRknHLu9Wv0/qAM7vrV9fWBaijGTRt
+	 g719AfZ5EakEvbGjdUPq4ro+8dx/0KhcQPneok20DrhRIfBYbyajV+dgfZQ8WvfwYq
+	 ZT/DZmtFxgbWhj+ZoCiXnT7AbtmDkzSHB4SjUpTM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anthony Doeraene <anthony.doeraene@uclouvain.be>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
+	Suman Ghosh <sumang@marvell.com>,
+	Ratheesh Kannoth <rkannoth@marvell.com>,
+	Simon Horman <horms@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 327/744] mpls: Set rt->rt_nhn just before returning from mpls_nh_build_multi().
-Date: Thu, 30 Jul 2026 16:10:00 +0200
-Message-ID: <20260730141451.234782174@linuxfoundation.org>
+Subject: [PATCH 7.1 328/744] octeontx2-vf: set TC flower flag on MCAM entry allocation
+Date: Thu, 30 Jul 2026 16:10:01 +0200
+Message-ID: <20260730141451.257028774@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -52,64 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Suman Ghosh <sumang@marvell.com>
 
-[ Upstream commit 3671f0419d90b98a02f313830595ab958c8b2025 ]
+[ Upstream commit 0d4d31e3cc5dd6204fa1495c4107f5075acce5ed ]
 
-Commit f0914b8436c5 ("mpls: Hold dev refcnt for mpls_nh.") added
-change_nexthops() loop to call netdev_put() for the nexthop devices
-before freeing mpls_route.
+When MCAM entries are allocated for a VF netdev via the devlink
+mcam_count parameter, only OTX2_FLAG_NTUPLE_SUPPORT was set. That
+enabled ethtool ntuple filters but not tc flower offload. Also set
+OTX2_FLAG_TC_FLOWER_SUPPORT when entries are successfully allocated.
 
-Then, mpls_nh_build_multi() was also changed to avoid iterating
-uninitialised nexthops in mpls_rt_free_rcu().
-
-However, setting rt->rt_nhn to 0 at the entry of mpls_nh_build_multi()
-makes the following change_nexthops() no-op.
-
-Let's set rt->rt_nhn just before returning from mpls_nh_build_multi().
-
-Fixes: f0914b8436c5 ("mpls: Hold dev refcnt for mpls_nh.")
-Reported-by: Anthony Doeraene <anthony.doeraene@uclouvain.be>
-Closes: https://lore.kernel.org/netdev/036a0c95-f5d4-46ab-88e7-1eab567d7a84@uclouvain.be/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260716170609.804629-1-kuniyu@google.com
+Fixes: 2da489432747 ("octeontx2-pf: devlink params support to set mcam entry count")
+Signed-off-by: Suman Ghosh <sumang@marvell.com>
+Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260715052007.2099851-1-rkannoth@marvell.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mpls/af_mpls.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/nic/otx2_flows.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/mpls/af_mpls.c b/net/mpls/af_mpls.c
-index b64a8b1bac0961..35069183f59c3e 100644
---- a/net/mpls/af_mpls.c
-+++ b/net/mpls/af_mpls.c
-@@ -922,8 +922,7 @@ static int mpls_nh_build_multi(struct mpls_route_config *cfg,
- 	struct nlattr *nla_via, *nla_newdst;
- 	int remaining = cfg->rc_mp_len;
- 	int err = 0;
--
--	rt->rt_nhn = 0;
-+	u8 nhs = 0;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_flows.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_flows.c
+index 38cc539d724d84..3b3eee15715f75 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_flows.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_flows.c
+@@ -270,6 +270,7 @@ int otx2_alloc_mcam_entries(struct otx2_nic *pfvf, u16 count)
+ 	if (allocated) {
+ 		pfvf->flags |= OTX2_FLAG_MCAM_ENTRIES_ALLOC;
+ 		pfvf->flags |= OTX2_FLAG_NTUPLE_SUPPORT;
++		pfvf->flags |= OTX2_FLAG_TC_FLOWER_SUPPORT;
+ 	}
  
- 	change_nexthops(rt) {
- 		int attrlen;
-@@ -959,12 +958,15 @@ static int mpls_nh_build_multi(struct mpls_route_config *cfg,
- 			rt->rt_nhn_alive--;
- 
- 		rtnh = rtnh_next(rtnh, &remaining);
--		rt->rt_nhn++;
-+		nhs++;
- 	} endfor_nexthops(rt);
- 
-+	rt->rt_nhn = nhs;
-+
- 	return 0;
- 
- errout:
-+	rt->rt_nhn = nhs;
- 	return err;
- }
- 
+ 	if (allocated != count)
 -- 
 2.53.0
 
