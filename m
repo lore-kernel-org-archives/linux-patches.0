@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1C9B3750CF;
-	Thu, 30 Jul 2026 15:07:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1E694457AF;
+	Thu, 30 Jul 2026 15:07:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424077; cv=none; b=sRxhtqsAaEuTQHlDTcSuKWA5FFYCaWwkTyzaw+UDZlj6/Ux5PeAa7Ndwe7+RtoA8oWfHn8SspwWwCe9Ljzvr81HZNTkxS16c7N8bzMDwgwVd0StRalrgIwrw28ZkayKP2TqioFI3i7gCOS2TXW+Tdsl2RxO746GDvQkMy8Ttmfc=
+	t=1785424080; cv=none; b=rw75j+5PXhe50jRSP10lMFlkeH0jdtOJGOWKBnP9I/9yAroB4Z2cKH6Hk3LscDK+k5EugHapxj+p9gKQHpdKWoLH5hlfxgV0YH2nvLIF9WWn7MjC/C2E3nFRw8oaZ9lzBUSCDiSLJDIrL3pwyaT5S2UTalCiffH5JYUpSaKc8yA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424077; c=relaxed/simple;
-	bh=JL55u2LzWlgosKsHtfdmpzD4+d9S5tjUn6apT0anR+I=;
+	s=arc-20240116; t=1785424080; c=relaxed/simple;
+	bh=Dw7NJEOaZIwmLed2rLCiklSHu7991eYYbwakIXxeN5U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ItIlAe/6YiAoH+FgfVx+1e/9ij5j32IdrhwVoLp+iraPFa7r2RjZZsxcFElExoTLf8Nmd0WFBqdqn464N8zu68X/577zos+KusVUwrZ/44CZ4QC8uKHU1avJKcxUzcAWjbobLPVR4XBTLp4rIbRC1iFMD8J/bUNxODp8BwYj0uI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xA3WtcXY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=InqZgfk3hNlhQAD/tuAcWTQQCTOg5Vt8PX8Ia9dM9OeGktITK6akBRev7E6JjcEolPCbbJiWBn0SpZSejDMDLhWFauuPJbRaKctEZZMriBeTG+vP/1/exBjDEw6+SKC3KfubOPz5X45dDfwuE7wrk0Ox9anLMA5cS6/fsWL+AnM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KoWU0M4w; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xA3WtcXY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 597681F000E9;
-	Thu, 30 Jul 2026 15:07:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KoWU0M4w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EFA11F000E9;
+	Thu, 30 Jul 2026 15:07:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424075;
-	bh=C4vW//GZxcTxvLY2WAXe4cy/sBCrin/Z2/HG9d96Z4Y=;
+	s=korg; t=1785424078;
+	bh=o42Gy62IVzX75L1D5w11hz/Dp+wT7RGL0tarSrQiMhA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xA3WtcXYlkbIfeJyiIQJKuh/lF5a8U9uJ7E9FEmFjlGPpUysYmrB56YpfT8buaSrE
-	 2R4YZnAhXRKQ9Jmu0gK+Q+6SsIhoe8xUBssaD8vgdAP8V3na8oNpCompMCDddnqGxD
-	 S3Hpw9VjnwPmo3iTt2zHSVwSwuRMRGs8CNTM2p4A=
+	b=KoWU0M4wqMLOrURNvaD4CA8z/1n53OsB0MXwGyiO6jLIgdAZ65fcUyRH/hSJWf7EH
+	 0cXzbqjgEqsHsVHZx0QXg2JDBA8Yltf3VRgkb6Es+3ZSIwFqsd3DJh2/Gbz71fov2Q
+	 oCaa8S7iZTw9uej25kSPDDX1ml2afmaVgtF4guHE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guanghui Feng <guanghuifeng@linux.alibaba.com>,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Will Deacon <will@kernel.org>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 223/675] iommu/amd: Wait for completion instead of returning early in iommu_completion_wait()
-Date: Thu, 30 Jul 2026 16:09:13 +0200
-Message-ID: <20260730141449.882123070@linuxfoundation.org>
+Subject: [PATCH 6.18 224/675] wifi: mac80211: tear down new links on vif update error path
+Date: Thu, 30 Jul 2026 16:09:14 +0200
+Message-ID: <20260730141449.902439394@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -52,92 +52,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guanghui Feng <guanghuifeng@linux.alibaba.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit 1e75a8255f11c81fb07e81e5029cfd75804350a0 ]
+[ Upstream commit 952c02b33f56207a160421bcd61e7ac53c9c59ae ]
 
-need_sync is a per-IOMMU flag shared by all domains and devices behind
-that IOMMU. It is set whenever a command is queued with sync == true and
-cleared when a completion-wait (CWAIT) command is queued. However, a
-cleared need_sync only means that a covering CWAIT has been queued, not
-that all previously queued commands have actually completed in hardware.
+When ieee80211_vif_update_links() adds new links it allocates a link
+container for each and calls ieee80211_link_init() (which registers the
+per-link debugfs files with file->private_data pointing into the container)
+and ieee80211_link_setup(). If the subsequent drv_change_vif_links() fails,
+the error path restores the old pointers and jumps to 'free', which frees
+the new containers but never removes their debugfs entries or stops the
+links. The debugfs files survive with file->private_data dangling at the
+freed container, so a later open()+read() (e.g. link-1/txpower)
+dereferences freed memory in ieee80211_if_read_link(), a use-after-free.
 
-iommu_completion_wait() read need_sync locklessly and returned early
-when it was false. This breaks the "block until all previously queued
-commands have completed" contract in a multi-CPU scenario:
+The removal path already dismantles links correctly via
+ieee80211_tear_down_links(), which removes each link's keys and debugfs
+entries and calls ieee80211_link_stop(); the add path on the error branch
+does not. Commit be1ba9ed221f ("wifi: mac80211: avoid weird state in error
+path") hardened this same error path for the link-removal case
+(new_links == 0) but left the newly-added links' teardown unaddressed.
 
-  CPU2: queue inv-B                  => need_sync = true
-  CPU1: queue CWAIT(N); need_sync = false; then wait_on_sem(N)
-  CPU2: read need_sync == false      => return 0 (no wait!)
+drv_change_vif_links() can fail at runtime on MLO drivers (internal
+allocation / queue / firmware command failures).
 
-CPU2 returns without waiting for any sequence number even though its
-inv-B may not have completed yet (CWAIT(N), queued after inv-B, has not
-been signaled). CPU2 then proceeds to, for example, free page-table
-pages while the IOMMU can still walk stale translations, opening a
-use-after-free window. This is a logical race in the meaning of the
-flag, not a memory-visibility issue, so barriers alone do not help.
+Remove the new links' debugfs entries and stop them before freeing.
 
-Fix it without losing the optimization of avoiding redundant CWAIT
-commands: take iommu->lock before testing need_sync, and when it is
-false do not return early but wait for the last allocated sequence
-number (cmd_sem_val). Since need_sync == false implies no sync command
-was queued after the last CWAIT, that CWAIT is FIFO-ordered after every
-not-yet-completed command, so waiting for its sequence number guarantees
-all prior commands (possibly queued by another CPU) have completed. The
-common path with pending work is unchanged and no extra hardware command
-is issued.
+  BUG: KASAN: slab-use-after-free in ieee80211_if_read_link (net/mac80211/debugfs_netdev.c:127)
+  Read of size 8 at addr ffff888011290000 by task exploit/145
+  Call Trace:
+   ...
+   ieee80211_if_read_link (net/mac80211/debugfs_netdev.c:127)
+   short_proxy_read (fs/debugfs/file.c:373)
+   vfs_read (fs/read_write.c:572)
+   ksys_read (fs/read_write.c:716)
+   do_syscall_64 (arch/x86/entry/syscall_64.c:94)
+   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+  ...
+  Oops: general protection fault, probably for non-canonical address 0xdffffc000000000a
+  RIP: 0010:ieee80211_if_read_link (net/mac80211/debugfs_netdev.c:127)
+  Kernel panic - not syncing: Fatal exception
 
-Signed-off-by: Guanghui Feng <guanghuifeng@linux.alibaba.com>
-Fixes: 815b33fdc279 ("x86/amd-iommu: Cleanup completion-wait handling")
-Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: 170cd6a66d9a ("wifi: mac80211: add netdev per-link debugfs data and driver hook")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Link: https://patch.msgid.link/20260711210302.2098404-1-xmei5@asu.edu
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/iommu.c | 22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
+ net/mac80211/link.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
-index c458eec8a5bba8..12302647e26759 100644
---- a/drivers/iommu/amd/iommu.c
-+++ b/drivers/iommu/amd/iommu.c
-@@ -1408,11 +1408,23 @@ static int iommu_completion_wait(struct amd_iommu *iommu)
- 	int ret;
- 	u64 data;
- 
--	if (!iommu->need_sync)
--		return 0;
--
- 	raw_spin_lock_irqsave(&iommu->lock, flags);
- 
-+	if (!iommu->need_sync) {
-+		/*
-+		 * No command has been queued since the last completion-wait.
-+		 * A concurrent CPU may have already queued that CWAIT and
-+		 * cleared need_sync; need_sync == false only means a covering
-+		 * CWAIT is queued, not that all prior commands have completed.
-+		 * Wait for the last allocated sequence number so that any
-+		 * command queued before this call (possibly on another CPU)
-+		 * is guaranteed to have completed before returning.
-+		 */
-+		data = iommu->cmd_sem_val;
-+		raw_spin_unlock_irqrestore(&iommu->lock, flags);
-+		return wait_on_sem(iommu, data);
-+	}
-+
- 	data = get_cmdsem_val(iommu);
- 	build_completion_wait(&cmd, iommu, data);
- 
-@@ -1422,9 +1434,7 @@ static int iommu_completion_wait(struct amd_iommu *iommu)
- 	if (ret)
- 		return ret;
- 
--	ret = wait_on_sem(iommu, data);
--
--	return ret;
-+	return wait_on_sem(iommu, data);
- }
- 
- static void domain_flush_complete(struct protection_domain *domain)
+diff --git a/net/mac80211/link.c b/net/mac80211/link.c
+index 05b0472bda40ed..235e370c2b59eb 100644
+--- a/net/mac80211/link.c
++++ b/net/mac80211/link.c
+@@ -382,6 +382,10 @@ static int ieee80211_vif_update_links(struct ieee80211_sub_if_data *sdata,
+ 		memcpy(sdata->link, old_data, sizeof(old_data));
+ 		memcpy(sdata->vif.link_conf, old, sizeof(old));
+ 		ieee80211_set_vif_links_bitmaps(sdata, old_links, dormant_links);
++		for_each_set_bit(link_id, &add, IEEE80211_MLD_MAX_NUM_LINKS) {
++			ieee80211_link_debugfs_remove(&links[link_id]->data);
++			ieee80211_link_stop(&links[link_id]->data);
++		}
+ 		/* and free (only) the newly allocated links */
+ 		memset(to_free, 0, sizeof(links));
+ 		goto free;
 -- 
 2.53.0
 
