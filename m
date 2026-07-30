@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 794EF384223;
-	Thu, 30 Jul 2026 15:40:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45FE035DA67;
+	Thu, 30 Jul 2026 15:40:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426033; cv=none; b=L5YZjQsi/qqPRpGJX7JkLCSHKcaZByEZ29DphorPRP/UUjv5x87AsqB2kPf2kOQhsl0eJBLCD0mdpVeuQsi/Doek2cRad1b+i6mM8e36EICC/DoEZnJsGqr4CCjLUK85dYi6tsR9byi79Gtw2kauQRLlL0Vx4oP23khFKH05Eoc=
+	t=1785426036; cv=none; b=civNkglclkCD5Of5sUgM5e4cQGuS61AFKQZfblObNdDO5R4IoKLOYDHaTtjmkDCOVFId5xG/rzVUva/QRsrBLjDJ/MoH96k9ApNkE8gO+aLbsFy7kafeUI2DbKYWdomqEEBQEp2YAo/YwsoVDAzGsKLUcAWm7dzR+FHRVJwooqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426033; c=relaxed/simple;
-	bh=IkMWfjMsaXOVIbPGzD7heiFfFfOpAAUTCfOrnvEvriQ=;
+	s=arc-20240116; t=1785426036; c=relaxed/simple;
+	bh=NKVGKegeKqmoknyl/o6jetwHrv+a6PKfLRxpR5rXTiI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RgBkE3AHSe9Bdc/l6oKIrevt8RRjsW1dLOlKPdZSU4nSWQRooimcHO99oHfmegmrHkU7b/T0JOkXbvT8rtLfZ+iikaNnly6IZl0gApZl8DQrKS/ZXGvKot/oikotfJtnkWsvIZgSbBz3hBSynm4JQtkcBRIojUsEfN/HR6pNrN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d3xWJinu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=B80kv58jQFPHo3NRKPSirhmXsyMr/Vh6wSXfEzlqsat9OYVNA4K+uUiiNX/sCBzSibajua3Kt8+3tRDZYU0SwQcsHIsTGqVX7RU1bO5RZ+XEWWGk6p6hxVGW6uzbLwf78amYzAwZkRRBZjHVQxBndJR22BstPf5orFlf6dz5KMo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j6e2Fwpy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d3xWJinu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D49431F000E9;
-	Thu, 30 Jul 2026 15:40:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j6e2Fwpy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9D851F000E9;
+	Thu, 30 Jul 2026 15:40:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426032;
-	bh=DCWHZ7KrRh3t8wYwJYubFh/1r6AxDFzwZ4/w0jJbRSA=;
+	s=korg; t=1785426035;
+	bh=qjvtj6EBLv23MQyNDGCUjyAQ/LIRJGu5wtvtn3vKGpk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d3xWJinuWIRzukkMXUbv6a5piyM1M8XxcpFSLbMbFhNEBf7s0ggTmEHzruJ5Aa+32
-	 U76vaT2E4LFCwWfA/IQN4A8ZkPCeVy0shFWGIKPSo5GLxIDHVVNqEBgLoSt0lZzlLM
-	 k9VhpNV6v9k9AWcI2WwKaH2bkbgjULYKD2MtKLbk=
+	b=j6e2Fwpy33Ce3ccrhBlm7WL73xwhXWwut1WaAFo5nBCRXdCoTZm2/iz/EyP0XFWL6
+	 6bgD9z6385BIxFaiY0/TEkOWGma5Rt7Sb3TUW9gkpApkXVszssGZeBMrpnYwmGPS/2
+	 ILE+qvGWt/vYWy9b0viJ7HGXvIYWtjfMVpF0qhWA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yongqiang Sun <Yongqiang.Sun@amd.com>,
-	Philip Yang <philip.yang@amd.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	Zack Rusin <zackr@vmware.com>,
+	dri-devel@lists.freedesktop.org,
+	Harry Wentland <harry.wentland@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 275/602] drm/amdkfd: fix 32-bit overflow in CWSR total size calculation
-Date: Thu, 30 Jul 2026 16:11:07 +0200
-Message-ID: <20260730141441.749759332@linuxfoundation.org>
+Subject: [PATCH 6.12 276/602] drm/amd/display: Handle struct drm_plane_state.ignore_damage_clips
+Date: Thu, 30 Jul 2026 16:11:08 +0200
+Message-ID: <20260730141441.770819382@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -51,89 +54,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yongqiang Sun <Yongqiang.Sun@amd.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-commit 2b0386d4293920e690c0e017708f999b93cc729b upstream.
+commit ac11060c6d4959e2d4ceada037d2e1e1bfcf6645 upstream.
 
-total_cwsr_size was computed in 32-bit before being used as a BO/SVM
-allocation size.
-With large ctx_save_restore_area_size and debug_memory_size
-multiplied by the XCC count, the product can wrap,
-yielding an undersized CWSR save area that firmware later overruns.
+The mode-setting pipeline can disabled damage clippings for a commit
+by setting ignore_damage_clips in struct drm_plane_state. The commit
+will then do a full display update.
 
-Promote total_cwsr_size to u64 and use check_add_overflow()/
-check_mul_overflow() in both kfd_queue_acquire_buffers() and
-kfd_queue_release_buffers().
+Test the flag in DCN code and do a full update in DCN code if it has
+been set.
 
-Signed-off-by: Yongqiang Sun <Yongqiang.Sun@amd.com>
-Reviewed-by: Philip Yang <philip.yang@amd.com>
+Commit 35ed38d58257 ("drm: Allow drivers to indicate the damage helpers
+to ignore damage clips") introduced ignore_damage_clips to selectively
+ignore damage clipping in certain framebuffer changes. This driver does
+not do that, but DRM's damage iterator will soon rely on the flag.
+Therefore supporting it here as well make sense for consistency.
+
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Fixes: 35ed38d58257 ("drm: Allow drivers to indicate the damage helpers to ignore damage clips")
+Cc: Javier Martinez Canillas <javierm@redhat.com>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Zack Rusin <zackr@vmware.com>
+Cc: dri-devel@lists.freedesktop.org
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 319f7e13423ae3f486b9aea82f9ad2d6af0ee608)
-Cc: stable@vger.kernel.org
+(cherry picked from commit a24019f6480fad5c077b5956eed942c8960323d6)
+Cc: <stable@vger.kernel.org> # v6.8+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_queue.c |   23 +++++++++++++++++------
- 1 file changed, 17 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdkfd/kfd_queue.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_queue.c
-@@ -23,6 +23,7 @@
-  */
- 
- #include <linux/slab.h>
-+#include <linux/overflow.h>
- #include "kfd_priv.h"
- #include "kfd_topology.h"
- #include "kfd_svm.h"
-@@ -235,7 +236,7 @@ int kfd_queue_acquire_buffers(struct kfd
- 	struct kfd_topology_device *topo_dev;
- 	u64 expected_queue_size;
- 	struct amdgpu_vm *vm;
--	u32 total_cwsr_size;
-+	u64 total_cwsr_size;
- 	int err;
- 
- 	topo_dev = kfd_topology_device_by_id(pdd->dev->id);
-@@ -305,8 +306,14 @@ int kfd_queue_acquire_buffers(struct kfd
- 		goto out_err_unreserve;
- 	}
- 
--	total_cwsr_size = (properties->ctx_save_restore_area_size +
--			   topo_dev->node_props.debug_memory_size) * NUM_XCC(pdd->dev->xcc_mask);
-+	total_cwsr_size = (u64)properties->ctx_save_restore_area_size +
-+			  topo_dev->node_props.debug_memory_size;
-+	if (check_mul_overflow(total_cwsr_size,
-+			       NUM_XCC(pdd->dev->xcc_mask),
-+			       &total_cwsr_size)) {
-+		err = -EINVAL;
-+		goto out_err_unreserve;
-+	}
- 	total_cwsr_size = ALIGN(total_cwsr_size, PAGE_SIZE);
- 
- 	err = kfd_queue_buffer_get(vm, (void *)properties->ctx_save_restore_area_address,
-@@ -341,7 +348,7 @@ out_err_release:
- int kfd_queue_release_buffers(struct kfd_process_device *pdd, struct queue_properties *properties)
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -5826,8 +5826,8 @@ static void fill_dc_dirty_rects(struct d
  {
- 	struct kfd_topology_device *topo_dev;
--	u32 total_cwsr_size;
-+	u64 total_cwsr_size;
+ 	struct dm_crtc_state *dm_crtc_state = to_dm_crtc_state(crtc_state);
+ 	struct rect *dirty_rects = flip_addrs->dirty_rects;
+-	u32 num_clips;
+-	struct drm_mode_rect *clips;
++	u32 num_clips = 0;
++	struct drm_mode_rect *clips = NULL;
+ 	bool bb_changed;
+ 	bool fb_changed;
+ 	u32 i = 0;
+@@ -5843,8 +5843,10 @@ static void fill_dc_dirty_rects(struct d
+ 	if (new_plane_state->rotation != DRM_MODE_ROTATE_0)
+ 		goto ffu;
  
- 	kfd_queue_buffer_put(&properties->wptr_bo);
- 	kfd_queue_buffer_put(&properties->rptr_bo);
-@@ -352,8 +359,12 @@ int kfd_queue_release_buffers(struct kfd
- 	topo_dev = kfd_topology_device_by_id(pdd->dev->id);
- 	if (!topo_dev)
- 		return -EINVAL;
--	total_cwsr_size = (properties->ctx_save_restore_area_size +
--			   topo_dev->node_props.debug_memory_size) * NUM_XCC(pdd->dev->xcc_mask);
-+	total_cwsr_size = (u64)properties->ctx_save_restore_area_size +
-+			  topo_dev->node_props.debug_memory_size;
-+	if (check_mul_overflow(total_cwsr_size,
-+			       NUM_XCC(pdd->dev->xcc_mask),
-+			       &total_cwsr_size))
-+		return -EINVAL;
- 	total_cwsr_size = ALIGN(total_cwsr_size, PAGE_SIZE);
+-	num_clips = drm_plane_get_damage_clips_count(new_plane_state);
+-	clips = drm_plane_get_damage_clips(new_plane_state);
++	if (!new_plane_state->ignore_damage_clips) {
++		num_clips = drm_plane_get_damage_clips_count(new_plane_state);
++		clips = drm_plane_get_damage_clips(new_plane_state);
++	}
  
- 	kfd_queue_buffer_svm_put(pdd, properties->ctx_save_restore_area_address, total_cwsr_size);
+ 	if (num_clips && (!amdgpu_damage_clips || (amdgpu_damage_clips < 0 &&
+ 						   is_psr_su)))
 
 
