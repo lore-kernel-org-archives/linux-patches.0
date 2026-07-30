@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7A1743D515;
-	Thu, 30 Jul 2026 14:23:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13181435A94;
+	Thu, 30 Jul 2026 14:23:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421422; cv=none; b=VGS4PxoFdr12CXeqqTdmSBply8NZhhiLH4sMwst9UpS6cYORNGf5p8RS+GXmXjJwPG24dLHu4P0tjyW89jlzdHTGNOa5+eK68OfjSSYA2XaMnNXRBQ9BRWbtVKRw9yZanXyMEaaTkGHl2gXWf4bzQjZyGxg/BzLGzvB05e91d7Y=
+	t=1785421426; cv=none; b=PLumL4h9SmXVhARPmwleG03m1WiWs2suu3oxdAAYxvUY6JqW3rLn1Bf39n3QbWEXq+zMbeGbjjr0kNXzsiH+mrezpdpzKFWOeZAjJ8EitDQaR1XUBT8Jlax6xYrow7FQH3Lu5eBFvqLFjUu2IyTncTggG3lcA++UDOj/7t1ebGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421422; c=relaxed/simple;
-	bh=05QpuvdHMKk5HNUnaQBg+FzPp3uMzWbLHHIf+Q99BVE=;
+	s=arc-20240116; t=1785421426; c=relaxed/simple;
+	bh=P4TNHhK+2QtjXF4/fL46ROUuUFuZqeynfwx/hKwGB14=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ACex+HkimgbKo12C9NZ877atbHrk64AMyrYAAhXvhHPbmXQIqGwT9hDNbFYyDcpz66B7Db6Ax7NF3Ro/T+Yi5sIvWv5Q5hz3wHTOL7dlURwTxMdwTk1eOC5UAELiKnp+iNwkxe+P952nJ6sSe6gJ8SKbpWavHfh4/iSopMuDZfo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=djDW5wmQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lolndWnrQpaiLbtO/S/fQrHAUG5IgRpEMjO7217yQJGy7LG0TEA7ZfT25HiLx+qdvcmMJ2pkyjQ5J2uJ41F7WwFI5VzH23lTPZGtpBHALcMqIE59asIbYEpD+JJXuf1tiMj/OsGrHpHd6ae6zIcvI3UPDR+NdlvuBM2fjH9L3yQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D2zRLccI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="djDW5wmQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 114651F000E9;
-	Thu, 30 Jul 2026 14:23:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D2zRLccI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12F3C1F000E9;
+	Thu, 30 Jul 2026 14:23:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421421;
-	bh=fq2JN1ILmVJ1jNNEXHxVV3yCHEzotXDCEO0WhSDQ+lg=;
+	s=korg; t=1785421424;
+	bh=zUHblHiFzadcGUE5w0V94ItOxeMTmqsQq7Mzk7z9ZAc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=djDW5wmQKP7iNdG+fwPwjILBB7DZ+sP6xAlW7SYuMypstmDRd36qoIzwezO3sQzqf
-	 BGVI9J2kfJ+oosAIVUUBbbFvEB7v8cCvVR+zT5xCHLd1fzgGNflZ6yUeg887wQgX/x
-	 cArdsnNpHya4B26M4BcQNd7cwJmQGqERUZZXh/oc=
+	b=D2zRLccIauUGLcq2Ixt07pYaSvMWlNdVFWtsMhC5ErOYZ7URpPMXH82bt23f5MLRj
+	 yFPjuFdwizKvIBKgJ1rlGwUVIO9robxsUm04FGxiP6tInNwr0cUjtK+K3dU3R4w5/a
+	 HeyPUE76ixim26Ujy8zMwwLA6HoadX4dX0vfKyRs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Salvador Blaya <tiniebla6@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Johan Hovold <johan@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 098/744] ALSA: usb-audio: Skip DSD quirk for Musical Fidelity M6s DAC
-Date: Thu, 30 Jul 2026 16:06:11 +0200
-Message-ID: <20260730141446.352982059@linuxfoundation.org>
+Subject: [PATCH 7.1 099/744] Bluetooth: qca: fix NVM tag length underflow in TLV parser
+Date: Thu, 30 Jul 2026 16:06:12 +0200
+Message-ID: <20260730141446.373821978@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -51,45 +54,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit 93b47e66cc6d6c6382d44b44f5e7f6fc3a7b38c3 ]
+[ Upstream commit c90164ca0f7036942ba088eb7ea8d3f6c2352020 ]
 
-Salvador reported that the recent fix for applying the DSD quirk to
-Musical Fidelity devices broke for his M6s DAC model (2772:0502).
+In the TLV_TYPE_NVM branch of qca_tlv_check_data() the tag loop bound is
+"while (idx < length - sizeof(struct tlv_type_nvm))". "length" is a signed
+int from the firmware TLV header and sizeof(struct tlv_type_nvm) is a
+size_t (12), so "length" is converted to size_t and any firmware-supplied
+"length" < 12 makes the subtraction wrap to a huge value. The loop body
+then reads a 12-byte struct tlv_type_nvm past the end of the short
+vmalloc'd firmware buffer (and the EDL_TAG_ID_* handlers can write past it).
 
-Although this is basically a firmware bug, the model in question is
-fairly old, and no further firmware update can be expected, so it'd be
-better to address in the driver side.
+Rewrite the bound as "idx + sizeof(struct tlv_type_nvm) <= length"; both
+operands are non-negative, so it no longer underflows and a "length" too
+small for one record correctly skips the loop.
 
-As an ad hoc workaround, skip the DSD quirk for this device by adding
-an empty quirk entry of 2772:0502; this essentially skips the later
-DSD quirk entry by the match with the vendor 2772.
+  BUG: KASAN: vmalloc-out-of-bounds in qca_download_firmware.isra.0 (drivers/bluetooth/btqca.c:421)
+  Read of size 2 at addr ffffc900000e5004 by task kworker/u9:0/52
+  Workqueue: hci0 hci_power_on
+  Call Trace:
+   ...
+   kasan_report (mm/kasan/report.c:595)
+   qca_download_firmware.isra.0 (drivers/bluetooth/btqca.c:421 drivers/bluetooth/btqca.c:617)
+   qca_uart_setup (drivers/bluetooth/btqca.c:948)
+   qca_setup (drivers/bluetooth/hci_qca.c:2029)
+   hci_uart_setup (drivers/bluetooth/hci_ldisc.c:438)
+   hci_dev_open_sync (net/bluetooth/hci_sync.c:5227)
+   hci_power_on (net/bluetooth/hci_core.c:920)
+   process_one_work (kernel/workqueue.c:3322)
+   worker_thread (kernel/workqueue.c:3486)
+   kthread (kernel/kthread.c:436)
+   ret_from_fork (arch/x86/kernel/process.c:158)
+   ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
 
-Fixes: da3a7efff64e ("ALSA: usb-audio: Update for native DSD support quirks")
-Reported-by: Salvador Blaya <tiniebla6@gmail.com>
-Closes: https://lore.kernel.org/CAOdyq+qFaqCh=tK_wNnA64hv5pQuA1Y09ANxQ=xK8yR-t4mf9Q@mail.gmail.com
-Tested-by: Salvador Blaya <tiniebla6@gmail.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260709095614.1418838-1-tiwai@suse.de
+Fixes: 2e4edfa1e2bd ("Bluetooth: qca: add missing firmware sanity checks")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Reviewed-by: Johan Hovold <johan@kernel.org>
+Acked-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/quirks.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/bluetooth/btqca.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
-index ed66e2af95143b..33eb8be48af876 100644
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -2457,6 +2457,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
- 		   QUIRK_FLAG_DSD_RAW),
- 	DEVICE_FLG(0x2708, 0x0002, /* Audient iD14 */
- 		   QUIRK_FLAG_IGNORE_CTL_ERROR),
-+	DEVICE_FLG(0x2772, 0x0502, /* Musical Fidelity M6s DAC */
-+		   0), /* for avoiding QUIRK_FLAG_DSD_RAW with vendor match */
- 	DEVICE_FLG(0x2912, 0x30c8, /* Audioengine D1 */
- 		   QUIRK_FLAG_GET_SAMPLE_RATE),
- 	DEVICE_FLG(0x2a70, 0x1881, /* OnePlus Technology (Shenzhen) Co., Ltd. BE02T */
+diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
+index dda76365726f0b..fff1dd64383a3d 100644
+--- a/drivers/bluetooth/btqca.c
++++ b/drivers/bluetooth/btqca.c
+@@ -413,7 +413,7 @@ static int qca_tlv_check_data(struct hci_dev *hdev,
+ 
+ 		idx = 0;
+ 		data = tlv->data;
+-		while (idx < length - sizeof(struct tlv_type_nvm)) {
++		while (idx + sizeof(struct tlv_type_nvm) <= length) {
+ 			tlv_nvm = (struct tlv_type_nvm *)(data + idx);
+ 
+ 			tag_id = le16_to_cpu(tlv_nvm->tag_id);
 -- 
 2.53.0
 
