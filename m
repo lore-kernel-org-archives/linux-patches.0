@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF44B274650;
-	Thu, 30 Jul 2026 15:37:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B840337C92C;
+	Thu, 30 Jul 2026 15:37:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425838; cv=none; b=O1D+bNfwi2nfdqnFFfGn715qxHPHKiK3ec9rvwy8Bf21ze8JRIx3cdImmLB33Ht6UvTVIRiN4fhLZPpvvAHXzUN525XzS8yIBzy6rjNavWPzenMPnpXlY8fYk7KNv5FMnKhHGcdYq7IHkrUZ9Q/ZEK5upbtiFP3ZOe11mfzX2Qo=
+	t=1785425841; cv=none; b=G7c+vnNgDdx78blkyVCQzHly+Ldnpru8p125Z+VBDXJhv6XP9J87rCaJfAva84JofFnIStLnkq5rMPbhmwyb/CjpBM/fpO981+Q0EXLjcsVwppZ/mSjzZ0cqQYlm8ZjOdGxx/QmIU+pKPrd0pA+z8dU+sI0cSfR5wk6qZJHGLJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425838; c=relaxed/simple;
-	bh=7Z+aWOFbV/h+slMYx3bPcdZlAlAd1lP0Aqnip7kCKa0=;
+	s=arc-20240116; t=1785425841; c=relaxed/simple;
+	bh=n5/VU7fjQCA7kwtBG/Mr/g/MobI8r02/cOWHZIYibkU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nFlCs6Rcl0bYJ2v84oLv2DyF9B/TbICzZhphR+D24TBF8P8n1ZARRfB9/U2ENv6DsJPKbui0kfNfOU77o+ao2V/5UdDY51w3KuEpPRQI8/VKUTEJw2SveOHQBe5CX9RpKF7/jiSZRJO7PAod0PraaL0b55nay34RJjkPA0HIk2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JSTNbBVV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fMJ9YiFs+rJHxpgdD1BhaHjM9rHmDHwrebBxLyVJapt5rDiF3CTy+AfsGdblQ/XRLq5WY278TrNQ3L1W3A8ArZcfuT8bx8lsm+4MsFeH9pYxY20dW/1Yi3mArq5+z4v+l58pOOtVUxLHPKIHga1Piw04GhDHRNLwdRBiLPaZveo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T3JUQVrB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JSTNbBVV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35D151F000E9;
-	Thu, 30 Jul 2026 15:37:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T3JUQVrB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 142EF1F000E9;
+	Thu, 30 Jul 2026 15:37:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425837;
-	bh=bn1MqffzsujU884vjcG6gn+ujzxuiSyJ/AvuXkkp8S8=;
+	s=korg; t=1785425840;
+	bh=CMt4FwStlHLCvh74rEnjlHhKFRIYnH1azDB0pqaqFxs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JSTNbBVVWKU6jKMiXXQOjhui8IpPGAjBHPG/MW6TgnIiAx3TzJdt6X3z8unmu8I1w
-	 Ki/T4nA0OgRLykEXeuDQn1X3rzEDG7NDnnhIM79qdne/zXnb7IZVmvLiXTTIJf9tia
-	 eKZzx9wkjsAvADPG+/CkTk9tOS1adUO1LkfsMaXU=
+	b=T3JUQVrB8ukpWZYedhqkYq9ksE3yrz4XEIkWSqGEfCmV1zhXoqETmlScwJW/SuzB5
+	 RL47WD8NSy6D9oNTczpNvxbbUR6VKMnqAccsumaqWt5sqsWEtze8NR1Tj8abi5yIQT
+	 MsIbV/1lctsTnBK6fl5TqT4ReA1e758WbEI6iCDk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Sean Wang <sean.wang@mediatek.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 209/602] wifi: mt76: mt7996: check pointer returned by mt76_connac_get_he_phy_cap()
-Date: Thu, 30 Jul 2026 16:10:01 +0200
-Message-ID: <20260730141440.348160970@linuxfoundation.org>
+Subject: [PATCH 6.12 210/602] wifi: mt76: mt7925: fix crash in reset link replay
+Date: Thu, 30 Jul 2026 16:10:02 +0200
+Message-ID: <20260730141440.368114931@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -51,57 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Sean Wang <sean.wang@mediatek.com>
 
-[ Upstream commit e858cf6bf99880343348ff1e8c942aaff1d9d592 ]
+[ Upstream commit bd8b2ec838184236c3fcbf738a926328836adf12 ]
 
-mt76_connac_get_he_phy_cap routine can theoretically return NULL so
-check cap pointer before dereferencing it.
+During reset recovery, mt7925_vif_connect_iter() replays firmware state
+for links tracked in mvif->valid_links. After MLO link changes or MCU
+timeout recovery, the driver bitmap can temporarily contain a link whose
+mac80211 bss_conf has already gone away.
 
-Fixes: 98686cd21624c ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20260621-mt76_connac_get_he_phy_cap-fix-v1-3-ed4ccf7a0363@kernel.org
+This can pass a NULL bss_conf to mt76_connac_mcu_uni_add_dev(), matching
+the crash where x1, the second argument, is NULL:
+
+pc : mt76_connac_mcu_uni_add_dev+0x8c/0x1f8 [mt76_connac_lib]
+lr : mt7925_vif_connect_iter+0x9c/0x168 [mt7925_common]
+x2 : ffffff80a77f6018 x1 : 0000000000000000 x0 : ffffff8099402080
+Call trace:
+mt76_connac_mcu_uni_add_dev+0x8c/0x1f8 [mt76_connac_lib]
+mt7925_vif_connect_iter+0x9c/0x168 [mt7925_common]
+mt7925_mac_reset_work+0x264/0x2f8 [mt7925_common]
+
+Skip missing bss_conf entries before replaying the link. Non-MLO AP/STA
+reset replay is unchanged because the helper still returns &vif->bss_conf
+for the legacy link.
+
+Fixes: 14061994184d ("wifi: mt76: mt7925: add link handling in mt7925_vif_connect_iter")
+Signed-off-by: Sean Wang <sean.wang@mediatek.com>
+Link: https://patch.msgid.link/20260616161016.19346-1-sean.wang@kernel.org
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/mcu.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7925/mac.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-index 54567a5893449e..5730980fdc64eb 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-@@ -798,6 +798,8 @@ mt7996_mcu_bss_he_tlv(struct sk_buff *skb, struct ieee80211_vif *vif,
- 	struct tlv *tlv;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/mac.c b/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
+index f01dbca6e9b9ca..9ed0c2655037a0 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
+@@ -1285,6 +1285,9 @@ mt7925_vif_connect_iter(void *priv, u8 *mac,
  
- 	cap = mt76_connac_get_he_phy_cap(phy->mt76, vif);
-+	if (!cap)
-+		return;
+ 	for_each_set_bit(i, &valid, IEEE80211_MLD_MAX_NUM_LINKS) {
+ 		bss_conf = mt792x_vif_to_bss_conf(vif, i);
++		if (!bss_conf)
++			continue;
++
+ 		mconf = mt792x_vif_to_link(mvif, i);
  
- 	tlv = mt7996_mcu_add_uni_tlv(skb, UNI_BSS_INFO_HE_BASIC, sizeof(*he));
- 
-@@ -1537,17 +1539,18 @@ mt7996_mcu_sta_bfer_he(struct ieee80211_sta *sta, struct ieee80211_vif *vif,
- {
- 	struct ieee80211_sta_he_cap *pc = &sta->deflink.he_cap;
- 	struct ieee80211_he_cap_elem *pe = &pc->he_cap_elem;
--	const struct ieee80211_sta_he_cap *vc =
--		mt76_connac_get_he_phy_cap(phy->mt76, vif);
--	const struct ieee80211_he_cap_elem *ve = &vc->he_cap_elem;
- 	u16 mcs_map = le16_to_cpu(pc->he_mcs_nss_supp.rx_mcs_80);
- 	u8 nss_mcs = mt7996_mcu_get_sta_nss(mcs_map);
-+	const struct ieee80211_he_cap_elem *ve;
-+	const struct ieee80211_sta_he_cap *vc;
- 	u8 snd_dim, sts;
- 
-+	vc = mt76_connac_get_he_phy_cap(phy->mt76, vif);
- 	if (!vc)
- 		return;
- 
- 	bf->tx_mode = MT_PHY_TYPE_HE_SU;
-+	ve = &vc->he_cap_elem;
- 
- 	mt7996_mcu_sta_sounding_rate(bf);
- 
+ 		mt76_connac_mcu_uni_add_dev(&dev->mphy, bss_conf, &mconf->mt76,
 -- 
 2.53.0
 
