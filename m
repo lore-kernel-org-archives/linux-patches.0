@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FCFB3AA187;
-	Thu, 30 Jul 2026 15:10:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD40541F362;
+	Thu, 30 Jul 2026 15:10:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424254; cv=none; b=r0AhiAlO18qz6OqBQXHd9KOEY17NRMRuyC/62/9pQO4rA+DXvvOtHlYs6xHNu5C1cTPOtokD/SCYAV6Xrdxp5I+nt68KAIg/1aauaHuQKGpGlf+l0qs7BtEN2RSeEkk/k/eScctyGorgAFY2sCIlDWXQtitAluAoU3R2l12EQLw=
+	t=1785424257; cv=none; b=gNx1o5cAqsLjW7rGsYnZyWh/SiGhQgedSxbnX9uv8PLO2E4hdFXC6GCPjy2k72hTMF8blHKKgv20dwNOHD1ckD5mBXpW0gQQ5/sbck5uggtePZCRtyg4AQYRe9IuYvJE12MiYJmjcD+EdP8NQXnCX9rw9zYQPkUtUruyaLQ4dgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424254; c=relaxed/simple;
-	bh=UeZKoEnarIO8hjTbBSlGVJwO2xG6evrBNqhw1bACERg=;
+	s=arc-20240116; t=1785424257; c=relaxed/simple;
+	bh=AwiTiLlyRstvyUq9E0iboYDCb5A6kg3Ef8IeKUsfJMw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bWcICgCUFAxJr6wUxlIRkVnQ1kODA1FBBYdtAbl01Z0hMDtS/Wd/WBIG1XqFnz+oVP1nrCgmKzgm+iSHyI9hxQARq+JeYhq+8FX+DCH1P0QAUZJ1SifBpa0PirJig87pi/pzEW96Zd3QrYaqmxkNretmaJD6PpUkOAvRJtyM+Ek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ysLIMXnT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MERE/VIfxKIHFgKoWMKtK1+qtF8TYzAkCBXC2qWHxsJFpkXFOV2JabtBR4LTlfZfQJT63uFbCCsZOTibMEYuNwOHS+QE9MnaP4uNo70DZiPNDyUB7ITPY2WEhEDjVJuhP7YPWAfK1wNe71bFYfGUPXjJFhFZfFvAaCVx99YtRzs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZuHxVrJa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ysLIMXnT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EBD51F000E9;
-	Thu, 30 Jul 2026 15:10:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZuHxVrJa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD2411F00A3D;
+	Thu, 30 Jul 2026 15:10:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424244;
-	bh=bYZ3r3fzpRCXwQOb8ZaQm3OROBAHSnldZGlaTutezoo=;
+	s=korg; t=1785424250;
+	bh=z5vzIu2b5c0p0zjYlgToJnkyCV7viHHDPI7CGVyyRls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ysLIMXnT/O/0DgGICdcBthMoIxpYqddb48008CEdkPdB00gSRs4I3Q12DRZahI+Sq
-	 i7bkePnk+b7+T+1lDFGvgI+dNsF4/xWtJEw/XIObugV3BUUjmpxWQNwcWv09dnyxlI
-	 cvvwBktRsXY6kJd3dFc8J33AJMXcX3DvqeI9u6t0=
+	b=ZuHxVrJaZIj2zfBZyuPVA1RHppJtZRYwrf3HDeTwg9ypKGXyBecJ/935ZbTm5HXuk
+	 o+R03Sb8+uSmx4Tf9pSI+kvGEzh963sw5qe2IhMky8CRVjHCNi/U0RRCIyHahj5rUJ
+	 IyMPcmyipypcOkxXU9l4DHJBHu//HbkxN90pOvTo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alessio Belle <alessio.belle@imgtec.com>,
-	Brajesh Gupta <brajesh.gupta@imgtec.com>,
-	Matt Coster <matt.coster@imgtec.com>
-Subject: [PATCH 6.18 327/675] drm/imagination: Fit paired fragment job in the correct CCCB
-Date: Thu, 30 Jul 2026 16:10:57 +0200
-Message-ID: <20260730141452.078355513@linuxfoundation.org>
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Asad Kamal <asad.kamal@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.18 329/675] drm/amdgpu/gfx: fix cleaner shader IB buffer overflow
+Date: Thu, 30 Jul 2026 16:10:59 +0200
+Message-ID: <20260730141452.122011946@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -51,157 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alessio Belle <alessio.belle@imgtec.com>
+From: Asad Kamal <asad.kamal@amd.com>
 
-commit 4baf9e70cb756d78dd56419f8baee2978a72d0c3 upstream.
+commit 3e864bf2a32a1cbdf1e0f9c5a5a4176e8575f4a3 upstream.
 
-For geometry jobs with a paired fragment job, at the moment, the
-DRM scheduler's prepare_job() callback:
+The cleaner shader sysfs path allocates a 16-dword (64 byte) IB but
+incorrectly fills (align_mask + 1) dwords. On GFX rings align_mask is
+0xff, so the loop wrote 256 dwords into a 64-byte buffer, causing a
+kernel page fault.
 
-- checks for internal (driver) dependencies for the geometry job;
-- calls into pvr_queue_get_paired_frag_job_dep() to check for external
-  dependencies for the fragment job (the two jobs are submitted together
-  but the common scheduler code doesn't know about it, so this needs to
-  be done at this point in time);
-- calls into the prepare_job() callback again, but for the fragment job,
-  to check its internal dependencies as well, passing the fragment job's
-  drm_sched_job and the geometry job's drm_sched_entity / pvr_queue.
+The IB only needs to be a minimal NOP shell to schedule the job; the
+cleaner shader itself is emitted on the ring via emit_cleaner_shader().
+Fill 16 dwords to match the allocation.
 
-The problem with the last step is that pvr_queue_prepare_job() doesn't
-always take the mismatched fragment job and geometry queue into account,
-in particular when checking whether there is space for the fragment
-command to be submitted, so the code ends up checking for space in the
-geometry (i.e. wrong) CCCB.
-The rest of the nested prepare_job() callback happens to work fine at
-the moment as the other internal dependencies are not relevant for a
-paired fragment job.
+v2: Use ib_size_dw variable (Lijo)
 
-Move the initialisation of a paired fragment job's done fence and CCCB
-fence to pvr_queue_get_paired_frag_job_dep(), inferring the correct
-queue from the fragment job itself.
-
-This fixes cases where prepare_job() wrongly assumed that there was
-enough space for a paired fragment job in its own CCCB, unblocking
-run_job(), which then returned early without writing the full sequence
-of commands to the CCCB.
-
-The above lead to kernel warnings such as the following and potentially
-job timeouts (depending on waiters on the missing commands):
-
-  [  552.421075] WARNING: drivers/gpu/drm/imagination/pvr_cccb.c:178 at pvr_cccb_write_command_with_header+0x2c4/0x330 [powervr], CPU#2: kworker/u16:5/63
-  [  552.421230] Modules linked in:
-  [  552.421592] CPU: 2 UID: 0 PID: 63 Comm: kworker/u16:5 Tainted: G        W           7.0.0-rc2-gc5d053e4dccb #39 PREEMPT
-  [  552.421625] Tainted: [W]=WARN
-  [  552.421637] Hardware name: Texas Instruments AM625 SK (DT)
-  [  552.421655] Workqueue: powervr-sched drm_sched_run_job_work [gpu_sched]
-  [  552.421744] pstate: 80000005 (Nzcv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-  [  552.421766] pc : pvr_cccb_write_command_with_header+0x2c4/0x330 [powervr]
-  [  552.421850] lr : pvr_queue_submit_job_to_cccb+0x57c/0xa74 [powervr]
-  [  552.421923] sp : ffff800084c47650
-  [  552.421936] x29: ffff800084c47740 x28: 0000000000000df8 x27: ffff800088a77000
-  [  552.421979] x26: 0000000000000030 x25: ffff800084c47680 x24: 0000000000001000
-  [  552.422017] x23: ffff800084c47820 x22: 1ffff00010988ecc x21: 0000000000000008
-  [  552.422055] x20: 0000000000000208 x19: ffff000006ad5a88 x18: 0000000000000000
-  [  552.422093] x17: 0000000020020000 x16: 0000000000020000 x15: 0000000000000000
-  [  552.422130] x14: 0000000000000000 x13: 0000000000000000 x12: 0000000000000000
-  [  552.422167] x11: 000000000000f2f2 x10: 00000000f3000000 x9 : 00000000f3f3f3f3
-  [  552.422204] x8 : 00000000f2f2f200 x7 : ffff700010988ecc x6 : 0000000000000008
-  [  552.422241] x5 : 0000000000000000 x4 : 1ffff0001114ee00 x3 : 0000000000000000
-  [  552.422278] x2 : 0000000000000007 x1 : 0000000000000fff x0 : 000000000000002f
-  [  552.422316] Call trace:
-  [  552.422330]  pvr_cccb_write_command_with_header+0x2c4/0x330 [powervr] (P)
-  [  552.422411]  pvr_queue_submit_job_to_cccb+0x57c/0xa74 [powervr]
-  [  552.422486]  pvr_queue_run_job+0x3a4/0x990 [powervr]
-  [  552.422562]  drm_sched_run_job_work+0x580/0xd48 [gpu_sched]
-  [  552.422623]  process_one_work+0x520/0x1288
-  [  552.422657]  worker_thread+0x3f0/0xb3c
-  [  552.422679]  kthread+0x334/0x3d8
-  [  552.422706]  ret_from_fork+0x10/0x20
-
-Fixes: eaf01ee5ba28 ("drm/imagination: Implement job submission and scheduling")
-Cc: stable@vger.kernel.org
-Signed-off-by: Alessio Belle <alessio.belle@imgtec.com>
-Reviewed-by: Brajesh Gupta <brajesh.gupta@imgtec.com>
-Link: https://patch.msgid.link/20260330-job-submission-fixes-cleanup-v1-2-7de8c09cef8c@imgtec.com
-Signed-off-by: Matt Coster <matt.coster@imgtec.com>
+Fixes: d361ad5d2fc0 ("drm/amdgpu: Add sysfs interface for running cleaner shader")
+Suggested-by: Lijo Lazar <lijo.lazar@amd.com>
+Signed-off-by: Asad Kamal <asad.kamal@amd.com>
+Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit bf21af331ebf72d0935fd70c73192414a422c03a)
+CC: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/imagination/pvr_queue.c |   32 ++++++++++++++------------------
- 1 file changed, 14 insertions(+), 18 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/gpu/drm/imagination/pvr_queue.c
-+++ b/drivers/gpu/drm/imagination/pvr_queue.c
-@@ -488,10 +488,11 @@ pvr_queue_get_job_kccb_fence(struct pvr_
- }
- 
- static struct dma_fence *
--pvr_queue_get_paired_frag_job_dep(struct pvr_queue *queue, struct pvr_job *job)
-+pvr_queue_get_paired_frag_job_dep(struct pvr_job *job)
- {
- 	struct pvr_job *frag_job = job->type == DRM_PVR_JOB_TYPE_GEOMETRY ?
- 				   job->paired_job : NULL;
-+	struct pvr_queue *frag_queue = frag_job ? frag_job->ctx->queues.fragment : NULL;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
+@@ -1456,12 +1456,13 @@ static int amdgpu_gfx_run_cleaner_shader
+ 	struct amdgpu_device *adev = ring->adev;
+ 	struct drm_gpu_scheduler *sched = &ring->sched;
+ 	struct drm_sched_entity entity;
++	unsigned int ib_size_dw = 16;
+ 	static atomic_t counter;
  	struct dma_fence *f;
- 	unsigned long index;
+ 	struct amdgpu_job *job;
+ 	struct amdgpu_ib *ib;
+ 	void *owner;
+-	int i, r;
++	int r;
  
-@@ -510,7 +511,10 @@ pvr_queue_get_paired_frag_job_dep(struct
- 		return dma_fence_get(f);
- 	}
+ 	/* Initialize the scheduler entity */
+ 	r = drm_sched_entity_init(&entity, DRM_SCHED_PRIORITY_NORMAL,
+@@ -1479,7 +1480,7 @@ static int amdgpu_gfx_run_cleaner_shader
+ 	owner = (void *)(unsigned long)atomic_inc_return(&counter);
  
--	return frag_job->base.sched->ops->prepare_job(&frag_job->base, &queue->entity);
-+	/* Initialize the paired fragment job's done_fence, so we can signal it. */
-+	pvr_queue_job_fence_init(frag_job->done_fence, frag_queue);
-+
-+	return pvr_queue_get_job_cccb_fence(frag_queue, frag_job);
- }
+ 	r = amdgpu_job_alloc_with_ib(ring->adev, &entity, owner,
+-				     64, 0, &job,
++				     ib_size_dw * sizeof(uint32_t), 0, &job,
+ 				     AMDGPU_KERNEL_JOB_ID_CLEANER_SHADER);
+ 	if (r)
+ 		goto err;
+@@ -1489,9 +1490,8 @@ static int amdgpu_gfx_run_cleaner_shader
+ 	job->run_cleaner_shader = true;
  
- /**
-@@ -529,11 +533,6 @@ pvr_queue_prepare_job(struct drm_sched_j
- 	struct pvr_queue *queue = container_of(s_entity, struct pvr_queue, entity);
- 	struct dma_fence *internal_dep = NULL;
+ 	ib = &job->ibs[0];
+-	for (i = 0; i <= ring->funcs->align_mask; ++i)
+-		ib->ptr[i] = ring->funcs->nop;
+-	ib->length_dw = ring->funcs->align_mask + 1;
++	memset32(ib->ptr, ring->funcs->nop, ib_size_dw);
++	ib->length_dw = ib_size_dw;
  
--	/*
--	 * Initialize the done_fence, so we can signal it. This must be done
--	 * here because otherwise by the time of run_job() the job will end up
--	 * in the pending list without a valid fence.
--	 */
- 	if (job->type == DRM_PVR_JOB_TYPE_FRAGMENT && job->paired_job) {
- 		/*
- 		 * This will be called on a paired fragment job after being
-@@ -543,18 +542,15 @@ pvr_queue_prepare_job(struct drm_sched_j
- 		 */
- 		if (job->paired_job->has_pm_ref)
- 			return NULL;
--
--		/*
--		 * In this case we need to use the job's own ctx to initialise
--		 * the done_fence.  The other steps are done in the ctx of the
--		 * paired geometry job.
--		 */
--		pvr_queue_job_fence_init(job->done_fence,
--					 job->ctx->queues.fragment);
--	} else {
--		pvr_queue_job_fence_init(job->done_fence, queue);
- 	}
+ 	f = amdgpu_job_submit(job);
  
-+	/*
-+	 * Initialize the done_fence, so we can signal it. This must be done
-+	 * here because otherwise by the time of run_job() the job will end up
-+	 * in the pending list without a valid fence.
-+	 */
-+	pvr_queue_job_fence_init(job->done_fence, queue);
-+
- 	/* CCCB fence is used to make sure we have enough space in the CCCB to
- 	 * submit our commands.
- 	 */
-@@ -575,7 +571,7 @@ pvr_queue_prepare_job(struct drm_sched_j
- 
- 	/* The paired job fence should come last, when everything else is ready. */
- 	if (!internal_dep)
--		internal_dep = pvr_queue_get_paired_frag_job_dep(queue, job);
-+		internal_dep = pvr_queue_get_paired_frag_job_dep(job);
- 
- 	return internal_dep;
- }
 
 
