@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D1CE446070;
-	Thu, 30 Jul 2026 16:06:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1A823932E9;
+	Thu, 30 Jul 2026 16:06:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427566; cv=none; b=cmoDBhfcjAsC8FSVECQ9mBIxncR2a1sOxDL778hCn7RjSptyW/N9pPjbjgjPd+jTtADodDyBzt4dw4zldqNDrNFz0Ci0rZkUlqJzirzy2hO34bBeJItPRgisZVKk6RwoFUXo+hU3xpxQ7TnLSvMSRTfaaQjGldatG8CS0XR21Js=
+	t=1785427568; cv=none; b=U4remBdeZrn62MvhX7j3XSaaP9XSOTYFzcTc3Scjgx+OSKROcWRXOlotdOHzwyhmK5MhkG1Drb1xpH95eUu04Blhj3UpH96FHfD/un7G/lCQqsM2Wbc6OyVLoqiHnEskmSjK3oUSUU9le2Oh0a8Iz81aF9bM0Yagv1bXPE6JVv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427566; c=relaxed/simple;
-	bh=TfrYjbtJV4HGmTdLRFmZTAP9IUIqND7EhJWd1pAHf2k=;
+	s=arc-20240116; t=1785427568; c=relaxed/simple;
+	bh=dslJk9bLB5OqYNWqTluwnFLwqWGbYcZTwGeHNRoEYHk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NGT2BM4pPRZPiHSw/bk+ZcTHhRm4hXUcCDH+bmNEhJxGK/d1bbZ1H8rnp4olAfCUX6t34ffUg/haXZZF8bjBLdXSnbK3jeQ4EFSXyx3nP+OLK4pdfEHJ9BRrsZbfkxZG4bVpRMWQheUaswljbFnpdNYfaWhu1CTwosm45JI5Img=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WLpa2eXb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kZP9gVRA1wnR42ySjH0ECvI9RhokfGF5wWcx1Lfhbs3bm8+JIhsW8q2q2c+nHuJPogTpOQbC9Ufqfz4PPta/4aw30pNCzgl6cGflvkFTrbeeyjTsACCLyyIy98d1fx7PkTVDMYWG3D2blKxHe2wHfHHNk1LZRAjqfassbYew5iU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ix6C3j6U; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WLpa2eXb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 659261F000E9;
-	Thu, 30 Jul 2026 16:06:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ix6C3j6U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A92C1F000E9;
+	Thu, 30 Jul 2026 16:06:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427564;
-	bh=zY78bWmKqeqgsX1bjE9XEbnjcqUvLZsdhQNKtyxd6ZQ=;
+	s=korg; t=1785427567;
+	bh=AvWTlKn92+zGb6na6Dxpv/6XXfUayGeWnRbDKnFJAyU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WLpa2eXbGJq5nZ4Gd2sMvfViHARf2pa0hE3fkDN2JexETlzN3y7keUkKThqJPqJ6W
-	 YgsF5JFN8OXRr3sTro+AbK43BlchrURhrGFupzaDpjXsGGH2s3AjntlHxeYzxjK/jJ
-	 NS/+SGnwD2K8FIAPlF54SXyKYSC1CI9FDlj+Q3DY=
+	b=Ix6C3j6UU/wsietR1tR8RVy636IqBjKWEoLuGWYOz+gPv1sOnUEDq9reDKmfi1Mu2
+	 d8OYzL28KuqXbsORdkit5q+mCTPBpLGz4ysY/odQcS+m4QYr9+IUspZ3N4VTnVh3qR
+	 A/D02FcEa7VqxNadW4/oRHYYtmgDNSSOWCOf64uk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Junrui Luo <moonafterrain@outlook.com>,
-	Danilo Krummrich <dakr@kernel.org>
-Subject: [PATCH 6.6 214/484] drm/nouveau: fix reversed error cleanup order in ucopy functions
-Date: Thu, 30 Jul 2026 16:11:51 +0200
-Message-ID: <20260730141428.122088534@linuxfoundation.org>
+	Martin Hodo <martin.hodo@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Subject: [PATCH 6.6 215/484] drm/i915/gem: Add missing nospec on parallel submit slot
+Date: Thu, 30 Jul 2026 16:11:52 +0200
+Message-ID: <20260730141428.143133611@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -51,66 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 
-commit ab99ead646b1b833ecd57fe577a2816f2e848167 upstream.
+commit 914a76a9f08366434bf595700f62026b7a19a9cc upstream.
 
-nouveau_uvmm_vm_bind_ucopy() and nouveau_exec_ucopy() place their error
-cleanup labels in allocation order rather than reverse allocation order.
-On a u_memcpya() failure for in_sync.s, the goto to err_free_ops (or
-err_free_pushs) frees the first allocation and then falls through to
-err_free_ins, which calls u_free() on args->in_sync.s.
+Add missing Spectre mitigation for userspace controlled parallel
+submission slot.
 
-Since args->in_sync.s still holds the ERR_PTR returned by the failed
-u_memcpya(), and ERR_PTR values are not caught by ZERO_OR_NULL_PTR(),
-kvfree() proceeds to dereference it, which can result in a kernel oops.
-A failure for out_sync.s instead jumps to err_free_ins and skips freeing
-the first allocation, leading to a memory leak.
+Discovered using AI-assisted static analysis confirmed by Intel
+Product Security.
 
-Fix by swapping the cleanup label order so resources are freed in the
-correct reverse allocation sequence.
-
-Fixes: b88baab82871 ("drm/nouveau: implement new VM_BIND uAPI")
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
-Link: https://patch.msgid.link/SYBPR01MB7881484D91A6F80271415F71AF1A2@SYBPR01MB7881.ausprd01.prod.outlook.com
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Reported-by: Martin Hodo <martin.hodo@intel.com>
+Fixes: e5e32171a2cf ("drm/i915/guc: Connect UAPI to GuC multi-lrc interface")
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: Tvrtko Ursulin <tursulin@ursulin.net>
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Cc: <stable@vger.kernel.org> # v5.16+
+Link: https://patch.msgid.link/20260622132539.165558-1-joonas.lahtinen@linux.intel.com
+(cherry picked from commit 15b9353deff3cf72331c387780de3cf9c316b643)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_exec.c |    4 ++--
- drivers/gpu/drm/nouveau/nouveau_uvmm.c |    4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/i915/gem/i915_gem_context.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/nouveau/nouveau_exec.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_exec.c
-@@ -353,10 +353,10 @@ nouveau_exec_ucopy(struct nouveau_exec_j
+--- a/drivers/gpu/drm/i915/gem/i915_gem_context.c
++++ b/drivers/gpu/drm/i915/gem/i915_gem_context.c
+@@ -610,6 +610,7 @@ set_proto_ctx_engines_parallel_submit(st
+ 		return -EINVAL;
+ 	}
  
- 	return 0;
- 
--err_free_pushs:
--	u_free(args->push.s);
- err_free_ins:
- 	u_free(args->in_sync.s);
-+err_free_pushs:
-+	u_free(args->push.s);
- 	return ret;
- }
- 
---- a/drivers/gpu/drm/nouveau/nouveau_uvmm.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_uvmm.c
-@@ -1730,10 +1730,10 @@ nouveau_uvmm_vm_bind_ucopy(struct nouvea
- 
- 	return 0;
- 
--err_free_ops:
--	u_free(args->op.s);
- err_free_ins:
- 	u_free(args->in_sync.s);
-+err_free_ops:
-+	u_free(args->op.s);
- 	return ret;
- }
- 
++	slot = array_index_nospec(slot, set->num_engines);
+ 	if (set->engines[slot].type != I915_GEM_ENGINE_TYPE_INVALID) {
+ 		drm_dbg(&i915->drm,
+ 			"Invalid placement[%d], already occupied\n", slot);
 
 
