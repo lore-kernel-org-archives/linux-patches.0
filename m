@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D330383983;
-	Thu, 30 Jul 2026 15:57:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 650A12D0602;
+	Thu, 30 Jul 2026 15:57:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427045; cv=none; b=lPPio4s/Lfgx+Xg0H3SypKKAoa6srl5cEpz/5TKzMed7J3PfNeW4E9N5/DPryzGQGeN2Be0a30vMGynkON8Hh6fdRlBG02w0C0zzGtIlR9utKmXPEjghbAWF0tYh9ANHUKLbkrg7pDslLG59iHmVUwRMstW3rhDeHiMBTV2u1QA=
+	t=1785427048; cv=none; b=aHZMAKhTD7xQTXLf0s0r7m9S4nvXY8pvrHjYJDTodB74JA+qdNYotI6J4Gs1It1R21mHkiQahAZPTcp2EUZNOGNxTEHtGzmFbfy026skR4xcDhk18XxUuAo/ydCnSd52k0Bp7pH9mCbRD7oOA3nsNj2OjkDJ8CvFvm9ive9HUiM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427045; c=relaxed/simple;
-	bh=HV8l/ytYYQLDG0+9SYzVNFM5Cryygc8CBceLvBPs2h4=;
+	s=arc-20240116; t=1785427048; c=relaxed/simple;
+	bh=H3Njs75GU2J7slNFiVxWaaYRobOVSBbtvb31O7dIFzE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SJJDI53Fm+R6YVF2De5z+O7IbnP/KQEvcj0VV8IxwK+IySk1QXTI2myICJH+W44DRdOv8tvRi88LrEaAqjgR6B9K09AEvI2xOXPBfAIBKpBU13iOc+MNAC2eXu+U/L3JOLZZKe4I2xmKM81ZBYb+z8km3lpZCb5Uip/DgfxR7v4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H9xX0Z5u; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ZnL0kXcEEvepbxZ3/4TtpFcoJ+SOvd8Iip8vqgElxyQzeBgzfBotf1uXDSYF4xdxsFCSG1rqDtEJ13rdvflJ/w4Xcen37aJNMDs+BSPmTgORhrmFIQ35i8KEnDyZ65OLlmvEdW/s0cTRfiSd8foXb5yRO+T4vc3Eml8jINFiO+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CrXBoeAy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H9xX0Z5u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEEEE1F00A3E;
-	Thu, 30 Jul 2026 15:57:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CrXBoeAy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87C931F000E9;
+	Thu, 30 Jul 2026 15:57:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427044;
-	bh=QVTVz3US/KupgWn0ZBGHFwR+FOr8QUIft2rF4adikF0=;
+	s=korg; t=1785427047;
+	bh=PYV2MYdGHG0AmcJoxZwKbJU40f7tSTTQL3O36Wt0nCY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H9xX0Z5u01TDfgDyRTXpJZicPXGcn00ToHxnlBU87lE+zZsHbiVON8k6q75FEfDIx
-	 CDcPO4nKUOMW7/Mq8335rW70Mcp12CYW8sBfqWtFkVE6eWlJpB0J3eakN+Pyc1Fjn8
-	 uXTLyyZq0NKHeUw2u6JgQIG2NpfcYvILnMmLiDuk=
+	b=CrXBoeAy1Z7uysfxVB/Da3oj5YKOqEEIp6oBZwFA6Bhe0HGMP2J58Pcz4HIs/DAmD
+	 CFt132IeEpuZUQhb/lAOQS8cIBtCueC3VR8sHjQCjUuZxYSmw4zIGLRAQsE3WcFb2m
+	 D+uyaNQvIwVx7Gs72QGDAMX8GHdbhHrmTGv8geHY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	kernel test robot <lkp@intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Daniel Gibson <daniel@gibson.sh>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 032/484] mtd: nand: mtk-ecc: stop on ECC idle timeouts
-Date: Thu, 30 Jul 2026 16:08:49 +0200
-Message-ID: <20260730141424.123011300@linuxfoundation.org>
+Subject: [PATCH 6.6 006/484] platform/x86/amd/pmc: Avoid logging "(null)" for DMI values
+Date: Thu, 30 Jul 2026 16:08:23 +0200
+Message-ID: <20260730141423.539160969@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -45,79 +46,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Daniel Gibson <daniel@gibson.sh>
 
-[ Upstream commit 16f7ec8d5dc100eafd2c8e06cd30340a30b104a1 ]
+commit a0738abd042f7406edd2175a819cf2e66388ed97 upstream.
 
-mtk_ecc_wait_idle() logs when the encoder or decoder does not become
-idle, but returns void. Callers can therefore configure a non-idle ECC
-engine or read parity bytes after an unconfirmed encoder idle state.
+dmi_get_system_info(...) can return NULL. Using that as %s arguments
+of dev_info() would log "(null)" (as part of a message like
+'... System Vendor: "(null)", Product Name: "(null)" ...'), which may
+be confusing for users.
 
-Return the idle poll result and propagate it from the enable and encode
-paths that require the engine to be idle before continuing.
+Use Elvis operator to print "(Unknown)" instead.
 
-Fixes: 1d6b1e464950 ("mtd: mediatek: driver for MTK Smart Device")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Fixes: 428b9fd2dce5 ("platform/x86/amd/pmc: Add delay_suspend module parameter")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202606251540.Nr2BtaNu-lkp@intel.com/
+Suggested-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Daniel Gibson <daniel@gibson.sh>
+Link: https://patch.msgid.link/20260626220210.1761783-2-daniel@gibson.sh
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/ecc-mtk.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ drivers/platform/x86/amd/pmc/pmc.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/mtd/nand/ecc-mtk.c b/drivers/mtd/nand/ecc-mtk.c
-index c75bb8b80cc1e1..96703f0a418ea2 100644
---- a/drivers/mtd/nand/ecc-mtk.c
-+++ b/drivers/mtd/nand/ecc-mtk.c
-@@ -123,8 +123,8 @@ static int mt7622_ecc_regs[] = {
- 	[ECC_DECIRQ_STA] =      0x144,
- };
- 
--static inline void mtk_ecc_wait_idle(struct mtk_ecc *ecc,
--				     enum mtk_ecc_operation op)
-+static inline int mtk_ecc_wait_idle(struct mtk_ecc *ecc,
-+				    enum mtk_ecc_operation op)
- {
- 	struct device *dev = ecc->dev;
- 	u32 val;
-@@ -136,6 +136,8 @@ static inline void mtk_ecc_wait_idle(struct mtk_ecc *ecc,
- 	if (ret)
- 		dev_warn(dev, "%s NOT idle\n",
- 			 op == ECC_ENCODE ? "encoder" : "decoder");
-+
-+	return ret;
- }
- 
- static irqreturn_t mtk_ecc_irq(int irq, void *id)
-@@ -312,7 +314,11 @@ int mtk_ecc_enable(struct mtk_ecc *ecc, struct mtk_ecc_config *config)
- 		return ret;
+diff --git a/drivers/platform/x86/amd/pmc/pmc.c b/drivers/platform/x86/amd/pmc/pmc.c
+index b0951236887797..bf6c7ca247e243 100644
+--- a/drivers/platform/x86/amd/pmc/pmc.c
++++ b/drivers/platform/x86/amd/pmc/pmc.c
+@@ -852,11 +852,11 @@ static bool amd_pmc_want_suspend_delay(struct amd_pmc_dev *pdev)
+ 	} else if (delay_suspend == 1) {
+ 		if (!intermediate_wakeup)
+ 			dev_info(pdev->dev, "Delaying suspend by 2.5s because delay_suspend=1. If this solves problems on your machine, please report this whole line to: platform-driver-x86@vger.kernel.org so it can be automatically detected as affected in the future. System Vendor: \"%s\" Product Name: \"%s\" Product Family: \"%s\" Board Vendor: \"%s\" Board Name: \"%s\"\n",
+-				 dmi_get_system_info(DMI_SYS_VENDOR),
+-				 dmi_get_system_info(DMI_PRODUCT_NAME),
+-				 dmi_get_system_info(DMI_PRODUCT_FAMILY),
+-				 dmi_get_system_info(DMI_BOARD_VENDOR),
+-				 dmi_get_system_info(DMI_BOARD_NAME));
++				 dmi_get_system_info(DMI_SYS_VENDOR) ?: "(Unknown)",
++				 dmi_get_system_info(DMI_PRODUCT_NAME) ?: "(Unknown)",
++				 dmi_get_system_info(DMI_PRODUCT_FAMILY) ?: "(Unknown)",
++				 dmi_get_system_info(DMI_BOARD_VENDOR) ?: "(Unknown)",
++				 dmi_get_system_info(DMI_BOARD_NAME) ?: "(Unknown)");
+ 		return true;
  	}
- 
--	mtk_ecc_wait_idle(ecc, op);
-+	ret = mtk_ecc_wait_idle(ecc, op);
-+	if (ret) {
-+		mutex_unlock(&ecc->lock);
-+		return ret;
-+	}
- 
- 	ret = mtk_ecc_config(ecc, config);
- 	if (ret) {
-@@ -412,7 +418,9 @@ int mtk_ecc_encode(struct mtk_ecc *ecc, struct mtk_ecc_config *config,
- 	if (ret)
- 		goto timeout;
- 
--	mtk_ecc_wait_idle(ecc, ECC_ENCODE);
-+	ret = mtk_ecc_wait_idle(ecc, ECC_ENCODE);
-+	if (ret)
-+		goto timeout;
- 
- 	/* Program ECC bytes to OOB: per sector oob = FDM + ECC + SPARE */
- 	len = (config->strength * ecc->caps->parity_bits + 7) >> 3;
+ 	return false;
 -- 
 2.53.0
 
