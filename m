@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBF5639C00E;
-	Thu, 30 Jul 2026 14:46:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF7B43B6366;
+	Thu, 30 Jul 2026 14:46:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422802; cv=none; b=AddyDvmBaiwjANCA0HZ6zKV19H7SgicLmm5IPX28jEm+JLLYTmXxO9sY7tCxrxgdMETEL/MArqeuu4jUf/VeJ5c10WhUDXB9a2hu9pbGrjPnGPqf7HaOhNNUrtBZ5W953zwHenoeJ3DB3OYevkuBizemsUN/b8WJo8rfMVoIifg=
+	t=1785422806; cv=none; b=ZyVZySOYzR1W+qyoxFwdjuQQ+DKoTBd7uhu5h72rjZTlicI7aG6fsEK48L7fIbA/NPwcKBhClbDMWzZlVIy/uyipx/DzFpPPFUV3ehm6CmoLYYZxUhJooARNzODQw6diniMdYDAkVg6ptnxW6qldtcekRMUkziEvF8XvefUz+UM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422802; c=relaxed/simple;
-	bh=F1HEP6NdT1D0+hrMDzmN6yMVfPNogT6/4Bv2EIzekDQ=;
+	s=arc-20240116; t=1785422806; c=relaxed/simple;
+	bh=OI+SATb0Slw3/UJeGm8x3Y50j8Y9L0Qnao90L96cmgc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Se4bqw1Y495xocFmc0gAMpo/IoVkb2PueG5X5sCMO7q5vNIe++rmvlFu3ORYiH4dmktXhud7A7PqFGQOSdeiZTkLp1yv2DmzXcIQyW3IN36esRBGbSAS//NYLt8jTI1XGrx8jMlI4EZVekGpu9zKc6mbVEY3bglWHXfp9YatLN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Drk+Cg8l; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=puuiJp0S2joPKJx0beR/JE815+T2mM+ZyJS6dlI3UALSeX3aH0fa3x2XOezR9jlOK7eISGp4qi6HaTVkzArA+eP5BlENH2wTdQEltdA7HHqvQboO8kn105Li3OI0izPdC6t8SPBp+FaAZXp9EaUhEMeIREnHs8H6bGUW4tMV+uU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kx3DKP5q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Drk+Cg8l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B0141F000E9;
-	Thu, 30 Jul 2026 14:46:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kx3DKP5q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19EE61F000E9;
+	Thu, 30 Jul 2026 14:46:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422801;
-	bh=YTmq6ZfxnV5HunbzLVICJiG158h/oJuAbIkQm9afp3Q=;
+	s=korg; t=1785422804;
+	bh=rQ5caSI4pnqw0Ly0dcUBRuAzbcd0WvlObsNEe+k7jfs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Drk+Cg8lf+VW1c3WJd2a1g5loe19xtKWb3iX7e48pDv3jZoySAIgFLqVBTLYIXsea
-	 X503yikib5OufXZCVgy4yDIoidBU8YEFmtssTY0PqjDsqoBq4I4cJmkwbO5mbVcIBN
-	 g7WYw+/o69gO1gwZbJMBGFyofldK6Ona8Ux1yww4=
+	b=Kx3DKP5qepJoF3ZCH9bgxXTr/p4kVQlUVJC8DJLAtyE8T53Vg4b5Kck+udXI+kjvW
+	 ZBY1M2qKzfKd8h60MfT9OBu0lKXDSJws4oghCHK68q+3HLcPkLHt7BJZUEAcvowMHK
+	 Ae7QwSDys9KbUup9My21NN84v6L90vZ2at4+usas=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yao Zi <me@ziyao.cc>,
-	Xi Ruoyao <xry111@xry111.site>,
-	Zixing Liu <liushuyu@aosc.io>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 7.1 562/744] platform/loongarch: laptop: Explicitly reset bl_powered state when suspend
-Date: Thu, 30 Jul 2026 16:13:55 +0200
-Message-ID: <20260730141456.229212012@linuxfoundation.org>
+	stable@kernel.org,
+	Alice Ryhl <aliceryhl@google.com>
+Subject: [PATCH 7.1 563/744] rust_binder: only print failure if error has source
+Date: Thu, 30 Jul 2026 16:13:56 +0200
+Message-ID: <20260730141456.251097059@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -52,40 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zixing Liu <liushuyu@aosc.io>
+From: Alice Ryhl <aliceryhl@google.com>
 
-commit 91a70492c03040d51b36f595530d6491d5d6c541 upstream.
+commit bb66b1a3452534adb8b72abf2f761375970fe472 upstream.
 
-On EAECIS NL60R with EC firmware version 1.11, resuming from S3 has a
-very high chance (>90%) of causing the EC to lose the previous backlight
-power state. When this happens, the laptop resumes normally from S3, but
-the backlight remains off (when shining on the screen with a flash light,
-we can see the screen contents are updating normally).
+The commit that fixes BINDER_GET_EXTENDED_ERROR changed the condition
+for printing transaction failures so errors are printed even if the
+cause is a dead or frozen process. Undo this change so that the error
+is only printed if the failure has an errno associated with it.
 
-Since there is no generic way to query the EC's backlight state on
-Loongson laptop platforms, assume the worst-case scenario and restart
-the backlight power inside the kernel each time the system resumes.
-
-Cc: stable@vger.kernel.org
-Fixes: 53c762b47f72 ("platform/loongarch: laptop: Add backlight power control support")
-Tested-by: Yao Zi <me@ziyao.cc>
-Tested-by: Xi Ruoyao <xry111@xry111.site>
-Signed-off-by: Zixing Liu <liushuyu@aosc.io>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Cc: stable@kernel.org
+Fixes: 77bfebf11077 ("rust_binder: fix BINDER_GET_EXTENDED_ERROR")
+Signed-off-by: Alice Ryhl <aliceryhl@google.com>
+Link: https://patch.msgid.link/20260708-get-extended-error-fix-printing-v1-1-6e293b213b70@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/loongarch/loongson-laptop.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/android/binder/thread.rs |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/drivers/platform/loongarch/loongson-laptop.c
-+++ b/drivers/platform/loongarch/loongson-laptop.c
-@@ -189,6 +189,7 @@ static int __init setup_acpi_notify(stru
+--- a/drivers/android/binder/thread.rs
++++ b/drivers/android/binder/thread.rs
+@@ -1273,14 +1273,14 @@ impl Thread {
+                         inner.extended_error =
+                             ExtendedError::new(info.debug_id as u32, err.reply, source.to_errno());
+                     }
+-                }
  
- static int loongson_hotkey_suspend(struct device *dev)
- {
-+	bl_powered = false;
- 	return 0;
- }
+-                pr_warn!(
+-                    "{}:{} transaction to {} failed: {err:?}",
+-                    info.from_pid,
+-                    info.from_tid,
+-                    info.to_pid
+-                );
++                    pr_warn!(
++                        "{}:{} transaction to {} failed: {err:?}",
++                        info.from_pid,
++                        info.from_tid,
++                        info.to_pid
++                    );
++                }
+             }
+         }
  
 
 
