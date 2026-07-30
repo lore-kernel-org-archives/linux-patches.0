@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E0C37475C;
-	Thu, 30 Jul 2026 14:46:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5EE61FE44A;
+	Thu, 30 Jul 2026 14:46:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422788; cv=none; b=pLKPmtX91Sba7A1nQb04V7fGuz4wS1Vq2CSEW0UhU24KaoZTWIzhtgZaxsENZbwIE0BzReZ7tdqym4xVxkiBN8Ot5TXxlumF/zjZ1wvQ9YbmFGdmCwjJ2+Gif509V8icNcJQ8tIFUIndVUy6Zm/PjO7VHUJGZhipiKBNK+qcY6w=
+	t=1785422791; cv=none; b=lblPCiEGVVbze+T5Hf2TlKkULlNrM7db9TDMglW7Aa6ExOFKZ2t1x6xTO2EUyyd2ljhAWgWe4XODZGFvN0Wbpc1CtNv983s2I0g4vMPk5cDQ9OC+KkqbcJLkeMP4u2yJlSRji8eHuwFvaFCFgxReMNDPhIJCJbCVBFrqJZ4SjU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422788; c=relaxed/simple;
-	bh=oF5aRCfHVm6zyMWX4eOPVM9Iwrqmf/qVs3+K8A0mEzA=;
+	s=arc-20240116; t=1785422791; c=relaxed/simple;
+	bh=neX0IExWHmZEIcA94AkkiT44fZpAJzq45LWyeWm5myE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iPH2TxFhEM2rHGrgDCXj+R8AklM1wyO6u3h+WWscs4W+vjrSGM6dvDXj3QVV4gnc6TnmBLBlrGWLMC8pjrMFY2cRBduadYiW51fGcboqijbqeZ/vbgmbYHW7oSyRp6h2hFNI0oAokWQKYfuZVoF7dXqtwshw3mEVRn1FbwGuCw4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H7FZxJ+m; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=owNzYQvFgmBVkQUwalWHpxoqb86rVmb7xEl38BD7+kFwD8lOcARkxHkbeXTZeIneHEuU6IzkHKrD6e5+3PitH4Rl4E1QvtpxbL9YSlwM++jcyUB2pbrnTPhxDLWXs7oFRU6Mbo+zjSbEZPH91gq5o7cDnKK8Rl7Ol7I69IHtCEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p38gFah+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H7FZxJ+m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 465C81F000E9;
-	Thu, 30 Jul 2026 14:46:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p38gFah+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C77E1F000E9;
+	Thu, 30 Jul 2026 14:46:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422786;
-	bh=QrT9qHQOEz388gtt0usrfsujW8Xn8YGU6EouAfYEIhk=;
+	s=korg; t=1785422789;
+	bh=Ed2zKzylUQyN+QDuV9oCkIC3BCGWsTSO5bpOFUzAVus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H7FZxJ+msPYc0mqQhpOSfkYaRVQSuc1pNBsuQNSft6tyZw1f6KCQyguU49DZVQRf8
-	 48Y9bh9p/R///yvHkRsQau80+JDhLatD+FwjpiPF4qxrw22AnHrrvRVs4xmEUJPcCo
-	 lMFe4Wcdq9z4JNEj82kttXsYBi9xHevEZoM/dFcc=
+	b=p38gFah+aVXiAqMp24AZoF+f+30o2se9yX72rGrSnowFDwXG+hdhXRo0aK3VVOEvB
+	 Zsmqdtn/31085fVSqg0PAtaYUbWTy+PzrfwFpiknHCuA3OiWrtLyP4F6ao3aVrGaUT
+	 ly1hDkp1pKTjkj9f31DtgrFBSd/8H+feVhrg9AqQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Valery Borovsky <vebohr@gmail.com>,
+	Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>,
+	Jacopo Mondi <jacopo.mondi+renesas@ideasonboard.com>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 7.1 512/744] media: rtl2832_sdr: Return queued buffers on start_streaming() failure
-Date: Thu, 30 Jul 2026 16:13:05 +0200
-Message-ID: <20260730141455.161706821@linuxfoundation.org>
+Subject: [PATCH 7.1 513/744] media: rzg2l-cru: Skip ICnMC configuration when ICnSVC is used
+Date: Thu, 30 Jul 2026 16:13:06 +0200
+Message-ID: <20260730141455.182679750@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -50,111 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Valery Borovsky <vebohr@gmail.com>
+From: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
 
-commit 33ca0aab6f4bd90921fc1395478f38f72c4d19af upstream.
+commit cd4ce68875f406b0cf3f5a94c0fd22989689222f upstream.
 
-The vb2 framework hands buffers to the driver via buf_queue() before
-calling start_streaming().  If start_streaming() returns an error
-without first returning those buffers via vb2_buffer_done(),
-vb2_start_streaming() fires WARN_ON(owned_by_drv_count) and the queued
-buffers leak.
+When the CRU is configured to use ICnSVC for virtual channel mapping,
+as on the RZ/{G3E, V2H/P} SoC, the ICnMC register must not be
+programmed.
 
-rtl2832_sdr_start_streaming() had multiple error paths that hit this
-trap: two direct early returns (-ENODEV, -ERESTARTSYS), plus six
-`goto err` paths covering subdev s_power, tuner setup, ADC setup,
-stream-buffer allocation, urb allocation, and urb submission failures.
-None of them returned the queued buffers.
+Return early after setting up ICnSVC to avoid overriding the ICnMC
+register, which is not applicable in this mode.
 
-The original function had no distinct success exit and fell straight
-through into the err label, which previously only did mutex_unlock and
-"return ret".  Adding queued-buffer cleanup at err must therefore be
-paired with an explicit success return; otherwise every successful
-start would also drain the buffer queue and kill streaming.  Add that
-success return, then add rtl2832_sdr_cleanup_queued_bufs() at the err
-label and before each early return.
+This prevents unintended register programming when ICnSVC is enabled.
 
-The cleanup helper takes a vb2_buffer_state argument so that the
-start_streaming error paths can pass VB2_BUF_STATE_QUEUED (as
-expected by userspace on start_streaming failure) while stop_streaming
-keeps its existing VB2_BUF_STATE_ERROR semantics.
-
-This mirrors the uvcvideo fix in commit 4cf3b6fd54eb ("media: uvcvideo:
-Return queued buffers on start_streaming() failure").
-
-The err label still does not roll back power_ctrl(), frontend_ctrl(),
-the POWER_ON flag, or stream/URB allocations that may have happened
-before the failing step.  Those are pre-existing leaks of a different
-class and are not addressed here.
-
-Fixes: 771138920eaf ("[media] rtl2832_sdr: Realtek RTL2832 SDR driver module")
 Cc: stable@vger.kernel.org
-Signed-off-by: Valery Borovsky <vebohr@gmail.com>
+Fixes: 3c5ca0a48bb0 ("media: rzg2l-cru: Drop function pointer to configure CSI")
+Signed-off-by: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
+[Rework to not break image format programming]
+Signed-off-by: Jacopo Mondi <jacopo.mondi+renesas@ideasonboard.com>
+Reviewed-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/dvb-frontends/rtl2832_sdr.c |   19 ++++++++++++++-----
- 1 file changed, 14 insertions(+), 5 deletions(-)
+ drivers/media/platform/renesas/rzg2l-cru/rzg2l-cru-regs.h |    1 
+ drivers/media/platform/renesas/rzg2l-cru/rzg2l-video.c    |   17 +++++++++-----
+ 2 files changed, 12 insertions(+), 6 deletions(-)
 
---- a/drivers/media/dvb-frontends/rtl2832_sdr.c
-+++ b/drivers/media/dvb-frontends/rtl2832_sdr.c
-@@ -399,7 +399,8 @@ static int rtl2832_sdr_alloc_urbs(struct
- }
+--- a/drivers/media/platform/renesas/rzg2l-cru/rzg2l-cru-regs.h
++++ b/drivers/media/platform/renesas/rzg2l-cru/rzg2l-cru-regs.h
+@@ -60,6 +60,7 @@
+ #define ICnMC_CSCTHR			BIT(5)
+ #define ICnMC_INF(x)			((x) << 16)
+ #define ICnMC_VCSEL(x)			((x) << 22)
++#define ICnMC_VCSEL_MASK		GENMASK(23, 22)
+ #define ICnMC_INF_MASK			GENMASK(21, 16)
  
- /* Must be called with vb_queue_lock hold */
--static void rtl2832_sdr_cleanup_queued_bufs(struct rtl2832_sdr_dev *dev)
-+static void rtl2832_sdr_cleanup_queued_bufs(struct rtl2832_sdr_dev *dev,
-+					    enum vb2_buffer_state state)
+ #define ICnMS_IA			BIT(2)
+--- a/drivers/media/platform/renesas/rzg2l-cru/rzg2l-video.c
++++ b/drivers/media/platform/renesas/rzg2l-cru/rzg2l-video.c
+@@ -262,19 +262,24 @@ static void rzg2l_cru_csi2_setup(struct
+ 				 u8 csi_vc)
  {
- 	struct platform_device *pdev = dev->pdev;
- 	unsigned long flags;
-@@ -413,7 +414,7 @@ static void rtl2832_sdr_cleanup_queued_b
- 		buf = list_entry(dev->queued_bufs.next,
- 				struct rtl2832_sdr_frame_buf, list);
- 		list_del(&buf->list);
--		vb2_buffer_done(&buf->vb.vb2_buf, VB2_BUF_STATE_ERROR);
-+		vb2_buffer_done(&buf->vb.vb2_buf, state);
+ 	const struct rzg2l_cru_info *info = cru->info;
+-	u32 icnmc = ICnMC_INF(ip_fmt->datatype);
++	u32 icnmc = rzg2l_cru_read(cru, info->image_conv) & ~(ICnMC_INF_MASK |
++							      ICnMC_VCSEL_MASK);
++	icnmc |= ICnMC_INF(ip_fmt->datatype);
+ 
++	/*
++	 * VC filtering goes through SVC register on G3E/V2H.
++	 *
++	 * FIXME: virtual channel filtering is likely broken and only VC=0
++	 * works.
++	 */
+ 	if (cru->info->regs[ICnSVC]) {
+ 		rzg2l_cru_write(cru, ICnSVCNUM, csi_vc);
+ 		rzg2l_cru_write(cru, ICnSVC, ICnSVC_SVC0(0) | ICnSVC_SVC1(1) |
+ 				ICnSVC_SVC2(2) | ICnSVC_SVC3(3));
++	} else {
++		icnmc |= ICnMC_VCSEL(csi_vc);
  	}
- 	spin_unlock_irqrestore(&dev->queued_bufs_lock, flags);
+ 
+-	icnmc |= rzg2l_cru_read(cru, info->image_conv) & ~ICnMC_INF_MASK;
+-
+-	/* Set virtual channel CSI2 */
+-	icnmc |= ICnMC_VCSEL(csi_vc);
+-
+ 	rzg2l_cru_write(cru, info->image_conv, icnmc);
  }
-@@ -855,11 +856,15 @@ static int rtl2832_sdr_start_streaming(s
  
- 	dev_dbg(&pdev->dev, "\n");
- 
--	if (!dev->udev)
-+	if (!dev->udev) {
-+		rtl2832_sdr_cleanup_queued_bufs(dev, VB2_BUF_STATE_QUEUED);
- 		return -ENODEV;
-+	}
- 
--	if (mutex_lock_interruptible(&dev->v4l2_lock))
-+	if (mutex_lock_interruptible(&dev->v4l2_lock)) {
-+		rtl2832_sdr_cleanup_queued_bufs(dev, VB2_BUF_STATE_QUEUED);
- 		return -ERESTARTSYS;
-+	}
- 
- 	if (d->props->power_ctrl)
- 		d->props->power_ctrl(d, 1);
-@@ -900,7 +905,11 @@ static int rtl2832_sdr_start_streaming(s
- 	if (ret)
- 		goto err;
- 
-+	mutex_unlock(&dev->v4l2_lock);
-+	return 0;
-+
- err:
-+	rtl2832_sdr_cleanup_queued_bufs(dev, VB2_BUF_STATE_QUEUED);
- 	mutex_unlock(&dev->v4l2_lock);
- 
- 	return ret;
-@@ -920,7 +929,7 @@ static void rtl2832_sdr_stop_streaming(s
- 	rtl2832_sdr_kill_urbs(dev);
- 	rtl2832_sdr_free_urbs(dev);
- 	rtl2832_sdr_free_stream_bufs(dev);
--	rtl2832_sdr_cleanup_queued_bufs(dev);
-+	rtl2832_sdr_cleanup_queued_bufs(dev, VB2_BUF_STATE_ERROR);
- 	rtl2832_sdr_unset_adc(dev);
- 
- 	/* sleep tuner */
 
 
