@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B9B03E0091;
-	Thu, 30 Jul 2026 14:50:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F40091FE44A;
+	Thu, 30 Jul 2026 14:50:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423010; cv=none; b=YunP55O4xxN79u0Qh0ahW8MQpJ+AlHe4t2d6xJ/vuWa91wuhUO5Cgh2rD5HTfrh9PqCKxKpgq1EXm1aEVoqPqhemfITmODI1bm5ARo6ppPddsbTa6YORhwfj1PihLGyCh1g56GPZ+T0CgOyyXbpezJLtUvetHOBGkwm9w4nJisU=
+	t=1785423013; cv=none; b=Ue2/atB/RB68Nq0i0s72zQg05UGD75CoK/icGDZv/xittshtTuzfSYox1j5IgHxQEyj5RDU/T6v0JTGfCkxN4DuW1Wt9I8rAfT82BOouBip5UnF6L5Nu+YvJ23C8zf4HFoHjb6EGQ+yNz8EGht7BhTNHuTh/kuafoMlcFe08EPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423010; c=relaxed/simple;
-	bh=UyPPr5sc0lkUaTEGKg4N71ceZF1kSZWfiHWy9PCXws0=;
+	s=arc-20240116; t=1785423013; c=relaxed/simple;
+	bh=SeDRRzPLLW8azdHL7lLfMQDhGpmbSq/MZWCFRgsFCeQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sB/s9QEDu4VoE4Ev3Of+wjDiHeoWE9w4Sa16tAwawE3P0FAhZDtsnuPleYp9cPPrk96baVr2bthCpTsNH0y3c+UGoqrsca5eWGmjODmziCIM0t565klyHxPYIX7lNWWxZhA3qss9yb62PoAMHxU0YTVEa5O1suKGEBvIxIX0hGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oMen/p7Z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h6t+3MKB5F+/yOQ1V739YNqe0TtHF6Cih6Gn60pcr2tT8OX5u4MkergWDl+kTnT626g3cAgssgVG/s411hMA4q4p2acvkVrBOvmsM2NVpIHyS3bn8j3+Dxad3fATQpYIFuIMigi7yrY4B2vtBIPChbVsBbjTPXR5Kxn18u2u8qI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hh7kwNiQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oMen/p7Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 907221F000E9;
-	Thu, 30 Jul 2026 14:50:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hh7kwNiQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BBCB1F000E9;
+	Thu, 30 Jul 2026 14:50:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423009;
-	bh=XO9Wlfv8t2vtMVzD51qegX34hoVTdQ5VTkmS+Xt1y4A=;
+	s=korg; t=1785423011;
+	bh=3DPwuW80GuNp0FWdj9Xb2Jb/9UrHRSyv8df44J+RkGY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oMen/p7ZmbSRJltuw3hIyCs2SgewwJ5SU6DkblR7XOi/7/INZvA7CGHnv8zhMoR6E
-	 tRt3yZdI9901fVrfc19aQJsaUBKwg1ur5B6HdqsbX2MSP2YWxokhYTTBXRj16IK2pv
-	 5FI7axDg+G+AJZes3oDb8dGc8roNBF5/hrscOpSM=
+	b=hh7kwNiQ+SntvCycHGGQJIyHRRTmT/WbawrjFKD2qbUJgeIN5j8uqbjj1/vW8nDwp
+	 Ri4vraCEUxD3lyY7nkYYfwuPV5Qwe81d9VRar9/NluQeGCxWQHmRRL+I0lTDSysjdP
+	 SptS2ZGb87/oW0Mbm/zOUazbEVqVIqF1H608M3xI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <yuantan098@gmail.com>,
-	Zhengchuan Liang <zcliangcn@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Zhao Zhang <zzhan461@ucr.edu>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
+	Alex Markuze <amarkuze@redhat.com>,
 	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 7.1 633/744] libceph: guard missing CRUSH type name lookup
-Date: Thu, 30 Jul 2026 16:15:06 +0200
-Message-ID: <20260730141457.729000726@linuxfoundation.org>
+Subject: [PATCH 7.1 634/744] libceph: refresh auth->authorizer_buf{,_len} after authorizer update
+Date: Thu, 30 Jul 2026 16:15:07 +0200
+Message-ID: <20260730141457.750531752@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -55,50 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Zhang <zzhan461@ucr.edu>
+From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
 
-commit bbeae12fda3384a90fbebc8a19ba9d33f85b5361 upstream.
+commit 937d61f86d377a3aa578adae7a3dfcecdddf9d89 upstream.
 
-Localized read selection can walk a parent bucket whose name exists in
-the CRUSH map while its type has no matching entry in type_names.
-get_immediate_parent() then dereferences a NULL type_cn and passes an
-invalid pointer into strcmp(), causing a null-ptr-deref.
+ceph_x_create_authorizer() caches au->buf->vec.iov_base and
+au->buf->vec.iov_len in struct ceph_auth_handshake.  These
+cached values are then used by the messenger connect code when
+sending the authorizer.
 
-Skip such malformed parent buckets unless both the bucket name and type
-name metadata are present. This keeps malformed hierarchy data from
-crashing locality lookup and safely falls back to "not local".
+ceph_x_update_authorizer() can rebuild the authorizer when a newer
+service ticket is available.  If the rebuilt authorizer no longer
+fits in the existing buffer, ceph_x_build_authorizer() drops its
+reference to au->buf and allocates a new one.  If this is the final
+reference, ceph_buffer_put() frees the old ceph_buffer and its
+vec.iov_base, but auth->authorizer_buf still points at that freed
+memory.
 
-[ idryomov: add WARN_ON_ONCE ]
+A subsequent msgr1 reconnect can therefore queue the stale pointer
+and trigger a KASAN slab-use-after-free in _copy_from_iter() while
+tcp_sendmsg() copies the authorizer.
+
+Refresh auth->authorizer_buf and auth->authorizer_buf_len after a
+successful authorizer rebuild so the messenger sends the current
+buffer.
 
 Cc: stable@vger.kernel.org
-Fixes: 117d96a04f00 ("libceph: support for balanced and localized reads")
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Assisted-by: Codex:GPT-5.4
-Signed-off-by: Zhao Zhang <zzhan461@ucr.edu>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Fixes: 0bed9b5c523d ("libceph: add update_authorizer auth method")
+Closes: https://lore.kernel.org/all/E378850E-106C-427B-A241-970EB2D054D7@gmail.com/
+Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/osdmap.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/ceph/auth_x.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/net/ceph/osdmap.c
-+++ b/net/ceph/osdmap.c
-@@ -3058,8 +3058,11 @@ static int get_immediate_parent(struct c
- 			if (b->items[j] != id)
- 				continue;
+--- a/net/ceph/auth_x.c
++++ b/net/ceph/auth_x.c
+@@ -849,9 +849,16 @@ static int ceph_x_update_authorizer(
  
--			*parent_type_id = b->type;
- 			type_cn = lookup_crush_name(&c->type_names, b->type);
-+			if (WARN_ON_ONCE(!type_cn))
-+				continue;
+ 	au = (struct ceph_x_authorizer *)auth->authorizer;
+ 	if (au->secret_id < th->secret_id) {
++		int ret;
 +
-+			*parent_type_id = b->type;
- 			parent_loc->cl_type_name = type_cn->cn_name;
- 			parent_loc->cl_name = cn->cn_name;
- 			return b->id;
+ 		dout("ceph_x_update_authorizer service %u secret %llu < %llu\n",
+ 		     au->service, au->secret_id, th->secret_id);
+-		return ceph_x_build_authorizer(ac, th, au);
++		ret = ceph_x_build_authorizer(ac, th, au);
++		if (ret)
++			return ret;
++
++		auth->authorizer_buf = au->buf->vec.iov_base;
++		auth->authorizer_buf_len = au->buf->vec.iov_len;
+ 	}
+ 	return 0;
+ }
 
 
