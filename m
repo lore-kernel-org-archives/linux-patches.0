@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5696C30C618;
-	Thu, 30 Jul 2026 15:16:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3583A30567C;
+	Thu, 30 Jul 2026 15:16:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424593; cv=none; b=pFqK7R8rsa/ivJDmNawImHXY8vPQ+ATOB87pEiwISLUwvdHOBIrmlnmDCBvmxU7UpO1J5MQu1F2S0VQ+rUzELdsdb0KiAAf/WmWLZxUeVuWnEDG8xd1jRlL9aetpx5vZBgtbtLGhRUvSPZbRWadGVv1/zWWYVnkc+f/b2TgS/ME=
+	t=1785424596; cv=none; b=cTNv8Xynq5/Lbnhf9OdDx1PI2uq7aDjL2W7FPy3uOJqBsKPJRXePsPlhMYLOj1E4d1alRmzVNB5/3S+MKrbL+kpO7oJowe9aZaSjktlY81v04kbkj3pUwYTX123CIzI5GIUAxlWpcDSOWsOiddIg3OvF8JW9yk5+qGYL8HRdnho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424593; c=relaxed/simple;
-	bh=ZTIIO6277006gcp6jOiaa3x+fhMV7cm6AaELScC8B7o=;
+	s=arc-20240116; t=1785424596; c=relaxed/simple;
+	bh=kkHsDF3Y1HPiuUKev4LyMBDBs9cuPqz7pD8jTkdcsDw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m9hJ8eF/7uw5v0wgLGpqENapFQHdw1SDianoCfiwDgKP1ZsbjQ6Cwi8axFL7aZJChOxLoR0BS5fzKsqCbL716Q2BjPuNYT2eKsBsYp7FIQ8hwgLhGOw3/0eMxg13cmVLlJKje1srw2nWsqK+A3mWTno7oM9iHs2NKnYNBk52E58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0NnVVgk2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ggFUAMIIINZCI4he+UHcwfzzmnYFQI44XF4mIPa1Yil4twKco8cHwStSTPw6gquz9dHaAR7u4nAQCxdp0C+pVVvIgHs1cZed1sMVKXKF1XpWXxX5HMB0Dfyyq39FffNluus1VUbtaxOfSUnxGDEX2c3F6i8gXLyl7qLR0bf6nd4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BzMroXym; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0NnVVgk2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BC031F000E9;
-	Thu, 30 Jul 2026 15:16:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BzMroXym"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A3321F000E9;
+	Thu, 30 Jul 2026 15:16:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424592;
-	bh=8JbZQsUe1ydQbhC2pdL/uG5CuXUFeaEpSgQ/dcYC5e8=;
+	s=korg; t=1785424595;
+	bh=VLD/YpRtfbsLUdkA/sGY6sHZaWibQ46CMipTVsr6uho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0NnVVgk25jzXRBmeJUVO1OQ83vkxo3188+RnnypheHr1mJfLecnpsaRI1jIwSAMmq
-	 V6TJVvtLza4pIImSOaLpKxoZ5X4HT9X7PLo1/15uyg8gpwZghZm8FzKhD4ExX7+wzi
-	 xoJSujofzvM/RiyyID9zdtGoaNny8isoVVkrEb20=
+	b=BzMroXymYZYMKmYgILjvlJ5jLt0f5PuXJt1Efj+AJOcu4FZDBgoon2ouTAAOFoCYN
+	 c10h9PJR3GYPeCfaUlEKWWUj4lgv+GKEGTI0pH9Xie0UcvyzAUqabft4Jp8KAa2aQ2
+	 M38MwaskxZsz+gELnlAgCp0+45gxjVqh1Fq68PDQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Carlier <devnexen@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.18 411/675] media: nuvoton: npcm-video: fix error handling in npcm_video_init()
-Date: Thu, 30 Jul 2026 16:12:21 +0200
-Message-ID: <20260730141453.868268437@linuxfoundation.org>
+	Nikita Maksimov <nickstogramm@yandex.ru>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.18 447/675] ALSA: hda/realtek: Fix speakers on Lunnen Ground 14
+Date: Thu, 30 Jul 2026 16:12:57 +0200
+Message-ID: <20260730141454.639763960@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -50,48 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Carlier <devnexen@gmail.com>
+From: Nikita Maksimov <nickstogramm@yandex.ru>
 
-commit 60ca00792bce46ec170c7ed101f376186d4cf8a9 upstream.
+commit 5c3f8dac531b454bf67b6ee3c2aac89f0aaaef74 upstream.
 
-npcm_video_init() has two error handling issues after
-of_reserved_mem_device_init() is called:
+The firmware on the Lunnen Ground 14 marks pin 0x1b as unused even
+though the internal speakers are connected to it. As a result, the
+speakers are not detected.
 
-When dma_set_mask_and_coherent() fails, the function releases the
-reserved memory but does not return, allowing execution to fall through
-into npcm_video_ece_init() with a failed DMA configuration.
+Add a pin configuration quirk for PCI subsystem ID 2782:a212 to configure
+pin 0x1b as an internal speaker.
 
-When npcm_video_ece_init() fails, the function returns an error without
-calling of_reserved_mem_device_release(), leaking the reserved memory
-association.
+The pin configuration was tested on a Lunnen Ground 14 (DMI product LL4FA)
+with an ALC269VC codec. The internal speakers and microphone work as
+expected.
 
-Fix both by adding the missing return after the DMA mask failure and
-adding the missing of_reserved_mem_device_release() call on the ECE init
-error path.
-
-Fixes: 46c15a4ff1f4 ("media: nuvoton: Add driver for NPCM video capture and encoding engine")
 Cc: stable@vger.kernel.org
-Signed-off-by: David Carlier <devnexen@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Nikita Maksimov <nickstogramm@yandex.ru>
+Link: https://patch.msgid.link/20260720180214.73770-1-nickstogramm@yandex.ru
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/nuvoton/npcm-video.c |    2 ++
- 1 file changed, 2 insertions(+)
+ sound/hda/codecs/realtek/alc269.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/media/platform/nuvoton/npcm-video.c
-+++ b/drivers/media/platform/nuvoton/npcm-video.c
-@@ -1720,10 +1720,12 @@ static int npcm_video_init(struct npcm_v
- 	if (rc) {
- 		dev_err(dev, "Failed to set DMA mask\n");
- 		of_reserved_mem_device_release(dev);
-+		return rc;
- 	}
- 
- 	rc = npcm_video_ece_init(video);
- 	if (rc) {
-+		of_reserved_mem_device_release(dev);
- 		dev_err(dev, "Failed to initialize ECE\n");
- 		return rc;
- 	}
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -3742,6 +3742,7 @@ enum {
+ 	ALC269_FIXUP_DMIC_THINKPAD_ACPI,
+ 	ALC269VB_FIXUP_INFINIX_ZERO_BOOK_13,
+ 	ALC269VC_FIXUP_INFINIX_Y4_MAX,
++	ALC269VC_FIXUP_LUNNEN_GROUND_14,
+ 	ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO,
+ 	ALC255_FIXUP_ACER_MIC_NO_PRESENCE,
+ 	ALC255_FIXUP_ASUS_MIC_NO_PRESENCE,
+@@ -4183,6 +4184,13 @@ static const struct hda_fixup alc269_fix
+ 		.chained = true,
+ 		.chain_id = ALC269_FIXUP_LIMIT_INT_MIC_BOOST
+ 	},
++	[ALC269VC_FIXUP_LUNNEN_GROUND_14] = {
++		.type = HDA_FIXUP_PINS,
++		.v.pins = (const struct hda_pintbl[]) {
++			{ 0x1b, 0x90170150 }, /* internal speaker */
++			{ }
++		},
++	},
+ 	[ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO] = {
+ 		.type = HDA_FIXUP_PINS,
+ 		.v.pins = (const struct hda_pintbl[]) {
+@@ -7573,6 +7581,7 @@ static const struct hda_quirk alc269_fix
+ 	SND_PCI_QUIRK(0x2782, 0x1705, "MEDION E15433", ALC269VC_FIXUP_INFINIX_Y4_MAX),
+ 	SND_PCI_QUIRK(0x2782, 0x1707, "Vaio VJFE-ADL", ALC298_FIXUP_SPK_VOLUME),
+ 	SND_PCI_QUIRK(0x2782, 0x4900, "MEDION E15443", ALC233_FIXUP_MEDION_MTL_SPK),
++	SND_PCI_QUIRK(0x2782, 0xa212, "Lunnen Ground 14", ALC269VC_FIXUP_LUNNEN_GROUND_14),
+ 	SND_PCI_QUIRK(0x7017, 0x2014, "Star Labs StarFighter", ALC233_FIXUP_STARLABS_STARFIGHTER),
+ 	SND_PCI_QUIRK(0x8086, 0x2074, "Intel NUC 8", ALC233_FIXUP_INTEL_NUC8_DMIC),
+ 	SND_PCI_QUIRK(0x8086, 0x2080, "Intel NUC 8 Rugged", ALC256_FIXUP_INTEL_NUC8_RUGGED),
 
 
