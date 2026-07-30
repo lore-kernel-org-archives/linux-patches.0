@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57FE443C7C5;
-	Thu, 30 Jul 2026 15:09:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6621D43F8D3;
+	Thu, 30 Jul 2026 15:09:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424177; cv=none; b=rr5yQin3ih1Ewcui5sZMlEicWTSX5n9nh+0Ra0M9/nThXt2qHDg4XMlIVKCox6mIKZ+P/SXX8azLgOojNdoTVnJCqoMoZNzKrwjuv6pZY1Gl57/ke7CMUMtySZcOCTI1qtKaLdPzwZn0kRcs0jVVJDzRuR2BMTkus1Hs9E/mDpk=
+	t=1785424180; cv=none; b=ZPZg2Op2Qs2z3KNlsjmPnt9lvJt4ygatAPGm4Jxrr+hDGWwLpmkZhJtahYB0CddK+xXwWPDKK52tvOXyEW6wLBtI2CWzziol5FJH8nifQrag8P0uSWJa+blzEzxSCQZCK7jVpMww5TR7DIIGZRGpARrqaz8XUNYRCdEWBx2dV/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424177; c=relaxed/simple;
-	bh=xhGPQouWBSidgn8QwHVeZZeyhfD2bX/a4/Fx7M+C8Gs=;
+	s=arc-20240116; t=1785424180; c=relaxed/simple;
+	bh=KWrLb+ufpQBClpBE9bd/vFvfj1x5wNtQHi8xk2GkU7s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oDI7S4491Uja38oaxSeNbLH0NXk8LKt1fFhCPgF5Wik9Cyua645cMCNqSEt0WQVWc2hOmHLXN1Tc0FesdbqT27fjQBk7Kol0UsUSRG/IoUFVEhUYH+mq4mA+ecs3ie69SjW8hKGRY42fBz3UYaijYg2n3s3Jmk9xqVuu4W0KgzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nZNz3KM0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AE2XD22p35IygfofEaRNaAVLosDcCNALpYqpYciqJSAYKtwh0U1UpyywGuy6eKtTFzStli2/GI/T8WhFFONhLYcpMAUAMZvVbRAwSCqWWgtWjXVz1CmfTyL096v9yCpbztrHWLrbWA0+Ff8ucDfLj9Um6wvaMT3fY2hw1DagSsY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GK8fyay3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nZNz3KM0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEC701F000E9;
-	Thu, 30 Jul 2026 15:09:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GK8fyay3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8709C1F000E9;
+	Thu, 30 Jul 2026 15:09:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424176;
-	bh=7qTcSRz98M+LLiIdqsjo70rsIbZS6N6ocqOY7IJgIyQ=;
+	s=korg; t=1785424179;
+	bh=Tceu2FNW0dKsvSn7q5pTCNEJ8sHEIbDOhZwFyTJmBOc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nZNz3KM0onIrurjUvVkoSqYgyS4e4zOLIU1anQnVMVI9bjOIy5xGMYnkx/jjV8rti
-	 wcGELeoNUUb64HcjAan1fssBXH5cX3uRwEJ0e7Q5W2k4RQ80DLbgwhHNey2cj3ohJo
-	 rbemP9F382VvFRF5bg8+sBX/QeoVJc73wzh2b/+Y=
+	b=GK8fyay3DNxryHO25A6YaYICAEy/YqUzGyMfztUmxF+DcXf60SD5udHeTOxdgWQni
+	 Te1zyTylCZXQ4RsHDv+I+AMcgxojIPlBnmUbHZULAXiBjeU6eSzdGHT2l3QkRbjrXc
+	 QatS3lkl+nWqiId6tzJQsfyl003IqaUki8EQwV8U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Matthew W Carlis <mattc@purestorage.com>,
+	Gal Pressman <gal@nvidia.com>,
+	Jianbo Liu <jianbol@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 301/675] raw: annotate lockless match fields in raw_v4_match()
-Date: Thu, 30 Jul 2026 16:10:31 +0200
-Message-ID: <20260730141451.519611401@linuxfoundation.org>
+Subject: [PATCH 6.18 302/675] net/mlx5: Refactor EEPROM query error handling to return status separately
+Date: Thu, 30 Jul 2026 16:10:32 +0200
+Message-ID: <20260730141451.540380023@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -51,99 +54,232 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Gal Pressman <gal@nvidia.com>
 
-[ Upstream commit 18f116931f52e3c3303ad4b15ff41eb89b0e4239 ]
+[ Upstream commit 2e4c44b12f4da60d3e8dcbc1ccf38bb28a878050 ]
 
-raw_v4_match() is a lockless match helper under sk_for_each_rcu(). It
-still reads inet->inet_daddr, inet->inet_rcv_saddr and
-sk->sk_bound_dev_if with plain loads while bind, connect and
-bind-to-device paths can update the same match fields concurrently.
+Matthew and Jakub reported [1] issues where inventory automation tools
+are calling EEPROM query repeatedly on a port that doesn't have an SFP
+connected, resulting in millions of error prints.
 
-Annotate only those mutable match fields in raw_v4_match(), and do so
-at the point of use instead of hoisting the bound-device read before
-the earlier short-circuit tests.
+Move MCIA register status extraction from the query functions to the
+callers, allowing use of extack reporting instead of a dmesg print when
+using the netlink API.
 
-Also annotate the raw bind writer and the shared IPv4 datagram connect
-writer used by raw sockets, so the address fields updated on bind and
-connect match explicit WRITE_ONCE() updates.
+[1] https://lore.kernel.org/netdev/20251028194011.39877-1-mattc@purestorage.com/
 
-This version intentionally leaves the shared disconnect-side IPv4
-writers to follow-up cleanup and limits the writer changes here to the
-raw bind path and the datagram connect path directly exercised by raw
-sockets.
-
-Fixes: 0daf07e52709 ("raw: convert raw sockets to RCU")
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Link: https://patch.msgid.link/20260716142958.3064224-1-runyu.xiao@seu.edu.cn
+Cc: Matthew W Carlis <mattc@purestorage.com>
+Signed-off-by: Gal Pressman <gal@nvidia.com>
+Reviewed-by: Jianbo Liu <jianbol@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/1763415729-1238421-2-git-send-email-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 11c057d23465 ("net/mlx5: Fix MCIA register buffer overflow on 32 dword reads")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/datagram.c |  4 ++--
- net/ipv4/raw.c      | 23 ++++++++++++++++-------
- 2 files changed, 18 insertions(+), 9 deletions(-)
+ .../ethernet/mellanox/mlx5/core/en_ethtool.c  | 19 +++++-----
+ .../ethernet/mellanox/mlx5/core/mlx5_core.h   |  4 +--
+ .../net/ethernet/mellanox/mlx5/core/port.c    | 35 +++++++++----------
+ 3 files changed, 30 insertions(+), 28 deletions(-)
 
-diff --git a/net/ipv4/datagram.c b/net/ipv4/datagram.c
-index c2b2cda1a7e506..7861615b34fc68 100644
---- a/net/ipv4/datagram.c
-+++ b/net/ipv4/datagram.c
-@@ -63,12 +63,12 @@ int __ip4_datagram_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len
- 	}
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c b/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
+index 893e1380a7c973..8a07b9e8dc3861 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
+@@ -2027,7 +2027,7 @@ static int mlx5e_get_module_info(struct net_device *netdev,
+ 	int size_read = 0;
+ 	u8 data[4] = {0};
  
- 	/* Update addresses before rehashing */
--	inet->inet_daddr = fl4->daddr;
-+	WRITE_ONCE(inet->inet_daddr, fl4->daddr);
- 	inet->inet_dport = usin->sin_port;
- 	if (!inet->inet_saddr)
- 		inet->inet_saddr = fl4->saddr;
- 	if (!inet->inet_rcv_saddr) {
--		inet->inet_rcv_saddr = fl4->saddr;
-+		WRITE_ONCE(inet->inet_rcv_saddr, fl4->saddr);
- 		if (sk->sk_prot->rehash)
- 			sk->sk_prot->rehash(sk);
- 	}
-diff --git a/net/ipv4/raw.c b/net/ipv4/raw.c
-index 26468a2ec63db1..c10cf41a365dc2 100644
---- a/net/ipv4/raw.c
-+++ b/net/ipv4/raw.c
-@@ -120,13 +120,21 @@ bool raw_v4_match(struct net *net, const struct sock *sk, unsigned short num,
- 		  __be32 raddr, __be32 laddr, int dif, int sdif)
- {
- 	const struct inet_sock *inet = inet_sk(sk);
-+	__be32 daddr, rcv_saddr;
+-	size_read = mlx5_query_module_eeprom(dev, 0, 2, data);
++	size_read = mlx5_query_module_eeprom(dev, 0, 2, data, NULL);
+ 	if (size_read < 2)
+ 		return -EIO;
  
--	if (net_eq(sock_net(sk), net) && inet->inet_num == num	&&
--	    !(inet->inet_daddr && inet->inet_daddr != raddr) 	&&
--	    !(inet->inet_rcv_saddr && inet->inet_rcv_saddr != laddr) &&
--	    raw_sk_bound_dev_eq(net, sk->sk_bound_dev_if, dif, sdif))
--		return true;
--	return false;
-+	if (!net_eq(sock_net(sk), net) || inet->inet_num != num)
-+		return false;
-+
-+	daddr = READ_ONCE(inet->inet_daddr);
-+	if (daddr && daddr != raddr)
-+		return false;
-+
-+	rcv_saddr = READ_ONCE(inet->inet_rcv_saddr);
-+	if (rcv_saddr && rcv_saddr != laddr)
-+		return false;
-+
-+	return raw_sk_bound_dev_eq(net, READ_ONCE(sk->sk_bound_dev_if),
-+				   dif, sdif);
+@@ -2069,6 +2069,7 @@ static int mlx5e_get_module_eeprom(struct net_device *netdev,
+ 	struct mlx5_core_dev *mdev = priv->mdev;
+ 	int offset = ee->offset;
+ 	int size_read;
++	u8 status = 0;
+ 	int i = 0;
+ 
+ 	if (!ee->len)
+@@ -2078,15 +2079,15 @@ static int mlx5e_get_module_eeprom(struct net_device *netdev,
+ 
+ 	while (i < ee->len) {
+ 		size_read = mlx5_query_module_eeprom(mdev, offset, ee->len - i,
+-						     data + i);
+-
++						     data + i, &status);
+ 		if (!size_read)
+ 			/* Done reading */
+ 			return 0;
+ 
+ 		if (size_read < 0) {
+-			netdev_err(priv->netdev, "%s: mlx5_query_eeprom failed:0x%x\n",
+-				   __func__, size_read);
++			netdev_err(netdev,
++				   "%s: mlx5_query_eeprom failed:0x%x, status %u\n",
++				   __func__, size_read, status);
+ 			return size_read;
+ 		}
+ 
+@@ -2106,6 +2107,7 @@ static int mlx5e_get_module_eeprom_by_page(struct net_device *netdev,
+ 	struct mlx5_core_dev *mdev = priv->mdev;
+ 	u8 *data = page_data->data;
+ 	int size_read;
++	u8 status = 0;
+ 	int i = 0;
+ 
+ 	if (!page_data->length)
+@@ -2119,7 +2121,8 @@ static int mlx5e_get_module_eeprom_by_page(struct net_device *netdev,
+ 	query.page = page_data->page;
+ 	while (i < page_data->length) {
+ 		query.size = page_data->length - i;
+-		size_read = mlx5_query_module_eeprom_by_page(mdev, &query, data + i);
++		size_read = mlx5_query_module_eeprom_by_page(mdev, &query,
++							     data + i, &status);
+ 
+ 		/* Done reading, return how many bytes was read */
+ 		if (!size_read)
+@@ -2128,8 +2131,8 @@ static int mlx5e_get_module_eeprom_by_page(struct net_device *netdev,
+ 		if (size_read < 0) {
+ 			NL_SET_ERR_MSG_FMT_MOD(
+ 				extack,
+-				"Query module eeprom by page failed, read %u bytes, err %d",
+-				i, size_read);
++				"Query module eeprom by page failed, read %u bytes, err %d, status %u",
++				i, size_read, status);
+ 			return size_read;
+ 		}
+ 
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h b/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h
+index 09c544bdf70da9..e08903d002a10b 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h
+@@ -358,11 +358,11 @@ int mlx5_set_port_fcs(struct mlx5_core_dev *mdev, u8 enable);
+ void mlx5_query_port_fcs(struct mlx5_core_dev *mdev, bool *supported,
+ 			 bool *enabled);
+ int mlx5_query_module_eeprom(struct mlx5_core_dev *dev,
+-			     u16 offset, u16 size, u8 *data);
++			     u16 offset, u16 size, u8 *data, u8 *status);
+ int
+ mlx5_query_module_eeprom_by_page(struct mlx5_core_dev *dev,
+ 				 struct mlx5_module_eeprom_query_params *params,
+-				 u8 *data);
++				 u8 *data, u8 *status);
+ 
+ int mlx5_query_port_dcbx_param(struct mlx5_core_dev *mdev, u32 *out);
+ int mlx5_set_port_dcbx_param(struct mlx5_core_dev *mdev, u32 *in);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/port.c b/drivers/net/ethernet/mellanox/mlx5/core/port.c
+index 876e648c91ba8b..5fa06f69943dff 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/port.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/port.c
+@@ -289,11 +289,11 @@ int mlx5_query_module_num(struct mlx5_core_dev *dev, int *module_num)
  }
- EXPORT_SYMBOL_GPL(raw_v4_match);
  
-@@ -721,7 +729,8 @@ static int raw_bind(struct sock *sk, struct sockaddr *uaddr, int addr_len)
- 					 chk_addr_ret))
- 		goto out;
+ static int mlx5_query_module_id(struct mlx5_core_dev *dev, int module_num,
+-				u8 *module_id)
++				u8 *module_id, u8 *status)
+ {
+ 	u32 in[MLX5_ST_SZ_DW(mcia_reg)] = {};
+ 	u32 out[MLX5_ST_SZ_DW(mcia_reg)];
+-	int err, status;
++	int err;
+ 	u8 *ptr;
  
--	inet->inet_rcv_saddr = inet->inet_saddr = addr->sin_addr.s_addr;
-+	inet->inet_saddr = addr->sin_addr.s_addr;
-+	WRITE_ONCE(inet->inet_rcv_saddr, addr->sin_addr.s_addr);
- 	if (chk_addr_ret == RTN_MULTICAST || chk_addr_ret == RTN_BROADCAST)
- 		inet->inet_saddr = 0;  /* Use device */
- 	sk_dst_reset(sk);
+ 	MLX5_SET(mcia_reg, in, i2c_device_address, MLX5_I2C_ADDR_LOW);
+@@ -308,12 +308,12 @@ static int mlx5_query_module_id(struct mlx5_core_dev *dev, int module_num,
+ 	if (err)
+ 		return err;
+ 
+-	status = MLX5_GET(mcia_reg, out, status);
+-	if (status) {
+-		mlx5_core_err(dev, "query_mcia_reg failed: status: 0x%x\n",
+-			      status);
++	if (MLX5_GET(mcia_reg, out, status)) {
++		if (status)
++			*status = MLX5_GET(mcia_reg, out, status);
+ 		return -EIO;
+ 	}
++
+ 	ptr = MLX5_ADDR_OF(mcia_reg, out, dword_0);
+ 
+ 	*module_id = ptr[0];
+@@ -370,13 +370,14 @@ static int mlx5_mcia_max_bytes(struct mlx5_core_dev *dev)
+ }
+ 
+ static int mlx5_query_mcia(struct mlx5_core_dev *dev,
+-			   struct mlx5_module_eeprom_query_params *params, u8 *data)
++			   struct mlx5_module_eeprom_query_params *params,
++			   u8 *data, u8 *status)
+ {
+ 	u32 in[MLX5_ST_SZ_DW(mcia_reg)] = {};
+ 	u32 out[MLX5_ST_SZ_DW(mcia_reg)];
+-	int status, err;
+ 	void *ptr;
+ 	u16 size;
++	int err;
+ 
+ 	size = min_t(int, params->size, mlx5_mcia_max_bytes(dev));
+ 
+@@ -392,12 +393,9 @@ static int mlx5_query_mcia(struct mlx5_core_dev *dev,
+ 	if (err)
+ 		return err;
+ 
+-	status = MLX5_GET(mcia_reg, out, status);
+-	if (status) {
+-		mlx5_core_err(dev, "query_mcia_reg failed: status: 0x%x\n",
+-			      status);
++	*status = MLX5_GET(mcia_reg, out, status);
++	if (*status)
+ 		return -EIO;
+-	}
+ 
+ 	ptr = MLX5_ADDR_OF(mcia_reg, out, dword_0);
+ 	memcpy(data, ptr, size);
+@@ -406,7 +404,7 @@ static int mlx5_query_mcia(struct mlx5_core_dev *dev,
+ }
+ 
+ int mlx5_query_module_eeprom(struct mlx5_core_dev *dev,
+-			     u16 offset, u16 size, u8 *data)
++			     u16 offset, u16 size, u8 *data, u8 *status)
+ {
+ 	struct mlx5_module_eeprom_query_params query = {0};
+ 	u8 module_id;
+@@ -416,7 +414,8 @@ int mlx5_query_module_eeprom(struct mlx5_core_dev *dev,
+ 	if (err)
+ 		return err;
+ 
+-	err = mlx5_query_module_id(dev, query.module_number, &module_id);
++	err = mlx5_query_module_id(dev, query.module_number, &module_id,
++				   status);
+ 	if (err)
+ 		return err;
+ 
+@@ -442,12 +441,12 @@ int mlx5_query_module_eeprom(struct mlx5_core_dev *dev,
+ 	query.size = size;
+ 	query.offset = offset;
+ 
+-	return mlx5_query_mcia(dev, &query, data);
++	return mlx5_query_mcia(dev, &query, data, status);
+ }
+ 
+ int mlx5_query_module_eeprom_by_page(struct mlx5_core_dev *dev,
+ 				     struct mlx5_module_eeprom_query_params *params,
+-				     u8 *data)
++				     u8 *data, u8 *status)
+ {
+ 	int err;
+ 
+@@ -461,7 +460,7 @@ int mlx5_query_module_eeprom_by_page(struct mlx5_core_dev *dev,
+ 		return -EINVAL;
+ 	}
+ 
+-	return mlx5_query_mcia(dev, params, data);
++	return mlx5_query_mcia(dev, params, data, status);
+ }
+ 
+ static int mlx5_query_port_pvlc(struct mlx5_core_dev *dev, u32 *pvlc,
 -- 
 2.53.0
 
