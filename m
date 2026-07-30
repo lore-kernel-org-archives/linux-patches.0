@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD37E422540;
-	Thu, 30 Jul 2026 14:25:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02D3C43935B;
+	Thu, 30 Jul 2026 14:25:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421514; cv=none; b=cFTuB1TJo+bzWWPihWyXBCZ2FlddcZuIPo7q4ucOuAj2SVjLrOD+9zjGmGqHU9S9eOgosWZJNlxRLUicluzU6JXxQflz4rMsfzsR+v0RLZRGWoOLuosQl7DjWFej5zO5EPxObwcyPiCje1YGtRTL6f8VczEpCjb0WN1c4/W4F9c=
+	t=1785421517; cv=none; b=Zsuv3bmEKOOcD9lShZK9Ib1vrWKUJMRXbGmfDhbMlr9ai8y0tlpH9hEo2je5zyRLH+q/entMW72j/oBzIQffNSZ7N7dHMXNQaOYWdJgP5KWPrbVkz0ctoYnKYTZT0LH5n8d5F07eYnQXY4wUk0RRldPBvulAiZYUN3/n1XB9ZcU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421514; c=relaxed/simple;
-	bh=5YmGE9xRWfUZIC2dYtlkTqHo4AhIIxNwSxlNkzrmzWM=;
+	s=arc-20240116; t=1785421517; c=relaxed/simple;
+	bh=jdZewM+KuYWkJPTVR6XnUmmkEDEvtnIx/a36KaTJ5xg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IFnst+3qKFBwYEad7CiYgHVfGNQX+ugWX18ahBU/eM06ijlTJXOrTexnXym6FCcIWSOgw7mqZ0tDLIAPxJeNc29onYBDLX8oXFXiLuvhljIhN8r9mJJdGmz1FBNstzF8+IU4caNAVzuv0ROuHksG68tog6SD94T4M6BeiQ3lWMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gVQdZ9Aw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NHwkjtRcx6ta2W+PZ/VkKiTWNkv1NP1Ak8Ffy/0o0vPb/VO4yFnzZQqQBUBL4dcVePf+AYLpcuWta77gatPWx5XZLRKYqR3XRNtkij/OfpkeZtWuV0ANMhtx513n+qXcxT+QvMH8msHA1U4cFlqxUQG+jUj38ejLJvOfuSq3+t8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iqm1NtcM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gVQdZ9Aw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 449291F000E9;
-	Thu, 30 Jul 2026 14:25:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iqm1NtcM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 474781F000E9;
+	Thu, 30 Jul 2026 14:25:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421512;
-	bh=ZsaRPsQiVj288y9PBhjLG06K1suidxYodpi/bE7FMjc=;
+	s=korg; t=1785421515;
+	bh=JooOtYleKOBVR9oXW/tlhef9LGjd5pbMeB579GHTBpw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gVQdZ9AwSyaxDyZViL4J2i6jfU1cYVRJ7We4wds//ghIlTfP01Fb/kXJZKT7+PYmf
-	 iGir0hfJS5M8ZtVICeyGs6nAi2ZVp0eTdC8jh+VTW1VW1O3Yy4xEFAACZwaXaKhTmU
-	 +9Y2A4o7ZXGStGPkTsLUxWyjrWHb7vpYGry+bFSY=
+	b=iqm1NtcMJPDeI5yIGX9jk/1V4kczCu4TaooaefpGSzzBmWW214S5RzZDT8hUkW87L
+	 JGBA3bpIZLEd8KoPlT+Tq6Oj8meMIm/bl43yWQylhP+LMZaLI+qxqG4o/89+90DNte
+	 uSmhkc5kf1t9bTEQPcfbZw3DUKyoz7b+ICjDOW/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pushpendra Singh <pushpendra.singh@oss.qualcomm.com>,
-	Sudeep Holla <sudeep.holla@kernel.org>,
+	Matt Bobrowski <mattbobrowski@google.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 084/744] firmware: arm_scmi: Rate-limit queue-full warnings in IRQ context
-Date: Thu, 30 Jul 2026 16:05:57 +0200
-Message-ID: <20260730141446.054839493@linuxfoundation.org>
+Subject: [PATCH 7.1 085/744] bpf: Fix UAF in sock clone early bailouts
+Date: Thu, 30 Jul 2026 16:05:58 +0200
+Message-ID: <20260730141446.074896918@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -51,52 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pushpendra Singh <pushpendra.singh@oss.qualcomm.com>
+From: Matt Bobrowski <mattbobrowski@google.com>
 
-[ Upstream commit a4447c0693830d5ecadd6e755cb7fdc55d86aacc ]
+[ Upstream commit 7cbd0c4cebe4c9f678d15e6b9ba975e1155a107f ]
 
-The scmi_notify() function is called from interrupt context to queue
-received notification events onto a per-protocol kfifo. When the kfifo
-is full, it logs a warning via dev_warn() for every dropped event.
+Similar to recent commit 9b51a6155d14 ("bpf,fork: wipe ->bpf_storage
+before bailouts that access it"), sk_clone() performs an initial
+shallow copy of the socket field ->sk_bpf_storage via sock_copy()
+for the cloned socket newsk.
 
-Under conditions where the platform sends a burst of SCMI notifications
-faster than the deferred worker can drain the queue, this results in a
-flood of dev_warn() calls from IRQ context. Each call acquires the
-console lock and may execute blocking console writes, causing the CPU
-to be held in interrupt context for an extended period and leading to
-observable system stalls.
+If sk_clone() bails out early (e.g. if sk_filter_charge() fails) prior
+to calling bpf_sk_storage_clone(), newsk->sk_bpf_storage still points
+to the parent socket's BPF local storage. When newsk is subsequently
+freed via sk_free(), the deallocation path (__sk_destruct() ->
+bpf_sk_storage_free()) destroys the parent socket's BPF local storage,
+leading to a use-after-free (UAF) on the parent socket.
 
-Fix this by switching to dev_warn_ratelimited() to limit the frequency
-of log messages when the notification queue is full. This reduces
-console overhead in interrupt context and prevents CPU stalls caused by
-excessive logging, while still preserving diagnostic visibility.
+Fix this by resetting newsk->sk_bpf_storage to NULL immediately after
+sock_copy() in sk_clone(), and remove the now redundant initialization
+from bpf_sk_storage_clone().
 
-Fixes: bd31b249692e ("firmware: arm_scmi: Add notification dispatch and delivery")
-Signed-off-by: Pushpendra Singh <pushpendra.singh@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260708072339.3021140-1-pushpendra.singh@oss.qualcomm.com
-Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
+Fixes: 6ac99e8f23d4 ("bpf: Introduce bpf sk local storage")
+Fixes: f12dd75959b0 ("bpf: net: Set sk_bpf_storage back to NULL for cloned sk")
+Signed-off-by: Matt Bobrowski <mattbobrowski@google.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20260709025316.999913-1-mattbobrowski@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/notify.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/core/bpf_sk_storage.c | 2 --
+ net/core/sock.c           | 3 +++
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/firmware/arm_scmi/notify.c b/drivers/firmware/arm_scmi/notify.c
-index 40ec184eedaecc..0a192cf2deab62 100644
---- a/drivers/firmware/arm_scmi/notify.c
-+++ b/drivers/firmware/arm_scmi/notify.c
-@@ -600,9 +600,9 @@ int scmi_notify(const struct scmi_handle *handle, u8 proto_id, u8 evt_id,
- 		return -EINVAL;
- 	}
- 	if (kfifo_avail(&r_evt->proto->equeue.kfifo) < sizeof(eh) + len) {
--		dev_warn(handle->dev,
--			 "queue full, dropping proto_id:%d  evt_id:%d  ts:%lld\n",
--			 proto_id, evt_id, ktime_to_ns(ts));
-+		dev_warn_ratelimited(handle->dev,
-+				     "queue full, dropping proto_id:%d  evt_id:%d  ts:%lld\n",
-+				     proto_id, evt_id, ktime_to_ns(ts));
- 		return -ENOMEM;
- 	}
+diff --git a/net/core/bpf_sk_storage.c b/net/core/bpf_sk_storage.c
+index ecd659f79fd4a0..1d295a8769fad5 100644
+--- a/net/core/bpf_sk_storage.c
++++ b/net/core/bpf_sk_storage.c
+@@ -158,8 +158,6 @@ int bpf_sk_storage_clone(const struct sock *sk, struct sock *newsk)
+ 	struct bpf_local_storage_elem *selem;
+ 	int ret = 0;
  
+-	RCU_INIT_POINTER(newsk->sk_bpf_storage, NULL);
+-
+ 	rcu_read_lock_dont_migrate();
+ 	sk_storage = rcu_dereference(sk->sk_bpf_storage);
+ 
+diff --git a/net/core/sock.c b/net/core/sock.c
+index cab041b57d2865..1c73b6841d0ae9 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -2492,6 +2492,9 @@ struct sock *sk_clone(const struct sock *sk, const gfp_t priority,
+ 	sock_copy(newsk, sk);
+ 
+ 	newsk->sk_prot_creator = prot;
++#ifdef CONFIG_BPF_SYSCALL
++	RCU_INIT_POINTER(newsk->sk_bpf_storage, NULL);
++#endif
+ 
+ 	/* SANITY */
+ 	if (likely(newsk->sk_net_refcnt)) {
 -- 
 2.53.0
 
