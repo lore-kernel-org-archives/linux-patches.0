@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0ACC382F01;
-	Thu, 30 Jul 2026 15:48:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0F8D358373;
+	Thu, 30 Jul 2026 15:48:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426492; cv=none; b=l9rqU7dPud8S0GYASu2T0O/M/kMO/i2XA4ahrklD6/177y6tV3hTSKhbNMy/ed4oGyZyRWtkuQeQeYKI0ywEqJDxY0Rz3sAdabBqdGwOZRLVCKbYzKHQ1pRKX+WOR2BYJEwRwKZrsvndD23EQX+xmrOgyuljauNJBVBBUVtkUTM=
+	t=1785426494; cv=none; b=ZL9Y/IRCJnM6uaBF8T6g8/7YhsSTRJMq2WqzAT3QxIyyHAA/Wad1o5semOwCNT/TCm4KmMOCzxG8Y3AqtdvvS4eh2qD667vP7Z7Zjczf9YWEDSrED1AJkS0byLcoOL/dl9G9xs4ii0ovYz6RfuCP+oeNd44lnI/GrYmfKxov4Ls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426492; c=relaxed/simple;
-	bh=V/nY+PIJkNGBLVD9qDkMG1VoUSHo0tBZ9e6kKylEMio=;
+	s=arc-20240116; t=1785426494; c=relaxed/simple;
+	bh=qglDAOB7VJwHJLlbx3tcmvsTShD4ZhQjH22yp4TmEVI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jIUA0App4oPIaMsl51x1avVr8cWHk7pHyX7VwgwXs0uyWeMAUkpS0PFOrQNlh5+TRlcJfYn3/9wzW2K8aHCxvhtZBMdntV8GFXgMIMHYUPNFraRuyRTsWIjcvqlo/RG2kdAPqkBLJ43zLhoextx73T1bl6stXIgk0xlrUeMYVVE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z8nlxGxu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lx3W9gRNxCEFB+R+rmA49/LE0dQDOVd84OsojWELift7K523ErMicM59ZYjgyIV31oc/qCNYR9Bbn0SuTB0lZbQR8+OsB2DXQnnvu227aY9CTprFmtfM5NmD6/+yEG4dTpsejlNQs/25iPsa2WMcQiO/KXDD5ldDbva16ktUjgw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ryUsKdeO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z8nlxGxu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E40D1F000E9;
-	Thu, 30 Jul 2026 15:48:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ryUsKdeO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08C631F000E9;
+	Thu, 30 Jul 2026 15:48:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426490;
-	bh=KgTqiUbFFTz8JIt8cUp/k1Y3zgP2kHA0nWiXJ1ZJU3o=;
+	s=korg; t=1785426493;
+	bh=Jfgfuo3Rk+juR6qKmC4u/81N/F9E/+8XdZ3BV+AGrb0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z8nlxGxuNaUbAwpuJ1Yh7ZU2KpDxPG1VlNMtHZF6Rz87OUScaOK/tJ5OrjaOj9SaG
-	 2mFSMNTpnZAL9lRP/pMaDmSeKaFIYbEOBtLrIACLsfbciLUpBn3HZltjRnB5TFUN/s
-	 6sBmpj6KoUvW8tXU0EWvPd2svlUPKwvDJ+orkSdE=
+	b=ryUsKdeOtu+zf+CgLYmEOte2LsujUrkswd4qpICx8fMl4Q+EHcTK/uMM75PnpiJsF
+	 vwOxla8GWvPXeJdaFkkFcpih9UVMKdOTRFxDe/Fao7egX50Lj4itbu5/5zTVjMg3LL
+	 AKO43tV9J103U+TfQ3Aq8+du7DnqJukAWuYw0720=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitaly Prosyak <vitaly.prosyak@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 439/602] drm/amdgpu/gfx12: replace BUG_ON() with WARN_ON()
-Date: Thu, 30 Jul 2026 16:13:51 +0200
-Message-ID: <20260730141445.189720106@linuxfoundation.org>
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Marcin Szycik <marcin.szycik@linux.intel.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 422/602] ice: reject out-of-range ptype in ice_parser_profile_init
+Date: Thu, 30 Jul 2026 16:13:34 +0200
+Message-ID: <20260730141444.832486685@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -50,71 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
 
-commit cd3b3efa1ced05528d9128755338baa62a6b562d upstream.
+commit 59abb87159c53605c063f6e2ceb215b5eba43ee6 upstream.
 
-There's no need to crash the kernel for these cases.
+set_bit(rslt->ptype, prof->ptypes) operates on a DECLARE_BITMAP of
+ICE_FLOW_PTYPE_MAX (1024) bits. Nothing prevents a malicious VF from
+providing ptype >= 1024 through VIRTCHNL, resulting in a write past
+the end of the bitmap and a kernel page fault.
 
-Reviewed-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit f952076f76d62f783e8ba4995a7c400d39354ccf)
+Reproduced with a custom kernel module injecting a crafted
+VIRTCHNL_OP_ADD_RSS_CFG on E810-C QSFP (8086:1592),
+FW 4.91 0x800214af 1.3909.0, ICE COMMS DDP 1.3.53.0,
+kernel 7.1.0-rc1.
+
+crash_parser: ice_parser_profile_init @ ffffffffc0d61b60
+crash_parser: setting ptype=0xffff (max valid=1023)
+crash_parser: calling ice_parser_profile_init -- expect OOB crash!
+BUG: kernel NULL pointer dereference, address: 0000000000000000
+Oops: Oops: 0002 [#1] SMP NOPTI
+CPU: 56 UID: 0 PID: 165011 Comm: insmod Kdump: loaded Tainted: G S U OE 7.1.0-rc1 #1
+Hardware name: Intel Corporation S2600BPB/S2600BPB
+RIP: 0010:ice_parser_profile_init+0x2d/0x1d0 [ice]
+Call Trace:
+ <TASK>
+ ? __pfx_ice_parser_profile_init+0x10/0x10 [ice]
+ crash_init+0x127/0xff0 [crash_parser]
+ do_one_initcall+0x45/0x310
+ do_init_module+0x64/0x270
+ init_module_from_file+0xcc/0xf0
+ idempotent_init_module+0x17b/0x280
+ __x64_sys_finit_module+0x6e/0xe0
+
+Bail out early with -EINVAL when ptype is out of range.
+
+Fixes: e312b3a1e209 ("ice: add API for parser profile initialization")
 Cc: stable@vger.kernel.org
+Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Marcin Szycik <marcin.szycik@linux.intel.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://patch.msgid.link/20260717185340.3595286-12-anthony.l.nguyen@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c |   13 +++++--------
- 1 file changed, 5 insertions(+), 8 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_parser.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
-@@ -409,7 +409,7 @@ static void gfx_v12_0_wait_reg_mem(struc
- 			   WAIT_REG_MEM_ENGINE(eng_sel)));
+--- a/drivers/net/ethernet/intel/ice/ice_parser.c
++++ b/drivers/net/ethernet/intel/ice/ice_parser.c
+@@ -2368,6 +2368,9 @@ int ice_parser_profile_init(struct ice_p
+ 	u16 proto_off = 0;
+ 	u16 off;
  
- 	if (mem_space)
--		BUG_ON(addr0 & 0x3); /* Dword align */
-+		WARN_ON(addr0 & 0x3); /* Dword align */
- 	amdgpu_ring_write(ring, addr0);
- 	amdgpu_ring_write(ring, addr1);
- 	amdgpu_ring_write(ring, ref);
-@@ -4338,7 +4338,7 @@ static void gfx_v12_0_ring_emit_ib_gfx(s
- 		control |= 0x400000;
- 
- 	amdgpu_ring_write(ring, header);
--	BUG_ON(ib->gpu_addr & 0x3); /* Dword align */
-+	WARN_ON(ib->gpu_addr & 0x3); /* Dword align */
- 	amdgpu_ring_write(ring,
- #ifdef __BIG_ENDIAN
- 		(2 << 0) |
-@@ -4361,7 +4361,7 @@ static void gfx_v12_0_ring_emit_ib_compu
- 		control |= 0x40000000;
- 
- 	amdgpu_ring_write(ring, PACKET3(PACKET3_INDIRECT_BUFFER, 2));
--	BUG_ON(ib->gpu_addr & 0x3); /* Dword align */
-+	WARN_ON(ib->gpu_addr & 0x3); /* Dword align */
- 	amdgpu_ring_write(ring,
- #ifdef __BIG_ENDIAN
- 				(2 << 0) |
-@@ -4392,9 +4392,9 @@ static void gfx_v12_0_ring_emit_fence(st
- 	 * aligned if only send 32bit data low (discard data high)
- 	 */
- 	if (write64bit)
--		BUG_ON(addr & 0x7);
-+		WARN_ON(addr & 0x7);
- 	else
--		BUG_ON(addr & 0x3);
-+		WARN_ON(addr & 0x3);
- 	amdgpu_ring_write(ring, lower_32_bits(addr));
- 	amdgpu_ring_write(ring, upper_32_bits(addr));
- 	amdgpu_ring_write(ring, lower_32_bits(seq));
-@@ -4446,9 +4446,6 @@ static void gfx_v12_0_ring_emit_fence_ki
- {
- 	struct amdgpu_device *adev = ring->adev;
- 
--	/* we only allocate 32bit for each seq wb address */
--	BUG_ON(flags & AMDGPU_FENCE_FLAG_64BIT);
--
- 	/* write fence seq to the "addr" */
- 	amdgpu_ring_write(ring, PACKET3(PACKET3_WRITE_DATA, 3));
- 	amdgpu_ring_write(ring, (WRITE_DATA_ENGINE_SEL(0) |
++	if (rslt->ptype >= ICE_FLOW_PTYPE_MAX)
++		return -EINVAL;
++
+ 	memset(prof, 0, sizeof(*prof));
+ 	set_bit(rslt->ptype, prof->ptypes);
+ 	if (blk == ICE_BLK_SW) {
 
 
