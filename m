@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3DB330C618;
-	Thu, 30 Jul 2026 15:11:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9295C43F0A7;
+	Thu, 30 Jul 2026 15:11:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424311; cv=none; b=FKtK8vKsbF/HmE+cqbH80XGHRtaUM1cZ47eHHiBlN04GJKRaTv39FL5YuPtegXmNAhfN5S3tQ7syIounLk7cGXyBMX+lPGNwD6myDuiSYJaq4IKmaPjDcN8VqDWvMIpsEFpv6B/bj2xZdh/7lKNz8IA8iVUAX/l/DtUQvCEE5DI=
+	t=1785424314; cv=none; b=Ye9reKlzcvMpXcU4WNJHYTG8IdfpH9vqtERM7E99fL4PEaFHWBQexN3ABRgxO8GyuIEhF76MxvPQ/sSUM9uN+7Bt3eb8RAkVMHFCx1SYw3iM8ZVF4HdCAMufpM5bfxVaojEorRCI61+XzxBbjdA2Lvbqmuvj/wZfHQW0YvpHkYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424311; c=relaxed/simple;
-	bh=M8i6kcA9r55gTlTO4cR8nI35a5ZHc5q6IJs+8lT4JBs=;
+	s=arc-20240116; t=1785424314; c=relaxed/simple;
+	bh=A/i34Hx/8ca8sk2pG5cfznb3Q77ExqzjsAJCO+2RWm0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DF8bY8Q0lx9BCdcQgXYEHjasBqyHGNmvzrE9spNMkVqP/uMCNC/KEV9N5RhjnBAOXfBk284jlef8kdmJ0eeEjdPtymoq6W6hdmw5JFQgp1decF5TaLwj7LGHukH9U/7qYZV/EXDyqaRItNbaSjmjObfHg3QhiiT0Xc5bo3f+nik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ZIBD1yy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qNp0Pbu2c3mqacjgiuWF76bZPDx3HGjT1sBOHYQRMHFDbUTb/xriIGGhezODkvbcGjgxYqo6rLywjqVwwkycq4UpikEhwo9RwRtv5jIQYxZjmlEEJYC7ODfUCevdlSNguOKOOPq1s+sEUT9am2b5z9DZDcE8Gp9w5k8LIB1jjlk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W8kLV1RN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ZIBD1yy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05DD21F000E9;
-	Thu, 30 Jul 2026 15:11:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W8kLV1RN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDBD71F000E9;
+	Thu, 30 Jul 2026 15:11:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424310;
-	bh=fQHezVHyiL3ryK363NmkFNXN9Nih8L3dbHDpfYnPu+w=;
+	s=korg; t=1785424313;
+	bh=iDNfa/vAd+VVatdRGVmHEVoz/4IW2We/JjW3MihKHhY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2ZIBD1yyOhAmx8ts0gkgfmxygjb3yvvFpukNQo11Zk/iT53MvjJ9X2kSnBcZbbLr+
-	 E0+lDgkDDm8J+vRnANvS9cJRiltd86kNagNUgGYl4ZSRW/5HHSd5T8LM7peICHJVzu
-	 VzfprtR1L9eAizQzWRZr70T0lTspF2wmKCX9gmsg=
+	b=W8kLV1RN8m5fZI/PrWI011eupJLB5xYEoMJCjmBzC1zLcRONjvuZZ4Bp4wfTnpYgv
+	 i1QWoJBQBRLx4wiQSz7hMh6Pp4d2N0uWQ5nePsBVIze0Q78CgQHh//hxmS9yefVo50
+	 Lhi8eQx4RtcsH7QSy9y+8H7KwnUB0XY2HzGQCmU0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brajesh Gupta <brajesh.gupta@imgtec.com>,
-	Alessio Belle <alessio.belle@imgtec.com>
-Subject: [PATCH 6.18 348/675] drm/imagination: Fix double call to drm_sched_entity_fini()
-Date: Thu, 30 Jul 2026 16:11:18 +0200
-Message-ID: <20260730141452.530608501@linuxfoundation.org>
+	Alessio Belle <alessio.belle@imgtec.com>,
+	Shuvam Pandey <shuvampandey1@gmail.com>
+Subject: [PATCH 6.18 349/675] drm/imagination: Fix user array stride in pvr_set_uobj_array()
+Date: Thu, 30 Jul 2026 16:11:19 +0200
+Message-ID: <20260730141452.551380238@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -44,184 +44,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Brajesh Gupta <brajesh.gupta@imgtec.com>
+From: Shuvam Pandey <shuvampandey1@gmail.com>
 
-commit 4af24c27a39ba147a613a09e10b9e0f7294524c0 upstream.
+commit 8dc8f3f4c2382fb7d1b1986ba8f33a2466cd3d7a upstream.
 
-Call sequence of double call:
-pvr_context_destroy
-  pvr_context_kill_queues
-    pvr_queue_kill
-      drm_sched_entity_destroy
-        drm_sched_entity_fini // here
-  pvr_context_put
-    kref_put(..., pvr_context_release)
-      pvr_context_destroy_queues
-        pvr_queue_destroy
-          drm_sched_entity_fini // here
+pvr_set_uobj_array() copies an array of kernel objects to a userspace
+array whose element size is described by out->stride. When out->stride
+is different from the kernel object size, the slow path advances the
+userspace pointer by the kernel object size and the kernel pointer by the
+userspace stride.
 
-Call to drm_sched_entity_destroy() from pvr_context_kill_queues() calls
-drm_sched_entity_flush() + drm_sched_entity_fini().
-drm_sched_entity_flush() ensures all pending jobs are completed and
-drm_sched_entity_fini() ensures no further submission is allowed as
-per expectation from pvr_context_kill_queues(). Double call to
-drm_sched_entity_fini() is misuse of the API so keep call only in
-pvr_context_create() failure path.
+This reverses the intended layout. For larger userspace strides, later
+copies read from the wrong kernel addresses. For smaller userspace
+strides, later copies are written at the wrong userspace offsets. The
+padding clear is also done only for the first element instead of the
+padding area for each element.
 
-Stack trace for issue with addition of refcounting for DRM entity
-stats in commit fd177135f0e6 ("drm/sched: Account entity GPU time"):
+Advance the userspace pointer by out->stride and the kernel pointer by
+obj_size, and clear per-element padding while the current userspace
+pointer is still available.
 
-[  789.490527] ------------[ cut here ]------------
-[  789.490559] refcount_t: underflow; use-after-free.
-[  789.490657] WARNING: lib/refcount.c:28 at refcount_warn_saturate+0xf4/0x144, CPU#0: kworker/u16:1/440
-[  789.490695] Modules linked in: powervr drm_gpuvm drm_exec gpu_sched drm_shmem_helper xhci_plat_hcd xhci_hcd dwc3 usbcore usb_common snd_soc_simple_card snd_soc_simple_card_utils sa2ul sha512 sha256 dwc3_am62 sha1 authenc rti_wdt libsha512 at24 sch_fq_codel fuse dm_mod ipv6
-[  789.490798] CPU: 0 UID: 0 PID: 440 Comm: kworker/u16:1 Not tainted 7.0.0-rc7-02049-g5e2c0700091b #22 PREEMPT
-[  789.490809] Hardware name: Texas Instruments AM625 SK (DT)
-[  789.490815] Workqueue: powervr-sched pvr_queue_fence_release_work [powervr]
-[  789.490868] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[  789.490876] pc : refcount_warn_saturate+0xf4/0x144
-[  789.490884] lr : refcount_warn_saturate+0xf4/0x144
-[  789.490892] sp : ffff8000822cbcc0
-[  789.490895] x29: ffff8000822cbcc0 x28: 0000000000000000 x27: 0000000000000000
-[  789.490909] x26: 0000000000000000 x25: ffff800081b1e338 x24: ffff000004541405
-[  789.490922] x23: ffff000004bea950 x22: ffff00000042e400 x21: ffff000007123e30
-[  789.490935] x20: ffff000007123000 x19: ffff000007a80d50 x18: fffffffffffe7768
-[  789.490948] x17: 74736574202c6e6f x16: 697461746e656d65 x15: ffff800081b269f0
-[  789.490962] x14: 0000000000000030 x13: ffff800081b26a70 x12: 0000000000000211
-[  789.490975] x11: 00000000000000c0 x10: 0000000000000b50 x9 : ffff8000822cbb30
-[  789.490988] x8 : ffff0000014e7bb0 x7 : ffff00007725e780 x6 : 0000000372a05f49
-[  789.491001] x5 : 0000000000000000 x4 : 0000000000000001 x3 : 0000000000000010
-[  789.491013] x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff0000014e7000
-[  789.491027] Call trace:
-[  789.491032]  refcount_warn_saturate+0xf4/0x144 (P)
-[  789.491043]  drm_sched_entity_fini+0x164/0x18c [gpu_sched]
-[  789.491081]  pvr_queue_destroy+0x64/0x134 [powervr]
-[  789.491110]  pvr_context_destroy_queues+0x34/0x64 [powervr]
-[  789.491138]  pvr_context_release+0x70/0xac [powervr]
-[  789.491166]  pvr_context_put.part.0+0x5c/0x7c [powervr]
-[  789.491193]  pvr_context_put+0x14/0x24 [powervr]
-[  789.491221]  pvr_queue_fence_release_work+0x20/0x38 [powervr]
-[  789.491249]  process_one_work+0x160/0x4c4
-[  789.491264]  worker_thread+0x188/0x310
-[  789.491276]  kthread+0x130/0x13c
-[  789.491287]  ret_from_fork+0x10/0x20
-[  789.491300] ---[ end trace 0000000000000000 ]---
-
-Fixes: eaf01ee5ba28 ("drm/imagination: Implement job submission and scheduling")
-Cc: stable@vger.kernel.org
-Signed-off-by: Brajesh Gupta <brajesh.gupta@imgtec.com>
+Fixes: f99f5f3ea7ef ("drm/imagination: Add GPU ID parsing and firmware loading")
+Cc: stable@vger.kernel.org # v6.8+
 Reviewed-by: Alessio Belle <alessio.belle@imgtec.com>
-Link: https://patch.msgid.link/20260630-b4-sched_fix-v7-1-71aa39c62627@imgtec.com
+Signed-off-by: Shuvam Pandey <shuvampandey1@gmail.com>
+Link: https://patch.msgid.link/6a456012.eb165e5c.113c2a.b71d@mx.google.com
 Signed-off-by: Alessio Belle <alessio.belle@imgtec.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/imagination/pvr_context.c |   18 ++++++++++--------
- drivers/gpu/drm/imagination/pvr_queue.c   |    6 ++++--
- drivers/gpu/drm/imagination/pvr_queue.h   |    2 +-
- 3 files changed, 15 insertions(+), 11 deletions(-)
+ drivers/gpu/drm/imagination/pvr_drv.c |   13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
---- a/drivers/gpu/drm/imagination/pvr_context.c
-+++ b/drivers/gpu/drm/imagination/pvr_context.c
-@@ -161,22 +161,24 @@ ctx_fw_data_init(void *cpu_ptr, void *pr
- /**
-  * pvr_context_destroy_queues() - Destroy all queues attached to a context.
-  * @ctx: Context to destroy queues on.
-+ * @cleanup_queue_entity: Whether to cleanup the queue entity e.g. context
-+ * creation failure path.
-  *
-  * Should be called when the last reference to a context object is dropped.
-  * It releases all resources attached to the queues bound to this context.
-  */
--static void pvr_context_destroy_queues(struct pvr_context *ctx)
-+static void pvr_context_destroy_queues(struct pvr_context *ctx, bool cleanup_queue_entity)
- {
- 	switch (ctx->type) {
- 	case DRM_PVR_CTX_TYPE_RENDER:
--		pvr_queue_destroy(ctx->queues.fragment);
--		pvr_queue_destroy(ctx->queues.geometry);
-+		pvr_queue_destroy(ctx->queues.fragment, cleanup_queue_entity);
-+		pvr_queue_destroy(ctx->queues.geometry, cleanup_queue_entity);
- 		break;
- 	case DRM_PVR_CTX_TYPE_COMPUTE:
--		pvr_queue_destroy(ctx->queues.compute);
-+		pvr_queue_destroy(ctx->queues.compute, cleanup_queue_entity);
- 		break;
- 	case DRM_PVR_CTX_TYPE_TRANSFER_FRAG:
--		pvr_queue_destroy(ctx->queues.transfer);
-+		pvr_queue_destroy(ctx->queues.transfer, cleanup_queue_entity);
- 		break;
+--- a/drivers/gpu/drm/imagination/pvr_drv.c
++++ b/drivers/gpu/drm/imagination/pvr_drv.c
+@@ -1252,14 +1252,13 @@ pvr_set_uobj_array(const struct drm_pvr_
+ 			if (copy_to_user(out_ptr, in_ptr, cpy_elem_size))
+ 				return -EFAULT;
+ 
+-			out_ptr += obj_size;
+-			in_ptr += out->stride;
+-		}
++			if (out->stride > obj_size &&
++			    clear_user(out_ptr + cpy_elem_size, out->stride - obj_size)) {
++				return -EFAULT;
++			}
+ 
+-		if (out->stride > obj_size &&
+-		    clear_user(u64_to_user_ptr(out->array + obj_size),
+-			       out->stride - obj_size)) {
+-			return -EFAULT;
++			out_ptr += out->stride;
++			in_ptr += obj_size;
+ 		}
  	}
- }
-@@ -240,7 +242,7 @@ static int pvr_context_create_queues(str
- 	return -EINVAL;
- 
- err_destroy_queues:
--	pvr_context_destroy_queues(ctx);
-+	pvr_context_destroy_queues(ctx, true);
- 	return err;
- }
- 
-@@ -356,7 +358,7 @@ err_destroy_fw_obj:
- 	pvr_fw_object_destroy(ctx->fw_obj);
- 
- err_destroy_queues:
--	pvr_context_destroy_queues(ctx);
-+	pvr_context_destroy_queues(ctx, true);
- 
- err_free_ctx_data:
- 	kfree(ctx->data);
-@@ -382,7 +384,7 @@ pvr_context_release(struct kref *ref_cou
- 	spin_unlock(&pvr_dev->ctx_list_lock);
- 
- 	xa_erase(&pvr_dev->ctx_ids, ctx->ctx_id);
--	pvr_context_destroy_queues(ctx);
-+	pvr_context_destroy_queues(ctx, false);
- 	pvr_fw_object_destroy(ctx->fw_obj);
- 	kfree(ctx->data);
- 	pvr_vm_context_put(ctx->vm_ctx);
---- a/drivers/gpu/drm/imagination/pvr_queue.c
-+++ b/drivers/gpu/drm/imagination/pvr_queue.c
-@@ -1401,11 +1401,12 @@ void pvr_queue_kill(struct pvr_queue *qu
- /**
-  * pvr_queue_destroy() - Destroy a queue.
-  * @queue: The queue to destroy.
-+ * @cleanup_queue_entity: Whether to cleanup the queue entity.
-  *
-  * Cleanup the queue and free the resources attached to it. Should be
-  * called from the context release function.
-  */
--void pvr_queue_destroy(struct pvr_queue *queue)
-+void pvr_queue_destroy(struct pvr_queue *queue, bool cleanup_queue_entity)
- {
- 	if (!queue)
- 		return;
-@@ -1415,7 +1416,8 @@ void pvr_queue_destroy(struct pvr_queue
- 	mutex_unlock(&queue->ctx->pvr_dev->queues.lock);
- 
- 	drm_sched_fini(&queue->scheduler);
--	drm_sched_entity_fini(&queue->entity);
-+	if (cleanup_queue_entity)
-+		drm_sched_entity_fini(&queue->entity);
- 
- 	if (WARN_ON(queue->last_queued_job_scheduled_fence))
- 		dma_fence_put(queue->last_queued_job_scheduled_fence);
---- a/drivers/gpu/drm/imagination/pvr_queue.h
-+++ b/drivers/gpu/drm/imagination/pvr_queue.h
-@@ -158,7 +158,7 @@ struct pvr_queue *pvr_queue_create(struc
- 
- void pvr_queue_kill(struct pvr_queue *queue);
- 
--void pvr_queue_destroy(struct pvr_queue *queue);
-+void pvr_queue_destroy(struct pvr_queue *queue, bool cleanup_queue_entity);
- 
- void pvr_queue_process(struct pvr_queue *queue);
  
 
 
