@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 370CE38B122;
-	Thu, 30 Jul 2026 15:12:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01F823B5DEE;
+	Thu, 30 Jul 2026 15:12:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424340; cv=none; b=CfgwCjIjnyUsEbc1d2fmANft1dBf9t0+JnQc20SCvED6402gfgATBIYYqIHnYBYwC9A9I9TwsdBOwprs8J/qJ0FjpDByr0tnALfZAEZhSD4/cwR5DAI/l7ZTO/v3O0Q9bJNYATjty7hHArAC8Q6PYgRK9EiYc7VAs6RHwRbVI00=
+	t=1785424343; cv=none; b=ZdLEMfLisVXPBXGtFCdteSKoWADrhbTOKeYlgjieTNB6F/9hp60wnXcEAobE2/4qSP0AHM/SUQY6eqi8ZI9rQCYaHWmCUWpHh0+fd6Uw+3SoXr5dlQe38GgvQBOH9h16uHHJ8AxY2ltmeUmoHQ0nIH6+NHxMMJkFQ22InF7g548=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424340; c=relaxed/simple;
-	bh=Hrj/1VUGYkkr/igTpmTJGIQktKhpPwGEBfhNmF6Pggg=;
+	s=arc-20240116; t=1785424343; c=relaxed/simple;
+	bh=9TSZeMtk7M0YbelFSY0Jb603Vd2yP+IiMNcoTsFTIj4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZQ1g4dmDpJ/JKVTLH3ZiRFIM0m/NRbRUmYTFibGQByqGfdZUGzCiSr/oNa+o+TLUoSImUmH59UV3ZWfzsh7dcBU9zaWC371EEXcOqOuH6z1JCAq4g2lcuQx/eK4IZp9/B6bMxQu7hBjoLezZ5w3WGnytPMvNp8e+oFIVhO1ibrc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JGqgkBZi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rDPWpjcH6BhtsuaORUZ8KKrNrhjf+NCa4K54raQrB3t+NFDY5cIKMCeZcrLQpBFKuZY5FBjqG8aCp/alVtQj/s800+mxQhe+aHXBtU78EPYKYhLkMgZqQsn8QvfYyX30G4PPr72TPMGbXnX7lWGLfCWp4ygj+k9fGvU/VQOJmkI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Toks9fpF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JGqgkBZi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CF601F000E9;
-	Thu, 30 Jul 2026 15:12:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Toks9fpF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DE121F000E9;
+	Thu, 30 Jul 2026 15:12:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424339;
-	bh=L1IHJYKLbUHMWUaLcISOn9vWb1v5UyHFZ2OMR6XzUwI=;
+	s=korg; t=1785424341;
+	bh=23x3ncY/TkBCsZM3EgZx1LxQRgrx6WotztftctlY5UY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JGqgkBZiKA43zf9VX+FKkThXOeSRv7nDFnAJs82BHvsc0hbUJpbCOn2wDskFgdepQ
-	 mk4TzbWE3W9nE1uOh7a29HbF+QytwyvBcJ2nDxscLwULfIrsysMzXvTGtfs2AP0hp1
-	 SzQ7B4VTSbcvfsJO7HXYKyB3rdTu6Xk3GXGpAbS0=
+	b=Toks9fpFfNBsqd46RtiyHsgTK8adFj1WencJfAAWdbG2ENwmsrT6f/mndqb68M/hn
+	 Q0RNvuu6P7QZ0hk2N33mOFe1yjp87LsziedyCgHT6hLbM5bGnnPizia7iuzcBeFg1N
+	 JTxP2Yiq31ev5QmnXBig4MH9qxhy1vH7uIevFomA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	WenTao Liang <vulab@iscas.ac.cn>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 357/675] drm/amd/display: detect_link_and_local_sink: DP alt mode timeout path leaks prev_sink reference
-Date: Thu, 30 Jul 2026 16:11:27 +0200
-Message-ID: <20260730141452.720763869@linuxfoundation.org>
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Subject: [PATCH 6.18 358/675] drm/virtio: bound EDID block reads to the response buffer
+Date: Thu, 30 Jul 2026 16:11:28 +0200
+Message-ID: <20260730141452.741790398@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -52,43 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: WenTao Liang <vulab@iscas.ac.cn>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit a6e14b976be48eebd8769cb5b883a6af7fc5ade1 upstream.
+commit 4e1a53892ba7f8a3e1da6bfc53c83ae7c812dccd upstream.
 
-prev_sink is unconditionally retained via dc_sink_retain at function
-  entry, but the DP alt mode timeout path inside SIGNAL_TYPE_DISPLAY_PORT
-  returns false without releasing prev_sink. All other return paths in the
-  function correctly call dc_sink_release(prev_sink), making this the only
-  missing cleanup.
+virtio_get_edid_block() validates the read offset only against the
+device-supplied resp->size field, never against the fixed-size resp->edid
+array. The EDID block index is driven by the device-supplied extension
+count, so a malicious virtio-gpu backend can advertise a large size
+together with a high block count and read far past the array into adjacent
+kernel memory, which is then surfaced in the parsed EDID (an out-of-bounds
+read / info leak).
 
-Fixes: 54618888d1ea ("drm/amd/display: break down dc_link.c")
-Signed-off-by: WenTao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Link: https://patch.msgid.link/20260626124555.36910-1-vulab@iscas.ac.cn
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 45510cf662dcf46b5d8926d454f338809f107b9d)
+Also reject any read whose end exceeds the size of the edid array.
+Conforming EDID responses stay within the array and are unaffected.
+
+Fixes: b4b01b4995fb ("drm/virtio: add edid support")
 Cc: stable@vger.kernel.org
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Link: https://patch.msgid.link/20260620-b4-disp-22bba7bf-v1-1-b95924cee742@proton.me
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/link/link_detection.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/virtio/virtgpu_vq.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/dc/link/link_detection.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/link_detection.c
-@@ -979,8 +979,11 @@ static bool detect_link_and_local_sink(s
- 			    link->link_enc->features.flags.bits.DP_IS_USB_C == 1) {
+--- a/drivers/gpu/drm/virtio/virtgpu_vq.c
++++ b/drivers/gpu/drm/virtio/virtgpu_vq.c
+@@ -893,7 +893,8 @@ static int virtio_get_edid_block(void *d
+ 	struct virtio_gpu_resp_edid *resp = data;
+ 	size_t start = block * EDID_LENGTH;
  
- 				/* if alt mode times out, return false */
--				if (!wait_for_entering_dp_alt_mode(link))
-+				if (!wait_for_entering_dp_alt_mode(link)) {
-+					if (prev_sink)
-+						dc_sink_release(prev_sink);
- 					return false;
-+				}
- 			}
- 
- 			if (!detect_dp(link, &sink_caps, reason)) {
+-	if (start + len > le32_to_cpu(resp->size))
++	if (start + len > le32_to_cpu(resp->size) ||
++	    start + len > sizeof(resp->edid))
+ 		return -EINVAL;
+ 	memcpy(buf, resp->edid + start, len);
+ 	return 0;
 
 
