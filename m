@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00345270545;
-	Thu, 30 Jul 2026 15:33:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CADF9270545;
+	Thu, 30 Jul 2026 15:33:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425616; cv=none; b=t3cUp5/8awY+YTAEV1k8OU826o7/37kEHa0NWQNAVWqA6bPK320i08DEb8KZ+mTwtr/fxQ6bY8+niaJKohqflZxzRRriEG/kRKcZcLadu/T1FOISLh4w5c78JZilrn7tBoSOSJ4qHUmsQ0Rrw/Eza4aDak9aykF83RadL/lxAGQ=
+	t=1785425618; cv=none; b=bKqi180efzhDDqxKg1SYs2p63qhmsiLraPdHJZnYF0tXWChefNeEWgh4po3q3Y738ecSTsa+gmZekMv/Rm2YDDVVUwdntHEUKwwJICpIYAgIv5b613NPBuoZi/oB9+jW8H5xoruTJelAHW6flP/TqOUWvMtbuhwroQFsyh5n+uQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425616; c=relaxed/simple;
-	bh=Rc53Qk/kz6XhxgGwvhoAlDFYEhUftexOU43BsZFGq5I=;
+	s=arc-20240116; t=1785425618; c=relaxed/simple;
+	bh=i5vCuQ5MMZtkBAQBmHjZDc5FgJt2c0G5+9cbUtvQ7Aw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LGxmR4pa/qYE+o7e8xbXIHRuPUsbdEC6vnnt49mcPYNoi0dkhgJJ2Toy7cxO+VUVtGlRPHxynX2hz4Lez3s26ohci+KBo11CQZAV3MnjLfXCrGi/owUzqrQ31F1M0p597ZQO+fseoB9qrkrz1K70iCyS6U/iQYGFVjYmI64W4Tw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=atsiIeJD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Aql9XEqog2zIVhsvHlXTrSimiVQZj2nyk04uFeA4iWpXo6Bvnru5pnpQO5AMwrwFGcErShN5Ua+Vw0Q/0tPbiWiPypmwJWtbfySH28bzrd/f9Ipk2ZSOeW0VPpPtxxTo8bMJ3ROxLS3x3n7Aa6GmDIu0H9oV27jZdU/Hh9ph3BA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pGSBzsvr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="atsiIeJD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 534F81F000E9;
-	Thu, 30 Jul 2026 15:33:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pGSBzsvr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 322611F00A3D;
+	Thu, 30 Jul 2026 15:33:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425614;
-	bh=kQc51ZtrGtsihXtLpVzk5nFlp3MJTGMD1/mXlGqOhGs=;
+	s=korg; t=1785425617;
+	bh=oXNKfu20fkuDuapeq1wAEXfpsROTMYLj9KRUncK7sQI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=atsiIeJDxqhXPjqyEPARnpMMh5bTG0lEaWhWWazyxue246tF34LBbb6vEmVeIf0Le
-	 Sya0EgBT5yC5xYV940GGaJdWHUBMAIzvKP+SAcFNfwHubMz2wtBtWGt1AQhjwBirDu
-	 V6UwEvj1d2u83jtgU/M4w/3jT+0VjjjNOutFM15Y=
+	b=pGSBzsvrfLgNdvmUT0HiovDc/2hWTF7JcsX7Lz0Qgy7PHsaY9opBKHpi80+dyD8As
+	 /WR8Bw1zGWIbCV9X5dDB4p1zPNT7NxfEMs9r9pmSLHAfiT2C3Tr/LD3YJ5+ye5zZRn
+	 TjKJIgbFYPaJtNsX4TUFIqk4nO6KZFm8QIutviHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chukun Pan <amadeus@jmu.edu.cn>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.12 129/602] USB: serial: option: add TDTECH MT5710-CN
-Date: Thu, 30 Jul 2026 16:08:41 +0200
-Message-ID: <20260730141438.697558038@linuxfoundation.org>
+	Doruk Tan Ozturk <doruk@0sec.ai>,
+	Lukas Wunner <lukas@wunner.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 130/602] crypto: rsa-pkcs1pad: Dont WARN on an empty digest
+Date: Thu, 30 Jul 2026 16:08:42 +0200
+Message-ID: <20260730141438.717685899@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -50,59 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chukun Pan <amadeus@jmu.edu.cn>
+From: Doruk Tan Ozturk <doruk@0sec.ai>
 
-commit 55645e4f3c6022ffb160ad3617d2b624eaa38501 upstream.
+KEYCTL_PKEY_VERIFY lets an unprivileged caller supply a zero-length
+digest (in_len == 0).  keyctl_pkey_params_get_2() accepts the zero
+length and the request reaches pkcs1pad_verify(), where the empty
+digest is rejected but only after being passed through
+WARN_ON(!digest_size).  The warning is therefore directly
+user-triggerable, and on kernels built with panic_on_warn=1 an
+unprivileged process can panic the machine -- a local denial of
+service.  Reproduced as UID 65534 in a setuid sandbox.
 
-Add support for the TDTECH MT5710-CN (5G redcap) module based on the
-Huawei HiSilicon Balong chip.
+Keep rejecting the invalid request with -EINVAL, but do not emit a
+warning for the user-controlled length.
 
-T:  Bus=01 Lev=02 Prnt=02 Port=00 Cnt=01 Dev#=  3 Spd=480  MxCh= 0
-D:  Ver= 2.10 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=3466 ProdID=3301 Rev=ff.ff
-S:  Manufacturer=TD Tech Ltd.
-S:  Product=TDTECH MT571X
-S:  SerialNumber=0123456789ABCDEF
-C:* #Ifs= 6 Cfg#= 1 Atr=c0 MxPwr=  0mA
-A:  FirstIf#= 0 IfCount= 2 Cls=02(comm.) Sub=0d Prot=00
-I:* If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=0d Prot=00 Driver=cdc_ncm
-E:  Ad=82(I) Atr=03(Int.) MxPS=  16 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=01 Driver=cdc_ncm
-I:* If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=01 Driver=cdc_ncm
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=06 Prot=13 Driver=option
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=06 Prot=12 Driver=option
-E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=06 Prot=1c Driver=option
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=06 Prot=14 Driver=option
-E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+Mainline does not contain this code path; commit 1e562deacecc
+("crypto: rsassa-pkcs1 - Migrate to sig_alg backend") removed
+pkcs1pad_verify() in v6.13-rc1.  This is a minimal fix for the
+affected stable branches.  It applies as-is to 6.1.y, 6.6.y and
+6.12.y (identical pkcs1pad_verify); the 5.10.y/5.15.y form is sent
+as a separate patch due to the older req->dst_len spelling.
 
-Interface: ECM / NCM + DIAG + AT + SERIAL + GPS
+Found by 0sec automated security-research tooling (https://0sec.ai).
 
-Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
+Fixes: c7381b012872 ("crypto: akcipher - new verify API for public key algorithms")
 Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Assisted-by: 0sec:multi-model
+Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
+Reviewed-by: Lukas Wunner <lukas@wunner.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/option.c |    1 +
- 1 file changed, 1 insertion(+)
+ crypto/rsa-pkcs1pad.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -2497,6 +2497,7 @@ static const struct usb_device_id option
- 	  .driver_info = RSVD(5) },
- 	{ USB_DEVICE_INTERFACE_CLASS(0x33f8, 0x1003, 0xff),			/* Rolling RW135R-GL (laptop MBIM) */
- 	  .driver_info = RSVD(5) },
-+	{ USB_DEVICE_INTERFACE_CLASS(0x3466, 0x3301, 0xff) },			/* TDTECH MT5710-CN */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x0100, 0xff, 0xff, 0x30) },	/* NetPrisma LCUK54-WWD for Global */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x0100, 0xff, 0x00, 0x40) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x0100, 0xff, 0xff, 0x40) },
+diff --git a/crypto/rsa-pkcs1pad.c b/crypto/rsa-pkcs1pad.c
+index cd501195f34a1a..225fcc3377dddc 100644
+--- a/crypto/rsa-pkcs1pad.c
++++ b/crypto/rsa-pkcs1pad.c
+@@ -557,7 +557,7 @@ static int pkcs1pad_verify(struct akcipher_request *req)
+ 	const unsigned int digest_size = req->dst_len;
+ 	int err;
+ 
+-	if (WARN_ON(req->dst) || WARN_ON(!digest_size) ||
++	if (WARN_ON(req->dst) || !digest_size ||
+ 	    !ctx->key_size || sig_size != ctx->key_size)
+ 		return -EINVAL;
+ 
+-- 
+2.53.0
+
 
 
