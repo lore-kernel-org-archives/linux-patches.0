@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89ACA443A83;
-	Thu, 30 Jul 2026 14:57:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 710B12D7393;
+	Thu, 30 Jul 2026 14:57:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423436; cv=none; b=OGpwoKZ4Upd6FdlaHJvqKCREgjPQFayySdKvpDR38hSVeDethkDL4ACXJXZqq8Et/ACHhDH+P6WULP75oO43HbpVJV7U2YlN4Kq9RhAX+ob+eAKpnkyN29ZNIQ1fkh3mPN9VWWo2LbYDFJoK4f+P1Q384UNRTSQjYLfmPursLS4=
+	t=1785423439; cv=none; b=mHvktLvIedWozJEWKdD+yh7MpnYg9Jz/0Namhi4tKByVFuL18VsmubGhkROTOnaii9I0ctQFTX2LjEA3kMfPpvaVTvXY519zviqF1d2mwoge26aDLE2NZlTQcG0aoUOIiAgkesOitAUDr6I8jyGBSMwpGue845BrDJ7rzsbiq7A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423436; c=relaxed/simple;
-	bh=Xg/Rd0LVDnJ10VDAHCd7kZA4sQk9p1mkKttMnvn9f7Y=;
+	s=arc-20240116; t=1785423439; c=relaxed/simple;
+	bh=CZokdSuSInQPNeojiMb8iu62XoxMhCkHHdSyD5UeeeE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t0vT0RDuj77TioXP7ihOk5d+2DDUYS+Dy0s2H4FlrOVp5LZLZZMM2T4bARx7xmjU/SLYOGMWlyF2lAEO+iaFeZ1hZZOFash4fVwI6UCBmeNYJa5gU6AUcbN1wimaYM0Zo8L/8Z0CsPCpeJm4lIp10FROQlEfbinSCJfwvehL8NY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E55avvqL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UtfdKayXg6mzQIip7KE3QvjLiHlgqppnx56yo+9nfIvv+rIH44v96A5BSHqgTqFHGgsnJw5435DExbLqBnqSWXuIQeRyj21ArRdmRZfZslOtwqFfl3hS8k4dggYxgPU1nKQFVhCmL0a6L2tssPQsPU75JLB5DGz1xlNeWAj8Dlc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jPLL/2nq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E55avvqL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E541E1F000E9;
-	Thu, 30 Jul 2026 14:57:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jPLL/2nq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C826A1F000E9;
+	Thu, 30 Jul 2026 14:57:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423435;
-	bh=yJqa33pYLIiRUMx70a0ur+s8k5bWY1ImwaNhB2GDPds=;
+	s=korg; t=1785423438;
+	bh=B2LZq7U3boS85un9BzteQJKhLK+JK2TiZVnAAxMqD3Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E55avvqLKjvbT4ZA4ASmOK8D5Vlwj/sQf3zd69X4lZu0av/OhhsxtEece6qbl2qho
-	 EkfeBxPfvZswJMWi3z5STdSD/8yU6TywZhSK2prsel404oR/008C1XBR3+4SriIOna
-	 C2hDeQJt6KAMQtV0hD1fRQvz2zp/63FeGuCVn/sg=
+	b=jPLL/2nqrnMB4yVgd9L5cwuW88u2zN8BLB9J4iJd7CvOWkP1DdsU1CSO44WRV85YV
+	 FfcmZIuEuFKNS4DUh/fYpvaGaZwgtBZxs6E94SQ2JjH4EMpvFImCCtoSETERWDSAD+
+	 RA1TVZtrqrM+41jVyQamwTI1GGl7gqGbekLmlu7I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	Boris Burkov <boris@bur.io>,
-	David Sterba <dsterba@suse.com>,
+	Unnathi Chalicheemala <unnathi.chalicheemala@oss.qualcomm.com>,
+	Sudeep Holla <sudeep.holla@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 044/675] btrfs: fallback to transaction csum tree on a commit root csum miss
-Date: Thu, 30 Jul 2026 16:06:14 +0200
-Message-ID: <20260730141446.057167785@linuxfoundation.org>
+Subject: [PATCH 6.18 045/675] firmware: arm_ffa: Fix NULL dereference in ffa_partition_info_get()
+Date: Thu, 30 Jul 2026 16:06:15 +0200
+Message-ID: <20260730141446.079144059@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -52,90 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boris Burkov <boris@bur.io>
+From: Unnathi Chalicheemala <unnathi.chalicheemala@oss.qualcomm.com>
 
-[ Upstream commit 3dcd50730814e5220072d2b26d0587af6bfb6dbe ]
+[ Upstream commit 8ae5f8e4836667fcaffdf2e3c6068b0a8b364dd8 ]
 
-We have been running with commit root csums enabled for some time and
-have noticed a slight uptick in zero csum errors. Investigating those
-revealed that they were same transaction reads of extents that were just
-relocated, but the extent map generation was long ago.
+ffa_partition_info_get() passes uuid_str directly to uuid_parse()
+without a NULL check. When a caller passes NULL, uuid_parse() ->
+__uuid_parse() -> uuid_is_valid() dereferences the pointer, causing
+a kernel panic:
 
-It turns out that relocation intentionally does not update the extent
-generation (replace_file_extents()), but must write a new csum since the
-data has moved, so we must account for this with commit root csum reading.
+  |  Unable to handle kernel NULL pointer dereference at virtual address
+  |  0000000000000040
+  |  pc : uuid_parse+0x40/0xac
+  |  lr : ffa_partition_info_get+0x1c/0x94 [arm_ffa]
 
-Luckily this is a short lived condition: after the relocation transaction
-the commit root will once again have the csum. So we can add a generic
-fallback to the lookup to try again with the transaction csum root.
+Add a NULL guard before uuid_parse() so a NULL argument returns
+-ENODEV instead of crashing. Callers are expected to always supply
+a valid partition UUID, so NULL is not a supported input.
 
-Fixes: f07b855c56b1 ("btrfs: try to search for data csums in commit root")
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Boris Burkov <boris@bur.io>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: d0c0bce83122 ("firmware: arm_ffa: Setup in-kernel users of FFA partitions")
+Signed-off-by: Unnathi Chalicheemala <unnathi.chalicheemala@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260617-ffa_partition_nullptr_fix-v2-1-bc801b4ce34c@oss.qualcomm.com
+Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/file-item.c | 26 +++++++++++++++++++++++++-
- 1 file changed, 25 insertions(+), 1 deletion(-)
+ drivers/firmware/arm_ffa/driver.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/file-item.c b/fs/btrfs/file-item.c
-index a2f851eaadca06..9b19b33e85b687 100644
---- a/fs/btrfs/file-item.c
-+++ b/fs/btrfs/file-item.c
-@@ -350,6 +350,7 @@ int btrfs_lookup_bio_sums(struct btrfs_bio *bbio)
- 	const unsigned int nblocks = orig_len >> fs_info->sectorsize_bits;
- 	int ret = 0;
- 	u32 bio_offset = 0;
-+	bool using_commit_root = false;
+diff --git a/drivers/firmware/arm_ffa/driver.c b/drivers/firmware/arm_ffa/driver.c
+index c76eabb8436a85..feded15bb5e921 100644
+--- a/drivers/firmware/arm_ffa/driver.c
++++ b/drivers/firmware/arm_ffa/driver.c
+@@ -1133,7 +1133,7 @@ static int ffa_partition_info_get(const char *uuid_str,
+ 	uuid_t uuid;
+ 	struct ffa_partition_info *pbuf;
  
- 	if ((inode->flags & BTRFS_INODE_NODATASUM) ||
- 	    test_bit(BTRFS_FS_STATE_NO_DATA_CSUMS, &fs_info->fs_state))
-@@ -423,6 +424,7 @@ int btrfs_lookup_bio_sums(struct btrfs_bio *bbio)
- 	 * from across transactions.
- 	 */
- 	if (bbio->csum_search_commit_root) {
-+		using_commit_root = true;
- 		path->search_commit_root = true;
- 		path->skip_locking = true;
- 		down_read(&fs_info->commit_root_sem);
-@@ -455,6 +457,28 @@ int btrfs_lookup_bio_sums(struct btrfs_bio *bbio)
- 		 * assume this is the case.
- 		 */
- 		if (count == 0) {
-+			/*
-+			 * If an extent is relocated in the current transaction
-+			 * then relocation writes a new csum without updating
-+			 * the extent map generation. Until the next commit, we
-+			 * will see a hole in that case, so we need to fallback
-+			 * to searching the transaction csum root.
-+			 *
-+			 * Note that a commit root lookup of a referenced extent can
-+			 * only miss, not return a stale csum. A freed extent's csum
-+			 * is deleted in the same transaction and its bytenr is not
-+			 * reusable until that transaction has committed and the
-+			 * extent is unpinned.
-+			 */
-+			if (using_commit_root) {
-+				up_read(&fs_info->commit_root_sem);
-+				using_commit_root = false;
-+				path->search_commit_root = false;
-+				path->skip_locking = false;
-+				btrfs_release_path(path);
-+				continue;
-+			}
-+
- 			memset(csum_dst, 0, csum_size);
- 			count = 1;
- 
-@@ -473,7 +497,7 @@ int btrfs_lookup_bio_sums(struct btrfs_bio *bbio)
- 		bio_offset += count * sectorsize;
+-	if (uuid_parse(uuid_str, &uuid)) {
++	if (!uuid_str || uuid_parse(uuid_str, &uuid)) {
+ 		pr_err("invalid uuid (%s)\n", uuid_str);
+ 		return -ENODEV;
  	}
- 
--	if (bbio->csum_search_commit_root)
-+	if (using_commit_root)
- 		up_read(&fs_info->commit_root_sem);
- 	return ret;
- }
 -- 
 2.53.0
 
