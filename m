@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 784693806BD;
-	Thu, 30 Jul 2026 15:47:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4792B3769FD;
+	Thu, 30 Jul 2026 15:47:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426463; cv=none; b=Hm1yotCXtg36D33IiGk1Tw5z9mV0wi4I7QUE+uZzmi+1x+2Y4WdnEwHWIPYGXLWNKTmSEkmlueZBXAs+PF/3Zr9DJYzHGIjP8jiJkXh5Gn6dI8HiYc9Rto5xelzjOd9sM4LnkteP4PlSqzI0oT1Qrl2kBCqWJRgryjJARQhimYg=
+	t=1785426466; cv=none; b=sjBREHQrluEttQOxKIuTTqDZB2TXXej/ZBViB7+69O/ANwxQMyR5vnX3RW1eDU5MIm5hXlyRna+ZGQOtYyM7wMuZG16KVu2/0cT9Fkw9Asi3Gx0Qzv5zOh1PzetPC/VGs+X2reeqIz9bFHJBL4E0sLDkchtsmnDwHdvEmolcwKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426463; c=relaxed/simple;
-	bh=gwZQwoZBm95Ae+1kQbKstLzijXH7GuLGbJfExBRpTM4=;
+	s=arc-20240116; t=1785426466; c=relaxed/simple;
+	bh=xxGv1ua601wI8HDILgnb/mUKk01qjZ2wDzTuBWyw5x4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OOYyiiHlXSY9Df8lCOV1hyErUQLQ3dlFEdC9OthBUbF/0VwF24292ZncFo2PdNd2C/3OAab3hsXMPoHv9G002W3AGf7Fd7OWXpNPVUATyvyE7xx5GvfCChCdkqtnwKweVYiAZxChKr8Hf7/FOUY8pp3wNZSLegBDVR6VygWEy4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CRDhvv0y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oDhymLoaMnVgjE6XbK1I5V3z72KJL3+4hok4TKZwkBqipUGTQDtzkkXHsn/YGdYzK66hZ9CA/p1r1yd4KePV782bRbyBi+IF6UJ+vN+Bsny8DLFRHhKCXnUdO66GqvOH8trMehgxDIO1hCBx+04cfamHmYp6sWSYAuFcZB/kFqI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xoOvdwNa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CRDhvv0y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC0731F000E9;
-	Thu, 30 Jul 2026 15:47:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xoOvdwNa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1E7E1F000E9;
+	Thu, 30 Jul 2026 15:47:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426462;
-	bh=eMeoBjF2eRqVOnCfcKpNT/11HPuQwq286r3UQtsiihA=;
+	s=korg; t=1785426465;
+	bh=J9M8XmlksaxnnuW4MS8nrOwygTXxy8BydvPf+xlwei8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CRDhvv0y72nDyUeiq/RDC+j/C0loBnWDSpDqnYHITz1vCS/aWviLvsXcXqC/zMAs9
-	 6djURTWEw8lXPi9woDT4dGA4mIYiMJf1zgRfNgZZNVXwJwHRfzsc2DmaLswwbMNYfr
-	 q78+JwZS4xb/cyMaWELEBi9fv9gn7yv5njdWRg9I=
+	b=xoOvdwNaCsDntFjLSwD6ZEATHaFwp74H/J0HCeNuedySD7KodxuTLanxl/GZZUXGt
+	 7pJS7oM4cXBU6AAl2rimdnBOs0x+128JvHs9Hg66pBedrbuiSeZPi8xU4HaV6UWydb
+	 DH9cvaxgSB54toZM4Z8dh4wLehZhQJJt/xW26ccg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Montgomery <james_montgomery@disroot.org>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.12 421/602] ksmbd: defer destroy_previous_session() until after NTLM authentication
-Date: Thu, 30 Jul 2026 16:13:33 +0200
-Message-ID: <20260730141444.812587056@linuxfoundation.org>
+	Justin Lai <justinlai0215@realtek.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 430/602] rtase: Workaround for TX hang caused by hardware packet parsing
+Date: Thu, 30 Jul 2026 16:13:42 +0200
+Message-ID: <20260730141445.001876485@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -51,60 +51,301 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Montgomery <james_montgomery@disroot.org>
+From: Justin Lai <justinlai0215@realtek.com>
 
-commit c74801ee524f477c174a1899782b6c3b6918d407 upstream.
+commit 1c50efa1faf3a1a96e100b07ec7a2f3164d90bee upstream.
 
-In ntlm_authenticate(), destroy_previous_session() is called using a
-user pointer resolved from the client-supplied NTLM blob username field
-before the NTLMv2 response is validated. An authenticated attacker can
-set the NTLM blob username to match a victim account and set
-PreviousSessionId to the victim's session ID; destroy_previous_session()
-destroys the victim's session while ksmbd_decode_ntlmssp_auth_blob()
-subsequently rejects the request with -EPERM.
+The hardware performs packet parsing before packet transmission.
+Parsing incomplete IPv4, IPv6, TCP, or UDP headers may trigger a TX
+hang because the hardware parser expects additional protocol header
+data that is not present in the packet.
 
-Move destroy_previous_session() and the prev_id assignment to after
-ksmbd_decode_ntlmssp_auth_blob() returns success and use sess->user
-rather than the pre-authentication lookup result. This matches the
-ordering already used by krb5_authenticate(), where
-destroy_previous_session() is called only after
-ksmbd_krb5_authenticate() returns success.
+The hardware performs additional PTP parsing on UDP packets identified
+by destination ports 319/320 at the expected UDP destination port
+offset.
 
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+If such a packet has transport data smaller than RTASE_MIN_PAD_LEN,
+the hardware parser expects additional packet data and may trigger a
+TX hang.
+
+To avoid these hardware issues, the driver applies the following
+workarounds.
+
+Drop malformed packets that may trigger this hardware issue before
+transmission.
+
+For IPv4 non-initial fragments, the hardware does not check the
+fragment offset before parsing the expected transport header location.
+As a result, these packets are still subject to transport header
+parsing even though they do not contain a transport header. If the
+transport data is shorter than the minimum transport header required
+by the hardware parser, pad the transport data to the minimum
+transport header length required by the hardware parser. Packets that
+also match the hardware PTP parsing conditions continue to follow the
+corresponding workaround.
+
+For IPv6 fragmented packets, neither of the above hardware issues
+occurs because the hardware only continues packet parsing when the
+IPv6 Base Header Next Header field directly indicates UDP. Packets
+carrying a Fragment Header do not continue through the subsequent
+packet parsing stages.
+
+For packets identified for hardware PTP parsing, pad the transport
+data so it reaches RTASE_MIN_PAD_LEN before transmission.
+
+Fixes: d6e882b89fdf ("rtase: Implement .ndo_start_xmit function")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/linux-cifs/20260702155449.3639773-1-james_montgomery@disroot.org/
-Signed-off-by: James Montgomery <james_montgomery@disroot.org>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Justin Lai <justinlai0215@realtek.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260709103456.83789-1-justinlai0215@realtek.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |    9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/realtek/rtase/rtase.h      |    8 
+ drivers/net/ethernet/realtek/rtase/rtase_main.c |  197 ++++++++++++++++++++++++
+ 2 files changed, 205 insertions(+)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -1489,11 +1489,6 @@ static int ntlm_authenticate(struct ksmb
- 		return -EPERM;
- 	}
+--- a/drivers/net/ethernet/realtek/rtase/rtase.h
++++ b/drivers/net/ethernet/realtek/rtase/rtase.h
+@@ -186,6 +186,12 @@ enum rtase_sw_flag_content {
+ 	RTASE_SWF_MSIX_ENABLED = BIT(2),
+ };
  
--	/* Check for previous session */
--	prev_id = le64_to_cpu(req->PreviousSessionId);
--	if (prev_id && prev_id != sess->id)
--		destroy_previous_session(conn, user, prev_id);
--
- 	if (sess->state == SMB2_SESSION_VALID) {
- 		/*
- 		 * Reuse session if anonymous try to connect
-@@ -1531,6 +1526,10 @@ static int ntlm_authenticate(struct ksmb
- 		}
- 	}
- 
-+	prev_id = le64_to_cpu(req->PreviousSessionId);
-+	if (prev_id && prev_id != sess->id)
-+		destroy_previous_session(conn, sess->user, prev_id);
++enum rtase_parse_result {
++	RTASE_PARSE_OK,
++	RTASE_PARSE_SKIP,
++	RTASE_PARSE_DROP,
++};
 +
- 	/*
- 	 * If session state is SMB2_SESSION_VALID, We can assume
- 	 * that it is reauthentication. And the user/password
+ #define RSVD_MASK 0x3FFFC000
+ 
+ struct rtase_tx_desc {
+@@ -342,4 +348,6 @@ struct rtase_private {
+ 
+ #define RTASE_MSS_MASK GENMASK(28, 18)
+ 
++#define RTASE_MIN_PAD_LEN 47
++
+ #endif /* RTASE_H */
+--- a/drivers/net/ethernet/realtek/rtase/rtase_main.c
++++ b/drivers/net/ethernet/realtek/rtase/rtase_main.c
+@@ -61,6 +61,7 @@
+ #include <linux/pci.h>
+ #include <linux/pm_runtime.h>
+ #include <linux/prefetch.h>
++#include <linux/ptp_classify.h>
+ #include <linux/rtnetlink.h>
+ #include <linux/tcp.h>
+ #include <asm/irq.h>
+@@ -1238,6 +1239,199 @@ static u32 rtase_tx_csum(struct sk_buff
+ 	return csum_cmd;
+ }
+ 
++static enum rtase_parse_result rtase_get_l3_proto(struct sk_buff *skb,
++						  __be16 *proto,
++						  u32 *network_offset)
++{
++	struct vlan_hdr *vh, _vh;
++	struct ethhdr *eh, _eh;
++	u32 offset = ETH_HLEN;
++
++	eh = skb_header_pointer(skb, 0, sizeof(_eh), &_eh);
++	if (!eh)
++		return RTASE_PARSE_DROP;
++
++	*proto = eh->h_proto;
++
++	while (eth_type_vlan(*proto)) {
++		vh = skb_header_pointer(skb, offset, sizeof(_vh), &_vh);
++		if (!vh)
++			return RTASE_PARSE_DROP;
++
++		*proto = vh->h_vlan_encapsulated_proto;
++		offset += VLAN_HLEN;
++	}
++
++	*network_offset = offset;
++
++	return RTASE_PARSE_OK;
++}
++
++static bool rtase_pad_to_transport_len(struct sk_buff *skb,
++				       u32 transport_offset,
++				       u32 pad_to_len)
++{
++	u32 trans_data_len;
++	u32 pad_len;
++
++	trans_data_len = skb->len - transport_offset;
++	if (trans_data_len >= pad_to_len)
++		return true;
++
++	if (skb_is_nonlinear(skb)) {
++		if (skb_linearize(skb))
++			return false;
++	}
++
++	pad_len = pad_to_len - trans_data_len;
++	if (__skb_put_padto(skb, skb->len + pad_len, false))
++		return false;
++
++	return true;
++}
++
++static enum rtase_parse_result rtase_get_transport_offset(struct sk_buff *skb,
++							  u32 *transport_offset,
++							  u8 *transport_proto,
++							  u32 *pad_to_len)
++{
++	enum rtase_parse_result ret;
++	struct ipv6hdr *i6h, _i6h;
++	struct iphdr *ih, _ih;
++	bool non_first_frag;
++	__be16 proto;
++	u32 offset;
++	u32 no;
++
++	ret = rtase_get_l3_proto(skb, &proto, &no);
++	if (ret != RTASE_PARSE_OK)
++		return ret;
++
++	switch (proto) {
++	case htons(ETH_P_IP):
++		ih = skb_header_pointer(skb, no, sizeof(_ih), &_ih);
++		if (!ih)
++			return RTASE_PARSE_DROP;
++
++		if (ih->ihl < 5)
++			return RTASE_PARSE_DROP;
++
++		offset = no + ih->ihl * 4;
++		if (offset > skb->len)
++			return RTASE_PARSE_DROP;
++
++		non_first_frag = ntohs(ih->frag_off) & IP_OFFSET;
++
++		if (ih->protocol == IPPROTO_TCP) {
++			if (skb->len - offset < sizeof(struct tcphdr)) {
++				if (non_first_frag) {
++					*transport_offset = offset;
++					*transport_proto = IPPROTO_TCP;
++					*pad_to_len = sizeof(struct tcphdr);
++
++					return RTASE_PARSE_OK;
++				}
++
++				return RTASE_PARSE_DROP;
++			}
++
++			return RTASE_PARSE_SKIP;
++		}
++
++		if (ih->protocol != IPPROTO_UDP)
++			return RTASE_PARSE_SKIP;
++
++		*transport_offset = offset;
++		*transport_proto = IPPROTO_UDP;
++
++		if (skb->len - offset < sizeof(struct udphdr)) {
++			if (non_first_frag) {
++				*pad_to_len = sizeof(struct udphdr);
++
++				return RTASE_PARSE_OK;
++			}
++
++			return RTASE_PARSE_DROP;
++		}
++
++		return RTASE_PARSE_OK;
++
++	case htons(ETH_P_IPV6):
++		i6h = skb_header_pointer(skb, no, sizeof(_i6h), &_i6h);
++		if (!i6h)
++			return RTASE_PARSE_DROP;
++
++		offset = no + sizeof(*i6h);
++
++		if (i6h->nexthdr == IPPROTO_TCP) {
++			if (skb->len - offset < sizeof(struct tcphdr))
++				return RTASE_PARSE_DROP;
++
++			return RTASE_PARSE_SKIP;
++		}
++
++		if (i6h->nexthdr != IPPROTO_UDP)
++			return RTASE_PARSE_SKIP;
++
++		if (skb->len - offset < sizeof(struct udphdr))
++			return RTASE_PARSE_DROP;
++
++		*transport_offset = offset;
++		*transport_proto = IPPROTO_UDP;
++
++		return RTASE_PARSE_OK;
++
++	default:
++		return RTASE_PARSE_SKIP;
++	}
++}
++
++static bool rtase_skb_pad(struct sk_buff *skb)
++{
++	enum rtase_parse_result ret;
++	u32 transport_offset;
++	__be16 *dest, _dest;
++	u32 trans_data_len;
++	u32 pad_to_len = 0;
++	u8 transport_proto;
++	u16 dest_port;
++
++	ret = rtase_get_transport_offset(skb, &transport_offset,
++					 &transport_proto, &pad_to_len);
++	if (ret == RTASE_PARSE_SKIP) {
++		return true;
++	} else if (ret == RTASE_PARSE_DROP) {
++		netdev_dbg(skb->dev, "drop malformed packet\n");
++		return false;
++	}
++
++	if (pad_to_len &&
++	    !rtase_pad_to_transport_len(skb, transport_offset, pad_to_len))
++		return false;
++
++	if (transport_proto != IPPROTO_UDP)
++		return true;
++
++	trans_data_len = skb->len - transport_offset;
++	if (trans_data_len < offsetof(struct udphdr, len) ||
++	    trans_data_len >= RTASE_MIN_PAD_LEN)
++		return true;
++
++	dest = skb_header_pointer(skb,
++				  transport_offset +
++				  offsetof(struct udphdr, dest),
++				  sizeof(_dest), &_dest);
++	if (!dest)
++		return true;
++
++	dest_port = ntohs(*dest);
++	if (dest_port != PTP_EV_PORT && dest_port != PTP_GEN_PORT)
++		return true;
++
++	return rtase_pad_to_transport_len(skb, transport_offset,
++					  RTASE_MIN_PAD_LEN);
++}
++
+ static int rtase_xmit_frags(struct rtase_ring *ring, struct sk_buff *skb,
+ 			    u32 opts1, u32 opts2)
+ {
+@@ -1351,6 +1545,9 @@ static netdev_tx_t rtase_start_xmit(stru
+ 		opts2 |= rtase_tx_csum(skb, dev);
+ 	}
+ 
++	if (!rtase_skb_pad(skb))
++		goto err_dma_0;
++
+ 	frags = rtase_xmit_frags(ring, skb, opts1, opts2);
+ 	if (unlikely(frags < 0))
+ 		goto err_dma_0;
 
 
