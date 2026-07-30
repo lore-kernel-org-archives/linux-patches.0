@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44CB9443A92;
-	Thu, 30 Jul 2026 15:33:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1589F440A06;
+	Thu, 30 Jul 2026 15:33:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425587; cv=none; b=agv+rgt5iyndI3MTNR+LH2B2E9jIDf8q8ffcuWLt1Ke/5IvBBFoosDTxWdBq2rNcUgkLKqv1URngc4DnVMjJ9sE2aEhhCKsX0DRQGsimikvPTN1QSVhbzKh59yEPz+R/tw2Vk3/tx/2MrW0gQc9VaJLDeJbTMXjifiCNt6YNf8k=
+	t=1785425590; cv=none; b=Kos6ATVPSlKG1Dfik3hIrnXKS9cke5l7dQUCWzGTamP/KZ2CRdVwC6w6VFnu/ZVDBYD3obF++Sxyb0mpeaWdNVcQ5atehW2rrGecF8wZOdlO3+uv7cFmyutIXbmoz0W09DpXOzWfsl5Np0gZgowLHAzQ+ZpkaQ+PWwhb9oHtZQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425587; c=relaxed/simple;
-	bh=ec7vE4YVWBXxQuvR5ksKNYaLbXZqcktAc9qVTpvGfSk=;
+	s=arc-20240116; t=1785425590; c=relaxed/simple;
+	bh=Lddof7WTXsOryOAhb3VPBJjWsPX/+CYFFmbRLCriYWw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=in96uWJ9bdshEmxD7eYGAvb7+D2YhZl6Pa+8Gkbgbwftg6646k811g9U9YIHyjP3+ctFHd1wI8wJTMPYqQhQT0UY+b9N/dSSqRak6XyMZd8lcFQVWBnMoVbVXF8IoiJOrKAR7m96DIOReazVySSgG2n248YdBGxbY2vuRfprQKc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ksCduK17; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Krxc7PKGIkna223fxmsP5/V/jTFRXK/ZYZz4AFgkN8OIXY+weDTNIjyAgtAo+zRkZl8SEXCKwP4//n7kHXnP7spzRsjNkn0PazBrULIeXBkadxKxn05w3X4vuObmFoyQ8LzRCcKcFIwhB1+8ZPwRxvarsPowRAVVibySMDmQ6L0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=03P4klDF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ksCduK17"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F1E91F000E9;
-	Thu, 30 Jul 2026 15:33:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="03P4klDF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 705E21F00A3A;
+	Thu, 30 Jul 2026 15:33:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425586;
-	bh=6OUbWpXg6bTRjmMXcsHSDjWaLlk5hPhOKBFOX6wtVPo=;
+	s=korg; t=1785425589;
+	bh=ALUfsxp2Iqemx3XiVGWBDw2dsovC6G3Vt/WI+VZ0dKs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ksCduK17WVqFsf6WymKFGYg+/ZYz8+gDhOizDtKIE57OSTGglSRl20Z9WjcVtcU3M
-	 9GxHbDWo8rC9Yo8LL8EYV4WfScs0urzJY21s51Tudk78jyHW2ewzn/bzWx3T299d/1
-	 kzj0mA90vomibDVCcsrWRQ8Nu2V0M8ks44sLwsQI=
+	b=03P4klDFvQCtBbwTYXWNdexEKs0rtK5/gNPuzZVGNiKKeAPYP20+hhKWRV0iVZ8IQ
+	 hPrt70tmWf0iHlaq6kv9hJI6aci2pfqs9dgJpklXG3KvoQW5XSeKeAwpFELAdUtUnY
+	 LM0ldoDYVv/2kqCicKCadf4gOBlwt39E+vq2zAD4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Peter Chen <peter.chen@kernel.org>,
-	Melbin K Mathew <mlbnkm1@gmail.com>
-Subject: [PATCH 6.12 120/602] usb: gadget: printer: fix infinite loop in printer_read()
-Date: Thu, 30 Jul 2026 16:08:32 +0200
-Message-ID: <20260730141438.511232044@linuxfoundation.org>
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.12 121/602] USB: gadget: snps-udc: fix device name leak on probe failure
+Date: Thu, 30 Jul 2026 16:08:33 +0200
+Message-ID: <20260730141438.533415909@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -51,77 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Melbin K Mathew <mlbnkm1@gmail.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit c2e819be6a5c7f34344926b4bd7e3dfca58cf48a upstream.
+commit 29a142d3e8b35ebc9e0bcc78f4bc26c9b6a9ac0b upstream.
 
-printer_read() uses the same variable for the requested copy size and
-the number of bytes actually copied to user space. copy_to_user()
-returns the number of bytes not copied, so when it fails to copy
-anything, the computed copied length becomes zero.
+The gadget device name is set by UDC core when registering the gadget
+and must not be set before to avoid leaking the name in intermediate
+error paths (e.g. when detecting an older chip revision).
 
-In that case len, buf, current_rx_bytes and current_rx_buf are left
-unchanged. If RX data is available and the user buffer remains
-unwritable, the read loop can repeat indefinitely.
-
-Track the copied length separately and return -EFAULT, or the number of
-bytes already copied, if an iteration makes no progress.
-
-Fixes: b185f01a9ab7 ("usb: gadget: printer: factor out f_printer")
+Fixes: 12ad0fcaf2fb ("usb: gadget: amd5536udc: let udc-core manage gadget->dev")
 Cc: stable <stable@kernel.org>
-Reviewed-by: Peter Chen <peter.chen@kernel.org>
-Signed-off-by: Melbin K Mathew <mlbnkm1@gmail.com>
-Link: https://patch.msgid.link/20260709205622.55700-1-mlbnkm1@gmail.com
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260702141536.90887-3-johan@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_printer.c |   23 ++++++++++++++++++-----
- 1 file changed, 18 insertions(+), 5 deletions(-)
+ drivers/usb/gadget/udc/snps_udc_core.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/usb/gadget/function/f_printer.c
-+++ b/drivers/usb/gadget/function/f_printer.c
-@@ -431,7 +431,7 @@ printer_read(struct file *fd, char __use
- {
- 	struct printer_dev		*dev = fd->private_data;
- 	unsigned long			flags;
--	size_t				size;
-+	size_t				size, not_copied, copied;
- 	size_t				bytes_copied;
- 	struct usb_request		*req;
- 	/* This is a pointer to the current USB rx request. */
-@@ -524,10 +524,12 @@ printer_read(struct file *fd, char __use
- 		else
- 			size = len;
+--- a/drivers/usb/gadget/udc/snps_udc_core.c
++++ b/drivers/usb/gadget/udc/snps_udc_core.c
+@@ -3133,7 +3133,6 @@ int udc_probe(struct udc *dev)
+ 	/* device struct setup */
+ 	dev->gadget.ops = &udc_ops;
  
--		size -= copy_to_user(buf, current_rx_buf, size);
--		bytes_copied += size;
--		len -= size;
--		buf += size;
-+		not_copied = copy_to_user(buf, current_rx_buf, size);
-+		copied = size - not_copied;
-+
-+		bytes_copied += copied;
-+		len -= copied;
-+		buf += copied;
+-	dev_set_name(&dev->gadget.dev, "gadget");
+ 	dev->gadget.name = name;
+ 	dev->gadget.max_speed = USB_SPEED_HIGH;
  
- 		spin_lock_irqsave(&dev->lock, flags);
- 
-@@ -542,6 +544,17 @@ printer_read(struct file *fd, char __use
- 		if (dev->interface < 0)
- 			goto out_disabled;
- 
-+		if (!copied) {
-+			dev->current_rx_req = current_rx_req;
-+			dev->current_rx_bytes = current_rx_bytes;
-+			dev->current_rx_buf = current_rx_buf;
-+			spin_unlock_irqrestore(&dev->lock, flags);
-+			mutex_unlock(&dev->lock_printer_io);
-+			return bytes_copied ? bytes_copied : -EFAULT;
-+		}
-+
-+		size = copied;
-+
- 		/* If we not returning all the data left in this RX request
- 		 * buffer then adjust the amount of data left in the buffer.
- 		 * Othewise if we are done with this RX request buffer then
 
 
