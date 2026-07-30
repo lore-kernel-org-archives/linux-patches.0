@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AC0F39A801;
-	Thu, 30 Jul 2026 15:01:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06F4F423782;
+	Thu, 30 Jul 2026 15:01:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423711; cv=none; b=E1B5Aitt5ZbhK1KNUNwlJU+VistIsI57rfsaaoMhCQX1lShf66zuNWfcjXmH1Ff3CcD6Q3XPXECoDIgue10PiN7Xhpor2ylQlTBTc9FVcUCZLQiIgkXNyfgAAwMFaYyk3X9lQd/mYK7cCCt7braB4MCukJeV/ZOg80wkoIbMg+g=
+	t=1785423714; cv=none; b=TMXQErqV74IYeFzWOxZyWW+VY2gAiG7+7lMZnFkJJMZ3gyNoc7KuEfwcDipta4dxRSRNIQ7Fwn4aCUUMRpN4i8L1QaZUAhh/9T6P5GQMsmqOzt+dIYwHEaAe7Mxp6idlN2kkvXguYKwrq/AIcLJT2NdhXHwRORwXuKzCXTP2UNU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423711; c=relaxed/simple;
-	bh=TNIyYvL9PzZHvENBP0LEh8uxiZ8wL6UVdJCZ5ZGR9OE=;
+	s=arc-20240116; t=1785423714; c=relaxed/simple;
+	bh=YulG9bRmGL2z12hp6ZVhu/ldYc4AHhIovku9r9G6D6g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DwpMIjds0l2NA2TEK3XgUMBc0zvPDkMeUruCuvhcx/A78BW4/YvCzDAqvjs9yCBCFAiI3XT5j+Q1TZeB/oCF1tQlFoQ2eOroshAPq+WAOjO2BScotBSclLkbdMh2sNRo8IVqr6hWcOxX4KcfaUhCe8nRc6x6Ep+w3wX54jOC8e8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0ixTM+04; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bwBuZCGLbjVyGtcuJYZqpaWLGvRQg5iSxR+wWd2WTcvUKln5kem6jbFzQtT8C1FSNix6w4d5vGrRDcsQvbUZzsQb15YhJJWzw5fIpMhVMlt/IX4WKAaLXk45fEQsIIiuGkYFv4R495ry1+FjyJ69B8xGm7w8Qke6Q/5yLVbomw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jcgXtW0d; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0ixTM+04"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 514661F000E9;
-	Thu, 30 Jul 2026 15:01:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jcgXtW0d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 538D91F000E9;
+	Thu, 30 Jul 2026 15:01:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423709;
-	bh=cVeP9tEkAKoySvlsn1xvWvNVqIeXF1cEt2XjJiv2dKE=;
+	s=korg; t=1785423712;
+	bh=QMfxXi4ELoiy1KD7LB8iMMSCn8V+3JtTsw4pWhsJxPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0ixTM+04M2kW7Ph0ANzhr55GE9szrAyivR1TB6X65XuSAIdYwfSXtpvD7xMdr/ANV
-	 Mn8lybuCiTL4/50WP3mAj0QeKdRY30PSGSf0klwju0RZkGvIjgFZQY72RyAfW6tRGr
-	 8YIIeilQWc90m85lhsDmPJuHmWodkkG45o70id1A=
+	b=jcgXtW0dyIvJI1NanCeRpLBXdfH2KcXLtAx4iusr/o3z/9cOI9HfJFO+FBh2E8atO
+	 DcMrEihH6R3eQ5n9guWnWHZD28OFMOZVRENF0hmaMEP6qWJuyoLqYODdvKPGGrZ9eD
+	 CYtd67lkib8dYb/dLOy00X3htSN55Vgcq3rX9F5A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huihui Huang <hhhuang@smu.edu.sg>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.18 140/675] wifi: at76c50x-usb: avoid length underflow in at76_guess_freq()
-Date: Thu, 30 Jul 2026 16:07:50 +0200
-Message-ID: <20260730141448.113189395@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	"Chia-Lin Kao (AceLan)" <acelan.kao@canonical.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.18 141/675] usb: core: port: Deattach Type-C connector on component unbind
+Date: Thu, 30 Jul 2026 16:07:51 +0200
+Message-ID: <20260730141448.133786340@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -50,59 +51,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huihui Huang <hhhuang@smu.edu.sg>
+From: Chia-Lin Kao (AceLan) <acelan.kao@canonical.com>
 
-commit 61a799ffd1e5a4fd3702d547828b7ff3d161468e upstream.
+commit e0b291fe117964037e0ba382eff4bb365d531c3a upstream.
 
-at76_guess_freq() checks only that the received frame is at least a bare
-802.11 header (24 bytes) before subtracting the fixed management-body
-offset:
+connector_unbind() is the mirror of connector_bind(), but it is missing
+the symmetric call to typec_deattach() that connector_bind() makes via:
 
-	len -= el_off;
+    if (port_dev->child)
+        typec_attach(port_dev->connector, &port_dev->child->dev);
 
-For both beacon and probe response frames, el_off is 36. If the frame is
-shorter than el_off, subtracting it causes the calculated IE length to
-wrap. The length is eventually passed to cfg80211_find_elem_match() as a
-very large unsigned value, so the element walk runs beyond the RX skb.
+When a Thunderbolt dock is unplugged, two teardown paths race:
 
-This path is reached from at76_rx_tasklet() while scanning. If the device
-delivers a truncated beacon or probe response, the oversized IE length
-causes an out-of-bounds read during scanning.
+1. The component framework calls connector_unbind() first, which sets
+   port_dev->connector = NULL without calling typec_deattach().  This
+   leaves port->usb2_dev/port->usb3_dev in struct typec_port pointing at
+   the USB device that is about to be freed.
 
-Skip the IE lookup if the frame does not reach the variable elements,
-before subtracting el_off.
+2. usb_disconnect() then calls typec_deattach(port_dev->connector, ...),
+   but port_dev->connector is already NULL, so the call is a no-op and
+   port->usb2_dev is never cleared.
 
-Fixes: 1264b951463a ("at76c50x-usb: add driver")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Huihui Huang <hhhuang@smu.edu.sg>
-Link: https://patch.msgid.link/20260715140815.1242033-1-hhhuang@smu.edu.sg
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+3. Concurrently, UCSI detects a PD partner-disconnect event and calls
+   typec_unregister_partner(), which reads port->usb2_dev (now a dangling
+   pointer to freed memory) and passes it to typec_partner_unlink_device()
+   -> sysfs_remove_link() -> dev_name() on the freed device, corrupting
+   the typec/UCSI partner state.
+
+This corruption leaves the Thunderbolt tunnel in an inconsistent state on
+the next dock hot-plug.  On affected hardware the dock's I225/igc NIC fails
+to enumerate: AER fires a slot reset while the igc driver is still
+initialising ("PCIe link lost"), and the subsequent igc_reset attempt hits
+igc_rd32 on an already-detached device:
+
+    igc 0000:2e:00.0 eth0: PCIe link lost, device now detached
+    igc: Failed to read reg 0x0!
+    WARNING: CPU: 9 PID: 129 at drivers/net/ethernet/intel/igc/igc_main.c:7005
+             igc_rd32+0xa4/0xc0 [igc]
+    Call Trace:
+     igc_disable_pcie_master+0x16/0xa0 [igc]
+     igc_reset_hw_base+0x14/0x170 [igc]
+     igc_reset+0x63/0x110 [igc]
+     igc_io_slot_reset+0x9e/0xd0 [igc]
+     report_slot_reset+0x5d/0xc0
+     pcie_do_recovery+0x209/0x400
+     aer_isr_one_error_type+0x235/0x430
+     aer_isr+0x4e/0x80
+     irq_thread+0xf4/0x1f0
+
+4. UCSI later handles the PD partner-disconnect and calls
+   typec_unregister_partner(), which still sees the stale port->usb2_dev
+   and tries to remove its sysfs link a second time:
+
+   kernfs: can not remove 'typec', no directory
+   WARNING: CPU: 6 PID: 55 at fs/kernfs/dir.c:1706 kernfs_remove_by_name_ns+0xe9/0xf0
+   Workqueue: events ucsi_handle_connector_change [typec_ucsi]
+   Call Trace:
+    sysfs_remove_link+0x19/0x50
+    typec_unregister_partner+0x6e/0x120 [typec]
+    ucsi_unregister_partner+0x107/0x150 [typec_ucsi]
+    ucsi_handle_connector_change+0x3ec/0x490 [typec_ucsi]
+    process_one_work+0x18e/0x3e0
+    worker_thread+0x2e3/0x420
+    kthread+0x10a/0x230
+    ret_from_fork+0x121/0x140
+    ret_from_fork_asm+0x1a/0x30
+
+   With worse timing the same stale pointer is dereferenced after the
+   backing memory is freed, turning the warning into a use-after-free.
+
+Fix the asymmetry: call typec_deattach() before clearing
+port_dev->connector, matching what connector_bind() does on the bind side.
+typec_partner_deattach() is already protected by port->partner_link_lock,
+so it serialises safely with the concurrent typec_unregister_partner() path.
+
+Fixes: 11110783f5ea ("usb: Inform the USB Type-C class about enumerated devices")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Chia-Lin Kao (AceLan) <acelan.kao@canonical.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://patch.msgid.link/20260611071201.1235545-1-acelan.kao@canonical.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/atmel/at76c50x-usb.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/usb/core/port.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/net/wireless/atmel/at76c50x-usb.c
-+++ b/drivers/net/wireless/atmel/at76c50x-usb.c
-@@ -1521,13 +1521,16 @@ static inline int at76_guess_freq(struct
+--- a/drivers/usb/core/port.c
++++ b/drivers/usb/core/port.c
+@@ -726,6 +726,8 @@ static void connector_unbind(struct devi
  
- 	if (ieee80211_is_probe_resp(hdr->frame_control)) {
- 		el_off = offsetof(struct ieee80211_mgmt, u.probe_resp.variable);
--		el = ((struct ieee80211_mgmt *)hdr)->u.probe_resp.variable;
- 	} else if (ieee80211_is_beacon(hdr->frame_control)) {
- 		el_off = offsetof(struct ieee80211_mgmt, u.beacon.variable);
--		el = ((struct ieee80211_mgmt *)hdr)->u.beacon.variable;
- 	} else {
- 		goto exit;
- 	}
-+
-+	if (len < el_off)
-+		goto exit;
-+
-+	el = priv->rx_skb->data + el_off;
- 	len -= el_off;
+ 	sysfs_remove_link(&connector->kobj, dev_name(dev));
+ 	sysfs_remove_link(&dev->kobj, "connector");
++	if (port_dev->child)
++		typec_deattach(port_dev->connector, &port_dev->child->dev);
+ 	port_dev->connector = NULL;
+ }
  
- 	el = cfg80211_find_ie(WLAN_EID_DS_PARAMS, el, len);
 
 
