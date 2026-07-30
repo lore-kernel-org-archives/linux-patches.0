@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC4823B2D18;
-	Thu, 30 Jul 2026 15:17:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FF1B3769F5;
+	Thu, 30 Jul 2026 15:17:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424675; cv=none; b=a6ufZnLgncwVuhcuucH7M3NHj949HPJQmStjMgM0mp91+Mi65T2DpK32KZc6HxxFAfDO0vGmGVJRR6ilbGDRrxZteNvx+7/f1bhF0ivj82E9Y+SJCXnqbeAnlcxaxRYtRrBxIdbaULx/0+Jimf1wF72F4BEWQb9L/mJvt6Z9BQw=
+	t=1785424678; cv=none; b=lqF0jXh8FTL1u2B4U0qH8cJX8PabsCgJLleL4FVyGsQqr1DaXc9HzIXP5toWYHD0GAubApDW+8D/r01hZUhJvz00Gi74O/bPpy5iJcll++jjCF5Ht+lDdZSWVvrvuxqSzbdMtifIeBa2DFUZO6X1BdoVZ+gJJgW9+a/TJ9dgtY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424675; c=relaxed/simple;
-	bh=zPGlW6GdGgdfMH4uxDUzakd5m541xM9JvLhvCwsg3+Q=;
+	s=arc-20240116; t=1785424678; c=relaxed/simple;
+	bh=blmpiq24J8Q3331Wt5O9G/TNBwpgf9yB8dCEAJ4Dmno=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PjbWVeGp2vG3g7l9tdQU9SZwuhgGEXesWGwFhLg+BqhJGz/yUfi4/kL/n4cOlyXSKNA7NuSgNsDisORylbAmzwAlFbVZDPQnqkSZXvrzEvWNc5eutVYaC6n+K8aI0LON6PgFfTDheRXApTyuP+Hv/hm0JV+7gNVzIP4oEcQ0G0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L3Xqb+XH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AYsf2czRgimerl5pHkCiMPGEywr67UFEt61V6Wo29G7WrYk4Xw+/ulYw6bZLdj9XSvVjyWBO2Fa1bLI4obMkknx78GQTZgpZwvykNc0RRWFhuRD0EYmQOroaEHCBVGZpywM7/3p5ITpwdW/g9gijRySp01cyFOGKLZAU61l6Xt4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ruhNX5ym; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L3Xqb+XH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D9FC1F000E9;
-	Thu, 30 Jul 2026 15:17:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ruhNX5ym"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 086C11F000E9;
+	Thu, 30 Jul 2026 15:17:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424674;
-	bh=C4/PcB94/WCLsAbPwzCpJeu4mbJEkqApI9o8ZZULA2M=;
+	s=korg; t=1785424677;
+	bh=M8RZoeDSrR5NmlqvdZi4XhoQB3Wd9acCl2+nJYKDwlk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L3Xqb+XHaAHnciOT3RBIH0mjjXjsrQMALKZoyXSK0ZRDNFac9dHtr03M05W4ljlCh
-	 p4sQE7Vy303lzkbhIDZK0alqYV+x+a0ynWUoXC8l+aeVzB4MCRvBD+e/2VAvYjxSFY
-	 5kflWBZ4IZnsDbuHEz4C0t/IQBsnk6epyBxRMo+s=
+	b=ruhNX5ymf+9OqP8MyL8tUe2k9I/c/VnV5lkuPD/XT6QkHvkAh53v66NxVFOu0QOam
+	 EjxZ6eHExdWso2lNWxFG+9+qIqgAq7YrOOcj5jop7er4G4cleamwI9YGmxY6EGNo94
+	 VPesRSzJ3NrX1B4yp5h5Ea5dvnBmGA+78zKWQxW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Rao <raoxu@uniontech.com>,
-	Phillip Potter <phil@philpotter.co.uk>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.18 477/675] cdrom: fix stack out-of-bounds read in CDROMVOLCTRL
-Date: Thu, 30 Jul 2026 16:13:27 +0200
-Message-ID: <20260730141455.263862031@linuxfoundation.org>
+	AutonomousCodeSecurity@microsoft.com,
+	Yuan Tan <yuantan098@gmail.com>,
+	"Cen Zhang (Microsoft)" <blbllhy@gmail.com>,
+	NeilBrown <neil@brown.name>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.18 478/675] rhashtable: clear stale iter->p on table restart
+Date: Thu, 30 Jul 2026 16:13:28 +0200
+Message-ID: <20260730141455.285311385@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -51,54 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Rao <raoxu@uniontech.com>
+From: Cen Zhang (Microsoft) <blbllhy@gmail.com>
 
-commit b27e195d4db8dea263050bdbeb11881b2999c9c6 upstream.
+commit 8173f7e2ce67e6ca1d4763f3da14e5b01ce77456 upstream.
 
-mmc_ioctl_cdrom_volume() first reads the audio control mode page into a
-32-byte stack buffer with cgc->buflen set to 24.  If the device reports a
-block descriptor, the function increases cgc->buflen to include that
-descriptor and reads the page again.
+rhashtable_walk_start_check() has two restart paths when resuming a walk.
+When iter->walker.tbl is valid, it re-validates iter->p against the table
+and sets iter->p = NULL if the object is gone.  When iter->walker.tbl is
+NULL (table was freed during resize), it resets slot and skip but forgets
+to clear iter->p.
 
-For CDROMVOLCTRL, the function then builds a MODE SELECT parameter list
-by moving cgc->buffer forward by offset - 8 bytes.  This drops the block
-descriptor from the outgoing payload and leaves a new 8-byte mode
-parameter header in front of the audio control page.  However, cgc->buflen
-is left unchanged.
+rhashtable_walk_next() then dereferences the stale iter->p, reading
+freed memory.  This is a use-after-free.
 
-With a standard 8-byte block descriptor, cgc->buffer points at buffer + 8
-but cgc->buflen remains 32.  cdrom_mode_select() therefore asks the low
-level packet path to write 32 bytes from that adjusted pointer, reading 8
-bytes past the end of the 32-byte stack buffer.
+Any caller that does multi-fragment rhashtable walks across
+walk_stop/walk_start boundaries is affected.  Concrete cases include
+netlink_diag (__netlink_diag_dump in net/netlink/diag.c) and TIPC
+(tipc_nl_sk_walk in net/tipc/socket.c).
 
-This is not hit by CDROMVOLREAD, and CDROMVOLCTRL only triggers it on
-drives that return a non-zero block descriptor length, which helps explain
-why it has gone unnoticed.  The overread is also sent to the device as
-extra MODE SELECT payload, so it may not produce an obvious local failure.
+Crash stack (netlink_diag):
+  BUG: KASAN: slab-use-after-free in rhashtable_walk_next+0x365/0x3c0
+  Read of size 8 at addr ffff88801a9d2438 (freed kmalloc-2k, offset 1080)
+  Call Trace:
+   rhashtable_walk_next+0x365/0x3c0 (lib/rhashtable.c:1016)
+   __netlink_diag_dump+0x160/0x760 (net/netlink/diag.c:122)
+   netlink_diag_dump+0xc2/0x240
+   netlink_dump+0x5bc/0x1270
+   netlink_recvmsg+0x7a3/0x980
+   sock_recvmsg+0x1bc/0x200
+   __sys_recvfrom+0x1d4/0x2c0
 
-Reduce cgc->buflen by the same amount as the buffer pointer adjustment so
-the MODE SELECT transfer covers only the intended parameter list.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Xu Rao <raoxu@uniontech.com>
-Signed-off-by: Phillip Potter <phil@philpotter.co.uk>
-Link: https://patch.msgid.link/20260720194421.1497-2-phil@philpotter.co.uk
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 5d240a8936f6 ("rhashtable: improve rhashtable_walk stability when stop/start used.")
+Cc: <stable@vger.kernel.org>
+Reported-by: AutonomousCodeSecurity@microsoft.com
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Closes: https://lore.kernel.org/linux-crypto/CAB8m9Wh559e+=n8z51gB8DrbEyCc2mc0MgGjrRR6_VXBmU=2AQ@mail.gmail.com
+Signed-off-by: Cen Zhang (Microsoft) <blbllhy@gmail.com>
+Reviewed-by: NeilBrown <neil@brown.name>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cdrom/cdrom.c |    1 +
+ lib/rhashtable.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/drivers/cdrom/cdrom.c
-+++ b/drivers/cdrom/cdrom.c
-@@ -3187,6 +3187,7 @@ static noinline int mmc_ioctl_cdrom_volu
+--- a/lib/rhashtable.c
++++ b/lib/rhashtable.c
+@@ -742,6 +742,7 @@ int rhashtable_walk_start_check(struct r
+ 		iter->walker.tbl = rht_dereference_rcu(ht->tbl, ht);
+ 		iter->slot = 0;
+ 		iter->skip = 0;
++		iter->p = NULL;
+ 		return -EAGAIN;
+ 	}
  
- 	/* set volume */
- 	cgc->buffer = buffer + offset - 8;
-+	cgc->buflen -= offset - 8;
- 	memset(cgc->buffer, 0, 8);
- 	return cdrom_mode_select(cdi, cgc);
- }
 
 
