@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56E2B36493F;
-	Thu, 30 Jul 2026 14:49:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2958E43C7B4;
+	Thu, 30 Jul 2026 14:49:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422956; cv=none; b=sNYFL4kfgL9kRzRORMyixDwsjoPujWi0oauB4x5MRP1DuS3NmkzDJu+bqfXxrOzSkvlbjJIt5WPeQso8JnD1foqWRZ/S/dsaPYx2a7k/+ZwJihgbsbGih1jvFsKVINfXc5ntILNwmnQ5VNFpuJ8q4edTMUPc/APNTOj/SFX4kqE=
+	t=1785422959; cv=none; b=n3wTAWeSBzYjilmGNo9tcAUxDqJKeisZlfBCJ0uYM4lNceAA9YB6oqE2AodezFKErwQrmBMnh6iEoK4hU3YAicGEOS8Hihq0LO62Giz5bjqrmHW/x2uZhZXeqFSQAxjCgqHQM5Z+ovSV5JTKPtNGOyImvqmBwO/qezpyOC2uxP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422956; c=relaxed/simple;
-	bh=VqxnwdHpiRtido35EsnNUEi0wbDjW5F3FKyvOOHUA3M=;
+	s=arc-20240116; t=1785422959; c=relaxed/simple;
+	bh=vWZjDjc1GHVXi7wHc7HnGa1c1BKCnLzgP7eR4RhruLc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QhCjpR0+7vAk4YtkRVeThxLY/8DNBGbL8VwzUkN+PAsrECcaUbsWfl+ibqnkelWD9/Z2eKm6/ttTaR0In1iPavGSxjBjzpc+UiE3/HtetMjUAxmsBUDDp3CIEraoFp4TX8hsoML5R90RgY2t0U1oKSkcV3xPl+v9E+ksWlTBiT4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HNGL91lD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RQErh99jO6VLp5XcZQTiypVinGJP+2sB7T8RA+PtLmStlh4Tia/QPz/zKOGQkf2OJ1VPFqVO6h2Jb+dwAYH3eUpOl1xj2A2gDonkxvmawz1UGvjZfSVXGcOIkLaJpXsnMGilN63z5iTwU3VbCkRz0fVuhTcRLYNSNj6+lFmlzVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=teoTn8sZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HNGL91lD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7CA81F000E9;
-	Thu, 30 Jul 2026 14:49:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="teoTn8sZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84A3F1F000E9;
+	Thu, 30 Jul 2026 14:49:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422955;
-	bh=5akkgauxPwKzUPhUv4gXKTQz0qrHkCcZlwF+PnuIkgY=;
+	s=korg; t=1785422958;
+	bh=wn6rQduIUW8R0LwXF93DDrI5Cxk+w9FhgLtGqDmcIyY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HNGL91lD8JQhVaGfLhP6mG0+TQV6YoTVIki56m3N1DcoF+yS53Wbq6BjCFRFzeUS7
-	 CbvSNRMi33JCZkcuA67+G+gPgxKaMGdZ2ZLO3ZqLPhgKJ4MykaBuGskN2b26YWZBcC
-	 u50WsZJzb4yxp8RuJwGelOaP1vkGBmhfdVpQrHi4=
+	b=teoTn8sZfLy6Gfj2ojA+ZZsJ/7dfD/2QHoow2puteK+4JDRbDAG0vDPv9K6ZoDO+j
+	 g9/o5QXCAxGBZ84TgsfoRcfGPEbFh8LfQyK6IYPjkc2bOEiidGR4xUkN2sNUIBDN67
+	 irVjW70EuzetfNXcfRenYOYvBi1Bk0Q1H2XmvXwA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Andreas Schwab <schwab@linux-m68k.org>,
-	Ankur Arora <ankur.a.arora@oracle.com>,
-	David Hildenbrand <david@kernel.org>,
+	SJ Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.1 616/744] m68k: avoid -Wunused-but-set-parameter in clear_user_page()
-Date: Thu, 30 Jul 2026 16:14:49 +0200
-Message-ID: <20260730141457.367452213@linuxfoundation.org>
+Subject: [PATCH 7.1 617/744] mm/damon/core: disallow overlapping input ranges for damon_set_regions()
+Date: Thu, 30 Jul 2026 16:14:50 +0200
+Message-ID: <20260730141457.388242478@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -48,65 +44,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <linux@weissschuh.net>
+From: SJ Park <sj@kernel.org>
 
-commit 955b67c3ddf9912a670ed80eae7769745b4f405e upstream.
+commit 954157679ec34661c2e87e7eb796104a797c32db upstream.
 
-The loop in clear_user_pages() iterates over all pages and calls
-clear_user_page() for each of them.  During the loop "vaddr" is modified.
-However on m68k clear_user() is a macro which does not use "vaddr".  The
-compiler sees a variable which is modified but never used and emits a
-warning for that:
+damon_set_regions() assumes the input ranges are sorted by the address and
+don't overlap each other.  Hence the assumption was initially to be
+explicitly validated.  But commit 97d482f4592f ("mm/damon/sysfs: reuse
+damon_set_regions() for regions setting") has mistakenly removed the
+validation.
 
-include/linux/highmem.h: In function 'clear_user_pages':
-include/linux/highmem.h:234:63: warning: parameter 'vaddr' set but not used [-Wunused-but-set-parameter=]
-    static inline void clear_user_pages(void *addr, unsigned long vaddr,
+This can make DAMON behave in unexpected ways.  At the best, the
+monitoring results snapshot will just look weird since there will be
+overlapping regions.  DAMOS will also work weirdly, applying the same
+action multiple times for overlapping regions, and make DAMOS quota weird.
+More seriously, depending on the setup and regions updates sequence,
+negative size regions can be made.  It will trigger WARN_ONCE() if the
+kernel is built with CONFIG_DAMON_DEBUG_SANITY=y.  Depending on the
+monitoring results, the negative size region can further trigger division
+by zero in damon_merge_two_regions().
 
-Other architectures use an inline function for clear_user_page() which
-avoids the warning.  This is not possible on m68k, as dlush_dcache_page()
-is another macro which is not yet defined where clear_user_page() is
-defined.  Including cacheflush_mm.h will trigger recursive and lots of
-other issues.
+Note that some of the consequences including the WARN_ONCE() and the
+divide by zero depend on commits that were introduced after the root cause
+commit 97d482f4592f ("mm/damon/sysfs: reuse damon_set_regions() for
+regions setting").
 
-So hide the warning with a cast to (void) instead.
+Fix the problems by checking the assumption and returning an error if
+the input ranges don't meet the assumption.
 
-While we are here, do the same for copy_user_page().
+The issue was discovered [1] by Sashiko.
 
-Link: https://lore.kernel.org/20260525-m68k-clear_user_page-v2-1-0c8981c6eca1@weissschuh.net
-Fixes: 62a9f5a85b98 ("mm: introduce clear_pages() and clear_user_pages()")
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Acked-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Cc: Andreas Schwab <schwab@linux-m68k.org>
-Cc: Ankur Arora <ankur.a.arora@oracle.com>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/20260703165610.92894-1-sj@kernel.org
+Link: https://lore.kernel.org/20260630041806.151124-1-sj@kernel.org [1]
+Fixes: 97d482f4592f ("mm/damon/sysfs: reuse damon_set_regions() for regions setting")
+Signed-off-by: SJ Park <sj@kernel.org>
+Cc: <stable@vger.kernel.org> # 5.19.x
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/m68k/include/asm/page_mm.h |    2 ++
- 1 file changed, 2 insertions(+)
+ mm/damon/core.c |   11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
---- a/arch/m68k/include/asm/page_mm.h
-+++ b/arch/m68k/include/asm/page_mm.h
-@@ -55,10 +55,12 @@ static inline void clear_page(void *page
- #define clear_user_page(addr, vaddr, page)	\
- 	do {	clear_page(addr);		\
- 		flush_dcache_page(page);	\
-+		(void)(vaddr);			\
- 	} while (0)
- #define copy_user_page(to, from, vaddr, page)	\
- 	do {	copy_page(to, from);		\
- 		flush_dcache_page(page);	\
-+		(void)(vaddr);			\
- 	} while (0)
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -240,12 +240,19 @@ int damon_set_regions(struct damon_targe
+ {
+ 	struct damon_region *r, *next;
+ 	unsigned int i;
++	unsigned long last_end;
+ 	int err;
  
- extern unsigned long m68k_memoffset;
+ 	for (i = 0; i < nr_ranges; i++) {
+-		if (ALIGN_DOWN(ranges[i].start, min_region_sz) >=
+-				ALIGN(ranges[i].end, min_region_sz))
++		unsigned long start, end;
++
++		start = ALIGN_DOWN(ranges[i].start, min_region_sz);
++		end = ALIGN(ranges[i].end, min_region_sz);
++		if (start >= end)
++			return -EINVAL;
++		if (i > 0 && last_end > start)
+ 			return -EINVAL;
++		last_end = end;
+ 	}
+ 
+ 	/* Remove regions which are not in the new ranges */
 
 
