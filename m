@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A408395266;
-	Thu, 30 Jul 2026 16:13:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F261A44D6AC;
+	Thu, 30 Jul 2026 16:13:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785428003; cv=none; b=tjGvH0Xdstk4DoMyCF/gL6Ki44qTokAinzUe8/uvYQtvYVeJhCO2i0Hgd7dXVmHvIUO0lDMldGsjWYYW+REl6pVAWCV6ofQk/rFUaSaNwH8IEdLJMCPMRVBVtqaxpnXXr64r5ZBJ8P2hCU+3BMxtkAyO4FmNXyqVWvQGTFmzqR4=
+	t=1785428006; cv=none; b=oAOdRjARWUfEAMT8i+3ml9N+RcGhhh1mrO/FclgFx2SRiTaznl/EcU/dIaT8iS8R0cT3TTXwr6gWFn8PYiFMbDB7GAp99c4o5Z/K4n/yKLYjYon4cKZnITZ40WLgGZhWkPyf1B70op1yfVLXcCj7DB/Q12DPOZBsRwtlcgx3OYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785428003; c=relaxed/simple;
-	bh=nbBhY0BX+7TeZhbiPDCukHI/U/h/ARdmg9LbOuqJlVY=;
+	s=arc-20240116; t=1785428006; c=relaxed/simple;
+	bh=WDJzyTEFKm6k6zGgBnlGoxG2M7rh1UZEFY4U5+7ka4s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FC1Ffqkwb2N3jja2XGPzfVqZyvve2NZ1HaOxrJauMllJ63UG+08WV3Z2zn5GkINRs1y6rTXcvphTnbKZJNlKPtioihtH3AjBQjrc9woZJ8qaaFq//fo8CTWrcaREPZjup8uhXgRjH0iy91vuTozikxMoq0SMD7xWvM/0QZYTqWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P/wX2TKm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dDSqKkDtJtEjxWl1FWVGyjrw5oqIkeXhEMAVd9cL7IrQ8Tqo0ig94R3URYqtzwYOKzLuOZ0VE52VRl8TZfeL/3zFuNEFw2cLrMC6T1qOwSVhAnnJNXVb+tD0UCs2mgUlTrPzu8RRQGrIWDlx3RXfaRWUf4aES1coYKa9tK87eZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RQsvSHHn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P/wX2TKm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8654F1F000E9;
-	Thu, 30 Jul 2026 16:13:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RQsvSHHn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59CF81F00A3A;
+	Thu, 30 Jul 2026 16:13:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785428002;
-	bh=M7GIhE3291QNJJuY0xT/fwg8s9RM1f6/+j7oY10Vm3Y=;
+	s=korg; t=1785428004;
+	bh=cfNFRBn9CJ1I1EPTXkUoc9P9nb7iX9P23rAyYcGSDZ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P/wX2TKmrdTqjDvcxxtCr3wlCWXwZiGAfCRopXBtPYpP+daxFmdPSSfpZJ+mrswHs
-	 Qm6ZyTlQ9wh+Z00yjxqd4HznGZsxBWpw0JQm70RPD+70zcDn+Zh0NC78aS3W6dPFMD
-	 TXpHjOSvtcCbWfHXlrZPX4mBnYD9k81cgjtXJJRo=
+	b=RQsvSHHnRY62bmXxPPYncFaBub1Be7541Gxqg12QhvspqJu3lhemWnXLc+hL+otzQ
+	 tYfj12/JMfrui5PieOiKKvJyKmAZ7Qq6R0wMOhJ4ufKjrXNPqbPzsJEfiw//IYiwFc
+	 0ueGIio3pWR4fbqnkk6c0TFyZIzzF7klttJ4lAj4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Alba Vives <sebasjosue84@gmail.com>,
-	Xu Yilun <yilun.xu@intel.com>,
-	Xu Yilun <yilun.xu@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 367/484] fpga: dfl-afu: validate DMA mapping length in afu_dma_map_region()
-Date: Thu, 30 Jul 2026 16:14:24 +0200
-Message-ID: <20260730141431.447952925@linuxfoundation.org>
+	Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 6.6 326/484] rbd: Reset positive result codes to zero in object map update path
+Date: Thu, 30 Jul 2026 16:13:43 +0200
+Message-ID: <20260730141430.569071255@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -52,43 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Alba Vives <sebasjosue84@gmail.com>
+From: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
 
-[ Upstream commit fc3b071a7c8dc0f5d56defddf6e6fd5aaa3e1e27 ]
+commit a6c4250b81bd30beae94e1b7a4b26fa1193ad2e4 upstream.
 
-afu_ioctl_dma_map() accepts a 64-bit length from userspace via
-DFL_FPGA_PORT_DMA_MAP ioctl without an upper bound check. The value
-is passed to afu_dma_pin_pages() where npages is derived as
-length >> PAGE_SHIFT and passed to pin_user_pages_fast() which takes
-int nr_pages, causing implicit truncation if length is very large.
+In a reply message to an RBD request, a positive result code indicates
+a data payload, which is not allowed for writes. While
+rbd_osd_req_callback() already resets a positive result code for writes
+to zero, rbd_object_map_callback() does not. This allows a corrupted
+reply to an object map update to trigger the rbd_assert(*result < 0) in
+__rbd_obj_handle_request(). This happens, because
+rbd_object_map_callback() calls rbd_obj_handle_request() ->
+__rbd_obj_handle_request() and passes this positive result code. From
+__rbd_obj_handle_request(), rbd_obj_advance_write() is called, which
+leaves the positive result code unchanged and returns true. Therefore,
+the if(done && *result) branch is executed in __rbd_obj_handle_request()
+and the assertion triggers.
 
-Validate map.length at the ioctl entry point before calling
-afu_dma_map_region(), rejecting values whose page count exceeds
-INT_MAX.
+This patch fixes the issue by adjusting the logic in the
+rbd_object_map_callback() path. A positive result code for an object map
+update is now reset to zero (similar to rbd_osd_req_callback()), and the
+message is subsequently handled the same way as if the result code was
+zero from the beginning. Additionally, a WARN_ON_ONCE() is added for
+this case.
 
-Fixes: fa8dda1edef9 ("fpga: dfl: afu: add DFL_FPGA_PORT_DMA_MAP/UNMAP ioctls support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sebastian Alba Vives <sebasjosue84@gmail.com>
-Reviewed-by: Xu Yilun <yilun.xu@intel.com>
-Link: https://lore.kernel.org/r/20260518190742.61426-3-sebasjosue84@gmail.com
-Signed-off-by: Xu Yilun <yilun.xu@linux.intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 22e8bd51bb04 ("rbd: support for object-map and fast-diff")
+Signed-off-by: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
+Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/fpga/dfl-afu-main.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/block/rbd.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/fpga/dfl-afu-main.c
-+++ b/drivers/fpga/dfl-afu-main.c
-@@ -720,6 +720,9 @@ afu_ioctl_dma_map(struct dfl_feature_pla
- 	if (map.argsz < minsz || map.flags)
- 		return -EINVAL;
+--- a/drivers/block/rbd.c
++++ b/drivers/block/rbd.c
+@@ -1957,10 +1957,15 @@ static int rbd_object_map_update_finish(
+ 	bool has_current_state;
+ 	void *p;
  
-+	if (map.length >> PAGE_SHIFT > (u64)INT_MAX)
-+		return -EINVAL;
+-	if (osd_req->r_result)
++	if (osd_req->r_result < 0)
+ 		return osd_req->r_result;
+ 
+ 	/*
++	 * Writes aren't allowed to return a data payload.
++	 */
++	WARN_ON_ONCE(osd_req->r_result > 0);
 +
- 	ret = afu_dma_map_region(pdata, map.user_addr, map.length, &map.iova);
- 	if (ret)
- 		return ret;
++	/*
+ 	 * Nothing to do for a snapshot object map.
+ 	 */
+ 	if (osd_req->r_num_ops == 1)
 
 
