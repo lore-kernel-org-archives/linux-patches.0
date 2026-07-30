@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B962D31E831;
-	Thu, 30 Jul 2026 14:30:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B12443A6B7F;
+	Thu, 30 Jul 2026 14:30:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421835; cv=none; b=a/oRyrdxyyxwP2FOGaxOD8XoSt6WXn6k2WXJyQYI1qrZZPMOOCKrFD9OeSG329pxkulEsuHtWoH7IPUiAIP472oB4IN5oFia37Aq0xPmnMj8lUMQZ+5lQrTWhXDnjPS6u9RDWguJpI8e+UUEzOgJprp40uLTP6zeqpMRkkn5SkI=
+	t=1785421838; cv=none; b=B6XhcnE7xDO7Ly45ye+bBDwkzfiTk7JRGXa2ogdTrE6y7wqowMtplSmFBkC2kfnqYskETACDCMgXMv0CMcpON9p3b25IklABHPGpgpA+7xuvWtkslMZ7cz3u4IarS7ssRvd+mbt8qBm2067RNE13UTUIOEfJeabP9E6lELxmJzw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421835; c=relaxed/simple;
-	bh=o/niBpsHRmDWfiGwt7RBuxM24h4vfRBufgL5M/A8vnU=;
+	s=arc-20240116; t=1785421838; c=relaxed/simple;
+	bh=K9OBkFlzzo/HEV33UsMHNHPf5fLZ19aTdOapTnRIasg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d83vgpCHCCZTsq8wAg1GOcokI7g+RsUConkNmU+hZi3UGlyrptycV0CwNicZMamHIl8SKVMCwvtSYyv64KjO7gqop1UVs+KFnoN2VqsS4zHh3eV+Xd5PA5M0njbVmZj2vx5oz0mNUAxbBWwlC3nsLNJ1Z0lJ71IANg62BHGeelA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xcp74f24; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QFfRnrPFQIDqt7+GpmwbugrAOI+COq+UATf5DI22OMFsQJaQSqW56rQblz8/dbSeSld/sinfmKX/ZGomLsMYuGHZwSsKy6LuJtUScBj3dE/9pT1LbvgecvWEXHcWHL83Ruf4hKtGcbDdaNTB5mYrkW8Bpv6dG67qHCcS7gjnvaI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q+BjJSIh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xcp74f24"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20D781F000E9;
-	Thu, 30 Jul 2026 14:30:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q+BjJSIh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FBDC1F000E9;
+	Thu, 30 Jul 2026 14:30:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421834;
-	bh=CkjSOll5nnN1VVE5tB6mmCNSbbOz2v5Y8Er0ZDeChtU=;
+	s=korg; t=1785421837;
+	bh=h4c5eaYpJLP8rOXNjNhI/M6Jn7ZUHK0W9FL8GOHGi6I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xcp74f24lQKk+U3yTFrIEj2ymDOs5/Gc5tGjXWR0gDY1+ZdyF7VlrWjw7Hm+ndWIb
-	 m1/RzIpk6Fv2hlw1ImBv8noQ/v+I8l+DP49MyNmYxLmLn/egPlEPlEVIfVoPknucHb
-	 p1mGEtvSt8kvh404muzutFxidf4yKx2bd+sXkiDY=
+	b=Q+BjJSIhlCpyW7AW/DftHtCGIPW4FHx1X8RZQMAKSHDBraRZ7qSBdVkBCT/abSOey
+	 aFv+iSAfvLX2q/zZ1rb/7FztdddbStel+F2nyz3G2MSli/qkZ2QIDXFoL/bb36tlNg
+	 XiCKDF4NfUKsaIP5J/BIv+ccONVYZZ5QYRn8xJNk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhixing Chen <running910@gmail.com>,
+	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
+	Simon Horman <horms@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 237/744] gtp: parse extension headers before reading inner protocol
-Date: Thu, 30 Jul 2026 16:08:30 +0200
-Message-ID: <20260730141449.330405428@linuxfoundation.org>
+Subject: [PATCH 7.1 238/744] rxrpc: fix io_thread race in rxrpc_wake_up_io_thread()
+Date: Thu, 30 Jul 2026 16:08:31 +0200
+Message-ID: <20260730141449.351801972@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -51,65 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhixing Chen <running910@gmail.com>
+From: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
 
-[ Upstream commit 96e37e2f618e931aa97af95e707dcdfb1ec41264 ]
+[ Upstream commit 745fb794c3e933c023af9dbb5876a5e16ad2dc71 ]
 
-GTPv1-U packets may carry a chain of extension headers before the inner
-IP packet. The receive path already parses and skips these extension
-headers, but it currently reads the inner protocol before doing so.
+rxrpc_wake_up_io_thread() checks local->io_thread before waking it, but
+then reloads the pointer for wake_up_process().
 
-As a result, the first extension header byte is interpreted as the inner
-IP version. Packets with extension headers are then dropped before PDP
-lookup.
+local->io_thread is cleared with WRITE_ONCE() when the I/O thread exits, so
+the second load can see NULL even if the first load did not.
 
-Parse the extension header chain before calling gtp_inner_proto(), so the
-inner protocol is read from the actual inner IP header.
+Take a READ_ONCE() snapshot and use it for both the NULL check and the
+wake_up_process() call, as rxrpc_encap_rcv() already does.
 
-Fixes: c75fc0b9e5be ("gtp: identify tunnel via GTP device + GTP version + TEID + family")
-Signed-off-by: Zhixing Chen <running910@gmail.com>
-Link: https://patch.msgid.link/20260708042244.120898-1-running910@gmail.com
+Fixes: 5800b1cf3fd8 ("rxrpc: Allow CHALLENGEs to the passed to the app for a RESPONSE")
+Signed-off-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260708093534.53486-1-xuanqiang.luo@linux.dev
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/gtp.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ net/rxrpc/ar-internal.h | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/gtp.c b/drivers/net/gtp.c
-index a60ef32b35b825..c0e38878af51b3 100644
---- a/drivers/net/gtp.c
-+++ b/drivers/net/gtp.c
-@@ -826,13 +826,17 @@ static int gtp1u_udp_encap_recv(struct gtp_dev *gtp, struct sk_buff *skb)
- 	if (!pskb_may_pull(skb, hdrlen))
- 		return -1;
- 
-+	gtp1 = (struct gtp1_header *)(skb->data + sizeof(struct udphdr));
+diff --git a/net/rxrpc/ar-internal.h b/net/rxrpc/ar-internal.h
+index d2b31d15851b96..38b0997ce0cb3a 100644
+--- a/net/rxrpc/ar-internal.h
++++ b/net/rxrpc/ar-internal.h
+@@ -1266,9 +1266,11 @@ int rxrpc_io_thread(void *data);
+ void rxrpc_post_response(struct rxrpc_connection *conn, struct sk_buff *skb);
+ static inline void rxrpc_wake_up_io_thread(struct rxrpc_local *local)
+ {
+-	if (!local->io_thread)
++	struct task_struct *io_thread = READ_ONCE(local->io_thread);
 +
-+	if (gtp1->flags & GTP1_F_EXTHDR &&
-+	    gtp_parse_exthdrs(skb, &hdrlen) < 0)
-+		return -1;
-+
- 	if (gtp_inner_proto(skb, hdrlen, &inner_proto) < 0) {
- 		netdev_dbg(gtp->dev, "GTP packet does not encapsulate an IP packet\n");
- 		return -1;
- 	}
- 
--	gtp1 = (struct gtp1_header *)(skb->data + sizeof(struct udphdr));
--
- 	pctx = gtp1_pdp_find(gtp, ntohl(gtp1->tid),
- 			     gtp_proto_to_family(inner_proto));
- 	if (!pctx) {
-@@ -840,10 +844,6 @@ static int gtp1u_udp_encap_recv(struct gtp_dev *gtp, struct sk_buff *skb)
- 		return 1;
- 	}
- 
--	if (gtp1->flags & GTP1_F_EXTHDR &&
--	    gtp_parse_exthdrs(skb, &hdrlen) < 0)
--		return -1;
--
- 	return gtp_rx(pctx, skb, hdrlen, gtp->role, inner_proto);
++	if (!io_thread)
+ 		return;
+-	wake_up_process(READ_ONCE(local->io_thread));
++	wake_up_process(io_thread);
  }
  
+ static inline bool rxrpc_protocol_error(struct sk_buff *skb, enum rxrpc_abort_reason why)
 -- 
 2.53.0
 
