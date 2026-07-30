@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAA70442134;
-	Thu, 30 Jul 2026 15:08:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD2C543C7C5;
+	Thu, 30 Jul 2026 15:08:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424085; cv=none; b=GRBv0YHWSU4yGntSyh8hkp8Bzv7CzismEFOqJObcSejW167EJWt9el/0hv48dDvwSx9L7URBXibC4PxKKwZMVStl6kVrGD+EDOZgpAcCET90kazgyDHz910PIpqYTTl/MDHkenDUvV2jIaGz18e/8ij+/v/C+fTXzs6HKMP5mfI=
+	t=1785424089; cv=none; b=k2kAqUR489wpuGWSntQAJ68JVOJl4v3EwE2OoAxcmAiFGR45Cj+SrYfgZYcEulMr3IrhwErJx5LsXSukOsdIA7kNPVkjS1gav4akQsAVtEIeePqp3RpO/D95o73KoP2qNcGBf40sBC/yk64h86Dpa/Fa5cWEf2aSD0ZtfvT6Lmk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424085; c=relaxed/simple;
-	bh=bhswHaB9hRuv6d52FMu3ENLSlmRyjqrXTGir20CW1YY=;
+	s=arc-20240116; t=1785424089; c=relaxed/simple;
+	bh=e+g8uczhqkv7HnUzwXwsP4O2rWWfDScJPW7j9kHQLpk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=avwQbiV8lmbGf5UYZpX1viRBKmRVxX0/wISmcEL6+X0/JHt6XlTHp2FdlKXv/sXmq+TW/osOqrn44+ItQXRiBbXimzapaS1cfgjiVqozGJOlCHceDTds5ZCTueokwcibrkvyKY2qyGxQfxCUkXTRfxNJRlWZNB83MEW2xPA5KQw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vg8/sYCr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MWhuXu0UZAdSlqa6AIAP7wHMG7Jbm9wbZxXzcSLfNwMK/yo49fAWjoV+G6ozuPd9wphyuTJ4cRagtBlmo6jCFMBzwARmKvP3WHe0ZXQ5J47qluHxi8JEjNMokmu48tvqZFyeLJu4RnvT9w5GQOowZ2TvWRbg23s5oxhwn7K2jL0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BxU3tbj9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vg8/sYCr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A65D1F000E9;
-	Thu, 30 Jul 2026 15:08:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BxU3tbj9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0031D1F000E9;
+	Thu, 30 Jul 2026 15:08:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424084;
-	bh=HF6qFju4RnBVid72Fjo7waIaGC3d+pF7xSHTS/Sz9W0=;
+	s=korg; t=1785424087;
+	bh=Nu4mSb7fqKHblxf+qhOTD0rkSKezAvlNg97L1jUtbEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vg8/sYCrspToz9qB9s1ddJYstuvTGSke8RtIO1H+S7udnT+vSf2XtPMNO9w4i+uvo
-	 ycZ7dwa9S/ugX03RjHeyw4fRdhj2XeNwR7IqBe6Pn7JF5JkiyWpBkBhLKOWf3hUmCn
-	 /i2DH/ICy1nfg7ZfX1UUuhuR8MwkhR4+cTdiPIhE=
+	b=BxU3tbj9hDBV87wWNXP58PaXY1IGXPKiV8HmvTy5oAFNixRKRg6qbm08bQh1/DsDB
+	 f8ig8fNCGjTyrOpmwdfauv3HP9GXMwIlfNhnnBZvEuJKLTSqmOrYFGOTyYa70yzc3U
+	 NGlsZPcUP87F2nVuventJKeOs2FPEoCuaysP0PWA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Zhixing Chen <running910@gmail.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 226/675] wan: wanxl: Only reset hardware after BAR mapping
-Date: Thu, 30 Jul 2026 16:09:16 +0200
-Message-ID: <20260730141449.944970099@linuxfoundation.org>
+Subject: [PATCH 6.18 217/675] gtp: parse extension headers before reading inner protocol
+Date: Thu, 30 Jul 2026 16:09:07 +0200
+Message-ID: <20260730141449.755618547@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -51,49 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Zhixing Chen <running910@gmail.com>
 
-[ Upstream commit 91957b89da995607cb654b1f9a3c126ddbaee10f ]
+[ Upstream commit 96e37e2f618e931aa97af95e707dcdfb1ec41264 ]
 
-wanxl_pci_init_one() stores the freshly allocated card in driver data
-before the PLX BAR is mapped.  Several early probe failures then unwind
-through wanxl_pci_remove_one(), including failure to allocate the coherent
-status area or to restore the DMA mask.
+GTPv1-U packets may carry a chain of extension headers before the inner
+IP packet. The receive path already parses and skips these extension
+headers, but it currently reads the inner protocol before doing so.
 
-wanxl_pci_remove_one() unconditionally calls wanxl_reset(), and
-wanxl_reset() dereferences card->plx.  On those early failures card->plx
-is still NULL, so the error path can dereference a NULL MMIO pointer.
+As a result, the first extension header byte is interpreted as the inner
+IP version. Packets with extension headers are then dropped before PDP
+lookup.
 
-Only issue the hardware reset once the BAR mapping exists.  The remaining
-cleanup in wanxl_pci_remove_one() already checks whether later resources
-were allocated.
+Parse the extension header chain before calling gtp_inner_proto(), so the
+inner protocol is read from the actual inner IP header.
 
-This issue was found by a static analysis checker and confirmed by
-manual source review.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Link: https://patch.msgid.link/20260708143415.3169358-1-ruoyuw560@gmail.com
+Fixes: c75fc0b9e5be ("gtp: identify tunnel via GTP device + GTP version + TEID + family")
+Signed-off-by: Zhixing Chen <running910@gmail.com>
+Link: https://patch.msgid.link/20260708042244.120898-1-running910@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wan/wanxl.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/gtp.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/wan/wanxl.c b/drivers/net/wan/wanxl.c
-index 5a9e262188efe1..c38dd741401e13 100644
---- a/drivers/net/wan/wanxl.c
-+++ b/drivers/net/wan/wanxl.c
-@@ -514,7 +514,8 @@ static void wanxl_pci_remove_one(struct pci_dev *pdev)
- 	if (card->irq)
- 		free_irq(card->irq, card);
+diff --git a/drivers/net/gtp.c b/drivers/net/gtp.c
+index 2f8626c3824d6b..937d913ce5c334 100644
+--- a/drivers/net/gtp.c
++++ b/drivers/net/gtp.c
+@@ -826,13 +826,17 @@ static int gtp1u_udp_encap_recv(struct gtp_dev *gtp, struct sk_buff *skb)
+ 	if (!pskb_may_pull(skb, hdrlen))
+ 		return -1;
  
--	wanxl_reset(card);
-+	if (card->plx)
-+		wanxl_reset(card);
++	gtp1 = (struct gtp1_header *)(skb->data + sizeof(struct udphdr));
++
++	if (gtp1->flags & GTP1_F_EXTHDR &&
++	    gtp_parse_exthdrs(skb, &hdrlen) < 0)
++		return -1;
++
+ 	if (gtp_inner_proto(skb, hdrlen, &inner_proto) < 0) {
+ 		netdev_dbg(gtp->dev, "GTP packet does not encapsulate an IP packet\n");
+ 		return -1;
+ 	}
  
- 	for (i = 0; i < RX_QUEUE_LENGTH; i++)
- 		if (card->rx_skbs[i]) {
+-	gtp1 = (struct gtp1_header *)(skb->data + sizeof(struct udphdr));
+-
+ 	pctx = gtp1_pdp_find(gtp, ntohl(gtp1->tid),
+ 			     gtp_proto_to_family(inner_proto));
+ 	if (!pctx) {
+@@ -840,10 +844,6 @@ static int gtp1u_udp_encap_recv(struct gtp_dev *gtp, struct sk_buff *skb)
+ 		return 1;
+ 	}
+ 
+-	if (gtp1->flags & GTP1_F_EXTHDR &&
+-	    gtp_parse_exthdrs(skb, &hdrlen) < 0)
+-		return -1;
+-
+ 	return gtp_rx(pctx, skb, hdrlen, gtp->role, inner_proto);
+ }
+ 
 -- 
 2.53.0
 
