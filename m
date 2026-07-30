@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3583A30567C;
-	Thu, 30 Jul 2026 15:16:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DC77217723;
+	Thu, 30 Jul 2026 15:16:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424596; cv=none; b=cTNv8Xynq5/Lbnhf9OdDx1PI2uq7aDjL2W7FPy3uOJqBsKPJRXePsPlhMYLOj1E4d1alRmzVNB5/3S+MKrbL+kpO7oJowe9aZaSjktlY81v04kbkj3pUwYTX123CIzI5GIUAxlWpcDSOWsOiddIg3OvF8JW9yk5+qGYL8HRdnho=
+	t=1785424599; cv=none; b=lF4yHdSQFqDe+bi/hQnR9iydbQviCiOViMTYA0IBgD2ONktGVH2cmJJhpQKWM+jfIIgpS3P+Q0R3/lxlX5T8h3Dg+OHFc7vnxlNPenR7agaFq9GOKOL7TSLHv0UzQikF5beHMIFiefTYZRhV4kNY5rFsBZl66zC2r5MJ24IBxfM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424596; c=relaxed/simple;
-	bh=kkHsDF3Y1HPiuUKev4LyMBDBs9cuPqz7pD8jTkdcsDw=;
+	s=arc-20240116; t=1785424599; c=relaxed/simple;
+	bh=5bVGGffKAh0+LUHUupyjPuwcIDTX+6ZqiiQqh6tYjCg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ggFUAMIIINZCI4he+UHcwfzzmnYFQI44XF4mIPa1Yil4twKco8cHwStSTPw6gquz9dHaAR7u4nAQCxdp0C+pVVvIgHs1cZed1sMVKXKF1XpWXxX5HMB0Dfyyq39FffNluus1VUbtaxOfSUnxGDEX2c3F6i8gXLyl7qLR0bf6nd4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BzMroXym; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mCt++9wSLOxl91Fp/K4JXr2PiOOLqCBJPq8NbPFgAd+lPbNYW1EUOmVzsIX8RfdKWZ8ILJrgbFXTw1bMahm9aSsuBwajoAq/SOR7Oz89H3Ip/q+Ihq4eZzw7uP7bWTSO58b25t3MgLbmC53npD3UCHQiibG/84FZFYYxBxF40XQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MB4MCJ1J; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BzMroXym"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A3321F000E9;
-	Thu, 30 Jul 2026 15:16:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MB4MCJ1J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6819A1F000E9;
+	Thu, 30 Jul 2026 15:16:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424595;
-	bh=VLD/YpRtfbsLUdkA/sGY6sHZaWibQ46CMipTVsr6uho=;
+	s=korg; t=1785424597;
+	bh=J6fkY3NhnPP+GrO7PZkUr3w3QZZqL/53tSu90eC2sUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BzMroXymYZYMKmYgILjvlJ5jLt0f5PuXJt1Efj+AJOcu4FZDBgoon2ouTAAOFoCYN
-	 c10h9PJR3GYPeCfaUlEKWWUj4lgv+GKEGTI0pH9Xie0UcvyzAUqabft4Jp8KAa2aQ2
-	 M38MwaskxZsz+gELnlAgCp0+45gxjVqh1Fq68PDQ=
+	b=MB4MCJ1J8gthB0xWfEdDu5nAVXv8HN+jDmYUaKhaJfd02Lj9NjUSzSJy9mwxzznXB
+	 VeiwfmhtKoOAhTAxg3u8Y5/vHgk5AVdritbgwkeB686tTP5QDRkGbpRWUsLLNZiOlo
+	 qhPeMeSmDmwKCAwBKZHnvJcL+zYG8jq/aDpASyrc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Maksimov <nickstogramm@yandex.ru>,
+	Norbert Szetei <norbert@doyensec.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.18 447/675] ALSA: hda/realtek: Fix speakers on Lunnen Ground 14
-Date: Thu, 30 Jul 2026 16:12:57 +0200
-Message-ID: <20260730141454.639763960@linuxfoundation.org>
+Subject: [PATCH 6.18 448/675] ALSA: seq: close a re-opened queue timer in the destructor
+Date: Thu, 30 Jul 2026 16:12:58 +0200
+Message-ID: <20260730141454.661208466@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -50,61 +50,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikita Maksimov <nickstogramm@yandex.ru>
+From: Norbert Szetei <norbert@doyensec.com>
 
-commit 5c3f8dac531b454bf67b6ee3c2aac89f0aaaef74 upstream.
+commit 2c4dc0ed50b05cd847a4b34b8cebf0775f19aeb9 upstream.
 
-The firmware on the Lunnen Ground 14 marks pin 0x1b as unused even
-though the internal speakers are connected to it. As a result, the
-speakers are not detected.
+queue_delete() closes the queue timer, then frees it. snd_seq_timer_close()
+clears q->timer->timeri. snd_use_lock_sync() then drains borrowers, and
+snd_seq_timer_delete() frees q->timer.
 
-Add a pin configuration quirk for PCI subsystem ID 2782:a212 to configure
-pin 0x1b as an internal speaker.
+A borrower can re-open the timer inside that window. A SET_QUEUE_CLIENT
+that took a queueptr() use_lock reference before the queue was unlinked
+runs snd_seq_timer_open() after the close. Open refuses re-open only while
+timeri is set, and the close just cleared it, so it re-opens timeri.
 
-The pin configuration was tested on a Lunnen Ground 14 (DMI product LL4FA)
-with an ALC269VC codec. The internal speakers and microphone work as
-expected.
+snd_seq_timer_delete() does not close that instance. Its snd_seq_timer_stop()
+is a no-op, because running was cleared first. So it frees q->timer with the
+instance still live. The queue is freed next.
 
+The instance stays on the global timer with callback_data pointing at the
+freed queue. A non-owner START on the unlocked queue arms it. The next tick
+derefs the freed queue in snd_seq_timer_interrupt().
+
+Reachable by an unprivileged user with access to /dev/snd/seq. No CAP and
+no queue ownership required.
+
+Close any lingering instance in the destructor. There, ->timeri can no
+longer change: the queue is unlinked and all use_lock borrowers have
+drained, so no snd_seq_queue_use() can re-open it. Close it before clearing
+q->timer. snd_timer_close() waits for any in-flight snd_seq_timer_interrupt()
+to finish, and that callback still reads q->timer (via snd_seq_check_queue()),
+so q->timer must stay valid until it drains.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Nikita Maksimov <nickstogramm@yandex.ru>
-Link: https://patch.msgid.link/20260720180214.73770-1-nickstogramm@yandex.ru
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Norbert Szetei <norbert@doyensec.com>
+Link: https://patch.msgid.link/422FDB81-2A68-47C7-A22D-2D3301E2E86D@doyensec.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/hda/codecs/realtek/alc269.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ sound/core/seq/seq_timer.c |   13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -3742,6 +3742,7 @@ enum {
- 	ALC269_FIXUP_DMIC_THINKPAD_ACPI,
- 	ALC269VB_FIXUP_INFINIX_ZERO_BOOK_13,
- 	ALC269VC_FIXUP_INFINIX_Y4_MAX,
-+	ALC269VC_FIXUP_LUNNEN_GROUND_14,
- 	ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO,
- 	ALC255_FIXUP_ACER_MIC_NO_PRESENCE,
- 	ALC255_FIXUP_ASUS_MIC_NO_PRESENCE,
-@@ -4183,6 +4184,13 @@ static const struct hda_fixup alc269_fix
- 		.chained = true,
- 		.chain_id = ALC269_FIXUP_LIMIT_INT_MIC_BOOST
- 	},
-+	[ALC269VC_FIXUP_LUNNEN_GROUND_14] = {
-+		.type = HDA_FIXUP_PINS,
-+		.v.pins = (const struct hda_pintbl[]) {
-+			{ 0x1b, 0x90170150 }, /* internal speaker */
-+			{ }
-+		},
-+	},
- 	[ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO] = {
- 		.type = HDA_FIXUP_PINS,
- 		.v.pins = (const struct hda_pintbl[]) {
-@@ -7573,6 +7581,7 @@ static const struct hda_quirk alc269_fix
- 	SND_PCI_QUIRK(0x2782, 0x1705, "MEDION E15433", ALC269VC_FIXUP_INFINIX_Y4_MAX),
- 	SND_PCI_QUIRK(0x2782, 0x1707, "Vaio VJFE-ADL", ALC298_FIXUP_SPK_VOLUME),
- 	SND_PCI_QUIRK(0x2782, 0x4900, "MEDION E15443", ALC233_FIXUP_MEDION_MTL_SPK),
-+	SND_PCI_QUIRK(0x2782, 0xa212, "Lunnen Ground 14", ALC269VC_FIXUP_LUNNEN_GROUND_14),
- 	SND_PCI_QUIRK(0x7017, 0x2014, "Star Labs StarFighter", ALC233_FIXUP_STARLABS_STARFIGHTER),
- 	SND_PCI_QUIRK(0x8086, 0x2074, "Intel NUC 8", ALC233_FIXUP_INTEL_NUC8_DMIC),
- 	SND_PCI_QUIRK(0x8086, 0x2080, "Intel NUC 8 Rugged", ALC256_FIXUP_INTEL_NUC8_RUGGED),
+--- a/sound/core/seq/seq_timer.c
++++ b/sound/core/seq/seq_timer.c
+@@ -61,12 +61,23 @@ struct snd_seq_timer *snd_seq_timer_new(
+ void snd_seq_timer_delete(struct snd_seq_timer **tmr)
+ {
+ 	struct snd_seq_timer *t = *tmr;
+-	*tmr = NULL;
++	struct snd_timer_instance *ti;
+ 
+ 	if (t == NULL) {
+ 		pr_debug("ALSA: seq: snd_seq_timer_delete() called with NULL timer\n");
+ 		return;
+ 	}
++
++	scoped_guard(spinlock_irq, &t->lock) {
++		ti = t->timeri;
++		t->timeri = NULL;
++	}
++	if (ti) {
++		snd_timer_close(ti);
++		snd_timer_instance_free(ti);
++	}
++
++	*tmr = NULL;
+ 	t->running = 0;
+ 
+ 	/* reset time */
 
 
