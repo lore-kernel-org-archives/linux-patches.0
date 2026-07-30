@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C91A119CD1D;
-	Thu, 30 Jul 2026 15:38:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4795331A48;
+	Thu, 30 Jul 2026 15:38:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425901; cv=none; b=iUff1b0kbP+ZJRvr0NydDL9q0OZN7pF49hVa6Brnn76P/OKd8oHTRR5M310VvwCw/Vh4bFS1WmH5KEQtqjdf5K3ZJNNQZB+u1HZTBarlZw+TxbKZ23dA0sNkDONs9RJ9fia2x/0Zet/0qsD5o3ArOPoSnnC2DDpvngU3OILPKqg=
+	t=1785425904; cv=none; b=XzdNeWSRbGgEBoJ795r9f7jg7Vx91FZxlWPM9KgwhMCr/WuERiKwLZqNkW3NC9zJNoVtBMdBwdPB9+PEh6pPC8k9IkUIw1HU5LkLT1GR0pBsHFIq50sECS9el1HJ3lcvsMPS11TaezzL6EV24a9+G2iFB7o4jc6LII+Jwv9w0Gc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425901; c=relaxed/simple;
-	bh=+iVRy/QBFGdWwiBMtB9d2w3rFxApeS8JlpHxsYwHU68=;
+	s=arc-20240116; t=1785425904; c=relaxed/simple;
+	bh=Efk/HytdyKmHfP8LYH2uZkgKa3QUbvkZpP46GPqhs0c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OrStsGsBw4QhFZlKmwHDKTAiWA7DzUB7yMm/nE+Mh0lMWGkIMdpWh0ZEpvRSVC5na5UnEvXgt8nuABJNRSiIJ6hIupA1LUXNucLZw/MJSOHTonXd/9cNJ1naYwnRbAN7ld9pd20pJpFrHXsSlz6kyhNNpHRbub4/n5uFa0F2M0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ztZc72pH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=rl4/Y+B4ks4k4Afq1MrsjrXcszDIZXPAho0FOzSpXoq52IyHY7bVoVx8MnZ67UmbLiL02PoxTmERjEYP2Bnj0Of33cA+wmdV8ejFfnBD7EvhUjWRlbBG14aIK4CXKe0MyTe+JQhnMEeu59Rl8cGB5eHW39ze2yhGLmZ2r8tnI0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H88MpE8t; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ztZc72pH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C3AA1F000E9;
-	Thu, 30 Jul 2026 15:38:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H88MpE8t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 246F11F00A3A;
+	Thu, 30 Jul 2026 15:38:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425900;
-	bh=QTx9XvZuIWeDGLk766kuzNOeLamJud/dljz95gIQ67I=;
+	s=korg; t=1785425903;
+	bh=Rkl33AatXG2x5K4ApUXnY1RJwLucc4KeqxgIcS4SQTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ztZc72pH/eS+IfsnAsfLoUXYM+wV2JW+iyAoDi5T5VDMrSX3gznYpCvojPdhr5VkA
-	 qYaczoCf3mMspoK0lBZKuwycaHqCplz0OC1TRFgXxIjoNcsTPsS/I9PyM03seH5Kyc
-	 mH9PGqOCsz9TDQCPEnpjMFnxsmQU6DVKhXXXBeQU=
+	b=H88MpE8tBGiCFdDAf5eqf7AnTfWzedT0zfFUENIbzS+C0WHCu1Azx+6L3Uvj6rN9z
+	 LP3JCJNYr2aVos/ccjy0ierxjPk6/ZVZY8Q785ouHJhRzGI8ULkTnqYb1C6XANwIJp
+	 9ks/McwmSg/TX53e9hxsk8GKnNfhBluCv+cKp53w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Ziad <muhzi100@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
+	Qingfang Deng <dqfext@gmail.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 229/602] ipv4: icmp: fill flow parameters in icmp_route_lookup decoy lookup
-Date: Thu, 30 Jul 2026 16:10:21 +0200
-Message-ID: <20260730141440.774521620@linuxfoundation.org>
+Subject: [PATCH 6.12 230/602] ppp: use IFF_NO_QUEUE in virtual interfaces
+Date: Thu, 30 Jul 2026 16:10:22 +0200
+Message-ID: <20260730141440.803609131@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -47,92 +46,107 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Qingfang Deng <dqfext@gmail.com>
 
-[ Upstream commit 853e164c2b321f0711361bc23505aaeb7dc432c3 ]
+[ Upstream commit 95d0d094ba26432ec467e2260f4bf553053f1f8f ]
 
-When Linux forwards a packet and needs to generate an ICMP error,
-icmp_route_lookup() performs a reverse-path relookup. For non-local
-destinations, it performs a decoy lookup to find the expected egress
-interface (rt2->dst.dev) before validating the path with ip_route_input().
+For PPPoE, PPTP, and PPPoL2TP, the start_xmit() function directly
+forwards packets to the underlying network stack and never returns
+anything other than 1. So these interfaces do not require a qdisc,
+and the IFF_NO_QUEUE flag should be set.
 
-Currently, the decoy flow structure (fl4_2) only sets .daddr = fl4_dec.saddr,
-leaving .saddr, .flowi4_dscp, .flowi4_proto, .flowi4_mark, .flowi4_oif,
-.fl4_sport, .fl4_dport, and .flowi4_uid zeroed out.
+Introduces a direct_xmit flag in struct ppp_channel to indicate when
+IFF_NO_QUEUE should be applied. The flag is set in ppp_connect_channel()
+for relevant protocols.
 
-When policy routing rules (such as ip rule add from $SRC lookup 100, or
-dscp/fwmark/ipproto/port rules, or VRF bindings) are configured:
-1. The decoy lookup fails to match the policy rule because saddr and other
-   key flow selectors are missing in fl4_2.
-2. It resolves a route using the default table instead, returning an incorrect
-   egress netdev.
-3. Passing the wrong netdev to ip_route_input() causes strict reverse-path
-   filtering (rp_filter=1) to fail, logging false-positive "martian source"
-   warnings and causing the relookup to fail.
+While at it, remove the usused latency member from struct ppp_channel.
 
-Fix this by initializing fl4_2 from fl4_dec and:
-- Swapping source/destination IP addresses.
-- Swapping L4 ports for transport protocols with ports (TCP, UDP, SCTP, DCCP)
-  so port-based policy routing matches correctly. Non-port protocols (such as
-  ICMP or GRE) leave the flowi_uli union fields intact to prevent corruption.
-- Setting .flowi4_oif = l3mdev_master_ifindex(route_lookup_dev) to ensure
-  VRF routing tables are respected.
-- Setting .flowi4_flags |= FLOWI_FLAG_ANYSRC to allow output route lookups
-  for non-local source IP addresses.
-- Using __ip_route_output_key() instead of ip_route_output_key() for fl4_2
-  so that raw FIB routing is used without triggering spurious XFRM policy
-  lookups on the decoy flow (the actual XFRM lookup is performed later using
-  fl4_dec).
-
-Fixes: 415b3334a21a ("icmp: Fix regression in nexthop resolution during replies.")
-Reported-by: Muhammad Ziad <muhzi100@gmail.com>
-Closes: https://lore.kernel.org/netdev/CAOAwikA60AYKdFr_UDLyja3oU4hqyAE7uFZWqum5uRdaQsgRYg@mail.gmail.com/
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20260722104236.2938082-1-edumazet@google.com
+Signed-off-by: Qingfang Deng <dqfext@gmail.com>
+Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Link: https://patch.msgid.link/20250301135517.695809-1-dqfext@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 543adf072165 ("ppp: annotate data races in ppp_generic")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/icmp.c | 18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ drivers/net/ppp/ppp_generic.c | 4 ++++
+ drivers/net/ppp/pppoe.c       | 1 +
+ drivers/net/ppp/pptp.c        | 1 +
+ include/linux/ppp_channel.h   | 3 +--
+ net/l2tp/l2tp_ppp.c           | 1 +
+ 5 files changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/icmp.c b/net/ipv4/icmp.c
-index 4f55b6041feb49..c7af8b914e13cd 100644
---- a/net/ipv4/icmp.c
-+++ b/net/ipv4/icmp.c
-@@ -540,11 +540,23 @@ static struct rtable *icmp_route_lookup(struct net *net, struct flowi4 *fl4,
- 		if (IS_ERR(rt2))
- 			err = PTR_ERR(rt2);
- 	} else {
--		struct flowi4 fl4_2 = {};
-+		struct flowi4 fl4_2 = fl4_dec;
- 		unsigned long orefdst;
+diff --git a/drivers/net/ppp/ppp_generic.c b/drivers/net/ppp/ppp_generic.c
+index 9f787adef3eb38..9599b67688432e 100644
+--- a/drivers/net/ppp/ppp_generic.c
++++ b/drivers/net/ppp/ppp_generic.c
+@@ -3508,6 +3508,10 @@ ppp_connect_channel(struct channel *pch, int unit)
+ 		ret = -ENOTCONN;
+ 		goto outl;
+ 	}
++	if (pch->chan->direct_xmit)
++		ppp->dev->priv_flags |= IFF_NO_QUEUE;
++	else
++		ppp->dev->priv_flags &= ~IFF_NO_QUEUE;
+ 	spin_unlock_bh(&pch->downl);
+ 	if (pch->file.hdrlen > ppp->file.hdrlen)
+ 		ppp->file.hdrlen = pch->file.hdrlen;
+diff --git a/drivers/net/ppp/pppoe.c b/drivers/net/ppp/pppoe.c
+index 937cf9b17f9aeb..944adf8b6e02b6 100644
+--- a/drivers/net/ppp/pppoe.c
++++ b/drivers/net/ppp/pppoe.c
+@@ -699,6 +699,7 @@ static int pppoe_connect(struct socket *sock, struct sockaddr *uservaddr,
+ 		po->chan.mtu = dev->mtu - sizeof(struct pppoe_hdr) - 2;
+ 		po->chan.private = sk;
+ 		po->chan.ops = &pppoe_chan_ops;
++		po->chan.direct_xmit = true;
  
--		fl4_2.daddr = fl4_dec.saddr;
--		rt2 = ip_route_output_key(net, &fl4_2);
-+		swap(fl4_2.daddr, fl4_2.saddr);
-+		switch (fl4_2.flowi4_proto) {
-+		case IPPROTO_TCP:
-+		case IPPROTO_UDP:
-+		case IPPROTO_SCTP:
-+		case IPPROTO_DCCP:
-+			swap(fl4_2.fl4_sport, fl4_2.fl4_dport);
-+			break;
-+		}
-+
-+		fl4_2.flowi4_oif = l3mdev_master_ifindex(route_lookup_dev);
-+		fl4_2.flowi4_flags |= FLOWI_FLAG_ANYSRC;
-+
-+		rt2 = __ip_route_output_key(net, &fl4_2);
- 		if (IS_ERR(rt2)) {
- 			err = PTR_ERR(rt2);
- 			goto relookup_failed;
+ 		error = ppp_register_net_channel(dev_net(dev), &po->chan);
+ 		if (error) {
+diff --git a/drivers/net/ppp/pptp.c b/drivers/net/ppp/pptp.c
+index cec3bb22471b54..90737cb718928a 100644
+--- a/drivers/net/ppp/pptp.c
++++ b/drivers/net/ppp/pptp.c
+@@ -469,6 +469,7 @@ static int pptp_connect(struct socket *sock, struct sockaddr *uservaddr,
+ 	po->chan.mtu -= PPTP_HEADER_OVERHEAD;
+ 
+ 	po->chan.hdrlen = 2 + sizeof(struct pptp_gre_header);
++	po->chan.direct_xmit = true;
+ 	error = ppp_register_channel(&po->chan);
+ 	if (error) {
+ 		pr_err("PPTP: failed to register PPP channel (%d)\n", error);
+diff --git a/include/linux/ppp_channel.h b/include/linux/ppp_channel.h
+index 45e6e427ceb8a0..f73fbea0dbc239 100644
+--- a/include/linux/ppp_channel.h
++++ b/include/linux/ppp_channel.h
+@@ -42,8 +42,7 @@ struct ppp_channel {
+ 	int		hdrlen;		/* amount of headroom channel needs */
+ 	void		*ppp;		/* opaque to channel */
+ 	int		speed;		/* transfer rate (bytes/second) */
+-	/* the following is not used at present */
+-	int		latency;	/* overhead time in milliseconds */
++	bool		direct_xmit;	/* no qdisc, xmit directly */
+ };
+ 
+ #ifdef __KERNEL__
+diff --git a/net/l2tp/l2tp_ppp.c b/net/l2tp/l2tp_ppp.c
+index bf78edee1ef8a7..f388bf9abf378d 100644
+--- a/net/l2tp/l2tp_ppp.c
++++ b/net/l2tp/l2tp_ppp.c
+@@ -796,6 +796,7 @@ static int pppol2tp_connect(struct socket *sock, struct sockaddr *uservaddr,
+ 	po->chan.private = sk;
+ 	po->chan.ops	 = &pppol2tp_chan_ops;
+ 	po->chan.mtu	 = pppol2tp_tunnel_mtu(tunnel);
++	po->chan.direct_xmit	= true;
+ 
+ 	error = ppp_register_net_channel(sock_net(sk), &po->chan);
+ 	if (error) {
 -- 
 2.53.0
 
