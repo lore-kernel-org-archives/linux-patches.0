@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 209BC29DB6C;
-	Thu, 30 Jul 2026 15:00:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43F73407CCF;
+	Thu, 30 Jul 2026 15:00:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423636; cv=none; b=oEXpLZmPwsibLncl3ybup7Mqx9iDspvoUfWSM07NhfNT0LRZb/Yfgt0nuUzv05tSZZLIBv9Bdpb0jtPRUJK+MA/N+zpqsDZoWbBRGg0KuESa1VCRkJruyi/0h7XZMh9jXTgcg/WFptNKTgKI10mQVPdU9mmtvrI8Y5mR8KkJiS4=
+	t=1785423639; cv=none; b=YPeG7muvYPwrIGcZST5KYnGvrMhiJVoiQ3xcCHl43e1NsTRCTxiP6LIKMHkHAtA9bogBDeOVhdZUyBvIHRhEkXL7ydoykIv925Ts3glTIPED+lXT0L74v6GtzJ9E3yFBmFMID+sJcnaLZLzmfccTHQ1sTCVwYdIHy32Qr47A4g8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423636; c=relaxed/simple;
-	bh=yKX7HcAazyEIxbz4NSRqBiqm7RbsOpyf+Z9bv0UOZfE=;
+	s=arc-20240116; t=1785423639; c=relaxed/simple;
+	bh=ZOQD96efGYEuWnCgaMX/dv9m8YOaNlWTYsw8glN9uQI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OX1Rz+y2scJ6J7f8Na8pxZ/SqzTVqBViDhoClh8OK1JqlVCvmn2y4Ys/2e8u3EDhUoVZXwHqI9jB+SlpkDD7PPpbTHxifwF+TNXJP6xw+zRoHyeERpQiS+6uGFBu8xJ8v+AMnxNq/Eg/PIhrClDrguGR7g7OSrBwYRktFDew3oI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gESBitfF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JI7gsOQy7rb5HcJaCU6B2ZKhf34PwtREFMSB4K3G44iSoAjKg0bz9kng2nxdEdBVmOlmB8ObsUNN/QZJ8AgyM9jElL7xzp6QdxNkzoFJEYXmyGZD+6YvzgMLZqoSIRSLdKazE7t6WTX6YJ0Iue05gVzNuiZPSjIy4L1SY/Zqqq8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LEILJNV7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gESBitfF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 729F21F000E9;
-	Thu, 30 Jul 2026 15:00:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LEILJNV7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 527881F00A3A;
+	Thu, 30 Jul 2026 15:00:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423635;
-	bh=WsMbkDQQ7veMhyjmu1uQJrDYlsf4KC6Bo7OxQn/MTQs=;
+	s=korg; t=1785423637;
+	bh=iVLQ9x4OEemyg14scHPc4YBw+7xeM+CqYNZ7wFotbq0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gESBitfFDQbelwzl8E1dhCmKX8Qsfye6U3saEB4ViLHdQ/O2dLgNivHA/pens6y3J
-	 VUXdHJlXnMoEGuIHziqKMEr+mIuteXuE5OqXxtmWlah8PxlaQPN5Zpg/OjC2e14Lff
-	 6d9GZni/hp+YselVv6e6jVmy8Jaht8CoVoYLliTg=
+	b=LEILJNV7clYl9uQ4KyMxgZTbx88PzqoFeMJug/zv36tbrmwT5A0QVKffX+DiKDZG+
+	 Kuh4AixHNL+2RcEp0bzl2oJDyxK5H0iU5LrTTcjNf3j4Cq9ENj7tWfCveJKGPf5HVG
+	 mEA0Wh1NTSKiGQc9ZPQ9PkUvQ0r4t5Z1RwhKpTtc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Zijun Hu <zijun.hu@oss.qualcomm.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Huiwen He <hehuiwen@kylinos.cn>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 112/675] Bluetooth: hci_qca: Clear memdump state on invalid dump size
-Date: Thu, 30 Jul 2026 16:07:22 +0200
-Message-ID: <20260730141447.523045083@linuxfoundation.org>
+Subject: [PATCH 6.18 113/675] smb/client: handle overlapping allocated ranges in fallocate
+Date: Thu, 30 Jul 2026 16:07:23 +0200
+Message-ID: <20260730141447.543800456@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -53,53 +52,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Huiwen He <hehuiwen@kylinos.cn>
 
-[ Upstream commit bf587a10c33e5571a299742e45bc18960b9912e7 ]
+[ Upstream commit b09ae45d85dc816987a71db9eebc54b0ae288e94 ]
 
-qca_controller_memdump() allocates qca->qca_memdump before processing
-the first dump packet. For a sequence-zero packet it then disables IBS,
-marks memdump collection active, and reads the advertised dump size.
+smb3_simple_fallocate_range() can skip holes when an allocated range
+returned by the server starts before the current fallocate offset. The
+skipped hole is not zero-filled, but fallocate still returns success. A
+later write to that hole may therefore fail with ENOSPC.
 
-If the controller reports a zero dump size, the error path frees the
-local qca_memdump object and returns without clearing qca->qca_memdump
-or undoing the collection state. A later memdump work item initializes
-its local pointer from qca->qca_memdump and skips allocation when that
-pointer is non-NULL, so it can operate on freed memory. The stale
-collection and IBS-disabled flags can also leave waiters or later
-transmit handling blocked behind an aborted dump.
+The function queries allocated ranges so that it can preserve existing
+contents and write zeroes only into holes. However, the server may return
+a range that starts before the current fallocate offset.
 
-Clear the saved pointer and memdump state before returning from the
-invalid-size path, matching the cleanup used when hci_devcd_init() fails.
+For example, assume the fallocate request is [100, 400) and the only
+allocated range returned by the server is [0, 200):
 
-A static analysis checker reported the stale memdump state, and manual
-source review confirmed the invalid-size failure path.
+        Request:      [100, 400)
+        Server range: [  0, 200)  allocated
 
-Fixes: 06d3fdfcdf5c ("Bluetooth: hci_qca: Add qcom devcoredump support")
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Reviewed-by: Zijun Hu <zijun.hu@oss.qualcomm.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+        Correct:
+        [100, 200)    allocated data, skip
+        [200, 400)    hole, zero-fill
+
+        Current:
+        [100, 300)    skipped
+        [300, 400)    zero-filled afterwards
+
+The current code adds the full server range length, 200, to the current
+offset 100 and moves to 300. As a result, the hole in [200, 300) is
+skipped without being zero-filled.
+
+Fix this by advancing only over the part of the allocated range that
+overlaps the current fallocate offset.  Ignore ranges that end before the
+current offset and reject ranges whose end offset overflows.
+
+This also prevents a malformed range length from causing an out-of-bounds
+zero-buffer read.
+
+Fixes: 966a3cb7c7db ("cifs: improve fallocate emulation")
+Signed-off-by: Huiwen He <hehuiwen@kylinos.cn>
+Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/hci_qca.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ fs/smb/client/smb2ops.c | 25 ++++++++++++++++++-------
+ 1 file changed, 18 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index c649a3f702c042..b510b03dae870f 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -1083,6 +1083,10 @@ static void qca_controller_memdump(struct work_struct *work)
- 			if (!(qca_memdump->ram_dump_size)) {
- 				bt_dev_err(hu->hdev, "Rx invalid memdump size");
- 				kfree(qca_memdump);
-+				qca->qca_memdump = NULL;
-+				qca->memdump_state = QCA_MEMDUMP_COLLECTED;
-+				clear_and_wake_up_bit(QCA_MEMDUMP_COLLECTION, &qca->flags);
-+				clear_bit(QCA_IBS_DISABLED, &qca->flags);
- 				kfree_skb(skb);
- 				mutex_unlock(&qca->hci_memdump_lock);
- 				return;
+diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
+index 786a7e963f1ff4..5bbe98dc0529b9 100644
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -3546,6 +3546,7 @@ static int smb3_simple_fallocate_range(unsigned int xid,
+ 	struct file_allocated_range_buffer in_data, *out_data = NULL, *tmp_data;
+ 	u32 out_data_len;
+ 	char *buf = NULL;
++	u64 range_start, range_len, range_end;
+ 	loff_t l;
+ 	int rc;
+ 
+@@ -3582,13 +3583,21 @@ static int smb3_simple_fallocate_range(unsigned int xid,
+ 			goto out;
+ 		}
+ 
+-		if (off < le64_to_cpu(tmp_data->file_offset)) {
++		range_start = le64_to_cpu(tmp_data->file_offset);
++		range_len = le64_to_cpu(tmp_data->length);
++		if (check_add_overflow(range_start, range_len, &range_end) ||
++		    range_end > S64_MAX) {
++			rc = -EINVAL;
++			goto out;
++		}
++
++		if (off < range_start) {
+ 			/*
+ 			 * We are at a hole. Write until the end of the region
+ 			 * or until the next allocated data,
+ 			 * whichever comes next.
+ 			 */
+-			l = le64_to_cpu(tmp_data->file_offset) - off;
++			l = range_start - off;
+ 			if (len < l)
+ 				l = len;
+ 			rc = smb3_simple_fallocate_write_range(xid, tcon,
+@@ -3605,11 +3614,13 @@ static int smb3_simple_fallocate_range(unsigned int xid,
+ 		 * until the end of the data or the end of the region
+ 		 * we are supposed to fallocate, whichever comes first.
+ 		 */
+-		l = le64_to_cpu(tmp_data->length);
+-		if (len < l)
+-			l = len;
+-		off += l;
+-		len -= l;
++		if (off < range_end) {
++			l = range_end - off;
++			if (len < l)
++				l = len;
++			off += l;
++			len -= l;
++		}
+ 
+ 		tmp_data = &tmp_data[1];
+ 		out_data_len -= sizeof(struct file_allocated_range_buffer);
 -- 
 2.53.0
 
