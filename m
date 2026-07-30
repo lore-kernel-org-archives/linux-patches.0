@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80300435AB0;
-	Thu, 30 Jul 2026 14:29:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB37643CEE7;
+	Thu, 30 Jul 2026 14:29:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421764; cv=none; b=b1R3r+0/q1n1SrKFcssJIX3hkJEC7RfmTzjQx5UMpNghurLX2AUEU5ocEIAtGn/754Hxaouzo3RmwJg/UrEf+XN4hgKIXWTAOc/HUv+dOccTKJsgWAJVc3lqAhJurONlLeJKNT0AftLx10pSlQ9auxBIA7p5uwX0zFDQ3bRZYTs=
+	t=1785421767; cv=none; b=HYsGh33yuIjzR7wUXl/nRw51qwL1EXbZILlOeL+iO5NWRALfL7oyC3XHp0Fhfy13DYZEAWDuIUlrBrZhsUc8D/Xl1hWWXQBJO5Pd9R09of7yXqmksfx4Rp3IaDxFRMYBHEn30EcUUpY5MGMPcCSxoc8J9cgq3yPMIt24PCwssdk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421764; c=relaxed/simple;
-	bh=0JKF9PpR3k3oQW7/IE9vh4JOehb64u8f3j9OfwssKa8=;
+	s=arc-20240116; t=1785421767; c=relaxed/simple;
+	bh=zW52Em28sadQpqSfJdMJsKSBtSqkCZVee+3kC7CBssY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TBifXdeQTBmYKD4sh1dnNfWBoBHbmV4zOr6uCiHm2fh44Q5HyPw/RHfQ4YMelN/gTbPkuSHHrHRInAAcmP+ZZ9u10/8+FTmEOquBohzVt6RWdNjxh9xBopgBJHNNXkJZz9o6nZvYd+tUiUcAmmbIq02A0DERODQw6ROsMmSgoV0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ajBESriP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oBF/Vs3pgUbsf71eNJtlhCLOV8cM5H1XjAH/RaVZJk7LC4AwFoDjp+p52vIScyX1mjxH6yWewaMKTbxu3rVIZKpmhaa4O6ownlsTjjDepb+QaJW4m63VeQ1gSAfYnGF08gbsdk0CxkwzVkMFdQzQz1pm1MTTTZgzMhe50CzsHi0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IdFJGPsO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ajBESriP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA0BC1F000E9;
-	Thu, 30 Jul 2026 14:29:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IdFJGPsO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F23F21F000E9;
+	Thu, 30 Jul 2026 14:29:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421763;
-	bh=+hfogXW0rauS0pCr1gLrscOE6h4fnSSB/Nk6Yk0ocBM=;
+	s=korg; t=1785421766;
+	bh=bbLrVEuJcwIVjDeMjc1XzPzptBybhjhy6teF7SpjnNU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ajBESriP/n/VK+W8m4GEWbfU+Sao5qOGVNgd+7JkLWuDcL2TcaIOyWRctBRPPpKG0
-	 lqou8tlIOdwNwiuknUmyEZCm76lTgMiBIllF8J1SZS8oNJ1mJs8osLlkErpbSpaeCn
-	 CJdC0RcxaHdoViwOxcx8fCJF2G5/YdQioyZEc9lI=
+	b=IdFJGPsOvKCxrtJEnuZzHV6LycRiV2eNV+H9WQd0MNiTkF70vRtmf1wtyUw6vjNJV
+	 KqJKf4vdselbrDyC5DfjmIeyyPjwVP27FSu4pyGA9CidXerUG1Qd1oN5q0I3gAwMw1
+	 b5JGuOprLFHMYiG6v4bvM3rb0JgBORE/mzLtR9oU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Mostafa Saleh <smostafa@google.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	"Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 176/744] watchdog: pretimeout: Fix UAF in watchdog_unregister_governor()
-Date: Thu, 30 Jul 2026 16:07:29 +0200
-Message-ID: <20260730141448.028537028@linuxfoundation.org>
+Subject: [PATCH 7.1 212/744] drivers/virt: pkvm: Fix end calculation in mmio_guard_ioremap_hook()
+Date: Thu, 30 Jul 2026 16:08:05 +0200
+Message-ID: <20260730141448.787816859@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -51,46 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tzung-Bi Shih <tzungbi@kernel.org>
+From: Mostafa Saleh <smostafa@google.com>
 
-[ Upstream commit 7362ba0f9c96ac3ad6a2ca3995bd9fc9a28a8661 ]
+[ Upstream commit 62c740f823a8e47ffe56e45a7472c27cf988e2f6 ]
 
-When a watchdog governor is unregistered, it updates existing watchdog
-devices that were using this governor by falling back to `default_gov`.
+Sashiko (locally) reports a logical issues in mmio_guard_ioremap_hook()
 
-If the governor being unregistered is currently set as `default_gov`,
-the `default_gov` is never cleared.  This leads to 2 use-after-free
-issues:
-1. New watchdog devices registered after this point will inherit the
-   dangling `default_gov`.
-2. Existing watchdog devices using the unregistered governor will have
-   their `wdd->gov` reassigned to the dangling `default_gov`.
+mmio_guard_ioremap_hook() attempts to handle unaligned addresses and
+sizes. However, aligning the start address before adding the size, might
+shift the end to the page before.
 
-Fix the UAF by clearing `default_gov` if it matches the governor being
-unregistered.
-
-Fixes: da0d12ff2b82 ("watchdog: pretimeout: add panic pretimeout governor")
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Link: https://lore.kernel.org/r/20260707101803.3598173-1-tzungbi@kernel.org
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 0f1269495800 ("drivers/virt: pkvm: Intercept ioremap using pKVM MMIO_GUARD hypercall")
+Signed-off-by: Mostafa Saleh <smostafa@google.com>
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Tested-by: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/watchdog_pretimeout.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/virt/coco/pkvm-guest/arm-pkvm-guest.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/watchdog/watchdog_pretimeout.c b/drivers/watchdog/watchdog_pretimeout.c
-index 19eb2ed2c7cb0e..02e09b9e396dab 100644
---- a/drivers/watchdog/watchdog_pretimeout.c
-+++ b/drivers/watchdog/watchdog_pretimeout.c
-@@ -167,6 +167,8 @@ void watchdog_unregister_governor(struct watchdog_governor *gov)
- 	}
+diff --git a/drivers/virt/coco/pkvm-guest/arm-pkvm-guest.c b/drivers/virt/coco/pkvm-guest/arm-pkvm-guest.c
+index 4230b817a80bd8..d66291def0f408 100644
+--- a/drivers/virt/coco/pkvm-guest/arm-pkvm-guest.c
++++ b/drivers/virt/coco/pkvm-guest/arm-pkvm-guest.c
+@@ -82,8 +82,8 @@ static int mmio_guard_ioremap_hook(phys_addr_t phys, size_t size,
+ 	if (protval != PROT_DEVICE_nGnRE && protval != PROT_DEVICE_nGnRnE)
+ 		return 0;
  
- 	spin_lock_irq(&pretimeout_lock);
-+	if (default_gov == gov)
-+		default_gov = NULL;
- 	list_for_each_entry(p, &pretimeout_list, entry)
- 		if (p->wdd->gov == gov)
- 			p->wdd->gov = default_gov;
++	end = PAGE_ALIGN(phys + size);
+ 	phys = PAGE_ALIGN_DOWN(phys);
+-	end = phys + PAGE_ALIGN(size);
+ 
+ 	while (phys < end) {
+ 		const int func_id = ARM_SMCCC_VENDOR_HYP_KVM_MMIO_GUARD_FUNC_ID;
 -- 
 2.53.0
 
