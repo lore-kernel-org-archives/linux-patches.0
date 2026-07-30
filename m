@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C04938DC50;
-	Thu, 30 Jul 2026 14:48:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E61943991B;
+	Thu, 30 Jul 2026 14:48:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422919; cv=none; b=DZ7b2XI4M8vOJ4oVXLKIwtDbaVtrmElHXDkJPAURaV80PwPdY0Tx80ySj+NV/OXNetNA78fXLwV65aphGGrkqZr1/1dEdeZjrC31h/Svvl/I3L3ieAVks0cX2UTw3ylGKu8QuQpNUKLKCIUv9h9HRw1kEfVEPPykDF4qqe7bnd8=
+	t=1785422922; cv=none; b=ANb/KPQXSm+ys2M+292+LagGdqaOWK8lFfzY7bxt+vU3ntqLfVGEX4GKskvA36CjXX5QjgYsGU2mFhxP1lDaN8FI4S58qfNTJfUCNMP4a5mY3AbRHbxdAYhOEeOck/NmBWJUbRSDxPh2JuqNGwGYmk9W57/OgL/QUjJFxXmvQcs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422919; c=relaxed/simple;
-	bh=zkT8olvV4478eG7s7gKskc9Og5mOmtiHmbMmt1iPLC8=;
+	s=arc-20240116; t=1785422922; c=relaxed/simple;
+	bh=bLbXDyB0ALA5afZy9xCzMhuyElguDVWKR+8mTF0Bko8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Akvs4M9I92NintWNloo+/A+omJQMBd7SqMoA2dnde7RZnwublqgRbqLb4NzX8dGr622PtA2ReSCAvguaYHTbmv4l1ZvQhuydhKEzYjsya3zaLP+JjrXU1nRhI6QLBCip8k24m6U592XTKFNC/XD7IMtvICL74Go5MTHHBSRfM/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f+mkzO8R; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TLPOC1eCKPqWd8XV16IsH5TwY860cHCR3GEWTFtBi3NrBtPt0Xa+EbaJFlRKmjzDYDnUSVqvFcerqELNTwNB//TCWdUfBevI/joxDxyW2XggWIMfFed3rudjdMqWCAQwEA07d9LrIPo57VV1PSBKSa0KgZq8B+bL8tojXcR4Ysg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cudCjAco; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f+mkzO8R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7DAE1F000E9;
-	Thu, 30 Jul 2026 14:48:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cudCjAco"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE9A71F000E9;
+	Thu, 30 Jul 2026 14:48:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422918;
-	bh=5R+0KNz2ppXdLZqppq3TjywntgazohIDOu+5+Q6z8BA=;
+	s=korg; t=1785422921;
+	bh=9mQf/le9y9YHm3ynkKIHKMoqgzrnTPI0A72oNaLdAzc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f+mkzO8RwEZTPegIQhOTGva/Bb+/EeQ8p9UDl/VABCFJ2aRbI2QAaHUU/oOaSl8NJ
-	 lP5fLMFUGfaEjBTiKZ5QJWZh11W/kw0WOtIQJNGaV1xijoTiqqn9v4Z3DSSnXv8T2A
-	 jmaRcqTlb9ewCJOuqmj4MnDLFYuqjl+AOzaBAbtA=
+	b=cudCjAcov+s7sH9nGsQRoYehGd4Bf9KfsEA0/tXX4KwORAzwSLdCVSEei8hNHdx+o
+	 XfztVGYOX3QGOcLxllYFOG2NhdrE99iZuBd3UAX8zt2Uk12nK0jf/xpANmHRh/saPv
+	 /a6BmXywjqiXylZPRF9aIZJzS6U1h+lOScAswiH4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	MinJea Kim <qndkdrnl@gmail.com>
-Subject: [PATCH 7.1 557/744] staging: rtl8723bs: fix inverted HT40 secondary channel offset
-Date: Thu, 30 Jul 2026 16:13:50 +0200
-Message-ID: <20260730141456.120441679@linuxfoundation.org>
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 7.1 558/744] Bluetooth: hci_sync: Protect UUID list traversal
+Date: Thu, 30 Jul 2026 16:13:51 +0200
+Message-ID: <20260730141456.141639796@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -49,59 +50,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: MinJea Kim <qndkdrnl@gmail.com>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-commit 30d49cba27f8905bc288cef5846963f0004f644c upstream.
+commit e9027ffbf5a0f3c12ca8900822e884eae9f0821b upstream.
 
-rtw_get_chan_type() maps the driver's channel offset to nl80211 channel
-types the wrong way around.
+The hci_sync conversion moved class-of-device and EIR generation from an
+HCI request built under hdev->lock to asynchronous command sync work.
+The worker holds hdev->req_lock, but that lock does not serialize access
+to hdev->uuids against add_uuid() and remove_uuid(), which update the
+list under hdev->lock.
 
-In this driver HAL_PRIME_CHNL_OFFSET_LOWER means the primary channel is
-the lower 20 MHz half of the 40 MHz pair, i.e. the secondary channel is
-above the primary one: rtw_get_center_ch() computes the center channel
-as "channel + 2" for OFFSET_LOWER, and bwmode_update_check() sets
-OFFSET_LOWER when the AP's HT operation IE announces SCA (secondary
-channel above). In nl80211 terms that is NL80211_CHAN_HT40PLUS, not
-HT40MINUS.
+The following interleaving can therefore occur:
 
-Because of the inversion, cfg80211_rtw_get_channel() reports an HT40+
-association as HT40-. For an HT40+ AP on a low channel (e.g. channel 3)
-the resulting chandef spans below the 2.4 GHz band edge and is invalid,
-so the regulatory core tears the connection down 60 seconds
-(REG_ENFORCE_GRACE_MS) after the AP's country IE triggers a regdomain
-change: reg_check_chans_work() considers the reported chandef unusable
-and calls cfg80211_leave(). The supplicant then reconnects, the country
-IE changes the regdomain again, and the cycle repeats, causing a
-disconnect/reconnect loop every ~65 seconds for as long as the link is
-up.
+  CPU0 (command sync work)       CPU1 (management socket)
+  fetch uuid from the list
+                                list_del(&uuid->list)
+                                kfree(uuid)
+  read uuid->size
 
-Observed on a TECLAST X80 Power tablet (RTL8723BS) associated to an
-HT40+ AP on channel 3 with a KR country IE; a kprobe trace showed
-cfg80211_disconnect() being invoked from reg_check_chans_work(). With
-the mapping fixed, "iw dev wlan0 info" reports the correct
-"width: 40 MHz, center1: 2432 MHz" and the periodic disconnects stop.
+KASAN reports the resulting use-after-free:
 
-Fixes: 5402cc178c5d ("staging: rtl8723bs: add get_channel cfg80211 implementation")
+  BUG: KASAN: slab-use-after-free in eir_create+0xb8f/0xee0
+  Read of size 1 at addr ffff88810dbd8620 by task kworker/u17:0/87
+  Workqueue: hci0 hci_cmd_sync_work
+  Call Trace:
+   eir_create+0xb8f/0xee0
+   hci_update_eir_sync+0x1c0/0x330
+   hci_cmd_sync_work+0x13c/0x290
+   process_one_work+0x63a/0x1070
+   worker_thread+0x45b/0xd10
+
+  Allocated by task 86:
+   __kasan_kmalloc+0x8f/0xa0
+   add_uuid+0x18a/0x4b0
+   hci_sock_sendmsg+0x1033/0x1ea0
+
+  Freed by task 92:
+   __kasan_slab_free+0x43/0x70
+   kfree+0x131/0x3c0
+   remove_uuid+0x25e/0x560
+   hci_sock_sendmsg+0x1033/0x1ea0
+
+Hold hdev->lock while generating and committing the class-of-device and
+EIR snapshots.  Release it before sending an HCI command, so controller
+waits do not happen under the device lock.  This protects all UUID list
+walks in these paths and restores the serialization lost in the command
+sync conversion.
+
+Fixes: 161510ccf91c ("Bluetooth: hci_sync: Make use of hci_cmd_sync_queue set 1")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude-Code:claude-fable-5 bpftrace
-Signed-off-by: MinJea Kim <qndkdrnl@gmail.com>
-Link: https://patch.msgid.link/20260714131421.3980-1-qndkdrnl@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/hci_sync.c |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
---- a/drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c
-+++ b/drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c
-@@ -1956,7 +1956,7 @@ static u8 rtw_get_chan_type(struct adapt
- 		else
- 			return NL80211_CHAN_NO_HT;
- 	case CHANNEL_WIDTH_40:
--		if (mlme_ext->cur_ch_offset == HAL_PRIME_CHNL_OFFSET_UPPER)
-+		if (mlme_ext->cur_ch_offset == HAL_PRIME_CHNL_OFFSET_LOWER)
- 			return NL80211_CHAN_HT40PLUS;
- 		else
- 			return NL80211_CHAN_HT40MINUS;
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -929,12 +929,16 @@ int hci_update_eir_sync(struct hci_dev *
+ 
+ 	memset(&cp, 0, sizeof(cp));
+ 
++	hci_dev_lock(hdev);
+ 	eir_create(hdev, cp.data);
+ 
+-	if (memcmp(cp.data, hdev->eir, sizeof(cp.data)) == 0)
++	if (memcmp(cp.data, hdev->eir, sizeof(cp.data)) == 0) {
++		hci_dev_unlock(hdev);
+ 		return 0;
++	}
+ 
+ 	memcpy(hdev->eir, cp.data, sizeof(cp.data));
++	hci_dev_unlock(hdev);
+ 
+ 	return __hci_cmd_sync_status(hdev, HCI_OP_WRITE_EIR, sizeof(cp), &cp,
+ 				     HCI_CMD_TIMEOUT);
+@@ -966,6 +970,7 @@ int hci_update_class_sync(struct hci_dev
+ 	if (hci_dev_test_flag(hdev, HCI_SERVICE_CACHE))
+ 		return 0;
+ 
++	hci_dev_lock(hdev);
+ 	cod[0] = hdev->minor_class;
+ 	cod[1] = hdev->major_class;
+ 	cod[2] = get_service_classes(hdev);
+@@ -973,8 +978,12 @@ int hci_update_class_sync(struct hci_dev
+ 	if (hci_dev_test_flag(hdev, HCI_LIMITED_DISCOVERABLE))
+ 		cod[1] |= 0x20;
+ 
+-	if (memcmp(cod, hdev->dev_class, 3) == 0)
++	if (memcmp(cod, hdev->dev_class, 3) == 0) {
++		hci_dev_unlock(hdev);
+ 		return 0;
++	}
++
++	hci_dev_unlock(hdev);
+ 
+ 	return __hci_cmd_sync_status(hdev, HCI_OP_WRITE_CLASS_OF_DEV,
+ 				     sizeof(cod), cod, HCI_CMD_TIMEOUT);
 
 
