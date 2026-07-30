@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEC83443E24;
-	Thu, 30 Jul 2026 15:05:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8B66434E2C;
+	Thu, 30 Jul 2026 15:05:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423903; cv=none; b=ldiLTzHdmvXU9xtZXtr2lDsxGYcPvPXevnGP8y9/qYDpvuv5WONqG1aMgWgFk5ijZErvpXdmjFONO6ERrgOpsFn6odgx+20eJUOLdI+USoLHLeelJ4T6tuY1zA7YTlLYeXe4vWZJX1AbaQc8yqWwiud/8Lw7kLaKPeohB4zbAhk=
+	t=1785423905; cv=none; b=V/kPyJudZb5paBPtrGGxQi8mie7YCwaEp9Kih1hPj8pj2H6k1hBGQU/ZNsoVLhBMd8l5kuuB1jibBZ8oobFUuy66AIbZeVpTFfmDLmd7018mYxbUhm/3c4ELUfvIQnEV4QYnFQz/d2BJyWA6IIVP+cdNT565aHRYF7g09lumEDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423903; c=relaxed/simple;
-	bh=43Iw8+LQNwBEdJ0nSwVtmCC8M295O6o4jOGgZliJF2M=;
+	s=arc-20240116; t=1785423905; c=relaxed/simple;
+	bh=+DcFMFktPpSEyehIAzpEApVUyxsFOsFCpMXf9T4fFXE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lPj86+vG7mFSQXU9LYTX7Edn+fIJVmRvd3w11Y3hJeJPQe1Mk2s3EuFvJSOyXce6qLzioqicQpwwn0HUt5R77kym0qHsQbt3jTo2oYegiX3B5iHxbQGhSheM+7wzs/OubGXRSK0ny4by8QNUeglMbeO0M6Vu0R1p4DS+4jYUwqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iB2wXigX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=keYCRXkh4RcuxFUliW6U+86mFgmtiwV45xG5z/Rp5xOtwsRelj7dmhHhw8NTD9WtWXrYECzGr9iS0oGyTKYFUUJtU+DGPuC/1sWwFLjpU/5ath8nf91ECzCPJaszcs5QOJ1Gy25N8FswIGffacQGyoSpbx866bD8NjaqklS6whA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V0umTmS+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iB2wXigX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45DD81F000E9;
-	Thu, 30 Jul 2026 15:05:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V0umTmS+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B3D61F000E9;
+	Thu, 30 Jul 2026 15:05:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423901;
-	bh=MJNWkEMCFH9Kg92EWZUWGVUk7ubKsKp7+gHwZn36k30=;
+	s=korg; t=1785423904;
+	bh=Uy7fBXOR/fB0x5F/K57OLENknnQsd+O/s02xIs5ovOM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iB2wXigX2ZDWieqFoZX6CngAQXiHOUZnwpVsS5gQ8ZeEEUERf5oOt3ESvg4RHCidI
-	 yDcnZpWy2F4On6/Uqr4I3ZDeS3zan/yKtw4QBvWhcglBXOF06iu4QG1FlpK/srKFxC
-	 PpJvx5Y3nKRm2Wc08OKSHGBhaxogkx42/JP7RsRk=
+	b=V0umTmS+p8ZazA7fb1Vu5yqaIkaZmN/9orA9/kmKEBkU+whfnbENX+vOHuixeS5ww
+	 jokuV79S3Crsek6JOvXdwzEmLooQ1q9rWZnMmFO2YXJy1nS+0V8qWwtXzkNmhg3lyu
+	 NDPwlewVyeizcluw1jj9Z/PnEfDVeQkGi10B77CM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qing Ming <a0yami@mailbox.org>,
-	Simon Horman <horms@kernel.org>,
+	longlong yan <yanlonglong@kylinos.cn>,
 	Antonio Quartulli <antonio@openvpn.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 205/675] ovpn: avoid putting unrelated P2P peer on socket release
-Date: Thu, 30 Jul 2026 16:08:55 +0200
-Message-ID: <20260730141449.501810090@linuxfoundation.org>
+Subject: [PATCH 6.18 206/675] selftests/net: ovpn: fix getaddrinfo memory leak in ovpn_parse_remote()
+Date: Thu, 30 Jul 2026 16:08:56 +0200
+Message-ID: <20260730141449.522773094@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -52,56 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qing Ming <a0yami@mailbox.org>
+From: longlong yan <yanlonglong@kylinos.cn>
 
-[ Upstream commit b52c5103f64ee825996ca1ab8df7283cde8c5f86 ]
+[ Upstream commit 0bd9cfebc1c91e1066e56d6261b99691b9df6008 ]
 
-ovpn_peer_release_p2p() is called when an OVPN UDP socket is being
-destroyed. It checks the currently published P2P peer and releases it only
-if that peer still uses the socket being destroyed.
+The ovpn_parse_remote() function has two memory management issues:
 
-A peer replacement can publish a new peer before the old UDP socket is
-destroyed. When the old socket destruction path runs afterwards,
-ovpn_peer_release_p2p() observes the new peer through ovpn->peer. Since the
-new peer uses a different socket, the function takes the socket mismatch
-branch.
+1. When both 'host' and 'vpnip' are non-NULL, the first getaddrinfo()
+   allocation is leaked because 'result' is overwritten by the second
+   getaddrinfo() call without freeing the first allocation.
 
-That branch still calls ovpn_peer_put(peer). At this point, however, peer
-is the currently published replacement peer, not the peer associated with
-the socket being destroyed. Dropping its reference can free it while
-ovpn->peer still points to it, leading to later use-after-free accesses
-from the peer and socket cleanup paths.
+2. When both 'host' and 'vpnip' are NULL, 'result' is an uninitialized
+   stack variable passed to freeaddrinfo(), which is undefined behavior.
 
-KASAN reports this as a slab-use-after-free on the kmalloc-1k ovpn_peer
-object. In the reproducer, the object is allocated from ovpn_peer_new() via
-ovpn_nl_peer_new_doit(), and freed through ovpn_peer_release_rcu() from RCU
-callback processing. Observed access sites include ovpn_peer_remove(),
-ovpn_socket_release(), ovpn_nl_peer_del_notify(), and unlock_ovpn().
+Fix by initializing 'result' to NULL and calling freeaddrinfo() after
+the first getaddrinfo() result is consumed.
 
-Fix this by returning from the socket mismatch branch without putting the
-peer.
-
-Fixes: f6226ae7a0cd ("ovpn: introduce the ovpn_socket object")
-Signed-off-by: Qing Ming <a0yami@mailbox.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
+Fixes: 959bc330a439 ("testing/selftests: add test tool and scripts for ovpn module")
+Signed-off-by: longlong yan <yanlonglong@kylinos.cn>
 Signed-off-by: Antonio Quartulli <antonio@openvpn.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ovpn/peer.c | 1 -
- 1 file changed, 1 deletion(-)
+ tools/testing/selftests/net/ovpn/ovpn-cli.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ovpn/peer.c b/drivers/net/ovpn/peer.c
-index 87a83321f1dd5f..795741645e5eb0 100644
---- a/drivers/net/ovpn/peer.c
-+++ b/drivers/net/ovpn/peer.c
-@@ -1162,7 +1162,6 @@ static void ovpn_peer_release_p2p(struct ovpn_priv *ovpn, struct sock *sk,
- 		ovpn_sock = rcu_access_pointer(peer->sock);
- 		if (!ovpn_sock || ovpn_sock->sk != sk) {
- 			spin_unlock_bh(&ovpn->lock);
--			ovpn_peer_put(peer);
- 			return;
+diff --git a/tools/testing/selftests/net/ovpn/ovpn-cli.c b/tools/testing/selftests/net/ovpn/ovpn-cli.c
+index 0a5226196a2e73..44418118f6ea7a 100644
+--- a/tools/testing/selftests/net/ovpn/ovpn-cli.c
++++ b/tools/testing/selftests/net/ovpn/ovpn-cli.c
+@@ -1746,7 +1746,7 @@ static int ovpn_parse_remote(struct ovpn_ctx *ovpn, const char *host,
+ 			     const char *service, const char *vpnip)
+ {
+ 	int ret;
+-	struct addrinfo *result;
++	struct addrinfo *result = NULL;
+ 	struct addrinfo hints = {
+ 		.ai_family = ovpn->sa_family,
+ 		.ai_socktype = SOCK_DGRAM,
+@@ -1770,6 +1770,8 @@ static int ovpn_parse_remote(struct ovpn_ctx *ovpn, const char *host,
  		}
+ 
+ 		memcpy(&ovpn->remote, result->ai_addr, result->ai_addrlen);
++		freeaddrinfo(result);
++		result = NULL;
  	}
+ 
+ 	if (vpnip) {
 -- 
 2.53.0
 
