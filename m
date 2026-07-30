@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92C644499BE;
-	Thu, 30 Jul 2026 16:10:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C9364499BB;
+	Thu, 30 Jul 2026 16:10:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427852; cv=none; b=uZLEiyQzdRHxlmqYEHezTQNw5meL9xI2Og3hHDhsgFiG1P0cRw1GNqQSzkxmkxg+g1sm/eplCRbAcFrGfw+ZsMdGCHiua43gVZReCfQ9YRAd8LOXgHZBifvtN2z5kyfFqLGqX2O1ZNAAyUZNeAXwd90qSYHcRxXuXGD68rgI4Ak=
+	t=1785427855; cv=none; b=G3B/n6ZcdLREEKThXgzsWQDJMwGqobBYc7Ma1CRHMPW2dk2CLbgYVLSrZrF3OIEhzxRYDqbFTye0qNJybroCi4J7sxSbjSOTD2JhB0QJogCYhgEE9dzygVSsLvffMNK65QM83JsPD6Ek8kCq8gdqc2x69VJBkaB9voBPn7l3uB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427852; c=relaxed/simple;
-	bh=hJXLHx2Doxz86jZ8I9QCtRY25GW74TZIYI/kg9O9Scc=;
+	s=arc-20240116; t=1785427855; c=relaxed/simple;
+	bh=/7fdyM6WaVlN2lat8mnz55WrEjuFtUN95xjBA6bBvCU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kLJueH6jOZPZe4PyWzdLTlTWJkSljbkLGsjZhj/dXxFDWVDjXMG6Y6HjujJPSgnY9DCvWe27UCPG7zxYTh+svqet1u/iKldVTsKoAH8Tfh/nuMoSyLZHHJDgmUOmoEsTrl9M6hElOs52KVywHz9Rk4Qv9HK+u5UiZ9y67iYj160=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hCVh4+cS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ntOZR+87Th3vBJg8Tqb6Et4QZUELn4nZ5nBJ77tI6O1j0+zqxeHYZ7pwKkQW/PiPDY/aD7astTfV58F2LKj5PZv32Le6QaJIoX8TkRmeeopYG5Z77LW2jLuyx+wMlN0Runy/0TpwE32P3SVBuNJAN2+s6vi0N1RhVM1lKthI2n0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=09zooP9n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hCVh4+cS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E25BF1F000E9;
-	Thu, 30 Jul 2026 16:10:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="09zooP9n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C41A31F000E9;
+	Thu, 30 Jul 2026 16:10:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427851;
-	bh=ixo2x2IXZ/tsEkET6tDRZDS6LzjcnjadejmzUCsLgTI=;
+	s=korg; t=1785427854;
+	bh=4UDQO0HOvQFVvFf1Ytpd2Y38wpWCYyoStdJ4ca51HDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hCVh4+cSYJZpDQpLy4nsluXDJqKw6HFprcG2StZtOkkaC8ookoXCmDp6AhUcnM8FQ
-	 AKSkfN79ADOXPLCP5BEleubP3vlSr+4a0IuOsyozS1ul63Z/7U044d5Vo5EuUVMWJB
-	 uGjHdr4Y3I/zO3/nXKcv+LHkG5vDMsq56QvPQqX8=
+	b=09zooP9nkx8C9Rrq5QkaZmv/ZE4w2i/UgkhZTYOHy1oz4ttkRDPV9+M9NDtw7FYF7
+	 sRFq7VfXB0qfL1ZnP/HRPm65h8+k3jqbla9zjFZfscpt553NEMvwz66NU0f5nh5jML
+	 4Oo45C6rDPOggRnd+gqKyXFoafT/tfLz4k7rV9Cs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tengda Wu <wutengda@huaweicloud.com>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 6.6 314/484] ftrace: Add global mutex to serialize trace_parser access
-Date: Thu, 30 Jul 2026 16:13:31 +0200
-Message-ID: <20260730141430.308340396@linuxfoundation.org>
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Samiullah Khawaja <skhawaja@google.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 6.6 315/484] iommu/vt-d: Disallow SVA if page walk is not coherent
+Date: Thu, 30 Jul 2026 16:13:32 +0200
+Message-ID: <20260730141430.329798552@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -50,98 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tengda Wu <wutengda@huaweicloud.com>
+From: Lu Baolu <baolu.lu@linux.intel.com>
 
-commit 7720b63bcef3f54c7fe288774b720a227d54a306 upstream.
+commit 780dfed688622ea01be3c9c2c55eec2207f05e04 upstream.
 
-In ftrace, the trace_parser structure is allocated and initialized when
-a trace file is opened, and is subsequently used across write and release
-handlers to parse user input.
+Hardware implementations report Scalable-Mode Page-walk Coherency Support
+via the SMPWCS field in the extended capability register. If the hardware
+does not support page-walk coherency, a clflush is required every time
+the page table entries (which are walked by the IOMMU hardware) are
+updated.
 
-The affected handler paths and their specific functions are:
-  - Open paths: ftrace_regex_open(), ftrace_graph_open()
-  - Write paths: ftrace_regex_write(), ftrace_graph_write()
-  - Release paths: ftrace_regex_release(), ftrace_graph_release()
+In the SVA case, page tables are managed by the CPU mm core, not by the
+IOMMU driver. Because the IOMMU driver has no way of knowing whether the
+CPU page table management code has ensured coherency via clflush, the
+driver must deny SVA if the hardware does not support coherent paging.
 
-If userspace opens a trace file descriptor and shares it across multiple
-threads, concurrent write calls will race on the parser's internal state,
-specifically the 'idx', 'cont', and 'buffer' fields, leading to corrupted
-input or undefined behavior.
-
-Fix this by adding a global mutex, parser_lock, to serialize all access
-to trace_parser across write and release paths, preventing concurrent
-corruption of parser state.
-
-Fixes: e704eff3ff51 ("ftrace: Have set_graph_function handle multiple functions in one write")
-Fixes: 689fd8b65d66 ("tracing: trace parser support for function and graph")
+Fixes: ff3dc6521f78 ("iommu/vt-d: Fix CPU and IOMMU SVM feature matching checks")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260725024721.1983675-1-wutengda@huaweicloud.com
-Signed-off-by: Tengda Wu <wutengda@huaweicloud.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Reviewed-by: Samiullah Khawaja <skhawaja@google.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ftrace.c |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/iommu/intel/svm.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/trace/ftrace.c
-+++ b/kernel/trace/ftrace.c
-@@ -1068,6 +1068,12 @@ struct ftrace_ops global_ops = {
- };
+--- a/drivers/iommu/intel/svm.c
++++ b/drivers/iommu/intel/svm.c
+@@ -149,7 +149,7 @@ int intel_svm_finish_prq(struct intel_io
  
- /*
-+ * parser_lock - Protects trace_parser state against concurrent operations.
-+ * Held across trace_get_user() and subsequent buffer parsing to prevent races.
-+ */
-+static DEFINE_MUTEX(parser_lock);
-+
-+/*
-  * Used by the stack unwinder to know about dynamic ftrace trampolines.
-  */
- struct ftrace_ops *ftrace_ops_trampoline(unsigned long addr)
-@@ -5205,6 +5211,8 @@ ftrace_regex_write(struct file *file, co
- 	/* iter->hash is a local copy, so we don't need regex_lock */
+ void intel_svm_check(struct intel_iommu *iommu)
+ {
+-	if (!pasid_supported(iommu))
++	if (!pasid_supported(iommu) || !ecap_smpwc(iommu->ecap))
+ 		return;
  
- 	parser = &iter->parser;
-+
-+	guard(mutex)(&parser_lock);
- 	read = trace_get_user(parser, ubuf, cnt, ppos);
- 
- 	if (read >= 0 && trace_parser_loaded(parser) &&
-@@ -5930,12 +5938,14 @@ int ftrace_regex_release(struct inode *i
- 		iter = file->private_data;
- 
- 	parser = &iter->parser;
-+	mutex_lock(&parser_lock);
- 	if (trace_parser_loaded(parser)) {
- 		int enable = !(iter->flags & FTRACE_ITER_NOTRACE);
- 
- 		ftrace_process_regex(iter, parser->buffer,
- 				     parser->idx, enable);
- 	}
-+	mutex_unlock(&parser_lock);
- 
- 	trace_parser_put(parser);
- 
-@@ -6267,10 +6277,12 @@ ftrace_graph_release(struct inode *inode
- 
- 		parser = &fgd->parser;
- 
-+		mutex_lock(&parser_lock);
- 		if (trace_parser_loaded((parser))) {
- 			ret = ftrace_graph_set_hash(fgd->new_hash,
- 						    parser->buffer);
- 		}
-+		mutex_unlock(&parser_lock);
- 
- 		trace_parser_put(parser);
- 
-@@ -6390,6 +6402,7 @@ ftrace_graph_write(struct file *file, co
- 
- 	parser = &fgd->parser;
- 
-+	guard(mutex)(&parser_lock);
- 	read = trace_get_user(parser, ubuf, cnt, ppos);
- 
- 	if (read >= 0 && trace_parser_loaded(parser) &&
+ 	if (cpu_feature_enabled(X86_FEATURE_GBPAGES) &&
 
 
