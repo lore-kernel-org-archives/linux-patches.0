@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40D423769FD;
-	Thu, 30 Jul 2026 15:56:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B23B3769FD;
+	Thu, 30 Jul 2026 15:56:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426971; cv=none; b=I/7J3ejj7kS+JgkKPCzv5Aq+S6dwD3hQ0dgpb4lqnGkNmK+ZYfB7jehKfWpNagG9Ir/wUIYPzS31bOli1aMZhWyEs0oCCW2/fWvkuhHr475N43JDLmrraRab2MDcZmO5jIEcxwrlTN0IO5zNzXoxptVY1SS47s89L/0e0rECxE8=
+	t=1785426974; cv=none; b=uJ+wHSBAAKZGBklbROCDw5lgcEvw3q2FsvQlye2stMG5BsooRWo4OujlGEYhP4Hmq+xKkIrkcjp0tbPN80VPVVzlByJN/Sa3k/Nc3v9cn60KTmF1rLzkZN+z6p4Yq0c7e5DuTuOrswduAvnURlpj8h8qYQKUofm7fptFNXrmeos=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426971; c=relaxed/simple;
-	bh=A7xDWYjQbQegkJiw5NThic+VVNraVGzmjO+0+Jusw7M=;
+	s=arc-20240116; t=1785426974; c=relaxed/simple;
+	bh=8S117MICrZjIWSWtfXIIarOmCAt+E3hKLciakk7ADjA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qMMdXgFJzOBD46k+jvJ4Uv9Y0ziYeSaRHriymnHAs9e7SubzBsdt+NDH5uuVwUVMmotsMwzjCN+bfU3YJYnslPHMzR7FNYzzamm81Z3p12+1IW1aWH+Yl/MxG12ySuzCs3FcfISyKQhLmjCilwAleelCXHhqYMuAMAhmA89+HwE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pKxuDh9v; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o/qj0jO7t1onbr5t7B/G+mfxpndHPJSEP4sxtJcoNLMvSb5o6Ka2QyIM4TwjXkpn41j8BPJtG1bwFazgIHjmiTynxqFieKpNxC1oW/+Oi9s1UX0nVJE7pFIFru5kl78oWY9NuqbXL0T37PlEz9IsHZfxLpoK7s5jNSRc9CH/ELs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y7xI8s0j; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pKxuDh9v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D78E1F000E9;
-	Thu, 30 Jul 2026 15:56:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y7xI8s0j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 755CD1F000E9;
+	Thu, 30 Jul 2026 15:56:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426970;
-	bh=9SATUZgItT9OPbDGLitCxnqbmwy8y+2EU/GBMibqHU0=;
+	s=korg; t=1785426973;
+	bh=jnYKP/iqI0vC3QgwRGJI5lYJDxqy1c6M5QM9OyE/O8g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pKxuDh9vQyd178xcyA623ujVzkm/xZy3hom8EsSQtE55wjCUb+ShIXiI/MesG3H4k
-	 sAE1u4lPoaXZTjL6OeVx39m4bagmTNwmVE1tqcqKEsu/g0lCsrnwogwi2mlVCfD4fg
-	 rkeCGXpI48TaDsRvVDn47D/HML9MWFv3TdxcVcac=
+	b=Y7xI8s0jF09/4Gs3RxPssUxNuUfHSkUENOrO781N85T6dmfAC3vtmrXOGZJIdO14U
+	 OwRRpquvWrajAPCU8f0RrWntlV+G76riCQCnFSzWyowa+oQ8/dWKOzC4I0PXQtXqAK
+	 IdzAgWMa07yv88dHQptoVXXj9542PAY3wsI8ssK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Niklas Cassel <cassel@kernel.org>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	stable@kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 568/602] ata: libata-core: Reject an invalid concurrent positioning ranges count
-Date: Thu, 30 Jul 2026 16:16:00 +0200
-Message-ID: <20260730141447.981925432@linuxfoundation.org>
+Subject: [PATCH 6.12 569/602] fs/resctrl: Fix double-add of pseudo-locked regions RMID to free list
+Date: Thu, 30 Jul 2026 16:16:01 +0200
+Message-ID: <20260730141448.004488837@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -52,97 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Reinette Chatre <reinette.chatre@intel.com>
 
-[ Upstream commit 533a0b940f901c15e5cbbd4b5d66e871c209e8ce ]
+[ Upstream commit b9f089723aee892efc77c349ae47a6b452b293c4 ]
 
-ata_dev_config_cpr() takes the number of range descriptors from buf[0]
-of the concurrent positioning ranges log (up to 255), which the device
-reports independently of the log size in the GPL directory. The count is
-then walked at a fixed 32-byte stride in two places with no bound: the
-log read here, and the INQUIRY VPD page B9h emitter, which writes one
-descriptor per range into the fixed 2048-byte ata_scsi_rbuf. A device
-reporting a count larger than its own log overflows the read buffer (up
-to 7704 bytes past a 512-byte slab), and a count above 62 overflows the
-response buffer on the emit side.
+A pseudo-locked group's RMID is freed when it is created. On unmount
+rmdir_all_sub() unconditionally frees all RMID of all groups, resulting
+in a double-free of the pseudo-locked group's RMID. The consequence of this
+is that the original free results in the pseudo-locked group's RMID being
+added to the rmid_free_lru linked list and the second free then attempts
+to add the same RMID entry to the rmid_free_lru again.
 
-Bound the count once, on probe, against both the log the device returned
-and the number of descriptors the VPD B9h response buffer can hold
-(ATA_DEV_MAX_CPR, derived from the rbuf size). Reject an out-of-range
-count with a warning; this keeps the emitter in bounds with no separate
-change there.
+Do not double-free a pseudo-locked group's RMID.
 
-Suggested-by: Damien Le Moal <dlemoal@kernel.org>
-Fixes: fe22e1c2f705 ("libata: support concurrent positioning ranges log")
-Fixes: c745dfc541e7 ("libata: fix reading concurrent positioning ranges log")
-Cc: stable@vger.kernel.org
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-[ adapted `kzalloc_flex()` allocation to `kzalloc(struct_size(...), GFP_KERNEL)` and adjusted context offsets. ]
+Fixes: e0bdfe8e36f3 ("x86/intel_rdt: Support creation/removal of pseudo-locked region")
+Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: <stable@kernel.org>
+Link: https://patch.msgid.link/551432dd7e624a862b8e58314c38aaba0afff3e9.1783377598.git.reinette.chatre@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/libata-core.c |   18 ++++++++++++++++++
- drivers/ata/libata-scsi.c |    2 --
- drivers/ata/libata.h      |    9 +++++++++
- 3 files changed, 27 insertions(+), 2 deletions(-)
+ arch/x86/kernel/cpu/resctrl/rdtgroup.c |   12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
---- a/drivers/ata/libata-core.c
-+++ b/drivers/ata/libata-core.c
-@@ -2804,6 +2804,24 @@ static void ata_dev_config_cpr(struct at
- 	if (!nr_cpr)
- 		goto out;
+--- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
++++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+@@ -2922,10 +2922,6 @@ static void rmdir_all_sub(void)
+ 		if (rdtgrp == &rdtgroup_default)
+ 			continue;
  
-+	/*
-+	 * The device reports the number of CPR descriptors independently of the
-+	 * log size, and that count is also used to emit VPD page B9h into the
-+	 * fixed-size rbuf. Reject a count larger than what that buffer can hold
-+	 * (ATA_DEV_MAX_CPR) or larger than the log the device actually returned.
-+	 */
-+	if (nr_cpr > ATA_DEV_MAX_CPR) {
-+		ata_dev_warn(dev,
-+			     "Too many concurrent positioning ranges\n");
-+		goto out;
-+	}
-+
-+	if (buf_len < 64 + (size_t)nr_cpr * 32) {
-+		ata_dev_warn(dev,
-+			     "Invalid number of concurrent positioning ranges\n");
-+		goto out;
-+	}
-+
- 	cpr_log = kzalloc(struct_size(cpr_log, cpr, nr_cpr), GFP_KERNEL);
- 	if (!cpr_log)
- 		goto out;
---- a/drivers/ata/libata-scsi.c
-+++ b/drivers/ata/libata-scsi.c
-@@ -37,8 +37,6 @@
- #include "libata.h"
- #include "libata-transport.h"
- 
--#define ATA_SCSI_RBUF_SIZE	2048
+-		if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKSETUP ||
+-		    rdtgrp->mode == RDT_MODE_PSEUDO_LOCKED)
+-			rdtgroup_pseudo_lock_remove(rdtgrp);
 -
- static DEFINE_SPINLOCK(ata_scsi_rbuf_lock);
- static u8 ata_scsi_rbuf[ATA_SCSI_RBUF_SIZE];
+ 		/*
+ 		 * Give any CPUs back to the default group. We cannot copy
+ 		 * cpu_online_mask because a CPU might have executed the
+@@ -2934,7 +2930,13 @@ static void rmdir_all_sub(void)
+ 		cpumask_or(&rdtgroup_default.cpu_mask,
+ 			   &rdtgroup_default.cpu_mask, &rdtgrp->cpu_mask);
  
---- a/drivers/ata/libata.h
-+++ b/drivers/ata/libata.h
-@@ -145,6 +145,15 @@ static inline void ata_acpi_bind_dev(str
- #endif
+-		free_rmid(rdtgrp->closid, rdtgrp->mon.rmid);
++		if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKSETUP ||
++		    rdtgrp->mode == RDT_MODE_PSEUDO_LOCKED) {
++			rdtgroup_pseudo_lock_remove(rdtgrp);
++		} else {
++			/* Pseudo-locked group's RMID is freed during setup. */
++			free_rmid(rdtgrp->closid, rdtgrp->mon.rmid);
++		}
  
- /* libata-scsi.c */
-+#define ATA_SCSI_RBUF_SIZE	2048
-+
-+/*
-+ * Maximum number of concurrent positioning ranges (CPR) supported. The ACS
-+ * specifications allow up to 255, but we limit this to the number of CPR
-+ * descriptors that fit in the rbuf buffer used to emit VPD page B9h.
-+ */
-+#define ATA_DEV_MAX_CPR		min(255, ((ATA_SCSI_RBUF_SIZE - 64) / 32))
-+
- extern struct ata_device *ata_scsi_find_dev(struct ata_port *ap,
- 					    const struct scsi_device *scsidev);
- extern int ata_scsi_add_hosts(struct ata_host *host,
+ 		kernfs_remove(rdtgrp->kn);
+ 		list_del(&rdtgrp->rdtgroup_list);
 
 
