@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9B5C442FC4;
-	Thu, 30 Jul 2026 15:25:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD27144AB62;
+	Thu, 30 Jul 2026 15:25:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425136; cv=none; b=uDLw/YRU75yXUAIeXu6mOUzQjOJLsZLwyxV5CD9Z6THWLNERHdAP7Be4v2zjQf7DHIp2trf7fy90oC9T//AmFuVRlKIuxBIWu3yZKZlkaNrk0+XLG/kpVLQZm4zrgzJnVCYUXmEZVYTZ8G7fPa0mIHBt03O+iTs9mkusyjd5Brg=
+	t=1785425139; cv=none; b=G/CCJVVDrvR/l8CMPPejNNqFE5Krk183++LRRW3GK4nYsTmyFp6sSkIx4cw4h5t4l4mZmdcLcZ2W+pI0MEv3HEAfYDeS5XOt/+V6M7HnpRb1puk57Cl+PXTFUXHkOPU2GtReMUdz8D+OC22m4yOl5KT1A/fJWSjkF6cC5NEmvm4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425136; c=relaxed/simple;
-	bh=zuT3deog0QExUgUTdriGHw3TFZsTstFATUcGoNXPZmY=;
+	s=arc-20240116; t=1785425139; c=relaxed/simple;
+	bh=MVhQv/mvKrYQJrMQD8/xFSqDe++MVIobuoL4U7VwK6Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EHGuuGthwdu7VwrcZLYEMErNJTEcTvFeMPzWysTMXjuE+IRLU/raayZlst+ouDW7gg6OwQerRPAvMgE66Micf8dIqYFJ7cqplpUNFNWO63s7hmbdbTdwgYFS9Eax5QlTW4xl8WAZsZzGlQC9ayLsZwdx1Wv4kqy06tMYzqRRLGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Swf/kd0I; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F1gg4/hayfdC0nsPmll11e4fPxuFjLKAHWrI6PJgAfHHrMqW9oXIUKrHO0A24pUb+pmd2thTh9ae68vmLRqITM+yCPKI71ZUdA54DEnHJGyjweOGmw2M0L1cbsmxlbe2VN27B24+tllbqwPMebpD+gpMYAlaImxXlUmxTe3Ym10=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eNgpVizr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Swf/kd0I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 072701F000E9;
-	Thu, 30 Jul 2026 15:25:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eNgpVizr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14ABC1F000E9;
+	Thu, 30 Jul 2026 15:25:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425135;
-	bh=mzLTaExp9iDm/Dakk0IkUDdpij+ZffBLJoXSNW9qD2g=;
+	s=korg; t=1785425138;
+	bh=dJIPWoWzU2igqpODQ4S0GYqNaMim1GOPxXViniGUyvo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Swf/kd0I1xMiZ1lM4iLKFZagw8nArSXXEIypFG/FQ7BEX9KD1v/DsBeBHvUEae3Iw
-	 iMx4fhQJyi8Z/6sf3ONnOj9xZcZBPO6uSEa854M7SaI4CSZgeBoVYy2s7Tj6/P95Lx
-	 ZMjMo0gClMVU75jL/P6Rrj69e0MGdDNoTooSVA70=
+	b=eNgpVizrG4+roUHUC3NACvJAyUQ5zH4D7HNeqrUUDyYeFmoCer7CdHOBJFhzx1dU+
+	 9Jf4I3EDss6bXmkKWbjuGUwTI7+tt8nDxfCTmQnFHiMYnXK+dRjl66Pz/fPRY7RQuJ
+	 6cqpY9UcyfAF1L8Vi9OmaPphKQlMNdFEX00ndpAg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Guan <guanwentao@uniontech.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Florian Fuchs <fuchsfl@gmail.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 600/675] ksmbd: restore DACL size on check_add_overflow() to avoid malformed ACL
-Date: Thu, 30 Jul 2026 16:15:30 +0200
-Message-ID: <20260730141457.869918139@linuxfoundation.org>
+Subject: [PATCH 6.18 636/675] mtd: maps: vmu-flash: fix fault in unaligned fixup
+Date: Thu, 30 Jul 2026 16:16:06 +0200
+Message-ID: <20260730141458.647599641@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -52,90 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Guan <guanwentao@uniontech.com>
+From: Florian Fuchs <fuchsfl@gmail.com>
 
-commit bbf0a8e931204ecdab494a88d43b0a24a04285c5 upstream.
+[ Upstream commit 79d1661502c6e4b6f626185cef72cf2fa78116e1 ]
 
-check_add_overflow() unconditionally writes the truncated sum into *d
-even on overflow, per its contract in include/linux/overflow.h.
-The four check_add_overflow() guards in set_posix_acl_entries_dacl()
-and set_ntacl_dacl() break out of the ACE-building loops on overflow,
-but the truncated *size is then consumed downstream at the end of
-set_ntacl_dacl():
+Use kzalloc_obj() / kzalloc_objs() to allocate the memcard structs,
+instead of kmalloc_obj() / kmalloc_objs() to prevent access to
+uninitialized data.
 
-    pndacl->size = cpu_to_le16(le16_to_cpu(pndacl->size) + size);
+Fixes runtime error: Fault in unaligned fixup: 0000 [#1] at
+mtd_get_fact_prot_info.
 
-This produces an on-wire NT ACL whose pndacl->size under-reports the
-bytes actually written by the preceding fill_ace_for_sid()/memcpy()
-calls, yielding a malformed ACL that can trigger out-of-bounds reads
-when re-parsed by clients or ksmbd itself.
-
-Restore *size to its pre-addition value on each overflow branch (via
-`*size -= ace_sz` / `size -= nt_ace_size`) so that after the break,
-*size once again holds the cumulative size of the successfully-written
-ACEs. The committed ACL is then truncated-but-self-consistent rather
-than malformed.
-
-The ksmbd DACL builders are the only check_add_overflow() sites found
-where an overflow path breaks out of a loop and the destination value
-is consumed afterward. The other nearby break-style cases either
-return -EINVAL on overflow (transport_ipc.c) or break without
-consuming the overflowed destination value afterward (buildid.c).
-
-Fixes: 299f962c0b02 ("ksmbd: use check_add_overflow() to prevent u16 DACL size overflow")
-Assisted-by: atomcode:glm-5.2
-Assisted-by: Codex:gpt-5.5
+Fixes: 47a72688fae7 ("mtd: flash mapping support for Dreamcast VMU.")
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Florian Fuchs <fuchsfl@gmail.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smbacl.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/mtd/maps/vmu-flash.c |    8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/fs/smb/server/smbacl.c b/fs/smb/server/smbacl.c
-index 173469d112f101..ca0e4aab6dd87f 100644
---- a/fs/smb/server/smbacl.c
-+++ b/fs/smb/server/smbacl.c
-@@ -649,6 +649,7 @@ static void set_posix_acl_entries_dacl(struct mnt_idmap *idmap,
- 		ace_sz = fill_ace_for_sid(ntace, sid, ACCESS_ALLOWED, flags,
- 				pace->e_perm, 0777);
- 		if (check_add_overflow(*size, ace_sz, size)) {
-+			*size -= ace_sz;
- 			kfree(sid);
- 			break;
- 		}
-@@ -663,6 +664,7 @@ static void set_posix_acl_entries_dacl(struct mnt_idmap *idmap,
- 			ace_sz = fill_ace_for_sid(ntace, sid, ACCESS_ALLOWED,
- 					0x03, pace->e_perm, 0777);
- 			if (check_add_overflow(*size, ace_sz, size)) {
-+				*size -= ace_sz;
- 				kfree(sid);
- 				break;
- 			}
-@@ -708,6 +710,7 @@ static void set_posix_acl_entries_dacl(struct mnt_idmap *idmap,
- 		ace_sz = fill_ace_for_sid(ntace, sid, ACCESS_ALLOWED, 0x0b,
- 				pace->e_perm, 0777);
- 		if (check_add_overflow(*size, ace_sz, size)) {
-+			*size -= ace_sz;
- 			kfree(sid);
- 			break;
- 		}
-@@ -750,8 +753,10 @@ static void set_ntacl_dacl(struct mnt_idmap *idmap,
- 				goto next_ace;
+--- a/drivers/mtd/maps/vmu-flash.c
++++ b/drivers/mtd/maps/vmu-flash.c
+@@ -610,7 +610,7 @@ static int vmu_connect(struct maple_devi
  
- 			memcpy((char *)pndace + size, ntace, nt_ace_size);
--			if (check_add_overflow(size, nt_ace_size, &size))
-+			if (check_add_overflow(size, nt_ace_size, &size)) {
-+				size -= nt_ace_size;
- 				break;
-+			}
- 			num_aces++;
+ 	basic_flash_data = be32_to_cpu(mdev->devinfo.function_data[c - 1]);
  
- next_ace:
--- 
-2.53.0
-
+-	card = kmalloc(sizeof(struct memcard), GFP_KERNEL);
++	card = kzalloc_obj(struct memcard);
+ 	if (!card) {
+ 		error = -ENOMEM;
+ 		goto fail_nomem;
+@@ -628,15 +628,13 @@ static int vmu_connect(struct maple_devi
+ 	* Not sure there are actually any multi-partition devices in the
+ 	* real world, but the hardware supports them, so, so will we
+ 	*/
+-	card->parts = kmalloc_array(card->partitions, sizeof(struct vmupart),
+-				    GFP_KERNEL);
++	card->parts = kzalloc_objs(struct vmupart, card->partitions);
+ 	if (!card->parts) {
+ 		error = -ENOMEM;
+ 		goto fail_partitions;
+ 	}
+ 
+-	card->mtd = kmalloc_array(card->partitions, sizeof(struct mtd_info),
+-				  GFP_KERNEL);
++	card->mtd = kzalloc_objs(struct mtd_info, card->partitions);
+ 	if (!card->mtd) {
+ 		error = -ENOMEM;
+ 		goto fail_mtd_info;
 
 
