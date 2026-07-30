@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 417BB3C1D70;
-	Thu, 30 Jul 2026 15:32:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07C133C1D70;
+	Thu, 30 Jul 2026 15:32:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425547; cv=none; b=mjoVRbjU9Tc0OkwkGzx59CRZT+g7qDkpdxpxITAaU08RsyEgEqH0rQKLpiLltqFjrY8UHMrU9jmOU6yjMS2n3vCrqvv0ek7uGSWKGBW7pWbf4DBBZkRO0EbckOcb4PrVOeo9HvMW5AZ/nrQiJWLMS/LLjjuHuWXQdkN1bv5Tx1k=
+	t=1785425550; cv=none; b=gOg5g+lbQLJe6ZAWtT7YuG1cxZ1Yfre4s0i/OTzHhXPoxOWqMYJs1/8xwnwdMDq+BBzgC1E8iZok0nCppO4L5VWGzF5IOU1qgtYwu2Bl1k3zAZpLQao6z1YWTVDBRjG5ZgLZZlr5ygpupmGtx00hrTNaWNh/4jhpy/jLSlGfQd8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425547; c=relaxed/simple;
-	bh=qq6xq8WNhD2woY5ikldvD4rH6SSdXJp8VOgRSc0BnII=;
+	s=arc-20240116; t=1785425550; c=relaxed/simple;
+	bh=xviLINx7YBF7I2IzS3IyRI10F3rQtPpwhu6HluJR18s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pp8qInkUHBOvG+2rO4j6HFKoOKUblS3Azgivb5QBuR0pnQI3oQO6QmU28PkeXw875qwOSt20yfJRoyJPjIxgUYpCJumtYt/ulmBH8Uaf3Wv2GV71irZI7OHntjy0W+GmbunPC4+kUtQFyCUKFTprSxAl0k00fOWx6aT8YIlOZnI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X6avKSdh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=g/0h21jVRg/WNpiB2nB4ZcewAnLi/x+BZlz70FdQemJ2lW2n+xN54hXqx7djb4koKWaS2M0y8VY6fzjlhmg4lYVGakpyx6wTtRBTGTIgzw/TVDwGUIE+XFiClPHw/LA9J2EKXwvVITiKY+xF003rvaInTW//M3WO0jN097GeK2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fIRzw4ci; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X6avKSdh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A80B1F000E9;
-	Thu, 30 Jul 2026 15:32:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fIRzw4ci"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69C6B1F000E9;
+	Thu, 30 Jul 2026 15:32:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425546;
-	bh=M7LLQgjGodZD5ujaufUOq4UatO2nJijA7d6buecM8dk=;
+	s=korg; t=1785425548;
+	bh=CXgRR+rKJxKMpE5YB4Wecjpf9AILuX2t7AMekjYbCL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X6avKSdhgsc0BUoQZFulkcu8ljuEPFizkjF9mqjcj6J2BTUJKqm6mFciJPpaEBxrH
-	 nBa13eWkPT1Q07wS6a+tNLFa8ddq5pRzerS7qA6lhf1nTOtBxqUZGxrL9AZNgYHk2D
-	 tpHrtaxnROHhJwlRKBmNHaz8m2g0EQLyGqaHuMV0=
+	b=fIRzw4cimEep7XxI3QNGcVjURsGLe144rsV6TwlOZGp/H8E49b5L7bgPPJ8FZ8n/v
+	 UscwP3AKzsC1vG8bZarFCVfFvS0knCBwHoJgBNQKWh14LJt/izKcupC6+El22z0BHv
+	 dNLVvYXDmg6P/rlhGb0uBfX7VyFIsQGS7Zt6g/hc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Johan Hovold <johan@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 108/602] ksmbd: validate compound request size before reading StructureSize2
-Date: Thu, 30 Jul 2026 16:08:20 +0200
-Message-ID: <20260730141438.260647574@linuxfoundation.org>
+Subject: [PATCH 6.12 091/602] Bluetooth: qca: fix NVM tag length underflow in TLV parser
+Date: Thu, 30 Jul 2026 16:08:03 +0200
+Message-ID: <20260730141437.907925069@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -53,67 +54,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei (Microsoft) <xmei5@asu.edu>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit 15b38176fd1530372905c602fde51fe89ec8c877 ]
+[ Upstream commit c90164ca0f7036942ba088eb7ea8d3f6c2352020 ]
 
-When ksmbd validates a compound (chained) SMB2 request,
-ksmbd_smb2_check_message() reads pdu->StructureSize2 without first
-checking that the compound element is large enough to contain it.
-StructureSize2 is a 2-byte field at offset 64
-(__SMB2_HEADER_STRUCTURE_SIZE) from the start of each element.
+In the TLV_TYPE_NVM branch of qca_tlv_check_data() the tag loop bound is
+"while (idx < length - sizeof(struct tlv_type_nvm))". "length" is a signed
+int from the firmware TLV header and sizeof(struct tlv_type_nvm) is a
+size_t (12), so "length" is converted to size_t and any firmware-supplied
+"length" < 12 makes the subtraction wrap to a huge value. The loop body
+then reads a 12-byte struct tlv_type_nvm past the end of the short
+vmalloc'd firmware buffer (and the EDL_TAG_ID_* handlers can write past it).
 
-The compound-walking logic only guarantees that a full 64-byte SMB2
-header is present for the trailing element: when NextCommand is 0, len is
-reduced to the number of bytes remaining after next_smb2_rcv_hdr_off. A
-remote client can craft a compound request whose last element has exactly
-64 bytes, so the 2-byte StructureSize2 read at offset 64 extends one byte
-past the receive buffer, producing a slab-out-of-bounds read.
+Rewrite the bound as "idx + sizeof(struct tlv_type_nvm) <= length"; both
+operands are non-negative, so it no longer underflows and a "length" too
+small for one record correctly skips the loop.
 
-  BUG: KASAN: slab-out-of-bounds in ksmbd_smb2_check_message (fs/smb/server/smb2misc.c:402)
-  Read of size 2 at addr ffff888012ae31ac by task kworker/0:1/14
-  The buggy address is located 172 bytes inside of allocated 173-byte region
-  Workqueue: ksmbd-io handle_ksmbd_work
+  BUG: KASAN: vmalloc-out-of-bounds in qca_download_firmware.isra.0 (drivers/bluetooth/btqca.c:421)
+  Read of size 2 at addr ffffc900000e5004 by task kworker/u9:0/52
+  Workqueue: hci0 hci_power_on
   Call Trace:
    ...
    kasan_report (mm/kasan/report.c:595)
-   ksmbd_smb2_check_message (fs/smb/server/smb2misc.c:402)
-   handle_ksmbd_work (fs/smb/server/server.c:119)
-   process_one_work (kernel/workqueue.c:3314)
-   worker_thread (kernel/workqueue.c:3397)
+   qca_download_firmware.isra.0 (drivers/bluetooth/btqca.c:421 drivers/bluetooth/btqca.c:617)
+   qca_uart_setup (drivers/bluetooth/btqca.c:948)
+   qca_setup (drivers/bluetooth/hci_qca.c:2029)
+   hci_uart_setup (drivers/bluetooth/hci_ldisc.c:438)
+   hci_dev_open_sync (net/bluetooth/hci_sync.c:5227)
+   hci_power_on (net/bluetooth/hci_core.c:920)
+   process_one_work (kernel/workqueue.c:3322)
+   worker_thread (kernel/workqueue.c:3486)
    kthread (kernel/kthread.c:436)
    ret_from_fork (arch/x86/kernel/process.c:158)
    ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
 
-Reject any compound element that is too small to hold StructureSize2
-before dereferencing it.
-
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Signed-off-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 2e4edfa1e2bd ("Bluetooth: qca: add missing firmware sanity checks")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Reviewed-by: Johan Hovold <johan@kernel.org>
+Acked-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2misc.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/bluetooth/btqca.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/smb/server/smb2misc.c b/fs/smb/server/smb2misc.c
-index ae501024665e1f..6317edbfe4fa43 100644
---- a/fs/smb/server/smb2misc.c
-+++ b/fs/smb/server/smb2misc.c
-@@ -400,6 +400,11 @@ int ksmbd_smb2_check_message(struct ksmbd_work *work)
- 		return 1;
- 	}
+diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
+index 372427747cd649..083a599eec74db 100644
+--- a/drivers/bluetooth/btqca.c
++++ b/drivers/bluetooth/btqca.c
+@@ -413,7 +413,7 @@ static int qca_tlv_check_data(struct hci_dev *hdev,
  
-+	if (len < __SMB2_HEADER_STRUCTURE_SIZE + sizeof(__le16)) {
-+		ksmbd_debug(SMB, "Message is too small for StructureSize2\n");
-+		return 1;
-+	}
-+
- 	if (smb2_req_struct_sizes[command] != pdu->StructureSize2) {
- 		if (!(command == SMB2_OPLOCK_BREAK_HE &&
- 		    (le16_to_cpu(pdu->StructureSize2) == OP_BREAK_STRUCT_SIZE_20 ||
+ 		idx = 0;
+ 		data = tlv->data;
+-		while (idx < length - sizeof(struct tlv_type_nvm)) {
++		while (idx + sizeof(struct tlv_type_nvm) <= length) {
+ 			tlv_nvm = (struct tlv_type_nvm *)(data + idx);
+ 
+ 			tag_id = le16_to_cpu(tlv_nvm->tag_id);
 -- 
 2.53.0
 
