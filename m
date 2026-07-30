@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51995433E63;
-	Thu, 30 Jul 2026 15:06:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36C59433E63;
+	Thu, 30 Jul 2026 15:06:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424014; cv=none; b=LPJygVrxexqjLJR5n8gG4v8ZYb4nRzE36BDwFgVslIx1ShBtCL5mSnaR0SlBYS6+OS8/zy8LlUiP5RA5mojxEuXuSQt4uWEY0OQq0UxjTt7uona/3jbHng48d73CYzg14FjOUaXYOquEs3FJpfpoRJGfJ0qhAF+V1f2dHjYwkeg=
+	t=1785424017; cv=none; b=WvI/3gdeC8Fpa6KFUv2n7yobypIifAWuVJZzjWVE05SvB1bxUs9IZCt1lhBwzunKmajIC1q2dPpJQh1+zhIpmVSOxSvya9v9HMEVNc+s5SZuFnUHh+84tgk+QF6Chww8X3JhHQxdGcKlrx9yNWkmjyQIZskXJViEroNLfe50rOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424014; c=relaxed/simple;
-	bh=A6TYszqKOLVjpNJo2JvY3I16gOSmLBpwMeVkXD8TsY0=;
+	s=arc-20240116; t=1785424017; c=relaxed/simple;
+	bh=UcLWtDfC1KJUzJZJIAKS1gEfLU66SUobqfBlkEFvCP8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RgfQOkZxiPrt0IgK5zYny3br4GBA1GV1BOvdSXbacbBWZqEWaUwj0qX5AfsZX6/fy7gJYSZgDsUPh5xx9iKGKpE2ZLg+0Zhxye0e4JSZehBkPPav9oOmULaIwmHruCFmOflQPjWll7i7ZXbzDocgaLs1ThFqz5X2YLLruPPugz8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qSFTQK8l; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Vi+MuEagfatYb93fdMoE19PQJOOVL85yJt08uISgV44AOAES1AI7nYxzS4Jp1D9hidqWbsWDZZRy0GkXOUYocKnLHlDL8fgsg9vhynumNRbd8OajP9ycX7kC0qkbIB0vzx20ZxMIuPO6DfrYJjuGqBkDSRFj7ynYtF538l6irGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w0/ehf7T; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qSFTQK8l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9DC01F000E9;
-	Thu, 30 Jul 2026 15:06:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w0/ehf7T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DED41F000E9;
+	Thu, 30 Jul 2026 15:06:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424013;
-	bh=L5Zc5l0iQZkEEBMXKnkda+yKu7og+uNXON6j8MflZSk=;
+	s=korg; t=1785424016;
+	bh=uWy987cUlp11J5DWL8XTIL5XEjietZVVCmZ9zAMCA+s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qSFTQK8lAJe5UAlO3Y2JU+Yz8cy0V584ESN7blN8lUg+u4uyllWvTbM46PkwWGxej
-	 SRbKGpL9Tb17ImQpzUi6N0ZAGuEqYOTUj0Y4dm7n07uNaC14fVDDwDqnnj5sL14nH9
-	 BfqFdrjLiInUnEF/J8JodwPZd8MywoBeciK8qG04=
+	b=w0/ehf7TeIO8hrY41jEqvjSf23X4vcqhCgHJi53TxhgZHFDHuUse+TLz3XKCSkuHN
+	 iAqQzq29fc5KJIaXzDDS0bYjgGFzPA2mx3jxEDGsYUokbdR0tcXOkFMSrTWN7q9+CQ
+	 YX9k5Ik2Dq/0lIr+/A9CN3zgVHh3zoouLHuaKfNk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	Xin Long <lucien.xin@gmail.com>,
-	"Cen Zhang (Microsoft)" <blbllhy@gmail.com>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Jeremy Kerr <jk@codeconstruct.com.au>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 245/675] sctp: validate stream count in sctp_process_strreset_inreq()
-Date: Thu, 30 Jul 2026 16:09:35 +0200
-Message-ID: <20260730141450.342946944@linuxfoundation.org>
+Subject: [PATCH 6.18 246/675] net: mctp i3c: clean up notifier and buses if driver register fails
+Date: Thu, 30 Jul 2026 16:09:36 +0200
+Message-ID: <20260730141450.364019643@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -53,78 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang (Microsoft) <blbllhy@gmail.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit 18ae07691d43183d270de8be9dc8e027906015d9 ]
+[ Upstream commit 03d1057305ef17ac3f5936ac1580bc9a1a826e14 ]
 
-When processing a RESET_IN_REQUEST from a peer,
-sctp_process_strreset_inreq() derives the stream count from the
-parameter length but does not check whether the resulting
-RESET_OUT_REQUEST would exceed SCTP_MAX_CHUNK_LEN.
+mctp_i3c_mod_init() registers the I3C bus notifier and then walks the
+existing buses with i3c_for_each_bus_locked(mctp_i3c_bus_add_new, NULL)
+before registering the I3C device driver.  If i3c_driver_register()
+fails, the function returns the error directly, leaving the notifier
+registered and every mctp_i3c_bus object created for the existing buses
+allocated.  The notifier is left pointing into the module that failed to
+load and the bus list is leaked.
 
-The OUT request header (sctp_strreset_outreq, 16 bytes) is 8 bytes
-larger than the IN request header (sctp_strreset_inreq, 8 bytes).
-Generally, the IP payload is bounded to 65535 bytes, so the stream
-list cannot be large enough to trigger the overflow. However, on
-interfaces with MTU > 65535 (e.g., loopback with IPv6 jumbograms), a
-stream list that fits within the incoming IN parameter can cause a
-__u16 overflow in sctp_make_strreset_req() when computing the OUT
-request size, leading to an undersized skb allocation and a kernel
-BUG:
+Mirror the module exit path on this failure: unregister the notifier and
+tear down the buses that were added before returning the error.
 
-  net/core/skbuff.c:207         skb_panic
-  net/core/skbuff.c:2625        skb_put
-  net/sctp/sm_make_chunk.c:1535 sctp_addto_chunk
-  net/sctp/sm_make_chunk.c:3695 sctp_make_strreset_req
-  net/sctp/stream.c:655         sctp_process_strreset_inreq
+This issue was identified during our ongoing static-analysis research while
+reviewing kernel code.
 
-The local setsockopt path validates the generated reset request size.
-However, for an incoming-only reset, it accounts for the smaller IN
-request even though the peer must generate an OUT request with the same
-stream list. Such a request cannot be completed successfully by the
-peer.
-
-Reject peer IN requests whose corresponding OUT request would exceed
-SCTP_MAX_CHUNK_LEN. Also tighten the local check so it does not send an
-IN request that would require an oversized OUT request from the peer.
-
-Fixes: 7f9d68ac944e ("sctp: implement sender-side procedures for SSN Reset Request Parameter")
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Closes: https://lore.kernel.org/all/20260707203215.2752-1-blbllhy@gmail.com/
-Suggested-by: Xin Long <lucien.xin@gmail.com>
-Signed-off-by: Cen Zhang (Microsoft) <blbllhy@gmail.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20260710010718.20318-1-blbllhy@gmail.com
+Fixes: c8755b29b58e ("mctp i3c: MCTP I3C driver")
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Acked-by: Jeremy Kerr <jk@codeconstruct.com.au>
+Link: https://patch.msgid.link/20260715072517.13216-1-mhun512@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/stream.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/net/mctp/mctp-i3c.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/net/sctp/stream.c b/net/sctp/stream.c
-index 39b8f5e8ce3534..9addcfad467f97 100644
---- a/net/sctp/stream.c
-+++ b/net/sctp/stream.c
-@@ -308,7 +308,8 @@ int sctp_send_reset_streams(struct sctp_association *asoc,
- 					goto out;
+diff --git a/drivers/net/mctp/mctp-i3c.c b/drivers/net/mctp/mctp-i3c.c
+index c678f79aa35611..c5d0bc517fea99 100644
+--- a/drivers/net/mctp/mctp-i3c.c
++++ b/drivers/net/mctp/mctp-i3c.c
+@@ -731,18 +731,21 @@ static __init int mctp_i3c_mod_init(void)
+ 	int rc;
  
- 			param_len += str_nums * sizeof(__u16) +
--				     sizeof(struct sctp_strreset_inreq);
-+				     (out ? sizeof(struct sctp_strreset_inreq)
-+					  : sizeof(struct sctp_strreset_outreq));
- 		}
+ 	rc = i3c_register_notifier(&mctp_i3c_notifier);
+-	if (rc < 0) {
+-		i3c_driver_unregister(&mctp_i3c_driver);
++	if (rc < 0)
+ 		return rc;
+-	}
  
- 		if (param_len > SCTP_MAX_CHUNK_LEN -
-@@ -639,6 +640,9 @@ struct sctp_chunk *sctp_process_strreset_inreq(
+ 	i3c_for_each_bus_locked(mctp_i3c_bus_add_new, NULL);
  
- 	nums = (ntohs(param.p->length) - sizeof(*inreq)) / sizeof(__u16);
- 	str_p = inreq->list_of_streams;
-+	if (nums * sizeof(__u16) + sizeof(struct sctp_strreset_outreq) >
-+	    SCTP_MAX_CHUNK_LEN - sizeof(struct sctp_reconf_chunk))
-+		goto out;
- 	for (i = 0; i < nums; i++) {
- 		if (ntohs(str_p[i]) >= stream->outcnt) {
- 			result = SCTP_STRRESET_ERR_WRONG_SSN;
+ 	rc = i3c_driver_register(&mctp_i3c_driver);
+ 	if (rc < 0)
+-		return rc;
++		goto err_unregister_notifier;
+ 
+ 	return 0;
++
++err_unregister_notifier:
++	i3c_unregister_notifier(&mctp_i3c_notifier);
++	mctp_i3c_bus_remove_all();
++	return rc;
+ }
+ 
+ static __exit void mctp_i3c_mod_exit(void)
 -- 
 2.53.0
 
