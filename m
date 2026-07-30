@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7756736607D;
-	Thu, 30 Jul 2026 15:51:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5323F35BDAA;
+	Thu, 30 Jul 2026 15:51:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426665; cv=none; b=WQFBp39mjnkzMGiOZGq/+F5V5/i282Mj3IXHUrtI6s8zKIJLLgp60SD01wRkuYRo2dA5qNDbHfhy3jiNYCc435/sAcux5yw1yvlReI8JWJvI8Ie6HHoynAxJ7sAAKKYBt5KZsiZb3dy9RW3F6IO9gBLCTomuJhCjemM7LkfzYF4=
+	t=1785426668; cv=none; b=BNjbF+Ni8RXIIdT7aVk0HOj/dSFlPJ45Rz3rB/ifGiQi4RzbjHlBc4E8GEc6QBdzGAAaa08JT3EnqinGJs76k5q90SbQGGABJHOcRQSSAyng6zjMxFAK29Ne1k17hsno3xRz3ZBzQ2ltKNVxmk7Wet+OpcPMnklbl5ftArSMnIU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426665; c=relaxed/simple;
-	bh=GJzeEDg1i/Td8ZLv1mCTcMmqeuwf24/ICK6FHeu0ubA=;
+	s=arc-20240116; t=1785426668; c=relaxed/simple;
+	bh=SUmfPp3ToF3rfXvvkwXd0b7/CnSPq0QTCDGqhsOOPd4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LsVmB6j+iA4LCstM26nq0wKOpzqwwzqXDpZAigiu+MEoNYSfZWmM6NjRdtpHA1NwA/7x25N6nFYurcSWYY6j01AeMY/kQL2ejyzHgRSqugGUcqmNqCcfJnTjG7TIKN9JBklv3MBSGRZWzJK86kuwbAcZ4zVKk9qrlQ46Sn/Tses=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H6yTV+jK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=AduQWzO/w/xR1vQ3omRugHLaok7P7nWBHIFYqEZlwjd0UJtEHx2xWAzUHySqXoU/AKoZb3+U6iYf8gRZpcnPUjnnBuz1bgbNhmQL01hYJRKtd2tz2UmlbW+RdDM0AY6QwE8oeDeRCXmnWu+1NsrAAx9lwfGublIYupbTcVTCn+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1pJrkgbY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H6yTV+jK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D34A11F000E9;
-	Thu, 30 Jul 2026 15:51:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1pJrkgbY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD8BE1F000E9;
+	Thu, 30 Jul 2026 15:51:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426664;
-	bh=FSVFC+ziPvk8X4ByiyFbE0L2FDwCm5Zinm2zWmG0GOQ=;
+	s=korg; t=1785426667;
+	bh=icMv/CN4T28fDAGp3lgmAm8bGIpsxtV/pm3QKtGZoog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H6yTV+jKDbLvWPj6BMMl4W5M08si1Ba94vYwC9RDmDNaBeOz/zcgdAWBWLvVcuBtw
-	 hciCGu/YCF/rcvvOd6yV7SHLr/8/6I1b1IP9W8oFJ0XduxFsqHP1rX3+X5evjtajmP
-	 +VyBCPA0gSkEVP2FI5NJxidnMUQbgDESWnnhDqmA=
+	b=1pJrkgbYRkaPnHp2a5oGnWM+69gngSG4+bwKDjvSRtyOoUPR5HaOQp++q7eyu0h+g
+	 diTblcS4Qfg2jk2bJA8a1fuuCix54J6FiCNl/CTReFWqjCp1y5YIloGpCb0YaYQn6W
+	 5jBmqAQa/BhIWMSbUA07EKd8lW0z8olsvA9wOs8c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tang Bin <tangbin@cmss.chinamobile.com>,
+	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 498/602] ASoC: mediatek: mt8192-afe-pcm: Simplify probe() with local dev variable
-Date: Thu, 30 Jul 2026 16:14:50 +0200
-Message-ID: <20260730141446.442910038@linuxfoundation.org>
+Subject: [PATCH 6.12 499/602] ASoC: mediatek: mt8192: Check runtime resume during probe
+Date: Thu, 30 Jul 2026 16:14:51 +0200
+Message-ID: <20260730141446.466549497@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -45,97 +45,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tang Bin <tangbin@cmss.chinamobile.com>
+From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-[ Upstream commit 01981565c764c554cc96e2d30a71c42975171416 ]
+[ Upstream commit e24d5dde56a50946020b134fa8448869093db76a ]
 
-Simplify the function mt8192_afe_pcm_dev_probe() by
-using local 'dev' instead of '&pdev->dev'.
+The MT8192 AFE probe enables runtime PM temporarily while reinitializing
+the regmap cache from hardware, but it uses pm_runtime_get_sync()
+without checking the return value. If runtime resume fails, probe keeps
+going without the device necessarily being accessible, and
+pm_runtime_get_sync() may leave the PM usage count incremented.
 
-Signed-off-by: Tang Bin <tangbin@cmss.chinamobile.com>
-Link: https://patch.msgid.link/20241025080026.2393-1-tangbin@cmss.chinamobile.com
+The regmap_reinit_cache() failure path also returns before dropping the
+temporary PM reference and before clearing pm_runtime_bypass_reg_ctl.
+
+Use pm_runtime_resume_and_get() so resume failures do not leak a usage
+count, and clear the temporary bypass flag after dropping the probe PM
+reference on all regmap_reinit_cache() outcomes.
+
+Fixes: 125ab5d588b0 ("ASoC: mediatek: mt8192: add platform driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+Link: https://patch.msgid.link/20260527-asoc-mt8192-probe-cleanup-v1-2-1bb834d05b72@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: e24d5dde56a5 ("ASoC: mediatek: mt8192: Check runtime resume during probe")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/mediatek/mt8192/mt8192-afe-pcm.c |   19 +++++++++----------
- 1 file changed, 9 insertions(+), 10 deletions(-)
+ sound/soc/mediatek/mt8192/mt8192-afe-pcm.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
 --- a/sound/soc/mediatek/mt8192/mt8192-afe-pcm.c
 +++ b/sound/soc/mediatek/mt8192/mt8192-afe-pcm.c
-@@ -2164,27 +2164,26 @@ static int mt8192_afe_pcm_dev_probe(stru
- {
- 	struct mtk_base_afe *afe;
- 	struct mt8192_afe_private *afe_priv;
--	struct device *dev;
-+	struct device *dev = &pdev->dev;
- 	struct reset_control *rstc;
- 	int i, ret, irq_id;
- 
--	ret = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(34));
-+	ret = dma_set_mask_and_coherent(dev, DMA_BIT_MASK(34));
- 	if (ret)
- 		return ret;
- 
--	afe = devm_kzalloc(&pdev->dev, sizeof(*afe), GFP_KERNEL);
-+	afe = devm_kzalloc(dev, sizeof(*afe), GFP_KERNEL);
- 	if (!afe)
- 		return -ENOMEM;
- 	platform_set_drvdata(pdev, afe);
- 
--	afe->platform_priv = devm_kzalloc(&pdev->dev, sizeof(*afe_priv),
-+	afe->platform_priv = devm_kzalloc(dev, sizeof(*afe_priv),
- 					  GFP_KERNEL);
- 	if (!afe->platform_priv)
- 		return -ENOMEM;
- 	afe_priv = afe->platform_priv;
- 
--	afe->dev = &pdev->dev;
--	dev = afe->dev;
-+	afe->dev = dev;
- 
- 	ret = of_reserved_mem_device_init(dev);
- 	if (ret) {
-@@ -2212,7 +2211,7 @@ static int mt8192_afe_pcm_dev_probe(stru
- 	if (ret)
- 		return dev_err_probe(dev, ret, "failed to trigger audio reset\n");
- 
--	ret = devm_pm_runtime_enable(&pdev->dev);
-+	ret = devm_pm_runtime_enable(dev);
- 	if (ret)
- 		return ret;
- 
-@@ -2228,13 +2227,13 @@ static int mt8192_afe_pcm_dev_probe(stru
+@@ -2227,15 +2227,19 @@ static int mt8192_afe_pcm_dev_probe(stru
  
  	/* enable clock for regcache get default value from hw */
  	afe_priv->pm_runtime_bypass_reg_ctl = true;
--	pm_runtime_get_sync(&pdev->dev);
-+	pm_runtime_get_sync(dev);
+-	pm_runtime_get_sync(dev);
++	ret = pm_runtime_resume_and_get(dev);
++	if (ret) {
++		afe_priv->pm_runtime_bypass_reg_ctl = false;
++		return dev_err_probe(dev, ret, "failed to resume device\n");
++	}
  
  	ret = regmap_reinit_cache(afe->regmap, &mt8192_afe_regmap_config);
- 	if (ret)
- 		return dev_err_probe(dev, ret, "regmap_reinit_cache fail\n");
- 
--	pm_runtime_put_sync(&pdev->dev);
-+	pm_runtime_put_sync(dev);
+-	if (ret)
+-		return dev_err_probe(dev, ret, "regmap_reinit_cache fail\n");
+-
+ 	pm_runtime_put_sync(dev);
  	afe_priv->pm_runtime_bypass_reg_ctl = false;
  
++	if (ret)
++		return dev_err_probe(dev, ret, "regmap_reinit_cache fail\n");
++
  	regcache_cache_only(afe->regmap, true);
-@@ -2301,7 +2300,7 @@ static int mt8192_afe_pcm_dev_probe(stru
- 	afe->runtime_suspend = mt8192_afe_runtime_suspend;
+ 	regcache_mark_dirty(afe->regmap);
  
- 	/* register platform */
--	ret = devm_snd_soc_register_component(&pdev->dev,
-+	ret = devm_snd_soc_register_component(dev,
- 					      &mtk_afe_pcm_platform,
- 					      afe->dai_drivers,
- 					      afe->num_dai_drivers);
 
 
