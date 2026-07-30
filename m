@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDE1036607D;
-	Thu, 30 Jul 2026 15:52:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92A24383983;
+	Thu, 30 Jul 2026 15:52:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426759; cv=none; b=Eso0DlewY0dnQ8OnwF2M73HJ9TyPSPtZVG+TsNxgExYnMRmDtNOele1pu3yHfD220a/Qve0elYj3gHcINLWJZEKnM0unks4ZUvCmZhE6leW9EWsJKgWKp8fxEGol7FNsfxiZ6OAKvKWVMfHrWKIu/03lPRB+423yWOFG/AiIcBs=
+	t=1785426762; cv=none; b=mlOAi3EAufA3QTaMFmO3OPBX4An5578h93hIa3vpaA2Q69+RcmcJitdlDtiYlfUuI5CAxLqah8ZRG3ZEQG/l1GWeKibPABhm+TxjnDBQlUBEuSKHVNSphNYgORs8f0SEPeAjZIY+C+MlMTaIf3Ii0yTtfjKwoayVM4kMThVFPvo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426759; c=relaxed/simple;
-	bh=y+nwKucfT+WesDR3MYW36S0GCfd6esQRaphhnKWrXtQ=;
+	s=arc-20240116; t=1785426762; c=relaxed/simple;
+	bh=uptNYTJevq1iMYA09PbPp/KFM9A0VDxb0ajGOBeRKaI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P1/BvNouanrisKLY2dMGVHR+WxJTrR5DD/au9b4xnXOv/4QL/AhMI3sq82ibDu/OOt12Ro+sdfRjqVmJJTiB81MmN/Lk7+qSHm72RvU+Ah3J6MH7lHhxbhQN6eGJ8/eBB+yUD29NBMb2fVQIHO00sGG2t/6AB/s5JUeedc1qV+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xq+H2Ddm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SY0/NNOxHF992va5OeYCMBNGNdyHRhGEoDyFq243HTU4I+mbq1PzvGr4QPaF30H1TOCkpCppUlN/ubBeK5gE+d7nBgW2WJRW7P9YTqwJzizv8ovzaFVLN59VoBQvOquTdvVAz/GTwVoaze28aSGbdqd7tXWXsDBm+G71dT7vq0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dIqFF8xv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xq+H2Ddm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A7B91F000E9;
-	Thu, 30 Jul 2026 15:52:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dIqFF8xv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF4461F000E9;
+	Thu, 30 Jul 2026 15:52:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426758;
-	bh=cq7WgNMyGpLUN1VaYkC/sevZ7HzLy7LEoQW4PDwUKcs=;
+	s=korg; t=1785426761;
+	bh=MjuQFfE+M0s2Dmkr3vpaN+qJfZyWV7AJhpZy/EdU1VI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xq+H2DdmCbsRsPgI/LS7iHb5TALIMlea5NDrovlOmUAuJ+aHJ4HqNNHJnYB3KvHgk
-	 Mh2/diBle/DD2AlzWO9gFHs95v/bfnXpUhaULpOYsZmEcs7iMwhyGO/4n3Xu9lqmB3
-	 0Xjdz33e6el9qOsAYr4Kn2btNoTzPiexPXbgUY04=
+	b=dIqFF8xvu3z9pDxenoH3LWt0RV9pHM0LiAiadQWo4tPtaEuiS1/a6WRNHM+1lXa6P
+	 +1h9H7wkxfo9jx9rFMnxND9hf7oX+2GWqTe5uxEvm/lCq7Bqgzxqao4alK13xfmAyS
+	 lB2cW2jJjyKGLcFdhQAPHKt/zy7HW3QqClbPKJQ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Jardin <vjardin@free.fr>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Carlos Song <carlos.song@nxp.com>,
-	Stefan Eichenberger <eichest@gmail.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 533/602] i2c: imx: fix locked bus on SMBus block-read of 0 (atomic)
-Date: Thu, 30 Jul 2026 16:15:25 +0200
-Message-ID: <20260730141447.217887865@linuxfoundation.org>
+Subject: [PATCH 6.12 534/602] xfrm: Use nested-BH locking for nat_keepalive_sk_ipv[46]
+Date: Thu, 30 Jul 2026 16:15:26 +0200
+Message-ID: <20260730141447.241433804@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -54,84 +53,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vincent Jardin <vjardin@free.fr>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit cb2fc37857693b55909fb77dc2c87cfbc1cdc476 ]
+[ Upstream commit 9c607d4b6589d4d380a85784514bcf4cceee1e11 ]
 
-SMBus 3.1 6.5.7 allows a Block Read byte count of 0, but the atomic
-(polling) path rejects it as -EPROTO. Worse, it returns without a
-NACK+STOP: the next receive cycle has already started, so the target
-keeps holding SDA and the bus stays stuck until a power cycle for
-this i2c controller.
+nat_keepalive_sk_ipv[46] is a per-CPU variable and relies on disabled BH
+for its locking. Without per-CPU locking in local_bh_disable() on
+PREEMPT_RT this data structure requires explicit locking.
 
-Reading I2DR to obtain the count likewise arms the next byte on the
-count > I2C_SMBUS_BLOCK_MAX path, which also returned -EPROTO directly
-and left the bus held.
+Use sock_bh_locked which has a sock pointer and a local_lock_t. Use
+local_lock_nested_bh() for locking. This change adds only lockdep
+coverage and does not alter the functional behaviour for !PREEMPT_RT.
 
-Handle both: NACK the in-flight dummy byte (TXAK) and extend msgs->len so
-the existing last-byte handling emits STOP; the dummy byte is discarded.
-A count of 0 is a valid empty block read; a count above
-I2C_SMBUS_BLOCK_MAX is still reported as -EPROTO, but only after the bus
-has been released.
-
-The interrupt-driven path has the same flaw from a later commit and is
-fixed separately, as it carries a different Fixes: tag and stable range.
-
-Fixes: 8e8782c71595 ("i2c: imx: add SMBus block read support")
-Signed-off-by: Vincent Jardin <vjardin@free.fr>
-Cc: <stable@vger.kernel.org> # v3.16+
-Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Acked-by: Carlos Song <carlos.song@nxp.com>
-Reviewed-by: Stefan Eichenberger <eichest@gmail.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20260713-for-upstream-i2c-lx2160-fix-v1-v3-1-073ac9e103a5@free.fr
+Cc: Steffen Klassert <steffen.klassert@secunet.com>
+Cc: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Link: https://patch.msgid.link/20250512092736.229935-7-bigeasy@linutronix.de
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: 226f4a490d1a ("xfrm: nat_keepalive: avoid double free on send error")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-imx.c |   19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ net/xfrm/xfrm_nat_keepalive.c |   30 ++++++++++++++++++++----------
+ 1 file changed, 20 insertions(+), 10 deletions(-)
 
---- a/drivers/i2c/busses/i2c-imx.c
-+++ b/drivers/i2c/busses/i2c-imx.c
-@@ -1180,6 +1180,7 @@ static int i2c_imx_read(struct imx_i2c_s
- 	int i, result;
- 	unsigned int temp;
- 	int block_data = msgs->flags & I2C_M_RECV_LEN;
-+	int block_err = 0;
+--- a/net/xfrm/xfrm_nat_keepalive.c
++++ b/net/xfrm/xfrm_nat_keepalive.c
+@@ -9,9 +9,13 @@
+ #include <net/ip6_checksum.h>
+ #include <net/xfrm.h>
  
- 	result = i2c_imx_prepare_read(i2c_imx, msgs, atomic, false);
- 	if (result)
-@@ -1201,8 +1202,20 @@ static int i2c_imx_read(struct imx_i2c_s
- 		 */
- 		if ((!i) && block_data) {
- 			len = imx_i2c_read_reg(i2c_imx, IMX_I2C_I2DR);
--			if ((len == 0) || (len > I2C_SMBUS_BLOCK_MAX))
--				return -EPROTO;
-+			if ((len == 0) || (len > I2C_SMBUS_BLOCK_MAX)) {
-+				/*
-+				 * SMBus 3.1 6.5.7: support count byte of 0.
-+				 * I2C_SMBUS_BLOCK_MAX case should not hold the SDA either.
-+				 */
-+				if (len > I2C_SMBUS_BLOCK_MAX)
-+					block_err = -EPROTO;
-+				temp = imx_i2c_read_reg(i2c_imx, IMX_I2C_I2CR);
-+				temp |= I2CR_TXAK;
-+				imx_i2c_write_reg(temp, i2c_imx, IMX_I2C_I2CR);
-+				msgs->buf[0] = 0;
-+				msgs->len = 2;
-+				continue;
-+			}
- 			dev_dbg(&i2c_imx->adapter.dev,
- 				"<%s> read length: 0x%X\n",
- 				__func__, len);
-@@ -1250,7 +1263,7 @@ static int i2c_imx_read(struct imx_i2c_s
- 			"<%s> read byte: B%d=0x%X\n",
- 			__func__, i, msgs->buf[i]);
- 	}
--	return 0;
-+	return block_err;
+-static DEFINE_PER_CPU(struct sock *, nat_keepalive_sk_ipv4);
++static DEFINE_PER_CPU(struct sock_bh_locked, nat_keepalive_sk_ipv4) = {
++	.bh_lock = INIT_LOCAL_LOCK(bh_lock),
++};
+ #if IS_ENABLED(CONFIG_IPV6)
+-static DEFINE_PER_CPU(struct sock *, nat_keepalive_sk_ipv6);
++static DEFINE_PER_CPU(struct sock_bh_locked, nat_keepalive_sk_ipv6) = {
++	.bh_lock = INIT_LOCAL_LOCK(bh_lock),
++};
+ #endif
+ 
+ struct nat_keepalive {
+@@ -56,10 +60,12 @@ static int nat_keepalive_send_ipv4(struc
+ 
+ 	skb_dst_set(skb, &rt->dst);
+ 
+-	sk = *this_cpu_ptr(&nat_keepalive_sk_ipv4);
++	local_lock_nested_bh(&nat_keepalive_sk_ipv4.bh_lock);
++	sk = this_cpu_read(nat_keepalive_sk_ipv4.sock);
+ 	sock_net_set(sk, net);
+ 	err = ip_build_and_send_pkt(skb, sk, fl4.saddr, fl4.daddr, NULL, tos);
+ 	sock_net_set(sk, &init_net);
++	local_unlock_nested_bh(&nat_keepalive_sk_ipv4.bh_lock);
+ 	return err;
  }
  
- static int i2c_imx_atomic_read(struct imx_i2c_struct *i2c_imx, struct i2c_msg *msgs,
+@@ -89,15 +95,19 @@ static int nat_keepalive_send_ipv6(struc
+ 	fl6.fl6_sport = ka->encap_sport;
+ 	fl6.fl6_dport = ka->encap_dport;
+ 
+-	sk = *this_cpu_ptr(&nat_keepalive_sk_ipv6);
++	local_lock_nested_bh(&nat_keepalive_sk_ipv6.bh_lock);
++	sk = this_cpu_read(nat_keepalive_sk_ipv6.sock);
+ 	sock_net_set(sk, net);
+ 	dst = ipv6_stub->ipv6_dst_lookup_flow(net, sk, &fl6, NULL);
+-	if (IS_ERR(dst))
++	if (IS_ERR(dst)) {
++		local_unlock_nested_bh(&nat_keepalive_sk_ipv6.bh_lock);
+ 		return PTR_ERR(dst);
++	}
+ 
+ 	skb_dst_set(skb, dst);
+ 	err = ipv6_stub->ip6_xmit(sk, skb, &fl6, skb->mark, NULL, 0, 0);
+ 	sock_net_set(sk, &init_net);
++	local_unlock_nested_bh(&nat_keepalive_sk_ipv6.bh_lock);
+ 	return err;
+ }
+ #endif
+@@ -202,7 +212,7 @@ static void nat_keepalive_work(struct wo
+ 				      (ctx.next_run - ctx.now) * HZ);
+ }
+ 
+-static int nat_keepalive_sk_init(struct sock * __percpu *socks,
++static int nat_keepalive_sk_init(struct sock_bh_locked __percpu *socks,
+ 				 unsigned short family)
+ {
+ 	struct sock *sk;
+@@ -214,22 +224,22 @@ static int nat_keepalive_sk_init(struct
+ 		if (err < 0)
+ 			goto err;
+ 
+-		*per_cpu_ptr(socks, i) = sk;
++		per_cpu_ptr(socks, i)->sock = sk;
+ 	}
+ 
+ 	return 0;
+ err:
+ 	for_each_possible_cpu(i)
+-		inet_ctl_sock_destroy(*per_cpu_ptr(socks, i));
++		inet_ctl_sock_destroy(per_cpu_ptr(socks, i)->sock);
+ 	return err;
+ }
+ 
+-static void nat_keepalive_sk_fini(struct sock * __percpu *socks)
++static void nat_keepalive_sk_fini(struct sock_bh_locked __percpu *socks)
+ {
+ 	int i;
+ 
+ 	for_each_possible_cpu(i)
+-		inet_ctl_sock_destroy(*per_cpu_ptr(socks, i));
++		inet_ctl_sock_destroy(per_cpu_ptr(socks, i)->sock);
+ }
+ 
+ void xfrm_nat_keepalive_state_updated(struct xfrm_state *x)
 
 
