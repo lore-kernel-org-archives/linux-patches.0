@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DF1D37C92C;
-	Thu, 30 Jul 2026 15:37:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0384439526F;
+	Thu, 30 Jul 2026 15:37:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425833; cv=none; b=jU2MTa6YEF4O3dBXc6bgroHr+3wvO+Q515zKFBekNa2zIioytwAbEh6wtHcwK1Xec5bWWz14GXpJ6wfzlGmlw9IXLS2ixrR8XA90eylqBXKHTw2qQiQkvC2Y1RMpn5xN5jKlUYHdJE3a5+xBNy5+Gt1Gj2sF/25PDqms3rqBpoc=
+	t=1785425836; cv=none; b=L2LQc3z4EvVfj/XMdfum95NJNVXP+ezUYPJAxGIvV7/mYSA7LiN4NxqsItwNcO1J8nh5b/zIakAmTdW9HzJEIjHIYWO3MXQh6sjtBQhgaZjV10STtwoJdQ+kFnDzlh1+8bgjhZemFVuP2Ie//GeazGiFCnwl4gprxwHrzi+HUv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425833; c=relaxed/simple;
-	bh=MWCQO8tLVwtjv+nBU8nGwkzh+q+S0bRRYriiFRgQwwc=;
+	s=arc-20240116; t=1785425836; c=relaxed/simple;
+	bh=bAanFQRXdayZFvRpscBKWjK1XQkhAvVTB/PKc9gdEWs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gWlql4sUy/GmKXlm7tT5HL9ysI/wefB8XXJK4ze7YC1q/75F9kAmeMfFd7uiOigeDc0Kx3PkewrbaBYxEu+Bjul/1CEiXnJ/02DljF6TOq0nXmoNmXDJTvnGDHDs7zvq/tfAQ7Xr2Yl5pRCANpMB6wb+aDduLI9MESwjpFGPRTU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TbDMG2tZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PqtTOXz+jmj2aGZfCNvMWYqwFbGdRBavaF/GhwHo2iy4wGo3AfySs1W1KoepirayVF0IS7J8gdeUfN1WhNPFHY5hfTzaUcZLHTqrEjC6cruQzlYEc9TEe3sCwToCfT8q85bSk53spJLX8xYQYA5oqTp8ftIa7tEwV2M7Rr4QHLM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RrI1o2fC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TbDMG2tZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8655A1F000E9;
-	Thu, 30 Jul 2026 15:37:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RrI1o2fC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EE191F000E9;
+	Thu, 30 Jul 2026 15:37:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425832;
-	bh=rczP1GWTf+vQzGV2yBrK1s8r2iB5hGVxcrrEa7MHOgA=;
+	s=korg; t=1785425834;
+	bh=2CJynhafWMhYMPBGGfxqvw1jn06jsisb1D83ZTv3L+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TbDMG2tZ499Up2HjMUHsaAR9F7RsXiHRUETnOdTHH31ukSeJpwzc83aGdrLprEI14
-	 FUgM0DFhObQ4fLl9OXk7hSC87NRzuwN8muHMFKVzmeif/O3FEg2O4a+ir6UvJTqv4W
-	 Ay8UCggSqntIDn42eVQudPAbEF3NkKMfJVG0gT6M=
+	b=RrI1o2fCBBraEcGt22j+DOscrIX1q8G3GRn7x1aOXdvh4QHuxGaSzz2u7X0G9mvya
+	 UBMOB5NtNXM0z+/cfT3ipUg8OyY9FiGi/VXdejmfvT7sdy1BIegXgY8WeHuFMSk/66
+	 505pgwyrJZm3Z4HHPHr061wY5kbtOxN0+PltBJzM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Lorenzo Bianconi <lorenzo@kernel.org>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 207/602] wifi: mt76: connac: fix possible NULL-pointer deref in mt76_connac_mcu_uni_bss_he_tlv()
-Date: Thu, 30 Jul 2026 16:09:59 +0200
-Message-ID: <20260730141440.305284246@linuxfoundation.org>
+Subject: [PATCH 6.12 208/602] wifi: mt76: mt7925: fix possible NULL-pointer deref in mt7925_mcu_bss_he_tlv()
+Date: Thu, 30 Jul 2026 16:10:00 +0200
+Message-ID: <20260730141440.327479529@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -53,33 +53,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit 2c1fb2335f5e3afb34f91bc07ecb63517c328090 ]
+[ Upstream commit 8d1b6738c1ab48c086b17e7994034aca94258931 ]
 
 mt76_connac_get_he_phy_cap routine can theoretically return NULL so
 check cap pointer before dereferencing it.
 
-Fixes: d0e274af2f2e4 ("mt76: mt76_connac: create mcu library")
+Fixes: c948b5da6bbec ("wifi: mt76: mt7925: add Mediatek Wi-Fi7 driver for mt7925 chips")
 Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20260621-mt76_connac_get_he_phy_cap-fix-v1-1-ed4ccf7a0363@kernel.org
+Link: https://patch.msgid.link/20260621-mt76_connac_get_he_phy_cap-fix-v1-2-ed4ccf7a0363@kernel.org
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c | 2 ++
+ drivers/net/wireless/mediatek/mt76/mt7925/mcu.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
-index 462b4a68c4f0f1..b1a7fbedffac5c 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
-@@ -1435,6 +1435,8 @@ mt76_connac_mcu_uni_bss_he_tlv(struct mt76_phy *phy, struct ieee80211_vif *vif,
- 	struct bss_info_uni_he *he;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
+index 1f113a618515e8..1fc1116d9becca 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
+@@ -2646,6 +2646,8 @@ mt7925_mcu_bss_he_tlv(struct sk_buff *skb, struct ieee80211_bss_conf *link_conf,
+ 	struct tlv *tlv;
  
- 	cap = mt76_connac_get_he_phy_cap(phy, vif);
+ 	cap = mt76_connac_get_he_phy_cap(phy->mt76, link_conf->vif);
 +	if (!cap)
 +		return;
  
- 	he = (struct bss_info_uni_he *)tlv;
- 	he->he_pe_duration = vif->bss_conf.htc_trig_based_pkt_ext;
+ 	tlv = mt76_connac_mcu_add_tlv(skb, UNI_BSS_INFO_HE_BASIC, sizeof(*he));
+ 
 -- 
 2.53.0
 
