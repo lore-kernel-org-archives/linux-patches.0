@@ -1,48 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E6F4442FDA;
-	Thu, 30 Jul 2026 15:21:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 292784457AF;
+	Thu, 30 Jul 2026 15:21:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424865; cv=none; b=pnTsF41/KB9xGmqkwt5JWvFg+dnhKuC2cn/g4m96K49WQJ9FhTISXGiVZGbGs1XC/g2DHLrmgDPFCXQiQrVDe+hvDIU9ue7TvHExLphn/wnozICjbXBsrS2hmhCHQYy6G5VVfGoI5o1ep/6ym454XKOyk4LpbBsKJO6F4SwTRzE=
+	t=1785424868; cv=none; b=AvWGs2W/q95cBdM9QbJcUoDXGt/0Mcn/J3LiapkdASQeMi2zgjzHd+pnhe5+k24anzv+WJa9xQkkTL4bZvknJ++RNSP9Yrf7u9eQhj8xUT3GP/wjylkqwDwQaOknKdh/Irisdyh9/zEY0SQbwTmJQLw/KQLDz7NPYO5AxYgdPUE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424865; c=relaxed/simple;
-	bh=UPNIHN35LEizrQlVJX0CIUI68bUICmH9qtwqAifZhBY=;
+	s=arc-20240116; t=1785424868; c=relaxed/simple;
+	bh=90WynpdXS4eOgv8sW1d8g6O8NkI/lCbSKFzyGfplCg0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J9xi4Ij+8ISGbdAAcM0XluewtpkJWuNgtSxNETozaBFBi6Mw0+a/9fo62frdoZ2SKuZPNHFuG+4zH1u6z98lxOSAX4UqsC1fBkj6kwu+TODPmvseTv9ynSTHUBfZLydb7oa/6Sfbdp8b6njkOQxFvsd3UXC8fVNIgO3Lbjo8oK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AgKKnuTv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nJNi/M3QkW7G9bdVvYRgLAjfl9Bpjp88bAcsWZLzPqNla+swUvAiVn9CVaJ2DAqdOUzpfVYgsvoTV4wv1VBQXqWWXtwROyF5g9hbVm5XTlTf458/47ZBHxBTAI9z8KzTdEk16/ogWYf7Z7jWmAgGj+IqFiw4Qb8UzVGHYGCF8L4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tc0hpKYD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AgKKnuTv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B0FC1F00ACF;
-	Thu, 30 Jul 2026 15:21:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tc0hpKYD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 778711F00ACF;
+	Thu, 30 Jul 2026 15:21:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424863;
-	bh=BHUXSlkq+F7XZusUtZ43ZskoX8vfdcCJ25dehEDp2QI=;
+	s=korg; t=1785424866;
+	bh=rXMcijH3rpffIIjGtPfNqOoAHCTmK8+Br/o7y27+GEg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AgKKnuTvX10kPagww8nRp77NhtoDYb3b/ZCT5wbHrHcjty+0lNOvM1j47StUFYwVR
-	 8H4z31iwD6U3fKP35Le98K3iDR7EagwQ4wVXkExWTtDq60drMBiDgL9PBm+Vgr9kNw
-	 24+qOO+vkziUt4zbO+O2stBOXhO1Kh+k72f8PJh8=
+	b=Tc0hpKYDWS0AXdmZY+yz0Jnvz025HtZNpUGlgDmphsUyYKHJC3jFgxZs5Uw/rpFrK
+	 SVS8VKRS90U3d6LodspPfcYQ0CPGrXzp2/ro1nDI+attmQ6SFmvQnKBDRKt0Ueg7zs
+	 +6d3O79drUeTTlVqFnVVQANCv1FH8jyQ+gmXg/0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rik van Riel <riel@surriel.com>,
-	Zi Yan <ziy@nvidia.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Lance Yang <lance.yang@linux.dev>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Barry Song <baohua@kernel.org>,
-	Dev Jain <dev.jain@arm.com>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Nico Pache <npache@redhat.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Yang Shi <yang@os.amperecomputing.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 506/675] mm/huge_memory: set PG_has_hwpoisoned only after new folio head is established
-Date: Thu, 30 Jul 2026 16:13:56 +0200
-Message-ID: <20260730141455.882578881@linuxfoundation.org>
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 542/675] net: hip04: fix RX buffer leak on build_skb failure
+Date: Thu, 30 Jul 2026 16:14:32 +0200
+Message-ID: <20260730141456.663408375@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -61,105 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rik van Riel <riel@surriel.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit e1cd30eceb6908fc13bebce41283b885d71ee8d6 upstream.
+commit 14fa65d10f5696b063a7d8d26e8291ea84a2c6ed upstream.
 
-__split_folio_to_order() copies the hwpoison state onto each new sub-folio
-while splitting a folio to a non-zero order.  It does so via
+When build_skb() fails in hip04_rx_poll(), the driver jumps to the
+refill path without releasing the current RX buffer and its DMA mapping.
+Installing a replacement buffer then overwrites the slot references and
+leaks both resources.
 
-	if (handle_hwpoison && page_range_has_hwpoisoned(new_head, new_nr_pages))
-		folio_set_has_hwpoisoned(new_folio);
+Keep the current slot intact and return budget so NAPI retries the same
+buffer.  Also free a newly allocated RX fragment when dma_map_single()
+fails.
 
-*before* clear_compound_head(new_head)/prep_compound_page(new_head, ...)
-turns @new_head from a tail page into a proper folio head.
+This issue was found by an in-house static analysis tool.
 
-PG_has_hwpoisoned is a FOLIO_SECOND_PAGE flag, so
-folio_set_has_hwpoisoned() resolves to folio_flags(folio, 1).  With the
-new compound_info-based page-flags layout, folio_flags() asserts the page
-is not a tail:
-
-	VM_BUG_ON_PGFLAGS(page->compound_info & 1, page);
-	VM_BUG_ON_PGFLAGS(n > 0 && !test_bit(PG_head, &page->flags.f), page);
-
-At the current call site @new_head still has the tail marker
-(compound_info bit 0 set, PG_head clear), so on CONFIG_DEBUG_VM kernels
-this hits:
-
-  kernel BUG at include/linux/page-flags.h:354
-  folio_flags+0x82
-  folio_set_has_hwpoisoned
-  __split_folio_to_order
-  __split_unmapped_folio
-  __folio_split
-  truncate_inode_partial_folio  (shmem hole-punch / MADV_REMOVE)
-
-Reproduced by syzkaller: hwpoison-inject a few subpages of a large shmem
-folio, then MADV_REMOVE (fallocate punch hole) on the same range, which
-splits the partial folio to a non-zero order.
-
-memory_failure() tries to split the poisoned folio to order 0 first, but
-that split is best-effort; when it fails the folio is left large with
-PG_has_hwpoisoned set, the case fa5a06170036 added this hwpoison copying
-for.
-
-Move the folio_set_has_hwpoisoned() call to after
-clear_compound_head()/prep_compound_page(), where @new_folio is a real
-order-new_order head folio (handle_hwpoison implies new_order != 0, so a
-second page always exists).  The flag still lands on the same struct page
-(page[1] of the new folio); only the ordering relative to compound-head
-setup changes, satisfying the FOLIO_SECOND_PAGE precondition.
-
-Link: https://lore.kernel.org/20260701174235.3173401-1-riel@surriel.com
-Fixes: fa5a06170036 ("mm/huge_memory: preserve PG_has_hwpoisoned if a folio is split to >0 order")
-Signed-off-by: Rik van Riel <riel@surriel.com>
-Assisted-by: Claude:claude-opus-4-8
-Reviewed-by: Zi Yan <ziy@nvidia.com>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Tested-by: Lance Yang <lance.yang@linux.dev>
-Reviewed-by: Lorenzo Stoakes <ljs@kernel.org>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Barry Song <baohua@kernel.org>
-Cc: Dev Jain <dev.jain@arm.com>
-Cc: Lance Yang <lance.yang@linux.dev>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Nico Pache <npache@redhat.com>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Yang Shi <yang@os.amperecomputing.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 701a0fd52318 ("hip04_eth: fix missing error handle for build_skb failed")
+Cc: stable@vger.kernel.org
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20260712142729.2057636-1-fanwu01@zju.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/huge_memory.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/hisilicon/hip04_eth.c |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/mm/huge_memory.c
-+++ b/mm/huge_memory.c
-@@ -3344,10 +3344,6 @@ static void __split_folio_to_order(struc
- 				 (1L << PG_dirty) |
- 				 LRU_GEN_MASK | LRU_REFS_MASK));
- 
--		if (handle_hwpoison &&
--		    page_range_has_hwpoisoned(new_head, new_nr_pages))
--			folio_set_has_hwpoisoned(new_folio);
--
- 		new_folio->mapping = folio->mapping;
- 		new_folio->index = folio->index + i;
- 
-@@ -3378,6 +3374,14 @@ static void __split_folio_to_order(struc
- 			folio_set_large_rmappable(new_folio);
+--- a/drivers/net/ethernet/hisilicon/hip04_eth.c
++++ b/drivers/net/ethernet/hisilicon/hip04_eth.c
+@@ -594,7 +594,11 @@ static int hip04_rx_poll(struct napi_str
+ 		skb = build_skb(buf, priv->rx_buf_size);
+ 		if (unlikely(!skb)) {
+ 			net_dbg_ratelimited("build_skb failed\n");
+-			goto refill;
++			/* Retain the slot; return budget so NAPI retries this
++			 * buffer. Refill would overwrite rx_buf[]/rx_phys[]
++			 * and leak them.
++			 */
++			return budget;
  		}
  
-+		/*
-+		 * PG_has_hwpoisoned is on the 2nd page, so set it after
-+		 * the compound head is prepped.
-+		 */
-+		if (handle_hwpoison &&
-+		    page_range_has_hwpoisoned(new_head, new_nr_pages))
-+			folio_set_has_hwpoisoned(new_folio);
-+
- 		if (folio_test_young(folio))
- 			folio_set_young(new_folio);
- 		if (folio_test_idle(folio))
+ 		dma_unmap_single(priv->dev, priv->rx_phys[priv->rx_head],
+@@ -622,14 +626,15 @@ static int hip04_rx_poll(struct napi_str
+ 			rx++;
+ 		}
+ 
+-refill:
+ 		buf = netdev_alloc_frag(priv->rx_buf_size);
+ 		if (!buf)
+ 			goto done;
+ 		phys = dma_map_single(priv->dev, buf,
+ 				      RX_BUF_SIZE, DMA_FROM_DEVICE);
+-		if (dma_mapping_error(priv->dev, phys))
++		if (dma_mapping_error(priv->dev, phys)) {
++			skb_free_frag(buf);
+ 			goto done;
++		}
+ 		priv->rx_buf[priv->rx_head] = buf;
+ 		priv->rx_phys[priv->rx_head] = phys;
+ 		hip04_set_recv_desc(priv, phys);
 
 
