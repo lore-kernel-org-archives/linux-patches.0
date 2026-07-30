@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E720A43F0B4;
-	Thu, 30 Jul 2026 15:12:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBDEA3750CF;
+	Thu, 30 Jul 2026 15:12:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424330; cv=none; b=e4pq8T7b4H1s/ROs3Q+DRCtj6XGQJha2ZKdZwmxgwM0na5JM0Lc1eHPK6n7ekuIefIorCJSV3Gxt6bb8aGaIKsj5r5eG9an+ViZXjDRmjeeZT5oi0tBEpWq0nl2Ww8UL+WY4waUebUFn6Pr6BB+CrKuAZZuy3IIk7qmjseQUUrc=
+	t=1785424332; cv=none; b=p+n1uRFOHG5egF+qy3M2LTtAFeeGsYbojRwGkiNV3XWpu3XA6fXPFWi1cBslR91zOlASrO48f0up6vkjGMor5FYGrZ9eAopw/5rNjmfCwo9gZUAHeU5446OJ6IXQgAn4MhiI6xj8kBaizzRc1JDsRc0WtWw7lvg8QUDOAPpCSOk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424330; c=relaxed/simple;
-	bh=QGIPTQH+uHuhkyTtgclalksO8YagYW8VWp/9SQBsLzM=;
+	s=arc-20240116; t=1785424332; c=relaxed/simple;
+	bh=w+blShoniIxQqMVFJzmd7fGybRD9r0Oy7XF2+p3RY/A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mRPKDv6XxoG9W9mXUrkzEAqKqhXgt1InIYzcHR9BhU89LW53Q5SHkfIvmGO+YyWuTdW7ytYoYg2FGmOdmS2+zIwgC2GkkKUR4026KDoW2o2wcohZ9Xm8Om+30TFUw8AKs4Jfm4EaQvzhxKYdeIbfCqvSgBAErpV6AnfD7HgtOmg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1moUX9HB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lYt4lMx7PNFnhsbaxe7LoUvBoDbEC2iS/8oO47GX7ABPyp4IWaRV2RnMQ4DK4lHaK6/fdcfxSD5npgpycysxZZFXemroxbHC+NluRelWqoC63MkCyEsQSIoronBVgIGrWgTxMXFuMmDh+2BEeTX65MRFw8/ytBj/Dpxl5fALQQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lisU3r42; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1moUX9HB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 399421F000E9;
-	Thu, 30 Jul 2026 15:12:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lisU3r42"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F1671F00A3A;
+	Thu, 30 Jul 2026 15:12:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424327;
-	bh=hbDcEbMaT84y/rs6IcHu1rau2QzzW0IHcemQ4Tf6bgU=;
+	s=korg; t=1785424330;
+	bh=BbrXRqUKj3N9jW9IuUvCBM21tBXqgXYJwdOrjk8UevA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1moUX9HBSRwwP32YI0SRjziQXRhbaNWAAosa/dXt0MxPWihXRpG5S4WkRaceZGv04
-	 dfjOugj8wrGBRQdLAJpjk+s4JePFcayYc+SX+896roYm1eU583/aQJwlexp5gy2EBv
-	 SDZpNjsa8DRojvbThCF43lzD3XhLETWBG3mx/mYE=
+	b=lisU3r427zyROJPu5Mxe5edb2HhWEielYgYoPSBekb6wLbCBZCOhy414GmU+Gi7BF
+	 bAbeGnmDdOT/vO2mn40KzzdXCKTN94y0StMbCBm4Ge6KhXCWRIOJWmJbHpAKdIJk1i
+	 R6HaVkpiyKKZio2ppkEsGHNhi4CPBZPartihZ/es=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Francis <David.Francis@amd.com>,
 	David Yat Sin <david.yatsin@amd.com>,
+	David Francis <David.Francis@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 353/675] drm/amdkfd: Check bounds in allocate_event_notification_slot
-Date: Thu, 30 Jul 2026 16:11:23 +0200
-Message-ID: <20260730141452.637039334@linuxfoundation.org>
+Subject: [PATCH 6.18 354/675] drm/amdkfd: Check bounds on CRIU restore queue type and mqd size
+Date: Thu, 30 Jul 2026 16:11:24 +0200
+Message-ID: <20260730141452.656981167@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -53,42 +53,107 @@ Content-Transfer-Encoding: 8bit
 
 From: David Francis <David.Francis@amd.com>
 
-commit bb52249fbbe948875155ccd45cd8d74bf4ae747b upstream.
+commit 47ea05f246bebc81c7796f56265cffd812cf0601 upstream.
 
-The valid event ids go from 0 to KFD_SIGNAL_EVENT_LIMIT
+We weren't checking whether the values provided in the private
+data in kfd CRIU restore were within bounds.
 
-allocate_event_notification_slot has an option to specify
-an event id to allocate at, used by CRIU. We weren't checking
-the bounds on that value.
+For queue type, add a KFD_QUEUE_TYPE_MAX and ensure the provided
+type is less than it.
 
-Check them.
+For mqd_size, add new function mqd_size_from_queue_type and confirm
+that the provided mqd_size matches expectations.
 
-v2: Lower bounds check is unecessary because of idr_alloc
-already rejecting negative numbers. Upper bounds check should
-be KFD_SIGNAL_EVENT_LIMIT since the signal mode mappings might
-not yet exist
-
-Signed-off-by: David Francis <David.Francis@amd.com>
 Reviewed-by: David Yat Sin <david.yatsin@amd.com>
+Signed-off-by: David Francis <David.Francis@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 6853f1f6cbbeb3f53ebbbd7286536aeb2c5d5f50)
+(cherry picked from commit f19d8086f6644083c913d70bfdeee20e1b6f46a5)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_events.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c  |    6 ++++
+ drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.h  |    2 +
+ drivers/gpu/drm/amd/amdkfd/kfd_priv.h                  |    3 +-
+ drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c |   24 ++++++++++++-----
+ 4 files changed, 27 insertions(+), 8 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdkfd/kfd_events.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_events.c
-@@ -107,6 +107,9 @@ static int allocate_event_notification_s
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
+@@ -3628,6 +3628,12 @@ out:
+ 	dqm_unlock(dqm);
+ 	return r;
+ }
++
++size_t mqd_size_from_queue_type(struct device_queue_manager *dqm, enum kfd_queue_type type)
++{
++	return dqm->mqd_mgrs[get_mqd_type_from_queue_type(type)]->mqd_size;
++}
++
+ #if defined(CONFIG_DEBUG_FS)
+ 
+ static void seq_reg_dump(struct seq_file *m,
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.h
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.h
+@@ -327,6 +327,8 @@ int debug_refresh_runlist(struct device_
+ bool kfd_dqm_is_queue_in_process(struct device_queue_manager *dqm,
+ 				 struct qcm_process_device *qpd,
+ 				 int doorbell_off, u32 *queue_format);
++size_t mqd_size_from_queue_type(struct device_queue_manager *dqm,
++				enum kfd_queue_type type);
+ 
+ static inline unsigned int get_sh_mem_bases_32(struct kfd_process_device *pdd)
+ {
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
+@@ -436,7 +436,8 @@ enum kfd_queue_type  {
+ 	KFD_QUEUE_TYPE_HIQ,
+ 	KFD_QUEUE_TYPE_DIQ,
+ 	KFD_QUEUE_TYPE_SDMA_XGMI,
+-	KFD_QUEUE_TYPE_SDMA_BY_ENG_ID
++	KFD_QUEUE_TYPE_SDMA_BY_ENG_ID,
++	KFD_QUEUE_TYPE_MAX,
+ };
+ 
+ enum kfd_queue_format {
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
+@@ -1015,6 +1015,23 @@ int kfd_criu_restore_queue(struct kfd_pr
+ 		goto exit;
  	}
  
- 	if (restore_id) {
-+		if (*restore_id >= KFD_SIGNAL_EVENT_LIMIT)
-+			return -EINVAL;
++	pdd = kfd_process_device_data_by_id(p, q_data->gpu_id);
++	if (!pdd) {
++		pr_err("Failed to get pdd\n");
++		ret = -EINVAL;
++		goto exit;
++	}
 +
- 		id = idr_alloc(&p->event_idr, ev, *restore_id, *restore_id + 1,
- 				GFP_KERNEL);
- 	} else {
++	if (q_data->type >= KFD_QUEUE_TYPE_MAX) {
++		ret = -EINVAL;
++		goto exit;
++	}
++
++	if (q_data->mqd_size != mqd_size_from_queue_type(pdd->dev->dqm, q_data->type)) {
++		ret = -EINVAL;
++		goto exit;
++	}
++
+ 	*priv_data_offset += sizeof(*q_data);
+ 	q_extra_data_size = (uint64_t)q_data->ctl_stack_size + q_data->mqd_size;
+ 
+@@ -1037,13 +1054,6 @@ int kfd_criu_restore_queue(struct kfd_pr
+ 
+ 	*priv_data_offset += q_extra_data_size;
+ 
+-	pdd = kfd_process_device_data_by_id(p, q_data->gpu_id);
+-	if (!pdd) {
+-		pr_err("Failed to get pdd\n");
+-		ret = -EINVAL;
+-		goto exit;
+-	}
+-
+ 	/*
+ 	 * data stored in this order:
+ 	 * mqd[xcc0], mqd[xcc1],..., ctl_stack[xcc0], ctl_stack[xcc1]...
 
 
