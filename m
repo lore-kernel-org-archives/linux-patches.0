@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0310D43C7C4;
-	Thu, 30 Jul 2026 14:42:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D81913B52EE;
+	Thu, 30 Jul 2026 14:42:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422533; cv=none; b=LPiisdjgwyiM5fx7ne+AiX5gOXOBpepjFfv+hERPZtJK0QIh9OnEBVZC5tc/7R892WdvgydOvaEUOnmO13MS+yGsiCFf6y80weLWZroa2x/80pWBkZOr+x6fAUsWkH+OA9kV2McZow5LRUW1R3Rf1lUqmJUpx6Gmi2wAd+vPbyE=
+	t=1785422535; cv=none; b=aZ7FKu0EUDreQtxY/OttBajbDEAH4Gd+xnw7HTdi/PLDceVc4ID1qFSUmMwpG27YK7fikRtK07mvcXUwvJqYk7brZn1/WPYpnd1XAM34DzBWyVtthlTM5wdOVInCYbvkJuSZSZaRbA1FHdYslPJ/fLyhFjR0GwmjNFfMvmBW7tE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422533; c=relaxed/simple;
-	bh=FL0u0ZCHNcEnjzLRepaE67RA5sy0pHB4QJehNq9oYWQ=;
+	s=arc-20240116; t=1785422535; c=relaxed/simple;
+	bh=ejeDIinjwRrwPFo1q8WAylXpzzTLZqQ9YAFsGfUxkXo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jmTTOtPWbkr2br3Gaw/eGbKMtDR3kXQt9xRh/lXk+WJQoMEA4l9Ms/wulhtdqY2JsQWHUfFUut76S6Eis6MCqLtRQq3w3efvFaU3yryF5uvKHYtDW/45M4TXNO3rVc+yK28fbJPazJ5FJSLfJiK7P6YnCNA5cYlKD0b7OWulcGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pnp1sIUp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=uRmE0um0fjcKPf4Aja54fLBzF4jpD9+EnEEeCxFuPONTdIHYlWPj28hRJOt9NbZT0PUFnxh6vagaOF5f2Nk7v9sQmP0reExVdDCmJBsDURey6ghN/R2CarRQjPbmhnpRT8Ghj0wEjYPotajpO09py91ojIf5RLqGvflHLg7Ypno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=byB+K7lx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pnp1sIUp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0A5D1F000E9;
-	Thu, 30 Jul 2026 14:42:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="byB+K7lx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC5521F000E9;
+	Thu, 30 Jul 2026 14:42:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422531;
-	bh=VCratDyy1xP4dkCwpsrVPpWTNiNImVpOoSZxNnNPGuA=;
+	s=korg; t=1785422534;
+	bh=/ppvN5mQqbqeen3E5bP5W8wa6MyBUG7CJ0enxwOERQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pnp1sIUpZpwSkilGNVc1plS0/svWkmb3KJqRt1OecdWTvMAByRo7kHsVJgRGR6p+k
-	 ioA/0u8lXqOH3udrHZOrBJNsLdT7/Q+QsB2mQZbSY/RI54JtTGENTrXnRLxMd2OKU/
-	 NSSstXZuFNdXFqXlhHYcE1Lx3BIWtWl6f1AnFfsE=
+	b=byB+K7lxwzhN/CJbpy7m61zX8oF4d/+lFtJLHGfncQUBYLoSv8CFP8MHbogPcrCWG
+	 oNWIYLgXvJU+PgbchLZV3DEi7HF+BlypyZNCWLpkTVA0uWpsaHKAlC/CAl5ldK3eNn
+	 tVlXqrzE+1ZzZLwi9K7qnnHaCqeg5bfuZRIeTdjk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Brost <matthew.brost@intel.com>,
-	Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
-Subject: [PATCH 7.1 472/744] drm/gpusvm: Fix MM reference leak in drm_gpusvm_range_evict
-Date: Thu, 30 Jul 2026 16:12:25 +0200
-Message-ID: <20260730141454.328345841@linuxfoundation.org>
+	Iago Toral Quiroga <itoral@igalia.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>
+Subject: [PATCH 7.1 473/744] drm/v3d: Reach the GMP through the hub registers on V3D 7.x
+Date: Thu, 30 Jul 2026 16:12:26 +0200
+Message-ID: <20260730141454.349479761@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -44,46 +44,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matthew Brost <matthew.brost@intel.com>
+From: Maíra Canal <mcanal@igalia.com>
 
-commit 847b371debf3c8c72384ab7b9a0c4123a74cc925 upstream.
+commit f7df2da0d1c375c1c4c70e1e0b569592de0d6b73 upstream.
 
-If kvmalloc_array() fails in drm_gpusvm_range_evict(), the MM
-reference acquired earlier is not released, resulting in a reference
-leak.
+v3d_idle_axi() drains the GPU's memory interface for a safe powerdown by
+using the V3D_GMP_CFG register. It reached both registers with the macros
+V3D_CORE_READ and V3D_CORE_WRITE.
 
-Fix this by dropping the MM reference on the kvmalloc_array()
-failure path.
+On V3D 7.x the GMP is no longer a per-core block; it lives in the hub
+register region. Reaching it through the per-core register block addresses
+the wrong region.
 
-Fixes: 99624bdff867 ("drm/gpusvm: Add support for GPU Shared Virtual Memory")
+Select the hub accessors (V3D_{READ,WRITE}) for the GMP on V3D 7.x and
+keep the per-core path for earlier generations.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
-Reviewed-by: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
-Link: https://patch.msgid.link/20260714170025.3487974-1-matthew.brost@intel.com
+Fixes: 0ad5bc1ce463 ("drm/v3d: fix up register addresses for V3D 7.x")
+Link: https://patch.msgid.link/20260718-v3d-pm-axi-transactions-v1-1-4ecd7729ed70@igalia.com
+Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_gpusvm.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/v3d/v3d_gem.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/drivers/gpu/drm/drm_gpusvm.c
-+++ b/drivers/gpu/drm/drm_gpusvm.c
-@@ -1704,8 +1704,10 @@ int drm_gpusvm_range_evict(struct drm_gp
- 		return -EFAULT;
- 
- 	pfns = kvmalloc_array(npages, sizeof(*pfns), GFP_KERNEL);
--	if (!pfns)
-+	if (!pfns) {
-+		mmput(mm);
- 		return -ENOMEM;
+--- a/drivers/gpu/drm/v3d/v3d_gem.c
++++ b/drivers/gpu/drm/v3d/v3d_gem.c
+@@ -46,6 +46,18 @@ v3d_init_hw_state(struct v3d_dev *v3d)
+ static void
+ v3d_idle_axi(struct v3d_dev *v3d, int core)
+ {
++	if (v3d->ver >= V3D_GEN_71) {
++		V3D_WRITE(V3D_GMP_CFG(v3d->ver), V3D_GMP_CFG_STOP_REQ);
++
++		if (wait_for((V3D_READ(V3D_GMP_STATUS(v3d->ver)) &
++			      (V3D_GMP_STATUS_RD_COUNT_MASK |
++			       V3D_GMP_STATUS_WR_COUNT_MASK |
++			       V3D_GMP_STATUS_CFG_BUSY)) == 0, 100)) {
++			drm_err(&v3d->drm, "Failed to wait for safe GMP shutdown\n");
++		}
++		return;
 +	}
++
+ 	V3D_CORE_WRITE(core, V3D_GMP_CFG(v3d->ver), V3D_GMP_CFG_STOP_REQ);
  
- 	hmm_range.hmm_pfns = pfns;
- 	while (!time_after(jiffies, timeout)) {
+ 	if (wait_for((V3D_CORE_READ(core, V3D_GMP_STATUS(v3d->ver)) &
 
 
