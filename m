@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C108D43F0B5;
-	Thu, 30 Jul 2026 15:03:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B415442FBC;
+	Thu, 30 Jul 2026 15:03:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423809; cv=none; b=FkeesXBjWd087NO3RSCpgazYbrL1LrXPAJaIDPaLxETKoDQTyf5dubY3LPDq4f61JvGwJH/MBh+C+UzoiYSHMHCC+S0U5lVTStbBPrpE4Ng6HrHDaGteq+TKnDLZHWhGQk6chA5EL+1sGCNC6Q2CUmz6/LVNorrNQ8/dkUwYtuM=
+	t=1785423811; cv=none; b=oU5BR+aW1jankqntdxx7SnoGUh0lxH4orNA3dLqKlRRhrr1EYXmUcX7Tpt8wzZbomYKErDFzTWfq7prP10PZCUGknVxszXIDQdf8xpas7mJTXh26nHufZqh6Lvo8iPM+QVrbMCa+wouoVrJl6LR2AA0y7v6XUu2yDZ+3al8DAck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423809; c=relaxed/simple;
-	bh=uMjhr1ScrKHk1DffmrSHvZfNPyGvyWZRVr5NI9iKE4A=;
+	s=arc-20240116; t=1785423811; c=relaxed/simple;
+	bh=kCMof6L7T5br+iDTUrgNDlSEp8BZFctv5omtyGnsoHg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UKUwwsAyYWw9P8VymUTy1Ntm01iAN345Eo2U5SMnxSJy0vZovj8c12KMPcNU408cAYIFve9rI7U1PLt3X15XEpCu6U4tsL/A5iwRl2i61V2x4Adv+Ze5Q4ixti67/nO3ba03lL0yRFAwfebJWTEfMhxpe5Ju5B0cxTTqFF0v52w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QkZj6vaE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mxyFgrKgqAjVRfzareR/mwbOJx2QuT4AbhqgWCgDbQDhcqbk5DctYTCrByGCTJz7C3BajIKBFFMIUn2uEyf9pV/Vj+1PiRP0daCtbk8jtby/puWtn3evqVElquJBSVOeYZuKG6ju0D0fEuEaYQSzX1q/2E0HFAttKhwBJhvJSfQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cjNS1TB4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QkZj6vaE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 222DA1F00A3F;
-	Thu, 30 Jul 2026 15:03:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cjNS1TB4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5FF91F01562;
+	Thu, 30 Jul 2026 15:03:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423807;
-	bh=L3heQyeFv812KJqdTMMfIli7QczhlQ1SrZJDX7WxKyk=;
+	s=korg; t=1785423810;
+	bh=LcZQms3uZoLWdw27tZHdnIvpHxmoNY3WOTiUs0Fr2FQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QkZj6vaE+m25tIry5flk6B0fgHcp98M2ng59FW0IWk0GKrTtGDtcyBvqgIr/RQj2n
-	 szdjTVdZFnhchLFbnO9DqqwuZWzfUgROmnmDKrS+PbZ9NpFGLGwh8VJdivZ+JsVR9S
-	 ddtNjwiNo5xhPyOrVcpm1+VBbBC1kGONhi9uYFUA=
+	b=cjNS1TB4RfpyuZRIn6iI345yFqwqt161lSheOGZhvJUx+3ca96fiLZkIzoG+vtcUc
+	 LTslz7Z68m8iW3B4x0zWXJiltv5ccC9SEqrUm8OLss4cELGHFKBnNzvCE4Q/LdBOK5
+	 8XAs95fdPzJjnSlGZNx8I6qbSlIQLcCrMNBIybag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qihang <q.h.hack.winter@gmail.com>,
+	AutonomousCodeSecurity@microsoft.com,
+	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 129/675] ksmbd: pin conn during async oplock break notification
-Date: Thu, 30 Jul 2026 16:07:39 +0200
-Message-ID: <20260730141447.886702470@linuxfoundation.org>
+Subject: [PATCH 6.18 130/675] ksmbd: validate compound request size before reading StructureSize2
+Date: Thu, 30 Jul 2026 16:07:40 +0200
+Message-ID: <20260730141447.907582470@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -52,73 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qihang <q.h.hack.winter@gmail.com>
+From: Xiang Mei (Microsoft) <xmei5@asu.edu>
 
-[ Upstream commit aa5d8f3f96aa11a4a54ce993c11ce8af11c546f9 ]
+[ Upstream commit 15b38176fd1530372905c602fde51fe89ec8c877 ]
 
-smb2_oplock_break_noti() and smb2_lease_break_noti() store a ksmbd_conn
-pointer in an async ksmbd_work and then queue that work on ksmbd-io.  The
-work only increments conn->r_count, which prevents teardown from passing
-the pending-request wait after the increment, but it does not pin the
-struct ksmbd_conn object.
+When ksmbd validates a compound (chained) SMB2 request,
+ksmbd_smb2_check_message() reads pdu->StructureSize2 without first
+checking that the compound element is large enough to contain it.
+StructureSize2 is a 2-byte field at offset 64
+(__SMB2_HEADER_STRUCTURE_SIZE) from the start of each element.
 
-If connection teardown races with an oplock break notification, the last
-conn reference can be dropped before the queued worker finishes.  The
-worker then uses the freed conn in ksmbd_conn_write() and
-ksmbd_conn_r_count_dec().
+The compound-walking logic only guarantees that a full 64-byte SMB2
+header is present for the trailing element: when NextCommand is 0, len is
+reduced to the number of bytes remaining after next_smb2_rcv_hdr_off. A
+remote client can craft a compound request whose last element has exactly
+64 bytes, so the 2-byte StructureSize2 read at offset 64 extends one byte
+past the receive buffer, producing a slab-out-of-bounds read.
 
-Take a real conn reference when publishing the conn pointer to the async
-work item, and drop it after the notification work has decremented
-r_count.  Apply the same lifetime rule to lease break notification, which
-uses the same work->conn pattern.
+  BUG: KASAN: slab-out-of-bounds in ksmbd_smb2_check_message (fs/smb/server/smb2misc.c:402)
+  Read of size 2 at addr ffff888012ae31ac by task kworker/0:1/14
+  The buggy address is located 172 bytes inside of allocated 173-byte region
+  Workqueue: ksmbd-io handle_ksmbd_work
+  Call Trace:
+   ...
+   kasan_report (mm/kasan/report.c:595)
+   ksmbd_smb2_check_message (fs/smb/server/smb2misc.c:402)
+   handle_ksmbd_work (fs/smb/server/server.c:119)
+   process_one_work (kernel/workqueue.c:3314)
+   worker_thread (kernel/workqueue.c:3397)
+   kthread (kernel/kthread.c:436)
+   ret_from_fork (arch/x86/kernel/process.c:158)
+   ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
 
-Fixes: 3aa660c05924 ("ksmbd: prevent connection release during oplock break notification")
-Signed-off-by: Qihang <q.h.hack.winter@gmail.com>
+Reject any compound element that is too small to hold StructureSize2
+before dereferencing it.
+
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Reported-by: AutonomousCodeSecurity@microsoft.com
+Signed-off-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
 Acked-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/oplock.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/smb/server/smb2misc.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/fs/smb/server/oplock.c b/fs/smb/server/oplock.c
-index a019c4496ae433..ff0dbf3f8cbf49 100644
---- a/fs/smb/server/oplock.c
-+++ b/fs/smb/server/oplock.c
-@@ -705,6 +705,7 @@ static void __smb2_oplock_break_noti(struct work_struct *wk)
- out:
- 	ksmbd_free_work_struct(work);
- 	ksmbd_conn_r_count_dec(conn);
-+	ksmbd_conn_put(conn);
- }
+diff --git a/fs/smb/server/smb2misc.c b/fs/smb/server/smb2misc.c
+index 67a2d7a793f6ed..b11d854d3fcfba 100644
+--- a/fs/smb/server/smb2misc.c
++++ b/fs/smb/server/smb2misc.c
+@@ -400,6 +400,11 @@ int ksmbd_smb2_check_message(struct ksmbd_work *work)
+ 		return 1;
+ 	}
  
- /**
-@@ -740,7 +741,7 @@ static int smb2_oplock_break_noti(struct oplock_info *opinfo)
- 	br_info->open_trunc = opinfo->open_trunc;
- 
- 	work->request_buf = (char *)br_info;
--	work->conn = conn;
-+	work->conn = ksmbd_conn_get(conn);
- 	work->sess = opinfo->sess;
- 
- 	ksmbd_conn_r_count_inc(conn);
-@@ -814,6 +815,7 @@ static void __smb2_lease_break_noti(struct work_struct *wk)
- out:
- 	ksmbd_free_work_struct(work);
- 	ksmbd_conn_r_count_dec(conn);
-+	ksmbd_conn_put(conn);
- }
- 
- /**
-@@ -853,7 +855,7 @@ static int smb2_lease_break_noti(struct oplock_info *opinfo)
- 	memcpy(br_info->lease_key, lease->lease_key, SMB2_LEASE_KEY_SIZE);
- 
- 	work->request_buf = (char *)br_info;
--	work->conn = conn;
-+	work->conn = ksmbd_conn_get(conn);
- 	work->sess = opinfo->sess;
- 
- 	ksmbd_conn_r_count_inc(conn);
++	if (len < __SMB2_HEADER_STRUCTURE_SIZE + sizeof(__le16)) {
++		ksmbd_debug(SMB, "Message is too small for StructureSize2\n");
++		return 1;
++	}
++
+ 	if (smb2_req_struct_sizes[command] != pdu->StructureSize2) {
+ 		if (!(command == SMB2_OPLOCK_BREAK_HE &&
+ 		    (le16_to_cpu(pdu->StructureSize2) == OP_BREAK_STRUCT_SIZE_20 ||
 -- 
 2.53.0
 
