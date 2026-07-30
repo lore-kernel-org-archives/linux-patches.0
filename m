@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AECDF3B52EE;
-	Thu, 30 Jul 2026 14:44:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FDFB33D4E2;
+	Thu, 30 Jul 2026 14:44:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422678; cv=none; b=LYFgvXrY+cJ2Vg9B2MxhVw9t0I186j/FIzGjlGSZ1PX9xRQgpwQ3t/N+aeLCTAR1lE23fgQUyogYsj37NOmttNXYwLkrT+3MPgelpkZRBA+hb0+KNFzSPdCLt1yHR68jwF70gGiYEsgdqqg1YW9vDAVV0X14LccN64QZ+ndVALg=
+	t=1785422681; cv=none; b=iNRMbILBM1DWNePnehPQ/BFxHdxvdXdNzN/dxJBTz3/fJEvUtBSdbAmahvqmF2BB6+GSNidJcAX00AZZryuY2xgbOTx9hO7bDCnsrEtsWgUQw0x6i7HEy1i20od4tvWNg2fwY4X+9t/IDl2O/5VwlNdSwCGb5dxoA6wB6JxUbqU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422678; c=relaxed/simple;
-	bh=u4x/jlb0YHnqGw7sYXtWPWjeCI78RAQD7+Z86J1WAb0=;
+	s=arc-20240116; t=1785422681; c=relaxed/simple;
+	bh=GtF8J5jkzt7l0JDZkhFRPaTaJR7zFVZK4lL6LxjWp7Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=etkCjayTFxu1ezprDyivxR8O9LVPuDLOjtkbz5CUa+Sc9G/5dDcvxP4Jf6OZ9h9vaQ4cO8WnX++XATuTPHmDrPYIE5ZsrnJqZHn4A0RlzcNd5zRRUFRP5y1rVJdmBzwP1Pq2ROjq5mVdzbxTOe+D+wrvy78YxTx8xaewTqBz5Ms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FVBHthBV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kpUeZes/wM8G3QoJzC5cn4Vqnk8eQnwvPpP0cNU6XFfgsfil/FD7RuhHzmY8nwr8QdnMx5MCdbTsg2NdZglvmQDtZv5kYiVR1aukqppEclWD4UIBWiswjrbOJ5RLt7AXXlukGDucoEAiOwERMFmwAZcZsSoH8uSuvIFHJCnUZvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uOWxiicu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FVBHthBV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C67E51F000E9;
-	Thu, 30 Jul 2026 14:44:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uOWxiicu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0F1A1F000E9;
+	Thu, 30 Jul 2026 14:44:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422677;
-	bh=BKS3vdpitxJeKFxBecLgyOVpFUNhUuVKhTtR01CryJI=;
+	s=korg; t=1785422680;
+	bh=RSH9LuNy+99/wMHo3KtZJxuyWrjdGUfP0nS3SNmlp9I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FVBHthBVS3Enfr9DxR+eyLsadOD9NpwYu2ajmTdPOphnd9JTRywSGbLAgS2kvLD5r
-	 0RWIVbmhvIPrW5Qchcpbl9k6IrkLmSAIGVc0upEQb61iJm8d0bzMbbdcmLX6+9REVG
-	 4wtj7irRaOT8wUQEJa2ZiLx3WbUqqWQZ1Skw35sk=
+	b=uOWxiicu5CLr3UbjHmWmS5nGI4xf/W7qnZSYylYXhIqql2CWQDpHwynWYEJywKO9r
+	 g0K3xi3dsBbqKg1A6YWvFMtgU1HPqrzn83dkOR4uikepC2f+z7yQLtfYRmvDpyKLIp
+	 r6H2tZlDRdjPYkitvs0BHkcKqtifBUfL7WTkpYsM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Felix Gu <ustc.gu@gmail.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 7.1 521/744] media: ti: vpe: Fix fwnode_handle leak in vip_probe_complete()
-Date: Thu, 30 Jul 2026 16:13:14 +0200
-Message-ID: <20260730141455.348904593@linuxfoundation.org>
+Subject: [PATCH 7.1 522/744] media: ti: vpe: Fix the error code of devm_kzalloc() in vip_probe_slice()
+Date: Thu, 30 Jul 2026 16:13:15 +0200
+Message-ID: <20260730141455.370175970@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -52,15 +52,12 @@ Content-Transfer-Encoding: 8bit
 
 From: Felix Gu <ustc.gu@gmail.com>
 
-commit 34ca1065a4b2cf776c28d7cece6f6c9d90f7e3a3 upstream.
+commit e8f319eae96a3d718e810d52432020a2b77f5f60 upstream.
 
-In vip_probe_complete(), the fwnode_handle reference is not released
-if the loop continues via the default switch case or if alloc_port()
-fails. This results in a reference count leak.
+In vip_probe_slice(), the error check for devm_kzalloc() incorrectly
+uses PTR_ERR_OR_ZERO() which returns 0 for NULL pointer.
 
-Switch to using the __free(fwnode_handle) cleanup attribute to ensure
-the reference is automatically released when the handle goes out of
-scope.
+Return -ENOMEM for devm_kzalloc() failure.
 
 Fixes: fc2873aa4a21 ("media: ti: vpe: Add the VIP driver")
 Cc: stable@vger.kernel.org
@@ -68,49 +65,40 @@ Signed-off-by: Felix Gu <ustc.gu@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/ti/vpe/vip.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/media/platform/ti/vpe/vip.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/media/platform/ti/vpe/vip.c b/drivers/media/platform/ti/vpe/vip.c
-index 0e91e87bda9b..a3c5e966f64c 100644
+index bd34c982b427..cb0a5a07a3d4 100644
 --- a/drivers/media/platform/ti/vpe/vip.c
 +++ b/drivers/media/platform/ti/vpe/vip.c
-@@ -9,6 +9,7 @@
-  */
+@@ -3490,7 +3490,7 @@ static int vip_probe_slice(struct platform_device *pdev, int slice)
  
- #include <linux/clk.h>
-+#include <linux/cleanup.h>
- #include <linux/delay.h>
- #include <linux/dma-mapping.h>
- #include <linux/err.h>
-@@ -3389,7 +3390,6 @@ static int vip_probe_complete(struct platform_device *pdev)
- 	struct vip_port *port;
- 	struct vip_dev *dev;
- 	struct device_node *parent = pdev->dev.of_node;
--	struct fwnode_handle *ep = NULL;
- 	unsigned int syscon_args[5];
- 	int ret, i, slice_id, port_id, p;
+ 	parser = devm_kzalloc(&pdev->dev, sizeof(*dev->parser), GFP_KERNEL);
+ 	if (!parser)
+-		return PTR_ERR_OR_ZERO(parser);
++		return -ENOMEM;
  
-@@ -3411,8 +3411,9 @@ static int vip_probe_complete(struct platform_device *pdev)
- 		ctrl->syscon_bit_field[i] = syscon_args[i + 1];
+ 	parser->base = dev->base + (slice ? VIP_SLICE1_PARSER : VIP_SLICE0_PARSER);
+ 	if (IS_ERR(parser->base))
+@@ -3502,7 +3502,7 @@ static int vip_probe_slice(struct platform_device *pdev, int slice)
+ 	dev->sc_assigned = VIP_NOT_ASSIGNED;
+ 	sc = devm_kzalloc(&pdev->dev, sizeof(*dev->sc), GFP_KERNEL);
+ 	if (!sc)
+-		return PTR_ERR_OR_ZERO(sc);
++		return -ENOMEM;
  
- 	for (p = 0; p < (VIP_NUM_PORTS * VIP_NUM_SLICES); p++) {
--		ep = fwnode_graph_get_next_endpoint_by_regs(of_fwnode_handle(parent),
--							    p, 0);
-+		struct fwnode_handle *ep __free(fwnode_handle) =
-+			fwnode_graph_get_next_endpoint_by_regs(
-+				of_fwnode_handle(parent), p, 0);
- 		if (!ep)
- 			continue;
+ 	sc->base = dev->base + (slice ? VIP_SLICE1_SC : VIP_SLICE0_SC);
+ 	if (IS_ERR(sc->base))
+@@ -3514,7 +3514,7 @@ static int vip_probe_slice(struct platform_device *pdev, int slice)
+ 	dev->csc_assigned = VIP_NOT_ASSIGNED;
+ 	csc = devm_kzalloc(&pdev->dev, sizeof(*dev->csc), GFP_KERNEL);
+ 	if (!csc)
+-		return PTR_ERR_OR_ZERO(csc);
++		return -ENOMEM;
  
-@@ -3447,7 +3448,6 @@ static int vip_probe_complete(struct platform_device *pdev)
- 		port = dev->ports[port_id];
- 
- 		vip_register_subdev_notify(port, ep);
--		fwnode_handle_put(ep);
- 	}
- 	return 0;
- }
+ 	csc->base = dev->base + (slice ? VIP_SLICE1_CSC : VIP_SLICE0_CSC);
+ 	if (IS_ERR(csc->base))
 -- 
 2.55.0
 
