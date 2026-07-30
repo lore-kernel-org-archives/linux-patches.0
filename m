@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3DF844998F;
-	Thu, 30 Jul 2026 15:28:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76BDC41DED0;
+	Thu, 30 Jul 2026 15:29:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425339; cv=none; b=Ajc4YFGSAVLnyNpNZn2vUAdpVD+q1xs3zlIcmI1YBOHdNMTwzCGZm9CnMlunFbuEr4WxTPAWmz0RyEZA7iR9B1EyWyjR7qOEBjP1zM5jTHWfb5rrYPJ9fvPDsuuYzTaS/HgwU2XkBzqh3zI2moLRJuQtSP5GDKXodAGJm8drXmQ=
+	t=1785425343; cv=none; b=qFADwgV+n2MhUpfphUSP6Gi/s+Nv+JROdnMYiGGK5T+BpDsQwCIqpobfV2/CCNLDVa8+gLhRMbQL7nQDf5EDJa7s/MTEeVvvcK1BxP44OfhdQ/NVzLkFIzm3j9xLy9+8EOSA11ohZZwYr9okXF1OevK0nxN6DVmZHbKAoqtre30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425339; c=relaxed/simple;
-	bh=1lTiAEG5CjIuvLXnIawQxZN3dV93gK9ZOQvuBTgyg28=;
+	s=arc-20240116; t=1785425343; c=relaxed/simple;
+	bh=+4e0WML5XjNU4n/mvenKXgcnTsjnhVac5VZgCQyK3F4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eWim86s6GCuZT0lEchC+AYue/4N3/Fuev6tJnWs3CBGOOlcFbmAzHNJJWkKPW/rArSJrIXok0/Av6QfppGvtd7dCI+3a8OE5asDZXC4fy766T51LitWu2XtkT3GGK0L77aN4Gq+WsoVVlTXxjWYhhfQQBAAXI8kN14FLT+w+2IM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gS7M7Gxq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JIQUe6X9Vy+V4U/G8WuguPVYRuP+37WbfIAWI6pYVbEqzkhoshw8VTqzpq9PfOKwlC0IHIMaN57Bgz0nytn5LYCgjRBRW76vqfUcq+mncg2S4ZP9pGm6KOgjmIzEf7ye/IRiJk/YWKhFCq3Tq/5pIvZw6vU5DrXHTZC6L9e4hYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mWcjBJWH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gS7M7Gxq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B31A1F000E9;
-	Thu, 30 Jul 2026 15:28:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mWcjBJWH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFB081F000E9;
+	Thu, 30 Jul 2026 15:29:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425338;
-	bh=yMOl2FTEPT7JKbjD7tWmbtB8iJCi0g/IETZl2kpiQg0=;
+	s=korg; t=1785425341;
+	bh=34zSLTCSR3oSop2DuNHN87JQ9nswD2ac6exkaRyYfy4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gS7M7GxqNFrRrNvrDjrbh6iS4XW4FKL1tLtAXc+jdSk53XpWtqNte8rNTANPWa9RN
-	 jjh4jiFZn8ggYdXmpBSXfV+xlhQwrCxyTWY0vMJ+S3/BSu88XzMXaYhGi75onhtpYV
-	 DFbkcZn8IMQT2ZM8WND1RbrXHDMTYMkRqf4DjMJc=
+	b=mWcjBJWHGtAB2DU/Yl8PfxIte8gKknOJDXJUW2ws9nrJPppqQUzDztGnhXVK1WAK2
+	 TUCxgryt8Oklqdb8t/3LylC+dCRheBzeKidu84++PiaIH/3oGon03H9x1T3+PrIvsy
+	 3AI4/AMi+Ok61rKZHengKecnXpzpKE+77qeFSp+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko bot <sashiko-bot@kernel.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	syzbot+ff16b505ec9152e5f448@syzkaller.appspotmail.com,
+	Brian Witte <brianwitte@mailfence.com>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 034/602] Input: ims-pcu - fix logic error in packet reset
-Date: Thu, 30 Jul 2026 16:07:06 +0200
-Message-ID: <20260730141436.725041063@linuxfoundation.org>
+Subject: [PATCH 6.12 008/602] netfilter: nf_tables: revert commit_mutex usage in reset path
+Date: Thu, 30 Jul 2026 16:06:40 +0200
+Message-ID: <20260730141436.168282690@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -51,40 +52,422 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Brian Witte <brianwitte@mailfence.com>
 
-[ Upstream commit 2c9b85a14abb4811e8d4773ccd13559e59792efb ]
+[ Upstream commit 7f261bb906bf527c4a6e2a646e2d5f3679f2a8bc ]
 
-ims_pcu_reset_packet() incorrectly sets have_stx to true, which implies
-that the start-of-packet delimiter has already been received. This
-causes the protocol parser to skip waiting for the next STX byte and
-potentially process garbage data.
+It causes circular lock dependency between commit_mutex, nfnl_subsys_ipset
+and nlk_cb_mutex when nft reset, ipset list, and iptables-nft with '-m set'
+rule run at the same time.
 
-Correctly set have_stx to false when resetting the packet state.
+Previous patches made it safe to run individual reset handlers concurrently
+so commit_mutex is no longer required to prevent this.
 
-Fixes: 875115b82c29 ("Input: ims-pcu - fix heap-buffer-overflow in ims_pcu_process_data()")
-Cc: stable@vger.kernel.org
-Reported-by: Sashiko bot <sashiko-bot@kernel.org>
-Assisted-by: Gemini:gemini-3.1-pro
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Fixes: bd662c4218f9 ("netfilter: nf_tables: Add locking for NFT_MSG_GETOBJ_RESET requests")
+Fixes: 3d483faa6663 ("netfilter: nf_tables: Add locking for NFT_MSG_GETSETELEM_RESET requests")
+Fixes: 3cb03edb4de3 ("netfilter: nf_tables: Add locking for NFT_MSG_GETRULE_RESET requests")
+Link: https://lore.kernel.org/all/aUh_3mVRV8OrGsVo@strlen.de/
+Reported-by: <syzbot+ff16b505ec9152e5f448@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=ff16b505ec9152e5f448
+Signed-off-by: Brian Witte <brianwitte@mailfence.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/misc/ims-pcu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/nf_tables_api.c | 248 ++++++----------------------------
+ 1 file changed, 42 insertions(+), 206 deletions(-)
 
-diff --git a/drivers/input/misc/ims-pcu.c b/drivers/input/misc/ims-pcu.c
-index 3dc624c75bb5c5..4cfcf6e945bba5 100644
---- a/drivers/input/misc/ims-pcu.c
-+++ b/drivers/input/misc/ims-pcu.c
-@@ -450,7 +450,7 @@ static void ims_pcu_handle_response(struct ims_pcu *pcu)
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 838c9f49e4e01a..09969379c43a73 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -3719,23 +3719,6 @@ static int nf_tables_dump_rules(struct sk_buff *skb,
+ 	return skb->len;
+ }
  
- static void ims_pcu_reset_packet(struct ims_pcu *pcu)
+-static int nf_tables_dumpreset_rules(struct sk_buff *skb,
+-				     struct netlink_callback *cb)
+-{
+-	struct nftables_pernet *nft_net = nft_pernet(sock_net(skb->sk));
+-	int ret;
+-
+-	/* Mutex is held is to prevent that two concurrent dump-and-reset calls
+-	 * do not underrun counters and quotas. The commit_mutex is used for
+-	 * the lack a better lock, this is not transaction path.
+-	 */
+-	mutex_lock(&nft_net->commit_mutex);
+-	ret = nf_tables_dump_rules(skb, cb);
+-	mutex_unlock(&nft_net->commit_mutex);
+-
+-	return ret;
+-}
+-
+ static int nf_tables_dump_rules_start(struct netlink_callback *cb)
  {
--	pcu->have_stx = true;
-+	pcu->have_stx = false;
- 	pcu->have_dle = false;
- 	pcu->read_pos = 0;
- 	pcu->check_sum = 0;
+ 	struct nft_rule_dump_ctx *ctx = (void *)cb->ctx;
+@@ -3755,16 +3738,10 @@ static int nf_tables_dump_rules_start(struct netlink_callback *cb)
+ 			return -ENOMEM;
+ 		}
+ 	}
+-	return 0;
+-}
+-
+-static int nf_tables_dumpreset_rules_start(struct netlink_callback *cb)
+-{
+-	struct nft_rule_dump_ctx *ctx = (void *)cb->ctx;
+-
+-	ctx->reset = true;
++	if (NFNL_MSG_TYPE(cb->nlh->nlmsg_type) == NFT_MSG_GETRULE_RESET)
++		ctx->reset = true;
+ 
+-	return nf_tables_dump_rules_start(cb);
++	return 0;
+ }
+ 
+ static int nf_tables_dump_rules_done(struct netlink_callback *cb)
+@@ -3830,6 +3807,8 @@ static int nf_tables_getrule(struct sk_buff *skb, const struct nfnl_info *info,
+ 	u32 portid = NETLINK_CB(skb).portid;
+ 	struct net *net = info->net;
+ 	struct sk_buff *skb2;
++	bool reset = false;
++	char *buf;
+ 
+ 	if (info->nlh->nlmsg_flags & NLM_F_DUMP) {
+ 		struct netlink_dump_control c = {
+@@ -3843,47 +3822,16 @@ static int nf_tables_getrule(struct sk_buff *skb, const struct nfnl_info *info,
+ 		return nft_netlink_dump_start_rcu(info->sk, skb, info->nlh, &c);
+ 	}
+ 
+-	skb2 = nf_tables_getrule_single(portid, info, nla, false);
+-	if (IS_ERR(skb2))
+-		return PTR_ERR(skb2);
+-
+-	return nfnetlink_unicast(skb2, net, portid);
+-}
+-
+-static int nf_tables_getrule_reset(struct sk_buff *skb,
+-				   const struct nfnl_info *info,
+-				   const struct nlattr * const nla[])
+-{
+-	struct nftables_pernet *nft_net = nft_pernet(info->net);
+-	u32 portid = NETLINK_CB(skb).portid;
+-	struct net *net = info->net;
+-	struct sk_buff *skb2;
+-	char *buf;
+-
+-	if (info->nlh->nlmsg_flags & NLM_F_DUMP) {
+-		struct netlink_dump_control c = {
+-			.start= nf_tables_dumpreset_rules_start,
+-			.dump = nf_tables_dumpreset_rules,
+-			.done = nf_tables_dump_rules_done,
+-			.module = THIS_MODULE,
+-			.data = (void *)nla,
+-		};
+-
+-		return nft_netlink_dump_start_rcu(info->sk, skb, info->nlh, &c);
+-	}
+-
+-	if (!try_module_get(THIS_MODULE))
+-		return -EINVAL;
+-	rcu_read_unlock();
+-	mutex_lock(&nft_net->commit_mutex);
+-	skb2 = nf_tables_getrule_single(portid, info, nla, true);
+-	mutex_unlock(&nft_net->commit_mutex);
+-	rcu_read_lock();
+-	module_put(THIS_MODULE);
++	if (NFNL_MSG_TYPE(info->nlh->nlmsg_type) == NFT_MSG_GETRULE_RESET)
++		reset = true;
+ 
++	skb2 = nf_tables_getrule_single(portid, info, nla, reset);
+ 	if (IS_ERR(skb2))
+ 		return PTR_ERR(skb2);
+ 
++	if (!reset)
++		return nfnetlink_unicast(skb2, net, portid);
++
+ 	buf = kasprintf(GFP_ATOMIC, "%.*s:%u",
+ 			nla_len(nla[NFTA_RULE_TABLE]),
+ 			(char *)nla_data(nla[NFTA_RULE_TABLE]),
+@@ -6107,6 +6055,10 @@ static int nf_tables_dump_set(struct sk_buff *skb, struct netlink_callback *cb)
+ 	nla_nest_end(skb, nest);
+ 	nlmsg_end(skb, nlh);
+ 
++	if (dump_ctx->reset && args.iter.count > args.iter.skip)
++		audit_log_nft_set_reset(table, cb->seq,
++					args.iter.count - args.iter.skip);
++
+ 	rcu_read_unlock();
+ 
+ 	if (args.iter.err && args.iter.err != -EMSGSIZE)
+@@ -6122,26 +6074,6 @@ static int nf_tables_dump_set(struct sk_buff *skb, struct netlink_callback *cb)
+ 	return -ENOSPC;
+ }
+ 
+-static int nf_tables_dumpreset_set(struct sk_buff *skb,
+-				   struct netlink_callback *cb)
+-{
+-	struct nftables_pernet *nft_net = nft_pernet(sock_net(skb->sk));
+-	struct nft_set_dump_ctx *dump_ctx = cb->data;
+-	int ret, skip = cb->args[0];
+-
+-	mutex_lock(&nft_net->commit_mutex);
+-
+-	ret = nf_tables_dump_set(skb, cb);
+-
+-	if (cb->args[0] > skip)
+-		audit_log_nft_set_reset(dump_ctx->ctx.table, cb->seq,
+-					cb->args[0] - skip);
+-
+-	mutex_unlock(&nft_net->commit_mutex);
+-
+-	return ret;
+-}
+-
+ static int nf_tables_dump_set_start(struct netlink_callback *cb)
+ {
+ 	struct nft_set_dump_ctx *dump_ctx = cb->data;
+@@ -6385,8 +6317,13 @@ static int nf_tables_getsetelem(struct sk_buff *skb,
+ {
+ 	struct netlink_ext_ack *extack = info->extack;
+ 	struct nft_set_dump_ctx dump_ctx;
++	int rem, err = 0, nelems = 0;
++	struct net *net = info->net;
+ 	struct nlattr *attr;
+-	int rem, err = 0;
++	bool reset = false;
++
++	if (NFNL_MSG_TYPE(info->nlh->nlmsg_type) == NFT_MSG_GETSETELEM_RESET)
++		reset = true;
+ 
+ 	if (info->nlh->nlmsg_flags & NLM_F_DUMP) {
+ 		struct netlink_dump_control c = {
+@@ -6396,7 +6333,7 @@ static int nf_tables_getsetelem(struct sk_buff *skb,
+ 			.module = THIS_MODULE,
+ 		};
+ 
+-		err = nft_set_dump_ctx_init(&dump_ctx, skb, info, nla, false);
++		err = nft_set_dump_ctx_init(&dump_ctx, skb, info, nla, reset);
+ 		if (err)
+ 			return err;
+ 
+@@ -6407,75 +6344,21 @@ static int nf_tables_getsetelem(struct sk_buff *skb,
+ 	if (!nla[NFTA_SET_ELEM_LIST_ELEMENTS])
+ 		return -EINVAL;
+ 
+-	err = nft_set_dump_ctx_init(&dump_ctx, skb, info, nla, false);
++	err = nft_set_dump_ctx_init(&dump_ctx, skb, info, nla, reset);
+ 	if (err)
+ 		return err;
+ 
+ 	nla_for_each_nested(attr, nla[NFTA_SET_ELEM_LIST_ELEMENTS], rem) {
+-		err = nft_get_set_elem(&dump_ctx.ctx, dump_ctx.set, attr, false);
+-		if (err < 0) {
+-			NL_SET_BAD_ATTR(extack, attr);
+-			break;
+-		}
+-	}
+-
+-	return err;
+-}
+-
+-static int nf_tables_getsetelem_reset(struct sk_buff *skb,
+-				      const struct nfnl_info *info,
+-				      const struct nlattr * const nla[])
+-{
+-	struct nftables_pernet *nft_net = nft_pernet(info->net);
+-	struct netlink_ext_ack *extack = info->extack;
+-	struct nft_set_dump_ctx dump_ctx;
+-	int rem, err = 0, nelems = 0;
+-	struct nlattr *attr;
+-
+-	if (info->nlh->nlmsg_flags & NLM_F_DUMP) {
+-		struct netlink_dump_control c = {
+-			.start = nf_tables_dump_set_start,
+-			.dump = nf_tables_dumpreset_set,
+-			.done = nf_tables_dump_set_done,
+-			.module = THIS_MODULE,
+-		};
+-
+-		err = nft_set_dump_ctx_init(&dump_ctx, skb, info, nla, true);
+-		if (err)
+-			return err;
+-
+-		c.data = &dump_ctx;
+-		return nft_netlink_dump_start_rcu(info->sk, skb, info->nlh, &c);
+-	}
+-
+-	if (!nla[NFTA_SET_ELEM_LIST_ELEMENTS])
+-		return -EINVAL;
+-
+-	if (!try_module_get(THIS_MODULE))
+-		return -EINVAL;
+-	rcu_read_unlock();
+-	mutex_lock(&nft_net->commit_mutex);
+-	rcu_read_lock();
+-
+-	err = nft_set_dump_ctx_init(&dump_ctx, skb, info, nla, true);
+-	if (err)
+-		goto out_unlock;
+-
+-	nla_for_each_nested(attr, nla[NFTA_SET_ELEM_LIST_ELEMENTS], rem) {
+-		err = nft_get_set_elem(&dump_ctx.ctx, dump_ctx.set, attr, true);
++		err = nft_get_set_elem(&dump_ctx.ctx, dump_ctx.set, attr, reset);
+ 		if (err < 0) {
+ 			NL_SET_BAD_ATTR(extack, attr);
+ 			break;
+ 		}
+ 		nelems++;
+ 	}
+-	audit_log_nft_set_reset(dump_ctx.ctx.table, nft_base_seq(info->net), nelems);
+-
+-out_unlock:
+-	rcu_read_unlock();
+-	mutex_unlock(&nft_net->commit_mutex);
+-	rcu_read_lock();
+-	module_put(THIS_MODULE);
++	if (reset)
++		audit_log_nft_set_reset(dump_ctx.ctx.table, nft_base_seq(net),
++					nelems);
+ 
+ 	return err;
+ }
+@@ -8182,19 +8065,6 @@ static int nf_tables_dump_obj(struct sk_buff *skb, struct netlink_callback *cb)
+ 	return skb->len;
+ }
+ 
+-static int nf_tables_dumpreset_obj(struct sk_buff *skb,
+-				   struct netlink_callback *cb)
+-{
+-	struct nftables_pernet *nft_net = nft_pernet(sock_net(skb->sk));
+-	int ret;
+-
+-	mutex_lock(&nft_net->commit_mutex);
+-	ret = nf_tables_dump_obj(skb, cb);
+-	mutex_unlock(&nft_net->commit_mutex);
+-
+-	return ret;
+-}
+-
+ static int nf_tables_dump_obj_start(struct netlink_callback *cb)
+ {
+ 	struct nft_obj_dump_ctx *ctx = (void *)cb->ctx;
+@@ -8211,16 +8081,10 @@ static int nf_tables_dump_obj_start(struct netlink_callback *cb)
+ 	if (nla[NFTA_OBJ_TYPE])
+ 		ctx->type = ntohl(nla_get_be32(nla[NFTA_OBJ_TYPE]));
+ 
+-	return 0;
+-}
+-
+-static int nf_tables_dumpreset_obj_start(struct netlink_callback *cb)
+-{
+-	struct nft_obj_dump_ctx *ctx = (void *)cb->ctx;
+-
+-	ctx->reset = true;
++	if (NFNL_MSG_TYPE(cb->nlh->nlmsg_type) == NFT_MSG_GETOBJ_RESET)
++		ctx->reset = true;
+ 
+-	return nf_tables_dump_obj_start(cb);
++	return 0;
+ }
+ 
+ static int nf_tables_dump_obj_done(struct netlink_callback *cb)
+@@ -8282,42 +8146,16 @@ nf_tables_getobj_single(u32 portid, const struct nfnl_info *info,
+ static int nf_tables_getobj(struct sk_buff *skb, const struct nfnl_info *info,
+ 			    const struct nlattr * const nla[])
+ {
+-	u32 portid = NETLINK_CB(skb).portid;
+-	struct sk_buff *skb2;
+-
+-	if (info->nlh->nlmsg_flags & NLM_F_DUMP) {
+-		struct netlink_dump_control c = {
+-			.start = nf_tables_dump_obj_start,
+-			.dump = nf_tables_dump_obj,
+-			.done = nf_tables_dump_obj_done,
+-			.module = THIS_MODULE,
+-			.data = (void *)nla,
+-		};
+-
+-		return nft_netlink_dump_start_rcu(info->sk, skb, info->nlh, &c);
+-	}
+-
+-	skb2 = nf_tables_getobj_single(portid, info, nla, false);
+-	if (IS_ERR(skb2))
+-		return PTR_ERR(skb2);
+-
+-	return nfnetlink_unicast(skb2, info->net, portid);
+-}
+-
+-static int nf_tables_getobj_reset(struct sk_buff *skb,
+-				  const struct nfnl_info *info,
+-				  const struct nlattr * const nla[])
+-{
+-	struct nftables_pernet *nft_net = nft_pernet(info->net);
+ 	u32 portid = NETLINK_CB(skb).portid;
+ 	struct net *net = info->net;
+ 	struct sk_buff *skb2;
++	bool reset = false;
+ 	char *buf;
+ 
+ 	if (info->nlh->nlmsg_flags & NLM_F_DUMP) {
+ 		struct netlink_dump_control c = {
+-			.start = nf_tables_dumpreset_obj_start,
+-			.dump = nf_tables_dumpreset_obj,
++			.start = nf_tables_dump_obj_start,
++			.dump = nf_tables_dump_obj,
+ 			.done = nf_tables_dump_obj_done,
+ 			.module = THIS_MODULE,
+ 			.data = (void *)nla,
+@@ -8326,18 +8164,16 @@ static int nf_tables_getobj_reset(struct sk_buff *skb,
+ 		return nft_netlink_dump_start_rcu(info->sk, skb, info->nlh, &c);
+ 	}
+ 
+-	if (!try_module_get(THIS_MODULE))
+-		return -EINVAL;
+-	rcu_read_unlock();
+-	mutex_lock(&nft_net->commit_mutex);
+-	skb2 = nf_tables_getobj_single(portid, info, nla, true);
+-	mutex_unlock(&nft_net->commit_mutex);
+-	rcu_read_lock();
+-	module_put(THIS_MODULE);
++	if (NFNL_MSG_TYPE(info->nlh->nlmsg_type) == NFT_MSG_GETOBJ_RESET)
++		reset = true;
+ 
++	skb2 = nf_tables_getobj_single(portid, info, nla, reset);
+ 	if (IS_ERR(skb2))
+ 		return PTR_ERR(skb2);
+ 
++	if (!reset)
++		return nfnetlink_unicast(skb2, net, NETLINK_CB(skb).portid);
++
+ 	buf = kasprintf(GFP_ATOMIC, "%.*s:%u",
+ 			nla_len(nla[NFTA_OBJ_TABLE]),
+ 			(char *)nla_data(nla[NFTA_OBJ_TABLE]),
+@@ -9540,7 +9376,7 @@ static const struct nfnl_callback nf_tables_cb[NFT_MSG_MAX] = {
+ 		.policy		= nft_rule_policy,
+ 	},
+ 	[NFT_MSG_GETRULE_RESET] = {
+-		.call		= nf_tables_getrule_reset,
++		.call		= nf_tables_getrule,
+ 		.type		= NFNL_CB_RCU,
+ 		.attr_count	= NFTA_RULE_MAX,
+ 		.policy		= nft_rule_policy,
+@@ -9594,7 +9430,7 @@ static const struct nfnl_callback nf_tables_cb[NFT_MSG_MAX] = {
+ 		.policy		= nft_set_elem_list_policy,
+ 	},
+ 	[NFT_MSG_GETSETELEM_RESET] = {
+-		.call		= nf_tables_getsetelem_reset,
++		.call		= nf_tables_getsetelem,
+ 		.type		= NFNL_CB_RCU,
+ 		.attr_count	= NFTA_SET_ELEM_LIST_MAX,
+ 		.policy		= nft_set_elem_list_policy,
+@@ -9640,7 +9476,7 @@ static const struct nfnl_callback nf_tables_cb[NFT_MSG_MAX] = {
+ 		.policy		= nft_obj_policy,
+ 	},
+ 	[NFT_MSG_GETOBJ_RESET] = {
+-		.call		= nf_tables_getobj_reset,
++		.call		= nf_tables_getobj,
+ 		.type		= NFNL_CB_RCU,
+ 		.attr_count	= NFTA_OBJ_MAX,
+ 		.policy		= nft_obj_policy,
 -- 
 2.53.0
 
