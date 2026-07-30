@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 843D5446073;
-	Thu, 30 Jul 2026 16:09:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4709C446050;
+	Thu, 30 Jul 2026 16:09:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427742; cv=none; b=W10qhydfaRvXXkVQ9S6+HaT+zCGvK4sptSRu+qwexZS3gvNa6dYJMG5szJLHVsOz3Yu1uhl9kk9I/KNI0sBzmBHCDGcQ+qruZsymRdYqPhb0xKpZcsvV+FgZMpaS82OE+9c8K9HBTrzjWdhm5rYCCMJka+2xY1GRUZiIYzNntmM=
+	t=1785427745; cv=none; b=tdTN7nolajY/C773JKXPmOuUaYUn5rpnWR1CrvQKhs60uOvYUe6X5/Kcd0t1IVFOiJT3APj538YyihEDA6ocMmsMhoveHnfkIwkpRc9XK3MTYVF7DxKK3r28yrxiSYE9F/TT6Jipu8y6azuNmsJ4rFB1FXll7NdErT8pwIFhJPc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427742; c=relaxed/simple;
-	bh=eAZsHBBdOkgWN0mDD7dn9tKbIqKNWK9jCsGWtEF1o00=;
+	s=arc-20240116; t=1785427745; c=relaxed/simple;
+	bh=ZrdOUj5jPFxBt74eElI54/IsWDzonDSIQ2mRnJ1TByY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oIG6ANTYzJyAQcDbg12JfDTiXrT0e8TAJhy8m+dKt0l+NVsXCQjgNxqpFfmsQkShXAPYJXkXuVz/4xITpQKlj/goLyPv2UlwfK78LVhCnDhHcLcSxNQ+0+pmTmM9GJgxNDVV26sCtA/Xht5LZtqAuJZjdHSfdDDFEhEUG1fyy+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eavsMIuT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bfNJ50JPPQs9rhuM/UGcdIkat7OVYf2p9P2+NjwuDx+/k0dsmW78057BoychTtDkMNBPygciFdFqDq2uYhb3JSf9x5oVPsViDPk3oiSl9CtJ3cdmtojJUALotUXC3NcbC38krEWOCT5TNxu3nd0kW6NUqJCtjh4UGnGjQ02qt7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MCnf/LQs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eavsMIuT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D39041F000E9;
-	Thu, 30 Jul 2026 16:09:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MCnf/LQs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2B971F000E9;
+	Thu, 30 Jul 2026 16:09:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427741;
-	bh=rNveJAYo6Sxwdwn21dwc4ml4wXnoUhN0J+h5r1QGH8w=;
+	s=korg; t=1785427744;
+	bh=cALIrXJwFAL26I7GpzQxGcZdJG3RX6iZXVpv1L+9RNY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eavsMIuTJgA3bu5DOiR96BKq2U7RnjHAeokihS6YZhZw9SGPnghNKRbWT9kj/UCnK
-	 mkPGcYFdt+UPEVTYdHVhtgf7oq296GMf34FSRA0euCRLasDisOMTya+m4C2V/Ld2LL
-	 36GzVcJnR3lSB1Z38+xzvGYryVvO5JArxX7mHX20=
+	b=MCnf/LQsGZZE6DsNzjCT/mZ6SKB+8d5Rpzu8QawdEJbpHjgQWCZMOrimy3iqvXena
+	 NhP4T6fe9E4erl1vQXngzSTjSRmYwoWK5P7lKB994drB7rO5u7jE/6E0YnLksWNvKJ
+	 LObuXSdOZp6DIz8VQ+/bN4KmcnD6u/drX9wTVMMQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Linmao Li <lilinmao@kylinos.cn>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>
-Subject: [PATCH 6.6 233/484] drm/vc4: Prevent shader BO mappings from becoming writable
-Date: Thu, 30 Jul 2026 16:12:10 +0200
-Message-ID: <20260730141428.540948193@linuxfoundation.org>
+	Valery Borovsky <vebohr@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.6 234/484] media: airspy: Return queued buffers on start_streaming() failure
+Date: Thu, 30 Jul 2026 16:12:11 +0200
+Message-ID: <20260730141428.561636655@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -45,60 +44,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Linmao Li <lilinmao@kylinos.cn>
+From: Valery Borovsky <vebohr@gmail.com>
 
-commit 0c9e6367639548307d3f578f6943ce72c9d39087 upstream.
+commit 04344d0b4929caa94c0df72f767752aa0935ef5d upstream.
 
-vc4_gem_object_mmap() rejects a writable mapping of a validated shader
-BO, but leaves VM_MAYWRITE set.  Userspace can map the BO read-only and
-then turn it writable with mprotect().
+The vb2 framework hands buffers to the driver via buf_queue() before
+calling start_streaming().  If start_streaming() returns an error
+without first returning those buffers via vb2_buffer_done(),
+vb2_start_streaming() fires WARN_ON(owned_by_drv_count) and the queued
+buffers leak.
 
-Validated shader BOs must stay read-only: the validator checks the
-instructions once and the GPU trusts them afterwards.  A writable
-mapping lets userspace rewrite the code after validation, bypassing the
-validator.
+airspy_start_streaming() returned -ENODEV early when the USB device had
+been disconnected (s->udev == NULL) without returning any buffers that
+buf_queue() had already accepted.  Take v4l2_lock first and jump to the
+existing err_clear_bit label, which already drains s->queued_bufs via
+vb2_buffer_done(..., VB2_BUF_STATE_QUEUED) before unlocking.
 
-Clear VM_MAYWRITE on the read-only path so the mapping cannot be
-upgraded, as i915 already does for its read-only objects.
+This mirrors the uvcvideo fix in commit 4cf3b6fd54eb ("media: uvcvideo:
+Return queued buffers on start_streaming() failure").
 
-Fixes: 463873d57014 ("drm/vc4: Add an API for creating GPU shaders in GEM BOs.")
+Fixes: 634fe5033951 ("[media] airspy: AirSpy SDR driver")
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/dri-devel/20260720085554.B0AF01F000E9@smtp.kernel.org/
-Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
-Link: https://patch.msgid.link/20260721011558.1672477-1-lilinmao@kylinos.cn
-Reviewed-by: Maíra Canal <mcanal@igalia.com>
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
+Signed-off-by: Valery Borovsky <vebohr@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/vc4/vc4_bo.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/media/usb/airspy/airspy.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/vc4/vc4_bo.c
-+++ b/drivers/gpu/drm/vc4/vc4_bo.c
-@@ -733,9 +733,13 @@ static int vc4_gem_object_mmap(struct dr
- {
- 	struct vc4_bo *bo = to_vc4_bo(obj);
+--- a/drivers/media/usb/airspy/airspy.c
++++ b/drivers/media/usb/airspy/airspy.c
+@@ -521,11 +521,13 @@ static int airspy_start_streaming(struct
  
--	if (bo->validated_shader && (vma->vm_flags & VM_WRITE)) {
--		DRM_DEBUG("mmapping of shader BOs for writing not allowed.\n");
--		return -EINVAL;
-+	if (bo->validated_shader) {
-+		if (vma->vm_flags & VM_WRITE) {
-+			DRM_DEBUG("mmapping of shader BOs for writing not allowed.\n");
-+			return -EINVAL;
-+		}
+ 	dev_dbg(s->dev, "\n");
+ 
+-	if (!s->udev)
+-		return -ENODEV;
+-
+ 	mutex_lock(&s->v4l2_lock);
+ 
++	if (!s->udev) {
++		ret = -ENODEV;
++		goto err_clear_bit;
++	}
 +
-+		vm_flags_clear(vma, VM_MAYWRITE);
- 	}
+ 	s->sequence = 0;
  
- 	mutex_lock(&bo->madv_lock);
+ 	set_bit(POWER_ON, &s->flags);
 
 
