@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18C55443A9D;
-	Thu, 30 Jul 2026 15:22:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FCCC4446F0;
+	Thu, 30 Jul 2026 15:22:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424937; cv=none; b=hZXBwDZUZhb5yby0wEOP+SiHcuxpUpBbKT8sxnIBhpyIrLEBr4jTtl5IRXb48lyRaXdV0IXFA/q172V9YeCiPf/XkWkkNhfZgSk2+ut5qXynAoaRB25mZDZhuWOT0rK4+KuzXQBbNLuqHNKsorXOHDiFlAZDy6GJbGbBmFvAfNY=
+	t=1785424940; cv=none; b=MptADyYNX+w2DsvVxkrd/KzMCMpzeMKx/4DcLU2mV//6Ws8Hbp9bAhnxHlzzGUkP34YzbnsFgk/2bF9V9bAxlJRiCdANJdxyQgYqe/atkUk5WJA2j2O3u6k5CcA0U0kRaVq9CHuDkB1HK/aplY5C0pZB5lA1F8h5iU/doDqCuGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424937; c=relaxed/simple;
-	bh=ZA+5gtgNMxTCGjDKE4Yl0EfzwQywStyHzS7ZjvwbwTA=;
+	s=arc-20240116; t=1785424940; c=relaxed/simple;
+	bh=1cgq7HIPDWncOcb4Hy0rF9Zfo1aZ6CVA4OwXq85PK54=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ieIyGanKuE6CUD2hi19okP2gRREbqB7wSsakMXgfglIIWDG0XI5nknQaJGDK5ldik6aFSUurg9jpSYbq2xuKULsJlFnZZBhvMv03x3Ls0QHza3UN7uVFGj15qYlLDz3JVW3owoANqR5kh1LP9EhVtFQZo0XsjytVlan+ZVlt1Rc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vZI1AHAA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RdH5/BmN6rmJ6TMk1z+zzL/kkZIjuFWhOHvSBhicheYkg8hfYV/t1ajczLgshz8CTGxnVR5hS/elUYH6FUXW85u+ZN7WpvStngBenyEH4xqc1FzQJF24/53yrL7qk43P8+95ppuXDqtyUF+N/Ow+4yHE0TUt3NFvo6/K/3cW+mA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T1hwksDP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vZI1AHAA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E24611F000E9;
-	Thu, 30 Jul 2026 15:22:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T1hwksDP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF8331F00AC4;
+	Thu, 30 Jul 2026 15:22:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424934;
-	bh=MyiOYUXrdrzTBDrxnlp6pg6883LRL2u4FgjXTcRjBx8=;
+	s=korg; t=1785424937;
+	bh=YBBBfwNSd3kSyW0oW8jfrJ/hpMQRDrWOtuo3SO8h6dY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vZI1AHAA9neBFn1PfyK24Qf7ja5wG5Ds6tHBRYfxD2Kni62vH2tr05Hxblel/Qygp
-	 toHkiTCWkfxp1n+fyaAiDACn/48tCvDlT1C50JaxOQo1HG4EmzdTciPR95wv5CEfT+
-	 SOLL9T60cf0keAd2AeS+Py7If6X66CGuu0vOw/rk=
+	b=T1hwksDPny5uP4VjhydkfE2OI7Fz/3fNwTOPdy1qwZWkXJxYJ+4G94gvGWDLdzJbd
+	 iB73QDaJjG8N6OJq4Z5q08q0ok0C32v6wByFH2ApeTUA6Nzm78IqOlS8Sa8wybatQY
+	 ITFfDcALXQoit/gDFv2sTs+w4zFta0A2gcAYBceA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Montgomery <james_montgomery@disroot.org>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.18 551/675] ksmbd: defer destroy_previous_session() until after NTLM authentication
-Date: Thu, 30 Jul 2026 16:14:41 +0200
-Message-ID: <20260730141456.850669252@linuxfoundation.org>
+	Ethan Nelson-Moore <enelsonmoore@gmail.com>,
+	Daniel Lezcano <daniel.lezcano@oss.qualcomm.com>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.18 569/675] watchdog: s32g_wdt: remove incorrect options in watchdog_info struct
+Date: Thu, 30 Jul 2026 16:14:59 +0200
+Message-ID: <20260730141457.226719227@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -51,60 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Montgomery <james_montgomery@disroot.org>
+From: Ethan Nelson-Moore <enelsonmoore@gmail.com>
 
-commit c74801ee524f477c174a1899782b6c3b6918d407 upstream.
+commit 2b37415618bfc6a83d4aceb00fd8d6491096f2ed upstream.
 
-In ntlm_authenticate(), destroy_previous_session() is called using a
-user pointer resolved from the client-supplied NTLM blob username field
-before the NTLMv2 response is validated. An authenticated attacker can
-set the NTLM blob username to match a victim account and set
-PreviousSessionId to the victim's session ID; destroy_previous_session()
-destroys the victim's session while ksmbd_decode_ntlmssp_auth_blob()
-subsequently rejects the request with -EPERM.
+The s32g_wdt driver uses two incorrect constants in the options field
+of its watchdog_info struct. This bit mask should contain WDIOF_*
+constants, but the driver uses two WDIOC_* ioctl constants (in addition
+to correct WDIOF_* constants). This causes many incorrect bits to be
+set in the bit mask. The functionality indicated by these ioctl
+constants is supported by all drivers using the watchdog framework, so
+this patch simply removes them.
 
-Move destroy_previous_session() and the prev_id assignment to after
-ksmbd_decode_ntlmssp_auth_blob() returns success and use sess->user
-rather than the pre-authentication lookup result. This matches the
-ordering already used by krb5_authenticate(), where
-destroy_previous_session() is called only after
-ksmbd_krb5_authenticate() returns success.
-
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/linux-cifs/20260702155449.3639773-1-james_montgomery@disroot.org/
-Signed-off-by: James Montgomery <james_montgomery@disroot.org>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: bd3f54ec559b ("watchdog: Add the Watchdog Timer for the NXP S32 platform")
+Cc: stable@vger.kernel.org # 6.18+
+Signed-off-by: Ethan Nelson-Moore <enelsonmoore@gmail.com>
+Acked-by: Daniel Lezcano <daniel.lezcano@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260505024409.60301-1-enelsonmoore@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |    9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/watchdog/s32g_wdt.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -1492,11 +1492,6 @@ static int ntlm_authenticate(struct ksmb
- 		return -EPERM;
- 	}
+diff --git a/drivers/watchdog/s32g_wdt.c b/drivers/watchdog/s32g_wdt.c
+index ad55063060af..6422a694fc65 100644
+--- a/drivers/watchdog/s32g_wdt.c
++++ b/drivers/watchdog/s32g_wdt.c
+@@ -56,8 +56,7 @@ MODULE_PARM_DESC(early_enable,
  
--	/* Check for previous session */
--	prev_id = le64_to_cpu(req->PreviousSessionId);
--	if (prev_id && prev_id != sess->id)
--		destroy_previous_session(conn, user, prev_id);
--
- 	if (sess->state == SMB2_SESSION_VALID) {
- 		/*
- 		 * Reuse session if anonymous try to connect
-@@ -1534,6 +1529,10 @@ static int ntlm_authenticate(struct ksmb
- 		}
- 	}
+ static const struct watchdog_info s32g_wdt_info = {
+ 	.identity = "s32g watchdog",
+-	.options = WDIOF_KEEPALIVEPING | WDIOF_SETTIMEOUT | WDIOF_MAGICCLOSE |
+-	WDIOC_GETTIMEOUT | WDIOC_GETTIMELEFT,
++	.options = WDIOF_KEEPALIVEPING | WDIOF_SETTIMEOUT | WDIOF_MAGICCLOSE,
+ };
  
-+	prev_id = le64_to_cpu(req->PreviousSessionId);
-+	if (prev_id && prev_id != sess->id)
-+		destroy_previous_session(conn, sess->user, prev_id);
-+
- 	/*
- 	 * If session state is SMB2_SESSION_VALID, We can assume
- 	 * that it is reauthentication. And the user/password
+ static struct s32g_wdt_device *wdd_to_s32g_wdt(struct watchdog_device *wdd)
+-- 
+2.55.0
+
 
 
