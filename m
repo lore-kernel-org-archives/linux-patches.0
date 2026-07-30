@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF1A8450901;
-	Thu, 30 Jul 2026 16:18:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A71C45198F;
+	Thu, 30 Jul 2026 16:18:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785428309; cv=none; b=FskThrsfLuxR8ve6i305f9+UqaDW+C3Amzt8Ao946j1/JFVoMqMdhnC3JPDCyCGcYmKlm0uM1l15oGrkhtX8+etNd/9B1pDGCvP5J73FPw/MYg+5rqKWKKPaOvW5KrfGu8pkDZcxKWD2ouJTWwME9GDHC9fif9xI3peCrwKxxHc=
+	t=1785428312; cv=none; b=jlRgwXO+RNhyKdRjjPJRG3QyeyDZ+N6fRgSfp14fRqbEKgD0kEBUR3ynNYnMxPmNh71MRq9EkNjAM6x3OHHBH9HKF3fNIpDyuynFOc7oQsGjig4nUdT+7UOVjTYgQ3pPziRc3iR0GvVKP+isi6aXnPV25c00X3q2Q12X058LI7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785428309; c=relaxed/simple;
-	bh=kuZuEPEpfE7s1JvoCNrbUS4cRuLrqMZSme0967JcRh4=;
+	s=arc-20240116; t=1785428312; c=relaxed/simple;
+	bh=ltwmn68UkViK4ZibAYNRQ8nQqM9d26emeVAgffHXBvI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QelppeEM0xD0kaVd25cRvi8iC7f8xmqkyxFjbnKRwQWoMVrBkF81dqISGLt4VKXsQbEF2il3YA8RvTYVibp0GIXLiUDgeAu+2YLya2CHbhbrcevURdGlRnyUdf+OYsRtNXZ3MIoIW3gNWHR0UGRnaDsWm1FOv8qc2nkyrH/M1cA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xusil7oE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=vCfe7TUndYpHZFmvXRheIb6fx/ELOhNwpqWy2FHkahpC13TMagauVnV0ELnWdbGNZYQDNHC9oJHNhX4F3j82h+TxTkYeV0SEhdJNZp/jujIWckl5RaLEA1P0pamDZi7LMZehJoiSpoPv4JDncKqGVWG9Wo3rPzMYqU2GObUhAP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fBklDTFE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xusil7oE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46DF11F000E9;
-	Thu, 30 Jul 2026 16:18:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fBklDTFE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29D461F000E9;
+	Thu, 30 Jul 2026 16:18:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785428307;
-	bh=PdHEcSvjHN8SfJNvR2mrTlbO/bWIz0i6KDZkw27C/GM=;
+	s=korg; t=1785428310;
+	bh=0hpLMY3FCv41ViCYE6WxFpQiSSLzmYD1qKIkC4PYmYQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xusil7oE3GpvjJb0wvIV7QM3o9VxyDivXZJVh7issTnVJ4R46RY/8V+s7pyYi6RJD
-	 k6RgLu3XCzbV0Yd5f3mPKTV9jAd6usiCjj+2bFYg7Gv3Fkqa1pOjzCgpXdxgXGmRDJ
-	 5USnsi6KTMjHbwTKUQ4Pxxu+Irvs6Ergmz3gb/CE=
+	b=fBklDTFEmHSK3eF8hqWwSqduiCSi4aLk51tfuXBhov022lDbWdOm5jRLHSCW+kqr8
+	 ZfMUOiQ7G37cscGPvglIJzYdcImQ5RM+HWEr90DCZI4oui026sv367nqSI3FX+RKrg
+	 LHL2jMmoCZprMetd5JKbwSJd1UBraOfK2qPOwsGQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qian Zuo <zuoqian113@gmail.com>
-Subject: [PATCH 6.6 477/484] coredump: fix pidfs file refcount leak in umh_coredump_setup
-Date: Thu, 30 Jul 2026 16:16:14 +0200
-Message-ID: <20260730141433.856501938@linuxfoundation.org>
+	SJ Park <sj@kernel.org>,
+	Yang yingliang <yangyingliang@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 478/484] mm/damon/core: validate ranges in damon_set_regions()
+Date: Thu, 30 Jul 2026 16:16:15 +0200
+Message-ID: <20260730141433.878411071@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -49,40 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qian Zuo <zuoqian113@gmail.com>
+From: SJ Park <sj@kernel.org>
 
-The backport of upstream commit b5325b2a270f introduced a reference
-count leak for pidfs_file.
+commit 1292c0ecb1caefb8ca064a3639d5673991e8810c upstream.
 
-In the upstream implementation, pidfs_file is declared with
-__free(fput), which automatically drops the initial file reference when
-leaving the scope. During the backport, the code was rewritten to manage
-the file pointer manually, but after a successful replace_fd(),
-pidfs_file was simply cleared without dropping the initial reference.
+DAMON core logic assumes zero length regions don't exist.  However, a few
+DAMON API callers including DAMON_SYSFS, DAMON_RECLAIM and DAMON_LRU_SORT
+allow users to set empty monitoring target regions.  This could result in
+WARN_ONCE() on CONFIG_DAMON_DEBUG_SANITY enabled kernel, and
+divide-by-zero from damon_merge_two_regions().
 
-As a result, the pidfs file keeps an extra reference and is never
-released after the usermode helper exits, leaving associated objects,
-such as struct pid, permanently allocated and triggering kmemleak
-reports.
+For example, the WANR_ONCE() can be triggered like below.
 
-Fix this by explicitly calling fput(pidfs_file) after replace_fd().
+    # grep DAMON_DEBUG_SANITY /boot/config-$(uname -r)
+    # CONFIG_DAMON_DEBUG_SANITY=y
+    # damo start
+    # cd /sys/kernel/mm/damon/admin/kdamonds/0
+    # echo 0 > contexts/0/targets/0/regions/0/start
+    # echo 0 > contexts/0/targets/0/regions/0/end
+    # echo commit > state
+    # dmesg
+    [....]
+    [   73.705780] ------------[ cut here ]------------
+    [   73.707552] start 0 >= end 0
+    [   73.708452] WARNING: mm/damon/core.c:359 at damon_new_region+0x6e/0x80, CPU#1: kdamond.0/758
+    [...]
 
-Fixes: cdb61a705f5f ("coredump: hand a pidfd to the usermode coredump helper")
-Signed-off-by: Qian Zuo <zuoqian113@gmail.com>
+All DAMON API callers eventually use damon_set_regions() to setup the
+regions.  Add the validation logic in the function.
+
+Link: https://lore.kernel.org/20260630035221.146458-1-sj@kernel.org
+Fixes: 43b0536cb471 ("mm/damon: introduce DAMON-based Reclamation (DAMON_RECLAIM)")
+Signed-off-by: SJ Park <sj@kernel.org>
+Cc: Yang yingliang <yangyingliang@huawei.com>
+Cc: <stable@vger.kernel.org> # 5.16.x
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: SJ Park <sj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/coredump.c |    1 +
- 1 file changed, 1 insertion(+)
+ mm/damon/core.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/fs/coredump.c
-+++ b/fs/coredump.c
-@@ -560,6 +560,7 @@ static int umh_coredump_setup(struct sub
- 		if (err < 0)
- 			goto out_fail;
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -212,6 +212,12 @@ int damon_set_regions(struct damon_targe
+ 	unsigned int i;
+ 	int err;
  
-+		fput(pidfs_file);
- 		pidfs_file = NULL;
- 	}
- 
++	for (i = 0; i < nr_ranges; i++) {
++		if (ALIGN_DOWN(ranges[i].start, DAMON_MIN_REGION) >=
++				ALIGN(ranges[i].end, DAMON_MIN_REGION))
++			return -EINVAL;
++	}
++
+ 	/* Remove regions which are not in the new ranges */
+ 	damon_for_each_region_safe(r, next, t) {
+ 		for (i = 0; i < nr_ranges; i++) {
 
 
