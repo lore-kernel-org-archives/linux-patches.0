@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C2183B6366;
-	Thu, 30 Jul 2026 14:53:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE04D34DCE4;
+	Thu, 30 Jul 2026 14:53:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423226; cv=none; b=Yfo/juxbySIvU8DSW/LZsGtPx82xCIMFoeHEEwhwPR75fAFbLiAfIH699aNuhruhcNBmN0hruM+762621zKIHThx+Uw8+7UCPQtf49hymlk+kuJq2N2GW7g5hKQE5i3mymzrubjvV2KAXnd3pfvCmkuA1S18eJxO5ybDSMW8XNU=
+	t=1785423229; cv=none; b=AsbbDWgzh5eN+/ZHXLje2MmlD6xzj+kHQS7aKAlTUmQ3pOKg7NAgr9PkUzkplEQLb+CVTOLI8COir6OmwmObECfefvg9bCKbDXalLKq/78XYz9kh93AQbrEirowK5oxDBkSLf/bAvoriouCmkGedzSqSQJLWEppgat1m/SDvyAk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423226; c=relaxed/simple;
-	bh=4QJWl4vyuq9cADqI/e7isNG3dJUsR0M4YRVScjnsUoU=;
+	s=arc-20240116; t=1785423229; c=relaxed/simple;
+	bh=q6pCKbMjHq2wuYM909D7nIMYRhZUpe+TjJXyN5sqGKE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oJHqwc9OzahbCQHcgpjx1cRq3CNxBAQcbsGHJqQbFa86qdPC4iY4rVs9vs8uVhj/vjdiS1GQSxli5cCszeEngZzdJz44/YEPUVFrrmlZY+Vq7g5j4DuSZwPg6oWKOez3qthC67iBgfGOf6BOxA1b7DsIfvf4kZRTvGFR4S+SS7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A22KfQSr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gDetvD4B5E/4rb6DZC3VZ3X6Z+4GvSeJiHLllooGENh/2Ts+PASYkgLD2BFfuLYo196KwaAzeXcTBilBLGhg/VOz7V7H9IsOEarkbI1+xqHAiZF8LJmR+J+6pmje+epPrtR1UeQhwsjGlPu0KjmkMpDjiaRRWuMRZaiukKE1Od4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rTkwXrQP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A22KfQSr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6686D1F000E9;
-	Thu, 30 Jul 2026 14:53:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rTkwXrQP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43E6F1F000E9;
+	Thu, 30 Jul 2026 14:53:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423224;
-	bh=8pvGNBCA7nC00V14Cj+RhA9Bi8OwgohA4Kh9sanHGOY=;
+	s=korg; t=1785423227;
+	bh=s+VqcHRJ1OX1MuC7cctu1pLiHlZWf+cpE5Cc2RvbVw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A22KfQSrOAW2AV2Ks8UnK0R0mBiqxkUH9cSZxM6GxH121O+p7OarQdMufu5oB3kFS
-	 vWO+1hdQyorGUY8XmrxI6AgFUOxv01A+TTJBJ0hxDVwz7ZsLz33l/t0YCkr06HQxgx
-	 lpdcV53UhapUnCMpptJIzUfK2d1ZSQcxvI5eRmCk=
+	b=rTkwXrQP4Ar/L0aOk2Yp6R/EFS4tDFddMK8McL9difTNvreS0/WW30FG2+JM0bT95
+	 xuA9aqAEWvdxjCPQ2FaNMlfRqAk8m3TSx/JspTrAXaJt+TNATyw1DS+q3rk1nzAEBW
+	 LxlqWvTeWXI4vUMvjEi1iQimYKL/9wvrKBOdi3m4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boyuan Zhang <boyuan.zhang@amd.com>,
-	Leo Liu <leo.liu@amd.com>,
+	Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>,
+	Kent Russell <kent.russell@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.1 711/744] drm/amdgpu: fix division by zero with invalid uvd dimensions
-Date: Thu, 30 Jul 2026 16:16:24 +0200
-Message-ID: <20260730141459.391254525@linuxfoundation.org>
+Subject: [PATCH 7.1 712/744] drm/amdgpu: Fix kernel panic during driver load failure
+Date: Thu, 30 Jul 2026 16:16:25 +0200
+Message-ID: <20260730141459.411698841@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -51,48 +51,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boyuan Zhang <boyuan.zhang@amd.com>
+From: Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>
 
-commit 0c01c811be47e6b146552dd59bfedbea8f09b8f4 upstream.
+commit a279bd143b3c184358b658e43a057e31ee8c4de5 upstream.
 
-When width or height is less than 16, width_in_mb or height_in_mb
-becomes 0, leading to fs_in_mb being 0. This causes a division by
-zero when calculating num_dpb_buffer in H264 and H264 Perf decode
-paths.
+Avoid kernel panic if MES init fails during driver load. The KIQ ring is
+falsely marked as ready as ASICs that use MES, KIQ is owned by MES.
 
-Add validation to reject frames with width < 16 or height < 16
-before performing any calculations that depend on these values.
+BUG: kernel NULL pointer dereference, address: 0000000000000000
+RIP: 0010:gfx_v12_1_wait_reg_mem+0x5a/0x1f0 [amdgpu]
+Call Trace:
+ gfx_v12_1_ring_emit_reg_write_reg_wait+0x1f/0x30 [amdgpu]
+ amdgpu_gmc_fw_reg_write_reg_wait+0xb2/0x190 [amdgpu]
+ amdgpu_gmc_flush_gpu_tlb+0x1cc/0x230 [amdgpu]
+ amdgpu_gart_invalidate_tlb+0x81/0xa0 [amdgpu]
+ amdgpu_gart_unbind+0x72/0x90 [amdgpu]
+ amdgpu_ttm_backend_unbind+0xa4/0xb0 [amdgpu]
+ amdgpu_ttm_tt_unpopulate+0x13/0xd0 [amdgpu]
+ amdttm_tt_unpopulate+0x29/0x70 [amdttm]
+ ttm_bo_put+0x1eb/0x360 [amdttm]
+ amdgpu_bo_free_kernel+0xf9/0x1f0 [amdgpu]
+ amdgpu_ih_ring_fini+0x5a/0x90 [amdgpu]
+ amdgpu_irq_fini_hw+0x58/0x80 [amdgpu]
+ amdgpu_device_fini_hw+0x4e0/0x5b0 [amdgpu]
+ amdgpu_driver_load_kms+0x60/0xa0 [amdgpu]
+ amdgpu_pci_probe+0x28e/0x6d0 [amdgpu]
+ pci_device_probe+0x19f/0x220
+ really_probe+0x1ed/0x340
+ driver_probe_device+0x1e/0x80
+ __driver_attach+0xd3/0x1a0
+ bus_for_each_dev+0x68/0xa0
+ bus_add_driver+0x19f/0x270
+ driver_register+0x5d/0xf0
+ do_one_initcall+0xac/0x200
+ do_init_module+0x1ec/0x280
+ __se_sys_finit_module+0x2de/0x310
+ do_syscall_64+0x6a/0x250
+ entry_SYSCALL_64_after_hwframe+0x4b/0x53
 
-V2: Format change - move up all vaiable definitions.
-V3: Use warn_once to avoid spam.
-
-Signed-off-by: Boyuan Zhang <boyuan.zhang@amd.com>
-Reviewed-by: Leo Liu <leo.liu@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>
+Reviewed-by: Kent Russell <kent.russell@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 3e41d26c70b0a459d041cc19482a226c4b7423cb)
+(cherry picked from commit 4623b958dd6da0f4c3026afdf330626a09ecb0f0)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c |   13 +++++++++++--
+ drivers/gpu/drm/amd/amdgpu/gfx_v12_1.c |   13 +++++++++++--
+ 2 files changed, 22 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
-@@ -655,6 +655,14 @@ static int amdgpu_uvd_cs_msg_decode(stru
- 	unsigned int image_size, tmp, min_dpb_size, num_dpb_buffer;
- 	unsigned int min_ctx_size = ~0;
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
+@@ -3514,10 +3514,19 @@ static int gfx_v12_0_cp_resume(struct am
+ 		gfx_v12_0_cp_gfx_enable(adev, true);
+ 	}
  
-+	/* Reject invalid dimensions to prevent division by zero */
-+	if (width < 16 || height < 16) {
-+		dev_WARN_ONCE(adev->dev, 1,
-+			      "Invalid UVD decoding dimensions (%dx%d)!\n",
-+			      width, height);
-+		return -EINVAL;
+-	if (adev->enable_mes_kiq && adev->mes.kiq_hw_init)
++	if (adev->enable_mes_kiq && adev->mes.kiq_hw_init) {
+ 		r = amdgpu_mes_kiq_hw_init(adev, 0);
+-	else
++		/*
++		 * With MES, GFX KIQ ring is owned by the MES and is never
++		 * initialized/used directly by the driver, so it must
++		 * not be left flagged as ready. mes_v12_0_hw_init() clears
++		 * but clear here if MES init fails
++		*/
++		if (r)
++			adev->gfx.kiq[0].ring.sched.ready = false;
++	} else {
+ 		r = gfx_v12_0_kiq_resume(adev);
 +	}
-+
- 	image_size = width * height;
- 	image_size += image_size / 2;
- 	image_size = ALIGN(image_size, 1024);
+ 	if (r)
+ 		return r;
+ 
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v12_1.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v12_1.c
+@@ -2502,10 +2502,19 @@ static int gfx_v12_1_xcc_cp_resume(struc
+ 
+ 		gfx_v12_1_xcc_cp_compute_enable(adev, true, xcc_id);
+ 
+-		if (adev->enable_mes_kiq && adev->mes.kiq_hw_init)
++		if (adev->enable_mes_kiq && adev->mes.kiq_hw_init) {
+ 			r = amdgpu_mes_kiq_hw_init(adev, xcc_id);
+-		else
++			/*
++			 * With MES, GFX KIQ ring is owned by the MES and is never
++			 * initialized/used directly by the driver, so it must
++			 * not be left flagged as ready. mes_v12_0_hw_init() clears
++			 * but clear here if MES init fails
++			 */
++			if (r)
++				adev->gfx.kiq[xcc_id].ring.sched.ready = false;
++		} else {
+ 			r = gfx_v12_1_xcc_kiq_resume(adev, xcc_id);
++		}
+ 		if (r)
+ 			return r;
+ 
 
 
