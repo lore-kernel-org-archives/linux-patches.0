@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 832E04052DC;
-	Thu, 30 Jul 2026 14:58:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 579E0337699;
+	Thu, 30 Jul 2026 14:58:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423527; cv=none; b=kh5Xb9HvS/7BPu2xafiMbTNTu0e4EJR1M1S4Fr3y4nOHmDrxm8SQMJb3mvrdcD1Q30F+jY66SABCmlEcH/Y0hx2QgkfKoooMXxg+uajDnTziFoN7B37uSW/MTqgFonsHOszB+d1tEQXCQ5ZT8eTzJmRFTLMdpRvjE3SQzjxq0nY=
+	t=1785423530; cv=none; b=jefGcaHVx/e32pVccnJ4TRmtYQoBqSHmyqA6oUZt/o48tsC2gi1vrmoZM735kH+rJnncUEmcwosBGDrLPZ35prFsockiLokR10kIeqQJ8s08D3TzIQMBFhs6tECsRTQGi2sRW2BdEt08O/7TKnkX07FfAMFhhGNJguc1lFZ/Poc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423527; c=relaxed/simple;
-	bh=jyx7c/hoIoLc52yU8CivU/hJp6f2O31o3oWoctR0h9s=;
+	s=arc-20240116; t=1785423530; c=relaxed/simple;
+	bh=7F/XuT2u0CRWnTyROuE/vgMWIa30rS4+9baHhb7cCLc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BAi89lZEGxCNRryLGz9iVIlMkGwFe8Y0BzpLsqXmrU/ryDaaZ+bkFQFiaugExdk/M665E18KRiI0njLWhBzXlmrBik3GUdxlCK2hHaHpP814aKz0N9KHbw3XReXOKgcfT4sO9JwFPe7nt6S3wkzlzKWLNBZDETAZaGx8eYgw+m4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ub3Dt/de; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=opQpifr0wktJyJT6e4ipiTGo5ALiheOvdBsgAcC/8KZtFgjwZZPMTSWxt+VmxCTrk2wzK++oX2wWdIUL9c39FBIDtQtI2GTKGI2OqdqKKxSNNT/u5JOq/ChXOwYVBCtYlydXJGqCb5heiJzMH9Jv+cjzOa6NgUbDFW8qHgow9BE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FtM5xd1+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ub3Dt/de"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE6041F000E9;
-	Thu, 30 Jul 2026 14:58:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FtM5xd1+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B37601F000E9;
+	Thu, 30 Jul 2026 14:58:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423526;
-	bh=Yj7fiu0en/jwebYvFeTHePsi2pt7BrG4JVomMZxxwng=;
+	s=korg; t=1785423529;
+	bh=hg7x6yB6OGdZNkpv/yCPqcF/YmOCpRfwbsqRECkmZyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ub3Dt/deH8001t3nTuNfpT2oEeRdXUAqEDj6UcYiwnqqlxJVRXHHAgBfgeSVnnZmC
-	 dA0uKe5ZtRSO2siJw4FUgYn1RKxsEHa2BzZaQmE3bDtY26hHzt17AGzoUuo40gmxZ7
-	 skHBkCcAQCJi59Hy6kHH0DzHqypq2odrsU5D9dvE=
+	b=FtM5xd1+5mNQRIaymnKNbvwJ+JLk2F1JfCCUav+Tmc5VSSKVGSxENQ7maeqpNG5G6
+	 1UDjspMklShuIzc8SNPYP8uh2hYkobrPV+H8uDb9O3k1XoHEfGKGtD0KkOdblzU0S/
+	 pP/kahPVpFSCB/Gz/bc3SFv6tPOZKlwiOnwhh79k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Christian Lamparter <chunkeey@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Sumit Gupta <sumitg@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 073/675] wifi: p54: validate RX frame length in p54_rx_eeprom_readback()
-Date: Thu, 30 Jul 2026 16:06:43 +0200
-Message-ID: <20260730141446.681833457@linuxfoundation.org>
+Subject: [PATCH 6.18 032/675] arm64: tegra: Fix CPU compatible string to cortex-a78ae on Tegra234
+Date: Thu, 30 Jul 2026 16:06:02 +0200
+Message-ID: <20260730141445.802500981@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -53,77 +51,141 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Sumit Gupta <sumitg@nvidia.com>
 
-[ Upstream commit ebd6d37fa94bee929e0b4c9ca19fdf9b1dcf6cea ]
+[ Upstream commit 0dfa1e960f86e032007882b032c5cc7d14ebe73e ]
 
-p54_rx_eeprom_readback() copies the requested EEPROM slice out of a
-device-supplied readback frame without checking that the skb actually holds
-that many bytes. Commit da1b9a55ff11 ("wifi: p54: prevent buffer-overflow in
-p54_rx_eeprom_readback()") closed the destination overflow by copying a
-fixed priv->eeprom_slice_size (and rejecting a mismatched advertised len),
-but the source side is still unbounded: nothing verifies the frame is long
-enough to supply that many bytes.
+The Tegra234 SoC uses Cortex-A78AE cores, not Cortex-A78. Update the
+compatible string for all CPU nodes to match the actual hardware.
 
-A malicious USB device can send a short frame whose advertised len matches
-priv->eeprom_slice_size while the payload is truncated. The equality check
-passes and memcpy() reads past the end of the skb, leaking adjacent heap:
+Tegra234 hardware reports:
+  # head /proc/cpuinfo | egrep 'implementer|part'
+  CPU implementer : 0x41
+  CPU part        : 0xd42
 
-  BUG: KASAN: slab-out-of-bounds in p54_rx (drivers/net/wireless/intersil/p54/txrx.c:507)
-  Read of size 1016 at addr ffff88800f077114 by task swapper/0/0
-  Call Trace:
-   <IRQ>
-   ...
-   __asan_memcpy (mm/kasan/shadow.c:105)
-   p54_rx (drivers/net/wireless/intersil/p54/txrx.c:507)
-   p54u_rx_cb (drivers/net/wireless/intersil/p54/p54usb.c:163)
-   __usb_hcd_giveback_urb (drivers/usb/core/hcd.c:1657)
-   dummy_timer (drivers/usb/gadget/udc/dummy_hcd.c:2005)
-   ...
-   </IRQ>
+Which maps to (from arch/arm64/include/asm/cputype.h):
+  #define ARM_CPU_IMP_ARM              0x41
+  #define ARM_CPU_PART_CORTEX_A78AE    0xD42
 
-  The buggy address belongs to the object at ffff88800f0770c0
-   which belongs to the cache skbuff_small_head of size 704
-  The buggy address is located 84 bytes inside of
-   allocated 704-byte region [ffff88800f0770c0, ffff88800f077380)
-
-Check that the slice fits in the skb before copying.
-
-Fixes: 7cb770729ba8 ("p54: move eeprom code into common library")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Acked-by: Christian Lamparter <chunkeey@gmail.com>
-Link: https://patch.msgid.link/20260628000510.4152481-1-xmei5@asu.edu
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: a12cf5c339b08 ("arm64: tegra: Describe Tegra234 CPU hierarchy")
+Signed-off-by: Sumit Gupta <sumitg@nvidia.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intersil/p54/txrx.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/arm64/boot/dts/nvidia/tegra234.dtsi | 24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/net/wireless/intersil/p54/txrx.c b/drivers/net/wireless/intersil/p54/txrx.c
-index 1294a1d6528e2c..9f491334c8d043 100644
---- a/drivers/net/wireless/intersil/p54/txrx.c
-+++ b/drivers/net/wireless/intersil/p54/txrx.c
-@@ -499,11 +499,19 @@ static void p54_rx_eeprom_readback(struct p54_common *priv,
- 		if (le16_to_cpu(eeprom->v2.len) != priv->eeprom_slice_size)
- 			return;
+diff --git a/arch/arm64/boot/dts/nvidia/tegra234.dtsi b/arch/arm64/boot/dts/nvidia/tegra234.dtsi
+index 5b245977d6a037..345587fa1d9ad0 100644
+--- a/arch/arm64/boot/dts/nvidia/tegra234.dtsi
++++ b/arch/arm64/boot/dts/nvidia/tegra234.dtsi
+@@ -5345,7 +5345,7 @@ cpus {
+ 		#size-cells = <0>;
  
-+		if (eeprom->v2.data + priv->eeprom_slice_size >
-+		    skb_tail_pointer(skb))
-+			return;
-+
- 		memcpy(priv->eeprom, eeprom->v2.data, priv->eeprom_slice_size);
- 	} else {
- 		if (le16_to_cpu(eeprom->v1.len) != priv->eeprom_slice_size)
- 			return;
+ 		cpu0_0: cpu@0 {
+-			compatible = "arm,cortex-a78";
++			compatible = "arm,cortex-a78ae";
+ 			device_type = "cpu";
+ 			reg = <0x00000>;
  
-+		if (eeprom->v1.data + priv->eeprom_slice_size >
-+		    skb_tail_pointer(skb))
-+			return;
-+
- 		memcpy(priv->eeprom, eeprom->v1.data, priv->eeprom_slice_size);
- 	}
+@@ -5364,7 +5364,7 @@ cpu0_0: cpu@0 {
+ 		};
+ 
+ 		cpu0_1: cpu@100 {
+-			compatible = "arm,cortex-a78";
++			compatible = "arm,cortex-a78ae";
+ 			device_type = "cpu";
+ 			reg = <0x00100>;
+ 
+@@ -5383,7 +5383,7 @@ cpu0_1: cpu@100 {
+ 		};
+ 
+ 		cpu0_2: cpu@200 {
+-			compatible = "arm,cortex-a78";
++			compatible = "arm,cortex-a78ae";
+ 			device_type = "cpu";
+ 			reg = <0x00200>;
+ 
+@@ -5402,7 +5402,7 @@ cpu0_2: cpu@200 {
+ 		};
+ 
+ 		cpu0_3: cpu@300 {
+-			compatible = "arm,cortex-a78";
++			compatible = "arm,cortex-a78ae";
+ 			device_type = "cpu";
+ 			reg = <0x00300>;
+ 
+@@ -5421,7 +5421,7 @@ cpu0_3: cpu@300 {
+ 		};
+ 
+ 		cpu1_0: cpu@10000 {
+-			compatible = "arm,cortex-a78";
++			compatible = "arm,cortex-a78ae";
+ 			device_type = "cpu";
+ 			reg = <0x10000>;
+ 
+@@ -5440,7 +5440,7 @@ cpu1_0: cpu@10000 {
+ 		};
+ 
+ 		cpu1_1: cpu@10100 {
+-			compatible = "arm,cortex-a78";
++			compatible = "arm,cortex-a78ae";
+ 			device_type = "cpu";
+ 			reg = <0x10100>;
+ 
+@@ -5459,7 +5459,7 @@ cpu1_1: cpu@10100 {
+ 		};
+ 
+ 		cpu1_2: cpu@10200 {
+-			compatible = "arm,cortex-a78";
++			compatible = "arm,cortex-a78ae";
+ 			device_type = "cpu";
+ 			reg = <0x10200>;
+ 
+@@ -5478,7 +5478,7 @@ cpu1_2: cpu@10200 {
+ 		};
+ 
+ 		cpu1_3: cpu@10300 {
+-			compatible = "arm,cortex-a78";
++			compatible = "arm,cortex-a78ae";
+ 			device_type = "cpu";
+ 			reg = <0x10300>;
+ 
+@@ -5497,7 +5497,7 @@ cpu1_3: cpu@10300 {
+ 		};
+ 
+ 		cpu2_0: cpu@20000 {
+-			compatible = "arm,cortex-a78";
++			compatible = "arm,cortex-a78ae";
+ 			device_type = "cpu";
+ 			reg = <0x20000>;
+ 
+@@ -5516,7 +5516,7 @@ cpu2_0: cpu@20000 {
+ 		};
+ 
+ 		cpu2_1: cpu@20100 {
+-			compatible = "arm,cortex-a78";
++			compatible = "arm,cortex-a78ae";
+ 			device_type = "cpu";
+ 			reg = <0x20100>;
+ 
+@@ -5535,7 +5535,7 @@ cpu2_1: cpu@20100 {
+ 		};
+ 
+ 		cpu2_2: cpu@20200 {
+-			compatible = "arm,cortex-a78";
++			compatible = "arm,cortex-a78ae";
+ 			device_type = "cpu";
+ 			reg = <0x20200>;
+ 
+@@ -5554,7 +5554,7 @@ cpu2_2: cpu@20200 {
+ 		};
+ 
+ 		cpu2_3: cpu@20300 {
+-			compatible = "arm,cortex-a78";
++			compatible = "arm,cortex-a78ae";
+ 			device_type = "cpu";
+ 			reg = <0x20300>;
  
 -- 
 2.53.0
