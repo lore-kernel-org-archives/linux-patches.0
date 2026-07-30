@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 521693B52EE;
-	Thu, 30 Jul 2026 15:57:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C52E442FCF;
+	Thu, 30 Jul 2026 15:57:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427065; cv=none; b=HvlSzvslCtSn017rndjWFlHgva6Z47V1ZnOImrJV0eP8X9Jdp+KQYE5BBaPyBjmzX3D3sm8ZVSywpaXSkSStII1MtMm5bzWxMGuIKHEva2dMrYa8g+ozlipARAVoEASX2TuZ3RM3Fw0oAg/uU3nUV6enxZtR2q/briF182oy0dc=
+	t=1785427068; cv=none; b=sfV3ZPz1ISnTd+4UUgEuQAUXPKk+uZzYWjJTps4vYLeM6l3CBsl+R90pSpNGHGZmT2n/nFxK8A5kPOHiDmWmjI90RRBJhMBUeu6C0sVv3+V0bIbhhom42znZtzZswV0XlYD2ukRpX9V43jQfc9Oaj8Z/yxAEyG8OV8MQL8YZrLM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427065; c=relaxed/simple;
-	bh=Us+Ta+NSl+LPBtyzry9PM6+lkI0X3Y4lUZVqZhW4G1g=;
+	s=arc-20240116; t=1785427068; c=relaxed/simple;
+	bh=oLeZga0yrPn8pHAo4HHYsFxeAMLIjVtlTjhhz5mZ+pw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D6auj/KwDMhK6dwUFUB9gbF7b62AVWrw0nYrY6+L6JSRoDquEFypVtllk4i5OfEgBTevU/2R32uGOeXOvpG7lEdGdP+LqvNc9kWdO7RtS/9i1q0vP9sWG4Gf1Vz1RNe1/3kl/BlNGqjB+dj5tcwDHOxXxxj6r7JZx1Lz7gHtspc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KgJNhMK0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JbxDP9H1ZaTh8OsoGB5nVsQ4GZHudL0OAREZJiSr2Z6kxISCtpCPSDF4VN6UMmpGgfdGnjji3wiO58hzNIoVr5H7y4TmRYA920g9ffJcmwd0EpynWS+tQtE8hx/odpZF4sKt+ihLxfTUH7W6nJTgFSfYuHXFVsifp1A4/m4yGaQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bd/+yJxB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KgJNhMK0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACA9B1F000E9;
-	Thu, 30 Jul 2026 15:57:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bd/+yJxB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 934341F000E9;
+	Thu, 30 Jul 2026 15:57:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427064;
-	bh=Jb2FXDD45C7dFeXLufDFwWPpex9+51D3eGf409YF+mI=;
+	s=korg; t=1785427067;
+	bh=zuh6MmmKgmvrpPsb+hyRJzoR1fHz/NQ0tJr7A61FQ6c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KgJNhMK0Gd33zT1V+oI0VTqLdNsUAJY8rRjBZy2VgyUeT8G+84wBzfY7rjH8UnfKE
-	 og0iYuRag1nUkKY/UsVx2TNmTGq0raeMk/PnN9Ymnpacx7MXLXz5S83/nxLxxOi4Dv
-	 xDdR5eqLPpN8tvgXcZoiHCXiHp2+1qcT2gFhKPKU=
+	b=Bd/+yJxBdjff5WPI25Bv5pR9oLOGaNfejmzRhoMQWtCYXdFUX3e69cLwsnsP4xJxb
+	 1BXMMmmQBnteDEHs6BQ1WdhYnzUvmTBL2FDh5KmPvIWFDavFs77l5sSKZcwb1B21rQ
+	 Xqz64qikB3rn/bO4qin8UPnfS4gXYMnNBZvyPer4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Hyunwoo Kim <imv4bel@gmail.com>,
-	Sean Christopherson <seanjc@google.com>,
 	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.6 010/484] KVM: x86: Check for invalid/obsolete root *after* making MMU pages available
-Date: Thu, 30 Jul 2026 16:08:27 +0200
-Message-ID: <20260730141423.630830561@linuxfoundation.org>
+Subject: [PATCH 6.6 011/484] KVM: nVMX: Hide shadow VMCS right after VMCLEAR
+Date: Thu, 30 Jul 2026 16:08:28 +0200
+Message-ID: <20260730141423.654792203@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -51,86 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-commit 2abd5287f08319fa35764566b15c6e22cb1068db upstream.
+commit 622ebfac01ba4f9c0060cebd41257fe46fc4a0b3 upstream.
 
-Check for a "stale" page fault, i.e. for an invalid and/or obsolete root,
-after making MMU pages available for the shadow MMU.  If reclaiming shadow
-pages zaps an in-use root, i.e. marks it invalid, then KVM will attempt to
-map memory into an invalid root.  On its own, populating an invalid root is
-"fine", but because child shadow pages inherit their parent's role, any
-children created during the map/fetch will be created as invalid pages,
-thus violating KVM's invariant that invalid pages are never on the list of
-active MMU pages.
+free_nested() frees the shadow VMCS while vmcs01 still points to it. But
+because it is asynchronous with respect to loaded_vmcs_clear(), the vCPU
+might migrate before the pointer is cleared and __loaded_vmcs_clear()
+may then execute VMCLEAR.
 
-Note, the underlying flaw has existed since KVM first started tracking
-invalid roots in 2008 (commit 2e53d63acba7, "KVM: MMU: ignore zapped root
-pagetables"), but the true badness only came along in 2020 (Linux 5.9)
-with the invariant that invalid shadow pages can't be on the list of
-active pages.
+The VMCS needs to stay attached until its explicit VMCLEAR completes, but
+then it can be hidden and the page safely freed.
 
-Note #2, inheriting role.invalid when creating child shadow pages is also
-far from ideal; that flaw will be addressed separately.
-
-Reported-by: Hyunwoo Kim <imv4bel@gmail.com>
-Fixes: f95eec9bed76 ("KVM: x86/mmu: Don't put invalid SPs back on the list of active pages")
+Fixes: 355f4fb1405e ("kvm: nVMX: VMCLEAR an active shadow VMCS after last use")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/mmu/mmu.c         |    9 +++++----
- arch/x86/kvm/mmu/paging_tmpl.h |   10 ++++++----
- 2 files changed, 11 insertions(+), 8 deletions(-)
+ arch/x86/kvm/vmx/nested.c |   11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
---- a/arch/x86/kvm/mmu/mmu.c
-+++ b/arch/x86/kvm/mmu/mmu.c
-@@ -4384,16 +4384,17 @@ static int direct_page_fault(struct kvm_
+--- a/arch/x86/kvm/vmx/nested.c
++++ b/arch/x86/kvm/vmx/nested.c
+@@ -295,6 +295,7 @@ static void vmx_switch_vmcs(struct kvm_v
+ static void free_nested(struct kvm_vcpu *vcpu)
+ {
+ 	struct vcpu_vmx *vmx = to_vmx(vcpu);
++	struct vmcs *shadow_vmcs;
  
- 	orig_pfn = fault->pfn;
- 
--	r = RET_PF_RETRY;
- 	write_lock(&vcpu->kvm->mmu_lock);
- 
--	if (is_page_fault_stale(vcpu, fault))
--		goto out_unlock;
--
- 	r = make_mmu_pages_available(vcpu);
- 	if (r)
- 		goto out_unlock;
- 
-+	if (is_page_fault_stale(vcpu, fault)) {
-+		r = RET_PF_RETRY;
-+		goto out_unlock;
-+	}
+ 	if (WARN_ON_ONCE(vmx->loaded_vmcs != &vmx->vmcs01))
+ 		vmx_switch_vmcs(vcpu, &vmx->vmcs01);
+@@ -312,9 +313,15 @@ static void free_nested(struct kvm_vcpu
+ 	vmx->nested.current_vmptr = INVALID_GPA;
+ 	if (enable_shadow_vmcs) {
+ 		vmx_disable_shadow_vmcs(vmx);
+-		vmcs_clear(vmx->vmcs01.shadow_vmcs);
+-		free_vmcs(vmx->vmcs01.shadow_vmcs);
 +
- 	r = direct_map(vcpu, fault);
- 
- out_unlock:
---- a/arch/x86/kvm/mmu/paging_tmpl.h
-+++ b/arch/x86/kvm/mmu/paging_tmpl.h
-@@ -838,15 +838,17 @@ static int FNAME(page_fault)(struct kvm_
- 
- 	orig_pfn = fault->pfn;
- 
--	r = RET_PF_RETRY;
- 	write_lock(&vcpu->kvm->mmu_lock);
- 
--	if (is_page_fault_stale(vcpu, fault))
--		goto out_unlock;
--
- 	r = make_mmu_pages_available(vcpu);
- 	if (r)
- 		goto out_unlock;
-+
-+	if (is_page_fault_stale(vcpu, fault)) {
-+		r = RET_PF_RETRY;
-+		goto out_unlock;
-+	}
-+
- 	r = FNAME(fetch)(vcpu, fault, &walker);
- 
- out_unlock:
++		/*
++		 * Keep the pointer visible until after VMCLEAR, so migration
++		 * can clear an active shadow VMCS on the old CPU.
++		 */
++		shadow_vmcs = vmx->vmcs01.shadow_vmcs;
++		vmcs_clear(shadow_vmcs);
+ 		vmx->vmcs01.shadow_vmcs = NULL;
++		free_vmcs(shadow_vmcs);
+ 	}
+ 	kfree(vmx->nested.cached_vmcs12);
+ 	vmx->nested.cached_vmcs12 = NULL;
 
 
