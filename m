@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EC3A38BF6A;
-	Thu, 30 Jul 2026 16:08:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DAC938BF6A;
+	Thu, 30 Jul 2026 16:08:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427711; cv=none; b=myyJJ42OMDbIv7pLQdp6CzxPOjC/YhMLchLedk4CsJrdClnC9lK+6Rd9HudGpXHTWWPsrtDEDjjaHeeBndMSzkghDgCyZlQE1f+3c13dmaTUjisPW7/Kv4n4ruW5SENib8ExVGBbHhpwFea5TMHe93VrvzfNLUqU55bGbcDfC5M=
+	t=1785427714; cv=none; b=O6BEp/CwmUdSsJdFAm2+jQtBVttGU3VOqvx+BViUDZ1lwQK7W2Sj2TgpGI0lIzwIg6p5titUXDENXw6cL1VfWDoZd28qLd3lXVHGz96/5hGUaEulMAV+AZwUzMWU9mCQo4BMLwn5UCHHe/2GXEKPnyfjHQMd0Hkaxi8jGk7H514=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427711; c=relaxed/simple;
-	bh=WnCG2hw7bW5iTmDNVvEbOhFpMto8peY8I3LhrzmkYP0=;
+	s=arc-20240116; t=1785427714; c=relaxed/simple;
+	bh=Qx/1TTkCaW9LXZiG1hSBqF0Wt1EeyTRK7VBMIif131g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AysveuBPK7qU2xnzQNILl2tB5lmVbL42ECv5UHfLLVIwBZDhSVO/NmBBMWjB5birJY+7e7b4izTHUoDx8cLj/dNOjB9Ofp3f0wYJBTGe4B5+MQhwIh5uwBVU6CGwrlwRQmSQcHQcH10AwvE0ZXvn5MCoLVboXWl93N2xm0zAbyw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SP1VVMBN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OlHQTbzcJZl1JIIORTTwLfuhZsLUhzN82CpdWRxf1in9ekJrkfmkhAGUPDAtLa1EVay4OP6in9GBQAXL+yv1LcPwi1zBu8LA/9heV6onGMYX0Rwid9ovtclBgz75GJz2ibT2LXUfWhuOPMXh4pQU15+MOneN+UBAT5eaNDApe7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UKrHKZoI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SP1VVMBN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85D8E1F000E9;
-	Thu, 30 Jul 2026 16:08:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UKrHKZoI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 746F51F000E9;
+	Thu, 30 Jul 2026 16:08:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427710;
-	bh=/wXeVnxWgQmz+a2J/tn1AibNufrFUMEBS4qbs9Vt3KM=;
+	s=korg; t=1785427713;
+	bh=21Cs7aaBUbaDfbRiyyVRrw/CBTnlsoTldUcrjLXiENo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SP1VVMBNWMbhxjqwkyCs/fSe7ZnqaOWT1R0P9b9xO8BB9hCOdC1cNP0jK9xW0whzV
-	 JwwQMLLsas/j9FCFFpNXp7IYx0yeLxmZvwD7TXoFkUXw6l50Ji0SiFJtsAqhWCCZNe
-	 Ghkhp5EWj4/p5JyGMI36lFhcGp1N5/yovDPd3LoQ=
+	b=UKrHKZoIdoki8kuJjdqKmyM9rcv6CrmljNcqCNRiLJPEdKRxFAeziMnjpsvhDwU5i
+	 I+K1u/dW/v6s6DhE4SEkgjUyHN+62phxNwtsLD24VqeTg09UumBBoAXR8VNzu1DNIC
+	 +kzP7/wvI8YSBghrag74SN5nDvlF1T7tZIJKiALg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.6 265/484] media: vimc: fix reference leak on failed device registration
-Date: Thu, 30 Jul 2026 16:12:42 +0200
-Message-ID: <20260730141429.250776908@linuxfoundation.org>
+	WenTao Liang <vulab@iscas.ac.cn>,
+	George Zhang <george.zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.6 230/484] drm/amd/display: set new_stream to NULL after release
+Date: Thu, 30 Jul 2026 16:12:07 +0200
+Message-ID: <20260730141428.474216627@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -50,45 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: WenTao Liang <vulab@iscas.ac.cn>
 
-commit 33e2b833c66b890a0d71c4fa82d4c97143f7f75f upstream.
+commit 9fa26b9eed6195bf840f39ac183b9a6237548755 upstream.
 
-When platform_device_register() fails in vimc_init(), the embedded
-struct device in vimc_pdev has already been initialized by
-device_initialize(), but the failure path returns the error without
-dropping the device reference for the current platform device:
+In dm_update_crtc_state(), the skip_modeset path releases new_stream
+via dc_stream_release() but does not set the pointer to NULL.
 
-  vimc_init()
-    -> platform_device_register(&vimc_pdev)
-       -> device_initialize(&vimc_pdev.dev)
-       -> setup_pdev_dma_masks(&vimc_pdev)
-       -> platform_device_add(&vimc_pdev)
+If a later error (e.g., color management failure) triggers the fail
+label, the error path calls dc_stream_release() again on the same
+dangling pointer, causing a double release and potential use-after-free.
 
-This leads to a reference leak when platform_device_register() fails.
-Fix this by calling platform_device_put() before returning the error.
+Fix this by setting new_stream to NULL after the initial release.
 
-The issue was identified by a static analysis tool I developed and
-confirmed by manual review.
-
-Fixes: 4babf057c143f ("media: vimc: allocate vimc_device dynamically")
+Fixes: 9b690ef3c704 ("drm/amd/display: Avoid full modeset when not required")
+Signed-off-by: WenTao Liang <vulab@iscas.ac.cn>
+Reviewed-by: George Zhang <george.zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 99f3af19073b3ddbfd96e789124cce12c4277b28)
 Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/test-drivers/vimc/vimc-core.c |    1 +
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/drivers/media/test-drivers/vimc/vimc-core.c
-+++ b/drivers/media/test-drivers/vimc/vimc-core.c
-@@ -424,6 +424,7 @@ static int __init vimc_init(void)
- 	if (ret) {
- 		dev_err(&vimc_pdev.dev,
- 			"platform device registration failed (err=%d)\n", ret);
-+		platform_device_put(&vimc_pdev);
- 		return ret;
- 	}
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -9534,6 +9534,7 @@ skip_modeset:
+ 	/* Release extra reference */
+ 	if (new_stream)
+ 		dc_stream_release(new_stream);
++	new_stream = NULL;
  
+ 	/*
+ 	 * We want to do dc stream updates that do not require a
 
 
