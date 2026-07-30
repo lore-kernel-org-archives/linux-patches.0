@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D693440FD86;
-	Thu, 30 Jul 2026 14:52:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9372E4052DC;
+	Thu, 30 Jul 2026 14:52:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423164; cv=none; b=MZCU3T2WAG1TbG47UMDXcX8j1Bjag99fLmBjZKUfZwVTR62/zHcqTJTB0iJwbRYq4zeXYNEE2ghfzLZCjAxC5XWnorw18obMFvFLpAvQ9MKlrxQUVz8mj4mNF4YGgG1f1zdKJwnugfxpW37myNTPMgEvm4Q4f601OrEF/hCa+fI=
+	t=1785423166; cv=none; b=UlfkvBoLrRllE7O9RSxpbLI6h+D+eoFKzP8E1nmVXkiBkF5T2i4NTzvz1zmx7jg5i9CtvjXnqcgJdf45ui7jsxBBdTlM+y/6neMJkG3SlO6MY/f0Z4yp/mEDfYzdlNcagwbub36IyDz7wNcZxEq+JdQjHONwNX8fxpAcBdC27U8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423164; c=relaxed/simple;
-	bh=n29IE3xNzG4QYGRghatQhevoNfFuiX3sJ1ifn0XlYXQ=;
+	s=arc-20240116; t=1785423166; c=relaxed/simple;
+	bh=6mGsr/Fo2z+LQ0VGQO+W4m53ae848kA20+kVEnwKZOY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rG8gh5wFG1JH34LHOr0mLBSYnirs21Hth1XynEDKs3FE2htZGTDtj/ZlXfanAfLpNqd+5Gxq0Vu0rPW+7+L9vGpvhsjZN05qNuKENe1eEhIoIZzH58qNgFTbQL0Ohu748RbKYoXocyHwTJnubMGZ1L6PvPEs8D9bbn+tSRoICqY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ruhYuv+d; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eTY1GxmoPZC8X/9cMAn2Wg2OIUaq0SxU/jX82Jl4fJxaoeu8xzSmpnK/Eec9ikTIZfBhaId/1KV3ZWXpdH1HlbKf+khqfajqSMMcOKdiZPgK3cEGoXm5iUrMKWdLMKgCdtW5bXL11dDuisw+5+xabtGXzEqnoUs9G1t233TAgEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PB9Jo36i; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ruhYuv+d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 258111F00A3D;
-	Thu, 30 Jul 2026 14:52:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PB9Jo36i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02B751F000E9;
+	Thu, 30 Jul 2026 14:52:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423162;
-	bh=HSF95Dnhxmz+1MS3YKSW+zMwGQ0syV4TcDjhdc0YY9U=;
+	s=korg; t=1785423165;
+	bh=+qLzslLCx1W9iPiex2j3VmKBP1hg2GRxBtfy8vNy5YY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ruhYuv+dZ2A0AhPhHXHaeW7OTKwBoAlmce+2bm4dk/nvqvM8JB4nzaEN0/7s+eCml
-	 plaT87k+kX3R6qqamlHp/19grkfnfQujcDcvbZXeWOUHvVGX/SeODQGbJQKBY9spfd
-	 n1uNfIIO7FvA21oCZr1Gw6CsHuwPilSyHTp0OLl4=
+	b=PB9Jo36ireC1/MoSer04eBD2I0MUE6Jwda4QhGRsBESzX4sgVG9k3wWU9YdlFs/IU
+	 hmj+Pr18SJAhrwemaNJHLU2anyfkGReOIyrOqn5LXOPtGG1mXz/avlAzp1yiRGS+Wy
+	 92wB9gq/FuIOU++5Txxm537IXCju+hpoCn44+PkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Lai <justinlai0215@realtek.com>,
-	Simon Horman <horms@kernel.org>,
+	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
+	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
+	Ao Wang <wangao@seu.edu.cn>,
+	Xuewei Feng <fengxw06@126.com>,
+	Qi Li <qli01@tsinghua.edu.cn>,
+	Ke Xu <xuke@tsinghua.edu.cn>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.1 686/744] rtase: Workaround for TX hang caused by hardware packet parsing
-Date: Thu, 30 Jul 2026 16:15:59 +0200
-Message-ID: <20260730141458.846786416@linuxfoundation.org>
+Subject: [PATCH 7.1 687/744] tcp: initialize standalone TCP-AO response padding
+Date: Thu, 30 Jul 2026 16:16:00 +0200
+Message-ID: <20260730141458.868301539@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -51,301 +56,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Lai <justinlai0215@realtek.com>
+From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
 
-commit 1c50efa1faf3a1a96e100b07ec7a2f3164d90bee upstream.
+commit e1a9d3cc11829c5414a75eb39c704f461936eb24 upstream.
 
-The hardware performs packet parsing before packet transmission.
-Parsing incomplete IPv4, IPv6, TCP, or UDP headers may trigger a TX
-hang because the hardware parser expects additional protocol header
-data that is not present in the packet.
+tcp_v4_send_ack() and tcp_v6_send_response() construct standalone TCP
+responses with TCP-AO options.  The option length carries the actual MAC
+length, but the TCP header length includes the option rounded up to a
+four-byte boundary.
 
-The hardware performs additional PTP parsing on UDP packets identified
-by destination ports 319/320 at the expected UDP destination port
-offset.
+tcp_ao_hash_hdr() writes the MAC only.  Thus, when the MAC length is not
+four-byte aligned, the one to three bytes after the MAC are left
+uninitialized and may be transmitted.  For the normal TCP-AO hashing
+mode, those bytes also have to be initialized before computing the MAC.
 
-If such a packet has transport data smaller than RTASE_MIN_PAD_LEN,
-the hardware parser expects additional packet data and may trigger a
-TX hang.
+Initialize only the alignment padding in the TCP-AO branches, before
+hashing the header.  Use TCPOPT_NOP, as in the normal TCP-AO output path.
+This avoids adding work to non-AO TCP responses while preserving a valid
+authenticated header.
 
-To avoid these hardware issues, the driver applies the following
-workarounds.
-
-Drop malformed packets that may trigger this hardware issue before
-transmission.
-
-For IPv4 non-initial fragments, the hardware does not check the
-fragment offset before parsing the expected transport header location.
-As a result, these packets are still subject to transport header
-parsing even though they do not contain a transport header. If the
-transport data is shorter than the minimum transport header required
-by the hardware parser, pad the transport data to the minimum
-transport header length required by the hardware parser. Packets that
-also match the hardware PTP parsing conditions continue to follow the
-corresponding workaround.
-
-For IPv6 fragmented packets, neither of the above hardware issues
-occurs because the hardware only continues packet parsing when the
-IPv6 Base Header Next Header field directly indicates UDP. Packets
-carrying a Fragment Header do not continue through the subsequent
-packet parsing stages.
-
-For packets identified for hardware PTP parsing, pad the transport
-data so it reaches RTASE_MIN_PAD_LEN before transmission.
-
-Fixes: d6e882b89fdf ("rtase: Implement .ndo_start_xmit function")
+Fixes: decde2586b34 ("net/tcp: Add TCP-AO sign to twsk")
+Fixes: da7dfaa6d6f7 ("net/tcp: Consistently align TCP-AO option in the header")
 Cc: stable@vger.kernel.org
-Signed-off-by: Justin Lai <justinlai0215@realtek.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260709103456.83789-1-justinlai0215@realtek.com
+Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
+Reported-by: Ao Wang <wangao@seu.edu.cn>
+Reported-by: Xuewei Feng <fengxw06@126.com>
+Reported-by: Qi Li <qli01@tsinghua.edu.cn>
+Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260713105631.8616-1-zhaoyz24@mails.tsinghua.edu.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/realtek/rtase/rtase.h      |    8 
- drivers/net/ethernet/realtek/rtase/rtase_main.c |  197 ++++++++++++++++++++++++
- 2 files changed, 205 insertions(+)
+ net/ipv4/tcp_ipv4.c |    3 +++
+ net/ipv6/tcp_ipv6.c |    2 ++
+ 2 files changed, 5 insertions(+)
 
---- a/drivers/net/ethernet/realtek/rtase/rtase.h
-+++ b/drivers/net/ethernet/realtek/rtase/rtase.h
-@@ -188,6 +188,12 @@ enum rtase_sw_flag_content {
- 	RTASE_SWF_MSIX_ENABLED = BIT(2),
- };
+--- a/net/ipv4/tcp_ipv4.c
++++ b/net/ipv4/tcp_ipv4.c
+@@ -971,6 +971,9 @@ static void tcp_v4_send_ack(const struct
+ 					  key->rcv_next);
+ 		arg.iov[0].iov_len += tcp_ao_len_aligned(key->ao_key);
+ 		rep.th.doff = arg.iov[0].iov_len / 4;
++		memset((u8 *)&rep.opt[offset] + tcp_ao_maclen(key->ao_key),
++		       TCPOPT_NOP, tcp_ao_len_aligned(key->ao_key) -
++				    tcp_ao_len(key->ao_key));
  
-+enum rtase_parse_result {
-+	RTASE_PARSE_OK,
-+	RTASE_PARSE_SKIP,
-+	RTASE_PARSE_DROP,
-+};
-+
- #define RSVD_MASK 0x3FFFC000
+ 		tcp_ao_hash_hdr(AF_INET, (char *)&rep.opt[offset],
+ 				key->ao_key, key->traffic_key,
+--- a/net/ipv6/tcp_ipv6.c
++++ b/net/ipv6/tcp_ipv6.c
+@@ -915,6 +915,8 @@ static void tcp_v6_send_response(const s
+ 				(tcp_ao_len(key->ao_key) << 16) |
+ 				(key->ao_key->sndid << 8) |
+ 				(key->rcv_next));
++		memset((u8 *)topt + tcp_ao_maclen(key->ao_key), TCPOPT_NOP,
++		       tcp_ao_len_aligned(key->ao_key) - tcp_ao_len(key->ao_key));
  
- struct rtase_tx_desc {
-@@ -359,4 +365,6 @@ struct rtase_private {
- 
- #define RTASE_MSS_MASK GENMASK(28, 18)
- 
-+#define RTASE_MIN_PAD_LEN 47
-+
- #endif /* RTASE_H */
---- a/drivers/net/ethernet/realtek/rtase/rtase_main.c
-+++ b/drivers/net/ethernet/realtek/rtase/rtase_main.c
-@@ -61,6 +61,7 @@
- #include <linux/pci.h>
- #include <linux/pm_runtime.h>
- #include <linux/prefetch.h>
-+#include <linux/ptp_classify.h>
- #include <linux/rtnetlink.h>
- #include <linux/tcp.h>
- #include <asm/irq.h>
-@@ -1249,6 +1250,199 @@ static u32 rtase_tx_csum(struct sk_buff
- 	return csum_cmd;
- }
- 
-+static enum rtase_parse_result rtase_get_l3_proto(struct sk_buff *skb,
-+						  __be16 *proto,
-+						  u32 *network_offset)
-+{
-+	struct vlan_hdr *vh, _vh;
-+	struct ethhdr *eh, _eh;
-+	u32 offset = ETH_HLEN;
-+
-+	eh = skb_header_pointer(skb, 0, sizeof(_eh), &_eh);
-+	if (!eh)
-+		return RTASE_PARSE_DROP;
-+
-+	*proto = eh->h_proto;
-+
-+	while (eth_type_vlan(*proto)) {
-+		vh = skb_header_pointer(skb, offset, sizeof(_vh), &_vh);
-+		if (!vh)
-+			return RTASE_PARSE_DROP;
-+
-+		*proto = vh->h_vlan_encapsulated_proto;
-+		offset += VLAN_HLEN;
-+	}
-+
-+	*network_offset = offset;
-+
-+	return RTASE_PARSE_OK;
-+}
-+
-+static bool rtase_pad_to_transport_len(struct sk_buff *skb,
-+				       u32 transport_offset,
-+				       u32 pad_to_len)
-+{
-+	u32 trans_data_len;
-+	u32 pad_len;
-+
-+	trans_data_len = skb->len - transport_offset;
-+	if (trans_data_len >= pad_to_len)
-+		return true;
-+
-+	if (skb_is_nonlinear(skb)) {
-+		if (skb_linearize(skb))
-+			return false;
-+	}
-+
-+	pad_len = pad_to_len - trans_data_len;
-+	if (__skb_put_padto(skb, skb->len + pad_len, false))
-+		return false;
-+
-+	return true;
-+}
-+
-+static enum rtase_parse_result rtase_get_transport_offset(struct sk_buff *skb,
-+							  u32 *transport_offset,
-+							  u8 *transport_proto,
-+							  u32 *pad_to_len)
-+{
-+	enum rtase_parse_result ret;
-+	struct ipv6hdr *i6h, _i6h;
-+	struct iphdr *ih, _ih;
-+	bool non_first_frag;
-+	__be16 proto;
-+	u32 offset;
-+	u32 no;
-+
-+	ret = rtase_get_l3_proto(skb, &proto, &no);
-+	if (ret != RTASE_PARSE_OK)
-+		return ret;
-+
-+	switch (proto) {
-+	case htons(ETH_P_IP):
-+		ih = skb_header_pointer(skb, no, sizeof(_ih), &_ih);
-+		if (!ih)
-+			return RTASE_PARSE_DROP;
-+
-+		if (ih->ihl < 5)
-+			return RTASE_PARSE_DROP;
-+
-+		offset = no + ih->ihl * 4;
-+		if (offset > skb->len)
-+			return RTASE_PARSE_DROP;
-+
-+		non_first_frag = ntohs(ih->frag_off) & IP_OFFSET;
-+
-+		if (ih->protocol == IPPROTO_TCP) {
-+			if (skb->len - offset < sizeof(struct tcphdr)) {
-+				if (non_first_frag) {
-+					*transport_offset = offset;
-+					*transport_proto = IPPROTO_TCP;
-+					*pad_to_len = sizeof(struct tcphdr);
-+
-+					return RTASE_PARSE_OK;
-+				}
-+
-+				return RTASE_PARSE_DROP;
-+			}
-+
-+			return RTASE_PARSE_SKIP;
-+		}
-+
-+		if (ih->protocol != IPPROTO_UDP)
-+			return RTASE_PARSE_SKIP;
-+
-+		*transport_offset = offset;
-+		*transport_proto = IPPROTO_UDP;
-+
-+		if (skb->len - offset < sizeof(struct udphdr)) {
-+			if (non_first_frag) {
-+				*pad_to_len = sizeof(struct udphdr);
-+
-+				return RTASE_PARSE_OK;
-+			}
-+
-+			return RTASE_PARSE_DROP;
-+		}
-+
-+		return RTASE_PARSE_OK;
-+
-+	case htons(ETH_P_IPV6):
-+		i6h = skb_header_pointer(skb, no, sizeof(_i6h), &_i6h);
-+		if (!i6h)
-+			return RTASE_PARSE_DROP;
-+
-+		offset = no + sizeof(*i6h);
-+
-+		if (i6h->nexthdr == IPPROTO_TCP) {
-+			if (skb->len - offset < sizeof(struct tcphdr))
-+				return RTASE_PARSE_DROP;
-+
-+			return RTASE_PARSE_SKIP;
-+		}
-+
-+		if (i6h->nexthdr != IPPROTO_UDP)
-+			return RTASE_PARSE_SKIP;
-+
-+		if (skb->len - offset < sizeof(struct udphdr))
-+			return RTASE_PARSE_DROP;
-+
-+		*transport_offset = offset;
-+		*transport_proto = IPPROTO_UDP;
-+
-+		return RTASE_PARSE_OK;
-+
-+	default:
-+		return RTASE_PARSE_SKIP;
-+	}
-+}
-+
-+static bool rtase_skb_pad(struct sk_buff *skb)
-+{
-+	enum rtase_parse_result ret;
-+	u32 transport_offset;
-+	__be16 *dest, _dest;
-+	u32 trans_data_len;
-+	u32 pad_to_len = 0;
-+	u8 transport_proto;
-+	u16 dest_port;
-+
-+	ret = rtase_get_transport_offset(skb, &transport_offset,
-+					 &transport_proto, &pad_to_len);
-+	if (ret == RTASE_PARSE_SKIP) {
-+		return true;
-+	} else if (ret == RTASE_PARSE_DROP) {
-+		netdev_dbg(skb->dev, "drop malformed packet\n");
-+		return false;
-+	}
-+
-+	if (pad_to_len &&
-+	    !rtase_pad_to_transport_len(skb, transport_offset, pad_to_len))
-+		return false;
-+
-+	if (transport_proto != IPPROTO_UDP)
-+		return true;
-+
-+	trans_data_len = skb->len - transport_offset;
-+	if (trans_data_len < offsetof(struct udphdr, len) ||
-+	    trans_data_len >= RTASE_MIN_PAD_LEN)
-+		return true;
-+
-+	dest = skb_header_pointer(skb,
-+				  transport_offset +
-+				  offsetof(struct udphdr, dest),
-+				  sizeof(_dest), &_dest);
-+	if (!dest)
-+		return true;
-+
-+	dest_port = ntohs(*dest);
-+	if (dest_port != PTP_EV_PORT && dest_port != PTP_GEN_PORT)
-+		return true;
-+
-+	return rtase_pad_to_transport_len(skb, transport_offset,
-+					  RTASE_MIN_PAD_LEN);
-+}
-+
- static int rtase_xmit_frags(struct rtase_ring *ring, struct sk_buff *skb,
- 			    u32 opts1, u32 opts2)
- {
-@@ -1362,6 +1556,9 @@ static netdev_tx_t rtase_start_xmit(stru
- 		opts2 |= rtase_tx_csum(skb, dev);
- 	}
- 
-+	if (!rtase_skb_pad(skb))
-+		goto err_dma_0;
-+
- 	frags = rtase_xmit_frags(ring, skb, opts1, opts2);
- 	if (unlikely(frags < 0))
- 		goto err_dma_0;
+ 		tcp_ao_hash_hdr(AF_INET6, (char *)topt, key->ao_key,
+ 				key->traffic_key,
 
 
