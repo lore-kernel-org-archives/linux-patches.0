@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F7E343FD01;
-	Thu, 30 Jul 2026 15:07:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A4C63B6366;
+	Thu, 30 Jul 2026 15:07:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424071; cv=none; b=MXFqP8WCtSk2XBQrJDnYMwPKM3D7jXxnlR1mGWe8/C9bhtyBIcIwCXqnBmymtw1ZHr0vVExh+zfqwGguvC1AO0HePWE+7lZd38YnknbjMrWvas0y5BJTb/5FWZbXRK0//bT8abjDCpxV3BCRl1MqjitlTsvmzQ/DK8eLqjbF/Cs=
+	t=1785424074; cv=none; b=EBy0/f6OMOE/YubUos4LMaJF25UQ3aKEGzZm74DEA7m7t6QHkM4iIu2hbQykAXT573Wb265M3jvu5yyhDubwAiBDWj76s2jQpsiuiryKtOeZaAfhXvAtDaEUn3AUrRHYTY0FLIdWOxftBnjh9SAJA89BBqFAsM1FoQ6wyuPIhGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424071; c=relaxed/simple;
-	bh=iaNzAZeqlGs5aMzR4/9XWqCJf19IMwEpoqEboPIhC78=;
+	s=arc-20240116; t=1785424074; c=relaxed/simple;
+	bh=Zm2KOuTka4EgbUrsZxe5crWVDLNjnDb/Ei/AFYn8v5o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B26WjhoGzdqc8s0DRa6UeED366do4uxM6ptMKz/zTHQdn9bDuVfW7hHZH798y/OrYt6g+S1zC7SPEQqz1N4tQmpbd8iJoMOCOhALAKOuhXOmFC3x5YCwobJFLtnXCSSh4rU7ha4q0jYarmjmUUuLzDHjFwU6xeoc21cTTckoJhM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uh7xraPT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=mS+MRGc/fFWp58cgJWu9xbwCKfQQ3ZUSUnddsUIoRayQpMxIS/T15/TsFgTwNquPK5FxAnuDrZXfZ3Jd1TChORnucnSw4g48pNCzy1XX7bt8979Hfxn+pbCwamh6DKO0l1zMFMItxucI7Or0Xxh7ZlhRHLXH/VSZZFcDz9O6LwQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FSRjFTXw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uh7xraPT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A96D01F000E9;
-	Thu, 30 Jul 2026 15:07:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FSRjFTXw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85D5F1F000E9;
+	Thu, 30 Jul 2026 15:07:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424070;
-	bh=5P99+buoo/4mAKSLI/r1VUG/3TSHOJ5+J2nsrOenHnU=;
+	s=korg; t=1785424073;
+	bh=LA64DwvJa2goHeD7YtOpEub//7wsDFTIo449ffQnYww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uh7xraPTHxroE9T/hmRLiabpb2qRmx1VCxVUSDwYuL3qwtVBUj91Ks63wZprpY0/v
-	 +fsv5XVVWdxyu6Cc4FD8kQ81Tc0Zh7RVm4moYfNkeGnxtFTiNtmRfAGq5tObeRt85R
-	 i45nE+eFdbseUMLhRLZ0HDLLQ9SketekHcnJjsMU=
+	b=FSRjFTXwzYNDRNi3ULU2tDpMVSZ3n6N8Wix4kPy0rwSEJlqi3OZPybJzq3WT0op+h
+	 UzH7eRSREuPgjWdYYEyh5+P8gEJREE5R9W9rMoZ5MWnns3BNK90LBOJzVuREAmUj0a
+	 gSbiv7wq5Hk8D2uUFz0Nb9MzlCjdGMKgSu7VLIyM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Wayen Yan <win847@gmail.com>,
 	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Felix Fietkau <nbd@nbd.name>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 263/675] wifi: mt76: mt7996: check pointer returned by mt76_connac_get_he_phy_cap()
-Date: Thu, 30 Jul 2026 16:09:53 +0200
-Message-ID: <20260730141450.723981086@linuxfoundation.org>
+Subject: [PATCH 6.18 222/675] net: airoha: Fix DMA direction for NPU mailbox buffer
+Date: Thu, 30 Jul 2026 16:09:12 +0200
+Message-ID: <20260730141449.860999806@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -45,63 +46,75 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Wayen Yan <win847@gmail.com>
 
-[ Upstream commit e858cf6bf99880343348ff1e8c942aaff1d9d592 ]
+[ Upstream commit 6f884eb87a79e0c482baef2ad96c96b81d024235 ]
 
-mt76_connac_get_he_phy_cap routine can theoretically return NULL so
-check cap pointer before dereferencing it.
+airoha_npu_send_msg() always maps the mailbox buffer with DMA_TO_DEVICE,
+but some callers expect the NPU to write response data back into the
+same buffer:
 
-Fixes: 98686cd21624c ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20260621-mt76_connac_get_he_phy_cap-fix-v1-3-ed4ccf7a0363@kernel.org
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+- airoha_npu_wlan_msg_get() (NPU_OP_GET): NPU writes response into
+  the buffer, then the caller reads it via memcpy()
+- airoha_npu_ppe_stats_setup() (NPU_OP_SET): NPU writes back
+  npu_stats_addr field in the response
+
+On non-cache-coherent architectures like EN7581 (Cortex-A53 without
+hardware cache coherency for NPU DMA), DMA_TO_DEVICE unmap is a no-op
+— it does not invalidate the CPU cache. If the NPU-written cache line
+is still present in the CPU cache when the caller reads the buffer,
+the CPU observes stale data instead of the NPU response.
+
+This is a timing-sensitive bug: small mailbox buffers (~24 bytes)
+typically fit in a single cache line and may survive in the cache
+until the caller reads them, producing silent data corruption rather
+than a crash. The bug is more likely to trigger when the caller reads
+the response immediately after dma_unmap_single() without intervening
+cache-evicting operations.
+
+Fix by using DMA_BIDIRECTIONAL for both map and unmap, which ensures
+dma_unmap_single() invalidates the CPU cache on non-coherent systems.
+The mailbox buffers are small so there is no performance concern.
+
+Fixes: c52918744ee1e49cea86622a2633b9782446428f ("net: airoha: npu: Move memory allocation in airoha_npu_send_msg() caller")
+Signed-off-by: Wayen Yan <win847@gmail.com>
+Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Link: https://patch.msgid.link/178351055214.98729.11403147818632027428@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/mcu.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/airoha/airoha_npu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-index a3f813be107df7..87ec7e90dfeebe 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-@@ -860,6 +860,8 @@ mt7996_mcu_bss_he_tlv(struct sk_buff *skb, struct ieee80211_vif *vif,
- 	struct tlv *tlv;
+diff --git a/drivers/net/ethernet/airoha/airoha_npu.c b/drivers/net/ethernet/airoha/airoha_npu.c
+index 8c883f2b2d36b7..d6547834d3c783 100644
+--- a/drivers/net/ethernet/airoha/airoha_npu.c
++++ b/drivers/net/ethernet/airoha/airoha_npu.c
+@@ -154,7 +154,7 @@ static int airoha_npu_send_msg(struct airoha_npu *npu, int func_id,
+ 	dma_addr_t dma_addr;
+ 	int ret;
  
- 	cap = mt76_connac_get_he_phy_cap(phy->mt76, vif);
-+	if (!cap)
-+		return;
+-	dma_addr = dma_map_single(npu->dev, p, size, DMA_TO_DEVICE);
++	dma_addr = dma_map_single(npu->dev, p, size, DMA_BIDIRECTIONAL);
+ 	ret = dma_mapping_error(npu->dev, dma_addr);
+ 	if (ret)
+ 		return ret;
+@@ -177,7 +177,7 @@ static int airoha_npu_send_msg(struct airoha_npu *npu, int func_id,
  
- 	tlv = mt7996_mcu_add_uni_tlv(skb, UNI_BSS_INFO_HE_BASIC, sizeof(*he));
+ 	spin_unlock_bh(&npu->cores[core].lock);
  
-@@ -1659,17 +1661,18 @@ mt7996_mcu_sta_bfer_he(struct ieee80211_link_sta *link_sta,
- {
- 	struct ieee80211_sta_he_cap *pc = &link_sta->he_cap;
- 	struct ieee80211_he_cap_elem *pe = &pc->he_cap_elem;
--	const struct ieee80211_sta_he_cap *vc =
--		mt76_connac_get_he_phy_cap(phy->mt76, vif);
--	const struct ieee80211_he_cap_elem *ve = &vc->he_cap_elem;
- 	u16 mcs_map = le16_to_cpu(pc->he_mcs_nss_supp.rx_mcs_80);
- 	u8 nss_mcs = mt7996_mcu_get_sta_nss(mcs_map);
-+	const struct ieee80211_he_cap_elem *ve;
-+	const struct ieee80211_sta_he_cap *vc;
- 	u8 snd_dim, sts;
+-	dma_unmap_single(npu->dev, dma_addr, size, DMA_TO_DEVICE);
++	dma_unmap_single(npu->dev, dma_addr, size, DMA_BIDIRECTIONAL);
  
-+	vc = mt76_connac_get_he_phy_cap(phy->mt76, vif);
- 	if (!vc)
- 		return;
- 
- 	bf->tx_mode = MT_PHY_TYPE_HE_SU;
-+	ve = &vc->he_cap_elem;
- 
- 	mt7996_mcu_sta_sounding_rate(bf, phy);
- 
+ 	return ret;
+ }
 -- 
 2.53.0
 
