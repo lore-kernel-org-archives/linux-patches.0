@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AEE4432E65;
-	Thu, 30 Jul 2026 14:28:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AF22435AB0;
+	Thu, 30 Jul 2026 14:28:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421731; cv=none; b=VckVO/RwRpsYchMeXt/BXhSquEsdoxHE7xAmXj/FjHGeVjh9iVNoa5OEcoRZ5eJzBx3lBnW0zwj/5BgyAqZ1Ei/OM/J3oUo9LvX5REfq7EdODn5yWfsBoe3jpGtHSgpRIkzBDO/Oyy4WNikB4W0qA8i5+E4Sz/hJUc5VKgtxy1U=
+	t=1785421734; cv=none; b=KKlVFydFJaz8CuI9UXU1vjQLPwyxx9nZDclimBXrBARMb3jbN/yXguxjdqjXCLtQT0rTT5es+b3UZRNGlKJObZnja8HZccbcHFo9eYpRWDaGAfJSeh4DFaxc6KNCR19f2CBgpIKoWyV6BnE+DvKjsOiEOLtKZZ1eJvOaM6jqNDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421731; c=relaxed/simple;
-	bh=u7VgTGUj2n+PczGq11BhUlASqZ9UP+2o+8myG17eu0I=;
+	s=arc-20240116; t=1785421734; c=relaxed/simple;
+	bh=OlLILUR5RQMOE2hbYujekc6QLEf6TMuA63eD84j+qcg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hQI7LFT7HTE50F3A9NwehwrxPMNRMemEt7cYAaUmaieNkNnjvQKa+mDuos8vLPHjJI433WVz8inIO2HnM3L3E6Ms6M+vLotHmPdtVtHiFL6nikIG3oj7ZIUWGtUmDipoMBTUZhP1URRpyvl+LcMkx44e0vqNFfBIyh1OVjPnWsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hvQ4Jkuh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Y/KYNpaDspyiWRX01ypQjfuNL9FmgPelYPstXFW382ps8dum0iUJ66oGz3tmOR7GXewCV3upgr3PiF9bEvzcd2a1ww5qcJW6fZbSwGyPQDhIvmIEodAfegfTKBLVg/21np19BBMzkgFvK5+Q2hZvrcg/31JNOoKnwgYhyyrOlvw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FzQj5UYY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hvQ4Jkuh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 499051F000E9;
-	Thu, 30 Jul 2026 14:28:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FzQj5UYY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74C5D1F000E9;
+	Thu, 30 Jul 2026 14:28:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421729;
-	bh=kOh0njX40fCXmKWRJbqxpa5k13WqmvJDzdbbEd2XWzI=;
+	s=korg; t=1785421733;
+	bh=Yb9J8L8zQBjwNoPBpoQLSOmlMZAH2IlQrNQQrZcFnwk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hvQ4JkuhAPSxPGF5ylbWmMJ7mA8AdaByYhJ98uboNPkfJy0ElDYwTWn/kUcHj3aH5
-	 BOs4zmDYzdvafmASpY0KzITkFFFHYxIz81ZPBduwvRZ+OhWYcj0GWK4MKhRwQ28xm+
-	 6NuMBh4JDQT3d7wPCeH+dVRDWdfZJE1pQ1Y1pU0o=
+	b=FzQj5UYYOFilQ3rQCKgQMfzwnvRp8afEwhC0vQghup57fq8ogsj2ltRUNoLBXUeHx
+	 ZZNuCokzpPWCX0WRad9pqQOZanXTZxQgl9RnNaPP/9RwtoJoWgZrNzj88DaCz07E1n
+	 BGHR9tllqzOZZ6B6wYG685m8UBn0ciau5lZ/TGk8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Ben Horgan <ben.horgan@arm.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 175/744] hwmon: (nzxt-kraken3) Stop device IO before calling hid_hw_stop
-Date: Thu, 30 Jul 2026 16:07:28 +0200
-Message-ID: <20260730141448.008016989@linuxfoundation.org>
+Subject: [PATCH 7.1 202/744] arm_mpam: Fix software reset values of MPAMCFG_PRI
+Date: Thu, 30 Jul 2026 16:07:55 +0200
+Message-ID: <20260730141448.573737005@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -51,57 +51,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Ben Horgan <ben.horgan@arm.com>
 
-[ Upstream commit f151d0143ac4e086f92f52328ebdbdc50933d8ef ]
+[ Upstream commit 9469764292e0d6825c9bf51d75682e3a623b9b6b ]
 
-Calling hid_hw_stop() does not stop the device IO.
-This results in a race condition between hid_input_report() and the point
-immediately following the execution of hid_device_io_start() within
-the driver probe function. If the probe operation fails after "io start"
-has been initiated, this race condition will result in a UAF vulnerability.
+Priority partitioning is not supported other than to set the per-PARTID
+defaults in MPAMCFG_PRI, INTPRI and DSPRI, to the highest priority. When 0
+is the lowest priority, all ones is the highest priority. However, these
+values are calculated with an extra higher bit set.
 
-Fix the problem by calling hid_device_io_stop() before calling
-hid_hw_stop().
+Luckily, there is still no chance of setting functional bits incorrectly.
+When the priority widths are maximal, this is ensured as the fields have
+width 16 and a u16 holds the value for each field. When the widths are
+smaller, the higher order bits beyond the advertised widths,
+MPAMF_PRI_IDR.DSPRI_WD and MPAMF_PRI_IDR.INTPRI_WD, in the priority fields
+INTPRI and DSPRI are not used to calculate the priority.  It is not
+specified whether these higher order bits are RAZ/WI or Res0 and so it is
+desirable not to set them to avoid the chance of misleading reads.
 
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Fixes: f3b4b146eb107 ("hwmon: Add driver for NZXT Kraken X and Z series AIO CPU coolers")
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Correct the priority reset values.
+
+Fixes: 880df85d8673 ("arm_mpam: Probe and reset the rest of the features")
+Signed-off-by: Ben Horgan <ben.horgan@arm.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/nzxt-kraken3.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/resctrl/mpam_devices.c | 26 ++++++++++++++++----------
+ 1 file changed, 16 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/hwmon/nzxt-kraken3.c b/drivers/hwmon/nzxt-kraken3.c
-index d00409bcab93ad..05525406c5fbb5 100644
---- a/drivers/hwmon/nzxt-kraken3.c
-+++ b/drivers/hwmon/nzxt-kraken3.c
-@@ -948,7 +948,7 @@ static int kraken3_probe(struct hid_device *hdev, const struct hid_device_id *id
- 	ret = kraken3_init_device(hdev);
- 	if (ret < 0) {
- 		hid_err(hdev, "device init failed with %d\n", ret);
--		goto fail_and_close;
-+		goto fail_and_stop_io;
+diff --git a/drivers/resctrl/mpam_devices.c b/drivers/resctrl/mpam_devices.c
+index 988fc291241d23..54e9da3158a89d 100644
+--- a/drivers/resctrl/mpam_devices.c
++++ b/drivers/resctrl/mpam_devices.c
+@@ -1535,12 +1535,9 @@ static u16 mpam_wa_t241_calc_min_from_max(struct mpam_props *props,
+ static void mpam_reprogram_ris_partid(struct mpam_msc_ris *ris, u16 partid,
+ 				      struct mpam_config *cfg)
+ {
+-	u32 pri_val = 0;
+ 	u16 cmax = MPAMCFG_CMAX_CMAX;
+ 	struct mpam_msc *msc = ris->vmsc->msc;
+ 	struct mpam_props *rprops = &ris->props;
+-	u16 dspri = GENMASK(rprops->dspri_wd, 0);
+-	u16 intpri = GENMASK(rprops->intpri_wd, 0);
+ 
+ 	mutex_lock(&msc->part_sel_lock);
+ 	__mpam_part_sel(ris->ris_idx, partid, msc);
+@@ -1605,16 +1602,25 @@ static void mpam_reprogram_ris_partid(struct mpam_msc_ris *ris, u16 partid,
+ 
+ 	if (mpam_has_feature(mpam_feat_intpri_part, rprops) ||
+ 	    mpam_has_feature(mpam_feat_dspri_part, rprops)) {
+-		/* aces high? */
+-		if (!mpam_has_feature(mpam_feat_intpri_part_0_low, rprops))
+-			intpri = 0;
+-		if (!mpam_has_feature(mpam_feat_dspri_part_0_low, rprops))
+-			dspri = 0;
++		u32 pri_val = 0;
++
++		if (mpam_has_feature(mpam_feat_intpri_part, rprops)) {
++			u16 intpri = GENMASK(rprops->intpri_wd - 1, 0);
++
++			/* aces high? */
++			if (!mpam_has_feature(mpam_feat_intpri_part_0_low, rprops))
++				intpri = 0;
+ 
+-		if (mpam_has_feature(mpam_feat_intpri_part, rprops))
+ 			pri_val |= FIELD_PREP(MPAMCFG_PRI_INTPRI, intpri);
+-		if (mpam_has_feature(mpam_feat_dspri_part, rprops))
++		}
++		if (mpam_has_feature(mpam_feat_dspri_part, rprops)) {
++			u16 dspri = GENMASK(rprops->dspri_wd - 1, 0);
++
++			if (!mpam_has_feature(mpam_feat_dspri_part_0_low, rprops))
++				dspri = 0;
++
+ 			pri_val |= FIELD_PREP(MPAMCFG_PRI_DSPRI, dspri);
++		}
+ 
+ 		mpam_write_partsel_reg(msc, PRI, pri_val);
  	}
- 
- 	ret = kraken3_get_fw_ver(hdev);
-@@ -960,13 +960,15 @@ static int kraken3_probe(struct hid_device *hdev, const struct hid_device_id *id
- 	if (IS_ERR(priv->hwmon_dev)) {
- 		ret = PTR_ERR(priv->hwmon_dev);
- 		hid_err(hdev, "hwmon registration failed with %d\n", ret);
--		goto fail_and_close;
-+		goto fail_and_stop_io;
- 	}
- 
- 	kraken3_debugfs_init(priv, device_name);
- 
- 	return 0;
- 
-+fail_and_stop_io:
-+	hid_device_io_stop(hdev);
- fail_and_close:
- 	hid_hw_close(hdev);
- fail_and_stop:
 -- 
 2.53.0
 
