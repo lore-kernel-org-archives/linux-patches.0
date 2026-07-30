@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96B393A641D;
-	Thu, 30 Jul 2026 14:53:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 808AB3E0091;
+	Thu, 30 Jul 2026 14:53:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423183; cv=none; b=GlUNvZPblN4BV+ewpkxbGg3Dh5qWvo9g/R6J+3Yp7tJJwOJ288FuZonaxEqjcmeoG9gADNV0TlmWg8jz60qBWYYeoystq12dlXCnBlh/qVN0spzTBZpHmvTox82rCrAF5y9wZlfnlCSrdJCkBl8zwnCLhilTwz8EWSZrw1zzbVU=
+	t=1785423186; cv=none; b=AQnujQcEhN9vrE0Wy2HudpohF1HdrB3axO/0goc+qVWhsPyCuOfwt89PmnRi2u0EXOSmA5Cv1nUZF5yc1fgTk8EOamM8qj0kpv4lLhrmuLwPSdTgB3FEE7DCFUnu/jwknTbVrbFW0RmS7i0rreD9X6YCwsdTP3++QLKu3iIJOXc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423183; c=relaxed/simple;
-	bh=i53HcEzqQBexK3uZ0pnlvdKCfEQGTxki3NdDU/9YL38=;
+	s=arc-20240116; t=1785423186; c=relaxed/simple;
+	bh=JQH4HnIEgj6AemA5TkmeyoB492Jwjii0VBsEaCQnif8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gw9i4Bgocsa/9sWQAd7sj5Jz7Ob1LSrQN/lpdjYx4c7ZLD4ys18ZghzgbC1n6v4SRhJHx85jjmuKCW3OelZtx1Weh4PlWUO5QD4BEt99fayYYTWHAOePfEBO66uzs4chmaqwEj/lOqRJWbJtFwQPGjojPXJv1X27zhy+dT0kfj4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xKecbiIH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=g4SvgLnh+ugNnh92D5vvuvW2jBp0+3AC/73mlWAhF8SSPDa/mIptdeXzSyxjxQi0JppT+0Qh5XkV5xYRlxr6ICSSj8jE7Ud3CeJGgKJLDnoezOeTJYs97fYB//a7d6gFAuMmGVs5aOD6TiVh6O0OdQn67K2HNpjexjjRwuMTF6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aDVAfzTq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xKecbiIH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CD651F000E9;
-	Thu, 30 Jul 2026 14:53:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aDVAfzTq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D52AB1F000E9;
+	Thu, 30 Jul 2026 14:53:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423182;
-	bh=jAHbygJbOpA5vihNNeqv4CSbN724TX6JEyfOyt65GmA=;
+	s=korg; t=1785423185;
+	bh=uIDKKgFIGWYbMkUlYeyHUYUc0GD0F8E7jegkrdOsIYw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xKecbiIHBBI5pAqlYaNYgBAz0My68L1uVeVzIQqQ6310Cs2t9+HF3Igo56HOweRMf
-	 mRniLY0OJZKqlAyTkpK1+reSV0HZJSCVfASjPJND+DK8V4unsXCao3WYkRIAIC+H1O
-	 mg598U94M1Lcr5bStn53U0UTVJRC2L5/TjCPaaes=
+	b=aDVAfzTqIr2gnEpsLdg3f4bKzrgbhe4hiqtmsU2KLTiZVB/TYm/d4xwBXBS8bJK+P
+	 KkI4Lf+byvc4pjjcJG+r5+I8gF26LLZisPYXuxTVe49AzGFROQAeiKHRgLqCBk6JmH
+	 S6pv9/yym4IAteqG1tFaGsJoSaHf0B+DL3LC/Svc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Wang <kevinyang.wang@amd.com>,
-	Asad Kamal <asad.kamal@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.1 693/744] drm/amd/pm: fix amdgpu_pm_info power display units
-Date: Thu, 30 Jul 2026 16:16:06 +0200
-Message-ID: <20260730141458.999092732@linuxfoundation.org>
+	"Harry Yoo (Oracle)" <harry@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>
+Subject: [PATCH 7.1 651/744] mm/slab: fix a memory leak due to bootstrapping sheaves twice
+Date: Thu, 30 Jul 2026 16:15:24 +0200
+Message-ID: <20260730141458.106747227@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -51,104 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Wang <kevinyang.wang@amd.com>
+From: Harry Yoo (Oracle) <harry@kernel.org>
 
-commit 238baca26a6279e688d1a156bd031390b82eb578 upstream.
+commit 1dba91a0493b7ffe9cbbcf7a8df1b361ddcac515 upstream.
 
-amdgpu_pm_info displayed power sensor readings with the wrong fractional unit.
-It treated the low byte of the raw sensor value as the decimal part of watts,
-while that field represents milliwatts in the decoded value. As a result,
-debugfs could report misleading SoC power when the remainder was not already
-a two-digit centiwatt value.
+When kmalloc caches are aliased, multiple cache pointers reference
+the same kmem_cache. As a result, iterating over kmalloc indices and
+bootstrapping sheaves can bootstrap the same cache more than once and
+leak memory.
 
-Example with query = 0x00000354:
+Currently, this could happen when the architecture specifies
+minimum alignment for slab caches that is larger than
+ARCH_KMALLOC_MINALIGN.
 
-  raw field        value
-  ---------------------
-  query >> 8       3 W
-  query & 0xff     84 mW
-  decoded power    3084 mW
+Bootstrap sheaves only when the cache does not have them already.
+Add a warning when bootstrap_cache_sheaves() is called for a cache
+that already has sheaves enabled.
 
-  output           value
-  ---------------------
-  before           3.84 W
-  after            3.08 W
-
-Fixes: f0b8f65b4825 ("drm/amd/amdgpu: fix the GPU power print error in pm info")
-Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
-Reviewed-by: Asad Kamal <asad.kamal@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 01992b121fb652c753d37e0c1427a2d1a557d2b1)
+Fixes: 913ffd3a1bf5 ("slab: handle kmalloc sheaves bootstrap")
 Cc: stable@vger.kernel.org
+Signed-off-by: Harry Yoo (Oracle) <harry@kernel.org>
+Reviewed-by: Suren Baghdasaryan <surenb@google.com>
+Link: https://patch.msgid.link/20260713-kmalloc-no-objext-v3-1-47c7bd138de7@kernel.org
+Signed-off-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/amdgpu_pm.c |   21 ++++++++++++---------
- 1 file changed, 12 insertions(+), 9 deletions(-)
+ mm/slub.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/pm/amdgpu_pm.c
-+++ b/drivers/gpu/drm/amd/pm/amdgpu_pm.c
-@@ -41,6 +41,8 @@
+--- a/mm/slub.c
++++ b/mm/slub.c
+@@ -8423,6 +8423,8 @@ static void __init bootstrap_cache_sheav
+ 	bool failed = false;
+ 	int node, cpu;
  
- #define DEVICE_ATTR_IS(_name)		(attr_id == device_attr_id__##_name)
- 
-+#define power_2_mwatt(power)	(((power) >> 8) * 1000 + ((power) & 0xff))
++	VM_WARN_ON_ONCE(cache_has_sheaves(s));
 +
- struct od_attribute {
- 	struct kobj_attribute	attribute;
- 	struct list_head	entry;
-@@ -3333,7 +3335,6 @@ static int amdgpu_hwmon_get_power(struct
- 				  enum amd_pp_sensors sensor)
- {
- 	struct amdgpu_device *adev = dev_get_drvdata(dev);
--	unsigned int uw;
- 	u32 query = 0;
- 	int r;
+ 	capacity = calculate_sheaf_capacity(s, &empty_args);
  
-@@ -3342,9 +3343,7 @@ static int amdgpu_hwmon_get_power(struct
- 		return r;
+ 	/* capacity can be 0 due to debugging or SLUB_TINY */
+@@ -8473,8 +8475,11 @@ static void __init bootstrap_kmalloc_she
  
- 	/* convert to microwatts */
--	uw = (query >> 8) * 1000000 + (query & 0xff) * 1000;
--
--	return uw;
-+	return power_2_mwatt(query) * 1000;
+ 	for (type = KMALLOC_NORMAL; type <= KMALLOC_RANDOM_END; type++) {
+ 		for (int idx = 0; idx < KMALLOC_SHIFT_HIGH + 1; idx++) {
+-			if (kmalloc_caches[type][idx])
+-				bootstrap_cache_sheaves(kmalloc_caches[type][idx]);
++			struct kmem_cache *s = kmalloc_caches[type][idx];
++
++			/* Do not bootstrap twice when caches are aliased */
++			if (s && !cache_has_sheaves(s))
++				bootstrap_cache_sheaves(s);
+ 		}
+ 	}
  }
- 
- static ssize_t amdgpu_hwmon_show_power_avg(struct device *dev,
-@@ -4882,7 +4881,7 @@ static int amdgpu_debugfs_pm_info_pp(str
- {
- 	uint32_t mp1_ver = amdgpu_ip_version(adev, MP1_HWIP, 0);
- 	uint32_t gc_ver = amdgpu_ip_version(adev, GC_HWIP, 0);
--	uint32_t value;
-+	uint32_t value, mwatt, centiwatt;
- 	uint64_t value64 = 0;
- 	uint32_t query = 0;
- 	int size;
-@@ -4907,17 +4906,21 @@ static int amdgpu_debugfs_pm_info_pp(str
- 		seq_printf(m, "\t%u mV (VDDNB)\n", value);
- 	size = sizeof(uint32_t);
- 	if (!amdgpu_dpm_read_sensor(adev, AMDGPU_PP_SENSOR_GPU_AVG_POWER, (void *)&query, &size)) {
-+		mwatt = power_2_mwatt(query);
-+		centiwatt = DIV_ROUND_CLOSEST(mwatt, 10);
- 		if (adev->flags & AMD_IS_APU)
--			seq_printf(m, "\t%u.%02u W (average SoC including CPU)\n", query >> 8, query & 0xff);
-+			seq_printf(m, "\t%u.%02u W (average SoC including CPU)\n", centiwatt / 100, centiwatt % 100);
- 		else
--			seq_printf(m, "\t%u.%02u W (average SoC)\n", query >> 8, query & 0xff);
-+			seq_printf(m, "\t%u.%02u W (average SoC)\n", centiwatt / 100, centiwatt % 100);
- 	}
- 	size = sizeof(uint32_t);
- 	if (!amdgpu_dpm_read_sensor(adev, AMDGPU_PP_SENSOR_GPU_INPUT_POWER, (void *)&query, &size)) {
-+		mwatt = power_2_mwatt(query);
-+		centiwatt = DIV_ROUND_CLOSEST(mwatt, 10);
- 		if (adev->flags & AMD_IS_APU)
--			seq_printf(m, "\t%u.%02u W (current SoC including CPU)\n", query >> 8, query & 0xff);
-+			seq_printf(m, "\t%u.%02u W (current SoC including CPU)\n", centiwatt / 100, centiwatt % 100);
- 		else
--			seq_printf(m, "\t%u.%02u W (current SoC)\n", query >> 8, query & 0xff);
-+			seq_printf(m, "\t%u.%02u W (current SoC)\n", centiwatt / 100, centiwatt % 100);
- 	}
- 	size = sizeof(value);
- 	seq_printf(m, "\n");
 
 
