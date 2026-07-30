@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD2C543C7C5;
-	Thu, 30 Jul 2026 15:08:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79C3A44163B;
+	Thu, 30 Jul 2026 15:08:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424089; cv=none; b=k2kAqUR489wpuGWSntQAJ68JVOJl4v3EwE2OoAxcmAiFGR45Cj+SrYfgZYcEulMr3IrhwErJx5LsXSukOsdIA7kNPVkjS1gav4akQsAVtEIeePqp3RpO/D95o73KoP2qNcGBf40sBC/yk64h86Dpa/Fa5cWEf2aSD0ZtfvT6Lmk=
+	t=1785424091; cv=none; b=A+V5XGm1CP+JUKS4RHWPXa+veKdftVevUSTI1h9XcwtCNaGvAsV/AZwN/tcXk5WpZhMfdhXJzuPvMGwopz/gqDy8UQS2OEf45JxyY4KxJLDwzO2HKRbLshqPunkuyEu0+VzPn2uLE1PsteaY1/RWNIT9kj+RK+eSGsKE81Hf5Wg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424089; c=relaxed/simple;
-	bh=e+g8uczhqkv7HnUzwXwsP4O2rWWfDScJPW7j9kHQLpk=;
+	s=arc-20240116; t=1785424091; c=relaxed/simple;
+	bh=CKtX98+gHJVZOohMLrd06I8g27c84rOOGGtOn+YbSPI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MWhuXu0UZAdSlqa6AIAP7wHMG7Jbm9wbZxXzcSLfNwMK/yo49fAWjoV+G6ozuPd9wphyuTJ4cRagtBlmo6jCFMBzwARmKvP3WHe0ZXQ5J47qluHxi8JEjNMokmu48tvqZFyeLJu4RnvT9w5GQOowZ2TvWRbg23s5oxhwn7K2jL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BxU3tbj9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IAk2xBq71aQzQS/d1TNpvkZTc9XqoquKuZTVeuYZPUBNNaMoX3XR0i8kwyIqDUcrKfb08Yfj+BLpfzQVBuh0hrqo9U1IZbTsMRZoxo8M1rTTZKb1983zgnwxZdClj7LHD/nD5ErhA93MV/PQjuCj5087gMiREDtEleZybJQCxKY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ogXEa5kR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BxU3tbj9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0031D1F000E9;
-	Thu, 30 Jul 2026 15:08:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ogXEa5kR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D40D31F000E9;
+	Thu, 30 Jul 2026 15:08:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424087;
-	bh=Nu4mSb7fqKHblxf+qhOTD0rkSKezAvlNg97L1jUtbEA=;
+	s=korg; t=1785424090;
+	bh=8YTXA9B6PXIcubvoee1G/8kInMfH72kKFphNsfPhLYY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BxU3tbj9hDBV87wWNXP58PaXY1IGXPKiV8HmvTy5oAFNixRKRg6qbm08bQh1/DsDB
-	 f8ig8fNCGjTyrOpmwdfauv3HP9GXMwIlfNhnnBZvEuJKLTSqmOrYFGOTyYa70yzc3U
-	 NGlsZPcUP87F2nVuventJKeOs2FPEoCuaysP0PWA=
+	b=ogXEa5kR633aXdBTUyspxG2IOKSxTT85fwuNnpxamx2lO6Vxfzm3fbBHrDFImnKFX
+	 yIjavV/vUgdn8OulF9hmta5NxqgGjtKriu5D9eH0S0qgblf9J+Jm8azY2tEo0HfjQX
+	 n516g7Q9wNPB34jhh0yQsnckatSLmPtO5Ulus/6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhixing Chen <running910@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 217/675] gtp: parse extension headers before reading inner protocol
-Date: Thu, 30 Jul 2026 16:09:07 +0200
-Message-ID: <20260730141449.755618547@linuxfoundation.org>
+Subject: [PATCH 6.18 265/675] wifi: mt76: mt7996: fix possible NULL-pointer deref in mt7996_mcu_sta_bfer_eht()
+Date: Thu, 30 Jul 2026 16:09:55 +0200
+Message-ID: <20260730141450.765269187@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -51,64 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhixing Chen <running910@gmail.com>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit 96e37e2f618e931aa97af95e707dcdfb1ec41264 ]
+[ Upstream commit 2fffc472bec490c8357defcee9c075ca74467352 ]
 
-GTPv1-U packets may carry a chain of extension headers before the inner
-IP packet. The receive path already parses and skips these extension
-headers, but it currently reads the inner protocol before doing so.
+mt76_connac_get_eht_phy_cap routine can theoretically return NULL so
+check cap pointer before dereferencing it.
 
-As a result, the first extension header byte is interpreted as the inner
-IP version. Packets with extension headers are then dropped before PDP
-lookup.
-
-Parse the extension header chain before calling gtp_inner_proto(), so the
-inner protocol is read from the actual inner IP header.
-
-Fixes: c75fc0b9e5be ("gtp: identify tunnel via GTP device + GTP version + TEID + family")
-Signed-off-by: Zhixing Chen <running910@gmail.com>
-Link: https://patch.msgid.link/20260708042244.120898-1-running910@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: ba01944adee9f ("wifi: mt76: mt7996: add EHT beamforming support")
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Link: https://patch.msgid.link/20260621-mt76_connac_get_he_phy_cap-fix-v1-4-ed4ccf7a0363@kernel.org
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/gtp.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/mcu.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/gtp.c b/drivers/net/gtp.c
-index 2f8626c3824d6b..937d913ce5c334 100644
---- a/drivers/net/gtp.c
-+++ b/drivers/net/gtp.c
-@@ -826,13 +826,17 @@ static int gtp1u_udp_encap_recv(struct gtp_dev *gtp, struct sk_buff *skb)
- 	if (!pskb_may_pull(skb, hdrlen))
- 		return -1;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
+index 87ec7e90dfeebe..72851399575f9d 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
+@@ -1728,14 +1728,18 @@ mt7996_mcu_sta_bfer_eht(struct ieee80211_link_sta *link_sta,
+ 	struct ieee80211_sta_eht_cap *pc = &link_sta->eht_cap;
+ 	struct ieee80211_eht_cap_elem_fixed *pe = &pc->eht_cap_elem;
+ 	struct ieee80211_eht_mcs_nss_supp *eht_nss = &pc->eht_mcs_nss_supp;
+-	const struct ieee80211_sta_eht_cap *vc =
+-		mt76_connac_get_eht_phy_cap(phy->mt76, vif);
+-	const struct ieee80211_eht_cap_elem_fixed *ve = &vc->eht_cap_elem;
+ 	u8 nss_mcs = u8_get_bits(eht_nss->bw._80.rx_tx_mcs9_max_nss,
+ 				 IEEE80211_EHT_MCS_NSS_RX) - 1;
++	const struct ieee80211_eht_cap_elem_fixed *ve;
++	const struct ieee80211_sta_eht_cap *vc;
+ 	u8 snd_dim, sts;
  
-+	gtp1 = (struct gtp1_header *)(skb->data + sizeof(struct udphdr));
++	vc = mt76_connac_get_eht_phy_cap(phy->mt76, vif);
++	if (!vc)
++		return;
 +
-+	if (gtp1->flags & GTP1_F_EXTHDR &&
-+	    gtp_parse_exthdrs(skb, &hdrlen) < 0)
-+		return -1;
-+
- 	if (gtp_inner_proto(skb, hdrlen, &inner_proto) < 0) {
- 		netdev_dbg(gtp->dev, "GTP packet does not encapsulate an IP packet\n");
- 		return -1;
- 	}
+ 	bf->tx_mode = MT_PHY_TYPE_EHT_MU;
++	ve = &vc->eht_cap_elem;
  
--	gtp1 = (struct gtp1_header *)(skb->data + sizeof(struct udphdr));
--
- 	pctx = gtp1_pdp_find(gtp, ntohl(gtp1->tid),
- 			     gtp_proto_to_family(inner_proto));
- 	if (!pctx) {
-@@ -840,10 +844,6 @@ static int gtp1u_udp_encap_recv(struct gtp_dev *gtp, struct sk_buff *skb)
- 		return 1;
- 	}
- 
--	if (gtp1->flags & GTP1_F_EXTHDR &&
--	    gtp_parse_exthdrs(skb, &hdrlen) < 0)
--		return -1;
--
- 	return gtp_rx(pctx, skb, hdrlen, gtp->role, inner_proto);
- }
+ 	mt7996_mcu_sta_sounding_rate(bf, phy);
  
 -- 
 2.53.0
