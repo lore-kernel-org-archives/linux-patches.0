@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B021B44102D;
-	Thu, 30 Jul 2026 14:48:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C19839C00E;
+	Thu, 30 Jul 2026 14:48:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422899; cv=none; b=JOzKS92cxybpG+2032C33qCgoWPm7b0lcdePHqzVvkUxfR93GRHgko1V1qQzq59l5an4eXrb3QT0c/YKT5bHBFNRZSIi1mLA0L09bPtkTxI7PgdR+Zk4psxfd9od1lTayeECqu2uNxLRlUJc7c8msEOiDmpNaxHciBV6n5W2PRo=
+	t=1785422902; cv=none; b=TIPZIgEbWUjmqJzzfBE/dCC8e4TE69u3NnSeZbeF3rZGooCsVGQKkLSYJWNtMXqSD+iKIkvXN8o8jsA9o7Fq6WAPKZTwJve5M9LgN0ETKfVkhadMz+NjWPq57sCzFVnY0BlPVF9G0ERIIX021Y0ZX/cIjZzodoLhlD0Y7//MSuc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422899; c=relaxed/simple;
-	bh=u69Im/r14eLSFkOliFzHgClCTdkcULNuw5UyyyyA/Qc=;
+	s=arc-20240116; t=1785422902; c=relaxed/simple;
+	bh=W4n2Rwz63cNEP8DtVerRRxagFMtn98gJGWAUaVWgK2g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sd+RdKcIFS6XPSfE8fQl4gkuZnt8VA7M30xYA0axi6+avcaVXWN85qHjIa4fFy0U2fLIigVLdPPWbA+HZUSMe9SxH5nCSFRmImsAdWu055TS3DLAain0e7LzqinRkCGwMpdLc7KC2AluWhnKoIHLdbm6Eo9MA+f0zazfq+UfN18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UofLZH2p; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lrLAmg1a1QiaxZyd/POu2SjI8w7oay1ZVN/6PKMJqYryoABI6g+rkD7y3n/d7MPCXsf4J9aUBa8z1XFTZq1vDz1s+TQPXYoAub1RZf69Sa9zcTwTGixmikXgOPu1AnHgsd7rB3LELzuznoGtabwo2CYhhTwIKPBoFQiCnsvl9ig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S/Hpz9xr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UofLZH2p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 162021F000E9;
-	Thu, 30 Jul 2026 14:48:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S/Hpz9xr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D92411F000E9;
+	Thu, 30 Jul 2026 14:48:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422898;
-	bh=dKo4sxQg+8zyEGLPP0UqwFK7pFsuM76SP6dgDoq2qCQ=;
+	s=korg; t=1785422901;
+	bh=vw/WrrkTgzl4PBfuFYNMwIqPtM8dh8L8Tm8yrxrEiDA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UofLZH2poLm4TcNKBSLA1v9yPt1raeHy6Dc4WMUGhe6U+fl0Wuzs6ufCYZR4BuyAc
-	 yhRruObxQHrwfgdt7DfRyp+D0Xy4mf5iSZ7wyGW9yO9++50BfTjf7Vx3EqHPcw8lCb
-	 e8BNEpGiLfGemF0l3xkAMSvRzRbG12tSWRpAF19s=
+	b=S/Hpz9xrRhCt9cpzAoeeU3mW71A8etTxWJbrTiy/HmX13QBbunUokN4CkiyQ8aPqm
+	 k1FQDIaWTHunu5+UmWBBRrUm2zoPcOgmtw6OV7mvpuA97jlpDq89HSh4VqgO1PCXxV
+	 zzOm0LfBQ7ObQqVHVFPOn0I7YlFc7wW0VHF6Oim8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	deepakraog <gaikwad.dcg@gmail.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 7.1 593/744] tracing: Fix resource leak on mmiotrace trace_pipe close
-Date: Thu, 30 Jul 2026 16:14:26 +0200
-Message-ID: <20260730141456.884059967@linuxfoundation.org>
+Subject: [PATCH 7.1 594/744] tracing: Fix union collision of module and refcnt for dynamic events
+Date: Thu, 30 Jul 2026 16:14:27 +0200
+Message-ID: <20260730141456.905018584@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -50,62 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: deepakraog <gaikwad.dcg@gmail.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit c1d87e724ae55e781b7cc7ccafb34d9e668582b2 upstream.
+commit b4eb07bde606c2096b24252be589e735eff6d413 upstream.
 
-The mmiotrace tracer was added May 12th 2008. At that time, resources
-created in pipe_open() could not be freed because there was not
-pipe_close function pointer of the tracer. The pipe_close function pointer
-was added in December 7th, 2009, but the mmiotrace tracer was not updated.
+In 'struct trace_event_call', the 'module' pointer and the 'refcnt'
+atomic variable share the same memory space in a union. For dynamic
+events, the union member is 'refcnt', which acts as an active
+reference counter.
 
-mmio_pipe_open() allocates a header_iter and takes a pci_dev reference
-when trace_pipe is opened. mmio_close() frees them, but it was only
-wired to the tracer's .close callback.
+When a dynamic event (such as kprobe, uprobe, fprobe, eprobe, or
+wprobe) has a non-zero reference count (e.g. due to active event
+triggers or perf attachments), its 'call->module' evaluates to a
+small non-zero integer instead of NULL.
 
-tracing_release_pipe() invokes .pipe_close, not .close, when the
-trace_pipe file is released. As a result, closing trace_pipe with the
-mmiotrace tracer active leaked the header_iter allocation and left a
-stale pci_dev reference.
+When filtering or setting events for a specific module (e.g., writing
+':mod:<module>' to 'set_event'), the code in
+'__ftrace_set_clr_event_nolock()' and 'update_event_fields()' reads
+'call->module' directly without checking whether the event is dynamic.
+This causes the kernel to treat the small integer (refcnt) as a
+'struct module' pointer, leading to a NULL/invalid pointer dereference
+(Oops) when dereferencing the module name.
 
-Set .pipe_close to mmio_close, matching how function_graph wires both
-callbacks to the same handler.
-
-Note, if the trace_pipe is read to completion, it will clean up the
-resources, but if one were to run:
-
-  # head -n 1 /sys/kernel/tracing/trace_pipe
- VERSION 20070824
-
-Over and over again, it would trigger a massive leak.
+Fix this by ensuring that the 'TRACE_EVENT_FL_DYNAMIC' flag is checked
+before treating 'call->module' as a valid pointer in these code paths.
 
 Cc: stable@vger.kernel.org
-Fixes: c521efd1700a8 ("tracing: Add pipe_close interface)
-Link: https://patch.msgid.link/20260715143604.14481-1-gaikwad.dcg@gmail.com
-Signed-off-by: deepakraog <gaikwad.dcg@gmail.com>
+Link: https://patch.msgid.link/178425670947.84440.11344393611899824907.stgit@devnote2
+Fixes: 4c86bc531e60 ("tracing: Add :mod: command to enabled module events")
+Assisted-by: Antigravity:gemini-3.5-flash
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_mmiotrace.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/trace_events.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/kernel/trace/trace_mmiotrace.c
-+++ b/kernel/trace/trace_mmiotrace.c
-@@ -109,7 +109,6 @@ static void mmio_pipe_open(struct trace_
- 	iter->private = hiter;
- }
+--- a/kernel/trace/trace_events.c
++++ b/kernel/trace/trace_events.c
+@@ -1350,7 +1350,9 @@ __ftrace_set_clr_event_nolock(struct tra
+ 		call = file->event_call;
  
--/* XXX: This is not called when the pipe is closed! */
- static void mmio_close(struct trace_iterator *iter)
- {
- 	struct header_iter *hiter = iter->private;
-@@ -279,6 +278,7 @@ static struct tracer mmio_tracer __read_
- 	.start		= mmio_trace_start,
- 	.pipe_open	= mmio_pipe_open,
- 	.close		= mmio_close,
-+	.pipe_close	= mmio_close,
- 	.read		= mmio_read,
- 	.print_line	= mmio_print_line,
- 	.noboot		= true,
+ 		/* If a module is specified, skip events that are not that module */
+-		if (module && (!call->module || strcmp(module_name(call->module), module)))
++		if (module &&
++		    ((call->flags & TRACE_EVENT_FL_DYNAMIC) ||
++		     !call->module || strcmp(module_name(call->module), module)))
+ 			continue;
+ 
+ 		name = trace_event_name(call);
 
 
