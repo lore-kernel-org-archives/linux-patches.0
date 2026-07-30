@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 095E3337699;
-	Thu, 30 Jul 2026 14:54:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56C70175A6D;
+	Thu, 30 Jul 2026 14:54:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423266; cv=none; b=pn43ae159fHDyVfmre/37N27l+hFAgP+mbOMsNzwbFOjgSx6m6+iRQUuYS+JKGsrTYdMyIe1NpnYN6RzjMmS2/Rj/neeSHxAs1gmNONWDItLdru4ZUT6Yb3VC+kxL/+gw5z+QMx+dlEpUBK5ju9+v9fm4lBLtQsT5gt1+CfCWWQ=
+	t=1785423269; cv=none; b=C3BPmIpxvL4qqJE6TU8zh98OLBhlKVJslOdIcrpWuD5eIoyACoh7QGew/+9ucri1zvMR2KoGNDzbrvRTvtI1RsFWUu9FiFl8ImoFtKV+hY1TngVhNj6Ku/qo/v0XbpFpHBSMGlhtTmFtOmdORsSSTRAYZxnm1Xb31cOgBaLYtUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423266; c=relaxed/simple;
-	bh=SQBCZP0L1SrWy5lZcWb6wC7BnW0uRkf/g0pOCr0C/6E=;
+	s=arc-20240116; t=1785423269; c=relaxed/simple;
+	bh=1BWo54pah8P0qKsh74KTe1CBmUhCb9CLmk2ra2DHakU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sF1KenhYQ7vyIDfsn32rQqojFSvaI85EXhCSTAIiGD7j1uzltFwZ4BlWnyXCYwN08hDmaStSfK/ClNT0XxRuyidVeXWFtHkHG/lnaT72m7UG5RWWcScixXg55eFtWP3QS8H8o/dzVa7D4F9eBaDdv2YLm1DLozSTO6y2NYJyRwI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yAzJRcXK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a79WXmrS55s7Ji08GNAez0TckFQwkHeCic+88fNbJaRYfXxNi99fTeXG9BGypLmtsoupuMF1vOVE8rb16LRLxLUXeoUfmSj2DayV8aqilbrp9nuwNQEllMGQfHsxL/cW60+EUTphkYAcUQS+mHxAKqrv0CUxy/w8wNY/azXzOgY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bs+gw64f; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yAzJRcXK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 647561F000E9;
-	Thu, 30 Jul 2026 14:54:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bs+gw64f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 562601F000E9;
+	Thu, 30 Jul 2026 14:54:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423264;
-	bh=CZ9hveDwdk2NbGXEDgwdTYqwgEyz2J5tvnr8Nu6WNQk=;
+	s=korg; t=1785423267;
+	bh=vk1cfEurVECB/TATxFeIIEZTnccKZ+IAXY4kI+n939k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yAzJRcXKgILr5hmE00RwaZof935ICSC8WjYW2ZKOVITuXOj6286ZZOK2/k768j8Jy
-	 R4q2V6uzKev1pfYjUDu0v9o4V75Zn/a9JUcWfZ80Gkthu9JAgVqBTUzNqP+GHS633f
-	 skncEhQY2gFBaRipG2cfaIRiqODWAMqQX0mgib84=
+	b=bs+gw64fponz3EHF8iDvm3BuBpj4pwae/RzB6dI5UquhzzekHU3kvVtCGrq2ss5zC
+	 v4lhiaC0G8wHNzOaUaXVXkmun+meL9CILMgXcoFbZuMdEiaJDEDT7E1OX+A0SkLXXi
+	 myUM/xUtsLKalJ27uEKJp3bUtH8xUgxXX211dqjc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Harry Wentland <harry.wentland@amd.com>,
+	Fangzhi Zuo <Jerry.Zuo@amd.com>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
-	Jesse Zhang <jesse.zhang@amd.com>
-Subject: [PATCH 7.1 697/744] drm/amdgpu/gfx11: fix EOP interrupt routing for KQ and userq
-Date: Thu, 30 Jul 2026 16:16:10 +0200
-Message-ID: <20260730141459.085505068@linuxfoundation.org>
+	Matthew Schwartz <matthew.schwartz@linux.dev>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.1 724/744] drm/amd/display: Fix DTB DTO updates breaking live pixel rate sources
+Date: Thu, 30 Jul 2026 16:16:37 +0200
+Message-ID: <20260730141459.674738303@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -50,98 +54,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jesse Zhang <Jesse.Zhang@amd.com>
+From: Harry Wentland <harry.wentland@amd.com>
 
-commit 0a3d35460320baf8744c7dcc3e287e07fbaf6d36 upstream.
+commit 76a2db58e95e328007043f54ac3c7336ccbee440 upstream.
 
-Try KQ by ring_id first (KCQ and UQ never share a HW slot); fall back
-to amdgpu_userq_process_fence_irq() on miss, since KQ EOPs were
-misrouted into the userq fence path when enable_mes is true.
+dcn32_update_clocks_update_dtb_dto() and its dcn35 counterpart reprogram
+the DTB DTO of every timing generator in the context whenever the DTBCLK
+reference changes, passing a zeroed pixel rate and never setting
+is_hdmi. Both dccg set_dtbclk_dto() implementations treat a zero pixel
+rate as a disable request. On dcn32 that branch drives PIPE_DTO_SRC_SEL
+to the DP DTO source, so a timing generator actively scanning out an
+HDMI stream has its pixel rate source re-muxed out from under the live
+raster and the OTG stops on the spot. On dcn35 it clears
+DTBCLK_DTO_ENABLE and restores DTBCLK_Pn clock gating, which does the
+same to a live 128b/132b stream.
 
-Require a strict (me,pipe,queue) match in the gfx case, then userq gfx
-EOPs fall through to amdgpu_userq_process_fence_irq().
+Two displays where only one runs a 128b/132b link hit this reliably.
+is_dtbclk_required() holds the DTBCLK reference high while both are
+active, and the moment the 128b/132b stream is torn down (compositor
+switch, display disable, hot-unplug) the next safe_to_lower pass drops
+the reference to the lowest DPM level and the DTO walk freezes the
+surviving screen. On Navi31 the DAL mailbox then goes deaf on the
+DISPCLK hard-min that follows the walk in dcn32_update_clocks(),
+stranding both SMU mailboxes until reboot.
 
-Suggested-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Jesse Zhang <jesse.zhang@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Set is_hdmi for HDMI and DVI signals so the disable path leaves the
+pixel rate source selection on the HDMI path, and pass the real pixel
+rate for 128b/132b streams so a reference change rescales their DTO
+instead of disabling it.
+
+Fixes: 128c1ca0303f ("drm/amd/display: Update DTBCLK for DCN32")
+Fixes: 8774029f76b9 ("drm/amd/display: Add DCN35 CLK_MGR")
+Signed-off-by: Harry Wentland <harry.wentland@amd.com>
+Reviewed-by: Fangzhi Zuo <Jerry.Zuo@amd.com>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 88e589cc811ba907209a426c426c469bcb4bb894)
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[ mschwartz: dcn32 and dcn35 clk_mgr hunks only. The rest is HDMI FRL
+  enablement, absent before 7.2, so the FRL conditions and the
+  req_audio_dtbclk_khz assignment they guard are dropped and the
+  FRL-centric changelog is rewritten. Added the pipe_ctx->stream check
+  the new dereferences need. ]
+Signed-off-by: Matthew Schwartz <matthew.schwartz@linux.dev>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c |   43 ++++++++++++++++++++++-----------
- 1 file changed, 29 insertions(+), 14 deletions(-)
+ .../gpu/drm/amd/display/dc/clk_mgr/dcn32/dcn32_clk_mgr.c | 9 ++++++++-
+ .../gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn35_clk_mgr.c | 9 ++++++++-
+ 2 files changed, 16 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
-@@ -6513,25 +6513,33 @@ static int gfx_v11_0_eop_irq(struct amdg
- 			     struct amdgpu_iv_entry *entry)
- {
- 	u32 doorbell_offset = entry->src_data[0];
--	u8 me_id, pipe_id, queue_id;
--	struct amdgpu_ring *ring;
--	int i;
+diff --git a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn32/dcn32_clk_mgr.c b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn32/dcn32_clk_mgr.c
+index fda6cade30a8de..e2787c7084ec07 100644
+--- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn32/dcn32_clk_mgr.c
++++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn32/dcn32_clk_mgr.c
+@@ -276,13 +276,20 @@ static void dcn32_update_clocks_update_dtb_dto(struct clk_mgr_internal *clk_mgr,
+ 		struct dtbclk_dto_params dto_params = {0};
  
- 	DRM_DEBUG("IH: CP EOP\n");
+ 		/* use mask to program DTO once per tg */
+-		if (pipe_ctx->stream_res.tg &&
++		if (pipe_ctx->stream && pipe_ctx->stream_res.tg &&
+ 				!(tg_mask & (1 << pipe_ctx->stream_res.tg->inst))) {
+ 			tg_mask |= (1 << pipe_ctx->stream_res.tg->inst);
  
--	if (adev->enable_mes && doorbell_offset) {
--		amdgpu_userq_process_fence_irq(adev, doorbell_offset);
--	} else {
--		me_id = (entry->ring_id & 0x0c) >> 2;
--		pipe_id = (entry->ring_id & 0x03) >> 0;
--		queue_id = (entry->ring_id & 0x70) >> 4;
-+	if (!adev->gfx.disable_kq) {
-+		u8 me_id = (entry->ring_id & 0x0c) >> 2;
-+		u8 pipe_id = (entry->ring_id & 0x03) >> 0;
-+		u8 queue_id = (entry->ring_id & 0x70) >> 4;
-+		struct amdgpu_ring *ring;
-+		int i;
+ 			dto_params.otg_inst = pipe_ctx->stream_res.tg->inst;
+ 			dto_params.ref_dtbclk_khz = ref_dtbclk_khz;
  
- 		switch (me_id) {
- 		case 0:
--			if (pipe_id == 0)
--				amdgpu_fence_process(&adev->gfx.gfx_ring[0]);
--			else
--				amdgpu_fence_process(&adev->gfx.gfx_ring[1]);
-+			/*
-+			 * MES splits gfx HQDs per (me,pipe): KGQ owns queue=0,
-+			 * userq gfx owns queue>=1 (see amdgpu_mes_get_hqd_mask).
-+			 * Require a strict (me,pipe,queue) match so userq gfx
-+			 * EOPs fall through to amdgpu_userq_process_fence_irq().
-+			 */
-+			for (i = 0; i < adev->gfx.num_gfx_rings; i++) {
-+				ring = &adev->gfx.gfx_ring[i];
-+				if ((ring->me == me_id) &&
-+				    (ring->pipe == pipe_id) &&
-+				    (ring->queue == queue_id)) {
-+					amdgpu_fence_process(ring);
-+					return 0;
-+				}
-+			}
- 			break;
- 		case 1:
- 		case 2:
-@@ -6543,13 +6551,20 @@ static int gfx_v11_0_eop_irq(struct amdg
- 				 */
- 				if ((ring->me == me_id) &&
- 				    (ring->pipe == pipe_id) &&
--				    (ring->queue == queue_id))
-+				    (ring->queue == queue_id)) {
- 					amdgpu_fence_process(ring);
-+					return 0;
-+				}
- 			}
- 			break;
-+		default:
-+			break;
- 		}
- 	}
- 
-+	if (adev->enable_mes && doorbell_offset)
-+		amdgpu_userq_process_fence_irq(adev, doorbell_offset);
++			if (dccg->ctx->dc->link_srv->dp_is_128b_132b_signal(pipe_ctx))
++				dto_params.pixclk_khz = pipe_ctx->stream->timing.pix_clk_100hz / 10;
 +
- 	return 0;
- }
++			if (dc_is_hdmi_signal(pipe_ctx->stream->signal) ||
++					dc_is_dvi_signal(pipe_ctx->stream->signal))
++				dto_params.is_hdmi = true;
++
+ 			dccg->funcs->set_dtbclk_dto(clk_mgr->dccg, &dto_params);
+ 			//dccg->funcs->set_audio_dtbclk_dto(clk_mgr->dccg, &dto_params);
+ 		}
+diff --git a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn35_clk_mgr.c b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn35_clk_mgr.c
+index 3f58a1640d64e7..020d43c7fab855 100644
+--- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn35_clk_mgr.c
++++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn35_clk_mgr.c
+@@ -264,13 +264,20 @@ static void dcn35_update_clocks_update_dtb_dto(struct clk_mgr_internal *clk_mgr,
+ 		struct dtbclk_dto_params dto_params = {0};
  
+ 		/* use mask to program DTO once per tg */
+-		if (pipe_ctx->stream_res.tg &&
++		if (pipe_ctx->stream && pipe_ctx->stream_res.tg &&
+ 				!(tg_mask & (1 << pipe_ctx->stream_res.tg->inst))) {
+ 			tg_mask |= (1 << pipe_ctx->stream_res.tg->inst);
+ 
+ 			dto_params.otg_inst = pipe_ctx->stream_res.tg->inst;
+ 			dto_params.ref_dtbclk_khz = ref_dtbclk_khz;
+ 
++			if (dccg->ctx->dc->link_srv->dp_is_128b_132b_signal(pipe_ctx))
++				dto_params.pixclk_khz = pipe_ctx->stream->timing.pix_clk_100hz / 10;
++
++			if (dc_is_hdmi_signal(pipe_ctx->stream->signal) ||
++					dc_is_dvi_signal(pipe_ctx->stream->signal))
++				dto_params.is_hdmi = true;
++
+ 			dccg->funcs->set_dtbclk_dto(clk_mgr->dccg, &dto_params);
+ 			//dccg->funcs->set_audio_dtbclk_dto(clk_mgr->dccg, &dto_params);
+ 		}
+-- 
+2.53.0
+
 
 
