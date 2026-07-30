@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A285D32B116;
-	Thu, 30 Jul 2026 15:15:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ABFA367B67;
+	Thu, 30 Jul 2026 15:15:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424547; cv=none; b=l8pW1aHTXsUT8CekPytxDmVFHMhBCmvVv1vXEkvXML1zhZVzox/1Fr+Br40cUONVLsBxHX0SiDUlrBmP1K0Z4efhW6HVw20+7Vee7+Zoflju7+CMZOMmjDo/utLx2NqFvuKyQ5url3AibhGOsAApCZh9qpPwhjYAdtpETPCxDq0=
+	t=1785424550; cv=none; b=JihBnIoOx01/1ZVSbS5gOIa607PM/a1Y0pr/bDWareGB2rviTu6Ua1yEGvyIVWxBQSBWupMNDqlve6i3FXREzNnsAZo/Ac1s7EAiQ2ITbWIp29re2NatuPFOSIGLGcBiwj3I0msj49zwl2Hp91ye2sgTP6qhEX0yTLoSVbRRLRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424547; c=relaxed/simple;
-	bh=8l5rG4z5o/QuO+ehRIahBFoLptR+b1aSdq8DGXOmgzg=;
+	s=arc-20240116; t=1785424550; c=relaxed/simple;
+	bh=VsHQW97zsU9BCcRxiU+9NUbmbFtMBM3CKbVEmK6bpbI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XABl1bfYf+zwriHhJfBqP5LCuy2csASHM8zBP1ASzVYoDXJYuvdc1r/1+O4rZ7GLlsSLpC0dkSeUdf46GKcJvXJDcpIMM7C2eJr2kMcSnzXEV7wa3znT30EbrJmUd4m3qWHiXMKpDu5S74ME3vciWaA+F96tC6Jpo+btp8M8LOE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AblZ0jBl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uU4XJqeVv45rbo8ROdCbNGJh+A7vsIf11/gyhmgeWhtlEBt2GDvpi2zVtM0N+DA0O7UljqiVU/3uDLLK2WO+AgwcrqPe6ydRh0U2pRjVdx8rynHCtAA93moksFHqhSCf+RU6ZH6qPoX287rccEBdjfhiZO2D+9UCeDTUrxtUKB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KQhmhNU1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AblZ0jBl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 027901F000E9;
-	Thu, 30 Jul 2026 15:15:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KQhmhNU1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D70CD1F00A3A;
+	Thu, 30 Jul 2026 15:15:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424546;
-	bh=0ZzMJTKVPmFPl0FKTnwKc7v25q06t7Typ+4ARx7YCrQ=;
+	s=korg; t=1785424549;
+	bh=5dZJfBrkJ8kbyz6m0/fgiioZdHj4iDynzAVAXsFyvKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AblZ0jBlHIC1JQrxyiEtw/UVEwF2t5exfmrtqtzcmNn8dLY0YSnnPNWFtXvQNVz8E
-	 f2UgsTnNtHPezgvTHQ2A9ySUl1fpP2QTGBZ6OB+0gKhJe+7OKZoZ4dPDXRpmjHpw8E
-	 I26roxysUP55XUPMcHzwt/v9RPOn31tKPjzhA1Ow=
+	b=KQhmhNU1uVAY+eyt36jdBD2KUYI+CTR9YFPkuxJ01j3t++Ce/N5waKGfISXrrqFkC
+	 wqpSCE/cdF7kMkZ2ydJj9tKSrQ0MAmAZTiVVEhsY+UzDbpghPBLAbBF+6M7hwVt9W6
+	 JwXH4x6d/IOnWnev/kl+83IcUtoyo+lsO5DDEXUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ross Cawston <ross@r-sc.ca>,
-	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.18 432/675] media: synopsys: hdmirx: Fix HPD lane hold time
-Date: Thu, 30 Jul 2026 16:12:42 +0200
-Message-ID: <20260730141454.321674574@linuxfoundation.org>
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Hungyu Lin <dennylin0707@gmail.com>
+Subject: [PATCH 6.18 433/675] media: tegra-video: vi: fix invalid u32 return value in format lookup
+Date: Thu, 30 Jul 2026 16:12:43 +0200
+Message-ID: <20260730141454.343383647@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -51,37 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+From: Hungyu Lin <dennylin0707@gmail.com>
 
-commit d1162a5adbb5e95953d460b5bde3a04cd4473fe9 upstream.
+commit d5b50055338e131a1a99f923ebb0361974a00f36 upstream.
 
-Increase time of holding HPD lane low by 50ms. This fixes EDID change not
-detected by source/display side.
+tegra_get_format_fourcc_by_idx() returns a u32 but uses -EINVAL to
+signal an out-of-bounds index. This results in a large unsigned
+value being returned, which may be interpreted as a valid fourcc.
 
-Fixes: 7b59b132ad43 ("media: platform: synopsys: Add support for HDMI input driver")
+Returning 0 is not a valid fourcc either. This condition should
+never happen, so use WARN_ON_ONCE() to catch unexpected out-of-bounds
+access and return a valid fallback format instead.
+
+Suggested-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Fixes: 3d8a97eabef0 ("media: tegra-video: Add Tegra210 Video input driver")
 Cc: stable@vger.kernel.org
-Reported-by: Ross Cawston <ross@r-sc.ca>
-Closes: https://lore.kernel.org/linux-rockchip/20260209061654.54757-1-ross@r-sc.ca/
-Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/synopsys/hdmirx/snps_hdmirx.c |    4 ++--
+ drivers/staging/media/tegra-video/vi.c |    4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/media/platform/synopsys/hdmirx/snps_hdmirx.c
-+++ b/drivers/media/platform/synopsys/hdmirx/snps_hdmirx.c
-@@ -504,9 +504,9 @@ static void hdmirx_hpd_ctrl(struct snps_
- 	hdmirx_writel(hdmirx_dev, CORE_CONFIG,
- 		      hdmirx_dev->hpd_trigger_level_high ? en : !en);
+--- a/drivers/staging/media/tegra-video/vi.c
++++ b/drivers/staging/media/tegra-video/vi.c
+@@ -80,8 +80,8 @@ static int tegra_get_format_idx_by_code(
+ static u32 tegra_get_format_fourcc_by_idx(struct tegra_vi *vi,
+ 					  unsigned int index)
+ {
+-	if (index >= vi->soc->nformats)
+-		return -EINVAL;
++	if (WARN_ON_ONCE(index >= vi->soc->nformats))
++		return vi->soc->video_formats[0].fourcc;
  
--	/* 100ms delay as per HDMI spec */
-+	/* 100ms delay as per HDMI spec + extra 50ms to cover internal delay */
- 	if (!en)
--		msleep(100);
-+		msleep(100 + 50);
+ 	return vi->soc->video_formats[index].fourcc;
  }
- 
- static void hdmirx_write_edid_data(struct snps_hdmirx_dev *hdmirx_dev,
 
 
