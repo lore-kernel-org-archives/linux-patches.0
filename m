@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92838384223;
-	Thu, 30 Jul 2026 15:52:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7209384223;
+	Thu, 30 Jul 2026 15:53:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426779; cv=none; b=R57zYhjPNpRpOj8SOvcpKoq8hRxOsV7UgSSF3m4WJoxfrYowNADjZrAm936/erTiZXGkWittpYEPGk4E+CTc7hX4jurPnUfAocGTgp66YFzI+YGV5OQoaLJc/YBnfhISbNbM37TxU1W0GWOxz0i8CeFLU9MnKYEiI/VniyETChk=
+	t=1785426782; cv=none; b=H1ME99p8yIERINOqX3q+VxkiqDnMZFKkHpX3RSTImMEWMbbDX7Yceex08ZYXg6oBYyCwplOpGJQ8obsB3L19LNT6F2uFbip2zGHXy1yONM3HPf3C2/sqMnEii/Lbgk25oJ7E5rHtptNsDK6YaS3tf44jNETnbmdIdKl0mv+lk34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426779; c=relaxed/simple;
-	bh=U+Yddm23v15Y+z8Y001VfkPq9obtQsnjItGht1AIOE4=;
+	s=arc-20240116; t=1785426782; c=relaxed/simple;
+	bh=MQPDM42gjWMEOdLjZD6G8mbg+uAKGFTbTSGoLn+tZSw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HpAKmRt3ZWaQ/EX5My/9uQBh9Vh0BYeKhv1Enfj7KO3thuQwmGOq+Qj45htfySyg6PScn6ZVO6qMeWsjTNuwkaroKnO7fEBjL6ene788zA3bMXNMv2MsUriyJROQ54ZU9ppyq+87YjfZ0/O7MF3IelsLylIPk1Ud9WChaexnpqQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oytBXYO7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=RS5TmFTFS7LhwPGYDXwt/+SLjvCcJBG6QuQmg/PiRS9Mx02m5P672LWTh+qNyJx87VTJMFznJBeGFCuzGk9+fq4dDy9QPXiK1dfrQnU9IWreRDhNxIR1Tz8WRWiQzV1w9d9qxCAwCi9h+7lVQXESCpZzY3S17yTupbLjOu2z1dU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MB8FUY83; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oytBXYO7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECF1C1F000E9;
-	Thu, 30 Jul 2026 15:52:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MB8FUY83"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEB5B1F000E9;
+	Thu, 30 Jul 2026 15:53:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426778;
-	bh=avpeRXmkFi09chvWHlKFWEZ5fZPaq8Ob93GDc6qq+5U=;
+	s=korg; t=1785426781;
+	bh=Bq+7d2g2w4KKhSf+aiOHKf/47K/3LPo7f2QNqDhXFkI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oytBXYO74iBQp02sOjKURfrfD8QeBDqm051bEA32tjD3/+cmrINSrEUy08++Gklpm
-	 8QmssFPFdL4pG94L0rDqXzbiDtPHOz3A8IbM7EMhqiQTcNejuP+wr/CIyg0Fc1BtV+
-	 n7S9AUxvgAyqpywa13P7yYLOELrPbOspyR3t5oKs=
+	b=MB8FUY83M2LHLwWxAHYDRCg5c65SU433hmxgV+zihkqtBn+/1bKrm/lmxoIsi0wyT
+	 NGb9tlMyzTMWflo1X29ENIbuAzgghYBqeJ8ZnMyLys085mEIFPa/zxLf7X+o8maC0A
+	 58SO17mDW00eQUb8zUB4FMf1bOFD/QrjDB5HkpEs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@kernel.org>,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Souvik Banerjee <souvik@amlalabs.com>,
+	Amir Goldstein <amir73il@gmail.com>,
+	Miklos Szeredi <mszeredi@redhat.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 539/602] nvmet-auth: reject short AUTH_RECEIVE buffers
-Date: Thu, 30 Jul 2026 16:15:31 +0200
-Message-ID: <20260730141447.351113320@linuxfoundation.org>
+Subject: [PATCH 6.12 540/602] ovl: use linked upper dentry in copy-up tmpfile
+Date: Thu, 30 Jul 2026 16:15:32 +0200
+Message-ID: <20260730141447.373272789@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -46,88 +47,109 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Souvik Banerjee <souvik@amlalabs.com>
 
-[ Upstream commit 779575bc35c687697ba69e904f2cd22e60112534 ]
+[ Upstream commit e348eecd4d8fa8d18a5157ff59f7be1dc59c5928 ]
 
-nvmet_execute_auth_receive() trusts the AUTH_RECEIVE allocation length
-after checking only that it is nonzero and matches the transfer length.
-In the SUCCESS1 and FAILURE1/default states, that lets a remote NVMe-oF
-initiator reach the fixed-size DH-HMAC-CHAP response builders with a
-kmalloc() buffer shorter than the response, so nvmet_auth_success1() and
-nvmet_auth_failure1() write past the allocation; both only WARN_ON the
-short length and then format the message anyway.
+ovl_copy_up_tmpfile() stores the disconnected O_TMPFILE dentry as the
+overlay's upper dentry reference via ovl_inode_update().  vfs_tmpfile()
+allocated this dentry via d_alloc(parentpath->dentry, &slash_name), so
+d_name is "/" and d_parent is c->workdir.  Local upper filesystems
+(ext4, btrfs, xfs, ...) immediately rename it to "#<inum>" via
+d_mark_tmpfile() inside their ->tmpfile() op; FUSE and virtiofs do
+not, so both fields stay that way.  Neither identifies the destination
+directory and filename where ovl_do_link() actually linked the file.
 
-Impact: A remote NVMe-oF initiator with access to an auth-enabled target
-can trigger a 16-byte heap out-of-bounds write via a one-byte
-AUTH_RECEIVE allocation length.
+When the upper filesystem implements ->d_revalidate() (e.g. FUSE or
+virtiofs), ovl_revalidate_real() calls it with the dentry's parent
+inode and a snapshot of d_name.  The server tries to look up "/" inside
+c->workdir, fails, and overlayfs reports -ESTALE.
 
-Compute the minimum response length for the current DH-HMAC-CHAP step in
-nvmet_auth_receive_data_len() and report a zero data length when the
-host-supplied allocation length is shorter, so the existing zero-length
-check in nvmet_execute_auth_receive() rejects the command before any
-builder runs. The SUCCESS1 minimum is sizeof(struct
-nvmf_auth_dhchap_success1_data) plus the HMAC hash length, because the
-response hash is written into the rval[] flexible-array tail, so the
-minimum is state dependent rather than a flat sizeof. CHALLENGE keeps its
-existing variable-length guard in nvmet_auth_challenge().
+This causes persistent ESTALE errors for any file that was copied up via
+the tmpfile path, breaking dpkg, apt, and other tools that do
+rename-over-existing on overlayfs with a FUSE/virtiofs upper.
 
-This is reachable only when in-band DH-HMAC-CHAP authentication is
-configured on the target.
+Before commit 6b52243f633e ("ovl: fold copy-up helpers into callers"),
+the tmpfile copy-up path used a dedicated helper ovl_link_tmpfile()
+that captured the linked destination dentry returned by ovl_do_link():
 
-Fixes: db1312dd9548 ("nvmet: implement basic In-Band Authentication")
-Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5-5-xhigh
-Assisted-by: Claude:claude-opus-4-8
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+    err = ovl_do_link(temp, udir, upper);
+    ...
+    if (!err)
+        *newdentry = dget(upper);
+
+and published it via ovl_inode_update(d_inode(c->dentry), newdentry).
+The fold inlined ovl_do_link() into ovl_copy_up_tmpfile() but dropped
+the dget(upper) capture, and rewrote the publish line as
+ovl_inode_update(d_inode(c->dentry), dget(temp)) — where temp is the
+disconnected O_TMPFILE dentry.
+
+Fix by keeping a reference to the linked destination dentry after
+ovl_do_link() succeeds, and publishing that dentry at the existing
+ovl_inode_update() call site.  The non-tmpfile/workdir path continues to
+publish the renamed temporary dentry.
+
+Reproducer:
+  - Mount overlayfs with virtiofs (or a FUSE fs whose server advertises
+    FUSE_TMPFILE) as upper
+  - Run: dpkg -i <any .deb>
+  - Observe: "error installing new file '...': Stale file handle"
+
+Fixes: 6b52243f633e ("ovl: fold copy-up helpers into callers")
+Cc: stable@vger.kernel.org # v4.20+
+Signed-off-by: Souvik Banerjee <souvik@amlalabs.com>
+Link: https://patch.msgid.link/20260501232735.2610824-1-souvik@amlalabs.com
+Reviewed-by: Amir Goldstein <amir73il@gmail.com>
+Reviewed-by: Miklos Szeredi <mszeredi@redhat.com>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+[ adapted scoped credential and creation helpers to explicit credential, locking, lookup, and cleanup handling ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/fabrics-cmd-auth.c |   26 +++++++++++++++++++++++++-
- 1 file changed, 25 insertions(+), 1 deletion(-)
+ fs/overlayfs/copy_up.c |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
---- a/drivers/nvme/target/fabrics-cmd-auth.c
-+++ b/drivers/nvme/target/fabrics-cmd-auth.c
-@@ -445,7 +445,31 @@ static void nvmet_auth_failure1(struct n
- 
- u32 nvmet_auth_receive_data_len(struct nvmet_req *req)
+--- a/fs/overlayfs/copy_up.c
++++ b/fs/overlayfs/copy_up.c
+@@ -864,7 +864,7 @@ static int ovl_copy_up_tmpfile(struct ov
  {
--	return le32_to_cpu(req->cmd->auth_receive.al);
-+	struct nvmet_ctrl *ctrl = req->sq->ctrl;
-+	u32 al = le32_to_cpu(req->cmd->auth_receive.al);
-+	u32 min_len;
-+
-+	/*
-+	 * Reject too-short al before kmalloc(al), since the SUCCESS1 and
-+	 * FAILURE1/default builders write fixed response headers into it.
-+	 */
-+	switch (req->sq->dhchap_step) {
-+	case NVME_AUTH_DHCHAP_MESSAGE_CHALLENGE:
-+		return al;
-+	case NVME_AUTH_DHCHAP_MESSAGE_SUCCESS1:
-+		min_len = sizeof(struct nvmf_auth_dhchap_success1_data);
-+		if (req->sq->dhchap_c2)
-+			min_len += nvme_auth_hmac_hash_len(ctrl->shash_id);
-+		break;
-+	default:
-+		min_len = sizeof(struct nvmf_auth_dhchap_failure_data);
-+		break;
-+	}
-+
-+	if (al < min_len)
-+		return 0;
-+
-+	return al;
- }
+ 	struct ovl_fs *ofs = OVL_FS(c->dentry->d_sb);
+ 	struct inode *udir = d_inode(c->destdir);
+-	struct dentry *temp, *upper;
++	struct dentry *temp, *upper, *newdentry = NULL;
+ 	struct file *tmpfile;
+ 	struct ovl_cu_creds cc;
+ 	int err;
+@@ -901,6 +901,14 @@ static int ovl_copy_up_tmpfile(struct ov
+ 	err = PTR_ERR(upper);
+ 	if (!IS_ERR(upper)) {
+ 		err = ovl_do_link(ofs, temp, udir, upper);
++		if (!err) {
++			/*
++			 * Record the linked dentry -- not the disconnected
++			 * O_TMPFILE dentry -- so that ->d_revalidate() on
++			 * the upper fs sees the real parent/name.
++			 */
++			newdentry = dget(upper);
++		}
+ 		dput(upper);
+ 	}
+ 	inode_unlock(udir);
+@@ -916,7 +924,7 @@ static int ovl_copy_up_tmpfile(struct ov
  
- void nvmet_execute_auth_receive(struct nvmet_req *req)
+ 	if (!c->metacopy)
+ 		ovl_set_upperdata(d_inode(c->dentry));
+-	ovl_inode_update(d_inode(c->dentry), dget(temp));
++	ovl_inode_update(d_inode(c->dentry), newdentry);
+ 
+ out:
+ 	ovl_end_write(c->dentry);
 
 
