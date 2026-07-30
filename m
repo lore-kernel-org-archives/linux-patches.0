@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7463430CC6;
-	Thu, 30 Jul 2026 14:29:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE53A40926C;
+	Thu, 30 Jul 2026 14:29:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421749; cv=none; b=HUEw5Q4BSYSp3Z5g4ApoGe40uC0yQX+c48iO+uukz6/qXhkDNZAQuaSjFV9O8J/R2ZumHKd57fH2Fe84jLiMIgZuJhuhgfTQ8BlUMpNKfCgty8xI3Fb5OMZWSISidHYUfQhEy7LLIOCEPZvSEmEOqVwhMDsgKo+UhfJV/lr4QtA=
+	t=1785421753; cv=none; b=H1T78Q0G9BzPQVgBE4FBKId/WOLrbp42sa6jJpOOOq75CLE3pWFF7mR2YT2Mt46Udh9rkS4DQ9Cf/EK6oC5nSswIf79BTqP7vGsbuncT1z4pAIzmJUcB93JFYz4OpiOj8PqnF1TvAP4vv6MXvAL6pwy3qlmAao8mE1bKppr886Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421749; c=relaxed/simple;
-	bh=4+nlB6pi8YJHScAw/uEzVdbcOJ8bJlCstk6zq37hLII=;
+	s=arc-20240116; t=1785421753; c=relaxed/simple;
+	bh=X/hM2ywqgT+Ya0QJcWWKsZwy6PgVBadNWq2dBSmGYZ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YodKMuqZM/pGeSfrbPLgxyrjsPJHzoH0fXYPgSso7WdciL6cFyYxiZFVDRzPMNRrC6PeNcv3+9HLZf9EFGCw0NUcVr1bGJ9pKf3nYRslKXzuyYkqZ9/ID8d7NTX/kQYmE1dNyTnUnLPmXefnjs7+jj3UsJvCQzZDk6x3gasHgiQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DUXYts/X; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eTlndRs6VquOjuNt7bVZ3fcw/ydZz/3PAFox0lAwwOWzeCzfveDhvBRv+FMY1mmqPa6m6FKY6IlMiXIUqr+XWZeHFQr5QzfUzMkuoGYcf+jjFhwhHNnQpzFBYQxT0s2H6yNJ3EpfwMIxmx7/oL9als54uUgo4klw1ntGgP+OfyY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1z5q7aE9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DUXYts/X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 307E11F000E9;
-	Thu, 30 Jul 2026 14:29:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1z5q7aE9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 321D81F00A3D;
+	Thu, 30 Jul 2026 14:29:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421748;
-	bh=9Ckeg+Hs1uakYsgnoa6i9SQBzM1llyrRCIJdiQau5Rs=;
+	s=korg; t=1785421751;
+	bh=ExleSuI78gj433FTEXRAElscpRiYMgC6A+2M5sHrQDc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DUXYts/XQwtxi9+Uor06HdhOR0+7N4wwqNKzqyTn/JJbOeR7QEN+MOEVj0x2DmWlG
-	 hmPgUcqnTNVqW9KRiwW2j/JGz+sBNcEYltJtJz9fewPDlJU9s9cvjf1jtvB060UQQt
-	 J2O0cRW6WA/rXHk1yS2Bitg6VuMLqUAGHCLkgy/k=
+	b=1z5q7aE9MbqR2jNU1tDrac3BxN3Ii1Ojg9gw8OqzhvdXVIFbPpSisuv8GgeBdttnt
+	 3GCKsM4Degumq05TLoaRwQCyCqUBhlEW3mg2iwWVMEd8WPdJN/NesuJG5Tb6YDJHUd
+	 kdFYkWdN85vmXQ0LJ2vCgH5yR8L2PQ182qoBlRPI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pagadala Yesu Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>,
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
 	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 207/744] wifi: iwlwifi: mvm: validate SAR GEO response payload size
-Date: Thu, 30 Jul 2026 16:08:00 +0200
-Message-ID: <20260730141448.678526516@linuxfoundation.org>
+Subject: [PATCH 7.1 208/744] wifi: iwlwifi: fix pointer arithmetic in iwl_add_mcc_to_tas_block_list
+Date: Thu, 30 Jul 2026 16:08:01 +0200
+Message-ID: <20260730141448.700725123@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -51,54 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pagadala Yesu Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
+From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 
-[ Upstream commit 408d7da38272ce48e2db79b8a9895999f94d7655 ]
+[ Upstream commit bc796f84ec9a95b356959ec7caf1d4fce33f3a76 ]
 
-The SAR GEO command response is cast to
-iwl_geo_tx_power_profiles_resp without verifying the payload length.
-A malformed or unexpected firmware response can lead to reading an
-invalid structure layout.
+The expression list[*size++] increments the pointer 'size'
+rather than the u8 value it points to (operator precedence: ++
+binds to the pointer before the dereference). As a result the
+block-list entry is written at the correct index but *size is
+never incremented, so the caller's count stays at zero and
+subsequent calls overwrite slot 0 every time.
 
-Add an explicit size check before accessing the response data and
-return -EIO when the payload size is wrong.
+Change to list[(*size)++] so that the value pointed to by size
+is incremented after use as the array index.
 
-Fixes: f604324eefec ("iwlwifi: remove iwl_validate_sar_geo_profile() export")
-Signed-off-by: Pagadala Yesu Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
+Fixes: 5f4656610edb ("wifi: iwlwifi: extend TAS_CONFIG cmd support for v5")
+Assisted-by: GitHubCopilot:gpt-5.3-codex
+Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20260715215523.7e749b7d374a.I4ef54548bff6c6e7c7a57bee771ac12508aad677@changeid
+Link: https://patch.msgid.link/20260715215523.d2cd92242582.Ife4140a4e27be2a1cd9f886c5a9b376ce182a019@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/fw.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/net/wireless/intel/iwlwifi/fw/regulatory.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/fw.c b/drivers/net/wireless/intel/iwlwifi/mvm/fw.c
-index 6e507d6dcdd2a1..fa523be91d8ad3 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/fw.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/fw.c
-@@ -964,12 +964,22 @@ int iwl_mvm_get_sar_geo_profile(struct iwl_mvm *mvm)
- 		return ret;
- 	}
+diff --git a/drivers/net/wireless/intel/iwlwifi/fw/regulatory.c b/drivers/net/wireless/intel/iwlwifi/fw/regulatory.c
+index 55128caac7ed9f..14c813cf530f66 100644
+--- a/drivers/net/wireless/intel/iwlwifi/fw/regulatory.c
++++ b/drivers/net/wireless/intel/iwlwifi/fw/regulatory.c
+@@ -384,7 +384,7 @@ bool iwl_add_mcc_to_tas_block_list(u16 *list, u8 *size, u16 mcc)
+ 	if (*size >= IWL_WTAS_BLACK_LIST_MAX)
+ 		return false;
  
-+	if (IWL_FW_CHECK(mvm,
-+			 iwl_rx_packet_payload_len(cmd.resp_pkt) !=
-+			 sizeof(*resp),
-+			 "Wrong size for iwl_geo_tx_power_profiles_resp: %d\n",
-+			 iwl_rx_packet_payload_len(cmd.resp_pkt))) {
-+		ret = -EIO;
-+		goto out;
-+	}
-+
- 	resp = (void *)cmd.resp_pkt->data;
- 	ret = le32_to_cpu(resp->profile_idx);
- 
- 	if (WARN_ON(ret > BIOS_GEO_MAX_PROFILE_NUM))
- 		ret = -EIO;
- 
-+out:
- 	iwl_free_resp(&cmd);
- 	return ret;
+-	list[*size++] = mcc;
++	list[(*size)++] = mcc;
+ 	return true;
  }
+ IWL_EXPORT_SYMBOL(iwl_add_mcc_to_tas_block_list);
 -- 
 2.53.0
 
