@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 707B138B133;
-	Thu, 30 Jul 2026 16:03:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0863E44AB66;
+	Thu, 30 Jul 2026 16:03:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427432; cv=none; b=Gw1fh5qhEYNgGYDV2AYyjQiCtTB2CZj62maOf9AHoQ7FoISzWKW0W+yy8quOugA1ocdJ6C5+Ujb95pB6F2A5q4XstMyKLyAI6WsZPLRGlofjy08vnzD0nZzGHhC/iGElBsJQkqRpcpNa+6yGYZX7vilUEFbL7ZMhg2NYdf2qlT0=
+	t=1785427435; cv=none; b=eb9c7jMgD3hZwBpqZOmtybfAUfhl0wcaS2DmSg4B87TSfUie3xptuJNhibrkMrmZQnaY+KAlW0Fv8TrXCO4Wdf9n+TK5pllhVaC5obRbuTBVqYIHQP2zDcXn5sCw60K/hvSaeBN4CfbifemJjcw5iINPHmQyfolXzc7V32oQjXg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427432; c=relaxed/simple;
-	bh=oJILXXqohP50ZabpC3XVJeDyO8NCAXJkARTifXJ6Ffc=;
+	s=arc-20240116; t=1785427435; c=relaxed/simple;
+	bh=8YshSFE9H/nuqCVB9cxNHxU7bqOZfQ279v/tmjGBiMU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CTYihcSDaN1xzq10/NHT9tpvxkKa2nCIboVWc8ZAX/0yaBgIAHbSCnqB3mwqKYLsxQLOJ1kjjJE4Xsx6KwBlsJL7LY831BNue8JSKWLJOOlns1qFD00SO79O5d/F3AmveduRp06PACryQ0yp6BUJEVuPkYra185n+BbPh6ht6M4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CXgfb3xj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Rj9imJcQZQaaLKs7KDGqlAsU0FXV2TFGj/nLABGVxAjJ4xH/qpIhnZn+Bub9tEHuihLIPYD2cvOnTPFGy9PBHdZtCm36fqGcq7hV1NpBdUwNyhpRO2V0FpWYLjc5SX2St5zJYxT4KrPdsK9gbHBSigMFeXFQgTb3f2F/WCEjzmY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D1+uhLM7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CXgfb3xj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93F241F00A3A;
-	Thu, 30 Jul 2026 16:03:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D1+uhLM7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 643201F000E9;
+	Thu, 30 Jul 2026 16:03:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427431;
-	bh=Se/qa389aQwxCDqwsEU9xXsAzwhNpZkEC7kfaO4TmyA=;
+	s=korg; t=1785427433;
+	bh=LKZF78OKJLB0R+liQEsJARiZHsG0GXwKcYPZllmZRYw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CXgfb3xjmTb66c6flOmr4M+Ox/lejJ/s+WwyFMKbwe+1TZ4s3Ff1gPYp+RuLn/9Qx
-	 aeJoOAqKb6zouHt5pW9Z+3zqKIiAjerCNpWQLOzGnWLR9kzRI50FiX8cMRmXSTmvHY
-	 wtF9tpcfyjeGuiEhikh1VkGBZG9jCVFY9PwOq4dg=
+	b=D1+uhLM7KwtQwiiwIsEH19bomd3yFIYE1yrGgIJvPTol4DHSWYzBIxp3CRmab+KdN
+	 L+KzBLS0ZAbV1DwxYMKI12PiXH2VmnCPk/xCNfIMeN6SjPZ3fd4d3sKHIhoIFBdm2F
+	 HlTi8lZWmmnIEIrpBmWIFolq/9VpeuiChAnvvLv0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nils Juenemann <nils.juenemann@gmail.com>,
-	Rishikesh Jethwani <rjethwani@purestorage.com>,
 	Jakub Kicinski <kuba@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 167/484] tls: device: push pending open record on splice EOF
-Date: Thu, 30 Jul 2026 16:11:04 +0200
-Message-ID: <20260730141427.095932766@linuxfoundation.org>
+Subject: [PATCH 6.6 168/484] selftest: af_unix: Add Kconfig file.
+Date: Thu, 30 Jul 2026 16:11:05 +0200
+Message-ID: <20260730141427.118614498@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -52,54 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rishikesh Jethwani <rjethwani@purestorage.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit eaa39f9f8ac8c1d032cd26b9cd572804e9d7683f ]
+[ Upstream commit 11b006d6896c0471ad29c6f1fb1af606e7ba278f ]
 
-On kTLS device-offload sockets, sendfile() with count > EOF can reach
-->splice_eof() with a fully assembled but still-open TLS record left
-pending. tls_device_splice_eof() only flushes partially sent records,
-so an abrupt close() can drop the final record and the peer receives
-a short file.
+diag_uid selftest failed on NIPA where the received nlmsg_type is
+NLMSG_ERROR [0] because CONFIG_UNIX_DIAG is not set [1] by default
+and sock_diag_lock_handler() failed to load the module.
 
-Fix tls_device_splice_eof() to also push pending open records.
-This matches the software path, where splice EOF already flushes
-pending open records.
+  # # Starting 2 tests from 2 test cases.
+  # #  RUN           diag_uid.uid.1 ...
+  # # diag_uid.c:159:1:Expected nlh->nlmsg_type (2) == SOCK_DIAG_BY_FAMILY (20)
+  # # 1: Test terminated by assertion
+  # #          FAIL  diag_uid.uid.1
+  # not ok 1 diag_uid.uid.1
 
-Fixes: d4c1e80b0d1b ("tls/device: Use splice_eof() to flush")
-Link: https://lore.kernel.org/netdev/CAMPsyauZ+jzG9AysO0FWv6ZY0kvCUpjX_U7o=oOjCuOQ87BCgg@mail.gmail.com/
-Reported-by: Nils Juenemann <nils.juenemann@gmail.com>
-Signed-off-by: Rishikesh Jethwani <rjethwani@purestorage.com>
-Tested-by: Nils Juenemann <nils.juenemann@gmail.com>
-Link: https://patch.msgid.link/20260709224436.1608993-2-rjethwani@purestorage.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Let's add all AF_UNIX Kconfig to the config file under af_unix dir
+so that NIPA consumes it.
+
+Fixes: ac011361bd4f ("af_unix: Add test for sock_diag and UDIAG_SHOW_UID.")
+Link: https://netdev-3.bots.linux.dev/vmksft-net/results/644841/104-diag-uid/stdout [0]
+Link: https://netdev-3.bots.linux.dev/vmksft-net/results/644841/config [1]
+Reported-by: Jakub Kicinski <kuba@kernel.org>
+Closes: https://lore.kernel.org/netdev/20240617073033.0cbb829d@kernel.org/
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: f8b1abed7361 ("selftests: af_unix: add USER_NS config")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_device.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ tools/testing/selftests/net/af_unix/config | 3 +++
+ 1 file changed, 3 insertions(+)
+ create mode 100644 tools/testing/selftests/net/af_unix/config
 
-diff --git a/net/tls/tls_device.c b/net/tls/tls_device.c
-index 1fc1e8e2a9cb2c..7fce47197d0a45 100644
---- a/net/tls/tls_device.c
-+++ b/net/tls/tls_device.c
-@@ -600,13 +600,15 @@ void tls_device_splice_eof(struct socket *sock)
- 	struct tls_context *tls_ctx = tls_get_ctx(sk);
- 	struct iov_iter iter = {};
- 
--	if (!tls_is_partially_sent_record(tls_ctx))
-+	if (!tls_is_partially_sent_record(tls_ctx) &&
-+	    !tls_is_pending_open_record(tls_ctx))
- 		return;
- 
- 	mutex_lock(&tls_ctx->tx_lock);
- 	lock_sock(sk);
- 
--	if (tls_is_partially_sent_record(tls_ctx)) {
-+	if (tls_is_partially_sent_record(tls_ctx) ||
-+	    tls_is_pending_open_record(tls_ctx)) {
- 		iov_iter_bvec(&iter, ITER_SOURCE, NULL, 0, 0);
- 		tls_push_data(sk, &iter, 0, 0, TLS_RECORD_TYPE_DATA);
- 	}
+diff --git a/tools/testing/selftests/net/af_unix/config b/tools/testing/selftests/net/af_unix/config
+new file mode 100644
+index 00000000000000..37368567768cc0
+--- /dev/null
++++ b/tools/testing/selftests/net/af_unix/config
+@@ -0,0 +1,3 @@
++CONFIG_UNIX=y
++CONFIG_AF_UNIX_OOB=y
++CONFIG_UNIX_DIAG=m
 -- 
 2.53.0
 
