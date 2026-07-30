@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C28FB450414;
-	Thu, 30 Jul 2026 16:06:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DD69395AD2;
+	Thu, 30 Jul 2026 16:07:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427619; cv=none; b=Xu3MCWWSZ8xuKbTFCwYTHmkEFVWRohwTwoE17mgUyjWdx4T0l92qNy20CPY88sbYraxzVrUuBtiFOPgR+RjMt/HNV9ix6C2Uz43C/0fus3K+T5mithhe6rDG/J/yUJfgns3O4qtnMaEwuA7ZTHUJW1wwqxlIEVkZ3SMNjJnsGWQ=
+	t=1785427622; cv=none; b=fT5G1gU/ae3SQ0N32WgAst0JYw2Kwt7GIM7iUCVsSkTBDOpe+ULCZFH5vOaypdvKoYCtJO4TECLpdKCUrGCCYAGJGZV4imNOR8pltF0/jhZogqLIAGcvKGvQu2ETK87jn0x0UADDAOi+cIQiLRyFkXR93bM6GW0Q1+vwD78ErxU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427619; c=relaxed/simple;
-	bh=ZHm8VOnOuKK98SrBmkbOoOn2JDfOqEA/mlNoiQc2U4k=;
+	s=arc-20240116; t=1785427622; c=relaxed/simple;
+	bh=cl1FnGjR5j4CBCZZtWxgEmwJM0dm6F65z3GkeKEXB4E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=my3K9tkN1Vl2GCIpzmrOdUoencv3GZSbq2jrpHemGvUQlMdJgx58LbBE1JmYZhykiBgQD+Srh8ev15ZoB68q0aIe53d2uTkLxLsh2hdU/FCxdR3Cs2MxEU/RPjKFDHV9qUyTM+/M5a+Jg4iO3k1t4POeUb5bvcPLECa5BqSczC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=twArHR2d; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nYjGxdtmQldXTnt60QRC/aqomfOS8s8Z43mQeP3/ZNuxia0I4EEkBITja6EqU2olT8h75dqc1KSkgZXjjw/MQ83HHnphRXytxTtP6j1k3TGmp4H19EfsnOqASpBVajDkap8kJXaQGUONyI+GxlmtzSxUTD/V5erAAC6DHkP0Cxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HqGOfjBc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="twArHR2d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 250631F000E9;
-	Thu, 30 Jul 2026 16:06:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HqGOfjBc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 013A11F000E9;
+	Thu, 30 Jul 2026 16:07:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427618;
-	bh=TM9gW0Pmu2+p2sDf1FQAyi5Vj3HL9DywZ38nXqS3au4=;
+	s=korg; t=1785427621;
+	bh=PxQEZtq02jEhZU2m2tAGACu974e0zZ6SrF3Tz1j+aVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=twArHR2d2wzrWaRdtEX9Xi5DSjQEjoNxJ/rEd+rlKGHiB/gNTOu8xZvYDFrqAUdSf
-	 BHYeQmzyaVla2dcBQqjT/nSMHj/6zBY1apdPEfdO9K59nuVs3Cs+FvD83HYwUmswI2
-	 PV2flp4ewrc2QesFIZm5VjJJmZU9PqdZmNmlAwfs=
+	b=HqGOfjBceT33kXV92iXJGHudzRLp4YBhZCf/80XrU+dD7JX2dYIRh7GGlsPglYVJ0
+	 IGb2fdFiGZDH1zNxdfXBtAsfV1LZvyGxxqF3AiLCn9AXXKiRH9ryGyZE/iLBZO0tOY
+	 N7bNESFHKKkCa86AX2JebAu78D0PD6cFwro7xM5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Hodo <martin.hodo@intel.com>,
-	Faith Ekstrand <faith.ekstrand@collabora.com>,
-	Simona Vetter <simona.vetter@ffwll.ch>,
-	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.6 227/484] drm/i915/gem: Fix NULL deref in I915_CONTEXT_PARAM_SSEU
-Date: Thu, 30 Jul 2026 16:12:04 +0200
-Message-ID: <20260730141428.406794385@linuxfoundation.org>
+	Myeonghun Pak <mhun512@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.6 236/484] media: cec: seco: unregister adapter on IR probe failure
+Date: Thu, 30 Jul 2026 16:12:13 +0200
+Message-ID: <20260730141428.603361411@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -56,46 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-commit 2b56757a9a7456825eb668fde92299e01c5e2721 upstream.
+commit c3a78691be8245e52ced489f268e413f18061ac2 upstream.
 
-Setting context engine slot N into I915_ENGINE_CLASS_INVALID /
-I915_ENGINE_CLASS_INVALID_NONE and attempting to apply
-I915_CONTEXT_PARAM_SSEU to the same slot N will deref NULL.
-Fix that.
+If secocec_ir_probe() fails after cec_register_adapter() succeeds,
+probe returns an error and the driver remove callback is not called.
+The current unwind path unregisters the notifier and then falls through
+to cec_delete_adapter(), which violates the CEC adapter lifetime rules
+after a successful registration.
 
-Discovered using AI-assisted static analysis confirmed by
-Intel Product Security.
+Add a registered-adapter unwind path that unregisters the notifier and
+the adapter instead.
 
-Reported-by: Martin Hodo <martin.hodo@intel.com>
-Fixes: d4433c7600f7 ("drm/i915/gem: Use the proto-context to handle create parameters (v5)")
-Cc: Faith Ekstrand <faith.ekstrand@collabora.com>
-Cc: Simona Vetter <simona.vetter@ffwll.ch>
-Cc: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Cc: <stable@vger.kernel.org> # v5.15+
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Reviewed-by: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Link: https://patch.msgid.link/20260701075555.52142-1-joonas.lahtinen@linux.intel.com
-(cherry picked from commit 36eda5b5c2d40da41cc0a5403c26986237cf9e87)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Fixes: daef95769b3a ("media: seco-cec: add Consumer-IR support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/gem/i915_gem_context.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/cec/platform/seco/seco-cec.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/i915/gem/i915_gem_context.c
-+++ b/drivers/gpu/drm/i915/gem/i915_gem_context.c
-@@ -855,7 +855,7 @@ static int set_proto_ctx_sseu(struct drm
- 		pe = &pc->user_engines[idx];
+--- a/drivers/media/cec/platform/seco/seco-cec.c
++++ b/drivers/media/cec/platform/seco/seco-cec.c
+@@ -649,7 +649,7 @@ static int secocec_probe(struct platform
  
- 		/* Only render engine supports RPCS configuration. */
--		if (pe->engine->class != RENDER_CLASS)
-+		if (!pe->engine || pe->engine->class != RENDER_CLASS)
- 			return -EINVAL;
+ 	ret = secocec_ir_probe(secocec);
+ 	if (ret)
+-		goto err_notifier;
++		goto err_unregister_adapter;
  
- 		sseu = &pe->sseu;
+ 	platform_set_drvdata(pdev, secocec);
+ 
+@@ -657,6 +657,10 @@ static int secocec_probe(struct platform
+ 
+ 	return ret;
+ 
++err_unregister_adapter:
++	cec_notifier_cec_adap_unregister(secocec->notifier, secocec->cec_adap);
++	cec_unregister_adapter(secocec->cec_adap);
++	goto err;
+ err_notifier:
+ 	cec_notifier_cec_adap_unregister(secocec->notifier, secocec->cec_adap);
+ err_delete_adapter:
 
 
