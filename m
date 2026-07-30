@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDB9C442FC8;
-	Thu, 30 Jul 2026 15:28:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00DA0448CF4;
+	Thu, 30 Jul 2026 15:28:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425320; cv=none; b=aqKfBJPycRlHvNweWAhhbK9NenMaahBYK8YsUCqFh5n3VDXBDXP9NvdyY2jyAbXvcLE19M+2P8P/6WzqSdIpIQ39I+FVLe4Wdz/TXG2j8t0gmuayofnsIxH9ViQFIsyNWMxzm8FKya320/hLbcTP5SYjDz5rMFZTiy9qOC9Tny0=
+	t=1785425323; cv=none; b=Tkc+JhMS+8PNcRON/6Rco+oZm7G8z+R6a0PnQ8lZyxqWgxCh3ANRdwQUpDQ9X+Q0a2DBRCW0dR3nfLqa/30HE+zAJUXmG5f/T82g+rDuWbo0BRuRDFjS3WIJmNNVnBN3dfmQZ87mpKqQx05PpefW61ml4N6/QXvUpsE3qjC+pMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425320; c=relaxed/simple;
-	bh=oE0xfgboWwPGFrrBmRcRk3uRZ8AVW8YGJE24oOQ6Dj8=;
+	s=arc-20240116; t=1785425323; c=relaxed/simple;
+	bh=w9c2/We9rI4Zg1f1CU8U6evaqVYmBoHGBq7rg0rdURc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RG8IVjr4CnUW9Eg39Clo8LsvWYSLbNe3hznvWO2bATv28stSj8dg+UJHKw/TKDwY8ma4GbKr4dk8ekj+kpepgJYuckWfac4+VdDTesAXr1eP82Pc9RwHEq3vrI/Z2yF1Si4VcfEGBj2dcxHeqdbl61r5ovhTRZqoFsyHIr64R38=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=spNegj4l; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VO+gv/wf+2m0MTnxw+bfUDVoqFXZIBPPWsYq5XjBTuYZfd27t0KmH0MFA6/mQZildeWtj6y74mY2YeCsufAuz18GOrCLzFas+kZII3vyTAA2zgNOEInrTbasdsYARZarwq193RM0jUrBFhZG3ipaaZmARbyuqgLyH53HivXdurM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dzofdGDw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="spNegj4l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 324CE1F00A3A;
-	Thu, 30 Jul 2026 15:28:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dzofdGDw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D03B1F000E9;
+	Thu, 30 Jul 2026 15:28:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425318;
-	bh=DpxsTubtLv0Q++fSGnhBfM8MvcCLfkPY6mIfzYp2XDI=;
+	s=korg; t=1785425321;
+	bh=d7YnHiCXpOR8MhqssyvlShs9oJLMhuIi0sc5GU1mqrw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=spNegj4lmP/YhsWZcFCZjrptVf8eqzRgIyIH8kNI0ginlwyKvEKTGMfLZOIR2LQwo
-	 ufN3IyxAHUV23OCH+8cvVnTqcSs+HYsxefa0AAiEj6NoOpAg8XIjYguAvc0C/Xav/Z
-	 lhSYsGFtCBv5jXcFHVj2wMrMSL8mfj4kPcMhyNHs=
+	b=dzofdGDwAvnejU+w4CGxvLMW0PeQ6gGyITIJh3Hiqx/5PONTTzwhP2uOJRTuNlPFP
+	 NeW2ironpGfHkeYHH1C+tjWoPvwOwn04F1cliz3u+OEnYmtk/44fKmsjIIoKCbwjql
+	 tMtpLkW32eyRuZWtnWdKnYjxLlw5GebU+30/hYfE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	stable@kernel.org,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Frank Li <Frank.Li@nxp.com>,
+	John Madieu <john.madieu.xa@bp.renesas.com>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 027/602] can: isotp: serialize TX state transitions under so->rx_lock
-Date: Thu, 30 Jul 2026 16:06:59 +0200
-Message-ID: <20260730141436.574473105@linuxfoundation.org>
+Subject: [PATCH 6.12 028/602] dmaengine: sh: rz-dmac: Move interrupt request after everything is set up
+Date: Thu, 30 Jul 2026 16:07:00 +0200
+Message-ID: <20260730141436.596790310@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -53,424 +54,201 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Hartkopp <socketcan@hartkopp.net>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-commit cf070fe33bfbd1a4c21236078fadb35dd223a157 upstream.
+commit 731712403ddb39d1a76a11abf339a0615bc85de7 upstream.
 
-The TX state machine (so->tx.state) is driven from three contexts:
-sendmsg() claiming and progressing a transfer, the RX path consuming
-Flow Control/echo frames, and two hrtimers timing out a stalled
-transfer. Mixing a lock-free cmpxchg() claim in sendmsg() with
-hrtimer_cancel() calls made under so->rx_lock elsewhere left windows
-where a frame or timer callback could act on a state that had already
-moved on, corrupting an unrelated transfer.
+Once the interrupt is requested, the interrupt handler may run immediately.
+Since the IRQ handler can access channel->ch_base, which is initialized
+only after requesting the IRQ, this may lead to invalid memory access.
+Likewise, the IRQ thread may access uninitialized data (the ld_free,
+ld_queue, and ld_active lists), which may also lead to issues.
 
-so->rx_lock now covers the full lifecycle of a TX claim: sendmsg()
-takes it to check so->tx.state is ISOTP_IDLE, switch it to
-ISOTP_SENDING, bump so->tx_gen and drain the previous transfer's
-timers - all as one critical section. isotp_rcv_fc()/isotp_rcv_cf()
-already run under this lock via isotp_rcv(), and isotp_rcv_echo() now
-takes it itself, so none of them can ever observe a transfer mid-claim.
-This also means a transfer can no longer be handed to sendmsg()'s
-cleanup paths (signal or send error) while another thread is
-concurrently claiming or finishing it, so those paths can cancel
-timers and reset the state unconditionally.
+Request the interrupts only after everything is set up. To keep the error
+path simpler, use dmam_alloc_coherent() instead of dma_alloc_coherent().
 
-isotp_release() claims the socket the same way, so a racing sendmsg()
-sees a consistent ISOTP_SHUTDOWN and skips arming its timer or sending.
-
-Only the hrtimer callbacks stay outside so->rx_lock, since they run
-under so->rx_lock's cancellation elsewhere and taking it themselves
-would deadlock. so->tx_gen lets them recognize whether the transfer
-they timed out is still the one currently active, so they don't
-report an error against a transfer that has since completed or been
-superseded.
-
-Fixes: e057dd3fc20f ("can: add ISO 15765-2:2016 transport protocol")
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/linux-can/20260710142146.BDAE61F000E9@smtp.kernel.org/
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://patch.msgid.link/20260712-isotp-fixes-v10-3-793a1b1ce17f@hartkopp.net
-Cc: stable@kernel.org
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Fixes: 5000d37042a6 ("dmaengine: sh: Add DMAC driver for RZ/G2L SoC")
+Cc: stable@vger.kernel.org
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Tested-by: John Madieu <john.madieu.xa@bp.renesas.com>
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Tested-by: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
+Link: https://patch.msgid.link/20260526084710.3491480-2-claudiu.beznea@kernel.org
+[tm: Kept the channel->irq field in rz_dmac_chan_probe() instead of
+ upstream's local `irq` variable, as commit 04e227718ab8
+ ("dmaengine: sh: rz-dmac: Make channel irq local") is not present
+ in this tree. Likewise kept platform_get_irq_byname() (mandatory)
+ instead of platform_get_irq_byname_optional() for the error IRQ in
+ rz_dmac_probe(), as commit 6b3a6b6dc074 ("dmaengine: sh: rz_dmac:
+ make error interrupt optional") is not present in this tree either;
+ its early return on failure becomes a goto err jump to match the
+ new call order.]
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/can/isotp.c | 192 ++++++++++++++++++++++++++++++++++++++----------
- 1 file changed, 154 insertions(+), 38 deletions(-)
+ drivers/dma/sh/rz-dmac.c | 96 ++++++++++++++++------------------------
+ 1 file changed, 38 insertions(+), 58 deletions(-)
 
-diff --git a/net/can/isotp.c b/net/can/isotp.c
-index 76e84e2113eeab..b2622c881aa32b 100644
---- a/net/can/isotp.c
-+++ b/net/can/isotp.c
-@@ -156,7 +156,7 @@ struct isotp_sock {
- 	canid_t rxid;
- 	ktime_t tx_gap;
- 	ktime_t lastrxcf_tstamp;
--	struct hrtimer rxtimer, txtimer, txfrtimer;
-+	struct hrtimer rxtimer, txtimer, txfrtimer, echotimer;
- 	struct can_isotp_options opt;
- 	struct can_isotp_fc_options rxfc, txfc;
- 	struct can_isotp_ll_options ll;
-@@ -164,6 +164,7 @@ struct isotp_sock {
- 	u32 force_tx_stmin;
- 	u32 force_rx_stmin;
- 	u32 cfecho; /* consecutive frame echo tag */
-+	u32 tx_gen; /* generation, bumped per new tx transfer */
- 	struct tpcon rx, tx;
- 	struct list_head notifier;
- 	wait_queue_head_t wait;
-@@ -370,6 +371,15 @@ static int isotp_rcv_fc(struct isotp_sock *so, struct canfd_frame *cf, int ae)
+diff --git a/drivers/dma/sh/rz-dmac.c b/drivers/dma/sh/rz-dmac.c
+index 06952519f509b8..fece2cfec1ccb4 100644
+--- a/drivers/dma/sh/rz-dmac.c
++++ b/drivers/dma/sh/rz-dmac.c
+@@ -780,27 +780,6 @@ static int rz_dmac_chan_probe(struct rz_dmac *dmac,
+ 	channel->index = index;
+ 	channel->mid_rid = -EINVAL;
  
- 	hrtimer_cancel(&so->txtimer);
- 
-+	/* isotp_tx_timeout() may have given up on this job while
-+	 * hrtimer_cancel() above waited for it to finish; so->rx_lock
-+	 * (held by our caller isotp_rcv()) rules out a concurrent claim,
-+	 * so a plain recheck is enough here.
-+	 */
-+	if (so->tx.state != ISOTP_WAIT_FC &&
-+	    so->tx.state != ISOTP_WAIT_FIRST_FC)
-+		return 1;
-+
- 	if ((cf->len < ae + FC_CONTENT_SZ) ||
- 	    ((so->opt.flags & ISOTP_CHECK_PADDING) &&
- 	     check_pad(so, cf, ae + FC_CONTENT_SZ, so->opt.rxpad_content))) {
-@@ -416,7 +426,7 @@ static int isotp_rcv_fc(struct isotp_sock *so, struct canfd_frame *cf, int ae)
- 		so->tx.bs = 0;
- 		so->tx.state = ISOTP_SENDING;
- 		/* send CF frame and enable echo timeout handling */
--		hrtimer_start(&so->txtimer, ktime_set(ISOTP_ECHO_TIMEOUT, 0),
-+		hrtimer_start(&so->echotimer, ktime_set(ISOTP_ECHO_TIMEOUT, 0),
- 			      HRTIMER_MODE_REL_SOFT);
- 		isotp_send_cframe(so);
- 		break;
-@@ -569,6 +579,14 @@ static int isotp_rcv_cf(struct sock *sk, struct canfd_frame *cf, int ae,
- 
- 	hrtimer_cancel(&so->rxtimer);
- 
-+	/* isotp_rx_timer_handler() may have raced us for so->rx.state
-+	 * while hrtimer_cancel() above waited for it to finish, already
-+	 * reporting ETIMEDOUT and resetting the reception; don't process
-+	 * this CF into a reassembly that has already been given up on.
-+	 */
-+	if (so->rx.state != ISOTP_WAIT_DATA)
-+		return 1;
-+
- 	/* CFs are never longer than the FF */
- 	if (cf->len > so->rx.ll_dl)
- 		return 1;
-@@ -858,20 +876,36 @@ static void isotp_rcv_echo(struct sk_buff *skb, void *data)
- 	struct canfd_frame *cf = (struct canfd_frame *)skb->data;
- 
- 	/* only handle my own local echo CF/SF skb's (no FF!) */
--	if (skb->sk != sk || so->cfecho != *(u32 *)cf->data)
-+	if (skb->sk != sk)
- 		return;
- 
-+	/* unlike isotp_rcv_fc()/isotp_rcv_cf(), not already under so->rx_lock
-+	 * (no isotp_rcv() caller here), so take it ourselves
-+	 */
-+	spin_lock(&so->rx_lock);
-+
-+	/* so->cfecho may since belong to a new transfer; recheck under lock */
-+	if (so->cfecho != *(u32 *)cf->data)
-+		goto out_unlock;
-+
- 	/* cancel local echo timeout */
--	hrtimer_cancel(&so->txtimer);
-+	hrtimer_cancel(&so->echotimer);
- 
- 	/* local echo skb with consecutive frame has been consumed */
- 	so->cfecho = 0;
- 
-+	/* claiming a transfer also takes so->rx_lock, so a plain recheck
-+	 * is enough: so->tx.state can't have flipped to ISOTP_SENDING for
-+	 * a new claim while we're still in here
-+	 */
-+	if (so->tx.state != ISOTP_SENDING)
-+		goto out_unlock;
-+
- 	if (so->tx.idx >= so->tx.len) {
- 		/* we are done */
- 		so->tx.state = ISOTP_IDLE;
- 		wake_up_interruptible(&so->wait);
--		return;
-+		goto out_unlock;
+-	/* Request the channel interrupt. */
+-	scnprintf(pdev_irqname, sizeof(pdev_irqname), "ch%u", index);
+-	channel->irq = platform_get_irq_byname(pdev, pdev_irqname);
+-	if (channel->irq < 0)
+-		return channel->irq;
+-
+-	irqname = devm_kasprintf(dmac->dev, GFP_KERNEL, "%s:%u",
+-				 dev_name(dmac->dev), index);
+-	if (!irqname)
+-		return -ENOMEM;
+-
+-	ret = devm_request_threaded_irq(dmac->dev, channel->irq,
+-					rz_dmac_irq_handler,
+-					rz_dmac_irq_handler_thread, 0,
+-					irqname, channel);
+-	if (ret) {
+-		dev_err(dmac->dev, "failed to request IRQ %u (%d)\n",
+-			channel->irq, ret);
+-		return ret;
+-	}
+-
+ 	/* Set io base address for each channel */
+ 	if (index < 8) {
+ 		channel->ch_base = dmac->base + CHANNEL_0_7_OFFSET +
+@@ -813,9 +792,9 @@ static int rz_dmac_chan_probe(struct rz_dmac *dmac,
  	}
  
- 	if (so->txfc.bs && so->tx.bs >= so->txfc.bs) {
-@@ -879,53 +913,83 @@ static void isotp_rcv_echo(struct sk_buff *skb, void *data)
- 		so->tx.state = ISOTP_WAIT_FC;
- 		hrtimer_start(&so->txtimer, ktime_set(ISOTP_FC_TIMEOUT, 0),
- 			      HRTIMER_MODE_REL_SOFT);
--		return;
-+		goto out_unlock;
- 	}
+ 	/* Allocate descriptors */
+-	lmdesc = dma_alloc_coherent(&pdev->dev,
+-				    sizeof(struct rz_lmdesc) * DMAC_NR_LMDESC,
+-				    &channel->lmdesc.base_dma, GFP_KERNEL);
++	lmdesc = dmam_alloc_coherent(&pdev->dev,
++				     sizeof(struct rz_lmdesc) * DMAC_NR_LMDESC,
++				     &channel->lmdesc.base_dma, GFP_KERNEL);
+ 	if (!lmdesc) {
+ 		dev_err(&pdev->dev, "Can't allocate memory (lmdesc)\n");
+ 		return -ENOMEM;
+@@ -831,7 +810,26 @@ static int rz_dmac_chan_probe(struct rz_dmac *dmac,
+ 	INIT_LIST_HEAD(&channel->ld_free);
+ 	INIT_LIST_HEAD(&channel->ld_active);
  
- 	/* no gap between data frames needed => use burst mode */
- 	if (!so->tx_gap) {
- 		/* enable echo timeout handling */
--		hrtimer_start(&so->txtimer, ktime_set(ISOTP_ECHO_TIMEOUT, 0),
-+		hrtimer_start(&so->echotimer, ktime_set(ISOTP_ECHO_TIMEOUT, 0),
- 			      HRTIMER_MODE_REL_SOFT);
- 		isotp_send_cframe(so);
--		return;
-+		goto out_unlock;
- 	}
- 
- 	/* start timer to send next consecutive frame with correct delay */
- 	hrtimer_start(&so->txfrtimer, so->tx_gap, HRTIMER_MODE_REL_SOFT);
+-	return 0;
++	/* Request the channel interrupt. */
++	scnprintf(pdev_irqname, sizeof(pdev_irqname), "ch%u", index);
++	channel->irq = platform_get_irq_byname(pdev, pdev_irqname);
++	if (channel->irq < 0)
++		return channel->irq;
 +
-+out_unlock:
-+	spin_unlock(&so->rx_lock);
++	irqname = devm_kasprintf(dmac->dev, GFP_KERNEL, "%s:%u",
++				 dev_name(dmac->dev), index);
++	if (!irqname)
++		return -ENOMEM;
++
++	ret = devm_request_threaded_irq(dmac->dev, channel->irq,
++					rz_dmac_irq_handler,
++					rz_dmac_irq_handler_thread, 0,
++					irqname, channel);
++	if (ret)
++		dev_err(dmac->dev, "failed to request IRQ %u (%d)\n",
++			channel->irq, ret);
++
++	return ret;
  }
  
--static enum hrtimer_restart isotp_tx_timer_handler(struct hrtimer *hrtimer)
-+/* shared by so->txtimer's and so->echotimer's callbacks. Both timers get
-+ * cancelled under so->rx_lock elsewhere, so this must stay lock-free to
-+ * avoid deadlocking with that; uses so->tx_gen instead to avoid tainting
-+ * a new transfer with an error from the one that just timed out.
-+ */
-+static enum hrtimer_restart isotp_tx_timeout(struct isotp_sock *so)
- {
--	struct isotp_sock *so = container_of(hrtimer, struct isotp_sock,
--					     txtimer);
- 	struct sock *sk = &so->sk;
-+	u32 gen = READ_ONCE(so->tx_gen);
-+	u32 old_state = READ_ONCE(so->tx.state);
+ static int rz_dmac_parse_of(struct device *dev, struct rz_dmac *dmac)
+@@ -858,7 +856,6 @@ static int rz_dmac_probe(struct platform_device *pdev)
+ 	const char *irqname = "error";
+ 	struct dma_device *engine;
+ 	struct rz_dmac *dmac;
+-	int channel_num;
+ 	int ret;
+ 	int irq;
+ 	u8 i;
+@@ -888,19 +885,6 @@ static int rz_dmac_probe(struct platform_device *pdev)
+ 	if (IS_ERR(dmac->ext_base))
+ 		return PTR_ERR(dmac->ext_base);
  
- 	/* don't handle timeouts in IDLE or SHUTDOWN state */
--	if (so->tx.state == ISOTP_IDLE || so->tx.state == ISOTP_SHUTDOWN)
-+	if (old_state == ISOTP_IDLE || old_state == ISOTP_SHUTDOWN)
-+		return HRTIMER_NORESTART;
-+
-+	/* only claim the timeout if the state is still unchanged */
-+	if (cmpxchg(&so->tx.state, old_state, ISOTP_IDLE) != old_state)
- 		return HRTIMER_NORESTART;
- 
- 	/* we did not get any flow control or echo frame in time */
- 
--	/* report 'communication error on send' */
--	sk->sk_err = ECOMM;
--	if (!sock_flag(sk, SOCK_DEAD))
--		sk_error_report(sk);
-+	if (READ_ONCE(so->tx_gen) == gen) {
-+		/* report 'communication error on send' */
-+		sk->sk_err = ECOMM;
-+		if (!sock_flag(sk, SOCK_DEAD))
-+			sk_error_report(sk);
-+	}
- 
--	/* reset tx state */
--	so->tx.state = ISOTP_IDLE;
- 	wake_up_interruptible(&so->wait);
- 
- 	return HRTIMER_NORESTART;
- }
- 
-+/* so->txtimer: fires when a Flow Control frame does not arrive in time */
-+static enum hrtimer_restart isotp_tx_timer_handler(struct hrtimer *hrtimer)
-+{
-+	struct isotp_sock *so = container_of(hrtimer, struct isotp_sock,
-+					     txtimer);
-+
-+	return isotp_tx_timeout(so);
-+}
-+
-+/* so->echotimer: fires when a sent CF/SF's local echo does not arrive */
-+static enum hrtimer_restart isotp_echo_timer_handler(struct hrtimer *hrtimer)
-+{
-+	struct isotp_sock *so = container_of(hrtimer, struct isotp_sock,
-+					     echotimer);
-+
-+	return isotp_tx_timeout(so);
-+}
-+
- static enum hrtimer_restart isotp_txfr_timer_handler(struct hrtimer *hrtimer)
- {
- 	struct isotp_sock *so = container_of(hrtimer, struct isotp_sock,
- 					     txfrtimer);
- 
- 	/* start echo timeout handling and cover below protocol error */
--	hrtimer_start(&so->txtimer, ktime_set(ISOTP_ECHO_TIMEOUT, 0),
-+	hrtimer_start(&so->echotimer, ktime_set(ISOTP_ECHO_TIMEOUT, 0),
- 		      HRTIMER_MODE_REL_SOFT);
- 
- 	/* cfecho should be consumed by isotp_rcv_echo() here */
-@@ -945,13 +1009,24 @@ static int isotp_sendmsg(struct socket *sock, struct msghdr *msg, size_t size)
- 	int ae = (so->opt.flags & CAN_ISOTP_EXTEND_ADDR) ? 1 : 0;
- 	int wait_tx_done = (so->opt.flags & CAN_ISOTP_WAIT_TX_DONE) ? 1 : 0;
- 	s64 hrtimer_sec = ISOTP_ECHO_TIMEOUT;
-+	struct hrtimer *tx_hrt = &so->echotimer;
-+	u32 new_state = ISOTP_SENDING;
- 	int off;
- 	int err;
- 
- 	if (!so->bound || so->tx.state == ISOTP_SHUTDOWN)
- 		return -EADDRNOTAVAIL;
- 
--	while (cmpxchg(&so->tx.state, ISOTP_IDLE, ISOTP_SENDING) != ISOTP_IDLE) {
-+	/* claim the socket under so->rx_lock: this serializes the claim
-+	 * with the RX path and with sendmsg()'s own error paths below, so
-+	 * none of them can ever see a transfer mid-claim
-+	 */
-+	for (;;) {
-+		spin_lock_bh(&so->rx_lock);
-+		if (READ_ONCE(so->tx.state) == ISOTP_IDLE)
-+			break;
-+		spin_unlock_bh(&so->rx_lock);
-+
- 		/* we do not support multiple buffers - for now */
- 		if (msg->msg_flags & MSG_DONTWAIT)
- 			return -EAGAIN;
-@@ -960,11 +1035,23 @@ static int isotp_sendmsg(struct socket *sock, struct msghdr *msg, size_t size)
- 			return -EADDRNOTAVAIL;
- 
- 		/* wait for complete transmission of current pdu */
--		err = wait_event_interruptible(so->wait, so->tx.state == ISOTP_IDLE);
-+		err = wait_event_interruptible(so->wait,
-+					       so->tx.state == ISOTP_IDLE);
- 		if (err)
--			goto err_event_drop;
-+			return err;
- 	}
- 
-+	/* new transfer: bump so->tx_gen and drain the old one's timers,
-+	 * still under the so->rx_lock we just claimed the socket with
-+	 */
-+	WRITE_ONCE(so->tx.state, ISOTP_SENDING);
-+	WRITE_ONCE(so->tx_gen, READ_ONCE(so->tx_gen) + 1);
-+	hrtimer_cancel(&so->txtimer);
-+	hrtimer_cancel(&so->echotimer);
-+	hrtimer_cancel(&so->txfrtimer);
-+	so->cfecho = 0;
-+	spin_unlock_bh(&so->rx_lock);
-+
- 	/* so->bound is only checked once above - a wakeup may have
- 	 * unbound/rebound the socket meanwhile, so re-validate it
- 	 */
-@@ -1075,18 +1162,33 @@ static int isotp_sendmsg(struct socket *sock, struct msghdr *msg, size_t size)
- 			so->cfecho = *(u32 *)cf->data;
- 		} else {
- 			/* standard flow control check */
--			so->tx.state = ISOTP_WAIT_FIRST_FC;
-+			new_state = ISOTP_WAIT_FIRST_FC;
- 
- 			/* start timeout for FC */
- 			hrtimer_sec = ISOTP_FC_TIMEOUT;
-+			tx_hrt = &so->txtimer;
- 
- 			/* no CF echo tag for isotp_rcv_echo() (FF-mode) */
- 			so->cfecho = 0;
- 		}
- 	}
- 
--	hrtimer_start(&so->txtimer, ktime_set(hrtimer_sec, 0),
-+	spin_lock_bh(&so->rx_lock);
-+	if (so->tx.state == ISOTP_SHUTDOWN) {
-+		/* isotp_release() has since taken over and already drained
-+		 * our timers - don't send into a socket that's going away
-+		 */
-+		spin_unlock_bh(&so->rx_lock);
-+		kfree_skb(skb);
-+		dev_put(dev);
-+		wake_up_interruptible(&so->wait);
-+		return -EADDRNOTAVAIL;
-+	}
-+	/* WAIT_FIRST_FC for standard FF, else stays ISOTP_SENDING */
-+	so->tx.state = new_state;
-+	hrtimer_start(tx_hrt, ktime_set(hrtimer_sec, 0),
- 		      HRTIMER_MODE_REL_SOFT);
-+	spin_unlock_bh(&so->rx_lock);
- 
- 	/* send the first or only CAN frame */
- 	cf->flags = so->ll.tx_flags;
-@@ -1099,13 +1201,10 @@ static int isotp_sendmsg(struct socket *sock, struct msghdr *msg, size_t size)
- 		pr_notice_once("can-isotp: %s: can_send_ret %pe\n",
- 			       __func__, ERR_PTR(err));
- 
-+		spin_lock_bh(&so->rx_lock);
- 		/* no transmission -> no timeout monitoring */
--		hrtimer_cancel(&so->txtimer);
+-	/* Register interrupt handler for error */
+-	irq = platform_get_irq_byname(pdev, irqname);
+-	if (irq < 0)
+-		return irq;
 -
--		/* reset consecutive frame echo tag */
--		so->cfecho = 0;
+-	ret = devm_request_irq(&pdev->dev, irq, rz_dmac_irq_handler, 0,
+-			       irqname, NULL);
+-	if (ret) {
+-		dev_err(&pdev->dev, "failed to request IRQ %u (%d)\n",
+-			irq, ret);
+-		return ret;
+-	}
 -
--		goto err_out_drop;
-+		hrtimer_cancel(tx_hrt);
-+		goto err_out_drop_locked;
+ 	/* Initialize the channels. */
+ 	INIT_LIST_HEAD(&dmac->engine.channels);
+ 
+@@ -926,6 +910,21 @@ static int rz_dmac_probe(struct platform_device *pdev)
+ 			goto err;
  	}
  
- 	if (wait_tx_done) {
-@@ -1121,14 +1220,21 @@ static int isotp_sendmsg(struct socket *sock, struct msghdr *msg, size_t size)
++	/* Register interrupt handler for error */
++	irq = platform_get_irq_byname(pdev, irqname);
++	if (irq < 0) {
++		ret = irq;
++		goto err;
++	}
++
++	ret = devm_request_irq(&pdev->dev, irq, rz_dmac_irq_handler, 0,
++			       irqname, NULL);
++	if (ret) {
++		dev_err(&pdev->dev, "failed to request IRQ %u (%d)\n",
++			irq, ret);
++		goto err;
++	}
++
+ 	/* Register the DMAC as a DMA provider for DT. */
+ 	ret = of_dma_controller_register(pdev->dev.of_node, rz_dmac_of_xlate,
+ 					 NULL);
+@@ -964,16 +963,6 @@ static int rz_dmac_probe(struct platform_device *pdev)
+ dma_register_err:
+ 	of_dma_controller_free(pdev->dev.of_node);
+ err:
+-	channel_num = i ? i - 1 : 0;
+-	for (i = 0; i < channel_num; i++) {
+-		struct rz_dmac_chan *channel = &dmac->channels[i];
+-
+-		dma_free_coherent(&pdev->dev,
+-				  sizeof(struct rz_lmdesc) * DMAC_NR_LMDESC,
+-				  channel->lmdesc.base,
+-				  channel->lmdesc.base_dma);
+-	}
+-
+ 	reset_control_assert(dmac->rstc);
+ err_pm_runtime_put:
+ 	pm_runtime_put(&pdev->dev);
+@@ -986,18 +975,9 @@ static int rz_dmac_probe(struct platform_device *pdev)
+ static void rz_dmac_remove(struct platform_device *pdev)
+ {
+ 	struct rz_dmac *dmac = platform_get_drvdata(pdev);
+-	unsigned int i;
  
- 	return size;
- 
-+err_out_drop:
-+	/* claimed but nothing sent yet - no timer to cancel */
-+	spin_lock_bh(&so->rx_lock);
-+	goto err_out_drop_locked;
- err_event_drop:
--	/* got signal: force tx state machine to be idle */
--	so->tx.state = ISOTP_IDLE;
-+	/* interrupted waiting on our own transfer - drain its timers */
-+	spin_lock_bh(&so->rx_lock);
- 	hrtimer_cancel(&so->txfrtimer);
- 	hrtimer_cancel(&so->txtimer);
--err_out_drop:
--	/* drop this PDU and unlock a potential wait queue */
-+	hrtimer_cancel(&so->echotimer);
-+err_out_drop_locked:
-+	/* release the claim; so->rx_lock still held from above */
-+	so->cfecho = 0;
- 	so->tx.state = ISOTP_IDLE;
-+	spin_unlock_bh(&so->rx_lock);
- 	wake_up_interruptible(&so->wait);
- 
- 	return err;
-@@ -1190,13 +1296,20 @@ static int isotp_release(struct socket *sock)
- 	so = isotp_sk(sk);
- 	net = sock_net(sk);
- 
--	/* wait for complete transmission of current pdu */
--	while (wait_event_interruptible(so->wait, so->tx.state == ISOTP_IDLE) == 0 &&
--	       cmpxchg(&so->tx.state, ISOTP_IDLE, ISOTP_SHUTDOWN) != ISOTP_IDLE)
-+	/* best-effort: wait for a running pdu to finish, but don't block on
-+	 * it forever - give up after the first signal
-+	 */
-+	while (so->tx.state != ISOTP_IDLE &&
-+	       wait_event_interruptible(so->wait, so->tx.state == ISOTP_IDLE) == 0)
- 		;
- 
--	/* force state machines to be idle also when a signal occurred */
-+	/* claim the socket under so->rx_lock like sendmsg() does, so its
-+	 * claim can't race the forced ISOTP_SHUTDOWN below; force it
-+	 * unconditionally, even when a signal cut the wait above short
-+	 */
-+	spin_lock_bh(&so->rx_lock);
- 	so->tx.state = ISOTP_SHUTDOWN;
-+	spin_unlock_bh(&so->rx_lock);
- 	so->rx.state = ISOTP_IDLE;
- 
- 	spin_lock(&isotp_notifier_lock);
-@@ -1242,6 +1355,7 @@ static int isotp_release(struct socket *sock)
- 
- 	hrtimer_cancel(&so->txfrtimer);
- 	hrtimer_cancel(&so->txtimer);
-+	hrtimer_cancel(&so->echotimer);
- 	hrtimer_cancel(&so->rxtimer);
- 
- 	sock_orphan(sk);
-@@ -1684,6 +1798,8 @@ static int isotp_init(struct sock *sk)
- 	so->rxtimer.function = isotp_rx_timer_handler;
- 	hrtimer_init(&so->txtimer, CLOCK_MONOTONIC, HRTIMER_MODE_REL_SOFT);
- 	so->txtimer.function = isotp_tx_timer_handler;
-+	hrtimer_init(&so->echotimer, CLOCK_MONOTONIC, HRTIMER_MODE_REL_SOFT);
-+	so->echotimer.function = isotp_echo_timer_handler;
- 	hrtimer_init(&so->txfrtimer, CLOCK_MONOTONIC, HRTIMER_MODE_REL_SOFT);
- 	so->txfrtimer.function = isotp_txfr_timer_handler;
- 
+ 	dma_async_device_unregister(&dmac->engine);
+ 	of_dma_controller_free(pdev->dev.of_node);
+-	for (i = 0; i < dmac->n_channels; i++) {
+-		struct rz_dmac_chan *channel = &dmac->channels[i];
+-
+-		dma_free_coherent(&pdev->dev,
+-				  sizeof(struct rz_lmdesc) * DMAC_NR_LMDESC,
+-				  channel->lmdesc.base,
+-				  channel->lmdesc.base_dma);
+-	}
+ 	reset_control_assert(dmac->rstc);
+ 	pm_runtime_put(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
 -- 
 2.53.0
 
