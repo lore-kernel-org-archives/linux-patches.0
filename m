@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E7CE42E8FF;
-	Thu, 30 Jul 2026 14:24:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4634C431488;
+	Thu, 30 Jul 2026 14:24:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421452; cv=none; b=uPQDq7XuDVfcr99oq9IC+g9u7omqkhIzleeVNOeqjMQh6yH0E/uUO3HyBRRjjOoH+3l4/2rQAII5Vc4ItzjPmEfLR7gxutsSHw4dGhXR83AQ62042KMd1G8gAm/RJKgkTUqudoiJlbOuZ4ZPp0xHWXHPCB2Fw7CqLLCnR6B8KdI=
+	t=1785421455; cv=none; b=d4nBTx0fSx9DaSvwbIN4KiDewIpUgG4pxwdcAQdbmSQokMrF3nioZo8IlfAufkRTrV7HB0AqjtFVTIujv8289yrHeVUpX5YburLNyYBAWIhiNr91Xt1Cp5xlbwmbDkskyWoQUKUjKgiph0x/fvoMdYP0vxFqGgsj2P+ABpvTJD0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421452; c=relaxed/simple;
-	bh=jA2JC9sjLidB6UeIEsctzivvIolggMJ5ee8ZXYyD6SU=;
+	s=arc-20240116; t=1785421455; c=relaxed/simple;
+	bh=Rp7veMbtgJu+ik85Nek/mjqhsKQQaFlTOFX1UAabmoU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GMBPW8tYCsag7qnDRYPOnqKn3WU/7LfvDYN8qNoHlWrP9Uy97sMUwV530drmvSZZ6wLN9TZ8aseCsb50/8JNYYvENSVxbK6SVd+BeoPdfJeGiPRj83rHiNyKfAkFj2vKdMIOR4f3sH+0iM/7y62e9kMTJ2oKcNw4AMzyPzncT6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MRbiYhwJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rooD3NkCrIlzf57Lt4DB+pU2vXaTQD0cIMqO4KlPx0b3UDD25ZW8iITVuDMPZsive7YQGbQp+Xlj3FKb57/1QjxBYzzPAXwmzJsqsgdjO9Lipkn3qLQJi+7IFrpwELJ064YHptgns7mpMuafHV/T0/M1kJiSSQqnQ7zztxOodik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RF4QgxGC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MRbiYhwJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F0A71F000E9;
-	Thu, 30 Jul 2026 14:24:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RF4QgxGC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 991EF1F00A3A;
+	Thu, 30 Jul 2026 14:24:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421451;
-	bh=W6jKLcTiuYWCfy61+b5i+yjwpJt4anu4XsWGUEddf3A=;
+	s=korg; t=1785421454;
+	bh=wDAPZK4OVWZCLOYvtFGrgZI+BrG+it3zSc4mhp6XXWo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MRbiYhwJt35j15rYUzaCWtIpWkyZMkjuwDkKIPrvF2Ciy1yq4UTB+Ohzgt9gJ49ZJ
-	 ZBRJzWkbcdE4YJmsWsD8R4ANA9Fb9jMrDhnUNeTzw15GTzyXno7KKbld9g8OkrjwXW
-	 BszgG0B9ZCmVG+mdaLeGkpnbW9idaUlkwrQ1vWUo=
+	b=RF4QgxGCKQFrJ5bkCC8eOpQzH8T7VIX4L4YBWgvc9PtPgg1crxHZHZBAc2CK5pOG0
+	 lOONHAgIhobuT0/pJ0vwloAvpZJWoY4zmBCW16OSKkFKVt+UxE2ek9hn0purs3ENWU
+	 PUmQchkrxZaoVtQZv2OfTWCxJWnULdKxQdwl8B04=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huiwen He <hehuiwen@kylinos.cn>,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	Steve French <stfrench@microsoft.com>,
+	Rui Qi <qirui.001@bytedance.com>,
+	Paul Walmsley <pjw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 107/744] smb/client: handle overlapping allocated ranges in fallocate
-Date: Thu, 30 Jul 2026 16:06:20 +0200
-Message-ID: <20260730141446.552247512@linuxfoundation.org>
+Subject: [PATCH 7.1 108/744] riscv: Gate FUNCTION_ALIGNMENT_4B on DYNAMIC_FTRACE
+Date: Thu, 30 Jul 2026 16:06:21 +0200
+Message-ID: <20260730141446.572661122@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -52,108 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huiwen He <hehuiwen@kylinos.cn>
+From: Rui Qi <qirui.001@bytedance.com>
 
-[ Upstream commit b09ae45d85dc816987a71db9eebc54b0ae288e94 ]
+[ Upstream commit 3a2694bf6ac8e47b3814293e80343f58fc72937f ]
 
-smb3_simple_fallocate_range() can skip holes when an allocated range
-returned by the server starts before the current fallocate offset. The
-skipped hole is not zero-filled, but fallocate still returns success. A
-later write to that hole may therefore fail with ENOSPC.
+The FUNCTION_ALIGNMENT_4B select forces the whole kernel to be built
+with -fmin-function-alignment=4. This alignment is only needed so the
+patchable-function-entry NOPs, which arch/riscv/Makefile emits under
+CONFIG_DYNAMIC_FTRACE, can be patched reliably on RISCV_ISA_C=y builds
+where compressed instructions otherwise allow 2-byte function
+alignment.
 
-The function queries allocated ranges so that it can preserve existing
-contents and write zeroes only into holes. However, the server may return
-a range that starts before the current fallocate offset.
+The select is currently gated on HAVE_DYNAMIC_FTRACE, a capability bit
+that is selected whenever the toolchain supports dynamic ftrace, rather
+than on whether tracing is actually enabled. As a result every
+RISCV_ISA_C=y build gets 4-byte function alignment across the entire
+kernel even when function tracing is disabled, needlessly growing the
+kernel image and wasting instruction cache for a feature that is not
+in use.
 
-For example, assume the fallocate request is [100, 400) and the only
-allocated range returned by the server is [0, 200):
+Gate the select on DYNAMIC_FTRACE instead, matching the condition under
+which arch/riscv/Makefile emits -fpatchable-function-entry, so the
+alignment is only applied when it is actually needed.
 
-        Request:      [100, 400)
-        Server range: [  0, 200)  allocated
-
-        Correct:
-        [100, 200)    allocated data, skip
-        [200, 400)    hole, zero-fill
-
-        Current:
-        [100, 300)    skipped
-        [300, 400)    zero-filled afterwards
-
-The current code adds the full server range length, 200, to the current
-offset 100 and moves to 300. As a result, the hole in [200, 300) is
-skipped without being zero-filled.
-
-Fix this by advancing only over the part of the allocated range that
-overlaps the current fallocate offset.  Ignore ranges that end before the
-current offset and reject ranges whose end offset overflows.
-
-This also prevents a malformed range length from causing an out-of-bounds
-zero-buffer read.
-
-Fixes: 966a3cb7c7db ("cifs: improve fallocate emulation")
-Signed-off-by: Huiwen He <hehuiwen@kylinos.cn>
-Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: c41bf4326c7b ("riscv: ftrace: align patchable functions to 4 Byte boundary")
+Signed-off-by: Rui Qi <qirui.001@bytedance.com>
+Link: https://patch.msgid.link/20260706130415.463682-1-qirui.001@bytedance.com
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb2ops.c | 25 ++++++++++++++++++-------
- 1 file changed, 18 insertions(+), 7 deletions(-)
+ arch/riscv/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
-index 02c2f83353e27a..6f843c8b83f3a8 100644
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -3581,6 +3581,7 @@ static int smb3_simple_fallocate_range(unsigned int xid,
- 	struct file_allocated_range_buffer in_data, *out_data = NULL, *tmp_data;
- 	u32 out_data_len;
- 	char *buf = NULL;
-+	u64 range_start, range_len, range_end;
- 	loff_t l;
- 	int rc;
- 
-@@ -3617,13 +3618,21 @@ static int smb3_simple_fallocate_range(unsigned int xid,
- 			goto out;
- 		}
- 
--		if (off < le64_to_cpu(tmp_data->file_offset)) {
-+		range_start = le64_to_cpu(tmp_data->file_offset);
-+		range_len = le64_to_cpu(tmp_data->length);
-+		if (check_add_overflow(range_start, range_len, &range_end) ||
-+		    range_end > S64_MAX) {
-+			rc = -EINVAL;
-+			goto out;
-+		}
-+
-+		if (off < range_start) {
- 			/*
- 			 * We are at a hole. Write until the end of the region
- 			 * or until the next allocated data,
- 			 * whichever comes next.
- 			 */
--			l = le64_to_cpu(tmp_data->file_offset) - off;
-+			l = range_start - off;
- 			if (len < l)
- 				l = len;
- 			rc = smb3_simple_fallocate_write_range(xid, tcon,
-@@ -3640,11 +3649,13 @@ static int smb3_simple_fallocate_range(unsigned int xid,
- 		 * until the end of the data or the end of the region
- 		 * we are supposed to fallocate, whichever comes first.
- 		 */
--		l = le64_to_cpu(tmp_data->length);
--		if (len < l)
--			l = len;
--		off += l;
--		len -= l;
-+		if (off < range_end) {
-+			l = range_end - off;
-+			if (len < l)
-+				l = len;
-+			off += l;
-+			len -= l;
-+		}
- 
- 		tmp_data = &tmp_data[1];
- 		out_data_len -= sizeof(struct file_allocated_range_buffer);
+diff --git a/arch/riscv/Kconfig b/arch/riscv/Kconfig
+index c5754942cf85a4..e73f556720c1cf 100644
+--- a/arch/riscv/Kconfig
++++ b/arch/riscv/Kconfig
+@@ -155,7 +155,7 @@ config RISCV
+ 	select HAVE_DEBUG_KMEMLEAK
+ 	select HAVE_DMA_CONTIGUOUS if MMU
+ 	select HAVE_DYNAMIC_FTRACE if MMU && (CLANG_SUPPORTS_DYNAMIC_FTRACE || GCC_SUPPORTS_DYNAMIC_FTRACE)
+-	select FUNCTION_ALIGNMENT_4B if HAVE_DYNAMIC_FTRACE && RISCV_ISA_C
++	select FUNCTION_ALIGNMENT_4B if DYNAMIC_FTRACE && RISCV_ISA_C
+ 	select HAVE_DYNAMIC_FTRACE_WITH_DIRECT_CALLS if HAVE_DYNAMIC_FTRACE_WITH_CALL_OPS
+ 	select HAVE_DYNAMIC_FTRACE_WITH_CALL_OPS if (DYNAMIC_FTRACE_WITH_ARGS && !CFI)
+ 	select HAVE_DYNAMIC_FTRACE_WITH_ARGS if HAVE_DYNAMIC_FTRACE
 -- 
 2.53.0
 
