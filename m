@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 404B1442FD5;
-	Thu, 30 Jul 2026 14:35:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 724FF5C613;
+	Thu, 30 Jul 2026 14:36:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422159; cv=none; b=hoT/4ZTliIvWdj3eOIpDNxi/EUzWRgi7AWNymot55aKb43uRL3Kb4BK2j+n81CZQ81a20J7YAeVGYIWgneOmLjnxWHiV0Vu2OMGcZcM/bsy6XxY5If8hXuZ8dJ5MwiknXTBBHgJdKHJ/ywzNNaB9wHn7j7mEgCvvh0+ENZtDi5A=
+	t=1785422161; cv=none; b=LDWkqPiuO9TMj5tufLhZ6J+qRgtqGRS79ECn9QRNfB1FRYWQ4+uwLr0wmhzxNaxGDGGOADhphV5nBxn2HxJilZM4+Rp1oE0Ti2K47d4Qz0Lvfvzx+IwDLxTaKX76WImqNNqtxcTzgdHLFiudfaAwdETwFoi7DrkLXahmD3yDGyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422159; c=relaxed/simple;
-	bh=tBv43TTzVQn0Ef8r7cFPs76w0mSTS0FQxbWL4k039jU=;
+	s=arc-20240116; t=1785422161; c=relaxed/simple;
+	bh=NFENKel0SYviKxXJIZFMsJTlkfGLTPlWz+pmDBH8h1M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oKjusfZ1HBhje/CUoeEqVMXyA+j7LtiyHS0UNyG8w/qJN8KV1UC1q/8imqjMZcSHLd9NIqhD9BiGk+FxG4EqVLT9tdutI3yWKHRCu5gTfOH7IuJQ4AgDRcNiUpatAeASfVqjiL5oPXSRpyoKoQv36i1XTh1DeAPJHSvtEK+54y4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lc6ojJkx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=q2QLGpeYkrZaQqyo/+Tu9vJP1XJ4W1MXeFe7Xo8tX6oLM8kUu5MYDS+6QAQDnkvpP8VhBH0vAuGkft811Z6aNsdf7uWg5anP+JUIjo9oa5Eryk2dJaZns+whQkOO6BVw2XBzdhb3wwGJOH0Qk1DnDq14bq6rjV5eH0CsyIfEVj0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rXR4CgDZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lc6ojJkx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F5251F00A3A;
-	Thu, 30 Jul 2026 14:35:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rXR4CgDZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9303B1F000E9;
+	Thu, 30 Jul 2026 14:35:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422157;
-	bh=F2iKlwdRsGp1ULtfX7XQhTYafbh0ah+kxbN5YyOvx0Q=;
+	s=korg; t=1785422160;
+	bh=0TgwoZfu0Oj9z6GWXe0vetGc3SvKI3jmmlH9Vt5a6Lc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lc6ojJkxZUbZEEsbqUG4l72BGgq/VnmewNPll/r2YqIOLnOasc9sj0A3/TwTvdJW5
-	 xrUlormOPf7Y6sZ3ABUp8+Qj3XJkByO7s9CJ3rcb5EmSsEiOtr5BUcX3kSA6JyAWfW
-	 hwfzsEV4QyI03eKxz93/jblw3X+5ly3XtbU7xuu8=
+	b=rXR4CgDZzN0RSpi7onYjt8rj1htg1rP2b2Prm6p2eKyGptNok/lpukP8QLOSmz8KI
+	 7jXxiN0DD/QE8YT3TBAlhXINi/AGtLSxdFSJBII/H4VdoHZ3sQc5J8JpZBhKF9M3YT
+	 YgpPj6s4KXp2p4lKVFEj3UDqaSBJ1guUg/SqQpEQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Joanne Koong <joannelkoong@gmail.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Madhu Chittim <madhu.chittim@intel.com>,
+	Emil Tantilov <emil.s.tantilov@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Samuel Salin <Samuel.salin@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 317/744] iomap: correct the range of a partial dirty clear
-Date: Thu, 30 Jul 2026 16:09:50 +0200
-Message-ID: <20260730141451.022367508@linuxfoundation.org>
+Subject: [PATCH 7.1 344/744] idpf: fix max_vport related crash on allocation error during init
+Date: Thu, 30 Jul 2026 16:10:17 +0200
+Message-ID: <20260730141451.595065680@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -54,58 +56,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Yi <yi.zhang@huawei.com>
+From: Emil Tantilov <emil.s.tantilov@intel.com>
 
-[ Upstream commit 88c26515313169806a412a362b32a1eca53d21bd ]
+[ Upstream commit 237f1f7653b8729169af11fae79f01b90d00b87e ]
 
-The block range calculation in ifs_clear_range_dirty() is incorrect when
-partially clearing a range in a folio. We cannot clear the dirty bit of
-the first block or the last block if the start or end offset is not
-blocksize-aligned. This has not yet caused any issues since we always
-clear a whole folio in iomap_writeback_folio().
+Set adapter->max_vports only after successful allocation of vports, netdevs
+and  vport_config buffers. This fixes possible crashes on reset or rmmod,
+following failed allocation on init
 
-Fix this by rounding up the first block to blocksize alignment, and
-calculate the last block by rounding down (using truncation). Correct
-the nr_blks calculation accordingly.
+[  305.981402] idpf 0000:83:00.0: enabling device (0100 -> 0102)
+[  305.994464] idpf 0000:83:00.0: Device HW Reset initiated
+[  320.416872] BUG: kernel NULL pointer dereference, address: 0000000000000000
+[  320.416918] #PF: supervisor read access in kernel mode
+[  320.416942] #PF: error_code(0x0000) - not-present page
+[  320.416963] PGD 2099657067 P4D 0
+[  320.416983] Oops: Oops: 0000 [#1] SMP NOPTI
+...
+[  320.417093] RIP: 0010:idpf_remove+0x118/0x200 [idpf]
+[  320.417130] Code: 8b bb 98 09 00 00 e8 17 0f 5b e5 48 8b bb e8 08 00 00 e8 0b 0f 5b e5 66 83 bb 28 06 00 00 00 48 8b bb 20 06 00 00 74 49 31 ed <48> 8b 04 ef 48 85 c0 74 2f 48 8b 78 20 e8 66 58 91 e5 48 8b 83 20
+[  320.417183] RSP: 0018:ff7322212903fdb8 EFLAGS: 00010246
+[  320.417205] RAX: 0000000000000000 RBX: ff4463de40300000 RCX: ff7322212903fd4c
+[  320.417228] RDX: 0000000000000001 RSI: ffffffffa7f7d100 RDI: 0000000000000000
+[  320.417250] RBP: 0000000000000000 R08: 0000000000000001 R09: 0000000000000000
+[  320.417272] R10: 0000000000000001 R11: ff4463de3a638f58 R12: ff4463be89ac7000
+[  320.417294] R13: ff4463be89ac7198 R14: ff4463be94fc7198 R15: ffffffffc0f10f20
+[  320.417317] FS:  00007f963c0e6740(0000) GS:ff4463fdd65d8000(0000) knlGS:0000000000000000
+[  320.417342] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  320.417362] CR2: 0000000000000000 CR3: 00000020ba674002 CR4: 0000000000773ef0
+[  320.417385] PKRU: 55555554
+[  320.417398] Call Trace:
+[  320.417412]  <TASK>
+[  320.417429]  pci_device_remove+0x42/0xb0
+[  320.417459]  device_release_driver_internal+0x1a9/0x210
+[  320.417492]  driver_detach+0x4b/0x90
+[  320.417516]  bus_remove_driver+0x70/0x100
+[  320.417539]  pci_unregister_driver+0x2e/0xb0
+[  320.417564]  __do_sys_delete_module.constprop.0+0x190/0x2f0
+[  320.417592]  ? kmem_cache_free+0x31e/0x550
+[  320.417619]  ? lockdep_hardirqs_on_prepare+0xde/0x190
+[  320.417644]  ? do_syscall_64+0x38/0x6b0
+[  320.417665]  do_syscall_64+0xc8/0x6b0
+[  320.417683]  ? clear_bhb_loop+0x30/0x80
+[  320.417706]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+[  320.417727] RIP: 0033:0x7f963bb30beb
 
-Fixes: 4ce02c679722 ("iomap: Add per-block dirty state tracking to improve performance")
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Link: https://patch.msgid.link/20260714082325.325163-2-yi.zhang@huaweicloud.com
-Reviewed-by: Joanne Koong <joannelkoong@gmail.com>
-Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: 0fe45467a104 ("idpf: add create vport and netdev configuration")
+Reviewed-by: Madhu Chittim <madhu.chittim@intel.com>
+Signed-off-by: Emil Tantilov <emil.s.tantilov@intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Samuel Salin <Samuel.salin@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://patch.msgid.link/20260717185340.3595286-13-anthony.l.nguyen@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/iomap/buffered-io.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/intel/idpf/idpf_virtchnl.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/fs/iomap/buffered-io.c b/fs/iomap/buffered-io.c
-index 5fa9a2c7e30eb8..116110628994df 100644
---- a/fs/iomap/buffered-io.c
-+++ b/fs/iomap/buffered-io.c
-@@ -176,13 +176,17 @@ static void ifs_clear_range_dirty(struct folio *folio,
- {
- 	struct inode *inode = folio->mapping->host;
- 	unsigned int blks_per_folio = i_blocks_per_folio(inode, folio);
--	unsigned int first_blk = (off >> inode->i_blkbits);
--	unsigned int last_blk = (off + len - 1) >> inode->i_blkbits;
--	unsigned int nr_blks = last_blk - first_blk + 1;
-+	unsigned int first_blk = round_up(off, i_blocksize(inode)) >>
-+				 inode->i_blkbits;
-+	unsigned int last_blk = (off + len) >> inode->i_blkbits;
- 	unsigned long flags;
+diff --git a/drivers/net/ethernet/intel/idpf/idpf_virtchnl.c b/drivers/net/ethernet/intel/idpf/idpf_virtchnl.c
+index be66f9b2e101ca..dc5ad784f456f0 100644
+--- a/drivers/net/ethernet/intel/idpf/idpf_virtchnl.c
++++ b/drivers/net/ethernet/intel/idpf/idpf_virtchnl.c
+@@ -3555,7 +3555,6 @@ int idpf_vc_core_init(struct idpf_adapter *adapter)
  
-+	if (first_blk >= last_blk)
-+		return;
+ 	pci_sriov_set_totalvfs(adapter->pdev, idpf_get_max_vfs(adapter));
+ 	num_max_vports = idpf_get_max_vports(adapter);
+-	adapter->max_vports = num_max_vports;
+ 	adapter->vports = kzalloc_objs(*adapter->vports, num_max_vports);
+ 	if (!adapter->vports)
+ 		return -ENOMEM;
+@@ -3576,6 +3575,12 @@ int idpf_vc_core_init(struct idpf_adapter *adapter)
+ 		goto err_netdev_alloc;
+ 	}
+ 
++	/* Set max_vports only after vports, netdevs and vport_config buffers
++	 * are allocated to make sure max_vport bound loops don't end up
++	 * crashing, following allocation errors on init.
++	 */
++	adapter->max_vports = num_max_vports;
 +
- 	spin_lock_irqsave(&ifs->state_lock, flags);
--	bitmap_clear(ifs->state, first_blk + blks_per_folio, nr_blks);
-+	bitmap_clear(ifs->state, first_blk + blks_per_folio,
-+		     last_blk - first_blk);
- 	spin_unlock_irqrestore(&ifs->state_lock, flags);
- }
- 
+ 	/* Start the mailbox task before requesting vectors. This will ensure
+ 	 * vector information response from mailbox is handled
+ 	 */
 -- 
 2.53.0
 
