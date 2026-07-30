@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67DEA43DA35;
-	Thu, 30 Jul 2026 14:59:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02694435AB0;
+	Thu, 30 Jul 2026 14:59:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423593; cv=none; b=uokVcSLoyF/tM4nU6vy0sTw23eoqC4Gc1U6ch8PlUWrfI/QbnsYVWZPqL4U65OYgEvf9O7gFfhB7gCx0ahxQghq7JgOPcojTPyi0bCsrI2B36tQ3zQfamW2uLK6/m7nBzjE9SCbZMU0/wNmL9NRv6y3drsW6wdsTr6GJHqDGtd4=
+	t=1785423596; cv=none; b=nx3W9EIbk1TNXgoyJAL6Ay1VuAruEn1axrvZZtMmEP9eJIUYae7WsxPAvVYzDYQ+3iiwv0PYfXr/JecQ+KB9XEtKe5jDFX/L3g7N15hNA0QLGadsVBgssy5U90waWV5gmtb4DeVMDfFC8x5fyPzb/UxMvklw+erc4Ai3YFoe3zo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423593; c=relaxed/simple;
-	bh=E23ZecO53fC10SeM2DLdqXUoYkIDrfoXRI6/dfRFBRQ=;
+	s=arc-20240116; t=1785423596; c=relaxed/simple;
+	bh=aiYAHefjBQJFglSNZI26xUnK48amc3SLaspPlQ6avRg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OWrcc7P2agh8jUYiPoTS1g+eh8i1ZVvu5bynZ5suY0xAEQfd48Kc8x6hOTeDbyJNyhViVRM7uEhp9Dgwx9hkiTs6A/VnhRLbA/5ikwfVs7h0+uCgM6O5IAHQBSRwFIIBh0XrrscM6XHTKjGPAyyOu5pm+8ga7AruMAcAwY2BamU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YanGCHMh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=psuI6ZZd9gzEAbM4hm7j9tMhVC9nVUjmoS4lD7VkvrY4PhaVhFrqGXM7XngSThDvnZRGcORkXmOK2gWaLJ8vSLJHdy7VbaYTcMLD7/18KbOLBSqpAbpXj/+KG/QyjgJdRTWG1rT8sLWA1CxMn8QPyswj52kthW/KU+iAH3x9Nz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jKBZ+HG4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YanGCHMh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ACB71F000E9;
-	Thu, 30 Jul 2026 14:59:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jKBZ+HG4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 581491F000E9;
+	Thu, 30 Jul 2026 14:59:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423592;
-	bh=w+CYxyoi7rp4nmHGx4oXvjPgyBPpi+lpeK+AEQi6KeE=;
+	s=korg; t=1785423594;
+	bh=4GFnUfmjLkMH4OmMGq/9H+H5grtM/Jv8lty7J75OFS4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YanGCHMh7lunApY/UlCuLXbEKWHIQCJluoasxsVE3SSCtGbhF772W8FC2ymXYKfYd
-	 J0RtxKCLEYl3S7wWXx/PyygUrdhhtKR/Ph4P2ci8MVSqEPmhAvrVr4k3NHamKrXfz1
-	 2EUFLl0NrD/hGYjuDDOtI0bcHxM1AVcTmFDihvcw=
+	b=jKBZ+HG4T3U5l5vq9jOyNDU42RKuRHtAZu7DkPU7Yb8Y+V5vpUEfHQiI06Gs16KF7
+	 V5Ki1UPYlLTRaUpeg9atQ9uh9ezedfUAIVp0xgsGkQ6y8uKRU7GjGY8d0R9pMCG+jC
+	 5Y3nZVcFkdRxttQbUGfaXBVwUCSd65H76U9xt0vI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Hidayath Khan <hidayath@linux.ibm.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Robert Mader <robert.mader@collabora.com>,
+	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
+	Vivek Kasireddy <vivek.kasireddy@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 098/675] net/iucv: take a reference on the socket found in afiucv_hs_rcv()
-Date: Thu, 30 Jul 2026 16:07:08 +0200
-Message-ID: <20260730141447.212356408@linuxfoundation.org>
+Subject: [PATCH 6.18 099/675] udmabuf: Ensure to perform cache synchronisation in begin_cpu_udmabuf()
+Date: Thu, 30 Jul 2026 16:07:09 +0200
+Message-ID: <20260730141447.238085872@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -52,53 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Robert Mader <robert.mader@collabora.com>
 
-[ Upstream commit 4fa349156043dc119721d067329714179f501749 ]
+[ Upstream commit 1d0e25c1ddf2063c499264fb2ba0fa6a3e4f8a00 ]
 
-afiucv_hs_rcv() looks up the destination socket under iucv_sk_list.lock,
-drops the lock, and then passes the socket to the afiucv_hs_callback_*()
-handlers without holding a reference. AF_IUCV sockets are not
-RCU-protected and are freed synchronously by iucv_sock_kill() ->
-sock_put(), so a concurrent close can free the socket in the window
-between read_unlock() and the handler, which then dereferences freed
-memory (for example sk->sk_data_ready() in afiucv_hs_callback_syn()).
+The message of commit 504e2b4ab97a ("dma-buf/udmabuf: skip redundant cpu sync to
+fix cacheline EEXIST warning") says:
 
-Take a reference with sock_hold() while the socket is still on the list
-and release it with sock_put() once the handler has run.
+> The CPU sync at map/unmap time is also redundant for udmabuf:
+> begin_cpu_udmabuf() and end_cpu_udmabuf() already perform explicit
+> cache synchronization via dma_sync_sgtable_for_cpu/device() when CPU
+> access is requested through the dma-buf interface.
 
-Fixes: 3881ac441f64 ("af_iucv: add HiperSockets transport")
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Reviewed-by: Hidayath Khan <hidayath@linux.ibm.com>
-Link: https://patch.msgid.link/20260705-b4-disp-fc79c0dc-v1-1-d2cdcb57afa9@proton.me
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+This, however, does not apply to the first time begin_cpu_udmabuf() is
+called on an udmabuf, in which case the implementation previously relied on
+get_sg_table() to perform the cache synchronisation.
+
+Ensure to call dma_sync_sgtable_for_cpu() in that case as well.
+
+Fixes: 504e2b4ab97a ("dma-buf/udmabuf: skip redundant cpu sync to fix cacheline EEXIST warning")
+Signed-off-by: Robert Mader <robert.mader@collabora.com>
+Reviewed-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Link: https://patch.msgid.link/20260627105725.9083-1-robert.mader@collabora.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/iucv/af_iucv.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/dma-buf/udmabuf.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/net/iucv/af_iucv.c b/net/iucv/af_iucv.c
-index c66b90c912e78e..bd0405373c5e97 100644
---- a/net/iucv/af_iucv.c
-+++ b/net/iucv/af_iucv.c
-@@ -2089,6 +2089,8 @@ static int afiucv_hs_rcv(struct sk_buff *skb, struct net_device *dev,
- 			}
+diff --git a/drivers/dma-buf/udmabuf.c b/drivers/dma-buf/udmabuf.c
+index be47d1ff6c508b..30b0f0c72e928c 100644
+--- a/drivers/dma-buf/udmabuf.c
++++ b/drivers/dma-buf/udmabuf.c
+@@ -249,21 +249,22 @@ static int begin_cpu_udmabuf(struct dma_buf *buf,
+ {
+ 	struct udmabuf *ubuf = buf->priv;
+ 	struct device *dev = ubuf->device->this_device;
+-	int ret = 0;
+ 
+ 	if (!ubuf->sg) {
+ 		ubuf->sg = get_sg_table(dev, buf, direction);
+ 		if (IS_ERR(ubuf->sg)) {
++			int ret;
++
+ 			ret = PTR_ERR(ubuf->sg);
+ 			ubuf->sg = NULL;
++			return ret;
+ 		} else {
+ 			ubuf->sg_dir = direction;
  		}
- 	}
-+	if (sk)
-+		sock_hold(sk);
- 	read_unlock(&iucv_sk_list.lock);
- 	if (!iucv)
- 		sk = NULL;
-@@ -2138,6 +2140,8 @@ static int afiucv_hs_rcv(struct sk_buff *skb, struct net_device *dev,
- 		kfree_skb(skb);
+-	} else {
+-		dma_sync_sgtable_for_cpu(dev, ubuf->sg, direction);
  	}
  
-+	if (sk)
-+		sock_put(sk);
- 	return err;
+-	return ret;
++	dma_sync_sgtable_for_cpu(dev, ubuf->sg, direction);
++	return 0;
  }
  
+ static int end_cpu_udmabuf(struct dma_buf *buf,
 -- 
 2.53.0
 
