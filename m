@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5B2343B6D1;
-	Thu, 30 Jul 2026 14:37:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D305435BDAA;
+	Thu, 30 Jul 2026 14:37:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422261; cv=none; b=ozqqD0PbLSzM3zMGYsBvXkRKkA+OzNUtGZaIaA/ycB7JOpIrfHNrTzTtvnbxdNs+kiGGBR/P1OLh5ts2RbjZO0iIUON1fFbYbBmCL9f4VJ6vkXMxAsKnR9i2w1hxMjo6AuMocWGYpieoZmBlDSFOeic47Y2HTk4/BZI/BqvyXkk=
+	t=1785422264; cv=none; b=fO6bBQ9fUpKXsBNdaQATKUUvpetE35QTzWLK+U+tF6Ns7s4iBw1USN+ANpF1wmZdcveFsB7EDkP8yJd4rN4SFTL/bnnvR/AB4uuRrg0VA8hrQUqBpMSkvr4TJ+ivHCPTj6C+dcjWx1QepEnz6TtVBa9SwFF+PpWoKF9qu5HMIKs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422261; c=relaxed/simple;
-	bh=JauKDFkMPh09nsBNXLflOWcdqvnLTXoOjoz8zryrrPI=;
+	s=arc-20240116; t=1785422264; c=relaxed/simple;
+	bh=F5at1Myw7E6SsOMgnLGqsnpcy8AtBxj8OtE4nrFL0bc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sAcRLiCaXHnTqJjj7VfSrBZYOWSc16pxLYnl3VeUHNsIlH6DvaN2+4TrFE1+Zdm5yjEonYGxbMf4n/ifjzYtsxPasozmL5WjtBz95pMYy5dLeymxAmw3gxfEGi3rezOybKiEOa0yH04C94xG/JQXEABH/dej4l+HoWI1lgypVOs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MXcPswhJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YrNCME8cAEgJiqkNPy7oxQeVzN3H/oZWbeXu32A53mNc6mq4kSDtZk8DY2mLI2QdauERmZdV8X/3XRhKnZOh6hRq7hh7ZFowBlDyzRNdfI7rx8GEP2KN273alkxVEpaLYZ4/3md0jfENAs/bPwXlkHvv0ubHBoAwN9JYV1U4+wA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FNZUFFEW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MXcPswhJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 397081F000E9;
-	Thu, 30 Jul 2026 14:37:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FNZUFFEW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D4E41F000E9;
+	Thu, 30 Jul 2026 14:37:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422259;
-	bh=vXfoV7s+buFtfmsDqlaZbxjHaRInprpggMemb9fpdMA=;
+	s=korg; t=1785422262;
+	bh=rO5ZrFYdpkXTIq6xkLaQt0CUN9KdL6hXG40Ope7Vyb0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MXcPswhJu0llv5Yer9Y5K4oqBBo1UUOS+waND1gAdY/lznx56DntGbFgD1DM2YFT8
-	 OlJsuorWYd42YTklPFd3G89vvu2KZ5yjE2ChzOHpUkFqhTOxutWkGcsK9kftvGr/u0
-	 8XsX/2erIEG7xeJKpIvqz139oBGNuFKE9tmRcFzE=
+	b=FNZUFFEW2veZYwdLFzKoXi2sLOsf+NZ7iySycqRFRrAepEYMDoyTBFNZcIP0piECA
+	 3Xfzm7Z1Thq8uA/b9XqXLDvVH0IMOzXxJOtIZdoG+Dkl3M3X+rg77APife1p6Dtm0z
+	 QdaHydI3V7U+rDeoFVsExo0lflweEy0XxZgm07H8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Sashiko <sashiko-bot@kernel.org>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	dri-devel@lists.freedesktop.org
-Subject: [PATCH 7.1 379/744] drm/sysfb: Avoid truncating maximum stride
-Date: Thu, 30 Jul 2026 16:10:52 +0200
-Message-ID: <20260730141452.342356347@linuxfoundation.org>
+	Zhanjun Dong <zhanjun.dong@intel.com>,
+	Tejas Upadhyay <tejas.upadhyay@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>
+Subject: [PATCH 7.1 380/744] drm/xe/guc: Fix buffer overflow in steered register list allocation
+Date: Thu, 30 Jul 2026 16:10:53 +0200
+Message-ID: <20260730141452.363531620@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -52,52 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Tejas Upadhyay <tejas.upadhyay@intel.com>
 
-commit 9206b22fb959f4a9cf1921f34aed0df1dcb1ab04 upstream.
+commit 632ecc90e1ca5d3b6822bb4d08f84a175b6c42c0 upstream.
 
-Passing a maximum as 64-bit type to drm_sysfb_get_validated_int0()
-can truncate the value to 32 bits. Use drm_sysfb_get_validated_size0(),
-which uses 64-bit arithmetics. Then test the returned stride against
-the limits of int to avoid truncations in the returned value. A valid
-stride is in the range of [1, INT_MAX] inclusive.
+The size calculation for the steered register extarray uses only the
+geometry DSS mask (g_dss_mask) to determine the number of entries to
+allocate:
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/dri-devel/20260617114016.5A5991F000E9@smtp.kernel.org/
-Fixes: 32ae90c66fb6 ("drm/sysfb: Add efidrm for EFI displays")
-Fixes: a84eb6abe2b6 ("drm/sysfb: Add vesadrm for VESA displays")
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Javier Martinez Canillas <javierm@redhat.com>
-Cc: dri-devel@lists.freedesktop.org
-Cc: <stable@vger.kernel.org> # v6.16+
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Link: https://patch.msgid.link/20260618084327.46567-5-tzimmermann@suse.de
+  total = bitmap_weight(gt->fuse_topo.g_dss_mask, ...) * steer_reg_num;
+
+However, the filling loop uses for_each_dss_steering(), which iterates
+over for_each_dss(), defined as the union of g_dss_mask and c_dss_mask
+(geometry + compute DSS). On platforms with compute-only DSS bits, the
+loop writes past the allocated buffer, corrupting adjacent slab objects.
+
+This manifests as list_del corruption and SLUB redzone overwrites during
+drm_managed_release on device unbind, since the overflow corrupts the
+drmres list_head of neighboring allocations.
+
+Fix by computing the allocation size using the union of both DSS masks,
+matching the iteration pattern of for_each_dss_steering().
+
+--
+v2:
+- use bitmap_weighted_or() (Zhanjun)
+
+Fixes: b170d696c1e2 ("drm/xe/guc: Add XE_LP steered register lists")
+Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/8049
+Cc: Zhanjun Dong <zhanjun.dong@intel.com>
+Cc: stable@vger.kernel.org
+Assisted-by: GitHub-Copilot:claude-opus-4.6
+Reviewed-by: Zhanjun Dong <zhanjun.dong@intel.com>
+Link: https://patch.msgid.link/20260612070401.543305-2-tejas.upadhyay@intel.com
+Signed-off-by: Tejas Upadhyay <tejas.upadhyay@intel.com>
+(cherry picked from commit 0a78a44f4901aa6c9263e66be7fce02282f1109f)
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/sysfb/drm_sysfb_screen_info.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/xe/xe_guc_capture.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/sysfb/drm_sysfb_screen_info.c
-+++ b/drivers/gpu/drm/sysfb/drm_sysfb_screen_info.c
-@@ -56,11 +56,17 @@ int drm_sysfb_get_stride_si(struct drm_d
- 			    unsigned int width, unsigned int height, u64 size)
- {
- 	u64 lfb_linelength = si->lfb_linelength;
-+	s64 stride;
+--- a/drivers/gpu/drm/xe/xe_guc_capture.c
++++ b/drivers/gpu/drm/xe/xe_guc_capture.c
+@@ -461,8 +461,14 @@ static void guc_capture_alloc_steered_li
+ 	if (!list || guc->capture->extlists)
+ 		return;
  
- 	if (!lfb_linelength)
- 		lfb_linelength = drm_format_info_min_pitch(format, 0, width);
- 
--	return drm_sysfb_get_validated_int0(dev, "stride", lfb_linelength, div64_u64(size, height));
-+	stride = drm_sysfb_get_validated_size0(dev, "stride", lfb_linelength,
-+					       div64_u64(size, height));
-+	if (stride < INT_MIN || stride > INT_MAX)
-+		return -EINVAL;
+-	total = bitmap_weight(gt->fuse_topo.g_dss_mask, sizeof(gt->fuse_topo.g_dss_mask) * 8) *
+-		guc_capture_get_steer_reg_num(guc_to_xe(guc));
++	{
++		xe_dss_mask_t all_dss;
 +
-+	return (int)stride; /* stride or negative errno code */
- }
- EXPORT_SYMBOL(drm_sysfb_get_stride_si);
++		total = bitmap_weighted_or(all_dss, gt->fuse_topo.g_dss_mask,
++					   gt->fuse_topo.c_dss_mask,
++					   XE_MAX_DSS_FUSE_BITS) *
++			guc_capture_get_steer_reg_num(guc_to_xe(guc));
++	}
  
+ 	if (!total)
+ 		return;
 
 
