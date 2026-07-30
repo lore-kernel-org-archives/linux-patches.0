@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 097A132B116;
-	Thu, 30 Jul 2026 15:01:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25442372ECB;
+	Thu, 30 Jul 2026 15:01:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423690; cv=none; b=WCEY4q6kucz2LbdsUWC+bTkcySPMoXtcQ1778QtXi5QHezFp2OzFGtZkoFV4dgWEnGIJr8mV7ubWTbe00DO1jsCItsOCMgAvPJewgC7Z8UP8cAmVXc+cpHqALvhBxCDXoilbX7ww/BA/HIVknZkEcCM8bz04GRzGTwh1J83pOZI=
+	t=1785423693; cv=none; b=KftWOrfCTzfdBijeC/EVtCdbbtNU0cNeJLb/EX3RQp7jH1x4/g3flb3XamTSyG3yhQ7/5IsXpAHGmb1XxyyqZXRMFu5/H/7PlxNSAqBL96iWXaSZLsRIfMZHkleb6wUr7hNKESTdMqSixnJDdoNp2wglR2pzGZ7b9DcDEffFR8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423690; c=relaxed/simple;
-	bh=a/XR/seov+aTLCDBqkGAIGrsbM8wyZ6G1B4E39bRzR0=;
+	s=arc-20240116; t=1785423693; c=relaxed/simple;
+	bh=wzGV9GnUi49xLqXJ9u4Zw37F6J+2MR/MMMDfxspgikc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DrZaqosJV5ELAn4bTh+m+Y9HBE18t04hQGprikI50aQPcCE1CqSxcb9+ScUTp0BnOIzrSJRz+kXca3v8LFB9gLXhYW6xoons5ew4e6P7PaxcBMj1NOYl5n4F9lPFkYs9Rw/kF1dsi98wVS7URbsWQPAwMZjz9DGomqsDPvPPLYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jRuc4G4f; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oCXPZIKBxcj2pNfxnmAHvt0IBe84oEZJZY7sLYZU7X7DpxiANBi3a/vxxUfa/1xzCcmYyLJqobrFGwZXZW3Uhm7q4/NvgU20PyLdkFwBM6r33j/tALxc02xraX9mvoSajNDvWMQrIPx/smpD1m9DW0cGtwSPvDKyzm8EMTOb4TE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JgZagqKP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jRuc4G4f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 638911F000E9;
-	Thu, 30 Jul 2026 15:01:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JgZagqKP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EFEC1F000E9;
+	Thu, 30 Jul 2026 15:01:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423688;
-	bh=GHX/j9QTZJmuWNGleP2tJ9z2s4Rp2zt0gLjS5B2qSmc=;
+	s=korg; t=1785423691;
+	bh=pdni7gOInC5TYmAVFzXEoilAMDSHlbwKgycFhyIGn8c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jRuc4G4fiN5fuYZbz3PKFdHHlhQL2RchG9fa0u/Q/8f03vkaOb+9SrUlwFqQvyL9e
-	 9swfNwSwHN6Jtydo6dzJHhcrGaYXdhUcj83FExufz3SUEF1eDq+HeCzlzvNf200cT8
-	 f8nirpTEDk+g9LZ0cZ45U2caGEfKBHS+spYMmvbU=
+	b=JgZagqKPbsp8bXdkB2Ig/T7W+S+ElQgoJERKe3WZRJojTGov8SbQX0q6lXASbu8g1
+	 lunpkzLOv7ZnWvTC0srGAxR4rz4dxeOI3kMZcvL/sRQYJ6mPcnLAYqQNngwFeoubYk
+	 tZBfhZkIPuXw6Hvf6sQoWdS0exzy0wLspxMppzbg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Zhen <max.zhen@amd.com>,
-	Lizhi Hou <lizhi.hou@amd.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Daniel Zahka <daniel.zahka@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 133/675] accel/amdxdna: Fix use-after-free of mm_struct in job scheduler
-Date: Thu, 30 Jul 2026 16:07:43 +0200
-Message-ID: <20260730141447.969028808@linuxfoundation.org>
+Subject: [PATCH 6.18 134/675] tcp: fix TIME_WAIT socket reference leak on PSP policy failure
+Date: Thu, 30 Jul 2026 16:07:44 +0200
+Message-ID: <20260730141447.988661947@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -51,56 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lizhi Hou <lizhi.hou@amd.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit faebb7ba1ac65fa5810b640df02ce04e509fdc11 ]
+[ Upstream commit 2c1931a81122c3cdc4c89448fe0442c69e21c0d5 ]
 
-amdxdna_cmd_submit() stores current->mm in job->mm without holding any
-reference. aie2_sched_job_run() later access job->mm from the DRM
-scheduler worker thread. With only a raw pointer and no structural
-reference, the mm_struct can be freed before the scheduler runs the job.
+Release the TIME_WAIT socket reference and jump to discard_it
+upon PSP policy failure in both IPv4 and IPv6 receive paths.
+This prevents a memory leak of tcp_tw_bucket structures.
 
-Fix this by calling mmgrab() to hold a structural mm_count reference for
-the lifetime of the job, paired with mmdrop() in every cleanup path.
-
-Fixes: aac243092b70 ("accel/amdxdna: Add command execution")
-Reviewed-by: Max Zhen <max.zhen@amd.com>
-Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
-Link: https://patch.msgid.link/20260716151305.1595780-1-lizhi.hou@amd.com
+Fixes: 659a2899a57d ("tcp: add datapath logic for PSP with inline key exchange")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Daniel Zahka <daniel.zahka@gmail.com>
+Link: https://patch.msgid.link/20260710181317.4060230-1-edumazet@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/amdxdna/amdxdna_ctx.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/ipv4/tcp_ipv4.c | 6 ++++--
+ net/ipv6/tcp_ipv6.c | 6 ++++--
+ 2 files changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/accel/amdxdna/amdxdna_ctx.c b/drivers/accel/amdxdna/amdxdna_ctx.c
-index cfee89681ff3cf..347e046d2a0fba 100644
---- a/drivers/accel/amdxdna/amdxdna_ctx.c
-+++ b/drivers/accel/amdxdna/amdxdna_ctx.c
-@@ -393,6 +393,7 @@ void amdxdna_sched_job_cleanup(struct amdxdna_sched_job *job)
- 	amdxdna_arg_bos_put(job);
- 	amdxdna_gem_put_obj(job->cmd_bo);
- 	dma_fence_put(job->fence);
-+	mmdrop(job->mm);
- }
+diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
+index f0106c2be1cf23..a1ed4fa264836d 100644
+--- a/net/ipv4/tcp_ipv4.c
++++ b/net/ipv4/tcp_ipv4.c
+@@ -2452,8 +2452,10 @@ int tcp_v4_rcv(struct sk_buff *skb)
+ 		}
  
- int amdxdna_cmd_submit(struct amdxdna_client *client,
-@@ -443,6 +444,7 @@ int amdxdna_cmd_submit(struct amdxdna_client *client,
+ 		drop_reason = psp_twsk_rx_policy_check(inet_twsk(sk), skb);
+-		if (drop_reason)
+-			break;
++		if (drop_reason) {
++			inet_twsk_put(inet_twsk(sk));
++			goto discard_it;
++		}
+ 	}
+ 		/* to ACK */
+ 		fallthrough;
+diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
+index 59b5900dd42bd6..ad9f69d49f2e3d 100644
+--- a/net/ipv6/tcp_ipv6.c
++++ b/net/ipv6/tcp_ipv6.c
+@@ -1984,8 +1984,10 @@ INDIRECT_CALLABLE_SCOPE int tcp_v6_rcv(struct sk_buff *skb)
+ 		}
  
- 	job->hwctx = hwctx;
- 	job->mm = current->mm;
-+	mmgrab(job->mm);
- 
- 	job->fence = amdxdna_fence_create(hwctx);
- 	if (!job->fence) {
-@@ -475,6 +477,8 @@ int amdxdna_cmd_submit(struct amdxdna_client *client,
- cmd_put:
- 	amdxdna_gem_put_obj(job->cmd_bo);
- free_job:
-+	if (job->mm)
-+		mmdrop(job->mm);
- 	kfree(job);
- 	return ret;
- }
+ 		drop_reason = psp_twsk_rx_policy_check(inet_twsk(sk), skb);
+-		if (drop_reason)
+-			break;
++		if (drop_reason) {
++			inet_twsk_put(inet_twsk(sk));
++			goto discard_it;
++		}
+ 	}
+ 		/* to ACK */
+ 		fallthrough;
 -- 
 2.53.0
 
