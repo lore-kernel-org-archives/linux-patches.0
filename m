@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3483544BCB8;
-	Thu, 30 Jul 2026 15:21:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F50544C664;
+	Thu, 30 Jul 2026 15:21:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424884; cv=none; b=HTHTV1059Y5PYuror/ZzxSMsqI//RfFDCDVOY2NOoiO4jeXbtforj8YP/+tddU8MjwMYk2FfcmWUuVqB6DjdjB0hhXOETk/hz2wkWIaAY/cz+rNuJLgC7plWwtCnD+VbnOwgLZFpIqERTa9v0EosACUY3OKEVU4XAsuQNUKmCik=
+	t=1785424887; cv=none; b=uZqTKpXIqtGC1hCHq9jLJiOC5u8R4U3a5LMHWTZtX8bOKnt4zvCYa/gfVO6TflZQHTLYvLkoqUYRGMdH4IoMoetvufb1Z7T3AVsPcPZplWFJrzBCKIijjLYF+T0XvdgvNXWV5XmMO4zso2uTgMUhAqRT0fQTMlyZD+OvtdlXPpU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424884; c=relaxed/simple;
-	bh=t1DXTruYe+rKRDGe1x8g4kGQYvHNNvCcW5xu95p6ZvM=;
+	s=arc-20240116; t=1785424887; c=relaxed/simple;
+	bh=DC7soECBdomiz9+PhFj62ncTNCrD2Hwz0o8mA/o3MeU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d6LJRrwL0xUGpvtbl5lmgHHthWTCMSJ3Cq+Y1DeB4IbhdLa2KWscnlBZOEViLgWeNIK7nZeOHbS0YeypRsKPXX/ZySPBATL81uTaxl/5+InA8RbleZ7tylu9AuuOMiopQJZ1tUBRzDiOYlKuytyrykt1I6biZTIvmcRLaTlL7Po=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qfrbCRgc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jmAIDDUdpWKTDfV/jgsX5CmLUzzA0JVm5Xl6Cb1zFF4LpFzSgPiNhT9PEERPdoyxX85Hq2CUuVOqkro1Efn2dUaYM+MaHGjW6YmfSSu/S3ek/mbOt06AO/DOyaEnysslN78CO60VX3tCl8nOLBA2AonZ2kyZd2uSXePWL9fPttU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aH28zi+J; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qfrbCRgc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CF271F00ACA;
-	Thu, 30 Jul 2026 15:21:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aH28zi+J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 641861F00ACA;
+	Thu, 30 Jul 2026 15:21:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424883;
-	bh=DkHMv8yDCdH4UwlcmTlNIFx2QfPr7wUdZGuILV0Fp4Q=;
+	s=korg; t=1785424885;
+	bh=ZnmKzo++Yj0uEfdfm6t4BMuUskUynwHRjkt9tHVUn0A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qfrbCRgc6Vo+RkmmS5t9BpYJz8XJNLw9DPCTGuyuJTVLm4Fcp0VyFSo1RyknbVqtU
-	 m5BvlOVZPIebBaW1CEJfbD6mbrYbG/ox9sMpG2jf4RKFyYcnn3M3DAg24RPcVaPn/+
-	 V+7Fva/uZy0tbLvrR81kWXqJ0rsOSlB28VX1WwGg=
+	b=aH28zi+Jyt3izVNachPrVfvczDN5y7mYZu/HbwxNX+BX813qpn+v2hlCIp1AWrlXO
+	 vCzNGC0wcCrTPGDO1RjU2JseZBHSqIiEMjOjfSQu1FmULD9PXTS3dWiWjnkLWNOSaZ
+	 NQKvTsC6+fl8zUT5O5qPLky3E2GZFYNbFwKabV8Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.18 548/675] super: fix emergency thaw deadlock on frozen block devices
-Date: Thu, 30 Jul 2026 16:14:38 +0200
-Message-ID: <20260730141456.789360460@linuxfoundation.org>
+	stable@kernel.org,
+	Jun Yang <junvyyang@tencent.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 507/675] sctp: dont free the ASCONFs own transport in DEL-IP processing
+Date: Thu, 30 Jul 2026 16:13:57 +0200
+Message-ID: <20260730141455.905631219@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -49,144 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Jun Yang <junvyyang@tencent.com>
 
-commit 749d7aa0377aae32af8c0a4ad43371e7bf830ab5 upstream.
+commit 9b2854f86f0b56e9027d68e7a3fc909d1a9b566f upstream.
 
-do_thaw_all_callback() calls bdev_thaw() while holding sb->s_umount
-exclusively. If the block device was frozen via bdev_freeze() dropping
-the last block layer freeze reference calls fs_bdev_thaw() which
-reacquires s_umount:
+sctp_process_asconf() caches the transport the ASCONF chunk is processed
+against in asconf->transport (== chunk->transport, set once in sctp_rcv()).
+For an ASCONF located through its Address Parameter by
+__sctp_rcv_asconf_lookup(), that cached transport corresponds to the
+Address Parameter, which need not be the packet's source address.
 
-  do_thaw_all_callback(sb)
-    super_lock_excl(sb)                     # holds sb->s_umount
-    bdev_thaw(sb->s_bdev)
-      mutex_lock(&bdev->bd_fsfreeze_mutex)
-      # bd_fsfreeze_count drops 1 -> 0
-      bd_holder_ops->thaw == fs_bdev_thaw
-        get_bdev_super(bdev)
-          bdev_super_lock(bdev, true)
-            super_lock(sb, true)
-              down_write(&sb->s_umount)     # same task: deadlock
+sctp_process_asconf_param() rejects a DEL-IP for the packet source address
+(ADDIP D8, SCTP_ERROR_DEL_SRC_IP), but nothing protects asconf->transport.
+A single ASCONF can therefore carry, in order:
 
-The emergency thaw worker deadlocks against itself holding both
-s_umount and bd_fsfreeze_mutex. That fscks any subsequent unmount,
-freeze, or thaw of that filesystem and block device.
+    [Address Parameter L] [DEL-IP L] [DEL-IP 0.0.0.0]
 
-  [   81.878470] sysrq: Show Blocked State
-  [   81.880140] task:kworker/0:1     state:D stack:0     pid:11    tgid:11    ppid:2      task_flags:0x4208060 flags:0x00080000
-  [   81.884876] Workqueue: events do_thaw_all
-  [   81.886656] Call Trace:
-  [   81.887759]  <TASK>
-  [   81.888763]  __schedule+0x579/0x1420
-  [   81.890372]  schedule+0x3a/0x100
-  [   81.891794]  schedule_preempt_disabled+0x15/0x30
-  [   81.893848]  rwsem_down_write_slowpath+0x1ea/0x900
-  [   81.895191]  ? __pfx_do_thaw_all_callback+0x10/0x10
-  [   81.896528]  down_write+0xbd/0xc0
-  [   81.897505]  super_lock+0x91/0x180
-  [   81.898457]  ? __mutex_lock+0xa99/0x1140
-  [   81.900748]  ? __mutex_unlock_slowpath+0x1f/0x400
-  [   81.902069]  bdev_super_lock+0x5b/0x150
-  [   81.903132]  get_bdev_super+0x10/0x60
-  [   81.904042]  fs_bdev_thaw+0x23/0xf0
-  [   81.904755]  bdev_thaw+0x82/0x100
-  [   81.905484]  do_thaw_all_callback+0x2c/0x50
-  [   81.906298]  __iterate_supers+0x5d/0x130
-  [   81.907067]  do_thaw_all+0x20/0x40
-  [   81.907739]  process_one_work+0x206/0x5e0
-  [   81.908545]  worker_thread+0x1e2/0x3c0
-  [   81.909339]  ? __pfx_worker_thread+0x10/0x10
-  [   81.910171]  kthread+0xf4/0x130
-  [   81.910799]  ? __pfx_kthread+0x10/0x10
-  [   81.911528]  ret_from_fork+0x2e2/0x3b0
-  [   81.912259]  ? __pfx_kthread+0x10/0x10
-  [   81.913010]  ret_from_fork_asm+0x1a/0x30
-  [   81.913806]  </TASK>
+where L differs from the source. The DEL-IP for L passes the D8 check and
+calls sctp_assoc_rm_peer() on the transport that asconf->transport still
+points at, freeing it (RCU-deferred). The following wildcard DEL-IP then
+reuses the now-dangling asconf->transport in sctp_assoc_set_primary() and
+sctp_assoc_del_nonprimary_peers(): set_primary() dereferences the freed
+transport (->ipaddr, ->state) and plants the dangling pointer into
+asoc->peer.primary_path / active_path, and del_nonprimary_peers(), keeping
+only the pointer that is no longer on the list, removes every real
+transport, leaving the association with a transport_count of 0 and
+primary_path/active_path pointing at freed memory.
 
-bdev_super_lock() even documents the violated requirement with
-lockdep_assert_not_held(&sb->s_umount).
+Reject a DEL-IP that targets the transport the ASCONF is being processed
+against, mirroring the existing source-address guard, so the wildcard
+branch can never reuse a freed transport.
 
-Acquiring bd_fsfreeze_mutex under s_umount also inverts the
-bd_fsfreeze_mutex vs. s_umount ordering established by
-bdev_{freeze,thaw}() and can thus ABBA against a concurrent block-layer
-freeze even when the recursive path isn't hit.
-
-Fix this by not holding s_umount around the bdev_thaw() loop at all. Pin
-the superblock with an active reference instead as
-filesystems_freeze_callback() does. The active reference keeps the
-superblock from being shut down and so ->s_bdev stays valid without
-holding s_umount. The block-layer-held freeze is dropped by
-fs_bdev_thaw() with FREEZE_MAY_NEST | FREEZE_HOLDER_USERSPACE exactly as
-a regular unfreeze would and thaw_super_locked() handles
-filesystem-level freezes as before.
-
-The emergency thaw path has deadlocked like this in one form or
-another for a long long time but the current exclusively-held
-shape dates back to commit [1] where thaw_bdev() already ended in
-thaw_super() with s_umount held by do_thaw_all_callback().
-
-Fixes: 08fdc8a0138a ("buffer.c: call thaw_super during emergency thaw") [1]
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260723-work-super-emergency_thaw-v1-1-7c315c600245@kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: 42e30bf3463c ("[SCTP]: Handle the wildcard ADD-IP Address parameter")
+Cc: stable@kernel.org
+Signed-off-by: Jun Yang <junvyyang@tencent.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/tencent_73762ED1DF08CC9D5F5F61954B01350CFE0A@qq.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/super.c |   29 ++++++++++++++++-------------
- 1 file changed, 16 insertions(+), 13 deletions(-)
+ net/sctp/sm_make_chunk.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/fs/super.c
-+++ b/fs/super.c
-@@ -1139,16 +1139,30 @@ void emergency_remount(void)
- 	}
- }
+--- a/net/sctp/sm_make_chunk.c
++++ b/net/sctp/sm_make_chunk.c
+@@ -3153,6 +3153,12 @@ static __be16 sctp_process_asconf_param(
+ 		if (!peer)
+ 			return SCTP_ERROR_DNS_FAILED;
  
-+static inline bool get_active_super(struct super_block *sb)
-+{
-+	bool active = false;
++		/* Don't free asconf->transport; a later wildcard DEL-IP
++		 * parameter reuses it.
++		 */
++		if (peer == asconf->transport)
++			return SCTP_ERROR_REQ_REFUSED;
 +
-+	if (super_lock_excl(sb)) {
-+		active = atomic_inc_not_zero(&sb->s_active);
-+		super_unlock_excl(sb);
-+	}
-+	return active;
-+}
-+
- static void do_thaw_all_callback(struct super_block *sb, void *unused)
- {
--	if (!super_lock_excl(sb))
-+	if (!get_active_super(sb))
- 		return;
- 
-+	/* fs_bdev_thaw() acquires s_umount so it must not be held here */
- 	if (IS_ENABLED(CONFIG_BLOCK))
- 		while (sb->s_bdev && !bdev_thaw(sb->s_bdev))
- 			pr_warn("Emergency Thaw on %pg\n", sb->s_bdev);
- 
--	thaw_super_locked(sb, FREEZE_HOLDER_USERSPACE, NULL);
-+	if (super_lock_excl(sb))
-+		thaw_super_locked(sb, FREEZE_HOLDER_USERSPACE, NULL);
-+	deactivate_super(sb);
- }
- 
- static void do_thaw_all(struct work_struct *work)
-@@ -1174,17 +1188,6 @@ void emergency_thaw_all(void)
- 	}
- }
- 
--static inline bool get_active_super(struct super_block *sb)
--{
--	bool active = false;
--
--	if (super_lock_excl(sb)) {
--		active = atomic_inc_not_zero(&sb->s_active);
--		super_unlock_excl(sb);
--	}
--	return active;
--}
--
- static const char *filesystems_freeze_ptr = "filesystems_freeze";
- 
- static void filesystems_freeze_callback(struct super_block *sb, void *freeze_all_ptr)
+ 		sctp_assoc_rm_peer(asoc, peer);
+ 		break;
+ 	case SCTP_PARAM_SET_PRIMARY:
 
 
