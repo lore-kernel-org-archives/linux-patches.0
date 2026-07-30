@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CECE930567C;
-	Thu, 30 Jul 2026 15:41:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F90137BE9C;
+	Thu, 30 Jul 2026 15:41:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426071; cv=none; b=J/aT4LY/f0pyZI3xmBbcpXc7IspkYtHpsjmSNhI5csxHWmUep2mp3mIrvLwYaeVSojitvGXlWf5X+zOO9kW5u8hlQYLr6V7MfkQ1N3iVaFQ2B4q3n3R09kBIy3mvNqowm+UXY/VlRK2K7IXnzbMT7ivxSRLdR0DCFXmvid/Q6s8=
+	t=1785426073; cv=none; b=fg7D/1Bl+ryVbmXwgZlyjU2B8wEpy8zg1ZSi/vSLyo1Ps++ESEvD0yISXMEgJz/9iJIC0Cu4I9241LXObveCMQpXhl8a6oLGR7UiF9JdnfQmatAAWSt42k9fXzE1DukwPoD+SoTuk0Tp/XcJKEd2HpXl+WGjXnrjEL/MNbFM/7o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426071; c=relaxed/simple;
-	bh=8H+tQgJbs6mW2ZbzkopWYKbHwLS/PpRNrd0SlyHyQYU=;
+	s=arc-20240116; t=1785426073; c=relaxed/simple;
+	bh=BNvSh9CarpdDNxIb5Tlt8Mkrw0zGhLrSPaLydZSCH6s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ekFbZ4ExxFn7yjFu6zX40M0VYNMPdQIb5PO2DUh5UjsT+I/Myx79A4TazUvX4kp/scnoGtosCHEpRu5pgfhUkEZlHb4OFhi3DcNudfxXR245mOlgiqmoFbneI1IbzwABNBH668zlFcvg0Qqs0AJgaDTEsYa5VIvQKY5ZODRnEa8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v25eXydI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=mM1VkY81t065lJ2AR40Gz/4V2LgBDBHhlbj8QU8St/JkqJ2GzhhPr+ca88pC+eJoT6iRylZPDthcIaQn2M6RUwkVxz/1WD0mWCVkIsTuLwojmh+QXUfFDhpX6m63GUn8ByKqHA3Kj13Gxys8rCsSQbiGWAQeR+Shvm6xMVlwfqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZWAIGfs7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v25eXydI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F374F1F000E9;
-	Thu, 30 Jul 2026 15:41:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZWAIGfs7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB65A1F000E9;
+	Thu, 30 Jul 2026 15:41:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426069;
-	bh=qKIMBUj9IrIvjZhTHsjEwS1JcrcviKeRuJUVXQsSWNI=;
+	s=korg; t=1785426072;
+	bh=f/697DZ1+1ud2Ho1rLBBJ0JA6wvB0Avb7RuzKzFgApw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v25eXydItqCR/vh+CblSJobvdarpDuSdN9aI4VyyyMf/8HW2Io69kYxSH1A72yz65
-	 F4Dy0p87LMj0nEST7CxVWXZw3rLeEE1p/0p+XKhn1J5Gy3o9ciR3uMmZcNFr/zPZju
-	 w7dIoPTY1v5i4MgK8G2yc5hhwncX2+FNAkeehKDc=
+	b=ZWAIGfs7f4ErS94mn5PQNHBUTADLF9cUQJMBiSpMOCYwqqxHr1KmQWa6pWhaiCeCD
+	 sGEvMYYEZCXLgqtDu8NiTSYIGkEWA5/VHTTp966bwjeoXcmemy/9Nap8UlduJ4ydzb
+	 gwKC02d/MYKAk53FN97f8b83V9kZIEpyMrBffmdw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oz Tiram <oz@shift-computing.de>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>
-Subject: [PATCH 6.12 291/602] drm/amdgpu: Fix VFCT bus number matching with soft filter
-Date: Thu, 30 Jul 2026 16:11:23 +0200
-Message-ID: <20260730141442.085953705@linuxfoundation.org>
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 292/602] drm/amd/pm/ci: Dont disable MCLK DPM on Bonaire 0x6658 (R7 260X)
+Date: Thu, 30 Jul 2026 16:11:24 +0200
+Message-ID: <20260730141442.106523990@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -45,101 +44,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-commit db7e8108809a2245f0a17ba323f027cac0941ffb upstream.
+commit 85371c5ef502d10add72eab38711e191dccea981 upstream.
 
-On systems where PCI bus renumbering occurs (e.g. pci=realloc,
-resource conflicts), the runtime bus number may differ from the
-BIOS POST bus number recorded in the VFCT table. This causes
-amdgpu_acpi_vfct_bios() to fail finding the VBIOS even though
-the correct device entry exists.
+The old radeon driver has a documented workaround in ci_dpm.c
+which claims that Bonaire 0x6658 with old memory controller
+firmware is unstable with MCLK DPM, so as a precaution I
+disabled MCLK DPM on this ASIC in amdgpu.
 
-Introduce amdgpu_acpi_vfct_match() which treats the bus number
-as a soft filter: vendor/device/function identity is the hard
-requirement, while exact bus match is the preferred path. When
-bus numbers disagree but device identity matches, accept the
-VFCT entry and log a dev_notice for diagnostics.
+Note that the old MC firmware is not actually used with
+amdgpu, but in theory it's possible that the VBIOS sets
+up the ASIC with an old MC firmware that is already running
+when amdgpu initializes (in which case amdgpu doesn't
+load its own firmware).
 
-Reported-by: Oz Tiram <oz@shift-computing.de>
-Closes: https://lore.kernel.org/amd-gfx/20260621173211.28443-1-oz@shift-computing.de/
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Link: https://patch.msgid.link/20260708193518.702584-2-mario.limonciello@amd.com
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+What I expected to happen is that the GPU would simply use
+its maximum memory clock, and indeed this is what seemed
+to happen according to amdgpu_pm_info which reads the
+current MCLK value from the SMU.
+However, some users reported a huge perf regression
+and upon a closer look it seems that the GPU seems to
+not actually use the highest MCLK value, despite the SMU
+reporting that it does.
+
+Let's not disable MCLK DPM on Bonaire 0x6658 (R7 260X).
+
+Keep MCLK DPM disabled on R9 M380 in the 2015 iMac
+because that still hangs if we enable it.
+
+Fixes: 9851f29cb06c ("drm/amd/pm/ci: Disable MCLK DPM on problematic CI ASICs")
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 11c141672045ffc0187aa604f2c0f597bc334fb2)
+(cherry picked from commit d34acad064ee7d82bd18f5d87592c422d4d323ac)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c |   45 +++++++++++++++++++++++++++----
- 1 file changed, 40 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/amd/pm/powerplay/hwmgr/hwmgr.c |    7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c
-@@ -345,6 +345,45 @@ static bool amdgpu_read_disabled_bios(st
- }
- 
- #ifdef CONFIG_ACPI
-+/**
-+ * amdgpu_acpi_vfct_match() - Check if a VFCT entry matches the device
-+ * @adev: AMDGPU device
-+ * @vhdr: VFCT image header to check
-+ *
-+ * VFCT entries contain the PCI bus number as recorded during BIOS POST.
-+ * On systems where the kernel renumbers PCI buses (e.g. pci=realloc or
-+ * resource conflicts), the runtime bus number may differ from the POST
-+ * value.  Match by device identity (vendor + device + function) and use
-+ * the bus number as a preference: exact bus match is preferred, but when
-+ * the bus numbers disagree we accept the entry if the device identity
-+ * matches.
-+ *
-+ * Returns: 0 on match, -ENODEV on no match
-+ */
-+static int amdgpu_acpi_vfct_match(struct amdgpu_device *adev,
-+				  VFCT_IMAGE_HEADER *vhdr)
-+{
-+	/* Vendor and device IDs must always match */
-+	if (vhdr->VendorID != adev->pdev->vendor ||
-+	    vhdr->DeviceID != adev->pdev->device)
-+		return -ENODEV;
-+
-+	if (vhdr->PCIDevice != PCI_SLOT(adev->pdev->devfn) ||
-+	    vhdr->PCIFunction != PCI_FUNC(adev->pdev->devfn))
-+		return -ENODEV;
-+
-+	/* Exact bus number match - preferred */
-+	if (vhdr->PCIBus == adev->pdev->bus->number)
-+		return 0;
-+
-+	/* Bus mismatch but device identity matches (PCI renumbering case) */
-+	dev_notice(adev->dev,
-+		   "VFCT bus number mismatch: table %u != runtime %u, matching by device identity (vendor 0x%04x device 0x%04x)\n",
-+		   vhdr->PCIBus, adev->pdev->bus->number,
-+		   adev->pdev->vendor, adev->pdev->device);
-+	return 0;
-+}
-+
- static bool amdgpu_acpi_vfct_bios(struct amdgpu_device *adev)
- {
- 	struct acpi_table_header *hdr;
-@@ -380,11 +419,7 @@ static bool amdgpu_acpi_vfct_bios(struct
- 		}
- 
- 		if (vhdr->ImageLength &&
--		    vhdr->PCIBus == adev->pdev->bus->number &&
--		    vhdr->PCIDevice == PCI_SLOT(adev->pdev->devfn) &&
--		    vhdr->PCIFunction == PCI_FUNC(adev->pdev->devfn) &&
--		    vhdr->VendorID == adev->pdev->vendor &&
--		    vhdr->DeviceID == adev->pdev->device) {
-+		    !amdgpu_acpi_vfct_match(adev, vhdr)) {
- 			adev->bios = kmemdup(&vbios->VbiosContent,
- 					     vhdr->ImageLength,
- 					     GFP_KERNEL);
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/hwmgr.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/hwmgr.c
+@@ -106,11 +106,8 @@ int hwmgr_early_init(struct pp_hwmgr *hw
+ 		hwmgr->od_enabled = false;
+ 		switch (hwmgr->chip_id) {
+ 		case CHIP_BONAIRE:
+-			/* R9 M380 in iMac 2015: SMU hangs when enabling MCLK DPM
+-			 * R7 260X cards with old MC ucode: MCLK DPM is unstable
+-			 */
+-			if (adev->pdev->subsystem_vendor == 0x106B ||
+-			    adev->pdev->device == 0x6658) {
++			/* R9 M380 in iMac 2015: SMU hangs when enabling MCLK DPM */
++			if (adev->pdev->subsystem_vendor == 0x106B) {
+ 				dev_info(adev->dev, "disabling MCLK DPM on quirky ASIC");
+ 				adev->pm.pp_feature &= ~PP_MCLK_DPM_MASK;
+ 				hwmgr->feature_mask &= ~PP_MCLK_DPM_MASK;
 
 
