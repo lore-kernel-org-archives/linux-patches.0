@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C9EB43C04B;
-	Thu, 30 Jul 2026 14:29:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB6283A6B7F;
+	Thu, 30 Jul 2026 14:29:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421744; cv=none; b=oKAsjZERfioQliqeERlw4ASLtiM3VaVbUi0+1P5BXff1zGPgYcAlMx0dmK8gEfKWo2nZPp5oiLXWl+PHBA+ZmAHg7jIzH6eJn3CdRpWlAxf9RQaVG0mQ9xlbC5M7lDdfQ4NX9LlAlXIpNzslLaljLXlad0E2lXZieSbzdqT8zyE=
+	t=1785421747; cv=none; b=IFbALyqVwBFipSYvDCSrnc5s65uW6YeKteCLnnjs4K4aG65JLj7Xzoo1/Hl+ZOjTO3sQvOk+cioRd1tZOZ/hfKgRAIqinsh/utZGL1/MACemSAVmxPrwF6kTtt9WEs4IDMVDALjyCRganxtBu51ILoxbAaObvvfAEIPiYaGA95o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421744; c=relaxed/simple;
-	bh=HA4pxfki9fe3CQvdh6LplWfOTk+R1teXMmR983s75qo=;
+	s=arc-20240116; t=1785421747; c=relaxed/simple;
+	bh=iJjZSpE1V+90t/bJ0xtLugcASoMnJl9XBGLziFODjrM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ms6/rveiELMbetIQuBDAvcW9hLLfJNGbSJOL8Y4ChSHp6Nd2pMLNvYo9R38XXATCAD8Z/J+WVgS5Nh7FtiTHpeMSG1tHE8vwQe7V1rMWTQR6+ISznAz9wwpbUMgDDOazijZvsoriRRCYHzWc5g78tEARw1G0vYueT4Y8hMHLnaA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ta+2DDV9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TbDtpXRvxcz9ZtGU0aFHYYroMjaTCRwmxSzJSa1iScDG8E5RJLl3dtfArfWVXrGOue2YT6HWHNKjqcH5Z8lj5hu9IQVHWQJf3jFeW86NZ3kmnpkWXuxS+pvenTatS8wkPP+daXQWC0zWhhqPmDurnIEzsVo3umkCGilzPCquTCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ldN83ySG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ta+2DDV9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FACC1F000E9;
-	Thu, 30 Jul 2026 14:29:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ldN83ySG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33F4B1F000E9;
+	Thu, 30 Jul 2026 14:29:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421742;
-	bh=Qz7Zdr97vpwizB276KZktAeeLf6A/YOyReto8Q1qCDI=;
+	s=korg; t=1785421745;
+	bh=D0/1fwhIDzYQzMawKswArK7QkCAOHXejSZzA5sYXuWQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ta+2DDV9ztzUbjzkpKyqkaxTzjejQV21mf0wgkTGLc/ZQwQNPM+wXs9zfn913IGPx
-	 nQmSKbL8qAtyYwQxE609h97hmXxWQPVr9nLWAw7aiZxY/NAKloe771cMgD1MVsIMTr
-	 /pTSt8UCQzPUM4t8tArK1xBxEMpFgAmosFiO1R7U=
+	b=ldN83ySGnwPeB5hbnFvf42vxBOJLsLQ13Rc7gHCwdvjjv+ZOkSAjCvDxDmLHYuI8o
+	 Fbe2hTuHf7YlPv3yayWsNoITKh85aJWiLgdjdY6pLDHxuW7JSHwY+s13p34LCZhB8L
+	 rvKHSaD7V3E03kk1bJoaQq7S9yBz2G+AduNBLvZM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Salman S. Tahir" <salman.abusaad@gmail.com>,
 	Richard Fitzgerald <rf@opensource.cirrus.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 205/744] ASoC: cs35l56: Fix potential probe() deadlock
-Date: Thu, 30 Jul 2026 16:07:58 +0200
-Message-ID: <20260730141448.637652576@linuxfoundation.org>
+Subject: [PATCH 7.1 206/744] ASoC: cs35l56: Use complete_all() to signal init_completion
+Date: Thu, 30 Jul 2026 16:07:59 +0200
+Message-ID: <20260730141448.658657233@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -54,107 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit 93c2a8ea2454b7b14eb378a58cad8a83c0ffc903 ]
+[ Upstream commit e0bffb63a2eda0af82ed7e6357ac67c2db990c21 ]
 
-On I2C/SPI call cs35l56_init() before calling
-snd_soc_register_component() to prevent the potential for a deadlock
-on init_completion.
+In cs35l56_init() use complete_all() to signal init_completion instead
+of complete().
 
-For most buses all the hardware would be ready when probe() returns,
-but on SoundWire, probe() must return before the SoundWire bus driver
-will enumerate the device. All access to the registers must be deferred
-until the driver receives an ATTACHED notification. But anything that
-could return -EPROBE_DEFER must be called during probe, and that includes
-snd_soc_register_component(). Because of that, on SoundWire the ASoC
-component can be created before the registers are accssible, so
-cs35l56_component_probe() waits for init_completion to signal that the
-registers are accessible.
+cs35l56_init() was signaling init_completion using the complete() function.
+This only releases ONE waiter.
 
-On I2C/SPI this 2-stage startup isn't required so their probe()
-functions simply called cs35l56_common_probe() and then cs35l56_init().
-The problem with this was that snd_soc_register_component() was still
-called early. If this triggered ASoC to create the card, ASoC would call
-cs35l56_component_probe() which waits on init_completion - but this would
-be running inside the cs35l56 driver probe() so blocking it from reaching
-the code that signals init_completion, causing a deadlock.
+If cs35l56_component_probe() was called multiple times the first time
+would consume that one signal, then future calls would timeout waiting for
+the completion. This could happen if:
+
+ - The component is probed, removed, then probed again without the cs35l56
+   module being removed.
+
+ - A call to component_probe() returns an error and ASoC calls it again
+   later.
+
+It should use complete_all() so that after it has been signaled it will
+allow any code that waits on it to continue immediately.
+
+The one case where the driver must wait for initialization to run again is
+when waiting for a reboot after firmware download, and here the code
+correctly calls reinit_completion() first.
 
 Fixes: e496112529006 ("ASoC: cs35l56: Add driver for Cirrus Logic CS35L56")
-Reported-by: Salman S. Tahir <salman.abusaad@gmail.com>
-Closes: https://lore.kernel.org/linux-sound/95c21574-97d5-4311-9263-9e174d22d22c@opensource.cirrus.com/T/#u
-Tested-by: Salman S. Tahir <salman.abusaad@gmail.com>
 Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Link: https://patch.msgid.link/20260716132045.1469156-2-rf@opensource.cirrus.com
+Link: https://patch.msgid.link/20260716132045.1469156-3-rf@opensource.cirrus.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/cs35l56-i2c.c |  4 +---
- sound/soc/codecs/cs35l56-spi.c |  4 +---
- sound/soc/codecs/cs35l56.c     | 15 +++++++++++++++
- 3 files changed, 17 insertions(+), 6 deletions(-)
+ sound/soc/codecs/cs35l56.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/cs35l56-i2c.c b/sound/soc/codecs/cs35l56-i2c.c
-index 0492ddc4102d80..8259714d8b2692 100644
---- a/sound/soc/codecs/cs35l56-i2c.c
-+++ b/sound/soc/codecs/cs35l56-i2c.c
-@@ -55,9 +55,7 @@ static int cs35l56_i2c_probe(struct i2c_client *client)
- 	if (ret != 0)
- 		return ret;
- 
--	ret = cs35l56_init(cs35l56);
--	if (ret == 0)
--		ret = cs35l56_irq_request(&cs35l56->base, client->irq);
-+	ret = cs35l56_irq_request(&cs35l56->base, client->irq);
- 	if (ret < 0)
- 		cs35l56_remove(cs35l56);
- 
-diff --git a/sound/soc/codecs/cs35l56-spi.c b/sound/soc/codecs/cs35l56-spi.c
-index 9bc9b7c98390dc..b1eb924a5b6ccf 100644
---- a/sound/soc/codecs/cs35l56-spi.c
-+++ b/sound/soc/codecs/cs35l56-spi.c
-@@ -44,9 +44,7 @@ static int cs35l56_spi_probe(struct spi_device *spi)
- 	if (ret != 0)
- 		return ret;
- 
--	ret = cs35l56_init(cs35l56);
--	if (ret == 0)
--		ret = cs35l56_irq_request(&cs35l56->base, spi->irq);
-+	ret = cs35l56_irq_request(&cs35l56->base, spi->irq);
- 	if (ret < 0)
- 		cs35l56_remove(cs35l56);
- 
 diff --git a/sound/soc/codecs/cs35l56.c b/sound/soc/codecs/cs35l56.c
-index 033028a4734b50..001985e07d57c9 100644
+index 001985e07d57c9..ad0f88cc0fb4b6 100644
 --- a/sound/soc/codecs/cs35l56.c
 +++ b/sound/soc/codecs/cs35l56.c
-@@ -1975,6 +1975,16 @@ int cs35l56_common_probe(struct cs35l56_private *cs35l56)
- 		goto err;
- 	}
+@@ -2089,7 +2089,7 @@ int cs35l56_init(struct cs35l56_private *cs35l56)
+ 		return dev_err_probe(cs35l56->base.dev, ret, "Failed to write ASP1_CONTROL3\n");
  
-+	/*
-+	 * On SoundWire the cs35l56_init() cannot be run until after the
-+	 * device has been enumerated by the SoundWire core.
-+	 */
-+	if (!cs35l56->sdw_peripheral) {
-+		ret = cs35l56_init(cs35l56);
-+		if (ret)
-+			goto err_remove_wm_adsp;
-+	}
-+
- 	ret = snd_soc_register_component(cs35l56->base.dev,
- 					 &soc_component_dev_cs35l56,
- 					 cs35l56_dai, ARRAY_SIZE(cs35l56_dai));
-@@ -1989,6 +1999,11 @@ int cs35l56_common_probe(struct cs35l56_private *cs35l56)
- 	wm_adsp2_remove(&cs35l56->dsp);
+ 	cs35l56->base.init_done = true;
+-	complete(&cs35l56->init_completion);
++	complete_all(&cs35l56->init_completion);
  
- err:
-+	if (pm_runtime_enabled(cs35l56->base.dev)) {
-+		pm_runtime_dont_use_autosuspend(cs35l56->base.dev);
-+		pm_runtime_disable(cs35l56->base.dev);
-+	}
-+
- 	gpiod_set_value_cansleep(cs35l56->base.reset_gpio, 0);
- 	regulator_bulk_disable(ARRAY_SIZE(cs35l56->supplies), cs35l56->supplies);
- 
+ 	return 0;
+ }
 -- 
 2.53.0
 
