@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58E4A3932E0;
-	Thu, 30 Jul 2026 16:06:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2721738DC46;
+	Thu, 30 Jul 2026 16:06:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427611; cv=none; b=RGNptadVQ4Idpii/B9GCAlWFOrERv4lIM9w3Xh7AOLOeW/tKBO8LmvjFBfxB1SoUDjdtBWn5Tuw1yWl+UU0Qf+U68OXPFZAQEXX2CUFEjc43kMYw+pey09PIJwCdxKT9GmtBmxTz8H7nsk1/iHO7FiF3vakQ4bwq04GVAsfx6bI=
+	t=1785427614; cv=none; b=VGlUUje8y2L7VF8filH2URrF2kElIBDWZaKCsiExZlWPHFrFZWzJi5PShlXfHrvlQ2tkloS1avN0PUl+yO/QrCJ3mPwewP4oFEDGR5DPSgmWZIHQdjrZDc8S5o3XqmKPbrLzVySs2xcE7c2Tpl1XOe76rtzs16rjGmis7rcKsVI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427611; c=relaxed/simple;
-	bh=3bFqVle0SlNdg9B97lmqTk9+p5am6S1gl59SF9mbJio=;
+	s=arc-20240116; t=1785427614; c=relaxed/simple;
+	bh=xUZuSHErJIUJndr37h2BSNzwqDmrZOiuFQ88KJ0Ca7c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WJhl47wtLzLzLSILnWEt7fYkBgGoxfhEKALWRK7IoIu8sljBZDshJIArFunaxZ5K5QyT89JBoCtWFen+ul7+GCB4+/yX8/AOLcv6tKaTIhdy8AH3TNH3/hcuYQeus0zhOU/+H6oaQyDGtkongQUnLizuFTkut4zpqIPDBWCkg7o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x6y78V+U; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Uza1w3iybSRUzN2ymcfzJ3LNJlU+hFUpSd0wk68t7lyphIFDtrDrt0ge+W1n/Ol/wfFHkCvG9byRpuDT+3wE5rbupZbyt4P+PYcqeDcyrzjo0xdh+mDG5b3uqPi0J6B82mdTafB53mqZJhAQ+vNf/Mco3ZQ2OHCF5JLghJH8oyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LZXSZeeU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x6y78V+U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9F151F000E9;
-	Thu, 30 Jul 2026 16:06:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LZXSZeeU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 897BD1F000E9;
+	Thu, 30 Jul 2026 16:06:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427610;
-	bh=5IN/7PRz902AuP+XrAA0zGRLy+CJGWfP0KnNhhPC1mg=;
+	s=korg; t=1785427613;
+	bh=/J8WszbVeYZyAZytSBqfx9Q3lC1QXdYgJ8DYsMdap/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x6y78V+URdGuT2rdoFnpY1wiAv1kExGKFJDdM2AGYJ69EZDgeAqud90FOavVnzloN
-	 lRlzHccmUw39braA7RptLgT7IwpGU4NY3p/WuB44S3ruxL8q1qGE7H7qgLwYoRCXff
-	 77gYBb2zm3yv+AOujl8SgtrfRTpd9Nvkpnmun6Rs=
+	b=LZXSZeeUrkJ9W23/QcWXGa8o68mAtg3U78Wi+6fieOi6zT58SzSgPc1MqG+2a32yj
+	 jLUc0plK/6vXxaG0T2Q7lIy/38qnBgeCTTN5b0Z03Nvjj6eAyEuS5sXE+zuYVJmKSl
+	 6yEXofWEkA3k0vtIQ+oz3IvdJznt+P/0Jp3ndjug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Joanne Koong <joannelkoong@gmail.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	AutonomousCodeSecurity@microsoft.com,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	"Cen Zhang (Microsoft)" <blbllhy@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 186/484] iomap: correct the range of a partial dirty clear
-Date: Thu, 30 Jul 2026 16:11:23 +0200
-Message-ID: <20260730141427.506286577@linuxfoundation.org>
+Subject: [PATCH 6.6 187/484] tipc: fix u16 MTU truncation in media and bearer MTU validation
+Date: Thu, 30 Jul 2026 16:11:24 +0200
+Message-ID: <20260730141427.529150322@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -54,60 +54,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Yi <yi.zhang@huawei.com>
+From: Cen Zhang (Microsoft) <blbllhy@gmail.com>
 
-[ Upstream commit 88c26515313169806a412a362b32a1eca53d21bd ]
+[ Upstream commit 9f29cd8a8e7901a2617c8064ce9f50fc67b97cb8 ]
 
-The block range calculation in ifs_clear_range_dirty() is incorrect when
-partially clearing a range in a folio. We cannot clear the dirty bit of
-the first block or the last block if the start or end offset is not
-blocksize-aligned. This has not yet caused any issues since we always
-clear a whole folio in iomap_writeback_folio().
+Both TIPC_NL_MEDIA_SET and TIPC_NL_BEARER_SET accept user-supplied
+MTU values but only enforce a minimum bound, not a maximum. When a user
+sets the MTU to a value exceeding U16_MAX (65535), it passes validation
+but is silently truncated when assigned to u16 fields l->mtu and
+l->advertised_mtu in tipc_link_create(). Values like 65536 (0x10000)
+truncate to 0, causing a division by zero in tipc_link_set_queue_limits()
+which computes TIPC_MAX_PUBL / (l->mtu / ITEM_SIZE). Other overflowing
+values (e.g. 65537-131071) produce small incorrect MTU values, resulting
+in link malfunction behaviors.
 
-Fix this by rounding up the first block to blocksize alignment, and
-calculate the last block by rounding down (using truncation). Correct
-the nr_blks calculation accordingly.
+Crash stack (triggered as unprivileged user via user namespace):
 
-Fixes: 4ce02c679722 ("iomap: Add per-block dirty state tracking to improve performance")
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Link: https://patch.msgid.link/20260714082325.325163-2-yi.zhang@huaweicloud.com
-Reviewed-by: Joanne Koong <joannelkoong@gmail.com>
-Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+  tipc_link_set_queue_limits  net/tipc/link.c:2531
+  tipc_link_create            net/tipc/link.c:520
+  tipc_node_check_dest        net/tipc/node.c:1279
+  tipc_disc_rcv               net/tipc/discover.c:252
+  tipc_rcv                    net/tipc/node.c:2129
+  tipc_udp_recv               net/tipc/udp_media.c:392
+
+Two independent paths lack the upper bound check:
+1. tipc_udp_mtu_bad() -- called from __tipc_nl_media_set() (MEDIA_SET)
+2. inline check in __tipc_nl_bearer_set() at bearer.c:1160 (BEARER_SET)
+
+Fix both by rejecting MTU values above U16_MAX.
+
+Fixes: 901271e0403a ("tipc: implement configuration of UDP media MTU")
+Reported-by: AutonomousCodeSecurity@microsoft.com
+Closes: https://lore.kernel.org/all/CAB8m9WgETt0AjmFwE=F-CKjGXsK6_WDv0=kbYRcC8-noo+amnA@mail.gmail.com
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Signed-off-by: Cen Zhang (Microsoft) <blbllhy@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260714041541.307702-1-blbllhy@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/iomap/buffered-io.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ net/tipc/netlink.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/fs/iomap/buffered-io.c b/fs/iomap/buffered-io.c
-index 4bc57934aa52df..bc7d176c4cf139 100644
---- a/fs/iomap/buffered-io.c
-+++ b/fs/iomap/buffered-io.c
-@@ -98,13 +98,17 @@ static void ifs_clear_range_dirty(struct folio *folio,
- {
- 	struct inode *inode = folio->mapping->host;
- 	unsigned int blks_per_folio = i_blocks_per_folio(inode, folio);
--	unsigned int first_blk = (off >> inode->i_blkbits);
--	unsigned int last_blk = (off + len - 1) >> inode->i_blkbits;
--	unsigned int nr_blks = last_blk - first_blk + 1;
-+	unsigned int first_blk = round_up(off, i_blocksize(inode)) >>
-+				 inode->i_blkbits;
-+	unsigned int last_blk = (off + len) >> inode->i_blkbits;
- 	unsigned long flags;
+--- a/net/tipc/netlink.c
++++ b/net/tipc/netlink.c
+@@ -113,12 +113,16 @@ const struct nla_policy tipc_nl_node_pol
+ };
  
-+	if (first_blk >= last_blk)
-+		return;
+ /* Properties valid for media, bearer and link */
++static struct netlink_range_validation tipc_nl_mtu_range = {
++	.max = U16_MAX,
++};
 +
- 	spin_lock_irqsave(&ifs->state_lock, flags);
--	bitmap_clear(ifs->state, first_blk + blks_per_folio, nr_blks);
-+	bitmap_clear(ifs->state, first_blk + blks_per_folio,
-+		     last_blk - first_blk);
- 	spin_unlock_irqrestore(&ifs->state_lock, flags);
- }
- 
--- 
-2.53.0
-
+ const struct nla_policy tipc_nl_prop_policy[TIPC_NLA_PROP_MAX + 1] = {
+ 	[TIPC_NLA_PROP_UNSPEC]		= { .type = NLA_UNSPEC },
+ 	[TIPC_NLA_PROP_PRIO]		= { .type = NLA_U32 },
+ 	[TIPC_NLA_PROP_TOL]		= { .type = NLA_U32 },
+ 	[TIPC_NLA_PROP_WIN]		= { .type = NLA_U32 },
+-	[TIPC_NLA_PROP_MTU]		= { .type = NLA_U32 },
++	[TIPC_NLA_PROP_MTU]		= NLA_POLICY_FULL_RANGE(NLA_U32, &tipc_nl_mtu_range),
+ 	[TIPC_NLA_PROP_BROADCAST]	= { .type = NLA_U32 },
+ 	[TIPC_NLA_PROP_BROADCAST_RATIO]	= { .type = NLA_U32 }
+ };
 
 
