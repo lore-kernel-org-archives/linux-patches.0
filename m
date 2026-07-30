@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBDB844AB64;
-	Thu, 30 Jul 2026 15:29:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FD6E442134;
+	Thu, 30 Jul 2026 15:29:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425360; cv=none; b=OarhIVylxHHu5c4kiaobOAEOg6d/hXU4qRUlNJrlS9oYuQwVT1D2AvVnOhTAUtH79JMaThrOrz/vvExvdxKc+f/YPlcW+6ekhpsQ5lF+LLxS3dZP0Oxkb7yynNjQcJDREZvyzMy7EpWyPdQ5/9Ztcqw14LQdLxNM+YZJJe71PTg=
+	t=1785425362; cv=none; b=t9+7ELZ8pD58mpTE9ikI4SpKCkcn88b2uL+z1SfeKekfpoy+yG3Y7rEx+YBC/IbztSx94pMTXsOjV5Hoqre3hf3Nxf7i/pKfNPMavZ0FQeEV80OgNw8+ZkdDv+lZl5qPB3p09MW+UiUBlu+ECkaSKpfXn1GZHk8bje4FWrbby4A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425360; c=relaxed/simple;
-	bh=b5XTVLeTzdsmy453rAsf1wNaV4XvdQ2sRULafmYT0hE=;
+	s=arc-20240116; t=1785425362; c=relaxed/simple;
+	bh=Xp8trkx3O5NhSE0andpAjWF9cTjHJufy400rILadwWQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QEdBcFb/bdXo7bc+Clf6VUgIOnWLYmMoDkFRL/1OIpQX1+fbqRoCF3Z/i+1BAC9f5Tv2URY/AvI+vpcqmFm1DC3j1VS8GVPClaVfK8ll7wX+7eCVa/nLJ47yw0ejlToRImlKyWWdD0NJh8A1nnD/wYyxbi1BYAuGmAzOA2D+HQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HbpvGFZ1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CZuEbVSL/TjgsYeLYrh6/J7J5nshKfhtLCJWaIJtqDOK0R8lHiCQXxEcuSC+zfp5kZ6623HK4D2I29u0bHb01SRPsTmVaE8KzdyXy679IRQxmVsviZW5Ua+SMn/Dp7B7oAKp/sdqUDqbJKiz3Hy7Re5t1VMOTbU7Vxm1XQIGdO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LqOHjVbL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HbpvGFZ1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E25901F000E9;
-	Thu, 30 Jul 2026 15:29:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LqOHjVbL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BACF31F000E9;
+	Thu, 30 Jul 2026 15:29:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425358;
-	bh=Gg48sewXGdzdpVsoUachifoHgdaCpMhy68lkSnn9pK0=;
+	s=korg; t=1785425361;
+	bh=KpDt844zFAHkjf5FdbQvJk/R3FNv2rXkQdDzGJLmQIM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HbpvGFZ1r/MvZJ52RRZnneOfX9jvaRg8u7seqdDmZlExiQVolZlxkbWKhPgS3U/Q0
-	 1UtBnvGeySqk0YG5+1PjITJRCldKn8WtQA5F8S+Y9KYqYpgAFqNPSn28yOEZpmW1WK
-	 YnxbJ+zb+GVIwCg0T43am3en6vvwgbfhOXr3y554=
+	b=LqOHjVbLXs5MGGkr9I30R7T7JFBmIQLCkjAjoaCFrTxTSLnqrK0G85r7TTREAX2Wg
+	 N1hY+OY3bp05uV+kcbEb/DdHBxi3RCqyXtJWYhmqhaT6Zikt4Opz6o0feUbjVitEtR
+	 IymFM/DUzmhFfJIJW0VXDGft7JfaHKGQeYLx5t+4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+	Ryosuke Yasuoka <ryasuoka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 040/602] mtd: nand: mtk-ecc: stop on ECC idle timeouts
-Date: Thu, 30 Jul 2026 16:07:12 +0200
-Message-ID: <20260730141436.849658466@linuxfoundation.org>
+Subject: [PATCH 6.12 009/602] drm/virtio: fix deadlock in display_info_cb by removing hotplug from dequeue worker
+Date: Thu, 30 Jul 2026 16:06:41 +0200
+Message-ID: <20260730141436.188982859@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -51,73 +51,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Ryosuke Yasuoka <ryasuoka@redhat.com>
 
-[ Upstream commit 16f7ec8d5dc100eafd2c8e06cd30340a30b104a1 ]
+[ Upstream commit d1b894c5bbb3fee0012bd14356286dc2384e8213 ]
 
-mtk_ecc_wait_idle() logs when the encoder or decoder does not become
-idle, but returns void. Callers can therefore configure a non-idle ECC
-engine or read parity bytes after an unconfirmed encoder idle state.
+A probe-time deadlock can occur between the dequeue worker and
+drm_client_register(). During probe, drm_client_register() holds
+clientlist_mutex and calls the fbdev hotplug callback, which triggers an
+atomic commit that ends up sleeping in virtio_gpu_queue_ctrl_sgs()
+waiting for virtqueue space. The dequeue worker that would free that
+space calls virtio_gpu_cmd_get_display_info_cb(), which invokes
+drm_kms_helper_hotplug_event() -> drm_client_dev_hotplug(), attempting
+to acquire the same clientlist_mutex. Since wake_up() is only called
+after the resp_cb loop, the probe thread is never woken and both threads
+deadlock.
 
-Return the idle poll result and propagate it from the enable and encode
-paths that require the engine to be idle before continuing.
+Fix this by removing the hotplug notification from
+virtio_gpu_cmd_get_display_info_cb(). The display data (outputs[i].info)
+is still updated synchronously in the callback.
 
-Fixes: 1d6b1e464950 ("mtd: mediatek: driver for MTK Smart Device")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+For the init path, drm_client_register() already fires an initial
+hotplug when the client is registered, which picks up the connector
+state updated by display_info_cb.
+
+For the runtime config_changed path, add a wait_event_timeout() in
+config_changed_work_func() so that display_info_cb updates the connector
+data before the hotplug notification is sent. Also replace
+drm_helper_hpd_irq_event() with drm_kms_helper_hotplug_event() since
+virtio-gpu never calls drm_kms_helper_poll_init() and thus
+drm_helper_hpd_irq_event() always returns false without doing anything.
+
+Fixes: 27655b9bb9f0 ("drm/client: Send hotplug event after registering a client")
+Closes: https://syzkaller.appspot.com/bug?id=d6dd6f86d3aaf7eebe7406e45c1c6e549453f224
+Closes: https://syzkaller.appspot.com/bug?id=908bd910da5dd79b88de4cf7baf376cc873a922e
+Suggested-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Signed-off-by: Ryosuke Yasuoka <ryasuoka@redhat.com>
+Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Link: https://patch.msgid.link/20260713-virtiogpu_syzbot-v2-1-2958fa37d46d@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/ecc-mtk.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/virtio/virtgpu_kms.c | 5 ++++-
+ drivers/gpu/drm/virtio/virtgpu_vq.c  | 3 ---
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/mtd/nand/ecc-mtk.c b/drivers/mtd/nand/ecc-mtk.c
-index c75bb8b80cc1e1..96703f0a418ea2 100644
---- a/drivers/mtd/nand/ecc-mtk.c
-+++ b/drivers/mtd/nand/ecc-mtk.c
-@@ -123,8 +123,8 @@ static int mt7622_ecc_regs[] = {
- 	[ECC_DECIRQ_STA] =      0x144,
- };
- 
--static inline void mtk_ecc_wait_idle(struct mtk_ecc *ecc,
--				     enum mtk_ecc_operation op)
-+static inline int mtk_ecc_wait_idle(struct mtk_ecc *ecc,
-+				    enum mtk_ecc_operation op)
- {
- 	struct device *dev = ecc->dev;
- 	u32 val;
-@@ -136,6 +136,8 @@ static inline void mtk_ecc_wait_idle(struct mtk_ecc *ecc,
- 	if (ret)
- 		dev_warn(dev, "%s NOT idle\n",
- 			 op == ECC_ENCODE ? "encoder" : "decoder");
-+
-+	return ret;
+diff --git a/drivers/gpu/drm/virtio/virtgpu_kms.c b/drivers/gpu/drm/virtio/virtgpu_kms.c
+index 7dfb2006c561ca..ec31a41d33d678 100644
+--- a/drivers/gpu/drm/virtio/virtgpu_kms.c
++++ b/drivers/gpu/drm/virtio/virtgpu_kms.c
+@@ -48,7 +48,10 @@ static void virtio_gpu_config_changed_work_func(struct work_struct *work)
+ 				virtio_gpu_cmd_get_edids(vgdev);
+ 			virtio_gpu_cmd_get_display_info(vgdev);
+ 			virtio_gpu_notify(vgdev);
+-			drm_helper_hpd_irq_event(vgdev->ddev);
++			wait_event_timeout(vgdev->resp_wq,
++					   !vgdev->display_info_pending,
++					   5 * HZ);
++			drm_kms_helper_hotplug_event(vgdev->ddev);
+ 		}
+ 		events_clear |= VIRTIO_GPU_EVENT_DISPLAY;
+ 	}
+diff --git a/drivers/gpu/drm/virtio/virtgpu_vq.c b/drivers/gpu/drm/virtio/virtgpu_vq.c
+index 0d3d0d09f39b9f..bcc070b478d30e 100644
+--- a/drivers/gpu/drm/virtio/virtgpu_vq.c
++++ b/drivers/gpu/drm/virtio/virtgpu_vq.c
+@@ -669,9 +669,6 @@ static void virtio_gpu_cmd_get_display_info_cb(struct virtio_gpu_device *vgdev,
+ 	vgdev->display_info_pending = false;
+ 	spin_unlock(&vgdev->display_info_lock);
+ 	wake_up(&vgdev->resp_wq);
+-
+-	if (!drm_helper_hpd_irq_event(vgdev->ddev))
+-		drm_kms_helper_hotplug_event(vgdev->ddev);
  }
  
- static irqreturn_t mtk_ecc_irq(int irq, void *id)
-@@ -312,7 +314,11 @@ int mtk_ecc_enable(struct mtk_ecc *ecc, struct mtk_ecc_config *config)
- 		return ret;
- 	}
- 
--	mtk_ecc_wait_idle(ecc, op);
-+	ret = mtk_ecc_wait_idle(ecc, op);
-+	if (ret) {
-+		mutex_unlock(&ecc->lock);
-+		return ret;
-+	}
- 
- 	ret = mtk_ecc_config(ecc, config);
- 	if (ret) {
-@@ -412,7 +418,9 @@ int mtk_ecc_encode(struct mtk_ecc *ecc, struct mtk_ecc_config *config,
- 	if (ret)
- 		goto timeout;
- 
--	mtk_ecc_wait_idle(ecc, ECC_ENCODE);
-+	ret = mtk_ecc_wait_idle(ecc, ECC_ENCODE);
-+	if (ret)
-+		goto timeout;
- 
- 	/* Program ECC bytes to OOB: per sector oob = FDM + ECC + SPARE */
- 	len = (config->strength * ecc->caps->parity_bits + 7) >> 3;
+ static void virtio_gpu_cmd_get_capset_info_cb(struct virtio_gpu_device *vgdev,
 -- 
 2.53.0
 
