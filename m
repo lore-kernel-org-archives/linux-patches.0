@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B3CD44C649;
-	Thu, 30 Jul 2026 16:17:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E09954503EA;
+	Thu, 30 Jul 2026 16:17:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785428277; cv=none; b=tEeJet28ygsvd0geFyTmouPqBFBrqxz/tggu+bBpsxoGOBDaLhvbMkM4HxZLPnNqx2XbV3mxzCZA2wwHEfMoCfn5CJGFz9xTRDOXo5I1A+wqXKhsT8KuQnVIHRasx+wXK70EyzBsX6OX2pTMZRqVtJZ4eVX4JXmZsEcNVe4WoSY=
+	t=1785428281; cv=none; b=r4Ab9n0/9Hadu3mMTUzH5RLySDIbxYk417+XZ3aFDA5T7iP1pHYKxSu4leNzi28puRbqU+7hD7IWjVd0ut+SnZaoDcqKJBAV7Y1E+XdNVmWImaJBkPF9Cf4bO3W0tbkA4vZGpDM9A6TeWlCASvU1TJzSGanq0zUXQMq5wbn9pc8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785428277; c=relaxed/simple;
-	bh=FXsslTKsTpr5/mXsSgCb7R+w7FUX2BKdSUF8SK83ozs=;
+	s=arc-20240116; t=1785428281; c=relaxed/simple;
+	bh=EZ9QIQYCpCfwSM8p6lARpEqZU6YhNKWt1nzlvF9mINk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g4XQEjsFL2DGKq6v9Vfwqz3kMZiriyIi4+K0hk5VPUCqDR1gWQw0tcLloYG6f7uIKvginMfxn05/fdpEVPTzCJwKkOGv+RlVUzWgim2biK2AFj5Dtjl6tleWXgBZqkjNnFTvd60jOqGLG5+of+LpLb7Duon7ARleW1EMTAW8BIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1AhpcqE2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gtsxS7WGNSAzit2B7c0X9AQdw5zwddokHeIZDMCwDz+KyxwEyjtfw+timk9EE9snpupsQNWDJwXtpNuvgmqmeGw+lCZbEY/qSaqNpmfAwMZc/g9OCTECGrmZNx9zy5Pc9/TI0nOAAoAoFu/9o48KoyCUT5htvzeHOYqpjxdUY1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0lABUp7u; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1AhpcqE2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB94F1F000E9;
-	Thu, 30 Jul 2026 16:17:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0lABUp7u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D62A91F000E9;
+	Thu, 30 Jul 2026 16:17:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785428276;
-	bh=c905OAQt8mSTxiI9MeZhA89Rn4vZfV3xpcChUamAaxo=;
+	s=korg; t=1785428279;
+	bh=6Uhc4oMYkWzOlVRtXy35nth5fbfqimce6rQIOSlfQFI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1AhpcqE2Pl2bAftF5KW/eepKEtprGxUpQkC6W/Bhw5aOxomspBrd3MEFPZks61pWo
-	 NS+H2zNtEcFDZXOjmuPd7cFXL5muADpy8bDxRvU+7H821NuOc4mfLd9mX24hpJdOly
-	 7AnWQtImXy6J83dAjftt2Q62ODq8xGCQ6FUkoFwk=
+	b=0lABUp7uYht1QbiKCXDdCeBlpn228HDmeTCtZY08a0w8vzdjgmNdLfq3irm0CzS0J
+	 iLx+wHIC/6tZ8YZPnu+YhfJWVGDqfquO7R6pcmAKcy0mA2XyDmyvi0pBUlbQ2+tGEf
+	 Ojqb6rKP3RQGOHocDInb8ay2/ZRg03inissgHPGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Snitzer <snitzer@kernel.org>,
 	Jeff Layton <jlayton@kernel.org>,
 	NeilBrown <neil@brown.name>,
-	Christoph Hellwig <hch@lst.de>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 420/484] NFSD: pass nfsd_file to nfsd_iter_read()
-Date: Thu, 30 Jul 2026 16:15:17 +0200
-Message-ID: <20260730141432.602538655@linuxfoundation.org>
+Subject: [PATCH 6.6 421/484] sunrpc: allocate a separate bvec array for socket sends
+Date: Thu, 30 Jul 2026 16:15:18 +0200
+Message-ID: <20260730141432.624492986@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -54,113 +52,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Snitzer <snitzer@kernel.org>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 803bc849f0039291f546ba0e2237faebeb5c073e ]
+[ Upstream commit 6b3b697d65d46a0f640216a3f6c72856c159c567 ]
 
-Prepare for nfsd_iter_read() to use the DIO alignment stored in
-nfsd_file by passing the nfsd_file to nfsd_iter_read() rather than
-just the file which is associaed with the nfsd_file.
+svc_tcp_sendmsg() calls xdr_buf_to_bvec() with the second slot of
+rq_bvec as the start, but doesn't reduce the array length by one, which
+could lead to an array overrun. Also, rq_bvec is always rq_maxpages in
+length, which can be too short in some cases, since the TCP record
+marker consumes a slot.
 
-This means nfsd4_encode_readv() now also needs the nfsd_file rather
-than the file.  Instead of changing the file arg to be the nfsd_file,
-we discard the file arg as the nfsd_file (and indeed the file) is
-already available via the "read" argument.
+Fix both problems by adding a separate bvec array to the svc_sock that
+is specifically for sending. For TCP, make this array one slot longer
+than rq_maxpages, to account for the record marker. For UDP, only
+allocate as large an array as we need since it's limited to 64k of
+payload.
 
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
 Reviewed-by: NeilBrown <neil@brown.name>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Stable-dep-of: 18c1cc698861 ("SUNRPC: Return an error from xdr_buf_to_bvec() on overflow")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4xdr.c |    8 ++++----
- fs/nfsd/vfs.c     |    7 ++++---
- fs/nfsd/vfs.h     |    2 +-
- 3 files changed, 9 insertions(+), 8 deletions(-)
+ include/linux/sunrpc/svcsock.h |    3 +++
+ net/sunrpc/svcsock.c           |   37 ++++++++++++++++++++++++++++---------
+ 2 files changed, 31 insertions(+), 9 deletions(-)
 
---- a/fs/nfsd/nfs4xdr.c
-+++ b/fs/nfsd/nfs4xdr.c
-@@ -4096,7 +4096,7 @@ out_err:
+--- a/include/linux/sunrpc/svcsock.h
++++ b/include/linux/sunrpc/svcsock.h
+@@ -26,6 +26,9 @@ struct svc_sock {
+ 	void			(*sk_odata)(struct sock *);
+ 	void			(*sk_owspace)(struct sock *);
  
- static __be32 nfsd4_encode_readv(struct nfsd4_compoundres *resp,
- 				 struct nfsd4_read *read,
--				 struct file *file, unsigned long maxcount)
-+				 unsigned long maxcount)
- {
- 	struct xdr_stream *xdr = resp->xdr;
- 	unsigned int base = xdr->buf->page_len & ~PAGE_MASK;
-@@ -4107,7 +4107,7 @@ static __be32 nfsd4_encode_readv(struct
- 	if (xdr_reserve_space_vec(xdr, maxcount) < 0)
- 		return nfserr_resource;
++	/* For sends (protected by xpt_mutex) */
++	struct bio_vec		*sk_bvec;
++
+ 	/* private TCP part */
+ 	/* On-the-wire fragment header: */
+ 	__be32			sk_marker;
+--- a/net/sunrpc/svcsock.c
++++ b/net/sunrpc/svcsock.c
+@@ -68,6 +68,17 @@
  
--	nfserr = nfsd_iter_read(resp->rqstp, read->rd_fhp, file,
-+	nfserr = nfsd_iter_read(resp->rqstp, read->rd_fhp, read->rd_nf,
- 				read->rd_offset, &maxcount, base,
- 				&read->rd_eof);
- 	read->rd_length = maxcount;
-@@ -4155,7 +4155,7 @@ nfsd4_encode_read(struct nfsd4_compoundr
- 	if (file->f_op->splice_read && splice_ok)
- 		nfserr = nfsd4_encode_splice_read(resp, read, file, maxcount);
- 	else
--		nfserr = nfsd4_encode_readv(resp, read, file, maxcount);
-+		nfserr = nfsd4_encode_readv(resp, read, maxcount);
- 	if (nfserr) {
- 		xdr_truncate_encode(xdr, starting_len);
- 		return nfserr;
-@@ -4906,7 +4906,7 @@ nfsd4_encode_read_plus_data(struct nfsd4
- 	if (file->f_op->splice_read && splice_ok)
- 		nfserr = nfsd4_encode_splice_read(resp, read, file, maxcount);
- 	else
--		nfserr = nfsd4_encode_readv(resp, read, file, maxcount);
-+		nfserr = nfsd4_encode_readv(resp, read, maxcount);
- 	if (nfserr)
- 		return nfserr;
+ #define RPCDBG_FACILITY	RPCDBG_SVCXPRT
  
---- a/fs/nfsd/vfs.c
-+++ b/fs/nfsd/vfs.c
-@@ -1061,7 +1061,7 @@ __be32 nfsd_splice_read(struct svc_rqst
-  * nfsd_iter_read - Perform a VFS read using an iterator
-  * @rqstp: RPC transaction context
-  * @fhp: file handle of file to be read
-- * @file: opened struct file of file to be read
-+ * @nf: opened struct nfsd_file of file to be read
-  * @offset: starting byte offset
-  * @count: IN: requested number of bytes; OUT: number of bytes read
-  * @base: offset in first page of read buffer
-@@ -1074,9 +1074,10 @@ __be32 nfsd_splice_read(struct svc_rqst
-  * returned.
++/*
++ * For UDP:
++ * 1 for header page
++ * enough pages for RPCSVC_MAXPAYLOAD_UDP
++ * 1 in case payload is not aligned
++ * 1 for tail page
++ */
++enum {
++	SUNRPC_MAX_UDP_SENDPAGES = 1 + RPCSVC_MAXPAYLOAD_UDP / PAGE_SIZE + 1 + 1
++};
++
+ /* To-do: to avoid tying up an nfsd thread while waiting for a
+  * handshake request, the request could instead be deferred.
   */
- __be32 nfsd_iter_read(struct svc_rqst *rqstp, struct svc_fh *fhp,
--		      struct file *file, loff_t offset, unsigned long *count,
-+		      struct nfsd_file *nf, loff_t offset, unsigned long *count,
- 		      unsigned int base, u32 *eof)
- {
-+	struct file *file = nf->nf_file;
- 	unsigned long v, total;
- 	struct iov_iter iter;
- 	loff_t ppos = offset;
-@@ -1258,7 +1259,7 @@ __be32 nfsd_read(struct svc_rqst *rqstp,
- 	if (file->f_op->splice_read && test_bit(RQ_SPLICE_OK, &rqstp->rq_flags))
- 		err = nfsd_splice_read(rqstp, fhp, file, offset, count, eof);
- 	else
--		err = nfsd_iter_read(rqstp, fhp, file, offset, count, 0, eof);
-+		err = nfsd_iter_read(rqstp, fhp, nf, offset, count, 0, eof);
+@@ -750,15 +761,14 @@ static int svc_udp_sendto(struct svc_rqs
+ 	if (svc_xprt_is_dead(xprt))
+ 		goto out_notconn;
  
- 	nfsd_file_put(nf);
- 	trace_nfsd_read_done(rqstp, fhp, offset, *count);
---- a/fs/nfsd/vfs.h
-+++ b/fs/nfsd/vfs.h
-@@ -120,7 +120,7 @@ __be32		nfsd_splice_read(struct svc_rqst
- 				unsigned long *count,
- 				u32 *eof);
- __be32		nfsd_iter_read(struct svc_rqst *rqstp, struct svc_fh *fhp,
--				struct file *file, loff_t offset,
-+				struct nfsd_file *nf, loff_t offset,
- 				unsigned long *count, unsigned int base,
- 				u32 *eof);
- __be32		nfsd_read(struct svc_rqst *rqstp, struct svc_fh *fhp,
+-	count = xdr_buf_to_bvec(rqstp->rq_bvec,
+-				ARRAY_SIZE(rqstp->rq_bvec), xdr);
++	count = xdr_buf_to_bvec(svsk->sk_bvec, SUNRPC_MAX_UDP_SENDPAGES, xdr);
+ 
+-	iov_iter_bvec(&msg.msg_iter, ITER_SOURCE, rqstp->rq_bvec,
++	iov_iter_bvec(&msg.msg_iter, ITER_SOURCE, svsk->sk_bvec,
+ 		      count, rqstp->rq_res.len);
+ 	err = sock_sendmsg(svsk->sk_sock, &msg);
+ 	if (err == -ECONNREFUSED) {
+ 		/* ICMP error on earlier request. */
+-		iov_iter_bvec(&msg.msg_iter, ITER_SOURCE, rqstp->rq_bvec,
++		iov_iter_bvec(&msg.msg_iter, ITER_SOURCE, svsk->sk_bvec,
+ 			      count, rqstp->rq_res.len);
+ 		err = sock_sendmsg(svsk->sk_sock, &msg);
+ 	}
+@@ -1257,19 +1267,19 @@ static int svc_tcp_sendmsg(struct svc_so
+ 	*sentp = 0;
+ 
+ 	/* The stream record marker is copied into a temporary page
+-	 * fragment buffer so that it can be included in rq_bvec.
++	 * fragment buffer so that it can be included in sk_bvec.
+ 	 */
+ 	buf = page_frag_alloc(&svsk->sk_frag_cache, sizeof(marker),
+ 			      GFP_KERNEL);
+ 	if (!buf)
+ 		return -ENOMEM;
+ 	memcpy(buf, &marker, sizeof(marker));
+-	bvec_set_virt(rqstp->rq_bvec, buf, sizeof(marker));
++	bvec_set_virt(svsk->sk_bvec, buf, sizeof(marker));
+ 
+-	count = xdr_buf_to_bvec(rqstp->rq_bvec + 1,
+-				ARRAY_SIZE(rqstp->rq_bvec) - 1, &rqstp->rq_res);
++	count = xdr_buf_to_bvec(svsk->sk_bvec + 1, RPCSVC_MAXPAGES,
++				&rqstp->rq_res);
+ 
+-	iov_iter_bvec(&msg.msg_iter, ITER_SOURCE, rqstp->rq_bvec,
++	iov_iter_bvec(&msg.msg_iter, ITER_SOURCE, svsk->sk_bvec,
+ 		      1 + count, sizeof(marker) + rqstp->rq_res.len);
+ 	ret = sock_sendmsg(svsk->sk_sock, &msg);
+ 	page_frag_free(buf);
+@@ -1432,6 +1442,13 @@ static struct svc_sock *svc_setup_socket
+ 	if (!svsk)
+ 		return ERR_PTR(-ENOMEM);
+ 
++	svsk->sk_bvec = kcalloc(RPCSVC_MAXPAGES + 1, sizeof(*svsk->sk_bvec),
++				GFP_KERNEL);
++	if (!svsk->sk_bvec) {
++		kfree(svsk);
++		return ERR_PTR(-ENOMEM);
++	}
++
+ 	inet = sock->sk;
+ 
+ 	if (pmap_register) {
+@@ -1441,6 +1458,7 @@ static struct svc_sock *svc_setup_socket
+ 				     inet->sk_protocol,
+ 				     ntohs(inet_sk(inet)->inet_sport));
+ 		if (err < 0) {
++			kfree(svsk->sk_bvec);
+ 			kfree(svsk);
+ 			return ERR_PTR(err);
+ 		}
+@@ -1660,5 +1678,6 @@ static void svc_sock_free(struct svc_xpr
+ 	if (pfc->va)
+ 		__page_frag_cache_drain(virt_to_head_page(pfc->va),
+ 					pfc->pagecnt_bias);
++	kfree(svsk->sk_bvec);
+ 	kfree(svsk);
+ }
 
 
