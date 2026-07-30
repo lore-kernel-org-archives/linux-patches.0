@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 435064314B5;
-	Thu, 30 Jul 2026 14:38:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 518E5443A9F;
+	Thu, 30 Jul 2026 14:38:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422294; cv=none; b=S+YVpR0mgvh/GQ34zIiRuxSVws3+3dnSItSmWHKS3l2dwaAwxqlN4rueyac34FU6hcMdo3wQobLeFy/Zo4RzFs6yNlZ+gMM++Tp+IqRUU3YWPsu+JfCVDrbo9BVq8PjGt8RY2dbrGj9J/t1lF7XRAPFHPVK5t1NRO5Cl8Z/DCHI=
+	t=1785422297; cv=none; b=oxviuPid6KdFTZMIlTKAZf55vHWp6fDGsn+F3aeUZhlRwRUX6e92CucAAN0VH8LVjIJH4ChGNQLNI8x0fWdOtbQGRhKxC6iow7QMYhATjMQ34pYvVLEM3bTvZTFg43duS1U5HZNq3nzS9BD6IHVxdB+YF42d5Rh9MrRzWgAt3L0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422294; c=relaxed/simple;
-	bh=TR2FsCjCZ3/D9K+CmUHAQhsG3PHVEraMutv8Jj6Ya18=;
+	s=arc-20240116; t=1785422297; c=relaxed/simple;
+	bh=/QHS50edNI0RONR32ZSExkb60TYc5X6U6Sow3yZ//G0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=neqMBFvzYr8B5IJjU1Q9oz3UW9VpF4XTxUiXJTHGauEEJsJ0PDAodC3c8JzXlBgZRUCvdBGqito98rfsEEVkqlvQuDlxXaCorPSQQEFoQ9ipxtMqt6Khfkb6ymkFiAGuEChG69uvk4pSffG8Q6wCzivkuzIZAHqVKMvvRZ3I76E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FphIM6kT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=OpWJeVb/1TeF/yuDp5xCzJsYZmHAYQskbO4L/EKi2qGPkiTnjXLj24HS5z9rUkKLQvVYFgeUTONP9LVmSDqdxOMUwyA8jdGT23yO4oJIdnYa6C5zlF8B2u7cDa6hiw/Nu0x+USAhS4cGjBZ3XkKPz7KFPVGmtIXShjO6GqhPVYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cL5ZmD3p; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FphIM6kT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EF091F000E9;
-	Thu, 30 Jul 2026 14:38:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cL5ZmD3p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E4061F000E9;
+	Thu, 30 Jul 2026 14:38:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422293;
-	bh=0E+QD8gxr4D/OdNrn5ht/mu3mgWqf0Kx55F+gk5K9+M=;
+	s=korg; t=1785422296;
+	bh=x/rTeR4C7kBychYxtBbHjUqCvW5Iwp02Kja6CxC3klY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FphIM6kTfDgL6DYBsY9wSQFZFqztrkjj6IBh1PxMWbn6yYsqfA6HLEFiDydWEoDM2
-	 3Rz/xV+5k2so+n9zMZw28hTaxvFaCs/jT92Pbxzl3/AVA7BWkEc4X/pnzCs3w1WzxF
-	 493+K5Mgn0GlQL3jT0H3q0JL8vq6KeMlBSt1dXco=
+	b=cL5ZmD3pCu1reFUHgiAeMsbnrnSpflVnPCheolw1b8KFB94WeTCHly3BOE8RZ4XKI
+	 aRpBIspDMQ5efV85m6d0m2o54FzAyFLtENqtz59lBl0d1kKC9l8myl3neP/5njP+lf
+	 lSzHZ+T9lkcalG4GxkIZP06o1+fbDHZNjeMrwWTc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	dri-devel@lists.freedesktop.org
-Subject: [PATCH 7.1 389/744] drm/sysfb: Return errno code from drm_sysfb_get_visible_size()
-Date: Thu, 30 Jul 2026 16:11:02 +0200
-Message-ID: <20260730141452.556710663@linuxfoundation.org>
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 7.1 390/744] drm/amdgpu: Respect placement requirements in amdgpu_gtt_mgr functions
+Date: Thu, 30 Jul 2026 16:11:03 +0200
+Message-ID: <20260730141452.577679105@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -45,111 +45,78 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-commit 7bab0f09d753f098977bbba3955d694c2e2c25da upstream.
+commit 8882f8897e554053af9e72f4c2da8b1e2cce56c7 upstream.
 
-Change the return type of drm_sysfb_get_visible_size() to s64 so
-that it returns a possible errno code from _get_validated_size0().
-Fix callers to handle the errno code.
+When testing intersection and compatibility, respect
+the actual placement requirements. This is a pre-requisite
+for ensuring that UVD CS BOs do not cross 256M segments.
 
-The currently returned unsigned type converts an errno code to a
-very large size value, which drivers interpret as visible size of
-the system framebuffer. Later efforts to reserve the framebuffer
-resource fail.
-
-The bug has been present since efidrm and vesadrm got merged. It
-was then part of each driver.
-
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Fixes: 32ae90c66fb6 ("drm/sysfb: Add efidrm for EFI displays")
-Fixes: a84eb6abe2b6 ("drm/sysfb: Add vesadrm for VESA displays")
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Javier Martinez Canillas <javierm@redhat.com>
-Cc: dri-devel@lists.freedesktop.org
-Cc: <stable@vger.kernel.org> # v6.16+
-Link: https://patch.msgid.link/20260618084327.46567-4-tzimmermann@suse.de
+Fixes: ded910f368a5 ("drm/amdgpu: Implement intersect/compatible functions")
+Suggested-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit bc06579ca29dee9c245a41b12e39c7bb6938af5d)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/sysfb/drm_sysfb_helper.h      |    2 +-
- drivers/gpu/drm/sysfb/drm_sysfb_screen_info.c |    2 +-
- drivers/gpu/drm/sysfb/efidrm.c                |    7 ++++---
- drivers/gpu/drm/sysfb/vesadrm.c               |    6 +++---
- 4 files changed, 9 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_gtt_mgr.c |   30 ++++++++++++++++++++++++++--
+ 1 file changed, 28 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/sysfb/drm_sysfb_helper.h
-+++ b/drivers/gpu/drm/sysfb/drm_sysfb_helper.h
-@@ -50,7 +50,7 @@ struct resource *drm_sysfb_get_memory_si
- int drm_sysfb_get_stride_si(struct drm_device *dev, const struct screen_info *si,
- 			    const struct drm_format_info *format,
- 			    unsigned int width, unsigned int height, u64 size);
--u64 drm_sysfb_get_visible_size_si(struct drm_device *dev, const struct screen_info *si,
-+s64 drm_sysfb_get_visible_size_si(struct drm_device *dev, const struct screen_info *si,
- 				  unsigned int height, unsigned int stride, u64 size);
- #endif
- 
---- a/drivers/gpu/drm/sysfb/drm_sysfb_screen_info.c
-+++ b/drivers/gpu/drm/sysfb/drm_sysfb_screen_info.c
-@@ -71,7 +71,7 @@ int drm_sysfb_get_stride_si(struct drm_d
- }
- EXPORT_SYMBOL(drm_sysfb_get_stride_si);
- 
--u64 drm_sysfb_get_visible_size_si(struct drm_device *dev, const struct screen_info *si,
-+s64 drm_sysfb_get_visible_size_si(struct drm_device *dev, const struct screen_info *si,
- 				  unsigned int height, unsigned int stride, u64 size)
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gtt_mgr.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gtt_mgr.c
+@@ -272,7 +272,20 @@ static bool amdgpu_gtt_mgr_intersects(st
+ 				      const struct ttm_place *place,
+ 				      size_t size)
  {
- 	u64 vsize = mul_u32_u32(height, stride);
---- a/drivers/gpu/drm/sysfb/efidrm.c
-+++ b/drivers/gpu/drm/sysfb/efidrm.c
-@@ -150,7 +150,8 @@ static struct efidrm_device *efidrm_devi
- 	const struct screen_info *si;
- 	const struct drm_format_info *format;
- 	int width, height, stride;
--	u64 vsize, mem_flags;
-+	s64 vsize;
-+	u64 mem_flags;
- 	struct resource resbuf;
- 	struct resource *res;
- 	struct efidrm_device *efi;
-@@ -204,8 +205,8 @@ static struct efidrm_device *efidrm_devi
- 	if (stride < 0)
- 		return ERR_PTR(stride);
- 	vsize = drm_sysfb_get_visible_size_si(dev, si, height, stride, resource_size(res));
--	if (!vsize)
--		return ERR_PTR(-EINVAL);
-+	if (vsize < 0)
-+		return ERR_PTR(vsize);
+-	return !place->lpfn || amdgpu_gtt_mgr_has_gart_addr(res);
++	const struct drm_mm_node *const node = &to_ttm_range_mgr_node(res)->mm_nodes[0];
++	const u32 num_pages = PFN_UP(size);
++
++	if (!place->lpfn)
++		return true;
++
++	if (!amdgpu_gtt_mgr_has_gart_addr(res))
++		return false;
++
++	if (place->fpfn >= (node->start + num_pages) ||
++	    (place->lpfn && place->lpfn <= node->start))
++		return false;
++
++	return true;
+ }
  
- 	drm_dbg(dev, "framebuffer format=%p4cc, size=%dx%d, stride=%d bytes\n",
- 		&format->format, width, height, stride);
---- a/drivers/gpu/drm/sysfb/vesadrm.c
-+++ b/drivers/gpu/drm/sysfb/vesadrm.c
-@@ -400,7 +400,7 @@ static struct vesadrm_device *vesadrm_de
- 	const struct screen_info *si;
- 	const struct drm_format_info *format;
- 	int width, height, stride;
--	u64 vsize;
-+	s64 vsize;
- 	struct resource resbuf;
- 	struct resource *res;
- 	struct vesadrm_device *vesa;
-@@ -455,8 +455,8 @@ static struct vesadrm_device *vesadrm_de
- 	if (stride < 0)
- 		return ERR_PTR(stride);
- 	vsize = drm_sysfb_get_visible_size_si(dev, si, height, stride, resource_size(res));
--	if (!vsize)
--		return ERR_PTR(-EINVAL);
-+	if (vsize < 0)
-+		return ERR_PTR(vsize);
+ /**
+@@ -290,7 +303,20 @@ static bool amdgpu_gtt_mgr_compatible(st
+ 				      const struct ttm_place *place,
+ 				      size_t size)
+ {
+-	return !place->lpfn || amdgpu_gtt_mgr_has_gart_addr(res);
++	const struct drm_mm_node *const node = &to_ttm_range_mgr_node(res)->mm_nodes[0];
++	const u32 num_pages = PFN_UP(size);
++
++	if (!place->lpfn)
++		return true;
++
++	if (!amdgpu_gtt_mgr_has_gart_addr(res))
++		return false;
++
++	if (node->start < place->fpfn ||
++	    (place->lpfn && (node->start + num_pages) > place->lpfn))
++		return false;
++
++	return true;
+ }
  
- 	drm_dbg(dev, "framebuffer format=%p4cc, size=%dx%d, stride=%d bytes\n",
- 		&format->format, width, height, stride);
+ /**
 
 
