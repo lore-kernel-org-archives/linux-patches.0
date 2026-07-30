@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A075344D011;
-	Thu, 30 Jul 2026 15:31:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71D0D435A9E;
+	Thu, 30 Jul 2026 15:31:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425498; cv=none; b=Fbx8APTfAXNipy0/pZS+qbzNYZguXDkdoQPK1nEfsCwTwyoYVrPQgqjJhuOYMR6UuO9Fv/xOiBIN2TrlH5MTJIi/tPnMjVDE+/raGLYJKV5FEbWrXYnhsOU1sZFpaiaTWdfaqg5ZXj//0JHUGqEf7+Mp8lqErhRy/RfwsC5jPDM=
+	t=1785425501; cv=none; b=mtQg9NoG/FmWHrhdaZ6ZnEp7GP0fl6UJbI9RXzdoI9KzSkYwVs+sA5udHSXp1Dtfr5iMXHIunx8G591+0eodhR7C2NEl1ViPSSeSsHqyT99kqEGHcK8pjTgNum5Bmh7YSafxP/E9odFk4ovl7ASad1aCZTMS8W4jMtiBop1+JPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425498; c=relaxed/simple;
-	bh=8S1H6qIE98E/24lEdL9PMw8OW5lXscDM50PGp1909m8=;
+	s=arc-20240116; t=1785425501; c=relaxed/simple;
+	bh=YnhzX1u9Sji5hc9dDGg4SlSw7DDsrrMmnIUx5M/SodU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SmlTPWTn22Cx2KkSGXovG5x2dRQa5mApO+RJcHJfeDFlD77bEdjg3aYWWftc5jdCL9HALASf9vmL58lRur48DYWit47QLDyyOFWN8wClOb+fgKkBuxnwbQze3wvaq3TKGXzIIFg16lMkZa5ZexEwbRTOUOZQ5Ee5L94Nq1/621A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p7yIOJS+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=N57X5YX1zqi2CayEnwWcdHL7nvpezi7/VeDLPstGkZHf9kz+BJrutMO6ICLAIGTRspzcU9WWeD24+IEqXZfpwqIsBZ6gAbUrt2gOjCFz0C504qXsoaBjnP6CX3EihZJdn16ENoNv2l9YuEpBUat4vD9uetTn3063/9GG5AuuYBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sin3LnQL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p7yIOJS+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 072A81F000E9;
-	Thu, 30 Jul 2026 15:31:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sin3LnQL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD77D1F000E9;
+	Thu, 30 Jul 2026 15:31:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425497;
-	bh=/zL938gSD17Zbyx38k4lGspNs4FWiO1mspSWa9DYxEw=;
+	s=korg; t=1785425500;
+	bh=rnnhF30sIF6Z6zZy+hTJVzZQBxZ8NyzS2eQEbfMYwkY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p7yIOJS+q5UzaGyACwpBYrQa2Fc/uff2DKxnAz5mnydZTzE87QjLyoOJNjMvkWWEo
-	 em5I+Y4vzlkwkC5xYBMmToEbzlHDGe9kgo7DIvw5Pbahx3l/jcOXD7k4K1e3OxgTds
-	 VOdgqRpMfwDPvik2oZiSzYH9M25prZTwrQkF94+Y=
+	b=sin3LnQLb2qfKEJBHjePNt3RskR5sC8CmNz0lgiFUj7NQBoYcKGKDqiI/FvHHJmbA
+	 qNB1OUaPGcpZEhPpBgdy9+Y8EaXJVAX2HXSNWrb6wLam716wCXswWStoipySkHuwQc
+	 AsUB0Yoofk46ZivQH8tGs8yc9vQW1hB624pHRXK0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
+	Jacob Moroni <jmoroni@google.com>,
+	David Hu <xuehaohu@google.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 088/602] ata: sata_dwc_460ex: fix infinite loop in NCQ tag completion bit-scanning
-Date: Thu, 30 Jul 2026 16:08:00 +0200
-Message-ID: <20260730141437.844555797@linuxfoundation.org>
+Subject: [PATCH 6.12 046/602] RDMA/irdma: Prevent rereg_mr for non-mem regions
+Date: Thu, 30 Jul 2026 16:07:18 +0200
+Message-ID: <20260730141436.973651923@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -51,51 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Jacob Moroni <jmoroni@google.com>
 
-[ Upstream commit c2130f6553f4a5cbdc259de069600117a995f197 ]
+[ Upstream commit a846aecb931b4d65d5eafa92a0623545af46d4f2 ]
 
-The hand-rolled bit-scanning loop in the NCQ completion path has an
-infinite loop bug.  When tag_mask has only high bits set (e.g.
-0x80000000), the inner while loop left-shifts tag_mask until it
-overflows to 0.  At that point !(0 & 1) is always true and 0 <<= 1
-stays 0, causing an infinite loop in hardirq context with a spinlock
-held.
+When a QP/CQ/SRQ is created, a two step process is used
+where the buffer is allocated in userspace and explicitly
+registered with the normal reg_mr mechanism prior to creating
+the actual QP/CQ/SRQ object.
 
-Replace the open-coded bit-scanning with __ffs() which correctly
-finds the least significant set bit and is bounded by the width of
-the argument.
+These special registrations are indicated via an ABI field
+so the driver knows that they do not have a valid mkey and
+to skip the actual CQP command submission.
 
-Fixes: 62936009f35a ("[libata] Add 460EX on-chip SATA driver, sata_dwc_460ex")
-Assisted-by: opencode:big-pickle
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Since these are real MR objects from the core's perspective,
+it is possible for a user application to invoke rereg_mr on them
+and cause a real CQP op to be emitted with the zero-initialized
+mkey value of 0.
+
+Fix this by preventing rereg_mr on these special regions.
+
+Fixes: 5ac388db27c4 ("RDMA/irdma: Add support to re-register a memory region")
+Signed-off-by: Jacob Moroni <jmoroni@google.com>
+Reviewed-by: David Hu <xuehaohu@google.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/sata_dwc_460ex.c | 9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+ drivers/infiniband/hw/irdma/verbs.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/ata/sata_dwc_460ex.c b/drivers/ata/sata_dwc_460ex.c
-index 74514608a7fada..66db8dd8ec2670 100644
---- a/drivers/ata/sata_dwc_460ex.c
-+++ b/drivers/ata/sata_dwc_460ex.c
-@@ -607,14 +607,9 @@ static irqreturn_t sata_dwc_isr(int irq, void *dev_instance)
- 	status = ap->ops->sff_check_status(ap);
- 	dev_dbg(ap->dev, "%s ATA status register=0x%x\n", __func__, status);
+diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
+index 92b56338819ef8..255c6d21756ba4 100644
+--- a/drivers/infiniband/hw/irdma/verbs.c
++++ b/drivers/infiniband/hw/irdma/verbs.c
+@@ -3252,6 +3252,9 @@ static struct ib_mr *irdma_rereg_user_mr(struct ib_mr *ib_mr, int flags,
+ 	if (flags & ~(IB_MR_REREG_TRANS | IB_MR_REREG_PD | IB_MR_REREG_ACCESS))
+ 		return ERR_PTR(-EOPNOTSUPP);
  
--	tag = 0;
- 	while (tag_mask) {
--		while (!(tag_mask & 0x00000001)) {
--			tag++;
--			tag_mask <<= 1;
--		}
--
--		tag_mask &= (~0x00000001);
-+		tag = __ffs(tag_mask);
-+		tag_mask &= ~(1U << tag);
- 		qc = ata_qc_from_tag(ap, tag);
- 		if (unlikely(!qc)) {
- 			dev_err(ap->dev, "failed to get qc");
++	if (iwmr->type != IRDMA_MEMREG_TYPE_MEM)
++	     return ERR_PTR(-EINVAL);
++
+ 	ret = ib_umem_check_rereg(iwmr->region, flags, new_access);
+ 	if (ret)
+ 		return ERR_PTR(ret);
 -- 
 2.53.0
 
