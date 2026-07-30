@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EE9E434404;
-	Thu, 30 Jul 2026 15:59:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C20E43CEC8;
+	Thu, 30 Jul 2026 15:59:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427157; cv=none; b=Kp9sha6Ckw319WtnbzcZ0R1WSs08nLjREt8XaWS4Lv/IfKoc2qXObhQt+rAEenhqhySqrNNcQr1WpBqBJ4hPdoYnWM4XekZNGiUq9yXt1B7/5CMtusNj4YmmX/THioTkLFIofpwH5IAGo0rNVnyeIVrf04W++8k4nd3wc0h7LJ4=
+	t=1785427159; cv=none; b=pyS367eER3qnRLxhBw9M8OtwfTpQYLPQcFeKJsZyp7HSPUldvueWnf67E3otkIDjrUcL/R/pHl++752Wykr74TX5L9lWRvyzLO+6fQu7ru63buioKafxZlYzTTPOqK82fFs+y77QlgGAhED+SQk7EvXypLxytv7joLRj0rlGAIQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427157; c=relaxed/simple;
-	bh=3aa5USkVnVz1FDnAU6hAaW6GoKIZiIpV7YzsWJ7vF1A=;
+	s=arc-20240116; t=1785427159; c=relaxed/simple;
+	bh=8Q+gZ97KsnmXRPibYInn0MKxZ9dcDR18N7QqfZw9Xgc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m20a1sKzy9sVDCgBU+lwaPv/2wO9FyyZayV1M0irdfcA1tR8bW8O/Nu20E3q0inLzBtPhy6Gf62oEg9nrrYkJVZFhZoXjPFBymT7rv5uHBuvNwHRZN/sxxOxp1gfSmt3c2ajv2j0acve1V2TedlsYTeqvL+zOo3dZ/st4ojuMIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nTJe9kzH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=t3QszPG8yH4TcBw/xWUdiIKhqPBVqvwiAVE8K5Rny0mnoHSaAfW89kcIVLWsLN+2Gc9G/Rp23Ol0Lrh+qZbW5JbtMWdjDOM3M4KMBveTjZfqZ9q2k7oAg+/wmeS6iHEuPusNKE232Dydsz8fZvn2Q/4tA00cktf/GsFOishT5I8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LoOJT7qt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nTJe9kzH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4DC81F000E9;
-	Thu, 30 Jul 2026 15:59:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LoOJT7qt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 988B31F00A3A;
+	Thu, 30 Jul 2026 15:59:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427155;
-	bh=H0FvUdj6RNWSvtOgF5b0Uo/O8u/xA+HheQ81/nsjz84=;
+	s=korg; t=1785427158;
+	bh=0qRheLmIu6EuOJzZM+6AFhXlXbIqf/abBwgiYCRilvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nTJe9kzHYu2DUfff5IKo/OCnUMcz/CfcQODe6gMdN46AKBzGv5N1nFmECUXGYZDfd
-	 X+XMYJSaB0K5DisBUgMTfZ1lb9I7fjGRMYhkOWSFC7TbzQVKCMz0IflWKX95OMxhny
-	 Aysn0PpBjJbIY6aUMh9gRthcJHp+Y+sq0FG57v0U=
+	b=LoOJT7qtOvoUT4s96Mk2gCFi0xFg99aLhcf/rDjQCdXYRx+Zw8ZD//D5D5LABtTfs
+	 pY1VnfQqTl2sSGQ83Ro2XonXNBkvNFCyE6n/OcBi6DIGDlZGX8hQMbReamw18BuqSi
+	 YX9w288qBN+iTFb5II8i7ezMMFgBzNOBRlaMDFYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pushpendra Singh <pushpendra.singh@oss.qualcomm.com>,
-	Sudeep Holla <sudeep.holla@kernel.org>,
+	Norbert Szetei <norbert@doyensec.com>,
+	Qingfang Deng <qingfang.deng@linux.dev>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 070/484] firmware: arm_scmi: Rate-limit queue-full warnings in IRQ context
-Date: Thu, 30 Jul 2026 16:09:27 +0200
-Message-ID: <20260730141424.956252611@linuxfoundation.org>
+Subject: [PATCH 6.6 071/484] ppp: defer channel free to an RCU grace period to fix pppol2tp RX UAF
+Date: Thu, 30 Jul 2026 16:09:28 +0200
+Message-ID: <20260730141424.977891909@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -51,52 +52,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pushpendra Singh <pushpendra.singh@oss.qualcomm.com>
+From: Norbert Szetei <norbert@doyensec.com>
 
-[ Upstream commit a4447c0693830d5ecadd6e755cb7fdc55d86aacc ]
+[ Upstream commit ec4215683e47424c9c4762fd3c60f552a3119142 ]
 
-The scmi_notify() function is called from interrupt context to queue
-received notification events onto a per-protocol kfifo. When the kfifo
-is full, it logs a warning via dev_warn() for every dropped event.
+pppol2tp_recv() runs in the L2TP UDP-encap softirq RX path:
 
-Under conditions where the platform sends a burst of SCMI notifications
-faster than the deferred worker can drain the queue, this results in a
-flood of dev_warn() calls from IRQ context. Each call acquires the
-console lock and may execute blocking console writes, causing the CPU
-to be held in interrupt context for an extended period and leading to
-observable system stalls.
+ l2tp_udp_encap_recv() -> l2tp_recv_common() -> pppol2tp_recv()
+   -> ppp_input(&po->chan)
 
-Fix this by switching to dev_warn_ratelimited() to limit the frequency
-of log messages when the notification queue is full. This reduces
-console overhead in interrupt context and prevents CPU stalls caused by
-excessive logging, while still preserving diagnostic visibility.
+It runs under rcu_read_lock() holding only an l2tp_session reference and
+takes NO reference on the internal PPP channel (struct channel,
+chan->ppp) that ppp_input() dereferences.
 
-Fixes: bd31b249692e ("firmware: arm_scmi: Add notification dispatch and delivery")
-Signed-off-by: Pushpendra Singh <pushpendra.singh@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260708072339.3021140-1-pushpendra.singh@oss.qualcomm.com
-Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
+The pppox socket is SOCK_RCU_FREE, so 'po' and the embedded ppp_channel
+are RCU-safe.  But the internal struct channel is a separate allocation
+that ppp_release_channel() frees with a plain kfree():
+
+ close(data socket) -> pppol2tp_release() -> pppox_unbind_sock()
+   -> ppp_unregister_channel() -> ppp_release_channel() -> kfree(pch)
+
+For a channel that is bound (PPPIOCGCHAN) but not attached to a ppp unit
+(no PPPIOCCONNECT, pch->ppp == NULL) and not bridged, teardown skips
+both ppp_disconnect_channel()'s synchronize_net() and
+ppp_unbridge_channels()'s synchronize_rcu(), so the kfree() has no grace
+period.  rcu_read_lock() in pppol2tp_recv() does not protect against a
+plain kfree(), so an in-flight ppp_input() on one CPU can dereference
+the channel just freed by close() on another CPU.
+
+The bug is reachable by an unprivileged user.
+
+Defer the channel free to an RCU callback via call_rcu() so the grace
+period fences any in-flight ppp_input(). The disconnect and unbridge
+teardown paths already fence with synchronize_net()/synchronize_rcu();
+call_rcu() does the same here without stalling the close() path.
+
+Fixes: ee40fb2e1eb5 ("l2tp: protect sock pointer of struct pppol2tp_session with RCU")
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Norbert Szetei <norbert@doyensec.com>
+Reviewed-by: Qingfang Deng <qingfang.deng@linux.dev>
+Link: https://patch.msgid.link/E793FCF2-58DE-4387-A983-C7B4BC3158BD@doyensec.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/notify.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/ppp/ppp_generic.c | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/firmware/arm_scmi/notify.c b/drivers/firmware/arm_scmi/notify.c
-index 4782b115e6ec51..1bc715fe3968c3 100644
---- a/drivers/firmware/arm_scmi/notify.c
-+++ b/drivers/firmware/arm_scmi/notify.c
-@@ -595,9 +595,9 @@ int scmi_notify(const struct scmi_handle *handle, u8 proto_id, u8 evt_id,
- 		return -EINVAL;
- 	}
- 	if (kfifo_avail(&r_evt->proto->equeue.kfifo) < sizeof(eh) + len) {
--		dev_warn(handle->dev,
--			 "queue full, dropping proto_id:%d  evt_id:%d  ts:%lld\n",
--			 proto_id, evt_id, ktime_to_ns(ts));
-+		dev_warn_ratelimited(handle->dev,
-+				     "queue full, dropping proto_id:%d  evt_id:%d  ts:%lld\n",
-+				     proto_id, evt_id, ktime_to_ns(ts));
- 		return -ENOMEM;
- 	}
+diff --git a/drivers/net/ppp/ppp_generic.c b/drivers/net/ppp/ppp_generic.c
+index 2b5843d14cbb84..53e96a8740397c 100644
+--- a/drivers/net/ppp/ppp_generic.c
++++ b/drivers/net/ppp/ppp_generic.c
+@@ -192,6 +192,7 @@ struct channel {
+ 	struct list_head clist;		/* link in list of channels per unit */
+ 	rwlock_t	upl;		/* protects `ppp' and 'bridge' */
+ 	struct channel __rcu *bridge;	/* "bridged" ppp channel */
++	struct rcu_head rcu;		/* for RCU-deferred free of the channel */
+ #ifdef CONFIG_PPP_MULTILINK
+ 	u8		avail;		/* flag used in multilink stuff */
+ 	u8		had_frag;	/* >= 1 fragments have been sent */
+@@ -3555,6 +3556,18 @@ ppp_disconnect_channel(struct channel *pch)
+ 	return err;
+ }
  
++/* Purge after the grace period: a late ppp_input() may still queue an
++ * skb on pch->file.rq before the last RCU reader drains.
++ */
++static void ppp_release_channel_free(struct rcu_head *rcu)
++{
++	struct channel *pch = container_of(rcu, struct channel, rcu);
++
++	skb_queue_purge(&pch->file.xq);
++	skb_queue_purge(&pch->file.rq);
++	kfree(pch);
++}
++
+ /*
+  * Free up the resources used by a ppp channel.
+  */
+@@ -3570,9 +3583,7 @@ static void ppp_destroy_channel(struct channel *pch)
+ 		pr_err("ppp: destroying undead channel %p !\n", pch);
+ 		return;
+ 	}
+-	skb_queue_purge(&pch->file.xq);
+-	skb_queue_purge(&pch->file.rq);
+-	kfree(pch);
++	call_rcu(&pch->rcu, ppp_release_channel_free);
+ }
+ 
+ static void __exit ppp_cleanup(void)
+@@ -3585,6 +3596,7 @@ static void __exit ppp_cleanup(void)
+ 	device_destroy(ppp_class, MKDEV(PPP_MAJOR, 0));
+ 	class_destroy(ppp_class);
+ 	unregister_pernet_device(&ppp_net_ops);
++	rcu_barrier(); /* wait for RCU callbacks before module unload */
+ }
+ 
+ /*
 -- 
 2.53.0
 
