@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41719442FC9;
-	Thu, 30 Jul 2026 14:22:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43C8243D515;
+	Thu, 30 Jul 2026 14:22:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421354; cv=none; b=okhBxbx0k3hthLzayoo89uhauhNMUn/iYyQoMEujDOiYKCQayn5DK5nzNG7WilJZn5C+lx2mAqpprPyiMFCU1Fjf5n7b8VMlzsJ0fRkn8comYVA6VkJYtlqRlhKyi4IIS8r37xGuO5l6C6OxQ1VPDUV3DXTvkleck1D3AS313ZU=
+	t=1785421358; cv=none; b=IHOu+7xFSaq9Q0Hb/wtrc1NaPkpa2VNnTk2g0cbD51xMYD0clqPxpHNxtCFL3R+zKuaKWSUpx24Mmmr9ftCtp+czzzCu0m27ERhe7lljm2yUsUyA6t+UYL70HD2+qC1IMBihvRO270ZzpDzfAvvsqAPOxlkOpvVFLpaCNO6qtzU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421354; c=relaxed/simple;
-	bh=j6JdZvtu/KnQC+Nmm9az3XeEV+6fAOTJKqgKJmBNr0k=;
+	s=arc-20240116; t=1785421358; c=relaxed/simple;
+	bh=kOLg86s7oUUC0GyATzD37VpNh3gqoNdb30WWvIbO/S8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KKp6tUvrcj2Rkpus6bT5MxqP2an8roValpQI5VX75xmbbWcOvrjE5jBN99r151UOb6g8BmJ2E1BcJA2bwf/Q480dswer3ZH6wG4fH7w/zC1lySdLbtTEiS17OV4SCg855tS/2vVzCHgACiAhvpCvfzz1kr9zQ/Zt5cE/6gk1egI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i3J5jQh+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MqfCVWRdP/YPEJDMYQXagBJbCV/u9/xPJ4yEAwhBaf3tmjC0RmWk+SsnVVC3wfVVcYEqQ/SDTqSyq8tU4emSwNiHSqK9/IuOblKrXQZh3fGkLIk1lQ0IBsYu7OK7/pDr+o1hz80H9TrirR1u5BGWRqySoba++MqrSv1Cc7XYsuM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JetHRSx3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i3J5jQh+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98F3E1F000E9;
-	Thu, 30 Jul 2026 14:22:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JetHRSx3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9189E1F000E9;
+	Thu, 30 Jul 2026 14:22:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421353;
-	bh=YCHB+BKyTPM7+OE2rHD9H2eV89nAXAdwdf0bKSWrJYg=;
+	s=korg; t=1785421356;
+	bh=//nncbXN81EwO6kJ12dSO2FIGPd6U4sDeFKfEVNlYUg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i3J5jQh+hKVBaJGcp8AtPgD+Ecr6MFsEHbKu1FAelJZgUOSLGhrEjzlHpUL6KhKIp
-	 4456mdG22qxtwcdzelyWLubPA6NJQ/sLudyn4E+AnyyZsHGV0iyuXsXsHLPUDp2a5s
-	 ABR0ktE1NLCrFX2SN3Iit9dtky1pggnYFo5gDjKo=
+	b=JetHRSx3bcdMaWztA/Wt79R0vQyJibd5/UweNmuCGn7Qf5Uy6C7rqSKMHqXp3QkXD
+	 x9yXSeeiuizurumUwlmIS6g5ihsIkb3DQFRK9tk5hOlq3Chl9spbu8nP2N59pFbhzZ
+	 1oasrYhB9ny3TRiKp2I5BpIJnJy/Sa0zAVND+Cfg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?HE=20WEI=20 ?= <skyexpoc@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Sudeep Holla <sudeep.holla@kernel.org>,
+	Mostafa Saleh <smostafa@google.com>,
+	Sebastian Ene <sebastianene@google.com>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 073/744] wifi: cfg80211: bound element ID read when checking non-inheritance
-Date: Thu, 30 Jul 2026 16:05:46 +0200
-Message-ID: <20260730141445.825188502@linuxfoundation.org>
+Subject: [PATCH 7.1 074/744] firmware: arm_ffa: Fix out-of-bound writes in ffa_setup_and_transmit()
+Date: Thu, 30 Jul 2026 16:05:47 +0200
+Message-ID: <20260730141445.847057194@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -45,60 +47,75 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: HE WEI (ギカク) <skyexpoc@gmail.com>
+From: Mostafa Saleh <smostafa@google.com>
 
-[ Upstream commit cb8afea4655ff004fa7feee825d5c79783525383 ]
+[ Upstream commit 3383ffb7ef937317361713ffcc21921a7848511a ]
 
-cfg80211_is_element_inherited() reads the first data octet of the
-candidate element (id = elem->data[0]) to look it up in an extension
-non-inheritance list. It does so after testing elem->id, but without
-verifying that the element actually has a data octet. A zero-length
-extension element (WLAN_EID_EXTENSION with length 0) therefore makes it
-read one octet past the end of the element.
+Sashiko (locally) reports multiple out-of-bound issues in
+ffa_setup_and_transmit:
+1) Writing ep_mem_access->reserved can write out of bounds for FFA
+   versions < 1.2 as ffa_emad_size_get() returns 16 bytes in that case
+   while reserved has an offset of 24.
+   Instead of zeroing fields, memset the struct to zero first based on
+   the FFA version.
 
-_ieee802_11_parse_elems_full() runs this check for every element of a
-frame once a non-inheritance context exists -- e.g. while parsing a
-per-STA profile of a Multi-Link element in a (re)association response,
-or a non-transmitted BSS profile -- so a crafted frame from an AP can
-trigger a one-octet slab-out-of-bounds read during element parsing:
+2) Make sure there is enough size to write constituents.
 
-  BUG: KASAN: slab-out-of-bounds in cfg80211_is_element_inherited
-  Read of size 1 ... in net/wireless/scan.c
+While at it, convert the only sizeof() in the driver that uses a
+type instead of variable.
 
-Return early (treat the element as inherited) when an extension element
-carries no data, mirroring the existing handling of empty ID lists.
-
-The bug was found by fuzzing ieee802_11_parse_elems_full() under KASAN.
-
-Fixes: f7dacfb11475 ("cfg80211: support non-inheritance element")
-Signed-off-by: HE WEI (ギカク) <skyexpoc@gmail.com>
-Link: https://patch.msgid.link/20260707094828.16465-1-skyexpoc@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Reviewed-by: Sudeep Holla <sudeep.holla@kernel.org>
+Fixes: 111a833dc5cb ("firmware: arm_ffa: Set reserved/MBZ fields to zero in the memory descriptors")
+Signed-off-by: Mostafa Saleh <smostafa@google.com>
+Signed-off-by: Sebastian Ene <sebastianene@google.com>
+Link: https://patch.msgid.link/20260702103848.1647249-2-sebastianene@google.com
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/scan.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/firmware/arm_ffa/driver.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/net/wireless/scan.c b/net/wireless/scan.c
-index 4b7d4c576763ba..8ea6946eb0a353 100644
---- a/net/wireless/scan.c
-+++ b/net/wireless/scan.c
-@@ -205,7 +205,7 @@ bool cfg80211_is_element_inherited(const struct element *elem,
- 		return true;
+diff --git a/drivers/firmware/arm_ffa/driver.c b/drivers/firmware/arm_ffa/driver.c
+index ea0671180a16d9..c9e3d0f246913c 100644
+--- a/drivers/firmware/arm_ffa/driver.c
++++ b/drivers/firmware/arm_ffa/driver.c
+@@ -723,11 +723,10 @@ ffa_setup_and_transmit(u32 func_id, void *buffer, u32 max_fragsize,
+ 	for (idx = 0; idx < args->nattrs; idx++) {
+ 		ep_mem_access = buffer +
+ 			ffa_mem_desc_offset(buffer, idx, drv_info->version);
++		memset(ep_mem_access, 0, ffa_emad_size_get(drv_info->version));
+ 		ep_mem_access->receiver = args->attrs[idx].receiver;
+ 		ep_mem_access->attrs = args->attrs[idx].attrs;
+ 		ep_mem_access->composite_off = composite_offset;
+-		ep_mem_access->flag = 0;
+-		ep_mem_access->reserved = 0;
+ 		ffa_emad_impdef_value_init(drv_info->version,
+ 					   ep_mem_access->impdef_val,
+ 					   args->attrs[idx].impdef_val);
+@@ -767,7 +766,7 @@ ffa_setup_and_transmit(u32 func_id, void *buffer, u32 max_fragsize,
+ 			constituents = buffer;
+ 		}
  
- 	if (elem->id == WLAN_EID_EXTENSION) {
--		if (!ext_id_len)
-+		if (!ext_id_len || !elem->datalen)
- 			return true;
- 		loop_len = ext_id_len;
- 		list = &non_inherit_elem->data[3 + id_len];
+-		if ((void *)constituents - buffer > max_fragsize) {
++		if ((void *)constituents + sizeof(*constituents) - buffer > max_fragsize) {
+ 			pr_err("Memory Region Fragment > Tx Buffer size\n");
+ 			return -EFAULT;
+ 		}
+@@ -776,7 +775,7 @@ ffa_setup_and_transmit(u32 func_id, void *buffer, u32 max_fragsize,
+ 		constituents->pg_cnt = args->sg->length / FFA_PAGE_SIZE;
+ 		constituents->reserved = 0;
+ 		constituents++;
+-		frag_len += sizeof(struct ffa_mem_region_addr_range);
++		frag_len += sizeof(*constituents);
+ 	} while ((args->sg = sg_next(args->sg)));
+ 
+ 	return ffa_transmit_fragment(func_id, addr, buf_sz, frag_len,
 -- 
 2.53.0
 
