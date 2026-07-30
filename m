@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11F0D43F0BE;
-	Thu, 30 Jul 2026 14:41:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D215844103A;
+	Thu, 30 Jul 2026 14:41:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422469; cv=none; b=j8mUzHdmw6hYNv6VpPMx5olSV6h4Vw4qg+hWSLFTsyjhHVzkK4x2Goqp12nXmli3wFojrmI4Y7g+VtRztDbG6suwhN3DuOeF6JlIh9JRVIj4HLRS0OH4car2HMJjIR2Eu18y1rVttWIOFZvZltmQSY9q9pmAvN38GS9+O2huV5A=
+	t=1785422472; cv=none; b=sBXZJ5zQEJaFgHD0BQQFtDRf/P+UItslEuzgJMz74stGjenLh0RuE8axKid9/AE0dXxV+yFBCZ/tO/gjeEXOpWxDijOpBYV60eR2I4aDrgOLQLwz4rlI8Z58aV25SHNWTjfrzb8ZAhN/sXirhtsbW4CosjXSovjoI9FA4thaio8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422469; c=relaxed/simple;
-	bh=uoIfeg0MvFn9JqrOiwnOw0X1mv5LlQtuv2RFtNLCBJ4=;
+	s=arc-20240116; t=1785422472; c=relaxed/simple;
+	bh=XCb3f3Ku+LOkqGTaocr09yaKAnJDexztsKzHrUz9a0E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MSgocDT6T7czxh7rN7foKNdMh77VaStUvP7Yht7ul5jsnPqZ8axjbiqaJE2JvZcuw/fORpAxLKmv7+xcWUoNKpFeOh8KE5AW9MbHXa1HmaIs/s54jKQw7ns7C4+uJylzE3TfZifPcg46DTRrUhFDpFlFhGC52m6LmZaOpntbYTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rDoKj1Dr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HnVva211alTH1kchHdCl8SHza+H6VjNBU99ZrZ4VE07EEDMIIPr1bfO2BJdgo5fmSqpntOX4kCfDm7W1I+JIKOxqZoC545J2cCYxqfgQ/3d/AWCv4anpd6+70tDszjeCLzMZ/mk4wKhwcGdRrq/7bV49vXwdEqm4m6sjJ1VzW/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qAmGMjQB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rDoKj1Dr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C8AA1F000E9;
-	Thu, 30 Jul 2026 14:41:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qAmGMjQB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 375AA1F000E9;
+	Thu, 30 Jul 2026 14:41:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422468;
-	bh=oa4aEcZ4YVDAM5q6Flc3/lMwFVzPWqAynp6o9dXseMw=;
+	s=korg; t=1785422470;
+	bh=0Yfntzcn9wqRJLtBona5k/niybN0QQorob55Pu7Rkdk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rDoKj1DrMrPNDaW//9S8g/attPNJaMiot1U0GbF0PBZ4pVnukN/FHq/vPBQlBMW4c
-	 8kGblyJLKjWaDNtgZDwR88JoEhJV5mMtEm52r5RNp9xo55rcWwvTYdJuL25m9S4tpH
-	 SEy+64LPInG1GWu8N1Cr1ump993d2fgjUj/HuhUM=
+	b=qAmGMjQBTDBA6ye5/+2HinwWWElaDbQRd5KSgESQcJArflKCFKUILI4JkfVU/UD24
+	 f2RHPhj8n7rn3FqXTeLlwRfl0LY6xwXl4tmresHmFQioATLsomQygM94f5klP06gz8
+	 jiUNuJqNv/BN44Wv7y9KkO4meCtJGPxrBef27wY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Osama Abdelkader <osama.abdelkader@gmail.com>,
-	Liviu Dudau <liviu.dudau@arm.com>,
-	Boris Brezillon <boris.brezillon@collabora.com>
-Subject: [PATCH 7.1 448/744] drm/panthor: return error on truncated firmware
-Date: Thu, 30 Jul 2026 16:12:01 +0200
-Message-ID: <20260730141453.818640696@linuxfoundation.org>
+	David Francis <David.Francis@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 7.1 413/744] drm/amdkfd: Use kvcalloc to allocate arrays
+Date: Thu, 30 Jul 2026 16:11:26 +0200
+Message-ID: <20260730141453.074498232@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -51,38 +50,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Osama Abdelkader <osama.abdelkader@gmail.com>
+From: David Francis <David.Francis@amd.com>
 
-commit 4a2c8cbe9bcba170706fdf08b1c84b6cbcf5b044 upstream.
+commit 9c8b85f95c1d4736b967e17b8eb4a463c055bea3 upstream.
 
-panthor_fw_load() detects truncated firmware images, but jumps to the
-common cleanup path without setting ret. If no previous error was recorded,
-the function can return 0 and treat the invalid firmware as successfully
-loaded.
+There were a few instances in kfd_chardev.c of kvzalloc being
+used to allocate memory for an array.
 
-Set ret to -EINVAL before leaving the truncated-image path.
+Switch those to kvcalloc, which
+- is the standard way of allocating a zero-initialized array
+- does a check for the mul overflowing
 
-Fixes: 2718d91816ee ("drm/panthor: Add the FW logical block")
+Signed-off-by: David Francis <David.Francis@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 60b048c93f7a3add39757ad65fe2bb6e58eeae23)
 Cc: stable@vger.kernel.org
-Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
-Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
-Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
-Link: https://patch.msgid.link/20260714163056.22329-1-osama.abdelkader@gmail.com
-Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/panthor/panthor_fw.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/amdkfd/kfd_chardev.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/gpu/drm/panthor/panthor_fw.c
-+++ b/drivers/gpu/drm/panthor/panthor_fw.c
-@@ -824,6 +824,7 @@ static int panthor_fw_load(struct pantho
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
+@@ -1837,13 +1837,13 @@ static int criu_checkpoint_devices(struc
+ 	struct kfd_criu_device_bucket *device_buckets = NULL;
+ 	int ret = 0, i;
+ 
+-	device_buckets = kvzalloc(num_devices * sizeof(*device_buckets), GFP_KERNEL);
++	device_buckets = kvcalloc(num_devices, sizeof(*device_buckets), GFP_KERNEL);
+ 	if (!device_buckets) {
+ 		ret = -ENOMEM;
+ 		goto exit;
  	}
  
- 	if (hdr.size > iter.size) {
-+		ret = -EINVAL;
- 		drm_err(&ptdev->base, "Firmware image is truncated\n");
- 		goto out;
+-	device_priv = kvzalloc(num_devices * sizeof(*device_priv), GFP_KERNEL);
++	device_priv = kvcalloc(num_devices, sizeof(*device_priv), GFP_KERNEL);
+ 	if (!device_priv) {
+ 		ret = -ENOMEM;
+ 		goto exit;
+@@ -1963,17 +1963,17 @@ static int criu_checkpoint_bos(struct kf
+ 	int ret = 0, pdd_index, bo_index = 0, id;
+ 	void *mem;
+ 
+-	bo_buckets = kvzalloc(num_bos * sizeof(*bo_buckets), GFP_KERNEL);
++	bo_buckets = kvcalloc(num_bos, sizeof(*bo_buckets), GFP_KERNEL);
+ 	if (!bo_buckets)
+ 		return -ENOMEM;
+ 
+-	bo_privs = kvzalloc(num_bos * sizeof(*bo_privs), GFP_KERNEL);
++	bo_privs = kvcalloc(num_bos, sizeof(*bo_privs), GFP_KERNEL);
+ 	if (!bo_privs) {
+ 		ret = -ENOMEM;
+ 		goto exit;
  	}
+ 
+-	files = kvzalloc(num_bos * sizeof(struct file *), GFP_KERNEL);
++	files = kvcalloc(num_bos, sizeof(struct file *), GFP_KERNEL);
+ 	if (!files) {
+ 		ret = -ENOMEM;
+ 		goto exit;
+@@ -2510,7 +2510,7 @@ static int criu_restore_bos(struct kfd_p
+ 	if (!bo_buckets)
+ 		return -ENOMEM;
+ 
+-	files = kvzalloc(args->num_bos * sizeof(struct file *), GFP_KERNEL);
++	files = kvcalloc(args->num_bos, sizeof(struct file *), GFP_KERNEL);
+ 	if (!files) {
+ 		ret = -ENOMEM;
+ 		goto exit;
 
 
