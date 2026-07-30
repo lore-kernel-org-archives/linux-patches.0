@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB07F40FDB9;
-	Thu, 30 Jul 2026 14:50:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 905FF40FDB9;
+	Thu, 30 Jul 2026 14:50:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423001; cv=none; b=qO01ueiI13ZS9SEfQdFWSk7+4g5/1UHYVkDwdy7cKUl3p29kj2yzg93aftPz80EyxH0vfzpavsB+jN9WN2oztyPoKwH+NtrmKPdhVwCe/F78c72ZtsnT7e9JnwYlxGKULyXX2QsfODdnXP/OYBpWZl+bD8Yvg4+KH7zIQGGEOwc=
+	t=1785423004; cv=none; b=Xob0WcpdbebFehjU7j64sg5PpCe+QYxrtsdRi0urRGRllWESLhcd8Ee/sMGu236XR31SAF7a2k+KbDIIGFDtR2JMB9yvRTl2HsLDi6ltxxo36M2sS5PnJZJDc63C1g6Ci6NXKuLS2sD1F1f3vPcNpA/VAsKMcYEvvCkQBGPe+YA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423001; c=relaxed/simple;
-	bh=X1E6dYuqB2aG7Byo00OFSMLQbpge1A21a6hYW41kYro=;
+	s=arc-20240116; t=1785423004; c=relaxed/simple;
+	bh=NdoLw7dC5pGhhUa5McO6pb8tHBKBtAcuZL6aWPPuRno=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YeXtyi4XbfyxymVlU2ekiY8uMp65qiDUIiN6EeKiWsoFvbAz+LoXGzYls9GRL+Y4SPiqbDmZ69zU46f6AJ3sbP9tm/1Ni3PZvk0HxpRIfG7SRQ3Td/+p75EOcxopcFhaoiRgQMS46k0S8vcqHwDJ6xplNqqz/Kv03RUIFXb3zSU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fu5qjx5v; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QRs9VPQIxvPEfx5uov6JnpRwfnoTezrl3nF6IEsGd+lQta8YuwF4rOgWpR6WfiLj3fxJuUdkbNt5bBk3wPFLHMDuDv8GVdTCr9CqUanP74k6G5G0Cvo4UI+ktp+pe5OgMBYHRwjYHDvjU/9NMfEInQ6BkoKE8KCD9ChqjLLtD3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OKIyY2tf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fu5qjx5v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21BF31F00A3D;
-	Thu, 30 Jul 2026 14:49:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OKIyY2tf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB8FB1F000E9;
+	Thu, 30 Jul 2026 14:50:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423000;
-	bh=7Wxp0taZzY/wCDVtth6qOKh2GcIXoEOnyf7awWTgPHw=;
+	s=korg; t=1785423003;
+	bh=BBWoqQdZoze+RLG4S6xrY5uDwvHLCeIR2MkMpigmWUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Fu5qjx5vWmPtqzPpK9rJ6GVj2Ldp/AlxqZMlCFXwlscoQb5M+T1nudTgWViMzE8h+
-	 liI7Snugsz0QlAMyhJq6P0eI5Ejg62g6ZDGr6ONBX4gfGg7zFD+ahkWaPwFRhHv2sp
-	 ZIO9BzpAWA4TyT6LYhrLFJK40aHkg7GTV/Zp03ds=
+	b=OKIyY2tfFhcOAlBkth8nMK9EBFNPmVHiqTQ8z1Fty4z48vUR0e9wxL4qNIXkVbNWH
+	 T7Vn0SjyqpEb6vqYgrnmCyxAxcMBt4guzA9ljHinjtJEJuqxwrHkejtMOKeKFsSknC
+	 0mx50k8VuMYriPj1Et8HuJFuj5uMDdj9VQSdMbIs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Alex Markuze <amarkuze@redhat.com>,
+	Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
 	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 7.1 630/744] libceph: bound pg_{temp,upmap,upmap_items} length to CEPH_PG_MAX_SIZE
-Date: Thu, 30 Jul 2026 16:15:03 +0200
-Message-ID: <20260730141457.667142140@linuxfoundation.org>
+Subject: [PATCH 7.1 631/744] libceph: Fix multiplication overflow in decode_new_up_state_weight()
+Date: Thu, 30 Jul 2026 16:15:04 +0200
+Message-ID: <20260730141457.687899686@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -52,68 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
 
-commit 9f00f9cf2be293efe899db67dc5272e3a9c62717 upstream.
+commit 98917a499ec7064c14fc56d180a4fd636fc2784c upstream.
 
-__decode_pg_temp() decodes an user-controlled length but only rejects
-values large enough to overflow the allocation; it does not bound it to
-CEPH_PG_MAX_SIZE. The helper backs both pg_temp and pg_upmap decoding, and
-apply_upmap()/get_temp_osds() later copy the decoded list into the fixed-size
-on-stack array struct ceph_osds.osds[CEPH_PG_MAX_SIZE]. A monitor that sends
-an OSDMap with a pg_temp/pg_upmap entry longer than 32 thus causes a stack
-out-of-bounds write.
+If a message of type CEPH_MSG_OSD_MAP contains a (maliciously) corrupted
+osdmap, out-of-bounds memory accesses may occur in
+decode_new_up_state_weight(). This happens because the bounds check for
+the new_state part is based on calculating its length depending on a len
+value read from the incoming message. This calculation may overflow
+leading to an incorrect bounds check. Subsequently, out-of-bounds reads
+may occur when decoding this part.
 
-An OSD set for a single PG can never exceed CEPH_PG_MAX_SIZE, so reject longer
-entries at decode time. The bound is well below the old overflow threshold, so
-it also covers the allocation-size overflow the previous check guarded against.
+This patch switches the multiplication to use check_mul_overflow() to
+abort processing the osdmap if an overflow occurred. Therefore,
+osdmaps/messages containing large values for len that result in a
+multiplication overflow are treated as invalid.
 
-  BUG: KASAN: stack-out-of-bounds in ceph_pg_to_up_acting_osds
-  Write of size 4 ... by task exploit
-   kasan_report (mm/kasan/report.c:595)
-   ceph_pg_to_up_acting_osds (net/ceph/osdmap.c:2617 net/ceph/osdmap.c:2833)
-   calc_target (net/ceph/osd_client.c:1638)
-   __submit_request (net/ceph/osd_client.c:2394)
-   ceph_osdc_start_request (net/ceph/osd_client.c:2490)
-   ceph_osdc_call (net/ceph/osd_client.c:5164)
-   rbd_dev_image_probe (drivers/block/rbd.c:6899)
-   do_rbd_add (drivers/block/rbd.c:7138)
-   ...
-  kernel BUG at net/ceph/osdmap.c:2670!
-
-[ idryomov: do the same in __decode_pg_upmap_items() ]
+[ idryomov: rename new_state_len -> new_state_item_size, formatting ]
 
 Cc: stable@vger.kernel.org
-Fixes: a303bb0e5834 ("libceph: introduce and switch to decode_pg_mapping()")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Fixes: 930c53286977 ("libceph: apply new_state before new_up_client on incrementals")
+Signed-off-by: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
+Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/osdmap.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/ceph/osdmap.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 --- a/net/ceph/osdmap.c
 +++ b/net/ceph/osdmap.c
-@@ -1436,7 +1436,7 @@ static struct ceph_pg_mapping *__decode_
+@@ -1842,6 +1842,8 @@ static int decode_new_up_state_weight(vo
+ 	void *new_up_client;
+ 	void *new_state;
+ 	void *new_weight_end;
++	const u32 new_state_item_size =
++	    sizeof(u32) + (struct_v >= 5 ? sizeof(u32) : sizeof(u8));
+ 	u32 len;
+ 	int ret;
+ 	int i;
+@@ -1862,7 +1864,8 @@ static int decode_new_up_state_weight(vo
+ 
+ 	new_state = *p;
  	ceph_decode_32_safe(p, end, len, e_inval);
- 	if (len == 0 && incremental)
- 		return NULL;	/* new_pg_temp: [] to remove */
--	if ((size_t)len > (SIZE_MAX - sizeof(*pg)) / sizeof(u32))
-+	if (len > CEPH_PG_MAX_SIZE)
- 		return ERR_PTR(-EINVAL);
+-	len *= sizeof(u32) + (struct_v >= 5 ? sizeof(u32) : sizeof(u8));
++	if (check_mul_overflow(len, new_state_item_size, &len))
++		goto e_inval;
+ 	ceph_decode_need(p, end, len, e_inval);
+ 	*p += len;
  
- 	ceph_decode_need(p, end, len * sizeof(u32), e_inval);
-@@ -1617,7 +1617,7 @@ static struct ceph_pg_mapping *__decode_
- 	u32 len, i;
- 
- 	ceph_decode_32_safe(p, end, len, e_inval);
--	if ((size_t)len > (SIZE_MAX - sizeof(*pg)) / (2 * sizeof(u32)))
-+	if (len > CEPH_PG_MAX_SIZE)
- 		return ERR_PTR(-EINVAL);
- 
- 	ceph_decode_need(p, end, 2 * len * sizeof(u32), e_inval);
 
 
