@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 398CA431488;
-	Thu, 30 Jul 2026 14:38:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D3D4411689;
+	Thu, 30 Jul 2026 14:38:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422304; cv=none; b=qsXQrp5y0ES8IAw7KgiyHrqvK39BuqBYUJvbZx23lok5//OBaAD7bNIny1Imx44AtxnbRkadpk+VSrnrfryWQckRuEsEj+MEU9/2Gb3ClAjFUQ4HxBcZgdUzFO2vgpIMnZaj2esYoBmosirDd09hx4IbxAORT0BPki4MC7r5nXo=
+	t=1785422306; cv=none; b=jkpvh8lucKPXCGSTxFfanlHiZwniixIP3hKBbP5i0Br05PM+Oe3V003kirG5yZtt4i9xPHVfMBKjOeVv4Z0j4u9XsW1uxrOWuFO9Pg8y0zOrUQ527O2Lx5sByFF/DPgpTppdhlv86qtqG2Kv5pbZ1D0i0zfaXxUnHZDplcFbihk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422304; c=relaxed/simple;
-	bh=JWtWhTJmol9QSdzeFP3vMC1T2QMyHjWVoGyvksBUPMQ=;
+	s=arc-20240116; t=1785422306; c=relaxed/simple;
+	bh=VAPnoHzSlALjZ6NvaSZg00cgfxvad1DXz7Me5lK+r9E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N2YIhJ9q1W9HeSR3oN7pFkNMl3Ml03EPLmdtCa48NwJhpftuRKjVU+I1KJjxI1xwektqUVkdHiWtxP8I8Y/8hDRqCvJ2HXAoiQXJmni/fkU5/OTDsUE7WSgORtko5NBP4dk62j8ZApTvsdfp/c3Uh52NvB+YZ2yKuwCWMHNOUQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bs0qtD5F; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=n/FVYhE0JLsdQ1juAohZH2FRoYmG7fsz6QupqLiCHCa1DrevfVp5BA+GtyClc9GJ2L2JLXn2Cy000ihcWkRYcTnhiXGiAhYiexYUzzh1hu6G6YO9b7fR4OPU5TmbjiC2XFafNJ6V/Fjd1gKdHXVwFC4wc7I0P9w9ipIwqVtv1yM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=COqTcc1X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bs0qtD5F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 940981F000E9;
-	Thu, 30 Jul 2026 14:38:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="COqTcc1X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9764B1F00A3A;
+	Thu, 30 Jul 2026 14:38:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422302;
-	bh=fKk5VH6DBU0bUMDQW7HKx8KNipr2q17RM9q8cmRe6UA=;
+	s=korg; t=1785422305;
+	bh=JeQO37gVfWVUnJMni6Xf7lQAG2tpQ0zZzrOY3MKa5YY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Bs0qtD5Fw60xRgZoJ08fOI2hlx+zsvc8WG45MhWwjpPjFPXCVIm71Piq6oN2IBjxf
-	 t4fRL6a/C9ek2ru4OpMi3xlHoFL6s4R7cQ0iIKQd/mo5IUQBqIdITRLMj9c9ceS8IQ
-	 e6pbRl+2d7iuFRw5kyLbCfK1rkpoE6o0f5g3i9xQ=
+	b=COqTcc1X+rFENg1+jxU4YTljWuq2HUzPAhL7B3rCDjs38ykaz5zwZLSzinIiPxaKs
+	 /Hpu2JSpJew8ZvTY2nkUUUR62fyrlL4wNKld5r3tChUOGra37DstgC1bTbGbWIsAcA
+	 PgJGR0PQCMGUSCnoW1RLXIUas97lOVUfNqmoT/AU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Vitor Soares <vitor.soares@toradex.com>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>
-Subject: [PATCH 7.1 365/744] drm/bridge: cdns-dsi: Replace deprecated UNIVERSAL_DEV_PM_OPS()
-Date: Thu, 30 Jul 2026 16:10:38 +0200
-Message-ID: <20260730141452.042157667@linuxfoundation.org>
+	Dave Airlie <airlied@redhat.com>,
+	Jani Nikula <jani.nikula@intel.com>
+Subject: [PATCH 7.1 392/744] drm/displayid: fix Tiled Display Topology ID size
+Date: Thu, 30 Jul 2026 16:11:05 +0200
+Message-ID: <20260730141452.620759365@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -51,90 +50,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vitor Soares <vitor.soares@toradex.com>
+From: Jani Nikula <jani.nikula@intel.com>
 
-commit 2d8b08844c0ecc6f2002fa68711e779aa18c8585 upstream.
+commit 90c0486a82e27393f9eaf3bb350f51a0bd38cb6b upstream.
 
-The deprecated UNIVERSAL_DEV_PM_OPS() macro uses the provided callbacks
-for both runtime PM and system sleep. This causes the DSI clocks to be
-disabled twice: once during runtime suspend and again during system
-suspend, resulting in a WARN message from the clock framework when
-attempting to disable already-disabled clocks.
+The Tiled Display Topology ID of a DisplayID Tiled Display Topology Data
+Block consists of three fields:
 
-[   84.384540] clk:231:5 already disabled
-[   84.388314] WARNING: CPU: 2 PID: 531 at /drivers/clk/clk.c:1181 clk_core_disable+0xa4/0xac
-...
-[   84.579183] Call trace:
-[   84.581624]  clk_core_disable+0xa4/0xac
-[   84.585457]  clk_disable+0x30/0x4c
-[   84.588857]  cdns_dsi_suspend+0x20/0x58 [cdns_dsi]
-[   84.593651]  pm_generic_suspend+0x2c/0x44
-[   84.597661]  ti_sci_pd_suspend+0xbc/0x15c
-[   84.601670]  dpm_run_callback+0x8c/0x14c
-[   84.605588]  __device_suspend+0x1a0/0x56c
-[   84.609594]  dpm_suspend+0x17c/0x21c
-[   84.613165]  dpm_suspend_start+0xa0/0xa8
-[   84.617083]  suspend_devices_and_enter+0x12c/0x634
-[   84.621872]  pm_suspend+0x1fc/0x368
+- Tiled Display Manufacturer/Vendor ID Field (3 bytes)
+- Tiled Display Product ID Code Field (2 bytes)
+- Tiled Display Serial Number Field (4 bytes)
 
-To address this issue, replace UNIVERSAL_DEV_PM_OPS() with
-RUNTIME_PM_OPS(). Bridge and panel drivers should only deal with runtime
-PM, as the DRM framework manages system-wide power transitions through
-the bridge enable() and disable() hooks.
+i.e. a total of 9 bytes, not 8.
 
-Link: https://lore.kernel.org/all/fbde0659-78f3-46e4-98cf-d832f765a18b@ideasonboard.com/
-Cc: stable@vger.kernel.org # 6.1.x
-Fixes: e19233955d9e ("drm/bridge: Add Cadence DSI driver")
-Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Signed-off-by: Vitor Soares <vitor.soares@toradex.com>
-Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Link: https://patch.msgid.link/20260505134705.188661-2-ivitro@gmail.com
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+The DisplayID Tiled Display Topology ID is used as the tile group
+identifier.
+
+Update both struct displayid_tiled_block topology_id member and struct
+drm_tile_group group_data member to full 9 bytes.
+
+The group data was missing the last byte of the serial number. I don't
+know whether there are known bug reports that might be linked to this,
+but it's plausible the last byte could be the differentiating part for
+the tile groups, and fewer tile groups might have been created than
+intended.
+
+Fixes: b49b55bd4fba ("drm/displayid: add displayid defines and edid extension (v2)")
+Fixes: 138f9ebb9755 ("drm: add tile_group support. (v3)")
+Cc: Dave Airlie <airlied@redhat.com>
+Cc: stable@vger.kernel.org # v3.19+
+Reviewed-by: Dave Airlie <airlied@redhat.com>
+Link: https://patch.msgid.link/20260610141549.555605-1-jani.nikula@intel.com
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/bridge/cadence/cdns-dsi-core.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/drm_connector.c          |   12 ++++++------
+ drivers/gpu/drm/drm_displayid_internal.h |    2 +-
+ include/drm/drm_connector.h              |    6 +++---
+ 3 files changed, 10 insertions(+), 10 deletions(-)
 
---- a/drivers/gpu/drm/bridge/cadence/cdns-dsi-core.c
-+++ b/drivers/gpu/drm/bridge/cadence/cdns-dsi-core.c
-@@ -1230,7 +1230,7 @@ static const struct mipi_dsi_host_ops cd
- 	.transfer = cdns_dsi_transfer,
+--- a/drivers/gpu/drm/drm_connector.c
++++ b/drivers/gpu/drm/drm_connector.c
+@@ -3576,7 +3576,7 @@ EXPORT_SYMBOL(drm_mode_put_tile_group);
+ /**
+  * drm_mode_get_tile_group - get a reference to an existing tile group
+  * @dev: DRM device
+- * @topology: 8-bytes unique per monitor.
++ * @topology_id: 9-byte unique ID per monitor.
+  *
+  * Use the unique bytes to get a reference to an existing tile group.
+  *
+@@ -3584,14 +3584,14 @@ EXPORT_SYMBOL(drm_mode_put_tile_group);
+  * tile group or NULL if not found.
+  */
+ struct drm_tile_group *drm_mode_get_tile_group(struct drm_device *dev,
+-					       const char topology[8])
++					       const char topology_id[9])
+ {
+ 	struct drm_tile_group *tg;
+ 	int id;
+ 
+ 	mutex_lock(&dev->mode_config.idr_mutex);
+ 	idr_for_each_entry(&dev->mode_config.tile_idr, tg, id) {
+-		if (!memcmp(tg->group_data, topology, 8)) {
++		if (!memcmp(tg->group_data, topology_id, sizeof(tg->group_data))) {
+ 			if (!kref_get_unless_zero(&tg->refcount))
+ 				tg = NULL;
+ 			mutex_unlock(&dev->mode_config.idr_mutex);
+@@ -3606,7 +3606,7 @@ EXPORT_SYMBOL(drm_mode_get_tile_group);
+ /**
+  * drm_mode_create_tile_group - create a tile group from a displayid description
+  * @dev: DRM device
+- * @topology: 8-bytes unique per monitor.
++ * @topology_id: 9-byte unique ID per monitor.
+  *
+  * Create a tile group for the unique monitor, and get a unique
+  * identifier for the tile group.
+@@ -3615,7 +3615,7 @@ EXPORT_SYMBOL(drm_mode_get_tile_group);
+  * new tile group or NULL.
+  */
+ struct drm_tile_group *drm_mode_create_tile_group(struct drm_device *dev,
+-						  const char topology[8])
++						  const char topology_id[9])
+ {
+ 	struct drm_tile_group *tg;
+ 	int ret;
+@@ -3625,7 +3625,7 @@ struct drm_tile_group *drm_mode_create_t
+ 		return NULL;
+ 
+ 	kref_init(&tg->refcount);
+-	memcpy(tg->group_data, topology, 8);
++	memcpy(tg->group_data, topology_id, sizeof(tg->group_data));
+ 	tg->dev = dev;
+ 
+ 	mutex_lock(&dev->mode_config.idr_mutex);
+--- a/drivers/gpu/drm/drm_displayid_internal.h
++++ b/drivers/gpu/drm/drm_displayid_internal.h
+@@ -109,7 +109,7 @@ struct displayid_tiled_block {
+ 	u8 topo[3];
+ 	u8 tile_size[4];
+ 	u8 tile_pixel_bezel[5];
+-	u8 topology_id[8];
++	u8 topology_id[9];
+ } __packed;
+ 
+ struct displayid_detailed_timings_1 {
+--- a/include/drm/drm_connector.h
++++ b/include/drm/drm_connector.h
+@@ -2608,13 +2608,13 @@ struct drm_tile_group {
+ 	struct kref refcount;
+ 	struct drm_device *dev;
+ 	int id;
+-	u8 group_data[8];
++	u8 group_data[9];
  };
  
--static int __maybe_unused cdns_dsi_resume(struct device *dev)
-+static int cdns_dsi_resume(struct device *dev)
- {
- 	struct cdns_dsi *dsi = dev_get_drvdata(dev);
+ struct drm_tile_group *drm_mode_create_tile_group(struct drm_device *dev,
+-						  const char topology[8]);
++						  const char topology_id[9]);
+ struct drm_tile_group *drm_mode_get_tile_group(struct drm_device *dev,
+-					       const char topology[8]);
++					       const char topology_id[9]);
+ void drm_mode_put_tile_group(struct drm_device *dev,
+ 			     struct drm_tile_group *tg);
  
-@@ -1241,7 +1241,7 @@ static int __maybe_unused cdns_dsi_resum
- 	return 0;
- }
- 
--static int __maybe_unused cdns_dsi_suspend(struct device *dev)
-+static int cdns_dsi_suspend(struct device *dev)
- {
- 	struct cdns_dsi *dsi = dev_get_drvdata(dev);
- 
-@@ -1251,8 +1251,9 @@ static int __maybe_unused cdns_dsi_suspe
- 	return 0;
- }
- 
--static UNIVERSAL_DEV_PM_OPS(cdns_dsi_pm_ops, cdns_dsi_suspend, cdns_dsi_resume,
--			    NULL);
-+static const struct dev_pm_ops cdns_dsi_pm_ops = {
-+	RUNTIME_PM_OPS(cdns_dsi_suspend, cdns_dsi_resume, NULL)
-+};
- 
- static int cdns_dsi_drm_probe(struct platform_device *pdev)
- {
-@@ -1399,7 +1400,7 @@ static struct platform_driver cdns_dsi_p
- 	.driver = {
- 		.name   = "cdns-dsi",
- 		.of_match_table = cdns_dsi_of_match,
--		.pm = &cdns_dsi_pm_ops,
-+		.pm = pm_ptr(&cdns_dsi_pm_ops),
- 	},
- };
- module_platform_driver(cdns_dsi_platform_driver);
 
 
