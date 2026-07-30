@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 916EF3806BD;
-	Thu, 30 Jul 2026 15:49:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B95F936607D;
+	Thu, 30 Jul 2026 15:49:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426582; cv=none; b=BtTUDhavFtUKW306aZ/S+8ykblRWeTV1aKr9n4D2LcXTuryHXuxAvnibSbwD71TrlAyiwu9xE5n/TnX/rKc2GbL93j70wMPUxlbb17U+cZxRp0Ba9O02zF1HYJ9q7o2MuTRdKbMGey6eQGXCdqWzenw7jqzf+mj/qtvtzg1nlMY=
+	t=1785426585; cv=none; b=MWeVEDqhXnHXD9SFJChTmiyJVatpwpOy8PGnhfWJCJBfj8c8OBWRd+0ltXUjUrQJGj2yN9xtPXnLTramm78CUGAdW9smzhlNdr+fsJuxUAdnJ0xiLlI8l7i3hvV6BUmS2Dv2kWwzx+3K2x+eskER9nHj/xGV5wmroPinZ4O0Wmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426582; c=relaxed/simple;
-	bh=9ZOp4aC0PswJ0DbbHOdSeaAg53m4Upcn2LsO8coaDsA=;
+	s=arc-20240116; t=1785426585; c=relaxed/simple;
+	bh=2gS6WMYJBu9Yz7TsGzP1x+Qesv45AruV7yeWCy0X5Go=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NjhK2KcmlFXsqg2LIvbhALTi2WJ1CNt2rwZF0CIt6Jm10o3Vl1tgp5h/dtaUpS9nND0nZnQEkaWcLngufdU1DX460PcWz+LILL83uDe8dAPIwK+wSqgHz6eGkIA46seAMvNV0dWoZJ/DXhBM8/l+V6wIMN0kwKVxa072wG/TYu8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IdqKW6EE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dW/4kqKKQP+vvZ0C3qoooWFWaYtKAlAqNIKJa6tKLM6UNZz7UozTBMD9QGlr1FXUeh51H7vzhBOxVHaGzIo24BrY7JAtXEQaNvDVFkV4t0Z/MoW641AZQSHtiXnhZXBimYhoSfPWvy2MHmyl6NKuKaI1cPGYx4WRUHqG67ibb9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aFABEG7A; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IdqKW6EE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC7B61F000E9;
-	Thu, 30 Jul 2026 15:49:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aFABEG7A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C41EE1F000E9;
+	Thu, 30 Jul 2026 15:49:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426581;
-	bh=OhV+UOZ6n1BynsGIy7mECTfNwYCLjA8hwgSJyUo6bMU=;
+	s=korg; t=1785426584;
+	bh=yq0vKgm995ngDBv2CYPmnR8WyjXpYa49dWn729QpAKI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IdqKW6EEPg8J5OxrRgWqgDUFtC6PcofQeF6m5wR9k0MquAeFQ5GoglS9CrvjqzbOn
-	 pja7KAdZE0vb/o1pIjkeJt/AlrgUHzWM0aCzeLeRCU8i/v0EJ3xK53mjEy6v6TkJ36
-	 GIXMCLlQU1NFa2X+VbpNuJ3VVeNNBlQ7MgPO4eFE=
+	b=aFABEG7AVL/T5RkAP09zmdR5+/Ajn3yYQbjlubffSI8SpK4LDCmDZKW8w+Ffc0M2+
+	 JFX9l1F1JAzCl8EU3rcd0A3F/G5dupg7xyeuR6jaKeZeCGXjFgCaHiFc7Wg0QyocTd
+	 +8NL6ByXt4tlb59N1A0kjSNxgPG4Is9mwMxOZsmM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ibrahim Hashimov <security@auditcode.ai>,
+	Simon Horman <horms@kernel.org>,
+	Doruk Tan Ozturk <doruk@0sec.ai>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 425/602] mac802154: hold an interface reference across the scan worker
-Date: Thu, 30 Jul 2026 16:13:37 +0200
-Message-ID: <20260730141444.895767654@linuxfoundation.org>
+Subject: [PATCH 6.12 426/602] mac802154: llsec: reject frames shorter than the authentication tag
+Date: Thu, 30 Jul 2026 16:13:38 +0200
+Message-ID: <20260730141444.917253072@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -50,78 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ibrahim Hashimov <security@auditcode.ai>
+From: Doruk Tan Ozturk <doruk@0sec.ai>
 
-commit 234e5e898b713bc0b3a631b6f002897f43d046c8 upstream.
+commit fd3a3f28ed60c6af4b2a39933b151d6b27842c3b upstream.
 
-mac802154_scan_worker() captures the scanning sub-interface under RCU
-and then keeps dereferencing sdata->dev after rcu_read_unlock() and
-outside the rtnl -- in the failure traces, in
-mac802154_transmit_beacon_req() (skb->dev = sdata->dev), and in the
-end_scan cleanup. Nothing keeps that netdev alive across the worker
-iteration.
+llsec_do_decrypt_auth() computes the associated-data length for the
+AEAD request as
 
-A concurrent DEL_INTERFACE or PHY removal can unregister the interface
-once the worker drops the rtnl between its two drv_set_channel()
-sections. unregister_netdevice() frees the netdev asynchronously from
-netdev_run_todo() with the rtnl already dropped, so neither holding the
-rtnl nor the per-PHY IEEE802154_IS_SCANNING flag prevents a stale worker
-iteration from dereferencing the freed netdev -- a KASAN
-slab-use-after-free, reachable by racing TRIGGER_SCAN against
-DEL_INTERFACE (both CAP_NET_ADMIN).
+	assoclen += datalen - authlen;
 
-Pin the netdev with netdev_hold() while the RCU read lock is still held,
-and release it at every worker exit.
+where datalen is the number of bytes after the MAC header and authlen
+(4, 8 or 16) is the length of the authentication tag. Nothing verifies
+that the frame actually carries at least authlen payload bytes. A
+secured frame whose payload is shorter than the tag makes
+datalen - authlen negative; assoclen is then passed to
+aead_request_set_ad() as an unsigned value close to 4 GiB, so
+crypto_aead_decrypt() walks far off the end of the scatterlist that
+only spans the real frame.
 
-Fixes: 57588c71177f ("mac802154: Handle passive scanning")
+The frame is fully attacker-controlled and reaches this path from any
+IEEE 802.15.4 peer in radio range. Reject frames whose payload is
+shorter than the authentication tag before the subtraction.
+
+Dynamically reproduced on a KASAN kernel as a general-protection-fault
+in the AEAD scatterwalk, and the fix confirmed.
+
+Fixes: 4c14a2fb5d14 ("mac802154: add llsec decryption method")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ibrahim Hashimov <security@auditcode.ai>
-Link: https://patch.msgid.link/20260721211228.34578-1-security@auditcode.ai
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
+Link: https://patch.msgid.link/20260716193423.32498-1-doruk@0sec.ai
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac802154/scan.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ net/mac802154/llsec.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/net/mac802154/scan.c
-+++ b/net/mac802154/scan.c
-@@ -179,6 +179,7 @@ void mac802154_scan_worker(struct work_s
- 	enum nl802154_scan_types scan_req_type;
- 	struct ieee802154_sub_if_data *sdata;
- 	unsigned int scan_duration = 0;
-+	netdevice_tracker dev_tracker;
- 	struct wpan_phy *wpan_phy;
- 	u8 scan_req_duration;
- 	u8 page, channel;
-@@ -209,6 +210,14 @@ void mac802154_scan_worker(struct work_s
- 		return;
- 	}
+--- a/net/mac802154/llsec.c
++++ b/net/mac802154/llsec.c
+@@ -891,6 +891,11 @@ llsec_do_decrypt_auth(struct sk_buff *sk
+ 	data = skb_mac_header(skb) + skb->mac_len;
+ 	datalen = skb_tail_pointer(skb) - data;
  
-+	/*
-+	 * sdata->dev is dereferenced below after rcu_read_unlock() and outside
-+	 * the rtnl, and a concurrent DEL_INTERFACE / PHY teardown can free it
-+	 * asynchronously from netdev_run_todo(). Pin it with a reference taken
-+	 * while the RCU read lock is still held, and drop it at every exit.
-+	 */
-+	netdev_hold(sdata->dev, &dev_tracker, GFP_ATOMIC);
++	if (datalen < authlen) {
++		kfree_sensitive(req);
++		return -EBADMSG;
++	}
 +
- 	wpan_phy = scan_req->wpan_phy;
- 	scan_req_type = scan_req->type;
- 	scan_req_duration = scan_req->duration;
-@@ -262,12 +271,14 @@ void mac802154_scan_worker(struct work_s
- 		"Scan page %u channel %u for %ums\n",
- 		page, channel, jiffies_to_msecs(scan_duration));
- 	queue_delayed_work(local->mac_wq, &local->scan_work, scan_duration);
-+	netdev_put(sdata->dev, &dev_tracker);
- 	return;
+ 	sg_init_one(&sg, skb_mac_header(skb), assoclen + datalen);
  
- end_scan:
- 	rtnl_lock();
- 	mac802154_scan_cleanup_locked(local, sdata, false);
- 	rtnl_unlock();
-+	netdev_put(sdata->dev, &dev_tracker);
- }
- 
- int mac802154_trigger_scan_locked(struct ieee802154_sub_if_data *sdata,
+ 	if (!(hdr->sec.level & IEEE802154_SCF_SECLEVEL_ENC)) {
 
 
