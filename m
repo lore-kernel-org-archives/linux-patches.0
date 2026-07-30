@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C03B237CD59;
-	Thu, 30 Jul 2026 15:46:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C05E8332629;
+	Thu, 30 Jul 2026 15:46:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426369; cv=none; b=TSNWD5x9SJ5bslpAcrAcv7O5IXsrsO1kKJjTAVdX2h3Az73iqHjl87hRdOKfsFWrJGbifCIakgMpx1ANLY77mfXchlMxYKSEGLYVmAqV0BYrecJPI6u53kUBZ82yYF9TS1E6JPIf0DlCU3eoUsBM0IsAg52opqfKKrreiJP2U00=
+	t=1785426372; cv=none; b=lCf3qPHdn8FkCk87zKHeYcaBx1RibfBL7g1HvKSUz00AXzZNZWkyUbjYYSXNvDAHykyVb0UFCyu03vHa9jsWJrmBlTg3EBO89OUU2+gEN8l3jukZE66O7hR6KV1M9DeZAJoFBgm2Fw7HD8JDzw75z8VFKpYVM8Y6XFCDnvX06fY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426369; c=relaxed/simple;
-	bh=Eoj0fp75qwMbQVcTpT+DLxd5NrsFCbnC8vrsq61GzuM=;
+	s=arc-20240116; t=1785426372; c=relaxed/simple;
+	bh=IaZUCcUMHqVXRH9DNHrj66pif+drqUbhg5AuEye1xzU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OxKVBi7+paaT/sXBvNdaA7iS0K0dy/up+nNfw3X8YIms5+sGT+pSvjlo+p+9YH6csBJcqZY+6QXOzXz691NaL6X/NDy4bUsQr64BCiGgEDJwuOnuZiz60fgibbI5A+0AX5I9QScz657wvn6EbF9215zRqtUbGF/yRoEjk5JkjNQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2QV48HWu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KPzrfyPFnJdPNvsmnYCHvB8L1zxggnIQChEaEqphdDugx1bBSMcl6TPb3YSadChITLmnWAmyH2+tU+Im8diUh2pE/usc7L2Ylnp49uGFOHr2nS9dkYzdw4Cs7sAv7WK9dZjbvUQYeusFtPph2saCiLW7VqKY5QiDhtZVGTLt+s4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GcHgd3E5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2QV48HWu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 296741F000E9;
-	Thu, 30 Jul 2026 15:46:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GcHgd3E5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1BDA1F000E9;
+	Thu, 30 Jul 2026 15:46:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426368;
-	bh=xpT3KFP0CZEjcnKB1P+981PHakfE5nA6I3O+43Mb028=;
+	s=korg; t=1785426371;
+	bh=SCFAzdkfF0zTatzRIP5SK3lK/lnPjCI0jdaOmhKCbE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2QV48HWukQhDljjpliBlp7d25O6mIitCgfqwa8BUN2B12rbqvQT7msEwVRWSgwc+i
-	 GXr0YFTe4htR/kqPmu0xhmoff/KeLlCYiq2TcyKQmkAEjabJfeIdrdrhGRxsrhXE1H
-	 zi18V7cKXkh+x4u/hdPaRvhtzYF2XlyQKxMreElg=
+	b=GcHgd3E5CK5uZA0cXmALGbsdClzzIIFYRoMynFreOshUsJWTz9v5BVn+Nb9aR0MM4
+	 mPAwsV8WDIjF4pdNs3TilNnSBZmpiMK8bXs8DRk0FwvoiFmcpbZI3sFCwI5b9quqwP
+	 cSulRiSZdw6+EZVOcGP6WljEBdn77yCgqIAjJENo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
-	Alex Markuze <amarkuze@redhat.com>,
+	Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>,
 	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 6.12 395/602] libceph: refresh auth->authorizer_buf{,_len} after authorizer update
-Date: Thu, 30 Jul 2026 16:13:07 +0200
-Message-ID: <20260730141444.259270255@linuxfoundation.org>
+Subject: [PATCH 6.12 396/602] libceph: Reject monmaps advertising zero monitors
+Date: Thu, 30 Jul 2026 16:13:08 +0200
+Message-ID: <20260730141444.281669252@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -51,61 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+From: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
 
-commit 937d61f86d377a3aa578adae7a3dfcecdddf9d89 upstream.
+commit 40480eee361ed9676b3f844d532ac28b47251634 upstream.
 
-ceph_x_create_authorizer() caches au->buf->vec.iov_base and
-au->buf->vec.iov_len in struct ceph_auth_handshake.  These
-cached values are then used by the messenger connect code when
-sending the authorizer.
+A message of type CEPH_MSG_MON_MAP contains a monmap that is sent from a
+monitor to the client. This monmap contains information about the
+existing monitors in the cluster. Currently, a monmap indicating that
+there are zero monitors in the cluster is treated as valid. However, it
+is impossible to have zero monitors in the cluster and still receive a
+valid monmap from a monitor. Therefore, such a monmap must be corrupted
+and should be treated as invalid. Furthermore, a monmap with a monitor
+count of zero can subsequently crash the client when attempting to open
+a session with a monitor in __open_session(). This happens because the
+"BUG_ON(monc->monmap->num_mon < 1)" assertion in pick_new_mon() is
+triggered.
 
-ceph_x_update_authorizer() can rebuild the authorizer when a newer
-service ticket is available.  If the rebuilt authorizer no longer
-fits in the existing buffer, ceph_x_build_authorizer() drops its
-reference to au->buf and allocates a new one.  If this is the final
-reference, ceph_buffer_put() frees the old ceph_buffer and its
-vec.iov_base, but auth->authorizer_buf still points at that freed
-memory.
+This patch extends a check in ceph_monmap_decode() to also reject
+arriving mon_maps with num_mon == 0 rather than only with
+num_mon > CEPH_MAX_MON.
 
-A subsequent msgr1 reconnect can therefore queue the stale pointer
-and trigger a KASAN slab-use-after-free in _copy_from_iter() while
-tcp_sendmsg() copies the authorizer.
-
-Refresh auth->authorizer_buf and auth->authorizer_buf_len after a
-successful authorizer rebuild so the messenger sends the current
-buffer.
+[ idryomov: drop "log output for unusual values of num_mon" part ]
 
 Cc: stable@vger.kernel.org
-Fixes: 0bed9b5c523d ("libceph: add update_authorizer auth method")
-Closes: https://lore.kernel.org/all/E378850E-106C-427B-A241-970EB2D054D7@gmail.com/
-Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Signed-off-by: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
+Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/auth_x.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ net/ceph/mon_client.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/ceph/auth_x.c
-+++ b/net/ceph/auth_x.c
-@@ -781,9 +781,16 @@ static int ceph_x_update_authorizer(
+--- a/net/ceph/mon_client.c
++++ b/net/ceph/mon_client.c
+@@ -114,7 +114,7 @@ static struct ceph_monmap *ceph_monmap_d
  
- 	au = (struct ceph_x_authorizer *)auth->authorizer;
- 	if (au->secret_id < th->secret_id) {
-+		int ret;
-+
- 		dout("ceph_x_update_authorizer service %u secret %llu < %llu\n",
- 		     au->service, au->secret_id, th->secret_id);
--		return ceph_x_build_authorizer(ac, th, au);
-+		ret = ceph_x_build_authorizer(ac, th, au);
-+		if (ret)
-+			return ret;
-+
-+		auth->authorizer_buf = au->buf->vec.iov_base;
-+		auth->authorizer_buf_len = au->buf->vec.iov_len;
- 	}
- 	return 0;
- }
+ 	dout("%s fsid %pU epoch %u num_mon %u\n", __func__, &fsid, epoch,
+ 	     num_mon);
+-	if (num_mon > CEPH_MAX_MON)
++	if (num_mon == 0 || num_mon > CEPH_MAX_MON)
+ 		goto e_inval;
+ 
+ 	monmap = kmalloc(struct_size(monmap, mon_inst, num_mon), GFP_NOIO);
 
 
