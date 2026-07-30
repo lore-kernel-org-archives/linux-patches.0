@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFDFB423782;
-	Thu, 30 Jul 2026 15:44:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB7F0384CC3;
+	Thu, 30 Jul 2026 15:44:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426265; cv=none; b=stEtwAIs576+OCeU77LgawfiDp9RGS7JpY/f98+IkbXBUuMirijCRr0pLbvE/zxB6l7vzkt2BGt7jmouGefEDy1k9G+/UqW8/AbZYL8jV+aueD8xL8SQDA0ZCONS8OnX0QwPC7Dy5xgqPLqiAXsXcwBIzllW5bt7KWTiX55N2v4=
+	t=1785426267; cv=none; b=hNqfkUSL//GtaNC7/t0sDvhgPrcAWnWdtHnFt1LRW/OKhbMUckLr0lRDHwGBQHG+xVVCnfTlWws5jQIXkgb0GWwpNlPiYpXYGTtsPx9acIiId2+D1o1zgw/mnTW3nwEHESD8RqGFALMhAEmLDV76677tYymMce3IS1creScR1UA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426265; c=relaxed/simple;
-	bh=LzxnDD/nD/acNX/qOCOteCpo7BuIeZiSLDPDWfWFrt8=;
+	s=arc-20240116; t=1785426267; c=relaxed/simple;
+	bh=0RRLhA/HSmpcaB7u3UCVgg66KoSg4/lWVv5yQjRs54M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nKZvalFhRgI/ETcZO7SwtzOoLx6Uh2STKQwnKZqh1Q7ASAHtS7RoFuARPGV01uaU0S4Il+UauWITygGfLpCGLVVl4dkmP0BJceLg6WINz9YrW4ugpOKdhSYqERSnUXFvskX8lUD7Z6LPkvxeCDKJ4Opq/lDxK0bYkJjYposYo+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DnEaaSY7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fOLk1jhuXdLng9cEkJyBDpAUi4YIgOjBVHm8yZyxYIWDU+onjNyqaiEZSC5kDtMLOdZbvJWa96h0J4MnfmstKGM5jOGSitEL0ogUzm6FePtGHGeO72/h6UMwT83VKSk0n3giwWZ3Nn8gRErEztgrW0dd0Xx7w4+tdA7NjtGHWfA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MToP95/e; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DnEaaSY7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 561621F000E9;
-	Thu, 30 Jul 2026 15:44:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MToP95/e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 235B31F000E9;
+	Thu, 30 Jul 2026 15:44:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426263;
-	bh=MNh/8eYroXVgG9D6HhEw5K+SULncdPP+q0GK8yPKOBE=;
+	s=korg; t=1785426266;
+	bh=N4oSNaFK7XYXyL8gKRshOCJ2EgfOjlKySVIv4/GI1NU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DnEaaSY7E1mNrsNdUxfssBfvfaUjoOFg7y9OMsb9SjHFAUXlt1RXEbqiFdG1fi+0q
-	 Pb00CRakaIXNWZMZBlk30SE6V1OTsdKgDls/OOmtFpMy3vXhDb2DVg/N5Rm3r1Q4tM
-	 OuAOG+aJzFjWE+LLCKBOqlKxHqTEZXzTxLr087No=
+	b=MToP95/e8lie8xhxAxBfDZByfPZg4/woLl5RcakBunsN8TOHDy7rlNkqOS6P9iRyu
+	 HfI6wZEJe4Tp7Xuo3g2taZMy3ERod5FFztiVMzIXv7kfiZx6RHu8sXOMD2ogzNOhOY
+	 2hheoMLibWETQsF5s7wOe1K04kCbQ4f6iV7fL7wU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.12 357/602] exec: fix unsigned loop counter wrap in transfer_args_to_stack()
-Date: Thu, 30 Jul 2026 16:12:29 +0200
-Message-ID: <20260730141443.463707190@linuxfoundation.org>
+Subject: [PATCH 6.12 358/602] binfmt_misc: set have_execfd only once the interpreter is opened
+Date: Thu, 30 Jul 2026 16:12:30 +0200
+Message-ID: <20260730141443.484203314@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -52,77 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Brauner <brauner@kernel.org>
 
-commit 16cc4f5c1c4b9e45eca7f7deefa5410a292db599 upstream.
+commit bbf5f639918dc011aaf60aab8480218758ee68c5 upstream.
 
-The stop value is derived from bprm->p >> PAGE_SHIFT. The index variable
-is an unsigned long. If bprm->p drops below PAGE_SIZE and stop becomes
-zero the loop condition index >= stop is always true.
+load_misc_binary() raises bprm->have_execfd as soon as it sees the 'O'
+(or 'C') flag. This happens well before it opens the interpreter. If
+that open fails the flag stays set on the bprm. binfmt_misc is at the
+head of the format list so an interpreter open failure that returns
+-ENOEXEC lets the search fall through to a later format. This means it
+runs the matched binary directly having never staged an interpreter. So
+bprm->executable is NULL while have_execfd falsely claims a descriptor
+is present.
 
-After the index == 0 iteration the decrement wraps to ULONG_MAX and
-bprm->page[ULONG_MAX] reads sizeof(void *) bytes in front of the array.
-The pointer has wrapped to -1. That garbage pointer is then passed to
-kmap_local_page() and PAGE_SIZE bytes are copied from wherever that
-lands into the stack of the process being created. And the loop doesn't
-terminate either...
+Consequently, begin_new_exec() dereferences the missing executable:
 
-Getting there only requires bprm->p < PAGE_SIZE. On !MMU
-bprm_set_stack_limit() and bprm_hit_stack_limit() are empty. So the only
-constraint on how far bprm->p is pushed down is valid_arg_len(), i.e.
-that each individual string still fits in what is left.
+  would_dump(bprm, bprm->executable);
 
-bprm->p starts at PAGE_SIZE * MAX_ARG_PAGES - sizeof(void *) so a
-single argument or environment string of a little over 31 pages leaves
-it in the first page:
+and NULL derefs. Had it not, the hand-off later in the same function
+would have failed anyway. FD_ADD(0, bprm->executable) rejects a NULL
+file with -ENOMEM. Both sites are past the point of no return so the
+exec cannot be unwound either way.
 
-  Oops - load access fault [#1]
-  CPU: 0 UID: 0 PID: 1 Comm: victim Not tainted 7.2.0-rc4 #1
-  epc : __memcpy+0xd4/0xf8
-   ra : transfer_args_to_stack+0xaa/0xae
-   s4 : ffffffffffffffff   s2 : 0000000000000000
-   a1 : ffffffdc98000000   a2 : 0000000000001000
-  status: 0000000a00001880 badaddr: ffffffdc98000000 cause: 0000000000000005
-  [<801a5324>] __memcpy+0xd4/0xf8
-  [<800d5f6a>] load_flat_binary+0x43a/0x65e
-  [<800a2de4>] bprm_execve+0x1d4/0x316
-  [<800a351a>] do_execveat_common+0x12e/0x138
-  [<800a3d44>] __riscv_sys_execve+0x38/0x4e
-  Kernel panic - not syncing: Fatal exception in interrupt
+This can be reached by unprivileged users as binfmt_misc can be mounted
+in user namespaces. So a user can register an 'O' entry whose
+interpreter lives on a FUSE mount, have the FUSE server fail the open
+with -ENOEXEC and execute a native ELF file that matches the entry.
 
-This is an arcane bug but we should still fix it.
+have_execfd only means anything alongside the executable it describes
+which is not set until the interpreter has been opened and staged.
+So lets raise it there, next to execfd_creds, which is already set at
+that point. An open failure now leaves it clear, so the fallback format
+derives credentials from the binary and emits no AT_EXECFD, as it would
+for any native exec. The argv rewrite load_misc_binary() performs before
+the open is still not undone. This means the binary sees the interpreter
+path in argv[0] and its own path in argv[1] but that predates this
+change and only became observable once the exec stopped faulting.
 
-Count down from MAX_ARG_PAGES so the loop ends when index reaches stop,
-stop == 0 included. The iterations performed are unchanged for every
-other value of stop.
-
-Only CONFIG_MMU=n builds are affected, transfer_args_to_stack() is used
-by binfmt_flat and binfmt_elf_fdpic on nommu only.
-
-The loop predates git history. commit 7e7ec6a93434
-("elf_fdpic_transfer_args_to_stack(): make it generic") only moved it
-from binfmt_elf_fdpic.c into fs/exec.c and narrowed the copy to the used
-part of the first page. The condition and the decrement are unchanged
-from 2.6.12-rc2.
-
-Link: https://patch.msgid.link/20260721-hochachtung-staumauer-pigmente-15d71f7d7d04@brauner
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Link: https://patch.msgid.link/20260720-beglichen-kognitiv-organismus-5e1e55326c56@brauner
+Fixes: bc2bf338d54b ("exec: Remove recursion from search_binary_handler")
 Cc: stable@vger.kernel.org
-Reviewed-by: David Hildenbrand (Arm) <david@kernel.org>
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/exec.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/binfmt_misc.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/fs/exec.c
-+++ b/fs/exec.c
-@@ -856,7 +856,7 @@ int transfer_args_to_stack(struct linux_
- 	stop = bprm->p >> PAGE_SHIFT;
- 	sp = *sp_location;
+--- a/fs/binfmt_misc.c
++++ b/fs/binfmt_misc.c
+@@ -227,9 +227,6 @@ static int load_misc_binary(struct linux
+ 			goto ret;
+ 	}
  
--	for (index = MAX_ARG_PAGES - 1; index >= stop; index--) {
-+	for (index = MAX_ARG_PAGES; index-- > stop; ) {
- 		unsigned int offset = index == stop ? bprm->p & ~PAGE_MASK : 0;
- 		char *src = kmap_local_page(bprm->page[index]) + offset;
- 		sp -= PAGE_SIZE - offset;
+-	if (fmt->flags & MISC_FMT_OPEN_BINARY)
+-		bprm->have_execfd = 1;
+-
+ 	/* make argv[1] be the path to the binary */
+ 	retval = copy_string_kernel(bprm->interp, bprm);
+ 	if (retval < 0)
+@@ -259,6 +256,8 @@ static int load_misc_binary(struct linux
+ 		goto ret;
+ 
+ 	bprm->interpreter = interp_file;
++	if (fmt->flags & MISC_FMT_OPEN_BINARY)
++		bprm->have_execfd = 1;
+ 	if (fmt->flags & MISC_FMT_CREDENTIALS)
+ 		bprm->execfd_creds = 1;
+ 
 
 
