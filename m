@@ -1,47 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D5BE43C04D;
-	Thu, 30 Jul 2026 15:13:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70EE64446E9;
+	Thu, 30 Jul 2026 15:13:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424382; cv=none; b=YZ9Fjw+Ru2134N0Awbsxsnal4cp+oxsaxkZCcmktg+DX4jX7d4ILtOep0xfhfK5n3t4mlXHuo8LlEBmehahWL4B7Q+uuZaj4knN/EnjBS/rcO7F5j7rARIl3VkYRG7H3nnRQTMCHdzxKZaKmsDcP/zbyXtrwiZ+XIjrwSNJZnRs=
+	t=1785424385; cv=none; b=aiOYhCZgW8bxZN3x3JYfrpB7gX3OofXW81GCMNxCW+wGg2hi1BmBxhWMQantU0eDxwE9vCHApjP/zXqYJJYOEKNhXgYg2GQqU7+IPpxy16125ccAtgGyt7Y7/iqIFC2U+ysgvC8vJilOHQQL3urkHTAVsxAYo2lOrPSUCOtCbS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424382; c=relaxed/simple;
-	bh=XzYNMX92IlCevxgrl2A6+P8Dgcz92+xCFP5tZsgBzLg=;
+	s=arc-20240116; t=1785424385; c=relaxed/simple;
+	bh=UtzlMjg7+RHaAt2ONAH95g02AZ7Q8inuYlDENbvtAlQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DwO4cCHfymNjBaaRjJpAlK25Y7DJR3DNErLm+Ieflgklo+JSBud8AfChxXzVbq+64OHxoJARlup/EruWcIg388dQ4ZBn0jtx9lOJE7Wbz87TZueDmTX8Rx8cwNtWBKj5uPWXGdqVjQkAJ579ak9cBkAskR7ZSIveHu6aMRj5jNE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0rCysXWn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=A2S80E3NUw1KtnORXEHabiFqUKgT7vbrybq1Dt0wsJ2G61a0bhG50veGiOJhbqU6GVTvcYET1joan/ddI7o1zhHQTan9erj4nRoN5XCc/FHS4WyKRWhnrT5Fz3whkNOk71W74GztadDUfbtOV8ZSni4gbJ2giQtmE3QlusscMm4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H5WQ17rR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0rCysXWn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D2CC1F000E9;
-	Thu, 30 Jul 2026 15:13:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H5WQ17rR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD2911F000E9;
+	Thu, 30 Jul 2026 15:13:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424381;
-	bh=RihudVo5cMe2Uf1hutkTduDNgC3DGVuP4aLoaWAT4fE=;
+	s=korg; t=1785424384;
+	bh=lGNSE9ubazNOAuhy3bSWmFbWc7yfMezKxYjcfj9toXs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0rCysXWnMIeIEDi3CwWrWqUWiZT4WmUBtk5iO4K43Id3QUlHSyBtls412eI9p/htC
-	 uA00AQUn5bs7GVA1tBEbgGScXxFOIUuvSF3gIayBlDiDezv7RK+OUfogg8rb4u6Ty8
-	 UvCZahqqQKBxcnvrleexqwOn790PCzjNGCKY0Gj4=
+	b=H5WQ17rR46dnt//lgPHGN0RwlN1o7R47ldvVoHG3TcHA+b0S1YHuaO+Os2Cq5NVOn
+	 TM9ePD2mGdEt8cHmk2l3lDdigwPPvxEOmCE0eruQ47yl23JiJtQ01LmKlMl6Ha7kfy
+	 ux3FLVhPsgafIS1OAkqb7AQyM2+9sv4KvVaRPoNY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Koenig <christian.koenig@amd.com>,
-	Huang Rui <ray.huang@amd.com>,
-	Matthew Auld <matthew.auld@intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	dri-devel@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH 6.18 375/675] drm/ttm: Account for NULL and handle pages in ttm_pool_backup
-Date: Thu, 30 Jul 2026 16:11:45 +0200
-Message-ID: <20260730141453.105789167@linuxfoundation.org>
+	Osama Abdelkader <osama.abdelkader@gmail.com>,
+	Liviu Dudau <liviu.dudau@arm.com>,
+	Boris Brezillon <boris.brezillon@collabora.com>
+Subject: [PATCH 6.18 376/675] drm/panthor: return error on truncated firmware
+Date: Thu, 30 Jul 2026 16:11:46 +0200
+Message-ID: <20260730141453.128043308@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -54,148 +45,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matthew Brost <matthew.brost@intel.com>
+From: Osama Abdelkader <osama.abdelkader@gmail.com>
 
-commit 5b7b3b6595ee77d01c7463757baed114786094dd upstream.
+commit 4a2c8cbe9bcba170706fdf08b1c84b6cbcf5b044 upstream.
 
-Pages in ttm_pool_backup can be NULL or backup handles
-(ttm_backup_page_ptr_is_handle()), neither of which can be passed to
-set_pages_array_wb() or freed. Add a dedicated WB pass before the
-dma/purge loop that walks allocations using the same i += num_pages
-stride, skipping NULL and handle entries, and calls set_pages_array_wb()
-once per contiguous run of real pages. Apply the same NULL/handle guard
-to the dma/purge loop.
+panthor_fw_load() detects truncated firmware images, but jumps to the
+common cleanup path without setting ret. If no previous error was recorded,
+the function can return 0 and treat the invalid firmware as successfully
+loaded.
 
-Fixes the following oops:
+Set ret to -EINVAL before leaving the truncated-image path.
 
-Oops: general protection fault, kernel NULL pointer dereference 0x0: 0000 [#1] SMP NOPTI
-RIP: 0010:__cpa_process_fault+0xf8/0x770
-RSP: 0018:ffffc90000a87718 EFLAGS: 00010287
-RAX: 0000000000000000 RBX: ffffc90000a87868 RCX: 0000000000000000
-RDX: 0000000000001000 RSI: 0005088000000000 RDI: ffffffff827c5f34
-RBP: 0005088000000000 R08: ffffc90000a877cb R09: ffffc90000a877d0
-R10: 0000000000000000 R11: 000000000000001b R12: 000ffffffffff000
-R13: ffffc90000a87868 R14: ffffc90000a87868 R15: ffff88815b882ae0
-FS:  0000000000000000(0000) GS:ffff8884ec840000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f930b844000 CR3: 000000000262e003 CR4: 0000000008f70ef0
-PKRU: 55555554
-Call Trace:
- <TASK>
- __change_page_attr_set_clr+0x989/0xe90
- ? __purge_vmap_area_lazy+0x6c/0x3a0
- ? _vm_unmap_aliases+0x250/0x2a0
- set_pages_array_wb+0x7f/0x120
- ttm_pool_backup+0x4c9/0x5b0 [ttm]
- ? dma_resv_wait_timeout+0x3b/0xf0
- ttm_tt_backup+0x32/0x60 [ttm]
- ttm_bo_shrink+0x66/0x110 [ttm]
- xe_bo_shrink_purge+0x12b/0x1b0 [xe]
- xe_bo_shrink+0xbb/0x270 [xe]
- __xe_shrinker_walk+0xf7/0x160 [xe]
- xe_shrinker_walk+0x9d/0xc0 [xe]
- xe_shrinker_scan+0x11f/0x210 [xe]
- do_shrink_slab+0x13b/0x270
- shrink_slab+0xf1/0x400
- shrink_node+0x352/0x8a0
- balance_pgdat+0x32c/0x700
- kswapd+0x205/0x2f0
- ? __pfx_autoremove_wake_function+0x10/0x10
- ? __pfx_kswapd+0x10/0x10
- kthread+0xd1/0x110
- ? __pfx_kthread+0x10/0x10
- ret_from_fork+0x1b1/0x200
- ? __pfx_kthread+0x10/0x10
- ret_from_fork_asm+0x1a/0x30
- </TASK>
-
-Cc: Christian Koenig <christian.koenig@amd.com>
-Cc: Huang Rui <ray.huang@amd.com>
-Cc: Matthew Auld <matthew.auld@intel.com>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Cc: Maxime Ripard <mripard@kernel.org>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: David Airlie <airlied@gmail.com>
-Cc: Simona Vetter <simona@ffwll.ch>
-Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Cc: dri-devel@lists.freedesktop.org
-Cc: linux-kernel@vger.kernel.org
+Fixes: 2718d91816ee ("drm/panthor: Add the FW logical block")
 Cc: stable@vger.kernel.org
-Fixes: b63d715b8090 ("drm/ttm/pool, drm/ttm/tt: Provide a helper to shrink pages")
-Cc: stable@vger.kernel.org
-Assisted-by: GitHub_Copilot:claude-opus-4.8
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
-Reviewed-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Link: https://patch.msgid.link/20260702214815.4009271-1-matthew.brost@intel.com
+Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
+Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
+Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
+Link: https://patch.msgid.link/20260714163056.22329-1-osama.abdelkader@gmail.com
+Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/ttm/ttm_pool.c |   34 ++++++++++++++++++++++++++++++----
- 1 file changed, 30 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/panthor/panthor_fw.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/ttm/ttm_pool.c
-+++ b/drivers/gpu/drm/ttm/ttm_pool.c
-@@ -981,9 +981,31 @@ long ttm_pool_backup(struct ttm_pool *po
- 		return -EBUSY;
+--- a/drivers/gpu/drm/panthor/panthor_fw.c
++++ b/drivers/gpu/drm/panthor/panthor_fw.c
+@@ -777,6 +777,7 @@ static int panthor_fw_load(struct pantho
+ 	}
  
- #ifdef CONFIG_X86
--	/* Anything returned to the system needs to be cached. */
--	if (tt->caching != ttm_cached)
--		set_pages_array_wb(tt->pages, tt->num_pages);
-+	/* Anything returned to the system needs to be cached. Walk allocations
-+	 * skipping NULL pages and issue set_pages_array_wb() per contiguous run.
-+	 */
-+	if (tt->caching != ttm_cached) {
-+		pgoff_t run_start = 0, run_count = 0;
-+
-+		for (i = 0; i < tt->num_pages; i += num_pages) {
-+			page = tt->pages[i];
-+			if (unlikely(!page || ttm_backup_page_ptr_is_handle(page))) {
-+				if (run_count) {
-+					set_pages_array_wb(&tt->pages[run_start],
-+							   run_count);
-+					run_count = 0;
-+				}
-+				num_pages = 1;
-+				continue;
-+			}
-+			num_pages = 1UL << ttm_pool_page_order(pool, page);
-+			if (!run_count)
-+				run_start = i;
-+			run_count += num_pages;
-+		}
-+		if (run_count)
-+			set_pages_array_wb(&tt->pages[run_start], run_count);
-+	}
- #endif
- 
- 	if (tt->dma_address || flags->purge) {
-@@ -991,7 +1013,7 @@ long ttm_pool_backup(struct ttm_pool *po
- 			unsigned int order;
- 
- 			page = tt->pages[i];
--			if (unlikely(!page)) {
-+			if (unlikely(!page || ttm_backup_page_ptr_is_handle(page))) {
- 				num_pages = 1;
- 				continue;
- 			}
-@@ -1034,6 +1056,10 @@ long ttm_pool_backup(struct ttm_pool *po
- 		if (unlikely(!page))
- 			continue;
- 
-+		/* Already-handled entry from a previous attempt. */
-+		if (unlikely(ttm_backup_page_ptr_is_handle(page)))
-+			continue;
-+
- 		ttm_pool_split_for_swap(pool, page);
- 
- 		shandle = ttm_backup_backup_page(backup, page, flags->writeback, i,
+ 	if (hdr.size > iter.size) {
++		ret = -EINVAL;
+ 		drm_err(&ptdev->base, "Firmware image is truncated\n");
+ 		goto out;
+ 	}
 
 
