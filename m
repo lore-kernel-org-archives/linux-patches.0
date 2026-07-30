@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECC5338E106;
-	Thu, 30 Jul 2026 16:14:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD03A411691;
+	Thu, 30 Jul 2026 16:14:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785428049; cv=none; b=B7dEVD3NuJ5PqR307K1lFRSyBMjlwGtYEzhfLF0tGVYRPyt+noxoDssrJONDmJYIynZ/O0bppe9athT2S7+rm5+Wuq9FvQbir2fiosecpkYYNe+gbJSZhSnNpbp/MNDO/QYeTQL8NcVxX/mQIxJd3yb4truzKeKiddUMyCd5iHo=
+	t=1785428052; cv=none; b=q4/GH3tPHIKEGUlRb1k7v/uLeFBOuE1tjbedVg5k/B3aCuqVWCeXJ6H4T8Aa/Bvft1/EtX9lu/esrJbkMJpPNlIp/DvVZQD8ZFsjJKXZxtoDKXyp1hgqZ9u2GSRbYY+aak6IthvUt4+aJ35I/HxHm0Ja1J5fgVlJCDq/VEKHcHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785428049; c=relaxed/simple;
-	bh=ASe4JJ0yZh31Ynaq8AaHItRxGPkyw2N4X2RcGSN5n5o=;
+	s=arc-20240116; t=1785428052; c=relaxed/simple;
+	bh=MsXzU/WFE7Jyv9ZmK9S4sgJuiITYclIojYIUe5o60E4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qBWeHkthE+FEXM6X9FLIFaZ03YVWFcFDYJspVk9BcFs3d0lwR307JNxF5ghhgNW69VEYRFZc2PVpVwVuaNfCakjDk+lVdr09bGmFP6EKUuM6tc2rOrM1RuFswNfvVhPzh0zrkp9m/iwE+miwWQcXvAa/cg+CGBBj6OJdayK0Ans=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y28gy0nG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dHgUekqHkb4gJ82HfYXePKgjylRNGXh32t//Ygz9LWUieKDof3tnuoGneOW7Lib+fBJHM6OmqwgIWevglzsf58EfgKbLazc8+T+Gww0SFhFBh1kVHRURYUwZLKR6dGsGcuVBrxj7SdJpRB2oeVOIdfKJ67q+4g8D3r3XaLiVm88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kd/eIdVa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y28gy0nG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51F1B1F000E9;
-	Thu, 30 Jul 2026 16:14:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kd/eIdVa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B85B1F000E9;
+	Thu, 30 Jul 2026 16:14:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785428047;
-	bh=aeKRaFuazTNhNplPXfTq3L6VTGXY2DyzkEjp60VmfSE=;
+	s=korg; t=1785428050;
+	bh=msIxa8rl9K1nZvZLUxJ19nyBKNmqNNpV7RIrmaAefao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y28gy0nGgk90HomJKu3ms21KS6CAQWV8+X2FCDZE7+kv7Ck5dUHaENItJd6GiAovZ
-	 ga2gdw3+NpkydlFg9BZFsro91u6Seqpt4oM0YuxArqTBPK0kJ7SevsvZHicHeo8Ufl
-	 FGwDabsxBbdfEm6oQTwEeLWjFgatOMt0m0Ul97Z8=
+	b=Kd/eIdVaLnG8jmqFG9ghyj1yhNNnjHN9wxu921fpA5YEJQgn4i9EQNsRDrunrq9vk
+	 PrcU6m3VTbCVNBq9oI9wpyot8pOKpOI/HTrZRzIL+Olw2OAYZXIDGcj+h+PDguKvZV
+	 dMCu2oi4KcH0DVCe1Sk80Hr+ZE90/UmuUPzhNPwU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	David Howells <dhowells@redhat.com>,
+	Jeffrey Altman <jaltman@auristor.com>,
 	Marc Dionne <marc.dionne@auristor.com>,
+	"Junvyyang, Tencent Zhuque Lab" <zhuque@tencent.com>,
+	LePremierHomme <kwqcheii@proton.me>,
+	Simon Horman <horms@kernel.org>,
 	linux-afs@lists.infradead.org,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 386/484] rxrpc: Use irq-disabling spinlocks between app and I/O thread
-Date: Thu, 30 Jul 2026 16:14:43 +0200
-Message-ID: <20260730141431.862043040@linuxfoundation.org>
+Subject: [PATCH 6.6 387/484] rxrpc: Fix notification vs call-release vs recvmsg
+Date: Thu, 30 Jul 2026 16:14:44 +0200
+Message-ID: <20260730141431.883152554@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -55,442 +59,133 @@ Content-Transfer-Encoding: 8bit
 
 From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit a2ea9a9072607c2fd6442bd1ffb4dbdbf882aed7 ]
+[ Upstream commit 2fd895842d49c23137ae48252dd211e5d6d8a3ed ]
 
-Where a spinlock is used by both the application thread and the I/O thread,
-use irq-disabling locking so that an interrupt taken on the app thread
-doesn't also slow down the I/O thread.
+When a call is released, rxrpc takes the spinlock and removes it from
+->recvmsg_q in an effort to prevent racing recvmsg() invocations from
+seeing the same call.  Now, rxrpc_recvmsg() only takes the spinlock when
+actually removing a call from the queue; it doesn't, however, take it in
+the lead up to that when it checks to see if the queue is empty.  It *does*
+hold the socket lock, which prevents a recvmsg/recvmsg race - but this
+doesn't prevent sendmsg from ending the call because sendmsg() drops the
+socket lock and relies on the call->user_mutex.
 
+Fix this by firstly removing the bit in rxrpc_release_call() that dequeues
+the released call and, instead, rely on recvmsg() to simply discard
+released calls (done in a preceding fix).
+
+Secondly, rxrpc_notify_socket() is abandoned if the call is already marked
+as released rather than trying to be clever by setting both pointers in
+call->recvmsg_link to NULL to trick list_empty().  This isn't perfect and
+can still race, resulting in a released call on the queue, but recvmsg()
+will now clean that up.
+
+Fixes: 17926a79320a ("[AF_RXRPC]: Provide secure RxRPC sockets for use by userspace and kernel both")
 Signed-off-by: David Howells <dhowells@redhat.com>
+Reviewed-by: Jeffrey Altman <jaltman@auristor.com>
 cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Junvyyang, Tencent Zhuque Lab <zhuque@tencent.com>
+cc: LePremierHomme <kwqcheii@proton.me>
+cc: Simon Horman <horms@kernel.org>
 cc: linux-afs@lists.infradead.org
+Link: https://patch.msgid.link/20250717074350.3767366-4-dhowells@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: e66f8f32f501 ("rxrpc: Fix socket notification race")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rxrpc/af_rxrpc.c    |    4 ++--
- net/rxrpc/call_accept.c |   20 ++++++++++----------
- net/rxrpc/call_object.c |   14 +++++++-------
- net/rxrpc/conn_client.c |   12 ++++++------
- net/rxrpc/conn_event.c  |   14 +++++++-------
- net/rxrpc/conn_object.c |    8 ++++----
- net/rxrpc/input.c       |    5 +----
- net/rxrpc/peer_event.c  |    8 ++++----
- net/rxrpc/peer_object.c |    1 +
- net/rxrpc/recvmsg.c     |   22 +++++++++++-----------
- net/rxrpc/security.c    |    4 ++--
- 11 files changed, 55 insertions(+), 57 deletions(-)
+ include/trace/events/rxrpc.h |    3 ++-
+ net/rxrpc/call_object.c      |   28 ++++++++++++----------------
+ net/rxrpc/recvmsg.c          |    4 ++++
+ 3 files changed, 18 insertions(+), 17 deletions(-)
 
---- a/net/rxrpc/af_rxrpc.c
-+++ b/net/rxrpc/af_rxrpc.c
-@@ -362,9 +362,9 @@ void rxrpc_kernel_shutdown_call(struct s
- 
- 		/* Make sure we're not going to call back into a kernel service */
- 		if (call->notify_rx) {
--			spin_lock(&call->notify_lock);
-+			spin_lock_irq(&call->notify_lock);
- 			call->notify_rx = rxrpc_dummy_notify_rx;
--			spin_unlock(&call->notify_lock);
-+			spin_unlock_irq(&call->notify_lock);
- 		}
- 	}
- 	mutex_unlock(&call->user_mutex);
---- a/net/rxrpc/call_accept.c
-+++ b/net/rxrpc/call_accept.c
-@@ -189,8 +189,8 @@ void rxrpc_discard_prealloc(struct rxrpc
- 	/* Make sure that there aren't any incoming calls in progress before we
- 	 * clear the preallocation buffers.
- 	 */
--	spin_lock(&rx->incoming_lock);
--	spin_unlock(&rx->incoming_lock);
-+	spin_lock_irq(&rx->incoming_lock);
-+	spin_unlock_irq(&rx->incoming_lock);
- 
- 	head = b->peer_backlog_head;
- 	tail = b->peer_backlog_tail;
-@@ -349,7 +349,7 @@ bool rxrpc_new_incoming_call(struct rxrp
- 	if (sp->hdr.type != RXRPC_PACKET_TYPE_DATA)
- 		return rxrpc_protocol_error(skb, rxrpc_eproto_no_service_call);
- 
--	read_lock(&local->services_lock);
-+	read_lock_irq(&local->services_lock);
- 
- 	/* Weed out packets to services we're not offering.  Packets that would
- 	 * begin a call are explicitly rejected and the rest are just
-@@ -406,12 +406,12 @@ bool rxrpc_new_incoming_call(struct rxrp
- 	spin_unlock(&conn->state_lock);
- 
- 	spin_unlock(&rx->incoming_lock);
--	read_unlock(&local->services_lock);
-+	read_unlock_irq(&local->services_lock);
- 
- 	if (hlist_unhashed(&call->error_link)) {
--		spin_lock(&call->peer->lock);
-+		spin_lock_irq(&call->peer->lock);
- 		hlist_add_head(&call->error_link, &call->peer->error_targets);
--		spin_unlock(&call->peer->lock);
-+		spin_unlock_irq(&call->peer->lock);
- 	}
- 
- 	_leave(" = %p{%d}", call, call->debug_id);
-@@ -420,20 +420,20 @@ bool rxrpc_new_incoming_call(struct rxrp
- 	return true;
- 
- unsupported_service:
--	read_unlock(&local->services_lock);
-+	read_unlock_irq(&local->services_lock);
- 	return rxrpc_direct_abort(skb, rxrpc_abort_service_not_offered,
- 				  RX_INVALID_OPERATION, -EOPNOTSUPP);
- unsupported_security:
--	read_unlock(&local->services_lock);
-+	read_unlock_irq(&local->services_lock);
- 	return rxrpc_direct_abort(skb, rxrpc_abort_service_not_offered,
- 				  RX_INVALID_OPERATION, -EKEYREJECTED);
- no_call:
- 	spin_unlock(&rx->incoming_lock);
--	read_unlock(&local->services_lock);
-+	read_unlock_irq(&local->services_lock);
- 	_leave(" = f [%u]", skb->mark);
- 	return false;
- discard:
--	read_unlock(&local->services_lock);
-+	read_unlock_irq(&local->services_lock);
- 	return true;
- }
- 
+--- a/include/trace/events/rxrpc.h
++++ b/include/trace/events/rxrpc.h
+@@ -271,10 +271,10 @@
+ 	EM(rxrpc_call_put_poke,			"PUT poke    ") \
+ 	EM(rxrpc_call_put_recvmsg,		"PUT recvmsg ") \
+ 	EM(rxrpc_call_put_recvmsg_peek_nowait,	"PUT peek-nwt") \
++	EM(rxrpc_call_put_release_recvmsg_q,	"PUT rls-rcmq") \
+ 	EM(rxrpc_call_put_release_sock,		"PUT rls-sock") \
+ 	EM(rxrpc_call_put_release_sock_tba,	"PUT rls-sk-a") \
+ 	EM(rxrpc_call_put_sendmsg,		"PUT sendmsg ") \
+-	EM(rxrpc_call_put_unnotify,		"PUT unnotify") \
+ 	EM(rxrpc_call_put_userid_exists,	"PUT u-exists") \
+ 	EM(rxrpc_call_put_userid,		"PUT user-id ") \
+ 	EM(rxrpc_call_see_accept,		"SEE accept  ") \
+@@ -287,6 +287,7 @@
+ 	EM(rxrpc_call_see_disconnected,		"SEE disconn ") \
+ 	EM(rxrpc_call_see_distribute_error,	"SEE dist-err") \
+ 	EM(rxrpc_call_see_input,		"SEE input   ") \
++	EM(rxrpc_call_see_notify_released,	"SEE nfy-rlsd") \
+ 	EM(rxrpc_call_see_recvmsg,		"SEE recvmsg ") \
+ 	EM(rxrpc_call_see_recvmsg_requeue,	"SEE recv-rqu") \
+ 	EM(rxrpc_call_see_recvmsg_requeue_first, "SEE recv-rqF") \
 --- a/net/rxrpc/call_object.c
 +++ b/net/rxrpc/call_object.c
-@@ -48,7 +48,7 @@ void rxrpc_poke_call(struct rxrpc_call *
- 	bool busy;
+@@ -550,7 +550,7 @@ static void rxrpc_cleanup_ring(struct rx
+ void rxrpc_release_call(struct rxrpc_sock *rx, struct rxrpc_call *call)
+ {
+ 	struct rxrpc_connection *conn = call->conn;
+-	bool put = false, putu = false;
++	bool putu = false;
  
- 	if (!test_bit(RXRPC_CALL_DISCONNECTED, &call->flags)) {
--		spin_lock_bh(&local->lock);
-+		spin_lock_irq(&local->lock);
- 		busy = !list_empty(&call->attend_link);
- 		trace_rxrpc_poke_call(call, busy, what);
- 		if (!busy && !rxrpc_try_get_call(call, rxrpc_call_get_poke))
-@@ -56,7 +56,7 @@ void rxrpc_poke_call(struct rxrpc_call *
- 		if (!busy) {
- 			list_add_tail(&call->attend_link, &local->call_attend_q);
- 		}
--		spin_unlock_bh(&local->lock);
-+		spin_unlock_irq(&local->lock);
- 		if (!busy)
- 			rxrpc_wake_up_io_thread(local);
- 	}
-@@ -311,9 +311,9 @@ static int rxrpc_connect_call(struct rxr
+ 	_enter("{%d,%d}", call->debug_id, refcount_read(&call->ref));
  
- 	trace_rxrpc_client(NULL, -1, rxrpc_client_queue_new_call);
- 	rxrpc_get_call(call, rxrpc_call_get_io_thread);
--	spin_lock(&local->client_call_lock);
-+	spin_lock_irq(&local->client_call_lock);
- 	list_add_tail(&call->wait_link, &local->new_client_calls);
--	spin_unlock(&local->client_call_lock);
-+	spin_unlock_irq(&local->client_call_lock);
- 	rxrpc_wake_up_io_thread(local);
- 	return 0;
+@@ -562,23 +562,13 @@ void rxrpc_release_call(struct rxrpc_soc
  
-@@ -439,7 +439,7 @@ error_attached_to_socket:
- 
- /*
-  * Set up an incoming call.  call->conn points to the connection.
-- * This is called in BH context and isn't allowed to fail.
-+ * This is called with interrupts disabled and isn't allowed to fail.
-  */
- void rxrpc_incoming_call(struct rxrpc_sock *rx,
- 			 struct rxrpc_call *call,
-@@ -563,7 +563,7 @@ void rxrpc_release_call(struct rxrpc_soc
  	rxrpc_put_call_slot(call);
  
- 	/* Make sure we don't get any more notifications */
--	spin_lock(&rx->recvmsg_lock);
-+	spin_lock_irq(&rx->recvmsg_lock);
- 
- 	if (!list_empty(&call->recvmsg_link)) {
- 		_debug("unlinking once-pending call %p { e=%lx f=%lx }",
-@@ -576,7 +576,7 @@ void rxrpc_release_call(struct rxrpc_soc
- 	call->recvmsg_link.next = NULL;
- 	call->recvmsg_link.prev = NULL;
- 
--	spin_unlock(&rx->recvmsg_lock);
-+	spin_unlock_irq(&rx->recvmsg_lock);
- 	if (put)
- 		rxrpc_put_call(call, rxrpc_call_put_unnotify);
- 
---- a/net/rxrpc/conn_client.c
-+++ b/net/rxrpc/conn_client.c
-@@ -505,10 +505,10 @@ void rxrpc_connect_client_calls(struct r
- 	       ) {
- 		struct rxrpc_bundle *bundle = call->bundle;
- 
--		spin_lock(&local->client_call_lock);
-+		spin_lock_irq(&local->client_call_lock);
- 		list_move_tail(&call->wait_link, &bundle->waiting_calls);
- 		rxrpc_see_call(call, rxrpc_call_see_waiting_call);
--		spin_unlock(&local->client_call_lock);
-+		spin_unlock_irq(&local->client_call_lock);
- 
- 		if (rxrpc_bundle_has_space(bundle))
- 			rxrpc_activate_channels(bundle);
-@@ -536,9 +536,9 @@ void rxrpc_expose_client_call(struct rxr
- 			set_bit(RXRPC_CONN_DONT_REUSE, &conn->flags);
- 		trace_rxrpc_client(conn, channel, rxrpc_client_exposed);
- 
--		spin_lock(&call->peer->lock);
-+		spin_lock_irq(&call->peer->lock);
- 		hlist_add_head(&call->error_link, &call->peer->error_targets);
--		spin_unlock(&call->peer->lock);
-+		spin_unlock_irq(&call->peer->lock);
- 	}
- }
- 
-@@ -579,9 +579,9 @@ void rxrpc_disconnect_client_call(struct
- 		ASSERTCMP(call->call_id, ==, 0);
- 		ASSERT(!test_bit(RXRPC_CALL_EXPOSED, &call->flags));
- 		/* May still be on ->new_client_calls. */
--		spin_lock(&local->client_call_lock);
-+		spin_lock_irq(&local->client_call_lock);
- 		list_del_init(&call->wait_link);
--		spin_unlock(&local->client_call_lock);
-+		spin_unlock_irq(&local->client_call_lock);
- 		return;
- 	}
- 
---- a/net/rxrpc/conn_event.c
-+++ b/net/rxrpc/conn_event.c
-@@ -26,7 +26,7 @@ static bool rxrpc_set_conn_aborted(struc
- 	bool aborted = false;
- 
- 	if (conn->state != RXRPC_CONN_ABORTED) {
--		spin_lock(&conn->state_lock);
-+		spin_lock_irq(&conn->state_lock);
- 		if (conn->state != RXRPC_CONN_ABORTED) {
- 			conn->abort_code = abort_code;
- 			conn->error	 = err;
-@@ -37,7 +37,7 @@ static bool rxrpc_set_conn_aborted(struc
- 			set_bit(RXRPC_CONN_EV_ABORT_CALLS, &conn->events);
- 			aborted = true;
- 		}
--		spin_unlock(&conn->state_lock);
-+		spin_unlock_irq(&conn->state_lock);
- 	}
- 
- 	return aborted;
-@@ -268,12 +268,12 @@ static int rxrpc_process_event(struct rx
- 		return conn->security->respond_to_challenge(conn, skb);
- 
- 	case RXRPC_PACKET_TYPE_RESPONSE:
--		spin_lock(&conn->state_lock);
-+		spin_lock_irq(&conn->state_lock);
- 		if (conn->state != RXRPC_CONN_SERVICE_CHALLENGING) {
--			spin_unlock(&conn->state_lock);
-+			spin_unlock_irq(&conn->state_lock);
- 			return 0;
- 		}
--		spin_unlock(&conn->state_lock);
-+		spin_unlock_irq(&conn->state_lock);
- 
- 		ret = rxrpc_verify_response(conn, skb);
- 		if (ret < 0)
-@@ -284,12 +284,12 @@ static int rxrpc_process_event(struct rx
- 		if (ret < 0)
- 			return ret;
- 
--		spin_lock(&conn->state_lock);
-+		spin_lock_irq(&conn->state_lock);
- 		if (conn->state == RXRPC_CONN_SERVICE_CHALLENGING) {
- 			conn->state = RXRPC_CONN_SERVICE;
- 			secured = true;
- 		}
--		spin_unlock(&conn->state_lock);
-+		spin_unlock_irq(&conn->state_lock);
- 
- 		if (secured) {
- 			/* Offload call state flipping to the I/O thread.  As
---- a/net/rxrpc/conn_object.c
-+++ b/net/rxrpc/conn_object.c
-@@ -31,13 +31,13 @@ void rxrpc_poke_conn(struct rxrpc_connec
- 	if (WARN_ON_ONCE(!local))
- 		return;
- 
--	spin_lock_bh(&local->lock);
-+	spin_lock_irq(&local->lock);
- 	busy = !list_empty(&conn->attend_link);
- 	if (!busy) {
- 		rxrpc_get_connection(conn, why);
- 		list_add_tail(&conn->attend_link, &local->conn_attend_q);
- 	}
--	spin_unlock_bh(&local->lock);
-+	spin_unlock_irq(&local->lock);
- 	rxrpc_wake_up_io_thread(local);
- }
- 
-@@ -196,9 +196,9 @@ void rxrpc_disconnect_call(struct rxrpc_
- 	call->peer->cong_ssthresh = call->cong_ssthresh;
- 
- 	if (!hlist_unhashed(&call->error_link)) {
--		spin_lock(&call->peer->lock);
-+		spin_lock_irq(&call->peer->lock);
- 		hlist_del_init(&call->error_link);
--		spin_unlock(&call->peer->lock);
-+		spin_unlock_irq(&call->peer->lock);
- 	}
- 
- 	if (rxrpc_is_client_call(call)) {
---- a/net/rxrpc/input.c
-+++ b/net/rxrpc/input.c
-@@ -366,7 +366,7 @@ static void rxrpc_input_queue_data(struc
- 	struct rxrpc_skb_priv *sp = rxrpc_skb(skb);
- 	bool last = sp->hdr.flags & RXRPC_LAST_PACKET;
- 
--	__skb_queue_tail(&call->recvmsg_queue, skb);
-+	skb_queue_tail(&call->recvmsg_queue, skb);
- 	rxrpc_input_update_ack_window(call, window, wtop);
- 	trace_rxrpc_receive(call, last ? why + 1 : why, sp->hdr.serial, sp->hdr.seq);
- 	if (last)
-@@ -443,7 +443,6 @@ static void rxrpc_input_data_one(struct
- 
- 		rxrpc_get_skb(skb, rxrpc_skb_get_to_recvmsg);
- 
--		spin_lock(&call->recvmsg_queue.lock);
- 		rxrpc_input_queue_data(call, skb, window, wtop, rxrpc_receive_queue);
- 		*_notify = true;
- 
-@@ -465,8 +464,6 @@ static void rxrpc_input_data_one(struct
- 					       rxrpc_receive_queue_oos);
- 		}
- 
--		spin_unlock(&call->recvmsg_queue.lock);
+-	/* Make sure we don't get any more notifications */
++	/* Note that at this point, the call may still be on or may have been
++	 * added back on to the socket receive queue.  recvmsg() must discard
++	 * released calls.  The CALL_RELEASED flag should prevent further
++	 * notifications.
++	 */
+ 	spin_lock_irq(&rx->recvmsg_lock);
 -
- 		call->ackr_sack_base = sack;
- 	} else {
- 		unsigned int slot;
---- a/net/rxrpc/peer_event.c
-+++ b/net/rxrpc/peer_event.c
-@@ -205,23 +205,23 @@ static void rxrpc_distribute_error(struc
- 	struct rxrpc_call *call;
- 	HLIST_HEAD(error_targets);
+-	if (!list_empty(&call->recvmsg_link)) {
+-		_debug("unlinking once-pending call %p { e=%lx f=%lx }",
+-		       call, call->events, call->flags);
+-		list_del(&call->recvmsg_link);
+-		put = true;
+-	}
+-
+-	/* list_empty() must return false in rxrpc_notify_socket() */
+-	call->recvmsg_link.next = NULL;
+-	call->recvmsg_link.prev = NULL;
+-
+ 	spin_unlock_irq(&rx->recvmsg_lock);
+-	if (put)
+-		rxrpc_put_call(call, rxrpc_call_put_unnotify);
  
--	spin_lock(&peer->lock);
-+	spin_lock_irq(&peer->lock);
- 	hlist_move_list(&peer->error_targets, &error_targets);
+ 	write_lock(&rx->call_lock);
  
- 	while (!hlist_empty(&error_targets)) {
- 		call = hlist_entry(error_targets.first,
- 				   struct rxrpc_call, error_link);
- 		hlist_del_init(&call->error_link);
--		spin_unlock(&peer->lock);
-+		spin_unlock_irq(&peer->lock);
- 
- 		rxrpc_see_call(call, rxrpc_call_see_distribute_error);
- 		rxrpc_set_call_completion(call, compl, 0, -err);
- 		rxrpc_input_call_event(call, skb);
- 
--		spin_lock(&peer->lock);
-+		spin_lock_irq(&peer->lock);
+@@ -627,6 +617,12 @@ void rxrpc_release_calls_on_socket(struc
+ 		rxrpc_put_call(call, rxrpc_call_put_release_sock);
  	}
  
--	spin_unlock(&peer->lock);
-+	spin_unlock_irq(&peer->lock);
++	while ((call = list_first_entry_or_null(&rx->recvmsg_q,
++						struct rxrpc_call, recvmsg_link))) {
++		list_del_init(&call->recvmsg_link);
++		rxrpc_put_call(call, rxrpc_call_put_release_recvmsg_q);
++	}
++
+ 	_leave("");
  }
  
- /*
---- a/net/rxrpc/peer_object.c
-+++ b/net/rxrpc/peer_object.c
-@@ -302,6 +302,7 @@ static void rxrpc_free_peer(struct rxrpc
-  * Set up a new incoming peer.  There shouldn't be any other matching peers
-  * since we've already done a search in the list from the non-reentrant context
-  * (the data_ready handler) that is the only place we can add new peers.
-+ * Called with interrupts disabled.
-  */
- void rxrpc_new_incoming_peer(struct rxrpc_local *local, struct rxrpc_peer *peer)
- {
 --- a/net/rxrpc/recvmsg.c
 +++ b/net/rxrpc/recvmsg.c
-@@ -36,16 +36,16 @@ void rxrpc_notify_socket(struct rxrpc_ca
- 	sk = &rx->sk;
- 	if (rx && sk->sk_state < RXRPC_CLOSE) {
- 		if (call->notify_rx) {
--			spin_lock(&call->notify_lock);
-+			spin_lock_irq(&call->notify_lock);
- 			call->notify_rx(sk, call, call->user_call_ID);
--			spin_unlock(&call->notify_lock);
-+			spin_unlock_irq(&call->notify_lock);
- 		} else {
--			spin_lock(&rx->recvmsg_lock);
-+			spin_lock_irq(&rx->recvmsg_lock);
- 			if (list_empty(&call->recvmsg_link)) {
- 				rxrpc_get_call(call, rxrpc_call_get_notify_socket);
- 				list_add_tail(&call->recvmsg_link, &rx->recvmsg_q);
- 			}
--			spin_unlock(&rx->recvmsg_lock);
-+			spin_unlock_irq(&rx->recvmsg_lock);
+@@ -29,6 +29,10 @@ void rxrpc_notify_socket(struct rxrpc_ca
  
- 			if (!sock_flag(sk, SOCK_DEAD)) {
- 				_debug("call %ps", sk->sk_data_ready);
-@@ -379,14 +379,14 @@ try_again:
- 	 * We also want to weed out calls that got requeued whilst we were
- 	 * shovelling data out.
- 	 */
--	spin_lock(&rx->recvmsg_lock);
-+	spin_lock_irq(&rx->recvmsg_lock);
- 	l = rx->recvmsg_q.next;
- 	call = list_entry(l, struct rxrpc_call, recvmsg_link);
+ 	if (!list_empty(&call->recvmsg_link))
+ 		return;
++	if (test_bit(RXRPC_CALL_RELEASED, &call->flags)) {
++		rxrpc_see_call(call, rxrpc_call_see_notify_released);
++		return;
++	}
  
- 	if (!rxrpc_call_is_complete(call) &&
- 	    skb_queue_empty(&call->recvmsg_queue)) {
- 		list_del_init(&call->recvmsg_link);
--		spin_unlock(&rx->recvmsg_lock);
-+		spin_unlock_irq(&rx->recvmsg_lock);
- 		release_sock(&rx->sk);
- 		trace_rxrpc_recvmsg(call->debug_id, rxrpc_recvmsg_unqueue, 0);
- 		rxrpc_put_call(call, rxrpc_call_put_recvmsg);
-@@ -407,7 +407,7 @@ try_again:
- 		list_del_init(&call->recvmsg_link);
- 	else
- 		rxrpc_get_call(call, rxrpc_call_get_recvmsg);
--	spin_unlock(&rx->recvmsg_lock);
-+	spin_unlock_irq(&rx->recvmsg_lock);
+ 	rcu_read_lock();
  
- 	call_debug_id = call->debug_id;
- 	trace_rxrpc_recvmsg(call_debug_id, rxrpc_recvmsg_dequeue, 0);
-@@ -502,17 +502,17 @@ error_unlock_call:
- 
- error_requeue_call:
- 	if (!(flags & MSG_PEEK)) {
--		spin_lock(&rx->recvmsg_lock);
-+		spin_lock_irq(&rx->recvmsg_lock);
- 		if (list_empty(&call->recvmsg_link)) {
- 			list_add(&call->recvmsg_link, &rx->recvmsg_q);
- 			rxrpc_see_call(call, rxrpc_call_see_recvmsg_requeue);
--			spin_unlock(&rx->recvmsg_lock);
-+			spin_unlock_irq(&rx->recvmsg_lock);
- 		} else if (list_is_first(&call->recvmsg_link, &rx->recvmsg_q)) {
--			spin_unlock(&rx->recvmsg_lock);
-+			spin_unlock_irq(&rx->recvmsg_lock);
- 			rxrpc_put_call(call, rxrpc_call_see_recvmsg_requeue_first);
- 		} else {
- 			list_move(&call->recvmsg_link, &rx->recvmsg_q);
--			spin_unlock(&rx->recvmsg_lock);
-+			spin_unlock_irq(&rx->recvmsg_lock);
- 			rxrpc_put_call(call, rxrpc_call_see_recvmsg_requeue_move);
- 		}
- 		trace_rxrpc_recvmsg(call_debug_id, rxrpc_recvmsg_requeue, 0);
---- a/net/rxrpc/security.c
-+++ b/net/rxrpc/security.c
-@@ -114,10 +114,10 @@ found:
- 	if (conn->state == RXRPC_CONN_CLIENT_UNSECURED) {
- 		ret = conn->security->init_connection_security(conn, token);
- 		if (ret == 0) {
--			spin_lock(&conn->state_lock);
-+			spin_lock_irq(&conn->state_lock);
- 			if (conn->state == RXRPC_CONN_CLIENT_UNSECURED)
- 				conn->state = RXRPC_CONN_CLIENT;
--			spin_unlock(&conn->state_lock);
-+			spin_unlock_irq(&conn->state_lock);
- 		}
- 	}
- 	mutex_unlock(&conn->security_lock);
 
 
