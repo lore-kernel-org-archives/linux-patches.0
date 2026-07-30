@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF62831E831;
-	Thu, 30 Jul 2026 14:31:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4F5F35C68A;
+	Thu, 30 Jul 2026 14:31:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421871; cv=none; b=X+boKXt+wW4uN1zFTQf50JDLSTuJb7ErWTH+t8JXHSKv/cK6IT4NN0Lk6nYf2Cz3O1F9os1YRCvqGRct3YAYkNHKSGZBNAM1lYl2I8dpqfeuONar3EadVpuIgkxs2rHuIitTCMaP6GP00fet85pTGT1qOjsjJA5JiY3aD7Akulo=
+	t=1785421875; cv=none; b=SwcoImHyaZmhNd+D5jbzn4uZkROUjBY/bWVTd4wTitN0hCf8L7OuH8wlVIyhWyQMFw/qUQbG0BMPUM5IQHkuHK1TyxikrMGU9mmjVu0t0omX192Ruo4esR1FgKC6FLLGcjxOW/GzzzG9nlYlNE4Zl21LmRXIVgw1imfHMvoBsfY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421871; c=relaxed/simple;
-	bh=PCTTDaBaUvbQoPJQOGkqXhGjXLHmmFbgG/i2d6A9Wtc=;
+	s=arc-20240116; t=1785421875; c=relaxed/simple;
+	bh=WeqJDn30gl7ol8NUmiSBkswQZJgRp/BUBm4ec2IHinI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ShHk9xPeWqBjOQx6kEHTap8IXXnu4m09xs6hDxTf7KRtnzDXJMVic1RPVrTva1syePW7H5QTFShJLnpn3DlmqxESo/0waBX12IdwABJZaS5HMcl33+ngU/2DKJ5f0MwbjXhH6z5CmPlv50ZpPDlUUr4x6wk8GaADuK7FB570vZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mlikdtD7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=U6H5kYmaZFZ5/bK8g5aNDqQx3wakmrgEKWcRsdsodPOGhKYz4ID6IwL7EtIPYp4jyUtZh0Gt4ZXftBsU0OD1+Rf4IUjIe6p8khU4jWII+xCm5sIVzC9bZZOl6Ow7wBG/wPLaeja97sXJYnoKIzR4GtrKusICTuw5V8Rsly2Lim4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2SYKH4RW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mlikdtD7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1273F1F000E9;
-	Thu, 30 Jul 2026 14:31:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2SYKH4RW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06E9E1F000E9;
+	Thu, 30 Jul 2026 14:31:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421870;
-	bh=9xSAtdQ/T7etjgIzLcZKhGtUXcfmmxm32xlPjz30IYo=;
+	s=korg; t=1785421873;
+	bh=uCrnWGLHSCY9LxicljlA+TwUDM3W2zfO1SF6Az+7tEY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mlikdtD7X0MdCdyIaNrTBW6Ea2hZ9f7noRHMP0xSepJYdiP1+LtH50UB0wLds6BPP
-	 rcfb2KzhgSsNVUjqTWlKPnMEdyWypJ9kIlJi68euapPuaQrDZ/q23NRF9cWermfMeP
-	 tciKTGIA/VyiZgZYk5wu7rwwBjo1mXowj6/0xmog=
+	b=2SYKH4RW2XAQoNtCwGoyg4F7RS6Z2AAwW2GbzWX+ZrfKnERsd9pXFSIATHYD+P+wE
+	 MASanCtKWpfza70rm5iigwAcotYMW3XiZH1bsq/BABOk9gDDi13D36oTiGmwIaEsnK
+	 rXBl6maOAnHvA4HKw+OFKZjDl/8PCOEcCb2QUiNo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Berg <benjamin.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	=?UTF-8?q?HE=20WEI=20 ?= <skyexpoc@gmail.com>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 248/744] wifi: mac80211: copy aggregation information
-Date: Thu, 30 Jul 2026 16:08:41 +0200
-Message-ID: <20260730141449.564019954@linuxfoundation.org>
+Subject: [PATCH 7.1 249/744] wifi: mwifiex: bound uAP association event IEs to the event buffer
+Date: Thu, 30 Jul 2026 16:08:42 +0200
+Message-ID: <20260730141449.584907785@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -46,43 +46,106 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Benjamin Berg <benjamin.berg@intel.com>
+From: HE WEI (ギカク) <skyexpoc@gmail.com>
 
-[ Upstream commit 0fe2d5be7ab59717adb3f9cfab3832c6c4dd770c ]
+[ Upstream commit f0858bfc7d3cab411a447b88e3ef970e575032c9 ]
 
-This information can be considered part of the capabilities and should
-also be copied to the NAN data station.
+mwifiex_process_uap_event() handles EVENT_UAP_STA_ASSOC by exposing the
+(re)association request IEs that the firmware copies into the event:
 
-Fixes: 27e9b326b674 ("wifi: mac80211: support NAN stations")
-Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20260714141038.15620aa5324b.I049254b854ac91c32e0768eb7c819f32eda34218@changeid
+	sinfo->assoc_req_ies = &event->data[len];
+	len = (u8 *)sinfo->assoc_req_ies - (u8 *)&event->frame_control;
+	sinfo->assoc_req_ies_len = le16_to_cpu(event->len) - (u16)len;
+
+event->len is supplied by the device firmware and is never validated,
+and the subtraction is unchecked.  assoc_req_ies points into
+adapter->event_body[MAX_EVENT_SIZE], a fixed-size array embedded in the
+kmalloc()'d struct mwifiex_adapter.
+
+On the ap_11n_enabled path mwifiex_set_sta_ht_cap() walks these IEs with
+cfg80211_find_ie(), whose for_each_element() loop dereferences each
+element header.  A firmware-reported event->len larger than the bytes
+actually received makes assoc_req_ies_len describe IEs that extend past
+event_body, so the walk reads out of the adapter slab object, a
+slab-out-of-bounds read (KASAN: slab-out-of-bounds in cfg80211_find_ie).
+An event->len smaller than the header instead makes the int subtraction
+negative, which wraps to a huge size_t when stored in assoc_req_ies_len.
+The same length is handed to cfg80211_new_sta(), so a more modest
+over-claim can also copy stale event_body bytes into the
+NL80211_CMD_NEW_STATION notification.
+
+A malicious or malfunctioning mwifiex device (USB/SDIO/PCIe) can deliver
+such an event while the interface is in AP/uAP mode.
+
+Validate event->len before use: reject a length that underflows the
+header or that would place the IEs outside the event_body[] buffer the
+event was copied into.  event->len here is struct mwifiex_assoc_event.len,
+a payload field internal to this event, not the transport frame length,
+so it is validated in this handler rather than at the generic
+MWIFIEX_TYPE_EVENT receive path, which only sees the event cause and the
+transport frame length.  The bound is against event_body[MAX_EVENT_SIZE]
+rather than the actually-received length because the transports store the
+event differently (USB and SDIO leave the 4-byte event header in
+event_skb, PCIe strips it via skb_pull), whereas event_body is the single
+fixed buffer all of them copy the event into.  This is the event-path
+analogue of the receive-path bounds checks added in commit 119585281617
+("wifi: mwifiex: Fix OOB and integer underflow when rx packets").
+
+Fixes: e568634ae7ac ("mwifiex: add AP event handling framework")
+Signed-off-by: HE WEI (ギカク) <skyexpoc@gmail.com>
+Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Link: https://patch.msgid.link/20260715135711.34688-1-skyexpoc@gmail.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/cfg.c | 3 +++
- 1 file changed, 3 insertions(+)
+ .../net/wireless/marvell/mwifiex/uap_event.c  | 24 +++++++++++++++++--
+ 1 file changed, 22 insertions(+), 2 deletions(-)
 
-diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
-index 0bc10136b816ef..80210ef4cbc843 100644
---- a/net/mac80211/cfg.c
-+++ b/net/mac80211/cfg.c
-@@ -2414,6 +2414,9 @@ static int sta_apply_parameters(struct ieee80211_local *local,
- 		memcpy(&sta->deflink.pub->supp_rates,
- 		       &nmi_sta->deflink.pub->supp_rates,
- 		       sizeof(sta->deflink.pub->supp_rates));
-+
-+		sta->deflink.pub->agg = nmi_sta->deflink.pub->agg;
-+		__ieee80211_sta_recalc_aggregates(sta, 0);
- 	}
+diff --git a/drivers/net/wireless/marvell/mwifiex/uap_event.c b/drivers/net/wireless/marvell/mwifiex/uap_event.c
+index 679fdae0f001a1..ba1bdbbff687be 100644
+--- a/drivers/net/wireless/marvell/mwifiex/uap_event.c
++++ b/drivers/net/wireless/marvell/mwifiex/uap_event.c
+@@ -123,11 +123,31 @@ int mwifiex_process_uap_event(struct mwifiex_private *priv)
+ 				len = ETH_ALEN;
  
- 	/* set the STA state after all sta info from usermode has been set */
+ 			if (len != -1) {
++				u16 evt_len = le16_to_cpu(event->len);
++
+ 				sinfo->assoc_req_ies = &event->data[len];
+ 				len = (u8 *)sinfo->assoc_req_ies -
+ 				      (u8 *)&event->frame_control;
+-				sinfo->assoc_req_ies_len =
+-					le16_to_cpu(event->len) - (u16)len;
++
++				/*
++				 * event->len is reported by the device firmware
++				 * and is not otherwise validated.  Reject a
++				 * length that underflows the header, or that
++				 * would place the association request IEs
++				 * outside the fixed-size event_body[] buffer the
++				 * event was copied into; otherwise the IE walk
++				 * in mwifiex_set_sta_ht_cap() reads past
++				 * event_body and out of the adapter slab object.
++				 */
++				if (evt_len < len ||
++				    (u8 *)&event->frame_control + evt_len >
++				    adapter->event_body + MAX_EVENT_SIZE) {
++					mwifiex_dbg(adapter, ERROR,
++						    "invalid STA assoc event length\n");
++					kfree(sinfo);
++					return -1;
++				}
++				sinfo->assoc_req_ies_len = evt_len - (u16)len;
+ 			}
+ 		}
+ 		cfg80211_new_sta(priv->netdev->ieee80211_ptr, event->sta_addr,
 -- 
 2.53.0
 
