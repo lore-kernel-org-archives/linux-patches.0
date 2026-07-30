@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BEDE37BE9C;
-	Thu, 30 Jul 2026 15:46:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D3DB2DB791;
+	Thu, 30 Jul 2026 15:46:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426361; cv=none; b=fABWFZMaRBpHoHkqrUQfZodPrEnR++rKrwXut8Z0tBoWmnvS+elQObI3kRanTSvRgffl4NUdNgYvSZmFxUws5qh73j22iC7hImb9yKIw58THDqOZXFvEIIFkKfk9cuuVWDAF5kXYqHe0BUlSurD401zwddFs36aLJzASA5ZIZ3o=
+	t=1785426364; cv=none; b=LHuH8HuP1hGRW38+E86KGXbXJaUIuzwbIGweHFZ4EL0RFCc9p9/RQuba0IOWK7CjUM+WRPBPiueiPCmgaYtfQ3WQ7fqofFXJXWa/MieBAtxbGzde6KueSCKSsy+punO43a92nxc5WGyaz33dCVhK/2iPOasd9vAOtpUOftlbCbk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426361; c=relaxed/simple;
-	bh=RjZY0MI32Nx1h/FPRWTp4KMQaM2vAGi/mSBTgKEj+Vc=;
+	s=arc-20240116; t=1785426364; c=relaxed/simple;
+	bh=mqSMq92iGB1N+aJt+pskmogGkq1e9EXIcTpYA7JMyIs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AWaUHLgOv5uOV1VIyyUPzyLzHUBTvka8Q112r7a5O60Frchj90DSXhXIfXdehARVdimUJS6qtRr+Zoh8t8pZ7a6jQL87nMgMr3tBZnsW/1kykay+5p8qkrvPau8FjzHB+ZEsV0YfMKy0H60n+loY0hFRpuiD5jUNuQXEyxC9czI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R9uad8vj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=llinbHSdmiUmgjs+bnjBqNYogmXULpSDhCaVRx6SsnQ6ErdywGqjEJH9VWxSkgqGE8PGXrNboVMOO8dsuorfr00kNbxxJaGgPlAKqI24VI/Cr0UWZrz5YrxdktZOcHJyqV+SInlIvsjEcl66qLMzDggHE+RRyFCHxijC1MPpMaw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g9551Jhy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R9uad8vj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D58B01F00A3D;
-	Thu, 30 Jul 2026 15:45:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g9551Jhy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3B3A1F000E9;
+	Thu, 30 Jul 2026 15:46:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426360;
-	bh=KtslUuk0JQUJeCmeJlp2sLd3R6xLr18Zs9EZsd2qPV8=;
+	s=korg; t=1785426363;
+	bh=x8eflYQfQAtas6FwEEoPmH0iETvwuOsiF6VA95K6g80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R9uad8vj7XSC56QUrp/qSE0NJ3SyhINT2kMx7fyVnxmIEov61QqPIf/3c965szZ/4
-	 egKBIkWSlKYmqDVbeimnmouuZwY04Pdl1506UsSDjM6fZIGKCqjcg8vNviaxAXEpy4
-	 XcpbpO7myKPVk0giaNJrgmA7ljpFJ2+9b8O4ST70=
+	b=g9551JhyXLv6fKmiU2Xzlsk9NsqgIL5tBJHF5ami+Kf1n/VQBU1G+eqnwcChNaR9A
+	 fecA/FCqU2WK7lUAjVI32xSIMgDw5s+pfcrWSV/FpZVV/Pr6XXIiKl9pq9oiq9i21W
+	 vSl8bN2zqUqJX+Y8Ti4RKZ9qvDLq8jYr16MEPiBM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Xu Rao <raoxu@uniontech.com>
-Subject: [PATCH 6.12 375/602] misc: nsm: pin the module while the device is open
-Date: Thu, 30 Jul 2026 16:12:47 +0200
-Message-ID: <20260730141443.841195904@linuxfoundation.org>
+	Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 6.12 393/602] libceph: Fix multiplication overflow in decode_new_up_state_weight()
+Date: Thu, 30 Jul 2026 16:13:05 +0200
+Message-ID: <20260730141444.217042023@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -50,41 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Rao <raoxu@uniontech.com>
+From: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
 
-commit 3b231f1e9990f4c21220d0a69733ce2105891ff9 upstream.
+commit 98917a499ec7064c14fc56d180a4fd636fc2784c upstream.
 
-misc_open() installs a misc driver's file operations with fops_get(),
-which pins file_operations::owner before replacing the file's f_op.  The
-NSM misc device leaves nsm_dev_fops.owner unset, so opening /dev/nsm does
-not take a module reference on the nsm driver.
+If a message of type CEPH_MSG_OSD_MAP contains a (maliciously) corrupted
+osdmap, out-of-bounds memory accesses may occur in
+decode_new_up_state_weight(). This happens because the bounds check for
+the new_state part is based on calculating its length depending on a len
+value read from the incoming message. This calculation may overflow
+leading to an incorrect bounds check. Subsequently, out-of-bounds reads
+may occur when decoding this part.
 
-If the driver is built as a module, an open file descriptor can therefore
-survive rmmod of the module that provides its ioctl callbacks.  A later
-ioctl through that descriptor can call into unloaded module text.
+This patch switches the multiplication to use check_mul_overflow() to
+abort processing the osdmap if an overflow occurred. Therefore,
+osdmaps/messages containing large values for len that result in a
+multiplication overflow are treated as invalid.
 
-Set nsm_dev_fops.owner to THIS_MODULE so the misc core holds the module
-while any /dev/nsm file descriptor is open, matching the lifetime
-expectation for the installed file operations.
+[ idryomov: rename new_state_len -> new_state_item_size, formatting ]
 
-Fixes: b9873755a6c8 ("misc: Add Nitro Secure Module driver")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Xu Rao <raoxu@uniontech.com>
-Link: https://patch.msgid.link/BE6951D13B5E5513+20260713055523.3193089-1-raoxu@uniontech.com
+Cc: stable@vger.kernel.org
+Fixes: 930c53286977 ("libceph: apply new_state before new_up_client on incrementals")
+Signed-off-by: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
+Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/nsm.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/ceph/osdmap.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/misc/nsm.c
-+++ b/drivers/misc/nsm.c
-@@ -413,6 +413,7 @@ static int nsm_device_init_vq(struct vir
- }
+--- a/net/ceph/osdmap.c
++++ b/net/ceph/osdmap.c
+@@ -1844,6 +1844,8 @@ static int decode_new_up_state_weight(vo
+ 	void *new_up_client;
+ 	void *new_state;
+ 	void *new_weight_end;
++	const u32 new_state_item_size =
++	    sizeof(u32) + (struct_v >= 5 ? sizeof(u32) : sizeof(u8));
+ 	u32 len;
+ 	int ret;
+ 	int i;
+@@ -1864,7 +1866,8 @@ static int decode_new_up_state_weight(vo
  
- static const struct file_operations nsm_dev_fops = {
-+	.owner = THIS_MODULE,
- 	.unlocked_ioctl = nsm_dev_ioctl,
- 	.compat_ioctl = compat_ptr_ioctl,
- };
+ 	new_state = *p;
+ 	ceph_decode_32_safe(p, end, len, e_inval);
+-	len *= sizeof(u32) + (struct_v >= 5 ? sizeof(u32) : sizeof(u8));
++	if (check_mul_overflow(len, new_state_item_size, &len))
++		goto e_inval;
+ 	ceph_decode_need(p, end, len, e_inval);
+ 	*p += len;
+ 
 
 
