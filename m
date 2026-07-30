@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45AFC449B2A;
-	Thu, 30 Jul 2026 16:04:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1357B38DC40;
+	Thu, 30 Jul 2026 16:04:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427469; cv=none; b=b4MHri2Nnwkqksupy1VnvmynuTvhTJwtP0JfPJjP/U++/79tk06McijTtkniUebUSKULinvlwtTbaRK75jTRSJ0HLqvLyM609+QfHlYruhX9Clwcl7rQCA+HbO1WENkTAWcdTSRHZT5JkJzg0ri9DGOEK8fHtifwM2wnazQKVG8=
+	t=1785427472; cv=none; b=sp85uP4e8bNMkAlYuUeWRQVKO2tof78ekA/nldvMxM5S8MjIAwtb6iPLyrhRw8D6ltuSz1P+VQeovBWfH1y7Nz/Cp0kYHDia794d1NQYXwVaEM1Cw98FxtW2pyiGRDFzkc6Khmu5lqrFFJGv13B+dP4rxKr7dqW2DuQkJlBdUA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427469; c=relaxed/simple;
-	bh=LXFx4QJvKpEOityYm85HBhqlFI91ku2seqcSGPHrA3Q=;
+	s=arc-20240116; t=1785427472; c=relaxed/simple;
+	bh=nhlV9bTTjTEukZkIE4rQYcRSSq6caL2DKzq8x3B4lAQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a1/40r7j2ixxsoqeY7q/gt7Cj/bqfqfrpC7evVRjC9fpUu49S3NyP/CcF72pcYPrcqJnY48wOOeT2sRTCNffFlsSU3OdZNeZMpXgLbxcF3qJoL5UmblBQVlE2imBdc0w8GQVqs9cR5dt6Hkz5OGVJZYlB165upUcGaqeSAvLVJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D91yQtcl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KnEAxjpp8K/GMUHXjJ+cgTR2jRL3Z7p+laZNIwowrnZhQv+cp0KLg4kHeTFThHQEpVrIn+UBmSuMvDjk/odmcT9JErP6ejYxwIKKPCGB1WKZjqtw8xyNn1zBUH+s8wh25cGlk//dmFaIQ+7/6lADfHjwmW6meXqHatr/0Ulst7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SaUiwjGx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D91yQtcl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98A811F000E9;
-	Thu, 30 Jul 2026 16:04:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SaUiwjGx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D66D1F000E9;
+	Thu, 30 Jul 2026 16:04:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427468;
-	bh=waowzF+MFTWmhQOE4nmFPHojLjYQ4ncmaj2FZ9QWaBQ=;
+	s=korg; t=1785427471;
+	bh=d8icm2DCLXvLKxeriUvIZqMfD9RUFat/iAUj7Dz/Q2w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D91yQtclGunj9ldOiYBKFDlrLJaHlwNpYSEC1n4Wl/4DQEO8/eZ5yj4aAcyoDo4P4
-	 ZgMBUY6jOiX5rJJhxK8lSD9+Y0T8vGIPgY2TO4shXpFIy81bpHGqsyA/wlLxZmEWQD
-	 LAPUulV1RMcb7+ofBATJA5o7WbLPAOXygxDNDVE4=
+	b=SaUiwjGxwLr9eDHdENrFg3Cui/XPCefRvX8aZlai2SDeulxyJ8MpAHAgTWB2N+iBg
+	 f7kEvPIZ0LtA2J5tiXphvt2HMYZ1gGokdhSvVZJy8w/jZiR58UsH3+uChpDFDCst9j
+	 i8ATxrbdlwXsyAV/BFRhb97sMpYZqsGGf6ygitZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Pagadala Yesu Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 136/484] ASoC: cs35l56: Use complete_all() to signal init_completion
-Date: Thu, 30 Jul 2026 16:10:33 +0200
-Message-ID: <20260730141426.412372273@linuxfoundation.org>
+Subject: [PATCH 6.6 137/484] wifi: iwlwifi: mvm: validate SAR GEO response payload size
+Date: Thu, 30 Jul 2026 16:10:34 +0200
+Message-ID: <20260730141426.434653915@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -51,54 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Fitzgerald <rf@opensource.cirrus.com>
+From: Pagadala Yesu Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
 
-[ Upstream commit e0bffb63a2eda0af82ed7e6357ac67c2db990c21 ]
+[ Upstream commit 408d7da38272ce48e2db79b8a9895999f94d7655 ]
 
-In cs35l56_init() use complete_all() to signal init_completion instead
-of complete().
+The SAR GEO command response is cast to
+iwl_geo_tx_power_profiles_resp without verifying the payload length.
+A malformed or unexpected firmware response can lead to reading an
+invalid structure layout.
 
-cs35l56_init() was signaling init_completion using the complete() function.
-This only releases ONE waiter.
+Add an explicit size check before accessing the response data and
+return -EIO when the payload size is wrong.
 
-If cs35l56_component_probe() was called multiple times the first time
-would consume that one signal, then future calls would timeout waiting for
-the completion. This could happen if:
-
- - The component is probed, removed, then probed again without the cs35l56
-   module being removed.
-
- - A call to component_probe() returns an error and ASoC calls it again
-   later.
-
-It should use complete_all() so that after it has been signaled it will
-allow any code that waits on it to continue immediately.
-
-The one case where the driver must wait for initialization to run again is
-when waiting for a reboot after firmware download, and here the code
-correctly calls reinit_completion() first.
-
-Fixes: e496112529006 ("ASoC: cs35l56: Add driver for Cirrus Logic CS35L56")
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Link: https://patch.msgid.link/20260716132045.1469156-3-rf@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: f604324eefec ("iwlwifi: remove iwl_validate_sar_geo_profile() export")
+Signed-off-by: Pagadala Yesu Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20260715215523.7e749b7d374a.I4ef54548bff6c6e7c7a57bee771ac12508aad677@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/cs35l56.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/fw.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/sound/soc/codecs/cs35l56.c b/sound/soc/codecs/cs35l56.c
-index dda40e97cf5e66..987bd7a3cf1d48 100644
---- a/sound/soc/codecs/cs35l56.c
-+++ b/sound/soc/codecs/cs35l56.c
-@@ -1423,7 +1423,7 @@ int cs35l56_init(struct cs35l56_private *cs35l56)
- 		return dev_err_probe(cs35l56->base.dev, ret, "Failed to write ASP1_CONTROL3\n");
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/fw.c b/drivers/net/wireless/intel/iwlwifi/mvm/fw.c
+index c597492668fad5..d2ff33366b3c6c 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/fw.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/fw.c
+@@ -908,12 +908,22 @@ int iwl_mvm_get_sar_geo_profile(struct iwl_mvm *mvm)
+ 		return ret;
+ 	}
  
- 	cs35l56->base.init_done = true;
--	complete(&cs35l56->init_completion);
-+	complete_all(&cs35l56->init_completion);
++	if (IWL_FW_CHECK(mvm,
++			 iwl_rx_packet_payload_len(cmd.resp_pkt) !=
++			 sizeof(*resp),
++			 "Wrong size for iwl_geo_tx_power_profiles_resp: %d\n",
++			 iwl_rx_packet_payload_len(cmd.resp_pkt))) {
++		ret = -EIO;
++		goto out;
++	}
++
+ 	resp = (void *)cmd.resp_pkt->data;
+ 	ret = le32_to_cpu(resp->profile_idx);
  
- 	return 0;
+ 	if (WARN_ON(ret > ACPI_NUM_GEO_PROFILES_REV3))
+ 		ret = -EIO;
+ 
++out:
+ 	iwl_free_resp(&cmd);
+ 	return ret;
  }
 -- 
 2.53.0
