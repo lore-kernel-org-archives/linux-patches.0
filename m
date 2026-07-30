@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6025B43E9F9;
-	Thu, 30 Jul 2026 14:19:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9C0D2D9EE4;
+	Thu, 30 Jul 2026 14:19:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421195; cv=none; b=iJQNgrI4LcxGM75YHvmyO31oLyAqV8EKyixlkYA9CRIClnRB6JZHLNuIYc24mJwZV6zpayyOo9toLSAeFePCsS2jGXsv1igOXLU7IHDI6gbw2CpX+1aMynlveC6p8Z+ZaojtE5Q/jFQQocFqTeNu6T2vm/Ea+Bf0k4V59L4icas=
+	t=1785421198; cv=none; b=DuY2vQ9heRjAWg0CHUO6/h4cvKUNem3UiYMCxjDlJHpwpii9WOAsotrKTjHIiQAmZzH0k31OyKPTEt9HbdUqhVw5pEbCp+aCLouwIbIEz8R7zG2+qGCEIHPzGtGlC5l10wxfDIzfNDCSs/ZxCK2iHjt2fVug5h18miAkgVGik34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421195; c=relaxed/simple;
-	bh=AOWOP+ekJyKb9I/y1mNZD8YMghqqN5oqUkYiCMlUau4=;
+	s=arc-20240116; t=1785421198; c=relaxed/simple;
+	bh=BajB6hd9pBcz450tzzJ2v62ASLIWuLfTb+ynu4WeMVU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d4hp815dn6OdSAW4RE2wbdVWjGlY0N7dnKTJpSzn6Xx88R0rTN2DcqZFsr2YpS8kJr3ia1can8+HDVNajslSNRtfBAheY8x1bNRRMFOCiFCRuWLg5cFk2C9HI3V2q6ohTKUfOH5sQuwGdoyW3FTztUPWQKMJgJSXehCQ1w8bWzU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N+CAH/29; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bFe7zAycmWnDE56vcluZ+YLHBH1LvdPQMoKuKRgrKBa2LQoFqaaGuJX1x2S3Jy6Jtj0ocuZ32C0PZjWw6MmiQkDh1mpGXiIw/4VcDhkw3oeoxaiyENEMfWoFDr1QZHqk2QvtDm4YZs1LZumg3JbIZbQjuFnOZHbu9mnJ28TxrgQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AxhBEP8v; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N+CAH/29"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E4881F000E9;
-	Thu, 30 Jul 2026 14:19:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AxhBEP8v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 419191F000E9;
+	Thu, 30 Jul 2026 14:19:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421194;
-	bh=8yE4xzJM1NrhmJw4kW/PLE5n2YcGtdEWgY5T7xiX5Zg=;
+	s=korg; t=1785421196;
+	bh=cCduI6eye9mev9NSjKTDoubdphq8rzSBuVOJ5XSmNlA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N+CAH/295F/amz6iowiUWolXsxPktY5cv2pyTys3tX5OtUM2tKi5QhEiUtQcBtgGP
-	 yjOgPkk10D2bTu13zv2QifQegAJkTl8pIw7nIxYHkrFsaLF1bWaWTZwWUixm8TB5aN
-	 NSVcRIqS7u433X3RZK45j6SNaimX4qH7FfZYD3Fk=
+	b=AxhBEP8v/qATp/rdDqHi76IoRP3R6YoYPCne8Bjz3+geMlR4G2L7QOuq5vmZC5Ahb
+	 FnRqrbteURtSwUW2V9IdOBmZZJLp81+iciYVh5us9Wo7q7rn6saENoFPGPxTwG7upf
+	 buGxDGXpmsBVL4Q1tdcoVAgGQriTzBWUjKXkVaYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 7.1 005/744] KVM: x86: Check for invalid/obsolete root *after* making MMU pages available
-Date: Thu, 30 Jul 2026 16:04:38 +0200
-Message-ID: <20260730141444.393605975@linuxfoundation.org>
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.1 023/744] mtd: nand: mtk-ecc: stop on ECC idle timeouts
+Date: Thu, 30 Jul 2026 16:04:56 +0200
+Message-ID: <20260730141444.776132765@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -51,86 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-commit 2abd5287f08319fa35764566b15c6e22cb1068db upstream.
+[ Upstream commit 16f7ec8d5dc100eafd2c8e06cd30340a30b104a1 ]
 
-Check for a "stale" page fault, i.e. for an invalid and/or obsolete root,
-after making MMU pages available for the shadow MMU.  If reclaiming shadow
-pages zaps an in-use root, i.e. marks it invalid, then KVM will attempt to
-map memory into an invalid root.  On its own, populating an invalid root is
-"fine", but because child shadow pages inherit their parent's role, any
-children created during the map/fetch will be created as invalid pages,
-thus violating KVM's invariant that invalid pages are never on the list of
-active MMU pages.
+mtk_ecc_wait_idle() logs when the encoder or decoder does not become
+idle, but returns void. Callers can therefore configure a non-idle ECC
+engine or read parity bytes after an unconfirmed encoder idle state.
 
-Note, the underlying flaw has existed since KVM first started tracking
-invalid roots in 2008 (commit 2e53d63acba7, "KVM: MMU: ignore zapped root
-pagetables"), but the true badness only came along in 2020 (Linux 5.9)
-with the invariant that invalid shadow pages can't be on the list of
-active pages.
+Return the idle poll result and propagate it from the enable and encode
+paths that require the engine to be idle before continuing.
 
-Note #2, inheriting role.invalid when creating child shadow pages is also
-far from ideal; that flaw will be addressed separately.
-
-Reported-by: Hyunwoo Kim <imv4bel@gmail.com>
-Fixes: f95eec9bed76 ("KVM: x86/mmu: Don't put invalid SPs back on the list of active pages")
-Cc: stable@vger.kernel.org
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 1d6b1e464950 ("mtd: mediatek: driver for MTK Smart Device")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/mmu/mmu.c         |    9 +++++----
- arch/x86/kvm/mmu/paging_tmpl.h |   10 ++++++----
- 2 files changed, 11 insertions(+), 8 deletions(-)
+ drivers/mtd/nand/ecc-mtk.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
---- a/arch/x86/kvm/mmu/mmu.c
-+++ b/arch/x86/kvm/mmu/mmu.c
-@@ -4837,16 +4837,17 @@ static int direct_page_fault(struct kvm_
- 	if (r != RET_PF_CONTINUE)
- 		return r;
+diff --git a/drivers/mtd/nand/ecc-mtk.c b/drivers/mtd/nand/ecc-mtk.c
+index c75bb8b80cc1e1..96703f0a418ea2 100644
+--- a/drivers/mtd/nand/ecc-mtk.c
++++ b/drivers/mtd/nand/ecc-mtk.c
+@@ -123,8 +123,8 @@ static int mt7622_ecc_regs[] = {
+ 	[ECC_DECIRQ_STA] =      0x144,
+ };
  
--	r = RET_PF_RETRY;
- 	write_lock(&vcpu->kvm->mmu_lock);
- 
--	if (is_page_fault_stale(vcpu, fault))
--		goto out_unlock;
--
- 	r = make_mmu_pages_available(vcpu);
- 	if (r)
- 		goto out_unlock;
- 
-+	if (is_page_fault_stale(vcpu, fault)) {
-+		r = RET_PF_RETRY;
-+		goto out_unlock;
-+	}
+-static inline void mtk_ecc_wait_idle(struct mtk_ecc *ecc,
+-				     enum mtk_ecc_operation op)
++static inline int mtk_ecc_wait_idle(struct mtk_ecc *ecc,
++				    enum mtk_ecc_operation op)
+ {
+ 	struct device *dev = ecc->dev;
+ 	u32 val;
+@@ -136,6 +136,8 @@ static inline void mtk_ecc_wait_idle(struct mtk_ecc *ecc,
+ 	if (ret)
+ 		dev_warn(dev, "%s NOT idle\n",
+ 			 op == ECC_ENCODE ? "encoder" : "decoder");
 +
- 	r = direct_map(vcpu, fault);
++	return ret;
+ }
  
- out_unlock:
---- a/arch/x86/kvm/mmu/paging_tmpl.h
-+++ b/arch/x86/kvm/mmu/paging_tmpl.h
-@@ -827,15 +827,17 @@ static int FNAME(page_fault)(struct kvm_
+ static irqreturn_t mtk_ecc_irq(int irq, void *id)
+@@ -312,7 +314,11 @@ int mtk_ecc_enable(struct mtk_ecc *ecc, struct mtk_ecc_config *config)
+ 		return ret;
  	}
- #endif
  
--	r = RET_PF_RETRY;
- 	write_lock(&vcpu->kvm->mmu_lock);
- 
--	if (is_page_fault_stale(vcpu, fault))
--		goto out_unlock;
--
- 	r = make_mmu_pages_available(vcpu);
- 	if (r)
- 		goto out_unlock;
-+
-+	if (is_page_fault_stale(vcpu, fault)) {
-+		r = RET_PF_RETRY;
-+		goto out_unlock;
+-	mtk_ecc_wait_idle(ecc, op);
++	ret = mtk_ecc_wait_idle(ecc, op);
++	if (ret) {
++		mutex_unlock(&ecc->lock);
++		return ret;
 +	}
-+
- 	r = FNAME(fetch)(vcpu, fault, &walker);
  
- out_unlock:
+ 	ret = mtk_ecc_config(ecc, config);
+ 	if (ret) {
+@@ -412,7 +418,9 @@ int mtk_ecc_encode(struct mtk_ecc *ecc, struct mtk_ecc_config *config,
+ 	if (ret)
+ 		goto timeout;
+ 
+-	mtk_ecc_wait_idle(ecc, ECC_ENCODE);
++	ret = mtk_ecc_wait_idle(ecc, ECC_ENCODE);
++	if (ret)
++		goto timeout;
+ 
+ 	/* Program ECC bytes to OOB: per sector oob = FDM + ECC + SPARE */
+ 	len = (config->strength * ecc->caps->parity_bits + 7) >> 3;
+-- 
+2.53.0
+
 
 
