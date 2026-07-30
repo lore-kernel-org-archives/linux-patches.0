@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17529420470;
-	Thu, 30 Jul 2026 15:31:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C03F443AAA;
+	Thu, 30 Jul 2026 15:31:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425465; cv=none; b=aqx+DR4mB0z3PMVzGgZsFmdPbnAVzYCijgTecRwF0qWZqDxo1L017/SYjgkiYDu2Df78Kh1Jvxai6bYNs07AEHQEp5XaqrvtoAU5Go5e3mtvlsNaLNvGj/TBA68wUFfBDNNqtkTiqRH+rE+UV5o+oSd/xx0NDkrF9wrZtoqcEPg=
+	t=1785425467; cv=none; b=qJUddOgMqX+Qezn03412u7m/IeuCF3bJaYIw3HkzpZopU93CseJ+dkXr5QfW2eC0BC1w/xweuQtAwgV9GjkrR1DYPG8jYXX3iYI4Dc7SEi4Nd28AFwErgcjG2BOSZhFPq9nt+D06p0iOGBQvyELKp0GTInp+oP+iv/go6AOH9rM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425465; c=relaxed/simple;
-	bh=qKr64o1TJOAgGw9sGxS03nG8ZtilfAO+O4oJb/lbzpo=;
+	s=arc-20240116; t=1785425467; c=relaxed/simple;
+	bh=et1nBc9/2gLtucb56KQHbz6mapJ8XvKL5d1ob6nRpj0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aC9xOErCH42ogJ5eKi8a6UCYI8lllHPmhZdNuz0pastK8zfcflnnQUDo5/xYLqSoxpNmsi0lI+P3lWYaCxr0u0gkjSaPMCQ0WG6t1YqlhJncuw5UCsrYgBB6WGitf319ab6ksHk2ZMz5y0a7bd7SCaey516KerwRMZR4Y+QBln0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KusIPtJ8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cPw4N/b6M6vZaIjhJAedxC5cjBPtmfkU+6KYTtz0NJQPrlnScMA+GfpjcARjoAiBqSGcJdjEC/CLACcRBYY8isZNvwAYCJq7R0MwBZCVik8jclMXQm+M14KErCqTKVMkqbAG2KlFX5Fn0kyLF3DUMA4HTuNbFdTIkOYcrDIP+j8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NUrNNNMP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KusIPtJ8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B2151F000E9;
-	Thu, 30 Jul 2026 15:31:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NUrNNNMP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E64AF1F000E9;
+	Thu, 30 Jul 2026 15:31:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425463;
-	bh=+VCbPPlyeG8H4W09EtuA/4b7CSBz6WzL9uBN8hig7V0=;
+	s=korg; t=1785425466;
+	bh=PmD2IoLQePB4imfb/xYs1nyKuT1lzZBxhPM5NOLGhBU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KusIPtJ8QaQdL2oK0C3PjrcU4U5SqNpbCyO2yhCYS0eLcd8GK5hMg6ZsXgc8NqR2I
-	 bLf+Dbfr6HeuKy380v0VxVvDw9EVdhVsxOiK3djisKXu7VXNG5+sZSAwzROM/DR7O3
-	 IZWebiS0eSFbBtZZznoRyAMcDFbIcm9cEn2ZuayI=
+	b=NUrNNNMPMAKPzkBEGpLba9G7PKuUnl4g9T+Ni4EhkElRO0aIMWUxgTw8Ei7rYdadW
+	 4r3e60pskdVBqMnIZRt/tUkb86t6UjLPitTRHmjGvBs+vMr81GU/4WOPjxiJR0put8
+	 ZZTqhQkMboA3EgICuwU4/eV8US+OulMp9Te452pQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Uday Khare <udaykhare77@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Pushpendra Singh <pushpendra.singh@oss.qualcomm.com>,
+	Sudeep Holla <sudeep.holla@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 077/602] ASoC: tas2562: fix deprecated shut-down GPIO always cleared after lookup
-Date: Thu, 30 Jul 2026 16:07:49 +0200
-Message-ID: <20260730141437.615094480@linuxfoundation.org>
+Subject: [PATCH 6.12 078/602] firmware: arm_scmi: Rate-limit queue-full warnings in IRQ context
+Date: Thu, 30 Jul 2026 16:07:50 +0200
+Message-ID: <20260730141437.637559557@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -51,59 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Uday Khare <udaykhare77@gmail.com>
+From: Pushpendra Singh <pushpendra.singh@oss.qualcomm.com>
 
-[ Upstream commit 3238c634725afbb2a137fdda762208510828f71d ]
+[ Upstream commit a4447c0693830d5ecadd6e755cb7fdc55d86aacc ]
 
-In tas2562_parse_dt(), the fallback lookup for the deprecated
-"shut-down" GPIO property is broken due to a missing pair of braces.
+The scmi_notify() function is called from interrupt context to queue
+received notification events onto a per-protocol kfifo. When the kfifo
+is full, it logs a warning via dev_warn() for every dropped event.
 
-The code intends to reset sdz_gpio to NULL only when the lookup
-returns an error that is not -EPROBE_DEFER (so the driver gracefully
-continues without a GPIO). However, without braces the statement:
+Under conditions where the platform sends a burst of SCMI notifications
+faster than the deferred worker can drain the queue, this results in a
+flood of dev_warn() calls from IRQ context. Each call acquires the
+console lock and may execute blocking console writes, causing the CPU
+to be held in interrupt context for an extended period and leading to
+observable system stalls.
 
-    tas2562->sdz_gpio = NULL;
+Fix this by switching to dev_warn_ratelimited() to limit the frequency
+of log messages when the notification queue is full. This reduces
+console overhead in interrupt context and prevents CPU stalls caused by
+excessive logging, while still preserving diagnostic visibility.
 
-falls outside the IS_ERR() check and is executed unconditionally
-for every path through the if block, including a successful GPIO
-lookup.
-
-This means any device using the deprecated 'shut-down' DT property
-will always have sdz_gpio == NULL after probe, making the GPIO
-completely non-functional.
-
-Fix this by adding the missing braces to scope the NULL assignment
-inside the IS_ERR() branch, matching the pattern already used for
-the primary 'shutdown' GPIO lookup above.
-
-Fixes: f78a97003b8b ("ASoC: tas2562: Update shutdown GPIO property")
-Signed-off-by: Uday Khare <udaykhare77@gmail.com>
-Link: https://patch.msgid.link/20260706153109.10953-1-udaykhare77@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: bd31b249692e ("firmware: arm_scmi: Add notification dispatch and delivery")
+Signed-off-by: Pushpendra Singh <pushpendra.singh@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260708072339.3021140-1-pushpendra.singh@oss.qualcomm.com
+Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/tas2562.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/firmware/arm_scmi/notify.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/codecs/tas2562.c b/sound/soc/codecs/tas2562.c
-index 54561ae598b87a..7daa9e9e0f60e9 100644
---- a/sound/soc/codecs/tas2562.c
-+++ b/sound/soc/codecs/tas2562.c
-@@ -683,11 +683,12 @@ static int tas2562_parse_dt(struct tas2562_data *tas2562)
- 	if (tas2562->sdz_gpio == NULL) {
- 		tas2562->sdz_gpio = devm_gpiod_get_optional(dev, "shut-down",
- 							      GPIOD_OUT_HIGH);
--		if (IS_ERR(tas2562->sdz_gpio))
-+		if (IS_ERR(tas2562->sdz_gpio)) {
- 			if (PTR_ERR(tas2562->sdz_gpio) == -EPROBE_DEFER)
- 				return -EPROBE_DEFER;
- 
--		tas2562->sdz_gpio = NULL;
-+			tas2562->sdz_gpio = NULL;
-+		}
+diff --git a/drivers/firmware/arm_scmi/notify.c b/drivers/firmware/arm_scmi/notify.c
+index e160ecb22948fc..f042fb8a050265 100644
+--- a/drivers/firmware/arm_scmi/notify.c
++++ b/drivers/firmware/arm_scmi/notify.c
+@@ -596,9 +596,9 @@ int scmi_notify(const struct scmi_handle *handle, u8 proto_id, u8 evt_id,
+ 		return -EINVAL;
+ 	}
+ 	if (kfifo_avail(&r_evt->proto->equeue.kfifo) < sizeof(eh) + len) {
+-		dev_warn(handle->dev,
+-			 "queue full, dropping proto_id:%d  evt_id:%d  ts:%lld\n",
+-			 proto_id, evt_id, ktime_to_ns(ts));
++		dev_warn_ratelimited(handle->dev,
++				     "queue full, dropping proto_id:%d  evt_id:%d  ts:%lld\n",
++				     proto_id, evt_id, ktime_to_ns(ts));
+ 		return -ENOMEM;
  	}
  
- 	if (tas2562->model_id == TAS2110)
 -- 
 2.53.0
 
