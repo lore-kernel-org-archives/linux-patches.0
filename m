@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7814235DA67;
-	Thu, 30 Jul 2026 15:39:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DC5E42F712;
+	Thu, 30 Jul 2026 15:39:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425996; cv=none; b=gNu+y7liD7rHFF3Vfx+TLPv6iQ7VCMPTwccDG7TWqIQVNICWLjOPRHgCogS7zmR4b5rsRiDMaNN76rZYRH3YV48IcRilGWSElF9S3fxvj/ZDPmYnJp2P0ipofr4athxzXW+dirq0yUEJp6MjNw5jnJCY6Q8toYCPd0vv2cpezUM=
+	t=1785425999; cv=none; b=TDIV4qX4jBDRopudAdNyFCJuN3Un84QAQAxIGDP8RwheVg7kM3HEcooJpYXYDxYko+ZxwzLaRtQ2KhGgQ9+vSflpk97rYQ34odgDZma0vbix8r9xdGFRBjzOKGIs0kFl5ESyx+jp3TXHerfgWAtsVhs3ok2WPT94NWtuqK0LZpc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425996; c=relaxed/simple;
-	bh=H2fU+J+wdge+s+jngaWPnwH02Mv0JeaQyy57+6Uuk9s=;
+	s=arc-20240116; t=1785425999; c=relaxed/simple;
+	bh=/n2fNFnPRr05yAF3MM0G6xS3ZeD6Z0YchfuZlCyllJQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EyiC2VJYAuN6wZ0PQxYgK9/Gu8t4Kcv+baR4bP8u/yP1cefw2PkItcCOnCxHqy4UzvTn2KkBjN1ndzCYMEH3pVqorzW7l2Pupbc/nQUU9vNRaJi0AB/057aLRqJyndAJB4XMcvUcRdyViXIAO7W+5e2QlR/jY65g/Xm5yBozFgY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G4ZMTpoz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Xh4jofvf1QuW6idkzL38PU54zfb0PiHMleS/2u7bKfaufAg9Xi+os7JO2HZ4BdPCddJRT1xOepnblM7SUZD8JtQuUOtMRZPfMP4Cvz/P/CUUE2uqWcuaJYf4PC8aFSHROv0wlB2yJopxz9v71gQD99CsquQo3LwLNVWvHuc/Nlg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J8/k5Mib; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G4ZMTpoz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9268A1F000E9;
-	Thu, 30 Jul 2026 15:39:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J8/k5Mib"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CC031F00A3A;
+	Thu, 30 Jul 2026 15:39:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425995;
-	bh=oYgT4chHZax+OISOqF7PjJ2U5yMJUGAZjztNart5O+E=;
+	s=korg; t=1785425998;
+	bh=E+8o3rIp90GO93nhrkhwObs6Nr6xnmh7aPOLQJ498pA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G4ZMTpozARKnC6WtnkadesiCWIOwwAhtzRkMJulkvaWcWOUJNRHICqFgfWVx+5DTi
-	 pYIQB2wwCzzBRhmMZw0pcwtUzMGtYmpOD7nT1n6Fz6TQIPcKVNOVEWlyu5avN29jx8
-	 KwclCTXH3K8N/xr6E58slprEidZzWxNzWwUNXJtc=
+	b=J8/k5MibwSDf3yxUGsp4HeF2A8OBAe2wMNoD9PlDQudXpck60afgpmLHbtfeSitjx
+	 3Vinm1tuXFrh5WztmG5ZZgd95sRWcPDeNXPGnPxRL1AZ8xD6qbQfINqcaNDEk7CgGE
+	 EiahkUv5iZiIOboLpVH4zK2TmaaPsnXikbdohpUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Junrui Luo <moonafterrain@outlook.com>,
-	Danilo Krummrich <dakr@kernel.org>
-Subject: [PATCH 6.12 263/602] drm/nouveau: fix reversed error cleanup order in ucopy functions
-Date: Thu, 30 Jul 2026 16:10:55 +0200
-Message-ID: <20260730141441.498575903@linuxfoundation.org>
+	Dave Airlie <airlied@redhat.com>,
+	Jani Nikula <jani.nikula@intel.com>
+Subject: [PATCH 6.12 264/602] drm/displayid: fix Tiled Display Topology ID size
+Date: Thu, 30 Jul 2026 16:10:56 +0200
+Message-ID: <20260730141441.518754220@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -51,66 +50,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: Jani Nikula <jani.nikula@intel.com>
 
-commit ab99ead646b1b833ecd57fe577a2816f2e848167 upstream.
+commit 90c0486a82e27393f9eaf3bb350f51a0bd38cb6b upstream.
 
-nouveau_uvmm_vm_bind_ucopy() and nouveau_exec_ucopy() place their error
-cleanup labels in allocation order rather than reverse allocation order.
-On a u_memcpya() failure for in_sync.s, the goto to err_free_ops (or
-err_free_pushs) frees the first allocation and then falls through to
-err_free_ins, which calls u_free() on args->in_sync.s.
+The Tiled Display Topology ID of a DisplayID Tiled Display Topology Data
+Block consists of three fields:
 
-Since args->in_sync.s still holds the ERR_PTR returned by the failed
-u_memcpya(), and ERR_PTR values are not caught by ZERO_OR_NULL_PTR(),
-kvfree() proceeds to dereference it, which can result in a kernel oops.
-A failure for out_sync.s instead jumps to err_free_ins and skips freeing
-the first allocation, leading to a memory leak.
+- Tiled Display Manufacturer/Vendor ID Field (3 bytes)
+- Tiled Display Product ID Code Field (2 bytes)
+- Tiled Display Serial Number Field (4 bytes)
 
-Fix by swapping the cleanup label order so resources are freed in the
-correct reverse allocation sequence.
+i.e. a total of 9 bytes, not 8.
 
-Fixes: b88baab82871 ("drm/nouveau: implement new VM_BIND uAPI")
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
-Link: https://patch.msgid.link/SYBPR01MB7881484D91A6F80271415F71AF1A2@SYBPR01MB7881.ausprd01.prod.outlook.com
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+The DisplayID Tiled Display Topology ID is used as the tile group
+identifier.
+
+Update both struct displayid_tiled_block topology_id member and struct
+drm_tile_group group_data member to full 9 bytes.
+
+The group data was missing the last byte of the serial number. I don't
+know whether there are known bug reports that might be linked to this,
+but it's plausible the last byte could be the differentiating part for
+the tile groups, and fewer tile groups might have been created than
+intended.
+
+Fixes: b49b55bd4fba ("drm/displayid: add displayid defines and edid extension (v2)")
+Fixes: 138f9ebb9755 ("drm: add tile_group support. (v3)")
+Cc: Dave Airlie <airlied@redhat.com>
+Cc: stable@vger.kernel.org # v3.19+
+Reviewed-by: Dave Airlie <airlied@redhat.com>
+Link: https://patch.msgid.link/20260610141549.555605-1-jani.nikula@intel.com
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_exec.c |    4 ++--
- drivers/gpu/drm/nouveau/nouveau_uvmm.c |    4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/drm_connector.c          |   12 ++++++------
+ drivers/gpu/drm/drm_displayid_internal.h |    2 +-
+ include/drm/drm_connector.h              |    6 +++---
+ 3 files changed, 10 insertions(+), 10 deletions(-)
 
---- a/drivers/gpu/drm/nouveau/nouveau_exec.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_exec.c
-@@ -327,10 +327,10 @@ nouveau_exec_ucopy(struct nouveau_exec_j
+--- a/drivers/gpu/drm/drm_connector.c
++++ b/drivers/gpu/drm/drm_connector.c
+@@ -3393,7 +3393,7 @@ EXPORT_SYMBOL(drm_mode_put_tile_group);
+ /**
+  * drm_mode_get_tile_group - get a reference to an existing tile group
+  * @dev: DRM device
+- * @topology: 8-bytes unique per monitor.
++ * @topology_id: 9-byte unique ID per monitor.
+  *
+  * Use the unique bytes to get a reference to an existing tile group.
+  *
+@@ -3401,14 +3401,14 @@ EXPORT_SYMBOL(drm_mode_put_tile_group);
+  * tile group or NULL if not found.
+  */
+ struct drm_tile_group *drm_mode_get_tile_group(struct drm_device *dev,
+-					       const char topology[8])
++					       const char topology_id[9])
+ {
+ 	struct drm_tile_group *tg;
+ 	int id;
  
- 	return 0;
+ 	mutex_lock(&dev->mode_config.idr_mutex);
+ 	idr_for_each_entry(&dev->mode_config.tile_idr, tg, id) {
+-		if (!memcmp(tg->group_data, topology, 8)) {
++		if (!memcmp(tg->group_data, topology_id, sizeof(tg->group_data))) {
+ 			if (!kref_get_unless_zero(&tg->refcount))
+ 				tg = NULL;
+ 			mutex_unlock(&dev->mode_config.idr_mutex);
+@@ -3423,7 +3423,7 @@ EXPORT_SYMBOL(drm_mode_get_tile_group);
+ /**
+  * drm_mode_create_tile_group - create a tile group from a displayid description
+  * @dev: DRM device
+- * @topology: 8-bytes unique per monitor.
++ * @topology_id: 9-byte unique ID per monitor.
+  *
+  * Create a tile group for the unique monitor, and get a unique
+  * identifier for the tile group.
+@@ -3432,7 +3432,7 @@ EXPORT_SYMBOL(drm_mode_get_tile_group);
+  * new tile group or NULL.
+  */
+ struct drm_tile_group *drm_mode_create_tile_group(struct drm_device *dev,
+-						  const char topology[8])
++						  const char topology_id[9])
+ {
+ 	struct drm_tile_group *tg;
+ 	int ret;
+@@ -3442,7 +3442,7 @@ struct drm_tile_group *drm_mode_create_t
+ 		return NULL;
  
--err_free_pushs:
--	u_free(args->push.s);
- err_free_ins:
- 	u_free(args->in_sync.s);
-+err_free_pushs:
-+	u_free(args->push.s);
- 	return ret;
- }
+ 	kref_init(&tg->refcount);
+-	memcpy(tg->group_data, topology, 8);
++	memcpy(tg->group_data, topology_id, sizeof(tg->group_data));
+ 	tg->dev = dev;
  
---- a/drivers/gpu/drm/nouveau/nouveau_uvmm.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_uvmm.c
-@@ -1708,10 +1708,10 @@ nouveau_uvmm_vm_bind_ucopy(struct nouvea
+ 	mutex_lock(&dev->mode_config.idr_mutex);
+--- a/drivers/gpu/drm/drm_displayid_internal.h
++++ b/drivers/gpu/drm/drm_displayid_internal.h
+@@ -108,7 +108,7 @@ struct displayid_tiled_block {
+ 	u8 topo[3];
+ 	u8 tile_size[4];
+ 	u8 tile_pixel_bezel[5];
+-	u8 topology_id[8];
++	u8 topology_id[9];
+ } __packed;
  
- 	return 0;
+ struct displayid_detailed_timings_1 {
+--- a/include/drm/drm_connector.h
++++ b/include/drm/drm_connector.h
+@@ -2312,13 +2312,13 @@ struct drm_tile_group {
+ 	struct kref refcount;
+ 	struct drm_device *dev;
+ 	int id;
+-	u8 group_data[8];
++	u8 group_data[9];
+ };
  
--err_free_ops:
--	u_free(args->op.s);
- err_free_ins:
- 	u_free(args->in_sync.s);
-+err_free_ops:
-+	u_free(args->op.s);
- 	return ret;
- }
+ struct drm_tile_group *drm_mode_create_tile_group(struct drm_device *dev,
+-						  const char topology[8]);
++						  const char topology_id[9]);
+ struct drm_tile_group *drm_mode_get_tile_group(struct drm_device *dev,
+-					       const char topology[8]);
++					       const char topology_id[9]);
+ void drm_mode_put_tile_group(struct drm_device *dev,
+ 			     struct drm_tile_group *tg);
  
 
 
