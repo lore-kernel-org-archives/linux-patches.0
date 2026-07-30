@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16BC1407597;
-	Thu, 30 Jul 2026 14:51:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09B513C3F4C;
+	Thu, 30 Jul 2026 14:52:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423118; cv=none; b=tz15yraWTmjvUrFS5pHSuZ4lSKGWd9RECMYHED3Y8I+SibmEnlu7+t6KWLJsnofYUmYYhICZrgic4dRNIsfcU2w7KE4vmC1Nt9Tyu/6scncWDPocK4Z97jJwYnqHjXZnlroBdk6t0pZdguOyQFG54jvfAZqTKlR1w9O3Vgi8xaA=
+	t=1785423121; cv=none; b=pkqhoPW8ufq7NduxzNSdVFKTX6Qx57FNKG1972WXD+Nk1E1IAmrX5XkmUEGuzuIUOzPjAnaXRLgxhe9k4eVrD2lUtoSXOsE4Ue9UY1pihvrdGjBamP5b9o1U5OLR7wjXmmVMWiRhLXW1QrtFfwy/reGmkhjLAeCSV2S9ph9kyNk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423118; c=relaxed/simple;
-	bh=sAOlsFA7CBm1Woq+VJWbdbz/2xgbQfal2G0kh6+Bg24=;
+	s=arc-20240116; t=1785423121; c=relaxed/simple;
+	bh=79lqkEh8O91KQM2A9eaT0UM8PG9IlQI3QYp30NBB790=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uBhm8HIcX0LI1bGdPCTMXEygEdH1w4kDX/nloFaslig/iG3pMnLjcSC1sDyGbsFBKMVT9x6t6OwZsfeqpu810BP4Xi9XF4RItpzcQC/J9jKDFJZcHWbGUK8atyx62zMYM/YuYlpK/xzAX6di3/hJYT61Nt6kHp10LtdjHeJG7uY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d4qFg30e; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DAMFimW+hoP8i8LA3aF9Pj+IbD8VpxwZJelOXvf/L5RcX5WVJ/06GUtzFHd/vBm2GYrqs9VypwJnaDhtdBWzOe+flSTZ1LZfuc82CKw7zFOJPOGSE0bfA14dWLsOtdLTKkbIS6E8bWAsyVvZmWB/zz0YyaerFd70Ywyx59jwjUk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tj6V4qb9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d4qFg30e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6942E1F000E9;
-	Thu, 30 Jul 2026 14:51:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tj6V4qb9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DE941F000E9;
+	Thu, 30 Jul 2026 14:51:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423117;
-	bh=4GShDEeCcBVFPS1U2tupPtE3XJgulDy9K1STKbtGiFY=;
+	s=korg; t=1785423119;
+	bh=2vzkAZ5hnlntjTqN2H6Q9vaM6KG7Qqp08GCvIfJ/Fu0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d4qFg30ebV9pwHUS1gN92KAkuinOTMwQ4igDEWQFq0rnxrFpDHsa84zeZPXinSvBd
-	 YGVC8vImspyf6Ix5zDNeGgI2rOjOVEBgdQTq/rCFNGpwM3TZQ5EsXlNZG96of/DYX8
-	 WExSkJzozSvL66hTcFp9gABkSt2lrKE1Ay9ir1Uk=
+	b=tj6V4qb9+tLDIb39+QYZoIg+7s6zz6cFd2nxQ9RZPxcYhVVsyA2NilP6KkI7X22TA
+	 UJroEOVNIW/0W1BKsQgA19IFPfw74EYRK7e6rTTztV44sD46MjXbfk7Hta5Mtf574Z
+	 en2dvy2wefTNKd+r7iewfZzxP1NQ88RaDFt9V6Qc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Carl Johnson <carl@jpartners.org>,
+	James Montgomery <james_montgomery@disroot.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 7.1 672/744] smb: client: handle STATUS_STOPPED_ON_SYMLINK responses without a symlink target
-Date: Thu, 30 Jul 2026 16:15:45 +0200
-Message-ID: <20260730141458.546636700@linuxfoundation.org>
+Subject: [PATCH 7.1 673/744] ksmbd: defer destroy_previous_session() until after NTLM authentication
+Date: Thu, 30 Jul 2026 16:15:46 +0200
+Message-ID: <20260730141458.567079103@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -45,167 +45,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Carl Johnson <carl@jpartners.org>
+From: James Montgomery <james_montgomery@disroot.org>
 
-commit 2eb74eef4b7eda8df593d22fb48e94ef959ec8a5 upstream.
+commit c74801ee524f477c174a1899782b6c3b6918d407 upstream.
 
-The macOS built-in SMB server returns STATUS_STOPPED_ON_SYMLINK for a
-CREATE on a path whose final component is a symlink, but it does not
-include a Symbolic Link Error Response in the error data: both
-ErrorContextCount and ByteCount are zero, so the symlink target is not
-present in the response at all.  Per [MS-SMB2] section 2.2.2 such a
-response should carry a valid Symbolic Link Error Response, so this is a
-server bug, but the target can still be retrieved with
-FSCTL_GET_REPARSE_POINT.
+In ntlm_authenticate(), destroy_previous_session() is called using a
+user pointer resolved from the client-supplied NTLM blob username field
+before the NTLMv2 response is validated. An authenticated attacker can
+set the NTLM blob username to match a victim account and set
+PreviousSessionId to the victim's session ID; destroy_previous_session()
+destroys the victim's session while ksmbd_decode_ntlmssp_auth_blob()
+subsequently rejects the request with -EPERM.
 
-Frame from a capture against macOS 26.5.2 (build 25F84):
+Move destroy_previous_session() and the prev_id assignment to after
+ksmbd_decode_ntlmssp_auth_blob() returns success and use sess->user
+rather than the pre-authentication lookup result. This matches the
+ordering already used by krb5_authenticate(), where
+destroy_previous_session() is called only after
+ksmbd_krb5_authenticate() returns success.
 
-    SMB2 hdr : Status=0x8000002d STATUS_STOPPED_ON_SYMLINK, Cmd=Create
-    Error Rsp: StructureSize=0x0009
-               Error Context Count: 0
-               Byte Count: 0
-               Error Data: 00
-
-symlink_data() cannot find a struct smb2_symlink_err_rsp in such a
-response and returns -EINVAL, which parse_create_response() propagates,
-so smb2_query_path_info() bails out at
-
-	if (rc || !data->reparse_point)
-		goto out;
-
-before it can retry with SMB2_OP_GET_REPARSE.  stat(), readlink() and ls
-of any server-side symlink then fail with -EINVAL:
-
-  $ ls -la Config
-  l????????? ? ? ? ? ? Config.json
-  $ stat Config/Config.json
-  stat: cannot statx 'Config/Config.json': Invalid argument
-
-A 5.10 client resolves these symlinks correctly against the same server
-and share, so this is a regression for Apple SMB servers.
-
-Handle it in several places:
-
- - symlink_data() detects the empty response (ErrorContextCount and
-   ByteCount both zero) and returns a distinct -ENODATA, so that "server
-   did not send the target" can be told apart from a genuinely malformed
-   response and only this case is worked around.
-
- - parse_create_response() treats -ENODATA like
-   STATUS_IO_REPARSE_TAG_NOT_HANDLED, which does not carry the target
-   either: leave the reparse tag unset and clear rc, so the existing
-   SMB2_OP_GET_REPARSE path retrieves the target.
-
- - smb2_query_path_info() only fixes up the symlink target type when the
-   target is already known.  SMB2_OP_GET_REPARSE sets data->reparse.tag
-   but does not parse the target out of the reparse buffer; that happens
-   later, in reparse_info_to_fattr().  Without this check
-   smb2_fix_symlink_target_type() is called with a NULL target and
-   returns -EIO.  This could not happen with servers that send the target
-   inline and therefore skip SMB2_OP_GET_REPARSE.
-
- - smb2_open_file() maps -ENODATA to -EIO, matching
-   STATUS_IO_REPARSE_TAG_NOT_HANDLED, so its callers retrieve the target
-   with SMB2_OP_GET_REPARSE as well.
-
-Tested on Debian 13, kernel 6.18.38 (armv7), against macOS 26.5.2:
-symlinks now resolve, including relative, parent-traversing and directory
-symlinks, and reads through symlinks succeed.
-
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
 Cc: stable@vger.kernel.org
-Co-developed-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Carl Johnson <carl@jpartners.org>
+Link: https://lore.kernel.org/linux-cifs/20260702155449.3639773-1-james_montgomery@disroot.org/
+Signed-off-by: James Montgomery <james_montgomery@disroot.org>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2file.c  |   21 +++++++++++++++++++++
- fs/smb/client/smb2inode.c |   23 ++++++++++++++++++++---
- 2 files changed, 41 insertions(+), 3 deletions(-)
+ fs/smb/server/smb2pdu.c |    9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
---- a/fs/smb/client/smb2file.c
-+++ b/fs/smb/client/smb2file.c
-@@ -30,6 +30,19 @@ static struct smb2_symlink_err_rsp *syml
- 	u8 *end = (u8 *)err + iov->iov_len;
- 	u32 len;
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -1535,11 +1535,6 @@ static int ntlm_authenticate(struct ksmb
+ 		return -EPERM;
+ 	}
  
-+	/*
-+	 * Per [MS-SMB2] section 2.2.2, a STATUS_STOPPED_ON_SYMLINK response has to
-+	 * carry a Symbolic Link Error Response, so ByteCount cannot be zero.  Some
-+	 * servers (e.g. the macOS built-in SMB server) violate this and return an
-+	 * empty error response, with both ErrorContextCount and ByteCount set to
-+	 * zero, i.e. without the symlink target.  Detect this and return -ENODATA
-+	 * so that callers can tell "server did not send the target" apart from a
-+	 * malformed response, and retrieve the target with FSCTL_GET_REPARSE_POINT
-+	 * instead.
-+	 */
-+	if (!err->ErrorContextCount && !le32_to_cpu(err->ByteCount))
-+		return ERR_PTR(-ENODATA);
+-	/* Check for previous session */
+-	prev_id = le64_to_cpu(req->PreviousSessionId);
+-	if (prev_id && prev_id != sess->id)
+-		destroy_previous_session(conn, user, prev_id);
+-
+ 	if (sess->state == SMB2_SESSION_VALID) {
+ 		/*
+ 		 * Reuse session if anonymous try to connect
+@@ -1579,6 +1574,10 @@ static int ntlm_authenticate(struct ksmb
+ 		}
+ 	}
+ 
++	prev_id = le64_to_cpu(req->PreviousSessionId);
++	if (prev_id && prev_id != sess->id)
++		destroy_previous_session(conn, sess->user, prev_id);
 +
- 	if (err->ErrorContextCount) {
- 		struct smb2_error_context_rsp *p;
- 
-@@ -201,6 +214,14 @@ int smb2_open_file(const unsigned int xi
- 			rc = smb2_parse_symlink_response(oparms->cifs_sb, &err_iov,
- 							 oparms->path,
- 							 &data->symlink_target);
-+			/*
-+			 * If smb2_parse_symlink_response returned -ENODATA then the
-+			 * symlink_target was not sent. Treat this as if the SMB2_open()
-+			 * failed with STATUS_IO_REPARSE_TAG_NOT_HANDLED status, which is
-+			 * indicated by the -EIO errno.
-+			 */
-+			if (rc == -ENODATA)
-+				rc = -EIO;
- 			if (!rc) {
- 				memset(smb2_data, 0, sizeof(*smb2_data));
- 				oparms->create_options |= OPEN_REPARSE_POINT;
---- a/fs/smb/client/smb2inode.c
-+++ b/fs/smb/client/smb2inode.c
-@@ -792,9 +792,19 @@ static int parse_create_response(struct
- 		rc = smb2_parse_symlink_response(cifs_sb, iov,
- 						 full_path,
- 						 &data->symlink_target);
--		if (rc)
-+		if (rc != 0 && rc != -ENODATA)
- 			return rc;
--		tag = IO_REPARSE_TAG_SYMLINK;
-+		/*
-+		 * -ENODATA means that the response was parsed but did not contain
-+		 * the symlink target at all (see symlink_data()).  Treat it like
-+		 * STATUS_IO_REPARSE_TAG_NOT_HANDLED, which does not contain it
-+		 * either: leave the tag unset and clear rc, so that the caller
-+		 * retrieves the target with SMB2_OP_GET_REPARSE.
-+		 */
-+		if (rc == -ENODATA)
-+			rc = 0;
-+		else
-+			tag = IO_REPARSE_TAG_SYMLINK;
- 		reparse_point = true;
- 		break;
- 	case STATUS_SUCCESS:
-@@ -987,7 +997,14 @@ int smb2_query_path_info(const unsigned
- 				rc = -EOPNOTSUPP;
- 		}
- 
--		if (data->reparse.tag == IO_REPARSE_TAG_SYMLINK && !rc) {
-+		/*
-+		 * If the symlink was already parsed in create response then it is needed to fix
-+		 * its type now (after the second call with OPEN_REPARSE_POINT which filled the
-+		 * data->fi.Attributes). If the symlink was not parsed in create response then
-+		 * the data->symlink_target was not filled yet and then the type will be fixed
-+		 * later after data->symlink_target is filled.
-+		 */
-+		if (data->reparse.tag == IO_REPARSE_TAG_SYMLINK && !rc && data->symlink_target) {
- 			bool directory = le32_to_cpu(data->fi.Attributes) & ATTR_DIRECTORY;
- 			rc = smb2_fix_symlink_target_type(&data->symlink_target, directory, cifs_sb);
- 		}
+ 	/*
+ 	 * If session state is SMB2_SESSION_VALID, We can assume
+ 	 * that it is reauthentication. And the user/password
 
 
