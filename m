@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F83B44AB9C;
-	Thu, 30 Jul 2026 16:03:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 707B138B133;
+	Thu, 30 Jul 2026 16:03:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427429; cv=none; b=cigMBeR+2OlbJAUPDUJ3HMMhHTa9rKBgbMgMrJtj+86/nb3E7KUb0BGqYPJzG5AK+TJFpzWQdQIjjblp9ljiepDdzTIda2vSynGtKFWVkD73T6Xv/X9EEIAHkcsjQTDeI3YRkpnK8/Cb4WZafUsbj1emAb6d/LzQj/kNFwzQeLE=
+	t=1785427432; cv=none; b=Gw1fh5qhEYNgGYDV2AYyjQiCtTB2CZj62maOf9AHoQ7FoISzWKW0W+yy8quOugA1ocdJ6C5+Ujb95pB6F2A5q4XstMyKLyAI6WsZPLRGlofjy08vnzD0nZzGHhC/iGElBsJQkqRpcpNa+6yGYZX7vilUEFbL7ZMhg2NYdf2qlT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427429; c=relaxed/simple;
-	bh=UD6GC97eQ1Si5R//rdnbizObc/etbSZLKyj0Q2wq7do=;
+	s=arc-20240116; t=1785427432; c=relaxed/simple;
+	bh=oJILXXqohP50ZabpC3XVJeDyO8NCAXJkARTifXJ6Ffc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AKQmc/sh+1mHGdl/B7TpIck/Ibls7+j5EyztUUpB7tW01azcZthbw5Jp4VCIpjioUHgUVqEzmqW0J5yf2c8Y1Sc5bWmXjV8ltRx5RI638CJ08CbsFExAlNVvn8zTZY23T1PntER5bz28WnbBpKH5tivb0lVdTlSJCsmW2vgGrF0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bXfxlYNk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CTYihcSDaN1xzq10/NHT9tpvxkKa2nCIboVWc8ZAX/0yaBgIAHbSCnqB3mwqKYLsxQLOJ1kjjJE4Xsx6KwBlsJL7LY831BNue8JSKWLJOOlns1qFD00SO79O5d/F3AmveduRp06PACryQ0yp6BUJEVuPkYra185n+BbPh6ht6M4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CXgfb3xj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bXfxlYNk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB3241F00A3A;
-	Thu, 30 Jul 2026 16:03:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CXgfb3xj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93F241F00A3A;
+	Thu, 30 Jul 2026 16:03:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427428;
-	bh=IUjHVIKMnlzVrm3A8sJSLpQIKczvpxX5lkELp0l2y1w=;
+	s=korg; t=1785427431;
+	bh=Se/qa389aQwxCDqwsEU9xXsAzwhNpZkEC7kfaO4TmyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bXfxlYNkqMjb/F7vLcx+Qv/G8aMx69s9QCSHebiNWv9nDr/8wyV3X4eXxhV4qoPbG
-	 lDQBOWfx7G10zJNSNvIGkYkwy0zQYhHhj0e75zui35juet5rZ4NbaU7xuDV4uu5ojT
-	 eaPpI1BJ+S5/9qYe2h2Quj0RE+LhyONvlmOwih/c=
+	b=CXgfb3xjmTb66c6flOmr4M+Ox/lejJ/s+WwyFMKbwe+1TZ4s3Ff1gPYp+RuLn/9Qx
+	 aeJoOAqKb6zouHt5pW9Z+3zqKIiAjerCNpWQLOzGnWLR9kzRI50FiX8cMRmXSTmvHY
+	 wtF9tpcfyjeGuiEhikh1VkGBZG9jCVFY9PwOq4dg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	Xin Long <lucien.xin@gmail.com>,
-	"Cen Zhang (Microsoft)" <blbllhy@gmail.com>,
+	Nils Juenemann <nils.juenemann@gmail.com>,
+	Rishikesh Jethwani <rjethwani@purestorage.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 166/484] sctp: validate stream count in sctp_process_strreset_inreq()
-Date: Thu, 30 Jul 2026 16:11:03 +0200
-Message-ID: <20260730141427.074401450@linuxfoundation.org>
+Subject: [PATCH 6.6 167/484] tls: device: push pending open record on splice EOF
+Date: Thu, 30 Jul 2026 16:11:04 +0200
+Message-ID: <20260730141427.095932766@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -53,78 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang (Microsoft) <blbllhy@gmail.com>
+From: Rishikesh Jethwani <rjethwani@purestorage.com>
 
-[ Upstream commit 18ae07691d43183d270de8be9dc8e027906015d9 ]
+[ Upstream commit eaa39f9f8ac8c1d032cd26b9cd572804e9d7683f ]
 
-When processing a RESET_IN_REQUEST from a peer,
-sctp_process_strreset_inreq() derives the stream count from the
-parameter length but does not check whether the resulting
-RESET_OUT_REQUEST would exceed SCTP_MAX_CHUNK_LEN.
+On kTLS device-offload sockets, sendfile() with count > EOF can reach
+->splice_eof() with a fully assembled but still-open TLS record left
+pending. tls_device_splice_eof() only flushes partially sent records,
+so an abrupt close() can drop the final record and the peer receives
+a short file.
 
-The OUT request header (sctp_strreset_outreq, 16 bytes) is 8 bytes
-larger than the IN request header (sctp_strreset_inreq, 8 bytes).
-Generally, the IP payload is bounded to 65535 bytes, so the stream
-list cannot be large enough to trigger the overflow. However, on
-interfaces with MTU > 65535 (e.g., loopback with IPv6 jumbograms), a
-stream list that fits within the incoming IN parameter can cause a
-__u16 overflow in sctp_make_strreset_req() when computing the OUT
-request size, leading to an undersized skb allocation and a kernel
-BUG:
+Fix tls_device_splice_eof() to also push pending open records.
+This matches the software path, where splice EOF already flushes
+pending open records.
 
-  net/core/skbuff.c:207         skb_panic
-  net/core/skbuff.c:2625        skb_put
-  net/sctp/sm_make_chunk.c:1535 sctp_addto_chunk
-  net/sctp/sm_make_chunk.c:3695 sctp_make_strreset_req
-  net/sctp/stream.c:655         sctp_process_strreset_inreq
-
-The local setsockopt path validates the generated reset request size.
-However, for an incoming-only reset, it accounts for the smaller IN
-request even though the peer must generate an OUT request with the same
-stream list. Such a request cannot be completed successfully by the
-peer.
-
-Reject peer IN requests whose corresponding OUT request would exceed
-SCTP_MAX_CHUNK_LEN. Also tighten the local check so it does not send an
-IN request that would require an oversized OUT request from the peer.
-
-Fixes: 7f9d68ac944e ("sctp: implement sender-side procedures for SSN Reset Request Parameter")
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Closes: https://lore.kernel.org/all/20260707203215.2752-1-blbllhy@gmail.com/
-Suggested-by: Xin Long <lucien.xin@gmail.com>
-Signed-off-by: Cen Zhang (Microsoft) <blbllhy@gmail.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20260710010718.20318-1-blbllhy@gmail.com
+Fixes: d4c1e80b0d1b ("tls/device: Use splice_eof() to flush")
+Link: https://lore.kernel.org/netdev/CAMPsyauZ+jzG9AysO0FWv6ZY0kvCUpjX_U7o=oOjCuOQ87BCgg@mail.gmail.com/
+Reported-by: Nils Juenemann <nils.juenemann@gmail.com>
+Signed-off-by: Rishikesh Jethwani <rjethwani@purestorage.com>
+Tested-by: Nils Juenemann <nils.juenemann@gmail.com>
+Link: https://patch.msgid.link/20260709224436.1608993-2-rjethwani@purestorage.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/stream.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/tls/tls_device.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/net/sctp/stream.c b/net/sctp/stream.c
-index e8922f350bafe6..0f81820c730bae 100644
---- a/net/sctp/stream.c
-+++ b/net/sctp/stream.c
-@@ -308,7 +308,8 @@ int sctp_send_reset_streams(struct sctp_association *asoc,
- 					goto out;
+diff --git a/net/tls/tls_device.c b/net/tls/tls_device.c
+index 1fc1e8e2a9cb2c..7fce47197d0a45 100644
+--- a/net/tls/tls_device.c
++++ b/net/tls/tls_device.c
+@@ -600,13 +600,15 @@ void tls_device_splice_eof(struct socket *sock)
+ 	struct tls_context *tls_ctx = tls_get_ctx(sk);
+ 	struct iov_iter iter = {};
  
- 			param_len += str_nums * sizeof(__u16) +
--				     sizeof(struct sctp_strreset_inreq);
-+				     (out ? sizeof(struct sctp_strreset_inreq)
-+					  : sizeof(struct sctp_strreset_outreq));
- 		}
+-	if (!tls_is_partially_sent_record(tls_ctx))
++	if (!tls_is_partially_sent_record(tls_ctx) &&
++	    !tls_is_pending_open_record(tls_ctx))
+ 		return;
  
- 		if (param_len > SCTP_MAX_CHUNK_LEN -
-@@ -639,6 +640,9 @@ struct sctp_chunk *sctp_process_strreset_inreq(
+ 	mutex_lock(&tls_ctx->tx_lock);
+ 	lock_sock(sk);
  
- 	nums = (ntohs(param.p->length) - sizeof(*inreq)) / sizeof(__u16);
- 	str_p = inreq->list_of_streams;
-+	if (nums * sizeof(__u16) + sizeof(struct sctp_strreset_outreq) >
-+	    SCTP_MAX_CHUNK_LEN - sizeof(struct sctp_reconf_chunk))
-+		goto out;
- 	for (i = 0; i < nums; i++) {
- 		if (ntohs(str_p[i]) >= stream->outcnt) {
- 			result = SCTP_STRRESET_ERR_WRONG_SSN;
+-	if (tls_is_partially_sent_record(tls_ctx)) {
++	if (tls_is_partially_sent_record(tls_ctx) ||
++	    tls_is_pending_open_record(tls_ctx)) {
+ 		iov_iter_bvec(&iter, ITER_SOURCE, NULL, 0, 0);
+ 		tls_push_data(sk, &iter, 0, 0, TLS_RECORD_TYPE_DATA);
+ 	}
 -- 
 2.53.0
 
