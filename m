@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F62936493F;
-	Thu, 30 Jul 2026 14:52:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDB6E4052DC;
+	Thu, 30 Jul 2026 14:52:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423135; cv=none; b=WuPyj6+1pGp1QILf/8mu38+is5NgODnNgFjm/8R+k01Wew0uXergHVNlpNzYTxR9b1KQUVFUSANAVYT2m5WpIbx12JwTOiQjk0J9K3fSRVTGoeQ0VkkIw6vexPa+bnYB6bgyokd7qByDv42v75UAf2ec8DboGcoEXPgRMOrCVTY=
+	t=1785423138; cv=none; b=iqXP0wpQ00MHN7cCOisOxf2uLc0/l0DlfmHdDq+WD7sZbP42sVs5bae9oVLoPBgj0/Iq6KUqPLGCaco8l4w1AhWE5Jyd9zrZHCgWiO8Xxx5YcD3PitG3qSwPdYc+YdrDUonbcVvFjEBk+3wtL0C4qa+ZAQL4LCRdIHrNtlrzbMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423135; c=relaxed/simple;
-	bh=DmZp49WGlcVsic9pkjoybG5JlhGYNVue7c4w68GjhIk=;
+	s=arc-20240116; t=1785423138; c=relaxed/simple;
+	bh=FByCdD8j9GuS8sLK5Q/fE8Y9K578yQ8PZg6OiebFjf4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MZQrYfvSar6HgQROPgXrBgzkPK5B+onuxfm7IyA7gUQnTF68MkQLnUBYpHye8RdxvPkrlZZQGihE39Xb62JCHr1X+zppwYA5ijSmI0Ts1v6QUdxdGrGSAt/FK99+9r23cTV8Vnq0X/MYl8xZzZkmygWppEsE3JJzu/xgZcrxpUg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NAdf0hEe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KTEcvJD1bH5tkCb7YF72Fs3EBueHYnTL+M+Gq56ZpCedkR9KyKjoy7FQ+x6TmbhgzF32yaCI69Jj6jkkrvDrR9sSQaAYw+nRCN8HrgzVWr/euVpVS/Poe4gDA4v6byKKQqp9UcYUK0uBCxPIL2UA9VYZF0yTVlyDUkIjVndMSXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hb5OWOjz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NAdf0hEe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 834601F000E9;
-	Thu, 30 Jul 2026 14:52:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hb5OWOjz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5550D1F00A3D;
+	Thu, 30 Jul 2026 14:52:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423134;
-	bh=awlJjFvhqwvmL6qeqSKGoLx23RAdqwhplHGWD9zxOko=;
+	s=korg; t=1785423136;
+	bh=+ySvmLBezaaodHoPKWrOfE7MASSsREcmap2/hb5RO8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NAdf0hEeANcX7goqoszKCfxsV/W3/61nam9QSkFVWQhWqZ4+VQQIRAM2EXndvbxOR
-	 nv6CGf3h1k0wTixHBBqBzDs66XF/QUXfqer688tBGSEYU7S+cr+ahvek/hChYBKT+C
-	 5ZlXNxuSD/phdPaz5H4gve1GVfxE0lu8/pUFO//w=
+	b=Hb5OWOjzfcQhFc2ZWBn+qwnQQECUgwKfZNVIBuo8pCPCeflkVbPTShg6TdFxpTehj
+	 5PdwRS0xUX49pvqeIRBux9p8j4C5dEcPK6/ghQOFQXIOAT3Z149XmVgJ9v43R16CGL
+	 n7V9j6m1WIImUVchkojU2QKlhcl5QiKhyLBcpnUQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Temerkhanov <sergey.temerkhanov@intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
 	Simon Horman <horms@kernel.org>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Rinitha S <sx.rinitha@intel.com>
-Subject: [PATCH 7.1 677/744] ice: use READ_ONCE() to access cached PHC time
-Date: Thu, 30 Jul 2026 16:15:50 +0200
-Message-ID: <20260730141458.652916797@linuxfoundation.org>
+	Antoine Tenart <atenart@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.1 678/744] ila: reload IPv6 header after pskb_may_pull in checksum adjust
+Date: Thu, 30 Jul 2026 16:15:51 +0200
+Message-ID: <20260730141458.674564929@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -54,39 +52,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergey Temerkhanov <sergey.temerkhanov@intel.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 2915681b89f817677ab9f1166d95b595bc144f5f upstream.
+commit 92d3817649df2b0b6a008a686c8275c88d7ef594 upstream.
 
-ptp.cached_phc_time is a 64-bit value updated by a periodic work item
-on one CPU and read locklessly on another.  On 32-bit or non-atomic
-architectures this can result in a torn read.  Use READ_ONCE() to
-enforce a single atomic load.
+ila_csum_adjust_transport() caches ip6h = ipv6_hdr(skb) before calling
+pskb_may_pull(). On a non-linear skb whose transport header sits in a page
+fragment, pskb_may_pull() can call __pskb_pull_tail() / pskb_expand_head()
+and free the old skb head, leaving ip6h dangling; the following
+get_csum_diff(ip6h, p) then reads freed memory. ila_update_ipv6_locator()
+uses ip6h (and the iaddr derived from it) again after the csum-adjust
+call and additionally writes the new locator through that pointer.
 
-Fixes: 77a781155a65 ("ice: enable receive hardware timestamping")
+Impact: a remote IPv6 packet routed through a configured ILA
+csum-adjust-transport route or receive-side mapping triggers a
+slab-use-after-free in ila_update_ipv6_locator() (KASAN). The route or
+mapping requires CAP_NET_ADMIN to configure, but trigger packets are
+unauthenticated once it exists.
+
+Reload ip6h after each pskb_may_pull() in ila_csum_adjust_transport()
+before the csum-diff read. In ila_update_ipv6_locator() only the
+ILA_CSUM_ADJUST_TRANSPORT case pulls the skb, so reload ip6h and iaddr in
+that case alone before the destination-address write; the neutral-map
+modes never pull and keep their cached pointers.
+
+Fixes: 33f11d16142b ("ila: Create net/ipv6/ila directory")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sergey Temerkhanov <sergey.temerkhanov@intel.com>
-Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://patch.msgid.link/20260717185340.3595286-9-anthony.l.nguyen@intel.com
+Reviewed-by: Antoine Tenart <atenart@kernel.org>
+Link: https://patch.msgid.link/20260714114903.3763420-1-michael.bommarito@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/ice/ice_ptp.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv6/ila/ila_common.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/drivers/net/ethernet/intel/ice/ice_ptp.c
-+++ b/drivers/net/ethernet/intel/ice/ice_ptp.c
-@@ -350,7 +350,7 @@ static u64 ice_ptp_extend_40b_ts(struct
- 		return 0;
- 	}
+--- a/net/ipv6/ila/ila_common.c
++++ b/net/ipv6/ila/ila_common.c
+@@ -85,6 +85,7 @@ static void ila_csum_adjust_transport(st
+ 			struct tcphdr *th = (struct tcphdr *)
+ 					(skb_network_header(skb) + nhoff);
  
--	return ice_ptp_extend_32b_ts(pf->ptp.cached_phc_time,
-+	return ice_ptp_extend_32b_ts(READ_ONCE(pf->ptp.cached_phc_time),
- 				     (in_tstamp >> 8) & mask);
- }
++			ip6h = ipv6_hdr(skb);
+ 			diff = get_csum_diff(ip6h, p);
+ 			inet_proto_csum_replace_by_diff(&th->check, skb,
+ 							diff, true, true);
+@@ -96,6 +97,7 @@ static void ila_csum_adjust_transport(st
+ 					(skb_network_header(skb) + nhoff);
  
+ 			if (uh->check || skb->ip_summed == CHECKSUM_PARTIAL) {
++				ip6h = ipv6_hdr(skb);
+ 				diff = get_csum_diff(ip6h, p);
+ 				inet_proto_csum_replace_by_diff(&uh->check, skb,
+ 								diff, true, true);
+@@ -110,6 +112,7 @@ static void ila_csum_adjust_transport(st
+ 			struct icmp6hdr *ih = (struct icmp6hdr *)
+ 					(skb_network_header(skb) + nhoff);
+ 
++			ip6h = ipv6_hdr(skb);
+ 			diff = get_csum_diff(ip6h, p);
+ 			inet_proto_csum_replace_by_diff(&ih->icmp6_cksum, skb,
+ 							diff, true, true);
+@@ -127,6 +130,15 @@ void ila_update_ipv6_locator(struct sk_b
+ 	switch (p->csum_mode) {
+ 	case ILA_CSUM_ADJUST_TRANSPORT:
+ 		ila_csum_adjust_transport(skb, p);
++		/*
++		 * ila_csum_adjust_transport() calls pskb_may_pull(), which can
++		 * reallocate the skb head and leave ip6h (and the iaddr derived
++		 * from it) dangling; reload both before the write below.  The
++		 * other csum modes do not pull, so their cached pointers stay
++		 * valid.
++		 */
++		ip6h = ipv6_hdr(skb);
++		iaddr = ila_a2i(&ip6h->daddr);
+ 		break;
+ 	case ILA_CSUM_NEUTRAL_MAP:
+ 		if (sir2ila) {
 
 
