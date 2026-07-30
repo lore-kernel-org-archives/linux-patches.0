@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CD563E0091;
-	Thu, 30 Jul 2026 15:44:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A843411689;
+	Thu, 30 Jul 2026 15:44:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426256; cv=none; b=Ne837e6baAgBMng6ChJyi+RNCtk0TzuoFrMqYAC4bCrvvlmbq3EO/8Cc0dYSy7i74KlGgZeXCwBesVXQjQ2Vbwtmo6AFp9Ncf9gIshat3Uhq4ZqHiaxKVTp0lyul9khkZbf8McwJPdN2BjQdBP1zTb3p7qKqUF3CeZFTp6nAQCM=
+	t=1785426259; cv=none; b=fGuS9RbBX5engwHSy94i54dAxB2PsN0iFX+ENCP4DV2esLKS1N2SLpVIKBLICIAAusS6OIPVS+dVNhxZjX57nGoKIbCDBcIzwssFaZfThN33CblW0llygt60DQrfSrVhvEuAw9J8SC523giGvAEu/oquLcbEantZ6FvaiWagTXk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426256; c=relaxed/simple;
-	bh=4T299tVyutkLHzGURpCxPP4RMX7FNbkPVytI9nenA0c=;
+	s=arc-20240116; t=1785426259; c=relaxed/simple;
+	bh=S2FF8b2MPpz34KWmkW6EV0Cv/3kzxZ/Ra4YVvjA7+2k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J2zBeiPCKfp7LJALG16BDxQpkENd6YDgN64eUoEgp9/DsVIxd780BsWEs8Dy76Onva17xlT6d8o0E274T8BKXorXMLAhTy3sqoqVMiKZ+FemJlPynjNKZZ1x/AnyD6mJMgpVSXLQgPYdjB7xLzvOE36eQ7e6LldSr28uvZWrK9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wq+8iHGm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jc1QiFxYr3yRCHxushE58ynIYf6uMeZ0Ad/X6lUtwJAxf4pul8PNUgvcFU22ISpKaodyIJEull122xdLpnwI/EHqfhzFwoymgeQ3C6kF2/7bNCFShAv5eZKMoHPcYNN16xNtAsmebSYGczaV5XAt9hPkCg2DpvNW+xpGGMEOheQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ydS/ythu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wq+8iHGm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF9461F00A3A;
-	Thu, 30 Jul 2026 15:44:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ydS/ythu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FA631F000E9;
+	Thu, 30 Jul 2026 15:44:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426255;
-	bh=g01ctxu8Q0ysEwIuIZWSvKC1vWrc9TWF+eV9JakJYW8=;
+	s=korg; t=1785426258;
+	bh=m49D1wdokDyUhr0u4YbsoFGYfOElmOPPygEoKi2ne5Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Wq+8iHGm7N725+SOfz42hjTPQI1gI+m+vz4PfXzmPC4BlKUvBHewufUsvNStNcYTt
-	 AM9jCmIDRNVeK8QqCSgKpTSEbJbtS+qMiI2fA636RT8HCD1NmHsvbP8JDVOZj/lIH4
-	 tZ75ZX8eq/Y9UrP9/J2hJ+W9xjxQL4vx7rJhw87g=
+	b=ydS/ythuAt2mDILtRvjFmW1c7wFmEzUYoBUhoEHSVUqphYotTkQn3GojE/gZM9k8n
+	 vOZUKEa6UmJTgpReixYSNeMev1BYPyzBdOxli5NqpajzhrDlC4mwnATyS54dL2cQv3
+	 ziYWbYkEo/kOIbBKVsY5Qi9G5GPDilYa1aVp6hIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.12 328/602] media: stm32: dcmi: unregister notifier on probe failure
-Date: Thu, 30 Jul 2026 16:12:00 +0200
-Message-ID: <20260730141442.856424301@linuxfoundation.org>
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.12 355/602] Bluetooth: hci_sync: Protect UUID list traversal
+Date: Thu, 30 Jul 2026 16:12:27 +0200
+Message-ID: <20260730141443.421921653@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -50,38 +50,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-commit 084973ebd67b28f0945c5d45408f86c58b540110 upstream.
+commit e9027ffbf5a0f3c12ca8900822e884eae9f0821b upstream.
 
-dcmi_graph_init() registers the async notifier before dcmi_probe() toggles
-the reset line. If reset_control_assert() or reset_control_deassert()
-fails afterwards, probe returns through err_cleanup and the driver core
-will not call dcmi_remove().
+The hci_sync conversion moved class-of-device and EIR generation from an
+HCI request built under hdev->lock to asynchronous command sync work.
+The worker holds hdev->req_lock, but that lock does not serialize access
+to hdev->uuids against add_uuid() and remove_uuid(), which update the
+list under hdev->lock.
 
-Unregister the notifier before cleaning it up on that error path,
-matching the successful remove path and the V4L2 async notifier lifetime
-rules.
+The following interleaving can therefore occur:
 
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-Fixes: d079f94c9046 ("media: platform: Switch to v4l2_async_notifier_add_subdev")
+  CPU0 (command sync work)       CPU1 (management socket)
+  fetch uuid from the list
+                                list_del(&uuid->list)
+                                kfree(uuid)
+  read uuid->size
+
+KASAN reports the resulting use-after-free:
+
+  BUG: KASAN: slab-use-after-free in eir_create+0xb8f/0xee0
+  Read of size 1 at addr ffff88810dbd8620 by task kworker/u17:0/87
+  Workqueue: hci0 hci_cmd_sync_work
+  Call Trace:
+   eir_create+0xb8f/0xee0
+   hci_update_eir_sync+0x1c0/0x330
+   hci_cmd_sync_work+0x13c/0x290
+   process_one_work+0x63a/0x1070
+   worker_thread+0x45b/0xd10
+
+  Allocated by task 86:
+   __kasan_kmalloc+0x8f/0xa0
+   add_uuid+0x18a/0x4b0
+   hci_sock_sendmsg+0x1033/0x1ea0
+
+  Freed by task 92:
+   __kasan_slab_free+0x43/0x70
+   kfree+0x131/0x3c0
+   remove_uuid+0x25e/0x560
+   hci_sock_sendmsg+0x1033/0x1ea0
+
+Hold hdev->lock while generating and committing the class-of-device and
+EIR snapshots.  Release it before sending an HCI command, so controller
+waits do not happen under the device lock.  This protects all UUID list
+walks in these paths and restores the serialization lost in the command
+sync conversion.
+
+Fixes: 161510ccf91c ("Bluetooth: hci_sync: Make use of hci_cmd_sync_queue set 1")
 Cc: stable@vger.kernel.org
-[hverkuil: added Fixes tag]
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/st/stm32/stm32-dcmi.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/bluetooth/hci_sync.c |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
---- a/drivers/media/platform/st/stm32/stm32-dcmi.c
-+++ b/drivers/media/platform/st/stm32/stm32-dcmi.c
-@@ -2069,6 +2069,7 @@ static int dcmi_probe(struct platform_de
- 	return 0;
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -929,12 +929,16 @@ int hci_update_eir_sync(struct hci_dev *
  
- err_cleanup:
-+	v4l2_async_nf_unregister(&dcmi->notifier);
- 	v4l2_async_nf_cleanup(&dcmi->notifier);
- err_media_entity_cleanup:
- 	media_entity_cleanup(&dcmi->vdev->entity);
+ 	memset(&cp, 0, sizeof(cp));
+ 
++	hci_dev_lock(hdev);
+ 	eir_create(hdev, cp.data);
+ 
+-	if (memcmp(cp.data, hdev->eir, sizeof(cp.data)) == 0)
++	if (memcmp(cp.data, hdev->eir, sizeof(cp.data)) == 0) {
++		hci_dev_unlock(hdev);
+ 		return 0;
++	}
+ 
+ 	memcpy(hdev->eir, cp.data, sizeof(cp.data));
++	hci_dev_unlock(hdev);
+ 
+ 	return __hci_cmd_sync_status(hdev, HCI_OP_WRITE_EIR, sizeof(cp), &cp,
+ 				     HCI_CMD_TIMEOUT);
+@@ -966,6 +970,7 @@ int hci_update_class_sync(struct hci_dev
+ 	if (hci_dev_test_flag(hdev, HCI_SERVICE_CACHE))
+ 		return 0;
+ 
++	hci_dev_lock(hdev);
+ 	cod[0] = hdev->minor_class;
+ 	cod[1] = hdev->major_class;
+ 	cod[2] = get_service_classes(hdev);
+@@ -973,8 +978,12 @@ int hci_update_class_sync(struct hci_dev
+ 	if (hci_dev_test_flag(hdev, HCI_LIMITED_DISCOVERABLE))
+ 		cod[1] |= 0x20;
+ 
+-	if (memcmp(cod, hdev->dev_class, 3) == 0)
++	if (memcmp(cod, hdev->dev_class, 3) == 0) {
++		hci_dev_unlock(hdev);
+ 		return 0;
++	}
++
++	hci_dev_unlock(hdev);
+ 
+ 	return __hci_cmd_sync_status(hdev, HCI_OP_WRITE_CLASS_OF_DEV,
+ 				     sizeof(cod), cod, HCI_CMD_TIMEOUT);
 
 
