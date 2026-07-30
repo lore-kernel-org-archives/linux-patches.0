@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C2B2451996;
-	Thu, 30 Jul 2026 16:19:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A698451996;
+	Thu, 30 Jul 2026 16:19:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785428352; cv=none; b=gTs+h6YIBEKSg26zEeNgKoPskw/PZFmoibmXUT0ON/PBGEqBTN+lR9rwaGFjFhfmAG5BaqO4B8w4IcwfzJt4pjs62GpTaS7Ob1F/FDXRJ6aAYnuX1DN6fQSjr58jDjWvy0t4KnX5ohBli3QRSIQQLrVUQz8kfiw7qznXJto4riE=
+	t=1785428355; cv=none; b=CmqM3FjIrQc0//l8VGzblM5ylhaasBRvHYAZecDTcDok11c+Py/+1aZJhhrOJ8RUiaMEqrX+OsVy1u8QQEzNNhtYEuduMekXn/+3+mBPukW2U7RNLvvjJDkF+DI8r0cdCuE0U+AtGADYjrc0j8ITcDhDHZPVsqB24Mx0HrjHFXo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785428352; c=relaxed/simple;
-	bh=VNlOd69qyeJvifWKbxZdTruEqqlC2u7SyfZ/ffjhQJc=;
+	s=arc-20240116; t=1785428355; c=relaxed/simple;
+	bh=aAbuq0SpajKcVOB0YK8WmMRZX0EfSYzxcp53iccQu64=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Xiq25JDPLATCXlpm9JNpB3pH7Sxem2bwYAmH/fe1LdKW3ogI3fypkpQQrezBPND7hMzhdk203Jv439G7pw8upuyUeUx4gv6WxLS4Sk9bl5/RjhT/QsleLDnk1DRaosZwVR6F1Mug7fcvq0uteU6TdNs22HcjWd1iyWTHfloJAPI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sz1e0kUT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ByjJlnh06WViY9MG9qdvTjh0JzXa1CNBXu8jkW0gK6R5PPKo5ar3wpxre1wvG8atoz5JUPvuOOBl9D6M+HhRSc+cLLDPty/DCrITwLWEp0guJ18tPA4NO5stgMAtqSNxV5XvCaLgJVw0BRTnP5Fm5A4CD0CUNn2KlsRokVZ6Jbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e4LrcAZJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sz1e0kUT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 658F11F000E9;
-	Thu, 30 Jul 2026 16:19:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e4LrcAZJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CF541F000E9;
+	Thu, 30 Jul 2026 16:19:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785428350;
-	bh=srQRlyqgLPtOQF3AG+zB4xY3wGvHn4Hzwrgto5jbZYo=;
+	s=korg; t=1785428353;
+	bh=xPd0nHzvQ5DCmNeK99qX1nvtFaeDl+Kb+l47PcTUE5o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sz1e0kUTIVhqvZ5h5YjQWGPwiFl3zhN5fjLpcB3oTXS7FeK2tIwcUg7XVOuaXtKX9
-	 z7jbtAHQoUnAN0bHNvrSYIFGJtDaseJ2DschWx8QrIVF8fMVk59hWg5V3xQQF8LR3f
-	 pk0itpI5pT/DisO/OgIGhfgoH1i6a8PEobHwyxUs=
+	b=e4LrcAZJUF/QnarrLtbeIIDUymQe0ws2eKnqdiCeAGwmPRFfEpIoTWa/cu2T7nFPl
+	 lQ1i1GWWHng+a8Q2n7TR2clOufu+zCYiLhOSDfPWa3isYmZ+Kth4T//xWdZxcXKdZt
+	 /gnKIiuIOWNv/3TOCYaOWrvA0y5D6ZbVrWjNVAts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolai Buchwitz <nb@tipi-net.de>,
-	=?UTF-8?q?Th=C3=A9o=20Lebrun?= <theo.lebrun@bootlin.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Xiao Liang <shaw.leon@gmail.com>,
+	Maoyi Xie <maoyixie.tju@gmail.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 472/484] net: macb: drop in-flight Tx SKBs on close
-Date: Thu, 30 Jul 2026 16:16:09 +0200
-Message-ID: <20260730141433.745204194@linuxfoundation.org>
+Subject: [PATCH 6.6 463/484] net: ip6_tunnel: require CAP_NET_ADMIN in the device netns for changelink
+Date: Thu, 30 Jul 2026 16:16:00 +0200
+Message-ID: <20260730141433.543668535@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -46,68 +47,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Théo Lebrun <theo.lebrun@bootlin.com>
+From: Maoyi Xie <maoyixie.tju@gmail.com>
 
-[ Upstream commit 27f575836cfebbf872dec020428742b10650a955 ]
+[ Upstream commit 2496fa0b7d180b3ad356b514e7ff93bb14e6140a ]
 
-The MACB driver has since forever leaked the outgoing SKBs that
-have not yet been marked as completed. They live in queue->tx_skb
-which gets freed without remorse nor checking.
+ip6_tnl_changelink() operates on at most two netns, dev_net(dev) and the
+tunnel link netns t->net. They differ once the device is created in or
+moved to a netns other than the one the request runs in. The rtnl
+changelink path checks CAP_NET_ADMIN only against dev_net(dev), so a
+caller privileged there but not in t->net can rewrite a tunnel that
+lives in t->net.
 
-macb_free_consistent() gets called in a few codepaths, but only close will
-trigger the added expressions. In macb_open() and macb_alloc_consistent()
-failure cases, queues' tx_skb just got allocated and are empty.
+Gate ip6_tnl_changelink() on rtnl_dev_link_net_capable() at its top,
+before any attribute is parsed.
 
-Fixes: 89e5785fc8a6 ("[PATCH] Atmel MACB ethernet driver")
+Reported-by: Xiao Liang <shaw.leon@gmail.com>
+Closes: https://lore.kernel.org/netdev/CABAhCOSzP1vaThGV35_VnsRCb=87_CPjPVsTHbq905k8A+BuUg@mail.gmail.com/
+Fixes: 0bd8762824e7 ("ip6tnl: add x-netns support")
 Cc: stable@vger.kernel.org
-Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
-Signed-off-by: Théo Lebrun <theo.lebrun@bootlin.com>
-Link: https://patch.msgid.link/20260702-macb-drop-tx-v4-1-1c833eebdbc8@bootlin.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ adjusted context to free each queue's Tx/Rx rings individually since 6.12 lacks the single-dma_alloc_coherent refactor ]
+Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260612085941.3158249-5-maoyixie.tju@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/cadence/macb_main.c |   22 ++++++++++++++++++++--
- 1 file changed, 20 insertions(+), 2 deletions(-)
+ net/ipv6/ip6_tunnel.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/net/ethernet/cadence/macb_main.c
-+++ b/drivers/net/ethernet/cadence/macb_main.c
-@@ -2582,8 +2582,26 @@ static void macb_free_consistent(struct
- 	bp->macbgem_ops.mog_free_rx_buffers(bp);
+--- a/net/ipv6/ip6_tunnel.c
++++ b/net/ipv6/ip6_tunnel.c
+@@ -2055,6 +2055,9 @@ static int ip6_tnl_changelink(struct net
+ 	struct ip6_tnl_net *ip6n = net_generic(net, ip6_tnl_net_id);
+ 	struct ip_tunnel_encap ipencap;
  
- 	for (q = 0, queue = bp->queues; q < bp->num_queues; ++q, ++queue) {
--		kfree(queue->tx_skb);
--		queue->tx_skb = NULL;
-+		if (queue->tx_skb) {
-+			unsigned int dropped = 0, tail;
++	if (!rtnl_dev_link_net_capable(dev, net))
++		return -EPERM;
 +
-+			for (tail = queue->tx_tail; tail != queue->tx_head;
-+			     tail++) {
-+				if (macb_tx_skb(queue, tail)->skb)
-+					dropped++;
-+				macb_tx_unmap(bp, macb_tx_skb(queue, tail), 0);
-+			}
-+
-+			queue->stats.tx_dropped += dropped;
-+			bp->dev->stats.tx_dropped += dropped;
-+
-+			kfree(queue->tx_skb);
-+			queue->tx_skb = NULL;
-+		}
-+
-+		queue->tx_head = 0;
-+		queue->tx_tail = 0;
-+
- 		if (queue->tx_ring) {
- 			size = TX_RING_BYTES(bp) + bp->tx_bd_rd_prefetch;
- 			dma_free_coherent(&bp->pdev->dev, size,
+ 	if (dev == ip6n->fb_tnl_dev)
+ 		return -EINVAL;
+ 
 
 
