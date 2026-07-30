@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1CF038B14B;
-	Thu, 30 Jul 2026 16:11:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB97938B14B;
+	Thu, 30 Jul 2026 16:11:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427898; cv=none; b=aT9gt4EMX8kTdboTXv2RuTBXSej25kT0GVuiRwHfM8SB58fb8YABD6+pGMDZ4FFJaVjnaCRF8X1cIHRYnYVAwCzxdT9PVrOKLkw56YFXlCcO7PSffF07jZN/4ipL2tofZyOBDtt5A61oZzzohTAO+us8H18sSeHXNW/utZK1hLM=
+	t=1785427901; cv=none; b=sg8Sd648chaAtmE2EsKSkxZ9L4NbYrexPk6RIw8a/Xd65O/hNmOGaQIurLHNNIF6qt3zyv0e5Dbb3mD+IqB+W5IizB0Tl5d/jEMjj+wlL15x7LDniFdbkg9onVZsZ33B5CdAzfJ1B14uJ0qPnly7e2Qq+Cn6XLfI/tjjnrlbyMc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427898; c=relaxed/simple;
-	bh=edjsu7SLveb/ooHh2vkzbHRisjBzR3kLQsdoyclXrps=;
+	s=arc-20240116; t=1785427901; c=relaxed/simple;
+	bh=acESJ0mHU2Y3JBeCNFX0Qc6QQTune+W3yFQqdsm++Os=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I0UTL9lb2DDlzS+ncNV6jgnDLvRbvR4fUu2P7UasEGWcHtG2jbcljipTaN+XtlA2Fp1E77+g/l7ssRMHHoO+tra2ddk79ZgcZGIZn34v9sWoiYPWfO1EW7Kb5op+PMAThFgGLMQowGpXWPW0rJWcJHd6Ue1nx12qcnCuhvC01mE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0n8SCv0k; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sTDHbwKQUM0aj8k4V5ZxK5c/JFdTpQ+l5uKd6J1cXtPBo+SMRIRxJqJnYAtbRHgWSQyue4icf9a2HfgpTy5ZZOZ+T/zCGmPLAWVivtZK2l3XWxJz0xjRyNr9AXS85zAaql9M/Z3ghw4S1PLaPN4R0WjdsUyK+FywZZcvUxJAvQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S64sWp7f; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0n8SCv0k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31F801F000E9;
-	Thu, 30 Jul 2026 16:11:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S64sWp7f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12A1A1F000E9;
+	Thu, 30 Jul 2026 16:11:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427897;
-	bh=HlCMzcrIg1qBeysHbtXBAeD8SqVcl6y7D+PnkjH5LLo=;
+	s=korg; t=1785427900;
+	bh=FWRmVjNQHmikWki8fnT81kH1bURW+yMPUdmVRKL5CJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0n8SCv0keK4QoDOZ+maKZ1cjv9RLNBo3Zi1BSpHAu1y2hrGdLs7MyI04TcJpYO+TX
-	 8xHJMYOQclSfgO1JLEPy9gEBFufpDLEvNqoes3up0bYT0J8tbTTPZkOOfk2mXMWkJI
-	 bZI6dlNCyzeV7dgCbk6qKb47YgSIERA1HcB8XQOk=
+	b=S64sWp7f7udGMKHwlfds7B81xKf5z5Q3y8E3VTk6XVA7cC8xDGJYoKx2qkSQl4j1d
+	 txkYhjlb0vI8OBuQuG4VpMMb6eMO3maov+rS307OqeGyeWNG9ulGzamV/3OnFmtAGt
+	 NeWf0NnLgPzUN/QCZ9m5i45VqwDtgbPafY07gaZM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Asim Viladi Oglu Manizada <manizada@pm.me>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 333/484] pppoe: reload header pointer after dev_hard_header()
-Date: Thu, 30 Jul 2026 16:13:50 +0200
-Message-ID: <20260730141430.721148838@linuxfoundation.org>
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Breno Leitao <leitao@debian.org>,
+	Daehyeon Ko <4ncienth@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.6 334/484] tipc: clear sock->sk on the failed-insert path in tipc_sk_create()
+Date: Thu, 30 Jul 2026 16:13:51 +0200
+Message-ID: <20260730141430.741517711@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -52,44 +53,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Asim Viladi Oglu Manizada <manizada@pm.me>
+From: Daehyeon Ko <4ncienth@gmail.com>
 
-commit e9c238f6fe42fb1b4dba3a578277de32cb487937 upstream.
+commit ba0533fc163f905fe817cfabdf8ed4058da44800 upstream.
 
-pppoe_sendmsg() saves a pointer to the PPPoE header before calling
-dev_hard_header(). Device header callbacks are allowed to reallocate the
-skb head, invalidating pointers into it.
+When tipc_sk_create() fails to insert the new socket (tipc_sk_insert()
+returns non-zero), its error path frees the sk with sk_free() but leaves
+sock->sk pointing at the freed object:
 
-This can happen when a send is blocked in copy_from_user() while the first
-non-Ethernet port is added to an empty team device. The team's delegated
-GRE header callback then expands the skb head. PPPoE subsequently writes
-six bytes through the stale pointer into the freed head.
+	if (tipc_sk_insert(tsk)) {
+		sk_free(sk);
+		pr_warn("Socket create failed; port number exhausted\n");
+		return -EINVAL;
+	}
 
-Reload the PPPoE header through the skb's network-header offset after
-device header creation. pskb_expand_head() updates that offset when it
-relocates the head.
+This is harmless for plain socket(): the syscall layer clears sock->ops
+before releasing, so tipc_release() is never called. It is not harmless
+on the accept() path. tipc_accept() creates the pre-allocated child
+socket with tipc_sk_create(net, new_sock, 0, kern); on failure it leaves
+new_sock->sk dangling and new_sock->ops non-NULL, and do_accept() then
+fput()s the new file, so __sock_release() -> tipc_release() runs
+lock_sock(new_sock->sk) on the freed sk -- a use-after-free write of the
+sk_lock spinlock.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+tipc_release() already guards this exact "failed accept() releases a
+pre-allocated child" case with "if (sk == NULL) return 0;", but the
+guard is bypassed because tipc_sk_create() left sock->sk non-NULL
+(dangling) rather than NULL.
+
+Clear sock->sk on the failed-insert path so the existing tipc_release()
+NULL check fires and the use-after-free is avoided.
+
+The tipc_sk_insert() failure is reached when the per-netns socket
+rhashtable hits its max_size (tsk_rht_params.max_size = 1048576, ~2M
+elements) -- i.e. once a netns holds ~2M TIPC sockets every insert
+returns -E2BIG.
+
+  BUG: KASAN: slab-use-after-free in lock_sock_nested (net/core/sock.c:3839)
+  Write of size 8 at addr ffff8880047cdc38 by task init/1
+   lock_sock_nested (net/core/sock.c:3839)
+   tipc_release (net/tipc/socket.c:638)
+   __sock_release (net/socket.c:710)
+   sock_close (net/socket.c:1501)
+   __fput (fs/file_table.c:512)
+  Allocated by task 1:
+   sk_alloc (net/core/sock.c:2308)
+   tipc_sk_create (net/tipc/socket.c:487)
+   tipc_accept (net/tipc/socket.c:2744)
+   do_accept (net/socket.c:2034)
+  Freed by task 1:
+   __sk_destruct (net/core/sock.c:2391)
+   tipc_sk_create (net/tipc/socket.c:504)
+   tipc_accept (net/tipc/socket.c:2744)
+   do_accept (net/socket.c:2034)
+
+Fixes: 00aff3590fc0 ("net: tipc: fix possible refcount leak in tipc_sk_create()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Asim Viladi Oglu Manizada <manizada@pm.me>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260722093814.3017176-1-manizada@pm.me
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Reviewed-by: Breno Leitao <leitao@debian.org>
+Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260714131939.1255974-1-4ncienth@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ppp/pppoe.c |    1 +
+ net/tipc/socket.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/drivers/net/ppp/pppoe.c
-+++ b/drivers/net/ppp/pppoe.c
-@@ -900,6 +900,7 @@ static int pppoe_sendmsg(struct socket *
- 	dev_hard_header(skb, dev, ETH_P_PPP_SES,
- 			po->pppoe_pa.remote, NULL, total_len);
- 
-+	ph = pppoe_hdr(skb);
- 	memcpy(ph, &hdr, sizeof(struct pppoe_hdr));
- 
- 	ph->length = htons(total_len);
+--- a/net/tipc/socket.c
++++ b/net/tipc/socket.c
+@@ -504,6 +504,7 @@ static int tipc_sk_create(struct net *ne
+ 	tipc_set_sk_state(sk, TIPC_OPEN);
+ 	if (tipc_sk_insert(tsk)) {
+ 		sk_free(sk);
++		sock->sk = NULL;
+ 		pr_warn("Socket create failed; port number exhausted\n");
+ 		return -EINVAL;
+ 	}
 
 
