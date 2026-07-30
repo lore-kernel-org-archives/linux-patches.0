@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C74063793A9;
-	Thu, 30 Jul 2026 14:49:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C4A73793A9;
+	Thu, 30 Jul 2026 14:49:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422985; cv=none; b=NJ5PC0B6QH680qAZ4y9hCA8QZxriD5wOea1DFwkIbN0xben4KALXr+wAsTPL6pLF1vwxGiCfX9aWLIJXBdUWkcjXDHS55KBk5O5W7672miemsd/X6oYQjU/zNnEjfhDOSKZmEBHRUbDev2urwqIyur2sGQGLmH+MsP5DKYtpO7E=
+	t=1785422987; cv=none; b=G1xlJtPWdrVC/gwNbW6eqwentyaOd3VKZzou82AN0l18OIVd8VPIxUjkxCB/xCJHQCRAE3jJ5nUyz90GGGby5OP18pNz9LSf0NsszHTZydgZx56+nDjNJGoACghDVQKvB4oUeKrAAbp41VrlHlqxWuULOcLaZIThRLBlXp6MFC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422985; c=relaxed/simple;
-	bh=yuleUqPlWas4aoV1+pvmFjpqp3k4ZmqkzAZYF7W0cuA=;
+	s=arc-20240116; t=1785422987; c=relaxed/simple;
+	bh=CXUsmZM3KlL25yMHKLarIZLm7odUsZY8Kpq5WiIfjEw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QFc2/kKV8pW1JhCvr2BAT9Sp899uhBCOlGZDnQUt33jI7TEgJ5bACK8KtA+Rgz2PjR6Jqz/jYscLEbv3BmkzyFgLqDfSdhrfF+tbCXGMf1rhioTCdwFyYZDD1ZjQsPDE9bTQvHATlYRltHjsLowxkxFp+GbhlZ4rLmXL78BCYLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ewRLO6tn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aslKlM8aZaJAgjo1vp9hTLabrIOA7AJUm8A73kGepZET0zJR3QbxixBMbIAStAHVm8sA2xJh7VQZjEizWNvloVH+wUJPXAMms1r0FN777Me3ZYRFOsnG0icsyHUjmGaSA2fAWJx6maT5G4GxcsG+S3PHBPsq+3Q8XtF/+mNRkbs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O7vU80Rw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ewRLO6tn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED6541F000E9;
-	Thu, 30 Jul 2026 14:49:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O7vU80Rw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6F621F000E9;
+	Thu, 30 Jul 2026 14:49:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422983;
-	bh=t3CZysRs6yQEln8kdRCpTNKIJOhCVtp1Ph6KHHa66jY=;
+	s=korg; t=1785422986;
+	bh=OtUSZYfm50jbx8r18MGRYyOQXSMrZjUU+pUlSnZr4GU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ewRLO6tneVJejw4/t45eY0anBOk/yirrgSYu0/ibZJ9BfSV8TZXL96QoQ0GbhGON/
-	 XLP3FqxehWnYSPWtFExOTeR2Id3yUhIlDojyN7lYN0mROhuWAtCZ4/Y++Xy3pr1kAQ
-	 ESE7TIqApLqpcsJNI8Zkz3kkLTXHy7OxPgiIKNIU=
+	b=O7vU80Rww01jLWrBOZLbey9yNlhYxybdAoEpVsR4QRMXVsFCWbooMJp+VmCmJ2pzy
+	 Rq6WOrzSvRsv/IGXtcprTmb/RdaJRTdmymRlWm2cqFDNWXyH7pLZz5Nteu7plLpniV
+	 7PG4OSCWJq7CANE1P3HQNk/ixk4KVsL5oYtiu/MI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Kellermann <max.kellermann@ionos.com>,
-	Xiubo Li <xiubo.li@clyso.com>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
 	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 7.1 625/744] ceph: add owner/capability checks for CEPH_IOC_SET_LAYOUT*
-Date: Thu, 30 Jul 2026 16:14:58 +0200
-Message-ID: <20260730141457.560203325@linuxfoundation.org>
+Subject: [PATCH 7.1 626/744] ceph: fix pre-auth out-of-bounds read on snaptrace in ceph_handle_caps()
+Date: Thu, 30 Jul 2026 16:14:59 +0200
+Message-ID: <20260730141457.581856143@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -51,52 +51,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Max Kellermann <max.kellermann@ionos.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit cee38bbf5556a8e0a232ccae41649580827d7806 upstream.
+commit 4dbc71bcaf9a30abf3920a4e2cc4ed33bba78c02 upstream.
 
-These permission checks were already missing in the initial
-impementation of these ioctls.  This Ceph allows any user who owns a
-file descriptor to manipulate the layout of any file, even if they
-don't have write permissions.
+ceph_handle_caps() reads snap_trace_len from the wire-format
+ceph_mds_caps header and uses it unconditionally to build a fake
+end pointer (snaptrace + snaptrace_len) that is later handed to
+ceph_update_snap_trace() in the CEPH_CAP_OP_IMPORT case:
 
-It might be a good idea to guard other ioctls with permission checks
-as well or even disallow regular users (even if they own the file) to
-manipulate layout settings completely, as this may be abused to DoS
-the Ceph servers, but right now, I find it most urgent to have setter
-checks at all.
+    snaptrace     = h + 1;
+    snaptrace_len = le32_to_cpu(h->snap_trace_len);
+    p             = snaptrace + snaptrace_len;
+    ...
+    case CEPH_CAP_OP_IMPORT:
+        if (snaptrace_len) {
+            ...
+            if (ceph_update_snap_trace(mdsc, snaptrace,
+                                       snaptrace + snaptrace_len,
+                                       false, &realm)) { ... }
+
+ceph_update_snap_trace() then decodes a struct ceph_mds_snap_realm
+from snaptrace using ceph_decode_need(&p, e, sizeof(*ri), bad)
+with the attacker-supplied fake end e == snaptrace + snaptrace_len.
+With snaptrace_len == 0xFFFFFFFF the bound check is trivially
+satisfied, ri = p reads sizeof(struct ceph_mds_snap_realm) past
+the legitimate msg->front buffer, and ri->num_snaps /
+ri->num_prior_parent_snaps then drive further out-of-bounds
+reads of the encoded snap arrays.
+
+The eleven msg_version >= 2 .. msg_version >= 12 decoder blocks
+above the op switch each catch this OOB through their
+ceph_decode_*_safe() / ceph_decode_need() helpers, but they sit
+behind a hdr.version-gated if, so a malicious or compromised
+MDS that sets msg->hdr.version = 1 reaches the IMPORT path with
+no version-gated decoder having validated snap_trace_len. The
+shape has been present since ceph_handle_caps() was introduced.
+
+Validate snap_trace_len against the message front buffer before
+consuming it, using the canonical ceph_decode_need() / ceph_has_room()
+helper.  The helper bounds the length with subtraction (n <= end - p,
+guarded by end >= p) rather than pointer addition, so it is wrap-safe
+for the attacker-controlled u32 length on 32-bit builds where
+p + snap_trace_len could overflow the address space.  This matches the
+rest of the ceph decode path (e.g. the pool_ns_len check a few lines
+below), and the existing goto bad cleanup already covers this exit
+path.
 
 Cc: stable@vger.kernel.org
-Fixes: 8f4e91dee2a2 ("ceph: ioctls")
-Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
-Reviewed-by: Xiubo Li <xiubo.li@clyso.com>
+Fixes: a8599bd821d0 ("ceph: capability management")
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/ioctl.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/ceph/caps.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/ceph/ioctl.c
-+++ b/fs/ceph/ioctl.c
-@@ -72,6 +72,9 @@ static long ceph_ioctl_set_layout(struct
- 	struct ceph_ioctl_layout nl;
- 	int err;
+--- a/fs/ceph/caps.c
++++ b/fs/ceph/caps.c
+@@ -4365,6 +4365,7 @@ void ceph_handle_caps(struct ceph_mds_se
  
-+	if (!inode_owner_or_capable(&nop_mnt_idmap, inode))
-+		return -EACCES;
-+
- 	if (copy_from_user(&l, arg, sizeof(l)))
- 		return -EFAULT;
+ 	snaptrace = h + 1;
+ 	snaptrace_len = le32_to_cpu(h->snap_trace_len);
++	ceph_decode_need(&snaptrace, end, snaptrace_len, bad);
+ 	p = snaptrace + snaptrace_len;
  
-@@ -142,6 +145,9 @@ static long ceph_ioctl_set_layout_policy
- 	int err;
- 	struct ceph_mds_client *mdsc = ceph_sb_to_fs_client(inode->i_sb)->mdsc;
- 
-+	if (!inode_owner_or_capable(&nop_mnt_idmap, inode))
-+		return -EACCES;
-+
- 	/* copy and validate */
- 	if (copy_from_user(&l, arg, sizeof(l)))
- 		return -EFAULT;
+ 	if (msg_version >= 2) {
 
 
