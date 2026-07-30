@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01F823B5DEE;
-	Thu, 30 Jul 2026 15:12:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3508A3C3F4C;
+	Thu, 30 Jul 2026 15:12:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424343; cv=none; b=ZdLEMfLisVXPBXGtFCdteSKoWADrhbTOKeYlgjieTNB6F/9hp60wnXcEAobE2/4qSP0AHM/SUQY6eqi8ZI9rQCYaHWmCUWpHh0+fd6Uw+3SoXr5dlQe38GgvQBOH9h16uHHJ8AxY2ltmeUmoHQ0nIH6+NHxMMJkFQ22InF7g548=
+	t=1785424346; cv=none; b=QEBXn7o/4i0T2nLDtIh7Pet/0NE1Ajp39OE6f9VWvw9/hrYDU6lsby2MoXPq9diyBAUyg3fzd/KBU3tYXZaUBfguvfWH1o6mhpZdBj1qnAZF1HMWmnklnG1HVdxGXQHIwug5YtU1ju8xyC++Dcldo9PWxEv6rzrjjhWeolOgH9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424343; c=relaxed/simple;
-	bh=9TSZeMtk7M0YbelFSY0Jb603Vd2yP+IiMNcoTsFTIj4=;
+	s=arc-20240116; t=1785424346; c=relaxed/simple;
+	bh=tROesbveg7+WA/Q/pBGTgvHRJb+neVubxfavv8kClUA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rDPWpjcH6BhtsuaORUZ8KKrNrhjf+NCa4K54raQrB3t+NFDY5cIKMCeZcrLQpBFKuZY5FBjqG8aCp/alVtQj/s800+mxQhe+aHXBtU78EPYKYhLkMgZqQsn8QvfYyX30G4PPr72TPMGbXnX7lWGLfCWp4ygj+k9fGvU/VQOJmkI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Toks9fpF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YRoQYiKSmbYkxWdFY0GxmXO8wYx5mCpHcjm9yITQhMB4xrVXFoaIMsV7RyvICT6WYOED718vVKqIehSsQ4bSUPONxy/Z475OEG2EU0yuK4z3DctpkJPGrxWm0PQ4CsDI188+zOkjtylnPlstOjEwT6NIwGOLYyrAKze3+pG625g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ca8j2F2p; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Toks9fpF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DE121F000E9;
-	Thu, 30 Jul 2026 15:12:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ca8j2F2p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 344E31F000E9;
+	Thu, 30 Jul 2026 15:12:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424341;
-	bh=23x3ncY/TkBCsZM3EgZx1LxQRgrx6WotztftctlY5UY=;
+	s=korg; t=1785424344;
+	bh=1coZ/1512fG0LxXbw3POzj+z5uditEkl/SF9LUx+ri4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Toks9fpFfNBsqd46RtiyHsgTK8adFj1WencJfAAWdbG2ENwmsrT6f/mndqb68M/hn
-	 Q0RNvuu6P7QZ0hk2N33mOFe1yjp87LsziedyCgHT6hLbM5bGnnPizia7iuzcBeFg1N
-	 JTxP2Yiq31ev5QmnXBig4MH9qxhy1vH7uIevFomA=
+	b=Ca8j2F2pY6sLDlp/uCdvC4iexG4p0cGWCsWqs2IIasgU9E87jCKz8xsF3V01EiY3G
+	 E9jKH42IxRkuWcNbN/3ddEB5FWaibTbJJnkRk50uSebiWSLnGf0hk4450u5ANTJ3tU
+	 lTydJUw4Z87n4NEoyZQbbcV+EVqyS4E5JSboSVwg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Subject: [PATCH 6.18 358/675] drm/virtio: bound EDID block reads to the response buffer
-Date: Thu, 30 Jul 2026 16:11:28 +0200
-Message-ID: <20260730141452.741790398@linuxfoundation.org>
+	Simon Horman <horms@kernel.org>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 316/675] net: airoha: fix ETS channel derivation in airoha_tc_setup_qdisc_ets()
+Date: Thu, 30 Jul 2026 16:10:46 +0200
+Message-ID: <20260730141451.843101878@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -50,42 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-commit 4e1a53892ba7f8a3e1da6bfc53c83ae7c812dccd upstream.
+[ Upstream commit 649ea07fc25a17aa51bff710baac1ab161022a7c ]
 
-virtio_get_edid_block() validates the read offset only against the
-device-supplied resp->size field, never against the fixed-size resp->edid
-array. The EDID block index is driven by the device-supplied extension
-count, so a malicious virtio-gpu backend can advertise a large size
-together with a high block count and read far past the array into adjacent
-kernel memory, which is then surfaced in the parsed EDID (an out-of-bounds
-read / info leak).
+Derive the hardware QoS channel from opt->parent instead of opt->handle
+in airoha_tc_setup_qdisc_ets(). The ETS qdisc handle is either
+user-specified or auto-allocated by qdisc_alloc_handle() and bears no
+relation to the HTB leaf classid that identifies the hardware channel.
+HTB derives the channel from TC_H_MIN(opt->classid), and ETS is always
+attached as a child of an HTB leaf, so its opt->parent matches that
+classid. Using opt->handle instead can cause two ETS qdiscs on different
+HTB leaves to collide on the same hardware channel, corrupting scheduler
+configuration and stats.
 
-Also reject any read whose end exceeds the size of the edid array.
-Conforming EDID responses stay within the array and are unaffected.
-
-Fixes: b4b01b4995fb ("drm/virtio: add edid support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Link: https://patch.msgid.link/20260620-b4-disp-22bba7bf-v1-1-b95924cee742@proton.me
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 20bf7d07c956 ("net: airoha: Add sched ETS offload support")
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Link: https://patch.msgid.link/20260720-airoha-ets-handle-fix-v2-1-6f7129ddc06f@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/virtio/virtgpu_vq.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/airoha/airoha_eth.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/virtio/virtgpu_vq.c
-+++ b/drivers/gpu/drm/virtio/virtgpu_vq.c
-@@ -893,7 +893,8 @@ static int virtio_get_edid_block(void *d
- 	struct virtio_gpu_resp_edid *resp = data;
- 	size_t start = block * EDID_LENGTH;
- 
--	if (start + len > le32_to_cpu(resp->size))
-+	if (start + len > le32_to_cpu(resp->size) ||
-+	    start + len > sizeof(resp->edid))
+diff --git a/drivers/net/ethernet/airoha/airoha_eth.c b/drivers/net/ethernet/airoha/airoha_eth.c
+index 5efd03c2deea77..64ab34e37c36f9 100644
+--- a/drivers/net/ethernet/airoha/airoha_eth.c
++++ b/drivers/net/ethernet/airoha/airoha_eth.c
+@@ -2326,8 +2326,7 @@ static int airoha_tc_setup_qdisc_ets(struct airoha_gdm_port *port,
+ 	if (opt->parent == TC_H_ROOT)
  		return -EINVAL;
- 	memcpy(buf, resp->edid + start, len);
- 	return 0;
+ 
+-	channel = TC_H_MAJ(opt->handle) >> 16;
+-	channel = channel % AIROHA_NUM_QOS_CHANNELS;
++	channel = TC_H_MIN(opt->parent) % AIROHA_NUM_QOS_CHANNELS;
+ 
+ 	switch (opt->command) {
+ 	case TC_ETS_REPLACE:
+-- 
+2.53.0
+
 
 
