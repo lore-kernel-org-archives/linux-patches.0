@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB8193769FD;
-	Thu, 30 Jul 2026 15:43:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86B9F36607D;
+	Thu, 30 Jul 2026 15:43:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426213; cv=none; b=b7NLk/+bTsiRPNbD17mBJ/TVmVEFB8PoYXKhOqZaRNFY/7zcQKa+xKCmw7wwO4lxNMIQmBuZ+ONSJQPU35fVaIwEMxLXCVILQCP7dKKxdaQ+j0r1OGhUSffuQczPcWnKcy6xv+GnGqwo0DdxWMWarKHvCWFo0kzJgndwee+hOsQ=
+	t=1785426216; cv=none; b=AEQWtAeRtu1uvK6TP1dlWUmVY0Jqy259cEVYvURLLdeyN+UzdMvPhqge4Knf5gZth8aXXRy6zd5dYo9W5SbqdFvKgwR21gax0IQ1OxX6FXrUxkDZxqprGcO4sY3VWBfAtk3ELImZuFiKAe/EDlq+3i7ugFr1kbzThIJNz4taXkI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426213; c=relaxed/simple;
-	bh=aJYG8DY0hcznsr+w2DPyknedJb+iu1s6PAWyi2hwVnw=;
+	s=arc-20240116; t=1785426216; c=relaxed/simple;
+	bh=dDQInhBtKUnUs16OkpOhPljzKPv3xsFal1ArVGyo3/E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jI1EKxyZbZP9J+upn0fOH4O+axnsSBwdzMZ/jyzsLE1M3Q837lkeRt0M0CJLqpDXK7+eZ1HXu/A88WQuG7UJOSZ93I1oQ1xCXw2A2oc4rUsfeYpfO1cOdDgPKKC6iFuw0YFBd2VQZLpFPzvIaayT8fueekHujb1tesge73sGnrY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aiNROOk4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tcsMltSr79bmZFE1UjaPVBKC75SyKpUiCAdnigxH3255lQAV+100PcHG4iIIIiQeQN2bUo+YEI8VBNAFJzpwv0ipKVSMe5Y/cTdcLg+1BUnap5RuRZSP9Qq072keKjq9F/oY+HpwnCdRnSBjOeKqHIVWF5OJ2BmOmJ12qFLS/vE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K4CN852H; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aiNROOk4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1363E1F000E9;
-	Thu, 30 Jul 2026 15:43:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K4CN852H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFBCC1F000E9;
+	Thu, 30 Jul 2026 15:43:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426212;
-	bh=NC9gB4HjkTvolcazcvwM97uFx3cD9mVlBy/SJSXRAVc=;
+	s=korg; t=1785426215;
+	bh=VF2jLtvz8nc0H5admfjWx4hZD3ZAntmLBJ1Bm5OC0Mo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aiNROOk4fF3nJ67PbR4jC8X0rvYE0/nfb1yzeLIEiVaovgkGQXTibw4ay04p7KlQv
-	 jmOZ+Tjyo4MPfVwpJLWx9mrVi/u9YK1GfRXL6of/RzThBQ7PtfefWKWv/VJimwHS5j
-	 Td2PYxcIufxsf0fPMTvmvxA9t8YXotHs0hBC8AYE=
+	b=K4CN852HrBxZfEEC73Iek4K5IuOmaHD3q9s2P0BE7fmKyanzmMBpjBR0zfprQbTY2
+	 27O2llUZJolkI0PLGCJ2HOMrXUWevJoeKVZzJbN3IawY43/9xquqxyqUeX7+72/EPt
+	 VUvMWs8TXIW09hTRw4WJHut68awhgUND1F26ynOA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
+	Kevin Hilman <khilman@baylibre.com>,
+	Johan Hovold <johan@kernel.org>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.12 341/602] media: vivid: fix cleanup bugs in vivid_init()
-Date: Thu, 30 Jul 2026 16:12:13 +0200
-Message-ID: <20260730141443.127516282@linuxfoundation.org>
+Subject: [PATCH 6.12 342/602] media: vpif_capture: fix OF node reference imbalance
+Date: Thu, 30 Jul 2026 16:12:14 +0200
+Message-ID: <20260730141443.147885035@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -50,66 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit a07c179a92e949172ca52f6d4a13202ea88cd4b7 upstream.
+commit 2282f979560af6bbc8ee2c1ee8663197312cee5b upstream.
 
-When platform_device_register() fails in vivid_init(), the embedded
-struct device in vivid_pdev has already been initialized by
-device_initialize(), but the failure path jumps to free_output_strings
-without dropping the device reference for the current platform device:
+The driver reuses the OF node of the parent device but fails to take
+another reference to balance the one dropped by the platform bus code
+when unbinding the parent and releasing the child devices.
 
-  vivid_init()
-    -> platform_device_register(&vivid_pdev)
-       -> device_initialize(&vivid_pdev.dev)
-       -> setup_pdev_dma_masks(&vivid_pdev)
-       -> platform_device_add(&vivid_pdev)
+Fix this by using the intended helper for reusing OF nodes.
 
-This leads to a reference leak when platform_device_register() fails.
-Fix this by calling platform_device_put() before jumping to the common
-cleanup path.
-
-Also, the unreg_driver label incorrectly calls
-platform_driver_register() instead of platform_driver_unregister(),
-which breaks cleanup when workqueue creation fails after successful
-driver registration. Fix that as well.
-
-The reference leak was identified by a static analysis tool I developed
-and confirmed by manual review. The incorrect cleanup call was found
-during code inspection.
-
-Fixes: f46d740fb0258 ("[media] vivid: turn this into a platform_device")
-Fixes: d7c969f37515d ("media: vivid: Add 'Is Connected To' menu controls")
-Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Fixes: 4a5f8ae50b66 ("[media] davinci: vpif_capture: get subdevs from DT when available")
+Cc: stable@vger.kernel.org	# 4.13
+Cc: Kevin Hilman <khilman@baylibre.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/test-drivers/vivid/vivid-core.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/media/platform/ti/davinci/vpif_capture.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/test-drivers/vivid/vivid-core.c
-+++ b/drivers/media/test-drivers/vivid/vivid-core.c
-@@ -2291,8 +2291,10 @@ static int __init vivid_init(void)
- 		}
- 	}
- 	ret = platform_device_register(&vivid_pdev);
--	if (ret)
-+	if (ret) {
-+		platform_device_put(&vivid_pdev);
- 		goto free_output_strings;
-+	}
- 	ret = platform_driver_register(&vivid_pdrv);
- 	if (ret)
- 		goto unreg_device;
-@@ -2313,7 +2315,7 @@ static int __init vivid_init(void)
- destroy_hdmi_wq:
- 	destroy_workqueue(update_hdmi_ctrls_workqueue);
- unreg_driver:
--	platform_driver_register(&vivid_pdrv);
-+	platform_driver_unregister(&vivid_pdrv);
- unreg_device:
- 	platform_device_unregister(&vivid_pdev);
- free_output_strings:
+--- a/drivers/media/platform/ti/davinci/vpif_capture.c
++++ b/drivers/media/platform/ti/davinci/vpif_capture.c
+@@ -1501,7 +1501,7 @@ vpif_capture_get_pdata(struct platform_d
+ 	 * video ports & endpoints data.
+ 	 */
+ 	if (pdev->dev.parent && pdev->dev.parent->of_node)
+-		pdev->dev.of_node = pdev->dev.parent->of_node;
++		device_set_of_node_from_dev(&pdev->dev, pdev->dev.parent);
+ 	if (!IS_ENABLED(CONFIG_OF) || !pdev->dev.of_node)
+ 		return pdev->dev.platform_data;
+ 
 
 
