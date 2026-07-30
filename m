@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0E9D409114;
-	Thu, 30 Jul 2026 15:40:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED9C643E9DF;
+	Thu, 30 Jul 2026 15:40:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426023; cv=none; b=mot6Hvyha0JcDTu4eYf/2I2bbkiUtRCYVuCAtkiUFGQlq5hWXDl4UG3lQEhyL7tv388mgLUh+GOEUraIeBlphIe/xDyjK0UIlYjdyhiafy9xTRUMUhmRvRnkd3PSh6iisk+zcDJxHlBdy0/uBbZQUDyPdTMxDzTngORT3bIfBok=
+	t=1785426025; cv=none; b=C1xkbpWxn43u09i+hMZZsTmzthThu+Ody+nMBY9MdRtxWASp8+WyNdnpO9PyT2ZzvCPcfNCsKadf2QG+UaPCN2vFWKRCxBbQuAFMe6sEpfEOwviH9ia6mFiTMjsWRCcU58Jw3v9zTsgMFhq2yt6UQZTJ/CiZoim7QzaJE/ws7ck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426023; c=relaxed/simple;
-	bh=gGezIfmM1WbWjh8AimMEAO83IZH+I2uW4hWHiM+xepI=;
+	s=arc-20240116; t=1785426025; c=relaxed/simple;
+	bh=4MN+xmdQlapJyJd1gf2hoXjH9dNCUtKhGtKeqomSvj0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N0IWMs9yQOqEO2/iMFsGiHYE/mdf1UyV+YOOgP6y2SEevA/iBAU1MI/POfqQyi4PjwC2OxXkuJisijsDX+m6ZW/aHuTVPcqRQvdIA2zYO2NCEv0Jav5xl4d8eRWzJNrSb14O+JT5LLUu7i9cbxfquzcP91xDjF3hzQYpWTDZ8Po=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DIFLpvYq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XvdkUsATqmHcKpfdIoSNQ404BW1nDPTa9B/eihEDJaoOMrrVZKBKJ3+yo+/1NpS5YHh4srsaIhOtsD+S4njCHyvzch4WyZe8xG3a9FvGCgJRFVG95c+UPdnrqrQzRRkxhzPfdEfMShLr34lUo7nIkgEaZVV6jAzkZzj3kbRLTZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xBcCrMX5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DIFLpvYq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 584FA1F000E9;
-	Thu, 30 Jul 2026 15:40:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xBcCrMX5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 460FB1F00A3A;
+	Thu, 30 Jul 2026 15:40:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426020;
-	bh=pF71C5juXWcW7Uud7bLR02+GaXUrdnsmsLuVnX77HG8=;
+	s=korg; t=1785426023;
+	bh=o6LZ3RBnpsWDbrfQVJ0w60256f0EjsZXSMJo/Erj2FY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DIFLpvYq3fUejtWEVVGSeLJrpce+oupngA/2dehSs/vPOBnrhh1LhhutKTUlRjOq7
-	 h/fXgC93QQ8+gAbMQq5JxMoZzr0aCEzjxuvZN1nfbw4EGi2csDifouMXwjpEJGd9vJ
-	 Df898YvHdPx7idceHM5CQJIhUYGNvwN/cTKppnT8=
+	b=xBcCrMX5D9nxPGdr6eJKqIcwCrSiKEF1LTQZs7uvKxWrctWB3lbhkGQxLXk9ALeE0
+	 0AUzjMIl1RLTxhZM52wR2wTqxFHKBkd2FfmBRgWH+ziKQwE38FihDZsRDtRIfiq85j
+	 mNbzmoIdayitRZPH73t3TDBaYthqfGGX5CKZSnQg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luigi Santivetti <luigi.santivetti@imgtec.com>,
+	Icenowy Zheng <zhengxingda@iscas.ac.cn>,
 	Alessio Belle <alessio.belle@imgtec.com>
-Subject: [PATCH 6.12 271/602] drm/imagination: fix error checking of pvr_vm_context_lookup()
-Date: Thu, 30 Jul 2026 16:11:03 +0200
-Message-ID: <20260730141441.666279004@linuxfoundation.org>
+Subject: [PATCH 6.12 272/602] drm/imagination: acquire vm_ctx->lock before mapping memory to GPU VM
+Date: Thu, 30 Jul 2026 16:11:04 +0200
+Message-ID: <20260730141441.687061267@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -50,87 +50,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luigi Santivetti <luigi.santivetti@imgtec.com>
+From: Icenowy Zheng <zhengxingda@iscas.ac.cn>
 
-commit cf385cf6e713eba0720651174dac0b2d2f5bb8f8 upstream.
+commit 17e2030f37600994440f875dc410615d5c66ee6d upstream.
 
-Since pvr_vm_context_lookup() returns either NULL or a pointer, then stop
-using IS_ERR() for checking the return value.
+The drm gpuvm code doesn't protect find operation against map operation,
+and the driver needs to ensure a map operation shouldn't happen when a
+find operation is in progress.
 
-Using IS_ERR() leads to the kernel oops reported below. It can be
-reproduced by passing an invalid VM context handle from userspace to the
-DRM_IOCTL_PVR_CREATE_CONTEXT ioctl.
+In some cases a find operation will be in progress when doing map/unmap
+operations, and the find operation will do a NULL pointer dereference.
 
-[   92.733119] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000148
-[   92.742042] Mem abort info:
-[   92.744890]   ESR = 0x0000000096000004
-[   92.748686]   EC = 0x25: DABT (current EL), IL = 32 bits
-[   92.754020]   SET = 0, FnV = 0
-[   92.757154]   EA = 0, S1PTW = 0
-[   92.760337]   FSC = 0x04: level 0 translation fault
-[   92.765243] Data abort info:
-[   92.768129]   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
-[   92.773626]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
-[   92.778763]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
-[   92.784098] user pgtable: 4k pages, 48-bit VAs, pgdp=000000088ed23000
-[   92.790550] [0000000000000148] pgd=0000000000000000, p4d=0000000000000000
-[   92.797381] Internal error: Oops: 0000000096000004 [#1]  SMP
-[   92.803027] Modules linked in: powervr
-[   92.852533] CPU: 0 UID: 0 PID: 409 Comm: triangle Not tainted 7.1.0-rc5-g98b46e693b91 #1 PREEMPT
-[   92.861385] Hardware name: Texas Instruments AM68 SK (DT)
-[   92.866766] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[   92.873709] pc : pvr_vm_get_fw_mem_context+0x0/0xc [powervr]
-[   92.879376] lr : pvr_queue_create+0x26c/0x440 [powervr]
-[   92.884595] sp : ffff8000837fbb00
-[   92.887895] x29: ffff8000837fbb60 x28: 0000000000000000 x27: ffff8000837fbce8
-[   92.895015] x26: ffff000807f61a40 x25: ffff000807f61a00 x24: ffff000807f64400
-[   92.902135] x23: ffff00080a5ab000 x22: ffff800079b24730 x21: ffff000807f61800
-[   92.909254] x20: ffff00080999e680 x19: 0000000000000000 x18: 0000000000000000
-[   92.916373] x17: 0000000000000000 x16: 0000000000000000 x15: 0000000000000001
-[   92.923492] x14: 0000000000000000 x13: 0000000000000002 x12: ffff80008145b298
-[   92.930611] x11: ffff8000844e5000 x10: ffff80008165a130 x9 : 0000000000000100
-[   92.937730] x8 : 0000000000000001 x7 : ffff0008076b27e0 x6 : ffff00080ec43b7c
-[   92.944850] x5 : ffff00080ec43b78 x4 : 0000000000000000 x3 : ffff00080999e680
-[   92.951968] x2 : 0000000000000000 x1 : 0000000000000000 x0 : 0000000000000000
-[   92.959088] Call trace:
-[   92.961521]  pvr_vm_get_fw_mem_context+0x0/0xc [powervr] (P)
-[   92.967173]  pvr_context_create+0x190/0x410 [powervr]
-[   92.972218]  pvr_ioctl_create_context+0x44/0x8c [powervr]
-[   92.977608]  drm_ioctl_kernel+0xbc/0x124 [drm]
-[   92.982127]  drm_ioctl+0x1f8/0x4dc [drm]
-[   92.986098]  __arm64_sys_ioctl+0xac/0x104
-[   92.990102]  invoke_syscall+0x54/0x10c
-[   92.993842]  el0_svc_common.constprop.0+0x40/0xe0
-[   92.998532]  do_el0_svc+0x1c/0x28
-[   93.001835]  el0_svc+0x38/0x11c
-[   93.004969]  el0t_64_sync_handler+0xa0/0xe4
-[   93.009139]  el0t_64_sync+0x198/0x19c
-[   93.012792] Code: aa1703e0 d2800014 95cb0ba4 17ffffe8 (f940a400)
-[   93.018869] ---[ end trace 0000000000000000 ]---
+An example of the stack trace of such NULL dereference is shown below:
 
-Fixes: d2d79d29bb98 ("drm/imagination: Implement context creation/destruction ioctls")
+```
+Unable to handle kernel access to user memory without uaccess routines at
+virtual address 0000000000000010
+
+[<ffffffff01e989d4>] drm_gpuva_find+0x28/0x6c [drm_gpuvm]
+[<ffffffff01ed3a40>] pvr_vm_unmap+0x34/0x68 [powervr]
+[<ffffffff01ec69da>] pvr_ioctl_vm_unmap+0x2e/0x50 [powervr]
+[<ffffffff8080ce0a>] drm_ioctl_kernel+0x8e/0xdc
+[<ffffffff8080d016>] drm_ioctl+0x1be/0x3e0
+[<ffffffff802bec3e>] __riscv_sys_ioctl+0xba/0xc4
+[<ffffffff80d858b2>] do_trap_ecall_u+0x23e/0x3f4
+[<ffffffff80d92288>] handle_exception+0x168/0x174
+```
+
+As all occurences of drm_gpuva_find*() are already guarded by
+vm_ctx->lock, make pvr_vm_map() to acquire this lock to prevent
+disturbing any find operation. This fixes the NULL deference problem in
+drm_gpuva_find*().
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Luigi Santivetti <luigi.santivetti@imgtec.com>
+Fixes: ff5f643de0bf ("drm/imagination: Add GEM and VM related code")
+Fixes: 4bc736f890ce ("drm/imagination: vm: make use of GPUVM's drm_exec helper")
+Signed-off-by: Icenowy Zheng <zhengxingda@iscas.ac.cn>
 Reviewed-by: Alessio Belle <alessio.belle@imgtec.com>
-Link: https://patch.msgid.link/20260707-staging-ddkopsrc-2435-v1-1-24e160d44476@imgtec.com
+Link: https://patch.msgid.link/20260714073641.1935075-1-zhengxingda@iscas.ac.cn
 Signed-off-by: Alessio Belle <alessio.belle@imgtec.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/imagination/pvr_context.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/imagination/pvr_vm.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/gpu/drm/imagination/pvr_context.c
-+++ b/drivers/gpu/drm/imagination/pvr_context.c
-@@ -321,8 +321,8 @@ int pvr_context_create(struct pvr_file *
- 		goto err_free_ctx;
+--- a/drivers/gpu/drm/imagination/pvr_vm.c
++++ b/drivers/gpu/drm/imagination/pvr_vm.c
+@@ -741,6 +741,7 @@ pvr_vm_map(struct pvr_vm_context *vm_ctx
  
- 	ctx->vm_ctx = pvr_vm_context_lookup(pvr_file, args->vm_context_handle);
--	if (IS_ERR(ctx->vm_ctx)) {
--		err = PTR_ERR(ctx->vm_ctx);
-+	if (!ctx->vm_ctx) {
-+		err = -EINVAL;
- 		goto err_free_ctx;
- 	}
+ 	pvr_gem_object_get(pvr_obj);
  
++	mutex_lock(&vm_ctx->lock);
+ 	err = drm_gpuvm_exec_lock(&vm_exec);
+ 	if (err)
+ 		goto err_cleanup;
+@@ -750,6 +751,7 @@ pvr_vm_map(struct pvr_vm_context *vm_ctx
+ 	drm_gpuvm_exec_unlock(&vm_exec);
+ 
+ err_cleanup:
++	mutex_unlock(&vm_ctx->lock);
+ 	pvr_vm_bind_op_fini(&bind_op);
+ 
+ 	return err;
 
 
