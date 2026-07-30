@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E6E43806BD;
-	Thu, 30 Jul 2026 15:35:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 644123C3F4C;
+	Thu, 30 Jul 2026 15:35:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425707; cv=none; b=TB7jw03zEyAdIJpnRuKHu3QZI7sFEgSAOOGbvVr0LcFyB24uNN6XrnVJUkYvnR4l3fe9TbUr5GeTQRdRjR5Ufb00HGYlXrjW6ZgkWp64QDv9h9m3fiX9Ws0P8ynbU3V5bJ0CmGb+DnIHkM77ISnML6b5qd5vQYPyNtlEWV6JHDU=
+	t=1785425710; cv=none; b=q8ZXHp3qt73aCf9eKv0mKfmmNVP53D9zEEs9yTknkeZpiJzF6kfi4EtqOTWhlyRBfvLb1udDrXzsojfnWrY4jROnQiTi0xMdHNCDFn0cArr2vlVzE5MkZgyy0jUN9PpoecDOa9urYV8WndLCnjKGSCKRCzOqRXaAJ9iy8hN3h8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425707; c=relaxed/simple;
-	bh=FU7xEUGsPwZyHsytYp8XRk0dD1Bp2YL5dobEKvgGX2E=;
+	s=arc-20240116; t=1785425710; c=relaxed/simple;
+	bh=Yko1l53N3F7+dK0YU+0Me2NF0NrAcc8wvXOnXAp40Ac=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Drfb+wXhcxCYEKR2+MKgE6BPzXnhusUtKITTgKMFqmIBrNnZMyFNSPN0FZ3ajocbziocZRjZvoJGO4+zEU8oiIZJBsei2knuCYH0Xn/Ubf4RD0T/5Irb4CF7eeOd6en82N6JBT/qLzcyUi3WTjz4PCVUeMJRTLzj1LHaZdPz+/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1+c16hWu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iICJvPPFYSpK8jZ7cT3heJRqNbTqs/zKwyGa3WbpNk5XDZpOpJRmikqWX1Hgjj1YJ3eR0PSU+84bXonypnZP7DoTQA2SOowwqU1Z4N7HTveSgpI/b3TnXNsRDLRTYFfG9WQeP2qRos6ZuIvSlBrv5rGuUOrpZDZKbgVxXrLJArE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UK+Pfg/H; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1+c16hWu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EABAB1F000E9;
-	Thu, 30 Jul 2026 15:35:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UK+Pfg/H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF2741F000E9;
+	Thu, 30 Jul 2026 15:35:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425706;
-	bh=l/ucv8tkmtIGZldJyHq3uXnN6b7jCp3ijxUq/K00IoQ=;
+	s=korg; t=1785425709;
+	bh=FTZKSAoOuR/PQx0aXIDNG50WHbEPyyna39guA/Qc5Bg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1+c16hWuaMUVtXy7My+kqMgy9ZL9IXyaR3QaCOYWUgVQ50hzCUPfd7+jzwUqbv4R4
-	 KbwFUQur+z6XTFJlDam58sAsNe0Pv5laG5YUUJG6KpsAXZ4gmb4I3AXGfEOGyoQYAS
-	 rp5E/TXl7kbR8Kdxl/kKBcwPD6pPMzgAUgyBk6CE=
+	b=UK+Pfg/HbxUDSyLz6fqUu3lpp/WSz5m8Otc4JoxxbVqeuBsmFhNGPw91UQSSi6od1
+	 p7h4UvPJfIf+B0GtSDY6iwZg2+5PL9DdG8cOmXQCR+KRA5D0hDDFJMBDXHjyE1K2ON
+	 4Pomjg5N2q4Q8v3XLrHrhZZF6NTfvRcdF0jsa3CU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e62a973f8322b3bbe3ac@syzkaller.appspotmail.com,
-	Diego Fernando Mancera Gomez <diegomancera.dev@gmail.com>,
-	Stanislaw Gruszka <stf_xl@wp.pl>,
+	Mostafa Saleh <smostafa@google.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	"Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 163/602] usb: atm: ueagle-atm: reject descriptors that confuse probe and disconnect
-Date: Thu, 30 Jul 2026 16:09:15 +0200
-Message-ID: <20260730141439.396948115@linuxfoundation.org>
+Subject: [PATCH 6.12 164/602] drivers/virt: pkvm: Fix end calculation in mmio_guard_ioremap_hook()
+Date: Thu, 30 Jul 2026 16:09:16 +0200
+Message-ID: <20260730141439.417367704@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -52,90 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Diego Fernando Mancera Gomez <diegomancera.dev@gmail.com>
+From: Mostafa Saleh <smostafa@google.com>
 
-[ Upstream commit 71132cedd1ecbc4032d76e9928c18a10f7e39b80 ]
+[ Upstream commit 62c740f823a8e47ffe56e45a7472c27cf988e2f6 ]
 
-uea_probe() distinguishes a pre-firmware device from a post-firmware one
-using the USB id (UEA_IS_PREFIRM()), and stores a different object as the
-interface data in each case: a 'struct completion' for a pre-firmware
-device (to be waited on in .disconnect()), or a 'struct usbatm_data' for a
-post-firmware one.
+Sashiko (locally) reports a logical issues in mmio_guard_ioremap_hook()
 
-uea_disconnect() instead tells the two apart by the number of interfaces
-of the active configuration (a pre-firmware device exposes a single
-interface, ADI930 has 2 and eagle has 3), and casts the interface data
-accordingly.
+mmio_guard_ioremap_hook() attempts to handle unaligned addresses and
+sizes. However, aligning the start address before adding the size, might
+shift the end to the page before.
 
-Because the two handlers use different criteria, a crafted device that
-advertises a pre-firmware id together with a multi-interface descriptor
-(or a post-firmware id with a single interface) makes them disagree: the
-small 'struct completion' stored by uea_probe() is then passed to
-usbatm_usb_disconnect(), which casts it to 'struct usbatm_data' and takes
-instance->serialize, reading past the end of the allocation:
-
-  BUG: KASAN: slab-out-of-bounds in __mutex_lock+0x152a/0x1b80
-  Read of size 8 at addr ffff8880470e2c60 by task kworker/1:2/982
-  ...
-   __mutex_lock+0x152a/0x1b80
-   usbatm_usb_disconnect+0x70/0x820
-   uea_disconnect+0x133/0x2c0
-   usb_unbind_interface+0x1dd/0x9e0
-  ...
-  which belongs to the cache kmalloc-96 of size 96
-  The buggy address is located 0 bytes to the right of
-   allocated 96-byte region [ffff8880470e2c00, ffff8880470e2c60)
-
-Reject such inconsistent descriptors in uea_probe() so that both handlers
-always make the same pre/post-firmware decision.
-
-Reported-by: syzbot+e62a973f8322b3bbe3ac@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=e62a973f8322b3bbe3ac
-Fixes: e2674dfbed8a ("usb: atm: ueagle-atm: wait for pre-firmware load in .disconnect()")
-Signed-off-by: Diego Fernando Mancera Gomez <diegomancera.dev@gmail.com>
-Acked-by: Stanislaw Gruszka <stf_xl@wp.pl>
-Link: https://patch.msgid.link/20260717080704.1264-1-diegomancera.dev@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 0f1269495800 ("drivers/virt: pkvm: Intercept ioremap using pKVM MMIO_GUARD hypercall")
+Signed-off-by: Mostafa Saleh <smostafa@google.com>
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Tested-by: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/atm/ueagle-atm.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ drivers/virt/coco/pkvm-guest/arm-pkvm-guest.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/usb/atm/ueagle-atm.c b/drivers/usb/atm/ueagle-atm.c
-index cd53d36aa30748..dad42820814022 100644
---- a/drivers/usb/atm/ueagle-atm.c
-+++ b/drivers/usb/atm/ueagle-atm.c
-@@ -2590,6 +2590,7 @@ static struct usbatm_driver uea_usbatm_driver = {
- static int uea_probe(struct usb_interface *intf, const struct usb_device_id *id)
- {
- 	struct usb_device *usb = interface_to_usbdev(intf);
-+	bool single_iface = usb->config->desc.bNumInterfaces == 1;
- 	int ret;
+diff --git a/drivers/virt/coco/pkvm-guest/arm-pkvm-guest.c b/drivers/virt/coco/pkvm-guest/arm-pkvm-guest.c
+index 4230b817a80bd8..d66291def0f408 100644
+--- a/drivers/virt/coco/pkvm-guest/arm-pkvm-guest.c
++++ b/drivers/virt/coco/pkvm-guest/arm-pkvm-guest.c
+@@ -82,8 +82,8 @@ static int mmio_guard_ioremap_hook(phys_addr_t phys, size_t size,
+ 	if (protval != PROT_DEVICE_nGnRE && protval != PROT_DEVICE_nGnRnE)
+ 		return 0;
  
- 	uea_enters(usb);
-@@ -2599,6 +2600,22 @@ static int uea_probe(struct usb_interface *intf, const struct usb_device_id *id)
- 		le16_to_cpu(usb->descriptor.bcdDevice),
- 		chip_name[UEA_CHIP_VERSION(id)]);
++	end = PAGE_ALIGN(phys + size);
+ 	phys = PAGE_ALIGN_DOWN(phys);
+-	end = phys + PAGE_ALIGN(size);
  
-+	/*
-+	 * uea_probe() decides between the pre-firmware and post-firmware case
-+	 * from the USB id and stores a different object as interface data in
-+	 * each case: a struct completion for a pre-firmware device, a struct
-+	 * usbatm_data for a post-firmware one. uea_disconnect() instead tells
-+	 * the two apart by the number of interfaces (a pre-firmware device
-+	 * exposes a single interface, ADI930 has 2 and eagle has 3). A crafted
-+	 * device advertising a pre-firmware id together with a multi-interface
-+	 * descriptor (or the other way around) makes the two disagree, so that
-+	 * usbatm_usb_disconnect() treats the small completion object as a
-+	 * struct usbatm_data and reads out of bounds. Reject such inconsistent
-+	 * descriptors so both paths make the same decision.
-+	 */
-+	if (UEA_IS_PREFIRM(id) != single_iface)
-+		return -ENODEV;
-+
- 	usb_reset_device(usb);
- 
- 	if (UEA_IS_PREFIRM(id)) {
+ 	while (phys < end) {
+ 		const int func_id = ARM_SMCCC_VENDOR_HYP_KVM_MMIO_GUARD_FUNC_ID;
 -- 
 2.53.0
 
