@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA38C19CD1D;
-	Thu, 30 Jul 2026 15:40:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD0CD3E0091;
+	Thu, 30 Jul 2026 15:40:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785426045; cv=none; b=Lis8CaZD2yIbqZiwFVP403YPNz/aP92C1JH7gGHxyYnZ6oaqsqS1hPak7UXO4Bl7rcVALT/jyjYnjWHhiINkCGzgBt2M0FIRN7VQ+c04vWZ9BCZHi+qIBP8GHrxB7yaxNzbLTHStdr+zqM47eqUst5dTPdmo+oLLGRN5pl9NdG8=
+	t=1785426047; cv=none; b=AVN6J2odfrYAUYebh7TKcLJE2AHsRNcHFJ929fBMwL/RoiPLh78wbP3gAVf86CuPYEfacR2X+MAsD7ThPPi+t2iyOQ9lUUn1I0kb0qznc40gN+rl8aJigt74tMXhugiWV0mka4x37wEiXVEZ4Us/DVgk7NMJSbhzu8tB7NlwWbo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785426045; c=relaxed/simple;
-	bh=/x9UUUQoQ1PzqZmnqlzNYfB8+nzyZXZzA44VZaPjFww=;
+	s=arc-20240116; t=1785426047; c=relaxed/simple;
+	bh=NNIWRv+Qr5qgohQm8B6ySNDQ34MqFmICbrEnMzJuWSk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=chUKjNPlmV4+7MUC8zKiugpwcHCDjcV6cL0k60ZO7ULmLabMRoG1El0ge/5Asy3uCVvm0qBYDYZ6w2n3bimzwyHEXegHlxHHIoxWTdIDJ7GYVrmKFQa3R8jrJJyvyOflMQ9tv8kXsk7qzIxFbHHaoQ06tfobp8kP9zqmhNsHwjU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=14aSftAD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YZxlF1Cxq1n9J7XeCef31FA2CtClFkEtXHVvq5YW+gpXYna4QrUIfRehzw37QeqM0i58DZQzTzkr4MaaaCdOlvmvTiu96+y3Z4+x2juJOOvAIgIPHRySsglQrro8q1btwzcfRxsUjvnfByvzQPzmLb79GlrJyON23aDsC1wkWAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fmBJFnNk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="14aSftAD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FE0E1F000E9;
-	Thu, 30 Jul 2026 15:40:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fmBJFnNk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 232821F000E9;
+	Thu, 30 Jul 2026 15:40:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785426043;
-	bh=Y04nD4Vk8eNEc/03TI8yERunwZ8Sb6/Wra/yxTeUMyM=;
+	s=korg; t=1785426046;
+	bh=0JhHNC0Zf6FhYhle7FDag+qyH7bbpOg+dyUFFxyl9+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=14aSftADEo86MXLuBdRl5x8ieDb8kuDoDAyAJRip2hqMPE3GouD2/T3lSTS3rSMBi
-	 yqgXFn39XTmjKudmRxWWam1W8yY4teNyyfBzEvgYPUk58OlXjU5sj0q5J9t61C1jx9
-	 G3bktPryJQjnZwvyDufzqz9FXW2PvZFCj7zjdx40=
+	b=fmBJFnNk4yH0kHaCd+/AI/uNtLkohk79PSvyJVWIFtduQ+6kGzff/XR5OCCCyFGv/
+	 IKvSqCPNnGx1076LLvGIaZ+H39TY402Yv2fw43j95kQ7PKPfcpamGw/XgwiLQPiuBo
+	 TJLvOGX10WDv1sqyFR8Sq0aXNwZJv5pzik6vIOgo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>,
-	Jiri Pirko <jiri@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Gal Pressman <gal@nvidia.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 237/602] net/mlx5: DPLL, Add clock quality level op implementation
-Date: Thu, 30 Jul 2026 16:10:29 +0200
-Message-ID: <20260730141440.952213984@linuxfoundation.org>
+Subject: [PATCH 6.12 238/602] net/mlx5: Remove newline at the end of a netlink error message
+Date: Thu, 30 Jul 2026 16:10:30 +0200
+Message-ID: <20260730141440.974841385@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -52,118 +53,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Pirko <jiri@nvidia.com>
+From: Gal Pressman <gal@nvidia.com>
 
-[ Upstream commit e2017f27b6f888fb4ebc5c9a6d984bbf2f8b99ff ]
+[ Upstream commit 3a2295ff3f00d44c97baec37c43b6ede3eea9df9 ]
 
-Use MSECQ register to query clock quality from firmware. Implement the
-dpll op and fill-up the quality level value properly.
+Netlink error messages should not have a newline at the end of the
+string.
 
-Reviewed-by: Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>
-Signed-off-by: Jiri Pirko <jiri@nvidia.com>
-Link: https://patch.msgid.link/20241030081157.966604-3-jiri@resnulli.us
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Signed-off-by: Gal Pressman <gal@nvidia.com>
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Link: https://patch.msgid.link/20250226093904.6632-3-gal@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: 11c057d23465 ("net/mlx5: Fix MCIA register buffer overflow on 32 dword reads")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/dpll.c    | 81 +++++++++++++++++++
- 1 file changed, 81 insertions(+)
+ drivers/net/ethernet/mellanox/mlx5/core/dpll.c            | 2 +-
+ drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_vxlan.c | 2 +-
+ drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c      | 2 +-
+ drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c      | 6 +++---
+ 4 files changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/net/ethernet/mellanox/mlx5/core/dpll.c b/drivers/net/ethernet/mellanox/mlx5/core/dpll.c
-index 904e08de852eac..31142f6cc37293 100644
+index 31142f6cc37293..1e5522a194839c 100644
 --- a/drivers/net/ethernet/mellanox/mlx5/core/dpll.c
 +++ b/drivers/net/ethernet/mellanox/mlx5/core/dpll.c
-@@ -166,9 +166,90 @@ static int mlx5_dpll_device_mode_get(const struct dpll_device *dpll,
- 	return 0;
+@@ -242,7 +242,7 @@ static int mlx5_dpll_clock_quality_level_get(const struct dpll_device *dpll,
+ 		return 0;
+ 	}
+ errout:
+-	NL_SET_ERR_MSG_MOD(extack, "Invalid clock quality level obtained from firmware\n");
++	NL_SET_ERR_MSG_MOD(extack, "Invalid clock quality level obtained from firmware");
+ 	return -EINVAL;
  }
  
-+enum {
-+	MLX5_DPLL_SSM_CODE_PRC = 0b0010,
-+	MLX5_DPLL_SSM_CODE_SSU_A = 0b0100,
-+	MLX5_DPLL_SSM_CODE_SSU_B = 0b1000,
-+	MLX5_DPLL_SSM_CODE_EEC1 = 0b1011,
-+	MLX5_DPLL_SSM_CODE_PRTC = 0b0010,
-+	MLX5_DPLL_SSM_CODE_EPRTC = 0b0010,
-+	MLX5_DPLL_SSM_CODE_EEEC = 0b1011,
-+	MLX5_DPLL_SSM_CODE_EPRC = 0b0010,
-+};
-+
-+enum {
-+	MLX5_DPLL_ENHANCED_SSM_CODE_PRC = 0xff,
-+	MLX5_DPLL_ENHANCED_SSM_CODE_SSU_A = 0xff,
-+	MLX5_DPLL_ENHANCED_SSM_CODE_SSU_B = 0xff,
-+	MLX5_DPLL_ENHANCED_SSM_CODE_EEC1 = 0xff,
-+	MLX5_DPLL_ENHANCED_SSM_CODE_PRTC = 0x20,
-+	MLX5_DPLL_ENHANCED_SSM_CODE_EPRTC = 0x21,
-+	MLX5_DPLL_ENHANCED_SSM_CODE_EEEC = 0x22,
-+	MLX5_DPLL_ENHANCED_SSM_CODE_EPRC = 0x23,
-+};
-+
-+#define __MLX5_DPLL_SSM_COMBINED_CODE(ssm_code, enhanced_ssm_code)		\
-+	((ssm_code) | ((enhanced_ssm_code) << 8))
-+
-+#define MLX5_DPLL_SSM_COMBINED_CODE(type)					\
-+	__MLX5_DPLL_SSM_COMBINED_CODE(MLX5_DPLL_SSM_CODE_##type,		\
-+				      MLX5_DPLL_ENHANCED_SSM_CODE_##type)
-+
-+static int mlx5_dpll_clock_quality_level_get(const struct dpll_device *dpll,
-+					     void *priv, unsigned long *qls,
-+					     struct netlink_ext_ack *extack)
-+{
-+	u8 network_option, ssm_code, enhanced_ssm_code;
-+	u32 out[MLX5_ST_SZ_DW(msecq_reg)] = {};
-+	u32 in[MLX5_ST_SZ_DW(msecq_reg)] = {};
-+	struct mlx5_dpll *mdpll = priv;
-+	int err;
-+
-+	err = mlx5_core_access_reg(mdpll->mdev, in, sizeof(in),
-+				   out, sizeof(out), MLX5_REG_MSECQ, 0, 0);
-+	if (err)
-+		return err;
-+	network_option = MLX5_GET(msecq_reg, out, network_option);
-+	if (network_option != 1)
-+		goto errout;
-+	ssm_code = MLX5_GET(msecq_reg, out, local_ssm_code);
-+	enhanced_ssm_code = MLX5_GET(msecq_reg, out, local_enhanced_ssm_code);
-+
-+	switch (__MLX5_DPLL_SSM_COMBINED_CODE(ssm_code, enhanced_ssm_code)) {
-+	case MLX5_DPLL_SSM_COMBINED_CODE(PRC):
-+		__set_bit(DPLL_CLOCK_QUALITY_LEVEL_ITU_OPT1_PRC, qls);
-+		return 0;
-+	case MLX5_DPLL_SSM_COMBINED_CODE(SSU_A):
-+		__set_bit(DPLL_CLOCK_QUALITY_LEVEL_ITU_OPT1_SSU_A, qls);
-+		return 0;
-+	case MLX5_DPLL_SSM_COMBINED_CODE(SSU_B):
-+		__set_bit(DPLL_CLOCK_QUALITY_LEVEL_ITU_OPT1_SSU_B, qls);
-+		return 0;
-+	case MLX5_DPLL_SSM_COMBINED_CODE(EEC1):
-+		__set_bit(DPLL_CLOCK_QUALITY_LEVEL_ITU_OPT1_EEC1, qls);
-+		return 0;
-+	case MLX5_DPLL_SSM_COMBINED_CODE(PRTC):
-+		__set_bit(DPLL_CLOCK_QUALITY_LEVEL_ITU_OPT1_PRTC, qls);
-+		return 0;
-+	case MLX5_DPLL_SSM_COMBINED_CODE(EPRTC):
-+		__set_bit(DPLL_CLOCK_QUALITY_LEVEL_ITU_OPT1_EPRTC, qls);
-+		return 0;
-+	case MLX5_DPLL_SSM_COMBINED_CODE(EEEC):
-+		__set_bit(DPLL_CLOCK_QUALITY_LEVEL_ITU_OPT1_EEEC, qls);
-+		return 0;
-+	case MLX5_DPLL_SSM_COMBINED_CODE(EPRC):
-+		__set_bit(DPLL_CLOCK_QUALITY_LEVEL_ITU_OPT1_EPRC, qls);
-+		return 0;
-+	}
-+errout:
-+	NL_SET_ERR_MSG_MOD(extack, "Invalid clock quality level obtained from firmware\n");
-+	return -EINVAL;
-+}
-+
- static const struct dpll_device_ops mlx5_dpll_device_ops = {
- 	.lock_status_get = mlx5_dpll_device_lock_status_get,
- 	.mode_get = mlx5_dpll_device_mode_get,
-+	.clock_quality_level_get = mlx5_dpll_clock_quality_level_get,
- };
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_vxlan.c b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_vxlan.c
+index b9cf79e2712440..7a18a469961db8 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_vxlan.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_vxlan.c
+@@ -140,7 +140,7 @@ static int mlx5e_tc_tun_parse_vxlan_gbp_option(struct mlx5e_priv *priv,
+ 	gbp_mask = (u32 *)&enc_opts.mask->data[0];
  
- static int mlx5_dpll_pin_direction_get(const struct dpll_pin *pin,
+ 	if (*gbp_mask & ~VXLAN_GBP_MASK) {
+-		NL_SET_ERR_MSG_FMT_MOD(extack, "Wrong VxLAN GBP mask(0x%08X)\n", *gbp_mask);
++		NL_SET_ERR_MSG_FMT_MOD(extack, "Wrong VxLAN GBP mask(0x%08X)", *gbp_mask);
+ 		return -EINVAL;
+ 	}
+ 
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c b/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
+index 1f55c5a7edf31b..d278542677efb2 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
+@@ -2013,7 +2013,7 @@ static int mlx5e_get_module_eeprom_by_page(struct net_device *netdev,
+ 		if (size_read < 0) {
+ 			NL_SET_ERR_MSG_FMT_MOD(
+ 				extack,
+-				"Query module eeprom by page failed, read %u bytes, err %d\n",
++				"Query module eeprom by page failed, read %u bytes, err %d",
+ 				i, size_read);
+ 			return size_read;
+ 		}
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c b/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c
+index c5ea1d1d2b035c..282cef59e6173f 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c
+@@ -1861,7 +1861,7 @@ int mlx5_esw_bridge_port_mdb_add(struct net_device *dev, u16 vport_num, u16 esw_
+ 			 "Failed to lookup bridge port to add MDB (MAC=%pM,vport=%u)\n",
+ 			 addr, vport_num);
+ 		NL_SET_ERR_MSG_FMT_MOD(extack,
+-				       "Failed to lookup bridge port to add MDB (MAC=%pM,vport=%u)\n",
++				       "Failed to lookup bridge port to add MDB (MAC=%pM,vport=%u)",
+ 				       addr, vport_num);
+ 		return -EINVAL;
+ 	}
+@@ -1874,7 +1874,7 @@ int mlx5_esw_bridge_port_mdb_add(struct net_device *dev, u16 vport_num, u16 esw_
+ 				 "Failed to lookup bridge port vlan metadata to create MDB (MAC=%pM,vid=%u,vport=%u)\n",
+ 				 addr, vid, vport_num);
+ 			NL_SET_ERR_MSG_FMT_MOD(extack,
+-					       "Failed to lookup vlan metadata for MDB (MAC=%pM,vid=%u,vport=%u)\n",
++					       "Failed to lookup vlan metadata for MDB (MAC=%pM,vid=%u,vport=%u)",
+ 					       addr, vid, vport_num);
+ 			return -EINVAL;
+ 		}
+@@ -1882,7 +1882,7 @@ int mlx5_esw_bridge_port_mdb_add(struct net_device *dev, u16 vport_num, u16 esw_
+ 
+ 	err = mlx5_esw_bridge_port_mdb_attach(dev, port, addr, vid);
+ 	if (err) {
+-		NL_SET_ERR_MSG_FMT_MOD(extack, "Failed to add MDB (MAC=%pM,vid=%u,vport=%u)\n",
++		NL_SET_ERR_MSG_FMT_MOD(extack, "Failed to add MDB (MAC=%pM,vid=%u,vport=%u)",
+ 				       addr, vid, vport_num);
+ 		return err;
+ 	}
 -- 
 2.53.0
 
