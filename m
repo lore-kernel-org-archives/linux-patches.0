@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E37573E95A8;
-	Thu, 30 Jul 2026 15:14:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEEFE30C618;
+	Thu, 30 Jul 2026 15:14:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424482; cv=none; b=NbEHRnbsjs1XkTYXK2jn4hweMdzQ3R1FDiCMmEIkkUgwOx3Rpb9Ljjc90aPMnBFmxjFDXQ5vVwUTkJZjnpxt31ZyShjK00erzYEpqgHiyG77L69q0rhf6VfoKA0cEf65efPRRBntoMfhDpbl6V5I8nAk0Nr+hc7e2v1I5cxB5zQ=
+	t=1785424484; cv=none; b=TfQFEMc99uJNKSy9tGUjPUqhsZ+7mV6SXBq1NL2Zkfj/HM5gQdH9CBC6VzlKm4zNpiyQmyBPVwXLG1+aDnvpSHIruGOgWmnzahqAQwq+mw9wFGyz5vnBohGglJ2um52K/zhIj7X9CVcYTFAnhW14Idej7wMfNbNe5CyJywNsGm4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424482; c=relaxed/simple;
-	bh=7l/vzY0/dcyvKvTzEFhZdvET77bix4F09oLcI2HrgeU=;
+	s=arc-20240116; t=1785424484; c=relaxed/simple;
+	bh=rQaEHJPckiokI+iBI4gQIurM0EDC/dAZuOpgUWd0MRE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EIIGDPMND4z56qfAN5sA55UNT204A1ZQOgjmOEyI25GyIp5LyDUkDKfRd6USe8tmLpMtN8Hyhra1WAxE1ttqSFQ1WOlEfUoTRTkjMLBMrlLpb/1II5OGCzlxOWL0j4tbu0qb0TFl1Y7c63SFb06dY2doAB3as9IF0d+9CS+C2u4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nZ3HU6HM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=AbYDPlvAsREupArA9SlgGbYTkuASkKIJWhCK7A2tnz2wvq4CgPNf8ZVD6NBhHNhI3DclMj/UUEXKDLEGWZ+n3T4tuUTNdP8nK0G3/BFBVwEZaLKtoo9vHFCQAkFCWrSKSpbN95ZXuznGG468MXJCj/O9OaJqVunkmAQXO2JGxaI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LeCXsMP8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nZ3HU6HM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 423E91F000E9;
-	Thu, 30 Jul 2026 15:14:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LeCXsMP8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 193E41F000E9;
+	Thu, 30 Jul 2026 15:14:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424480;
-	bh=SEruJZpzQ13SKNh4LG7szBhwKlF2F2e2Arr9vHD61Vs=;
+	s=korg; t=1785424483;
+	bh=7VCgSOXa5+SIVyhJ+mDgCXEmzCJmoyRNNjCvXXQ7K5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nZ3HU6HMx28RPPGHZGy9zlGDp/M738XCg7R/fhsOE5bnxdZdjoN9zyoXVYCHgYHMJ
-	 xdhxw4Z3jy2FJSwalCfCOWl5IOH97MdZaEr8+4h42hxaMyEe6QVPk9cigrhCGT0LLf
-	 XEWSN5MGGiVyjak7xrdg6GnUMDkk6sHwF6MPUmy8=
+	b=LeCXsMP8ouK+P2Ed6PFFx10in1QtGU7tUZExJI8NNmmghU/x8hTRDGu4pr/tm7E5P
+	 0H4H3HTG1LpPVfzGQtsrOEAG5WQQuJ9lRi4081OVxpDkKbzmFVhr4oiKfHBy2EYENG
+	 Rcv0mjboScui4Z9GqgCuhrREUNA2AkFZtwUuOoTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitaly Prosyak <vitaly.prosyak@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 364/675] drm/amdgpu/sdma5.0: replace BUG_ON() with WARN_ON()
-Date: Thu, 30 Jul 2026 16:11:34 +0200
-Message-ID: <20260730141452.865548202@linuxfoundation.org>
+	Martin Hodo <martin.hodo@intel.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Simona Vetter <simona.vetter@ffwll.ch>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Sebastian Brzezinka <sebastian.brzezinka@intel.com>
+Subject: [PATCH 6.18 365/675] drm/i915: Return NULL on error in active_instance
+Date: Thu, 30 Jul 2026 16:11:35 +0200
+Message-ID: <20260730141452.887340490@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -44,46 +48,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 
-commit 9e98ed3113943257ad6e5c1e6beddbdb482a70ad upstream.
+commit 1e33f0de5fdcd09e51fdec1e5822448970b6420f upstream.
 
-There's no need to crash the kernel for these cases.
+Avoid returning &node->base when node is NULL due to OOM
+during GFP_ATOMIC allocation.
 
-Reviewed-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 8d144a0eb09537055841af48c9e7c2d4cd48e84d)
-Cc: stable@vger.kernel.org
+Discovered using AI-assisted static analysis confirmed by
+Intel Product Security.
+
+Reported-by: Martin Hodo <martin.hodo@intel.com>
+Fixes: bfaae47db3c0 ("drm/i915: make lockdep slightly happier about execbuf.")
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Cc: Simona Vetter <simona.vetter@ffwll.ch>
+Cc: <stable@vger.kernel.org> # v5.13+
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Reviewed-by: Sebastian Brzezinka <sebastian.brzezinka@intel.com>
+Reviewed-by: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Link: https://patch.msgid.link/20260624090940.74840-1-joonas.lahtinen@linux.intel.com
+(cherry picked from commit 6029bc064f0b1bac184203a50fbaaf070fa18832)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/sdma_v5_0.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/i915/i915_active.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/sdma_v5_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/sdma_v5_0.c
-@@ -528,7 +528,7 @@ static void sdma_v5_0_ring_emit_fence(st
- 	amdgpu_ring_write(ring, SDMA_PKT_HEADER_OP(SDMA_OP_FENCE) |
- 			  SDMA_PKT_FENCE_HEADER_MTYPE(0x3)); /* Ucached(UC) */
- 	/* zero in first two bits */
--	BUG_ON(addr & 0x3);
-+	WARN_ON(addr & 0x3);
- 	amdgpu_ring_write(ring, lower_32_bits(addr));
- 	amdgpu_ring_write(ring, upper_32_bits(addr));
- 	amdgpu_ring_write(ring, lower_32_bits(seq));
-@@ -539,7 +539,7 @@ static void sdma_v5_0_ring_emit_fence(st
- 		amdgpu_ring_write(ring, SDMA_PKT_HEADER_OP(SDMA_OP_FENCE) |
- 				  SDMA_PKT_FENCE_HEADER_MTYPE(0x3));
- 		/* zero in first two bits */
--		BUG_ON(addr & 0x3);
-+		WARN_ON(addr & 0x3);
- 		amdgpu_ring_write(ring, lower_32_bits(addr));
- 		amdgpu_ring_write(ring, upper_32_bits(addr));
- 		amdgpu_ring_write(ring, upper_32_bits(seq));
+--- a/drivers/gpu/drm/i915/i915_active.c
++++ b/drivers/gpu/drm/i915/i915_active.c
+@@ -318,7 +318,7 @@ active_instance(struct i915_active *ref,
+ 	 */
+ 	node = kmem_cache_alloc(slab_cache, GFP_ATOMIC);
+ 	if (!node)
+-		goto out;
++		goto err;
+ 
+ 	__i915_active_fence_init(&node->base, NULL, node_retire);
+ 	node->ref = ref;
+@@ -332,6 +332,11 @@ out:
+ 	spin_unlock_irq(&ref->tree_lock);
+ 
+ 	return &node->base;
++
++err:
++	spin_unlock_irq(&ref->tree_lock);
++
++	return NULL;
+ }
+ 
+ void __i915_active_init(struct i915_active *ref,
 
 
