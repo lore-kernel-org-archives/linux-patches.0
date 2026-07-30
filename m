@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C48ED30C143;
-	Thu, 30 Jul 2026 14:59:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3696423782;
+	Thu, 30 Jul 2026 14:59:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423578; cv=none; b=gKl9nMHP9mVAyiJXlrjzf6kvcboeA0/3I4WUovYZ0WfFpyd0ojWpApbWuCvbB1Ey2H9wQhkywFRl/h7J+tKCJaPf092dUREnGoBaa3Htqb3SUSPrgB7W3dmIypnK0927Mvtjy0JYn1M3sTguH2urM62Sv6IHBRxRwWKTNEzXiOs=
+	t=1785423581; cv=none; b=UnK/+ZURxalcBkCvXiVBJ0ZWGRR++wKQZeH5NwTrXHjE/eaFC3w2FwGIph33a0N/I3bxIQkMg2EYE1YccxusBkA3Cy2fZCdlK70nTHYOLUSw3jikERjGGsA252OM7wRBWyZgwgwe7zzXkgsShwCpgM5NKQYyyUfIC0NsLieHUnM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423578; c=relaxed/simple;
-	bh=G4TpZ0hHH/mYAwGLO7I9oEemkv+1oCC3Quq6sLI+48k=;
+	s=arc-20240116; t=1785423581; c=relaxed/simple;
+	bh=D77ZiCAmV7Ks9Jhs7rTH0yRR7Zms8A0mrywO6wVbjqk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=twB20E25AmWfXum0E8fv9JmbIP4I8JREUmCA88bm+2ralnW+n+CfYZbup0dhf2HdjyyrGqdSY29n8oG+f5zAjSXKWArazi99tpZgcz/xwuKVCM30zQiU2mWtug0ByOK+pSWoyzn182HzV4jhOr4lx0VVgbw05zSwBnZQH5xKri8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yjz1LuOc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Y/eEFrPO8ENQ/KEBsQ7zkwqecJVZszuATVSXRU/f7Nq1c6/I2sTQT0/EkCoSRiZWTveAsUFhIxwmbl9/Pv55cY9OOcXY417XGIzsaWQXNrZrcM7nb/VK39Q0DLuucEou6qOv1oE4fVJH3WfURkW99GwT/Thk2FJCaUkU1jXRBNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MyySlMug; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yjz1LuOc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26CD01F000E9;
-	Thu, 30 Jul 2026 14:59:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MyySlMug"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06E2F1F000E9;
+	Thu, 30 Jul 2026 14:59:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423577;
-	bh=xj/u/9A9D7+b5J5Wl7jl8ZxG16kacMR2Zs5KXU57XSw=;
+	s=korg; t=1785423580;
+	bh=Tuv6XrXsbwWlqwJXmBGjXomaOzPjLPc1WnOvex3SIzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Yjz1LuOcZEnLlYmA9Fp0kEcjRBd6fD1gUNa4aSrCUEhaokf9g6o5Ql+bAdJ6tttyy
-	 ediLC8WrkG44hSesbRCcMGoe0UIexKheEB7VJWc6T2FWotuH8TD/pSZQskWe7XrbTX
-	 erhVj5VRMbY6N7DYJTRac1TAPrqUW1+5lPOlerus=
+	b=MyySlMug2AvJVQTu0WshSqPggRxOcvsMbZSBro/7RO621nrG4cmwywlfiDKuqBF6H
+	 0dXqArWdcQx6xeILFi+5Qc9+0GmSMTJDehfpdPYehTpnZyMBsuS19VNLtNfN9fVFD3
+	 GkjQ9xrM7hEDZq1C/kuYoHlxZ5jiI/51j5ahKq6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Li <enderaoelyther@gmail.com>,
-	Lachlan Hodges <lachlan.hodges@morsemicro.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Pushpendra Singh <pushpendra.singh@oss.qualcomm.com>,
+	Sudeep Holla <sudeep.holla@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 076/675] wifi: cfg80211: derive S1G beacon TSF from S1G fields
-Date: Thu, 30 Jul 2026 16:06:46 +0200
-Message-ID: <20260730141446.744120807@linuxfoundation.org>
+Subject: [PATCH 6.18 094/675] firmware: arm_scmi: Rate-limit queue-full warnings in IRQ context
+Date: Thu, 30 Jul 2026 16:07:04 +0200
+Message-ID: <20260730141447.127153126@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -52,52 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Li <enderaoelyther@gmail.com>
+From: Pushpendra Singh <pushpendra.singh@oss.qualcomm.com>
 
-[ Upstream commit 4e5a4641e7b4763656336b7891d01359aaf363cd ]
+[ Upstream commit a4447c0693830d5ecadd6e755cb7fdc55d86aacc ]
 
-cfg80211_inform_bss_frame_data() parses S1G beacons with the extension
-frame layout, but still reads the TSF from the regular probe response
-layout after the S1G branch. For S1G beacons that reads bytes at the
-regular management-frame timestamp offset instead of the S1G timestamp.
+The scmi_notify() function is called from interrupt context to queue
+received notification events onto a per-protocol kfifo. When the kfifo
+is full, it logs a warning via dev_warn() for every dropped event.
 
-Use the 32-bit S1G beacon timestamp and the S1G Beacon Compatibility
-element's TSF completion field when informing an S1G BSS. Keep the
-regular management-frame timestamp read in the non-S1G branch.
+Under conditions where the platform sends a burst of SCMI notifications
+faster than the deferred worker can drain the queue, this results in a
+flood of dev_warn() calls from IRQ context. Each call acquires the
+console lock and may execute blocking console writes, causing the CPU
+to be held in interrupt context for an extended period and leading to
+observable system stalls.
 
-Fixes: 9eaffe5078ca ("cfg80211: convert S1G beacon to scan results")
-Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Tested-by: Lachlan Hodges <lachlan.hodges@morsemicro.com>
-Reviewed-by: Lachlan Hodges <lachlan.hodges@morsemicro.com>
-Link: https://patch.msgid.link/20260611161943.91069-6-enderaoelyther@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fix this by switching to dev_warn_ratelimited() to limit the frequency
+of log messages when the notification queue is full. This reduces
+console overhead in interrupt context and prevents CPU stalls caused by
+excessive logging, while still preserving diagnostic visibility.
+
+Fixes: bd31b249692e ("firmware: arm_scmi: Add notification dispatch and delivery")
+Signed-off-by: Pushpendra Singh <pushpendra.singh@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260708072339.3021140-1-pushpendra.singh@oss.qualcomm.com
+Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/scan.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/firmware/arm_scmi/notify.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/wireless/scan.c b/net/wireless/scan.c
-index 27d5f99dbb2289..af1e2ce1628dae 100644
---- a/net/wireless/scan.c
-+++ b/net/wireless/scan.c
-@@ -3326,14 +3326,15 @@ cfg80211_inform_bss_frame_data(struct wiphy *wiphy,
- 		bssid = ext->u.s1g_beacon.sa;
- 		capability = le16_to_cpu(compat->compat_info);
- 		beacon_interval = le16_to_cpu(compat->beacon_int);
-+		tsf = le32_to_cpu(ext->u.s1g_beacon.timestamp);
-+		tsf |= (u64)le32_to_cpu(compat->tsf_completion) << 32;
- 	} else {
- 		bssid = mgmt->bssid;
- 		beacon_interval = le16_to_cpu(mgmt->u.probe_resp.beacon_int);
- 		capability = le16_to_cpu(mgmt->u.probe_resp.capab_info);
-+		tsf = le64_to_cpu(mgmt->u.probe_resp.timestamp);
+diff --git a/drivers/firmware/arm_scmi/notify.c b/drivers/firmware/arm_scmi/notify.c
+index 2047edbdc5f6b1..9bf7f43ab868c8 100644
+--- a/drivers/firmware/arm_scmi/notify.c
++++ b/drivers/firmware/arm_scmi/notify.c
+@@ -600,9 +600,9 @@ int scmi_notify(const struct scmi_handle *handle, u8 proto_id, u8 evt_id,
+ 		return -EINVAL;
+ 	}
+ 	if (kfifo_avail(&r_evt->proto->equeue.kfifo) < sizeof(eh) + len) {
+-		dev_warn(handle->dev,
+-			 "queue full, dropping proto_id:%d  evt_id:%d  ts:%lld\n",
+-			 proto_id, evt_id, ktime_to_ns(ts));
++		dev_warn_ratelimited(handle->dev,
++				     "queue full, dropping proto_id:%d  evt_id:%d  ts:%lld\n",
++				     proto_id, evt_id, ktime_to_ns(ts));
+ 		return -ENOMEM;
  	}
  
--	tsf = le64_to_cpu(mgmt->u.probe_resp.timestamp);
--
- 	if (ieee80211_is_probe_resp(mgmt->frame_control))
- 		ftype = CFG80211_BSS_FTYPE_PRESP;
- 	else if (ext)
 -- 
 2.53.0
 
