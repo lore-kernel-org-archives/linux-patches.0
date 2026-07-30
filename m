@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4866E3914ED;
-	Thu, 30 Jul 2026 14:44:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C0F03B52EE;
+	Thu, 30 Jul 2026 14:44:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422693; cv=none; b=Jat2ARlxbnp99eivxtejQgCyXXX95/Qxbgr8QzoyVq8ETWnmES4SSFrmE0BctT2YGyj+ft8jwb1WAGv2EMiiOtx0Yf5VKLYJccReCejst0a//il2QjLAdmjQ5CDWKneW1yPM6kL0kT7XvvVva3S7QcuKbHP9rvtummIVN2bPn1U=
+	t=1785422697; cv=none; b=hWKgwCvdPW2SwPdmH+w2QSJQZCXygm1lXVpeu0ZJx0pkbQJ70cXoUHrldMYl3GbfLhfkrEn8fegnPOURnlBMLqY+ue1BSLX7NVBN91TD0olwc5aR/rR8EoDdjRzS+tBK/pNtgbEd1k29gcM79NJbbN7dZqeg0uZ1rEvK0710uuU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422693; c=relaxed/simple;
-	bh=o7Cjin77BxVQZQYsrtNFVQ107eR4uNALEC7WoT9Kil8=;
+	s=arc-20240116; t=1785422697; c=relaxed/simple;
+	bh=NqLs9vKAaCxBhG8YLO0rP+7mMVln8cwUh9A9ATwpFjQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=D0iSfQdQ9Zjiiq7mKk0I+iKJqn8Epbz+waGGK03YXTwP9JuZGiacuyqBUa2u0jDv0T9pKDUZHkjsm9d08+At/3bnAGINd+BqD5ElDccERfaZAP+kyuNJ9wkS5h6oHVT0qPxY4mh8QUUb98BjCGszjoQaZpNnzLdH9Z6xmbA2DpQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s6AG5dLB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=goTHyXm/Fs9i+eBmoBn54sgZ+pxbmrfYttkr8xHIYPotBuTpUtAu0mou5p9+4Rxipl4cbUDJQgy6yMvC+3AYzkIYnFtnPgRkn74ttC5J+7W7M+H3lGKWcwIzVGvjpX3EzOiuBXAJwGqbCGx1mIndm1VeqR9/ARej1vYVkpod2q4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jKZCkAF9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s6AG5dLB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9205A1F000E9;
-	Thu, 30 Jul 2026 14:44:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jKZCkAF9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6D751F000E9;
+	Thu, 30 Jul 2026 14:44:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422692;
-	bh=rtzRf88PdC0JrXRMZ5VhJf2/OQlBxgU7Rlcm2uUQiq4=;
+	s=korg; t=1785422695;
+	bh=NjV3TbjpaBOSg7ix0aKiE3zuMKkeqAyVK4ZvQF9/2rs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s6AG5dLB6eB9MQfu2+Cjgv4RDNA34Vr7jr9jR5iDRrdoO7cbecfOxeCeRw4ErOPYL
-	 e/F0BydT/sPazO+f/O9pmFvL4+J/5R03MyBmXDxfv4vwqniJA3h+7xLmHOyvGQRch0
-	 y7r03Sx0DbNQBhzwAsgESmaYvSiOaHiIOtU3Hvlg=
+	b=jKZCkAF9vaqMoBzXAhtbwX5IkMf4dGMyjbvTxLtS4LMY2WeL+CA3PmqRk7xW/ghjj
+	 kF3DJwjHWGXjziU+NDq/2vcY7Kz55afDlKI2Qiw0k2CN3JoAfrFV49ao/DTl1lQaDV
+	 GarlZYv9Hmr4NXSQS3Sb9TYVyUPmkqn8ynjvtmVU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Sergey Shtylyov <s.shtylyov@auroraos.dev>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 7.1 525/744] media: uapi: rkisp: Correct name version enum
-Date: Thu, 30 Jul 2026 16:13:18 +0200
-Message-ID: <20260730141455.433678402@linuxfoundation.org>
+Subject: [PATCH 7.1 526/744] media: v4l2-ctrls-request: add NULL check in v4l2_ctrl_request_complete()
+Date: Thu, 30 Jul 2026 16:13:19 +0200
+Message-ID: <20260730141455.454336939@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -45,58 +44,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+From: Sergey Shtylyov <s.shtylyov@auroraos.dev>
 
-commit c4c01c4fd4a3916ffdfb35ad9f511c48e289f51c upstream.
+commit caced3578bf9f104a4aaad8f46c4c719e705d9a6 upstream.
 
-The name of the enum to hold the mapping of parameter buffer versions
-have a typo in the name, correct it. While this is a uAPI header the
-impact should be minimal as the enum is only used as a collection for
-the one version number supported.
+If CONFIG_MEDIA_CONTROLLER is undefined, media_request_object_find() will
+always return NULL, so its 2nd call in v4l2_ctrl_request_complete() would
+fail as well as the 1st one and thus cause hdl to have a wrong value (at
+the top of memory) and list_for_each_entry() to iterate over the garbage
+data located there. Add NULL check for the 2nd call and place the error
+cleanup at the end of v4l2_ctrl_request_complete()...
 
-Fixes: e9d05e9d5db1 ("media: uapi: rkisp1-config: Add extensible params format")
+Found by Linux Verification Center (linuxtesting.org) with the Svace static
+analysis tool.
+
+Fixes: c3bf5129f339 ("media: v4l2-ctrls: always copy the controls on completion")
 Cc: stable@vger.kernel.org
-Signed-off-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Link: https://patch.msgid.link/20260501190339.3449193-1-niklas.soderlund+renesas@ragnatech.se
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Sergey Shtylyov <s.shtylyov@auroraos.dev>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/uapi/linux/rkisp1-config.h |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/media/v4l2-core/v4l2-ctrls-request.c |   14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
---- a/include/uapi/linux/rkisp1-config.h
-+++ b/include/uapi/linux/rkisp1-config.h
-@@ -1535,11 +1535,11 @@ struct rkisp1_ext_params_wdr_config {
- 	sizeof(struct rkisp1_ext_params_wdr_config))
+--- a/drivers/media/v4l2-core/v4l2-ctrls-request.c
++++ b/drivers/media/v4l2-core/v4l2-ctrls-request.c
+@@ -348,13 +348,12 @@ void v4l2_ctrl_request_complete(struct m
+ 		ret = v4l2_ctrl_handler_init(hdl, (main_hdl->nr_of_buckets - 1) * 8);
+ 		if (!ret)
+ 			ret = v4l2_ctrl_request_bind(req, hdl, main_hdl);
+-		if (ret) {
+-			v4l2_ctrl_handler_free(hdl);
+-			kfree(hdl);
+-			return;
+-		}
++		if (ret)
++			goto error;
+ 		hdl->request_is_queued = true;
+ 		obj = media_request_object_find(req, &req_ops, main_hdl);
++		if (!obj)
++			goto error;
+ 	}
+ 	hdl = container_of(obj, struct v4l2_ctrl_handler, req_obj);
  
- /**
-- * enum rksip1_ext_param_buffer_version - RkISP1 extensible parameters version
-+ * enum rkisp1_ext_param_buffer_version - RkISP1 extensible parameters version
-  *
-  * @RKISP1_EXT_PARAM_BUFFER_V1: First version of RkISP1 extensible parameters
-  */
--enum rksip1_ext_param_buffer_version {
-+enum rkisp1_ext_param_buffer_version {
- 	RKISP1_EXT_PARAM_BUFFER_V1 = V4L2_ISP_PARAMS_VERSION_V1,
- };
+@@ -389,6 +388,11 @@ void v4l2_ctrl_request_complete(struct m
+ 	mutex_unlock(main_hdl->lock);
+ 	media_request_object_complete(obj);
+ 	media_request_object_put(obj);
++	return;
++
++error:
++	v4l2_ctrl_handler_free(hdl);
++	kfree(hdl);
+ }
+ EXPORT_SYMBOL(v4l2_ctrl_request_complete);
  
-@@ -1601,7 +1601,7 @@ enum rksip1_ext_param_buffer_version {
-  *	+---------------------------------------------------------------------+
-  *
-  * @version: The RkISP1 extensible parameters buffer version, see
-- *	     :c:type:`rksip1_ext_param_buffer_version`
-+ *	     :c:type:`rkisp1_ext_param_buffer_version`
-  * @data_size: The RkISP1 configuration data effective size, excluding this
-  *	       header
-  * @data: The RkISP1 extensible configuration data blocks
 
 
