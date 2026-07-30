@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CE6429BD87;
-	Thu, 30 Jul 2026 14:58:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7A1D445AF8;
+	Thu, 30 Jul 2026 14:58:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423485; cv=none; b=mySQjkX8o1I16H1zglBltoQfWbGw+au4BQ3q7kInzoeU/n5K68HlxMBMjWNRDuo/kLCxWOfJs4Lsc2gm+CyiEytfUZYj4C7CMRou+jduZDVahGUl/h6kMRxSVjNjoSHHwP33ZiKzKEelfcSGM+Bt4iFNrCReCBZTy7FCUchjZw8=
+	t=1785423488; cv=none; b=UP6iJhAKhe3qFIlpaWwdPHQ6T5nY+O4QJHQ3SoOFJxclIq7QTtE869qSLhjtxx2lLOAOASziFwrO4wToFRnuERthbSfJNkQfPYILRkO7LmMBsgMBxt337Cn1uFeVXsdfLxDbz8xkcK+aP5jXn8vU/q52LEbrFk9OPq6fCp+LeZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423485; c=relaxed/simple;
-	bh=uUQw399DOOt5GaDN/7I3q0ydzlM5Fu58ywljN+62gUM=;
+	s=arc-20240116; t=1785423488; c=relaxed/simple;
+	bh=p+nHmKjRd5BbNa0b17UwnDkBhPMpmXa8PNtS/nqW9+Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b2p7JyZFNqCFK18FdfX8Cz/XVHWY9z61EYJfzDsnBDymGwYCro+oK3pe9k8QR/AB3bga3H2Fa9F4MWNpby4PoLrlaSprNqcKvVLFMDTrKo7e8NcNmZhVkIoVuAzUO5IkpDnHbDFr+De4FIPdn66+qBvI5D2divmcm2Nw9Z7u2zM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qF5lYRn9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Xd5IAF1D38JyOPk0rQo2w0SYhioyVoKwsQJoFn0G60ETL+b34V35IBaDUG24+panNKXzdbV7w4zvdqChexv1+KDpPBLnTF2FerZZHUt9GOYb796NuEW+E/XJhAk4ur7LS1+VD95+btFwexxp/6KWP2VqYOOKBu5jz8JhBz3rcxU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v8Y+tXUa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qF5lYRn9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D4091F000E9;
-	Thu, 30 Jul 2026 14:58:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v8Y+tXUa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E3F01F000E9;
+	Thu, 30 Jul 2026 14:58:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423483;
-	bh=TLRIBvyJTpYQw3xk6H1pjlaQMFOzkDHr0z9Lq/3VVRA=;
+	s=korg; t=1785423486;
+	bh=sEOWBMQAesUjhLWX6XxBo89DTd6NMmvCPFofbVq7zCc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qF5lYRn9xpTo2zOkNnBeAzcp0U+tcWY61W8TG+2r9lBUl9zZbL9RbgDIVEn7sf/nP
-	 J1G5YR+d3ouNfvNydNSLB6Lv/8e1Lgk5Lmkjgbyfva3T/updwWpeumyo6wy3SCg4JY
-	 +wAeLCvFJ5x8UlUI13TIPHOAP28lwcleveIYVkMw=
+	b=v8Y+tXUa2Cy0iiFes8YS5E7ClCQ/U7O/qocSljzEOgjO++gF0NcdcO6jRlVGi7ogH
+	 +N5Zp8q65YquuWCA3amBolWgcp/Pyy2M+4UTy+7ql/UTOEncEvxpx1D4KuhZx+rUao
+	 14XJ4EsVhawDrjDRaphzqh3tUD95iVnio81gBu5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Malaya Kumar Rout <malayarout91@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Aleksandrova Alyona <aga@itb.spb.ru>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 059/675] selftests/alsa: Fix memory leak in find_controls error path
-Date: Thu, 30 Jul 2026 16:06:29 +0200
-Message-ID: <20260730141446.374305634@linuxfoundation.org>
+Subject: [PATCH 6.18 060/675] RDMA/irdma: Prevent overflows in memory contiguity checks
+Date: Thu, 30 Jul 2026 16:06:30 +0200
+Message-ID: <20260730141446.396007746@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -51,39 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Malaya Kumar Rout <malayarout91@gmail.com>
+From: Aleksandrova Alyona <aga@itb.spb.ru>
 
-[ Upstream commit cb89f0c1aed02eb233c4271f76f830b37e222ff6 ]
+[ Upstream commit 3cda0dfe8c651dcbb9e38977905d3d3b1750c4ab ]
 
-In find_controls(), card_data is allocated with malloc() but when
-snd_ctl_open_lconf() fails, the code jumps to next_card without
-freeing the allocated memory. This results in a memory leak for
-each card where snd_ctl_open_lconf() fails.
+irdma_check_mem_contiguous() and irdma_check_mr_contiguous() verify that
+PBL entries describe physically contiguous memory ranges.
 
-Add free(card_data) before goto next_card to ensure proper cleanup
-of the allocated memory in the error path.
+Both functions calculate byte offsets using 32-bit operands. For example,
+with 4 KiB pages, pg_size * pg_idx overflows 32-bit arithmetic when
+pg_idx reaches 1048576. In the level-2 check, PBLE_PER_PAGE is 512, so
+i * pg_size * PBLE_PER_PAGE overflows when i reaches 2048.
 
-Fixes: 5aaf9efffc57 ("kselftest: alsa: Add simplistic test for ALSA mixer controls kselftest")
-Signed-off-by: Malaya Kumar Rout <malayarout91@gmail.com>
-Link: https://patch.msgid.link/20260704105736.94874-1-malayarout91@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+These values are reachable in the driver. For MRs, palloc->total_cnt
+comes from iwmr->page_cnt, which is calculated by
+ib_umem_num_dma_blocks(). The MR size is limited by IRDMA_MAX_MR_SIZE,
+so a 4 GiB MR with 4 KiB pages can reach page_cnt of 1048576. PBLE
+resources do not exclude this value either: for gen3, the limit is based
+on avail_sds * MAX_PBLE_PER_SD, and MAX_PBLE_PER_SD is 0x40000, so 4 SDs
+are enough for 1048576 PBLEs.
+
+Cast one operand to u64 before the multiplications so that the offset
+calculations are performed in 64-bit arithmetic.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: b48c24c2d710 ("RDMA/irdma: Implement device supported verb APIs")
+Signed-off-by: Aleksandrova Alyona <aga@itb.spb.ru>
+Link: https://patch.msgid.link/20260624144846.61242-1-aga@itb.spb.ru
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/alsa/mixer-test.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/infiniband/hw/irdma/verbs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/alsa/mixer-test.c b/tools/testing/selftests/alsa/mixer-test.c
-index e113dafa5c2464..cfb7968fbac075 100644
---- a/tools/testing/selftests/alsa/mixer-test.c
-+++ b/tools/testing/selftests/alsa/mixer-test.c
-@@ -84,6 +84,7 @@ static void find_controls(void)
- 		if (err < 0) {
- 			ksft_print_msg("Failed to get hctl for card %d: %s\n",
- 				       card, snd_strerror(err));
-+			free(card_data);
- 			goto next_card;
- 		}
+diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
+index 5f5b79109d5471..4084168d0194fb 100644
+--- a/drivers/infiniband/hw/irdma/verbs.c
++++ b/drivers/infiniband/hw/irdma/verbs.c
+@@ -2800,7 +2800,7 @@ static bool irdma_check_mem_contiguous(u64 *arr, u32 npages, u32 pg_size)
+ 	u32 pg_idx;
  
+ 	for (pg_idx = 0; pg_idx < npages; pg_idx++) {
+-		if ((*arr + (pg_size * pg_idx)) != arr[pg_idx])
++		if ((*arr + ((u64)pg_size * pg_idx)) != arr[pg_idx])
+ 			return false;
+ 	}
+ 
+@@ -2833,7 +2833,7 @@ static bool irdma_check_mr_contiguous(struct irdma_pble_alloc *palloc,
+ 
+ 	for (i = 0; i < lvl2->leaf_cnt; i++, leaf++) {
+ 		arr = leaf->addr;
+-		if ((*start_addr + (i * pg_size * PBLE_PER_PAGE)) != *arr)
++		if ((*start_addr + ((u64)i * pg_size * PBLE_PER_PAGE)) != *arr)
+ 			return false;
+ 		ret = irdma_check_mem_contiguous(arr, leaf->cnt, pg_size);
+ 		if (!ret)
 -- 
 2.53.0
 
