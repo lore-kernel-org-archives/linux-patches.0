@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7904523A99F;
-	Thu, 30 Jul 2026 15:15:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 411413B1008;
+	Thu, 30 Jul 2026 15:15:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424530; cv=none; b=acP7VnNWT8nFPydjkLmrMx4sOrc8ILeSSQjIUR9BER6EuVZ9YjeYk41v0RFqaWmH7P4zgmYveUz94kq1zQBh6PwTf7g1ceBJ3AiAKsyJoNWDx67V4OhJ/xm/qdLPqq4jHWQxuHX9/xC9E0OZIKfEi3ofy9GVQf0t+5UhplPyOPs=
+	t=1785424533; cv=none; b=OMl/Zt9gSjh+AThV1YDfnz8eC+WxpYr5zGhbN4Nb7Jtgco3/McUDHAZ37+kSxVVDCRRmlJVT3qjwh09Q/9AiiLTOR7gTnbx4YmhSR1/OxaKBUik5Wwq62wknmvjooQqE74GEMy6VtaRtGpxrPkSKcs4JUY0pzTG0RImmXJXqY0s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424530; c=relaxed/simple;
-	bh=xTnKLbVj+Qe1MhcfpCcEzrzfOMiTDAgSKVUx5o8BxTs=;
+	s=arc-20240116; t=1785424533; c=relaxed/simple;
+	bh=UQQqZ7l+fB1zcr99/gXQ1tCMWwhtaNAyk5wHdItGuJE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mb3ezVKpoNdR2IGtmWGlhgX9mGXptHxFBqk3VfDzlCJthiu7uW4PdwMxk2FrWhWg7wptrPPVApMU6ZbUsJngtEFiUkCmSYC9FjbRpRrq2/u3Vr3JU57Sg/jAaFiJHm44n7orHerkaoWxFsdSICdnui/gu/3B3vfcUnE4jYyeaac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yu/c064x; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FDFkr0UTDwR1XGaxdYIP8guROuDO51F1tkwVW0XHj9Y6EEHMPiP30pWa9sMR+zpVdHaawzr6iHPlHddOW/Y4ZA/zHA+bmdXsSYWsqpd/z2Wf7ge0zZDacAFNl9K1eOtQPdZtk62a2z76HEOmgnLvKG60Jp1zRnHNCMFf+0/1i54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MRolB1Fs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yu/c064x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3DBD1F000E9;
-	Thu, 30 Jul 2026 15:15:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MRolB1Fs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DA2D1F000E9;
+	Thu, 30 Jul 2026 15:15:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424529;
-	bh=UGfRB/gZheb9BRCUoVvaxS5B5zKx3oj+pnfBzSTn944=;
+	s=korg; t=1785424532;
+	bh=MrC5kahWUJN+OK+RBkYMfJ2u/cU1hjN52ZxOry0DNwU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Yu/c064xQGsitZrQAa/H3GdAzFmoiV33HTQAAidlHFHv5REQvaLgqRPcjNYtmcm5x
-	 18Rfn2NmliT5aCuMYHnqzGtCUzRc+jF/cpmf4CMONEqfVOT0pmsAQttSCM02NYPbCU
-	 TIsb8b/YrzG6XKM94cH8aECkeR51oFLxQla0mzBQ=
+	b=MRolB1FsXjVU0ilSq+Zs5+FTU3I4+zA04NWNxbXekLCkxOlwQaH/qIzReU2QGZzP8
+	 Or7mAnIqe9ojegC0i5kbgxex502ZNIWgqGL/2qZOwzya1mwsIZlEeYwLsYX5FCyQIw
+	 BL1prXj6C5iTvKNLzJ92kLHrF4BkUpUekJl5EH6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anand Moon <linux.amoon@gmail.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>,
+	Jacopo Mondi <jacopo.mondi+renesas@ideasonboard.com>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.18 409/675] media: meson: vdec: Fix memory leak in error path of vdec_open
-Date: Thu, 30 Jul 2026 16:12:19 +0200
-Message-ID: <20260730141453.826428187@linuxfoundation.org>
+Subject: [PATCH 6.18 427/675] media: rzg2l-cru: Skip ICnMC configuration when ICnSVC is used
+Date: Thu, 30 Jul 2026 16:12:37 +0200
+Message-ID: <20260730141454.212490271@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -51,70 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anand Moon <linux.amoon@gmail.com>
+From: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
 
-commit 940f161f734b25f175a95d2684c2021f6323693a upstream.
+commit cd4ce68875f406b0cf3f5a94c0fd22989689222f upstream.
 
-The vdec_open() function previously jumped directly to
-err_m2m_release when vdec_init_ctrls() failed, skipping
-release of the m2m context. This caused a resource leak.
+When the CRU is configured to use ICnSVC for virtual channel mapping,
+as on the RZ/{G3E, V2H/P} SoC, the ICnMC register must not be
+programmed.
 
-Fix it by introducing a proper err_m2m_ctx_release label
-that calls v4l2_m2m_ctx_release(sess->m2m_ctx) before
-releasing the m2m device.
+Return early after setting up ICnSVC to avoid overriding the ICnMC
+register, which is not applicable in this mode.
 
-This was identified via kmemleak:
-unreferenced object 0xffff0000205d6878 (size 8):
-  comm "v4l_id", pid 5289, jiffies 4294938580
-  hex dump (first 8 bytes):
-    40 d2 49 18 00 00 ff ff                          @.I.....
-  backtrace (crc d3204599):
-    kmemleak_alloc+0xc8/0xf0
-    __kvmalloc_node_noprof+0x60c/0x850
-    v4l2_ctrl_handler_init_class+0x1b4/0x2e8 [videodev]
-    vdec_open+0x1f4/0x788 [meson_vdec]
-    v4l2_open+0x144/0x460 [videodev]
-    chrdev_open+0x1ac/0x500
-    do_dentry_open+0x3f0/0xfe8
-    vfs_open+0x68/0x320
-    do_open+0x2d8/0x9a8
-    path_openat+0x1d0/0x4f0
-    do_filp_open+0x190/0x380
-    do_sys_openat2+0xf8/0x1b0
-    __arm64_sys_openat+0x13c/0x1e8
-    invoke_syscall+0xdc/0x268
-    el0_svc_common.constprop.0+0x178/0x258
-    do_el0_svc+0x4c/0x70
+This prevents unintended register programming when ICnSVC is enabled.
 
-Fixes: 3e7f51bd9607 ("media: meson: add v4l2 m2m video decoder driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Anand Moon <linux.amoon@gmail.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Fixes: 3c5ca0a48bb0 ("media: rzg2l-cru: Drop function pointer to configure CSI")
+Signed-off-by: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
+[Rework to not break image format programming]
+Signed-off-by: Jacopo Mondi <jacopo.mondi+renesas@ideasonboard.com>
+Reviewed-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/media/meson/vdec/vdec.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ .../platform/renesas/rzg2l-cru/rzg2l-cru-regs.h |  1 +
+ .../platform/renesas/rzg2l-cru/rzg2l-video.c    | 17 +++++++++++------
+ 2 files changed, 12 insertions(+), 6 deletions(-)
 
---- a/drivers/staging/media/meson/vdec/vdec.c
-+++ b/drivers/staging/media/meson/vdec/vdec.c
-@@ -889,7 +889,7 @@ static int vdec_open(struct file *file)
+diff --git a/drivers/media/platform/renesas/rzg2l-cru/rzg2l-cru-regs.h b/drivers/media/platform/renesas/rzg2l-cru/rzg2l-cru-regs.h
+index a5a57369ef0e..10e62f2646d0 100644
+--- a/drivers/media/platform/renesas/rzg2l-cru/rzg2l-cru-regs.h
++++ b/drivers/media/platform/renesas/rzg2l-cru/rzg2l-cru-regs.h
+@@ -60,6 +60,7 @@
+ #define ICnMC_CSCTHR			BIT(5)
+ #define ICnMC_INF(x)			((x) << 16)
+ #define ICnMC_VCSEL(x)			((x) << 22)
++#define ICnMC_VCSEL_MASK		GENMASK(23, 22)
+ #define ICnMC_INF_MASK			GENMASK(21, 16)
  
- 	ret = vdec_init_ctrls(sess);
- 	if (ret)
--		goto err_m2m_release;
-+		goto err_m2m_ctx_release;
+ #define ICnMS_IA			BIT(2)
+diff --git a/drivers/media/platform/renesas/rzg2l-cru/rzg2l-video.c b/drivers/media/platform/renesas/rzg2l-cru/rzg2l-video.c
+index 162e2ace6931..6aea7c244df1 100644
+--- a/drivers/media/platform/renesas/rzg2l-cru/rzg2l-video.c
++++ b/drivers/media/platform/renesas/rzg2l-cru/rzg2l-video.c
+@@ -262,19 +262,24 @@ static void rzg2l_cru_csi2_setup(struct rzg2l_cru_dev *cru,
+ 				 u8 csi_vc)
+ {
+ 	const struct rzg2l_cru_info *info = cru->info;
+-	u32 icnmc = ICnMC_INF(ip_fmt->datatype);
++	u32 icnmc = rzg2l_cru_read(cru, info->image_conv) & ~(ICnMC_INF_MASK |
++							      ICnMC_VCSEL_MASK);
++	icnmc |= ICnMC_INF(ip_fmt->datatype);
  
- 	sess->pixfmt_cap = formats[0].pixfmts_cap[0];
- 	sess->fmt_out = &formats[0];
-@@ -913,6 +913,8 @@ static int vdec_open(struct file *file)
++	/*
++	 * VC filtering goes through SVC register on G3E/V2H.
++	 *
++	 * FIXME: virtual channel filtering is likely broken and only VC=0
++	 * works.
++	 */
+ 	if (cru->info->regs[ICnSVC]) {
+ 		rzg2l_cru_write(cru, ICnSVCNUM, csi_vc);
+ 		rzg2l_cru_write(cru, ICnSVC, ICnSVC_SVC0(0) | ICnSVC_SVC1(1) |
+ 				ICnSVC_SVC2(2) | ICnSVC_SVC3(3));
++	} else {
++		icnmc |= ICnMC_VCSEL(csi_vc);
+ 	}
  
- 	return 0;
+-	icnmc |= rzg2l_cru_read(cru, info->image_conv) & ~ICnMC_INF_MASK;
+-
+-	/* Set virtual channel CSI2 */
+-	icnmc |= ICnMC_VCSEL(csi_vc);
+-
+ 	rzg2l_cru_write(cru, info->image_conv, icnmc);
+ }
  
-+err_m2m_ctx_release:
-+	v4l2_m2m_ctx_release(sess->m2m_ctx);
- err_m2m_release:
- 	v4l2_m2m_release(sess->m2m_dev);
- err_free_sess:
+-- 
+2.55.0
+
 
 
