@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E2E4418A44;
-	Thu, 30 Jul 2026 15:34:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 445CE446BFB;
+	Thu, 30 Jul 2026 15:34:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425647; cv=none; b=shtIKyi17MVCsPb7FAOeptzfecP0NbmV2NR52M5YIRpXTRyfi9WwSMty/pr/+QU2VgCr30DvRQQuzMJEl59lzcEP7o3MAyjrIg1CvkzaqYOxNLbPV+Lg0CuTdl3sbjMOCAYQg5qqQiJmDmzwvG7St/xRoeMj5hUHl6FMkL2uqv4=
+	t=1785425650; cv=none; b=DZy9HSXBdnjeDJAMr/j9ihReuaVjsQObhupvFc6q5brn0loqgtdnMJlRhu5NJgAlWe9sOSg1Wv3sz0G3vcHxexrN8sWgZkE91+lT92ehvxEL0dLloQcSAJsqIsfW4dnBlNA/bdWg9kyLgN8y7Z2Ct77e7kIdnXFl/+Vd+nn8FJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425647; c=relaxed/simple;
-	bh=pyV8Pk3740mOQn7l+xbdyBkPH7wZ2J/MrnnN5YB9lA0=;
+	s=arc-20240116; t=1785425650; c=relaxed/simple;
+	bh=jIU8ytf7B9LkwTObQzgTFNMsGSIEmKAkSx83ECQV7TA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ovT+sNAkojj1znxyNhL99SWNZkao3w3nWkQZcQXfftqK60Nb4/VmLJQlsR4clYlei6U9Z2TS9sl/jSXmLUWngnm/LodWkFBpYI9B6GKMRr7rHzLU76LaxS6uhCJ7O+tx1yP9vcQJ2+/qSBRoFWu3WnVf5jQy5BncXT30sfTA994=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZKpF7lut; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Gw+LmHGn506g1jBMr/tcw/RMi4I0WnVJiDfe1DF5orBwYrwq5Oc8g5hy44KSHUqv63LbEwNdWwe7aQBLOcValbMHpNzuEi0vEsyW+rNY8ZofqWlFY6rHklCIHVTgsXm1Ra/lDowMbrykMHScFtc6fQlOTsynDOK+67BSYnRR3/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zKzY00jb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZKpF7lut"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C93571F000E9;
-	Thu, 30 Jul 2026 15:34:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zKzY00jb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EA0A1F000E9;
+	Thu, 30 Jul 2026 15:34:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425646;
-	bh=w+t/z3+h3pJ1eNi4IMo7d/1HFcVLxxZjH5XWyq3dV4c=;
+	s=korg; t=1785425649;
+	bh=H95rq1wihht18aJCEkL6LgSXvp+YAzAYiGWCe4CscV0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZKpF7lutwtcw+6QePqlq2E6jxPxuqqsSTNtFeCFFoCXdIzTTT0xrBTBGGOXnHyoco
-	 AJuo7be6c2j06nhImdA5EEMKshJzlsdA6fsypUwZYWLfPMB3qzqVIUtF3ZxNHKA444
-	 S2CwdTC2YeIErzDRPMcgPS5BrAMcO2OGzlYNkTrk=
+	b=zKzY00jbc2PW4s+WdL50icwANfmsqCUtXNPxTBJIEIRkujXpCLwx+o2U/7OhHRYiC
+	 Ra7h2WW944r7VpmN8Luo0LFwaMlfHOpP8lYj5KAWoiXUUC/1rDhg2VhM9+z6zErZZr
+	 tzrRbnlLq/ZSUkbgrM9DwiI/RAW7wJiMIJAImcdQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Tvrtko Ursulin <tursulin@ursulin.net>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Rosen Penev <rosenp@gmail.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 097/602] drm/i915/gt: use correct selftest config symbol
-Date: Thu, 30 Jul 2026 16:08:09 +0200
-Message-ID: <20260730141438.033044645@linuxfoundation.org>
+Subject: [PATCH 6.12 098/602] powerpc/85xx: Add fsl,ifc to common device ids
+Date: Thu, 30 Jul 2026 16:08:10 +0200
+Message-ID: <20260730141438.053601560@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -52,48 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit a82f1bb8191aec98a971a2196136016ef70c0880 ]
+[ Upstream commit 25957f7c3dac3265332d766b71233e3622f17e14 ]
 
-intel_engine_user.c checks CONFIG_DRM_I915_SELFTESTS before running
-the engine UABI isolation check. Kconfig defines DRM_I915_SELFTEST,
-without the trailing "S", and the rest of i915 uses
-CONFIG_DRM_I915_SELFTEST.
+Add fsl,ifc to mpc85xx_common_ids so that of_platform_bus_probe
+creates a platform device for the IFC node even without 'simple-bus'
+in its compatible property. On P1010 and similar platforms the IFC
+node is a direct child of the root, so it must be explicitly matched
+to be populated.
 
-Because CONFIG_DRM_I915_SELFTESTS is not backed by any Kconfig symbol,
-the IS_ENABLED() test is always false. Use the existing selftest symbol
-so the debug/selftest guarded path can be reached when selftests are
-enabled.
-
-This is a source-level fix. It does not claim dynamic hardware
-reproduction; the evidence is the Kconfig definition and the inconsistent
-guard in intel_engine_user.c.
-
-Fixes: 750e76b4f9f6 ("drm/i915/gt: Move the [class][inst] lookup for engines onto the GT")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
-Link: https://lore.kernel.org/r/20260705080225.436-1-pengpeng@iscas.ac.cn
-(cherry picked from commit 14a2012a490258f3f93857bc4f1b203405964be7)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Fixes: 0bf51cc9e9e5 ("powerpc: dts: mpc85xx: remove "simple-bus" compatible from ifc node")
+Assisted-by: opencode:big-pickle
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260604043309.91280-1-rosenp@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gt/intel_engine_user.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/powerpc/platforms/85xx/common.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/i915/gt/intel_engine_user.c b/drivers/gpu/drm/i915/gt/intel_engine_user.c
-index 833987015b8bbc..ed42b9d05a07d5 100644
---- a/drivers/gpu/drm/i915/gt/intel_engine_user.c
-+++ b/drivers/gpu/drm/i915/gt/intel_engine_user.c
-@@ -257,7 +257,7 @@ void intel_engines_driver_register(struct drm_i915_private *i915)
- 		p = &prev->rb_right;
- 	}
+diff --git a/arch/powerpc/platforms/85xx/common.c b/arch/powerpc/platforms/85xx/common.c
+index 757811155587db..c11deb2f50ed45 100644
+--- a/arch/powerpc/platforms/85xx/common.c
++++ b/arch/powerpc/platforms/85xx/common.c
+@@ -42,6 +42,8 @@ static const struct of_device_id mpc85xx_common_ids[] __initconst = {
+ 	{ .compatible = "fsl,qoriq-pcie-v2.3", },
+ 	{ .compatible = "fsl,qoriq-pcie-v2.2", },
+ 	{ .compatible = "fsl,fman", },
++	/* IFC NAND and NOR controllers */
++	{ .compatible = "fsl,ifc", },
+ 	{},
+ };
  
--	if (IS_ENABLED(CONFIG_DRM_I915_SELFTESTS) &&
-+	if (IS_ENABLED(CONFIG_DRM_I915_SELFTEST) &&
- 	    IS_ENABLED(CONFIG_DRM_I915_DEBUG_GEM)) {
- 		struct intel_engine_cs *engine;
- 		unsigned int isolation;
 -- 
 2.53.0
 
