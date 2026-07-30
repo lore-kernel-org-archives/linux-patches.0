@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CB6F429838;
-	Thu, 30 Jul 2026 14:23:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D242143F094;
+	Thu, 30 Jul 2026 14:23:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421398; cv=none; b=V4Zx6r/AY2OSry4KmsC2f/8mBdXUZeL2LIosA+qFpI5ZNrHzN0u5bv+hxjoQXPBUBAEJIgvITYHcxEPu6EvqeYr5lxL7S0/rEK0lbVVElu4ZsWsN8VHiWSP82cI5e6Iao9xTaDn+HgDA1HYID6Yn2b03cE5nH+6ITJLZpDIZRN4=
+	t=1785421402; cv=none; b=gsP3MxE1QxjcdZ3Cx9/9476KRXhTwHHVfMT9TbdvKkCHQVq+U3br4gH54jZzGRKc6RSHBSBDZ2FaZr803uPAl1tLdxfsT3l84bts0/ZmU5FtKLsSKrnFq1gtU5Nz3H1Y9C4DMxg3KdWWATXBT/Syq7jHLxWf4ibUtpanS4d5SJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421398; c=relaxed/simple;
-	bh=nQJzn+yj5qyxmMvqVW681tieCWjjR7rtKLCoPLhPLhU=;
+	s=arc-20240116; t=1785421402; c=relaxed/simple;
+	bh=9m47hbFpYL46CX4G34Dd1Zt+o7mL4BnxWcLo6EzOKcU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E+skzAWbFRRtXz9ich3Sn+SNOMWWdU/K5KcwJHYmWkQiVzchinrvetgCru5mzIvoCZxlX07/gsKtZyncOb7mW/RZMwjgcVU/yoCeTcchVbXqBDWrqhBnDp0M7/vMjGf8NUlCHJ1lKkByOHz4br9iv12Ld9mWycYHerjfxR7XHmU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ckY6LTRp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SPkeHh+lVUTWzoT7Udz9l/VG7m40XbBmgxcN9Vx/v50MD7NHVqs7cYSgQs7Elp7Oq2MqGapmV4hBTGYbbNGb83tmD/Z6ASMaAvmjRx309ZMrIf2nzyFfrsVs3OnNATDQredE6PrwgKwfFCgHM7qGoXNIT4ZdSR8U2EzAl0q7jkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oux970FQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ckY6LTRp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 035961F000E9;
-	Thu, 30 Jul 2026 14:23:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oux970FQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23D8F1F000E9;
+	Thu, 30 Jul 2026 14:23:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421397;
-	bh=n8/M8CTSH5d5z6XwSwFoWPOEg0zLlHAot9ts6KtPLlA=;
+	s=korg; t=1785421400;
+	bh=QfFv+sF92bUPAzJZQ/kEgskUQwFxW1+j+MqPH+gsZbM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ckY6LTRpO3sgc7dsE7uC7HIZ0uxOF4ZnXEv7TD3S+5G5idUMU1qcCkJLPSfR1wjbr
-	 X4RcNUCzlgjzvlhi0jV3KewTeSkJGNRwEsTyOm8hu0aq8TUnm4n5kYf6d+eBkQvZNV
-	 NFpxJU2liDl0TR5vYC1xjA2ikDmBu34L+qGanCbE=
+	b=Oux970FQfI+blTOesNnc7X06y3vrvG+pS8Ucx9D+2ti2ZKwruPmwdNU+4z/R/6AeD
+	 LCmWG2JaRIJkhCVHe8fg3RWt0QuLHGk3/oqsHBmK/C2FErrKSUeTQ4qNaBt1zehBYF
+	 tKqfnjmwKi8JZSI2b6Fwt+Jb2+v0v5uTJooYq85M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Mader <robert.mader@collabora.com>,
-	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
-	Vivek Kasireddy <vivek.kasireddy@intel.com>,
+	David Jeffery <djeffery@redhat.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 091/744] udmabuf: Ensure to perform cache synchronisation in begin_cpu_udmabuf()
-Date: Thu, 30 Jul 2026 16:06:04 +0200
-Message-ID: <20260730141446.202799178@linuxfoundation.org>
+Subject: [PATCH 7.1 092/744] scsi: core: wake eh reliably when using scsi_schedule_eh
+Date: Thu, 30 Jul 2026 16:06:05 +0200
+Message-ID: <20260730141446.224171066@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -52,65 +51,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Robert Mader <robert.mader@collabora.com>
+From: David Jeffery <djeffery@redhat.com>
 
-[ Upstream commit 1d0e25c1ddf2063c499264fb2ba0fa6a3e4f8a00 ]
+[ Upstream commit dccf3b1798b70f94e958b3d00b83010399e6fb05 ]
 
-The message of commit 504e2b4ab97a ("dma-buf/udmabuf: skip redundant cpu sync to
-fix cacheline EEXIST warning") says:
+Drivers which use the scsi_schedule_eh function to run the error handler
+currently risk the error handler thread never waking once all commands are
+timed out or inactive. There is no enforced memory order between setting
+the host into error recovery state and counting busy commands. This can
+result in a race with scsi_dec_host_busy where neither CPU sees both
+conditions of all commands inactive and the host error state to request
+waking the error handler.
 
-> The CPU sync at map/unmap time is also redundant for udmabuf:
-> begin_cpu_udmabuf() and end_cpu_udmabuf() already perform explicit
-> cache synchronization via dma_sync_sgtable_for_cpu/device() when CPU
-> access is requested through the dma-buf interface.
+To fix this, run the scsi_schedule_eh's scsi_eh_wakeup from a new work item
+which will use rcu to ensure scsi_schedule_eh's call to scsi_host_busy will
+occur after the error state is globally visible and will be seen by any
+current scsi_dec_host_busy callers.
 
-This, however, does not apply to the first time begin_cpu_udmabuf() is
-called on an udmabuf, in which case the implementation previously relied on
-get_sg_table() to perform the cache synchronisation.
-
-Ensure to call dma_sync_sgtable_for_cpu() in that case as well.
-
-Fixes: 504e2b4ab97a ("dma-buf/udmabuf: skip redundant cpu sync to fix cacheline EEXIST warning")
-Signed-off-by: Robert Mader <robert.mader@collabora.com>
-Reviewed-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
-Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
-Link: https://patch.msgid.link/20260627105725.9083-1-robert.mader@collabora.com
+Fixes: 6eb045e092ef ("scsi: core: avoid host-wide host_busy counter for scsi_mq")
+Signed-off-by: David Jeffery <djeffery@redhat.com>
+Link: https://patch.msgid.link/20260615174630.11492-1-djeffery@redhat.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma-buf/udmabuf.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/scsi/hosts.c      |  2 ++
+ drivers/scsi/scsi_error.c | 22 +++++++++++++++++++++-
+ drivers/scsi/scsi_priv.h  |  1 +
+ include/scsi/scsi_host.h  |  3 +++
+ 4 files changed, 27 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/dma-buf/udmabuf.c b/drivers/dma-buf/udmabuf.c
-index 2f94be1df525aa..2e7b5d4d11f429 100644
---- a/drivers/dma-buf/udmabuf.c
-+++ b/drivers/dma-buf/udmabuf.c
-@@ -247,21 +247,22 @@ static int begin_cpu_udmabuf(struct dma_buf *buf,
- {
- 	struct udmabuf *ubuf = buf->priv;
- 	struct device *dev = ubuf->device->this_device;
--	int ret = 0;
+diff --git a/drivers/scsi/hosts.c b/drivers/scsi/hosts.c
+index e047747d4ecf81..46cc8e3c79a26e 100644
+--- a/drivers/scsi/hosts.c
++++ b/drivers/scsi/hosts.c
+@@ -357,6 +357,7 @@ static void scsi_host_dev_release(struct device *dev)
+ 	/* Wait for functions invoked through call_rcu(&scmd->rcu, ...) */
+ 	rcu_barrier();
  
- 	if (!ubuf->sg) {
- 		ubuf->sg = get_sg_table(dev, buf, direction);
- 		if (IS_ERR(ubuf->sg)) {
-+			int ret;
-+
- 			ret = PTR_ERR(ubuf->sg);
- 			ubuf->sg = NULL;
-+			return ret;
- 		} else {
- 			ubuf->sg_dir = direction;
- 		}
--	} else {
--		dma_sync_sgtable_for_cpu(dev, ubuf->sg, direction);
++	cancel_work_sync(&shost->eh_work);
+ 	if (shost->tmf_work_q)
+ 		destroy_workqueue(shost->tmf_work_q);
+ 	if (shost->ehandler)
+@@ -422,6 +423,7 @@ struct Scsi_Host *scsi_host_alloc(const struct scsi_host_template *sht, int priv
+ 	INIT_LIST_HEAD(&shost->starved_list);
+ 	init_waitqueue_head(&shost->host_wait);
+ 	mutex_init(&shost->scan_mutex);
++	INIT_WORK(&shost->eh_work, scsi_rcu_eh_wakeup);
+ 
+ 	index = ida_alloc(&host_index_ida, GFP_KERNEL);
+ 	if (index < 0) {
+diff --git a/drivers/scsi/scsi_error.c b/drivers/scsi/scsi_error.c
+index 147127fb4db9cc..453a2232452dba 100644
+--- a/drivers/scsi/scsi_error.c
++++ b/drivers/scsi/scsi_error.c
+@@ -73,6 +73,26 @@ void scsi_eh_wakeup(struct Scsi_Host *shost, unsigned int busy)
  	}
- 
--	return ret;
-+	dma_sync_sgtable_for_cpu(dev, ubuf->sg, direction);
-+	return 0;
  }
  
- static int end_cpu_udmabuf(struct dma_buf *buf,
++void scsi_rcu_eh_wakeup(struct work_struct *work)
++{
++	struct Scsi_Host *shost = container_of(work, struct Scsi_Host, eh_work);
++	unsigned long flags;
++	unsigned int busy;
++
++	/*
++	 * Ensure any running scsi_dec_host_busy has completed its rcu section
++	 * so changes to host state and host_eh_scheduled are visible to all
++	 * future calls of scsi_dec_host_busy
++	 */
++	synchronize_rcu();
++
++	busy = scsi_host_busy(shost);
++
++	spin_lock_irqsave(shost->host_lock, flags);
++	scsi_eh_wakeup(shost, busy);
++	spin_unlock_irqrestore(shost->host_lock, flags);
++}
++
+ /**
+  * scsi_schedule_eh - schedule EH for SCSI host
+  * @shost:	SCSI host to invoke error handling on.
+@@ -88,7 +108,7 @@ void scsi_schedule_eh(struct Scsi_Host *shost)
+ 	if (scsi_host_set_state(shost, SHOST_RECOVERY) == 0 ||
+ 	    scsi_host_set_state(shost, SHOST_CANCEL_RECOVERY) == 0) {
+ 		shost->host_eh_scheduled++;
+-		scsi_eh_wakeup(shost, scsi_host_busy(shost));
++		queue_work(shost->tmf_work_q, &shost->eh_work);
+ 	}
+ 
+ 	spin_unlock_irqrestore(shost->host_lock, flags);
+diff --git a/drivers/scsi/scsi_priv.h b/drivers/scsi/scsi_priv.h
+index 7a193cc04e5b6f..304e8e79bd91a9 100644
+--- a/drivers/scsi/scsi_priv.h
++++ b/drivers/scsi/scsi_priv.h
+@@ -91,6 +91,7 @@ extern enum blk_eh_timer_return scsi_timeout(struct request *req);
+ extern int scsi_error_handler(void *host);
+ extern enum scsi_disposition scsi_decide_disposition(struct scsi_cmnd *cmd);
+ extern void scsi_eh_wakeup(struct Scsi_Host *shost, unsigned int busy);
++extern void scsi_rcu_eh_wakeup(struct work_struct *work);
+ extern void scsi_eh_scmd_add(struct scsi_cmnd *);
+ void scsi_eh_ready_devs(struct Scsi_Host *shost,
+ 			struct list_head *work_q,
+diff --git a/include/scsi/scsi_host.h b/include/scsi/scsi_host.h
+index 7e2011830ba4bd..f6b286fa59f214 100644
+--- a/include/scsi/scsi_host.h
++++ b/include/scsi/scsi_host.h
+@@ -750,6 +750,9 @@ struct Scsi_Host {
+ 	 */
+ 	struct device *dma_dev;
+ 
++	/* Used for an rcu-synchronizing eh wakeup */
++	struct work_struct eh_work;
++
+ 	/* Delay for runtime autosuspend */
+ 	int rpm_autosuspend_delay;
+ 
 -- 
 2.53.0
 
