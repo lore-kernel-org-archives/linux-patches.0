@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 126953644C9;
-	Thu, 30 Jul 2026 14:22:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65D5C3644C9;
+	Thu, 30 Jul 2026 14:22:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785421363; cv=none; b=ba/ly/uxxtlU3EQMBbpq/xxr5TfceucXt8QebgI29NIEPo4dVypD84oPlyYyg+PDYJSgVqpZrnCmTyxsTBqqGDZRMeXO45lQvtPWbE8YutBJmymIRzTA3ouu0lW4drhW9UT7qJdAHb6wh9Pmo+tcOjjPRLjSu7WVnXihFwJ5EYs=
+	t=1785421367; cv=none; b=DxREl4AXcgc9J0u1cfx+AJgYhba9+3U6gvEvX4aXwpg3O6lVooF/o9j9+HdlQ7ov/BNznX4MvgY1eAVcv72j+NSMOTgo9I/RPQGFdZfnbc6VjMrhcOj8wfgOOwxR0wKn0bx4O6Z+iqeblHKTV1LvvcIq8YYltItJyP6Sq0wPda4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785421363; c=relaxed/simple;
-	bh=Y+RL1DMvAp0r8BtQMgCCgk0gqdhBhq9XBGR88n5Vd8o=;
+	s=arc-20240116; t=1785421367; c=relaxed/simple;
+	bh=sBl2c3K3sKFnX0MdOErRhCEMhkPRcwNT+ibOUAMkOnE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u8PXhpSbM4MwqDnArkDA4wSdvoXdacHzbEts5MHTQBh79cs0IR96zzJRxmpWcGubFDJi1C106iiGyl/oiR17Eil3o2WRyAxOsjHYURwJrASMTMcZdoi93FrUQUfiJYFNBhWRfgjzbnhdNYANWC9ZGNDisXcyetFD6amx211EIb0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IcVYqC/2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UYoHiI2w2n9ltEOWGwHo0fLBvWPnQcHbJipcN7xA6OmW/tBYEcOaA+xDMpw2tc2qQD+9d/p4mizkkc0l6k6W/9/aDiWY8ADGa88nMb59mKuwAkaBaeYYxnuTmi683cEQ/L0oiBhz6NdTsJsHYTTFEz9qPytpjqmYBYE5aq2EB/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZxWmBPAO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IcVYqC/2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E0A21F000E9;
-	Thu, 30 Jul 2026 14:22:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZxWmBPAO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C8CF1F000E9;
+	Thu, 30 Jul 2026 14:22:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785421361;
-	bh=SRkxJKfQfiknJXY9nXgCEv7+7sPIJ3WFqRmgxXtWXxE=;
+	s=korg; t=1785421365;
+	bh=NbrPtA2fslX2mt6UHta9O+da5yuGvwL9pm1zj26MD28=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IcVYqC/2PLOvMP/7AeU7xUNAXUgKe6FmXAXa91wlGq0yAy+TKoeb/2CNJ6qx05/z1
-	 x2Y14boi6qrmlhEWheuFHBYz9PKMrC7dThLTaPUXUzEEf/qito4zpvoIpOjxT7rXUj
-	 GrIaB00Kip5jVVexkWwSw19gIEp4PsmgS+JVuAZs=
+	b=ZxWmBPAOhAJTpS0ljpUrJGEsiAYM+xLXxlK50mctvuAXJn+FShXQYlcwI+NzHc7W4
+	 sN5hEY7UStEndsTCfen/4lvaKv8QlHAXX3iXV+yaIrNslopNcRhObnxdx+yVkBgpU6
+	 XAwyLGa0H1wtqYxiCKwYnfhrSCvph7d+fu+DGzq8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Hewitt <christianshewitt@gmail.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Jacob Moroni <jmoroni@google.com>,
+	David Hu <xuehaohu@google.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 076/744] ASoC: meson: aiu: fifo-spdif: soft reset the S/PDIF datapath on start/stop
-Date: Thu, 30 Jul 2026 16:05:49 +0200
-Message-ID: <20260730141445.888785636@linuxfoundation.org>
+Subject: [PATCH 7.1 035/744] RDMA/irdma: Prevent user-triggered null deref on QP create
+Date: Thu, 30 Jul 2026 16:05:08 +0200
+Message-ID: <20260730141445.028688803@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -52,61 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Hewitt <christianshewitt@gmail.com>
+From: Jacob Moroni <jmoroni@google.com>
 
-[ Upstream commit 6b59c53c8adc2b522327407af5e1793a65b67e4b ]
+[ Upstream commit b9b0889071569d43623c260074e159cd8f26adb1 ]
 
-The I2S FIFO soft-resets its fast domain on start (AIU_RST_SOFT bit 0 +
-AIU_I2S_SYNC read in aiu_fifo_i2s_trigger), mirroring the downstream
-vendor driver's audio_out_i2s_enable(). The S/PDIF FIFO has no equivalent:
-it only toggles the IEC958 DCU, so a stale datapath FIFO can be replayed,
-producing the "machine gun noise" buffer underrun - on start when switching
-outputs, and on stop when playback ends. The latter is audible on devices
-with an always-on S/PDIF-fed DAC (e.g. the ES7144 on the WeTek Play2).
+Previously, the user QP creation path would only attempt to
+populate iwqp->iwpbl if the user-provided req.user_wqe_bufs
+field was non-zero. The problem is that iwqp->iwpbl is
+unconditionally dereferenced later on in irdma_setup_virt_qp.
 
-The vendor driver resets the IEC958 fast domain (AIU_RST_SOFT bit 2) on
-both enable and disable (audio_hw_958_enable), and when reconfiguring
-(audio_hw_958_reset clears AIU_958_DCU_FF_CTRL then resets). Do the same:
-reset before enabling the DCU on start, and before disabling on stop.
+While there was a check for iwqp->iwpbl != NULL, this check
+would only occur if req.user_wqe_bufs was non-zero. The end
+result is that a user could send a zero user_wqe_bufs value
+and trigger a null ptr deref.
 
-Fixes: 6ae9ca9ce986bf ("ASoC: meson: aiu: add i2s and spdif support")
-Signed-off-by: Christian Hewitt <christianshewitt@gmail.com>
-Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Link: https://patch.msgid.link/20260627131205.808800-1-christianshewitt@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fix this by unconditionally calling irdma_get_pbl and bailing
+if it fails, similar to the CQ and SRQ paths.
+
+Fixes: b48c24c2d710 ("RDMA/irdma: Implement device supported verb APIs")
+Link: https://patch.msgid.link/r/20260617164013.280790-1-jmoroni@google.com
+Signed-off-by: Jacob Moroni <jmoroni@google.com>
+Reviewed-by: David Hu <xuehaohu@google.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/meson/aiu-fifo-spdif.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/infiniband/hw/irdma/verbs.c | 19 +++++++++----------
+ 1 file changed, 9 insertions(+), 10 deletions(-)
 
-diff --git a/sound/soc/meson/aiu-fifo-spdif.c b/sound/soc/meson/aiu-fifo-spdif.c
-index e0e00ec026dcc4..a9861c5d663745 100644
---- a/sound/soc/meson/aiu-fifo-spdif.c
-+++ b/sound/soc/meson/aiu-fifo-spdif.c
-@@ -24,6 +24,7 @@
- #define AIU_MEM_IEC958_CONTROL_MODE_16BIT	BIT(7)
- #define AIU_MEM_IEC958_CONTROL_MODE_LINEAR	BIT(8)
- #define AIU_MEM_IEC958_BUF_CNTL_INIT		BIT(0)
-+#define AIU_RST_SOFT_958_FAST			BIT(2)
+diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
+index 7ab08f324eb9a2..e7f6ebd9c9557d 100644
+--- a/drivers/infiniband/hw/irdma/verbs.c
++++ b/drivers/infiniband/hw/irdma/verbs.c
+@@ -633,17 +633,16 @@ static int irdma_setup_umode_qp(struct ib_udata *udata,
  
- #define AIU_FIFO_SPDIF_BLOCK			8
+ 	iwqp->ctx_info.qp_compl_ctx = req.user_compl_ctx;
+ 	iwqp->user_mode = 1;
+-	if (req.user_wqe_bufs) {
+-		spin_lock_irqsave(&ucontext->qp_reg_mem_list_lock, flags);
+-		iwqp->iwpbl = irdma_get_pbl((unsigned long)req.user_wqe_bufs,
+-					    &ucontext->qp_reg_mem_list);
+-		spin_unlock_irqrestore(&ucontext->qp_reg_mem_list_lock, flags);
  
-@@ -68,11 +69,15 @@ static int fifo_spdif_trigger(struct snd_pcm_substream *substream, int cmd,
- 	case SNDRV_PCM_TRIGGER_START:
- 	case SNDRV_PCM_TRIGGER_RESUME:
- 	case SNDRV_PCM_TRIGGER_PAUSE_RELEASE:
-+		snd_soc_component_write(component, AIU_RST_SOFT,
-+					AIU_RST_SOFT_958_FAST);
- 		fifo_spdif_dcu_enable(component, true);
- 		break;
- 	case SNDRV_PCM_TRIGGER_SUSPEND:
- 	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
- 	case SNDRV_PCM_TRIGGER_STOP:
-+		snd_soc_component_write(component, AIU_RST_SOFT,
-+					AIU_RST_SOFT_958_FAST);
- 		fifo_spdif_dcu_enable(component, false);
- 		break;
- 	default:
+-		if (!iwqp->iwpbl) {
+-			ret = -ENODATA;
+-			ibdev_dbg(&iwdev->ibdev, "VERBS: no pbl info\n");
+-			return ret;
+-		}
++	spin_lock_irqsave(&ucontext->qp_reg_mem_list_lock, flags);
++	iwqp->iwpbl = irdma_get_pbl((unsigned long)req.user_wqe_bufs,
++				    &ucontext->qp_reg_mem_list);
++	spin_unlock_irqrestore(&ucontext->qp_reg_mem_list_lock, flags);
++
++	if (!iwqp->iwpbl) {
++		ret = -ENODATA;
++		ibdev_dbg(&iwdev->ibdev, "VERBS: no pbl info\n");
++		return ret;
+ 	}
+ 
+ 	if (!ucontext->use_raw_attrs) {
 -- 
 2.53.0
 
