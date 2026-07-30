@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B8685C613;
-	Thu, 30 Jul 2026 14:37:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A01793D75C4;
+	Thu, 30 Jul 2026 14:37:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422221; cv=none; b=q0tWeY07/ZylRvua/jMUz0tNJy3e1bjgmzcTr42nVdqJI0LHNlmaZL5YStVIVxDZsroqArfS5Z4M+jnlnUA14W/NWJSBmtFpsMu1TBS1pKEvxClVvv02wDTOCU+VO+fc0ntlwBEm6gszBjVkc8/3qEtEWcxHsEAf/RxJdoRb43o=
+	t=1785422224; cv=none; b=Wt41v0yC4dR2YO2qhcRBJMX9PnPjnA1TNsauFXuru2BBnPgFh2GRkB0RtKq03f4WVA2nY8uR79SmPEgmvFPre24Hy614OctCS0yeVANcSFnOKt/drofvt9D/sAolhUCVvW9pe0UZTvOHxmfni0vgSn2uHLb/lvjN0cI8TZSA+rw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422221; c=relaxed/simple;
-	bh=gs0xVw0nhyUVZsCzQ2JPt+iaXeokTVAE2/ig6AdkPJA=;
+	s=arc-20240116; t=1785422224; c=relaxed/simple;
+	bh=bRfafhcEXZZUheN6TNQAatimFsauSpFDB9CNkJHUoC0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LLdOaGcBKHBJwMWckuVhIEzDbaWoAkSpb5zpAwUju5mGjlcdWSxXcDu3MWu0V5LgWhsAvu+Gh5lwXGR57rqm4sYjIQOPCAcr8ssJAVuzjAu284neBarXvuQuLZyQs3z/o7asBBMz0B8Fr92UoiaHQJavfhYI3G9wU2Wmxa1jK+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DiD/ee9I; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eqBZMalc1pJGL4g74StuuFkeUuLdtIXRnZPmrxW4sOZArmQaj+VzqnYtq/cnnOxt0VS2NOJiFdy1QsXPE1858Q6ADuKIrlrasEr8ALXlnrnA5gwYmPWAPM/9x8sad5qfzCZQlDrRKRY3HT2cO9gnGH2eWjo2OZ0QTESdgIi0It0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ys37YDDL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DiD/ee9I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7D531F000E9;
-	Thu, 30 Jul 2026 14:36:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ys37YDDL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1BD41F000E9;
+	Thu, 30 Jul 2026 14:37:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422220;
-	bh=9q1YSXvuWHhvwTNBJtN0hm+pdekcVxO+VEJ+L9cDGNU=;
+	s=korg; t=1785422223;
+	bh=sPQaFjsmwYFhemtRQcETXd6pHvzrkSj0qQkiM3fCa1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DiD/ee9IHzXBQN1nTRmvKHD8fBjd64p/4aWZgzIlKh2PMGydkq2TJneICLVrwfJuZ
-	 TJI1PNVMJW+CBYLXv+mb75iwrGXchCmmdAyRkrqQFfM3V/gxr9gQ3e9vKMTsXnKxW2
-	 jSgpE2Zwvf9FmMgK0IchdndiM0cib6CsLEUGTh/Q=
+	b=Ys37YDDLr+ZcCKOgaqwHUZjIF7WeKUnRioMxQ9pwQtAv77lfFtPJFjSbqoiCd9yWT
+	 cFBWcyDDUIZUGOb6Ds4diBscJRAhoj5cWTgPLTvFjt6dG6gF5uxvtCMhHtLHZI7WUW
+	 1ms+oMf44HvJEbc13G+F7qQJMJFi3AqAwDoc9OKM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	=?UTF-8?q?Jos=C3=A9=20Exp=C3=B3sito?= <jose.exposito@redhat.com>,
+	AutonomousCodeSecurity@microsoft.com,
+	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
+	Eric Dumazet <edumazet@google.com>,
+	Jordan Rife <jordan@jrife.io>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 320/744] drm/tests: shmem: Set DMA mask to 64-bit in drm_gem_shmem
-Date: Thu, 30 Jul 2026 16:09:53 +0200
-Message-ID: <20260730141451.087245543@linuxfoundation.org>
+Subject: [PATCH 7.1 321/744] bpf: tcp: fix double sock release on batch realloc
+Date: Thu, 30 Jul 2026 16:09:54 +0200
+Message-ID: <20260730141451.108532623@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -45,110 +48,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: José Expósito <jose.exposito@redhat.com>
+From: Xiang Mei (Microsoft) <xmei5@asu.edu>
 
-[ Upstream commit b04a248cfa6cfa1e7dc9ce91cb1eb88b1a70dd69 ]
+[ Upstream commit 980a813452754f8001704744e92f7aa697c53dd3 ]
 
-drm_gem_shmem_test_purge [1] and drm_gem_shmem_test_get_pages_sgt [2]
-intermittently fail on ppc64le and s390x CI systems with a DMA address
-overflow:
+bpf_iter_tcp_batch() releases the current batch via
+bpf_iter_tcp_put_batch(), which drops the socket refs and rewrites
+each slot with the socket cookie, then grows the batch. cur_sk/end_sk
+are kept for bpf_iter_tcp_resume(), but on realloc failure the function
+returns ERR_PTR() before resume runs, leaving cur_sk < end_sk over
+slots that now hold cookies rather than sock pointers.
+bpf_iter_tcp_seq_stop() then calls bpf_iter_tcp_put_batch() again and
+dereferences a cookie as a struct sock.
 
-  DMA addr 0x0000000100307000+4096 overflow (mask ffffffff, bus limit 0)
-  WARNING: kernel/dma/direct.h:114 dma_direct_map_sg+0x778/0x920
+Empty the batch on the failure path so stop() does not release it
+again. The sockets were already freed by the first
+bpf_iter_tcp_put_batch(), so nothing leaks, and a later read() rescans
+the bucket from the start instead of skipping it. The sibling
+GFP_NOWAIT failure path still holds real socket references and is left
+for stop() to release.
 
-  drm_gem_shmem_test_purge: ASSERTION FAILED at
-    drivers/gpu/drm/tests/drm_gem_shmem_test.c:330
-    Expected sgt is not error, but is: -5
+  BUG: KASAN: null-ptr-deref in __sock_gen_cookie
+  Read of size 8 at addr 0000000000000059 by task exploit
+   ...
+   __sock_gen_cookie (net/core/sock_diag.c:28)
+   bpf_iter_tcp_put_batch (net/ipv4/tcp_ipv4.c:2918)
+   bpf_iter_tcp_seq_stop (net/ipv4/tcp_ipv4.c:3270)
+   bpf_seq_read (kernel/bpf/bpf_iter.c:205)
+   vfs_read (fs/read_write.c:572)
+   ksys_read (fs/read_write.c:716)
+   do_syscall_64
+   entry_SYSCALL_64_after_hwframe
+  Kernel panic - not syncing: Fatal exception
 
-The call chain leading to the failure is:
-
-  drm_gem_shmem_test_purge() / drm_gem_shmem_test_get_pages_sgt()
-    drm_gem_shmem_get_pages_sgt()
-      drm_gem_shmem_get_pages_sgt_locked() [drm_gem_shmem_helper.c]
-        dma_map_sgtable()                  [mapping.c]
-          __dma_map_sg_attrs()
-            dma_direct_map_sg()            [direct.c]
-              dma_direct_map_phys()        [kernel/dma/direct.h]
-                dma_capable()              Checks addr against DMA mask
-                  -> FAILS: addr > 0xFFFFFFFF
-
-The root cause is that KUnit devices are initialized with a 32-bit DMA
-mask (DMA_BIT_MASK(32)) in lib/kunit/device.c. On ppc64le and s390x
-systems with physical memory above 4GB, page allocations can land at
-addresses that exceed this mask. When drm_gem_shmem_get_pages_sgt()
-attempts to DMA-map these pages via dma_map_sgtable(), the DMA layer
-rejects the mapping because the physical address overflows the 32-bit
-mask.
-
-The failure is intermittent because pages may or may not be allocated
-above 4GB on any given run depend on memory pressure.
-
-Fix by setting a 64-bit DMA mask on the device before calling
-drm_gem_shmem_get_pages_sgt() for all tests, following the same pattern
-already used in drm_gem_shmem_test_obj_create_private().
-
-[1] https://s3.amazonaws.com/arr-cki-prod-trusted-artifacts/trusted-artifacts/2643976103/test_s390x/15128551935/artifacts/jobwatch/logs/recipes/21561049/tasks/220716793/results/1014626315/logs/dmesg.log
-[2] https://s3.amazonaws.com/arr-cki-prod-trusted-artifacts/trusted-artifacts/2643976103/test_ppc64le/15128551933/artifacts/jobwatch/logs/recipes/21561041/tasks/220716705/results/1014628163/logs/dmesg.log
-
-Fixes: 93032ae634d4 ("drm/test: add a test suite for GEM objects backed by shmem")
-Closes: https://datawarehouse.cki-project.org/issue/5345
-Closes: https://datawarehouse.cki-project.org/issue/3184
-Assisted-by: Claude:claude-4.6-opus
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Signed-off-by: José Expósito <jose.exposito@redhat.com>
-Link: https://patch.msgid.link/20260703150808.3832-1-jose.exposito89@gmail.com
+Fixes: cdec67a489d4 ("bpf: tcp: Make sure iter->batch always contains a full bucket snapshot")
+Reported-by: AutonomousCodeSecurity@microsoft.com
+Signed-off-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Jordan Rife <jordan@jrife.io>
+Link: https://patch.msgid.link/20260713233230.3553593-1-xmei5@asu.edu
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tests/drm_gem_shmem_test.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ net/ipv4/tcp_ipv4.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/tests/drm_gem_shmem_test.c b/drivers/gpu/drm/tests/drm_gem_shmem_test.c
-index 44a1901092497e..5e69ff1d1ad673 100644
---- a/drivers/gpu/drm/tests/drm_gem_shmem_test.c
-+++ b/drivers/gpu/drm/tests/drm_gem_shmem_test.c
-@@ -95,13 +95,9 @@ static void drm_gem_shmem_test_obj_create_private(struct kunit *test)
- 	sg_init_one(sgt->sgl, buf, TEST_SIZE);
+diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
+index d5cd238358ef04..c7cf086cc6a1eb 100644
+--- a/net/ipv4/tcp_ipv4.c
++++ b/net/ipv4/tcp_ipv4.c
+@@ -3144,8 +3144,11 @@ static struct sock *bpf_iter_tcp_batch(struct seq_file *seq)
+ 	bpf_iter_tcp_put_batch(iter);
+ 	err = bpf_iter_tcp_realloc_batch(iter, expected * 3 / 2,
+ 					 GFP_USER);
+-	if (err)
++	if (err) {
++		iter->cur_sk = 0;
++		iter->end_sk = 0;
+ 		return ERR_PTR(err);
++	}
  
- 	/*
--	 * Set the DMA mask to 64-bits and map the sgtables
--	 * otherwise drm_gem_shmem_free will cause a warning
--	 * on debug kernels.
-+	 * Map the sgtables otherwise drm_gem_shmem_free will cause a warning on
-+	 * debug kernels.
- 	 */
--	ret = dma_set_mask(drm_dev->dev, DMA_BIT_MASK(64));
--	KUNIT_ASSERT_EQ(test, ret, 0);
--
- 	ret = dma_map_sgtable(drm_dev->dev, sgt, DMA_BIDIRECTIONAL, 0);
- 	KUNIT_ASSERT_EQ(test, ret, 0);
- 
-@@ -352,11 +348,19 @@ static int drm_gem_shmem_test_init(struct kunit *test)
- {
- 	struct device *dev;
- 	struct drm_device *drm_dev;
-+	int ret;
- 
- 	/* Allocate a parent device */
- 	dev = drm_kunit_helper_alloc_device(test);
- 	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, dev);
- 
-+	/*
-+	 * Set the DMA mask to 64-bits to avoid intermittent failures calling
-+	 * drm_gem_shmem_get_pages_sgt().
-+	 */
-+	ret = dma_set_mask(dev, DMA_BIT_MASK(64));
-+	KUNIT_ASSERT_EQ(test, ret, 0);
-+
- 	/*
- 	 * The DRM core will automatically initialize the GEM core and create
- 	 * a DRM Memory Manager object which provides an address space pool
+ 	sk = bpf_iter_tcp_resume(seq);
+ 	if (!sk)
 -- 
 2.53.0
 
