@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73D08392C2C;
-	Thu, 30 Jul 2026 16:05:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 127D54503ED;
+	Thu, 30 Jul 2026 16:05:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427546; cv=none; b=T3PeeahzaesYB1GxRzBzGpxUnr/dWIspmBe2Sa4MMumZ2c/2o0I73HiMyH3EORflmOkpT8ZvYRKio6RFRLF28SYt0AsWhLHEqv+Xl/DfqbOjt2BwUJ/IY30Je//rQMA10IPrNJy5pf7iLkyKz54tWFAjSSfCnjeOGajwq5tFaus=
+	t=1785427550; cv=none; b=ub2UxuaZCo6Lnkw79fglZ6WRaKxGGElu6g0pu0NWqZQW8X1cScOIOB4vU0/UIwTDlTuSJacKSNNCFjwVWRqsdyfVykH0czZsvPjpmK4v2PY58fVBMRn6XyxWG8pACyEZVO2rg+Z8drHGB5GYWTz9TkG20XE4n3uWhlXMXMPhjIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427546; c=relaxed/simple;
-	bh=aj4yK0Bdeh8Cmfet/sEkZoIaqTs0MqI8m8zKxbcP++M=;
+	s=arc-20240116; t=1785427550; c=relaxed/simple;
+	bh=ZWSesiltkJlqLjd5s4aYnnDAcMYKpz+WubK23IiQbAg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IBzgsS9pCnUiqdp0ifl4sKLmPy5tgEOzG4YqI50gHatmVyD7PyyZHtQeB+IS1rgkL9fwomPchxPjW7S0IEfD8q0lG9lAlcV3QGLFqggwusYIGUUAhiwcHEmU+jsoOAY/kLiF//+KJ966WMVsfv77a3U5DULA0m+WWPOUVE6+Z6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SHMSGnbx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dFtZeSCUNEI5ueYXscpO1WJjib7ZQu+1OfwFP3O2psSiJYSZsYq/gCDxo3zNY2reg2gj+OdLDa3CdTVpE1zcpV2ZBwMU9DwsKXrNlUnzhXl9NuVzz3DCh0ZljLqrVakpFrZKe/E37p533IOVb1vwPucVd9bpyxvJNjvoqBNLOcg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bXvYo4kZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SHMSGnbx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F60E1F000E9;
-	Thu, 30 Jul 2026 16:05:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bXvYo4kZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65A231F00A3A;
+	Thu, 30 Jul 2026 16:05:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427545;
-	bh=QKRcIpGmmYqbyZ+ypyIII3jgrdfMnT8+YqNxcTzj61Q=;
+	s=korg; t=1785427547;
+	bh=C/0zvcOksHZBb7siY1JZonWAfyjxlH+3SjCR+M0gv6g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SHMSGnbxtIHjs1cDUAiX+EaKL1RxhpzEYrt2ELCndJuL9zFjOhuOXTvUhP5HOBvjq
-	 EvM/lKt8yLM29BnCP83j3IuDhgrADBIrnSxP/Cr2OZ8H6PftNVIZPNbdT+W8K26Zgt
-	 BfSfyn/Cfy2KtS80kTqE2MzyyDpHokLEaWGrbUlQ=
+	b=bXvYo4kZQ+7lSVA5nZvzQZkh5e0nI5Eupj0hc8K/CDLHPVwMvU/g+/CitMo9wHmjx
+	 lXklko0fD8WUR0f/joQh87ChoNoPdUbMSB3hTImScUqGjcWDAKjIYi7bZ8BGP4HFau
+	 up1A95au3puzHjG02k/WeQfQl+v41STpBOwkHKNQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 181/484] net: bridge: vlan: fix vlan range dumps starting with pvid
-Date: Thu, 30 Jul 2026 16:11:18 +0200
-Message-ID: <20260730141427.400336504@linuxfoundation.org>
+	Ashutosh Desai <ashutoshdesai993@gmail.com>,
+	Lyude Paul <lyude@redhat.com>
+Subject: [PATCH 6.6 208/484] drm/dp/mst: fix buffer overflows in sideband chunk accumulation
+Date: Thu, 30 Jul 2026 16:11:45 +0200
+Message-ID: <20260730141427.990857130@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -52,149 +50,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikolay Aleksandrov <razor@blackwall.org>
+From: Ashutosh Desai <ashutoshdesai993@gmail.com>
 
-[ Upstream commit 43171c97e4714bf601b468401b37732244639c21 ]
+commit 55bd5e685bda455b9b50c835f8c8442d52a344a3 upstream.
 
-There is a bug in all range dumps that rely on br_vlan_can_enter_range()
-when the PVID is a range starting VLAN, all following VLANs that match
-its flags can enter the range, but when the range is filled in only the
-PVID VLAN is dumped and the rest of the range is discarded because
-br_vlan_fill_vids() checks for the PVID flag. Since the PVID VLAN can
-be only one, we need to break ranges around it, the best way to do that
-consistently for all is to alter br_vlan_can_enter_range() to take into
-account the PVID and return false to break the range when it's matched.
+drm_dp_sideband_append_payload() has three related bugs when processing
+device-provided sideband reply data:
 
-Before the fix:
-$ ip l add br0 type bridge vlan_filtering 1
-$ ip l add dumdum type dummy
-$ ip l set dumdum master br0
-$ ip l set br0 up
-$ ip l set dumdum up
-$ bridge vlan add dev dumdum vid 1 pvid untagged master
-$ bridge vlan add dev dumdum vid 2 untagged master
-$ bridge vlan show dev dumdum # use legacy dump to show all vlans
-port              vlan-id
-dumdum            1 PVID Egress Untagged
-                  2 Egress Untagged
+1. Zero-length curchunk_len underflow: msg_len is a 6-bit field taken
+   directly from the DP sideband header. If a device sends msg_len=0,
+   curchunk_len is set to zero. The condition (curchunk_idx >= curchunk_len)
+   is immediately true, and curchunk_len-1 wraps to 255 (u8 underflow).
+   drm_dp_msg_data_crc4() reads 255 bytes from chunk[48], then memcpy()
+   writes 255 bytes into msg[], both far out of bounds.
 
-$ bridge -d vlan show dev dumdum # use the new dump (RTM_GETVLAN)
-port              vlan-id
-dumdum            1 PVID Egress Untagged
-                    state forwarding mcast_router 1
+2. chunk[48] overflow: curchunk_len can reach 63 (6-bit field). chunk[] is
+   only 48 bytes. Multi-iteration payload assembly appends 16-byte blocks
+   until curchunk_idx reaches curchunk_len, writing up to 15 bytes past
+   the end of chunk[] into msg[].
 
-VLAN 2 is missing, and if there are more matching VLANs afterwards
-they'd be missing too.
+3. msg[256] overflow: each chunk contributes (curchunk_len-1) bytes to
+   msg[]. No check ensures curlen + (curchunk_len-1) stays within msg[256],
+   so the memcpy can spill into adjacent struct fields.
 
-After the fix:
-[ same setup steps ]
-$ bridge vlan show dev dumdum
-port              vlan-id
-dumdum            1 PVID Egress Untagged
-                  2 Egress Untagged
-$ bridge -d vlan show dev dumdum # use the new dump (RTM_GETVLAN)
-port              vlan-id
-dumdum            1 PVID Egress Untagged
-                    state forwarding mcast_router 1
-                  2 Egress Untagged
-                    state forwarding mcast_router 1
+All three are reachable from any DP MST device that can forge sideband
+reply messages on a physical connection.
 
-Fixes: 0ab558795184 ("net: bridge: vlan: add rtm range support")
-Signed-off-by: Nikolay Aleksandrov <razor@blackwall.org>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260721140922.682265-2-razor@blackwall.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: ad7f8a1f9ced ("drm/helper: add Displayport multi-stream helper (v0.6)")
+Cc: <stable@vger.kernel.org> # v3.17+
+Signed-off-by: Ashutosh Desai <ashutoshdesai993@gmail.com>
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Signed-off-by: Lyude Paul <lyude@redhat.com>
+Link: https://patch.msgid.link/20260410041901.2438960-1-ashutoshdesai993@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bridge/br_netlink_tunnel.c |  3 ++-
- net/bridge/br_private.h        |  6 ++++--
- net/bridge/br_vlan.c           | 10 ++++++----
- net/bridge/br_vlan_options.c   |  3 +--
- 4 files changed, 13 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/display/drm_dp_mst_topology.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/net/bridge/br_netlink_tunnel.c b/net/bridge/br_netlink_tunnel.c
-index 17abf092f7cac1..b006d1127c5495 100644
---- a/net/bridge/br_netlink_tunnel.c
-+++ b/net/bridge/br_netlink_tunnel.c
-@@ -271,7 +271,8 @@ static void __vlan_tunnel_handle_range(const struct net_bridge_port *p,
- 	if (!*v_start)
- 		goto out_init;
- 
--	if (v && curr_change && br_vlan_can_enter_range(v, *v_end)) {
-+	if (v && curr_change &&
-+	    br_vlan_can_enter_range(v, *v_end, br_get_pvid(vg))) {
- 		*v_end = v;
- 		return;
- 	}
-diff --git a/net/bridge/br_private.h b/net/bridge/br_private.h
-index f0d8edc378a0eb..4867464bde32b6 100644
---- a/net/bridge/br_private.h
-+++ b/net/bridge/br_private.h
-@@ -1563,7 +1563,8 @@ void br_vlan_notify(const struct net_bridge *br,
- 		    u16 vid, u16 vid_range,
- 		    int cmd);
- bool br_vlan_can_enter_range(const struct net_bridge_vlan *v_curr,
--			     const struct net_bridge_vlan *range_end);
-+			     const struct net_bridge_vlan *range_end,
-+			     u16 pvid);
- 
- void br_vlan_fill_forward_path_pvid(struct net_bridge *br,
- 				    struct net_device_path_ctx *ctx,
-@@ -1804,7 +1805,8 @@ static inline void br_vlan_notify(const struct net_bridge *br,
- }
- 
- static inline bool br_vlan_can_enter_range(const struct net_bridge_vlan *v_curr,
--					   const struct net_bridge_vlan *range_end)
-+					   const struct net_bridge_vlan *range_end,
-+					   u16 pvid)
+--- a/drivers/gpu/drm/display/drm_dp_mst_topology.c
++++ b/drivers/gpu/drm/display/drm_dp_mst_topology.c
+@@ -779,6 +779,12 @@ static bool drm_dp_sideband_append_paylo
  {
- 	return true;
- }
-diff --git a/net/bridge/br_vlan.c b/net/bridge/br_vlan.c
-index cc54b8267bcc7b..171d1dddb26a81 100644
---- a/net/bridge/br_vlan.c
-+++ b/net/bridge/br_vlan.c
-@@ -1943,9 +1943,11 @@ void br_vlan_notify(const struct net_bridge *br,
+ 	u8 crc4;
  
- /* check if v_curr can enter a range ending in range_end */
- bool br_vlan_can_enter_range(const struct net_bridge_vlan *v_curr,
--			     const struct net_bridge_vlan *range_end)
-+			     const struct net_bridge_vlan *range_end,
-+			     u16 pvid)
- {
--	return v_curr->vid - range_end->vid == 1 &&
-+	return v_curr->vid != pvid && range_end->vid != pvid &&
-+	       v_curr->vid - range_end->vid == 1 &&
- 	       range_end->flags == v_curr->flags &&
- 	       br_vlan_opts_eq_range(v_curr, range_end);
- }
-@@ -2027,8 +2029,8 @@ static int br_vlan_dump_dev(const struct net_device *dev,
- 			idx += range_end->vid - range_start->vid + 1;
++	/* curchunk_len must be >= 1 (min 1 CRC byte) and fit in chunk[] */
++	if (!msg->curchunk_len ||
++	    msg->curchunk_len > ARRAY_SIZE(msg->chunk) ||
++	    msg->curchunk_idx + replybuflen > ARRAY_SIZE(msg->chunk))
++		return false;
++
+ 	memcpy(&msg->chunk[msg->curchunk_idx], replybuf, replybuflen);
+ 	msg->curchunk_idx += replybuflen;
  
- 			range_start = v;
--		} else if (dump_stats || v->vid == pvid ||
--			   !br_vlan_can_enter_range(v, range_end)) {
-+		} else if (dump_stats ||
-+			   !br_vlan_can_enter_range(v, range_end, pvid)) {
- 			u16 vlan_flags = br_vlan_flags(range_start, pvid);
- 
- 			if (!br_vlan_fill_vids(skb, range_start->vid,
-diff --git a/net/bridge/br_vlan_options.c b/net/bridge/br_vlan_options.c
-index 8fa89b04ee942d..4a736e005bad7e 100644
---- a/net/bridge/br_vlan_options.c
-+++ b/net/bridge/br_vlan_options.c
-@@ -310,8 +310,7 @@ int br_vlan_process_options(const struct net_bridge *br,
- 				continue;
- 			}
- 
--			if (v->vid == pvid ||
--			    !br_vlan_can_enter_range(v, curr_end)) {
-+			if (!br_vlan_can_enter_range(v, curr_end, pvid)) {
- 				br_vlan_notify(br, p, curr_start->vid,
- 					       curr_end->vid, RTM_NEWVLAN);
- 				curr_start = v;
--- 
-2.53.0
-
+@@ -789,6 +795,9 @@ static bool drm_dp_sideband_append_paylo
+ 			print_hex_dump(KERN_DEBUG, "wrong crc",
+ 				       DUMP_PREFIX_NONE, 16, 1,
+ 				       msg->chunk,  msg->curchunk_len, false);
++		/* Guard against accumulated msg[] overflow */
++		if (msg->curlen + msg->curchunk_len - 1 > ARRAY_SIZE(msg->msg))
++			return false;
+ 		/* copy chunk into bigger msg */
+ 		memcpy(&msg->msg[msg->curlen], msg->chunk, msg->curchunk_len - 1);
+ 		msg->curlen += msg->curchunk_len - 1;
 
 
