@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97A27407597;
-	Thu, 30 Jul 2026 15:03:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71353367B67;
+	Thu, 30 Jul 2026 15:03:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785423791; cv=none; b=E+GTXkc9QTGCYkJqZFx09jJSBQdXYpi+U+e8QmjPA9yGycd+k1bWDEJ248hUWc2sZAg/SRQiyB4U80OIwAQApy48b+bH+3hSISDFFb4WKAnNnrHclkQH/wkqc+lLq/WWxXJxAwMYep6wnzKEyloUGokTPoWn9vO8CRdz4OabiHM=
+	t=1785423794; cv=none; b=FUhM6RhykfQ52GCk+BSlv1FDMTilr/iM7hPgrlW2slF9Q0SVJPVJh4SxDDgtbeNrydOt8qB0NwR3o1zni9w0s7rIzP3/6uU8hPX2dFWK1om2uHZPEfs1HhT8YOGCpBIriDfcTZdYgK8kTS9+/3kakuiuKwG3Ye33JFRMKohGIPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785423791; c=relaxed/simple;
-	bh=hxsmH8iaDZsqL8bGSebIjUvNWNAp7oFkbQw0hZQJaDY=;
+	s=arc-20240116; t=1785423794; c=relaxed/simple;
+	bh=FyouKX7iBs2ObkORfI6392RXvTOb/kH2pM3th/ZjTWM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X0pr3YR5OFAlQYR3IliiwmQZrfSgNZOlOVHjs4VfPluDXotEoTshMRhN77q2X9ZgY6i3CLytd5OwNRalrB5ObGgtZheWvMY/HMJHy5hJLV0hBVto/80rAdm3gix41lwpki+fLkl++dSZGjTWhiAsywtEvOlV6cT1axGdkZ9CZ4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cm/tLyTv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=LVnIVKjTEA9AQ4LbGxj0QwTlb8J1fQ/zEtghu44uIGdQYhLOI9NlyY2ivErvg/yIRBRoBf9x2XsgXp/VoL2ZKzLPROqfvInDHLt2AgSpqiWe81jdXXugOtFJ2dpFrFhMBekjsvOqihgnc1YjDX1GqlXHToVxBdgyl2miNoa0+IY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sJI/wsS6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cm/tLyTv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5C121F000E9;
-	Thu, 30 Jul 2026 15:03:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sJI/wsS6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC3DE1F000E9;
+	Thu, 30 Jul 2026 15:03:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785423790;
-	bh=oEXy5400y9oY8t+SLaNv5OMKc7UnJFO9czzb3hE0UOo=;
+	s=korg; t=1785423793;
+	bh=DNc/YUJMDaOnHA4DDfkpQVdUK5y6Syyg8lFt23FsZxk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Cm/tLyTvSqh09PeFe6ghnqoUuzzsEDz0DzfBn9n28lRaPI2We/EMKFna+Iwhw4g4V
-	 LkeO/1Jy3w+jA+VMzMA541NE+X0ndHNWZcCLylg3evuWX7mse0nItkHUC4oFoxIZ80
-	 OpW3fMga7jEoNxBOZ3UFGL3scQjkpd0OYe27abKE=
+	b=sJI/wsS6HYPRlmRG7oQCOw5fLe9M6Y58gv/tf/zfX7gd4qOO5y8aGRIGKq7NRfl6S
+	 vf3nsY/JKI5YtfAR/XeykqT8F/mNc4RklV863DRN2C4LlKM7JUhp129XodSG72YwhL
+	 efNMeAEcI1HZ6FMosvcweIsFBg6IAIe9q8s0V2no=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
+	syzbot+50122cbc2874b1eb25b0@syzkaller.appspotmail.com,
+	Cheng Yongkang <teel4res@gmail.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 165/675] selftests/bpf: Keep verifier_map_ptr exercising ops pointer access
-Date: Thu, 30 Jul 2026 16:08:15 +0200
-Message-ID: <20260730141448.645673517@linuxfoundation.org>
+Subject: [PATCH 6.18 166/675] wifi: ath9k: hif_usb: dont dereference hif_dev after re-arming firmware request
+Date: Thu, 30 Jul 2026 16:08:16 +0200
+Message-ID: <20260730141448.665780948@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -46,111 +47,91 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Cheng Yongkang <teel4res@gmail.com>
 
-commit 082c412097716b93ff1365689fc4ddcd1ce8296f upstream.
+[ Upstream commit dad9f96945d77ecd4708f730c06ef54dcd8cc057 ]
 
-sashiko complained that 38498c0ebacd ("selftests/bpf: Adjust verifier_map_ptr
-for the map's excl field") would slightly decrease the test coverage given
-before the test was against the verifier rejecting the ops pointer. Recover
-the old test with the right offsets and add the existing one as an additional
-test case.
+ath9k_hif_request_firmware() re-arms an asynchronous firmware load via
+request_firmware_nowait(), passing hif_dev as the completion context, and
+then still dereferences hif_dev:
 
-  # LDLIBS=-static PKG_CONFIG='pkg-config --static' ./vmtest.sh -- ./test_progs -t verifier_map_ptr
-  [    1.672932] bpf_testmod: module verification failed: signature and/or required key missing - tainting kernel
-  #637/1   verifier_map_ptr/bpf_map_ptr: read with negative offset rejected:OK
-  #637/2   verifier_map_ptr/bpf_map_ptr: read with negative offset rejected @unpriv:OK
-  #637/3   verifier_map_ptr/bpf_map_ptr: write rejected:OK
-  #637/4   verifier_map_ptr/bpf_map_ptr: write rejected @unpriv:OK
-  #637/5   verifier_map_ptr/bpf_map_ptr: read non-existent field rejected:OK
-  #637/6   verifier_map_ptr/bpf_map_ptr: read non-existent field rejected @unpriv:OK
-  #637/7   verifier_map_ptr/bpf_map_ptr: read beyond excl field rejected:OK
-  #637/8   verifier_map_ptr/bpf_map_ptr: read beyond excl field rejected @unpriv:OK
-  #637/9   verifier_map_ptr/bpf_map_ptr: read ops field accepted:OK
-  #637/10  verifier_map_ptr/bpf_map_ptr: read ops field accepted @unpriv:OK
-  #637/11  verifier_map_ptr/bpf_map_ptr: r = 0, map_ptr = map_ptr + r:OK
-  #637/12  verifier_map_ptr/bpf_map_ptr: r = 0, map_ptr = map_ptr + r @unpriv:OK
-  #637/13  verifier_map_ptr/bpf_map_ptr: r = 0, r = r + map_ptr:OK
-  #637/14  verifier_map_ptr/bpf_map_ptr: r = 0, r = r + map_ptr @unpriv:OK
-  #637     verifier_map_ptr:OK
-  [...]
-  Summary: 2/20 PASSED, 0 SKIPPED, 0 FAILED
+	dev_info(&hif_dev->udev->dev, "ath9k_htc: Firmware %s requested\n",
+		 hif_dev->fw_name);
 
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/r/20260602133052.423725-4-daniel@iogearbox.net
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+The re-armed callback ath9k_hif_usb_firmware_cb() runs on the "events"
+workqueue and, when the firmware is missing, walks the retry chain into
+ath9k_hif_usb_firmware_fail() -> complete_all(&hif_dev->fw_done). That
+releases the wait_for_completion(&hif_dev->fw_done) in a concurrent
+ath9k_hif_usb_disconnect(), which then kfree()s hif_dev. The trailing
+dev_info() in the frame that re-armed the request can therefore read freed
+memory (hif_dev->udev, the first field of struct hif_device_usb):
+
+  BUG: KASAN: slab-use-after-free in ath9k_hif_request_firmware
+  Read of size 8 ... by task kworker/...
+   ath9k_hif_request_firmware
+   ath9k_hif_usb_firmware_cb           drivers/net/wireless/ath/ath9k/hif_usb.c:1247
+   request_firmware_work_func
+  Allocated by ...:
+   ath9k_hif_usb_probe                 drivers/net/wireless/ath/ath9k/hif_usb.c
+  Freed by ...:
+   ath9k_hif_usb_disconnect -> kfree   drivers/net/wireless/ath/ath9k/hif_usb.c
+
+The fw_done barrier only makes disconnect wait for the firmware chain to
+*terminate*; it does not protect the outer ath9k_hif_request_firmware()
+frame that re-armed the request and keeps touching hif_dev afterwards.
+
+Drop the post-request dev_info(): it is the only use of hif_dev after the
+async request is armed, and it is purely informational (the dev_err() on the
+failure path runs only when request_firmware_nowait() did not arm a callback,
+so hif_dev is still alive there).
+
+This was first reported by syzbot as a single, non-reproduced crash that was
+later auto-obsoleted, and was independently rediscovered by the reFuzz fuzzer,
+which produced a C reproducer (USB-gadget connect/disconnect of an ath9k_htc
+device whose firmware download fails). The vulnerable code is unchanged and
+still present in v7.1-rc6, where the slab-use-after-free reproduces under KASAN
+once the (sub-microsecond) race window is widened.
+
+Fixes: e904cf6fe230 ("ath9k_htc: introduce support for different fw versions")
+Reported-by: syzbot+50122cbc2874b1eb25b0@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=50122cbc2874b1eb25b0
+Signed-off-by: Cheng Yongkang <teel4res@gmail.com>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Link: https://patch.msgid.link/20260605153210.20471-1-1020691186@qq.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/bpf/progs/verifier_map_ptr.c    | 34 ++++++++++++++++---
- 1 file changed, 30 insertions(+), 4 deletions(-)
+ drivers/net/wireless/ath/ath9k/hif_usb.c | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/progs/verifier_map_ptr.c b/tools/testing/selftests/bpf/progs/verifier_map_ptr.c
-index d8e822d1a8bab6..1661936598703c 100644
---- a/tools/testing/selftests/bpf/progs/verifier_map_ptr.c
-+++ b/tools/testing/selftests/bpf/progs/verifier_map_ptr.c
-@@ -72,17 +72,43 @@ __naked void bpf_map_ptr_write_rejected(void)
+diff --git a/drivers/net/wireless/ath/ath9k/hif_usb.c b/drivers/net/wireless/ath/ath9k/hif_usb.c
+index fe9abe8cd268fa..0a3d2190b9beec 100644
+--- a/drivers/net/wireless/ath/ath9k/hif_usb.c
++++ b/drivers/net/wireless/ath/ath9k/hif_usb.c
+@@ -1225,15 +1225,10 @@ static int ath9k_hif_request_firmware(struct hif_device_usb *hif_dev,
+ 	ret = request_firmware_nowait(THIS_MODULE, true, hif_dev->fw_name,
+ 				      &hif_dev->udev->dev, GFP_KERNEL,
+ 				      hif_dev, ath9k_hif_usb_firmware_cb);
+-	if (ret) {
++	if (ret)
+ 		dev_err(&hif_dev->udev->dev,
+ 			"ath9k_htc: Async request for firmware %s failed\n",
+ 			hif_dev->fw_name);
+-		return ret;
+-	}
+-
+-	dev_info(&hif_dev->udev->dev, "ath9k_htc: Firmware %s requested\n",
+-		 hif_dev->fw_name);
  
- /*
-  * struct bpf_map starts with the SHA256 hash sha[32] at offset 0 (a readable
-- * byte array), followed by the u32 excl field at offset 32. Reading a u32 at
-- * offset 33 runs past the end of excl and is rejected.
-+ * byte array), the u32 excl field at offset 32, and the ops pointer at offset
-+ * 40. Reading a u32 at offset 41 reaches into the middle of the ops pointer,
-+ * i.e. a partial pointer access, which is rejected.
-  */
- SEC("socket")
- __description("bpf_map_ptr: read non-existent field rejected")
- __failure
--__msg("access beyond the end of member excl (mend:36) in struct bpf_map with off 33 size 4")
-+__msg("cannot access ptr member ops with moff 40 in struct bpf_map with off 41 size 4")
- __failure_unpriv
- __msg_unpriv("access is allowed only to CAP_PERFMON and CAP_SYS_ADMIN")
- __flag(BPF_F_ANY_ALIGNMENT)
- __naked void read_non_existent_field_rejected(void)
-+{
-+	asm volatile ("					\
-+	r6 = 0;						\
-+	r1 = %[map_array_48b] ll;			\
-+	r6 = *(u32*)(r1 + 41);				\
-+	r0 = 1;						\
-+	exit;						\
-+"	:
-+	: __imm_addr(map_array_48b)
-+	: __clobber_all);
-+}
-+
-+/*
-+ * The u32 excl field spans offsets 32..35 (mend 36). Reading a u32 at offset
-+ * 33 starts inside excl but extends past its end, which the verifier rejects
-+ * as an out-of-bounds scalar access.
-+ */
-+SEC("socket")
-+__description("bpf_map_ptr: read beyond excl field rejected")
-+__failure
-+__msg("access beyond the end of member excl (mend:36) in struct bpf_map with off 33 size 4")
-+__failure_unpriv
-+__msg_unpriv("access is allowed only to CAP_PERFMON and CAP_SYS_ADMIN")
-+__flag(BPF_F_ANY_ALIGNMENT)
-+__naked void read_beyond_excl_field_rejected(void)
- {
- 	asm volatile ("					\
- 	r6 = 0;						\
-@@ -105,7 +131,7 @@ __naked void ptr_read_ops_field_accepted(void)
- 	asm volatile ("					\
- 	r6 = 0;						\
- 	r1 = %[map_array_48b] ll;			\
--	r6 = *(u64*)(r1 + 0);				\
-+	r6 = *(u64*)(r1 + 40);				\
- 	r0 = 1;						\
- 	exit;						\
- "	:
+ 	return ret;
+ }
 -- 
 2.53.0
 
