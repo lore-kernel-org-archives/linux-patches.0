@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16D3344839B;
-	Thu, 30 Jul 2026 15:23:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9173D4483B9;
+	Thu, 30 Jul 2026 15:23:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425033; cv=none; b=COMf7htsaqsC6tQrpriVB9PDrunVNcITlPQDWOkXFolTxXBXTGcDfy1QEfKnFVjlaurbn5J0f2/g7Z8jwuM5zkuzmlUVNKRFYCWIqeJ+vsopTdQTP8+5sXnviCowyjhUW69ezL605EEAFyzy2TMbKDfLDiSmsCReKkMjm7jJfxY=
+	t=1785425034; cv=none; b=NrAqqXufxbNjbkCJ8/hrGqyFw2WAv24ZwMutzmK9xhGFhvb9PUhAsySwoKhZnW2gv/219EmQ4WN+Dobvk5vhoWct9h9K9WBf8HZXp/loCTVLwOusCgeeItCOrU1DUoACpgZrXCs1HwgKkuiKGEOuVmUQFzZd36A9mL/2w0Oy44o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425033; c=relaxed/simple;
-	bh=c/JTqDHpxjCO/4e5v0yP/pp9UO1BrHGV0bqZP0IVBY4=;
+	s=arc-20240116; t=1785425034; c=relaxed/simple;
+	bh=ZLfH/xJeO0wcYJdw9bPpLYOwiFjYZifF1Wvy5IEHLQ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HK3+CtaISdOEHghK6618PwQWgA1jjlsBpXGcnbeNXDP/+gkvnN9GuAmfcGnUo6daJpeJVgp1Ylpi61iZIPpjx4JurPvoRMQ00KRrX3bv6N8YF355/g/8X3OQLCIr9mFxl7zfuub3PtLN3YEiGOBzfPMHQeGbI5AiCa5f+1xPy64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RxpicD2o; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=L0pGF3dXCKdBPAIBDHMQA6bVwXZ8YHJLe6xzsZBM2LyI/dpSNvyTryiVWJDjvPhgiudWc4FP3FEMPr/zkCdYtis6WOzLoaQOzI3ZB6xRT0c6gGou4OAMqxiTs/ji9ebBLbjuh+tTusKR6eWVzDL7YTX0WRk15tc83E8GG1sMap4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fsBsIXpL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RxpicD2o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 249981F000E9;
-	Thu, 30 Jul 2026 15:23:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fsBsIXpL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED3C01F00A3A;
+	Thu, 30 Jul 2026 15:23:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425030;
-	bh=WoGjk+dMzE6VPtnErMcsZmEkK/v5X7UYLlOtixGpArk=;
+	s=korg; t=1785425033;
+	bh=ZVr+TSwb7SG65TH/c8ohDgPvA/TAOJe5V8e+lvgL2es=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RxpicD2op83suR39apW6jzU81ugEwCLb8zIJ1crnArY28NUL2wcq0pR6LpBB6Wzqi
-	 DqEwRTCcuCcEJ44F7pxBtka8hudtg8yU5nTBZY0pPp60uJzJHxDWgHvhtLDFlbeHr9
-	 TLNxof7/N/Ufa00rnC2I9EwncZI46W4J/8IUI/iw=
+	b=fsBsIXpLTk1CoxAZRGI0dRvooQc6E1grHGIgEsKuSsv28x/tCEVNTxucXW3Vgu5Mp
+	 lZM+k5Op4zxqMqX6lhANU+QEa9/sPxGv6ceuAUlPYGUg97WpMM3N73dto0yJKC3jK1
+	 ltvyZJus1TyBoplVZt8LmETfgmjs6F3PbJ+WTwWQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeremy Kerr <jk@codeconstruct.com.au>,
-	Doruk Tan Ozturk <doruk@0sec.ai>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.18 558/675] mctp: serial: handle zero-length frames to prevent rx buffer overflow
-Date: Thu, 30 Jul 2026 16:14:48 +0200
-Message-ID: <20260730141456.995841146@linuxfoundation.org>
+	Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 6.18 549/675] rbd: Reset positive result codes to zero in object map update path
+Date: Thu, 30 Jul 2026 16:14:39 +0200
+Message-ID: <20260730141456.809388381@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -52,93 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doruk Tan Ozturk <doruk@0sec.ai>
+From: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
 
-commit 793b9b729f1e8de57be8c8daf1a9838be96cabed upstream.
+commit a6c4250b81bd30beae94e1b7a4b26fa1193ad2e4 upstream.
 
-The MCTP serial receive state machine reads a frame length byte in
-mctp_serial_push_header() case 2 and validates it upper-bound-only:
+In a reply message to an RBD request, a positive result code indicates
+a data payload, which is not allowed for writes. While
+rbd_osd_req_callback() already resets a positive result code for writes
+to zero, rbd_object_map_callback() does not. This allows a corrupted
+reply to an object map update to trigger the rbd_assert(*result < 0) in
+__rbd_obj_handle_request(). This happens, because
+rbd_object_map_callback() calls rbd_obj_handle_request() ->
+__rbd_obj_handle_request() and passes this positive result code. From
+__rbd_obj_handle_request(), rbd_obj_advance_write() is called, which
+leaves the positive result code unchanged and returns true. Therefore,
+the if(done && *result) branch is executed in __rbd_obj_handle_request()
+and the assertion triggers.
 
-	if (c > MCTP_SERIAL_FRAME_MTU) {
-		dev->rxstate = STATE_ERR;
-	} else {
-		dev->rxlen = c;
-		dev->rxpos = 0;
-		dev->rxstate = STATE_DATA;
-		...
-	}
+This patch fixes the issue by adjusting the logic in the
+rbd_object_map_callback() path. A positive result code for an object map
+update is now reset to zero (similar to rbd_osd_req_callback()), and the
+message is subsequently handled the same way as if the result code was
+zero from the beginning. Additionally, a WARN_ON_ONCE() is added for
+this case.
 
-A length of zero passes this check, so rxlen is set to 0 and the state
-machine advances to STATE_DATA. In mctp_serial_push() STATE_DATA, the
-incoming byte is stored and rxpos incremented before the terminator is
-tested:
-
-	dev->rxbuf[dev->rxpos] = c;
-	dev->rxpos++;
-	dev->rxstate = STATE_DATA;
-	if (dev->rxpos == dev->rxlen) {
-		dev->rxpos = 0;
-		dev->rxstate = STATE_TRAILER;
-	}
-
-With rxlen == 0 the "rxpos == rxlen" terminator can never fire (rxpos is
-already 1 on the first data byte), so subsequent bytes are written past
-the end of the fixed 74-byte rxbuf, which is the last member of the
-netdev private area. Every following data byte is an attacker-controlled
-1-byte out-of-bounds heap write, and the overflow continues until a
-frame (0x7e) or escape byte resets the parser -- effectively unbounded.
-
-Reaching this requires CAP_NET_ADMIN to attach the N_MCTP line
-discipline and bring the resulting mctpserialN netdev up, after which
-the bytes arrive via the tty receive path.
-
-Route a zero-length frame straight to STATE_TRAILER instead of
-STATE_DATA. The trailer/framing bytes are still consumed, and the frame
-resolves to a zero-length skb that the MCTP core rejects; the parser
-never enters STATE_DATA with rxlen == 0, so the out-of-bounds write can
-no longer occur.
-
-KASAN, on a frame of 0x7e 0x01 0x00 followed by data bytes (before this
-change):
-
-  UBSAN: array-index-out-of-bounds in drivers/net/mctp/mctp-serial.c:370
-  index 74 is out of range for type 'u8 [74]'
-  BUG: KASAN: slab-out-of-bounds in mctp_serial_tty_receive_buf
-  Write of size 1 at addr ... by task kworker/u16:0
-   mctp_serial_tty_receive_buf
-   tty_ldisc_receive_buf
-   flush_to_ldisc
-  Allocated by task 152:
-   alloc_netdev_mqs
-   mctp_serial_open
-
-v2: route zero-length frames to STATE_TRAILER instead of STATE_ERR so
-    the trailer/framing bytes are still consumed (Jeremy Kerr).
-
-Found by 0sec automated security-research tooling (https://0sec.ai).
-Fixes: a0c2ccd9b5ad ("mctp: Add MCTP-over-serial transport binding")
 Cc: stable@vger.kernel.org
-Suggested-by: Jeremy Kerr <jk@codeconstruct.com.au>
-Assisted-by: 0sec:multi-model
-Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260715082021.46315-1-doruk@0sec.ai
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 22e8bd51bb04 ("rbd: support for object-map and fast-diff")
+Signed-off-by: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
+Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/mctp/mctp-serial.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/block/rbd.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/net/mctp/mctp-serial.c
-+++ b/drivers/net/mctp/mctp-serial.c
-@@ -318,7 +318,7 @@ static void mctp_serial_push_header(stru
- 		} else {
- 			dev->rxlen = c;
- 			dev->rxpos = 0;
--			dev->rxstate = STATE_DATA;
-+			dev->rxstate = c > 0 ? STATE_DATA : STATE_TRAILER;
- 			dev->rxfcs = crc_ccitt_byte(dev->rxfcs, c);
- 		}
- 		break;
+--- a/drivers/block/rbd.c
++++ b/drivers/block/rbd.c
+@@ -1957,10 +1957,15 @@ static int rbd_object_map_update_finish(
+ 	bool has_current_state;
+ 	void *p;
+ 
+-	if (osd_req->r_result)
++	if (osd_req->r_result < 0)
+ 		return osd_req->r_result;
+ 
+ 	/*
++	 * Writes aren't allowed to return a data payload.
++	 */
++	WARN_ON_ONCE(osd_req->r_result > 0);
++
++	/*
+ 	 * Nothing to do for a snapshot object map.
+ 	 */
+ 	if (osd_req->r_num_ops == 1)
 
 
