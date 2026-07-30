@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16EAE453A25;
-	Thu, 30 Jul 2026 15:21:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B757443A89;
+	Thu, 30 Jul 2026 15:21:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785424907; cv=none; b=l9OZZ4HU6hn5TTSMCEcBG3T6yoKrLMA1yAI7WwU5w5AsQL+wM1kQQS0X5vXvoQ1SGUfbBecinS6lIWPFBw2kJcrU6hcvN5QJxJFE7VpQbQyWrM7GwN+XaUi6wZThEOgjhbyqANaUnKyfDo6QJzmVloKIf5QRopeTFvd4bjmVyLs=
+	t=1785424910; cv=none; b=odbCVTw64oIzgTpVR1vdxjD6sDTJnS0Nz78hkAKP1MbyuR7BrnRdtmQeQ8icnzFCtcJCMxLZKbjLOOqZAxRextV6OBkYcfss+31l+u3mSWHUeDbpo1UgCOzrLoQAX8Yi4wZasXY6gmNG+Je003f/u+GoEsDPeElZRRDEVlEirb8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785424907; c=relaxed/simple;
-	bh=RSprM9Xp8o1gknqOvZVHwa1XdSuDkeqTspH9Hf6KSik=;
+	s=arc-20240116; t=1785424910; c=relaxed/simple;
+	bh=KN8fU/k2FX9Sw8g0q4XDsp7M/08rp72NH/CwcTaAbL0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TIIW/0jSqeLg5cQoPXcEf98WrIgvoYAAMq8eQAga9f4WxI3OZt64KEVgOFjpieliPQfkiuWSEzXbkd3T96kanWC94KvS38YJ9Kp1thsXEJoS5etv8HCrnDFZeD5CuH6WLMf10p+XGGk/qPigZlkLpdFyZew6bQYtgdKCrDzzzIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E52iy9W+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SLU1ILXv2tPmRwuBFi+oCIsicOGEIogWduEHyEFBdBij3bTTGw2s5pv0tyH4So4rk6uQcN9r4D3ZA1jkAlXAWMVDrhLS6l4Arj0VKBJerrS8IjhptWKBU127wCmiEAeeuzdLN5s3cBQ0pFvhi8qLrIFqO5BkzFjga0OjWnBxZdg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S7RJjNqn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E52iy9W+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D0EC1F000E9;
-	Thu, 30 Jul 2026 15:21:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S7RJjNqn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 464E41F000E9;
+	Thu, 30 Jul 2026 15:21:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785424906;
-	bh=K3NL6hLrtSGCopPirsYWkZecAzUGT68EIi0eZ+9MZ6o=;
+	s=korg; t=1785424908;
+	bh=vF68PUFwStxsnSFZFBy1Aw4q/wdsB/rBcQAmymCNRKs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E52iy9W+Q0tqC3IQRP5vEckkbtP42x09D4CNI5cooim7noa2innchBBN+Pi/i978L
-	 rO1YNDUWXN0SinNedu6PQhDp5BJRIeRgUqJ2VIB5kq5gM8SjnGAUsfQM8vF80YiHwP
-	 LIcTszARz4le/JSU+sKazOGGo1U8aoGY772NA/sw=
+	b=S7RJjNqnTXZRYoL6vkVV2uUzbat0T0jw5yqaPdt3nNUNj8ppAv3E7xNzp5Uf93c46
+	 snUs3v/pIrD2YD3OHa0k1KCw5nnnPw/FJUeeG+RRP68K5xQRywbJsdxKbQCtIe+0Aq
+	 N0YIqcM1SbeiimAt8LFut4e6i93PDQN0txUSIQds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Aaron Conole <aconole@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.18 559/675] openvswitch: fix GSO userspace truncation underflow
-Date: Thu, 30 Jul 2026 16:14:49 +0200
-Message-ID: <20260730141457.016509167@linuxfoundation.org>
+	Pavitra Jha <jhapavitra98@gmail.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Antonio Quartulli <antonio@openvpn.net>
+Subject: [PATCH 6.18 560/675] ovpn: fix peer refcount leak in TCP error paths
+Date: Thu, 30 Jul 2026 16:14:50 +0200
+Message-ID: <20260730141457.036643959@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141445.110192266@linuxfoundation.org>
 References: <20260730141445.110192266@linuxfoundation.org>
@@ -52,198 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Pavitra Jha <jhapavitra98@gmail.com>
 
-commit 4032f8ed10fcb84d41c508dfb04be96589f78dfe upstream.
+commit 63bbe18fc03062f483c627838a566a707b62da79 upstream.
 
-OVS_ACTION_ATTR_TRUNC currently stores a delta from the original skb
-length in OVS_CB(skb)->cutlen. When a later userspace action segments a
-GSO skb, queue_gso_packets() reuses that delta for each smaller segment.
-A segment can then reach queue_userspace_packet() with cutlen greater
-than skb->len, underflowing the length passed to skb_zerocopy().
+When either the TCP RX or TX error path calls ovpn_peer_hold() followed
+by schedule_work(&peer->tcp.defer_del_work), and the work item is already
+pending from the other path, schedule_work() returns false and the work
+runs only once. Since ovpn_tcp_peer_del_work() calls ovpn_peer_put()
+exactly once, the extra reference taken by the losing path is never
+dropped, leaking the peer object.
 
-Store the maximum preserved length instead and bound each consumer
-against the current skb length. Use U32_MAX as the no-truncation
-sentinel so the value remains valid if skb geometry changes before a
-consumer handles it.
+The race window:
 
-Fixes: f2a4d086ed4c ("openvswitch: Add packet truncation support.")
+  CPU0 (strparser/RX error):       CPU1 (tcp_tx_work/TX error):
+  ovpn_peer_hold()   <- refcnt+1   ovpn_peer_hold()   <- refcnt+2
+  schedule_work()    <- queued      schedule_work()    <- NO-OP
+                                    (work already pending)
+  ovpn_tcp_peer_del_work runs:
+    ovpn_peer_del()
+    ovpn_peer_put()  <- refcnt+1
+                                   <- peer never freed
+
+Fix by checking the return value of schedule_work() in both paths and
+calling ovpn_peer_put() to drop the extra reference if the work was
+already pending. ovpn_peer_hold() is kept unconditional in the TX path
+as it cannot fail at that point.
+
+Fixes: a6a5e87b3ee4 ("ovpn: avoid sleep in atomic context in TCP RX error path")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.5
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
-Reviewed-by: Aaron Conole <aconole@redhat.com>
-Link: https://patch.msgid.link/20260707221635.27489-1-kylebot@openai.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Pavitra Jha <jhapavitra98@gmail.com>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Signed-off-by: Antonio Quartulli <antonio@openvpn.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/openvswitch/actions.c  |   19 +++++++------------
- net/openvswitch/datapath.c |   25 ++++++++++++++-----------
- net/openvswitch/datapath.h |    2 +-
- net/openvswitch/vport.c    |    2 +-
- 4 files changed, 23 insertions(+), 25 deletions(-)
+ drivers/net/ovpn/tcp.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/net/openvswitch/actions.c
-+++ b/net/openvswitch/actions.c
-@@ -836,12 +836,8 @@ static void do_output(struct datapath *d
- 		u16 mru = OVS_CB(skb)->mru;
- 		u32 cutlen = OVS_CB(skb)->cutlen;
+diff --git a/drivers/net/ovpn/tcp.c b/drivers/net/ovpn/tcp.c
+index 433bd07a4f1b..0af14055c39a 100644
+--- a/drivers/net/ovpn/tcp.c
++++ b/drivers/net/ovpn/tcp.c
+@@ -151,7 +151,8 @@ static void ovpn_tcp_rcv(struct strparser *strp, struct sk_buff *skb)
+ 	/* take reference for deferred peer deletion. should never fail */
+ 	if (WARN_ON(!ovpn_peer_hold(peer)))
+ 		goto err_nopeer;
+-	schedule_work(&peer->tcp.defer_del_work);
++	if (!schedule_work(&peer->tcp.defer_del_work))
++		ovpn_peer_put(peer);
+ 	ovpn_dev_dstats_rx_dropped(peer->ovpn->dev);
+ err_nopeer:
+ 	kfree_skb(skb);
+@@ -283,7 +284,8 @@ static void ovpn_tcp_send_sock(struct ovpn_peer *peer, struct sock *sk)
+ 			 * stream therefore we abort the connection
+ 			 */
+ 			ovpn_peer_hold(peer);
+-			schedule_work(&peer->tcp.defer_del_work);
++			if (!schedule_work(&peer->tcp.defer_del_work))
++				ovpn_peer_put(peer);
  
--		if (unlikely(cutlen > 0)) {
--			if (skb->len - cutlen > ovs_mac_header_len(key))
--				pskb_trim(skb, skb->len - cutlen);
--			else
--				pskb_trim(skb, ovs_mac_header_len(key));
--		}
-+		if (unlikely(cutlen < skb->len))
-+			pskb_trim(skb, max(cutlen, ovs_mac_header_len(key)));
- 
- 		if (likely(!mru ||
- 		           (skb->len <= mru + vport->dev->hard_header_len))) {
-@@ -1233,7 +1229,7 @@ static void execute_psample(struct datap
- 
- 	psample_group.net = ovs_dp_get_net(dp);
- 	md.in_ifindex = OVS_CB(skb)->input_vport->dev->ifindex;
--	md.trunc_size = skb->len - OVS_CB(skb)->cutlen;
-+	md.trunc_size = min(skb->len, OVS_CB(skb)->cutlen);
- 	md.rate_as_probability = 1;
- 
- 	rate = OVS_CB(skb)->probability ? OVS_CB(skb)->probability : U32_MAX;
-@@ -1283,22 +1279,21 @@ static int do_execute_actions(struct dat
- 			clone = skb_clone(skb, GFP_ATOMIC);
- 			if (clone)
- 				do_output(dp, clone, port, key);
--			OVS_CB(skb)->cutlen = 0;
-+			OVS_CB(skb)->cutlen = U32_MAX;
- 			break;
- 		}
- 
- 		case OVS_ACTION_ATTR_TRUNC: {
- 			struct ovs_action_trunc *trunc = nla_data(a);
- 
--			if (skb->len > trunc->max_len)
--				OVS_CB(skb)->cutlen = skb->len - trunc->max_len;
-+			OVS_CB(skb)->cutlen = trunc->max_len;
- 			break;
- 		}
- 
- 		case OVS_ACTION_ATTR_USERSPACE:
- 			output_userspace(dp, skb, key, a, attr,
- 						     len, OVS_CB(skb)->cutlen);
--			OVS_CB(skb)->cutlen = 0;
-+			OVS_CB(skb)->cutlen = U32_MAX;
- 			if (nla_is_last(a, rem)) {
- 				consume_skb(skb);
- 				return 0;
-@@ -1452,7 +1447,7 @@ static int do_execute_actions(struct dat
- 
- 		case OVS_ACTION_ATTR_PSAMPLE:
- 			execute_psample(dp, skb, a);
--			OVS_CB(skb)->cutlen = 0;
-+			OVS_CB(skb)->cutlen = U32_MAX;
- 			if (nla_is_last(a, rem)) {
- 				consume_skb(skb);
- 				return 0;
---- a/net/openvswitch/datapath.c
-+++ b/net/openvswitch/datapath.c
-@@ -276,7 +276,7 @@ void ovs_dp_process_packet(struct sk_buf
- 			upcall.portid = ovs_vport_find_upcall_portid(p, skb);
- 
- 		upcall.mru = OVS_CB(skb)->mru;
--		error = ovs_dp_upcall(dp, skb, key, &upcall, 0);
-+		error = ovs_dp_upcall(dp, skb, key, &upcall, U32_MAX);
- 		switch (error) {
- 		case 0:
- 		case -EAGAIN:
-@@ -457,7 +457,8 @@ static int queue_userspace_packet(struct
- 	struct sk_buff *nskb = NULL;
- 	struct sk_buff *user_skb = NULL; /* to be queued to userspace */
- 	struct nlattr *nla;
--	size_t len;
-+	size_t msg_size;
-+	size_t skb_len;
- 	unsigned int hlen;
- 	int err, dp_ifindex;
- 	u64 hash;
-@@ -478,7 +479,8 @@ static int queue_userspace_packet(struct
- 		skb = nskb;
- 	}
- 
--	if (nla_attr_size(skb->len) > USHRT_MAX) {
-+	skb_len = min(skb->len, cutlen);
-+	if (nla_attr_size(skb_len) > USHRT_MAX) {
- 		err = -EFBIG;
- 		goto out;
- 	}
-@@ -493,13 +495,13 @@ static int queue_userspace_packet(struct
- 	 * padding logic. Only perform zerocopy if padding is not required.
- 	 */
- 	if (dp->user_features & OVS_DP_F_UNALIGNED)
--		hlen = skb_zerocopy_headlen(skb);
-+		hlen = min(skb_zerocopy_headlen(skb), cutlen);
- 	else
--		hlen = skb->len;
-+		hlen = skb_len;
- 
--	len = upcall_msg_size(upcall_info, hlen - cutlen,
--			      OVS_CB(skb)->acts_origlen);
--	user_skb = genlmsg_new(len, GFP_ATOMIC);
-+	msg_size = upcall_msg_size(upcall_info, hlen,
-+				   OVS_CB(skb)->acts_origlen);
-+	user_skb = genlmsg_new(msg_size, GFP_ATOMIC);
- 	if (!user_skb) {
- 		err = -ENOMEM;
- 		goto out;
-@@ -560,7 +562,7 @@ static int queue_userspace_packet(struct
- 	}
- 
- 	/* Add OVS_PACKET_ATTR_LEN when packet is truncated */
--	if (cutlen > 0 &&
-+	if (skb_len < skb->len &&
- 	    nla_put_u32(user_skb, OVS_PACKET_ATTR_LEN, skb->len)) {
- 		err = -ENOBUFS;
- 		goto out;
-@@ -585,9 +587,9 @@ static int queue_userspace_packet(struct
- 		err = -ENOBUFS;
- 		goto out;
- 	}
--	nla->nla_len = nla_attr_size(skb->len - cutlen);
-+	nla->nla_len = nla_attr_size(skb_len);
- 
--	err = skb_zerocopy(user_skb, skb, skb->len - cutlen, hlen);
-+	err = skb_zerocopy(user_skb, skb, skb_len, hlen);
- 	if (err)
- 		goto out;
- 
-@@ -644,6 +646,7 @@ static int ovs_packet_cmd_execute(struct
- 		packet->ignore_df = 1;
- 	}
- 	OVS_CB(packet)->mru = mru;
-+	OVS_CB(packet)->cutlen = U32_MAX;
- 
- 	if (a[OVS_PACKET_ATTR_HASH]) {
- 		hash = nla_get_u64(a[OVS_PACKET_ATTR_HASH]);
---- a/net/openvswitch/datapath.h
-+++ b/net/openvswitch/datapath.h
-@@ -118,7 +118,7 @@ struct datapath {
-  * @mru: The maximum received fragement size; 0 if the packet is not
-  * fragmented.
-  * @acts_origlen: The netlink size of the flow actions applied to this skb.
-- * @cutlen: The number of bytes from the packet end to be removed.
-+ * @cutlen: The number of bytes in the packet to preserve on output.
-  * @probability: The sampling probability that was applied to this skb; 0 means
-  * no sampling has occurred; U32_MAX means 100% probability.
-  * @upcall_pid: Netlink socket PID to use for sending this packet to userspace;
---- a/net/openvswitch/vport.c
-+++ b/net/openvswitch/vport.c
-@@ -503,7 +503,7 @@ int ovs_vport_receive(struct vport *vpor
- 
- 	OVS_CB(skb)->input_vport = vport;
- 	OVS_CB(skb)->mru = 0;
--	OVS_CB(skb)->cutlen = 0;
-+	OVS_CB(skb)->cutlen = U32_MAX;
- 	OVS_CB(skb)->probability = 0;
- 	OVS_CB(skb)->upcall_pid = 0;
- 	if (unlikely(dev_net(skb->dev) != ovs_dp_get_net(vport->dp))) {
+ 			/* we bail out immediately and keep tx_in_progress set
+ 			 * to true. This way we prevent more TX attempts
+-- 
+2.55.0
+
 
 
