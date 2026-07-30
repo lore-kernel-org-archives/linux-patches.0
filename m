@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F48937CD45;
-	Thu, 30 Jul 2026 15:36:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C94E35E92B;
+	Thu, 30 Jul 2026 15:36:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785425810; cv=none; b=HZAv2dfbCSaBRKAGzbTpgJlZOKBw0G231Egv2eVrKMzNN9ii0hE7FCvmEKf2PPhpjQ7iBITDfyUNRecT2VbheGHiqq9ywqBXv6zwYI26vCs/WTflcdBqZ8/m61HH2L7y0MNz4jGdLw4P0zrs6cqXjLWPPFtvTyQevh2sOcgYofw=
+	t=1785425813; cv=none; b=iBaDYWKvF/ZZRjLYHIyu98nsp5xEV5VYK64SaeucZOskvTS7yXhPBq7eaXLDf24IcAiOLcXd9ZTqjzJ65UbO+iOsQAVRoezw+a0Vvq/535zVDnIdkWfzradC2hUm9BBXyvsLbHrpCAtXygkyyI/uA+xuzjvSBMOvZO4CHXTMdoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785425810; c=relaxed/simple;
-	bh=lWg0UOQecyVJS0ckKTd3ECN8OmaoRNzQX/jjJ7AO2aY=;
+	s=arc-20240116; t=1785425813; c=relaxed/simple;
+	bh=a9AGaoAVDoPVdkjLaOmuVdhO8PSTUvinv1YBcTfsYL8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BiJN542HlzouieetJ00S0eQ4rBMkoPJZI2xVi9ZkFCcd+0Uo67fAS8K5IwjuEnixJ9bpE4ZF45CA3jQXcygpcD9aOs4VRNhN9bSnHhBrGOQyYJKV4f1yxxVoS2wC/LeMcgMo15S63/9Mzgp06HKwiUatz19HNlnj726MGudm6iU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JudFECuY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=un/MSICrIqNB1+Bb3Meo+bN1mzWawiCgEolP2Y7ZDTDB8TXOoAcv19bYHFCGMUl942Pidu0G9eVB52WZXIAOlMI/e9urMnLyPw+OEUsyDi8UDZoisiygmF+2VjtlFeQpOVwfQNdyvDOQriKOfxgo/3eebw/MmFKj00H0YJ6agRM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JfBr7POG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JudFECuY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AE811F000E9;
-	Thu, 30 Jul 2026 15:36:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JfBr7POG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 680FD1F000E9;
+	Thu, 30 Jul 2026 15:36:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785425809;
-	bh=xq2SVjBGOjT4aCL63CpLPBRBUx9wPTLLRknJed9GhgE=;
+	s=korg; t=1785425811;
+	bh=wUYHSNLtyjLW83hk5B6TsMzHbbHgoIX7HvTTudgx5pU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JudFECuYDyJSpI4KbwM+XppYo1W46fDGdKB2g8LGS2GnHla+7nSYwkMnZHvxijh0V
-	 LtNwUFdvJx52Lwk3Dk3gcnz97P1iTjYRF7rZZ5dEIgxlqYq44qdxX3GhBrWf+FV8VS
-	 n/nC9ZJ9vlHBBp9Er/tCVSLqSjiIsEopFLfP8jJk=
+	b=JfBr7POGh+zwjdnUmGt4bLhmX7mIX9HhEC0fFCBMQKeN+ULMuZdZ/Gowdw6E71GFV
+	 XNgRT7rxeIRgSVGxDFLx4C8NF5Vq2wifT27WFCSSDZKVJ94HFZudo1No91AebYanQs
+	 BsUcNUccyiNWlU/tQrcWO89q3YfbGXf7oQ4Z1+1U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
+	Eelco Chaudron <echaudro@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 200/602] selftests: af_unix: add USER_NS config
-Date: Thu, 30 Jul 2026 16:09:52 +0200
-Message-ID: <20260730141440.160725212@linuxfoundation.org>
+Subject: [PATCH 6.12 201/602] selftests: openvswitch: add config file
+Date: Thu, 30 Jul 2026 16:09:53 +0200
+Message-ID: <20260730141440.182150769@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141435.976815864@linuxfoundation.org>
 References: <20260730141435.976815864@linuxfoundation.org>
@@ -54,36 +54,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-[ Upstream commit f8b1abed736111f914b2c567d9a3db1f71e788e8 ]
+[ Upstream commit 441a820ccef9af80a9ac5a4c85b9c396e595967c ]
 
-This is required to use unshare(CLONE_NEWUSER).
+The kselftests doc mentions that a config file should be present "if a
+test needs specific kernel config options enabled". This selftest
+requires some kernel config, but no config file was provided.
 
-This has not been seen on NIPA before, because the 'af_unix' tests are
-executed with the 'net' ones, merging their config files. USER_NS is
-present in tools/testing/selftests/net/config.
+We could say that a sub-target could use the parent's config file, but
+the kselftests doc doesn't mention anything about that. Plus the
+net/openvswitch target is the only net target without a config file.
 
-This issue is visible when only the af_unix config is used on top of the
-default one. This is the recommended way to execute selftest targets.
+Here is a new config file, which is a trimmed version of the net one,
+with hopefully the minimal required kconfig on top of 'make defconfig'.
 
-Fixes: ac011361bd4f ("af_unix: Add test for sock_diag and UDIAG_SHOW_UID.")
+The Fixes tag points to the introduction of the net/openvswitch target,
+just to help validating this target on stable kernels.
+
+Fixes: 25f16c873fb1 ("selftests: add openvswitch selftest suite")
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260710-net-sft-fix-containers-v1-1-a2915c294ef5@kernel.org
+Reviewed-by: Eelco Chaudron <echaudro@redhat.com>
+Link: https://patch.msgid.link/20260710-net-sft-fix-containers-v1-2-a2915c294ef5@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/af_unix/config | 1 +
- 1 file changed, 1 insertion(+)
+ tools/testing/selftests/net/openvswitch/config | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
+ create mode 100644 tools/testing/selftests/net/openvswitch/config
 
-diff --git a/tools/testing/selftests/net/af_unix/config b/tools/testing/selftests/net/af_unix/config
-index 37368567768cc0..9c4fb9c31c9506 100644
---- a/tools/testing/selftests/net/af_unix/config
-+++ b/tools/testing/selftests/net/af_unix/config
-@@ -1,3 +1,4 @@
- CONFIG_UNIX=y
- CONFIG_AF_UNIX_OOB=y
- CONFIG_UNIX_DIAG=m
-+CONFIG_USER_NS=y
+diff --git a/tools/testing/selftests/net/openvswitch/config b/tools/testing/selftests/net/openvswitch/config
+new file mode 100644
+index 00000000000000..c659749cd086c7
+--- /dev/null
++++ b/tools/testing/selftests/net/openvswitch/config
+@@ -0,0 +1,16 @@
++CONFIG_GENEVE=m
++CONFIG_INET_DIAG=y
++CONFIG_IPV6=y
++CONFIG_NETFILTER=y
++CONFIG_NET_IPGRE=m
++CONFIG_NET_IPGRE_DEMUX=m
++CONFIG_NF_CONNTRACK=m
++CONFIG_NF_CONNTRACK_OVS=y
++CONFIG_OPENVSWITCH=m
++CONFIG_OPENVSWITCH_GENEVE=m
++CONFIG_OPENVSWITCH_GRE=m
++CONFIG_OPENVSWITCH_VXLAN=m
++CONFIG_PSAMPLE=m
++CONFIG_VETH=y
++CONFIG_VLAN_8021Q=y
++CONFIG_VXLAN=m
 -- 
 2.53.0
 
