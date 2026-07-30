@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E2064519BE;
-	Thu, 30 Jul 2026 16:19:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C2B2451996;
+	Thu, 30 Jul 2026 16:19:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785428349; cv=none; b=s914shzeSWQ+ZNoc35F/hegkPrN1WZcu9l0DMm0iHHi7mD2S+Tl7lqKYZ6NSPwK8grz4jLbWZ6TEZ/va0tZ/GsR8xCP6AtuxgflIp6chggv1d0a5+a5Nin/7I30IHdceib9Pg4ob2GuLWKlKEJypcGCm8D1SCYQzqVGwXzfyHOw=
+	t=1785428352; cv=none; b=gTs+h6YIBEKSg26zEeNgKoPskw/PZFmoibmXUT0ON/PBGEqBTN+lR9rwaGFjFhfmAG5BaqO4B8w4IcwfzJt4pjs62GpTaS7Ob1F/FDXRJ6aAYnuX1DN6fQSjr58jDjWvy0t4KnX5ohBli3QRSIQQLrVUQz8kfiw7qznXJto4riE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785428349; c=relaxed/simple;
-	bh=nClIEJKAHcILGQJHqhFTJVB/DdWnYfL0e9NNxv+9NOc=;
+	s=arc-20240116; t=1785428352; c=relaxed/simple;
+	bh=VNlOd69qyeJvifWKbxZdTruEqqlC2u7SyfZ/ffjhQJc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bfH30xZsFPfJNk86UjF+2dBpxdvqxsCcs97Kol+eoUR39BviGWI3r9vV8RTuBRYPNKlHvB+uWkAdQCFIzzQgeuAAZk42dC7DXz99AhjuNbyU5lwD/HcphKYm0RQLyFnLQ1cwC0XaJSRjgMYro052XlxV9o+KmER45iIDR2RDHas=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fXTUvZIu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Xiq25JDPLATCXlpm9JNpB3pH7Sxem2bwYAmH/fe1LdKW3ogI3fypkpQQrezBPND7hMzhdk203Jv439G7pw8upuyUeUx4gv6WxLS4Sk9bl5/RjhT/QsleLDnk1DRaosZwVR6F1Mug7fcvq0uteU6TdNs22HcjWd1iyWTHfloJAPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sz1e0kUT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fXTUvZIu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81CF61F000E9;
-	Thu, 30 Jul 2026 16:19:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sz1e0kUT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 658F11F000E9;
+	Thu, 30 Jul 2026 16:19:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785428348;
-	bh=Kjom5KPNxa8LrzMWKBgDYqxHkKBOrRDJ8PEPBK1/0A4=;
+	s=korg; t=1785428350;
+	bh=srQRlyqgLPtOQF3AG+zB4xY3wGvHn4Hzwrgto5jbZYo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fXTUvZIuRoVqZ0hC8iN3AvKULFnl9w/W0uJCGTdUJ5EA07m12QUK41ihX2jhRo19J
-	 anXQg5aV6rx6eHMZygNeO2zruwkfyBiX902vlRgE0Uqb+Yia+QprIelnzdSA+CeHAc
-	 ea5Q6ImsxsZ9BR5OCItN0V9Y53eGnmgWcAB73Juw=
+	b=sz1e0kUTIVhqvZ5h5YjQWGPwiFl3zhN5fjLpcB3oTXS7FeK2tIwcUg7XVOuaXtKX9
+	 z7jbtAHQoUnAN0bHNvrSYIFGJtDaseJ2DschWx8QrIVF8fMVk59hWg5V3xQQF8LR3f
+	 pk0itpI5pT/DisO/OgIGhfgoH1i6a8PEobHwyxUs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Niklas Cassel <cassel@kernel.org>,
+	Nicolai Buchwitz <nb@tipi-net.de>,
+	=?UTF-8?q?Th=C3=A9o=20Lebrun?= <theo.lebrun@bootlin.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 471/484] ata: libata-core: Reject an invalid concurrent positioning ranges count
-Date: Thu, 30 Jul 2026 16:16:08 +0200
-Message-ID: <20260730141433.721670424@linuxfoundation.org>
+Subject: [PATCH 6.6 472/484] net: macb: drop in-flight Tx SKBs on close
+Date: Thu, 30 Jul 2026 16:16:09 +0200
+Message-ID: <20260730141433.745204194@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -46,103 +46,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Théo Lebrun <theo.lebrun@bootlin.com>
 
-[ Upstream commit 533a0b940f901c15e5cbbd4b5d66e871c209e8ce ]
+[ Upstream commit 27f575836cfebbf872dec020428742b10650a955 ]
 
-ata_dev_config_cpr() takes the number of range descriptors from buf[0]
-of the concurrent positioning ranges log (up to 255), which the device
-reports independently of the log size in the GPL directory. The count is
-then walked at a fixed 32-byte stride in two places with no bound: the
-log read here, and the INQUIRY VPD page B9h emitter, which writes one
-descriptor per range into the fixed 2048-byte ata_scsi_rbuf. A device
-reporting a count larger than its own log overflows the read buffer (up
-to 7704 bytes past a 512-byte slab), and a count above 62 overflows the
-response buffer on the emit side.
+The MACB driver has since forever leaked the outgoing SKBs that
+have not yet been marked as completed. They live in queue->tx_skb
+which gets freed without remorse nor checking.
 
-Bound the count once, on probe, against both the log the device returned
-and the number of descriptors the VPD B9h response buffer can hold
-(ATA_DEV_MAX_CPR, derived from the rbuf size). Reject an out-of-range
-count with a warning; this keeps the emitter in bounds with no separate
-change there.
+macb_free_consistent() gets called in a few codepaths, but only close will
+trigger the added expressions. In macb_open() and macb_alloc_consistent()
+failure cases, queues' tx_skb just got allocated and are empty.
 
-Suggested-by: Damien Le Moal <dlemoal@kernel.org>
-Fixes: fe22e1c2f705 ("libata: support concurrent positioning ranges log")
-Fixes: c745dfc541e7 ("libata: fix reading concurrent positioning ranges log")
+Fixes: 89e5785fc8a6 ("[PATCH] Atmel MACB ethernet driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-[ adapted `kzalloc_flex()` allocation to `kzalloc(struct_size(...), GFP_KERNEL)` and adjusted context offsets. ]
+Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
+Signed-off-by: Théo Lebrun <theo.lebrun@bootlin.com>
+Link: https://patch.msgid.link/20260702-macb-drop-tx-v4-1-1c833eebdbc8@bootlin.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[ adjusted context to free each queue's Tx/Rx rings individually since 6.12 lacks the single-dma_alloc_coherent refactor ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/libata-core.c |   18 ++++++++++++++++++
- drivers/ata/libata-scsi.c |    2 --
- drivers/ata/libata.h      |    9 +++++++++
- 3 files changed, 27 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/cadence/macb_main.c |   22 ++++++++++++++++++++--
+ 1 file changed, 20 insertions(+), 2 deletions(-)
 
---- a/drivers/ata/libata-core.c
-+++ b/drivers/ata/libata-core.c
-@@ -2794,6 +2794,24 @@ static void ata_dev_config_cpr(struct at
- 	if (!nr_cpr)
- 		goto out;
+--- a/drivers/net/ethernet/cadence/macb_main.c
++++ b/drivers/net/ethernet/cadence/macb_main.c
+@@ -2582,8 +2582,26 @@ static void macb_free_consistent(struct
+ 	bp->macbgem_ops.mog_free_rx_buffers(bp);
  
-+	/*
-+	 * The device reports the number of CPR descriptors independently of the
-+	 * log size, and that count is also used to emit VPD page B9h into the
-+	 * fixed-size rbuf. Reject a count larger than what that buffer can hold
-+	 * (ATA_DEV_MAX_CPR) or larger than the log the device actually returned.
-+	 */
-+	if (nr_cpr > ATA_DEV_MAX_CPR) {
-+		ata_dev_warn(dev,
-+			     "Too many concurrent positioning ranges\n");
-+		goto out;
-+	}
+ 	for (q = 0, queue = bp->queues; q < bp->num_queues; ++q, ++queue) {
+-		kfree(queue->tx_skb);
+-		queue->tx_skb = NULL;
++		if (queue->tx_skb) {
++			unsigned int dropped = 0, tail;
 +
-+	if (buf_len < 64 + (size_t)nr_cpr * 32) {
-+		ata_dev_warn(dev,
-+			     "Invalid number of concurrent positioning ranges\n");
-+		goto out;
-+	}
++			for (tail = queue->tx_tail; tail != queue->tx_head;
++			     tail++) {
++				if (macb_tx_skb(queue, tail)->skb)
++					dropped++;
++				macb_tx_unmap(bp, macb_tx_skb(queue, tail), 0);
++			}
 +
- 	cpr_log = kzalloc(struct_size(cpr_log, cpr, nr_cpr), GFP_KERNEL);
- 	if (!cpr_log)
- 		goto out;
---- a/drivers/ata/libata-scsi.c
-+++ b/drivers/ata/libata-scsi.c
-@@ -37,8 +37,6 @@
- #include "libata.h"
- #include "libata-transport.h"
- 
--#define ATA_SCSI_RBUF_SIZE	2048
--
- static DEFINE_SPINLOCK(ata_scsi_rbuf_lock);
- static u8 ata_scsi_rbuf[ATA_SCSI_RBUF_SIZE];
- 
---- a/drivers/ata/libata.h
-+++ b/drivers/ata/libata.h
-@@ -111,6 +111,15 @@ static inline void ata_acpi_bind_dev(str
- #endif
- 
- /* libata-scsi.c */
-+#define ATA_SCSI_RBUF_SIZE	2048
++			queue->stats.tx_dropped += dropped;
++			bp->dev->stats.tx_dropped += dropped;
 +
-+/*
-+ * Maximum number of concurrent positioning ranges (CPR) supported. The ACS
-+ * specifications allow up to 255, but we limit this to the number of CPR
-+ * descriptors that fit in the rbuf buffer used to emit VPD page B9h.
-+ */
-+#define ATA_DEV_MAX_CPR		min(255, ((ATA_SCSI_RBUF_SIZE - 64) / 32))
++			kfree(queue->tx_skb);
++			queue->tx_skb = NULL;
++		}
 +
- extern struct ata_device *ata_scsi_find_dev(struct ata_port *ap,
- 					    const struct scsi_device *scsidev);
- extern int ata_scsi_add_hosts(struct ata_host *host,
++		queue->tx_head = 0;
++		queue->tx_tail = 0;
++
+ 		if (queue->tx_ring) {
+ 			size = TX_RING_BYTES(bp) + bp->tx_bd_rd_prefetch;
+ 			dma_free_coherent(&bp->pdev->dev, size,
 
 
