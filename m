@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF01B44E05C;
-	Thu, 30 Jul 2026 16:04:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC3A045FFD6;
+	Thu, 30 Jul 2026 16:04:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427478; cv=none; b=ScawC/bbxTBxIkOCmaEn+/XrzStPTb+aILIam2n4VPxJ9W3+ampLLOAHUysc0zllSQlc2aPPU9j79gS+2jbBqy4kx9by9hFz2s5H5f6h6eVcWJrnf+7MPP/Sdm1APJ5s7+40Q1QrPZ/OiHo91/dmNmJJUTlvujxRB/0JFql4zuo=
+	t=1785427480; cv=none; b=u9+FOE5jThuIbfAOj3Tv4s+Z9yUIqH8XMmja2TJ+c1V7rv6Sb2yIyPLGBYt19JuBD7Wv7gbzNKbauHGKyJ94yAn5WvToqBsehf28sm13Y9iukP1HcptPH7ulOxgWNQShc6i9qv0UkA78GY7lFHgLCsymHAujP1w3T8cm1eAEjUQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427478; c=relaxed/simple;
-	bh=n45E+AEDh0yNT/pXbf2upR9xB0GR08amhDdoXPYuRsI=;
+	s=arc-20240116; t=1785427480; c=relaxed/simple;
+	bh=PCbi0GME3/rrIpxjaIGd7sQCj1tmh+ot8UapWnE+TC4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BNv7tyMs2i5JKDPDL1M1MWMgtKLVWyJa13i2OPP9X5M+naSOKJuEYEkiI7crBhPBNaT6D8rfy+X/ffMh8Wq2lRUqNQX94Q/dggDM7SZpkXMY2ydb7PXT9m+dghzyZTS/DQpqrj/DDbJ79BpIxlpKrV+yBOOe96G/J2ZrhXLUhpA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f+xYsxVd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lhyG15ET4FZYUvqsL+Ka3QDbZs2r7MhmAkRyHz8HHzFd4Mit9ATx2QXM7qFtBQzk1cLCUDTjd/uICVtaI5g4V+lKJm8xFMXb0iiwS0AcSlWBshjpu0gTkiiFvh+rly9Brq2610XgL8fxj88Y+WbhjZJUGYjsXqqyapzHgcDpXL8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NtNSvRLr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f+xYsxVd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30B771F000E9;
-	Thu, 30 Jul 2026 16:04:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NtNSvRLr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B3881F000E9;
+	Thu, 30 Jul 2026 16:04:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427476;
-	bh=Lz1uOOElRAHPDQmoxdfNlfSJithBo36CHOm7nmahNuI=;
+	s=korg; t=1785427479;
+	bh=K3pUkomOOZP0auiMc8gPc5pC68SLLdtXutfmluF/hWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f+xYsxVdIV55T9znrVELoj5iEx1B5AkYUppN2SJ3bbABuzsysnWU2EnQwXvJME8X6
-	 6x98eQg9eFgLeP82rDoKmZoSQUzKTH/OXOgXLDj3Ukb1xLqkcXNz+1Lp3UGUw9xEtD
-	 oVgeyu4Dd+gK6bBpYRfEea/Ys/Dflw2UR8ZVareo=
+	b=NtNSvRLrV55zzG+jjVt+INfnpapvzDmnc4xy9VM2gDZFS1nqiy2we6IcMbwpBfyYb
+	 Guyge/HA9jnKwDWuR7hbb3g1h/eEdIJNOF+KnpTC//iltL6VhaWS2S9UvJp48dsnQ7
+	 GCjBWy9soWJvzD8YlDp/AR7/yQ8Qbr1Bi2ZPiL2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e62a973f8322b3bbe3ac@syzkaller.appspotmail.com,
-	Diego Fernando Mancera Gomez <diegomancera.dev@gmail.com>,
-	Stanislaw Gruszka <stf_xl@wp.pl>,
+	Qu Wenruo <wqu@suse.com>,
+	You-Kai Zheng <ykzheng@synology.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 139/484] usb: atm: ueagle-atm: reject descriptors that confuse probe and disconnect
-Date: Thu, 30 Jul 2026 16:10:36 +0200
-Message-ID: <20260730141426.480149377@linuxfoundation.org>
+Subject: [PATCH 6.6 130/484] btrfs: declare btrfs_ioctl_search_args_v2::buf as __u8
+Date: Thu, 30 Jul 2026 16:10:27 +0200
+Message-ID: <20260730141426.282206588@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -52,90 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Diego Fernando Mancera Gomez <diegomancera.dev@gmail.com>
+From: You-Kai Zheng <ykzheng@synology.com>
 
-[ Upstream commit 71132cedd1ecbc4032d76e9928c18a10f7e39b80 ]
+[ Upstream commit b95181f3929ff98949fa9460ca93eccebbf2d7fc ]
 
-uea_probe() distinguishes a pre-firmware device from a post-firmware one
-using the USB id (UEA_IS_PREFIRM()), and stores a different object as the
-interface data in each case: a 'struct completion' for a pre-firmware
-device (to be waited on in .disconnect()), or a 'struct usbatm_data' for a
-post-firmware one.
+The variable-sized buffer buf in struct btrfs_ioctl_search_args_v2 is
+declared as __u64[], but it holds a packed byte stream of search results,
+where all offsets into the buffer are in bytes.
 
-uea_disconnect() instead tells the two apart by the number of interfaces
-of the active configuration (a pre-firmware device exposes a single
-interface, ADI930 has 2 and eagle has 3), and casts the interface data
-accordingly.
+Declaring buf as __u64[] makes it easy for user space to write incorrect
+pointer arithmetic: adding a byte offset directly to a __u64 pointer
+scales the offset by 8, landing at byte position offset*8 instead of
+offset.
 
-Because the two handlers use different criteria, a crafted device that
-advertises a pre-firmware id together with a multi-interface descriptor
-(or a post-firmware id with a single interface) makes them disagree: the
-small 'struct completion' stored by uea_probe() is then passed to
-usbatm_usb_disconnect(), which casts it to 'struct usbatm_data' and takes
-instance->serialize, reading past the end of the allocation:
+This recently caused an infinite loop in btrfs-progs: the accessor read
+all-zero data from misaddressed items, which fed zeroed search keys back
+into the ioctl loop and spun forever. The issue was worked around at the
+time by disabling TREE_SEARCH_V2 entirely in btrfs-progs (d73e69824854:
+"btrfs-progs: temporarily disable usage of v2 of search tree ioctl").
 
-  BUG: KASAN: slab-out-of-bounds in __mutex_lock+0x152a/0x1b80
-  Read of size 8 at addr ffff8880470e2c60 by task kworker/1:2/982
-  ...
-   __mutex_lock+0x152a/0x1b80
-   usbatm_usb_disconnect+0x70/0x820
-   uea_disconnect+0x133/0x2c0
-   usb_unbind_interface+0x1dd/0x9e0
-  ...
-  which belongs to the cache kmalloc-96 of size 96
-  The buggy address is located 0 bytes to the right of
-   allocated 96-byte region [ffff8880470e2c00, ffff8880470e2c60)
+The kernel side already treats buf as a byte buffer, so change the
+declaration to __u8[] to match the actual semantics and prevent similar
+misuse in user space. The change is ABI compatible: both the structure size
+and alignment are unchanged.
 
-Reject such inconsistent descriptors in uea_probe() so that both handlers
-always make the same pre/post-firmware decision.
-
-Reported-by: syzbot+e62a973f8322b3bbe3ac@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=e62a973f8322b3bbe3ac
-Fixes: e2674dfbed8a ("usb: atm: ueagle-atm: wait for pre-firmware load in .disconnect()")
-Signed-off-by: Diego Fernando Mancera Gomez <diegomancera.dev@gmail.com>
-Acked-by: Stanislaw Gruszka <stf_xl@wp.pl>
-Link: https://patch.msgid.link/20260717080704.1264-1-diegomancera.dev@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: cc68a8a5a433 ("btrfs: new ioctl TREE_SEARCH_V2")
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: You-Kai Zheng <ykzheng@synology.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/atm/ueagle-atm.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ include/uapi/linux/btrfs.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/usb/atm/ueagle-atm.c b/drivers/usb/atm/ueagle-atm.c
-index b41f352769f072..5dfe82a4c130da 100644
---- a/drivers/usb/atm/ueagle-atm.c
-+++ b/drivers/usb/atm/ueagle-atm.c
-@@ -2591,6 +2591,7 @@ static struct usbatm_driver uea_usbatm_driver = {
- static int uea_probe(struct usb_interface *intf, const struct usb_device_id *id)
- {
- 	struct usb_device *usb = interface_to_usbdev(intf);
-+	bool single_iface = usb->config->desc.bNumInterfaces == 1;
- 	int ret;
+diff --git a/include/uapi/linux/btrfs.h b/include/uapi/linux/btrfs.h
+index 7b499b90bb779e..9c921ae7c9187b 100644
+--- a/include/uapi/linux/btrfs.h
++++ b/include/uapi/linux/btrfs.h
+@@ -595,7 +595,7 @@ struct btrfs_ioctl_search_args_v2 {
+ 	__u64 buf_size;		   /* in - size of buffer
+ 					    * out - on EOVERFLOW: needed size
+ 					    *       to store item */
+-	__u64 buf[];                       /* out - found items */
++	__u8 buf[];                        /* out - found items */
+ };
  
- 	uea_enters(usb);
-@@ -2600,6 +2601,22 @@ static int uea_probe(struct usb_interface *intf, const struct usb_device_id *id)
- 		le16_to_cpu(usb->descriptor.bcdDevice),
- 		chip_name[UEA_CHIP_VERSION(id)]);
- 
-+	/*
-+	 * uea_probe() decides between the pre-firmware and post-firmware case
-+	 * from the USB id and stores a different object as interface data in
-+	 * each case: a struct completion for a pre-firmware device, a struct
-+	 * usbatm_data for a post-firmware one. uea_disconnect() instead tells
-+	 * the two apart by the number of interfaces (a pre-firmware device
-+	 * exposes a single interface, ADI930 has 2 and eagle has 3). A crafted
-+	 * device advertising a pre-firmware id together with a multi-interface
-+	 * descriptor (or the other way around) makes the two disagree, so that
-+	 * usbatm_usb_disconnect() treats the small completion object as a
-+	 * struct usbatm_data and reads out of bounds. Reject such inconsistent
-+	 * descriptors so both paths make the same decision.
-+	 */
-+	if (UEA_IS_PREFIRM(id) != single_iface)
-+		return -ENODEV;
-+
- 	usb_reset_device(usb);
- 
- 	if (UEA_IS_PREFIRM(id)) {
+ /* With a @src_length of zero, the range from @src_offset->EOF is cloned! */
 -- 
 2.53.0
 
