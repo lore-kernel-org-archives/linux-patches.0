@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FCA644E055;
-	Thu, 30 Jul 2026 16:04:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D0B04657D7;
+	Thu, 30 Jul 2026 16:04:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427484; cv=none; b=Gk4Q0zX5o0h/p8RT113hGcNi0zY7Vse/29fS0VluSMGaO/Oxnhth3T7AKUzS+cQhWVx+uyOAeUoc7gsZtf+6J7lfH72XO4kggQVfKk6bxKQnFvUv4LuDRV999rRpqLWtCI4XBiX8Jl+8lCVA64722IJCLAHPS/bGqVcOuPuqpyA=
+	t=1785427486; cv=none; b=tT2keF1j3ZXbWqw5qt+s6Cy6YCucjS320lj0UUKK/Yn5EyqhJcczSwrLgUPRNWly62YpbuNRUoSOhVgMi66AZOeDh1KYq8f6ajmVNbThAlU+QSupDo07ZrXomr/KF2XSFjoM50ZKzIGsNKiTcAIZM4ldGP5kr3Em281k9B2SagY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427484; c=relaxed/simple;
-	bh=Jsus+xcVnamEtHZdSngb5wytAMYlzQn+d/r54ISVgec=;
+	s=arc-20240116; t=1785427486; c=relaxed/simple;
+	bh=mB9cnNAKgvAKKCMivKgvGcejcCeqeTxZ/jzP9jnAcUQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rtesGjPNmtojG8A0wWq8K9uWOZ6NdM3KT2UdDFx64K5A1wty7ZADzq0QYxk5Pl62RirgnGoL/qEl72VNjsMad3G6QvHk1NIKGkdHumgF728wrK2GSEhfjYL6p1QVKGIP+Nks/OeP8OyaYUd2BN61yRgEEZe5Do/dW9+yy5Qqzq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zb3mXKLn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TUSzu8IIu72oxbwmQ8Pyp1GWuiljoC4rPQ+Xm/+jaK0gHTMm50SWsDSdC6UTIYIzxLOvABCR9fkbIGHkew9xqB/gVWWWB+FVxMDWESYw/oH7YmoamX05BMtdxo5ElV6ZmZqe1B87icth56dvpFmAKSoDruSe82HTh+nEfMgl0+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q3LbncTY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zb3mXKLn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D62EA1F000E9;
-	Thu, 30 Jul 2026 16:04:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q3LbncTY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF44C1F000E9;
+	Thu, 30 Jul 2026 16:04:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427482;
-	bh=Q9p7tx9N/oFpS96mbTVzKsLmYQrJCQsB6dTf38+dZd0=;
+	s=korg; t=1785427485;
+	bh=kbm5ystJZQX6GNt0sEpBBFk3QXcz8KhNZN3H46vtnqY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Zb3mXKLnpBa3HTlM/+ofHTG9wNCApZOs17pFudqXopJ2bLNgnohNynrl3jj5LGC7s
-	 JU2z0KuEp0tLDVRxrSPOkW9sWLQx5pcWYrSZq4JdGi3Nhm7QSMPaR4MSVzHvm3CANz
-	 HVDqUKvJ79jFlPqjYtCXOQIvz4Wtvw57EZ4VuemU=
+	b=q3LbncTYQ0OApIBqCB87MjQktt6HZS+xfnk0IgrJelCmku6ai6T3nFTNAPtQaCw+i
+	 bEN15EH0m4e5ZPrE3Ijg3i6Y0a62YmrRwHT4c5xeWjSvEZVIy++uHcTonh29p8OjPa
+	 IkG2ANQXnFkCkyIKHYI4KlOY/xKGcKXr/ov2p+Q8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Taehee Yoo <ap420073@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Rohan G Thomas <rohan.g.thomas@altera.com>,
+	Nazim Amirul <muhammad.nazim.amirul.nazle.asmade@altera.com>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Jakub Raczynski <j.raczynski@samsung.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 179/484] amt: re-read skb header pointers after every pull
-Date: Thu, 30 Jul 2026 16:11:16 +0200
-Message-ID: <20260730141427.358279309@linuxfoundation.org>
+Subject: [PATCH 6.6 188/484] net: stmmac: fix l3l4 filter rejecting unsupported offload requests
+Date: Thu, 30 Jul 2026 16:11:25 +0200
+Message-ID: <20260730141427.550956861@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -53,365 +54,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Nazim Amirul <muhammad.nazim.amirul.nazle.asmade@altera.com>
 
-[ Upstream commit 3656a79f94c471827a08f2cacce5f94ad5e52c24 ]
+[ Upstream commit 5536d7c843637e9430279b94935fcf7df98babb3 ]
 
-Several AMT receive and transmit paths cache a pointer into the skb head
-(ip_hdr(), ipv6_hdr(), eth_hdr() or the AMT message header) and then call
-a helper that can reallocate that head before the cached pointer is used
-again.  pskb_may_pull(), ip_mc_may_pull(), ipv6_mc_may_pull(),
-iptunnel_pull_header(), ip_mc_check_igmp() and ipv6_mc_check_mld() can all
-free the old head and move the data, so a pointer taken before the call
-dangles afterwards and the later access is a use-after-free of the freed
-head.
+The basic flow parser in tc_add_basic_flow() does not validate match
+keys before proceeding. Unsupported offload configurations such as
+partial protocol masks, non-IPv4 network proto, or non-TCP/UDP transport
+proto are silently accepted instead of returning -EOPNOTSUPP.
 
-The affected sites are:
+Add validation to return -EOPNOTSUPP early for:
+- No network or transport proto present in the key
+- Partial protocol mask (only full mask supported)
+- Network proto is not IPv4
+- Transport proto is not TCP or UDP
 
-  amt_rcv() caches ip_hdr() before amt_parse_type() pulls, then reads
-  iph->saddr.
+Each rejection includes an extack message so the user knows which part
+of the match is unsupported.
 
-  amt_dev_xmit() caches ip_hdr()/ipv6_hdr() before ip_mc_check_igmp()/
-  ipv6_mc_check_mld() and pskb_may_pull(), then reads the group address.
+Also propagate -EOPNOTSUPP from tc_add_basic_flow() in tc_add_flow()
+by returning it directly rather than using break. The break was silently
+discarding the error for FLOW_CLS_REPLACE operations where entry->in_use
+is already true, causing tc_add_flow() to return 0 (success) for
+unsupported replace requests.
 
-  amt_multicast_data_handler() caches eth_hdr() before pskb_may_pull(),
-  then writes the L2 header.
-
-  amt_membership_query_handler() caches the AMT header, the outer and
-  inner eth_hdr() and ip_hdr() before iptunnel_pull_header() and several
-  pulls, then reads and writes them.
-
-  amt_igmpv3_report_handler() and amt_mldv2_report_handler() cache
-  ip_hdr()/ipv6_hdr() and the current group record and read the record
-  count from the report header inside the record loop, across the
-  *_mc_may_pull() calls.
-
-  amt_update_handler() caches ip_hdr() and the AMT membership-update
-  header before pskb_may_pull(), iptunnel_pull_header(),
-  ip_mc_check_igmp() and the report handler, then reads iph->daddr and
-  amtmu->nonce / amtmu->response_mac.
-
-Fix each site by either snapshotting the scalar that is used after the
-pull before the first pull runs, or re-deriving the header pointer from
-the skb after the last pull that can move the head.  Values that are
-stable across the pull (source and group address, the response MAC and
-nonce, the record count, the outer source MAC) are snapshotted; pointers
-that are written through or read repeatedly are re-derived.
-
-Fixes: cbc21dc1cfe9 ("amt: add data plane of amt interface")
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Taehee Yoo <ap420073@gmail.com>
-Link: https://patch.msgid.link/20260711151934.2955226-2-michael.bommarito@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 425eabddaf0f ("net: stmmac: Implement L3/L4 Filters using TC Flower")
+Signed-off-by: Rohan G Thomas <rohan.g.thomas@altera.com>
+Signed-off-by: Nazim Amirul <muhammad.nazim.amirul.nazle.asmade@altera.com>
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Link: https://patch.msgid.link/20260714023716.29865-4-muhammad.nazim.amirul.nazle.asmade@altera.com
+Reviewed-by: Jakub Raczynski <j.raczynski@samsung.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/amt.c | 79 +++++++++++++++++++++++++++++++++--------------
- 1 file changed, 55 insertions(+), 24 deletions(-)
+ .../net/ethernet/stmicro/stmmac/stmmac_tc.c   | 34 +++++++++++++++++++
+ 1 file changed, 34 insertions(+)
 
-diff --git a/drivers/net/amt.c b/drivers/net/amt.c
-index f2da0c49171f5d..64aff304c51c66 100644
---- a/drivers/net/amt.c
-+++ b/drivers/net/amt.c
-@@ -1206,7 +1206,7 @@ static netdev_tx_t amt_dev_xmit(struct sk_buff *skb, struct net_device *dev)
- 			data = true;
- 		}
- 		v6 = false;
--		group.ip4 = iph->daddr;
-+		group.ip4 = ip_hdr(skb)->daddr;
- #if IS_ENABLED(CONFIG_IPV6)
- 	} else if (iph->version == 6) {
- 		ip6h = ipv6_hdr(skb);
-@@ -1230,7 +1230,7 @@ static netdev_tx_t amt_dev_xmit(struct sk_buff *skb, struct net_device *dev)
- 			data = true;
- 		}
- 		v6 = true;
--		group.ip6 = ip6h->daddr;
-+		group.ip6 = ipv6_hdr(skb)->daddr;
- #endif
- 	} else {
- 		dev->stats.tx_errors++;
-@@ -1273,12 +1273,12 @@ static netdev_tx_t amt_dev_xmit(struct sk_buff *skb, struct net_device *dev)
- 			hlist_for_each_entry_rcu(gnode, &tunnel->groups[hash],
- 						 node) {
- 				if (!v6) {
--					if (gnode->group_addr.ip4 == iph->daddr)
-+					if (gnode->group_addr.ip4 == group.ip4)
- 						goto found;
- #if IS_ENABLED(CONFIG_IPV6)
- 				} else {
- 					if (ipv6_addr_equal(&gnode->group_addr.ip6,
--							    &ip6h->daddr))
-+							    &group.ip6))
- 						goto found;
- #endif
- 				}
-@@ -1995,14 +1995,18 @@ static void amt_igmpv3_report_handler(struct amt_dev *amt, struct sk_buff *skb,
- 	struct igmpv3_report *ihrv3 = igmpv3_report_hdr(skb);
- 	int len = skb_transport_offset(skb) + sizeof(*ihrv3);
- 	void *zero_grec = (void *)&igmpv3_zero_grec;
--	struct iphdr *iph = ip_hdr(skb);
- 	struct amt_group_node *gnode;
- 	union amt_addr group, host;
- 	struct igmpv3_grec *grec;
-+	__be32 saddr;
- 	u16 nsrcs;
-+	u16 ngrec;
- 	int i;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
+index 97ff2dd8f2aecd..8eef993c47e968 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
+@@ -456,6 +456,7 @@ static int tc_parse_flow_actions(struct stmmac_priv *priv,
+ }
  
--	for (i = 0; i < ntohs(ihrv3->ngrec); i++) {
-+	saddr = ip_hdr(skb)->saddr;
-+	ngrec = ntohs(ihrv3->ngrec);
+ #define ETHER_TYPE_FULL_MASK	cpu_to_be16(~0)
++#define IP_PROTO_FULL_MASK	0xFF
+ 
+ static int tc_add_basic_flow(struct stmmac_priv *priv,
+ 			     struct flow_cls_offload *cls,
+@@ -471,6 +472,37 @@ static int tc_add_basic_flow(struct stmmac_priv *priv,
+ 
+ 	flow_rule_match_basic(rule, &match);
+ 
++	/* Both network proto and transport proto not present in the key */
++	if (!match.mask || !(match.mask->n_proto || match.mask->ip_proto)) {
++		NL_SET_ERR_MSG_MOD(cls->common.extack,
++				   "filter must specify network or transport protocol");
++		return -EOPNOTSUPP;
++	}
 +
-+	for (i = 0; i < ngrec; i++) {
- 		len += sizeof(*grec);
- 		if (!ip_mc_may_pull(skb, len))
- 			break;
-@@ -2014,10 +2018,13 @@ static void amt_igmpv3_report_handler(struct amt_dev *amt, struct sk_buff *skb,
- 		if (!ip_mc_may_pull(skb, len))
- 			break;
- 
-+		grec = (void *)(skb->data + len - sizeof(*grec) -
-+				nsrcs * sizeof(__be32));
++	/* If the proto is present in the key and is not full mask */
++	if ((match.mask->n_proto && match.mask->n_proto != ETHER_TYPE_FULL_MASK) ||
++	    (match.mask->ip_proto && match.mask->ip_proto != IP_PROTO_FULL_MASK)) {
++		NL_SET_ERR_MSG_MOD(cls->common.extack,
++				   "only full protocol mask is supported");
++		return -EOPNOTSUPP;
++	}
 +
- 		memset(&group, 0, sizeof(union amt_addr));
- 		group.ip4 = grec->grec_mca;
- 		memset(&host, 0, sizeof(union amt_addr));
--		host.ip4 = iph->saddr;
-+		host.ip4 = saddr;
- 		gnode = amt_lookup_group(tunnel, &group, &host, false);
- 		if (!gnode) {
- 			gnode = amt_add_group(amt, tunnel, &group, &host,
-@@ -2157,14 +2164,18 @@ static void amt_mldv2_report_handler(struct amt_dev *amt, struct sk_buff *skb,
- 	struct mld2_report *mld2r = (struct mld2_report *)icmp6_hdr(skb);
- 	int len = skb_transport_offset(skb) + sizeof(*mld2r);
- 	void *zero_grec = (void *)&mldv2_zero_grec;
--	struct ipv6hdr *ip6h = ipv6_hdr(skb);
- 	struct amt_group_node *gnode;
- 	union amt_addr group, host;
- 	struct mld2_grec *grec;
-+	struct in6_addr saddr;
- 	u16 nsrcs;
-+	u16 ngrec;
- 	int i;
- 
--	for (i = 0; i < ntohs(mld2r->mld2r_ngrec); i++) {
-+	saddr = ipv6_hdr(skb)->saddr;
-+	ngrec = ntohs(mld2r->mld2r_ngrec);
++	/* Network proto is present in the key and is not IPv4 */
++	if (match.mask->n_proto && match.key->n_proto != cpu_to_be16(ETH_P_IP)) {
++		NL_SET_ERR_MSG_MOD(cls->common.extack,
++				   "only IPv4 network protocol is supported");
++		return -EOPNOTSUPP;
++	}
 +
-+	for (i = 0; i < ngrec; i++) {
- 		len += sizeof(*grec);
- 		if (!ipv6_mc_may_pull(skb, len))
- 			break;
-@@ -2176,10 +2187,13 @@ static void amt_mldv2_report_handler(struct amt_dev *amt, struct sk_buff *skb,
- 		if (!ipv6_mc_may_pull(skb, len))
- 			break;
- 
-+		grec = (void *)(skb->data + len - sizeof(*grec) -
-+				nsrcs * sizeof(struct in6_addr));
++	/* Transport proto is present in the key and is not TCP or UDP */
++	if (match.mask->ip_proto &&
++	    match.key->ip_proto != IPPROTO_TCP &&
++	    match.key->ip_proto != IPPROTO_UDP) {
++		NL_SET_ERR_MSG_MOD(cls->common.extack,
++				   "only TCP and UDP transport protocols are supported");
++		return -EOPNOTSUPP;
++	}
 +
- 		memset(&group, 0, sizeof(union amt_addr));
- 		group.ip6 = grec->grec_mca;
- 		memset(&host, 0, sizeof(union amt_addr));
--		host.ip6 = ip6h->saddr;
-+		host.ip6 = saddr;
- 		gnode = amt_lookup_group(tunnel, &group, &host, true);
- 		if (!gnode) {
- 			gnode = amt_add_group(amt, tunnel, &group, &host,
-@@ -2300,7 +2314,6 @@ static bool amt_multicast_data_handler(struct amt_dev *amt, struct sk_buff *skb)
- 	skb_push(skb, sizeof(*eth));
- 	skb_reset_mac_header(skb);
- 	skb_pull(skb, sizeof(*eth));
--	eth = eth_hdr(skb);
- 
- 	if (!pskb_may_pull(skb, sizeof(*iph)))
- 		return true;
-@@ -2310,6 +2323,7 @@ static bool amt_multicast_data_handler(struct amt_dev *amt, struct sk_buff *skb)
- 		if (!ipv4_is_multicast(iph->daddr))
- 			return true;
- 		skb->protocol = htons(ETH_P_IP);
-+		eth = eth_hdr(skb);
- 		eth->h_proto = htons(ETH_P_IP);
- 		ip_eth_mc_map(iph->daddr, eth->h_dest);
- #if IS_ENABLED(CONFIG_IPV6)
-@@ -2323,6 +2337,7 @@ static bool amt_multicast_data_handler(struct amt_dev *amt, struct sk_buff *skb)
- 		if (!ipv6_addr_is_multicast(&ip6h->daddr))
- 			return true;
- 		skb->protocol = htons(ETH_P_IPV6);
-+		eth = eth_hdr(skb);
- 		eth->h_proto = htons(ETH_P_IPV6);
- 		ipv6_eth_mc_map(&ip6h->daddr, eth->h_dest);
- #endif
-@@ -2346,10 +2361,12 @@ static bool amt_membership_query_handler(struct amt_dev *amt,
- 					 struct sk_buff *skb)
- {
- 	struct amt_header_membership_query *amtmq;
--	struct igmpv3_query *ihv3;
- 	struct ethhdr *eth, *oeth;
-+	struct igmpv3_query *ihv3;
-+	u8 h_source[ETH_ALEN];
- 	struct iphdr *iph;
- 	int hdr_size, len;
-+	u64 response_mac;
- 
- 	hdr_size = sizeof(*amtmq) + sizeof(struct udphdr);
- 	if (!pskb_may_pull(skb, hdr_size))
-@@ -2362,6 +2379,8 @@ static bool amt_membership_query_handler(struct amt_dev *amt,
- 	if (amtmq->nonce != amt->nonce)
- 		return true;
- 
-+	response_mac = amtmq->response_mac;
-+
- 	hdr_size -= sizeof(*eth);
- 	if (iptunnel_pull_header(skb, hdr_size, htons(ETH_P_TEB), false))
- 		return true;
-@@ -2371,6 +2390,7 @@ static bool amt_membership_query_handler(struct amt_dev *amt,
- 	skb_pull(skb, sizeof(*eth));
- 	skb_reset_network_header(skb);
- 	eth = eth_hdr(skb);
-+	ether_addr_copy(h_source, oeth->h_source);
- 	if (!pskb_may_pull(skb, sizeof(*iph)))
- 		return true;
- 
-@@ -2383,6 +2403,7 @@ static bool amt_membership_query_handler(struct amt_dev *amt,
- 				   sizeof(*ihv3)))
- 			return true;
- 
-+		iph = ip_hdr(skb);
- 		if (!ipv4_is_multicast(iph->daddr))
- 			return true;
- 
-@@ -2390,10 +2411,11 @@ static bool amt_membership_query_handler(struct amt_dev *amt,
- 		skb_reset_transport_header(skb);
- 		skb_push(skb, sizeof(*iph) + AMT_IPHDR_OPTS);
- 		WRITE_ONCE(amt->ready4, true);
--		amt->mac = amtmq->response_mac;
-+		amt->mac = response_mac;
- 		amt->req_cnt = 0;
- 		amt->qi = ihv3->qqic;
- 		skb->protocol = htons(ETH_P_IP);
-+		eth = eth_hdr(skb);
- 		eth->h_proto = htons(ETH_P_IP);
- 		ip_eth_mc_map(iph->daddr, eth->h_dest);
- #if IS_ENABLED(CONFIG_IPV6)
-@@ -2416,10 +2438,11 @@ static bool amt_membership_query_handler(struct amt_dev *amt,
- 		skb_reset_transport_header(skb);
- 		skb_push(skb, sizeof(*ip6h) + AMT_IP6HDR_OPTS);
- 		WRITE_ONCE(amt->ready6, true);
--		amt->mac = amtmq->response_mac;
-+		amt->mac = response_mac;
- 		amt->req_cnt = 0;
- 		amt->qi = mld2q->mld2q_qqic;
- 		skb->protocol = htons(ETH_P_IPV6);
-+		eth = eth_hdr(skb);
- 		eth->h_proto = htons(ETH_P_IPV6);
- 		ipv6_eth_mc_map(&ip6h->daddr, eth->h_dest);
- #endif
-@@ -2427,7 +2450,7 @@ static bool amt_membership_query_handler(struct amt_dev *amt,
- 		return true;
+ 	entry->ip_proto = match.key->ip_proto;
+ 	return 0;
+ }
+@@ -608,6 +640,8 @@ static int tc_add_flow(struct stmmac_priv *priv,
+ 		ret = tc_flow_parsers[i].fn(priv, cls, entry);
+ 		if (!ret)
+ 			entry->in_use = true;
++		else if (ret == -EOPNOTSUPP)
++			return ret;
  	}
  
--	ether_addr_copy(eth->h_source, oeth->h_source);
-+	ether_addr_copy(eth->h_source, h_source);
- 	skb->pkt_type = PACKET_MULTICAST;
- 	skb->ip_summed = CHECKSUM_NONE;
- 	len = skb->len;
-@@ -2450,8 +2473,11 @@ static bool amt_update_handler(struct amt_dev *amt, struct sk_buff *skb)
- 	struct ethhdr *eth;
- 	struct iphdr *iph;
- 	int len, hdr_size;
-+	u64 response_mac;
-+	__be32 saddr;
-+	__be32 nonce;
- 
--	iph = ip_hdr(skb);
-+	saddr = ip_hdr(skb)->saddr;
- 
- 	hdr_size = sizeof(*amtmu) + sizeof(struct udphdr);
- 	if (!pskb_may_pull(skb, hdr_size))
-@@ -2461,15 +2487,18 @@ static bool amt_update_handler(struct amt_dev *amt, struct sk_buff *skb)
- 	if (amtmu->reserved || amtmu->version)
- 		return true;
- 
-+	nonce = amtmu->nonce;
-+	response_mac = amtmu->response_mac;
-+
- 	if (iptunnel_pull_header(skb, hdr_size, skb->protocol, false))
- 		return true;
- 
- 	skb_reset_network_header(skb);
- 
- 	list_for_each_entry_rcu(tunnel, &amt->tunnel_list, list) {
--		if (tunnel->ip4 == iph->saddr) {
--			if ((amtmu->nonce == tunnel->nonce &&
--			     amtmu->response_mac == tunnel->mac)) {
-+		if (tunnel->ip4 == saddr) {
-+			if ((nonce == tunnel->nonce &&
-+			     response_mac == tunnel->mac)) {
- 				mod_delayed_work(amt_wq, &tunnel->gc_wq,
- 						 msecs_to_jiffies(amt_gmi(amt))
- 								  * 3);
-@@ -2503,6 +2532,7 @@ static bool amt_update_handler(struct amt_dev *amt, struct sk_buff *skb)
- 		eth = eth_hdr(skb);
- 		skb->protocol = htons(ETH_P_IP);
- 		eth->h_proto = htons(ETH_P_IP);
-+		iph = ip_hdr(skb);
- 		ip_eth_mc_map(iph->daddr, eth->h_dest);
- #if IS_ENABLED(CONFIG_IPV6)
- 	} else if (iph->version == 6) {
-@@ -2522,6 +2552,7 @@ static bool amt_update_handler(struct amt_dev *amt, struct sk_buff *skb)
- 		eth = eth_hdr(skb);
- 		skb->protocol = htons(ETH_P_IPV6);
- 		eth->h_proto = htons(ETH_P_IPV6);
-+		ip6h = ipv6_hdr(skb);
- 		ipv6_eth_mc_map(&ip6h->daddr, eth->h_dest);
- #endif
- 	} else {
-@@ -2767,7 +2798,7 @@ static void amt_gw_rcv(struct amt_dev *amt, struct sk_buff *skb)
- static int amt_rcv(struct sock *sk, struct sk_buff *skb)
- {
- 	struct amt_dev *amt;
--	struct iphdr *iph;
-+	__be32 saddr;
- 	int type;
- 	bool err;
- 
-@@ -2780,7 +2811,7 @@ static int amt_rcv(struct sock *sk, struct sk_buff *skb)
- 	}
- 
- 	skb->dev = amt->dev;
--	iph = ip_hdr(skb);
-+	saddr = ip_hdr(skb)->saddr;
- 	type = amt_parse_type(skb);
- 	if (type == -1) {
- 		err = true;
-@@ -2790,7 +2821,7 @@ static int amt_rcv(struct sock *sk, struct sk_buff *skb)
- 	if (amt->mode == AMT_MODE_GATEWAY) {
- 		switch (type) {
- 		case AMT_MSG_ADVERTISEMENT:
--			if (iph->saddr != amt->discovery_ip) {
-+			if (saddr != amt->discovery_ip) {
- 				netdev_dbg(amt->dev, "Invalid Relay IP\n");
- 				err = true;
- 				goto drop;
-@@ -2802,7 +2833,7 @@ static int amt_rcv(struct sock *sk, struct sk_buff *skb)
- 			}
- 			goto out;
- 		case AMT_MSG_MULTICAST_DATA:
--			if (iph->saddr != amt->remote_ip) {
-+			if (saddr != amt->remote_ip) {
- 				netdev_dbg(amt->dev, "Invalid Relay IP\n");
- 				err = true;
- 				goto drop;
-@@ -2813,7 +2844,7 @@ static int amt_rcv(struct sock *sk, struct sk_buff *skb)
- 			else
- 				goto out;
- 		case AMT_MSG_MEMBERSHIP_QUERY:
--			if (iph->saddr != amt->remote_ip) {
-+			if (saddr != amt->remote_ip) {
- 				netdev_dbg(amt->dev, "Invalid Relay IP\n");
- 				err = true;
- 				goto drop;
+ 	if (!entry->in_use)
 -- 
 2.53.0
 
