@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92DA83876D5;
-	Thu, 30 Jul 2026 16:09:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A55A2390CBE;
+	Thu, 30 Jul 2026 16:09:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427770; cv=none; b=aAwKm0dTjovU9olONO1NzoEKMWY4AOd/1Szw7lHDjceauQe3oh4XE3FZVxltZPFLb7FxIEacjUnkXrXhZjxQfFl5bbBFTdAINQARIrgGF7AhkBoqfi50lZUy48XRk3EABfLg7tp8tu87+N4X3G2WBdXW6C83JBYVYhLt3Zt+QrI=
+	t=1785427773; cv=none; b=bJ5ykJfpAXK+EORI7KRsMamfD+JmFeEEbo2Xkk/278JK8vLA4UauiNB2BnNWIZw4Hcf7qs0vEQutW9QT48gLp8ll0rkQWUGSg8LOfhj0YBW5hy1y9t1CB/TBZKT1+vw4E1IuOv9UFfdAk9dBSXInVjtHrY4H2JjsxQy59vPu4aE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427770; c=relaxed/simple;
-	bh=9nelUImQuNilb5nnqs6Ej3DLjuh41tbAeNSLM83hDjM=;
+	s=arc-20240116; t=1785427773; c=relaxed/simple;
+	bh=4ID6rNd7cQCHEOem6GIbt8Hl+PsvBl6CXv4usCbi8Kc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IPUFovi6Uc6e5F2Ueeg1py6gJR4V2SsQRVPtXB97QTToaMIVdYhgYou3xNZfeN3pcDiBwDoKklr6bitglyji++YpLDUDHXmylMR7rdKvoYD6Jr28ZucvCJKNcPHIGJiZ4DUq/JnE9AzLSPppRUqiSZbJrsDvyEgYPWaaUCLV59Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jvd78vs0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mD3YSI4xTjkrbleFvOXpt3WdIu+EVl7LPWx67AdEHre4maMMvNrrFuetfCFcOOYi5gsTP6bM+4ZLc2fWYk/lsWJMEx8G+T6A+sFKQgHlS2nAFx8IwTkld1MZHuZ8+k6aox/mO6UYR2pGmZevwIprJ6JE2YP57nI2IZr7QS7prbY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DHb6G7vS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jvd78vs0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EED3B1F000E9;
-	Thu, 30 Jul 2026 16:09:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DHb6G7vS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C420D1F000E9;
+	Thu, 30 Jul 2026 16:09:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427769;
-	bh=i3XIJMiqiSZoFDK8pg2UplSl7hvWaozFM3Jr078wMg4=;
+	s=korg; t=1785427772;
+	bh=dim5RG6VbjKqHV3iuqvDwoeQ0JxEBcalJnEmPMZrnKw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jvd78vs01DJrsNSc20sPucbgiQKrGmICbcFT79rT4yLo4V7OrZ+a6pcajrHjE4mu6
-	 Hqdw889BBLnvWm073wPA/DS+XQCcfBsFZMJYRjAkQUrbx23fCqoASkSyq4iN3Pa1UA
-	 e4uuguE0KZOM5Ls+WfzRT0GQOMsTcke+fLfVTRbU=
+	b=DHb6G7vSJ4yJpLmXZqoAQpopcZ+oC2II9uMHjyBRMkEVWDVdtxTT2Pg+Ne+9ZLwLV
+	 NFd9t/Cdq3Kmm2wH1cbJhM8lQK/TnYgNRjPV0TscZTNP/kR3jpKWn/uDoInorGxPXS
+	 ggmVu+T5NcGK3McSB625ZyBp3Qri14qLNDDThe+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Jiangshan Yi <yijiangshan@kylinos.cn>
-Subject: [PATCH 6.6 288/484] serial: 8250_mid: Fix NULL function pointer dereference on DNV/ICX-D/SNR platforms
-Date: Thu, 30 Jul 2026 16:13:05 +0200
-Message-ID: <20260730141429.753775943@linuxfoundation.org>
+	Menachem Adin <menachem.adin@intel.com>,
+	Alexander Usyskin <alexander.usyskin@intel.com>
+Subject: [PATCH 6.6 289/484] mei: bus: access mei_device under device_lock on cleanup
+Date: Thu, 30 Jul 2026 16:13:06 +0200
+Message-ID: <20260730141429.775848271@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -51,68 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiangshan Yi <yijiangshan@kylinos.cn>
+From: Alexander Usyskin <alexander.usyskin@intel.com>
 
-commit 7fb13fd7e9a59a37cd911efff83abe19e3ee029d upstream.
+commit f112ea910e554d58b4b39a4492b7d302f0f4204f upstream.
 
-Commit b1b4efea05a5 ("serial: 8250_mid: Disable DMA for selected
-platforms") replaced the dnv_board setup and exit callbacks with
-PTR_IF(false, ...), which evaluates to NULL. However, the three call
-sites in mid8250_probe() and mid8250_remove() unconditionally
-dereference these function pointers without NULL checks, causing a NULL
-pointer dereference (kernel oops) on any Denverton (DNV), Ice Lake Xeon
-D (ICX-D/CDF), or Snowridge (SNR) platform.
+Fix couple of problems in mei_cl_bus_dev_release():
 
-Fix this by adding the missing NULL checks before calling the setup and
-exit callbacks.
+mei_cl_flush_queues() is running without lock.
+bus->file_list access after mei_dev_bus_put(bus) can become a
+use-after-free if this was the last reference to bus.
 
-Fixes: b1b4efea05a5 ("serial: 8250_mid: Disable DMA for selected platforms")
+Protect queues cleanup and WARN traversal by device lock there
+to avoid the concurrent access problems.
+Move WARN traversal before mei_dev_bus_put(bus).
+
+This file uses bus variable name for mei_device, adjust
+code of mei_cl_bus_dev_release() to use bus variable too.
+
 Cc: stable <stable@kernel.org>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
-Link: https://patch.msgid.link/20260715073546.1875083-1-yijiangshan@kylinos.cn
+Fixes: 35e8a426b16a ("mei: bus: Check for still connected devices in mei_cl_bus_dev_release()")
+Reviewed-by: Menachem Adin <menachem.adin@intel.com>
+Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
+Link: https://patch.msgid.link/20260705151259.3054795-1-alexander.usyskin@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_mid.c |   14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ drivers/misc/mei/bus.c |   16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
---- a/drivers/tty/serial/8250/8250_mid.c
-+++ b/drivers/tty/serial/8250/8250_mid.c
-@@ -318,9 +318,11 @@ static int mid8250_probe(struct pci_dev
- 	if (!uart.port.membase)
- 		return -ENOMEM;
+--- a/drivers/misc/mei/bus.c
++++ b/drivers/misc/mei/bus.c
+@@ -4,6 +4,7 @@
+  * Intel Management Engine Interface (Intel MEI) Linux driver
+  */
  
--	ret = mid->board->setup(mid, &uart.port);
--	if (ret)
--		return ret;
-+	if (mid->board->setup) {
-+		ret = mid->board->setup(mid, &uart.port);
-+		if (ret)
-+			return ret;
++#include <linux/cleanup.h>
+ #include <linux/module.h>
+ #include <linux/device.h>
+ #include <linux/kernel.h>
+@@ -1269,15 +1270,16 @@ static void mei_dev_bus_put(struct mei_d
+ static void mei_cl_bus_dev_release(struct device *dev)
+ {
+ 	struct mei_cl_device *cldev = to_mei_cl_device(dev);
+-	struct mei_device *mdev = cldev->cl->dev;
++	struct mei_device *bus = cldev->bus;
+ 	struct mei_cl *cl;
+ 
+-	mei_cl_flush_queues(cldev->cl, NULL);
+-	mei_me_cl_put(cldev->me_cl);
+-	mei_dev_bus_put(cldev->bus);
+-
+-	list_for_each_entry(cl, &mdev->file_list, link)
+-		WARN_ON(cl == cldev->cl);
++	scoped_guard(mutex, &bus->device_lock) {
++		mei_cl_flush_queues(cldev->cl, NULL);
++		mei_me_cl_put(cldev->me_cl);
++		list_for_each_entry(cl, &bus->file_list, link)
++			WARN_ON(cl == cldev->cl);
 +	}
++	mei_dev_bus_put(bus);
  
- 	ret = mid8250_dma_setup(mid, &uart);
- 	if (ret)
-@@ -336,7 +338,8 @@ static int mid8250_probe(struct pci_dev
- 	return 0;
- 
- err:
--	mid->board->exit(mid);
-+	if (mid->board->exit)
-+		mid->board->exit(mid);
- 	return ret;
- }
- 
-@@ -346,7 +349,8 @@ static void mid8250_remove(struct pci_de
- 
- 	serial8250_unregister_port(mid->line);
- 
--	mid->board->exit(mid);
-+	if (mid->board->exit)
-+		mid->board->exit(mid);
- }
- 
- static const struct mid8250_board pnw_board = {
+ 	kfree(cldev->cl);
+ 	kfree(cldev);
 
 
