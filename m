@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2E43389118;
-	Thu, 30 Jul 2026 16:16:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D101D449B1C;
+	Thu, 30 Jul 2026 16:16:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785428218; cv=none; b=TVv+o+P+WzKOfcbGSMCy/+2bY2/KIBMbIzN06MoUyyuh6Z3P9woUDkIegxik9bCwLCIaY21sqr7Tj9QDuUn/r8TFzRROTO2eBxlPOjQQC7KJnNsJuh9QQ+FrkbGbvaUkfGq8s9q07UKQuFWphvWhJNIUj4Q7PhxfAni/f9BNEB4=
+	t=1785428219; cv=none; b=Zo7+miw31dOjiPn/0ZYaSE9nQUiigz92xAr87KE9+XrN/F6/bKoE0BCxmfM5wbpRMv8xF5PXzjHR4O5T33oHZiJslyO+cPyknI6ULCDD0/Xt8ICX9TF9ZEzj1qp41jBOGCUoMNzQg72bIK532o/bam7vsfjQXP2XX2spDw1xWqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785428218; c=relaxed/simple;
-	bh=Te4pnfnUnVkewrsg0h+sABjwkSJ6oyIyCOWGksHRcMY=;
+	s=arc-20240116; t=1785428219; c=relaxed/simple;
+	bh=CeKIjuFjfvgXFoRW98uaovtMsIsyWyjgC53dAdnpiPc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KwLFbK4fLY+DuENXD+UV9ANww+MtaF6lPNpFX6bDA9Jwz6mHlbaBrnhsmw9eNcSkdai153iOC2n+2Rkbi7qMi/PEi4rFVSjJeAb8AOdhTQsaVV9EScUfTFuT2i7BOispx5QxMU1oTi/G7nif72BN4BeZKgnsjC84L4B4xvbz3wg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y2g0qU8t; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YB51vqdm1OdxnExsxJ+Pqt4thRsYWyxNCnDHQGJKVzF/oitSuKOqGxoMaGOUYmkHopCI2cEslGdT6Dt1pJoteXdzmhsTucXL0LNxM3Tw0Y/BAGUZt5v9vEnZHI5oldxbmHNwnV+2vxQfTMBYPPjv1gvtF2KSD9ABF3toUD5MgWY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aGQ5BJnc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y2g0qU8t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 076471F00A3E;
-	Thu, 30 Jul 2026 16:16:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aGQ5BJnc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BD7F1F00A3F;
+	Thu, 30 Jul 2026 16:16:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785428210;
-	bh=HT2tCL3glURnMH277xV83YFDMIsYG0pmAWMNCcddqo4=;
+	s=korg; t=1785428216;
+	bh=I/QJudmJu6pSkaTtaqcWWyaZT0fMbCYcMXSmiN1eros=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y2g0qU8tHN1PZOeQPGI8lPlRiX5aQMLWeSoPcgf1zQqJfaFlIBnu1tSXSVLAzSw9B
-	 Z7EII3xaDnG7ELw3UHFHzXCyKO9UL4kpdoWuaUR3rVcdYJRLxh2R4hLl+KwvnIbwSN
-	 h2hXC28y31XRL25Na3f4nWQibDCDUtN/Zs9zhd74=
+	b=aGQ5BJncYtBetrfviU4Xhr8Yp0gpWzQtfokdI3jWwgIOwNsUDs8crFfP04+Hdt5fL
+	 L+7g8OAuzkarapTQQUztU5AF0OPNJlRi+qry7A3S8o/kZhpDLNIDsYfGlSoIRUU2Gz
+	 xrftGosKWR5hTIjTkRS8YeNZsRsHE1FgewpBr6Qs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Vincent Jardin <vjardin@free.fr>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Carlos Song <carlos.song@nxp.com>,
+	Stefan Eichenberger <eichest@gmail.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 442/484] platform/x86: dell-laptop: fix missing cleanups in init error path
-Date: Thu, 30 Jul 2026 16:15:39 +0200
-Message-ID: <20260730141433.082247746@linuxfoundation.org>
+Subject: [PATCH 6.6 444/484] i2c: imx: fix locked bus on SMBus block-read of 0 (atomic)
+Date: Thu, 30 Jul 2026 16:15:41 +0200
+Message-ID: <20260730141433.126591020@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -45,56 +48,90 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+From: Vincent Jardin <vjardin@free.fr>
 
-[ Upstream commit 6e9cab2247e5b243ae2d907ce7c948a8a9c8d61a ]
+[ Upstream commit cb2fc37857693b55909fb77dc2c87cfbc1cdc476 ]
 
-dell_init() initializes several resources after dell_setup_rfkill(),
-including the optional touchpad LED, keyboard backlight LED, battery
-hook, debugfs directory and dell-laptop notifier.
+SMBus 3.1 6.5.7 allows a Block Read byte count of 0, but the atomic
+(polling) path rejects it as -EPROTO. Worse, it returns without a
+NACK+STOP: the next receive cycle has already started, so the target
+keeps holding SDA and the bus stays stuck until a power cycle for
+this i2c controller.
 
-If a later LED or backlight registration fails, the error path only
-tears down the battery hook and rfkill resources. This leaves the
-notifier, debugfs directory, keyboard backlight LED and optional
-touchpad LED registered after dell_init() returns an error.
+Reading I2DR to obtain the count likewise arms the next byte on the
+count > I2C_SMBUS_BLOCK_MAX path, which also returned -EPROTO directly
+and left the bus held.
 
-Add the missing cleanup calls before tearing down rfkill.
+Handle both: NACK the in-flight dummy byte (TXAK) and extend msgs->len so
+the existing last-byte handling emits STOP; the dummy byte is discarded.
+A count of 0 is a valid empty block read; a count above
+I2C_SMBUS_BLOCK_MAX is still reported as -EPROTO, but only after the bus
+has been released.
 
-Fixes: 9c656b07997f ("platform/x86: dell-*: Call new led hw_changed API on kbd brightness change")
-Fixes: 037accfa14b2 ("dell-laptop: Add debugfs support")
-Fixes: 2d8b90be4f1c ("dell-laptop: support Synaptics/Alps touchpad led")
-Fixes: 6cff8d60aa0a ("platform: x86: dell-laptop: Add support for keyboard backlight")
-Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
-Link: https://patch.msgid.link/20260609081419.1995169-1-lihaoxiang@isrc.iscas.ac.cn
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+The interrupt-driven path has the same flaw from a later commit and is
+fixed separately, as it carries a different Fixes: tag and stable range.
+
+Fixes: 8e8782c71595 ("i2c: imx: add SMBus block read support")
+Signed-off-by: Vincent Jardin <vjardin@free.fr>
+Cc: <stable@vger.kernel.org> # v3.16+
+Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Acked-by: Carlos Song <carlos.song@nxp.com>
+Reviewed-by: Stefan Eichenberger <eichest@gmail.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/20260713-for-upstream-i2c-lx2160-fix-v1-v3-1-073ac9e103a5@free.fr
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/dell/dell-laptop.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/i2c/busses/i2c-imx.c |   19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
---- a/drivers/platform/x86/dell/dell-laptop.c
-+++ b/drivers/platform/x86/dell/dell-laptop.c
-@@ -2295,6 +2295,11 @@ fail_backlight:
- 	if (mute_led_registered)
- 		led_classdev_unregister(&mute_led_cdev);
- fail_led:
-+	dell_laptop_unregister_notifier(&dell_laptop_notifier);
-+	debugfs_remove_recursive(dell_laptop_dir);
-+	kbd_led_exit();
-+	if (quirks && quirks->touchpad_led)
-+		touchpad_led_exit();
- 	dell_cleanup_rfkill();
- fail_rfkill:
- 	platform_device_del(platform_device);
+--- a/drivers/i2c/busses/i2c-imx.c
++++ b/drivers/i2c/busses/i2c-imx.c
+@@ -1184,6 +1184,7 @@ static int i2c_imx_read(struct imx_i2c_s
+ 	int i, result;
+ 	unsigned int temp;
+ 	int block_data = msgs->flags & I2C_M_RECV_LEN;
++	int block_err = 0;
+ 
+ 	result = i2c_imx_prepare_read(i2c_imx, msgs, atomic, false);
+ 	if (result)
+@@ -1205,8 +1206,20 @@ static int i2c_imx_read(struct imx_i2c_s
+ 		 */
+ 		if ((!i) && block_data) {
+ 			len = imx_i2c_read_reg(i2c_imx, IMX_I2C_I2DR);
+-			if ((len == 0) || (len > I2C_SMBUS_BLOCK_MAX))
+-				return -EPROTO;
++			if ((len == 0) || (len > I2C_SMBUS_BLOCK_MAX)) {
++				/*
++				 * SMBus 3.1 6.5.7: support count byte of 0.
++				 * I2C_SMBUS_BLOCK_MAX case should not hold the SDA either.
++				 */
++				if (len > I2C_SMBUS_BLOCK_MAX)
++					block_err = -EPROTO;
++				temp = imx_i2c_read_reg(i2c_imx, IMX_I2C_I2CR);
++				temp |= I2CR_TXAK;
++				imx_i2c_write_reg(temp, i2c_imx, IMX_I2C_I2CR);
++				msgs->buf[0] = 0;
++				msgs->len = 2;
++				continue;
++			}
+ 			dev_dbg(&i2c_imx->adapter.dev,
+ 				"<%s> read length: 0x%X\n",
+ 				__func__, len);
+@@ -1254,7 +1267,7 @@ static int i2c_imx_read(struct imx_i2c_s
+ 			"<%s> read byte: B%d=0x%X\n",
+ 			__func__, i, msgs->buf[i]);
+ 	}
+-	return 0;
++	return block_err;
+ }
+ 
+ static int i2c_imx_atomic_read(struct imx_i2c_struct *i2c_imx, struct i2c_msg *msgs,
 
 
