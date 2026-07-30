@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 964245C613;
-	Thu, 30 Jul 2026 14:40:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74E585C613;
+	Thu, 30 Jul 2026 14:40:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785422446; cv=none; b=hzkU1zRbP16bpPk4vBnu6a6oq+3yyuO1YimbsisIh/ACOm7Q6uqdoDpOSQntW9ix9IdfAuHaU9o2rJ+PAka0u/qhcjHhn6sqKssgsedCyRTcu3EJbCm4D9mVcuKYu2K0zA662ao+QY+7bt2Q4k0lq+Mj2q/5ZvKPYrMnFzk0Bsg=
+	t=1785422449; cv=none; b=hzHIPysIVhtAH9vNh5wo1gGjFQFPLBmNTUdbqXwA9bRIJyc5Me3tlivVNAiP4gSBObEAyb2mpPteGL9lFokf2pFRNZ0fVrTyfo7+JqDLLEwFHhQpsx8aulrzcrBWnvVX4BCwmfDw+OdCpVJmEudUAYd68Nzp3cqppzp9xmS+3/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785422446; c=relaxed/simple;
-	bh=QJbSR9B518KA2cDFeeEszz+THlq25aPEBpsmqSlYL0E=;
+	s=arc-20240116; t=1785422449; c=relaxed/simple;
+	bh=hohn45oomncffZaM+pRDO+R5KLdKTggBQZ6KPSgPls4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C0BhzcnMoMhNNSWzgkkvbZ1KjOMsSgzjhhDW8gI5EJewD076N4EONSBIziSi+VMv5AS1pf5viG2N8VDLLJy516Oz+ns4faE3vRTMs7WicfJf62MR9zfm9z/fklxaMQu2XLY0ffoSMBHa2OGyiXL7wBhGQkjDH9DraeQTwQkpzPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RXXhP9hl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PAd+Jd2WztT2okV8BwvPwkDkqUksrJDtV+rVNc69GpXW3eJJi0USAChugN0rN5baXr3hQ/n20Dyrtr3g0m0xlUmK0526Lv3+rnzRJHxKiE8u3PRA3/kWx9qu57rD0fPgMPXzT/6vegXkIb+qqZlAt2mECPJtsIPU+lrfZTlatlw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GoThFsms; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RXXhP9hl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 079A81F000E9;
-	Thu, 30 Jul 2026 14:40:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GoThFsms"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5DCC1F000E9;
+	Thu, 30 Jul 2026 14:40:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785422445;
-	bh=crAmPFLDSIChqJwz3sYoHNzFO/erZsXTPmQJ6URUOLQ=;
+	s=korg; t=1785422448;
+	bh=aHwcDNMXreggI1ExIahKw7j4RPjTQbTRFqBLYHSYAAg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RXXhP9hl5uAZZahEEOZGm4mkyVZrCFddDI6F8GvVCrG1LLDykEJFSH3j1vk3Zd3FE
-	 FIHKUpSXxwl/z8dvxys0Xj23NPy4cdXYgrgm0t2lzk2yw25t7v6Eig7/zZLPNPCGxB
-	 aOiNj2Ylw86KRG648tNUoXU/Mm5G9SNyXd1v0OiQ=
+	b=GoThFsmsbBYvYxC37rR6cg/qwljDQVJi41FhYrUZS4huQKSxATqxV1HbdaoDzSQqL
+	 HXxG/BDh/Eqlpk6FOEhE8XB+Zy8kKBG7oBQLp3B++rzz6Vw1aiViU2HAN2fsY8XV1X
+	 /MPFPWRxtfNbdtpg3XKP+QtIYaPpjlZevbkRdffo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Martin Hodo <martin.hodo@intel.com>,
-	Faith Ekstrand <faith.ekstrand@collabora.com>,
-	Simona Vetter <simona.vetter@ffwll.ch>,
-	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>,
 	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
 	Andi Shyti <andi.shyti@linux.intel.com>,
 	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 7.1 440/744] drm/i915/gem: Fix NULL deref in I915_CONTEXT_PARAM_SSEU
-Date: Thu, 30 Jul 2026 16:11:53 +0200
-Message-ID: <20260730141453.651900420@linuxfoundation.org>
+Subject: [PATCH 7.1 441/744] drm/i915/gt: Fix NULL deref on sched_engine alloc failure
+Date: Thu, 30 Jul 2026 16:11:54 +0200
+Message-ID: <20260730141453.673262052@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141444.267951807@linuxfoundation.org>
 References: <20260730141444.267951807@linuxfoundation.org>
@@ -58,44 +57,86 @@ Content-Transfer-Encoding: 8bit
 
 From: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 
-commit 2b56757a9a7456825eb668fde92299e01c5e2721 upstream.
+commit 82ec992c404c3dc774c5e9f3d4aa858e97187675 upstream.
 
-Setting context engine slot N into I915_ENGINE_CLASS_INVALID /
-I915_ENGINE_CLASS_INVALID_NONE and attempting to apply
-I915_CONTEXT_PARAM_SSEU to the same slot N will deref NULL.
-Fix that.
+Avoid using intel_context_put() before intel_context_init() in
+execlists_create_virtual() as the kref_put() inside would lead
+to NULL deref on the IOCTL path when sched_engine allocation fails.
 
 Discovered using AI-assisted static analysis confirmed by
 Intel Product Security.
 
 Reported-by: Martin Hodo <martin.hodo@intel.com>
-Fixes: d4433c7600f7 ("drm/i915/gem: Use the proto-context to handle create parameters (v5)")
-Cc: Faith Ekstrand <faith.ekstrand@collabora.com>
-Cc: Simona Vetter <simona.vetter@ffwll.ch>
-Cc: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Fixes: 3e28d37146db ("drm/i915: Move priolist to new i915_sched_engine object")
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
+Cc: Tvrtko Ursulin <tursulin@ursulin.net>
 Cc: <stable@vger.kernel.org> # v5.15+
 Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Reviewed-by: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
 Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Link: https://patch.msgid.link/20260701075555.52142-1-joonas.lahtinen@linux.intel.com
-(cherry picked from commit 36eda5b5c2d40da41cc0a5403c26986237cf9e87)
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
+Link: https://lore.kernel.org/r/20260701114513.221254-1-joonas.lahtinen@linux.intel.com
+(cherry picked from commit 4f2a12f2d50e9f48227656e4dcbd6423506be31d)
 Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/gem/i915_gem_context.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/i915/gt/intel_execlists_submission.c |   19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
---- a/drivers/gpu/drm/i915/gem/i915_gem_context.c
-+++ b/drivers/gpu/drm/i915/gem/i915_gem_context.c
-@@ -856,7 +856,7 @@ static int set_proto_ctx_sseu(struct drm
- 		pe = &pc->user_engines[idx];
+--- a/drivers/gpu/drm/i915/gt/intel_execlists_submission.c
++++ b/drivers/gpu/drm/i915/gt/intel_execlists_submission.c
+@@ -3932,11 +3932,11 @@ execlists_create_virtual(struct intel_en
+ 	struct drm_i915_private *i915 = siblings[0]->i915;
+ 	struct virtual_engine *ve;
+ 	unsigned int n;
+-	int err;
++	int err = -ENOMEM;
  
- 		/* Only render engine supports RPCS configuration. */
--		if (pe->engine->class != RENDER_CLASS)
-+		if (!pe->engine || pe->engine->class != RENDER_CLASS)
- 			return -EINVAL;
+ 	ve = kzalloc_flex(*ve, siblings, count);
+ 	if (!ve)
+-		return ERR_PTR(-ENOMEM);
++		goto err;
  
- 		sseu = &pe->sseu;
+ 	ve->base.i915 = i915;
+ 	ve->base.gt = siblings[0]->gt;
+@@ -3968,10 +3968,8 @@ execlists_create_virtual(struct intel_en
+ 	intel_engine_init_execlists(&ve->base);
+ 
+ 	ve->base.sched_engine = i915_sched_engine_create(ENGINE_VIRTUAL);
+-	if (!ve->base.sched_engine) {
+-		err = -ENOMEM;
+-		goto err_put;
+-	}
++	if (!ve->base.sched_engine)
++		goto err_noput;
+ 	ve->base.sched_engine->private_data = &ve->base;
+ 
+ 	ve->base.cops = &virtual_context_ops;
+@@ -3987,10 +3985,8 @@ execlists_create_virtual(struct intel_en
+ 	intel_context_init(&ve->context, &ve->base);
+ 
+ 	ve->base.breadcrumbs = intel_breadcrumbs_create(NULL);
+-	if (!ve->base.breadcrumbs) {
+-		err = -ENOMEM;
++	if (!ve->base.breadcrumbs)
+ 		goto err_put;
+-	}
+ 
+ 	for (n = 0; n < count; n++) {
+ 		struct intel_engine_cs *sibling = siblings[n];
+@@ -4065,8 +4061,13 @@ execlists_create_virtual(struct intel_en
+ 	virtual_engine_initial_hint(ve);
+ 	return &ve->context;
+ 
++err_noput:
++	kfree(ve);
++	goto err;
++
+ err_put:
+ 	intel_context_put(&ve->context);
++err:
+ 	return ERR_PTR(err);
+ }
+ 
 
 
