@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B16937A494;
-	Thu, 30 Jul 2026 16:07:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F38E9384CDD;
+	Thu, 30 Jul 2026 16:07:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785427671; cv=none; b=j93BI6f9UDTn5JpxvNvX44OiIWtsf5JRIzRZFCcYF8WR4KlyWYwvu3QmSEPs7ybLxjVNxFJWQlgc8FIyLc8y2D9bts1X6iSDkE/btrJ/JbEerRjlGAQnddwb+r03pcWC6BJAMDZZNFIqriJqtI9Auw+pomstNYgPLuRe2o0o478=
+	t=1785427674; cv=none; b=h3mjgRuMlX9kWQsNLXcXOYTWHSeNerSuPD3HK3eo+E/x+JwpQd2Jw56iG4BgXBD1ae8zUueth57lGTnxqktDFSf0rS+wIg18L42BcYW6J1fG++Gijx4OlawgVceoWNSvTP/rRW3HPWhE/dI2+LzQKu0TZYrFOQCjcLWRtodlTaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785427671; c=relaxed/simple;
-	bh=keXMFthYaheBNFoC8v1tlqD7VJt0AKEpu6DFMqEnUxo=;
+	s=arc-20240116; t=1785427674; c=relaxed/simple;
+	bh=wrkmXOCq7Hw7NxTtf22qPeVzB60vxQsCaS0Qa3CwKxU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DS++HGqOiUewMr4A37HD1q18Ad9BccKraxO6xcQdARgOtOIh7Ded+KH2cSuDcgKbRORvq5ifhVi1i86tyQvA5QAyf/YY6QtJU2DDBQQ5nY0GrM25yaMNhJZ6OSjSIkP7zg+p/XGqp9AD5pkOkpL3scmqx5CsHyUS7VtokB1Sl7g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P/2i/fCP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tRLJsmxyeLbMuP6jfpccK1RbpuHbw3YinQWsEArg8Pl++Cu3/KavX8DT3mu76aM5YLPQzzKuroNxd3HHj5SoFAfIufUY/W/KsJKPcBwSObzxer5QA8TMfi6VBX+HRkCdfNr3mD2G2o9R92AolC7lL3IvozM3iPNZtl17LOSfWDQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RyxG1Qs1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P/2i/fCP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 875F11F000E9;
-	Thu, 30 Jul 2026 16:07:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RyxG1Qs1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59EA31F000E9;
+	Thu, 30 Jul 2026 16:07:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785427670;
-	bh=ZhJ47h5Pi+wM76fIjeJZ2lzlxmPYquTEAe42E1+SoNA=;
+	s=korg; t=1785427672;
+	bh=hCF4O0uPyu/yhfcT6vhAZ+dRBDLg4tfnHbnzv9KlfeQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P/2i/fCPQqLc9ea/BzRCxEsKVEAjHCOjDFVo/ySXLVn+VmJVzfn9fKVuSCeo2btQB
-	 E2ituDyjeFWyFCpgAOCjEWp7Oespu+3v3cEHX1qSA43Jkg0PXclfB0sERalLgh6bQJ
-	 J9HYKptNc6+Ng25OWNlKxGm7Q+84rUuhaO2LPsJw=
+	b=RyxG1Qs1QCSVs82QY1Y50edXdc4oJa6OLPkQf9vwm6ry32enza5muoqaF7bI8Kvyi
+	 YbSEKCDZL8BhGtrVGIso+qTxmf0KSI52ve9YDsGWHNzvBthVfhlvbkaDJYZgReatMr
+	 RjBLc0onQJ9BzJ+HfV0f5Lyh71vowXfLVW61ieLc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Valery Borovsky <vebohr@gmail.com>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.6 252/484] media: pwc: Return queued buffers on start_streaming() failure
-Date: Thu, 30 Jul 2026 16:12:29 +0200
-Message-ID: <20260730141428.963080300@linuxfoundation.org>
+Subject: [PATCH 6.6 253/484] media: radio-si476x: Unregister v4l2_device on probe failure
+Date: Thu, 30 Jul 2026 16:12:30 +0200
+Message-ID: <20260730141428.984907921@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
 References: <20260730141423.392222816@linuxfoundation.org>
@@ -50,54 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Valery Borovsky <vebohr@gmail.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-commit 975b2ee20e569d47821e4f6c9761b4664d48a6a4 upstream.
+commit 436a693af04ffb889aaf87cb69ec1f2b21d3569c upstream.
 
-The vb2 framework hands buffers to the driver via buf_queue() before
-calling start_streaming().  If start_streaming() returns an error
-without first returning those buffers via vb2_buffer_done(),
-vb2_start_streaming() fires WARN_ON(owned_by_drv_count) and the queued
-buffers leak.
+si476x_radio_probe() registers radio->v4l2dev before allocating the V4L2
+controls and before registering the video device. If any of those later
+steps fails, probe returns through the exit label after freeing only the
+control handler.
 
-pwc's start_streaming() had two early returns that hit this trap:
--ENODEV when the USB device was already disconnected, and -ERESTARTSYS
-when mutex_lock_interruptible() was interrupted by a signal.  Call the
-existing pwc_cleanup_queued_bufs() helper with VB2_BUF_STATE_QUEUED
-before returning (matching the state already used by the
-pwc_isoc_init() error path in the same function).
+A failed probe does not call si476x_radio_remove(), so the
+v4l2_device_unregister() there is not reached. This leaves the parent
+device reference taken by v4l2_device_register() behind on the error path.
 
-This mirrors the uvcvideo fix in commit 4cf3b6fd54eb ("media: uvcvideo:
-Return queued buffers on start_streaming() failure").
+Unregister the V4L2 device in the probe error path after freeing the
+controls.
 
-Fixes: ceede9fa8939 ("[media] pwc: Fix locking")
+Fixes: b879a9c2a755 ("[media] v4l2: Add a V4L2 driver for SI476X MFD")
 Cc: stable@vger.kernel.org
-Signed-off-by: Valery Borovsky <vebohr@gmail.com>
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/pwc/pwc-if.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/media/radio/radio-si476x.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/media/usb/pwc/pwc-if.c
-+++ b/drivers/media/usb/pwc/pwc-if.c
-@@ -711,11 +711,15 @@ static int start_streaming(struct vb2_qu
- 	struct pwc_device *pdev = vb2_get_drv_priv(vq);
- 	int r;
+--- a/drivers/media/radio/radio-si476x.c
++++ b/drivers/media/radio/radio-si476x.c
+@@ -1495,6 +1495,7 @@ static int si476x_radio_probe(struct pla
+ 	return 0;
+ exit:
+ 	v4l2_ctrl_handler_free(radio->videodev.ctrl_handler);
++	v4l2_device_unregister(&radio->v4l2dev);
+ 	return rval;
+ }
  
--	if (!pdev->udev)
-+	if (!pdev->udev) {
-+		pwc_cleanup_queued_bufs(pdev, VB2_BUF_STATE_QUEUED);
- 		return -ENODEV;
-+	}
- 
--	if (mutex_lock_interruptible(&pdev->v4l2_lock))
-+	if (mutex_lock_interruptible(&pdev->v4l2_lock)) {
-+		pwc_cleanup_queued_bufs(pdev, VB2_BUF_STATE_QUEUED);
- 		return -ERESTARTSYS;
-+	}
- 	/* Turn on camera and set LEDS on */
- 	pwc_camera_power(pdev, 1);
- 	pwc_set_leds(pdev, leds[0], leds[1]);
 
 
