@@ -1,117 +1,112 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AC26356751;
-	Fri, 31 Jul 2026 06:07:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D51735E929;
+	Fri, 31 Jul 2026 06:19:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785478065; cv=none; b=m7la+YVelqkzPkN2t+aJwD6GgaWkmM6SSOSNmfLUm29HN9HkperULZ+eCMstU1VYSRrtlz3gf/0zw5WUBIW7CGN3zj6CzVuOqLeoyrqSZTKSvpZVnPYWpnJZ2QeRP/Gfs+FHg1XHTzN7qLLjOQVD4RlocbHgOrg6nK4qLAp2nrU=
+	t=1785478786; cv=none; b=UaujF6VODQCXh/rDO0F8qpEGZGy/GDHNrTvImYCybBslv2uuPvrHLbXzDt86f9jSUVPBgkVi8NKk7ffQOHMgi2IamldhYf4YDRaEXXInk1L7cLLVzmAJD403mBuiVeK/dKvL5lGo64QiJ0b0/1X1uB1Yur466WYajYvKB3Lf4z4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785478065; c=relaxed/simple;
-	bh=WaNdN+YQuV0PIYy8AFzhGPMHE+BepQ0e2VLF6AjfEMg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Rfbuidhk9t/d0Fmita/QFm09NA1FYPPiljAj2VWKGPGy7lsMjC6SVl5jJkzev/PR9ZNWGz+Jw/USI8bROUGZr+LsQYLcV+7Rf4gT1MzMjVrH1GEVRcpkI9uhmdXcPBXiNd/1O9mgj6Hpb6Hpms5f4TktNM+nSmAVXecaNjIyDrA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hr7H8Ara; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1785478786; c=relaxed/simple;
+	bh=m7F3y13oXrBbQYsXjuZ8reSIh3ZK7L7Cep88zLsijwQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=RRZPMsFOoCHcPDReNcxbO8v7DrT/RJjQPjzZIpdiR3rQl3ggokLSp4C1SronJSlwjrCtPV9/HDQJeBusgLDPBGUgiK4/kl08mh9c5UOSKhDoJuKvvhlZGops5aGOpK3cbolowNdRKF/g0plh6VmtyoSr5CD9IwLjKmvj5GaTN1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cxoViVsA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hr7H8Ara"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9A6A1F000E9;
-	Fri, 31 Jul 2026 06:07:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1785478063;
-	bh=tSaQcQO13V9eH1T+8uK2VpcXOjUx0fX6Ia1smb5+GIQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=Hr7H8Araf/h1q8yhZed3sMeLAaH/DInMeSfq7/g6+yXWtxaF4uoAzd8ROUXu6wnFK
-	 pnGZU3f+mfDltD1+QWOPmxWvrv4zq1FnWm4a+u56Abr8YWwUwfhX9xO1K3MkarD8dX
-	 P0p228cz27khvYFIcS4lEH12shHvKmX2vHKVbr8w=
-Date: Fri, 31 Jul 2026 08:07:29 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Ilya Dryomov <idryomov@gmail.com>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Max Kellermann <max.kellermann@ionos.com>,
-	Xiubo Li <xiubo.li@clyso.com>
-Subject: Re: [PATCH 7.1 625/744] ceph: add owner/capability checks for
- CEPH_IOC_SET_LAYOUT*
-Message-ID: <2026073115-tilt-lavender-4ca2@gregkh>
-References: <20260730141444.267951807@linuxfoundation.org>
- <20260730141457.560203325@linuxfoundation.org>
- <CAOi1vP8Ka3cbvY-wKg-WE+oTWmuJwgQpwJ1-mxSU6YrbtMRyKQ@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cxoViVsA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBAEF1F000E9;
+	Fri, 31 Jul 2026 06:19:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1785478785;
+	bh=6QXi0TII7/bK1tQ1d3dFhzqKhjQUEb0v2ZIzAPOVW7I=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=cxoViVsA4KZazBH3XxBiBb3ipkIr3CsNim6fJoqSej2DfT2czk9RJPFdv2wZcukX1
+	 AxLowSFcx6i2ng1qNWNo56tgRCzn+BOm6vtAyciSNk5XsqTq8Kh46RDGJRFJfFewke
+	 dtftHab14hlxXhxJKY1DZa40U7YXAqGF82xkubMhN59+YB/w9pAnywkb5Kl/J56W06
+	 VmjG0N8UpITWNcL3R3T+x+hfrwFAPKmkWCHcPS00hG2rolPnKIE1uFBXCvU0lJFRrY
+	 +v4VQ2LUaEB/HIOr96enLdkJVzb91H4vh7sXoKdRUxCw5VDcr8LYatu1a8Sbmgy8yn
+	 figTM4JPnjvAw==
+Message-ID: <3f871221-c64e-4a68-95a5-56a9c5ff83d0@kernel.org>
+Date: Fri, 31 Jul 2026 08:19:41 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAOi1vP8Ka3cbvY-wKg-WE+oTWmuJwgQpwJ1-mxSU6YrbtMRyKQ@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 7.1 286/744] cifs: prevent readdir from changing file size
+ due to stale directory metadata
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, Frank Sorenson <sorenson@redhat.com>,
+ Steve French <stfrench@microsoft.com>, Sasha Levin <sashal@kernel.org>
+References: <20260730141444.267951807@linuxfoundation.org>
+ <20260730141450.369284870@linuxfoundation.org>
+Content-Language: en-US
+From: Jiri Slaby <jirislaby@kernel.org>
+Autocrypt: addr=jirislaby@kernel.org; keydata=
+ xsFNBE6S54YBEACzzjLwDUbU5elY4GTg/NdotjA0jyyJtYI86wdKraekbNE0bC4zV+ryvH4j
+ rrcDwGs6tFVrAHvdHeIdI07s1iIx5R/ndcHwt4fvI8CL5PzPmn5J+h0WERR5rFprRh6axhOk
+ rSD5CwQl19fm4AJCS6A9GJtOoiLpWn2/IbogPc71jQVrupZYYx51rAaHZ0D2KYK/uhfc6neJ
+ i0WqPlbtIlIrpvWxckucNu6ZwXjFY0f3qIRg3Vqh5QxPkojGsq9tXVFVLEkSVz6FoqCHrUTx
+ wr+aw6qqQVgvT/McQtsI0S66uIkQjzPUrgAEtWUv76rM4ekqL9stHyvTGw0Fjsualwb0Gwdx
+ ReTZzMgheAyoy/umIOKrSEpWouVoBt5FFSZUyjuDdlPPYyPav+hpI6ggmCTld3u2hyiHji2H
+ cDpcLM2LMhlHBipu80s9anNeZhCANDhbC5E+NZmuwgzHBcan8WC7xsPXPaiZSIm7TKaVoOcL
+ 9tE5aN3jQmIlrT7ZUX52Ff/hSdx/JKDP3YMNtt4B0cH6ejIjtqTd+Ge8sSttsnNM0CQUkXps
+ w98jwz+Lxw/bKMr3NSnnFpUZaxwji3BC9vYyxKMAwNelBCHEgS/OAa3EJoTfuYOK6wT6nadm
+ YqYjwYbZE5V/SwzMbpWu7Jwlvuwyfo5mh7w5iMfnZE+vHFwp/wARAQABzSFKaXJpIFNsYWJ5
+ IDxqaXJpc2xhYnlAa2VybmVsLm9yZz7CwXcEEwEIACEFAlW3RUwCGwMFCwkIBwIGFQgJCgsC
+ BBYCAwECHgECF4AACgkQvSWxBAa0cEnVTg//TQpdIAr8Tn0VAeUjdVIH9XCFw+cPSU+zMSCH
+ eCZoA/N6gitEcnvHoFVVM7b3hK2HgoFUNbmYC0RdcSc80pOF5gCnACSP9XWHGWzeKCARRcQR
+ 4s5YD8I4VV5hqXcKo2DFAtIOVbHDW+0okOzcecdasCakUTr7s2fXz97uuoc2gIBB7bmHUGAH
+ XQXHvdnCLjDjR+eJN+zrtbqZKYSfj89s/ZHn5Slug6w8qOPT1sVNGG+eWPlc5s7XYhT9z66E
+ l5C0rG35JE4PhC+tl7BaE5IwjJlBMHf/cMJxNHAYoQ1hWQCKOfMDQ6bsEr++kGUCbHkrEFwD
+ UVA72iLnnnlZCMevwE4hc0zVhseWhPc/KMYObU1sDGqaCesRLkE3tiE7X2cikmj/qH0CoMWe
+ gjnwnQ2qVJcaPSzJ4QITvchEQ+tbuVAyvn9H+9MkdT7b7b2OaqYsUP8rn/2k1Td5zknUz7iF
+ oJ0Z9wPTl6tDfF8phaMIPISYrhceVOIoL+rWfaikhBulZTIT5ihieY9nQOw6vhOfWkYvv0Dl
+ o4GRnb2ybPQpfEs7WtetOsUgiUbfljTgILFw3CsPW8JESOGQc0Pv8ieznIighqPPFz9g+zSu
+ Ss/rpcsqag5n9rQp/H3WW5zKUpeYcKGaPDp/vSUovMcjp8USIhzBBrmI7UWAtuedG9prjqfO
+ wU0ETpLnhgEQAM+cDWLL+Wvc9cLhA2OXZ/gMmu7NbYKjfth1UyOuBd5emIO+d4RfFM02XFTI
+ t4MxwhAryhsKQQcA4iQNldkbyeviYrPKWjLTjRXT5cD2lpWzr+Jx7mX7InV5JOz1Qq+P+nJW
+ YIBjUKhI03ux89p58CYil24Zpyn2F5cX7U+inY8lJIBwLPBnc9Z0An/DVnUOD+0wIcYVnZAK
+ DiIXODkGqTg3fhZwbbi+KAhtHPFM2fGw2VTUf62IHzV+eBSnamzPOBc1XsJYKRo3FHNeLuS8
+ f4wUe7bWb9O66PPFK/RkeqNX6akkFBf9VfrZ1rTEKAyJ2uqf1EI1olYnENk4+00IBa+BavGQ
+ 8UW9dGW3nbPrfuOV5UUvbnsSQwj67pSdrBQqilr5N/5H9z7VCDQ0dhuJNtvDSlTf2iUFBqgk
+ 3smln31PUYiVPrMP0V4ja0i9qtO/TB01rTfTyXTRtqz53qO5dGsYiliJO5aUmh8swVpotgK4
+ /57h3zGsaXO9PGgnnAdqeKVITaFTLY1ISg+Ptb4KoliiOjrBMmQUSJVtkUXMrCMCeuPDGHo7
+ 39Xc75lcHlGuM3yEB//htKjyprbLeLf1y4xPyTeeF5zg/0ztRZNKZicgEmxyUNBHHnBKHQxz
+ 1j+mzH0HjZZtXjGu2KLJ18G07q0fpz2ZPk2D53Ww39VNI/J9ABEBAAHCwV8EGAECAAkFAk6S
+ 54YCGwwACgkQvSWxBAa0cEk3tRAAgO+DFpbyIa4RlnfpcW17AfnpZi9VR5+zr496n2jH/1ld
+ wRO/S+QNSA8qdABqMb9WI4BNaoANgcg0AS429Mq0taaWKkAjkkGAT7mD1Q5PiLr06Y/+Kzdr
+ 90eUVneqM2TUQQbK+Kh7JwmGVrRGNqQrDk+gRNvKnGwFNeTkTKtJ0P8jYd7P1gZb9Fwj9YLx
+ jhn/sVIhNmEBLBoI7PL+9fbILqJPHgAwW35rpnq4f/EYTykbk1sa13Tav6btJ+4QOgbcezWI
+ wZ5w/JVfEJW9JXp3BFAVzRQ5nVrrLDAJZ8Y5ioWcm99JtSIIxXxt9FJaGc1Bgsi5K/+dyTKL
+ wLMJgiBzbVx8G+fCJJ9YtlNOPWhbKPlrQ8+AY52Aagi9WNhe6XfJdh5g6ptiOILm330mkR4g
+ W6nEgZVyIyTq3ekOuruftWL99qpP5zi+eNrMmLRQx9iecDNgFr342R9bTDlb1TLuRb+/tJ98
+ f/bIWIr0cqQmqQ33FgRhrG1+Xml6UXyJ2jExmlO8JljuOGeXYh6ZkIEyzqzffzBLXZCujlYQ
+ DFXpyMNVJ2ZwPmX2mWEoYuaBU0JN7wM+/zWgOf2zRwhEuD3A2cO2PxoiIfyUEfB9SSmffaK/
+ S4xXoB6wvGENZ85Hg37C7WDNdaAt6Xh2uQIly5grkgvWppkNy4ZHxE+jeNsU7tg=
+In-Reply-To: <20260730141450.369284870@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Jul 30, 2026 at 07:39:26PM +0200, Ilya Dryomov wrote:
-> On Thu, Jul 30, 2026 at 4:49 PM Greg Kroah-Hartman
-> <gregkh@linuxfoundation.org> wrote:
-> >
-> > 7.1-stable review patch.  If anyone has any objections, please let me know.
-> >
-> > ------------------
-> >
-> > From: Max Kellermann <max.kellermann@ionos.com>
-> >
-> > commit cee38bbf5556a8e0a232ccae41649580827d7806 upstream.
-> >
-> > These permission checks were already missing in the initial
-> > impementation of these ioctls.  This Ceph allows any user who owns a
-> > file descriptor to manipulate the layout of any file, even if they
-> > don't have write permissions.
-> >
-> > It might be a good idea to guard other ioctls with permission checks
-> > as well or even disallow regular users (even if they own the file) to
-> > manipulate layout settings completely, as this may be abused to DoS
-> > the Ceph servers, but right now, I find it most urgent to have setter
-> > checks at all.
-> >
-> > Cc: stable@vger.kernel.org
-> > Fixes: 8f4e91dee2a2 ("ceph: ioctls")
-> > Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
-> > Reviewed-by: Xiubo Li <xiubo.li@clyso.com>
-> > Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-> > Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> > ---
-> >  fs/ceph/ioctl.c |    6 ++++++
-> >  1 file changed, 6 insertions(+)
-> >
-> > --- a/fs/ceph/ioctl.c
-> > +++ b/fs/ceph/ioctl.c
-> > @@ -72,6 +72,9 @@ static long ceph_ioctl_set_layout(struct
-> >         struct ceph_ioctl_layout nl;
-> >         int err;
-> >
-> > +       if (!inode_owner_or_capable(&nop_mnt_idmap, inode))
-> > +               return -EACCES;
-> > +
-> >         if (copy_from_user(&l, arg, sizeof(l)))
-> >                 return -EFAULT;
-> >
-> > @@ -142,6 +145,9 @@ static long ceph_ioctl_set_layout_policy
-> >         int err;
-> >         struct ceph_mds_client *mdsc = ceph_sb_to_fs_client(inode->i_sb)->mdsc;
-> >
-> > +       if (!inode_owner_or_capable(&nop_mnt_idmap, inode))
-> > +               return -EACCES;
-> > +
-> >         /* copy and validate */
-> >         if (copy_from_user(&l, arg, sizeof(l)))
-> >                 return -EFAULT;
-> >
-> >
+On 30. 07. 26, 16:09, Greg Kroah-Hartman wrote:
+> 7.1-stable review patch.  If anyone has any objections, please let me know.
 > 
-> Hi Greg,
+> ------------------
 > 
-> There is a concern about the correctness of this patch, please drop it
-> for now.
+> From: Frank Sorenson <sorenson@redhat.com>
+> 
+> [ Upstream commit e8a8d54c2d508891c142a928fc7d298c4c8bd0dd ]
 
-Ok, dropped now from all branches.  If you want it back, please let us
-know in the future.
+These two allegedly fix the above:
+ecababf08905 ("cifs: fix time_last_write stamp placement in 
+setattr/truncate paths")
+0e3ea5445c22 ("cifs: consolidate time_last_write stamp into 
+_cifsFileInfo_put()")
 
 thanks,
+-- 
+js
+suse labs
 
-greg k-h
