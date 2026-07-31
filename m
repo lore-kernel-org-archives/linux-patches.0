@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D51735E929;
-	Fri, 31 Jul 2026 06:19:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69B4F1D5CFE;
+	Fri, 31 Jul 2026 06:21:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785478786; cv=none; b=UaujF6VODQCXh/rDO0F8qpEGZGy/GDHNrTvImYCybBslv2uuPvrHLbXzDt86f9jSUVPBgkVi8NKk7ffQOHMgi2IamldhYf4YDRaEXXInk1L7cLLVzmAJD403mBuiVeK/dKvL5lGo64QiJ0b0/1X1uB1Yur466WYajYvKB3Lf4z4=
+	t=1785478890; cv=none; b=mYAqhb8JfmKk0YQMw+B/dyVAr8TY9kyDqlY3S4AGfiLqZr1rc/cw+KtI6J78YxaRLshIwNqF2NHDDSKHuaS2gg5s0EG+QhMeUOYSaJtwQXhOM3D21Jcq+31ifQmuntQGfIreunmTSWaWVaJc26nz/4437DjOixRsNmoDOHpBtOE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785478786; c=relaxed/simple;
-	bh=m7F3y13oXrBbQYsXjuZ8reSIh3ZK7L7Cep88zLsijwQ=;
+	s=arc-20240116; t=1785478890; c=relaxed/simple;
+	bh=yjCnhuPS8D+3ItM9BnGw2G1vlWBt7nfs7tfqu9r5IG8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RRZPMsFOoCHcPDReNcxbO8v7DrT/RJjQPjzZIpdiR3rQl3ggokLSp4C1SronJSlwjrCtPV9/HDQJeBusgLDPBGUgiK4/kl08mh9c5UOSKhDoJuKvvhlZGops5aGOpK3cbolowNdRKF/g0plh6VmtyoSr5CD9IwLjKmvj5GaTN1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cxoViVsA; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:Content-Type; b=RwPNNg6qMVL0ISRJIseQJ4VCdDkZrqS6AWuuyxxWqGfo1VEwi7lyYtbzY5TI2Ib8xphznucuOyA/r5rHAB7CPfx000nUG4M9kPfRxj6fLAG/DkPcBEeU+ZR6pQCuJAEoGNfgOOHaL3oq1rDAmhWmKeZuMpIPx3ym56ANNV7hvVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PaSF4IHy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cxoViVsA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBAEF1F000E9;
-	Fri, 31 Jul 2026 06:19:43 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PaSF4IHy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 901E01F000E9;
+	Fri, 31 Jul 2026 06:21:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785478785;
-	bh=6QXi0TII7/bK1tQ1d3dFhzqKhjQUEb0v2ZIzAPOVW7I=;
+	s=k20260515; t=1785478889;
+	bh=Ai5DdgnMBAlwlIqY4Tfv37GQM1l9efw1p8pTzSPaYCI=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=cxoViVsA4KZazBH3XxBiBb3ipkIr3CsNim6fJoqSej2DfT2czk9RJPFdv2wZcukX1
-	 AxLowSFcx6i2ng1qNWNo56tgRCzn+BOm6vtAyciSNk5XsqTq8Kh46RDGJRFJfFewke
-	 dtftHab14hlxXhxJKY1DZa40U7YXAqGF82xkubMhN59+YB/w9pAnywkb5Kl/J56W06
-	 VmjG0N8UpITWNcL3R3T+x+hfrwFAPKmkWCHcPS00hG2rolPnKIE1uFBXCvU0lJFRrY
-	 +v4VQ2LUaEB/HIOr96enLdkJVzb91H4vh7sXoKdRUxCw5VDcr8LYatu1a8Sbmgy8yn
-	 figTM4JPnjvAw==
-Message-ID: <3f871221-c64e-4a68-95a5-56a9c5ff83d0@kernel.org>
-Date: Fri, 31 Jul 2026 08:19:41 +0200
+	b=PaSF4IHyYtix5wVuBP5jdvcSbzEoHkgOQdyAgitBB58PExXvGAg39pTkSqmRpgPMu
+	 5uU2xklcdCeFx4tTrcWCOLonDSHRtoASWiwmhGyMgcwEiwBM5SqIa7zyZt7u2I7bVh
+	 vn/9k0rXT2JtdhVlf5m0N7Wuz2eH5GMiwz5I4Cdr+uEQdfLYCIf7tdHSx4tBNBJlhV
+	 HvrtZ0UsnFTlHoIaxG5esPour5xJloVF9mD9+P61jmaOT7Cv4qBw97BWALq3Uv98VW
+	 62cW3KtS/WNmyj+nmJXyyodE9hEfFf83PKfI4RanUksqxEbHBXbscL7mytJYyaSGTg
+	 eQEpliyKZ4f9A==
+Message-ID: <669b8e16-19a6-49bf-a1ef-a7bce5075a9a@kernel.org>
+Date: Fri, 31 Jul 2026 08:21:26 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -35,13 +35,13 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7.1 286/744] cifs: prevent readdir from changing file size
- due to stale directory metadata
+Subject: Re: [PATCH 7.1 667/744] ptp: ptp_s390: Add missing facility check
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Frank Sorenson <sorenson@redhat.com>,
- Steve French <stfrench@microsoft.com>, Sasha Levin <sashal@kernel.org>
+Cc: patches@lists.linux.dev, Sven Schnelle <svens@linux.ibm.com>,
+ stable@kernel.org, Heiko Carstens <hca@linux.ibm.com>,
+ Jakub Kicinski <kuba@kernel.org>
 References: <20260730141444.267951807@linuxfoundation.org>
- <20260730141450.369284870@linuxfoundation.org>
+ <20260730141458.442328931@linuxfoundation.org>
 Content-Language: en-US
 From: Jiri Slaby <jirislaby@kernel.org>
 Autocrypt: addr=jirislaby@kernel.org; keydata=
@@ -86,24 +86,43 @@ Autocrypt: addr=jirislaby@kernel.org; keydata=
  f/bIWIr0cqQmqQ33FgRhrG1+Xml6UXyJ2jExmlO8JljuOGeXYh6ZkIEyzqzffzBLXZCujlYQ
  DFXpyMNVJ2ZwPmX2mWEoYuaBU0JN7wM+/zWgOf2zRwhEuD3A2cO2PxoiIfyUEfB9SSmffaK/
  S4xXoB6wvGENZ85Hg37C7WDNdaAt6Xh2uQIly5grkgvWppkNy4ZHxE+jeNsU7tg=
-In-Reply-To: <20260730141450.369284870@linuxfoundation.org>
+In-Reply-To: <20260730141458.442328931@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 30. 07. 26, 16:09, Greg Kroah-Hartman wrote:
+On 30. 07. 26, 16:15, Greg Kroah-Hartman wrote:
 > 7.1-stable review patch.  If anyone has any objections, please let me know.
 > 
 > ------------------
 > 
-> From: Frank Sorenson <sorenson@redhat.com>
+> From: Sven Schnelle <svens@linux.ibm.com>
 > 
-> [ Upstream commit e8a8d54c2d508891c142a928fc7d298c4c8bd0dd ]
+> commit e78f1ac37afcb16cb6fef8a2c92591eab6558956 upstream.
+> 
+> Only register the physical clock when facility 28 is installed
+> and PTFF QAF returns that PTFF QPT is available.
+> 
+> Fixes: 2d7de7a3010d ("s390/time: Add PtP driver")
+> Signed-off-by: Sven Schnelle <svens@linux.ibm.com>
+> Cc: stable@kernel.org
+> Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+> Link: https://patch.msgid.link/20260714130342.1971700-3-svens@linux.ibm.com
+> Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> ---
+>   drivers/ptp/ptp_s390.c |    6 +++++-
+>   1 file changed, 5 insertions(+), 1 deletion(-)
+> 
+> --- a/drivers/ptp/ptp_s390.c
+> +++ b/drivers/ptp/ptp_s390.c
+> @@ -107,6 +107,9 @@ static __init int ptp_s390_init(void)
+>   	if (IS_ERR(ptp_stcke_clock))
+>   		return PTR_ERR(ptp_stcke_clock);
+>   
+> +	if (!test_facility(28) || !ptff_query(PTFF_QPT))
 
-These two allegedly fix the above:
-ecababf08905 ("cifs: fix time_last_write stamp placement in 
-setattr/truncate paths")
-0e3ea5445c22 ("cifs: consolidate time_last_write stamp into 
-_cifsFileInfo_put()")
+ptff_query() here needs:
+9de445d8296a ("s390/ptff: Export ptff_function_mask[]")
 
 thanks,
 -- 
