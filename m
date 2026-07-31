@@ -1,110 +1,117 @@
-Received: from smtpbg150.qq.com (smtpbg150.qq.com [18.132.163.193])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D44F42566F7
-	for <patches@lists.linux.dev>; Fri, 31 Jul 2026 05:06:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.132.163.193
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AC26356751;
+	Fri, 31 Jul 2026 06:07:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785474400; cv=none; b=b9KD5gGkgnFSKKbNShqzlj5x29fehcYhHbTxwrkCaXUhOSq1bEwYGjGyEYJYIQURix1coO2iiD1A9O9p/EKbu/TW8rb/VXq806p83Opq8vn2PNBCpGmjpExlSWsZca0c7e0iqYCUlqpVKhSse1bjRg+X2MuotH1oAJI0k1jQU0Y=
+	t=1785478065; cv=none; b=m7la+YVelqkzPkN2t+aJwD6GgaWkmM6SSOSNmfLUm29HN9HkperULZ+eCMstU1VYSRrtlz3gf/0zw5WUBIW7CGN3zj6CzVuOqLeoyrqSZTKSvpZVnPYWpnJZ2QeRP/Gfs+FHg1XHTzN7qLLjOQVD4RlocbHgOrg6nK4qLAp2nrU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785474400; c=relaxed/simple;
-	bh=AC1aCGGF7i7PNCvAs2VTA83SmIkCRDsYvUzW4JlAGQg=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=GwqIb4+Vi1juGM4/Uss5+HrZlFBrkC7WfW27vkclYIclPN1RHqn1WkvUBeBSCD0ciIKK5acEKDlWUNRx3W3qZBwW7enQOUbrC9z9IMLKAYqKCOeejF5ZpmlTornEXdZXhFIcX4F8d9UtW39/r6LwWeDPhES+LRlKQxm/Cw35npU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com; spf=pass smtp.mailfrom=uniontech.com; dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b=RT3tPTya; arc=none smtp.client-ip=18.132.163.193
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=uniontech.com
+	s=arc-20240116; t=1785478065; c=relaxed/simple;
+	bh=WaNdN+YQuV0PIYy8AFzhGPMHE+BepQ0e2VLF6AjfEMg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Rfbuidhk9t/d0Fmita/QFm09NA1FYPPiljAj2VWKGPGy7lsMjC6SVl5jJkzev/PR9ZNWGz+Jw/USI8bROUGZr+LsQYLcV+7Rf4gT1MzMjVrH1GEVRcpkI9uhmdXcPBXiNd/1O9mgj6Hpb6Hpms5f4TktNM+nSmAVXecaNjIyDrA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hr7H8Ara; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b="RT3tPTya"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=uniontech.com;
-	s=onoh2408; t=1785474372;
-	bh=AC1aCGGF7i7PNCvAs2VTA83SmIkCRDsYvUzW4JlAGQg=;
-	h=From:To:Subject:Date:Message-Id:MIME-Version;
-	b=RT3tPTyaXI766cutWCEX8JICha1OI58Qq/jweAXDb90w9iPBr6TNJoqohUV0pdwZr
-	 p2WaDhZemvbOYbyG1dqCqfz6DUa35mxjlOqgBxPsHh6q2jOtCEdLEvy2EXBwkc4H2l
-	 xbdaYPg6QjiH2Dpx1pIhFkP7HtuFOnkjJFmold1c=
-X-QQ-mid: zesmtpsz4t1785474365t5463c04b
-X-QQ-Originating-IP: xA2G7VDyRJ76V1Tmq7ui1U87cPouK9vQ7D4XA8/qAGU=
-Received: from localhost.localdomain ( [113.57.152.160])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Fri, 31 Jul 2026 13:06:02 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 1
-X-BIZMAIL-ID: 2940425011589697088
-EX-QQ-RecipientCnt: 21
-From: Wentao Guan <guanwentao@uniontech.com>
-To: gregkh@linuxfoundation.org
-Cc: achill@achill.org,
-	akpm@linux-foundation.org,
-	broonie@kernel.org,
-	conor@kernel.org,
-	f.fainelli@gmail.com,
-	hargar@microsoft.com,
-	jonathanh@nvidia.com,
-	linux-kernel@vger.kernel.org,
-	linux@roeck-us.net,
-	lkft-triage@lists.linaro.org,
-	patches@kernelci.org,
-	patches@lists.linux.dev,
-	pavel@nabladev.com,
-	rwarsow@gmx.de,
-	shuah@kernel.org,
-	sr@sladewatkins.com,
-	stable@vger.kernel.org,
-	sudipm.mukherjee@gmail.com,
-	torvalds@linux-foundation.org,
-	Wentao Guan <guanwentao@uniontech.com>
-Subject: Re: [PATCH 6.6 000/484] 6.6.148-rc1 review
-Date: Fri, 31 Jul 2026 13:06:00 +0800
-Message-Id: <20260731050600.550567-1-guanwentao@uniontech.com>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
-References: <20260730141423.392222816@linuxfoundation.org>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hr7H8Ara"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9A6A1F000E9;
+	Fri, 31 Jul 2026 06:07:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1785478063;
+	bh=tSaQcQO13V9eH1T+8uK2VpcXOjUx0fX6Ia1smb5+GIQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=Hr7H8Araf/h1q8yhZed3sMeLAaH/DInMeSfq7/g6+yXWtxaF4uoAzd8ROUXu6wnFK
+	 pnGZU3f+mfDltD1+QWOPmxWvrv4zq1FnWm4a+u56Abr8YWwUwfhX9xO1K3MkarD8dX
+	 P0p228cz27khvYFIcS4lEH12shHvKmX2vHKVbr8w=
+Date: Fri, 31 Jul 2026 08:07:29 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Ilya Dryomov <idryomov@gmail.com>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Max Kellermann <max.kellermann@ionos.com>,
+	Xiubo Li <xiubo.li@clyso.com>
+Subject: Re: [PATCH 7.1 625/744] ceph: add owner/capability checks for
+ CEPH_IOC_SET_LAYOUT*
+Message-ID: <2026073115-tilt-lavender-4ca2@gregkh>
+References: <20260730141444.267951807@linuxfoundation.org>
+ <20260730141457.560203325@linuxfoundation.org>
+ <CAOi1vP8Ka3cbvY-wKg-WE+oTWmuJwgQpwJ1-mxSU6YrbtMRyKQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpsz:uniontech.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: ONalwM1aM/hiQmtOZV5Kwr4QRk//2jplMZ7VmSkGmE5g0bcHQwpEuLj1
-	+i5hH66OYRFRM0y7XZBACWIMFc9W+CWGhzF0jaIga8Sky/JyG4uhrVhZvubQzmNXk31wQnm
-	4b2PxO4Frya1J5bmpWpuOp01TaiZU9YEI7YG/XPQhF8LoyG25f4Go0a49XHujRDNQg3X7/s
-	YKfRZ9cGwJ2eRI5+jFVOWSjKe2uqOb1Sup2/qMLhRP/MA0gDFSpEWw8/naw7QzsrgGQmoHT
-	bJCRPSl25ezwm9GvcjMKw0IFfFIyVcWhqD9gdGtqMho2EqP0Wl6ok4hddFDTLA4NvUk9j0I
-	bVlPeK0u6r52mUqTdGGjeX335qOBkaDEmF4+jhogq9RrV/cGh0dWm4WNsZOcSIl1X+VloSP
-	kMd68fHZAxZwK1Bfy58s4d3sAqedjUd1J/+d/udF0tBS+lene+snWq9LmA4/jKs3irb3eYM
-	PLgTCNDI5L50rrPArBUxFaKok8BvdzzcJfDGSxLei5A2m3q0ZYHd+HYBbWyzQebRnUK5QMe
-	gPj1ZUY4EGuX5qpMKokynmroiNm/ZdqBp24E88ppB0fGapg87zuZCRbXsPMmVPemB2UZEct
-	vhtE5FvtMIYa1pMqeW7+omeWC9uBmwZxKbwyuV1n1jfUICGqXdTF4up7soYb2km3kd+NeCR
-	ZDV7AANcJTsX/85d2hqY5i0qGEM+tYhmmxDscHARuyujCTVzeb89uRtmqqNhUCRNJ0on9bA
-	AwbeQ1Dh4OorYe8KwBYnJKfq8eqjp3K/EwQGw7SWht1bi/LF1huveXboOYvkPZVlwjpZcoJ
-	uq1/jhhh3/y2zK2PnoBMB4LMSBHp6RERkCcOheMO5eg4u2z2GRl3G65hzosKdfRgwjvd2d/
-	iM+/80xhgR2A6VRBYVHrWVd5/gdpfEWPjm29buGoiCzPqOLaMbeqlO7F1mfpETMT3vRmem4
-	KwrsslCivHrTLzd49v22rdGC20iv7GJhJqf/W5R1ClY/87GKiczz3hYujLDEQ2MpAYAhiiK
-	wEZI56wDL165H3JK7BgoGgfVvs84qqFTU1DMTRJoqZBeYasWZyc0H39dwKeoO+FxTKTkGyp
-	e2ao/q2ritr
-X-QQ-XMRINFO: NS+P29fieYNwqS3WCnRCOn9D1NpZuCnCRA==
-X-QQ-RECHKSPAM: 0
+In-Reply-To: <CAOi1vP8Ka3cbvY-wKg-WE+oTWmuJwgQpwJ1-mxSU6YrbtMRyKQ@mail.gmail.com>
 
-Hello,
+On Thu, Jul 30, 2026 at 07:39:26PM +0200, Ilya Dryomov wrote:
+> On Thu, Jul 30, 2026 at 4:49 PM Greg Kroah-Hartman
+> <gregkh@linuxfoundation.org> wrote:
+> >
+> > 7.1-stable review patch.  If anyone has any objections, please let me know.
+> >
+> > ------------------
+> >
+> > From: Max Kellermann <max.kellermann@ionos.com>
+> >
+> > commit cee38bbf5556a8e0a232ccae41649580827d7806 upstream.
+> >
+> > These permission checks were already missing in the initial
+> > impementation of these ioctls.  This Ceph allows any user who owns a
+> > file descriptor to manipulate the layout of any file, even if they
+> > don't have write permissions.
+> >
+> > It might be a good idea to guard other ioctls with permission checks
+> > as well or even disallow regular users (even if they own the file) to
+> > manipulate layout settings completely, as this may be abused to DoS
+> > the Ceph servers, but right now, I find it most urgent to have setter
+> > checks at all.
+> >
+> > Cc: stable@vger.kernel.org
+> > Fixes: 8f4e91dee2a2 ("ceph: ioctls")
+> > Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
+> > Reviewed-by: Xiubo Li <xiubo.li@clyso.com>
+> > Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+> > Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> > ---
+> >  fs/ceph/ioctl.c |    6 ++++++
+> >  1 file changed, 6 insertions(+)
+> >
+> > --- a/fs/ceph/ioctl.c
+> > +++ b/fs/ceph/ioctl.c
+> > @@ -72,6 +72,9 @@ static long ceph_ioctl_set_layout(struct
+> >         struct ceph_ioctl_layout nl;
+> >         int err;
+> >
+> > +       if (!inode_owner_or_capable(&nop_mnt_idmap, inode))
+> > +               return -EACCES;
+> > +
+> >         if (copy_from_user(&l, arg, sizeof(l)))
+> >                 return -EFAULT;
+> >
+> > @@ -142,6 +145,9 @@ static long ceph_ioctl_set_layout_policy
+> >         int err;
+> >         struct ceph_mds_client *mdsc = ceph_sb_to_fs_client(inode->i_sb)->mdsc;
+> >
+> > +       if (!inode_owner_or_capable(&nop_mnt_idmap, inode))
+> > +               return -EACCES;
+> > +
+> >         /* copy and validate */
+> >         if (copy_from_user(&l, arg, sizeof(l)))
+> >                 return -EFAULT;
+> >
+> >
+> 
+> Hi Greg,
+> 
+> There is a concern about the correctness of this patch, please drop it
+> for now.
 
-Build tested in our x86,arm64,loongarch,riscv config successfully without error.
+Ok, dropped now from all branches.  If you want it back, please let us
+know in the future.
 
-Tested-by: Wentao Guan <guanwentao@uniontech.com>
+thanks,
 
-Best Regards
-Wentao Guan
-
-Log:
-Linux version 6.6.148-rc1-arm64-desktop-hwe-g7f195ac3d444 (guanwentao@uos-PC) (aarch64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) # SMP PREEMPT
-Linux version 6.6.148-rc1-arm64-desktop-hwe-g7f195ac3d444 (guanwentao@uos-PC) (aarch64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) #2 SMP PREEMPT Fri Jul 31 11:50:50 CST 2026
-Linux version 6.6.148-rc1-loong64-desktop-hwe-g7f195ac3d444 (guanwentao@uos-PC) (loongarch64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) # SMP PREEMPT
-Linux version 6.6.148-rc1-loong64-desktop-hwe-g7f195ac3d444 (guanwentao@uos-PC) (loongarch64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) #3 SMP PREEMPT Fri Jul 31 12:08:17 CST 2026
-Linux version 6.6.148-rc1-riscv64-desktop-hwe+ (guanwentao@uos-PC) (riscv64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) # SMP
-Linux version 6.6.148-rc1-riscv64-desktop-hwe+ (guanwentao@uos-PC) (riscv64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) #4 SMP Fri Jul 31 12:24:40 CST 2026
-Linux version 6.6.148-rc1-amd64-desktop-hwe-g7f195ac3d444 (guanwentao@uos-PC) (gcc (Deepin 12.3.0-17deepin15) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) # SMP PREEMPT_DYNAMIC
-Linux version 6.6.148-rc1-amd64-desktop-hwe-g7f195ac3d444 (guanwentao@uos-PC) (gcc (Deepin 12.3.0-17deepin15) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) #1 SMP PREEMPT_DYNAMIC Fri Jul 31 11:32:42 CST 2026
-
+greg k-h
