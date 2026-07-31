@@ -1,46 +1,61 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mail.antaris-organics.com (mail.antaris-organics.com [91.227.220.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52B5D3FC5C3;
-	Fri, 31 Jul 2026 14:29:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BDB0427F94
+	for <patches@lists.linux.dev>; Fri, 31 Jul 2026 14:36:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.227.220.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785508175; cv=none; b=ECj8Vcv23Hzz+IHLQgwP5oBoChmiO9Py5c1WjcpaDCDbs5fkhrAE98Df1//G3bI3r/QFO5g81Sw5dt9u/xqfeHZ8mdT+K6Gl2pEeTWI6BSbWXJBRz7AoW59b9nFQz4m9D4zjboPcWfgJy1OFVVG2NVaeMCakNOCVx6mEcoXj9dg=
+	t=1785508614; cv=none; b=ciq1XVW4bWiziWyFiNbVmemq+riGpHDwGVgEeDHk7k7F4mKoU+5e5eERKKnIkFpiRopbnE7+Xldbz8ECimVQm0ZQH+YN2pI+8ESYc9E5xARr8+TVmc8hy9j33thx+d8IYwfqIRhDip0XcQFZrcazR0v48ERq1kbhcxADasN+jJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785508175; c=relaxed/simple;
-	bh=Yw3B7wU+czQKESZw8G426fhQMOKfXdB7fPCV5Zla/A0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=vCEyoL7EpRASs3X1FFghOdO2i1PCWuTA5ASK56tsz2l+SXCeLZui0SKNBGsxpPxqE34gajFKmrHBY9R9BOOFJvtjanvS/UTSOoW4+VfdSx1EHq7U27tYQZk9aRuUS35ieT0HwEnw9l2j412srq6zHqdWQ4Zdhbv0HtRMIyLImZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j6fRUHbr; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1785508614; c=relaxed/simple;
+	bh=F4LgoteC2e6o2WW/OhfAfb8TIfN8WskWJ+AXaNOp5a8=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=tRXqZlGI5rvwBLm85NoLEQH/vlcov5wGo7bZUPaH5CBng3yr7J768d8AK8ir4pvnYxu15EroG1QLeOe7fHCZsBf0lLN8VzEXgyG6HHbKCElj8kr6WBIqNadcQluqxMnEql3BNEh2eH+mYjfWmgcG/Sx8lU3iAhcTQ8C3kr+Tm/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mareichelt.com; spf=pass smtp.mailfrom=mareichelt.com; dkim=pass (2048-bit key) header.d=mareichelt.com header.i=@mareichelt.com header.b=vXuLHEji; arc=none smtp.client-ip=91.227.220.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mareichelt.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mareichelt.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j6fRUHbr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E44DD1F000E9;
-	Fri, 31 Jul 2026 14:29:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785508173;
-	bh=kgiUawpvI1W98n0hQkUrW2O/OCGSUY9AN3W101wRDjo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=j6fRUHbrjOsitbZO0c1V/coq30F4PLsOeekI3EVMkekHldQiEkTFs/G6rIW2HrMQM
-	 mA4tBAaje258e3RdLEJ1A0TFxgnOnxm2xHs1UzPsXhZcP1GCo1MgFx3d7MYlBMsyhK
-	 Xd91Zq7RN7H9ur+p83M6cNHNwqejaVrumhkwKpHcZP+6eZj0+TIMMhg/PEKlXs35PB
-	 Vmq8vZ2s70y44IEi9fhlUdgF4S/VelQqmDQG0VdHHYn2oWjt6698V5UzAVivUxlnZ3
-	 IeRzt1IsYTbKkiqW0n3vTq6u5MwIShae8O9OGopzi4qTw3hNlPvz2bnimn1RpeTAue
-	 vfTUhCUn1SsNQ==
-Received: from johan by xi.lan with local (Exim 4.99.4)
-	(envelope-from <johan@kernel.org>)
-	id 1wpoEt-00000000X3D-1hOG;
-	Fri, 31 Jul 2026 16:29:31 +0200
-Date: Fri, 31 Jul 2026 16:29:31 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Greg KH <gregkh@linuxfoundation.org>
-Cc: Wentao Guan <guanwentao@uniontech.com>, patches@lists.linux.dev,
-	stable@vger.kernel.org, ulf.hansson@linaro.org,
-	zhoubinbin@loongson.cn
-Subject: Re: [PATCH 6.6 456/484] mmc: vub300: fix use-after-free on disconnect
-Message-ID: <amyxS1dyw49Rvsha@hovoldconsulting.com>
-References: <20260730141433.390818444@linuxfoundation.org>
- <20260731033117.506282-1-guanwentao@uniontech.com>
- <2026073134-vindicate-kissable-e3e6@gregkh>
+	dkim=pass (2048-bit key) header.d=mareichelt.com header.i=@mareichelt.com header.b="vXuLHEji"
+Date: Fri, 31 Jul 2026 16:31:20 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mareichelt.com;
+	s=202107; t=1785508281;
+	bh=SbtiAmo847PQkBzYOsU8T5bEGz2t5hGIdIWPj+7FojU=;
+	h=Date:From:To:Cc:Subject:Message-ID:Mail-Followup-To:MIME-Version:
+	 Content-Type:Content-Disposition:date:author:from:to:subject:
+	 message-id:in-reply-to:references:mail-followup-to:openpgp:
+	 mime-version:content-type:content-transfer-encoding:author:from:
+	 subject:date:to:cc:resent-author:resent-date:resent-from:
+	 resent-sender:resent-to:resent-cc:resent-reply-to:
+	 resent-message-id:in-reply-to:references:mime-version:content-type:
+	 content-transfer-encoding:content-disposition:content-id:
+	 content-description:message-id:mail-followup-to:openpgp;
+	b=vXuLHEjiTdZh8g5u9uol5WR2LCRrBB1pXWj+PvNkizOYuMKCCE1iuy1RhQVABrNWM
+	 uGgnE4DJ4/wpdMGhU/HTEeeyGc+SKB2HqTjUpNdJeer2MsoQGAaqObx6H9pv1JG3gi
+	 4Y2w3Rf7+eXcCbJ2e1N6+y7f1zZ+S7i1zgM9IcSi8ny7cH8xcl1ae4/irJjrnmg7um
+	 LK4xR0fULiWzIilGJo7+xdC3fT0X/crqU2n1VLxa/9J71uGyhDSPXXLBF5gEoeFpDP
+	 FX0NXgp6uBP/ZT46297TtCD9ZU5a5BAMIQfzU24PjyjYqW2ubxPSPqCvArh0P1QqoU
+	 eh74/f3BGdPWg==
+From: Markus Reichelt <lkt+2023@mareichelt.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org,
+	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+	sr@sladewatkins.com
+Subject: Re: [PATCH 7.1 000/744] 7.1.6-rc1 review
+Message-ID: <20260731143120.GB21778@pc21.mareichelt.com>
+Mail-Followup-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org,
+	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+	sr@sladewatkins.com
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -49,22 +64,21 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <2026073134-vindicate-kissable-e3e6@gregkh>
 
-On Fri, Jul 31, 2026 at 08:51:45AM +0200, Greg Kroah-Hartman wrote:
-> On Fri, Jul 31, 2026 at 11:31:17AM +0800, Wentao Guan wrote:
-> > Hello,
-> > 
-> > The backport is wrong and not as is discribe in the title.
-> > It just renames the goto and I don`t know what the backport fix not in the tree
-> > for 'git log v6.6.147 --grep="mmc: vub300: Use devm_mmc_alloc_host() helper"'
-> > not found it fixes for, so I see just drop the patch.
+* Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+
+> This is the start of the stable review cycle for the 7.1.6 release.
+> There are 744 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> Odd, yeah, let me go drop this one, good catch.  something went wrong on
-> my side...  I'll also drop it from the other queues.
+> Responses should be made by Sat, 01 Aug 2026 14:13:38 +0000.
+> Anything received after that time might be too late.
 
-Yeah, this fixes a commit in 6.17 so shouldn't be backported further
-than that (unless that commit somehow ended up being backported as a
-dependency somewhere...).
+Hi Greg
 
-Johan
+7.1.6-rc1 compiles on x86_64 (Xeon E5-1620 v2, Slackware64-15.0),
+and boots & runs on x86_64 (AMD Ryzen 5 7520U, Slackware64-current).
+No regressions observed during boot & my custom tests.
+
+Tested-by: Markus Reichelt <lkt+2023@mareichelt.com>
