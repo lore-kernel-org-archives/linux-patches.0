@@ -1,47 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFD862931C7;
-	Sat,  1 Aug 2026 14:20:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A22E2931C7;
+	Sat,  1 Aug 2026 14:20:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785594022; cv=none; b=bI3mI5XADQbeMQ1lceWq5kLL59RzOoLTuJVQEapNh/QfpvDkRUCR6SYaEYhRXatZi21w5Ok1FoYvbgHch/TDhCXce2bpEua6CFyVwngM1w72QsgEOXdPM1wYKTNzGWIxVafSC8LOx3HQCdYOYRVKL0TJypqFsLBleuBKMKeZa5k=
+	t=1785594024; cv=none; b=d6wGgLWzUEkavusTuP8dZpxSM967O+qBFR+QE1XFUpN4jq0k8R0Tv8vtUCI9adE3NEFskrlMUUkvPvqb/ysDkMJKqTG+BFseMX4AxArYwQAcM6+U3cCFjISUN15iaQpZLqimynVijb4WF/VJJoMsTiCbqhbM5idBkQ9CjTna+ls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785594022; c=relaxed/simple;
-	bh=xpnj6wC8h5/QCW0aYUwJ2pZK0GXW7CDAJjVc7QI1evU=;
+	s=arc-20240116; t=1785594024; c=relaxed/simple;
+	bh=nSt60UJtWVxLsGKbgw1HcToN0dR/IHEcak2s3lbloZY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VGPwbcDKu0vy9Q/zndofNLbnPVF5z5YXvIHkfu1sZn+ZswSI2PaSumGHB0lgkRLXsmLKu/FoHxvhpANCbKXBWW77k5ckOfG0A7pCCwWYMZSKDFcNp+bO5YK+zh0mMO1TAhXnsVeJn1lC0pycLGXzJx77R8LBUlE7hT1DZO0mxME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BiLvGpGd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gwccAQZbeYC5rcSp12jgLc7jXFJkHIv97QZbQ1fJYlfvEGe09OAZ9qUDN3sUYK0+FnIZN4nUXlhuGs3qUa4hDapOPdNL+sDmYSLnP9MrdZwpWaJPWA0oL49U/ZAytZUmrxykYpiKshoZ5HdXCj0Gdn/xYR/AHipUnpi6GbR4QD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eRiWx9wb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BiLvGpGd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBE541F00AC4;
-	Sat,  1 Aug 2026 14:20:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eRiWx9wb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02D7C1F00ADB;
+	Sat,  1 Aug 2026 14:20:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1785594021;
-	bh=ZGzqtJTAQVj3UiL8UDAlVrMJtLh1W963GASY87LM1hc=;
+	s=k20260515; t=1785594023;
+	bh=DXkV0v3KhWSQY39L4P+V9ZY08u22dL9CRa7qm8XpPkE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BiLvGpGdYhr/BxVA2RZ2KcLwtpjt5UF0O7vBVjaHOEfJhqSNvUfSW9bxN8Lzd+YG8
-	 rIqcGIm9X6PV0fNRYDHPgVGgS0+LQN/IeR4nY+ko+EuwarTBLNtVDeYvj5HSnvmYQa
-	 aik1sKsNlLZ0w3cq/+01qVIro2654/sJti+QO5qvWAv2v06HKXPR1ZMvb4UlxKgh3u
-	 hxO8yMy9zGtbr5rFQlrw7IbHLwRvnwMrvJ/Jpt0+O9HP2UBN8rx4y7epLWnLGs3lpA
-	 NJxtQ55oSz2gJbPaIpNAMtD+nBgxP14hGMhIqk2BdMyit/ArmU2mVgzzCFrQr86Vcg
-	 uV0rL9lSYGqhw==
+	b=eRiWx9wbtGt/blU+6SVRhNivrum3y+fsAtddIcJMW95juO9xokzIHLdbQZ3u6le2Z
+	 Z5nfRk0wGhPFFZ+JV+kQJnjVLR5Qkoi51T6WO2DRyamhfscmLjecp+gm3iMGwpJV8t
+	 x3OfKqcF5G0tOkoQEyX8KaEFpyoYhg5vhmX4jj13UvjIybkUWdMTs/MbNUq9ElnDL4
+	 zzK8swkI8i79/HlWFAv7PjxyJsDRtmwEQavOI6ezeUjxGF0N1X4tpBdYS9AabIlSVe
+	 V60yRM0E2wdNRcRERHq0MvooniutnEq8gM36wkPhdePws9zb1Uyb72+maNaZUwQE2E
+	 +KXOKsSsCQcEA==
 From: Sasha Levin <sashal@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+To: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable@vger.kernel.org
 Cc: Sasha Levin <sashal@kernel.org>,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Harshal Dev <harshal.dev@oss.qualcomm.com>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	NeilBrown <neil@brown.name>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	vegard.nossum@oracle.com
-Subject: Re: [PATCH 6.12 513/602] sunrpc: allocate a separate bvec array for socket sends
-Date: Sat,  1 Aug 2026 10:20:16 -0400
-Message-ID: <20260801101505-810831fa989d@kernel.org>
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	vegard.nossum@oracle.com,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>
+Subject: Re: [PATCH 6.12 0139/1276] arm64: dts: qcom: sc7180: Add power-domain and iface clk for ice node
+Date: Sat,  1 Aug 2026 10:20:17 -0400
+Message-ID: <20260801101505-6a6d5089afcf@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <6006a83d-d1a5-46c3-a501-9d31b27204bb@oracle.com>
-References: <20260730141435.976815864@linuxfoundation.org> <20260730141446.781523139@linuxfoundation.org> <6006a83d-d1a5-46c3-a501-9d31b27204bb@oracle.com>
+In-Reply-To: <ab3c3006-bfa0-417b-86f7-95470c73e547@oss.qualcomm.com>
+References: <20260721152446.065700225@linuxfoundation.org> <20260721152449.211750681@linuxfoundation.org> <a0273f34-8596-4b6c-a489-66a4533b6dd1@oracle.com> <ab3c3006-bfa0-417b-86f7-95470c73e547@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -50,27 +52,37 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Sat, Aug 01, 2026 at 09:57:48AM +0530, Harshit Mogalapalli wrote:
->The 6.12.y backport instead allocates sk_bvec unconditionally in
->svc_setup_socket() with kcalloc(RPCSVC_MAXPAGES + 1, ...), including
->for permanent TCP listener sockets.
->
->I do not see a correctness issue here. So I think this looks like an
->acceptable 6.12.y adaptation, even though it does not preserve the exact
->upstream allocation policy.
+On Fri, Jul 31, 2026 at 12:51:25PM +0530, Harshal Dev wrote:
+>The 1st can be taken on-top of the four DTS, since describing the clocks
+>first but enabling them later via the commit is totally fine.
 
-I think I agree with you, and the divergence is intentional. 6.12 and 6.6
-have neither svc_sock_sendpages() nor svc_serv_maxpages().
+Thanks for confirming - and no worries about the delay, enjoy the
+vacation.
 
->I don't think there is anything to fix, but would like to double check,
->thoughts ?
+0d5dc5818191 ("soc: qcom: ice: Allow explicit votes on 'iface' clock for ICE")
+stays queued for 6.12 on that basis. It closes the gap the four DTS commits
+already shipped in v6.12.97 opened up, and I confirmed it's harmless on the
+6.12 nodes that were never converted (sm8550, sa8775p):
+devm_clk_get_optional_enabled(dev, "iface") just resolves to NULL there, same
+as mainline.
 
-Nothing to fix, the patch stays. It's also a hard prerequisite for
-18c1cc698861 ("SUNRPC: Return an error from xdr_buf_to_bvec() on
-overflow"), which is queued immediately after it in all three series and
-patches the exact svsk->sk_bvec call sites this one introduces.
+>The 2nd one should be taken to make the DTS patches comply with an updated
+>binding. [...] However, the patch must be adapted to 6.12 to not make the
+>power-domain and clock-names mandatory for Eliza and Milos since those
+>targets arrived in 7.1 kernel. Only the first portion of the patch is
+>applicable for 6.12.
 
-Thanks for the careful review.
+Agreed, and that matches what I see: the allOf/if-then block in e27264daac7d
+keys on qcom,eliza-inline-crypto-engine and qcom,milos-inline-crypto-engine,
+and neither compatible exists in the 6.12 binding's enum, so it can't go in
+verbatim.
+
+We don't hand-split upstream commits in the stable queue, though, so
+could you send the adapted version yourself once you're back? Please
+post it to stable@vger.kernel.org targeting both 6.12 and 6.18 - 6.18
+shipped the driver change already and has the same binding gap.
+
+Thanks!
 
 -- 
 Thanks,
