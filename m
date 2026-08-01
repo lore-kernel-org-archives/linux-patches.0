@@ -1,115 +1,77 @@
-Received: from omta033.useast.a.cloudfilter.net (omta033.useast.a.cloudfilter.net [44.202.169.32])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5924304BB3
-	for <patches@lists.linux.dev>; Sat,  1 Aug 2026 06:54:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=44.202.169.32
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFD862931C7;
+	Sat,  1 Aug 2026 14:20:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785567290; cv=none; b=CVgDDl788VRIxKXAE47UlmyQVoxemIdNrVrfT1If28K8nSHNCEVjZ2UPqTTk5pkAUIAtH/+8iGqM1k7UAzI5cDAByIj11RWG26Ls1D3WyeHNVThMS6p408P0OprEKQL695fDFlyItW5QsedECuJjWBLjYpsfn6cGZGJLLttbo3g=
+	t=1785594022; cv=none; b=bI3mI5XADQbeMQ1lceWq5kLL59RzOoLTuJVQEapNh/QfpvDkRUCR6SYaEYhRXatZi21w5Ok1FoYvbgHch/TDhCXce2bpEua6CFyVwngM1w72QsgEOXdPM1wYKTNzGWIxVafSC8LOx3HQCdYOYRVKL0TJypqFsLBleuBKMKeZa5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785567290; c=relaxed/simple;
-	bh=JJIbv8BDeyHyQDbWakbN2kS3TrgwI3g76Zl4cmWaGFA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=faATF1PGBMkyX9APyZAMkfdP7tBGMpNVEy3FLeCufFiNs2fNUQaNONJPE6lfLd3/YI8iVm8yUzk964IpwhQBp2YgcBUmntQwxLg0NCVsOft7hYzzvnFe4XMB3MFzuKjccwOsxBKQVSAaVfVmS/p6sV1WxB/cjo1AHiM8qtWFe0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=ezE666jy; arc=none smtp.client-ip=44.202.169.32
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
+	s=arc-20240116; t=1785594022; c=relaxed/simple;
+	bh=xpnj6wC8h5/QCW0aYUwJ2pZK0GXW7CDAJjVc7QI1evU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=VGPwbcDKu0vy9Q/zndofNLbnPVF5z5YXvIHkfu1sZn+ZswSI2PaSumGHB0lgkRLXsmLKu/FoHxvhpANCbKXBWW77k5ckOfG0A7pCCwWYMZSKDFcNp+bO5YK+zh0mMO1TAhXnsVeJn1lC0pycLGXzJx77R8LBUlE7hT1DZO0mxME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BiLvGpGd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="ezE666jy"
-Received: from eig-obgw-5001b.ext.cloudfilter.net ([10.0.29.181])
-	by cmsmtp with ESMTPS
-	id pxn0wftqW37X2q3aqwHwUq; Sat, 01 Aug 2026 06:53:12 +0000
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTPS
-	id q3apw6bowlaKXq3apwWQdN; Sat, 01 Aug 2026 06:53:12 +0000
-X-Authority-Analysis: v=2.4 cv=GsRC+l1C c=1 sm=1 tr=0 ts=6a6d97d8
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=7vwVE5O1G3EA:10 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=BcPpWBVZ1W6q4qeFJZEA:9 a=QEXdDO2ut3YA:10
- a=nmWuMzfKamIsx3l42hEX:22 a=L5EjiQpGQaFGZdqT14z7:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=7aO6yaoWgKwSVKND9Ym3ydlxmgXwBuh5ivRzD8VadOk=; b=ezE666jyfd5T2R48XodJnKbQZ5
-	RMuUaPrAfQlmpJ298UUDkl2tJVAZWpVZGXEfDvhbTOCcvz4dNWDp3KMqjbKLtheEGyXLjcuWCUu3C
-	5PJA6+aCHIC3yUHi98va3xmfDiiLdo8OfMzfsJlGeuOS4sMUJNxecILklvDWnAICUu57I7PlVluja
-	XyJYy9zuOpEcxHSROJE5yS3iyVuc9WKjQkNsZfN1shhSNQrWCRa+8fOWBplIXfeBXeBr9l9eTPFAR
-	RMZLAnYquXAq8sIu+S9hhZ8srTQOit94NQ3aAuuNkDVSSn9IBe8KyBDqEubfuboXytW5AXo6l7YYe
-	EfoqTjoA==;
-Received: from c-73-162-206-103.hsd1.ca.comcast.net ([73.162.206.103]:55678 helo=[10.0.1.180])
-	by box5620.bluehost.com with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
-	(Exim 4.99.5)
-	(envelope-from <re@w6rz.net>)
-	id 1wq3ap-00000002lj6-0G2c;
-	Sat, 01 Aug 2026 00:53:11 -0600
-Message-ID: <5556d366-5428-4367-b082-3de0dac59a0a@w6rz.net>
-Date: Fri, 31 Jul 2026 23:53:09 -0700
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BiLvGpGd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBE541F00AC4;
+	Sat,  1 Aug 2026 14:20:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1785594021;
+	bh=ZGzqtJTAQVj3UiL8UDAlVrMJtLh1W963GASY87LM1hc=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=BiLvGpGdYhr/BxVA2RZ2KcLwtpjt5UF0O7vBVjaHOEfJhqSNvUfSW9bxN8Lzd+YG8
+	 rIqcGIm9X6PV0fNRYDHPgVGgS0+LQN/IeR4nY+ko+EuwarTBLNtVDeYvj5HSnvmYQa
+	 aik1sKsNlLZ0w3cq/+01qVIro2654/sJti+QO5qvWAv2v06HKXPR1ZMvb4UlxKgh3u
+	 hxO8yMy9zGtbr5rFQlrw7IbHLwRvnwMrvJ/Jpt0+O9HP2UBN8rx4y7epLWnLGs3lpA
+	 NJxtQ55oSz2gJbPaIpNAMtD+nBgxP14hGMhIqk2BdMyit/ArmU2mVgzzCFrQr86Vcg
+	 uV0rL9lSYGqhw==
+From: Sasha Levin <sashal@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	stable@vger.kernel.org
+Cc: Sasha Levin <sashal@kernel.org>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	patches@lists.linux.dev,
+	Jeff Layton <jlayton@kernel.org>,
+	NeilBrown <neil@brown.name>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	vegard.nossum@oracle.com
+Subject: Re: [PATCH 6.12 513/602] sunrpc: allocate a separate bvec array for socket sends
+Date: Sat,  1 Aug 2026 10:20:16 -0400
+Message-ID: <20260801101505-810831fa989d@kernel.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <6006a83d-d1a5-46c3-a501-9d31b27204bb@oracle.com>
+References: <20260730141435.976815864@linuxfoundation.org> <20260730141446.781523139@linuxfoundation.org> <6006a83d-d1a5-46c3-a501-9d31b27204bb@oracle.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.6 000/484] 6.6.148-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com
-References: <20260730141423.392222816@linuxfoundation.org>
-Content-Language: en-US
-From: Ron Economos <re@w6rz.net>
-In-Reply-To: <20260730141423.392222816@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.162.206.103
-X-Source-L: No
-X-Exim-ID: 1wq3ap-00000002lj6-0G2c
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-162-206-103.hsd1.ca.comcast.net ([10.0.1.180]) [73.162.206.103]:55678
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 78
-X-Org: HG=bhshared;ORG=bluehost;
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfFW35Lonq4hTtm6JrJQp7WCxsLBw/UzHfAeM1PlZTsJ5pvBjiHtqvMUMSVacch84e0Sgkdeku5D45or3z/36JZ2z6atuCNkz1KlYPmGCW1nM/VxNO9+s
- Txe2I/maCVkHXNfGYW7VgbunFU7ji4Sms3i+JVmKG+sj1Sj+8yVhu2tj3sWX28jeKcdt2kqylpYr7A==
+Content-Transfer-Encoding: 8bit
 
-On 7/30/26 07:08, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.6.148 release.
-> There are 484 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Sat, Aug 01, 2026 at 09:57:48AM +0530, Harshit Mogalapalli wrote:
+>The 6.12.y backport instead allocates sk_bvec unconditionally in
+>svc_setup_socket() with kcalloc(RPCSVC_MAXPAGES + 1, ...), including
+>for permanent TCP listener sockets.
 >
-> Responses should be made by Sat, 01 Aug 2026 14:13:41 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.148-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+>I do not see a correctness issue here. So I think this looks like an
+>acceptable 6.12.y adaptation, even though it does not preserve the exact
+>upstream allocation policy.
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+I think I agree with you, and the divergence is intentional. 6.12 and 6.6
+have neither svc_sock_sendpages() nor svc_serv_maxpages().
 
-Tested-by: Ron Economos <re@w6rz.net>
+>I don't think there is anything to fix, but would like to double check,
+>thoughts ?
 
+Nothing to fix, the patch stays. It's also a hard prerequisite for
+18c1cc698861 ("SUNRPC: Return an error from xdr_buf_to_bvec() on
+overflow"), which is queued immediately after it in all three series and
+patches the exact svsk->sk_bvec call sites this one introduces.
+
+Thanks for the careful review.
+
+-- 
+Thanks,
+Sasha
