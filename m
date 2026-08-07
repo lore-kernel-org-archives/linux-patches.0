@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C132351C2F;
-	Fri,  7 Aug 2026 15:07:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACA4B377A93;
+	Fri,  7 Aug 2026 15:07:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115261; cv=none; b=cKz4R8Sp2/3ZBQyU6NfAO5YVp/OjejyIsmD8gPEl7riFgttTZ3KZ2gYdqgVUUye5MI+OaF9z7aUda7MoRMzb4MNw0HsNA4L3obQFigmbweeCy6afHClrDvvZm0awrUWaVnT0vJjr1GSNW3LsC9rJiAs/8pLRxKxSuKSGf9VmYXg=
+	t=1786115264; cv=none; b=Z4O/eAy2f9S/c6CeP2P4RcoEpznTgnU22E/HgloxI4Eo/DwVSGtZ/+/o4Twb4bsnOgYuBDTBIMgFugshod0njdyp2C9Q/m4oYyuJOmDRLb266gZCbI7eYZFiUo6zrfNGp9EvvWWDgjVjqWqK9BvGVWckZM/ShcQ9Tnu+lHjQCBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115261; c=relaxed/simple;
-	bh=Xuf9Njb0eoVceNjiid+GZIiN4LpROD8nohIJ5Qdhz+U=;
+	s=arc-20240116; t=1786115264; c=relaxed/simple;
+	bh=I24sH/+awHpUVhNMwcHUXwRDVGHPOxK7cvEC3vyWC78=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uGPJGD4pDp5nkoIMYYr7I1JagOrqu+ZfjyvUhaX854y2rMuEWgzvEoln+rlCpsfdUNxrcFNQg9ZwVxjDQ7FOK2bDq4HN0DIMxLn56K1torJFKx/iSDlmeXCkPFlvdQseCkAE6TBx2ZyOl5AcgmP85URMoMbEhAAp69sNqDEhIL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YearK7PQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EjclQFyPNt3SrLH41BIHQD/u3LuvsWDg5VTbLlklof1aDzHsLBz1FGQ48b4rbzIWz4xzDpZX2mNPf55sK6PDXKno9+yEcMnHx3Gv5uWNdAazlf4dGeznjyMX7Yk9n5NdDXiH+FHQ6825SX53abCx0gx57+mWpNfHMOXpy0pS/Gs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B+v9MeyE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YearK7PQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1D471F000E9;
-	Fri,  7 Aug 2026 15:07:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B+v9MeyE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFDE61F000E9;
+	Fri,  7 Aug 2026 15:07:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115260;
-	bh=tCK08DvNMO5t/VoEuFfVRxUsJHoAvMi+i+sbTgCgOHA=;
+	s=korg; t=1786115263;
+	bh=qGJi730d9/vgCKzE4mg8LwYo5AiVojmrVmhPvNQciv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YearK7PQeRd9Wq05a2RAekF799Ckxon7ZGG6gD8pefPGUbam8XveKpp9PVWIeHdH3
-	 cIbh5wDlr9R7mRkDFk7cpT6pi26y1AR8qKUGmxhwZ85QxFQo3s31kSo3xIzolALWlu
-	 Q3rLlWcm5yyasT9IZkx+dBdNZFs73QG3158ihl68=
+	b=B+v9MeyEw34YvfXzS2wpzKNCR18l4XC5fBbXgOfUsllOLdmQJLtyB+lYRdGT/VsVe
+	 16R7wRO3XJRUd594WMCtWZWNPR4+ye+y7u6c+6spDBbsX5/woUZWKwPbz6AQE1Tony
+	 15fq+NvEq8Hy5mSRHJ4ufvrVua32o+3csLSjGOic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Federico Kirschbaum <federico.kirschbaum@xbow.com>,
 	Baul Lee <baul.lee@xbow.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.18 214/396] ALSA: usb-audio: fix use-after-free in ump_to_endpoint()
-Date: Fri,  7 Aug 2026 16:36:14 +0200
-Message-ID: <20260807143428.884451858@linuxfoundation.org>
+Subject: [PATCH 6.18 215/396] ALSA: usb-audio: fix stack info leak in RME Digiface status
+Date: Fri,  7 Aug 2026 16:36:15 +0200
+Message-ID: <20260807143428.904658928@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -53,62 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 From: Baul Lee <baul.lee@xbow.com>
 
-commit 4a05b2d1b4642df74f30b6f54843e825c4a2bfd3 upstream.
+commit 441aaad150c57edaf57ee482a79a3bf4c5b7e353 upstream.
 
-create_midi2_ump() registers a card-owned snd_ump_endpoint and stores a
-back-pointer to its per-interface snd_usb_midi2_ump object in
-ump->private_data, but it never installs an ump->private_free hook and
-never clears that pointer.
+snd_rme_digiface_read_status() reads a four-word status block from the
+device into an uninitialised on-stack __le32 buf[4] and, whenever the
+vendor control-IN transfer does not return a negative error, copies all
+four words into the caller's status[].
 
-If a later step of snd_usb_midi_v2_create() fails, its error path calls
-free_all_midi2_umps(), which kfree()s the snd_usb_midi2_ump object while
-the already-registered endpoint keeps pointing at it.  The created
-/dev/snd/umpC*D* node stays exposed, so the first operation of any UMP
-open, ump_to_endpoint(), dereferences the dangling ump->private_data and
-reads rmidi->eps[dir] out of freed memory.
+snd_usb_ctl_msg() copies the full requested size back into the caller's
+buffer regardless of how many bytes the data stage actually delivered:
 
-A malicious USB MIDI 2.0 device that makes creation fail after the
-endpoint is registered can thus trigger a slab use-after-free read on a
-subsequent open of the UMP node.
+	buf = kmemdup(data, size, GFP_KERNEL);
+	err = usb_control_msg(dev, pipe, request, requesttype,
+			      value, index, buf, size, timeout);
+	memcpy(data, buf, size);
 
-Clear the endpoint's back-pointer before freeing the object, and let
-ump_to_endpoint() tolerate a NULL private_data so the open/close/trigger
-callbacks fail cleanly (their callers already handle a NULL endpoint)
-instead of dereferencing a stale pointer.
+usb_control_msg() returns the transferred length on a short control-IN,
+which is a non-negative value, and writes only that many bytes.  The
+remainder of the copy back is the kmemdup()ed image of the caller's
+buffer, so a device answering with a short data stage leaves the
+trailing words of buf[] holding leftover kernel stack.  The only guard
+in the caller is err < 0, so those words are stored into status[].
+
+They then reach user space: snd_rme_digiface_get_status_val() selects a
+16-bit halfword of status[] per the control's reg/mask, and the eight
+Digiface status controls together expose the whole 16-byte frame to an
+unprivileged reader of /dev/snd/controlC*.
+
+Zero-initialise the buffer so a short read yields zeros instead of stack
+residue.  This mirrors snd_rme_get_status1(), which already clears its
+output word before the same kind of vendor read.
 
 Discovered by XBOW, triaged by Baul Lee <baul.lee@xbow.com>
 
-Fixes: ff49d1df79ae ("ALSA: usb-audio: USB MIDI 2.0 UMP support")
+Fixes: 611a96f6acf2 ("ALSA: usb-audio: Add mixer quirk for RME Digiface USB")
 Reported-by: Federico Kirschbaum <federico.kirschbaum@xbow.com>
 Reported-by: Baul Lee <baul.lee@xbow.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Baul Lee <baul.lee@xbow.com>
-Link: https://patch.msgid.link/20260726051337.41124-1-baul.lee@xbow.com
+Link: https://patch.msgid.link/20260726065020.46070-1-baul.lee@xbow.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/midi2.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/usb/mixer_quirks.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/usb/midi2.c
-+++ b/sound/usb/midi2.c
-@@ -329,7 +329,7 @@ ump_to_endpoint(struct snd_ump_endpoint
- {
- 	struct snd_usb_midi2_ump *rmidi = ump->private_data;
+--- a/sound/usb/mixer_quirks.c
++++ b/sound/usb/mixer_quirks.c
+@@ -3352,7 +3352,7 @@ static int snd_rme_digiface_read_status(
+ 	struct usb_mixer_elem_list *list = snd_kcontrol_chip(kcontrol);
+ 	struct snd_usb_audio *chip = list->mixer->chip;
+ 	struct usb_device *dev = chip->dev;
+-	__le32 buf[4];
++	__le32 buf[4] = {};
+ 	int err;
  
--	return rmidi->eps[dir];
-+	return rmidi ? rmidi->eps[dir] : NULL;
- }
- 
- /* ump open callback */
-@@ -685,6 +685,8 @@ static void free_all_midi2_umps(struct s
- 		rmidi = list_first_entry(&umidi->rawmidi_list,
- 					 struct snd_usb_midi2_ump, list);
- 		list_del(&rmidi->list);
-+		if (rmidi->ump)
-+			rmidi->ump->private_data = NULL;
- 		kfree(rmidi);
- 	}
- }
+ 	err = snd_usb_ctl_msg(dev, usb_rcvctrlpipe(dev, 0),
 
 
