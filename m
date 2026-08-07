@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D78238C2C0;
-	Fri,  7 Aug 2026 14:53:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 768A337CD3A;
+	Fri,  7 Aug 2026 14:53:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114434; cv=none; b=Z6Lr1HYrwYtGouqkddlQcrsnzUC0ez4Wys2UXtQqcrQy/6B4yW6RLMu2s7ujEJyKy89hFbKTW+EYobv4Uej+5uJQ40dkJbhB6G+3pcGlImrLwQ8hsON+aDNwtMe3dyVah155LRxCi9r5hdMg5w9NoH3Liqbvmeykn3/pe4L6hCM=
+	t=1786114438; cv=none; b=NQca5bkDCXjhNl/5grABWXE9IOYv12dCBGg+cel/B8YKED93rB8Jckzwu0szawzy6AhNzH3XomPbhbJP2T4eV60UT97BFngwHsaV7264SArnm+STAahiu+DqJlD26YWBeWnCO2hQN1piPb+nQjU14W7LYjEAMuu7tfhLV6jo0ho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114434; c=relaxed/simple;
-	bh=1lzb0KxznFfktuoYHDikL619+tNd59FLFAlcB6AaHns=;
+	s=arc-20240116; t=1786114438; c=relaxed/simple;
+	bh=c6nrhwMtfQ71D81kbh6WJkHCVznpdyFSiHG2PTc0PiI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P9OHlluK/rtWZNPXd8lWmaKAvttOc0R76xB45oMLO5AP4vUTn0P+cy+jkSt0b2DXXts0YCm3TxU3x2eOHPUVCLvnJHMRgv+xOOrWvShpXolBBe23HN+6WR0aemsOBhQZ2bk8B8fgkKlrhKkvlorqMYtd/UvvZE9Fna9FGfLoTcE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MBU3FRQ6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QiWFzuX9i5VQXJn1cBEQ64C6h+SyQcClueFt/bIXhiCJqyVnzRsm9PAutWUAyvuQ9E7g82SfYZLY2X8nfPo9G2kDYyLRxm5DSIPNfeI8qzsB12MN2yLobuNfj9EdA/y6X3hprcb0v71Rw3OZEeBlq/h0nlLyePxyqOUboH8ErMk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iGsl7AUi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MBU3FRQ6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04FC91F000E9;
-	Fri,  7 Aug 2026 14:53:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iGsl7AUi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D16AD1F000E9;
+	Fri,  7 Aug 2026 14:53:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114433;
-	bh=pEfINRxMwVRv0ldlzG042jSjKTwjIIt60EeVR7V8vho=;
+	s=korg; t=1786114436;
+	bh=8zN5U6fdbBaCE6ZDR8GQ3t20MrF4wSJRILwCJcegG/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MBU3FRQ6pbXb7XJZlTcdFHQNJg7ZnQshUDqvqId2MHurSGh/1H37sN6SC1q9L6s9E
-	 UCOtitjV4Wf/DWm/nXZ8TQpxcMONppw1bT4ExBWnl7n2Una673uwO8pgEs9pUkOZ9O
-	 TsSaIGlunJMOw3t9hlNO88/S9GQTgySvts4bxSBA=
+	b=iGsl7AUidiY4SJSlsloPXknkGOGeqLiDz9dv4zdEI6TzF1PVuXog2/h2z+qonFiBc
+	 NvOr2f/dksiJbdNd5HQO/W37Eo9OYasnlN92074BobtWmf2qovgr8L5VdPWSCGBV15
+	 WaNVuoNQxKNpkzAzEOAO6AsoQF9RCREs0MukHnTs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Zack Rusin <zack.rusin@broadcom.com>,
 	Ian Forbes <ian.forbes@broadcom.com>
-Subject: [PATCH 6.12 260/337] drm/vmwgfx: reject DX_BIND_QUERY without a DX context
-Date: Fri,  7 Aug 2026 16:37:43 +0200
-Message-ID: <20260807143424.181913661@linuxfoundation.org>
+Subject: [PATCH 6.12 261/337] drm/vmwgfx: drop dma_buf reference on foreign-fd prime import
+Date: Fri,  7 Aug 2026 16:37:44 +0200
+Message-ID: <20260807143424.203974481@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -52,55 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Zack Rusin <zack.rusin@broadcom.com>
 
-commit 55ec09c9ce10b1272802c7ab6c1be2ea0dbc68db upstream.
+commit f739416dc555fa205a785e5135d73fa39b26f35d upstream.
 
-vmw_cmd_dx_bind_query() unconditionally dereferences
-sw_context->dx_ctx_node->ctx.  Userspace can trigger a NULL pointer
-dereference from any render-node fd by submitting an execbuf with
-dx_context_handle == SVGA3D_INVALID_ID and a SVGA_3D_CMD_DX_BIND_QUERY
-opcode in the command stream: dx_ctx_node is left NULL and the kernel
-oopses on the assignment.  The same NULL is then re-read in
-vmw_resources_reserve() via vmw_context_get_dx_query_mob().
+ttm_prime_fd_to_handle() returns -ENOSYS when the imported fd's
+dma_buf->ops do not match the ttm_object_device's ops, but does so
+without releasing the reference acquired by dma_buf_get().  Any
+unprivileged renderD client passing a non-vmwgfx prime fd through the
+DRM_VMW_GB_SURFACE_REF{,_EXT} path leaks one dma_buf reference per
+call and indefinitely pins the foreign exporter's GEM resources.
 
-All sibling DX handlers fail-close on a missing dx_ctx_node using
-VMW_GET_CTX_NODE().  Use the same pattern here, returning -EINVAL up
-front before any relocation state is published.
+Funnel the error path through the existing dma_buf_put() so the
+reference is always dropped.
 
-Fixes: 9c079b8ce8bf ("drm/vmwgfx: Adapt execbuf to the new validation api")
+Fixes: 65981f7681ab ("drm/ttm: Add a minimal prime implementation for ttm base objects")
 Cc: stable@vger.kernel.org
 Assisted-by: Claude:claude-opus-4.7
 Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
 Reviewed-by: Ian Forbes <ian.forbes@broadcom.com>
-Link: https://patch.msgid.link/20260505222728.519626-3-zack.rusin@broadcom.com
+Link: https://patch.msgid.link/20260505222728.519626-6-zack.rusin@broadcom.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/vmwgfx/ttm_object.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
-@@ -1290,9 +1290,13 @@ static int vmw_cmd_dx_bind_query(struct
- 				 SVGA3dCmdHeader *header)
- {
- 	VMW_DECLARE_CMD_VAR(*cmd, SVGA3dCmdDXBindQuery);
-+	struct vmw_ctx_validation_info *ctx_node = VMW_GET_CTX_NODE(sw_context);
- 	struct vmw_bo *vmw_bo;
- 	int ret;
+--- a/drivers/gpu/drm/vmwgfx/ttm_object.c
++++ b/drivers/gpu/drm/vmwgfx/ttm_object.c
+@@ -547,14 +547,17 @@ int ttm_prime_fd_to_handle(struct ttm_ob
+ 	if (IS_ERR(dma_buf))
+ 		return PTR_ERR(dma_buf);
  
-+	if (!ctx_node)
-+		return -EINVAL;
-+
- 	cmd = container_of(header, typeof(*cmd), header);
+-	if (dma_buf->ops != &tdev->ops)
+-		return -ENOSYS;
++	if (dma_buf->ops != &tdev->ops) {
++		ret = -ENOSYS;
++		goto out;
++	}
  
- 	/*
-@@ -1306,7 +1310,7 @@ static int vmw_cmd_dx_bind_query(struct
- 		return ret;
+ 	prime = (struct ttm_prime_object *) dma_buf->priv;
+ 	base = &prime->base;
+ 	*handle = base->handle;
+ 	ret = ttm_ref_object_add(tfile, base, NULL, false);
  
- 	sw_context->dx_query_mob = vmw_bo;
--	sw_context->dx_query_ctx = sw_context->dx_ctx_node->ctx;
-+	sw_context->dx_query_ctx = ctx_node->ctx;
- 	return 0;
- }
++out:
+ 	dma_buf_put(dma_buf);
  
+ 	return ret;
 
 
