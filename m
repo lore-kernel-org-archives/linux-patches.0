@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCDE418E02A;
-	Fri,  7 Aug 2026 15:14:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF47518E02A;
+	Fri,  7 Aug 2026 15:14:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115649; cv=none; b=SHbIdyf6tMOllmXbxgLOhgUZVndZNmooitok6vh4rhqgMKN9jmzR8rZ1RzMbu5+acicuZ2KgRJKl50VRjDSEPFE97s24oY2XzDpBC5sBN8qaVxDKQoH6JykKx3CtAPibOFC84/1ZW4caex5chTbZeSE65VL3gIqZtwjp88Q4QO0=
+	t=1786115651; cv=none; b=NadNj2o1yXVRsNqM3bjxV5qoI9C99rRa9yADx4G2VBAGRmVml3Fpnf6fFKOQmhSTvnRgHV9Jnx5XgMMeI/6TelFUXeYeDAxm/9pfCQtXSlIcE0JK+bavg9F5Ep4fsaJvdTuXk82mS+zPpe4E9aMHENVcgiPuLlmzk463QN0brX0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115649; c=relaxed/simple;
-	bh=8xmaPOPhIKYZLYvwgP+VxReIkW9Vo8x8QsXTvZcUwA4=;
+	s=arc-20240116; t=1786115651; c=relaxed/simple;
+	bh=PpClwhs+sRRGp0FZdqVNT789r6v3nMdzKPlvl2b6tJw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sCSI8SNlJCOv+kOzpVeY39FkKgoPwrU16fLzJVTQbzYxk57jMmO6tPZyZxInPgqrI9aHbkFGt1Zwdzzp+g17SQ+FrlYuJ2ndWGiYcUDL3TupG7OVE89cxpHVoT9chdt6/ML5wuOwhyd7nmy4Dyv+rRLZWJ6Bvm/qVebiraxHAPo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PGOM+W+C; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CQduUjSNFDJpSUGh8NkbU+XgbfEpS80+Uo1hP7Ad9QnNgRwWK0nKJkaoEpBC7M50cI9CgDGV0Ut/g+GrVZJCkWjG+2ygGR5iUA3mv7ipgELtd1rlv1ts/klSCn44+26nXVkR4VKig118LZh4mDpZ2jK95meqQfUuEp670JduXnk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eDKASP8s; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PGOM+W+C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 454571F000E9;
-	Fri,  7 Aug 2026 15:14:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eDKASP8s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 176E81F000E9;
+	Fri,  7 Aug 2026 15:14:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115647;
-	bh=akW7u+IqEvHdqeNH9wx8oLRZj6kDSwz5Z5cVmPpAmY0=;
+	s=korg; t=1786115650;
+	bh=A3PCRfAhBDSSOrvs5oICEtUR5O+MXAfCnMMYRgj0sWM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PGOM+W+CbBGrSsKxJcvGzH2MVkVH50G5ZJbZUe0PJoZJ8ug69A6T9bVA4AXH8WWPQ
-	 TRAG4w5aN2AbHMfvPTE/+e1E7j8JygNiZccJcf0L4Z9Tl2MBHZJWaF4R/oVwxTr6TC
-	 PlPqQXDSHzDa5fae3LTse7TrrdQnaK9S3N1CC0I4=
+	b=eDKASP8sKXNQ/UP3TiiZHPFf96PbthZiNjs+UiAND42WiM6Q0C28AeLwoQnGXvv/a
+	 vlH7UAAdagXJRz90vqlhQgjPuens6YvQ/qfhht/jL9cj8Tu2tBvAITwc9qMdIiIG78
+	 eqyC+Z8Y1T0GQw9qh/yDIhXNlm0KA8VfF3d0bM5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ashutosh Dixit <ashutosh.dixit@intel.com>,
 	Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 350/396] drm/xe/rtp: (De-)whitelist OA registers for all hwes for a gt
-Date: Fri,  7 Aug 2026 16:38:30 +0200
-Message-ID: <20260807143431.835476259@linuxfoundation.org>
+Subject: [PATCH 6.18 351/396] drm/xe/oa: (De-)whitelist OA registers on OA stream open/release
+Date: Fri,  7 Aug 2026 16:38:31 +0200
+Message-ID: <20260807143431.856833625@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -53,102 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Ashutosh Dixit <ashutosh.dixit@intel.com>
 
-[ Upstream commit ebba7ce65252a4ab0e3794ff14854df2afca5c08 ]
+[ Upstream commit 63ddb3ad08ff4e89c108499dfec5e9be5ddc25c9 ]
 
-Whitelist or de-whitelist OA registers for all hwe's on the gt on which the
-OA stream is opened. This simplifies the case where an oa unit has 0
-attached hwe's (but which monitors OA events on the associated GT).
+Whitelist OA registers on stream open and de-whitelist on stream
+close/release. Whitelisting is only done when 'stream->sample' is
+true. 'stream->sample' is only true when (a) xe_observation_paranoid is set
+to false by system admin, or (b) the process is perfmon_capable(). This
+therefore enforces the OA register whitelisting security requirements.
 
 Fixes: 828a8eaf37c3 ("drm/xe/oa: Add MMIO trigger support")
 Cc: stable@vger.kernel.org # v6.12+
 Signed-off-by: Ashutosh Dixit <ashutosh.dixit@intel.com>
 Reviewed-by: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
-Link: https://patch.msgid.link/20260615224227.34880-8-ashutosh.dixit@intel.com
+Link: https://patch.msgid.link/20260615224227.34880-9-ashutosh.dixit@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_reg_whitelist.c | 34 +++++++++++++++++++++++++--
- drivers/gpu/drm/xe/xe_reg_whitelist.h |  4 ++++
- 2 files changed, 36 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/xe/xe_oa.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/gpu/drm/xe/xe_reg_whitelist.c b/drivers/gpu/drm/xe/xe_reg_whitelist.c
-index 4922b3561dbf4..e77f50da4a268 100644
---- a/drivers/gpu/drm/xe/xe_reg_whitelist.c
-+++ b/drivers/gpu/drm/xe/xe_reg_whitelist.c
-@@ -9,7 +9,7 @@
- #include "regs/xe_gt_regs.h"
- #include "regs/xe_oa_regs.h"
- #include "regs/xe_regs.h"
--#include "xe_gt_types.h"
-+#include "xe_gt.h"
- #include "xe_gt_printk.h"
- #include "xe_platform_types.h"
- #include "xe_reg_sr.h"
-@@ -161,7 +161,7 @@ void xe_reg_whitelist_process_engine(struct xe_hw_engine *hwe)
- 	whitelist_apply_to_hwe(hwe, &hwe->oa_whitelist, &hwe->reg_sr, first_oa_slot);
- }
+diff --git a/drivers/gpu/drm/xe/xe_oa.c b/drivers/gpu/drm/xe/xe_oa.c
+index 7d04591e297a8..98df9ee1cac39 100644
+--- a/drivers/gpu/drm/xe/xe_oa.c
++++ b/drivers/gpu/drm/xe/xe_oa.c
+@@ -35,6 +35,7 @@
+ #include "xe_oa.h"
+ #include "xe_observation.h"
+ #include "xe_pm.h"
++#include "xe_reg_whitelist.h"
+ #include "xe_sched_job.h"
+ #include "xe_sriov.h"
+ #include "xe_sync.h"
+@@ -863,6 +864,9 @@ static void xe_oa_stream_destroy(struct xe_oa_stream *stream)
  
--__maybe_unused static void __whitelist_oa_regs(struct xe_hw_engine *hwe, bool whitelist)
-+static void __whitelist_oa_regs(struct xe_hw_engine *hwe, bool whitelist)
- {
- 	struct xe_reg_sr_entry *entry;
- 	unsigned long reg;
-@@ -176,6 +176,36 @@ __maybe_unused static void __whitelist_oa_regs(struct xe_hw_engine *hwe, bool wh
- 	xe_reg_sr_apply_mmio(&hwe->oa_sr, hwe->gt);
- }
+ 	mutex_destroy(&stream->stream_lock);
  
-+/**
-+ * xe_reg_whitelist_oa_regs - whitelist oa registers for gt
-+ * @gt: gt to whitelist oa registers for
-+ *
-+ * Whitelist OA registers by resetting RING_FORCE_TO_NONPRIV_DENY
-+ */
-+void xe_reg_whitelist_oa_regs(struct xe_gt *gt)
-+{
-+	struct xe_hw_engine *hwe;
-+	enum xe_hw_engine_id id;
++	if (stream->sample)
++		xe_reg_dewhitelist_oa_regs(stream->gt);
 +
-+	for_each_hw_engine(hwe, gt, id)
-+		__whitelist_oa_regs(hwe, true);
-+}
-+
-+/**
-+ * xe_reg_dewhitelist_oa_regs - dewhitelist oa registers for gt
-+ * @gt: gt to dewhitelist oa registers for
-+ *
-+ * Dewhitelist OA registers by setting RING_FORCE_TO_NONPRIV_DENY
-+ */
-+void xe_reg_dewhitelist_oa_regs(struct xe_gt *gt)
-+{
-+	struct xe_hw_engine *hwe;
-+	enum xe_hw_engine_id id;
-+
-+	for_each_hw_engine(hwe, gt, id)
-+		__whitelist_oa_regs(hwe, false);
-+}
-+
- /**
-  * xe_reg_whitelist_print_entry - print one whitelist entry
-  * @p: DRM printer
-diff --git a/drivers/gpu/drm/xe/xe_reg_whitelist.h b/drivers/gpu/drm/xe/xe_reg_whitelist.h
-index 69b121d377da0..f243b6ac60b7e 100644
---- a/drivers/gpu/drm/xe/xe_reg_whitelist.h
-+++ b/drivers/gpu/drm/xe/xe_reg_whitelist.h
-@@ -9,12 +9,16 @@
- #include <linux/types.h>
+ 	xe_oa_disable_metric_set(stream);
+ 	xe_exec_queue_put(stream->k_exec_q);
  
- struct drm_printer;
-+struct xe_gt;
- struct xe_hw_engine;
- struct xe_reg_sr;
- struct xe_reg_sr_entry;
+@@ -1887,6 +1891,9 @@ static int xe_oa_stream_open_ioctl_locked(struct xe_oa *oa,
+ 		goto err_disable;
+ 	}
  
- void xe_reg_whitelist_process_engine(struct xe_hw_engine *hwe);
- 
-+void xe_reg_whitelist_oa_regs(struct xe_gt *gt);
-+void xe_reg_dewhitelist_oa_regs(struct xe_gt *gt);
++	if (stream->sample)
++		xe_reg_whitelist_oa_regs(stream->gt);
 +
- void xe_reg_whitelist_print_entry(struct drm_printer *p, unsigned int indent,
- 				  u32 reg, struct xe_reg_sr_entry *entry);
+ 	/* Hold a reference on the drm device till stream_fd is released */
+ 	drm_dev_get(&stream->oa->xe->drm);
  
 -- 
 2.53.0
