@@ -1,37 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 776C9281369;
-	Fri,  7 Aug 2026 15:43:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BDDE46C4B0;
+	Fri,  7 Aug 2026 15:43:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786117425; cv=none; b=Ij8Sc0MYT3sQSqvtQbOT2i7I5e5/4Vi8QA3fqVYNzGp+XWZgR515QKOIr+bfMaaeYfN+oBU+RZ7obJ7s0SBeokX0MtrOm6LkE9ZkdAu7r/85tq37iOG9t/rU3ireZ/dWu90vVPHt4pcNzqVfj+GsPmQMKS9yHXfyH/Iu7LwyIsU=
+	t=1786117428; cv=none; b=OgScJvhiQyyWgSxyZDPy7L5FyjTmCTs+PvN+txwTlLPwg3D554QeVCS9rwWiFNqRYGk3gfEvceg7JTIhoN4PDJ/tXG86xniRad8DkkpVs55KowLDvheJhtQebZKX3nfggazdtWXr0fSbHBC/lMQtn3zUitzgRjYGHTke2z0VF+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786117425; c=relaxed/simple;
-	bh=Mv9IvmDQBnO7BCZsr7ilj5QLq8Ua1BAz7Ln48Y70c0A=;
+	s=arc-20240116; t=1786117428; c=relaxed/simple;
+	bh=4MLe8JCZBpzTG0CistmqqIcMRLjP2WQwXUaBJWMa3Nc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QEbCnCP8VEf0RLczKxtrgfgGdlWdOheIl8hKH7+r9HJPl0G6KF1Xyau/rg1iWSzTP6P7xVbZLzIKS0JUfOiaSy/KGzCu+pNaE5lXiTQyDeG4IW7jXK4nhAM2BixFd6E9kUTTnswaNuufrWsWeEQfz7GDLvkFEpRWIKDPmFNkCs0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CpWXyLWP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ff0JfEVpoaautXvI3b0dfJpoQiuL4VwqTTIteXoSuKfW1JvscyFiOXK536ARAEhQN21IIBXea72OawAmsrZ5u/jX2jyhFTJZwcZOmc7tX3zesPmVZeACSeIIZLjz1HB86LWQe9WEqXJXqZMOG2L4WpyUnUGqMVbWCZ5CEvf+mhE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x9wi4z18; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CpWXyLWP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC6DC1F000E9;
-	Fri,  7 Aug 2026 15:43:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x9wi4z18"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68F071F000E9;
+	Fri,  7 Aug 2026 15:43:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786117424;
-	bh=Zv7fsSor6AAkG3m2EuE6NaenHn46LxM9MffLDf6iAoM=;
+	s=korg; t=1786117427;
+	bh=faypeFiFO2lqvz7JwWNBlniXq10R0dBULxlpS72kqOw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CpWXyLWPvldWOhi11GT9tIzlmxBOi6BG1ABSDW7h1zI/44pTsOYzRLcGdWucT81Q4
-	 Tu1uZCFR60EsLdSbBMgjEX5yCTt8XNo4WedkdNpeJQ3xEzDnaaKVDVFXEVqOiy1Fjn
-	 7BQpIY2DqYz4ih2+JXLMY/HTeJeA18t72ggBt/0A=
+	b=x9wi4z18h179zv9OIWs/n1h/Akza69vspzVvFBApliLuEPou38FaF5f/RX0IDnU/0
+	 BB8ptVZsxCXf+LJx9XIVpK3GLAJUFii/b2dBCZEhMFwBkKxUTQJmyzW+V7xRxeNWwn
+	 UuPt17MKStInLakc+dsUM4WAKz/lPZS8ftzYyKOU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vijaya Krishna Nivarthi <vijaya.nivarthi@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 7.1 315/438] spi: qcom-qspi: Correct max DMA length to avoid 64K boundary failure
-Date: Fri,  7 Aug 2026 16:38:31 +0200
-Message-ID: <20260807143434.684604840@linuxfoundation.org>
+	Chris Gellermann <christian.gellermann@codasip.com>,
+	"David Hildenbrand (arm)" <david@kernel.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Christian Brauner <brauner@kernel.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Shuah Khan <shuah@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 7.1 316/438] selftests/mm: fix potential wild pointer access of getline due to missing init
+Date: Fri,  7 Aug 2026 16:38:32 +0200
+Message-ID: <20260807143434.706040452@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -50,49 +59,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vijaya Krishna Nivarthi <vijaya.nivarthi@oss.qualcomm.com>
+From: Chris Gellermann <christian.gellermann@codasip.com>
 
-commit 90ef2f2961c2dc55957dafe2f53b3efdb4675efc upstream.
+commit 9f1d75a4ce04095afdb63d8e540092ff8151dacf upstream.
 
-The maximum size for a DMA data descriptor is 64KB-1 because the size
-field in HW is 16 bits wide. For this reason, transfers fail at 64KB
-and beyond.
+This is another occurrence of using getline where the code assumes that
+getline allocates memory to store the line, but the pointer passed to it
+is uninitialized and potentially a non-null pointer.  This violates the
+Open Group Spec[1] and caused a segfault in a similar situation in
+selftest/clone3/clone3_set_tid.  Fix it by initializing the line pointer
+to NULL.
 
-Lower max_dma_len to 60KB so larger transfers are split into multiple
-DMA blocks and do not hit the failing 64KB boundary. 60KB is chosen as
-a safe round number below the 64KB-1 hardware limit while satisfying
-alignment requirements.
+The issue has been found by simply grepping through the selftest code
+after running into the issue in clone3_set_tid.  Whether it segfaults in
+its current state is unknown to me.  But it's good to be addressed due to
+defensive reasons.
 
-Tested on x1e80100 (Hamoa) with SPI-NOR flash (/dev/mtd0):
-
-Without patch:
-  dd if=/dev/mtd0 of=/tmp/spi_dump.bin bs=32768 count=2  # works
-  dd if=/dev/mtd0 of=/tmp/spi_dump.bin bs=65536 count=1  # fails
-
-With patch:
-  dd if=/dev/mtd0 of=/tmp/spi_dump.bin bs=65536 count=1  # works
-
-Fixes: b5762d95607e ("spi: spi-qcom-qspi: Add DMA mode support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Vijaya Krishna Nivarthi <vijaya.nivarthi@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260722092358.459943-1-vnivarth@qti.qualcomm.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/20260722130246.2135563-3-christian.gellermann@codasip.com
+Link: https://pubs.opengroup.org/onlinepubs/9799919799/functions/getline.html [1]
+Fixes: 26b4224d9961 ("selftests: expanding more mlock selftest")
+Signed-off-by: Chris Gellermann <christian.gellermann@codasip.com>
+Acked-by: David Hildenbrand (arm) <david@kernel.org>
+Reviewed-by: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-qcom-qspi.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/testing/selftests/mm/mlock-random-test.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/spi/spi-qcom-qspi.c
-+++ b/drivers/spi/spi-qcom-qspi.c
-@@ -759,7 +759,8 @@ static int qcom_qspi_probe(struct platfo
- 		return dev_err_probe(dev, ret, "could not set DMA mask\n");
+--- a/tools/testing/selftests/mm/mlock-random-test.c
++++ b/tools/testing/selftests/mm/mlock-random-test.c
+@@ -84,7 +84,7 @@ int get_proc_locked_vm_size(void)
+ int get_proc_page_size(unsigned long addr)
+ {
+ 	FILE *smaps;
+-	char *line;
++	char *line = NULL;
+ 	unsigned long mmupage_size = 0;
+ 	size_t size;
  
- 	host->max_speed_hz = 300000000;
--	host->max_dma_len = 65536; /* as per HPG */
-+	/* as per HPG, it is 64KB, limit to 60KB to avoid boundary condition failures */
-+	host->max_dma_len = 0xf000;
- 	host->dma_alignment = QSPI_ALIGN_REQ;
- 	host->num_chipselect = QSPI_NUM_CS;
- 	host->bus_num = -1;
 
 
