@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 398503557F3;
-	Fri,  7 Aug 2026 15:29:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DDF43557F3;
+	Fri,  7 Aug 2026 15:29:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116595; cv=none; b=W37TykCf1hiGyM3xTOPAKs62KJ57bSvKkxl+vz/12U+t33HooQfBJ2Z62HaMK/7rBxkCyx/B9rsOOjB3t8ZmdA1EnyANePLqyzHsy1fmT/oHZTLMqyQR2cgxnZpDf7BrEGcitHBaUjNlsf2POAdVxnLUL6/BkSI7NbgeIjl8T+s=
+	t=1786116598; cv=none; b=OywQ/PmlQzInJvE7ZaN6X0o6zFytwakcvivh2j6gZ+Di1x2ytJyOGAOKduZOGhKIT/UFQn+foi74NenAdU6cpdG8cRCOdAT8hN7aj7E5JPH3/DMGnLTp6yV4+tGtjz3zbkm48Ojltozn8CFiqROKZP9bR7bxt8R2FOzXTNoQlhY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116595; c=relaxed/simple;
-	bh=YtLzj/2oHStZ91vCLeVrX1Z1NXEPQKRdLg50W59ikkU=;
+	s=arc-20240116; t=1786116598; c=relaxed/simple;
+	bh=qS1H2VWWTNIImdvMB9DYieruioIeV6Nnv21x/DpI+vU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mj/FgyQXXLw2z09jXejmiiAUwH67uSk+dzORxlCmMb82ehM+wSfhyoXdnEFQC0/+1lArZVWLlSKY64lfE1jWFnMm5G6Ug5en+TV30KQuXBWJioQ4NPmE7ETAlhVQhrprCqjekz8GvnfhqffAaCW9bOk7dwa5pTADbbSlmMzrf9U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nFhTgH2J; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=U5rZM1n0I8XcXLVF91DgJSwwU3FYbEfXA8J5Oi/x2lg0bnIehCjenG5i9g0Z/hwqRaxogSi8ZbxBw1gegbxhSfOFqRo4klaRGalKyypMfK41wy1Ut+kYGwGIXVMMLsc5r12v7NMuqDiajIAWaNgHxDilcHhmLQ9Q5yOsDnSM2QI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mf33AyCN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nFhTgH2J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E0EE1F000E9;
-	Fri,  7 Aug 2026 15:29:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mf33AyCN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 798821F000E9;
+	Fri,  7 Aug 2026 15:29:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116594;
-	bh=+vGzV3q82ucC1UvYrup/TJV2pnkiLqIxhgVSIEROWPs=;
+	s=korg; t=1786116597;
+	bh=b5iGQ5/9qh8oEzEP5TykcGzIoiItG5zfJKKSQKM1aNY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nFhTgH2Jhp9lqIPIHlWU64h71xEvYsl24Ee2ssm88i+ROPZ3M7zon49d+CCxK/aB5
-	 m+MVMtO4zQH+RTQr6j92r5Q/aj3IdCnqkQRDKSGSyqvCqUsZiEBf7iJpTOxFr8LhZ0
-	 Fu6vnvJNqUj+W8RAp0bWuwDywXZEPhsUrqputbE8=
+	b=Mf33AyCNboimzEbdFe1NHjWoxH9jIBkB6TYCPOduuGJm6AD9QFy9iCQE5rZH8oIWU
+	 3AGBdVh949J4iQMe7VKr77ABfc5Yf2kegUL2R2nu/3tPhcjbPRBae5uBCXj6sUkn3d
+	 oMVZ/A6kVehLjvJN8f4dJD7UAj4bL6kBLuS8o5Ok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Carlier <devnexen@gmail.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Logan Gunthorpe <logang@deltatee.com>
-Subject: [PATCH 7.1 008/438] dmaengine: switchtec-dma: fix FIELD_GET misuse when programming SE threshold
-Date: Fri,  7 Aug 2026 16:33:24 +0200
-Message-ID: <20260807143428.189272176@linuxfoundation.org>
+	Sneh Mankad <sneh.mankad@oss.qualcomm.com>,
+	Maulik Shah <maulik.shah@oss.qualcomm.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.1 009/438] pinctrl: qcom: Unconditionally mark gpio as wakeup enable
+Date: Fri,  7 Aug 2026 16:33:25 +0200
+Message-ID: <20260807143428.210346177@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -53,44 +54,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Carlier <devnexen@gmail.com>
+From: Sneh Mankad <sneh.mankad@oss.qualcomm.com>
 
-[ Upstream commit 9d12eb98582fec2578d17e025b13740dcfb57d8e ]
+[ Upstream commit 859e02a369ab328a77dfcabf59562100e55f9c5c ]
 
-FIELD_GET(SE_THRESH_MASK, thresh) extracts bits [31:23] from thresh and
-right-shifts them, which is the inverse of the intended operation. Since
-thresh is derived from se_buf_len / 2 (at most 255), bits [31:23] are
-always zero, so the SE threshold is never actually programmed into the
-register.
+GPIO interrupts that are wakeup capable need to be forwarded to wakeup
+capable parent irqchip. This is done via writing to it's wakeup_enable bit.
 
-Use FIELD_PREP() instead to correctly left-shift thresh into bits [31:23]
-of the valid_en_se register, consistent with the FIELD_PREP usage for
-the perf tuner config just above.
+Currently the bit is set only for PDC irqchip by checking skip_wake_irqs.
+skip_wake_irqs is set to differentiate between parent irqchips MPM and
+PDC. It is set when the parent irqchip is PDC to inform pinctrl about
+skipping the IRQ setting up at TLMM.
 
-Fixes: 30eba9df76ad ("dmaengine: switchtec-dma: Implement hardware initialization and cleanup")
-Signed-off-by: David Carlier <devnexen@gmail.com>
-Review-by: Logan Gunthorpe <logang@deltatee.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260317083252.13224-1-devnexen@gmail.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+However, the functionality to forward GPIO interrupts during SoC low
+power mode is needed regardless of which parent irqchip it is.
+Without the functionality it is impossible for MPM irqchip to detect the
+GPIO interrupt during SoC low power mode since for MPM irqchip the
+skip_wake_irqs is always false.
+
+Remove skip_wake_irqs condition when setting wakeup enable bit to allow
+forwarding GPIO interrupts for SoCs using MPM irqchip too.
+
+Fixes: 76b446f5b86e ("pinctrl: qcom: handle intr_target_reg wakeup_present/enable bits")
+Signed-off-by: Sneh Mankad <sneh.mankad@oss.qualcomm.com>
+Reviewed-by: Maulik Shah <maulik.shah@oss.qualcomm.com>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260616-enable_wakeup_capable_gpios-v3-1-fb59647d89cb@oss.qualcomm.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/switchtec_dma.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/qcom/pinctrl-msm.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/dma/switchtec_dma.c b/drivers/dma/switchtec_dma.c
-index 3ef9286406159..71d9868ce613e 100644
---- a/drivers/dma/switchtec_dma.c
-+++ b/drivers/dma/switchtec_dma.c
-@@ -1099,7 +1099,7 @@ static int switchtec_dma_chan_init(struct switchtec_dma_dev *swdma_dev,
- 	dev_dbg(&pdev->dev, "Channel %d: SE buffer count %d\n", i, se_buf_len);
+diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
+index 45b3a2763eb85..6a24f9b5e4a97 100644
+--- a/drivers/pinctrl/qcom/pinctrl-msm.c
++++ b/drivers/pinctrl/qcom/pinctrl-msm.c
+@@ -1242,12 +1242,12 @@ static int msm_gpio_irq_reqres(struct irq_data *d)
+ 	/*
+ 	 * If the wakeup_enable bit is present and marked as available for the
+ 	 * requested GPIO, it should be enabled when the GPIO is marked as
+-	 * wake irq in order to allow the interrupt event to be transfered to
+-	 * the PDC HW.
++	 * wake irq in order to allow the interrupt event to be transferred to
++	 * the PDC/MPM HW.
+ 	 * While the name implies only the wakeup event, it's also required for
+ 	 * the interrupt event.
+ 	 */
+-	if (test_bit(d->hwirq, pctrl->skip_wake_irqs) && g->intr_wakeup_present_bit) {
++	if (g->intr_wakeup_present_bit) {
+ 		u32 intr_cfg;
  
- 	thresh = se_buf_len / 2;
--	valid_en_se |= FIELD_GET(SE_THRESH_MASK, thresh);
-+	valid_en_se |= FIELD_PREP(SE_THRESH_MASK, thresh);
- 	writel(valid_en_se, &swdma_chan->mmio_chan_fw->valid_en_se);
+ 		raw_spin_lock_irqsave(&pctrl->lock, flags);
+@@ -1275,7 +1275,7 @@ static void msm_gpio_irq_relres(struct irq_data *d)
+ 	unsigned long flags;
  
- 	/* request irqs */
+ 	/* Disable the wakeup_enable bit if it has been set in msm_gpio_irq_reqres() */
+-	if (test_bit(d->hwirq, pctrl->skip_wake_irqs) && g->intr_wakeup_present_bit) {
++	if (g->intr_wakeup_present_bit) {
+ 		u32 intr_cfg;
+ 
+ 		raw_spin_lock_irqsave(&pctrl->lock, flags);
 -- 
 2.53.0
 
