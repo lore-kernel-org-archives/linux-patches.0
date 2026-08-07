@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 559EA33C1AD;
-	Fri,  7 Aug 2026 15:32:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21A0B324B0A;
+	Fri,  7 Aug 2026 15:32:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116738; cv=none; b=CBDGxA1iCV13ebPe2dv+DPsK0IvoK3Q2akwpqRZ9+/SAiNww3jOdWCJU18Yoem2fbJ5CxDt/W1F8IX1m8Yb4vqCqxXinVPkjtXdog/xIKEXs3BwbSInHi4mB7k7F1kVByWu8JB5pRXVnrGMJERnRKh0l1pVY7kgQGgNGs1S2d3o=
+	t=1786116741; cv=none; b=PTEG+y4/7zzA5wXTcvYIB92i7iOvo1vWwBS4WQNOpOzYmDLZlDuPM6rusjwfXjq+93W5y0zGJVQgHdEIxhYncoxBAxTFEOqQQUXSW9UAe47xXxCDDYYEJL5bKzNSeafUC4NdvdBje7anKJ3/7MPfxMMOojAnaKQ8xawM8aWV1FE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116738; c=relaxed/simple;
-	bh=Rp4ITDuwkitu5R6mlzAiU0Eyb//EHNcjykAYUAQlWV4=;
+	s=arc-20240116; t=1786116741; c=relaxed/simple;
+	bh=Gg0YMt2KJMrbwXwuRgnRzujhjSYBKWdxHn8XYgkOMUk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VXEANi/B2Ku36qNO9IgWq7Yk8d25BOU6W21HQv4C41rFSPdq28phlkP95pON79dm088bWTBCTANSpFfJLnr5/N4YTMC9BMAtVchdvunsC4Le72Ah0AxEH7fxYl8iEdwatA7T45F+WmcWKDiTAGJvQfPGXH+qTN6ddllSgwWeSYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P5qz/6nv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bT7DkXVcVdOlt3WDiVC3dh4Rbc9fA8ww3Bx2V3wSX4TSpqK/8U30KDOFz779NSv1d08CmSuZ2q4y6a1lSFl3RBAKXCCTbXSDF2WKH9uaxTCMMCiu4pHpao+xMt1DJRXPGAqe1v+juJZCcjF8FvnLjP1vW3OJY5Lp69OcHhyKGr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0/2+HbT4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P5qz/6nv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A83D91F000E9;
-	Fri,  7 Aug 2026 15:32:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0/2+HbT4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E44C1F000E9;
+	Fri,  7 Aug 2026 15:32:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116737;
-	bh=z4edLT1XVxIOnSxEh8pL3xq3dSU0xpuTrmMGtb/9FfA=;
+	s=korg; t=1786116740;
+	bh=5GgYfhpwMGR2sXC1WNcGSNM61CVLbyQmv7wYTvTABAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P5qz/6nvrwEeqeVqPdUEu5uVIucLaVf8qvj6yOJj5EvjPFehJNxdTRul/rx+Ba7eL
-	 knIwnROQyl8VrB9lLAwNmntw1xEc4gIn7e24mb4gvzD3SBRn1PJbXyw8T/7W96TeFy
-	 cPsbC1yn6yiv5V8rvFAdn/VF/+11qxJIhd9cWYZg=
+	b=0/2+HbT4igcZyKgl2JwN3XkhkEAONKlX1U7Y8DQfj/d80f4xV8N3xKzqK+8Ht5t9f
+	 DTqnfvyajdLwGIcZEzxcLrXV5XqoohZXsgxQeVzynP/wYlz0AcBapT34AknsqP4SED
+	 YvAGoBnOZ/gO4ZjZqm3qd++lwSpr3ol4R9LWIBQI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 018/438] ntfs: preserve RECALL_ON_OPEN on WSL special-file reparse points
-Date: Fri,  7 Aug 2026 16:33:34 +0200
-Message-ID: <20260807143428.399015236@linuxfoundation.org>
+Subject: [PATCH 7.1 067/438] ASoC: SDCA: Ensure that Control Range is large enough for header
+Date: Fri,  7 Aug 2026 16:34:23 +0200
+Message-ID: <20260807143429.417264724@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -50,46 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Charles Keepax <ckeepax@opensource.cirrus.com>
 
-[ Upstream commit 523307b8516fc740895238af8473aa0630b3e088 ]
+[ Upstream commit 951e921b039b793bef7050eaf5c5fb1a4a5341d1 ]
 
-When creating a WSL special file (socket, fifo, character or block
-device), __ntfs_create() sets FILE_ATTRIBUTE_RECALL_ON_OPEN in ni->flags
-as valid_reparse_data() requires for these tags. This flag is
-intentionally absent from $FILE_NAME, so the subsequent reload
+When reading the Ranges structure from an SDCA Control, ensure that the
+read data is large enough to encompass the required header before
+accessing it.
 
-        ni->flags = fn->file_attributes;
-
-drops it from ni->flags, the authoritative copy written back to
-$STANDARD_INFORMATION. The on-disk file_attributes becomes 0x00000404
-instead of 0x00040404, and after a remount valid_reparse_data() rejects
-the reparse point while fsck reports "$REPARSE_POINT data is corrupted".
-
-Preserve the RECALL_ON_OPEN bit across the reload. Symlinks do not set
-that bit, so they are unaffected.
-
-Fixes: af0db57d4293 ("ntfs: update inode operations")
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Fixes: 64fb5af1d1bb ("ASoC: SDCA: Add parsing for Control range structures")
+Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>
+Link: https://patch.msgid.link/20260722103500.872714-5-ckeepax@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs/namei.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/soc/sdca/sdca_functions.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/ntfs/namei.c b/fs/ntfs/namei.c
-index a20ef06087368..712c9ccc8b254 100644
---- a/fs/ntfs/namei.c
-+++ b/fs/ntfs/namei.c
-@@ -683,7 +683,8 @@ static struct ntfs_inode *__ntfs_create(struct mnt_idmap *idmap, struct inode *d
- 	mutex_unlock(&dir_ni->mrec_lock);
- 	mutex_unlock(&ni->mrec_lock);
+diff --git a/sound/soc/sdca/sdca_functions.c b/sound/soc/sdca/sdca_functions.c
+index 196bade11ab5d..ecc372a397573 100644
+--- a/sound/soc/sdca/sdca_functions.c
++++ b/sound/soc/sdca/sdca_functions.c
+@@ -847,6 +847,8 @@ static int find_sdca_control_range(struct device *dev,
+ 		return 0;
+ 	else if (num_range < 0)
+ 		return num_range;
++	else if (num_range < 2 * sizeof(*limits))
++		return -EINVAL;
  
--	ni->flags = fn->file_attributes;
-+	ni->flags = fn->file_attributes |
-+		    (ni->flags & FILE_ATTRIBUTE_RECALL_ON_OPEN);
- 	/* Set the sequence number. */
- 	vi->i_generation = ni->seq_no;
- 	set_nlink(vi, 1);
+ 	range_list = devm_kcalloc(dev, num_range, sizeof(*range_list), GFP_KERNEL);
+ 	if (!range_list)
 -- 
 2.53.0
 
