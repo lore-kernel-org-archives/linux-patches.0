@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97D1F29D27A;
-	Fri,  7 Aug 2026 14:50:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF962386C1E;
+	Fri,  7 Aug 2026 14:50:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114247; cv=none; b=QgnebLQVSY9vYFPucP7YG/tkOPtqYDH5b/06gOool3dGhi7XNsg0/ZLXjgaVQpD87jqgh7WIwdnjiXWgal7seUFm3Jx2I9y4YqzvVm5YDcviTAEIKtj2KbwIhUo1BHcsfFC6DP1oyRvS7RPQCoaM0lMwZwfFsDVHGGZuy+069U8=
+	t=1786114251; cv=none; b=MbKTn/oHAwqtPo0ic6RXd2pJcDqfo+JHt+oJLGsXX5N6wHvez0/LQc/JhLXUMivDJE+SnU7gZeC5lSAAj95DLtM0NAoPh45h6PyPzcTJ1QtrbAGOwqaSrqzx68zNT2XEEglzGSjVI0HeJcsrTxPll4pYwsb9wPi0XXd3IqaqpNs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114247; c=relaxed/simple;
-	bh=eAUrEg/aTgIjb6+9P5vURWMwmBAaBCoOnYe5oXmiBH8=;
+	s=arc-20240116; t=1786114251; c=relaxed/simple;
+	bh=1PiI0zF2R3goKL9zFw3BDj+91vXAg/6AaYXOYIv7w/o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xoel0a3AlfejR+TESfxtEzb7SbiKcuB3i166Jwffrnx0upfnqTIcnR8toJ7fhE2LOIIaMD8v8QrrrXhNKjIR85D3blFB8aL+q3Ye/WWxfzAZD/Hhau56oYfNVMkQ6feFjZyUmwZQELmuzZXT6iuvxWujiAXUdjta++kvK7M7CZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SJW0zsSK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dkr4aafeQKZy1XKn5tbp/4MnPjJJjCfdRLmVF2b6nC8UgTuHcYzVYtWYMU/A6L+RLjgbq0be6t1FO6IbjuCmjBADU2BFRYtQS6ecfqPWOR8LNR48SG/FnYJd2on11MEScX9/yg2vA3rGhqteXpft3xGFRC9DzRAr5+SxkQb/fFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NLBeRTSC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SJW0zsSK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02FAB1F00A3D;
-	Fri,  7 Aug 2026 14:50:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NLBeRTSC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0D021F00A3A;
+	Fri,  7 Aug 2026 14:50:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114243;
-	bh=84w8211+WNwV5jV68t0WYaaFiGQD0auZpQ0fz4oq47A=;
+	s=korg; t=1786114246;
+	bh=N8mTqSlK3Qp0eGMBGcRGPown+lNMXLl3AUIe8ui7jvw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SJW0zsSK958105SNTW36ydT3OryH/3zgsC/yZHAv0nBn5hBYcGK/sOaYX55oqJUj+
-	 dbdJtbrtBWZJOf5RAHf2vqG54F8/GAmGj+u3r52RqF+Qq5IZJ1kxqFIQZNG1Ij5LXl
-	 ME6dsIEdj+9sgfF1P+rmOUAVa1DmPhhd1JXqJYos=
+	b=NLBeRTSCa5tTVdpivAfSFxspNIgnsmZKApeiteNe4caUgennX0VhkzSY0QjO3e0xf
+	 F9WU9XF+P4cM5IoDrKbfOFfOSC/1vrABJ4q+od6fCPG1Mnab8NrLvXeVmmGoasgaYF
+	 eoZO7sBas6AYzvuVt6M4rpm5aBdBX9rXmyPMa5NA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -38,9 +38,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Suren Baghdasaryan <surenb@google.com>,
 	Vlastimil Babka <vbabka@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 195/337] selftests/mm: fix potential wild pointer access of getline due to missing init
-Date: Fri,  7 Aug 2026 16:36:38 +0200
-Message-ID: <20260807143422.782541168@linuxfoundation.org>
+Subject: [PATCH 6.12 196/337] selftests/clone3: fix wild pointer access of getline due to missing init
+Date: Fri,  7 Aug 2026 16:36:39 +0200
+Message-ID: <20260807143422.803851643@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -61,28 +61,71 @@ Content-Transfer-Encoding: 8bit
 
 From: Chris Gellermann <christian.gellermann@codasip.com>
 
-commit 9f1d75a4ce04095afdb63d8e540092ff8151dacf upstream.
+commit 8f6f9fd93cd7a5dd607ad5cd910476dd68fff3ed upstream.
 
-This is another occurrence of using getline where the code assumes that
-getline allocates memory to store the line, but the pointer passed to it
-is uninitialized and potentially a non-null pointer.  This violates the
-Open Group Spec[1] and caused a segfault in a similar situation in
-selftest/clone3/clone3_set_tid.  Fix it by initializing the line pointer
-to NULL.
+Patch series "selftests: Add missing initalization of pointer passed to
+getline", v2.
 
-The issue has been found by simply grepping through the selftest code
-after running into the issue in clone3_set_tid.  Whether it segfaults in
-its current state is unknown to me.  But it's good to be addressed due to
-defensive reasons.
 
-Link: https://lore.kernel.org/20260722130246.2135563-3-christian.gellermann@codasip.com
+This patch (of 2):
+
+Clone3_set_tid uses getline(&line, ...) in a loop to read the child's
+process status.  The code expects that getline allocates the buffer for
+the line on the first loop iteration.  According to the Open Group
+Spec[1], char *line has to be null pointer for this:
+
+> ssize_t getline(char **restrict lineptr, ...);
+> If *lineptr is a null pointer or if the object pointed to by *lineptr
+> is of insufficient size, an object shall be allocated as if by
+malloc()
+> or the object shall be reallocated as if by realloc()[...].
+
+However, char *line is only declared, leading to an undefined value that
+is potentially non-null.  In an example run with Musl v1.2.6, the realloc
+call[2] of getdelim, which implements getline, triggers a segfault:
+
+./run_kselftest.sh --test clone3:clone3_set_tid
+[ 1366.165898] kselftest: Running tests in clone3
+...
+[ 1367.799244] clone3_set_tid[811]: unhandled signal 11 code 0x1 at
+0x0000000000000000 in libc.so[68184,3fbf69f000+4c000]
+[ 1367.802808] CPU: 0 UID: 0 PID: 811 Comm: clone3_set_tid Not tainted
+..
+[ 1367.804188]  epc: 0x0000003fbf6b0184
+[ 1367.804188]  ra : 0x0000003fbf6d4664
+[ 1367.804188]  sp : 0x0000003fce5f2e40
+[ 1367.805314]  gp : 0x0000002aaab0dfb8
+[ 1367.805314]  tp : 0x0000003fbf6f14a8
+[ 1367.805314]  t0 : 0x0000003fbf63d000
+...
+
+Looking at the realloc implementation, Musl mallocs for a null pointer
+memory.  But for a non-null pointer, it assumes it's passed a valid
+pointer to the heap and tries to access its meta-data.  This leads to the
+segfault we see:
+
+void *realloc(void *p, size_t n)
+{
+        if (!p) return malloc(n);
+        if (size_overflows(n)) return 0;
+
+        struct meta *g = get_meta(p);
+        ...
+}
+
+Fix this by properly initializing the line pointer to NULL.
+
+Link: https://lore.kernel.org/20260722130246.2135563-1-christian.gellermann@codasip.com
+Link: https://lore.kernel.org/20260722130246.2135563-2-christian.gellermann@codasip.com
 Link: https://pubs.opengroup.org/onlinepubs/9799919799/functions/getline.html [1]
-Fixes: 26b4224d9961 ("selftests: expanding more mlock selftest")
+Link: https://git.musl-libc.org/cgit/musl/tree/src/stdio/getdelim.c#n38 [2]
+Fixes: 41585bbeeef9 ("selftests: add tests for clone3() with *set_tid")
 Signed-off-by: Chris Gellermann <christian.gellermann@codasip.com>
 Acked-by: David Hildenbrand (arm) <david@kernel.org>
 Reviewed-by: Lorenzo Stoakes <ljs@kernel.org>
 Cc: Christian Brauner <brauner@kernel.org>
 Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
 Cc: Michal Hocko <mhocko@suse.com>
 Cc: Mike Rapoport <rppt@kernel.org>
 Cc: Shuah Khan <shuah@kernel.org>
@@ -92,19 +135,19 @@ Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/mm/mlock-random-test.c |    2 +-
+ tools/testing/selftests/clone3/clone3_set_tid.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/tools/testing/selftests/mm/mlock-random-test.c
-+++ b/tools/testing/selftests/mm/mlock-random-test.c
-@@ -84,7 +84,7 @@ int get_proc_locked_vm_size(void)
- int get_proc_page_size(unsigned long addr)
+--- a/tools/testing/selftests/clone3/clone3_set_tid.c
++++ b/tools/testing/selftests/clone3/clone3_set_tid.c
+@@ -141,7 +141,7 @@ int main(int argc, char *argv[])
  {
- 	FILE *smaps;
+ 	FILE *f;
+ 	char buf;
 -	char *line;
 +	char *line = NULL;
- 	unsigned long mmupage_size = 0;
- 	size_t size;
- 
+ 	int status;
+ 	int ret = -1;
+ 	size_t len = 0;
 
 
