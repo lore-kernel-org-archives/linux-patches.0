@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E55B33D6F9;
-	Fri,  7 Aug 2026 14:56:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F66D38758D;
+	Fri,  7 Aug 2026 14:56:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114596; cv=none; b=hdfeczV03oNPZcI+c1bHtvrC2dXwY3Wv3vMzmk89YQJT/Lt08THrZhJOJwcEdQaX2LNZnKPNP/eKLTw+GYMwC71on/tn+uzy7EpN/doJw/0TKro2bmSuy+OCwqoQHB21R5oeN5YNBEfCXstjujFCRcPPvVKxVJTxLKvooEKQat0=
+	t=1786114602; cv=none; b=soZLcNlrE31tYNLX+9M1znRSdJPK7VxrVXUvPfebR/gktz+d1PMCFph24bXm32qToTzozHL4W7VDgQDcHCH4wkSH1CHYAuM1NIjr1zoLpoNe3Bl9KlAbT39Ckq97G2KjggptSvz+XhTqz7/JLSAH/ognElmr+unBk8STVPr2TaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114596; c=relaxed/simple;
-	bh=uvVXhLEcRaHZo2kHxEChkICZ8tXBcezT5oHKGZoUiDk=;
+	s=arc-20240116; t=1786114602; c=relaxed/simple;
+	bh=9Y2XSUXh4/KZ2n4Q4xtVUtuOdX2f4ST/+owM6Ft/LJU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WYOQT2QpccpJ6GMWq+nmVf5kkqRPZeXXM5tylzoL4LMPt5xvS/6hVCZwEaRU9hrC19Btu65as84WzBXPzQUbfl5wKaKQmgjSro8nBL1jPixLDN1QaYdSKXhLCcX+HpHg5sGOe3+ul4ph9qqF3C1hIe7yBvVyinVl+tL82ffCMUk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o2XQM7km; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aw5BR2/iaPmDQyGlP1rQOm/uG35cngPweu6ZQUaWn2fqc0ECbFpgLrHZTRqekgXzE0ha1ldGCcgOHktFTdDj0ybrZF3JIqFajUWCW+SyyPGO30HXv1W81lIWU4cQbDdrby2xxVgXnO7pb2W2gGl5ueaxqJO/PEhscxBOaxQhgS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u7KVD8v7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o2XQM7km"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C04F41F00A3A;
-	Fri,  7 Aug 2026 14:56:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u7KVD8v7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DEE71F000E9;
+	Fri,  7 Aug 2026 14:56:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114593;
-	bh=nqGwnPambP50dseJ6kQr8hCpHOCAOZxDu6AF2WxCd/w=;
+	s=korg; t=1786114596;
+	bh=uztMcfnQVs5izyFUYjJOrIL2nmnnEhMXaBBSkJj/O10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o2XQM7kmxPMzIu4BInv4mANPCyKBwbMx4VlpDzMjqhDa25b2DE41ntwBjutDdFyhz
-	 Bo/T49HwU/9Bsc+x8OM8ndyY6YiMsFWbFxMRv+8NaGXcRVxJO8JrzvL6BC4krRo3ek
-	 KdD6/Y4zjEaEga2lQxeu0sXOxW/eKx2JEUCUa3y8=
+	b=u7KVD8v74o07cFR3pACldaiVsnr8qM62RlPh/1HJbO95zRBNefsqnrXRauCNK9zDo
+	 M7Q5wosPYDGuN0XkvGMgsYTocpYil4jmL4jBhZG6KujiZAR/66hvuWHvjflWfro8fN
+	 hvQxjaCpFXyXcYDA3U9mtt3qJ7xJetyCFedQvAjk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zack Rusin <zack.rusin@broadcom.com>,
-	Ian Forbes <ian.forbes@broadcom.com>
-Subject: [PATCH 6.12 264/337] drm/vmwgfx: avoid destroy_workqueue(NULL) on vkms init failure
-Date: Fri,  7 Aug 2026 16:37:47 +0200
-Message-ID: <20260807143424.267567349@linuxfoundation.org>
+	Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 312/337] drm/amdgpu: give each kernel job a unique id
+Date: Fri,  7 Aug 2026 16:38:35 +0200
+Message-ID: <20260807143425.290936767@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -50,74 +52,517 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zack Rusin <zack.rusin@broadcom.com>
+From: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
 
-commit 05eaa887e7b4f40fba425f8a1d7a5a8a043092a6 upstream.
+[ Upstream commit 256576ed6895b81290690ae3e2b9f62eb7c642fc ]
 
-Two paths through vmw_vkms_init() can leave vmw->crc_workq NULL while
-still leaving the rest of the driver in a state that calls
-vmw_vkms_cleanup() at module unload:
+Userspace jobs have drm_file.client_id as a unique identifier
+as job's owners. For kernel jobs, we can allocate arbitrary
+values - the risk of overlap with userspace ids is small (given
+that it's a u64 value).
+In the unlikely case the overlap happens, it'll only impact
+trace events.
 
-  1. vmw_host_get_guestinfo(GUESTINFO_VBLANK, ...) failing or
-     returning an oversized buffer -- the common case on hosts
-     without a VBLANK guestinfo entry -- early-returned before the
-     workqueue allocation.
-  2. alloc_ordered_workqueue() returning NULL on memory pressure.
+Since this ID is traced in the gpu_scheduler trace events, this
+allows to determine the source of each job sent to the hardware.
 
-vmw_vkms_cleanup() then calls destroy_workqueue(NULL), which
-dereferences wq->name and panics.
+To make grepping easier, the IDs are defined as they will appear
+in the trace output.
 
-Fix the first case by removing the early return: vmw->vkms_enabled
-is already false on the rpci-failure path so no work will ever be
-queued, and allocating the workqueue unconditionally keeps the
-control flow simple.  Fix the second case by guarding the cleanup
-with a NULL check, since alloc_ordered_workqueue() can still fail
-under low memory.
-
-Fixes: 7b0062036c3b ("drm/vmwgfx: Implement virtual crc generation")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4.7
-Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
-Reviewed-by: Ian Forbes <ian.forbes@broadcom.com>
-Link: https://patch.msgid.link/20260505222728.519626-9-zack.rusin@broadcom.com
+Signed-off-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>
+Link: https://lore.kernel.org/r/20250604122827.2191-1-pierre-eric.pelloux-prayer@amd.com
+Stable-dep-of: 3e864bf2a32a ("drm/amdgpu/gfx: fix cleaner shader IB buffer overflow")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_vkms.c |   17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c     |    3 ++-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c     |    2 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_job.c     |    5 +++--
+ drivers/gpu/drm/amd/amdgpu/amdgpu_job.h     |   19 ++++++++++++++++++-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_jpeg.c    |    3 ++-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_object.c  |    3 ++-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c     |   28 +++++++++++++++++-----------
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.h     |    3 ++-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c     |    3 ++-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vce.c     |    5 +++--
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vcn.c     |    8 ++++----
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c      |    6 ++++--
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm.h      |    2 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm_cpu.c  |    4 +++-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c   |    4 +++-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm_sdma.c |   12 +++++++-----
+ drivers/gpu/drm/amd/amdgpu/uvd_v6_0.c       |    6 ++++--
+ drivers/gpu/drm/amd/amdgpu/uvd_v7_0.c       |    6 ++++--
+ drivers/gpu/drm/amd/amdkfd/kfd_migrate.c    |    3 ++-
+ 19 files changed, 84 insertions(+), 41 deletions(-)
 
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_vkms.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_vkms.c
-@@ -214,14 +214,14 @@ vmw_vkms_init(struct vmw_private *vmw)
- 	vmw->vkms_enabled = false;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
+@@ -1449,7 +1449,8 @@ static int amdgpu_gfx_run_cleaner_shader
+ 	owner = (void *)(unsigned long)atomic_inc_return(&counter);
  
- 	ret = vmw_host_get_guestinfo(GUESTINFO_VBLANK, buffer, &buf_len);
--	if (ret || buf_len > max_buf_len)
--		return;
--	buffer[buf_len] = '\0';
-+	if (!ret && buf_len <= max_buf_len) {
-+		buffer[buf_len] = '\0';
+ 	r = amdgpu_job_alloc_with_ib(ring->adev, &entity, owner,
+-				     64, 0, &job);
++				     64, 0, &job,
++				     AMDGPU_KERNEL_JOB_ID_CLEANER_SHADER);
+ 	if (r)
+ 		goto err;
  
--	ret = kstrtobool(buffer, &vmw->vkms_enabled);
--	if (!ret && vmw->vkms_enabled) {
--		ret = drm_vblank_init(&vmw->drm, VMWGFX_NUM_DISPLAY_UNITS);
--		vmw->vkms_enabled = (ret == 0);
-+		ret = kstrtobool(buffer, &vmw->vkms_enabled);
-+		if (!ret && vmw->vkms_enabled) {
-+			ret = drm_vblank_init(&vmw->drm, VMWGFX_NUM_DISPLAY_UNITS);
-+			vmw->vkms_enabled = (ret == 0);
-+		}
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
+@@ -664,7 +664,7 @@ void amdgpu_gmc_flush_gpu_tlb(struct amd
+ 	r = amdgpu_job_alloc_with_ib(ring->adev, &adev->mman.high_pr,
+ 				     AMDGPU_FENCE_OWNER_UNDEFINED,
+ 				     16 * 4, AMDGPU_IB_POOL_IMMEDIATE,
+-				     &job);
++				     &job, AMDGPU_KERNEL_JOB_ID_FLUSH_GPU_TLB);
+ 	if (r)
+ 		goto error_alloc;
+ 
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
+@@ -218,11 +218,12 @@ int amdgpu_job_alloc(struct amdgpu_devic
+ int amdgpu_job_alloc_with_ib(struct amdgpu_device *adev,
+ 			     struct drm_sched_entity *entity, void *owner,
+ 			     size_t size, enum amdgpu_ib_pool_type pool_type,
+-			     struct amdgpu_job **job)
++			     struct amdgpu_job **job, u64 k_job_id)
+ {
+ 	int r;
+ 
+-	r = amdgpu_job_alloc(adev, NULL, entity, owner, 1, job, 0);
++	r = amdgpu_job_alloc(adev, NULL, entity, owner, 1, job,
++			     k_job_id);
+ 	if (r)
+ 		return r;
+ 
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_job.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_job.h
+@@ -44,6 +44,22 @@
+ struct amdgpu_fence;
+ enum amdgpu_ib_pool_type;
+ 
++/* Internal kernel job ids. (decreasing values, starting from U64_MAX). */
++#define AMDGPU_KERNEL_JOB_ID_VM_UPDATE              (18446744073709551615ULL)
++#define AMDGPU_KERNEL_JOB_ID_VM_UPDATE_PDES         (18446744073709551614ULL)
++#define AMDGPU_KERNEL_JOB_ID_VM_UPDATE_RANGE        (18446744073709551613ULL)
++#define AMDGPU_KERNEL_JOB_ID_VM_PT_CLEAR            (18446744073709551612ULL)
++#define AMDGPU_KERNEL_JOB_ID_TTM_MAP_BUFFER         (18446744073709551611ULL)
++#define AMDGPU_KERNEL_JOB_ID_TTM_ACCESS_MEMORY_SDMA (18446744073709551610ULL)
++#define AMDGPU_KERNEL_JOB_ID_TTM_COPY_BUFFER        (18446744073709551609ULL)
++#define AMDGPU_KERNEL_JOB_ID_CLEAR_ON_RELEASE       (18446744073709551608ULL)
++#define AMDGPU_KERNEL_JOB_ID_MOVE_BLIT              (18446744073709551607ULL)
++#define AMDGPU_KERNEL_JOB_ID_TTM_CLEAR_BUFFER       (18446744073709551606ULL)
++#define AMDGPU_KERNEL_JOB_ID_CLEANER_SHADER         (18446744073709551605ULL)
++#define AMDGPU_KERNEL_JOB_ID_FLUSH_GPU_TLB          (18446744073709551604ULL)
++#define AMDGPU_KERNEL_JOB_ID_KFD_GART_MAP           (18446744073709551603ULL)
++#define AMDGPU_KERNEL_JOB_ID_VCN_RING_TEST          (18446744073709551602ULL)
++
+ struct amdgpu_job {
+ 	struct drm_sched_job    base;
+ 	struct amdgpu_vm	*vm;
+@@ -95,7 +111,8 @@ int amdgpu_job_alloc(struct amdgpu_devic
+ int amdgpu_job_alloc_with_ib(struct amdgpu_device *adev,
+ 			     struct drm_sched_entity *entity, void *owner,
+ 			     size_t size, enum amdgpu_ib_pool_type pool_type,
+-			     struct amdgpu_job **job);
++			     struct amdgpu_job **job,
++			     u64 k_job_id);
+ void amdgpu_job_set_resources(struct amdgpu_job *job, struct amdgpu_bo *gds,
+ 			      struct amdgpu_bo *gws, struct amdgpu_bo *oa);
+ void amdgpu_job_free_resources(struct amdgpu_job *job);
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_jpeg.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_jpeg.c
+@@ -192,7 +192,8 @@ static int amdgpu_jpeg_dec_set_reg(struc
+ 	int i, r;
+ 
+ 	r = amdgpu_job_alloc_with_ib(ring->adev, NULL, NULL, ib_size_dw * 4,
+-				     AMDGPU_IB_POOL_DIRECT, &job);
++				     AMDGPU_IB_POOL_DIRECT, &job,
++				     AMDGPU_KERNEL_JOB_ID_VCN_RING_TEST);
+ 	if (r)
+ 		return r;
+ 
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
+@@ -1269,7 +1269,8 @@ void amdgpu_bo_release_notify(struct ttm
+ 	if (r)
+ 		goto out;
+ 
+-	r = amdgpu_fill_buffer(abo, 0, &bo->base._resv, &fence, true);
++	r = amdgpu_fill_buffer(abo, 0, &bo->base._resv, &fence, true,
++			       AMDGPU_KERNEL_JOB_ID_CLEAR_ON_RELEASE);
+ 	if (WARN_ON(r))
+ 		goto out;
+ 
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
+@@ -229,7 +229,8 @@ static int amdgpu_ttm_map_buffer(struct
+ 	r = amdgpu_job_alloc_with_ib(adev, &adev->mman.high_pr,
+ 				     AMDGPU_FENCE_OWNER_UNDEFINED,
+ 				     num_dw * 4 + num_bytes,
+-				     AMDGPU_IB_POOL_DELAYED, &job);
++				     AMDGPU_IB_POOL_DELAYED, &job,
++				     AMDGPU_KERNEL_JOB_ID_TTM_MAP_BUFFER);
+ 	if (r)
+ 		return r;
+ 
+@@ -408,7 +409,7 @@ static int amdgpu_move_blit(struct ttm_b
+ 		struct dma_fence *wipe_fence = NULL;
+ 
+ 		r = amdgpu_fill_buffer(abo, 0, NULL, &wipe_fence,
+-				       false);
++				       false, AMDGPU_KERNEL_JOB_ID_MOVE_BLIT);
+ 		if (r) {
+ 			goto error;
+ 		} else if (wipe_fence) {
+@@ -1530,7 +1531,8 @@ static int amdgpu_ttm_access_memory_sdma
+ 	r = amdgpu_job_alloc_with_ib(adev, &adev->mman.high_pr,
+ 				     AMDGPU_FENCE_OWNER_UNDEFINED,
+ 				     num_dw * 4, AMDGPU_IB_POOL_DELAYED,
+-				     &job);
++				     &job,
++				     AMDGPU_KERNEL_JOB_ID_TTM_ACCESS_MEMORY_SDMA);
+ 	if (r)
+ 		goto out;
+ 
+@@ -2175,7 +2177,7 @@ static int amdgpu_ttm_prepare_job(struct
+ 				  struct dma_resv *resv,
+ 				  bool vm_needs_flush,
+ 				  struct amdgpu_job **job,
+-				  bool delayed)
++				  bool delayed, u64 k_job_id)
+ {
+ 	enum amdgpu_ib_pool_type pool = direct_submit ?
+ 		AMDGPU_IB_POOL_DIRECT :
+@@ -2185,7 +2187,7 @@ static int amdgpu_ttm_prepare_job(struct
+ 						    &adev->mman.high_pr;
+ 	r = amdgpu_job_alloc_with_ib(adev, entity,
+ 				     AMDGPU_FENCE_OWNER_UNDEFINED,
+-				     num_dw * 4, pool, job);
++				     num_dw * 4, pool, job, k_job_id);
+ 	if (r)
+ 		return r;
+ 
+@@ -2224,7 +2226,8 @@ int amdgpu_copy_buffer(struct amdgpu_rin
+ 	num_loops = DIV_ROUND_UP(byte_count, max_bytes);
+ 	num_dw = ALIGN(num_loops * adev->mman.buffer_funcs->copy_num_dw, 8);
+ 	r = amdgpu_ttm_prepare_job(adev, direct_submit, num_dw,
+-				   resv, vm_needs_flush, &job, false);
++				   resv, vm_needs_flush, &job, false,
++				   AMDGPU_KERNEL_JOB_ID_TTM_COPY_BUFFER);
+ 	if (r)
+ 		return r;
+ 
+@@ -2259,7 +2262,8 @@ static int amdgpu_ttm_fill_mem(struct am
+ 			       uint64_t dst_addr, uint32_t byte_count,
+ 			       struct dma_resv *resv,
+ 			       struct dma_fence **fence,
+-			       bool vm_needs_flush, bool delayed)
++			       bool vm_needs_flush, bool delayed,
++			       u64 k_job_id)
+ {
+ 	struct amdgpu_device *adev = ring->adev;
+ 	unsigned int num_loops, num_dw;
+@@ -2272,7 +2276,7 @@ static int amdgpu_ttm_fill_mem(struct am
+ 	num_loops = DIV_ROUND_UP_ULL(byte_count, max_bytes);
+ 	num_dw = ALIGN(num_loops * adev->mman.buffer_funcs->fill_num_dw, 8);
+ 	r = amdgpu_ttm_prepare_job(adev, false, num_dw, resv, vm_needs_flush,
+-				   &job, delayed);
++				   &job, delayed, k_job_id);
+ 	if (r)
+ 		return r;
+ 
+@@ -2342,7 +2346,8 @@ int amdgpu_ttm_clear_buffer(struct amdgp
+ 			goto err;
+ 
+ 		r = amdgpu_ttm_fill_mem(ring, 0, addr, size, resv,
+-					&next, true, true);
++					&next, true, true,
++					AMDGPU_KERNEL_JOB_ID_TTM_CLEAR_BUFFER);
+ 		if (r)
+ 			goto err;
+ 
+@@ -2361,7 +2366,8 @@ int amdgpu_fill_buffer(struct amdgpu_bo
+ 			uint32_t src_data,
+ 			struct dma_resv *resv,
+ 			struct dma_fence **f,
+-			bool delayed)
++			bool delayed,
++			u64 k_job_id)
+ {
+ 	struct amdgpu_device *adev = amdgpu_ttm_adev(bo->tbo.bdev);
+ 	struct amdgpu_ring *ring = adev->mman.buffer_funcs_ring;
+@@ -2390,7 +2396,7 @@ int amdgpu_fill_buffer(struct amdgpu_bo
+ 			goto error;
+ 
+ 		r = amdgpu_ttm_fill_mem(ring, src_data, to, cur_size, resv,
+-					&next, true, delayed);
++					&next, true, delayed, k_job_id);
+ 		if (r)
+ 			goto error;
+ 
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.h
+@@ -180,7 +180,8 @@ int amdgpu_fill_buffer(struct amdgpu_bo
+ 			uint32_t src_data,
+ 			struct dma_resv *resv,
+ 			struct dma_fence **fence,
+-			bool delayed);
++			bool delayed,
++			u64 k_job_id);
+ 
+ int amdgpu_ttm_alloc_gart(struct ttm_buffer_object *bo);
+ void amdgpu_ttm_recover_gart(struct ttm_buffer_object *tbo);
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
+@@ -1164,7 +1164,8 @@ static int amdgpu_uvd_send_msg(struct am
+ 	r = amdgpu_job_alloc_with_ib(ring->adev, &adev->uvd.entity,
+ 				     AMDGPU_FENCE_OWNER_UNDEFINED,
+ 				     64, direct ? AMDGPU_IB_POOL_DIRECT :
+-				     AMDGPU_IB_POOL_DELAYED, &job);
++				     AMDGPU_IB_POOL_DELAYED, &job,
++				     AMDGPU_KERNEL_JOB_ID_VCN_RING_TEST);
+ 	if (r)
+ 		return r;
+ 
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vce.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vce.c
+@@ -449,7 +449,7 @@ static int amdgpu_vce_get_create_msg(str
+ 	r = amdgpu_job_alloc_with_ib(ring->adev, &ring->adev->vce.entity,
+ 				     AMDGPU_FENCE_OWNER_UNDEFINED,
+ 				     ib_size_dw * 4, AMDGPU_IB_POOL_DIRECT,
+-				     &job);
++				     &job, AMDGPU_KERNEL_JOB_ID_VCN_RING_TEST);
+ 	if (r)
+ 		return r;
+ 
+@@ -540,7 +540,8 @@ static int amdgpu_vce_get_destroy_msg(st
+ 				     AMDGPU_FENCE_OWNER_UNDEFINED,
+ 				     ib_size_dw * 4,
+ 				     direct ? AMDGPU_IB_POOL_DIRECT :
+-				     AMDGPU_IB_POOL_DELAYED, &job);
++				     AMDGPU_IB_POOL_DELAYED, &job,
++				     AMDGPU_KERNEL_JOB_ID_VCN_RING_TEST);
+ 	if (r)
+ 		return r;
+ 
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vcn.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vcn.c
+@@ -553,7 +553,7 @@ static int amdgpu_vcn_dec_send_msg(struc
+ 
+ 	r = amdgpu_job_alloc_with_ib(ring->adev, NULL, NULL,
+ 				     64, AMDGPU_IB_POOL_DIRECT,
+-				     &job);
++				     &job, AMDGPU_KERNEL_JOB_ID_VCN_RING_TEST);
+ 	if (r)
+ 		goto err;
+ 
+@@ -733,7 +733,7 @@ static int amdgpu_vcn_dec_sw_send_msg(st
+ 
+ 	r = amdgpu_job_alloc_with_ib(ring->adev, NULL, NULL,
+ 				     ib_size_dw * 4, AMDGPU_IB_POOL_DIRECT,
+-				     &job);
++				     &job, AMDGPU_KERNEL_JOB_ID_VCN_RING_TEST);
+ 	if (r)
+ 		goto err;
+ 
+@@ -863,7 +863,7 @@ static int amdgpu_vcn_enc_get_create_msg
+ 
+ 	r = amdgpu_job_alloc_with_ib(ring->adev, NULL, NULL,
+ 				     ib_size_dw * 4, AMDGPU_IB_POOL_DIRECT,
+-				     &job);
++				     &job, AMDGPU_KERNEL_JOB_ID_VCN_RING_TEST);
+ 	if (r)
+ 		return r;
+ 
+@@ -930,7 +930,7 @@ static int amdgpu_vcn_enc_get_destroy_ms
+ 
+ 	r = amdgpu_job_alloc_with_ib(ring->adev, NULL, NULL,
+ 				     ib_size_dw * 4, AMDGPU_IB_POOL_DIRECT,
+-				     &job);
++				     &job, AMDGPU_KERNEL_JOB_ID_VCN_RING_TEST);
+ 	if (r)
+ 		return r;
+ 
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
+@@ -838,7 +838,8 @@ int amdgpu_vm_update_pdes(struct amdgpu_
+ 	params.vm = vm;
+ 	params.immediate = immediate;
+ 
+-	r = vm->update_funcs->prepare(&params, NULL);
++	r = vm->update_funcs->prepare(&params, NULL,
++				      AMDGPU_KERNEL_JOB_ID_VM_UPDATE_PDES);
+ 	if (r)
+ 		goto error;
+ 
+@@ -1007,7 +1008,8 @@ int amdgpu_vm_update_range(struct amdgpu
+ 		dma_fence_put(tmp);
  	}
  
- 	vmw->crc_workq = alloc_ordered_workqueue("vmwgfx_crc_generator", 0);
-@@ -236,7 +236,8 @@ vmw_vkms_init(struct vmw_private *vmw)
- void
- vmw_vkms_cleanup(struct vmw_private *vmw)
- {
--	destroy_workqueue(vmw->crc_workq);
-+	if (vmw->crc_workq)
-+		destroy_workqueue(vmw->crc_workq);
- }
+-	r = vm->update_funcs->prepare(&params, sync);
++	r = vm->update_funcs->prepare(&params, sync,
++				      AMDGPU_KERNEL_JOB_ID_VM_UPDATE_RANGE);
+ 	if (r)
+ 		goto error_free;
  
- bool
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.h
+@@ -305,7 +305,7 @@ struct amdgpu_vm_update_params {
+ struct amdgpu_vm_update_funcs {
+ 	int (*map_table)(struct amdgpu_bo_vm *bo);
+ 	int (*prepare)(struct amdgpu_vm_update_params *p,
+-		       struct amdgpu_sync *sync);
++		       struct amdgpu_sync *sync, u64 k_job_id);
+ 	int (*update)(struct amdgpu_vm_update_params *p,
+ 		      struct amdgpu_bo_vm *bo, uint64_t pe, uint64_t addr,
+ 		      unsigned count, uint32_t incr, uint64_t flags);
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_cpu.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_cpu.c
+@@ -42,12 +42,14 @@ static int amdgpu_vm_cpu_map_table(struc
+  *
+  * @p: see amdgpu_vm_update_params definition
+  * @sync: sync obj with fences to wait on
++ * @k_job_id: the id for tracing/debug purposes
+  *
+  * Returns:
+  * Negativ errno, 0 for success.
+  */
+ static int amdgpu_vm_cpu_prepare(struct amdgpu_vm_update_params *p,
+-				 struct amdgpu_sync *sync)
++				 struct amdgpu_sync *sync,
++				 u64 k_job_id)
+ {
+ 	if (!sync)
+ 		return 0;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_pt.c
+@@ -26,6 +26,7 @@
+ #include "amdgpu.h"
+ #include "amdgpu_trace.h"
+ #include "amdgpu_vm.h"
++#include "amdgpu_job.h"
+ 
+ /*
+  * amdgpu_vm_pt_cursor - state for for_each_amdgpu_vm_pt
+@@ -395,7 +396,8 @@ int amdgpu_vm_pt_clear(struct amdgpu_dev
+ 	params.vm = vm;
+ 	params.immediate = immediate;
+ 
+-	r = vm->update_funcs->prepare(&params, NULL);
++	r = vm->update_funcs->prepare(&params, NULL,
++				      AMDGPU_KERNEL_JOB_ID_VM_PT_CLEAR);
+ 	if (r)
+ 		goto exit;
+ 
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_sdma.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_sdma.c
+@@ -40,7 +40,7 @@ static int amdgpu_vm_sdma_map_table(stru
+ 
+ /* Allocate a new job for @count PTE updates */
+ static int amdgpu_vm_sdma_alloc_job(struct amdgpu_vm_update_params *p,
+-				    unsigned int count)
++				    unsigned int count, u64 k_job_id)
+ {
+ 	enum amdgpu_ib_pool_type pool = p->immediate ? AMDGPU_IB_POOL_IMMEDIATE
+ 		: AMDGPU_IB_POOL_DELAYED;
+@@ -56,7 +56,7 @@ static int amdgpu_vm_sdma_alloc_job(stru
+ 	ndw = min(ndw, AMDGPU_VM_SDMA_MAX_NUM_DW);
+ 
+ 	r = amdgpu_job_alloc_with_ib(p->adev, entity, AMDGPU_FENCE_OWNER_VM,
+-				     ndw * 4, pool, &p->job);
++				     ndw * 4, pool, &p->job, k_job_id);
+ 	if (r)
+ 		return r;
+ 
+@@ -69,16 +69,17 @@ static int amdgpu_vm_sdma_alloc_job(stru
+  *
+  * @p: see amdgpu_vm_update_params definition
+  * @sync: amdgpu_sync object with fences to wait for
++ * @k_job_id: identifier of the job, for tracing purpose
+  *
+  * Returns:
+  * Negativ errno, 0 for success.
+  */
+ static int amdgpu_vm_sdma_prepare(struct amdgpu_vm_update_params *p,
+-				  struct amdgpu_sync *sync)
++				  struct amdgpu_sync *sync, u64 k_job_id)
+ {
+ 	int r;
+ 
+-	r = amdgpu_vm_sdma_alloc_job(p, 0);
++	r = amdgpu_vm_sdma_alloc_job(p, 0, k_job_id);
+ 	if (r)
+ 		return r;
+ 
+@@ -249,7 +250,8 @@ static int amdgpu_vm_sdma_update(struct
+ 			if (r)
+ 				return r;
+ 
+-			r = amdgpu_vm_sdma_alloc_job(p, count);
++			r = amdgpu_vm_sdma_alloc_job(p, count,
++						     AMDGPU_KERNEL_JOB_ID_VM_UPDATE);
+ 			if (r)
+ 				return r;
+ 		}
+--- a/drivers/gpu/drm/amd/amdgpu/uvd_v6_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/uvd_v6_0.c
+@@ -217,7 +217,8 @@ static int uvd_v6_0_enc_get_create_msg(s
+ 	int i, r;
+ 
+ 	r = amdgpu_job_alloc_with_ib(ring->adev, NULL, NULL, ib_size_dw * 4,
+-				     AMDGPU_IB_POOL_DIRECT, &job);
++				     AMDGPU_IB_POOL_DIRECT, &job,
++				     AMDGPU_KERNEL_JOB_ID_VCN_RING_TEST);
+ 	if (r)
+ 		return r;
+ 
+@@ -281,7 +282,8 @@ static int uvd_v6_0_enc_get_destroy_msg(
+ 	int i, r;
+ 
+ 	r = amdgpu_job_alloc_with_ib(ring->adev, NULL, NULL, ib_size_dw * 4,
+-				     AMDGPU_IB_POOL_DIRECT, &job);
++				     AMDGPU_IB_POOL_DIRECT, &job,
++				     AMDGPU_KERNEL_JOB_ID_VCN_RING_TEST);
+ 	if (r)
+ 		return r;
+ 
+--- a/drivers/gpu/drm/amd/amdgpu/uvd_v7_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/uvd_v7_0.c
+@@ -225,7 +225,8 @@ static int uvd_v7_0_enc_get_create_msg(s
+ 	int i, r;
+ 
+ 	r = amdgpu_job_alloc_with_ib(ring->adev, NULL, NULL, ib_size_dw * 4,
+-				     AMDGPU_IB_POOL_DIRECT, &job);
++				     AMDGPU_IB_POOL_DIRECT, &job,
++				     AMDGPU_KERNEL_JOB_ID_VCN_RING_TEST);
+ 	if (r)
+ 		return r;
+ 
+@@ -288,7 +289,8 @@ static int uvd_v7_0_enc_get_destroy_msg(
+ 	int i, r;
+ 
+ 	r = amdgpu_job_alloc_with_ib(ring->adev, NULL, NULL, ib_size_dw * 4,
+-				     AMDGPU_IB_POOL_DIRECT, &job);
++				     AMDGPU_IB_POOL_DIRECT, &job,
++				     AMDGPU_KERNEL_JOB_ID_VCN_RING_TEST);
+ 	if (r)
+ 		return r;
+ 
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_migrate.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_migrate.c
+@@ -68,7 +68,8 @@ svm_migrate_gart_map(struct amdgpu_ring
+ 				     AMDGPU_FENCE_OWNER_UNDEFINED,
+ 				     num_dw * 4 + num_bytes,
+ 				     AMDGPU_IB_POOL_DELAYED,
+-				     &job);
++				     &job,
++				     AMDGPU_KERNEL_JOB_ID_KFD_GART_MAP);
+ 	if (r)
+ 		return r;
+ 
 
 
