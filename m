@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02A114734CF;
-	Fri,  7 Aug 2026 15:03:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAF24472F99;
+	Fri,  7 Aug 2026 15:03:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115015; cv=none; b=i06w6ewLd+PFZS1F8oypZQ6Go4gJ7mSbYRdIGRUIfb5WIPp9VHPuAAgnTQ46y3OFTTDkadFHB/cR8LipaNfzkjYHbKX9PSKR2qeZgHjtbbdBr2GBLSvyOLGnT7V9MCAKiIURBnOGVM3WgnGgs9/obrN2AnuNOFNW//ihBx6GBDU=
+	t=1786115018; cv=none; b=iS/2wYY1+Q0/nlbwhyTvPNUjQ+nRV4sRchCIgDcxa9TkyqIDcsdnD5YHYyBoLI792IzwyiOvCB1ksaGqDkE3yQb+w+9Qaw4TUr7HRwbuV1oDhFoBHN/HejwjCJIMu6nt1L+x/1OohA9TUUJ3sjj2wZ4zFAzjdW06LIibXxlelhw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115015; c=relaxed/simple;
-	bh=FdveJJh/zzHo2U5QnpMVzvsiw0ua4++b2kr7xVQgscQ=;
+	s=arc-20240116; t=1786115018; c=relaxed/simple;
+	bh=Jy//1fOl3qOguuKlTE3NZ35mhrutBJFdrXXRDndIiaw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KHpTaUTQV/c+hGXJpcmagGVFdQjYhLd+XnYubhagwVuNKMqzINSr7laIHIw5F0TvmwyAjfKZlNWYvSO0e1yu2v8zgRnLCLARxmUl8hF/FRbGfAFhpciOxuYPs/nKhlvO/PAm/U+fg4XzRVy2DOFp3MdVoxKka6QIkJYftsbqZP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OZAjAdUm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rzshEz1UZkU3BAlhrrupqR3Nb4wPK2NuRXbvq8dSjERwZsxgBeIdPT+5H/RS4pQxR6TaqvSnsBogslC3XeuKrhe75nP2DrrOzLFkpQrUfG/dQQLMR7JQV1+idtZ6/6tO1j92tJDpY+ycugKmsENkWGb99Q4NT0SPk3OcoC6VnlA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WxgKfoHW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OZAjAdUm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 599651F000E9;
-	Fri,  7 Aug 2026 15:03:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WxgKfoHW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 327941F000E9;
+	Fri,  7 Aug 2026 15:03:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115013;
-	bh=ZHA9HcrJ03ol/CKHTo1lMz/zjXt2qgxgDlKgPrb1m/w=;
+	s=korg; t=1786115016;
+	bh=zW0iCQGCmZNhux1Al2nSa97vyzZ1zNu6MhpEZaJLLjM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OZAjAdUmbHutMQ3/fOLbvct0rlOakap8xNNUnmj90R6K6+nyzmRWtXI5EPkbu61W5
-	 fELc5FnQlG4X5Dw42nE0kcZJrSh9ftVfOJzfIEqVTDPGQpXns1i+MSx+rWDeVx7w8R
-	 hDkO9AGEDNzycAiG+yBCaoFTeTn3NKdUj+pLKGFI=
+	b=WxgKfoHWeTr1EcBhmg8xvxm0EjnrZt5+0RgrkK+LEAfa92TQUYv5esWO7q1FfWCUP
+	 9iUcIqjOhwKRIm+g2IiIresGkj0H3JTSoWMF5kdZ6C+KYMPOvQXMOXgbsv2m1+x7s+
+	 yb3rpYngTxlCeF5thITU9BzQRCId+p/cGxG7wkvM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Borislav Petkov <bp@alien8.de>,
-	Mauricio Faria de Oliveira <mfo@igalia.com>,
+	Christian Marangi <ansuelsmth@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 126/396] x86/boot: Add volatile, clobbers and zero-length test in memcmp()
-Date: Fri,  7 Aug 2026 16:34:46 +0200
-Message-ID: <20260807143427.027197053@linuxfoundation.org>
+Subject: [PATCH 6.18 127/396] net: phylink: put link_gpio if phylink_create fails
+Date: Fri,  7 Aug 2026 16:34:47 +0200
+Message-ID: <20260807143427.048243222@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -51,51 +52,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mauricio Faria de Oliveira <mfo@igalia.com>
+From: Christian Marangi <ansuelsmth@gmail.com>
 
-[ Upstream commit a8c171c107c0b61a5e7e10cedab0fb72aeaf640d ]
+[ Upstream commit 0fe1e3e8f3380d7862296a73b528d164e96c76b8 ]
 
-Add the volatile qualifier and clobbers parameter to prevent bugs with
-instruction reordering and optimization.
+In phylink_create() if phylink_register_sfp() returns an error, link_gpio
+obtained by phylink_parse_fixedlink() is never released. While this is a
+very unlikely scenario, it's worth to fix/handle this.
 
-Also add TEST for the zero-length case to set ZF, as, if the count register
-is zero, the REPE prefix does not run the CMPSB instruction, leaving the ZF
-flag undetermined.
+This was present from the very first implementation of phylink but got
+relevant only with the introduction of ce0aa27ff3f6 ("sfp: add sfp-bus to
+bridge between network devices and sfp cages") where additional function
+were added after phylink_parse_fixedlink() making the release of link_gpio
+needed if such additional function errored out.
 
-  [ bp: Add a comment about the len==0 case. ]
+While at it, restructure the exit condition of phylink_create() with the
+goto pattern to reduce code duplication on handling error conditions.
 
-Fixes: 62bd0337d0c4 ("Top header file for new x86 setup code")
-Closes: https://sashiko.dev/#/patchset/20260701-pvh-kasan-inline-v6-0-ba99045dfa9f%40igalia.com
-Suggested-by: Borislav Petkov <bp@alien8.de>
-Signed-off-by: Mauricio Faria de Oliveira <mfo@igalia.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/all/20260721-pvh-kasan-inline-v7-2-38979a50cef0@igalia.com
+Fixes: ce0aa27ff3f6 ("sfp: add sfp-bus to bridge between network devices and sfp cages")
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20260726150806.2437-1-ansuelsmth@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/boot/string.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/net/phy/phylink.c | 29 +++++++++++++++--------------
+ 1 file changed, 15 insertions(+), 14 deletions(-)
 
-diff --git a/arch/x86/boot/string.c b/arch/x86/boot/string.c
-index b25c6a9303b73..3a2bba7c25e9d 100644
---- a/arch/x86/boot/string.c
-+++ b/arch/x86/boot/string.c
-@@ -32,8 +32,15 @@
- int memcmp(const void *s1, const void *s2, size_t len)
- {
- 	bool diff;
--	asm("repe cmpsb"
--	    : "=@ccnz" (diff), "+D" (s1), "+S" (s2), "+c" (len));
+diff --git a/drivers/net/phy/phylink.c b/drivers/net/phy/phylink.c
+index 9182443082158..1b7fc17bf3919 100644
+--- a/drivers/net/phy/phylink.c
++++ b/drivers/net/phy/phylink.c
+@@ -1861,8 +1861,8 @@ struct phylink *phylink_create(struct phylink_config *config,
+ 	} else if (config->type == PHYLINK_DEV) {
+ 		pl->dev = config->dev;
+ 	} else {
+-		kfree(pl);
+-		return ERR_PTR(-EINVAL);
++		ret = -EINVAL;
++		goto free_pl;
+ 	}
+ 
+ 	pl->mac_supports_eee_ops = phylink_mac_implements_lpi(mac_ops);
+@@ -1895,28 +1895,29 @@ struct phylink *phylink_create(struct phylink_config *config,
+ 	phylink_validate(pl, pl->supported, &pl->link_config);
+ 
+ 	ret = phylink_parse_mode(pl, fwnode);
+-	if (ret < 0) {
+-		kfree(pl);
+-		return ERR_PTR(ret);
+-	}
++	if (ret < 0)
++		goto free_pl;
+ 
+ 	if (pl->cfg_link_an_mode == MLO_AN_FIXED) {
+ 		ret = phylink_parse_fixedlink(pl, fwnode);
+-		if (ret < 0) {
+-			kfree(pl);
+-			return ERR_PTR(ret);
+-		}
++		if (ret < 0)
++			goto release_link_gpio;
+ 	}
+ 
+ 	pl->req_link_an_mode = pl->cfg_link_an_mode;
+ 
+ 	ret = phylink_register_sfp(pl, fwnode);
+-	if (ret < 0) {
+-		kfree(pl);
+-		return ERR_PTR(ret);
+-	}
++	if (ret < 0)
++		goto release_link_gpio;
+ 
+ 	return pl;
 +
-+	/*
-+	 * Make sure ZF is properly set in the len==0 case because in it,
-+	 * RCX==0 and the REPE; CMPSB won't get executed.
-+	 */
-+	asm volatile("test %3, %3\n\t"
-+		     "repe cmpsb"
-+		     : "=@ccnz" (diff), "+D" (s1), "+S" (s2), "+c" (len)
-+		     : : "cc", "memory");
- 	return diff;
++release_link_gpio:
++	if (pl->link_gpio)
++		gpiod_put(pl->link_gpio);
++free_pl:
++	kfree(pl);
++	return ERR_PTR(ret);
  }
+ EXPORT_SYMBOL_GPL(phylink_create);
  
 -- 
 2.53.0
