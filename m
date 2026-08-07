@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B689C3AEB40;
-	Fri,  7 Aug 2026 15:08:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4CF3381AE4;
+	Fri,  7 Aug 2026 15:08:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115322; cv=none; b=uxA25RvjtkD7Fx/qmei1kG/+ltOcHeRekbWOtBUsbnH5d7rs3FCsZrPO4qhhwDOTiZA4sXFdPCiu23vjQWmxuwwUb2WkbWqpZTIlGjO7WO7Nks/3E9G23Sx4hcL3/6U8anGkx1BgR6l83UnaaJ6Pdqc4Dir8duLoW1NkAn7hp74=
+	t=1786115324; cv=none; b=Q6uGV+Jrt3mfZGHWVE2bbLLDhb3PU3dRLRXD3cOfLCQGbLwFlvm91i6ZLHbVmf2KK7aDGcc2gGDWtSqFVvDiqIj0go/L1Xxe8UEwSQwUIsqasJe5VtmJIN1mtWrnAqx13tzPOjsJgubKSyLrth3s+4aPUP1lmLBEB0mlwVqvuNg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115322; c=relaxed/simple;
-	bh=Xuw+IcvT+Zl9sMsyBdJfzJBRwsPBZo3GmtrVVIginxw=;
+	s=arc-20240116; t=1786115324; c=relaxed/simple;
+	bh=pRYd9OhiNslMKGYsY8u+3MP82xLp2TC2+ciJRJevYwc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cIw68LyklCENXaOf47wQpXa0q2tqe88hF7UmwrztY7TQRSuMRmXgaUHaNLZlaxeP6b5D7CZcGibTfV9xRDy9Fd4rqMiAuqI3dIIVmIjTqs+DMoUNMQRCxf0zXZ/e0MyrwzkNnYEziZCjmIWwOr/o4ZGsIjs1vUBT9Y7WUGk3LDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HB2Mo8To; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uXubeGZlS4Kl++uzRDpyoxhAgjWVpvjF1DGdBk5nvJBommGmpXWSa04L804B0MRGqGj1TKKh0bzK3Epod1llqk/0ytT1z9C5VSXtihc54RsYjX86AiCf09RKH0oIAQ9jm8Pa4574zRGE16FcD3ZmWf6sz+T69u8ac3pp0llwFjY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AMJl4B1S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HB2Mo8To"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D971C1F000E9;
-	Fri,  7 Aug 2026 15:08:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AMJl4B1S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF7E71F000E9;
+	Fri,  7 Aug 2026 15:08:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115320;
-	bh=o1q+MLFJfCylAV/BZgSPSziuTB7fJG491Th47OztF3s=;
+	s=korg; t=1786115323;
+	bh=EqWiEBGkhTNwzJ57Lex/ROg4O8BftereyZOwCHNxaeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HB2Mo8TocV8diBi761EUhtodjenf5WNf5ahPEvAiAXVu9uOR09zR4qHZG704nPywK
-	 sFe4xKyfZ/49TLcBoeuuotT4n3rx4rafB6uhSioN/EBl4RM6NQdOmy3w+fT079JpCY
-	 TWwJSI5WygbQqTQfXz/no5qeQopFChEqsIiW/B/U=
+	b=AMJl4B1SgIkIrsNgfI+fiX4WAky3v1Prj2/v93sotKtrmGdmTJwDJruoQtHlt+c3D
+	 P+hEjGOutgqhi0MXyqFuqFn3z/LeTs8yeEmE2HYxkXj+CTJNyxzFmyKIX6LAu/B+v1
+	 D89DMJZXDRvb7pF/B3gWGTtvnmWXoE5gZZZp1CdM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.18 233/396] binfmt_misc: reject a flag character as the field delimiter
-Date: Fri,  7 Aug 2026 16:36:33 +0200
-Message-ID: <20260807143429.282785478@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Zihan Xi <zihanx@nebusec.ai>,
+	Ren Wei <enjou1224z@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.18 191/396] Bluetooth: mgmt: fix pending command UAF in EIR updates
+Date: Fri,  7 Aug 2026 16:35:51 +0200
+Message-ID: <20260807143428.406227013@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -49,65 +52,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Zihan Xi <zihanx@nebusec.ai>
 
-commit 8e85d50ba1117fd446bf9a250bd8a97d48384bdc upstream.
+commit 8f2f62855a41d1730fb9e8122912bd2c8d6bed5d upstream.
 
-The registration string starts with a user chosen delimiter that
-separates the individual fields. So that the field parsers terminate
-even on a truncated string create_entry() pads the buffer with that
-same delimiter:
+MGMT_OP_SET_LOCAL_NAME is handled asynchronously on powered controllers
+and can run set_name_sync().  When the controller is BR/EDR capable,
+set_name_sync() updates the local name and then rebuilds EIR data through
+eir_create().  The EIR builder walks hdev->uuids, but the UUID list can
+be changed and entries can be freed by MGMT_OP_ADD_UUID and
+MGMT_OP_REMOVE_UUID.
 
-	memset(buf + count, del, 8);
+pending_eir_or_class() is meant to serialize management commands that
+can change EIR or the class of device, but it did not include
+MGMT_OP_SET_LOCAL_NAME.  In addition, it walked hdev->mgmt_pending
+without hdev->mgmt_pending_lock even though pending commands are added
+and removed under that mutex.  A racing command completion can therefore
+remove and free a pending command while pending_eir_or_class() is still
+inspecting it, leading to a use-after-free in the pending-command list or
+allowing a local name update to rebuild EIR while UUID entries are being
+removed.
 
-Most fields are scanned for the delimiter with strchr()/scanarg() and
-happily stop on the padding. The flags field is different: instead of
-scanning for the delimiter check_special_flags() consumes the flag
-characters 'P', 'O', 'C' and 'F' and stops at the first byte that is
-none of them, relying on the trailing delimiter to end the scan.
+Take hdev->mgmt_pending_lock while scanning hdev->mgmt_pending and treat
+MGMT_OP_SET_LOCAL_NAME as an EIR/class-affecting pending command on the
+powered asynchronous path.  Check for a conflicting pending command before
+copying the new short name so a rejected SET_LOCAL_NAME request does not
+modify hdev->short_name.
 
-If the delimiter is itself a flag character the padding no longer acts
-as a terminator. The scan swallows all eight padding bytes and keeps
-reading past the end of the allocation until it hits a byte that is
-not a flag character. For example registering
-
-	PaPEPPxPPiP
-
-with 'P' as the delimiter (name "a", type extension, magic "x",
-interpreter "i", empty flags) leaves the flag scan running off the end
-of the buffer. The registration is rejected in the end because the
-parser does not stop exactly at buf + count, but only after the out of
-bounds read has already happened. With an unlucky allocation layout the
-scan can walk into an unmapped page; under KASAN it is reported as a
-slab out of bounds read. binfmt_misc mounts are available to
-unprivileged users in a user namespace so the read is reachable without
-privileges.
-
-Reject a delimiter that is one of the flag characters up front. Such a
-registration was always rejected anyway, only after the out of bounds
-read, so no valid registration string changes meaning.
-
-Link: https://patch.msgid.link/20260710-work-binfmt_misc-locking-v3-3-a162f7cb58d6@kernel.org
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 6fe26f694c82 ("Bluetooth: MGMT: Protect mgmt_pending list with its own lock")
 Cc: stable@vger.kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Reported-by: Vega <vega@nebusec.ai>
+Assisted-by: Codex:gpt-5.4
+Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
+Signed-off-by: Ren Wei <enjou1224z@gmail.com>
+Reported-by: Vega <vega@nebusec.ai>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/binfmt_misc.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ net/bluetooth/mgmt.c |   20 ++++++++++++++++++--
+ 1 file changed, 18 insertions(+), 2 deletions(-)
 
---- a/fs/binfmt_misc.c
-+++ b/fs/binfmt_misc.c
-@@ -383,6 +383,10 @@ static Node *create_entry(const char __u
- 
- 	pr_debug("register: delim: %#x {%c}\n", del, del);
- 
-+	/* A flag-char delimiter runs the flag scan off the buffer. */
-+	if (del == 'P' || del == 'O' || del == 'C' || del == 'F')
-+		goto einval;
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -2699,18 +2699,28 @@ static int mgmt_hci_cmd_sync(struct sock
+ static bool pending_eir_or_class(struct hci_dev *hdev)
+ {
+ 	struct mgmt_pending_cmd *cmd;
++	bool pending = false;
 +
- 	/* Pad the buffer with the delim to simplify parsing below. */
- 	memset(buf + count, del, 8);
++	mutex_lock(&hdev->mgmt_pending_lock);
  
+ 	list_for_each_entry(cmd, &hdev->mgmt_pending, list) {
+ 		switch (cmd->opcode) {
+ 		case MGMT_OP_ADD_UUID:
+ 		case MGMT_OP_REMOVE_UUID:
+ 		case MGMT_OP_SET_DEV_CLASS:
++		case MGMT_OP_SET_LOCAL_NAME:
+ 		case MGMT_OP_SET_POWERED:
+-			return true;
++			pending = true;
++			break;
+ 		}
++
++		if (pending)
++			break;
+ 	}
+ 
+-	return false;
++	mutex_unlock(&hdev->mgmt_pending_lock);
++
++	return pending;
+ }
+ 
+ static const u8 bluetooth_base_uuid[] = {
+@@ -4046,6 +4056,12 @@ static int set_local_name(struct sock *s
+ 		goto failed;
+ 	}
+ 
++	if (hdev_is_powered(hdev) && pending_eir_or_class(hdev)) {
++		err = mgmt_cmd_status(sk, hdev->id, MGMT_OP_SET_LOCAL_NAME,
++				      MGMT_STATUS_BUSY);
++		goto failed;
++	}
++
+ 	memcpy(hdev->short_name, cp->short_name, sizeof(hdev->short_name));
+ 
+ 	if (!hdev_is_powered(hdev)) {
 
 
