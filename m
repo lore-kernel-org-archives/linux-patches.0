@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 020354746C9;
-	Fri,  7 Aug 2026 15:49:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C98C34749F6;
+	Fri,  7 Aug 2026 15:49:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786117770; cv=none; b=izkeYzL2sTj1n4KOqTFPjXxnYu0foVm3TPyTaDoDOBoc1sQrTk5hw2cvM7+5j/VebfdNCznUGnqoED54Kr49yPSJHl3ge/TXNVMsoKXXCAlDhSPw5dJXLobP8oBtIBhfvXVNSPRe9co+NUU8FIEW+PKvcSJpuROZHOtovrEcM6k=
+	t=1786117773; cv=none; b=rhiakS2MSISl7ocv78jzWeaj4L1xmK1gONkB4jKB7tO0Eg9G97Lp6Xeq/y6NCSUANZT/DiEw1tfyZZb8Dkamkr9c5e0smMc0DGnxtfEQHvA8cvGERfQGdCnBMZ4SHhlDhiJ6k0KXc/866QeS65faBMVuReSvkwvUNS8IvVZzDwg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786117770; c=relaxed/simple;
-	bh=wbHjLOukhaBHitx/GJ4PUDuvSbNG0LMnMpfPJgHOAzg=;
+	s=arc-20240116; t=1786117773; c=relaxed/simple;
+	bh=4M5sponoq4LTB5bbt82gtTckqjYLPP6W7X4B97yzlHE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uJnVBsmWgpvZIZ0dQPbUPWMU67MWiAwvoRr1OcHtFhs73ZT0jVUfPLPl9mzPkOUFtFB1fe/4FRbBA41QM5/sSDR8yGSS5WhGHmtzM+dd51b3pXFFLwE3VfKo1GGodOk3AV3OeVA19WKkDjhPf2pJv2x72h0sLnoaM1I3702uXj0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g2t0ny8H; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G8uHaD/YgBX6aNbYF8sOCy5U8w0DJT1Lyw4PWYfkxGpc3ukrNlkleSz/EjGR9SaU9TfwoQpYPQqMxR5qOq90VOg55DZGdH8JNvkvAF64cLtm+JV/TTST7X7/WkIkeeTZz/5OsLlJmATtvAnogack2QNMJEUqSVnZ69s7ajCZ3a8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B3Su1np/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g2t0ny8H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E0FF1F00ADB;
-	Fri,  7 Aug 2026 15:49:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B3Su1np/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36C071F000E9;
+	Fri,  7 Aug 2026 15:49:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786117768;
-	bh=p4hfkV8+HX7urxJVwmmpcCCFQZcTDvXgwVxGBu0AkMo=;
+	s=korg; t=1786117771;
+	bh=WdvHGdDEgnbIhRFJ4/oWFkeeFYhFsG9354KtlIPY4Mo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g2t0ny8Hoe6GOjUd2g9OTYgdALgiS1yG1DW8OkJl8dz5RMUgZZgxyDOWKkIWBwGXr
-	 4QKb221nIl7uh7Rqs/W/qtv0+YFA3Uzn69HlLaLbhZdGad4B1xtNtK7JBs1KQM2A6V
-	 OY5toJ+7ltsXm9ytBJqY+laRIR5bwyyocNHuiNa0=
+	b=B3Su1np/s8VLIiH4jqy2ae3lf1Ux1Gg0hLJSr9+6ZztXq4cW5c5RhCU+Rpo0zwgPl
+	 hJtK7Reb2OZqsT1lyhzetCV6DQGq61M29P+l85Ai+rGvg34IUXyv7MlYQMbWeeuRhL
+	 OEtUMTOYG1+ZTAeMmV3GeNv73m3fhPrU3xEQ/17Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Brost <matthew.brost@intel.com>,
-	Matthew Auld <matthew.auld@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Sasha Levin <sashal@nvidia.com>
-Subject: [PATCH 7.1 434/438] drm/xe: Wait on external BO kernel fences in exec IOCTL
-Date: Fri,  7 Aug 2026 16:40:30 +0200
-Message-ID: <20260807143437.223354209@linuxfoundation.org>
+	Jackson Lee <jackson.lee@chipsnmedia.com>,
+	Nas Chung <nas.chung@chipsnmedia.com>,
+	Brandon Brnich <b-brnich@ti.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.1 435/438] media: chips-media: wave5: Support CBP profile
+Date: Fri,  7 Aug 2026 16:40:31 +0200
+Message-ID: <20260807143437.245164353@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -46,84 +48,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matthew Brost <matthew.brost@intel.com>
+From: Jackson Lee <jackson.lee@chipsnmedia.com>
 
-[ Upstream commit af80e2bfde9312c76b60cf9274248dce0410b30d ]
+[ Upstream commit f8505f9d6b223a26854003bfdba1a0772457886d ]
 
-Before arming a user job, xe_exec_ioctl() only added the VM's
-dma-resv KERNEL slot as a dependency. That slot covers rebinds and
-the kernel operations of the VM's private BOs, but not external BOs
-(bo->vm == NULL), which carry their kernel operations (evictions,
-moves, ...) in their own dma-resv KERNEL slot.
+Constrained Baseline Profile (CBP) and Baseline Profile (BP) have been
+treated as the same.
+Introduce the ability to differentiate between the two.
 
-The DMA_RESV_USAGE_KERNEL slot is the cross-driver contract for
-memory management operations that must complete before the BO or its
-backing store may be used: any accessor is required to wait on the
-KERNEL fences before touching the resv. By skipping the external BOs'
-KERNEL slots, the exec path violated that contract and could schedule
-a user job while a kernel operation on an external BO mapped by the VM
-was still in flight, racing against it and potentially reading or
-writing memory that was being moved.
-
-Replace the VM-only dependency with an iteration over every object
-locked by the exec, adding each object's KERNEL slot as a job
-dependency. This covers the VM resv (rebinds and private BOs) as well
-as every external BO, mirroring the drm_gpuvm_resv_add_fence() call
-that later publishes the job fence to the same set of objects.
-Long-running mode continues to skip this, as before.
-
-Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
+Fixes: 9707a6254a8a ("media: chips-media: wave5: Add the v4l2 layer")
 Cc: stable@vger.kernel.org
-Assisted-by: GitHub_Copilot:claude-opus-4.8
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
-Reviewed-by: Matthew Auld <matthew.auld@intel.com>
-Link: https://patch.msgid.link/20260702215805.4011228-1-matthew.brost@intel.com
-(cherry picked from commit a6b842acf3ddd1efc53a56de9260cfa718fb35e7)
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Signed-off-by: Sasha Levin <sashal@nvidia.com>
+Signed-off-by: Jackson Lee <jackson.lee@chipsnmedia.com>
+Signed-off-by: Nas Chung <nas.chung@chipsnmedia.com>
+Tested-by: Brandon Brnich <b-brnich@ti.com>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_exec.c |   22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
+ drivers/media/platform/chips-media/wave5/wave5-hw.c      |    3 +++
+ drivers/media/platform/chips-media/wave5/wave5-vpu-enc.c |    5 ++++-
+ drivers/media/platform/chips-media/wave5/wave5-vpuapi.h  |    1 +
+ 3 files changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/xe/xe_exec.c
-+++ b/drivers/gpu/drm/xe/xe_exec.c
-@@ -292,13 +292,23 @@ retry:
- 		goto err_exec;
- 	}
- 
--	/* Wait behind rebinds */
-+	/*
-+	 * Wait behind rebinds and any kernel operations (evictions, defrag
-+	 * moves, ...) on the VM and all external BOs. The VM's private BOs
-+	 * carry their kernel ops in the VM dma-resv KERNEL slot, while each
-+	 * external BO carries them in its own dma-resv KERNEL slot; both are
-+	 * covered by iterating every object locked by the exec, mirroring the
-+	 * drm_gpuvm_resv_add_fence() below.
-+	 */
- 	if (!xe_vm_in_lr_mode(vm)) {
--		err = xe_sched_job_add_deps(job,
--					    xe_vm_resv(vm),
--					    DMA_RESV_USAGE_KERNEL);
--		if (err)
--			goto err_put_job;
-+		struct drm_gem_object *obj;
+--- a/drivers/media/platform/chips-media/wave5/wave5-hw.c
++++ b/drivers/media/platform/chips-media/wave5/wave5-hw.c
+@@ -1762,6 +1762,9 @@ int wave5_vpu_enc_init_seq(struct vpu_in
+ 			(p_param->skip_intra_trans << 25) |
+ 			(p_param->strong_intra_smooth_enable << 27) |
+ 			(p_param->en_still_picture << 30);
++	else if (inst->std == W_AVC_ENC)
++		reg_val |= (p_param->constraint_set1_flag << 29);
 +
-+		drm_exec_for_each_locked_object(exec, obj) {
-+			err = xe_sched_job_add_deps(job, obj->resv,
-+						    DMA_RESV_USAGE_KERNEL);
-+			if (err)
-+				goto err_put_job;
-+		}
- 	}
+ 	vpu_write_reg(inst->dev, W5_CMD_ENC_SEQ_SPS_PARAM, reg_val);
  
- 	for (i = 0; i < num_syncs && !err; i++)
+ 	reg_val = (p_param->lossless_enable) |
+--- a/drivers/media/platform/chips-media/wave5/wave5-vpu-enc.c
++++ b/drivers/media/platform/chips-media/wave5/wave5-vpu-enc.c
+@@ -915,6 +915,8 @@ static int wave5_vpu_enc_s_ctrl(struct v
+ 		case V4L2_MPEG_VIDEO_H264_PROFILE_CONSTRAINED_BASELINE:
+ 			inst->enc_param.profile = H264_PROFILE_BP;
+ 			inst->bit_depth = 8;
++			if (ctrl->val == V4L2_MPEG_VIDEO_H264_PROFILE_CONSTRAINED_BASELINE)
++				inst->enc_param.constraint_set1_flag = 1;
+ 			break;
+ 		case V4L2_MPEG_VIDEO_H264_PROFILE_MAIN:
+ 			inst->enc_param.profile = H264_PROFILE_MP;
+@@ -1190,6 +1192,7 @@ static int wave5_set_enc_openparam(struc
+ 			open_param->wave_param.intra_period = input.avc_idr_period;
+ 		}
+ 	} else {
++		open_param->wave_param.constraint_set1_flag = input.constraint_set1_flag;
+ 		open_param->wave_param.avc_idr_period = input.avc_idr_period;
+ 	}
+ 	open_param->wave_param.entropy_coding_mode = input.entropy_coding_mode;
+@@ -1662,7 +1665,7 @@ static int wave5_vpu_open_enc(struct fil
+ 			  -6, 6, 1, 0);
+ 	v4l2_ctrl_new_std(v4l2_ctrl_hdl, &wave5_vpu_enc_ctrl_ops,
+ 			  V4L2_CID_MPEG_VIDEO_H264_8X8_TRANSFORM,
+-			  0, 1, 1, 1);
++			  0, 1, 1, 0);
+ 	v4l2_ctrl_new_std(v4l2_ctrl_hdl, &wave5_vpu_enc_ctrl_ops,
+ 			  V4L2_CID_MPEG_VIDEO_H264_CONSTRAINED_INTRA_PREDICTION,
+ 			  0, 1, 1, 0);
+--- a/drivers/media/platform/chips-media/wave5/wave5-vpuapi.h
++++ b/drivers/media/platform/chips-media/wave5/wave5-vpuapi.h
+@@ -570,6 +570,7 @@ struct enc_wave_param {
+ 	u32 transform8x8_enable: 1; /* enable 8x8 intra prediction and 8x8 transform */
+ 	u32 mb_level_rc_enable: 1; /* enable MB-level rate control */
+ 	u32 forced_idr_header_enable: 1; /* enable header encoding before IDR frame */
++	u32 constraint_set1_flag: 1; /* enable CBP */
+ };
+ 
+ struct enc_open_param {
 
 
