@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B798F28E0;
-	Fri,  7 Aug 2026 15:25:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D186235CB60;
+	Fri,  7 Aug 2026 15:25:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116326; cv=none; b=g5sarVQsiLNsSTu0DY+85QFmSiwn18lTC5cCdcQJmb2XWIyQYIPC1EBy2J8qvhenPnP6ZHD4zCECkQmupCK7lNAKKakRiie9+jHCWeRxsIaGJjdhebBZ/nkMHpsRbdZoIbJh1ahzL+bJakO2UKvGop5OQ78R6rCbg5+2TaO05z8=
+	t=1786116330; cv=none; b=hbcU4E7agusgUr8b71KjE1NrcnaIpYU1sJp0BECl4WYZcjCtpp05X9xn3i3MtWEB4XGBoCElT3KNDeqQxArrS5Uh7MpH9DV1bvZkI7s9OIloHcl/eFWZoPuhnVQLM1AyfZny+9TsG3cQAWoYFSBLgTD295N3WXAmPg6+1IzKI+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116326; c=relaxed/simple;
-	bh=fLQJa2EIblLBltCpLX5MhU2O2ZUTM+msGtbD9ybc6Nc=;
+	s=arc-20240116; t=1786116330; c=relaxed/simple;
+	bh=N/dQNo9pNWz3VjkCVc04lXpbsRyHZJCWJHdwaRal3/I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JCaXGypO3dNAPEfjuM+7jNoo/LyD01qBgWWVX+51uYLnVb916gcc6DIJRANTFjLNdVrGF84HR0XdXtORAWScZh6aZV2mYQW2xW7EQzyhr84TUDpbwBCluMm0BvbSTxnx+jdcNncXUMaVZMVRp9Bnkj0+UsPb7ACRG8eC3KHB5Ks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J5/jHQ0s; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Gqa4S0Biq+nBDtepgWx2Q/nY41I3jM+DgxVzFjU9VLwiNpYF0L7AKDbFOOFfnWw/KlFS2SfV6Q2C8BNOd2RJyDRzWDv4vCUE/da5A+ZnW/+jTcLmeKZxEPIYIFHEh5eT7A7bCgElsjJUUOT67Cz5+OaDTDHLDxWmRiW9gbw9MlA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YLt3R7Xy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J5/jHQ0s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FDD11F000E9;
-	Fri,  7 Aug 2026 15:25:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YLt3R7Xy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7B7B1F000E9;
+	Fri,  7 Aug 2026 15:25:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116325;
-	bh=8s3h9RJLAAame6RtcbJ7HSo+D9W4aSU7brJq2PKXZVc=;
+	s=korg; t=1786116328;
+	bh=gUbZQHbk0lhMoQqb7lUMaR7WSq0HNviXjLtOUGY2yZc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J5/jHQ0sDtVIehrnnmoKxCLIw2+8tvnBZ6sI5aIPBopONEBcB0XEzOK10jQXqSRul
-	 1/VNu8O1eU81HzDkOXZ+ocopVLcw/UUImaIjoSzcYtZZASXVL7sHXo0eeqyad4EYEY
-	 nzbsf27FmcgnP+/hzsrctM6E3HSQtuotElMBXNTY=
+	b=YLt3R7Xy3ms3cHfKhl88jGCZm9SPksXEc1vQOMU7Noqh1FyvAi4DVdEqJHr/5G1s/
+	 Fwr0esCGbOjg7kvGyhvdKaNXidr/r+32lCwi0ZOACnjekeet3KXyGhprpqP76HHd4e
+	 zVSXKQFMxYqjQi4u4UaY/KwSe2uMHBOOqVbLFis0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Candice Li <candice.li@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Yang Wang <kevinyang.wang@amd.com>,
+	Harkirat Gill <harkirat.gill@amd.com>,
+	David Francis <David.Francis@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 191/261] drm/amdgpu: restore UMD profile pstate after runtime resume
-Date: Fri,  7 Aug 2026 16:39:08 +0200
-Message-ID: <20260807143419.487179269@linuxfoundation.org>
+Subject: [PATCH 6.6 192/261] drm/amdgpu: cap GTT size to physical RAM on APUs
+Date: Fri,  7 Aug 2026 16:39:09 +0200
+Message-ID: <20260807143419.509858287@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143415.358597922@linuxfoundation.org>
 References: <20260807143415.358597922@linuxfoundation.org>
@@ -52,55 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Candice Li <candice.li@amd.com>
+From: Harkirat Gill <harkirat.gill@amd.com>
 
-commit f931c54b241ce2f36bfc34955aec43a188276b8d upstream.
+commit 5e70f6804b4d6256058c360b10e044ee04ea4a4e upstream.
 
-Runtime suspend runs GFX hw_fini and clears perfmon clock gating while
-the UMD profile DPM level remains set in software.  Re-apply stable
-pstate after a successful runtime resume when a profile mode is active.
+On APUs, the GTT pool is backed by system RAM, but its size is not bound
+to the non-carveout memory that actually backs it. A user can end up
+with GTT + VRAM exceeding total physical memory through the following
+sequence:
 
-Signed-off-by: Candice Li <candice.li@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
+ - Have a large non-carveout memory space (~128GB) and accordingly set a
+   large GTT (~100GB) via the ttm module parameter.
+ - Lower the non-carveout memory space in BIOS by increasing the UMA
+   Frame Buffer Size (VRAM) to 64GB.
+ - The previously set GTT value (~100GB) persists, even though the new
+   non-carveout space (64GB) can no longer back it.
+
+This leads to a case where kernel reports GTT (100GB) + VRAM (64GB)
+despite the sum being greater than total physical memory (128GB).
+
+Cap the GTT size to totalram_pages() on APUs. totalram_pages() already
+excludes the VRAM carveout, so the resulting GTT can never exceed the
+system RAM that actually backs it.
+
+Signed-off-by: Harkirat Gill <harkirat.gill@amd.com>
+Reviewed-by: David Francis <David.Francis@amd.com>
+Assisted-by: Claude:claude-opus-4
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 138531c8850cc247aa12b104bb29ea387bcdcbb1)
+(cherry picked from commit 5dafdd649280c7dc6c22c8f877da3f54fcc441e1)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c |   15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-@@ -2637,6 +2637,19 @@ static int amdgpu_pmops_runtime_suspend(
- 	return 0;
- }
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
+@@ -1976,6 +1976,18 @@ int amdgpu_ttm_init(struct amdgpu_device
+ 	else
+ 		gtt_size = (uint64_t)amdgpu_gtt_size << 20;
  
-+static void amdgpu_restore_umd_profile_pstate_after_runpm(struct amdgpu_device *adev)
-+{
-+	enum amd_dpm_forced_level level;
-+	uint32_t profile_mode_mask = AMD_DPM_FORCED_LEVEL_PROFILE_STANDARD |
-+		AMD_DPM_FORCED_LEVEL_PROFILE_MIN_SCLK |
-+		AMD_DPM_FORCED_LEVEL_PROFILE_MIN_MCLK |
-+		AMD_DPM_FORCED_LEVEL_PROFILE_PEAK;
++	/* Cap GTT so that it does not exceed total physical RAM. */
++	if (adev->flags & AMD_IS_APU) {
++		u64 phys_ram = (u64)totalram_pages() << PAGE_SHIFT;
 +
-+	level = amdgpu_dpm_get_performance_level(adev);
-+	if (level & profile_mode_mask)
-+		amdgpu_asic_update_umd_stable_pstate(adev, true);
-+}
++		if (gtt_size > phys_ram) {
++			gtt_size = phys_ram;
++			dev_info(adev->dev,
++				 "Capping GTT to %uM to not exceed available system memory\n",
++				 (unsigned int)(gtt_size / (1024 * 1024)));
++		}
++	}
 +
- static int amdgpu_pmops_runtime_resume(struct device *dev)
- {
- 	struct pci_dev *pdev = to_pci_dev(dev);
-@@ -2680,6 +2693,8 @@ static int amdgpu_pmops_runtime_resume(s
- 
- 	if (amdgpu_device_supports_px(drm_dev))
- 		drm_dev->switch_power_state = DRM_SWITCH_POWER_ON;
-+
-+	amdgpu_restore_umd_profile_pstate_after_runpm(adev);
- 	adev->in_runpm = false;
- 	return 0;
- }
+ 	/* Initialize GTT memory pool */
+ 	r = amdgpu_gtt_mgr_init(adev, gtt_size);
+ 	if (r) {
 
 
