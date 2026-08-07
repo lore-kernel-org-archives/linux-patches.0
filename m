@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C7993A8FE9;
-	Fri,  7 Aug 2026 14:46:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF1F7390C90;
+	Fri,  7 Aug 2026 14:46:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114017; cv=none; b=FygInWQ9r6x1X44+N9XXWC6pSRIogmRP8dwLMcX8z5G/3NMSSw3DJWgjp7GUcz6eCKVjTixHgIiU6nLxQcd3ITBUJ9oj3zFAOVl2RzSlEo1D/1DsFmS8cDg1OWXsM+9vqympJbwnNpBuLovqqAw3r6SX1M1542tI/V0Gf896WFk=
+	t=1786114021; cv=none; b=cI9Io+ji9PrcFIkPAaepOIDgp02MCgyUlBCMQRJ4ceRnPeKCbucsTlaXTuOcZEfhTVdWBXik/qSfa7XoaPyrJEeUVemwu3IvXkOP3qY1ARDUsOII6qi5cjIHilQzEPXAa2G5yxjRNlzxQKd4PqhRrQkxwFdjowcxcKaBfeq0AW4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114017; c=relaxed/simple;
-	bh=fbyfzNZfsFxdr3rtEN6wLPuLIkXcK5ZZwKtT8YY8HK4=;
+	s=arc-20240116; t=1786114021; c=relaxed/simple;
+	bh=6X2/7MXBWsOZoq601zvTm/WqlCf3eeNMDlwyi+oWVLA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nmAm73nc5J5qnt6eO3QnESjnV9wLT4+kblMoMwwWd92endEBpEOLOtNLG1V1LUQzirc3/kKVsAIryoDgiQnXtccg9FlQjm13xDJs1730BfmBhlad9YOsJxgKelSuejBpMYbsO8J0dOOPRXIeerXCeI8/PooPDb3uVf8/BnftS0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VKVMAh+M; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WN9QjvQWQh8ckt1fXnp052mL0I/4N5WNMwlFgLxvqC/eSIpGefG8cje1WUqO3TFr9K//aO+zCk+FnxwLOTyO6+GNPLihyZRuSopW0jr6qBF8PYfeA1pPMceKyEOLozCX/O/W3A/YPiu2WG3cwryAajUtcwygqSzVyh1huhB+U7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jsE2kUJU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VKVMAh+M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D7301F000E9;
-	Fri,  7 Aug 2026 14:46:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jsE2kUJU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74F2D1F00A3A;
+	Fri,  7 Aug 2026 14:46:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114014;
-	bh=hLDru/ZqyJGw/d8exSVHhcTsT4wtYIg+z9lorUAieGw=;
+	s=korg; t=1786114017;
+	bh=RbLmPyWB+WdpnAd3dLH8mH62xeZrBEdRY+8La+ssHV4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VKVMAh+M0W2gQV6IbNQ98hvmPY/ZhAmc/f5CYygdOAOKc29ucJPt3N/3NXDaXetU4
-	 AXgtQmdatJajf2/a7na909Z39loprMINvcoDOTjjbH+1u6fmD7vV3i91v2kpLzeqF9
-	 SLqWvooWvLaPLA9Zsh+PYolEt1cm7KQlgb428F9s=
+	b=jsE2kUJU4peO/5HCU+SdMHScF+BF06L5QD22wsN+m9LrmwoLdVqdPy0I33A7IDX12
+	 aOcmfSqFRgGKksutwPDW/leTVFwrirsucxsJPM61oo7E+3sYv6aF8pCxkcH7ANskCk
+	 OfjKybq79qOB/P1PqmYAzy7MAQKXkPHJi0Yn75+k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chenguang Zhao <zhaochenguang@kylinos.cn>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	"David S. Miller" <davem@davemloft.net>,
+	sashiko-bot@kernel.org,
+	Luiz Angelo Daros de Luca <luizluca@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 113/337] net: sxgbe: check descriptor ring allocation failures
-Date: Fri,  7 Aug 2026 16:35:16 +0200
-Message-ID: <20260807143420.980895996@linuxfoundation.org>
+Subject: [PATCH 6.12 078/337] hwmon: (adt7470) Fix busy-loop and I2C flooding in update thread
+Date: Fri,  7 Aug 2026 16:34:41 +0200
+Message-ID: <20260807143420.204838359@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -52,46 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chenguang Zhao <zhaochenguang@kylinos.cn>
+From: Luiz Angelo Daros de Luca <luizluca@gmail.com>
 
-[ Upstream commit 51b093a7ba27476e1f639455f005e8d2e75390e4 ]
+[ Upstream commit cb0b7f9c43b0abbd422a7e4c2c85e91db429207c ]
 
-sxgbe_open() ignores the return value of init_dma_desc_rings() and
-continues to program DMA with invalid ring addresses when allocation
-fails. Check the return value and disconnect the PHY on failure.
+When userspace configures 'auto_update_interval' to 0 via sysfs, the
+background kthread executes schedule_timeout_interruptible(0), which
+returns immediately.
 
-Fixes: 1edb9ca69e8a ("net: sxgbe: add basic framework for Samsung 10Gb ethernet driver")
-Signed-off-by: Chenguang Zhao <zhaochenguang@kylinos.cn>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+If 'num_temp_sensors' is concurrently or previously set to 0, the
+msleep_interruptible() delay inside adt7470_read_temperatures() also
+becomes 0. This combination forces the background thread into a tight,
+unbounded busy-loop, hogging the CPU and flooding the I2C bus with a
+continuous stream of transactions.
+
+Fix this vulnerability by raising the lower limit of the clamp_val in
+auto_update_interval_store() from 0 to 500 milliseconds. This guarantees
+a reasonable minimum sleep window between sensor updates, protecting the
+system from intentional or accidental I2C bus denial of service.
+
+Reported-by: sashiko-bot@kernel.org
+Closes: https://lore.kernel.org/r/20260716213252.EACA71F000E9@smtp.kernel.org
+Fixes: 89fac11cb3e7 ("adt7470: make automatic fan control really work")
+Signed-off-by: Luiz Angelo Daros de Luca <luizluca@gmail.com>
+Link: https://lore.kernel.org/r/20260727-adt7470_fixes-v2-3-598e38a46ba6@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/samsung/sxgbe/sxgbe_main.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/hwmon/adt7470.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/samsung/sxgbe/sxgbe_main.c b/drivers/net/ethernet/samsung/sxgbe/sxgbe_main.c
-index a4f457fa570d9..4afa2b2c67b47 100644
---- a/drivers/net/ethernet/samsung/sxgbe/sxgbe_main.c
-+++ b/drivers/net/ethernet/samsung/sxgbe/sxgbe_main.c
-@@ -1079,7 +1079,9 @@ static int sxgbe_open(struct net_device *dev)
- 	priv->dma_buf_sz = SXGBE_ALIGN(DMA_BUFFER_SIZE);
- 	priv->tx_tc = TC_DEFAULT;
- 	priv->rx_tc = TC_DEFAULT;
--	init_dma_desc_rings(dev);
-+	ret = init_dma_desc_rings(dev);
-+	if (ret)
-+		goto init_phy_error;
+diff --git a/drivers/hwmon/adt7470.c b/drivers/hwmon/adt7470.c
+index 06b19fd382457..a927e0b6d3319 100644
+--- a/drivers/hwmon/adt7470.c
++++ b/drivers/hwmon/adt7470.c
+@@ -509,7 +509,7 @@ static ssize_t auto_update_interval_store(struct device *dev,
+ 	if (kstrtol(buf, 10, &temp))
+ 		return -EINVAL;
  
- 	/* DMA initialization and SW reset */
- 	ret = sxgbe_init_dma_engine(priv);
-@@ -1188,6 +1190,7 @@ static int sxgbe_open(struct net_device *dev)
+-	temp = clamp_val(temp, 0, 60000);
++	temp = clamp_val(temp, 500, 60000);
  
- init_error:
- 	free_dma_desc_resources(priv);
-+init_phy_error:
- 	if (dev->phydev)
- 		phy_disconnect(dev->phydev);
- phy_error:
+ 	mutex_lock(&data->lock);
+ 	data->auto_update_interval = temp;
 -- 
 2.53.0
 
