@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F111420478;
-	Fri,  7 Aug 2026 15:35:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AF9D471252;
+	Fri,  7 Aug 2026 15:35:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116927; cv=none; b=qLudsEWHsJ6FlnLpXdSn/pPW5n7KrkudnNqrIvxgZrLlc8SZhkvxzFJLO+0sKOIffNiIMuvM/vKh1KqLsI9YlbeqNh4XXbn9jM9O1FzS8yH5JP6YT2gp5OF3FPtVNSaEEXMfwqkoCdrkOu9DtmI7dl7v51w1zNCnXjKYT+IAvQg=
+	t=1786116930; cv=none; b=Qutkaet2vbVMgD9twgpItdQwcntXqt9lu/zY1mDrdEeAkZO6lCQ/2rkZpNgbT5JoEa+SssYnMPviNvZe42gGqWNAd84Hj5g6JCn1WwZQcxIe0TyWmbYew0AvcN13MH9PuwwVDl/LTOTpDMFzhEmxpTutlmg0m4johzol6ksQ9ZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116927; c=relaxed/simple;
-	bh=QSLjUEzt37xqBQLzXHiVKIslLiP0q0YEO5n2ocZuWjg=;
+	s=arc-20240116; t=1786116930; c=relaxed/simple;
+	bh=P8UtPz5RAucGSyWkcr4GkA4XtPtIe0xsgKqztP82zQg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XvP+sR0qWfiPEETenBe0lXjvKFISjdaolpRHj85ob9DpazzqDohOvdbrK/Ta254AeDwhwKYcb+Ka96y1094FNAFndDrzLhoSRiU2qw2tzU6kX6nPi2t3SbiqZgdkk30MJOBFjxV2JmlP1mmLepgvCzwk5ZZxlu3RVgAvYUnZOXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=utn1piFz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CpchIoLy65XjuZPj6T5mbbYpeCa/rAybfyWLRpOLpndTkZJxIFXwV23SENFWw69LBW/eMvc4H4vzen/0d01D9hGN2aqr6+rVWheKfUBNfnDZlAmhZXo80SIfRKXDU6SW5SKa7/aaAdfGdux4yhlKBMjH4XfuYNTaWI+VG0SzMSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c4Ao929i; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="utn1piFz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A7AE1F000E9;
-	Fri,  7 Aug 2026 15:35:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c4Ao929i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71A111F000E9;
+	Fri,  7 Aug 2026 15:35:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116926;
-	bh=1PUz0eFe9Xew8bl0TgToiID9xZmpwKfpJVRiPy4HGvY=;
+	s=korg; t=1786116929;
+	bh=3YnXRygvoH25N0Tgwe2w6XiYRQptc9lROALx049qHW4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=utn1piFzosOVRwRx0rYpSXj+kfNGVTiO1ME0qkNh30nfRnAQBGE0oNq3BNfehwUz7
-	 AgDCuYpv3eBSNumcDzLYO5VLJ622mNp22d6CKH3LJOPfyNhXJOcThTa+Qrl6LiVute
-	 5jmOGXzdzxgYYjK7elRLN/gubkU9yD1mRSa9WJik=
+	b=c4Ao929iaQvHocJj0JWoUbokq2Fqwvkt7wBrjmPzu/JUOPvQ0FLt8DXxSymK80mUU
+	 uoSDzvOU4NAcIBNh34CtcmbyIqtYUyZBAfS8woaIZHZXE3LsOn+70MVR/KKSgH+0zD
+	 WjneFJVrnc8uOhbyc0XMaibrDb5vUD67sTM1TW9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Pauli Virtanen <pav@iki.fi>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 139/438] Bluetooth: ISO: fix refcounting of iso_conn
-Date: Fri,  7 Aug 2026 16:35:35 +0200
-Message-ID: <20260807143430.967751645@linuxfoundation.org>
+Subject: [PATCH 7.1 140/438] Bluetooth: ISO: fix race of kfree vs kref_get_unless_zero
+Date: Fri,  7 Aug 2026 16:35:36 +0200
+Message-ID: <20260807143430.989718164@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -45,7 +45,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
@@ -54,135 +53,228 @@ Content-Transfer-Encoding: 8bit
 
 From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit fdfde532ab1caa165fcd8985001157ac8b4db365 ]
+[ Upstream commit af24e338bf5dafb80f42baa9a0b9e9b57b1c5d9c ]
 
-iso_conn_del() and iso_chan_del() have a race that results to double-put
-of iso_conn:
+hci_conn::iso_data is accessed and modified without lock or RCU.
+This leads to a race
 
-    [Task hdev->workqueue]         [Task 2]
-    iso_conn_del                   iso_chan_del
-      iso_conn_hold_unless_zero      iso_conn_lock
-      iso_conn_lock                  conn->sk = NULL
-                                     iso_conn_unlock
-      sk = iso_sock_hold(conn)  <---------´
-      if (!sk) iso_conn_put          iso_conn_put
-      iso_conn_put /* UAF */
+    [Task hdev->workqueue]                 	[Task 2]
+    iso_recv                                    iso_conn_put(conn)
+      conn = LOAD hcon->iso_data                  iso_conn_free(conn)
+      iso_conn_hold_unless_zero(conn)               hcon->iso_data = NULL
+                                                    kfree(conn)
+        kref_get_unless_zero(&conn->ref) /* UAF */
 
-The extra put for !sk in iso_conn_del() is currently required since
-failing iso_chan_add() may leave iso_conn not associated with any sk.
+and also to races in iso_conn_add() vs. iso_conn_free().
 
-Fix by having iso_pi(sk)->conn own refcount when non-NULL, so
-iso_conn_del does not need to put it.  Adjust the iso_conn_add()
-refcounting so that conn is put if it does not get associated with an
-sk.
+Fix by adding spinlock hci_conn::proto_lock and using it to guard
+hci_conn::iso_data.
 
 Fixes: dc26097bdb86 ("Bluetooth: ISO: Use kref to track lifetime of iso_conn")
 Signed-off-by: Pauli Virtanen <pav@iki.fi>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/iso.c | 29 +++++++++++++++++------------
- 1 file changed, 17 insertions(+), 12 deletions(-)
+ include/net/bluetooth/hci_core.h |  4 +-
+ net/bluetooth/hci_conn.c         |  2 +
+ net/bluetooth/iso.c              | 64 ++++++++++++++++++++++++++------
+ 3 files changed, 58 insertions(+), 12 deletions(-)
 
+diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
+index 02ba1cba6b236..2c15c9d8dbf74 100644
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -770,9 +770,11 @@ struct hci_conn {
+ 	struct dentry	*debugfs;
+ 
+ 	struct hci_dev	*hdev;
++
++	spinlock_t	proto_lock; /* lock guarding protocol data */
+ 	void		*l2cap_data;
+ 	void		*sco_data;
+-	void		*iso_data;
++	void		*iso_data __guarded_by(&proto_lock);
+ 
+ 	struct list_head link_list;
+ 	struct hci_conn	*parent;
+diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
+index eba4a548bef52..924c7795e368a 100644
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -1126,6 +1126,8 @@ static struct hci_conn *__hci_conn_add(struct hci_dev *hdev, int type,
+ 	INIT_DELAYED_WORK(&conn->idle_work, hci_conn_idle);
+ 	INIT_DELAYED_WORK(&conn->le_conn_timeout, le_conn_timeout);
+ 
++	spin_lock_init(&conn->proto_lock);
++
+ 	atomic_set(&conn->refcnt, 0);
+ 
+ 	hci_dev_hold(hdev);
 diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
-index 31ceb1338dc23..3b22193a9ec32 100644
+index 3b22193a9ec32..f946ef5f37b37 100644
 --- a/net/bluetooth/iso.c
 +++ b/net/bluetooth/iso.c
-@@ -107,9 +107,6 @@ static void iso_conn_free(struct kref *ref)
- 
+@@ -108,9 +108,16 @@ static void iso_conn_free(struct kref *ref)
  	BT_DBG("conn %p", conn);
  
--	if (conn->sk)
--		iso_pi(conn->sk)->conn = NULL;
--
  	if (conn->hcon) {
- 		conn->hcon->iso_data = NULL;
- 		if (!test_and_set_bit(ISO_CONN_DROPPED, conn->flags))
-@@ -144,6 +141,14 @@ static struct iso_conn *iso_conn_hold_unless_zero(struct iso_conn *conn)
- 	return conn;
+-		conn->hcon->iso_data = NULL;
+-		if (!test_and_set_bit(ISO_CONN_DROPPED, conn->flags))
+-			hci_conn_drop(conn->hcon);
++		spin_lock(&conn->hcon->proto_lock);
++
++		/* Check we are not racing with iso_conn_add */
++		if (conn->hcon->iso_data == conn) {
++			conn->hcon->iso_data = NULL;
++			if (!test_and_set_bit(ISO_CONN_DROPPED, conn->flags))
++				hci_conn_drop(conn->hcon);
++		}
++
++		spin_unlock(&conn->hcon->proto_lock);
+ 	}
+ 
+ 	kfree_skb(conn->rx_skb);
+@@ -125,7 +132,21 @@ static void iso_conn_put(struct iso_conn *conn)
+ 
+ 	BT_DBG("conn %p refcnt %d", conn, kref_read(&conn->ref));
+ 
++	/* The following race vs. iso_conn_del() is possible:
++	 *
++	 * 1. conn->hcon != NULL here
++	 * 2. kref_put puts the last reference
++	 * 3. concurrent iso_conn_del() gets iso_conn_hold_unless_zero() -> NULL
++	 *    and returns immediately, so conn->hcon is not cleared
++	 * 4. iso_conn_free() dereferences conn->hcon
++	 *
++	 * To avoid UAF in step 4, take RCU before decrementing the refcount.
++	 */
++	rcu_read_lock();
++
+ 	kref_put(&conn->ref, iso_conn_free);
++
++	rcu_read_unlock();
  }
  
-+static struct iso_conn *iso_conn_hold(struct iso_conn *conn)
-+{
-+	BT_DBG("conn %p refcnt %u", conn, kref_read(&conn->ref));
-+
-+	kref_get(&conn->ref);
-+	return conn;
-+}
-+
- static struct sock *iso_sock_hold(struct iso_conn *conn)
+ static struct iso_conn *iso_conn_hold_unless_zero(struct iso_conn *conn)
+@@ -204,22 +225,28 @@ static void iso_sock_disable_timer(struct sock *sk)
+ 
+ /* ---- ISO connections ---- */
+ static struct iso_conn *iso_conn_add(struct hci_conn *hcon)
++	__must_hold(&hcon->hdev->lock)
  {
- 	if (!conn || !bt_sock_linked(&iso_sk_list, conn->sk))
-@@ -209,7 +214,6 @@ static struct iso_conn *iso_conn_add(struct hci_conn *hcon)
+-	struct iso_conn *conn = hcon->iso_data;
++	struct iso_conn *conn;
++
++	spin_lock(&hcon->proto_lock);
+ 
+-	conn = iso_conn_hold_unless_zero(conn);
++	conn = iso_conn_hold_unless_zero(hcon->iso_data);
+ 	if (conn) {
+ 		if (!conn->hcon) {
+ 			iso_conn_lock(conn);
  			conn->hcon = hcon;
  			iso_conn_unlock(conn);
  		}
--		iso_conn_put(conn);
++		spin_unlock(&hcon->proto_lock);
  		return conn;
  	}
  
-@@ -278,10 +282,8 @@ static void iso_conn_del(struct hci_conn *hcon, int err)
- 	sk = iso_sock_hold(conn);
+-	conn = kzalloc_obj(*conn);
+-	if (!conn)
++	conn = kzalloc_obj(*conn, GFP_ATOMIC);
++	if (!conn) {
++		spin_unlock(&hcon->proto_lock);
+ 		return NULL;
++	}
+ 
+ 	kref_init(&conn->ref);
+ 	spin_lock_init(&conn->lock);
+@@ -228,6 +255,8 @@ static struct iso_conn *iso_conn_add(struct hci_conn *hcon)
+ 	conn->hcon = hcon;
+ 	conn->tx_sn = 0;
+ 
++	spin_unlock(&hcon->proto_lock);
++
+ 	BT_DBG("hcon %p conn %p", hcon, conn);
+ 
+ 	return conn;
+@@ -268,10 +297,12 @@ static void iso_chan_del(struct sock *sk, int err)
+ static void iso_conn_del(struct hci_conn *hcon, int err)
+ 	__must_hold(&hcon->hdev->lock)
+ {
+-	struct iso_conn *conn = hcon->iso_data;
++	struct iso_conn *conn;
+ 	struct sock *sk;
+ 
+-	conn = iso_conn_hold_unless_zero(conn);
++	spin_lock(&hcon->proto_lock);
++	conn = iso_conn_hold_unless_zero(hcon->iso_data);
++	spin_unlock(&hcon->proto_lock);
+ 	if (!conn)
+ 		return;
+ 
+@@ -295,10 +326,12 @@ static void iso_conn_del(struct hci_conn *hcon, int err)
+ 
+ done:
+ 	/* No sk access to conn->hcon any more (lock_sock + hdev->lock) */
++	spin_lock(&hcon->proto_lock);
+ 	iso_conn_lock(conn);
+ 	conn->hcon = NULL;
+ 	hcon->iso_data = NULL;
  	iso_conn_unlock(conn);
++	spin_unlock(&hcon->proto_lock);
  
--	if (!sk) {
--		iso_conn_put(conn);
-+	if (!sk)
- 		goto done;
--	}
- 
- 	iso_sock_disable_timer(sk);
- 
-@@ -319,7 +321,7 @@ static int __iso_chan_add(struct iso_conn *conn, struct sock *sk,
- 		return -EIO;
+ 	iso_conn_put(conn);
+ }
+@@ -420,6 +453,8 @@ static int iso_connect_bis(struct sock *sk)
+ 			iso_pi(sk)->bc_sid = hcon->sid;
  	}
  
--	iso_pi(sk)->conn = conn;
-+	iso_pi(sk)->conn = iso_conn_hold(conn);
- 	conn->sk = sk;
- 	clear_bit(ISO_CONN_DROPPED, conn->flags);
- 
-@@ -426,6 +428,7 @@ static int iso_connect_bis(struct sock *sk)
++	lockdep_assert_held(&hcon->hdev->lock);
++
+ 	conn = iso_conn_add(hcon);
+ 	if (!conn) {
+ 		hci_conn_drop(hcon);
+@@ -523,6 +558,8 @@ static int iso_connect_cis(struct sock *sk)
+ 		}
  	}
  
- 	err = iso_chan_add(conn, sk, NULL);
-+	iso_conn_put(conn);
- 	if (err)
++	lockdep_assert_held(&hcon->hdev->lock);
++
+ 	conn = iso_conn_add(hcon);
+ 	if (!conn) {
+ 		hci_conn_drop(hcon);
+@@ -854,8 +891,8 @@ static void iso_sock_disconn(struct sock *sk)
+ 		 */
+ 		if (bis_sk) {
+ 			hcon->state = BT_OPEN;
+-			hcon->iso_data = NULL;
+-			iso_pi(sk)->conn->hcon = NULL;
++			set_bit(ISO_CONN_DROPPED, iso_pi(sk)->conn->flags);
++
+ 			iso_sock_clear_timer(sk);
+ 			iso_chan_del(sk, bt_to_errno(hcon->abort_reason));
+ 			sock_put(bis_sk);
+@@ -1305,6 +1342,8 @@ static int iso_listen_bis(struct sock *sk)
  		goto unlock;
- 
-@@ -528,6 +531,7 @@ static int iso_connect_cis(struct sock *sk)
  	}
  
- 	err = iso_chan_add(conn, sk, NULL);
-+	iso_conn_put(conn);
- 	if (err)
- 		goto unlock;
- 
-@@ -1309,10 +1313,9 @@ static int iso_listen_bis(struct sock *sk)
++	lockdep_assert_held(&hcon->hdev->lock);
++
+ 	conn = iso_conn_add(hcon);
+ 	if (!conn) {
+ 		hci_conn_drop(hcon);
+@@ -2590,7 +2629,10 @@ int iso_recv(struct hci_dev *hdev, u16 handle, struct sk_buff *skb, u16 flags)
+ 		return -ENOENT;
  	}
  
- 	err = iso_chan_add(conn, sk, NULL);
--	if (err) {
--		hci_conn_drop(hcon);
-+	iso_conn_put(conn);
-+	if (err)
- 		goto unlock;
--	}
++	spin_lock(&hcon->proto_lock);
+ 	conn = iso_conn_hold_unless_zero(hcon->iso_data);
++	spin_unlock(&hcon->proto_lock);
++
+ 	hcon = NULL;
  
- unlock:
- 	release_sock(sk);
-@@ -2550,8 +2553,10 @@ static void iso_connect_cfm(struct hci_conn *hcon, __u8 status)
- 		struct iso_conn *conn;
- 
- 		conn = iso_conn_add(hcon);
--		if (conn)
-+		if (conn) {
- 			iso_conn_ready(conn);
-+			iso_conn_put(conn);
-+		}
- 	} else {
- 		iso_conn_del(hcon, bt_to_errno(status));
- 	}
+ 	hci_dev_unlock(hdev);
 -- 
 2.53.0
 
