@@ -1,37 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96C483557F3;
-	Fri,  7 Aug 2026 15:42:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B86E8397958;
+	Fri,  7 Aug 2026 15:43:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786117379; cv=none; b=AriBIaQ1Tg+g6MSG5Gjb0rhzq7usr9BUA4d5iS79BsCu8HUln9fjInNaQQddb3JZT3aT8LQT5cwXMxeu0uwoLYlkAkMNitSALQoVzzrvMZeXsXSGdbM4WocseNZ1pCniVgd+a8O53r3g49gzxAEjZIxUZb+0i6j4yvZzeQA5H78=
+	t=1786117382; cv=none; b=p+iJWdjdPcODrSvwSYa/c9TJQj7fSaOCsJFVvVcYM4cRIvsqNKI0XErmjSr2Myh9UvlNQ7+8ZKO7BCloSg6eZZRcEGyT36V0BwaU9VDMbyyVhwp6jm00xGTjAPmwRviZ8P4Geep7Uc6S0prL57CCqdhLylIjMi2iRNOFM39Me+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786117379; c=relaxed/simple;
-	bh=eYE2PgKIgNS8uTZEfB0zDdRxQwuDgX6fJyOH1MO1pS0=;
+	s=arc-20240116; t=1786117382; c=relaxed/simple;
+	bh=Ofecrbf+Narxx7V4l7hscqcj7Tqs7k4icWQjJD99bd0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d1X2lStJa7h4kj5r/cuI92rd09ybJInLAChrjPkg8PUwtUe9Buyc5GbyPTUyUzz3nSfCxsiBufUY4C6ZyIWIh4fsAIGTaKGYtsLU15AYtD2ricg2uDNdM7rlnIcjyESy84bYtZvTY/SIxLMgPl8b39qVZSOYSoWBe69fK+UpJ6A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bDwVaVLZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oMvwKSaQ0PL3AB0eLJoh62nU58HHkEYY3BTPuLYJvInfV0d2lpVRwfloTU6OqT4g8rysheoIxa+rHnaBk+gOax3TCTbEC6bP6g1RlYt5qm1ciphW9yol9aTykfk9SWeV+j2NNyyzTNUNrUlRoIrKfzvEJoL8EZ8fX+L0fmuhW5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Da4ZTN2v; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bDwVaVLZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE1111F000E9;
-	Fri,  7 Aug 2026 15:42:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Da4ZTN2v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D01071F00A3A;
+	Fri,  7 Aug 2026 15:43:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786117378;
-	bh=KeIqV9sqtMt/vlQuh/1qz2cY1STPDZtrjWciRZUcjko=;
+	s=korg; t=1786117381;
+	bh=G6wfEr3x7SQUOwFHNOz8rzfFGHzHJUdmGhDQJhO/hTo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bDwVaVLZHlYs0vwvYcccZTcNqSC8JdqjPOfCQkOCAi3C9yIhHBOF63imUBF/Ig97/
-	 fY3Rt3X1PI2wcadxiXJTKSbbYDylva51LVcv+U5O20VnXGPalc786To1/ScMdYVb40
-	 mLUnWVp4WOl6ZG75XbFmRo6pb2mMhkond29DSVok=
+	b=Da4ZTN2v0ToHr+Zg9TUqumHesHX668Cj+8+o0AlKR+Cg+/yFIvPGvwZ+YfvoS7LpD
+	 YTe826p4X3ROYtP0IUeisP9lZ4mVDNCCxlJxYFxAOisUe3jdXLpyGsZoRq0xgd6jM1
+	 SnPHEPv7CGLom8kM1cgjDbunbUkGXAO1mns5At0E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haidar Lee <haidar.lee@adlinktech.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 7.1 261/438] ASoC: tas2562: fix DVC coefficient write order
-Date: Fri,  7 Aug 2026 16:37:37 +0200
-Message-ID: <20260807143433.557161794@linuxfoundation.org>
+	Breno Leitao <leitao@debian.org>,
+	Joshua Hahn <joshua.hahnjy@gmail.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	SeongJae Park <sj@kernel.org>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Michal Hocko <mhocko@kernel.org>,
+	Muchun Song <muchun.song@linux.dev>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 7.1 297/438] mm: memcg: initialize *locked in memcg1_oom_prepare() stub
+Date: Fri,  7 Aug 2026 16:38:13 +0200
+Message-ID: <20260807143434.305097468@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -50,78 +57,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haidar Lee <haidar.lee@adlinktech.com>
+From: Breno Leitao <leitao@debian.org>
 
-commit 8e957e4907c58e9ca944f98799524f2bbb9cf68a upstream.
+commit 1833ce36b35426504c64600c94f322437ea44bb2 upstream.
 
-The TAS2562 applies the 32-bit digital volume coefficient to the
-playback path when the last byte, DVC_CFG4 (book 0 page 2 reg 0x0F), is
-written. tas2562_volume_control_put() wrote DVC_CFG4 first and DVC_CFG1
-(the MSB) last, so every volume change latched a value made of the
-previous coefficient's upper three bytes combined with the new LSB; the
-remaining bytes only took effect on the next volume change.
+mem_cgroup_oom() passes an uninitialized "locked" to memcg1_oom_prepare()
+and reads it back in memcg1_oom_finish():
 
-In practice the control was unusable: the first setting after power-on
-always played at roughly 0 dB no matter what value was requested (the
-chip's default upper bytes were still latched), and most subsequent
-changes muted the output entirely or produced a distorted, over-unity
-gain.
+	bool locked, ret;
+	...
+	if (!memcg1_oom_prepare(memcg, &locked))
+		return false;
+	ret = mem_cgroup_out_of_memory(memcg, mask, order);
+	memcg1_oom_finish(memcg, locked);
 
-Verified on a TAS2562 (ADLINK OSM-520 / MT8189 board) by tracing the
-I2C writes with ftrace and by writing the same coefficients manually in
-both byte orders: written MSB-first the register block behaves exactly
-as the driver expects, LSB-first reproduces the broken behaviour.
+This relies on memcg1_oom_prepare() setting *locked whenever it returns
+true.  The CONFIG_MEMCG_V1=y version does, but the stub used when
+CONFIG_MEMCG_V1=n returns true without touching *locked, so
+memcg1_oom_finish() consumes an uninitialized value.  On a memcg OOM this
+is reported by UBSAN:
 
-Write the bytes MSB first with DVC_CFG4 last so the complete new
-coefficient is latched atomically.
+  UBSAN: invalid-load in mm/memcontrol.c:1932:27
+  load of value 0 is not a valid value for type 'bool' (aka '_Bool')
 
-Fixes: bf726b1c86f2 ("ASoC: tas2562: Add support for digital volume control")
-Cc: stable@vger.kernel.org
-Signed-off-by: Haidar Lee <haidar.lee@adlinktech.com>
-Link: https://patch.msgid.link/20260715-tas2562-dvc-fix-v1-1-072b13901b20@adlinktech.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Initialize *locked to false in the stub; with cgroup v1 compiled out there
+is no OOM lock to take.
+
+Link: https://lore.kernel.org/20260716-memcg-oom-uninit-locked-v2-1-63631d878eb4@debian.org
+Fixes: e93d4166b40a ("mm: memcg: put cgroup v1-specific code under a config option")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Joshua Hahn <joshua.hahnjy@gmail.com>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Reviewed-by: SeongJae Park <sj@kernel.org>
+Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/tas2562.c |   23 +++++++++++++++--------
- 1 file changed, 15 insertions(+), 8 deletions(-)
+ mm/memcontrol-v1.h |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/sound/soc/codecs/tas2562.c
-+++ b/sound/soc/codecs/tas2562.c
-@@ -475,20 +475,27 @@ static int tas2562_volume_control_put(st
- 	u32 reg_val;
+--- a/mm/memcontrol-v1.h
++++ b/mm/memcontrol-v1.h
+@@ -107,7 +107,11 @@ static inline void memcg1_remove_from_tr
+ static inline void memcg1_soft_limit_reset(struct mem_cgroup *memcg) {}
+ static inline void memcg1_css_offline(struct mem_cgroup *memcg) {}
  
- 	reg_val = float_vol_db_lookup[ucontrol->value.integer.value[0]/2];
--	ret = snd_soc_component_write(component, TAS2562_DVC_CFG4,
--				      (reg_val & 0xff));
--	if (ret)
--		return ret;
--	ret = snd_soc_component_write(component, TAS2562_DVC_CFG3,
--				      ((reg_val >> 8) & 0xff));
-+	/*
-+	 * The device applies the 32-bit coefficient to the playback path on
-+	 * the write to DVC_CFG4 (the LSB, book 0 page 2 reg 0x0F), so the
-+	 * bytes must be written MSB first and DVC_CFG4 last. Writing CFG4
-+	 * first latches a mix of the previous coefficient's upper bytes and
-+	 * the new LSB instead of the requested value.
-+	 */
-+	ret = snd_soc_component_write(component, TAS2562_DVC_CFG1,
-+				      ((reg_val >> 24) & 0xff));
- 	if (ret)
- 		return ret;
- 	ret = snd_soc_component_write(component, TAS2562_DVC_CFG2,
- 				      ((reg_val >> 16) & 0xff));
- 	if (ret)
- 		return ret;
--	ret = snd_soc_component_write(component, TAS2562_DVC_CFG1,
--				      ((reg_val >> 24) & 0xff));
-+	ret = snd_soc_component_write(component, TAS2562_DVC_CFG3,
-+				      ((reg_val >> 8) & 0xff));
-+	if (ret)
-+		return ret;
-+	ret = snd_soc_component_write(component, TAS2562_DVC_CFG4,
-+				      (reg_val & 0xff));
- 	if (ret)
- 		return ret;
+-static inline bool memcg1_oom_prepare(struct mem_cgroup *memcg, bool *locked) { return true; }
++static inline bool memcg1_oom_prepare(struct mem_cgroup *memcg, bool *locked)
++{
++	*locked = false;
++	return true;
++}
+ static inline void memcg1_oom_finish(struct mem_cgroup *memcg, bool locked) {}
+ static inline void memcg1_oom_recover(struct mem_cgroup *memcg) {}
  
 
 
