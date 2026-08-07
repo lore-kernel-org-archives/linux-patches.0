@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A31FB346AFB;
-	Fri,  7 Aug 2026 15:30:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E87B22D12ED;
+	Fri,  7 Aug 2026 15:30:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116624; cv=none; b=a9RaguFd+NWkRfiEae634TNTTshLZbFpamET4tjuJpteVlRbSkiJgSVg0sDbAlPDmqrH3SyKHo03uDVlTIxu9JPhXPGncbkaR2mPuCTCsnGDv0AqteeJ5ViFoE/OgDerw+vjbtzJZ+sOUMW5Yg4xIrffKUpKypP4cWV+k1kV1X4=
+	t=1786116627; cv=none; b=DTf/Wzuo6iPWKwHgXKqI3rb4PUFiZjLIOMGrksjE4IiZr7+nobXSzjcMCPC6sZquJTTOcJd8HNko0Ed35bzWzbGVkDS+vrSpy1buiE0A95+vaD9+5vXub599+MhbfA98tSPxq8poir28SdXDGU3Rou0HnGUqMFRVvuj5J96+Z8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116624; c=relaxed/simple;
-	bh=y0IKEqWcAqlJ9BW6SUDKCkxk+tgS12wx1sL2G0W6+6k=;
+	s=arc-20240116; t=1786116627; c=relaxed/simple;
+	bh=SvXD7GHySRozmN/tvJ1KpZuEJAZCWJp9x4IewXXzfl4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W45TtM6e0mBFe15EW59z1V9564zBciF8jMJAhCvHxM27PalKeOWGpv/3tKKLS+LfqszRvNvB/3tDuuBqEHXeydwbiZQaZbQtFyMuMpnkcCObfYJYgv1xoQvPgWQ1yH+caSFV7OZX1jg09OOuThApeEGZbiet7XbYQpLqtlYUSrc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a3xa8XRJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tYhSCE1gve5EOUe9GJ1/iV+jJaqcXH02ODh18nYrMHGY6ZPIReD+kXTqW0LEuzBX0WpHQB9IqLFy/ycYvvj9erAbAVtL+cQLo5MsAneWirEyug4NZS51RIaAllFDDc7vzhkXDZ1jaVRw6gNZs8c4H2fQz8OMjU6NFSKipr5G6y8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pPW1gLr5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a3xa8XRJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D4021F000E9;
-	Fri,  7 Aug 2026 15:30:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pPW1gLr5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 469CB1F000E9;
+	Fri,  7 Aug 2026 15:30:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116623;
-	bh=rjP68OSh6D7SyHnjebgct+RafRwsW8MGgwcj6QjwHoQ=;
+	s=korg; t=1786116625;
+	bh=R9WDFYSUmTwape+vFtoougdnzmUTth71RLTAOYg37cQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a3xa8XRJMeOXX6e/EQGD3khXO7yYrPaXOHt2s/4bO/0WUg7QfZ5DYBIEPl1KqtTcf
-	 P4jy46JfmN/YeWsALPNNAE7p/e1TR8xrMVN2rLSe8jTkLBVpAILA4T+Sb921rOle+/
-	 5kk8TgWkBoMzt3PYoG07Bm5Id48wKivJ4N1YdVEM=
+	b=pPW1gLr5T0voLylYoaVUg2vLmYlz7qcFJw7KejgRapEapExA16SvQfHTrrBwhGp4j
+	 dTPmDSPdhujGJfS+fCbNfhPVjw3i/qZEJLdm+XM8Xudgz3YGGLZgB4JhrpWilNyPLy
+	 nBNLav+y5KXgKGc5bBlkS1qhcF4X4czA7u7zfySc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Attila Fazekas <afazekas@redhat.com>,
-	Wander Lairson Costa <wander@redhat.com>,
-	Tomas Glozar <tglozar@redhat.com>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	Michal Simek <michal.simek@amd.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 034/438] rtla/timerlat_top: Fix on-threshold actions firing on signal
-Date: Fri,  7 Aug 2026 16:33:50 +0200
-Message-ID: <20260807143428.735231401@linuxfoundation.org>
+Subject: [PATCH 7.1 035/438] phy: zynqmp: fix clock error handling in xpsgtr_phy_init()
+Date: Fri,  7 Aug 2026 16:33:51 +0200
+Message-ID: <20260807143428.755783078@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -52,60 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomas Glozar <tglozar@redhat.com>
+From: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
 
-[ Upstream commit fafb66e5903c2bcfc7b7e259042a8282f18a6faa ]
+[ Upstream commit e4779e2a16d600892aaf743438f6ce8cc4eb3c4c ]
 
-A bug was reported when rtla-timerlat-top tool performs on-threshold
-actions, even though no threshold was hit. This is reproduced even if no
-threshold is set at all:
+Propagate clk_prepare_enable() failures to the caller instead of
+returning success, and disable the reference clock on initialization
+error paths to avoid leaking clock references when phy_exit() is not
+called.
 
-$ rtla timerlat top -q -c 0 --on-threshold shell,command='echo BAD'
-BAD
-                                     Timer Latency
-...
-
-The bug is due to incorrect logic in timerlat_top_bpf_main_loop().
-The loop uses timerlat_bpf_wait(), the return values of which are:
-
-- > 0 (number of ringbuffer entries): at least 1 CPU hit threshold
-- = 0: time out
-- < 0: wait was interrupted by a signal
-
-Commit 3138df6f0cd0 ("rtla/timerlat: Exit top main loop on any non-zero
-wait_retval") changed the condition for "threshold hit" from
-"wait_reval == 1" (exactly 1 CPU hit threshold) to "wait_retval != 0",
-to fix a race where multiple CPUs hit the threshold at the same time.
-
-That also made it incorrectly include a signal (< 0), coming from either
-duration expired (SIGALRM) or user interrupt (SIGINT).
-
-Check for wait_retval greater than zero in the if condition to cover all
-return values correctly.
-
-Fixes: 3138df6f0cd0 ("rtla/timerlat: Exit top main loop on any non-zero wait_retval")
-Reported-by: Attila Fazekas <afazekas@redhat.com>
-Reviewed-by: Wander Lairson Costa <wander@redhat.com>
-Link: https://lore.kernel.org/r/20260713141047.687877-1-tglozar@redhat.com
-Signed-off-by: Tomas Glozar <tglozar@redhat.com>
+Fixes: 25d700833513 ("phy: xilinx: phy-zynqmp: dynamic clock support for power-save")
+Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Reviewed-by: Michal Simek <michal.simek@amd.com>
+Link: https://patch.msgid.link/20260720153832.1130006-2-radhey.shyam.pandey@amd.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/tracing/rtla/src/timerlat_top.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/phy/xilinx/phy-zynqmp.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/tools/tracing/rtla/src/timerlat_top.c b/tools/tracing/rtla/src/timerlat_top.c
-index 035abf01dbe63..d625b76a31679 100644
---- a/tools/tracing/rtla/src/timerlat_top.c
-+++ b/tools/tracing/rtla/src/timerlat_top.c
-@@ -821,7 +821,7 @@ timerlat_top_bpf_main_loop(struct osnoise_tool *tool)
- 		if (!params->quiet)
- 			timerlat_print_stats(tool);
+diff --git a/drivers/phy/xilinx/phy-zynqmp.c b/drivers/phy/xilinx/phy-zynqmp.c
+index fe6b4925d1662..c8230f2bda629 100644
+--- a/drivers/phy/xilinx/phy-zynqmp.c
++++ b/drivers/phy/xilinx/phy-zynqmp.c
+@@ -658,12 +658,13 @@ static int xpsgtr_phy_init(struct phy *phy)
+ {
+ 	struct xpsgtr_phy *gtr_phy = phy_get_drvdata(phy);
+ 	struct xpsgtr_dev *gtr_dev = gtr_phy->dev;
+-	int ret = 0;
++	int ret;
  
--		if (wait_retval != 0) {
-+		if (wait_retval > 0) {
- 			/* Stopping requested by tracer */
- 			retval = common_threshold_handler(tool);
- 			if (retval)
+ 	mutex_lock(&gtr_dev->gtr_mutex);
+ 
+ 	/* Configure and enable the clock when peripheral phy_init call */
+-	if (clk_prepare_enable(gtr_dev->clk[gtr_phy->refclk]))
++	ret = clk_prepare_enable(gtr_dev->clk[gtr_phy->refclk]);
++	if (ret)
+ 		goto out;
+ 
+ 	/* Skip initialization if not required. */
+@@ -673,7 +674,7 @@ static int xpsgtr_phy_init(struct phy *phy)
+ 	if (gtr_dev->tx_term_fix) {
+ 		ret = xpsgtr_phy_tx_term_fix(gtr_phy);
+ 		if (ret < 0)
+-			goto out;
++			goto out_disable_clk;
+ 
+ 		gtr_dev->tx_term_fix = false;
+ 	}
+@@ -687,7 +688,7 @@ static int xpsgtr_phy_init(struct phy *phy)
+ 	 */
+ 	ret = xpsgtr_configure_pll(gtr_phy);
+ 	if (ret)
+-		goto out;
++		goto out_disable_clk;
+ 
+ 	xpsgtr_lane_set_protocol(gtr_phy);
+ 
+@@ -705,6 +706,10 @@ static int xpsgtr_phy_init(struct phy *phy)
+ 		break;
+ 	}
+ 
++	goto out;
++
++out_disable_clk:
++	clk_disable_unprepare(gtr_dev->clk[gtr_phy->refclk]);
+ out:
+ 	mutex_unlock(&gtr_dev->gtr_mutex);
+ 	return ret;
 -- 
 2.53.0
 
