@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84DF2339387;
-	Fri,  7 Aug 2026 15:29:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BF8F3557F3;
+	Fri,  7 Aug 2026 15:29:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116589; cv=none; b=QNy+yTha2KGlDWjvh0aUkXV6Z2nIkLPej2Lv9NeakS3kI3sftmwTqRIyrnMJTn24rKroE806wCW+wkCuQgrHM5yc5yUPxKNf34iwX9rs8EBB7yqU0ul4xsGGmL9m5+39PUar9XFrGF02E7rfVTlAB1VDG1vr8cMN4NAvxN7+HJY=
+	t=1786116592; cv=none; b=kCu5AuNFvPCb52p9yUD7OVczU/uD7oOlDF71bFu1bkeU2Mo6CUJGCysag7UppTykMpJcs4ApTYCGNn/2D3sqmqFv9XKFuA26YojmoTvDOTbWDPJu5yo57/urap4NOBEl4kcpbd+MNDKk4SggdT7BKt/LFO45+Eibhulv4X+0e40=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116589; c=relaxed/simple;
-	bh=obQo3FINaixm/ezt8g3pm+dbcnS5PKrMzEMh6ea0ui4=;
+	s=arc-20240116; t=1786116592; c=relaxed/simple;
+	bh=BlkWQXxqL0U3LnGjItHE/RYCsLKaFL3BJCP01S1Syiw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZeyeC3JjYvNJJ8AwTxfs3iSR3sXrBBX2mu7wnttnZ5u1K7NR1IH1Ygkh68k0yDGzWC7mJ8Ktwqdr5dpI/CPIrBmUh4j+knR36w9lJYUeL9H62osr+N9igxMvw4TW5qR+DY5pUwoj2r7UuxLnLmMbUIUONWIGj+u5cb3c/a9YHqc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1bpK84xW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Fde2WJhFfIUOClLISlVIeD9n8cS8kRHbMZnU86PMl11YSVhKRjIZqBN5muiH4jEyV01TkMbbhk20JrsJx36FdK1mAF84m78tBfLHmsfbxQClX/h7XhoTniykWF6T+outgwZx+FfPPZsL/DDmg5mbnHNkH7l00P0byj7yZrZhWXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=13Riekh/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1bpK84xW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E06761F000E9;
-	Fri,  7 Aug 2026 15:29:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="13Riekh/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B99101F000E9;
+	Fri,  7 Aug 2026 15:29:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116588;
-	bh=Ubk7B9bLTUZuHIpNGs9C0/y/FxXzFW0BsO4mvqkaibo=;
+	s=korg; t=1786116591;
+	bh=KlQHZDTHP4LMRZg/z5scUXV5UxAGc/HC+5mwmWReY94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1bpK84xWqFdMQiLSRZId6tv51AgvALuYYyHye5JnSpbPQf0jx94I6B+lrCuwlf4pP
-	 Os1qejQWI8INSb9Xtx7fZ/csKCKMtZzdFXhxktVDDj93U+0en/pEwP8qZplA8EQUnL
-	 0HF3fGWmXsO9+CsYuFhoN5Bwn2E4gpATTRzTG4Ko=
+	b=13Riekh/YHrhC4qQgyhYNW4drP5e6GFhBun/E0QuiQXqRntKrQSyjXPxGPyDqnr03
+	 SHdRYKmheAqSlt64381BPQLxTEQV647aidIbRKZ8BV0X1AGpbTRJOUCqkABpDdZ3bk
+	 IVgXroG4RSBgUR5t4G1/edjUrEL0ti17XgXdlz5M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 006/438] thunderbolt: Prevent XDomain delayed work use-after-free on disconnect
-Date: Fri,  7 Aug 2026 16:33:22 +0200
-Message-ID: <20260807143428.147155723@linuxfoundation.org>
+	D Scott Phillips <scott@os.amperecomputing.com>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 7.1 007/438] KVM: arm64: vgic: Avoid double-deactivate of IRQs in the nested context
+Date: Fri,  7 Aug 2026 16:33:23 +0200
+Message-ID: <20260807143428.169108992@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -51,148 +50,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: D Scott Phillips <scott@os.amperecomputing.com>
 
-[ Upstream commit 2c5d2d3c3f70cde2565d7b279b544893a2035842 ]
+commit 8a570b19b4b16a8a3b5ffa2b332bd5613110b2d8 upstream.
 
-tb_xdp_handle_request() runs on system_wq and queues
-xd->state_work via queue_delayed_work() in three request handlers:
-PROPERTIES_CHANGED_REQUEST, UUID_REQUEST (via start_handshake),
-and LINK_STATE_CHANGE_REQUEST.  Similarly, update_xdomain() queues
-xd->properties_changed_work when local properties change.
+In the nested state, the physical interrupt has already been
+deactivated through the HW bit in the LR. The extra deactivation
+would be harmless but can hit an errata case on AmpereOne, so
+avoid it here.
 
-Concurrently, tb_xdomain_remove() calls stop_handshake() which does
-cancel_delayed_work_sync() on both delayed works.  Later,
-tb_xdomain_unregister() calls device_unregister() which eventually
-frees the xdomain.  Since commit 559c1e1e0134 ("thunderbolt: Run
-tb_xdp_handle_request() in system workqueue") moved the request
-handler off tb->wq, the handler and the remove path are no longer
-serialized.  If queue_delayed_work() executes after
-cancel_delayed_work_sync() but before the xdomain is freed, the
-delayed work fires on a freed object.
+On AmpereOne, deactivating a physical interrupt through
+ICC_DIR_EL1 or ICC_EOIR1_EL1 (depending on EOImode) which is not
+active, but is the highest priority pending interrupt causes the
+cpu to lose the interrupt pending state and also prevents the
+delivery of future interrupts.
 
-Add xd->removing that tb_xdomain_remove() sets under xd->lock
-before calling stop_handshake().  Each external queue site holds
-the same lock and checks removing before calling
-queue_delayed_work().  This provides the mutual exclusion needed:
-either the queue site acquires the lock first and queues work that
-the subsequent cancel will see, or the remove path acquires the
-lock first and the queue site observes removing == true and skips
-the queue.
-
-Fixes: 559c1e1e0134 ("thunderbolt: Run tb_xdp_handle_request() in system workqueue")
+Fixes: 6dd333c8942b2 ("KVM: arm64: GICv3: nv: Plug L1 LR sync into deactivation primitive")
+Signed-off-by: D Scott Phillips <scott@os.amperecomputing.com>
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/linux-arm-kernel/20260710222128.416581-1-scott@os.amperecomputing.com/
+Link: https://patch.msgid.link/20260714231158.496808-1-scott@os.amperecomputing.com
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/xdomain.c | 40 ++++++++++++++++++++++++++---------
- include/linux/thunderbolt.h   |  3 +++
- 2 files changed, 33 insertions(+), 10 deletions(-)
+ Documentation/arch/arm64/silicon-errata.rst |    4 ++++
+ arch/arm64/kvm/vgic/vgic-v3.c               |    8 +++++++-
+ 2 files changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/thunderbolt/xdomain.c b/drivers/thunderbolt/xdomain.c
-index 1fd1cf4295a2a..55f91ead8f13b 100644
---- a/drivers/thunderbolt/xdomain.c
-+++ b/drivers/thunderbolt/xdomain.c
-@@ -785,9 +785,13 @@ static void tb_xdp_handle_request(struct work_struct *work)
- 		 * the xdomain related to this connection as well in
- 		 * case there is a change in services it offers.
- 		 */
--		if (xd && device_is_registered(&xd->dev))
--			queue_delayed_work(tb->wq, &xd->state_work,
--					   msecs_to_jiffies(XDOMAIN_SHORT_TIMEOUT));
-+		if (xd) {
-+			mutex_lock(&xd->lock);
-+			if (!xd->removing && device_is_registered(&xd->dev))
-+				queue_delayed_work(tb->wq, &xd->state_work,
-+						   msecs_to_jiffies(XDOMAIN_SHORT_TIMEOUT));
-+			mutex_unlock(&xd->lock);
-+		}
- 		break;
- 
- 	case UUID_REQUEST_OLD:
-@@ -800,8 +804,12 @@ static void tb_xdp_handle_request(struct work_struct *work)
- 		 * received UUID request from the remote host.
- 		 */
- 		if (!ret && xd && xd->state == XDOMAIN_STATE_ERROR) {
--			dev_dbg(&xd->dev, "restarting handshake\n");
--			start_handshake(xd);
-+			mutex_lock(&xd->lock);
-+			if (!xd->removing) {
-+				dev_dbg(&xd->dev, "restarting handshake\n");
-+				start_handshake(xd);
-+			}
-+			mutex_unlock(&xd->lock);
- 		}
- 		break;
- 
-@@ -829,9 +837,13 @@ static void tb_xdp_handle_request(struct work_struct *work)
- 
- 			ret = tb_xdp_link_state_change_response(ctl, route,
- 								sequence, 0);
--			xd->target_link_width = lsc->tlw;
--			queue_delayed_work(tb->wq, &xd->state_work,
--					   msecs_to_jiffies(XDOMAIN_SHORT_TIMEOUT));
-+			mutex_lock(&xd->lock);
-+			if (!xd->removing) {
-+				xd->target_link_width = lsc->tlw;
-+				queue_delayed_work(tb->wq, &xd->state_work,
-+						   msecs_to_jiffies(XDOMAIN_SHORT_TIMEOUT));
-+			}
-+			mutex_unlock(&xd->lock);
- 		} else {
- 			tb_xdp_error_response(ctl, route, sequence,
- 					      ERROR_NOT_READY);
-@@ -2074,6 +2086,10 @@ void tb_xdomain_remove(struct tb_xdomain *xd)
- {
- 	tb_xdomain_debugfs_remove(xd);
- 
-+	mutex_lock(&xd->lock);
-+	xd->removing = true;
-+	mutex_unlock(&xd->lock);
-+
- 	stop_handshake(xd);
- 
- 	device_for_each_child_reverse(&xd->dev, xd, unregister_service);
-@@ -2484,8 +2500,12 @@ static int update_xdomain(struct device *dev, void *data)
- 
- 	xd = tb_to_xdomain(dev);
- 	if (xd) {
--		queue_delayed_work(xd->tb->wq, &xd->properties_changed_work,
--				   msecs_to_jiffies(50));
-+		mutex_lock(&xd->lock);
-+		if (!xd->removing)
-+			queue_delayed_work(xd->tb->wq,
-+					   &xd->properties_changed_work,
-+					   msecs_to_jiffies(50));
-+		mutex_unlock(&xd->lock);
+--- a/Documentation/arch/arm64/silicon-errata.rst
++++ b/Documentation/arch/arm64/silicon-errata.rst
+@@ -55,10 +55,14 @@ stable kernels.
+ +----------------+-----------------+-----------------+-----------------------------+
+ | Ampere         | AmpereOne       | AC03_CPU_38     | AMPERE_ERRATUM_AC03_CPU_38  |
+ +----------------+-----------------+-----------------+-----------------------------+
++| Ampere         | AmpereOne       | AC03_CPU_57     | N/A                         |
+++----------------+-----------------+-----------------+-----------------------------+
+ | Ampere         | AmpereOne AC04  | AC04_CPU_10     | AMPERE_ERRATUM_AC03_CPU_38  |
+ +----------------+-----------------+-----------------+-----------------------------+
+ | Ampere         | AmpereOne AC04  | AC04_CPU_23     | AMPERE_ERRATUM_AC04_CPU_23  |
+ +----------------+-----------------+-----------------+-----------------------------+
++| Ampere         | AmpereOne AC04  | AC04_CPU_29     | N/A                         |
+++----------------+-----------------+-----------------+-----------------------------+
+ +----------------+-----------------+-----------------+-----------------------------+
+ | ARM            | Cortex-A510     | #2457168        | ARM64_ERRATUM_2457168       |
+ +----------------+-----------------+-----------------+-----------------------------+
+--- a/arch/arm64/kvm/vgic/vgic-v3.c
++++ b/arch/arm64/kvm/vgic/vgic-v3.c
+@@ -275,7 +275,13 @@ void vgic_v3_deactivate(struct kvm_vcpu
+ 		lr = vgic_v3_compute_lr(vcpu, irq) & ~ICH_LR_ACTIVE_BIT;
  	}
  
- 	return 0;
-diff --git a/include/linux/thunderbolt.h b/include/linux/thunderbolt.h
-index 0ba112175bb39..7204586c10c3e 100644
---- a/include/linux/thunderbolt.h
-+++ b/include/linux/thunderbolt.h
-@@ -209,6 +209,8 @@ enum tb_link_width {
-  * @link_width: Width of the downstream facing link
-  * @link_usb4: Downstream link is USB4
-  * @is_unplugged: The XDomain is unplugged
-+ * @removing: Set by tb_xdomain_remove() under @lock to prevent
-+ *	      concurrent delayed work queueing
-  * @needs_uuid: If the XDomain does not have @remote_uuid it will be
-  *		queried first
-  * @service_ids: Used to generate IDs for the services
-@@ -257,6 +259,7 @@ struct tb_xdomain {
- 	enum tb_link_width link_width;
- 	bool link_usb4;
- 	bool is_unplugged;
-+	bool removing;
- 	bool needs_uuid;
- 	struct ida service_ids;
- 	struct ida in_hopids;
--- 
-2.53.0
-
+-	if (lr & ICH_LR_HW)
++	/*
++	 * In the nested state, the irq has already been deactivated via the HW
++	 * bit in the LR. Deactivating again would be harmless except AmpereOne
++	 * errata AC03_CPU_57, AC04_CPU_29 could cause irq delivery to break if
++	 * the deactivation hits the highest priority pending irq.
++	 */
++	if ((lr & ICH_LR_HW) && !vgic_state_is_nested(vcpu))
+ 		vgic_v3_deactivate_phys(FIELD_GET(ICH_LR_PHYS_ID_MASK, lr));
+ 
+ 	vgic_v3_fold_lr(vcpu, lr);
 
 
