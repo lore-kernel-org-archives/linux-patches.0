@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 155062D12ED;
-	Fri,  7 Aug 2026 15:40:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D52D047427A;
+	Fri,  7 Aug 2026 15:40:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786117252; cv=none; b=Lg46e+pvs4oC86Y97qVk5GqRWKNaL9FsugCjgZ8eNj4mdlEnfeGzzhnjgpACDcGue3YIByzgqTtdzVFqP04Vuw/6TdY0dckpO3+4XDb6n1Yw29yLUvGkK48oUZjLKGAHx/nQXmfuaNZhnyPM87Z60P/hGPT5oYpgQagOrdYvQmo=
+	t=1786117255; cv=none; b=a5yb/IpDb7nly/EGBNu6T4CLRZ9Utxm7klDODSP0WvH3jF6cYZf3GWDJYwticW4KNSi5/hUbkz46PwRIvTcvfX/q/GlUwjPXquemzQYozrMQRISsFNguOTn6vaLf/fiSjWNjIP0tWZaCXp8RlU6RrcVMMc39mwb+U5gaTuZMs6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786117252; c=relaxed/simple;
-	bh=s0+b6ku2fd+aNn3ELQ7RSgPB13lye14uHJ6DoH+Ev2Y=;
+	s=arc-20240116; t=1786117255; c=relaxed/simple;
+	bh=O36Q+o8+S8Dmx5O5mG9KIAEVku+hfI/g9ldwAUwgOf4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ue2TSVaX5GXg10xqxBHAPZFRMCnA0WZBNZ6mPLh6ftoPJPGsS+oi6VUByVCZDmgcXxv/qH+huNPSlw10XLdUCPpplFOAyyn0zslz+InCwYyeL1Bc5N9l6nnqGvxShquwtkbLVqvq4rD8Vyjzk85wUqSDqhn4yosktRJ9i8TGkWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mfqgRbws; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qmMAOy6673fzGfHhPc/GjE+HRUnXDALVh8q9VZIfwarfrlUO7DrgmuiCrIyl9/ZPV4OG++pCG3WznogLqfGxpefIu6eLqYbb2MNfxR18cziZqWsndm+dprOEj9Vd1v+cD9d8Bb9hFlTIp6Iwl7Qv649kfdFgN98ICOa5twIMBlM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jjmtl4/m; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mfqgRbws"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ED841F000E9;
-	Fri,  7 Aug 2026 15:40:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jjmtl4/m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CFA71F000E9;
+	Fri,  7 Aug 2026 15:40:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786117250;
-	bh=UCr1VTdV1D3BYUS6OyIg6yuSQb8AuzS3dLTZNO3T/JU=;
+	s=korg; t=1786117253;
+	bh=OHzY2ZFMyNOLZ+2TD29S2pTWkjdm9pzwVqAdIHzjB2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mfqgRbws0tcjO8NrrDzoQYRCtikCcbHsi+juBKgn+L+wtL2BDsBcWDCSw2S8lTp48
-	 ZY9zgI1ZzINui9mBlYDCzqFTPXJq5yBrgH/eKN0osTw16zXgFyxvoAJ323WoEePbUS
-	 p95bg9OR150bOjWmCC8IclQc7bYATp3oOGWn/elo=
+	b=jjmtl4/mg7NWV8D6lvzaDE0On6AFNCL4Aqjpq9KrAYDDwT4g3PHm3tv5lyISsdDjP
+	 FkIaugGl1kjYEwd1QQZ5lewOAh76mhT0a7GM2Pkid44XJYgcguCgKpcG5WJ8VKgOPk
+	 odi7IBmzLItRPipXqa4Gik8o7tK6cTtIOtzsi1zI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Dionne <marc.dionne@auristor.com>,
-	David Howells <dhowells@redhat.com>,
-	Jeffrey Altman <jaltman@auristor.com>,
-	linux-afs@lists.infradead.org,
-	stable@kernel.org,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 7.1 251/438] afs: Fix UAF when sending a message
-Date: Fri,  7 Aug 2026 16:37:27 +0200
-Message-ID: <20260807143433.349605054@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>,
+	Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Subject: [PATCH 7.1 252/438] ALSA: 6fire: Fix UAF at error handling during probe
+Date: Fri,  7 Aug 2026 16:37:28 +0200
+Message-ID: <20260807143433.370783201@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -54,76 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 4af1ec68d54b3871155914d584fb10669c41a861 upstream.
+commit a54bf16965f896415c3337bc4fbb40fb11941d99 upstream.
 
-In afs_make_call(), there's a race with async call reception and
-destruction.  If a call is dispatched that doesn't have call->write_iter
-set (used to specify the data content for FS.StoreData), then the first
-rxrpc_kernel_send_data() will not set MSG_MORE in the msghdr.
+Although 6fire driver had a few fixes for dealing with the early error
+handling during the probe phase, it forgot a pending URB before
+freeing the resources, which may lead to a UAF.
 
-Once rxrpc_send_data() queues the last request packet, the response could
-come in at any time and cause the call to be completed and put.  However,
-afs_make_call() will look at the call again to see it ->write_iter should
-be handled - something it's only allowed to do if it has its own ref on the
-call.  Whilst this is the case for synchronous calls, it isn't true for
-async calls such as FS.FetchData.
+This patch addresses it by doing the almost same cleanup procedure
+like the normal disconnect phase at the error path.
 
-There's also a potential UAF in afs_make_call() in the event that an
-asynchronous call is being sent, but the call fails in some way (e.g. it
-gets aborted from the server).  The problem there is that afs_make_call()
-tries to abort a call if the rxrpc send fails, but the asynchronous
-notification from rxrpc may have caused the afs_call to be torn down.
-
-generic/650 plays games with randomly taking CPUs offline, and can
-interject a significant delay such that the call is deallocated before
-afs_make_call() gets to check call->write_iter - and a UAF ensues (caught
-by KASAN).
-
-   BUG: KASAN: slab-use-after-free in afs_make_call+0x1c90/0x2210 [kafs]
-   Read of size 8 at addr ffff888035e050e8 by task fsstress/1409
-
-Fix this by making afs_make_op_call() give the op->call its own ref rather
-than transferring the caller's ref to it and then dropping the ref when
-afs_make_call() returns.
-
-This also means that the afs_make_call() func never loses its ref on the
-call now.
-
-Fixes: eddf51f2bb2c ("afs: Make {Y,}FS.FetchData an asynchronous operation")
-Fixes: e49c7b2f6de7 ("afs: Build an abstraction around an "operation" concept")
-Link: https://sashiko.dev/#/patchset/20260702144919.172295-1-dhowells%40redhat.com
-Reported-by: Marc Dionne <marc.dionne@auristor.com>
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://patch.msgid.link/20260723113452.566619-4-dhowells@redhat.com
-cc: Jeffrey Altman <jaltman@auristor.com>
-cc: linux-afs@lists.infradead.org
-cc: stable@kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Reported-and-tested-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Closes: https://lore.kernel.org/20260724030900.1984491-1-shuangpeng.kernel@gmail.com
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20260726074821.2288158-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/afs/internal.h |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/usb/6fire/chip.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/fs/afs/internal.h
-+++ b/fs/afs/internal.h
-@@ -1421,7 +1421,7 @@ static inline void afs_make_op_call(stru
- {
- 	struct afs_addr_list *alist = op->estate->addresses;
+--- a/sound/usb/6fire/chip.c
++++ b/sound/usb/6fire/chip.c
+@@ -150,6 +150,10 @@ static int usb6fire_chip_probe(struct us
+ 	return 0;
  
--	op->call	= call;
-+	op->call	= afs_get_call(call, afs_call_trace_get);
- 	op->type	= call->type;
- 	call->op	= op;
- 	call->key	= op->key;
-@@ -1429,6 +1429,7 @@ static inline void afs_make_op_call(stru
- 	call->peer	= rxrpc_kernel_get_peer(alist->addrs[op->addr_index].peer);
- 	call->service_id = op->server->service_id;
- 	afs_make_call(call, gfp);
-+	afs_put_call(call);
+ destroy_chip:
++	chip->shutdown = true;
++	if (card)
++		snd_card_disconnect(card);
++	usb6fire_chip_abort(chip);
+ 	snd_card_free(card);
+ 	return ret;
  }
- 
- static inline void afs_extract_begin(struct afs_call *call, void *buf, size_t size)
 
 
