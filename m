@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FB143803D9;
-	Fri,  7 Aug 2026 14:56:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AEA9331A61;
+	Fri,  7 Aug 2026 14:56:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114583; cv=none; b=i5a28/NfvX5Me9edfJ9dDx74O0ge55w4g+n4R9MW0E41YspnKfJ08zI9UhS51SZgqfeaFnNPcdaITSYmIRGvcraPwea6XVIP5PMmMoQWVWiDrqetaPGkakPNkd6lSKnPCGj+wb/C3jzA904i73ONwbXu0J6c/GslzQh1vnbo6DY=
+	t=1786114584; cv=none; b=IZmMheh3Cj1TrJbmVRH1Xu5CHibhglb3pvEsh9UEAqriuzhRMaAgmFOhe9FRN+3y162uF/hbayGldnkiVugxSpdOtlO2S0/9jdB5DsuybgYf/Pr2lPeuzbEfXaAwsWw7mPlnbZsdypSWfd1QvzWzv0oK6axY9HmDGH2ZbOriWqQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114583; c=relaxed/simple;
-	bh=TgRPxzd1OFrgv83Z5Ly2EnrOOBNrAj14yobR+V2CMEQ=;
+	s=arc-20240116; t=1786114584; c=relaxed/simple;
+	bh=jT4Bq+DAZQXiGmRKLVRHrH+odJkzlh1CKaCBGQnOL3w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QoWcTrcD+PYwhMh4oSWJmTJ1W4W/JhOed4y9IcpX7xuojzaGGdkuuRqp8W4aUBsDXtuIlxdubnRPsvvFbtxWRcVHI63GW1WnLyugztbnueDkcVczfB4eJqr6sQmYA9aYlww15RIJKVNHlF/7qKM7YbfF6sg8/jVn1gm4P/ZRniI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2YctB3RV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s6ZrXuLkpZJjlVcCUwhSknP5e789vEkGBbBRV+3UeAwFxL4x7V4+L0MqGKnsJaoFRZ09aBcMyS1mchmrB/FFmBnU1Lo1UZZsPxC7e63/kNBJiKSdKYj4wCdR060PpnxAByu9tXVMdlsVehaUIu/bWyzPf53yE8CjsMdf7wW/CX4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FsH/iwAU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2YctB3RV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DBC61F000E9;
-	Fri,  7 Aug 2026 14:56:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FsH/iwAU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B08B1F00A3D;
+	Fri,  7 Aug 2026 14:56:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114576;
-	bh=GGOAjo5kb+EYwpFroUmth+NcwBLkvmYgTRHZHdxddJc=;
+	s=korg; t=1786114579;
+	bh=tLXgdHQEw79Er7EUNMHdaVmqxFv9kraoM5djjrMqWWY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2YctB3RV/as3IVZ4My0hfmTqwTnWIgDDjWXsU+hPOLUueriiHUoEo4OLKEBZwNV0+
-	 LhxjU7NDNU2o3yMS+EzLXdaVJQ/1aZCUo0Uv65YjcwZKYhaVgBWPWp0IkP9RVrdgdk
-	 QT9Od3tpWy5atZT05LAR9Bn9r9rczSqmzAGdGmA0=
+	b=FsH/iwAU2Tf4ohRH/gkRD5xCwvpahozICHb3DGNEXoRiBpk/eSE5PTNEy/zF93W41
+	 z6oGKEKnBhlK5QEkZY77kEZiGoNBlbtHBKcs/mpB/WbDoRb7vJQB4oHZEjklRUkthg
+	 UCkaenT6Vu4fhfL3GsNYAhV8g4ewHgI4X5HiGKvY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
-	Chengming Gui <Jack.Gui@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 310/337] drm/amdgpu: Fix context pstate override handling
-Date: Fri,  7 Aug 2026 16:38:33 +0200
-Message-ID: <20260807143425.247778911@linuxfoundation.org>
+	Klaus Kudielka <klaus.kudielka@gmail.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Josua Mayer <josua@solid-run.com>,
+	Niklas Cassel <cassel@kernel.org>
+Subject: [PATCH 6.12 269/337] ata: libahci_platform: Do not set mask_port_map when not needed
+Date: Fri,  7 Aug 2026 16:37:52 +0200
+Message-ID: <20260807143424.372818403@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -47,169 +46,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-[ Upstream commit c1dc4ccb82c9e56325d8e7514ca4c90bd1efb351 ]
+commit 2c202e6c4f4dd19d2e8c1dfac9df05170aa3934f upstream.
 
-There are several problems in the context pstate handling code.
+Commit 8c87215dd3a2 ("ata: libahci_platform: support non-consecutive
+port numbers") modified ahci_platform_get_resources() to allow
+identifying the ports of a controller that are defined as child nodes of
+the controller node in order to support non-consecutive port numbers (as
+defined by the platform device tree).
 
-The most serious ones are potential use-after-free and NULL pointer
-dereferences at context initialization time. Both are due
-amdgpu_ctx_init() not holding the adev->pm.stable_pstate_ctx_lock, which
-is otherwise used from both sysfs and the context code itself for
-modifying and clearing the stored context pointer.
+However, this commit also erroneously sets bit 0 of
+hpriv->mask_port_map when the platform devices tree does not define port
+child nodes, to match the fact that the temporary default number of
+ports used in that case is 1 (which is also consistent with the fact
+that only index 0 of hpriv->phys[] is initialized with the call to
+ahci_platform_get_phy(). But doing so causes ahci_platform_init_host()
+to initialize and probe only the first port, even if this function
+determines that the controller has in fact multiple ports using the
+capability register of the controller (through a call to
+ahci_nr_ports()). This can be seen with the ahci_mvebu driver (Armada
+385 SoC) with the second port declared as "dummy":
 
-Second issue is that context fini can trample over the pstate
-configuration set via sysfs. This is due the restore state
-(ctx->stable_pstate) being saved at context init time, and not if, or when
-the context actually changes the pstate. As the context exits it will
-therefore incorrectly restore to what was set before the sysfs override
-was requested.
+ahci-mvebu f10a8000.sata: masking port_map 0x3 -> 0x1
+ahci-mvebu f10a8000.sata: AHCI vers 0001.0000, 32 command slots, 6 Gbps, platform mode
+ahci-mvebu f10a8000.sata: 1/2 ports implemented (port mask 0x1)
+ahci-mvebu f10a8000.sata: flags: 64bit ncq sntf led only pmp fbs pio slum part sxs
+scsi host0: ahci-mvebu
+scsi host1: ahci-mvebu
+ata1: SATA max UDMA/133 mmio [mem 0xf10a8000-0xf10a9fff] port 0x100 irq 40 lpm-pol 0
+ata2: DUMMY
 
-The simplest fix is to drastically simplify how the state is tracked, by
-clearly defining the points at which pstate ownership is taken and
-released, and to handle all transitions under the correct lock.
+Fix this issue by removing setting bit 0 of hpriv->mask_port_map when
+the platform device tree does not define port child nodes.
 
-Instead of at context init time, the previous state is saved only at the
-point the context overrides the current state, and is restored on context
-exit only if the context is still the owner of the current override state.
-
-Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-Fixes: 79610d304133 ("drm/amdgpu: fix pstate setting issue")
-Cc: Chengming Gui <Jack.Gui@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: "Christian König" <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 1b5e413713c0a93bc1818394d0ce49aaad21bd27)
-Cc: <stable@vger.kernel.org> # v6.1+
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Klaus Kudielka <klaus.kudielka@gmail.com>
+Fixes: 8c87215dd3a2 ("ata: libahci_platform: support non-consecutive port numbers")
+Tested-by: Klaus Kudielka <klaus.kudielka@gmail.com>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Acked-by: Josua Mayer <josua@solid-run.com>
+Link: https://lore.kernel.org/r/20250207232915.1439174-1-dlemoal@kernel.org
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.c |   71 ++++++++++++++++++--------------
- 1 file changed, 42 insertions(+), 29 deletions(-)
+ drivers/ata/libahci_platform.c |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.c
-@@ -321,7 +321,6 @@ static int amdgpu_ctx_init(struct amdgpu
- 			   struct drm_file *filp, struct amdgpu_ctx *ctx)
- {
- 	struct amdgpu_fpriv *fpriv = filp->driver_priv;
--	u32 current_stable_pstate;
- 	int r;
- 
- 	r = amdgpu_ctx_priority_permit(filp, priority);
-@@ -339,37 +338,22 @@ static int amdgpu_ctx_init(struct amdgpu
- 	ctx->generation = amdgpu_vm_generation(mgr->adev, &fpriv->vm);
- 	ctx->init_priority = priority;
- 	ctx->override_priority = AMDGPU_CTX_PRIORITY_UNSET;
+--- a/drivers/ata/libahci_platform.c
++++ b/drivers/ata/libahci_platform.c
+@@ -651,8 +651,6 @@ struct ahci_host_priv *ahci_platform_get
+ 		 * If no sub-node was found, keep this for device tree
+ 		 * compatibility
+ 		 */
+-		hpriv->mask_port_map |= BIT(0);
 -
--	r = amdgpu_ctx_get_stable_pstate(ctx, &current_stable_pstate);
--	if (r)
--		return r;
--
--	if (mgr->adev->pm.stable_pstate_ctx)
--		ctx->stable_pstate = mgr->adev->pm.stable_pstate_ctx->stable_pstate;
--	else
--		ctx->stable_pstate = current_stable_pstate;
-+	ctx->stable_pstate = AMDGPU_CTX_STABLE_PSTATE_NONE;
- 
- 	ctx->ctx_mgr = &(fpriv->ctx_mgr);
- 	return 0;
- }
- 
--static int amdgpu_ctx_set_stable_pstate(struct amdgpu_ctx *ctx,
--					u32 stable_pstate)
-+static int __amdgpu_ctx_set_stable_pstate(struct amdgpu_ctx *ctx,
-+					  u32 stable_pstate)
- {
- 	struct amdgpu_device *adev = ctx->mgr->adev;
- 	enum amd_dpm_forced_level level;
-+	struct amdgpu_ctx *current_ctx;
- 	u32 current_stable_pstate;
--	int r;
--
--	mutex_lock(&adev->pm.stable_pstate_ctx_lock);
--	if (adev->pm.stable_pstate_ctx && adev->pm.stable_pstate_ctx != ctx) {
--		r = -EBUSY;
--		goto done;
--	}
-+	int r = 0;
- 
--	r = amdgpu_ctx_get_stable_pstate(ctx, &current_stable_pstate);
--	if (r || (stable_pstate == current_stable_pstate))
--		goto done;
-+	lockdep_assert_held(&adev->pm.stable_pstate_ctx_lock);
- 
- 	switch (stable_pstate) {
- 	case AMDGPU_CTX_STABLE_PSTATE_NONE:
-@@ -388,17 +372,41 @@ static int amdgpu_ctx_set_stable_pstate(
- 		level = AMD_DPM_FORCED_LEVEL_PROFILE_PEAK;
- 		break;
- 	default:
--		r = -EINVAL;
--		goto done;
-+		return -EINVAL;
- 	}
- 
-+	current_ctx = adev->pm.stable_pstate_ctx;
-+	if (current_ctx && current_ctx != ctx)
-+		return -EBUSY;
-+
-+	r = amdgpu_ctx_get_stable_pstate(ctx, &current_stable_pstate);
-+	if (r || current_stable_pstate == stable_pstate)
-+		return r;
-+
- 	r = amdgpu_dpm_force_performance_level(adev, level);
-+	if (r)
-+		return r;
- 
--	if (level == AMD_DPM_FORCED_LEVEL_AUTO)
--		adev->pm.stable_pstate_ctx = NULL;
--	else
-+	if (!current_ctx) {
- 		adev->pm.stable_pstate_ctx = ctx;
--done:
-+		/*
-+		 * Serialized by context taking ownership for the first time
-+		 * while holding adev->pm.stable_pstate_ctx_lock).
-+		 */
-+		WRITE_ONCE(ctx->stable_pstate, current_stable_pstate);
-+	}
-+
-+	return 0;
-+}
-+
-+static int amdgpu_ctx_set_stable_pstate(struct amdgpu_ctx *ctx,
-+					u32 stable_pstate)
-+{
-+	struct amdgpu_device *adev = ctx->mgr->adev;
-+	int r;
-+
-+	mutex_lock(&adev->pm.stable_pstate_ctx_lock);
-+	r = __amdgpu_ctx_set_stable_pstate(ctx, stable_pstate);
- 	mutex_unlock(&adev->pm.stable_pstate_ctx_lock);
- 
- 	return r;
-@@ -424,7 +432,12 @@ static void amdgpu_ctx_fini(struct kref
- 	}
- 
- 	if (drm_dev_enter(adev_to_drm(adev), &idx)) {
--		amdgpu_ctx_set_stable_pstate(ctx, ctx->stable_pstate);
-+		mutex_lock(&adev->pm.stable_pstate_ctx_lock);
-+		if (adev->pm.stable_pstate_ctx == ctx) {
-+			__amdgpu_ctx_set_stable_pstate(ctx, ctx->stable_pstate);
-+			adev->pm.stable_pstate_ctx = NULL;
-+		}
-+		mutex_unlock(&adev->pm.stable_pstate_ctx_lock);
- 		drm_dev_exit(idx);
- 	}
- 
+ 		rc = ahci_platform_get_phy(hpriv, 0, dev, dev->of_node);
+ 		if (rc)
+ 			goto err_out;
 
 
