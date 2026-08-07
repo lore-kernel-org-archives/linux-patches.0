@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDDE14B0482;
-	Fri,  7 Aug 2026 14:53:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A50324B0482;
+	Fri,  7 Aug 2026 14:53:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114398; cv=none; b=q+hemew5bSXsIJ+7lB/Thm4fEZs6vmT7hpZmnBNjgK8uAiL5Zw5j0utIwEZvJHsIxKK4XNzqUrMjTYnFvLHu6iGY+7GJ7SX3mPwl1WlP5RYB4ExqqxeDn9AQlwJT6eOo2Mwdw+zT72m6kNo6SdnBWUtKq1M5RrirAqS53ctt9O0=
+	t=1786114400; cv=none; b=A/Fuoe68J+s/jatlObzqThAN6pHXxIpWokc5EiBQPxVbC58BSDwjMd0mti9akrWeiRCGMqEmhhC9H2PzfUFSEaaCvYiZXYjZWAj1sevxsrm442oSC/NKeDn5YMRJbsbHNorPemaGlX2yVhPKaGEvMPI2sjc9V6fuyt81zHalquQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114398; c=relaxed/simple;
-	bh=F0f9lDz2lY4iTaidRN4D3iFpqJMS38zggpIZMZ9ClUE=;
+	s=arc-20240116; t=1786114400; c=relaxed/simple;
+	bh=CfFlCfidmU57CjAKZcwN64x/tJyNNX0Haazsl58Fq6o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l4ExdYzk3ND9Q9oVG6LXgKBOV3zSR/gR7kzl9XjMEpRnrOZ/0v8CPOq49cvgYHmW4BYAGMgvRJ/EV6ioSENt6437pwRcwgWEDi6slTOjAgBRpWnZ7UMgMrLStf1Q6QSx5cBjyInMoOSewilPrZTJXEJ2AJlcv3ezUeqn3hvOkCE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vqj2aW2D; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iRYPbAIzQ9q3phUnOKF7nMMKlVSphnhhaiqAPqasYzpiDQxy7D+775fMyVl8UkHXM8naiP6m7sIRzW1GfZMAA4xjYgTZVSADtg0Cs4W0ntaeFq4kjSBrfDS/3faFi6Soj9X7dxx+W/Pl95rWcWKsOvvn8mVwhays2pVkFjynlt4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yrQ796Mm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vqj2aW2D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3561C1F000E9;
-	Fri,  7 Aug 2026 14:53:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yrQ796Mm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C28E1F000E9;
+	Fri,  7 Aug 2026 14:53:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114396;
-	bh=PAL5B3WlitffPUnAREQhYv8CDdSz45UaD3ivehcqUVo=;
+	s=korg; t=1786114399;
+	bh=TNxi7DTjo/oTw8sifDhe8S1F0o85mepoBuwwPBrUIps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Vqj2aW2DsX0slSt3f/3kFuDJMMDLYKx0nZ6n9avaGY+2hgYUKyDSYVqCplwWHYV2F
-	 zYvdpHjDicbmvEZeYBnXoZKyRs515yHkL1OE6wg1YexJFaXYb493lIykEQe6yTKp2v
-	 8SgLwX+dQ7qeqpB1s6Ig88jRTkc6MVTsTI+gsNeQ=
+	b=yrQ796MmnSh2bAjBxIVwHQO8HfhCPlT7rFhnXi34DcTUy62G9G1+N71Gt5GB/kB6V
+	 Y1h2DCXPLLxFUBBvDMXch4MkS3ilZfAlx+DzCsheHIdLvf7zbW2YS/+Y0loAFxfHsS
+	 rP6tfJ18iepGozZ3FJUlr+/nVNvP8i9pF5iY/o7A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Osama Abdelkader <osama.abdelkader@gmail.com>,
-	Steven Price <steven.price@arm.com>
-Subject: [PATCH 6.12 248/337] drm/panthor: validate firmware interface structure sizes
-Date: Fri,  7 Aug 2026 16:37:31 +0200
-Message-ID: <20260807143423.923539696@linuxfoundation.org>
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	CK Hu <ck.hu@mediatek.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Subject: [PATCH 6.12 249/337] drm/mediatek: ovl_adaptor: balance component registrations
+Date: Fri,  7 Aug 2026 16:37:32 +0200
+Message-ID: <20260807143423.944773967@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -50,100 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Osama Abdelkader <osama.abdelkader@gmail.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-commit b921b8613790a3f9e78ab64017fa7149ef0b750c upstream.
+commit 533e3469a57996905cdb95f178e7efe38c21aeb2 upstream.
 
-iface_fw_to_cpu_addr() only checks that the firmware-provided MCU virtual
-address points inside the shared section. The returned pointer is later
-used as a full firmware interface structure, so accepting an address near
-the end of the shared section can still lead to out-of-bounds accesses.
+The OVL adaptor registers both an aggregate driver for its child devices
+and a component for the main DRM aggregate. Probe currently ignores an
+error from registering the child aggregate and leaves that aggregate
+registered if registering the DRM component fails. The remove callback
+also leaves the DRM component registered.
 
-Pass the expected object size to iface_fw_to_cpu_addr() and reject ranges
-that do not fit entirely in the shared section.
+These imbalances can leave component framework entries referring to a
+device whose probe failed or whose driver has been detached. The aggregate
+unbind callback also fails to undo component_bind_all(), leaving its child
+components marked as bound when the aggregate is removed.
 
-Fixes: 2718d91816ee ("drm/panthor: Add the FW logical block")
-Cc: stable@vger.kernel.org
-Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Signed-off-by: Steven Price <steven.price@arm.com>
-Link: https://patch.msgid.link/20260720114918.15973-1-osama.abdelkader@gmail.com
+Check the aggregate registration result, unwind it when the component
+registration fails, and unregister the component before the aggregate on
+remove. Keep runtime PM enabled until both framework registrations have
+been removed, and unbind all child components from the aggregate unbind
+callback.
+
+Fixes: 453c3364632a ("drm/mediatek: Add ovl_adaptor support for MT8195")
+Cc: stable@vger.kernel.org # 6.4+
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Reviewed-by: CK Hu <ck.hu@mediatek.com>
+Link: https://patchwork.kernel.org/project/linux-mediatek/patch/20260721152242.47138-1-mhun512@gmail.com/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/panthor/panthor_fw.c |   36 +++++++++++++++++++++++------------
- 1 file changed, 24 insertions(+), 12 deletions(-)
+ drivers/gpu/drm/mediatek/mtk_disp_ovl_adaptor.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/panthor/panthor_fw.c
-+++ b/drivers/gpu/drm/panthor/panthor_fw.c
-@@ -767,18 +767,24 @@ out:
-  * iface_fw_to_cpu_addr() - Turn an MCU address into a CPU address
-  * @ptdev: Device.
-  * @mcu_va: MCU address.
-+ * @size: Size of the object pointed to by @mcu_va.
-  *
-- * Return: NULL if the address is not part of the shared section, non-NULL otherwise.
-+ * Return: NULL if the object is not part of the shared section, non-NULL otherwise.
-  */
--static void *iface_fw_to_cpu_addr(struct panthor_device *ptdev, u32 mcu_va)
-+static void *iface_fw_to_cpu_addr(struct panthor_device *ptdev, u32 mcu_va, size_t size)
- {
- 	u64 shared_mem_start = panthor_kernel_bo_gpuva(ptdev->fw->shared_section->mem);
--	u64 shared_mem_end = shared_mem_start +
--			     panthor_kernel_bo_size(ptdev->fw->shared_section->mem);
--	if (mcu_va < shared_mem_start || mcu_va >= shared_mem_end)
-+	size_t shared_mem_size = panthor_kernel_bo_size(ptdev->fw->shared_section->mem);
-+	u64 offset;
-+
-+	if (mcu_va < shared_mem_start)
-+		return NULL;
-+
-+	offset = mcu_va - shared_mem_start;
-+	if (offset > shared_mem_size || size > shared_mem_size - offset)
- 		return NULL;
+--- a/drivers/gpu/drm/mediatek/mtk_disp_ovl_adaptor.c
++++ b/drivers/gpu/drm/mediatek/mtk_disp_ovl_adaptor.c
+@@ -585,6 +585,7 @@ static void mtk_disp_ovl_adaptor_master_
+ 	struct mtk_disp_ovl_adaptor *priv = dev_get_drvdata(dev);
  
--	return ptdev->fw->shared_section->mem->kmap + (mcu_va - shared_mem_start);
-+	return ptdev->fw->shared_section->mem->kmap + offset;
+ 	priv->children_bound = false;
++	component_unbind_all(dev, priv->mmsys_dev);
  }
  
- static int panthor_init_cs_iface(struct panthor_device *ptdev,
-@@ -800,8 +806,10 @@ static int panthor_init_cs_iface(struct
+ static const struct component_master_ops mtk_disp_ovl_adaptor_master_ops = {
+@@ -611,12 +612,15 @@ static int mtk_disp_ovl_adaptor_probe(st
  
- 	spin_lock_init(&cs_iface->lock);
- 	cs_iface->control = ptdev->fw->shared_section->mem->kmap + iface_offset;
--	cs_iface->input = iface_fw_to_cpu_addr(ptdev, cs_iface->control->input_va);
--	cs_iface->output = iface_fw_to_cpu_addr(ptdev, cs_iface->control->output_va);
-+	cs_iface->input = iface_fw_to_cpu_addr(ptdev, cs_iface->control->input_va,
-+					       sizeof(*cs_iface->input));
-+	cs_iface->output = iface_fw_to_cpu_addr(ptdev, cs_iface->control->output_va,
-+						sizeof(*cs_iface->output));
+ 	priv->mmsys_dev = pdev->dev.platform_data;
  
- 	if (!cs_iface->input || !cs_iface->output) {
- 		drm_err(&ptdev->base, "Invalid stream control interface input/output VA");
-@@ -851,8 +859,10 @@ static int panthor_init_csg_iface(struct
+-	component_master_add_with_match(dev, &mtk_disp_ovl_adaptor_master_ops, match);
++	ret = component_master_add_with_match(dev, &mtk_disp_ovl_adaptor_master_ops, match);
++	if (ret)
++		return dev_err_probe(dev, ret, "Failed to add component master\n");
  
- 	spin_lock_init(&csg_iface->lock);
- 	csg_iface->control = ptdev->fw->shared_section->mem->kmap + iface_offset;
--	csg_iface->input = iface_fw_to_cpu_addr(ptdev, csg_iface->control->input_va);
--	csg_iface->output = iface_fw_to_cpu_addr(ptdev, csg_iface->control->output_va);
-+	csg_iface->input = iface_fw_to_cpu_addr(ptdev, csg_iface->control->input_va,
-+						sizeof(*csg_iface->input));
-+	csg_iface->output = iface_fw_to_cpu_addr(ptdev, csg_iface->control->output_va,
-+						 sizeof(*csg_iface->output));
+ 	pm_runtime_enable(dev);
  
- 	if (csg_iface->control->stream_num < MIN_CS_PER_CSG ||
- 	    csg_iface->control->stream_num > MAX_CS_PER_CSG)
-@@ -909,8 +919,10 @@ static int panthor_fw_init_ifaces(struct
- 		return -EINVAL;
+ 	ret = component_add(dev, &mtk_disp_ovl_adaptor_comp_ops);
+ 	if (ret != 0) {
++		component_master_del(dev, &mtk_disp_ovl_adaptor_master_ops);
+ 		pm_runtime_disable(dev);
+ 		return dev_err_probe(dev, ret, "Failed to add component\n");
  	}
+@@ -626,6 +630,7 @@ static int mtk_disp_ovl_adaptor_probe(st
  
--	glb_iface->input = iface_fw_to_cpu_addr(ptdev, glb_iface->control->input_va);
--	glb_iface->output = iface_fw_to_cpu_addr(ptdev, glb_iface->control->output_va);
-+	glb_iface->input = iface_fw_to_cpu_addr(ptdev, glb_iface->control->input_va,
-+						sizeof(*glb_iface->input));
-+	glb_iface->output = iface_fw_to_cpu_addr(ptdev, glb_iface->control->output_va,
-+						 sizeof(*glb_iface->output));
- 	if (!glb_iface->input || !glb_iface->output) {
- 		drm_err(&ptdev->base, "Invalid global control interface input/output VA");
- 		return -EINVAL;
+ static void mtk_disp_ovl_adaptor_remove(struct platform_device *pdev)
+ {
++	component_del(&pdev->dev, &mtk_disp_ovl_adaptor_comp_ops);
+ 	component_master_del(&pdev->dev, &mtk_disp_ovl_adaptor_master_ops);
+ 	pm_runtime_disable(&pdev->dev);
+ }
 
 
