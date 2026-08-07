@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28F0239734E;
-	Fri,  7 Aug 2026 14:43:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00EAC38F626;
+	Fri,  7 Aug 2026 14:43:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786113803; cv=none; b=NT6eXgd5BahAEmPahb/a0Dafr9WPUewoK4z18kBP3exJ8TkHfrYyvdu4P3A0nEdMd961CVSLArF0yjPT8QWwsr9A4pK+sdldAG0shbQZLyIm6dkzs9Cxy/2hdxALbk8f8Xt6weavv8p2YPnjoOTafyl5qqRpiy6ukrjMBjoCvZM=
+	t=1786113804; cv=none; b=pHWg3QDA9F2bifjpbOg4tGUQ/FF0e83MSdxA2jSzIlxeeeh69ligcitVVxzEbe2wNvnM4JKP8LpIOkBy/lJrpXGDdild7BEhwOjjMAtnablJL0Wj9hBXLISUANhX+mz0sD5OsZ/sPYVuqgrk+ZGqjVHXPuyZ8GXSRweII7CQJqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786113803; c=relaxed/simple;
-	bh=CHNffRGPjII3VBB64EhkH7EBXPrl0ZQczV15uL7Emrg=;
+	s=arc-20240116; t=1786113804; c=relaxed/simple;
+	bh=1oFTqKUDaBnTjDYeLVWD0VxsgdObeq5QvdgxTfakQ8Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L2mqXrTE/oYKs07d/8HJPaL4rush0uQAX/Ur3xPfCiJSQ+I4RKTHdAOhvz14uTGCxB+q9TcXoz7ax9uXUBiyg7nrBurnDh7Ghdae8RII0JTUI1+uaGJZQtW8/9ozQLNK1n2R3TK23w4LQNrKXya/P+Qr6D4EzWtCtZbo+dFlFTI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qe5z/CfX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Fr9+RfBQFGqy/mt5XzJsq6bmqYm/TC0XvmXd78+L88ngqMWuugxIttKb10x8W35hJk8XFpGYl4ljkQNfe5e4Hw26GWwz6mYMtYUzJiTG4YQ7Y0qYZ/3b750VJqoGOqK5aFlNovdwiyUz6nRuEp8OabpVLgNu07l1kRGsE8QcnbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zkpEN8ni; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qe5z/CfX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 013B81F00A3A;
-	Fri,  7 Aug 2026 14:43:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zkpEN8ni"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A4741F00ACF;
+	Fri,  7 Aug 2026 14:43:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786113788;
-	bh=NyZfxLZibaSD5RcEnehAuy8NKMkZcVtrn1ryFObmLrM=;
+	s=korg; t=1786113782;
+	bh=PwXVfWgDFrrZ7dgyDXGY+uY74TEn7tOaMNJuD5Ut0CI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qe5z/CfXuTzGbw6e4yNMMIUU0X1Ab043c/x+ohi078FeNGIQc+wVaTZBzjZanf4tA
-	 ClsAmj1eDuxs4zlTMxz6FWltQBgZpLTxg55kSxVO2pvONImfVLBKj1Y78dKfl4U6AT
-	 5UZdMeCwbpiUWUhnDg0Yne7+wHENAjAxdcuk49tw=
+	b=zkpEN8ni2c5ymBtRxlQGEN7a1iew9nj5P+bGBOHlYuSGHlx7PocQWK5L0FNfQ2xrg
+	 e+sxkbTtqYGKyNln40AcxNr0QdTBSk8/KT/wl/vAHdY76/ZEVsOitAGj6/5Iq48ULI
+	 3kH8T3s5SfJqGN6n/uvMhgBQeuGHfbsIQwk6QzGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
+	Tiwei Bie <tiwei.btw@antgroup.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 028/337] ata: ahci_ceva: fix error paths in ceva_ahci_platform_enable_resources()
-Date: Fri,  7 Aug 2026 16:33:51 +0200
-Message-ID: <20260807143419.128482533@linuxfoundation.org>
+Subject: [PATCH 6.12 010/337] um: Preserve errno within signal handler
+Date: Fri,  7 Aug 2026 16:33:33 +0200
+Message-ID: <20260807143418.745439178@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -51,73 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+From: Tiwei Bie <tiwei.btw@antgroup.com>
 
-[ Upstream commit 4d99a91574c420decab56cc880fad0dc15b8a7a3 ]
+commit f68b2d5a907b53eed99cf2efcaaae116df73c298 upstream.
 
-On phy_init() failure the error path fallsthrough to disable_rsts, which
-deasserts the controller reset and then enters disable_phys calling
-phy_power_off() on PHYs that were never powered on. That corrupts the PHY
-power_count and triggers an extra runtime PM put.
+We rely on errno to determine whether a syscall has failed, so we
+need to ensure that accessing errno is async-signal-safe. Currently,
+we preserve the errno in sig_handler_common(), but it doesn't cover
+every possible case. Let's do it in hard_handler() instead, which
+is the signal handler we actually register.
 
-Use a separate exit_phys path that unwinds with phy_exit() only and falls
-through to disable_clks while the controller remains in reset.  Reserve
-phy_power_off() for the phy_power_on() failure path only, and skip
-masked-out ports in both unwind loops.
-
-On phy_power_on() failure re-assert the controller reset before disabling
-clocks and regulators, matching the teardown order used by
-ahci_platform_enable_resources() and ahci_platform_disable_resources().
-
-Fixes: 26c8404e162b ("ata: ahci_ceva: fix error handling for Xilinx GT PHY support")
-Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Tiwei Bie <tiwei.btw@antgroup.com>
+Link: https://patch.msgid.link/20260106001228.1531146-2-tiwei.btw@antgroup.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+[florian: hard_handler() in 6.12 retains the to_irq_stack/from_irq_stack
+loop from before the upstream SMP refactoring; errno save/restore is wrapped
+around that loop rather than replacing sig_handler_common's existing save/restore]
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/ahci_ceva.c | 18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ arch/um/os-Linux/signal.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/ata/ahci_ceva.c b/drivers/ata/ahci_ceva.c
-index 93275b1b48898..b2918ad8e7e05 100644
---- a/drivers/ata/ahci_ceva.c
-+++ b/drivers/ata/ahci_ceva.c
-@@ -211,7 +211,7 @@ static int ceva_ahci_platform_enable_resources(struct ahci_host_priv *hpriv)
+diff --git a/arch/um/os-Linux/signal.c b/arch/um/os-Linux/signal.c
+index b11ed66c8bb0..94abc9e3ec7e 100644
+--- a/arch/um/os-Linux/signal.c
++++ b/arch/um/os-Linux/signal.c
+@@ -190,6 +190,7 @@ static void hard_handler(int sig, siginfo_t *si, void *p)
+ {
+ 	ucontext_t *uc = p;
+ 	mcontext_t *mc = &uc->uc_mcontext;
++	int save_errno = errno;
+ 	unsigned long pending = 1UL << sig;
  
- 		rc = phy_init(hpriv->phys[i]);
- 		if (rc)
--			goto disable_rsts;
-+			goto exit_phys;
- 	}
- 
- 	/* De-assert the controller reset */
-@@ -230,14 +230,24 @@ static int ceva_ahci_platform_enable_resources(struct ahci_host_priv *hpriv)
- 
- 	return 0;
- 
--disable_rsts:
--	ahci_platform_deassert_rsts(hpriv);
--
- disable_phys:
- 	while (--i >= 0) {
-+		if (ahci_ignore_port(hpriv, i))
-+			continue;
+ 	do {
+@@ -227,6 +228,8 @@ static void hard_handler(int sig, siginfo_t *si, void *p)
+ 		if (!nested)
+ 			pending = from_irq_stack(nested);
+ 	} while (pending);
 +
- 		phy_power_off(hpriv->phys[i]);
- 		phy_exit(hpriv->phys[i]);
- 	}
-+	ahci_platform_assert_rsts(hpriv);
-+	goto disable_clks;
-+
-+exit_phys:
-+	while (--i >= 0) {
-+		if (ahci_ignore_port(hpriv, i))
-+			continue;
-+
-+		phy_exit(hpriv->phys[i]);
-+	}
++	errno = save_errno;
+ }
  
- disable_clks:
- 	ahci_platform_disable_clks(hpriv);
+ void set_handler(int sig)
 -- 
 2.53.0
 
