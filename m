@@ -1,39 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB5B34B0480;
-	Fri,  7 Aug 2026 15:12:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74E4A43F4C8;
+	Fri,  7 Aug 2026 15:12:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115578; cv=none; b=rBJPh1utQNOsbVb8Qnuark4XNS/gUTabfEbWuQeyLG2Ql3xt0v4zwYk33Jp3PangdS6qFFuknMjXVoMMCpaQppoP3vGwh0Pj4/K+G14E9tq+ElprqctMBkvuMli0pn2jIgpoboBJu4+X36gfH3cSALafYKvu9ZPU7eOaXDoCJFY=
+	t=1786115580; cv=none; b=SYaTjStCvPLxvvRcqTwGfJwuoNe/V2+Z/x8IzSbM21WAKlFwL6lJIhLZ7vbhEt8nokjjd/QJyusuoAa0Q8nE1SZvEN5UvtGLsV0GSQv1PJeYX17oBW5MFkjfYJxloQLug9Bj3Rf+8xrcj2QioaS0kfD1uZ8+A0f3p1NX6lhSDC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115578; c=relaxed/simple;
-	bh=yGNl1QrworOvSRqr2Vf9nN+VUz06pkqcG4SV7WwqwjQ=;
+	s=arc-20240116; t=1786115580; c=relaxed/simple;
+	bh=Fq5wMMqKlLGBXE/Kd+ug72DqjCxBMNRDjiS+Rcv/v/g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cJfaPILMqhLUPLcg2vt0LQg/uRUqtaeHTlB2+2cFvEiyZV+1kYeWON2739sRd22WVY5SImN7ExJmUU6v+HVkdNrwnbu+khFBM53abRnPVLZhuJu/qupMPliynIcCb3NFEJd3dKddAtIvETcDn/fwzTpL00laHXKfZLMxvUjW4gY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QLBkbsuC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=TszUlrK2qUMUoj0tVklr/dmvb3k41E3N//v0OEOKucVPiJUDEmi2VkmiQAGxUhZ6m3izl5HUrVHtiVHvU6t0le4nZIRZpIS5FakzOuH29TDDBEDlzrT4zzvnAZ2YuCIx5AyErwby1vB1wX4jE8l4JAdH0Ofe1oiI+jnMfd5jmXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tDeKvowr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QLBkbsuC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1307D1F000E9;
-	Fri,  7 Aug 2026 15:12:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tDeKvowr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF1D21F000E9;
+	Fri,  7 Aug 2026 15:12:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115576;
-	bh=UhkwvhCxptx3J3KuhnZueq0vPKqeN73xJArXbnvn8rY=;
+	s=korg; t=1786115579;
+	bh=II43kAk1wu2mpnRKNvVLhYaDv176Uk91N9IVXWf995c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QLBkbsuCxSN4VdD+Vmrj4fB9wfBJIyheQidJBgF57cnCMVSAl+4n5Pt+ogvyTUlmL
-	 pblA3RAp6F857g6g9opnjSScXEgDbc5GrSuOb+95RYTUiIzI/T2HdhjxMr+FsjIRkS
-	 0TNNzvkSKmHAtcGTImG54UVG3bvzwTRYLLMsh8so=
+	b=tDeKvowrdDoZuOOxFT3DrKzktWN1FAPSeaORorjhl4AykhE72FBjm/rwC3K6D/d1Q
+	 nkCZk0gNFOac7PiVg5sQFFVNpUsU9KlngEkQFw0akTxwtTMYsHMXGTCmTR7PYgByNf
+	 bgnh2uVhJCND4wBykcjiUmC+JDaJIYqWnz7va61A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wayne Lin <wayne.lin@amd.com>,
-	Ray Wu <ray.wu@amd.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 323/396] drm/amd/display: Increase HDMI AV mute wait from 2 to 3 frames
-Date: Fri,  7 Aug 2026 16:38:03 +0200
-Message-ID: <20260807143431.232353771@linuxfoundation.org>
+	Bhawanpreet Lakha <bhawanpreet.lakha@amd.com>,
+	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
+	"Lakha, Bhawanpreet" <Bhawanpreet.Lakha@amd.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Leo Li <sunpeng.li@amd.com>,
+	Rodrigo Siqueira <siqueira@igalia.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	amd-gfx@lists.freedesktop.org
+Subject: [PATCH 6.18 324/396] drm/amd/display: use proper context for logging
+Date: Fri,  7 Aug 2026 16:38:04 +0200
+Message-ID: <20260807143431.252604967@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -46,64 +53,179 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ray Wu <ray.wu@amd.com>
+From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
 
-commit c216b39fbbc4b007fd6984cffd85039d49a55154 upstream.
+commit 114b42507b6a23d9d24e24e4ef165233332c64d4 upstream.
 
-Some HDMI sinks need additional GCP packets to properly process the
-mute state before the timing generator is disabled, especially after
-link re-establishment with HDMI 2.0 scrambling enabled. Waiting for
-only 2 frames is insufficient for certain monitor firmware, resulting
-in garbled display output on resume from suspend.
+The same as the rest of the code, get_ss_info_from_atombios() uses
+calc_pll_cs->ctx->logger for logging. But calc_pll_cs->ctx is
+initialized only later in calc_pll_max_vco_construct(). Therefore, any
+output using DC_LOG_SYNC() leads to a NULL pointer deference in
+get_ss_info_from_atombios().
 
-Increase the AV mute wait in dcn30_set_avmute() from 2 to 3 frames
-to ensure the sink receives enough GCP packets.
+According to Sashiko, the very same problem exists in
+dce112_get_pix_clk_dividers() and dcn3_get_pix_clk_dividers() too.
 
-Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/5167
-Assisted-by: Cursor:Claude-Opus-4.6
-Reviewed-by: Wayne Lin <wayne.lin@amd.com>
-Signed-off-by: Ray Wu <ray.wu@amd.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+To avoid accessing the NULL context, use clk_src->base.ctx->logger
+everywhere. That context in base is initialized earlier in
+dce110_clk_src_construct() and dce112_clk_src_construct(). Before
+get_ss_info_from_atombios() or Sashiko's get_pix_clk_dividers functions
+above are actually called. This is done by redefining DC_LOGGER to
+CTX->logger.
+
+Before:
+dce110_clk_src_construct() did:
+ -> sets clk_src->base.ctx = ctx;
+ -> ss_info_from_atombios_create()
+   -> get_ss_info_from_atombios()   <- uses calc_pll_cs->ctx  # BOOM
+ -> calc_pll_max_vco_construct()    <- sets calc_pll_cs->ctx
+
+After:
+dce110_clk_src_construct() does:
+ -> sets clk_src->base.ctx = ctx;
+ -> ss_info_from_atombios_create()
+   -> get_ss_info_from_atombios()   <- uses clk_src->base.ctx
+
+Closes: https://bugzilla.suse.com/show_bug.cgi?id=1271175
+Closes: https://lore.kernel.org/all/a9ee54e6-2413-4156-9bde-d528ae3c63a3@kernel.org/
+Fixes: 1296423bf23c ("drm/amd/display: define DC_LOGGER for logger")
+Reviewed-by: Bhawanpreet Lakha <bhawanpreet.lakha@amd.com>
+Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+Cc: Lakha, Bhawanpreet <Bhawanpreet.Lakha@amd.com>
+Cc: Harry Wentland <harry.wentland@amd.com>
+Cc: Leo Li <sunpeng.li@amd.com>
+Cc: Rodrigo Siqueira <siqueira@igalia.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: "Christian König" <christian.koenig@amd.com>
+Cc: David Airlie <airlied@gmail.com>
+Cc: Simona Vetter <simona@ffwll.ch>
+Cc: amd-gfx@lists.freedesktop.org
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 0c0d5174b09640d8b560764aa5a177630e076e93)
+(cherry picked from commit 6f16fcbb0c46a87e3d9685407e906573d60104b0)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/hwss/dcn30/dcn30_hwseq.c |   16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dce/dce_clock_source.c |   20 ++++++++----------
+ 1 file changed, 9 insertions(+), 11 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn30/dcn30_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn30/dcn30_hwseq.c
-@@ -837,13 +837,19 @@ void dcn30_set_avmute(struct pipe_ctx *p
- 				pipe_ctx->stream_res.stream_enc,
- 				enable);
+--- a/drivers/gpu/drm/amd/display/dc/dce/dce_clock_source.c
++++ b/drivers/gpu/drm/amd/display/dc/dce/dce_clock_source.c
+@@ -45,9 +45,7 @@
+ 	clk_src->base.ctx
  
--		/* Wait for two frame to make sure AV mute is sent out */
-+		/* Wait for three frames to make sure AV mute is sent out.
-+		 * Some HDMI sinks need additional GCP packets to properly
-+		 * process the mute state, especially after link re-establishment
-+		 * with HDMI 2.0 scrambling enabled.
-+		 */
- 		if (enable && pipe_ctx->stream_res.tg->funcs->is_tg_enabled(pipe_ctx->stream_res.tg)) {
-+			int i;
-+
- 			pipe_ctx->stream_res.tg->funcs->wait_for_state(pipe_ctx->stream_res.tg, CRTC_STATE_VACTIVE);
--			pipe_ctx->stream_res.tg->funcs->wait_for_state(pipe_ctx->stream_res.tg, CRTC_STATE_VBLANK);
--			pipe_ctx->stream_res.tg->funcs->wait_for_state(pipe_ctx->stream_res.tg, CRTC_STATE_VACTIVE);
--			pipe_ctx->stream_res.tg->funcs->wait_for_state(pipe_ctx->stream_res.tg, CRTC_STATE_VBLANK);
--			pipe_ctx->stream_res.tg->funcs->wait_for_state(pipe_ctx->stream_res.tg, CRTC_STATE_VACTIVE);
-+			for (i = 0; i < 3; i++) {
-+				pipe_ctx->stream_res.tg->funcs->wait_for_state(pipe_ctx->stream_res.tg, CRTC_STATE_VBLANK);
-+				pipe_ctx->stream_res.tg->funcs->wait_for_state(pipe_ctx->stream_res.tg, CRTC_STATE_VACTIVE);
-+			}
- 		}
- 	}
+ #define DC_LOGGER \
+-	calc_pll_cs->ctx->logger
+-#define DC_LOGGER_INIT() \
+-	struct calc_pll_clock_source *calc_pll_cs = &clk_src->calc_pll
++	CTX->logger
+ 
+ #undef FN
+ #define FN(reg_name, field_name) \
+@@ -291,6 +289,7 @@ static bool calc_pll_dividers_in_range(
  }
+ 
+ static uint32_t calculate_pixel_clock_pll_dividers(
++		struct dce110_clk_src *clk_src,
+ 		struct calc_pll_clock_source *calc_pll_cs,
+ 		struct pll_settings *pll_settings)
+ {
+@@ -479,7 +478,7 @@ static uint32_t dce110_get_pix_clk_divid
+ {
+ 	uint32_t field = 0;
+ 	uint32_t pll_calc_error = MAX_PLL_CALC_ERROR;
+-	DC_LOGGER_INIT();
++
+ 	/* Check if reference clock is external (not pcie/xtalin)
+ 	* HW Dce80 spec:
+ 	* 00 - PCIE_REFCLK, 01 - XTALIN,    02 - GENERICA,    03 - GENERICB
+@@ -522,12 +521,14 @@ static uint32_t dce110_get_pix_clk_divid
+ 		/*Calculate Dividers by HDMI object, no SS case or SS case */
+ 		pll_calc_error =
+ 			calculate_pixel_clock_pll_dividers(
++				        clk_src,
+ 					&clk_src->calc_pll_hdmi,
+ 					pll_settings);
+ 	else
+ 		/*Calculate Dividers by default object, no SS case or SS case */
+ 		pll_calc_error =
+ 			calculate_pixel_clock_pll_dividers(
++					clk_src,
+ 					&clk_src->calc_pll,
+ 					pll_settings);
+ 
+@@ -572,7 +573,6 @@ static uint32_t dce110_get_pix_clk_divid
+ {
+ 	struct dce110_clk_src *clk_src = TO_DCE110_CLK_SRC(cs);
+ 	uint32_t pll_calc_error = MAX_PLL_CALC_ERROR;
+-	DC_LOGGER_INIT();
+ 
+ 	if (pix_clk_params == NULL || pll_settings == NULL
+ 			|| pix_clk_params->requested_pix_clk_100hz == 0) {
+@@ -604,7 +604,6 @@ static uint32_t dce112_get_pix_clk_divid
+ 		struct pll_settings *pll_settings)
+ {
+ 	struct dce110_clk_src *clk_src = TO_DCE110_CLK_SRC(cs);
+-	DC_LOGGER_INIT();
+ 
+ 	if (pix_clk_params == NULL || pll_settings == NULL
+ 			|| pix_clk_params->requested_pix_clk_100hz == 0) {
+@@ -1370,8 +1369,6 @@ static uint32_t dcn3_get_pix_clk_divider
+ 	unsigned long long actual_pix_clk_100Hz = pix_clk_params ? pix_clk_params->requested_pix_clk_100hz : 0;
+ 	struct dce110_clk_src *clk_src = TO_DCE110_CLK_SRC(cs);
+ 
+-	DC_LOGGER_INIT();
+-
+ 	if (pix_clk_params == NULL || pll_settings == NULL
+ 			|| pix_clk_params->requested_pix_clk_100hz == 0) {
+ 		DC_LOG_ERROR(
+@@ -1441,7 +1438,6 @@ static const struct clock_source_funcs d
+ 	.get_pixel_clk_frequency_100hz = get_pixel_clk_frequency_100hz
+ };
+ 
+-
+ static void get_ss_info_from_atombios(
+ 		struct dce110_clk_src *clk_src,
+ 		enum as_signal_type as_signal,
+@@ -1454,7 +1450,7 @@ static void get_ss_info_from_atombios(
+ 	struct spread_spectrum_info *ss_info_cur;
+ 	struct spread_spectrum_data *ss_data_cur;
+ 	uint32_t i;
+-	DC_LOGGER_INIT();
++
+ 	if (ss_entries_num == NULL) {
+ 		DC_LOG_SYNC(
+ 			"Invalid entry !!!\n");
+@@ -1589,6 +1585,7 @@ static void ss_info_from_atombios_create
+ }
+ 
+ static bool calc_pll_max_vco_construct(
++			struct dce110_clk_src *clk_src,
+ 			struct calc_pll_clock_source *calc_pll_cs,
+ 			struct calc_pll_clock_source_init_data *init_data)
+ {
+@@ -1740,6 +1737,7 @@ bool dce110_clk_src_construct(
+ 	ss_info_from_atombios_create(clk_src);
+ 
+ 	if (!calc_pll_max_vco_construct(
++			clk_src,
+ 			&clk_src->calc_pll,
+ 			&calc_pll_cs_init_data)) {
+ 		ASSERT_CRITICAL(false);
+@@ -1754,7 +1752,7 @@ bool dce110_clk_src_construct(
+ 
+ 
+ 	if (!calc_pll_max_vco_construct(
+-			&clk_src->calc_pll_hdmi, &calc_pll_cs_init_data_hdmi)) {
++			clk_src, &clk_src->calc_pll_hdmi, &calc_pll_cs_init_data_hdmi)) {
+ 		ASSERT_CRITICAL(false);
+ 		goto unexpected_failure;
+ 	}
 
 
