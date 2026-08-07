@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61317442388;
-	Fri,  7 Aug 2026 15:02:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45E2B42DA3F;
+	Fri,  7 Aug 2026 15:02:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114952; cv=none; b=EvXFpK0lMHEfw0xsEgVcPNx6tF7rImYNIAtWqjM5IBdc2HofD/RIHMuduXEv9DtyaLJmS89aWmo6gtRQGOENxeR7p3pyh9a0A/fbyXHU87s1cQbCNkN+JSA+PjwZEY1P74QI5CUWvy3kMLv52jcOgWA9fbLwGmTgygn+56O1qOI=
+	t=1786114955; cv=none; b=RFP9FLZsQaZzoaaysvGwO9RNMlbMmi0ALO8Dm/dIHYu3HPXvs6RYMxxVwXyvDVLrPkbU5PiTXtnUNbKdK1C1khcY9af3Vz9LhfYtTWsK0T/lZHLnDqdF/AkEkiT7wFShmsUaGMkO3vx6qebgL7QHisCTcYm2HgQGhsy8hYBEM00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114952; c=relaxed/simple;
-	bh=RRhWEf1IF6zYIoeusqSudbwbc8VDyO7g5QtBtKlpI9w=;
+	s=arc-20240116; t=1786114955; c=relaxed/simple;
+	bh=MGSR/SNVjshH1NPLHCu8Nbp13iA8xNUKb1G/jSESgOs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fhEnrOFrEd/CZ6fYA2XtFxTGrp28/lX+VDnnuRCV+AwKJeFzP600y7E5TRDVg6xtsWS2HgTtqAjuvs0IOwYZ+9SZp3uQD9MZNV51U6KY796sdV8LdzrzyC5uTpSgoZd9ndA6uGuvdUGGdQVI5fi+1Ds3IV3bm+7+ZhhOjwqD4j8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t1Q860K6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YPTSbvOexZSEFikQCNfFpFRozv7nkzHKg9A/kz9ZDqVf+BH70+FZWqfgqZObJVLAfm2peqCf6zzMGhQPfLYK58HHQ49CtuKZ/+/KUqBTlHkFsYk5V+HCx0S6KDpjn65CQzfpK7RH3OrnxT+dpmNy6VaukVVanRIUAkOoarluvns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ab4+ycNn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t1Q860K6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0CCE1F00A3D;
-	Fri,  7 Aug 2026 15:02:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ab4+ycNn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A4D81F00A3A;
+	Fri,  7 Aug 2026 15:02:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114951;
-	bh=3geWi/EnJSoKfOqpXXFRIt+/KAzMYbDipwUFVn+/yC0=;
+	s=korg; t=1786114954;
+	bh=sTyv/NWAuo+BolqzCbk8HPw99Q5XL+LhTM98EzUyFkk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t1Q860K6Bp6VS7hB+rkpcy+Nm6HjRBbSGaOQclVxCa0XZ7d/o85YJRRZ4J0WivYZC
-	 GYBCGbq0yN5WSFv/ZCUux0M4wG1OqmZrXkFdSy58sGUZhz8kzKF85g0aWIxS8BH/+p
-	 YH9q/fsqow+PJQE7oyLrA/2eboMZS/vBSqw5rH/0=
+	b=Ab4+ycNnnm0JH582iagoGUr7GJ7mvQglBhRc68cw0+dBUzstHea4FTLBH4tEydqfX
+	 ik6xkV0/6qggyP0IroHF99v9E5YJqHLmRVnbR00kgCjEX86OA8GwmjL+rZjDbBKCQz
+	 p+BIFeX7adtZSS+1gf+LW65MlrM9I+TTYQClx72g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
+	Jiale Yao <yaojiale02@163.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 106/396] Bluetooth: ISO: clear iso_data always when detaching conn from hcon
-Date: Fri,  7 Aug 2026 16:34:26 +0200
-Message-ID: <20260807143426.581872217@linuxfoundation.org>
+Subject: [PATCH 6.18 107/396] Bluetooth: L2CAP: fix UAF in l2cap_le_connect_rsp
+Date: Fri,  7 Aug 2026 16:34:27 +0200
+Message-ID: <20260807143426.602868351@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -51,37 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit d57e506f6a1e3929611340fae87c1e4823f4d85c ]
+[ Upstream commit c4740e7f23ff9a8210198d8b4703259e21b9f69d ]
 
-When setting conn->hcon = NULL, also conn->hcon->iso_data = NULL is
-necessary, otherwise later iso_conn_free() will UAF.
+l2cap_le_connect_rsp() obtains a channel via
+__l2cap_get_chan_by_ident() but neither holds a reference nor uses
+l2cap_chan_hold_unless_zero() before locking and operating on it.
+A concurrent l2cap_chan_del() triggered by a remote disconnect can
+free the channel between the lookup and l2cap_chan_lock(), causing
+a use-after-free.
 
-Fix clearing of iso_data in iso_sock_disconn()
+The BR/EDR counterpart l2cap_connect_rsp() and the sibling handler
+l2cap_le_command_rej() already use l2cap_chan_hold_unless_zero()
+to safely hold a reference, but l2cap_le_connect_rsp() was left
+unprotected.
 
-Fixes KASAN: slab-use-after-free in iso_conn_hold_unless_zero on
-iso_sock_release() followed by hci_abort_conn_sync().
+Fix by adding l2cap_chan_hold_unless_zero() after the ident lookup
+and l2cap_chan_put() on the exit path, consistent with other L2CAP
+response handlers.
 
-Fixes: fbdc4bc47268 ("Bluetooth: ISO: Use defer setup to separate PA sync and BIG sync")
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Fixes: f1496dee9cbd ("Bluetooth: Add initial code for LE L2CAP Connect Request")
+Assisted-by: Claude:deepseek-v4-pro
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/iso.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/bluetooth/l2cap_core.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
-index f2ff10ae76e22..5868ad1f7128e 100644
---- a/net/bluetooth/iso.c
-+++ b/net/bluetooth/iso.c
-@@ -826,6 +826,7 @@ static void iso_sock_disconn(struct sock *sk)
- 	sk->sk_state = BT_DISCONN;
- 	iso_conn_lock(iso_pi(sk)->conn);
- 	hci_conn_drop(iso_pi(sk)->conn->hcon);
-+	iso_pi(sk)->conn->hcon->iso_data = NULL;
- 	iso_pi(sk)->conn->hcon = NULL;
- 	iso_conn_unlock(iso_pi(sk)->conn);
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index e04948fb6832e..6133c65b20172 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -4831,6 +4831,10 @@ static int l2cap_le_connect_rsp(struct l2cap_conn *conn,
+ 	if (!chan)
+ 		return -EBADSLT;
+ 
++	chan = l2cap_chan_hold_unless_zero(chan);
++	if (!chan)
++		return -EBADSLT;
++
+ 	err = 0;
+ 
+ 	l2cap_chan_lock(chan);
+@@ -4876,6 +4880,7 @@ static int l2cap_le_connect_rsp(struct l2cap_conn *conn,
+ 	}
+ 
+ 	l2cap_chan_unlock(chan);
++	l2cap_chan_put(chan);
+ 
+ 	return err;
  }
 -- 
 2.53.0
