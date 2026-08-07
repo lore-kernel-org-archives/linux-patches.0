@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7B7A478869;
-	Fri,  7 Aug 2026 15:00:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B8BE478869;
+	Fri,  7 Aug 2026 15:00:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114849; cv=none; b=IsjGJMsZVd7kL8XRoyprJvAl4TS6Vc/FqCG4PX0Kh7d+mBX58PggWyTWEeAIDTa6Ppj6Paz+dycMsEREtu+KaRjrfn2rgDlIf4QdwHZF7enb4QNmyO9Db65fRnD4L4BYmEDnF41BPr56+8dWyreUyGSQMDiwKf7HBDe1XMUfewQ=
+	t=1786114852; cv=none; b=CaWzOkBt6ihivYT3SPH8txlyYm/CRpdmHl1QlRc5iQQomoYLi3pr1OMySgvZDA0f3JJh8fONuL2HDkgHVQLyuXl/i+bqDUQRXcKrd31eUPA9ADxB1yiY26aq1KTJmAQmFh9nVKbrePeM0u9oL6fsUETUiJtlfIL/XnVeJ7AajMY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114849; c=relaxed/simple;
-	bh=ihDVgF5p2t3XsViVWXxQ88m0C53SXWxuEQjA7Q9W54M=;
+	s=arc-20240116; t=1786114852; c=relaxed/simple;
+	bh=H31+ha+2G361rzC3U3MdhIboiIMJif+W2X/sKjgbavM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uNV3b8kkICXHHpTMVd25ZpwKLvoavD3RXLg8RCrb4PveZSvu8tA9LcTEm9earDsNzExRhgcAyN8AzWzWnq9JoXywDmVbMyQiKVU02grqyp8Pc7ZJwlu14GX3ey4ag5evk5jlq084uct35Yc7d8u/65+1Z+pHz7qG/A+I6TZOIo8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YdGzsVIm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=bTV7Gz4S0miVZuRtrX7E0/BxviprCIPRtKJt3irRxa3abgQ2jBNpTNGh72wApsW6rRxz9ySgoQrirRD70jlzciMu2DkNYjihqV3uowTguG9M//dpB4ZD2Zu3Wlr6ZCr3msq9TGRycfPCF7B2kAYHRZotpF2dzMSRn5GFfxFJNIA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FxRj/upn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YdGzsVIm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DC4B1F000E9;
-	Fri,  7 Aug 2026 15:00:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FxRj/upn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D70591F000E9;
+	Fri,  7 Aug 2026 15:00:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114848;
-	bh=Ec3NTTio/HkgnbIXaCSz/HN8TqEoBWvDKBXMipE2KWY=;
+	s=korg; t=1786114851;
+	bh=Bv0hkO8Yj8YzAIOsEeCWOJgFp0cXf8f76VBW2W0Z3Xk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YdGzsVImmjiF2UHI2huCnDNg6aiE5/5nfKMLvfle1BR5KHCEvaAi3x1PMB7Vgb1XD
-	 ajN6k+DcA+WoX1tIrz50/8/eMcU1sHyQmtohPc6r6tuKl1b70LMgpR5HZjELT0GMbJ
-	 YzbLjLDzDqiELmiZhMRWOoVPXSS61fo9nwqZtsK0=
+	b=FxRj/upnhwoI7Bg2XFGjFgwtwFSlInliLXQmLUx5VB9B7tjA7czDKPXGbnDbmjB0Z
+	 f91ZFElJmY94ALM9lFHSCTI46Lm1tzCtZapHN0Ep1aJE8AczZsy/wzjklUO49zgMrY
+	 O3hK/vYHkmxpByO1laVDvwv5M3xF6jauwel/J/aU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jun Guo <jun.guo@cixtech.com>,
+	Srikanth Boyapally <srikanth.boyapally@amd.com>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 069/396] spi: spi-cadence: supports transmission with bits_per_word of 16 and 32
-Date: Fri,  7 Aug 2026 16:33:49 +0200
-Message-ID: <20260807143425.759741372@linuxfoundation.org>
+Subject: [PATCH 6.18 070/396] spi: spi-cadence: Move TX FIFO full busy-wait into FIFO
+Date: Fri,  7 Aug 2026 16:33:50 +0200
+Message-ID: <20260807143425.780420460@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -45,203 +46,113 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jun Guo <jun.guo@cixtech.com>
+From: Srikanth Boyapally <srikanth.boyapally@amd.com>
 
-[ Upstream commit 4e00135b2dd1d7924a58bffa551b6ceb3bd836f2 ]
+[ Upstream commit d9eadfce2fac49445db40808fe4d8259f20a9d2b ]
 
-The default FIFO data width of the Cadence SPI IP is 8 bits, but
-the hardware supports configurations of 16 bits and 32 bits.
-This patch enhances the driver to support communication with both
-16-bits and 32-bits FIFO data widths.
+SPI host transfers could intermittently stall with spi_transfer timeouts.
+The TXFULL condition was checked only once in cdns_transfer_one() before
+cdns_spi_process_fifo(), so if the FIFO became full again during refill,
+writes could be dropped and the transfer would never complete.
 
-Signed-off-by: Jun Guo <jun.guo@cixtech.com>
-Link: https://patch.msgid.link/20251031073003.3289573-3-jun.guo@cixtech.com
+Move the TXFULL busy-wait into the TX path of cdns_spi_process_fifo() so
+the 10µs back-off is applied per FIFO entry during filling, ensuring
+forward progress and eliminating spurious timeouts.
+
+Restrict the delay to host mode using spi_controller_is_target(), the
+controller is passed into cdns_spi_process_fifo() so the check is made at
+the point of use. In target mode this delay must not run as it causes the
+target to miss its transfer window and corrupt data.
+
+Fixes: 49530e641178 ("spi: cadence: Add usleep_range() for cdns_spi_fill_tx_fifo()")
+Signed-off-by: Srikanth Boyapally <srikanth.boyapally@amd.com>
+Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Link: https://patch.msgid.link/20260720125510.60166-1-srikanth.boyapally@amd.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: d9eadfce2fac ("spi: spi-cadence: Move TX FIFO full busy-wait into FIFO")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-cadence.c | 106 +++++++++++++++++++++++++++++++++-----
- 1 file changed, 93 insertions(+), 13 deletions(-)
+ drivers/spi/spi-cadence.c | 26 ++++++++++++++++----------
+ 1 file changed, 16 insertions(+), 10 deletions(-)
 
 diff --git a/drivers/spi/spi-cadence.c b/drivers/spi/spi-cadence.c
-index 7a745c2e0892c..75803a7f4cb11 100644
+index 75803a7f4cb11..403e8141dff89 100644
 --- a/drivers/spi/spi-cadence.c
 +++ b/drivers/spi/spi-cadence.c
-@@ -109,6 +109,7 @@
-  * @rxbuf:		Pointer to the RX buffer
-  * @tx_bytes:		Number of bytes left to transfer
-  * @rx_bytes:		Number of bytes requested
-+ * @n_bytes:		Number of bytes per word
-  * @dev_busy:		Device busy flag
-  * @is_decoded_cs:	Flag for decoder property set or not
-  * @tx_fifo_depth:	Depth of the TX FIFO
-@@ -120,16 +121,24 @@ struct cdns_spi {
- 	struct clk *pclk;
- 	unsigned int clk_rate;
- 	u32 speed_hz;
--	const u8 *txbuf;
--	u8 *rxbuf;
-+	const void *txbuf;
-+	void *rxbuf;
- 	int tx_bytes;
- 	int rx_bytes;
-+	u8 n_bytes;
- 	u8 dev_busy;
- 	u32 is_decoded_cs;
- 	unsigned int tx_fifo_depth;
- 	struct reset_control *rstc;
- };
+@@ -388,11 +388,13 @@ static inline void cdns_spi_writer(struct cdns_spi *xspi)
  
-+enum cdns_spi_frame_n_bytes {
-+	CDNS_SPI_N_BYTES_NULL = 0,
-+	CDNS_SPI_N_BYTES_U8 = 1,
-+	CDNS_SPI_N_BYTES_U16 = 2,
-+	CDNS_SPI_N_BYTES_U32 = 4
-+};
-+
- /* Macros for the SPI controller read/write */
- static inline u32 cdns_spi_read(struct cdns_spi *xspi, u32 offset)
- {
-@@ -305,6 +314,78 @@ static int cdns_spi_setup_transfer(struct spi_device *spi,
- 	return 0;
- }
- 
-+static u8 cdns_spi_n_bytes(struct spi_transfer *transfer)
-+{
-+	if (transfer->bits_per_word <= 8)
-+		return CDNS_SPI_N_BYTES_U8;
-+	else if (transfer->bits_per_word <= 16)
-+		return CDNS_SPI_N_BYTES_U16;
-+	else
-+		return CDNS_SPI_N_BYTES_U32;
-+}
-+
-+static inline void cdns_spi_reader(struct cdns_spi *xspi)
-+{
-+	u32 rxw = 0;
-+
-+	if (xspi->rxbuf && !IS_ALIGNED((uintptr_t)xspi->rxbuf, xspi->n_bytes)) {
-+		pr_err("%s: rxbuf address is not aligned for %d bytes\n",
-+		       __func__, xspi->n_bytes);
-+		return;
-+	}
-+
-+	rxw = cdns_spi_read(xspi, CDNS_SPI_RXD);
-+	if (xspi->rxbuf) {
-+		switch (xspi->n_bytes) {
-+		case CDNS_SPI_N_BYTES_U8:
-+			*(u8 *)xspi->rxbuf = rxw;
-+			break;
-+		case CDNS_SPI_N_BYTES_U16:
-+			*(u16 *)xspi->rxbuf = rxw;
-+			break;
-+		case CDNS_SPI_N_BYTES_U32:
-+			*(u32 *)xspi->rxbuf = rxw;
-+			break;
-+		default:
-+			pr_err("%s invalid n_bytes %d\n", __func__,
-+			       xspi->n_bytes);
-+			return;
-+		}
-+		xspi->rxbuf = (u8 *)xspi->rxbuf + xspi->n_bytes;
-+	}
-+}
-+
-+static inline void cdns_spi_writer(struct cdns_spi *xspi)
-+{
-+	u32 txw = 0;
-+
-+	if (xspi->txbuf && !IS_ALIGNED((uintptr_t)xspi->txbuf, xspi->n_bytes)) {
-+		pr_err("%s: txbuf address is not aligned for %d bytes\n",
-+		       __func__, xspi->n_bytes);
-+		return;
-+	}
-+
-+	if (xspi->txbuf) {
-+		switch (xspi->n_bytes) {
-+		case CDNS_SPI_N_BYTES_U8:
-+			txw = *(u8 *)xspi->txbuf;
-+			break;
-+		case CDNS_SPI_N_BYTES_U16:
-+			txw = *(u16 *)xspi->txbuf;
-+			break;
-+		case CDNS_SPI_N_BYTES_U32:
-+			txw = *(u32 *)xspi->txbuf;
-+			break;
-+		default:
-+			pr_err("%s invalid n_bytes %d\n", __func__,
-+			       xspi->n_bytes);
-+			return;
-+		}
-+		cdns_spi_write(xspi, CDNS_SPI_TXD, txw);
-+		xspi->txbuf = (u8 *)xspi->txbuf + xspi->n_bytes;
-+	}
-+}
-+
  /**
   * cdns_spi_process_fifo - Fills the TX FIFO, and drain the RX FIFO
++ * @ctlr:	Pointer to the spi_controller structure
   * @xspi:	Pointer to the cdns_spi structure
-@@ -321,23 +402,14 @@ static void cdns_spi_process_fifo(struct cdns_spi *xspi, int ntx, int nrx)
- 
- 	while (ntx || nrx) {
- 		if (nrx) {
--			u8 data = cdns_spi_read(xspi, CDNS_SPI_RXD);
--
--			if (xspi->rxbuf)
--				*xspi->rxbuf++ = data;
--
-+			cdns_spi_reader(xspi);
- 			nrx--;
+  * @ntx:	Number of bytes to pack into the TX FIFO
+  * @nrx:	Number of bytes to drain from the RX FIFO
+  */
+-static void cdns_spi_process_fifo(struct cdns_spi *xspi, int ntx, int nrx)
++static void cdns_spi_process_fifo(struct spi_controller *ctlr,
++				  struct cdns_spi *xspi, int ntx, int nrx)
+ {
+ 	ntx = clamp(ntx, 0, xspi->tx_bytes);
+ 	nrx = clamp(nrx, 0, xspi->rx_bytes);
+@@ -407,6 +409,16 @@ static void cdns_spi_process_fifo(struct cdns_spi *xspi, int ntx, int nrx)
  		}
  
  		if (ntx) {
--			if (xspi->txbuf)
--				cdns_spi_write(xspi, CDNS_SPI_TXD, *xspi->txbuf++);
--			else
--				cdns_spi_write(xspi, CDNS_SPI_TXD, 0);
--
-+			cdns_spi_writer(xspi);
++			/* When xspi in busy condition, bytes may send failed,
++			 * then spi control didn't work thoroughly, add one byte
++			 * delay. Only in host mode; in target mode this delay
++			 * causes data corruption as the target fails to prepare
++			 * data in time.
++			 */
++			if (!spi_controller_is_target(ctlr) &&
++			    (cdns_spi_read(xspi, CDNS_SPI_ISR) & CDNS_SPI_IXR_TXFULL))
++				udelay(10);
++
+ 			cdns_spi_writer(xspi);
  			ntx--;
  		}
--
+@@ -460,14 +472,14 @@ static irqreturn_t cdns_spi_irq(int irq, void *dev_id)
+ 			cdns_spi_write(xspi, CDNS_SPI_THLD, 1);
+ 
+ 		if (xspi->tx_bytes) {
+-			cdns_spi_process_fifo(xspi, trans_cnt, trans_cnt);
++			cdns_spi_process_fifo(ctlr, xspi, trans_cnt, trans_cnt);
+ 		} else {
+ 			/* Fixed delay due to controller limitation with
+ 			 * RX_NEMPTY incorrect status
+ 			 * Xilinx AR:65885 contains more details
+ 			 */
+ 			udelay(10);
+-			cdns_spi_process_fifo(xspi, 0, trans_cnt);
++			cdns_spi_process_fifo(ctlr, xspi, 0, trans_cnt);
+ 			cdns_spi_write(xspi, CDNS_SPI_IDR,
+ 				       CDNS_SPI_IXR_DEFAULT);
+ 			spi_finalize_current_transfer(ctlr);
+@@ -520,17 +532,11 @@ static int cdns_transfer_one(struct spi_controller *ctlr,
+ 			cdns_spi_write(xspi, CDNS_SPI_THLD, xspi->tx_fifo_depth >> 1);
  	}
- }
  
-@@ -454,6 +526,10 @@ static int cdns_transfer_one(struct spi_controller *ctlr,
- 	if (cdns_spi_read(xspi, CDNS_SPI_ISR) & CDNS_SPI_IXR_TXFULL)
- 		udelay(10);
+-	/* When xspi in busy condition, bytes may send failed,
+-	 * then spi control didn't work thoroughly, add one byte delay
+-	 */
+-	if (cdns_spi_read(xspi, CDNS_SPI_ISR) & CDNS_SPI_IXR_TXFULL)
+-		udelay(10);
+-
+ 	xspi->n_bytes = cdns_spi_n_bytes(transfer);
+ 	xspi->tx_bytes = DIV_ROUND_UP(xspi->tx_bytes, xspi->n_bytes);
+ 	xspi->rx_bytes = DIV_ROUND_UP(xspi->rx_bytes, xspi->n_bytes);
  
-+	xspi->n_bytes = cdns_spi_n_bytes(transfer);
-+	xspi->tx_bytes = DIV_ROUND_UP(xspi->tx_bytes, xspi->n_bytes);
-+	xspi->rx_bytes = DIV_ROUND_UP(xspi->rx_bytes, xspi->n_bytes);
-+
- 	cdns_spi_process_fifo(xspi, xspi->tx_fifo_depth, 0);
+-	cdns_spi_process_fifo(xspi, xspi->tx_fifo_depth, 0);
++	cdns_spi_process_fifo(ctlr, xspi, xspi->tx_fifo_depth, 0);
  
  	cdns_spi_write(xspi, CDNS_SPI_IER, CDNS_SPI_IXR_DEFAULT);
-@@ -654,6 +730,9 @@ static int cdns_spi_probe(struct platform_device *pdev)
- 	ctlr->mode_bits = SPI_CPOL | SPI_CPHA;
- 	ctlr->bits_per_word_mask = SPI_BPW_MASK(8);
- 
-+	if (of_device_is_compatible(pdev->dev.of_node, "cix,sky1-spi-r1p6"))
-+		ctlr->bits_per_word_mask |= SPI_BPW_MASK(16) | SPI_BPW_MASK(32);
-+
- 	if (!spi_controller_is_target(ctlr)) {
- 		ctlr->mode_bits |=  SPI_CS_HIGH;
- 		ctlr->set_cs = cdns_spi_chipselect;
-@@ -812,6 +891,7 @@ static const struct dev_pm_ops cdns_spi_dev_pm_ops = {
- 
- static const struct of_device_id cdns_spi_of_match[] = {
- 	{ .compatible = "xlnx,zynq-spi-r1p6" },
-+	{ .compatible = "cix,sky1-spi-r1p6" },
- 	{ .compatible = "cdns,spi-r1p6" },
- 	{ /* end of table */ }
- };
+ 	return transfer->len;
 -- 
 2.53.0
 
