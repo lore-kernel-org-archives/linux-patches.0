@@ -1,47 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4971F3FB7E0;
-	Fri,  7 Aug 2026 14:49:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19A864B0482;
+	Fri,  7 Aug 2026 14:50:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114199; cv=none; b=K/R3fGWoov6ctYd5LQo92Jd8/0EaJQR6MRgMjv1AAPh6NQUnL/XmElURFEi+Xi9HQ5BpGkNFjy9I51z3gqGgy3aDPdRIe/61l7knWWKDoDLJw+bOfoVC9m63ZvXPSiOisp92teikPmVtr2LwIM8jiAEviMPOJe0z8G6uFYwqth4=
+	t=1786114203; cv=none; b=jGzlQhNS7vIiQtBJuntQIuPIt5VrSCnIG7ZGsgQP7IknoXEy9myRNV/rBJCWI4xUpkObM4HWJxFzva32EgTVdftloX8gYW6ysf18oTdw/6N305ZVw+ZBtEbpINnpcj8JP3OLa4ZrJU/roMt74PHwMAIaWkDNB3ObNeJ9vrqWVQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114199; c=relaxed/simple;
-	bh=rz+qFSQQewGac+18y0YmCK9F/99WmO4x6r+XPud7PiY=;
+	s=arc-20240116; t=1786114203; c=relaxed/simple;
+	bh=BJ2uEqZ8jgDP5WcfCzpfzej3GtXmpqToHoxBatDxUNA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lFrgasjdbOzUx7EAdZRD4jynjvyCHBvNg0FTcnMNJam6/MZjLTneWe0CpdaHLbN3sbfsNNUB4tioL98wmCMxK5yu3Ft7lXA3z0LC5h7oZqvwMfqykkKv8M+3H+sWN4c1t6a7xhLdqO42Yv4yQaIS1xY0AcyLXQsNCQj71JfptMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hxl1ZU2e; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GhOLHOqrWLBWoCQin/vw2IaFp8qfIjyznY9qmgXEboPA+8mH1OxJs0tUWQ6MqmUrXhK/oS7wRSmKHymh+G7gVEeUg74YcXJ79VjQIm5Duzb9zuhoSQ3FkA5tA+x93IpIgmIjcHw6UhtHFgkOB7nLl5Ti16KpNJ6hr9Kjb/gh6G4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xiMGObqC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hxl1ZU2e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A13291F000E9;
-	Fri,  7 Aug 2026 14:49:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xiMGObqC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB6C41F000E9;
+	Fri,  7 Aug 2026 14:50:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114198;
-	bh=4fIYmBubnEkLE9l2ExVBjGr8BkA0bSuYwl5BHa7rGjk=;
+	s=korg; t=1786114201;
+	bh=pfNsIzxZMQWdSvpev7PMowm1Dpq5aIUMZGtH9XNAEEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hxl1ZU2e3THduQh2+uDwkABtkpBhLMkl2jJHPkkKDQwV2dsxEUkmMJqvWS5S38x8z
-	 OXbn+72SxidAyx7Rl4JBK0H8BxAaCL8gP1VFtDjpT7k0eSjKj5qDK8aw2vQaQjfETV
-	 yX9JhFI45iIpsxdWXOk1L6MUIEXaEgojGDJ+5sYA=
+	b=xiMGObqCs1nBjaOmUqJbi652k5tlPWVMG4QkKLq3d/FDEi1zcRVeidtqHCy2+emDp
+	 AQgFiOd1k1lfc/wJiJFTEUjYV5o9NKhQArajz/7MqwUHfwFT069o7PwexDSDsAxcmD
+	 QBByeFx8Lwhoq1IdjI6Ot/rWvtsWk6ycTu7JAfeU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Link Lin <linkl@google.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	David Rientjes <rientjes@google.com>,
-	Alexander Duyck <alexander.duyck@gmail.com>,
-	Greg Thelen <gthelen@google.com>,
-	James Houghton <jthoughton@google.com>,
-	Jason Wang <jasowang@redhat.com>,
-	Jiaqi Yan <jiaqiyan@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
+	Breno Leitao <leitao@debian.org>,
+	Joshua Hahn <joshua.hahnjy@gmail.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	SeongJae Park <sj@kernel.org>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Michal Hocko <mhocko@kernel.org>,
+	Muchun Song <muchun.song@linux.dev>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 180/337] mm/page_reporting: use system_freezable_wq to fix UAF during suspend
-Date: Fri,  7 Aug 2026 16:36:23 +0200
-Message-ID: <20260807143422.463246834@linuxfoundation.org>
+Subject: [PATCH 6.12 181/337] mm: memcg: initialize *locked in memcg1_oom_prepare() stub
+Date: Fri,  7 Aug 2026 16:36:24 +0200
+Message-ID: <20260807143422.483464410@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -54,102 +51,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Link Lin <linkl@google.com>
+From: Breno Leitao <leitao@debian.org>
 
-commit 0b45f6927a14914ff685fe0e6f9d11232a1e03df upstream.
+commit 1833ce36b35426504c64600c94f322437ea44bb2 upstream.
 
-During PM freeze (e.g.  S3 suspend or S4 hibernation), device drivers like
-virtio_balloon reset their underlying virtio devices and delete their
-virtqueues via vdev->config->del_vqs().
+mem_cgroup_oom() passes an uninitialized "locked" to memcg1_oom_prepare()
+and reads it back in memcg1_oom_finish():
 
-However, page reporting work (page_reporting_process) was scheduled on the
-global system_wq.  Because system_wq lacks the WQ_FREEZABLE flag, the PM
-freezer skips it, leaving page_reporting_process active during suspend.
+	bool locked, ret;
+	...
+	if (!memcg1_oom_prepare(memcg, &locked))
+		return false;
+	ret = mem_cgroup_out_of_memory(memcg, mask, order);
+	memcg1_oom_finish(memcg, locked);
 
-If pages are freed into the buddy allocator while suspending (for example,
-when core MM invokes the balloon shrinker during S4 hibernation image
-saving), page reporting triggers virtballoon_free_page_report() on deleted
-virtqueues, resulting in a Use-After-Free / General Protection Fault:
+This relies on memcg1_oom_prepare() setting *locked whenever it returns
+true.  The CONFIG_MEMCG_V1=y version does, but the stub used when
+CONFIG_MEMCG_V1=n returns true without touching *locked, so
+memcg1_oom_finish() consumes an uninitialized value.  On a memcg OOM this
+is reported by UBSAN:
 
-    [  196.795226] general protection fault, probably for non-canonical address 0xaa1436fe70dae6df: 0000 [#1] SMP NOPTI
-    [  196.825967] Workqueue: events page_reporting_process
-    [  196.831038] RIP: 0010:virtqueue_add_split+0x233/0x4c0 [virtio_ring]
-    [  196.927073] virtballoon_free_page_report+0x3a/0xe0 [virtio_balloon]
-    [  196.946943] page_reporting_process+0x370/0x4f0
+  UBSAN: invalid-load in mm/memcontrol.c:1932:27
+  load of value 0 is not a valid value for type 'bool' (aka '_Bool')
 
-Fix this by switching page reporting work to system_freezable_wq.  This
-ensures that the PM freezer pauses page_reporting_process before device
-drivers destroy their reporting virtqueues.  Because the reporting worker
-is frozen, memory reclamation/freeing (e.g.  via shrinker execution) can
-safely return pages to MM during freeze without triggering unfrozen
-reporting work on deleted virtqueues.
+Initialize *locked to false in the stub; with cgroup v1 compiled out there
+is no OOM lock to take.
 
-This aligns with the driver's existing design. The comment in
-virtballoon_freeze() states:
-    /*
-     * The workqueue is already frozen by the PM core before this
-     * function is called.
-     */
-
-Testing:
-I have verified these fixes using Google’s virtualization infrastructure
-by running continuous suspend/resume iterations (40+ cycles) while
-churning memory using stress-ng (`stress-ng --vm 4 --vm-bytes 60%
---timeout 1`) to constantly create free pages for the buddy allocator.  We
-also set the `page_reporting_order` parameter to 0 to make the page
-reporting worker highly sensitive, forcing it to pick up any 4K free
-pages.  This confirmed that the UAF crashes are no longer reproducible.
-
-Link: https://lore.kernel.org/20260721005603.1710551-1-linkl@google.com
-Fixes: 36e66c554b5c ("mm: introduce Reported pages")
-Signed-off-by: Link Lin <linkl@google.com>
-Suggested-by: David Hildenbrand (Arm) <david@kernel.org>
-Suggested-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: David Rientjes <rientjes@google.com>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Cc: Alexander Duyck <alexander.duyck@gmail.com>
-Cc: Greg Thelen <gthelen@google.com>
-Cc: James Houghton <jthoughton@google.com>
-Cc: Jason Wang <jasowang@redhat.com>
-Cc: Jiaqi Yan <jiaqiyan@google.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+Link: https://lore.kernel.org/20260716-memcg-oom-uninit-locked-v2-1-63631d878eb4@debian.org
+Fixes: e93d4166b40a ("mm: memcg: put cgroup v1-specific code under a config option")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Joshua Hahn <joshua.hahnjy@gmail.com>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Reviewed-by: SeongJae Park <sj@kernel.org>
+Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Shakeel Butt <shakeel.butt@linux.dev>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/page_reporting.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ mm/memcontrol-v1.h |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/mm/page_reporting.c
-+++ b/mm/page_reporting.c
-@@ -80,7 +80,8 @@ __page_reporting_request(struct page_rep
- 	 * now we are limiting this to running no more than once every
- 	 * couple of seconds.
- 	 */
--	schedule_delayed_work(&prdev->work, PAGE_REPORTING_DELAY);
-+	queue_delayed_work(system_freezable_wq, &prdev->work,
-+			   PAGE_REPORTING_DELAY);
- }
+--- a/mm/memcontrol-v1.h
++++ b/mm/memcontrol-v1.h
+@@ -133,7 +133,11 @@ static inline void memcg1_soft_limit_res
+ static inline bool memcg1_wait_acct_move(struct mem_cgroup *memcg) { return false; }
+ static inline void memcg1_css_offline(struct mem_cgroup *memcg) {}
  
- /* notify prdev of free page reporting request */
-@@ -343,7 +344,8 @@ err_out:
- 	 */
- 	state = atomic_cmpxchg(&prdev->state, state, PAGE_REPORTING_IDLE);
- 	if (state == PAGE_REPORTING_REQUESTED)
--		schedule_delayed_work(&prdev->work, PAGE_REPORTING_DELAY);
-+		queue_delayed_work(system_freezable_wq, &prdev->work,
-+				   PAGE_REPORTING_DELAY);
- }
+-static inline bool memcg1_oom_prepare(struct mem_cgroup *memcg, bool *locked) { return true; }
++static inline bool memcg1_oom_prepare(struct mem_cgroup *memcg, bool *locked)
++{
++	*locked = false;
++	return true;
++}
+ static inline void memcg1_oom_finish(struct mem_cgroup *memcg, bool locked) {}
+ static inline void memcg1_oom_recover(struct mem_cgroup *memcg) {}
  
- static DEFINE_MUTEX(page_reporting_mutex);
 
 
