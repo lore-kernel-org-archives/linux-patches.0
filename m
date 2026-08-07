@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F72038E8A9;
-	Fri,  7 Aug 2026 15:11:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83A24435AB2;
+	Fri,  7 Aug 2026 15:11:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115482; cv=none; b=jcQcYtjoLLjN4aO8r1lYUk6PJNnc8idk/XFkkjMckcQzYQ1hMUPB7D3trFxn+Pyf2w0ZCv5USNFN0p1c7sGHp75o2i15tuGXIuDfD3aXUS9sK2ztQByvmGPRbITZ/36o7/jkp0oIThiRCi8BN/xOTZrh+mEPUNyM6ABvJpFSvx8=
+	t=1786115484; cv=none; b=eQfjX49L1Jw3uD5+HBqho237j/f1h34VHd2C22w7LiwzzugtSjbOU8rz3tqkJfNjItNZGKRolcnuYiCTgW6KVWHqUUUZFpQzwW7HTUKGZQsNFCMaKRWjmdzCzvxd2YkT4P0C204wAm4eVJrVlO8GZnGD1IYgKxgBU3I8qRcfm/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115482; c=relaxed/simple;
-	bh=0KUZg2gG9jW/U8E8YgCu07/FCO3c+8jMGjMtF5g5gq0=;
+	s=arc-20240116; t=1786115484; c=relaxed/simple;
+	bh=S5W1VT6nNeRKFThsAE2nKLmEUQvWMqnkfFnWTua/ro4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DZ6OtYxKJNvaeCxaT6Y8NqvH4DakcmwTci560RI4X7fuLee5a2qMI8EIvJ+LYgfxYdQ2g8rai63FAtnfULInMJfvcT34HCnvmj0wd5GyMlYGx/2FI3eyTfQXq+yRyNRCEN/rA9wy2pfwszG4oPHL0Ihbd+LtHUbkQ/78/ql/x/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ApC9gmiW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BDiL0/0XGNGXWu/Zwo4U23Yk7baoihGzAx3wPWxXGWzLfmzrQZh0NKpA7CCAhVGUBqzlAHKsfsKpEKxKPmoMAg7dOix3f+3maGtcMq+EGWKLI/j+Ynqf8DuSb3G0X54COZmDV5ig364x6A/Ku3R2oHBWmph56KesONT4lbTACvs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cVT4Z4SZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ApC9gmiW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0145C1F000E9;
-	Fri,  7 Aug 2026 15:11:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cVT4Z4SZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7FF11F00A3A;
+	Fri,  7 Aug 2026 15:11:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115479;
-	bh=tLWKXIxQ1b+rQDA2aVeCGdPRcLh1Ti3iyXcx+wtroCg=;
+	s=korg; t=1786115482;
+	bh=G2a52FjtOUF9bhE+VNVvk06Sr0CmN0xjQLF1v+oVtSo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ApC9gmiW3BZqxY3fL4ypiX+Q+gs3/6h/M7QbZcjg1RJfEQDnLNykvt80pyngjYvbu
-	 UpXQRbkaJeuPIUYQtHhpFe9kTcGNS6XQjsg6ZKvfcAIb0WxM9w1wAWrdY6bdP7G3DZ
-	 V5lwo5+pQTDhH1lDre5EXScKb7o1eITWF6PIWyCU=
+	b=cVT4Z4SZhPn6vDCdvAn7Ayr9jWxmAckrKDMp9KpQsySIEr/wArHwDuOFyAHUtoX/C
+	 3JJkvdjecpEUIleOEugZtasTv1qSl+oJGroaFMsmvSKkasf6LZpwbgQ+z2fifI1L96
+	 hlhaUNH7fJudUwlfNyyWM9WCC4ywejRJeCFAmwBU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carlos Song <carlos.song@nxp.com>,
+	Liem <liem16213@gmail.com>,
 	Frank Li <Frank.Li@nxp.com>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Carlos Song <carlos.song@nxp.com>,
 	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.18 292/396] i2c: imx: mark I2C adapter when hardware is powered down
-Date: Fri,  7 Aug 2026 16:37:32 +0200
-Message-ID: <20260807143430.568847709@linuxfoundation.org>
+Subject: [PATCH 6.18 293/396] i2c: imx: Fix slave registration race and error handling
+Date: Fri,  7 Aug 2026 16:37:33 +0200
+Message-ID: <20260807143430.591634629@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -52,100 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carlos Song <carlos.song@nxp.com>
+From: Liem <liem16213@gmail.com>
 
-commit 00d86dd5c2034e0e139e4806137b3b43e07ddd83 upstream.
+commit d64ec362c369bbc33833f7936d5f3a706b0d5c45 upstream.
 
-On some i.MX platforms, certain I2C client drivers keep a periodic
-workqueue which continues to trigger I2C transfers.
+In i2c_imx_reg_slave(), the slave pointer was assigned before
+pm_runtime_resume_and_get().  If pm_runtime_resume_and_get() failed,
+the error path returned without clearing i2c_imx->slave, leaving it
+non-NULL and causing all subsequent registration attempts to fail
+with -EBUSY.
 
-During system suspend/resume, there exists a time window between:
-  - suspend_noirq and the system entering suspend
-  - the system starting to resume and resume_noirq
+Additionally, because this driver uses a shared IRQ, the interrupt
+handler i2c_imx_isr() can execute concurrently and, after acquiring
+slave_lock, dereference i2c_imx->slave.  The previous fix attempt
+added a lockless i2c_imx->slave = NULL on the error path, but that
+could race with the ISR under the lock and still cause a NULL pointer
+dereference.
 
-In this window, the I2C controller resources such as clock and pinctrl
-may already be disabled or not yet restored.
+Fix both issues by deferring the assignment of i2c_imx->slave and
+i2c_imx->last_slave_event to after a successful resume, and by
+performing the assignment inside the slave_lock critical section.
+This guarantees that the slave pointer is never left stale on the
+error path and is always valid when observed by the interrupt handler.
 
-If a workqueue triggers an I2C transfer in this period, the driver
-attempts to access I2C registers while the hardware resources are
-unavailable, which may lead to system hang.
-
-Mark the I2C adapter as suspended during noirq suspend and block new
-transfers until resume, ensuring that I2C transfers are only issued
-when hardware resources are available.
-
-Fixes: 358025ac091e ("i2c: imx: make controller available until system suspend_noirq() and from resume_noirq()")
-Signed-off-by: Carlos Song <carlos.song@nxp.com>
-Cc: <stable@vger.kernel.org> # v6.14+
+Fixes: f7414cd6923f ("i2c: imx: support slave mode for imx I2C driver")
+Signed-off-by: Liem <liem16213@gmail.com>
+Cc: <stable@vger.kernel.org> # v5.11+
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Acked-by: Carlos Song <carlos.song@nxp.com>
 Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20260525030400.3182911-1-carlos.song@oss.nxp.com
+Link: https://lore.kernel.org/r/20260629023829.152651-2-liem16213@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-imx.c |   45 +++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 43 insertions(+), 2 deletions(-)
+ drivers/i2c/busses/i2c-imx.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
 --- a/drivers/i2c/busses/i2c-imx.c
 +++ b/drivers/i2c/busses/i2c-imx.c
-@@ -1952,6 +1952,47 @@ static int i2c_imx_runtime_resume(struct
- 	return 0;
- }
+@@ -930,9 +930,6 @@ static int i2c_imx_reg_slave(struct i2c_
+ 	if (i2c_imx->slave)
+ 		return -EBUSY;
  
-+static int __maybe_unused i2c_imx_suspend_noirq(struct device *dev)
-+{
-+	struct imx_i2c_struct *i2c_imx = dev_get_drvdata(dev);
-+	int ret;
-+
-+	i2c_mark_adapter_suspended(&i2c_imx->adapter);
-+
-+	/*
-+	 * Cancel the slave timer before powering down to prevent
-+	 * i2c_imx_slave_timeout() from accessing hardware registers
-+	 * while the clock is disabled.
-+	 */
-+	hrtimer_cancel(&i2c_imx->slave_timer);
-+
-+	ret = pm_runtime_force_suspend(dev);
-+	if (ret) {
-+		i2c_mark_adapter_resumed(&i2c_imx->adapter);
-+		if (i2c_imx->slave) {
-+			hrtimer_forward_now(&i2c_imx->slave_timer, I2C_IMX_CHECK_DELAY);
-+			hrtimer_restart(&i2c_imx->slave_timer);
-+		}
-+		return ret;
+-	i2c_imx->slave = client;
+-	i2c_imx->last_slave_event = I2C_SLAVE_STOP;
+-
+ 	/* Resume */
+ 	ret = pm_runtime_resume_and_get(i2c_imx->adapter.dev.parent);
+ 	if (ret < 0) {
+@@ -940,6 +937,11 @@ static int i2c_imx_reg_slave(struct i2c_
+ 		return ret;
+ 	}
+ 
++	scoped_guard(spinlock_irqsave, &i2c_imx->slave_lock) {
++		i2c_imx->slave = client;
++		i2c_imx->last_slave_event = I2C_SLAVE_STOP;
 +	}
 +
-+	return 0;
-+}
-+
-+static int __maybe_unused i2c_imx_resume_noirq(struct device *dev)
-+{
-+	struct imx_i2c_struct *i2c_imx = dev_get_drvdata(dev);
-+	int ret;
-+
-+	ret = pm_runtime_force_resume(dev);
-+	if (ret)
-+		return ret;
-+
-+	i2c_mark_adapter_resumed(&i2c_imx->adapter);
-+
-+	return 0;
-+}
-+
- static int i2c_imx_suspend(struct device *dev)
- {
- 	/*
-@@ -1985,8 +2026,8 @@ static int i2c_imx_resume(struct device
- }
+ 	i2c_imx_slave_init(i2c_imx);
  
- static const struct dev_pm_ops i2c_imx_pm_ops = {
--	NOIRQ_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend,
--				  pm_runtime_force_resume)
-+	NOIRQ_SYSTEM_SLEEP_PM_OPS(i2c_imx_suspend_noirq,
-+				  i2c_imx_resume_noirq)
- 	SYSTEM_SLEEP_PM_OPS(i2c_imx_suspend, i2c_imx_resume)
- 	RUNTIME_PM_OPS(i2c_imx_runtime_suspend, i2c_imx_runtime_resume, NULL)
- };
+ 	return 0;
 
 
