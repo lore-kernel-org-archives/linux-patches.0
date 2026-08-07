@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 418FD35F184;
-	Fri,  7 Aug 2026 15:28:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 157A627466A;
+	Fri,  7 Aug 2026 15:28:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116526; cv=none; b=sfCVJb5WhV8fP8R2i2ayKW3L9xr8rdXyU4/K0t46ZdQbnljkWDTgn5JqNwqLpNxejO6ejgBast5vEz3ubI/BKxUjYTI2RWF2wrlBbXZCKN2Me0/iyaGeaoQFAMRmVIxXb7V2Zmx5VgxzDwDHnnX2eNVBM6rfB7P+cuX2XeAlAzE=
+	t=1786116529; cv=none; b=iZF9c1n517/DapMsyjxRbsefUhBN6XnWD5nRMoyZY/LnQ0mFxmYUqIICxC11vwbABZX0iLT7SClzW82VWpcEUpy/xMK+cZJ4fbemGmwBmJdtR8DMvJoaoGBZcTy75pjLsJ8sGpplRe/NCcDUhfD6GM7x1Y2St3XYFJWzsh7wBWM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116526; c=relaxed/simple;
-	bh=REcPbFk+7p7VQlGruiUEiLs/R8rZLJhpU1qyxGdxG20=;
+	s=arc-20240116; t=1786116529; c=relaxed/simple;
+	bh=YU93LJiwR3fKh7d4oNbwGohRPM1/j/58nZtpYbjMPF4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mbCmTZCpaF7riZ0QehVDYT4hnjIio+ZM7uxlWS15glIbKMEsaqoc8+rfRjXCLDPdsJV9mmgaLT6QvpMRqMKwwPATbM0aYb54eqQxZTqS/K3TPN33sxf3gptLKiargV3jJYKM47R98E7YAzPRJZ92TC4gWp5M/3yJ9Eg0vYFZu4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AmaJHHww; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NniDzvDxH+Li8BNh4PbWz2sLufTCwV01uVZV9/o77ipqdMRv2gXQgZzbne5WiWuTkjsEeYxwk7ObNTtdoaErH/lEzqCcuYFiolbcNeMbAVsempk8gAJjtL0bD3jRHoXiepzgM7nuh4LLHt7fB1FKEaiB9/SV6uprNNaprvWTB7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MFdGTSHc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AmaJHHww"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C18F1F00A3A;
-	Fri,  7 Aug 2026 15:28:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MFdGTSHc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7202C1F000E9;
+	Fri,  7 Aug 2026 15:28:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116525;
-	bh=f+BX2zBKgjIjnOnJ5ouZXeir9BIs9uvgjBfVO/cUqEE=;
+	s=korg; t=1786116528;
+	bh=g4a0Ar4E1Ls+Rwm3sq2iE9mZTvfmXLA+Jg5RPDbkuEg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AmaJHHwwzopohQXAe3Ixs2LMruqEH2XBx950LqZrlait0D8SSnSjIjREny5EblHfy
-	 fMUs3d654pXjCSypeHZPgp487vgfD+cXN1t9of8bUDrG4FTaoPlhYnbG0jVBa43RJs
-	 DDhuQEeAZdXPo7ecNOCNFc6uQvF7omaEd1WFNubA=
+	b=MFdGTSHcVWzvzq/IePq5khA5SYUxlybeokwV0gX/r2ucyThUwFOHidVZ7gtrfm4Rb
+	 iqmAjvFxsWc8j59NcnLhjhmlxbuNRnKD3RJDIkI/qE4JO29nGkUjy6IzZqSGRUyBg1
+	 4sXfhn1QHpi9Cx0B/ndNlDBX+dzSpeEHM6JcvjrE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>,
-	Biju Das <biju.das.jz@bp.renesas.com>,
+	Wei Yang <albinwyang@tencent.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 217/261] drm: renesas: rzg2l_mipi_dsi: Increase reset deassertion delay
-Date: Fri,  7 Aug 2026 16:39:34 +0200
-Message-ID: <20260807143420.048628128@linuxfoundation.org>
+Subject: [PATCH 6.6 208/261] iommu/sva: move x86 disable check before allocation
+Date: Fri,  7 Aug 2026 16:39:25 +0200
+Message-ID: <20260807143419.854611989@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143415.358597922@linuxfoundation.org>
 References: <20260807143415.358597922@linuxfoundation.org>
@@ -51,37 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Wei Yang <albinwyang@tencent.com>
 
-[ Upstream commit 7cbba8a8ba0219a267844d3116dbc77cecb4fcf8 ]
+Backport of commit 72f98ef9a4be ("iommu: disable SVA when CONFIG_X86 is
+set") placed the IS_ENABLED(CONFIG_X86) early-return in
+iommu_sva_bind_device() after iommu_sva_alloc_pasid() and kzalloc(handle),
+while upstream puts it at the function start.
 
-The RZ/G2L hardware manual (Rev. 1.50, May 2025), Section 34.4.2.1,
-requires waiting at least 1 msec after deasserting the CMN_RSTB signal
-before the DSI-Tx module is ready. Increase the delay from 1 usec to
-1 msec by replacing udelay(1) with fsleep(1000) for RZ/G2L SoCs.
+On x86 this leaks the kzalloc'd struct iommu_sva (early return skips
+kfree) and a globally allocated PASID (mm->pasid wrongly set, never
+unbound). Move the check before any allocation/side effect.
 
-Fixes: 7a043f978ed1 ("drm: rcar-du: Add RZ/G2L DSI driver")
-Cc: stable@vger.kernel.org
-Reviewed-by: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
-Tested-by: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
-Link: https://patch.msgid.link/20260330104450.128512-3-biju.das.jz@bp.renesas.com
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Fixes: 240cd7f2812c ("iommu: disable SVA when CONFIG_X86 is set")
+
+Signed-off-by: Wei Yang <albinwyang@tencent.com>
+Acked-by: Lu Baolu <baolu.lu@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/renesas/rz-du/rzg2l_mipi_dsi.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iommu/iommu-sva.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/renesas/rz-du/rzg2l_mipi_dsi.c
-+++ b/drivers/gpu/drm/renesas/rz-du/rzg2l_mipi_dsi.c
-@@ -238,7 +238,7 @@ static int rzg2l_mipi_dsi_dphy_init(stru
- 	if (ret < 0)
- 		return ret;
+diff --git a/drivers/iommu/iommu-sva.c b/drivers/iommu/iommu-sva.c
+index 611733c02b7c0..a340b805b82b7 100644
+--- a/drivers/iommu/iommu-sva.c
++++ b/drivers/iommu/iommu-sva.c
+@@ -62,6 +62,9 @@ struct iommu_sva *iommu_sva_bind_device(struct device *dev, struct mm_struct *mm
+ 	struct iommu_sva *handle;
+ 	int ret;
  
--	udelay(1);
-+	fsleep(1000);
++	if (IS_ENABLED(CONFIG_X86))
++		return ERR_PTR(-EOPNOTSUPP);
++
+ 	/* Allocate mm->pasid if necessary. */
+ 	ret = iommu_sva_alloc_pasid(mm, dev);
+ 	if (ret)
+@@ -71,9 +74,6 @@ struct iommu_sva *iommu_sva_bind_device(struct device *dev, struct mm_struct *mm
+ 	if (!handle)
+ 		return ERR_PTR(-ENOMEM);
  
- 	return 0;
- }
+-	if (IS_ENABLED(CONFIG_X86))
+-		return ERR_PTR(-EOPNOTSUPP);
+-
+ 	mutex_lock(&iommu_sva_lock);
+ 	/* Search for an existing domain. */
+ 	domain = iommu_get_domain_for_dev_pasid(dev, mm->pasid,
+-- 
+2.53.0
+
 
 
