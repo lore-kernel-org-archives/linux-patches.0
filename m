@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 698CE46C839;
-	Fri,  7 Aug 2026 14:59:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA28D42A15B;
+	Fri,  7 Aug 2026 14:59:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114782; cv=none; b=BSCGnJ6kYP/XivbGzKdSu2okus+5fhTonSHnf63gwhae/gcLKyIkDLBF47EXDgbp5wpVEhIWkOxf/JDpOfgX/ZhiccGNPwsHjjujqgv16IR7o5v8jfPCJh2dtPiQLGl3zEHcyYz2/bHZrGkMk6yfReFS6FGDip0c+LiwdC4fd18=
+	t=1786114785; cv=none; b=Ku9yV083wihzqlWO0zwc/yS9pcM3XXgmjVNUs2USeed2A0UuYaIOCPPto9A1cIBkt2zL6e3TFko+z8i/ryP580ZMwRTlbe0IjYKZ7HD+kNHnoUx58K1tUSTX3r1dwx4psvAMDUz4dtXYyLrOe7YP1kE8fG4dcQoyJz8iFJJ2WpQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114782; c=relaxed/simple;
-	bh=0rMW5i2/Ixg6aaZEPoFIaC5E60Q6ZBw1TiNeEx5pc9Y=;
+	s=arc-20240116; t=1786114785; c=relaxed/simple;
+	bh=dvr4LU3IQIGfhq2evzlAj5D5d8mJmzsjI7UY+nFcDd4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aP0Kv0NgJvI6MVjEo2d5ue4Kjl3zoklbbB0nAv9wEHmDPSmmAFPXs+c0qhblNOA5J2LxSFiaYkRP+3B5UrBuQq43CKPAvFIrpy4vnVTnS8PH4x8FZKhLFoCYpR8fMAjN0yJINpE1XmqMST2a4ZOL0/XKLXxFggYrXU4uZ2xZ5/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yHpdvEkz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MAjhkv2BfNIXn0/5SQK0q3oS9I71M8fg9KnA3Fv3IIbfJo+Ci9oN8heoLONK9mOEUYS/AD/u0wwfjLZF1kt0PgPwFzdOKBn2d7HlnLrbdaHiitOXqDdVqCqVZVBK3gnOqi37Kk9nx7pxHbLhSWC1kwGAGDLUbxFVsuqUTNAw0lo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yoonfDim; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yHpdvEkz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 852431F000E9;
-	Fri,  7 Aug 2026 14:59:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yoonfDim"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 529251F00A3D;
+	Fri,  7 Aug 2026 14:59:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114781;
-	bh=JSXf3DNkUeBqtmrv+XdX0Lfi3N6cjznbVo3T1qIU/So=;
+	s=korg; t=1786114783;
+	bh=2Q5WRbeCTosz+6f5fBl86pclkLC8qcbJfMNsmhAfhGk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yHpdvEkz4k/58M2dUn01GUmK7hX1PKI1xIFFWpAnbkCavWobsQ501B2iEH8p8AMHg
-	 alJSTOTbkDh7HLGya/NVyENtCeEF5FEXk1OGFAK6JqWHKshotputJktQc3kiWyTfo/
-	 uGxwB0ns7f4n6UCwxsSrl3VBNu3NEHfg5wCHKenw=
+	b=yoonfDim1jqIjyN5kxLw4ngXrbg6iDm6cUK+wb8i07sMjx9lNMlur/ZeJcSVLfbn6
+	 BuHqaUcfmzPOgXaVOBhE2BrrIwycpSP57a7AiGHfuTC79x6GTxOgID8XqnGVpl095C
+	 B8nNY8l9RcEclmx9itXTVnqGRgx3N4Xq2JJ0LEUs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Honglei Huang <honghuan@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 005/396] net: mpls: initialize rtm_tos in mpls_getroute()
-Date: Fri,  7 Aug 2026 16:32:45 +0200
-Message-ID: <20260807143424.391683230@linuxfoundation.org>
+Subject: [PATCH 6.18 006/396] drm/gpusvm: publish dpagemap early to avoid device mapping leak on error
+Date: Fri,  7 Aug 2026 16:32:46 +0200
+Message-ID: <20260807143424.411933985@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -51,72 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+From: Honglei Huang <honghuan@amd.com>
 
-[ Upstream commit 295dd295e2137e10e9a5b1891d97e0f08de76f03 ]
+commit 7f708f51e3955bda0d77a0b67ab9bea6c97fea99 upstream.
 
-mpls_getroute() builds the RTM_NEWROUTE reply to an RTM_GETROUTE
-request by filling a struct rtmsg allocated from an skb whose data
-area is not zeroed (alloc_skb(NLMSG_GOODSIZE, ...)). It sets every
-field of the header except rtm_tos:
+drm_gpusvm_get_pages() only stored the local dpagemap into
+svm_pages->dpagemap on the success path. If a later page failed (e.g.
+-EOPNOTSUPP when ctx->allow_mixed is false) and jumped to err_unmap,
+svm_pages->dpagemap was still NULL, so __drm_gpusvm_unmap_pages() skipped
+device_unmap() and leaked the device mappings already created.
 
-	r = nlmsg_data(nlh);
-	r->rtm_family	 = AF_MPLS;
-	r->rtm_dst_len	= 20;
-	r->rtm_src_len	= 0;
-	r->rtm_table	= RT_TABLE_MAIN;
-	r->rtm_type	= RTN_UNICAST;
-	r->rtm_scope	= RT_SCOPE_UNIVERSE;
-	r->rtm_protocol = rt->rt_protocol;
-	r->rtm_flags	= 0;
+Assign svm_pages->dpagemap when the first device page is mapped so the
+err_unmap path can device_unmap() those mappings.
 
-struct rtmsg has no padding, so the one uninitialised byte rtm_tos
-(offset 3) is copied straight to user space on recvmsg(), leaking a
-byte of uninitialised heap memory. This is in contrast to
-mpls_dump_route(), which fills the very same header and does set
-rtm_tos = 0.
+This issue was found by Sashiko AI review.
 
-Initialize rtm_tos to 0, matching mpls_dump_route().
-
-Reproduced with KMSAN by adding an MPLS route and issuing a
-non-RTM_F_FIB_MATCH RTM_GETROUTE for its label:
-
-  BUG: KMSAN: kernel-infoleak in _copy_to_iter+0x36c/0x33f0
-   _copy_to_iter+0x36c/0x33f0
-   __skb_datagram_iter+0x196/0x12c0
-   skb_copy_datagram_iter+0x5b/0x210
-   netlink_recvmsg+0x37b/0xef0
-   ...
-  Uninit was created at:
-   __alloc_skb+0x8ca/0x10e0
-   mpls_getroute+0x1280/0x3a40
-   rtnetlink_rcv_msg+0x1138/0x15a0
-   ...
-  Byte 19 of 64 is uninitialized
-
-(byte 19 = nlmsghdr(16) + rtmsg offset 3 = rtm_tos)
-
-Fixes: 397fc9e5cefe ("mpls: route get support")
-Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
-Link: https://patch.msgid.link/20260723010830.289917-1-yhlee@isslab.korea.ac.kr
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: f70da6f99d4f ("drm/gpusvm: pull out drm_gpusvm_pages substructure")
+Cc: stable@vger.kernel.org
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Signed-off-by: Honglei Huang <honghuan@amd.com>
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://patch.msgid.link/20260701062800.409248-4-honghuan@amd.com
+[ Adjusted for 6.18.y: drop drm_pagemap_get()/drm_pagemap_put() around the
+  svm_pages->dpagemap assignment; that reference counting is not present in
+  6.18 where the field is not refcounted (unmap path only clears it). ]
+Signed-off-by: Honglei Huang <honghuan@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mpls/af_mpls.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/drm_gpusvm.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/net/mpls/af_mpls.c b/net/mpls/af_mpls.c
-index f7f60025d042..f9b8c4d0f049 100644
---- a/net/mpls/af_mpls.c
-+++ b/net/mpls/af_mpls.c
-@@ -2468,6 +2468,7 @@ static int mpls_getroute(struct sk_buff *in_skb, struct nlmsghdr *in_nlh,
- 	r->rtm_family	 = AF_MPLS;
- 	r->rtm_dst_len	= 20;
- 	r->rtm_src_len	= 0;
-+	r->rtm_tos	= 0;
- 	r->rtm_table	= RT_TABLE_MAIN;
- 	r->rtm_type	= RTN_UNICAST;
- 	r->rtm_scope	= RT_SCOPE_UNIVERSE;
+diff --git a/drivers/gpu/drm/drm_gpusvm.c b/drivers/gpu/drm/drm_gpusvm.c
+index 781cd4e5b704..e5c7befe3108 100644
+--- a/drivers/gpu/drm/drm_gpusvm.c
++++ b/drivers/gpu/drm/drm_gpusvm.c
+@@ -1390,6 +1390,14 @@ int drm_gpusvm_get_pages(struct drm_gpusvm *gpusvm,
+ 					err = -EAGAIN;
+ 					goto err_unmap;
+ 				}
++
++				/*
++				 * Set the dpagemap as soon as the first
++				 * device page is mapped so the err_unmap path
++				 * can device_unmap() the device mappings that
++				 * have already been created.
++				 */
++				svm_pages->dpagemap = dpagemap;
+ 			}
+ 			svm_pages->dma_addr[j] =
+ 				dpagemap->ops->device_map(dpagemap,
+@@ -1432,10 +1440,8 @@ int drm_gpusvm_get_pages(struct drm_gpusvm *gpusvm,
+ 		flags.has_dma_mapping = true;
+ 	}
+ 
+-	if (pagemap) {
++	if (pagemap)
+ 		flags.has_devmem_pages = true;
+-		svm_pages->dpagemap = dpagemap;
+-	}
+ 
+ 	/* WRITE_ONCE pairs with READ_ONCE for opportunistic checks */
+ 	WRITE_ONCE(svm_pages->flags.__flags, flags.__flags);
 -- 
 2.53.0
 
