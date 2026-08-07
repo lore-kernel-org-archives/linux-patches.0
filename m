@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0DEB3431F5;
-	Fri,  7 Aug 2026 15:37:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98FE0395DAA;
+	Fri,  7 Aug 2026 15:37:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786117048; cv=none; b=GyD4ofbrlC5B4S3J0GZYQG3EMr3insecjfdcDwHz1MzECjF4qHB6+PTb+10OGeqJXaViczVF/YiLn0gx7dMjgXTNPzZ2FZMtf2GI6SphC9Vw1o832PFWB5+EppXf0aPl5/iu3B9lm/Z0mdOiFgtKn/AJ2YCJgIQ+u8XpLyK+8eU=
+	t=1786117051; cv=none; b=aPYEfLpIpjiCBUhVVwjCX9NvQ1aHBud1znCOeXxLCTRHYW2xNgsZm3XnHuBqMJNMZJdThamwFxmrrElvyBXkw2Y8Oo4XxEwAvo0jFWA12Agnyy0VqY+bxd94JRx6QarP29YQVQT64xk+NVKHrg0tVsryQHgwf3JvFB5ph9cSvXM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786117048; c=relaxed/simple;
-	bh=EcAva/tZTPkt5edMV8cOsdbgYWE8mZSddldy14t41gE=;
+	s=arc-20240116; t=1786117051; c=relaxed/simple;
+	bh=Cs82OO6H2z2C/7eJSWlj3haFYNvdz+29NB+PWr11im4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aczA1mwbHYskPHkfOm+EniAsHny+idVSZoMTfPrwd+UURlWubZYRG9l1CciUcobFEvwHhf31teJuKYjOvZ4HjMv267au5MWtZdyMoULV5FJpYxFkCrg8xvYpSVPYaBpXxMSdREPB6/K9iZfYCG9/zuzzmi295REHWKQyYIRL9fI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yC12wj9F; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e+v3pQU2kiZf+Tu6ENCBQMKipZFT9Goczzap6ibePVbIfuxvyknz66AluNPoYhdDoii/JhUloUTjl8XBspMcpsP3S6aUdFJ5JvtDnA4XkFOxts6lBWdD+uFlwDPRX8YujFw4XJoRaTRw8OZwOto22D2vJmiouPAIx39KxBbzQzc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i/wdEvxg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yC12wj9F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A0EF1F000E9;
-	Fri,  7 Aug 2026 15:37:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i/wdEvxg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0100C1F000E9;
+	Fri,  7 Aug 2026 15:37:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786117047;
-	bh=HmGFhWLGQ8FbWnAEz1OCpDaVI8BKTK7k64bIBPhAUX4=;
+	s=korg; t=1786117050;
+	bh=yM7378bOzzs7LU2u+w2Expzppb4gUNHdl5P+06ogobM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yC12wj9FMFSmijx+8w6NQxncxenUSvwXlo8ngWvkksA7kbNg+d5I31SmX3oeRQNnr
-	 3ZSCqMUifmpMnYaBySrZPP3Pp2P4Vy2veKC08y3a/H5TT9RopcaZdw4oIOpyoXlbZ6
-	 16bZIwQ3XbBAn0Frci901IH4FmbIbbfR3lNTqJWU=
+	b=i/wdEvxgFl3OznjL0PAoLDBAmVY6Hh3mP5Ionf8NNJe8cY8Cv6qCNZkHMONCaVtIb
+	 GA6Pjv1OESSQtYoDpabRY/jt8e0jr8/zThLq1WImDJbENTJt7YDp5W+7KUdHEQJ3t8
+	 Kxw5jHQmgUY3Mh2bvs2xbTI4cyDZHtu/VR0OhKN4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suman Ghosh <sumang@marvell.com>,
-	Ratheesh Kannoth <rkannoth@marvell.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Gabriele Monaco <gmonaco@redhat.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Juri Lelli <juri.lelli@redhat.com>,
+	Andrea Righi <arighi@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 182/438] octeontx2-pf: Set correct sequence for carrier off and tx queue stop
-Date: Fri,  7 Aug 2026 16:36:18 +0200
-Message-ID: <20260807143431.911527865@linuxfoundation.org>
+Subject: [PATCH 7.1 183/438] sched/deadline: Use revised wakeup rule only for running dl_server
+Date: Fri,  7 Aug 2026 16:36:19 +0200
+Message-ID: <20260807143431.933990709@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -53,40 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Suman Ghosh <sumang@marvell.com>
+From: Gabriele Monaco <gmonaco@redhat.com>
 
-[ Upstream commit 16809472409d998afcda402e32b8229b389337c4 ]
+[ Upstream commit 1842bf97af109f5ebf830175c9725bf81ebb78b1 ]
 
-During link down event, we were doing netif_tx_stop_all_queues() first
-and then netif_carrier_off(). This can cause a potential race since
-carrier is still on during down event. This patch reverse the calling
-order to fix the issue.
+Commit 14a857056466 ("sched/deadline: Use revised wakeup rule for
+dl_server") applies the revised wakeup rule to any server, as a result
+servers that are not running (dl_defer_running == 0) and start with a
+deadline overflow get enqueued and can boost tasks as if they were
+running, invalidating the defer rule and the documented state model.
 
-Fixes: 50fe6c02e5ad ("octeontx2-pf: Register and handle link notifications")
-Signed-off-by: Suman Ghosh <sumang@marvell.com>
-Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260724072831.2415281-1-rkannoth@marvell.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Apply the revised wakeup rule only for deferrable servers that are
+marked as running.
+
+Fixes: 14a857056466 ("sched/deadline: Use revised wakeup rule for dl_server")
+Signed-off-by: Gabriele Monaco <gmonaco@redhat.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Acked-by: Juri Lelli <juri.lelli@redhat.com>
+Tested-by: Andrea Righi <arighi@nvidia.com>
+Link: https://patch.msgid.link/20260522125833.264145-1-gmonaco@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/sched/deadline.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
-index 2e33b33ec9934..c995f29008590 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
-@@ -889,8 +889,8 @@ static void otx2_handle_link_event(struct otx2_nic *pf)
- 		netif_carrier_on(netdev);
- 		netif_tx_start_all_queues(netdev);
- 	} else {
--		netif_tx_stop_all_queues(netdev);
- 		netif_carrier_off(netdev);
-+		netif_tx_stop_all_queues(netdev);
- 	}
- }
+diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
+index 7db4c87df83b0..e5a7701a8af71 100644
+--- a/kernel/sched/deadline.c
++++ b/kernel/sched/deadline.c
+@@ -1017,7 +1017,8 @@ static void update_dl_entity(struct sched_dl_entity *dl_se)
+ 	if (dl_time_before(dl_se->deadline, rq_clock(rq)) ||
+ 	    dl_entity_overflow(dl_se, rq_clock(rq))) {
  
+-		if (unlikely((!dl_is_implicit(dl_se) || dl_se->dl_defer) &&
++		if (unlikely((!dl_is_implicit(dl_se) ||
++			      (dl_se->dl_defer && dl_se->dl_defer_running)) &&
+ 			     !dl_time_before(dl_se->deadline, rq_clock(rq)) &&
+ 			     !is_dl_boosted(dl_se))) {
+ 			update_dl_revised_wakeup(dl_se, rq);
 -- 
 2.53.0
 
