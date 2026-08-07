@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87EB5280331;
-	Fri,  7 Aug 2026 15:32:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5566A31327A;
+	Fri,  7 Aug 2026 15:33:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116778; cv=none; b=Xwiq/92wLQG20WqA8jRqm5qxci3wbJ28G/mrhJtlXRh82lMvaTYsCb8aKO2uNTWmeIHNyIn7rXsTiQDBdGR3Z8XZLXdWTanG0Wr09zdfPyRUAnD/a6HabbuZ80ULBEx2ESfaIy+gwhuLm5hoErNSoHs/aCD6f+2/HhW5FGiUdoc=
+	t=1786116781; cv=none; b=JQGYJvWJmATyn0IbUSWSC21BloxKtSl4/zudWr6Rp5D1ZeQcw/t4fay/l3c1cbjSh92wChXyxhYWcFWKb+qXTziA0mp7iQbBgJlBVBqr15fJMlZ4rEqTANKQjNcugUH9Y48Xzs0V9vjnj5yZolsfIFNviDc8kdAs5vTyo2f8has=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116778; c=relaxed/simple;
-	bh=qSIO6YcDghMU/khBP5D6mJxkVa/NULjVAt4oNd+UjVo=;
+	s=arc-20240116; t=1786116781; c=relaxed/simple;
+	bh=l3tmqhm6ESlrE1OGe71FsJ9Ud4XBlndTUjF49B7s1ow=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FHq5XTsVyLg5u/NmkCyg9sRMWqKycRJ7t3MA7alBJIFPwMVrpcJdwpYKZwM4NGcVeOngOhQjAK+1Mqcc7W7bG7wukbxZLxM709eFzMGgqsH6afcAPPyzY6ZPn4UZJ54ux0WCVOMwrnL5U8kGlZY3rZ/yYIEhlGmtgPMRdLtg2lc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h1CrUEft; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=f3L48oo098t71ydqFCKCHEJknA1DnqT/YcTWPT6MzUEeJ2rEpKL4Gc0hQ2ADtoBjnFnmP8HZmLq9zVp/+NrzYSmnXoYclPFaidRB4Jy6cifeBdH0DDAKtzdpEF/rbXNqY9C1st0uM5aVDrn3KHp0zlziCY+cP6VttVa+rxjDeVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LbpYQeGc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h1CrUEft"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E49F21F000E9;
-	Fri,  7 Aug 2026 15:32:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LbpYQeGc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFFF31F000E9;
+	Fri,  7 Aug 2026 15:32:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116777;
-	bh=MnvX8sxxxFGO5+BnPe8QoQQhdHHmpOiNNVwdWMbEs/E=;
+	s=korg; t=1786116780;
+	bh=3FrhlmaP/5izhYMBEYFvh9zJ5tYn7RsUmZIjc/FKPxA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h1CrUEftKcHcZZ2QsZP+NdmktLnQfpR3QIDm3uRPMJuQm1vLkYB64eUxZj7m1+H2J
-	 PR5dqWrosD/6/UaR8NZkHqoigVt0t4BtTfPtXCXjzGuF/vYd19sR3aXplbWfA/hbY9
-	 w7sYl9cKzlA8W1ApsgG8wxGd0ul3Slv3EPCFrr+8=
+	b=LbpYQeGco3rfiBa44RPb99IlSYY5/AUwaGKIkgqYMP80te/d11t/VXc+7jIzxaVRm
+	 kMxw+gsv0MQsZ5hknUUa3ZjJDOv/U/xmZ6mnlSKgb4M7wVYnKhq/1xHaDjbgE5rc2K
+	 PmK0He1p8vSwtb754uoPQ48HpTFzkCxoEBx60jaM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sumit Gupta <sumitg@nvidia.com>,
-	Christian Loehle <christian.loehle@arm.com>,
-	Lifeng Zheng <zhenglifeng1@huawei.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 087/438] ACPI: CPPC: Skip writes to unsupported performance controls
-Date: Fri,  7 Aug 2026 16:34:43 +0200
-Message-ID: <20260807143429.836823351@linuxfoundation.org>
+Subject: [PATCH 7.1 088/438] wifi: ath12k: fix out-of-bounds clear_bit in ath12k_mac_dp_peer_cleanup()
+Date: Fri,  7 Aug 2026 16:34:44 +0200
+Message-ID: <20260807143429.861923461@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -53,59 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Loehle <christian.loehle@arm.com>
+From: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
 
-[ Upstream commit 47d4e945dff8139050473be4ab263a32e1da910c ]
+[ Upstream commit 47abd2ca281531deee38a3b3770d885e270e9fc9 ]
 
-MIN_PERF and MAX_PERF are optional CPPC controls. DESIRED_PERF is also
-optional with CPPC2 when autonomous selection is supported.
+ath12k_mac_dp_peer_cleanup() clears the ML peer ID slot on the
+free_ml_peer_id_map bitmap by indexing it with dp_peer->peer_id. That is
+wrong: dp_peer->peer_id for an MLO peer always carries the
+ATH12K_PEER_ML_ID_VALID bit (BIT(13)), so clear_bit() is invoked with
+index >= 0x2000, which is far outside the bitmap of ATH12K_MAX_MLO_PEERS
+(256) bits and corrupts memory adjacent to ah->free_ml_peer_id_map. The
+intended bitmap entry also never gets cleared, so subsequent
+ath12k_peer_ml_alloc() calls eventually run out of IDs.
 
-The cppc-cpufreq target callbacks populate both limits for every request
-without checking whether the controls are implemented. cppc_set_perf()
-consequently passes NULL register descriptors to cpc_write(). The writes
-fail width validation and their return values are ignored, so the failed
-access paths are repeated on every target request. An autonomous-only
-platform can take the same path for DESIRED_PERF.
+The ID without the VALID bit is what ath12k_peer_ml_alloc() returned and
+is stored in ahsta->ml_peer_id. Use that instead.
 
-Check that each performance control is supported before calling
-cpc_write().
+While there, also reset ahsta->ml_peer_id to ATH12K_MLO_PEER_ID_INVALID so
+the bitmap and ahsta->ml_peer_id stay in sync.
 
-Fixes: ea3db45ae476 ("cpufreq: cppc: Update MIN_PERF/MAX_PERF in target callbacks")
-Reviewed-by: Sumit Gupta <sumitg@nvidia.com>
-Signed-off-by: Christian Loehle <christian.loehle@arm.com>
-Reviewed-by: Lifeng Zheng <zhenglifeng1@huawei.com>
-Link: https://patch.msgid.link/20260724104042.1481804-1-christian.loehle@arm.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.1.c5-00302-QCAHMTSWPL_V1.0_V2.0_SILICONZ-1.115823.3
+
+Fixes: ee16dcf573d5 ("wifi: ath12k: Define ath12k_dp_peer structure & APIs for create & delete")
+Signed-off-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260720-ath12k-fw-allocated-ml-peer-id-v2-1-630632758a80@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/cppc_acpi.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/net/wireless/ath/ath12k/mac.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/cppc_acpi.c b/drivers/acpi/cppc_acpi.c
-index 34edec0f2bde2..aa4017be960a0 100644
---- a/drivers/acpi/cppc_acpi.c
-+++ b/drivers/acpi/cppc_acpi.c
-@@ -1940,16 +1940,17 @@ int cppc_set_perf(int cpu, struct cppc_perf_ctrls *perf_ctrls)
- 		cpc_desc->write_cmd_status = 0;
- 	}
+diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
+index 7408c2577dc2e..d13fb31d13014 100644
+--- a/drivers/net/wireless/ath/ath12k/mac.c
++++ b/drivers/net/wireless/ath/ath12k/mac.c
+@@ -1283,8 +1283,11 @@ void ath12k_mac_dp_peer_cleanup(struct ath12k_hw *ah)
+ 	spin_lock_bh(&dp_hw->peer_lock);
+ 	list_for_each_entry_safe(dp_peer, tmp, &dp_hw->dp_peers_list, list) {
+ 		if (dp_peer->is_mlo) {
++			struct ath12k_sta *ahsta = ath12k_sta_to_ahsta(dp_peer->sta);
++
+ 			rcu_assign_pointer(dp_hw->dp_peers[dp_peer->peer_id], NULL);
+-			clear_bit(dp_peer->peer_id, ah->free_ml_peer_id_map);
++			clear_bit(ahsta->ml_peer_id, ah->free_ml_peer_id_map);
++			ahsta->ml_peer_id = ATH12K_MLO_PEER_ID_INVALID;
+ 		}
  
--	cpc_write(cpu, desired_reg, perf_ctrls->desired_perf);
-+	if (CPC_SUPPORTED(desired_reg))
-+		cpc_write(cpu, desired_reg, perf_ctrls->desired_perf);
- 
- 	/*
- 	 * Only write if min_perf and max_perf not zero. Some drivers pass zero
- 	 * value to min and max perf, but they don't mean to set the zero value,
- 	 * they just don't want to write to those registers.
- 	 */
--	if (perf_ctrls->min_perf)
-+	if (perf_ctrls->min_perf && CPC_SUPPORTED(min_perf_reg))
- 		cpc_write(cpu, min_perf_reg, perf_ctrls->min_perf);
--	if (perf_ctrls->max_perf)
-+	if (perf_ctrls->max_perf && CPC_SUPPORTED(max_perf_reg))
- 		cpc_write(cpu, max_perf_reg, perf_ctrls->max_perf);
- 
- 	if (CPC_IN_PCC(desired_reg) || CPC_IN_PCC(min_perf_reg) || CPC_IN_PCC(max_perf_reg))
+ 		list_move(&dp_peer->list, &peers);
 -- 
 2.53.0
 
