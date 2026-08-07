@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0B413F327A;
-	Fri,  7 Aug 2026 14:51:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D61D3AD50F;
+	Fri,  7 Aug 2026 14:51:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114284; cv=none; b=iEhJAUgzD3hWb+yjUNBOF0PKtLSobEbOHNM53wxDYM0j/eH6yyUEusT1eUtNBXy2lwvojJKWb3Ra5PRxWQMDKa7em0FLqWmL/+aAae7s5ckrFzJmDGYx7ACxJ8qzUlWZsepduElfy2qd/H+Si4v6zz9CGR5LLe8Aw60urW9N3lQ=
+	t=1786114286; cv=none; b=HccXYEnFtEflW6jDuHtGEcZi/4NUaw7dcIhivLrrFHpQGAWXtKEJ4vq7a3zzH4PdYVz0zqKULcpTqMfqtl1kdDXpAg/vfTg1Topzw6tgHFfszrvEjTlqoFwy4QgiLvBhH75cqTci4K3B1AeUvq1XnQRYAy1GQaAz7KQt+Y3NtMo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114284; c=relaxed/simple;
-	bh=e1B+qHrUXRH/l0mT4GCy6RIPk93wQxOYdZ5XrH74xkE=;
+	s=arc-20240116; t=1786114286; c=relaxed/simple;
+	bh=zuVKBi9PrUEyOzd2x7iofXSbpO8p3sqThtEz8FA0IfQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=unJE032GtC/Nmd6Tu4fuiEGTDS7rX4eNMh0B8y+sg0f4zpn9ni9SwVSOxoWrUIU6BMrYP2i+Efpmk2gI0Ki+FDO7p23E7hGLzM4xYREPT4Cx4DgRYyFZ2GbnKFbK1aIXkE7e4eoEc7a2sStAxwu28irb6RsLaxX+ftd+dvfcCXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mBJk/3y7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ISlr+vJZgtXADvDbQ3JWOZbr7qPUFSIgqB0Uck8Gk+rFb64mPuQDCKfsJPithI8lpqBQUG62FaY5BrgzzUyoz75dNeR1P5RIhJ1+nzFTuLH4MvQUZlL2SbXz0R3ypQNdzLQY36VrDjVOPe3WbFNvgX0dhm0YLU0ZZ0wO9xSgm9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cq7pl+9/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mBJk/3y7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 215DE1F00A3D;
-	Fri,  7 Aug 2026 14:51:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cq7pl+9/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 013DA1F000E9;
+	Fri,  7 Aug 2026 14:51:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114280;
-	bh=jAxUMjkvBRGhRwws4r9QfdkBGlLOLW7IyGz7aWNrECM=;
+	s=korg; t=1786114283;
+	bh=FiyB3u+lfHK3LHp0Om7NF/pJyBrKWf5/ctvP1LSF7fw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mBJk/3y7LqbVhnrXeDelC4OUbZ32onh65ptY1g5xNo0lIvsi0sOfd3rqbrTtOxtb2
-	 dgn69NCNsYAWe3bSo9fCEHzXDVhSOo8Xcfr2uNk3pAMAHbbtb1UWMr/zxqjOcPW1rF
-	 Ao6dzWqngbvtygRVVPBok+reEnwq6CLAlSy8lT4o=
+	b=cq7pl+9/B2pfL24b008pO12YMsADJ89eKWyJKZXLOY330UQ8VHDAuQwE534rSslST
+	 7GNl+dH2vECzuIZit4xObR2xjfzJS7+kDEgkz2BN1RdEaI4E3ERirNaMexBs6TFBJS
+	 iGBqb6AYWUBhxkayYmBAIu6iZEMy0yEnk5Ei0K6g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianing Li <m13940358460@163.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 6.12 207/337] power: supply: max17040: handle missing status supplier
-Date: Fri,  7 Aug 2026 16:36:50 +0200
-Message-ID: <20260807143423.043617716@linuxfoundation.org>
+	Julian Ruess <julianr@linux.ibm.com>,
+	Farhan Ali <alifm@linux.ibm.com>,
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>
+Subject: [PATCH 6.12 208/337] s390/pci: Fix s390_pci_mmio_write syscall error return without MIO
+Date: Fri,  7 Aug 2026 16:36:51 +0200
+Message-ID: <20260807143423.065555552@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -50,47 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jianing Li <m13940358460@163.com>
+From: Niklas Schnelle <schnelle@linux.ibm.com>
 
-commit 725668c6b6aa3971fe850659102c250d0d676e18 upstream.
+commit b7ab86bdc65eadcfc43a0e3faf682a3f750cfb96 upstream.
 
-MAX17040 does not report charger state itself, so the driver forwards
-POWER_SUPPLY_PROP_STATUS to a supplier power supply. If no supplier is
-registered, power_supply_get_property_from_supplier() returns -ENODEV and
-leaves the output value untouched.
+On a machine without PCI memory-I/O (MIO) support or when running with
+pci=nomio the s390 specific PCI MMIO write syscall checks if the MMIO
+cookie is above ZPCI_IOMAP_ADDR_BASE as a sanity check before even
+trying to perform the MMIO. If this check fails the return value was
+left unchanged and thus 0 from prior operations falsely indicating
+success. This could potentially confuse user-space into falsely
+believing the MMIO, on a mapping not valid for MMIO was successful.
 
-max17040_get_property() currently ignores that error and returns success,
-so userspace can read an uninitialized status value from the battery power
-supply. This happens on systems that use the fuel gauge without a charger
-supplier relationship in firmware.
+Fix this by setting the return value to -EFAULT prior to the check
+following the same pattern as elsewhere in the same function.
 
-Return POWER_SUPPLY_STATUS_UNKNOWN when no supplier provides STATUS, and
-propagate other supplier lookup errors.
-
-Fixes: f4b782af61ae ("power: max17040: pass status property from supplier")
-Cc: stable@vger.kernel.org # 6.7+
-Signed-off-by: Jianing Li <m13940358460@163.com>
-Link: https://patch.msgid.link/20260701061042.1008-1-m13940358460@163.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Julian Ruess <julianr@linux.ibm.com>
+Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
+Fixes: a67a88b0b8de ("s390/pci: remove races against pte updates")
+Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/max17040_battery.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ arch/s390/pci/pci_mmio.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/power/supply/max17040_battery.c
-+++ b/drivers/power/supply/max17040_battery.c
-@@ -405,7 +405,11 @@ static int max17040_get_property(struct
- 		val->intval = chip->low_soc_alert;
- 		break;
- 	case POWER_SUPPLY_PROP_STATUS:
--		power_supply_get_property_from_supplier(psy, psp, val);
-+		ret = power_supply_get_property_from_supplier(psy, psp, val);
-+		if (ret == -ENODEV)
-+			val->intval = POWER_SUPPLY_STATUS_UNKNOWN;
-+		else if (ret)
-+			return ret;
- 		break;
- 	case POWER_SUPPLY_PROP_TEMP:
- 		if (!chip->channel_temp)
+--- a/arch/s390/pci/pci_mmio.c
++++ b/arch/s390/pci/pci_mmio.c
+@@ -178,6 +178,7 @@ SYSCALL_DEFINE3(s390_pci_mmio_write, uns
+ 			goto out_unlock_mmap;
+ 	}
+ 
++	ret = -EFAULT;
+ 	io_addr = (void __iomem *)((args.pfn << PAGE_SHIFT) |
+ 			(mmio_addr & ~PAGE_MASK));
+ 
 
 
