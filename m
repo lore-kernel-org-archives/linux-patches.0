@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 595273806B0;
-	Fri,  7 Aug 2026 15:38:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 261613806B0;
+	Fri,  7 Aug 2026 15:38:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786117101; cv=none; b=GCeBkJ+vhh6lm9OC7lzVI8LW61bGHDfx6XnnztEAbnzfbv7pWOCCUspx05iaSNvYs0/Z2VHXsDY0CUSknsYeUO716EZ6Q5rpiqlS3UjdBC4TsZj7uxJtxS0J7KYieEH+BTpyR4Lob5nHgxRBBfWjQIhNKBZwTogTqpch4lmtL/0=
+	t=1786117104; cv=none; b=UoAcmxmflTlnL2fU2HSU53H/gO6gQOIM2Zu46DICxGWnEQoKeQBpXGCPHB37JXI7OOrAHNSB7mhWZ8mbRferHM4ZEoQRhawmzBNs1LM2qH8kL2wC03aKv4Y2g37/2NTgVCtZjA9J1btF2IbQNFUGuDdwTqIAKiVZfPr7+PcyoZ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786117101; c=relaxed/simple;
-	bh=Q05TKpqbWOd/g3KzG9ITA9JEBYc/VEp8i7USZvC4ei8=;
+	s=arc-20240116; t=1786117104; c=relaxed/simple;
+	bh=RWsahvUVa8Glebihk8EFpBQmeecc+sv6f8i/9q+Ay/8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YsLMup8nM2GZ0KShSfuSZ5yMlxKoqYtvSRTXu05sPZNqtrU4JhmEb3zNSUDMoYHwaJHMYFfvAHmaqi9mv/W9ACvmaQiTGhvNHyZTZPeFL1aliH//jMRdiHdMWkUs5jS3Gxvbh5IqwBzxkaZcFoeEQs4gGVn+FairrSu0WCL1+n0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sBHBrsjE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aY9LFjLDbHSuulJSI0vIJA0ONN9Eka9Fuv9hVPhdOvcJMQOKCAinr+J1EUZqkcjc+SPX1RiaovMlF+3QEM6P2nJttB5++qC3Btxud9wGHicY5zlpRdqSuH9JnUgUn7O74yN33BHX3DQPq2pVFDjjNxzIsVXRtHkN9sCIEv8d7aY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FAsO213m; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sBHBrsjE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B55D91F000E9;
-	Fri,  7 Aug 2026 15:38:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FAsO213m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81E901F000E9;
+	Fri,  7 Aug 2026 15:38:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786117100;
-	bh=1TQv6eNKTS6Rzjq/Qst1PE3oFgM/3OBunIvz67lSMF0=;
+	s=korg; t=1786117103;
+	bh=/PcsXLU+c5wzdMvrjMhh5+MYZeX5qPH9eeArjVkYTV0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sBHBrsjEyAo/iaJkz5h8hSfUD3uenV3xSYIn1UBJO56ni7Y58PfEu71DnVS4mj7z7
-	 yROdo8XlvqxbIjfNACPq8lSxdIivdyX9ugHTYrbIiQUVQDfiW3L1GKPoQF0/Xvt6Vm
-	 nHxO+KLXltU8f+YdcZQ90qdiYRf+FtN6198/2QrI=
+	b=FAsO213mszPTuVObVD61lB4Kj1LrQGpHw0AY+QZRjZbiw/XXTcZ5R5b8DTaE7oxjW
+	 YXxvbzjcF5MgKppevZgYAfBn9hFw1j4zntK42lppAm8hQRrJS1VGlS2j99x3f5EOLk
+	 +LLBDfenxeNg3CKbyysHjroFJiLim0cG2dBJbfKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Peiyang He <peiyang_he@smail.nju.edu.cn>,
 	Kevin Tian <kevin.tian@intel.com>,
 	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 7.1 199/438] iommufd: Reject DMABUF pages from the access pin path
-Date: Fri,  7 Aug 2026 16:36:35 +0200
-Message-ID: <20260807143432.265252162@linuxfoundation.org>
+Subject: [PATCH 7.1 200/438] iommufd: Fix wrong hwpt passed to iommufd_auto_response_faults on replace
+Date: Fri,  7 Aug 2026 16:36:36 +0200
+Message-ID: <20260807143432.286228396@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -53,49 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Peiyang He <peiyang_he@smail.nju.edu.cn>
 
-commit 5f3fc0ad9a41883a62098359b9fdbe4257f20e53 upstream.
+commit ba5c0f28a26e7d9be1e0997f8920dd638e2782fd upstream.
 
-DMABUF pages are not supported for iommufd access pinning.
-iommufd_access_pin_pages() returns struct page pointers for
-in-kernel CPU access, but DMABUF-backed iopt_pages do not carry
-a userspace address that can be passed to the GUP path.
+iommufd_hwpt_replace_device() calls:
 
-iopt_pages_rw_access() already rejects IOPT_ADDRESS_DMABUF before doing
-CPU access. Apply the same rejection to iopt_area_add_access() before it
-takes pages->mutex and calls iopt_pages_fill_xarray().
-Otherwise a DMABUF-backed iopt_pages can reach the hole-fill path, where
-pfn_reader_user_pin() interprets the union as uptr and
-calls pin_user_pages_fast()/pin_user_pages_remote().
+	iommufd_auto_response_faults(hwpt, old_handle);
 
-This fix also avoids the lockdep warning reported from that path, where
-pages_dmabuf_mutex_key is held while gup_fast_fallback() may acquire
-mmap_lock.
+passing the *new* hwpt together with the handle of
+the device's *old* domain. This should be a parameter mismatch:
 
-Link: https://patch.msgid.link/r/CD68F549BF3761B7+20260709050800.520607-1-peiyang_he@smail.nju.edu.cn
-Reported-by: Peiyang He <peiyang_he@smail.nju.edu.cn>
-Closes: https://lore.kernel.org/all/E8540D7D05768C91+8b2ef227-3368-494e-909d-7b28e1489dfb@smail.nju.edu.cn/
-Fixes: 71db84a092c3 ("iommufd: Add DMABUF to iopt_pages")
+1. Semantically, iommufd_auto_response_faults(x, handle) scans
+   x->fault's deliver list and response xarray for groups matching
+   "handle". A group is queued under the hwpt that was attached at
+   fault-delivery time. old_handle is fetched *before* the domain switch,
+   so its group lives on old->fault, not on the new hwpt->fault.
+
+2. Historically, the first argument was "old". The routine was
+   introduced by commit b7d8833677ba ("iommufd: Fault-capable hwpt
+   attach/detach/replace") as __fault_domain_replace_dev() in
+   fault.c, correctly calling iommufd_auto_response_faults(old, curr).
+   Commit fb21b1568ada ("iommufd: Make attach_handle generic than
+   fault specific") moved this into iommufd_hwpt_replace_device() in
+   device.c and swapped it to "hwpt". This should be a refactor regression,
+   not an intentional change.
+
+Fix this by passing "old" instead.
+
+Link: https://patch.msgid.link/r/9D652384339C69D5+20260710122952.885325-1-peiyang_he@smail.nju.edu.cn
+Fixes: fb21b1568ada ("iommufd: Make attach_handle generic than fault specific")
 Cc: stable@vger.kernel.org
-Tested-by: Peiyang He <peiyang_he@smail.nju.edu.cn>
 Signed-off-by: Peiyang He <peiyang_he@smail.nju.edu.cn>
 Reviewed-by: Kevin Tian <kevin.tian@intel.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/iommufd/pages.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/iommu/iommufd/device.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iommu/iommufd/pages.c
-+++ b/drivers/iommu/iommufd/pages.c
-@@ -2451,6 +2451,9 @@ int iopt_area_add_access(struct iopt_are
- 	if ((flags & IOMMUFD_ACCESS_RW_WRITE) && !pages->writable)
- 		return -EPERM;
+--- a/drivers/iommu/iommufd/device.c
++++ b/drivers/iommu/iommufd/device.c
+@@ -589,7 +589,7 @@ static int iommufd_hwpt_replace_device(s
+ 	if (rc)
+ 		goto out_free_handle;
  
-+	if (iopt_is_dmabuf(pages))
-+		return -EINVAL;
-+
- 	mutex_lock(&pages->mutex);
- 	access = iopt_pages_get_exact_access(pages, start_index, last_index);
- 	if (access) {
+-	iommufd_auto_response_faults(hwpt, old_handle);
++	iommufd_auto_response_faults(old, old_handle);
+ 	kfree(old_handle);
+ 
+ 	return 0;
 
 
