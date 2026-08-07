@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBBEF2F0C74;
-	Fri,  7 Aug 2026 15:27:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EC2B2F0C74;
+	Fri,  7 Aug 2026 15:27:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116471; cv=none; b=lwwCY73F3+qyBvA5Dcjcr4g9cQZqDisaQ7mefJPMc1fwWxLzYrDw4OLTXy3TzzCaB3VXz4iBndXZnwv4tgaq2+rPbH+ntqUN8EX137UubYn27n+XJUC9syJafCrRtA+QzjdiXBK0azZIQptZHbRdjZzIQV7o6PZnQk4get+X3eU=
+	t=1786116474; cv=none; b=c8QnnOY7FLNULNppl+TD8Cg8ZYODC3PxAEN/VNGvr7bLSuX9dFA+SVjR0Vg3vRTnHoG29Zom0Vr4YsAYwYC4llfPqdUyioyrTbXlsPBoAGcDG9Jyup4EPNO2KXqY/GrCaahxpIM3uabBc0gvtTVS0kIxz+s8tsccBJLVFxVgig8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116471; c=relaxed/simple;
-	bh=6xKgIGrWIJ1NLTjNIkeuEAkn6NVIONn1LhobAE5UecE=;
+	s=arc-20240116; t=1786116474; c=relaxed/simple;
+	bh=FG3U7ClaRXrj7S0X0fY8KV2vIPfM/vkSHzOLy9wlvXI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FvQQXLDA1lF+vQh36dQv5oeKGCbJh6SH3K02bGJTJXCnoCEBXaBMX8y4Lx8xsakmcgL0M0B5UlL4TlnxviZqkkscENsgXJjqNcFzQ9sdRJ3stCvnrywq7cmkS530Z3Pea+AIPEx7unvbIH1jJijVgwlAnHveZ4c+uaJK2bhsDKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a7AvcfYK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=mpQRvIHAm/Sz9lPrGntHcLjA43hxNDFxFncfiTrIJQ7F+DlPELHVMvSdzdI8phph0wTeNnyZKQEVYNhFBQtPl1EGQ8lOnJQ7HWlLgISvSbugtvokaiGaUt9ELI7mQRtyEesi+eZU/lvKP/4UVzSi+RujXWn3wOrixSLh177qUb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T7M9Rd1w; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a7AvcfYK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33B8B1F000E9;
-	Fri,  7 Aug 2026 15:27:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T7M9Rd1w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 060131F000E9;
+	Fri,  7 Aug 2026 15:27:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116469;
-	bh=/oQMVcGc1KgiqqxEZrIGnXw9RvWew+XUkHiWjwdbgBI=;
+	s=korg; t=1786116472;
+	bh=aLslt8f7nIrNUxGLd5MpYJsAVNZqsdyMV7C00Wzdjy8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a7AvcfYK+Lbd56LAh2RkFAwMagC00BnGDknjNOpe/clNRy9UYLfA67Lg0vCV9AZsW
-	 vFvD6P73dr7P1iq5ZmY28TGvTUSjmZkmG2LnBSeT+brFFZiVXABZWdvdCxpdmBj/7E
-	 pcO0EcjV4507oKeN/gW/XcuOwANaR89Q8NAFETx4=
+	b=T7M9Rd1w0noZgpHDnfh87ZLriBOTGDBE65H1Bs2dbdfB2Fs4mywz+CrKDtyFaU/kN
+	 9L3B3yORiilH8d86gcafByZ97+nPTFQ2OcAUgTKlEFzOzlX7Gggv/TxQSY0UFvFlkR
+	 JrM+/mh+VvLq9FeqpAy+iqxJhFsYrRraqpGV7KNY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Kees Cook <keescook@chromium.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 241/261] wifi: brcmfmac: drain bus_reset work on device removal
-Date: Fri,  7 Aug 2026 16:39:58 +0200
-Message-ID: <20260807143420.605709466@linuxfoundation.org>
+Subject: [PATCH 6.6 242/261] sysctl: treewide: constify ctl_table_header::ctl_table_arg
+Date: Fri,  7 Aug 2026 16:39:59 +0200
+Message-ID: <20260807143420.631099710@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143415.358597922@linuxfoundation.org>
 References: <20260807143415.358597922@linuxfoundation.org>
@@ -46,295 +46,371 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Thomas Weißschuh <linux@weissschuh.net>
 
-[ Upstream commit 43b25879f004c98defa2776bedc6ca4763c51945 ]
+[ Upstream commit bfa858f220ab8c950dd3e1310fee61950d0ecdae ]
 
-brcmf_fw_crashed() and the debugfs "reset" entry both schedule
-drvr->bus_reset, whose callback recovers drvr through container_of()
-and dereferences it.  The removal path frees drvr (brcmf_free ->
-wiphy_free) without draining the work, so a bus_reset callback pending
-or running during removal can outlive drvr.
+To be able to constify instances of struct ctl_tables it is necessary to
+remove ways through which non-const versions are exposed from the
+sysctl core.
+One of these is the ctl_table_arg member of struct ctl_table_header.
 
-Cancellation cannot live in brcmf_detach() or brcmf_free(): the work
-callback reaches teardown through the bus .reset op (PCIe
-brcmf_pcie_reset -> brcmf_detach; SDIO brcmf_sdio_bus_reset ->
-brcmf_sdiod_remove -> brcmf_free), so cancelling there would wait for
-the running work and deadlock.
+Constify this reference as a prerequisite for the full constification of
+struct ctl_table instances.
+No functional change.
 
-Add a per-bus mutex (bus_reset_lock) and route all arming through
-brcmf_bus_schedule_reset(), which under the lock skips when the bus is
-marked removing.  Each bus remove entry calls
-brcmf_bus_cancel_reset_work(), which under the same lock sets removing
-and cancels the work.  Holding the mutex across cancel_work_sync() makes
-the set-removing + drain step atomic.  Every producer reaches the arming
-path from process context -- the PCIe firmware-halt notification runs in
-the threaded IRQ handler (brcmf_pcie_isr_thread) and the SDIO hostmail
-path runs from the data workqueue -- so the mutex is taken only in
-sleepable contexts.  Where applicable the remove entry first stops the
-firmware-crash producer: on PCIe mask the mailbox and synchronize_irq;
-on SDIO unregister the bus interrupt and cancel the data worker, which
-also reports firmware halts through brcmf_fw_crashed().  The mutex is
-initialized at bus allocation.  The SDIO suspend power-off path frees
-drvr through the same brcmf_sdiod_remove() and takes the same lock;
-resume re-allows the work only on a successful re-probe.
-
-Also guard brcmf_fw_crashed() against a NULL bus_if/drvr: it can fire
-before brcmf_attach() wires up drvr, and it dereferences drvr
-(bphy_err/brcmf_dev_coredump) before reaching the arming gate.
-
-The bus_reset work is shared across buses, so the drain is applied to
-every remove path: PCIe (the .reset op introduced by the Fixes commit),
-SDIO (arms the same work through brcmf_fw_crashed()), and USB (via the
-debugfs "reset" entry).  cancel_work_sync() drains a running or pending
-bus_reset work item before removal frees drvr, and patch 1/2 makes the
-scratch-buffer release safe when reset teardown has already released
-those DMA buffers.
-
-This patch fixes the lifetime of the bus_reset work item itself.  It does
-not attempt to address the separate, pre-existing lifetime of the
-asynchronous firmware completion started by the PCIe reset path.  That
-callback needs its own lifetime/ownership protocol and is being tracked
-separately.
-
-This issue was found by an in-house static analysis tool.
-
-Fixes: 4684997d9eea ("brcmfmac: reset PCIe bus on a firmware crash")
-Cc: stable@vger.kernel.org
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Assisted-by: Codex:gpt-5.6
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Link: https://patch.msgid.link/20260718024353.3147201-3-fanwu01@zju.edu.cn
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: f8d5e7846025 ("sctp: avoid auth_enable sysctl UAF during netns teardown")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c |   13 +++
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/bus.h    |    6 +
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c   |   46 ++++++++++++--
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c   |    6 +
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c   |    6 +
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.h   |    1 
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c    |    3 
- 7 files changed, 77 insertions(+), 4 deletions(-)
+ drivers/net/vrf.c                       |    2 +-
+ include/linux/sysctl.h                  |    2 +-
+ ipc/ipc_sysctl.c                        |    2 +-
+ ipc/mq_sysctl.c                         |    2 +-
+ kernel/ucount.c                         |    2 +-
+ net/ax25/sysctl_net_ax25.c              |    2 +-
+ net/bridge/br_netfilter_hooks.c         |    2 +-
+ net/core/sysctl_net_core.c              |    2 +-
+ net/ieee802154/6lowpan/reassembly.c     |    2 +-
+ net/ipv4/devinet.c                      |    2 +-
+ net/ipv4/ip_fragment.c                  |    2 +-
+ net/ipv4/route.c                        |    2 +-
+ net/ipv4/sysctl_net_ipv4.c              |    2 +-
+ net/ipv4/xfrm4_policy.c                 |    2 +-
+ net/ipv6/addrconf.c                     |    2 +-
+ net/ipv6/netfilter/nf_conntrack_reasm.c |    2 +-
+ net/ipv6/reassembly.c                   |    2 +-
+ net/ipv6/sysctl_net_ipv6.c              |    6 +++---
+ net/ipv6/xfrm6_policy.c                 |    2 +-
+ net/mpls/af_mpls.c                      |    4 ++--
+ net/mptcp/ctrl.c                        |    2 +-
+ net/netfilter/nf_conntrack_standalone.c |    2 +-
+ net/netfilter/nf_log.c                  |    2 +-
+ net/sctp/sysctl.c                       |    2 +-
+ net/smc/smc_sysctl.c                    |    2 +-
+ net/unix/sysctl_net_unix.c              |    2 +-
+ net/xfrm/xfrm_sysctl.c                  |    2 +-
+ 27 files changed, 30 insertions(+), 30 deletions(-)
 
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
-@@ -1065,6 +1065,7 @@ static int brcmf_ops_sdio_probe(struct s
- 	bus_if = kzalloc(sizeof(struct brcmf_bus), GFP_KERNEL);
- 	if (!bus_if)
- 		return -ENOMEM;
-+	mutex_init(&bus_if->bus_reset_lock);
- 	sdiodev = kzalloc(sizeof(struct brcmf_sdio_dev), GFP_KERNEL);
- 	if (!sdiodev) {
- 		kfree(bus_if);
-@@ -1126,6 +1127,14 @@ static void brcmf_ops_sdio_remove(struct
- 		if (func->num != 1)
- 			return;
- 
-+		/* Drain bus_reset before the shared brcmf_sdiod_remove()
-+		 * teardown, which the SDIO reset callback also reaches.  The
-+		 * data worker can arm bus_reset via brcmf_fw_crashed(); cancel
-+		 * it first.
-+		 */
-+		brcmf_sdio_cancel_datawork(sdiodev->bus);
-+		brcmf_bus_cancel_reset_work(bus_if);
-+
- 		/* only proceed with rest of cleanup if func 1 */
- 		brcmf_sdiod_remove(sdiodev);
- 
-@@ -1200,6 +1209,8 @@ static int brcmf_ops_sdio_suspend(struct
- 	} else {
- 		/* power will be cut so remove device, probe again in resume */
- 		brcmf_sdiod_intr_unregister(sdiodev);
-+		brcmf_sdio_cancel_datawork(sdiodev->bus);
-+		brcmf_bus_cancel_reset_work(bus_if);
- 		ret = brcmf_sdiod_remove(sdiodev);
- 		if (ret)
- 			brcmf_err("Failed to remove device on suspend\n");
-@@ -1225,6 +1236,8 @@ static int brcmf_ops_sdio_resume(struct
- 		ret = brcmf_sdiod_probe(sdiodev);
- 		if (ret)
- 			brcmf_err("Failed to probe device on resume\n");
-+		else
-+			brcmf_bus_allow_reset_work(bus_if);
- 	} else {
- 		if (sdiodev->wowl_enabled && sdiodev->settings->bus.sdio.oob_irq_supported)
- 			disable_irq_wake(sdiodev->settings->bus.sdio.oob_irq_nr);
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bus.h
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bus.h
-@@ -9,6 +9,7 @@
- #include <linux/kernel.h>
- #include <linux/firmware.h>
- #include <linux/device.h>
-+#include <linux/mutex.h>
- #include "debug.h"
- 
- /* IDs of the 6 default common rings of msgbuf protocol */
-@@ -179,6 +180,8 @@ struct brcmf_bus {
- 	enum brcmf_fwvendor fwvid;
- 	bool always_use_fws_queue;
- 	bool wowl_supported;
-+	bool removing;		/* device removal in progress; quiesce async work */
-+	struct mutex bus_reset_lock;
- 
- 	const struct brcmf_bus_ops *ops;
- 	struct brcmf_bus_msgbuf *msgbuf;
-@@ -186,6 +189,9 @@ struct brcmf_bus {
- 	struct list_head list;
- };
- 
-+void brcmf_bus_cancel_reset_work(struct brcmf_bus *bus_if);
-+void brcmf_bus_allow_reset_work(struct brcmf_bus *bus_if);
-+
- /*
-  * callback wrappers
-  */
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
-@@ -1162,6 +1162,35 @@ static int brcmf_revinfo_read(struct seq
- 	return 0;
- }
- 
-+/*
-+ * Serialize arming from debugfs reset and brcmf_fw_crashed() against
-+ * teardown.  The remove path sets ->removing and drains the work while
-+ * holding bus_reset_lock, so a racing armer is either drained or skips it.
-+ */
-+static void brcmf_bus_schedule_reset(struct brcmf_bus *bus_if)
-+{
-+	mutex_lock(&bus_if->bus_reset_lock);
-+	if (bus_if->drvr && bus_if->drvr->bus_reset.func && !bus_if->removing)
-+		schedule_work(&bus_if->drvr->bus_reset);
-+	mutex_unlock(&bus_if->bus_reset_lock);
-+}
-+
-+void brcmf_bus_cancel_reset_work(struct brcmf_bus *bus_if)
-+{
-+	mutex_lock(&bus_if->bus_reset_lock);
-+	bus_if->removing = true;
-+	if (bus_if->drvr)
-+		cancel_work_sync(&bus_if->drvr->bus_reset);
-+	mutex_unlock(&bus_if->bus_reset_lock);
-+}
-+
-+void brcmf_bus_allow_reset_work(struct brcmf_bus *bus_if)
-+{
-+	mutex_lock(&bus_if->bus_reset_lock);
-+	bus_if->removing = false;
-+	mutex_unlock(&bus_if->bus_reset_lock);
-+}
-+
- static void brcmf_core_bus_reset(struct work_struct *work)
+--- a/drivers/net/vrf.c
++++ b/drivers/net/vrf.c
+@@ -1983,7 +1983,7 @@ static int vrf_netns_init_sysctl(struct
+ static void vrf_netns_exit_sysctl(struct net *net)
  {
- 	struct brcmf_pub *drvr = container_of(work, struct brcmf_pub,
-@@ -1182,7 +1211,7 @@ static ssize_t bus_reset_write(struct fi
- 	if (value != 1)
- 		return -EINVAL;
+ 	struct netns_vrf *nn_vrf = net_generic(net, vrf_net_id);
+-	struct ctl_table *table;
++	const struct ctl_table *table;
  
--	schedule_work(&drvr->bus_reset);
-+	brcmf_bus_schedule_reset(drvr->bus_if);
+ 	table = nn_vrf->ctl_hdr->ctl_table_arg;
+ 	unregister_net_sysctl_table(nn_vrf->ctl_hdr);
+--- a/include/linux/sysctl.h
++++ b/include/linux/sysctl.h
+@@ -182,7 +182,7 @@ struct ctl_table_header {
+ 		struct rcu_head rcu;
+ 	};
+ 	struct completion *unregistering;
+-	struct ctl_table *ctl_table_arg;
++	const struct ctl_table *ctl_table_arg;
+ 	struct ctl_table_root *root;
+ 	struct ctl_table_set *set;
+ 	struct ctl_dir *parent;
+--- a/ipc/ipc_sysctl.c
++++ b/ipc/ipc_sysctl.c
+@@ -306,7 +306,7 @@ bool setup_ipc_sysctls(struct ipc_namesp
  
- 	return count;
- }
-@@ -1407,14 +1436,23 @@ void brcmf_dev_coredump(struct device *d
- void brcmf_fw_crashed(struct device *dev)
+ void retire_ipc_sysctls(struct ipc_namespace *ns)
  {
- 	struct brcmf_bus *bus_if = dev_get_drvdata(dev);
--	struct brcmf_pub *drvr = bus_if->drvr;
-+	struct brcmf_pub *drvr;
-+
-+	/* May fire before brcmf_attach() wires up drvr, or after removal
-+	 * has cleared it; guard the derefs below (and the arming gate in
-+	 * brcmf_bus_schedule_reset() already checks drvr/->removing).
-+	 */
-+	if (!bus_if)
-+		return;
-+	drvr = bus_if->drvr;
-+	if (!drvr)
-+		return;
+-	struct ctl_table *tbl;
++	const struct ctl_table *tbl;
  
- 	bphy_err(drvr, "Firmware has halted or crashed\n");
+ 	tbl = ns->ipc_sysctls->ctl_table_arg;
+ 	unregister_sysctl_table(ns->ipc_sysctls);
+--- a/ipc/mq_sysctl.c
++++ b/ipc/mq_sysctl.c
+@@ -159,7 +159,7 @@ bool setup_mq_sysctls(struct ipc_namespa
  
- 	brcmf_dev_coredump(dev);
- 
--	if (drvr->bus_reset.func)
--		schedule_work(&drvr->bus_reset);
-+	brcmf_bus_schedule_reset(bus_if);
- }
- 
- void brcmf_detach(struct device *dev)
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-@@ -2467,6 +2467,7 @@ brcmf_pcie_probe(struct pci_dev *pdev, c
- 		ret = -ENOMEM;
- 		goto fail;
- 	}
-+	mutex_init(&bus->bus_reset_lock);
- 	bus->msgbuf = kzalloc(sizeof(*bus->msgbuf), GFP_KERNEL);
- 	if (!bus->msgbuf) {
- 		ret = -ENOMEM;
-@@ -2552,6 +2553,11 @@ brcmf_pcie_remove(struct pci_dev *pdev)
- 	if (devinfo->ci)
- 		brcmf_pcie_intr_disable(devinfo);
- 
-+	if (devinfo->irq_allocated)
-+		synchronize_irq(pdev->irq);
-+
-+	brcmf_bus_cancel_reset_work(bus);
-+
- 	brcmf_detach(&pdev->dev);
- 	brcmf_free(&pdev->dev);
- 
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-@@ -4550,6 +4550,12 @@ fail:
- 	return NULL;
- }
- 
-+void brcmf_sdio_cancel_datawork(struct brcmf_sdio *bus)
-+{
-+	if (bus)
-+		cancel_work_sync(&bus->datawork);
-+}
-+
- /* Detach and free everything */
- void brcmf_sdio_remove(struct brcmf_sdio *bus)
+ void retire_mq_sysctls(struct ipc_namespace *ns)
  {
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.h
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.h
-@@ -361,6 +361,7 @@ int brcmf_sdiod_remove(struct brcmf_sdio
- struct brcmf_sdio *brcmf_sdio_probe(struct brcmf_sdio_dev *sdiodev);
- void brcmf_sdio_remove(struct brcmf_sdio *bus);
- void brcmf_sdio_isr(struct brcmf_sdio *bus, bool in_isr);
-+void brcmf_sdio_cancel_datawork(struct brcmf_sdio *bus);
+-	struct ctl_table *tbl;
++	const struct ctl_table *tbl;
  
- void brcmf_sdio_wd_timer(struct brcmf_sdio *bus, bool active);
- void brcmf_sdio_wowl_config(struct device *dev, bool enabled);
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
-@@ -1261,6 +1261,7 @@ static int brcmf_usb_probe_cb(struct brc
- 		ret = -ENOMEM;
- 		goto fail;
- 	}
-+	mutex_init(&bus->bus_reset_lock);
+ 	tbl = ns->mq_sysctls->ctl_table_arg;
+ 	unregister_sysctl_table(ns->mq_sysctls);
+--- a/kernel/ucount.c
++++ b/kernel/ucount.c
+@@ -119,7 +119,7 @@ bool setup_userns_sysctls(struct user_na
+ void retire_userns_sysctls(struct user_namespace *ns)
+ {
+ #ifdef CONFIG_SYSCTL
+-	struct ctl_table *tbl;
++	const struct ctl_table *tbl;
  
- 	bus->dev = dev;
- 	bus_pub->bus = bus;
-@@ -1327,6 +1328,8 @@ brcmf_usb_disconnect_cb(struct brcmf_usb
+ 	tbl = ns->sysctls->ctl_table_arg;
+ 	unregister_sysctl_table(ns->sysctls);
+--- a/net/ax25/sysctl_net_ax25.c
++++ b/net/ax25/sysctl_net_ax25.c
+@@ -171,7 +171,7 @@ int ax25_register_dev_sysctl(ax25_dev *a
+ void ax25_unregister_dev_sysctl(ax25_dev *ax25_dev)
+ {
+ 	struct ctl_table_header *header = ax25_dev->sysheader;
+-	struct ctl_table *table;
++	const struct ctl_table *table;
+ 
+ 	if (header) {
+ 		ax25_dev->sysheader = NULL;
+--- a/net/bridge/br_netfilter_hooks.c
++++ b/net/bridge/br_netfilter_hooks.c
+@@ -1290,7 +1290,7 @@ static int br_netfilter_sysctl_init_net(
+ static void br_netfilter_sysctl_exit_net(struct net *net,
+ 					 struct brnf_net *brnet)
+ {
+-	struct ctl_table *table = brnet->ctl_hdr->ctl_table_arg;
++	const struct ctl_table *table = brnet->ctl_hdr->ctl_table_arg;
+ 
+ 	unregister_net_sysctl_table(brnet->ctl_hdr);
+ 	if (!net_eq(net, &init_net))
+--- a/net/core/sysctl_net_core.c
++++ b/net/core/sysctl_net_core.c
+@@ -741,7 +741,7 @@ err_dup:
+ 
+ static __net_exit void sysctl_core_net_exit(struct net *net)
+ {
+-	struct ctl_table *tbl;
++	const struct ctl_table *tbl;
+ 
+ 	tbl = net->core.sysctl_hdr->ctl_table_arg;
+ 	unregister_net_sysctl_table(net->core.sysctl_hdr);
+--- a/net/ieee802154/6lowpan/reassembly.c
++++ b/net/ieee802154/6lowpan/reassembly.c
+@@ -399,7 +399,7 @@ err_alloc:
+ 
+ static void __net_exit lowpan_frags_ns_sysctl_unregister(struct net *net)
+ {
+-	struct ctl_table *table;
++	const struct ctl_table *table;
+ 	struct netns_ieee802154_lowpan *ieee802154_lowpan =
+ 		net_ieee802154_lowpan(net);
+ 
+--- a/net/ipv4/devinet.c
++++ b/net/ipv4/devinet.c
+@@ -2793,7 +2793,7 @@ err_alloc_all:
+ static __net_exit void devinet_exit_net(struct net *net)
+ {
+ #ifdef CONFIG_SYSCTL
+-	struct ctl_table *tbl;
++	const struct ctl_table *tbl;
+ 
+ 	tbl = net->ipv4.forw_hdr->ctl_table_arg;
+ 	unregister_net_sysctl_table(net->ipv4.forw_hdr);
+--- a/net/ipv4/ip_fragment.c
++++ b/net/ipv4/ip_fragment.c
+@@ -632,7 +632,7 @@ err_alloc:
+ 
+ static void __net_exit ip4_frags_ns_ctl_unregister(struct net *net)
+ {
+-	struct ctl_table *table;
++	const struct ctl_table *table;
+ 
+ 	table = net->ipv4.frags_hdr->ctl_table_arg;
+ 	unregister_net_sysctl_table(net->ipv4.frags_hdr);
+--- a/net/ipv4/route.c
++++ b/net/ipv4/route.c
+@@ -3621,7 +3621,7 @@ err_dup:
+ 
+ static __net_exit void sysctl_route_net_exit(struct net *net)
+ {
+-	struct ctl_table *tbl;
++	const struct ctl_table *tbl;
+ 
+ 	tbl = net->ipv4.route_hdr->ctl_table_arg;
+ 	unregister_net_sysctl_table(net->ipv4.route_hdr);
+--- a/net/ipv4/sysctl_net_ipv4.c
++++ b/net/ipv4/sysctl_net_ipv4.c
+@@ -1564,7 +1564,7 @@ err_alloc:
+ 
+ static __net_exit void ipv4_sysctl_exit_net(struct net *net)
+ {
+-	struct ctl_table *table;
++	const struct ctl_table *table;
+ 
+ 	table = net->ipv4.ipv4_hdr->ctl_table_arg;
+ 	unregister_net_sysctl_table(net->ipv4.ipv4_hdr);
+--- a/net/ipv4/xfrm4_policy.c
++++ b/net/ipv4/xfrm4_policy.c
+@@ -182,7 +182,7 @@ err_alloc:
+ 
+ static __net_exit void xfrm4_net_sysctl_exit(struct net *net)
+ {
+-	struct ctl_table *table;
++	const struct ctl_table *table;
+ 
+ 	if (!net->ipv4.xfrm4_hdr)
  		return;
- 	brcmf_dbg(USB, "Enter, bus_pub %p\n", devinfo);
+--- a/net/ipv6/addrconf.c
++++ b/net/ipv6/addrconf.c
+@@ -7251,7 +7251,7 @@ out:
+ static void __addrconf_sysctl_unregister(struct net *net,
+ 					 struct ipv6_devconf *p, int ifindex)
+ {
+-	struct ctl_table *table;
++	const struct ctl_table *table;
  
-+	brcmf_bus_cancel_reset_work(devinfo->bus_pub.bus);
-+
- 	brcmf_detach(devinfo->dev);
- 	brcmf_free(devinfo->dev);
- 	kfree(devinfo->bus_pub.bus);
+ 	if (!p->sysctl_header)
+ 		return;
+--- a/net/ipv6/netfilter/nf_conntrack_reasm.c
++++ b/net/ipv6/netfilter/nf_conntrack_reasm.c
+@@ -105,7 +105,7 @@ err_alloc:
+ static void __net_exit nf_ct_frags6_sysctl_unregister(struct net *net)
+ {
+ 	struct nft_ct_frag6_pernet *nf_frag = nf_frag_pernet(net);
+-	struct ctl_table *table;
++	const struct ctl_table *table;
+ 
+ 	table = nf_frag->nf_frag_frags_hdr->ctl_table_arg;
+ 	unregister_net_sysctl_table(nf_frag->nf_frag_frags_hdr);
+--- a/net/ipv6/reassembly.c
++++ b/net/ipv6/reassembly.c
+@@ -487,7 +487,7 @@ err_alloc:
+ 
+ static void __net_exit ip6_frags_ns_sysctl_unregister(struct net *net)
+ {
+-	struct ctl_table *table;
++	const struct ctl_table *table;
+ 
+ 	table = net->ipv6.sysctl.frags_hdr->ctl_table_arg;
+ 	unregister_net_sysctl_table(net->ipv6.sysctl.frags_hdr);
+--- a/net/ipv6/sysctl_net_ipv6.c
++++ b/net/ipv6/sysctl_net_ipv6.c
+@@ -313,9 +313,9 @@ out_ipv6_table:
+ 
+ static void __net_exit ipv6_sysctl_net_exit(struct net *net)
+ {
+-	struct ctl_table *ipv6_table;
+-	struct ctl_table *ipv6_route_table;
+-	struct ctl_table *ipv6_icmp_table;
++	const struct ctl_table *ipv6_table;
++	const struct ctl_table *ipv6_route_table;
++	const struct ctl_table *ipv6_icmp_table;
+ 
+ 	ipv6_table = net->ipv6.sysctl.hdr->ctl_table_arg;
+ 	ipv6_route_table = net->ipv6.sysctl.route_hdr->ctl_table_arg;
+--- a/net/ipv6/xfrm6_policy.c
++++ b/net/ipv6/xfrm6_policy.c
+@@ -229,7 +229,7 @@ err_alloc:
+ 
+ static void __net_exit xfrm6_net_sysctl_exit(struct net *net)
+ {
+-	struct ctl_table *table;
++	const struct ctl_table *table;
+ 
+ 	if (!net->ipv6.sysctl.xfrm6_hdr)
+ 		return;
+--- a/net/mpls/af_mpls.c
++++ b/net/mpls/af_mpls.c
+@@ -1422,7 +1422,7 @@ static void mpls_dev_sysctl_unregister(s
+ 				       struct mpls_dev *mdev)
+ {
+ 	struct net *net = dev_net(dev);
+-	struct ctl_table *table;
++	const struct ctl_table *table;
+ 
+ 	if (!mdev->sysctl)
+ 		return;
+@@ -2692,7 +2692,7 @@ static void mpls_net_exit(struct net *ne
+ {
+ 	struct mpls_route __rcu **platform_label;
+ 	size_t platform_labels;
+-	struct ctl_table *table;
++	const struct ctl_table *table;
+ 	unsigned int index;
+ 
+ 	table = net->mpls.ctl->ctl_table_arg;
+--- a/net/mptcp/ctrl.c
++++ b/net/mptcp/ctrl.c
+@@ -218,7 +218,7 @@ err_alloc:
+ 
+ static void mptcp_pernet_del_table(struct mptcp_pernet *pernet)
+ {
+-	struct ctl_table *table = pernet->ctl_table_hdr->ctl_table_arg;
++	const struct ctl_table *table = pernet->ctl_table_hdr->ctl_table_arg;
+ 
+ 	unregister_net_sysctl_table(pernet->ctl_table_hdr);
+ 
+--- a/net/netfilter/nf_conntrack_standalone.c
++++ b/net/netfilter/nf_conntrack_standalone.c
+@@ -1113,7 +1113,7 @@ out_unregister_netfilter:
+ static void nf_conntrack_standalone_fini_sysctl(struct net *net)
+ {
+ 	struct nf_conntrack_net *cnet = nf_ct_pernet(net);
+-	struct ctl_table *table;
++	const struct ctl_table *table;
+ 
+ 	table = cnet->sysctl_header->ctl_table_arg;
+ 	unregister_net_sysctl_table(cnet->sysctl_header);
+--- a/net/netfilter/nf_log.c
++++ b/net/netfilter/nf_log.c
+@@ -509,7 +509,7 @@ err_alloc:
+ 
+ static void netfilter_log_sysctl_exit(struct net *net)
+ {
+-	struct ctl_table *table;
++	const struct ctl_table *table;
+ 
+ 	table = net->nf.nf_log_dir_header->ctl_table_arg;
+ 	unregister_net_sysctl_table(net->nf.nf_log_dir_header);
+--- a/net/sctp/sysctl.c
++++ b/net/sctp/sysctl.c
+@@ -630,7 +630,7 @@ int sctp_sysctl_net_register(struct net
+ 
+ void sctp_sysctl_net_unregister(struct net *net)
+ {
+-	struct ctl_table *table;
++	const struct ctl_table *table;
+ 
+ 	table = net->sctp.sysctl_header->ctl_table_arg;
+ 	unregister_net_sysctl_table(net->sctp.sysctl_header);
+--- a/net/smc/smc_sysctl.c
++++ b/net/smc/smc_sysctl.c
+@@ -109,7 +109,7 @@ err_alloc:
+ 
+ void __net_exit smc_sysctl_net_exit(struct net *net)
+ {
+-	struct ctl_table *table;
++	const struct ctl_table *table;
+ 
+ 	table = net->smc.smc_hdr->ctl_table_arg;
+ 	unregister_net_sysctl_table(net->smc.smc_hdr);
+--- a/net/unix/sysctl_net_unix.c
++++ b/net/unix/sysctl_net_unix.c
+@@ -52,7 +52,7 @@ err_alloc:
+ 
+ void unix_sysctl_unregister(struct net *net)
+ {
+-	struct ctl_table *table;
++	const struct ctl_table *table;
+ 
+ 	table = net->unx.ctl->ctl_table_arg;
+ 	unregister_net_sysctl_table(net->unx.ctl);
+--- a/net/xfrm/xfrm_sysctl.c
++++ b/net/xfrm/xfrm_sysctl.c
+@@ -76,7 +76,7 @@ out_kmemdup:
+ 
+ void __net_exit xfrm_sysctl_fini(struct net *net)
+ {
+-	struct ctl_table *table;
++	const struct ctl_table *table;
+ 
+ 	table = net->xfrm.sysctl_hdr->ctl_table_arg;
+ 	unregister_net_sysctl_table(net->xfrm.sysctl_hdr);
 
 
