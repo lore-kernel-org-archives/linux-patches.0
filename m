@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4CFA33E355;
-	Fri,  7 Aug 2026 15:22:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 913DC3264D6;
+	Fri,  7 Aug 2026 15:22:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116156; cv=none; b=YNRLpaYNa6pruNkWqQ6W3mI9qy1C1zE0RnXCClEbCA/eSzJW4oktdmENsgpWmkeAvXcbh+hojlSjd9jGE87874rNqnU46DfjKwaOwJML7C857uDmCUMVN9i36jzydCPWjsWqY/Peps00iFCO+GaM60SfLIkONHek34QVFU+VaHo=
+	t=1786116159; cv=none; b=hbVe+0EzI9LKm8836Ey/7PpmPm/06CMS5Hzxn7rqJtm+O8iuGHYjIL3uU88LBhaauBH98/8sYNbQG6NZu2+P91T3Rq+LxDvM+dLtNxTovm/PSGw6a8JYjH0ykG/AVQBu5uEAYGFqx7hO3cFdpMedhkWe0sEcmVO4ixydeqWdnZo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116156; c=relaxed/simple;
-	bh=3684B0Ul43gMnsPXpTU+riKCb/fZnP/+HhivXgSXgvA=;
+	s=arc-20240116; t=1786116159; c=relaxed/simple;
+	bh=WKnGqnSJ7BmgdFn2PRDEpnNBYtcaAztxWkEpdEBDfOY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pocb0n60oMU6Tiqi25wEEc+pB9Fi4+swX8bqhMVoZAYRgPVdzVQfuw53jEZaNp+y+mqRxlpFRSuoz7pK846o0G7CCiq1LbFEtvABNk1rF/zP7emJYOS4eUtnvUyW++Q/1E0XgpF1RMNWXyy7HaZ2pV3ibNwfqY/onUZX4DstaDc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vOjBldxW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G1yeGlbMRsoHv00eCqptz7YlBRmjqVyqf2JMB3LaqvOWRtgjWxm02h9l6xr77k2MRZFzygA0N1zRNkxCCZ3pHzx3E6xvvCDeopewZ22V7oa1kOfn7JwFoRz2ZCZsPklm2Ojn/tU6mlnr2hQEUPptTCERl4fRK0I4cxZI37YXovY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KXJLmWU1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vOjBldxW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B81C1F000E9;
-	Fri,  7 Aug 2026 15:22:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KXJLmWU1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3A3E1F000E9;
+	Fri,  7 Aug 2026 15:22:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116155;
-	bh=Zn7hfHWQ/k6qftniZ0mkXuLqcqSjsfM1CDWxLxSaFZY=;
+	s=korg; t=1786116158;
+	bh=cOw7bOQu/TaM4zNA57lqSEwsuVnJSE9krAURtlncs54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vOjBldxWKchMdaSiQtnQwJ3pObiJEFU0MERtd6MD7CncP/9S5aJeYIVB8YvR1mhSv
-	 oA7j85qTGtsWxDw4KZ368Bn+1h2o9pN4XSOdKRKQQUCMxE5ddyGAynOynx946caKBb
-	 QgfeQoVI0xMWylnJP8Ve36Vci8KCdynQTkRxN8hY=
+	b=KXJLmWU1dR+JQyDKvQU9h8EUv3hL2Ci3hO2PyLxdkpJSAon4U6PL8IEvg0P9ftaql
+	 Dk/x/8DOI8jCTJ/0bfPuTWJYJL4AoNg0BFr3adKhKqfy6hYfmCZq7Z0z11ZAEWsway
+	 yD1N3QZBNhqAaCX80VLzjIf+PxrK7+Z1ItV2/D/E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Vollrath <tactii@gmail.com>,
-	Damien Le Moal <dlemoal@kernel.org>
-Subject: [PATCH 6.6 115/261] ata: libata-eh: Increase STANDBY IMMEDIATE timeout
-Date: Fri,  7 Aug 2026 16:37:52 +0200
-Message-ID: <20260807143417.856239461@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Richard Weinberger <richard@nod.at>
+Subject: [PATCH 6.6 133/261] um: vector: fix use-after-free in vector_mmsg_rx()
+Date: Fri,  7 Aug 2026 16:38:10 +0200
+Message-ID: <20260807143418.235916827@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143415.358597922@linuxfoundation.org>
 References: <20260807143415.358597922@linuxfoundation.org>
@@ -50,78 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matt Vollrath <tactii@gmail.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 1e024d2b41ee32bc06818f7f09a3562c58842cf9 upstream.
+commit af421e9aed3920c7ac88c24daa48606c7112feca upstream.
 
-Correct a previous change (see Fixes) which reduced the standby timeout
-from 30 to 5 seconds. Increase it to 15 seconds.
+When vector_mmsg_rx() discards a packet whose overlay header fails
+verify_header(), it frees the skb and continues the loop:
 
-I was troubleshooting an error spotted during system suspend:
+	if (header_check < 0) {
+		dev_kfree_skb_irq(skb);
+		vp->estats.rx_encaps_errors++;
+		continue;
+	}
 
-    [ 1217.152867] ata1.00: Entering standby power mode
-    [ 1222.322948] ata1.00: qc timeout after 5000 msecs (cmd 0xe0)
-    [ 1222.324010] ata1.00: STANDBY IMMEDIATE failed (err_mask=0x4)
+The normal and short-packet paths fall through to the bottom of the
+loop body, which clears the consumed slot and advances the cursors:
 
-This drive is a Samsung 870 EVO SSD in good SMART standing, and I wasn't
-aware of any reason it should be taking so long to standby. The issue is
-intermittent, but I observed it sometimes taking 7 seconds to manually
-standby. I assume this was interruption of background maintenance after
-a power outage.
+	(*skbuff_vector) = NULL;
+	mmsg_vector++;
+	skbuff_vector++;
 
-As a desktop user, I would prefer to wait the extra 2 seconds at suspend
-to let the drive finish its business rather than drop the rails from
-under it.
+The verify_header() < 0 path skips that via continue, so the freed skb
+is left in skbuff_vector[] and the cursors do not advance. The next
+iteration reads the same slot, gets the freed skb, and frees it again,
+producing a refcount underflow / use-after-free in the RX path.
 
-The change from 30 to 5 seconds was implicit when switching suspend
-from START STOP UNIT to an internal command with no timeout table entry.
-No reason was stated for the change.
+Discard the slot the same way the other paths do before continuing.
 
-Fixes: aa3998dbeb3a ("ata: libata-scsi: Disable scsi device manage_system_start_stop")
+Only transports whose verify_header() can return negative are affected:
+GRE and L2TPv3 do so on a cookie/session-id mismatch (raw/tap do not),
+so any peer on such a transport can trigger it without authentication.
+
+Fixes: 49da7e64f33e ("High Performance UML Vector Network Driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Matt Vollrath <tactii@gmail.com>
-Assisted-by: Claude:claude-5-fable
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/libata-eh.c |    8 ++++++++
- include/linux/libata.h  |    2 +-
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ arch/um/drivers/vector_kern.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/ata/libata-eh.c
-+++ b/drivers/ata/libata-eh.c
-@@ -106,6 +106,12 @@ static const unsigned int ata_eh_flush_t
- 	UINT_MAX,
- };
- 
-+static const unsigned int ata_eh_standby_timeouts[] = {
-+	15000,	/* Some drives may be slow to standby */
-+	/* but don't hold up a suspend too long waiting for them */
-+	UINT_MAX,
-+};
-+
- static const unsigned int ata_eh_other_timeouts[] = {
- 	 5000,	/* same rationale as identify timeout */
- 	10000,	/* ditto */
-@@ -147,6 +153,8 @@ ata_eh_cmd_timeout_table[ATA_EH_CMD_TIME
- 	  .timeouts = ata_eh_other_timeouts, },
- 	{ .commands = CMDS(ATA_CMD_FLUSH, ATA_CMD_FLUSH_EXT),
- 	  .timeouts = ata_eh_flush_timeouts },
-+	{ .commands = CMDS(ATA_CMD_STANDBYNOW1),
-+	  .timeouts = ata_eh_standby_timeouts },
- 	{ .commands = CMDS(ATA_CMD_VERIFY),
- 	  .timeouts = ata_eh_reset_timeouts },
- };
---- a/include/linux/libata.h
-+++ b/include/linux/libata.h
-@@ -360,7 +360,7 @@ enum {
- 	/* This should match the actual table size of
- 	 * ata_eh_cmd_timeout_table in libata-eh.c.
- 	 */
--	ATA_EH_CMD_TIMEOUT_TABLE_SIZE = 8,
-+	ATA_EH_CMD_TIMEOUT_TABLE_SIZE = 9,
- 
- 	/* Horkage types. May be set by libata or controller on drives
- 	   (some horkage may be drive/controller pair dependent */
+--- a/arch/um/drivers/vector_kern.c
++++ b/arch/um/drivers/vector_kern.c
+@@ -1007,6 +1007,9 @@ static int vector_mmsg_rx(struct vector_
+ 				 */
+ 					dev_kfree_skb_irq(skb);
+ 					vp->estats.rx_encaps_errors++;
++					(*skbuff_vector) = NULL;
++					mmsg_vector++;
++					skbuff_vector++;
+ 					continue;
+ 				}
+ 				if (header_check > 0) {
 
 
