@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41D2F470458;
-	Fri,  7 Aug 2026 15:05:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A76B346D092;
+	Fri,  7 Aug 2026 15:06:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115162; cv=none; b=BJTUQRnFvmPY13Y9pjqDJwHSf9qejIs4EN7X/StG4pt31KpQjpVzqfuAvx3DNCH8pKBxaun5JKCfFSI2fF24ImAdJAlNOL8Z4A0wogC1jsoUgwp4DsuAxcmYSJxpONDC2XCVANjmj8f2hfkuV3fFnO+1A1Lbl03mzxahiQaOJ3w=
+	t=1786115167; cv=none; b=XWfibBQtDCVAdQoN8fce92YJuR26heNNzu3ABm58OJyBgBjBJi6KvAhf2K2MmZfPYQCCdf7x3NqrZfmPvLEJKjPuNgg3Fyc9jSWPiVNbgaKbrtXZFGRg7780hsADaBNd4ezCzTkKFWnbpnrA42sfqXnUuUNUnJAs1K6NgAaROO8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115162; c=relaxed/simple;
-	bh=D2fuskp5E/bGvWXUjwKmeR7MdJIl+ZYzMolZ0h4vP2A=;
+	s=arc-20240116; t=1786115167; c=relaxed/simple;
+	bh=LjV9doUnPGqRRtrB6xYHE/lpcBB9kOdGlh6PGp2JBV4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=klDW3AdYsLmGU9YEhj4mWbanLH3a13J5Kdo4xXKC3VzM2OxpjbNCACtDM/zUM/jpsPzHTXP9AKGcat2xu15vNK6WoycpWdEfOjQu5w7BUyGnCvYpxE831guL3XIXNDO9sVGow+LropI8kgr5W/ecQu/7dl51BhdBeXxdSWtXwns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mlOcTAOU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ojwMHPDpA4rT5y5f2r7jo/gib9pB2yvxTJj7zjKVsg2MXZqJ5Jbw3KUdroqBJWj8tzUFQY432kYztmwEoxSg/n4tnYbceFvHnl7HCIOVBvxIe9O9oTVxerttQPyUeSNvNH2l5XpJzEiYZ8y60PXO9LsGhaCKYZtxvKjk9Fj20Zg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wu89PeLP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mlOcTAOU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B322A1F00A3D;
-	Fri,  7 Aug 2026 15:05:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wu89PeLP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A01D01F00A3E;
+	Fri,  7 Aug 2026 15:06:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115155;
-	bh=JZPKLJPAN4Q3FeNFQJGBfOVh/8PVUkGwG5eh9JwXlJc=;
+	s=korg; t=1786115161;
+	bh=HLtjgnPpCFe5X0UWTcIk1PwcGAEcdNQhygW83w4ce+0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mlOcTAOU0MBFZQHYZ06SFTeaJtxNTqXGxAo3HOoDmPQgZK/cOJtJu4dkHtGz6ZlYm
-	 pc9ZxIFW+E+ttnT9iBF3lctPZ+l7yGbE7i0NgXTkArGsTGrrh5TaXDnnLLDlqefidQ
-	 O0m9mSCjkC3wrpHk1mFYTspU83sQMFvHK2StMRFo=
+	b=wu89PeLPHzWn0m4YG0rhM+6owJqlJyXuKFN+EBo+frcVIRQFDkkC5R+WuTv8zAPjT
+	 4Eu9DVlx2WBY0ZddnWRENl3SxQh5/hg5fjeg9xRqCLyYmEjC/TaIDYQGUT9vB2fRu7
+	 cJFKQbT1blvf54lMyzWCuX2tWq2AFfXGhVUiREWc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raushan Patel <raushan.jhon@gmail.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 6.18 176/396] tracing/probes: Reject $arg0 in meta argument expansion
-Date: Fri,  7 Aug 2026 16:35:36 +0200
-Message-ID: <20260807143428.094800271@linuxfoundation.org>
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.18 178/396] KVM: VMX: add memory clobber to asm for VMX instructions
+Date: Fri,  7 Aug 2026 16:35:38 +0200
+Message-ID: <20260807143428.135458557@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -50,48 +50,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raushan Patel <raushan.jhon@gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-commit 00a8ce2a2a9fa17674e1feec4d9105c1a5d6a419 upstream.
+commit 0e65cd9e5d41c34f86b7c347967bedac54926041 upstream.
 
-traceprobe_expand_meta_args() parses $argN with simple_strtoul() and
-calls sprint_nth_btf_arg(n - 1, ...). For $arg0, n is 0 so the index is
--1. Because ctx->nr_params is signed, the "idx >= nr_params" guard in
-sprint_nth_btf_arg() does not catch the negative index, and
-ctx->params[-1].name_off is read out of bounds.
+VMCLEAR/VMREAD/VMWRITE/VMPTRLD access the internal VMCS cache, which
+is not visible to the compiler; without a memory clobber, the compiler
+can reorder them in troublesome ways because "asm volatile" and "asm goto"
+only protect against removal of the asm.  For example, placing a VMWRITE
+before the corresponding VMCS pointer is loaded can lead to corruption.
+While none of this has been observed, it is better to prevent than cure.
 
-The normal per-argument path (parse_probe_vars()) already rejects
-$arg0 via its argument-number check, but meta-argument expansion runs
-before per-argument parsing and substitutes the value first, bypassing
-that check.
+Likewise, INVEPT and INVVPID access the TLB and, even though in their
+case the effect is only visible to the next VMLAUNCH/VMRESUME, it is
+technically correct to add the clobber there too.  So avoid any urge to
+special case them, and simply hardcode "memory" into the clobber list
+of vmx_asm1() and vmx_asm2().  __vmcs_readl() open-codes its own asm,
+so add the clobber there as well.
 
-Reject $arg0 explicitly during expansion.
-
-Link: https://lore.kernel.org/all/20260724054435.146279-1-raushan.jhon@gmail.com/
-
-Fixes: 18b1e870a496 ("tracing/probes: Add $arg* meta argument for all function args")
+Link: https://lore.kernel.org/kvm/CABgObfbL3t21yVeSwiLSjjOUER+rTYDPHYAH9YU4TWGRjx6XHg@mail.gmail.com/
+Cc: Sean Christopherson <seanjc@google.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Raushan Patel <raushan.jhon@gmail.com>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_probe.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ arch/x86/kvm/vmx/vmx_ops.h |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/kernel/trace/trace_probe.c
-+++ b/kernel/trace/trace_probe.c
-@@ -1906,7 +1906,11 @@ const char **traceprobe_expand_meta_args
- 				trace_probe_log_err(0, BAD_VAR);
- 				return ERR_PTR(-ENOENT);
- 			}
--			/* Note: $argN starts from $arg1 */
-+			/* Note: $argN starts from $arg1, so $arg0 is invalid. */
-+			if (n == 0) {
-+				trace_probe_log_err(0, BAD_ARG_NUM);
-+				return ERR_PTR(-EINVAL);
-+			}
- 			ret = sprint_nth_btf_arg(n - 1, type, buf + used,
- 						 bufsize - used, ctx);
- 			if (ret < 0)
+--- a/arch/x86/kvm/vmx/vmx_ops.h
++++ b/arch/x86/kvm/vmx/vmx_ops.h
+@@ -101,7 +101,7 @@ static __always_inline unsigned long __v
+ 
+ 			  : [output] "=r" (value)
+ 			  : [field] "r" (field)
+-			  : "cc"
++			  : "cc", "memory"
+ 			  : do_fail, do_exception);
+ 
+ 	return value;
+@@ -146,7 +146,7 @@ do_exception:
+ 
+ 		     : ASM_CALL_CONSTRAINT, [output] "=&r" (value)
+ 		     : [field] "r" (field)
+-		     : "cc");
++		     : "cc", "memory");
+ 	return value;
+ 
+ #endif /* CONFIG_CC_HAS_ASM_GOTO_OUTPUT */
+@@ -194,7 +194,7 @@ do {									\
+ 			  ".byte 0x2e\n\t" /* branch not taken hint */	\
+ 			  "jna %l[error]\n\t"				\
+ 			  _ASM_EXTABLE(1b, %l[fault])			\
+-			  : : op1 : "cc" : error, fault);		\
++			  : : op1 : "cc", "memory" : error, fault);	\
+ 	return;								\
+ error:									\
+ 	instrumentation_begin();					\
+@@ -211,7 +211,7 @@ do {									\
+ 			  ".byte 0x2e\n\t" /* branch not taken hint */	\
+ 			  "jna %l[error]\n\t"				\
+ 			  _ASM_EXTABLE(1b, %l[fault])			\
+-			  : : op1, op2 : "cc" : error, fault);		\
++			  : : op1, op2 : "cc", "memory" : error, fault);\
+ 	return;								\
+ error:									\
+ 	instrumentation_begin();					\
 
 
