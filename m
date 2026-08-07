@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F47138E8A9;
-	Fri,  7 Aug 2026 14:59:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF33A41F5D9;
+	Fri,  7 Aug 2026 14:59:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114762; cv=none; b=MXcB1OjDDqjN45+HTXLWRwWEdbNHPGeNGfd0bhXQ/T5QoMfeJ/w6iI93JWH6m+4z5zYDlqsG7dNS8y79pe/jqNfv7Eh4Uzq86rukbrWGlq1CnXt2MolWxmQBddkUJcwDK9hVkI0SE6L8Elg9uNzC+A1dBSGecs4LBsfpiYnLz2Y=
+	t=1786114765; cv=none; b=tk4wgbsX8D/hnxQ2WNdWRRcud7oNKfvkfegTgJIXudFV44/h6YflhSQ9qeY/aw4w3+nI8G07Hmxg8UCoWcmD0p4InAW+pRFdwaO8QuxIAI6Pt6hnfJeI3Nl2UBum4BVqrWGRiXJkgMQhwmCbIfUKv6spRyrvEP1EdbNeRkEl/zw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114762; c=relaxed/simple;
-	bh=zbPY+ItUr/PJh6KDD0ZGJ7vmHEcG1V52q0l/kChffeQ=;
+	s=arc-20240116; t=1786114765; c=relaxed/simple;
+	bh=7dsoYtal0tHbyE7U7IhRWB6Ykrri6VA0Fn2Yn+vkL1Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BtYogCu9G2dw57yT50fhsBUdH2EIBtTn+4EuTmapTBpKGtgNAwa1hhYS+7P7EzCCaTDWrGYG5fIPrzWu6n2dGwfS10G8NaXEklMjWTXNPL+Uv+TltoYTFXnHjLAhSmzr0G8Gls2u4ZkUvfYqPi+AJbutUmuPR6RXEN5FdACsNIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rz2ME+yD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DDg3xEtVm+uUvvWd9IMf4vzVQSaONsuQTZwnXpIE1af0JSodyVfX2Eu4ZSFmufiswQxCMyRBeGiHZ/TCWPEcI7wcAVfVzj1ycIHHmxDuuTYLs4B5ywulJfx+OKJI8V7RPozHVpfVGyMkj2/PZ5/f7MtafHRER0j4EzvGu4bnvTo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vHjaHpeq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rz2ME+yD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72EEB1F000E9;
-	Fri,  7 Aug 2026 14:59:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vHjaHpeq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46C631F000E9;
+	Fri,  7 Aug 2026 14:59:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114761;
-	bh=FC/TVo73IquE02POO9wIX0ipvggIzlU/l5DqHVh3Sjg=;
+	s=korg; t=1786114763;
+	bh=uzlbsV2S4TVXPLQ0TbkG5qA9TNWDi/7Vvd2YkPenK3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rz2ME+yDVi7+IqDGSSVkYAm9JpNxI4qGn+PSvvyTRQajzZKSqyYy4wB49DkTlv5NU
-	 BZ6wkpjOq5U7NZrOv+jYS4X15M46N7prtbeGklxbDxu1RIA7x1sALhdViJ8lZw/Z3X
-	 sgQNqDm2T7ir8Rq5zLGQ3p84xmVrDeYDxN+E0DWg=
+	b=vHjaHpeq5hBhSSPhRMR5F3ckOsRZ2AgWnMbwaP3f/ojN0s58UxBpy7FLm+x/HNvrn
+	 X+uT/rRKTRZ9yZYRDgtEXgP3af6UN9uG7bAsOrhFJxMKvZBpKfNKcudfpfJFfyaMv7
+	 i6F2mgUQzrHaCWDX1tPIAyoYU5VBXq4Fq9XRVCX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roman Kisel <romank@linux.microsoft.com>,
-	Tianyu Lan <tiala@microsoft.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
 	Michael Kelley <mhklinux@outlook.com>,
 	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 038/396] Drivers: hv: Allocate the paravisor SynIC pages when required
-Date: Fri,  7 Aug 2026 16:33:18 +0200
-Message-ID: <20260807143425.092781239@linuxfoundation.org>
+Subject: [PATCH 6.18 039/396] Drivers: hv: vmbus: Replace lockdep_hardirq_threaded() with lockdep annotation
+Date: Fri,  7 Aug 2026 16:33:19 +0200
+Message-ID: <20260807143425.113844934@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -53,292 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roman Kisel <romank@linux.microsoft.com>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit 226494e5ee4eb0bae4fc7b525505828271d5047e ]
+[ Upstream commit 8c7ab779c8850f4dab8473463cca9a7d52fdaecc ]
 
-Confidential VMBus requires interacting with two SynICs -- one
-provided by the host hypervisor, and one provided by the paravisor.
-Each SynIC requires its own message and event pages.
+lockdep_hardirq_threaded() is supposed to be used within IRQ core code
+and not within drivers. It is not obvious from within the driver, that
+this is the only interrupt service routing and that it is not shared
+handler.
 
-Refactor and extend the existing code to add allocating and freeing
-the message and event pages for the paravisor SynIC when it is
-present.
+Replace lockdep_hardirq_threaded() with a lockdep annotation limiting
+threaded context on PREEMPT_RT to __vmbus_isr().
 
-Signed-off-by: Roman Kisel <romank@linux.microsoft.com>
-Reviewed-by: Tianyu Lan <tiala@microsoft.com>
+Fixes: f8e6343b7a89c ("Drivers: hv: vmbus: Use kthread for vmbus interrupts on PREEMPT_RT")
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Reviewed-by: Michael Kelley <mhklinux@outlook.com>
 Signed-off-by: Wei Liu <wei.liu@kernel.org>
-Stable-dep-of: 8c7ab779c885 ("Drivers: hv: vmbus: Replace lockdep_hardirq_threaded() with lockdep annotation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hv/hv.c           | 184 +++++++++++++++++++-------------------
- drivers/hv/hyperv_vmbus.h |  18 ++++
- 2 files changed, 112 insertions(+), 90 deletions(-)
+ drivers/hv/vmbus_drv.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hv/hv.c b/drivers/hv/hv.c
-index b7419d0fad1d3..90db1e17582d8 100644
---- a/drivers/hv/hv.c
-+++ b/drivers/hv/hv.c
-@@ -96,10 +96,70 @@ int hv_post_message(union hv_connection_id connection_id,
- 	return hv_result(status);
+diff --git a/drivers/hv/vmbus_drv.c b/drivers/hv/vmbus_drv.c
+index 0788281b28ded..4f1f5f294a735 100644
+--- a/drivers/hv/vmbus_drv.c
++++ b/drivers/hv/vmbus_drv.c
+@@ -1372,8 +1372,19 @@ static void vmbus_isr(void)
+ 	if (IS_ENABLED(CONFIG_PREEMPT_RT)) {
+ 		vmbus_irqd_wake();
+ 	} else {
+-		lockdep_hardirq_threaded();
++		static DEFINE_WAIT_OVERRIDE_MAP(vmbus_map, LD_WAIT_CONFIG);
++
++		/*
++		 * vmbus_isr is never force-threaded and always invoked at hard
++		 * IRQ level. __vmbus_isr() below can acquire a spinlock_t
++		 * which becomes a sleeping lock and must not be acquired in
++		 * this context. Therefore on PREEMPT_RT this will be threaded
++		 * via vmbus_irqd_wake(). On non-PREEMPT the annotation lets
++		 * lockdep know that acquiring a spinlock_t is not an issue.
++		 */
++		lock_map_acquire_try(&vmbus_map);
+ 		__vmbus_isr();
++		lock_map_release(&vmbus_map);
+ 	}
  }
  
-+static int hv_alloc_page(void **page, bool decrypt, const char *note)
-+{
-+	int ret = 0;
-+
-+	/*
-+	 * After the page changes its encryption status, its contents might
-+	 * appear scrambled on some hardware. Thus `get_zeroed_page` would
-+	 * zero the page out in vain, so do that explicitly exactly once.
-+	 *
-+	 * By default, the page is allocated encrypted in a CoCo VM.
-+	 */
-+	*page = (void *)__get_free_page(GFP_KERNEL);
-+	if (!*page)
-+		return -ENOMEM;
-+
-+	if (decrypt)
-+		ret = set_memory_decrypted((unsigned long)*page, 1);
-+	if (ret)
-+		goto failed;
-+
-+	memset(*page, 0, PAGE_SIZE);
-+	return 0;
-+
-+failed:
-+	/*
-+	 * Report the failure but don't put the page back on the free list as
-+	 * its encryption status is unknown.
-+	 */
-+	pr_err("allocation failed for %s page, error %d, decrypted %d\n",
-+		note, ret, decrypt);
-+	*page = NULL;
-+	return ret;
-+}
-+
-+static int hv_free_page(void **page, bool encrypt, const char *note)
-+{
-+	int ret = 0;
-+
-+	if (!*page)
-+		return 0;
-+
-+	if (encrypt)
-+		ret = set_memory_encrypted((unsigned long)*page, 1);
-+
-+	/*
-+	 * In the case of the failure, the page is leaked. Something is wrong,
-+	 * prefer to lose the page with the unknown encryption status and stay afloat.
-+	 */
-+	if (ret)
-+		pr_err("deallocation failed for %s page, error %d, encrypt %d\n",
-+			note, ret, encrypt);
-+	else
-+		free_page((unsigned long)*page);
-+
-+	*page = NULL;
-+
-+	return ret;
-+}
-+
- int hv_synic_alloc(void)
- {
- 	int cpu, ret = -ENOMEM;
- 	struct hv_per_cpu_context *hv_cpu;
-+	const bool decrypt = !vmbus_is_confidential();
- 
- 	/*
- 	 * First, zero all per-cpu memory areas so hv_synic_free() can
-@@ -125,73 +185,37 @@ int hv_synic_alloc(void)
- 			     vmbus_on_msg_dpc, (unsigned long)hv_cpu);
- 
- 		if (ms_hyperv.paravisor_present && hv_isolation_type_tdx()) {
--			hv_cpu->post_msg_page = (void *)get_zeroed_page(GFP_ATOMIC);
--			if (!hv_cpu->post_msg_page) {
--				pr_err("Unable to allocate post msg page\n");
-+			ret = hv_alloc_page(&hv_cpu->post_msg_page,
-+				decrypt, "post msg");
-+			if (ret)
- 				goto err;
--			}
--
--			ret = set_memory_decrypted((unsigned long)hv_cpu->post_msg_page, 1);
--			if (ret) {
--				pr_err("Failed to decrypt post msg page: %d\n", ret);
--				/* Just leak the page, as it's unsafe to free the page. */
--				hv_cpu->post_msg_page = NULL;
--				goto err;
--			}
--
--			memset(hv_cpu->post_msg_page, 0, PAGE_SIZE);
- 		}
- 
- 		/*
--		 * Synic message and event pages are allocated by paravisor.
--		 * Skip these pages allocation here.
-+		 * If these SynIC pages are not allocated, SIEF and SIM pages
-+		 * are configured using what the root partition or the paravisor
-+		 * provides upon reading the SIEFP and SIMP registers.
- 		 */
- 		if (!ms_hyperv.paravisor_present && !hv_root_partition()) {
--			hv_cpu->hyp_synic_message_page =
--				(void *)get_zeroed_page(GFP_ATOMIC);
--			if (!hv_cpu->hyp_synic_message_page) {
--				pr_err("Unable to allocate SYNIC message page\n");
-+			ret = hv_alloc_page(&hv_cpu->hyp_synic_message_page,
-+				decrypt, "hypervisor SynIC msg");
-+			if (ret)
- 				goto err;
--			}
--
--			hv_cpu->hyp_synic_event_page =
--				(void *)get_zeroed_page(GFP_ATOMIC);
--			if (!hv_cpu->hyp_synic_event_page) {
--				pr_err("Unable to allocate SYNIC event page\n");
--
--				free_page((unsigned long)hv_cpu->hyp_synic_message_page);
--				hv_cpu->hyp_synic_message_page = NULL;
-+			ret = hv_alloc_page(&hv_cpu->hyp_synic_event_page,
-+				decrypt, "hypervisor SynIC event");
-+			if (ret)
- 				goto err;
--			}
- 		}
- 
--		if (!ms_hyperv.paravisor_present &&
--		    (hv_isolation_type_snp() || hv_isolation_type_tdx())) {
--			ret = set_memory_decrypted((unsigned long)
--				hv_cpu->hyp_synic_message_page, 1);
--			if (ret) {
--				pr_err("Failed to decrypt SYNIC msg page: %d\n", ret);
--				hv_cpu->hyp_synic_message_page = NULL;
--
--				/*
--				 * Free the event page here so that hv_synic_free()
--				 * won't later try to re-encrypt it.
--				 */
--				free_page((unsigned long)hv_cpu->hyp_synic_event_page);
--				hv_cpu->hyp_synic_event_page = NULL;
-+		if (vmbus_is_confidential()) {
-+			ret = hv_alloc_page(&hv_cpu->para_synic_message_page,
-+				false, "paravisor SynIC msg");
-+			if (ret)
- 				goto err;
--			}
--
--			ret = set_memory_decrypted((unsigned long)
--				hv_cpu->hyp_synic_event_page, 1);
--			if (ret) {
--				pr_err("Failed to decrypt SYNIC event page: %d\n", ret);
--				hv_cpu->hyp_synic_event_page = NULL;
-+			ret = hv_alloc_page(&hv_cpu->para_synic_event_page,
-+				false, "paravisor SynIC event");
-+			if (ret)
- 				goto err;
--			}
--
--			memset(hv_cpu->hyp_synic_message_page, 0, PAGE_SIZE);
--			memset(hv_cpu->hyp_synic_event_page, 0, PAGE_SIZE);
- 		}
- 	}
- 
-@@ -207,48 +231,28 @@ int hv_synic_alloc(void)
- 
- void hv_synic_free(void)
- {
--	int cpu, ret;
-+	int cpu;
-+	const bool encrypt = !vmbus_is_confidential();
- 
- 	for_each_present_cpu(cpu) {
- 		struct hv_per_cpu_context *hv_cpu =
- 			per_cpu_ptr(hv_context.cpu_context, cpu);
- 
--		/* It's better to leak the page if the encryption fails. */
--		if (ms_hyperv.paravisor_present && hv_isolation_type_tdx()) {
--			if (hv_cpu->post_msg_page) {
--				ret = set_memory_encrypted((unsigned long)
--					hv_cpu->post_msg_page, 1);
--				if (ret) {
--					pr_err("Failed to encrypt post msg page: %d\n", ret);
--					hv_cpu->post_msg_page = NULL;
--				}
--			}
-+		if (ms_hyperv.paravisor_present && hv_isolation_type_tdx())
-+			hv_free_page(&hv_cpu->post_msg_page,
-+				encrypt, "post msg");
-+		if (!ms_hyperv.paravisor_present && !hv_root_partition()) {
-+			hv_free_page(&hv_cpu->hyp_synic_event_page,
-+				encrypt, "hypervisor SynIC event");
-+			hv_free_page(&hv_cpu->hyp_synic_message_page,
-+				encrypt, "hypervisor SynIC msg");
- 		}
--
--		if (!ms_hyperv.paravisor_present &&
--		    (hv_isolation_type_snp() || hv_isolation_type_tdx())) {
--			if (hv_cpu->hyp_synic_message_page) {
--				ret = set_memory_encrypted((unsigned long)
--					hv_cpu->hyp_synic_message_page, 1);
--				if (ret) {
--					pr_err("Failed to encrypt SYNIC msg page: %d\n", ret);
--					hv_cpu->hyp_synic_message_page = NULL;
--				}
--			}
--
--			if (hv_cpu->hyp_synic_event_page) {
--				ret = set_memory_encrypted((unsigned long)
--					hv_cpu->hyp_synic_event_page, 1);
--				if (ret) {
--					pr_err("Failed to encrypt SYNIC event page: %d\n", ret);
--					hv_cpu->hyp_synic_event_page = NULL;
--				}
--			}
-+		if (vmbus_is_confidential()) {
-+			hv_free_page(&hv_cpu->para_synic_event_page,
-+				false, "paravisor SynIC event");
-+			hv_free_page(&hv_cpu->para_synic_message_page,
-+				false, "paravisor SynIC msg");
- 		}
--
--		free_page((unsigned long)hv_cpu->post_msg_page);
--		free_page((unsigned long)hv_cpu->hyp_synic_event_page);
--		free_page((unsigned long)hv_cpu->hyp_synic_message_page);
- 	}
- 
- 	kfree(hv_context.hv_numa_map);
-diff --git a/drivers/hv/hyperv_vmbus.h b/drivers/hv/hyperv_vmbus.h
-index 1b05a57286101..39cdded062e8b 100644
---- a/drivers/hv/hyperv_vmbus.h
-+++ b/drivers/hv/hyperv_vmbus.h
-@@ -120,8 +120,26 @@ enum {
-  * Per cpu state for channel handling
-  */
- struct hv_per_cpu_context {
-+	/*
-+	 * SynIC pages for communicating with the host.
-+	 *
-+	 * These pages are accessible to the host partition and the hypervisor.
-+	 * They may be used for exchanging data with the host partition and the
-+	 * hypervisor even when they aren't trusted yet the guest partition
-+	 * must be prepared to handle the malicious behavior.
-+	 */
- 	void *hyp_synic_message_page;
- 	void *hyp_synic_event_page;
-+	/*
-+	 * SynIC pages for communicating with the paravisor.
-+	 *
-+	 * These pages may be accessed from within the guest partition only in
-+	 * CoCo VMs. Neither the host partition nor the hypervisor can access
-+	 * these pages in that case; they are used for exchanging data with the
-+	 * paravisor.
-+	 */
-+	void *para_synic_message_page;
-+	void *para_synic_event_page;
- 
- 	/*
- 	 * The page is only used in hv_post_message() for a TDX VM (with the
 -- 
 2.53.0
 
