@@ -1,38 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC09E314B6D;
-	Fri,  7 Aug 2026 15:23:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 613A52D12ED;
+	Fri,  7 Aug 2026 15:23:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116187; cv=none; b=OpYB3ZBiogBkmtcC2jjEw5GPp1ih+rmhwYGGBXolcwC8z92HdfAu1Q1aJpT7Nf3Kr/dI5gUz/5XAFM1wmIOefhnDkPSlxEKppLdyCAYaokZvrwlJz7OjBQqoZhCbOMj/GD8oyOj9XzwbA/Ij1ZSlti02xzassEcMp4Dn2+iEEJ8=
+	t=1786116190; cv=none; b=e8H9mzPMVI/MsEnVrXLdAqRcUTJz5Ue8X6THkjqs5fv8fiN/DQ3walcrR4a4gdhuwSf5TAOXokyNvls7g3ppRPkHjaTzKgo7Aek43i48RFI/CnfHFENAaaFS9Lgel8eoQ7oXw0x5RrID4g8vTG9mpLJvIj8/WfTrrrTBYIAO/Z8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116187; c=relaxed/simple;
-	bh=k33Y+lUIGTMNR77MFXgD/10ghh4tFpsjO5lKuhhoaCw=;
+	s=arc-20240116; t=1786116190; c=relaxed/simple;
+	bh=Zf9ee1ZKyXG1kLUVHcx2AhPZde0F/+mufCoDADz8ZWk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mp/ir6c0g/cNtQ1hDoftBFkrMYSpNznuwjZV6y2gn0E91z4ZObV2TsjLzxPiJoxY6JamjqQgjtIMMn1nhPGvl//kG+6v45o0PDdk5R9348n9DDziCg69WduDGEKthm5RqfluDAw1W1ufdCVtmK6llQm0aMY7IVGEJBJcGhgS5Sg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nZHKm3nD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e2kPgnOG9yZXIKF6L6uxL2fO6qS4js0BpeCSG07FvOLiI75U/PUFCFMn5engsmQcCW4ojfhC63rlheUI8BEy7W2VgX/B+/BcBN7ouphrJ5umQ5pO022i0O5dtZsXfT5vN1jMDWEyDInoI6X+3FB82xrOJIt7zaqgHhOoTCyxJcU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M64C8mPh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nZHKm3nD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 136281F000E9;
-	Fri,  7 Aug 2026 15:23:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M64C8mPh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B61911F000E9;
+	Fri,  7 Aug 2026 15:23:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116186;
-	bh=XGa7udNZKqysK7kURFp8ffAkz0hcURIm9q+qrRqGrvY=;
+	s=korg; t=1786116189;
+	bh=5xidlWcHZy50RMLPJQyEVDyxzIeevrLjkXP9fLrS4JY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nZHKm3nDv3EjYbc5OypaHfiuONR7IKwihRGxaiaPLAK/tMtzCcjKz8pqTXnV9UEGk
-	 CPviNpKA/lg3p4bKnpw3/Vgb84FwJ22QKiQho5pEq0R/CRBAlfkvVYXKjqbCNL/Ycm
-	 fSpxPj7hqsYVTpeSdLh/rfUGQ4FKxBiSMUQ7+kv0=
+	b=M64C8mPhBUUkfTgJejUt+EXfkyctu7eEifgak+6wdXOa25IVNm1/+t4kZH4/SCONf
+	 AT3wovyGyXGp2d9B6cDOZ1oTnJmoLvNX3rJ6QruE4gLVjAQAp0uP4FnjTPYwjSTe0i
+	 JJwyQmZ1WkGhJXcHJ+0Qfyi2YjpMI1I+OJq9mlLs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Federico Kirschbaum <federico.kirschbaum@xbow.com>,
-	Baul Lee <baul.lee@xbow.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.6 116/261] ALSA: usb-audio: fix use-after-free in ump_to_endpoint()
-Date: Fri,  7 Aug 2026 16:37:53 +0200
-Message-ID: <20260807143417.876735575@linuxfoundation.org>
+	Chris Gellermann <christian.gellermann@codasip.com>,
+	"David Hildenbrand (arm)" <david@kernel.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Christian Brauner <brauner@kernel.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Shuah Khan <shuah@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 143/261] selftests/clone3: fix wild pointer access of getline due to missing init
+Date: Fri,  7 Aug 2026 16:38:20 +0200
+Message-ID: <20260807143418.450712175@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143415.358597922@linuxfoundation.org>
 References: <20260807143415.358597922@linuxfoundation.org>
@@ -51,64 +59,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baul Lee <baul.lee@xbow.com>
+From: Chris Gellermann <christian.gellermann@codasip.com>
 
-commit 4a05b2d1b4642df74f30b6f54843e825c4a2bfd3 upstream.
+commit 8f6f9fd93cd7a5dd607ad5cd910476dd68fff3ed upstream.
 
-create_midi2_ump() registers a card-owned snd_ump_endpoint and stores a
-back-pointer to its per-interface snd_usb_midi2_ump object in
-ump->private_data, but it never installs an ump->private_free hook and
-never clears that pointer.
+Patch series "selftests: Add missing initalization of pointer passed to
+getline", v2.
 
-If a later step of snd_usb_midi_v2_create() fails, its error path calls
-free_all_midi2_umps(), which kfree()s the snd_usb_midi2_ump object while
-the already-registered endpoint keeps pointing at it.  The created
-/dev/snd/umpC*D* node stays exposed, so the first operation of any UMP
-open, ump_to_endpoint(), dereferences the dangling ump->private_data and
-reads rmidi->eps[dir] out of freed memory.
 
-A malicious USB MIDI 2.0 device that makes creation fail after the
-endpoint is registered can thus trigger a slab use-after-free read on a
-subsequent open of the UMP node.
+This patch (of 2):
 
-Clear the endpoint's back-pointer before freeing the object, and let
-ump_to_endpoint() tolerate a NULL private_data so the open/close/trigger
-callbacks fail cleanly (their callers already handle a NULL endpoint)
-instead of dereferencing a stale pointer.
+Clone3_set_tid uses getline(&line, ...) in a loop to read the child's
+process status.  The code expects that getline allocates the buffer for
+the line on the first loop iteration.  According to the Open Group
+Spec[1], char *line has to be null pointer for this:
 
-Discovered by XBOW, triaged by Baul Lee <baul.lee@xbow.com>
+> ssize_t getline(char **restrict lineptr, ...);
+> If *lineptr is a null pointer or if the object pointed to by *lineptr
+> is of insufficient size, an object shall be allocated as if by
+malloc()
+> or the object shall be reallocated as if by realloc()[...].
 
-Fixes: ff49d1df79ae ("ALSA: usb-audio: USB MIDI 2.0 UMP support")
-Reported-by: Federico Kirschbaum <federico.kirschbaum@xbow.com>
-Reported-by: Baul Lee <baul.lee@xbow.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Baul Lee <baul.lee@xbow.com>
-Link: https://patch.msgid.link/20260726051337.41124-1-baul.lee@xbow.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+However, char *line is only declared, leading to an undefined value that
+is potentially non-null.  In an example run with Musl v1.2.6, the realloc
+call[2] of getdelim, which implements getline, triggers a segfault:
+
+./run_kselftest.sh --test clone3:clone3_set_tid
+[ 1366.165898] kselftest: Running tests in clone3
+...
+[ 1367.799244] clone3_set_tid[811]: unhandled signal 11 code 0x1 at
+0x0000000000000000 in libc.so[68184,3fbf69f000+4c000]
+[ 1367.802808] CPU: 0 UID: 0 PID: 811 Comm: clone3_set_tid Not tainted
+..
+[ 1367.804188]  epc: 0x0000003fbf6b0184
+[ 1367.804188]  ra : 0x0000003fbf6d4664
+[ 1367.804188]  sp : 0x0000003fce5f2e40
+[ 1367.805314]  gp : 0x0000002aaab0dfb8
+[ 1367.805314]  tp : 0x0000003fbf6f14a8
+[ 1367.805314]  t0 : 0x0000003fbf63d000
+...
+
+Looking at the realloc implementation, Musl mallocs for a null pointer
+memory.  But for a non-null pointer, it assumes it's passed a valid
+pointer to the heap and tries to access its meta-data.  This leads to the
+segfault we see:
+
+void *realloc(void *p, size_t n)
+{
+        if (!p) return malloc(n);
+        if (size_overflows(n)) return 0;
+
+        struct meta *g = get_meta(p);
+        ...
+}
+
+Fix this by properly initializing the line pointer to NULL.
+
+Link: https://lore.kernel.org/20260722130246.2135563-1-christian.gellermann@codasip.com
+Link: https://lore.kernel.org/20260722130246.2135563-2-christian.gellermann@codasip.com
+Link: https://pubs.opengroup.org/onlinepubs/9799919799/functions/getline.html [1]
+Link: https://git.musl-libc.org/cgit/musl/tree/src/stdio/getdelim.c#n38 [2]
+Fixes: 41585bbeeef9 ("selftests: add tests for clone3() with *set_tid")
+Signed-off-by: Chris Gellermann <christian.gellermann@codasip.com>
+Acked-by: David Hildenbrand (arm) <david@kernel.org>
+Reviewed-by: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/midi2.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ tools/testing/selftests/clone3/clone3_set_tid.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/usb/midi2.c
-+++ b/sound/usb/midi2.c
-@@ -337,7 +337,7 @@ ump_to_endpoint(struct snd_ump_endpoint
+--- a/tools/testing/selftests/clone3/clone3_set_tid.c
++++ b/tools/testing/selftests/clone3/clone3_set_tid.c
+@@ -146,7 +146,7 @@ int main(int argc, char *argv[])
  {
- 	struct snd_usb_midi2_ump *rmidi = ump->private_data;
- 
--	return rmidi->eps[dir];
-+	return rmidi ? rmidi->eps[dir] : NULL;
- }
- 
- /* ump open callback */
-@@ -703,6 +703,8 @@ static void free_all_midi2_umps(struct s
- 		rmidi = list_first_entry(&umidi->rawmidi_list,
- 					 struct snd_usb_midi2_ump, list);
- 		list_del(&rmidi->list);
-+		if (rmidi->ump)
-+			rmidi->ump->private_data = NULL;
- 		kfree(rmidi);
- 	}
- }
+ 	FILE *f;
+ 	char buf;
+-	char *line;
++	char *line = NULL;
+ 	int status;
+ 	int ret = -1;
+ 	size_t len = 0;
 
 
