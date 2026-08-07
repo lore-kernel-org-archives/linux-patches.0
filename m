@@ -1,51 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E0AF3B9943;
-	Fri,  7 Aug 2026 14:55:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84BC4340280;
+	Fri,  7 Aug 2026 14:55:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114509; cv=none; b=aPnKHpZxhttwVHIiUkw0XmJtIzjutiHlanr4+Evg0YFsXJgL6ziq08i9nKn31ewRELJNlLZh5zFW+AS1CX3mKaBtVkqd4vheJXxKDaXTMZxwPgFIhl/7tJhKBb59M49P83vHgGsSox6G4msYsDv0wL/DFFjgZaiccCuuyzLUu94=
+	t=1786114516; cv=none; b=hZqZZZmxHaJsr5XyqwaaTExT0v4r6+7CeLDbW030NUnF88v5B9rzfuTJ/dYAQoOPtGS8MHFdSrrnwrbxiEo2VRc7Z3PqHllA1oQrCTRipSpP497HIt66cLhVyFRdAoMq8x+F+Eb6KzSvOwVWUUWM92QrYFMjSET0oXK2317w1Ig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114509; c=relaxed/simple;
-	bh=SQi9ehetMBtNssfnFt5emLpzeRkJuVyifyGT3mfqor8=;
+	s=arc-20240116; t=1786114516; c=relaxed/simple;
+	bh=Nqr71HAcDSKXqp45wpHUtaAtAdRyb/4qODKzFqT7PM8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RJsUBAXrTwbdJa6uf4j9wKUNmGSEntBDc/vCydve4ggKPCmwoRxr5+C0bvTFZ5mGyQN7vZM/bEC4/kB8ef+W3q4QcxttPJ1++hfioxWVdtLch8QI5zsZy8Wnn2TCg+YOxWVdQ7Z0tgeitxQgLHWGCl+/SO3psLuZtCRRtQL+cKU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yQS/+j7t; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qGxbLSL/jbX0waeJqFL3xfZiRZ2Zzroa1nejRO0YNIxMXlpiZ3lauqOmRKxMTGJlaQYrxImDsN39sTTwo4RpFqiLTHAiXKe+eq/bA+DqX5HKG6VZQXF7S5OeofNDva6+2TbjgUhEm50nY8eSIOb4/O4wBqpKPMyUWD2SjVQEpnM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=suqQrTNQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yQS/+j7t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4F381F000E9;
-	Fri,  7 Aug 2026 14:55:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="suqQrTNQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFFE91F00A3A;
+	Fri,  7 Aug 2026 14:55:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114504;
-	bh=+lXJbukKgrQmwYO/GuTxFZljdNHfFNZPeqTfRcZaqG4=;
+	s=korg; t=1786114507;
+	bh=PSv9nYPMYNCwu1leWmSyv7it/XiePE3TT3pYaX77NAY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yQS/+j7t76I7Uk8ZwcZdlOISPOaXxLPCWRaiD4Y82sYkhZTw1eRKdaxx/iQxQXxIg
-	 DX/xxlLDwCpPsobSqnupnX3i2Kg4B2LQcjl3v1AZkRftp6zT8MMDQAd3zlT1WNsnzB
-	 IzoR58reXWo/e/wEblarhGJr+PY2gzCKb4gI9MGo=
+	b=suqQrTNQ6SyQ+iyNKyL+ypcXocPfh37PifOQ28eKw0QQuR7XA0BXV/gUOziEv0EiC
+	 tYgNvvjHQC3lWvbfiZ2DJ4whFTRFUEzW55uy3iIpPeKjdscICBDLiE0js9yp8tRxEf
+	 se6Sj3QsyOaJeHANWeKbx1MB5wz7FEK7CPjrgXsU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
-	Hao Zhang <zhanghao1@kylinos.cn>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Zi Yan <ziy@nvidia.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Barry Song <baohua@kernel.org>,
-	Dev Jain <dev.jain@arm.com>,
-	Lance Yang <lance.yang@linux.dev>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Naoya Horiguchi <nao.horiguchi@gmail.com>,
-	Nico Pache <npache@redhat.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	"Harry Yoo (Oracle)" <harry@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 287/337] mm/huge_memory: unlock i_mmap_rwsem before releasing after-split folios
-Date: Fri,  7 Aug 2026 16:38:10 +0200
-Message-ID: <20260807143424.754806656@linuxfoundation.org>
+Subject: [PATCH 6.12 288/337] lib/alloc_tag: introduce mem_alloc_profiling_permanently_disabled()
+Date: Fri,  7 Aug 2026 16:38:11 +0200
+Message-ID: <20260807143424.777059354@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -64,122 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kiryl Shutsemau (Meta) <kas@kernel.org>
+From: Harry Yoo (Oracle) <harry@kernel.org>
 
-[ Upstream commit e923bd21058ea02fd0dcd3549d151d143fd036e5 ]
+commit a37b0066a10aabf3c968b4566706fb866eaf9a85 upstream.
 
-__folio_split() keeps dereferencing the mapping after the split:
-shmem_uncharge(mapping->host) and remap_page() while the folios are still
-frozen/locked, and i_mmap_unlock_read(mapping) at the very end, after the
-after-split folios have been unlocked and freed.
+mem_alloc_profiling_enabled() tells whether memalloc profiling is
+currently enabled. However, even when this function returns false,
+it can be enabled later.
 
-Nothing holds an inode reference across that.  The split relies on @folio
--- which the beyond-EOF drop loop never removes, as it starts at
-folio_next(folio) -- staying locked and in the page cache to hold off
-eviction.  But the unlock loop unlocks @folio before i_mmap_unlock_read()
-runs.  If the caller's @lock_at is a tail beyond EOF, as memory_failure()
-passes when splitting a poisoned tail of a shmem THP that reaches past
-i_size during truncation, it too is gone from the page cache; so once
-@folio is unlocked no locked, in-cache folio pins the inode, and a
-concurrent final iput() can evict and RCU-free it before
-i_mmap_unlock_read() touches i_mmap_rwsem:
+However, this is not enough. Some optimizations can be applied only when
+memalloc profiling is permanently disabled. For example, to skip the
+creation of KMALLOC_NO_OBJ_EXT caches at boot time, mem_profiling must
+be set to "never", "0" w/ debugging on, or have been shutdown so that
+it can no longer be enabled.
 
-  BUG: KASAN: slab-use-after-free in __up_read+0x634/0x790
-   i_mmap_unlock_read include/linux/fs.h:537 [inline]
-   __folio_split+0x732/0x1640 mm/huge_memory.c:4100
-   try_to_split_thp_page+0xab/0x390 mm/memory-failure.c:1675
-   memory_failure+0x1394/0x26e0 mm/memory-failure.c:2470
+Introduce mem_alloc_profiling_permanently_disabled() for this purpose.
 
-  Freed by task 4601:
-   shmem_free_in_core_inode+0x54/0xb0 mm/shmem.c:5177
-   evict+0x57f/0xac0 fs/inode.c:870
+Signed-off-by: Harry Yoo (Oracle) <harry@kernel.org>
+Acked-by: Suren Baghdasaryan <surenb@google.com>
+Link: https://patch.msgid.link/20260713-kmalloc-no-objext-v3-3-47c7bd138de7@kernel.org
+Signed-off-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+[ harry@kernel.org: Move the definition of
+  mem_alloc_profiling_permanently_disabled() after
+  mem_profiling_support.
 
-Do every mapping dereference while @folio still pins the inode: drop
-i_mmap_rwsem right after remap_page(), before the loop that unlocks and
-frees the after-split folios, and clear @mapping so the exit path does not
-unlock it again.  shmem_uncharge() and remap_page() already run before
-that point, so after this nothing past the unlock loop touches the inode
-or the mapping.
-
-This is now a rule the split depends on, alongside keeping @folio frozen
-until the page cache is updated: no inode or mapping dereference once the
-after-split folios start being unlocked.
-
-Link: https://lore.kernel.org/20260716095424.471052-1-kirill@shutemov.name
-Fixes: baa355fd3314 ("thp: file pages support for split_huge_page()")
-Signed-off-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
-Reported-by: Hao Zhang <zhanghao1@kylinos.cn>
-Closes: https://lore.kernel.org/linux-mm/20260710071344.GA106129@zh-pc
-Co-developed-by: Hao Zhang <zhanghao1@kylinos.cn>
-Signed-off-by: Hao Zhang <zhanghao1@kylinos.cn>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Reviewed-by: Miaohe Lin <linmiaohe@huawei.com>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Barry Song <baohua@kernel.org>
-Cc: Dev Jain <dev.jain@arm.com>
-Cc: Lance Yang <lance.yang@linux.dev>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
-Cc: Nico Pache <npache@redhat.com>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-
-(cherry picked from commit e923bd21058ea02fd0dcd3549d151d143fd036e5)
-[ kas: adapt to the __split_huge_page()/split_huge_page_to_list_to_order()
-  two-function split: pass @mapping into __split_huge_page() and drop it
-  there, before the loop that frees the after-split subpages while the
-  head is still locked; the caller then skips its own i_mmap unlock ]
-Signed-off-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
+  Unlike 6.18 and later kernels, mem_profiling_support is marked
+  __init and gets freed after boot. Since the function is needed
+  only when creating kmalloc caches, mark it __init as well. ]
+Signed-off-by: Harry Yoo <harry@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/huge_memory.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ include/linux/alloc_tag.h | 3 +++
+ lib/alloc_tag.c           | 9 +++++++++
+ 2 files changed, 12 insertions(+)
 
-diff --git a/mm/huge_memory.c b/mm/huge_memory.c
-index e60c21b924644..b2daa1767d900 100644
---- a/mm/huge_memory.c
-+++ b/mm/huge_memory.c
-@@ -3206,7 +3206,7 @@ static void __split_huge_page_tail(struct folio *folio, int tail,
+diff --git a/include/linux/alloc_tag.h b/include/linux/alloc_tag.h
+index 6073a8f13c413..70025f8e24990 100644
+--- a/include/linux/alloc_tag.h
++++ b/include/linux/alloc_tag.h
+@@ -105,6 +105,8 @@ static inline bool mem_alloc_profiling_enabled(void)
+ 				   &mem_alloc_profiling_key);
  }
  
- static void __split_huge_page(struct page *page, struct list_head *list,
--		pgoff_t end, unsigned int new_order)
-+		pgoff_t end, unsigned int new_order, struct address_space *mapping)
- {
- 	struct folio *folio = page_folio(page);
- 	/* Scan poisoned pages when split a poisoned folio to large folios */
-@@ -3303,6 +3303,16 @@ static void __split_huge_page(struct page *page, struct list_head *list,
- 	if (new_order)
- 		page = compound_head(page);
- 
-+	/*
-+	 * Drop the mapping while the head page is still locked and thus pins
-+	 * the inode. The loop below may free the after-split subpages --
-+	 * including the head, when @page is a tail beyond EOF that the split
-+	 * dropped from the page cache -- which could otherwise let the inode,
-+	 * and @mapping, be freed before this unlock.
-+	 */
-+	if (mapping)
-+		i_mmap_unlock_read(mapping);
++bool __init mem_alloc_profiling_permanently_disabled(void);
 +
- 	for (i = 0; i < nr; i += new_nr) {
- 		struct page *subpage = head + i;
- 		struct folio *new_folio = page_folio(subpage);
-@@ -3580,7 +3590,9 @@ int split_huge_page_to_list_to_order(struct page *page, struct list_head *list,
- 			mod_mthp_stat(order, MTHP_STAT_NR_ANON, -1);
- 			mod_mthp_stat(new_order, MTHP_STAT_NR_ANON, 1 << (order - new_order));
- 		}
--		__split_huge_page(page, list, end, new_order);
-+		__split_huge_page(page, list, end, new_order, mapping);
-+		/* __split_huge_page() dropped the i_mmap lock */
-+		mapping = NULL;
- 		ret = 0;
- 	} else {
- 		spin_unlock(&ds_queue->split_queue_lock);
+ static inline struct alloc_tag_counters alloc_tag_read(struct alloc_tag *tag)
+ {
+ 	struct alloc_tag_counters v = { 0, 0 };
+@@ -198,6 +200,7 @@ static inline void alloc_tag_sub(union codetag_ref *ref, size_t bytes)
+ 
+ #define DEFINE_ALLOC_TAG(_alloc_tag)
+ static inline bool mem_alloc_profiling_enabled(void) { return false; }
++static inline bool mem_alloc_profiling_permanently_disabled(void) { return true; }
+ static inline void alloc_tag_add(union codetag_ref *ref, struct alloc_tag *tag,
+ 				 size_t bytes) {}
+ static inline void alloc_tag_sub(union codetag_ref *ref, size_t bytes) {}
+diff --git a/lib/alloc_tag.c b/lib/alloc_tag.c
+index e76c40bf29d06..a0d11582029ef 100644
+--- a/lib/alloc_tag.c
++++ b/lib/alloc_tag.c
+@@ -183,6 +183,15 @@ static bool mem_profiling_support __meminitdata = true;
+ static bool mem_profiling_support __meminitdata;
+ #endif
+ 
++/*
++ * Memory allocation profiling is permanently disabled and cannot be enabled.
++ * Must be called after setup_early_mem_profiling().
++ */
++bool __init mem_alloc_profiling_permanently_disabled(void)
++{
++	return !mem_profiling_support;
++}
++
+ static int __init setup_early_mem_profiling(char *str)
+ {
+ 	bool enable;
 -- 
 2.53.0
 
