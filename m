@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC497412C05;
-	Fri,  7 Aug 2026 15:31:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3B432D12ED;
+	Fri,  7 Aug 2026 15:31:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116666; cv=none; b=t20dyS28U2KBhLXvK/YE8zpC4rCyLZP+0Lck87ibw8ZZ1zH+uzzK54bYj9aKC6YrgFnyTVgNusrUN5FmxA10ykXGjev78eeUhal/4dJIndEFxzJ3Zla1M10yk/H4hrYxU9Q0fZ6rDropuMT/ohs+A83wZmZNMIcmaOaI4fptwKY=
+	t=1786116669; cv=none; b=kteFd5IlfYn9sY/uZTAXD2XfdnFv63OLyQ34gB3sMQx3Ymm/UvI6E1Lc/uzXqnGX0QJ7fMcRppf/9t9O2ovkjM6B+jZkUtgkwSNOaIAEXkJ05shFLiPGJ8Ig2ej2FgPIbZZffzuw60cuLMgVXGLU41V6GjoZYoShl+rvXV8NDeY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116666; c=relaxed/simple;
-	bh=irGKIJ+C+n4gdtXzar7wprf1vzjNRYk5KtQGp5QYj2A=;
+	s=arc-20240116; t=1786116669; c=relaxed/simple;
+	bh=Y136A5t2LTO3Rpur9TUR32enEWfbK9Y58q8u6kQ2Hq0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TxByjtqlw06P4px+8KQTsF3yCjbpaCrtZnEEMJmFpC2Rlw8Rpyi7pB0K9KnB+CqnYwgbfOupusGqy//D0iQLtPQtUC4DCnogLWDYKUCwdgbclqxPdyd6tPIi7azY511BjYhZs2t3mHCeho94jsI4MIjDSWIZsi+g27eLHszVb90=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I0eCbxMF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uq/wCyExVa7pmLz3dKKjIgKFameER23Eq8G/uLe7OwQQS/z6nA+opXi1Ml08A13SbFBoVwFLKBFuufCTyT7MUeY8XNhXf5yQEVtIbV7TTVckj1Q5vXqeJQTsgbh8KDI0aS7b2dUW1AwtWxMuwRbRdhqDIEn0AUnKEUyaduOiLQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nkjvjk9h; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I0eCbxMF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13CF51F000E9;
-	Fri,  7 Aug 2026 15:31:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nkjvjk9h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03E811F00A3A;
+	Fri,  7 Aug 2026 15:31:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116665;
-	bh=qaiHfhzuNpZTBTc69Fo1QlJoJpK2+YK2/2JTySNWNT4=;
+	s=korg; t=1786116668;
+	bh=P66QabjG0p61UnpGrU5yv166k1MHbIaAN2WCBrQXCr4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I0eCbxMFN+rICLPm1PFwlDCc2ZkDsk4Rt6V3FBEWa66/lGTwl0rYlbql4OQ/NxGRA
-	 2kSfu7nGHsD+vMAvJXUftQ+KLI6IqlD2bnYavgnYrSLCFJ/auqbQXHCuP2v9eW+xdd
-	 KVT7qnmgKwFMScEYEof1dHjVMxyuHP4xxihDkfVc=
+	b=Nkjvjk9hJ/TBPYcVrTbaJc1hitpyTAltH0VXxOMDB2EotM/JFZtQmmxpQHXP36I8L
+	 5VN1873AaKaYrJkCwED/K6NraNXuK2CzQnQwJa9Preh9pS6ZwK9Bz3UtmfSU8hg7LP
+	 czhW5tcRbsy7pqYEQBF8o4auioaOtXFbih+lVGIU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Fuad Tabba <fuad.tabba@linux.dev>,
+	Vincent Donnefort <vdonnefort@google.com>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 021/438] phy: qcom: m31-eusb2: Fix return value of init call
-Date: Fri,  7 Aug 2026 16:33:37 +0200
-Message-ID: <20260807143428.461916055@linuxfoundation.org>
+Subject: [PATCH 7.1 048/438] KVM: arm64: Fix potential leak in hyp_trace_buffer_alloc_bpages_backing
+Date: Fri,  7 Aug 2026 16:34:04 +0200
+Message-ID: <20260807143429.020491564@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -51,36 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+From: Vincent Donnefort <vdonnefort@google.com>
 
-[ Upstream commit 361f533a2dce2c2841fe4dc0c9d85a67117edf95 ]
+[ Upstream commit df7a9d376f7a388ecfacf8dfe0b5819ddfba6972 ]
 
-The init call currently returns success irrespective of any failures
-during repeater init or clock enablement. Return appropriate error value
-in the init call failure path.
+In the very unlikely event of a failure in __map_hyp, the allocated
+backing pages are leaked in hyp_trace_buffer_alloc_bpages_backing(). Fix
+this by freeing the pages on error.
 
-Fixes: 9c8504861cc4 ("phy: qcom: Add M31 based eUSB2 PHY driver")
-Signed-off-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260718-m31-eusb2-fix-v1-1-8588a1b94d76@oss.qualcomm.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: 3aed038aac8d ("KVM: arm64: Add trace remote for the nVHE/pKVM hyp")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Reviewed-by: Fuad Tabba <fuad.tabba@linux.dev>
+Tested-by: Fuad Tabba <fuad.tabba@linux.dev>
+Signed-off-by: Vincent Donnefort <vdonnefort@google.com>
+Link: https://patch.msgid.link/20260710114819.2689386-2-vdonnefort@google.com
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/qualcomm/phy-qcom-m31-eusb2.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/kvm/hyp_trace.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-m31-eusb2.c b/drivers/phy/qualcomm/phy-qcom-m31-eusb2.c
-index 68f1ba8fec4ad..9434bd22ef32d 100644
---- a/drivers/phy/qualcomm/phy-qcom-m31-eusb2.c
-+++ b/drivers/phy/qualcomm/phy-qcom-m31-eusb2.c
-@@ -221,7 +221,7 @@ static int m31eusb2_phy_init(struct phy *uphy)
- disable_vreg:
- 	regulator_bulk_disable(M31_EUSB_NUM_VREGS, phy->vregs);
+diff --git a/arch/arm64/kvm/hyp_trace.c b/arch/arm64/kvm/hyp_trace.c
+index ac6a2db317323..73c1731392c74 100644
+--- a/arch/arm64/kvm/hyp_trace.c
++++ b/arch/arm64/kvm/hyp_trace.c
+@@ -154,6 +154,7 @@ static int hyp_trace_buffer_alloc_bpages_backing(struct hyp_trace_buffer *trace_
+ 	int nr_bpages = (PAGE_ALIGN(size) / PAGE_SIZE) + 1;
+ 	size_t backing_size;
+ 	void *start;
++	int ret;
  
--	return 0;
+ 	backing_size = PAGE_ALIGN(sizeof(struct simple_buffer_page) * nr_bpages *
+ 				  num_possible_cpus());
+@@ -162,10 +163,16 @@ static int hyp_trace_buffer_alloc_bpages_backing(struct hyp_trace_buffer *trace_
+ 	if (!start)
+ 		return -ENOMEM;
+ 
++	ret = __map_hyp(start, backing_size);
++	if (ret) {
++		free_pages_exact(start, backing_size);
++		return ret;
++	}
++
+ 	trace_buffer->desc->bpages_backing_start = (unsigned long)start;
+ 	trace_buffer->desc->bpages_backing_size = backing_size;
+ 
+-	return __map_hyp(start, backing_size);
 +	return ret;
  }
  
- static int m31eusb2_phy_exit(struct phy *uphy)
+ static void hyp_trace_buffer_free_bpages_backing(struct hyp_trace_buffer *trace_buffer)
 -- 
 2.53.0
 
