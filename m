@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4405B1A681E;
-	Fri,  7 Aug 2026 15:17:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5853927466A;
+	Fri,  7 Aug 2026 15:18:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115879; cv=none; b=HyHhbqlrmR/bVpRmFl1d1v+M+R35Y+2Z0zrUkVbOSvZm+mAhasyQLwbYBQLsvADLOaeDRu0svc3D94xT7lEMEhE4a9NeLCKfufCjltRt7UnfQKFf4V4d40UFrXtYr9WSkaVU2ZCysk9Vc336Vu/ZiROjehT7vsctYybYEX+WW+U=
+	t=1786115882; cv=none; b=qDwhlSp7zI912qZ22k52Mw3Z2aynPhHrfE2fjyTYfTPsoDBRJisyPfUzB9AjTBNWXApJ8iOIMCf4RV6ZLTMNLSETiN4W/etVRldpQDPtDNiQmwHYPTB6dkRk5y92bLJy6u0+BfzUaLn7HSq6JBi1253djtQiLm+lcfSBFRn+EHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115879; c=relaxed/simple;
-	bh=HmvOHeOOA3IUyEyUtBEQ4+n+6ANB9RI4OHtJeKhb5a0=;
+	s=arc-20240116; t=1786115882; c=relaxed/simple;
+	bh=nSnfox2dDXnU49DJP8seKt2Hu2cHFmAccTA4zVWTdAQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j+b9AWYqg9NrpSs18CEHhq2j/BL5NEVDfuJUk3k2a89M2ZXkaOdfJHyBi+UifydlJ2hKnCmvmArsaNYTcU0s0VJkciZgFVokesDw7ri3CSGeyxICkyUhHFGI4ZTrQBuEpqKiTJyVfermbR3BJW8CLmoTDVbMwq4hdQdsy+KhC0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z2/gt13T; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XcRdbOVdtWIB2DBGKYfMPH178zI+wH5yO0tI+cML6GU1cyJJmkFgr005dbxQhWwdfIeCpVe/gBRSDxc593I34ZwIdFzZ62PnwwfVESBACxBYX5ealq8nJdAYr6jj3dw3wMlHZnGiSgX/uCQ2pkFGKsoNclAPJDMPKpai8PMnLBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MOBx0U4m; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z2/gt13T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A05081F000E9;
-	Fri,  7 Aug 2026 15:17:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MOBx0U4m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9491C1F000E9;
+	Fri,  7 Aug 2026 15:18:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115878;
-	bh=UTdaYE+9VSIcMThbz9XxHfXTxCO6MeGHyqF6mK+ZJww=;
+	s=korg; t=1786115881;
+	bh=4Jn2ZUVzU5wr2gXss/zSi9bd5ZCKLQynPnRwpXmRyq4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z2/gt13Tg8dceq+voM5CddYChY5oYgF+2kqG/lGgx3Tk0U4uqogFeagFr5Ib2CyDT
-	 t7I5lyr8nNmBo2V+tDNM9LgQfdf1zuY7lCaheOUL2feCYOhwT4+2G1n+LWhtvmhctr
-	 903onwHYiEQ0uiFZKmGpU48DrA0eyjEelA5NqF0A=
+	b=MOBx0U4m3APut0yjah7njvZXrdWpqq1j2uqK3MRcuRwfsl5qs5HcBLbVGHEkgM4ix
+	 MQkJeKslfSBN1OpZMpzIkE3wfqrRC5cbZ5V45MPBxfYie0R0TebPEX4gQR3Wch2/HG
+	 p1jKZA6yl0IsDnF9dfdLbY8Wz56goJF77SIPclP4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Allison Henderson <achender@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 035/261] rds: tcp: hold the RCU lock across ipv6_chk_addr() in rds_tcp_laddr_check()
-Date: Fri,  7 Aug 2026 16:36:32 +0200
-Message-ID: <20260807143416.137630872@linuxfoundation.org>
+Subject: [PATCH 6.6 036/261] pinctrl-amd: Dont clear S4 wake bits at probe
+Date: Fri,  7 Aug 2026 16:36:33 +0200
+Message-ID: <20260807143416.160576430@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143415.358597922@linuxfoundation.org>
 References: <20260807143415.358597922@linuxfoundation.org>
@@ -53,82 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 78f75d632f74b8de0f081a128588f7c37d0d1164 ]
+[ Upstream commit ffe8a0c6b55285ceaf2f42fc20c3a0594d14f1e9 ]
 
-rds_tcp_laddr_check() looks up a scoped IPv6 interface with
-dev_get_by_index_rcu(), drops the RCU read-side lock, and only then
-passes the bare struct net_device * into ipv6_chk_addr().
+commit 6bc3462a0f5e ("pinctrl: amd: Mask wake bits on probe again")
+introduced a regression where Wake-on-LAN no longer works after suspend
+or shutdown on some AMD platforms.
 
-dev_get_by_index_rcu() only keeps the device alive within the same RCU
-read-side section. After rcu_read_unlock(), a concurrent RTM_DELLINK can
-free the net_device; ipv6_chk_addr() then dereferences the stale pointer
-in __ipv6_chk_addr_and_flags() (e.g. l3mdev_master_dev_rcu(dev)), reading
-freed memory.
+Firmware-programmed S4 wake bits for devices like PCIe NICs using PCI
+PME are cleared at probe, but nothing restores them. Unlike S0i3/S3 wake
+sources that use enable_irq_wake() -> amd_gpio_irq_set_wake(), PCIe PME
+does not use GPIO IRQ infrastructure and relies on firmware configuration.
 
-Keep the RCU read-side lock held across the ipv6_chk_addr() call instead
-of dropping it right after the lookup, so the device cannot be freed
-while it is in use.
+The original intent of commit 6bc3462a0f5e ("pinctrl: amd: Mask wake
+bits on probe again") was to clear spurious wake bits left by firmware
+to prevent unwanted wakeups. However, S4 wake bits are used for
+hardware-level wake sources like WoL that bypass the kernel's IRQ wake
+API.
 
-  BUG: KASAN: slab-use-after-free in __ipv6_chk_addr_and_flags (... net/ipv6/addrconf.c:1998)
-  Read of size 8 at addr ffff8880106ec000 by task exploit/153
-  Call Trace:
-   ...
-   kasan_report (mm/kasan/report.c:595)
-   __ipv6_chk_addr_and_flags (... net/ipv6/addrconf.c:1998)
-   ipv6_chk_addr (net/ipv6/addrconf.c:2031 net/ipv6/addrconf.c:1972)
-   rds_tcp_laddr_check (net/rds/tcp.c:370)
-   rds_bind (net/rds/bind.c:248)
-   __sys_bind (net/socket.c:1920)
-   __x64_sys_bind (net/socket.c:1956)
-   do_syscall_64 (arch/x86/entry/syscall_64.c:63)
-   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+Fix by preserving S4 wake bits at probe and only clearing S0i3/S3 bits:
+- Firmware-configured S4 wake sources (WoL) continue working
+- Kernel maintains control of S3/S0i3 wake policy via set_wake()
+- S3-only wake sources work correctly per commit f31f33dbb3ba ("pinctrl:
+  amd: Take suspend type into consideration which pins are non-wake")
 
-Fixes: eee2fa6ab322 ("rds: Changing IP address internal representation to struct in6_addr")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Reviewed-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20260722210203.565803-1-xmei5@asu.edu
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+The trade-off is that firmware-programmed spurious S4 wake bits remain
+set, but this is less problematic than breaking WoL.
+
+Fixes: 6bc3462a0f5e ("pinctrl: amd: Mask wake bits on probe again")
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/tcp.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/pinctrl/pinctrl-amd.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/net/rds/tcp.c b/net/rds/tcp.c
-index 09dd862d7e9f1..997aee359025e 100644
---- a/net/rds/tcp.c
-+++ b/net/rds/tcp.c
-@@ -330,23 +330,25 @@ int rds_tcp_laddr_check(struct net *net, const struct in6_addr *addr,
- 	/* If the scope_id is specified, check only those addresses
- 	 * hosted on the specified interface.
- 	 */
-+	rcu_read_lock();
- 	if (scope_id != 0) {
--		rcu_read_lock();
- 		dev = dev_get_by_index_rcu(net, scope_id);
- 		/* scope_id is not valid... */
- 		if (!dev) {
- 			rcu_read_unlock();
- 			return -EADDRNOTAVAIL;
- 		}
--		rcu_read_unlock();
- 	}
- #if IS_ENABLED(CONFIG_IPV6)
- 	if (ipv6_mod_enabled()) {
- 		ret = ipv6_chk_addr(net, addr, dev, 0);
--		if (ret)
-+		if (ret) {
-+			rcu_read_unlock();
- 			return 0;
-+		}
- 	}
- #endif
-+	rcu_read_unlock();
- 	return -EADDRNOTAVAIL;
- }
+diff --git a/drivers/pinctrl/pinctrl-amd.c b/drivers/pinctrl/pinctrl-amd.c
+index ba38173d3ed3c..9c937f6cf525c 100644
+--- a/drivers/pinctrl/pinctrl-amd.c
++++ b/drivers/pinctrl/pinctrl-amd.c
+@@ -869,8 +869,7 @@ static void amd_gpio_irq_init(struct amd_gpio *gpio_dev)
+ 	u32 pin_reg, mask;
+ 	int i;
  
+-	mask = BIT(WAKE_CNTRL_OFF_S0I3) | BIT(WAKE_CNTRL_OFF_S3) |
+-		BIT(WAKE_CNTRL_OFF_S4);
++	mask = BIT(WAKE_CNTRL_OFF_S0I3) | BIT(WAKE_CNTRL_OFF_S3);
+ 
+ 	for (i = 0; i < desc->npins; i++) {
+ 		int pin = desc->pins[i].number;
 -- 
 2.53.0
 
