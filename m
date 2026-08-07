@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88300345EB7;
-	Fri,  7 Aug 2026 14:50:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D05DB37E2E9;
+	Fri,  7 Aug 2026 14:50:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114255; cv=none; b=L14qQCqauzOU2KPAhVZuhbj40RbSVxSuvSPxy/j+rgCbINMB4ie9P1JKVWSW8JaJZgkf1JBJ2zwVVXYpw2eLtwmwFrw2QDLHCKH291Z2IjbP56Ke/XecbDhRNSRA7TADBL1QIwI/Kq7YhRQIoj0i0V2D8ZX4Vhm6vaR7nPWwORc=
+	t=1786114262; cv=none; b=tTEdL9pDCZkE/phNHlZ8lWPekJRsUb5iLk7FALsOYKhS6/OFlqR+lK/AwWiISnoAAAO97VwSpbGTtHSz6GWX1JtxStlBvJytehk8BMD2K/42198/mOcMpcNt5D8Yp34ZVTDte05Zy7ywUOn7cVIGa39VT2yg5qXj9lijH3LmjaY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114255; c=relaxed/simple;
-	bh=It+3bUQFyhntYpoT+3nYJqWyGukEFrNVBgXAI6TIUd4=;
+	s=arc-20240116; t=1786114262; c=relaxed/simple;
+	bh=DSBX5vpEx2I4Y2mV2l40oNT1jVIw+TLtM1b8MzPQDIc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X1FM6Eimmx0XE/LfASL5lDxnjMvMor3eq7A1XH8j/sYn27wehE2KGWmH/rsTHEelcs2Cwi/u6Mfa+0KEGAY3dubQoL+AFPa0PpMPvydDDFthhGbB1JzqSII0ArZkt1UzfxMuzE4qBctgL6KuXSdXEdTO08Lz2LfodWbeJ5T+ZYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZX7d2HSg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e3/oh/9JBFCMiRiHqXmv9zfno8jdy0BUoDCIV4u+PXePdI4SHRJd1pdZ3ZHT3bkb2KdP+auAtrWhh//9r7h1tJlcHtuXt9reU6bo6vVbUV4o/k2L681vN4p1t9vHR3dn1Jo6THk30niTNKiGmm2pxt7pjYeTK+PxrZ/E0Z4HPmo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MbusODVv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZX7d2HSg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4E1B1F000E9;
-	Fri,  7 Aug 2026 14:50:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MbusODVv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 723371F00A3A;
+	Fri,  7 Aug 2026 14:50:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114249;
-	bh=qxQNbpjw0Xz/Skk+mXuLsquEO3oWUz29LNAkqVVwKbY=;
+	s=korg; t=1786114255;
+	bh=PNkytX3tYO3CKZScBuNK/6AocV+0781E2KaVu/F4R8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZX7d2HSgbsVf87sw814cvER7RHGlw/DJ8CI0y5eUQfO/pL5GVbLuJp17c54v6FYyx
-	 yatYe1bcgbkwW6JR1s/CJjjFTvcWRK7cjWV5nq0QRc0rY/7FA/mi5OHPTMybIvGSmj
-	 BSNyUF38kPSEeeDwidML1wShqHzOvlPD/HcIDrwg=
+	b=MbusODVvF5OUv1x7VC5sh533RMifCFwp/E6HB0vfLIQZ5vje9pVxtDNQ3wpkNuV+A
+	 NOWKEo5TuC5Ktbl5pBYspGX2h+Ea5CE3oeWZ2ni8HdlLIIjDpX+qcYIvcst5i6d1tR
+	 s3eVj/CXAh55DzCeeNq/wOITJzk4rwc3pbcocd7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Ibrahim Hashimov <security@auditcode.ai>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.12 197/337] scsi: scsi_debug: Fix REPORT ZONES alloc_len underflow OOB write
-Date: Fri,  7 Aug 2026 16:36:40 +0200
-Message-ID: <20260807143422.824673786@linuxfoundation.org>
+	Matt Vollrath <tactii@gmail.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>
+Subject: [PATCH 6.12 172/337] igbvf: Fix leak in TX DMA error cleanup
+Date: Fri,  7 Aug 2026 16:36:15 +0200
+Message-ID: <20260807143422.287937244@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -52,68 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ibrahim Hashimov <security@auditcode.ai>
+From: Matt Vollrath <tactii@gmail.com>
 
-commit 93dde0bf2f39a0f9f57fd610aa3201ce5b753433 upstream.
+commit 0565052b7e2f436b7f1541f4849da96dc0aa7a0e upstream.
 
-resp_report_zones() sizes the reply buffer from the CDB allocation
-length. The v3 fix rounds alloc_len up with ALIGN() before deriving the
-descriptor count:
+If an error is encountered while mapping TX buffers, the driver should
+unmap any buffers already mapped for that skb.
 
-	rep_max_zones = (ALIGN((u64)alloc_len, RZONES_DESC_HD) -
-			 RZONES_DESC_HD) >> ilog2(RZONES_DESC_HD);
-	arr_len = (u64)RZONES_DESC_HD * (rep_max_zones + 1);
+Because count is incremented before each frag mapping, it will always
+match the correct number of unmappings needed when dma_error is reached.
+Decrementing count before the while loop in dma_error causes an
+off-by-one error. If any mapping was successful before an unsuccessful
+mapping, exactly one DMA mapping (the head) would leak.
 
-For alloc_len in 0xFFFFFFC1..0xFFFFFFFF, ALIGN() rounds up to
-0x100000000, so arr_len is 4 GB. On 32-bit, kzalloc()'s size_t is 32-bit
-and truncates 0x100000000 to 0; kzalloc(0) returns ZERO_SIZE_PTR, which
-passes the !arr check, and desc = arr + 64 is then dereferenced in the
-loop -> out-of-bounds write / panic.
+This bug was introduced by a 2010 fix for an endless loop in dma_error.
+All other affected drivers have already been fixed.
 
-Clamp rep_max_zones to devip->nr_zones. The loop already stops at
-sdebug_capacity (after nr_zones zones), so a report can never hold more
-than nr_zones descriptors; the clamp does not change the report, it only
-bounds arr_len to (nr_zones + 1) * RZONES_DESC_HD, a real device
-property that can never reach 0x100000000.
-
-Fixes: 7db0e0c8190a ("scsi: scsi_debug: Fix buffer size of REPORT ZONES command")
-Suggested-by: Damien Le Moal <dlemoal@kernel.org>
+Fixes: c1fa347f20f1 ("e1000/e1000e/igb/igbvf/ixgb/ixgbe: Fix tests of unsigned in *_tx_map()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ibrahim Hashimov <security@auditcode.ai>
-Assisted-by: AuditCode-AI:2026.07
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20260712183739.83915-1-security@auditcode.ai
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Assisted-by: Claude:claude-4-7-opus
+Signed-off-by: Matt Vollrath <tactii@gmail.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/scsi_debug.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/igbvf/netdev.c |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/drivers/scsi/scsi_debug.c
-+++ b/drivers/scsi/scsi_debug.c
-@@ -5191,6 +5191,7 @@ static int resp_report_zones(struct scsi
- 	u32 alloc_len, rep_opts, rep_len;
- 	bool partial;
- 	u64 lba, zs_lba;
-+	u64 arr_len;
- 	u8 *arr = NULL, *desc;
- 	u8 *cmd = scp->cmnd;
- 	struct sdeb_zone_state *zsp = NULL;
-@@ -5212,9 +5213,12 @@ static int resp_report_zones(struct scsi
- 		return check_condition_result;
- 	}
+--- a/drivers/net/ethernet/intel/igbvf/netdev.c
++++ b/drivers/net/ethernet/intel/igbvf/netdev.c
+@@ -2201,8 +2201,6 @@ dma_error:
+ 	buffer_info->time_stamp = 0;
+ 	buffer_info->length = 0;
+ 	buffer_info->mapped_as_page = false;
+-	if (count)
+-		count--;
  
--	rep_max_zones = (alloc_len - 64) >> ilog2(RZONES_DESC_HD);
-+	rep_max_zones = (ALIGN((u64)alloc_len, RZONES_DESC_HD) - RZONES_DESC_HD) >>
-+			ilog2(RZONES_DESC_HD);
-+	rep_max_zones = min_t(unsigned int, rep_max_zones, devip->nr_zones);
-+	arr_len = (u64)RZONES_DESC_HD * (rep_max_zones + 1);
- 
--	arr = kzalloc(alloc_len, GFP_ATOMIC | __GFP_NOWARN);
-+	arr = kzalloc(arr_len, GFP_ATOMIC | __GFP_NOWARN);
- 	if (!arr) {
- 		mk_sense_buffer(scp, ILLEGAL_REQUEST, INSUFF_RES_ASC,
- 				INSUFF_RES_ASCQ);
+ 	/* clear timestamp and dma mappings for remaining portion of packet */
+ 	while (count--) {
 
 
