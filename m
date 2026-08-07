@@ -1,109 +1,72 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.forwardemail.net (smtp.forwardemail.net [121.127.44.73])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F1A33F0A94;
-	Fri,  7 Aug 2026 15:50:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0ABD38B7D2
+	for <patches@lists.linux.dev>; Fri,  7 Aug 2026 16:08:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=121.127.44.73
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786117801; cv=none; b=dMOiiAkV+QSZ2WeB004SD+DntTYhy2I/WihWmMn4OVW9h78r4oPzbf4qTfaX6TKFX4Jp5++VTy+R8QVJoDHQ6sVOJlFjQ3yalBYh7uCYrVgEWSa89loH73vDqVb/g5FxVShzJjc13XV6D87oWJLPl6QP/hZTHQYQcw1jnvaO0fU=
+	t=1786118908; cv=none; b=E/c7i7S/PtpekJe0x+g2KITIHbCnOc2XG/PKy7H7nKdgPErDJKs7BhNIZzwhXAfwaoqOGg/FXivvfbR7Y7jWod6p+hwpWKEuZqcYwRFFwDxYDpe15FR7NaBHN559JwFT6ZkudVGX1/ObNc+P32Efeogr72r1omwdjaZmNvTQDKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786117801; c=relaxed/simple;
-	bh=4n/ClGM4PlvaQw//Z/tjDn+bQpuBd04kmGHzUUs7DJ4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V4mZ7WdeoiKTWjeMxKGjZDwNASoDy8VtUqTP5PtlN9bdhghaciu10AA312zAOXMp4vDKYxKV66e2hRAtcuAvgjFgWd7UFrcrgXIpP1PViEngL7qI/LvUSFqHqOH/JncBChAu6ij9KvtMAGzIok6wwB3Qe0LgGLDrpSrOUp7PHfI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UbC0CWYY; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1786118908; c=relaxed/simple;
+	bh=3i9Yg7zGiG7NLreB+R/L9yBxDBd3PbX+sHtmLQel8kI=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=k3ukQ3DuxxUX41tAvz0yBo87POnIGoiLNCalfhs9a3AmuQ2OwBDdBumyXBcnGiqx35ob5GJyGFIJAtipxPIp7gLM8RSRPqcgZlq90hKLqxKt6fBLg62Ttn8RCH3lHW58RTIf9K7lbbiunr422pUdVJB6J4HV+/j8p1keYqz84Ds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ubuntu.com; spf=pass smtp.mailfrom=fe-bounces.ubuntu.com; dkim=pass (2048-bit key) header.d=ubuntu.com header.i=@ubuntu.com header.b=jGyGMxT2; arc=none smtp.client-ip=121.127.44.73
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ubuntu.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fe-bounces.ubuntu.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UbC0CWYY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07F0E1F000E9;
-	Fri,  7 Aug 2026 15:49:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786117800;
-	bh=UKQxVypSmg9rmivDK9mBctlfXpFCoA4RMczvos8MDcQ=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UbC0CWYYT8CW6BGOlk64P3sshFhei8Y0ZN0XiI7eKywETnNHhJu2S3muB23bgsF6F
-	 zno56i5GCbLd2skVE7s9Pw6uqoWkPHg0iDZ7DrwEQwb8EvkBtcyTdCOfTw0VypCXFg
-	 3TXKaycZTsSemiON9kJ2LilKud+CY1eXfnyzjCrY=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Wayne Lin <wayne.lin@amd.com>,
-	Ray Wu <ray.wu@amd.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.1 399/438] drm/amd/display: Increase HDMI AV mute wait from 2 to 3 frames
-Date: Fri,  7 Aug 2026 16:39:55 +0200
-Message-ID: <20260807143436.467228149@linuxfoundation.org>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
-References: <20260807143428.008222056@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (2048-bit key) header.d=ubuntu.com header.i=@ubuntu.com header.b="jGyGMxT2"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ubuntu.com;
+ h=In-Reply-To: References: To: From: Subject: Cc: Message-Id: Date:
+ Content-Type: Content-Transfer-Encoding: Mime-Version; q=dns/txt;
+ s=fe-953a8a3ca9; t=1786118905;
+ bh=gjOCGq/lgPEAyIC03TEeRPE1lC1Ra5aHVVKGkvFTmzs=;
+ b=jGyGMxT2GQYBWIBOx4C1909p+dbFkaEZmjmykKxaaaMu4VfVpCVrcnWdS8IgdlNwlliuWh9oF
+ xSSSMNSUO2mvoWTlHQAds3fX5zPcE8Vq6nZz3lTXUoYMKy0j4l2Uj2KTdPfQuBIirs7uh7JRA05
+ Qyj2BSHFZR/ayq8QejdXTAo6MjKhg5tge7HVPxWBNq40vAzTScIo+r4eMErArFdwtw4yoq8wRF+
+ 4dPkYx6+UDGJOJTgfYtPbfxDM8dAZAxu16k+lVARKHWhYvgoMts5iJlz1cDUlQWHzX6PEdw7x1m
+ TcrwohCxIWxcbTXHPIgsuJNGDCvklF5QGjP3UqhGuUTA==
+X-Forward-Email-ID: 6a760270c2d7d501b99555b0
+X-Forward-Email-Sender: rfc822; jpeisach@ubuntu.com, smtp.forwardemail.net,
+ 121.127.44.73
+X-Forward-Email-Version: 2.13.10
+X-Forward-Email-Website: https://forwardemail.net
+X-Complaints-To: abuse@forwardemail.net
+X-Report-Abuse: abuse@forwardemail.net
+X-Report-Abuse-To: abuse@forwardemail.net
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8; format=Flowed
+Date: Fri, 07 Aug 2026 12:06:07 -0400
+Message-Id: <DKIU9E13QG3Z.2V2PD3QB9BXR7@ubuntu.com>
+Cc: <patches@lists.linux.dev>, "Sven Peter" <sven@kernel.org>, "Joshua
+ Peisach" <jpeisach@ubuntu.com>, "Janne Grunau" <j@jannau.net>, "Sasha
+ Finkelstein" <k@chaosmail.tech>, "Sebastian Reichel"
+ <sebastian.reichel@collabora.com>
+Subject: Re: [PATCH 7.1 335/438] power: supply: macsmc: Support macOS 27 SMC
+ firmware
+From: "Joshua Peisach" <jpeisach@ubuntu.com>
+To: "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
+ <stable@vger.kernel.org>
+X-Mailer: aerc 0.21.0
+References: <20260807143428.008222056@linuxfoundation.org>
+ <20260807143435.115379040@linuxfoundation.org>
+In-Reply-To: <20260807143435.115379040@linuxfoundation.org>
 
-7.1-stable review patch.  If anyone has any objections, please let me know.
+On Fri Aug 7, 2026 at 10:38 AM EDT, Greg Kroah-Hartman wrote:
+> 7.1-stable review patch.  If anyone has any objections, please let me kno=
+w.
+>
 
-------------------
+Not an objection, but this did fix my problems with emergency
+shutdowns. I'm not sure if you can promote from Reviewed -> Tested by
+but if you would like so for the record:
 
-From: Ray Wu <ray.wu@amd.com>
+on a M1 MBP, after applying patch following macOS 27 update:
 
-commit c216b39fbbc4b007fd6984cffd85039d49a55154 upstream.
-
-Some HDMI sinks need additional GCP packets to properly process the
-mute state before the timing generator is disabled, especially after
-link re-establishment with HDMI 2.0 scrambling enabled. Waiting for
-only 2 frames is insufficient for certain monitor firmware, resulting
-in garbled display output on resume from suspend.
-
-Increase the AV mute wait in dcn30_set_avmute() from 2 to 3 frames
-to ensure the sink receives enough GCP packets.
-
-Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/5167
-Assisted-by: Cursor:Claude-Opus-4.6
-Reviewed-by: Wayne Lin <wayne.lin@amd.com>
-Signed-off-by: Ray Wu <ray.wu@amd.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 0c0d5174b09640d8b560764aa5a177630e076e93)
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/gpu/drm/amd/display/dc/hwss/dcn30/dcn30_hwseq.c |   16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
-
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn30/dcn30_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn30/dcn30_hwseq.c
-@@ -841,13 +841,19 @@ void dcn30_set_avmute(struct pipe_ctx *p
- 				pipe_ctx->stream_res.stream_enc,
- 				enable);
- 
--		/* Wait for two frame to make sure AV mute is sent out */
-+		/* Wait for three frames to make sure AV mute is sent out.
-+		 * Some HDMI sinks need additional GCP packets to properly
-+		 * process the mute state, especially after link re-establishment
-+		 * with HDMI 2.0 scrambling enabled.
-+		 */
- 		if (enable && pipe_ctx->stream_res.tg->funcs->is_tg_enabled(pipe_ctx->stream_res.tg)) {
-+			int i;
-+
- 			pipe_ctx->stream_res.tg->funcs->wait_for_state(pipe_ctx->stream_res.tg, CRTC_STATE_VACTIVE);
--			pipe_ctx->stream_res.tg->funcs->wait_for_state(pipe_ctx->stream_res.tg, CRTC_STATE_VBLANK);
--			pipe_ctx->stream_res.tg->funcs->wait_for_state(pipe_ctx->stream_res.tg, CRTC_STATE_VACTIVE);
--			pipe_ctx->stream_res.tg->funcs->wait_for_state(pipe_ctx->stream_res.tg, CRTC_STATE_VBLANK);
--			pipe_ctx->stream_res.tg->funcs->wait_for_state(pipe_ctx->stream_res.tg, CRTC_STATE_VACTIVE);
-+			for (i = 0; i < 3; i++) {
-+				pipe_ctx->stream_res.tg->funcs->wait_for_state(pipe_ctx->stream_res.tg, CRTC_STATE_VBLANK);
-+				pipe_ctx->stream_res.tg->funcs->wait_for_state(pipe_ctx->stream_res.tg, CRTC_STATE_VACTIVE);
-+			}
- 		}
- 	}
- }
-
-
+Tested-by: Joshua Peisach <jpeisach@ubuntu.com>
