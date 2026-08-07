@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0710C38C2C0;
-	Fri,  7 Aug 2026 14:48:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD8253AC0D0;
+	Fri,  7 Aug 2026 14:48:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114120; cv=none; b=lqRiczvPNpkmf4M/dB2WuiPa4v9MmxJXWvIdbvJAjHVGZMxnnAN7tZFW+JJ7soTiI0hSVQ9NbD4d1QeWgHJ21QazKXF9jjYy7Qp6ad3Rl3W//kMdn9fecEQNWLc+1niYZk0ov5/A8WUQZxC8knIOMXMTnyOqsVc5tUUTIiPBZ6Q=
+	t=1786114124; cv=none; b=B1zchqLjp1mwIefncni/2tPEgPtwbu3AJga/sBIn2o72fQV1gP9CYA6Fi4b/O+Xh3IlYVaO/sqQr1Wj0POBy1HvKJN/dEwvGRR7rL+q3DWUBnppB4x+z0XANeQi9WHWbeG3H48Vg6MJhrwBNCp0UbNDFevjRwjzd8lC6wdVSurc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114120; c=relaxed/simple;
-	bh=ZFH0w1Sz22QfyZfZL3zN8X1WwS/xiWd2s4wu7txrbcU=;
+	s=arc-20240116; t=1786114124; c=relaxed/simple;
+	bh=Y5NMJ+eyKajaEfMb9dHX6dxADkOBHprYKs/fXm/O4pw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pIomhGcdSy8ztq3uQkyTecCUlVnm5+GKGa9UOnQQwQTJOcaEFqMhYVHO4Sw2gbWgNgn+2l+thjX5B6rolN4LKbGsfNBWX/e/kuefhylK+xJneWA35+7lJKsaDD6gRjKEyfG+yOuHptNWiw3JhF+BygJoGfPtOORg4rj5/MXDQUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nxNyzWjA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ikItoiFayJ2hMVB1+CEH9N51TwPA0XONZU6MOBFbKgYKVvwfe70owm9jzq0r5Uh8LWumDYOlHmjPw7WIfcL721k5TACrA9UhGHvMN1Q2uRgSKprXUUUvaBkBXfih2M6wd1LYvLqrLfuHJLy/mNwC82ecGr2b/RLaayNUACm+TkA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mp/3gkNO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nxNyzWjA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A248F1F000E9;
-	Fri,  7 Aug 2026 14:48:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mp/3gkNO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9575D1F00A3A;
+	Fri,  7 Aug 2026 14:48:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114116;
-	bh=5NBGSccyOGoHal6vi74vslzXWcZfGCQFS40SGqmteEw=;
+	s=korg; t=1786114119;
+	bh=D5yUsoKEPaAZZu86/ZbXpaTm8JOooZeJLP6+yJU8j3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nxNyzWjAS81NQFu692UOvjIYg9d2sM2c87ZLWXzj3n+PichAWgSJ1DFHvTxgZC4mG
-	 8B/6Z5wjrIRi6TIDSpc94Zyaix6vPaRQmQ7gxNguU9QJb3e+0pJFy3sRp4TuEc4zAk
-	 q9NxAZcFHzIunSUDG9millZ3wqupV/aiKfpjuF8c=
+	b=Mp/3gkNOg0xkOjTPeX+PRG4wstU+MgxkG67+cnRRZ1vWzyGSGAgvfWiPBDnvdkjip
+	 +762/sb7GHlZDVcroaLdfqrnJjabhPXRXCp5CPH9kWMPW9sJcM0ztMVQkbmQeBq4g+
+	 b0iTE551ZtThi2pzZNZNvqFYQohRle19RQantzqA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zihan Xi <xizh2024@lzu.edu.cn>,
-	Ren Wei <enjou1224z@gmail.com>,
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.12 150/337] Bluetooth: mgmt: fix UAF in pair command cancellation
-Date: Fri,  7 Aug 2026 16:35:53 +0200
-Message-ID: <20260807143421.802709976@linuxfoundation.org>
+Subject: [PATCH 6.12 151/337] Bluetooth: hci_sync: Fix advertising data UAFs
+Date: Fri,  7 Aug 2026 16:35:54 +0200
+Message-ID: <20260807143421.824102124@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -52,198 +51,341 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zihan Xi <xizh2024@lzu.edu.cn>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-commit d0a7b48ad0921bd88effaee10bf970ab1d5d0ddd upstream.
+commit cdc36db204ffd97b947d64374cf23a210dc74777 upstream.
 
-The pairing completion and authentication failure callbacks look up the
-pending MGMT_OP_PAIR_DEVICE command by walking hdev->mgmt_pending. The
-lookup returned a command that was still linked on the shared pending list,
-without keeping mgmt_pending_lock held for the later dereference and
-removal.
+hci_find_adv_instance() returns an adv_info pointer that is valid only
+while hdev->lock is held.  The advertising command-sync paths perform
+instance lookups without that lock and, in some cases, retain the pointer
+while waiting for a controller response.
 
-A concurrent MGMT_OP_CANCEL_PAIR_DEVICE request can remove and free the
-same pending command before the callback uses it. The reverse race is also
-possible when cancel_pair_device() gets a command from pending_find() and a
-callback removes it before the cancel path dereferences it. This can lead
-to a use-after-free and a second list_del().
+An advertising termination event can therefore interleave as follows:
 
-Make the pairing lookup helpers transfer ownership of the pending command
-by removing it from hdev->mgmt_pending while holding mgmt_pending_lock.
-The callbacks and cancel path then complete the command and free it
-directly, so racing paths cannot find or free the same command again. Take
-a temporary hci_conn reference in cancel_pair_device() because the command
-completion drops the reference stored in the pending command.
+  hci_cmd_sync_work                 hci_rx_work
+  hci_find_adv_instance()
+  __hci_cmd_sync_status()
+    wait for controller reply       hci_dev_lock()
+                                    hci_remove_adv_instance()
+                                      kfree(adv)
+  adv->scan_rsp_changed = false
 
-Fixes: e9a416b5ce0c ("Bluetooth: Add mgmt_pair_device command")
+KASAN reported:
+
+  BUG: KASAN: slab-use-after-free in hci_set_ext_scan_rsp_data_sync+0x2e1/0x300
+  Write of size 1 at addr ffff88810a45d21d by task kworker/u17:0/88
+  Workqueue: hci0 hci_cmd_sync_work
+  Call Trace:
+   hci_set_ext_scan_rsp_data_sync+0x2e1/0x300
+   hci_schedule_adv_instance_sync+0x390/0x4c0
+   hci_cmd_sync_work+0x173/0x300
+  Allocated by task 87:
+   hci_add_adv_instance+0x538/0xac0
+   add_advertising+0x885/0x1160
+  Freed by task 89:
+   kfree+0x131/0x3c0
+   hci_remove_adv_instance+0x1d8/0x3b0
+   hci_le_ext_adv_term_evt+0x17b/0x730
+
+Protect the instance lookup and payload construction in the extended
+advertising, scan response, and periodic advertising data paths.  Snapshot
+the advertising parameters under hdev->lock, but release the lock before
+waiting for the controller.
+
+Clear advertising-data dirty bits before issuing their commands and
+restore them after a failure using a fresh lookup.  Likewise, update the
+reported transmit power through a fresh lookup after the parameter command
+completes.  No adv_info pointer then survives an HCI command wait.
+
+Fixes: cba6b758711c ("Bluetooth: hci_sync: Make use of hci_cmd_sync_queue set 2")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Assisted-by: Codex:gpt-5.4
-Signed-off-by: Zihan Xi <xizh2024@lzu.edu.cn>
-Reviewed-by: Ren Wei <enjou1224z@gmail.com>
-Reported-by: Vega <vega@nebusec.ai>
+Suggested-by: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/mgmt.c |   64 ++++++++++++++++++++++++++++++++++++---------------
- 1 file changed, 46 insertions(+), 18 deletions(-)
+ net/bluetooth/hci_sync.c |  131 ++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 97 insertions(+), 34 deletions(-)
 
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -3445,11 +3445,13 @@ static int set_io_capability(struct sock
- 				 NULL, 0);
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -1228,10 +1228,11 @@ static int hci_set_adv_set_random_addr_s
  }
  
--static struct mgmt_pending_cmd *find_pairing(struct hci_conn *conn)
-+static struct mgmt_pending_cmd *remove_pairing(struct hci_conn *conn)
+ static int
+-hci_set_ext_adv_params_sync(struct hci_dev *hdev, struct adv_info *adv,
++hci_set_ext_adv_params_sync(struct hci_dev *hdev, u8 instance,
+ 			    const struct hci_cp_le_set_ext_adv_params *cp,
+ 			    struct hci_rp_le_set_ext_adv_params *rp)
  {
- 	struct hci_dev *hdev = conn->hdev;
- 	struct mgmt_pending_cmd *cmd;
++	struct adv_info *adv;
+ 	struct sk_buff *skb;
  
-+	mutex_lock(&hdev->mgmt_pending_lock);
-+
- 	list_for_each_entry(cmd, &hdev->mgmt_pending, list) {
- 		if (cmd->opcode != MGMT_OP_PAIR_DEVICE)
- 			continue;
-@@ -3457,9 +3459,39 @@ static struct mgmt_pending_cmd *find_pai
- 		if (cmd->user_data != conn)
- 			continue;
+ 	skb = __hci_cmd_sync(hdev, HCI_OP_LE_SET_EXT_ADV_PARAMS, sizeof(*cp),
+@@ -1259,11 +1260,15 @@ hci_set_ext_adv_params_sync(struct hci_d
  
-+		list_del(&cmd->list);
-+		mutex_unlock(&hdev->mgmt_pending_lock);
- 		return cmd;
+ 	if (!rp->status) {
+ 		hdev->adv_addr_type = cp->own_addr_type;
+-		if (!cp->handle) {
++		if (!instance) {
+ 			/* Store in hdev for instance 0 */
+ 			hdev->adv_tx_power = rp->tx_power;
+-		} else if (adv) {
+-			adv->tx_power = rp->tx_power;
++		} else {
++			hci_dev_lock(hdev);
++			adv = hci_find_adv_instance(hdev, instance);
++			if (adv)
++				adv->tx_power = rp->tx_power;
++			hci_dev_unlock(hdev);
+ 		}
  	}
  
-+	mutex_unlock(&hdev->mgmt_pending_lock);
+@@ -1279,9 +1284,13 @@ static int hci_set_ext_adv_data_sync(str
+ 	int err;
+ 
+ 	if (instance) {
++		hci_dev_lock(hdev);
 +
-+	return NULL;
-+}
-+
-+static struct mgmt_pending_cmd *remove_pairing_by_addr(struct hci_dev *hdev,
-+						       bdaddr_t *bdaddr)
-+{
-+	struct mgmt_pending_cmd *cmd;
-+	struct hci_conn *conn;
-+
-+	mutex_lock(&hdev->mgmt_pending_lock);
-+
-+	list_for_each_entry(cmd, &hdev->mgmt_pending, list) {
-+		if (cmd->opcode != MGMT_OP_PAIR_DEVICE)
-+			continue;
-+
-+		conn = cmd->user_data;
-+		if (bacmp(bdaddr, &conn->dst) != 0)
-+			continue;
-+
-+		list_del(&cmd->list);
-+		mutex_unlock(&hdev->mgmt_pending_lock);
-+		return cmd;
+ 		adv = hci_find_adv_instance(hdev, instance);
+-		if (!adv || !adv->adv_data_changed)
++		if (!adv || !adv->adv_data_changed) {
++			hci_dev_unlock(hdev);
+ 			return 0;
++		}
+ 	}
+ 
+ 	len = eir_create_adv_data(hdev, instance, pdu->data,
+@@ -1292,16 +1301,27 @@ static int hci_set_ext_adv_data_sync(str
+ 	pdu->operation = LE_SET_ADV_DATA_OP_COMPLETE;
+ 	pdu->frag_pref = LE_SET_ADV_DATA_NO_FRAG;
+ 
++	if (adv) {
++		adv->adv_data_changed = false;
++		hci_dev_unlock(hdev);
 +	}
 +
-+	mutex_unlock(&hdev->mgmt_pending_lock);
+ 	err = __hci_cmd_sync_status(hdev, HCI_OP_LE_SET_EXT_ADV_DATA,
+ 				    struct_size(pdu, data, len), pdu,
+ 				    HCI_CMD_TIMEOUT);
+-	if (err)
++	if (err) {
++		if (instance) {
++			hci_dev_lock(hdev);
++			adv = hci_find_adv_instance(hdev, instance);
++			if (adv)
++				adv->adv_data_changed = true;
++			hci_dev_unlock(hdev);
++		}
 +
- 	return NULL;
- }
+ 		return err;
++	}
  
-@@ -3497,10 +3529,10 @@ void mgmt_smp_complete(struct hci_conn *
- 	u8 status = complete ? MGMT_STATUS_SUCCESS : MGMT_STATUS_FAILED;
- 	struct mgmt_pending_cmd *cmd;
- 
--	cmd = find_pairing(conn);
-+	cmd = remove_pairing(conn);
- 	if (cmd) {
- 		cmd->cmd_complete(cmd, status);
--		mgmt_pending_remove(cmd);
-+		mgmt_pending_free(cmd);
+-	/* Update data if the command succeed */
+-	if (adv) {
+-		adv->adv_data_changed = false;
+-	} else {
++	if (!instance) {
+ 		memcpy(hdev->adv_data, pdu->data, len);
+ 		hdev->adv_data_len = len;
  	}
- }
+@@ -1355,22 +1375,22 @@ int hci_setup_ext_adv_instance_sync(stru
+ 	struct adv_info *adv;
+ 	bool secondary_adv;
  
-@@ -3510,14 +3542,14 @@ static void pairing_complete_cb(struct h
- 
- 	BT_DBG("status %u", status);
- 
--	cmd = find_pairing(conn);
-+	cmd = remove_pairing(conn);
- 	if (!cmd) {
- 		BT_DBG("Unable to find a pending command");
- 		return;
- 	}
- 
- 	cmd->cmd_complete(cmd, mgmt_status(status));
--	mgmt_pending_remove(cmd);
-+	mgmt_pending_free(cmd);
- }
- 
- static void le_pairing_complete_cb(struct hci_conn *conn, u8 status)
-@@ -3529,14 +3561,14 @@ static void le_pairing_complete_cb(struc
- 	if (!status)
- 		return;
- 
--	cmd = find_pairing(conn);
-+	cmd = remove_pairing(conn);
- 	if (!cmd) {
- 		BT_DBG("Unable to find a pending command");
- 		return;
- 	}
- 
- 	cmd->cmd_complete(cmd, mgmt_status(status));
--	mgmt_pending_remove(cmd);
-+	mgmt_pending_free(cmd);
- }
- 
- static int pair_device(struct sock *sk, struct hci_dev *hdev, void *data,
-@@ -3693,23 +3725,17 @@ static int cancel_pair_device(struct soc
- 		goto unlock;
- 	}
- 
--	cmd = pending_find(MGMT_OP_PAIR_DEVICE, hdev);
-+	cmd = remove_pairing_by_addr(hdev, &addr->bdaddr);
- 	if (!cmd) {
- 		err = mgmt_cmd_status(sk, hdev->id, MGMT_OP_CANCEL_PAIR_DEVICE,
- 				      MGMT_STATUS_INVALID_PARAMS);
- 		goto unlock;
- 	}
- 
--	conn = cmd->user_data;
--
--	if (bacmp(&addr->bdaddr, &conn->dst) != 0) {
--		err = mgmt_cmd_status(sk, hdev->id, MGMT_OP_CANCEL_PAIR_DEVICE,
--				      MGMT_STATUS_INVALID_PARAMS);
--		goto unlock;
+-	if (instance > 0) {
+-		adv = hci_find_adv_instance(hdev, instance);
+-		if (!adv)
+-			return -EINVAL;
+-	} else {
+-		adv = NULL;
 -	}
-+	conn = hci_conn_get(cmd->user_data);
- 
- 	cmd->cmd_complete(cmd, MGMT_STATUS_CANCELLED);
--	mgmt_pending_remove(cmd);
-+	mgmt_pending_free(cmd);
- 
- 	err = mgmt_cmd_complete(sk, hdev->id, MGMT_OP_CANCEL_PAIR_DEVICE, 0,
- 				addr, sizeof(*addr));
-@@ -3727,6 +3753,8 @@ static int cancel_pair_device(struct soc
- 	if (conn->conn_reason == CONN_REASON_PAIR_DEVICE)
- 		hci_abort_conn(conn, HCI_ERROR_REMOTE_USER_TERM);
- 
-+	hci_conn_put(conn);
+-
+ 	/* Updating parameters of an active instance will return a
+-	 * Command Disallowed error, so we must first disable the
+-	 * instance if it is active.
++	 * Command Disallowed error, so disable it before taking a snapshot.
+ 	 */
+-	if (adv) {
++	if (instance > 0) {
+ 		err = hci_disable_ext_adv_instance_sync(hdev, instance);
+ 		if (err)
+ 			return err;
 +
- unlock:
- 	hci_dev_unlock(hdev);
- 	return err;
-@@ -10221,14 +10249,14 @@ void mgmt_auth_failed(struct hci_conn *c
- 	ev.addr.type = link_to_bdaddr(conn->type, conn->dst_type);
- 	ev.status = status;
- 
--	cmd = find_pairing(conn);
-+	cmd = remove_pairing(conn);
- 
- 	mgmt_event(MGMT_EV_AUTH_FAILED, conn->hdev, &ev, sizeof(ev),
- 		    cmd ? cmd->sk : NULL);
- 
- 	if (cmd) {
- 		cmd->cmd_complete(cmd, status);
--		mgmt_pending_remove(cmd);
-+		mgmt_pending_free(cmd);
++		hci_dev_lock(hdev);
++		adv = hci_find_adv_instance(hdev, instance);
++		if (!adv) {
++			hci_dev_unlock(hdev);
++			return -EINVAL;
++		}
++	} else {
++		adv = NULL;
  	}
- }
+ 
+ 	flags = hci_adv_instance_flags(hdev, instance);
+@@ -1381,8 +1401,11 @@ int hci_setup_ext_adv_instance_sync(stru
+ 	connectable = (flags & MGMT_ADV_FLAG_CONNECTABLE) ||
+ 		      mgmt_get_connectable(hdev);
+ 
+-	if (!is_advertising_allowed(hdev, connectable))
++	if (!is_advertising_allowed(hdev, connectable)) {
++		if (instance)
++			hci_dev_unlock(hdev);
+ 		return -EPERM;
++	}
+ 
+ 	/* Set require_privacy to true only when non-connectable
+ 	 * advertising is used and it is not periodic.
+@@ -1393,8 +1416,11 @@ int hci_setup_ext_adv_instance_sync(stru
+ 	err = hci_get_random_address(hdev, require_privacy,
+ 				     adv_use_rpa(hdev, flags), adv,
+ 				     &own_addr_type, &random_addr);
+-	if (err < 0)
++	if (err < 0) {
++		if (instance)
++			hci_dev_unlock(hdev);
+ 		return err;
++	}
+ 
+ 	memset(&cp, 0, sizeof(cp));
+ 
+@@ -1445,6 +1471,9 @@ int hci_setup_ext_adv_instance_sync(stru
+ 	cp.channel_map = hdev->le_adv_channel_map;
+ 	cp.handle = adv ? adv->handle : instance;
+ 
++	if (instance)
++		hci_dev_unlock(hdev);
++
+ 	if (flags & MGMT_ADV_FLAG_SEC_2M) {
+ 		cp.primary_phy = HCI_ADV_PHY_1M;
+ 		cp.secondary_phy = HCI_ADV_PHY_2M;
+@@ -1457,12 +1486,12 @@ int hci_setup_ext_adv_instance_sync(stru
+ 		cp.secondary_phy = HCI_ADV_PHY_1M;
+ 	}
+ 
+-	err = hci_set_ext_adv_params_sync(hdev, adv, &cp, &rp);
++	err = hci_set_ext_adv_params_sync(hdev, instance, &cp, &rp);
+ 	if (err)
+ 		return err;
+ 
+ 	/* Update adv data as tx power is known now */
+-	err = hci_set_ext_adv_data_sync(hdev, cp.handle);
++	err = hci_set_ext_adv_data_sync(hdev, instance);
+ 	if (err)
+ 		return err;
+ 
+@@ -1470,9 +1499,14 @@ int hci_setup_ext_adv_instance_sync(stru
+ 	     own_addr_type == ADDR_LE_DEV_RANDOM_RESOLVED) &&
+ 	    bacmp(&random_addr, BDADDR_ANY)) {
+ 		/* Check if random address need to be updated */
+-		if (adv) {
+-			if (!bacmp(&random_addr, &adv->random_addr))
++		if (instance) {
++			hci_dev_lock(hdev);
++			adv = hci_find_adv_instance(hdev, instance);
++			if (!adv || !bacmp(&random_addr, &adv->random_addr)) {
++				hci_dev_unlock(hdev);
+ 				return 0;
++			}
++			hci_dev_unlock(hdev);
+ 		} else {
+ 			if (!bacmp(&random_addr, &hdev->random_addr))
+ 				return 0;
+@@ -1494,9 +1528,13 @@ static int hci_set_ext_scan_rsp_data_syn
+ 	int err;
+ 
+ 	if (instance) {
++		hci_dev_lock(hdev);
++
+ 		adv = hci_find_adv_instance(hdev, instance);
+-		if (!adv || !adv->scan_rsp_changed)
++		if (!adv || !adv->scan_rsp_changed) {
++			hci_dev_unlock(hdev);
+ 			return 0;
++		}
+ 	}
+ 
+ 	len = eir_create_scan_rsp(hdev, instance, pdu->data);
+@@ -1506,15 +1544,27 @@ static int hci_set_ext_scan_rsp_data_syn
+ 	pdu->operation = LE_SET_ADV_DATA_OP_COMPLETE;
+ 	pdu->frag_pref = LE_SET_ADV_DATA_NO_FRAG;
+ 
++	if (adv) {
++		adv->scan_rsp_changed = false;
++		hci_dev_unlock(hdev);
++	}
++
+ 	err = __hci_cmd_sync_status(hdev, HCI_OP_LE_SET_EXT_SCAN_RSP_DATA,
+ 				    struct_size(pdu, data, len), pdu,
+ 				    HCI_CMD_TIMEOUT);
+-	if (err)
++	if (err) {
++		if (instance) {
++			hci_dev_lock(hdev);
++			adv = hci_find_adv_instance(hdev, instance);
++			if (adv)
++				adv->scan_rsp_changed = true;
++			hci_dev_unlock(hdev);
++		}
++
+ 		return err;
++	}
+ 
+-	if (adv) {
+-		adv->scan_rsp_changed = false;
+-	} else {
++	if (!instance) {
+ 		memcpy(hdev->scan_rsp_data, pdu->data, len);
+ 		hdev->scan_rsp_data_len = len;
+ 	}
+@@ -1529,8 +1579,14 @@ static int __hci_set_scan_rsp_data_sync(
+ 
+ 	memset(&cp, 0, sizeof(cp));
+ 
++	if (instance)
++		hci_dev_lock(hdev);
++
+ 	len = eir_create_scan_rsp(hdev, instance, cp.data);
+ 
++	if (instance)
++		hci_dev_unlock(hdev);
++
+ 	if (hdev->scan_rsp_data_len == len &&
+ 	    !memcmp(cp.data, hdev->scan_rsp_data, len))
+ 		return 0;
+@@ -1665,9 +1721,13 @@ static int hci_set_per_adv_data_sync(str
+ 	struct adv_info *adv = NULL;
+ 
+ 	if (instance) {
++		hci_dev_lock(hdev);
++
+ 		adv = hci_find_adv_instance(hdev, instance);
+-		if (!adv || !adv->periodic)
++		if (!adv || !adv->periodic) {
++			hci_dev_unlock(hdev);
+ 			return 0;
++		}
+ 	}
+ 
+ 	len = eir_create_per_adv_data(hdev, instance, pdu->data);
+@@ -1676,6 +1736,9 @@ static int hci_set_per_adv_data_sync(str
+ 	pdu->handle = adv ? adv->handle : instance;
+ 	pdu->operation = LE_SET_ADV_DATA_OP_COMPLETE;
+ 
++	if (adv)
++		hci_dev_unlock(hdev);
++
+ 	return __hci_cmd_sync_status(hdev, HCI_OP_LE_SET_PER_ADV_DATA,
+ 				     struct_size(pdu, data, len), pdu,
+ 				     HCI_CMD_TIMEOUT);
+@@ -6422,7 +6485,7 @@ static int hci_le_ext_directed_advertisi
+ 	if (err)
+ 		return err;
+ 
+-	err = hci_set_ext_adv_params_sync(hdev, NULL, &cp, &rp);
++	err = hci_set_ext_adv_params_sync(hdev, 0, &cp, &rp);
+ 	if (err)
+ 		return err;
  
 
 
