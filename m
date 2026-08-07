@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49F18331200;
-	Fri,  7 Aug 2026 14:57:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80D8344239B;
+	Fri,  7 Aug 2026 14:57:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114628; cv=none; b=mBgo0hKvNLkorv6uxquHvMdAKZ6oeVvT/co5UV8/t/AF8IzgCaAuYgxWIzqDC5Gxod4warQl21wDjrXERN7SeClm0llsq3mi72P5UAaSYqNUaD2qrsUUW7NA59L7Wn3fATw265vhsOqaIHf/N1eIJbVZTAyWHPXbUQL1tTl6QXk=
+	t=1786114632; cv=none; b=Yy09ttmDVCIi6cFhu7vXnDlWRW1tE1Grxp8dvHj1ZglZnIoltMrhpEaDnvyoZUaTsseVReO5S/adApQgVtb5uqrd3uu4Q9lL7NXoJ3Qn9bKu61Rt0K8Ez4VIhWWvJCXHRNxiLCcJAyDMsrho2WYck8VQwzSb1pN1qXKHeMA1VaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114628; c=relaxed/simple;
-	bh=FVbx4VSmuMwtATLkqYtJrq+abEVxsv+vrOdsreefMAA=;
+	s=arc-20240116; t=1786114632; c=relaxed/simple;
+	bh=rsOnejBQSdGH5fsuyA1V2rPZ6pYsyNHKlh/rzjne/AQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ijes/RSRKtpqi5YOvjUwXmz23oxXQCNxmBzJsGAeZnhi4wkVMk+h+DBn9/XY5rwORx14ttKgyMPjmER2PXJay396ba/eqax+0Sqlw5t1+4o6LzETfYqLZhKmDNsR9s9ooLzlZpJtZjpWGs4rFEhY7hjq/EtZo4bhu975FeX1Lho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ABra4gM4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eW0cAmUBd9VMMSW1icBskC+SXHh3h2+koICzeQeNGY/0uXa/70uJXis2QQLyd/sfDSqMapuRAE5Zuk8KJdDmjOV5HkFMYbBpZuyqFQ0RST57D0Gbl0CgV1QH99/s7f94EMwQaektOjvM+qbhA3dYJm188c2AaFgtMe4/gMUqCPo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0y4PzOc4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ABra4gM4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D06861F00A3D;
-	Fri,  7 Aug 2026 14:56:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0y4PzOc4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C72B1F00A3A;
+	Fri,  7 Aug 2026 14:57:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114619;
-	bh=PFkd3NFehkxlubiAZU0Pkwt1y10VMDXUK9TM5GyZh3I=;
+	s=korg; t=1786114625;
+	bh=XwDGOubuX4Sf6tbLSEt9Kv97cV//AUsxjU8PCJOSL44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ABra4gM46Q2z5M0Vwey1+E8hlAe8tUEJe56jLUl51BEYnR+LRPkURZKbk7smqvJ+p
-	 L/imNps5CEtDHDtYRgQDXbhuzrjHlbjjmwRkwKOmUivuxZQPQYoY2f6xk1URWYR9hN
-	 o/MmVQW3+YwSnbXucIvQV44eH3wqD/8Ja214iZEQ=
+	b=0y4PzOc4LmCdf2Tsn89Hkuw4XquhkiJMEndZXxQ+m4du52NEKN3UGRWdAqyIaH9/i
+	 Q1RsWZRtyJC7p8Xnzcf3OoperTstDhndC2ZmtUwThX2goZmIYNy8VC3+ntCCj/utLk
+	 9giQiVo0aLEwMFrjI+4FOtMkRxwO8cRdtJqC/8ZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	David Howells <dhowells@redhat.com>,
+	Simon Wilkinson <sxw@auristor.com>,
 	Marc Dionne <marc.dionne@auristor.com>,
 	linux-afs@lists.infradead.org,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 328/337] rxrpc: Generate rtt_min
-Date: Fri,  7 Aug 2026 16:38:51 +0200
-Message-ID: <20260807143425.652017439@linuxfoundation.org>
+Subject: [PATCH 6.12 330/337] rxrpc: Fix the calculation and use of RTO
+Date: Fri,  7 Aug 2026 16:38:53 +0200
+Message-ID: <20260807143425.695475885@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -55,86 +56,60 @@ Content-Transfer-Encoding: 8bit
 
 From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit c637bd066841de6d0a204898a62f1d9bb8fa1b7f ]
+[ Upstream commit 5c0ceba23bb47085d6c9c53bff08a29634ee4e7e ]
 
-Generate rtt_min as this is required by RACK-TLP.
+Make the following changes to the calculation and use of RTO:
 
+ (1) Fix rxrpc_resend() to use the backed-off RTO value obtained by calling
+     rxrpc_get_rto_backoff() rather than extracting the value itself.
+     Without this, it may retransmit packets too early.
+
+ (2) The RTO value being similar to the RTT causes a lot of extraneous
+     resends because the RTT doesn't end up taking account of clearing out
+     of the receive queue on the server.  Worse, responses to PING-ACKs are
+     made as fast as possible and so are less than the DATA-requested-ACK
+     RTT and so skew the RTT down.
+
+     Fix this by putting a lower bound on the RTO by adding 100ms to it and
+     limiting the lower end to 200ms.
+
+Fixes: c410bf01933e ("rxrpc: Fix the excessive initial retransmission timeout")
+Fixes: 37473e416234 ("rxrpc: Clean up the resend algorithm")
 Signed-off-by: David Howells <dhowells@redhat.com>
+Suggested-by: Simon Wilkinson <sxw@auristor.com>
 cc: Marc Dionne <marc.dionne@auristor.com>
 cc: linux-afs@lists.infradead.org
-Link: https://patch.msgid.link/20241204074710.990092-27-dhowells@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: e4d2878369d5 ("rxrpc: Fix irq-disabled in local_bh_enable()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/win_minmax.c        |    1 +
- net/rxrpc/ar-internal.h |    2 ++
- net/rxrpc/rtt.c         |   20 ++++++++++++++++----
- 3 files changed, 19 insertions(+), 4 deletions(-)
+ net/rxrpc/call_event.c |    3 ++-
+ net/rxrpc/rtt.c        |    2 +-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
---- a/lib/win_minmax.c
-+++ b/lib/win_minmax.c
-@@ -97,3 +97,4 @@ u32 minmax_running_min(struct minmax *m,
- 
- 	return minmax_subwin_update(m, win, &val);
- }
-+EXPORT_SYMBOL(minmax_running_min);
---- a/net/rxrpc/ar-internal.h
-+++ b/net/rxrpc/ar-internal.h
-@@ -349,6 +349,8 @@ struct rxrpc_peer {
- 	spinlock_t		rtt_input_lock;	/* RTT lock for input routine */
- 	ktime_t			rtt_last_req;	/* Time of last RTT request */
- 	unsigned int		rtt_count;	/* Number of samples we've got */
-+	unsigned int		rtt_taken;	/* Number of samples taken (wrapping) */
-+	struct minmax		min_rtt;	/* Estimated minimum RTT */
- 
- 	u32			srtt_us;	/* smoothed round trip time << 3 in usecs */
- 	u32			mdev_us;	/* medium deviation			*/
+--- a/net/rxrpc/call_event.c
++++ b/net/rxrpc/call_event.c
+@@ -71,7 +71,8 @@ void rxrpc_resend(struct rxrpc_call *cal
+ 	struct rxrpc_skb_priv *sp;
+ 	struct rxrpc_txbuf *txb;
+ 	rxrpc_seq_t transmitted = call->tx_transmitted;
+-	ktime_t next_resend = KTIME_MAX, rto = ns_to_ktime(call->peer->rto_us * NSEC_PER_USEC);
++	ktime_t next_resend = KTIME_MAX;
++	ktime_t rto = rxrpc_get_rto_backoff(call->peer, false);
+ 	ktime_t resend_at = KTIME_MAX, now, delay;
+ 	bool unacked = false, did_send = false;
+ 	unsigned int i;
 --- a/net/rxrpc/rtt.c
 +++ b/net/rxrpc/rtt.c
-@@ -127,16 +127,27 @@ static void rxrpc_set_rto(struct rxrpc_p
- 	peer->rto_us = rxrpc_bound_rto(rto);
- }
+@@ -27,7 +27,7 @@ static u32 __rxrpc_set_rto(const struct
  
--static void rxrpc_ack_update_rtt(struct rxrpc_peer *peer, long rtt_us)
-+static void rxrpc_update_rtt_min(struct rxrpc_peer *peer, ktime_t resp_time, long rtt_us)
-+{
-+	/* Window size 5mins in approx usec (ipv4.sysctl_tcp_min_rtt_wlen) */
-+	u32 wlen_us = 5ULL * NSEC_PER_SEC / 1024;
-+
-+	minmax_running_min(&peer->min_rtt, wlen_us, resp_time / 1024,
-+			   (u32)rtt_us ? : jiffies_to_usecs(1));
-+}
-+
-+static void rxrpc_ack_update_rtt(struct rxrpc_peer *peer, ktime_t resp_time, long rtt_us)
+ static u32 rxrpc_bound_rto(u32 rto)
  {
- 	if (rtt_us < 0)
- 		return;
- 
--	//rxrpc_update_rtt_min(peer, rtt_us);
-+	/* Update RACK min RTT [RFC8985 6.1 Step 1]. */
-+	rxrpc_update_rtt_min(peer, resp_time, rtt_us);
-+
- 	rxrpc_rtt_estimator(peer, rtt_us);
- 	rxrpc_set_rto(peer);
- 
--	/* RFC6298: only reset backoff on valid RTT measurement. */
-+	/* Only reset backoff on valid RTT measurement [RFC6298]. */
- 	peer->backoff = 0;
+-	return min(rto, RXRPC_RTO_MAX);
++	return clamp(200000, rto + 100000, RXRPC_RTO_MAX);
  }
  
-@@ -157,9 +168,10 @@ void rxrpc_peer_add_rtt(struct rxrpc_cal
- 		return;
- 
- 	spin_lock(&peer->rtt_input_lock);
--	rxrpc_ack_update_rtt(peer, rtt_us);
-+	rxrpc_ack_update_rtt(peer, resp_time, rtt_us);
- 	if (peer->rtt_count < 3)
- 		peer->rtt_count++;
-+	peer->rtt_taken++;
- 	spin_unlock(&peer->rtt_input_lock);
- 
- 	trace_rxrpc_rtt_rx(call, why, rtt_slot, send_serial, resp_serial,
+ /*
 
 
