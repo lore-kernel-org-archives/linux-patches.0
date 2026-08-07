@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57F903A1E7E;
-	Fri,  7 Aug 2026 14:48:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 692592E736E;
+	Fri,  7 Aug 2026 14:48:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114137; cv=none; b=dcb3Od0JYFX1MX1YnZqPGbNj+zEYWFPQP1d3bBfZ/9TQ+CDUzSgOlsQCgfxVfPjbGyHNaZGMmt/gYP1HaFNPpxZFYi/ipJhKuDP6eUIo4lav3E+LRCSeSn+3dbHb8SQWB2+sjjvUQdIyiOSEVAlIHP9IAr3cKieWB63ulWOCXXQ=
+	t=1786114140; cv=none; b=oWOmTAHDBH8wza404/fAIcsfG8iWYlu91VMUGL7iD7jEhzOSHcVVSwkhyxQ/uRCZJ/oO3JlVFokgt7xF/3wMq6l6DfiOWrLDRc8r7lGVTOzRh4S9In9tNcNrRhBZ+pPGrEh1b9zb0JqKq100lYB665hfjc0K53E7kpYDlnpxGTI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114137; c=relaxed/simple;
-	bh=qe6yAaOqhcMvRF6PrYnO7qx174oNH/YppL62P8D6aGw=;
+	s=arc-20240116; t=1786114140; c=relaxed/simple;
+	bh=xgke/V2N2qBVmYcxMgnK8BwrF+8pkHYzaHt09DuOenU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t2QpnuRx+DK2nvhvREmpcgNMsNLJQTuvt5nAJHadrXU5Cmn823FxzkQvWSu7J7GeVqpQnTAmIyotCeBnutnleA0vh77QsnTFHPvi1Bi5n2bV8Vp3/999n6bcCCWZE7zjyRzCYbVVCfQ/me094N2sbXSy75EDNLXv6Snvf0Hf4lQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zUYcvDgC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JQu+7rFi9Fwz0FUee7mZDu15gX/g617X7bdVgJAnTlfmO08nZDpX813/5ha5CGea5fwM8wsAxbhdlR7jmyIGFQbxs6sEGPkzWPDH419hqjSemT3W9pAElehCMxS65ERjcm92WaceL9LFDyTReyNZqriI7i2U/gMwopJTYwtgzSg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h3nLLvT7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zUYcvDgC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B35471F00A3A;
-	Fri,  7 Aug 2026 14:48:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h3nLLvT7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D61D1F000E9;
+	Fri,  7 Aug 2026 14:48:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114136;
-	bh=OyK/F4yRHssxhV4GLCG1pZp62EKfZwCJ8NiVbzHm2FI=;
+	s=korg; t=1786114139;
+	bh=11gqXkGvcyt1p/PwfM2wYDSeTuf+Nfp0n/ZnloiOkVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zUYcvDgC4vUimZXUghEXgBq1OvmxoLtBJtbpWXHTKMqut2iDc/TyCjawQxHrNbX2m
-	 IiGesIEdGdk3uJN9x0E3MJDpVC5g/yi/GdhXU/uBQSidvZPukebELm9uWdv7SkjeJy
-	 HvOHxtXbECv+5bAX+sSU4EVFflPhpSL0oz5ltES8=
+	b=h3nLLvT7Nww+Dgq2xIgNnLVhp9T6P5gHKfo3Nr96uX9H6HnvuOYeSVm9jvIGD2+6a
+	 K+Ky2rPC73zHQQ5SW22LpUfDT7ig3LVjWVnepwDRsadLSQs7H1yf+KoetePBcyDLKn
+	 Uv82lbct3IlQJ1zJPdwvLN3XYEqIPwNELojIewjk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Rao <raoxu@uniontech.com>,
+	Norbert Szetei <norbert@doyensec.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.12 156/337] ALSA: lx6464es: fix period byte count for 16-bit streams
-Date: Fri,  7 Aug 2026 16:35:59 +0200
-Message-ID: <20260807143421.931920799@linuxfoundation.org>
+Subject: [PATCH 6.12 157/337] ALSA: pcm: wake linked drain waiters on unlink
+Date: Fri,  7 Aug 2026 16:36:00 +0200
+Message-ID: <20260807143421.955244704@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -50,63 +50,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Rao <raoxu@uniontech.com>
+From: Norbert Szetei <norbert@doyensec.com>
 
-commit 6437033bffe8bd2af174d139af552d90d40c7ac6 upstream.
+commit f495b6c4c8594122918552c9be2b51eb71647cd9 upstream.
 
-The lx6464es driver advertises both 16-bit and packed 24-bit PCM formats,
-but lx_trigger_start() and lx_interrupt_request_new_buffer() calculate the
-DMA period size as runtime->period_size * runtime->channels * 3.  That is
-only correct for the packed 24-bit formats.
+snd_pcm_drain() on a linked stream parks an on-stack wait entry on the
+drained peer's runtime->sleep, and after schedule_timeout() removes it
+only if that peer is still found in the caller's group.  If group
+membership changes during the wait and the sleep ends by signal or
+timeout (so autoremove_wake_function() does not run), finish_wait() is
+skipped and snd_pcm_drain() returns with the entry still queued on that
+stream's sleep list; a later wake_up() then walks a freed stack frame.
+This is reachable by unlinking either the drained or the draining stream.
 
-For 16-bit streams the driver submits buffers that are 50% larger than the
-actual ALSA period and advances the DMA address by the same wrong amount.
-For example, with 2 channels, 256 frames and 4 periods, the third buffer
-already extends beyond the ALSA buffer and the fourth buffer starts outside
-it.
+Unlike the close path (snd_pcm_drop() -> snd_pcm_post_stop()),
+snd_pcm_unlink() never wakes the sleep queues.  Wake every group member
+under the group lock before the membership change, so a linked drainer is
+released and drops its entry while the streams are still grouped.
 
-Use snd_pcm_lib_period_bytes() so the byte count matches the runtime
-format, channel count and period size.
+The window was opened when snd_pcm_link_rwsem stopped being held across
+the wait and the removal became conditional on group membership (see
+Fixes). The later switch to finish_wait() kept that conditional removal,
+so the signal/timeout case remained.
 
-Fixes: 02bec4904508 ("ALSA: lx6464es - driver for the digigram lx6464es interface")
+Fixes: f57f3df03a8e ("ALSA: pcm: More fine-grained PCM link locking")
 Cc: stable@vger.kernel.org
-Signed-off-by: Xu Rao <raoxu@uniontech.com>
-Link: https://patch.msgid.link/8BB12E8D92A7CDBA+20260723085710.2567463-1-raoxu@uniontech.com
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Norbert Szetei <norbert@doyensec.com>
+Link: https://patch.msgid.link/A0705100-D10B-4286-9980-0142ABEEAD51@doyensec.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/lx6464es/lx6464es.c |    5 +----
- sound/pci/lx6464es/lx_core.c  |    5 +----
- 2 files changed, 2 insertions(+), 8 deletions(-)
+ sound/core/pcm_native.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/sound/pci/lx6464es/lx6464es.c
-+++ b/sound/pci/lx6464es/lx6464es.c
-@@ -410,11 +410,8 @@ static void lx_trigger_start(struct lx64
+--- a/sound/core/pcm_native.c
++++ b/sound/core/pcm_native.c
+@@ -2334,6 +2334,7 @@ static void relink_to_local(struct snd_p
  
- 	int err;
+ static int snd_pcm_unlink(struct snd_pcm_substream *substream)
+ {
++	struct snd_pcm_substream *s;
+ 	struct snd_pcm_group *group;
+ 	bool nonatomic = substream->pcm->nonatomic;
+ 	bool do_free = false;
+@@ -2346,6 +2347,12 @@ static int snd_pcm_unlink(struct snd_pcm
+ 	group = substream->group;
+ 	snd_pcm_group_lock_irq(group, nonatomic);
  
--	const u32 channels = substream->runtime->channels;
--	const u32 bytes_per_frame = channels * 3;
--	const u32 period_size = substream->runtime->period_size;
- 	const u32 periods = substream->runtime->periods;
--	const u32 period_bytes = period_size * bytes_per_frame;
-+	const u32 period_bytes = snd_pcm_lib_period_bytes(substream);
++	/* release drain waiters before changing membership, else snd_pcm_drain()
++	 * leaves its on-stack wait entry queued on a member's sleep list
++	 */
++	snd_pcm_group_for_each_entry(s, substream)
++		wake_up(&s->runtime->sleep);
++
+ 	relink_to_local(substream);
+ 	refcount_dec(&group->refs);
  
- 	dma_addr_t buf = substream->dma_buffer.addr;
- 	int i;
---- a/sound/pci/lx6464es/lx_core.c
-+++ b/sound/pci/lx6464es/lx_core.c
-@@ -1015,10 +1015,7 @@ static int lx_interrupt_request_new_buff
- 	const unsigned int is_capture = lx_stream->is_capture;
- 	int err;
- 
--	const u32 channels = substream->runtime->channels;
--	const u32 bytes_per_frame = channels * 3;
--	const u32 period_size = substream->runtime->period_size;
--	const u32 period_bytes = period_size * bytes_per_frame;
-+	const u32 period_bytes = snd_pcm_lib_period_bytes(substream);
- 	const u32 pos = lx_stream->frame_pos;
- 	const u32 next_pos = ((pos+1) == substream->runtime->periods) ?
- 		0 : pos + 1;
 
 
