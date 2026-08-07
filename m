@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35071478E47;
-	Fri,  7 Aug 2026 15:46:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEAF247799F;
+	Fri,  7 Aug 2026 15:46:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786117582; cv=none; b=Lsp03tDcGrxKqEsBmtL9w2iOUygeE9uZiO7VSNw0qOtfRf2MZOAXtI+CW4yT5MK86nnBmscCV3CwVei3/ra+seBCyk8pBLGpR75J11qZ8k6E2eVW+zYb8/t1uEcwQwB8Yn3l45O9VH2/qPBkhp4ObhLiAIUFTkxfbATJk1HU+3w=
+	t=1786117585; cv=none; b=Cd0ijuOGcXPMRIED5BTj8zmMKE8DCkDad687XnKFx6YTcIc3F1oA4FxtCFt2ERwpceHVxwtpcXlrvEXBf01wAdncj1T2GaUpIDBMl9w+XsovsHOoE0e8jphb1ZfPFFQ/hrm8LD4qdCvNQzpNStQBMWnX9zmC+SoEsMb4SeiVIXo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786117582; c=relaxed/simple;
-	bh=/sA6uDIqUzFsmnoa/hXAvlbdholKthJHTQCtw+JH/Jo=;
+	s=arc-20240116; t=1786117585; c=relaxed/simple;
+	bh=YFxHZBIwwQEgyy9mksv0k2OJwFTHESyq14BedLl2rQY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iaxEOyEkMPAtQ7XdhUmUjtrtO8pUI4FmwBWOzPor/4J2O/KB5p4IxOnVNO02VL5O6WHHDu++i9mWTvqWwEWQ4Yv4iV29VgCw2jtHvYvp7Z8KNysN8cx7QuKnIf6Xk9ZY7/qSLv8awx6tTNyJqw3L+5DeahKaY/uQIdKeBTAcFiY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ue4NJPwy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nXyos0sE0JZfbURF0PqBkuVTtRy57LUX2IhyP9h9N23sI8NP/7Uwlqe+YVmkPRpASuAWWx3nglXMlSQW67/vX8I412Zg6f4oSKZ68IEA5XnMtbr6vGsfTvpBBPgjBp1G6Uz+/ueXEz0XZundbl6yf2iOwM+CjW5unzz4+brlbPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vsEpzEdJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ue4NJPwy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D5441F000E9;
-	Fri,  7 Aug 2026 15:46:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vsEpzEdJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 605CF1F000E9;
+	Fri,  7 Aug 2026 15:46:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786117581;
-	bh=cVLbAtvbUegLu5h34aZlrvITcDFWaet5vjtWj4tYjho=;
+	s=korg; t=1786117583;
+	bh=avxu9bAXH63tbajjmSw5BWxVFqNAXoEVY4XgNl5axqc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ue4NJPwyX3jprLu2kwUs/FJ/uP2tlwN5Zotnys/vZkTezrtptv6P/sgXrbb1EcXvH
-	 z0f/PZtE12sS0Q1Um8cd7s3Yy4Cn0vOzxqUzis3MtVbhoUxU6SZ/Ax63xH/8z7BULL
-	 o3wdzJWN7bvfcb+KTro0n45NKH5c3uSSNWhkfLDs=
+	b=vsEpzEdJ40EOVINhrnpKNF/1Q99qZhH9q3x/SPYdypA4XQvkeTHS6AkKZzqu9FS9A
+	 w4LTUIH78A8F+6XleLXtreLS2aaslwJa+enDU746Hjhsn4scuIp6BQqwL5aw5l4mqi
+	 O1zn+69CQ+WkTjGA82h8Du0IStXCplFJReivB8Ks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 7.1 370/438] can: kvaser_usb: kvaser_usb_hydra_get_busparams(): fix memory leak in kvaser_usb_hydra_get_busparams()
-Date: Fri,  7 Aug 2026 16:39:26 +0200
-Message-ID: <20260807143435.859572631@linuxfoundation.org>
+	Kohei Enju <kohei@enjuk.jp>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Aaron Ma <aaron.ma@canonical.com>,
+	Alexander Nowlin <alexander.nowlin@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>
+Subject: [PATCH 7.1 353/438] ice: wait for reset completion in ice_resume()
+Date: Fri,  7 Aug 2026 16:39:09 +0200
+Message-ID: <20260807143435.496485299@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -50,33 +54,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+From: Aaron Ma <aaron.ma@canonical.com>
 
-commit 941eaf9a6d3b33dea49f2c0a1da7546a03b6ff71 upstream.
+commit c2816d613f388814d27bc9fd6dbd931a88056e19 upstream.
 
-The memory allocated for cmd is not freed after the call to
-kvaser_usb_send_cmd() in both the normal and error paths.
-Fix that by adding a kfree() immediately after the call.
+ice_resume() schedules an asynchronous PF reset and returns
+immediately. The reset runs later in ice_service_task(). If
+userspace tries to bring up the net device before the reset
+finishes, ice_open() fails with -EBUSY:
 
-Fixes: 39d3df6b0ea8 ("can: kvaser_usb: Compare requested bittiming parameters with actual parameters in do_set_{,data}_bittiming")
+  ice_resume()
+    ice_schedule_reset()          # sets ICE_PFR_REQ, returns
+  ...
+  ice_open()
+    ice_is_reset_in_progress()    # ICE_PFR_REQ still set, -EBUSY
+  ...
+  ice_service_task()
+    ice_do_reset()
+      ice_rebuild()               # clears ICE_PFR_REQ, too late
+
+Reproduced on E800 series NICs during suspend/resume with irdma
+enabled, where the aux device probe widens the race window.
+
+  ice 0000:81:00.0: can't open net device while reset is in progress
+
+Add a best-effort wait (10s timeout, matching ice_devlink_info_get())
+for the reset to complete before returning from ice_resume(). In
+practice the reset completes in ~300ms.
+
+Fixes: 769c500dcc1e ("ice: Add advanced power mgmt for WoL")
 Cc: stable@vger.kernel.org
-Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
-Link: https://patch.msgid.link/20260722103906.108571-1-nihaal@cse.iitm.ac.in
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Reviewed-by: Kohei Enju <kohei@enjuk.jp>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Signed-off-by: Aaron Ma <aaron.ma@canonical.com>
+Tested-by: Alexander Nowlin <alexander.nowlin@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/usb/kvaser_usb/kvaser_usb_hydra.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/intel/ice/ice_main.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/drivers/net/can/usb/kvaser_usb/kvaser_usb_hydra.c
-+++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb_hydra.c
-@@ -1626,6 +1626,7 @@ static int kvaser_usb_hydra_get_busparam
- 	reinit_completion(&priv->get_busparams_comp);
+--- a/drivers/net/ethernet/intel/ice/ice_main.c
++++ b/drivers/net/ethernet/intel/ice/ice_main.c
+@@ -5637,6 +5637,16 @@ static int ice_resume(struct device *dev
+ 	/* Restart the service task */
+ 	mod_timer(&pf->serv_tmr, round_jiffies(jiffies + pf->serv_tmr_period));
  
- 	err = kvaser_usb_send_cmd(dev, cmd, cmd_len);
-+	kfree(cmd);
- 	if (err)
- 		return err;
++	/* Best-effort wait for the scheduled reset to finish so that the
++	 * device is operational before returning. Without this, userspace
++	 * (e.g. NetworkManager) may try to open the net device while the
++	 * asynchronous reset is still in progress, hitting -EBUSY.
++	 */
++	ret = ice_wait_for_reset(pf, secs_to_jiffies(10));
++	if (ret)
++		dev_err(dev, "Wait for reset timed out (10s) during resume: %d\n",
++			ret);
++
+ 	return 0;
+ }
  
 
 
