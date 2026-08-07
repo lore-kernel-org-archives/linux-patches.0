@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4834C27466A;
-	Fri,  7 Aug 2026 15:21:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19A721C84D0;
+	Fri,  7 Aug 2026 15:21:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116083; cv=none; b=q2/IYo1AuR/0eNxNXN7mM5eohuQFtk5zmEczq4+IhUIuRs3hOLm3Tt2GHm5bWgYatoOjVIMh9z0hAhOFCkrXAGvccASHe+YtEi3qsJmhml11sRh8g3VY/kmW8jFcjoU8XVI7s4v1M+wvvy/g0MAbpiYDXYkeBCnewTU9z9AP/Q0=
+	t=1786116086; cv=none; b=YuwaKfRQqsgIES7tcSl9zRwlueJN1oN6AnfyBNUQ7pxgkalNHYGE/g+Jah1vF1aZLapUWJUHPlp3A6pwTw2cb700FQStJzOZPHzTQORz9Ox7nA36ogwQC5jc5WD7MltaN/VivJxdPDyv51JGuttq0MtmIyyaOfHqvWJaAxXY5/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116083; c=relaxed/simple;
-	bh=lId8XxGwulMfrEWDdXuVkWMcSIywb4KB7wJOlEP78Oc=;
+	s=arc-20240116; t=1786116086; c=relaxed/simple;
+	bh=FSZSASTapPWsxtkS4m6X1mw3ItM/s4Gh1NlgnC86+1U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sc/MI+cT5UmTDnYTIkuoe+VJWo4l35t7BisW0FH5rcHWSDqwBA8nWv+jCtw5vgDVTw63hsNJPZg0H63G8WQRYpBD4/eoKlSJ3EWa9nVtU/ZKnaipT99ZHeYGlioqK9CwTI00xj4481KFogUlyNM2EqPMFWdxVQCDme2yRICduz8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2niynRph; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P3OoMz3JcBaDkUT0Pk+/F+YfpS01Dv6N42bqBRFjHQrkkpScYwijDMxLke25BzMq0MzBUIobsbQlL0jz3itAeNwL1pAXI0eSLRm1QBagbtdA1KZwWGSWR/QslfdpqeAK7bbT1dAxicXAn0Zr0OHZOoa+gEtHHU1JwO/otNNLVOA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XpWDtsRc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2niynRph"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D2E21F00A3A;
-	Fri,  7 Aug 2026 15:21:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XpWDtsRc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75CD71F000E9;
+	Fri,  7 Aug 2026 15:21:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116082;
-	bh=xChG7KyVhzYuB4YFy7vjrjkkSlbazXvXBm0XWoodb8I=;
+	s=korg; t=1786116085;
+	bh=RfNsT8M4PVcNCr6XNLYwC5TWhSfVHnptZoW4i/M/oYA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2niynRph8OrhJcOUIAiBv2YSxnON4kMPesMUFtEKAor7HnJW9ziHMO2fXJKm6y53J
-	 Nn7kgOoBDjdd1Vz1Em6lapyPGXVQcojEvDOObbYATk7NytBdzXw4Ltz58T0lx5Z+I+
-	 9H2AcJlqlEs2fuejppvGt96zkTlRUWB+jHyuoHes=
+	b=XpWDtsRcu56Q0Ii/zd9TAqXQkM2b33WYQnzOYOpVWp+8okSWGUgHFZDm0fX9aJXfS
+	 5xGjbF9I/3MwWcS2VaCnsIYeaQFOn27016iymvxji5f5RSpGQAAv/v5qkuzntVc20l
+	 6Eqa9T2UvFUaI6rfhthy+nCtAaTNvi+iCg6ouDOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zihan Xi <xizh2024@lzu.edu.cn>,
-	Ren Wei <enjou1224z@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.6 105/261] Bluetooth: mgmt: fix UAF in pair command cancellation
-Date: Fri,  7 Aug 2026 16:37:42 +0200
-Message-ID: <20260807143417.646009952@linuxfoundation.org>
+	Pauli Virtanen <pav@iki.fi>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 070/261] Bluetooth: hci_sync: remove unnecessary hci_conn_get in create_conn_sync
+Date: Fri,  7 Aug 2026 16:37:07 +0200
+Message-ID: <20260807143416.894841268@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143415.358597922@linuxfoundation.org>
 References: <20260807143415.358597922@linuxfoundation.org>
@@ -52,198 +51,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zihan Xi <xizh2024@lzu.edu.cn>
+From: Pauli Virtanen <pav@iki.fi>
 
-commit d0a7b48ad0921bd88effaee10bf970ab1d5d0ddd upstream.
+[ Upstream commit c0a9dcd2be398eee505d4b254ec3a845aa8ab189 ]
 
-The pairing completion and authentication failure callbacks look up the
-pending MGMT_OP_PAIR_DEVICE command by walking hdev->mgmt_pending. The
-lookup returned a command that was still linked on the shared pending list,
-without keeping mgmt_pending_lock held for the later dereference and
-removal.
+hci_conn_get() without already held reference is data race against
+concurrent deletion.
 
-A concurrent MGMT_OP_CANCEL_PAIR_DEVICE request can remove and free the
-same pending command before the callback uses it. The reverse race is also
-possible when cancel_pair_device() gets a command from pending_find() and a
-callback removes it before the cancel path dereferences it. This can lead
-to a use-after-free and a second list_del().
+In previous patches, the refcount has been changed to be taken before
+starting the hci_sync task, so remove these extra get() + put() as they
+are not needed.
 
-Make the pairing lookup helpers transfer ownership of the pending command
-by removing it from hdev->mgmt_pending while holding mgmt_pending_lock.
-The callbacks and cancel path then complete the command and free it
-directly, so racing paths cannot find or free the same command again. Take
-a temporary hci_conn reference in cancel_pair_device() because the command
-completion drops the reference stored in the pending command.
-
-Fixes: e9a416b5ce0c ("Bluetooth: Add mgmt_pair_device command")
-Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Assisted-by: Codex:gpt-5.4
-Signed-off-by: Zihan Xi <xizh2024@lzu.edu.cn>
-Reviewed-by: Ren Wei <enjou1224z@gmail.com>
-Reported-by: Vega <vega@nebusec.ai>
+Fixes: 12917f591cea ("Bluetooth: hci_conn: Fix null ptr deref in hci_abort_conn()")
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/mgmt.c |   64 ++++++++++++++++++++++++++++++++++++---------------
- 1 file changed, 46 insertions(+), 18 deletions(-)
+ net/bluetooth/hci_sync.c | 13 -------------
+ 1 file changed, 13 deletions(-)
 
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -3437,11 +3437,13 @@ static int set_io_capability(struct sock
- 				 NULL, 0);
- }
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index 6a5ec74eaf25a..9dec36467fead 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -6566,11 +6566,6 @@ static int hci_le_create_conn_sync(struct hci_dev *hdev, void *data)
  
--static struct mgmt_pending_cmd *find_pairing(struct hci_conn *conn)
-+static struct mgmt_pending_cmd *remove_pairing(struct hci_conn *conn)
- {
- 	struct hci_dev *hdev = conn->hdev;
- 	struct mgmt_pending_cmd *cmd;
+ 	bt_dev_dbg(hdev, "conn %p", conn);
  
-+	mutex_lock(&hdev->mgmt_pending_lock);
-+
- 	list_for_each_entry(cmd, &hdev->mgmt_pending, list) {
- 		if (cmd->opcode != MGMT_OP_PAIR_DEVICE)
- 			continue;
-@@ -3449,9 +3451,39 @@ static struct mgmt_pending_cmd *find_pai
- 		if (cmd->user_data != conn)
- 			continue;
- 
-+		list_del(&cmd->list);
-+		mutex_unlock(&hdev->mgmt_pending_lock);
- 		return cmd;
- 	}
- 
-+	mutex_unlock(&hdev->mgmt_pending_lock);
-+
-+	return NULL;
-+}
-+
-+static struct mgmt_pending_cmd *remove_pairing_by_addr(struct hci_dev *hdev,
-+						       bdaddr_t *bdaddr)
-+{
-+	struct mgmt_pending_cmd *cmd;
-+	struct hci_conn *conn;
-+
-+	mutex_lock(&hdev->mgmt_pending_lock);
-+
-+	list_for_each_entry(cmd, &hdev->mgmt_pending, list) {
-+		if (cmd->opcode != MGMT_OP_PAIR_DEVICE)
-+			continue;
-+
-+		conn = cmd->user_data;
-+		if (bacmp(bdaddr, &conn->dst) != 0)
-+			continue;
-+
-+		list_del(&cmd->list);
-+		mutex_unlock(&hdev->mgmt_pending_lock);
-+		return cmd;
-+	}
-+
-+	mutex_unlock(&hdev->mgmt_pending_lock);
-+
- 	return NULL;
- }
- 
-@@ -3489,10 +3521,10 @@ void mgmt_smp_complete(struct hci_conn *
- 	u8 status = complete ? MGMT_STATUS_SUCCESS : MGMT_STATUS_FAILED;
- 	struct mgmt_pending_cmd *cmd;
- 
--	cmd = find_pairing(conn);
-+	cmd = remove_pairing(conn);
- 	if (cmd) {
- 		cmd->cmd_complete(cmd, status);
--		mgmt_pending_remove(cmd);
-+		mgmt_pending_free(cmd);
- 	}
- }
- 
-@@ -3502,14 +3534,14 @@ static void pairing_complete_cb(struct h
- 
- 	BT_DBG("status %u", status);
- 
--	cmd = find_pairing(conn);
-+	cmd = remove_pairing(conn);
- 	if (!cmd) {
- 		BT_DBG("Unable to find a pending command");
- 		return;
- 	}
- 
- 	cmd->cmd_complete(cmd, mgmt_status(status));
--	mgmt_pending_remove(cmd);
-+	mgmt_pending_free(cmd);
- }
- 
- static void le_pairing_complete_cb(struct hci_conn *conn, u8 status)
-@@ -3521,14 +3553,14 @@ static void le_pairing_complete_cb(struc
- 	if (!status)
- 		return;
- 
--	cmd = find_pairing(conn);
-+	cmd = remove_pairing(conn);
- 	if (!cmd) {
- 		BT_DBG("Unable to find a pending command");
- 		return;
- 	}
- 
- 	cmd->cmd_complete(cmd, mgmt_status(status));
--	mgmt_pending_remove(cmd);
-+	mgmt_pending_free(cmd);
- }
- 
- static int pair_device(struct sock *sk, struct hci_dev *hdev, void *data,
-@@ -3684,23 +3716,17 @@ static int cancel_pair_device(struct soc
- 		goto unlock;
- 	}
- 
--	cmd = pending_find(MGMT_OP_PAIR_DEVICE, hdev);
-+	cmd = remove_pairing_by_addr(hdev, &addr->bdaddr);
- 	if (!cmd) {
- 		err = mgmt_cmd_status(sk, hdev->id, MGMT_OP_CANCEL_PAIR_DEVICE,
- 				      MGMT_STATUS_INVALID_PARAMS);
- 		goto unlock;
- 	}
- 
--	conn = cmd->user_data;
+-	/* Hold a reference so conn stays valid for the HCI_CONN_CREATE
+-	 * clear_bit() at done.
+-	 */
+-	hci_conn_get(conn);
 -
--	if (bacmp(&addr->bdaddr, &conn->dst) != 0) {
--		err = mgmt_cmd_status(sk, hdev->id, MGMT_OP_CANCEL_PAIR_DEVICE,
--				      MGMT_STATUS_INVALID_PARAMS);
--		goto unlock;
--	}
-+	conn = hci_conn_get(cmd->user_data);
+ 	clear_bit(HCI_CONN_SCANNING, &conn->flags);
+ 	conn->state = BT_CONNECT;
  
- 	cmd->cmd_complete(cmd, MGMT_STATUS_CANCELLED);
--	mgmt_pending_remove(cmd);
-+	mgmt_pending_free(cmd);
+@@ -6585,7 +6580,6 @@ static int hci_le_create_conn_sync(struct hci_dev *hdev, void *data)
+ 			conn->state = BT_OPEN;
+ 			hci_abort_conn_sync(hdev, conn,
+ 					    HCI_ERROR_REJ_LIMITED_RESOURCES);
+-			hci_conn_put(conn);
+ 			return -EBUSY;
+ 		}
  
- 	err = mgmt_cmd_complete(sk, hdev->id, MGMT_OP_CANCEL_PAIR_DEVICE, 0,
- 				addr, sizeof(*addr));
-@@ -3718,6 +3744,8 @@ static int cancel_pair_device(struct soc
- 	if (conn->conn_reason == CONN_REASON_PAIR_DEVICE)
- 		hci_abort_conn(conn, HCI_ERROR_REMOTE_USER_TERM);
+@@ -6679,7 +6673,6 @@ static int hci_le_create_conn_sync(struct hci_dev *hdev, void *data)
  
-+	hci_conn_put(conn);
-+
- unlock:
- 	hci_dev_unlock(hdev);
+ 	/* Re-enable advertising after the connection attempt is finished. */
+ 	hci_resume_advertising_sync(hdev);
+-	hci_conn_put(conn);
  	return err;
-@@ -10138,14 +10166,14 @@ void mgmt_auth_failed(struct hci_conn *c
- 	ev.addr.type = link_to_bdaddr(conn->type, conn->dst_type);
- 	ev.status = status;
- 
--	cmd = find_pairing(conn);
-+	cmd = remove_pairing(conn);
- 
- 	mgmt_event(MGMT_EV_AUTH_FAILED, conn->hdev, &ev, sizeof(ev),
- 		    cmd ? cmd->sk : NULL);
- 
- 	if (cmd) {
- 		cmd->cmd_complete(cmd, status);
--		mgmt_pending_remove(cmd);
-+		mgmt_pending_free(cmd);
- 	}
  }
  
+@@ -6958,11 +6951,6 @@ static int hci_acl_create_conn_sync(struct hci_dev *hdev, void *data)
+ 	else
+ 		cp.role_switch = 0x00;
+ 
+-	/* Hold a reference so conn stays valid for the HCI_CONN_CREATE
+-	 * clear_bit() below.
+-	 */
+-	hci_conn_get(conn);
+-
+ 	/* Mark create connection in flight so hci_cancel_connect_sync() can
+ 	 * cancel it while blocking on the connection complete event.
+ 	 */
+@@ -6974,7 +6962,6 @@ static int hci_acl_create_conn_sync(struct hci_dev *hdev, void *data)
+ 				       conn->conn_timeout, NULL);
+ 
+ 	clear_bit(HCI_CONN_CREATE, &conn->flags);
+-	hci_conn_put(conn);
+ 
+ 	return err;
+ }
+-- 
+2.53.0
+
 
 
