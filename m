@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABD9531327A;
-	Fri,  7 Aug 2026 15:18:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8610A2F0C74;
+	Fri,  7 Aug 2026 15:18:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115888; cv=none; b=r1DpIB2B377k1RvJbxPP4C/X+YwIJDRqj0/a16aS9/cqejG6mwgpeKeqKKG+67PJ83h6OtQP4P29bpsbEfFGpEmmJ4WnDTa4nnb2U1ybrv+QfkxYKlT8WAkA3eOt8Te0hp2GFqObBCYPkLqVW23qwZUu6XfFWsdpKCOTZrawnJE=
+	t=1786115890; cv=none; b=Iwv4MrDa8TbiBbnrwpZV30hg7+uQVWPClhIsoVKbaSx369eeXY3fXTI3Me6kj5TC9skF0UAC7JImY4LJeQvt6pKjE8/3tCUzuViS5aXCFy6qi7F/Iw4BhlIzmVw5wnC9MV2sTXnH6DtXh3bnho7aZSIuBf7TVlnxjmr9XjMxuGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115888; c=relaxed/simple;
-	bh=7YtZUo69D25R0MIKORg6KLZHmZC+wDqM+XzDlvPXV0Q=;
+	s=arc-20240116; t=1786115890; c=relaxed/simple;
+	bh=jyTxajKml6fw9DyvxbeDgIMjjYUuHAubL76plThpnng=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O/j7CqwLxk5FtXJoap4Em2uAGYtotYpkYLcoCS1sNevPJ8/fz2pbc030rL2uF6Xxfmm+TB+2JSd/vNd8VYFQlQkw5ghUj7MNApMvcchc3IEOBaxJvxgLuJ+Mr5MBmkdZL+5w82kFwL7hCOJ+vC3hbnbJVxcjul2gW2J4cA080OI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TcT5nvyc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IyCz6GjqOsX5cs72FiHndQiwkUn3IMu0WECNtEcFCBXXXYHo8KboGpwJMpVqUpQH59A6SCLyVjdguz3bowCBVidzh/bQduejAl4lFTBvsiHI/SE4nQPqdsmaBsOxjj9iD5bC7XiPuhkZjWV/SFqf1X+r5oHX91T7BwbsqtD7XPA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XNEw+sGT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TcT5nvyc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 147241F000E9;
-	Fri,  7 Aug 2026 15:18:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XNEw+sGT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0E1F1F000E9;
+	Fri,  7 Aug 2026 15:18:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115886;
-	bh=RL5n2FIOMgd3ou/tvlIRtJdWrvYVuJZfSYxujeePyBo=;
+	s=korg; t=1786115889;
+	bh=k9MKJUXld6bPVl9wlFdOD6NiUYQAT+JJzN6WXl8pz18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TcT5nvyc/COijbFknYRPdRygUkDzZIINsvziv4za17DpM2p/Lpaudf4v/fTRVIsi/
-	 qvoWbj29SnDOCurs7JM1VYnZCAidqgSP6ERYLNu5bXn64Jjx7YML3hg1esc41BVL5x
-	 a77wA/M/JAskFmABTJLRszy3Jw11i6XTXVMMboFk=
+	b=XNEw+sGTGaStKuH6it5/RC4DiFasRAHNZMMjQg0qiEisBhenW5+2+hq53ASv+ZVdY
+	 pG0TkKTSTQix/19ojoUVvMqr2rpUZUmneJ9vXmq361zWe8RkEnGN//OCl+oQTkgbTQ
+	 GUYDxSbCcO1yF42LWyqcLJPceXqo4NhhbCE8IHUQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Looijmans <mike.looijmans@topic.nl>,
-	Michal Simek <michal.simek@amd.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Chris Leech <cleech@redhat.com>,
+	HyeongJun An <sammiee5311@gmail.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 020/261] phy-zynqmp: Postpone getting clock rate until actually needed
-Date: Fri,  7 Aug 2026 16:36:17 +0200
-Message-ID: <20260807143415.804459583@linuxfoundation.org>
+Subject: [PATCH 6.6 038/261] scsi: libiscsi_tcp: Bound SCSI Response data segment to the connection buffer
+Date: Fri,  7 Aug 2026 16:36:35 +0200
+Message-ID: <20260807143416.202748797@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143415.358597922@linuxfoundation.org>
 References: <20260807143415.358597922@linuxfoundation.org>
@@ -52,170 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Looijmans <mike.looijmans@topic.nl>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit 065d5885f6180c534b7b176847b3e008f4e11850 ]
+[ Upstream commit c1dea15f819cded9b3faf58f8bec72323568b6e6 ]
 
-At probe time the driver would display the following error and abort:
-  xilinx-psgtr fd400000.phy: Invalid rate 0 for reference clock 0
+iscsi_tcp_hdr_dissect() receives the data segment of several PDU types
+into the fixed-size conn->data buffer, which is allocated for
+ISCSI_DEF_MAX_RECV_SEG_LEN (8192) bytes.  For the LOGIN_RSP, TEXT_RSP,
+REJECT and ASYNC_EVENT opcodes the dissect path already rejects a PDU
+whose DataSegmentLength exceeds that buffer.
 
-At probe time, the associated GTR driver (e.g. SATA or PCIe) hasn't
-initialized the clock yet, so clk_get_rate() likely returns 0 if the clock
-is programmable. So this driver only works if the clock is fixed.
+The SCSI Command Response (ISCSI_OP_SCSI_CMD_RSP) path also copies its
+data segment (sense/response data) into conn->data via
+iscsi_tcp_data_recv_prep(), but it does so without the same check.  The
+only upstream bound on in.datalen is conn->max_recv_dlength, the
+initiator's advertised MaxRecvDataSegmentLength, which is commonly
+negotiated well above 8192 (open-iscsi defaults to 262144).  A target
+that returns a SCSI Response with a DataSegmentLength between 8193 and
+max_recv_dlength therefore overflows the 8192-byte conn->data buffer.
 
-The PHY driver doesn't need to know the clock frequency at probe yet, so
-wait until the associated driver initializes the lane before requesting the
-clock rate setting.
+Once the same bound applies, ISCSI_OP_SCSI_CMD_RSP is handled exactly
+like those responses: bound the data segment, receive it into conn->data
+when present, and otherwise complete the PDU with no data.  Fold the
+opcode into that case group rather than duplicating the check.
 
-In addition to allowing the driver to be used with programmable clocks,
-this also reduces the driver's runtime memory footprint by removing an
-array of pointers from struct xpsgtr_phy.
-
-Signed-off-by: Mike Looijmans <mike.looijmans@topic.nl>
-Acked-by: Michal Simek <michal.simek@amd.com>
-Link: https://lore.kernel.org/r/20250428063648.22034-1-mike.looijmans@topic.nl
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Stable-dep-of: e4779e2a16d6 ("phy: zynqmp: fix clock error handling in xpsgtr_phy_init()")
+Fixes: a081c13e39b5 ("[SCSI] iscsi_tcp: split module into lib and lld")
+Suggested-by: Chris Leech <cleech@redhat.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Acked-by: Chris Leech <cleech@redhat.com>
+Link: https://patch.msgid.link/20260716065848.1653431-1-sammiee5311@gmail.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/xilinx/phy-zynqmp.c | 70 +++++++++++++++++----------------
- 1 file changed, 37 insertions(+), 33 deletions(-)
+ drivers/scsi/libiscsi_tcp.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-diff --git a/drivers/phy/xilinx/phy-zynqmp.c b/drivers/phy/xilinx/phy-zynqmp.c
-index c72b52955a867..559a9c26a0040 100644
---- a/drivers/phy/xilinx/phy-zynqmp.c
-+++ b/drivers/phy/xilinx/phy-zynqmp.c
-@@ -227,7 +227,6 @@ struct xpsgtr_phy {
-  * @siou: siou base address
-  * @gtr_mutex: mutex for locking
-  * @phys: PHY lanes
-- * @refclk_sscs: spread spectrum settings for the reference clocks
-  * @clk: reference clocks
-  * @tx_term_fix: fix for GT issue
-  * @saved_icm_cfg0: stored value of ICM CFG0 register
-@@ -240,7 +239,6 @@ struct xpsgtr_dev {
- 	void __iomem *siou;
- 	struct mutex gtr_mutex; /* mutex for locking */
- 	struct xpsgtr_phy phys[NUM_LANES];
--	const struct xpsgtr_ssc *refclk_sscs[NUM_LANES];
- 	struct clk *clk[NUM_LANES];
- 	bool tx_term_fix;
- 	unsigned int saved_icm_cfg0;
-@@ -383,13 +381,40 @@ static int xpsgtr_wait_pll_lock(struct phy *phy)
- 	return ret;
- }
- 
-+/* Get the spread spectrum (SSC) settings for the reference clock rate */
-+static const struct xpsgtr_ssc *xpsgtr_find_sscs(struct xpsgtr_phy *gtr_phy)
-+{
-+	unsigned long rate;
-+	struct clk *clk;
-+	unsigned int i;
-+
-+	clk = gtr_phy->dev->clk[gtr_phy->refclk];
-+	rate = clk_get_rate(clk);
-+
-+	for (i = 0 ; i < ARRAY_SIZE(ssc_lookup); i++) {
-+		/* Allow an error of 100 ppm */
-+		unsigned long error = ssc_lookup[i].refclk_rate / 10000;
-+
-+		if (abs(rate - ssc_lookup[i].refclk_rate) < error)
-+			return &ssc_lookup[i];
-+	}
-+
-+	dev_err(gtr_phy->dev->dev, "Invalid rate %lu for reference clock %u\n",
-+		rate, gtr_phy->refclk);
-+
-+	return NULL;
-+}
-+
- /* Configure PLL and spread-sprectrum clock. */
--static void xpsgtr_configure_pll(struct xpsgtr_phy *gtr_phy)
-+static int xpsgtr_configure_pll(struct xpsgtr_phy *gtr_phy)
- {
- 	const struct xpsgtr_ssc *ssc;
- 	u32 step_size;
- 
--	ssc = gtr_phy->dev->refclk_sscs[gtr_phy->refclk];
-+	ssc = xpsgtr_find_sscs(gtr_phy);
-+	if (!ssc)
-+		return -EINVAL;
-+
- 	step_size = ssc->step_size;
- 
- 	xpsgtr_clr_set(gtr_phy->dev, PLL_REF_SEL(gtr_phy->lane),
-@@ -431,6 +456,8 @@ static void xpsgtr_configure_pll(struct xpsgtr_phy *gtr_phy)
- 	xpsgtr_clr_set_phy(gtr_phy, L0_PLL_SS_STEP_SIZE_3_MSB,
- 			   STEP_SIZE_3_MASK, (step_size & STEP_SIZE_3_MASK) |
- 			   FORCE_STEP_SIZE | FORCE_STEPS);
-+
-+	return 0;
- }
- 
- /* Configure the lane protocol. */
-@@ -643,7 +670,10 @@ static int xpsgtr_phy_init(struct phy *phy)
- 	 * Configure the PLL, the lane protocol, and perform protocol-specific
- 	 * initialization.
- 	 */
--	xpsgtr_configure_pll(gtr_phy);
-+	ret = xpsgtr_configure_pll(gtr_phy);
-+	if (ret)
-+		goto out;
-+
- 	xpsgtr_lane_set_protocol(gtr_phy);
- 
- 	switch (gtr_phy->protocol) {
-@@ -854,8 +884,7 @@ static struct phy *xpsgtr_xlate(struct device *dev,
- 	}
- 
- 	refclk = args->args[3];
--	if (refclk >= ARRAY_SIZE(gtr_dev->refclk_sscs) ||
--	    !gtr_dev->refclk_sscs[refclk]) {
-+	if (refclk >= ARRAY_SIZE(gtr_dev->clk)) {
- 		dev_err(dev, "Invalid reference clock number %u\n", refclk);
- 		return ERR_PTR(-EINVAL);
- 	}
-@@ -931,9 +960,7 @@ static int xpsgtr_get_ref_clocks(struct xpsgtr_dev *gtr_dev)
- {
- 	unsigned int refclk;
- 
--	for (refclk = 0; refclk < ARRAY_SIZE(gtr_dev->refclk_sscs); ++refclk) {
--		unsigned long rate;
--		unsigned int i;
-+	for (refclk = 0; refclk < ARRAY_SIZE(gtr_dev->clk); ++refclk) {
- 		struct clk *clk;
- 		char name[8];
- 
-@@ -949,29 +976,6 @@ static int xpsgtr_get_ref_clocks(struct xpsgtr_dev *gtr_dev)
- 			continue;
- 
- 		gtr_dev->clk[refclk] = clk;
--
--		/*
--		 * Get the spread spectrum (SSC) settings for the reference
--		 * clock rate.
--		 */
--		rate = clk_get_rate(clk);
--
--		for (i = 0 ; i < ARRAY_SIZE(ssc_lookup); i++) {
--			/* Allow an error of 100 ppm */
--			unsigned long error = ssc_lookup[i].refclk_rate / 10000;
--
--			if (abs(rate - ssc_lookup[i].refclk_rate) < error) {
--				gtr_dev->refclk_sscs[refclk] = &ssc_lookup[i];
--				break;
--			}
+diff --git a/drivers/scsi/libiscsi_tcp.c b/drivers/scsi/libiscsi_tcp.c
+index c182aa83f2c93..4d23205129432 100644
+--- a/drivers/scsi/libiscsi_tcp.c
++++ b/drivers/scsi/libiscsi_tcp.c
+@@ -763,13 +763,6 @@ iscsi_tcp_hdr_dissect(struct iscsi_conn *conn, struct iscsi_hdr *hdr)
+ 		rc = __iscsi_complete_pdu(conn, hdr, NULL, 0);
+ 		spin_unlock(&conn->session->back_lock);
+ 		break;
+-	case ISCSI_OP_SCSI_CMD_RSP:
+-		if (tcp_conn->in.datalen) {
+-			iscsi_tcp_data_recv_prep(tcp_conn);
+-			return 0;
 -		}
--
--		if (i == ARRAY_SIZE(ssc_lookup)) {
--			dev_err(gtr_dev->dev,
--				"Invalid rate %lu for reference clock %u\n",
--				rate, refclk);
--			return -EINVAL;
--		}
- 	}
- 
- 	return 0;
+-		rc = iscsi_complete_pdu(conn, hdr, NULL, 0);
+-		break;
+ 	case ISCSI_OP_R2T:
+ 		if (ahslen) {
+ 			rc = ISCSI_ERR_AHSLEN;
+@@ -777,6 +770,7 @@ iscsi_tcp_hdr_dissect(struct iscsi_conn *conn, struct iscsi_hdr *hdr)
+ 		}
+ 		rc = iscsi_tcp_r2t_rsp(conn, hdr);
+ 		break;
++	case ISCSI_OP_SCSI_CMD_RSP:
+ 	case ISCSI_OP_LOGIN_RSP:
+ 	case ISCSI_OP_TEXT_RSP:
+ 	case ISCSI_OP_REJECT:
 -- 
 2.53.0
 
