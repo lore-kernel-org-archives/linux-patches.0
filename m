@@ -1,50 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DF173A6F0A;
-	Fri,  7 Aug 2026 15:42:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD94135CB60;
+	Fri,  7 Aug 2026 15:42:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786117374; cv=none; b=iFUEghlYxbinV5WcaYqNU4wC9MFaGFfLKlZr0WGpvqhAxRn+ifh8wPRgEh42/KnptBGDUNiol9Mre4fa3USzjWILCh5jpSL4n9c8ERzyT+wagkX5ctESDwWyH9jz0buvQruqHXyNPBK8lkWD5DKZjs5CEQrVaehdwgYWn8haaD8=
+	t=1786117377; cv=none; b=u2elCqVqrXZQOfZFwigwT8B6NAU7P/aDj8YkcQG0xm50dEhb/xW9aQV6Nq1KyulEk9q7eACbvneYEMsXi/1GW8AQGK/mVB1DxPI/RQP5iN6xtITJuGi+m3xuRz/4kOCp+qL4kHyXNVrPEVgDXcJGqVw0OzPpc9V1xi9ypZQul5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786117374; c=relaxed/simple;
-	bh=WbFpEDXB4aOv0VkabwtRM0Zgx508Woq2oABK6JSHPs0=;
+	s=arc-20240116; t=1786117377; c=relaxed/simple;
+	bh=jKX8paOS11rH5912YXtzpTVhOprCHKYHmw3ZPL4E/So=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HZ45zgPNI4dwFWZ4cXwVsMwWbJJqB2C15lJMOZmuwCzxscs+8IYO1mM+cHxpDE64svDpNhpulZdF0Byi6wh/8AahgYLRmfTCDMo9X4vibFjFxkq45FterC3FD2HuVjJ9gbABdE3q6T+PUp4TQruJ53JxleJcZWO5W8ZKmhdWBKE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bxicBfPr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=OGyFV5R/QQf4sDeYghPMaRJEcsgLbEhXBhVVjpi7xqu8zqLtMZUhuouVN2+VbZTOsDZG3vUyr1gBaJZnOE7qn/G1ay9EwnREZq4zBaRoEBaK0Quwc6ypE9lCU+yjGU93s6YbmePNj2TPndweB+RtQblV8g11ivntAtZo+C3etj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PMyo7wgR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bxicBfPr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 411621F000E9;
-	Fri,  7 Aug 2026 15:42:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PMyo7wgR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C4BC1F000E9;
+	Fri,  7 Aug 2026 15:42:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786117372;
-	bh=60Xe/lWoHBD882eiScpkin0eGNGw9sFfBXrt6cOq9jE=;
+	s=korg; t=1786117375;
+	bh=qeAVcUELC+R4h5ai+sFfMHxYLmO3ll2oGQ2FJaomnnc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bxicBfPrDGwK1X+XtP3KJdvEMK30yZhFkuNoA+gEUZEVQLgNgavcyW1ALrvPyIXhX
-	 JwVO3f3LQGzApAu9YX3vvnAr7DkC4q4LdjEzXmm/GwU8Ug9XtxtVbpN/muBuuTbuSS
-	 oYgRkJUQPdwxRZd89GxWPkX7tyJasjd6j2ei4w58=
+	b=PMyo7wgRR7JhJQJIgUw/l8qzUYyXxh7a64SJHQgNH4vDbwEhsRuF/QaQI8dRbL+8F
+	 8z9mlbm6ITunzGmvzYcchkDZD97dDKZSRsJjHl2PpSMhMmNze1SYMuTgIbQM/4SI9a
+	 kUVzkB14si1ZaQ9X7kpCLaFYPT/iUHcPByzkgOQk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
-	Hao Zhang <zhanghao1@kylinos.cn>,
+	Link Lin <linkl@google.com>,
 	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Zi Yan <ziy@nvidia.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Barry Song <baohua@kernel.org>,
-	Dev Jain <dev.jain@arm.com>,
-	Lance Yang <lance.yang@linux.dev>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Naoya Horiguchi <nao.horiguchi@gmail.com>,
-	Nico Pache <npache@redhat.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	David Rientjes <rientjes@google.com>,
+	Alexander Duyck <alexander.duyck@gmail.com>,
+	Greg Thelen <gthelen@google.com>,
+	James Houghton <jthoughton@google.com>,
+	Jason Wang <jasowang@redhat.com>,
+	Jiaqi Yan <jiaqiyan@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.1 295/438] mm/huge_memory: unlock i_mmap_rwsem before releasing after-split folios
-Date: Fri,  7 Aug 2026 16:38:11 +0200
-Message-ID: <20260807143434.262508396@linuxfoundation.org>
+Subject: [PATCH 7.1 296/438] mm/page_reporting: use system_freezable_wq to fix UAF during suspend
+Date: Fri,  7 Aug 2026 16:38:12 +0200
+Message-ID: <20260807143434.282897859@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -57,100 +54,102 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kiryl Shutsemau (Meta) <kas@kernel.org>
+From: Link Lin <linkl@google.com>
 
-commit e923bd21058ea02fd0dcd3549d151d143fd036e5 upstream.
+commit 0b45f6927a14914ff685fe0e6f9d11232a1e03df upstream.
 
-__folio_split() keeps dereferencing the mapping after the split:
-shmem_uncharge(mapping->host) and remap_page() while the folios are still
-frozen/locked, and i_mmap_unlock_read(mapping) at the very end, after the
-after-split folios have been unlocked and freed.
+During PM freeze (e.g.  S3 suspend or S4 hibernation), device drivers like
+virtio_balloon reset their underlying virtio devices and delete their
+virtqueues via vdev->config->del_vqs().
 
-Nothing holds an inode reference across that.  The split relies on @folio
--- which the beyond-EOF drop loop never removes, as it starts at
-folio_next(folio) -- staying locked and in the page cache to hold off
-eviction.  But the unlock loop unlocks @folio before i_mmap_unlock_read()
-runs.  If the caller's @lock_at is a tail beyond EOF, as memory_failure()
-passes when splitting a poisoned tail of a shmem THP that reaches past
-i_size during truncation, it too is gone from the page cache; so once
-@folio is unlocked no locked, in-cache folio pins the inode, and a
-concurrent final iput() can evict and RCU-free it before
-i_mmap_unlock_read() touches i_mmap_rwsem:
+However, page reporting work (page_reporting_process) was scheduled on the
+global system_wq.  Because system_wq lacks the WQ_FREEZABLE flag, the PM
+freezer skips it, leaving page_reporting_process active during suspend.
 
-  BUG: KASAN: slab-use-after-free in __up_read+0x634/0x790
-   i_mmap_unlock_read include/linux/fs.h:537 [inline]
-   __folio_split+0x732/0x1640 mm/huge_memory.c:4100
-   try_to_split_thp_page+0xab/0x390 mm/memory-failure.c:1675
-   memory_failure+0x1394/0x26e0 mm/memory-failure.c:2470
+If pages are freed into the buddy allocator while suspending (for example,
+when core MM invokes the balloon shrinker during S4 hibernation image
+saving), page reporting triggers virtballoon_free_page_report() on deleted
+virtqueues, resulting in a Use-After-Free / General Protection Fault:
 
-  Freed by task 4601:
-   shmem_free_in_core_inode+0x54/0xb0 mm/shmem.c:5177
-   evict+0x57f/0xac0 fs/inode.c:870
+    [  196.795226] general protection fault, probably for non-canonical address 0xaa1436fe70dae6df: 0000 [#1] SMP NOPTI
+    [  196.825967] Workqueue: events page_reporting_process
+    [  196.831038] RIP: 0010:virtqueue_add_split+0x233/0x4c0 [virtio_ring]
+    [  196.927073] virtballoon_free_page_report+0x3a/0xe0 [virtio_balloon]
+    [  196.946943] page_reporting_process+0x370/0x4f0
 
-Do every mapping dereference while @folio still pins the inode: drop
-i_mmap_rwsem right after remap_page(), before the loop that unlocks and
-frees the after-split folios, and clear @mapping so the exit path does not
-unlock it again.  shmem_uncharge() and remap_page() already run before
-that point, so after this nothing past the unlock loop touches the inode
-or the mapping.
+Fix this by switching page reporting work to system_freezable_wq.  This
+ensures that the PM freezer pauses page_reporting_process before device
+drivers destroy their reporting virtqueues.  Because the reporting worker
+is frozen, memory reclamation/freeing (e.g.  via shrinker execution) can
+safely return pages to MM during freeze without triggering unfrozen
+reporting work on deleted virtqueues.
 
-This is now a rule the split depends on, alongside keeping @folio frozen
-until the page cache is updated: no inode or mapping dereference once the
-after-split folios start being unlocked.
+This aligns with the driver's existing design. The comment in
+virtballoon_freeze() states:
+    /*
+     * The workqueue is already frozen by the PM core before this
+     * function is called.
+     */
 
-Link: https://lore.kernel.org/20260716095424.471052-1-kirill@shutemov.name
-Fixes: baa355fd3314 ("thp: file pages support for split_huge_page()")
-Signed-off-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
-Reported-by: Hao Zhang <zhanghao1@kylinos.cn>
-Closes: https://lore.kernel.org/linux-mm/20260710071344.GA106129@zh-pc
-Co-developed-by: Hao Zhang <zhanghao1@kylinos.cn>
-Signed-off-by: Hao Zhang <zhanghao1@kylinos.cn>
+Testing:
+I have verified these fixes using Google’s virtualization infrastructure
+by running continuous suspend/resume iterations (40+ cycles) while
+churning memory using stress-ng (`stress-ng --vm 4 --vm-bytes 60%
+--timeout 1`) to constantly create free pages for the buddy allocator.  We
+also set the `page_reporting_order` parameter to 0 to make the page
+reporting worker highly sensitive, forcing it to pick up any 4K free
+pages.  This confirmed that the UAF crashes are no longer reproducible.
+
+Link: https://lore.kernel.org/20260721005603.1710551-1-linkl@google.com
+Fixes: 36e66c554b5c ("mm: introduce Reported pages")
+Signed-off-by: Link Lin <linkl@google.com>
+Suggested-by: David Hildenbrand (Arm) <david@kernel.org>
+Suggested-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: David Rientjes <rientjes@google.com>
 Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Reviewed-by: Miaohe Lin <linmiaohe@huawei.com>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Barry Song <baohua@kernel.org>
-Cc: Dev Jain <dev.jain@arm.com>
-Cc: Lance Yang <lance.yang@linux.dev>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
-Cc: Nico Pache <npache@redhat.com>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Cc: Alexander Duyck <alexander.duyck@gmail.com>
+Cc: Greg Thelen <gthelen@google.com>
+Cc: James Houghton <jthoughton@google.com>
+Cc: Jason Wang <jasowang@redhat.com>
+Cc: Jiaqi Yan <jiaqiyan@google.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/huge_memory.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ mm/page_reporting.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/mm/huge_memory.c
-+++ b/mm/huge_memory.c
-@@ -4189,6 +4189,18 @@ fail:
- 	remap_page(folio, 1 << old_order, ttu_flags);
- 
- 	/*
-+	 * Drop the mapping while the inode is still pinned. @folio stays
-+	 * locked and present in the page cache until the loop below, so
-+	 * eviction cannot free the inode yet; @lock_at is not enough, it may
-+	 * be a tail beyond EOF that the split already dropped from the page
-+	 * cache. Nothing past this point may touch the inode or the mapping.
-+	 */
-+	if (mapping) {
-+		i_mmap_unlock_read(mapping);
-+		mapping = NULL;
-+	}
-+
-+	/*
- 	 * Unlock all after-split folios except the one containing
- 	 * @lock_at page. If @folio is not split, it will be kept locked.
+--- a/mm/page_reporting.c
++++ b/mm/page_reporting.c
+@@ -80,7 +80,8 @@ __page_reporting_request(struct page_rep
+ 	 * now we are limiting this to running no more than once every
+ 	 * couple of seconds.
  	 */
+-	schedule_delayed_work(&prdev->work, PAGE_REPORTING_DELAY);
++	queue_delayed_work(system_freezable_wq, &prdev->work,
++			   PAGE_REPORTING_DELAY);
+ }
+ 
+ /* notify prdev of free page reporting request */
+@@ -343,7 +344,8 @@ err_out:
+ 	 */
+ 	state = atomic_cmpxchg(&prdev->state, state, PAGE_REPORTING_IDLE);
+ 	if (state == PAGE_REPORTING_REQUESTED)
+-		schedule_delayed_work(&prdev->work, PAGE_REPORTING_DELAY);
++		queue_delayed_work(system_freezable_wq, &prdev->work,
++				   PAGE_REPORTING_DELAY);
+ }
+ 
+ static DEFINE_MUTEX(page_reporting_mutex);
 
 
