@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF8872F0C74;
-	Fri,  7 Aug 2026 15:10:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBD81368276;
+	Fri,  7 Aug 2026 15:10:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115432; cv=none; b=ii74jLeAm/gU5H4IIWJWsMxcrC46W3EmB31CBuiZw0bkvle+PDSxCC4/hX2fcLf94RiBNPB+bSvoyfG+9DNxI6uY+rBXkDIkGtj0dd2IkIVqdFU278lP34YWbaPMo8puLfRMFVfJ/96GmXMZz86pVSZs78NRn6D9N3394plz4d4=
+	t=1786115435; cv=none; b=KXVs3XKIEUqQJaWaR+j0ctDgejIuztjHAsFoJMIFqhTHTwlXkKVeg5PrT7mkLVn6v/h58+oCx7vgaKxqnr8niBy4nMxALw/8IFXJqhng2w1DUCFnc3Vy3KNfuBTJMQYyMzdg/Z/KjGpMwXT1B8b/tcyizAw/WaFWrjby0UDcyD0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115432; c=relaxed/simple;
-	bh=kmIFmpqEU9uuZhPCjiEoDk+J8Eh0eS2WJVDP+zbjP8k=;
+	s=arc-20240116; t=1786115435; c=relaxed/simple;
+	bh=l1NnFUXRRXbrMKqkMFQm1pYLO8c5Km94aU0gS2e58bo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MhPibwwMUHofPSvnM3zvuvF3nvMTfVD1jvqMddo9DyXxFiZJoTJZXie5cvS6ISwhE2eVjBP54dIeB3P2v2VqSNlbyFYTlECbB0VDo30EXq6+UuH5emlO9pzuL8ybbZvWIHjhGRifAHz4yO5pnpGC+XVg7zkfLmN6FlnjVO/SK8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=urdB7AKp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hADCU6b6gzdxblroW3aY4Ixu4Lik9Hfj5/fYe5bbxVI4a1tfaDpzoVX02HKE/4GXEM1b/7u6ZxM/WxxfWGuPAdh8EmtdVlKJiaf89huOBWVkvBwa0E3O0bQIVQJ6Z3uYEdb1ahggaGba3+OoKBese719m98sXA//ZJLQkWkXVhc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jk/E9SKc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="urdB7AKp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 469A31F000E9;
-	Fri,  7 Aug 2026 15:10:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jk/E9SKc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15F7B1F000E9;
+	Fri,  7 Aug 2026 15:10:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115430;
-	bh=/S1sW07V8phs32/b5/IxID9XFe1NeOOyX/UgTYmtr+c=;
+	s=korg; t=1786115433;
+	bh=QkPmrilpibC/xGu3lduWJVOBu4Q2IBZGYPBft3rIXUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=urdB7AKpuN7/71T7YZ5VMvHO4JmseZTehNKYbd2sx4YkHTTEGrAquejdW+aXkMk/N
-	 byUahChWzzqOvflOdusVlup8K7FVzbUq2FLkqnwnT9RVFgLmB9BHTwSsfY7hh4cfHm
-	 nDv4z6NQakQ7XHH3TOEHt9qWjw+58mLUQum8jI3U=
+	b=Jk/E9SKc68S1FyZyWB+CSpuvs6CTplkFzBjeqc+RQ5Bki2OXXUiAZiPovEyXbA+C1
+	 dAOsA283488nEijUmS+Iud+U7g8OUrFR/kf1FoTt86XQHXfbjmvWzPno0biHbc47af
+	 MUoQWzonEQOhwes+16OSl4E4qVkubx2nrKSLl1OM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jan=20H=C3=B6ppner?= <hoeppner@linux.ibm.com>,
-	Stefan Haberland <sth@linux.ibm.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.18 273/396] s390/dasd: Fix undersized format-check buffer
-Date: Fri,  7 Aug 2026 16:37:13 +0200
-Message-ID: <20260807143430.143908681@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Zhiling Zou <zhilinz@nebusec.ai>,
+	Ren Wei <enjou1224z@gmail.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 238/396] net: bridge: stop fast-leave after deleting a port group
+Date: Fri,  7 Aug 2026 16:36:38 +0200
+Message-ID: <20260807143429.391078745@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -45,82 +47,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stefan Haberland <sth@linux.ibm.com>
+From: Zhiling Zou <zhilinz@nebusec.ai>
 
-commit 7f40b346462f563a0d6e841a77b5163d2a882a04 upstream.
+commit a39789f211b8a4125f0c70e05b30cf715f4f187d upstream.
 
-fmt_buffer_size in dasd_eckd_check_device_format() is declared as
-int, even though one of the multiplicands, sizeof(struct eckd_count),
-is a size_t. The expression
+br_multicast_leave_group() iterates mp->ports with pp = &p->next in
+its fast-leave path. After br_multicast_del_pg() removes p,
+continuing the loop advances pp through the deleted entry.
 
-    trkcount * rpt_max * sizeof(struct eckd_count)
+If multicast-to-unicast was enabled, the bridge can hold multiple port
+groups for the same port and group with different source MAC
+addresses. Once multicast-to-unicast is disabled,
+br_port_group_equal() matches those entries by port only. A fast leave
+can then delete one entry and continue from its stale next pointer,
+leaving mp->ports pointing at a deleted port group.
 
-is therefore correctly evaluated at 64-bit width, but the result is
-silently truncated when it is stored back into the 32-bit
-fmt_buffer_size variable. For a sufficiently large track range
-(start_unit/stop_unit are caller-controlled) this truncation
-yields a buffer size far smaller than the number of tracks actually
-requested. kzalloc() then succeeds with an undersized allocation,
-while the subsequent channel program build still operates on the
-untruncated track count and writes past the end of that buffer.
+Fast leave only needs to remove one matching port group. Break after
+br_multicast_del_pg() so the loop stops before dereferencing the
+removed entry.
 
-Compute the buffer size with check_mul_overflow() and keep it in a
-size_t, so that a value that no longer fits results in -EINVAL
-instead of a silently truncated allocation size.
-
-Fixes: 8fd575200db5 ("s390/dasd: Add new ioctl BIODASDCHECKFMT")
-Cc: stable@vger.kernel.org #4.7
-Reviewed-by: Jan Höppner <hoeppner@linux.ibm.com>
-Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
-Link: https://patch.msgid.link/20260727142840.567286-4-sth@linux.ibm.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 6db6f0eae605 ("bridge: multicast to unicast")
+Cc: stable@vger.kernel.org
+Reported-by: Vega <vega@nebusec.ai>
+Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
+Signed-off-by: Ren Wei <enjou1224z@gmail.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/1cf0898872ef7c72d5f4c0304414a192c6dac591.1784707712.git.zhilinz@nebusec.ai
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/block/dasd_eckd.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ net/bridge/br_multicast.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/s390/block/dasd_eckd.c
-+++ b/drivers/s390/block/dasd_eckd.c
-@@ -21,6 +21,7 @@
- #include <linux/seq_file.h>
- #include <linux/uaccess.h>
- #include <linux/io.h>
-+#include <linux/overflow.h>
+--- a/net/bridge/br_multicast.c
++++ b/net/bridge/br_multicast.c
+@@ -3686,6 +3686,7 @@ br_multicast_leave_group(struct net_brid
  
- #include <asm/css_chars.h>
- #include <asm/machine.h>
-@@ -3476,11 +3477,11 @@ static int dasd_eckd_check_device_format
- {
- 	struct dasd_eckd_private *private = base->private;
- 	struct eckd_count *fmt_buffer;
--	struct irb irb;
-+	size_t fmt_buffer_size;
-+	unsigned int trkcount;
- 	int rpt_max, rpt_exp;
--	int fmt_buffer_size;
-+	struct irb irb;
- 	int trk_per_cyl;
--	int trkcount;
- 	int tpm = 0;
- 	int rc;
- 
-@@ -3491,7 +3492,9 @@ static int dasd_eckd_check_device_format
- 	rpt_exp = recs_per_track(&private->rdc_data, 0, cdata->expect.blksize);
- 
- 	trkcount = cdata->expect.stop_unit - cdata->expect.start_unit + 1;
--	fmt_buffer_size = trkcount * rpt_max * sizeof(struct eckd_count);
-+	if (check_mul_overflow(trkcount, rpt_max, &fmt_buffer_size) ||
-+	    check_mul_overflow(fmt_buffer_size, sizeof(struct eckd_count), &fmt_buffer_size))
-+		return -EINVAL;
- 
- 	fmt_buffer = kzalloc(fmt_buffer_size, GFP_KERNEL | GFP_DMA);
- 	if (!fmt_buffer)
+ 			p->flags |= MDB_PG_FLAGS_FAST_LEAVE;
+ 			br_multicast_del_pg(mp, p, pp);
++			break;
+ 		}
+ 		goto out;
+ 	}
 
 
