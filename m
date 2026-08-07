@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C89233DEF7;
-	Fri,  7 Aug 2026 14:55:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EC81388E43;
+	Fri,  7 Aug 2026 14:55:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114522; cv=none; b=irDKymrQ/FJUZdFiJ2iWWDnEyFC2f8MnVEO+NH+/9ehziGUuo6kWfIPTKHpPeXO9I128vZil9zilQ4cyvT+/qkO0GYsDzVatNW1Cx0Gy0bTYgVhI5LYlhhCHmG4uoyYtq6XS3C0RCmJYTyHpAJEVVv1hTr88QA514H+Rc6ETjLc=
+	t=1786114524; cv=none; b=J45dahqG1XTWUB8qbVxGjeWnBnxNoJFkxxeu6l4ri5+sJYsNMttmhajXfS40plXFkHaWYG0F+0duIk6kbqoXjZNbon3cL6fJ4hUGVLOn1XQyMqYowcFgzrNRvx2jRTeUInPTKNJLVywbznHAv0D1Brj4w//EGnVvM4BivVX3Kko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114522; c=relaxed/simple;
-	bh=T3/hiHpz1qZ9uVAWFa4zdLsBgVAyJOV4uO4HG6TNmJE=;
+	s=arc-20240116; t=1786114524; c=relaxed/simple;
+	bh=+1Y6pKf16WP5TOetfI0NGLUcjPzsscq9DZ5RMWLe6Eg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eZ3aMNIGlV9SSEXIJkPzQjG9IOZ2bo4q9jj/uYO/vlYyBLy9dIBteEkQe6bKooYj3mqqHpwd5YyNTqJd5Jtv18U49FDsVvJk/6/qgpEuIYAJZhZ/ZBgFUpJ5W+oR2YzQUSFlowe8HUJkzfykt78TWTJpr/qn/K1wCqVIivMrFoE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u3hLs2bB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=U2+cAO3KZ+vaajY9e5MnF95wTigV2W7To9J2dl7wjEXBXYwVZcvtwtDkF2RWM2Hpk68Tgl4qEcHTD9IJ8TdtIhmT3raKe6AWnnrfgPGDaZ2nr+9YhcjMYLb1ihzFbMukq6J5PAwKphxFImvbJFpE5UGxMCPXjHKbxd1qIoNHlqE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tIwRWl7F; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u3hLs2bB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE6461F00A3D;
-	Fri,  7 Aug 2026 14:55:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tIwRWl7F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76C891F00A3A;
+	Fri,  7 Aug 2026 14:55:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114513;
-	bh=k851tAI2+QLTJZfanOud2SjV0krEVXKuDGXRk2VVLUk=;
+	s=korg; t=1786114519;
+	bh=zBVmPgt4bc73k5ZVlA75I/xy/US3BTGUYIFSoAk6AGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u3hLs2bBIj+mMhenYn2FXemIqhceVBrmqnJMLH+6B8q+ayGfWM7vex9V5ZENQ2cXm
-	 w+DSrajFxBhXCA0hDxDGp12aOE4/q3QySfSh1WZ2lMFZZ3ej8Zxo7UfI4Gvc1xUSUq
-	 j9/dT8/CHY3YcXHgRjgeQVNKBoFnDCmOzjkabk7E=
+	b=tIwRWl7F2tKY3RzSb4I59je1r6A+P5eH0rvnndCNi7vnqvLdYjuMmZAnc40J3hA6t
+	 J6ECeF6s7W1KjRAeed0YvVi7Dmde+jRlUUi/XPDunU+uR2pcFRZPJeaK1RLv0irfy+
+	 qzC6ko6Tn/moN4ov6AKpFSbY3fRwo1fd9WvgBSSs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junjie Cao <junjie.cao@intel.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 290/337] gpio: pch: use raw_spinlock_t for the register lock
-Date: Fri,  7 Aug 2026 16:38:13 +0200
-Message-ID: <20260807143424.818543599@linuxfoundation.org>
+Subject: [PATCH 6.12 292/337] usb: typec: ucsi: split connector lock classes
+Date: Fri,  7 Aug 2026 16:38:15 +0200
+Message-ID: <20260807143424.859113804@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -52,174 +51,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junjie Cao <junjie.cao@intel.com>
+From: Sergey Senozhatsky <senozhatsky@chromium.org>
 
-[ Upstream commit a02b8950d619123da64f69b70fe1dadef217dfe4 ]
+[ Upstream commit 8c22256bbafad3dc5fdbe9f684d045b67ff06a68 ]
 
-pch_irq_type() is registered as the irq_chip .irq_set_type callback and
-takes chip->spinlock with spin_lock_irqsave().  This callback is reached
-from __setup_irq() -> __irq_set_trigger() -> chip->irq_set_type() while
-the caller holds desc->lock, a raw_spinlock_t, with hardirqs disabled.
-That context is not sleepable, but on PREEMPT_RT a regular spinlock_t is
-an rtmutex-backed sleeping lock, so acquiring it there is invalid.
+Lockdep detects a possible recursive locking scenario during
+ucsi init:
 
-This was confirmed on a PREEMPT_RT kernel with lockdep
-(PROVE_RAW_LOCK_NESTING and DEBUG_ATOMIC_SLEEP).  A grounded PoC mirrored
-pch_irq_type()'s locking and drove it through the real genirq carrier
-irq_set_irq_type() -> __irq_set_trigger() -> chip->irq_set_type(), i.e.
-the same __irq_set_trigger() edge that __setup_irq() takes for a
-requested IRQ.  With the original spin_lock_irqsave() edge lockdep
-reported an invalid wait context, immediately followed by:
+[    5.418616] ============================================
+[    5.418634] WARNING: possible recursive locking detected
+[    5.418706] --------------------------------------------
+[    5.418725] kworker/4:1/82 is trying to acquire lock:
+[    5.418759] ffff888119a34648 (&con->lock){+.+.}-{3:3}, at: ucsi_init_work+0x1a78/0x2eb0 [typec_ucsi]
+[    5.418801]
+               but task is already holding lock:
+[    5.418835] ffff888119a34080 (&con->lock){+.+.}-{3:3}, at: ucsi_init_work+0x1a78/0x2eb0 [typec_ucsi]
+[    5.418884]
+               other info that might help us debug this:
+[    5.418904]  Possible unsafe locking scenario:
 
-  BUG: sleeping function called from invalid context at kernel/locking/spinlock_rt.c:48
-  in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 95, name: insmod
-  hardirqs last disabled at (3784): _raw_spin_lock_irqsave+0x4f/0x60
-   rt_spin_lock+0x3a/0x1c0
-   repro_irq_set_type+0x64/0xa0 [pch_repro]
-   __irq_set_trigger+0x69/0x140
-   irq_set_irq_type+0x78/0xd0
+[    5.418937]        CPU0
+[    5.418956]        ----
+[    5.418991]   lock(&con->lock);
+[    5.419013]   lock(&con->lock);
+[    5.419033]
+                *** DEADLOCK ***
 
-Switching the mirrored lock to raw_spinlock_t made both splats go away.
+[    5.419387] Call Trace:
+[    5.419406]  <TASK>
+[    5.419425]  dump_stack_lvl+0x61/0xa0
+[    5.419448]  print_deadlock_bug+0x4a6/0x650
+[    5.419483]  __lock_acquire+0x62b6/0x7f50
+[    5.419507]  lock_acquire+0x11b/0x390
+[    5.419654]  __mutex_lock+0xbc/0xcd0
+[    5.419741]  ucsi_init_work+0x1a78/0x2eb0
+[    5.419785]  ? worker_thread+0xf53/0x2bc0
+[    5.419819]  worker_thread+0xff4/0x2bc0
+[    5.419842]  kthread+0x2a7/0x330
+[    5.419863]  ? __pfx_worker_thread+0x10/0x10
+[    5.419896]  ? __pfx_kthread+0x10/0x10
+[    5.419916]  ret_from_fork+0x38/0x70
+[    5.419936]  ? __pfx_kthread+0x10/0x10
+[    5.419969]  ret_from_fork_asm+0x1b/0x30
+[    5.419991]  </TASK>
+[    5.420009] ---[ end trace 0000000000000000 ]---
 
-Convert the register lock to raw_spinlock_t.  The same lock also
-serializes the GPIO direction/value callbacks and the suspend/resume
-register save/restore, but all of those critical sections only perform
-MMIO register accesses (ioread32()/iowrite32()) and
-irq_set_handler_locked(); none of them contain sleepable operations.
-Keeping this register lock non-sleeping is therefore appropriate for the
-irqchip callbacks and does not change the GPIO-side locking contract.
+The problem is that all connector locks belong to the same
+lockdep lock class, so the following loop:
 
-This is the same class of issue and fix as recently addressed for other
-GPIO controllers, e.g. commit 286533cb14a3 ("gpio: sch: use raw_spinlock_t
-in the irq startup path") and commit 90f0109019e6 ("gpio: eic-sprd: use
-raw_spinlock_t in the irq startup path").
+	for (i = 0; i < ucsi->cap.num_connectors; i++)
+		ucsi_register_port(connector[i])
+			mutex_lock(&connector[i]->lock)
 
-Fixes: 38eb18a6f92d ("gpio-pch: Support interrupt function")
-Cc: stable@vger.kernel.org
-Signed-off-by: Junjie Cao <junjie.cao@intel.com>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260723014129.1129730-1-junjie.cao@intel.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-(cherry picked from commit a02b8950d619123da64f69b70fe1dadef217dfe4)
+looks like a recursive acquire of the same mutex.  Put each connector
+lock into a dedicated lock class so that lockdep doesn't see it as a
+possible recursion.
+
+Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://patch.msgid.link/20260515060042.136083-1-senozhatsky@chromium.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 7aa7d4bf9d3f ("usb: typec: ucsi: Fix race condition and ordering in port unregistration")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-pch.c |   28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+ drivers/usb/typec/ucsi/ucsi.c |    8 ++++++++
+ drivers/usb/typec/ucsi/ucsi.h |    1 +
+ 2 files changed, 9 insertions(+)
 
---- a/drivers/gpio/gpio-pch.c
-+++ b/drivers/gpio/gpio-pch.c
-@@ -96,7 +96,7 @@ struct pch_gpio {
- 	struct pch_gpio_reg_data pch_gpio_reg;
- 	int irq_base;
- 	enum pch_type_t ioh;
--	spinlock_t spinlock;
-+	raw_spinlock_t spinlock;
- };
+--- a/drivers/usb/typec/ucsi/ucsi.c
++++ b/drivers/usb/typec/ucsi/ucsi.c
+@@ -1569,6 +1569,7 @@ static int ucsi_register_port(struct ucs
+ 	INIT_WORK(&con->work, ucsi_handle_connector_change);
+ 	init_completion(&con->complete);
+ 	mutex_init(&con->lock);
++	lockdep_set_class(&con->lock, &con->lock_key);
+ 	INIT_LIST_HEAD(&con->partner_tasks);
+ 	con->ucsi = ucsi;
  
- static void pch_gpio_set(struct gpio_chip *gpio, unsigned int nr, int val)
-@@ -105,7 +105,7 @@ static void pch_gpio_set(struct gpio_chi
- 	struct pch_gpio *chip =	gpiochip_get_data(gpio);
- 	unsigned long flags;
- 
--	spin_lock_irqsave(&chip->spinlock, flags);
-+	raw_spin_lock_irqsave(&chip->spinlock, flags);
- 	reg_val = ioread32(&chip->reg->po);
- 	if (val)
- 		reg_val |= BIT(nr);
-@@ -113,7 +113,7 @@ static void pch_gpio_set(struct gpio_chi
- 		reg_val &= ~BIT(nr);
- 
- 	iowrite32(reg_val, &chip->reg->po);
--	spin_unlock_irqrestore(&chip->spinlock, flags);
-+	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
- }
- 
- static int pch_gpio_get(struct gpio_chip *gpio, unsigned int nr)
-@@ -131,7 +131,7 @@ static int pch_gpio_direction_output(str
- 	u32 reg_val;
- 	unsigned long flags;
- 
--	spin_lock_irqsave(&chip->spinlock, flags);
-+	raw_spin_lock_irqsave(&chip->spinlock, flags);
- 
- 	reg_val = ioread32(&chip->reg->po);
- 	if (val)
-@@ -145,7 +145,7 @@ static int pch_gpio_direction_output(str
- 	pm |= BIT(nr);
- 	iowrite32(pm, &chip->reg->pm);
- 
--	spin_unlock_irqrestore(&chip->spinlock, flags);
-+	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
- 
- 	return 0;
- }
-@@ -156,12 +156,12 @@ static int pch_gpio_direction_input(stru
- 	u32 pm;
- 	unsigned long flags;
- 
--	spin_lock_irqsave(&chip->spinlock, flags);
-+	raw_spin_lock_irqsave(&chip->spinlock, flags);
- 	pm = ioread32(&chip->reg->pm);
- 	pm &= BIT(gpio_pins[chip->ioh]) - 1;
- 	pm &= ~BIT(nr);
- 	iowrite32(pm, &chip->reg->pm);
--	spin_unlock_irqrestore(&chip->spinlock, flags);
-+	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
- 
- 	return 0;
- }
-@@ -263,7 +263,7 @@ static int pch_irq_type(struct irq_data
- 		return 0;
+@@ -1808,6 +1809,9 @@ static int ucsi_init(struct ucsi *ucsi)
+ 		goto err_reset;
  	}
  
--	spin_lock_irqsave(&chip->spinlock, flags);
-+	raw_spin_lock_irqsave(&chip->spinlock, flags);
- 
- 	/* Set interrupt mode */
- 	im = ioread32(im_reg) & ~(PCH_IM_MASK << (im_pos * 4));
-@@ -275,7 +275,7 @@ static int pch_irq_type(struct irq_data
- 	else if (type & IRQ_TYPE_EDGE_BOTH)
- 		irq_set_handler_locked(d, handle_edge_irq);
- 
--	spin_unlock_irqrestore(&chip->spinlock, flags);
-+	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
++	for (i = 0; i < ucsi->cap.num_connectors; i++)
++		lockdep_register_key(&connector[i].lock_key);
++
+ 	/* Register all connectors */
+ 	for (i = 0; i < ucsi->cap.num_connectors; i++) {
+ 		connector[i].num = i + 1;
+@@ -1837,6 +1841,9 @@ static int ucsi_init(struct ucsi *ucsi)
  	return 0;
- }
  
-@@ -372,7 +372,7 @@ static int pch_gpio_probe(struct pci_dev
- 	chip->ioh = id->driver_data;
- 	chip->reg = chip->base;
- 	pci_set_drvdata(pdev, chip);
--	spin_lock_init(&chip->spinlock);
-+	raw_spin_lock_init(&chip->spinlock);
- 	pch_gpio_setup(chip);
+ err_unregister:
++	for (i = 0; i < ucsi->cap.num_connectors; i++)
++		lockdep_unregister_key(&connector[i].lock_key);
++
+ 	for (con = connector; con->port; con++) {
+ 		if (con->wq)
+ 			destroy_workqueue(con->wq);
+@@ -2107,6 +2114,7 @@ void ucsi_unregister(struct ucsi *ucsi)
+ 		usb_power_delivery_unregister(ucsi->connector[i].pd);
+ 		ucsi->connector[i].pd = NULL;
+ 		typec_unregister_port(ucsi->connector[i].port);
++		lockdep_unregister_key(&ucsi->connector[i].lock_key);
+ 	}
  
- 	ret = devm_gpiochip_add_data(dev, &chip->gpio, chip);
-@@ -405,9 +405,9 @@ static int __maybe_unused pch_gpio_suspe
- 	struct pch_gpio *chip = dev_get_drvdata(dev);
- 	unsigned long flags;
+ 	kfree(ucsi->connector);
+--- a/drivers/usb/typec/ucsi/ucsi.h
++++ b/drivers/usb/typec/ucsi/ucsi.h
+@@ -422,6 +422,7 @@ struct ucsi_connector {
  
--	spin_lock_irqsave(&chip->spinlock, flags);
-+	raw_spin_lock_irqsave(&chip->spinlock, flags);
- 	pch_gpio_save_reg_conf(chip);
--	spin_unlock_irqrestore(&chip->spinlock, flags);
-+	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
- 
- 	return 0;
- }
-@@ -417,11 +417,11 @@ static int __maybe_unused pch_gpio_resum
- 	struct pch_gpio *chip = dev_get_drvdata(dev);
- 	unsigned long flags;
- 
--	spin_lock_irqsave(&chip->spinlock, flags);
-+	raw_spin_lock_irqsave(&chip->spinlock, flags);
- 	iowrite32(0x01, &chip->reg->reset);
- 	iowrite32(0x00, &chip->reg->reset);
- 	pch_gpio_restore_reg_conf(chip);
--	spin_unlock_irqrestore(&chip->spinlock, flags);
-+	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
- 
- 	return 0;
- }
+ 	struct ucsi *ucsi;
+ 	struct mutex lock; /* port lock */
++	struct lock_class_key lock_key;
+ 	struct work_struct work;
+ 	struct completion complete;
+ 	struct workqueue_struct *wq;
 
 
