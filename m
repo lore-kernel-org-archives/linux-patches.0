@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B8512E736E;
-	Fri,  7 Aug 2026 14:48:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DF84385D86;
+	Fri,  7 Aug 2026 14:48:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114131; cv=none; b=dVJ7cSuv3bDITXA2aNxKuSwHBDYRjpG1jk/2GFN/kF0QUgpCqcVZQAs5NtJ+ZM1rlyuoUDF5NqNIuipZH1chXcsG9RPqvWr7xF/gAPjAvLjBOhkIS8dUb0JW+vjXgl8It5eemZN139FsJBgragI94rVPXR8QpfD6YYKmIg2ludo=
+	t=1786114135; cv=none; b=udDxVmVU679lwl/R61oFmshydAtaN3wSnlyNMns0b/sCrzKAgqJs0TwSErvqLhyWFMjzLvFiWtmDgNcCQ6gN5efZv4Rcq0DU/S4rTdrwKql5sSB13MdSdVs76dOBOJi55spXx7lvWuNGNvmISVNuuEGrM18oKCd9nsvTYCAGPt0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114131; c=relaxed/simple;
-	bh=Bz64UxOfwCYu7XeeSS5Ylp/pEKeRiTfcNp8kltk81Tk=;
+	s=arc-20240116; t=1786114135; c=relaxed/simple;
+	bh=bkCq8ve4kOWj6csbfo0YxLV6QfoX7PlGv54zB3ze8Eg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LoFcD2hoMSBNLHQS4pDK0SeV2ll1lcWaHfTTMA8FDLMdEdsC5FLKwOVpavJwHYCOkypY+4UOPer5cQck8AmwsQhFz4GNMpKb+lhJQJv4VWEicuwXDw6XO6QraOlC/T+mWEFZO5VUFK3bDBXfXkvGc6VaWo+TEkm2wa/uaC1rQU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xqjYVqel; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Vbv0osInLXM9160iLLXPvfrJm/cizQaadug1dLzMFIRXAxWIstYBtGOEAp5+SbNoy49GcbTJ8xU6hjb+flMF2EvRYIngTyhItarUF83T9yDucfJh1asxADhZkPCEqQSskw9weEanYmf/+YkqfikkGgJyt2Qk7t8D5GZB8A9z2vs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LOMJ7QG7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xqjYVqel"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44C421F000E9;
-	Fri,  7 Aug 2026 14:48:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LOMJ7QG7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 186241F00A3A;
+	Fri,  7 Aug 2026 14:48:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114127;
-	bh=R3hcBZWiUmHGS5xeA+jpHSREw+hsvY4DyuLo5dkohMc=;
+	s=korg; t=1786114130;
+	bh=aF5dtWHHxGOdMyGXBOEMM0XDIdeW3vOhLsXa9YqGTkI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xqjYVqel27fRBV0QiOFxWsIf3EV7yF1q7yPnTJsqYE5XR8/NiDghVV5IJu1qLFnyo
-	 Y+KfRpwKxbqp7Oyr2zmC3kfYA7YcljJj6k46JsjVbnkkZJJKUkU4jAAeHqjOy27QvG
-	 b1hnNN/XrbDCISDLp5Y908d+TI7j59O1nknx7xUw=
+	b=LOMJ7QG7jdPjFCBKkJsePbTFj5sF8zKsXeSKG/90wgyFhjUBLZsvH6aQJkY+aQJwT
+	 tjtKXbPJzFR4yPSNxC7xYmvvjAr6LBm22qpD4xLhMTVowyl8eswFtHlHU35wisDdi5
+	 muD9vzYm8T9I//Y1x5SsQt6krpVj1uFW/6VggSSc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sangho Lee <kudo3228@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.12 153/337] Bluetooth: HIDP: validate numbered report payloads
-Date: Fri,  7 Aug 2026 16:35:56 +0200
-Message-ID: <20260807143421.868865177@linuxfoundation.org>
+	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.12 154/337] bpf: lwt: Fix dst reference leak on reroute failure
+Date: Fri,  7 Aug 2026 16:35:57 +0200
+Message-ID: <20260807143421.889952207@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -50,53 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sangho Lee <kudo3228@gmail.com>
+From: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
 
-commit 34f53d27b81a16a02828c8fdfa4e02badc326f17 upstream.
+commit 88c17de85ddb459c3fe1e3c65d61fa366b1cf0a8 upstream.
 
-When hidp_get_raw_report() waits for a numbered report,
-hidp_process_data() compares the expected report number with skb->data[0].
-A connected HIDP peer can reply with only a DATA transaction header,
-leaving the skb empty after the header is removed.
+bpf_lwt_xmit_reroute() obtains a referenced dst from the route
+lookup. When skb_cow_head() fails before that dst is installed on the
+skb, the error path only frees the skb. The skb still owns its previous
+dst, so the newly looked up dst reference is leaked.
 
-KMSAN reports an uninitialized-value use in hidp_session_run(), with the
-value originating in __alloc_skb() through vhci_write(). The transaction
-header checks remove the empty-frame reports, but this report remains until
-the payload check is added.
+Release the new dst reference before freeing the skb on this error
+path.
 
-The comparison can also consume a peer-controlled byte beyond the declared
-L2CAP PDU. A DATA | FEATURE response followed by an extra 0x01 byte made
-the current code accept that byte as report ID 1 and complete
-HIDIOCGFEATURE with a zero-byte result. With this change the malformed
-response is rejected with -EIO, while a subsequent valid response still
-succeeds.
-
-Require a payload byte before comparing a numbered report ID. Unnumbered
-reports continue to accept an empty payload.
-
-Fixes: 0ff1731a1ae5 ("HID: bt: Add support for hidraw HIDIOCGFEATURE and HIDIOCSFEATURE")
+Fixes: 3bd0b15281af ("bpf: add handling of BPF_LWT_REROUTE to lwt_bpf.c")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sangho Lee <kudo3228@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+Link: https://patch.msgid.link/20260723060445.21926-1-xuanqiang.luo@linux.dev
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hidp/core.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/core/lwt_bpf.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/net/bluetooth/hidp/core.c
-+++ b/net/bluetooth/hidp/core.c
-@@ -546,9 +546,10 @@ static int hidp_process_data(struct hidp
- 	}
+--- a/net/core/lwt_bpf.c
++++ b/net/core/lwt_bpf.c
+@@ -248,8 +248,10 @@ static int bpf_lwt_xmit_reroute(struct s
+ 	 * if there is enough header space in skb.
+ 	 */
+ 	err = skb_cow_head(skb, LL_RESERVED_SPACE(dst->dev));
+-	if (unlikely(err))
++	if (unlikely(err)) {
++		dst_release(dst);
+ 		goto err;
++	}
  
- 	if (test_bit(HIDP_WAITING_FOR_RETURN, &session->flags) &&
--				param == session->waiting_report_type) {
-+	    param == session->waiting_report_type) {
- 		if (session->waiting_report_number < 0 ||
--		    session->waiting_report_number == skb->data[0]) {
-+		    (skb->len &&
-+		     session->waiting_report_number == skb->data[0])) {
- 			/* hidp_get_raw_report() is waiting on this report. */
- 			session->report_return = skb;
- 			done_with_skb = 0;
+ 	skb_dst_drop(skb);
+ 	skb_dst_set(skb, dst);
 
 
