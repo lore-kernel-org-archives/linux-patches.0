@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F4083DDAFA;
-	Fri,  7 Aug 2026 14:49:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D9D0435EEC;
+	Fri,  7 Aug 2026 14:49:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114185; cv=none; b=Y83rqZauh/2H7Tcwc88oXba5JXjcoNMkYMR80Meua8PsKkwbbXPceRI8E6oDTSGjs0YBXdFCPIBJ65owr3asYFhsgfKDUGD850HEFqV3px+mD7aqySorKAsY0MUHGCOE0dhOkBmSJRXqw9nicL/F9iD92sEoJKsRSr+srsogp08=
+	t=1786114188; cv=none; b=UT+l+fdzBA/lZtiyVJTITEclvej4SXQqCD7j44C66GTpAGXJvHB8KEMkxgh0GRU1+T8yqjzzQMj5S5bdvfgLPFvxCKriSHI9HHXf/FhnKz740IyeJDyQZzSyS/7cQtca4L8v/E9JdRUmziydtyllHJKPEXRxdfaOf8/bkAYubTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114185; c=relaxed/simple;
-	bh=mwdKzcmn478oKGtovQDNiXqtdWAFZeV1CCZ4OLte+to=;
+	s=arc-20240116; t=1786114188; c=relaxed/simple;
+	bh=Vry3ypEbA0fJBGKrK7g3B4EjyLnt7eDxPaouj5l8rhE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a4KDgayKZxN2Wf6ijNTzfiJRafu5QCiVV2rV7DG8KNQEjEIsm3WPJcVw9+SmbFkxf4y62TWsKxidsRuJHVkDRJljgCzvxOlFKKPhS6GTSGk5RqgYZgOZqgqyXIN4cOvzWoVsMi0iBC62F8UBmu1ECt+wHMt6vY7yvxFELjm0BoU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ElZRV6hE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JbUlOdExS5uYv9iYegXcnqtAq8kUzdiunad4tQe6kI1Jyr58JyYUBH8akvOvVzfoLG1nbRtfVuhc8/vdXz69QvUAz8g0hAtY02yh66rDcjGW691eDdlHRD8t/MVfYZ/WXlcPPNG3BGBZEVSJlVqtyP4WdJAMbf5dRIOHpIrgMfo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zjIwjTs7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ElZRV6hE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C131D1F000E9;
-	Fri,  7 Aug 2026 14:49:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zjIwjTs7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 973A21F00A3A;
+	Fri,  7 Aug 2026 14:49:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114184;
-	bh=xtWEdQTyKdsQHCUCLfeEgS5mi4KW1E641CAblEnSFu8=;
+	s=korg; t=1786114187;
+	bh=ye2Lp1dSHOVinOhXEYb/mxjzYzsAgED++5voB7j2V4M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ElZRV6hEW5/bD2iXS9wu1ioAbD4IjgYqFKgt9PiCVRNPAj2DVPqiloG+4Vi8BeMjS
-	 N3/jvdBtHztvGPwGATKjomI4E4YUelngJxD4tsE5Lf/TMH9/H6P5lb2Uq5YbqshMOg
-	 1/e4wgWMZMRZc4cQqYXxELMeA+43eJCasr0IjE3U=
+	b=zjIwjTs7NqOAFiJuy9c0E+KYl4eakbaWVHSOfRhOr8YcQFfoiKTqs+CueFQ2SplUg
+	 JR8JPtp+UNgfkLQ0BpBMZCAK5iVBaINWig/5qJVenxcciQ4dNnRsXrpoYyVhjZgLf4
+	 7hojcP+IiCm8NuIctR40foz0k/i6Z9kYPbVQeKYQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Linus Walleij <linusw@kernel.org>
-Subject: [PATCH 6.12 130/337] pinctrl: devicetree: dont free uninitialized dev_name on error path
-Date: Fri,  7 Aug 2026 16:35:33 +0200
-Message-ID: <20260807143421.351053984@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>
+Subject: [PATCH 6.12 131/337] erofs: cap LZMA stream pool size
+Date: Fri,  7 Aug 2026 16:35:34 +0200
+Message-ID: <20260807143421.373614133@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -50,54 +50,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 015b5bcbcb622b32317642be91a7f79aa5413649 upstream.
+commit c9b47e6b23114e939b17f818471c7a46e59006e7 upstream.
 
-dt_remember_or_free_map() duplicates dev_name for each map entry. If
-kstrdup_const() fails, dt_free_map() frees dev_name in all num_maps
-entries, including entries that have not been initialized.
+fs/erofs/decompressor_lzma.c sizes the module-global MicroLZMA stream
+pool from num_possible_cpus() when the lzma_streams module parameter is
+unset, then z_erofs_load_lzma_config() preallocates one image-supplied
+dictionary per stream, accepting dictionaries up to 8 MiB.  On high-CPU
+systems, a small EROFS image can pin hundreds of MiB of vmalloc-backed
+decoder state until the erofs module is unloaded.
 
-Some pinctrl drivers, including pinctrl-imx, allocate the map with
-kmalloc() and leave dev_name for the core to initialize. The untouched
-entries therefore contain uninitialized data which is passed to
-kfree_const().
+Impact: An EROFS image mounted by the system can pin up to 8 MiB of
+vmalloc memory per LZMA stream, either as intended or unexpectedly.
 
-Reproduced on qemu's mcimx6ul-evk (pinctrl-imx) with failslab injection
-while binding the pinctrl-consuming device, under KASAN:
+Bound the default stream count by a new
+CONFIG_EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS option, default 16, so the
+worst-case default preallocation is 128 MiB if the number of CPUs is no
+less than 16 while preserving the existing per-image dictionary limit.
+An explicit lzma_streams module parameter is still honoured as-is, so
+administrators who deliberately size the pool are not affected.
 
-  BUG: KASAN: double-free in dt_free_map+0x34/0xa4
-  Free of addr c425a900 by task init/1
-   kfree from dt_free_map+0x34/0xa4
-   dt_free_map from dt_remember_or_free_map+0x184/0x198
-   dt_remember_or_free_map from pinctrl_dt_to_map+0x33c/0x4c8
-   pinctrl_dt_to_map from create_pinctrl+0x9c/0x5c0
-
-Initialize all dev_name fields to NULL before duplicating the device
-name, making the full-map cleanup safe after a partial failure.
-
-Fixes: be4c60b563ed ("pinctrl: devicetree: Avoid taking direct reference to device name string")
+Fixes: 622ceaddb764 ("erofs: lzma compression support")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-fable-5
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/devicetree.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ fs/erofs/Kconfig             |   14 ++++++++++++++
+ fs/erofs/decompressor_lzma.c |    3 ++-
+ 2 files changed, 16 insertions(+), 1 deletion(-)
 
---- a/drivers/pinctrl/devicetree.c
-+++ b/drivers/pinctrl/devicetree.c
-@@ -69,6 +69,10 @@ static int dt_remember_or_free_map(struc
- 	int i;
- 	struct pinctrl_dt_map *dt_map;
+--- a/fs/erofs/Kconfig
++++ b/fs/erofs/Kconfig
+@@ -114,6 +114,20 @@ config EROFS_FS_ZIP_LZMA
  
-+	/* Initialize dev_name before any allocation can fail */
-+	for (i = 0; i < num_maps; i++)
-+		map[i].dev_name = NULL;
+ 	  If unsure, say N.
+ 
++config EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS
++	int "EROFS LZMA default maximum decompression streams"
++	depends on EROFS_FS_ZIP_LZMA
++	range 1 NR_CPUS
++	default 16
++	help
++	  By default EROFS allocates one LZMA decompression stream per CPU.
++	  Each stream can hold a dictionary of up to 8 MiB taken from the
++	  mounted image, so on systems with many CPUs this can reserve a lot
++	  of memory.  This caps the default; the lzma_streams module parameter
++	  still overrides it.
 +
- 	/* Initialize common mapping table entry fields */
- 	for (i = 0; i < num_maps; i++) {
- 		const char *devname;
++	  If unsure, keep the default of 16.
++
+ config EROFS_FS_ZIP_DEFLATE
+ 	bool "EROFS DEFLATE compressed data support"
+ 	depends on EROFS_FS_ZIP
+--- a/fs/erofs/decompressor_lzma.c
++++ b/fs/erofs/decompressor_lzma.c
+@@ -51,7 +51,8 @@ static int __init z_erofs_lzma_init(void
+ 
+ 	/* by default, use # of possible CPUs instead */
+ 	if (!z_erofs_lzma_nstrms)
+-		z_erofs_lzma_nstrms = num_possible_cpus();
++		z_erofs_lzma_nstrms = min_t(unsigned int, num_possible_cpus(),
++				CONFIG_EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS);
+ 
+ 	for (i = 0; i < z_erofs_lzma_nstrms; ++i) {
+ 		struct z_erofs_lzma *strm = kzalloc(sizeof(*strm), GFP_KERNEL);
 
 
