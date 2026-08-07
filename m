@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8347133C53D;
-	Fri,  7 Aug 2026 15:31:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E5E625F988;
+	Fri,  7 Aug 2026 15:31:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116689; cv=none; b=dOuSV5ejIs2JTyv1/CaAXmDyh8AameVRH4bBesq5sk/D3ehzVVh1EZAG+IU6squRM83nV2VGVyQm28nTrGvOfk+bajaA5cukLs42kbzHd+VN+IHnTCQbqml9BlqTJk80tTdv+ziMo8U3LhdZoP9ya6jM86Y9VYSP/25pxLosKhA=
+	t=1786116692; cv=none; b=X0iwKNVkF+LFSeLqEq1geFlwdpwTtOc0yJa1TNgEaZ/pR/vdw7znkXmuI5rkaNzVGbreHypAhZQJQL6WGCdZfK5y3FtDO+ZpBfGo90MODM6sDT5WC3OwMVNk3RYHSCrfTO7aI4mK28Cpd+9YUze1OyrkE42N6IHNAIdx9qfNsM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116689; c=relaxed/simple;
-	bh=4TlpriZaF2zMC4TCluWBEDH5DlZ/KBFxJfQsydF7us0=;
+	s=arc-20240116; t=1786116692; c=relaxed/simple;
+	bh=BK/+DS28XZx+spvGzIaLExw2YnGbLn8/SqncqETEVxE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c6cQR93NjrNY+dk4s85fzxeO3SWtIxB1+SNjypjru4gxScauao6C9vEq12xbxe9gxK6XbKbScLjbQr+ZNb9XZiDyGhepVfwKXj+gHbrxKT3o74oGEmu1eoPnR2IWS6pteOYGv2oXpcoAsWiYEN8WJA0w6aQquSTapLFVUjKFbgA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZKA3gShU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FMTKYE81bWtNtKMHY4XinrlItIuDkrY6oAjZfAl3eGNa5imdGD4FPkhOFin3lhLadU//8AHpcmquWZgAzCLXgy/LACH/RC/Thl7J9CPS5kCb0vAMSSSlQ1jqqac5v5Jwt3uK9Q1LLatDm5efsrLl+tLakHkWqCbGaOPVEmVNQxo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u3XdBm98; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZKA3gShU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D79FF1F000E9;
-	Fri,  7 Aug 2026 15:31:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u3XdBm98"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B81831F00A3A;
+	Fri,  7 Aug 2026 15:31:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116688;
-	bh=V3ec3I1QutgM/SK9ghWrDYRY3SsOUEiqJKuo3RiuM7o=;
+	s=korg; t=1786116691;
+	bh=0TVy4Pi6yIRxexynTYKx3vBRGXDHs2iM4M4G/pw68XQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZKA3gShUPQtYU9s2JtCgF8gvjCzav7XSQsG7/avpDlr/iPk4KNIcDMT73NboJzHiM
-	 99LvINCunkfnlGdOG09HteTDdvWoHaLiwAzy/c1svD21Udal00H088dzfgWnP/eqk4
-	 8THiI2LUFZqaakeeqnU59mQuZjH02jjIH9aa9tQ8=
+	b=u3XdBm98DN/0lyfTNl8x16TiUzao7VMvX/luum+n9uUV1G86om7iKqqhQpsW7LIOa
+	 AbAVJ5imvBlKUYAzAXdEcKpsv8wCdsD9yh7de0ggehuwAoHhCcpPHnIjwFYP6SPOHE
+	 d+eAM1iU+RYh3tKApUcDuyzmN2Wp9bxEvXEYUH4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
+	Zhiling Zou <roxy520tt@gmail.com>,
+	Julian Anastasov <ja@ssi.bg>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 055/438] assoc_array: trim the final shortcut word using the current chunk end
-Date: Fri,  7 Aug 2026 16:34:11 +0200
-Message-ID: <20260807143429.165133203@linuxfoundation.org>
+Subject: [PATCH 7.1 056/438] ipvs: adjust double hashing when fwd method changes
+Date: Fri,  7 Aug 2026 16:34:12 +0200
+Message-ID: <20260807143429.185507113@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -51,64 +52,342 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Julian Anastasov <ja@ssi.bg>
 
-[ Upstream commit a82c8a05e86f3f84e09698f65b4515b5d04633f6 ]
+[ Upstream commit 712d2993bea555f1f09cd53cbdb25714f28e85db ]
 
-assoc_array_walk() masks off the bits past shortcut->skip_to_level in the
-word that contains skip_to_level, gated on
-round_up(sc_level, ASSOC_ARRAY_KEY_CHUNK_SIZE) > skip_to_level.
+Synced conns can be created with one forwarding method
+and later updated with different one after the dest
+server is configured. This needs adjusting the hashing
+for node hn1 because only MASQ supports double hashing.
 
-That guard is wrong in two opposite ways:
+Modify conn_tab_lock() to support seeking for hash node
+hn0 together with adding for hn1. By this way we can
+safely modify the forwarding method and hn1.hash_key
+under bucket lock for the first node hn0. The forwarding
+method is also protected by cp->lock as it is part of
+cp->flags.
 
- - When sc_level is word-aligned (every word after the first) round_up()
-   is a no-op, so the guard is sc_level > skip_to_level and never fires for
-   the word that holds skip_to_level.  A shortcut that spans more than one
-   word and ends in the middle of its last word leaves that word untrimmed,
-   and its stale high bits leak into the dissimilarity word and can steer
-   the walk down the wrong descendant.
+Fix the usage of stale idx/idx2 values in conn_tab_lock
+after jumping to the retry label. Instead, use idx/idx2
+values just to order the locking for the old/new tables.
 
- - When sc_level is unaligned (the first word) and skip_to_level sits on
-   the next chunk boundary, sc_level + CHUNK would exceed skip_to_level and
-   fire the trim with shift = skip_to_level & CHUNK_MASK == 0, which clears
-   the whole dissimilarity word and makes a differing shortcut compare
-   equal.
-
-Use the end of the chunk that contains sc_level instead:
-
-	skip_to_level < round_down(sc_level, CHUNK) + CHUNK
-
-For an aligned sc_level whose word holds skip_to_level this now fires (the
-first bug); for an unaligned sc_level with skip_to_level on the following
-boundary it does not, so shift is never 0 when the branch runs and the trim
-never clears the whole word.
-
-Fixes: 3cb989501c26 ("Add a generic associative array implementation.")
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Tested-by: Jarkko Sakkinen <jarkko@kernel.org>
-Link: https://lore.kernel.org/r/20260719161505.2423935-4-michael.bommarito@gmail.com
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Reported-by: Zhiling Zou <roxy520tt@gmail.com>
+Link: https://patch.msgid.link/1b914f41d725bc064c9ba9830dc8169329737270.1782540466.git.roxy520tt@gmail.com/
+Link: https://sashiko.dev/#/patchset/CALMqdkR704S2BG_QD_bgHTFp2%2B1QCi7n0T4zoZyTo8mDZevYSA%40mail.gmail.com
+Fixes: f20c73b0460d ("ipvs: use more keys for connection hashing")
+Signed-off-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/assoc_array.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/netfilter/ipvs/ip_vs_conn.c | 189 +++++++++++++++++++++++++-------
+ 1 file changed, 147 insertions(+), 42 deletions(-)
 
-diff --git a/lib/assoc_array.c b/lib/assoc_array.c
-index bcc6e0a013eb8..b6c9723e12ced 100644
---- a/lib/assoc_array.c
-+++ b/lib/assoc_array.c
-@@ -255,7 +255,8 @@ assoc_array_walk(const struct assoc_array *array,
- 		sc_segments = shortcut->index_key[sc_level >> ASSOC_ARRAY_KEY_CHUNK_SHIFT];
- 		dissimilarity = segments ^ sc_segments;
+diff --git a/net/netfilter/ipvs/ip_vs_conn.c b/net/netfilter/ipvs/ip_vs_conn.c
+index b457dd2f6bc89..26f2233b34b04 100644
+--- a/net/netfilter/ipvs/ip_vs_conn.c
++++ b/net/netfilter/ipvs/ip_vs_conn.c
+@@ -70,25 +70,45 @@ static struct kmem_cache *ip_vs_conn_cachep __read_mostly;
+  * bucket or hash table
+  * - hash table resize works like rehash but always rehashes into new table
+  * - bit lock on bucket serializes all operations that modify the chain
++ * - on resize, bucket from the old table is locked before bucket from the
++ * new table
+  * - cp->lock protects conn fields like cp->flags, cp->dest
+  */
  
--		if (round_up(sc_level, ASSOC_ARRAY_KEY_CHUNK_SIZE) > shortcut->skip_to_level) {
-+		if (shortcut->skip_to_level < round_down(sc_level,
-+				ASSOC_ARRAY_KEY_CHUNK_SIZE) + ASSOC_ARRAY_KEY_CHUNK_SIZE) {
- 			/* Trim segments that are beyond the shortcut */
- 			int shift = shortcut->skip_to_level & ASSOC_ARRAY_KEY_CHUNK_MASK;
- 			dissimilarity &= ~(ULONG_MAX << shift);
+-/* Lock conn_tab bucket for conn hash/unhash, not for rehash */
++/**
++ * conn_tab_lock - Lock conn_tab buckets for conn hash/unhash, not for rehash
++ * @t:		hash table for hn0, new_tbl when new_hash=true
++ * @t2:		hash table for hn1, new_tbl when new_hash2=true
++ * @cp:		connection
++ * @hash_key:	hash key for hn0
++ * @hash_key2:	hash key for hn1
++ * @use2:	using hn1 (double hashing) based on the forwarding method
++ * @new_hash:	mode for hn0, hash node (true) or seek node (false)
++ * @new_hash2:	mode for hn1, hash node (true) or seek node (false)
++ * @head_ret:	returned head for hn0
++ * @head2_ret:	returned head for hn1
++ *
++ * We support 3 modes:
++ * - seek mode for both nodes, used for unhashing
++ * - hash mode for both nodes, used for hashing
++ * - seek hn0 and hash hn1, used when forwarding method is changed
++ */
+ static __always_inline void
+-conn_tab_lock(struct ip_vs_rht *t, struct ip_vs_conn *cp, u32 hash_key,
+-	      u32 hash_key2, bool use2, bool new_hash,
+-	      struct hlist_bl_head **head_ret, struct hlist_bl_head **head2_ret)
++conn_tab_lock(struct ip_vs_rht *t, struct ip_vs_rht *t2, struct ip_vs_conn *cp,
++	      u32 hash_key, u32 hash_key2, bool use2, bool new_hash,
++	      bool new_hash2, struct hlist_bl_head **head_ret,
++	      struct hlist_bl_head **head2_ret)
+ {
+ 	struct hlist_bl_head *head, *head2;
+ 	u32 hash_key_new, hash_key_new2;
+-	struct ip_vs_rht *t2 = t;
+-	u32 idx, idx2;
++	int idx = 0, idx2 = 0;
++
++	/* Advance idx2 when new_hash is not set but hash_key2
++	 * is for new table
++	 */
++	if (new_hash2 && use2 && t != t2)
++		idx2++;
+ 
+-	idx = hash_key & t->mask;
+-	if (use2)
+-		idx2 = hash_key2 & t->mask;
+-	else
+-		idx2 = idx;
+ 	if (!new_hash) {
+ 		/* We need to lock the bucket in the right table */
+ 
+@@ -100,46 +120,45 @@ conn_tab_lock(struct ip_vs_rht *t, struct ip_vs_conn *cp, u32 hash_key,
+ 			 * both nodes in different tables, use idx/idx2
+ 			 * for proper lock ordering for heads.
+ 			 */
+-			idx = hash_key & t->mask;
+-			idx |= IP_VS_RHT_TABLE_ID_MASK;
+-		}
+-		if (use2) {
+-			if (!ip_vs_rht_same_table(t2, hash_key2)) {
+-				/* It is already moved to new table */
+-				t2 = rcu_dereference(t2->new_tbl);
+-				idx2 = hash_key2 & t2->mask;
+-				idx2 |= IP_VS_RHT_TABLE_ID_MASK;
+-			}
+-		} else {
+-			idx2 = idx;
++			idx++;
+ 		}
+ 	}
++	if (use2 && !new_hash2 && !ip_vs_rht_same_table(t2, hash_key2)) {
++		/* It is already moved to new table */
++		t2 = rcu_dereference(t2->new_tbl);
++		idx2++;
++	}
+ 
++	if (!use2)
++		idx2 = idx;
+ 	head = t->buckets + (hash_key & t->mask);
+ 	head2 = use2 ? t2->buckets + (hash_key2 & t2->mask) : head;
+ 
+-	local_bh_disable();
+-	/* Do not touch seqcount, this is a safe operation */
+-
+-	if (idx <= idx2) {
++	if (idx > idx2 || (head > head2 && idx == idx2)) {
++		hlist_bl_lock(head2);
+ 		hlist_bl_lock(head);
+-		if (head != head2)
+-			hlist_bl_lock(head2);
+ 	} else {
+-		hlist_bl_lock(head2);
+ 		hlist_bl_lock(head);
++		if (head != head2)
++			hlist_bl_lock(head2);
+ 	}
+ 	if (!new_hash) {
++		bool changed;
++
+ 		/* Ensure hash_key is read under lock */
+ 		hash_key_new = READ_ONCE(cp->hn0.hash_key);
+-		hash_key_new2 = READ_ONCE(cp->hn1.hash_key);
++		changed = hash_key != hash_key_new;
++		if (use2 && !new_hash2) {
++			hash_key_new2 = READ_ONCE(cp->hn1.hash_key);
++			changed |= hash_key2 != hash_key_new2;
++		} else {
++			hash_key_new2 = hash_key2;
++		}
+ 		/* Hash changed ? */
+-		if (hash_key != hash_key_new ||
+-		    (hash_key2 != hash_key_new2 && use2)) {
++		if (changed) {
+ 			if (head != head2)
+ 				hlist_bl_unlock(head2);
+ 			hlist_bl_unlock(head);
+-			local_bh_enable();
+ 			hash_key = hash_key_new;
+ 			hash_key2 = hash_key_new2;
+ 			goto retry;
+@@ -155,7 +174,6 @@ static inline void conn_tab_unlock(struct hlist_bl_head *head,
+ 	if (head != head2)
+ 		hlist_bl_unlock(head2);
+ 	hlist_bl_unlock(head);
+-	local_bh_enable();
+ }
+ 
+ static void ip_vs_conn_expire(struct timer_list *t);
+@@ -268,8 +286,9 @@ static inline int ip_vs_conn_hash(struct ip_vs_conn *cp)
+ 		use2 = false;
+ 	}
+ 
+-	conn_tab_lock(t, cp, hash_key, hash_key2, use2, true /* new_hash */,
+-		      &head, &head2);
++	local_bh_disable();
++	conn_tab_lock(t, t, cp, hash_key, hash_key2, use2, true /* new_hash */,
++		      true /* new_hash2 */, &head, &head2);
+ 
+ 	cp->flags |= IP_VS_CONN_F_HASHED;
+ 	WRITE_ONCE(cp->hn0.hash_key, hash_key);
+@@ -280,6 +299,7 @@ static inline int ip_vs_conn_hash(struct ip_vs_conn *cp)
+ 		hlist_bl_add_head_rcu(&cp->hn1.node, head2);
+ 
+ 	conn_tab_unlock(head, head2);
++	local_bh_enable();
+ 	ret = 1;
+ 
+ 	/* Schedule resizing if load increases */
+@@ -306,18 +326,20 @@ static inline bool ip_vs_conn_unlink(struct ip_vs_conn *cp)
+ 		return refcount_dec_if_one(&cp->refcnt);
+ 
+ 	rcu_read_lock();
++	local_bh_disable();
+ 
+ 	t = rcu_dereference(ipvs->conn_tab);
+ 	hash_key = READ_ONCE(cp->hn0.hash_key);
+ 	hash_key2 = READ_ONCE(cp->hn1.hash_key);
+ 	use2 = ip_vs_conn_use_hash2(cp);
+ 
+-	conn_tab_lock(t, cp, hash_key, hash_key2, use2, false /* new_hash */,
+-		      &head, &head2);
++	conn_tab_lock(t, t, cp, hash_key, hash_key2, use2, false /* new_hash */,
++		      false /* new_hash2 */, &head, &head2);
+ 
+ 	if (cp->flags & IP_VS_CONN_F_HASHED) {
+ 		/* Decrease refcnt and unlink conn only if we are last user */
+-		if (refcount_dec_if_one(&cp->refcnt)) {
++		if (use2 == ip_vs_conn_use_hash2(cp) &&
++		    refcount_dec_if_one(&cp->refcnt)) {
+ 			hlist_bl_del_rcu(&cp->hn0.node);
+ 			if (use2)
+ 				hlist_bl_del_rcu(&cp->hn1.node);
+@@ -328,6 +350,7 @@ static inline bool ip_vs_conn_unlink(struct ip_vs_conn *cp)
+ 
+ 	conn_tab_unlock(head, head2);
+ 
++	local_bh_enable();
+ 	rcu_read_unlock();
+ 
+ 	return ret;
+@@ -632,6 +655,7 @@ void ip_vs_conn_fill_cport(struct ip_vs_conn *cp, __be16 cport)
+ 	int ntbl;
+ 	int dir;
+ 
++restart:
+ 	/* No packets from inside, so we can do it in 2 steps. */
+ 	dir = use2 ? 1 : 0;
+ 
+@@ -686,6 +710,23 @@ void ip_vs_conn_fill_cport(struct ip_vs_conn *cp, __be16 cport)
+ 	/* Protect the cp->flags modification */
+ 	spin_lock_bh(&cp->lock);
+ 
++	/* Recheck the forwarding method under lock */
++	if (use2 != ip_vs_conn_use_hash2(cp)) {
++		use2 = !use2;
++		if (use2) {
++			spin_unlock_bh(&cp->lock);
++			/* Restart with new use2 value */
++			goto restart;
++		}
++		if (dir) {
++			/* Not started yet, so just skip dir 1 */
++			spin_unlock_bh(&cp->lock);
++			dir--;
++			goto next_dir;
++		}
++		/* Just finish dir 0 */
++	}
++
+ 	/* Lock seqcount only for the old bucket, even if we are on new table
+ 	 * because it affects the del operation, not the adding.
+ 	 */
+@@ -752,6 +793,61 @@ void ip_vs_conn_fill_cport(struct ip_vs_conn *cp, __be16 cport)
+ 		goto next_dir;
+ }
+ 
++/* Change forwarding method for hashed conn */
++static void ip_vs_conn_change_fwd_mask(struct ip_vs_conn *cp, u32 new_flags)
++{
++	struct netns_ipvs *ipvs = cp->ipvs;
++	struct hlist_bl_head *head, *head2;
++	u32 hash2, hash_key, hash_key2;
++	struct ip_vs_rht *t, *t2;
++
++	/* See ip_vs_conn_use_hash2() for reference */
++	if ((cp->flags & IP_VS_CONN_F_TEMPLATE) ||
++	    /* No change in double hashing ? */
++	    (IP_VS_FWD_METHOD(cp) == IP_VS_CONN_F_MASQ) ==
++	    ((new_flags & IP_VS_CONN_F_FWD_MASK) == IP_VS_CONN_F_MASQ)) {
++		cp->flags = new_flags;
++		return;
++	}
++	t = rcu_dereference(ipvs->conn_tab);
++	if (ip_vs_conn_use_hash2(cp)) {
++		/* Stop double hashing */
++		hash_key = READ_ONCE(cp->hn0.hash_key);
++		hash_key2 = READ_ONCE(cp->hn1.hash_key);
++
++		conn_tab_lock(t, t, cp, hash_key, hash_key2, true /* use2 */,
++			      false /* new_hash */, false /* new_hash2 */,
++			      &head, &head2);
++
++		/* Keep both hash keys in same table */
++		hash_key = READ_ONCE(cp->hn0.hash_key);
++		WRITE_ONCE(cp->hn1.hash_key, hash_key);
++		hlist_bl_del_rcu(&cp->hn1.node);
++		cp->flags = new_flags;
++
++		conn_tab_unlock(head, head2);
++	} else {
++		/* Start double hashing */
++
++		hash_key = READ_ONCE(cp->hn0.hash_key);
++
++		t2 = rcu_dereference(t->new_tbl);
++		hash2 = ip_vs_conn_hashkey_conn(t2, cp, true);
++		hash_key2 = ip_vs_rht_build_hash_key(t2, hash2);
++
++		/* Change the forwarding method under locked hn0 */
++		conn_tab_lock(t, t2, cp, hash_key, hash_key2, true /* use2 */,
++			      false /* new_hash */, true /* new_hash2 */,
++			      &head, &head2);
++
++		WRITE_ONCE(cp->hn1.hash_key, hash_key2);
++		cp->flags = new_flags;
++		hlist_bl_add_head_rcu(&cp->hn1.node, head2);
++
++		conn_tab_unlock(head, head2);
++	}
++}
++
+ /* Get default load factor to map conn_count/u_thresh to t->size */
+ static int ip_vs_conn_default_load_factor(struct netns_ipvs *ipvs)
+ {
+@@ -1021,9 +1117,18 @@ ip_vs_bind_dest(struct ip_vs_conn *cp, struct ip_vs_dest *dest)
+ 			conn_flags &= ~IP_VS_CONN_F_INACTIVE;
+ 		/* connections inherit forwarding method from dest */
+ 		flags &= ~(IP_VS_CONN_F_FWD_MASK | IP_VS_CONN_F_NOOUTPUT);
++		flags |= conn_flags;
++		/* Changing forwarding method for hashed conn can
++		 * happen only under locks
++		 */
++		if (cp->flags & IP_VS_CONN_F_HASHED)
++			ip_vs_conn_change_fwd_mask(cp, flags);
++		else
++			cp->flags = flags;
++	} else {
++		flags |= conn_flags;
++		cp->flags = flags;
+ 	}
+-	flags |= conn_flags;
+-	cp->flags = flags;
+ 	cp->dest = dest;
+ 
+ 	IP_VS_DBG_BUF(7, "Bind-dest %s c:%s:%d v:%s:%d "
 -- 
 2.53.0
 
