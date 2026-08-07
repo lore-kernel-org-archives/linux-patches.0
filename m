@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C38C727466A;
-	Fri,  7 Aug 2026 15:16:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FEE01A681E;
+	Fri,  7 Aug 2026 15:16:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115816; cv=none; b=rfAgGxvcuRKFGe9g1piFRV2a/yArLYH0lDsYCdTXVipeT9t7k+zYQy9EFMCHHwArX36/vgBI+fot1BzySyJKhvV5IXHS3c0SAIKrYZcecztNoQsmpxA1MG1u07PwzV2VlbB7TLfYE2/FLXTswElEHyDhaWa+N62qMvuXm3UvPyM=
+	t=1786115820; cv=none; b=auycRZDZgG4ipSa2N2Y2LdfRDoP+dVhnGbXQXcQqCuFcQsO29jMJuaRvGF+kyGreDJfQg8+AMsm3t9GVnphLr7ZMT4zpkUi3beteC5tMrZ+83T6tYcmj7LVTTxqadtOGHRVI+mjLfQQE0mFhTiX20JIcJOVF48MN4UMUgeQBqas=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115816; c=relaxed/simple;
-	bh=yxvSCtZ+ERCZuoCZiuRIL50SVBFkoaKmSwIHqx4rF+w=;
+	s=arc-20240116; t=1786115820; c=relaxed/simple;
+	bh=6Ufvzj5Xw6BNKthhjYNzhD4tTiXGGsAiGDdJQtZOypQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WFzu4LfQTpXQ/oHz13v1rqmVVBWDA/ggF6XdEhJpPNcieVXVxwte5Tg8OTf2Txh8JExp0ybw/vWztigUymdTQXIuxRAgYFjK+mm0lQq7QQVRVP7wn6rg+RBb+ksPCI09sYdfHs0RvytNo+K0yXM6xBtKDuxeLNS64/4mMUPMnEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bcDUUcO7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WdNyxAFbugKoiMBzkynhZlzPduJkOYvk8cgvnsGpE9RLfsEgdqUeEhGqUDtJA3AK2YjqKwnwXshYMUN6CjPXv9jfL8H7y72AQIOVCbs7n463AHhjWdw1LS8vEjDBZuGWEa8rPvywR+B4NsABnCGwbd9VTaVecAPnkx4Qy2A1xa0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G5nbuVm9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bcDUUcO7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 236F81F000E9;
-	Fri,  7 Aug 2026 15:16:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G5nbuVm9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3CAA1F000E9;
+	Fri,  7 Aug 2026 15:16:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115815;
-	bh=fbqZS8o7imow/2b45zCe3zT9juath/79gVGFBfHkqOY=;
+	s=korg; t=1786115818;
+	bh=xrTQdKLCoB+SKp+xFo6i2s4i2XBeq4oqAG5GZdgcf98=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bcDUUcO7rQoqh4JwZAGphAQgjxwHbVNcsgRQb/sXAdn2mabyR61HRPOdXD9XE4bF6
-	 x/HRKWlD7YNa0liKjSpmJbekeZbqa4K3gIyfK/FC4VcSu0GkU/6gnCPH8IwuYWXQWo
-	 XTuBrjsAsCd7uPKMAgzSXT6O751naCNe2hmD3Kf4=
+	b=G5nbuVm9MxcOUYk+k69cCBOWinRgMUC86MVIYxDoGxXgzYCdCBfi43FwfQh8wVJFv
+	 eIIXAtfF3DQvJwD/Ca03FapUGs9vfIyF5WhKf3aQJ+uhXUBDp7gdrabdR/d3G8hODn
+	 J5hGfYu26/YtB2yQcZmUYTrWXdWNRs8IZTtUwpx4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
+	Josua Mayer <josua@solid-run.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Damien Le Moal <dlemoal@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 013/261] ata: sata_mv: accept 1 or 2 resources in platform probe
-Date: Fri,  7 Aug 2026 16:36:10 +0200
-Message-ID: <20260807143415.650730283@linuxfoundation.org>
+Subject: [PATCH 6.6 014/261] ata: libahci_platform: support non-consecutive port numbers
+Date: Fri,  7 Aug 2026 16:36:11 +0200
+Message-ID: <20260807143415.673170563@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143415.358597922@linuxfoundation.org>
 References: <20260807143415.358597922@linuxfoundation.org>
@@ -51,42 +52,176 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Josua Mayer <josua@solid-run.com>
 
-[ Upstream commit ef19a9cf037957fe3a35df8355c76ff0a63a0436 ]
+[ Upstream commit 8c87215dd3a2c814dcffc0bafe8c80c8f98f2574 ]
 
-Board files in arch/arm/plat-orion, arch/arm/mach-dove,
-arch/arm/mach-mv78xx0 and arch/arm/mach-orion5x still register the
-"sata_mv" device with two resources (IORESOURCE_MEM plus IORESOURCE_IRQ).
-Those devices are rejected with -EINVAL, so SATA no longer probes on
-legacy Marvell Orion/Kirkwood-style boards.
+So far ahci_platform relied on number of child nodes in firmware to
+allocate arrays and expected port numbers to start from 0 without holes.
+This number of ports is then set in private structure for use when
+configuring phys and regulators.
 
-Accept both 1 resource (DT, IRQ fetched via platform_get_irq()) and 2
-resources (legacy, IRQ supplied as a second resource) so both probing
-paths work.
+Some platforms may not use every port of an ahci controller.
+E.g. SolidRUN CN9130 Clearfog uses only port 1 but not port 0, leading
+to the following errors during boot:
+[    1.719476] ahci f2540000.sata: invalid port number 1
+[    1.724562] ahci f2540000.sata: No port enabled
 
-Fixes: b3b2bec9646e ("ata: sata_mv: Fixes expected number of resources now IRQs are gone")
-Assisted-by: opencode:big-pickle
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Update all accessesors of ahci_host_priv phys and target_pwrs arrays to
+support holes. Access is gated by hpriv->mask_port_map which has a bit
+set for each enabled port.
+
+Update ahci_platform_get_resources to ignore holes in the port numbers
+and enable ports defined in firmware by their reg property only.
+
+When firmware does not define children it is assumed that there is
+exactly one port, using index 0.
+
+Signed-off-by: Josua Mayer <josua@solid-run.com>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Stable-dep-of: 4d99a91574c4 ("ata: ahci_ceva: fix error paths in ceva_ahci_platform_enable_resources()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/sata_mv.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/ata/ahci_brcm.c        |  3 +++
+ drivers/ata/ahci_ceva.c        |  6 +++++
+ drivers/ata/libahci_platform.c | 40 +++++++++++++++++++++++++++++-----
+ 3 files changed, 43 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/ata/sata_mv.c b/drivers/ata/sata_mv.c
-index 80a45e11fb5b6..8700bc2fdade8 100644
---- a/drivers/ata/sata_mv.c
-+++ b/drivers/ata/sata_mv.c
-@@ -4026,7 +4026,7 @@ static int mv_platform_probe(struct platform_device *pdev)
- 	/*
- 	 * Simple resource validation ..
- 	 */
--	if (unlikely(pdev->num_resources != 1)) {
-+	if (unlikely(pdev->num_resources != 1 && pdev->num_resources != 2)) {
- 		dev_err(&pdev->dev, "invalid number of resources\n");
- 		return -EINVAL;
+diff --git a/drivers/ata/ahci_brcm.c b/drivers/ata/ahci_brcm.c
+index 70c3a33eee6f2..0411bad231475 100644
+--- a/drivers/ata/ahci_brcm.c
++++ b/drivers/ata/ahci_brcm.c
+@@ -288,6 +288,9 @@ static unsigned int brcm_ahci_read_id(struct ata_device *dev,
+ 
+ 	/* Re-initialize and calibrate the PHY */
+ 	for (i = 0; i < hpriv->nports; i++) {
++		if (!(hpriv->mask_port_map & (1 << i)))
++			continue;
++
+ 		rc = phy_init(hpriv->phys[i]);
+ 		if (rc)
+ 			goto disable_phys;
+diff --git a/drivers/ata/ahci_ceva.c b/drivers/ata/ahci_ceva.c
+index 11a2c199a7c24..6e115da23d3f0 100644
+--- a/drivers/ata/ahci_ceva.c
++++ b/drivers/ata/ahci_ceva.c
+@@ -206,6 +206,9 @@ static int ceva_ahci_platform_enable_resources(struct ahci_host_priv *hpriv)
+ 		goto disable_clks;
+ 
+ 	for (i = 0; i < hpriv->nports; i++) {
++		if (!(hpriv->mask_port_map & (1 << i)))
++			continue;
++
+ 		rc = phy_init(hpriv->phys[i]);
+ 		if (rc)
+ 			goto disable_rsts;
+@@ -215,6 +218,9 @@ static int ceva_ahci_platform_enable_resources(struct ahci_host_priv *hpriv)
+ 	ahci_platform_deassert_rsts(hpriv);
+ 
+ 	for (i = 0; i < hpriv->nports; i++) {
++		if (!(hpriv->mask_port_map & (1 << i)))
++			continue;
++
+ 		rc = phy_power_on(hpriv->phys[i]);
+ 		if (rc) {
+ 			phy_exit(hpriv->phys[i]);
+diff --git a/drivers/ata/libahci_platform.c b/drivers/ata/libahci_platform.c
+index 581704e61f286..2174a3e6e9574 100644
+--- a/drivers/ata/libahci_platform.c
++++ b/drivers/ata/libahci_platform.c
+@@ -49,6 +49,9 @@ int ahci_platform_enable_phys(struct ahci_host_priv *hpriv)
+ 	int rc, i;
+ 
+ 	for (i = 0; i < hpriv->nports; i++) {
++		if (!(hpriv->mask_port_map & (1 << i)))
++			continue;
++
+ 		rc = phy_init(hpriv->phys[i]);
+ 		if (rc)
+ 			goto disable_phys;
+@@ -70,6 +73,9 @@ int ahci_platform_enable_phys(struct ahci_host_priv *hpriv)
+ 
+ disable_phys:
+ 	while (--i >= 0) {
++		if (!(hpriv->mask_port_map & (1 << i)))
++			continue;
++
+ 		phy_power_off(hpriv->phys[i]);
+ 		phy_exit(hpriv->phys[i]);
  	}
+@@ -88,6 +94,9 @@ void ahci_platform_disable_phys(struct ahci_host_priv *hpriv)
+ 	int i;
+ 
+ 	for (i = 0; i < hpriv->nports; i++) {
++		if (!(hpriv->mask_port_map & (1 << i)))
++			continue;
++
+ 		phy_power_off(hpriv->phys[i]);
+ 		phy_exit(hpriv->phys[i]);
+ 	}
+@@ -435,6 +444,20 @@ static int ahci_platform_get_firmware(struct ahci_host_priv *hpriv,
+ 	return 0;
+ }
+ 
++static u32 ahci_platform_find_max_port_id(struct device *dev)
++{
++	u32 max_port = 0;
++
++	for_each_child_of_node_scoped(dev->of_node, child) {
++		u32 port;
++
++		if (!of_property_read_u32(child, "reg", &port))
++			max_port = max(max_port, port);
++	}
++
++	return max_port;
++}
++
+ /**
+  * ahci_platform_get_resources - Get platform resources
+  * @pdev: platform device to get resources for
+@@ -462,6 +485,7 @@ struct ahci_host_priv *ahci_platform_get_resources(struct platform_device *pdev,
+ 	struct ahci_host_priv *hpriv;
+ 	struct device_node *child;
+ 	u32 mask_port_map = 0;
++	u32 max_port;
+ 
+ 	if (!devres_open_group(dev, NULL, GFP_KERNEL))
+ 		return ERR_PTR(-ENOMEM);
+@@ -553,15 +577,17 @@ struct ahci_host_priv *ahci_platform_get_resources(struct platform_device *pdev,
+ 		goto err_out;
+ 	}
+ 
++	/* find maximum port id for allocating structures */
++	max_port = ahci_platform_find_max_port_id(dev);
+ 	/*
+-	 * If no sub-node was found, we still need to set nports to
+-	 * one in order to be able to use the
++	 * Set nports according to maximum port id. Clamp at
++	 * AHCI_MAX_PORTS, warning message for invalid port id
++	 * is generated later.
++	 * When DT has no sub-nodes max_port is 0, nports is 1,
++	 * in order to be able to use the
+ 	 * ahci_platform_[en|dis]able_[phys|regulators] functions.
+ 	 */
+-	if (child_nodes)
+-		hpriv->nports = child_nodes;
+-	else
+-		hpriv->nports = 1;
++	hpriv->nports = min(AHCI_MAX_PORTS, max_port + 1);
+ 
+ 	hpriv->phys = devm_kcalloc(dev, hpriv->nports, sizeof(*hpriv->phys), GFP_KERNEL);
+ 	if (!hpriv->phys) {
+@@ -634,6 +660,8 @@ struct ahci_host_priv *ahci_platform_get_resources(struct platform_device *pdev,
+ 		 * If no sub-node was found, keep this for device tree
+ 		 * compatibility
+ 		 */
++		hpriv->mask_port_map |= BIT(0);
++
+ 		rc = ahci_platform_get_phy(hpriv, 0, dev, dev->of_node);
+ 		if (rc)
+ 			goto err_out;
 -- 
 2.53.0
 
