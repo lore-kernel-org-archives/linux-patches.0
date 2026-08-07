@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD8253AC0D0;
-	Fri,  7 Aug 2026 14:48:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 816CE39CD16;
+	Fri,  7 Aug 2026 14:48:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114124; cv=none; b=B1zchqLjp1mwIefncni/2tPEgPtwbu3AJga/sBIn2o72fQV1gP9CYA6Fi4b/O+Xh3IlYVaO/sqQr1Wj0POBy1HvKJN/dEwvGRR7rL+q3DWUBnppB4x+z0XANeQi9WHWbeG3H48Vg6MJhrwBNCp0UbNDFevjRwjzd8lC6wdVSurc=
+	t=1786114126; cv=none; b=ooO1wI5b3RhEb1PJDt46QZ+OLVjEhhQHisSo8dEjPUKOFmDKTDVrAXnd5K7cjyrSQR/ZI0GooRZ8tSmHr82nmPyAsGB6mme18OePN1crsW/18yjGIa0NLS5MYodcIbD7YupR7nF7U55fjmkJgD7ljBYpaumhStzoajSgd6euXk4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114124; c=relaxed/simple;
-	bh=Y5NMJ+eyKajaEfMb9dHX6dxADkOBHprYKs/fXm/O4pw=;
+	s=arc-20240116; t=1786114126; c=relaxed/simple;
+	bh=LBiMfh95oCPAJGrnsrIncfczwdyRHTRiILUEgqra9fM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ikItoiFayJ2hMVB1+CEH9N51TwPA0XONZU6MOBFbKgYKVvwfe70owm9jzq0r5Uh8LWumDYOlHmjPw7WIfcL721k5TACrA9UhGHvMN1Q2uRgSKprXUUUvaBkBXfih2M6wd1LYvLqrLfuHJLy/mNwC82ecGr2b/RLaayNUACm+TkA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mp/3gkNO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UuVvpFDtAkn3GKbCG/mZx8UJp6ldMSy/4KjpWPS+ocXP/90wGRI1y1glUseVqVcM8KyZa2GGV4wJlcDOI0E0YEysY4dfR1qmL5+Vm+exo4pBpgjsvCSyq1Rpay7O0NcYUKN7LTe9ROoqrxNGdLu8xqiS9WalDCFHd7P7eFoAIQI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UQCNqiJ1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mp/3gkNO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9575D1F00A3A;
-	Fri,  7 Aug 2026 14:48:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UQCNqiJ1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92E181F000E9;
+	Fri,  7 Aug 2026 14:48:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114119;
-	bh=D5yUsoKEPaAZZu86/ZbXpaTm8JOooZeJLP6+yJU8j3o=;
+	s=korg; t=1786114122;
+	bh=NBZGAwWaWN6WROklyHT53vqsR4qaeyaUJZ3pfLB27ko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Mp/3gkNOg0xkOjTPeX+PRG4wstU+MgxkG67+cnRRZ1vWzyGSGAgvfWiPBDnvdkjip
-	 +762/sb7GHlZDVcroaLdfqrnJjabhPXRXCp5CPH9kWMPW9sJcM0ztMVQkbmQeBq4g+
-	 b0iTE551ZtThi2pzZNZNvqFYQohRle19RQantzqA=
+	b=UQCNqiJ1Y8E4AH3uD1LJr+AzPpyXe0dL1mGQAUkfIHuKVtpWvdipvHZFzPO12P3jc
+	 csn24cQ3XeEgQUDbTK65GZ+R6FFAFYGq7hxq5IleKX0HvTjEsp/5pMTl69jjP/Muid
+	 OsaZSiRMoSQ8IueM7KM3RadB5P0+6epiET9QkB1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.12 151/337] Bluetooth: hci_sync: Fix advertising data UAFs
-Date: Fri,  7 Aug 2026 16:35:54 +0200
-Message-ID: <20260807143421.824102124@linuxfoundation.org>
+	"Denis V. Lunev" <den@openvz.org>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 125/337] qede: sync udp_tunnel ports outside qede_lock in the recovery path
+Date: Fri,  7 Aug 2026 16:35:28 +0200
+Message-ID: <20260807143421.242130171@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -51,341 +56,169 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <nicoyip.dev@gmail.com>
+From: Denis V. Lunev <den@openvz.org>
 
-commit cdc36db204ffd97b947d64374cf23a210dc74777 upstream.
+[ Upstream commit 451c9075d6c53f2438d110addbeeeea6fac18567 ]
 
-hci_find_adv_instance() returns an adv_info pointer that is valid only
-while hdev->lock is held.  The advertising command-sync paths perform
-instance lookups without that lock and, in some cases, retain the pointer
-while waiting for a controller response.
+A TX timeout on a qede NIC that has VXLAN/GENEVE tunnel ports
+configured wedges the rtnetlink control plane of the whole machine:
 
-An advertising termination event can therefore interleave as follows:
+  NETDEV WATCHDOG: ens6f1 (qede): transmit queue 2 timed out 10226 ms
+  [qede_tx_timeout:586(ens6f1)]TX timeout on queue 2!
+  [qede_recovery_handler:2665(ens6f0)]Starting a recovery process
 
-  hci_cmd_sync_work                 hci_rx_work
-  hci_find_adv_instance()
-  __hci_cmd_sync_status()
-    wait for controller reply       hci_dev_lock()
-                                    hci_remove_adv_instance()
-                                      kfree(adv)
-  adv->scan_rsp_changed = false
+The recovery path deadlocks on the driver's own mutex:
 
-KASAN reported:
+  qede_sp_task
+   rtnl_lock()
+   mutex_lock(&edev->qede_lock)        <- taken
+   qede_recovery_handler
+    qede_load
+    udp_tunnel_nic_reset_ntf
+     __udp_tunnel_nic_device_sync
+      info->sync_table == qede_udp_tunnel_sync
+       mutex_lock(&edev->qede_lock)    <- same task: deadlock
 
-  BUG: KASAN: slab-use-after-free in hci_set_ext_scan_rsp_data_sync+0x2e1/0x300
-  Write of size 1 at addr ffff88810a45d21d by task kworker/u17:0/88
-  Workqueue: hci0 hci_cmd_sync_work
-  Call Trace:
-   hci_set_ext_scan_rsp_data_sync+0x2e1/0x300
-   hci_schedule_adv_instance_sync+0x390/0x4c0
-   hci_cmd_sync_work+0x173/0x300
-  Allocated by task 87:
-   hci_add_adv_instance+0x538/0xac0
-   add_advertising+0x885/0x1160
-  Freed by task 89:
-   kfree+0x131/0x3c0
-   hci_remove_adv_instance+0x1d8/0x3b0
-   hci_le_ext_adv_term_evt+0x17b/0x730
+The mutex is not recursive, so the kworker blocks on itself with
+rtnl_lock held, and neither lock is ever released. Every task that
+calls rtnl_lock() afterwards (ip, ovs-vswitchd, lldpad, IPv6
+addrconf, sshd) blocks forever while the node still answers ping.
+In a vmcore from an affected production node rtnl_mutex.owner
+decodes to the very kworker blocked at the innermost mutex_lock()
+above.
 
-Protect the instance lookup and payload construction in the extended
-advertising, scan response, and periodic advertising data paths.  Snapshot
-the advertising parameters under hdev->lock, but release the lock before
-waiting for the controller.
+Re-sync the tunnel ports from qede_sp_task() after the internal lock
+is dropped, still under rtnl_lock as the udp_tunnel API requires.
+This mirrors qede_open(), which calls udp_tunnel_nic_reset_ntf()
+under rtnl without the internal lock.
 
-Clear advertising-data dirty bits before issuing their commands and
-restore them after a failure using a fresh lookup.  Likewise, update the
-reported transmit power through a fresh lookup after the parameter command
-completes.  No adv_info pointer then survives an HCI command wait.
+qede_recovery_handler() now returns whether it has successfully
+reloaded an open device, and the caller re-syncs the ports only in
+that case. This keeps the old gating exactly: a device that was down
+or a failed recovery returns false, as those paths never reached the
+udp_tunnel_nic_reset_ntf() call before either.
 
-Fixes: cba6b758711c ("Bluetooth: hci_sync: Make use of hci_cmd_sync_queue set 2")
-Cc: stable@vger.kernel.org
-Suggested-by: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This was the only user of the qede_lock()/qede_unlock() helpers, so
+remove them.
+
+Fixes: 8cd160a29415 ("qede: convert to new udp_tunnel_nic infra")
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+CC: Andrew Lunn <andrew+netdev@lunn.ch>
+CC: "David S. Miller" <davem@davemloft.net>
+CC: Eric Dumazet <edumazet@google.com>
+CC: Jakub Kicinski <kuba@kernel.org>
+CC: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20260726104311.1782900-1-den@openvz.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sync.c |  131 ++++++++++++++++++++++++++++++++++-------------
- 1 file changed, 97 insertions(+), 34 deletions(-)
+ drivers/net/ethernet/qlogic/qede/qede_main.c | 44 ++++++++++----------
+ 1 file changed, 22 insertions(+), 22 deletions(-)
 
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -1228,10 +1228,11 @@ static int hci_set_adv_set_random_addr_s
+diff --git a/drivers/net/ethernet/qlogic/qede/qede_main.c b/drivers/net/ethernet/qlogic/qede/qede_main.c
+index b5d744d2586f7..59a80f7193723 100644
+--- a/drivers/net/ethernet/qlogic/qede/qede_main.c
++++ b/drivers/net/ethernet/qlogic/qede/qede_main.c
+@@ -107,7 +107,7 @@ static void qede_remove(struct pci_dev *pdev);
+ static void qede_shutdown(struct pci_dev *pdev);
+ static void qede_link_update(void *dev, struct qed_link_output *link);
+ static void qede_schedule_recovery_handler(void *dev);
+-static void qede_recovery_handler(struct qede_dev *edev);
++static bool qede_recovery_handler(struct qede_dev *edev);
+ static void qede_schedule_hw_err_handler(void *dev,
+ 					 enum qed_hw_err_type err_type);
+ static void qede_get_eth_tlv_data(void *edev, void *data);
+@@ -1065,21 +1065,6 @@ void __qede_unlock(struct qede_dev *edev)
+ 	mutex_unlock(&edev->qede_lock);
  }
  
- static int
--hci_set_ext_adv_params_sync(struct hci_dev *hdev, struct adv_info *adv,
-+hci_set_ext_adv_params_sync(struct hci_dev *hdev, u8 instance,
- 			    const struct hci_cp_le_set_ext_adv_params *cp,
- 			    struct hci_rp_le_set_ext_adv_params *rp)
- {
-+	struct adv_info *adv;
- 	struct sk_buff *skb;
- 
- 	skb = __hci_cmd_sync(hdev, HCI_OP_LE_SET_EXT_ADV_PARAMS, sizeof(*cp),
-@@ -1259,11 +1260,15 @@ hci_set_ext_adv_params_sync(struct hci_d
- 
- 	if (!rp->status) {
- 		hdev->adv_addr_type = cp->own_addr_type;
--		if (!cp->handle) {
-+		if (!instance) {
- 			/* Store in hdev for instance 0 */
- 			hdev->adv_tx_power = rp->tx_power;
--		} else if (adv) {
--			adv->tx_power = rp->tx_power;
-+		} else {
-+			hci_dev_lock(hdev);
-+			adv = hci_find_adv_instance(hdev, instance);
-+			if (adv)
-+				adv->tx_power = rp->tx_power;
-+			hci_dev_unlock(hdev);
- 		}
- 	}
- 
-@@ -1279,9 +1284,13 @@ static int hci_set_ext_adv_data_sync(str
- 	int err;
- 
- 	if (instance) {
-+		hci_dev_lock(hdev);
-+
- 		adv = hci_find_adv_instance(hdev, instance);
--		if (!adv || !adv->adv_data_changed)
-+		if (!adv || !adv->adv_data_changed) {
-+			hci_dev_unlock(hdev);
- 			return 0;
-+		}
- 	}
- 
- 	len = eir_create_adv_data(hdev, instance, pdu->data,
-@@ -1292,16 +1301,27 @@ static int hci_set_ext_adv_data_sync(str
- 	pdu->operation = LE_SET_ADV_DATA_OP_COMPLETE;
- 	pdu->frag_pref = LE_SET_ADV_DATA_NO_FRAG;
- 
-+	if (adv) {
-+		adv->adv_data_changed = false;
-+		hci_dev_unlock(hdev);
-+	}
-+
- 	err = __hci_cmd_sync_status(hdev, HCI_OP_LE_SET_EXT_ADV_DATA,
- 				    struct_size(pdu, data, len), pdu,
- 				    HCI_CMD_TIMEOUT);
--	if (err)
-+	if (err) {
-+		if (instance) {
-+			hci_dev_lock(hdev);
-+			adv = hci_find_adv_instance(hdev, instance);
-+			if (adv)
-+				adv->adv_data_changed = true;
-+			hci_dev_unlock(hdev);
-+		}
-+
- 		return err;
-+	}
- 
--	/* Update data if the command succeed */
--	if (adv) {
--		adv->adv_data_changed = false;
--	} else {
-+	if (!instance) {
- 		memcpy(hdev->adv_data, pdu->data, len);
- 		hdev->adv_data_len = len;
- 	}
-@@ -1355,22 +1375,22 @@ int hci_setup_ext_adv_instance_sync(stru
- 	struct adv_info *adv;
- 	bool secondary_adv;
- 
--	if (instance > 0) {
--		adv = hci_find_adv_instance(hdev, instance);
--		if (!adv)
--			return -EINVAL;
--	} else {
--		adv = NULL;
--	}
+-/* This version of the lock should be used when acquiring the RTNL lock is also
+- * needed in addition to the internal qede lock.
+- */
+-static void qede_lock(struct qede_dev *edev)
+-{
+-	rtnl_lock();
+-	__qede_lock(edev);
+-}
 -
- 	/* Updating parameters of an active instance will return a
--	 * Command Disallowed error, so we must first disable the
--	 * instance if it is active.
-+	 * Command Disallowed error, so disable it before taking a snapshot.
+-static void qede_unlock(struct qede_dev *edev)
+-{
+-	__qede_unlock(edev);
+-	rtnl_unlock();
+-}
+-
+ static void qede_periodic_task(struct work_struct *work)
+ {
+ 	struct qede_dev *edev = container_of(work, struct qede_dev,
+@@ -1116,6 +1101,8 @@ static void qede_sp_task(struct work_struct *work)
  	 */
--	if (adv) {
-+	if (instance > 0) {
- 		err = hci_disable_ext_adv_instance_sync(hdev, instance);
- 		if (err)
- 			return err;
+ 
+ 	if (test_and_clear_bit(QEDE_SP_RECOVERY, &edev->sp_flags)) {
++		bool reloaded;
 +
-+		hci_dev_lock(hdev);
-+		adv = hci_find_adv_instance(hdev, instance);
-+		if (!adv) {
-+			hci_dev_unlock(hdev);
-+			return -EINVAL;
-+		}
-+	} else {
-+		adv = NULL;
+ 		cancel_delayed_work_sync(&edev->periodic_task);
+ #ifdef CONFIG_QED_SRIOV
+ 		/* SRIOV must be disabled outside the lock to avoid a deadlock.
+@@ -1124,9 +1111,17 @@ static void qede_sp_task(struct work_struct *work)
+ 		if (pci_num_vf(edev->pdev))
+ 			qede_sriov_configure(edev->pdev, 0);
+ #endif
+-		qede_lock(edev);
+-		qede_recovery_handler(edev);
+-		qede_unlock(edev);
++		rtnl_lock();
++		__qede_lock(edev);
++		reloaded = qede_recovery_handler(edev);
++		__qede_unlock(edev);
++
++		/* The udp_tunnel core synchronously calls back into
++		 * qede_udp_tunnel_sync(), which takes the qede lock.
++		 */
++		if (reloaded)
++			udp_tunnel_nic_reset_ntf(edev->ndev);
++		rtnl_unlock();
  	}
  
- 	flags = hci_adv_instance_flags(hdev, instance);
-@@ -1381,8 +1401,11 @@ int hci_setup_ext_adv_instance_sync(stru
- 	connectable = (flags & MGMT_ADV_FLAG_CONNECTABLE) ||
- 		      mgmt_get_connectable(hdev);
+ 	__qede_lock(edev);
+@@ -2667,9 +2662,13 @@ static void qede_recovery_failed(struct qede_dev *edev)
+ 		edev->ops->common->set_power_state(edev->cdev, PCI_D3hot);
+ }
  
--	if (!is_advertising_allowed(hdev, connectable))
-+	if (!is_advertising_allowed(hdev, connectable)) {
-+		if (instance)
-+			hci_dev_unlock(hdev);
- 		return -EPERM;
-+	}
+-static void qede_recovery_handler(struct qede_dev *edev)
++/* Returns true if an open device was successfully reloaded and its
++ * udp_tunnel ports need to be re-synced by the caller.
++ */
++static bool qede_recovery_handler(struct qede_dev *edev)
+ {
+ 	u32 curr_state = edev->state;
++	bool reloaded = false;
+ 	int rc;
  
- 	/* Set require_privacy to true only when non-connectable
- 	 * advertising is used and it is not periodic.
-@@ -1393,8 +1416,11 @@ int hci_setup_ext_adv_instance_sync(stru
- 	err = hci_get_random_address(hdev, require_privacy,
- 				     adv_use_rpa(hdev, flags), adv,
- 				     &own_addr_type, &random_addr);
--	if (err < 0)
-+	if (err < 0) {
-+		if (instance)
-+			hci_dev_unlock(hdev);
- 		return err;
-+	}
+ 	DP_NOTICE(edev, "Starting a recovery process\n");
+@@ -2699,17 +2698,18 @@ static void qede_recovery_handler(struct qede_dev *edev)
+ 			goto err;
  
- 	memset(&cp, 0, sizeof(cp));
- 
-@@ -1445,6 +1471,9 @@ int hci_setup_ext_adv_instance_sync(stru
- 	cp.channel_map = hdev->le_adv_channel_map;
- 	cp.handle = adv ? adv->handle : instance;
- 
-+	if (instance)
-+		hci_dev_unlock(hdev);
-+
- 	if (flags & MGMT_ADV_FLAG_SEC_2M) {
- 		cp.primary_phy = HCI_ADV_PHY_1M;
- 		cp.secondary_phy = HCI_ADV_PHY_2M;
-@@ -1457,12 +1486,12 @@ int hci_setup_ext_adv_instance_sync(stru
- 		cp.secondary_phy = HCI_ADV_PHY_1M;
+ 		qede_config_rx_mode(edev->ndev);
+-		udp_tunnel_nic_reset_ntf(edev->ndev);
++		reloaded = true;
  	}
  
--	err = hci_set_ext_adv_params_sync(hdev, adv, &cp, &rp);
-+	err = hci_set_ext_adv_params_sync(hdev, instance, &cp, &rp);
- 	if (err)
- 		return err;
+ 	edev->state = curr_state;
  
- 	/* Update adv data as tx power is known now */
--	err = hci_set_ext_adv_data_sync(hdev, cp.handle);
-+	err = hci_set_ext_adv_data_sync(hdev, instance);
- 	if (err)
- 		return err;
+ 	DP_NOTICE(edev, "Recovery handling is done\n");
  
-@@ -1470,9 +1499,14 @@ int hci_setup_ext_adv_instance_sync(stru
- 	     own_addr_type == ADDR_LE_DEV_RANDOM_RESOLVED) &&
- 	    bacmp(&random_addr, BDADDR_ANY)) {
- 		/* Check if random address need to be updated */
--		if (adv) {
--			if (!bacmp(&random_addr, &adv->random_addr))
-+		if (instance) {
-+			hci_dev_lock(hdev);
-+			adv = hci_find_adv_instance(hdev, instance);
-+			if (!adv || !bacmp(&random_addr, &adv->random_addr)) {
-+				hci_dev_unlock(hdev);
- 				return 0;
-+			}
-+			hci_dev_unlock(hdev);
- 		} else {
- 			if (!bacmp(&random_addr, &hdev->random_addr))
- 				return 0;
-@@ -1494,9 +1528,13 @@ static int hci_set_ext_scan_rsp_data_syn
- 	int err;
+-	return;
++	return reloaded;
  
- 	if (instance) {
-+		hci_dev_lock(hdev);
-+
- 		adv = hci_find_adv_instance(hdev, instance);
--		if (!adv || !adv->scan_rsp_changed)
-+		if (!adv || !adv->scan_rsp_changed) {
-+			hci_dev_unlock(hdev);
- 			return 0;
-+		}
- 	}
+ err:
+ 	qede_recovery_failed(edev);
++	return false;
+ }
  
- 	len = eir_create_scan_rsp(hdev, instance, pdu->data);
-@@ -1506,15 +1544,27 @@ static int hci_set_ext_scan_rsp_data_syn
- 	pdu->operation = LE_SET_ADV_DATA_OP_COMPLETE;
- 	pdu->frag_pref = LE_SET_ADV_DATA_NO_FRAG;
- 
-+	if (adv) {
-+		adv->scan_rsp_changed = false;
-+		hci_dev_unlock(hdev);
-+	}
-+
- 	err = __hci_cmd_sync_status(hdev, HCI_OP_LE_SET_EXT_SCAN_RSP_DATA,
- 				    struct_size(pdu, data, len), pdu,
- 				    HCI_CMD_TIMEOUT);
--	if (err)
-+	if (err) {
-+		if (instance) {
-+			hci_dev_lock(hdev);
-+			adv = hci_find_adv_instance(hdev, instance);
-+			if (adv)
-+				adv->scan_rsp_changed = true;
-+			hci_dev_unlock(hdev);
-+		}
-+
- 		return err;
-+	}
- 
--	if (adv) {
--		adv->scan_rsp_changed = false;
--	} else {
-+	if (!instance) {
- 		memcpy(hdev->scan_rsp_data, pdu->data, len);
- 		hdev->scan_rsp_data_len = len;
- 	}
-@@ -1529,8 +1579,14 @@ static int __hci_set_scan_rsp_data_sync(
- 
- 	memset(&cp, 0, sizeof(cp));
- 
-+	if (instance)
-+		hci_dev_lock(hdev);
-+
- 	len = eir_create_scan_rsp(hdev, instance, cp.data);
- 
-+	if (instance)
-+		hci_dev_unlock(hdev);
-+
- 	if (hdev->scan_rsp_data_len == len &&
- 	    !memcmp(cp.data, hdev->scan_rsp_data, len))
- 		return 0;
-@@ -1665,9 +1721,13 @@ static int hci_set_per_adv_data_sync(str
- 	struct adv_info *adv = NULL;
- 
- 	if (instance) {
-+		hci_dev_lock(hdev);
-+
- 		adv = hci_find_adv_instance(hdev, instance);
--		if (!adv || !adv->periodic)
-+		if (!adv || !adv->periodic) {
-+			hci_dev_unlock(hdev);
- 			return 0;
-+		}
- 	}
- 
- 	len = eir_create_per_adv_data(hdev, instance, pdu->data);
-@@ -1676,6 +1736,9 @@ static int hci_set_per_adv_data_sync(str
- 	pdu->handle = adv ? adv->handle : instance;
- 	pdu->operation = LE_SET_ADV_DATA_OP_COMPLETE;
- 
-+	if (adv)
-+		hci_dev_unlock(hdev);
-+
- 	return __hci_cmd_sync_status(hdev, HCI_OP_LE_SET_PER_ADV_DATA,
- 				     struct_size(pdu, data, len), pdu,
- 				     HCI_CMD_TIMEOUT);
-@@ -6422,7 +6485,7 @@ static int hci_le_ext_directed_advertisi
- 	if (err)
- 		return err;
- 
--	err = hci_set_ext_adv_params_sync(hdev, NULL, &cp, &rp);
-+	err = hci_set_ext_adv_params_sync(hdev, 0, &cp, &rp);
- 	if (err)
- 		return err;
- 
+ static void qede_atomic_hw_err_handler(struct qede_dev *edev)
+-- 
+2.53.0
+
 
 
