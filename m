@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C3A92F8E8B;
-	Fri,  7 Aug 2026 14:58:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22E4C331A61;
+	Fri,  7 Aug 2026 14:58:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114697; cv=none; b=P4UOaF83ZAK3oQOPpQxdtEPwbj7F2Tm8CILdO5siC1Me5KfnmwEX2Quec+ARl8JzO3gc3vt95IYici8ySHT6AupxWor9BjEnq7mNE2x/Ps/ewc309SN6SP6IoMqdMxHrp9wjZ5BxAxKf+mvhH0qgGr3fkfhF64jBGKvi4/AF1uc=
+	t=1786114700; cv=none; b=IX//i43xjLA6gPgnvrF7u7fzBQbv9vwkPZ0wdEPnorgs3laO1kOLclGrUIVr3NhzQOg/RdovTC3Ek8ZWh07dLVEmrM87Qj0j2Xf88d2JWt2c2hhOTHyBF5lNIE6kl2cHviRM79o107PTw/dC+aBAatc6bQpTmgwaZ0rvZM44Kx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114697; c=relaxed/simple;
-	bh=D9AFjOld01ePjv2zEFWZ+SF9SOnV8TlW2quoreCEiZE=;
+	s=arc-20240116; t=1786114700; c=relaxed/simple;
+	bh=RfgiCFtuaD0QHBLj62nzIcTa4GXz9Tei2SBzUa15Hcs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r7+gYPCSUu0YhZc1Men5acx4tWVfNOt/i9miycT2EgCpkKe2tnXa3DxOCguk/yYWsxSCbUu5435KSNXvfOHNs3MdrEn4ngxWbuB110hGqLMsurge03VPjf79Q2uXMFAHHH2LzKAnkqANWHIcclcc1FNGLX5qs451xKesy1NqAys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xttLb1u5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OmI25RvpNe73IDJJWS2H+psVuqElQ9lIqbByEIcNroTy6glbXZBAft2Px+bWIU0l2iLci2NjUnKS3uSEpAf0jCu0GVYZMLpKOnkJOhaSi42hLj7ZsvCZO4Swdf3bfGohgM7Qi60wA0VCDAk9LToZ4tvI0xINXj0RzIbxymfiyg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jGpxeFlQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xttLb1u5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A69AB1F000E9;
-	Fri,  7 Aug 2026 14:58:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jGpxeFlQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71B641F000E9;
+	Fri,  7 Aug 2026 14:58:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114696;
-	bh=poiu6XiF+B9KTHM7hsp+HaZkzB4NyRu88X7Jq8MLR80=;
+	s=korg; t=1786114699;
+	bh=U0I07t82+wjtndi5scDPXx/t3zG7lyFTRNcKy40WyOw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xttLb1u5//QxJRE5FBbjwBHhhd24dLN5BZcoXPyfYsA7IGFg3w2MJHWAJP0S80F2c
-	 +UN37qKTG7TFoj+z1sciw44uvTkIthQfQrI0BCn0/vgBJ6zQQq6TBUqYCmAClFTBIs
-	 j4SGFfv2SUTwBQmsXCcnGCfBVLJjxrYmF3GpPULE=
+	b=jGpxeFlQNSFLoaTpo1+oJyHYh3wwsPFrtR1sTuq2UD3hSY6popsTLbkC+EYmfb5z6
+	 Y/Ht/jOr4BNX8ZdZ8kLfmFLqrn5FmiFbrsN/8G32qEsnhjEn9EkdSjhIRs8/j9c3Ep
+	 fY3waOBWIQwCMgA+Jpk0bjvol0KWRqopsc249g8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Pranjal Shrivastava <praan@google.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 017/396] dmaengine: idxd: fix fdev setup failure cleanup in idxd_cdev_open()
-Date: Fri,  7 Aug 2026 16:32:57 +0200
-Message-ID: <20260807143424.648404826@linuxfoundation.org>
+Subject: [PATCH 6.18 018/396] iommu/arm-smmu-v3-iommufd: Require exactly one Stream ID for a vDEVICE
+Date: Fri,  7 Aug 2026 16:32:58 +0200
+Message-ID: <20260807143424.669146998@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -53,63 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Nicolin Chen <nicolinc@nvidia.com>
 
-[ Upstream commit ee1d7274102285d78a53161fc705a8d8cd40b066 ]
+[ Upstream commit c3b8ee84a965058b41275069d4696f37a8b14bf6 ]
 
-The failed_dev_add and failed_dev_name paths drop the file-device
-reference while wq->wq_lock is still held. If put_device(fdev) drops the
-last reference, idxd_file_dev_release() runs synchronously and tries to
-take wq->wq_lock again, deadlocking.
+arm_vsmmu_vsid_to_sid() maps a guest's vSID to a single physical Stream ID
+taken from master->streams[0], assuming a device has exactly one stream. A
+device with several streams gets only its first one mapped, so a guest vSID
+invalidation cannot reach the others' ATC and IOTLB entries; a device with
+none makes master->streams a ZERO_SIZE_PTR, read out of bounds.
 
-Those paths also fall through into the later ctx cleanup labels even
-though idxd_file_dev_release() owns that cleanup and frees ctx. This can
-make idxd_xa_pasid_remove(ctx) and kfree(ctx) operate on a freed context.
+Add an arm_vsmmu_vdevice_init() op to reject the vDEVICE with -EOPNOTSUPP
+when master->num_streams is not one, rather than mapping it silently.
 
-Move idxd_wq_get() before file-device setup can fail, since the release
-callback always calls idxd_wq_put(). Then unlock wq->wq_lock before
-put_device(fdev) and return directly from the file-device setup failure
-path, leaving ctx cleanup to the release callback.
-
-Fixes: e6fd6d7e5f0fe ("dmaengine: idxd: add a device to represent the file opened")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Link: https://patch.msgid.link/20260525141550.1385581-1-dbgh9129@gmail.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: d68beb276ba26 ("iommu/arm-smmu-v3: Support IOMMU_HWPT_INVALIDATE using a VIOMMU object")
+Link: https://patch.msgid.link/r/b15f2b73520f389f3f57881da2f040e7bdc18876.1783311134.git.nicolinc@nvidia.com
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Assisted-by: Claude:claude-opus-4-8
+Reviewed-by: Pranjal Shrivastava <praan@google.com>
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/idxd/cdev.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ .../iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c   | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/drivers/dma/idxd/cdev.c b/drivers/dma/idxd/cdev.c
-index 4105688cf3f06..37addcdc10bc2 100644
---- a/drivers/dma/idxd/cdev.c
-+++ b/drivers/dma/idxd/cdev.c
-@@ -288,6 +288,7 @@ static int idxd_cdev_open(struct inode *inode, struct file *filp)
- 	fdev->parent = cdev_dev(idxd_cdev);
- 	fdev->bus = &dsa_bus_type;
- 	fdev->type = &idxd_cdev_file_type;
-+	idxd_wq_get(wq);
+diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c
+index 9ec5591565083..a52f86454f77d 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c
+@@ -285,6 +285,20 @@ static int arm_vsmmu_vsid_to_sid(struct arm_vsmmu *vsmmu, u32 vsid, u32 *sid)
+ 	return ret;
+ }
  
- 	rc = dev_set_name(fdev, "file%d", ctx->id);
- 	if (rc < 0) {
-@@ -301,13 +302,14 @@ static int idxd_cdev_open(struct inode *inode, struct file *filp)
- 		goto failed_dev_add;
- 	}
++static int arm_vsmmu_vdevice_init(struct iommufd_vdevice *vdev)
++{
++	struct device *dev = iommufd_vdevice_to_device(vdev);
++	struct arm_smmu_master *master = dev_iommu_priv_get(dev);
++
++	/*
++	 * arm_vsmmu_vsid_to_sid() maps a vSID to master->streams[0] alone, so
++	 * more streams would leave the rest stale and none reads out of bounds.
++	 */
++	if (master->num_streams != 1)
++		return -EOPNOTSUPP;
++	return 0;
++}
++
+ /* This is basically iommu_viommu_arm_smmuv3_invalidate in u64 for conversion */
+ struct arm_vsmmu_invalidation_cmd {
+ 	union {
+@@ -391,6 +405,7 @@ int arm_vsmmu_cache_invalidate(struct iommufd_viommu *viommu,
+ static const struct iommufd_viommu_ops arm_vsmmu_ops = {
+ 	.alloc_domain_nested = arm_vsmmu_alloc_domain_nested,
+ 	.cache_invalidate = arm_vsmmu_cache_invalidate,
++	.vdevice_init = arm_vsmmu_vdevice_init,
+ };
  
--	idxd_wq_get(wq);
- 	mutex_unlock(&wq->wq_lock);
- 	return 0;
- 
- failed_dev_add:
- failed_dev_name:
-+	mutex_unlock(&wq->wq_lock);
- 	put_device(fdev);
-+	return rc;
- failed_ida:
- failed_set_pasid:
- 	if (device_user_pasid_enabled(idxd))
+ size_t arm_smmu_get_viommu_size(struct device *dev,
 -- 
 2.53.0
 
