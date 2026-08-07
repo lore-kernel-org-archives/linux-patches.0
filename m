@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1D1E37206E;
-	Fri,  7 Aug 2026 15:07:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2284377A93;
+	Fri,  7 Aug 2026 15:07:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115273; cv=none; b=tL9Io7oEKkgp2dxwzSd0gIVIECIOVG6VlS8cfqo3VFQuX7VCJbG5v5/uj3mw+AK8+jodDJzCmV5T1/irs9CKVM6XYqdqdxkd1IEowE8O2GhTHJ3qmP7/KRLwqYzd00z42ybRQAnsNPT8OXNqdLVfIZJoXXf7+n6JHY1xHzy+nOs=
+	t=1786115276; cv=none; b=hr8Dhr1iEpewqjkR8AKWrbkfIUNFI1b8QcaKF956wULTL2yTmtYyisHV45eyBC04tjTaEECDomyc9/kRTPAWNRcajz4VRJq0wJhvAcrr1k4bAtF8p2sgSURwT476rFbCR1DGwcrSM4kwJzm/M8jPBpf8k2aI7XWph9XluZ8r/k4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115273; c=relaxed/simple;
-	bh=ORAutr+9GT6GG6Z1EBEEQvrjYQ5cDaZBD/m+ZZ2tPys=;
+	s=arc-20240116; t=1786115276; c=relaxed/simple;
+	bh=YB58tm99kubvJSiSAyVQE6/kkYakKeBhUsFL5suoMmQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OXKxz4Vh7pJ0BXtKrTOsEGGsL6VX8Z/Mc0jt+NAxMVCUVrqZ3oxsyMfW471mOVHSRjfQIKopXyc9ed9t/AU9s/7ZQIfoQl4gbjuaVjQD3tX8+82cnhRNyAllF5gRn/0wLUw9jkMAXP2KQCTE1z2Urbh+a1C+p9nMuOydn6wZ0Q8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sFg3cXtB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LZMAO0ifFdx1rG1uUrRr3updHA8VX6p84adphbMXRQiWsCVFxT6lSF0G6wcpWdqK8dSOg4Qqh/7LeXtpU+WJZlfqWdypMhlkZdnK6Ez8bq7Pz+HKt2XPJlb8i29sxq6enYLSZhg6WSN7CuufniNEFmsVBZtSqKDfRxqAGiVvXPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n5T9LtKa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sFg3cXtB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 514E51F000E9;
-	Fri,  7 Aug 2026 15:07:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n5T9LtKa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49AD21F000E9;
+	Fri,  7 Aug 2026 15:07:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115271;
-	bh=RwUN+R59T1I/KrE+M1+PhjdSonyTt9BcmrFXLUFY6cQ=;
+	s=korg; t=1786115274;
+	bh=7Roinm35eQrz5vg1l1ZM1BNWZdQxYXdoetutMPsn9+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sFg3cXtBANd9X6HzKNJ3xAwRVTVQyL4+3CadJfdeO+B8IFyW4uAryUCwwk7yCo4oC
-	 GrYdzzRY9CAYv7FFyJ3pf1U6+p1d1sitlLBkiu4R1qbJ/kZaUmG0DHG0tYrc4Rr0C6
-	 7o6rBCDD5Wadv5O5VWesakmO5Anrba/sss5JX7fs=
+	b=n5T9LtKauiEr5/eA8dTbX+nXLjs5EsbR24+eptLBImo23ZH9JLON91XNjKae5jEqf
+	 beNm+nBB0sxQZKsgBOBN+QdR47ai8A8WMIeqHVRV/ox1kOzUDob/4BtM9pbfpfB2GY
+	 VTonNT/pANLPe984nt5dboCTFmNSxbcV5+qQ6VVU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sonali Pradhan <sonalipradhan@google.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.18 217/396] ALSA: usb-audio: Fix DMA buffer out-of-bounds write when fill_max is set
-Date: Fri,  7 Aug 2026 16:36:17 +0200
-Message-ID: <20260807143428.948286839@linuxfoundation.org>
+Subject: [PATCH 6.18 218/396] ALSA: usb-audio: Clamp frame size in implicit-feedback mode
+Date: Fri,  7 Aug 2026 16:36:18 +0200
+Message-ID: <20260807143428.969397274@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -52,50 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Sonali Pradhan <sonalipradhan@google.com>
 
-commit d0199ae1666ff9ae2d1d568d64c3430d4c47f0e5 upstream.
+commit 8d7a30c50c2e58a6839634ed0acde14466d1dc61 upstream.
 
-When a USB audio endpoint requests full packet transfers via the fill_max
-descriptor flag, data_ep_set_params() promotes ep->curpacksize to
-ep->maxpacksize. However, maxsize is left at the original sample-rate
-derived value.
+snd_usb_handle_sync_urb() scales received sync packet sizes by the sender's
+stride and stores the result directly in out_packet->packet_size[i]. If a
+connected USB device sends an oversized sync packet, this frame count can
+exceed ep->maxframesize.
 
-Since u->buffer_size is allocated as maxsize * packets, the resulting
-DMA buffer is far too small for the requested transfer length. When the
-USB host controller streams up to curpacksize bytes per packet, it writes
-past the end of the buffer via DMA, corrupting kernel heap memory.
+The un-clamped frame count then propagates to the playback endpoint queue,
+potentially driving packet transfers beyond the endpoint's hardware frame
+limits.
 
-Update maxsize to curpacksize when fill_max is set so that the allocated
-DMA buffer size matches the actual transfer request size.
+Cap the calculated frame count against ep->maxframesize in
+snd_usb_handle_sync_urb() to prevent oversized packets from entering the
+playback queue.
 
-[ changed to reassign maxsize only when ep->fill_max is set -- tiwai ]
-
-Fixes: 8fdff6a319e7 ("ALSA: snd-usb: implement new endpoint streaming model")
+Fixes: 28acb12014fb ("ALSA: usb-audio: use sender stride for implicit feedback")
 Cc: stable@vger.kernel.org
 Assisted-by: Jetski:Gemini-3.6-Flash
 Signed-off-by: Sonali Pradhan <sonalipradhan@google.com>
-Link: https://patch.msgid.link/20260728201716.2347726-1-sonalipradhan@google.com
+Link: https://patch.msgid.link/20260728202432.2354994-1-sonalipradhan@google.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/endpoint.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ sound/usb/endpoint.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
 --- a/sound/usb/endpoint.c
 +++ b/sound/usb/endpoint.c
-@@ -1164,10 +1164,12 @@ static int data_ep_set_params(struct snd
- 				<< (16 - ep->datainterval);
- 	}
+@@ -1806,11 +1806,13 @@ static void snd_usb_handle_sync_urb(stru
  
--	if (ep->fill_max)
-+	if (ep->fill_max) {
- 		ep->curpacksize = ep->maxpacksize;
--	else
-+		maxsize = ep->curpacksize;
-+	} else {
- 		ep->curpacksize = maxsize;
-+	}
+ 		out_packet->packets = in_ctx->packets;
+ 		for (i = 0; i < in_ctx->packets; i++) {
+-			if (urb->iso_frame_desc[i].status == 0)
+-				out_packet->packet_size[i] =
++			if (urb->iso_frame_desc[i].status == 0) {
++				unsigned int frames =
+ 					urb->iso_frame_desc[i].actual_length / sender->stride;
+-			else
++				out_packet->packet_size[i] = min(frames, ep->maxframesize);
++			} else {
+ 				out_packet->packet_size[i] = 0;
++			}
+ 		}
  
- 	if (snd_usb_get_speed(chip->dev) != USB_SPEED_FULL) {
- 		packs_per_ms = 8 >> ep->datainterval;
+ 		spin_unlock_irqrestore(&ep->lock, flags);
 
 
