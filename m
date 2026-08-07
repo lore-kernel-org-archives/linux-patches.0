@@ -1,46 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF962386C1E;
-	Fri,  7 Aug 2026 14:50:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9920935F5ED;
+	Fri,  7 Aug 2026 14:50:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114251; cv=none; b=MbKTn/oHAwqtPo0ic6RXd2pJcDqfo+JHt+oJLGsXX5N6wHvez0/LQc/JhLXUMivDJE+SnU7gZeC5lSAAj95DLtM0NAoPh45h6PyPzcTJ1QtrbAGOwqaSrqzx68zNT2XEEglzGSjVI0HeJcsrTxPll4pYwsb9wPi0XXd3IqaqpNs=
+	t=1786114255; cv=none; b=nhvQOBbmrFx352B9651RWeFcMk1xc70ACt/1nqJzVpRjWf9i3HAn2XSenp8ScjLT9nuJz9DnYXF36Ik843E6svSY56ltzTB2eSpow3QGZ7KpAcQN4L2ZKyPBo9Mm+BFOtqjjuLEd7wEwwHror1NF+yTMmLT6PkcBJ9lgmuN8gx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114251; c=relaxed/simple;
-	bh=1PiI0zF2R3goKL9zFw3BDj+91vXAg/6AaYXOYIv7w/o=;
+	s=arc-20240116; t=1786114255; c=relaxed/simple;
+	bh=VNGT16qwCBGEDZq0womCi9F8+/6iiNpAVmoz5de+R0U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dkr4aafeQKZy1XKn5tbp/4MnPjJJjCfdRLmVF2b6nC8UgTuHcYzVYtWYMU/A6L+RLjgbq0be6t1FO6IbjuCmjBADU2BFRYtQS6ecfqPWOR8LNR48SG/FnYJd2on11MEScX9/yg2vA3rGhqteXpft3xGFRC9DzRAr5+SxkQb/fFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NLBeRTSC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Lfley44zUSp+ffoNOvDD94AYa+V1duuNajfmyOb8ejsOeuh3B5nSuRt9VZCmssRVzigQRXueAYXES8jUFxQxf1KcHunC+GnOvzSH42V3klfmEiQiC0M7lMjIBuNLiiO1rzqPEeJpLGR9EXsMRrQA+QECSbyFPAmstJxjw2b+pAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GkF7RQIm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NLBeRTSC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0D021F00A3A;
-	Fri,  7 Aug 2026 14:50:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GkF7RQIm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A69161F00A3D;
+	Fri,  7 Aug 2026 14:50:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114246;
-	bh=N8mTqSlK3Qp0eGMBGcRGPown+lNMXLl3AUIe8ui7jvw=;
+	s=korg; t=1786114252;
+	bh=yF6eRYCRxZ6OTJdZqclXgF4xdPivYC4zcUcKDnLPf3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NLBeRTSCa5tTVdpivAfSFxspNIgnsmZKApeiteNe4caUgennX0VhkzSY0QjO3e0xf
-	 F9WU9XF+P4cM5IoDrKbfOFfOSC/1vrABJ4q+od6fCPG1Mnab8NrLvXeVmmGoasgaYF
-	 eoZO7sBas6AYzvuVt6M4rpm5aBdBX9rXmyPMa5NA=
+	b=GkF7RQIm0XeWfYIJjQZNViIrgWbeFfMA9rkEHAMwHVJ2c2u2maRiiv6Q0NLJmBOZ8
+	 zN6ZQqAskAUK/Itcg5zCa7KSfayb0vGzrSRB138hDa69/qis39zFjrrLZ0rQECWD3e
+	 ZmuB1zL2ZDZbSTn7bbf1nY2zQpAvg7zcU/OzjzG4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Gellermann <christian.gellermann@codasip.com>,
-	"David Hildenbrand (arm)" <david@kernel.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Christian Brauner <brauner@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Shuah Khan <shuah@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 196/337] selftests/clone3: fix wild pointer access of getline due to missing init
-Date: Fri,  7 Aug 2026 16:36:39 +0200
-Message-ID: <20260807143422.803851643@linuxfoundation.org>
+	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 198/337] sctp: reject stale cookies with mismatched verification tags
+Date: Fri,  7 Aug 2026 16:36:41 +0200
+Message-ID: <20260807143422.845752363@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -59,95 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Gellermann <christian.gellermann@codasip.com>
+From: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
 
-commit 8f6f9fd93cd7a5dd607ad5cd910476dd68fff3ed upstream.
+commit 9d8da8e0a9bce4a340af60dd0446bc7eb8d07587 upstream.
 
-Patch series "selftests: Add missing initalization of pointer passed to
-getline", v2.
+sctp_unpack_cookie() skips cookie expiration checks whenever an
+association already exists.  This is broader than the exception in
+RFC 9260 Section 5.2.4.
 
+For an existing association, Section 5.2.4 permits an expired State
+Cookie only when both Verification Tags in the cookie match the current
+association.  Otherwise, the packet SHOULD be discarded and a Stale
+Cookie ERROR MUST be sent.
 
-This patch (of 2):
+The broad check lets an expired Action A restart cookie reach
+sctp_sf_do_dupcook_a().  In a runtime test with the default 60 second
+cookie lifetime, replaying such a cookie after 65 seconds returned a
+COOKIE-ACK and restarted the association.
 
-Clone3_set_tid uses getline(&line, ...) in a loop to read the child's
-process status.  The code expects that getline allocates the buffer for
-the line on the first loop iteration.  According to the Open Group
-Spec[1], char *line has to be null pointer for this:
+Check cookie expiration unless both Verification Tags match.  This
+preserves the Action D exception for a lost COOKIE ACK while rejecting
+expired cookies in all other cases.
 
-> ssize_t getline(char **restrict lineptr, ...);
-> If *lineptr is a null pointer or if the object pointed to by *lineptr
-> is of insufficient size, an object shall be allocated as if by
-malloc()
-> or the object shall be reallocated as if by realloc()[...].
-
-However, char *line is only declared, leading to an undefined value that
-is potentially non-null.  In an example run with Musl v1.2.6, the realloc
-call[2] of getdelim, which implements getline, triggers a segfault:
-
-./run_kselftest.sh --test clone3:clone3_set_tid
-[ 1366.165898] kselftest: Running tests in clone3
-...
-[ 1367.799244] clone3_set_tid[811]: unhandled signal 11 code 0x1 at
-0x0000000000000000 in libc.so[68184,3fbf69f000+4c000]
-[ 1367.802808] CPU: 0 UID: 0 PID: 811 Comm: clone3_set_tid Not tainted
-..
-[ 1367.804188]  epc: 0x0000003fbf6b0184
-[ 1367.804188]  ra : 0x0000003fbf6d4664
-[ 1367.804188]  sp : 0x0000003fce5f2e40
-[ 1367.805314]  gp : 0x0000002aaab0dfb8
-[ 1367.805314]  tp : 0x0000003fbf6f14a8
-[ 1367.805314]  t0 : 0x0000003fbf63d000
-...
-
-Looking at the realloc implementation, Musl mallocs for a null pointer
-memory.  But for a non-null pointer, it assumes it's passed a valid
-pointer to the heap and tries to access its meta-data.  This leads to the
-segfault we see:
-
-void *realloc(void *p, size_t n)
-{
-        if (!p) return malloc(n);
-        if (size_overflows(n)) return 0;
-
-        struct meta *g = get_meta(p);
-        ...
-}
-
-Fix this by properly initializing the line pointer to NULL.
-
-Link: https://lore.kernel.org/20260722130246.2135563-1-christian.gellermann@codasip.com
-Link: https://lore.kernel.org/20260722130246.2135563-2-christian.gellermann@codasip.com
-Link: https://pubs.opengroup.org/onlinepubs/9799919799/functions/getline.html [1]
-Link: https://git.musl-libc.org/cgit/musl/tree/src/stdio/getdelim.c#n38 [2]
-Fixes: 41585bbeeef9 ("selftests: add tests for clone3() with *set_tid")
-Signed-off-by: Chris Gellermann <christian.gellermann@codasip.com>
-Acked-by: David Hildenbrand (arm) <david@kernel.org>
-Reviewed-by: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20260723225623.2658868-1-yangyx22@mails.tsinghua.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/clone3/clone3_set_tid.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sctp/sm_make_chunk.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
---- a/tools/testing/selftests/clone3/clone3_set_tid.c
-+++ b/tools/testing/selftests/clone3/clone3_set_tid.c
-@@ -141,7 +141,7 @@ int main(int argc, char *argv[])
- {
- 	FILE *f;
- 	char buf;
--	char *line;
-+	char *line = NULL;
- 	int status;
- 	int ret = -1;
- 	size_t len = 0;
+--- a/net/sctp/sm_make_chunk.c
++++ b/net/sctp/sm_make_chunk.c
+@@ -1821,9 +1821,9 @@ no_hmac:
+ 		goto fail;
+ 	}
+ 
+-	/* Check to see if the cookie is stale.  If there is already
+-	 * an association, there is no need to check cookie's expiration
+-	 * for init collision case of lost COOKIE ACK.
++	/* Check to see if the cookie is stale.  RFC 9260 Section 5.2.4
++	 * exempts an expired cookie only when both Verification Tags match
++	 * the current association.
+ 	 * If skb has been timestamped, then use the stamp, otherwise
+ 	 * use current time.  This introduces a small possibility that
+ 	 * a cookie may be considered expired, but this would only slow
+@@ -1834,7 +1834,10 @@ no_hmac:
+ 	else
+ 		kt = ktime_get_real();
+ 
+-	if (!asoc && ktime_before(bear_cookie->expiration, kt)) {
++	if ((!asoc ||
++	     asoc->c.my_vtag != bear_cookie->my_vtag ||
++	     asoc->c.peer_vtag != bear_cookie->peer_vtag) &&
++	    ktime_before(bear_cookie->expiration, kt)) {
+ 		suseconds_t usecs = ktime_to_us(ktime_sub(kt, bear_cookie->expiration));
+ 		__be32 n = htonl(usecs);
+ 
 
 
