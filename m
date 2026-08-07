@@ -1,39 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EC2B2F0C74;
-	Fri,  7 Aug 2026 15:27:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C0A7473C9F;
+	Fri,  7 Aug 2026 15:27:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116474; cv=none; b=c8QnnOY7FLNULNppl+TD8Cg8ZYODC3PxAEN/VNGvr7bLSuX9dFA+SVjR0Vg3vRTnHoG29Zom0Vr4YsAYwYC4llfPqdUyioyrTbXlsPBoAGcDG9Jyup4EPNO2KXqY/GrCaahxpIM3uabBc0gvtTVS0kIxz+s8tsccBJLVFxVgig8=
+	t=1786116476; cv=none; b=lPLgpdDyll84lUmUVkQ+Pfv6RHBQ84Bv/EB9hF4gJWZnT78x8pI2N9JIE48CSWL0xgetJ+4PROvV3a5xWTzoYGnFQXoUIvKXgseNUjvGxuCwmIu4aod9yIFUTFIVIH7TFIeXwhm8GEfdvXEGwsbguT093bS7MkYWD8arvUhVYPI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116474; c=relaxed/simple;
-	bh=FG3U7ClaRXrj7S0X0fY8KV2vIPfM/vkSHzOLy9wlvXI=;
+	s=arc-20240116; t=1786116476; c=relaxed/simple;
+	bh=nx5MUrf2atMmDFgoTFNBD+ZBUGF3Uu5CY+unAWyW8mY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mpQRvIHAm/Sz9lPrGntHcLjA43hxNDFxFncfiTrIJQ7F+DlPELHVMvSdzdI8phph0wTeNnyZKQEVYNhFBQtPl1EGQ8lOnJQ7HWlLgISvSbugtvokaiGaUt9ELI7mQRtyEesi+eZU/lvKP/4UVzSi+RujXWn3wOrixSLh177qUb4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T7M9Rd1w; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ekBorDHaPIsR/9mkfOF7vjSWwlujchqdUJQ9hZHJ0Tp83cMA1++IeWLMsDvdybe6gHUM8awq8rLLp97dbK6Ha28+3QN1T9Alx2BfG6HnoO4QeWmuV5M6h3xy2reJzOWkDkY/9FTNEGeNh7vJDL4jSz3zm3ZPVb/HxCljCO5OtRs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dYq4t6wM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T7M9Rd1w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 060131F000E9;
-	Fri,  7 Aug 2026 15:27:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dYq4t6wM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CED911F000E9;
+	Fri,  7 Aug 2026 15:27:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116472;
-	bh=aLslt8f7nIrNUxGLd5MpYJsAVNZqsdyMV7C00Wzdjy8=;
+	s=korg; t=1786116475;
+	bh=IT0J7vRfQvgVjw4tbI0g+a76nX18ipC1CMF7YzX3Pgw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T7M9Rd1w0noZgpHDnfh87ZLriBOTGDBE65H1Bs2dbdfB2Fs4mywz+CrKDtyFaU/kN
-	 9L3B3yORiilH8d86gcafByZ97+nPTFQ2OcAUgTKlEFzOzlX7Gggv/TxQSY0UFvFlkR
-	 JrM+/mh+VvLq9FeqpAy+iqxJhFsYrRraqpGV7KNY=
+	b=dYq4t6wM4nrDhO0n65Q010vxfLWKEm58/JEjx82F8RJWx/y1ZXdGjchaKFNciRwyW
+	 wzK0df372OmErMLeFih9isM+vsllnpQxd27Tjc5pxHOHbyVsvjGKkDmcajwvTTqoP5
+	 eQSk80qoTvtBmooWOwx/SdPMBENKkd+J9wypf+wI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	Kees Cook <keescook@chromium.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Qi Tang <tpluszz77@gmail.com>,
+	Zhiling Zou <roxy520tt@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 242/261] sysctl: treewide: constify ctl_table_header::ctl_table_arg
-Date: Fri,  7 Aug 2026 16:39:59 +0200
-Message-ID: <20260807143420.631099710@linuxfoundation.org>
+Subject: [PATCH 6.6 243/261] sctp: avoid auth_enable sysctl UAF during netns teardown
+Date: Fri,  7 Aug 2026 16:40:00 +0200
+Message-ID: <20260807143420.652634793@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143415.358597922@linuxfoundation.org>
 References: <20260807143415.358597922@linuxfoundation.org>
@@ -46,371 +52,137 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <linux@weissschuh.net>
+From: Zhiling Zou <roxy520tt@gmail.com>
 
-[ Upstream commit bfa858f220ab8c950dd3e1310fee61950d0ecdae ]
+[ Upstream commit f8d5e7846025f4ab15a461235f8ebae9094a361a ]
 
-To be able to constify instances of struct ctl_tables it is necessary to
-remove ways through which non-const versions are exposed from the
-sysctl core.
-One of these is the ctl_table_arg member of struct ctl_table_header.
+proc_sctp_do_auth() updates the SCTP control socket after changing
+net.sctp.auth_enable. The handler gets the per-net SCTP state from
+ctl->data, so an already opened sysctl file can still target a network
+namespace while that namespace is being torn down.
 
-Constify this reference as a prerequisite for the full constification of
-struct ctl_table instances.
-No functional change.
+SCTP previously registered its per-net sysctls from sctp_defaults_init(),
+while the control socket is created later from sctp_ctrlsock_init(). This
+exposed a window during initialization where auth_enable was writable
+before net->sctp.ctl_sock existed, and a teardown window where auth_enable
+stayed writable after inet_ctl_sock_destroy() had released the control
+socket.
 
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: f8d5e7846025 ("sctp: avoid auth_enable sysctl UAF during netns teardown")
+Move the per-net SCTP sysctl registration into sctp_ctrlsock_init() after
+sctp_ctl_sock_init() succeeds, and unregister the sysctl table before
+destroying the control socket in sctp_ctrlsock_exit(). If sysctl
+registration fails after the control socket was created, destroy the
+control socket in the same init path.
+
+Make sctp_sysctl_net_unregister() tolerate a missing header and clear the
+saved pointer so init-error and exit paths can safely share the unregister
+helper.
+
+Fixes: 15649fd5415e ("sctp: sysctl: auth_enable: avoid using current->nsproxy")
+Cc: stable@vger.kernel.org
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Co-developed-by: Qi Tang <tpluszz77@gmail.com>
+Signed-off-by: Qi Tang <tpluszz77@gmail.com>
+Signed-off-by: Zhiling Zou <roxy520tt@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/390cd5e91ed60eea27b0b64d0468301a9e73b808.1784033357.git.roxy520tt@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/vrf.c                       |    2 +-
- include/linux/sysctl.h                  |    2 +-
- ipc/ipc_sysctl.c                        |    2 +-
- ipc/mq_sysctl.c                         |    2 +-
- kernel/ucount.c                         |    2 +-
- net/ax25/sysctl_net_ax25.c              |    2 +-
- net/bridge/br_netfilter_hooks.c         |    2 +-
- net/core/sysctl_net_core.c              |    2 +-
- net/ieee802154/6lowpan/reassembly.c     |    2 +-
- net/ipv4/devinet.c                      |    2 +-
- net/ipv4/ip_fragment.c                  |    2 +-
- net/ipv4/route.c                        |    2 +-
- net/ipv4/sysctl_net_ipv4.c              |    2 +-
- net/ipv4/xfrm4_policy.c                 |    2 +-
- net/ipv6/addrconf.c                     |    2 +-
- net/ipv6/netfilter/nf_conntrack_reasm.c |    2 +-
- net/ipv6/reassembly.c                   |    2 +-
- net/ipv6/sysctl_net_ipv6.c              |    6 +++---
- net/ipv6/xfrm6_policy.c                 |    2 +-
- net/mpls/af_mpls.c                      |    4 ++--
- net/mptcp/ctrl.c                        |    2 +-
- net/netfilter/nf_conntrack_standalone.c |    2 +-
- net/netfilter/nf_log.c                  |    2 +-
- net/sctp/sysctl.c                       |    2 +-
- net/smc/smc_sysctl.c                    |    2 +-
- net/unix/sysctl_net_unix.c              |    2 +-
- net/xfrm/xfrm_sysctl.c                  |    2 +-
- 27 files changed, 30 insertions(+), 30 deletions(-)
+ net/sctp/protocol.c |   20 ++++++++++++--------
+ net/sctp/sysctl.c   |    9 +++++++--
+ 2 files changed, 19 insertions(+), 10 deletions(-)
 
---- a/drivers/net/vrf.c
-+++ b/drivers/net/vrf.c
-@@ -1983,7 +1983,7 @@ static int vrf_netns_init_sysctl(struct
- static void vrf_netns_exit_sysctl(struct net *net)
+--- a/net/sctp/protocol.c
++++ b/net/sctp/protocol.c
+@@ -1394,10 +1394,6 @@ static int __net_init sctp_defaults_init
+ 	net->sctp.l3mdev_accept = 1;
+ #endif
+ 
+-	status = sctp_sysctl_net_register(net);
+-	if (status)
+-		goto err_sysctl_register;
+-
+ 	/* Allocate and initialise sctp mibs.  */
+ 	status = init_sctp_mibs(net);
+ 	if (status)
+@@ -1431,8 +1427,6 @@ err_init_proc:
+ 	cleanup_sctp_mibs(net);
+ #endif
+ err_init_mibs:
+-	sctp_sysctl_net_unregister(net);
+-err_sysctl_register:
+ 	return status;
+ }
+ 
+@@ -1447,7 +1441,6 @@ static void __net_exit sctp_defaults_exi
+ 	net->sctp.proc_net_sctp = NULL;
+ #endif
+ 	cleanup_sctp_mibs(net);
+-	sctp_sysctl_net_unregister(net);
+ }
+ 
+ static struct pernet_operations sctp_defaults_ops = {
+@@ -1461,16 +1454,27 @@ static int __net_init sctp_ctrlsock_init
+ 
+ 	/* Initialize the control inode/socket for handling OOTB packets.  */
+ 	status = sctp_ctl_sock_init(net);
+-	if (status)
++	if (status) {
+ 		pr_err("Failed to initialize the SCTP control sock\n");
++		return status;
++	}
++
++	status = sctp_sysctl_net_register(net);
++	if (status) {
++		inet_ctl_sock_destroy(net->sctp.ctl_sock);
++		net->sctp.ctl_sock = NULL;
++	}
+ 
+ 	return status;
+ }
+ 
+ static void __net_exit sctp_ctrlsock_exit(struct net *net)
  {
- 	struct netns_vrf *nn_vrf = net_generic(net, vrf_net_id);
--	struct ctl_table *table;
-+	const struct ctl_table *table;
++	sctp_sysctl_net_unregister(net);
++
+ 	/* Free the control endpoint.  */
+ 	inet_ctl_sock_destroy(net->sctp.ctl_sock);
++	net->sctp.ctl_sock = NULL;
+ }
  
- 	table = nn_vrf->ctl_hdr->ctl_table_arg;
- 	unregister_net_sysctl_table(nn_vrf->ctl_hdr);
---- a/include/linux/sysctl.h
-+++ b/include/linux/sysctl.h
-@@ -182,7 +182,7 @@ struct ctl_table_header {
- 		struct rcu_head rcu;
- 	};
- 	struct completion *unregistering;
--	struct ctl_table *ctl_table_arg;
-+	const struct ctl_table *ctl_table_arg;
- 	struct ctl_table_root *root;
- 	struct ctl_table_set *set;
- 	struct ctl_dir *parent;
---- a/ipc/ipc_sysctl.c
-+++ b/ipc/ipc_sysctl.c
-@@ -306,7 +306,7 @@ bool setup_ipc_sysctls(struct ipc_namesp
- 
- void retire_ipc_sysctls(struct ipc_namespace *ns)
- {
--	struct ctl_table *tbl;
-+	const struct ctl_table *tbl;
- 
- 	tbl = ns->ipc_sysctls->ctl_table_arg;
- 	unregister_sysctl_table(ns->ipc_sysctls);
---- a/ipc/mq_sysctl.c
-+++ b/ipc/mq_sysctl.c
-@@ -159,7 +159,7 @@ bool setup_mq_sysctls(struct ipc_namespa
- 
- void retire_mq_sysctls(struct ipc_namespace *ns)
- {
--	struct ctl_table *tbl;
-+	const struct ctl_table *tbl;
- 
- 	tbl = ns->mq_sysctls->ctl_table_arg;
- 	unregister_sysctl_table(ns->mq_sysctls);
---- a/kernel/ucount.c
-+++ b/kernel/ucount.c
-@@ -119,7 +119,7 @@ bool setup_userns_sysctls(struct user_na
- void retire_userns_sysctls(struct user_namespace *ns)
- {
- #ifdef CONFIG_SYSCTL
--	struct ctl_table *tbl;
-+	const struct ctl_table *tbl;
- 
- 	tbl = ns->sysctls->ctl_table_arg;
- 	unregister_sysctl_table(ns->sysctls);
---- a/net/ax25/sysctl_net_ax25.c
-+++ b/net/ax25/sysctl_net_ax25.c
-@@ -171,7 +171,7 @@ int ax25_register_dev_sysctl(ax25_dev *a
- void ax25_unregister_dev_sysctl(ax25_dev *ax25_dev)
- {
- 	struct ctl_table_header *header = ax25_dev->sysheader;
--	struct ctl_table *table;
-+	const struct ctl_table *table;
- 
- 	if (header) {
- 		ax25_dev->sysheader = NULL;
---- a/net/bridge/br_netfilter_hooks.c
-+++ b/net/bridge/br_netfilter_hooks.c
-@@ -1290,7 +1290,7 @@ static int br_netfilter_sysctl_init_net(
- static void br_netfilter_sysctl_exit_net(struct net *net,
- 					 struct brnf_net *brnet)
- {
--	struct ctl_table *table = brnet->ctl_hdr->ctl_table_arg;
-+	const struct ctl_table *table = brnet->ctl_hdr->ctl_table_arg;
- 
- 	unregister_net_sysctl_table(brnet->ctl_hdr);
- 	if (!net_eq(net, &init_net))
---- a/net/core/sysctl_net_core.c
-+++ b/net/core/sysctl_net_core.c
-@@ -741,7 +741,7 @@ err_dup:
- 
- static __net_exit void sysctl_core_net_exit(struct net *net)
- {
--	struct ctl_table *tbl;
-+	const struct ctl_table *tbl;
- 
- 	tbl = net->core.sysctl_hdr->ctl_table_arg;
- 	unregister_net_sysctl_table(net->core.sysctl_hdr);
---- a/net/ieee802154/6lowpan/reassembly.c
-+++ b/net/ieee802154/6lowpan/reassembly.c
-@@ -399,7 +399,7 @@ err_alloc:
- 
- static void __net_exit lowpan_frags_ns_sysctl_unregister(struct net *net)
- {
--	struct ctl_table *table;
-+	const struct ctl_table *table;
- 	struct netns_ieee802154_lowpan *ieee802154_lowpan =
- 		net_ieee802154_lowpan(net);
- 
---- a/net/ipv4/devinet.c
-+++ b/net/ipv4/devinet.c
-@@ -2793,7 +2793,7 @@ err_alloc_all:
- static __net_exit void devinet_exit_net(struct net *net)
- {
- #ifdef CONFIG_SYSCTL
--	struct ctl_table *tbl;
-+	const struct ctl_table *tbl;
- 
- 	tbl = net->ipv4.forw_hdr->ctl_table_arg;
- 	unregister_net_sysctl_table(net->ipv4.forw_hdr);
---- a/net/ipv4/ip_fragment.c
-+++ b/net/ipv4/ip_fragment.c
-@@ -632,7 +632,7 @@ err_alloc:
- 
- static void __net_exit ip4_frags_ns_ctl_unregister(struct net *net)
- {
--	struct ctl_table *table;
-+	const struct ctl_table *table;
- 
- 	table = net->ipv4.frags_hdr->ctl_table_arg;
- 	unregister_net_sysctl_table(net->ipv4.frags_hdr);
---- a/net/ipv4/route.c
-+++ b/net/ipv4/route.c
-@@ -3621,7 +3621,7 @@ err_dup:
- 
- static __net_exit void sysctl_route_net_exit(struct net *net)
- {
--	struct ctl_table *tbl;
-+	const struct ctl_table *tbl;
- 
- 	tbl = net->ipv4.route_hdr->ctl_table_arg;
- 	unregister_net_sysctl_table(net->ipv4.route_hdr);
---- a/net/ipv4/sysctl_net_ipv4.c
-+++ b/net/ipv4/sysctl_net_ipv4.c
-@@ -1564,7 +1564,7 @@ err_alloc:
- 
- static __net_exit void ipv4_sysctl_exit_net(struct net *net)
- {
--	struct ctl_table *table;
-+	const struct ctl_table *table;
- 
- 	table = net->ipv4.ipv4_hdr->ctl_table_arg;
- 	unregister_net_sysctl_table(net->ipv4.ipv4_hdr);
---- a/net/ipv4/xfrm4_policy.c
-+++ b/net/ipv4/xfrm4_policy.c
-@@ -182,7 +182,7 @@ err_alloc:
- 
- static __net_exit void xfrm4_net_sysctl_exit(struct net *net)
- {
--	struct ctl_table *table;
-+	const struct ctl_table *table;
- 
- 	if (!net->ipv4.xfrm4_hdr)
- 		return;
---- a/net/ipv6/addrconf.c
-+++ b/net/ipv6/addrconf.c
-@@ -7251,7 +7251,7 @@ out:
- static void __addrconf_sysctl_unregister(struct net *net,
- 					 struct ipv6_devconf *p, int ifindex)
- {
--	struct ctl_table *table;
-+	const struct ctl_table *table;
- 
- 	if (!p->sysctl_header)
- 		return;
---- a/net/ipv6/netfilter/nf_conntrack_reasm.c
-+++ b/net/ipv6/netfilter/nf_conntrack_reasm.c
-@@ -105,7 +105,7 @@ err_alloc:
- static void __net_exit nf_ct_frags6_sysctl_unregister(struct net *net)
- {
- 	struct nft_ct_frag6_pernet *nf_frag = nf_frag_pernet(net);
--	struct ctl_table *table;
-+	const struct ctl_table *table;
- 
- 	table = nf_frag->nf_frag_frags_hdr->ctl_table_arg;
- 	unregister_net_sysctl_table(nf_frag->nf_frag_frags_hdr);
---- a/net/ipv6/reassembly.c
-+++ b/net/ipv6/reassembly.c
-@@ -487,7 +487,7 @@ err_alloc:
- 
- static void __net_exit ip6_frags_ns_sysctl_unregister(struct net *net)
- {
--	struct ctl_table *table;
-+	const struct ctl_table *table;
- 
- 	table = net->ipv6.sysctl.frags_hdr->ctl_table_arg;
- 	unregister_net_sysctl_table(net->ipv6.sysctl.frags_hdr);
---- a/net/ipv6/sysctl_net_ipv6.c
-+++ b/net/ipv6/sysctl_net_ipv6.c
-@@ -313,9 +313,9 @@ out_ipv6_table:
- 
- static void __net_exit ipv6_sysctl_net_exit(struct net *net)
- {
--	struct ctl_table *ipv6_table;
--	struct ctl_table *ipv6_route_table;
--	struct ctl_table *ipv6_icmp_table;
-+	const struct ctl_table *ipv6_table;
-+	const struct ctl_table *ipv6_route_table;
-+	const struct ctl_table *ipv6_icmp_table;
- 
- 	ipv6_table = net->ipv6.sysctl.hdr->ctl_table_arg;
- 	ipv6_route_table = net->ipv6.sysctl.route_hdr->ctl_table_arg;
---- a/net/ipv6/xfrm6_policy.c
-+++ b/net/ipv6/xfrm6_policy.c
-@@ -229,7 +229,7 @@ err_alloc:
- 
- static void __net_exit xfrm6_net_sysctl_exit(struct net *net)
- {
--	struct ctl_table *table;
-+	const struct ctl_table *table;
- 
- 	if (!net->ipv6.sysctl.xfrm6_hdr)
- 		return;
---- a/net/mpls/af_mpls.c
-+++ b/net/mpls/af_mpls.c
-@@ -1422,7 +1422,7 @@ static void mpls_dev_sysctl_unregister(s
- 				       struct mpls_dev *mdev)
- {
- 	struct net *net = dev_net(dev);
--	struct ctl_table *table;
-+	const struct ctl_table *table;
- 
- 	if (!mdev->sysctl)
- 		return;
-@@ -2692,7 +2692,7 @@ static void mpls_net_exit(struct net *ne
- {
- 	struct mpls_route __rcu **platform_label;
- 	size_t platform_labels;
--	struct ctl_table *table;
-+	const struct ctl_table *table;
- 	unsigned int index;
- 
- 	table = net->mpls.ctl->ctl_table_arg;
---- a/net/mptcp/ctrl.c
-+++ b/net/mptcp/ctrl.c
-@@ -218,7 +218,7 @@ err_alloc:
- 
- static void mptcp_pernet_del_table(struct mptcp_pernet *pernet)
- {
--	struct ctl_table *table = pernet->ctl_table_hdr->ctl_table_arg;
-+	const struct ctl_table *table = pernet->ctl_table_hdr->ctl_table_arg;
- 
- 	unregister_net_sysctl_table(pernet->ctl_table_hdr);
- 
---- a/net/netfilter/nf_conntrack_standalone.c
-+++ b/net/netfilter/nf_conntrack_standalone.c
-@@ -1113,7 +1113,7 @@ out_unregister_netfilter:
- static void nf_conntrack_standalone_fini_sysctl(struct net *net)
- {
- 	struct nf_conntrack_net *cnet = nf_ct_pernet(net);
--	struct ctl_table *table;
-+	const struct ctl_table *table;
- 
- 	table = cnet->sysctl_header->ctl_table_arg;
- 	unregister_net_sysctl_table(cnet->sysctl_header);
---- a/net/netfilter/nf_log.c
-+++ b/net/netfilter/nf_log.c
-@@ -509,7 +509,7 @@ err_alloc:
- 
- static void netfilter_log_sysctl_exit(struct net *net)
- {
--	struct ctl_table *table;
-+	const struct ctl_table *table;
- 
- 	table = net->nf.nf_log_dir_header->ctl_table_arg;
- 	unregister_net_sysctl_table(net->nf.nf_log_dir_header);
+ static struct pernet_operations sctp_ctrlsock_ops = {
 --- a/net/sctp/sysctl.c
 +++ b/net/sctp/sysctl.c
-@@ -630,7 +630,7 @@ int sctp_sysctl_net_register(struct net
+@@ -630,11 +630,16 @@ int sctp_sysctl_net_register(struct net
  
  void sctp_sysctl_net_unregister(struct net *net)
  {
--	struct ctl_table *table;
-+	const struct ctl_table *table;
++	struct ctl_table_header *header = net->sctp.sysctl_header;
+ 	const struct ctl_table *table;
  
- 	table = net->sctp.sysctl_header->ctl_table_arg;
- 	unregister_net_sysctl_table(net->sctp.sysctl_header);
---- a/net/smc/smc_sysctl.c
-+++ b/net/smc/smc_sysctl.c
-@@ -109,7 +109,7 @@ err_alloc:
+-	table = net->sctp.sysctl_header->ctl_table_arg;
+-	unregister_net_sysctl_table(net->sctp.sysctl_header);
++	if (!header)
++		return;
++
++	table = header->ctl_table_arg;
++	unregister_net_sysctl_table(header);
+ 	kfree(table);
++	net->sctp.sysctl_header = NULL;
+ }
  
- void __net_exit smc_sysctl_net_exit(struct net *net)
- {
--	struct ctl_table *table;
-+	const struct ctl_table *table;
- 
- 	table = net->smc.smc_hdr->ctl_table_arg;
- 	unregister_net_sysctl_table(net->smc.smc_hdr);
---- a/net/unix/sysctl_net_unix.c
-+++ b/net/unix/sysctl_net_unix.c
-@@ -52,7 +52,7 @@ err_alloc:
- 
- void unix_sysctl_unregister(struct net *net)
- {
--	struct ctl_table *table;
-+	const struct ctl_table *table;
- 
- 	table = net->unx.ctl->ctl_table_arg;
- 	unregister_net_sysctl_table(net->unx.ctl);
---- a/net/xfrm/xfrm_sysctl.c
-+++ b/net/xfrm/xfrm_sysctl.c
-@@ -76,7 +76,7 @@ out_kmemdup:
- 
- void __net_exit xfrm_sysctl_fini(struct net *net)
- {
--	struct ctl_table *table;
-+	const struct ctl_table *table;
- 
- 	table = net->xfrm.sysctl_hdr->ctl_table_arg;
- 	unregister_net_sysctl_table(net->xfrm.sysctl_hdr);
+ static struct ctl_table_header *sctp_sysctl_header;
 
 
