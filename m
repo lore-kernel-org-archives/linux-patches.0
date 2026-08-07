@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 722DE37AA9A;
-	Fri,  7 Aug 2026 15:00:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A55E3A75A3;
+	Fri,  7 Aug 2026 15:00:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114832; cv=none; b=I6O8L++o/B5s5N7F+8wpvbFYL/wLyA7cQ3d0rz7gl15eGBQNzlZ+RhTUXyL/COn2b8KLYOR2cfxO4RtmvP6Kvxu8c4YNU1fQ3TR1/FYKfcoGGqoltaBoSUls47FJ9jF3BCh8g6zAEdj/nAj097bc63zTlme/HB3RwUx0j2MrcOQ=
+	t=1786114835; cv=none; b=Prje117FkhG2j+dc7tSTe/sm2z+5Y/FdWyZVuAfS9vwj40DYsJxebFO3ZU+NI++fFTRQh0CJRfNxdOnIbN5hAO9fasKqWHYrArHbffQgWT7tF5O+MlZHkheWpuapZIfg3fNWcDt0DKZnsPwgpO2s9mT0L0IFjUFykLbLrHOKRYk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114832; c=relaxed/simple;
-	bh=xKTkBTospZmyRwgOxzuyD/xNLqEqMoMFzknhCns3rz8=;
+	s=arc-20240116; t=1786114835; c=relaxed/simple;
+	bh=UA2R6JgohTkG1kbROAE0fT08G+yEzkOVyQ+uQrj3IS8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HcGPeiLKty8h5H4xTpF6nLJ7H8mXQ7AhMa9R5kLZRvrVHsqbRR3LiaLu6El5WS6HGr2mc9tWSyjWc+IjLxWBrbo3ZNKwmN0mPLCLAe5GlCtf307acShOVpU59zg4a+Zw2qyWiriAZ0c7JyO+ZGsCTYkUorGu16L/lnPYgqujySk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AD+8aRIQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JyuPctd64BFeNPSrHAekNKpwOo+x5iJYtSRrjK0izpSm/ov52VJ3D35NCX3SefbeR9Mn9rrSnhsFRppARlMp9AH4auXnnHt56sV90WxnikcBAlMpaUFgHW+0J3kq4EF4scnTNWyRYPNplA1JojxsICWRySjp1AvfgpxHKWFQksM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wHMBamxg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AD+8aRIQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C23191F000E9;
-	Fri,  7 Aug 2026 15:00:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wHMBamxg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96C2D1F00A3A;
+	Fri,  7 Aug 2026 15:00:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114831;
-	bh=geDS6vaCSk/5w//Wt4QAHmSsVtc493+xBeZCXKh6drM=;
+	s=korg; t=1786114834;
+	bh=NXtV45UfDaJg9ONAeYwYXtn7veMyGXI+kBvK1YTSfYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AD+8aRIQaTbAHfa28pLwAtvjdiclyP38WCx7dtoznXD/XPFGF4ubY8IZ4QnoiwURr
-	 NcaaSd7zs4UVy9xXSt49BLZ8S94SjN4D7+5zSrdKS6jIe17m66PqvR+U5viFpWle5U
-	 jrlGD2NxFsatLAEfgW4wZb+akRD65y/rOrzR3UuY=
+	b=wHMBamxg/oLcFipOnAtmIOXcHX1gxtDrN8BpjhtCHCW1wzIs/UoKehFrvXT1enbsN
+	 hvRp0S7aLGd73Na57TbV51T2Kl83HvLmyXOzQnCWluJd/JLazYFp6ZFP0A0wuooO/y
+	 gDljSDXJ8PGYbLUZV9SmZt72lViZcvH9sql5kWCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
+	Sashiko AI <sashiko-bot@kernel.org>,
+	HyeongJun An <sammiee5311@gmail.com>,
+	Chris Leech <cleech@redhat.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 046/396] assoc_array: trim the final shortcut word using the current chunk end
-Date: Fri,  7 Aug 2026 16:33:26 +0200
-Message-ID: <20260807143425.260442627@linuxfoundation.org>
+Subject: [PATCH 6.18 064/396] scsi: libiscsi: Fix stale-data leak into the SCSI sense buffer
+Date: Fri,  7 Aug 2026 16:33:44 +0200
+Message-ID: <20260807143425.654591039@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -51,64 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit a82c8a05e86f3f84e09698f65b4515b5d04633f6 ]
+[ Upstream commit 98b87885de4b7f605533a2860685f5689fce8e82 ]
 
-assoc_array_walk() masks off the bits past shortcut->skip_to_level in the
-word that contains skip_to_level, gated on
-round_up(sc_level, ASSOC_ARRAY_KEY_CHUNK_SIZE) > skip_to_level.
+iscsi_scsi_cmd_rsp() copies the sense data of a SCSI Response from the
+target-supplied data segment.  The segment carries a 2-byte sense length
+followed by the sense bytes, so it must hold 2 + senselen bytes, but the
+bounds check only requires datalen >= senselen:
 
-That guard is wrong in two opposite ways:
+	senselen = get_unaligned_be16(data);
+	if (datalen < senselen)
+		goto invalid_datalen;
+	memcpy(sc->sense_buffer, data + 2,
+	       min_t(uint16_t, senselen, SCSI_SENSE_BUFFERSIZE));
 
- - When sc_level is word-aligned (every word after the first) round_up()
-   is a no-op, so the guard is sc_level > skip_to_level and never fires for
-   the word that holds skip_to_level.  A shortcut that spans more than one
-   word and ends in the middle of its last word leaves that word untrimmed,
-   and its stale high bits leak into the dissimilarity word and can steer
-   the walk down the wrong descendant.
+A target that returns a SCSI Response whose datalen equals senselen
+(with senselen <= SCSI_SENSE_BUFFERSIZE) makes the memcpy() from data +
+2 read up to two bytes past the received data.  Those bytes are stale
+conn->data contents and end up in the command's sense buffer, which is
+returned to userspace.
 
- - When sc_level is unaligned (the first word) and skip_to_level sits on
-   the next chunk boundary, sc_level + CHUNK would exceed skip_to_level and
-   fire the trim with shift = skip_to_level & CHUNK_MASK == 0, which clears
-   the whole dissimilarity word and makes a differing shortcut compare
-   equal.
+Account for the 2-byte sense length prefix in the check.
 
-Use the end of the chunk that contains sc_level instead:
-
-	skip_to_level < round_down(sc_level, CHUNK) + CHUNK
-
-For an aligned sc_level whose word holds skip_to_level this now fires (the
-first bug); for an unaligned sc_level with skip_to_level on the following
-boundary it does not, so shift is never 0 when the branch runs and the trim
-never clears the whole word.
-
-Fixes: 3cb989501c26 ("Add a generic associative array implementation.")
+Fixes: 7996a778ff8c ("[SCSI] iscsi: add libiscsi")
+Suggested-by: Sashiko AI <sashiko-bot@kernel.org>
 Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Tested-by: Jarkko Sakkinen <jarkko@kernel.org>
-Link: https://lore.kernel.org/r/20260719161505.2423935-4-michael.bommarito@gmail.com
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Acked-by: Chris Leech <cleech@redhat.com>
+Link: https://patch.msgid.link/20260714104934.1404423-1-sammiee5311@gmail.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/assoc_array.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/scsi/libiscsi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/lib/assoc_array.c b/lib/assoc_array.c
-index 388e656ac9743..01619e88a52c9 100644
---- a/lib/assoc_array.c
-+++ b/lib/assoc_array.c
-@@ -255,7 +255,8 @@ assoc_array_walk(const struct assoc_array *array,
- 		sc_segments = shortcut->index_key[sc_level >> ASSOC_ARRAY_KEY_CHUNK_SHIFT];
- 		dissimilarity = segments ^ sc_segments;
+diff --git a/drivers/scsi/libiscsi.c b/drivers/scsi/libiscsi.c
+index c9f410c509783..e2adebc80b3a9 100644
+--- a/drivers/scsi/libiscsi.c
++++ b/drivers/scsi/libiscsi.c
+@@ -918,7 +918,7 @@ static void iscsi_scsi_cmd_rsp(struct iscsi_conn *conn, struct iscsi_hdr *hdr,
+ 		}
  
--		if (round_up(sc_level, ASSOC_ARRAY_KEY_CHUNK_SIZE) > shortcut->skip_to_level) {
-+		if (shortcut->skip_to_level < round_down(sc_level,
-+				ASSOC_ARRAY_KEY_CHUNK_SIZE) + ASSOC_ARRAY_KEY_CHUNK_SIZE) {
- 			/* Trim segments that are beyond the shortcut */
- 			int shift = shortcut->skip_to_level & ASSOC_ARRAY_KEY_CHUNK_MASK;
- 			dissimilarity &= ~(ULONG_MAX << shift);
+ 		senselen = get_unaligned_be16(data);
+-		if (datalen < senselen)
++		if (datalen < senselen + 2)
+ 			goto invalid_datalen;
+ 
+ 		memcpy(sc->sense_buffer, data + 2,
 -- 
 2.53.0
 
