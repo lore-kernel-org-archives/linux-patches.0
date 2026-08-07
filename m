@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7664E2FF641;
-	Fri,  7 Aug 2026 14:49:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E42A31578E;
+	Fri,  7 Aug 2026 14:49:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114154; cv=none; b=s5G7f8psKU9dSAk0xj+LgGC6105Px5cEvLA2iI1DfYoWjncdnj+dacURQwz6nMgH4t7y3iDqgsVgt2+0+1d+OUNsb3752zL02oasSl3oFijKFnhTmXZa9rFDMswJRYCrbCV0ET1LANNq/CpipT+oumqW49hcBarDrxCjXuGpfSk=
+	t=1786114157; cv=none; b=ZOuHW6U2WuVa9ftjlyZdfkYAVwRlbOaAbj8xS2OZ0wjHxTep+CBek0abOIdsq8uUbBcVSEitGrQhjhtZlLN6GllBiAY/F4JTI9jrwRZptRCGL9zRsKsDrINdA5v3QBOBl36rnuCNJ94OUpMwuDrf0HF2I+zzH0kqReVGTCyzaj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114154; c=relaxed/simple;
-	bh=85VQE4+A9Da7+lhIWCxzJKnAxwRDm5F1sq9AxQCItTs=;
+	s=arc-20240116; t=1786114157; c=relaxed/simple;
+	bh=Jn1a1W6SFnNnDFQ6zmzWP8fcF3J0cY+ZS7zdxm8mEzQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FMT8lF7vOIZz52sNs2jE6KGWNhMnP4lrJcOPKSoa7u5xrQPjiUXTJNeCSikDg2Cgy5OP3pBFHos48PmzYRl5P/BqM0kIePX2LKRlpExZu5TDNE1VKwXdM5PNTG3PhuemwhLg0CalSxGlxN/fc0tEh1d5rXSmW5WC0YMjOeOEcT4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rv3TNaML; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=noFFhxDaPRhHv2hfrWWeTkhRQ5cWOSkjjX7EKJoVXuWMVZaWzCo2esghAgQesfCENsyWsJtsSTOgj8pPwerMvT6qu2VjX6vrJbEC1GluxoK/8Qbcau4D0kK2OxDJOU844JHmEmyseZtI3876ydp2EqQF0w7VLuFEYjUeNSD3V+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NFQXpgWp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rv3TNaML"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAF041F000E9;
-	Fri,  7 Aug 2026 14:49:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NFQXpgWp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFEFA1F000E9;
+	Fri,  7 Aug 2026 14:49:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114153;
-	bh=HuRYNqprBxQduWeMIg9U/A3Knx9p5X2M+A1weIz57+I=;
+	s=korg; t=1786114156;
+	bh=e+kg1G3kIHDSX+1KhUj0QSTbunzMbmOc2g19+KTFHOI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rv3TNaMLktbWgiabj6xheKK85QyHoqQZdhfd9PWrVUZ3a3F6yjqDgnE+chiNVasWV
-	 NAxuSGp7lR+eYltRtZ82DtKIYJqzUdOTVxAetlbkdVQNOJbOPBTTEvQ4Ar5Ls8e2na
-	 kRDgJBMroSUHnxs+P2bTneV4YjIbgJX5tOOzTqgE=
+	b=NFQXpgWpCS2jy5Gc57iubT5pj6NxVdbRpconZBNQGHCnka9IVf6nXWkqxzp/uWb/C
+	 tlHbiCTlwFNB+4SgVG+Y7/YzHHlKUvH2/GW2cQvjdDdXca2jC/w5MPKIeS0rDB2ve1
+	 bwNU2T5mMolm8moWXtVLclIG7O+5ZhCj35/Rz1bA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 126/337] ksmbd: return success for deferred final close
-Date: Fri,  7 Aug 2026 16:35:29 +0200
-Message-ID: <20260807143421.263788848@linuxfoundation.org>
+	Haidar Lee <haidar.lee@adlinktech.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.12 162/337] ASoC: tas2562: fix broken entries in the volume lookup table
+Date: Fri,  7 Aug 2026 16:36:05 +0200
+Message-ID: <20260807143422.063862057@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -51,64 +50,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Haidar Lee <haidar.lee@adlinktech.com>
 
-[ Upstream commit c5db4de8988f1a621556ca5c4537f77b766ca07d ]
+commit bdb0fd6de403fcea7b85dc9d38f0a571583ebe80 upstream.
 
-ksmbd_close_fd() marks an open file as FP_CLOSED and drops the file table
-reference. If another in-flight request still holds a reference, the final
-close is deferred until that request drops its reference.
+The float_vol_db_lookup table is supposed to hold
+round(10^(dB/20) * 2^30) for every 2 dB step from -110 dB to 0 dB,
+which is 56 entries, but it only has 55: the -90 dB entry duplicates
+the -92 dB value (0x0000695b) and the -20 dB entry (0x06666666) is
+missing altogether. As a result every step between -90 dB and -22 dB
+is off by 2 dB, and the control's maximum raw value of 110 indexes one
+element past the end of the array.
 
-The function currently returns -EINVAL in that deferred-final-close case
-because fp is cleared when the reference count does not reach zero.  That
-turns a valid close into STATUS_FILE_CLOSED.
+Replace the duplicated -90 dB entry with the correct value 0x000084a3
+and add the missing -20 dB entry, bringing the table to the full 56
+entries so index 55 (raw value 110, 0 dB) is in range again.
 
-smb2.compound_find.compound_find_close sends QUERY_DIRECTORY and then
-closes the same directory handle before receiving the find response.
-The query holds a reference while it builds the response, so close must
-mark the handle closed and return success even though final teardown is
-delayed. Track whether the handle was successfully transitioned to
-FP_CLOSED and return success when only the final close is deferred.
-
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Stable-dep-of: e7188199eff4 ("ksmbd: fix use-after-free in __close_file_table_ids()")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: bf726b1c86f2 ("ASoC: tas2562: Add support for digital volume control")
+Cc: stable@vger.kernel.org
+Signed-off-by: Haidar Lee <haidar.lee@adlinktech.com>
+Link: https://patch.msgid.link/20260715-tas2562-dvc-fix-v1-2-072b13901b20@adlinktech.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/vfs_cache.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/soc/codecs/tas2562.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/fs/smb/server/vfs_cache.c b/fs/smb/server/vfs_cache.c
-index 5b6d8bb8edb27..0d3341927b483 100644
---- a/fs/smb/server/vfs_cache.c
-+++ b/fs/smb/server/vfs_cache.c
-@@ -487,6 +487,7 @@ int ksmbd_close_fd(struct ksmbd_work *work, u64 id)
- {
- 	struct ksmbd_file	*fp;
- 	struct ksmbd_file_table	*ft;
-+	bool closed = false;
+--- a/sound/soc/codecs/tas2562.c
++++ b/sound/soc/codecs/tas2562.c
+@@ -32,15 +32,16 @@
+ static const unsigned int float_vol_db_lookup[] = {
+ 0x00000d43, 0x000010b2, 0x00001505, 0x00001a67, 0x00002151,
+ 0x000029f1, 0x000034cd, 0x00004279, 0x000053af, 0x0000695b,
+-0x0000695b, 0x0000a6fa, 0x0000d236, 0x000108a4, 0x00014d2a,
++0x000084a3, 0x0000a6fa, 0x0000d236, 0x000108a4, 0x00014d2a,
+ 0x0001a36e, 0x00021008, 0x000298c0, 0x000344df, 0x00041d8f,
+ 0x00052e5a, 0x000685c8, 0x00083621, 0x000a566d, 0x000d03a7,
+ 0x0010624d, 0x0014a050, 0x0019f786, 0x0020b0bc, 0x0029279d,
+ 0x0033cf8d, 0x004139d3, 0x00521d50, 0x00676044, 0x0082248a,
+ 0x00a3d70a, 0x00ce4328, 0x0103ab3d, 0x0146e75d, 0x019b8c27,
+ 0x02061b89, 0x028c423f, 0x03352529, 0x0409c2b0, 0x05156d68,
+-0x080e9f96, 0x0a24b062, 0x0cc509ab, 0x10137987, 0x143d1362,
+-0x197a967f, 0x2013739e, 0x28619ae9, 0x32d64617, 0x40000000
++0x06666666, 0x080e9f96, 0x0a24b062, 0x0cc509ab, 0x10137987,
++0x143d1362, 0x197a967f, 0x2013739e, 0x28619ae9, 0x32d64617,
++0x40000000
+ };
  
- 	if (!has_file_id(id))
- 		return 0;
-@@ -501,6 +502,7 @@ int ksmbd_close_fd(struct ksmbd_work *work, u64 id)
- 			fp = NULL;
- 		else {
- 			fp->f_state = FP_CLOSED;
-+			closed = true;
- 			if (!atomic_dec_and_test(&fp->refcount))
- 				fp = NULL;
- 		}
-@@ -508,7 +510,7 @@ int ksmbd_close_fd(struct ksmbd_work *work, u64 id)
- 	write_unlock(&ft->lock);
- 
- 	if (!fp)
--		return -EINVAL;
-+		return closed ? 0 : -EINVAL;
- 
- 	__put_fd_final(work, fp);
- 	return 0;
--- 
-2.53.0
-
+ struct tas2562_data {
 
 
