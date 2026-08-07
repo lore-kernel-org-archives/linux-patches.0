@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C9AB3FD96B;
-	Fri,  7 Aug 2026 14:42:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CAB242C4E8;
+	Fri,  7 Aug 2026 14:42:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786113766; cv=none; b=Fw6sRyIYBFwv4j9jxdI6eMp7btrw54AfUQnLepD4CdGhCjVnW5uQknV+82Wj+8G6N4bT2iKFFaSU2WuwEyLpImAyKKduIU6FhYUFojiz5+Hyu46DUDLJFsSFKVgOaI4YB0bAW/l0TlVmytcH2BPM+/gP9ExX2X7kHbepKeOZinE=
+	t=1786113768; cv=none; b=IBxiDIHxe2MDZAmeRqIkbvrJmpFGXFAxG0EkH271OL5LJZhMJhdbYL6pXdseJGbDBzmzeqdZAsPuX5RIYIG0CLKqXfaO/oVbKMTCb2qi+HsozbjxIcGJ2dnRa8Fd4OPLr0QPuBdRk++1DKsMIBPlXUpCjVPwRzSGEovkhTdYGrM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786113766; c=relaxed/simple;
-	bh=JuBmBmrI4VLEG+tT/l5qprFAeFEymnEv0ixKhkVneqA=;
+	s=arc-20240116; t=1786113768; c=relaxed/simple;
+	bh=oKqSUuioZ+Gch0z6mjq3LZAhqc2oDuxi4YNStvtxJFI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rZ9RV3LbeX+4ybgfJ6cVyCDkSx3FtoDJq/4mhhh4hBykpU8pdfMUOj5aOyl5dj1Edcz871gNhNqw2qBvw9DXPQSgRA8HXsRvW3S5bNJoeKb88oq1ZO7rylJjkmW8J7n8eG6LlKwi2qoTpsURMrCWg7QOirWMDx7dKVhNfGFlCNk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m4591Yph; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=goV9usSLrdRLckB4jscVz5EnkPJoYc4pkLlf12FZ38UTJPwj56AzFwbcKwgwG1wj1xflYZ1BMttbaMI6ciChJ4vwgQiO4Be9RZIr59N6/8CqgX/WvLvrN/tCtrVllCu7/Y4/MTMPSFSl1mwiJ1Ym1c3/dfLmt8V9RqBRe/eXuEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AoqZk4RX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m4591Yph"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 157BE1F00ADB;
-	Fri,  7 Aug 2026 14:42:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AoqZk4RX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E584B1F00A3D;
+	Fri,  7 Aug 2026 14:42:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786113742;
-	bh=PEV5L0BjsEAlikaGORdk5guK1TICZy+GhuEplkj1J/E=;
+	s=korg; t=1786113745;
+	bh=hCGgHmzaesImvJdpupJSwuHEXDh8dyC2aWkfun5qfX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m4591YphUWMZ9lLV3Ksj/RuuRU/Wy0vkLIV+X8j6yEBrVhM8rfb9UYrOJ0t6lcG80
-	 iliy0yoRugvrMLmelXcRVsztu41g/u7SUTNaRkFMRW1GkcIMjQMgaDZxX3thBg+a/o
-	 85BwsqoEDRvJ+OFfKtKe8pzmMHELUfZm8npzecn8=
+	b=AoqZk4RXvoag5ez3Ob95eENzLT8jN3RAcnQnl+/W2BqbnQceeHygVrc8SDmWC5Dsv
+	 ptJW0yIS9nAiDofzzeELuFGTg+sOd3z8oXZgUQncquKsSKBdhWR522VqVdnZOiWPI4
+	 tgRSQD+agIXjjJ2NJQqXHIRlO76PQ9Z/zFyIgJKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sneh Mankad <sneh.mankad@oss.qualcomm.com>,
-	Maulik Shah <maulik.shah@oss.qualcomm.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Benjamin Berg <benjamin.berg@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 020/337] pinctrl: qcom: Unconditionally mark gpio as wakeup enable
-Date: Fri,  7 Aug 2026 16:33:43 +0200
-Message-ID: <20260807143418.956759553@linuxfoundation.org>
+Subject: [PATCH 6.12 003/337] um: Set parent death signal for winch thread/process
+Date: Fri,  7 Aug 2026 16:33:26 +0200
+Message-ID: <20260807143418.593750999@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -54,68 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sneh Mankad <sneh.mankad@oss.qualcomm.com>
+From: Benjamin Berg <benjamin.berg@intel.com>
 
-[ Upstream commit 859e02a369ab328a77dfcabf59562100e55f9c5c ]
+commit fdb2ecd35d327a1fc6bba69b97f85b494e1f4b6b upstream.
 
-GPIO interrupts that are wakeup capable need to be forwarded to wakeup
-capable parent irqchip. This is done via writing to it's wakeup_enable bit.
+The winch "thread" is really a separate process. Using prctl to set
+PR_SET_PDEATHSIG ensures that this separate thread will be killed if the
+UML kernel itself dies unexpectedly and does not perform proper cleanup.
 
-Currently the bit is set only for PDC irqchip by checking skip_wake_irqs.
-skip_wake_irqs is set to differentiate between parent irqchips MPM and
-PDC. It is set when the parent irqchip is PDC to inform pinctrl about
-skipping the IRQ setting up at TLMM.
-
-However, the functionality to forward GPIO interrupts during SoC low
-power mode is needed regardless of which parent irqchip it is.
-Without the functionality it is impossible for MPM irqchip to detect the
-GPIO interrupt during SoC low power mode since for MPM irqchip the
-skip_wake_irqs is always false.
-
-Remove skip_wake_irqs condition when setting wakeup enable bit to allow
-forwarding GPIO interrupts for SoCs using MPM irqchip too.
-
-Fixes: 76b446f5b86e ("pinctrl: qcom: handle intr_target_reg wakeup_present/enable bits")
-Signed-off-by: Sneh Mankad <sneh.mankad@oss.qualcomm.com>
-Reviewed-by: Maulik Shah <maulik.shah@oss.qualcomm.com>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260616-enable_wakeup_capable_gpios-v3-1-fb59647d89cb@oss.qualcomm.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
+Link: https://patch.msgid.link/20240919124511.282088-5-benjamin@sipsolutions.net
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/qcom/pinctrl-msm.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/um/drivers/chan_user.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
-index 27eb585bf42df..994f46c4c3b6b 100644
---- a/drivers/pinctrl/qcom/pinctrl-msm.c
-+++ b/drivers/pinctrl/qcom/pinctrl-msm.c
-@@ -1247,12 +1247,12 @@ static int msm_gpio_irq_reqres(struct irq_data *d)
- 	/*
- 	 * If the wakeup_enable bit is present and marked as available for the
- 	 * requested GPIO, it should be enabled when the GPIO is marked as
--	 * wake irq in order to allow the interrupt event to be transfered to
--	 * the PDC HW.
-+	 * wake irq in order to allow the interrupt event to be transferred to
-+	 * the PDC/MPM HW.
- 	 * While the name implies only the wakeup event, it's also required for
- 	 * the interrupt event.
- 	 */
--	if (test_bit(d->hwirq, pctrl->skip_wake_irqs) && g->intr_wakeup_present_bit) {
-+	if (g->intr_wakeup_present_bit) {
- 		u32 intr_cfg;
+diff --git a/arch/um/drivers/chan_user.c b/arch/um/drivers/chan_user.c
+index a66e556012c4..1434114b2f34 100644
+--- a/arch/um/drivers/chan_user.c
++++ b/arch/um/drivers/chan_user.c
+@@ -10,6 +10,7 @@
+ #include <signal.h>
+ #include <termios.h>
+ #include <sys/ioctl.h>
++#include <sys/prctl.h>
+ #include "chan_user.h"
+ #include <os.h>
+ #include <um_malloc.h>
+@@ -161,6 +162,8 @@ static __noreturn int winch_thread(void *arg)
+ 	int count;
+ 	char c = 1;
  
- 		raw_spin_lock_irqsave(&pctrl->lock, flags);
-@@ -1280,7 +1280,7 @@ static void msm_gpio_irq_relres(struct irq_data *d)
- 	unsigned long flags;
- 
- 	/* Disable the wakeup_enable bit if it has been set in msm_gpio_irq_reqres() */
--	if (test_bit(d->hwirq, pctrl->skip_wake_irqs) && g->intr_wakeup_present_bit) {
-+	if (g->intr_wakeup_present_bit) {
- 		u32 intr_cfg;
- 
- 		raw_spin_lock_irqsave(&pctrl->lock, flags);
++	prctl(PR_SET_PDEATHSIG, SIGKILL);
++
+ 	pty_fd = data->pty_fd;
+ 	pipe_fd = data->pipe_fd;
+ 	count = write(pipe_fd, &c, sizeof(c));
 -- 
 2.53.0
 
