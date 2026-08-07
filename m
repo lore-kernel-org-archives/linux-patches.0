@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41C14339387;
-	Fri,  7 Aug 2026 15:32:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19535346AFB;
+	Fri,  7 Aug 2026 15:32:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116724; cv=none; b=IaJGEGlBze5xuvttpteIG4VtDSFZk9sYJtq2OZgPDH+1b5d/QkgFvYvH/ejPPzA4unwWao5mddMZu+4++06kSvNdZ0rmoEHuVCghXmTdieHpByR6IwbE4l9K5u8PeSakp+C/JZcVvPBR95jwkfSp0abNW64T+Wq/UEsBju14smI=
+	t=1786116727; cv=none; b=tTlsW9mY+eFNbEKjyiDY2qtNprx+6u7SL3S+cvy1eCIgY1D5ucXe/uyYYjEpb1HL9igD2vstZAy6mk415rd0NC5756+hKi/Hf0AIRZ/7uoBPo6SJNThtcXPVVGFS8bMFxC3+xmOsbEEwn2tlPK6o/1ToY6F8i7lhEzCOfZQvksI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116724; c=relaxed/simple;
-	bh=VSmnF6tA2k+Tpv/Du1r6CvU3oeuhXpk567UDUpZagkc=;
+	s=arc-20240116; t=1786116727; c=relaxed/simple;
+	bh=n6e+inZ7Uq+Nb8UO5eP0yodCPyI1n2/5nczCTw4r1dQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DaG27aLhtpQjhCFE/1o+HAiptK/roapQ8tkyIrbf08PG0VFWDnC4zQm768lNdqIU1dTkgBD9+ntjUSc6CmJ/uboejJ9T5yY5FOyrS6DhRjaRNrLye5LfygSDmq3j2GwBP+qz6WUo/EnQGzDSsTu8dgaH3gen8m+7UUxkp3+wGi8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zKzLg7Q7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JCwC7kK6fqYkjcIXHt6QerbJxtVXBfAX2YvbfbIdywhgxicP2OCzNK2D9Xtlfq1gCbJ3xxoC7SydjR/juqKNAg1l9gaV2jJHySWxCAQsIDqdTI7yUIT6T6Uop4F51AuOTKBR/VN4Hu1cGEAwZU3x0pilomXrVHRTWXHHeDB9fg0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HEPHQhSj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zKzLg7Q7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4073D1F000E9;
-	Fri,  7 Aug 2026 15:32:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HEPHQhSj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 342B71F00ACA;
+	Fri,  7 Aug 2026 15:32:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116722;
-	bh=ZgkYE0lgtdsVy97fJNrLj8HVZ3i3xerXcxELRxP8rf4=;
+	s=korg; t=1786116725;
+	bh=7hxCE5FbufJM2Oe8yB+SUVhYc4LDmMwm7c9VM17hxvk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zKzLg7Q7ELfYf2DNsaqg+gOmn0+MPhW1sO2hVFeBSMRLw28I6nyZ0hMu73tsLjMrv
-	 4jkuOt1Fs7fopzxbZYDC7I4o/CAsXHtnLWxZ883rxIYVgtA15F+J78rkhg2xVMCg9c
-	 1dVT2rE1YdTy6lV3c8yGfTm8VuQ/7lanrPby25YQ=
+	b=HEPHQhSjVkLW6bEcd37YjB6vWVUntli8wMgMggFFUlUELNX2TiVqyHCceNiJV8muw
+	 ro9CNSRuBtJYrB/GnDS+gvZ2E7WHq7hbE8T1xCNkzWh5IdI5FEZrXLH+ee64yYLlNF
+	 g+5WdY0WEh7R3E8zA4NlRCeVqn376ylXEgvm/ZvA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Uday Khare <udaykhare77@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Sang-Heon Jeon <ekffu200098@gmail.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 023/438] ASoC: max98090: fix missing IS_ERR() before PTR_ERR() on mclk lookup
-Date: Fri,  7 Aug 2026 16:33:39 +0200
-Message-ID: <20260807143428.503776385@linuxfoundation.org>
+Subject: [PATCH 7.1 024/438] of: reserved_mem: prevent OOB when too many dynamic regions are defined
+Date: Fri,  7 Aug 2026 16:33:40 +0200
+Message-ID: <20260807143428.523899188@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -51,59 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Uday Khare <udaykhare77@gmail.com>
+From: Sang-Heon Jeon <ekffu200098@gmail.com>
 
-[ Upstream commit a792ce0fad61a70793ec565743f11d6ca534de59 ]
+[ Upstream commit db3dbdfea1b8f38774419c5c2c14e4b81c48708d ]
 
-In max98090_probe(), the -EPROBE_DEFER check after devm_clk_get() is
-broken due to a missing IS_ERR() guard.
+On boot, fdt_scan_reserved_mem() saves each dynamically-placed
+/reserved-memory subnode into a local array of size
+MAX_RESERVED_REGIONS.
 
-The code intends to return -EPROBE_DEFER only when the clock lookup
-fails with that specific error.  However, without IS_ERR() the check:
+If the device tree defines more than MAX_RESERVED_REGIONS
+dynamically-placed regions, fdt_scan_reserved_mem() writes past the
+end of the local array.
 
-    if (PTR_ERR(max98090->mclk) == -EPROBE_DEFER)
+Add a bounds check that logs an error and skips the excess regions,
+restoring the original behavior.
 
-is called unconditionally, including when devm_clk_get() succeeds and
-returns a valid pointer.  Calling PTR_ERR() on a valid pointer
-reinterprets its address as a signed long; the result is arbitrary
-and is almost never equal to -EPROBE_DEFER, so the check silently
-does nothing in the success case.  When devm_clk_get() fails with
-any error other than -EPROBE_DEFER the check is also skipped, leaving
-max98090->mclk holding an error pointer with no indication to the caller.
-
-This means a deferred probe will never actually be triggered for this
-device, and any non-EPROBE_DEFER clock error is silently swallowed with
-the error pointer left in the mclk field.
-
-Fix this by adding the missing IS_ERR() guard around the PTR_ERR() call,
-matching the pattern already used in the sibling max98088 and wm8960
-drivers.
-
-Fixes: b10ab7b838bd ("ASoC: max98090: Add master clock handling")
-Signed-off-by: Uday Khare <udaykhare77@gmail.com>
-Link: https://patch.msgid.link/20260720104254.14948-1-udaykhare77@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 8a6e02d0c00e ("of: reserved_mem: Restructure how the reserved memory regions are processed")
+Signed-off-by: Sang-Heon Jeon <ekffu200098@gmail.com>
+Link: https://patch.msgid.link/20260614133807.2165124-2-ekffu200098@gmail.com
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/max98090.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/of/of_reserved_mem.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/codecs/max98090.c b/sound/soc/codecs/max98090.c
-index 13a15459040fc..595efd84b62b3 100644
---- a/sound/soc/codecs/max98090.c
-+++ b/sound/soc/codecs/max98090.c
-@@ -2424,8 +2424,9 @@ static int max98090_probe(struct snd_soc_component *component)
- 	dev_dbg(component->dev, "max98090_probe\n");
- 
- 	max98090->mclk = devm_clk_get(component->dev, "mclk");
--	if (PTR_ERR(max98090->mclk) == -EPROBE_DEFER)
--		return -EPROBE_DEFER;
-+	if (IS_ERR(max98090->mclk))
-+		if (PTR_ERR(max98090->mclk) == -EPROBE_DEFER)
-+			return -EPROBE_DEFER;
- 
- 	max98090->component = component;
- 
+diff --git a/drivers/of/of_reserved_mem.c b/drivers/of/of_reserved_mem.c
+index deaea58c74f2a..47041d195dff8 100644
+--- a/drivers/of/of_reserved_mem.c
++++ b/drivers/of/of_reserved_mem.c
+@@ -351,6 +351,7 @@ int __init fdt_scan_reserved_mem(void)
+ 		err = __reserved_mem_reserve_reg(child, uname);
+ 		if (!err)
+ 			count++;
++
+ 		/*
+ 		 * Save the nodes for the dynamically-placed regions
+ 		 * into an array which will be used for allocation right
+@@ -358,10 +359,17 @@ int __init fdt_scan_reserved_mem(void)
+ 		 * or marked as no-map. This is done to avoid dynamically
+ 		 * allocating from one of the statically-placed regions.
+ 		 */
+-		if (err == -ENOENT && of_get_flat_dt_prop(child, "size", NULL)) {
+-			dynamic_nodes[dynamic_nodes_cnt] = child;
+-			dynamic_nodes_cnt++;
++		if (err != -ENOENT || !of_get_flat_dt_prop(child, "size", NULL))
++			continue;
++
++		if (dynamic_nodes_cnt == MAX_RESERVED_REGIONS) {
++			pr_err("too many defined dynamic regions, skip '%s'\n",
++			       uname);
++			continue;
+ 		}
++
++		dynamic_nodes[dynamic_nodes_cnt] = child;
++		dynamic_nodes_cnt++;
+ 	}
+ 	for (int i = 0; i < dynamic_nodes_cnt; i++) {
+ 		const char *uname;
 -- 
 2.53.0
 
