@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD00447A889;
-	Fri,  7 Aug 2026 15:00:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7B7A478869;
+	Fri,  7 Aug 2026 15:00:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114846; cv=none; b=aXlwtadG7fgwSZ3TXKSnEWXkri25OTH+gwkOOQh0zJ2E8YLb5WSeF05mV9YQ6U4ZjgPisSuuQ/20sw77wPNLSOZJ2V3RiVmcPC8gvH/A1Dt6dqkx3wu6rGUkFZtwFd9vs6QnfOoxo/SAjvzLvj8p+A2sVn2QMN36IGJ0wFCDdIc=
+	t=1786114849; cv=none; b=IsjGJMsZVd7kL8XRoyprJvAl4TS6Vc/FqCG4PX0Kh7d+mBX58PggWyTWEeAIDTa6Ppj6Paz+dycMsEREtu+KaRjrfn2rgDlIf4QdwHZF7enb4QNmyO9Db65fRnD4L4BYmEDnF41BPr56+8dWyreUyGSQMDiwKf7HBDe1XMUfewQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114846; c=relaxed/simple;
-	bh=PiePzOlvdJ+v5/ALonHaEJHzE/4xz04WkCF06tFQfuc=;
+	s=arc-20240116; t=1786114849; c=relaxed/simple;
+	bh=ihDVgF5p2t3XsViVWXxQ88m0C53SXWxuEQjA7Q9W54M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=acCY7oV0iO1qRNbFrmQjQrNWBSat0oXAVxKIrPnOS+oX6k3P5Xq2orNDpE4yEpK8l2ssQdlPThhRogrqhhQVBkE0VuV8H8gZHyC+seqRd0mJJ7FEdD8pxSDRE0SZ/1uS4rgOecZB1KQyzvq188u7U3fAUrVWfWWnkdm8Vcv4FSw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cCf/K7Om; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uNV3b8kkICXHHpTMVd25ZpwKLvoavD3RXLg8RCrb4PveZSvu8tA9LcTEm9earDsNzExRhgcAyN8AzWzWnq9JoXywDmVbMyQiKVU02grqyp8Pc7ZJwlu14GX3ey4ag5evk5jlq084uct35Yc7d8u/65+1Z+pHz7qG/A+I6TZOIo8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YdGzsVIm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cCf/K7Om"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33BD21F000E9;
-	Fri,  7 Aug 2026 15:00:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YdGzsVIm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DC4B1F000E9;
+	Fri,  7 Aug 2026 15:00:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114845;
-	bh=BNrzEwCCmEIVv4q0VcwOxTTD28+m50r6Sf0qcSOQmNw=;
+	s=korg; t=1786114848;
+	bh=Ec3NTTio/HkgnbIXaCSz/HN8TqEoBWvDKBXMipE2KWY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cCf/K7OmvrsWQUGR/rCHdW74g66G4WNAFcHGEcKF0tKm9P7HumVZ1j2V7DoUSZRSq
-	 bFkygAOLvKNOAQDjIR3S+unWgZ6nl+hlpuz7O4/MFBATvqTDw+sxDjPPwc+DxV9VdO
-	 fQ1FeFQboSwgg51rwg1tV5o/kLprJi9D2+6tnpzc=
+	b=YdGzsVImmjiF2UHI2huCnDNg6aiE5/5nfKMLvfle1BR5KHCEvaAi3x1PMB7Vgb1XD
+	 ajN6k+DcA+WoX1tIrz50/8/eMcU1sHyQmtohPc6r6tuKl1b70LMgpR5HZjELT0GMbJ
+	 YzbLjLDzDqiELmiZhMRWOoVPXSS61fo9nwqZtsK0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	wangdicheng <wangdicheng@kylinos.cn>,
+	Jun Guo <jun.guo@cixtech.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 068/396] ASoC: tas2781: Use correct calibration data for SINEGAIN2 register
-Date: Fri,  7 Aug 2026 16:33:48 +0200
-Message-ID: <20260807143425.738422504@linuxfoundation.org>
+Subject: [PATCH 6.18 069/396] spi: spi-cadence: supports transmission with bits_per_word of 16 and 32
+Date: Fri,  7 Aug 2026 16:33:49 +0200
+Message-ID: <20260807143425.759741372@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -51,42 +51,197 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: wangdicheng <wangdicheng@kylinos.cn>
+From: Jun Guo <jun.guo@cixtech.com>
 
-[ Upstream commit dd88cf6273de61f2f7206c2066af97798dbb38b0 ]
+[ Upstream commit 4e00135b2dd1d7924a58bffa551b6ceb3bd836f2 ]
 
-The SINEGAIN2_REG case in cali_reg_update() references t->sin_gn[]
-rather than t->sin_gn2[], causing the second pilot tone gain
-calibration to be programmed with the wrong register address.
+The default FIFO data width of the Cadence SPI IP is 8 bits, but
+the hardware supports configurations of 16 bits and 32 bits.
+This patch enhances the driver to support communication with both
+16-bits and 32-bits FIFO data widths.
 
-These are distinct fields in struct fct_param_address and are
-populated from separate firmware parameters by the parser in
-tas2781-fmwlib.c.
-
-Fixes: 84d6a465f211 ("ASoC: tas2781: Support dsp firmware Alpha and Beta seaies")
-Signed-off-by: wangdicheng <wangdicheng@kylinos.cn>
-Link: https://patch.msgid.link/20260720081616.631413-1-wangdich9700@163.com
+Signed-off-by: Jun Guo <jun.guo@cixtech.com>
+Link: https://patch.msgid.link/20251031073003.3289573-3-jun.guo@cixtech.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: d9eadfce2fac ("spi: spi-cadence: Move TX FIFO full busy-wait into FIFO")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/tas2781-i2c.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/spi/spi-cadence.c | 106 +++++++++++++++++++++++++++++++++-----
+ 1 file changed, 93 insertions(+), 13 deletions(-)
 
-diff --git a/sound/soc/codecs/tas2781-i2c.c b/sound/soc/codecs/tas2781-i2c.c
-index a3b4d2c3b4789..0b83446da45ea 100644
---- a/sound/soc/codecs/tas2781-i2c.c
-+++ b/sound/soc/codecs/tas2781-i2c.c
-@@ -1303,8 +1303,8 @@ static void cali_reg_update(struct bulk_reg_val *p,
- 				t->sin_gn[2]);
- 			break;
- 		case TAS2781_PRM_SINEGAIN2_REG:
--			reg = TASDEVICE_REG(t->sin_gn[0], t->sin_gn[1],
--				t->sin_gn[2]);
-+			reg = TASDEVICE_REG(t->sin_gn2[0], t->sin_gn2[1],
-+				t->sin_gn2[2]);
- 			break;
- 		default:
- 			reg = 0;
+diff --git a/drivers/spi/spi-cadence.c b/drivers/spi/spi-cadence.c
+index 7a745c2e0892c..75803a7f4cb11 100644
+--- a/drivers/spi/spi-cadence.c
++++ b/drivers/spi/spi-cadence.c
+@@ -109,6 +109,7 @@
+  * @rxbuf:		Pointer to the RX buffer
+  * @tx_bytes:		Number of bytes left to transfer
+  * @rx_bytes:		Number of bytes requested
++ * @n_bytes:		Number of bytes per word
+  * @dev_busy:		Device busy flag
+  * @is_decoded_cs:	Flag for decoder property set or not
+  * @tx_fifo_depth:	Depth of the TX FIFO
+@@ -120,16 +121,24 @@ struct cdns_spi {
+ 	struct clk *pclk;
+ 	unsigned int clk_rate;
+ 	u32 speed_hz;
+-	const u8 *txbuf;
+-	u8 *rxbuf;
++	const void *txbuf;
++	void *rxbuf;
+ 	int tx_bytes;
+ 	int rx_bytes;
++	u8 n_bytes;
+ 	u8 dev_busy;
+ 	u32 is_decoded_cs;
+ 	unsigned int tx_fifo_depth;
+ 	struct reset_control *rstc;
+ };
+ 
++enum cdns_spi_frame_n_bytes {
++	CDNS_SPI_N_BYTES_NULL = 0,
++	CDNS_SPI_N_BYTES_U8 = 1,
++	CDNS_SPI_N_BYTES_U16 = 2,
++	CDNS_SPI_N_BYTES_U32 = 4
++};
++
+ /* Macros for the SPI controller read/write */
+ static inline u32 cdns_spi_read(struct cdns_spi *xspi, u32 offset)
+ {
+@@ -305,6 +314,78 @@ static int cdns_spi_setup_transfer(struct spi_device *spi,
+ 	return 0;
+ }
+ 
++static u8 cdns_spi_n_bytes(struct spi_transfer *transfer)
++{
++	if (transfer->bits_per_word <= 8)
++		return CDNS_SPI_N_BYTES_U8;
++	else if (transfer->bits_per_word <= 16)
++		return CDNS_SPI_N_BYTES_U16;
++	else
++		return CDNS_SPI_N_BYTES_U32;
++}
++
++static inline void cdns_spi_reader(struct cdns_spi *xspi)
++{
++	u32 rxw = 0;
++
++	if (xspi->rxbuf && !IS_ALIGNED((uintptr_t)xspi->rxbuf, xspi->n_bytes)) {
++		pr_err("%s: rxbuf address is not aligned for %d bytes\n",
++		       __func__, xspi->n_bytes);
++		return;
++	}
++
++	rxw = cdns_spi_read(xspi, CDNS_SPI_RXD);
++	if (xspi->rxbuf) {
++		switch (xspi->n_bytes) {
++		case CDNS_SPI_N_BYTES_U8:
++			*(u8 *)xspi->rxbuf = rxw;
++			break;
++		case CDNS_SPI_N_BYTES_U16:
++			*(u16 *)xspi->rxbuf = rxw;
++			break;
++		case CDNS_SPI_N_BYTES_U32:
++			*(u32 *)xspi->rxbuf = rxw;
++			break;
++		default:
++			pr_err("%s invalid n_bytes %d\n", __func__,
++			       xspi->n_bytes);
++			return;
++		}
++		xspi->rxbuf = (u8 *)xspi->rxbuf + xspi->n_bytes;
++	}
++}
++
++static inline void cdns_spi_writer(struct cdns_spi *xspi)
++{
++	u32 txw = 0;
++
++	if (xspi->txbuf && !IS_ALIGNED((uintptr_t)xspi->txbuf, xspi->n_bytes)) {
++		pr_err("%s: txbuf address is not aligned for %d bytes\n",
++		       __func__, xspi->n_bytes);
++		return;
++	}
++
++	if (xspi->txbuf) {
++		switch (xspi->n_bytes) {
++		case CDNS_SPI_N_BYTES_U8:
++			txw = *(u8 *)xspi->txbuf;
++			break;
++		case CDNS_SPI_N_BYTES_U16:
++			txw = *(u16 *)xspi->txbuf;
++			break;
++		case CDNS_SPI_N_BYTES_U32:
++			txw = *(u32 *)xspi->txbuf;
++			break;
++		default:
++			pr_err("%s invalid n_bytes %d\n", __func__,
++			       xspi->n_bytes);
++			return;
++		}
++		cdns_spi_write(xspi, CDNS_SPI_TXD, txw);
++		xspi->txbuf = (u8 *)xspi->txbuf + xspi->n_bytes;
++	}
++}
++
+ /**
+  * cdns_spi_process_fifo - Fills the TX FIFO, and drain the RX FIFO
+  * @xspi:	Pointer to the cdns_spi structure
+@@ -321,23 +402,14 @@ static void cdns_spi_process_fifo(struct cdns_spi *xspi, int ntx, int nrx)
+ 
+ 	while (ntx || nrx) {
+ 		if (nrx) {
+-			u8 data = cdns_spi_read(xspi, CDNS_SPI_RXD);
+-
+-			if (xspi->rxbuf)
+-				*xspi->rxbuf++ = data;
+-
++			cdns_spi_reader(xspi);
+ 			nrx--;
+ 		}
+ 
+ 		if (ntx) {
+-			if (xspi->txbuf)
+-				cdns_spi_write(xspi, CDNS_SPI_TXD, *xspi->txbuf++);
+-			else
+-				cdns_spi_write(xspi, CDNS_SPI_TXD, 0);
+-
++			cdns_spi_writer(xspi);
+ 			ntx--;
+ 		}
+-
+ 	}
+ }
+ 
+@@ -454,6 +526,10 @@ static int cdns_transfer_one(struct spi_controller *ctlr,
+ 	if (cdns_spi_read(xspi, CDNS_SPI_ISR) & CDNS_SPI_IXR_TXFULL)
+ 		udelay(10);
+ 
++	xspi->n_bytes = cdns_spi_n_bytes(transfer);
++	xspi->tx_bytes = DIV_ROUND_UP(xspi->tx_bytes, xspi->n_bytes);
++	xspi->rx_bytes = DIV_ROUND_UP(xspi->rx_bytes, xspi->n_bytes);
++
+ 	cdns_spi_process_fifo(xspi, xspi->tx_fifo_depth, 0);
+ 
+ 	cdns_spi_write(xspi, CDNS_SPI_IER, CDNS_SPI_IXR_DEFAULT);
+@@ -654,6 +730,9 @@ static int cdns_spi_probe(struct platform_device *pdev)
+ 	ctlr->mode_bits = SPI_CPOL | SPI_CPHA;
+ 	ctlr->bits_per_word_mask = SPI_BPW_MASK(8);
+ 
++	if (of_device_is_compatible(pdev->dev.of_node, "cix,sky1-spi-r1p6"))
++		ctlr->bits_per_word_mask |= SPI_BPW_MASK(16) | SPI_BPW_MASK(32);
++
+ 	if (!spi_controller_is_target(ctlr)) {
+ 		ctlr->mode_bits |=  SPI_CS_HIGH;
+ 		ctlr->set_cs = cdns_spi_chipselect;
+@@ -812,6 +891,7 @@ static const struct dev_pm_ops cdns_spi_dev_pm_ops = {
+ 
+ static const struct of_device_id cdns_spi_of_match[] = {
+ 	{ .compatible = "xlnx,zynq-spi-r1p6" },
++	{ .compatible = "cix,sky1-spi-r1p6" },
+ 	{ .compatible = "cdns,spi-r1p6" },
+ 	{ /* end of table */ }
+ };
 -- 
 2.53.0
 
