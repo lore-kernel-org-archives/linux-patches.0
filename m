@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E4F147ACC7;
-	Fri,  7 Aug 2026 14:57:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD51F47A882;
+	Fri,  7 Aug 2026 14:57:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114666; cv=none; b=M0eaJ9iHyPYti6O3QLnoe8pQaKYLxlIFSFNa+Xmtevoy2F4LYkQyApOkQdhChRJC3Jhj99c5y93xgUs/0tdxGfqSMLpoS+N2MQRkJZL1nY2kAXqlQ+ihUmEjE8nsZu+VugksD2LJrmQySBjjnPxrFzSsEeqJfrwVqHwYjj4PBOM=
+	t=1786114669; cv=none; b=AUDn7fiMSEY/teISOvWYL4w7ulOFeRv1toc/xTp6NrY6VA0AHrZSQyx2UMCx0BPJ5DMIWXdaYz360RJpHE+ikFoEXadnU/U48VAiAImfUiMXFFuAQwLaj2HKhtzFAp1qN3tl1d+G6FOWf/6FVhW965F1DC3VJ7UA3V8yUHGlI4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114666; c=relaxed/simple;
-	bh=rIrdEWTUB8YJ7PpoqcCJerD6nnu05w1X9GRYYcqz8EE=;
+	s=arc-20240116; t=1786114669; c=relaxed/simple;
+	bh=9ZnHeKBcPjY8slJnKObXCGqVz91I3s4NUxY3ao+tfXI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AaMcIdUNhQlkgVdx0GjAJ0egS5w+oYP267NO3gV5UywzX3yTfCp86fxYh+dc581dUJbxDHkh979ACkjdyCteggCNc5ARQp/4/dTrznXsu/jZ7jEREbkJca4Wj9FnO6uWzNaGT6KxR68PbJcGgERe2cnw1oLusL2nNMiaHcVmccw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TBczjanb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=CDD3vBA1xkS9DqRLrXkykpm3XSBkvLjAp10rOhjW6ovWRunac0GO489nIBpUU+uMrUw7G5j+0FpotckxeKxdSFKbQkd9+UNGp66eLQ8mOKEOY1wq/aLzmXxU64ByLa4X1ry8f4rz3wP6itxfT7y3tv40TzSbNXOjEUmD7B+G9bk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mGrN69vk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TBczjanb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66F6F1F000E9;
-	Fri,  7 Aug 2026 14:57:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mGrN69vk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4278A1F000E9;
+	Fri,  7 Aug 2026 14:57:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114665;
-	bh=MQFqIk1/6FsdMO3ZgwS8mzfxjC+YwigTYhZewv/qyt8=;
+	s=korg; t=1786114667;
+	bh=mw5j9D2Kh98sdj/1vF0UNm84ioT+nFtzbGCZX216JlQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TBczjanbAOz1W8oTeTb/3RHWsqIn6xry8iPwK8QsCNoEweH3b5cVukkk9LVsJf3ra
-	 chRzQSKqWDd0eSbln2IlR9jHDf5EPV6usKqiv+MCYiSqwM7x6W3O58rIqni8RSqcfW
-	 ilDNEe3I2PudPsZbDhjn/k2EU0u9K2vtDnKvX2Qc=
+	b=mGrN69vkS0W13G6pQRZA13EpwHzhlSJ5osWxT2B+cbm7/e52fRpVDl9bnnt80eWhF
+	 xxiTyXhNGMbNDU+pTW5Yl46QnL2dVXNfvrd92DArhDJOPTXqUaoQZDrBpYN2uNqwuJ
+	 VcF9LhlA/gFpphakn6fwlX9QxswJfUH86pa+ZXp4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Hodo <martin.hodo@intel.com>,
-	Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 319/337] drm/i915/vrr: require valid min/max vfreq for VRR
-Date: Fri,  7 Aug 2026 16:38:42 +0200
-Message-ID: <20260807143425.448207639@linuxfoundation.org>
+Subject: [PATCH 6.12 320/337] drm/xe: Rename ___xe_bo_create_locked()
+Date: Fri,  7 Aug 2026 16:38:43 +0200
+Message-ID: <20260807143425.470337774@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -47,52 +45,101 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jani Nikula <jani.nikula@intel.com>
+From: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 
-[ Upstream commit f8a9262c7a6fc2de9802e14b0228114f0333869e ]
+[ Upstream commit 550a42a8daee1b056f9b3e6c858e57451a5b315a ]
 
-Ensure the EDID provided min/max vfreq are valid. Most scenarios are
-already covered (by coincidence) through the checks in
-intel_vrr_is_capable() and intel_vrr_is_in_range(), but be more explicit
-about it. At worst, a zero min_vfreq could lead to a division by zero in
-intel_vrr_compute_vmax().
+Don't start external function names with underscores.
+Rename to xe_bo_init_locked().
 
-Discovered using AI-assisted static analysis confirmed by Intel Product
-Security.
-
-Reported-by: Martin Hodo <martin.hodo@intel.com>
-Fixes: 117cd09ba528 ("drm/i915/display/dp: Compute VRR state in atomic_check")
-Cc: stable@vger.kernel.org # v5.12+
-Cc: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
-Reviewed-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
-Link: https://patch.msgid.link/20260625131040.1051272-1-jani.nikula@intel.com
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-(cherry picked from commit 1765cf59f517b02f3b0591fe5120930d08bddeb6)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://lore.kernel.org/r/20250908101246.65025-10-thomas.hellstrom@linux.intel.com
+Stable-dep-of: 62775525a27c ("drm/xe: Hold a dma-buf reference for imported BOs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_vrr.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/xe/xe_bo.c      |   20 ++++++++++----------
+ drivers/gpu/drm/xe/xe_bo.h      |   10 +++++-----
+ drivers/gpu/drm/xe/xe_dma_buf.c |    6 +++---
+ 3 files changed, 18 insertions(+), 18 deletions(-)
 
---- a/drivers/gpu/drm/i915/display/intel_vrr.c
-+++ b/drivers/gpu/drm/i915/display/intel_vrr.c
-@@ -46,6 +46,10 @@ bool intel_vrr_is_capable(struct intel_c
- 		return false;
- 	}
- 
-+	if (!info->monitor_range.min_vfreq || !info->monitor_range.max_vfreq ||
-+	    info->monitor_range.min_vfreq > info->monitor_range.max_vfreq)
-+		return false;
-+
- 	return info->monitor_range.max_vfreq - info->monitor_range.min_vfreq > 10;
+--- a/drivers/gpu/drm/xe/xe_bo.c
++++ b/drivers/gpu/drm/xe/xe_bo.c
+@@ -1288,11 +1288,11 @@ void xe_bo_free(struct xe_bo *bo)
+ 	kfree(bo);
  }
  
+-struct xe_bo *___xe_bo_create_locked(struct xe_device *xe, struct xe_bo *bo,
+-				     struct xe_tile *tile, struct dma_resv *resv,
+-				     struct ttm_lru_bulk_move *bulk, size_t size,
+-				     u16 cpu_caching, enum ttm_bo_type type,
+-				     u32 flags)
++struct xe_bo *xe_bo_init_locked(struct xe_device *xe, struct xe_bo *bo,
++				struct xe_tile *tile, struct dma_resv *resv,
++				struct ttm_lru_bulk_move *bulk, size_t size,
++				u16 cpu_caching, enum ttm_bo_type type,
++				u32 flags)
+ {
+ 	struct ttm_operation_ctx ctx = {
+ 		.interruptible = true,
+@@ -1487,11 +1487,11 @@ __xe_bo_create_locked(struct xe_device *
+ 		}
+ 	}
+ 
+-	bo = ___xe_bo_create_locked(xe, bo, tile, vm ? xe_vm_resv(vm) : NULL,
+-				    vm && !xe_vm_in_fault_mode(vm) &&
+-				    flags & XE_BO_FLAG_USER ?
+-				    &vm->lru_bulk_move : NULL, size,
+-				    cpu_caching, type, flags);
++	bo = xe_bo_init_locked(xe, bo, tile, vm ? xe_vm_resv(vm) : NULL,
++			       vm && !xe_vm_in_fault_mode(vm) &&
++			       flags & XE_BO_FLAG_USER ?
++			       &vm->lru_bulk_move : NULL, size,
++			       cpu_caching, type, flags);
+ 	if (IS_ERR(bo))
+ 		return bo;
+ 
+--- a/drivers/gpu/drm/xe/xe_bo.h
++++ b/drivers/gpu/drm/xe/xe_bo.h
+@@ -80,11 +80,11 @@ struct sg_table;
+ struct xe_bo *xe_bo_alloc(void);
+ void xe_bo_free(struct xe_bo *bo);
+ 
+-struct xe_bo *___xe_bo_create_locked(struct xe_device *xe, struct xe_bo *bo,
+-				     struct xe_tile *tile, struct dma_resv *resv,
+-				     struct ttm_lru_bulk_move *bulk, size_t size,
+-				     u16 cpu_caching, enum ttm_bo_type type,
+-				     u32 flags);
++struct xe_bo *xe_bo_init_locked(struct xe_device *xe, struct xe_bo *bo,
++				struct xe_tile *tile, struct dma_resv *resv,
++				struct ttm_lru_bulk_move *bulk, size_t size,
++				u16 cpu_caching, enum ttm_bo_type type,
++				u32 flags);
+ struct xe_bo *
+ xe_bo_create_locked_range(struct xe_device *xe,
+ 			  struct xe_tile *tile, struct xe_vm *vm,
+--- a/drivers/gpu/drm/xe/xe_dma_buf.c
++++ b/drivers/gpu/drm/xe/xe_dma_buf.c
+@@ -212,9 +212,9 @@ xe_dma_buf_init_obj(struct drm_device *d
+ 	int ret;
+ 
+ 	dma_resv_lock(resv, NULL);
+-	bo = ___xe_bo_create_locked(xe, storage, NULL, resv, NULL, dma_buf->size,
+-				    0, /* Will require 1way or 2way for vm_bind */
+-				    ttm_bo_type_sg, XE_BO_FLAG_SYSTEM);
++	bo = xe_bo_init_locked(xe, storage, NULL, resv, NULL, dma_buf->size,
++			       0, /* Will require 1way or 2way for vm_bind */
++			       ttm_bo_type_sg, XE_BO_FLAG_SYSTEM);
+ 	if (IS_ERR(bo)) {
+ 		ret = PTR_ERR(bo);
+ 		goto error;
 
 
