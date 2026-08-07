@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26412472F6C;
-	Fri,  7 Aug 2026 15:06:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80C7C37F8C2;
+	Fri,  7 Aug 2026 15:06:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115179; cv=none; b=Rwgz5y8vG/Katu6gXsiFz6Dj3Poo+E1AwyoefEzApjBoMyTyUXqAyWtxInEn2eB/5tB13zU5hqOLIr2Oancu7YMWlO5k/gPU7j+w9MdO8XbPcTx+nd5In2xwy09SBM5FB5XQ+7igt+ZGyJOlokTqwvyZ341AmyUXab8dFFB8MZY=
+	t=1786115180; cv=none; b=IsHhKTZfmTshKsSvVltlZ7k69yz+PNOK/sLEW5Ioo6Be8Mf7EVWFZRjEVjkUJkivD7KIq6eJO7/yMOLFAFUI5iijn3K8NMWG5265NEk3QG5n2pMsdywVx28hpW5+jUM1yBCKw0Q3aqkMstALlRvBF3XsD0hzvFw9IkinQ1cZphg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115179; c=relaxed/simple;
-	bh=SVnyFXQWE20RDbOLBquIW3SL6dpJI3GJgo5WZRPBsqI=;
+	s=arc-20240116; t=1786115180; c=relaxed/simple;
+	bh=KVT8r5sak2RTPMdvro670f5m/E+Pr5RowUYtSIx/Skw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UOqpAyj0PHcl/wWyvyYm3Vx0ZtVySCIcD74zy/rWnbOwmZBjY96nn9bQ/Es8UPAkUg3/iW3lPRH58+OHgmpHhWKqoBzCMBKj/eDcD6L38DMsJfJMCWDd/bDJlVNSJzAgxdB79CCvFzF1L/JOQLdVGffeSO/29srjfq71FIFQXBk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BgGsy+FI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KS73PnYtgrMnKvmMVY1Qj1/Q6TWr/92++GGlrl+5ndxcGDUSE4dxme9NZSHmZgwnEmi9F1+Jpv62gsFBkSrIjqx9uDSrY4FaMOmQjufdR356ra58Q2NqvBHXgKcayp39/9Uxp8P0viA3DtYtkmRcFv4uskoMKZG9qhwWr1dthGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pjjUOJTc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BgGsy+FI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9882A1F00A3D;
-	Fri,  7 Aug 2026 15:06:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pjjUOJTc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E2911F00ADB;
+	Fri,  7 Aug 2026 15:06:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115172;
-	bh=2gMz6lylNRABaA5MgaO6RhZH7iyiEhD669NXk+LpMuM=;
+	s=korg; t=1786115175;
+	bh=kD3LglLZWhTMEi5fCXzC9NHHlovAoCg+IzTEVas785A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BgGsy+FI834N4TuYDCAoitRfX3ZgT4SCx8nHSEt7PJS0WkGopNtv5b6ZQ5BielzUQ
-	 BjPQqZGaAJXavRqbuHg9vGf1/VpDSVW7fWgiq3BicH4BFM9ZV3fUhvBq2rEKsp8gux
-	 YbQnqz/zGxBe37860OXCfPRfNlFb9lzLWERr4YrA=
+	b=pjjUOJTcyAroCe/3Dbvyph5SI1rTxCd0Gyx58HWih8sN4y6GB2o80FUoERzJNCwR2
+	 YqZHreXMnG7Ra69KrekI5SSJwAPbkwjAn9V5ruIbELfoj6f+ncLzjHHvubKINOU76f
+	 /bmBeH1ezh9e9JI6P5VTLsER9Yv5SLelZ4Fp0pVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Christian Borntraeger <borntraeger@linux.ibm.com>,
 	Matthew Rosato <mjrosato@linux.ibm.com>,
 	Farhan Ali <alifm@linux.ibm.com>
-Subject: [PATCH 6.18 181/396] KVM: s390: pci: Fix memory accounting for pinned/unpinned pages
-Date: Fri,  7 Aug 2026 16:35:41 +0200
-Message-ID: <20260807143428.198454970@linuxfoundation.org>
+Subject: [PATCH 6.18 182/396] KVM: s390: pci: Fix missing error codes and memory unaccounting
+Date: Fri,  7 Aug 2026 16:35:42 +0200
+Message-ID: <20260807143428.218225335@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -53,18 +53,12 @@ Content-Transfer-Encoding: 8bit
 
 From: Farhan Ali <alifm@linux.ibm.com>
 
-commit 36f6999ecde3976731a8bfc0b8e667da6f593069 upstream.
+commit f86842e4d6c482300f4567f492d512c9ccf5bc4f upstream.
 
-The account_mem() and unaccount_mem() functions call get_uid() which
-increments the reference count of struct user_struct on every invocation.
-But we don't decrement the count by calling free_uid(). It also
-accounted/unaccounted the pages against the current->mm. But its possible
-the unaccount_mem() can be called from a different process context than the
-one that originally pinned the pages.
-
-Let's fix this by storing the pinning process user_struct and mm_struct
-when accounting for pinned pages, and subsequently free these resources
-when the pages are unpinned.
+In kvm_s390_pci_aif_enable() two error paths failed to set an error code,
+causing the function to return 0 on failure. It also failed to rollback
+memory accounting on failure. Fix both by propagating an error code on
+failure and calling unaccount_mem() in the cleanup path.
 
 Fixes: 3c5a1b6f0a18 ("KVM: s390: pci: provide routines for enabling/disabling interrupt forwarding")
 Cc: stable@vger.kernel.org
@@ -72,108 +66,42 @@ Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
 Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
 Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
 Tested-by: Matthew Rosato <mjrosato@linux.ibm.com>
-[borntraeger@linux.ibm.com: Fixed whitespace]
 Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kvm/pci.c |   43 ++++++++++++++++++++++++++++++++-----------
- arch/s390/kvm/pci.h |    2 ++
- 2 files changed, 34 insertions(+), 11 deletions(-)
+ arch/s390/kvm/pci.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
 --- a/arch/s390/kvm/pci.c
 +++ b/arch/s390/kvm/pci.c
-@@ -191,33 +191,54 @@ static int kvm_zpci_clear_airq(struct zp
- 	return cc ? -EIO : 0;
- }
- 
--static inline void unaccount_mem(unsigned long nr_pages)
-+static inline void unaccount_mem(struct kvm_zdev *kzdev, unsigned long nr_pages)
- {
--	struct user_struct *user = get_uid(current_user());
-+	struct user_struct *user = kzdev->user_account;
-+	struct mm_struct *mm_account = kzdev->mm_account;
- 
--	if (user)
-+	if (user) {
- 		atomic_long_sub(nr_pages, &user->locked_vm);
--	if (current->mm)
--		atomic64_sub(nr_pages, &current->mm->pinned_vm);
-+		free_uid(user);
-+		kzdev->user_account = NULL;
-+	}
-+
-+	if (mm_account) {
-+		atomic64_sub(nr_pages, &mm_account->pinned_vm);
-+		mmdrop(mm_account);
-+		kzdev->mm_account = NULL;
-+	}
- }
- 
--static inline int account_mem(unsigned long nr_pages)
-+static inline int account_mem(struct kvm_zdev *kzdev, unsigned long nr_pages)
- {
- 	struct user_struct *user = get_uid(current_user());
- 	unsigned long page_limit, cur_pages, new_pages;
-+	int rc = 0;
- 
- 	page_limit = rlimit(RLIMIT_MEMLOCK) >> PAGE_SHIFT;
- 
- 	cur_pages = atomic_long_read(&user->locked_vm);
- 	do {
- 		new_pages = cur_pages + nr_pages;
--		if (new_pages > page_limit)
--			return -ENOMEM;
-+		if (new_pages > page_limit) {
-+			rc = -ENOMEM;
-+			goto out;
-+		}
- 	} while (!atomic_long_try_cmpxchg(&user->locked_vm, &cur_pages, new_pages));
- 
--	atomic64_add(nr_pages, &current->mm->pinned_vm);
-+	if (current->mm) {
-+		mmgrab(current->mm);
-+		atomic64_add(nr_pages, &current->mm->pinned_vm);
-+	}
-+
-+	kzdev->user_account = user;
-+	kzdev->mm_account = current->mm;
- 
- 	return 0;
-+
-+out:
-+	free_uid(user);
-+	return rc;
- }
- 
- static int kvm_s390_pci_aif_enable(struct zpci_dev *zdev, struct zpci_fib *fib,
-@@ -280,7 +301,7 @@ static int kvm_s390_pci_aif_enable(struc
+@@ -301,14 +301,17 @@ static int kvm_s390_pci_aif_enable(struc
  	}
  
  	/* Account for pinned pages, roll back on failure */
--	if (account_mem(pcount))
-+	if (account_mem(zdev->kzdev, pcount))
+-	if (account_mem(zdev->kzdev, pcount))
++	rc = account_mem(zdev->kzdev, pcount);
++	if (rc)
  		goto unpin2;
  
  	/* AISB must be allocated before we can fill in GAITE */
-@@ -401,7 +422,7 @@ static int kvm_s390_pci_aif_disable(stru
- 		pcount++;
- 	}
- 	if (pcount > 0)
--		unaccount_mem(pcount);
-+		unaccount_mem(kzdev, pcount);
- out:
+ 	mutex_lock(&aift->aift_lock);
+ 	bit = airq_iv_alloc_bit(aift->sbv);
+-	if (bit == -1UL)
++	if (bit == -1UL) {
++		rc = -ENOMEM;
+ 		goto unlock;
++	}
+ 	zdev->aisb = bit; /* store the summary bit number */
+ 	zdev->aibv = airq_iv_create(msi_vecs, AIRQ_IV_DATA |
+ 				    AIRQ_IV_BITLOCK |
+@@ -352,6 +355,8 @@ static int kvm_s390_pci_aif_enable(struc
+ 	return rc;
+ 
+ unlock:
++	if (pcount > 0)
++		unaccount_mem(zdev->kzdev, pcount);
  	mutex_unlock(&aift->aift_lock);
- 
---- a/arch/s390/kvm/pci.h
-+++ b/arch/s390/kvm/pci.h
-@@ -22,6 +22,8 @@ struct kvm_zdev {
- 	struct kvm *kvm;
- 	struct zpci_fib fib;
- 	struct list_head entry;
-+	struct user_struct *user_account;
-+	struct mm_struct *mm_account;
- };
- 
- struct zpci_gaite {
+ unpin2:
+ 	if (fib->fmt0.sum == 1)
 
 
