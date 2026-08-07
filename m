@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 142A9476CDD;
-	Fri,  7 Aug 2026 15:00:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCB9A47884E;
+	Fri,  7 Aug 2026 15:00:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114815; cv=none; b=X+1GKtgWSYYG4ddVFWe8D7iQ+YcigqBNMxXNlkyHJmpFxOabpwxVpBR885vK39XBYyvoKNOE01Q9wI9Y07+uNSQGh6lZeGswqG1uUWIqRpSgyFzJ0yi7vLtFjoJx6H26bW9ba26r/qu9wMR0Db515uDt2PnXOmniW7tCgpf7oj8=
+	t=1786114818; cv=none; b=kfkjvfRp8ARyULiPmxSv2k6lDOF0C4cK2saurM2FwgzFdTBUhXV5pX2Wx5VP90krwmB5bvBGh+is7WvNHjD0z2LJaiCQ8SqQvVnU39W2+Etz8+oPHVt0nG+8YaYNUvQz2sA1Z6PfqZcpCNY8YeJfB/U9QlBvSnXe7prBf3+OalU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114815; c=relaxed/simple;
-	bh=B1Crmn36nUTRZ3CJszNss9dN2QeN/MJyCNk5GoEiYdo=;
+	s=arc-20240116; t=1786114818; c=relaxed/simple;
+	bh=+yFnzfQsFQ3O0qQUNsNHfBiN0gbTwS7fDQangbQZjV4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MwG7hYXVDXYdxM2ep60TBMDItjGQGLox+MyAvmdNKwgDgAMZeufs685BOR7FQGwqeHxq0eKG+b3i17acFkni3HcWPnTPZr4FTMQ3MQSZSZe9QV6a8kbTNlDwN6k3YzB6EgN9uHQFN3XbZFiueNqOb9yvadIJQmAQjpck8s7aU4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xyLKybGw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BXeAFxKBbw/A15OHK9NNgvgs6bpPyDtOSMohIINMCQXkBPqqxg76LK22QNK5I0tGVm4TMWltdFG6XenLclrmZ4xyHL/m/zysx+o1nGoT4+UQi653AXB1yV1N7MB/ci7wvNhF1x5dkOSaCUOcGAmHJhXywps6viT+6h/auIiHf1g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p8pumlno; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xyLKybGw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EB111F00A3A;
-	Fri,  7 Aug 2026 15:00:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p8pumlno"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43FFA1F000E9;
+	Fri,  7 Aug 2026 15:00:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114814;
-	bh=P6eQE9esrXe1pxSlTOboaiFF5xYz/xuHED7G7UfLiWI=;
+	s=korg; t=1786114816;
+	bh=d74ox4c+xzibX8blu3I09Nfm7m4nOc6d1QHcLIrxk+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xyLKybGw59wg7QDMVkK0B2vhoJB6vAant6KqhivXTNkROJPFFYCV0AIe2Xz+MgHpn
-	 WqZ7+63RdcIani8sEnZ4o2BxrCZOH3/XlaoxWsxEJOTUZzUzcUJCdh7BiotIJ0D9ZN
-	 thCs6rlOACVKgxYD+s37fKDf8mp2mEYGzNxU59DQ=
+	b=p8pumlno8nki++Eg/rr1lwjyENELgSpPMhflvpkhq+z/JoI2XEv+DIRqCq0lRd0/L
+	 Atd8qwPA6pkuN2fO7U8Kc0GMnA7nrmCzjTh6F0pRvj56W4XuuLgL9PHVQ2wyVSlPAj
+	 TxJlflzPdo68qTC1CnUa4I78u1JVoGZGieojEhqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
+	John Ericson <mail@johnericson.me>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 058/396] selftest: af_unix: Create its own .gitignore.
-Date: Fri,  7 Aug 2026 16:33:38 +0200
-Message-ID: <20260807143425.523880477@linuxfoundation.org>
+Subject: [PATCH 6.18 059/396] selftests/net/af_unix: test listen() rejects wrong socket states
+Date: Fri,  7 Aug 2026 16:33:39 +0200
+Message-ID: <20260807143425.546011292@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -51,84 +51,251 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: John Ericson <mail@johnericson.me>
 
-[ Upstream commit adb6b68c50604f3113d62758e839cc0186b94ce8 ]
+[ Upstream commit 7f57c650d08b8793bb551bdb33ad876535ef9fe8 ]
 
-Somehow AF_UNIX tests have reused ../.gitignore,
-but now NIPA warns about it.
+Add a regression test for the unix_listen() state check. The key case is
+listen() on a bound socket that has already been connected: it is no
+longer in TCP_CLOSE or TCP_LISTEN, so it must fail with EINVAL. A
+prepare_peercred() call slipped in ahead of that check once left err at 0
+and made listen() silently succeed there instead; this guards against a
+repeat.
 
-Let's create .gitignore under af_unix/.
+The neighbouring outcomes are covered too so they cannot regress the same
+way: a bound socket in TCP_CLOSE listens fine, calling listen() again on a
+socket already in TCP_LISTEN is allowed, and an unbound socket fails with
+EINVAL.
 
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20251124212805.486235-2-kuniyu@google.com
+Each case runs for both listenable socket types (SOCK_STREAM and
+SOCK_SEQPACKET) and both pathname and abstract addresses.
+
+Fixes: fd0a109a0f6b ("net, pidfs: prepare for handing out pidfds for reaped sk->sk_peer_pid")
+Signed-off-by: John Ericson <mail@johnericson.me>
+Link: https://patch.msgid.link/20260718182903.2295560-2-John.Ericson@Obsidian.Systems
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 7f57c650d08b ("selftests/net/af_unix: test listen() rejects wrong socket states")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/.gitignore         | 8 --------
- tools/testing/selftests/net/af_unix/.gitignore | 8 ++++++++
- 2 files changed, 8 insertions(+), 8 deletions(-)
- create mode 100644 tools/testing/selftests/net/af_unix/.gitignore
+ .../testing/selftests/net/af_unix/.gitignore  |   1 +
+ tools/testing/selftests/net/af_unix/Makefile  |   1 +
+ .../selftests/net/af_unix/unix_listen.c       | 187 ++++++++++++++++++
+ 3 files changed, 189 insertions(+)
+ create mode 100644 tools/testing/selftests/net/af_unix/unix_listen.c
 
-diff --git a/tools/testing/selftests/net/.gitignore b/tools/testing/selftests/net/.gitignore
-index f627f1a2a2b8c..e2e2063399675 100644
---- a/tools/testing/selftests/net/.gitignore
-+++ b/tools/testing/selftests/net/.gitignore
-@@ -4,7 +4,6 @@ bind_timewait
- bind_wildcard
- busy_poller
- cmsg_sender
--diag_uid
- epoll_busy_poll
- fin_ack_lat
- gro
-@@ -18,7 +17,6 @@ ipv6_flowlabel
- ipv6_flowlabel_mgr
- ipv6_fragmentation
- log.txt
--msg_oob
- msg_zerocopy
- netlink-dumps
- nettest
-@@ -35,9 +33,6 @@ reuseport_bpf_numa
- reuseport_dualstack
- rxtimestamp
- sctp_hello
--scm_inq
--scm_pidfd
--scm_rights
- sk_bind_sendto_listen
- sk_connect_zero_addr
- sk_so_peek_off
-@@ -45,7 +40,6 @@ skf_net_off
- socket
- so_incoming_cpu
- so_netns_cookie
--so_peek_off
- so_txtime
- so_rcv_listener
- stress_reuseport_listen
-@@ -65,5 +59,3 @@ txtimestamp
- udpgso
- udpgso_bench_rx
- udpgso_bench_tx
--unix_connect
--unix_connreset
 diff --git a/tools/testing/selftests/net/af_unix/.gitignore b/tools/testing/selftests/net/af_unix/.gitignore
-new file mode 100644
-index 0000000000000..240b26740c9e0
---- /dev/null
+index 240b26740c9e0..9731766441036 100644
+--- a/tools/testing/selftests/net/af_unix/.gitignore
 +++ b/tools/testing/selftests/net/af_unix/.gitignore
-@@ -0,0 +1,8 @@
-+diag_uid
-+msg_oob
-+scm_inq
-+scm_pidfd
-+scm_rights
-+so_peek_off
-+unix_connect
-+unix_connreset
+@@ -6,3 +6,4 @@ scm_rights
+ so_peek_off
+ unix_connect
+ unix_connreset
++unix_listen
+diff --git a/tools/testing/selftests/net/af_unix/Makefile b/tools/testing/selftests/net/af_unix/Makefile
+index 4c0375e28bbee..57d159803a3ab 100644
+--- a/tools/testing/selftests/net/af_unix/Makefile
++++ b/tools/testing/selftests/net/af_unix/Makefile
+@@ -14,6 +14,7 @@ TEST_GEN_PROGS := \
+ 	so_peek_off \
+ 	unix_connect \
+ 	unix_connreset \
++	unix_listen \
+ # end of TEST_GEN_PROGS
+ 
+ include ../../lib.mk
+diff --git a/tools/testing/selftests/net/af_unix/unix_listen.c b/tools/testing/selftests/net/af_unix/unix_listen.c
+new file mode 100644
+index 0000000000000..416fa3e5bfe9b
+--- /dev/null
++++ b/tools/testing/selftests/net/af_unix/unix_listen.c
+@@ -0,0 +1,187 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * Tests for the state checks in AF_UNIX listen().
++ *
++ * The central case is a regression test: listen() on a bound socket that
++ * is already connected (i.e. not in TCP_CLOSE or TCP_LISTEN state) must
++ * fail with EINVAL.  A prior change accidentally let it return success
++ * without doing anything, because a helper called in between reset the
++ * error code to 0.  The neighbouring checks (unbound, already listening)
++ * are tested too so they cannot silently regress the same way.
++ *
++ * Every case runs for both listenable socket types (SOCK_STREAM and
++ * SOCK_SEQPACKET) and both pathname and abstract addresses.
++ */
++#define _GNU_SOURCE
++
++#include <errno.h>
++#include <stddef.h>
++#include <stdio.h>
++#include <string.h>
++#include <unistd.h>
++
++#include <sys/socket.h>
++#include <sys/un.h>
++
++#include "kselftest_harness.h"
++
++#define SK_NAME		"unix_listen_sk"
++#define SRV_NAME	"unix_listen_srv"
++
++FIXTURE(unix_listen)
++{
++	int sk;			/* socket under test */
++	int server;		/* a listening peer, when a test needs one */
++	struct sockaddr_un addr, srv_addr;
++	socklen_t addrlen, srv_addrlen;
++};
++
++FIXTURE_VARIANT(unix_listen)
++{
++	int type;
++	int abstract;
++};
++
++FIXTURE_VARIANT_ADD(unix_listen, stream_pathname)
++{
++	.type = SOCK_STREAM,
++	.abstract = 0,
++};
++
++FIXTURE_VARIANT_ADD(unix_listen, stream_abstract)
++{
++	.type = SOCK_STREAM,
++	.abstract = 1,
++};
++
++FIXTURE_VARIANT_ADD(unix_listen, seqpacket_pathname)
++{
++	.type = SOCK_SEQPACKET,
++	.abstract = 0,
++};
++
++FIXTURE_VARIANT_ADD(unix_listen, seqpacket_abstract)
++{
++	.type = SOCK_SEQPACKET,
++	.abstract = 1,
++};
++
++/* Fill @addr with a pathname or abstract address named @name. */
++static socklen_t unix_set_addr(struct sockaddr_un *addr, const char *name,
++			       int abstract)
++{
++	size_t len = strlen(name);
++
++	memset(addr, 0, sizeof(*addr));
++	addr->sun_family = AF_UNIX;
++	/* An abstract address leads with a NUL and has no filesystem entry. */
++	memcpy(addr->sun_path + (abstract ? 1 : 0), name, len);
++
++	return offsetof(struct sockaddr_un, sun_path) + len + 1;
++}
++
++FIXTURE_SETUP(unix_listen)
++{
++	self->sk = -1;
++	self->server = -1;
++	self->addrlen = unix_set_addr(&self->addr, SK_NAME, variant->abstract);
++	self->srv_addrlen = unix_set_addr(&self->srv_addr, SRV_NAME,
++					  variant->abstract);
++}
++
++FIXTURE_TEARDOWN(unix_listen)
++{
++	if (self->sk >= 0)
++		close(self->sk);
++	if (self->server >= 0)
++		close(self->server);
++
++	/* Pathname sockets leave a filesystem entry behind; abstract ones do not. */
++	if (!variant->abstract) {
++		remove(SK_NAME);
++		remove(SRV_NAME);
++	}
++}
++
++/* A bound socket in TCP_CLOSE is the normal, allowed case. */
++TEST_F(unix_listen, bound_is_ok)
++{
++	int err;
++
++	self->sk = socket(AF_UNIX, variant->type, 0);
++	ASSERT_LE(0, self->sk);
++
++	err = bind(self->sk, (struct sockaddr *)&self->addr, self->addrlen);
++	ASSERT_EQ(0, err);
++
++	err = listen(self->sk, 8);
++	EXPECT_EQ(0, err);
++}
++
++/* Listening again on an already-listening socket (TCP_LISTEN) is allowed. */
++TEST_F(unix_listen, relisten_is_ok)
++{
++	int err;
++
++	self->sk = socket(AF_UNIX, variant->type, 0);
++	ASSERT_LE(0, self->sk);
++
++	err = bind(self->sk, (struct sockaddr *)&self->addr, self->addrlen);
++	ASSERT_EQ(0, err);
++
++	err = listen(self->sk, 8);
++	ASSERT_EQ(0, err);
++
++	err = listen(self->sk, 16);
++	EXPECT_EQ(0, err);
++}
++
++/* listen() on an unbound socket fails: there is nothing to listen on. */
++TEST_F(unix_listen, unbound_is_einval)
++{
++	int err;
++
++	self->sk = socket(AF_UNIX, variant->type, 0);
++	ASSERT_LE(0, self->sk);
++
++	err = listen(self->sk, 8);
++	EXPECT_EQ(-1, err);
++	EXPECT_EQ(EINVAL, errno);
++}
++
++/*
++ * The regression: a bound socket that has already been connected is not in
++ * TCP_CLOSE or TCP_LISTEN, so listen() must reject it with EINVAL rather
++ * than quietly succeeding.
++ */
++TEST_F(unix_listen, connected_is_einval)
++{
++	int err;
++
++	self->server = socket(AF_UNIX, variant->type, 0);
++	ASSERT_LE(0, self->server);
++
++	err = bind(self->server, (struct sockaddr *)&self->srv_addr,
++		   self->srv_addrlen);
++	ASSERT_EQ(0, err);
++
++	err = listen(self->server, 8);
++	ASSERT_EQ(0, err);
++
++	self->sk = socket(AF_UNIX, variant->type, 0);
++	ASSERT_LE(0, self->sk);
++
++	/* Bind first so the unbound check does not mask the state check. */
++	err = bind(self->sk, (struct sockaddr *)&self->addr, self->addrlen);
++	ASSERT_EQ(0, err);
++
++	err = connect(self->sk, (struct sockaddr *)&self->srv_addr,
++		      self->srv_addrlen);
++	ASSERT_EQ(0, err);
++
++	err = listen(self->sk, 8);
++	EXPECT_EQ(-1, err);
++	EXPECT_EQ(EINVAL, errno);
++}
++
++TEST_HARNESS_MAIN
 -- 
 2.53.0
 
