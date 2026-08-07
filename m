@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D06E53BCD38;
-	Fri,  7 Aug 2026 15:26:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE2BC4746D1;
+	Fri,  7 Aug 2026 15:26:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116392; cv=none; b=QOMcE5Fdl+w1uc6XHzR/qGOogWJanant/WyM+llioQmQNQMPfejBOnVDSX/gk5BtZt4e31EfoAelzkC3X0XlDd8k4nRQbSOYRuhnwgDIi+3lGnL/3LyaPc/I7L262ZbZZCpn901tiGoPyU67IxEJASM+QnKA4pWs2uSF3D02Og4=
+	t=1786116395; cv=none; b=uBiGdgr40bzvJko3zXRgcb9Y1g7S16Cb8xGv94/UI9eEqDEo7PuKdisufxbJIiiWh9ISRp2MXGSoWww6Sygp7G9szwUVRVjNhOpzquwvEN8LIzqdJwsn2gl3ljoEf+wQzFqNl8zwzMokdkvJsi17WRa7SKJNfu8fMI0my6o0/zw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116392; c=relaxed/simple;
-	bh=VmqeSAaXGLmA4aP36SA25dqSOQQIYF6/TWaTeQVtoK4=;
+	s=arc-20240116; t=1786116395; c=relaxed/simple;
+	bh=U/c2jeZxatr1qlC0eHl3+bagaBEHCPAWPqQHwkU2mNE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YYKcIiTxk2KPlmFlRWh23ekV5LJWrB0EcMWQZssTfVG+s0rmzG6obh+m876XqNYlfCAG2dKLhl4YsgQruuZjpSVr9qWX88mNk2SSZaSseBvAdg1V5bR0Igam/Ef2DZlaK5LeNkeJyzBb2e67yKU61Yu2Fr4utZF1dZfAa9JX/pY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wn0ZiJlZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=llai/kFRNRnfWl6lfxbNPeKs3eOu5d9UsppwIeL3En6VVh1wjbQxjHmpq8Vhd1s3JfftBASgJwAUUjvVxSCoAvYfjpaXJl1A8t5EDXACbprntwXf0BXpDM2NFHpFzXP1ZOAZy79BPU5ns7sOisloNUEdBfHs+DxtgGkKsXY+Uvg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rolsn3LC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wn0ZiJlZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 612951F000E9;
-	Fri,  7 Aug 2026 15:26:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rolsn3LC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A1D81F000E9;
+	Fri,  7 Aug 2026 15:26:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116390;
-	bh=I9VKzsnz5omhFQ7q8EHnrCGFCS/IOvWjLAlb6ub85EY=;
+	s=korg; t=1786116393;
+	bh=+/8KJQtiYKL6bnSbVEaAhWef+YSeURv5iBokd8VJYV4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Wn0ZiJlZrlJpCQYDBG1WUwpn97GqAstCnKP+X+PyNAgIhfluqcr1YPuq33DT8BZae
-	 r04W0duWxkVKYFdM8SqTU6XtWpcd0miSlN/T8mm4Gkl162tqI9Q1ab2g7HwFtF79fX
-	 3KRn6wovmXOjfKr7lkjCiBbd8IIgJXSgo1U8SGqM=
+	b=rolsn3LCwflaLqXUlyI24DApLeJ6jKl8vQitbIwAdPgeKim7FhqiVTFFMjw+KtLxv
+	 Ir5ACYTYl/KEv9LyzDvmQYVspVNhaWJbsB/eRMrjm9UMThfXVNH1pI52rbtdeWPxEy
+	 xRPj/kAG9jJdvFJZLSojFJ04gvuA01n8AJgOvRWw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nava kishore Manne <nava.kishore.manne@amd.com>,
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
-	Michal Simek <michal.simek@amd.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.6 160/261] phy: zynqmp: use read-modify-write for SERDES scrambler bypass
-Date: Fri,  7 Aug 2026 16:38:37 +0200
-Message-ID: <20260807143418.819019927@linuxfoundation.org>
+	Kiryl Shutsemau <kas@kernel.org>,
+	Sashiko AI review <sashiko-bot@kernel.org>,
+	David Hildenbrand <david@kernel.org>,
+	Muchun Song <muchun.song@linux.dev>,
+	Oscar Salvador <osalvador@suse.de>,
+	Peter Xu <peterx@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 209/261] mm/hugetlb: fix swap entry corruption when clearing uffd-wp at fork()
+Date: Fri,  7 Aug 2026 16:39:26 +0200
+Message-ID: <20260807143419.876077927@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143415.358597922@linuxfoundation.org>
 References: <20260807143415.358597922@linuxfoundation.org>
@@ -52,45 +56,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nava kishore Manne <nava.kishore.manne@amd.com>
+From: Kiryl Shutsemau (Meta) <kas@kernel.org>
 
-commit 21e0749f931702765b9d52d05740092bc87fcd8d upstream.
+[ Upstream commit 83abe2fd5b3aeb3123b5408a5a91709c5538fb23 ]
 
-xpsgtr_bypass_scrambler_8b10b() used xpsgtr_write_phy() which performs
-a full register write, silently clearing any bits beyond the intended
-bypass control fields.
+copy_hugetlb_page_range() clears the uffd-wp bit of migration and hwpoison
+entries with huge_pte_clear_uffd_wp(), which operates on the present-PTE
+bit position.  Swap entries keep the uffd-wp state elsewhere -- the
+migration branch reads and sets it with pte_swp_uffd_wp() and
+pte_swp_mkuffd_wp() -- and the present-PTE position falls into the swap
+payload.  On x86-64 it lands in the inverted swap offset, where a
+naturally-aligned hugetlb PFN always has the affected bit set, so the
+clear advances the encoded PFN by two pages.
 
-Switch to xpsgtr_clr_set_phy() with clr=mask, set=mask to set only
-the bypass bits while preserving the remaining bits in each register.
+No userfaultfd needs to be involved: the clear is guarded only by the
+child VMA not being uffd-wp registered, so a plain fork() with an
+in-flight hugetlb migration entry (or a poisoned hugetlb page) corrupts
+the entry copied into the child.  Instrumenting the clear and forking
+after MADV_HWPOISON on a 2MB anon hugetlb page shows:
 
-Fixes: 4a33bea00314 ("phy: zynqmp: Add PHY driver for the Xilinx ZynqMP Gigabit Transceiver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Nava kishore Manne <nava.kishore.manne@amd.com>
-Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Acked-by: Michal Simek <michal.simek@amd.com>
-Link: https://patch.msgid.link/20260627155229.2791113-3-radhey.shyam.pandey@amd.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  offset before=120e00
+  offset after =120e02
+
+The fallout is mostly latent: rmap walks match migration entries by folio
+range and remove_migration_pte() rebuilds the PTE from the folio, so a
+within-folio PFN skew heals once migration completes.  But any path that
+re-encodes the corrupted offset -- e.g.  hugetlb_change_protection()
+rewriting a writable migration entry via
+make_readable_migration_entry(swp_offset(entry)) -- propagates it.
+
+Migration entries legitimately carry uffd-wp, so clear it with
+pte_swp_clear_uffd_wp(), matching copy_nonpresent_pte() and
+move_huge_pte().
+
+A hwpoison entry, on the other hand, never carries the uffd-wp bit: it is
+installed fresh by make_hwpoison_entry() (try_to_unmap_one() does not
+preserve uffd-wp on the hwpoison path) and hugetlb_change_protection()
+leaves hwpoison entries untouched.  There was nothing to clear there, only
+the corruption, so drop the clear entirely.
+
+Link: https://lore.kernel.org/20260708090110.136162-1-kirill@shutemov.name
+Fixes: bc70fbf269fd ("mm/hugetlb: handle uffd-wp during fork()")
+Signed-off-by: Kiryl Shutsemau <kas@kernel.org>
+Reported-by: Sashiko AI review <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/all/20260703140011.99E601F000E9@smtp.kernel.org/
+Suggested-by: David Hildenbrand <david@kernel.org>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Assisted-by: Claude:claude-fable-5
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+(cherry picked from commit 83abe2fd5b3aeb3123b5408a5a91709c5538fb23)
+[ kas: adapt to the pre-softleaf idiom ]
+Signed-off-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/xilinx/phy-zynqmp.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ mm/hugetlb.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/drivers/phy/xilinx/phy-zynqmp.c
-+++ b/drivers/phy/xilinx/phy-zynqmp.c
-@@ -490,8 +490,12 @@ static void xpsgtr_lane_set_protocol(str
- /* Bypass (de)scrambler and 8b/10b decoder and encoder. */
- static void xpsgtr_bypass_scrambler_8b10b(struct xpsgtr_phy *gtr_phy)
- {
--	xpsgtr_write_phy(gtr_phy, L0_TM_DIG_6, L0_TM_DIS_DESCRAMBLE_DECODER);
--	xpsgtr_write_phy(gtr_phy, L0_TX_DIG_61, L0_TM_DISABLE_SCRAMBLE_ENCODER);
-+	xpsgtr_clr_set_phy(gtr_phy, L0_TM_DIG_6,
-+			   L0_TM_DIS_DESCRAMBLE_DECODER,
-+			   L0_TM_DIS_DESCRAMBLE_DECODER);
-+	xpsgtr_clr_set_phy(gtr_phy, L0_TX_DIG_61,
-+			   L0_TM_DISABLE_SCRAMBLE_ENCODER,
-+			   L0_TM_DISABLE_SCRAMBLE_ENCODER);
- }
- 
- /* DP-specific initialization. */
+diff --git a/mm/hugetlb.c b/mm/hugetlb.c
+index af4533028f62e..edae641407b96 100644
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -5112,8 +5112,12 @@ int copy_hugetlb_page_range(struct mm_struct *dst, struct mm_struct *src,
+ 			 */
+ 			;
+ 		} else if (unlikely(is_hugetlb_entry_hwpoisoned(entry))) {
+-			if (!userfaultfd_wp(dst_vma))
+-				entry = huge_pte_clear_uffd_wp(entry);
++			/*
++			 * A hwpoison entry never carries the uffd-wp bit: it is
++			 * installed fresh by make_hwpoison_entry() and
++			 * hugetlb_change_protection() leaves it untouched, so
++			 * there is nothing to clear for the child.
++			 */
+ 			set_huge_pte_at(dst, addr, dst_pte, entry, sz);
+ 		} else if (unlikely(is_hugetlb_entry_migration(entry))) {
+ 			swp_entry_t swp_entry = pte_to_swp_entry(entry);
+@@ -5132,7 +5136,7 @@ int copy_hugetlb_page_range(struct mm_struct *dst, struct mm_struct *src,
+ 				set_huge_pte_at(src, addr, src_pte, entry, sz);
+ 			}
+ 			if (!userfaultfd_wp(dst_vma))
+-				entry = huge_pte_clear_uffd_wp(entry);
++				entry = pte_swp_clear_uffd_wp(entry);
+ 			set_huge_pte_at(dst, addr, dst_pte, entry, sz);
+ 		} else if (unlikely(is_pte_marker(entry))) {
+ 			pte_marker marker = copy_pte_marker(
+-- 
+2.53.0
+
 
 
