@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8A4F31327A;
-	Fri,  7 Aug 2026 15:33:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC7552F5337;
+	Fri,  7 Aug 2026 15:33:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116810; cv=none; b=V0DCTTz9KDJfmjPWNE26Gc0Dewdzukl1i576SAitgbfFiAEDN6dIXZQqkrrSfKgDqy2rYnimtfa4ndaSPR8VavKeMoELCIrWNJ3Ca+lRk/nfwODjDMn14yd6tbjW/63M4+BJgSheCc44M3IgKGAOuzQwIR+dyiUYCqdZCLno8hc=
+	t=1786116812; cv=none; b=Hesp90WJ1IGTccZdSj5/+pNEJOV4mqbCnXtmDZ4oUAESkXc+LuGJURVBwYFsGQ3gMge2dPqQRVn3enAa9cRz8Si2oHh5cwQQBZVnerOn4GS5J240L2heIrmeLNBgInVRUcdIJabDjFf6xGZ37LHIegBVuTtOlrdprAf/HtU6qz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116810; c=relaxed/simple;
-	bh=H/82X9CFBBIAFUQz9ervpuGJSEO32r18ep4qcKxg5sQ=;
+	s=arc-20240116; t=1786116812; c=relaxed/simple;
+	bh=gBlpdLENHM3gw81visbnKVwmyT4PKlT1PkCoL57GepU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X1zamsGUHWOYXVhieeD8TgxG1TDv4b4Fo2FMGkLv/4gHjqGjfhRuwzjyRvtl1RSqzx8+mvpk2vP0+TXLS+Re/OlVk40DtvLws/Qwng3HhP77Cd1sGMgzPythc0AaP1GEDPml5MVyANxRtH1nrNEHwED91AMK7Xc+6G1GlpHgA/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bliYDv7k; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=jz8IoUcoXqNvJpKBqh/CSPBaEvaG3tOGupiWUz8eU71lKIC/HmGnMvNwi83mO4K1tfsCByA1m0CYBQVG/jiohl6KF+Y7gB3B7aihUSmIpu55oDocKEKCRirqekUdJ9180/ToHuZJamVCVRu1rkU0Etq0Xf2yzdRqxoz2Lmoe6jA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QXA48RBF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bliYDv7k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07C581F00A3D;
-	Fri,  7 Aug 2026 15:33:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QXA48RBF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D14891F000E9;
+	Fri,  7 Aug 2026 15:33:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116808;
-	bh=tXIf3EnjRE4gOcLjBX4vj1vojn9m2XlDRbgAfhwwyb8=;
+	s=korg; t=1786116811;
+	bh=AP/W7QCMZvaRfmyMI3eaYfLYZ4+wau+ID5ld48zZvEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bliYDv7kT+ZTWxBkPvNLRoBvEE07umYjVQjxtxGaO9ZfnGFa5bIhIlXSzW+Epvkws
-	 QfjdmORMSE86Q7n0PaIqRu+mKX6eGy5sKXYzSs1U59f93oVhz+JMmF1xdMm1dmndBU
-	 8DPLr+sKtuNdHMNLxakRggu0Nb9N2gabWYTCqrv8=
+	b=QXA48RBFGeLDIXQfCjHuNcwYBdSZNjZkvaQViZIqFNU7qnhsEzqKTuFlWH/c8Y7Hf
+	 WDu+3pQZy/xpl9VkV2QmtQyazKt1JjN++MS3ue/Tn4LpUBLpKsN9/UfHpMFCokqhbZ
+	 SLwLVaD/4r1vdkbOXaS6BHMfmkKi2eh9JsFQ/V3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	=?UTF-8?q?Bj=C3=B6rn=20Gerhart?= <gerhart@posteo.de>,
+	Florian Bezdeka <florian.bezdeka@siemens.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 097/438] net: do not send ICMP/NDISC Redirects when peer allocation fails
-Date: Fri,  7 Aug 2026 16:34:53 +0200
-Message-ID: <20260807143430.058261983@linuxfoundation.org>
+Subject: [PATCH 7.1 098/438] hwmon: (nct6775-core) Prevent access to unsupported weight registers
+Date: Fri,  7 Aug 2026 16:34:54 +0200
+Message-ID: <20260807143430.079888202@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -46,82 +47,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit dbc3791e3b2472e1ccc08947e0f83b443470ff4f ]
+[ Upstream commit d0b704e569ac3b8416d8e02270cdc9bf830ed395 ]
 
-When inet_getpeer_v4() or inet_getpeer_v6() fails to allocate a peer entry
-under memory pressure or tree size caps, redirect handlers previously fell
-back to sending un-rate-limited ICMP/NDISC Redirect messages.
+Sashiko reports:
 
-In IPv4, ip_rt_send_redirect() called icmp_send() directly when peer == NULL.
-In IPv6, ip6_forward() and ndisc_send_redirect() passed a NULL peer into
-inet_peer_xrlim_allow(), which returned true when peer == NULL.
+During initialization of the nct6116 chip, the driver sets data->pwm_num
+to 5. However, it assigns several NCT6106 register arrays (such as
+NCT6106_REG_WEIGHT_DUTY_STEP, NCT6106_REG_WEIGHT_TEMP_SEL, and
+NCT6106_REG_WEIGHT_TEMP_*) to data->REG_PWM and data->REG_WEIGHT_TEMP.
+These arrays only contain 3 elements.
 
-Because ICMP/NDISC Redirects are not part of the default global rate limit
-mask (sysctl_icmp_ratemask), sending redirects when peer == NULL creates
-an un-rate-limited ICMP packet storm.
+In nct6775_update_pwm(), the driver iterates up to data->pwm_num. If
+data->has_pwm has bits 3 or 4 set (which is structurally possible for
+nct6116), the loop attempts to read elements at index 3 and 4 from these
+3-element arrays. This results in a global out-of-bounds read, which can
+be caught by KASAN.
 
-Fix this by failing closed in ip_rt_send_redirect(), ip6_forward(), and
-ndisc_send_redirect() when peer is NULL.
+Furthermore, the driver uses these garbage out-of-bounds values as
+hardware register addresses for subsequent read and write operations. This
+leads to invalid hardware register access, potentially causing hardware
+misconfiguration or system crashes.
 
-Fixes: 92d868292634 ("inetpeer: Move ICMP rate limiting state into inet_peer entries.")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260724072901.1633601-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+The underlying problem is that the chip does support up to five fan
+control channels, but only the first three support weight control.
+Fix the problem by extending the affected weight register arrays with
+zeroed fields. The driver uses zeroed register addresses to determine
+if a register is supported or not, and skips accesses for unsupported
+registers.
+
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: 29c7cb485b32 ("hwmon: (nct6775) Integrate new model nct6116")
+Cc: Björn Gerhart <gerhart@posteo.de>
+Cc: Florian Bezdeka <florian.bezdeka@siemens.com>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/route.c      | 2 --
- net/ipv6/ip6_output.c | 2 +-
- net/ipv6/ndisc.c      | 2 ++
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/hwmon/nct6775-core.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/net/ipv4/route.c b/net/ipv4/route.c
-index 3d62d45d84bda..7cc9a7336c30a 100644
---- a/net/ipv4/route.c
-+++ b/net/ipv4/route.c
-@@ -892,8 +892,6 @@ void ip_rt_send_redirect(struct sk_buff *skb)
- 	peer = inet_getpeer_v4(net->ipv4.peers, ip_hdr(skb)->saddr, vif);
- 	if (!peer) {
- 		rcu_read_unlock();
--		icmp_send(skb, ICMP_REDIRECT, ICMP_REDIR_HOST,
--			  rt_nexthop(rt, ip_hdr(skb)->daddr));
- 		return;
- 	}
+diff --git a/drivers/hwmon/nct6775-core.c b/drivers/hwmon/nct6775-core.c
+index 51253acff4b06..94482c8092cda 100644
+--- a/drivers/hwmon/nct6775-core.c
++++ b/drivers/hwmon/nct6775-core.c
+@@ -791,12 +791,12 @@ static const u16 NCT6106_REG_TOLERANCE_H[] = { 0x112, 0x122, 0x132 };
  
-diff --git a/net/ipv6/ip6_output.c b/net/ipv6/ip6_output.c
-index b5d9c57fe439f..634f581e17114 100644
---- a/net/ipv6/ip6_output.c
-+++ b/net/ipv6/ip6_output.c
-@@ -641,7 +641,7 @@ int ip6_forward(struct sk_buff *skb)
- 		/* Limit redirects both by destination (here)
- 		   and by source (inside ndisc_send_redirect)
- 		 */
--		if (inet_peer_xrlim_allow(peer, 1*HZ))
-+		if (peer && inet_peer_xrlim_allow(peer, 1*HZ))
- 			ndisc_send_redirect(skb, target);
- 		rcu_read_unlock();
- 	} else {
-diff --git a/net/ipv6/ndisc.c b/net/ipv6/ndisc.c
-index f867ec8d3d905..fe36b3f512850 100644
---- a/net/ipv6/ndisc.c
-+++ b/net/ipv6/ndisc.c
-@@ -1707,6 +1707,8 @@ void ndisc_send_redirect(struct sk_buff *skb, const struct in6_addr *target)
- 	}
+ static const u16 NCT6106_REG_TARGET[] = { 0x111, 0x121, 0x131 };
  
- 	peer = inet_getpeer_v6(net->ipv6.peers, &ipv6_hdr(skb)->saddr);
-+	if (!peer)
-+		goto release;
- 	ret = inet_peer_xrlim_allow(peer, 1*HZ);
+-static const u16 NCT6106_REG_WEIGHT_TEMP_SEL[] = { 0x168, 0x178, 0x188 };
+-static const u16 NCT6106_REG_WEIGHT_TEMP_STEP[] = { 0x169, 0x179, 0x189 };
+-static const u16 NCT6106_REG_WEIGHT_TEMP_STEP_TOL[] = { 0x16a, 0x17a, 0x18a };
+-static const u16 NCT6106_REG_WEIGHT_DUTY_STEP[] = { 0x16b, 0x17b, 0x18b };
+-static const u16 NCT6106_REG_WEIGHT_TEMP_BASE[] = { 0x16c, 0x17c, 0x18c };
+-static const u16 NCT6106_REG_WEIGHT_DUTY_BASE[] = { 0x16d, 0x17d, 0x18d };
++static const u16 NCT6106_REG_WEIGHT_TEMP_SEL[] = { 0x168, 0x178, 0x188, 0, 0 };
++static const u16 NCT6106_REG_WEIGHT_TEMP_STEP[] = { 0x169, 0x179, 0x189, 0, 0 };
++static const u16 NCT6106_REG_WEIGHT_TEMP_STEP_TOL[] = { 0x16a, 0x17a, 0x18a, 0, 0 };
++static const u16 NCT6106_REG_WEIGHT_DUTY_STEP[] = { 0x16b, 0x17b, 0x18b, 0, 0 };
++static const u16 NCT6106_REG_WEIGHT_TEMP_BASE[] = { 0x16c, 0x17c, 0x18c, 0, 0 };
++static const u16 NCT6106_REG_WEIGHT_DUTY_BASE[] = { 0x16d, 0x17d, 0x18d, 0, 0 };
  
- 	if (!ret)
+ static const u16 NCT6106_REG_AUTO_TEMP[] = { 0x160, 0x170, 0x180 };
+ static const u16 NCT6106_REG_AUTO_PWM[] = { 0x164, 0x174, 0x184 };
 -- 
 2.53.0
 
