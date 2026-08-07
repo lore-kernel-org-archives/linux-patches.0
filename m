@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2BFB37E5DD;
-	Fri,  7 Aug 2026 14:43:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63B123FE375;
+	Fri,  7 Aug 2026 14:44:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786113848; cv=none; b=CEVarj7j7ruTbme1TxLsxkZ2DJKsCovAL3G6zVSMnIHGQj21ZnGJZ8s2MUFRmCiiD1OypX0lw9V2LdoeQMV039I1I59qPC+B1fcrpaHW7s59W0rJO57m59nyUNwAhOFPdBdhYppetzecBAJfMM4fNVyyANWjlPnJBl7A78qZ3bg=
+	t=1786113852; cv=none; b=Z4rgalAXm+ri48QPkuNyfu1N85ubPQrx5HIMRcEXI6CcVElNRR+MSim4rNdPj3GvqdXGrakDTrr3Sz+UAiiqMx9fi5kWDVZmWYfKGg6L1CvedCna00dyTEhtrQZzz0fcHFHqtsD0imiKMCh+m4akdreYpUwm8aS6CNRBiT3p9Tg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786113848; c=relaxed/simple;
-	bh=1tfUMvklKdeofYzyVz+OHYBu4yxw7WGm8UFYylyKOq8=;
+	s=arc-20240116; t=1786113852; c=relaxed/simple;
+	bh=ElJVPIA/rsyu2Rbow9Ksn4DOIDII+AiYDPv7GiOI2eA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hsuDlgPAzZEMT2NoDcP1HJHoxjubQS/aHXiFLIrLhQ3H+w54Ub31bkc1KOykDyTyVZznA/6Z62jtjVnE7yfeP7w/qd63K1OWuYuOC2c1tg8BjEfF6rs3l0KfeYF47XvUzO0qLHzc4KXmhjVatrwEL9VLYplyaDOtYMXw6IMdlpI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RLOCGUHj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rJekG89IxBtDMBB3KUKaSnBugYtGY2okBVpXe4Pg47wJ0mTlXLrrk6Juu7sHP0s6vDUO3vtffFI5tQX8X19+EkpvxIIsOM7GwrYUItwSs4cv8TGB6eM1ZW3Tv7nelJTcrZV2uw//yQptG+UMvukxhvW2JykYd7i0k0ukKim2w7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2vdzaEOn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RLOCGUHj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBCD21F00A3E;
-	Fri,  7 Aug 2026 14:43:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2vdzaEOn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 759FC1F00A3A;
+	Fri,  7 Aug 2026 14:43:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786113831;
-	bh=k0BVMmFkkqvOYcIZ854Ci4Wxy5msnIliBR1/c5qGLlw=;
+	s=korg; t=1786113840;
+	bh=EGC5UAqFbNyULVMkwQsDrbrj6vWMgYUllAyfDMtRous=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RLOCGUHjnAeGsiLPS8bsGI/xLR1AellCyh57ISas589yxsBparIV+eIEK2S3ZMkMK
-	 iWNU4lO55ZTfDVBeGpvuhD6BSma9RR0wqZx9omEQqVQaElSYp3of8YXoFw8VYbNDhh
-	 C1v7wtlS+jYsbMFQn8wSqSqmbHSf12Ak8cofBPoE=
+	b=2vdzaEOnEf7v6Qv32vjxdOHOgrLgacCrzlwu3Of4LF5ctffndRNV4UZcX982BTcwX
+	 Xb01jJEHmvNLKNc4sR2HaqlJ2wuvYoEhNOSOh8XBqUP1MSO1hLaAmmTkOGl8eeJyka
+	 dEEWjJKC3FYwIYzsHj1V4leFV2wmzjYM09mNNjRQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 050/337] netfilter: nft_payload: fix mask build for partial field offload
-Date: Fri,  7 Aug 2026 16:34:13 +0200
-Message-ID: <20260807143419.601701099@linuxfoundation.org>
+Subject: [PATCH 6.12 053/337] pinctrl-amd: Dont clear S4 wake bits at probe
+Date: Fri,  7 Aug 2026 16:34:16 +0200
+Message-ID: <20260807143419.665965924@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -52,67 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei (Microsoft) <xmei5@asu.edu>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 39e88f28fb32bf02bd4b525c24c842c9cff5663d ]
+[ Upstream commit ffe8a0c6b55285ceaf2f42fc20c3a0594d14f1e9 ]
 
-nft_payload_offload_mask() builds the offload match mask for a payload
-expression that covers only part of a header field.  For a partial IPv6
-address match (field_len = 16, priv_len = 1) that shift is 1 << 120, which
-is undefined on the 32-bit int operand.  It also trims only one word, so
-the remaining words stay 0xffffffff (and when priv_len is a multiple of 4
-the trim is skipped entirely), leaving the mask covering more bytes than
-the rule matches.
+commit 6bc3462a0f5e ("pinctrl: amd: Mask wake bits on probe again")
+introduced a regression where Wake-on-LAN no longer works after suspend
+or shutdown on some AMD platforms.
 
-  UBSAN: shift-out-of-bounds in net/netfilter/nft_payload.c:278:20
-  shift exponent 120 is too large for 32-bit type 'int'
-  ...
+Firmware-programmed S4 wake bits for devices like PCIe NICs using PCI
+PME are cleared at probe, but nothing restores them. Unlike S0i3/S3 wake
+sources that use enable_irq_wake() -> amd_gpio_irq_set_wake(), PCIe PME
+does not use GPIO IRQ infrastructure and relies on firmware configuration.
 
-The match is byte-granular and struct nft_data is zero-initialised, so the
-correct mask is simply the first priv_len bytes set to 0xff. Set those
-bytes directly and drop the word/shift trimming; this removes the undefined
-shift and no longer over-masks the trailing bytes.
+The original intent of commit 6bc3462a0f5e ("pinctrl: amd: Mask wake
+bits on probe again") was to clear spurious wake bits left by firmware
+to prevent unwanted wakeups. However, S4 wake bits are used for
+hardware-level wake sources like WoL that bypass the kernel's IRQ wake
+API.
 
-Fixes: a5d45bc0dc50 ("netfilter: nftables_offload: build mask based from the matching bytes")
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Signed-off-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fix by preserving S4 wake bits at probe and only clearing S0i3/S3 bits:
+- Firmware-configured S4 wake sources (WoL) continue working
+- Kernel maintains control of S3/S0i3 wake policy via set_wake()
+- S3-only wake sources work correctly per commit f31f33dbb3ba ("pinctrl:
+  amd: Take suspend type into consideration which pins are non-wake")
+
+The trade-off is that firmware-programmed spurious S4 wake bits remain
+set, but this is less problematic than breaking WoL.
+
+Fixes: 6bc3462a0f5e ("pinctrl: amd: Mask wake bits on probe again")
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_payload.c | 12 +-----------
- 1 file changed, 1 insertion(+), 11 deletions(-)
+ drivers/pinctrl/pinctrl-amd.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/net/netfilter/nft_payload.c b/net/netfilter/nft_payload.c
-index 36c31ad2d64c1..15feb49e0b663 100644
---- a/net/netfilter/nft_payload.c
-+++ b/net/netfilter/nft_payload.c
-@@ -253,9 +253,7 @@ static int nft_payload_dump(struct sk_buff *skb,
- static bool nft_payload_offload_mask(struct nft_offload_reg *reg,
- 				     u32 priv_len, u32 field_len)
- {
--	unsigned int remainder, delta, k;
- 	struct nft_data mask = {};
--	__be32 remainder_mask;
+diff --git a/drivers/pinctrl/pinctrl-amd.c b/drivers/pinctrl/pinctrl-amd.c
+index debf36ce57857..65006eceaf399 100644
+--- a/drivers/pinctrl/pinctrl-amd.c
++++ b/drivers/pinctrl/pinctrl-amd.c
+@@ -869,8 +869,7 @@ static void amd_gpio_irq_init(struct amd_gpio *gpio_dev)
+ 	u32 pin_reg, mask;
+ 	int i;
  
- 	if (priv_len == field_len) {
- 		memset(&reg->mask, 0xff, priv_len);
-@@ -264,15 +262,7 @@ static bool nft_payload_offload_mask(struct nft_offload_reg *reg,
- 		return false;
- 	}
+-	mask = BIT(WAKE_CNTRL_OFF_S0I3) | BIT(WAKE_CNTRL_OFF_S3) |
+-		BIT(WAKE_CNTRL_OFF_S4);
++	mask = BIT(WAKE_CNTRL_OFF_S0I3) | BIT(WAKE_CNTRL_OFF_S3);
  
--	memset(&mask, 0xff, field_len);
--	remainder = priv_len % sizeof(u32);
--	if (remainder) {
--		k = priv_len / sizeof(u32);
--		delta = field_len - priv_len;
--		remainder_mask = htonl(~((1 << (delta * BITS_PER_BYTE)) - 1));
--		mask.data[k] = (__force u32)remainder_mask;
--	}
--
-+	memset(&mask, 0xff, priv_len);
- 	memcpy(&reg->mask, &mask, field_len);
- 
- 	return true;
+ 	for (i = 0; i < desc->npins; i++) {
+ 		int pin = desc->pins[i].number;
 -- 
 2.53.0
 
