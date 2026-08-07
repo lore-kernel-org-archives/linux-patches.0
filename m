@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5936448D18;
-	Fri,  7 Aug 2026 15:36:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E182D471268;
+	Fri,  7 Aug 2026 15:36:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116961; cv=none; b=nT38csBFFKUClRenBJo2fG7Ia4r+z9WSs2uQ03gBtWrCMN7AEdRE1cAcwbcGErEGwEB4rXQhFYepIe3ujWeNJA9codafMTyhO3PaqUQhvCN+BJxOW/16/TQxSiASx1c84iGQHOknZeLtB4CboUkrQ5Uk2pnqaqx9ZwYVmswsNFQ=
+	t=1786116964; cv=none; b=F7AjH9mQTTs4DmdEQKzxa24CDRAIjGIHaiitqro/fiNVv/BMlFCAw1ekuN7m0vpr9dijlC60wf7beR4D6elmsk50BSdQiksAtSk01vi8BkuA8hGwk+i9HLl+AmZsotbvvr7D4BXB7Jf0nOKrk8XOB9iKnr9n9Ogx9xYiDYnVIeo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116961; c=relaxed/simple;
-	bh=u1igMQEyfNYnAjLhFsy8aJzWG2R4iiAIDcXXWfqX4VI=;
+	s=arc-20240116; t=1786116964; c=relaxed/simple;
+	bh=ovGTTfU0IkAZk57J4mW41t2doJkKMRSIyzBLHzEGQzI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lfuC4lvmWPZwzGt5ZDc4MHNuRwAY5zWcQIoVdXzlard2gfPtVjpAGeezlJI9I9QMSvihWYWaxb8vqGyK/VWWHCsQD3XpJeQDBIjtY/GqRNOffjIvTtMUEBT4Qj84VY4S32XluYGwabP2sHIWz2dvO6vdaDbt3fI/FnVS+9iVx64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xoTsM1f1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rNSJ2zUCQ5pzVVRT2dTBbmcSNWnNPvELcUbWWqwc8B9PdUix2Bkh+1lKI30oYlUXQFIrra5fUp7nnrNT+2atAmSLtUvZkKB1OSA0MFYsMkm34rMelaoHY2o0Tp73Fq3LdWlmr0J9VhnOlt46ZJGCLlEcaYCU2b+NufT/hDYF180=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AdcdjNpm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xoTsM1f1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 747D71F000E9;
-	Fri,  7 Aug 2026 15:35:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AdcdjNpm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49E1B1F000E9;
+	Fri,  7 Aug 2026 15:36:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116960;
-	bh=fDpgRo49oGCsalwGGHSmU7hIf3U/mfMSiOaZC+PE6sc=;
+	s=korg; t=1786116962;
+	bh=i2KK1i53tACO/UslS1WQiIG8orkS3px3aafhHu77laA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xoTsM1f1AetoSN+e+fUTXfWRF9KHNPM5jU0RlSDE3rvjLG15GiCVLBeNsGgA2RZlU
-	 izDT/rPo8wAdcobJdEMZoQ7Hox5LymtOEbsq/0LfgQzReZ3Mp7Ggk8QEMgtPBB05Hl
-	 sB6xJIkUE63vuu0YVhjSRkdFnrTVldO2mYZuWmG4=
+	b=AdcdjNpmEFKfd6vVGR7ABkZ4mQ6yyDDeid69IQ0JlBod04hBz+voiH3ZDLJQICDEB
+	 X4O1cteUU647aOVq9z5uo0ZIE5arem5yc9dReoKZpcBQHl0LwODRicrxaC7kGed/hz
+	 oBL6p000PYL94OWtHspUh7PyvFkRTjAUq4H7QRtQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Marangi <ansuelsmth@gmail.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	TanZheng <tanzheng@kylinos.cn>,
+	Mike Christie <michael.christie@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 150/438] net: phylink: put link_gpio if phylink_create fails
-Date: Fri,  7 Aug 2026 16:35:46 +0200
-Message-ID: <20260807143431.207312850@linuxfoundation.org>
+Subject: [PATCH 7.1 151/438] scsi: target: iblock: Fix wrong PR ops NULL check for PREEMPT/RELEASE
+Date: Fri,  7 Aug 2026 16:35:47 +0200
+Message-ID: <20260807143431.228162204@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -52,89 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Marangi <ansuelsmth@gmail.com>
+From: TanZheng <tanzheng@kylinos.cn>
 
-[ Upstream commit 0fe1e3e8f3380d7862296a73b528d164e96c76b8 ]
+[ Upstream commit 9c33222bd387312874fbe36ca8002e5c945b9653 ]
 
-In phylink_create() if phylink_register_sfp() returns an error, link_gpio
-obtained by phylink_parse_fixedlink() is never released. While this is a
-very unlikely scenario, it's worth to fix/handle this.
+In the iblock_execute_pr_out() function, PRO_PREEMPT,
+PRO_PREEMPT_AND_ABORT, and PRO_RELEASE all perform callback capability
+checks through ops->pr_clear. The error check allows unimplemented hooks
+to pass through the gate, resulting dereferencing a NULL function
+pointer.
 
-This was present from the very first implementation of phylink but got
-relevant only with the introduction of ce0aa27ff3f6 ("sfp: add sfp-bus to
-bridge between network devices and sfp cages") where additional function
-were added after phylink_parse_fixedlink() making the release of link_gpio
-needed if such additional function errored out.
+Check whether the hooks that need to be called are supported.
 
-While at it, restructure the exit condition of phylink_create() with the
-goto pattern to reduce code duplication on handling error conditions.
-
-Fixes: ce0aa27ff3f6 ("sfp: add sfp-bus to bridge between network devices and sfp cages")
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20260726150806.2437-1-ansuelsmth@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 394f81184882 ("scsi: target: Add block PR support to iblock")
+Signed-off-by: TanZheng <tanzheng@kylinos.cn>
+Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Link: https://patch.msgid.link/20260724075850.280699-1-kensanya@163.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/phylink.c | 29 +++++++++++++++--------------
- 1 file changed, 15 insertions(+), 14 deletions(-)
+ drivers/target/target_core_iblock.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/phy/phylink.c b/drivers/net/phy/phylink.c
-index 087ac63f9193d..18d2ead97aa54 100644
---- a/drivers/net/phy/phylink.c
-+++ b/drivers/net/phy/phylink.c
-@@ -1875,8 +1875,8 @@ struct phylink *phylink_create(struct phylink_config *config,
- 	} else if (config->type == PHYLINK_DEV) {
- 		pl->dev = config->dev;
- 	} else {
--		kfree(pl);
--		return ERR_PTR(-EINVAL);
-+		ret = -EINVAL;
-+		goto free_pl;
- 	}
- 
- 	pl->mac_supports_eee_ops = phylink_mac_implements_lpi(mac_ops);
-@@ -1909,28 +1909,29 @@ struct phylink *phylink_create(struct phylink_config *config,
- 	phylink_validate(pl, pl->supported, &pl->link_config);
- 
- 	ret = phylink_parse_mode(pl, fwnode);
--	if (ret < 0) {
--		kfree(pl);
--		return ERR_PTR(ret);
--	}
-+	if (ret < 0)
-+		goto free_pl;
- 
- 	if (pl->cfg_link_an_mode == MLO_AN_FIXED) {
- 		ret = phylink_parse_fixedlink(pl, fwnode);
--		if (ret < 0) {
--			kfree(pl);
--			return ERR_PTR(ret);
--		}
-+		if (ret < 0)
-+			goto release_link_gpio;
- 	}
- 
- 	pl->req_link_an_mode = pl->cfg_link_an_mode;
- 
- 	ret = phylink_register_sfp(pl, fwnode);
--	if (ret < 0) {
--		kfree(pl);
--		return ERR_PTR(ret);
--	}
-+	if (ret < 0)
-+		goto release_link_gpio;
- 
- 	return pl;
-+
-+release_link_gpio:
-+	if (pl->link_gpio)
-+		gpiod_put(pl->link_gpio);
-+free_pl:
-+	kfree(pl);
-+	return ERR_PTR(ret);
- }
- EXPORT_SYMBOL_GPL(phylink_create);
+diff --git a/drivers/target/target_core_iblock.c b/drivers/target/target_core_iblock.c
+index 1087d1d17c36d..ea65d39fef884 100644
+--- a/drivers/target/target_core_iblock.c
++++ b/drivers/target/target_core_iblock.c
+@@ -906,7 +906,7 @@ static sense_reason_t iblock_execute_pr_out(struct se_cmd *cmd, u8 sa, u64 key,
+ 		break;
+ 	case PRO_PREEMPT:
+ 	case PRO_PREEMPT_AND_ABORT:
+-		if (!ops->pr_clear) {
++		if (!ops->pr_preempt) {
+ 			pr_err("block_device does not support pr_preempt.\n");
+ 			return TCM_UNSUPPORTED_SCSI_OPCODE;
+ 		}
+@@ -916,8 +916,8 @@ static sense_reason_t iblock_execute_pr_out(struct se_cmd *cmd, u8 sa, u64 key,
+ 				      sa == PRO_PREEMPT_AND_ABORT);
+ 		break;
+ 	case PRO_RELEASE:
+-		if (!ops->pr_clear) {
+-			pr_err("block_device does not support pr_pclear.\n");
++		if (!ops->pr_release) {
++			pr_err("block_device does not support pr_release.\n");
+ 			return TCM_UNSUPPORTED_SCSI_OPCODE;
+ 		}
  
 -- 
 2.53.0
