@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B77E1314B6D;
-	Fri,  7 Aug 2026 15:32:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87EB5280331;
+	Fri,  7 Aug 2026 15:32:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116775; cv=none; b=neGEaJumi1neCNTS49hjR5t6pkWaCNojibmu6xe/lWO8JovgYWnqo8w/Cn41JGdr4ag36Z+8WHZxVtXfeUDKUwvZ1OZ92/SfSP+EiZJu3guAl7wRNjVST8Su5bIAEshR7mfiAc1VgQbbh6Dj/tUgb8fRgR4JDklD9ynjFVxuK/s=
+	t=1786116778; cv=none; b=Xwiq/92wLQG20WqA8jRqm5qxci3wbJ28G/mrhJtlXRh82lMvaTYsCb8aKO2uNTWmeIHNyIn7rXsTiQDBdGR3Z8XZLXdWTanG0Wr09zdfPyRUAnD/a6HabbuZ80ULBEx2ESfaIy+gwhuLm5hoErNSoHs/aCD6f+2/HhW5FGiUdoc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116775; c=relaxed/simple;
-	bh=qJ9zCgPGFB+9T/jAhO2GISfyyaHVOICB1t5A+AUosOo=;
+	s=arc-20240116; t=1786116778; c=relaxed/simple;
+	bh=qSIO6YcDghMU/khBP5D6mJxkVa/NULjVAt4oNd+UjVo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GMh3eIYCd2qwwG+7QHenJ7mIzs2/Q7O3hkm3HWM4JEryvOAukpgIsMZRR88ybTggxou4oss1b2lOtWpA6hEukYGV5BDgb6luGabxj4t/BZ8Ix5CKS8tS0sVb4P1mxQd212j7pB3Up7DUGYnZkmowzvbIIOwcSbbkyaI5nLlkpF8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0z7HKgID; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FHq5XTsVyLg5u/NmkCyg9sRMWqKycRJ7t3MA7alBJIFPwMVrpcJdwpYKZwM4NGcVeOngOhQjAK+1Mqcc7W7bG7wukbxZLxM709eFzMGgqsH6afcAPPyzY6ZPn4UZJ54ux0WCVOMwrnL5U8kGlZY3rZ/yYIEhlGmtgPMRdLtg2lc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h1CrUEft; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0z7HKgID"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 210F81F000E9;
-	Fri,  7 Aug 2026 15:32:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h1CrUEft"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E49F21F000E9;
+	Fri,  7 Aug 2026 15:32:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116774;
-	bh=DTNUHbtKCAE+khL4xmhKqTtkzCPwTfh+ha0EgsygNRE=;
+	s=korg; t=1786116777;
+	bh=MnvX8sxxxFGO5+BnPe8QoQQhdHHmpOiNNVwdWMbEs/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0z7HKgIDP9Ay/mE8Tq9LEYENiAnBgWeSVmrxrXzFRxR17xg4fVkQvn6EfV/dXLtQD
-	 5QG68eOH5WWvCpKWen0Y0bF1BVZ5NXggzIlO0CsbGP82iTJ+eT9Pe7tCi/jav3NPhe
-	 o9FD9lltuMQ5eTLrhUO+BCa+kSH932jCfZ0+smF0=
+	b=h1CrUEftKcHcZZ2QsZP+NdmktLnQfpR3QIDm3uRPMJuQm1vLkYB64eUxZj7m1+H2J
+	 PR5dqWrosD/6/UaR8NZkHqoigVt0t4BtTfPtXCXjzGuF/vYd19sR3aXplbWfA/hbY9
+	 w7sYl9cKzlA8W1ApsgG8wxGd0ul3Slv3EPCFrr+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Tran <alex.tran@oss.qualcomm.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Sumit Gupta <sumitg@nvidia.com>,
+	Christian Loehle <christian.loehle@arm.com>,
+	Lifeng Zheng <zhenglifeng1@huawei.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 086/438] gpio: gpio-by-pinctrl: Apply initial value in direction output wrapper
-Date: Fri,  7 Aug 2026 16:34:42 +0200
-Message-ID: <20260807143429.815101949@linuxfoundation.org>
+Subject: [PATCH 7.1 087/438] ACPI: CPPC: Skip writes to unsupported performance controls
+Date: Fri,  7 Aug 2026 16:34:43 +0200
+Message-ID: <20260807143429.836823351@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -52,60 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Tran <alex.tran@oss.qualcomm.com>
+From: Christian Loehle <christian.loehle@arm.com>
 
-[ Upstream commit 67ff4bf723c8bd1f1b10450fa3e8f55762418104 ]
+[ Upstream commit 47d4e945dff8139050473be4ab263a32e1da910c ]
 
-After successfully configuring gpio pin as output, set the
-requested initial output value via the existing gpio set
-wrapper, so that the pin is not left at its previous level.
+MIN_PERF and MAX_PERF are optional CPPC controls. DESIRED_PERF is also
+optional with CPPC2 when autonomous selection is supported.
 
-Fixes: 7671f4949a6c ("gpio: gpio-by-pinctrl: add pinctrl based generic GPIO driver")
-Signed-off-by: Alex Tran <alex.tran@oss.qualcomm.com>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260724-gpio-pinctrl-output-set-val-v2-1-cad55d025636@oss.qualcomm.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+The cppc-cpufreq target callbacks populate both limits for every request
+without checking whether the controls are implemented. cppc_set_perf()
+consequently passes NULL register descriptors to cpc_write(). The writes
+fail width validation and their return values are ignored, so the failed
+access paths are repeated on every target request. An autonomous-only
+platform can take the same path for DESIRED_PERF.
+
+Check that each performance control is supported before calling
+cpc_write().
+
+Fixes: ea3db45ae476 ("cpufreq: cppc: Update MIN_PERF/MAX_PERF in target callbacks")
+Reviewed-by: Sumit Gupta <sumitg@nvidia.com>
+Signed-off-by: Christian Loehle <christian.loehle@arm.com>
+Reviewed-by: Lifeng Zheng <zhenglifeng1@huawei.com>
+Link: https://patch.msgid.link/20260724104042.1481804-1-christian.loehle@arm.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-by-pinctrl.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ drivers/acpi/cppc_acpi.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpio/gpio-by-pinctrl.c b/drivers/gpio/gpio-by-pinctrl.c
-index ddfdc479d38a8..b3b3c11376172 100644
---- a/drivers/gpio/gpio-by-pinctrl.c
-+++ b/drivers/gpio/gpio-by-pinctrl.c
-@@ -28,12 +28,6 @@ static int pin_control_gpio_get_direction(struct gpio_chip *gc, unsigned int off
- 	return GPIO_LINE_DIRECTION_IN;
- }
+diff --git a/drivers/acpi/cppc_acpi.c b/drivers/acpi/cppc_acpi.c
+index 34edec0f2bde2..aa4017be960a0 100644
+--- a/drivers/acpi/cppc_acpi.c
++++ b/drivers/acpi/cppc_acpi.c
+@@ -1940,16 +1940,17 @@ int cppc_set_perf(int cpu, struct cppc_perf_ctrls *perf_ctrls)
+ 		cpc_desc->write_cmd_status = 0;
+ 	}
  
--static int pin_control_gpio_direction_output(struct gpio_chip *chip,
--					     unsigned int offset, int val)
--{
--	return pinctrl_gpio_direction_output(chip, offset);
--}
--
- static int pin_control_gpio_get(struct gpio_chip *chip, unsigned int offset)
- {
- 	unsigned long config;
-@@ -56,6 +50,18 @@ static int pin_control_gpio_set(struct gpio_chip *chip, unsigned int offset,
- 	return pinctrl_gpio_set_config(chip, offset, config);
- }
+-	cpc_write(cpu, desired_reg, perf_ctrls->desired_perf);
++	if (CPC_SUPPORTED(desired_reg))
++		cpc_write(cpu, desired_reg, perf_ctrls->desired_perf);
  
-+static int pin_control_gpio_direction_output(struct gpio_chip *chip,
-+					     unsigned int offset, int val)
-+{
-+	int ret;
-+
-+	ret = pinctrl_gpio_direction_output(chip, offset);
-+	if (ret)
-+		return ret;
-+
-+	return pin_control_gpio_set(chip, offset, val);
-+}
-+
- static int pin_control_gpio_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
+ 	/*
+ 	 * Only write if min_perf and max_perf not zero. Some drivers pass zero
+ 	 * value to min and max perf, but they don't mean to set the zero value,
+ 	 * they just don't want to write to those registers.
+ 	 */
+-	if (perf_ctrls->min_perf)
++	if (perf_ctrls->min_perf && CPC_SUPPORTED(min_perf_reg))
+ 		cpc_write(cpu, min_perf_reg, perf_ctrls->min_perf);
+-	if (perf_ctrls->max_perf)
++	if (perf_ctrls->max_perf && CPC_SUPPORTED(max_perf_reg))
+ 		cpc_write(cpu, max_perf_reg, perf_ctrls->max_perf);
+ 
+ 	if (CPC_IN_PCC(desired_reg) || CPC_IN_PCC(min_perf_reg) || CPC_IN_PCC(max_perf_reg))
 -- 
 2.53.0
 
