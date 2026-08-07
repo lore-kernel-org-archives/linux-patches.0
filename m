@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B189D473C6D;
-	Fri,  7 Aug 2026 15:41:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CB30476CC8;
+	Fri,  7 Aug 2026 15:41:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786117308; cv=none; b=F0cr9qELRjKAZsgJwkFdFUqp6gVBR3Ah2viuyPPNZ/rQHhOLiQBAdqlkF9O9s5yspsQUBqn7To43KZYoyQ6iyTjp1dkGRhBkuGExfKDWoxNLu1NkMx+utHkFWAWjv12705HsLHsydRmF3krKmbh3u9Nz379XHjqwdey84dXVA9U=
+	t=1786117311; cv=none; b=hujWm0gzM92vn9OXsKv1BUoAGmNRWN/39kdkD1yYA6pD4y4CKv50yyBTYMWtpUTY11cqBpBw01AtuP73vWAnKrokdqi8/rFxF5DINLRceFXBcoVwhozASWtrTIsmO7k3B6oQ9gYRT46m9XwA14ceF/X+HU07X+uh2QJmNWhq1og=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786117308; c=relaxed/simple;
-	bh=r0q4NVJeXp2A/VbC6axAbLB6i/QdZN7Rfn3SYLF/FhQ=;
+	s=arc-20240116; t=1786117311; c=relaxed/simple;
+	bh=P7G5jpSnDHFEFmyup8lgk0UtKObwnRioXB7v1qkqAgg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G9tT+kPgY+iRAnrRr/oqRZ8052PVeXHVwRo6wWBpzhQ4MUUdpLeh/wE+tAhkC8swGt7npkl8ug7jW+qU3vxrN8JQWGFh/n6VhfeTP3OETHVeNL/Y4uISRXqhi5y9cZsMtKCJNhOMsXhfauEn+MnqG/r+pyAbMdEUrJYasmHLY/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fXKrc1+X; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DBRVQQRSW4FCV9GzwyzDVorEcq2AWuJ14cfbRBKwaTkrKmCL1l6yTZbMxHfto7kgDnn1TpvNoo7C2/fG2sLY7rjhkhxELyDOke/j7Xvtif1I/lZnSVEXXJgFV4tLUFodR/HATGiYKusp2Dk0K2aAk8GCFVuwRwAp5hIb+9bfPP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TyQk9ldr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fXKrc1+X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD7231F000E9;
-	Fri,  7 Aug 2026 15:41:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TyQk9ldr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DDFB1F000E9;
+	Fri,  7 Aug 2026 15:41:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786117307;
-	bh=0L40yF2kBgJRSCjxt/QV4eUTro+CQx1ogjEnkX9U1y0=;
+	s=korg; t=1786117310;
+	bh=4r3Hy7ed3rvWOdpea24z1aEl/34OWiO8W9f0m1ygmQ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fXKrc1+X8mX1jUbx2yfhZT33XPWqsT16G2RuF1LnVX6ILaL3GCPjVUlMd3J/Isjwe
-	 mZZG1GvvoFE1OxnHFKclMo7Rr4HQZr2AYGmahTafAUt2ddZDX6dlDSuYYaZfKQtuaC
-	 ZTN/eZU77O9pDOa21rWajP3enkW4m6DXAyOtoCKU=
+	b=TyQk9ldrv+kq4+rvlPL0wwcuo19CLdM+73nEnnsuRtaISFqkKcixt4EnVSgDrYL2t
+	 V32ukusXGr0/+pF1fjk+z7hsAe7p1D2EStu/Xgq11B0XLcoditlgmqwjcxykXwWlN/
+	 8JjSGlpHctfEGeTybWahtgEolegroIXhhhlVoZpo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 7.1 274/438] fou: Fix use-after-free in fou_create()
-Date: Fri,  7 Aug 2026 16:37:50 +0200
-Message-ID: <20260807143433.823967225@linuxfoundation.org>
+	Matt Vollrath <tactii@gmail.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>
+Subject: [PATCH 7.1 275/438] igbvf: Fix leak in TX DMA error cleanup
+Date: Fri,  7 Aug 2026 16:37:51 +0200
+Message-ID: <20260807143433.845617300@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -51,50 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+From: Matt Vollrath <tactii@gmail.com>
 
-commit b14361aca6350ff7907b0e9903c7b94dc7d5d4a0 upstream.
+commit 0565052b7e2f436b7f1541f4849da96dc0aa7a0e upstream.
 
-fou_create() publishes struct fou through sk_user_data before adding the
-new FOU port to the per-netns list.  If fou_add_to_port_list() fails,
-the error path frees fou while it is still reachable through
-sk_user_data.  A concurrent receive can then dereference the freed
-object in fou_from_sock().
+If an error is encountered while mapping TX buffers, the driver should
+unmap any buffers already mapped for that skb.
 
-This ordering issue was previously noted in the linked discussion.
+Because count is incremented before each frag mapping, it will always
+match the correct number of unmappings needed when dma_error is reached.
+Decrementing count before the while loop in dma_error causes an
+off-by-one error. If any mapping was successful before an unsuccessful
+mapping, exactly one DMA mapping (the head) would leak.
 
-The failure is reachable when local port 0 is requested.  Each socket
-binds to a different ephemeral port, but fou_cfg_cmp() compares the
-requested port 0 and reports -EALREADY once an entry already exists.
+This bug was introduced by a 2010 fix for an endless loop in dma_error.
+All other affected drivers have already been fixed.
 
-Release the tunnel socket before freeing fou so sk_user_data is cleared
-first, and defer reclamation with kfree_rcu() to protect concurrent RCU
-readers.  This matches the lifetime handling in fou_release().
-
-Fixes: 23461551c006 ("fou: Support for foo-over-udp RX path")
-Suggested-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://lore.kernel.org/netdev/20260502031401.3557229-12-kuniyu@google.com/
+Fixes: c1fa347f20f1 ("e1000/e1000e/igb/igbvf/ixgb/ixgbe: Fix tests of unsigned in *_tx_map()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
-Link: https://patch.msgid.link/20260722083858.182506-1-xuanqiang.luo@linux.dev
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Assisted-by: Claude:claude-4-7-opus
+Signed-off-by: Matt Vollrath <tactii@gmail.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/fou_core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/intel/igbvf/netdev.c |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/net/ipv4/fou_core.c
-+++ b/net/ipv4/fou_core.c
-@@ -629,9 +629,9 @@ static int fou_create(struct net *net, s
- 	return 0;
+--- a/drivers/net/ethernet/intel/igbvf/netdev.c
++++ b/drivers/net/ethernet/intel/igbvf/netdev.c
+@@ -2190,8 +2190,6 @@ dma_error:
+ 	buffer_info->time_stamp = 0;
+ 	buffer_info->length = 0;
+ 	buffer_info->mapped_as_page = false;
+-	if (count)
+-		count--;
  
- error:
--	kfree(fou);
- 	if (sock)
- 		udp_tunnel_sock_release(sock->sk);
-+	kfree_rcu(fou, rcu);
- 
- 	return err;
- }
+ 	/* clear timestamp and dma mappings for remaining portion of packet */
+ 	while (count--) {
 
 
