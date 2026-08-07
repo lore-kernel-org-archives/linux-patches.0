@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B8753B05A4;
-	Fri,  7 Aug 2026 14:59:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA6723B05A4;
+	Fri,  7 Aug 2026 14:59:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114745; cv=none; b=Ylyskk+zo51nPjrNRQ8qjVFpZLrYQfRIuWv8bs9bgxwXmXcqk4D8s/LxXM1yIj0l65jvqecHE1TL5q6Wy24FnYNmjYjtOfASqZZwaoiyihV8dC59pmXgNz++5Zss3WO6vAKR323QHdMiK+mAXXUwnNph2hient8OAqrwONPnrV0=
+	t=1786114748; cv=none; b=mGXkX+5ZdATMfdm5fS/kiyQXRz6EbM58czhien+Q5pemtKhE6g5tLnRgHCen52ESRqb3kbgw6QCBucuJUhQjnniKD7lgv2NNhAoQImSWf8ASzyT1+t8a2r+uaKT25fgnJERRmdk9TeQVj56/Mz0MY3rAeMn4LgH1Vnpigkd77EI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114745; c=relaxed/simple;
-	bh=dLEMk8bKW9/91Ymlmvmkh+5xxgZqyCl6RnZy6PlYOss=;
+	s=arc-20240116; t=1786114748; c=relaxed/simple;
+	bh=FDcU6DAbWBOiACJ+/GS9Hrg291uL1lr9To1o3G/nlU0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mDGkf2Y/kgmPR10ZiKhn5u02c4K1F8OYEwKIDSvUjCIbBRMxuY8K6DXHozYR+sDp8lQSuYdA63wsQQRF2sR1dncNCACJiytYg465TwrfOq+K0ScIystoibOkCq4sPgjT3U1klgX7gqEwacEW6jSdIQrDNx0folB+2jHD8RGVLY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TQ3T1FuW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JWVja/oWvKFVz5RlfSUoQQ/kB84a/b0d4Ii4E5GbfJAAS+LOsjTCgrxxmj05ugGAUh3bLMcw0fCMJgzmlZaQxMKXfXwA8iIyf/gsqq3RrMIUisEy5TAqSA9bH2iRvemvMSv7lgyrjJ7aB5U+KPFwecl/wmIYrz5eKhmweco3reM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L2h5ig4T; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TQ3T1FuW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0CA51F000E9;
-	Fri,  7 Aug 2026 14:59:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L2h5ig4T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5267E1F00A3A;
+	Fri,  7 Aug 2026 14:59:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114744;
-	bh=0ebgqhF924UyLDGZA+cFSrYIo+JzjYSRgtKQB1tPUuQ=;
+	s=korg; t=1786114746;
+	bh=NKtCmw8eLONM/KVGu+zmqXVQzg2hlMUniM6+nML3D/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TQ3T1FuWFyoBiYjjoXwMyh8o8cf4HwRsVdX1ntCiWC63QEsAP3BdlBhjIMKYJeoyj
-	 oMwYcN5SMdc/BqXKPR5UeQQdH8In5VaUYjMOQ0aHUdgwNQAiJEhZrI22TC/1OmLIfQ
-	 bN7sA7eNOsI8DwhAvlkQNVZuz5db1q9XOS65Haw8=
+	b=L2h5ig4TBCt4YtpR3wJ30IYxWguw8+6rdOtKhEfjVk4oURQcuXcQ9QrXOVHy7vfht
+	 9WUrYGGcc0MliXi3A3tUCbkAgkrZqZmIxQk3TdBcNNdmr1juLfktsvwLcQQQv4bkZY
+	 Noi32aci959OZ4LmNHWngZJWXWEgvAeHOrfVGCpA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Michal Simek <michal.simek@amd.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 032/396] phy: zynqmp: fix clock error handling in xpsgtr_phy_init()
-Date: Fri,  7 Aug 2026 16:33:12 +0200
-Message-ID: <20260807143424.965730135@linuxfoundation.org>
+Subject: [PATCH 6.18 033/396] phy: zynqmp: fix runtime PM leak on probe allocation failure
+Date: Fri,  7 Aug 2026 16:33:13 +0200
+Message-ID: <20260807143424.987549905@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -54,72 +54,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
 
-[ Upstream commit e4779e2a16d600892aaf743438f6ce8cc4eb3c4c ]
+[ Upstream commit f3506e15cf72e94f62d5f2d173e5b7008f644cde ]
 
-Propagate clk_prepare_enable() failures to the caller instead of
-returning success, and disable the reference clock on initialization
-error paths to avoid leaking clock references when phy_exit() is not
-called.
+Allocate saved_regs before pm_runtime_resume_and_get() so a
+devm_kmalloc() failure does not leave an unreleased runtime PM usage
+counter.
 
-Fixes: 25d700833513 ("phy: xilinx: phy-zynqmp: dynamic clock support for power-save")
+Fixes: 5af9b304bc60 ("phy: xilinx: phy-zynqmp: Fix SGMII linkup failure on resume")
 Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
 Reviewed-by: Michal Simek <michal.simek@amd.com>
-Link: https://patch.msgid.link/20260720153832.1130006-2-radhey.shyam.pandey@amd.com
+Link: https://patch.msgid.link/20260720153832.1130006-3-radhey.shyam.pandey@amd.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/xilinx/phy-zynqmp.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/phy/xilinx/phy-zynqmp.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/phy/xilinx/phy-zynqmp.c b/drivers/phy/xilinx/phy-zynqmp.c
-index fe6b4925d1662..c8230f2bda629 100644
+index c8230f2bda629..2138f5399821a 100644
 --- a/drivers/phy/xilinx/phy-zynqmp.c
 +++ b/drivers/phy/xilinx/phy-zynqmp.c
-@@ -658,12 +658,13 @@ static int xpsgtr_phy_init(struct phy *phy)
- {
- 	struct xpsgtr_phy *gtr_phy = phy_get_drvdata(phy);
- 	struct xpsgtr_dev *gtr_dev = gtr_phy->dev;
--	int ret = 0;
-+	int ret;
- 
- 	mutex_lock(&gtr_dev->gtr_mutex);
- 
- 	/* Configure and enable the clock when peripheral phy_init call */
--	if (clk_prepare_enable(gtr_dev->clk[gtr_phy->refclk]))
-+	ret = clk_prepare_enable(gtr_dev->clk[gtr_phy->refclk]);
-+	if (ret)
- 		goto out;
- 
- 	/* Skip initialization if not required. */
-@@ -673,7 +674,7 @@ static int xpsgtr_phy_init(struct phy *phy)
- 	if (gtr_dev->tx_term_fix) {
- 		ret = xpsgtr_phy_tx_term_fix(gtr_phy);
- 		if (ret < 0)
--			goto out;
-+			goto out_disable_clk;
- 
- 		gtr_dev->tx_term_fix = false;
- 	}
-@@ -687,7 +688,7 @@ static int xpsgtr_phy_init(struct phy *phy)
- 	 */
- 	ret = xpsgtr_configure_pll(gtr_phy);
- 	if (ret)
--		goto out;
-+		goto out_disable_clk;
- 
- 	xpsgtr_lane_set_protocol(gtr_phy);
- 
-@@ -705,6 +706,10 @@ static int xpsgtr_phy_init(struct phy *phy)
- 		break;
+@@ -1044,6 +1044,12 @@ static int xpsgtr_probe(struct platform_device *pdev)
+ 		return PTR_ERR(provider);
  	}
  
-+	goto out;
++	gtr_dev->saved_regs = devm_kmalloc(gtr_dev->dev,
++					   sizeof(save_reg_address),
++					   GFP_KERNEL);
++	if (!gtr_dev->saved_regs)
++		return -ENOMEM;
 +
-+out_disable_clk:
-+	clk_disable_unprepare(gtr_dev->clk[gtr_phy->refclk]);
- out:
- 	mutex_unlock(&gtr_dev->gtr_mutex);
- 	return ret;
+ 	pm_runtime_set_active(gtr_dev->dev);
+ 	pm_runtime_enable(gtr_dev->dev);
+ 
+@@ -1053,12 +1059,6 @@ static int xpsgtr_probe(struct platform_device *pdev)
+ 		return ret;
+ 	}
+ 
+-	gtr_dev->saved_regs = devm_kmalloc(gtr_dev->dev,
+-					   sizeof(save_reg_address),
+-					   GFP_KERNEL);
+-	if (!gtr_dev->saved_regs)
+-		return -ENOMEM;
+-
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
