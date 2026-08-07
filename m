@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAAA0470EB4;
-	Fri,  7 Aug 2026 14:57:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7F3B3806B0;
+	Fri,  7 Aug 2026 14:57:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114652; cv=none; b=r90G94T1mQC45iSfp87KNzku0pIK7T9/wrc42eNnTFL1/qlbakYEMf8LfoVD0tuhK/3Flza/qWInE9T39TX8Yl+QfqS0vlb4aO98nyIEkIN36j2epYSjgk7bRK6OJqzz3vzQsb0bhE9eAsXhURKV8AYgZlxotrrRpspCTigUcb4=
+	t=1786114655; cv=none; b=M0IvkiOoHWVt9LCXtA5Qs3fR1knq435FpcUQ/f01XA3h1w78KU/4uEcGdBfOG/R54ujZtF1GxPilSNxpiVdKYrMBpsXnkI9QZ14ZaOjEksh24seGkKXc1haTPuycjVpDiWQjCCHkkNrpDxTPM7J4KvnQYyRBzqAT/4piLhhdsoY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114652; c=relaxed/simple;
-	bh=XLSbm1UWERFqJoU7EBJYU8AI3uvYyNK+nqQXfREu7jU=;
+	s=arc-20240116; t=1786114655; c=relaxed/simple;
+	bh=aNgMHEfDOGGzw8tlco2WHQ9jFA9iz3aKFKegSbUkGbk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=d0/tMmrQUvSNW0EOLXS1eGHr9j1k9jXbR52/lpVPmcQAEqkuNN2O6joN9QVg7pWHw4ltZS2sP8MtN1/wDnRoQr54zgjNebNCiPecl89gdbYAp/tzePJuCyTBaitk7g3X9I1G4q8mn5Hh6TeWsKKCvG8CWoBxrgng+yIxXHhGWJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RgJMa7Z8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jXhxz959bFEGrEPv6mU5goABurOuLh/lFCg3AGgAZjeXnNeN+hRYQZ2C9vspBE+ULl/7851hTcn+HkVgRmIca+Iso2Zc7mhpGhwU3Ovbq2UDi1EtHoA29K+fHpSNjnu3RYBFoTuRje/3K+Rp9ZBPNwMek5+dnN3BtQ82vk2UMEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0OiSKdHm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RgJMa7Z8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 400C31F000E9;
-	Fri,  7 Aug 2026 14:57:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0OiSKdHm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18FFF1F000E9;
+	Fri,  7 Aug 2026 14:57:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114650;
-	bh=uvVoRN9VhMecIDrB071k9QdQkA+TaNh763or8f/AkeY=;
+	s=korg; t=1786114653;
+	bh=i7qAU9PC85pfCMpTQw3RP3v9Z9elbZRQagbuUnQXWrc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RgJMa7Z8qvuwgaTrZkEQmx/jerJfuEK3nIeBfbWWY2S+VUgpTjPxpSyis+cLYD0Lr
-	 H2Jhz4fMCNKzjbzuMYW6edwU/oGQngz0bF9V0bE5u+qYF4vgsAVBOhzxt01dP1hNRJ
-	 gt+fQWC0Ky6Dq6/DrhlFSLx/kKNOPbPdIeIvQEHA=
+	b=0OiSKdHmExVI5i1sO+qICb7IuNeeWXFdiYR9Wi78F7D7XvzQzEEVBxxUMEcAw87Vc
+	 QTgXpk/vxf/0qveEBQL0IeC04hEk44J72t3nmR5khc/9uMipB4CzbXFvsaPJRNz8uT
+	 RhdA9ePb3WjFAZCOweLmSDuwoOLNh+wki8NOXQc0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Thomas Zimmermann <tzimmermann@suse.de>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Sasha Levin <sashal@kernel.org>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Subject: [PATCH 6.12 314/337] drm/fb-helper: Allocate and release fb_info in single place
-Date: Fri,  7 Aug 2026 16:38:37 +0200
-Message-ID: <20260807143425.335442394@linuxfoundation.org>
+	dri-devel@lists.freedesktop.org,
+	linux-tegra@vger.kernel.org,
+	Thierry Reding <treding@nvidia.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 315/337] drm/tegra: fbdev: Remove offset into framebuffer memory
+Date: Fri,  7 Aug 2026 16:38:38 +0200
+Message-ID: <20260807143425.357899490@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -47,7 +47,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
@@ -56,523 +55,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit 63c971af40365ee706c7e24f6a7900d693518f09 ]
+[ Upstream commit a18b6e30ecd69096beda4a0c96d2570900c3879a ]
 
-Move the calls to drm_fb_helper_alloc_info() from drivers into a
-single place in fbdev helpers. Allocates struct fb_info for a new
-framebuffer device. Then call drm_fb_helper_single_fb_probe() to
-create an fbdev screen buffer. Also release the instance on errors
-by calling drm_fb_helper_release_info().
-
-Simplifies the code and fixes the error cleanup for some of the
-drivers.
-
-Regular release of the struct fb_info instance still happens in
-drm_fb_helper_fini() as before.
-
-v2:
-- remove error rollback in driver implementations (kernel test robot)
-- initialize info in TTM implementation (kernel test robot)
+The screen_buffer field in struct fb_info contains the kernel address
+of the first byte of framebuffer memory. Do not add the display offset.
+This offset only describes scrolling during scanout.
 
 Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Acked-by: Christian König <christian.koenig@amd.com> # radeon
-Acked-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com> # msm
-Acked-by: Javier Martinez Canillas <javierm@redhat.com>
-Link: https://patch.msgid.link/20251027081245.80262-1-tzimmermann@suse.de
-Stable-dep-of: a18b6e30ecd6 ("drm/tegra: fbdev: Remove offset into framebuffer memory")
+Fixes: de2ba664c30f ("gpu: host1x: drm: Add memory manager and fb")
+Cc: dri-devel@lists.freedesktop.org
+Cc: linux-tegra@vger.kernel.org
+Cc: <stable@vger.kernel.org> # v3.10+
+Signed-off-by: Thierry Reding <treding@nvidia.com>
+Link: https://patch.msgid.link/20260421073646.144712-3-tzimmermann@suse.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/armada/armada_fbdev.c      |   12 --------
- drivers/gpu/drm/drm_fb_helper.c            |   39 ++++++++---------------------
- drivers/gpu/drm/drm_fbdev_dma.c            |   12 +-------
- drivers/gpu/drm/drm_fbdev_shmem.c          |   12 +-------
- drivers/gpu/drm/drm_fbdev_ttm.c            |   12 +-------
- drivers/gpu/drm/exynos/exynos_drm_fbdev.c  |    9 ------
- drivers/gpu/drm/gma500/fbdev.c             |   13 ---------
- drivers/gpu/drm/i915/display/intel_fbdev.c |    9 ------
- drivers/gpu/drm/msm/msm_fbdev.c            |    9 ------
- drivers/gpu/drm/omapdrm/omap_fbdev.c       |    9 ------
- drivers/gpu/drm/radeon/radeon_fbdev.c      |   13 ---------
- drivers/gpu/drm/tegra/fbdev.c              |    9 ------
- include/drm/drm_fb_helper.h                |   12 --------
- 13 files changed, 26 insertions(+), 144 deletions(-)
+ drivers/gpu/drm/tegra/fbdev.c |    8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
---- a/drivers/gpu/drm/armada/armada_fbdev.c
-+++ b/drivers/gpu/drm/armada/armada_fbdev.c
-@@ -43,10 +43,10 @@ static int armada_fbdev_create(struct dr
- 	struct drm_fb_helper_surface_size *sizes)
- {
- 	struct drm_device *dev = fbh->dev;
-+	struct fb_info *info = fbh->info;
- 	struct drm_mode_fb_cmd2 mode;
- 	struct armada_framebuffer *dfb;
- 	struct armada_gem_object *obj;
--	struct fb_info *info;
- 	int size, ret;
- 	void *ptr;
- 
-@@ -87,12 +87,6 @@ static int armada_fbdev_create(struct dr
- 	if (IS_ERR(dfb))
- 		return PTR_ERR(dfb);
- 
--	info = drm_fb_helper_alloc_info(fbh);
--	if (IS_ERR(info)) {
--		ret = PTR_ERR(info);
--		goto err_fballoc;
--	}
--
- 	info->fbops = &armada_fb_ops;
- 	info->fix.smem_start = obj->phys_addr;
- 	info->fix.smem_len = obj->obj.size;
-@@ -107,10 +101,6 @@ static int armada_fbdev_create(struct dr
- 		(unsigned long long)obj->phys_addr);
- 
- 	return 0;
--
-- err_fballoc:
--	dfb->fb.funcs->destroy(&dfb->fb);
--	return ret;
- }
- 
- static int armada_fb_probe(struct drm_fb_helper *fbh,
---- a/drivers/gpu/drm/drm_fb_helper.c
-+++ b/drivers/gpu/drm/drm_fb_helper.c
-@@ -485,20 +485,7 @@ int drm_fb_helper_init(struct drm_device
- }
- EXPORT_SYMBOL(drm_fb_helper_init);
- 
--/**
-- * drm_fb_helper_alloc_info - allocate fb_info and some of its members
-- * @fb_helper: driver-allocated fbdev helper
-- *
-- * A helper to alloc fb_info and the member cmap. Called by the driver
-- * within the struct &drm_driver.fbdev_probe callback function. Drivers do
-- * not need to release the allocated fb_info structure themselves, this is
-- * automatically done when calling drm_fb_helper_fini().
-- *
-- * RETURNS:
-- * fb_info pointer if things went okay, pointer containing error code
-- * otherwise
-- */
--struct fb_info *drm_fb_helper_alloc_info(struct drm_fb_helper *fb_helper)
-+static struct fb_info *drm_fb_helper_alloc_info(struct drm_fb_helper *fb_helper)
- {
- 	struct device *dev = fb_helper->dev->dev;
- 	struct fb_info *info;
-@@ -525,17 +512,8 @@ err_release:
- 	framebuffer_release(info);
- 	return ERR_PTR(ret);
- }
--EXPORT_SYMBOL(drm_fb_helper_alloc_info);
- 
--/**
-- * drm_fb_helper_release_info - release fb_info and its members
-- * @fb_helper: driver-allocated fbdev helper
-- *
-- * A helper to release fb_info and the member cmap.  Drivers do not
-- * need to release the allocated fb_info structure themselves, this is
-- * automatically done when calling drm_fb_helper_fini().
-- */
--void drm_fb_helper_release_info(struct drm_fb_helper *fb_helper)
-+static void drm_fb_helper_release_info(struct drm_fb_helper *fb_helper)
- {
- 	struct fb_info *info = fb_helper->info;
- 
-@@ -548,7 +526,6 @@ void drm_fb_helper_release_info(struct d
- 		fb_dealloc_cmap(&info->cmap);
- 	framebuffer_release(info);
- }
--EXPORT_SYMBOL(drm_fb_helper_release_info);
- 
- /**
-  * drm_fb_helper_unregister_info - unregister fb_info framebuffer device
-@@ -1803,6 +1780,11 @@ __drm_fb_helper_initial_config_and_unloc
- 	height = dev->mode_config.max_height;
- 
- 	drm_client_modeset_probe(&fb_helper->client, width, height);
-+
-+	info = drm_fb_helper_alloc_info(fb_helper);
-+	if (IS_ERR(info))
-+		return PTR_ERR(info);
-+
- 	ret = drm_fb_helper_single_fb_probe(fb_helper);
- 	if (ret < 0) {
- 		if (ret == -EAGAIN) {
-@@ -1811,13 +1793,12 @@ __drm_fb_helper_initial_config_and_unloc
- 		}
- 		mutex_unlock(&fb_helper->lock);
- 
--		return ret;
-+		goto err_drm_fb_helper_release_info;
- 	}
- 	drm_setup_crtcs_fb(fb_helper);
- 
- 	fb_helper->deferred_setup = false;
- 
--	info = fb_helper->info;
- 	info->var.pixclock = 0;
- 
- 	/* Need to drop locks to avoid recursive deadlock in
-@@ -1840,6 +1821,10 @@ __drm_fb_helper_initial_config_and_unloc
- 	mutex_unlock(&kernel_fb_helper_lock);
- 
- 	return 0;
-+
-+err_drm_fb_helper_release_info:
-+	drm_fb_helper_release_info(fb_helper);
-+	return ret;
- }
- 
- /**
---- a/drivers/gpu/drm/drm_fbdev_dma.c
-+++ b/drivers/gpu/drm/drm_fbdev_dma.c
-@@ -280,9 +280,9 @@ int drm_fbdev_dma_driver_fbdev_probe(str
- {
- 	struct drm_client_dev *client = &fb_helper->client;
- 	struct drm_device *dev = fb_helper->dev;
-+	struct fb_info *info = fb_helper->info;
- 	struct drm_client_buffer *buffer;
- 	struct drm_framebuffer *fb;
--	struct fb_info *info;
- 	u32 format;
- 	struct iosys_map map;
- 	int ret;
-@@ -312,12 +312,6 @@ int drm_fbdev_dma_driver_fbdev_probe(str
- 	fb_helper->buffer = buffer;
- 	fb_helper->fb = fb;
- 
--	info = drm_fb_helper_alloc_info(fb_helper);
--	if (IS_ERR(info)) {
--		ret = PTR_ERR(info);
--		goto err_drm_client_buffer_vunmap;
--	}
--
- 	drm_fb_helper_fill_info(info, fb_helper, sizes);
- 
- 	if (fb->funcs->dirty)
-@@ -325,12 +319,10 @@ int drm_fbdev_dma_driver_fbdev_probe(str
- 	else
- 		ret = drm_fbdev_dma_driver_fbdev_probe_tail(fb_helper, sizes);
- 	if (ret)
--		goto err_drm_fb_helper_release_info;
-+		goto err_drm_client_buffer_vunmap;
- 
- 	return 0;
- 
--err_drm_fb_helper_release_info:
--	drm_fb_helper_release_info(fb_helper);
- err_drm_client_buffer_vunmap:
- 	fb_helper->fb = NULL;
- 	fb_helper->buffer = NULL;
---- a/drivers/gpu/drm/drm_fbdev_shmem.c
-+++ b/drivers/gpu/drm/drm_fbdev_shmem.c
-@@ -110,10 +110,10 @@ static int drm_fbdev_shmem_helper_fb_pro
- {
- 	struct drm_client_dev *client = &fb_helper->client;
- 	struct drm_device *dev = fb_helper->dev;
-+	struct fb_info *info = fb_helper->info;
- 	struct drm_client_buffer *buffer;
- 	struct drm_gem_shmem_object *shmem;
- 	struct drm_framebuffer *fb;
--	struct fb_info *info;
- 	u32 format;
- 	struct iosys_map map;
- 	int ret;
-@@ -142,12 +142,6 @@ static int drm_fbdev_shmem_helper_fb_pro
- 	fb_helper->buffer = buffer;
- 	fb_helper->fb = fb;
- 
--	info = drm_fb_helper_alloc_info(fb_helper);
--	if (IS_ERR(info)) {
--		ret = PTR_ERR(info);
--		goto err_drm_client_buffer_vunmap;
--	}
--
- 	drm_fb_helper_fill_info(info, fb_helper, sizes);
- 
- 	info->fbops = &drm_fbdev_shmem_fb_ops;
-@@ -168,12 +162,10 @@ static int drm_fbdev_shmem_helper_fb_pro
- 	info->fbdefio = &fb_helper->fbdefio;
- 	ret = fb_deferred_io_init(info);
- 	if (ret)
--		goto err_drm_fb_helper_release_info;
-+		goto err_drm_client_buffer_vunmap;
- 
- 	return 0;
- 
--err_drm_fb_helper_release_info:
--	drm_fb_helper_release_info(fb_helper);
- err_drm_client_buffer_vunmap:
- 	fb_helper->fb = NULL;
- 	fb_helper->buffer = NULL;
---- a/drivers/gpu/drm/drm_fbdev_ttm.c
-+++ b/drivers/gpu/drm/drm_fbdev_ttm.c
-@@ -185,8 +185,8 @@ int drm_fbdev_ttm_driver_fbdev_probe(str
- {
- 	struct drm_client_dev *client = &fb_helper->client;
- 	struct drm_device *dev = fb_helper->dev;
-+	struct fb_info *info = fb_helper->info;
- 	struct drm_client_buffer *buffer;
--	struct fb_info *info;
- 	size_t screen_size;
- 	void *screen_buffer;
- 	u32 format;
-@@ -214,12 +214,6 @@ int drm_fbdev_ttm_driver_fbdev_probe(str
- 		goto err_drm_client_framebuffer_delete;
- 	}
- 
--	info = drm_fb_helper_alloc_info(fb_helper);
--	if (IS_ERR(info)) {
--		ret = PTR_ERR(info);
--		goto err_vfree;
--	}
--
- 	drm_fb_helper_fill_info(info, fb_helper, sizes);
- 
- 	info->fbops = &drm_fbdev_ttm_fb_ops;
-@@ -236,12 +230,10 @@ int drm_fbdev_ttm_driver_fbdev_probe(str
- 	info->fbdefio = &fb_helper->fbdefio;
- 	ret = fb_deferred_io_init(info);
- 	if (ret)
--		goto err_drm_fb_helper_release_info;
-+		goto err_vfree;
- 
- 	return 0;
- 
--err_drm_fb_helper_release_info:
--	drm_fb_helper_release_info(fb_helper);
- err_vfree:
- 	vfree(screen_buffer);
- err_drm_client_framebuffer_delete:
---- a/drivers/gpu/drm/exynos/exynos_drm_fbdev.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_fbdev.c
-@@ -60,18 +60,11 @@ static int exynos_drm_fbdev_update(struc
- 				   struct drm_fb_helper_surface_size *sizes,
- 				   struct exynos_drm_gem *exynos_gem)
- {
--	struct fb_info *fbi;
-+	struct fb_info *fbi = helper->info;
- 	struct drm_framebuffer *fb = helper->fb;
- 	unsigned int size = fb->width * fb->height * fb->format->cpp[0];
- 	unsigned long offset;
- 
--	fbi = drm_fb_helper_alloc_info(helper);
--	if (IS_ERR(fbi)) {
--		DRM_DEV_ERROR(to_dma_dev(helper->dev),
--			      "failed to allocate fb info.\n");
--		return PTR_ERR(fbi);
--	}
--
- 	fbi->fbops = &exynos_drm_fb_ops;
- 
- 	drm_fb_helper_fill_info(fbi, helper, sizes);
---- a/drivers/gpu/drm/gma500/fbdev.c
-+++ b/drivers/gpu/drm/gma500/fbdev.c
-@@ -110,7 +110,7 @@ static int psb_fbdev_fb_probe(struct drm
- 	struct drm_device *dev = fb_helper->dev;
- 	struct drm_psb_private *dev_priv = to_drm_psb_private(dev);
- 	struct pci_dev *pdev = to_pci_dev(dev->dev);
--	struct fb_info *info;
-+	struct fb_info *info = fb_helper->info;
- 	struct drm_framebuffer *fb;
- 	struct drm_mode_fb_cmd2 mode_cmd = { };
- 	int size;
-@@ -165,12 +165,6 @@ static int psb_fbdev_fb_probe(struct drm
- 
- 	fb_helper->fb = fb;
- 
--	info = drm_fb_helper_alloc_info(fb_helper);
--	if (IS_ERR(info)) {
--		ret = PTR_ERR(info);
--		goto err_drm_framebuffer_unregister_private;
--	}
--
- 	info->fbops = &psb_fbdev_fb_ops;
- 
- 	/* Accessed stolen memory directly */
-@@ -194,11 +188,6 @@ static int psb_fbdev_fb_probe(struct drm
- 
- 	return 0;
- 
--err_drm_framebuffer_unregister_private:
--	drm_framebuffer_unregister_private(fb);
--	fb->obj[0] = NULL;
--	drm_framebuffer_cleanup(fb);
--	kfree(fb);
- err_drm_gem_object_put:
- 	drm_gem_object_put(obj);
- 	return ret;
---- a/drivers/gpu/drm/i915/display/intel_fbdev.c
-+++ b/drivers/gpu/drm/i915/display/intel_fbdev.c
-@@ -183,7 +183,7 @@ static int intelfb_create(struct drm_fb_
- 		.type = I915_GTT_VIEW_NORMAL,
- 	};
- 	intel_wakeref_t wakeref;
--	struct fb_info *info;
-+	struct fb_info *info = helper->info;
- 	struct i915_vma *vma;
- 	unsigned long flags = 0;
- 	bool prealloc = false;
-@@ -236,13 +236,6 @@ static int intelfb_create(struct drm_fb_
- 		goto out_unlock;
- 	}
- 
--	info = drm_fb_helper_alloc_info(helper);
--	if (IS_ERR(info)) {
--		drm_err(&dev_priv->drm, "Failed to allocate fb_info (%pe)\n", info);
--		ret = PTR_ERR(info);
--		goto out_unpin;
--	}
--
- 	ifbdev->helper.fb = &fb->base;
- 
- 	info->fbops = &intelfb_ops;
---- a/drivers/gpu/drm/msm/msm_fbdev.c
-+++ b/drivers/gpu/drm/msm/msm_fbdev.c
-@@ -70,9 +70,9 @@ static int msm_fbdev_create(struct drm_f
- {
- 	struct drm_device *dev = helper->dev;
- 	struct msm_drm_private *priv = dev->dev_private;
-+	struct fb_info *fbi = helper->info;
- 	struct drm_framebuffer *fb = NULL;
- 	struct drm_gem_object *bo;
--	struct fb_info *fbi = NULL;
- 	uint64_t paddr;
- 	uint32_t format;
- 	int ret, pitch;
-@@ -105,13 +105,6 @@ static int msm_fbdev_create(struct drm_f
- 		goto fail;
- 	}
- 
--	fbi = drm_fb_helper_alloc_info(helper);
--	if (IS_ERR(fbi)) {
--		DRM_DEV_ERROR(dev->dev, "failed to allocate fb info\n");
--		ret = PTR_ERR(fbi);
--		goto fail;
--	}
--
- 	DBG("fbi=%p, dev=%p", fbi, dev);
- 
- 	helper->fb = fb;
---- a/drivers/gpu/drm/omapdrm/omap_fbdev.c
-+++ b/drivers/gpu/drm/omapdrm/omap_fbdev.c
-@@ -131,9 +131,9 @@ static int omap_fbdev_create(struct drm_
- 	struct omap_fbdev *fbdev = to_omap_fbdev(helper);
- 	struct drm_device *dev = helper->dev;
- 	struct omap_drm_private *priv = dev->dev_private;
-+	struct fb_info *fbi = helper->info;
- 	struct drm_framebuffer *fb = NULL;
- 	union omap_gem_size gsize;
--	struct fb_info *fbi = NULL;
- 	struct drm_mode_fb_cmd2 mode_cmd = {0};
- 	struct drm_gem_object *bo;
- 	dma_addr_t dma_addr;
-@@ -199,13 +199,6 @@ static int omap_fbdev_create(struct drm_
- 		goto fail;
- 	}
- 
--	fbi = drm_fb_helper_alloc_info(helper);
--	if (IS_ERR(fbi)) {
--		dev_err(dev->dev, "failed to allocate fb info\n");
--		ret = PTR_ERR(fbi);
--		goto fail;
--	}
--
- 	DBG("fbi=%p, dev=%p", fbi, dev);
- 
- 	helper->fb = fb;
---- a/drivers/gpu/drm/radeon/radeon_fbdev.c
-+++ b/drivers/gpu/drm/radeon/radeon_fbdev.c
-@@ -207,7 +207,7 @@ static int radeon_fbdev_fb_helper_fb_pro
- {
- 	struct radeon_device *rdev = fb_helper->dev->dev_private;
- 	struct drm_mode_fb_cmd2 mode_cmd = { };
--	struct fb_info *info;
-+	struct fb_info *info = fb_helper->info;
- 	struct drm_gem_object *gobj;
- 	struct radeon_bo *rbo;
- 	struct drm_framebuffer *fb;
-@@ -245,13 +245,6 @@ static int radeon_fbdev_fb_helper_fb_pro
- 	/* setup helper */
- 	fb_helper->fb = fb;
- 
--	/* okay we have an object now allocate the framebuffer */
--	info = drm_fb_helper_alloc_info(fb_helper);
--	if (IS_ERR(info)) {
--		ret = PTR_ERR(info);
--		goto err_drm_framebuffer_unregister_private;
--	}
--
- 	info->fbops = &radeon_fbdev_fb_ops;
- 
- 	/* radeon resume is fragile and needs a vt switch to help it along */
-@@ -277,10 +270,6 @@ static int radeon_fbdev_fb_helper_fb_pro
- 
- 	return 0;
- 
--err_drm_framebuffer_unregister_private:
--	fb_helper->fb = NULL;
--	drm_framebuffer_unregister_private(fb);
--	drm_framebuffer_cleanup(fb);
- err_kfree:
- 	kfree(fb);
- err_radeon_fbdev_destroy_pinned_object:
 --- a/drivers/gpu/drm/tegra/fbdev.c
 +++ b/drivers/gpu/drm/tegra/fbdev.c
-@@ -72,10 +72,10 @@ static int tegra_fbdev_probe(struct drm_
- 	struct tegra_drm *tegra = helper->dev->dev_private;
- 	struct drm_device *drm = helper->dev;
- 	struct drm_mode_fb_cmd2 cmd = { 0 };
-+	struct fb_info *info = helper->info;
+@@ -75,7 +75,6 @@ static int tegra_fbdev_probe(struct drm_
+ 	struct fb_info *info = helper->info;
  	unsigned int bytes_per_pixel;
  	struct drm_framebuffer *fb;
- 	unsigned long offset;
--	struct fb_info *info;
+-	unsigned long offset;
  	struct tegra_bo *bo;
  	size_t size;
  	int err;
-@@ -96,13 +96,6 @@ static int tegra_fbdev_probe(struct drm_
- 	if (IS_ERR(bo))
- 		return PTR_ERR(bo);
+@@ -112,9 +111,6 @@ static int tegra_fbdev_probe(struct drm_
  
--	info = drm_fb_helper_alloc_info(helper);
--	if (IS_ERR(info)) {
--		dev_err(drm->dev, "failed to allocate framebuffer info\n");
--		drm_gem_object_put(&bo->gem);
--		return PTR_ERR(info);
--	}
+ 	drm_fb_helper_fill_info(info, helper, sizes);
+ 
+-	offset = info->var.xoffset * bytes_per_pixel +
+-		 info->var.yoffset * fb->pitches[0];
 -
- 	fb = tegra_fb_alloc(drm, &cmd, &bo, 1);
- 	if (IS_ERR(fb)) {
- 		err = PTR_ERR(fb);
---- a/include/drm/drm_fb_helper.h
-+++ b/include/drm/drm_fb_helper.h
-@@ -246,8 +246,6 @@ int drm_fb_helper_check_var(struct fb_va
+ 	if (bo->pages) {
+ 		bo->vaddr = vmap(bo->pages, bo->num_pages, VM_MAP,
+ 				 pgprot_writecombine(PAGE_KERNEL));
+@@ -126,9 +122,9 @@ static int tegra_fbdev_probe(struct drm_
+ 	}
  
- int drm_fb_helper_restore_fbdev_mode_unlocked(struct drm_fb_helper *fb_helper);
+ 	info->flags |= FBINFO_VIRTFB;
+-	info->screen_buffer = bo->vaddr + offset;
++	info->screen_buffer = bo->vaddr;
+ 	info->screen_size = size;
+-	info->fix.smem_start = (unsigned long)(bo->iova + offset);
++	info->fix.smem_start = (unsigned long)(bo->iova);
+ 	info->fix.smem_len = size;
  
--struct fb_info *drm_fb_helper_alloc_info(struct drm_fb_helper *fb_helper);
--void drm_fb_helper_release_info(struct drm_fb_helper *fb_helper);
- void drm_fb_helper_unregister_info(struct drm_fb_helper *fb_helper);
- void drm_fb_helper_fill_info(struct fb_info *info,
- 			     struct drm_fb_helper *fb_helper,
-@@ -328,16 +326,6 @@ drm_fb_helper_restore_fbdev_mode_unlocke
  	return 0;
- }
- 
--static inline struct fb_info *
--drm_fb_helper_alloc_info(struct drm_fb_helper *fb_helper)
--{
--	return NULL;
--}
--
--static inline void drm_fb_helper_release_info(struct drm_fb_helper *fb_helper)
--{
--}
--
- static inline void drm_fb_helper_unregister_info(struct drm_fb_helper *fb_helper)
- {
- }
 
 
