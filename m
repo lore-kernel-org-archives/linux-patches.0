@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC7552F5337;
-	Fri,  7 Aug 2026 15:33:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BB0735B631;
+	Fri,  7 Aug 2026 15:33:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116812; cv=none; b=Hesp90WJ1IGTccZdSj5/+pNEJOV4mqbCnXtmDZ4oUAESkXc+LuGJURVBwYFsGQ3gMge2dPqQRVn3enAa9cRz8Si2oHh5cwQQBZVnerOn4GS5J240L2heIrmeLNBgInVRUcdIJabDjFf6xGZ37LHIegBVuTtOlrdprAf/HtU6qz8=
+	t=1786116815; cv=none; b=C5liX1wPbpgPzcfhSoo+gpnROJBRmdHECHiPh7TBHcfoE2uCvMwdeXUH7G0/ahILv1q17jPfm6sMi6GlNp1IwPsKyKmy0ICmUfkpt1WbU5EcWzm09Nw6VZ922jMqkA4eorPDvfKGkO3PHt1L17f/SpVquOLuDF0RJk1iUEbkQOw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116812; c=relaxed/simple;
-	bh=gBlpdLENHM3gw81visbnKVwmyT4PKlT1PkCoL57GepU=;
+	s=arc-20240116; t=1786116815; c=relaxed/simple;
+	bh=7OleHfrwVjnZcxJAXloJLMjpDSVOBqP8uDInC4Ncv2k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jz8IoUcoXqNvJpKBqh/CSPBaEvaG3tOGupiWUz8eU71lKIC/HmGnMvNwi83mO4K1tfsCByA1m0CYBQVG/jiohl6KF+Y7gB3B7aihUSmIpu55oDocKEKCRirqekUdJ9180/ToHuZJamVCVRu1rkU0Etq0Xf2yzdRqxoz2Lmoe6jA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QXA48RBF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Tr2PbF5CmfWTwhthKAGlq29heQmhHKNFca9hKp/SioBhDyBElam7inD4rDs6YKUXsvzPxfC8JYZDY3J3yAfb7ykkQxWpzQU7aieBZYSudI/PXS0jgAOzXULJesRsrQmtg1cOavmxYO8b9h0xvfA/70ypx+pmfbQusOTId6rPdjc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rf/PHvsX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QXA48RBF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D14891F000E9;
-	Fri,  7 Aug 2026 15:33:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rf/PHvsX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A722A1F000E9;
+	Fri,  7 Aug 2026 15:33:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116811;
-	bh=AP/W7QCMZvaRfmyMI3eaYfLYZ4+wau+ID5ld48zZvEI=;
+	s=korg; t=1786116814;
+	bh=T7BW1KwwTMIF9Yfnm3z6FsQsal8+9vgs/DXKDoKcUAM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QXA48RBFGeLDIXQfCjHuNcwYBdSZNjZkvaQViZIqFNU7qnhsEzqKTuFlWH/c8Y7Hf
-	 WDu+3pQZy/xpl9VkV2QmtQyazKt1JjN++MS3ue/Tn4LpUBLpKsN9/UfHpMFCokqhbZ
-	 SLwLVaD/4r1vdkbOXaS6BHMfmkKi2eh9JsFQ/V3c=
+	b=Rf/PHvsXBCzch+1CBGv2Wo6s7tUcHVAyAXKSD75WD6tMgdnKIzPGImaYL2cwKAl3w
+	 2RNB8/xCL6QCPVRBiB5dH+PnLOuA47GWSRMYveIpz9B/d9Cr53txeI96pa4fN+vbof
+	 hcDJnvtpPRpeHiayizjlYnB7Eoti9lwPkTxGzEBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	=?UTF-8?q?Bj=C3=B6rn=20Gerhart?= <gerhart@posteo.de>,
-	Florian Bezdeka <florian.bezdeka@siemens.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	David Corvaglia <david@corvaglia.dev>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 098/438] hwmon: (nct6775-core) Prevent access to unsupported weight registers
-Date: Fri,  7 Aug 2026 16:34:54 +0200
-Message-ID: <20260807143430.079888202@linuxfoundation.org>
+Subject: [PATCH 7.1 099/438] net: bridge: mrp: fix Option TLV length in MRP_Test frames
+Date: Fri,  7 Aug 2026 16:34:55 +0200
+Message-ID: <20260807143430.101079108@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -47,76 +46,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: David Corvaglia <david@corvaglia.dev>
 
-[ Upstream commit d0b704e569ac3b8416d8e02270cdc9bf830ed395 ]
+[ Upstream commit 5546da86894d5906f131b05890705a7abf949d84 ]
 
-Sashiko reports:
+oui is a pointer, so sizeof(oui) is the pointer size. The MRA
+Option TLV thus advertises a wrong length (15 vs 10 on x86_64),
+causing misparsing of the frame on peers. Fix is to replace
+with sizeof(*oui).
 
-During initialization of the nct6116 chip, the driver sets data->pwm_num
-to 5. However, it assigns several NCT6106 register arrays (such as
-NCT6106_REG_WEIGHT_DUTY_STEP, NCT6106_REG_WEIGHT_TEMP_SEL, and
-NCT6106_REG_WEIGHT_TEMP_*) to data->REG_PWM and data->REG_WEIGHT_TEMP.
-These arrays only contain 3 elements.
-
-In nct6775_update_pwm(), the driver iterates up to data->pwm_num. If
-data->has_pwm has bits 3 or 4 set (which is structurally possible for
-nct6116), the loop attempts to read elements at index 3 and 4 from these
-3-element arrays. This results in a global out-of-bounds read, which can
-be caught by KASAN.
-
-Furthermore, the driver uses these garbage out-of-bounds values as
-hardware register addresses for subsequent read and write operations. This
-leads to invalid hardware register access, potentially causing hardware
-misconfiguration or system crashes.
-
-The underlying problem is that the chip does support up to five fan
-control channels, but only the first three support weight control.
-Fix the problem by extending the affected weight register arrays with
-zeroed fields. The driver uses zeroed register addresses to determine
-if a register is supported or not, and skips accesses for unsupported
-registers.
-
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Fixes: 29c7cb485b32 ("hwmon: (nct6775) Integrate new model nct6116")
-Cc: Björn Gerhart <gerhart@posteo.de>
-Cc: Florian Bezdeka <florian.bezdeka@siemens.com>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: f7458934b079 ("net: bridge: mrp: Update the Test frames for MRA")
+Signed-off-by: David Corvaglia <david@corvaglia.dev>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/20260726062605.2746-1-david@corvaglia.dev
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/nct6775-core.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ net/bridge/br_mrp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/nct6775-core.c b/drivers/hwmon/nct6775-core.c
-index 51253acff4b06..94482c8092cda 100644
---- a/drivers/hwmon/nct6775-core.c
-+++ b/drivers/hwmon/nct6775-core.c
-@@ -791,12 +791,12 @@ static const u16 NCT6106_REG_TOLERANCE_H[] = { 0x112, 0x122, 0x132 };
+diff --git a/net/bridge/br_mrp.c b/net/bridge/br_mrp.c
+index f1aa67f7a0510..460be392af477 100644
+--- a/net/bridge/br_mrp.c
++++ b/net/bridge/br_mrp.c
+@@ -215,7 +215,7 @@ static struct sk_buff *br_mrp_alloc_test_skb(struct br_mrp *mrp,
+ 		struct br_mrp_oui_hdr *oui = NULL;
+ 		u8 length;
  
- static const u16 NCT6106_REG_TARGET[] = { 0x111, 0x121, 0x131 };
+-		length = sizeof(*sub_opt) + sizeof(*sub_tlv) + sizeof(oui) +
++		length = sizeof(*sub_opt) + sizeof(*sub_tlv) + sizeof(*oui) +
+ 			MRP_OPT_PADDING;
+ 		br_mrp_skb_tlv(skb, BR_MRP_TLV_HEADER_OPTION, length);
  
--static const u16 NCT6106_REG_WEIGHT_TEMP_SEL[] = { 0x168, 0x178, 0x188 };
--static const u16 NCT6106_REG_WEIGHT_TEMP_STEP[] = { 0x169, 0x179, 0x189 };
--static const u16 NCT6106_REG_WEIGHT_TEMP_STEP_TOL[] = { 0x16a, 0x17a, 0x18a };
--static const u16 NCT6106_REG_WEIGHT_DUTY_STEP[] = { 0x16b, 0x17b, 0x18b };
--static const u16 NCT6106_REG_WEIGHT_TEMP_BASE[] = { 0x16c, 0x17c, 0x18c };
--static const u16 NCT6106_REG_WEIGHT_DUTY_BASE[] = { 0x16d, 0x17d, 0x18d };
-+static const u16 NCT6106_REG_WEIGHT_TEMP_SEL[] = { 0x168, 0x178, 0x188, 0, 0 };
-+static const u16 NCT6106_REG_WEIGHT_TEMP_STEP[] = { 0x169, 0x179, 0x189, 0, 0 };
-+static const u16 NCT6106_REG_WEIGHT_TEMP_STEP_TOL[] = { 0x16a, 0x17a, 0x18a, 0, 0 };
-+static const u16 NCT6106_REG_WEIGHT_DUTY_STEP[] = { 0x16b, 0x17b, 0x18b, 0, 0 };
-+static const u16 NCT6106_REG_WEIGHT_TEMP_BASE[] = { 0x16c, 0x17c, 0x18c, 0, 0 };
-+static const u16 NCT6106_REG_WEIGHT_DUTY_BASE[] = { 0x16d, 0x17d, 0x18d, 0, 0 };
- 
- static const u16 NCT6106_REG_AUTO_TEMP[] = { 0x160, 0x170, 0x180 };
- static const u16 NCT6106_REG_AUTO_PWM[] = { 0x164, 0x174, 0x184 };
 -- 
 2.53.0
 
