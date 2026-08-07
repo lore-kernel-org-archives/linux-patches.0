@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7839F4756BB;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C10474746A8;
 	Fri,  7 Aug 2026 15:04:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115065; cv=none; b=R4n1RM7Ap5m1N5jqVkip+eq/k0wnywkIwy6tfp8c4KFcwFlGu6IecJcc+KWrNTm4OZSk3KDMBG4UQYExpHfIEv4kZzlbYynjhHtgT2udMKDsWWJFybORiSfeC8UBuY9+eFH3sKkhdkU2AgpkhH8kec1ac4BPC7k6FUo0VHHdEx8=
+	t=1786115067; cv=none; b=q51G8AOLMjndiS156PkUGAcZBTFyyd0mtlRTtgNBG4zIyvMvSuHn2cTgU6nH7OfiJm4Q6Hi3Ozd8TpIt4dae4cFJd6KRLDc16Zxce2zRQYg4SK165X5df4wvhWEXhN9P4/CbrGTb/CiMG0Q9N9+i7sN4zUXYwOeQndZS0LCGqFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115065; c=relaxed/simple;
-	bh=G3PgBkegK14GkvDauW/uoxilVyPrVXhreZit1IpmSro=;
+	s=arc-20240116; t=1786115067; c=relaxed/simple;
+	bh=Wggo2VxFg8bIAUDM38150L+VaKAwdcgWfLxLmtkp20c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uTdtCygogUxmMifR0nj5GzekeCIdh5jWOKd5ybKH3tPrc4ThBXw5rUoUv6QJBWIeZNlb66Nq+kz7O6wTSHNChmRpETQeDMlPmPrRyfqE+sTUqXTLfidK/O4F2InpFaoOdxTIlK7WCKP4KZjI7ounCnw7sc7K71ogmigtuPkRZy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FoUEFQJC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qI2+k92t9UYdrsU3pssDoEg6WZjaHhi6UwFIMkTt51eyN630mkhr6fh5YDu0VHAI3PvWUweD1MOc7nRTFRwNEE0rWxhLAawqF4AM6sHfdqDMjF2O4gGk7jcL+BhfXrPPtiFH9hYvpJtHUyy6LP3ORk33NCXUCX0Y50yS5/wsyww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w+RiAC+m; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FoUEFQJC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1AA81F000E9;
-	Fri,  7 Aug 2026 15:04:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w+RiAC+m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 030321F00A3F;
+	Fri,  7 Aug 2026 15:04:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115059;
-	bh=2yyd283gN0ssyFozjAP6TltQzeMkybBTvH25YghcAoU=;
+	s=korg; t=1786115056;
+	bh=DoMiCM30oz4W3rb5HJbkTpECR7J75wLq14ekd4oGWGM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FoUEFQJCdalw7WbQERg/qTBCHeGmO74yO9XMnJ2TMFpp2IgYwlMtP2BszqMxY13vi
-	 p7Tyjdj3fAw71s0mPknXyuCCNNS+efaBL+WXDqxkdRK4yjPowZTV8i21VKZy9/mwNY
-	 E2z9m/iXLKnluO7MTMxh1oDvdaxdcZYDCJA94aPQ=
+	b=w+RiAC+mJR5F0do4yf336/sPa/Nw267lHZB2tc23DMx17mlL0sAEkOBLMpKHLkRZh
+	 412m1VrcUmXTkbhnwA/aJRcjwl+w7Cgi+mCP7a7ulU2x6zDw0kwxV7Ezy7AwsLhwym
+	 0COs0LLjlGQ5Cbc92FhUhnuvVN36CiXsWCDVKse0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -34,9 +34,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	linux-fsdevel@vger.kernel.org,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 099/396] netfs: handle single writeback rolling buffer allocation failure
-Date: Fri,  7 Aug 2026 16:34:19 +0200
-Message-ID: <20260807143426.427241025@linuxfoundation.org>
+Subject: [PATCH 6.18 098/396] netfs: clear PG_private_2 on copy-to-cache append failure
+Date: Fri,  7 Aug 2026 16:34:18 +0200
+Message-ID: <20260807143426.400196208@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -57,53 +57,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Yichong Chen <chenyichong@uniontech.com>
 
-[ Upstream commit 37a1c535c80c67d98668d190c7432f9ebda43310 ]
+[ Upstream commit a81fc9266e1c5fef9ccf675a9b44b2f4ab464923 ]
 
-netfs_write_folio_single() takes an extra folio reference before
-appending the folio to the rolling buffer.
+netfs_pgpriv2_copy_to_cache() marks the folio with PG_private_2 before
+netfs_pgpriv2_copy_folio() appends it to the copy-to-cache rolling
+buffer.
 
-rolling_buffer_append() can fail if it cannot allocate another
-folio_queue. Check the return value and drop the extra folio reference
-before returning the error.
+If the append fails, the folio is not queued for cache writeback, so
+the PG_private_2 state and its reference must be released immediately.
 
-Fixes: 49866ce7ea8d ("netfs: Add support for caching single monolithic objects such as AFS dirs")
+Fixes: e2d46f2ec332 ("netfs: Change the read result collector to only use one work item")
 Signed-off-by: Yichong Chen <chenyichong@uniontech.com>
 Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://patch.msgid.link/20260727130716.1099906-3-dhowells@redhat.com
+Link: https://patch.msgid.link/20260727130716.1099906-2-dhowells@redhat.com
 cc: Paulo Alcantara <pc@manguebit.org>
 cc: netfs@lists.linux.dev
 cc: linux-fsdevel@vger.kernel.org
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/netfs/write_issue.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/netfs/read_pgpriv2.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/netfs/write_issue.c b/fs/netfs/write_issue.c
-index 76614339554ea..5f216907b1e50 100644
---- a/fs/netfs/write_issue.c
-+++ b/fs/netfs/write_issue.c
-@@ -730,6 +730,7 @@ static int netfs_write_folio_single(struct netfs_io_request *wreq,
- 	size_t iter_off = 0;
- 	size_t fsize = folio_size(folio), flen;
- 	loff_t fpos = folio_pos(folio);
-+	ssize_t ret;
- 	bool to_eof = false;
- 	bool no_debug = false;
- 
-@@ -758,7 +759,11 @@ static int netfs_write_folio_single(struct netfs_io_request *wreq,
+diff --git a/fs/netfs/read_pgpriv2.c b/fs/netfs/read_pgpriv2.c
+index a1489aa29f782..7eacc58abadb7 100644
+--- a/fs/netfs/read_pgpriv2.c
++++ b/fs/netfs/read_pgpriv2.c
+@@ -54,6 +54,7 @@ static void netfs_pgpriv2_copy_folio(struct netfs_io_request *creq, struct folio
  
  	/* Attach the folio to the rolling buffer. */
- 	folio_get(folio);
--	rolling_buffer_append(&wreq->buffer, folio, NETFS_ROLLBUF_PUT_MARK);
-+	ret = rolling_buffer_append(&wreq->buffer, folio, NETFS_ROLLBUF_PUT_MARK);
-+	if (ret < 0) {
-+		folio_put(folio);
-+		return ret;
-+	}
- 
- 	/* Move the submission point forward to allow for write-streaming data
- 	 * not starting at the front of the page.  We don't do write-streaming
+ 	if (rolling_buffer_append(&creq->buffer, folio, 0) < 0) {
++		folio_end_private_2(folio);
+ 		clear_bit(NETFS_RREQ_FOLIO_COPY_TO_CACHE, &creq->flags);
+ 		return;
+ 	}
 -- 
 2.53.0
 
