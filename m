@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5A813557F3;
-	Fri,  7 Aug 2026 15:19:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B43535CB60;
+	Fri,  7 Aug 2026 15:19:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115964; cv=none; b=jr0QjXsLQYwyRq9Pib7a4T+TBWa3tbzORscXLZMN+TRfP5rXdT4yedgzc0r80YAwd0imH77g+V4uotKkhuNrv6Oao/w2sfgM44Wf5/9xeG4aaik8JTH5wifWDdDQsi5fggjZPtR85KgE4+z6E1lQv+JXT9up6yW9RCm8mbENjAM=
+	t=1786115967; cv=none; b=LcYk04PogP6XDvNXGok+Vf4deH+08PwT8vdJ3HFSJ6knq1AQhH+IMwNUV/v3OIiOaRjXW4cFcwiu8ZFF0VWnUi6Ne0Z4FMKOJfVxBgqcMpZhPyQGJaPfmSXnDILARF41I4IktbZFN3m+qQEc1siuZsDlDiwpQw/CNtFHEMlnZIA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115964; c=relaxed/simple;
-	bh=osJl7iQpJhS94ZPYVZYDzFbGTXFfQGbnT2fn4U2nT24=;
+	s=arc-20240116; t=1786115967; c=relaxed/simple;
+	bh=wY3uqxZb9+hYjlSVY3hu9AANkqnFIc9uZPIl0i2jZoA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lWJko/a1PqPJm2020+2FWiXxAuY5t27vwBv6kBdcw1jeV41f/7bbGqXRmBtTrMFyoRm5UYFX1kkYRJHR69iW4Vs9dU5U84NDtMHlh0oBHWvQa0T4y14QnGIYxOOKz+k2SDm9hYHntnLNT6dCCLgTVrtpFdAYZUIzTvE/B+TQF9k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pPHj0Eg/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=I7lTUkancb7rgE/HrUGcRnre/Z/4zIQbTTKbfd10eAfTvYPW4zbnCq686t1gTX2g6VIt5F1kI5/NFjHKf0MOKI9H8sjDD3sJ4SS+Fkqnm5R3reeFoWkCIXV3yQnuH1QCe/KeugysPxe8Mw4tcY9Kx23epiYdZZ78SpxY593SSDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F/i4QmHY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pPHj0Eg/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B342B1F00A3E;
-	Fri,  7 Aug 2026 15:19:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F/i4QmHY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 877F51F00A3A;
+	Fri,  7 Aug 2026 15:19:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115963;
-	bh=wu0pPJToV5Dj11g5TFop0paJPki2cMMyq8rGhfXinzI=;
+	s=korg; t=1786115966;
+	bh=FrNFU1h7TURcC3PwAF8X8iE3ZLXmsTpuWFymzPWkP9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pPHj0Eg/fsfitE1gFuoE6RRHdmqyp+NFcs9Jqg5TrjSy8Ox4DGDU+uCkxJfGZwiYx
-	 AlgbFyHYcM10KEjBJXMlMCCj+SuQ4J/rCcxre+BBgqK0QO4QFs+2Stpy9t3r5Wsevk
-	 nj0dxGG9MgAi84HoDGQJ5K7waWBR+mR0DDobWq4Q=
+	b=F/i4QmHYjbjDaMmrmGWKt7ga8m1dtbnFRA/sH69AK+xztjX7Iosim+0zWgg42BCPk
+	 82IkMsVHCtrUziiPY1dAprPvOt+Q3ok06bx94YX8JEcearujF+yKJOcfbShBijd0gF
+	 IC99EiSS26s5wrMyTad/Dx2esptrQCrVcNQw/qXs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
+	Pauli Virtanen <pav@iki.fi>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 062/261] hwmon: (pmbus) Fix return value from pmbus_update_byte_data()
-Date: Fri,  7 Aug 2026 16:36:59 +0200
-Message-ID: <20260807143416.721792570@linuxfoundation.org>
+Subject: [PATCH 6.6 063/261] Bluetooth: ISO: clear iso_data always when detaching conn from hcon
+Date: Fri,  7 Aug 2026 16:37:00 +0200
+Message-ID: <20260807143416.743472609@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143415.358597922@linuxfoundation.org>
 References: <20260807143415.358597922@linuxfoundation.org>
@@ -50,37 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit a19038a200f18d9e74ac30081797917d0886e16b ]
+[ Upstream commit d57e506f6a1e3929611340fae87c1e4823f4d85c ]
 
-pmbus_update_byte_data() is supposed to return a negative error code or 0.
-However, if no change is made to the register, it actually returns the
-register value. This can result in problems if the calling code explicitly
-expects to see an error code or 0.
+When setting conn->hcon = NULL, also conn->hcon->iso_data = NULL is
+necessary, otherwise later iso_conn_free() will UAF.
 
-Fix it to return 0 on success or the error code as expected.
+Fix clearing of iso_data in iso_sock_disconn()
 
-Fixes: 11c119986f270 ("hwmon: (pmbus) add helpers for byte write and read modify write")
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes KASAN: slab-use-after-free in iso_conn_hold_unless_zero on
+iso_sock_release() followed by hci_abort_conn_sync().
+
+Fixes: fbdc4bc47268 ("Bluetooth: ISO: Use defer setup to separate PA sync and BIG sync")
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/pmbus/pmbus_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/iso.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/hwmon/pmbus/pmbus_core.c b/drivers/hwmon/pmbus/pmbus_core.c
-index eafeabfd93d77..2cf5f1fe8886c 100644
---- a/drivers/hwmon/pmbus/pmbus_core.c
-+++ b/drivers/hwmon/pmbus/pmbus_core.c
-@@ -449,7 +449,7 @@ int pmbus_update_byte_data(struct i2c_client *client, int page, u8 reg,
- 	if (tmp != rv)
- 		rv = _pmbus_write_byte_data(client, page, reg, tmp);
- 
--	return rv;
-+	return rv < 0 ? rv : 0;
+diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
+index 189b719669924..51d0065f058c1 100644
+--- a/net/bluetooth/iso.c
++++ b/net/bluetooth/iso.c
+@@ -767,6 +767,7 @@ static void iso_sock_disconn(struct sock *sk)
+ 	iso_sock_set_timer(sk, ISO_DISCONN_TIMEOUT);
+ 	iso_conn_lock(iso_pi(sk)->conn);
+ 	hci_conn_drop(iso_pi(sk)->conn->hcon);
++	iso_pi(sk)->conn->hcon->iso_data = NULL;
+ 	iso_pi(sk)->conn->hcon = NULL;
+ 	iso_conn_unlock(iso_pi(sk)->conn);
  }
- EXPORT_SYMBOL_NS_GPL(pmbus_update_byte_data, PMBUS);
- 
 -- 
 2.53.0
 
