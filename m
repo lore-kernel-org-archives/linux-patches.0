@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D08283502A3;
-	Fri,  7 Aug 2026 15:49:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4A9A47A876;
+	Fri,  7 Aug 2026 15:49:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786117752; cv=none; b=mw4J9vodqy35S7vrWPpaah5jYKMaT2c/3BRioT6tkh2YhVBGk/YVtOiMjRyIQI/ff4AbknPYWOcyu+aExQfI6q8Zbvn5cjQztoLhd21bcjrSDEV9a8/E+RlIW3O1xOYEYFULp6zqJUd8dNL4Wi7dpl85l64QG+8AWmixH5pGAHs=
+	t=1786117755; cv=none; b=tIqtydqjCsGhciWP7jqJjL+U19Zlm7ooTQKz+XD9oBY4SET6xHRCOEpM5sNP3hFQCRFOHwMKTEMh9idZYyCbZeZ5vBRsC7gD5jSIluO0smyAdERhBAgng+fCZn6AuH9+MaVB3PA1nb+o6jkXsLdulBHTSUDDSXQ3k2rfxgt2OOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786117752; c=relaxed/simple;
-	bh=lL9HdtqOque2eMGjrQnjqTdP/K65hoi8/YE3EZZfv3k=;
+	s=arc-20240116; t=1786117755; c=relaxed/simple;
+	bh=TVzxkri/cGYhCEBzD1QcOePo3kptqbZkgRrZf2wocSo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EQ3T2FDP2dzMQ5Rh97Z04umdTJsOjKms30n6qaVtixVOWE0P9CLk79rqhzdCNwi6GumWjgqzjQwFGpy+0VeWZt2EPq0gheeW8KoKMhE8Cm6xraH3kHl8m7kX7mmDaAmx0eDnwf3b/+16RXog+MaGxGLQZdYib1fEP22rmtChXsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tfduy4Nc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=J8oW0urG89OZOl3JH6jrzeB8fHeUCgosvWoz11SljNiwNYIHBl4S+vExV2fBNGeZ4QB6wRte69Rm4DVlW04hxMOShwQRJ6tEdMrkymF02tQ26hSIgbu/qEZm/vnyGcCrmWICZZuVl3cnw6sWmSJlWIHrjcqeeKJ6k3yGHYtfvfQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rm1S5jJM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tfduy4Nc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3934E1F000E9;
-	Fri,  7 Aug 2026 15:49:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rm1S5jJM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D5611F000E9;
+	Fri,  7 Aug 2026 15:49:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786117751;
-	bh=q21gvSo9s+YOQTZNJO2BebvKyzDgKqnLX42bzk123QQ=;
+	s=korg; t=1786117754;
+	bh=0k4FYkIwmfxqYBOjTHnwTIok/bJ68rgZTgc39kCRxH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Tfduy4NcTodmD8zWG+ZeEJHYLSp+WI+VeD6SisA4+BLYad+g6QAitlvAl0Xl4iHkZ
-	 T9qzv+JXJ1ahZYQ8QRQCSN3kbzrJLuj1n4skM9lnqJ4qlXY4y82w7Sn/VPDMFyXwbt
-	 WYfE3Pt8RU1f4vOO0V0eoirZWUmK+yUmA9z2WANY=
+	b=Rm1S5jJMscIdr/GwXSFOh+XojsusR99bitOooOjw9WOLLFvGFaONbjiTg0EVkaxmR
+	 5ws6dZmOX6eAdMySv+KU8u84TynlBByZ5lPWFujIvNO24gc8kuDB4JY1vIFaI92Raz
+	 aGcGX2BQDHSRISyIhd2qMy6aeyBafUOBfoU7+OHQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gang Ba <Gang.Ba@amd.com>,
-	Kent Russell <kent.russell@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.1 402/438] drm/amdkfd: Fix missing authorization check in KFD_IOC_DBG_TRAP_DISABLE
-Date: Fri,  7 Aug 2026 16:39:58 +0200
-Message-ID: <20260807143436.532966305@linuxfoundation.org>
+	Michal Wajdeczko <michal.wajdeczko@intel.com>,
+	Gustavo Sousa <gustavo.sousa@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.1 429/438] drm/xe: Move xe->info.force_execlist initialization
+Date: Fri,  7 Aug 2026 16:40:25 +0200
+Message-ID: <20260807143437.112723696@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -51,43 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gang Ba <Gang.Ba@amd.com>
+From: Michal Wajdeczko <michal.wajdeczko@intel.com>
 
-commit 99b2fe4f19e3be0a8d0a0b5ea98d855970889653 upstream.
+[ Upstream commit f1d581bb50ed54b71a8121d3d46fe2627fddd147 ]
 
-Prevent unauthorized termination of active GPU debug sessions.
-Previously, users with /dev/kfd access could terminate another process's
-debug session without proper ownership or ptrace authorization.
+The xe_info_init_early() is a place where we initialize those of
+the xe->info fields that do not require any additional hardware
+probes. Move the initialization of the force_execlist flag there.
 
-Signed-off-by: Gang Ba <Gang.Ba@amd.com>
-Reviewed-by: Kent Russell <kent.russell@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 4db4c5ffd5585b72622ecf6ffedf2da258ee23f5)
-Cc: stable@vger.kernel.org
+Signed-off-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
+Reviewed-by: Gustavo Sousa <gustavo.sousa@intel.com>
+Link: https://patch.msgid.link/20260526195452.20545-4-michal.wajdeczko@intel.com
+Stable-dep-of: ba7fd1634228 ("drm/xe: Set TTM device beneficial_order to 9 (2M)")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_chardev.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/xe/xe_device.c |    1 -
+ drivers/gpu/drm/xe/xe_pci.c    |    1 +
+ 2 files changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-@@ -3038,10 +3038,14 @@ static int kfd_ioctl_set_debug_trap(stru
- 		goto out;
- 	}
+--- a/drivers/gpu/drm/xe/xe_device.c
++++ b/drivers/gpu/drm/xe/xe_device.c
+@@ -475,7 +475,6 @@ struct xe_device *xe_device_create(struc
  
--	/* Check if target is still PTRACED. */
-+	/*
-+	 * Verify debugger has permission to debug target process.
-+	 * For cross-process debugging, require active ptrace relationship.
-+	 * This applies to ALL operations to prevent unauthorized interference.
-+	 */
- 	rcu_read_lock();
--	if (target != p && args->op != KFD_IOC_DBG_TRAP_DISABLE
--				&& ptrace_parent(target->lead_thread) != current) {
-+	if (target != p && ptrace_parent(target->lead_thread) != current
-+			&& target->debugger_process != p) {
- 		pr_err("PID %i is not PTRACED and cannot be debugged\n", args->pid);
- 		r = -EPERM;
- 	}
+ 	xe->info.devid = pdev->device;
+ 	xe->info.revid = pdev->revision;
+-	xe->info.force_execlist = xe_modparam.force_execlist;
+ 	xe->atomic_svm_timeslice_ms = 5;
+ 	xe->min_run_period_lr_ms = 5;
+ 
+--- a/drivers/gpu/drm/xe/xe_pci.c
++++ b/drivers/gpu/drm/xe/xe_pci.c
+@@ -774,6 +774,7 @@ static int xe_info_init_early(struct xe_
+ 	xe->info.probe_display = IS_ENABLED(CONFIG_DRM_XE_DISPLAY) &&
+ 				 xe_modparam.probe_display &&
+ 				 desc->has_display;
++	xe->info.force_execlist = xe_modparam.force_execlist;
+ 
+ 	xe_assert(xe, desc->max_gt_per_tile > 0);
+ 	xe_assert(xe, desc->max_gt_per_tile <= XE_MAX_GT_PER_TILE);
 
 
