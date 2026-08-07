@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 875D638C2C0;
-	Fri,  7 Aug 2026 15:29:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70A4A346AFB;
+	Fri,  7 Aug 2026 15:29:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116572; cv=none; b=mqg1xmuwifIRBhZyipU0alWlHsPl6sTxDMIfw+QHG56jB+NRQfIe7zyI2YaFdInvI88BxRjBPzPSqshkze1S9hr1anQEbvNoKrRxKfwMwVVio4yHHpY2IsGmS8Ec6zwufR5IZwtI4BNIL1m28shzbtA8ogkzkSPDk36ay0GjlQE=
+	t=1786116575; cv=none; b=GfqDY1UXJpQ0nQWKdY/mW2YBWNxaFanRHmDPcDdiqxQ6QsFbPdOJpzmM5+AJS57KzOKDD1lulKgBNWkZdxyxlxN8yrnt9aMFg8jT/g+tii/gm9ANyzBBQYVOuh6NH/XTsi3Zdpjg7y2m0LrNNLzxbjzGTXw5n5xlLMUfyEA45xs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116572; c=relaxed/simple;
-	bh=Bt735QhSSMhY9IkY4vJCoil4ghhVOQFSbgBJ6wM7d+E=;
+	s=arc-20240116; t=1786116575; c=relaxed/simple;
+	bh=do81iSuLLjAJa7y77Uj6wntC31eSJRfw56ySXqTy4PA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NDRMJl/R4KKXVPHP4mVJVkuGfYhRjo1zcvkUlk/UMgWbZ/nadTBQjhWXJFwCIMG4ScKG9ol7XctMuuPfhLLm+OXhFagH+ssu2BG7/zbNbQYxj5X9f1M+0FmWyW+RBzjodPqeKT7Ih3vvdE8OZZ4K759qattPo84XKYf48A6qZsg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yrMMqSXy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=g5TZO1qknSiyEb0gmabHC0K7bgpUT6BRiRMM1YcYxeszS7PYNCd2lNJ5PCWiNzOU8M9VQ2fiTWcI6ZPOiIB0LC0/avIb5NLmc9SvoKzYIqUBpvQN809QCvpUE7GH44mWBZTzNMqTQHWMA/y6Igw0mU/e6IvYiOmwZYej+vIxPug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l7CwUbeH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yrMMqSXy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E43981F000E9;
-	Fri,  7 Aug 2026 15:29:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l7CwUbeH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C75E31F000E9;
+	Fri,  7 Aug 2026 15:29:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116571;
-	bh=aMvr1ibEor63eRln9zBFt+xGAfcR08jFTRJewjhGYRk=;
+	s=korg; t=1786116574;
+	bh=XkUTmDFhqZec1/3KmaC/Mr4WgVPN0WtGmPR5IAP8xtw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yrMMqSXyEQiSsOmCH0aHA3xvHLyFsyfRTbQ5s+x2+ly7jU0Wd8xZ1eFMB/RHbkTjn
-	 hg4Y/JvDpFmCgqBpYrLU2GylSUXt4/y6mwE6WG8Rv60nCCe2jr1wH58nVK9L7NODs5
-	 zRIAtHbcVU33LC1ko2X+c+pEvk+mKf9UB/a7cUKQ=
+	b=l7CwUbeHuOcvELPAdRcrk6t2OLWClfqzhpGDsSIvjh9I4A3a2/p/HT5nO37APPWYk
+	 CU+hG42/ooyE4tz2kLVh0nffbptfXB2zm01ReYsaJtU5qr5NpajVf/KjDUcc72kcFx
+	 OkGb2SE1qlqRgZUtzxfQTvmQ1xr+wmyBVrs04ktE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haofeng Li <lihaofeng@kylinos.cn>,
+	Kuan-Ying Lee <kuan-ying.lee@canonical.com>,
+	Jiri Olsa <jolsa@kernel.org>,
 	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 016/438] selftests/lkdtm: rename STACKLEAK_ERASING to KSTACK_ERASE
-Date: Fri,  7 Aug 2026 16:33:32 +0200
-Message-ID: <20260807143428.355021696@linuxfoundation.org>
+Subject: [PATCH 7.1 017/438] selftests/seccomp: Fix pointer type mismatch build error
+Date: Fri,  7 Aug 2026 16:33:33 +0200
+Message-ID: <20260807143428.377089187@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -45,46 +46,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Haofeng Li <lihaofeng@kylinos.cn>
+From: Kuan-Ying Lee <kuan-ying.lee@canonical.com>
 
-[ Upstream commit b3a7aa9c0020ae549a0d4964867ff66d2bd61709 ]
+[ Upstream commit 3421b9b056a6576d0ebac1030eafb48ad0544092 ]
 
-Commit 57fbad15c2ee ("stackleak: Rename STACKLEAK to KSTACK_ERASE")
-renamed the LKDTM crash type and selftest configuration but missed the
-entry in tests.txt.
+We hit the following build error while running the seccomp selftests in
+our testing.
 
-As a result, the selftest generates STACKLEAK_ERASING.sh, which run.sh
-skips because the LKDTM DIRECT trigger only exposes KSTACK_ERASE. Rename
-the test entry so the generated runner uses the registered crash type.
+CC seccomp_bpf
+seccomp_bpf.c: In function ‘UPROBE_setup’:
+seccomp_bpf.c:5175:74: error: pointer type mismatch in conditional expression [-Wincompatible-pointer-types]
+5175 | offset = get_uprobe_offset(variant->uretprobe ? probed_uretprobe : probed_uprobe);
+| ^
+seccomp_bpf.c:5175:57: note: first expression has type ‘int (*)(void)’
+5175 | offset = get_uprobe_offset(variant->uretprobe ? probed_uretprobe : probed_uprobe);
+| ^~~~~~~~~~~~~~~~
+seccomp_bpf.c:5175:76: note: second expression has type ‘int (__attribute__((nocf_check)) *)(void)’
+5175 | offset = get_uprobe_offset(variant->uretprobe ? probed_uretprobe : probed_uprobe);
+| ^~~~~~~~~~~~~
 
-Fixes: 57fbad15c2ee ("stackleak: Rename STACKLEAK to KSTACK_ERASE")
-Signed-off-by: Haofeng Li <lihaofeng@kylinos.cn>
-Link: https://patch.msgid.link/tencent_CD80B5F746B6AABD68AF3F1097AD02C96F05@qq.com
+get_uprobe_offset() takes a 'const void *' argument, so cast both
+operands to 'void *'.
+
+Fixes: 9ffc7a635c35 ("selftests/seccomp: validate uprobe syscall passes through seccomp")
+Signed-off-by: Kuan-Ying Lee <kuan-ying.lee@canonical.com>
+Acked-by: Jiri Olsa <jolsa@kernel.org>
+Link: https://patch.msgid.link/20260715053559.28535-1-kuan-ying.lee@canonical.com
 Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/lkdtm/tests.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/seccomp/seccomp_bpf.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/lkdtm/tests.txt b/tools/testing/selftests/lkdtm/tests.txt
-index 3245032db34d3..444040ca51689 100644
---- a/tools/testing/selftests/lkdtm/tests.txt
-+++ b/tools/testing/selftests/lkdtm/tests.txt
-@@ -78,7 +78,7 @@ USERCOPY_STACK_FRAME_TO
- USERCOPY_STACK_FRAME_FROM
- USERCOPY_STACK_BEYOND
- USERCOPY_KERNEL
--STACKLEAK_ERASING OK: the rest of the thread stack is properly erased
-+KSTACK_ERASE OK: the rest of the thread stack is properly erased
- CFI_FORWARD_PROTO
- CFI_BACKWARD call trace:|ok: control flow unchanged
- FORTIFY_STRSCPY detected buffer overflow
+diff --git a/tools/testing/selftests/seccomp/seccomp_bpf.c b/tools/testing/selftests/seccomp/seccomp_bpf.c
+index 358b6c65e120e..0622bc2acad40 100644
+--- a/tools/testing/selftests/seccomp/seccomp_bpf.c
++++ b/tools/testing/selftests/seccomp/seccomp_bpf.c
+@@ -5178,7 +5178,8 @@ FIXTURE_SETUP(UPROBE)
+ 		ASSERT_GE(bit, 0);
+ 	}
+ 
+-	offset = get_uprobe_offset(variant->uretprobe ? probed_uretprobe : probed_uprobe);
++	offset = get_uprobe_offset(variant->uretprobe ? (void *)probed_uretprobe
++						      : (void *)probed_uprobe);
+ 	ASSERT_GE(offset, 0);
+ 
+ 	if (variant->uretprobe)
 -- 
 2.53.0
 
