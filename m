@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 113242F0C74;
-	Fri,  7 Aug 2026 15:18:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB47127466A;
+	Fri,  7 Aug 2026 15:18:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115916; cv=none; b=pHXccVm0yaTFdyGSgJ0yyim2KH6VNysozBGhC3uCXfq8XJ3tpgEdctAl2rm6cxpWcatB7EFDXJF/dZyUoDHYjCFTWaZ4JA+1D0SBO4eqSoFZzX2LSpcn2ZzP4XQ2u/ldusjbArI7At2R7U76JD780b21y2GqteB/VkkDY0GdtNE=
+	t=1786115919; cv=none; b=DOOXQgX+aTDv0IzreCr1II7h2jtUPlWCM/6mWdBkWm59SJkab9L0SlSxG9B5WaEhras0cBmgz4GYvrWsN+SbWYymzNCcsZhXM2UlngW0A4VN/dbN7p1Vm2ZSRNV+1PoE59+0pku1FBdMUPjqSuH7GI4Yar+bmB06ixNClbFymg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115916; c=relaxed/simple;
-	bh=y1xq8W7CyIIbRvhfdSBgshW5RCdpYYC1Pj7FT1F8pcY=;
+	s=arc-20240116; t=1786115919; c=relaxed/simple;
+	bh=FOk/WTXPq0T1YnOkhxxAD9DRd9pdqy8NKXPpRtpbJn4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FN713tj6XfxVlyslpvy7NDeaxDTV0NnVsMDv+n+zZ36AOTcozPN9LbpJe3knhTmYK9BOQoR3HBXWRtnDM7U+D0vh818zibJ7cwwZhkunwM1qn7gX5P852P4p/y8/tIlONdAHl+o8BDp8ykWOHXTTUCeMf0MCnodqqVBwmsOM/+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ijuDSvPP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Dqc3IURAg9sYQY/KxFDP+tcY50zUvu/QwAVZBuZyoQ1iS+3QvM74hzpmliwtlTcLA8uWUPGwUISTcYb/1tc5+QCRwNmwI4mXue6Wa8KtRCA4sO7oWJjloVfqRAW52ryxWMqWXT5Ft9T2lbRl3XfuPShYUlpw4wAM8X7pBLZ51aU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NETtLBRf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ijuDSvPP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C5E71F000E9;
-	Fri,  7 Aug 2026 15:18:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NETtLBRf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F8551F000E9;
+	Fri,  7 Aug 2026 15:18:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115915;
-	bh=1R93frG9W9IpHCbVtWIu9P/yAdKwk2WW6wOj4lKVdD8=;
+	s=korg; t=1786115917;
+	bh=ihBvq+5ha0fgQO3U+oorj2I3Uc3/WiKaknC3iXDYPpg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ijuDSvPPESz7Urxr2ivagpAGfopxX8Ltvr3IC4QCZsswVPN0yx/kvauXtfN+YDKtN
-	 slh2LxxyxlD476XKHJ3aw2APc/FYj2lhFdNGjXs4gqOZoN/xfG7xmZqUeGpKT3LxAK
-	 NGfQ5nDT6xzBiaHLM47z8tMhE7zAaLXsTKfZFWWU=
+	b=NETtLBRfOc3vQWt0SUHoHRpWk2jOk+b7NG4anhPpD31UEVsz5d6xi7XawYNJYi7wI
+	 irhgvdIt6Pzk5FGhAAxgvraMkWlG6QqrSyhSVuwl9In7d7j9MZPQDnOBUIurzy7SfX
+	 X8hhEhosb7OTFZwrDKEKmdzYM22jtQW07hHCI3LE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	=?UTF-8?q?Bj=C3=B6rn=20Gerhart?= <gerhart@posteo.de>,
-	Florian Bezdeka <florian.bezdeka@siemens.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	Michal Simek <michal.simek@amd.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 047/261] hwmon: (nct6775-core) Prevent access to unsupported weight registers
-Date: Fri,  7 Aug 2026 16:36:44 +0200
-Message-ID: <20260807143416.400892287@linuxfoundation.org>
+Subject: [PATCH 6.6 021/261] phy: zynqmp: fix clock error handling in xpsgtr_phy_init()
+Date: Fri,  7 Aug 2026 16:36:18 +0200
+Message-ID: <20260807143415.826261706@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143415.358597922@linuxfoundation.org>
 References: <20260807143415.358597922@linuxfoundation.org>
@@ -47,76 +46,80 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
 
-[ Upstream commit d0b704e569ac3b8416d8e02270cdc9bf830ed395 ]
+[ Upstream commit e4779e2a16d600892aaf743438f6ce8cc4eb3c4c ]
 
-Sashiko reports:
+Propagate clk_prepare_enable() failures to the caller instead of
+returning success, and disable the reference clock on initialization
+error paths to avoid leaking clock references when phy_exit() is not
+called.
 
-During initialization of the nct6116 chip, the driver sets data->pwm_num
-to 5. However, it assigns several NCT6106 register arrays (such as
-NCT6106_REG_WEIGHT_DUTY_STEP, NCT6106_REG_WEIGHT_TEMP_SEL, and
-NCT6106_REG_WEIGHT_TEMP_*) to data->REG_PWM and data->REG_WEIGHT_TEMP.
-These arrays only contain 3 elements.
-
-In nct6775_update_pwm(), the driver iterates up to data->pwm_num. If
-data->has_pwm has bits 3 or 4 set (which is structurally possible for
-nct6116), the loop attempts to read elements at index 3 and 4 from these
-3-element arrays. This results in a global out-of-bounds read, which can
-be caught by KASAN.
-
-Furthermore, the driver uses these garbage out-of-bounds values as
-hardware register addresses for subsequent read and write operations. This
-leads to invalid hardware register access, potentially causing hardware
-misconfiguration or system crashes.
-
-The underlying problem is that the chip does support up to five fan
-control channels, but only the first three support weight control.
-Fix the problem by extending the affected weight register arrays with
-zeroed fields. The driver uses zeroed register addresses to determine
-if a register is supported or not, and skips accesses for unsupported
-registers.
-
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Fixes: 29c7cb485b32 ("hwmon: (nct6775) Integrate new model nct6116")
-Cc: Björn Gerhart <gerhart@posteo.de>
-Cc: Florian Bezdeka <florian.bezdeka@siemens.com>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 25d700833513 ("phy: xilinx: phy-zynqmp: dynamic clock support for power-save")
+Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Reviewed-by: Michal Simek <michal.simek@amd.com>
+Link: https://patch.msgid.link/20260720153832.1130006-2-radhey.shyam.pandey@amd.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/nct6775-core.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/phy/xilinx/phy-zynqmp.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/hwmon/nct6775-core.c b/drivers/hwmon/nct6775-core.c
-index d47ba7cd97727..6d28cf101f5f1 100644
---- a/drivers/hwmon/nct6775-core.c
-+++ b/drivers/hwmon/nct6775-core.c
-@@ -791,12 +791,12 @@ static const u16 NCT6106_REG_TOLERANCE_H[] = { 0x112, 0x122, 0x132 };
+diff --git a/drivers/phy/xilinx/phy-zynqmp.c b/drivers/phy/xilinx/phy-zynqmp.c
+index 559a9c26a0040..bf2a06a7f606f 100644
+--- a/drivers/phy/xilinx/phy-zynqmp.c
++++ b/drivers/phy/xilinx/phy-zynqmp.c
+@@ -643,12 +643,13 @@ static int xpsgtr_phy_init(struct phy *phy)
+ {
+ 	struct xpsgtr_phy *gtr_phy = phy_get_drvdata(phy);
+ 	struct xpsgtr_dev *gtr_dev = gtr_phy->dev;
+-	int ret = 0;
++	int ret;
  
- static const u16 NCT6106_REG_TARGET[] = { 0x111, 0x121, 0x131 };
+ 	mutex_lock(&gtr_dev->gtr_mutex);
  
--static const u16 NCT6106_REG_WEIGHT_TEMP_SEL[] = { 0x168, 0x178, 0x188 };
--static const u16 NCT6106_REG_WEIGHT_TEMP_STEP[] = { 0x169, 0x179, 0x189 };
--static const u16 NCT6106_REG_WEIGHT_TEMP_STEP_TOL[] = { 0x16a, 0x17a, 0x18a };
--static const u16 NCT6106_REG_WEIGHT_DUTY_STEP[] = { 0x16b, 0x17b, 0x18b };
--static const u16 NCT6106_REG_WEIGHT_TEMP_BASE[] = { 0x16c, 0x17c, 0x18c };
--static const u16 NCT6106_REG_WEIGHT_DUTY_BASE[] = { 0x16d, 0x17d, 0x18d };
-+static const u16 NCT6106_REG_WEIGHT_TEMP_SEL[] = { 0x168, 0x178, 0x188, 0, 0 };
-+static const u16 NCT6106_REG_WEIGHT_TEMP_STEP[] = { 0x169, 0x179, 0x189, 0, 0 };
-+static const u16 NCT6106_REG_WEIGHT_TEMP_STEP_TOL[] = { 0x16a, 0x17a, 0x18a, 0, 0 };
-+static const u16 NCT6106_REG_WEIGHT_DUTY_STEP[] = { 0x16b, 0x17b, 0x18b, 0, 0 };
-+static const u16 NCT6106_REG_WEIGHT_TEMP_BASE[] = { 0x16c, 0x17c, 0x18c, 0, 0 };
-+static const u16 NCT6106_REG_WEIGHT_DUTY_BASE[] = { 0x16d, 0x17d, 0x18d, 0, 0 };
+ 	/* Configure and enable the clock when peripheral phy_init call */
+-	if (clk_prepare_enable(gtr_dev->clk[gtr_phy->refclk]))
++	ret = clk_prepare_enable(gtr_dev->clk[gtr_phy->refclk]);
++	if (ret)
+ 		goto out;
  
- static const u16 NCT6106_REG_AUTO_TEMP[] = { 0x160, 0x170, 0x180 };
- static const u16 NCT6106_REG_AUTO_PWM[] = { 0x164, 0x174, 0x184 };
+ 	/* Skip initialization if not required. */
+@@ -658,7 +659,7 @@ static int xpsgtr_phy_init(struct phy *phy)
+ 	if (gtr_dev->tx_term_fix) {
+ 		ret = xpsgtr_phy_tx_term_fix(gtr_phy);
+ 		if (ret < 0)
+-			goto out;
++			goto out_disable_clk;
+ 
+ 		gtr_dev->tx_term_fix = false;
+ 	}
+@@ -672,7 +673,7 @@ static int xpsgtr_phy_init(struct phy *phy)
+ 	 */
+ 	ret = xpsgtr_configure_pll(gtr_phy);
+ 	if (ret)
+-		goto out;
++		goto out_disable_clk;
+ 
+ 	xpsgtr_lane_set_protocol(gtr_phy);
+ 
+@@ -690,6 +691,10 @@ static int xpsgtr_phy_init(struct phy *phy)
+ 		break;
+ 	}
+ 
++	goto out;
++
++out_disable_clk:
++	clk_disable_unprepare(gtr_dev->clk[gtr_phy->refclk]);
+ out:
+ 	mutex_unlock(&gtr_dev->gtr_mutex);
+ 	return ret;
 -- 
 2.53.0
 
