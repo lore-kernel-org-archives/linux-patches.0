@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBA7C41A576;
-	Fri,  7 Aug 2026 15:08:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98C66351C2F;
+	Fri,  7 Aug 2026 15:08:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115336; cv=none; b=aG7hS4aq25vDjxjJoBG3lJPQnh+9Xksqft77NOMiYD335dgBDMJppvu2fECXbT+tHWujanI9QHZIm0TwQblKcTfJKejh0gOJfbTLebtXKl4DLN4wpfWDw5q1RDQKrCWs3QYZ/I08VHSc5mDfE6KsE7KHonVUoftYGe+KQNSLzZ0=
+	t=1786115338; cv=none; b=HTjY8oOisOy4hY7nvUWyLNQ0LiQbk0nLKBmRrBMBY/j8ZXS0e4GvcH6DrnvqRfikCMQXTFjm63nXn8E7XCsa8/a10AUbbEGW7Nm5BJ+vdUmMP6mrbaAWZxZyg/UvBXQK3/Og/w+kkZcUHV+3R4RR0HtZif4gsGUA8sxfe5dfapw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115336; c=relaxed/simple;
-	bh=tlgN7u8aplxRi97ja+qFpM4wYlesfCM5mRyQ5Gm3GEk=;
+	s=arc-20240116; t=1786115338; c=relaxed/simple;
+	bh=ZhrBwaXHpM+Eec99dEMbLcMLubo6Q1G5Y5UqlC7vimw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZcIR5vv+Uq4+FxKr5KjDu6TOoaGfZRWA1AQ24u+BLDsKgvMJeekVyp7RwYFQgZ3GQU2WB9fbmDORmpweGCl12UehSGeGiA6j1TroKucHIe7cCmXeQYHJfQ0qqRzDCksVIBo3/MKJPa0VpGEa+yZu6I8Zftxqxo3LxYhoXt/Eg00=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=egIKeCjn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rxPPrMKA0qkWcIJa8RFWSiXwmfrM+18sDqfBnjL0bgHGgCiCrTl9xZZCG5TpnJdqd34Cwz1U53mVPPbXii9ms35jHRQQs2e+p5RmCHbbhpoArc0PPumTxfiZg5MiJkJqBNAE74GdyN8lHob59xFzcSdN7p4r+syNMBcOcC7GZ9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FW+Efz8e; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="egIKeCjn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2738B1F000E9;
-	Fri,  7 Aug 2026 15:08:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FW+Efz8e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7C421F000E9;
+	Fri,  7 Aug 2026 15:08:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115334;
-	bh=KfTrdiJLcapxFhpQocchCja3M8GIS/OF+rJ3ziWdslA=;
+	s=korg; t=1786115337;
+	bh=ESBjv5WMjdMQ2XZxy4sRemS50drhPrg9j/6B9lrEvZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=egIKeCjnONUW7oU/LNTt3NjtaInYUKjGxus9oOea1XU4hs21pfZ8/Pkfj410z21DN
-	 cii9CWtmb/BPiITjbSL7iRC1wp2UD2Uip0SHOKoOqOWL6v+82UsyWMo7jAF5PFV6Dh
-	 U9ue4i3gT+XsxqeRLHwU8tESwClB0L0tRauLF31A=
+	b=FW+Efz8eZbhKyso+Yyd/uv/EaUyg5+Zw1+CSM99Vlbjg1WZkVG0bVxyYCvytq3vU5
+	 cDQfRBQsbBuVBCHxE3NCP6tZ831ZpY4m9eWxbH0sabgEf/tCjkZ4f803Lc+XWm71kf
+	 LIv3jKFkTBC45Z2QXDUcwHaASXjI2r4Q/G5Isgb0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sangho Lee <kudo3228@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.18 195/396] Bluetooth: HIDP: reject frames without a transaction header
-Date: Fri,  7 Aug 2026 16:35:55 +0200
-Message-ID: <20260807143428.490600992@linuxfoundation.org>
+	Charles Vosburgh <trilobyte777@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 186/396] sctp: validate Adaptation Indication parameter length
+Date: Fri,  7 Aug 2026 16:35:46 +0200
+Message-ID: <20260807143428.299771673@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -50,105 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sangho Lee <kudo3228@gmail.com>
+From: Charles Vosburgh <trilobyte777@gmail.com>
 
-commit 47778d2c2087b5d192398f6fddf692d16a5431cf upstream.
+commit 74b21f52c5c5a71a05c0ff70e513f4f04ff28b17 upstream.
 
-hidp_recv_ctrl_frame() and hidp_recv_intr_frame() read skb->data[0]
-before checking that the L2CAP SDU contains a transaction header. A
-connected HIDP peer can send an empty basic-mode SDU and make both paths
-use an uninitialized byte from skb tailroom.
+The Adaptation Layer Indication parameter contains a fixed 32-bit
+Adaptation Code Point after its parameter header. However,
+sctp_verify_param() accepts a header-only parameter because the generic
+parameter walker only requires the header to be present.
 
-KMSAN reports the use in hidp_session_run(), with the uninitialized value
-originating in __alloc_skb() through vhci_write(). The control path
-produces two reports and the interrupt path produces one.
+sctp_process_param() then reads adaptation_ind beyond the declared
+parameter. When the malformed parameter is last in an INIT, the read
+starts at the receive skb tail, and the value is copied into the state
+cookie returned in the INIT ACK. This may disclose four receive-buffer
+tail bytes.
 
-The byte can also be controlled by a malformed lower-layer packet. If an
-HCI ACL packet contains an L2CAP PDU with a declared zero-length payload
-followed by an extra 0x15 byte, l2cap_recv_acldata() reduces skb->len to
-the declared PDU length before dispatch. The current HIDP path nevertheless
-consumes the extra byte as HIDP_TRANS_HID_CONTROL |
-HIDP_CTRL_VIRTUAL_CABLE_UNPLUG and terminates the HIDP session. With this
-change, the same packet is discarded and a subsequent feature report
-request succeeds.
-
-Pull the transaction header with skb_pull_data() and discard frames that
-do not contain it.
+Require the declared parameter length to match the fixed structure size
+and abort the association through the existing invalid parameter length
+path otherwise.
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sangho Lee <kudo3228@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Charles Vosburgh <trilobyte777@gmail.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20260727-sctp-adaptation-length-v1-1-0ab58b2810a5@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hidp/core.c |   25 +++++++++++++++----------
- 1 file changed, 15 insertions(+), 10 deletions(-)
+ net/sctp/sm_make_chunk.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/net/bluetooth/hidp/core.c
-+++ b/net/bluetooth/hidp/core.c
-@@ -563,16 +563,18 @@ static int hidp_process_data(struct hidp
- static void hidp_recv_ctrl_frame(struct hidp_session *session,
- 					struct sk_buff *skb)
- {
--	unsigned char hdr, type, param;
-+	unsigned char type, param;
-+	u8 *hdr;
- 	int free_skb = 1;
- 
- 	BT_DBG("session %p skb %p len %u", session, skb, skb->len);
- 
--	hdr = skb->data[0];
--	skb_pull(skb, 1);
-+	hdr = skb_pull_data(skb, 1);
-+	if (!hdr)
-+		goto free;
- 
--	type = hdr & HIDP_HEADER_TRANS_MASK;
--	param = hdr & HIDP_HEADER_PARAM_MASK;
-+	type = *hdr & HIDP_HEADER_TRANS_MASK;
-+	param = *hdr & HIDP_HEADER_PARAM_MASK;
- 
- 	switch (type) {
- 	case HIDP_TRANS_HANDSHAKE:
-@@ -593,6 +595,7 @@ static void hidp_recv_ctrl_frame(struct
+--- a/net/sctp/sm_make_chunk.c
++++ b/net/sctp/sm_make_chunk.c
+@@ -2168,7 +2168,13 @@ static enum sctp_ierror sctp_verify_para
+ 	case SCTP_PARAM_HEARTBEAT_INFO:
+ 	case SCTP_PARAM_UNRECOGNIZED_PARAMETERS:
+ 	case SCTP_PARAM_ECN_CAPABLE:
++		break;
+ 	case SCTP_PARAM_ADAPTATION_LAYER_IND:
++		if (ntohs(param.p->length) != sizeof(*param.aind)) {
++			sctp_process_inv_paramlength(asoc, param.p,
++						     chunk, err_chunk);
++			retval = SCTP_IERROR_ABORT;
++		}
  		break;
- 	}
  
-+free:
- 	if (free_skb)
- 		kfree_skb(skb);
- }
-@@ -600,14 +603,15 @@ static void hidp_recv_ctrl_frame(struct
- static void hidp_recv_intr_frame(struct hidp_session *session,
- 				struct sk_buff *skb)
- {
--	unsigned char hdr;
-+	u8 *hdr;
- 
- 	BT_DBG("session %p skb %p len %u", session, skb, skb->len);
- 
--	hdr = skb->data[0];
--	skb_pull(skb, 1);
-+	hdr = skb_pull_data(skb, 1);
-+	if (!hdr)
-+		goto free;
- 
--	if (hdr == (HIDP_TRANS_DATA | HIDP_DATA_RTYPE_INPUT)) {
-+	if (*hdr == (HIDP_TRANS_DATA | HIDP_DATA_RTYPE_INPUT)) {
- 		hidp_set_timer(session);
- 
- 		if (session->input)
-@@ -619,9 +623,10 @@ static void hidp_recv_intr_frame(struct
- 			BT_DBG("report len %d", skb->len);
- 		}
- 	} else {
--		BT_DBG("Unsupported protocol header 0x%02x", hdr);
-+		BT_DBG("Unsupported protocol header 0x%02x", *hdr);
- 	}
- 
-+free:
- 	kfree_skb(skb);
- }
- 
+ 	case SCTP_PARAM_SUPPORTED_EXT:
 
 
