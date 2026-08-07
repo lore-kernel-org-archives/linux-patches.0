@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F31D637206E;
-	Fri,  7 Aug 2026 15:00:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD00447A889;
+	Fri,  7 Aug 2026 15:00:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114844; cv=none; b=Rt11/cD/VvJQljojvD+QU0GBre5vrfmznVhUo0jXLkD2YEioF0d1I053fskxbfXU5XZBOnpPRv8D51FyGOeUSZMtNcdZkC6qQXM7InyWCIFux7uv/zPe2VL6eugbVARlXjs40w1EZT8+Ki03wOBseJ6YTc1z93B1gDrn5VKqNas=
+	t=1786114846; cv=none; b=aXlwtadG7fgwSZ3TXKSnEWXkri25OTH+gwkOOQh0zJ2E8YLb5WSeF05mV9YQ6U4ZjgPisSuuQ/20sw77wPNLSOZJ2V3RiVmcPC8gvH/A1Dt6dqkx3wu6rGUkFZtwFd9vs6QnfOoxo/SAjvzLvj8p+A2sVn2QMN36IGJ0wFCDdIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114844; c=relaxed/simple;
-	bh=l+hRIq1aIrTY0m+kO+G0MtZfi8GRmRIP96a4kT08yIw=;
+	s=arc-20240116; t=1786114846; c=relaxed/simple;
+	bh=PiePzOlvdJ+v5/ALonHaEJHzE/4xz04WkCF06tFQfuc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=moetGQlFXBYLKAoMOYYLJXhlFpQLpzb6CXBxzDfAYI3+MQuMjUxBYZNeJr40GZEMOqRPalDgjOSEoHchOOovL/PYFsGvzYVYTtiz4qKMdQXgdJV86pYCrPIExy5Fl2fbzW2FxZpj4jYoxIWS1E45ULzKiyxje0sJIQ2Aq4Cf7Bw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cn6kd8YB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=acCY7oV0iO1qRNbFrmQjQrNWBSat0oXAVxKIrPnOS+oX6k3P5Xq2orNDpE4yEpK8l2ssQdlPThhRogrqhhQVBkE0VuV8H8gZHyC+seqRd0mJJ7FEdD8pxSDRE0SZ/1uS4rgOecZB1KQyzvq188u7U3fAUrVWfWWnkdm8Vcv4FSw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cCf/K7Om; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cn6kd8YB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5926B1F000E9;
-	Fri,  7 Aug 2026 15:00:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cCf/K7Om"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33BD21F000E9;
+	Fri,  7 Aug 2026 15:00:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114842;
-	bh=cNkmNbl/oyzDj6M/gqfU7p0oYBxytto1pRr71JCXNn0=;
+	s=korg; t=1786114845;
+	bh=BNrzEwCCmEIVv4q0VcwOxTTD28+m50r6Sf0qcSOQmNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cn6kd8YBCGwLU9DBPc3bab+ZYe4e5jzcXSsAXjnw81KPcjhz89LUWP4BqgXD6DmsA
-	 Ilkt6hOkPpRlryM6x7jRsTz4AvbL9JrbcAKeevywG/eAjO3aiCK+XZcPJLwQw1VKxG
-	 GlkaF9mnN7Kb3d3Rr7ElNLvvXqSZUgcEAtodoPwE=
+	b=cCf/K7OmvrsWQUGR/rCHdW74g66G4WNAFcHGEcKF0tKm9P7HumVZ1j2V7DoUSZRSq
+	 bFkygAOLvKNOAQDjIR3S+unWgZ6nl+hlpuz7O4/MFBATvqTDw+sxDjPPwc+DxV9VdO
+	 fQ1FeFQboSwgg51rwg1tV5o/kLprJi9D2+6tnpzc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dawei Feng <dawei.feng@seu.edu.cn>,
-	Steve French <stfrench@microsoft.com>,
+	wangdicheng <wangdicheng@kylinos.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 067/396] smb: client: fix buffer leaks in SMB1 read and write
-Date: Fri,  7 Aug 2026 16:33:47 +0200
-Message-ID: <20260807143425.716736816@linuxfoundation.org>
+Subject: [PATCH 6.18 068/396] ASoC: tas2781: Use correct calibration data for SINEGAIN2 register
+Date: Fri,  7 Aug 2026 16:33:48 +0200
+Message-ID: <20260807143425.738422504@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -51,83 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dawei Feng <dawei.feng@seu.edu.cn>
+From: wangdicheng <wangdicheng@kylinos.cn>
 
-[ Upstream commit 6a3e16d60e81a4aa3056ab15617036cfbea2e07d ]
+[ Upstream commit dd88cf6273de61f2f7206c2066af97798dbb38b0 ]
 
-CIFSSMBRead(), CIFSSMBWrite() and CIFSSMBWrite2() allocate a request
-buffer before checking whether tcon->ses->server is NULL. If that
-defensive check ever fails, the helper returns -ECONNABORTED without
-releasing the request buffer.
+The SINEGAIN2_REG case in cali_reg_update() references t->sin_gn[]
+rather than t->sin_gn2[], causing the second pilot tone gain
+calibration to be programmed with the wrong register address.
 
-Fix these leaks by releasing the allocated request buffer before
-returning from these error paths. Use cifs_small_buf_release() for the
-buffers allocated by small_smb_init() and cifs_buf_release() for the
-buffer allocated by smb_init().
+These are distinct fields in struct fct_param_address and are
+populated from separate firmware parameters by the parser in
+tas2781-fmwlib.c.
 
-The bug was first flagged by an experimental analysis tool we are
-developing for kernel memory-management bugs while analyzing
-v6.13-rc1. The tool is still under development and is not yet publicly
-available. Manual inspection confirms that the bug is still
-present in v7.1.1.
-
-An x86_64 allyesconfig build showed no new warnings.
-
-Runtime validation used a temporary fault-injection hook to force
-tcon->ses->server to NULL after request-buffer initialization. On the
-unfixed kernel, the harness observed two leaked small request buffers and
-one leaked large request buffer, with directed kmemleak dumps confirming
-the CIFS buffer allocation stacks. After the fix, no CIFS request-buffer
-deltas remained.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 84d6a465f211 ("ASoC: tas2781: Support dsp firmware Alpha and Beta seaies")
+Signed-off-by: wangdicheng <wangdicheng@kylinos.cn>
+Link: https://patch.msgid.link/20260720081616.631413-1-wangdich9700@163.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifssmb.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ sound/soc/codecs/tas2781-i2c.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/smb/client/cifssmb.c b/fs/smb/client/cifssmb.c
-index 7694ca283fdc3..db9d9a1983c73 100644
---- a/fs/smb/client/cifssmb.c
-+++ b/fs/smb/client/cifssmb.c
-@@ -1515,8 +1515,10 @@ CIFSSMBRead(const unsigned int xid, struct cifs_io_parms *io_parms,
- 	pSMB->hdr.PidHigh = cpu_to_le16((__u16)(pid >> 16));
- 
- 	/* tcon and ses pointer are checked in smb_init */
--	if (tcon->ses->server == NULL)
-+	if (!tcon->ses->server) {
-+		cifs_small_buf_release(pSMB);
- 		return -ECONNABORTED;
-+	}
- 
- 	pSMB->AndXCommand = 0xFF;       /* none */
- 	pSMB->Fid = netfid;
-@@ -1628,8 +1630,10 @@ CIFSSMBWrite(const unsigned int xid, struct cifs_io_parms *io_parms,
- 	pSMB->hdr.PidHigh = cpu_to_le16((__u16)(pid >> 16));
- 
- 	/* tcon and ses pointer are checked in smb_init */
--	if (tcon->ses->server == NULL)
-+	if (!tcon->ses->server) {
-+		cifs_buf_release(pSMB);
- 		return -ECONNABORTED;
-+	}
- 
- 	pSMB->AndXCommand = 0xFF;	/* none */
- 	pSMB->Fid = netfid;
-@@ -1908,8 +1912,10 @@ CIFSSMBWrite2(const unsigned int xid, struct cifs_io_parms *io_parms,
- 	pSMB->hdr.PidHigh = cpu_to_le16((__u16)(pid >> 16));
- 
- 	/* tcon and ses pointer are checked in smb_init */
--	if (tcon->ses->server == NULL)
-+	if (!tcon->ses->server) {
-+		cifs_small_buf_release(pSMB);
- 		return -ECONNABORTED;
-+	}
- 
- 	pSMB->AndXCommand = 0xFF;	/* none */
- 	pSMB->Fid = netfid;
+diff --git a/sound/soc/codecs/tas2781-i2c.c b/sound/soc/codecs/tas2781-i2c.c
+index a3b4d2c3b4789..0b83446da45ea 100644
+--- a/sound/soc/codecs/tas2781-i2c.c
++++ b/sound/soc/codecs/tas2781-i2c.c
+@@ -1303,8 +1303,8 @@ static void cali_reg_update(struct bulk_reg_val *p,
+ 				t->sin_gn[2]);
+ 			break;
+ 		case TAS2781_PRM_SINEGAIN2_REG:
+-			reg = TASDEVICE_REG(t->sin_gn[0], t->sin_gn[1],
+-				t->sin_gn[2]);
++			reg = TASDEVICE_REG(t->sin_gn2[0], t->sin_gn2[1],
++				t->sin_gn2[2]);
+ 			break;
+ 		default:
+ 			reg = 0;
 -- 
 2.53.0
 
