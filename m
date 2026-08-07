@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25681368276;
-	Fri,  7 Aug 2026 15:14:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76EE83019BA;
+	Fri,  7 Aug 2026 15:14:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115694; cv=none; b=GIKvMefiqCI7iMapA+pRMSQNR7psJVBIcMVyCsov2TzCICBtMw0fNEjwjrQo7gZ320A1bOt/3F9ZBhtV4J4WEtpdesqVES4NcE8c6npA4lFRtssHWK8RTJWbnmAivzreQXjRhJdRb8NpOR3gmhXc1r4XLqw+S386D1CE1xza2mw=
+	t=1786115697; cv=none; b=CKgR4/ieim1nZVWq/JTxjyTvziJ3mZKZ4Qx13fkJ0lQ95UG033JTxqg+mB8ZU3YspBHSLof6YCMHpEOmXVS+5sH/dafewag21ixQQm+ktiaFvT+b0dnSRIN/d04ov5145OiMdeNHb/+7gD7AgpywllTbuHhbToU6wfaHc9xvVQ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115694; c=relaxed/simple;
-	bh=928v2TlfxzthaZ+QaUTpMlR1Tv8c4ONF5AMsl2IlfKo=;
+	s=arc-20240116; t=1786115697; c=relaxed/simple;
+	bh=3rEeOJm7QrmgiN2SMrqbDrA+SIYOeWE9YVpGzLPJuSM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NWWlkloGeswTc6/d92YJLFI8gZBbRzlEUOCNsOZ4/m5sujaqommqCqJVL7vx5UI7hoGE/A+Rg4rLhIUFwWYZZs2cjKbkW1IAhHTejpZT2Z0sJiiqRxeVayflR+unbcd8C22+fatTkiGnF9ilE58J2GycoTNO2nBKUdfyYQ/Df8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FanuGUAD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a5PyBn+OdgdughUcMiE7HANSQMzZdvleem18FzA2sHEH5VxISdpNryo1+soxwDdXStAUhDv79PpAGxxezKwqymn5N3GUZ9ox/UrzhGARpKgvMUTkaEyIRIrl97qMJEaM+iUKwt3jPsT6F5EVWuPkq5F4nQ9ve0gc0RO1kiiu62I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cZI5xOtA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FanuGUAD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8212D1F000E9;
-	Fri,  7 Aug 2026 15:14:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cZI5xOtA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 574F51F000E9;
+	Fri,  7 Aug 2026 15:14:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115693;
-	bh=Qc90rdU0WbRSzl8SiRsZCOhqPUdVk8wKZntdDO+YzUA=;
+	s=korg; t=1786115695;
+	bh=ta7K3jS5UGqsNOMjxfUHdicibsark1jTQJyo4xqOU8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FanuGUADWdBI7vFi3zrPvQkW5JnMg5TVe2fNAnV+zHKS1zqiUjzPfL7Fc9wdzv3Qt
-	 ielyonoPKdmOzFXCE9VSqbQPRzyNXqN/9tPVs4wjtwx2XBDvicp0cCp1BAgiGr2i/i
-	 AtwMqAfRL+sVykPc+a1kVtBF2k3QqkjPbgJyuUBE=
+	b=cZI5xOtAJcnTG97M3uHU8CIpoM5QIMI8MPS3LEbmKnUPzHQWyozyT34N5Wwrwo/zl
+	 1fcB52Lk6H0SBPZH9veH1ckJMqXMurzPzBwFaFbDXe3muEAMVXHCPqHUkRIRaEE3Io
+	 eFQsxMel56wvNeHeXG6Ed+hiL0WyGpvmprKWPO/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Andrei Kuchynski <akuchynski@chromium.org>,
-	Benson Leung <bleung@chromium.org>,
+	Jackson Lee <jackson.lee@chipsnmedia.com>,
+	Nas Chung <nas.chung@chipsnmedia.com>,
+	Brandon Brnich <b-brnich@ti.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 365/396] usb: typec: ucsi: Fix race condition and ordering in port unregistration
-Date: Fri,  7 Aug 2026 16:38:45 +0200
-Message-ID: <20260807143432.154356962@linuxfoundation.org>
+Subject: [PATCH 6.18 366/396] media: chips-media: wave5: Support CBP profile
+Date: Fri,  7 Aug 2026 16:38:46 +0200
+Message-ID: <20260807143432.175541118@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -52,170 +54,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrei Kuchynski <akuchynski@chromium.org>
+From: Jackson Lee <jackson.lee@chipsnmedia.com>
 
-[ Upstream commit 7aa7d4bf9d3fa9a6a47b640ad103ab433b7ff261 ]
+[ Upstream commit f8505f9d6b223a26854003bfdba1a0772457886d ]
 
-A synchronization issue exists during port unregistration where pending
-partner work items can race against workqueue destruction, leading to
-use-after-free conditions:
+Constrained Baseline Profile (CBP) and Baseline Profile (BP) have been
+treated as the same.
+Introduce the ability to differentiate between the two.
 
-  cros_ec_ucsi cros_ec_ucsi.3.auto: error -ETIMEDOUT: PPM init failed
-  BUG: kernel NULL pointer dereference, address: 0000000000000000
-  RIP: 0010:__queue_work+0x83/0x4a0
-  Call Trace:
-    <IRQ>
-    __cfi_delayed_work_timer_fn+0x10/0x10
-    run_timer_softirq+0x3b6/0xbd0
-    sched_clock_cpu+0xc/0x110
-    irq_exit_rcu+0x18d/0x330
-    fred_sysvec_apic_timer_interrupt+0x5e/0x80
-
-Fix this by ensuring strict ordering and proper serialization during
-teardown:
-
-1. Move ucsi_unregister_partner() to the beginning of the teardown
-sequence and protect it under the connector mutex lock.
-2. Ensure all pending partner tasks are explicitly flushed and finished
-before the workqueue is destroyed.
-3. Switch from mod_delayed_work() to a cancel_delayed_work() and
-queue_delayed_work() sequence. This guarantees that items currently marked
-as pending won't be scheduled an additional time, preventing a double
-release of resources which leads to the following crash:
-
-  Oops: general protection fault, probably for non-canonical address
-    0xdead000000000122: 0000 [#1] SMP NOPTI
-  Workqueue: cros_ec_ucsi.3.auto-con2 ucsi_poll_worker
-  RIP: 0010:ucsi_poll_worker+0x65/0x1e0
-  Call Trace:
-  <TASK>
-    process_scheduled_works+0x218/0x6d0
-    worker_thread+0x188/0x3f0
-    __cfi_worker_thread+0x10/0x10
-    kthread+0x226/0x2a0
-
-To ensure these rules are applied identically across both the normal
-teardown and the ucsi_init() error paths, consolidate the cleanup logic
-into a new helper, ucsi_unregister_port().
-
-Cc: stable <stable@kernel.org>
-Fixes: b9aa02ca39a4 ("usb: typec: ucsi: Add polling mechanism for partner tasks like alt mode checking")
-Fixes: b13abcb7ddd8 ("usb: typec: ucsi: Fix NULL pointer access")
-Fixes: fac4b8633fd6 ("usb: ucsi: Ensure connector delayed work items are flushed")
-Signed-off-by: Andrei Kuchynski <akuchynski@chromium.org>
-Reviewed-by: Benson Leung <bleung@chromium.org>
-Link: https://patch.msgid.link/20260707141736.1635698-1-akuchynski@chromium.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 9707a6254a8a ("media: chips-media: wave5: Add the v4l2 layer")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jackson Lee <jackson.lee@chipsnmedia.com>
+Signed-off-by: Nas Chung <nas.chung@chipsnmedia.com>
+Tested-by: Brandon Brnich <b-brnich@ti.com>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/ucsi/ucsi.c |   82 +++++++++++++++++++-----------------------
- 1 file changed, 39 insertions(+), 43 deletions(-)
+ drivers/media/platform/chips-media/wave5/wave5-hw.c      |    3 +++
+ drivers/media/platform/chips-media/wave5/wave5-vpu-enc.c |    5 ++++-
+ drivers/media/platform/chips-media/wave5/wave5-vpuapi.h  |    1 +
+ 3 files changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/typec/ucsi/ucsi.c
-+++ b/drivers/usb/typec/ucsi/ucsi.c
-@@ -1891,6 +1891,42 @@ out_unlock:
- 	return ret;
- }
+--- a/drivers/media/platform/chips-media/wave5/wave5-hw.c
++++ b/drivers/media/platform/chips-media/wave5/wave5-hw.c
+@@ -1762,6 +1762,9 @@ int wave5_vpu_enc_init_seq(struct vpu_in
+ 			(p_param->skip_intra_trans << 25) |
+ 			(p_param->strong_intra_smooth_enable << 27) |
+ 			(p_param->en_still_picture << 30);
++	else if (inst->std == W_AVC_ENC)
++		reg_val |= (p_param->constraint_set1_flag << 29);
++
+ 	vpu_write_reg(inst->dev, W5_CMD_ENC_SEQ_SPS_PARAM, reg_val);
  
-+static void ucsi_unregister_port(struct ucsi_connector *con)
-+{
-+	struct ucsi_work *uwork;
-+
-+	if (con->wq) {
-+		mutex_lock(&con->lock);
-+		ucsi_unregister_partner(con);
-+		/*
-+		 * queue delayed items immediately so they can execute
-+		 * and free themselves before the wq is destroyed
-+		 */
-+		list_for_each_entry(uwork, &con->partner_tasks, node) {
-+			if (cancel_delayed_work(&uwork->work))
-+				queue_delayed_work(con->wq, &uwork->work, 0);
-+		}
-+		mutex_unlock(&con->lock);
-+
-+		destroy_workqueue(con->wq);
-+		con->wq = NULL;
-+	} else {
-+		ucsi_unregister_partner(con);
-+	}
-+
-+	ucsi_unregister_altmodes(con, UCSI_RECIPIENT_CON);
-+	ucsi_unregister_port_psy(con);
-+
-+	usb_power_delivery_unregister_capabilities(con->port_sink_caps);
-+	con->port_sink_caps = NULL;
-+	usb_power_delivery_unregister_capabilities(con->port_source_caps);
-+	con->port_source_caps = NULL;
-+	usb_power_delivery_unregister(con->pd);
-+	con->pd = NULL;
-+	typec_unregister_port(con->port);
-+	con->port = NULL;
-+}
-+
- static u64 ucsi_get_supported_notifications(struct ucsi *ucsi)
- {
- 	u16 features = ucsi->cap.features;
-@@ -2017,22 +2053,8 @@ err_unregister:
- 	for (i = 0; i < ucsi->cap.num_connectors; i++)
- 		lockdep_unregister_key(&connector[i].lock_key);
- 
--	for (con = connector; con->port; con++) {
--		if (con->wq)
--			destroy_workqueue(con->wq);
--		ucsi_unregister_partner(con);
--		ucsi_unregister_altmodes(con, UCSI_RECIPIENT_CON);
--		ucsi_unregister_port_psy(con);
--
--		usb_power_delivery_unregister_capabilities(con->port_sink_caps);
--		con->port_sink_caps = NULL;
--		usb_power_delivery_unregister_capabilities(con->port_source_caps);
--		con->port_source_caps = NULL;
--		usb_power_delivery_unregister(con->pd);
--		con->pd = NULL;
--		typec_unregister_port(con->port);
--		con->port = NULL;
--	}
-+	for (con = connector; con->port; con++)
-+		ucsi_unregister_port(con);
- 	kfree(connector);
- err_reset:
- 	memset(&ucsi->cap, 0, sizeof(ucsi->cap));
-@@ -2260,33 +2282,7 @@ void ucsi_unregister(struct ucsi *ucsi)
- 
- 	for (i = 0; i < ucsi->cap.num_connectors; i++) {
- 		cancel_work_sync(&ucsi->connector[i].work);
--
--		if (ucsi->connector[i].wq) {
--			struct ucsi_work *uwork;
--
--			mutex_lock(&ucsi->connector[i].lock);
--			/*
--			 * queue delayed items immediately so they can execute
--			 * and free themselves before the wq is destroyed
--			 */
--			list_for_each_entry(uwork, &ucsi->connector[i].partner_tasks, node)
--				mod_delayed_work(ucsi->connector[i].wq, &uwork->work, 0);
--			mutex_unlock(&ucsi->connector[i].lock);
--			destroy_workqueue(ucsi->connector[i].wq);
--		}
--
--		ucsi_unregister_partner(&ucsi->connector[i]);
--		ucsi_unregister_altmodes(&ucsi->connector[i],
--					 UCSI_RECIPIENT_CON);
--		ucsi_unregister_port_psy(&ucsi->connector[i]);
--
--		usb_power_delivery_unregister_capabilities(ucsi->connector[i].port_sink_caps);
--		ucsi->connector[i].port_sink_caps = NULL;
--		usb_power_delivery_unregister_capabilities(ucsi->connector[i].port_source_caps);
--		ucsi->connector[i].port_source_caps = NULL;
--		usb_power_delivery_unregister(ucsi->connector[i].pd);
--		ucsi->connector[i].pd = NULL;
--		typec_unregister_port(ucsi->connector[i].port);
-+		ucsi_unregister_port(&ucsi->connector[i]);
- 		lockdep_unregister_key(&ucsi->connector[i].lock_key);
+ 	reg_val = (p_param->lossless_enable) |
+--- a/drivers/media/platform/chips-media/wave5/wave5-vpu-enc.c
++++ b/drivers/media/platform/chips-media/wave5/wave5-vpu-enc.c
+@@ -915,6 +915,8 @@ static int wave5_vpu_enc_s_ctrl(struct v
+ 		case V4L2_MPEG_VIDEO_H264_PROFILE_CONSTRAINED_BASELINE:
+ 			inst->enc_param.profile = H264_PROFILE_BP;
+ 			inst->bit_depth = 8;
++			if (ctrl->val == V4L2_MPEG_VIDEO_H264_PROFILE_CONSTRAINED_BASELINE)
++				inst->enc_param.constraint_set1_flag = 1;
+ 			break;
+ 		case V4L2_MPEG_VIDEO_H264_PROFILE_MAIN:
+ 			inst->enc_param.profile = H264_PROFILE_MP;
+@@ -1190,6 +1192,7 @@ static int wave5_set_enc_openparam(struc
+ 			open_param->wave_param.intra_period = input.avc_idr_period;
+ 		}
+ 	} else {
++		open_param->wave_param.constraint_set1_flag = input.constraint_set1_flag;
+ 		open_param->wave_param.avc_idr_period = input.avc_idr_period;
  	}
+ 	open_param->wave_param.entropy_coding_mode = input.entropy_coding_mode;
+@@ -1662,7 +1665,7 @@ static int wave5_vpu_open_enc(struct fil
+ 			  -6, 6, 1, 0);
+ 	v4l2_ctrl_new_std(v4l2_ctrl_hdl, &wave5_vpu_enc_ctrl_ops,
+ 			  V4L2_CID_MPEG_VIDEO_H264_8X8_TRANSFORM,
+-			  0, 1, 1, 1);
++			  0, 1, 1, 0);
+ 	v4l2_ctrl_new_std(v4l2_ctrl_hdl, &wave5_vpu_enc_ctrl_ops,
+ 			  V4L2_CID_MPEG_VIDEO_H264_CONSTRAINED_INTRA_PREDICTION,
+ 			  0, 1, 1, 0);
+--- a/drivers/media/platform/chips-media/wave5/wave5-vpuapi.h
++++ b/drivers/media/platform/chips-media/wave5/wave5-vpuapi.h
+@@ -570,6 +570,7 @@ struct enc_wave_param {
+ 	u32 transform8x8_enable: 1; /* enable 8x8 intra prediction and 8x8 transform */
+ 	u32 mb_level_rc_enable: 1; /* enable MB-level rate control */
+ 	u32 forced_idr_header_enable: 1; /* enable header encoding before IDR frame */
++	u32 constraint_set1_flag: 1; /* enable CBP */
+ };
  
+ struct enc_open_param {
 
 
