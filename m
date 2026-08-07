@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98C66351C2F;
-	Fri,  7 Aug 2026 15:08:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 726082DB7BB;
+	Fri,  7 Aug 2026 15:09:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115338; cv=none; b=HTjY8oOisOy4hY7nvUWyLNQ0LiQbk0nLKBmRrBMBY/j8ZXS0e4GvcH6DrnvqRfikCMQXTFjm63nXn8E7XCsa8/a10AUbbEGW7Nm5BJ+vdUmMP6mrbaAWZxZyg/UvBXQK3/Og/w+kkZcUHV+3R4RR0HtZif4gsGUA8sxfe5dfapw=
+	t=1786115341; cv=none; b=PmgIQpvgai12V6LO/w7q0H19Qf/wPAY8fbT1RGQrFfyEN2la7SfhokAu0HrG0d1ZG2CPFXWPP12XXI42KQUSgREBIBBpVoHUrnAXVDj18KGAoX8uRiSsFcoCOmAd/Qg362WIJuANI2eGYo575xFgDY/yvxfgL9+8P/iBC4sEZyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115338; c=relaxed/simple;
-	bh=ZhrBwaXHpM+Eec99dEMbLcMLubo6Q1G5Y5UqlC7vimw=;
+	s=arc-20240116; t=1786115341; c=relaxed/simple;
+	bh=Zrw8hfnv1uheQ/dxcnOTh+a31i/1ioVVl4t+BE6TPBI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rxPPrMKA0qkWcIJa8RFWSiXwmfrM+18sDqfBnjL0bgHGgCiCrTl9xZZCG5TpnJdqd34Cwz1U53mVPPbXii9ms35jHRQQs2e+p5RmCHbbhpoArc0PPumTxfiZg5MiJkJqBNAE74GdyN8lHob59xFzcSdN7p4r+syNMBcOcC7GZ9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FW+Efz8e; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MO3MvjWErT16ntVaaDy0ePzdJ6wKV537SAcHcE/o7lKqSwf8DpSU2ZfLYdT3e8tS4XcYM33BFN6PD+rCGNBwP9BTlbObVzw+/hcpvVuXtt2qteGfhT8qaV2AMZsE4mDlpGOeFMuklMDBMROhrff4VckW5If2GtK8aDvsoIctnBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QvD+6jkQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FW+Efz8e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7C421F000E9;
-	Fri,  7 Aug 2026 15:08:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QvD+6jkQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0C251F000E9;
+	Fri,  7 Aug 2026 15:08:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115337;
-	bh=ESBjv5WMjdMQ2XZxy4sRemS50drhPrg9j/6B9lrEvZY=;
+	s=korg; t=1786115340;
+	bh=u2txxwktYPKSmAkuhD2FTpbY3HwRggXCbKpmxVkKBmM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FW+Efz8eZbhKyso+Yyd/uv/EaUyg5+Zw1+CSM99Vlbjg1WZkVG0bVxyYCvytq3vU5
-	 cDQfRBQsbBuVBCHxE3NCP6tZ831ZpY4m9eWxbH0sabgEf/tCjkZ4f803Lc+XWm71kf
-	 LIv3jKFkTBC45Z2QXDUcwHaASXjI2r4Q/G5Isgb0=
+	b=QvD+6jkQGy29DURbLKXgJIbcd4Z0Mf7aJvwDeg3eKhrthAlpEo0FLk7DSGzD0qr41
+	 Qvkay6uilYGkKL8MPKm45pM65YbZCK6J1+2HYLnePZGjuvwv18aYqjX7hwB4EX+r4+
+	 qt3CN2KmG9c3/oJ7Nh0ohR9xSVp7qwEiOkJHKWWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Vosburgh <trilobyte777@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 186/396] sctp: validate Adaptation Indication parameter length
-Date: Fri,  7 Aug 2026 16:35:46 +0200
-Message-ID: <20260807143428.299771673@linuxfoundation.org>
+	Sung Keum <kambodi127@gmail.com>,
+	Gabriel Krisman Bertazi <krisman@suse.de>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.18 235/396] io_uring/net: initialize mshot_len for send
+Date: Fri,  7 Aug 2026 16:36:35 +0200
+Message-ID: <20260807143429.327812888@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -51,51 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charles Vosburgh <trilobyte777@gmail.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit 74b21f52c5c5a71a05c0ff70e513f4f04ff28b17 upstream.
+commit c77ffbc980efb337fd750c337d8157d532ea14e5 upstream.
 
-The Adaptation Layer Indication parameter contains a fixed 32-bit
-Adaptation Code Point after its parameter header. However,
-sctp_verify_param() accepts a header-only parameter because the generic
-parameter walker only requires the header to be present.
+Commit:
 
-sctp_process_param() then reads adaptation_ind beyond the declared
-parameter. When the malformed parameter is last in an INIT, the read
-starts at the receive skb tail, and the value is copied into the state
-cookie returned in the INIT ACK. This may disclose four receive-buffer
-tail bytes.
+6a8afb9fff64 ("io_uring/net: allow multishot receive per-invocation cap")
 
-Require the declared parameter length to match the fixed structure size
-and abort the association through the existing invalid parameter length
-path otherwise.
+changed how io_mshot_prep_retry() set sr->len, and added the same
+initialization in io_mshot_prep_retry(). But it neglected to touch the
+send path, which may also uses the mshot retry path. Ensure that
+sr->mshot_len always gets initialized correctly.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 6a8afb9fff64 ("io_uring/net: allow multishot receive per-invocation cap")
 Cc: stable@vger.kernel.org
-Signed-off-by: Charles Vosburgh <trilobyte777@gmail.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20260727-sctp-adaptation-length-v1-1-0ab58b2810a5@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Sung Keum <kambodi127@gmail.com>
+Reviewed-by: Gabriel Krisman Bertazi <krisman@suse.de>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/sm_make_chunk.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ io_uring/net.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/sctp/sm_make_chunk.c
-+++ b/net/sctp/sm_make_chunk.c
-@@ -2168,7 +2168,13 @@ static enum sctp_ierror sctp_verify_para
- 	case SCTP_PARAM_HEARTBEAT_INFO:
- 	case SCTP_PARAM_UNRECOGNIZED_PARAMETERS:
- 	case SCTP_PARAM_ECN_CAPABLE:
-+		break;
- 	case SCTP_PARAM_ADAPTATION_LAYER_IND:
-+		if (ntohs(param.p->length) != sizeof(*param.aind)) {
-+			sctp_process_inv_paramlength(asoc, param.p,
-+						     chunk, err_chunk);
-+			retval = SCTP_IERROR_ABORT;
-+		}
- 		break;
- 
- 	case SCTP_PARAM_SUPPORTED_EXT:
+--- a/io_uring/net.c
++++ b/io_uring/net.c
+@@ -433,6 +433,7 @@ int io_sendmsg_prep(struct io_kiocb *req
+ 		req->flags |= REQ_F_NOWAIT;
+ 	if (req->flags & REQ_F_BUFFER_SELECT)
+ 		sr->buf_group = req->buf_index;
++	sr->mshot_total_len = sr->mshot_len = 0;
+ 	if (sr->flags & IORING_RECVSEND_BUNDLE) {
+ 		if (req->opcode == IORING_OP_SENDMSG)
+ 			return -EINVAL;
 
 
