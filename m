@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AE4546D09D;
-	Fri,  7 Aug 2026 15:34:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D873D41D138;
+	Fri,  7 Aug 2026 15:34:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116841; cv=none; b=pcOgdaSPVcL40mx4xWfHQ27N7f7rkW0VPH6wRYQW3HSmkMLochcRIO/gUaQUVpg09lFGjjUqPiJyhYz9Aah/lKFbyp5y/v9cu/kBq99oon5jblfXdE3WjANGNxDGU18nK2yvyTSt/AVVyG80I2LnmW8YmVtbtJHEmIUd/PRH+Gc=
+	t=1786116844; cv=none; b=Ley5UGWb+Qq88wxQDc1pWu/rSS4x/cUN+ULiOc0XQv6hCXjHu1Rd1GIfX4Zfp4oa/TMYHYwYBgL31H9MZ3T+TLkILlMLntlwnqLv//9dO6fceCFoS1kCWoGs7lxvhO/ThDeSmO+VWkypcl4OxamefAUrKFm87M4LKeYUZnWIZXc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116841; c=relaxed/simple;
-	bh=wOeJqIswh9V1abMkQTlAm6P0kT52O8SmKjdud4dnr+s=;
+	s=arc-20240116; t=1786116844; c=relaxed/simple;
+	bh=0kxbfzcKEzyuAwy38gyZFv2GjIiuMHvQP65mYn/kVEI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iwt2P5EMJecxmCpVVSLVLzyh3bhDy5WKaDm/oV8dOy6jtUFdAKRsKh9XwPJPCbQoi6ifeOI5eo+NXJrSyPpPWiQDsp92YWsZQ/heu0DwsBfv9u8ArMxvZxBkT3+a3OV+qC652HWi1Br2dXIGOSQMAlN3Wg51Orj8NatyZP1NxD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H/TSnpF6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AotMSgTy2MeZEZWzUiRTtUP/UVcncfiAWqhFGE/1+t4GnnTFm5GmWwmETp/ahY3LJEDamp8jyXn5hbjnYwoH8mMjBAP1ujxx0VEbGoXH9Do2vhI6FIDGzvC4boRpyv1fjN3USnxuiZeRL397xq3Be5mox68ghKL1YYBRKyPzxMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FvU6xYqI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H/TSnpF6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C0B61F000E9;
-	Fri,  7 Aug 2026 15:33:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FvU6xYqI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40F4D1F000E9;
+	Fri,  7 Aug 2026 15:34:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116839;
-	bh=RoOm+8PEuUOkktxNELlDyVkZv11JvIPAQTcOaTzAGnI=;
+	s=korg; t=1786116842;
+	bh=A1wcDfsXA4cKH3RRfBWdeHifvJ72EDfPGYjbMkeQWFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H/TSnpF68yA3vIzhz/cJNNQ0/BgI00B8g0ivlNrIXDSdpAP47xSBTFo1JEO8MUSn1
-	 03pyeUusRuab4RDjUGrTeg6x/JPVKIPscMjZ7obHSQeRgd6VyZosBaGZp7330D6Gwz
-	 UP6RZpWJQTZEYqKHotkHZh9uThlDxvh90OcpG+TA=
+	b=FvU6xYqIr3QDd7eKGAYGycW+EnI+htu691XHwj28cwLkuq3iPhQIhTwtF4RhuzM8m
+	 IvTRuD5BGLA4vpCUQXVyZO/eBI3Gg8ZkGcU+KkQu4htHCQ6eeBXl744eorCdxOi6df
+	 lprly9I2Zl5CmpmuZwApqmHezeaAfQ/YTGCjqTBw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	sashiko-bot@kernel.org,
 	Luiz Angelo Daros de Luca <luizluca@gmail.com>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 107/438] hwmon: (adt7470) Use cached PWM frequency value
-Date: Fri,  7 Aug 2026 16:35:03 +0200
-Message-ID: <20260807143430.269877671@linuxfoundation.org>
+Subject: [PATCH 7.1 108/438] hwmon: (adt7470) Fix divide-by-zero TOCTOU crash in fan speed read
+Date: Fri,  7 Aug 2026 16:35:04 +0200
+Message-ID: <20260807143430.291330170@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -53,107 +54,76 @@ Content-Transfer-Encoding: 8bit
 
 From: Luiz Angelo Daros de Luca <luizluca@gmail.com>
 
-[ Upstream commit 60677cd4c28f44d5b307d3029dccece38fcce90f ]
+[ Upstream commit 1b46fe9dc8f8de59310f37e6c5e5c0e05ded46c3 ]
 
-adt7470_pwm_read() currently ignores failures returned by
-pwm1_freq_get(). If the register read fails, the negative error code is
-returned through *val while the function itself reports success,
-potentially exposing a negative PWM frequency through sysfs.
+If the fan data becomes 0 between the FAN_DATA_VALID() check and the
+FAN_PERIOD_TO_RPM() conversion, it will result in a divide-by-zero crash
+due to a race with a concurrent update of the cached fan value.
 
-Fix this by using the cached PWM frequency maintained by the driver,
-eliminating the register access from the read path.
+Fix a TOCTOU issue by reading fan data once.
 
-Apart from the corrected error propagation and using the cached value,
-no functional change is intended.
-
-Fixes: ef67959c4253 ("hwmon: (adt7470) Convert to use regmap")
+Reported-by: sashiko-bot@kernel.org
+Closes: https://lore.kernel.org/r/20260727034929.E29B71F000E9@smtp.kernel.org/
+Fixes: fc958a61ff6d ("hwmon: (adt7470) Convert to devm_hwmon_device_register_with_info API")
 Signed-off-by: Luiz Angelo Daros de Luca <luizluca@gmail.com>
-Link: https://lore.kernel.org/r/20260727-adt7470_fixes-v2-6-598e38a46ba6@gmail.com
+Link: https://lore.kernel.org/r/20260727-adt7470_fixes-v2-7-598e38a46ba6@gmail.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/adt7470.c | 20 ++++++++++++++++++--
- 1 file changed, 18 insertions(+), 2 deletions(-)
+ drivers/hwmon/adt7470.c | 23 ++++++++++-------------
+ 1 file changed, 10 insertions(+), 13 deletions(-)
 
 diff --git a/drivers/hwmon/adt7470.c b/drivers/hwmon/adt7470.c
-index c6fc7d38d698c..1fbca4869b7b6 100644
+index 1fbca4869b7b6..772d2a409bb5c 100644
 --- a/drivers/hwmon/adt7470.c
 +++ b/drivers/hwmon/adt7470.c
-@@ -182,6 +182,7 @@ struct adt7470_data {
- 	u8			pwm_min[ADT7470_PWM_COUNT];
- 	s8			pwm_tmin[ADT7470_PWM_COUNT];
- 	u8			pwm_auto_temp[ADT7470_PWM_COUNT];
-+	u32			pwm_freq;
+@@ -660,36 +660,33 @@ static ssize_t alarm_mask_store(struct device *dev,
+ static int adt7470_fan_read(struct device *dev, u32 attr, int channel, long *val)
+ {
+ 	struct adt7470_data *data = adt7470_update_device(dev);
++	u16 fan_data;
  
- 	struct task_struct	*auto_update;
- 	unsigned int		auto_update_interval;
-@@ -756,7 +757,7 @@ static ssize_t force_pwm_max_store(struct device *dev,
- }
+ 	if (IS_ERR(data))
+ 		return PTR_ERR(data);
  
- /* These are the valid PWM frequencies to the nearest Hz */
--static const int adt7470_freq_map[] = {
-+static const u32 adt7470_freq_map[] = {
- 	11, 15, 22, 29, 35, 44, 59, 88, 1400, 22500
- };
- 
-@@ -796,7 +797,7 @@ static int adt7470_pwm_read(struct device *dev, u32 attr, int channel, long *val
- 		*val = 1 + data->pwm_automatic[channel];
+ 	switch (attr) {
+ 	case hwmon_fan_input:
+-		if (FAN_DATA_VALID(data->fan[channel]))
+-			*val = FAN_PERIOD_TO_RPM(data->fan[channel]);
+-		else
+-			*val = 0;
++		fan_data = READ_ONCE(data->fan[channel]);
  		break;
- 	case hwmon_pwm_freq:
--		*val = pwm1_freq_get(dev);
-+		*val = data->pwm_freq;
+ 	case hwmon_fan_min:
+-		if (FAN_DATA_VALID(data->fan_min[channel]))
+-			*val = FAN_PERIOD_TO_RPM(data->fan_min[channel]);
+-		else
+-			*val = 0;
++		fan_data = READ_ONCE(data->fan_min[channel]);
  		break;
+ 	case hwmon_fan_max:
+-		if (FAN_DATA_VALID(data->fan_max[channel]))
+-			*val = FAN_PERIOD_TO_RPM(data->fan_max[channel]);
+-		else
+-			*val = 0;
++		fan_data = READ_ONCE(data->fan_max[channel]);
+ 		break;
+ 	case hwmon_fan_alarm:
+ 		*val = !!(data->alarm & FAN_ALARM_BIT(channel));
+-		break;
++		return 0;
  	default:
  		return -EOPNOTSUPP;
-@@ -809,12 +810,14 @@ static int pwm1_freq_set(struct device *dev, long freq)
- {
- 	struct adt7470_data *data = dev_get_drvdata(dev);
- 	unsigned int low_freq = ADT7470_CFG_LF;
-+	u32 closest_freq;
- 	int index;
- 	int err;
+ 	}
  
- 	/* Round the user value given to the closest available frequency */
- 	index = find_closest(freq, adt7470_freq_map,
- 			     ARRAY_SIZE(adt7470_freq_map));
-+	closest_freq = adt7470_freq_map[index];
- 
- 	if (index >= 8) {
- 		index -= 8;
-@@ -832,6 +835,10 @@ static int pwm1_freq_set(struct device *dev, long freq)
- 	err = regmap_update_bits(data->regmap, ADT7470_REG_CFG_2,
- 				 ADT7470_FREQ_MASK,
- 				 index << ADT7470_FREQ_SHIFT);
-+	if (err < 0)
-+		goto out;
++	if (FAN_DATA_VALID(fan_data))
++		*val = FAN_PERIOD_TO_RPM(fan_data);
++	else
++		*val = 0;
 +
-+	data->pwm_freq = closest_freq;
- out:
- 	mutex_unlock(&data->lock);
+ 	return 0;
+ }
  
-@@ -1285,6 +1292,7 @@ static int adt7470_probe(struct i2c_client *client)
- 	struct device *dev = &client->dev;
- 	struct adt7470_data *data;
- 	struct device *hwmon_dev;
-+	int freq_val;
- 	int err;
- 
- 	data = devm_kzalloc(dev, sizeof(struct adt7470_data), GFP_KERNEL);
-@@ -1309,6 +1317,14 @@ static int adt7470_probe(struct i2c_client *client)
- 	if (err < 0)
- 		return err;
- 
-+	freq_val = pwm1_freq_get(dev);
-+	if (freq_val <= 0) {
-+		err = freq_val < 0 ? freq_val : -EINVAL;
-+		return err;
-+	}
-+
-+	data->pwm_freq = (u32)freq_val;
-+
- 	/* Register sysfs hooks */
- 	hwmon_dev = devm_hwmon_device_register_with_info(dev, client->name, data,
- 							 &adt7470_chip_info,
 -- 
 2.53.0
 
