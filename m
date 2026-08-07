@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A29CB3DBD4E;
-	Fri,  7 Aug 2026 14:47:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E57236D4F1;
+	Fri,  7 Aug 2026 14:47:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114079; cv=none; b=mMgT68GlyE9gQ29SBvaazHbmijCJKyPCkgsFfRHUiFsKIJzq+GRk+YsKhtMVMxao5xlenMDP59R4kTrlJymPBrBjpCDavQmb5t1yCYqU7qIIaxWHPCvTWEol5tS6Vj3Un8Y/v0D5I0A1mKQssCox+BsG2Ja3QwdfM+56eTNr+MY=
+	t=1786114081; cv=none; b=FDA6EOLO+JwanSoyVMjcY/1u75p58RJ5f6A4GBZNIY6VDceIDUefmDtcymA2pHmnEQZUC/ql8On299hZI9jBDf3+f+zJhnc9VYrM0iGWyTUpnFrkizzdSxrlDu/COi5OPkcKeiJKTmqzDTYSCUek3pkYn5rpeHSJTLsaHpY9ubI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114079; c=relaxed/simple;
-	bh=xJ+XJcLR+pyirJNnykpuDH5LdKVthwn3lE+SzYfs/sI=;
+	s=arc-20240116; t=1786114081; c=relaxed/simple;
+	bh=zgpVVyQQIUI3Rqu/gvnpNpTRD3gOTSZBDE9u5aSzAkM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LftjLKmB1OP9EsoiYEVLuNRDe4yTfmpSVNhwF+VB6TSSEfq/BSuH5O/DutsM/2yvjfl7fpx9RcvK0kyE65CZsWcmJ3uYAAjGaXFSsWZ8X5xjNNkEwPV96y23OlBXTUumWzkHPrF5zB1RIjbJXy14N9LmKKYrFeCU08kEZSg1zcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IgqtADzG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RpNUGBSdMtaGa2QXvdh7zwhX49ApOtNO8rgVlaCzXOXO+qa82lC0os0r1wvMXgYpRNUC/UrMtDMY0k0Y7CxzD0scTW1Pt1Y6gaFwyNGAQkuMrLRg0e2ESAQ/59sfImN3Ai3ASSiH110cdbrxJaUod38srO5TUlJBNeN4AIoGFto=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AYCpbTVa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IgqtADzG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CDCC1F000E9;
-	Fri,  7 Aug 2026 14:47:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AYCpbTVa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B31F1F00A3D;
+	Fri,  7 Aug 2026 14:47:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114076;
-	bh=skl13YoowjPo9CmYnHeVzlHQv37g7o02yYflOa/RlJg=;
+	s=korg; t=1786114079;
+	bh=GATXlbibTaCZjCLRN9mjO8zVHT1WMM+yEVb9eCJ7VDU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IgqtADzG/4Ji9SYY5v3rE2c2fRpSpRZuu2MmBlQZ04Kd05iKJAt5kdm9fOnSIUWlZ
-	 8Wgo8Q/ADpB4ubMFiPQhI6fI0FLxx2sSd6RalMCdkcJe3tVpZIh/ZRUuF54Km8lR55
-	 qqSvLCoeRKAa5tqse3IEQHYgBTIa8jVgGa2umitM=
+	b=AYCpbTVatWjjVZgHWEXrLRUl2UPXHaeKhknzBZyx1g4iAdV+1HSZZv4/OsaDhCa9Y
+	 qL9cYCa7saLT3xTxV034WsN7B2b9UigyP/Ij1wScx7HsmzxIMsaGEywXX057Xf9cD+
+	 NZeRAFk9w9tmeBDbhJtWyBVxgPFZIm2KXQsPnv7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiangfeng Cai <caixiangfeng@bytedance.com>,
-	Muchun Song <muchun.song@linux.dev>,
-	Baoquan He <baoquan.he@linux.dev>,
-	David Hildenbrand <david@kernel.org>,
-	Oscar Salvador <osalvador@suse.de>,
-	Shuah Khan <shuah@kernel.org>,
-	Wei Yang <richard.weiyang@linux.alibaba.com>,
+	Gregory Price <gourry@gourry.net>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Mel Gorman <mgorman@techsingularity.net>,
+	Mike Rapoport <rppt@kernel.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 137/337] mm/hugetlb: fix list corruption in allocate_file_region_entries()
-Date: Fri,  7 Aug 2026 16:35:40 +0200
-Message-ID: <20260807143421.504549252@linuxfoundation.org>
+Subject: [PATCH 6.12 138/337] mm/vmstat: fold stranded per-cpu node stats when a node comes online
+Date: Fri,  7 Aug 2026 16:35:41 +0200
+Message-ID: <20260807143421.525712897@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -56,76 +54,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiangfeng Cai <caixiangfeng@bytedance.com>
+From: Gregory Price <gourry@gourry.net>
 
-commit dd9623f58ec702a07b2d67179d6fcea79c52231a upstream.
+commit ea3034b2b00fa50c8d2518d0804c9d427bbafa86 upstream.
 
-allocate_file_region_entries() tops up resv->region_cache with freshly
-allocated file_region descriptors.  The allocation uses GFP_KERNEL, so
-resv->lock is dropped around it: the new entries are gathered on a
-stack-local list head, allocated_regions, and spliced into
-resv->region_cache once the lock is re-acquired.
+A per-node vmstat counter is pgdat->vm_stat[] plus per-cpu deltas.  A
+balanced counter can sit split as global=+N / per-cpu=-N.
 
-The splice used list_splice(), which moves the entries but does not
-re-initialize the source head, so allocated_regions is left pointing at an
-entry that now lives on resv->region_cache.  The top-up runs in a while
-loop that re-checks the cache deficit after re-acquiring the lock.  For a
-shared mapping the resv_map is shared by every mapper of the hugetlbfs
-inode, so a concurrent region_chg()/region_add()/region_del() on the same
-resv_map can consume cache entries during the unlocked window and force a
-second iteration.  That iteration calls list_add() on the stale head and
-corrupts the list; with CONFIG_DEBUG_LIST the __list_add_valid() check
-trips:
+The folds reconciling the split only walk online nodes, so when
+try_offline_node() marks a node offline the per-cpu deltas are stranded.
 
-  list_add corruption. next->prev should be prev (ffffc900011ff7f8),
-  but was ffff88814c281460. (next=ffff88814c545640).
-  kernel BUG at lib/list_debug.c:31!
-   allocate_file_region_entries+0x191/0x420
-   region_chg+0x267/0x300
-   hugetlb_reserve_pages+0x387/0xc80
-   hugetlbfs_file_mmap+0x2ce/0x3f0
-   mmap_region+0x1348/0x1a80
-   do_mmap+0x85e/0xb90
-   vm_mmap_pgoff+0x18c/0x330
-   ksys_mmap_pgoff+0x2a1/0x3e0
-   do_syscall_64+0xd7/0x420
+A subsequent online resets the per-cpu area but not pgdat->vm_stat[],
+orphaning the +N permanently.  All NR_VM_NODE_STAT_ITEMS are affected.
 
-Without CONFIG_DEBUG_LIST the bad list_add() silently links a kernel-stack
-address into resv->region_cache, leading to later use-after-free.
+The existing code zeroes the per-cpu counters and causes a permanent skew.
+Fold the stranded deltas instead, before the node rejoins the online set.
+The node is not online yet and the hotplug lock is held, so the remote
+access to per-cpu values is safe.
 
-This was observed as a real host panic on a dense KVM host where a QEMU
-guest-RAM hugetlbfs file was mapped MAP_SHARED by both QEMU and a separate
-SPDK/DPDK vhost-user target, generating concurrent region_* traffic on one
-shared resv_map.
+Discovered when node compaction hung for a nearly empty node, as the math
+to determine throttling broke.  Reproduced by repeated memory
+hotplug/unplug cycles on a node under pressure: NR_ISOLATED_ANON ratchets
+up and never returns to zero.
 
-Use list_splice_init() so the source head is re-initialized empty after
-each splice, making the retry loop safe.
-
-Link: https://lore.kernel.org/20260713171456.300518-2-caixiangfeng@bytedance.com
-Fixes: d3ec7b6e09e5 ("mm/hugetlb: use list_splice to merge two list at once")
-Signed-off-by: Xiangfeng Cai <caixiangfeng@bytedance.com>
-Reviewed-by: Muchun Song <muchun.song@linux.dev>
-Cc: Baoquan He <baoquan.he@linux.dev>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Wei Yang <richard.weiyang@linux.alibaba.com>
+Link: https://lore.kernel.org/20260627202243.758289-1-gourry@gourry.net
+Fixes: 75ef71840539 ("mm, vmstat: add infrastructure for per-node vmstats")
+Signed-off-by: Gregory Price <gourry@gourry.net>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Mel Gorman <mgorman@techsingularity.net>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Vlastimil Babka <vbabka@kernel.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/hugetlb.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/mm_init.c |   15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -676,7 +676,7 @@ static int allocate_file_region_entries(
+--- a/mm/mm_init.c
++++ b/mm/mm_init.c
+@@ -1524,7 +1524,7 @@ void __ref free_area_init_core_hotplug(s
+ {
+ 	int nid = pgdat->node_id;
+ 	enum zone_type z;
+-	int cpu;
++	int cpu, i;
  
- 		spin_lock(&resv->lock);
+ 	pgdat_init_internals(pgdat);
  
--		list_splice(&allocated_regions, &resv->region_cache);
-+		list_splice_init(&allocated_regions, &resv->region_cache);
- 		resv->region_cache_count += to_allocate;
+@@ -1542,10 +1542,17 @@ void __ref free_area_init_core_hotplug(s
+ 	pgdat->node_start_pfn = 0;
+ 	pgdat->node_present_pages = 0;
+ 
+-	for_each_online_cpu(cpu) {
+-		struct per_cpu_nodestat *p;
++	/*
++	 * Hot-unplug can leave per-cpu vmstat deltas unfolded (folders skip
++	 * offline nodes) - reconcile this at online. Foreign access to counters
++	 * is safe: the node is not online yet and we hold the hotplug lock.
++	 */
++	for_each_possible_cpu(cpu) {
++		struct per_cpu_nodestat *p = per_cpu_ptr(pgdat->per_cpu_nodestats, cpu);
+ 
+-		p = per_cpu_ptr(pgdat->per_cpu_nodestats, cpu);
++		for (i = 0; i < NR_VM_NODE_STAT_ITEMS; i++)
++			if (p->vm_node_stat_diff[i])
++				node_page_state_add(p->vm_node_stat_diff[i], pgdat, i);
+ 		memset(p, 0, sizeof(*p));
  	}
  
 
