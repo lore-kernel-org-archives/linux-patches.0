@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B71D476CC8;
-	Fri,  7 Aug 2026 15:41:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B189D473C6D;
+	Fri,  7 Aug 2026 15:41:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786117305; cv=none; b=PP0Jql0wyqnIbE5wpR1QEOovijb12oOwhtsXBYapUd3TM/895HE/HB2VNSbgEzSzPI+GRXUdA6TgH/J51qcar9pk3UMZJcBS+HZeosZQ9kFyNLt1vq7Xhu0pc93NGbRfpTW4WApA5jLTcyE/KgVVYdCB94bcvDccW62lgS/rhYI=
+	t=1786117308; cv=none; b=F0cr9qELRjKAZsgJwkFdFUqp6gVBR3Ah2viuyPPNZ/rQHhOLiQBAdqlkF9O9s5yspsQUBqn7To43KZYoyQ6iyTjp1dkGRhBkuGExfKDWoxNLu1NkMx+utHkFWAWjv12705HsLHsydRmF3krKmbh3u9Nz379XHjqwdey84dXVA9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786117305; c=relaxed/simple;
-	bh=LfG+8KPOtcoxLMK/yryFujYXUL0j4mO1dtPHZtgQK3A=;
+	s=arc-20240116; t=1786117308; c=relaxed/simple;
+	bh=r0q4NVJeXp2A/VbC6axAbLB6i/QdZN7Rfn3SYLF/FhQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Oy32k/6ih46zkF+yjsfuhDGMLWOgkuEacsxdbPX+ZzIvfNeTfCj0LVz6K7I7vRZowjdwEj/VXvjPVLXOMSCcmKdb0F/9veH8+mIlrncuQ6rU//tbULCxpmAECCuChPzHGCSq+ci3k4PPuP+0G4Bjskg8vnXU9TVjBHoq/fKDpyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nHmXlQt+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G9tT+kPgY+iRAnrRr/oqRZ8052PVeXHVwRo6wWBpzhQ4MUUdpLeh/wE+tAhkC8swGt7npkl8ug7jW+qU3vxrN8JQWGFh/n6VhfeTP3OETHVeNL/Y4uISRXqhi5y9cZsMtKCJNhOMsXhfauEn+MnqG/r+pyAbMdEUrJYasmHLY/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fXKrc1+X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nHmXlQt+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F21D41F000E9;
-	Fri,  7 Aug 2026 15:41:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fXKrc1+X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD7231F000E9;
+	Fri,  7 Aug 2026 15:41:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786117304;
-	bh=IsMs+Odc+tVAjrxNot6NYKyQrFTwCCKObp5c+tnV4js=;
+	s=korg; t=1786117307;
+	bh=0L40yF2kBgJRSCjxt/QV4eUTro+CQx1ogjEnkX9U1y0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nHmXlQt+N9H+RFVhiUVI/HzS49idCoUQ78SrxhtJEr92dYN7tWhKV4YJDk/cVrbrs
-	 OnJWNxd2GMZJGs1kV2pB8Jqi2WwFta1sKAeVq58FA+iGpEU4P1qknwronoDP9eBLte
-	 Z+X4K+Fcyfb+Bn4qSAG5EakLc1D0PNV2jVWBCdPc=
+	b=fXKrc1+X8mX1jUbx2yfhZT33XPWqsT16G2RuF1LnVX6ILaL3GCPjVUlMd3J/Isjwe
+	 mZZG1GvvoFE1OxnHFKclMo7Rr4HQZr2AYGmahTafAUt2ddZDX6dlDSuYYaZfKQtuaC
+	 ZTN/eZU77O9pDOa21rWajP3enkW4m6DXAyOtoCKU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zilin Guan <zilin@seu.edu.cn>,
-	Dawei Feng <dawei.feng@seu.edu.cn>,
-	Dima Ruinskiy <dima.ruinskiy@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>
-Subject: [PATCH 7.1 273/438] e1000: fix memory leak in e1000_probe()
-Date: Fri,  7 Aug 2026 16:37:49 +0200
-Message-ID: <20260807143433.803584732@linuxfoundation.org>
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 7.1 274/438] fou: Fix use-after-free in fou_create()
+Date: Fri,  7 Aug 2026 16:37:50 +0200
+Message-ID: <20260807143433.823967225@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -52,54 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dawei Feng <dawei.feng@seu.edu.cn>
+From: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
 
-commit 816419dfea5c88126f35eb7a1b429a1bf546665e upstream.
+commit b14361aca6350ff7907b0e9903c7b94dc7d5d4a0 upstream.
 
-In the e1000_probe() path, e1000_sw_init() allocates adapter->tx_ring and
-adapter->rx_ring. If the subsequent CE4100-specific MDIO BAR mapping
-fails, the error handling jumps past the ring cleanup code, leaking both
-allocations.
+fou_create() publishes struct fou through sk_user_data before adding the
+new FOU port to the per-netns list.  If fou_add_to_port_list() fails,
+the error path frees fou while it is still reachable through
+sk_user_data.  A concurrent receive can then dereference the freed
+object in fou_from_sock().
 
-Fix this leak by moving the err_mdio_ioremap label above the ring
-deallocation logic. This guarantees the proper release of these resources
-and prevents the memory leak.
+This ordering issue was previously noted in the linked discussion.
 
-The bug was first flagged by an experimental analysis tool we are
-developing for kernel memory-management bugs while analyzing
-v6.13-rc1. The tool is still under development and is not yet publicly
-available. Manual inspection confirms that the bug is still
-present in v7.1-rc6.
+The failure is reachable when local port 0 is requested.  Each socket
+binds to a different ephemeral port, but fou_cfg_cmp() compares the
+requested port 0 and reports -EALREADY once an entry already exists.
 
-An x86_64 allyesconfig build showed no new warnings. As we do not have a
-CE4100 reference platform to test with, no runtime testing was able to
-be performed.
+Release the tunnel socket before freeing fou so sk_user_data is cleared
+first, and defer reclamation with kfree_rcu() to protect concurrent RCU
+readers.  This matches the lifetime handling in fou_release().
 
-Fixes: 5377a4160bb65 ("e1000: Add support for the CE4100 reference platform")
+Fixes: 23461551c006 ("fou: Support for foo-over-udp RX path")
+Suggested-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://lore.kernel.org/netdev/20260502031401.3557229-12-kuniyu@google.com/
 Cc: stable@vger.kernel.org
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
-Reviewed-by: Dima Ruinskiy <dima.ruinskiy@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+Link: https://patch.msgid.link/20260722083858.182506-1-xuanqiang.luo@linux.dev
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/e1000/e1000_main.c |    2 +-
+ net/ipv4/fou_core.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/intel/e1000/e1000_main.c
-+++ b/drivers/net/ethernet/intel/e1000/e1000_main.c
-@@ -1222,11 +1222,11 @@ err_eeprom:
+--- a/net/ipv4/fou_core.c
++++ b/net/ipv4/fou_core.c
+@@ -629,9 +629,9 @@ static int fou_create(struct net *net, s
+ 	return 0;
  
- 	if (hw->flash_address)
- 		iounmap(hw->flash_address);
-+err_mdio_ioremap:
- 	kfree(adapter->tx_ring);
- 	kfree(adapter->rx_ring);
- err_dma:
- err_sw_init:
--err_mdio_ioremap:
- 	iounmap(hw->ce4100_gbe_mdio_base_virt);
- 	iounmap(hw->hw_addr);
- err_ioremap:
+ error:
+-	kfree(fou);
+ 	if (sock)
+ 		udp_tunnel_sock_release(sock->sk);
++	kfree_rcu(fou, rcu);
+ 
+ 	return err;
+ }
 
 
