@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0894D1C84D0;
-	Fri,  7 Aug 2026 15:23:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE1E81C84D0;
+	Fri,  7 Aug 2026 15:23:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116216; cv=none; b=Y4MydNvhWLNW8LHH40KY1BDKoE0/iSxf7AJD3eWfHNodXq2qiH1qxGKH7yJs/4tyP3LLWb9L3HiN8iL9Obnod0E3eAxPlcm+x+JAYMUIuKQzkvXKx/YkU/XGHr5y1TePumgyldK98uEfRigbzVXWa6zF2mrVYpwJc5hzudQoX6c=
+	t=1786116219; cv=none; b=VXdMTM3EN8CUNa/pGHVTBdkIZLsbRDfW86ZOe8njTOtvesWp1pE1oI71qBO/+hf6FKiqgprcvn7KJqjmv9HdHZQR1YotPvvvdFyrTr4WrpXvMhRdywgnseTXHdJy0/yPhUf6m6etM0ihIoD8urUwv/Ry2g3y+H85CoAX30pVK4A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116216; c=relaxed/simple;
-	bh=CIYjeXB1Qdma/JwqYKl6H9J/vJkDqA2AKYx0egrR3oM=;
+	s=arc-20240116; t=1786116219; c=relaxed/simple;
+	bh=RCwHlpelBd0/xO9kFaC7d9a3ehVjQHUy8cz05boqf2E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=awzBqMcLR1J11dyfijwWrQ54IPVqVBMCnOIVL6VG/P2vrmFhKcKRMIT1JuCUUGJy/cDBcHuKbLo7H88W2fePT5s8rDQyW6/Et8wsKlZHWfWFYJ0Jb2AIshyM/yxuUY1w/xKQkmD1op/8XX+D4URSC3B01KWI1gjXPOTQuwU/MUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KhNxaBPx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JWHu6x51BK9SUgHU9+tl9osb+JIqKsVjvW9+xSiVsVnKoXTPXmHbevU/LK9/8ZH2BCKliHC3JrlrxGTlr3vTPPgfaKJ5+XwEXz9XrCuplD+ZvqbSCytK+3vA8pHf7oJguKzJx43xcTFKFvE4npo2NDp7wbKGxF+KmE+ElZr9aos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AZpEOzOU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KhNxaBPx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FF481F000E9;
-	Fri,  7 Aug 2026 15:23:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AZpEOzOU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 369CA1F000E9;
+	Fri,  7 Aug 2026 15:23:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116214;
-	bh=IhzfLaP/lnOvVG1Ow+ywPwvs/A3CSL0ys9T9iJ88vp8=;
+	s=korg; t=1786116217;
+	bh=4/v3Fz9F6t2Ufw8LhCJbKRDUWlPJppDDe/7tvApiUR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KhNxaBPxlYg9o6maEXTHW2sMc26G2V0xBX9mWdwoJA9snKh4RrbXkc6kg1FI4nngA
-	 KYWTsVe9bQvlFMiJusFmtcMB+WH5xAkRdl2Cx2lFT5V/feXifdXE7U+XAPgCAmXQ/T
-	 kINTxLeWClZM9Y9REEJZ8K0+W29OrXFa3/1FH74E=
+	b=AZpEOzOUZVLYWgEf9MSV/m+sNLM1fwO9VFPuo3i1JeAXwz8QGeJCBfNH/743bH8Cc
+	 l53ejikcK5TiKp53aPnM8tmdkGSdgOOfroaJk1e3TRdj2diM/6S/H7odyzXLZn8WY+
+	 rJxR/uzBpgu+Kudf+AwItvEksAyxXKutTtzikJpA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Rao <raoxu@uniontech.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 6.6 152/261] power: supply: bq25890: fix the -10 C NTC lookup entry
-Date: Fri,  7 Aug 2026 16:38:29 +0200
-Message-ID: <20260807143418.643818409@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>,
+	Federico Kirschbaum <federico.kirschbaum@xbow.com>,
+	Baul Lee <baul.lee@xbow.com>
+Subject: [PATCH 6.6 117/261] ALSA: usb-audio: fix OOB write in snd_usbmidi_akai_output()
+Date: Fri,  7 Aug 2026 16:37:54 +0200
+Message-ID: <20260807143417.896702204@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143415.358597922@linuxfoundation.org>
 References: <20260807143415.358597922@linuxfoundation.org>
@@ -50,38 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Rao <raoxu@uniontech.com>
+From: Baul Lee <baul.lee@xbow.com>
 
-commit 160a783aa65b74782bc17cb874af1a6d3f5fba3c upstream.
+commit 0970274613fb463d376211450cab066d34ebfe6a upstream.
 
-The TSPCT lookup table is monotonically decreasing except for ADC code
-121, where the sequence reads -9.0 C, -1.0 C, -12.0 C.  This makes the
-reported battery temperature jump upward by eight degrees for one code
-and then downward by eleven degrees for the next code.
+snd_usbmidi_akai_output() computes its fill-loop bound
 
-The entry is a missing zero: use -10.0 C so the sequence remains
-monotonic between -9.0 C and -12.0 C.
+	buf_end = ep->max_transfer - MAX_AKAI_SYSEX_LEN - 1;
 
-Fixes: 9652c02428f3 ("power: bq25890: add POWER_SUPPLY_PROP_TEMP")
+as a signed int, so a small device-advertised bulk-OUT max_transfer
+makes buf_end negative.  The loop guard then compares the u32
+urb->transfer_buffer_length against that negative int: the usual
+arithmetic conversion turns buf_end into a large unsigned value, so the
+guard stays true and each iteration keeps appending SysEx framing and
+payload bytes past the end of the URB transfer buffer, which is only
+max_transfer bytes long.
+
+A USB device that advertises a tiny bulk-OUT endpoint can therefore
+trigger an attacker-length- and content-controlled heap out-of-bounds
+write when a process writes to the created /dev/snd/midiC*D* node.
+
+Return early when there is no room for even one SysEx, so the loop is
+never entered with a bound that would wrap.  The loop is the last
+statement of the function, so bailing out is equivalent to it not
+running.
+
+Discovered by XBOW, triaged by Baul Lee <baul.lee@xbow.com>
+
+Fixes: 4434ade8c933 ("ALSA: usb-audio: add support for Akai MPD16")
+Suggested-by: Takashi Iwai <tiwai@suse.de>
+Reported-by: Federico Kirschbaum <federico.kirschbaum@xbow.com>
+Reported-by: Baul Lee <baul.lee@xbow.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Xu Rao <raoxu@uniontech.com>
-Link: https://patch.msgid.link/0619C8BF15F43B7C+20260723065444.1796002-1-raoxu@uniontech.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: Baul Lee <baul.lee@xbow.com>
+Link: https://patch.msgid.link/20260726074500.50145-1-baul.lee@xbow.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/bq25890_charger.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/usb/midi.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/power/supply/bq25890_charger.c
-+++ b/drivers/power/supply/bq25890_charger.c
-@@ -320,7 +320,7 @@ static const u32 bq25890_tspct_tbl[] = {
- 	145, 140, 130, 120, 115, 110, 100, 90,
- 	80, 70, 60, 50, 40, 30, 20, 10,
- 	0, -10, -20, -30, -40, -60, -70, -80,
--	-90, -10, -120, -140, -150, -170, -190, -210,
-+	-90, -100, -120, -140, -150, -170, -190, -210,
- };
+--- a/sound/usb/midi.c
++++ b/sound/usb/midi.c
+@@ -800,6 +800,8 @@ static void snd_usbmidi_akai_output(stru
  
- #define BQ25890_TSPCT_TBL_SIZE		ARRAY_SIZE(bq25890_tspct_tbl)
+ 	msg = urb->transfer_buffer + urb->transfer_buffer_length;
+ 	buf_end = ep->max_transfer - MAX_AKAI_SYSEX_LEN - 1;
++	if (buf_end <= 0)
++		return;
+ 
+ 	/* only try adding more data when there's space for at least 1 SysEx */
+ 	while (urb->transfer_buffer_length < buf_end) {
 
 
