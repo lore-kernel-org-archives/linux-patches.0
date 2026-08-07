@@ -1,38 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 270E02F1FDF;
-	Fri,  7 Aug 2026 15:05:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0F0544238C;
+	Fri,  7 Aug 2026 15:05:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115134; cv=none; b=I1C02VdT46OAFaBKN6SpOzp3wIxrmYTWWQTfFIlJwVlZca0fDg9bz1DadW6HuMGnpYukq/EnAJoW+Xrgk1gVs9gS4vTxrBMffIkUbz1I4OTV+pRpA91NgSecKwC5Gxpmi5VhEkw4mnhFgfZbYdVQpJwwEM2OHf5pnV0mgQDWOi4=
+	t=1786115137; cv=none; b=k9tufFN33uvsMPCD2G+lfxgah7CBJn9WW3y5KpzQqYwxUcGxuFAl55uB+xdd2L3dSYVvBXttX6zU57c+JO080rZm2y60iVDCxI/LY+YADkP2IRLJ/7RLa7m6TeLQbHJutgvymS7+I1QMWn38/uLWspIQpeAldo26CklU9cN6zQM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115134; c=relaxed/simple;
-	bh=+UIhg4YyTI6htrC/9TCt1XDAVkIqjyCyB7jHwJVaWpk=;
+	s=arc-20240116; t=1786115137; c=relaxed/simple;
+	bh=EIhW9D8wL76oYug07aeu9XgkKN0jJCVneZkq4IL3wzg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FVAsnCdoOcs0VLkEVmwlRD8t/MfCDJxMP4cnxFckYyXHU8ddD1uh5Dlztnm2xEMRbkqBfyDr4u/iITuZ648w1rXEYoZDj0RSWMINOsl1p5MhKtYxtj6r4cES5m74W4BNlEJUuHAyTboshDadYIvIXgvdXNq5zF/48Dp5xEtB1NU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VlDTJaoT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ePMNq+SMp0kAMArG8loQhr0jASHBBS+gMfcLJzka/aARgUuVtlrFggHR6AkY8UMt2Ohy6BN2nrWQXC6BSkL8QWYQGAzKVSQ5OmloAtCvIw51GT20EWLN/l/DhLT5KQL78RnWfxn57WjYza7EPNc7fRmFaCB9SXBLlLH4jRJaluI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OVUROxfK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VlDTJaoT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C9BB1F000E9;
-	Fri,  7 Aug 2026 15:05:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OVUROxfK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30F1D1F000E9;
+	Fri,  7 Aug 2026 15:05:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115133;
-	bh=BbiiuQBgRv/RJyXHV0G56WmX33JcJeCq5B7LEPs+228=;
+	s=korg; t=1786115135;
+	bh=Jx1VAd5oo+lLj653xamLuUcWpjOnqP6GJluGDXbd/t0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VlDTJaoTGb1+NTjDbbqk6Wrsnx7oL4Q+nMXGHqh8Xt1w20TLcW4MxdK3UGpk6js18
-	 1kcfxsTcmPj2J4HNMlge9Q9GlnabInga8oo+Yd17LIlXKRc54dugOMXha1br5sTc0T
-	 S4QgTYX7Gh3pparrvXtPK+aYSJszvAWt6vJfVdfM=
+	b=OVUROxfK/KJdxRlcQXPZvROweSPpcvfxb44A/CLdiFonvKmG1ue6JafMejlWLp3ka
+	 gQ78HJdiFbzBOpqkdIXw56cOI1jnzlMt0kK0Fn0vSe34X2DxV3WCoF0nQnx4ngsIc4
+	 4tz/uv2XddJEePPr6+UAtr39crsH5mOuZnNblmBQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Bilal <meatuni001@gmail.com>,
-	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 142/396] accel/qaic: use sizeof(*trans_hdr) for transaction length check
-Date: Fri,  7 Aug 2026 16:35:02 +0200
-Message-ID: <20260807143427.372738487@linuxfoundation.org>
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Balbir Singh <balbirs@nvidia.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Alistair Popple <apopple@nvidia.com>,
+	Byungchul Park <byungchul@sk.com>,
+	David Hildenbrand <david@kernel.org>,
+	Gregory Price <gourry@gourry.net>,
+	"Huang, Ying" <ying.huang@linux.alibaba.com>,
+	Joshua Hahn <joshua.hahnjy@gmail.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Rakie Kim <rakie.kim@sk.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 169/396] mm: migrate_device: fix pte_pfn/pte_dirty called on non-present PTE
+Date: Fri,  7 Aug 2026 16:35:29 +0200
+Message-ID: <20260807143427.946521376@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -51,49 +60,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muhammad Bilal <meatuni001@gmail.com>
+From: Kefeng Wang <wangkefeng.wang@huawei.com>
 
-[ Upstream commit d6c075f797a672a6e3bd2fd44aee713801698ec2 ]
+commit 63867c82d0c0c2d182016a32b1cc0103116b0ea5 upstream.
 
-In encode_message() the per-transaction lower-bound check compares
-trans_hdr->len against sizeof(trans_hdr), i.e. the size of the pointer,
-instead of sizeof(*trans_hdr), the size of struct qaic_manage_trans_hdr.
+pte_pfn() and pte_dirty() have undefined behaviour when called on a
+non-present PTE. In migrate_vma_collect_pmd(), these functions may be
+invoked on non-present entries (e.g., device-private entries), leading
+to potential crashes from pte_pfn() or incorrect dirty folio accounting
+from pte_dirty(). Fix both by guarding with pte_present() checks.
 
-Every other length check in this file (encode_message() at the loop
-guard, decode_message(), etc.) correctly uses sizeof(*trans_hdr), so
-this is an inconsistency. On 64-bit builds the pointer and the struct
-are both 8 bytes, so the check is correct by coincidence and there is
-no behavioural change. On 32-bit builds the pointer is 4 bytes, which
-weakens the minimum-length check below the 8-byte header size.
-
-Use sizeof(*trans_hdr) so the check validates against the actual
-transaction header size on all builds.
-
-Fixes: ea33cb6fc278 ("accel/qaic: tighten bounds checking in encode_message()")
-Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-Reviewed-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-Signed-off-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260617212520.59801-1-meatuni001@gmail.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/20260708003955.4024340-1-wangkefeng.wang@huawei.com
+Link: https://lore.kernel.org/20260706111958.3649651-1-wangkefeng.wang@huawei.com
+Fixes: fd35ca3d12cc ("mm/migrate_device.c: copy pte dirty bit to page")
+Fixes: 6c287605fd56 ("mm: remember exclusively mapped anonymous pages with PG_anon_exclusive")
+Signed-off-by: Kefeng Wang <wangkefeng.wang@huawei.com>
+Reviewed-by: Balbir Singh <balbirs@nvidia.com>
+Acked-by: Zi Yan <ziy@nvidia.com>
+Cc: Alistair Popple <apopple@nvidia.com>
+Cc: Byungchul Park <byungchul@sk.com>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Gregory Price <gourry@gourry.net>
+Cc: "Huang, Ying" <ying.huang@linux.alibaba.com>
+Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: Rakie Kim <rakie.kim@sk.com>
+Cc: Ying Huang <ying.huang@linux.alibaba.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/accel/qaic/qaic_control.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/migrate_device.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/accel/qaic/qaic_control.c b/drivers/accel/qaic/qaic_control.c
-index 8eae30fe14f98..8759b53ba38eb 100644
---- a/drivers/accel/qaic/qaic_control.c
-+++ b/drivers/accel/qaic/qaic_control.c
-@@ -782,7 +782,7 @@ static int encode_message(struct qaic_device *qdev, struct manage_msg *user_msg,
- 			break;
- 		}
- 		trans_hdr = (struct qaic_manage_trans_hdr *)(user_msg->data + user_len);
--		if (trans_hdr->len < sizeof(trans_hdr) ||
-+		if (trans_hdr->len < sizeof(*trans_hdr) ||
- 		    size_add(user_len, trans_hdr->len) > user_msg->len) {
- 			ret = -EINVAL;
- 			break;
--- 
-2.53.0
-
+--- a/mm/migrate_device.c
++++ b/mm/migrate_device.c
+@@ -209,7 +209,8 @@ again:
+ 			bool anon_exclusive;
+ 			pte_t swp_pte;
+ 
+-			flush_cache_page(vma, addr, pte_pfn(pte));
++			if (pte_present(pte))
++				flush_cache_page(vma, addr, pte_pfn(pte));
+ 			anon_exclusive = folio_test_anon(folio) &&
+ 					  PageAnonExclusive(page);
+ 			if (anon_exclusive) {
+@@ -230,7 +231,7 @@ again:
+ 			migrate->cpages++;
+ 
+ 			/* Set the dirty flag on the folio now the pte is gone. */
+-			if (pte_dirty(pte))
++			if (pte_present(pte) && pte_dirty(pte))
+ 				folio_mark_dirty(folio);
+ 
+ 			/* Setup special migration page table entry */
 
 
