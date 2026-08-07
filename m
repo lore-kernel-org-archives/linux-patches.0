@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84359432E85;
-	Fri,  7 Aug 2026 15:34:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 582B747278C;
+	Fri,  7 Aug 2026 15:34:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116858; cv=none; b=TwUHeUJp9aAWHdz6QV/6ivoY43PlWZ5Hkq1+8r0XjkigQaLU5MYHxg0PRNTJvwZVutCRDtzvN4uwDzkSjtIsOvFgh97D7lLX73N1/kK1LmsLnEUo33M/9Sg7AdiEyL0LUQGWs8ejc1ATHH7BfFwsTfvQnArqGyOx5EoLtGBRO0g=
+	t=1786116861; cv=none; b=BjklXStMoJN7GP1WlN+cxb2tuxEW6UlyLwTdpLvh3YEQvnYxB/ObivZSkCm0KFbzbrZGVtHqPTEZraEHQuVPMaTCsUuzcS0l8QuVvnv5XMRu+WTz9gOst0smNy2W9txwi3hM1Xmz2DUpWC3REIGnUYkcWAq3IGQzHKcCoPMCWHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116858; c=relaxed/simple;
-	bh=XFpBbM7dKf6vueF5qonzaePZm8FfI6ihpnTx6A1HJxo=;
+	s=arc-20240116; t=1786116861; c=relaxed/simple;
+	bh=t160CjPKutJ7ysGYEmR8XvAwk+idUppjKX+qz0nBk6E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IgnmLgk0fUgYObRNYnOrlOscCTqbA0Um2ajVXuRSCTAp9YjeXIZWZdRaTgLeAxIFB6+0WVKfoaHjAXIw6yMV93kvVdxujn8yGJNZDlazCDE2jAE29uofzaszG6tKDDIl7RMysI0gSdbnKhadIX1OmeY42Jns+niSZchY5CQO1p8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K2wkRMIK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=csJuXrbKHqL8TnA21lNEJsaXyPyjNHb6qmXobA9dGCWhmXt5k8P7ar67hrfNukqVUBeia76QT1hzC9qWoKcVORUVlomGUD7J8CFZ2Tlyt46Z7lDV1bNaVOfJfUyRSleRlDzoxvfpiJMzs83tdDI/vxWRiNmU8RZSf87EZjh5ilc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ywh8kxll; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K2wkRMIK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DF2A1F00A3A;
-	Fri,  7 Aug 2026 15:34:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ywh8kxll"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 779BC1F00A3A;
+	Fri,  7 Aug 2026 15:34:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116857;
-	bh=SALSkfKvgEkOECsttcK6xHg/I1xU7wLKXgmSQq1Po34=;
+	s=korg; t=1786116860;
+	bh=wloUCSkIiMLfeitwhg5BQdZUysVJAIigpxs7URRtHvY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K2wkRMIKuD+UcdvG2HL/brQOqazDI1EERxu9nPwd0xitRFRtl5uN3lEJ/8dit3mRL
-	 35y5MrAeSAooYzSnPNVFknPxiIvt5pPyryeDeP37G7Ek/wPl0c560V2J+Qtu1SHUxK
-	 3b9OzNN1wFZjDLVlkj1SoIXp+Qd6mzp6iM9Eqtuo=
+	b=Ywh8kxll3H9/JCKgw8jAfJ5f4QDLSFP5LsNrmqv6WFSuTa8cDOaHI5WBJItJZUwov
+	 yuPGXNGzoPsLypPjc3QKioWVKL6h6/ySlnR+0OoT3lPo9F3Bsfse06+zrAnFpNI3+e
+	 rUgJGkztrTuKwQd8eVqnqSC78OxoiNKcGdzMjd1Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	John Ericson <mail@johnericson.me>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 113/438] powerpc/boot: Fix treeboot-currituck CPU node lookup check
-Date: Fri,  7 Aug 2026 16:35:09 +0200
-Message-ID: <20260807143430.404124468@linuxfoundation.org>
+Subject: [PATCH 7.1 071/438] af_unix: fix listen() succeeding on sockets in the wrong state
+Date: Fri,  7 Aug 2026 16:34:27 +0200
+Message-ID: <20260807143429.501248788@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -52,36 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: John Ericson <mail@johnericson.me>
 
-[ Upstream commit 43863f6575d2211e8c5157fefb83ad0ad046aab4 ]
+[ Upstream commit f0d9c3ffc2b5fc2ffacb56b3036155ce7a940a12 ]
 
-fdt_node_offset_by_prop_value() returns a negative error code on
-failure - fix the check accordingly.
+Commit fd0a109a0f6b ("net, pidfs: prepare for handing out pidfds for
+reaped sk->sk_peer_pid") inserted a prepare_peercred() call between err
+= -EINVAL and the socket-state check in unix_listen(). Since
+prepare_peercred() leaves err at 0 on success, listen() on an AF_UNIX
+socket that is not in TCP_CLOSE or TCP_LISTEN state (e.g. one that is
+already connected) now silently returns success without doing anything,
+instead of failing with EINVAL as it did before.
 
-Fixes: 228d55053397 ("powerpc/47x: Add support for the new IBM currituck platform")
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260702211554.56923-5-thorsten.blum@linux.dev
+Fixes: fd0a109a0f6b ("net, pidfs: prepare for handing out pidfds for reaped sk->sk_peer_pid")
+Signed-off-by: John Ericson <mail@johnericson.me>
+Link: https://patch.msgid.link/20260718182903.2295560-1-John.Ericson@Obsidian.Systems
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/boot/treeboot-currituck.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/unix/af_unix.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/powerpc/boot/treeboot-currituck.c b/arch/powerpc/boot/treeboot-currituck.c
-index d53e8a592f816..5b5363b74f9f3 100644
---- a/arch/powerpc/boot/treeboot-currituck.c
-+++ b/arch/powerpc/boot/treeboot-currituck.c
-@@ -102,7 +102,7 @@ void platform_init(void)
- 
- 	node = fdt_node_offset_by_prop_value(_dtb_start, -1, "device_type",
- 	                                     "cpu", sizeof("cpu"));
--	if (!node)
-+	if (node < 0)
- 		fatal("Cannot find cpu node\n");
- 	timebase = fdt_getprop(_dtb_start, node, "timebase-frequency", &size);
- 	if (timebase && (size == 4))
+diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
+index 0d9cd977c7b78..bb01d5371dc85 100644
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -823,6 +823,7 @@ static int unix_listen(struct socket *sock, int backlog)
+ 	if (err)
+ 		goto out;
+ 	unix_state_lock(sk);
++	err = -EINVAL;
+ 	if (sk->sk_state != TCP_CLOSE && sk->sk_state != TCP_LISTEN)
+ 		goto out_unlock;
+ 	if (backlog > sk->sk_max_ack_backlog)
 -- 
 2.53.0
 
