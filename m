@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 831DA376A19;
-	Fri,  7 Aug 2026 14:53:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53F9B31AAA8;
+	Fri,  7 Aug 2026 14:53:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114407; cv=none; b=Alj55GjZDDftRR7uf8khFva/n8EDsANt9UiaesYdM7f8+uA6QU0Jlal9CrNPG0BgsUqNIlcFMlHKxubPcBTnaxq3JjYF8vVkI6s6I8h85MPXc91wSYzjwe26ZRGXWwH3HAqTWy3DAoaP5+9ruH397QsHDAtbEuhm6E+WIikEAGc=
+	t=1786114409; cv=none; b=tw9GljvT/wuuHnIJaq1zIAZajAnWCK+u64kY4qo6bsvD5ssReicFhQMO03hpxxzXD989bH6wvHTU8N8IlQUKbiS2ZcVVLaL5Dg9e41k4iuYGp+z+iy683iXrX8RhlA5KeO+pTIhxdMZ9Q/wXyxT/22Vdt2aEepw6ZketVPssQKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114407; c=relaxed/simple;
-	bh=Mx9Q/tDi+oEXGfRnbzelfwq5+ymizQQ0XW6u7/zzj4k=;
+	s=arc-20240116; t=1786114409; c=relaxed/simple;
+	bh=0WEtaFTLw30HrP3UxRIaQAUhZGMbFa/nBg7MLj6fnaI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YQnOeAPgoUw7ymj7f7AcP9McyffYajW6L82C8VqA1Dd/b5OEaWnBsg41DF+N9diLzft44/5zIDomxbl/W1gXM3olcoqul2d0caKPHr3bwwnKE1JBDVopM0H0TvRfkexEODsNy4UVLIqjdS63B8aqn/u/Y4IqFXkbuE9b4WaPZOo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AwA7TP7q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lp/NmiG8JyBhV+j7Km8Js6hSbH/LEXmUVZnNAzwo4of22b14NYMRoZYVX19hcorDkPtvB0lfvrSevAjF3SkUCmDjna4a8lHW4JmSmLTBKBZCZPHcfb57yC2wOzLINO+YjNTw6b2NA++CyaReJMxa3RCtUX2vm/I+JrHDut8bIyg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FZC44C+m; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AwA7TP7q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B76931F000E9;
-	Fri,  7 Aug 2026 14:53:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FZC44C+m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A85E31F000E9;
+	Fri,  7 Aug 2026 14:53:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114405;
-	bh=lWBYRS59LWz80HtFBqPKXyfC3y0QGL8Rh14LClKRmmk=;
+	s=korg; t=1786114408;
+	bh=NQ3iEv0dogxmALeuQp8DGnqsp/znOrp9b8Q4FlqbHko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AwA7TP7qwsqVg31+oazXuTfvHfsusz2OE35zljIFCC6Guez/Ho0bMJ8v5R7kzgV+I
-	 W+B70rjWM1uMQjb30bOz2H0tHWA7hWmFH+sBt3BdDiADsRvmIrpS2I7UqQw/6uaoII
-	 UbDX+oWjqabzA15EZ4htgItk/X2aXHCestZt2LXo=
+	b=FZC44C+maGshGqTbM7zSIgiXT2xvTGJrxC4Mo2+hwEYw766qvo8vYWlgns+fi03/R
+	 fiKYbT2I2JnZt/SSLIPBLnotREj/kpR2Z8Ocp88EMlgQLaodKsoSi8FUXhfOnHaS5x
+	 EV+6v9sL1nhAa6bRUUO7HbOwRqgbGi5aaq9jHgJE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harkirat Gill <harkirat.gill@amd.com>,
-	David Francis <David.Francis@amd.com>,
+	Wayne Lin <wayne.lin@amd.com>,
+	Ray Wu <ray.wu@amd.com>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 251/337] drm/amdgpu: cap GTT size to physical RAM on APUs
-Date: Fri,  7 Aug 2026 16:37:34 +0200
-Message-ID: <20260807143423.986890601@linuxfoundation.org>
+Subject: [PATCH 6.12 252/337] drm/amd/display: Increase HDMI AV mute wait from 2 to 3 frames
+Date: Fri,  7 Aug 2026 16:37:35 +0200
+Message-ID: <20260807143424.010528798@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -51,60 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harkirat Gill <harkirat.gill@amd.com>
+From: Ray Wu <ray.wu@amd.com>
 
-commit 5e70f6804b4d6256058c360b10e044ee04ea4a4e upstream.
+commit c216b39fbbc4b007fd6984cffd85039d49a55154 upstream.
 
-On APUs, the GTT pool is backed by system RAM, but its size is not bound
-to the non-carveout memory that actually backs it. A user can end up
-with GTT + VRAM exceeding total physical memory through the following
-sequence:
+Some HDMI sinks need additional GCP packets to properly process the
+mute state before the timing generator is disabled, especially after
+link re-establishment with HDMI 2.0 scrambling enabled. Waiting for
+only 2 frames is insufficient for certain monitor firmware, resulting
+in garbled display output on resume from suspend.
 
- - Have a large non-carveout memory space (~128GB) and accordingly set a
-   large GTT (~100GB) via the ttm module parameter.
- - Lower the non-carveout memory space in BIOS by increasing the UMA
-   Frame Buffer Size (VRAM) to 64GB.
- - The previously set GTT value (~100GB) persists, even though the new
-   non-carveout space (64GB) can no longer back it.
+Increase the AV mute wait in dcn30_set_avmute() from 2 to 3 frames
+to ensure the sink receives enough GCP packets.
 
-This leads to a case where kernel reports GTT (100GB) + VRAM (64GB)
-despite the sum being greater than total physical memory (128GB).
-
-Cap the GTT size to totalram_pages() on APUs. totalram_pages() already
-excludes the VRAM carveout, so the resulting GTT can never exceed the
-system RAM that actually backs it.
-
-Signed-off-by: Harkirat Gill <harkirat.gill@amd.com>
-Reviewed-by: David Francis <David.Francis@amd.com>
-Assisted-by: Claude:claude-opus-4
+Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/5167
+Assisted-by: Cursor:Claude-Opus-4.6
+Reviewed-by: Wayne Lin <wayne.lin@amd.com>
+Signed-off-by: Ray Wu <ray.wu@amd.com>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 5dafdd649280c7dc6c22c8f877da3f54fcc441e1)
+(cherry picked from commit 0c0d5174b09640d8b560764aa5a177630e076e93)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/gpu/drm/amd/display/dc/hwss/dcn30/dcn30_hwseq.c |   16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-@@ -1996,6 +1996,18 @@ int amdgpu_ttm_init(struct amdgpu_device
- 	else
- 		gtt_size = (uint64_t)amdgpu_gtt_size << 20;
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dcn30/dcn30_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn30/dcn30_hwseq.c
+@@ -821,13 +821,19 @@ void dcn30_set_avmute(struct pipe_ctx *p
+ 				pipe_ctx->stream_res.stream_enc,
+ 				enable);
  
-+	/* Cap GTT so that it does not exceed total physical RAM. */
-+	if (adev->flags & AMD_IS_APU) {
-+		u64 phys_ram = (u64)totalram_pages() << PAGE_SHIFT;
+-		/* Wait for two frame to make sure AV mute is sent out */
++		/* Wait for three frames to make sure AV mute is sent out.
++		 * Some HDMI sinks need additional GCP packets to properly
++		 * process the mute state, especially after link re-establishment
++		 * with HDMI 2.0 scrambling enabled.
++		 */
+ 		if (enable && pipe_ctx->stream_res.tg->funcs->is_tg_enabled(pipe_ctx->stream_res.tg)) {
++			int i;
 +
-+		if (gtt_size > phys_ram) {
-+			gtt_size = phys_ram;
-+			dev_info(adev->dev,
-+				 "Capping GTT to %uM to not exceed available system memory\n",
-+				 (unsigned int)(gtt_size / (1024 * 1024)));
-+		}
-+	}
-+
- 	/* Initialize GTT memory pool */
- 	r = amdgpu_gtt_mgr_init(adev, gtt_size);
- 	if (r) {
+ 			pipe_ctx->stream_res.tg->funcs->wait_for_state(pipe_ctx->stream_res.tg, CRTC_STATE_VACTIVE);
+-			pipe_ctx->stream_res.tg->funcs->wait_for_state(pipe_ctx->stream_res.tg, CRTC_STATE_VBLANK);
+-			pipe_ctx->stream_res.tg->funcs->wait_for_state(pipe_ctx->stream_res.tg, CRTC_STATE_VACTIVE);
+-			pipe_ctx->stream_res.tg->funcs->wait_for_state(pipe_ctx->stream_res.tg, CRTC_STATE_VBLANK);
+-			pipe_ctx->stream_res.tg->funcs->wait_for_state(pipe_ctx->stream_res.tg, CRTC_STATE_VACTIVE);
++			for (i = 0; i < 3; i++) {
++				pipe_ctx->stream_res.tg->funcs->wait_for_state(pipe_ctx->stream_res.tg, CRTC_STATE_VBLANK);
++				pipe_ctx->stream_res.tg->funcs->wait_for_state(pipe_ctx->stream_res.tg, CRTC_STATE_VACTIVE);
++			}
+ 		}
+ 	}
+ }
 
 
