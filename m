@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5601830E0F2;
-	Fri,  7 Aug 2026 15:40:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36B8B41D138;
+	Fri,  7 Aug 2026 15:40:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786117209; cv=none; b=H4OiCOP4vP6GeJjo1vc0zzD0GVTkKcAECAkWDvDLSbcnNc3DAgNriGrSGH2v2GNh4ylaSMCvNUQOtJ87XjY7twEXJ2dyaedFJjpIsubERoMf3LiaUM+68DvC8zUbJWxnVtI4+/Zf8h3pwwbAnX16+rybIgVbrjsArn3fmArQLD8=
+	t=1786117212; cv=none; b=ik4NejwwujcWcgN5o8FeSLisprYNHw36IV5B26igXcueh+xnhOUm6Dfv01DVW9tNYe+8XFbU31R/llNBBInVYPBwWoReNg/us6DsrcgQa/tGtOevB0og9mECt86omYOdZYpP7TnE6dOD67ZVRDKuurS3mEK2lAm0SIk/PhGWraA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786117209; c=relaxed/simple;
-	bh=W4c3W8NEeApSgX6OWtr5GCZfiSr3nlClw+sAfg5+zuM=;
+	s=arc-20240116; t=1786117212; c=relaxed/simple;
+	bh=vSgzXVpXKhV9uUWCpIPHNNm9mqZtlGMvBM+h5YEKFEk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s0v/lvyouUNcJNKuYeTSy/glmfce0eiUEo3g/ldqhIKGesfxvLO8nYJYzM7lzAwzdBB1hL5/hDKGtILNf+AtiepuJbbDUOpWTVRE6rtVtXV8JKFtUTK970/hXEBssnRKt96knO5Npf3HZnLSy/1ksLR91yq7r99k2e/nvipKw50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jxxgKRQ+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JlLOygMQimvqprz9ArFttoVglTdFT7wtFE1wpOs6eWGrao6/criOvID7AME37SbQFGZWF3NA+cgTsDTA1bdX2pBj+t4WJArTEy/5uSYX/5HUsk196ZNmNl/Um8U5GP+h5UJM0RQ20mBUt3cSYKxtBj+D8rIdyoxBGIR4lbTHebY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dJDF94Dd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jxxgKRQ+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A175B1F000E9;
-	Fri,  7 Aug 2026 15:40:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dJDF94Dd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 929291F000E9;
+	Fri,  7 Aug 2026 15:40:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786117208;
-	bh=PxOZZEPhvIsA1dDHezwOVwnB8xmM/11wC8MOstt2cdY=;
+	s=korg; t=1786117211;
+	bh=5+NrT375NCL8MGYHfvtPr035Mf89KNaVQPNI/9xI4Ss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jxxgKRQ+opsueV7rQ+tEVQGKtE0tYtDBtBxeTvv6OFViPtLOiuh8uM59y/1q64Fo3
-	 SpqT3BzORY6STmQXvoa5TuLNhu3kpQIH8biR4vhA8yn3GlalQroeDv9b7BMWlNXP6X
-	 owOkR7SMkolr6/7ZmG7Kox8KtthpI0opvzdUX5w0=
+	b=dJDF94DdP5dk+YFBS7qlSY/RiIgCP7HzTulkktQu+x0HKAcD1zZQaUR5p+iDq1Ypq
+	 9o8doOrR7/9ly3YFqbhtjxf8DNflXb+k4QSEuq+ayp8L99gXkahyXSYzx2/GSAZp3N
+	 0mmg8Ri8FXMXOhuNW299S/nxlW1A7Wwa216MYNvg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Luxiao Xu <rakukuip@gmail.com>,
-	Ren Wei <enjou1224z@gmail.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 7.1 238/438] audit: fix potential use-after-free in audit_del_rule()
-Date: Fri,  7 Aug 2026 16:37:14 +0200
-Message-ID: <20260807143433.078006763@linuxfoundation.org>
+	Stanislav Kinsburskii <skinsburskii@gmail.com>,
+	Alistair Popple <apopple@nvidia.com>,
+	Balbir Singh <balbirs@nvidia.com>,
+	"Zenghui Yu (Huawei)" <zenghui.yu@linux.dev>,
+	Jason Gunthorpe <jgg@ziepe.ca>,
+	Leon Romanovsky <leon@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 7.1 212/438] lib: test_hmm: use device devt for coherent device range selection
+Date: Fri,  7 Aug 2026 16:36:48 +0200
+Message-ID: <20260807143432.532707528@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -52,55 +55,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luxiao Xu <rakukuip@gmail.com>
+From: Stanislav Kinsburskii <skinsburskii@gmail.com>
 
-commit 246df90b5f1a8a6e6abbd2f058b029558720adec upstream.
+commit 4fc089235378d1f9ddb6bcbe67c192ffdcaae0ed upstream.
 
-`audit_del_rule()` destroys `e->rule.exe` via `audit_remove_mark_rule()`
-before unlinking the rule from RCU-visible filter lists and waiting for a
-grace period. Concurrent readers in `audit_filter()` and
-`audit_filter_rules()` still dereference `e->rule.exe`, while the fsnotify
-mark can be freed on an independent lifetime path. This creates a
-use-after-free window during rule deletion.
+Commit af69016dab96 ("lib: test_hmm: implement a device release method")
+moved the initial dmirror_allocate_chunk() call before cdev_device_add().
+That means the struct cdev has not been added yet, so cdev_add() has not
+initialized mdevice->cdevice.dev.
 
-Fix this by unlinking the rule from the RCU-visible lists and invoking
-`synchronize_rcu()` before calling `audit_remove_mark_rule()` (and other
-rule removal helpers). This ensures that all existing RCU readers have
-exited the critical section before any underlying resources are destroyed.
+The coherent-device range selection uses the device minor to choose
+between spm_addr_dev0 and spm_addr_dev1.  Reading
+MINOR(mdevice->cdevice.dev) before cdev_add() therefore always sees an
+uninitialized dev_t.  As a result, both coherent devices select the same
+physical range, and adding the second device fails due to the overlapping
+dev_pagemap range.
 
-Cc: stable@vger.kernel.org
-Fixes: 34d99af52ad4 ("audit: implement audit by executable")
-Reported-by: Vega <vega@nebusec.ai>
-Assisted-by: Codex:gpt-5.4
-Signed-off-by: Luxiao Xu <rakukuip@gmail.com>
-Signed-off-by: Ren Wei <enjou1224z@gmail.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Use mdevice->device.devt instead.  It is initialized in
+dmirror_device_init() before dmirror_allocate_chunk() is called and is the
+same dev_t later passed to cdev_device_add().
+
+Link: https://lore.kernel.org/178277581197.172200.16265155329935822153.stgit@skinsburskii
+Fixes: af69016dab96 ("lib: test_hmm: implement a device release method")
+Signed-off-by: Stanislav Kinsburskii <skinsburskii@gmail.com>
+Reviewed-by: Alistair Popple <apopple@nvidia.com>
+Cc: Balbir Singh <balbirs@nvidia.com>
+Cc: Zenghui Yu (Huawei) <zenghui.yu@linux.dev>
+Cc: Jason Gunthorpe <jgg@ziepe.ca>
+Cc: Leon Romanovsky <leon@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/auditfilter.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ lib/test_hmm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/auditfilter.c
-+++ b/kernel/auditfilter.c
-@@ -1045,6 +1045,10 @@ int audit_del_rule(struct audit_entry *e
- 		goto out;
- 	}
- 
-+	list_del_rcu(&e->list);
-+	list_del(&e->rule.list);
-+	synchronize_rcu();
-+
- 	if (e->rule.watch)
- 		audit_remove_watch_rule(&e->rule);
- 
-@@ -1062,8 +1066,6 @@ int audit_del_rule(struct audit_entry *e
- 		audit_signals--;
- #endif
- 
--	list_del_rcu(&e->list);
--	list_del(&e->rule.list);
- 	call_rcu(&e->rcu, audit_free_rule_rcu);
- 
- out:
+diff --git a/lib/test_hmm.c b/lib/test_hmm.c
+index 9c59d1ceb5b5..c4adbf98fac7 100644
+--- a/lib/test_hmm.c
++++ b/lib/test_hmm.c
+@@ -581,7 +581,7 @@ static int dmirror_allocate_chunk(struct dmirror_device *mdevice,
+ 		devmem->pagemap.type = MEMORY_DEVICE_PRIVATE;
+ 		break;
+ 	case HMM_DMIRROR_MEMORY_DEVICE_COHERENT:
+-		devmem->pagemap.range.start = (MINOR(mdevice->cdevice.dev) - 2) ?
++		devmem->pagemap.range.start = (MINOR(mdevice->device.devt) - 2) ?
+ 							spm_addr_dev0 :
+ 							spm_addr_dev1;
+ 		devmem->pagemap.range.end = devmem->pagemap.range.start +
+-- 
+2.55.0
+
 
 
