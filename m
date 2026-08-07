@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCB9A47884E;
-	Fri,  7 Aug 2026 15:00:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4E0D340280;
+	Fri,  7 Aug 2026 15:00:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114818; cv=none; b=kfkjvfRp8ARyULiPmxSv2k6lDOF0C4cK2saurM2FwgzFdTBUhXV5pX2Wx5VP90krwmB5bvBGh+is7WvNHjD0z2LJaiCQ8SqQvVnU39W2+Etz8+oPHVt0nG+8YaYNUvQz2sA1Z6PfqZcpCNY8YeJfB/U9QlBvSnXe7prBf3+OalU=
+	t=1786114821; cv=none; b=dJrM4LW8iT2dF1nqEjgDEQgkAAQuFSjpUiiA6+l37pwWykupBPshYjDp8ULSeTbd9Tlm9lnQXlrSi3gJAblE4dN9mFRDhZL3CJqko8ZTrMH6TXk5BXuOo/qAmznvHB3qi8Rv6d6TT7bxks2jKcDnK9qZutINYGSM47XjJ3LIVmk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114818; c=relaxed/simple;
-	bh=+yFnzfQsFQ3O0qQUNsNHfBiN0gbTwS7fDQangbQZjV4=;
+	s=arc-20240116; t=1786114821; c=relaxed/simple;
+	bh=4ojfKEyJdsv0K+ZC6EvFndaxApAmuOH4fXMwoNhmYzc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BXeAFxKBbw/A15OHK9NNgvgs6bpPyDtOSMohIINMCQXkBPqqxg76LK22QNK5I0tGVm4TMWltdFG6XenLclrmZ4xyHL/m/zysx+o1nGoT4+UQi653AXB1yV1N7MB/ci7wvNhF1x5dkOSaCUOcGAmHJhXywps6viT+6h/auIiHf1g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p8pumlno; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nBkVSU1ScK207+uLM8jZAxvBP9FUIcwZ7KOF7XhWttPfUTtk8/yVyXNjueJajZpkbvxORkzAXL8Z9OUvkZdToQ9oBZyqGN6Gj12j/X2zHS6hDJl21Js9OH0pZm7WUu6Cdxp3wMdCfiV2Dx08Cg+mvFZ0wweP6UNf0bHh0zR3q44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Aio0FBVY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p8pumlno"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43FFA1F000E9;
-	Fri,  7 Aug 2026 15:00:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Aio0FBVY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FD311F000E9;
+	Fri,  7 Aug 2026 15:00:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114816;
-	bh=d74ox4c+xzibX8blu3I09Nfm7m4nOc6d1QHcLIrxk+Y=;
+	s=korg; t=1786114819;
+	bh=WX0ui0y2v+126TB+vAMBsL/oYLnkKVr1JQ5ZrrwS3Rk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p8pumlno8nki++Eg/rr1lwjyENELgSpPMhflvpkhq+z/JoI2XEv+DIRqCq0lRd0/L
-	 Atd8qwPA6pkuN2fO7U8Kc0GMnA7nrmCzjTh6F0pRvj56W4XuuLgL9PHVQ2wyVSlPAj
-	 TxJlflzPdo68qTC1CnUa4I78u1JVoGZGieojEhqo=
+	b=Aio0FBVYaBS8gStIHV46RzN519TN75AQYkAIz74NiFUWZT+4dvPaGCb0f07h/Trwc
+	 cXzO9xBPADbdsfBfeLkvDm+aun9+aONTT9oEYwYKzREhZZbMZ4m3d+kzSabvcTjOqA
+	 2iicL0VuHjJ5Z7C55q/RhlmxP8/XaR+P0rWnAiqE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Ericson <mail@johnericson.me>,
+	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
+	Jason Xing <kernelxing@tencent.com>,
+	Stanislav Fomichev <sdf@fomichev.me>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 059/396] selftests/net/af_unix: test listen() rejects wrong socket states
-Date: Fri,  7 Aug 2026 16:33:39 +0200
-Message-ID: <20260807143425.546011292@linuxfoundation.org>
+Subject: [PATCH 6.18 060/396] xsk: fix buffer leak in xsk_drop_skb() for AF_XDP multi-buffer Tx
+Date: Fri,  7 Aug 2026 16:33:40 +0200
+Message-ID: <20260807143425.568489589@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -51,251 +53,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Ericson <mail@johnericson.me>
+From: Jason Xing <kernelxing@tencent.com>
 
-[ Upstream commit 7f57c650d08b8793bb551bdb33ad876535ef9fe8 ]
+[ Upstream commit a3c8382ebce4780c6b3ace2c09bc342313ac0186 ]
 
-Add a regression test for the unix_listen() state check. The key case is
-listen() on a bound socket that has already been connected: it is no
-longer in TCP_CLOSE or TCP_LISTEN, so it must fail with EINVAL. A
-prepare_peercred() call slipped in ahead of that check once left err at 0
-and made listen() silently succeed there instead; this guards against a
-repeat.
+This patch is inspired by the check[1] from sashiko. It says when
+overflow happens, the address of cq to be published is invalid.
+Actually the severer thing is the whole process of publishing the
+address of cq in this particular case is not right: it should truely
+publish the address and advance the cached_prod in cq as long as it
+reads descriptors from txq.
 
-The neighbouring outcomes are covered too so they cannot regress the same
-way: a bound socket in TCP_CLOSE listens fine, calling listen() again on a
-socket already in TCP_LISTEN is allowed, and an unbound socket fails with
-EINVAL.
+The following is the full analysis.
+xsk_drop_skb() is called in three places, which all discard a partially
+built multi-buffer skb:
+1) xsk_build_skb() -EOVERFLOW error path: packet exceeds MAX_SKB_FRAGS
+2) __xsk_generic_xmit() post-loop cleanup: an invalid descriptor in
+   the TX ring prevents the partial packet from completing
+3) xsk_release(): socket close while xs->skb holds an incomplete packet
 
-Each case runs for both listenable socket types (SOCK_STREAM and
-SOCK_SEQPACKET) and both pathname and abstract addresses.
+In all three cases, the TX descriptors for the already-processed frags
+have been consumed from the TX ring (xskq_cons_release), and CQ slots
+have been reserved. However, xsk_drop_skb() calls xsk_consume_skb()
+which cancels the CQ reservations via xsk_cq_cancel_locked(). Since
+the buffer addresses never appear in the completion queue, userspace
+permanently loses track of these buffers.
 
-Fixes: fd0a109a0f6b ("net, pidfs: prepare for handing out pidfds for reaped sk->sk_peer_pid")
-Signed-off-by: John Ericson <mail@johnericson.me>
-Link: https://patch.msgid.link/20260718182903.2295560-2-John.Ericson@Obsidian.Systems
+Fix this by letting consume_skb() trigger the existing xsk_destruct_skb
+destructor, which already submits buffer addresses to the CQ via
+xsk_cq_submit_addr_locked().
+
+Note that cancelling the descriptors back to the TX ring (via
+xskq_cons_cancel_n) is not a appropriate option because an oversized
+packet that always exceeds MAX_SKB_FRAGS would be retried indefinitely,
+which is an obviously deadlock bug in the TX path.
+
+Also move the desc->addr assignment in xsk_build_skb() above the
+overflow check so that the current descriptor's address is recorded
+before a potential -EOVERFLOW jump to free_err, consistent with the
+zerocopy path in xsk_build_skb_zerocopy().
+
+[1]: https://lore.kernel.org/all/20260425041726.85FB3C2BCB2@smtp.kernel.org/
+
+Fixes: cf24f5a5feea ("xsk: add support for AF_XDP multi-buffer on Tx path")
+Acked-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Signed-off-by: Jason Xing <kernelxing@tencent.com>
+Acked-by: Stanislav Fomichev <sdf@fomichev.me>
+Link: https://patch.msgid.link/20260719135609.147823-2-maciej.fijalkowski@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../testing/selftests/net/af_unix/.gitignore  |   1 +
- tools/testing/selftests/net/af_unix/Makefile  |   1 +
- .../selftests/net/af_unix/unix_listen.c       | 187 ++++++++++++++++++
- 3 files changed, 189 insertions(+)
- create mode 100644 tools/testing/selftests/net/af_unix/unix_listen.c
+ net/xdp/xsk.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/tools/testing/selftests/net/af_unix/.gitignore b/tools/testing/selftests/net/af_unix/.gitignore
-index 240b26740c9e0..9731766441036 100644
---- a/tools/testing/selftests/net/af_unix/.gitignore
-+++ b/tools/testing/selftests/net/af_unix/.gitignore
-@@ -6,3 +6,4 @@ scm_rights
- so_peek_off
- unix_connect
- unix_connreset
-+unix_listen
-diff --git a/tools/testing/selftests/net/af_unix/Makefile b/tools/testing/selftests/net/af_unix/Makefile
-index 4c0375e28bbee..57d159803a3ab 100644
---- a/tools/testing/selftests/net/af_unix/Makefile
-+++ b/tools/testing/selftests/net/af_unix/Makefile
-@@ -14,6 +14,7 @@ TEST_GEN_PROGS := \
- 	so_peek_off \
- 	unix_connect \
- 	unix_connreset \
-+	unix_listen \
- # end of TEST_GEN_PROGS
+diff --git a/net/xdp/xsk.c b/net/xdp/xsk.c
+index 9e0a486d54fb3..024e23c08b8db 100644
+--- a/net/xdp/xsk.c
++++ b/net/xdp/xsk.c
+@@ -676,8 +676,11 @@ static void xsk_consume_skb(struct sk_buff *skb)
  
- include ../../lib.mk
-diff --git a/tools/testing/selftests/net/af_unix/unix_listen.c b/tools/testing/selftests/net/af_unix/unix_listen.c
-new file mode 100644
-index 0000000000000..416fa3e5bfe9b
---- /dev/null
-+++ b/tools/testing/selftests/net/af_unix/unix_listen.c
-@@ -0,0 +1,187 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Tests for the state checks in AF_UNIX listen().
-+ *
-+ * The central case is a regression test: listen() on a bound socket that
-+ * is already connected (i.e. not in TCP_CLOSE or TCP_LISTEN state) must
-+ * fail with EINVAL.  A prior change accidentally let it return success
-+ * without doing anything, because a helper called in between reset the
-+ * error code to 0.  The neighbouring checks (unbound, already listening)
-+ * are tested too so they cannot silently regress the same way.
-+ *
-+ * Every case runs for both listenable socket types (SOCK_STREAM and
-+ * SOCK_SEQPACKET) and both pathname and abstract addresses.
-+ */
-+#define _GNU_SOURCE
+ static void xsk_drop_skb(struct sk_buff *skb)
+ {
+-	xdp_sk(skb->sk)->tx->invalid_descs += xsk_get_num_desc(skb);
+-	xsk_consume_skb(skb);
++	struct xdp_sock *xs = xdp_sk(skb->sk);
 +
-+#include <errno.h>
-+#include <stddef.h>
-+#include <stdio.h>
-+#include <string.h>
-+#include <unistd.h>
++	xs->tx->invalid_descs += xsk_get_num_desc(skb);
++	consume_skb(skb);
++	xs->skb = NULL;
+ }
+ 
+ static int xsk_skb_metadata(struct sk_buff *skb, void *buffer,
+@@ -768,7 +771,7 @@ static struct sk_buff *xsk_build_skb_zerocopy(struct xdp_sock *xs,
+ 		}
+ 
+ 		/* in case of -EOVERFLOW that could happen below,
+-		 * xsk_consume_skb() will release this node as whole skb
++		 * xsk_drop_skb() will release this node as whole skb
+ 		 * would be dropped, which implies freeing all list elements
+ 		 */
+ 		xsk_addr->addrs[xsk_addr->num_descs] = desc->addr;
+@@ -867,6 +870,8 @@ static struct sk_buff *xsk_build_skb(struct xdp_sock *xs,
+ 				xsk_addr = (struct xsk_addrs *)skb_shinfo(skb)->destructor_arg;
+ 			}
+ 
++			xsk_addr->addrs[xsk_addr->num_descs] = desc->addr;
 +
-+#include <sys/socket.h>
-+#include <sys/un.h>
-+
-+#include "kselftest_harness.h"
-+
-+#define SK_NAME		"unix_listen_sk"
-+#define SRV_NAME	"unix_listen_srv"
-+
-+FIXTURE(unix_listen)
-+{
-+	int sk;			/* socket under test */
-+	int server;		/* a listening peer, when a test needs one */
-+	struct sockaddr_un addr, srv_addr;
-+	socklen_t addrlen, srv_addrlen;
-+};
-+
-+FIXTURE_VARIANT(unix_listen)
-+{
-+	int type;
-+	int abstract;
-+};
-+
-+FIXTURE_VARIANT_ADD(unix_listen, stream_pathname)
-+{
-+	.type = SOCK_STREAM,
-+	.abstract = 0,
-+};
-+
-+FIXTURE_VARIANT_ADD(unix_listen, stream_abstract)
-+{
-+	.type = SOCK_STREAM,
-+	.abstract = 1,
-+};
-+
-+FIXTURE_VARIANT_ADD(unix_listen, seqpacket_pathname)
-+{
-+	.type = SOCK_SEQPACKET,
-+	.abstract = 0,
-+};
-+
-+FIXTURE_VARIANT_ADD(unix_listen, seqpacket_abstract)
-+{
-+	.type = SOCK_SEQPACKET,
-+	.abstract = 1,
-+};
-+
-+/* Fill @addr with a pathname or abstract address named @name. */
-+static socklen_t unix_set_addr(struct sockaddr_un *addr, const char *name,
-+			       int abstract)
-+{
-+	size_t len = strlen(name);
-+
-+	memset(addr, 0, sizeof(*addr));
-+	addr->sun_family = AF_UNIX;
-+	/* An abstract address leads with a NUL and has no filesystem entry. */
-+	memcpy(addr->sun_path + (abstract ? 1 : 0), name, len);
-+
-+	return offsetof(struct sockaddr_un, sun_path) + len + 1;
-+}
-+
-+FIXTURE_SETUP(unix_listen)
-+{
-+	self->sk = -1;
-+	self->server = -1;
-+	self->addrlen = unix_set_addr(&self->addr, SK_NAME, variant->abstract);
-+	self->srv_addrlen = unix_set_addr(&self->srv_addr, SRV_NAME,
-+					  variant->abstract);
-+}
-+
-+FIXTURE_TEARDOWN(unix_listen)
-+{
-+	if (self->sk >= 0)
-+		close(self->sk);
-+	if (self->server >= 0)
-+		close(self->server);
-+
-+	/* Pathname sockets leave a filesystem entry behind; abstract ones do not. */
-+	if (!variant->abstract) {
-+		remove(SK_NAME);
-+		remove(SRV_NAME);
-+	}
-+}
-+
-+/* A bound socket in TCP_CLOSE is the normal, allowed case. */
-+TEST_F(unix_listen, bound_is_ok)
-+{
-+	int err;
-+
-+	self->sk = socket(AF_UNIX, variant->type, 0);
-+	ASSERT_LE(0, self->sk);
-+
-+	err = bind(self->sk, (struct sockaddr *)&self->addr, self->addrlen);
-+	ASSERT_EQ(0, err);
-+
-+	err = listen(self->sk, 8);
-+	EXPECT_EQ(0, err);
-+}
-+
-+/* Listening again on an already-listening socket (TCP_LISTEN) is allowed. */
-+TEST_F(unix_listen, relisten_is_ok)
-+{
-+	int err;
-+
-+	self->sk = socket(AF_UNIX, variant->type, 0);
-+	ASSERT_LE(0, self->sk);
-+
-+	err = bind(self->sk, (struct sockaddr *)&self->addr, self->addrlen);
-+	ASSERT_EQ(0, err);
-+
-+	err = listen(self->sk, 8);
-+	ASSERT_EQ(0, err);
-+
-+	err = listen(self->sk, 16);
-+	EXPECT_EQ(0, err);
-+}
-+
-+/* listen() on an unbound socket fails: there is nothing to listen on. */
-+TEST_F(unix_listen, unbound_is_einval)
-+{
-+	int err;
-+
-+	self->sk = socket(AF_UNIX, variant->type, 0);
-+	ASSERT_LE(0, self->sk);
-+
-+	err = listen(self->sk, 8);
-+	EXPECT_EQ(-1, err);
-+	EXPECT_EQ(EINVAL, errno);
-+}
-+
-+/*
-+ * The regression: a bound socket that has already been connected is not in
-+ * TCP_CLOSE or TCP_LISTEN, so listen() must reject it with EINVAL rather
-+ * than quietly succeeding.
-+ */
-+TEST_F(unix_listen, connected_is_einval)
-+{
-+	int err;
-+
-+	self->server = socket(AF_UNIX, variant->type, 0);
-+	ASSERT_LE(0, self->server);
-+
-+	err = bind(self->server, (struct sockaddr *)&self->srv_addr,
-+		   self->srv_addrlen);
-+	ASSERT_EQ(0, err);
-+
-+	err = listen(self->server, 8);
-+	ASSERT_EQ(0, err);
-+
-+	self->sk = socket(AF_UNIX, variant->type, 0);
-+	ASSERT_LE(0, self->sk);
-+
-+	/* Bind first so the unbound check does not mask the state check. */
-+	err = bind(self->sk, (struct sockaddr *)&self->addr, self->addrlen);
-+	ASSERT_EQ(0, err);
-+
-+	err = connect(self->sk, (struct sockaddr *)&self->srv_addr,
-+		      self->srv_addrlen);
-+	ASSERT_EQ(0, err);
-+
-+	err = listen(self->sk, 8);
-+	EXPECT_EQ(-1, err);
-+	EXPECT_EQ(EINVAL, errno);
-+}
-+
-+TEST_HARNESS_MAIN
+ 			if (unlikely(nr_frags == (MAX_SKB_FRAGS - 1) && xp_mb_desc(desc))) {
+ 				err = -EOVERFLOW;
+ 				goto free_err;
+@@ -884,8 +889,6 @@ static struct sk_buff *xsk_build_skb(struct xdp_sock *xs,
+ 
+ 			skb_add_rx_frag(skb, nr_frags, page, 0, len, PAGE_SIZE);
+ 			refcount_add(PAGE_SIZE, &xs->sk.sk_wmem_alloc);
+-
+-			xsk_addr->addrs[xsk_addr->num_descs] = desc->addr;
+ 		}
+ 	}
+ 
 -- 
 2.53.0
 
