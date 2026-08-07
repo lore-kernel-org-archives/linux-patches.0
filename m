@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E2EB303C97;
-	Fri,  7 Aug 2026 14:46:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45D90277CA5;
+	Fri,  7 Aug 2026 14:46:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786113984; cv=none; b=EhoyfB9smsYvOget/wFymvO7FKq25q2M5msftkhgXEqarPcjC3L9r4S+bG7qAYZg8q+SGFzw2JWXppElsVnXQqZN8akLXrG97iPT/yCvGw4XoI4IqyokwanF8m4qVT7MPdt90TvmwZBTeTm4DEdQMb01UXcMyy11XN5TSKUVgBY=
+	t=1786113987; cv=none; b=j1Dq0Z4FbJOMP3XPclLLn4J1XhKujcyoALLFqOHjyZD3oW07ZFpPrbj5LE2ATBE3WUqfSG17pacczS4UIsZSgD0chwfFlE8aLSIG6ol18zgZZ/v/oFCXJw/mUmXBHEjL+4L107i0bK2dQWcJQOUZ//ouUR33trEfiT+kW9nBl/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786113984; c=relaxed/simple;
-	bh=YPJjP4Yx3gLIHoVQ/f8f4khHdeO8IlCdQNidRT8lHAo=;
+	s=arc-20240116; t=1786113987; c=relaxed/simple;
+	bh=rg01+j8Ksg6HFTNXkJmAeFXmuKQz/U0W4pwQ4VjIxo4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=izsTZvcMciI8/jnV9JWFXidZMWWVYxsDar8lFL2MKelC86nhtKda51GtAITLuGchWcvHZTo2AoNFQP4XA02JQfxEGgzKWYAK+/rYUrZ4rXvKVfBMuikRaSmAotVZw3SJwlXChk2Fc77ytdhbT9x1kEgcQfRivb6oBy1pAUVDTfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BciR2LDp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hpakMu65iNHFzoC1W5sGcpql7ah0a8cn/zMP+FkObMWbt1cWHLmNpQI+ISr5tVu5ZtR83R522NoeRX8XsoUXoB0pmeFixR44OB43JlAKa9uY1NuIWxBYG4kd3xM188x/Oh/dEEe0bKHqPx7k/RJif4YH8wy4mEGVF4SEPOk7+yA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QPaYL2lM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BciR2LDp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60D141F000E9;
-	Fri,  7 Aug 2026 14:46:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QPaYL2lM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51EAA1F000E9;
+	Fri,  7 Aug 2026 14:46:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786113982;
-	bh=EqiBwPeRrFSCIN/RbINJ3q0q8GpWJhEZ8/LhnrJG9j0=;
+	s=korg; t=1786113985;
+	bh=yCClrX3IsxT+TafxH8aeAkQuRdTYvJEjIyT6aJR73TA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BciR2LDpNGpQamYWozergUPKYwfsI+zPB7DNrrlqvZbpe3XFmvv9nXmfZtOTMZfRO
-	 kuppEi4gX09Njt8gKm97Y3JG5X/HyynYrconX41Wk1TNO1Ptw/fvZJIzjNQraXOxfA
-	 UNd/6oqrjEOFNYF/Ibcb/dnuGXqVRjF5FqX3Do4E=
+	b=QPaYL2lMHjnQW401jl6i24KZPTswYCHD2QWyoREF6qfzN+UAooUBaxPFY0D+8JPyB
+	 7nmBg3yeVkhr8MF94kXTk/iMDeOIvSZRqKFNr82zTogNbiDvLCpK6w8QNQnn0a1+HU
+	 bEvd56eOQw9ehVpziS5Xm8GK4JabQ4ePbfWopDCg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Luiz Angelo Daros de Luca <luizluca@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 103/337] Bluetooth: hci_sync: make hci_cmd_sync_run_once return -EEXIST if exists
-Date: Fri,  7 Aug 2026 16:35:06 +0200
-Message-ID: <20260807143420.771951975@linuxfoundation.org>
+Subject: [PATCH 6.12 077/337] hwmon: (adt7470) Fix cache updated before hardware write on I2C error
+Date: Fri,  7 Aug 2026 16:34:40 +0200
+Message-ID: <20260807143420.182443267@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -51,61 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Luiz Angelo Daros de Luca <luizluca@gmail.com>
 
-[ Upstream commit d288f4db0909c22342eb50cd1632b4d850517281 ]
+[ Upstream commit 05270bd38d9bf88a2f4c212246a8fa29f4032078 ]
 
-hci_cmd_sync_run_once() needs to indicate whether a queue item was
-added, so caller can know if callbacks are called, so it can avoid
-leaking resources.
+adt7470_temp_write() and adt7470_pwm_write() update the driver's
+cached values (temp_min, temp_max, pwm_input, pwm_enable) before issuing
+the corresponding regmap_write(), and never check whether the write
+succeeded before committing that update. If the I2C transaction fails,
+the function correctly propagates the error to the caller, but the cache
+silently keeps the new value, which was never actually applied to the
+hardware. Subsequent reads then report a value that does not match the
+device state.
 
-Change the function to return -EEXIST if queue item already exists.
+Reorder both write paths to update the cache only after a successful
+regmap_write(), so the cache always reflects what was actually
+written to the hardware.
 
-Modify all callsites vs. the changes.  The only callsite is
-hci_abort_conn().
-
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Stable-dep-of: 5761d003daa9 ("Bluetooth: hci_conn: hold conn reference in abort_conn_sync()")
+Fixes: ef67959c4253 ("hwmon: (adt7470) Convert to use regmap")
+Signed-off-by: Luiz Angelo Daros de Luca <luizluca@gmail.com>
+Link: https://lore.kernel.org/r/20260727-adt7470_fixes-v2-2-598e38a46ba6@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_conn.c | 4 +++-
- net/bluetooth/hci_sync.c | 2 +-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ drivers/hwmon/adt7470.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
-index ac98e3f2344e2..93c14e2d66c8a 100644
---- a/net/bluetooth/hci_conn.c
-+++ b/net/bluetooth/hci_conn.c
-@@ -2928,6 +2928,7 @@ static int abort_conn_sync(struct hci_dev *hdev, void *data)
- int hci_abort_conn(struct hci_conn *conn, u8 reason)
- {
- 	struct hci_dev *hdev = conn->hdev;
-+	int err;
+diff --git a/drivers/hwmon/adt7470.c b/drivers/hwmon/adt7470.c
+index ef8f411df61be..06b19fd382457 100644
+--- a/drivers/hwmon/adt7470.c
++++ b/drivers/hwmon/adt7470.c
+@@ -589,14 +589,16 @@ static int adt7470_temp_write(struct device *dev, u32 attr, int channel, long va
+ 	switch (attr) {
+ 	case hwmon_temp_min:
+ 		mutex_lock(&data->lock);
+-		data->temp_min[channel] = val;
+ 		err = regmap_write(data->regmap, ADT7470_TEMP_MIN_REG(channel), val);
++		if (!err)
++			data->temp_min[channel] = val;
+ 		mutex_unlock(&data->lock);
+ 		break;
+ 	case hwmon_temp_max:
+ 		mutex_lock(&data->lock);
+-		data->temp_max[channel] = val;
+ 		err = regmap_write(data->regmap, ADT7470_TEMP_MAX_REG(channel), val);
++		if (!err)
++			data->temp_max[channel] = val;
+ 		mutex_unlock(&data->lock);
+ 		break;
+ 	default:
+@@ -831,9 +833,10 @@ static int adt7470_pwm_write(struct device *dev, u32 attr, int channel, long val
+ 	case hwmon_pwm_input:
+ 		val = clamp_val(val, 0, 255);
+ 		mutex_lock(&data->lock);
+-		data->pwm[channel] = val;
+ 		err = regmap_write(data->regmap, ADT7470_REG_PWM(channel),
+-				   data->pwm[channel]);
++				   val);
++		if (!err)
++			data->pwm[channel] = val;
+ 		mutex_unlock(&data->lock);
+ 		break;
+ 	case hwmon_pwm_enable:
+@@ -847,10 +850,11 @@ static int adt7470_pwm_write(struct device *dev, u32 attr, int channel, long val
+ 		val--;
  
- 	/* If abort_reason has already been set it means the connection is
- 	 * already being aborted so don't attempt to overwrite it.
-@@ -2949,5 +2950,6 @@ int hci_abort_conn(struct hci_conn *conn, u8 reason)
- 	 * as a result to MGMT_OP_DISCONNECT/MGMT_OP_UNPAIR which does
- 	 * already queue its callback on cmd_sync_work.
- 	 */
--	return hci_cmd_sync_run_once(hdev, abort_conn_sync, conn, NULL);
-+	err = hci_cmd_sync_run_once(hdev, abort_conn_sync, conn, NULL);
-+	return (err == -EEXIST) ? 0 : err;
- }
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index d2e8543b5a51e..111b8f3c77296 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -825,7 +825,7 @@ int hci_cmd_sync_run_once(struct hci_dev *hdev, hci_cmd_sync_work_func_t func,
- 			  void *data, hci_cmd_sync_work_destroy_t destroy)
- {
- 	if (hci_cmd_sync_lookup_entry(hdev, func, data, destroy))
--		return 0;
-+		return -EEXIST;
- 
- 	return hci_cmd_sync_run(hdev, func, data, destroy);
- }
+ 		mutex_lock(&data->lock);
+-		data->pwm_automatic[channel] = val;
+ 		err = regmap_update_bits(data->regmap, ADT7470_REG_PWM_CFG(channel),
+ 					 pwm_auto_reg_mask,
+ 					 val ? pwm_auto_reg_mask : 0);
++		if (!err)
++			data->pwm_automatic[channel] = val;
+ 		mutex_unlock(&data->lock);
+ 		break;
+ 	case hwmon_pwm_freq:
 -- 
 2.53.0
 
