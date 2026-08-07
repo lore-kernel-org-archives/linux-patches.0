@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC869314A95;
-	Fri,  7 Aug 2026 15:09:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD553331A61;
+	Fri,  7 Aug 2026 15:09:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115353; cv=none; b=L7pa19n46HIhHXQxQ0IrvhQrQ0zCOh/sop1h53fYy3nRbze+mS6LdiGyp//v9QebJYn3Hb3KbS2SIDg9Nx0WhAc4+Ln3zLpesRrdah5rhlpbc3OwPGPTwVHH02LD06At+5l1P+8IwI2ArrbPFl0pKQFM2305KsMdQgNvFEZQ4XA=
+	t=1786115356; cv=none; b=FPxL6m1ZTvaUN6ySNtfUjoxF6l+GgZ5iyfiwcLeSofZuAlwFyrC2tUuSEoKneAQ1U0tZBdMIuLYTw4Q6nshxUDyaZrQ5gW7Lt0TFMKSLUdf2Ff/HDez7B3lRAqRA5/u5m4ofWlqvI8Fg5+VRaWbUm6dDbEftUuNqb/IvAvkDrEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115353; c=relaxed/simple;
-	bh=+iqlPWYEk6HDR4HkYJLcgFpsrGfKinX4JfmQraGkV/A=;
+	s=arc-20240116; t=1786115356; c=relaxed/simple;
+	bh=LEJv/ZOov8DSfZPRPWHImHqYJakUbJ/7lbFOfyMHAHw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=saLKRO2lKt/BCYVM9o8wpS4nN4HJJ1yEFkdRG9pm4NXWcF7V9oWWfBudjssi0fb90ElPSGBrKGkZ2cj1DQychQaIEd6cJgbdbkOIY5OPSR2GbtYvbwsKEUH4/sSXIpU0qzyuf2RFcP70TRXDmXw3QpoJBuHLqlpJFPcF1FHpMTE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Svu30zMo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=B+jeQ7byfVD8e9jgu22ygO2Yw7mRjjg6jQNE6MPyRIBLQgzkHmpTScejc4JSw0SS7c/91xCIB2p6qzdtwhXE4sZoQi3T2JeLZ4pQpF1apUEFOMxPJXSTTgw7gDqK/aTIXO0ioTr/91WEfW9Hy6u+JLKSp/AJjAsdZkcvCEWnfPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XmbwoKJl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Svu30zMo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 456561F000E9;
-	Fri,  7 Aug 2026 15:09:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XmbwoKJl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 192C91F000E9;
+	Fri,  7 Aug 2026 15:09:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115351;
-	bh=9FgtM1jhK8LJ6uylPi+6RKdw2d2q2tZfFN9I5hX0wG8=;
+	s=korg; t=1786115354;
+	bh=iTAympczlzV2qKgNiml6pKhG873nfMrCAugr5/iMe0w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Svu30zMooCVuwoSvfZpkpeQgatlQf66G07ubgUE+7/zXPlZNdjp6ClPeSLLi8ulkS
-	 1/zXdBDfpoREUUE9TRw8hayFSjwQhhEcvT/39twOU+DQJnpjudBaQp8D59PBfH7XWZ
-	 +lhN6szDvZXQgKpmLIwrHZnfD3+PN7iOAoKN1IYs=
+	b=XmbwoKJlzWAxHc0Sd5ZHveeZwJN+aTnn1ClFAHvt1w4kWnXtEeetJ6QlabDCpueb1
+	 Duu7BqQeVpMQDJn8XdpYu6i5vnWMhzdMkW8vdsMEse5gn37SlqWz2ySjlkZ08Vsm+e
+	 a6vn4Zj3VzmCZjMvdThrr4y/IOlGTIlMztsHv3x4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Eric Dumazet <edumazet@google.com>,
 	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 247/396] vxlan: use neigh_ha_snapshot() in route_shortcircuit()
-Date: Fri,  7 Aug 2026 16:36:47 +0200
-Message-ID: <20260807143429.580586873@linuxfoundation.org>
+Subject: [PATCH 6.18 248/396] vxlan: use pskb_network_may_pull() for transmit path header pulls
+Date: Fri,  7 Aug 2026 16:36:48 +0200
+Message-ID: <20260807143429.600491800@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -53,53 +54,76 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-commit 8eca411347e1d38964f9ed2c8d3b6ab0e7e4473d upstream.
+commit b9553558b48db54ac9273e6b98d7263ef5c1a329 upstream.
 
-The neighbour hardware address n->ha can be updated asynchronously by the
-neighbour subsystem, protected by n->ha_lock seqlock. Reading n->ha without
-holding the seqlock loop can lead to torn reads or reading a partially updated
-MAC address.
+In vxlan_xmit(), arp_reduce(), and vxlan_mdb_entry_skb_get(), pskb_may_pull() was
+being called to verify the availability of network layer headers (ARP, IPv6/ND,
+IP/IPv6 MDB keys).
 
-Use neigh_ha_snapshot() in route_shortcircuit() to safely copy n->ha under
-read_seqbegin()/read_seqretry() lock protection before using it.
+However, during transmit skb->data points to the MAC header, so skb_network_offset(skb)
+is ETH_HLEN (14 bytes). Using pskb_may_pull(skb, len) only checks len bytes from skb->data
+rather than skb_network_offset(skb) + len, which can leave part of the network header
+in non-linear frags.
 
-Note that arp_reduce() and neigh_reduce() seem to have the same issue
-left for future patches.
+Replace these remaining pskb_may_pull() calls with pskb_network_may_pull() to properly
+account for the MAC header offset.
 
 Fixes: e4f67addf158 ("add DOVE extensions for VXLAN")
-Cc: stable@vger.kernel.org
+Fixes: f564f45c4518 ("vxlan: add ipv6 proxy support")
+Fixes: 0f83e69f44bf ("vxlan: Add MDB data path support")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: stable@vger.kernel.org
 Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Link: https://patch.msgid.link/20260723144249.759100-4-edumazet@google.com
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260723144249.759100-6-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/vxlan/vxlan_core.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/vxlan/vxlan_core.c |    6 +++---
+ drivers/net/vxlan/vxlan_mdb.c  |    4 ++--
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
 --- a/drivers/net/vxlan/vxlan_core.c
 +++ b/drivers/net/vxlan/vxlan_core.c
-@@ -2163,9 +2163,11 @@ static bool route_shortcircuit(struct ne
- 	}
+@@ -1852,7 +1852,7 @@ static int arp_reduce(struct net_device
+ 	if (dev->flags & IFF_NOARP)
+ 		goto out;
  
- 	if (n) {
-+		u8 haddr[ETH_ALEN];
- 		bool diff;
+-	if (!pskb_may_pull(skb, arp_hdr_len(dev))) {
++	if (!pskb_network_may_pull(skb, arp_hdr_len(dev))) {
+ 		dev_dstats_tx_dropped(dev);
+ 		vxlan_vnifilter_count(vxlan, vni, NULL,
+ 				      VXLAN_VNI_STATS_TX_DROPS, 0);
+@@ -2765,8 +2765,8 @@ static netdev_tx_t vxlan_xmit(struct sk_
+ 			return arp_reduce(dev, skb, vni);
+ #if IS_ENABLED(CONFIG_IPV6)
+ 		else if (ntohs(eth->h_proto) == ETH_P_IPV6 &&
+-			 pskb_may_pull(skb, sizeof(struct ipv6hdr) +
+-					    sizeof(struct nd_msg)) &&
++			 pskb_network_may_pull(skb, sizeof(struct ipv6hdr) +
++						    sizeof(struct nd_msg)) &&
+ 			 ipv6_hdr(skb)->nexthdr == IPPROTO_ICMPV6) {
+ 			struct nd_msg *m = (struct nd_msg *)(ipv6_hdr(skb) + 1);
  
--		diff = !ether_addr_equal(eth_hdr(skb)->h_dest, n->ha);
-+		neigh_ha_snapshot(haddr, n, dev);
-+		diff = !ether_addr_equal_unaligned(eth_hdr(skb)->h_dest, haddr);
- 		if (diff) {
- 			if (skb_cow_head(skb, 0)) {
- 				neigh_release(n);
-@@ -2173,7 +2175,7 @@ static bool route_shortcircuit(struct ne
- 			}
- 			memcpy(eth_hdr(skb)->h_source, eth_hdr(skb)->h_dest,
- 				dev->addr_len);
--			memcpy(eth_hdr(skb)->h_dest, n->ha, dev->addr_len);
-+			memcpy(eth_hdr(skb)->h_dest, haddr, dev->addr_len);
- 		}
- 		neigh_release(n);
- 		return diff;
+--- a/drivers/net/vxlan/vxlan_mdb.c
++++ b/drivers/net/vxlan/vxlan_mdb.c
+@@ -1631,7 +1631,7 @@ struct vxlan_mdb_entry *vxlan_mdb_entry_
+ 
+ 	switch (skb->protocol) {
+ 	case htons(ETH_P_IP):
+-		if (!pskb_may_pull(skb, sizeof(struct iphdr)))
++		if (!pskb_network_may_pull(skb, sizeof(struct iphdr)))
+ 			return NULL;
+ 		group.dst.sa.sa_family = AF_INET;
+ 		group.dst.sin.sin_addr.s_addr = ip_hdr(skb)->daddr;
+@@ -1640,7 +1640,7 @@ struct vxlan_mdb_entry *vxlan_mdb_entry_
+ 		break;
+ #if IS_ENABLED(CONFIG_IPV6)
+ 	case htons(ETH_P_IPV6):
+-		if (!pskb_may_pull(skb, sizeof(struct ipv6hdr)))
++		if (!pskb_network_may_pull(skb, sizeof(struct ipv6hdr)))
+ 			return NULL;
+ 		group.dst.sa.sa_family = AF_INET6;
+ 		group.dst.sin6.sin6_addr = ipv6_hdr(skb)->daddr;
 
 
