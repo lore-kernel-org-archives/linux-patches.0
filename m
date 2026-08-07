@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 298EE397958;
-	Fri,  7 Aug 2026 14:42:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F782364935;
+	Fri,  7 Aug 2026 14:42:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786113761; cv=none; b=q59jTY2gL90zX/WrrSvlZxEmkTmWhdEBOqzf0/mXpyeXcOLlUjsM7ie9+vvfQRCJN82rdY7Q0VI3ft5puiEW/wxyxxigXuwyf3iXuK1FdHZa5AEqTktXRRGp6tHaP7UZdREvu5ibsG2QgBJH/uxn6ROaolgzAJTI7Lx/Jsg36w0=
+	t=1786113765; cv=none; b=RnvLoPE3J3ooZmSuyVehOH/F9eY/HP61HWMdxXbpZQ+TVpzHSq9De0nFKgHqF+TmSSywpH0qWf5BWN2enH//jk5/ZiA+fsf0pmqUAm+5Zq5fmzv5hSx6bsh49sgJnRBVHZKfYgdDfSK9i/hTq3qkNh+5Ez0GZU8SVmohafknEfI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786113761; c=relaxed/simple;
-	bh=1f3Bop/jJejV086Ouy+C9+zGl0SYkDfl28y3MLVW1Zg=;
+	s=arc-20240116; t=1786113765; c=relaxed/simple;
+	bh=ZljBuLB6xpzNNh6pY/bgtJA0VO8yj3Cdgsv9LWTcPyc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LkFxeyicxzzeJHQIVNSHkUteVe5YFXCXxLFnWCPXr3pzKAw9i3rEjLb0nM05PY0FackiMAKJxGjIxGQJPUzn8ABkVFbzAPPGkhDSP2E/q0En01APASlvNxBoMSIC82INKMkvcK8kAAkw2T/X4BlYubInFLbwzz9LCpgeDkRs4S4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DBXUBUqg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qG7xRZnTj2KzShWmsB5oQdu7jdnM7VZE5khWl/1FMUQMfizEoOgZIgjRjVbYcjZ8JUK7Rbn8DI4hs2NiY1dC++UttvyfMvwYgDxVjEhdup/baAFKB3I8Q07P1E4Eh5Sudql92hxH59zn9W0PApbwYUH/WXZRXFTHD88tBJkd7rM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1HlL+iJJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DBXUBUqg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A90531F00A3F;
-	Fri,  7 Aug 2026 14:42:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1HlL+iJJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 408521F00ACF;
+	Fri,  7 Aug 2026 14:42:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786113751;
-	bh=t+hulkq6LXHhZJshBaRgEL55YU9cHBcwtBa0bvSP2z0=;
+	s=korg; t=1786113739;
+	bh=+bgTW2IZy+K/hxWrQafDJpCAnomdSqsklAs6fqWsSKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DBXUBUqgDOyOpIQoJTD3XFPQ2E24SKgRiQuyMDab/uunTdCjDqQH9cwRJvGpRoSpI
-	 zDE0OpHzhzodo80klVs1ZFHT132hl9QnzFtkSmPsb17vFr0cfDrJaHleU8WH88YOg1
-	 OtlbB23YnGyX/jh7yLIjIE7yCdjunlTj1JhMxK0E=
+	b=1HlL+iJJ39aqoJEGEl+GPQDBACDPMSbsWMbNAeorfeM41SGBsl5+6tuiLw0jsSgc5
+	 RbbUx08bpaIBpp6QbrxDrMlkBLS+LCCovymWWU/6kkvvsjPjWWOYAHuKE8Lovgfzfe
+	 pWetK8206ZYN6RVezdfTQYXGcMiSio5vKz2ynozw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongling Zeng <zenghongling@kylinos.cn>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Frank Li <Frank.li@oss.nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 022/337] dmaengine: sun6i-dma: Fix reclaim descriptors while terminating DMA
-Date: Fri,  7 Aug 2026 16:33:45 +0200
-Message-ID: <20260807143418.999362096@linuxfoundation.org>
+Subject: [PATCH 6.12 019/337] thunderbolt: Prevent XDomain delayed work use-after-free on disconnect
+Date: Fri,  7 Aug 2026 16:33:42 +0200
+Message-ID: <20260807143418.935740605@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -54,58 +51,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongling Zeng <zenghongling@kylinos.cn>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit ab1150115e68a46b687eb38c1ab92782018c9f2c ]
+[ Upstream commit 2c5d2d3c3f70cde2565d7b279b544893a2035842 ]
 
-When terminating DMA transfers, active descriptors are not properly
-reclaimed. Only cyclic descriptors were handled, leaving non-cyclic
-descriptors and their LLI chains to be permanently leaked.
+tb_xdp_handle_request() runs on system_wq and queues
+xd->state_work via queue_delayed_work() in three request handlers:
+PROPERTIES_CHANGED_REQUEST, UUID_REQUEST (via start_handshake),
+and LINK_STATE_CHANGE_REQUEST.  Similarly, update_xdomain() queues
+xd->properties_changed_work when local properties change.
 
-Fix by using vchan_terminate_vdesc() which handles both cyclic and
-non-cyclic descriptors by adding them to desc_terminated queue for
-proper cleanup.
+Concurrently, tb_xdomain_remove() calls stop_handshake() which does
+cancel_delayed_work_sync() on both delayed works.  Later,
+tb_xdomain_unregister() calls device_unregister() which eventually
+frees the xdomain.  Since commit 559c1e1e0134 ("thunderbolt: Run
+tb_xdp_handle_request() in system workqueue") moved the request
+handler off tb->wq, the handler and the remove path are no longer
+serialized.  If queue_delayed_work() executes after
+cancel_delayed_work_sync() but before the xdomain is freed, the
+delayed work fires on a freed object.
 
-Add pchan->desc != pchan->done check to prevent double-adding completed
-descriptors, which would corrupt the list.
+Add xd->removing that tb_xdomain_remove() sets under xd->lock
+before calling stop_handshake().  Each external queue site holds
+the same lock and checks removing before calling
+queue_delayed_work().  This provides the mutual exclusion needed:
+either the queue site acquires the lock first and queues work that
+the subsequent cancel will see, or the remove path acquires the
+lock first and the queue site observes removing == true and skips
+the queue.
 
-Fixes: 555859308723 ("dmaengine: sun6i: Add driver for the Allwinner A31 DMA controller")
-Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
-Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Suggested-by: Frank Li <Frank.li@oss.nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260701045733.33654-1-zenghongling@kylinos.cn
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: 559c1e1e0134 ("thunderbolt: Run tb_xdp_handle_request() in system workqueue")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/sun6i-dma.c | 11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ drivers/thunderbolt/xdomain.c | 40 ++++++++++++++++++++++++++---------
+ include/linux/thunderbolt.h   |  3 +++
+ 2 files changed, 33 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/dma/sun6i-dma.c b/drivers/dma/sun6i-dma.c
-index c97027379263d..1f1e21d48ad76 100644
---- a/drivers/dma/sun6i-dma.c
-+++ b/drivers/dma/sun6i-dma.c
-@@ -934,16 +934,13 @@ static int sun6i_dma_terminate_all(struct dma_chan *chan)
+diff --git a/drivers/thunderbolt/xdomain.c b/drivers/thunderbolt/xdomain.c
+index 06357073f4ab8..ffe7ce0737491 100644
+--- a/drivers/thunderbolt/xdomain.c
++++ b/drivers/thunderbolt/xdomain.c
+@@ -783,9 +783,13 @@ static void tb_xdp_handle_request(struct work_struct *work)
+ 		 * the xdomain related to this connection as well in
+ 		 * case there is a change in services it offers.
+ 		 */
+-		if (xd && device_is_registered(&xd->dev))
+-			queue_delayed_work(tb->wq, &xd->state_work,
+-					   msecs_to_jiffies(XDOMAIN_SHORT_TIMEOUT));
++		if (xd) {
++			mutex_lock(&xd->lock);
++			if (!xd->removing && device_is_registered(&xd->dev))
++				queue_delayed_work(tb->wq, &xd->state_work,
++						   msecs_to_jiffies(XDOMAIN_SHORT_TIMEOUT));
++			mutex_unlock(&xd->lock);
++		}
+ 		break;
  
- 	spin_lock_irqsave(&vchan->vc.lock, flags);
+ 	case UUID_REQUEST_OLD:
+@@ -798,8 +802,12 @@ static void tb_xdp_handle_request(struct work_struct *work)
+ 		 * received UUID request from the remote host.
+ 		 */
+ 		if (!ret && xd && xd->state == XDOMAIN_STATE_ERROR) {
+-			dev_dbg(&xd->dev, "restarting handshake\n");
+-			start_handshake(xd);
++			mutex_lock(&xd->lock);
++			if (!xd->removing) {
++				dev_dbg(&xd->dev, "restarting handshake\n");
++				start_handshake(xd);
++			}
++			mutex_unlock(&xd->lock);
+ 		}
+ 		break;
  
--	if (vchan->cyclic) {
--		vchan->cyclic = false;
--		if (pchan && pchan->desc) {
--			struct virt_dma_desc *vd = &pchan->desc->vd;
--			struct virt_dma_chan *vc = &vchan->vc;
-+	if (pchan && pchan->desc && pchan->desc != pchan->done) {
-+		struct virt_dma_desc *vd = &pchan->desc->vd;
+@@ -827,9 +835,13 @@ static void tb_xdp_handle_request(struct work_struct *work)
  
--			list_add_tail(&vd->node, &vc->desc_completed);
--		}
-+		vchan_terminate_vdesc(vd);
+ 			ret = tb_xdp_link_state_change_response(ctl, route,
+ 								sequence, 0);
+-			xd->target_link_width = lsc->tlw;
+-			queue_delayed_work(tb->wq, &xd->state_work,
+-					   msecs_to_jiffies(XDOMAIN_SHORT_TIMEOUT));
++			mutex_lock(&xd->lock);
++			if (!xd->removing) {
++				xd->target_link_width = lsc->tlw;
++				queue_delayed_work(tb->wq, &xd->state_work,
++						   msecs_to_jiffies(XDOMAIN_SHORT_TIMEOUT));
++			}
++			mutex_unlock(&xd->lock);
+ 		} else {
+ 			tb_xdp_error_response(ctl, route, sequence,
+ 					      ERROR_NOT_READY);
+@@ -2068,6 +2080,10 @@ void tb_xdomain_remove(struct tb_xdomain *xd)
+ {
+ 	tb_xdomain_debugfs_remove(xd);
+ 
++	mutex_lock(&xd->lock);
++	xd->removing = true;
++	mutex_unlock(&xd->lock);
++
+ 	stop_handshake(xd);
+ 
+ 	device_for_each_child_reverse(&xd->dev, xd, unregister_service);
+@@ -2464,8 +2480,12 @@ static int update_xdomain(struct device *dev, void *data)
+ 
+ 	xd = tb_to_xdomain(dev);
+ 	if (xd) {
+-		queue_delayed_work(xd->tb->wq, &xd->properties_changed_work,
+-				   msecs_to_jiffies(50));
++		mutex_lock(&xd->lock);
++		if (!xd->removing)
++			queue_delayed_work(xd->tb->wq,
++					   &xd->properties_changed_work,
++					   msecs_to_jiffies(50));
++		mutex_unlock(&xd->lock);
  	}
  
-+	vchan->cyclic = false;
- 	vchan_get_all_descriptors(&vchan->vc, &head);
- 
- 	if (pchan) {
+ 	return 0;
+diff --git a/include/linux/thunderbolt.h b/include/linux/thunderbolt.h
+index 7d902d8c054b2..4ef9c43026569 100644
+--- a/include/linux/thunderbolt.h
++++ b/include/linux/thunderbolt.h
+@@ -202,6 +202,8 @@ enum tb_link_width {
+  * @link_width: Width of the downstream facing link
+  * @link_usb4: Downstream link is USB4
+  * @is_unplugged: The XDomain is unplugged
++ * @removing: Set by tb_xdomain_remove() under @lock to prevent
++ *	      concurrent delayed work queueing
+  * @needs_uuid: If the XDomain does not have @remote_uuid it will be
+  *		queried first
+  * @service_ids: Used to generate IDs for the services
+@@ -250,6 +252,7 @@ struct tb_xdomain {
+ 	enum tb_link_width link_width;
+ 	bool link_usb4;
+ 	bool is_unplugged;
++	bool removing;
+ 	bool needs_uuid;
+ 	struct ida service_ids;
+ 	struct ida in_hopids;
 -- 
 2.53.0
 
