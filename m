@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B00938655E;
-	Fri,  7 Aug 2026 15:02:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 306D3314A73;
+	Fri,  7 Aug 2026 15:02:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114935; cv=none; b=MwmehR4d25WfGDQUEMCmglxPvTvPbek1h5zhYQSQTN1ZhwR2gVbAdRiOlJDvsDHlG9GPAc7LXIuwCwbATmqt7e+AqnVLEmqXqNqHB3B5jmXD8Z98/jHfyvq37xRz7jw1BdHUMmLqBMhD5Xkhn51FvsvQC/7AndtQgb2ISP1n2ro=
+	t=1786114938; cv=none; b=VtoKNGCV+LpshIcwL3oFoFiLMA9Mb5n9xhuBRlgOVJCKn11gxfUi1s7I9LLsDKs3q0oc13Yiz1vspeL21FWG3oJesRhuFOdGfHg3R6wksyymexe9vPbH7aB9tQLEoqkqigSv049g0+49195R2Sxv5urtFSrUxC1mz5IJ9Lc1+LU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114935; c=relaxed/simple;
-	bh=haOvIAU56pPdkZTI7nWbzw0/u4wZi4jpCFoTVAhgIU4=;
+	s=arc-20240116; t=1786114938; c=relaxed/simple;
+	bh=AYkhBSfDQqsZZ1wsQ/dp95BLg/vhx/8Jw+A7UgAkd3Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cEWXPpqr+iHeCsn5UNV0Y8c0KCyTyVpK3cASST9/44YeCawtwlMku/C87vWl5D2wSTxsgBf6B5IOqkpXKo5MlSsq9fNGFpwp2U38JHL4vSOQX7TQWaLgo7fQoMEykdFMqSY2sy+aX4IP81tT7Eq2QlxIW0vh8ULJ0huzseCMdYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yvohftTW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QWOwn5GeCJNwK1O++e/68Vw4vRVphIo1W6Fmz2wbB+bSZk0TVTPgjS2aUUCDj0m+nWZAeyQ3de1JJX7yj23QTyd1/hTth58ZPoXTZAHkYHaouMDRmE7UqtCT+FilKEPmKh1X8C+grS9Ye1JNROGJwQv8iKyWuml/Hi21sf6ZiD0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vkXEMkiz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yvohftTW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6F0D1F000E9;
-	Fri,  7 Aug 2026 15:02:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vkXEMkiz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A0081F000E9;
+	Fri,  7 Aug 2026 15:02:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114934;
-	bh=YRqJTYDf1TPVx75ugR/DNKXqI3QGRG7ggty5gxfawds=;
+	s=korg; t=1786114937;
+	bh=a/kfONYSg7Waq4nFabrpUCEOBp6QWZpx1qRZ3FxpQik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yvohftTW6lGpQzxAuL6pGdPyJn6K8VUtmO+CREZO4BXp18OuOSTHSu5w6qMaipvgz
-	 HjB3G3mMpH65X7UjwRwSgR7rcbSY3p9nfDWXR6deyJQ1aG3NoxeUayA3s//gI0S4bM
-	 lR8x2fHeKUu8H5OUp2ehVduKvO3JzbsJwfGyeK98=
+	b=vkXEMkizxzvNBxzvUgRysM6LvY9fY1zPtotnEsydwsSJ5mjyNUJXhqZmmVfJqvVyQ
+	 //TTwkfrGStzdTb6oj6Xssod3lkn9sFAptbZOJVxKvscBrSEFfY8ZgaQBp/Z+dup2p
+	 PAdZFjnaCecsS6zN6QFSJtHnr4hE5GHXTq+B7xGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 044/396] keys: fix out-of-bounds read in keyring_get_key_chunk()
-Date: Fri,  7 Aug 2026 16:33:24 +0200
-Message-ID: <20260807143425.218972623@linuxfoundation.org>
+Subject: [PATCH 6.18 093/396] powerpc/boot: Fix simpleboot CPU node lookup check
+Date: Fri,  7 Aug 2026 16:34:13 +0200
+Message-ID: <20260807143426.287078554@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -51,62 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit 63918731f9ae25b5deb022f118e941e6dddfcef4 ]
+[ Upstream commit c824ab65685bb119c6c6a3a200b3428c72862d5a ]
 
-For description-level chunks keyring_get_key_chunk() advances the read
-pointer by level * sizeof(long) past the inline prefix but only
-bounds-checks the prefix, so a long enough key description is read past
-its kmemdup(desc, desc_len + 1) allocation.  Compute the full byte
-offset and bounds-check the description against it before reading.
+fdt_node_offset_by_prop_value() returns a negative error code on
+failure - fix the check accordingly.
 
-The walk only reaches a description-level chunk when two keys collide
-through the hash, x, type and domain_tag chunks, so this is reached from
-an unprivileged add_key(2) with a crafted pair of same-type keys whose
-index hashes collide; KASAN reports a slab-out-of-bounds read.
-
-Fixes: f771fde82051 ("keys: Simplify key description management")
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Tested-by: Jarkko Sakkinen <jarkko@kernel.org>
-Link: https://lore.kernel.org/r/20260719161505.2423935-2-michael.bommarito@gmail.com
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Fixes: d2477b5cc8ca ("[POWERPC] bootwrapper: Add a firmware-independent simpleboot target.")
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260702211554.56923-4-thorsten.blum@linux.dev
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/keys/keyring.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ arch/powerpc/boot/simpleboot.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/security/keys/keyring.c b/security/keys/keyring.c
-index e105349794f23..b9ca9dc9b0c3f 100644
---- a/security/keys/keyring.c
-+++ b/security/keys/keyring.c
-@@ -271,6 +271,7 @@ static unsigned long keyring_get_key_chunk(const void *data, int level)
- 	unsigned long chunk = 0;
- 	const u8 *d;
- 	int desc_len = index_key->desc_len, n = sizeof(chunk);
-+	unsigned int offset;
- 
- 	level /= ASSOC_ARRAY_KEY_CHUNK_SIZE;
- 	switch (level) {
-@@ -284,12 +285,12 @@ static unsigned long keyring_get_key_chunk(const void *data, int level)
- 		return (unsigned long)index_key->domain_tag;
- 	default:
- 		level -= 4;
--		if (desc_len <= sizeof(index_key->desc))
-+		offset = sizeof(index_key->desc) + level * sizeof(long);
-+		if (desc_len <= offset)
- 			return 0;
- 
--		d = index_key->description + sizeof(index_key->desc);
--		d += level * sizeof(long);
--		desc_len -= sizeof(index_key->desc);
-+		d = index_key->description + offset;
-+		desc_len -= offset;
- 		if (desc_len > n)
- 			desc_len = n;
- 		do {
+diff --git a/arch/powerpc/boot/simpleboot.c b/arch/powerpc/boot/simpleboot.c
+index c80691d83880b..27591df41e9e8 100644
+--- a/arch/powerpc/boot/simpleboot.c
++++ b/arch/powerpc/boot/simpleboot.c
+@@ -68,7 +68,7 @@ void platform_init(unsigned long r3, unsigned long r4, unsigned long r5,
+ 	/* finally, setup the timebase */
+ 	node = fdt_node_offset_by_prop_value(_dtb_start, -1, "device_type",
+ 					     "cpu", sizeof("cpu"));
+-	if (!node)
++	if (node < 0)
+ 		fatal("Cannot find cpu node\n");
+ 	timebase = fdt_getprop(_dtb_start, node, "timebase-frequency", &size);
+ 	if (timebase && (size == 4))
 -- 
 2.53.0
 
