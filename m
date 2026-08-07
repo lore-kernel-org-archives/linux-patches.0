@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5783246AA62;
-	Fri,  7 Aug 2026 15:30:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A31FB346AFB;
+	Fri,  7 Aug 2026 15:30:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116621; cv=none; b=OgjUKLVcjIueB4WNV6KSGuue8ScpzKxdaI/zVZUymjNSwTiuaUvb0OiBscZhiIQNDKbqRWOpt5VRM0eYRJkUVD9qqww6OeCY8FwDOPOLJ68ryh54mrvcT1TVuZxydZFGv3V1JqcpDiSW0EB/JtdUapWXR9iejSgQHWMVuwgZL8k=
+	t=1786116624; cv=none; b=a9RaguFd+NWkRfiEae634TNTTshLZbFpamET4tjuJpteVlRbSkiJgSVg0sDbAlPDmqrH3SyKHo03uDVlTIxu9JPhXPGncbkaR2mPuCTCsnGDv0AqteeJ5ViFoE/OgDerw+vjbtzJZ+sOUMW5Yg4xIrffKUpKypP4cWV+k1kV1X4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116621; c=relaxed/simple;
-	bh=TXJbUIapcHgMfS1dd7kpijX6ix6cMfqr+I4wrlhZOsA=;
+	s=arc-20240116; t=1786116624; c=relaxed/simple;
+	bh=y0IKEqWcAqlJ9BW6SUDKCkxk+tgS12wx1sL2G0W6+6k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ctqThv4M3sCw8awzjKCy01BWAmHM9Wy65c/38xb7D2r+V9XdVJWUEO0tod6GOv2Xs3Ndk4wRClOL6F5WzzI54yitWLudN9qWf8C2IGyI3hYnddgdPkTmW61/T308WO5S9hhwtDbf5EPB4WCG/ptHQ0ZjEYrM6M1sZOxFtiecPjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CiuBqMuu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=W45TtM6e0mBFe15EW59z1V9564zBciF8jMJAhCvHxM27PalKeOWGpv/3tKKLS+LfqszRvNvB/3tDuuBqEHXeydwbiZQaZbQtFyMuMpnkcCObfYJYgv1xoQvPgWQ1yH+caSFV7OZX1jg09OOuThApeEGZbiet7XbYQpLqtlYUSrc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a3xa8XRJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CiuBqMuu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA4ED1F000E9;
-	Fri,  7 Aug 2026 15:30:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a3xa8XRJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D4021F000E9;
+	Fri,  7 Aug 2026 15:30:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116620;
-	bh=2aCzHN/unLkiXWzv7DFdJCEMixw//gNriF2bcF8kFok=;
+	s=korg; t=1786116623;
+	bh=rjP68OSh6D7SyHnjebgct+RafRwsW8MGgwcj6QjwHoQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CiuBqMuuYLSjIAlavu3uh6GNx9hrjcg+luq9mDcjRpXd/0WcHThGglhnCCLt+WG84
-	 5/PDHby3RLFB89M0vkURAoRA8w775LJH+Vuglym+wTz7NtUJp4IfGnOVNeAQhouM+j
-	 an9vgIoUbjhZ4sHPZ+2K+OGxRJdf8zsM52oUWmMg=
+	b=a3xa8XRJMeOXX6e/EQGD3khXO7yYrPaXOHt2s/4bO/0WUg7QfZ5DYBIEPl1KqtTcf
+	 P4jy46JfmN/YeWsALPNNAE7p/e1TR8xrMVN2rLSe8jTkLBVpAILA4T+Sb921rOle+/
+	 5kk8TgWkBoMzt3PYoG07Bm5Id48wKivJ4N1YdVEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Attila Fazekas <afazekas@redhat.com>,
+	Wander Lairson Costa <wander@redhat.com>,
+	Tomas Glozar <tglozar@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 033/438] ntfs: drop stale page-cache when shrinking a non-resident attr
-Date: Fri,  7 Aug 2026 16:33:49 +0200
-Message-ID: <20260807143428.715060025@linuxfoundation.org>
+Subject: [PATCH 7.1 034/438] rtla/timerlat_top: Fix on-threshold actions firing on signal
+Date: Fri,  7 Aug 2026 16:33:50 +0200
+Message-ID: <20260807143428.735231401@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -50,46 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Tomas Glozar <tglozar@redhat.com>
 
-[ Upstream commit 4e646ecd44759e552b0b9ccd995f3f608daab414 ]
+[ Upstream commit fafb66e5903c2bcfc7b7e259042a8282f18a6faa ]
 
-ntfs_non_resident_attr_shrink() shrinks attribute sizes but fails to
-trim the page cache. This leaves orphaned dirty folios beyond the new
-end of the attribute, leading to writeback failures (-ENOENT), data
-loss, and $EA chain corruption.
+A bug was reported when rtla-timerlat-top tool performs on-threshold
+actions, even though no threshold was hit. This is reproduced even if no
+threshold is set at all:
 
-Fix this by truncating the page cache to the new size immediately after
-updating the sizes, preventing writeback from flushing out-of-range folios.
+$ rtla timerlat top -q -c 0 --on-threshold shell,command='echo BAD'
+BAD
+                                     Timer Latency
+...
 
-Fixes: 495e90fa3348 ("ntfs: update attrib operations")
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+The bug is due to incorrect logic in timerlat_top_bpf_main_loop().
+The loop uses timerlat_bpf_wait(), the return values of which are:
+
+- > 0 (number of ringbuffer entries): at least 1 CPU hit threshold
+- = 0: time out
+- < 0: wait was interrupted by a signal
+
+Commit 3138df6f0cd0 ("rtla/timerlat: Exit top main loop on any non-zero
+wait_retval") changed the condition for "threshold hit" from
+"wait_reval == 1" (exactly 1 CPU hit threshold) to "wait_retval != 0",
+to fix a race where multiple CPUs hit the threshold at the same time.
+
+That also made it incorrectly include a signal (< 0), coming from either
+duration expired (SIGALRM) or user interrupt (SIGINT).
+
+Check for wait_retval greater than zero in the if condition to cover all
+return values correctly.
+
+Fixes: 3138df6f0cd0 ("rtla/timerlat: Exit top main loop on any non-zero wait_retval")
+Reported-by: Attila Fazekas <afazekas@redhat.com>
+Reviewed-by: Wander Lairson Costa <wander@redhat.com>
+Link: https://lore.kernel.org/r/20260713141047.687877-1-tglozar@redhat.com
+Signed-off-by: Tomas Glozar <tglozar@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs/attrib.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ tools/tracing/rtla/src/timerlat_top.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ntfs/attrib.c b/fs/ntfs/attrib.c
-index 0f1d0b54cfb52..22338ad541279 100644
---- a/fs/ntfs/attrib.c
-+++ b/fs/ntfs/attrib.c
-@@ -4292,6 +4292,16 @@ static int ntfs_non_resident_attr_shrink(struct ntfs_inode *ni, const s64 newsiz
- 		ni->initialized_size = newsize;
- 		ctx->attr->data.non_resident.initialized_size = cpu_to_le64(newsize);
- 	}
-+
-+	/*
-+	 * Drop any page-cache folios that now lie beyond the shrunk
-+	 * attribute. The clusters backing them have just been freed and the
-+	 * runlist truncated, so leaving stale dirty folios around makes a
-+	 * later writeback map a vcn past the new allocation, which fails with
-+	 * -ENOENT and loses the write.
-+	 */
-+	truncate_inode_pages(VFS_I(ni)->i_mapping, newsize);
-+
- 	/* Update data size in the index. */
- 	if (ni->type == AT_DATA && ni->name == AT_UNNAMED)
- 		NInoSetFileNameDirty(ni);
+diff --git a/tools/tracing/rtla/src/timerlat_top.c b/tools/tracing/rtla/src/timerlat_top.c
+index 035abf01dbe63..d625b76a31679 100644
+--- a/tools/tracing/rtla/src/timerlat_top.c
++++ b/tools/tracing/rtla/src/timerlat_top.c
+@@ -821,7 +821,7 @@ timerlat_top_bpf_main_loop(struct osnoise_tool *tool)
+ 		if (!params->quiet)
+ 			timerlat_print_stats(tool);
+ 
+-		if (wait_retval != 0) {
++		if (wait_retval > 0) {
+ 			/* Stopping requested by tracer */
+ 			retval = common_threshold_handler(tool);
+ 			if (retval)
 -- 
 2.53.0
 
