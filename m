@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7D05472790;
-	Fri,  7 Aug 2026 15:03:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91ECE33C1AD;
+	Fri,  7 Aug 2026 15:03:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115000; cv=none; b=QTnyAw/83H76UTsa1xICFGVBVN19h34dHm4/O86oy4GCB2bJm3kia3dgmBiYFUaalnOIk6F1tL/jxt5Nq55YM4+DhlFixIUgkuqhQ/Ne3zbGtG0dnWdldwen7D+2h0FlqZA1/3H3WCYLLTHjB2LWZYHpSsF/2BiXapoYwtR8TCc=
+	t=1786115003; cv=none; b=McYwv/zyRjgVRC2buZ8cZ6GkpmtZo06TwJz6c9KX4S58exOuLSEUcmK9DaK8TT16XCTT9VDwqki9pUh1wqkvCJBoUSePXHXs6Odw3H6Uvbw4hvM7lZ4x3Uut2no6nm2Kyp+b3Vz0o2BkXChtK0nSeGG7zYXWWiEwtBcuEpqnYoc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115000; c=relaxed/simple;
-	bh=JlNkDdcp1YQM4YFmKKLzX9zWfGMLjD0mu2UJqPzofXs=;
+	s=arc-20240116; t=1786115003; c=relaxed/simple;
+	bh=KUleKhgwX4DD55R6T9523bEnvXI/Exv5OtvDJoVVe1A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T9YJepImItdLO3Bf2B9PyK1hhSMP/aMx17GQ1O/WuuOpoCu0Y0r0TUECCkIpXm7W7BnB4gNhgX4p34EMi5iKG8ggpKnvjo9beyDm8qPAhs3P3LMtHsoV5JgsT/AcrLyQDlss2K1qvWHYQU732AeVi3dr+7thAgfnps+E7SSQyYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gGBAd9fs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PChFWdbmQgKOkzQja6odW0QnWUgYu1fMqKqLShfuHk54RiPYDnrhgUNl1H1v+WiCpbpLBRYNZfvh2zU/nSIsKVPNkZC0xmMVrU4rHrXh4qUSmrkNU6VJMzXkOblc+Fep/CJCUnDRzCbxHx6FnS8tsJDFgbUmDpjZyRYJ4AUytYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uUvPRbij; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gGBAd9fs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D2461F000E9;
-	Fri,  7 Aug 2026 15:03:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uUvPRbij"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC8A41F000E9;
+	Fri,  7 Aug 2026 15:03:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114999;
-	bh=qqxn43/uWJdEYTJIuwrucpM5+6GIPeqeBi7v5Lhi/Vw=;
+	s=korg; t=1786115002;
+	bh=c1pO9ACS3QDzvRJ4WqS90juOQUe8ECaeSynsdn05vPI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gGBAd9fszFEdy5vv8uw2aZqGypjED8FUYy1NjZiWUWukiCdkUgZuIjXoJMsiVgzwg
-	 FyVGg3d337yTnnROK17vztSRZejZa9yW52x26QmhECt2vDRjKahQV2U0H09B059/7W
-	 zV/sTiCLB6JGYfHbrw48xyV3IwgbacAfIVQq5t6Q=
+	b=uUvPRbij8ANd6smet88KjbxCbhOn13Gka77ANxjkkUudTo5J5mJd7D7P0G0ouxq4W
+	 SrOyZKPTIrVp+qJD//OIdzFMwfJXaKWMkMdxDaN5AMV7A4x6O0Bjezz6xQh1QJzkQ8
+	 Ur4ZjlCh+RHOszgNM+uu+gNWJMJFPwrwsPtaFu3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Pauli Virtanen <pav@iki.fi>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 095/396] powerpc/boot: Fix treeboot-akebono CPU node lookup check
-Date: Fri,  7 Aug 2026 16:34:15 +0200
-Message-ID: <20260807143426.329549970@linuxfoundation.org>
+Subject: [PATCH 6.18 122/396] Bluetooth: hci_sync: make hci_cmd_sync_run_once return -EEXIST if exists
+Date: Fri,  7 Aug 2026 16:34:42 +0200
+Message-ID: <20260807143426.937154372@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -52,36 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit b24fc8278b70a9d27ec801a427ab4de9b769d69a ]
+[ Upstream commit d288f4db0909c22342eb50cd1632b4d850517281 ]
 
-fdt_node_offset_by_prop_value() returns a negative error code on
-failure - fix the check accordingly.
+hci_cmd_sync_run_once() needs to indicate whether a queue item was
+added, so caller can know if callbacks are called, so it can avoid
+leaking resources.
 
-Fixes: 2a2c74b2efcb ("IBM Akebono: Add the Akebono platform")
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260702211554.56923-6-thorsten.blum@linux.dev
+Change the function to return -EEXIST if queue item already exists.
+
+Modify all callsites vs. the changes.  The only callsite is
+hci_abort_conn().
+
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Stable-dep-of: 5761d003daa9 ("Bluetooth: hci_conn: hold conn reference in abort_conn_sync()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/boot/treeboot-akebono.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/hci_conn.c | 4 +++-
+ net/bluetooth/hci_sync.c | 2 +-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/arch/powerpc/boot/treeboot-akebono.c b/arch/powerpc/boot/treeboot-akebono.c
-index e3cc2599869cc..1b529037480fb 100644
---- a/arch/powerpc/boot/treeboot-akebono.c
-+++ b/arch/powerpc/boot/treeboot-akebono.c
-@@ -146,7 +146,7 @@ void platform_init(char *userdata)
+diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
+index ceeb19158a36c..f485cffe35735 100644
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -2968,6 +2968,7 @@ static int abort_conn_sync(struct hci_dev *hdev, void *data)
+ int hci_abort_conn(struct hci_conn *conn, u8 reason)
+ {
+ 	struct hci_dev *hdev = conn->hdev;
++	int err;
  
- 	node = fdt_node_offset_by_prop_value(_dtb_start, -1, "device_type",
- 					     "cpu", sizeof("cpu"));
--	if (!node)
-+	if (node < 0)
- 		fatal("Cannot find cpu node\n");
- 	timebase = fdt_getprop(_dtb_start, node, "timebase-frequency", &size);
- 	if (timebase && (size == 4))
+ 	/* If abort_reason has already been set it means the connection is
+ 	 * already being aborted so don't attempt to overwrite it.
+@@ -2989,7 +2990,8 @@ int hci_abort_conn(struct hci_conn *conn, u8 reason)
+ 	 * as a result to MGMT_OP_DISCONNECT/MGMT_OP_UNPAIR which does
+ 	 * already queue its callback on cmd_sync_work.
+ 	 */
+-	return hci_cmd_sync_run_once(hdev, abort_conn_sync, conn, NULL);
++	err = hci_cmd_sync_run_once(hdev, abort_conn_sync, conn, NULL);
++	return (err == -EEXIST) ? 0 : err;
+ }
+ 
+ void hci_setup_tx_timestamp(struct sk_buff *skb, size_t key_offset,
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index 87a2502fccd6e..ca002269306c4 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -825,7 +825,7 @@ int hci_cmd_sync_run_once(struct hci_dev *hdev, hci_cmd_sync_work_func_t func,
+ 			  void *data, hci_cmd_sync_work_destroy_t destroy)
+ {
+ 	if (hci_cmd_sync_lookup_entry(hdev, func, data, destroy))
+-		return 0;
++		return -EEXIST;
+ 
+ 	return hci_cmd_sync_run(hdev, func, data, destroy);
+ }
 -- 
 2.53.0
 
