@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2EB742C4E8;
-	Fri,  7 Aug 2026 15:48:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DB66476CEC;
+	Fri,  7 Aug 2026 15:48:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786117713; cv=none; b=HsTbdoP6HdgfQHZCblecNFoysoaorPFa0h9Zsc9oEmnQXPJzT8zd3gjXNWKOO4BRK2GjeYjlfsc5s/FaN/2iQBeyOkyF5dsWpCzrYQlNEW2rBGkAQzZB4N4RyjTnfmGsyqji3hPYskx/AG+1yqPgB1hffsYiG/N0kdrheS4gTI0=
+	t=1786117716; cv=none; b=VjT6f+/5tozsn4jHknDjynFvpZghthNdXJp1xoSbnFkDvlH26AdbAKQAFJmF/2Y6r6a6Zpx6PWz4cVNeJ+batQcAHe621YHgrmTfF3D/r+6WsvnpifM4XoJZNXhaySvGF6bvZ1I4eowH2k5D8akTxMuFAKOrbwPqdUmD7yhOmhw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786117713; c=relaxed/simple;
-	bh=+6pgQfh1RGvoeDB/tB1IzBdmgwvzsOj+8ak613HSUqw=;
+	s=arc-20240116; t=1786117716; c=relaxed/simple;
+	bh=jOBoexpCzIviGVuBmsSYrlERTodJ3zEs47v5IRompUs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ld4jN33FXBdmBXi7o+gCxcqIpWIGxfg8/BvnnMTuMzHCTCoKrG6LqSD8A64aHJbgieqqrQpPXRFzixLYGRlFc/oWzBMPbNvI4RBjY6WUkWWI8zpDEywTgxvwNjKf81qglnYH/EYoSX5dB4tzOMudqgRzhuUG0MZUFCUbxjslz/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y6YFyK3d; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tLNVddX9civoremYjv1QlHHLBydJicA1uH30LtcrX+4CCRE8NDpTeApO9UyAu+xah32IbaAvduR+gMQj/R8n2iIAcIMDzNwk35niuGuziIjZnpYVN44+52SDQl0me1WUOtivNbvw0rdFTwvD9/Irxi9K7kqbrTdGwULSI7hWB0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f5EHB21z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y6YFyK3d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F0E31F000E9;
-	Fri,  7 Aug 2026 15:48:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f5EHB21z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ACC71F000E9;
+	Fri,  7 Aug 2026 15:48:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786117712;
-	bh=tgQ/m18vhNGxHcrjbJw2gS/U5waksKnU9H6k9G1io0k=;
+	s=korg; t=1786117715;
+	bh=YxXRh2Gm1KObUpY0qStpHGL4mc7iiA2VkqRYJsHFAsQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y6YFyK3dyTSjGebxy+mK2iZ/ZbVgBMQczBTRZ3FsBWrjkFu0AXLjCOk/v1iKT1g7N
-	 vh7ZMI5ePz1ewPpCOzYgOr8H0QfvTstLsVST2ZhRMFD4abMDPCwz44jzAmtA28OsbU
-	 L7A1pRCm0C94UaSljbQ2OEbtjk8jCOcDDvlFfMyA=
+	b=f5EHB21znHRntwngHcRNu3tkwo1M3xka0g3XTq+fgbx/NGV0DOAYIxrnlZkkEWhfr
+	 /TtNNg6Ab+/iszjfqUrO9r9S9w1gnSwy+VqjEgZrbDb6prnNTa6eQNXMcKgi3aFV8+
+	 eYAMzVXnluuMOHXhB5CHJ8eG815nA4xsHWEnJ6KE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Zack Rusin <zack.rusin@broadcom.com>,
 	Ian Forbes <ian.forbes@broadcom.com>
-Subject: [PATCH 7.1 416/438] drm/vmwgfx: use check_add_overflow for shader size+offset bound
-Date: Fri,  7 Aug 2026 16:40:12 +0200
-Message-ID: <20260807143436.831698014@linuxfoundation.org>
+Subject: [PATCH 7.1 417/438] drm/vmwgfx: validate external BO copy bounds for both stride paths
+Date: Fri,  7 Aug 2026 16:40:13 +0200
+Message-ID: <20260807143436.852306607@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -52,88 +52,129 @@ Content-Transfer-Encoding: 8bit
 
 From: Zack Rusin <zack.rusin@broadcom.com>
 
-commit 54d56d5b42d2e4c72ba6e365e9774da90698aa22 upstream.
+commit 706c93c5813caabbb0d0a576c017d15aeec2c113 upstream.
 
-vmw_shader_define() validates the user-supplied shader window against
-its backing buffer with
+vmw_external_bo_copy() trusts caller-supplied offsets, strides, and
+heights and operates on imported dma-buf vmaps:
 
-	(u64)buffer->tbo.base.size < (u64)size + (u64)offset
+  - The equal-stride memcpy() bound was clamped after subtracting the
+    offsets from dst_size and src_size; an offset larger than the BO
+    size wraps the unsigned subtraction to a huge value and the
+    resulting memcpy() runs off the end of the vmap.  dst_stride *
+    height is also a u32 multiplication that can overflow.
+  - The non-equal-stride row-by-row path had no bound at all.  The
+    loop touches bytes through offset + (height - 1) * stride +
+    width_in_bytes, with only a WARN_ON(dst_stride < width_in_bytes),
+    and could likewise step past the end of either mapping.
 
-drm_vmw_shader_create_arg::offset is __u64 in the uapi; when it is
-near U64_MAX the unsigned addition wraps and the resulting tiny value
-passes the check.  The unbounded offset is then stored in
-res->guest_memory_offset and forwarded to host SVGA shader-create
-commands.
+The offsets and strides are derived from STDU/SOU plane state, so a
+configured CRTC submitting a crafted atomic commit on an imported
+framebuffer can reach this path.
 
-Use check_add_overflow() to detect the wrap and compare the resulting
-endpoint against the buffer size.
+Validate the exact row-copy endpoint against each BO's size up front
+using check_mul_overflow() and check_add_overflow().  Use the bulk
+memcpy() path only when width_in_bytes covers the whole stride;
+otherwise copy one row at a time so partial-row updates near the bottom
+of a framebuffer remain valid.  Also reject zero strides and stride <
+width_in_bytes, both of which the row-by-row path cannot represent
+safely.
 
-Fixes: 668b206601c5 ("drm/vmwgfx: Stop using raw ttm_buffer_object's")
+Fixes: 50f119925091 ("drm/vmwgfx: Fix prime with external buffers")
 Cc: stable@vger.kernel.org
 Assisted-by: Claude:claude-opus-4.7
 Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
 Reviewed-by: Ian Forbes <ian.forbes@broadcom.com>
-Link: https://patch.msgid.link/20260505222728.519626-12-zack.rusin@broadcom.com
+Link: https://patch.msgid.link/20260505222728.519626-13-zack.rusin@broadcom.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_shader.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/vmwgfx/vmwgfx_blit.c |   39 +++++++++++++++++++++++++++--------
+ 1 file changed, 31 insertions(+), 8 deletions(-)
 
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_shader.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_shader.c
-@@ -25,6 +25,8 @@
-  *
-  **************************************************************************/
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_blit.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_blit.c
+@@ -30,6 +30,7 @@
  
+ #include "vmwgfx_bo.h"
+ #include <linux/highmem.h>
 +#include <linux/overflow.h>
+ 
+ /*
+  * Template that implements find_first_diff() for a generic
+@@ -463,19 +464,42 @@ static int vmw_external_bo_copy(struct v
+ 		container_of(dst->tbo.bdev, struct vmw_private, bdev);
+ 	size_t dst_size = dst->tbo.resource->size;
+ 	size_t src_size = src->tbo.resource->size;
++	size_t dst_end, src_end;
+ 	struct iosys_map dst_map = {0};
+ 	struct iosys_map src_map = {0};
++	bool dst_mapped = false;
++	bool src_mapped = false;
+ 	int ret, i;
+ 	int x_in_bytes;
+ 	u8 *vsrc;
+ 	u8 *vdst;
+ 
++	if (!height || !width_in_bytes)
++		return 0;
 +
- #include <drm/ttm/ttm_placement.h>
- 
- #include "vmwgfx_binding.h"
-@@ -685,7 +687,7 @@ int vmw_shader_destroy_ioctl(struct drm_
- static int vmw_user_shader_alloc(struct vmw_private *dev_priv,
- 				 struct vmw_bo *buffer,
- 				 size_t shader_size,
--				 size_t offset,
-+				 u64 offset,
- 				 SVGA3dShaderType shader_type,
- 				 uint8_t num_input_sig,
- 				 uint8_t num_output_sig,
-@@ -739,7 +741,7 @@ out:
- static struct vmw_resource *vmw_shader_alloc(struct vmw_private *dev_priv,
- 					     struct vmw_bo *buffer,
- 					     size_t shader_size,
--					     size_t offset,
-+					     u64 offset,
- 					     SVGA3dShaderType shader_type)
- {
- 	struct vmw_shader *shader;
-@@ -768,7 +770,7 @@ out_err:
- 
- static int vmw_shader_define(struct drm_device *dev, struct drm_file *file_priv,
- 			     enum drm_vmw_shader_type shader_type_drm,
--			     u32 buffer_handle, size_t size, size_t offset,
-+			     u32 buffer_handle, size_t size, u64 offset,
- 			     uint8_t num_input_sig, uint8_t num_output_sig,
- 			     uint32_t *shader_handle)
- {
-@@ -779,13 +781,16 @@ static int vmw_shader_define(struct drm_
- 	int ret;
- 
- 	if (buffer_handle != SVGA3D_INVALID_ID) {
-+		u64 end;
++	if (!dst_stride || !src_stride)
++		return -EINVAL;
++	if (dst_stride < width_in_bytes || src_stride < width_in_bytes)
++		return -EINVAL;
++	if (check_mul_overflow((size_t)dst_stride, (size_t)height - 1, &dst_end) ||
++	    check_add_overflow(dst_end, (size_t)width_in_bytes, &dst_end) ||
++	    check_add_overflow((size_t)dst_offset, dst_end, &dst_end) ||
++	    dst_end > dst_size ||
++	    check_mul_overflow((size_t)src_stride, (size_t)height - 1, &src_end) ||
++	    check_add_overflow(src_end, (size_t)width_in_bytes, &src_end) ||
++	    check_add_overflow((size_t)src_offset, src_end, &src_end) ||
++	    src_end > src_size) {
++		drm_dbg_driver(&vmw->drm, "Out-of-bounds external BO copy\n");
++		return -EINVAL;
++	}
 +
- 		ret = vmw_user_bo_lookup(file_priv, buffer_handle, &buffer);
- 		if (unlikely(ret != 0)) {
- 			VMW_DEBUG_USER("Couldn't find buffer for shader creation.\n");
- 			return ret;
- 		}
+ 	vsrc = map_external(src, &src_map);
+ 	if (!vsrc) {
+ 		drm_dbg_driver(&vmw->drm, "Wasn't able to map src\n");
+ 		ret = -ENOMEM;
+ 		goto out;
+ 	}
++	src_mapped = true;
  
--		if ((u64)buffer->tbo.base.size < (u64)size + (u64)offset) {
-+		if (check_add_overflow((u64)size, (u64)offset, &end) ||
-+		    end > buffer->tbo.base.size) {
- 			VMW_DEBUG_USER("Illegal buffer- or shader size.\n");
- 			ret = -EINVAL;
- 			goto out_bad_arg;
+ 	vdst = map_external(dst, &dst_map);
+ 	if (!vdst) {
+@@ -483,16 +507,13 @@ static int vmw_external_bo_copy(struct v
+ 		ret = -ENOMEM;
+ 		goto out;
+ 	}
++	dst_mapped = true;
+ 
+ 	vsrc += src_offset;
+ 	vdst += dst_offset;
+-	if (src_stride == dst_stride) {
+-		dst_size -= dst_offset;
+-		src_size -= src_offset;
+-		memcpy(vdst, vsrc,
+-		       min(dst_stride * height, min(dst_size, src_size)));
++	if (src_stride == dst_stride && width_in_bytes == dst_stride) {
++		memcpy(vdst, vsrc, dst_stride * (size_t)height);
+ 	} else {
+-		WARN_ON(dst_stride < width_in_bytes);
+ 		for (i = 0; i < height; ++i) {
+ 			memcpy(vdst, vsrc, width_in_bytes);
+ 			vsrc += src_stride;
+@@ -508,8 +529,10 @@ static int vmw_external_bo_copy(struct v
+ 
+ 	ret = 0;
+ out:
+-	unmap_external(src, &src_map);
+-	unmap_external(dst, &dst_map);
++	if (src_mapped)
++		unmap_external(src, &src_map);
++	if (dst_mapped)
++		unmap_external(dst, &dst_map);
+ 
+ 	return ret;
+ }
 
 
