@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E88A2388E6E;
-	Fri,  7 Aug 2026 14:43:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7862142D753;
+	Fri,  7 Aug 2026 14:43:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786113841; cv=none; b=dBdsMxkFeE0M+mUV9LxKGSV/lBFhIHzqZNzFvQc0vZu9iOJCVPgMtFQAsoNHxKUJej/NiPcN31sFE37KH7321BdWaZ/Ju6pKd40Hx99BPv8mZOaiIjI2eClAwjZPo+BGWCWLMyFTHZ8RqxoQkqM++npbgzvwJI8woxSqTj33wBA=
+	t=1786113844; cv=none; b=jUt43PhBeLFiddpDHOEOpRji7n2G4Xnh0W4DYlJbMzBfa5yWwCBlt7PayXNl0KcGbDBID8SfK6e4WUGQ1gYS8blM7V6nq/6CMVsgrnJVxlP9/5JDJpFjF3euMdzVqNczX6o6AxFsnroxz0rry3T3+tXHA3O9x6s02f77gGcatdc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786113841; c=relaxed/simple;
-	bh=D25OIwsMzzYSG/XXzJubAxUgl/5AhWL7xpVv/m94UHE=;
+	s=arc-20240116; t=1786113844; c=relaxed/simple;
+	bh=SX3plKMHy9YMFSTFht///nF/fEZx8goJ4iGc/VmgJgc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uA8paA/LpaxjELY08osZ82LhGtfddTiQ3joel3q2PBHN7xvCHe5FCQjfn8CK/Hhou9wjwU+eTN3k+4w86h7s/zoqe8lOR/2518/NRUIoOkiNIwGymhlIO3uDLjohLeOBUO6dy78+BUe+gXZR8Lmorgsa3fBgovAHPa8nJzzq0Lo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nVIYBRg+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EXQZd7JfXcQ0NDYuKeblOOIkPEgHSPNsEjCgqenxPddXmN1sql4DNIMPyah5yPvgw9JEWV5pFhOxBQmdN51w6TaqnCkGBCJtHu1va7LSq7xLuthlAO5xpzRcFlm0HxqFiXeZMxnhVMKn2E43mBvjdqYb8Dn5+DCflCWqkYxp/gA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2PQCd4Uj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nVIYBRg+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98C0F1F000E9;
-	Fri,  7 Aug 2026 14:43:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2PQCd4Uj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3B0B1F00ACA;
+	Fri,  7 Aug 2026 14:43:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786113837;
-	bh=wxnjX5oOjSBIq+g1ZbLHHm9jrHGVy+NWUCty/F/JLQg=;
+	s=korg; t=1786113834;
+	bh=CMTkfty7aLpRVtHtWug7iuJycdTLU/gVpmwG4sLSu4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nVIYBRg+3ZNeQKxsTXVVHMuZcBQZKRVF83EVUCmg0QchWBLTWC9kyMZDmwtqa6OXF
-	 MNDw0zRqNWXzQ2AQYjJU7XKvVQ4dUnpEZcGPNsX6MwG3BH/uGK7x+ecl7Pla9fkGkT
-	 vsW9/K/GK3cK9g6fGkKvcyAv+2qFBHLDiTMzOBZk=
+	b=2PQCd4UjxDW4Sf+8cdW6lm6/1RIJ3LWbG4w4fJaZtvQeLgdSzwTLvFGEIZS94/oM9
+	 Aqz9v0Bg1WBS75hCvzhF3THw7mOB+bZ5YZwWFVTrInMxfOosrQcTeoehhgzF606HVq
+	 SKYxn9xZw/CS+zxtHnQmznixwkDx20L4eamD3nDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
+	Ilia Gavrilov <Ilia.Gavrilov@infotecs.ru>,
 	Allison Henderson <achender@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 052/337] rds: tcp: hold the RCU lock across ipv6_chk_addr() in rds_tcp_laddr_check()
-Date: Fri,  7 Aug 2026 16:34:15 +0200
-Message-ID: <20260807143419.645806886@linuxfoundation.org>
+Subject: [PATCH 6.12 051/337] rds: Fix inet6_addr_lst NULL dereference when IPv6 is disabled
+Date: Fri,  7 Aug 2026 16:34:14 +0200
+Message-ID: <20260807143419.623447157@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -53,82 +52,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Ilia Gavrilov <Ilia.Gavrilov@infotecs.ru>
 
-[ Upstream commit 78f75d632f74b8de0f081a128588f7c37d0d1164 ]
+[ Upstream commit 9c805e592a29be9e4e61ff1bd567da04aa8fd6f9 ]
 
-rds_tcp_laddr_check() looks up a scoped IPv6 interface with
-dev_get_by_index_rcu(), drops the RCU read-side lock, and only then
-passes the bare struct net_device * into ipv6_chk_addr().
+When booting with the 'ipv6.disable=1' parameter, inet6_addr_lst
+is never initialized because inet6_init() exits before addrconf_init()
+is called to initialize it. An attempt to bind an RDS socket to
+an ipv6 address results in a crash in __ipv6_chk_addr_and_flags()
 
-dev_get_by_index_rcu() only keeps the device alive within the same RCU
-read-side section. After rcu_read_unlock(), a concurrent RTM_DELLINK can
-free the net_device; ipv6_chk_addr() then dereferences the stale pointer
-in __ipv6_chk_addr_and_flags() (e.g. l3mdev_master_dev_rcu(dev)), reading
-freed memory.
+KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
+RIP: 0010:__ipv6_chk_addr_and_flags+0x1df/0x7e0
+Call Trace:
+ <TASK>
+ ipv6_chk_addr+0x3b/0x50
+ rds_tcp_laddr_check+0x155/0x3b0 [rds_tcp]
+ rds_trans_get_preferred+0x15d/0x2d0 [rds]
+ ? trace_hardirqs_on+0x2d/0x110
+ rds_bind+0x1433/0x1d60 [rds]
+ ? rds_remove_bound+0xd50/0xd50 [rds]
+ ? aa_af_perm+0x250/0x250
+ ? __might_fault+0xde/0x190
+ ? __sys_bind+0x1dc/0x210
+ __sys_bind+0x1dc/0x210
+ ? __ia32_sys_socketpair+0x100/0x100
+ ? restore_fpregs_from_fpstate+0x53/0x100
+ __x64_sys_bind+0x73/0xb0
+ ? syscall_enter_from_user_mode+0x1c/0x50
+ do_syscall_64+0x34/0x80
+ entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+RIP: 0033:0x7f47f8269ea9
+ </TASK>
 
-Keep the RCU read-side lock held across the ipv6_chk_addr() call instead
-of dropping it right after the lookup, so the device cannot be freed
-while it is in use.
+The following code reproduces the issue:
 
-  BUG: KASAN: slab-use-after-free in __ipv6_chk_addr_and_flags (... net/ipv6/addrconf.c:1998)
-  Read of size 8 at addr ffff8880106ec000 by task exploit/153
-  Call Trace:
-   ...
-   kasan_report (mm/kasan/report.c:595)
-   __ipv6_chk_addr_and_flags (... net/ipv6/addrconf.c:1998)
-   ipv6_chk_addr (net/ipv6/addrconf.c:2031 net/ipv6/addrconf.c:1972)
-   rds_tcp_laddr_check (net/rds/tcp.c:370)
-   rds_bind (net/rds/bind.c:248)
-   __sys_bind (net/socket.c:1920)
-   __x64_sys_bind (net/socket.c:1956)
-   do_syscall_64 (arch/x86/entry/syscall_64.c:63)
-   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+struct sockaddr_in6 addr;
+s = socket(PF_RDS, SOCK_SEQPACKET, 0);
+
+memset(&addr, 0, sizeof(addr));
+inet_pton(AF_INET6, ADDRESS, &addr.sin6_addr);
+addr.sin6_family = AF_INET6;
+addr.sin6_port = htons(PORT);
+
+bind(s, &addr, sizeof(addr));
+
+Found by InfoTeCS on behalf of Linux Verification Center
+(linuxtesting.org) with Syzkaller.
 
 Fixes: eee2fa6ab322 ("rds: Changing IP address internal representation to struct in6_addr")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Fixes: 1e2b44e78eea ("rds: Enable RDS IPv6 support")
+Signed-off-by: Ilia Gavrilov <Ilia.Gavrilov@infotecs.ru>
 Reviewed-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20260722210203.565803-1-xmei5@asu.edu
+Link: https://patch.msgid.link/20260709162723.367523-1-Ilia.Gavrilov@infotecs.ru
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 78f75d632f74 ("rds: tcp: hold the RCU lock across ipv6_chk_addr() in rds_tcp_laddr_check()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/tcp.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ net/rds/ib.c    | 4 ++++
+ net/rds/ib_cm.c | 4 ++++
+ net/rds/tcp.c   | 8 +++++---
+ 3 files changed, 13 insertions(+), 3 deletions(-)
 
+diff --git a/net/rds/ib.c b/net/rds/ib.c
+index ce5be43c5fbac..1061bcf7d1315 100644
+--- a/net/rds/ib.c
++++ b/net/rds/ib.c
+@@ -431,6 +431,10 @@ static int rds_ib_laddr_check_cm(struct net *net, const struct in6_addr *addr,
+ 		sa = (struct sockaddr *)&sin;
+ 	} else {
+ #if IS_ENABLED(CONFIG_IPV6)
++		if (!ipv6_mod_enabled()) {
++			ret = -EADDRNOTAVAIL;
++			goto out;
++		}
+ 		memset(&sin6, 0, sizeof(sin6));
+ 		sin6.sin6_family = AF_INET6;
+ 		sin6.sin6_addr = *addr;
+diff --git a/net/rds/ib_cm.c b/net/rds/ib_cm.c
+index 5289afbb61aa7..e50e01abb0799 100644
+--- a/net/rds/ib_cm.c
++++ b/net/rds/ib_cm.c
+@@ -810,6 +810,10 @@ int rds_ib_cm_handle_connect(struct rdma_cm_id *cm_id,
+ 	dp = event->param.conn.private_data;
+ 	if (isv6) {
+ #if IS_ENABLED(CONFIG_IPV6)
++		if (!ipv6_mod_enabled()) {
++			err = -EOPNOTSUPP;
++			goto out;
++		}
+ 		dp_cmn = &dp->ricp_v6.dp_cmn;
+ 		saddr6 = &dp->ricp_v6.dp_saddr;
+ 		daddr6 = &dp->ricp_v6.dp_daddr;
 diff --git a/net/rds/tcp.c b/net/rds/tcp.c
-index 87e6ab0e93b71..1980a197034ba 100644
+index 06a2d8d48bbac..87e6ab0e93b71 100644
 --- a/net/rds/tcp.c
 +++ b/net/rds/tcp.c
-@@ -331,23 +331,25 @@ int rds_tcp_laddr_check(struct net *net, const struct in6_addr *addr,
- 	/* If the scope_id is specified, check only those addresses
- 	 * hosted on the specified interface.
- 	 */
-+	rcu_read_lock();
- 	if (scope_id != 0) {
--		rcu_read_lock();
- 		dev = dev_get_by_index_rcu(net, scope_id);
- 		/* scope_id is not valid... */
- 		if (!dev) {
- 			rcu_read_unlock();
- 			return -EADDRNOTAVAIL;
- 		}
--		rcu_read_unlock();
+@@ -342,9 +342,11 @@ int rds_tcp_laddr_check(struct net *net, const struct in6_addr *addr,
+ 		rcu_read_unlock();
  	}
  #if IS_ENABLED(CONFIG_IPV6)
- 	if (ipv6_mod_enabled()) {
- 		ret = ipv6_chk_addr(net, addr, dev, 0);
--		if (ret)
-+		if (ret) {
-+			rcu_read_unlock();
- 			return 0;
-+		}
- 	}
+-	ret = ipv6_chk_addr(net, addr, dev, 0);
+-	if (ret)
+-		return 0;
++	if (ipv6_mod_enabled()) {
++		ret = ipv6_chk_addr(net, addr, dev, 0);
++		if (ret)
++			return 0;
++	}
  #endif
-+	rcu_read_unlock();
  	return -EADDRNOTAVAIL;
  }
- 
 -- 
 2.53.0
 
