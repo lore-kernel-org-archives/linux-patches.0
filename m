@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E6803A6F0A;
-	Fri,  7 Aug 2026 14:55:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93A5D368276;
+	Fri,  7 Aug 2026 14:55:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114530; cv=none; b=B3u67sRdy8jcyskU4YTbioHNjHhrGKM6fNForGhH3p1Z00hqjPRA0zrzPZx9nbKeTGxo3zSGYWb6f6/kgaPLi0WrAMs8ApoXdBDMAtT09nUn34rrIaOCRskqMtxhbd6GB+WPJHPZ2sfyqkRo/UetuLjCDtR2fqjqL+mtwhbAiRU=
+	t=1786114533; cv=none; b=Z/0QfqvjxRw6zDYWa2ZGoyhitbmrk1CMeqj9FVyo3LVFxwZ9MOkj9e3y5/eR1XhOUmzx5VManknEc3W8Km4fiaYOmTjeMDh5zOMV1F1Uysuq6XDFpC4FolKpKhXxhM2w4OHzLSfk41x3thH6FvVWjT7wmkvfi3UACk5brBv7J9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114530; c=relaxed/simple;
-	bh=UGqgZEk3GhjimA9r8IZ59VK+E1YNT91Uiw7LQBUHtLs=;
+	s=arc-20240116; t=1786114533; c=relaxed/simple;
+	bh=70D3Wpu2e3yivbDsnPweyqachAbyCxT5m5Nbl3AqjLI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=idQbBbVwg6oqYxoTSwTueD5/ecAbtMwZlxL12gPR/br/S+9nfQbajjGCmo6mgQ8W586fob1Gogb3MYiT5heGeMY/q+RFv4rsjuquUmYlTOVfOrHC4mF7nfSVrKE6lQ7w3rjlGbGpndXxqSWe1o8eAXkTTkrImCVWXMor8y2nrmo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n4h6tkLR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bsIECSjcqeSuWaF+e2sOHnGIKSWvUbDwTbpPgcuwfN6p+nlpV7fGnNOl0LpMui8RpVQ9ZSPV9K69Q8BYpl/ZecUxFUtUi368iJd7P6c3TKD44QeXpGW+GCLJF9Eb5DQOci/CT8WvRuRzkP2UBvHTSGJiVrHmRaLlF6L3C1e/R5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z1Xx8bS0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n4h6tkLR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FAB21F00A3F;
-	Fri,  7 Aug 2026 14:55:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z1Xx8bS0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E75701F00A3D;
+	Fri,  7 Aug 2026 14:55:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114522;
-	bh=mJ9lSi/z7iIup6k7/Jaz2OR2AJtVZPIKmhUxRmpSKLk=;
+	s=korg; t=1786114530;
+	bh=7nEUCaTuS+KSS71NRQx0IRY3W7JAhISZD8KyhcUh2Vo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n4h6tkLRCx2D7vPAQLJJQti+Ij2N9jtw50wt3zw+76ayPmrRWSEm7XZi10x1JUJYO
-	 i9QuvVJdVOgaLUq1oERgeRYceMDsTzuHI8tKHykAXnMxyIIeS8Aq/NS7VNfkZ1/2pL
-	 MINQO+H99rLMSYqR7KqB6CZ7u0EzcS4C5ta9RcEg=
+	b=Z1Xx8bS0ifxQ+hMABRr+/BZZ8rciUEDTSD9hoKN1liMRwsVT9ey1R8fgVEw9m3n47
+	 hqmbj1eUc9Jvju0nj7J1Oy9aA2wn5y8Mho+it6Cgp08i8WKfP3MkkfWgRTChBRoZ0r
+	 xA/Z5Xj2DYnVVaXC2ovC6n9ABElY1H6KnwO0Xwow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Andrei Kuchynski <akuchynski@chromium.org>,
-	Benson Leung <bleung@chromium.org>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 293/337] usb: typec: ucsi: Fix race condition and ordering in port unregistration
-Date: Fri,  7 Aug 2026 16:38:16 +0200
-Message-ID: <20260807143424.879676247@linuxfoundation.org>
+Subject: [PATCH 6.12 295/337] media: imx219: Fix maximum frame length in lines
+Date: Fri,  7 Aug 2026 16:38:18 +0200
+Message-ID: <20260807143424.922340172@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -52,170 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrei Kuchynski <akuchynski@chromium.org>
+From: Sakari Ailus <sakari.ailus@linux.intel.com>
 
-[ Upstream commit 7aa7d4bf9d3fa9a6a47b640ad103ab433b7ff261 ]
+[ Upstream commit 2c4f1ba7354312ad2d6e34e70a518a51a9344715 ]
 
-A synchronization issue exists during port unregistration where pending
-partner work items can race against workqueue destruction, leading to
-use-after-free conditions:
+The driver used the maximum frame length in lines value of 0xffff, but the
+maximum appears to be 0xfffe instead. Fix it.
 
-  cros_ec_ucsi cros_ec_ucsi.3.auto: error -ETIMEDOUT: PPM init failed
-  BUG: kernel NULL pointer dereference, address: 0000000000000000
-  RIP: 0010:__queue_work+0x83/0x4a0
-  Call Trace:
-    <IRQ>
-    __cfi_delayed_work_timer_fn+0x10/0x10
-    run_timer_softirq+0x3b6/0xbd0
-    sched_clock_cpu+0xc/0x110
-    irq_exit_rcu+0x18d/0x330
-    fred_sysvec_apic_timer_interrupt+0x5e/0x80
-
-Fix this by ensuring strict ordering and proper serialization during
-teardown:
-
-1. Move ucsi_unregister_partner() to the beginning of the teardown
-sequence and protect it under the connector mutex lock.
-2. Ensure all pending partner tasks are explicitly flushed and finished
-before the workqueue is destroyed.
-3. Switch from mod_delayed_work() to a cancel_delayed_work() and
-queue_delayed_work() sequence. This guarantees that items currently marked
-as pending won't be scheduled an additional time, preventing a double
-release of resources which leads to the following crash:
-
-  Oops: general protection fault, probably for non-canonical address
-    0xdead000000000122: 0000 [#1] SMP NOPTI
-  Workqueue: cros_ec_ucsi.3.auto-con2 ucsi_poll_worker
-  RIP: 0010:ucsi_poll_worker+0x65/0x1e0
-  Call Trace:
-  <TASK>
-    process_scheduled_works+0x218/0x6d0
-    worker_thread+0x188/0x3f0
-    __cfi_worker_thread+0x10/0x10
-    kthread+0x226/0x2a0
-
-To ensure these rules are applied identically across both the normal
-teardown and the ucsi_init() error paths, consolidate the cleanup logic
-into a new helper, ucsi_unregister_port().
-
-Cc: stable <stable@kernel.org>
-Fixes: b9aa02ca39a4 ("usb: typec: ucsi: Add polling mechanism for partner tasks like alt mode checking")
-Fixes: b13abcb7ddd8 ("usb: typec: ucsi: Fix NULL pointer access")
-Fixes: fac4b8633fd6 ("usb: ucsi: Ensure connector delayed work items are flushed")
-Signed-off-by: Andrei Kuchynski <akuchynski@chromium.org>
-Reviewed-by: Benson Leung <bleung@chromium.org>
-Link: https://patch.msgid.link/20260707141736.1635698-1-akuchynski@chromium.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 1283b3b8f82b ("media: i2c: Add driver for Sony IMX219 sensor")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Reviewed-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/ucsi/ucsi.c |   82 +++++++++++++++++++-----------------------
- 1 file changed, 39 insertions(+), 43 deletions(-)
+ drivers/media/i2c/imx219.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/typec/ucsi/ucsi.c
-+++ b/drivers/usb/typec/ucsi/ucsi.c
-@@ -1719,6 +1719,42 @@ out_unlock:
- 	return ret;
- }
+--- a/drivers/media/i2c/imx219.c
++++ b/drivers/media/i2c/imx219.c
+@@ -72,7 +72,7 @@
  
-+static void ucsi_unregister_port(struct ucsi_connector *con)
-+{
-+	struct ucsi_work *uwork;
-+
-+	if (con->wq) {
-+		mutex_lock(&con->lock);
-+		ucsi_unregister_partner(con);
-+		/*
-+		 * queue delayed items immediately so they can execute
-+		 * and free themselves before the wq is destroyed
-+		 */
-+		list_for_each_entry(uwork, &con->partner_tasks, node) {
-+			if (cancel_delayed_work(&uwork->work))
-+				queue_delayed_work(con->wq, &uwork->work, 0);
-+		}
-+		mutex_unlock(&con->lock);
-+
-+		destroy_workqueue(con->wq);
-+		con->wq = NULL;
-+	} else {
-+		ucsi_unregister_partner(con);
-+	}
-+
-+	ucsi_unregister_altmodes(con, UCSI_RECIPIENT_CON);
-+	ucsi_unregister_port_psy(con);
-+
-+	usb_power_delivery_unregister_capabilities(con->port_sink_caps);
-+	con->port_sink_caps = NULL;
-+	usb_power_delivery_unregister_capabilities(con->port_source_caps);
-+	con->port_source_caps = NULL;
-+	usb_power_delivery_unregister(con->pd);
-+	con->pd = NULL;
-+	typec_unregister_port(con->port);
-+	con->port = NULL;
-+}
-+
- static u64 ucsi_get_supported_notifications(struct ucsi *ucsi)
- {
- 	u16 features = ucsi->cap.features;
-@@ -1844,22 +1880,8 @@ err_unregister:
- 	for (i = 0; i < ucsi->cap.num_connectors; i++)
- 		lockdep_unregister_key(&connector[i].lock_key);
+ /* V_TIMING internal */
+ #define IMX219_REG_FRM_LENGTH_A		CCI_REG16(0x0160)
+-#define IMX219_FLL_MAX			0xffff
++#define IMX219_FLL_MAX			0xfffe
+ #define IMX219_VBLANK_MIN		32
  
--	for (con = connector; con->port; con++) {
--		if (con->wq)
--			destroy_workqueue(con->wq);
--		ucsi_unregister_partner(con);
--		ucsi_unregister_altmodes(con, UCSI_RECIPIENT_CON);
--		ucsi_unregister_port_psy(con);
--
--		usb_power_delivery_unregister_capabilities(con->port_sink_caps);
--		con->port_sink_caps = NULL;
--		usb_power_delivery_unregister_capabilities(con->port_source_caps);
--		con->port_source_caps = NULL;
--		usb_power_delivery_unregister(con->pd);
--		con->pd = NULL;
--		typec_unregister_port(con->port);
--		con->port = NULL;
--	}
-+	for (con = connector; con->port; con++)
-+		ucsi_unregister_port(con);
- 	kfree(connector);
- err_reset:
- 	memset(&ucsi->cap, 0, sizeof(ucsi->cap));
-@@ -2087,33 +2109,7 @@ void ucsi_unregister(struct ucsi *ucsi)
- 
- 	for (i = 0; i < ucsi->cap.num_connectors; i++) {
- 		cancel_work_sync(&ucsi->connector[i].work);
--
--		if (ucsi->connector[i].wq) {
--			struct ucsi_work *uwork;
--
--			mutex_lock(&ucsi->connector[i].lock);
--			/*
--			 * queue delayed items immediately so they can execute
--			 * and free themselves before the wq is destroyed
--			 */
--			list_for_each_entry(uwork, &ucsi->connector[i].partner_tasks, node)
--				mod_delayed_work(ucsi->connector[i].wq, &uwork->work, 0);
--			mutex_unlock(&ucsi->connector[i].lock);
--			destroy_workqueue(ucsi->connector[i].wq);
--		}
--
--		ucsi_unregister_partner(&ucsi->connector[i]);
--		ucsi_unregister_altmodes(&ucsi->connector[i],
--					 UCSI_RECIPIENT_CON);
--		ucsi_unregister_port_psy(&ucsi->connector[i]);
--
--		usb_power_delivery_unregister_capabilities(ucsi->connector[i].port_sink_caps);
--		ucsi->connector[i].port_sink_caps = NULL;
--		usb_power_delivery_unregister_capabilities(ucsi->connector[i].port_source_caps);
--		ucsi->connector[i].port_source_caps = NULL;
--		usb_power_delivery_unregister(ucsi->connector[i].pd);
--		ucsi->connector[i].pd = NULL;
--		typec_unregister_port(ucsi->connector[i].port);
-+		ucsi_unregister_port(&ucsi->connector[i]);
- 		lockdep_unregister_key(&ucsi->connector[i].lock_key);
- 	}
- 
+ /* HBLANK control - read only */
 
 
