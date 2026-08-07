@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EC81388E43;
-	Fri,  7 Aug 2026 14:55:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A14C933C1AD;
+	Fri,  7 Aug 2026 14:55:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114524; cv=none; b=J45dahqG1XTWUB8qbVxGjeWnBnxNoJFkxxeu6l4ri5+sJYsNMttmhajXfS40plXFkHaWYG0F+0duIk6kbqoXjZNbon3cL6fJ4hUGVLOn1XQyMqYowcFgzrNRvx2jRTeUInPTKNJLVywbznHAv0D1Brj4w//EGnVvM4BivVX3Kko=
+	t=1786114523; cv=none; b=FpIQbAnuiYSPTxAXwT/QIgSu/V8/dKOj+jxf/5jFoKyPpCFF/h+QoltwtHMdxA3iGQ6gwXUQMt+HHw2pTIH7mbj4OTWLIuQSLP1kMoLLLIT8+3QW3Q716fgvrFfbHgnldgwNHpiIYPadOhAFospgL9IuGOUaOZS4RziZUZAzxbA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114524; c=relaxed/simple;
-	bh=+1Y6pKf16WP5TOetfI0NGLUcjPzsscq9DZ5RMWLe6Eg=;
+	s=arc-20240116; t=1786114523; c=relaxed/simple;
+	bh=kM+rIFW3kCYibZEk3Gsyvh+HwrIv4OrGZTHHhLKSzdo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U2+cAO3KZ+vaajY9e5MnF95wTigV2W7To9J2dl7wjEXBXYwVZcvtwtDkF2RWM2Hpk68Tgl4qEcHTD9IJ8TdtIhmT3raKe6AWnnrfgPGDaZ2nr+9YhcjMYLb1ihzFbMukq6J5PAwKphxFImvbJFpE5UGxMCPXjHKbxd1qIoNHlqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tIwRWl7F; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CvZIaYC2EGravuz8a80JTVKNHET4TrJXDAx6cdB5pg6QUeSDoWwjPMpDWGS1yw7Ay41hGSKZpJs2Q/N1GpvwPgWtEfcsvbPhrDEQSNv9O4KYqKKB0CBTKe/lcYdwDEtwVpnVZ0iwOk12efyvcd86emsAZ2Z8fSdF7+uuZW2SL+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hN6NbZti; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tIwRWl7F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76C891F00A3A;
-	Fri,  7 Aug 2026 14:55:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hN6NbZti"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C93D71F000E9;
+	Fri,  7 Aug 2026 14:55:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114519;
-	bh=zBVmPgt4bc73k5ZVlA75I/xy/US3BTGUYIFSoAk6AGs=;
+	s=korg; t=1786114510;
+	bh=JidP54RBTvoIqvVP5rfidaGr0zqULh1hsjVKo1Fhf+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tIwRWl7F2tKY3RzSb4I59je1r6A+P5eH0rvnndCNi7vnqvLdYjuMmZAnc40J3hA6t
-	 J6ECeF6s7W1KjRAeed0YvVi7Dmde+jRlUUi/XPDunU+uR2pcFRZPJeaK1RLv0irfy+
-	 qzC6ko6Tn/moN4ov6AKpFSbY3fRwo1fd9WvgBSSs=
+	b=hN6NbZti0dIKaXVEeCN1eNoOgffDUZqUTVK1Kp7BoZMcclhXwdjaqOFEQJ+v+r+Wk
+	 qxh2efwWR0iPAlEkCMSjF6AyCcT/7Ws/bAJYSxjwm9OxSIuB7uFum+g12eyeTrCJom
+	 hzR91M4rlpiYqmo1qOCZt6Z8WAwxJjDWbw6xerdE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Danielle Costantino <dcostantino@meta.com>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	"Harry Yoo (Oracle)" <harry@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 292/337] usb: typec: ucsi: split connector lock classes
-Date: Fri,  7 Aug 2026 16:38:15 +0200
-Message-ID: <20260807143424.859113804@linuxfoundation.org>
+Subject: [PATCH 6.12 289/337] mm/slab: prevent unbounded recursion in free path with new kmalloc type
+Date: Fri,  7 Aug 2026 16:38:12 +0200
+Message-ID: <20260807143424.797445703@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -51,121 +54,330 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergey Senozhatsky <senozhatsky@chromium.org>
+From: Harry Yoo (Oracle) <harry@kernel.org>
 
-[ Upstream commit 8c22256bbafad3dc5fdbe9f684d045b67ff06a68 ]
+commit d9e6a7623938968e3752b67e37eaff097e559a54 upstream.
 
-Lockdep detects a possible recursive locking scenario during
-ucsi init:
+Commit 280ea9c3154b ("mm/slab: avoid allocating slabobj_ext array from
+its own slab") avoided recursive allocation of obj_exts from kmalloc
+caches of the same size, by bumping the obj_exts array's allocation
+size whenever the array size equals the size of the object being
+allocated.
 
-[    5.418616] ============================================
-[    5.418634] WARNING: possible recursive locking detected
-[    5.418706] --------------------------------------------
-[    5.418725] kworker/4:1/82 is trying to acquire lock:
-[    5.418759] ffff888119a34648 (&con->lock){+.+.}-{3:3}, at: ucsi_init_work+0x1a78/0x2eb0 [typec_ucsi]
-[    5.418801]
-               but task is already holding lock:
-[    5.418835] ffff888119a34080 (&con->lock){+.+.}-{3:3}, at: ucsi_init_work+0x1a78/0x2eb0 [typec_ucsi]
-[    5.418884]
-               other info that might help us debug this:
-[    5.418904]  Possible unsafe locking scenario:
+However, as reported by Danielle Costantino and Shakeel Butt,
+even slabs from kmalloc caches of different sizes can form a cycle
+by allocating obj_exts arrays from each other [1]:
 
-[    5.418937]        CPU0
-[    5.418956]        ----
-[    5.418991]   lock(&con->lock);
-[    5.419013]   lock(&con->lock);
-[    5.419033]
-                *** DEADLOCK ***
+  What happened: a KMALLOC_NORMAL slab's obj_exts array (used by
+  allocation profiling / memcg accounting) is itself kmalloc()'d from a
+  KMALLOC_NORMAL cache, so the "slab holds another slab's obj_exts array"
+  relation can form cycles. With sizeof(struct slabobj_ext) == 16 and
+  the host's geometry:
 
-[    5.419387] Call Trace:
-[    5.419406]  <TASK>
-[    5.419425]  dump_stack_lvl+0x61/0xa0
-[    5.419448]  print_deadlock_bug+0x4a6/0x650
-[    5.419483]  __lock_acquire+0x62b6/0x7f50
-[    5.419507]  lock_acquire+0x11b/0x390
-[    5.419654]  __mutex_lock+0xbc/0xcd0
-[    5.419741]  ucsi_init_work+0x1a78/0x2eb0
-[    5.419785]  ? worker_thread+0xf53/0x2bc0
-[    5.419819]  worker_thread+0xff4/0x2bc0
-[    5.419842]  kthread+0x2a7/0x330
-[    5.419863]  ? __pfx_worker_thread+0x10/0x10
-[    5.419896]  ? __pfx_kthread+0x10/0x10
-[    5.419916]  ret_from_fork+0x38/0x70
-[    5.419936]  ? __pfx_kthread+0x10/0x10
-[    5.419969]  ret_from_fork_asm+0x1b/0x30
-[    5.419991]  </TASK>
-[    5.420009] ---[ end trace 0000000000000000 ]---
+  - kmalloc-512 has 64 objects/slab -> array is 64*16 == 1024 bytes,
+    served from kmalloc-1k;
+  - kmalloc-1k  has 32 objects/slab -> array is 32*16 ==  512 bytes,
+    served from kmalloc-512.
 
-The problem is that all connector locks belong to the same
-lockdep lock class, so the following loop:
+  A kmalloc-512 slab and a kmalloc-1k slab therefore hold each other's
+  obj_exts array.  Discarding one frees the other's array, which empties
+  and discards that slab, which frees the first's array, and so on:
+  __free_slab() -> free_slab_obj_exts() -> kfree() -> discard_slab() ->
+  __free_slab() recurses along the cycle until the stack is exhausted.
 
-	for (i = 0; i < ucsi->cap.num_connectors; i++)
-		ucsi_register_port(connector[i])
-			mutex_lock(&connector[i]->lock)
+With memory allocation profiling, this allows unbounded recursion
+in the free path and led to a stack overflow on a production host in
+the Meta fleet [1]:
 
-looks like a recursive acquire of the same mutex.  Put each connector
-lock into a dedicated lock class so that lockdep doesn't see it as a
-possible recursion.
+  BUG: TASK stack guard page was hit
+  Oops: stack guard page
+  RIP: 0010:kfree+0x8/0x5d0
+  Call Trace:
+   __free_slab+0x66/0xc0
+   kfree+0x3f0/0x5d0
+   ... ( ~125x __free_slab <-> kfree ) ...
+   <kernel driver freeing a resource>
+   do_syscall_64
 
-Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20260515060042.136083-1-senozhatsky@chromium.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 7aa7d4bf9d3f ("usb: typec: ucsi: Fix race condition and ordering in port unregistration")
+It is proposed [1] to resolve this issue by always serving the obj_exts
+array allocation from kmalloc caches (or large kmalloc) of sizes larger
+than the object size. However, as pointed out by Vlastimil Babka [2],
+this can waste an excessive amount of memory as slabs from large
+kmalloc sizes (e.g. kmalloc-8k) generally need obj_exts arrays much
+smaller than the object size.
+
+Therefore, rather than bumping the size, let us take a different
+approach; disallow formation of cycles between kmalloc types when
+allocating obj_exts arrays. Currently, all obj_exts arrays are served
+from normal kmalloc caches. Cycles cannot be created if obj_exts arrays
+of normal kmalloc caches are served from a special kmalloc type that can
+never have obj_exts arrays.
+
+To achieve this, create a new kmalloc type called KMALLOC_NO_OBJ_EXT.
+KMALLOC_NO_OBJ_EXT caches are created with SLAB_NO_OBJ_EXT flag when
+either 1) memory allocation profiling is not permanently disabled,
+or 2) kmalloc types with a priority higher than KMALLOC_CGROUP are
+aliased with KMALLOC_NORMAL.
+
+Sheaf bootstrapping for KMALLOC_NO_OBJ_EXT caches now must be deferred
+because allocation of a barn can trigger obj_exts array allocation of
+normal kmalloc caches when the KMALLOC_NO_OBJ_EXT cache for that size
+is not ready yet. For simplicity, perform bootstrapping of sheaves for
+all kmalloc caches later.
+
+Introduce a new slab alloc flag, SLAB_ALLOC_NO_OBJ_EXT, to prevent
+allocation of obj_exts arrays, and let kmalloc_slab() override the type
+to KMALLOC_NO_OBJ_EXT when specified. Note that kmalloc_type() remains
+unchanged because kmalloc_flags() bypasses the kmalloc fastpath.
+
+Do not pass SLAB_ALLOC_NO_RECURSE to kmalloc_flags() in
+alloc_slab_obj_exts() and instead use SLAB_ALLOC_NO_OBJ_EXT only when
+the objects are allocated from normal kmalloc caches. While this
+prevents unbounded recursive allocation of obj_exts, it allows
+KMALLOC_NO_OBJ_EXT caches to have sheaves.
+
+Since sheaf allocations specify SLAB_ALLOC_NO_RECURSE that prevents
+allocation of both sheaves and obj_exts arrays, the recursion depth
+is bounded.
+
+obj_exts arrays for non-kmalloc-normal caches can now have a valid tag.
+Do not call mark_obj_codetag_empty() when freeing an obj_exts array to
+avoid false warnings. KMALLOC_NO_OBJ_EXT don't need this as they never
+allocate those arrays.
+
+Reported-by: Danielle Costantino <dcostantino@meta.com>
+Reported-by: Shakeel Butt <shakeel.butt@linux.dev>
+Closes: https://lore.kernel.org/linux-mm/20260625230029.703750-1-shakeel.butt@linux.dev [1]
+Fixes: 4b8736964640 ("mm/slab: add allocation accounting into slab allocation and free paths")
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/linux-mm/c5c4208d-a6f0-413e-bad9-49be12f12d55@kernel.org [2]
+Signed-off-by: Harry Yoo (Oracle) <harry@kernel.org>
+Reviewed-by: Suren Baghdasaryan <surenb@google.com>
+Link: https://patch.msgid.link/20260713-kmalloc-no-objext-v3-4-47c7bd138de7@kernel.org
+Signed-off-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+[harry@kernel.org: Backport notes:
+ - Fix a minor conflict due to missing partitioned
+   kmalloc caches in 6.12.
+
+ - Use __GFP_NO_OBJ_EXT instead of SLAB_ALLOC_NO_OBJ_EXT
+   since slab's internal alloc_flags do not exist in 6.12.
+
+ - Deferring sheaf bootstrapping for kmalloc caches is not applied
+   as 6.12 doesn't have sheaves.
+
+ - Adjust the comment for SLAB_NO_OBJ_EXT, like in the commit
+   982e31382d9a ("mm/slab: decouple SLAB_NO_SHEAVES from
+   SLAB_NO_OBJ_EXT"). The rest of that commit is a no-op in 6.12 as
+   sheaves are not supported. Thus only adjust the comment.
+
+ - Resolve conflicts due to missing kmalloc_nolock() support in 6.12.
+
+ - Mark need_kmalloc_no_objext() __always_inline to make sure
+   the compiler does not generate a out-of-line function that could
+   access mem_profiling_support (which is marked __init) ]
+Signed-off-by: Harry Yoo <harry@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/ucsi/ucsi.c |    8 ++++++++
- drivers/usb/typec/ucsi/ucsi.h |    1 +
- 2 files changed, 9 insertions(+)
+ include/linux/slab.h |  8 +++++++-
+ mm/slab.h            | 28 ++++++++++++++++++++++++++--
+ mm/slab_common.c     | 13 +++++++++++++
+ mm/slub.c            | 34 +++++++++++++++++++++++-----------
+ 4 files changed, 69 insertions(+), 14 deletions(-)
 
---- a/drivers/usb/typec/ucsi/ucsi.c
-+++ b/drivers/usb/typec/ucsi/ucsi.c
-@@ -1569,6 +1569,7 @@ static int ucsi_register_port(struct ucs
- 	INIT_WORK(&con->work, ucsi_handle_connector_change);
- 	init_completion(&con->complete);
- 	mutex_init(&con->lock);
-+	lockdep_set_class(&con->lock, &con->lock_key);
- 	INIT_LIST_HEAD(&con->partner_tasks);
- 	con->ucsi = ucsi;
+diff --git a/include/linux/slab.h b/include/linux/slab.h
+index 773843a71960d..28eba6cbb7670 100644
+--- a/include/linux/slab.h
++++ b/include/linux/slab.h
+@@ -206,7 +206,7 @@ enum _slab_flag_bits {
+ #endif
+ #define SLAB_TEMPORARY		SLAB_RECLAIM_ACCOUNT	/* Objects are short-lived */
  
-@@ -1808,6 +1809,9 @@ static int ucsi_init(struct ucsi *ucsi)
- 		goto err_reset;
+-/* Slab created using create_boot_cache */
++/* Slab caches without obj_exts array */
+ #ifdef CONFIG_SLAB_OBJ_EXT
+ #define SLAB_NO_OBJ_EXT		__SLAB_FLAG_BIT(_SLAB_NO_OBJ_EXT)
+ #else
+@@ -578,6 +578,9 @@ enum kmalloc_cache_type {
+ #endif
+ #ifndef CONFIG_MEMCG
+ 	KMALLOC_CGROUP = KMALLOC_NORMAL,
++#endif
++#ifndef CONFIG_SLAB_OBJ_EXT
++	KMALLOC_NO_OBJ_EXT = KMALLOC_NORMAL,
+ #endif
+ 	KMALLOC_RANDOM_START = KMALLOC_NORMAL,
+ 	KMALLOC_RANDOM_END = KMALLOC_RANDOM_START + RANDOM_KMALLOC_CACHES_NR,
+@@ -591,6 +594,9 @@ enum kmalloc_cache_type {
+ #endif
+ #ifdef CONFIG_MEMCG
+ 	KMALLOC_CGROUP,
++#endif
++#ifdef CONFIG_SLAB_OBJ_EXT
++	KMALLOC_NO_OBJ_EXT,
+ #endif
+ 	NR_KMALLOC_TYPES
+ };
+diff --git a/mm/slab.h b/mm/slab.h
+index b65d2462b3fdb..34a3d65b4ef5f 100644
+--- a/mm/slab.h
++++ b/mm/slab.h
+@@ -413,9 +413,13 @@ static inline struct kmem_cache *
+ kmalloc_slab(size_t size, kmem_buckets *b, gfp_t flags, unsigned long caller)
+ {
+ 	unsigned int index;
++	enum kmalloc_cache_type type = kmalloc_type(flags, caller);
++
++	if (flags & __GFP_NO_OBJ_EXT)
++		type = KMALLOC_NO_OBJ_EXT;
+ 
+ 	if (!b)
+-		b = &kmalloc_caches[kmalloc_type(flags, caller)];
++		b = &kmalloc_caches[type];
+ 	if (size <= 192)
+ 		index = kmalloc_size_index[size_index_elem(size)];
+ 	else
+@@ -454,7 +458,8 @@ static inline bool is_kmalloc_normal(struct kmem_cache *s)
+ {
+ 	if (!is_kmalloc_cache(s))
+ 		return false;
+-	return !(s->flags & (SLAB_CACHE_DMA|SLAB_ACCOUNT|SLAB_RECLAIM_ACCOUNT));
++
++	return !(s->flags & (SLAB_CACHE_DMA|SLAB_ACCOUNT|SLAB_RECLAIM_ACCOUNT|SLAB_NO_OBJ_EXT));
+ }
+ 
+ /* Legal flag mask for kmem_cache_create(), for various configurations */
+@@ -557,6 +562,25 @@ bool slab_in_kunit_test(void);
+ static inline bool slab_in_kunit_test(void) { return false; }
+ #endif
+ 
++/*
++ * Return true if KMALLOC_NORMAL caches may need obj_exts arrays.
++ *
++ * Memory allocation profiling requires obj_exts for all caches.
++ * Memcg usually doesn't need them for normal kmalloc caches, but kmalloc types
++ * with a priority higher than KMALLOC_CGROUP can be aliased with KMALLOC_NORMAL.
++ */
++static __always_inline inline bool need_kmalloc_no_objext(void)
++{
++	if (!mem_alloc_profiling_permanently_disabled())
++		return true;
++
++	if (!mem_cgroup_kmem_disabled() &&
++			(KMALLOC_NORMAL == KMALLOC_RECLAIM))
++		return true;
++
++	return false;
++}
++
+ #ifdef CONFIG_SLAB_OBJ_EXT
+ 
+ /*
+diff --git a/mm/slab_common.c b/mm/slab_common.c
+index 477fa471da185..4cc96c3ea18e0 100644
+--- a/mm/slab_common.c
++++ b/mm/slab_common.c
+@@ -793,6 +793,12 @@ EXPORT_SYMBOL(kmalloc_size_roundup);
+ #define KMALLOC_RANDOM_NAME(N, sz)
+ #endif
+ 
++#ifdef CONFIG_SLAB_OBJ_EXT
++#define KMALLOC_NO_OBJ_EXT_NAME(sz) .name[KMALLOC_NO_OBJ_EXT] = "kmalloc-no-objext-" #sz,
++#else
++#define KMALLOC_NO_OBJ_EXT_NAME(sz)
++#endif
++
+ #define INIT_KMALLOC_INFO(__size, __short_size)			\
+ {								\
+ 	.name[KMALLOC_NORMAL]  = "kmalloc-" #__short_size,	\
+@@ -800,6 +806,7 @@ EXPORT_SYMBOL(kmalloc_size_roundup);
+ 	KMALLOC_CGROUP_NAME(__short_size)			\
+ 	KMALLOC_DMA_NAME(__short_size)				\
+ 	KMALLOC_RANDOM_NAME(RANDOM_KMALLOC_CACHES_NR, __short_size)	\
++	KMALLOC_NO_OBJ_EXT_NAME(__short_size)			\
+ 	.size = __size,						\
+ }
+ 
+@@ -907,6 +914,12 @@ new_kmalloc_cache(int idx, enum kmalloc_cache_type type)
+ 			return;
+ 		}
+ 		flags |= SLAB_ACCOUNT;
++	} else if (IS_ENABLED(CONFIG_SLAB_OBJ_EXT) && type == KMALLOC_NO_OBJ_EXT) {
++		if (!need_kmalloc_no_objext()) {
++			kmalloc_caches[type][idx] = kmalloc_caches[KMALLOC_NORMAL][idx];
++			return;
++		}
++		flags |= SLAB_NO_OBJ_EXT | SLAB_NO_MERGE;
+ 	} else if (IS_ENABLED(CONFIG_ZONE_DMA) && (type == KMALLOC_DMA)) {
+ 		flags |= SLAB_CACHE_DMA;
+ 	}
+diff --git a/mm/slub.c b/mm/slub.c
+index cf678f4617258..b61225c3503bf 100644
+--- a/mm/slub.c
++++ b/mm/slub.c
+@@ -1997,8 +1997,13 @@ int alloc_slab_obj_exts(struct slab *slab, struct kmem_cache *s,
+ 	struct slabobj_ext *vec;
+ 
+ 	gfp &= ~OBJCGS_CLEAR_MASK;
+-	/* Prevent recursive extension vector allocation */
+-	gfp |= __GFP_NO_OBJ_EXT;
++	/*
++	 * In most cases, obj_exts arrays are allocated from normal kmalloc.
++	 * However, normal kmalloc caches must allocate them from
++	 * KMALLOC_NO_OBJ_EXT caches to prevent recursion.
++	 */
++	if (is_kmalloc_normal(s))
++		gfp |= __GFP_NO_OBJ_EXT;
+ 	vec = kcalloc_node(objects, sizeof(struct slabobj_ext), gfp,
+ 			   slab_nid(slab));
+ 	if (!vec) {
+@@ -2014,6 +2019,22 @@ int alloc_slab_obj_exts(struct slab *slab, struct kmem_cache *s,
+ 		return -ENOMEM;
  	}
  
-+	for (i = 0; i < ucsi->cap.num_connectors; i++)
-+		lockdep_register_key(&connector[i].lock_key);
++	if (IS_ENABLED(CONFIG_DEBUG_VM)) {
++		struct kmem_cache *exts_cache;
++		struct slab *exts_slab;
 +
- 	/* Register all connectors */
- 	for (i = 0; i < ucsi->cap.num_connectors; i++) {
- 		connector[i].num = i + 1;
-@@ -1837,6 +1841,9 @@ static int ucsi_init(struct ucsi *ucsi)
- 	return 0;
- 
- err_unregister:
-+	for (i = 0; i < ucsi->cap.num_connectors; i++)
-+		lockdep_unregister_key(&connector[i].lock_key);
++		exts_slab = virt_to_slab(vec);
++		if (exts_slab) {
++			/*
++			 * The vector must be allocated from either normal or
++			 * KMALLOC_NO_OBJ_EXT kmalloc caches to avoid cycles.
++			 */
++			exts_cache = exts_slab->slab_cache;
++			WARN_ON_ONCE(!is_kmalloc_normal(exts_cache) &&
++					!(exts_cache->flags & SLAB_NO_OBJ_EXT));
++		}
++	}
 +
- 	for (con = connector; con->port; con++) {
- 		if (con->wq)
- 			destroy_workqueue(con->wq);
-@@ -2107,6 +2114,7 @@ void ucsi_unregister(struct ucsi *ucsi)
- 		usb_power_delivery_unregister(ucsi->connector[i].pd);
- 		ucsi->connector[i].pd = NULL;
- 		typec_unregister_port(ucsi->connector[i].port);
-+		lockdep_unregister_key(&ucsi->connector[i].lock_key);
+ 	new_exts = (unsigned long)vec;
+ #ifdef CONFIG_MEMCG
+ 	new_exts |= MEMCG_DATA_OBJEXTS;
+@@ -2034,7 +2055,6 @@ int alloc_slab_obj_exts(struct slab *slab, struct kmem_cache *s,
+ 		 * assign slabobj_exts in parallel. In this case the existing
+ 		 * objcg vector should be reused.
+ 		 */
+-		mark_objexts_empty(vec);
+ 		kfree(vec);
+ 		return 0;
+ 	} else if (cmpxchg(&slab->obj_exts, old_exts, new_exts) != old_exts) {
+@@ -2061,14 +2081,6 @@ static inline void free_slab_obj_exts(struct slab *slab)
+ 		return;
  	}
  
- 	kfree(ucsi->connector);
---- a/drivers/usb/typec/ucsi/ucsi.h
-+++ b/drivers/usb/typec/ucsi/ucsi.h
-@@ -422,6 +422,7 @@ struct ucsi_connector {
- 
- 	struct ucsi *ucsi;
- 	struct mutex lock; /* port lock */
-+	struct lock_class_key lock_key;
- 	struct work_struct work;
- 	struct completion complete;
- 	struct workqueue_struct *wq;
+-	/*
+-	 * obj_exts was created with __GFP_NO_OBJ_EXT flag, therefore its
+-	 * corresponding extension will be NULL. alloc_tag_sub() will throw a
+-	 * warning if slab has extensions but the extension of an object is
+-	 * NULL, therefore replace NULL with CODETAG_EMPTY to indicate that
+-	 * the extension for obj_exts is expected to be NULL.
+-	 */
+-	mark_objexts_empty(obj_exts);
+ 	kfree(obj_exts);
+ 	slab->obj_exts = 0;
+ }
+-- 
+2.53.0
+
 
 
