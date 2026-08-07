@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 995B6381AE4;
-	Fri,  7 Aug 2026 15:12:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FD19314A73;
+	Fri,  7 Aug 2026 15:12:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115569; cv=none; b=cOy5MBHtJ0FoF/fjXHFChLqpUYTgCW1p5sIMYDkZa7hoio8KY/fRueAFZDxVhv59ehNHnXD1vuNMGmkNuHqEHCFrA0Csdt+Oae8THW7mK65JMUpwo9TfOZbpYjKjgDfdN48FJ5Lh+WX3TsP066RWZSoXc+WPz+yIku0GSIvx4sc=
+	t=1786115569; cv=none; b=QaOaddYQ/3ZqJXedLg+xa9QkaVW8kE78hWqxDUVS+AVBS4aMdq57kg1Sg3mChR3NhGARHFQizQ6ZD6lop04s+fGBpIcxOh/K/cqS+xRkXcTQT0q1Ks2a8kc2q9uYu6m9T93UHEuazrJIasI/Bxb1oV/c72rHVmIHfQkZIqLJtT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1786115569; c=relaxed/simple;
-	bh=hiAv6dAEe/2NgzIM5KBm0cOIjRBlABa2Xg8vUrGWy/k=;
+	bh=PcgQOd+JcIMQobz0/P6WTLFQjkvoJFB1hbt+ELQtt1k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mvoTqiB4Fa2qcwWtZHddjFsLFE++xfn1Fe4Fv06gFBgsxFGBSRua79Hh/mfadOJTmfMcBit43FYzlT7xqqTOT3lmRmVCFcBfF4PugX7Zp6cOHPtATOhJIeJtzVoo65T2c2RhaBLRDk/u6821a0N9lYAi8t3Vl9RE4LeAFvatWeo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YhChJvaX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pVBKpHvUfQhzMcyl5rzjFykL6pPZ4XLju3EIcmTufrQSquj+mbThlZuac/Es5msJFYbEMacd/o5+7gx4lFIZZSkSnQBeHl83ADu8fJLN6HoOoNSQxeLI1fIdga2GjIKPZw7x9v7bud4stsDsAyk3rWgdrWR0407e+kQoQHmDnVw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2IhYeGe/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YhChJvaX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6FAF1F000E9;
-	Fri,  7 Aug 2026 15:12:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2IhYeGe/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CF6C1F00A3A;
+	Fri,  7 Aug 2026 15:12:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115565;
-	bh=sXU7cxBFVsAGRct7ZpvfjLlPyJxpGxFS46dWqY65jww=;
+	s=korg; t=1786115568;
+	bh=z83mKEBzf/7a/uGgaUfCpm0Un3T4ICYUIxoJUC26JVc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YhChJvaXKkOJByv+bnXVIiB+sroCBrjoSqQRiominR1X0nyul8LJqX95LrLLWJls/
-	 tgDzp2F82cSWoPrAURYy1NiOPtU5qdncTCsEYmFQE5eOSY25mFgO7jO2P+bLeiHxKa
-	 jGKyGQ9tATAcBlUpXM9s0TYOUgFNeCfnmUAD6QhU=
+	b=2IhYeGe//+cX0sMUupGCZY3ZTNzImZkwyO9M+eQgx+LS+fggaZiqbLcIdXmoyWnx4
+	 tcbQyqHkMgt9IBwFuktIl6H17eY2gMyF7svArXy7nqbk0lAUIcRCdBAjGCxR4KepFB
+	 w9t8egigj5Jqdp7ZXaI+GsqkdvCBl2ntzyk59wt0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Candice Li <candice.li@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Yang Wang <kevinyang.wang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 320/396] drm/amdgpu: restore UMD profile pstate after runtime resume
-Date: Fri,  7 Aug 2026 16:38:00 +0200
-Message-ID: <20260807143431.167903217@linuxfoundation.org>
+	Kohei Enju <kohei@enjuk.jp>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Aaron Ma <aaron.ma@canonical.com>,
+	Alexander Nowlin <alexander.nowlin@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>
+Subject: [PATCH 6.18 285/396] ice: wait for reset completion in ice_resume()
+Date: Fri,  7 Aug 2026 16:37:25 +0200
+Message-ID: <20260807143430.415860081@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -52,55 +54,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Candice Li <candice.li@amd.com>
+From: Aaron Ma <aaron.ma@canonical.com>
 
-commit f931c54b241ce2f36bfc34955aec43a188276b8d upstream.
+commit c2816d613f388814d27bc9fd6dbd931a88056e19 upstream.
 
-Runtime suspend runs GFX hw_fini and clears perfmon clock gating while
-the UMD profile DPM level remains set in software.  Re-apply stable
-pstate after a successful runtime resume when a profile mode is active.
+ice_resume() schedules an asynchronous PF reset and returns
+immediately. The reset runs later in ice_service_task(). If
+userspace tries to bring up the net device before the reset
+finishes, ice_open() fails with -EBUSY:
 
-Signed-off-by: Candice Li <candice.li@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 138531c8850cc247aa12b104bb29ea387bcdcbb1)
+  ice_resume()
+    ice_schedule_reset()          # sets ICE_PFR_REQ, returns
+  ...
+  ice_open()
+    ice_is_reset_in_progress()    # ICE_PFR_REQ still set, -EBUSY
+  ...
+  ice_service_task()
+    ice_do_reset()
+      ice_rebuild()               # clears ICE_PFR_REQ, too late
+
+Reproduced on E800 series NICs during suspend/resume with irdma
+enabled, where the aux device probe widens the race window.
+
+  ice 0000:81:00.0: can't open net device while reset is in progress
+
+Add a best-effort wait (10s timeout, matching ice_devlink_info_get())
+for the reset to complete before returning from ice_resume(). In
+practice the reset completes in ~300ms.
+
+Fixes: 769c500dcc1e ("ice: Add advanced power mgmt for WoL")
 Cc: stable@vger.kernel.org
+Reviewed-by: Kohei Enju <kohei@enjuk.jp>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Signed-off-by: Aaron Ma <aaron.ma@canonical.com>
+Tested-by: Alexander Nowlin <alexander.nowlin@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c |   15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/net/ethernet/intel/ice/ice_main.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-@@ -2891,6 +2891,19 @@ static int amdgpu_pmops_runtime_suspend(
+--- a/drivers/net/ethernet/intel/ice/ice_main.c
++++ b/drivers/net/ethernet/intel/ice/ice_main.c
+@@ -5713,6 +5713,16 @@ static int ice_resume(struct device *dev
+ 	/* Restart the service task */
+ 	mod_timer(&pf->serv_tmr, round_jiffies(jiffies + pf->serv_tmr_period));
+ 
++	/* Best-effort wait for the scheduled reset to finish so that the
++	 * device is operational before returning. Without this, userspace
++	 * (e.g. NetworkManager) may try to open the net device while the
++	 * asynchronous reset is still in progress, hitting -EBUSY.
++	 */
++	ret = ice_wait_for_reset(pf, secs_to_jiffies(10));
++	if (ret)
++		dev_err(dev, "Wait for reset timed out (10s) during resume: %d\n",
++			ret);
++
  	return 0;
  }
  
-+static void amdgpu_restore_umd_profile_pstate_after_runpm(struct amdgpu_device *adev)
-+{
-+	enum amd_dpm_forced_level level;
-+	uint32_t profile_mode_mask = AMD_DPM_FORCED_LEVEL_PROFILE_STANDARD |
-+		AMD_DPM_FORCED_LEVEL_PROFILE_MIN_SCLK |
-+		AMD_DPM_FORCED_LEVEL_PROFILE_MIN_MCLK |
-+		AMD_DPM_FORCED_LEVEL_PROFILE_PEAK;
-+
-+	level = amdgpu_dpm_get_performance_level(adev);
-+	if (level & profile_mode_mask)
-+		amdgpu_asic_update_umd_stable_pstate(adev, true);
-+}
-+
- static int amdgpu_pmops_runtime_resume(struct device *dev)
- {
- 	struct pci_dev *pdev = to_pci_dev(dev);
-@@ -2935,6 +2948,8 @@ static int amdgpu_pmops_runtime_resume(s
- 
- 	if (adev->pm.rpm_mode == AMDGPU_RUNPM_PX)
- 		drm_dev->switch_power_state = DRM_SWITCH_POWER_ON;
-+
-+	amdgpu_restore_umd_profile_pstate_after_runpm(adev);
- 	adev->in_runpm = false;
- 	return 0;
- }
 
 
