@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80A513491C9;
-	Fri,  7 Aug 2026 15:21:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ABAE281369;
+	Fri,  7 Aug 2026 15:21:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116077; cv=none; b=c27Ejytcug7Xu75qaYqSUyEDUvIkKp8Hlg4tVo9kUjq6xWa3p91YZSULzlCRWQXX8UID8PlViC3c6s5YcSEccRTccTmKombgYWM9XSIJrT26BENnhgFUVmKo24Md9lpklUNE/sw5ejgX5zfvPdEvolKMwmWAStOWPZqwk7cNuAw=
+	t=1786116080; cv=none; b=LZs+uYnoGu+gpgVy1jXqwmKt5s1U9FYrr5cN1aZG0SjJ70NIENoUOyLwSk3itv15VMl3VCG2nQNxL7ANfPM/AHsevE4FA5+QHf9+HWlB+66r6yLKIDBAf+kW9jpU61TdqJWTE2YEV3EiwdeOC6dg+qJ1UtX76V9WATeUYXsafk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116077; c=relaxed/simple;
-	bh=4I9YITIYheIFk4X4bVBWvpfMOKThyiKHX6Vdo7S80eY=;
+	s=arc-20240116; t=1786116080; c=relaxed/simple;
+	bh=Xeu3u/FGwIGKkdA27DcKl0w7+y+Be/UGa8UqYQ0hXck=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MoHCXlU6agbQedG3AMGM91hu6TkxNkjbFBxaAFE3wMI1HwahejjDuUKVyd/MPk8UAiqCRjIAjX5kWcX+ExHz9f7Y6V8DVsckHNFNT73XcftPX5eAHjZzB9PmcRtvnTxrPDIp+n1ISD2Luw00a4TrK6DpVOJbtm0aTDmqKdiQxkI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CK/i6+OH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tly+Nl5hb/hClu7ALk/TVity4CpK8SYKWDG9eCdRTnnrak2mIxDx0vqK0JacaORGDQqPiDFG39M4ieJuFtmEcPQp45r5RXf26ePwxm5VZIuCzw08TlWQQuAxfW8Z1n/bWwwUaIZgdehZPPni8EXJumTJapOjEvi2oHrOQ+Ibf30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z7MKE83+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CK/i6+OH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D57F01F000E9;
-	Fri,  7 Aug 2026 15:21:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z7MKE83+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C14671F000E9;
+	Fri,  7 Aug 2026 15:21:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116076;
-	bh=AS953PpJylhR0jR6cVNtk51UccxvMe6gxD7KRyhgOH8=;
+	s=korg; t=1786116079;
+	bh=C2NdxZgTibKdYYr0qF07X5hcFepc1tdppAKFLpV/H0o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CK/i6+OH3Q4tG8rPePJejge2UHiKsi0aEDp46P3OGwISo8ihOAZJWbcFOGaBiOxO8
-	 k8X15bHUE5gMbZn3L7ZFRqlKfbDNOxKSjGfPdpwxdG6oL/x8B9G5+AjAL22VTlgcJi
-	 RK22XKOymgK8ABZu6N2BpZfkmJoEMTf/moIF4Zm0=
+	b=z7MKE83+M/OFXJmqvNz1e3PaF9FzuAeaTOcRAequcSOdOpNw3N7cKK1Keejbs4dwQ
+	 BVLideERcHkUF/mJ3z1Rj5jVjKc7OX8MvGUptx4qgHHLEiFg85gELyMDjYFDCZizGW
+	 tjM6d7lSFpek5/8cFwgctaSe+1auE4LGFcVsFclc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
+	Vega <vega@nebusec.ai>,
+	Zihan Xi <zihanx@nebusec.ai>,
+	Ren Wei <enjou1224z@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.6 103/261] Bluetooth: btmtk: Fix short read errors in btmtk_usb_uhw_reg_read()
-Date: Fri,  7 Aug 2026 16:37:40 +0200
-Message-ID: <20260807143417.600959447@linuxfoundation.org>
+Subject: [PATCH 6.6 104/261] Bluetooth: mgmt: fix pending command UAF in EIR updates
+Date: Fri,  7 Aug 2026 16:37:41 +0200
+Message-ID: <20260807143417.623528160@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143415.358597922@linuxfoundation.org>
 References: <20260807143415.358597922@linuxfoundation.org>
@@ -50,167 +52,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Zihan Xi <zihanx@nebusec.ai>
 
-commit b186c18c4843dd58adc29443369bddc71cb626a3 upstream.
+commit 8f2f62855a41d1730fb9e8122912bd2c8d6bed5d upstream.
 
-If btmtk_usb_uhw_reg_read() gets a "short" read from a device, it will
-accidentally treat that as a "real" read and populate the returned value
-with some unknown and probably totally invalid data.
+MGMT_OP_SET_LOCAL_NAME is handled asynchronously on powered controllers
+and can run set_name_sync().  When the controller is BR/EDR capable,
+set_name_sync() updates the local name and then rebuilds EIR data through
+eir_create().  The EIR builder walks hdev->uuids, but the UUID list can
+be changed and entries can be freed by MGMT_OP_ADD_UUID and
+MGMT_OP_REMOVE_UUID.
 
-Fix this logic error up by calling usb_control_msg_recv() which
-guarantees a "full" read happens, and then simplify the error checking
-for when btmtk_usb_uhw_reg_read() is called.
+pending_eir_or_class() is meant to serialize management commands that
+can change EIR or the class of device, but it did not include
+MGMT_OP_SET_LOCAL_NAME.  In addition, it walked hdev->mgmt_pending
+without hdev->mgmt_pending_lock even though pending commands are added
+and removed under that mutex.  A racing command completion can therefore
+remove and free a pending command while pending_eir_or_class() is still
+inspecting it, leading to a use-after-free in the pending-command list or
+allowing a local name update to rebuild EIR while UUID entries are being
+removed.
 
-Note, one caller of btmtk_usb_uhw_reg_read() does not check the return
-value, but as we pre-initialize the return value as 0, an incorrect read
-will not do anything wrong.
+Take hdev->mgmt_pending_lock while scanning hdev->mgmt_pending and treat
+MGMT_OP_SET_LOCAL_NAME as an EIR/class-affecting pending command on the
+powered asynchronous path.  Check for a conflicting pending command before
+copying the new short name so a rejected SET_LOCAL_NAME request does not
+modify hdev->short_name.
 
-Cc: stable <stable@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 6fe26f694c82 ("Bluetooth: MGMT: Protect mgmt_pending list with its own lock")
+Cc: stable@vger.kernel.org
+Reported-by: Vega <vega@nebusec.ai>
+Assisted-by: Codex:gpt-5.4
+Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
+Signed-off-by: Ren Wei <enjou1224z@gmail.com>
+Reported-by: Vega <vega@nebusec.ai>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btmtk.c |   50 ++++++++++++++++++++--------------------------
- 1 file changed, 22 insertions(+), 28 deletions(-)
+ net/bluetooth/mgmt.c |   20 ++++++++++++++++++--
+ 1 file changed, 18 insertions(+), 2 deletions(-)
 
---- a/drivers/bluetooth/btmtk.c
-+++ b/drivers/bluetooth/btmtk.c
-@@ -760,30 +760,24 @@ static int btmtk_usb_uhw_reg_write(struc
- static int btmtk_usb_uhw_reg_read(struct hci_dev *hdev, u32 reg, u32 *val)
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -2610,18 +2610,28 @@ unlock:
+ static bool pending_eir_or_class(struct hci_dev *hdev)
  {
- 	struct btmtk_data *data = hci_get_priv(hdev);
--	int pipe, err;
--	void *buf;
--
--	buf = kzalloc(4, GFP_KERNEL);
--	if (!buf)
--		return -ENOMEM;
-+	u8 buf[sizeof(u32)];
-+	int err;
+ 	struct mgmt_pending_cmd *cmd;
++	bool pending = false;
++
++	mutex_lock(&hdev->mgmt_pending_lock);
  
--	pipe = usb_rcvctrlpipe(data->udev, 0);
--	err = usb_control_msg(data->udev, pipe, 0x01,
--			      0xDE,
--			      reg >> 16, reg & 0xffff,
--			      buf, 4, USB_CTRL_GET_TIMEOUT);
--	if (err < 0) {
-+	*val = 0;
-+	err = usb_control_msg_recv(data->udev, 0, 0x01,
-+				   0xDE,
-+				   reg >> 16, reg & 0xffff,
-+				   buf, sizeof(buf), USB_CTRL_GET_TIMEOUT,
-+				   GFP_KERNEL);
-+	if (err) {
- 		bt_dev_err(hdev, "Failed to read uhw reg(%d)", err);
--		goto err_free_buf;
-+		return err;
+ 	list_for_each_entry(cmd, &hdev->mgmt_pending, list) {
+ 		switch (cmd->opcode) {
+ 		case MGMT_OP_ADD_UUID:
+ 		case MGMT_OP_REMOVE_UUID:
+ 		case MGMT_OP_SET_DEV_CLASS:
++		case MGMT_OP_SET_LOCAL_NAME:
+ 		case MGMT_OP_SET_POWERED:
+-			return true;
++			pending = true;
++			break;
+ 		}
++
++		if (pending)
++			break;
  	}
  
- 	*val = get_unaligned_le32(buf);
- 	bt_dev_dbg(hdev, "reg=%x, value=0x%08x", reg, *val);
- 
--err_free_buf:
--	kfree(buf);
--
--	return err;
-+	return 0;
+-	return false;
++	mutex_unlock(&hdev->mgmt_pending_lock);
++
++	return pending;
  }
  
- static int btmtk_usb_reg_read(struct hci_dev *hdev, u32 reg, u32 *val)
-@@ -833,7 +827,7 @@ int btmtk_usb_subsys_reset(struct hci_de
- 
- 	if (dev_id == 0x7922) {
- 		err = btmtk_usb_uhw_reg_read(hdev, MTK_BT_SUBSYS_RST, &val);
--		if (err < 0)
-+		if (err)
- 			return err;
- 		val |= 0x00002020;
- 		err = btmtk_usb_uhw_reg_write(hdev, MTK_BT_SUBSYS_RST, val);
-@@ -843,7 +837,7 @@ int btmtk_usb_subsys_reset(struct hci_de
- 		if (err < 0)
- 			return err;
- 		err = btmtk_usb_uhw_reg_read(hdev, MTK_BT_SUBSYS_RST, &val);
--		if (err < 0)
-+		if (err)
- 			return err;
- 		val |= BIT(0);
- 		err = btmtk_usb_uhw_reg_write(hdev, MTK_BT_SUBSYS_RST, val);
-@@ -852,14 +846,14 @@ int btmtk_usb_subsys_reset(struct hci_de
- 		msleep(100);
- 	} else if (dev_id == 0x7925) {
- 		err = btmtk_usb_uhw_reg_read(hdev, MTK_BT_RESET_REG_CONNV3, &val);
--		if (err < 0)
-+		if (err)
- 			return err;
- 		val |= (1 << 5);
- 		err = btmtk_usb_uhw_reg_write(hdev, MTK_BT_RESET_REG_CONNV3, val);
- 		if (err < 0)
- 			return err;
- 		err = btmtk_usb_uhw_reg_read(hdev, MTK_BT_RESET_REG_CONNV3, &val);
--		if (err < 0)
-+		if (err)
- 			return err;
- 		val &= 0xFFFF00FF;
- 		val |= (1 << 13);
-@@ -870,7 +864,7 @@ int btmtk_usb_subsys_reset(struct hci_de
- 		if (err < 0)
- 			return err;
- 		err = btmtk_usb_uhw_reg_read(hdev, MTK_BT_RESET_REG_CONNV3, &val);
--		if (err < 0)
-+		if (err)
- 			return err;
- 		val |= (1 << 0);
- 		err = btmtk_usb_uhw_reg_write(hdev, MTK_BT_RESET_REG_CONNV3, val);
-@@ -880,13 +874,13 @@ int btmtk_usb_subsys_reset(struct hci_de
- 		if (err < 0)
- 			return err;
- 		err = btmtk_usb_uhw_reg_read(hdev, MTK_UDMA_INT_STA_BT, &val);
--		if (err < 0)
-+		if (err)
- 			return err;
- 		err = btmtk_usb_uhw_reg_write(hdev, MTK_UDMA_INT_STA_BT1, 0x000000FF);
- 		if (err < 0)
- 			return err;
- 		err = btmtk_usb_uhw_reg_read(hdev, MTK_UDMA_INT_STA_BT1, &val);
--		if (err < 0)
-+		if (err)
- 			return err;
- 		msleep(100);
- 	} else {
-@@ -896,7 +890,7 @@ int btmtk_usb_subsys_reset(struct hci_de
- 		if (err < 0)
- 			return err;
- 		err = btmtk_usb_uhw_reg_read(hdev, MTK_BT_WDT_STATUS, &val);
--		if (err < 0)
-+		if (err)
- 			return err;
- 		/* Reset the bluetooth chip via USB interface. */
- 		err = btmtk_usb_uhw_reg_write(hdev, MTK_BT_SUBSYS_RST, 1);
-@@ -906,13 +900,13 @@ int btmtk_usb_subsys_reset(struct hci_de
- 		if (err < 0)
- 			return err;
- 		err = btmtk_usb_uhw_reg_read(hdev, MTK_UDMA_INT_STA_BT, &val);
--		if (err < 0)
-+		if (err)
- 			return err;
- 		err = btmtk_usb_uhw_reg_write(hdev, MTK_UDMA_INT_STA_BT1, 0x000000FF);
- 		if (err < 0)
- 			return err;
- 		err = btmtk_usb_uhw_reg_read(hdev, MTK_UDMA_INT_STA_BT1, &val);
--		if (err < 0)
-+		if (err)
- 			return err;
- 		/* MT7921 need to delay 20ms between toggle reset bit */
- 		msleep(20);
-@@ -920,7 +914,7 @@ int btmtk_usb_subsys_reset(struct hci_de
- 		if (err < 0)
- 			return err;
- 		err = btmtk_usb_uhw_reg_read(hdev, MTK_BT_SUBSYS_RST, &val);
--		if (err < 0)
-+		if (err)
- 			return err;
+ static const u8 bluetooth_base_uuid[] = {
+@@ -3955,6 +3965,12 @@ static int set_local_name(struct sock *s
+ 		goto failed;
  	}
  
++	if (hdev_is_powered(hdev) && pending_eir_or_class(hdev)) {
++		err = mgmt_cmd_status(sk, hdev->id, MGMT_OP_SET_LOCAL_NAME,
++				      MGMT_STATUS_BUSY);
++		goto failed;
++	}
++
+ 	memcpy(hdev->short_name, cp->short_name, sizeof(hdev->short_name));
+ 
+ 	if (!hdev_is_powered(hdev)) {
 
 
