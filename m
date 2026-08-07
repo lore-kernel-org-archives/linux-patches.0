@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CC99340280;
-	Fri,  7 Aug 2026 15:03:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A485311C07;
+	Fri,  7 Aug 2026 15:03:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115029; cv=none; b=ET0v+d+VSIY4dyyTolkakMgc9qNhL3IPErhruhrIz1BzfJSYVkBH8sw0K11qsgOcF7oNJfagUfbKoLKmhfrJKYkN3PzoJ17Bw+uio5AGBnWtjvCXHB891tcw3MfIT2vHSEPo9kTLstbPl+3s3RUMp99qdysG3ESXWeuYHWl1hu8=
+	t=1786115032; cv=none; b=L9byNQXhN+9EyWKmO0yB51f/AaUc+fostG60HM9NSDQ2OOc02B2NVZ87lctYtMJyohwmT2g1ptXHM4PECvWh4V2SfdGngPu7lwIBAPy1K0E+cV6JKfoHuZUdXiBlC9hnH8n+aLbgSksg+Xpmj2Tiu7NubYapEls7TxqxdU2hsWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115029; c=relaxed/simple;
-	bh=EAe/yvLlNkpIHwnRE4GNQxZJlT+SHOn0EKjhpthE8BY=;
+	s=arc-20240116; t=1786115032; c=relaxed/simple;
+	bh=AbLaDlFDgdm8DO7HWgpfITp+0nMsCK78muNMHJY0wBQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=elvZKvaCFiriZEOntFRnj5QzbTibx9jNqk6r/OH4i5M3GVgfVw4+DPpW1blCCbmXAqded7yzjBlZYqq3KBqjSAjUX/1vFeKL2nfelHwS+RCfn6pNuvDXCPXpusgyxn7p6XF5sDlA9PHMyaoEnsfIH+YyKZkwlg7q8F2AKeS9o+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=17lWWM5C; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Wx+3gwhNAcUkBBd6iZjTcdifDosdQF6EcLoxenem+wvM3xW+L8bcIScqGoWTqy1D8IMwny8Tm3/3yH05Q28mVnvkqJ/r9fZC6tE6no2pD1LTQPHIutbDR1KofRhIuqGIbaCcPqPLcT2xBIBz0MMFoH9jb8jMgHZeRB1tEN58RLc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mvko2liO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="17lWWM5C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C7261F00A3A;
-	Fri,  7 Aug 2026 15:03:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mvko2liO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AE151F000E9;
+	Fri,  7 Aug 2026 15:03:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115028;
-	bh=15BXIVRjUM/7/tFzfsGjLVHFx3O1Z0gK5AyzPsDCHqs=;
+	s=korg; t=1786115030;
+	bh=1G0diQbwKT31bwBmKGqpCnnE0QLRQHCkn/KqGEgMb7w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=17lWWM5ChY9tI5pqCJH3FIyoMaiZ/RWhHZ9lilB9W1bemRxhM1cj/JP7mgsIxk5OI
-	 qzQS0I358REmfAs2JpkY8Mjvs95x+gmWHUf7kY6y/V69BP7KrPglS0t1Iews5fHyNQ
-	 zTwfek05maDALj343mWrxqOTSjWJL0iEh7HD/7l0=
+	b=Mvko2liOw6YeT1WxIO+iPRzR10g5vjLJQn6jY8gEARRs1QnHOQWNZrVJb+DGEGUrU
+	 BFFgAYfbK43auu2L4+RhIu8SZvX1IlL9Umn+tKZ8Sagru8mQJTbwVcIL+7iWy9ybPt
+	 rYKjXdNKmjnxREehjCCjc6tDK9+KkZ84VUAkS870=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	=?UTF-8?q?=E5=AD=99=E9=AD=81=20 ?= <kui.sun@unisoc.com>,
-	=?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
-	Gregory CLEMENT <gregory.clement@bootlin.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	syzbot+eca845fb8c18dd6b44c1@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 131/396] scsi: ufs: core: Revert "Delegate the interrupt service routine to a threaded IRQ handler"
-Date: Fri,  7 Aug 2026 16:34:51 +0200
-Message-ID: <20260807143427.131122188@linuxfoundation.org>
+Subject: [PATCH 6.18 096/396] net: udp_tunnel: fix memory leak in udp_tunnel_nic_unregister()
+Date: Fri,  7 Aug 2026 16:34:16 +0200
+Message-ID: <20260807143426.352993255@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -50,124 +46,154 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 8a309036f557d3ff4efb2beea5132ba91172d934 ]
+[ Upstream commit 080695e6f005e2396f1207fd69d24c442cb230c6 ]
 
-There have been multiple reports of performance regressions caused by
-commit 3c7ac40d7322 ("scsi: ufs: core: Delegate the interrupt service
-routine to a threaded IRQ handler"). Hence this revert.
+syzbot reported a memory leak [1] in the UDP tunnel NIC offload code.
 
-This patch reverts most of the following commits:
+When device registration fails (e.g. in register_netdevice()), netdev core
+unwinds by sending a single NETDEV_UNREGISTER notification. If work was queued
+during NETDEV_REGISTER (utn->work_pending is set), udp_tunnel_nic_unregister()
+returns early:
 
- * 3c7ac40d7322 ("scsi: ufs: core: Delegate the interrupt service
-   routine to a threaded IRQ handler")
+	if (utn->work_pending)
+		return;
 
- * 6475cfb81fc4 ("scsi: ufs: core: Avoid IRQ thread wakeup during active
-   UIC command")
+Because failed registrations do not enter netdev_wait_allrefs_any(), no
+subsequent NETDEV_UNREGISTER rebroadcast will ever occur. As a result, the
+struct udp_tunnel_nic allocated in udp_tunnel_nic_alloc() is leaked
+permanently.
 
-This patch preserves the following commits:
+Fix this by removing the early return. Instead, synchronously cancel any
+pending work with cancel_delayed_work_sync() before freeing @utn.
 
- * 034d319c8899 ("scsi: ufs: core: Fix interrupt handling for MCQ Mode")
+To be able to call cancel_delayed_work_sync() while holding RTNL (the work also
+needs RTNL), switch udp_tunnel_nic_device_sync_work() to rtnl_trylock(). If RTNL
+is contended, requeue the work with a 1 jiffy delay (via queue_delayed_work())
+to prevent high CPU contention while waiting for RTNL lock.
 
- * eabcac808ca3 ("scsi: ufs: core: Fix IRQ lock inversion for the SCSI
-   host lock")
+The utn->work_pending bookkeeping is no longer needed and is removed, as
+the workqueue core already tracks the pending/running state of the work.
 
-Cc: Neil Armstrong <neil.armstrong@linaro.org>
-Cc: 孙魁 (Kui Sun) <kui.sun@unisoc.com>
-Cc: André Draszik <andre.draszik@linaro.org>
-Cc: Gregory CLEMENT <gregory.clement@bootlin.com>
-Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Fixes: 3c7ac40d7322 ("scsi: ufs: core: Delegate the interrupt service routine to a threaded IRQ handler")
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Tested-by: André Draszik <andre.draszik@linaro.org> # on Pixel 6
-Reviewed-by: André Draszik <andre.draszik@linaro.org>
-Link: https://patch.msgid.link/b70eb60a01f971bed68c42c5b555929db5f835df.1784135511.git.bvanassche@acm.org
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+[1]
+BUG: memory leak
+unreferenced object 0xffff888127d5f840 (size 96):
+  comm "syz-executor", pid 5806, jiffies 4294942188
+  backtrace (crc 99fdb6c8):
+    __kmalloc_noprof+0x3bf/0x550
+    udp_tunnel_nic_alloc net/ipv4/udp_tunnel_nic.c:756 [inline]
+    udp_tunnel_nic_register net/ipv4/udp_tunnel_nic.c:833 [inline]
+    udp_tunnel_nic_netdevice_event+0x804/0xab0 net/ipv4/udp_tunnel_nic.c:931
+    notifier_call_chain+0x59/0x160 kernel/notifier.c:85
+    call_netdevice_notifiers_info+0x7d/0xb0 net/core/dev.c:2250
+    register_netdevice+0xc10/0xeb0 net/core/dev.c:11478
+
+Fixes: cc4e3835eff4 ("udp_tunnel: add central NIC RX port offload infrastructure")
+Reported-by: syzbot+eca845fb8c18dd6b44c1@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6a632b15.dde6c935.cf6c8.0011.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260724091137.1792543-1-edumazet@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufshcd.c | 39 +++------------------------------------
- 1 file changed, 3 insertions(+), 36 deletions(-)
+ net/ipv4/udp_tunnel_nic.c | 32 +++++++++++++++++---------------
+ 1 file changed, 17 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index 482a9299a5894..504600f1e08cd 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -7128,7 +7128,7 @@ static irqreturn_t ufshcd_sl_intr(struct ufs_hba *hba, u32 intr_status)
- }
- 
- /**
-- * ufshcd_threaded_intr - Threaded interrupt service routine
-+ * ufshcd_intr - Main interrupt service routine
-  * @irq: irq number
-  * @__hba: pointer to adapter instance
-  *
-@@ -7136,7 +7136,7 @@ static irqreturn_t ufshcd_sl_intr(struct ufs_hba *hba, u32 intr_status)
-  *  IRQ_HANDLED - If interrupt is valid
-  *  IRQ_NONE    - If invalid interrupt
+diff --git a/net/ipv4/udp_tunnel_nic.c b/net/ipv4/udp_tunnel_nic.c
+index b13e8f7092f46..4360d159ee8a7 100644
+--- a/net/ipv4/udp_tunnel_nic.c
++++ b/net/ipv4/udp_tunnel_nic.c
+@@ -32,13 +32,12 @@ struct udp_tunnel_nic_table_entry {
+  * @lock:	protects all fields
+  * @need_sync:	at least one port start changed
+  * @need_replay: space was freed, we need a replay of all ports
+- * @work_pending: @work is currently scheduled
+  * @n_tables:	number of tables under @entries
+  * @missed:	bitmap of tables which overflown
+  * @entries:	table of tables of ports currently offloaded
   */
--static irqreturn_t ufshcd_threaded_intr(int irq, void *__hba)
-+static irqreturn_t ufshcd_intr(int irq, void *__hba)
+ struct udp_tunnel_nic {
+-	struct work_struct work;
++	struct delayed_work work;
+ 
+ 	struct net_device *dev;
+ 
+@@ -46,7 +45,6 @@ struct udp_tunnel_nic {
+ 
+ 	u8 need_sync:1;
+ 	u8 need_replay:1;
+-	u8 work_pending:1;
+ 
+ 	unsigned int n_tables;
+ 	unsigned long missed;
+@@ -301,11 +299,10 @@ __udp_tunnel_nic_device_sync(struct net_device *dev, struct udp_tunnel_nic *utn)
+ static void
+ udp_tunnel_nic_device_sync(struct net_device *dev, struct udp_tunnel_nic *utn)
  {
- 	u32 last_intr_status, intr_status, enabled_intr_status = 0;
- 	irqreturn_t retval = IRQ_NONE;
-@@ -7175,38 +7175,6 @@ static irqreturn_t ufshcd_threaded_intr(int irq, void *__hba)
- 	return retval;
+-	if (!utn->need_sync || utn->work_pending)
++	if (!utn->need_sync)
+ 		return;
+ 
+-	queue_work(udp_tunnel_nic_workqueue, &utn->work);
+-	utn->work_pending = 1;
++	queue_delayed_work(udp_tunnel_nic_workqueue, &utn->work, 0);
  }
  
--/**
-- * ufshcd_intr - Main interrupt service routine
-- * @irq: irq number
-- * @__hba: pointer to adapter instance
-- *
-- * Return:
-- *  IRQ_HANDLED     - If interrupt is valid
-- *  IRQ_WAKE_THREAD - If handling is moved to threaded handled
-- *  IRQ_NONE        - If invalid interrupt
-- */
--static irqreturn_t ufshcd_intr(int irq, void *__hba)
--{
--	struct ufs_hba *hba = __hba;
--	u32 intr_status, enabled_intr_status;
--
--	/*
--	 * Handle interrupt in thread if MCQ or ESI is disabled,
--	 * and no active UIC command.
--	 */
--	if ((!hba->mcq_enabled || !hba->mcq_esi_enabled) &&
--	    !hba->active_uic_cmd)
--		return IRQ_WAKE_THREAD;
--
--	intr_status = ufshcd_readl(hba, REG_INTERRUPT_STATUS);
--	enabled_intr_status = intr_status & ufshcd_readl(hba, REG_INTERRUPT_ENABLE);
--
--	ufshcd_writel(hba, intr_status, REG_INTERRUPT_STATUS);
--
--	/* Directly handle interrupts since MCQ ESI handlers does the hard job */
--	return ufshcd_sl_intr(hba, enabled_intr_status);
--}
--
- static int ufshcd_clear_tm_cmd(struct ufs_hba *hba, int tag)
+ static bool
+@@ -731,12 +728,17 @@ udp_tunnel_nic_replay(struct net_device *dev, struct udp_tunnel_nic *utn)
+ static void udp_tunnel_nic_device_sync_work(struct work_struct *work)
  {
- 	int err = 0;
-@@ -10835,8 +10803,7 @@ int ufshcd_init(struct ufs_hba *hba, void __iomem *mmio_base, unsigned int irq)
- 	ufshcd_readl(hba, REG_INTERRUPT_ENABLE);
+ 	struct udp_tunnel_nic *utn =
+-		container_of(work, struct udp_tunnel_nic, work);
++		container_of(work, struct udp_tunnel_nic, work.work);
  
- 	/* IRQ registration */
--	err = devm_request_threaded_irq(dev, irq, ufshcd_intr, ufshcd_threaded_intr,
--					IRQF_ONESHOT | IRQF_SHARED, UFSHCD, hba);
-+	err = devm_request_irq(dev, irq, ufshcd_intr, IRQF_SHARED, UFSHCD, hba);
- 	if (err) {
- 		dev_err(hba->dev, "request irq failed\n");
- 		goto out_disable;
+-	rtnl_lock();
++	/* We cannot block on RTNL here, otherwise we would deadlock with
++	 * udp_tunnel_nic_unregister() calling cancel_delayed_work_sync()
++	 * while holding RTNL. Requeue with 1 jiffy delay if RTNL is contended.
++	 */
++	if (!rtnl_trylock()) {
++		queue_delayed_work(udp_tunnel_nic_workqueue, &utn->work, 1);
++		return;
++	}
+ 	mutex_lock(&utn->lock);
+-
+-	utn->work_pending = 0;
+ 	__udp_tunnel_nic_device_sync(utn->dev, utn);
+ 
+ 	if (utn->need_replay)
+@@ -757,7 +759,7 @@ udp_tunnel_nic_alloc(const struct udp_tunnel_nic_info *info,
+ 	if (!utn)
+ 		return NULL;
+ 	utn->n_tables = n_tables;
+-	INIT_WORK(&utn->work, udp_tunnel_nic_device_sync_work);
++	INIT_DELAYED_WORK(&utn->work, udp_tunnel_nic_device_sync_work);
+ 	mutex_init(&utn->lock);
+ 
+ 	for (i = 0; i < n_tables; i++) {
+@@ -901,11 +903,11 @@ udp_tunnel_nic_unregister(struct net_device *dev, struct udp_tunnel_nic *utn)
+ 	udp_tunnel_nic_flush(dev, utn);
+ 	udp_tunnel_nic_unlock(dev);
+ 
+-	/* Wait for the work to be done using the state, netdev core will
+-	 * retry unregister until we give up our reference on this device.
++	/* Make sure no work is running or queued before freeing @utn.
++	 * The work handler uses rtnl_trylock(), so it will not deadlock
++	 * against the RTNL we are holding here.
+ 	 */
+-	if (utn->work_pending)
+-		return;
++	cancel_delayed_work_sync(&utn->work);
+ 
+ 	udp_tunnel_nic_free(utn);
+ release_dev:
 -- 
 2.53.0
 
