@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 340F74052CF;
-	Fri,  7 Aug 2026 14:47:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09774371D1F;
+	Fri,  7 Aug 2026 14:47:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114049; cv=none; b=Lfq0zS6h5M2FN82DKGBSDV1frKFX2kZTOnlGVPBfVaKGuSwFvL8wyN3SRlzAoTypRXR7h3bXUTmWW6qMpL1nOaGEyE1HBIoqPc5DZfWEPYDuH3cWZpmI6l3jMSetGIlzBKM5jySi8MnQsBuu0Qul+4M+13Xm9oBlZFWeW4ng4qo=
+	t=1786114055; cv=none; b=odJKfBctkoNdBaUyCN72z8axruF14TsoM6JbPS6kNyUl4jowDKe9xOTEMl1Pfwh19TLYbKBc6OpCFq6yJMymOqYVuiACJXW17U2hLJFGRSUfUCMHiyxCGk2m/xMkBCAQGiwK7Esl6sBYkqGZ/V05Afez7dWIly6ddPr4QZzwMbs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114049; c=relaxed/simple;
-	bh=587R8M/K+Wt6nUuASC/5BrMmY3oOOc1SddI9bf4KoVg=;
+	s=arc-20240116; t=1786114055; c=relaxed/simple;
+	bh=JaYGq0gP/+oaFGhN3mpL/p1lcInEXltCf7fGmWm3J+E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VLq5Jyyi9ZTt8T6vXSabyEM4sqchIzB9PTPXjlyn9491aQQPAI5OFJV19GQbwat6H4ZA3KCsHfhWHw/vqQJezK+me4tD5T8XqFeZi0R5xImuoosb5g4vbLeUCh649lONlRllKg8+CgH5Y8C4EU86lWO5P8IP8/V4Oxu+kctzk7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SzRwEmRN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QS270PDgEzcrDIK7/HIz/xr+2FQnpT7+zqsxuO5QRd3z4TMdpKHh3brKA+G3as73vVawN6IaMkYcfkAX2yT4OIMucIWImp434HJMho5MS3GQwl8NnoXdszQwpvowWskFm2v5EGQwaEv5bBI5gvUWhscnOQ3y+P0VL/LAmBXolvU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GWxLkVxE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SzRwEmRN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D1671F000E9;
-	Fri,  7 Aug 2026 14:47:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GWxLkVxE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C69A1F00A3A;
+	Fri,  7 Aug 2026 14:47:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114045;
-	bh=j2aqFoGKzRK1s13uJGjBOZj7nQFDT3lXbXlbH0h43yU=;
+	s=korg; t=1786114048;
+	bh=y+7WISGLjXScJi/ApwZtP6gw1i8AjEIMHL2J6rYGdyI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SzRwEmRNMFGRb7mXG0w8bBXQMjAkqYNlphBZ/9SJNiSeG1MmvTnXjynZVHN/lGTSN
-	 OCAHsyjmWIrbrGTfrJaeRQqZiV/HC3i1P3jnOYcWgdH2aoD+RW8yi87lTsiFsFKWgn
-	 arwcCKZANybCR2HRe0JEKWZAl3Lg+B2RGsVTLB74=
+	b=GWxLkVxEC0RcUqMeyaLysWonHHUp19wetmkTZmgUjETDIQeYrS5GNPcNlElUPDA1u
+	 s4F8MFI72em2LcJABrcxwjy4+TkJZFzzp1zqWtKvFDZ0UQj+WE6XYAo1AxvespoXTD
+	 QJ9OjMVH1lOKMIoZGTPYxLFCs2EgNB3xRcql173A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Luiz Angelo Daros de Luca <luizluca@gmail.com>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 080/337] hwmon: (adt7470) Fix swapped PWM3 and PWM4 auto mode masks
-Date: Fri,  7 Aug 2026 16:34:43 +0200
-Message-ID: <20260807143420.249066841@linuxfoundation.org>
+Subject: [PATCH 6.12 081/337] hwmon: (adt7470) Use cached PWM frequency value
+Date: Fri,  7 Aug 2026 16:34:44 +0200
+Message-ID: <20260807143420.269785018@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -53,58 +53,107 @@ Content-Transfer-Encoding: 8bit
 
 From: Luiz Angelo Daros de Luca <luizluca@gmail.com>
 
-[ Upstream commit a3850231521b06bbbb18c8ebea100320c14a08be ]
+[ Upstream commit 60677cd4c28f44d5b307d3029dccece38fcce90f ]
 
-The ADT7470_PWM3_AUTO_MASK and ADT7470_PWM4_AUTO_MASK macros are
-currently defined with swapped bit values.
+adt7470_pwm_read() currently ignores failures returned by
+pwm1_freq_get(). If the register read fails, the negative error code is
+returned through *val while the function itself reports success,
+potentially exposing a negative PWM frequency through sysfs.
 
-According to Table 22 of the ADT7470 datasheet, the Fan Control Mode
-Configuration for register 0x69 follows the exact same bit position
-layout as register 0x68:
-- 0x68 Bit[7] corresponds to BHVR1 (PWM1) -> 0x80
-- 0x68 Bit[6] corresponds to BHVR2 (PWM2) -> 0x40
-- 0x69 Bit[7] corresponds to BHVR3 (PWM3) -> 0x80
-- 0x69 Bit[6] corresponds to BHVR4 (PWM4) -> 0x40
+Fix this by using the cached PWM frequency maintained by the driver,
+eliminating the register access from the read path.
 
-Consequently, PWM3 should use mask 0x80 and PWM4 should use 0x40.
+Apart from the corrected error propagation and using the cached value,
+no functional change is intended.
 
-This typo did not cause any functional bugs because these specific
-macros are never referenced in the driver code. Instead, the driver
-correctly applies the configuration by relying on the modulo parity of
-the channel index (e.g., `channel % 2`) to selectively apply either
-ADT7470_PWM1_AUTO_MASK (0x80) or ADT7470_PWM2_AUTO_MASK (0x40).
-Since the bit layout is identical between the two configuration
-registers, the hardware is currently configured correctly.
-
-Fix the macro definitions to reflect the datasheet accurately and
-prevent future bugs or confusion during code review and refactoring.
-As this is a purely cosmetic fix with no functional impact, a backport
-to stable kernels is not necessary.
-
-Fixes: 6f9703d0be16 ("hwmon: add support for adt7470")
+Fixes: ef67959c4253 ("hwmon: (adt7470) Convert to use regmap")
 Signed-off-by: Luiz Angelo Daros de Luca <luizluca@gmail.com>
-Link: https://lore.kernel.org/r/20260727-adt7470_fixes-v2-4-598e38a46ba6@gmail.com
+Link: https://lore.kernel.org/r/20260727-adt7470_fixes-v2-6-598e38a46ba6@gmail.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/adt7470.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/hwmon/adt7470.c | 20 ++++++++++++++++++--
+ 1 file changed, 18 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/hwmon/adt7470.c b/drivers/hwmon/adt7470.c
-index 41fa6a0e8b937..f0a45538ded6d 100644
+index f0a45538ded6d..43c0130342622 100644
 --- a/drivers/hwmon/adt7470.c
 +++ b/drivers/hwmon/adt7470.c
-@@ -70,8 +70,8 @@ static const unsigned short normal_i2c[] = { 0x2C, 0x2E, 0x2F, I2C_CLIENT_END };
- #define		ADT7470_PWM1_AUTO_MASK		0x80
- #define		ADT7470_PWM_AUTO_MASK		0xC0
- #define ADT7470_REG_PWM34_CFG			0x69
--#define		ADT7470_PWM3_AUTO_MASK		0x40
--#define		ADT7470_PWM4_AUTO_MASK		0x80
-+#define		ADT7470_PWM4_AUTO_MASK		0x40
-+#define		ADT7470_PWM3_AUTO_MASK		0x80
- #define	ADT7470_REG_PWM_MIN_BASE_ADDR		0x6A
- #define ADT7470_REG_PWM_MIN_MAX_ADDR		0x6D
- #define ADT7470_REG_PWM_TEMP_MIN_BASE_ADDR	0x6E
+@@ -182,6 +182,7 @@ struct adt7470_data {
+ 	u8			pwm_min[ADT7470_PWM_COUNT];
+ 	s8			pwm_tmin[ADT7470_PWM_COUNT];
+ 	u8			pwm_auto_temp[ADT7470_PWM_COUNT];
++	u32			pwm_freq;
+ 
+ 	struct task_struct	*auto_update;
+ 	unsigned int		auto_update_interval;
+@@ -756,7 +757,7 @@ static ssize_t force_pwm_max_store(struct device *dev,
+ }
+ 
+ /* These are the valid PWM frequencies to the nearest Hz */
+-static const int adt7470_freq_map[] = {
++static const u32 adt7470_freq_map[] = {
+ 	11, 15, 22, 29, 35, 44, 59, 88, 1400, 22500
+ };
+ 
+@@ -796,7 +797,7 @@ static int adt7470_pwm_read(struct device *dev, u32 attr, int channel, long *val
+ 		*val = 1 + data->pwm_automatic[channel];
+ 		break;
+ 	case hwmon_pwm_freq:
+-		*val = pwm1_freq_get(dev);
++		*val = data->pwm_freq;
+ 		break;
+ 	default:
+ 		return -EOPNOTSUPP;
+@@ -809,12 +810,14 @@ static int pwm1_freq_set(struct device *dev, long freq)
+ {
+ 	struct adt7470_data *data = dev_get_drvdata(dev);
+ 	unsigned int low_freq = ADT7470_CFG_LF;
++	u32 closest_freq;
+ 	int index;
+ 	int err;
+ 
+ 	/* Round the user value given to the closest available frequency */
+ 	index = find_closest(freq, adt7470_freq_map,
+ 			     ARRAY_SIZE(adt7470_freq_map));
++	closest_freq = adt7470_freq_map[index];
+ 
+ 	if (index >= 8) {
+ 		index -= 8;
+@@ -832,6 +835,10 @@ static int pwm1_freq_set(struct device *dev, long freq)
+ 	err = regmap_update_bits(data->regmap, ADT7470_REG_CFG_2,
+ 				 ADT7470_FREQ_MASK,
+ 				 index << ADT7470_FREQ_SHIFT);
++	if (err < 0)
++		goto out;
++
++	data->pwm_freq = closest_freq;
+ out:
+ 	mutex_unlock(&data->lock);
+ 
+@@ -1285,6 +1292,7 @@ static int adt7470_probe(struct i2c_client *client)
+ 	struct device *dev = &client->dev;
+ 	struct adt7470_data *data;
+ 	struct device *hwmon_dev;
++	int freq_val;
+ 	int err;
+ 
+ 	data = devm_kzalloc(dev, sizeof(struct adt7470_data), GFP_KERNEL);
+@@ -1309,6 +1317,14 @@ static int adt7470_probe(struct i2c_client *client)
+ 	if (err < 0)
+ 		return err;
+ 
++	freq_val = pwm1_freq_get(dev);
++	if (freq_val <= 0) {
++		err = freq_val < 0 ? freq_val : -EINVAL;
++		return err;
++	}
++
++	data->pwm_freq = (u32)freq_val;
++
+ 	/* Register sysfs hooks */
+ 	hwmon_dev = devm_hwmon_device_register_with_info(dev, client->name, data,
+ 							 &adt7470_chip_info,
 -- 
 2.53.0
 
