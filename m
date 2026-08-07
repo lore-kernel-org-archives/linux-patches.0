@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C820351C2F;
-	Fri,  7 Aug 2026 14:49:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7664E2FF641;
+	Fri,  7 Aug 2026 14:49:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114152; cv=none; b=h47GLIdgHy2gzKpmYDVpjnteqzgdHEV0fg8sJo7c3NkRxGhXgEUqOMynyQXQdLEE6Dos8L8yxiLT0T3D38ZhGSNpGX11wp6hs3MogLeNpyeQlI7dhFFEcxDNL8ocAU/c2zv4dKosUyp3339sjP5lLgd8uERyR/aVraEjBzXVt9k=
+	t=1786114154; cv=none; b=s5G7f8psKU9dSAk0xj+LgGC6105Px5cEvLA2iI1DfYoWjncdnj+dacURQwz6nMgH4t7y3iDqgsVgt2+0+1d+OUNsb3752zL02oasSl3oFijKFnhTmXZa9rFDMswJRYCrbCV0ET1LANNq/CpipT+oumqW49hcBarDrxCjXuGpfSk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114152; c=relaxed/simple;
-	bh=FsAwHfZmBVq/hPedUnrODP7EvaBQFWmMoo32LSTw0D4=;
+	s=arc-20240116; t=1786114154; c=relaxed/simple;
+	bh=85VQE4+A9Da7+lhIWCxzJKnAxwRDm5F1sq9AxQCItTs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n4B675BmaINiPQpt3g+3NLKLKMH9WO0riT9WJHjiefDq1jZb8+3uox0yxU86lAJukf+17rAt2DW8861/jHXI0WYfiBMC5HH74NehuEaeR9gNETsKewtCku3S/H8fulo0Pih6VLwoJlQYgIg32UjTdRHabRuPh3Cyb5RYgJQwhVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZPD0UW2w; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FMT8lF7vOIZz52sNs2jE6KGWNhMnP4lrJcOPKSoa7u5xrQPjiUXTJNeCSikDg2Cgy5OP3pBFHos48PmzYRl5P/BqM0kIePX2LKRlpExZu5TDNE1VKwXdM5PNTG3PhuemwhLg0CalSxGlxN/fc0tEh1d5rXSmW5WC0YMjOeOEcT4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rv3TNaML; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZPD0UW2w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC6CF1F000E9;
-	Fri,  7 Aug 2026 14:49:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rv3TNaML"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAF041F000E9;
+	Fri,  7 Aug 2026 14:49:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114150;
-	bh=21pNVRKlBBQMSNiaAC8oSt9cpRHDubvYEFhreyS/FyI=;
+	s=korg; t=1786114153;
+	bh=HuRYNqprBxQduWeMIg9U/A3Knx9p5X2M+A1weIz57+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZPD0UW2wpMHPeFj1qaz5hikk1PQJ1VlfXoPocqz9nplVrJXMbmRVei21ZER1yRfwQ
-	 i5xyEXcIX/S1LmG4W4oXYI7LIR68IHN561utAMFY+MELubaRfCh2q9w2g+V4b2L0Zo
-	 LwlTPGvJP9n0d0UvkxpaNxSndbpwmh8O6tQXEHmc=
+	b=rv3TNaMLktbWgiabj6xheKK85QyHoqQZdhfd9PWrVUZ3a3F6yjqDgnE+chiNVasWV
+	 NAxuSGp7lR+eYltRtZ82DtKIYJqzUdOTVxAetlbkdVQNOJbOPBTTEvQ4Ar5Ls8e2na
+	 kRDgJBMroSUHnxs+P2bTneV4YjIbgJX5tOOzTqgE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haidar Lee <haidar.lee@adlinktech.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.12 161/337] ASoC: tas2562: fix DVC coefficient write order
-Date: Fri,  7 Aug 2026 16:36:04 +0200
-Message-ID: <20260807143422.042200095@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 126/337] ksmbd: return success for deferred final close
+Date: Fri,  7 Aug 2026 16:35:29 +0200
+Message-ID: <20260807143421.263788848@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -50,78 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haidar Lee <haidar.lee@adlinktech.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit 8e957e4907c58e9ca944f98799524f2bbb9cf68a upstream.
+[ Upstream commit c5db4de8988f1a621556ca5c4537f77b766ca07d ]
 
-The TAS2562 applies the 32-bit digital volume coefficient to the
-playback path when the last byte, DVC_CFG4 (book 0 page 2 reg 0x0F), is
-written. tas2562_volume_control_put() wrote DVC_CFG4 first and DVC_CFG1
-(the MSB) last, so every volume change latched a value made of the
-previous coefficient's upper three bytes combined with the new LSB; the
-remaining bytes only took effect on the next volume change.
+ksmbd_close_fd() marks an open file as FP_CLOSED and drops the file table
+reference. If another in-flight request still holds a reference, the final
+close is deferred until that request drops its reference.
 
-In practice the control was unusable: the first setting after power-on
-always played at roughly 0 dB no matter what value was requested (the
-chip's default upper bytes were still latched), and most subsequent
-changes muted the output entirely or produced a distorted, over-unity
-gain.
+The function currently returns -EINVAL in that deferred-final-close case
+because fp is cleared when the reference count does not reach zero.  That
+turns a valid close into STATUS_FILE_CLOSED.
 
-Verified on a TAS2562 (ADLINK OSM-520 / MT8189 board) by tracing the
-I2C writes with ftrace and by writing the same coefficients manually in
-both byte orders: written MSB-first the register block behaves exactly
-as the driver expects, LSB-first reproduces the broken behaviour.
+smb2.compound_find.compound_find_close sends QUERY_DIRECTORY and then
+closes the same directory handle before receiving the find response.
+The query holds a reference while it builds the response, so close must
+mark the handle closed and return success even though final teardown is
+delayed. Track whether the handle was successfully transitioned to
+FP_CLOSED and return success when only the final close is deferred.
 
-Write the bytes MSB first with DVC_CFG4 last so the complete new
-coefficient is latched atomically.
-
-Fixes: bf726b1c86f2 ("ASoC: tas2562: Add support for digital volume control")
-Cc: stable@vger.kernel.org
-Signed-off-by: Haidar Lee <haidar.lee@adlinktech.com>
-Link: https://patch.msgid.link/20260715-tas2562-dvc-fix-v1-1-072b13901b20@adlinktech.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Stable-dep-of: e7188199eff4 ("ksmbd: fix use-after-free in __close_file_table_ids()")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/tas2562.c |   23 +++++++++++++++--------
- 1 file changed, 15 insertions(+), 8 deletions(-)
+ fs/smb/server/vfs_cache.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/sound/soc/codecs/tas2562.c
-+++ b/sound/soc/codecs/tas2562.c
-@@ -475,20 +475,27 @@ static int tas2562_volume_control_put(st
- 	u32 reg_val;
+diff --git a/fs/smb/server/vfs_cache.c b/fs/smb/server/vfs_cache.c
+index 5b6d8bb8edb27..0d3341927b483 100644
+--- a/fs/smb/server/vfs_cache.c
++++ b/fs/smb/server/vfs_cache.c
+@@ -487,6 +487,7 @@ int ksmbd_close_fd(struct ksmbd_work *work, u64 id)
+ {
+ 	struct ksmbd_file	*fp;
+ 	struct ksmbd_file_table	*ft;
++	bool closed = false;
  
- 	reg_val = float_vol_db_lookup[ucontrol->value.integer.value[0]/2];
--	ret = snd_soc_component_write(component, TAS2562_DVC_CFG4,
--				      (reg_val & 0xff));
--	if (ret)
--		return ret;
--	ret = snd_soc_component_write(component, TAS2562_DVC_CFG3,
--				      ((reg_val >> 8) & 0xff));
-+	/*
-+	 * The device applies the 32-bit coefficient to the playback path on
-+	 * the write to DVC_CFG4 (the LSB, book 0 page 2 reg 0x0F), so the
-+	 * bytes must be written MSB first and DVC_CFG4 last. Writing CFG4
-+	 * first latches a mix of the previous coefficient's upper bytes and
-+	 * the new LSB instead of the requested value.
-+	 */
-+	ret = snd_soc_component_write(component, TAS2562_DVC_CFG1,
-+				      ((reg_val >> 24) & 0xff));
- 	if (ret)
- 		return ret;
- 	ret = snd_soc_component_write(component, TAS2562_DVC_CFG2,
- 				      ((reg_val >> 16) & 0xff));
- 	if (ret)
- 		return ret;
--	ret = snd_soc_component_write(component, TAS2562_DVC_CFG1,
--				      ((reg_val >> 24) & 0xff));
-+	ret = snd_soc_component_write(component, TAS2562_DVC_CFG3,
-+				      ((reg_val >> 8) & 0xff));
-+	if (ret)
-+		return ret;
-+	ret = snd_soc_component_write(component, TAS2562_DVC_CFG4,
-+				      (reg_val & 0xff));
- 	if (ret)
- 		return ret;
+ 	if (!has_file_id(id))
+ 		return 0;
+@@ -501,6 +502,7 @@ int ksmbd_close_fd(struct ksmbd_work *work, u64 id)
+ 			fp = NULL;
+ 		else {
+ 			fp->f_state = FP_CLOSED;
++			closed = true;
+ 			if (!atomic_dec_and_test(&fp->refcount))
+ 				fp = NULL;
+ 		}
+@@ -508,7 +510,7 @@ int ksmbd_close_fd(struct ksmbd_work *work, u64 id)
+ 	write_unlock(&ft->lock);
  
+ 	if (!fp)
+-		return -EINVAL;
++		return closed ? 0 : -EINVAL;
+ 
+ 	__put_fd_final(work, fp);
+ 	return 0;
+-- 
+2.53.0
+
 
 
