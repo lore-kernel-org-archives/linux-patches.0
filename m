@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A913F34F259;
-	Fri,  7 Aug 2026 14:45:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F02937E5DD;
+	Fri,  7 Aug 2026 14:45:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786113939; cv=none; b=dkN/CDN0w8ld1A5ij78rtGtmdEOLQq++e0NUEOq+DeMsDjDdSb4bwlaC/RgA01grzev+KRlWaUmPacck9KLxDf/TD8pxtDEipGefExXeUihW0GuN6J+kr2AZ7lasG0SHhA6kRcJ0/BuSVX1/fzC2CQprD2sOc+ua0qVECmHXhyg=
+	t=1786113941; cv=none; b=EFMh5ZKrots3EwXgEwTaJ8rmO1CQpxAELJA2sGoaBv6QfgBgs8Vm3HAJ1XfF9KAxVeNX84q4xOExE24t+ABuILXmRGi3Pwk79LYBvcddxgbIud259FS/D3u6tRbh2qmfuhUZ4yL8+ijJlUvVqXrGm9F52enD1sr+/rLtBz9aXAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786113939; c=relaxed/simple;
-	bh=TZ5v3W49IGNlN4vKXq/iVLF/W5lGs3WPLkS078RZgT8=;
+	s=arc-20240116; t=1786113941; c=relaxed/simple;
+	bh=wG5hEbkB/eYIxvqS/QRqDprrVc/H6vlN0YvIWfumWWM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lasBWXVIWBqW2MXPv0fIUIybibQS7xb6tm/tT/yY1E8I+rJpCzHTRfYyq0ATJvjzySSRhDrrDistbum0TzjZsZl3PU4vgMpNkCgsfXZnB2E8GdB8V0WBuiW6igNRaBszudLPyzzcldVhRuTMHS61RWEoWsk+ttZW+L6fmAh56+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KZ68Q2X5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Sf00aXNjcDz16ofNxQTdcosmvazgOjoqpbgClIjIfuJgBzZ4Tgo3D4YVQE5OKQap1OSbW0atIda3SAAZD6Msq1dRRFzkbb8KdBLxTd16BPTix6qCvpEnezY1u+H92dYnjuS0QW0KKtriFLYKFzNPcXVu4jIN+aZmq4CRlR12iPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KX/jlYeZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KZ68Q2X5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE1B91F000E9;
-	Fri,  7 Aug 2026 14:45:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KX/jlYeZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6A591F000E9;
+	Fri,  7 Aug 2026 14:45:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786113937;
-	bh=z3E3PlgIofeiC2c8MFSl4krypgXNC8w7/0khOY9ffOk=;
+	s=korg; t=1786113940;
+	bh=wZHMmFqqDmLYp7D6L2BQSku/pBne4mcf8b1nWCAQ+UA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KZ68Q2X5ObQRkY9wKdTOcxWEoe5YNYLH8BqPPvIH342pb/F6SZo8iXs45qk8eDKUi
-	 FVtoQH9voGuVc3F0bQHTM+sPAXXBdw9fPcL5uAWQhta3c45bRmTYzfoylJCXRjZxnA
-	 GCFkpmz0fRpOWb+pC9DwzJTbDyOgjVfMEQvGYF3M=
+	b=KX/jlYeZ56tkG6yFfTu1GoRwgWWC0kxJn5EC7P3XvkBBEayFUYJX/QAUGI3kUo7k+
+	 DMC8HUoHpMG3PBv7IjWjn/1Trl9acut0GevF9E1c0dkCRGfRTogKrsTJBEIsC10DJl
+	 MuD1r3gSjjxtUq7/oACDbkqLVBJPHNzS1vbkttqA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+eca845fb8c18dd6b44c1@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Zhao Li <enderaoelyther@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 088/337] net: udp_tunnel: fix memory leak in udp_tunnel_nic_unregister()
-Date: Fri,  7 Aug 2026 16:34:51 +0200
-Message-ID: <20260807143420.423099646@linuxfoundation.org>
+Subject: [PATCH 6.12 089/337] wifi: mac80211: validate individual TWT params before driver setup
+Date: Fri,  7 Aug 2026 16:34:52 +0200
+Message-ID: <20260807143420.444608388@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -52,148 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Zhao Li <enderaoelyther@gmail.com>
 
-[ Upstream commit 080695e6f005e2396f1207fd69d24c442cb230c6 ]
+[ Upstream commit 0502d5077e419427d80f4d46ba95d0067f5fb916 ]
 
-syzbot reported a memory leak [1] in the UDP tunnel NIC offload code.
+ieee80211_process_rx_twt_action() only partially validates a received
+S1G TWT setup frame before queueing it.
 
-When device registration fails (e.g. in register_netdevice()), netdev core
-unwinds by sending a single NETDEV_UNREGISTER notification. If work was queued
-during NETDEV_REGISTER (utn->work_pending is set), udp_tunnel_nic_unregister()
-returns early:
+An individual agreement can therefore reach ieee80211_s1g_rx_twt_setup()
+with twt->length too short for the full struct ieee80211_twt_params.
 
-	if (utn->work_pending)
-		return;
+The individual path passes twt to drv_add_twt_setup(). Both the tracepoint
+and the driver callback consume the complete parameters block, not merely
+req_type. Do not pass a short individual agreement to the driver.
+Broadcast agreements remain unchanged because they are rejected locally
+after accessing only req_type.
 
-Because failed registrations do not enter netdev_wait_allrefs_any(), no
-subsequent NETDEV_UNREGISTER rebroadcast will ever occur. As a result, the
-struct udp_tunnel_nic allocated in udp_tunnel_nic_alloc() is leaked
-permanently.
-
-Fix this by removing the early return. Instead, synchronously cancel any
-pending work with cancel_delayed_work_sync() before freeing @utn.
-
-To be able to call cancel_delayed_work_sync() while holding RTNL (the work also
-needs RTNL), switch udp_tunnel_nic_device_sync_work() to rtnl_trylock(). If RTNL
-is contended, requeue the work with a 1 jiffy delay (via queue_delayed_work())
-to prevent high CPU contention while waiting for RTNL lock.
-
-The utn->work_pending bookkeeping is no longer needed and is removed, as
-the workqueue core already tracks the pending/running state of the work.
-
-[1]
-BUG: memory leak
-unreferenced object 0xffff888127d5f840 (size 96):
-  comm "syz-executor", pid 5806, jiffies 4294942188
-  backtrace (crc 99fdb6c8):
-    __kmalloc_noprof+0x3bf/0x550
-    udp_tunnel_nic_alloc net/ipv4/udp_tunnel_nic.c:756 [inline]
-    udp_tunnel_nic_register net/ipv4/udp_tunnel_nic.c:833 [inline]
-    udp_tunnel_nic_netdevice_event+0x804/0xab0 net/ipv4/udp_tunnel_nic.c:931
-    notifier_call_chain+0x59/0x160 kernel/notifier.c:85
-    call_netdevice_notifiers_info+0x7d/0xb0 net/core/dev.c:2250
-    register_netdevice+0xc10/0xeb0 net/core/dev.c:11478
-
-Fixes: cc4e3835eff4 ("udp_tunnel: add central NIC RX port offload infrastructure")
-Reported-by: syzbot+eca845fb8c18dd6b44c1@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6a632b15.dde6c935.cf6c8.0011.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260724091137.1792543-1-edumazet@google.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: f5a4c24e689f ("mac80211: introduce individual TWT support in AP mode")
+Assisted-by: Codex:gpt-5
+Assisted-by: Claude:opus-4.8
+Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
+Link: https://patch.msgid.link/20260723010928.76551-1-enderaoelyther@gmail.com
+[edit commit message to not overclaim lack of validation nor
+ understate driver impact]
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/udp_tunnel_nic.c | 32 +++++++++++++++++---------------
- 1 file changed, 17 insertions(+), 15 deletions(-)
+ net/mac80211/s1g.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/ipv4/udp_tunnel_nic.c b/net/ipv4/udp_tunnel_nic.c
-index b13e8f7092f46..4360d159ee8a7 100644
---- a/net/ipv4/udp_tunnel_nic.c
-+++ b/net/ipv4/udp_tunnel_nic.c
-@@ -32,13 +32,12 @@ struct udp_tunnel_nic_table_entry {
-  * @lock:	protects all fields
-  * @need_sync:	at least one port start changed
-  * @need_replay: space was freed, we need a replay of all ports
-- * @work_pending: @work is currently scheduled
-  * @n_tables:	number of tables under @entries
-  * @missed:	bitmap of tables which overflown
-  * @entries:	table of tables of ports currently offloaded
-  */
- struct udp_tunnel_nic {
--	struct work_struct work;
-+	struct delayed_work work;
+diff --git a/net/mac80211/s1g.c b/net/mac80211/s1g.c
+index d4ed0c0a335ca..2a23e431cbb5a 100644
+--- a/net/mac80211/s1g.c
++++ b/net/mac80211/s1g.c
+@@ -101,6 +101,10 @@ ieee80211_s1g_rx_twt_setup(struct ieee80211_sub_if_data *sdata,
+ 	struct ieee80211_twt_setup *twt = (void *)mgmt->u.action.u.s1g.variable;
+ 	struct ieee80211_twt_params *twt_agrt = (void *)twt->params;
  
- 	struct net_device *dev;
- 
-@@ -46,7 +45,6 @@ struct udp_tunnel_nic {
- 
- 	u8 need_sync:1;
- 	u8 need_replay:1;
--	u8 work_pending:1;
- 
- 	unsigned int n_tables;
- 	unsigned long missed;
-@@ -301,11 +299,10 @@ __udp_tunnel_nic_device_sync(struct net_device *dev, struct udp_tunnel_nic *utn)
- static void
- udp_tunnel_nic_device_sync(struct net_device *dev, struct udp_tunnel_nic *utn)
- {
--	if (!utn->need_sync || utn->work_pending)
-+	if (!utn->need_sync)
- 		return;
- 
--	queue_work(udp_tunnel_nic_workqueue, &utn->work);
--	utn->work_pending = 1;
-+	queue_delayed_work(udp_tunnel_nic_workqueue, &utn->work, 0);
- }
- 
- static bool
-@@ -731,12 +728,17 @@ udp_tunnel_nic_replay(struct net_device *dev, struct udp_tunnel_nic *utn)
- static void udp_tunnel_nic_device_sync_work(struct work_struct *work)
- {
- 	struct udp_tunnel_nic *utn =
--		container_of(work, struct udp_tunnel_nic, work);
-+		container_of(work, struct udp_tunnel_nic, work.work);
- 
--	rtnl_lock();
-+	/* We cannot block on RTNL here, otherwise we would deadlock with
-+	 * udp_tunnel_nic_unregister() calling cancel_delayed_work_sync()
-+	 * while holding RTNL. Requeue with 1 jiffy delay if RTNL is contended.
-+	 */
-+	if (!rtnl_trylock()) {
-+		queue_delayed_work(udp_tunnel_nic_workqueue, &utn->work, 1);
++	if (!(twt->control & IEEE80211_TWT_CONTROL_NEG_TYPE_BROADCAST) &&
++	    twt->length < sizeof(twt->control) + sizeof(*twt_agrt))
 +		return;
-+	}
- 	mutex_lock(&utn->lock);
--
--	utn->work_pending = 0;
- 	__udp_tunnel_nic_device_sync(utn->dev, utn);
++
+ 	twt_agrt->req_type &= cpu_to_le16(~IEEE80211_TWT_REQTYPE_REQUEST);
  
- 	if (utn->need_replay)
-@@ -757,7 +759,7 @@ udp_tunnel_nic_alloc(const struct udp_tunnel_nic_info *info,
- 	if (!utn)
- 		return NULL;
- 	utn->n_tables = n_tables;
--	INIT_WORK(&utn->work, udp_tunnel_nic_device_sync_work);
-+	INIT_DELAYED_WORK(&utn->work, udp_tunnel_nic_device_sync_work);
- 	mutex_init(&utn->lock);
- 
- 	for (i = 0; i < n_tables; i++) {
-@@ -901,11 +903,11 @@ udp_tunnel_nic_unregister(struct net_device *dev, struct udp_tunnel_nic *utn)
- 	udp_tunnel_nic_flush(dev, utn);
- 	udp_tunnel_nic_unlock(dev);
- 
--	/* Wait for the work to be done using the state, netdev core will
--	 * retry unregister until we give up our reference on this device.
-+	/* Make sure no work is running or queued before freeing @utn.
-+	 * The work handler uses rtnl_trylock(), so it will not deadlock
-+	 * against the RTNL we are holding here.
- 	 */
--	if (utn->work_pending)
--		return;
-+	cancel_delayed_work_sync(&utn->work);
- 
- 	udp_tunnel_nic_free(utn);
- release_dev:
+ 	/* broadcast TWT not supported yet */
 -- 
 2.53.0
 
