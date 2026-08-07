@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AE2B346AFB;
-	Fri,  7 Aug 2026 14:55:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56B6F346AFB;
+	Fri,  7 Aug 2026 14:55:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114535; cv=none; b=YoyNuSDaaOix69TD1CfgOe46phtwxqM2+EPdguBapxu+2O++pCIcY0yQ1TACDd0pHVx0MMUkOZXKlaxofk4+wu6e8vVWjiwWVHLM3WfS2ZsHSCD8nYNqv58JfoelZDIK0i+oO1vLTj3aZMmvSlBRpcCSb0J3nzbAcGikWwUUw8w=
+	t=1786114537; cv=none; b=X3xctBmJ6zTH7Io054GnaXq9KYZunRRdZUnpKjtauaIyL2OzxHKpsWV3JP76v72yVzA2w9Leyms9ebGukfGJdDMs8lh+TET+dVQhjhng3k5e+u52DHpKi1GnwKFZCPYxMFm1IfUJA8OMp1eNOsbHn3banSmhDtJQ7KqeVsfUCzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114535; c=relaxed/simple;
-	bh=/T5H7Jph2yg7JXC1hGsr8C9M7/q1uexNPN2gfXvNQWU=;
+	s=arc-20240116; t=1786114537; c=relaxed/simple;
+	bh=zTVwVtVaRhmmZK6kwBMgjSu59REU6IvtKXnFYGnvt2g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gjRmYnuxx4PLWPSZUvLjWW48NH3L5t8rdNVIUPqO+CTQRsNLDTdyG0W95xXzwBHNP5EZYqRKU3j/pJF+Q7uHrvIR5r8Dh8J0IYNco4304IXEyFNyj7dHjW3nz+QrZVCE9Xsrl/QEy9PAs787GDf1cf82XYhddlzKPvigmk8p5t0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fVIRimYw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=JL8lP3YdAlsCJCJWn5B3l5Z93Srq10KykrBrkM1UL/KVn3egPPi/DcyldKmDJnFF+xtn1qGTIqDfeqOi/RA8hWr5XE+tZdy9pcpoOXWoXyf1CB+rvuEDWFh9RRF76hT0lTLZKNUu95U03/D8OlOA8CiQlyV89djGejzTbRfcHUk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qQ4W5RHm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fVIRimYw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D61FD1F00A3E;
-	Fri,  7 Aug 2026 14:55:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qQ4W5RHm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B16DB1F000E9;
+	Fri,  7 Aug 2026 14:55:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114533;
-	bh=g1w54/LUFY6zzxrJzc2ESi4xURkqKlVAdT5df1a8KtU=;
+	s=korg; t=1786114536;
+	bh=ZhNtPM4QARyJJXjMxf2swM6RXbeHuRqwQC4TJVREq7w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fVIRimYwojCE7AXddwEt6avbmL1GJQ59Uo8oi77OfBp8tuBtZO9ASEROCWRlYjs/p
-	 TAcC7dKH9ytr9ugvhDYlf9k+VWjc2knp1hElY2b8lDzQbH1+xm3f4TDDzk6o3RYjFR
-	 8sEKSplOf0sh1lkAzQ8MAT+35cKrrIVCqWEjsfCQ=
+	b=qQ4W5RHmBbDrpnZWnlHwCjoP35FDoaNWeI9ICRNg8XuKUHjKRhFeHbcYExSNRVY0i
+	 CGPi7ZTgbs31eiIJ6qNs0U4Xam2DoE12rXxXc78/JDv1FOXpzP6aP/KBnQTVrgoPXU
+	 WwG2c/R2eKxGbEUPHu0WVq5N396N6pbVH98KnzAY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jackson Lee <jackson.lee@chipsnmedia.com>,
-	Nas Chung <nas.chung@chipsnmedia.com>,
-	Brandon Brnich <b-brnich@ti.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 296/337] media: chips-media: wave5: Support CBP profile
-Date: Fri,  7 Aug 2026 16:38:19 +0200
-Message-ID: <20260807143424.943863586@linuxfoundation.org>
+Subject: [PATCH 6.12 297/337] media: uapi: rkisp: Correct name version enum
+Date: Fri,  7 Aug 2026 16:38:20 +0200
+Message-ID: <20260807143424.965283786@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -48,85 +46,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jackson Lee <jackson.lee@chipsnmedia.com>
+From: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
 
-[ Upstream commit f8505f9d6b223a26854003bfdba1a0772457886d ]
+[ Upstream commit c4c01c4fd4a3916ffdfb35ad9f511c48e289f51c ]
 
-Constrained Baseline Profile (CBP) and Baseline Profile (BP) have been
-treated as the same.
-Introduce the ability to differentiate between the two.
+The name of the enum to hold the mapping of parameter buffer versions
+have a typo in the name, correct it. While this is a uAPI header the
+impact should be minimal as the enum is only used as a collection for
+the one version number supported.
 
-Fixes: 9707a6254a8a ("media: chips-media: wave5: Add the v4l2 layer")
+Fixes: e9d05e9d5db1 ("media: uapi: rkisp1-config: Add extensible params format")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jackson Lee <jackson.lee@chipsnmedia.com>
-Signed-off-by: Nas Chung <nas.chung@chipsnmedia.com>
-Tested-by: Brandon Brnich <b-brnich@ti.com>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Link: https://patch.msgid.link/20260501190339.3449193-1-niklas.soderlund+renesas@ragnatech.se
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+[ Adjusted context to keep the tree's `RKISP1_EXT_PARAM_BUFFER_V1 = 1` initializer instead of upstream's `V4L2_ISP_PARAMS_VERSION_V1`, which does not exist in this tree. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/chips-media/wave5/wave5-hw.c      |    3 +++
- drivers/media/platform/chips-media/wave5/wave5-vpu-enc.c |    5 ++++-
- drivers/media/platform/chips-media/wave5/wave5-vpuapi.h  |    1 +
- 3 files changed, 8 insertions(+), 1 deletion(-)
+ include/uapi/linux/rkisp1-config.h |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/media/platform/chips-media/wave5/wave5-hw.c
-+++ b/drivers/media/platform/chips-media/wave5/wave5-hw.c
-@@ -1753,6 +1753,9 @@ int wave5_vpu_enc_init_seq(struct vpu_in
- 			(p_param->skip_intra_trans << 25) |
- 			(p_param->strong_intra_smooth_enable << 27) |
- 			(p_param->en_still_picture << 30);
-+	else if (inst->std == W_AVC_ENC)
-+		reg_val |= (p_param->constraint_set1_flag << 29);
-+
- 	vpu_write_reg(inst->dev, W5_CMD_ENC_SEQ_SPS_PARAM, reg_val);
+--- a/include/uapi/linux/rkisp1-config.h
++++ b/include/uapi/linux/rkisp1-config.h
+@@ -1487,11 +1487,11 @@ struct rkisp1_ext_params_compand_curve_c
+ 	sizeof(struct rkisp1_ext_params_compand_curve_config))
  
- 	reg_val = (p_param->lossless_enable) |
---- a/drivers/media/platform/chips-media/wave5/wave5-vpu-enc.c
-+++ b/drivers/media/platform/chips-media/wave5/wave5-vpu-enc.c
-@@ -906,6 +906,8 @@ static int wave5_vpu_enc_s_ctrl(struct v
- 		case V4L2_MPEG_VIDEO_H264_PROFILE_CONSTRAINED_BASELINE:
- 			inst->enc_param.profile = H264_PROFILE_BP;
- 			inst->bit_depth = 8;
-+			if (ctrl->val == V4L2_MPEG_VIDEO_H264_PROFILE_CONSTRAINED_BASELINE)
-+				inst->enc_param.constraint_set1_flag = 1;
- 			break;
- 		case V4L2_MPEG_VIDEO_H264_PROFILE_MAIN:
- 			inst->enc_param.profile = H264_PROFILE_MP;
-@@ -1168,6 +1170,7 @@ static void wave5_set_enc_openparam(stru
- 			open_param->wave_param.intra_period = input.avc_idr_period;
- 		}
- 	} else {
-+		open_param->wave_param.constraint_set1_flag = input.constraint_set1_flag;
- 		open_param->wave_param.avc_idr_period = input.avc_idr_period;
- 	}
- 	open_param->wave_param.entropy_coding_mode = input.entropy_coding_mode;
-@@ -1631,7 +1634,7 @@ static int wave5_vpu_open_enc(struct fil
- 			  -6, 6, 1, 0);
- 	v4l2_ctrl_new_std(v4l2_ctrl_hdl, &wave5_vpu_enc_ctrl_ops,
- 			  V4L2_CID_MPEG_VIDEO_H264_8X8_TRANSFORM,
--			  0, 1, 1, 1);
-+			  0, 1, 1, 0);
- 	v4l2_ctrl_new_std(v4l2_ctrl_hdl, &wave5_vpu_enc_ctrl_ops,
- 			  V4L2_CID_MPEG_VIDEO_H264_CONSTRAINED_INTRA_PREDICTION,
- 			  0, 1, 1, 0);
---- a/drivers/media/platform/chips-media/wave5/wave5-vpuapi.h
-+++ b/drivers/media/platform/chips-media/wave5/wave5-vpuapi.h
-@@ -568,6 +568,7 @@ struct enc_wave_param {
- 	u32 lambda_scaling_enable: 1; /* enable lambda scaling using custom GOP */
- 	u32 transform8x8_enable: 1; /* enable 8x8 intra prediction and 8x8 transform */
- 	u32 mb_level_rc_enable: 1; /* enable MB-level rate control */
-+	u32 constraint_set1_flag: 1; /* enable CBP */
+ /**
+- * enum rksip1_ext_param_buffer_version - RkISP1 extensible parameters version
++ * enum rkisp1_ext_param_buffer_version - RkISP1 extensible parameters version
+  *
+  * @RKISP1_EXT_PARAM_BUFFER_V1: First version of RkISP1 extensible parameters
+  */
+-enum rksip1_ext_param_buffer_version {
++enum rkisp1_ext_param_buffer_version {
+ 	RKISP1_EXT_PARAM_BUFFER_V1 = 1,
  };
  
- struct enc_open_param {
+@@ -1563,7 +1563,7 @@ enum rksip1_ext_param_buffer_version {
+  *	+---------------------------------------------------------------------+
+  *
+  * @version: The RkISP1 extensible parameters buffer version, see
+- *	     :c:type:`rksip1_ext_param_buffer_version`
++ *	     :c:type:`rkisp1_ext_param_buffer_version`
+  * @data_size: The RkISP1 configuration data effective size, excluding this
+  *	       header
+  * @data: The RkISP1 extensible configuration data blocks
 
 
