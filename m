@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1F502F0C74;
-	Fri,  7 Aug 2026 15:15:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D89B52F0C74;
+	Fri,  7 Aug 2026 15:15:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115734; cv=none; b=D5yQGPAf8xZu9QUwo1f0ES4jB/GF7QlSeqeYqz4xaEAXWrCpB51NJFKB50u9RcfOF9YLC5iQa0aWoy1GQrEn+hKorEoUwK6NmfXKkcQvn0mTiZNsP0KH+oXMothLazkVMLXNldjv5MR0GQvMIGiVqAzXecMGRwgVou+S95fwp6I=
+	t=1786115737; cv=none; b=mZVrkZmHnTgqD8OVSoyA5rZuk5VMiGqNSyg9X6zf8TvPoV5pttU95fk5nDxSr9JjBt8imaiWXf3wFwj2YgQmRfA07f3u8VsPysoe/KAEWqKashfc58YEHJ+ahX01Ot2JDT3VoiZJ4Zyvv2L7LvA762OwYz3c3Krf6Mr/EqQRgHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115734; c=relaxed/simple;
-	bh=aeP0MF7kA9vKA/ATmWnLPyk88n/6qMRJ7CPKsGepwiU=;
+	s=arc-20240116; t=1786115737; c=relaxed/simple;
+	bh=leHBjHKT66qozlfhbQkQO5Fic8JA4u3k8xZaCtIM5Ys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XX0sOW9f1O8c0fou8xc+prlpH8p9R6MPDqJHVQiSAgNh+5GjcaHXBFQp5T00THGzHYoXJ3PDc3FXiju7VfSTRUdS6IZt1VDPVAiLMYXCkuNyx87248LPy7VX6FIlc0/ytthTD46z7TN/0MRFqOfkAheLd/uGG5nEDhrTt4RHtLw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V8n3nYcl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Nq1cEt6l7P5iGNFrKlLjZYb6JRum8+Yyre1E0q+NOK53aOWYV/XYk2JhpHIwHoyC0IknrrpWObPmEjKDcxeGGZzNs1voGpW7V29d/BqzzTdJzudNAdC4c18d3RpPWi6LYiWqypkoOwD9L2I0A2Ze2xEg7TigiYUdZXEWT0TV9Fg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SBSc+Mdq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V8n3nYcl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 494D31F000E9;
-	Fri,  7 Aug 2026 15:15:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SBSc+Mdq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F6421F000E9;
+	Fri,  7 Aug 2026 15:15:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115732;
-	bh=43q8qi1vNQD7RQBvKOXL95wgFo2d6uij1fhPJWhQ/e4=;
+	s=korg; t=1786115735;
+	bh=HEIxZ2OkK4SaRRe8F+iH5rY6i4V149KqoGzGNGJWdgQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V8n3nYcli6/RKvIVfj4LNJ0KF/fudvSCKbWjKOsm1wlH5KBFo5mZ0Rh2EkWSwFeGf
-	 gx+t5fII4hXwEkI20HCcAG4i3AZVZNti9dGbVhhpURxKz+S1O+GM7COKibs7SQEwv0
-	 frsShBFDOiLQlR2scuesUTceF3skx+hln/7Swr+c=
+	b=SBSc+MdqSveVfCkPNZ2MYDjv9PF2pFhqFKa2EjNHcZ5oWGnMiPIk2uxQ+F5o7ckte
+	 9572OT2AvMiR84xAUFAyznwViiPtxCC65XnG0J9FHVbIytkI08MQsn2Fyk3d0ZcCJw
+	 m3zKIs4VHIjokRLLB+8hPRjGLfx2OlPYkzAtZ6tg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Zack Rusin <zack.rusin@broadcom.com>,
 	Ian Forbes <ian.forbes@broadcom.com>
-Subject: [PATCH 6.18 336/396] drm/vmwgfx: bound DMA command body size against suffix pointer
-Date: Fri,  7 Aug 2026 16:38:16 +0200
-Message-ID: <20260807143431.535186192@linuxfoundation.org>
+Subject: [PATCH 6.18 337/396] drm/vmwgfx: avoid destroy_workqueue(NULL) on vkms init failure
+Date: Fri,  7 Aug 2026 16:38:17 +0200
+Message-ID: <20260807143431.556300683@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -52,47 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 From: Zack Rusin <zack.rusin@broadcom.com>
 
-commit f4f1db96bfd68b81053693ba53405b6f510ac16c upstream.
+commit 05eaa887e7b4f40fba425f8a1d7a5a8a043092a6 upstream.
 
-vmw_cmd_dma() locates the DMA suffix at
+Two paths through vmw_vkms_init() can leave vmw->crc_workq NULL while
+still leaving the rest of the driver in a state that calls
+vmw_vkms_cleanup() at module unload:
 
-	(unsigned long) &cmd->body + header->size - sizeof(*suffix)
+  1. vmw_host_get_guestinfo(GUESTINFO_VBLANK, ...) failing or
+     returning an oversized buffer -- the common case on hosts
+     without a VBLANK guestinfo entry -- early-returned before the
+     workqueue allocation.
+  2. alloc_ordered_workqueue() returning NULL on memory pressure.
 
-without checking that header->size is large enough to contain both
-cmd->body and the suffix.  An undersized header makes the suffix
-pointer underflow back into the previous command in the bounce
-buffer.  The verifier later writes suffix->maximumOffset, clobbering
-verified fields of an already-relocated earlier command -- a TOCTOU
-on the device-visible command stream that lets one command rewrite
-another's GMR id, surface id, or other authenticated fields.
+vmw_vkms_cleanup() then calls destroy_workqueue(NULL), which
+dereferences wq->name and panics.
 
-Reject the command if the body is too small for the suffix to fit.
+Fix the first case by removing the early return: vmw->vkms_enabled
+is already false on the rpci-failure path so no work will ever be
+queued, and allocating the workqueue unconditionally keeps the
+control flow simple.  Fix the second case by guarding the cleanup
+with a NULL check, since alloc_ordered_workqueue() can still fail
+under low memory.
 
-Fixes: 4e4ddd477743 ("drm/vmwgfx: Fix queries if no dma buffer thrashing is occuring.")
+Fixes: 7b0062036c3b ("drm/vmwgfx: Implement virtual crc generation")
 Cc: stable@vger.kernel.org
 Assisted-by: Claude:claude-opus-4.7
 Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
 Reviewed-by: Ian Forbes <ian.forbes@broadcom.com>
-Link: https://patch.msgid.link/20260505222728.519626-8-zack.rusin@broadcom.com
+Link: https://patch.msgid.link/20260505222728.519626-9-zack.rusin@broadcom.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpu/drm/vmwgfx/vmwgfx_vkms.c |   17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
-@@ -1510,6 +1510,12 @@ static int vmw_cmd_dma(struct vmw_privat
- 	bool dirty;
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_vkms.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_vkms.c
+@@ -214,14 +214,14 @@ vmw_vkms_init(struct vmw_private *vmw)
+ 	vmw->vkms_enabled = false;
  
- 	cmd = container_of(header, typeof(*cmd), header);
-+
-+	if (unlikely(header->size < sizeof(cmd->body) + sizeof(*suffix))) {
-+		VMW_DEBUG_USER("Illegal SVGA_3D_CMD_SURFACE_DMA size.\n");
-+		return -EINVAL;
-+	}
-+
- 	suffix = (SVGA3dCmdSurfaceDMASuffix *)((unsigned long) &cmd->body +
- 					       header->size - sizeof(*suffix));
+ 	ret = vmw_host_get_guestinfo(GUESTINFO_VBLANK, buffer, &buf_len);
+-	if (ret || buf_len > max_buf_len)
+-		return;
+-	buffer[buf_len] = '\0';
++	if (!ret && buf_len <= max_buf_len) {
++		buffer[buf_len] = '\0';
  
+-	ret = kstrtobool(buffer, &vmw->vkms_enabled);
+-	if (!ret && vmw->vkms_enabled) {
+-		ret = drm_vblank_init(&vmw->drm, VMWGFX_NUM_DISPLAY_UNITS);
+-		vmw->vkms_enabled = (ret == 0);
++		ret = kstrtobool(buffer, &vmw->vkms_enabled);
++		if (!ret && vmw->vkms_enabled) {
++			ret = drm_vblank_init(&vmw->drm, VMWGFX_NUM_DISPLAY_UNITS);
++			vmw->vkms_enabled = (ret == 0);
++		}
+ 	}
+ 
+ 	vmw->crc_workq = alloc_ordered_workqueue("vmwgfx_crc_generator", 0);
+@@ -236,7 +236,8 @@ vmw_vkms_init(struct vmw_private *vmw)
+ void
+ vmw_vkms_cleanup(struct vmw_private *vmw)
+ {
+-	destroy_workqueue(vmw->crc_workq);
++	if (vmw->crc_workq)
++		destroy_workqueue(vmw->crc_workq);
+ }
+ 
+ bool
 
 
