@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D01546EC60;
-	Fri,  7 Aug 2026 15:49:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F2D8479877;
+	Fri,  7 Aug 2026 15:49:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786117741; cv=none; b=MW2J5kpnSCfqdrjmGHP0zfoVxc1mGqEOEXYTTdhh8VwM4+oZ3sFXz6HcINK76GcBTRfDn5A0vEtoVj+0/hiCEY0PxB6qVVNKulv64obzVTrjGQlHRbm+Y/lBDZoy+e1ilEMfR4s1vmiO9x0ACS+NYdvPSeYqfpvmjis85GQvnWQ=
+	t=1786117744; cv=none; b=MAyoy3vL5nJw7I1NjL5FfGAag8/hB14BurfNjJ2+bGBgKnV1/kPR2ZTrvlwiI7FXL8LOqhWQlcH+ndubUDkAT8tyQtEdNBQGzKOCc+QS04fSjmd4Wjwkwag+OT5aRTDhD/xJiIGmFRt/440XVzqAiUEUfjgnQUJPuDCICHoULsE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786117741; c=relaxed/simple;
-	bh=gCFAeSDfHDqD5dSabDl5UzlltmQ0qPCXC/To2e/5QhI=;
+	s=arc-20240116; t=1786117744; c=relaxed/simple;
+	bh=yXE1+nttEIidvsBe3pwhC0lyol8Bmm7+H7Fz81TP2NE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a/7F9zA9L7SGcZqAsjToycIbqjxbgREB4MdqiWdCfsje9CdsEJLLE7wLyezXGtMnCSopqTGRl54niwrhnj7DTm8ZFR5RLBFVDkr8tr4TtFslPSigwG/Z9VVoM30/oDlYMQMYuazzi/RWwQqINXJhepCMFWo8eQ4N0u8riQQFCr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZA5qrjiA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rWu5tRXKJC58OuN3/5kSiWzxFUD1kc5fRsC0k92CvZgdNznrABtryAb+FzX7KQC92pI4gJeFLp+zOmloshm6JKhiLB0y2j4qY8P4bwP1WIUl5tjUEGLvXU33vKVB/YMxOpZ1LuhY/U21uwNWD1diNNLTIWmA769vxV+mKx0zs/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F69yFuG0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZA5qrjiA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3AD01F000E9;
-	Fri,  7 Aug 2026 15:48:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F69yFuG0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB2C81F000E9;
+	Fri,  7 Aug 2026 15:49:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786117740;
-	bh=qtQbccKxpgMJwoWoKt339W1ZmA1Vhr5ecKngfKVHMdE=;
+	s=korg; t=1786117743;
+	bh=MMKUICxWMOHVfralQLguLHyXq5y9s3Q4Ua2z14cddDc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZA5qrjiAowvkRhX58HFDfDRyYzfHuRHFp8UlOnezWU0peXngX02YJAR1bhllOF2ql
-	 SME4GipDnsG7d4n5MFXz0iiXG+DRgYDDPckTYDEBYVKZXur0ZCpPollApech5TSu/v
-	 lYlD2QzsfSvXqYVvXS2DZWVclidNaMWJnnW1SvMU=
+	b=F69yFuG0pwLEK9bi7MD6sULcf6sHVLvM1N4oMIA9oFs0Bvioi+zdYG2gu96/jIh/Z
+	 58D0LTQgIHpJYP+7UILOAU0D837ZHkhPMvzKWR8njP+JyHAWpuF8hOjomezuwcMwtB
+	 4f9sx+/dH8fgR0hhqnrzhSjEcHFnxrQ34ZfgksAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ashutosh Dixit <ashutosh.dixit@intel.com>,
-	Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 425/438] drm/xe/rtp: Ensure locking/ref counting for OA whitelists
-Date: Fri,  7 Aug 2026 16:40:21 +0200
-Message-ID: <20260807143437.026571600@linuxfoundation.org>
+Subject: [PATCH 7.1 426/438] usb: typec: ucsi: split connector lock classes
+Date: Fri,  7 Aug 2026 16:40:22 +0200
+Message-ID: <20260807143437.048907032@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -51,69 +51,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ashutosh Dixit <ashutosh.dixit@intel.com>
+From: Sergey Senozhatsky <senozhatsky@chromium.org>
 
-[ Upstream commit ef78e2a22f72c892fd6663f0760abd208d49a3e2 ]
+[ Upstream commit 8c22256bbafad3dc5fdbe9f684d045b67ff06a68 ]
 
-Since multiple OA streams might be open in parallel on a gt, ensure that
-proper locking is in place. Also ensure that OA registers are whitelisted
-when the first OA stream is open and de-whitelisted after the last OA
-stream is closed.
+Lockdep detects a possible recursive locking scenario during
+ucsi init:
 
-Fixes: 828a8eaf37c3 ("drm/xe/oa: Add MMIO trigger support")
-Cc: stable@vger.kernel.org # v6.12+
-Signed-off-by: Ashutosh Dixit <ashutosh.dixit@intel.com>
-Reviewed-by: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
-Link: https://patch.msgid.link/20260615224227.34880-10-ashutosh.dixit@intel.com
+[    5.418616] ============================================
+[    5.418634] WARNING: possible recursive locking detected
+[    5.418706] --------------------------------------------
+[    5.418725] kworker/4:1/82 is trying to acquire lock:
+[    5.418759] ffff888119a34648 (&con->lock){+.+.}-{3:3}, at: ucsi_init_work+0x1a78/0x2eb0 [typec_ucsi]
+[    5.418801]
+               but task is already holding lock:
+[    5.418835] ffff888119a34080 (&con->lock){+.+.}-{3:3}, at: ucsi_init_work+0x1a78/0x2eb0 [typec_ucsi]
+[    5.418884]
+               other info that might help us debug this:
+[    5.418904]  Possible unsafe locking scenario:
+
+[    5.418937]        CPU0
+[    5.418956]        ----
+[    5.418991]   lock(&con->lock);
+[    5.419013]   lock(&con->lock);
+[    5.419033]
+                *** DEADLOCK ***
+
+[    5.419387] Call Trace:
+[    5.419406]  <TASK>
+[    5.419425]  dump_stack_lvl+0x61/0xa0
+[    5.419448]  print_deadlock_bug+0x4a6/0x650
+[    5.419483]  __lock_acquire+0x62b6/0x7f50
+[    5.419507]  lock_acquire+0x11b/0x390
+[    5.419654]  __mutex_lock+0xbc/0xcd0
+[    5.419741]  ucsi_init_work+0x1a78/0x2eb0
+[    5.419785]  ? worker_thread+0xf53/0x2bc0
+[    5.419819]  worker_thread+0xff4/0x2bc0
+[    5.419842]  kthread+0x2a7/0x330
+[    5.419863]  ? __pfx_worker_thread+0x10/0x10
+[    5.419896]  ? __pfx_kthread+0x10/0x10
+[    5.419916]  ret_from_fork+0x38/0x70
+[    5.419936]  ? __pfx_kthread+0x10/0x10
+[    5.419969]  ret_from_fork_asm+0x1b/0x30
+[    5.419991]  </TASK>
+[    5.420009] ---[ end trace 0000000000000000 ]---
+
+The problem is that all connector locks belong to the same
+lockdep lock class, so the following loop:
+
+	for (i = 0; i < ucsi->cap.num_connectors; i++)
+		ucsi_register_port(connector[i])
+			mutex_lock(&connector[i]->lock)
+
+looks like a recursive acquire of the same mutex.  Put each connector
+lock into a dedicated lock class so that lockdep doesn't see it as a
+possible recursion.
+
+Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://patch.msgid.link/20260515060042.136083-1-senozhatsky@chromium.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 7aa7d4bf9d3f ("usb: typec: ucsi: Fix race condition and ordering in port unregistration")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_oa_types.h      | 3 +++
- drivers/gpu/drm/xe/xe_reg_whitelist.c | 9 +++++++++
- 2 files changed, 12 insertions(+)
+ drivers/usb/typec/ucsi/ucsi.c |    8 ++++++++
+ drivers/usb/typec/ucsi/ucsi.h |    1 +
+ 2 files changed, 9 insertions(+)
 
-diff --git a/drivers/gpu/drm/xe/xe_oa_types.h b/drivers/gpu/drm/xe/xe_oa_types.h
-index b03ffd5134834..c0ddfae755b6a 100644
---- a/drivers/gpu/drm/xe/xe_oa_types.h
-+++ b/drivers/gpu/drm/xe/xe_oa_types.h
-@@ -126,6 +126,9 @@ struct xe_oa_gt {
+--- a/drivers/usb/typec/ucsi/ucsi.c
++++ b/drivers/usb/typec/ucsi/ucsi.c
+@@ -1796,6 +1796,7 @@ static int ucsi_register_port(struct ucs
+ 	INIT_WORK(&con->work, ucsi_handle_connector_change);
+ 	init_completion(&con->complete);
+ 	mutex_init(&con->lock);
++	lockdep_set_class(&con->lock, &con->lock_key);
+ 	INIT_LIST_HEAD(&con->partner_tasks);
+ 	con->ucsi = ucsi;
  
- 	/** @oa_unit: array of oa_units */
- 	struct xe_oa_unit *oa_unit;
+@@ -2041,6 +2042,9 @@ static int ucsi_init(struct ucsi *ucsi)
+ 		goto err_reset;
+ 	}
+ 
++	for (i = 0; i < ucsi->cap.num_connectors; i++)
++		lockdep_register_key(&connector[i].lock_key);
 +
-+	/** @whitelist_count: number of open streams for which oa registers are whitelisted */
-+	u32 whitelist_count;
- };
+ 	/* Register all connectors */
+ 	for (i = 0; i < ucsi->cap.num_connectors; i++) {
+ 		connector[i].num = i + 1;
+@@ -2070,6 +2074,9 @@ static int ucsi_init(struct ucsi *ucsi)
+ 	return 0;
  
- /**
-diff --git a/drivers/gpu/drm/xe/xe_reg_whitelist.c b/drivers/gpu/drm/xe/xe_reg_whitelist.c
-index 2ecf273c5f401..dad47988bdf6d 100644
---- a/drivers/gpu/drm/xe/xe_reg_whitelist.c
-+++ b/drivers/gpu/drm/xe/xe_reg_whitelist.c
-@@ -242,6 +242,10 @@ void xe_reg_whitelist_oa_regs(struct xe_gt *gt)
- 	struct xe_hw_engine *hwe;
- 	enum xe_hw_engine_id id;
- 
-+	lockdep_assert_held(&gt->oa.gt_lock);
-+	if (gt->oa.whitelist_count++)
-+		return;
+ err_unregister:
++	for (i = 0; i < ucsi->cap.num_connectors; i++)
++		lockdep_unregister_key(&connector[i].lock_key);
 +
- 	for_each_hw_engine(hwe, gt, id)
- 		__whitelist_oa_regs(hwe, true);
- }
-@@ -257,6 +261,11 @@ void xe_reg_dewhitelist_oa_regs(struct xe_gt *gt)
- 	struct xe_hw_engine *hwe;
- 	enum xe_hw_engine_id id;
+ 	for (con = connector; con->port; con++) {
+ 		if (con->wq)
+ 			destroy_workqueue(con->wq);
+@@ -2340,6 +2347,7 @@ void ucsi_unregister(struct ucsi *ucsi)
+ 		usb_power_delivery_unregister(ucsi->connector[i].pd);
+ 		ucsi->connector[i].pd = NULL;
+ 		typec_unregister_port(ucsi->connector[i].port);
++		lockdep_unregister_key(&ucsi->connector[i].lock_key);
+ 	}
  
-+	lockdep_assert_held(&gt->oa.gt_lock);
-+	xe_assert(gt_to_xe(gt), gt->oa.whitelist_count);
-+	if (--gt->oa.whitelist_count)
-+		return;
-+
- 	for_each_hw_engine(hwe, gt, id)
- 		__whitelist_oa_regs(hwe, false);
- }
--- 
-2.53.0
-
+ 	kfree(ucsi->connector);
+--- a/drivers/usb/typec/ucsi/ucsi.h
++++ b/drivers/usb/typec/ucsi/ucsi.h
+@@ -517,6 +517,7 @@ struct ucsi_connector {
+ 
+ 	struct ucsi *ucsi;
+ 	struct mutex lock; /* port lock */
++	struct lock_class_key lock_key;
+ 	struct work_struct work;
+ 	struct completion complete;
+ 	struct workqueue_struct *wq;
 
 
