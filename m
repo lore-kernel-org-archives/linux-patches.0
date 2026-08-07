@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA4D0293458;
-	Fri,  7 Aug 2026 14:51:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E699293458;
+	Fri,  7 Aug 2026 14:51:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114312; cv=none; b=ooDJ+tpAo8INzZ0cIEXUgeLxt4ZOEzAb0iNWUfCMvhQsb1eKn4I4Ny2kI4UjkzIIUVu9XgFKpIjDTM5eWiW2TN+2vJGCeyAgLdRhKqQB/UWg8rVLYNugYQUjNkt54lm8BeiW6QmyxrYm7N3dBmOc0rko1P2N7lJJ6l9ZFdAAzqc=
+	t=1786114315; cv=none; b=r1SyYePJj1uG2Y4AUwQlTBBKdBqf13WjSRwt9qtTm5qWlY4sOHMcX0qaKZ8A7LI3NQeNVtlWzAF9InlxMBwEpebLkYQojxuYwAjbKVXL8nLrrfzfU6vPQpB9uz33F4jqV8bwkNVfqhrjHmruXSR24YkBBlF6gd7MdO0jb5XUkok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114312; c=relaxed/simple;
-	bh=GRIqLos9yPJL8zCYv55RgPklFRu9YeYvTSWyhBZvTeo=;
+	s=arc-20240116; t=1786114315; c=relaxed/simple;
+	bh=mcqU6MqNqiOWEEhhKWTOCKex+8b5dy6dqRJWU0dG6XU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jNu0i/6qCVz+hwcdc0UmDzi3qTRBs/QfyyNagMAOSLZvL1MpQbeZtYVJPu8Vy30vfat7s0eTH9jNDKWBe0dOuemRcPDKI9Rl2wZfhHu6qKoqhoyrHMmu0G10kmpE5Qe9YcQ+cawPbx2Yqi1GkzwUpmjPbFIs2cywnmXUVVw1WBY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kLLcY/vS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YcW9Wugdr0yQwvD6JCDpPz8vS/Iw0Wk/vTc2zO/g0zIsVzZGsLbbXTZT0Q7nHmPEuLbpI+5FahrI7LHYXekYJDWOtH9sh9ygDQOWG4Jp8Qfjh4pJ/LizqZi2h1WvUFETEgxbxuKP/Yeu4yVk9mOXHBpw4lULmQt/uVKBa3pEpUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kobAOhc9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kLLcY/vS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 118991F000E9;
-	Fri,  7 Aug 2026 14:51:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kobAOhc9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA6B31F000E9;
+	Fri,  7 Aug 2026 14:51:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114311;
-	bh=bj7dKP6UV/jGORToY6uZFoXDFyg4/O0qOOCbF1LXz1s=;
+	s=korg; t=1786114314;
+	bh=vDHE2n9DHw3vMsc/98CqiGYYWTb4gjuLwayBKwtLIek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kLLcY/vS74hzq3XFcxZtYBecNQoxQBd29prFbUGyZbRBdz6OPTazqJUY+5CPhvl5X
-	 wVIGgGsXjGHDOMOTZYtrOyyNa/P2znhheDS4WIA4e1yq0t6V2HBU86RltF5abZPcIe
-	 AYLE0URy4SDL93yJP4yylzw3YkKWHIDgLaMC/oRY=
+	b=kobAOhc9PpDZ+8ts4F+0ZIOKztWVOaEn9QUyXxVWBUNSpmodu6AmSdslki1UF2bah
+	 42St45xqnzAu5xsO2NlQgwyloYpezUMxQJl/Dyav/6RSpD+RZWgGxPO6EN7lmTveQM
+	 rObw61PmVLnZ0D/7IOMlOv6rqrn8TN7e6xSjlgqQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lee <david.lee@trailofbits.com>,
-	Jozsef Kadlecsik <kadlec@netfilter.org>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 6.12 175/337] netfilter: ipset: do not update comments from kernel-side hash adds
-Date: Fri,  7 Aug 2026 16:36:18 +0200
-Message-ID: <20260807143422.355679747@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Zihan Xi <zihanx@nebusec.ai>,
+	Ren Wei <enjou1224z@gmail.com>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 176/337] tipc: avoid use-after-free in poll trace queue dumps
+Date: Fri,  7 Aug 2026 16:36:19 +0200
+Message-ID: <20260807143422.377660217@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -51,49 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Lee <david.lee@trailofbits.com>
+From: Zihan Xi <zihanx@nebusec.ai>
 
-commit f30415929be8aeb002d557c8d3f7ab2d2188003a upstream.
+commit b4f1719dfea023220e0e6bd892b087d76b2a6a49 upstream.
 
-mtype_resize() copies comment pointers with memcpy(), not the comment
-objects themselves. During the window after an entry has been copied but
-before the table swap and backlog replay, the old table is still
-published for packet-side updates while the replacement-table entry
-already holds the same ip_set_comment_rcu pointer.
+TIPC socket tracepoints dump queue state through tipc_sk_dump(). Most
+queue-dump callsites already serialize that walk under the socket lock or
+sk->sk_lock.slock, but tipc_poll() calls trace_tipc_sk_poll(...,
+TIPC_DUMP_ALL, ...) without holding either lock.
 
-If xt_SET --add-set ... --exist hits that old entry in this window,
-mtype_add() calls ip_set_init_comment() even though packet-side adds
-carry no comment payload. That call frees the shared comment through the
-old entry, so the replacement-table entry now holds a stale pointer.
-When the queued add is replayed on the new table, mtype_add() calls
-ip_set_init_comment() again and strlen() dereferences the stale pointer.
+That lets the poll trace path reach tipc_list_dump() and backlog head/tail
+dumping while another context dequeues and frees an skb, leaving the trace
+helper dereferencing a stale queue entry.
 
-Fix this in mtype_add() by skipping ip_set_init_comment() when
-ext->target marks a packet-side add. Userspace adds still update
-comments, while packet-side adds can no longer free comment storage
-shared with a resize copy.
+Stop the unlocked poll trace site from requesting queue dumps. Other queue
+dump trace callsites keep their existing output under the locking they
+already provide, while poll still emits the event itself without walking
+live queue members from an unlocked context.
 
-Fixes: f66ee0410b1c ("netfilter: ipset: Fix "INFO: rcu detected stall in hash_xxx" reports")
+Fixes: b4b9771bcbbd ("tipc: enable tracepoints in tipc")
 Cc: stable@vger.kernel.org
-Signed-off-by: David Lee <david.lee@trailofbits.com>
-Assisted-by: Codex:gpt-5.5
-Acked-by: Jozsef Kadlecsik <kadlec@netfilter.org>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Reported-by: Vega <vega@nebusec.ai>
+Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
+Signed-off-by: Ren Wei <enjou1224z@gmail.com>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/f8119abd5e5ecc400597de667ae9d39656de56d0.1784794294.git.zihanx@nebusec.ai
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/ipset/ip_set_hash_gen.h |    2 +-
+ net/tipc/socket.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/netfilter/ipset/ip_set_hash_gen.h
-+++ b/net/netfilter/ipset/ip_set_hash_gen.h
-@@ -984,7 +984,7 @@ overwrite_extensions:
- #endif
- 	if (SET_WITH_COUNTER(set))
- 		ip_set_init_counter(ext_counter(data, set), ext);
--	if (SET_WITH_COMMENT(set))
-+	if (SET_WITH_COMMENT(set) && !ext->target)
- 		ip_set_init_comment(set, ext_comment(data, set), ext);
- 	if (SET_WITH_SKBINFO(set))
- 		ip_set_init_skbinfo(ext_skbinfo(data, set), ext);
+--- a/net/tipc/socket.c
++++ b/net/tipc/socket.c
+@@ -795,7 +795,7 @@ static __poll_t tipc_poll(struct file *f
+ 	__poll_t revents = 0;
+ 
+ 	sock_poll_wait(file, sock, wait);
+-	trace_tipc_sk_poll(sk, NULL, TIPC_DUMP_ALL, " ");
++	trace_tipc_sk_poll(sk, NULL, TIPC_DUMP_NONE, " ");
+ 
+ 	if (sk->sk_shutdown & RCV_SHUTDOWN)
+ 		revents |= EPOLLRDHUP | EPOLLIN | EPOLLRDNORM;
 
 
