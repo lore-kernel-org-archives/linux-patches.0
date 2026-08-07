@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4CB7305665;
-	Fri,  7 Aug 2026 14:46:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB7B022B594;
+	Fri,  7 Aug 2026 14:46:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114010; cv=none; b=uVRTy8xvFS4A+8TsR4gUFpmwTf+d+VVfdFgc47LGQ3SnsSSoku6RLQCjuQsWuKAd9oz4OUJ6JHIW1+iNItdsl6GmirmKElCYu1U0Lb5Hv47PrmiyOcfbwmezz0Uu2e2Qxb1QtGg8IOvlmDF61JHSjkC7dBH7XICQaz9m6TUUFiQ=
+	t=1786114013; cv=none; b=WXAg7XzBLWWC+3cQVS+m7L8XVXzIp4co1R+TFlgZXM5KX3w0MIPRdYOGVSDJ6v9a0Fm1FvCE8XxG6+sqX9srhgp77UGHXRpun5zYBW6m9hkMazZ9OuzWe+fezo8yE1qsIiZgN5eiar4n1eqANKYGWmokT61bY53aunSJZduCt7w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114010; c=relaxed/simple;
-	bh=ZKz5bi5wDVbbhwI0Uc9GhyHmy3/EGTf0CG6s6QO/emU=;
+	s=arc-20240116; t=1786114013; c=relaxed/simple;
+	bh=NV3MH+feR/3NPZ3F/8M2WDcQnkreQ3uceIzMXFvgNRM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P3FQCFEScaVK8LVCW1XmHFnkurawt8oTIcZatfb0BE9M4zy8d7VYjWgo1QjK2ETRfdwKwvOPXM+Q74vrYvtlPeXiXBwit7nMWQhj018d1AuAbm3Xek/pQKvsTeVjxSvkTFxggEYDITfcuwkrTdiS0o+05oB1c7inSaM1dwuNX6s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FVglmMH4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eZ4gqrI3tnnWc3Ugoxc2BsTDxfMExXV5zXcZPet5ntTbIwfl7FLgaCQ6PfjJpT0KVHJr8mJqXWa+/l9r9dLQ/r4/R4hsTQ7JYU7yX+GcabIf3j6AAn9FS+K6NT5ebUYbvR7wQ1TpJaaIVFapbEOiWlEddhSHbDVPRb73nLuO9EY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K+ao16rt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FVglmMH4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6C261F000E9;
-	Fri,  7 Aug 2026 14:46:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K+ao16rt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C025E1F000E9;
+	Fri,  7 Aug 2026 14:46:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114008;
-	bh=UzFy95JY2XIOPoSXF2t9PkDwb66zbAgGgdRbxBTjB1s=;
+	s=korg; t=1786114011;
+	bh=xiutd1QlgJ4oEJQKUruu8LwojRlsnAZfKkA3SL9902k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FVglmMH4wRvTGGKzbMsQTWioK2gi4ujQU5UZOJUcUvA5FyxVpmu9b5bOHfvF8CLOT
-	 Da9QIYf2nAY5ff4t/+7W0S2NvkDVR+ml34T7FKF3oFZf+LRm0bdANgE8NPp8mefsMo
-	 q+qaYNxTgbVuhUCvo4l++RYNaB5D3Y1joml+q4ds=
+	b=K+ao16rtRB8DYBwKsTLdM2J28KeCYRFZwDPsomhxdR46+nS3aj04syz/80KQ55UA6
+	 kuT7A0D08I7WVqXdXgyGZyeK329dU0eo9fW+9/ZDkoL4nzu8f3dtGupod5dWzgn5Lk
+	 u/dgWuHQlTsUuXcr+Ual5/AOowWSv8QeQg59BIMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Mike Christie <michael.christie@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Chenguang Zhao <zhaochenguang@kylinos.cn>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 111/337] scsi: target: Clear cmd_cnt when initial counter enrollment fails
-Date: Fri,  7 Aug 2026 16:35:14 +0200
-Message-ID: <20260807143420.939618841@linuxfoundation.org>
+Subject: [PATCH 6.12 112/337] net: sxgbe: free TX rings on RX allocation failure
+Date: Fri,  7 Aug 2026 16:35:15 +0200
+Message-ID: <20260807143420.960379992@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -52,78 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Chenguang Zhao <zhaochenguang@kylinos.cn>
 
-[ Upstream commit a8ddfd2425bbbafadae8700d63ed8a61a4109878 ]
+[ Upstream commit c870f7e2890b9f78ac84515a9809cc5c183c975e ]
 
-When target_get_sess_cmd() fails during session shutdown because
-percpu_ref_tryget_live() returns false, the command keeps the
-se_cmd->cmd_cnt pointer that __target_init_cmd() assigned earlier
-without owning a reference. Final release through
-target_release_cmd_kref() then issues an unmatched percpu_ref_put().
+When RX descriptor ring allocation fails, init_dma_desc_rings() only
+frees the partially allocated RX rings and returns. The TX rings that
+were allocated earlier in the same function are leaked.
 
-Commit 8e288be8606a ("scsi: target: Pass in cmd counter to use during
-cmd setup") moved the cmd_cnt assignment ahead of the reference
-acquisition.  Clear se_cmd->cmd_cnt whenever the initial
-target_get_sess_cmd() fails in target_init_cmd() and
-target_submit_tmr(), so release performs exactly one matching put per
-acquired reference.
+Rearrange error labels to clean up TX rings upon RX failures.
 
-Fixes: 8e288be8606a ("scsi: target: Pass in cmd counter to use during cmd setup")
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Reviewed-by: Mike Christie <michael.christie@oracle.com>
-Link: https://patch.msgid.link/20260722-reference-count-underflow-in-target-v1-1-63ab664f12fd@nvidia.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 1edb9ca69e8a ("net: sxgbe: add basic framework for Samsung 10Gb ethernet driver")
+Signed-off-by: Chenguang Zhao <zhaochenguang@kylinos.cn>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/target/target_core_transport.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/samsung/sxgbe/sxgbe_main.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/target/target_core_transport.c b/drivers/target/target_core_transport.c
-index cf9834f958c9c..3dc49f6c7832e 100644
---- a/drivers/target/target_core_transport.c
-+++ b/drivers/target/target_core_transport.c
-@@ -1691,6 +1691,7 @@ int target_init_cmd(struct se_cmd *se_cmd, struct se_session *se_sess,
- 		    u32 data_length, int task_attr, int data_dir, int flags)
- {
- 	struct se_portal_group *se_tpg;
-+	int ret;
+diff --git a/drivers/net/ethernet/samsung/sxgbe/sxgbe_main.c b/drivers/net/ethernet/samsung/sxgbe/sxgbe_main.c
+index d2ba283f6123f..a4f457fa570d9 100644
+--- a/drivers/net/ethernet/samsung/sxgbe/sxgbe_main.c
++++ b/drivers/net/ethernet/samsung/sxgbe/sxgbe_main.c
+@@ -598,14 +598,13 @@ static int init_dma_desc_rings(struct net_device *netd)
  
- 	se_tpg = se_sess->se_tpg;
- 	BUG_ON(!se_tpg);
-@@ -1720,7 +1721,11 @@ int target_init_cmd(struct se_cmd *se_cmd, struct se_session *se_sess,
- 	 * necessary for fabrics using TARGET_SCF_ACK_KREF that expect a second
- 	 * kref_put() to happen during fabric packet acknowledgement.
- 	 */
--	return target_get_sess_cmd(se_cmd, flags & TARGET_SCF_ACK_KREF);
-+	ret = target_get_sess_cmd(se_cmd, flags & TARGET_SCF_ACK_KREF);
-+	if (ret)
-+		se_cmd->cmd_cnt = NULL;
-+
-+	return ret;
+ 	return 0;
+ 
+-txalloc_err:
+-	while (queue_num--)
+-		free_tx_ring(priv->device, priv->txq[queue_num], tx_rsize);
+-	return ret;
+-
+ rxalloc_err:
+ 	while (queue_num--)
+ 		free_rx_ring(priv->device, priv->rxq[queue_num], rx_rsize);
++	queue_num = SXGBE_TX_QUEUES;
++txalloc_err:
++	while (queue_num--)
++		free_tx_ring(priv->device, priv->txq[queue_num], tx_rsize);
+ 	return ret;
  }
- EXPORT_SYMBOL_GPL(target_init_cmd);
  
-@@ -1996,8 +2001,10 @@ int target_submit_tmr(struct se_cmd *se_cmd, struct se_session *se_sess,
- 	 * allocation failure.
- 	 */
- 	ret = core_tmr_alloc_req(se_cmd, fabric_tmr_ptr, tm_type, gfp);
--	if (ret < 0)
-+	if (ret < 0) {
-+		se_cmd->cmd_cnt = NULL;
- 		return -ENOMEM;
-+	}
- 
- 	if (tm_type == TMR_ABORT_TASK)
- 		se_cmd->se_tmr_req->ref_task_tag = tag;
-@@ -2005,6 +2012,7 @@ int target_submit_tmr(struct se_cmd *se_cmd, struct se_session *se_sess,
- 	/* See target_submit_cmd for commentary */
- 	ret = target_get_sess_cmd(se_cmd, flags & TARGET_SCF_ACK_KREF);
- 	if (ret) {
-+		se_cmd->cmd_cnt = NULL;
- 		core_tmr_release_req(se_cmd->se_tmr_req);
- 		return ret;
- 	}
 -- 
 2.53.0
 
