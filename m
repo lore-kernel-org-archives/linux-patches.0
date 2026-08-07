@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3B432D12ED;
-	Fri,  7 Aug 2026 15:31:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0176237F8C2;
+	Fri,  7 Aug 2026 15:31:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116669; cv=none; b=kteFd5IlfYn9sY/uZTAXD2XfdnFv63OLyQ34gB3sMQx3Ymm/UvI6E1Lc/uzXqnGX0QJ7fMcRppf/9t9O2ovkjM6B+jZkUtgkwSNOaIAEXkJ05shFLiPGJ8Ig2ej2FgPIbZZffzuw60cuLMgVXGLU41V6GjoZYoShl+rvXV8NDeY=
+	t=1786116673; cv=none; b=LKOkgXsVCsZtiCwYQBnG9SCxJVs6/XGNJEnzC9Xe7fs/RgtC7RYns1Tf+dPkuIWBKYqfiINIBVTb/I/CvXUsdbEid3D6aiJMqmYF4L1LVNvExno8+dfv/nw9lgbP78HOHb3aA1X5vWvuXzxEnxAm+TTBRruZajC18ahDRTa/JDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116669; c=relaxed/simple;
-	bh=Y136A5t2LTO3Rpur9TUR32enEWfbK9Y58q8u6kQ2Hq0=;
+	s=arc-20240116; t=1786116673; c=relaxed/simple;
+	bh=AxYLkjwrtDHCwLuU1y9bncynvewm1HraXRJtYYfh43g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uq/wCyExVa7pmLz3dKKjIgKFameER23Eq8G/uLe7OwQQS/z6nA+opXi1Ml08A13SbFBoVwFLKBFuufCTyT7MUeY8XNhXf5yQEVtIbV7TTVckj1Q5vXqeJQTsgbh8KDI0aS7b2dUW1AwtWxMuwRbRdhqDIEn0AUnKEUyaduOiLQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nkjvjk9h; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eslgnZhrbtQ5hZJyyvQgx3QUH/7N+roJk6SJBazsct4BJZskvc+SkpIVvIBB+TvLHcUrPdnHb/Jrs0k6zPLPgV7vcwyMT3uI5EcHuL9x7f48hzMJlN35isyTzS2XFu5/cCuf1VDp7Pkr2bwBFWIxF9U9fBKIAAJrclJ3/BzvBKE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TtJe8U9b; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nkjvjk9h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03E811F00A3A;
-	Fri,  7 Aug 2026 15:31:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TtJe8U9b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBA7A1F000E9;
+	Fri,  7 Aug 2026 15:31:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116668;
-	bh=P66QabjG0p61UnpGrU5yv166k1MHbIaAN2WCBrQXCr4=;
+	s=korg; t=1786116671;
+	bh=uOlhGFNqpsKXSpdIByq/p66JQQCSxv6SU9VB1VrzM6k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Nkjvjk9hJ/TBPYcVrTbaJc1hitpyTAltH0VXxOMDB2EotM/JFZtQmmxpQHXP36I8L
-	 5VN1873AaKaYrJkCwED/K6NraNXuK2CzQnQwJa9Preh9pS6ZwK9Bz3UtmfSU8hg7LP
-	 czhW5tcRbsy7pqYEQBF8o4auioaOtXFbih+lVGIU=
+	b=TtJe8U9bNlMacd/Kklo5dkJZVgPhkNr7jKNMz2jCDUc04U7RcXqewFRc+MvnLPxXq
+	 8+INazvt4tLmwcJ0ezkdVKc5+Q6gF5hh4UNw7DruENgxfb5mYfKRsaxsz8ieJkgQaL
+	 /S6Mm+db2cvIcp3V9TlawyiR6LnWm+DAaV/k4UHM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sashiko <sashiko-bot@kernel.org>,
-	Fuad Tabba <fuad.tabba@linux.dev>,
 	Vincent Donnefort <vdonnefort@google.com>,
+	Fuad Tabba <fuad.tabba@linux.dev>,
 	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 048/438] KVM: arm64: Fix potential leak in hyp_trace_buffer_alloc_bpages_backing
-Date: Fri,  7 Aug 2026 16:34:04 +0200
-Message-ID: <20260807143429.020491564@linuxfoundation.org>
+Subject: [PATCH 7.1 049/438] KVM: arm64: Fix hyp_trace_desc allocation size in hyp_trace_load()
+Date: Fri,  7 Aug 2026 16:34:05 +0200
+Message-ID: <20260807143429.040841679@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -55,54 +55,65 @@ Content-Transfer-Encoding: 8bit
 
 From: Vincent Donnefort <vdonnefort@google.com>
 
-[ Upstream commit df7a9d376f7a388ecfacf8dfe0b5819ddfba6972 ]
+[ Upstream commit ca28278d10ec234592989ad370d58294b9d43e0f ]
 
-In the very unlikely event of a failure in __map_hyp, the allocated
-backing pages are leaked in hyp_trace_buffer_alloc_bpages_backing(). Fix
-this by freeing the pages on error.
+The footprint calculated for struct hyp_trace_desc sizes only
+trace_buffer_desc and do not take into account the other fields. It
+worked so far thanks to the follow-up PAGE_ALIGN().
 
-Fixes: 3aed038aac8d ("KVM: arm64: Add trace remote for the nVHE/pKVM hyp")
+Fix the descriptor size and while at it, enforce an overflow check after
+PAGE_ALIGN().
+
 Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: 3aed038aac8d ("KVM: arm64: Add trace remote for the nVHE/pKVM hyp")
+Signed-off-by: Vincent Donnefort <vdonnefort@google.com>
 Reviewed-by: Fuad Tabba <fuad.tabba@linux.dev>
 Tested-by: Fuad Tabba <fuad.tabba@linux.dev>
-Signed-off-by: Vincent Donnefort <vdonnefort@google.com>
-Link: https://patch.msgid.link/20260710114819.2689386-2-vdonnefort@google.com
+Link: https://patch.msgid.link/20260710114819.2689386-3-vdonnefort@google.com
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kvm/hyp_trace.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ arch/arm64/kvm/hyp_trace.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
 diff --git a/arch/arm64/kvm/hyp_trace.c b/arch/arm64/kvm/hyp_trace.c
-index ac6a2db317323..73c1731392c74 100644
+index 73c1731392c74..3f4ba2034a155 100644
 --- a/arch/arm64/kvm/hyp_trace.c
 +++ b/arch/arm64/kvm/hyp_trace.c
-@@ -154,6 +154,7 @@ static int hyp_trace_buffer_alloc_bpages_backing(struct hyp_trace_buffer *trace_
- 	int nr_bpages = (PAGE_ALIGN(size) / PAGE_SIZE) + 1;
- 	size_t backing_size;
- 	void *start;
-+	int ret;
+@@ -229,18 +229,22 @@ static int hyp_trace_buffer_share_hyp(struct hyp_trace_buffer *trace_buffer)
+ static struct trace_buffer_desc *hyp_trace_load(unsigned long size, void *priv)
+ {
+ 	struct hyp_trace_buffer *trace_buffer = priv;
++	size_t desc_size, tb_desc_size;
+ 	struct hyp_trace_desc *desc;
+-	size_t desc_size;
+ 	int ret;
  
- 	backing_size = PAGE_ALIGN(sizeof(struct simple_buffer_page) * nr_bpages *
- 				  num_possible_cpus());
-@@ -162,10 +163,16 @@ static int hyp_trace_buffer_alloc_bpages_backing(struct hyp_trace_buffer *trace_
- 	if (!start)
- 		return -ENOMEM;
+ 	if (WARN_ON(trace_buffer->desc))
+ 		return ERR_PTR(-EINVAL);
  
-+	ret = __map_hyp(start, backing_size);
-+	if (ret) {
-+		free_pages_exact(start, backing_size);
-+		return ret;
-+	}
+-	desc_size = trace_buffer_desc_size(size, num_possible_cpus());
++	tb_desc_size = trace_buffer_desc_size(size, num_possible_cpus());
++	desc_size = size_add(tb_desc_size, offsetof(struct hyp_trace_desc, trace_buffer_desc));
+ 	if (desc_size == SIZE_MAX)
+ 		return ERR_PTR(-E2BIG);
+ 
+ 	desc_size = PAGE_ALIGN(desc_size);
++	if (!desc_size)
++		return ERR_PTR(-E2BIG);
 +
- 	trace_buffer->desc->bpages_backing_start = (unsigned long)start;
- 	trace_buffer->desc->bpages_backing_size = backing_size;
+ 	desc = (struct hyp_trace_desc *)alloc_pages_exact(desc_size, GFP_KERNEL);
+ 	if (!desc)
+ 		return ERR_PTR(-ENOMEM);
+@@ -256,7 +260,7 @@ static struct trace_buffer_desc *hyp_trace_load(unsigned long size, void *priv)
+ 	if (ret)
+ 		goto err_free_desc;
  
--	return __map_hyp(start, backing_size);
-+	return ret;
- }
- 
- static void hyp_trace_buffer_free_bpages_backing(struct hyp_trace_buffer *trace_buffer)
+-	ret = trace_remote_alloc_buffer(&desc->trace_buffer_desc, desc_size, size,
++	ret = trace_remote_alloc_buffer(&desc->trace_buffer_desc, tb_desc_size, size,
+ 					cpu_possible_mask);
+ 	if (ret)
+ 		goto err_free_backing;
 -- 
 2.53.0
 
