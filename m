@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FD19314A73;
-	Fri,  7 Aug 2026 15:12:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6660C34CDD;
+	Fri,  7 Aug 2026 15:12:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115569; cv=none; b=QaOaddYQ/3ZqJXedLg+xa9QkaVW8kE78hWqxDUVS+AVBS4aMdq57kg1Sg3mChR3NhGARHFQizQ6ZD6lop04s+fGBpIcxOh/K/cqS+xRkXcTQT0q1Ks2a8kc2q9uYu6m9T93UHEuazrJIasI/Bxb1oV/c72rHVmIHfQkZIqLJtT0=
+	t=1786115572; cv=none; b=DOkMC1IlBsc7Io+VEUdoUthUv7gI10hrOcDGAZK1r3GdBb0POEZj7iIuUNVmBS1hPB/9ZYokizCxXoeFxb7YsBHS9U+eWoWLULWavNWaTpRYnP3X0rzsfAClZcIRqYCWvBjFLE9cg/RlQswEArXnVKzOyK46ADEyJe1jfKFHoEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115569; c=relaxed/simple;
-	bh=PcgQOd+JcIMQobz0/P6WTLFQjkvoJFB1hbt+ELQtt1k=;
+	s=arc-20240116; t=1786115572; c=relaxed/simple;
+	bh=JcejZpPt/GcnufQkPlLfMdCeZgcF22Epl5us6uHx51c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pVBKpHvUfQhzMcyl5rzjFykL6pPZ4XLju3EIcmTufrQSquj+mbThlZuac/Es5msJFYbEMacd/o5+7gx4lFIZZSkSnQBeHl83ADu8fJLN6HoOoNSQxeLI1fIdga2GjIKPZw7x9v7bud4stsDsAyk3rWgdrWR0407e+kQoQHmDnVw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2IhYeGe/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PyNhcnnF3ag0EPnU7L0tQlHWWI7QKvuB4JFtAIewC3sVfnlydmmAdLqVXccTIV4e+6HLMbGda3m+AfH9QfPuMue7plYcJwu3/WkdCJrvvwjtZTUyg+kFSNmMf7U8CflQhm3eV8iMZz+fZ78VJXxmr2WpOG9qyaKseGPLE2aEEc0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=znM9br/8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2IhYeGe/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CF6C1F00A3A;
-	Fri,  7 Aug 2026 15:12:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="znM9br/8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67C251F00A3A;
+	Fri,  7 Aug 2026 15:12:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115568;
-	bh=z83mKEBzf/7a/uGgaUfCpm0Un3T4ICYUIxoJUC26JVc=;
+	s=korg; t=1786115570;
+	bh=1qvR+Xp283MGe9QnQfof31oLI1XfpooD0RdqQn/l/nI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2IhYeGe//+cX0sMUupGCZY3ZTNzImZkwyO9M+eQgx+LS+fggaZiqbLcIdXmoyWnx4
-	 tcbQyqHkMgt9IBwFuktIl6H17eY2gMyF7svArXy7nqbk0lAUIcRCdBAjGCxR4KepFB
-	 w9t8egigj5Jqdp7ZXaI+GsqkdvCBl2ntzyk59wt0=
+	b=znM9br/8a5zrwPh38/DE1D0zSMOnETFJZlm7h8SUP5lJ28YDLYZw/LA3Dx1fwoHGE
+	 u5ppUyGi49+bbef2lpoZw9FiwCuj1j9rLYjVpuwX+TfGyfMipeSWMjTu0BM0fLid20
+	 gBJYW4PIhcelM6FwEFFSJnEsHwYRVOh01R5y6jMU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kohei Enju <kohei@enjuk.jp>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Aaron Ma <aaron.ma@canonical.com>,
-	Alexander Nowlin <alexander.nowlin@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>
-Subject: [PATCH 6.18 285/396] ice: wait for reset completion in ice_resume()
-Date: Fri,  7 Aug 2026 16:37:25 +0200
-Message-ID: <20260807143430.415860081@linuxfoundation.org>
+	Harkirat Gill <harkirat.gill@amd.com>,
+	David Francis <David.Francis@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.18 321/396] drm/amdgpu: cap GTT size to physical RAM on APUs
+Date: Fri,  7 Aug 2026 16:38:01 +0200
+Message-ID: <20260807143431.190621994@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -54,65 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aaron Ma <aaron.ma@canonical.com>
+From: Harkirat Gill <harkirat.gill@amd.com>
 
-commit c2816d613f388814d27bc9fd6dbd931a88056e19 upstream.
+commit 5e70f6804b4d6256058c360b10e044ee04ea4a4e upstream.
 
-ice_resume() schedules an asynchronous PF reset and returns
-immediately. The reset runs later in ice_service_task(). If
-userspace tries to bring up the net device before the reset
-finishes, ice_open() fails with -EBUSY:
+On APUs, the GTT pool is backed by system RAM, but its size is not bound
+to the non-carveout memory that actually backs it. A user can end up
+with GTT + VRAM exceeding total physical memory through the following
+sequence:
 
-  ice_resume()
-    ice_schedule_reset()          # sets ICE_PFR_REQ, returns
-  ...
-  ice_open()
-    ice_is_reset_in_progress()    # ICE_PFR_REQ still set, -EBUSY
-  ...
-  ice_service_task()
-    ice_do_reset()
-      ice_rebuild()               # clears ICE_PFR_REQ, too late
+ - Have a large non-carveout memory space (~128GB) and accordingly set a
+   large GTT (~100GB) via the ttm module parameter.
+ - Lower the non-carveout memory space in BIOS by increasing the UMA
+   Frame Buffer Size (VRAM) to 64GB.
+ - The previously set GTT value (~100GB) persists, even though the new
+   non-carveout space (64GB) can no longer back it.
 
-Reproduced on E800 series NICs during suspend/resume with irdma
-enabled, where the aux device probe widens the race window.
+This leads to a case where kernel reports GTT (100GB) + VRAM (64GB)
+despite the sum being greater than total physical memory (128GB).
 
-  ice 0000:81:00.0: can't open net device while reset is in progress
+Cap the GTT size to totalram_pages() on APUs. totalram_pages() already
+excludes the VRAM carveout, so the resulting GTT can never exceed the
+system RAM that actually backs it.
 
-Add a best-effort wait (10s timeout, matching ice_devlink_info_get())
-for the reset to complete before returning from ice_resume(). In
-practice the reset completes in ~300ms.
-
-Fixes: 769c500dcc1e ("ice: Add advanced power mgmt for WoL")
+Signed-off-by: Harkirat Gill <harkirat.gill@amd.com>
+Reviewed-by: David Francis <David.Francis@amd.com>
+Assisted-by: Claude:claude-opus-4
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 5dafdd649280c7dc6c22c8f877da3f54fcc441e1)
 Cc: stable@vger.kernel.org
-Reviewed-by: Kohei Enju <kohei@enjuk.jp>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Signed-off-by: Aaron Ma <aaron.ma@canonical.com>
-Tested-by: Alexander Nowlin <alexander.nowlin@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/ice/ice_main.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/drivers/net/ethernet/intel/ice/ice_main.c
-+++ b/drivers/net/ethernet/intel/ice/ice_main.c
-@@ -5713,6 +5713,16 @@ static int ice_resume(struct device *dev
- 	/* Restart the service task */
- 	mod_timer(&pf->serv_tmr, round_jiffies(jiffies + pf->serv_tmr_period));
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
+@@ -2078,6 +2078,18 @@ int amdgpu_ttm_init(struct amdgpu_device
+ 		gtt_size = configured_size;
+ 	}
  
-+	/* Best-effort wait for the scheduled reset to finish so that the
-+	 * device is operational before returning. Without this, userspace
-+	 * (e.g. NetworkManager) may try to open the net device while the
-+	 * asynchronous reset is still in progress, hitting -EBUSY.
-+	 */
-+	ret = ice_wait_for_reset(pf, secs_to_jiffies(10));
-+	if (ret)
-+		dev_err(dev, "Wait for reset timed out (10s) during resume: %d\n",
-+			ret);
++	/* Cap GTT so that it does not exceed total physical RAM. */
++	if (adev->flags & AMD_IS_APU) {
++		u64 phys_ram = (u64)totalram_pages() << PAGE_SHIFT;
 +
- 	return 0;
- }
- 
++		if (gtt_size > phys_ram) {
++			gtt_size = phys_ram;
++			dev_info(adev->dev,
++				 "Capping GTT to %uM to not exceed available system memory\n",
++				 (unsigned int)(gtt_size / (1024 * 1024)));
++		}
++	}
++
+ 	/* Initialize GTT memory pool */
+ 	r = amdgpu_gtt_mgr_init(adev, gtt_size);
+ 	if (r) {
 
 
