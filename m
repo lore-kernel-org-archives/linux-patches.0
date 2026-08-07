@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E264C3101A7;
-	Fri,  7 Aug 2026 15:11:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D158E306744;
+	Fri,  7 Aug 2026 15:11:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115472; cv=none; b=sPMXAxBtX12U+LqBn5DdKaghlFEqT/oh9h1yvsaohuHMtgF3CINtqksTGkuGIIGeqfPS8oP0eseB58e8J9EU2t2B28MD8FCD7UuLbr0o5WpCamu83Mu2jsfhSRlfFxMTyN9V7XZQ0WT5cGg82KqjzHGRBbm3aHCBYYUsC5g3EQY=
+	t=1786115475; cv=none; b=R7r8Hr/UlJnifDi7Iu1fUJXLMO7Gp7OT1WSyU930v7zgrUdUWjRiIWD/1AB7kiHQsOyLl5k0sOSna2Gjm0xVUKDdmN/E5AS4/ACzMNBvjKwDqU0JV+WmvdlIazCowABxqGoOK1tplnHnwjJQe3Gf0CwSWwNRw7JsTeOHAWyyx74=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115472; c=relaxed/simple;
-	bh=bkZBog54VyExC+3+6p+6+dfPk0zhYaEHxFfMg5ksNs8=;
+	s=arc-20240116; t=1786115475; c=relaxed/simple;
+	bh=GaIxLoX+NVV4pWg4UhZr3UlLNFdD7u1aQTmIG/caoLM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rCU6AFfM7zOEmC34LOP8goqAJNoQtNaQeHng0ytmXxwjNp6xWAI+5cErVMFwk2F8ZYtbPs7MAg4dBGxPoh54/7i/tLx0wr3IME5POmum6a4kaH74u3fAQxs5maQ+hIbmqCT0BoTbjzGFZEydvvR0YSvCRjcb0/hMtMC82UGXnSA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bx2grHkQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KrEsbb8VBvMaEp+NV9QGEPUIoZ6LSNOgkUKjckOm9mtV0ipVLjVr5KNRwDP6WuTDdBG8HWHFh4xR00OwjY8hkS+SKq/ZMraJb62OrChBlQDxroSujOwAh0HxKSspphvCANs2CmvC0ipcjEb0eSFMtmp8fWmsuZLAC6nnQlTfIZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y692x4Wk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bx2grHkQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 453831F000E9;
-	Fri,  7 Aug 2026 15:11:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y692x4Wk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 339F21F00A3A;
+	Fri,  7 Aug 2026 15:11:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115470;
-	bh=mM85KS+N0NgZBa8D7IZo6rvJnAXv8vMXjMBhnmua/m8=;
+	s=korg; t=1786115473;
+	bh=4pzFzsOyRXapHs1kIEmWTcJP3SmO6+P40P5Z/HML72E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bx2grHkQDt7pLQuaSugMziwqNFWZqCzAtyR+Jx5+P6tAoOM4TXg1VOlkgMHeGug0m
-	 4/EQ7E+gU+ZDLFJJkH8+DE+8OLpOlZ+OYi/RrI1C+2m6Qs3FE0TmCmWyY0YFKZmwOu
-	 EHhqNCaZ9RcEF8wKWDZ2jqHcS4qNL73f94R+CuUg=
+	b=Y692x4Wkn7Szex/wxayp51jvS+4lkJ0Mf0v0xdcKj71ctpS4GUxcg59fUS3QoPTob
+	 CoKlOMpaEx0IRV+Woq7nY/AQvu0CAMu7QtHhSsWoXxLr9Su6GqAp/SvWASnt88abk1
+	 kAGvY0a5gol9/Sk5ZXI3u0I2+2Vm20CenbhWBocA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.18 234/396] binfmt_misc: dont let an F entry pin its own instance
-Date: Fri,  7 Aug 2026 16:36:34 +0200
-Message-ID: <20260807143429.305141111@linuxfoundation.org>
+	Ilya Maximets <i.maximets@ovn.org>,
+	Eelco Chaudron <echaudro@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.18 282/396] net: openvswitch: fix potential UAF on meter attach failure
+Date: Fri,  7 Aug 2026 16:37:22 +0200
+Message-ID: <20260807143430.348629457@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -49,71 +51,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Ilya Maximets <i.maximets@ovn.org>
 
-commit 79055d82772b9584f259b747fe40ff56a076678d upstream.
+commit a58a2b0ce354df531ebc71fc870058c2feb59f6b upstream.
 
-An entry registered with 'F' opens its interpreter at registration time
-and holds that file until the entry is freed. Any entry nobody removes
-by hand only gets closed once the binfmt_misc superblock is shut down.
-If the interpreter lives on a mount that keeps that superblock alive the
-two pin each other:
+While attaching a newly created meter attach_meter() function makes
+the new meter visible to other CPUs but can still fail afterwards.
+On failure, it detaches the meter back and returns an error.
 
-    binfmt_misc sb -> inode -> entry -> interp_file -> vfsmount -> binfmt_misc sb
+However, this is an unexpected behavior for the ovs_meter_cmd_set()
+that uses a plain kfree(meter) on attach failure without waiting for
+RCU readers to stop using it, assuming it was never visible.
 
-TL;DR the file is never closed. Once the mount namespace is gone there
-is nothing left to unregister through either.
+This is never a problem for ovs-vswitchd as it always creates meters
+before creating any flows that use them.  But the UAF can be triggered
+with a custom application using uAPI:
 
-There are two ways to trigger this bug:
+ BUG: KASAN: slab-use-after-free in ovs_meter_execute (net/openvswitch/meter.c:653)
+ Read of size 8 at addr ffff88810d152650 by task meter/2508
 
-- Point the interpreter at the instance itself. Its files are regular
-  files owned by the mounter and both bm_get_inode() and
-  simple_fill_super() leave i_op at empty_iops. So notify_change() falls
-  back to simple_setattr() and chmod +x works. We never set SB_I_NOEXEC
-  and so open_exec() accepts it.
+ Call Trace:
+  ovs_meter_execute (net/openvswitch/meter.c:653)
+  do_execute_actions (net/openvswitch/actions.c:1407)
+  ovs_execute_actions (net/openvswitch/actions.c:1584)
+  ovs_packet_cmd_execute (net/openvswitch/datapath.c:703)
+  ...
+  netlink_sendmsg (af_netlink.c:1900)
 
-- Use the instance as an overlayfs lower layer. The overlay superblock
-  holds a clone_private_mount() of every layer until it is destroyed and
-  that clone is in no namespace. So umount_tree() never reaches it.
+ Allocated by task 2519:
+  __kasan_kmalloc (mm/kasan/common.c:398 mm/kasan/common.c:415)
+  ovs_meter_cmd_set (net/openvswitch/meter.c:422)
+  ...
+  netlink_sendmsg (af_netlink.c:1900)
 
-That's a DoS. And it isn't only the superblock that leaks. It pins the
-user namespace it was mounted in, so every iteration permanently eats
-one of the caller's user namespace charges.
+ Freed by task 2519:
+  kfree (mm/slub.c:2705 mm/slub.c:6405 mm/slub.c:6720)
+  ovs_meter_cmd_set (net/openvswitch/meter.c:479)
+  ...
+  netlink_sendmsg (af_netlink.c:1900)
 
-So let's just do the sane thing. SB_I_NOEXEC makes open_exec() fail on
-the instance's own files and s_stack_depth makes overlayfs reject the
-layer before it ever takes a clone. That also covers the ecryptfs and
-fuse passthrough variants. What 'F' promises is unchanged.
+Fix that by making sure attach_meter() doesn't make the meter visible
+until all the checks are done and the function can't fail anymore.
 
-The stable tag is narrower than the Fixes tags on purpose. Before
-sandboxed mounts this needed global root against the single instance
-everyone shares, and the change doesn't apply to those trees anyway.
+This also makes sure the "hash" value is calculated after the potential
+re-sizing of the table.
 
-Note that SB_I_NODEV is implicitly raised for userns mounts but raise it
-explicitly here as well.
+Reported by Trend Micro's Zero Day Initiative as ZDI-CAN-31642.
 
-Link: https://patch.msgid.link/20260728-work-binfmt_misc-selfpin-v1-1-74df5daeca5b@kernel.org
-Fixes: 948b701a607f ("binfmt_misc: add persistent opened binary handler for containers")
-Fixes: 21ca59b365c0 ("binfmt_misc: enable sandboxed mounts")
-Cc: stable@vger.kernel.org # v6.7+
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: c7c4c44c9a95 ("net: openvswitch: expand the meters supported number")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
+Reviewed-by: Eelco Chaudron <echaudro@redhat.com>
+Link: https://patch.msgid.link/20260727121022.198461-1-i.maximets@ovn.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/binfmt_misc.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ net/openvswitch/meter.c |   33 +++++++++++++++++++--------------
+ 1 file changed, 19 insertions(+), 14 deletions(-)
 
---- a/fs/binfmt_misc.c
-+++ b/fs/binfmt_misc.c
-@@ -956,6 +956,10 @@ static int bm_fill_super(struct super_bl
- 	if (WARN_ON(user_ns != current_user_ns()))
- 		return -EINVAL;
+--- a/net/openvswitch/meter.c
++++ b/net/openvswitch/meter.c
+@@ -133,18 +133,10 @@ static void dp_meter_instance_remove(str
  
-+	/* Never exec off this instance and never let anything stack on it. */
-+	sb->s_iflags |= SB_I_NOEXEC | SB_I_NODEV;
-+	sb->s_stack_depth = FILESYSTEM_MAX_STACK_DEPTH;
+ static int attach_meter(struct dp_meter_table *tbl, struct dp_meter *meter)
+ {
+-	struct dp_meter_instance *ti = rcu_dereference_ovsl(tbl->ti);
+-	u32 hash = meter_hash(ti, meter->id);
++	struct dp_meter_instance *ti;
++	u32 hash;
+ 	int err;
+ 
+-	/* In generally, slots selected should be empty, because
+-	 * OvS uses id-pool to fetch a available id.
+-	 */
+-	if (unlikely(rcu_dereference_ovsl(ti->dp_meters[hash])))
+-		return -EBUSY;
+-
+-	dp_meter_instance_insert(ti, meter);
+-
+ 	/* That function is thread-safe. */
+ 	tbl->count++;
+ 	if (tbl->count >= tbl->max_meters_allowed) {
+@@ -152,16 +144,29 @@ static int attach_meter(struct dp_meter_
+ 		goto attach_err;
+ 	}
+ 
+-	if (tbl->count >= ti->n_meters &&
+-	    dp_meter_instance_realloc(tbl, ti->n_meters * 2)) {
+-		err = -ENOMEM;
++	ti = rcu_dereference_ovsl(tbl->ti);
++	if (tbl->count >= ti->n_meters) {
++		err = dp_meter_instance_realloc(tbl, ti->n_meters * 2);
++		if (err)
++			goto attach_err;
 +
- 	/*
- 	 * Lazily allocate a new binfmt_misc instance for this namespace, i.e.
- 	 * do it here during the first mount of binfmt_misc. We don't need to
++		ti = rcu_dereference_ovsl(tbl->ti);
++	}
++
++	hash = meter_hash(ti, meter->id);
++
++	/* In general, selected slots should be empty, because
++	 * OvS uses id-pool to fetch available ids.
++	 */
++	if (unlikely(rcu_dereference_ovsl(ti->dp_meters[hash]))) {
++		err = -EBUSY;
+ 		goto attach_err;
+ 	}
+ 
++	dp_meter_instance_insert(ti, meter);
+ 	return 0;
+ 
+ attach_err:
+-	dp_meter_instance_remove(ti, meter);
+ 	tbl->count--;
+ 	return err;
+ }
 
 
