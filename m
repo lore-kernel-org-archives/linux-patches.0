@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 075992E762C;
-	Fri,  7 Aug 2026 14:53:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDDE14B0482;
+	Fri,  7 Aug 2026 14:53:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114395; cv=none; b=mDeGfkYWftcIbUvgt4c5O+F79I647/sUvoT4lKdHp+C/wBh9OksOd+ApHv/pqQmL2smJSh8bHpFgILsGeDWXdDpEeNWOb5GeVF4CLaT/DzzTrN6M+okZugUh79GIBD474+avSUGeEZAaNQEW5Q1fE0M5yW5485wET3b8V3V0ORs=
+	t=1786114398; cv=none; b=q+hemew5bSXsIJ+7lB/Thm4fEZs6vmT7hpZmnBNjgK8uAiL5Zw5j0utIwEZvJHsIxKK4XNzqUrMjTYnFvLHu6iGY+7GJ7SX3mPwl1WlP5RYB4ExqqxeDn9AQlwJT6eOo2Mwdw+zT72m6kNo6SdnBWUtKq1M5RrirAqS53ctt9O0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114395; c=relaxed/simple;
-	bh=ODtRcp2q6BabhFHPvRGlxJGolYuUNuZBDaKsY02KMtA=;
+	s=arc-20240116; t=1786114398; c=relaxed/simple;
+	bh=F0f9lDz2lY4iTaidRN4D3iFpqJMS38zggpIZMZ9ClUE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NDv86fEc0E5+9jinA7Md4MBwED5Otmx6bMzdcjo9pnGrxhM2RHvIsWHO6EICb+iFPr/1YEsQ+V/xXuRUUGs/vPxbJGCQ0713ILgX3o4Bx+1H3n4D4C6rhKPl//bi5jC5mwTSnDw4KyfkWEUg5Huxt8qQND633RkramuPLHoOPik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=At9BO17a; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l4ExdYzk3ND9Q9oVG6LXgKBOV3zSR/gR7kzl9XjMEpRnrOZ/0v8CPOq49cvgYHmW4BYAGMgvRJ/EV6ioSENt6437pwRcwgWEDi6slTOjAgBRpWnZ7UMgMrLStf1Q6QSx5cBjyInMoOSewilPrZTJXEJ2AJlcv3ezUeqn3hvOkCE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vqj2aW2D; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="At9BO17a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 630C61F000E9;
-	Fri,  7 Aug 2026 14:53:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vqj2aW2D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3561C1F000E9;
+	Fri,  7 Aug 2026 14:53:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114393;
-	bh=GAUVhNxGH7uqMwlcEJwPifRHbwHtutus/xsryk7iNQE=;
+	s=korg; t=1786114396;
+	bh=PAL5B3WlitffPUnAREQhYv8CDdSz45UaD3ivehcqUVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=At9BO17aKNAndzX1HOXeBp3McJoMO2AUOb1rfOMjFvPKSKPTYt1wZl9HBGlNuIjJQ
-	 JjCtVPI9BFhGKLjaYTUKNyB0PwdGffJ0ZGkQfNKGSt5eMYixpQov2Ee1xj8KA/f5oC
-	 scVoxl8swW0VLNeL/dYhUNywOWO2XLeiI87N+agY=
+	b=Vqj2aW2DsX0slSt3f/3kFuDJMMDLYKx0nZ6n9avaGY+2hgYUKyDSYVqCplwWHYV2F
+	 zYvdpHjDicbmvEZeYBnXoZKyRs515yHkL1OE6wg1YexJFaXYb493lIykEQe6yTKp2v
+	 8SgLwX+dQ7qeqpB1s6Ig88jRTkc6MVTsTI+gsNeQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Osama Abdelkader <osama.abdelkader@gmail.com>,
-	Steven Price <steven.price@arm.com>,
-	Boris Brezillon <boris.brezillon@collabora.com>
-Subject: [PATCH 6.12 247/337] drm/panthor: reject firmware sections with oversized data
-Date: Fri,  7 Aug 2026 16:37:30 +0200
-Message-ID: <20260807143423.902470593@linuxfoundation.org>
+	Steven Price <steven.price@arm.com>
+Subject: [PATCH 6.12 248/337] drm/panthor: validate firmware interface structure sizes
+Date: Fri,  7 Aug 2026 16:37:31 +0200
+Message-ID: <20260807143423.923539696@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -53,79 +52,98 @@ Content-Transfer-Encoding: 8bit
 
 From: Osama Abdelkader <osama.abdelkader@gmail.com>
 
-commit a3caaa06809248b996254be5b47e10804a3494e2 upstream.
+commit b921b8613790a3f9e78ab64017fa7149ef0b750c upstream.
 
-In panthor_fw_load_section_entry(), the data size to copy is calculated
-without validating it against the allocated section_size:
+iface_fw_to_cpu_addr() only checks that the firmware-provided MCU virtual
+address points inside the shared section. The returned pointer is later
+used as a full firmware interface structure, so accepting an address near
+the end of the shared section can still lead to out-of-bounds accesses.
 
-    section->data.size = hdr.data.end - hdr.data.start;
-
-If a crafted firmware sets data.size larger than the allocated memory,
-this could cause a heap buffer overflow in panthor_fw_init_section_mem()
-
-    memcpy(section->mem->kmap, section->data.buf, section->data.size);
-
-Additionally, if the section->data.size exceeds the BO size, could this
-memset underflow the size calculation, leading to a massive out-of-bounds
-zeroing of kernel memory?
-
-    memset(section->mem->kmap + section->data.size, 0,
-           panthor_kernel_bo_size(section->mem) - section->data.size);
-
-Reject section entries whose initial data is larger than the section size.
+Pass the expected object size to iface_fw_to_cpu_addr() and reject ranges
+that do not fit entirely in the shared section.
 
 Fixes: 2718d91816ee ("drm/panthor: Add the FW logical block")
 Cc: stable@vger.kernel.org
 Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
 Reviewed-by: Steven Price <steven.price@arm.com>
-Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
-Link: https://patch.msgid.link/20260716143939.21903-1-osama.abdelkader@gmail.com
 Signed-off-by: Steven Price <steven.price@arm.com>
+Link: https://patch.msgid.link/20260720114918.15973-1-osama.abdelkader@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/panthor/panthor_fw.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/panthor/panthor_fw.c |   36 +++++++++++++++++++++++------------
+ 1 file changed, 24 insertions(+), 12 deletions(-)
 
 --- a/drivers/gpu/drm/panthor/panthor_fw.c
 +++ b/drivers/gpu/drm/panthor/panthor_fw.c
-@@ -491,6 +491,7 @@ static int panthor_fw_load_section_entry
- 	struct panthor_fw_binary_section_entry_hdr hdr;
- 	struct panthor_fw_section *section;
- 	u32 section_size;
-+	u32 data_size;
- 	u32 name_len;
- 	int ret;
+@@ -767,18 +767,24 @@ out:
+  * iface_fw_to_cpu_addr() - Turn an MCU address into a CPU address
+  * @ptdev: Device.
+  * @mcu_va: MCU address.
++ * @size: Size of the object pointed to by @mcu_va.
+  *
+- * Return: NULL if the address is not part of the shared section, non-NULL otherwise.
++ * Return: NULL if the object is not part of the shared section, non-NULL otherwise.
+  */
+-static void *iface_fw_to_cpu_addr(struct panthor_device *ptdev, u32 mcu_va)
++static void *iface_fw_to_cpu_addr(struct panthor_device *ptdev, u32 mcu_va, size_t size)
+ {
+ 	u64 shared_mem_start = panthor_kernel_bo_gpuva(ptdev->fw->shared_section->mem);
+-	u64 shared_mem_end = shared_mem_start +
+-			     panthor_kernel_bo_size(ptdev->fw->shared_section->mem);
+-	if (mcu_va < shared_mem_start || mcu_va >= shared_mem_end)
++	size_t shared_mem_size = panthor_kernel_bo_size(ptdev->fw->shared_section->mem);
++	u64 offset;
++
++	if (mcu_va < shared_mem_start)
++		return NULL;
++
++	offset = mcu_va - shared_mem_start;
++	if (offset > shared_mem_size || size > shared_mem_size - offset)
+ 		return NULL;
  
-@@ -541,6 +542,13 @@ static int panthor_fw_load_section_entry
+-	return ptdev->fw->shared_section->mem->kmap + (mcu_va - shared_mem_start);
++	return ptdev->fw->shared_section->mem->kmap + offset;
+ }
+ 
+ static int panthor_init_cs_iface(struct panthor_device *ptdev,
+@@ -800,8 +806,10 @@ static int panthor_init_cs_iface(struct
+ 
+ 	spin_lock_init(&cs_iface->lock);
+ 	cs_iface->control = ptdev->fw->shared_section->mem->kmap + iface_offset;
+-	cs_iface->input = iface_fw_to_cpu_addr(ptdev, cs_iface->control->input_va);
+-	cs_iface->output = iface_fw_to_cpu_addr(ptdev, cs_iface->control->output_va);
++	cs_iface->input = iface_fw_to_cpu_addr(ptdev, cs_iface->control->input_va,
++					       sizeof(*cs_iface->input));
++	cs_iface->output = iface_fw_to_cpu_addr(ptdev, cs_iface->control->output_va,
++						sizeof(*cs_iface->output));
+ 
+ 	if (!cs_iface->input || !cs_iface->output) {
+ 		drm_err(&ptdev->base, "Invalid stream control interface input/output VA");
+@@ -851,8 +859,10 @@ static int panthor_init_csg_iface(struct
+ 
+ 	spin_lock_init(&csg_iface->lock);
+ 	csg_iface->control = ptdev->fw->shared_section->mem->kmap + iface_offset;
+-	csg_iface->input = iface_fw_to_cpu_addr(ptdev, csg_iface->control->input_va);
+-	csg_iface->output = iface_fw_to_cpu_addr(ptdev, csg_iface->control->output_va);
++	csg_iface->input = iface_fw_to_cpu_addr(ptdev, csg_iface->control->input_va,
++						sizeof(*csg_iface->input));
++	csg_iface->output = iface_fw_to_cpu_addr(ptdev, csg_iface->control->output_va,
++						 sizeof(*csg_iface->output));
+ 
+ 	if (csg_iface->control->stream_num < MIN_CS_PER_CSG ||
+ 	    csg_iface->control->stream_num > MAX_CS_PER_CSG)
+@@ -909,8 +919,10 @@ static int panthor_fw_init_ifaces(struct
  		return -EINVAL;
  	}
  
-+	section_size = hdr.va.end - hdr.va.start;
-+	data_size = hdr.data.end - hdr.data.start;
-+	if (data_size > section_size) {
-+		drm_err(&ptdev->base, "Firmware corrupted, section data exceeds section size\n");
-+		return -EINVAL;
-+	}
-+
- 	name_len = iter->size - iter->offset;
- 
- 	section = drmm_kzalloc(&ptdev->base, sizeof(*section), GFP_KERNEL);
-@@ -549,7 +557,7 @@ static int panthor_fw_load_section_entry
- 
- 	list_add_tail(&section->node, &ptdev->fw->sections);
- 	section->flags = hdr.flags;
--	section->data.size = hdr.data.end - hdr.data.start;
-+	section->data.size = data_size;
- 
- 	if (section->data.size > 0) {
- 		void *data = drmm_kmalloc(&ptdev->base, section->data.size, GFP_KERNEL);
-@@ -572,7 +580,6 @@ static int panthor_fw_load_section_entry
- 		section->name = name;
- 	}
- 
--	section_size = hdr.va.end - hdr.va.start;
- 	if (section_size) {
- 		u32 cache_mode = hdr.flags & CSF_FW_BINARY_IFACE_ENTRY_RD_CACHE_MODE_MASK;
- 		struct panthor_gem_object *bo;
+-	glb_iface->input = iface_fw_to_cpu_addr(ptdev, glb_iface->control->input_va);
+-	glb_iface->output = iface_fw_to_cpu_addr(ptdev, glb_iface->control->output_va);
++	glb_iface->input = iface_fw_to_cpu_addr(ptdev, glb_iface->control->input_va,
++						sizeof(*glb_iface->input));
++	glb_iface->output = iface_fw_to_cpu_addr(ptdev, glb_iface->control->output_va,
++						 sizeof(*glb_iface->output));
+ 	if (!glb_iface->input || !glb_iface->output) {
+ 		drm_err(&ptdev->base, "Invalid global control interface input/output VA");
+ 		return -EINVAL;
 
 
