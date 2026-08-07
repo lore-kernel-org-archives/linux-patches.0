@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28564468C20;
-	Fri,  7 Aug 2026 15:12:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3EA543786B;
+	Fri,  7 Aug 2026 15:12:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115530; cv=none; b=IrtlyWnQMmEJ8NuNQnQssXifmMWHX8OVFPXRuhpWAgEXkElkmlWP2HZioahTbI7bz+6tuWzyXFJe5kB7lgYjkNgX/8BNYg5Ijn9Wftftr/W4dwHKw6EtF8FtRjBmk+UXsxdwFkB2suUIqzsLanqi/Rh2KsV3pRxjOUozpLH+BCs=
+	t=1786115533; cv=none; b=hu2x0Mq7paivZqZpQNKuESUPRAf4/QOWrDkSyPOk6+ABYwQeKGZwJs+MOoz/zZ28S8wpDrVTtCA99RX8jbSRAj1029n7HxjCZIzHHAK6M8WOMHY9zkWJPekIq6zsDaGrn97Uhl4ToPBNnacqm34uBHdzIlxUOr90K4w2Y5TaJJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115530; c=relaxed/simple;
-	bh=UVL0NaDtbf4/LTab9Q83+prTZnA3FtplBWZpcT/38yw=;
+	s=arc-20240116; t=1786115533; c=relaxed/simple;
+	bh=wRekNIb/q/M5eKZCU0YUA6rhOfVD7eIuzn1D9MeoGXY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uDk7jinz91STaZWXEfi/PhtIz6RGxC1PYzOOHDs8ODdLR0X0r5wElBAUX7GFByNlV2OMTtLDhPqlZ0gs55A3k87JktOciRyUhdnvwM3CZ0Ye+1kMGfRuSgqFBqmgVa+RpeQ0D6yQO6TeFEQEAwjzoNtEFbPb+CtQYnHj3Pv+rD8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0hYf2N1I; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K0W7LjYxttrueb11BkNCuXL2D2cpCsYRMnuhg6CTUYZNC4YccxSRPg9QSNNFFwjMVLbiWnfLHhNrTOVjjY46A58EVkAqZHyUvzE9y76Yz0u9+vK1sfFDvS+IEv3+D1iEqX6MWAfBaI+JdgHFISah2Xl7rtKkM6loY2yeOEBI1f8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0id7joaq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0hYf2N1I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B7061F000E9;
-	Fri,  7 Aug 2026 15:12:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0id7joaq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 408631F00A3D;
+	Fri,  7 Aug 2026 15:12:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115526;
-	bh=p7rji5ug+FgDhDwPb24qRyTPDI1pY2TyXSt4c8z5m4E=;
+	s=korg; t=1786115528;
+	bh=LTHFxcn6J3b7ZQf5quBvMsJDVLcs42M46fWhdh3yrsM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0hYf2N1IpAK2rV8KYDvzCfPyxryY8J+tirJzn4soE6jD9Z6iIF/OosqacWCnmqQ+h
-	 BJ2mrfjgvmzpaPzogNtOz1lW+961uiT4EA/rW7ATherY0falztZLrZm+yPSa6K6GBh
-	 4o0dJN9fbf4FgCunReA55x4g/pNC72KhArzYPwCE=
+	b=0id7joaqJA2tmst5IzuNwS7zF9hd9k5cmF2zASC/2g8YxAmFrIgCJ7xhvHOkQkVmq
+	 /QxDyXR4ngIfN0OTqhJ0p5YnTZ8dVQRyIObW+jU6uheFfaEFU2c86T6vdTXlyK/vkC
+	 G/F/0RTwIWqzDLc6jQ6cTzq31L492qzZLamwxufE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Avi Weiss <thnkslprpt@gmail.com>,
 	Pavel Pisa <pisa@fel.cvut.cz>,
 	stable@kernel.org,
 	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.18 307/396] can: ctucanfd: add missing MODULE_DEVICE_TABLE()
-Date: Fri,  7 Aug 2026 16:37:47 +0200
-Message-ID: <20260807143430.894216323@linuxfoundation.org>
+Subject: [PATCH 6.18 308/396] can: ctucanfd: use self-test mode for PRESUME_ACK
+Date: Fri,  7 Aug 2026 16:37:48 +0200
+Message-ID: <20260807143430.914494030@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -52,41 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Avi Weiss <thnkslprpt@gmail.com>
 
-commit d937bdb244a751fe5967052ea2d64a7b2c476cc0 upstream.
+commit c31a435933f18be0f874302161333e9f16e200a0 upstream.
 
-The driver has a match table for the pci bus wired into its driver
-structure, but the table is not exported with MODULE_DEVICE_TABLE().
+Use self-test mode for CAN_CTRLMODE_PRESUME_ACK so transmitted
+frames can complete without receiving an ACK.
 
-Add the missing MODULE_DEVICE_TABLE() entry so module alias information
-is generated for automatic module loading.
+ACK forbidden mode prevents the controller from acknowledging
+received frames and does not implement the presume-ack behavior.
 
-This is a source-level fix.  It does not claim dynamic hardware
-reproduction; the evidence is the driver-owned match table, its use by
-the driver registration structure, and the missing module alias
-publication.
-
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Fixes: 2dcb8e8782d8 ("can: ctucanfd: add support for CTU CAN FD open-source IP core - bus independent part.")
+Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
 Acked-by: Pavel Pisa <pisa@fel.cvut.cz>
-Link: https://patch.msgid.link/20260704151957.48194-1-pengpeng@iscas.ac.cn
-Fixes: 792a5b678e81 ("can: ctucanfd: CTU CAN FD open-source IP core - PCI bus support.")
+Link: https://patch.msgid.link/20260722192726.230729-1-thnkslprpt@gmail.com
 Cc: stable@kernel.org
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/ctucanfd/ctucanfd_pci.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/can/ctucanfd/ctucanfd_base.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/net/can/ctucanfd/ctucanfd_pci.c
-+++ b/drivers/net/can/ctucanfd/ctucanfd_pci.c
-@@ -274,6 +274,7 @@ static const struct pci_device_id ctucan
- 		CTUCAN_WITH_CTUCAN_ID)},
- 	{},
- };
-+MODULE_DEVICE_TABLE(pci, ctucan_pci_tbl);
+--- a/drivers/net/can/ctucanfd/ctucanfd_base.c
++++ b/drivers/net/can/ctucanfd/ctucanfd_base.c
+@@ -340,8 +340,8 @@ static void ctucan_set_mode(struct ctuca
+ 			(mode_reg & ~REG_MODE_FDE);
  
- static struct pci_driver ctucan_pci_driver = {
- 	.name = KBUILD_MODNAME,
+ 	mode_reg = (mode->flags & CAN_CTRLMODE_PRESUME_ACK) ?
+-			(mode_reg | REG_MODE_ACF) :
+-			(mode_reg & ~REG_MODE_ACF);
++			(mode_reg | REG_MODE_STM) :
++			(mode_reg & ~REG_MODE_STM);
+ 
+ 	mode_reg = (mode->flags & CAN_CTRLMODE_FD_NON_ISO) ?
+ 			(mode_reg | REG_MODE_NISOFD) :
 
 
