@@ -1,46 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7DBC3BB13B;
-	Fri,  7 Aug 2026 15:48:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70D5E35677E;
+	Fri,  7 Aug 2026 15:48:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786117722; cv=none; b=p7wPQy5ASAEc2W412LvAH+kuTa5mm/JQyaEqjjqsKR9iaq6RA0E8U7NRGhL+y0UzjEEBHLLFpqTiKcTemmbWUl5vE4ZvjWkRt9XfouP3Hj2tAPuGPYjWUvsBjLgIKKnrGpehlCZBn8XtDIBv1yb300BeKaYnm4n2BMKcr6Va1wU=
+	t=1786117724; cv=none; b=cVpQt0a7L/Xhiwe27iZp32ScegdWSf5LdqIwDjTBBoii2Tgbx85cfjRSXkpvvWFZnirjamC8jUPg4qOFfkgvoucU95cs7awIibfZzov0e9e3Vfo0ft7c1nMdqoMKGvJ6ghuqabNbkYoZtQ3LCa09coRUXPCH5SNuzFMkMdO92Zc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786117722; c=relaxed/simple;
-	bh=bJn81q3Gg5XIJs9QQDvN680qskqpHBG+tWFAUYXGL94=;
+	s=arc-20240116; t=1786117724; c=relaxed/simple;
+	bh=yWj9fCFrHU24gLD383Tox1LqsHjAVL//OzT12nrBhtg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pI/nIJUJxvrLmGZRuvdxDPXhmwqgCt4VERCjN0dSPAwUfOh5ecUDSqhasAJyqbl1RTV4PuhXF+mwxIzpJNXo2yRvjnwl/VmCZ8geg0BtZTgWPdiJh2HxqBmvRbdavpp3fzNaobNVUciFVr/2l1qoVSb7M81DCK2PryS1EP7cMe8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AeeblNLF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qDANLPfBQeUSTBQ+jlHL8UxOZ2OUNRGBa+KA51yagNgIM/M4Zj/8Htu7Ow+urptXhXwJeWBB6Qvvw2bKC+1XiqQ474qCopzcD69JMIHRe5q72UOAEckegBeU0rH7o9zDzbdWWvYemqO9SET+lQP8JQMQK5D24NrX/cznjjZtHQ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K9tEfkNB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AeeblNLF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01D0B1F000E9;
-	Fri,  7 Aug 2026 15:48:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K9tEfkNB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD17A1F00A3A;
+	Fri,  7 Aug 2026 15:48:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786117720;
-	bh=cGOOA3FfrfUB0bN4mvQBLtNNnZjs1q/Fg4DmgrGkNgw=;
+	s=korg; t=1786117723;
+	bh=aJM8U+hRh/d8CoTw7unlgEm7I5vCR352mTvC7yXhiPA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AeeblNLF2jaXARt3S3NR766E2sOsyuBD4DPuJ1TMd51TajIbEDcFfIiMCtLy9OaTF
-	 KBrSDCrfWcqV15YkTnhv6GT4hXIWMWte66EwZsJc/ItfZL5h2bfARgwMoBHlUSskzX
-	 S8Z67dnwB7F5C48AmOf++pjmaEBXRxDJJS5507QE=
+	b=K9tEfkNBQWGkc7wLoE42l8ucuZ/Q0vIEqPe3fb8nXi43YVEwfaNInQNcuE9lqXihn
+	 69U+/W7YtJ+Arhn50/sBKF3GTPQF//r9Y5dqCyEKi9l8xg1MB80hYK07EX0AGEBqGo
+	 QjFV2JYJuUaICEgEaXQJc8TAC4o4d8e9s5pF+JXY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bhawanpreet Lakha <bhawanpreet.lakha@amd.com>,
-	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
-	"Lakha, Bhawanpreet" <Bhawanpreet.Lakha@amd.com>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Leo Li <sunpeng.li@amd.com>,
-	Rodrigo Siqueira <siqueira@igalia.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	amd-gfx@lists.freedesktop.org
-Subject: [PATCH 7.1 401/438] drm/amd/display: use proper context for logging
-Date: Fri,  7 Aug 2026 16:39:57 +0200
-Message-ID: <20260807143436.510660016@linuxfoundation.org>
+	Ashutosh Dixit <ashutosh.dixit@intel.com>,
+	Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.1 419/438] drm/xe/rtp: Keep track of non-OA nonpriv slots
+Date: Fri,  7 Aug 2026 16:40:15 +0200
+Message-ID: <20260807143436.894403471@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -53,179 +45,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+From: Ashutosh Dixit <ashutosh.dixit@intel.com>
 
-commit 114b42507b6a23d9d24e24e4ef165233332c64d4 upstream.
+[ Upstream commit 60d49ea28bb190a640bd8dc3f4c946e0811a948c ]
 
-The same as the rest of the code, get_ss_info_from_atombios() uses
-calc_pll_cs->ctx->logger for logging. But calc_pll_cs->ctx is
-initialized only later in calc_pll_max_vco_construct(). Therefore, any
-output using DC_LOG_SYNC() leads to a NULL pointer deference in
-get_ss_info_from_atombios().
+In order to dynamically whitelist/dewhitelist OA registers on OA stream
+open/close, we need to keep track of nonpriv slots occupied by non-OA
+register whitelists.
 
-According to Sashiko, the very same problem exists in
-dce112_get_pix_clk_dividers() and dcn3_get_pix_clk_dividers() too.
-
-To avoid accessing the NULL context, use clk_src->base.ctx->logger
-everywhere. That context in base is initialized earlier in
-dce110_clk_src_construct() and dce112_clk_src_construct(). Before
-get_ss_info_from_atombios() or Sashiko's get_pix_clk_dividers functions
-above are actually called. This is done by redefining DC_LOGGER to
-CTX->logger.
-
-Before:
-dce110_clk_src_construct() did:
- -> sets clk_src->base.ctx = ctx;
- -> ss_info_from_atombios_create()
-   -> get_ss_info_from_atombios()   <- uses calc_pll_cs->ctx  # BOOM
- -> calc_pll_max_vco_construct()    <- sets calc_pll_cs->ctx
-
-After:
-dce110_clk_src_construct() does:
- -> sets clk_src->base.ctx = ctx;
- -> ss_info_from_atombios_create()
-   -> get_ss_info_from_atombios()   <- uses clk_src->base.ctx
-
-Closes: https://bugzilla.suse.com/show_bug.cgi?id=1271175
-Closes: https://lore.kernel.org/all/a9ee54e6-2413-4156-9bde-d528ae3c63a3@kernel.org/
-Fixes: 1296423bf23c ("drm/amd/display: define DC_LOGGER for logger")
-Reviewed-by: Bhawanpreet Lakha <bhawanpreet.lakha@amd.com>
-Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
-Cc: Lakha, Bhawanpreet <Bhawanpreet.Lakha@amd.com>
-Cc: Harry Wentland <harry.wentland@amd.com>
-Cc: Leo Li <sunpeng.li@amd.com>
-Cc: Rodrigo Siqueira <siqueira@igalia.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: "Christian König" <christian.koenig@amd.com>
-Cc: David Airlie <airlied@gmail.com>
-Cc: Simona Vetter <simona@ffwll.ch>
-Cc: amd-gfx@lists.freedesktop.org
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 6f16fcbb0c46a87e3d9685407e906573d60104b0)
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 828a8eaf37c3 ("drm/xe/oa: Add MMIO trigger support")
+Cc: stable@vger.kernel.org # v6.12+
+Signed-off-by: Ashutosh Dixit <ashutosh.dixit@intel.com>
+Reviewed-by: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
+Link: https://patch.msgid.link/20260615224227.34880-4-ashutosh.dixit@intel.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dce/dce_clock_source.c |   20 ++++++++----------
- 1 file changed, 9 insertions(+), 11 deletions(-)
+ drivers/gpu/drm/xe/xe_reg_whitelist.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/dce/dce_clock_source.c
-+++ b/drivers/gpu/drm/amd/display/dc/dce/dce_clock_source.c
-@@ -45,9 +45,7 @@
- 	clk_src->base.ctx
- 
- #define DC_LOGGER \
--	calc_pll_cs->ctx->logger
--#define DC_LOGGER_INIT() \
--	struct calc_pll_clock_source *calc_pll_cs = &clk_src->calc_pll
-+	CTX->logger
- 
- #undef FN
- #define FN(reg_name, field_name) \
-@@ -289,6 +287,7 @@ static bool calc_pll_dividers_in_range(
- }
- 
- static uint32_t calculate_pixel_clock_pll_dividers(
-+		struct dce110_clk_src *clk_src,
- 		struct calc_pll_clock_source *calc_pll_cs,
- 		struct pll_settings *pll_settings)
- {
-@@ -477,7 +476,7 @@ static uint32_t dce110_get_pix_clk_divid
- {
- 	uint32_t field = 0;
- 	uint32_t pll_calc_error = MAX_PLL_CALC_ERROR;
--	DC_LOGGER_INIT();
-+
- 	/* Check if reference clock is external (not pcie/xtalin)
- 	* HW Dce80 spec:
- 	* 00 - PCIE_REFCLK, 01 - XTALIN,    02 - GENERICA,    03 - GENERICB
-@@ -520,12 +519,14 @@ static uint32_t dce110_get_pix_clk_divid
- 		/*Calculate Dividers by HDMI object, no SS case or SS case */
- 		pll_calc_error =
- 			calculate_pixel_clock_pll_dividers(
-+				        clk_src,
- 					&clk_src->calc_pll_hdmi,
- 					pll_settings);
- 	else
- 		/*Calculate Dividers by default object, no SS case or SS case */
- 		pll_calc_error =
- 			calculate_pixel_clock_pll_dividers(
-+					clk_src,
- 					&clk_src->calc_pll,
- 					pll_settings);
- 
-@@ -571,7 +572,6 @@ static uint32_t dce110_get_pix_clk_divid
- {
- 	struct dce110_clk_src *clk_src = TO_DCE110_CLK_SRC(cs);
- 	uint32_t pll_calc_error = MAX_PLL_CALC_ERROR;
--	DC_LOGGER_INIT();
- 
- 	if (pix_clk_params == NULL || pll_settings == NULL
- 			|| pix_clk_params->requested_pix_clk_100hz == 0) {
-@@ -603,7 +603,6 @@ static uint32_t dce112_get_pix_clk_divid
- 		struct pll_settings *pll_settings)
- {
- 	struct dce110_clk_src *clk_src = TO_DCE110_CLK_SRC(cs);
--	DC_LOGGER_INIT();
- 
- 	if (pix_clk_params == NULL || pll_settings == NULL
- 			|| pix_clk_params->requested_pix_clk_100hz == 0) {
-@@ -1372,8 +1371,6 @@ static uint32_t dcn3_get_pix_clk_divider
- 	unsigned long long actual_pix_clk_100Hz = pix_clk_params ? pix_clk_params->requested_pix_clk_100hz : 0;
- 	struct dce110_clk_src *clk_src = TO_DCE110_CLK_SRC(cs);
- 
--	DC_LOGGER_INIT();
--
- 	if (pix_clk_params == NULL || pll_settings == NULL
- 			|| pix_clk_params->requested_pix_clk_100hz == 0) {
- 		DC_LOG_ERROR(
-@@ -1443,7 +1440,6 @@ static const struct clock_source_funcs d
- 	.get_pixel_clk_frequency_100hz = get_pixel_clk_frequency_100hz
+diff --git a/drivers/gpu/drm/xe/xe_reg_whitelist.c b/drivers/gpu/drm/xe/xe_reg_whitelist.c
+index a0bbf4b745a1f..00f00002afcef 100644
+--- a/drivers/gpu/drm/xe/xe_reg_whitelist.c
++++ b/drivers/gpu/drm/xe/xe_reg_whitelist.c
+@@ -147,7 +147,7 @@ static const struct xe_rtp_entry_sr oa_whitelist[] = {
+ 	},
  };
  
--
- static void get_ss_info_from_atombios(
- 		struct dce110_clk_src *clk_src,
- 		enum as_signal_type as_signal,
-@@ -1456,7 +1452,7 @@ static void get_ss_info_from_atombios(
- 	struct spread_spectrum_info *ss_info_cur;
- 	struct spread_spectrum_data *ss_data_cur;
- 	uint32_t i;
--	DC_LOGGER_INIT();
+-static void whitelist_apply_to_hwe(struct xe_hw_engine *hwe)
++static int whitelist_apply_to_hwe(struct xe_hw_engine *hwe)
+ {
+ 	struct xe_reg_sr *sr = &hwe->reg_whitelist;
+ 	struct xe_reg_sr_entry *entry;
+@@ -179,6 +179,8 @@ static void whitelist_apply_to_hwe(struct xe_hw_engine *hwe)
+ 
+ 		slot++;
+ 	}
 +
- 	if (ss_entries_num == NULL) {
- 		DC_LOG_SYNC(
- 			"Invalid entry !!!\n");
-@@ -1587,6 +1583,7 @@ static void ss_info_from_atombios_create
++	return slot;
  }
  
- static bool calc_pll_max_vco_construct(
-+			struct dce110_clk_src *clk_src,
- 			struct calc_pll_clock_source *calc_pll_cs,
- 			struct calc_pll_clock_source_init_data *init_data)
+ /**
+@@ -192,10 +194,11 @@ static void whitelist_apply_to_hwe(struct xe_hw_engine *hwe)
+ void xe_reg_whitelist_process_engine(struct xe_hw_engine *hwe)
  {
-@@ -1738,6 +1735,7 @@ bool dce110_clk_src_construct(
- 	ss_info_from_atombios_create(clk_src);
+ 	struct xe_rtp_process_ctx ctx = XE_RTP_PROCESS_CTX_INITIALIZER(hwe);
++	int first_oa_slot;
  
- 	if (!calc_pll_max_vco_construct(
-+			clk_src,
- 			&clk_src->calc_pll,
- 			&calc_pll_cs_init_data)) {
- 		ASSERT_CRITICAL(false);
-@@ -1752,7 +1750,7 @@ bool dce110_clk_src_construct(
+ 	xe_rtp_process_to_sr(&ctx, register_whitelist, ARRAY_SIZE(register_whitelist),
+ 			     &hwe->reg_whitelist, false);
+-	whitelist_apply_to_hwe(hwe);
++	first_oa_slot = whitelist_apply_to_hwe(hwe);
  
- 
- 	if (!calc_pll_max_vco_construct(
--			&clk_src->calc_pll_hdmi, &calc_pll_cs_init_data_hdmi)) {
-+			clk_src, &clk_src->calc_pll_hdmi, &calc_pll_cs_init_data_hdmi)) {
- 		ASSERT_CRITICAL(false);
- 		goto unexpected_failure;
- 	}
+ 	xe_rtp_process_to_sr(&ctx, oa_whitelist, ARRAY_SIZE(oa_whitelist),
+ 			     &hwe->oa_whitelist, false);
+-- 
+2.53.0
+
 
 
