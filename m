@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED3F22DB7BB;
-	Fri,  7 Aug 2026 15:08:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BED5F2DB7BB;
+	Fri,  7 Aug 2026 15:08:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115290; cv=none; b=hpCiyTzJavk/7RZiW/c1woyrXVBB4ZqsMbTnO0AtM4uHoMFzRVnDtzMV+A/Qn+OfMmEuNI/j9Xaxn5KHi4Z5ayEPIDYLiNynGgX7K941BwBRB/pLfe/INJpmmwTdpc75BUF/rzsIL3PdneQr0I//EYRv38Pm3rasjrnJ6oURnrE=
+	t=1786115293; cv=none; b=CduFZcnooa9n1uGOwD3o8ztjFGSXNm2I09XNyr4c87JuyI6yleZF42aZXzXp7T5me0m9cXBODQQWyQ6r438cXTxweYS48912qtkUr90xakGYu3gObaLPv0g3NyM0c56LrIv+7rmTW0Hoh4+T/E24W1oCfjULcKT1mLpMMK2npdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115290; c=relaxed/simple;
-	bh=Cg5/5PbvGYAkEZlho7D3v9zMVndHcVhtBbbGHsd05Dw=;
+	s=arc-20240116; t=1786115293; c=relaxed/simple;
+	bh=E5zr7aZJ6Rxbo4lT85QfkqfDVUMpmT4eO4jNU18MQtE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FRG9V7H5Wz9ZW8FgDILx9fwOHxNg+AmnwmPTapWhC17Kqt/vXDUYEAVghhTA/WheXTAPjUA8XQ9FXNTyDZskdxTBiA2RURPy5VuxxxBaEWqXOSzofXN7PrwGclUBBpeVo+RbfkeOOS/u9oOyjCDizy7K3jnY9esV/k+h9skuhLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=069MyNrk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=c2XlwnYHEFk5pA2J5pxvOKgVpPJXwOqgsE82m3Z7EHIfueqrl6Q+HXPsQoRdsyEw+ociE+WMPzqwOs8VVn/D4LW5Gp7YKnNCMAN/xz+rmCiJ2mQYClwHdIPiCqo2A0OMY/WxnlyN/ZCOGXvJfoXKdKlysD+yRA5+AmKg7Gr27G4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QviLCEUH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="069MyNrk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EBCB1F000E9;
-	Fri,  7 Aug 2026 15:08:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QviLCEUH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 273681F00A3A;
+	Fri,  7 Aug 2026 15:08:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115288;
-	bh=zoD4uKV77UO5HQorLyjKyJoLWjol7BT4yO93yMhKl+0=;
+	s=korg; t=1786115291;
+	bh=ldPOsXds1ttjRldNFGoCHbcMA1PeKQlYiiRYZsNcNig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=069MyNrk1XgwTsUFgH7ZUs4hTV8w8n7ZJytEioH5I8M8I0JZHeMFyvewmtPJnkNbr
-	 nzhmYBuSqRQXItc4sG/RMNcUd+XyYZ5zJsRFhX5rlI5vmKjtOfsKgg1QLq0Asnypea
-	 xXIDp+oGZstiOwxlWuE+aymgnN4cv9DXY46UYUOs=
+	b=QviLCEUHdYqnrIy4pAewkOr+Ylw4dN9S5dKzKIvIqyWRdbdoUgxqi1fcoKqaiuCnq
+	 2WuTa6hECUJXFdzoc6M5o2/ThCzT6spuaCYlGqjpBUF+TVBi3XMWE9tNk5Tv7vTbRY
+	 AniyHXlGXG38f0lvkmhMrRW7xhIPVtXyBvxcCHJQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Julian Anastasov <ja@ssi.bg>,
-	Zhiling Zou <roxy520tt@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 6.18 223/396] ipvs: do not propagate one-packet flag to synced conns
-Date: Fri,  7 Aug 2026 16:36:23 +0200
-Message-ID: <20260807143429.073676200@linuxfoundation.org>
+	Runa Takemoto <takemotoruna223@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.18 224/396] ksmbd: reject repeated SMB2 NEGOTIATE requests
+Date: Fri,  7 Aug 2026 16:36:24 +0200
+Message-ID: <20260807143429.094865012@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -56,50 +51,145 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <roxy520tt@gmail.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit a63d2dbaeb50a85d4c976b15a36e6b0c7113db5b upstream.
+commit cb469993b3a61a72653770856d37af616d72d05f upstream.
 
-Synced connections can be created before their destination exists. When
-the destination is later added, ip_vs_bind_dest() copies connection flags
-from the destination into cp->flags.
+Unauthenticated client can send multiple successful SMB2 NEGOTIATE
+requests on one connection before SESSION_SETUP. While the connection is
+in KSMBD_SESS_NEED_SETUP, smb2_handle_negotiate() accepts another
+SMB3.1.1 NEGOTIATE and overwrites conn->preauth_info with a new allocation.
+Only the final allocation is freed when the connection is released, leaking
+one object for every additional successful request.
 
-IP_VS_CONN_F_ONE_PACKET connections are not synced. If a synced
-connection inherits IP_VS_CONN_F_ONE_PACKET while it is already hashed,
-expiry can treat it as a one-packet connection and skip unlinking the
-existing conn_tab node, leaving stale hash nodes pointing at a freed
-struct ip_vs_conn.
+A repeated SMB2 NEGOTIATE after a dialect has been selected is a protocol
+violation. MS-SMB2 section 3.3.5.4 requires the server to disconnect
+without replying in this case. Set the connection exiting when rejecting
+the request, in addition to suppressing the response.
 
-Drop IP_VS_CONN_F_ONE_PACKET from destination flags when binding synced
-connections.
+Reject SMB2 NEGOTIATE unless the connection is new or is waiting for the
+SMB2 NEGOTIATE that follows an SMB1 multi-protocol negotiate. Serialize
+both SMB1 and SMB2 negotiation paths under conn->srv_mutex, since they
+update connection-wide dialect and negotiation state.
 
-Fixes: 26ec037f9841 ("IPVS: one-packet scheduling")
+Move the locking contract to ksmbd_smb_negotiate_common(), where the state
+and dialect are selected, and add ksmbd_conn_new() for consistent state
+access.
+
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
 Cc: stable@vger.kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Suggested-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: Zhiling Zou <roxy520tt@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Acked-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Reported-by: Runa Takemoto <takemotoruna223@gmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/ipvs/ip_vs_conn.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/smb/server/connection.h |    5 +++++
+ fs/smb/server/smb2pdu.c    |   10 ++--------
+ fs/smb/server/smb_common.c |   37 ++++++++++++++++++++++++++++++-------
+ 3 files changed, 37 insertions(+), 15 deletions(-)
 
---- a/net/netfilter/ipvs/ip_vs_conn.c
-+++ b/net/netfilter/ipvs/ip_vs_conn.c
-@@ -599,6 +599,9 @@ ip_vs_bind_dest(struct ip_vs_conn *cp, s
- 	flags = cp->flags;
- 	/* Bind with the destination and its corresponding transmitter */
- 	if (flags & IP_VS_CONN_F_SYNC) {
-+		/* Synced conns are hashed, so they can not get this flag */
-+		conn_flags &= ~IP_VS_CONN_F_ONE_PACKET;
+--- a/fs/smb/server/connection.h
++++ b/fs/smb/server/connection.h
+@@ -197,6 +197,11 @@ void ksmbd_conn_r_count_dec(struct ksmbd
+  * This is a hack. We will move status to a proper place once we land
+  * a multi-sessions support.
+  */
++static inline bool ksmbd_conn_new(struct ksmbd_conn *conn)
++{
++	return READ_ONCE(conn->status) == KSMBD_SESS_NEW;
++}
 +
- 		/* if the connection is not template and is created
- 		 * by sync, preserve the activity flag.
- 		 */
+ static inline bool ksmbd_conn_good(struct ksmbd_conn *conn)
+ {
+ 	return READ_ONCE(conn->status) == KSMBD_SESS_GOOD;
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -1102,6 +1102,8 @@ static __le32 deassemble_neg_contexts(st
+  * smb2_handle_negotiate() - handler for smb2 negotiate command
+  * @work:	smb work containing smb request buffer
+  *
++ * The caller holds conn->srv_mutex.
++ *
+  * Return:      0
+  */
+ int smb2_handle_negotiate(struct ksmbd_work *work)
+@@ -1115,13 +1117,6 @@ int smb2_handle_negotiate(struct ksmbd_w
+ 
+ 	ksmbd_debug(SMB, "Received negotiate request\n");
+ 	conn->need_neg = false;
+-	if (ksmbd_conn_good(conn)) {
+-		pr_err("conn->tcp_status is already in CifsGood State\n");
+-		work->send_no_response = 1;
+-		return rc;
+-	}
+-
+-	ksmbd_conn_lock(conn);
+ 	smb2_buf_len = get_rfc1002_len(work->request_buf);
+ 	smb2_neg_size = offsetof(struct smb2_negotiate_req, Dialects);
+ 	if (smb2_neg_size > smb2_buf_len) {
+@@ -1272,7 +1267,6 @@ int smb2_handle_negotiate(struct ksmbd_w
+ 	ksmbd_conn_set_need_setup(conn);
+ 
+ err_out:
+-	ksmbd_conn_unlock(conn);
+ 	if (rc)
+ 		rsp->hdr.Status = STATUS_INSUFFICIENT_RESOURCES;
+ 
+--- a/fs/smb/server/smb_common.c
++++ b/fs/smb/server/smb_common.c
+@@ -592,23 +592,46 @@ int ksmbd_smb_negotiate_common(struct ks
+ 	struct ksmbd_conn *conn = work->conn;
+ 	int ret;
+ 
+-	conn->dialect =
+-		ksmbd_negotiate_smb_dialect(work->request_buf);
+-	ksmbd_debug(SMB, "conn->dialect 0x%x\n", conn->dialect);
+-
+ 	if (command == SMB2_NEGOTIATE_HE) {
++		/*
++		 * An SMB2 NEGOTIATE is valid for a new connection, or after an
++		 * SMB1 multi-protocol negotiate has selected SMB2. Do not allow
++		 * a second SMB2 NEGOTIATE to replace connection-wide state
++		 * while a session setup is pending. KSMBD_SESS_NEED_RECONNECT
++		 * is a transient session state and does not restart transport
++		 * negotiation.
++		 */
++		ksmbd_conn_lock(conn);
++		if (!ksmbd_conn_new(conn) &&
++		    !ksmbd_conn_need_negotiate(conn)) {
++			work->send_no_response = 1;
++			ksmbd_conn_set_exiting(conn);
++			ksmbd_conn_unlock(conn);
++			return 0;
++		}
++
++		conn->dialect =
++			ksmbd_negotiate_smb_dialect(work->request_buf);
++		ksmbd_debug(SMB, "conn->dialect 0x%x\n", conn->dialect);
+ 		ret = smb2_handle_negotiate(work);
++		ksmbd_conn_unlock(conn);
+ 		return ret;
+ 	}
+ 
+ 	if (command == SMB_COM_NEGOTIATE) {
++		ksmbd_conn_lock(conn);
++		conn->dialect =
++			ksmbd_negotiate_smb_dialect(work->request_buf);
++		ksmbd_debug(SMB, "conn->dialect 0x%x\n", conn->dialect);
+ 		if (__smb2_negotiate(conn)) {
+ 			init_smb3_11_server(conn);
+-			init_smb2_neg_rsp(work);
++			ret = init_smb2_neg_rsp(work);
+ 			ksmbd_debug(SMB, "Upgrade to SMB2 negotiation\n");
+-			return 0;
++		} else {
++			ret = smb_handle_negotiate(work);
+ 		}
+-		return smb_handle_negotiate(work);
++		ksmbd_conn_unlock(conn);
++		return ret;
+ 	}
+ 
+ 	pr_err("Unknown SMB negotiation command: %u\n", command);
 
 
