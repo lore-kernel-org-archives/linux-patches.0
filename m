@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B04C397958;
-	Fri,  7 Aug 2026 15:25:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4B67369224;
+	Fri,  7 Aug 2026 15:25:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116321; cv=none; b=u4k0EiuIkkYuB50QimaUX3N+65ZjScV9TnaghLKXmqGPdgoOudmnhLWAuR7ssNPXHORJSplM14EI5DE017xjLfzjX76kTkFYGnNCDzCTA/4/2g04uOIpgw4rDEko4W69bTkajWmFQEjTTY9IxYrZqbsj1Zv+RtTMV8iEmzXdGJg=
+	t=1786116324; cv=none; b=YM+K2o+ojjb+3p0a2FurKJpeO9yXh3kRZAO+pAxnjDCw+rncqomsLnwJ0yMjU5feAzG/tkK0nOYd3ENohUCmc1sk35Gy4vHajeEJ0Bl/hc1TAGghMCsZpvBbz9DBvqRekHzAY0S7WdHbc0G8Iy+5Ac4EHlWRNc8fQyEGpCM7Qok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116321; c=relaxed/simple;
-	bh=nMqVovKnNX1+MUDgP/9o9Lm235FVUZd3YwuhxtUCAAg=;
+	s=arc-20240116; t=1786116324; c=relaxed/simple;
+	bh=aWaJzA2JiITHK8OubJ15/fvDnWogVBr2aXp2SFw4gMQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lSZ7tFSGVkmtsN5g00UdywM465VUjaUQsms+5eM2c4vev1h2js0hj90B4gmOPIDAT5ce8J+5pipn2FD51LH71IZipxUgTZ3pujqz9R5uFhLQ9HpIbycQkzyTy+xFNjGy9Ya4byOSrbEz/ZOcRQi81HuqGQCYP2E5yd/4ZlKdoy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=muOx5g0b; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CS2VsNDkNXgbETV5a5clk2UwCTGLdwr2/HdOU4sgmxBxsh/UCVD4Taiz6oxsqLx4XioaYQhbimLl793HDcy+km5eV6SVD4WUDrG59+scXdfjysvbNJhwLOStz95JLqWNezKOGWyNQtql0FwKEya7F4ATTohLHzVeJQWRHtI+ngI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OdIQpUei; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="muOx5g0b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 776021F000E9;
-	Fri,  7 Aug 2026 15:25:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OdIQpUei"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B23C1F000E9;
+	Fri,  7 Aug 2026 15:25:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116320;
-	bh=2JkQ8Si64uS3bq2Z5flcVmC/hzHmrFXrwHrp+l/zcMw=;
+	s=korg; t=1786116322;
+	bh=EWdTB84zGXn+x4P0+FpczEYricU5VfNLqrg5htOn2Go=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=muOx5g0bjw2zuK6X4T/EB7yA3tiCVAONqkN37IQO3UqLk9VJrV49/dwaDfE4N4cjG
-	 YwpXSwRWEC9Ve3yk2pf0IQ7pg8L1bLyFxAWbkNTAK+6SPBWB1XcqKA4o1cHqCN84kX
-	 OyAGljrIjGxg48cmGHVuRM81emBry4VWxM+vNoZA=
+	b=OdIQpUeiUJh3L+JqXHJKDUc0c2qDhNnzISF4V63QJdroXAQZL6LAtCMpQpoA9WIko
+	 oz3YOPdqRBS3Z8SrLNuw6bZZ67KI5KlpLapGAJZM5xgSgEayWdYNPBoWfdTwPiJEm2
+	 dDzfcyMtUNutH1N264Yn0ayVaauodcDOSSHDmZi0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Aaron Conole <aconole@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 163/261] net: openvswitch: fix skb leak on flow key update failure during recirculation
-Date: Fri,  7 Aug 2026 16:38:40 +0200
-Message-ID: <20260807143418.880274988@linuxfoundation.org>
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	CK Hu <ck.hu@mediatek.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Subject: [PATCH 6.6 190/261] drm/mediatek: ovl_adaptor: balance component registrations
+Date: Fri,  7 Aug 2026 16:39:07 +0200
+Message-ID: <20260807143419.465484527@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143415.358597922@linuxfoundation.org>
 References: <20260807143415.358597922@linuxfoundation.org>
@@ -51,58 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Maximets <i.maximets@ovn.org>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-commit e1cf066244dad576221b7123a0e5005967f25a20 upstream.
+commit 533e3469a57996905cdb95f178e7efe38c21aeb2 upstream.
 
-do_execute_actions() returns right away when execute_recirc() fails on
-the last action as it assumes this function always takes ownership of
-the skb when 'last' is true.  But when the flow key update fails, the
-function doesn't free the skb and it ends up leaked.
+The OVL adaptor registers both an aggregate driver for its child devices
+and a component for the main DRM aggregate. Probe currently ignores an
+error from registering the child aggregate and leaves that aggregate
+registered if registering the DRM component fails. The remove callback
+also leaves the DRM component registered.
 
-This is a very unlikely scenario as it requires the packet to become
-unparseable by applying a set of actions on a previously parseable skb,
-but should be fixed nevertheless.
+These imbalances can leave component framework entries referring to a
+device whose probe failed or whose driver has been detached. The aggregate
+unbind callback also fails to undo component_bind_all(), leaving its child
+components marked as bound when the aggregate is removed.
 
-Reported by Sashiko.
+Check the aggregate registration result, unwind it when the component
+registration fails, and unregister the component before the aggregate on
+remove. Keep runtime PM enabled until both framework registrations have
+been removed, and unbind all child components from the aggregate unbind
+callback.
 
-Fixes: 971427f353f3 ("openvswitch: Add recirc and hash action.")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
-Reviewed-by: Aaron Conole <aconole@redhat.com>
-Link: https://patch.msgid.link/20260727181851.306076-2-i.maximets@ovn.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 453c3364632a ("drm/mediatek: Add ovl_adaptor support for MT8195")
+Cc: stable@vger.kernel.org # 6.4+
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Reviewed-by: CK Hu <ck.hu@mediatek.com>
+Link: https://patchwork.kernel.org/project/linux-mediatek/patch/20260721152242.47138-1-mhun512@gmail.com/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/openvswitch/actions.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/mediatek/mtk_disp_ovl_adaptor.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/net/openvswitch/actions.c
-+++ b/net/openvswitch/actions.c
-@@ -1120,6 +1120,10 @@ static int execute_masked_set_action(str
- 	return err;
+--- a/drivers/gpu/drm/mediatek/mtk_disp_ovl_adaptor.c
++++ b/drivers/gpu/drm/mediatek/mtk_disp_ovl_adaptor.c
+@@ -494,6 +494,7 @@ static void mtk_disp_ovl_adaptor_master_
+ 	struct mtk_disp_ovl_adaptor *priv = dev_get_drvdata(dev);
+ 
+ 	priv->children_bound = false;
++	component_unbind_all(dev, priv->mmsys_dev);
  }
  
-+/* When 'last' is true, recirc() should always consume the 'skb'.
-+ * Otherwise, recirc() should keep 'skb' intact regardless what
-+ * actions are executed on recirculation.
-+ */
- static int execute_recirc(struct datapath *dp, struct sk_buff *skb,
- 			  struct sw_flow_key *key,
- 			  const struct nlattr *a, bool last)
-@@ -1130,8 +1134,12 @@ static int execute_recirc(struct datapat
- 		int err;
+ static const struct component_master_ops mtk_disp_ovl_adaptor_master_ops = {
+@@ -520,12 +521,15 @@ static int mtk_disp_ovl_adaptor_probe(st
  
- 		err = ovs_flow_key_update(skb, key);
--		if (err)
-+		if (err) {
-+			if (last)
-+				ovs_kfree_skb_reason(skb,
-+						     OVS_DROP_ACTION_ERROR);
- 			return err;
-+		}
+ 	priv->mmsys_dev = pdev->dev.platform_data;
+ 
+-	component_master_add_with_match(dev, &mtk_disp_ovl_adaptor_master_ops, match);
++	ret = component_master_add_with_match(dev, &mtk_disp_ovl_adaptor_master_ops, match);
++	if (ret)
++		return dev_err_probe(dev, ret, "Failed to add component master\n");
+ 
+ 	pm_runtime_enable(dev);
+ 
+ 	ret = component_add(dev, &mtk_disp_ovl_adaptor_comp_ops);
+ 	if (ret != 0) {
++		component_master_del(dev, &mtk_disp_ovl_adaptor_master_ops);
+ 		pm_runtime_disable(dev);
+ 		dev_err(dev, "Failed to add component: %d\n", ret);
  	}
- 	BUG_ON(!is_flow_key_valid(key));
+@@ -535,6 +539,7 @@ static int mtk_disp_ovl_adaptor_probe(st
  
+ static int mtk_disp_ovl_adaptor_remove(struct platform_device *pdev)
+ {
++	component_del(&pdev->dev, &mtk_disp_ovl_adaptor_comp_ops);
+ 	component_master_del(&pdev->dev, &mtk_disp_ovl_adaptor_master_ops);
+ 	pm_runtime_disable(&pdev->dev);
+ 	return 0;
 
 
