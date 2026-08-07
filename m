@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 671AA476068;
-	Fri,  7 Aug 2026 15:36:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E2F74766BC;
+	Fri,  7 Aug 2026 15:36:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116976; cv=none; b=QE4Fc1cJfxiKWFVYBtLAvFYlqV3krwMoHn7lQshfTpS9ZEChRubFh51pCpdtZrEXcZ3yhR0xJiqQQmbFY3tIWlq5EsozR+/u4JteNP+HeuwtUhQQeruROrbQG0SvzvPiG8mJmVu2HPJX/6I4B8R1DZgE8U+T1FBKZVv5fgVHMu4=
+	t=1786116979; cv=none; b=nv+df6QseRqAHJGvDLS/bJSVuW2Zy1C07EHnx9d5IIV9QFEXdz3BAYu/iSyqekIdO3JfYPXg6cnJAREB7EVFdXoPAfuhFnPURfWPdOoRANwD7rLKL0zB7zCrIEvARQ58f/zyCyifrcr8xb0gbQNmtwpBdrA1bqRnihmO7nwe/Ww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116976; c=relaxed/simple;
-	bh=d1wZjCz3j6Cwyx/q5BL2ZDctOxnCnT84WPrjmW4f13A=;
+	s=arc-20240116; t=1786116979; c=relaxed/simple;
+	bh=V/k0C+/OaG0GdQ1RDT3N8mYhe04yvPDSoWLom+7IXW4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c4scbxt6CUllU+mOEHLPKi9R1hrAeHHrfXH68Aqjf1DL5Z/6KygRJcizWN0teyoVk18kXMBEUA/Yttf/DsRUYfZPi///l9Kuyv1nb0kT7iMGGiqXCO/RrHZ0Ujh8wryf6Op8z01pYKEVTEGaQHil6UdXx7tLT0tV93V4S2dmkTM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pTNpxjEr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ILVfnlYLg5RJInJNPfLfaS5NZqm9xa5eYmEpdyUY0FWHAsZPdC1BGyQ1Gz/8gMFuqRGazWwOhZrUj3WrQhfky57zn3jLryCBn5AQ6s73brd54kyFzYlnI90vqs6GTvjHulsXUTPXgS524yVW0lWOP7zUnZHLqb++ccssruYt1c0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dyUptvjt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pTNpxjEr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97A861F000E9;
-	Fri,  7 Aug 2026 15:36:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dyUptvjt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C4321F000E9;
+	Fri,  7 Aug 2026 15:36:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116974;
-	bh=aRwc4QiTNdTrhpOPMlD6oNLqv/LGt5I1hWXzhNVBCNA=;
+	s=korg; t=1786116977;
+	bh=nsSThzKLpI04GuwHG2pHERLgQTjRE69Z2+9z7AqhuSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pTNpxjEroxfZVoiaqsu120+SwP+u4TNIgBVovv9N5nrv427ULVoj4RkZjrbNAnJuR
-	 gOfeN5BCM/fkoHQSlqTOEqoUPwfmhBAepQkHqV5lRFrekSTSJlC+Ojj97odtAwMBYC
-	 dNVPR67DUHQgTmK6ItLIoarEMdD5Fju29W149DEo=
+	b=dyUptvjtX4dhEO5Anqm4bMxUR48UtLe0NewrcJ6IEXkLaEt7AW9gnBkKm+pyvfBB2
+	 upCbYm9eYLbINIEY/b8wffRGiZtQgQcI0UOMjUM/3y3BQsVfMCtimCwYxHnTav3ROp
+	 XCNzIhT+GNb9yQ1mTFffnnPzdsN73qbdXtPbDWAU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Block <bblock@linux.ibm.com>,
-	M Nikhil <nikh1092@linux.ibm.com>,
-	Chinmaya Kajagar <chinmayk@linux.ibm.com>,
-	Nihar Panda <niharp@linux.ibm.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Mike Christie <michael.christie@oracle.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 154/438] scsi: zfcp: Fix memory leak during adapter release by destroying gid_pn_req
-Date: Fri,  7 Aug 2026 16:35:50 +0200
-Message-ID: <20260807143431.319732246@linuxfoundation.org>
+Subject: [PATCH 7.1 155/438] scsi: target: Clear cmd_cnt when initial counter enrollment fails
+Date: Fri,  7 Aug 2026 16:35:51 +0200
+Message-ID: <20260807143431.341260729@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -54,63 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Block <bblock@linux.ibm.com>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit b601fa590e667bd9643feed8c869b6b3e418480d ]
+[ Upstream commit a8ddfd2425bbbafadae8700d63ed8a61a4109878 ]
 
-When releasing an adapter we don't free the mempool 'gid_pn_req' that is
-allocated during the enqueue. This leaks memory:
+When target_get_sess_cmd() fails during session shutdown because
+percpu_ref_tryget_live() returns false, the command keeps the
+se_cmd->cmd_cnt pointer that __target_init_cmd() assigned earlier
+without owning a reference. Final release through
+target_release_cmd_kref() then issues an unmatched percpu_ref_put().
 
-  unreferenced object 0xd8d29297de700 (size 256):
-    comm "(udev-worker)", pid 2105, jiffies 4294945794
-    hex dump (first 32 bytes):
-      00 00 00 00 de ad 4e ad ff ff ff ff 00 00 00 00  ......N.........
-      ff ff ff ff ff ff ff ff 00 0d c4 5f 67 9d 99 e0  ..........._g...
-    backtrace (crc 4a5b5da2):
-      [<000dc45f64da418c>] kmemleak_alloc+0x6c/0xa0
-      [<000dc45f62b430aa>] __kmalloc_cache_node_noprof+0x36a/0x4d0
-      [<000dc45f629a535a>] mempool_create_node_noprof+0xaa/0x150
-      [<000dc45ee2c065e6>] zfcp_allocate_low_mem_buffers+0x96/0x370 [zfcp]
-      [<000dc45ee2c070f8>] zfcp_adapter_enqueue+0x598/0xd40 [zfcp]
-      [<000dc45ee2c08eb0>] zfcp_ccw_set_online+0x160/0x210 [zfcp]
-      [<000dc45f643d4762>] ccw_device_set_online+0x232/0xd80
-      [<000dc45f643d53d4>] online_store_recog_and_online+0x124/0x390
-      [<000dc45f643d8238>] online_store+0x298/0x5b0
-      [<000dc45f62eb0a04>] kernfs_fop_write_iter+0x2c4/0x480
-      [<000dc45f62c81150>] new_sync_write+0x370/0x4b0
-      [<000dc45f62c87abe>] vfs_write+0x43e/0x5b0
-      [<000dc45f62c87ff4>] ksys_write+0x114/0x1f0
-      [<000dc45f621c4a16>] do_syscall+0x2f6/0x430
-      [<000dc45f64d9d5d8>] __do_syscall+0xc8/0x1c0
-      [<000dc45f64dc2224>] system_call+0x74/0xa0
+Commit 8e288be8606a ("scsi: target: Pass in cmd counter to use during
+cmd setup") moved the cmd_cnt assignment ahead of the reference
+acquisition.  Clear se_cmd->cmd_cnt whenever the initial
+target_get_sess_cmd() fails in target_init_cmd() and
+target_submit_tmr(), so release performs exactly one matching put per
+acquired reference.
 
-Fix this by destroying the mempool during the adapter's release.
-
-Fixes: 799b76d09aee ("[SCSI] zfcp: Decouple gid_pn requests from erp")
-Signed-off-by: Benjamin Block <bblock@linux.ibm.com>
-Tested-by: M Nikhil <nikh1092@linux.ibm.com>
-Acked-by: M Nikhil <nikh1092@linux.ibm.com>
-Reviewed-by: Chinmaya Kajagar <chinmayk@linux.ibm.com>
-Reviewed-by: Nihar Panda <niharp@linux.ibm.com>
-Link: https://patch.msgid.link/20260720072736.3381816-2-niharp@linux.ibm.com
+Fixes: 8e288be8606a ("scsi: target: Pass in cmd counter to use during cmd setup")
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Link: https://patch.msgid.link/20260722-reference-count-underflow-in-target-v1-1-63ab664f12fd@nvidia.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/scsi/zfcp_aux.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/target/target_core_transport.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/s390/scsi/zfcp_aux.c b/drivers/s390/scsi/zfcp_aux.c
-index 8ff7db7921b5a..fea573e00f9df 100644
---- a/drivers/s390/scsi/zfcp_aux.c
-+++ b/drivers/s390/scsi/zfcp_aux.c
-@@ -253,6 +253,7 @@ static int zfcp_allocate_low_mem_buffers(struct zfcp_adapter *adapter)
- static void zfcp_free_low_mem_buffers(struct zfcp_adapter *adapter)
+diff --git a/drivers/target/target_core_transport.c b/drivers/target/target_core_transport.c
+index fad03a15c969e..dcfe945949167 100644
+--- a/drivers/target/target_core_transport.c
++++ b/drivers/target/target_core_transport.c
+@@ -1734,6 +1734,7 @@ int target_init_cmd(struct se_cmd *se_cmd, struct se_session *se_sess,
+ 		    u32 data_length, int task_attr, int data_dir, int flags)
  {
- 	mempool_destroy(adapter->pool.erp_req);
-+	mempool_destroy(adapter->pool.gid_pn_req);
- 	mempool_destroy(adapter->pool.scsi_req);
- 	mempool_destroy(adapter->pool.scsi_abort);
- 	mempool_destroy(adapter->pool.qtcb_pool);
+ 	struct se_portal_group *se_tpg;
++	int ret;
+ 
+ 	se_tpg = se_sess->se_tpg;
+ 	BUG_ON(!se_tpg);
+@@ -1763,7 +1764,11 @@ int target_init_cmd(struct se_cmd *se_cmd, struct se_session *se_sess,
+ 	 * necessary for fabrics using TARGET_SCF_ACK_KREF that expect a second
+ 	 * kref_put() to happen during fabric packet acknowledgement.
+ 	 */
+-	return target_get_sess_cmd(se_cmd, flags & TARGET_SCF_ACK_KREF);
++	ret = target_get_sess_cmd(se_cmd, flags & TARGET_SCF_ACK_KREF);
++	if (ret)
++		se_cmd->cmd_cnt = NULL;
++
++	return ret;
+ }
+ EXPORT_SYMBOL_GPL(target_init_cmd);
+ 
+@@ -2039,8 +2044,10 @@ int target_submit_tmr(struct se_cmd *se_cmd, struct se_session *se_sess,
+ 	 * allocation failure.
+ 	 */
+ 	ret = core_tmr_alloc_req(se_cmd, fabric_tmr_ptr, tm_type, gfp);
+-	if (ret < 0)
++	if (ret < 0) {
++		se_cmd->cmd_cnt = NULL;
+ 		return -ENOMEM;
++	}
+ 
+ 	if (tm_type == TMR_ABORT_TASK)
+ 		se_cmd->se_tmr_req->ref_task_tag = tag;
+@@ -2048,6 +2055,7 @@ int target_submit_tmr(struct se_cmd *se_cmd, struct se_session *se_sess,
+ 	/* See target_submit_cmd for commentary */
+ 	ret = target_get_sess_cmd(se_cmd, flags & TARGET_SCF_ACK_KREF);
+ 	if (ret) {
++		se_cmd->cmd_cnt = NULL;
+ 		core_tmr_release_req(se_cmd->se_tmr_req);
+ 		return ret;
+ 	}
 -- 
 2.53.0
 
