@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4473C280331;
-	Fri,  7 Aug 2026 15:32:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19D9825F988;
+	Fri,  7 Aug 2026 15:32:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116761; cv=none; b=TDNINDzL4WJ+8YfF67qqhATul+Qhz8EnPdjPldAtcyJBWLD4rLw8Ca6Fu0j7V0ZmrYp8S9ThoN3r82ijoQBLHfEtsFxjOZNtWm6DUiEiYeSrD8K8cZwwkyJX6bROu4znEbyXrUA6RUg0arPCjPbz6PFs22/CxgYvEwSfiXUNiZ8=
+	t=1786116764; cv=none; b=aFzheckpY1rHlTx7zPTrNieipgaZJ2yJDoqQ+7jwGEJQcITwfTXOwj8CPIaeoQg2efJ+swrB1DOZlrLfiX4mwUK800fNUiRKrgprxXrh5ylXNgseJrKqwlIqGYYYyXn/BK+T0vItn90sgUoAeBeqRvrLYIqWeBHFeVUTvMjGRJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116761; c=relaxed/simple;
-	bh=cjNh/byOwYqGCI5eFH3VbDREgSlTqiUa36LqxbN1Ac8=;
+	s=arc-20240116; t=1786116764; c=relaxed/simple;
+	bh=EvOhOdLH7dksXtg5WXY4EwGxy8PgqRMHO4CpLNW2VJo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W+7O77RYED6nYV9sJqegn8dWWhJJp+93moHZMthyJqfIcsv+2eRunfcYSRat2xz9wN9zhsxKQ6jSnojjb61qFRcmpcG+MLVOcvK7erFpG0istSQmR9/RPLk/lMr3YAy1NsS+K0qQucCeFDoEPL/OaGuGKEcaqm5oOGmnqZffcAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f90Xe1JY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EKLXt+CHChLiufBz1axxdmGzAplJuin9zqqDDG71d9FteCQViS3uo4Z2SN2Iu8gYxih07gtsxzWR8/0B0Ob839E9DhkHu9+RQI0YX+kw4kyh5gudmyxkMLZaaEZzHpZUxgqOveAYv3XFjawCJOlEZlrqLE51AUlRogav8PNMX+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y8TMF1QD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f90Xe1JY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A11DD1F000E9;
-	Fri,  7 Aug 2026 15:32:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y8TMF1QD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74FD71F000E9;
+	Fri,  7 Aug 2026 15:32:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116760;
-	bh=U4MvXVM6xcx5bTOVN4FRos30JQnI7LI6/XxVyiRtCmI=;
+	s=korg; t=1786116763;
+	bh=z1uJqsTcCKOZ/BzzOQUG/ooCXvSJPS5gKZeCk2iXSKk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f90Xe1JY3XQw6tW+jtUhMaKf9wt/eZEW1Xa+HpdLNBiYl0qTTw5pl270Em7LH4Lsx
-	 M7nyxyA7B3x9ahKeDVS3i/s4KF30g/0XKfrkxLwW2q3w+vmIYA22CUuqqQBgIuG1mf
-	 //7azB45D+K+bIG11gs8SpQ/Zp2v+L+7wmxTPkMw=
+	b=y8TMF1QDoWtPJqq+0X7uz2m7Y4klJAO20spCMw/2Hvf8oDV3vxAHCIv69RoSsaPeJ
+	 ularFsjMUkIlG2f9MkY1U9x5PN91Y/xzByihivbcdeX6vn/S/RmkKj3HqGwuiEAX7y
+	 /6G722+WWE6SQ2kb11608llWcjX05yUouisQyS2o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dawei Feng <dawei.feng@seu.edu.cn>,
-	Steve French <stfrench@microsoft.com>,
+	Hongbo Li <lihongbo22@huawei.com>,
+	Chao Yu <chao@kernel.org>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 082/438] smb: client: fix buffer leaks in SMB1 read and write
-Date: Fri,  7 Aug 2026 16:34:38 +0200
-Message-ID: <20260807143429.730587240@linuxfoundation.org>
+Subject: [PATCH 7.1 083/438] erofs: clean up erofs_ishare_fill_inode()
+Date: Fri,  7 Aug 2026 16:34:39 +0200
+Message-ID: <20260807143429.752718626@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -51,83 +52,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dawei Feng <dawei.feng@seu.edu.cn>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-[ Upstream commit 6a3e16d60e81a4aa3056ab15617036cfbea2e07d ]
+[ Upstream commit 1ccc75909ca7c3b52163b408a3e1eb5453db013f ]
 
-CIFSSMBRead(), CIFSSMBWrite() and CIFSSMBWrite2() allocate a request
-buffer before checking whether tcon->ses->server is NULL. If that
-defensive check ever fails, the helper returns -ECONNABORTED without
-releasing the request buffer.
+ - Use the shorthand `si` to replace the overly long `sharedinode`;
 
-Fix these leaks by releasing the allocated request buffer before
-returning from these error paths. Use cifs_small_buf_release() for the
-buffers allocated by small_smb_init() and cifs_buf_release() for the
-buffer allocated by smb_init().
+ - Introduce erofs_warn() and get rid of barely-used _erofs_printk();
 
-The bug was first flagged by an experimental analysis tool we are
-developing for kernel memory-management bugs while analyzing
-v6.13-rc1. The tool is still under development and is not yet publicly
-available. Manual inspection confirms that the bug is still
-present in v7.1.1.
+ - Get rid of the variable `hash`;
 
-An x86_64 allyesconfig build showed no new warnings.
+ - Simplify error paths.
 
-Runtime validation used a temporary fault-injection hook to force
-tcon->ses->server to NULL after request-buffer initialization. On the
-unfixed kernel, the harness observed two leaked small request buffers and
-one leaked large request buffer, with directed kmemleak dumps confirming
-the CIFS buffer allocation stacks. After the fix, no CIFS request-buffer
-deltas remained.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Reviewed-by: Hongbo Li <lihongbo22@huawei.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Stable-dep-of: 96b2dbbe58a1 ("erofs: ensure valid f_path for page cache sharing")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifssmb.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ fs/erofs/internal.h |  2 ++
+ fs/erofs/ishare.c   | 45 +++++++++++++++++++--------------------------
+ 2 files changed, 21 insertions(+), 26 deletions(-)
 
-diff --git a/fs/smb/client/cifssmb.c b/fs/smb/client/cifssmb.c
-index 9e27bfa7376b1..024c5d462424d 100644
---- a/fs/smb/client/cifssmb.c
-+++ b/fs/smb/client/cifssmb.c
-@@ -1681,8 +1681,10 @@ CIFSSMBRead(const unsigned int xid, struct cifs_io_parms *io_parms,
- 	pSMB->hdr.PidHigh = cpu_to_le16((__u16)(pid >> 16));
+diff --git a/fs/erofs/internal.h b/fs/erofs/internal.h
+index 4792490161ec9..9e2ae7b619773 100644
+--- a/fs/erofs/internal.h
++++ b/fs/erofs/internal.h
+@@ -23,6 +23,8 @@
+ __printf(2, 3) void _erofs_printk(struct super_block *sb, const char *fmt, ...);
+ #define erofs_err(sb, fmt, ...)	\
+ 	_erofs_printk(sb, KERN_ERR fmt "\n", ##__VA_ARGS__)
++#define erofs_warn(sb, fmt, ...) \
++	_erofs_printk(sb, KERN_WARNING fmt "\n", ##__VA_ARGS__)
+ #define erofs_info(sb, fmt, ...) \
+ 	_erofs_printk(sb, KERN_INFO fmt "\n", ##__VA_ARGS__)
  
- 	/* tcon and ses pointer are checked in smb_init */
--	if (tcon->ses->server == NULL)
-+	if (!tcon->ses->server) {
-+		cifs_small_buf_release(pSMB);
- 		return -ECONNABORTED;
-+	}
+diff --git a/fs/erofs/ishare.c b/fs/erofs/ishare.c
+index 6ed66b17359ba..35cbd0bc04d7d 100644
+--- a/fs/erofs/ishare.c
++++ b/fs/erofs/ishare.c
+@@ -40,49 +40,42 @@ static int erofs_ishare_iget5_set(struct inode *inode, void *data)
+ bool erofs_ishare_fill_inode(struct inode *inode)
+ {
+ 	struct erofs_sb_info *sbi = EROFS_SB(inode->i_sb);
+-	struct erofs_inode *vi = EROFS_I(inode);
+ 	const struct address_space_operations *aops;
++	struct erofs_inode *vi = EROFS_I(inode);
+ 	struct erofs_inode_fingerprint fp;
+-	struct inode *sharedinode;
+-	unsigned long hash;
++	struct inode *si;
  
- 	pSMB->AndXCommand = 0xFF;       /* none */
- 	pSMB->Fid = netfid;
-@@ -1796,8 +1798,10 @@ CIFSSMBWrite(const unsigned int xid, struct cifs_io_parms *io_parms,
- 	pSMB->hdr.PidHigh = cpu_to_le16((__u16)(pid >> 16));
+ 	aops = erofs_get_aops(inode, true);
+ 	if (IS_ERR(aops))
+ 		return false;
+ 	if (erofs_xattr_fill_inode_fingerprint(&fp, inode, sbi->domain_id))
+ 		return false;
+-	hash = xxh32(fp.opaque, fp.size, 0);
+-	sharedinode = iget5_locked(erofs_ishare_mnt->mnt_sb, hash,
+-				   erofs_ishare_iget5_eq, erofs_ishare_iget5_set,
+-				   &fp);
+-	if (!sharedinode) {
+-		kfree(fp.opaque);
+-		return false;
+-	}
  
- 	/* tcon and ses pointer are checked in smb_init */
--	if (tcon->ses->server == NULL)
-+	if (!tcon->ses->server) {
-+		cifs_buf_release(pSMB);
- 		return -ECONNABORTED;
-+	}
+-	if (inode_state_read_once(sharedinode) & I_NEW) {
+-		sharedinode->i_mapping->a_ops = aops;
+-		sharedinode->i_size = vi->vfs_inode.i_size;
+-		unlock_new_inode(sharedinode);
++	si = iget5_locked(erofs_ishare_mnt->mnt_sb,
++			  xxh32(fp.opaque, fp.size, 0),
++			  erofs_ishare_iget5_eq, erofs_ishare_iget5_set, &fp);
++	if (si && (inode_state_read_once(si) & I_NEW)) {
++		si->i_mapping->a_ops = aops;
++		si->i_size = inode->i_size;
++		unlock_new_inode(si);
+ 	} else {
+ 		kfree(fp.opaque);
+-		if (aops != sharedinode->i_mapping->a_ops) {
+-			iput(sharedinode);
++		if (!si || aops != si->i_mapping->a_ops) {
++			iput(si);
+ 			return false;
+ 		}
+-		if (sharedinode->i_size != vi->vfs_inode.i_size) {
+-			_erofs_printk(inode->i_sb, KERN_WARNING
+-				"size(%lld:%lld) not matches for the same fingerprint\n",
+-				vi->vfs_inode.i_size, sharedinode->i_size);
+-			iput(sharedinode);
++		if (si->i_size != inode->i_size) {
++			erofs_warn(inode->i_sb, "i_size mismatch (%lld != %lld) for the same fingerprint",
++				   inode->i_size, si->i_size);
++			iput(si);
+ 			return false;
+ 		}
+ 	}
+-	vi->sharedinode = sharedinode;
++	vi->sharedinode = si;
+ 	INIT_LIST_HEAD(&vi->ishare_list);
+-	spin_lock(&EROFS_I(sharedinode)->ishare_lock);
+-	list_add(&vi->ishare_list, &EROFS_I(sharedinode)->ishare_list);
+-	spin_unlock(&EROFS_I(sharedinode)->ishare_lock);
++	spin_lock(&EROFS_I(si)->ishare_lock);
++	list_add(&vi->ishare_list, &EROFS_I(si)->ishare_list);
++	spin_unlock(&EROFS_I(si)->ishare_lock);
+ 	return true;
+ }
  
- 	pSMB->AndXCommand = 0xFF;	/* none */
- 	pSMB->Fid = netfid;
-@@ -2077,8 +2081,10 @@ CIFSSMBWrite2(const unsigned int xid, struct cifs_io_parms *io_parms,
- 	pSMB->hdr.PidHigh = cpu_to_le16((__u16)(pid >> 16));
- 
- 	/* tcon and ses pointer are checked in smb_init */
--	if (tcon->ses->server == NULL)
-+	if (!tcon->ses->server) {
-+		cifs_small_buf_release(pSMB);
- 		return -ECONNABORTED;
-+	}
- 
- 	pSMB->AndXCommand = 0xFF;	/* none */
- 	pSMB->Fid = netfid;
 -- 
 2.53.0
 
