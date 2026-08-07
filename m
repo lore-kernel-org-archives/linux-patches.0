@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DF7E2D12ED;
-	Fri,  7 Aug 2026 15:21:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3946727466A;
+	Fri,  7 Aug 2026 15:21:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116114; cv=none; b=kti4mVlGPf+4CFboh2oKe9wMYQEsGKRfM5q2ip11TaUrUAi7HapsxGdxBstHZmmqO/JQ+vZeXWRfc01WurXEIYQqnenFRYdyjiP3gOS6Og0sPgcw7bOd4X8LoeOeoDJq5f4VG8xO5JIF3UK5odhPXgOxuonvAvBUxaevx3b5q/M=
+	t=1786116117; cv=none; b=LyhQPTxn7PE5GYaGMCLi+2xItTNH+DpzVI/U2+Dy4RRw3I3o9NPUF8yCUPimqCKv5KwQeI2hPSLobqp/SktV817nZl9ujVrBPxOkjodv2WgdOWbXnWDKn9/b/faqAtG/t2bOzWJ8+teP0Nxjazzgqo1Py4T3UqC2dwgcf243B/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116114; c=relaxed/simple;
-	bh=VVm3kq4W4+OlkjvI4Tn6jCOrmrZHixPYvpgo3wGwNJk=;
+	s=arc-20240116; t=1786116117; c=relaxed/simple;
+	bh=OlU4Bsw7MIQdx9BaUFnt+O+ImOZalNCRO9LKVnSSwhA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FfGKOw/vmqKvLgSfjq9KYi5i6xUGrHc23unbsXxBZJVfcDjAXji8gx3zDHqXpFMfGSe207705lQm3+pD0OP6ng9Ev5Cd5Ep4WnmAWyTOGtPoyLovbQgCO8lj6I//pxumI7KWK8q2ShOZn+liy+7zD1VbAlOEoa6yLPYgW2oMGbk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FVT8ajva; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hSU5fBkZKcbXt9nyj7/qZni36szFtE1KJxg4nKpdyRN6IXeiYHA5L4k+BFzAXN5fMU8/9bqbkum8Iv54DAbmo8Py4U2w7ernxVJUqv6r7RqdVNphBvF3CVFV7eE1iZ53AasvM4GcuYgn6Jom0f1oqqBRvEToiMfG3anWiLGsQMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kggx99DG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FVT8ajva"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0BE51F000E9;
-	Fri,  7 Aug 2026 15:21:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kggx99DG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C7F31F000E9;
+	Fri,  7 Aug 2026 15:21:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116113;
-	bh=ciPejE63rzyaVcODlvQwRR2LLin/eQaURG7LiBLaPew=;
+	s=korg; t=1786116116;
+	bh=TWeq5qQ6eFRMJKOhT78FR/uo7x7E+VQG/XHrypA7rTk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FVT8ajvagh10DTGSL4ih7B7dpgO3kFlO8O2aj/QyBmfush8ovbjariWh6HbFad/Qd
-	 sX1cG2aPKp/rqGZAokGzsWLC4XC58datIpcTn9v+fPhR8Tt1Q7eMO6Uv9ENrZ0o4jD
-	 ieAgaylLfbB7Ze4YuNk2PaZrC84AC876+DxN99yY=
+	b=Kggx99DGvGgqJQQWP9JC6MaGaPXJjvw2hY0oRXtPdo0TSV4WLZwx4CEVWEHkb0jKS
+	 8MoUcKIKCFiYgzsvB66qYb267o/PGeg3qdtYtoUyVY57vvgRq6kTAEL2EIgDebJXJZ
+	 4ALIToPmYp7sczp1MlBXOq7NVJy+4QrwwdncvZ+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Peter Wang <peter.wang@mediatek.com>,
-	Bean Huo <beanhuo@micron.com>,
-	Bart Van Assche <bvanassche@acm.org>,
+	Benjamin Block <bblock@linux.ibm.com>,
+	M Nikhil <nikh1092@linux.ibm.com>,
+	Chinmaya Kajagar <chinmayk@linux.ibm.com>,
+	Nihar Panda <niharp@linux.ibm.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 073/261] scsi: ufs: core: Cancel RTC work in active-active suspend
-Date: Fri,  7 Aug 2026 16:37:10 +0200
-Message-ID: <20260807143416.961026574@linuxfoundation.org>
+Subject: [PATCH 6.6 074/261] scsi: zfcp: Fix memory leak during adapter release by destroying gid_pn_req
+Date: Fri,  7 Aug 2026 16:37:11 +0200
+Message-ID: <20260807143416.982488727@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143415.358597922@linuxfoundation.org>
 References: <20260807143415.358597922@linuxfoundation.org>
@@ -54,68 +54,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Benjamin Block <bblock@linux.ibm.com>
 
-[ Upstream commit f71b4a30983b846b4075bf544e835121e70e6a43 ]
+[ Upstream commit b601fa590e667bd9643feed8c869b6b3e418480d ]
 
-UFS RTC support schedules ufs_rtc_update_work to periodically update the
-device RTC. The work can issue query commands and access the UFS host
-controller.
+When releasing an adapter we don't free the mempool 'gid_pn_req' that is
+allocated during the enqueue. This leaks memory:
 
-A previous change moved the RTC work cancellation before the PRE_CHANGE
-vendor suspend callback to close a race in the common suspend path.
-However, the active-active path jumps directly to vops_suspend after
-flushing exception handling work and therefore bypasses the
-cancellation.
+  unreferenced object 0xd8d29297de700 (size 256):
+    comm "(udev-worker)", pid 2105, jiffies 4294945794
+    hex dump (first 32 bytes):
+      00 00 00 00 de ad 4e ad ff ff ff ff 00 00 00 00  ......N.........
+      ff ff ff ff ff ff ff ff 00 0d c4 5f 67 9d 99 e0  ..........._g...
+    backtrace (crc 4a5b5da2):
+      [<000dc45f64da418c>] kmemleak_alloc+0x6c/0xa0
+      [<000dc45f62b430aa>] __kmalloc_cache_node_noprof+0x36a/0x4d0
+      [<000dc45f629a535a>] mempool_create_node_noprof+0xaa/0x150
+      [<000dc45ee2c065e6>] zfcp_allocate_low_mem_buffers+0x96/0x370 [zfcp]
+      [<000dc45ee2c070f8>] zfcp_adapter_enqueue+0x598/0xd40 [zfcp]
+      [<000dc45ee2c08eb0>] zfcp_ccw_set_online+0x160/0x210 [zfcp]
+      [<000dc45f643d4762>] ccw_device_set_online+0x232/0xd80
+      [<000dc45f643d53d4>] online_store_recog_and_online+0x124/0x390
+      [<000dc45f643d8238>] online_store+0x298/0x5b0
+      [<000dc45f62eb0a04>] kernfs_fop_write_iter+0x2c4/0x480
+      [<000dc45f62c81150>] new_sync_write+0x370/0x4b0
+      [<000dc45f62c87abe>] vfs_write+0x43e/0x5b0
+      [<000dc45f62c87ff4>] ksys_write+0x114/0x1f0
+      [<000dc45f621c4a16>] do_syscall+0x2f6/0x430
+      [<000dc45f64d9d5d8>] __do_syscall+0xc8/0x1c0
+      [<000dc45f64dc2224>] system_call+0x74/0xa0
 
-If the RTC work runs while the vendor suspend callback is gating or
-otherwise changing hardware state, it can access the controller during
-suspend and trigger an SError.
+Fix this by destroying the mempool during the adapter's release.
 
-Cancel the RTC work before entering the vendor suspend callback in the
-active-active path. Since this path now cancels the work, move the RTC
-work scheduling outside the device and link state restoration block in
-the resume path. This restarts RTC updates after an active-active
-suspend and resume cycle.
-
-Fixes: b0bd84c39289 ("scsi: ufs: core: Fix SError in ufshcd_rtc_work() during UFS suspend")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Reviewed-by: Peter Wang <peter.wang@mediatek.com>
-Reviewed-by: Bean Huo <beanhuo@micron.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20260714172726.1736967-1-lgs201920130244@gmail.com
+Fixes: 799b76d09aee ("[SCSI] zfcp: Decouple gid_pn requests from erp")
+Signed-off-by: Benjamin Block <bblock@linux.ibm.com>
+Tested-by: M Nikhil <nikh1092@linux.ibm.com>
+Acked-by: M Nikhil <nikh1092@linux.ibm.com>
+Reviewed-by: Chinmaya Kajagar <chinmayk@linux.ibm.com>
+Reviewed-by: Nihar Panda <niharp@linux.ibm.com>
+Link: https://patch.msgid.link/20260720072736.3381816-2-niharp@linux.ibm.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufshcd.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/s390/scsi/zfcp_aux.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index 142abff301220..3bbe1088b7e49 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -9830,6 +9830,7 @@ static int __ufshcd_wl_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op)
- 			req_link_state == UIC_LINK_ACTIVE_STATE) {
- 		ufshcd_disable_auto_bkops(hba);
- 		flush_work(&hba->eeh_work);
-+		cancel_delayed_work_sync(&hba->ufs_rtc_update_work);
- 		goto vops_suspend;
- 	}
- 
-@@ -10039,10 +10040,11 @@ static int __ufshcd_wl_resume(struct ufs_hba *hba, enum ufs_pm_op pm_op)
- 		if (ret)
- 			goto set_old_link_state;
- 		ufshcd_set_timestamp_attr(hba);
--		schedule_delayed_work(&hba->ufs_rtc_update_work,
--				      msecs_to_jiffies(UFS_RTC_UPDATE_INTERVAL_MS));
- 	}
- 
-+	schedule_delayed_work(&hba->ufs_rtc_update_work,
-+			      msecs_to_jiffies(UFS_RTC_UPDATE_INTERVAL_MS));
-+
- 	if (ufshcd_keep_autobkops_enabled_except_suspend(hba))
- 		ufshcd_enable_auto_bkops(hba);
- 	else
+diff --git a/drivers/s390/scsi/zfcp_aux.c b/drivers/s390/scsi/zfcp_aux.c
+index ab2f35bc294da..d3cc884ccd599 100644
+--- a/drivers/s390/scsi/zfcp_aux.c
++++ b/drivers/s390/scsi/zfcp_aux.c
+@@ -254,6 +254,7 @@ static int zfcp_allocate_low_mem_buffers(struct zfcp_adapter *adapter)
+ static void zfcp_free_low_mem_buffers(struct zfcp_adapter *adapter)
+ {
+ 	mempool_destroy(adapter->pool.erp_req);
++	mempool_destroy(adapter->pool.gid_pn_req);
+ 	mempool_destroy(adapter->pool.scsi_req);
+ 	mempool_destroy(adapter->pool.scsi_abort);
+ 	mempool_destroy(adapter->pool.qtcb_pool);
 -- 
 2.53.0
 
