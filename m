@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F15A2F8E8B;
-	Fri,  7 Aug 2026 14:56:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EDB3383C86;
+	Fri,  7 Aug 2026 14:56:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114588; cv=none; b=CeWcIeYBhmjTVO+xh+FRAoLZ/ovY3mdJlZeXQtbg6m5K9b/tVNSQr/+NlZ0FQCl848TPyXZ99BR37+1rgDLBJFTYtMjbKBv2XyQYqFTBidRsUard2fgBMg7qt/7WXpW8kaC5NF/eo340+gz/yewgz3//vxwfiL0Za5XYmvES374=
+	t=1786114593; cv=none; b=ZIhvchhmkBrovQgO/xHMyepibULOR2RjVOs3nLOXmenzjLgYnuMvIqJbAWKYTnBHgUgPHsja2ldGQDBxqo3v5FhzT/8JZjWOOe+aMXKIyWmKRz+0WyOb+2kcH01pCu1yybwEXtO037029mmSEgJxPZZzLbp5fefi6k0D2Vj0Axg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114588; c=relaxed/simple;
-	bh=HE0g9rSRCbU5K5E+RqgEOczwpdkwEGVAaQesgxe3/AA=;
+	s=arc-20240116; t=1786114593; c=relaxed/simple;
+	bh=jh97WJ0fksw0Thx/edqhogGZ90wdVAJOk4V0onsX1z4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=t/ovWQlycyZemCVVl207/buIv/xWWa6vj1AoqlMk/KgpiWoPwec33vqr61QiN+rCdUZ+kB48IP0+6EnYzcta+LTQE1SZ6UINBkKz9H4UMp/Sijj2C58BbAi39y1KGbU9iQMpn0uRtla5UTvKdGXhdj2Bggql+o6f0NcJOMYQ2d0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pStCATrE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YjpqDkuAcVqTrowjTVjbM4E1Yj+hviSQ9qAtRT9vye+WoPqO2cUbxdTnpg8j5Gvf33iNVWZ7RDtKu6gLsgqEk6nd56GCBHDNzoYxMGt2eQaq9XE7+qIM77Ld7zCQvII5ZxDkyUePYs89WnI9FmGC77hN4m8NoXaT0AbihC1PQb0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VeAiMtvn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pStCATrE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DC211F00A3A;
-	Fri,  7 Aug 2026 14:56:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VeAiMtvn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8E0F1F00A3D;
+	Fri,  7 Aug 2026 14:56:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114581;
-	bh=zI8z3NVE4VtTFGFvQR8rsHJIueJkjeeaK77uGF126gE=;
+	s=korg; t=1786114587;
+	bh=MoSmHwbypCltRx0ZRoHw28dLIiIcSUlUP8/H22TSKqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pStCATrE8PQF90fMxeOcRCPzA38yMpvgXY3BUXEantsk9Hrziqn/BzBC774KvukHn
-	 1YYoRt4GGl5zKI8SSREaGDHCxItItDH6xLyjUHkEGyvQRQ4uzlCQJHOsJ0v8S+Nvvz
-	 D+pPpyytHeqiPY8aO4St4sirdVdcoC/it8MMYaXE=
+	b=VeAiMtvnWHC5P4domaVXYfRt9FtvK1z4k7HQ/wPQH/Ucq/B2PGn5/wezJCyqm/a/4
+	 BqEEBU/08ka3dEkr5CgM0eTurudLpXBZWB7JP6dLJUDzoNaLm73ShWkSyamgUc3Hx0
+	 yKZ4yY/WgGr7CBBIOeLt44oSQDUKJRUhd++J65Sk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>
-Subject: [PATCH 6.12 270/337] ata: ahci: Make ahci_ignore_port() handle empty mask_port_map
-Date: Fri,  7 Aug 2026 16:37:53 +0200
-Message-ID: <20260807143424.392911142@linuxfoundation.org>
+	Pauli Virtanen <pav@iki.fi>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.12 272/337] Bluetooth: ISO: fix CONNECTED -> CLOSED transition on shutdown/release
+Date: Fri,  7 Aug 2026 16:37:55 +0200
+Message-ID: <20260807143424.436513494@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -45,78 +44,107 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Pauli Virtanen <pav@iki.fi>
 
-commit 130ff5c8b78e6fd05270a04985c50bce6a3de6c1 upstream.
+commit 0786469ee242952008628ed0e2d386098e2065ab upstream.
 
-Commit 8c87215dd3a2 ("ata: libahci_platform: support non-consecutive port
-numbers") added a skip to ahci_platform_enable_phys() for ports that are
-not in mask_port_map.
+Commit d57e506f6a1e ("Bluetooth: ISO: clear iso_data always when detaching conn from hcon")
+merged a version of the UAF fix that breaks releasing connected
+ISO sockets. Since hci_conn::iso_data is set to NULL, iso_chan_del() won't
+be called when the hci_conn disconnects, and the ISO socket does not emit
+POLLHUP correctly.
 
-The code in ahci_platform_get_resources(), will currently set mask_port_map
-for each child "port" node it finds in the device tree.
+Fix by retaining full hci_conn <-> iso_conn association while in
+BT_DISCONNECT state, so that local disconnect via shutdown() follows
+similar ISO socket code path as remote disconnect.  Use a separate flag
+to track whether hci_conn_drop() is needed, instead of setting
+iso_conn::hcon = NULL
 
-However, device trees that do not have any child "port" nodes will not have
-mask_port_map set, and for non-device tree platforms mask_port_map will
-only exist as a quirk for specific PCI device + vendor IDs, or as a kernel
-module parameter, but will not be set by default.
+In iso_sock_ready(), disallow disconnecting socket going BT_CONNECTED,
+in case hcon connects while its drop is pending.
 
-Therefore, the common thing is that mask_port_map is only set if you do not
-want to use all ports (as defined by Offset 0Ch: PI – Ports Implemented
-register), but instead only want to use the ports in mask_port_map. If
-mask_port_map is not set, all ports are available.
-
-Thus, ahci_ignore_port() must be able to handle an empty mask_port_map.
-
-Fixes: 8c87215dd3a2 ("ata: libahci_platform: support non-consecutive port numbers")
-Fixes: 2c202e6c4f4d ("ata: libahci_platform: Do not set mask_port_map when not needed")
-Fixes: c9b5be909e65 ("ahci: Introduce ahci_ignore_port() helper")
-Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Closes: https://lore.kernel.org/linux-ide/10b31dd0-d0bb-4f76-9305-2195c3e17670@samsung.com/
-Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Co-developed-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20250225141612.942170-2-cassel@kernel.org
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Fixes: d57e506f6a1e ("Bluetooth: ISO: clear iso_data always when detaching conn from hcon")
+Fixes: fbdc4bc47268 ("Bluetooth: ISO: Use defer setup to separate PA sync and BIG sync")
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/ahci.h    |    8 ++++++--
- drivers/ata/libahci.c |    1 +
- 2 files changed, 7 insertions(+), 2 deletions(-)
+ net/bluetooth/iso.c |   26 ++++++++++++++++++++------
+ 1 file changed, 20 insertions(+), 6 deletions(-)
 
---- a/drivers/ata/ahci.h
-+++ b/drivers/ata/ahci.h
-@@ -387,8 +387,12 @@ struct ahci_host_priv {
- static inline bool ahci_ignore_port(struct ahci_host_priv *hpriv,
- 				    unsigned int portid)
- {
--	return portid >= hpriv->nports ||
--		!(hpriv->mask_port_map & (1 << portid));
-+	if (portid >= hpriv->nports)
-+		return true;
-+	/* mask_port_map not set means that all ports are available */
-+	if (!hpriv->mask_port_map)
-+		return false;
-+	return !(hpriv->mask_port_map & (1 << portid));
- }
+--- a/net/bluetooth/iso.c
++++ b/net/bluetooth/iso.c
+@@ -23,8 +23,14 @@ static struct bt_sock_list iso_sk_list =
+ };
  
- extern int ahci_ignore_sss;
---- a/drivers/ata/libahci.c
-+++ b/drivers/ata/libahci.c
-@@ -542,6 +542,7 @@ void ahci_save_initial_config(struct dev
- 		hpriv->saved_port_map = port_map;
+ /* ---- ISO connections ---- */
++enum {
++	ISO_CONN_DROPPED,
++	__ISO_CONN_NUM_FLAGS
++};
++
+ struct iso_conn {
+ 	struct hci_conn	*hcon;
++	DECLARE_BITMAP(flags, __ISO_CONN_NUM_FLAGS);
+ 
+ 	/* @lock: spinlock protecting changes to iso_conn fields */
+ 	spinlock_t	lock;
+@@ -105,7 +111,8 @@ static void iso_conn_free(struct kref *r
+ 
+ 	if (conn->hcon) {
+ 		conn->hcon->iso_data = NULL;
+-		hci_conn_drop(conn->hcon);
++		if (!test_and_set_bit(ISO_CONN_DROPPED, conn->flags))
++			hci_conn_drop(conn->hcon);
  	}
  
-+	/* mask_port_map not set means that all ports are available */
- 	if (hpriv->mask_port_map) {
- 		dev_warn(dev, "masking port_map 0x%lx -> 0x%lx\n",
- 			port_map,
+ 	kfree_skb(conn->rx_skb);
+@@ -299,6 +306,7 @@ static int __iso_chan_add(struct iso_con
+ 
+ 	iso_pi(sk)->conn = conn;
+ 	conn->sk = sk;
++	clear_bit(ISO_CONN_DROPPED, conn->flags);
+ 
+ 	if (parent)
+ 		bt_accept_enqueue(parent, sk, true);
+@@ -813,11 +821,8 @@ static void iso_sock_disconn(struct sock
+ 	}
+ 
+ 	sk->sk_state = BT_DISCONN;
+-	iso_conn_lock(iso_pi(sk)->conn);
+-	hci_conn_drop(iso_pi(sk)->conn->hcon);
+-	iso_pi(sk)->conn->hcon->iso_data = NULL;
+-	iso_pi(sk)->conn->hcon = NULL;
+-	iso_conn_unlock(iso_pi(sk)->conn);
++	if (!test_and_set_bit(ISO_CONN_DROPPED, iso_pi(sk)->conn->flags))
++		hci_conn_drop(iso_pi(sk)->conn->hcon);
+ }
+ 
+ static void __iso_sock_close(struct sock *sk)
+@@ -1894,9 +1899,18 @@ static void iso_sock_ready(struct sock *
+ 		return;
+ 
+ 	lock_sock(sk);
++
++	switch (sk->sk_state) {
++	case BT_DISCONN:
++	case BT_CLOSED:
++		release_sock(sk);
++		return;
++	}
++
+ 	iso_sock_clear_timer(sk);
+ 	sk->sk_state = BT_CONNECTED;
+ 	sk->sk_state_change(sk);
++
+ 	release_sock(sk);
+ }
+ 
 
 
