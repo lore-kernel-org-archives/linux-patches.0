@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 563A338D3F2;
-	Fri,  7 Aug 2026 15:13:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19B6D314A73;
+	Fri,  7 Aug 2026 15:13:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115626; cv=none; b=f6FcWXDZ9ajtfgi3na5JNZDbpu4OVN14dtmyXkniR8pkBUcXLREdpb9P7trP+kxYd4+p3luMPC5H4HR/wYhXG9ZaNp8OnBzoriKLObBataJKy6b+ykrfNz/k2jxu2Uw65qjTl271RjmVU3TQNwvKE49qIOdG5v+l1mrKA6kP5eQ=
+	t=1786115629; cv=none; b=Pkwf5ORI69lT5MF0wu2kJr6q9PeWMLYGRPMxFuHtm37YSCdeBAsgmRvZIMLwEJz2v1sjUZvy8A1RjrZf/pHlV/K3C5WAiom2vg6heiG3dxw1pmyu56yrwztz0LADOQ+22gH6eEYVfJQcrCAUuc9t+4oGRtZW1EyA/jlFi7HTKCc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115626; c=relaxed/simple;
-	bh=NSut/lZWrgM7CBHz7gIn9s/atipt1d6uudG+IeuLDCo=;
+	s=arc-20240116; t=1786115629; c=relaxed/simple;
+	bh=YWPHT8wAO0L/XZ5p2fNMf+xQF5OiIknMfEZH2l02lV8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bYpb9p0opPidBbtA+Plf8x4T/ro7DV9j+0anU4JbtemX9XTCPoLDLEH/Ra56Obrm9aJMU0vP7IXMlkxRmBu3TAlbJmiY2Ncx4KNhtf/9K6qjY30o6HlFwqpTbe5q87vZwST07FyUHI6QuXnigpXVxXLXcnvtRbIWHzexwXKhnGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=izymLiSF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Z994hpTFxsYtwCdkux9n/B1rFwBLMsbe+rui4jh73o1n2rT1YXV+gTS9k5pflim1Xv6/HyUvUcnsYglEMd1/XB38cfLk/UavBHltn+SehiJI26c3JGethjaFl/YQoWFQO8uROhOOGnYWMtOah81zJCGcQl59jGdUbwttoLGGPPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BAEgX6so; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="izymLiSF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7407C1F000E9;
-	Fri,  7 Aug 2026 15:13:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BAEgX6so"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A6341F000E9;
+	Fri,  7 Aug 2026 15:13:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115625;
-	bh=Eno/3iQNwoAB+bvY1nVTYbECpUAR/8EJp6/3zgLEOl0=;
+	s=korg; t=1786115627;
+	bh=E9AXC4eVZqyYkJ9Q30X0NSkEp2A6UXCUgATfTSS5N88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=izymLiSF+X9RpekEsH4AIf1WdpaQiuq7AgHlfPYLDBGuYJjb7OTrs/3ZGi1eT9ml3
-	 dYsuTKoJN0ROIdRKF+AdS6xSamaHwx2LfdDhx4gULiC/NL6MrjeEguhE+uXO1bSvTV
-	 wX2cnUbAt3p2tvaWWvGzC8lYk0ofbZHfeGcdwxMk=
+	b=BAEgX6soRhQZ4ghzzwlzQiA6rS01Bi9B9XuRJUM2nt/RInzRpL98+bgOol5105OjP
+	 BLeQGz/DrDhuAhVUDsHUgHdrYr3QmMxIn4JJ+zeBpiP1wimc1m/35Yk77F7pg7Xjwd
+	 ckfz9f+eTWLwZ97zbrHcR55/6545rfEGodwM+Crs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ashutosh Dixit <ashutosh.dixit@intel.com>,
 	Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>,
+	Ashutosh Dixit <ashutosh.dixit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 343/396] drm/xe/rtp: Refactor OAG MMIO trigger register whitelisting
-Date: Fri,  7 Aug 2026 16:38:23 +0200
-Message-ID: <20260807143431.684992538@linuxfoundation.org>
+Subject: [PATCH 6.18 344/396] drm/xe/rtp: Add RING_FORCE_TO_NONPRIV_DENY to OA whitelists
+Date: Fri,  7 Aug 2026 16:38:24 +0200
+Message-ID: <20260807143431.706770504@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -53,64 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Ashutosh Dixit <ashutosh.dixit@intel.com>
 
-[ Upstream commit ed455775c5a68b75e5f6ad6c8e0e3e9c98fd3f64 ]
+[ Upstream commit e70086a3a06d276b4a5d9a2c51c9330c6cf72780 ]
 
-Minor refactor of OAG MMIO trigger register whitelisting for code reuse
-with OAM MMIO trigger register whitelisting.
+Unconditionally whitelisting OA registers is a security violation. Set
+RING_FORCE_TO_NONPRIV_DENY bit in OA nonpriv slots, so that OA registers
+don't get whitelisted by default after probe, gt reset, resume and engine
+reset.
 
+Fixes: 828a8eaf37c3 ("drm/xe/oa: Add MMIO trigger support")
+Cc: stable@vger.kernel.org # v6.12+
+Suggested-by: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
 Signed-off-by: Ashutosh Dixit <ashutosh.dixit@intel.com>
 Reviewed-by: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
-Link: https://patch.msgid.link/20251202025115.373546-5-ashutosh.dixit@intel.com
+Link: https://patch.msgid.link/20260615224227.34880-2-ashutosh.dixit@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_reg_whitelist.c | 29 ++++++++++++---------------
- 1 file changed, 13 insertions(+), 16 deletions(-)
+ drivers/gpu/drm/xe/xe_reg_whitelist.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/gpu/drm/xe/xe_reg_whitelist.c b/drivers/gpu/drm/xe/xe_reg_whitelist.c
-index 21763dc51150b..47fb3e74b567c 100644
+index 47fb3e74b567c..5cb7e0e3a66bd 100644
 --- a/drivers/gpu/drm/xe/xe_reg_whitelist.c
 +++ b/drivers/gpu/drm/xe/xe_reg_whitelist.c
-@@ -66,27 +66,24 @@ static const struct xe_rtp_entry_sr register_whitelist[] = {
- 		       ENGINE_CLASS(RENDER)),
+@@ -67,10 +67,12 @@ static const struct xe_rtp_entry_sr register_whitelist[] = {
  	  XE_RTP_ACTIONS(WHITELIST(CSBE_DEBUG_STATUS(RENDER_RING_BASE), 0))
  	},
--	{ XE_RTP_NAME("oa_reg_render"),
-+
-+#define WHITELIST_OA_MMIO_TRG(trg, status, head) \
-+	WHITELIST(trg, RING_FORCE_TO_NONPRIV_ACCESS_RW), \
-+	WHITELIST(status, RING_FORCE_TO_NONPRIV_ACCESS_RD), \
-+	WHITELIST(head, RING_FORCE_TO_NONPRIV_ACCESS_RD | RING_FORCE_TO_NONPRIV_RANGE_4)
-+
-+#define WHITELIST_OAG_MMIO_TRG \
-+	WHITELIST_OA_MMIO_TRG(OAG_MMIOTRIGGER, OAG_OASTATUS, OAG_OAHEADPTR)
-+
-+	{ XE_RTP_NAME("oag_mmio_trg_rcs"),
- 	  XE_RTP_RULES(GRAPHICS_VERSION_RANGE(1200, XE_RTP_END_VERSION_UNDEFINED),
- 		       ENGINE_CLASS(RENDER)),
--	  XE_RTP_ACTIONS(WHITELIST(OAG_MMIOTRIGGER,
--				   RING_FORCE_TO_NONPRIV_ACCESS_RW),
--			 WHITELIST(OAG_OASTATUS,
--				   RING_FORCE_TO_NONPRIV_ACCESS_RD),
--			 WHITELIST(OAG_OAHEADPTR,
--				   RING_FORCE_TO_NONPRIV_ACCESS_RD |
--				   RING_FORCE_TO_NONPRIV_RANGE_4))
-+	  XE_RTP_ACTIONS(WHITELIST_OAG_MMIO_TRG)
- 	},
--	{ XE_RTP_NAME("oa_reg_compute"),
-+	{ XE_RTP_NAME("oag_mmio_trg_ccs"),
- 	  XE_RTP_RULES(GRAPHICS_VERSION_RANGE(1200, XE_RTP_END_VERSION_UNDEFINED),
- 		       ENGINE_CLASS(COMPUTE)),
--	  XE_RTP_ACTIONS(WHITELIST(OAG_MMIOTRIGGER,
--				   RING_FORCE_TO_NONPRIV_ACCESS_RW),
--			 WHITELIST(OAG_OASTATUS,
--				   RING_FORCE_TO_NONPRIV_ACCESS_RD),
--			 WHITELIST(OAG_OAHEADPTR,
--				   RING_FORCE_TO_NONPRIV_ACCESS_RD |
--				   RING_FORCE_TO_NONPRIV_RANGE_4))
-+	  XE_RTP_ACTIONS(WHITELIST_OAG_MMIO_TRG)
- 	},
- };
  
++#define WHITELIST_DENY(r, f) WHITELIST(r, (f) | RING_FORCE_TO_NONPRIV_DENY)
++
+ #define WHITELIST_OA_MMIO_TRG(trg, status, head) \
+-	WHITELIST(trg, RING_FORCE_TO_NONPRIV_ACCESS_RW), \
+-	WHITELIST(status, RING_FORCE_TO_NONPRIV_ACCESS_RD), \
+-	WHITELIST(head, RING_FORCE_TO_NONPRIV_ACCESS_RD | RING_FORCE_TO_NONPRIV_RANGE_4)
++	WHITELIST_DENY(trg, RING_FORCE_TO_NONPRIV_ACCESS_RW), \
++	WHITELIST_DENY(status, RING_FORCE_TO_NONPRIV_ACCESS_RD), \
++	WHITELIST_DENY(head, RING_FORCE_TO_NONPRIV_ACCESS_RD | RING_FORCE_TO_NONPRIV_RANGE_4)
+ 
+ #define WHITELIST_OAG_MMIO_TRG \
+ 	WHITELIST_OA_MMIO_TRG(OAG_MMIOTRIGGER, OAG_OASTATUS, OAG_OAHEADPTR)
 -- 
 2.53.0
 
