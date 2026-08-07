@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0021842882B;
-	Fri,  7 Aug 2026 15:07:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1D1E37206E;
+	Fri,  7 Aug 2026 15:07:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115270; cv=none; b=sLlKpLINNzIzHhd+NIku7GL0IrsLRIs8RshvVf3ohcfmnBZhI++Zv/izchZnK0NXWqavmeMowYJLdbjlbVGASGYZQvO47/7uJm5XhaCy9MI5VuGYthbuBYWfZGp27fM6TQs/pY/7dUGVnKtZV9CcnrTSrvicqKfwHmYeY38gw20=
+	t=1786115273; cv=none; b=tL9Io7oEKkgp2dxwzSd0gIVIECIOVG6VlS8cfqo3VFQuX7VCJbG5v5/uj3mw+AK8+jodDJzCmV5T1/irs9CKVM6XYqdqdxkd1IEowE8O2GhTHJ3qmP7/KRLwqYzd00z42ybRQAnsNPT8OXNqdLVfIZJoXXf7+n6JHY1xHzy+nOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115270; c=relaxed/simple;
-	bh=76Vqflt20/szlldkISE2v2Wn9DPR5kVgC3MCwZw4aGA=;
+	s=arc-20240116; t=1786115273; c=relaxed/simple;
+	bh=ORAutr+9GT6GG6Z1EBEEQvrjYQ5cDaZBD/m+ZZ2tPys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VU4b5itKqRzvRnGTUJu0CtW26kQFtvbTIqkneuLzNgZd5Or7cAZOD5Re2YDnsVtsGIujzOq6HDLbiA5BTHRli6BDYS9HiubKE3YBlg8R+Gg07DI+4M+cDsBE8avMtpk+0nQp1mQU8oHmJ7KjJHvxYhDilEob0XPIpj/r2OVtVY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yzni90gK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OXKxz4Vh7pJ0BXtKrTOsEGGsL6VX8Z/Mc0jt+NAxMVCUVrqZ3oxsyMfW471mOVHSRjfQIKopXyc9ed9t/AU9s/7ZQIfoQl4gbjuaVjQD3tX8+82cnhRNyAllF5gRn/0wLUw9jkMAXP2KQCTE1z2Urbh+a1C+p9nMuOydn6wZ0Q8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sFg3cXtB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yzni90gK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D2081F000E9;
-	Fri,  7 Aug 2026 15:07:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sFg3cXtB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 514E51F000E9;
+	Fri,  7 Aug 2026 15:07:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115268;
-	bh=XNMSWFEsnGBYIkEroV7WBcUcX05jwKFdKsOP+owf91k=;
+	s=korg; t=1786115271;
+	bh=RwUN+R59T1I/KrE+M1+PhjdSonyTt9BcmrFXLUFY6cQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Yzni90gK8E2XWrCWLSJN1bX8U+qcIYL9IYvzDg5GhyDjW3JCK6WlI7pe2UMSXroOR
-	 Fs5YBLNziyfbmur/hrJ/En/HtjUa3JUGjXVDNY/FDBu8c6+BpDPDesvSurfCxjcZz2
-	 Gh5e08PuDJ6nYxyVoX166rI/CYTQ4dXne9r4Pxnw=
+	b=sFg3cXtBANd9X6HzKNJ3xAwRVTVQyL4+3CadJfdeO+B8IFyW4uAryUCwwk7yCo4oC
+	 GrYdzzRY9CAYv7FFyJ3pf1U6+p1d1sitlLBkiu4R1qbJ/kZaUmG0DHG0tYrc4Rr0C6
+	 7o6rBCDD5Wadv5O5VWesakmO5Anrba/sss5JX7fs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Federico Kirschbaum <federico.kirschbaum@xbow.com>,
-	Baul Lee <baul.lee@xbow.com>
-Subject: [PATCH 6.18 216/396] ALSA: usb-audio: fix OOB write in snd_usbmidi_akai_output()
-Date: Fri,  7 Aug 2026 16:36:16 +0200
-Message-ID: <20260807143428.926746118@linuxfoundation.org>
+	Sonali Pradhan <sonalipradhan@google.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.18 217/396] ALSA: usb-audio: Fix DMA buffer out-of-bounds write when fill_max is set
+Date: Fri,  7 Aug 2026 16:36:17 +0200
+Message-ID: <20260807143428.948286839@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -51,56 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baul Lee <baul.lee@xbow.com>
+From: Sonali Pradhan <sonalipradhan@google.com>
 
-commit 0970274613fb463d376211450cab066d34ebfe6a upstream.
+commit d0199ae1666ff9ae2d1d568d64c3430d4c47f0e5 upstream.
 
-snd_usbmidi_akai_output() computes its fill-loop bound
+When a USB audio endpoint requests full packet transfers via the fill_max
+descriptor flag, data_ep_set_params() promotes ep->curpacksize to
+ep->maxpacksize. However, maxsize is left at the original sample-rate
+derived value.
 
-	buf_end = ep->max_transfer - MAX_AKAI_SYSEX_LEN - 1;
+Since u->buffer_size is allocated as maxsize * packets, the resulting
+DMA buffer is far too small for the requested transfer length. When the
+USB host controller streams up to curpacksize bytes per packet, it writes
+past the end of the buffer via DMA, corrupting kernel heap memory.
 
-as a signed int, so a small device-advertised bulk-OUT max_transfer
-makes buf_end negative.  The loop guard then compares the u32
-urb->transfer_buffer_length against that negative int: the usual
-arithmetic conversion turns buf_end into a large unsigned value, so the
-guard stays true and each iteration keeps appending SysEx framing and
-payload bytes past the end of the URB transfer buffer, which is only
-max_transfer bytes long.
+Update maxsize to curpacksize when fill_max is set so that the allocated
+DMA buffer size matches the actual transfer request size.
 
-A USB device that advertises a tiny bulk-OUT endpoint can therefore
-trigger an attacker-length- and content-controlled heap out-of-bounds
-write when a process writes to the created /dev/snd/midiC*D* node.
+[ changed to reassign maxsize only when ep->fill_max is set -- tiwai ]
 
-Return early when there is no room for even one SysEx, so the loop is
-never entered with a bound that would wrap.  The loop is the last
-statement of the function, so bailing out is equivalent to it not
-running.
-
-Discovered by XBOW, triaged by Baul Lee <baul.lee@xbow.com>
-
-Fixes: 4434ade8c933 ("ALSA: usb-audio: add support for Akai MPD16")
-Suggested-by: Takashi Iwai <tiwai@suse.de>
-Reported-by: Federico Kirschbaum <federico.kirschbaum@xbow.com>
-Reported-by: Baul Lee <baul.lee@xbow.com>
+Fixes: 8fdff6a319e7 ("ALSA: snd-usb: implement new endpoint streaming model")
 Cc: stable@vger.kernel.org
-Signed-off-by: Baul Lee <baul.lee@xbow.com>
-Link: https://patch.msgid.link/20260726074500.50145-1-baul.lee@xbow.com
+Assisted-by: Jetski:Gemini-3.6-Flash
+Signed-off-by: Sonali Pradhan <sonalipradhan@google.com>
+Link: https://patch.msgid.link/20260728201716.2347726-1-sonalipradhan@google.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/midi.c |    2 ++
- 1 file changed, 2 insertions(+)
+ sound/usb/endpoint.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/sound/usb/midi.c
-+++ b/sound/usb/midi.c
-@@ -793,6 +793,8 @@ static void snd_usbmidi_akai_output(stru
+--- a/sound/usb/endpoint.c
++++ b/sound/usb/endpoint.c
+@@ -1164,10 +1164,12 @@ static int data_ep_set_params(struct snd
+ 				<< (16 - ep->datainterval);
+ 	}
  
- 	msg = urb->transfer_buffer + urb->transfer_buffer_length;
- 	buf_end = ep->max_transfer - MAX_AKAI_SYSEX_LEN - 1;
-+	if (buf_end <= 0)
-+		return;
+-	if (ep->fill_max)
++	if (ep->fill_max) {
+ 		ep->curpacksize = ep->maxpacksize;
+-	else
++		maxsize = ep->curpacksize;
++	} else {
+ 		ep->curpacksize = maxsize;
++	}
  
- 	/* only try adding more data when there's space for at least 1 SysEx */
- 	while (urb->transfer_buffer_length < buf_end) {
+ 	if (snd_usb_get_speed(chip->dev) != USB_SPEED_FULL) {
+ 		packs_per_ms = 8 >> ep->datainterval;
 
 
