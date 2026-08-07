@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 341FA3E9C12;
-	Fri,  7 Aug 2026 14:50:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1370742DA3F;
+	Fri,  7 Aug 2026 14:50:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114242; cv=none; b=Iwbi5N/QfXbId+1PeE8OB5WPrfLwdCp5lmftLWzE5yVDPuc9RkB3BCSAduG9fYs4PVft3rN0h3s/3qeSWigS9Ylj1QRq/xdudPi2IWLGItCdq8tkzw2PiBZJg/Oaou5tDjSwh7rknJlRaaG2g6H5aN3lyXDWHvTCADgSOd4LyLw=
+	t=1786114244; cv=none; b=H4UcInAyC2BJAEBC7rw5HjXVAnOSgMIAv//1GYa5gvb5E+s/mhAtEkiXPXK+4tbWRSOX3ZXRqkoS/wJS85FjJVhrxPvhed3VStLpqKlNElqglKq3gUfWFrYjocnw81fWem8dW1OlACnWwuuOSrBuooJIc4ZWBuRnBv6tKgE8zqQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114242; c=relaxed/simple;
-	bh=Llaktl9kvh+DDH7PhqvsmZAnEAtXQUmw/zk7excgScw=;
+	s=arc-20240116; t=1786114244; c=relaxed/simple;
+	bh=yEQ9KBpARuRRpyHT7eZWwQHKSnpTGlg9KWnLOrlLthM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fN3r4nZA8xugA0dRqoFosP3fJwp5En75C71Sn2xJ1umyT0cCBrgTJl+zXtzCmw76/YWEHCLUW/qpFK7NC76khSFaowAi/hR6erka1AMpIt7QfGP25yji4MzsamluaKKg0dYHqemPdFSVGdzo1c5G/2tYkG4tg2W10H0acEdo1GQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mn8V6alb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tzZkt3KnQNXeOh0GqUnsqEhqe0RTp8Vb09Gw4qCBHRtN8wKXLrPPW57CTeUb1KR1EYGQZ4YkYOJW9frG+Fs/S6yb0QtI+eMfRhayK7tYut7x8J8X5FcbRYlByq7C4/Y76a4BpTtqGYNcMNJqt7xYc1IqW6Oewi6BSu/BKUhcGYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZDLZHYEZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mn8V6alb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8348D1F00A3A;
-	Fri,  7 Aug 2026 14:50:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZDLZHYEZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D9781F00A3E;
+	Fri,  7 Aug 2026 14:50:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114238;
-	bh=LSnkupG/B5OOX3JtUJubOquMZn72F+FFOV1zUElQvHw=;
+	s=korg; t=1786114240;
+	bh=dpwqCWorT8VGX5yAVt0Yu/YH9ArZr+hwrmO6fOLrfFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Mn8V6alb/OBoouLMO9pQJXe7HkG8K2KSMepYrxhXucW5He3Cupd+ENyi7VQ1ennwo
-	 0qNqtZf2u71db4tu4/vY9Cz/sJz19fEBDjQrkHxkYJP8ivuWTU8Ci5e9yQcv9zZEIf
-	 gjP/i4q0K+7bXOHq5sfNh8K0K3NCn1xI0avqEcWo=
+	b=ZDLZHYEZos1siIWwJP8pxEBO3x7TIpT4QK7gyhe5BG/vMXtyJ1hlR+7Rr1yaCXbKA
+	 fRUsXyjooYwIlpwCYitWm3jJaYHrFkbDUL5jlutmtcxFPONq0U2ST7Dg4mVDP5z92K
+	 A24bPvf9vFY5E5c8L6vL4K1SA61reHXtSebyi9GQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 6.12 193/337] tracing/filters: Fix false positive match in regex_match_full()
-Date: Fri,  7 Aug 2026 16:36:36 +0200
-Message-ID: <20260807143422.740843382@linuxfoundation.org>
+	Vijaya Krishna Nivarthi <vijaya.nivarthi@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.12 194/337] spi: qcom-qspi: Correct max DMA length to avoid 64K boundary failure
+Date: Fri,  7 Aug 2026 16:36:37 +0200
+Message-ID: <20260807143422.761535149@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -50,46 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Vijaya Krishna Nivarthi <vijaya.nivarthi@oss.qualcomm.com>
 
-commit c22c7b735f9810ad276014f788f9aa5c879ec238 upstream.
+commit 90ef2f2961c2dc55957dafe2f53b3efdb4675efc upstream.
 
-regex_match_full() calls strncmp(str, r->pattern, len) where len is the
-target field buffer size. When len is smaller than r->len (the filter
-pattern length), strncmp() checks only len bytes of r->pattern against
-str. If those len bytes match, strncmp() returns 0, resulting in a
-false-positive match where a shorter string in a fixed-size field
-matches a longer filter pattern.
+The maximum size for a DMA data descriptor is 64KB-1 because the size
+field in HW is 16 bits wide. For this reason, transfers fail at 64KB
+and beyond.
 
-For example, a 4-byte static string field containing "abcd" matched the
-filter pattern "abcdefgh" because strncmp("abcd", "abcdefgh", 4)
-returned 0. In this case, @len does NOT include '\0' because it is
-fixed-size array.
+Lower max_dma_len to 60KB so larger transfers are split into multiple
+DMA blocks and do not hit the failing 64KB boundary. 60KB is chosen as
+a safe round number below the 64KB-1 hardware limit while satisfying
+alignment requirements.
 
-Fix this by returning 0 (no match) early when len < r->len.
+Tested on x1e80100 (Hamoa) with SPI-NOR flash (/dev/mtd0):
 
-Fixes: 1889d20922d1 ("tracing/filters: Provide basic regex support")
+Without patch:
+  dd if=/dev/mtd0 of=/tmp/spi_dump.bin bs=32768 count=2  # works
+  dd if=/dev/mtd0 of=/tmp/spi_dump.bin bs=65536 count=1  # fails
+
+With patch:
+  dd if=/dev/mtd0 of=/tmp/spi_dump.bin bs=65536 count=1  # works
+
+Fixes: b5762d95607e ("spi: spi-qcom-qspi: Add DMA mode support")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/178528488779.124250.5571741156199253769.stgit@devnote2
-Assisted-by: Antigravity:gemini-3.5-flash
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Vijaya Krishna Nivarthi <vijaya.nivarthi@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260722092358.459943-1-vnivarth@qti.qualcomm.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_filter.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/spi/spi-qcom-qspi.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/kernel/trace/trace_events_filter.c
-+++ b/kernel/trace/trace_events_filter.c
-@@ -1027,6 +1027,9 @@ static int regex_match_full(char *str, s
- 	if (!len)
- 		return strcmp(str, r->pattern) == 0;
+--- a/drivers/spi/spi-qcom-qspi.c
++++ b/drivers/spi/spi-qcom-qspi.c
+@@ -759,7 +759,8 @@ static int qcom_qspi_probe(struct platfo
+ 		return dev_err_probe(dev, ret, "could not set DMA mask\n");
  
-+	if (len < r->len)
-+		return 0;
-+
- 	return strncmp(str, r->pattern, len) == 0;
- }
- 
+ 	host->max_speed_hz = 300000000;
+-	host->max_dma_len = 65536; /* as per HPG */
++	/* as per HPG, it is 64KB, limit to 60KB to avoid boundary condition failures */
++	host->max_dma_len = 0xf000;
+ 	host->dma_alignment = QSPI_ALIGN_REQ;
+ 	host->num_chipselect = QSPI_NUM_CS;
+ 	host->bus_num = -1;
 
 
