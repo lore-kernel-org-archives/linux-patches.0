@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C18033DEFE;
-	Fri,  7 Aug 2026 15:13:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 563A338D3F2;
+	Fri,  7 Aug 2026 15:13:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115623; cv=none; b=h8NrG+snWUj6f16Fj5CPjCM8aP/oT7/YIscPXKUhf6yDM4WAsuAo2evb7cKx9GrhpNIht/oMcvcbzNeo7KA+co8irmYm4hDs+yNgykOn3cx+YWauLSU1L24QGniSFJwxAcIkeGhJm3h1S5KmgNm/YGC15GrII17MaxW1n45sGEE=
+	t=1786115626; cv=none; b=f6FcWXDZ9ajtfgi3na5JNZDbpu4OVN14dtmyXkniR8pkBUcXLREdpb9P7trP+kxYd4+p3luMPC5H4HR/wYhXG9ZaNp8OnBzoriKLObBataJKy6b+ykrfNz/k2jxu2Uw65qjTl271RjmVU3TQNwvKE49qIOdG5v+l1mrKA6kP5eQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115623; c=relaxed/simple;
-	bh=q913uAsWZOwvcpsW0nz8XxxTzTp3FeWXHf6IsrswGOk=;
+	s=arc-20240116; t=1786115626; c=relaxed/simple;
+	bh=NSut/lZWrgM7CBHz7gIn9s/atipt1d6uudG+IeuLDCo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MME60Py5Eh/eO3QiUJCd8jp1Q3zoQ/DAsHRNbKNUuvRRJDLCZA3MHf3gN+GONcleP56bqyemGKlozzRT77JLqGHMTf1nXnnOtJSTttxO4fbaTYdptCnlLOPX9v8inhAq4zQKnxDHFpZPU8q2IVw1MiGj8MjJp/4iOz8+NArJqgw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H41EDpRU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bYpb9p0opPidBbtA+Plf8x4T/ro7DV9j+0anU4JbtemX9XTCPoLDLEH/Ra56Obrm9aJMU0vP7IXMlkxRmBu3TAlbJmiY2Ncx4KNhtf/9K6qjY30o6HlFwqpTbe5q87vZwST07FyUHI6QuXnigpXVxXLXcnvtRbIWHzexwXKhnGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=izymLiSF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H41EDpRU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 995F31F000E9;
-	Fri,  7 Aug 2026 15:13:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="izymLiSF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7407C1F000E9;
+	Fri,  7 Aug 2026 15:13:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115622;
-	bh=Cil8RCPfK9/JQVmIrIzUKRMFOfky0X/heXAkFyZTVJI=;
+	s=korg; t=1786115625;
+	bh=Eno/3iQNwoAB+bvY1nVTYbECpUAR/8EJp6/3zgLEOl0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H41EDpRU5dt660cFhY0e4+/oqUJCQ+kYc7A+0dGH0ceVF4gwdUABOZxkIbE6OxdsB
-	 H6e33oez9Ku+M1H0hK0YBgpiij9mGX2CbTrvGaAOgzwMO9n7u/Rq2ZDKlNE45J3TuE
-	 WxhTJeT7Lua6RVMTF5seKyebqc+p8IdJnUh0U6HU=
+	b=izymLiSF+X9RpekEsH4AIf1WdpaQiuq7AgHlfPYLDBGuYJjb7OTrs/3ZGi1eT9ml3
+	 dYsuTKoJN0ROIdRKF+AdS6xSamaHwx2LfdDhx4gULiC/NL6MrjeEguhE+uXO1bSvTV
+	 wX2cnUbAt3p2tvaWWvGzC8lYk0ofbZHfeGcdwxMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.18 342/396] HID: logitech-dj: Fix maxfield check in DJ short report validation
-Date: Fri,  7 Aug 2026 16:38:22 +0200
-Message-ID: <20260807143431.663117586@linuxfoundation.org>
+	Ashutosh Dixit <ashutosh.dixit@intel.com>,
+	Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 343/396] drm/xe/rtp: Refactor OAG MMIO trigger register whitelisting
+Date: Fri,  7 Aug 2026 16:38:23 +0200
+Message-ID: <20260807143431.684992538@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -50,69 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Ashutosh Dixit <ashutosh.dixit@intel.com>
 
-commit 590cc4d782487632a52f37c2171bee1eeea29627 upstream.
+[ Upstream commit ed455775c5a68b75e5f6ad6c8e0e3e9c98fd3f64 ]
 
-Commit b6a57912854e ("HID: logitech-dj: Prevent REPORT_ID_DJ_SHORT
-related user initiated OOB write") added validation for the DJ short
-output report, but the error path dereferences rep->field[0] even when
-rep->maxfield is zero.
+Minor refactor of OAG MMIO trigger register whitelisting for code reuse
+with OAM MMIO trigger register whitelisting.
 
-Commit 8b9a097eb2fc ("HID: logitech-dj: fix wrong detection of bad
-DJ_SHORT output report") made the check conditional on rep being present,
-but a crafted descriptor can still create report ID 0x20 with only padding
-output items. hid-core registers the report, ignores the padding field,
-and leaves rep->maxfield as zero.
-
-In that case the validation enters the rep->maxfield < 1 branch and then
-dereferences rep->field[0]->report_count while printing the error message,
-causing a NULL pointer dereference during probe. This is reproducible with
-uhid by emulating a Logitech receiver with a padding-only DJ short output
-report:
-
-  BUG: KASAN: null-ptr-deref in logi_dj_probe+0xb1/0x754 [hid_logitech_dj]
-  Read of size 4 at addr 0000000000000028 by task kworker/4:1/129
-  ...
-  Call Trace:
-   logi_dj_probe+0xb1/0x754 [hid_logitech_dj]
-   hid_device_probe+0x329/0x3f0 [hid]
-   really_probe+0x162/0x570
-   __device_attach+0x137/0x2c0
-   bus_probe_device+0x38/0xc0
-   device_add+0xa56/0xce0
-   hid_add_device+0x19c/0x280 [hid]
-   uhid_device_add_worker+0x2c/0xb0 [uhid]
-
-Reject the zero-field report before printing the field report_count.
-
-Fixes: b6a57912854e ("HID: logitech-dj: Prevent REPORT_ID_DJ_SHORT related user initiated OOB write")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Ashutosh Dixit <ashutosh.dixit@intel.com>
+Reviewed-by: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
+Link: https://patch.msgid.link/20251202025115.373546-5-ashutosh.dixit@intel.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-logitech-dj.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/xe/xe_reg_whitelist.c | 29 ++++++++++++---------------
+ 1 file changed, 13 insertions(+), 16 deletions(-)
 
---- a/drivers/hid/hid-logitech-dj.c
-+++ b/drivers/hid/hid-logitech-dj.c
-@@ -1797,8 +1797,13 @@ static int logi_dj_probe(struct hid_devi
- 	output_report_enum = &hdev->report_enum[HID_OUTPUT_REPORT];
- 	rep = output_report_enum->report_id_hash[REPORT_ID_DJ_SHORT];
- 
--	if (rep && (rep->maxfield < 1 ||
--		    rep->field[0]->report_count != DJREPORT_SHORT_LENGTH - 1)) {
-+	if (rep && rep->maxfield < 1) {
-+		hid_err(hdev, "Expected size of DJ short report is %d, but got 0",
-+			DJREPORT_SHORT_LENGTH - 1);
-+		return -EINVAL;
-+	}
+diff --git a/drivers/gpu/drm/xe/xe_reg_whitelist.c b/drivers/gpu/drm/xe/xe_reg_whitelist.c
+index 21763dc51150b..47fb3e74b567c 100644
+--- a/drivers/gpu/drm/xe/xe_reg_whitelist.c
++++ b/drivers/gpu/drm/xe/xe_reg_whitelist.c
+@@ -66,27 +66,24 @@ static const struct xe_rtp_entry_sr register_whitelist[] = {
+ 		       ENGINE_CLASS(RENDER)),
+ 	  XE_RTP_ACTIONS(WHITELIST(CSBE_DEBUG_STATUS(RENDER_RING_BASE), 0))
+ 	},
+-	{ XE_RTP_NAME("oa_reg_render"),
 +
-+	if (rep && rep->field[0]->report_count != DJREPORT_SHORT_LENGTH - 1) {
- 		hid_err(hdev, "Expected size of DJ short report is %d, but got %d",
- 			DJREPORT_SHORT_LENGTH - 1, rep->field[0]->report_count);
- 		return -EINVAL;
++#define WHITELIST_OA_MMIO_TRG(trg, status, head) \
++	WHITELIST(trg, RING_FORCE_TO_NONPRIV_ACCESS_RW), \
++	WHITELIST(status, RING_FORCE_TO_NONPRIV_ACCESS_RD), \
++	WHITELIST(head, RING_FORCE_TO_NONPRIV_ACCESS_RD | RING_FORCE_TO_NONPRIV_RANGE_4)
++
++#define WHITELIST_OAG_MMIO_TRG \
++	WHITELIST_OA_MMIO_TRG(OAG_MMIOTRIGGER, OAG_OASTATUS, OAG_OAHEADPTR)
++
++	{ XE_RTP_NAME("oag_mmio_trg_rcs"),
+ 	  XE_RTP_RULES(GRAPHICS_VERSION_RANGE(1200, XE_RTP_END_VERSION_UNDEFINED),
+ 		       ENGINE_CLASS(RENDER)),
+-	  XE_RTP_ACTIONS(WHITELIST(OAG_MMIOTRIGGER,
+-				   RING_FORCE_TO_NONPRIV_ACCESS_RW),
+-			 WHITELIST(OAG_OASTATUS,
+-				   RING_FORCE_TO_NONPRIV_ACCESS_RD),
+-			 WHITELIST(OAG_OAHEADPTR,
+-				   RING_FORCE_TO_NONPRIV_ACCESS_RD |
+-				   RING_FORCE_TO_NONPRIV_RANGE_4))
++	  XE_RTP_ACTIONS(WHITELIST_OAG_MMIO_TRG)
+ 	},
+-	{ XE_RTP_NAME("oa_reg_compute"),
++	{ XE_RTP_NAME("oag_mmio_trg_ccs"),
+ 	  XE_RTP_RULES(GRAPHICS_VERSION_RANGE(1200, XE_RTP_END_VERSION_UNDEFINED),
+ 		       ENGINE_CLASS(COMPUTE)),
+-	  XE_RTP_ACTIONS(WHITELIST(OAG_MMIOTRIGGER,
+-				   RING_FORCE_TO_NONPRIV_ACCESS_RW),
+-			 WHITELIST(OAG_OASTATUS,
+-				   RING_FORCE_TO_NONPRIV_ACCESS_RD),
+-			 WHITELIST(OAG_OAHEADPTR,
+-				   RING_FORCE_TO_NONPRIV_ACCESS_RD |
+-				   RING_FORCE_TO_NONPRIV_RANGE_4))
++	  XE_RTP_ACTIONS(WHITELIST_OAG_MMIO_TRG)
+ 	},
+ };
+ 
+-- 
+2.53.0
+
 
 
