@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B7B94B0482;
-	Fri,  7 Aug 2026 14:53:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C760A368276;
+	Fri,  7 Aug 2026 14:53:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114383; cv=none; b=Qlx8JTkKgdzhgVuHmXgk7b9TXmXh7kIxILv0KiuZ4jQpUG7lxL77ke+8+VVrYeFUbu1k4ipyR9jPMJC9EiENi0jZh2jDONImHrg2FxU6PNZwkL8ibOYflkSIc3MRFhRLQm1++0f8uhAHg+l2JtWlW86JimOgp7lUQkP1Cy1m4lw=
+	t=1786114387; cv=none; b=JgfefgEfaapUA1yVrKXQnpcdM/Zj9xlE74mOiI5evK15ZHsuUPAv2LHH+bcvfGPgZTZXVYCGbmc+xRA/lannvuZK8DGybeb41AT5M1DH2TrMW1Paq23RW8Y98974vxMRkNJ2uf3apJE7MgyldJHMG2//kBKNWZcq6oFTYp/A9ZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114383; c=relaxed/simple;
-	bh=DFbAMmBXTsnDOiSFvoxV1Zyp6gi6n2GE0Lee6z8BR0A=;
+	s=arc-20240116; t=1786114387; c=relaxed/simple;
+	bh=KFFaA4Ovkp//97vtygaBlbbAfwyoS3RqNRfUUOCiNPw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ulA9iMkUiwHVClmHP85sCA3t/ho/CibAMqDUdqqRnuVUBx4ex6yBxuPmPz66vCY93IZiO5n+jbWPach+5mrpRf7yNhVM1oefeB/bpiGfpv0z9w0Q4kqnW28ONQmYvMR8cHoaqOiLcnRcFJO21TTZpKQAMuSmiLqTOy7Iw3UUbZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C6tTGbwj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=inny8dJE+FJepUe556wqqv6HzkOa0D731R5uDeoE+mBYGOyQB4m9V6DZnWJYFK9w89Nf3m1h2hHWVGGTVbvyqe9HyTl4pwRoMl+MYA4GZYH26PZyswvBV/eJosdeq4XIeYM98X4p39qEYXdNnJs/Z17bgz3zCEbStKzWBOPKbzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fNSHPVnB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C6tTGbwj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BB851F000E9;
-	Fri,  7 Aug 2026 14:53:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fNSHPVnB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9F6D1F000E9;
+	Fri,  7 Aug 2026 14:53:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114382;
-	bh=sUzUaG/Ajka1/dXptoeoRGi4TLotYjssY7joTa8zAmI=;
+	s=korg; t=1786114385;
+	bh=xQy1bBRHII9ymc1qON/SRI5jIrTd0hiu32vNtjprNjs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C6tTGbwjdvXJ2ywPQeOE0/hqe2MenEk0n7ercjOSGmmxFJV8yoYix5MV9xvcQXv9Y
-	 fuy6SHNL4YKX57YJLeon4XzRCIk7GLE0bRy04nFqjBgEESVvQU7EibXKH0gWgjN+th
-	 ULWdmNScPbLQohOts3rlofLK54Rao4CZZ7YhsCUU=
+	b=fNSHPVnBQthjga7HYN9+3mdVBqVVyuxkQkWMwG9/R5AxGSMDYhxHeLiNEuiuljGJ4
+	 eic4/q4OjISyew9Zy8iia+bM8g0b+onu5yBFqQHwxW+kDK9MbvQo1KetGsW27Ro+P8
+	 MZ/l4u8TfoGGCcsEDkwP9dGHKd7jtYbgP589XRrc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	dri-devel@lists.freedesktop.org,
-	Alexander Kaplan <alexander.kaplan@sms-medipool.de>,
-	Uma Shankar <uma.shankar@intel.com>
-Subject: [PATCH 6.12 244/337] drm/dp: Read the PCON max FRL bandwidth only for HDMI DFPs
-Date: Fri,  7 Aug 2026 16:37:27 +0200
-Message-ID: <20260807143423.839360630@linuxfoundation.org>
+	Jose Maria Casanova Crespo <jmcasanova@igalia.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	Iago Toral Quiroga <itoral@igalia.com>
+Subject: [PATCH 6.12 245/337] drm/vc4: Supply the overflow slot size in BPOS, not the whole bin BO size
+Date: Fri,  7 Aug 2026 16:37:28 +0200
+Message-ID: <20260807143423.860923684@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -48,85 +45,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexander Kaplan <alexander.kaplan@sms-medipool.de>
+From: Jose Maria Casanova Crespo <jmcasanova@igalia.com>
 
-commit e40e20ac089e32f1d910636155dc82e61e61dcf3 upstream.
+commit 6395789e4739aa5177bbec0fa0f07ccc38d249b0 upstream.
 
-The PCON max FRL bandwidth field lives in byte 2 of the DFP Detailed
-Capability Info (DPCD 0x82 for the first DFP).
-The DP standard defines the meaning of descriptor bytes 1-3 strictly
-per DFP type, and for a DisplayPort type DFP all of them are
-reserved, with "read all 0s" semantics (DP v2.0, section 2.12.3,
-Table 2-183).
-The FRL bandwidth field is an HDMI DFP extension added by the VESA
-DP-to-HDMI PCON specification.
-drm_dp_get_pcon_max_frl_bw() however parses the byte without checking
-the DFP type, the branch presence or DETAILED_CAP_INFO_AVAILABLE.
-Without the latter the port descriptors are one byte wide and
-port_cap[2] is not even the right register.
+vc4_overflow_mem_work() points BPOA at a 512KB slot inside the 16MB
+binner BO, but writes the size of the whole BO to BPOS. On every binner
+out-of-memory event the PTB is therefore authorized to write tile lists
+across all the other slots (which may hold the tile state, tile alloc and
+overflow memory of in-flight jobs) and, for any slot but the first, past
+the end of the binner BO into unrelated CMA memory.
 
-All neighbouring helpers parsing the same descriptor are scoped by
-the DFP type already, see for instance drm_dp_downstream_max_bpc()
-reading the same byte and returning 0 for a DP type DFP.
-amdgpu's DC parses the field only for HDMI(/DP++) detailed types as
-well.
+Since CMA pages are recycled into page cache and user allocations, this
+is arbitrary memory corruption by GPU DMA. In practice it shows up as GPU
+hangs with corrupted control list pointers, userspace heap corruption, a
+GPU that stays permanently wedged after the first hang, and occasional
+full system crashes, whenever a job overflows the initial binner slot.
 
-This is not theoretical.
-A Synaptics VMM7100 based USB-C to HDMI adapter with a macOS targeted
-firmware advertises a DisplayPort type DFP with the type byte
-replicated across the whole descriptor (08 08 08 08).
-i915 decodes that as "PCON limited to 18 Gbps FRL" and prunes every
-mode above ~750 MHz dotclock, including all the 4k@100/120 modes the
-sink EDID offers, while macOS drives 4k@120 through the same adapter
-just fine via DP DSC (and amdgpu's type-scoped parser would ignore
-the bogus field as well).
+The bug dates back to the conversion from a dedicated overflow BO (where
+writing the full BO size was correct) to the slotted binner BO.
 
-Only parse the field for an HDMI DFP behind a DPCD 1.1+ branch
-device that reports detailed cap info, matching the type-scoped
-field layout of the spec and the rest of the helpers.
-
-Fixes: ce32a6239de6 ("drm/dp_helper: Add Helpers for FRL Link Training support for DP-HDMI2.1 PCON")
-Cc: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
-Cc: Uma Shankar <uma.shankar@intel.com> (v2)
-Cc: Jani Nikula <jani.nikula@intel.com>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Cc: dri-devel@lists.freedesktop.org
-Cc: <stable@vger.kernel.org> # v5.12+
-Signed-off-by: Alexander Kaplan <alexander.kaplan@sms-medipool.de>
-Reviewed-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
-Signed-off-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
-Link: https://patch.msgid.link/20260610193825.2933-1-alexander.kaplan@sms-medipool.de
+Fixes: 553c942f8b2c ("drm/vc4: Allow using more than 256MB of CMA memory.")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-4.8
+Signed-off-by: Jose Maria Casanova Crespo <jmcasanova@igalia.com>
+Reviewed-by: Maíra Canal <mcanal@igalia.com>
+Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
+Link: https://patch.msgid.link/20260727-vc4-bin-oom-fixes-v2-1-0d8a5eddc7c9@igalia.com
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/display/drm_dp_helper.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/gpu/drm/vc4/vc4_irq.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/display/drm_dp_helper.c
-+++ b/drivers/gpu/drm/display/drm_dp_helper.c
-@@ -3145,6 +3145,18 @@ int drm_dp_get_pcon_max_frl_bw(const u8
- 	int bw;
- 	u8 buf;
+--- a/drivers/gpu/drm/vc4/vc4_irq.c
++++ b/drivers/gpu/drm/vc4/vc4_irq.c
+@@ -104,7 +104,7 @@ vc4_overflow_mem_work(struct work_struct
+ 	vc4->bin_alloc_overflow = BIT(bin_bo_slot);
  
-+	if (!drm_dp_is_branch(dpcd))
-+		return 0;
-+
-+	if (dpcd[DP_DPCD_REV] < 0x11)
-+		return 0;
-+
-+	if ((dpcd[DP_DOWNSTREAMPORT_PRESENT] & DP_DETAILED_CAP_INFO_AVAILABLE) == 0)
-+		return 0;
-+
-+	if ((port_cap[0] & DP_DS_PORT_TYPE_MASK) != DP_DS_PORT_TYPE_HDMI)
-+		return 0;
-+
- 	buf = port_cap[2];
- 	bw = buf & DP_PCON_MAX_FRL_BW;
- 
+ 	V3D_WRITE(V3D_BPOA, bo->base.dma_addr + bin_bo_slot * vc4->bin_alloc_size);
+-	V3D_WRITE(V3D_BPOS, bo->base.base.size);
++	V3D_WRITE(V3D_BPOS, vc4->bin_alloc_size);
+ 	V3D_WRITE(V3D_INTCTL, V3D_INT_OUTOMEM);
+ 	V3D_WRITE(V3D_INTENA, V3D_INT_OUTOMEM);
+ 	spin_unlock_irqrestore(&vc4->job_lock, irqflags);
 
 
