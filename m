@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEF2447607C;
-	Fri,  7 Aug 2026 15:41:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3E6847604A;
+	Fri,  7 Aug 2026 15:41:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786117283; cv=none; b=ulRjq5grJ66vtFeaM78R/6bLTWmzN+jU77AX5jQu4EFLTpYGxZuAvvadzrBZFBs5j8I6+9bFbd8HaEiolxOZ38/5qjEZeRZCif3+j7R5+pnyYzZPNdXC9fQNCHfiTDHJV/bQcC764pC2ODxaZYP++nBzF5qVOA9+/CKA5s8FYfs=
+	t=1786117286; cv=none; b=Vat76mRH2vGPHQlir4VJLEM9nHOowkzJE8RPLhj0PuAh4hdp3nUOiExEgCjrGnDAoDgj1PHBLhH7NoRnxE+jajjRaUbhwpJplw0Pjca/LcYoSoLEClRys5D31HJMlP+onRRnkJuMDmFNGtkzfynAnIs3jqu2pbfSurPI4vGmEZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786117283; c=relaxed/simple;
-	bh=mHO9lH7M1gPO+nwuA4pSRfVQnSCvXb/rRqmXwayXSHo=;
+	s=arc-20240116; t=1786117286; c=relaxed/simple;
+	bh=mfRcoK39WbVzilE5T+9BmdY2SXa8DzFfV3liCZbQCJ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jl23jGkUNlDPl4DFXd+6G7JRzeMdSTQnpi+I8LTGNgY0PQ7ERQdlnQwSzF3qrrZITUV2ewJ+tH/JsJfEooExzR99IdpY9ReAuFesgtKhSM1+bw2yvqq5xj8TefzLuYaAc8q4xbF1PlL1xde3KgaVCwg32T5HtCPN0dbD5+uEriU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wVQd6qS8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iDli+DsHW+yi7Pu0IiZGtqPFruzqStMop4BARKSxjiGHuoRA/qcNySnqKg7K/fy3UIZ6pvVTKLFajunqC+ZsRj0UR2U6weZSGpTCD41wKDxXYcTicWo8TzCfrFlnjuvasiMc9x6BDaKLQh/Bb2xxjt/uYCefsN6D6tlGuMtZwxg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KDyRiIIJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wVQd6qS8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D6501F000E9;
-	Fri,  7 Aug 2026 15:41:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KDyRiIIJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E21F21F000E9;
+	Fri,  7 Aug 2026 15:41:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786117281;
-	bh=kNHN0VSZ9kfCYpdex2Ykd1T43QyBxCD09OgCspzgL/c=;
+	s=korg; t=1786117284;
+	bh=/3aujoGAzhp+1kaStmgysWM45oAEkoQ9hw0zGo2wKMM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wVQd6qS8Js0iqQO16VsAE6CNKcKta/X/GoJCdkqF9niU1mIv8Xw2SShlFFh/uLtPs
-	 2abFFaFRMS04MYkKM+Rr4dOuZGovAQQvqFnzuSvVgLUNSbnGsFTybjcF/7b1/l8JsG
-	 IQ2G3lOWVRp0ssABqkVK/ZwNpKVZ9JOh08GisjdE=
+	b=KDyRiIIJ5y812/lAfCdMDycVfDxV3BtF4RxcoeEs6nC9L6RWxnlGFUY26cQEP78Dn
+	 m//JGhtqzRpZ4SDEtjEFr8EBs8ikL3iZLLL2kWp1eRc7Y+oAXVEwCAoi03McYFbwf7
+	 N2wa6OxsSsJZs1A4vJSLuCrOX+tlEvQdpYEMu4KY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>
-Subject: [PATCH 7.1 209/438] erofs: cap LZMA stream pool size
-Date: Fri,  7 Aug 2026 16:36:45 +0200
-Message-ID: <20260807143432.470790384@linuxfoundation.org>
+	Federico Kirschbaum <federico.kirschbaum@xbow.com>,
+	Baul Lee <baul.lee@xbow.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 7.1 258/438] ALSA: ump: fix double free of out_cvts on rawmidi error
+Date: Fri,  7 Aug 2026 16:37:34 +0200
+Message-ID: <20260807143433.494704349@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -50,73 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Baul Lee <baul.lee@xbow.com>
 
-commit c9b47e6b23114e939b17f818471c7a46e59006e7 upstream.
+commit 70c977815af0d997feb2d0c5d284d55689bf7051 upstream.
 
-fs/erofs/decompressor_lzma.c sizes the module-global MicroLZMA stream
-pool from num_possible_cpus() when the lzma_streams module parameter is
-unset, then z_erofs_load_lzma_config() preallocates one image-supplied
-dictionary per stream, accepting dictionaries up to 8 MiB.  On high-CPU
-systems, a small EROFS image can pin hundreds of MiB of vmalloc-backed
-decoder state until the erofs module is unloaded.
+snd_ump_attach_legacy_rawmidi() allocates the legacy conversion array
+ump->out_cvts and, on the snd_rawmidi_new() error path, frees it with
+kfree() but leaves ump->out_cvts pointing at the freed memory.  When the
+endpoint is later torn down, snd_ump_endpoint_free() frees ump->out_cvts
+a second time, resulting in a double free.
 
-Impact: An EROFS image mounted by the system can pin up to 8 MiB of
-vmalloc memory per LZMA stream, either as intended or unexpectedly.
+The host snd-usb-audio driver attaches the legacy rawmidi for any USB
+MIDI 2.0 (UMP) device, so a device that makes snd_rawmidi_new() fail
+reaches this path on enumeration.
 
-Bound the default stream count by a new
-CONFIG_EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS option, default 16, so the
-worst-case default preallocation is 128 MiB if the number of CPUs is no
-less than 16 while preserving the existing per-image dictionary limit.
-An explicit lzma_streams module parameter is still honoured as-is, so
-administrators who deliberately size the pool are not affected.
+Clear ump->out_cvts after freeing it on the error path so it is not
+freed again during teardown.
 
-Fixes: 622ceaddb764 ("erofs: lzma compression support")
+Discovered by XBOW, triaged by Baul Lee <baul.lee@xbow.com>
+
+Fixes: 33cd7630782d ("ALSA: ump: Export MIDI1 / UMP conversion helpers")
+Reported-by: Federico Kirschbaum <federico.kirschbaum@xbow.com>
+Reported-by: Baul Lee <baul.lee@xbow.com>
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Signed-off-by: Baul Lee <baul.lee@xbow.com>
+Link: https://patch.msgid.link/20260726051633.41206-1-baul.lee@xbow.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/erofs/Kconfig             |   14 ++++++++++++++
- fs/erofs/decompressor_lzma.c |    3 ++-
- 2 files changed, 16 insertions(+), 1 deletion(-)
+ sound/core/ump.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/erofs/Kconfig
-+++ b/fs/erofs/Kconfig
-@@ -131,6 +131,20 @@ config EROFS_FS_ZIP_LZMA
+--- a/sound/core/ump.c
++++ b/sound/core/ump.c
+@@ -1365,6 +1365,7 @@ int snd_ump_attach_legacy_rawmidi(struct
+ 			      &rmidi);
+ 	if (err < 0) {
+ 		kfree(ump->out_cvts);
++		ump->out_cvts = NULL;
+ 		return err;
+ 	}
  
- 	  Say N if you want to disable LZMA compression support.
- 
-+config EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS
-+	int "EROFS LZMA default maximum decompression streams"
-+	depends on EROFS_FS_ZIP_LZMA
-+	range 1 NR_CPUS
-+	default 16
-+	help
-+	  By default EROFS allocates one LZMA decompression stream per CPU.
-+	  Each stream can hold a dictionary of up to 8 MiB taken from the
-+	  mounted image, so on systems with many CPUs this can reserve a lot
-+	  of memory.  This caps the default; the lzma_streams module parameter
-+	  still overrides it.
-+
-+	  If unsure, keep the default of 16.
-+
- config EROFS_FS_ZIP_DEFLATE
- 	bool "EROFS DEFLATE compressed data support"
- 	depends on EROFS_FS_ZIP
---- a/fs/erofs/decompressor_lzma.c
-+++ b/fs/erofs/decompressor_lzma.c
-@@ -51,7 +51,8 @@ static int __init z_erofs_lzma_init(void
- 
- 	/* by default, use # of possible CPUs instead */
- 	if (!z_erofs_lzma_nstrms)
--		z_erofs_lzma_nstrms = num_possible_cpus();
-+		z_erofs_lzma_nstrms = min_t(unsigned int, num_possible_cpus(),
-+				CONFIG_EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS);
- 
- 	for (i = 0; i < z_erofs_lzma_nstrms; ++i) {
- 		struct z_erofs_lzma *strm = kzalloc_obj(*strm);
 
 
