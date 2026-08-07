@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A340279DCC;
-	Fri,  7 Aug 2026 14:53:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3639B368276;
+	Fri,  7 Aug 2026 14:53:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114420; cv=none; b=Qo/ykJswbnNsgjdUIbDsvbe+X/0kiaViO/ZWYPIMXzxs6vJvT6hDsAO4/KP2aKylHzi5fy2fjGwLk5Kl8x9rTq5o2PJuW6V8fKHLX9zHzuJfWlB5Soxe7iujlLES6IcHvr/jwzGS3yg6vxekQRXvJKyIub9nlDjTF3U1K4xoP3U=
+	t=1786114423; cv=none; b=YMe69i/m4XcV6eNgFsSP9ao3kLRL+1bYDead0Llt/WrT3vJNiwws/E05CXNH5WGTcWEP4bHv65AJIBH7FgJx5wzA5UJc0GRVo+1RQlO2wyRKdV/27uMCzT3y8sC3s+edhuQkKNBxKAFGrvjcIsdZJY8v9Z/EnLTspKUezSPsqJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114420; c=relaxed/simple;
-	bh=sdLrhaLeinLt3l6rpVO+pD5n9W3LX9JvNGrrgTrvCjs=;
+	s=arc-20240116; t=1786114423; c=relaxed/simple;
+	bh=fEv3h0lI/jNDMQvKpa+PMmqOwxI802vWXbjRrktpX/0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tsKm7DRUKJW1RzIhvp5Lw6weq0ilMDvmQiZE5ib3LqiJX9bQQNZABfuzZ/ACm56n8tQCqTTbBndFbVZlMt49rlKHOgUxI+ZpyGuMoq7k+aXeaSMeuOoJioEQQncRBvM2FUTMIEqeJZoUUFIqP93HLgc++zzeuK95FOMz0faJu8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x5BC3LeX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kcffTPnEdwjEeBZWfsSnmEmXzwRT32XmZqk5c68l2rWMt4DpdirUovgvkCYe8Hr+SY0FZpGlOVqPL0305hqMDY1sNMwbmuxY57R1fVb+reN8xepIDqnJ2PywMekBACK3sblFvUlCRJDio6UJ7Qyt/5uYFMY8MuTxmRAyeB5VKiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pNmla+tB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x5BC3LeX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B62531F000E9;
-	Fri,  7 Aug 2026 14:53:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pNmla+tB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DC2D1F000E9;
+	Fri,  7 Aug 2026 14:53:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114419;
-	bh=xTGUupPfNush6nhFgK6EKyQgxANW3fcwlA+lUIf41dw=;
+	s=korg; t=1786114422;
+	bh=7oZsef3UouQPS/0BjQ9feCY6hK4IfFRTfVmm456DVbY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x5BC3LeXZQFW+V1dLkT5WSqFjyFNwmrW5/EX8JYxoUmMtM5kQpBuihbTIcRVC2Xs0
-	 8cmhzh+NgSO7N2xN5CxVIkdgXEh7C5Bpc0ArinyxNQzXkyYxIGT0bxcd8xJumcPdqf
-	 QkrhYVzMV67CK1fi08ZT+hJUiKiweCB6ZddpzR4E=
+	b=pNmla+tB5LPtFXcxku5FzhMch+LEdwv9MOo9hfeJLnJJKzj6/7FS+9Jj7Z4oJpCSx
+	 cn0ZtX1cvFpLK2mYTC0qaR3tnPlQnMclFCseE4bWbfn/G1j4DbmAEQps9dCD7K/aIY
+	 1Ov6RCJHqk+TzIkZtjsnfOA6ZHScxuIAGd1PYkGM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Aaron Conole <aconole@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 220/337] net: openvswitch: fix skb leak on flow key update failure during ct
-Date: Fri,  7 Aug 2026 16:37:03 +0200
-Message-ID: <20260807143423.323052381@linuxfoundation.org>
+	William Palacek <William.Palacek@amd.com>,
+	Alysa Liu <Alysa.Liu@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 256/337] drm/amdkfd: fix uint32_t overflow in EOP ring buffer size alignment
+Date: Fri,  7 Aug 2026 16:37:39 +0200
+Message-ID: <20260807143424.095511049@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -51,44 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Maximets <i.maximets@ovn.org>
+From: William Palacek <William.Palacek@amd.com>
 
-commit bc62e843bc48f933da765ce47079fd992e535794 upstream.
+commit 83463a96ea3c7d8ae636a4d6a0ba63c9ce410724 upstream.
 
-ovs_ct_execute() always steals or frees the skb on failure while
-ovs_flow_key_update() does not.  So, if it fails and we return right
-away, the skb ends up leaked.
+eop_ring_buffer_size in struct queue_properties is a u32. In
+kfd_queue_acquire_buffers() the expected EOP buffer size is computed as
+ALIGN(eop_ring_buffer_size, PAGE_SIZE); ALIGN uses typeof(x), so the
+addition is done in 32-bit. A user-supplied size of 0xFFFFF001 wraps to
+0, causing kfd_queue_buffer_get() to skip its exact-size check (gated on
+size != 0) and accept any BO mapped at the address. On GFX8/GFX9 the MQD
+cp_hqd_eop_control is then programmed for an 8KB EOP ring backed by a 4KB
+BO, so CP EOP writes can land past the buffer and fault the GPU.
 
-Fix that by breaking instead and letting the common error handling
-code at the bottom of the loop to free the skb properly.
+Cast the operand to u64 so the alignment is computed in 64-bit; the size
+check in kfd_queue_buffer_get() then rejects the oversized request.
 
-This is a very unlikely scenario as it requires the packet to become
-unparseable by applying a set of actions on a previously parseable skb,
-but should be fixed nevertheless.
-
-Reported by Sashiko.
-
-Fixes: ec0d043d05e6 ("openvswitch: Ensure flow is valid before executing ct")
+Fixes: 42ea9cf2f16b ("drm/amdkfd: Relax size checking during queue buffer get")
+Signed-off-by: William Palacek <William.Palacek@amd.com>
+Reviewed-by: Alysa Liu <Alysa.Liu@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit ae443117b742c357bfef3a7bddabf76fcf86e9ef)
 Cc: stable@vger.kernel.org
-Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
-Reviewed-by: Aaron Conole <aconole@redhat.com>
-Link: https://patch.msgid.link/20260727181851.306076-3-i.maximets@ovn.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/openvswitch/actions.c |    2 +-
+ drivers/gpu/drm/amd/amdkfd/kfd_queue.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/openvswitch/actions.c
-+++ b/net/openvswitch/actions.c
-@@ -1418,7 +1418,7 @@ static int do_execute_actions(struct dat
- 			if (!is_flow_key_valid(key)) {
- 				err = ovs_flow_key_update(skb, key);
- 				if (err)
--					return err;
-+					break;
- 			}
- 
- 			err = ovs_ct_execute(ovs_dp_get_net(dp), skb, key,
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_queue.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_queue.c
+@@ -285,7 +285,7 @@ int kfd_queue_acquire_buffers(struct kfd
+ 		}
+ 		err = kfd_queue_buffer_get(vm, (void *)properties->eop_ring_buffer_address,
+ 					   &properties->eop_buf_bo,
+-					   ALIGN(properties->eop_ring_buffer_size, PAGE_SIZE));
++					   ALIGN((u64)properties->eop_ring_buffer_size, PAGE_SIZE));
+ 		if (err)
+ 			goto out_err_unreserve;
+ 	}
 
 
