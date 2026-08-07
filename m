@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C9123101A7;
-	Fri,  7 Aug 2026 15:17:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDC622D12ED;
+	Fri,  7 Aug 2026 15:17:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115862; cv=none; b=AhtiShrVs/l94YjIlKVSGikgDCx92TgLIE0ZltmEx8VVccXC6/6GZazKoDmR50KAingI4fNAY/tAsk/DTP6cqZVYkzV37ci8u/gzTe5HtG3ka4U/m8reQXX7F3FMZqs5FnZ25jXMB1I4/xtNGhIDsdNIxTyNcjM8+pl3hjW33XM=
+	t=1786115865; cv=none; b=b3OltgeR/vlMvf2m5KI2f4I9J1lL/V99LyI3mj/6I+05dhrz3ZkPjrlopvbSwG4/CXduC5z4QH6Ubf7tYvev9Sh+XzY5V7xB7HBBqH1ErdXp3YrjZKRdVR0Jb3EDfPep8RXdDVn5VTurxNEMTvhJoo4BH+XSl93/frAp3c6t+8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115862; c=relaxed/simple;
-	bh=Vg6OLSHPn/DnB2OOS/QWhtT2evctvLKa5/JypCllV/g=;
+	s=arc-20240116; t=1786115865; c=relaxed/simple;
+	bh=UTQWSJxL38tEI2pI3go1tv/+t2aKUv/+EpYVZSaLGNk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LvzYTmunGrREi4yWGQvyiNt7psbTW2HftlSegP+pRW3S12597tRQ4bm6Zzlpg+CZ4HT51emFrQqhUPkN9pII+AKgjC2hkIyhFgpX0Y9XPqX56OCejGcfcmRvp2jkyciZWqgbZK6A1DnIQFAVLMRmGiFcBI2nVdmo3snnpWIfCzo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hVF9p3TP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SO/iKne7w0ZymfFqkQgFFN6gouOqno7OtQNPwgYoMRFlTwuMtsFscTRCAX1byDeEaMD0Xqg8bLJ3yKfM/sgJjTGk4mz8myIl1JYWfrygfN40awBTzxZjq0b9DCQzMwmKzObj6TqSw4is8UumUwK4clun6HP+EdfXHJuDvu5eIAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mCP+0eTt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hVF9p3TP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D8F11F000E9;
-	Fri,  7 Aug 2026 15:17:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mCP+0eTt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F63F1F000E9;
+	Fri,  7 Aug 2026 15:17:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115860;
-	bh=r3A/eZnHNwBwWmQ4bvYNqNIKSLaGdPZ3Fbz4mWkrhbk=;
+	s=korg; t=1786115863;
+	bh=4bdnnvNtKqdBypqGsv4JD07KgjDle4RvXhtD8lONgfY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hVF9p3TPEt2GC86vpEyDeltI7/fYOik9IXUFvumOE6qdBgTNr8FEp3AVAeOwVrqzp
-	 XMTJAzyQ5g3z9yVMqr/ciQ1ozlgE1XQQ/cdQgjRriJm/pFla1n78J8fHJz35kDX4Pz
-	 2BTe27OZhAuqYMQlFf6QsVkAws5v7OrvU+K10h1E=
+	b=mCP+0eTt0m3JeXjEQtEI/SFB2//MIk6q6mvR5VbFP9D5Lz0WV6EzZ2lKoqgUrZyvT
+	 RtBLurR2x5m4HaOsga322bw0ktIeiVwq8OyEhbnn3vIOn6POO5gbOs9ebBeVGKRwUk
+	 2JxawMFo8l424bYIct9QbPWO4SXP9W6eumEk+4fc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kent Overstreet <kent.overstreet@linux.dev>,
-	Jan Kara <jack@suse.cz>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	linux-fsdevel@vger.kernel.org,
-	=?UTF-8?q?Andreas=20Gr=C3=BCnbacher?= <andreas.gruenbacher@gmail.com>,
+	Julian Anastasov <ja@ssi.bg>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 029/261] sched: Add task_struct->faults_disabled_mapping
-Date: Fri,  7 Aug 2026 16:36:26 +0200
-Message-ID: <20260807143416.005594150@linuxfoundation.org>
+Subject: [PATCH 6.6 030/261] ipvs: fix the checksum validations
+Date: Fri,  7 Aug 2026 16:36:27 +0200
+Message-ID: <20260807143416.029237505@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143415.358597922@linuxfoundation.org>
 References: <20260807143415.358597922@linuxfoundation.org>
@@ -48,109 +45,393 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kent Overstreet <kent.overstreet@gmail.com>
+From: Julian Anastasov <ja@ssi.bg>
 
-[ Upstream commit 2b69987be575b92adb6c177679f3c559134f0d8f ]
+[ Upstream commit e876b75b9020a97bbdc79721e7fc749024891c65 ]
 
-There has been a long standing page cache coherence bug with direct IO.
-This provides part of a mechanism to fix it, currently just used by
-bcachefs but potentially worth promoting to the VFS.
+ip_vs_in_icmp_v6() is missing checksum validation for ICMPv6
+packets from clients. In fact, as for TCP/UDP we should
+validate the checksum for ICMP packets only when we
+mangle the packets on MASQ or on reply for tunnel.
 
-Direct IO evicts the range of the pagecache being read or written to.
+Also, Sashiko points out that handle_response_icmp() being
+common for IPv4 and IPv6 is missing the pseudo-header
+calculation while validating ICMPv6 messages from real
+servers which is a problem if checksum is not validated
+by the hardware.
 
-For reads, we need dirty pages to be written to disk, so that the read
-doesn't return stale data. For writes, we need to evict that range of
-the pagecache so that it's not stale after the write completes.
+Fix the problems by creating ip_vs_checksum_common_check()
+helper and use it for TCP/UDP/ICMP both for IPv4 and IPv6.
+Rely on the nf_checksum() for validating the ICMP messages
+but use it also for TCP and UDP.
 
-However, without a locking mechanism to prevent those pages from being
-re-added to the pagecache - by a buffered read or page fault - page
-cache inconsistency is still possible.
+Use correct IP offset for IP_VS_DBG_RL_PKT for TCP/UDP/SCTP.
 
-This isn't necessarily just an issue for userspace when they're playing
-games; filesystems may hang arbitrary state off the pagecache, and so
-page cache inconsistency may cause real filesystem bugs, depending on
-the filesystem. This is less of an issue for iomap based filesystems,
-but e.g. buffer heads caches disk block mappings (!) and attaches them
-to the pagecache, and bcachefs attaches disk reservations to pagecache
-pages.
+IPVS packets (TCP/UDP/SCTP/ICMP) do not need checksum
+validation on LOCAL_OUT (local clients or local real
+servers) and on FORWARD (traffic from servers on LAN).
+Do it only on LOCAL_IN, in case nf_checksum() is not
+called on PRE_ROUTING.
 
-This issue has been hard to fix, because
- - we need to add a lock (henceforth called pagecache_add_lock), which
-   would be held for the duration of the direct IO
- - page faults add pages to the page cache, thus need to take the same
-   lock
- - dio -> gup -> page fault thus can deadlock
+Also, ip_vs_checksum_complete() can be marked static.
 
-And we cannot enforce a lock ordering with this lock, since userspace
-will be controlling the lock ordering (via the fd and buffer arguments
-to direct IOs), so we need a different method of deadlock avoidance.
-
-We need to tell the page fault handler that we're already holding a
-pagecache_add_lock, and since plumbing it through the entire gup() path
-would be highly impractical this adds a field to task_struct.
-
-Then the full method is:
- - in the dio path, when we first take the pagecache_add_lock, note the
-   mapping in the current task_struct
- - in the page fault handler, if faults_disabled_mapping is set, we
-   check if it's the same mapping as the one we're taking a page fault
-   for, and if so return an error.
-
-   Then we check lock ordering: if there's a lock ordering violation and
-   trylock fails, we'll have to cycle the locks and return an error that
-   tells the DIO path to retry: faults_disabled_mapping is also used for
-   signalling "locks were dropped, please retry".
-
-Also relevant to this patch: mapping->invalidate_lock.
-mapping->invalidate_lock provides most of the required semantics - it's
-used by truncate/fallocate to block pages being added to the pagecache.
-However, since it's a rwsem, direct IOs would need to take the write
-side in order to block page cache adds, and would then be exclusive with
-each other - we'll need a new type of lock to pair with this approach.
-
-Signed-off-by: Kent Overstreet <kent.overstreet@linux.dev>
-Cc: Jan Kara <jack@suse.cz>
-Cc: Darrick J. Wong <djwong@kernel.org>
-Cc: linux-fsdevel@vger.kernel.org
-Cc: Andreas Grünbacher <andreas.gruenbacher@gmail.com>
-Stable-dep-of: e876b75b9020 ("ipvs: fix the checksum validations")
+Fixes: 2a3b791e6e11 ("IPVS: Add/adjust Netfilter hook functions and helpers for v6")
+Link: https://sashiko.dev/#/patchset/20260708180315.77413-1-ja%40ssi.bg
+Signed-off-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/sched.h | 1 +
- init/init_task.c      | 1 +
- 2 files changed, 2 insertions(+)
+ include/net/ip_vs.h                   | 31 +++++++++++++++--
+ net/netfilter/ipvs/ip_vs_core.c       | 20 +++++++++--
+ net/netfilter/ipvs/ip_vs_proto_sctp.c | 15 ++++----
+ net/netfilter/ipvs/ip_vs_proto_tcp.c  | 44 +++++------------------
+ net/netfilter/ipvs/ip_vs_proto_udp.c  | 50 ++++++---------------------
+ 5 files changed, 74 insertions(+), 86 deletions(-)
 
-diff --git a/include/linux/sched.h b/include/linux/sched.h
-index fad3aad97c7b0..c5e90874096e9 100644
---- a/include/linux/sched.h
-+++ b/include/linux/sched.h
-@@ -878,6 +878,7 @@ struct task_struct {
+diff --git a/include/net/ip_vs.h b/include/net/ip_vs.h
+index 08b90d33acdc6..aef042039cb00 100644
+--- a/include/net/ip_vs.h
++++ b/include/net/ip_vs.h
+@@ -24,7 +24,9 @@
+ #include <linux/netfilter.h>		/* for union nf_inet_addr */
+ #include <linux/ip.h>
+ #include <linux/ipv6.h>			/* for struct ipv6hdr */
++#include <net/route.h>
+ #include <net/ipv6.h>
++#include <net/ip6_fib.h>
+ #if IS_ENABLED(CONFIG_NF_CONNTRACK)
+ #include <net/netfilter/nf_conntrack.h>
+ #endif
+@@ -1711,8 +1713,6 @@ void ip_vs_nat_icmp_v6(struct sk_buff *skb, struct ip_vs_protocol *pp,
+ 		       struct ip_vs_conn *cp, int dir);
+ #endif
  
- 	struct mm_struct		*mm;
- 	struct mm_struct		*active_mm;
-+	struct address_space		*faults_disabled_mapping;
+-__sum16 ip_vs_checksum_complete(struct sk_buff *skb, int offset);
+-
+ static inline __wsum ip_vs_check_diff4(__be32 old, __be32 new, __wsum oldsum)
+ {
+ 	__be32 diff[2] = { ~old, new };
+@@ -1738,6 +1738,33 @@ static inline __wsum ip_vs_check_diff2(__be16 old, __be16 new, __wsum oldsum)
+ 	return csum_partial(diff, sizeof(diff), oldsum);
+ }
  
- 	int				exit_state;
- 	int				exit_code;
-diff --git a/init/init_task.c b/init/init_task.c
-index fd9e27185e23a..9b363c986f824 100644
---- a/init/init_task.c
-+++ b/init/init_task.c
-@@ -85,6 +85,7 @@ struct task_struct init_task
- 	.nr_cpus_allowed= NR_CPUS,
- 	.mm		= NULL,
- 	.active_mm	= &init_mm,
-+	.faults_disabled_mapping = NULL,
- 	.restart_block	= {
- 		.fn = do_no_restart_syscall,
- 	},
++static inline bool ip_vs_checksum_needed(struct sk_buff *skb, int af)
++{
++	/* Checksum unnecessary or already validated? */
++	if (skb_csum_unnecessary(skb))
++		return false;
++	/* LOCAL_OUT ? */
++	if (!skb->dev || skb->dev->flags & IFF_LOOPBACK)
++		return false;
++	/* !LOCAL_IN (FORWARD) ? */
++	if (af == AF_INET6) {
++		if (!(dst_rt6_info(skb_dst(skb))->rt6i_flags & RTF_LOCAL))
++			return false;
++	} else {
++		if (!(skb_rtable(skb)->rt_flags & RTCF_LOCAL))
++			return false;
++	}
++	return true;
++}
++
++static inline bool ip_vs_checksum_common_check(struct sk_buff *skb,
++					       int offset, int proto, int af)
++{
++	if (!ip_vs_checksum_needed(skb, af))
++		return true;
++	return !nf_checksum(skb, NF_INET_LOCAL_IN, offset, proto, af);
++}
++
+ /* Forget current conntrack (unconfirmed) and attach notrack entry */
+ static inline void ip_vs_notrack(struct sk_buff *skb)
+ {
+diff --git a/net/netfilter/ipvs/ip_vs_core.c b/net/netfilter/ipvs/ip_vs_core.c
+index fcd8e0857de2a..99b0090bdfadb 100644
+--- a/net/netfilter/ipvs/ip_vs_core.c
++++ b/net/netfilter/ipvs/ip_vs_core.c
+@@ -689,7 +689,7 @@ static int sysctl_nat_icmp_send(struct netns_ipvs *ipvs) { return 0; }
+ 
+ #endif
+ 
+-__sum16 ip_vs_checksum_complete(struct sk_buff *skb, int offset)
++static __sum16 ip_vs_checksum_complete(struct sk_buff *skb, int offset)
+ {
+ 	return csum_fold(skb_checksum(skb, offset, skb->len - offset, 0));
+ }
+@@ -860,13 +860,14 @@ static int handle_response_icmp(int af, struct sk_buff *skb,
+ 				unsigned int offset, unsigned int ihl,
+ 				unsigned int hooknum)
+ {
++	int iproto = af == AF_INET6 ? IPPROTO_ICMPV6 : IPPROTO_ICMP;
+ 	unsigned int verdict = NF_DROP;
+ 
+ 	if (IP_VS_FWD_METHOD(cp) != IP_VS_CONN_F_MASQ)
+ 		goto after_nat;
+ 
+ 	/* Ensure the checksum is correct */
+-	if (!skb_csum_unnecessary(skb) && ip_vs_checksum_complete(skb, ihl)) {
++	if (!ip_vs_checksum_common_check(skb, ihl, iproto, af)) {
+ 		/* Failed checksum! */
+ 		IP_VS_DBG_BUF(1, "Forward ICMP: failed checksum from %s!\n",
+ 			      IP_VS_DBG_ADDR(af, snet));
+@@ -1716,7 +1717,8 @@ ip_vs_in_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb, int *related,
+ 	verdict = NF_DROP;
+ 
+ 	/* Ensure the checksum is correct */
+-	if (!skb_csum_unnecessary(skb) && ip_vs_checksum_complete(skb, ihl)) {
++	if ((IP_VS_FWD_METHOD(cp) == IP_VS_CONN_F_MASQ || tunnel) &&
++	    !ip_vs_checksum_common_check(skb, ihl, IPPROTO_ICMP, AF_INET)) {
+ 		/* Failed checksum! */
+ 		IP_VS_DBG(1, "Incoming ICMP: failed checksum from %pI4!\n",
+ 			  &iph->saddr);
+@@ -1882,6 +1884,18 @@ static int ip_vs_in_icmp_v6(struct netns_ipvs *ipvs, struct sk_buff *skb,
+ 		goto out;
+ 	}
+ 
++	verdict = NF_DROP;
++
++	/* Ensure the checksum is correct */
++	if (IP_VS_FWD_METHOD(cp) == IP_VS_CONN_F_MASQ &&
++	    !ip_vs_checksum_common_check(skb, iph->len, IPPROTO_ICMPV6,
++					 AF_INET6)) {
++		/* Failed checksum! */
++		IP_VS_DBG(1, "Incoming ICMPv6: failed checksum from %pI6c!\n",
++			  &iph->saddr);
++		goto out;
++	}
++
+ 	/* do the statistics and put it back */
+ 	ip_vs_in_stats(cp, skb);
+ 
+diff --git a/net/netfilter/ipvs/ip_vs_proto_sctp.c b/net/netfilter/ipvs/ip_vs_proto_sctp.c
+index c67317be17dfa..f6f732b7dfa86 100644
+--- a/net/netfilter/ipvs/ip_vs_proto_sctp.c
++++ b/net/netfilter/ipvs/ip_vs_proto_sctp.c
+@@ -11,7 +11,7 @@
+ 
+ static int
+ sctp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp,
+-		unsigned int sctphoff);
++		struct ip_vs_iphdr *iph);
+ 
+ static int
+ sctp_conn_schedule(struct netns_ipvs *ipvs, int af, struct sk_buff *skb,
+@@ -109,7 +109,7 @@ sctp_snat_handler(struct sk_buff *skb, struct ip_vs_protocol *pp,
+ 		int ret;
+ 
+ 		/* Some checks before mangling */
+-		if (!sctp_csum_check(cp->af, skb, pp, sctphoff))
++		if (!sctp_csum_check(cp->af, skb, pp, iph))
+ 			return 0;
+ 
+ 		/* Call application helper if needed */
+@@ -157,7 +157,7 @@ sctp_dnat_handler(struct sk_buff *skb, struct ip_vs_protocol *pp,
+ 		int ret;
+ 
+ 		/* Some checks before mangling */
+-		if (!sctp_csum_check(cp->af, skb, pp, sctphoff))
++		if (!sctp_csum_check(cp->af, skb, pp, iph))
+ 			return 0;
+ 
+ 		/* Call application helper if needed */
+@@ -187,19 +187,22 @@ sctp_dnat_handler(struct sk_buff *skb, struct ip_vs_protocol *pp,
+ 
+ static int
+ sctp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp,
+-		unsigned int sctphoff)
++		struct ip_vs_iphdr *iph)
+ {
++	unsigned int sctphoff = iph->len;
+ 	struct sctphdr *sh;
+ 	__le32 cmp, val;
+ 
++	if (!ip_vs_checksum_needed(skb, af))
++		return 1;
+ 	sh = (struct sctphdr *)(skb->data + sctphoff);
+ 	cmp = sh->checksum;
+ 	val = sctp_compute_cksum(skb, sctphoff);
+ 
+ 	if (val != cmp) {
+ 		/* CRC failure, dump it. */
+-		IP_VS_DBG_RL_PKT(0, af, pp, skb, 0,
+-				"Failed checksum for");
++		IP_VS_DBG_RL_PKT(0, af, pp, skb, iph->off,
++				 "Failed checksum for");
+ 		return 0;
+ 	}
+ 	return 1;
+diff --git a/net/netfilter/ipvs/ip_vs_proto_tcp.c b/net/netfilter/ipvs/ip_vs_proto_tcp.c
+index b382810156b2c..bf31127338aa0 100644
+--- a/net/netfilter/ipvs/ip_vs_proto_tcp.c
++++ b/net/netfilter/ipvs/ip_vs_proto_tcp.c
+@@ -30,7 +30,7 @@
+ 
+ static int
+ tcp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp,
+-	       unsigned int tcphoff);
++	       struct ip_vs_iphdr *iph);
+ 
+ static int
+ tcp_conn_schedule(struct netns_ipvs *ipvs, int af, struct sk_buff *skb,
+@@ -167,7 +167,7 @@ tcp_snat_handler(struct sk_buff *skb, struct ip_vs_protocol *pp,
+ 		int ret;
+ 
+ 		/* Some checks before mangling */
+-		if (!tcp_csum_check(cp->af, skb, pp, tcphoff))
++		if (!tcp_csum_check(cp->af, skb, pp, iph))
+ 			return 0;
+ 
+ 		/* Call application helper if needed */
+@@ -245,7 +245,7 @@ tcp_dnat_handler(struct sk_buff *skb, struct ip_vs_protocol *pp,
+ 		int ret;
+ 
+ 		/* Some checks before mangling */
+-		if (!tcp_csum_check(cp->af, skb, pp, tcphoff))
++		if (!tcp_csum_check(cp->af, skb, pp, iph))
+ 			return 0;
+ 
+ 		/*
+@@ -303,41 +303,13 @@ tcp_dnat_handler(struct sk_buff *skb, struct ip_vs_protocol *pp,
+ 
+ static int
+ tcp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp,
+-	       unsigned int tcphoff)
++	       struct ip_vs_iphdr *iph)
+ {
+-	switch (skb->ip_summed) {
+-	case CHECKSUM_NONE:
+-		skb->csum = skb_checksum(skb, tcphoff, skb->len - tcphoff, 0);
+-		fallthrough;
+-	case CHECKSUM_COMPLETE:
+-#ifdef CONFIG_IP_VS_IPV6
+-		if (af == AF_INET6) {
+-			if (csum_ipv6_magic(&ipv6_hdr(skb)->saddr,
+-					    &ipv6_hdr(skb)->daddr,
+-					    skb->len - tcphoff,
+-					    IPPROTO_TCP,
+-					    skb->csum)) {
+-				IP_VS_DBG_RL_PKT(0, af, pp, skb, 0,
+-						 "Failed checksum for");
+-				return 0;
+-			}
+-		} else
+-#endif
+-			if (csum_tcpudp_magic(ip_hdr(skb)->saddr,
+-					      ip_hdr(skb)->daddr,
+-					      skb->len - tcphoff,
+-					      ip_hdr(skb)->protocol,
+-					      skb->csum)) {
+-				IP_VS_DBG_RL_PKT(0, af, pp, skb, 0,
+-						 "Failed checksum for");
+-				return 0;
+-			}
+-		break;
+-	default:
+-		/* No need to checksum. */
+-		break;
++	if (!ip_vs_checksum_common_check(skb, iph->len, IPPROTO_TCP, af)) {
++		IP_VS_DBG_RL_PKT(0, af, pp, skb, iph->off,
++				 "Failed checksum for");
++		return 0;
+ 	}
+-
+ 	return 1;
+ }
+ 
+diff --git a/net/netfilter/ipvs/ip_vs_proto_udp.c b/net/netfilter/ipvs/ip_vs_proto_udp.c
+index dbd4155bb0752..40d30649b3048 100644
+--- a/net/netfilter/ipvs/ip_vs_proto_udp.c
++++ b/net/netfilter/ipvs/ip_vs_proto_udp.c
+@@ -26,7 +26,7 @@
+ 
+ static int
+ udp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp,
+-	       unsigned int udphoff);
++	       struct ip_vs_iphdr *iph);
+ 
+ static int
+ udp_conn_schedule(struct netns_ipvs *ipvs, int af, struct sk_buff *skb,
+@@ -156,7 +156,7 @@ udp_snat_handler(struct sk_buff *skb, struct ip_vs_protocol *pp,
+ 		int ret;
+ 
+ 		/* Some checks before mangling */
+-		if (!udp_csum_check(cp->af, skb, pp, udphoff))
++		if (!udp_csum_check(cp->af, skb, pp, iph))
+ 			return 0;
+ 
+ 		/*
+@@ -239,7 +239,7 @@ udp_dnat_handler(struct sk_buff *skb, struct ip_vs_protocol *pp,
+ 		int ret;
+ 
+ 		/* Some checks before mangling */
+-		if (!udp_csum_check(cp->af, skb, pp, udphoff))
++		if (!udp_csum_check(cp->af, skb, pp, iph))
+ 			return 0;
+ 
+ 		/*
+@@ -299,48 +299,20 @@ udp_dnat_handler(struct sk_buff *skb, struct ip_vs_protocol *pp,
+ 
+ static int
+ udp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp,
+-	       unsigned int udphoff)
++	       struct ip_vs_iphdr *iph)
+ {
+ 	struct udphdr _udph, *uh;
+ 
+-	uh = skb_header_pointer(skb, udphoff, sizeof(_udph), &_udph);
++	uh = skb_header_pointer(skb, iph->len, sizeof(_udph), &_udph);
+ 	if (uh == NULL)
+ 		return 0;
+ 
+-	if (uh->check != 0) {
+-		switch (skb->ip_summed) {
+-		case CHECKSUM_NONE:
+-			skb->csum = skb_checksum(skb, udphoff,
+-						 skb->len - udphoff, 0);
+-			fallthrough;
+-		case CHECKSUM_COMPLETE:
+-#ifdef CONFIG_IP_VS_IPV6
+-			if (af == AF_INET6) {
+-				if (csum_ipv6_magic(&ipv6_hdr(skb)->saddr,
+-						    &ipv6_hdr(skb)->daddr,
+-						    skb->len - udphoff,
+-						    IPPROTO_UDP,
+-						    skb->csum)) {
+-					IP_VS_DBG_RL_PKT(0, af, pp, skb, 0,
+-							 "Failed checksum for");
+-					return 0;
+-				}
+-			} else
+-#endif
+-				if (csum_tcpudp_magic(ip_hdr(skb)->saddr,
+-						      ip_hdr(skb)->daddr,
+-						      skb->len - udphoff,
+-						      ip_hdr(skb)->protocol,
+-						      skb->csum)) {
+-					IP_VS_DBG_RL_PKT(0, af, pp, skb, 0,
+-							 "Failed checksum for");
+-					return 0;
+-				}
+-			break;
+-		default:
+-			/* No need to checksum. */
+-			break;
+-		}
++	if (!uh->check)
++		return 1;
++	if (!ip_vs_checksum_common_check(skb, iph->len, IPPROTO_UDP, af)) {
++		IP_VS_DBG_RL_PKT(0, af, pp, skb, iph->off,
++				 "Failed checksum for");
++		return 0;
+ 	}
+ 	return 1;
+ }
 -- 
 2.53.0
 
