@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A94863B9943;
-	Fri,  7 Aug 2026 15:34:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A8BA38C2C0;
+	Fri,  7 Aug 2026 15:34:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116878; cv=none; b=JLZ7/4JXB2+PnnCyAdT5fgClwgsB+zLY9CDFSYO/Cl4SuioNd6G3NL6t9Q3fOvEPQ2ZWYwaa1PnOtCzOKPDk84+W2G1xA7VBu3uRf5tfOxX0QWaRCGWXALf0SX31vCV2hD7Lw2gMPs1q/kreSzVKeKPtKh/t+q6SzhUfXgUT9ws=
+	t=1786116881; cv=none; b=B6gD0QMrg1Nl12wWXk3B4AvRxOOxzge8+kWnPUkz0XGF1EunHKV2WQYyJj9c19PP4V6+dbYbxh9kb513YsyBlv03WKWL+ErkiJ/oqAsjKXrdJdVNplLHgJcfudsdB+bEuZQUi+HTB77Fq8XoemUulcwOShXJtigxp+tltTrLaB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116878; c=relaxed/simple;
-	bh=r72LiJLgEs4OwFm7Y8FFwr83Jhmzt2nWGeQQUef3WFA=;
+	s=arc-20240116; t=1786116881; c=relaxed/simple;
+	bh=bV4BTV/HXAeb9xnsJfHkKL2M/p8c6vSvcTgEYJu8QAM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bQpxMuN2bmJU6U8YrLbhiMAF7cT4rpJt4KRLGjhvqpr2Vu/yLUVKAAzMINLVFovt9Qls++Yax+oo597Q2aBYd8u5g32DO8wo5oevRf4yHgSMiiHbMc1Xx1CKffDOweka8prhALe8fO4oCpRooV12jBtTvv1FKsDTneji3dIXCv4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bta9DfmQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=icERYM3CQPEMV1uSHyCXs0rwGVc5as3YJ05X0iwbrWMP4y5HCqiZzk1tRPe0u1JDcKDKPVWdqVDW7XMqf48mzMQxS3eqFyAZra2LT27n6T5sVgXX/5ytTL2K2Y8USIlR7+TkX1SRGFrU++rxkxdpFUqrYj+3XyG1XOtNGl6uyFs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OuW1L1gU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bta9DfmQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB97B1F000E9;
-	Fri,  7 Aug 2026 15:34:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OuW1L1gU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4C5C1F000E9;
+	Fri,  7 Aug 2026 15:34:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116877;
-	bh=uwtwbWAsgFXciQ22zDgPDSkqyNPbkNWhWc3bcglPsx4=;
+	s=korg; t=1786116880;
+	bh=ErJbsq6gpMOrZGVgMU4davWEFFNVWsQs1KVlMzF32/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bta9DfmQuSw4msCP5ly+H4+a9qvoEY/VkYKqgT6ehiD1rN4QzX5CaKLr1srcOpl0Z
-	 U1H9a0Mw/1TDpPlRNXJ/mYyK36wIzJYHfMg4iwot3Mz2/OeycJrhOHX4g6eKb6LmJo
-	 QX0yqC8i5V+9+NA89CgKmli/6QoDmrCsuaUikfc8=
+	b=OuW1L1gUxpr/mkWYbDSth26S2hOkIjVWEav8a9B8zZzyh+MhDL4+j9Deh5bU8TsTl
+	 Mx67Xlv9KCFgCEEfehx/dgmB2zPwSNO3GoSVFubZ+v9/5ORNrJKbyoSeLLy0BioEzk
+	 ClkAuGsDUN2wwtFCO7j6kfF1MkQbRu5Bu2dKZw2M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	"Cen Zhang (Microsoft)" <blbllhy@gmail.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Samuel Salin <Samuel.salin@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 115/438] net/sched: cls_u32: validate offshift to prevent shift-out-of-bounds
-Date: Fri,  7 Aug 2026 16:35:11 +0200
-Message-ID: <20260807143430.446268503@linuxfoundation.org>
+Subject: [PATCH 7.1 124/438] idpf: bound interrupt-vector register fill to the allocated array
+Date: Fri,  7 Aug 2026 16:35:20 +0200
+Message-ID: <20260807143430.638502760@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -54,56 +53,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang (Microsoft) <blbllhy@gmail.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit aef96eead2860cbfa371e4471d4f04412213b958 ]
+[ Upstream commit 9f7007ee9858c99aa43101bc8352c672fee85644 ]
 
-u32_change() copies the user-provided tc_u32_sel.offshift (unsigned char,
-0-255) into the kernel knode object without bounds validation. When a
-packet later hits u32_classify() with TC_U32_VAROFFSET set, it evaluates
-`ntohs(offmask & *data) >> offshift` where the left operand is a 16-bit
-value promoted to a 32-bit int. Any offshift >= 32 is undefined behavior
-per C11 6.5.7p3, triggerable by an unprivileged user via user/network
-namespaces.
+idpf_get_reg_intr_vecs() fills the caller-allocated reg_vals[] array from
+the VIRTCHNL2_OP_ALLOC_VECTORS reply in adapter->req_vec_chunks, bounding
+its inner loop only by the per-chunk num_vectors. The array is sized
+separately: idpf_intr_reg_init() allocates
+kzalloc_objs(struct idpf_vec_regs, total_vecs) from
+caps.num_allocated_vectors and only checks the returned count after the
+fill. The sum of per-chunk num_vectors is never reconciled against
+total_vecs, so a reply with a small num_allocated_vectors but chunks
+summing higher writes past the end of reg_vals[].
 
-UBSAN: shift-out-of-bounds in net/sched/cls_u32.c:236:43
-shift exponent 32 is too large for 32-bit type int
+Impact: a control plane (a PF or hypervisor device model) that returns a
+VIRTCHNL2_OP_ALLOC_VECTORS reply whose per-chunk num_vectors sum exceeds
+num_allocated_vectors writes struct idpf_vec_regs entries past the end of
+the reg_vals kmalloc allocation (KASAN slab-out-of-bounds write).
 
-Fix this by rejecting offshift >= 16 during filter creation in
-u32_change().
+Bound the fill loop to the array capacity passed in by the callers,
+mirroring the sibling idpf_vport_get_q_reg(). The existing
+num_regs < num_vecs check then rejects an undersized reply without the
+out-of-bounds write happening first.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Link: https://lore.kernel.org/all/20260720034514.23053-1-blbllhy@gmail.com
-Signed-off-by: Cen Zhang (Microsoft) <blbllhy@gmail.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Tested-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Tested-by: Victor Nogueira <victor@mojatatu.com>
-Link: https://patch.msgid.link/20260723044955.89471-1-blbllhy@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: d4d558718266 ("idpf: initialize interrupts and enable vport")
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Tested-by: Samuel Salin <Samuel.salin@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_u32.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/net/ethernet/intel/idpf/idpf_dev.c      | 2 +-
+ drivers/net/ethernet/intel/idpf/idpf_vf_dev.c   | 2 +-
+ drivers/net/ethernet/intel/idpf/idpf_virtchnl.c | 5 +++--
+ drivers/net/ethernet/intel/idpf/idpf_virtchnl.h | 2 +-
+ 4 files changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/net/sched/cls_u32.c b/net/sched/cls_u32.c
-index 8f30cc82181d9..ac98b1c2144a7 100644
---- a/net/sched/cls_u32.c
-+++ b/net/sched/cls_u32.c
-@@ -1107,6 +1107,13 @@ static int u32_change(struct net *net, struct sk_buff *in_skb,
- 		goto erridr;
- 	}
+diff --git a/drivers/net/ethernet/intel/idpf/idpf_dev.c b/drivers/net/ethernet/intel/idpf/idpf_dev.c
+index 1a0c71c95ef12..4079a787657f1 100644
+--- a/drivers/net/ethernet/intel/idpf/idpf_dev.c
++++ b/drivers/net/ethernet/intel/idpf/idpf_dev.c
+@@ -87,7 +87,7 @@ static int idpf_intr_reg_init(struct idpf_vport *vport,
+ 	if (!reg_vals)
+ 		return -ENOMEM;
  
-+	if (s->offshift >= 16) {
-+		NL_SET_ERR_MSG_MOD(extack,
-+				   "offshift must be less than 16");
-+		err = -EINVAL;
-+		goto erridr;
-+	}
-+
- 	n = kzalloc_flex(*n, sel.keys, s->nkeys);
- 	if (n == NULL) {
- 		err = -ENOBUFS;
+-	num_regs = idpf_get_reg_intr_vecs(adapter, reg_vals);
++	num_regs = idpf_get_reg_intr_vecs(adapter, reg_vals, total_vecs);
+ 	if (num_regs < num_vecs) {
+ 		err = -EINVAL;
+ 		goto free_reg_vals;
+diff --git a/drivers/net/ethernet/intel/idpf/idpf_vf_dev.c b/drivers/net/ethernet/intel/idpf/idpf_vf_dev.c
+index a07d7e808ca9b..6726084f6cfa0 100644
+--- a/drivers/net/ethernet/intel/idpf/idpf_vf_dev.c
++++ b/drivers/net/ethernet/intel/idpf/idpf_vf_dev.c
+@@ -86,7 +86,7 @@ static int idpf_vf_intr_reg_init(struct idpf_vport *vport,
+ 	if (!reg_vals)
+ 		return -ENOMEM;
+ 
+-	num_regs = idpf_get_reg_intr_vecs(adapter, reg_vals);
++	num_regs = idpf_get_reg_intr_vecs(adapter, reg_vals, total_vecs);
+ 	if (num_regs < num_vecs) {
+ 		err = -EINVAL;
+ 		goto free_reg_vals;
+diff --git a/drivers/net/ethernet/intel/idpf/idpf_virtchnl.c b/drivers/net/ethernet/intel/idpf/idpf_virtchnl.c
+index dc5ad784f456f..8bd6cca64c9bf 100644
+--- a/drivers/net/ethernet/intel/idpf/idpf_virtchnl.c
++++ b/drivers/net/ethernet/intel/idpf/idpf_virtchnl.c
+@@ -1318,11 +1318,12 @@ idpf_vport_init_queue_reg_chunks(struct idpf_vport_config *vport_config,
+  * idpf_get_reg_intr_vecs - Get vector queue register offset
+  * @adapter: adapter structure to get the vector chunks
+  * @reg_vals: Register offsets to store in
++ * @num_vecs: number of entries the @reg_vals array can hold
+  *
+  * Return: number of registers that got populated
+  */
+ int idpf_get_reg_intr_vecs(struct idpf_adapter *adapter,
+-			   struct idpf_vec_regs *reg_vals)
++			   struct idpf_vec_regs *reg_vals, int num_vecs)
+ {
+ 	struct virtchnl2_vector_chunks *chunks;
+ 	struct idpf_vec_regs reg_val;
+@@ -1346,7 +1347,7 @@ int idpf_get_reg_intr_vecs(struct idpf_adapter *adapter,
+ 		dynctl_reg_spacing = le32_to_cpu(chunk->dynctl_reg_spacing);
+ 		itrn_reg_spacing = le32_to_cpu(chunk->itrn_reg_spacing);
+ 
+-		for (i = 0; i < num_vec; i++) {
++		for (i = 0; i < num_vec && num_regs < num_vecs; i++) {
+ 			reg_vals[num_regs].dyn_ctl_reg = reg_val.dyn_ctl_reg;
+ 			reg_vals[num_regs].itrn_reg = reg_val.itrn_reg;
+ 			reg_vals[num_regs].itrn_index_spacing =
+diff --git a/drivers/net/ethernet/intel/idpf/idpf_virtchnl.h b/drivers/net/ethernet/intel/idpf/idpf_virtchnl.h
+index 6876e3ed9d1be..9b1c9c86f6eac 100644
+--- a/drivers/net/ethernet/intel/idpf/idpf_virtchnl.h
++++ b/drivers/net/ethernet/intel/idpf/idpf_virtchnl.h
+@@ -104,7 +104,7 @@ int idpf_vc_core_init(struct idpf_adapter *adapter);
+ void idpf_vc_core_deinit(struct idpf_adapter *adapter);
+ 
+ int idpf_get_reg_intr_vecs(struct idpf_adapter *adapter,
+-			   struct idpf_vec_regs *reg_vals);
++			   struct idpf_vec_regs *reg_vals, int num_vecs);
+ int idpf_queue_reg_init(struct idpf_vport *vport,
+ 			struct idpf_q_vec_rsrc *rsrc,
+ 			struct idpf_queue_id_reg_info *chunks);
 -- 
 2.53.0
 
