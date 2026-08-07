@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A98E42882B;
-	Fri,  7 Aug 2026 15:07:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0021842882B;
+	Fri,  7 Aug 2026 15:07:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115267; cv=none; b=CdccV3/19eqKXRq3LBlADOIF4pl0L3hqdsHS28SEqtZMBzzFwQs00B+c6GZ7v+1y7ZRUEbIMpuw45+mRve0kASw1dXaj5bzmJq8TLugQ6/8KFa+k7Mw4WTqhLnRerpauDBf/JRptVEdsUe4wiM00Zk/POIvWlwT+93cZVqc89Q8=
+	t=1786115270; cv=none; b=sLlKpLINNzIzHhd+NIku7GL0IrsLRIs8RshvVf3ohcfmnBZhI++Zv/izchZnK0NXWqavmeMowYJLdbjlbVGASGYZQvO47/7uJm5XhaCy9MI5VuGYthbuBYWfZGp27fM6TQs/pY/7dUGVnKtZV9CcnrTSrvicqKfwHmYeY38gw20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115267; c=relaxed/simple;
-	bh=NIQyDkihCLwcWC4pEoig5edlR9pDKmwbDmSa585njCU=;
+	s=arc-20240116; t=1786115270; c=relaxed/simple;
+	bh=76Vqflt20/szlldkISE2v2Wn9DPR5kVgC3MCwZw4aGA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o3cOb2xPmlv8IpbqKoC6sOGC0UgAjLRN3ysq/7WE1YUM3Co1qDdZfm5pSx+bhXypWVzkxQ6fKuNnsfHTM9XYjlt9WA9Jr1+RlvtTETepK9tDtk55QfnVrdYu0OD/GY8fcj7SmuhkGqNexwbMnFXL65VVAj6GezNVnG0zzOxJaAE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r9RMfQgT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VU4b5itKqRzvRnGTUJu0CtW26kQFtvbTIqkneuLzNgZd5Or7cAZOD5Re2YDnsVtsGIujzOq6HDLbiA5BTHRli6BDYS9HiubKE3YBlg8R+Gg07DI+4M+cDsBE8avMtpk+0nQp1mQU8oHmJ7KjJHvxYhDilEob0XPIpj/r2OVtVY4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yzni90gK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r9RMfQgT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 857831F000E9;
-	Fri,  7 Aug 2026 15:07:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yzni90gK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D2081F000E9;
+	Fri,  7 Aug 2026 15:07:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115266;
-	bh=B8ae9RPtkQvGqepm9rlNxoZWmXDLveFJ/KsefTLnFxA=;
+	s=korg; t=1786115268;
+	bh=XNMSWFEsnGBYIkEroV7WBcUcX05jwKFdKsOP+owf91k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r9RMfQgTnAhxtCLJKZhtsNKXUtUIM4lAfNtiw4Q6KUbRvG9D5+UVZJzgayBt8JCwV
-	 rNr05GxbbDVHQXSwtDNAsXZBaVusMke/hYP6uPwUSs0EnssrsVzhe+2HtGYf03Z3MY
-	 HNYnPbNtJKzzlJUQa4D2gPBa5VaNRXYM/6g9eAq8=
+	b=Yzni90gK8E2XWrCWLSJN1bX8U+qcIYL9IYvzDg5GhyDjW3JCK6WlI7pe2UMSXroOR
+	 Fs5YBLNziyfbmur/hrJ/En/HtjUa3JUGjXVDNY/FDBu8c6+BpDPDesvSurfCxjcZz2
+	 Gh5e08PuDJ6nYxyVoX166rI/CYTQ4dXne9r4Pxnw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.18 189/396] Bluetooth: btusb: Fix short read errors in btusb_qca_send_vendor_req()
-Date: Fri,  7 Aug 2026 16:35:49 +0200
-Message-ID: <20260807143428.364082828@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>,
+	Federico Kirschbaum <federico.kirschbaum@xbow.com>,
+	Baul Lee <baul.lee@xbow.com>
+Subject: [PATCH 6.18 216/396] ALSA: usb-audio: fix OOB write in snd_usbmidi_akai_output()
+Date: Fri,  7 Aug 2026 16:36:16 +0200
+Message-ID: <20260807143428.926746118@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -50,97 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Baul Lee <baul.lee@xbow.com>
 
-commit cac43d360c928bc0cbbd18809632388265649761 upstream.
+commit 0970274613fb463d376211450cab066d34ebfe6a upstream.
 
-If btusb_qca_send_vendor_req() gets a "short" read from a device, it
-will accidentally treat that as a "real" read and populate the returned
-value with some unknown and probably totally invalid data.
+snd_usbmidi_akai_output() computes its fill-loop bound
 
-Fix this logic error up by calling usb_control_msg_recv() which
-guarantees a "full" read happens, and then simplify the error checking
-for when btusb_qca_send_vendor_req() is called.
+	buf_end = ep->max_transfer - MAX_AKAI_SYSEX_LEN - 1;
 
-Cc: stable <stable@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+as a signed int, so a small device-advertised bulk-OUT max_transfer
+makes buf_end negative.  The loop guard then compares the u32
+urb->transfer_buffer_length against that negative int: the usual
+arithmetic conversion turns buf_end into a large unsigned value, so the
+guard stays true and each iteration keeps appending SysEx framing and
+payload bytes past the end of the URB transfer buffer, which is only
+max_transfer bytes long.
+
+A USB device that advertises a tiny bulk-OUT endpoint can therefore
+trigger an attacker-length- and content-controlled heap out-of-bounds
+write when a process writes to the created /dev/snd/midiC*D* node.
+
+Return early when there is no room for even one SysEx, so the loop is
+never entered with a bound that would wrap.  The loop is the last
+statement of the function, so bailing out is equivalent to it not
+running.
+
+Discovered by XBOW, triaged by Baul Lee <baul.lee@xbow.com>
+
+Fixes: 4434ade8c933 ("ALSA: usb-audio: add support for Akai MPD16")
+Suggested-by: Takashi Iwai <tiwai@suse.de>
+Reported-by: Federico Kirschbaum <federico.kirschbaum@xbow.com>
+Reported-by: Baul Lee <baul.lee@xbow.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Baul Lee <baul.lee@xbow.com>
+Link: https://patch.msgid.link/20260726074500.50145-1-baul.lee@xbow.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btusb.c |   30 +++++++++---------------------
- 1 file changed, 9 insertions(+), 21 deletions(-)
+ sound/usb/midi.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -3345,28 +3345,16 @@ static const char *qca_get_fw_subdirecto
- static int btusb_qca_send_vendor_req(struct usb_device *udev, u8 request,
- 				     void *data, u16 size)
- {
--	int pipe, err;
--	u8 *buf;
--
--	buf = kmalloc(size, GFP_KERNEL);
--	if (!buf)
--		return -ENOMEM;
-+	int err;
+--- a/sound/usb/midi.c
++++ b/sound/usb/midi.c
+@@ -793,6 +793,8 @@ static void snd_usbmidi_akai_output(stru
  
- 	/* Found some of USB hosts have IOT issues with ours so that we should
- 	 * not wait until HCI layer is ready.
- 	 */
--	pipe = usb_rcvctrlpipe(udev, 0);
--	err = usb_control_msg(udev, pipe, request, USB_TYPE_VENDOR | USB_DIR_IN,
--			      0, 0, buf, size, USB_CTRL_GET_TIMEOUT);
--	if (err < 0) {
-+	err = usb_control_msg_recv(udev, 0, request, USB_TYPE_VENDOR | USB_DIR_IN,
-+				   0, 0, data, size, USB_CTRL_GET_TIMEOUT,
-+				   GFP_KERNEL);
-+	if (err)
- 		dev_err(&udev->dev, "Failed to access otp area (%d)", err);
--		goto done;
--	}
--
--	memcpy(data, buf, size);
--
--done:
--	kfree(buf);
+ 	msg = urb->transfer_buffer + urb->transfer_buffer_length;
+ 	buf_end = ep->max_transfer - MAX_AKAI_SYSEX_LEN - 1;
++	if (buf_end <= 0)
++		return;
  
- 	return err;
- }
-@@ -3573,7 +3561,7 @@ static bool btusb_qca_need_patch(struct
- 	struct qca_version ver;
- 
- 	if (btusb_qca_send_vendor_req(udev, QCA_GET_TARGET_VERSION, &ver,
--				      sizeof(ver)) < 0)
-+				      sizeof(ver)))
- 		return false;
- 	/* only low ROM versions need patches */
- 	return !(le32_to_cpu(ver.rom_version) & ~0xffffU);
-@@ -3591,7 +3579,7 @@ static int btusb_setup_qca(struct hci_de
- 
- 	err = btusb_qca_send_vendor_req(udev, QCA_GET_TARGET_VERSION, &ver,
- 					sizeof(ver));
--	if (err < 0)
-+	if (err)
- 		return err;
- 
- 	ver_rom = le32_to_cpu(ver.rom_version);
-@@ -3614,7 +3602,7 @@ static int btusb_setup_qca(struct hci_de
- 
- 	err = btusb_qca_send_vendor_req(udev, QCA_CHECK_STATUS, &status,
- 					sizeof(status));
--	if (err < 0)
-+	if (err)
- 		return err;
- 
- 	if (!(status & QCA_PATCH_UPDATED)) {
-@@ -3625,7 +3613,7 @@ static int btusb_setup_qca(struct hci_de
- 
- 	err = btusb_qca_send_vendor_req(udev, QCA_GET_TARGET_VERSION, &ver,
- 					sizeof(ver));
--	if (err < 0)
-+	if (err)
- 		return err;
- 
- 	btdata->qca_dump.fw_version = le32_to_cpu(ver.patch_version);
+ 	/* only try adding more data when there's space for at least 1 SysEx */
+ 	while (urb->transfer_buffer_length < buf_end) {
 
 
