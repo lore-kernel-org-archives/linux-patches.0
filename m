@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50572389E13;
-	Fri,  7 Aug 2026 14:42:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4C0441A90B;
+	Fri,  7 Aug 2026 14:42:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786113743; cv=none; b=ON/vO34VXnyzHAWL0tv5ywQHhvqtrKwNuSajAT9kyG11fY4+AUgWeBGMUmQDo1/hpYsbOO+R5WMqy0EidwxykdkoZTvatg2JYq1697lQHIBKRtgrsvmFZVWiHF1Nz+GYv12PyKaCCRFr97X+h/2sNejuD8atcIYRp6zvqH/NuTo=
+	t=1786113747; cv=none; b=oNavz0SQd9eXfFvnEuUcF9XcgMEjQPgIB9Wc8qTjqNL/FhnSpa1/royNaXum0S/xkvDZpdwfPnXBPeZCoc9efV4L+5F+Obg1oyBC8VX3RwcaszN20X+vDMK6W7z4rIgTJymkfg/qu31RAVy5e3xGpxyEABuS+3HIH9lPzv96Wks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786113743; c=relaxed/simple;
-	bh=ltbeGHErsj4qtUDBw9chXsn6Fjibp4MuWES5NxNmX4w=;
+	s=arc-20240116; t=1786113747; c=relaxed/simple;
+	bh=2KdPgcOdcVZsNpOVcLfXEghxgqPZcx3eaSuwkF04rQg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MY9zIfL6CII2vVr8Q2TN65HU7UyLTYjD3RVOr5NSKXaYj9XSXYqSqiT5SCkrvKTYltlqSVr0GmT9fEufEpV+v8BZbhLdnTEkHwQa7Y3NtIGxY782IEUCjrzG6sXZc6kuChzzTWsWQcgD7rqyVOOtkl+/s2WB32DldqxjbRsJYfI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FOnBHjB5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S4hov2y6iktSQIwxlxGwon3vkxiO4y4ws3Sv0P3ycMR1rcT+9rKpVYGltj65IRjfByK2w4gIWFddJnxLOw7CH9qX2SYhrC/UdHSCkOhI9h4Mrc4Ch5YejWemvk0uwX3yAnxPWq7nn6AtgeeniGGEhsJMGsZF9yYqYr+/Opsep7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RPNasBXx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FOnBHjB5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69E4B1F00A3D;
-	Fri,  7 Aug 2026 14:41:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RPNasBXx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49A4E1F00A3F;
+	Fri,  7 Aug 2026 14:42:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786113720;
-	bh=QVxnOs6ng/T2z/d4sbqtR2fzVzzMy7sJFTEtTirmvWo=;
+	s=korg; t=1786113722;
+	bh=e/Ot7dXBXa0qPsohSDcs3+dcnnSbw0/Pz/o4m+yIygE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FOnBHjB5YhrvsjhGS57p6/R6w+XGunsh6fWy80SpVD+h1m7bT/J591cbZPtTrwZ6K
-	 yFkeOhavVgeam4TNSkNdZs05q9tnoIZt8+I/q11Ik/8R72SR0pL41Ku6BwsAO5V4Tu
-	 c4zZAN9y8pC0e6Eq8tnnsKqMmiQ1S403oafUyRkE=
+	b=RPNasBXx66xoTExZ1qc2e9LdbYBJ7hMnMD5jAEk+Dk9rO7suzu39p+8q71u8MzpVd
+	 K30WOzxnocns+kPguJGfbQIiDQlmio4zlnPEJRBJt0aKXlFBCfxkb9EESjfj2sq4kM
+	 ds/w/Oj+/OAZ0833hP8cnfWXg25HC4bsrgGs6zFE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Wayen.Yan" <win847@gmail.com>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 012/337] net: airoha: Fix register index for Tx-fwd counter configuration
-Date: Fri,  7 Aug 2026 16:33:35 +0200
-Message-ID: <20260807143418.787426408@linuxfoundation.org>
+Subject: [PATCH 6.12 013/337] net: mpls: initialize rtm_tos in mpls_getroute()
+Date: Fri,  7 Aug 2026 16:33:36 +0200
+Message-ID: <20260807143418.807320488@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -52,43 +51,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wayen.Yan <win847@gmail.com>
+From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
 
-[ Upstream commit 1402ecccf5630a0b7fa4749d7d2e72abc3f3d73d ]
+[ Upstream commit 295dd295e2137e10e9a5b1891d97e0f08de76f03 ]
 
-In airoha_qdma_init_qos_stats(), the Tx-fwd counter configuration
-register uses the same index (i << 1) as the Tx-cpu counter, which
-overwrites the Tx-cpu configuration. The Tx-fwd counter value register
-correctly uses (i << 1) + 1, so the configuration register should use
-the same index.
+mpls_getroute() builds the RTM_NEWROUTE reply to an RTM_GETROUTE
+request by filling a struct rtmsg allocated from an skb whose data
+area is not zeroed (alloc_skb(NLMSG_GOODSIZE, ...)). It sets every
+field of the header except rtm_tos:
 
-Fix the REG_CNTR_CFG index from (i << 1) to ((i << 1) + 1) so that
-the Tx-fwd counter is properly configured instead of clobbering the
-Tx-cpu counter config.
+	r = nlmsg_data(nlh);
+	r->rtm_family	 = AF_MPLS;
+	r->rtm_dst_len	= 20;
+	r->rtm_src_len	= 0;
+	r->rtm_table	= RT_TABLE_MAIN;
+	r->rtm_type	= RTN_UNICAST;
+	r->rtm_scope	= RT_SCOPE_UNIVERSE;
+	r->rtm_protocol = rt->rt_protocol;
+	r->rtm_flags	= 0;
 
-Fixes: 20bf7d07c956 ("net: airoha: Add sched ETS offload support")
-Signed-off-by: Wayen.Yan <win847@gmail.com>
-Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/6a2b40e7.4dd82583.3a5c46.e566@mx.google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+struct rtmsg has no padding, so the one uninitialised byte rtm_tos
+(offset 3) is copied straight to user space on recvmsg(), leaking a
+byte of uninitialised heap memory. This is in contrast to
+mpls_dump_route(), which fills the very same header and does set
+rtm_tos = 0.
+
+Initialize rtm_tos to 0, matching mpls_dump_route().
+
+Reproduced with KMSAN by adding an MPLS route and issuing a
+non-RTM_F_FIB_MATCH RTM_GETROUTE for its label:
+
+  BUG: KMSAN: kernel-infoleak in _copy_to_iter+0x36c/0x33f0
+   _copy_to_iter+0x36c/0x33f0
+   __skb_datagram_iter+0x196/0x12c0
+   skb_copy_datagram_iter+0x5b/0x210
+   netlink_recvmsg+0x37b/0xef0
+   ...
+  Uninit was created at:
+   __alloc_skb+0x8ca/0x10e0
+   mpls_getroute+0x1280/0x3a40
+   rtnetlink_rcv_msg+0x1138/0x15a0
+   ...
+  Byte 19 of 64 is uninitialized
+
+(byte 19 = nlmsghdr(16) + rtmsg offset 3 = rtm_tos)
+
+Fixes: 397fc9e5cefe ("mpls: route get support")
+Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+Link: https://patch.msgid.link/20260723010830.289917-1-yhlee@isslab.korea.ac.kr
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/airoha/airoha_eth.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/mpls/af_mpls.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/airoha/airoha_eth.c b/drivers/net/ethernet/airoha/airoha_eth.c
-index 58e5791e9cd4..9ebc9788ded7 100644
---- a/drivers/net/ethernet/airoha/airoha_eth.c
-+++ b/drivers/net/ethernet/airoha/airoha_eth.c
-@@ -2022,7 +2022,7 @@ static void airoha_qdma_init_qos_stats(struct airoha_qdma *qdma)
- 			       FIELD_PREP(CNTR_CHAN_MASK, i));
- 		/* Tx-fwd transferred count */
- 		airoha_qdma_wr(qdma, REG_CNTR_VAL((i << 1) + 1), 0);
--		airoha_qdma_wr(qdma, REG_CNTR_CFG(i << 1),
-+		airoha_qdma_wr(qdma, REG_CNTR_CFG((i << 1) + 1),
- 			       CNTR_EN_MASK | CNTR_ALL_QUEUE_EN_MASK |
- 			       CNTR_ALL_DSCP_RING_EN_MASK |
- 			       FIELD_PREP(CNTR_SRC_MASK, 1) |
+diff --git a/net/mpls/af_mpls.c b/net/mpls/af_mpls.c
+index 98816e51e01a..0379540d601a 100644
+--- a/net/mpls/af_mpls.c
++++ b/net/mpls/af_mpls.c
+@@ -2468,6 +2468,7 @@ static int mpls_getroute(struct sk_buff *in_skb, struct nlmsghdr *in_nlh,
+ 	r->rtm_family	 = AF_MPLS;
+ 	r->rtm_dst_len	= 20;
+ 	r->rtm_src_len	= 0;
++	r->rtm_tos	= 0;
+ 	r->rtm_table	= RT_TABLE_MAIN;
+ 	r->rtm_type	= RTN_UNICAST;
+ 	r->rtm_scope	= RT_SCOPE_UNIVERSE;
 -- 
 2.53.0
 
