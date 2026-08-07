@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F12FB29D27A;
-	Fri,  7 Aug 2026 14:56:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFF9B4B0480;
+	Fri,  7 Aug 2026 14:56:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114566; cv=none; b=DCgMtz+nV1eUCHM7I2qMP6cBfoVImYPRoNb9c++kwKAq9WeC/MFkkc7ytAiyuB5qAUpjm8HMcNi3tf7J21CbVxf5bbfrVZY0AMRAwlm+VSDVEHQ14EF2sNtjaOscAa+siSfqciTCGfBdk5aB5SewPvl1K4+3YW+i4cSlk9QP2Io=
+	t=1786114569; cv=none; b=rYtkqJ/4F7VRxZwqffjTGvFoYWHI0ssvytBmWgAp/ODNjuh7CXX9Shy1GaC59kj4zpBp/CVwTr9YicTNPwDNtnmT2dgUkN2kI3jfYEmHq/XlkkdP5KBJ0WHsfHSr7hRWSfH70Nv1ZuJJA3ZzzjXZqk8yE9En9Hwre9yPSNXzDoc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114566; c=relaxed/simple;
-	bh=Gu0S9PDX8VvxeBTwVmN5PoIiGL3qWrMYyUMefv2p3+s=;
+	s=arc-20240116; t=1786114569; c=relaxed/simple;
+	bh=/VHmZjga0hHEaZN0b6uID81pCzx95MOXC9B3/aIiPLM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GaMHTTiE26eOZnnzHFqx6OT08p8dZx6v+lfjx/DAC31+nOEDKWZ71i4yRBZqtvIj8z/BMYVcs42+37HwOtvqC5yQvf9ZQsUG1pvRhU6W4gN2YPKI8JgHdo9e6sMbjB3eH+YEEGEWJFLwhzczA6J6pvNS88gEztscPmzjnAZS7a4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m+irr8B6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aBgZj8yE3+ZN2ZVqdpTKyWdy8Z6Slmf1RzYYoSRFRkLe4BdOiiUm2F7KuWxdvuI3cD+wzK8QZ1v1plDo2lhMtPsM+b59CIVk0mjJGYSTGTfduvEc2TKGj3OzvFWXw6VIFXRJ+dxwbwdz1i4YgmzdUjCNEqkskEVEyCe90pplhBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zKUdbp4x; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m+irr8B6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 544721F000E9;
-	Fri,  7 Aug 2026 14:56:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zKUdbp4x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E3DA1F000E9;
+	Fri,  7 Aug 2026 14:56:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114564;
-	bh=5TfqF3A838WSR0ERj2VIMFynCBA5xMH3XtlTbXxZm+k=;
+	s=korg; t=1786114567;
+	bh=v1QAOJ4wT17+qYQxCCTBziOE+lIPX3LJBwM/GB9zn1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m+irr8B6vTgVtbElnbDl4T5ESwdKEueumGP0+kxZ5pyMv7oT6VM/vPrLz3r5jEVMW
-	 /+kk0ryND3ofwmpcWOZnXbSCW6NZj45oVczyCI5bdmLsc4fk3HWii8jL7wjkKZimsc
-	 M9fEYA1oX8+2svpGPjol10gpjvSyi7N8v3st2zsQ=
+	b=zKUdbp4x+/VqA3kL09YPHo90ssi53bgpWiB0pmCwutFAhP4AVF2M351xR9X6fOqno
+	 Qc+VmTiirsz48Gs9MHziL7+mu6t7YznscDank/srkzceo/cAtQgosZq7ePaBSY9W8b
+	 STS+RiEV9COpiuAiELuhXFCXJ7IjCHlNUSvLFaiM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <tanggeliang@kylinos.cn>,
-	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Ido Schimmel <idosch@idosch.org>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Joerg Roedel <joro@8bytes.org>,
+	Will Deacon <will@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 306/337] mptcp: pm: userspace: fix use-after-free in get_local_id
-Date: Fri,  7 Aug 2026 16:38:29 +0200
-Message-ID: <20260807143425.160138753@linuxfoundation.org>
+Subject: [PATCH 6.12 307/337] kmemleak: iommu/iova: fix transient kmemleak false positive
+Date: Fri,  7 Aug 2026 16:38:30 +0200
+Message-ID: <20260807143425.181571712@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -53,90 +56,163 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geliang Tang <tanggeliang@kylinos.cn>
+From: Catalin Marinas <catalin.marinas@arm.com>
 
-[ Upstream commit 9bc6d5e4ca9f3cbb41d43400b3a31cb0403796c9 ]
+[ Upstream commit 7591c127f3b17d5879f18819cad7058bf3a2e276 ]
 
-In mptcp_pm_userspace_get_local_id(), the address entry is looked up under
-spinlock, but its id is read after dropping the lock. A concurrent deletion
-can free the entry between the unlock and the read, leading to UAF.
+The introduction of iova_depot_pop() in 911aa1245da8 ("iommu/iova: Make
+the rcache depot scale better") confused kmemleak by moving a struct
+iova_magazine object from a singly linked list to rcache->depot and
+resetting the 'next' pointer referencing it.  Unlike doubly linked lists,
+the content of the object being referred is never changed on removal from
+a singly linked list and the kmemleak checksum heuristics do not detect
+such scenario.  This leads to false positives like:
 
-The race window is narrow. It was reproduced only with a locally
-constructed stress test that repeatedly overlaps an MP_JOIN SYN with a
-MPTCP_PM_CMD_SUBFLOW_DESTROY request.
+unreferenced object 0xffff8881a5301000 (size 1024):
+  comm "softirq", pid 0, jiffies 4306297099 (age 462.991s)
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 e7 7d 05 00 00 00 00 00  .........}......
+    0f b4 05 00 00 00 00 00 b4 96 05 00 00 00 00 00  ................
+  backtrace:
+    [<ffffffff819f5f08>] __kmem_cache_alloc_node+0x1e8/0x320
+    [<ffffffff818a239a>] kmalloc_trace+0x2a/0x60
+    [<ffffffff8231d31e>] free_iova_fast+0x28e/0x4e0
+    [<ffffffff82310860>] fq_ring_free_locked+0x1b0/0x310
+    [<ffffffff8231225d>] fq_flush_timeout+0x19d/0x2e0
+    [<ffffffff813e95ba>] call_timer_fn+0x19a/0x5c0
+    [<ffffffff813ea16b>] __run_timers+0x78b/0xb80
+    [<ffffffff813ea5bd>] run_timer_softirq+0x5d/0xd0
+    [<ffffffff82f1d915>] __do_softirq+0x205/0x8b5
 
-However, the KASAN report below confirms that the race is reachable:
+Introduce kmemleak_transient_leak() which resets the object checksum
+requiring another scan pass before it is reported (if still unreferenced).
+Call this new API in iova_depot_pop().
 
-  [  666.319376] BUG: KASAN: slab-use-after-free in mptcp_userspace_pm_get_local_id+0x1dc/0x1f0
-  [  666.319386] Read of size 1 at addr ffff888124845610 by task swapper/0/0
-  ...
-  [  666.319401] Call Trace:
-  [  666.319405]  <IRQ>
-  [  666.319408]  dump_stack_lvl+0x53/0x70
-  [  666.319412]  print_address_description.constprop.0+0x2c/0x3b0
-  [  666.319418]  print_report+0xbe/0x2b0
-  [  666.319421]  ? mptcp_userspace_pm_get_local_id+0x1dc/0x1f0
-  [  666.319423]  kasan_report+0xce/0x100
-  [  666.319426]  ? mptcp_userspace_pm_get_local_id+0x1dc/0x1f0
-  [  666.319429]  mptcp_userspace_pm_get_local_id+0x1dc/0x1f0
-  [  666.319433]  mptcp_pm_get_local_id+0x371/0x440
-  ...
-  [  666.319821] Allocated by task 45539:
-  [  666.319844]  kasan_save_stack+0x33/0x60
-  [  666.319855]  kasan_save_track+0x14/0x30
-  [  666.319858]  __kasan_kmalloc+0x8f/0xa0
-  [  666.319863]  __kmalloc_noprof+0x1e7/0x520
-  [  666.319867]  sock_kmalloc+0xdf/0x130
-  [  666.319885]  sock_kmemdup+0x1b/0x40
-  [  666.319888]  mptcp_userspace_pm_append_new_local_addr+0x261/0x500
-  [  666.319910]  mptcp_pm_nl_announce_doit+0x16a/0x610
-  ...
-  [  666.319967] Freed by task 45560:
-  [  666.319988]  kasan_save_stack+0x33/0x60
-  [  666.319991]  kasan_save_track+0x14/0x30
-  [  666.319994]  kasan_save_free_info+0x3b/0x60
-  [  666.319998]  __kasan_slab_free+0x43/0x70
-  [  666.320000]  kfree+0x166/0x440
-  [  666.320003]  sock_kfree_s+0x1d/0x50
-  [  666.320007]  mptcp_userspace_pm_delete_local_addr.isra.0+0x157/0x200
-  [  666.320011]  mptcp_pm_nl_subflow_destroy_doit+0x51d/0xea0
-
-Fix by copying the id into a local variable while still holding the lock,
-and use -1 as a "not found" sentinel.
-
-Fixes: f012d796a6de ("mptcp: check addrs list in userspace_pm_get_local_id")
-Cc: stable@vger.kernel.org
-Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
-Tested-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260722-net-mptcp-misc-fixes-7-2-rc5-v1-2-6fb595bc86ef@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lkml.kernel.org/r/20241104111944.2207155-1-catalin.marinas@arm.com
+Link: https://lore.kernel.org/r/ZY1osaGLyT-sdKE8@shredder/
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Reported-by: Ido Schimmel <idosch@idosch.org>
+Tested-by: Ido Schimmel <idosch@nvidia.com>
+Acked-by: Robin Murphy <robin.murphy@arm.com>
+Cc: Joerg Roedel <joro@8bytes.org>
+Cc: Will Deacon <will@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 79c37ae3733e ("mm/kmemleak: fix checksum computation for per-cpu objects")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_userspace.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ Documentation/dev-tools/kmemleak.rst |    1 
+ drivers/iommu/iova.c                 |    6 +++++
+ include/linux/kmemleak.h             |    4 +++
+ mm/kmemleak.c                        |   39 +++++++++++++++++++++++++++++++++++
+ 4 files changed, 50 insertions(+)
 
---- a/net/mptcp/pm_userspace.c
-+++ b/net/mptcp/pm_userspace.c
-@@ -137,12 +137,15 @@ int mptcp_userspace_pm_get_local_id(stru
- 	__be16 msk_sport =  ((struct inet_sock *)
- 			     inet_sk((struct sock *)msk))->inet_sport;
- 	struct mptcp_pm_addr_entry *entry;
-+	int id;
+--- a/Documentation/dev-tools/kmemleak.rst
++++ b/Documentation/dev-tools/kmemleak.rst
+@@ -161,6 +161,7 @@ See the include/linux/kmemleak.h header
+ - ``kmemleak_free_percpu``	 - notify of a percpu memory block freeing
+ - ``kmemleak_update_trace``	 - update object allocation stack trace
+ - ``kmemleak_not_leak``	 - mark an object as not a leak
++- ``kmemleak_transient_leak``	 - mark an object as a transient leak
+ - ``kmemleak_ignore``		 - do not scan or report an object as leak
+ - ``kmemleak_scan_area``	 - add scan areas inside a memory block
+ - ``kmemleak_no_scan``	 - do not scan a memory block
+--- a/drivers/iommu/iova.c
++++ b/drivers/iommu/iova.c
+@@ -6,6 +6,7 @@
+  */
  
- 	spin_lock_bh(&msk->pm.lock);
- 	entry = mptcp_userspace_pm_lookup_addr(msk, &skc->addr);
-+	id = entry ? entry->addr.id : -1;
- 	spin_unlock_bh(&msk->pm.lock);
--	if (entry)
--		return entry->addr.id;
+ #include <linux/iova.h>
++#include <linux/kmemleak.h>
+ #include <linux/module.h>
+ #include <linux/slab.h>
+ #include <linux/smp.h>
+@@ -673,6 +674,11 @@ static struct iova_magazine *iova_depot_
+ {
+ 	struct iova_magazine *mag = rcache->depot;
+ 
++	/*
++	 * As the mag->next pointer is moved to rcache->depot and reset via
++	 * the mag->size assignment, mark it as a transient false positive.
++	 */
++	kmemleak_transient_leak(mag->next);
+ 	rcache->depot = mag->next;
+ 	mag->size = IOVA_MAG_SIZE;
+ 	rcache->depot_size--;
+--- a/include/linux/kmemleak.h
++++ b/include/linux/kmemleak.h
+@@ -26,6 +26,7 @@ extern void kmemleak_free_part(const voi
+ extern void kmemleak_free_percpu(const void __percpu *ptr) __ref;
+ extern void kmemleak_update_trace(const void *ptr) __ref;
+ extern void kmemleak_not_leak(const void *ptr) __ref;
++extern void kmemleak_transient_leak(const void *ptr) __ref;
+ extern void kmemleak_ignore(const void *ptr) __ref;
+ extern void kmemleak_scan_area(const void *ptr, size_t size, gfp_t gfp) __ref;
+ extern void kmemleak_no_scan(const void *ptr) __ref;
+@@ -93,6 +94,9 @@ static inline void kmemleak_update_trace
+ static inline void kmemleak_not_leak(const void *ptr)
+ {
+ }
++static inline void kmemleak_transient_leak(const void *ptr)
++{
++}
+ static inline void kmemleak_ignore(const void *ptr)
+ {
+ }
+--- a/mm/kmemleak.c
++++ b/mm/kmemleak.c
+@@ -951,6 +951,28 @@ static void make_black_object(unsigned l
+ }
+ 
+ /*
++ * Reset the checksum of an object. The immediate effect is that it will not
++ * be reported as a leak during the next scan until its checksum is updated.
++ */
++static void reset_checksum(unsigned long ptr)
++{
++	unsigned long flags;
++	struct kmemleak_object *object;
 +
-+	if (id != -1)
-+		return id;
++	object = find_and_get_object(ptr, 0);
++	if (!object) {
++		kmemleak_warn("Not resetting the checksum of an unknown object at 0x%08lx\n",
++			      ptr);
++		return;
++	}
++
++	raw_spin_lock_irqsave(&object->lock, flags);
++	object->checksum = 0;
++	raw_spin_unlock_irqrestore(&object->lock, flags);
++	put_object(object);
++}
++
++/*
+  * Add a scanning area to the object. If at least one such area is added,
+  * kmemleak will only scan these ranges rather than the whole memory block.
+  */
+@@ -1219,6 +1241,23 @@ void __ref kmemleak_not_leak(const void
+ EXPORT_SYMBOL(kmemleak_not_leak);
  
- 	if (skc->addr.port == msk_sport)
- 		skc->addr.port = 0;
+ /**
++ * kmemleak_transient_leak - mark an allocated object as transient false positive
++ * @ptr:	pointer to beginning of the object
++ *
++ * Calling this function on an object will cause the memory block to not be
++ * reported as a leak temporarily. This may happen, for example, if the object
++ * is part of a singly linked list and the ->next reference to it is changed.
++ */
++void __ref kmemleak_transient_leak(const void *ptr)
++{
++	pr_debug("%s(0x%px)\n", __func__, ptr);
++
++	if (kmemleak_enabled && ptr && !IS_ERR(ptr))
++		reset_checksum((unsigned long)ptr);
++}
++EXPORT_SYMBOL(kmemleak_transient_leak);
++
++/**
+  * kmemleak_ignore - ignore an allocated object
+  * @ptr:	pointer to beginning of the object
+  *
 
 
