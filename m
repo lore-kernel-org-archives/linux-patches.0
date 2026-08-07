@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97D1326B2D3;
-	Fri,  7 Aug 2026 15:13:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7673E26B2D3;
+	Fri,  7 Aug 2026 15:13:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115597; cv=none; b=i4joQ23N2CIrsAee55PDj6NoNa7HSL6+Zklk/Sh+uuX15kd/KzKvnbtNKAfu5jVP+j/cv1/SujG4usz3n6xYP03fg+ivg70ffIxKFsyBiAK8E4MSlsSHJWnLnGt5frOO+PiG3evv9dQcURillUxw9zR5NPLJup1F7dox569rfYc=
+	t=1786115600; cv=none; b=i5m9BGbH9LPtxeRkkNJKPvKDGBOiKQcIrom2xlm7l9klJ8mrDC0gyGnUFqUfUIc8BceWdB9ZyBVLadRRtjVmNz1ZE3G09PZCFVv/2YQu3nHuea8iwBcLGHRWvXA4V4JfFVC9NrHazsaKVqm8KnhSMZcUzRELzBrl6fs4BJD3XqQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115597; c=relaxed/simple;
-	bh=lojKi7SRK1u0gyO7BmoutB6qB1F6m5dsOZMqZik7fdU=;
+	s=arc-20240116; t=1786115600; c=relaxed/simple;
+	bh=rc9o5czFoYRq7tCh+V5/JE1d1I6KCK4EdicX8lSLLZM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fUyh9MCUpwU/Ao+E9I02PvKizmgFjXVWovDepVMts2nVChHzLh2Q2IopVZQ+wX49VxA1d6ctBYa78flCQBUFlC1EDwzF8Owoxt77mWKLjvzUaVwkct8ccOwlz/tX04pbe7dWGgl32aP6LVpahrTcZ1hFYJYxgiiaA00wZoh+4xg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BQny6PLk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BRevomWp4iqyHbQHmvBbEZ8smD6TN3WsVqdOwbtw47H59vRNTJQMdTXqSldmoEkCjb4hfwXnpfJ9J0gxssouKo1tbVjuP9tsYZdQ8kWZQ06Z82MDYuwRkeVYWYKCPu8f3gu5tglu8hhzaJ0kCrWkPeOOcJJItMXP9aiy6BKMoiA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1f1GfK3G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BQny6PLk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFF3A1F000E9;
-	Fri,  7 Aug 2026 15:13:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1f1GfK3G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAB1C1F000E9;
+	Fri,  7 Aug 2026 15:13:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115596;
-	bh=8nqkgK+aRqW8lQFsFq58thtLYZMWWUT5V9KGgTElCMg=;
+	s=korg; t=1786115599;
+	bh=yado32/TMnvTiOxddc/2pUrmXHaZPEytdnhk0qq4nxA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BQny6PLkoT7ywcl37pYb7nZ4IDUr2NDcrHWgvh4Jz8nKcDNP9Pr6v0UpTCM21FmE/
-	 cF9HJw8pKzs54bLGrzBwUdwsN3meLHAwvMdF6EJW+/hICHRiHlWR6NzsM4eidQJLqQ
-	 HB0uEeDhGVEwkQ9suY8SYjFNbF4YZoGYoceMYW/s=
+	b=1f1GfK3Gs3FIXzZ0NMMEeTp3U+QM03qvnGiNIbV1l5cwO1RsuIaqlxtci1TlAnCbv
+	 P0jiaG0ZjEpPjIRJq/2dUkBZlBX77GSP24doN+ZbpmP5pFGTh3t9joDhrOZ+6KgCgR
+	 uyR6xXS80btRabRvgtgA33VGvUnBlvORlZzpUOAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dawei Feng <dawei.feng@seu.edu.cn>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Rinitha S <sx.rinitha@intel.com>
-Subject: [PATCH 6.18 287/396] ice: fix memory leak in ice_lbtest_prepare_rings()
-Date: Fri,  7 Aug 2026 16:37:27 +0200
-Message-ID: <20260807143430.460464317@linuxfoundation.org>
+	Linmao Li <lilinmao@kylinos.cn>,
+	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
+	Alex Elder <elder@riscstar.com>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH 6.18 288/396] i2c: spacemit: request IRQ after controller initialization
+Date: Fri,  7 Aug 2026 16:37:28 +0200
+Message-ID: <20260807143430.482162593@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -52,68 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dawei Feng <dawei.feng@seu.edu.cn>
+From: Linmao Li <lilinmao@kylinos.cn>
 
-commit 3a9de5590da4ffd9e9c541c4c4d492aa2b54cf6e upstream.
+commit cdac670237258c8ca063aa8a16998f680d81b80d upstream.
 
-ice_lbtest_prepare_rings() frees Rx rings only when
-ice_vsi_start_all_rx_rings() fails. If ice_vsi_setup_rx_rings() fails
-after allocating some descriptors, or if ice_vsi_cfg_lan() fails after
-the Rx rings were prepared, the function reaches the Tx cleanup path
-without releasing the initialized Rx resources.
+spacemit_i2c_probe() requests the IRQ before it enables the clocks, resets
+the controller and runs init_completion(). If an interrupt is already
+pending, the handler runs too early: it reads registers while the clocks
+are still off and calls complete() on an uninitialized completion. Request
+the IRQ after the controller and completion are initialized, but still
+before the adapter is registered.
 
-Fix this by adding separate unwind paths for Rx setup failure and LAN
-configuration failure. The Rx setup failure path releases the partially
-prepared Rx rings before freeing Tx rings, while later failures first
-undo the LAN Tx configuration and then release the Rx rings in reverse
-setup order.
-
-The bug was first flagged by an experimental analysis tool we are
-developing for kernel memory-management bugs while analyzing
-v6.13-rc1. The tool is still under development and is not yet publicly
-available. Manual inspection confirms that the bug is still
-present in v7.1-rc7.
-
-An x86_64 allyesconfig build showed no new warnings. As we do not have an
-Intel E800 Series adapter available to run the ethtool offline loopback
-selftest, no runtime testing was able to be performed.
-
-Fixes: 0e674aeb0b77 ("ice: Add handler for ethtool selftest")
-Cc: stable@vger.kernel.org
-Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: 5ea558473fa3 ("i2c: spacemit: add support for SpacemiT K1 SoC")
+Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
+Cc: <stable@vger.kernel.org> # v6.15+
+Reviewed-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
+Reviewed-by: Alex Elder <elder@riscstar.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/20260723021140.2293844-1-lilinmao@kylinos.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/ice/ice_ethtool.c |   10 +++++-----
+ drivers/i2c/busses/i2c-k1.c |   10 +++++-----
  1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/net/ethernet/intel/ice/ice_ethtool.c
-+++ b/drivers/net/ethernet/intel/ice/ice_ethtool.c
-@@ -1077,18 +1077,18 @@ static int ice_lbtest_prepare_rings(stru
+--- a/drivers/i2c/busses/i2c-k1.c
++++ b/drivers/i2c/busses/i2c-k1.c
+@@ -565,11 +565,6 @@ static int spacemit_i2c_probe(struct pla
+ 	if (i2c->irq < 0)
+ 		return dev_err_probe(dev, i2c->irq, "failed to get irq resource");
  
- 	status = ice_vsi_cfg_lan(vsi);
- 	if (status)
--		goto err_setup_rx_ring;
-+		goto err_cfg_lan;
+-	ret = devm_request_irq(i2c->dev, i2c->irq, spacemit_i2c_irq_handler,
+-			       IRQF_NO_SUSPEND, dev_name(i2c->dev), i2c);
+-	if (ret)
+-		return dev_err_probe(dev, ret, "failed to request irq");
+-
+ 	clk = devm_clk_get_enabled(dev, "func");
+ 	if (IS_ERR(clk))
+ 		return dev_err_probe(dev, PTR_ERR(clk), "failed to enable func clock");
+@@ -592,6 +587,11 @@ static int spacemit_i2c_probe(struct pla
  
- 	status = ice_vsi_start_all_rx_rings(vsi);
- 	if (status)
--		goto err_start_rx_ring;
-+		goto err_cfg_lan;
+ 	init_completion(&i2c->complete);
  
- 	return 0;
++	ret = devm_request_irq(i2c->dev, i2c->irq, spacemit_i2c_irq_handler,
++			       IRQF_NO_SUSPEND, dev_name(i2c->dev), i2c);
++	if (ret)
++		return dev_err_probe(dev, ret, "failed to request irq");
++
+ 	platform_set_drvdata(pdev, i2c);
  
--err_start_rx_ring:
--	ice_vsi_free_rx_rings(vsi);
--err_setup_rx_ring:
-+err_cfg_lan:
- 	ice_vsi_stop_lan_tx_rings(vsi, ICE_NO_RESET, 0);
-+err_setup_rx_ring:
-+	ice_vsi_free_rx_rings(vsi);
- err_setup_tx_ring:
- 	ice_vsi_free_tx_rings(vsi);
- 
+ 	ret = i2c_add_numbered_adapter(&i2c->adapt);
 
 
