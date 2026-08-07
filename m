@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A8102D12ED;
-	Fri,  7 Aug 2026 15:17:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D1F229C328;
+	Fri,  7 Aug 2026 15:17:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115856; cv=none; b=WDrRmG0mwlWg4xf2jrXg6rWqACkAp9DATfqjhVtSq+UfTzZcwkbuOnXaNNqniJX3LYZtrRSOET5S8y2uUYP8N99QCxGHQETJjCFLhjL9WzssfBiwlDK3VUu1UzCw5HesuyYrT+nLy/Q8/KuYrklfMiVcPWMb7DvV7RB/um+2UKs=
+	t=1786115859; cv=none; b=qHSy5ElJ9Y/W3wlTZgOSXxLyy6HPw7TDFZZfKW3exq55DkNG0vJ4tB41NOkQo3mw7E+TRYqVVgeNR1TavjaRqoh08bnUM1Dp56bq7FtlhATWU230N9a3Hf2jCnVDwnYUoHQBaOSGDB+0TL7079owxl4tENMKAsNpucifmrWrD88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115856; c=relaxed/simple;
-	bh=Q4DuPlMuoZhEw5mod/S8ILIFRIHGLw1yH+xQ01RUEhY=;
+	s=arc-20240116; t=1786115859; c=relaxed/simple;
+	bh=CLk0Sx//On/qyUFl29dwKZ2X5gS03MwFsp/iJu0/ZJY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PdczhgXZhFtNdJ/IfxiSoioebUXPBGetYyiuVf9x31Hmbyk7SWZZwbRpl3BJ/msV9WbXuWLc0cCR3DGlowH5LTPJFfw1zAfuI436f8ZlFdJFhcy+79Ebs3q3DScjIIbKpRuoeQ0OMabEWHOAtvBCK+HsB+P62v20BYY3jLX6BSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cyuEnYJP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jeMzEUukYvJN4cOgzq/ULHOe9FFWbTBw7D1PzLaxxHbhgB+q8W3XjhTX3k770EgeNBW+bVccsgp/DxjuoemNM8B9Yo/4roYiUJ4ZHKRxKuBTvJENNiVhr/q+Wl0uGd9649rD7Z//eGyrrmAvdV50KMqI0hjRK5m9FbtUE5joU5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R5poLxnL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cyuEnYJP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6C651F00A3A;
-	Fri,  7 Aug 2026 15:17:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R5poLxnL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 998B21F000E9;
+	Fri,  7 Aug 2026 15:17:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115855;
-	bh=k0XHWpUYevN0yRzgaASuvTtUzbaAVTyW6xzcpuVXzBw=;
+	s=korg; t=1786115858;
+	bh=wHeHj+Ps7D87ptX4Wof30AxHwQjsDIEkB0zEcu1WYGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cyuEnYJPTrVCvLChhwKIXICXlEhk1gCIqvSaSh5wgsolTI5SFYWtWPRVLT2t9NUED
-	 Wq4yi5+jGyEEUV4Fl7gm8MKnh3EaHkutFh9GPhPTbomclV3K01Yd0FNShLOyGwJtE9
-	 bqevYyF1F+7MFFlrGmEWfxrzSnMXZ1qh4rp9OkeY=
+	b=R5poLxnLr8cJIviasWihE+Kjz52ltcPMFeiMQOqiCHYDtSxCR8ggKdRdVDlq2YuCf
+	 K2h3mjMR+7+IKY3K1fGUdbr39l1gmMInx9qCtaCiHAAwrBYNUuJsD0Vmc/flX39SWM
+	 yejhy2Go89/MeAcd32sLILg495+vqkICMNZkUwBM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naohiro Aota <naohiro.aota@wdc.com>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	David Sterba <dsterba@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 019/261] btrfs: zoned: fix deadlock between metadata writeback and transaction commit
-Date: Fri,  7 Aug 2026 16:36:16 +0200
-Message-ID: <20260807143415.783792463@linuxfoundation.org>
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Talha Berk Arslan <talha.anything.info@gmail.com>
+Subject: [PATCH 6.6 028/261] netfilter: xt_hashlimit: validate hashtable supports XT_HASHLIMIT_RATE_MATCH
+Date: Fri,  7 Aug 2026 16:36:25 +0200
+Message-ID: <20260807143415.983686459@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143415.358597922@linuxfoundation.org>
 References: <20260807143415.358597922@linuxfoundation.org>
@@ -52,74 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 1ebe51c29fa9755d5b2fea28727c051117907cf8 ]
+[ Upstream commit 305b63e1402267459fdabb183af4527f6799eebf ]
 
-When writing out metadata extent buffers in a zoned filesystem,
-btree_writepages() holds fs_info->zoned_meta_io_lock across the whole
-writeback loop, including the call to btrfs_check_meta_write_pointer() ->
-check_bg_is_active().
+The XT_HASHLIMIT_RATE_MATCH flag mode changes the semantics of the
+dsthash_ent structure which represents an entry in the hashtable.  There
+is a union area which uses a different layout to express the rate match
+mode.
 
-For the tree-log block group, check_bg_is_active() may fail to activate
-the zone and fall back to btrfs_zone_finish_one_bg() to free an active
-zone. That path waits for the running transaction to commit while still
-holding zoned_meta_io_lock, but the committer needs that same lock to
-write out the tree extents, so the two tasks deadlock:
+Update .checkentry path to validate the XT_HASHLIMIT_RATE_MATCH mode
+flag is requested by two or more different rules that refer to the same
+hashtable. Otherwise, uninitialized access to the burst field in the
+union is possible.
 
-  Task A (kworker, metadata writeback)      Task B (fsstress, transaction commit)
-  ------------------------------------      -------------------------------------
-  wb_workfn()                               btrfs_commit_transaction(T)
-   btree_writepages()                        btrfs_write_and_wait_transaction()
-    btrfs_zoned_meta_io_lock()                btrfs_write_marked_extents()
-    btrfs_check_meta_write_pointer()           btree_writepages()
-     check_bg_is_active() [treelog_bg]          btrfs_zoned_meta_io_lock()
-      btrfs_zone_finish_one_bg()               <blocks on zoned_meta_io_lock,
-       btrfs_zone_finish()                      held by Task A>
-        do_zone_finish()
-         btrfs_inc_block_group_ro()
-          btrfs_wait_for_commit()
-           <blocks waiting for commit
-            of transaction T, done by
-            Task B>
+Reject the use of the XT_HASHLIMIT_RATE_MATCH mode flag if set on by
+revision less than 3 too.
 
-The sibling branch in check_bg_is_active() already drops zoned_meta_io_lock
-around do_zone_finish() for this exact reason. Do the same in the tree-log
-branch: release the lock around btrfs_zone_finish_one_bg() and re-acquire
-it afterwards. The lock only protects fs_info->active_{meta,system}_bg,
-which this branch does not touch, and ctx->zoned_bg keeps a reference to
-the block group across the unlock, so nothing is lost while the lock
-is dropped.
-
-This hang occasionally reproduces with fstests generic/475 on a zoned
-btrfs filesystem.
-
-Fixes: 13bb483d32ab ("btrfs: zoned: activate metadata block group on write time")
-Reviewed-by: Naohiro Aota <naohiro.aota@wdc.com>
-Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: bea74641e378 ("netfilter: xt_hashlimit: add rate match mode")
+Reported-and-tested-by: Talha Berk Arslan <talha.anything.info@gmail.com>
+Link: https://patch.msgid.link/20260721074629.668-1-talha.anything.info@gmail.com/
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/zoned.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/netfilter/xt_hashlimit.c | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/zoned.c b/fs/btrfs/zoned.c
-index dabbfc3b7d776..9962ae292b128 100644
---- a/fs/btrfs/zoned.c
-+++ b/fs/btrfs/zoned.c
-@@ -1775,7 +1775,11 @@ static bool check_bg_is_active(struct btrfs_eb_write_context *ctx,
+diff --git a/net/netfilter/xt_hashlimit.c b/net/netfilter/xt_hashlimit.c
+index 0859b8f767645..61813010cd319 100644
+--- a/net/netfilter/xt_hashlimit.c
++++ b/net/netfilter/xt_hashlimit.c
+@@ -118,6 +118,7 @@ struct xt_hashlimit_htable {
+ 	refcount_t use;
+ 	u_int8_t family;
+ 	bool rnd_initialized;
++	bool ratematch;
  
- 	if (fs_info->treelog_bg == block_group->start) {
- 		if (!btrfs_zone_activate(block_group)) {
--			int ret_fin = btrfs_zone_finish_one_bg(fs_info);
-+			int ret_fin;
+ 	struct hashlimit_cfg3 cfg;	/* config */
+ 
+@@ -325,6 +326,7 @@ static int htable_create(struct net *net, struct hashlimit_cfg3 *cfg,
+ 		vfree(hinfo);
+ 		return -ENOMEM;
+ 	}
++	hinfo->ratematch = !!(cfg->mode & XT_HASHLIMIT_RATE_MATCH);
+ 	spin_lock_init(&hinfo->lock);
+ 
+ 	switch (revision) {
+@@ -868,7 +870,10 @@ static int hashlimit_mt_check_common(const struct xt_mtchk_param *par,
+ 	}
+ 
+ 	/* Check for overflow. */
+-	if (revision >= 3 && cfg->mode & XT_HASHLIMIT_RATE_MATCH) {
++	if (cfg->mode & XT_HASHLIMIT_RATE_MATCH) {
++		if (revision < 3)
++			return -EINVAL;
 +
-+			btrfs_zoned_meta_io_unlock(fs_info);
-+			ret_fin = btrfs_zone_finish_one_bg(fs_info);
-+			btrfs_zoned_meta_io_lock(fs_info);
+ 		if (cfg->avg == 0 || cfg->avg > U32_MAX) {
+ 			pr_info_ratelimited("invalid rate\n");
+ 			return -ERANGE;
+@@ -901,6 +906,15 @@ static int hashlimit_mt_check_common(const struct xt_mtchk_param *par,
+ 			mutex_unlock(&hashlimit_mutex);
+ 			return ret;
+ 		}
++	} else {
++		if ((cfg->mode & XT_HASHLIMIT_RATE_MATCH &&
++		     !(*hinfo)->ratematch) ||
++		    (!(cfg->mode & XT_HASHLIMIT_RATE_MATCH) &&
++		      (*hinfo)->ratematch)) {
++			mutex_unlock(&hashlimit_mutex);
++			htable_put(*hinfo);
++			return -EINVAL;
++		}
+ 	}
+ 	mutex_unlock(&hashlimit_mutex);
  
- 			if (ret_fin != 1 || !btrfs_zone_activate(block_group))
- 				return false;
 -- 
 2.53.0
 
