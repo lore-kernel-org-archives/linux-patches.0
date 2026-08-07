@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E33C0381AE4;
-	Fri,  7 Aug 2026 15:11:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07C3A281369;
+	Fri,  7 Aug 2026 15:11:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115513; cv=none; b=f45TRm9yalaz155Xn/1oN6LEMcbx0inIuLYCPwZThiRLgmJPqTlY1n6AFetx3OTVc5wq3dnkNpekkTIwtQ4YOKCflmbEjddsDQWma0E3GB7Xvf7WZDp+dAuKVXq7lPm4o4xYszjZcrOsUvevXhAbK6ZDMfQdVz/cIUt6JBJ5OUE=
+	t=1786115516; cv=none; b=ZcnQlk+ZVAm+1MtEnxZRcP5RjrtL8vvE/9CvbYxdgDahbwHvU9EMzZ4gKFiNpffLzVnVmhmV7dKX+aITLCRaFRng0iMeb/senEkZTtBgWcxAT6wzCS/8/2RxUuZclvjL9STko8AvmNdVlyL2+woALzTJLYat27AFd9suVwyd2F8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115513; c=relaxed/simple;
-	bh=CCokCFVxMPBkEWJvFRUaU1AXnuDP+FzpeGeT7cR/SCA=;
+	s=arc-20240116; t=1786115516; c=relaxed/simple;
+	bh=QWfZW46XErCbat+Eje3LgnG69fJTDE9XnQGEaj2EO50=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FzqSQtjhdBPJujruwXTlNtl6vgpyfjv+TSW4DbjjRuoK1ziWZw2f59wfhnGtY5WjrW2JwluIX1V8fomRFK6T38JriVVMl+XHTPN7lsPlLaB9vUGNnLuk/mRxw+J+4LNs0SHQbcOFXlouZMdWg0LavUxXQuUr/mSEbJLTbRkxB5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MD7cLaZY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VCtJhQrne46qlsm6L8TDquuawkRklZzle7UofK7QqDoOEnBKLbtfLcB3Q28sf5Ii4hb4Hk47AsNQgjfNPTCsxJCCqF/0uUwGFb8IcEtAJbN/ZnsAlCDYm59MO4mXkELViu0JGYLq4co7USS874Z0n0Ndjne5z2mVu3pS9WQrY8I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NnYMS+t5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MD7cLaZY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 313D21F00A3E;
-	Fri,  7 Aug 2026 15:11:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NnYMS+t5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6D3C1F00A3A;
+	Fri,  7 Aug 2026 15:11:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115505;
-	bh=My+oVOLNH3Unmits90eQV6wRkzplw7bwrVgexvuvWZ8=;
+	s=korg; t=1786115511;
+	bh=9YNVgt8NCBEbsl4B+DaznJGT+Nx00lxz7bbReUrdEm0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MD7cLaZYsWrLfihQr8eYtcL7u+Te/xk6aGlGzZMQFpH1iz175jkRbYdiwYXI68yPX
-	 g1+uN/kKCj8/ZyV0rAlqsvFsA8JkV426Y9J35cTX39A0SM8OOVCisbZ6w8f3i7e4/D
-	 c31yz0W3oG1PQkMuuGLe+GiBLrKUAGlgT6SVEa3E=
+	b=NnYMS+t5LDUGH1UhsVzM1x+KQNhQcEuJsZtgdrT4I6feFOgPzlSB/xDontnuniasp
+	 tPsRprotQhBSDdH56TbUCKt3htzZG2Z7gaHOkk40lSt1R9EB5hdLg6I/9AUccTCGur
+	 0y9+Be2C1cHYX4lzT9Ci/owqInNwyr7C1u94JtDU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Aaron Conole <aconole@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 283/396] net: openvswitch: fix skb leak on flow key update failure during recirculation
-Date: Fri,  7 Aug 2026 16:37:23 +0200
-Message-ID: <20260807143430.370962606@linuxfoundation.org>
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	stable@kernel.org,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 6.18 302/396] can: kvaser_usb_leaf: kvaser_usb_leaf_wait_cmd(): validate received command extents
+Date: Fri,  7 Aug 2026 16:37:42 +0200
+Message-ID: <20260807143430.785408515@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -51,58 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Maximets <i.maximets@ovn.org>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-commit e1cf066244dad576221b7123a0e5005967f25a20 upstream.
+commit 0293dd153f9dbc1ddf5dacdccc76b363bce4a8ee upstream.
 
-do_execute_actions() returns right away when execute_recirc() fails on
-the last action as it assumes this function always takes ownership of
-the skb when 'last' is true.  But when the flow key update fails, the
-function doesn't free the skb and it ends up leaked.
+The wait and bulk receive paths walk variable-length commands from a
+USB buffer. A nonzero command shorter than CMD_HEADER_LEN can still be
+dispatched, and the wait path copies a matching command into a fixed
+caller-owned struct kvaser_cmd using the device-provided length.
 
-This is a very unlikely scenario as it requires the packet to become
-unparseable by applying a set of actions on a previously parseable skb,
-but should be fixed nevertheless.
+Reject nonzero commands that do not contain the fixed header or that
+extend beyond the current USB buffer item. In the wait path, also reject
+a matching command that exceeds the destination before copying it.
 
-Reported by Sashiko.
-
-Fixes: 971427f353f3 ("openvswitch: Add recirc and hash action.")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
-Reviewed-by: Aaron Conole <aconole@redhat.com>
-Link: https://patch.msgid.link/20260727181851.306076-2-i.maximets@ovn.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 080f40a6fa28 ("can: kvaser_usb: Add support for Kvaser CAN/USB devices")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260722042221.44066-1-pengpeng@iscas.ac.cn
+Cc: stable@kernel.org
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/openvswitch/actions.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
---- a/net/openvswitch/actions.c
-+++ b/net/openvswitch/actions.c
-@@ -1107,6 +1107,10 @@ static int execute_masked_set_action(str
- 	return err;
- }
+--- a/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
++++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
+@@ -691,13 +691,22 @@ static int kvaser_usb_leaf_wait_cmd(cons
+ 				continue;
+ 			}
  
-+/* When 'last' is true, recirc() should always consume the 'skb'.
-+ * Otherwise, recirc() should keep 'skb' intact regardless what
-+ * actions are executed on recirculation.
-+ */
- static int execute_recirc(struct datapath *dp, struct sk_buff *skb,
- 			  struct sw_flow_key *key,
- 			  const struct nlattr *a, bool last)
-@@ -1117,8 +1121,12 @@ static int execute_recirc(struct datapat
- 		int err;
+-			if (pos + tmp->len > actual_len) {
++			if (tmp->len < CMD_HEADER_LEN ||
++			    tmp->len > actual_len - pos) {
+ 				dev_err_ratelimited(&dev->intf->dev,
+ 						    "Format error\n");
+ 				break;
+ 			}
  
- 		err = ovs_flow_key_update(skb, key);
--		if (err)
-+		if (err) {
-+			if (last)
-+				ovs_kfree_skb_reason(skb,
-+						     OVS_DROP_ACTION_ERROR);
- 			return err;
-+		}
- 	}
- 	BUG_ON(!is_flow_key_valid(key));
+ 			if (tmp->id == id) {
++				if (tmp->len > sizeof(*cmd)) {
++					dev_err_ratelimited(&dev->intf->dev,
++							    "Received command %u too large (%u)\n",
++							    tmp->id, tmp->len);
++					err = -EIO;
++					goto end;
++				}
++
+ 				memcpy(cmd, tmp, tmp->len);
+ 				goto end;
+ 			}
+@@ -1737,7 +1746,7 @@ static void kvaser_usb_leaf_read_bulk_ca
+ 			continue;
+ 		}
  
+-		if (pos + cmd->len > len) {
++		if (cmd->len < CMD_HEADER_LEN || cmd->len > len - pos) {
+ 			dev_err_ratelimited(&dev->intf->dev, "Format error\n");
+ 			break;
+ 		}
 
 
