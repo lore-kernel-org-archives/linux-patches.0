@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE3183B9943;
-	Fri,  7 Aug 2026 15:09:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 958AE324B0A;
+	Fri,  7 Aug 2026 15:09:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115395; cv=none; b=kbjqmAlIsuthpkiefxYMxTDZNW5EeSbk1QHBj8RAY11FxItsUFN1fRtGaRGi2I65FA7naTvFrsca7bmG5WsK6Pbb47AAuMqFeeHEpDbbsc4RmcHtSRtY9SJlyt+XN3yFSNdgUbMqhP6TTqj8TPyJCwFmYVSpHR6+CkeV8ihts+U=
+	t=1786115399; cv=none; b=NaBHhfsL1NGs6km7fpA5AxxMa5zpmx6WMjWa+T4RlvVavbjuw7GTUuZQhlzYqjQy2bwKSZHQW6PKBNuRasJNcl6wC8Bh3x257fKEzoqh52JpPIDM6qEiCrAGc8MtQB4b9NpvVuRY1K3gMXUmGoORboRmwbgJ7VZd3Y6FPhF0PzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115395; c=relaxed/simple;
-	bh=Rqi9rXJDTdxCyinQyKzcVljzV0djeo9D+7s9ouyE3sg=;
+	s=arc-20240116; t=1786115399; c=relaxed/simple;
+	bh=GzqrLZAbGLuMs06krhI0XoQuc6iHpgCFF5z59MA9YXk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QKYaP8eK77Awmk9DPbWyDtdQK2eNHJGicNhD0YIlLozQzXx2BBKHT449HACmJostkGlbQej7ho/3h7dvIMbAikcbLTlNRl96hXuYgXsn1R5OxRxA32xkorNfIDVnO2LC+sCf8iQqotFZccScoHMV5tGwdMYMfj+IetWddykGx/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J/Jks6p9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YxE0HvI7g27xKWFugkRDl7fz+8djUtGZaCNyxVZxfxmq/rE1rUERgtj1R07nHPhZKoCTEg3lsdhwHm/CMRO4ez15VPHo8UnktweKj71N5TuG9oj2GAuInwHspFHcK/h2Jo2Axe6rRj7Cr90F8OyVaDpIM+4ffBNoF4kDLfCbjdQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jLm4lIy4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J/Jks6p9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49D5F1F000E9;
-	Fri,  7 Aug 2026 15:09:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jLm4lIy4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C05B1F000E9;
+	Fri,  7 Aug 2026 15:09:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115393;
-	bh=NthtVqNsBo2TzaC0r+KMmXefiml5OO0RezmNLhPbXFo=;
+	s=korg; t=1786115396;
+	bh=1XL7ErMrp4EywVOl23KboxLc1rOuvL0fLCC3lYZOhtM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J/Jks6p97CSYg2pl2pFLmzB5o4CIbVTIN9Z0MnbI+lOuqjBLtxZgD2WcDyFY6z9be
-	 fsiUcYLCYNtNpDa+sUsDeyc05TahR0psy62GNRFMVECCpQKtw2VNjKReC3YhY2xfHC
-	 PesQ26AGHyn6/a0lrES+uuOrUtge/E2D11UqkYq8=
+	b=jLm4lIy4Qob4TNJr/A+KUxUVJ+DoiJ2YBqKCXb762JDu9psr5H0IoOBorxVN1mptm
+	 pYxxWWeBGqQyXyzJ/Z1uD/X46tWleCtMoGkgKDAM5BdhsIcAY+TzZ9WbIxQpEeGbso
+	 KE51hZetfEfeS9fkL/SxHhmc7+jlYnDcSF/rojpY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Jardin <vjardin@free.fr>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.18 261/396] hwmon: (pmbus/core) notify on the hwmon device, not the i2c client
-Date: Fri,  7 Aug 2026 16:37:01 +0200
-Message-ID: <20260807143429.881926555@linuxfoundation.org>
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH 6.18 262/396] i2c: amd-mp2: Unregister callback on adapter add failure
+Date: Fri,  7 Aug 2026 16:37:02 +0200
+Message-ID: <20260807143429.908337420@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -50,43 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vincent Jardin <vjardin@free.fr>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-commit a64a7e8a0b012ba81b0eadbd7afc84ab0dbfd70c upstream.
+commit 82048795242f04275a3f49ffc66ad851b6120954 upstream.
 
-pmbus_notify() calls sysfs_notify() and kobject_uevent() on the i2c
-client's kobject, but the alarm attributes live on the hwmon class
-device registered by pmbus_do_probe(). Notifying the parent i2c device
-is a no-op for both poll(POLLPRI) waiters and udev listeners: the named
-attribute does not exist on that kobject.
+amd_mp2_register_cb() stores the platform I2C context in the MP2 PCI
+driver's callback table before the adapter is registered. If
+i2c_add_adapter() fails, probe returns and devres frees the context,
+but the PCI driver can still dereference the stale pointer from its IRQ
+and system-sleep callbacks.
 
-Notify the hwmon device instead, so poll() wakes up and "change"
-uevents fire on the inX_alarm/tempX_alarm attributes when SMBALERT#
-reports a fault.
+Unregister the callback before returning the adapter registration error.
 
-Fixes: f469bde9afd1 ("hwmon: (pmbus/core) Notify hwmon events")
-Cc: stable@vger.kernel.org # v6.4+
-Signed-off-by: Vincent Jardin <vjardin@free.fr>
-Link: https://lore.kernel.org/r/20260723-fix_hwmon_notify_v1-v1-1-5a24c528686d@free.fr
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 529766e0a011 ("i2c: Add drivers for the AMD PCIe MP2 I2C controller")
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Cc: <stable@vger.kernel.org> # v5.2+
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/20260721144147.31150-1-mhun512@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/pmbus/pmbus_core.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/i2c/busses/i2c-amd-mp2-plat.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/hwmon/pmbus/pmbus_core.c
-+++ b/drivers/hwmon/pmbus/pmbus_core.c
-@@ -2977,8 +2977,9 @@ static void pmbus_notify(struct pmbus_da
+--- a/drivers/i2c/busses/i2c-amd-mp2-plat.c
++++ b/drivers/i2c/busses/i2c-amd-mp2-plat.c
+@@ -316,8 +316,10 @@ static int i2c_amd_probe(struct platform
  
- 		if (reg == sreg && page == spage && (smask & flags)) {
- 			dev_dbg(data->dev, "sysfs notify: %s", da->attr.name);
--			sysfs_notify(&data->dev->kobj, NULL, da->attr.name);
--			kobject_uevent(&data->dev->kobj, KOBJ_CHANGE);
-+			sysfs_notify(&data->hwmon_dev->kobj, NULL,
-+				     da->attr.name);
-+			kobject_uevent(&data->hwmon_dev->kobj, KOBJ_CHANGE);
- 			flags &= ~smask;
- 		}
+ 	amd_mp2_pm_runtime_put(mp2_dev);
  
+-	if (ret < 0)
++	if (ret < 0) {
+ 		dev_err(&pdev->dev, "i2c add adapter failed = %d\n", ret);
++		amd_mp2_unregister_cb(&i2c_dev->common);
++	}
+ 
+ 	return ret;
+ }
 
 
