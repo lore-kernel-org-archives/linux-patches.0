@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FAFE1C84D0;
-	Fri,  7 Aug 2026 15:23:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1955127466A;
+	Fri,  7 Aug 2026 15:23:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116210; cv=none; b=gJhLwSK4AluQXLbqbkbtMyxOu4UXNjOCvzKYRARhYti7xBi77pVzgikjVvh0dzinoO/JuTvBvoaONoicgdWrihwMlncBDxu26pEpxdPiM3iP0faWe3Yb8mvWJe5SXvjwhpu700IuXZxt1Yq55XFOiOrQRsEaKfRyIpStexNJKGU=
+	t=1786116213; cv=none; b=hAuoS3ZMGHeqtV3O1Y6r7NiMfccFk/cGQhlLQ6BWIGJKJnXDj/yiCd7KBmIfw9BmczqE+A3siKV/Gbk2PizaLSD50maor3aHV1YFEvL/kz0HG9Hvh31K3SH1psmdvV+oCbi3euEbZXr6h9KXJJRRlzC4o7W3notlRblk+YR1MJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116210; c=relaxed/simple;
-	bh=LXbZ1oHkvnzBxt3xC3j3rvjY8yIWwUC0wsxp57UYCgk=;
+	s=arc-20240116; t=1786116213; c=relaxed/simple;
+	bh=FyhibI1CZIv0cgfcEeYwgSRsOtCfjs5fnSKZuJvkMhA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UqFIq8brSCIiutcb4DSbPBHh7+/3ikB227VqGpSG2tHfUxk+gBY5uvvGu2+3nFMiQJOkoLA0MNmTLGbTFApC0qTrGCxnkUSz77k5IyEwR5Rj3x6NPSa+MM+M8FHQmiNjNXVmKzucVIKLUWJeCEw20Zhl4rx/VmKTkd2/Y3N8k4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J+2z8BQ5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QQ5zTVf9mLmR0mvKW/UlJpWq4Di9TR5RyA9HsEaFmT1yNBQt027GYipi7FTl/VwVG2H5o6gptge4S3HDWy8NnV+WorCm6ff6/WtewpFjvPWnwCbc/K3dFpUCk5ORte/Hlmda3WNt0xJvHLhaY7CjzxFj/sg7mePyg788e7amQvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D8C0Y3BF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J+2z8BQ5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C11B1F000E9;
-	Fri,  7 Aug 2026 15:23:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D8C0Y3BF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75CFD1F000E9;
+	Fri,  7 Aug 2026 15:23:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116209;
-	bh=GhKs1QHwSu0zJWzFPA1KXukgbZuAmaUG6LAOCFZkPUA=;
+	s=korg; t=1786116212;
+	bh=TpranWkopFg8wkVSdkhJ3of3I4DCTQDpO9pkqCWnHhM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J+2z8BQ5D2Li85zu/FzOEtM0NFk+vI5M5LSm3pduwwQcLwFVRxRsSfJXfNifYuJVY
-	 ykK/dU0SnpqAapOtQTwgQn2xuYOQC0inL9qSU+zoWyFeudkd0ChYKsAu9epR8j+pfc
-	 Ss3VnFFKFwJSl3j1Cj6cH7H3Wh+27Gv4SVmGg1GI=
+	b=D8C0Y3BFwqb8jEDVtKrO6PzsdsBuaQiE168A1n12jJoYQsdWFkFeF77AegO2DvJR3
+	 ihqUg8mio9Hgv9WKd1QXe7yDV8K3OZ+eyDQ4vzw1GXcSNFth9QxB3wdfh60u7eaGkZ
+	 aC9IdVw7TjWcaSOJO2dtqQIhu1f7vU+QvOeZnmTw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: [PATCH 6.6 150/261] gpio: pca953x: fix cache_only and IRQ state on restore_context() failure
-Date: Fri,  7 Aug 2026 16:38:27 +0200
-Message-ID: <20260807143418.602071450@linuxfoundation.org>
+	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.6 151/261] cpufreq: powernow-k8: Fix possible memory leak in powernowk8_cpu_init()
+Date: Fri,  7 Aug 2026 16:38:28 +0200
+Message-ID: <20260807143418.623652331@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143415.358597922@linuxfoundation.org>
 References: <20260807143415.358597922@linuxfoundation.org>
@@ -51,51 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
 
-commit d233087c19f6607ef926ac3f47d776e2406ffd1f upstream.
+commit d5f8e5f6040d052d44fcbf4f31dd35145c0c8d7d upstream.
 
-When pca953x_restore_context() fails, cache_only is left disabled and
-the IRQ left enabled, even though register synchronization may not have
-completed successfully. Restore cache_only and disable the IRQ again on
-failure, matching the state set by pca953x_save_context().
+The memory allocated for data->powernow_table inside
+powernow_k8_cpu_init_acpi() or find_psb_table() is not freed in one of
+the error paths in powernowk8_cpu_init(). Fix that by adding a kfree().
 
-Fixes: ec5bde62019b ("gpio: pca953x: Split pca953x_restore_context() and pca953x_save_context()")
-Fixes: 3e38f946062b ("gpio: pca953x: fix IRQ storm on system wake up")
+Fixes: 1ff6e97f1d99 ("[CPUFREQ] cpumask: avoid playing with cpus_allowed in powernow-k8.c")
 Cc: stable@vger.kernel.org
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20260727080205.16353-1-phucduc.bui@gmail.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
+Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260727093553.98246-1-nihaal@cse.iitm.ac.in
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-pca953x.c |   15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ drivers/cpufreq/powernow-k8.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpio/gpio-pca953x.c
-+++ b/drivers/gpio/gpio-pca953x.c
-@@ -1258,9 +1258,20 @@ static int pca953x_restore_context(struc
- 	regcache_mark_dirty(chip->regmap);
- 	ret = pca953x_regcache_sync(chip);
- 	if (ret)
--		return ret;
-+		goto err;
+--- a/drivers/cpufreq/powernow-k8.c
++++ b/drivers/cpufreq/powernow-k8.c
+@@ -1083,6 +1083,7 @@ static int powernowk8_cpu_init(struct cp
  
--	return regcache_sync(chip->regmap);
-+	ret = regcache_sync(chip->regmap);
-+	if (ret)
-+		goto err;
-+
-+	return 0;
-+
-+err:
-+	if (chip->client->irq > 0)
-+		disable_irq(chip->client->irq);
-+	regcache_cache_only(chip->regmap, true);
-+
-+	return ret;
- }
+ err_out_exit_acpi:
+ 	powernow_k8_cpu_exit_acpi(data);
++	kfree(data->powernow_table);
  
- static void pca953x_save_context(struct pca953x_chip *chip)
+ err_out:
+ 	kfree(data);
 
 
