@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE1E81C84D0;
-	Fri,  7 Aug 2026 15:23:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B9422D12ED;
+	Fri,  7 Aug 2026 15:23:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116219; cv=none; b=VXdMTM3EN8CUNa/pGHVTBdkIZLsbRDfW86ZOe8njTOtvesWp1pE1oI71qBO/+hf6FKiqgprcvn7KJqjmv9HdHZQR1YotPvvvdFyrTr4WrpXvMhRdywgnseTXHdJy0/yPhUf6m6etM0ihIoD8urUwv/Ry2g3y+H85CoAX30pVK4A=
+	t=1786116221; cv=none; b=N5TrybMQPAzgC0NRln0tzkEHO9iKVdxUepCJvBQMnE9Y6Ymv3NEB81t4iKr6fHuTOtsIXZ+pQJbC72lFccFJev6BY2orAQhT9bkbf3UMKbT8DDdnWvic8FK4pwXTMUPUdnXcKWhExoFddgW+OhuIuWWfTJIs0Uh5LXkCXchMB1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116219; c=relaxed/simple;
-	bh=RCwHlpelBd0/xO9kFaC7d9a3ehVjQHUy8cz05boqf2E=;
+	s=arc-20240116; t=1786116221; c=relaxed/simple;
+	bh=4oVJ9d/lUyHKM9pe/u1qUMcYEfdTOv+OrgEQ23vw4Ak=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JWHu6x51BK9SUgHU9+tl9osb+JIqKsVjvW9+xSiVsVnKoXTPXmHbevU/LK9/8ZH2BCKliHC3JrlrxGTlr3vTPPgfaKJ5+XwEXz9XrCuplD+ZvqbSCytK+3vA8pHf7oJguKzJx43xcTFKFvE4npo2NDp7wbKGxF+KmE+ElZr9aos=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AZpEOzOU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=f3SHd7Z/c+lQtuplD6u3gC+1UqsuJgTmrj5Tzg/tLR/kaeGNd6gDmcQ4Ee59u2gqsebwCTe05gk6AieIbvtqgJbjlTC6yGej/5yXc9h8BSVfReZdVPZMYZI1NYDb2H7oakB2+RobFc5eloImZcKbq0I/Xx3YNem6MS7kEsIzdlg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LiTiEGNH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AZpEOzOU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 369CA1F000E9;
-	Fri,  7 Aug 2026 15:23:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LiTiEGNH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 033C01F000E9;
+	Fri,  7 Aug 2026 15:23:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116217;
-	bh=4/v3Fz9F6t2Ufw8LhCJbKRDUWlPJppDDe/7tvApiUR0=;
+	s=korg; t=1786116220;
+	bh=n6wOYBS7hEFVa1PoZZ0+F2C4NS0gQDYTYsNTS4hT5pY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AZpEOzOUZVLYWgEf9MSV/m+sNLM1fwO9VFPuo3i1JeAXwz8QGeJCBfNH/743bH8Cc
-	 l53ejikcK5TiKp53aPnM8tmdkGSdgOOfroaJk1e3TRdj2diM/6S/H7odyzXLZn8WY+
-	 rJxR/uzBpgu+Kudf+AwItvEksAyxXKutTtzikJpA=
+	b=LiTiEGNHIngwcBv3nC912hxv3PQ2H5OQoAIVw1gEzgdcKTLKHmxglU6tRmQn+wFCG
+	 fU9nbskZObK8Gw1/6xbYaXUXaH9hqHluWdorjJ9Qw3NfAbyt2WhVuOKkNI3txJpe4G
+	 AT3odkVyIjFbwNy9G63+rNh+QVSPXjqZ6v0w0gPA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Federico Kirschbaum <federico.kirschbaum@xbow.com>,
-	Baul Lee <baul.lee@xbow.com>
-Subject: [PATCH 6.6 117/261] ALSA: usb-audio: fix OOB write in snd_usbmidi_akai_output()
-Date: Fri,  7 Aug 2026 16:37:54 +0200
-Message-ID: <20260807143417.896702204@linuxfoundation.org>
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Alexandra Winter <wintera@linux.ibm.com>,
+	Aswin Karuvally <aswin@linux.ibm.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 153/261] s390/qeth: Check CAP_NET_ADMIN for private ioctls
+Date: Fri,  7 Aug 2026 16:38:30 +0200
+Message-ID: <20260807143418.666851558@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143415.358597922@linuxfoundation.org>
 References: <20260807143415.358597922@linuxfoundation.org>
@@ -51,56 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baul Lee <baul.lee@xbow.com>
+From: Aswin Karuvally <aswin@linux.ibm.com>
 
-commit 0970274613fb463d376211450cab066d34ebfe6a upstream.
+commit d211028bac1bd0fff0026bfa2a8328e5b78cd0e6 upstream.
 
-snd_usbmidi_akai_output() computes its fill-loop bound
+Gate the SIOCDEVPRIVATE ioctl commands SIOC_QETH_ADP_SET_SNMP_CONTROL,
+SIOC_QETH_GET_CARD_TYPE and SIOC_QETH_QUERY_OAT with CAP_NET_ADMIN
+capable check to ensure unprivileged users cannot invoke them.
 
-	buf_end = ep->max_transfer - MAX_AKAI_SYSEX_LEN - 1;
-
-as a signed int, so a small device-advertised bulk-OUT max_transfer
-makes buf_end negative.  The loop guard then compares the u32
-urb->transfer_buffer_length against that negative int: the usual
-arithmetic conversion turns buf_end into a large unsigned value, so the
-guard stays true and each iteration keeps appending SysEx framing and
-payload bytes past the end of the URB transfer buffer, which is only
-max_transfer bytes long.
-
-A USB device that advertises a tiny bulk-OUT endpoint can therefore
-trigger an attacker-length- and content-controlled heap out-of-bounds
-write when a process writes to the created /dev/snd/midiC*D* node.
-
-Return early when there is no room for even one SysEx, so the loop is
-never entered with a bound that would wrap.  The loop is the last
-statement of the function, so bailing out is equivalent to it not
-running.
-
-Discovered by XBOW, triaged by Baul Lee <baul.lee@xbow.com>
-
-Fixes: 4434ade8c933 ("ALSA: usb-audio: add support for Akai MPD16")
-Suggested-by: Takashi Iwai <tiwai@suse.de>
-Reported-by: Federico Kirschbaum <federico.kirschbaum@xbow.com>
-Reported-by: Baul Lee <baul.lee@xbow.com>
+Fixes: 18787eeebd71 ("qeth: use ndo_siocdevprivate")
 Cc: stable@vger.kernel.org
-Signed-off-by: Baul Lee <baul.lee@xbow.com>
-Link: https://patch.msgid.link/20260726074500.50145-1-baul.lee@xbow.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Suggested-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
+Signed-off-by: Aswin Karuvally <aswin@linux.ibm.com>
+Link: https://patch.msgid.link/20260723140050.762991-1-aswin@linux.ibm.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/midi.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/s390/net/qeth_core_main.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/sound/usb/midi.c
-+++ b/sound/usb/midi.c
-@@ -800,6 +800,8 @@ static void snd_usbmidi_akai_output(stru
+--- a/drivers/s390/net/qeth_core_main.c
++++ b/drivers/s390/net/qeth_core_main.c
+@@ -6526,6 +6526,9 @@ int qeth_siocdevprivate(struct net_devic
+ 	struct qeth_card *card = dev->ml_priv;
+ 	int rc = 0;
  
- 	msg = urb->transfer_buffer + urb->transfer_buffer_length;
- 	buf_end = ep->max_transfer - MAX_AKAI_SYSEX_LEN - 1;
-+	if (buf_end <= 0)
-+		return;
- 
- 	/* only try adding more data when there's space for at least 1 SysEx */
- 	while (urb->transfer_buffer_length < buf_end) {
++	if (!capable(CAP_NET_ADMIN))
++		return -EPERM;
++
+ 	switch (cmd) {
+ 	case SIOC_QETH_ADP_SET_SNMP_CONTROL:
+ 		rc = qeth_snmp_command(card, data);
 
 
