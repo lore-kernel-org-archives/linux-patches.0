@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 895652F1FDF;
-	Fri,  7 Aug 2026 14:59:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5838D42A15B;
+	Fri,  7 Aug 2026 14:59:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114776; cv=none; b=Q69OcgnBGw3zCkkAQE/eW3pZYMsph/9Mb9MMch4bHu+recBI1TXc/VydMZYSeOe1E/ItDU9TkQ9njUupb0JULGilRM3njZ53q4pbzSrgxgIu7aOp0gpUWUJkaHQGE9uXLWVeQUQvdv8urroPL5bN7lUFqv+xElvLMwa/J2GmHWY=
+	t=1786114779; cv=none; b=TreDUEXnVMBTN+KPz9nDyNzFWSScHr+Jyrd1aLGO3mAruu9mimOhig7m4JaXdCqZX7SJThxfR9Xk/D2X44n1uUnOmyey9hFs9sIKZ17gC3tLb/4OdlwzMIu4eVAHNDbA57CkU5qswvMeW3I6NqawHJiVEqo7QkU1u5K5C/dpYZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114776; c=relaxed/simple;
-	bh=ylWFPQViznyx7WpUbicMWFEPG+uNzG7TCG+bmUu1hKs=;
+	s=arc-20240116; t=1786114779; c=relaxed/simple;
+	bh=u7eAY4OIoYWtwqWHLIX7dAisvBEFhyczfrNi80CAvvM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K7YaD72w+xM6XOWyxeXSphxi9vj5qSj6e1afBrz1dNJYLtpyysUNw3oMVChbuGo8wGDIPDnPQ5CjpwntA0t34H3YG9vljnreeR2IOX/CY3vLLiPacknTjruaikwJl0hh9fVi4kHqV7quUF2sIc0+giUFEBhe3P5vSa9072EHrNw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wSaihVqw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Alc3WsU3TnUaNwpN2H2N7cQ6MbJa3Jg6TW6H5ChKz8iOMcKhBmyX8mrZEWAQzcFrwI7TJVPucg5R3NzLkfOJ4lR8w9+2BYf/X2ACCbzoS0PSrso0zGgTz253n82Q374pDNOhqXvvUjxHqBkTOrShKkjsqGDRcHD2h0d4gyrAUAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0aaXs8xd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wSaihVqw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6F7D1F000E9;
-	Fri,  7 Aug 2026 14:59:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0aaXs8xd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B193C1F000E9;
+	Fri,  7 Aug 2026 14:59:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114775;
-	bh=FxXUNfKrzvEHN/2f0YHiF6ncmt2wV7cJNuF8V2Xdt+8=;
+	s=korg; t=1786114778;
+	bh=h3XCQ9QVTGPlT9vqnI2CiKBkAw64LGFc+Y2nR9+A2bc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wSaihVqw3tuOi/g0xegiOGGAvIE+qE+W087kxzUueaCe8sz0e3n4gfxPyzN+YNHLG
-	 ufalKzmwkhCf7pEFbj1+yGrUZCO0uFgifLq8oR8GvdDnPl6G9ox2Vcmu4fGqW6gLQf
-	 lI5dbYVhet9Oqs1oiv6GW+5gYg2s7zkM5Qj90z0Y=
+	b=0aaXs8xdYRcQubjdDXVgyFzwnWLQuqiCa8hY4uTCkq4KH79Vi0BztKOz/VHd1Ndhh
+	 4xZ1p0H9XvBI8VtdgekfamaWan9hZm/uDw3+8AAMHFJgy1EHGsTfC/sCXqOM3hOp5v
+	 8xrQhBAcxuGN+nXdBrbR3wyZ6l3b2mRXtm/X68nM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fuad Tabba <fuad.tabba@linux.dev>,
-	Alexandru Elisei <alexandru.elisei@arm.com>,
-	Marc Zyngier <maz@kernel.org>,
+	Fabrice Derepas <fabrice.derepas@canonical.com>,
+	David Gstir <david@sigma-star.at>,
+	Richard Weinberger <richard@nod.at>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 042/396] KVM: arm64: Reject guest_memfd memslots when the VM has MTE
-Date: Fri,  7 Aug 2026 16:33:22 +0200
-Message-ID: <20260807143425.176021728@linuxfoundation.org>
+Subject: [PATCH 6.18 043/396] KEYS: trusted: dcp: fix key_len validation and calc_blob_len() return type
+Date: Fri,  7 Aug 2026 16:33:23 +0200
+Message-ID: <20260807143425.196327075@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -52,119 +53,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandru Elisei <alexandru.elisei@arm.com>
+From: Fabrice Derepas <fabrice.derepas@canonical.com>
 
-[ Upstream commit 679d7201c1f09e37fa1c12ce28d84079c17fc87f ]
+[ Upstream commit 35d661c98fe4733490f20b4311616a3c2c30abc0 ]
 
-The user cannot use MTE on VMAs created by mapping a guest_memfd file,
-as arch_calc_vm_flag_bits() does not set VM_MTE_ALLOWED.
+Two correctness and type-hygiene issues exist in the DCP trusted keys
+implementation.
 
-When creating a guest_memfd backed memslot,
-kvm_arch_prepare_memory_region() rejects the memslot if MTE is enabled for
-the VM and if guest_memfd has been mapped in a VMA that intersects the
-memslot.
+First, trusted_dcp_unseal() reads p->key_len from a user-supplied blob
+without checking if it exceeds MAX_KEY_SIZE.  If a crafted blob provides a
+payload_len larger than 128, the subsequent do_aead_crypto() call writes
+past the end of the p->key array into the adjacent p->blob buffer within
+the same struct trusted_key_payload -- the caller's own input, not
+unrelated kernel memory.  While not exploitable, this violates strict array
+bounds and triggers static analyzers.  Fix this by adding a validation
+check against MIN_KEY_SIZE and MAX_KEY_SIZE immediately after reading the
+length, matching the checks already done in trusted_core.c.
 
-However, the documentation for KVM_SET_USER_MEMORY_REGION2 explicitly
-states that the only condition for userspace_addr is for it to be a legal
-userspace address, but the mapping is not required to be valid nor
-populated at memslot creation.
+Second, calc_blob_len() calculates a sum in size_t that truncates to
+unsigned int on 64-bit platforms.  Because the DCP hardware is only present
+on 32-bit i.MX SoC platforms, size_t and unsigned int are functionally
+equivalent in production, making this truncation harmless in practice.
+Nevertheless, updating the return type to size_t (and subsequently updating
+'blen' in the seal/unseal paths) resolves type-narrowing warnings and
+improves overall code hygiene.
 
-If userspace sets userspace_addr to an address that hasn't been mapped, or
-if userspace_addr belongs to a VMA that isn't backed by the guest_memfd
-file, or if the VMA doesn't intersect the memslot, memslot creation is
-successful and KVM ends up with a VM with MTE and guest_memfd-backed
-memslots.
-
-The same happens if the order is reversed: when userspace enables MTE, KVM
-does not check if memslots backed by guest_memfd are already present.
-
-Fix both issues by rejecting guest_memfd-backed memslots when MTE is
-enabled, and by rejecting MTE when guest_memfd-backed memslots are already
-present.
-
-Fixes: 32e200bd6e44 ("KVM: arm64: Enable support for guest_memfd backed memory")
-Tested-by: Fuad Tabba <fuad.tabba@linux.dev>
-Reviewed-by: Fuad Tabba <fuad.tabba@linux.dev>
-Signed-off-by: Alexandru Elisei <alexandru.elisei@arm.com>
-Link: https://patch.msgid.link/20260722090354.94245-1-alexandru.elisei@arm.com
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+Fixes: 2e8a0f40a39c ("KEYS: trusted: Introduce NXP DCP-backed trusted keys")
+Signed-off-by: Fabrice Derepas <fabrice.derepas@canonical.com>
+Reviewed-by: David Gstir <david@sigma-star.at>
+Reviewed-by: Richard Weinberger <richard@nod.at>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Tested-by: Jarkko Sakkinen <jarkko@kernel.org>
+Link: https://lore.kernel.org/r/20260719163939.3624767-1-fabrice.derepas@canonical.com
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/virt/kvm/api.rst |  6 ++++++
- arch/arm64/kvm/arm.c           | 25 +++++++++++++++++++------
- arch/arm64/kvm/mmu.c           |  4 ++++
- 3 files changed, 29 insertions(+), 6 deletions(-)
+ security/keys/trusted-keys/trusted_dcp.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/virt/kvm/api.rst b/Documentation/virt/kvm/api.rst
-index 9f835f68b4fb9..10d8a366b2072 100644
---- a/Documentation/virt/kvm/api.rst
-+++ b/Documentation/virt/kvm/api.rst
-@@ -8259,6 +8259,12 @@ When this capability is enabled all memory in memslots must be mapped as
- attempts to create a memslot with an invalid mmap will result in an
- -EINVAL return.
+diff --git a/security/keys/trusted-keys/trusted_dcp.c b/security/keys/trusted-keys/trusted_dcp.c
+index 7b6eb655df0cb..c078adebe190e 100644
+--- a/security/keys/trusted-keys/trusted_dcp.c
++++ b/security/keys/trusted-keys/trusted_dcp.c
+@@ -69,7 +69,7 @@ static bool skip_zk_test;
+ module_param_named(dcp_skip_zk_test, skip_zk_test, bool, 0);
+ MODULE_PARM_DESC(dcp_skip_zk_test, "Don't test whether device keys are zero'ed");
  
-+``guest_memfd``, even though it is an anonymous file, is not supported with MTE.
-+Attempting to create a memslot backed by ``guest_memfd`` when the MTE capability
-+is enabled, or attempting to enable the MTE capability after
-+``guest_memfd``-backed memslots have been created, will result in an -EINVAL
-+return.
-+
- When enabled the VMM may make use of the ``KVM_ARM_MTE_COPY_TAGS`` ioctl to
- perform a bulk copy of tags to/from the guest.
+-static unsigned int calc_blob_len(unsigned int payload_len)
++static size_t calc_blob_len(unsigned int payload_len)
+ {
+ 	return sizeof(struct dcp_blob_fmt) + payload_len + DCP_BLOB_AUTHLEN;
+ }
+@@ -200,7 +200,8 @@ static int encrypt_blob_key(u8 *plain_key, u8 *encrypted_key)
+ static int trusted_dcp_seal(struct trusted_key_payload *p, char *datablob)
+ {
+ 	struct dcp_blob_fmt *b = (struct dcp_blob_fmt *)p->blob;
+-	int blen, ret;
++	size_t blen;
++	int ret;
+ 	u8 *plain_blob_key;
  
-diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
-index 10fc6783cd608..5d2435dd76f35 100644
---- a/arch/arm64/kvm/arm.c
-+++ b/arch/arm64/kvm/arm.c
-@@ -96,14 +96,27 @@ int kvm_vm_ioctl_enable_cap(struct kvm *kvm,
- 		set_bit(KVM_ARCH_FLAG_RETURN_NISV_IO_ABORT_TO_USER,
- 			&kvm->arch.flags);
- 		break;
--	case KVM_CAP_ARM_MTE:
--		mutex_lock(&kvm->lock);
--		if (system_supports_mte() && !kvm->created_vcpus) {
--			r = 0;
--			set_bit(KVM_ARCH_FLAG_MTE_ENABLED, &kvm->arch.flags);
-+	case KVM_CAP_ARM_MTE: {
-+		struct kvm_memory_slot *memslot;
-+		int bkt;
-+
-+		guard(mutex)(&kvm->lock);
-+		if (!system_supports_mte() || kvm->created_vcpus)
-+			break;
-+
-+		r = 0;
-+		guard(mutex)(&kvm->slots_lock);
-+		kvm_for_each_memslot(memslot, bkt, kvm_memslots(kvm)) {
-+			if (kvm_slot_has_gmem(memslot)) {
-+				r = -EINVAL;
-+				break;
-+			}
- 		}
--		mutex_unlock(&kvm->lock);
-+		if (r == 0)
-+			set_bit(KVM_ARCH_FLAG_MTE_ENABLED, &kvm->arch.flags);
- 		break;
-+
+ 	blen = calc_blob_len(p->key_len);
+@@ -242,7 +243,8 @@ static int trusted_dcp_seal(struct trusted_key_payload *p, char *datablob)
+ static int trusted_dcp_unseal(struct trusted_key_payload *p, char *datablob)
+ {
+ 	struct dcp_blob_fmt *b = (struct dcp_blob_fmt *)p->blob;
+-	int blen, ret;
++	size_t blen;
++	int ret;
+ 	u8 *plain_blob_key = NULL;
+ 
+ 	if (b->fmt_version != DCP_BLOB_VERSION) {
+@@ -253,9 +255,14 @@ static int trusted_dcp_unseal(struct trusted_key_payload *p, char *datablob)
+ 	}
+ 
+ 	p->key_len = le32_to_cpu(b->payload_len);
++	if (p->key_len < MIN_KEY_SIZE || p->key_len > MAX_KEY_SIZE) {
++		ret = -EINVAL;
++		goto out;
 +	}
- 	case KVM_CAP_ARM_SYSTEM_SUSPEND:
- 		r = 0;
- 		set_bit(KVM_ARCH_FLAG_SYSTEM_SUSPEND_ENABLED, &kvm->arch.flags);
-diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
-index 403a635483513..b4237699705b4 100644
---- a/arch/arm64/kvm/mmu.c
-+++ b/arch/arm64/kvm/mmu.c
-@@ -2323,6 +2323,10 @@ int kvm_arch_prepare_memory_region(struct kvm *kvm,
- 	if (kvm_slot_has_gmem(new) && !kvm_memslot_is_gmem_only(new))
- 		return -EINVAL;
- 
-+	/* guest_memfd is incompatible with MTE. */
-+	if (kvm_slot_has_gmem(new) && kvm_has_mte(kvm))
-+		return -EINVAL;
 +
- 	hva = new->userspace_addr;
- 	reg_end = hva + (new->npages << PAGE_SHIFT);
- 
+ 	blen = calc_blob_len(p->key_len);
+ 	if (blen != p->blob_len) {
+-		pr_err("DCP blob has bad length: %i != %i\n", blen,
++		pr_err("DCP blob has bad length: %zu != %u\n", blen,
+ 		       p->blob_len);
+ 		ret = -EINVAL;
+ 		goto out;
 -- 
 2.53.0
 
