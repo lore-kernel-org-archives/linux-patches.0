@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64DDA420478;
-	Fri,  7 Aug 2026 15:13:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ED44420478;
+	Fri,  7 Aug 2026 15:14:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115640; cv=none; b=abv3buq4SijY3KoRj7fh+Iw7iYWfaGeKFSTrFZxU0ANQMxjjFpmaFOLgyi5Mb87jbTzXGVnBvw6nh6nKcI+VqBrb8YFa7j3mA71uS4enSx4Tuft6TdTRzqe4jqWkeyz5h5zlJEoNmVh0eoMmr0xKL10CMinAeZKG/7R9Llb0B0I=
+	t=1786115643; cv=none; b=ljlMBiLze2gNbnHdFAo1LJi6gRILlLtiwdIGmSlV1RlpFDcE64A/9bmCmbxWPu2lFt8JaUDPrVZ3AOFb8Fh1EgbBYJvVYbX9XLUQdmBS5pmqww3kzsWDLisNICjcG+/Cr/dA3FX06SeXw2pojOU6hJQXJn4B7pVDdbKx2L23+TA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115640; c=relaxed/simple;
-	bh=lIsMrHmi1lEDZNkBrh6QYAmMhECEaCfg+X6JZztb964=;
+	s=arc-20240116; t=1786115643; c=relaxed/simple;
+	bh=SyHMTmYCr6BJ/DDms4jKuLQrZY+oAvVxMbkvRj2Yl84=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G/QhV47Iay5QmsepfCh72AJewxFbHc1dtXJwpw0XfyAM/yC6m/26ynktZb+CmJKGFKAIJtuNm9FZDiw9jYdniYrZs6xhMAV5FWwScxCMwPELlZDxNjmqmcAbe/DziJSQcTXgaFfFia29Nmyt+5SQ7HJqxaVYP7Mphn959WZZifk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FY9X7I0h; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=J5/Dq12P9v1hCPl6q3sweYWyqeKEZEpnTvMqLxkT12x1tqQPo3NLfHHs6klxaL5ghzgknhDljT+6p8nP3huVH3hMmSQqb4DyrbfR01WM5sWmRN3oXBYuFRPbW/rlSwOB5/M0XBmBjdQesg9oirwkhTrjXQ7Bk0Tv5HRnm4FvWqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Io/oUU2O; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FY9X7I0h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAD0B1F000E9;
-	Fri,  7 Aug 2026 15:13:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Io/oUU2O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF7941F00A3E;
+	Fri,  7 Aug 2026 15:14:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115639;
-	bh=5bRloGyFyp4nEco0TfuiltWTQVpynDi+b4TC42AMLWk=;
+	s=korg; t=1786115642;
+	bh=JQv/wSA3sFM9aA4IjnynNT7yHobYe4umFqHu/sW3kVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FY9X7I0hMbSirLpT4GGF3hUvf34DUcC9vugmSe0SzaInM9LSehkvkFx+L21U+8q3B
-	 s86xZ2HowfpXD2dgE0YSRQq0YtXL6/2biiyWMzgFeWcWPRrPNrX0gQaMDA9gYeF000
-	 Q5E3ozx8xESqUFrdum1DLTv8dXkJyZITc4Jt35lw=
+	b=Io/oUU2O1bwPvXl5OoPNO9LX78suCOEIaYNeAd7OvnG9ncUhkEhdrnsd50yQP/4r7
+	 iKYHTuPy6rDcqhErNrzjgrBNAX2Qdm0UpiblQ8VP8Je4wgq8+No8fdAQONCD8R73mT
+	 KQ0gn+POfhW6wipY9J1uYW42YIn+3RpbnL/JLSks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ashutosh Dixit <ashutosh.dixit@intel.com>,
-	Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 348/396] drm/xe/rtp: Save OA nonpriv registers to register save/restore lists
-Date: Fri,  7 Aug 2026 16:38:28 +0200
-Message-ID: <20260807143431.792104032@linuxfoundation.org>
+	Zack Rusin <zack.rusin@broadcom.com>,
+	Ian Forbes <ian.forbes@broadcom.com>
+Subject: [PATCH 6.18 331/396] drm/vmwgfx: reject DX_BIND_QUERY without a DX context
+Date: Fri,  7 Aug 2026 16:38:11 +0200
+Message-ID: <20260807143431.429560406@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -51,56 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ashutosh Dixit <ashutosh.dixit@intel.com>
+From: Zack Rusin <zack.rusin@broadcom.com>
 
-[ Upstream commit a19a83721a28ccaddace846da70da5c53d7dd052 ]
+commit 55ec09c9ce10b1272802c7ab6c1be2ea0dbc68db upstream.
 
-Now we can save OA whitelisting nonpriv registers to register save/restore
-lists. OA nonpriv registers are saved to both hwe->oa_sr as well as
-hwe->reg_sr.
+vmw_cmd_dx_bind_query() unconditionally dereferences
+sw_context->dx_ctx_node->ctx.  Userspace can trigger a NULL pointer
+dereference from any render-node fd by submitting an execbuf with
+dx_context_handle == SVGA3D_INVALID_ID and a SVGA_3D_CMD_DX_BIND_QUERY
+opcode in the command stream: dx_ctx_node is left NULL and the kernel
+oopses on the assignment.  The same NULL is then re-read in
+vmw_resources_reserve() via vmw_context_get_dx_query_mob().
 
-During probe, resume and gt-reset flows KMD will apply hwe->reg_sr,
-ensuring OA registers are de-whitelisted after these events. For
-engine-reset, hwe->reg_sr is registered with GuC and GuC will apply these
-registers, ensuring OA registers are de-whitelisted after engine resets.
+All sibling DX handlers fail-close on a missing dx_ctx_node using
+VMW_GET_CTX_NODE().  Use the same pattern here, returning -EINVAL up
+front before any relocation state is published.
 
-hwe->oa_sr is used for whitelisting or de-whitelisting OA registers during
-OA operation, by toggling the 'deny' bit on oa stream open/close.
-
-Fixes: 828a8eaf37c3 ("drm/xe/oa: Add MMIO trigger support")
-Cc: stable@vger.kernel.org # v6.12+
-Signed-off-by: Ashutosh Dixit <ashutosh.dixit@intel.com>
-Reviewed-by: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
-Link: https://patch.msgid.link/20260615224227.34880-6-ashutosh.dixit@intel.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 9c079b8ce8bf ("drm/vmwgfx: Adapt execbuf to the new validation api")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-4.7
+Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
+Reviewed-by: Ian Forbes <ian.forbes@broadcom.com>
+Link: https://patch.msgid.link/20260505222728.519626-3-zack.rusin@broadcom.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_reg_whitelist.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_reg_whitelist.c b/drivers/gpu/drm/xe/xe_reg_whitelist.c
-index cc9f0f598e49c..4f7391d787fb0 100644
---- a/drivers/gpu/drm/xe/xe_reg_whitelist.c
-+++ b/drivers/gpu/drm/xe/xe_reg_whitelist.c
-@@ -148,6 +148,17 @@ void xe_reg_whitelist_process_engine(struct xe_hw_engine *hwe)
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
+@@ -1272,9 +1272,13 @@ static int vmw_cmd_dx_bind_query(struct
+ 				 SVGA3dCmdHeader *header)
+ {
+ 	VMW_DECLARE_CMD_VAR(*cmd, SVGA3dCmdDXBindQuery);
++	struct vmw_ctx_validation_info *ctx_node = VMW_GET_CTX_NODE(sw_context);
+ 	struct vmw_bo *vmw_bo;
+ 	int ret;
  
- 	xe_rtp_process_to_sr(&ctx, oa_whitelist, ARRAY_SIZE(oa_whitelist),
- 			     &hwe->oa_whitelist);
-+	/*
-+	 * Save oa nonpriv registers to hwe->oa_sr, from which oa registers are whitelisted
-+	 * or de-whitelisted, by toggling the 'deny' bit on oa stream open/close
-+	 */
-+	whitelist_apply_to_hwe(hwe, &hwe->oa_whitelist, &hwe->oa_sr, first_oa_slot);
++	if (!ctx_node)
++		return -EINVAL;
 +
-+	/*
-+	 * Also save oa nonpriv registers to hwe->reg_sr, to ensure oa registers are not
-+	 * whitelisted by default after probe, gt reset, resume and engine reset
-+	 */
-+	whitelist_apply_to_hwe(hwe, &hwe->oa_whitelist, &hwe->reg_sr, first_oa_slot);
+ 	cmd = container_of(header, typeof(*cmd), header);
+ 
+ 	/*
+@@ -1288,7 +1292,7 @@ static int vmw_cmd_dx_bind_query(struct
+ 		return ret;
+ 
+ 	sw_context->dx_query_mob = vmw_bo;
+-	sw_context->dx_query_ctx = sw_context->dx_ctx_node->ctx;
++	sw_context->dx_query_ctx = ctx_node->ctx;
+ 	return 0;
  }
  
- /**
--- 
-2.53.0
-
 
 
