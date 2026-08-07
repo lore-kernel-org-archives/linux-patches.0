@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79B9B314B6D;
-	Fri,  7 Aug 2026 15:31:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59F36314B6D;
+	Fri,  7 Aug 2026 15:31:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116707; cv=none; b=gbJQJ6CSzU3OBqFDulCymCJ7Ey4mk/l+lADzrkQAzlqCyOBHAcc1WefdogXE/42RXWbFoShTxmObLS1ZjtF5vZuZj9tppB0OnsON6HNWTMf6NY99aJgZpxDjiUDFZTMeMkZK8qH+k0sBQ+kWpOyy7D89iEqcry1HBRsri5hgTbM=
+	t=1786116709; cv=none; b=oxjlk4rYbgUhEZAdRhUsCKwpe8vkT/Tg8H/JS3XOKSnNOXRdrCnVkWeVUsjT/K2JcsPZiSv0zNOofSSzlXpsEmBEIL+S1p92+xxn5VUWgsW8akuYcT+U8o6uAXS+iPIwG6b8OfilqG+BLLbK03ISE9nwgVGdm86iVQTGXWkcVyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116707; c=relaxed/simple;
-	bh=ppAjjlHO7tF8aswOHNn9jPB/4DlUyAeN+hRwdqg1u04=;
+	s=arc-20240116; t=1786116709; c=relaxed/simple;
+	bh=QqUIDIeko1hdvgc7p1D4QdxjK1adlbHR4rwOqhdQCFI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nf1B/3FxyZlqUHqf4IqPMEuSeZ+7x/JPrb0uMKY7xDr1k35Tce1tCmgY5m8c7U0CtViGZc0oZL+fxOmzHOpq2p7VEY6PdKgjCz8lOxLybi0jrnR9TMukJ+wNeKyKfgrlIdRcmjPxUr9GCTUDoXOTqP+PI3b/DJv/+agPncMcImg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eKgauYJ6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EIn1mDg0Ryra913WIrgmabRXt+JRd2qVX/mniMhOjhYoe24bmj0mI/j+aIUxJgmPNKrSOxticcdxL3CEcVL7rOMBZTlEQdL/CArOzB32h4X1AzO3wBjjdWWJ8I8WL/wE9p43KWyK8J2Lx5Nlyb9KNcvwmg7lrSecZcFfXbT4ca8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c3Ww0RGO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eKgauYJ6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB4531F000E9;
-	Fri,  7 Aug 2026 15:31:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c3Ww0RGO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B12A41F000E9;
+	Fri,  7 Aug 2026 15:31:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116705;
-	bh=RYq2+BC9wcZQSy8MubAzZTAxfjiyOpBU3a6nHC9UWNY=;
+	s=korg; t=1786116708;
+	bh=OP42395/b5Zrat7SBYH0KCxVQdqVbSiRETau/YD67F8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eKgauYJ6MTpQsKIbf9+D4VtX+yDlBPluJKKtMpNyohzzeuxMREqWYF6MCMeHYBUih
-	 M3xxVqMmELhidhaf4AALCwuSOqKp1f4v1bt4f9WZ+ri2AD5tqLmdhpFWKMRbt40MDy
-	 Ze3n0Uzg3QfiEDYo/5+aCSj7DQnH76AjExKocYK4=
+	b=c3Ww0RGO1R7V/hL7E4PiuqKHUx7dN/pI0ZAr0HZIg5MY8HxOD+HdDAoKIZSWZcDGR
+	 AprxBn/BWe+pvvAPi3mkisFFs9S/tAXx92iLNVxb+m0OvsaKRH9yY3pSQwKIizbB3u
+	 c8A+EVoCGyWIwxvV2tgNdsaSV1rXiAADBTf1RfhM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Julian Anastasov <ja@ssi.bg>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 060/438] ipvs: fix places with wrong packet offsets
-Date: Fri,  7 Aug 2026 16:34:16 +0200
-Message-ID: <20260807143429.269294843@linuxfoundation.org>
+Subject: [PATCH 7.1 061/438] ipvs: do not mangle ICMP replies for non-first fragments
+Date: Fri,  7 Aug 2026 16:34:17 +0200
+Message-ID: <20260807143429.290323555@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -53,617 +53,328 @@ Content-Transfer-Encoding: 8bit
 
 From: Julian Anastasov <ja@ssi.bg>
 
-[ Upstream commit 15cab31a3730e05f0767b922a7450e5d784b2607 ]
+[ Upstream commit 342e24a339b90e8e339a0f8c151ca479b8565661 ]
 
-The offsets we use to packet headers and payloads should be
-based on skb->data. We even already respect non-zero
-network offset in ip_vs_fill_iph_skb() but some places
-do it wrongly and support only zero offset which is expected
-for the IP layer where IPVS has hooks.
+Sashiko warns that ip_vs_nat_icmp() unconditionally mangles the
+payload for embedded non-first IPv4 fragments. The problem is
+in the very old inverted pp->dont_defrag check which should not
+continue when embedded is a non-first TCP/UDP/SCTP fragment.
 
-Change all places that instead of skb->data use offsets based
-on the network header (skb_network_header, ip_hdr, etc) because
-this doubles the network offset as noted by Sashiko.
+Check for embedded non-first fragment is also missing from
+ip_vs_out_icmp_v6(), it is needed before any connection
+lookups that expect ports after the network headers.
 
-For ip_vs_nat_icmp_v6() we can even rely on the IPv6 header
-parsing done by the caller.
+Drop the blocking code from ip_vs_in_icmp_v6() which prevents
+ICMPv6 from local clients to use non-MASQ forwarding.
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Link: https://sashiko.dev/#/patchset/20260710143733.29741-2-fw%40strlen.de
+Link: https://sashiko.dev/#/patchset/20260720201122.79882-1-ja%40ssi.bg
 Signed-off-by: Julian Anastasov <ja@ssi.bg>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/ip_vs.h                   |  15 +--
- net/netfilter/ipvs/ip_vs_app.c        |   4 +-
- net/netfilter/ipvs/ip_vs_core.c       | 133 +++++++++++++-------------
- net/netfilter/ipvs/ip_vs_proto_sctp.c |   4 +-
- net/netfilter/ipvs/ip_vs_proto_tcp.c  |   4 +-
- net/netfilter/ipvs/ip_vs_proto_udp.c  |   4 +-
- net/netfilter/ipvs/ip_vs_xmit.c       |  26 ++---
- 7 files changed, 97 insertions(+), 93 deletions(-)
+ include/net/ip_vs.h             | 11 +++---
+ net/netfilter/ipvs/ip_vs_core.c | 61 ++++++++++++---------------------
+ net/netfilter/ipvs/ip_vs_xmit.c | 28 +++++++++++----
+ 3 files changed, 48 insertions(+), 52 deletions(-)
 
 diff --git a/include/net/ip_vs.h b/include/net/ip_vs.h
-index 591bf5b4b894f..7b556ce03602e 100644
+index 7b556ce03602e..8d98f7e0a9fb2 100644
 --- a/include/net/ip_vs.h
 +++ b/include/net/ip_vs.h
-@@ -1952,8 +1952,9 @@ int ip_vs_tunnel_xmit(struct sk_buff *skb, struct ip_vs_conn *cp,
- int ip_vs_dr_xmit(struct sk_buff *skb, struct ip_vs_conn *cp,
+@@ -1953,8 +1953,7 @@ int ip_vs_dr_xmit(struct sk_buff *skb, struct ip_vs_conn *cp,
  		  struct ip_vs_protocol *pp, struct ip_vs_iphdr *iph);
  int ip_vs_icmp_xmit(struct sk_buff *skb, struct ip_vs_conn *cp,
--		    struct ip_vs_protocol *pp, int offset,
--		    unsigned int hooknum, struct ip_vs_iphdr *iph);
-+		    struct ip_vs_protocol *pp, unsigned int toff,
-+		    unsigned int wlen, unsigned int hooknum,
-+		    struct ip_vs_iphdr *ciph);
+ 		    struct ip_vs_protocol *pp, unsigned int toff,
+-		    unsigned int wlen, unsigned int hooknum,
+-		    struct ip_vs_iphdr *ciph);
++		    unsigned int hooknum, struct ip_vs_iphdr *ciph);
  void ip_vs_dest_dst_rcu_free(struct rcu_head *head);
  
  #ifdef CONFIG_IP_VS_IPV6
-@@ -1966,8 +1967,9 @@ int ip_vs_tunnel_xmit_v6(struct sk_buff *skb, struct ip_vs_conn *cp,
- int ip_vs_dr_xmit_v6(struct sk_buff *skb, struct ip_vs_conn *cp,
+@@ -1968,8 +1967,7 @@ int ip_vs_dr_xmit_v6(struct sk_buff *skb, struct ip_vs_conn *cp,
  		     struct ip_vs_protocol *pp, struct ip_vs_iphdr *iph);
  int ip_vs_icmp_xmit_v6(struct sk_buff *skb, struct ip_vs_conn *cp,
--		       struct ip_vs_protocol *pp, int offset,
--		       unsigned int hooknum, struct ip_vs_iphdr *iph);
-+		       struct ip_vs_protocol *pp, unsigned int toff,
-+		       unsigned int wlen, unsigned int hooknum,
-+		       struct ip_vs_iphdr *ciph);
+ 		       struct ip_vs_protocol *pp, unsigned int toff,
+-		       unsigned int wlen, unsigned int hooknum,
+-		       struct ip_vs_iphdr *ciph);
++		       unsigned int hooknum, struct ip_vs_iphdr *ciph);
  #endif
  
  #ifdef CONFIG_SYSCTL
-@@ -2039,11 +2041,12 @@ static inline bool ip_vs_conn_use_hash2(struct ip_vs_conn *cp)
+@@ -2041,12 +2039,13 @@ static inline bool ip_vs_conn_use_hash2(struct ip_vs_conn *cp)
  }
  
  void ip_vs_nat_icmp(struct sk_buff *skb, struct ip_vs_protocol *pp,
--		    struct ip_vs_conn *cp, int dir);
-+		    struct ip_vs_conn *cp, int dir, unsigned int toff);
+-		    struct ip_vs_conn *cp, int dir, unsigned int toff);
++		    struct ip_vs_conn *cp, int dir, unsigned int toff,
++		    bool has_ports);
  
  #ifdef CONFIG_IP_VS_IPV6
  void ip_vs_nat_icmp_v6(struct sk_buff *skb, struct ip_vs_protocol *pp,
--		       struct ip_vs_conn *cp, int dir);
-+		       struct ip_vs_conn *cp, int dir, unsigned int toff,
-+		       struct ip_vs_iphdr *ciph);
+ 		       struct ip_vs_conn *cp, int dir, unsigned int toff,
+-		       struct ip_vs_iphdr *ciph);
++		       bool has_ports, struct ip_vs_iphdr *ciph);
  #endif
  
  static inline __wsum ip_vs_check_diff4(__be32 old, __be32 new, __wsum oldsum)
-diff --git a/net/netfilter/ipvs/ip_vs_app.c b/net/netfilter/ipvs/ip_vs_app.c
-index b0e00be85cb12..11cbdbaf561da 100644
---- a/net/netfilter/ipvs/ip_vs_app.c
-+++ b/net/netfilter/ipvs/ip_vs_app.c
-@@ -367,7 +367,7 @@ static inline int app_tcp_pkt_out(struct ip_vs_conn *cp, struct sk_buff *skb,
- 	if (skb_ensure_writable(skb, ipvsh->len + sizeof(*th)))
- 		return 0;
- 
--	th = (struct tcphdr *)(skb_network_header(skb) + ipvsh->len);
-+	th = (struct tcphdr *)(skb->data + ipvsh->len);
- 
- 	/*
- 	 *	Remember seq number in case this pkt gets resized
-@@ -443,7 +443,7 @@ static inline int app_tcp_pkt_in(struct ip_vs_conn *cp, struct sk_buff *skb,
- 	if (skb_ensure_writable(skb, ipvsh->len + sizeof(*th)))
- 		return 0;
- 
--	th = (struct tcphdr *)(skb_network_header(skb) + ipvsh->len);
-+	th = (struct tcphdr *)(skb->data + ipvsh->len);
- 
- 	/*
- 	 *	Remember seq number in case this pkt gets resized
 diff --git a/net/netfilter/ipvs/ip_vs_core.c b/net/netfilter/ipvs/ip_vs_core.c
-index c8b512725e6e0..cd5eb71543ec8 100644
+index cd5eb71543ec8..7efa209a517b1 100644
 --- a/net/netfilter/ipvs/ip_vs_core.c
 +++ b/net/netfilter/ipvs/ip_vs_core.c
-@@ -924,13 +924,12 @@ static int ip_vs_route_me_harder(struct netns_ipvs *ipvs, int af,
+@@ -924,7 +924,8 @@ static int ip_vs_route_me_harder(struct netns_ipvs *ipvs, int af,
   * - inout: 1=in->out, 0=out->in
   */
  void ip_vs_nat_icmp(struct sk_buff *skb, struct ip_vs_protocol *pp,
--		    struct ip_vs_conn *cp, int inout)
-+		    struct ip_vs_conn *cp, int inout, unsigned int toff)
+-		    struct ip_vs_conn *cp, int inout, unsigned int toff)
++		    struct ip_vs_conn *cp, int inout, unsigned int toff,
++		    bool has_ports)
  {
  	struct iphdr *iph	 = ip_hdr(skb);
--	unsigned int icmp_offset = iph->ihl*4;
--	struct icmphdr *icmph	 = (struct icmphdr *)(skb_network_header(skb) +
--						      icmp_offset);
-+	struct icmphdr *icmph	 = (struct icmphdr *)(skb->data + toff);
- 	struct iphdr *ciph	 = (struct iphdr *)(icmph + 1);
-+	unsigned int coff __maybe_unused = toff + sizeof(struct icmphdr);
- 
- 	if (inout) {
- 		iph->saddr = cp->vaddr.ip;
-@@ -957,48 +956,45 @@ void ip_vs_nat_icmp(struct sk_buff *skb, struct ip_vs_protocol *pp,
- 
- 	/* And finally the ICMP checksum */
- 	icmph->checksum = 0;
--	icmph->checksum = ip_vs_checksum_complete(skb, icmp_offset);
-+	icmph->checksum = ip_vs_checksum_complete(skb, toff);
- 	skb->ip_summed = CHECKSUM_UNNECESSARY;
- 
- 	if (inout)
--		IP_VS_DBG_PKT(11, AF_INET, pp, skb, (void *)ciph - (void *)iph,
--			"Forwarding altered outgoing ICMP");
-+		IP_VS_DBG_PKT(11, AF_INET, pp, skb, coff,
-+			      "Forwarding altered outgoing ICMP");
- 	else
--		IP_VS_DBG_PKT(11, AF_INET, pp, skb, (void *)ciph - (void *)iph,
--			"Forwarding altered incoming ICMP");
-+		IP_VS_DBG_PKT(11, AF_INET, pp, skb, coff,
-+			      "Forwarding altered incoming ICMP");
- }
- 
- #ifdef CONFIG_IP_VS_IPV6
- void ip_vs_nat_icmp_v6(struct sk_buff *skb, struct ip_vs_protocol *pp,
--		    struct ip_vs_conn *cp, int inout)
-+		       struct ip_vs_conn *cp, int inout, unsigned int toff,
-+		       struct ip_vs_iphdr *ciph)
- {
- 	struct ipv6hdr *iph	 = ipv6_hdr(skb);
--	unsigned int icmp_offset = 0;
--	unsigned int offs	 = 0; /* header offset*/
- 	int protocol;
- 	struct icmp6hdr *icmph;
--	struct ipv6hdr *ciph;
--	unsigned short fragoffs;
-+	struct ipv6hdr *cih;
- 
--	ipv6_find_hdr(skb, &icmp_offset, IPPROTO_ICMPV6, &fragoffs, NULL);
--	icmph = (struct icmp6hdr *)(skb_network_header(skb) + icmp_offset);
--	offs = icmp_offset + sizeof(struct icmp6hdr);
--	ciph = (struct ipv6hdr *)(skb_network_header(skb) + offs);
-+	icmph = (struct icmp6hdr *)(skb->data + toff);
-+	cih = (struct ipv6hdr *)(skb->data + ciph->off);
- 
--	protocol = ipv6_find_hdr(skb, &offs, -1, &fragoffs, NULL);
-+	protocol = ciph->protocol;
- 
- 	if (inout) {
- 		iph->saddr = cp->vaddr.in6;
--		ciph->daddr = cp->vaddr.in6;
-+		cih->daddr = cp->vaddr.in6;
- 	} else {
- 		iph->daddr = cp->daddr.in6;
--		ciph->saddr = cp->daddr.in6;
-+		cih->saddr = cp->daddr.in6;
+ 	struct icmphdr *icmph	 = (struct icmphdr *)(skb->data + toff);
+@@ -944,8 +945,7 @@ void ip_vs_nat_icmp(struct sk_buff *skb, struct ip_vs_protocol *pp,
  	}
  
  	/* the TCP/UDP/SCTP port */
--	if (!fragoffs && (IPPROTO_TCP == protocol || IPPROTO_UDP == protocol ||
--			  IPPROTO_SCTP == protocol)) {
--		__be16 *ports = (void *)(skb_network_header(skb) + offs);
-+	if (!ciph->fragoffs &&
-+	    (protocol == IPPROTO_TCP  || protocol == IPPROTO_UDP ||
-+	     protocol == IPPROTO_SCTP)) {
-+		__be16 *ports = (void *)(skb->data + ciph->len);
+-	if (IPPROTO_TCP == ciph->protocol || IPPROTO_UDP == ciph->protocol ||
+-	    IPPROTO_SCTP == ciph->protocol) {
++	if (has_ports) {
+ 		__be16 *ports = (void *)ciph + ciph->ihl*4;
+ 
+ 		if (inout)
+@@ -970,18 +970,15 @@ void ip_vs_nat_icmp(struct sk_buff *skb, struct ip_vs_protocol *pp,
+ #ifdef CONFIG_IP_VS_IPV6
+ void ip_vs_nat_icmp_v6(struct sk_buff *skb, struct ip_vs_protocol *pp,
+ 		       struct ip_vs_conn *cp, int inout, unsigned int toff,
+-		       struct ip_vs_iphdr *ciph)
++		       bool has_ports, struct ip_vs_iphdr *ciph)
+ {
+ 	struct ipv6hdr *iph	 = ipv6_hdr(skb);
+-	int protocol;
+ 	struct icmp6hdr *icmph;
+ 	struct ipv6hdr *cih;
+ 
+ 	icmph = (struct icmp6hdr *)(skb->data + toff);
+ 	cih = (struct ipv6hdr *)(skb->data + ciph->off);
+ 
+-	protocol = ciph->protocol;
+-
+ 	if (inout) {
+ 		iph->saddr = cp->vaddr.in6;
+ 		cih->daddr = cp->vaddr.in6;
+@@ -991,9 +988,7 @@ void ip_vs_nat_icmp_v6(struct sk_buff *skb, struct ip_vs_protocol *pp,
+ 	}
+ 
+ 	/* the TCP/UDP/SCTP port */
+-	if (!ciph->fragoffs &&
+-	    (protocol == IPPROTO_TCP  || protocol == IPPROTO_UDP ||
+-	     protocol == IPPROTO_SCTP)) {
++	if (has_ports) {
+ 		__be16 *ports = (void *)(skb->data + ciph->len);
  
  		IP_VS_DBG(11, "%s() changed port %d to %d\n", __func__,
- 			      ntohs(inout ? ports[1] : ports[0]),
-@@ -1011,19 +1007,17 @@ void ip_vs_nat_icmp_v6(struct sk_buff *skb, struct ip_vs_protocol *pp,
- 
- 	/* And finally the ICMP checksum */
- 	icmph->icmp6_cksum = ~csum_ipv6_magic(&iph->saddr, &iph->daddr,
--					      skb->len - icmp_offset,
-+					      skb->len - toff,
- 					      IPPROTO_ICMPV6, 0);
--	skb->csum_start = skb_network_header(skb) - skb->head + icmp_offset;
-+	skb->csum_start = skb_headroom(skb) + toff;
- 	skb->csum_offset = offsetof(struct icmp6hdr, icmp6_cksum);
- 	skb->ip_summed = CHECKSUM_PARTIAL;
- 
- 	if (inout)
--		IP_VS_DBG_PKT(11, AF_INET6, pp, skb,
--			      (void *)ciph - (void *)iph,
-+		IP_VS_DBG_PKT(11, AF_INET6, pp, skb, ciph->off,
- 			      "Forwarding altered outgoing ICMPv6");
- 	else
--		IP_VS_DBG_PKT(11, AF_INET6, pp, skb,
--			      (void *)ciph - (void *)iph,
-+		IP_VS_DBG_PKT(11, AF_INET6, pp, skb, ciph->off,
- 			      "Forwarding altered incoming ICMPv6");
- }
- #endif
-@@ -1033,37 +1027,38 @@ void ip_vs_nat_icmp_v6(struct sk_buff *skb, struct ip_vs_protocol *pp,
-  */
- static int handle_response_icmp(int af, struct sk_buff *skb,
- 				union nf_inet_addr *snet,
--				__u8 protocol, struct ip_vs_conn *cp,
-+				struct ip_vs_conn *cp,
- 				struct ip_vs_protocol *pp,
--				unsigned int offset, unsigned int ihl,
--				unsigned int hooknum)
-+				struct ip_vs_iphdr *ciph,
-+				unsigned int toff, unsigned int hooknum)
- {
+@@ -1035,6 +1030,7 @@ static int handle_response_icmp(int af, struct sk_buff *skb,
  	int iproto = af == AF_INET6 ? IPPROTO_ICMPV6 : IPPROTO_ICMP;
  	unsigned int verdict = NF_DROP;
-+	unsigned int ctoff = ciph->len;
+ 	unsigned int ctoff = ciph->len;
++	bool has_ports = false;
  
  	if (IP_VS_FWD_METHOD(cp) != IP_VS_CONN_F_MASQ)
  		goto after_nat;
- 
- 	/* Ensure the checksum is correct */
--	if (!ip_vs_checksum_common_check(skb, ihl, iproto, af)) {
-+	if (!ip_vs_checksum_common_check(skb, toff, iproto, af)) {
- 		/* Failed checksum! */
- 		IP_VS_DBG_BUF(1, "Forward ICMP: failed checksum from %s!\n",
- 			      IP_VS_DBG_ADDR(af, snet));
- 		goto out;
+@@ -1048,17 +1044,19 @@ static int handle_response_icmp(int af, struct sk_buff *skb,
  	}
  
--	if (IPPROTO_TCP == protocol || IPPROTO_UDP == protocol ||
--	    IPPROTO_SCTP == protocol)
--		offset += 2 * sizeof(__u16);
--	if (skb_ensure_writable(skb, offset))
-+	if (ciph->protocol == IPPROTO_TCP || ciph->protocol == IPPROTO_UDP ||
-+	    ciph->protocol == IPPROTO_SCTP)
-+		ctoff += 2 * sizeof(__u16);
-+	if (skb_ensure_writable(skb, ctoff))
+ 	if (ciph->protocol == IPPROTO_TCP || ciph->protocol == IPPROTO_UDP ||
+-	    ciph->protocol == IPPROTO_SCTP)
++	    ciph->protocol == IPPROTO_SCTP) {
+ 		ctoff += 2 * sizeof(__u16);
++		has_ports = true;
++	}
+ 	if (skb_ensure_writable(skb, ctoff))
  		goto out;
  
  #ifdef CONFIG_IP_VS_IPV6
  	if (af == AF_INET6)
--		ip_vs_nat_icmp_v6(skb, pp, cp, 1);
-+		ip_vs_nat_icmp_v6(skb, pp, cp, 1, toff, ciph);
+-		ip_vs_nat_icmp_v6(skb, pp, cp, 1, toff, ciph);
++		ip_vs_nat_icmp_v6(skb, pp, cp, 1, toff, has_ports, ciph);
  	else
  #endif
--		ip_vs_nat_icmp(skb, pp, cp, 1);
-+		ip_vs_nat_icmp(skb, pp, cp, 1, toff);
+-		ip_vs_nat_icmp(skb, pp, cp, 1, toff);
++		ip_vs_nat_icmp(skb, pp, cp, 1, toff, has_ports);
  
  	if (ip_vs_route_me_harder(cp->ipvs, af, skb, hooknum))
  		goto out;
-@@ -1091,9 +1086,9 @@ static int handle_response_icmp(int af, struct sk_buff *skb,
-  *	Currently handles error types - unreachable, quench, ttl exceeded.
-  */
- static int ip_vs_out_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb,
--			  int *related, unsigned int hooknum)
-+			  int *related, unsigned int hooknum,
-+			  struct ip_vs_iphdr *ipvsh)
- {
--	struct iphdr *iph;
- 	struct icmphdr	_icmph, *ic;
- 	struct iphdr	_ciph, *cih;	/* The ip header contained within the ICMP */
- 	struct ip_vs_iphdr ciph;
-@@ -1108,17 +1103,19 @@ static int ip_vs_out_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb,
- 	if (ip_is_fragment(ip_hdr(skb))) {
- 		if (ip_vs_gather_frags(ipvs, skb, ip_vs_defrag_user(hooknum)))
- 			return NF_STOLEN;
-+		if (!ip_vs_fill_iph_skb(AF_INET, skb, false, ipvsh))
-+			return NF_ACCEPT;
- 	}
- 
--	iph = ip_hdr(skb);
--	offset = ihl = iph->ihl * 4;
-+	ihl = ipvsh->len;
-+	offset = ipvsh->len;
- 	ic = skb_header_pointer(skb, offset, sizeof(_icmph), &_icmph);
- 	if (ic == NULL)
- 		return NF_DROP;
- 
- 	IP_VS_DBG(12, "Outgoing ICMP (%d,%d) %pI4->%pI4\n",
- 		  ic->type, ntohs(icmp_id(ic)),
--		  &iph->saddr, &iph->daddr);
-+		  &ipvsh->saddr.ip, &ipvsh->daddr.ip);
- 
- 	/*
- 	 * Work through seeing if this is for us.
-@@ -1137,7 +1134,7 @@ static int ip_vs_out_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb,
- 	/* Now find the contained IP header */
- 	offset += sizeof(_icmph);
- 	cih = skb_header_pointer(skb, offset, sizeof(_ciph), &_ciph);
--	if (cih == NULL)
-+	if (!(cih && cih->version == 4 && cih->ihl >= 5))
- 		return NF_ACCEPT; /* The packet looks wrong, ignore */
- 
- 	pp = ip_vs_proto_get(cih->protocol);
-@@ -1160,9 +1157,9 @@ static int ip_vs_out_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb,
- 	if (!cp)
+@@ -1142,8 +1140,7 @@ static int ip_vs_out_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb,
  		return NF_ACCEPT;
  
--	snet.ip = iph->saddr;
--	return handle_response_icmp(AF_INET, skb, &snet, cih->protocol, cp,
--				    pp, ciph.len, ihl, hooknum);
-+	snet.ip = ipvsh->saddr.ip;
-+	return handle_response_icmp(AF_INET, skb, &snet, cp, pp, &ciph, ihl,
-+				    hooknum);
- }
- 
- #ifdef CONFIG_IP_VS_IPV6
-@@ -1175,7 +1172,6 @@ static int ip_vs_out_icmp_v6(struct netns_ipvs *ipvs, struct sk_buff *skb,
- 	struct ip_vs_conn *cp;
- 	struct ip_vs_protocol *pp;
- 	union nf_inet_addr snet;
--	unsigned int offset;
- 
- 	*related = 1;
- 	ic = frag_safe_skb_hp(skb, ipvsh->len, sizeof(_icmph), &_icmph);
-@@ -1218,9 +1214,8 @@ static int ip_vs_out_icmp_v6(struct netns_ipvs *ipvs, struct sk_buff *skb,
+ 	/* Is the embedded protocol header present? */
+-	if (unlikely(cih->frag_off & htons(IP_OFFSET) &&
+-		     pp->dont_defrag))
++	if (unlikely(cih->frag_off & htons(IP_OFFSET) && !pp->dont_defrag))
  		return NF_ACCEPT;
  
- 	snet.in6 = ciph.saddr.in6;
+ 	IP_VS_DBG_PKT(11, AF_INET, pp, skb, offset,
+@@ -1207,6 +1204,10 @@ static int ip_vs_out_icmp_v6(struct netns_ipvs *ipvs, struct sk_buff *skb,
+ 	if (!pp)
+ 		return NF_ACCEPT;
+ 
++	/* Is the embedded protocol header present? */
++	if (unlikely(ciph.fragoffs && !pp->dont_defrag))
++		return NF_ACCEPT;
++
+ 	/* The embedded headers contain source and dest in reverse order */
+ 	cp = INDIRECT_CALL_1(pp->conn_out_get, ip_vs_conn_out_get_proto,
+ 			     ipvs, AF_INET6, skb, &ciph);
+@@ -1865,8 +1866,7 @@ ip_vs_in_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb, int *related,
+ 	pp = pd->pp;
+ 
+ 	/* Is the embedded protocol header present? */
+-	if (unlikely(cih->frag_off & htons(IP_OFFSET) &&
+-		     pp->dont_defrag))
++	if (unlikely(cih->frag_off & htons(IP_OFFSET) && !pp->dont_defrag))
+ 		return NF_ACCEPT;
+ 
+ 	IP_VS_DBG_PKT(11, AF_INET, pp, skb, offset,
+@@ -1874,7 +1874,6 @@ ip_vs_in_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb, int *related,
+ 
+ 	offset2 = offset;
+ 	ip_vs_fill_iph_skb_icmp(AF_INET, skb, offset, !tunnel, &ciph);
 -	offset = ciph.len;
--	return handle_response_icmp(AF_INET6, skb, &snet, ciph.protocol, cp,
--				    pp, offset, ipvsh->len, hooknum);
-+	return handle_response_icmp(AF_INET6, skb, &snet, cp, pp, &ciph,
-+				    ipvsh->len, hooknum);
- }
- #endif
  
-@@ -1546,7 +1541,8 @@ ip_vs_out_hook(void *priv, struct sk_buff *skb, const struct nf_hook_state *stat
- #endif
- 		if (unlikely(iph.protocol == IPPROTO_ICMP)) {
- 			int related;
--			int verdict = ip_vs_out_icmp(ipvs, skb, &related, hooknum);
-+			int verdict = ip_vs_out_icmp(ipvs, skb, &related,
-+						     hooknum, &iph);
+ 	/* The embedded headers contain source and dest in reverse order.
+ 	 * For IPIP/UDP/GRE tunnel this is error for request, not for reply.
+@@ -1968,11 +1967,7 @@ ip_vs_in_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb, int *related,
  
- 			if (related)
- 				return verdict;
-@@ -1754,9 +1750,8 @@ static int ipvs_gre_decap(struct netns_ipvs *ipvs, struct sk_buff *skb,
-  */
- static int
- ip_vs_in_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb, int *related,
--	      unsigned int hooknum)
-+	      unsigned int hooknum, struct ip_vs_iphdr *iph)
- {
--	struct iphdr *iph;
- 	struct icmphdr	_icmph, *ic;
- 	struct iphdr	_ciph, *cih;	/* The ip header contained within the ICMP */
- 	struct ip_vs_iphdr ciph;
-@@ -1766,7 +1761,7 @@ ip_vs_in_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb, int *related,
- 	unsigned int offset, offset2, ihl, verdict;
- 	bool tunnel, new_cp = false;
- 	union nf_inet_addr *raddr;
--	char *outer_proto = "IPIP";
-+	char *outer_proto __maybe_unused = "IPIP";
- 	unsigned int hlen_ipip;
- 	int ulen = 0;
- 
-@@ -1776,17 +1771,19 @@ ip_vs_in_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb, int *related,
- 	if (ip_is_fragment(ip_hdr(skb))) {
- 		if (ip_vs_gather_frags(ipvs, skb, ip_vs_defrag_user(hooknum)))
- 			return NF_STOLEN;
-+		if (!ip_vs_fill_iph_skb(AF_INET, skb, false, iph))
-+			return NF_ACCEPT;
- 	}
- 
--	iph = ip_hdr(skb);
--	offset = ihl = iph->ihl * 4;
-+	ihl = iph->len;
-+	offset = iph->len;
- 	ic = skb_header_pointer(skb, offset, sizeof(_icmph), &_icmph);
- 	if (ic == NULL)
- 		return NF_DROP;
- 
- 	IP_VS_DBG(12, "Incoming ICMP (%d,%d) %pI4->%pI4\n",
- 		  ic->type, ntohs(icmp_id(ic)),
--		  &iph->saddr, &iph->daddr);
-+		  &iph->saddr.ip, &iph->daddr.ip);
- 
- 	/*
- 	 * Work through seeing if this is for us.
-@@ -1903,7 +1900,7 @@ ip_vs_in_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb, int *related,
- 	    !ip_vs_checksum_common_check(skb, ihl, IPPROTO_ICMP, AF_INET)) {
- 		/* Failed checksum! */
- 		IP_VS_DBG(1, "Incoming ICMP: failed checksum from %pI4!\n",
--			  &iph->saddr);
-+			  &iph->saddr.ip);
- 		goto out;
- 	}
- 
-@@ -1974,7 +1971,8 @@ ip_vs_in_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb, int *related,
- 	if (IPPROTO_TCP == cih->protocol || IPPROTO_UDP == cih->protocol ||
- 	    IPPROTO_SCTP == cih->protocol)
- 		offset += 2 * sizeof(__u16);
--	verdict = ip_vs_icmp_xmit(skb, cp, pp, offset, hooknum, &ciph);
-+	verdict = ip_vs_icmp_xmit(skb, cp, pp, iph->len, offset, hooknum,
-+				  &ciph);
+ 	/* do the statistics and put it back */
+ 	ip_vs_in_stats(cp, skb);
+-	if (IPPROTO_TCP == cih->protocol || IPPROTO_UDP == cih->protocol ||
+-	    IPPROTO_SCTP == cih->protocol)
+-		offset += 2 * sizeof(__u16);
+-	verdict = ip_vs_icmp_xmit(skb, cp, pp, iph->len, offset, hooknum,
+-				  &ciph);
++	verdict = ip_vs_icmp_xmit(skb, cp, pp, iph->len, hooknum, &ciph);
  
  out:
  	if (likely(!new_cp))
-@@ -2087,7 +2085,8 @@ static int ip_vs_in_icmp_v6(struct netns_ipvs *ipvs, struct sk_buff *skb,
- 	    IPPROTO_SCTP == ciph.protocol)
- 		offset += 2 * sizeof(__u16); /* Also mangle ports */
+@@ -2032,8 +2027,8 @@ static int ip_vs_in_icmp_v6(struct netns_ipvs *ipvs, struct sk_buff *skb,
+ 		return NF_ACCEPT;
+ 	pp = pd->pp;
  
--	verdict = ip_vs_icmp_xmit_v6(skb, cp, pp, offset, hooknum, &ciph);
-+	verdict = ip_vs_icmp_xmit_v6(skb, cp, pp, iph->len, offset, hooknum,
-+				     &ciph);
+-	/* Cannot handle fragmented embedded protocol */
+-	if (ciph.fragoffs)
++	/* Is the embedded protocol header present? */
++	if (ciph.fragoffs && !pp->dont_defrag)
+ 		return NF_ACCEPT;
  
- out:
- 	if (likely(!new_cp))
-@@ -2166,7 +2165,7 @@ ip_vs_in_hook(void *priv, struct sk_buff *skb, const struct nf_hook_state *state
- 		if (unlikely(iph.protocol == IPPROTO_ICMP)) {
- 			int related;
- 			int verdict = ip_vs_in_icmp(ipvs, skb, &related,
--						    hooknum);
-+						    hooknum, &iph);
+ 	IP_VS_DBG_PKT(11, AF_INET6, pp, skb, offset,
+@@ -2057,13 +2052,6 @@ static int ip_vs_in_icmp_v6(struct netns_ipvs *ipvs, struct sk_buff *skb,
+ 		new_cp = true;
+ 	}
  
- 			if (related)
- 				return verdict;
-@@ -2302,6 +2301,7 @@ ip_vs_forward_icmp(void *priv, struct sk_buff *skb,
- 		   const struct nf_hook_state *state)
- {
- 	struct netns_ipvs *ipvs = net_ipvs(state->net);
-+	struct ip_vs_iphdr iphdr;
- 	int r;
- 
- 	/* ipvs enabled in this netns ? */
-@@ -2311,10 +2311,9 @@ ip_vs_forward_icmp(void *priv, struct sk_buff *skb,
- 	if (state->pf == NFPROTO_IPV4) {
- 		if (ip_hdr(skb)->protocol != IPPROTO_ICMP)
- 			return NF_ACCEPT;
-+		ip_vs_fill_iph_skb(AF_INET, skb, false, &iphdr);
- #ifdef CONFIG_IP_VS_IPV6
- 	} else {
--		struct ip_vs_iphdr iphdr;
+-	/* VS/TUN, VS/DR and LOCALNODE just let it go */
+-	if ((hooknum == NF_INET_LOCAL_OUT) &&
+-	    (IP_VS_FWD_METHOD(cp) != IP_VS_CONN_F_MASQ)) {
+-		verdict = NF_ACCEPT;
+-		goto out;
+-	}
 -
- 		ip_vs_fill_iph_skb(AF_INET6, skb, false, &iphdr);
+ 	verdict = NF_DROP;
  
- 		if (iphdr.protocol != IPPROTO_ICMPV6)
-@@ -2324,7 +2323,7 @@ ip_vs_forward_icmp(void *priv, struct sk_buff *skb,
- #endif
- 	}
+ 	/* Ensure the checksum is correct */
+@@ -2079,14 +2067,7 @@ static int ip_vs_in_icmp_v6(struct netns_ipvs *ipvs, struct sk_buff *skb,
+ 	/* do the statistics and put it back */
+ 	ip_vs_in_stats(cp, skb);
  
--	return ip_vs_in_icmp(ipvs, skb, &r, state->hook);
-+	return ip_vs_in_icmp(ipvs, skb, &r, state->hook, &iphdr);
- }
+-	/* Need to mangle contained IPv6 header in ICMPv6 packet */
+-	offset = ciph.len;
+-	if (IPPROTO_TCP == ciph.protocol || IPPROTO_UDP == ciph.protocol ||
+-	    IPPROTO_SCTP == ciph.protocol)
+-		offset += 2 * sizeof(__u16); /* Also mangle ports */
+-
+-	verdict = ip_vs_icmp_xmit_v6(skb, cp, pp, iph->len, offset, hooknum,
+-				     &ciph);
++	verdict = ip_vs_icmp_xmit_v6(skb, cp, pp, iph->len, hooknum, &ciph);
  
- static const struct nf_hook_ops ip_vs_ops4[] = {
-diff --git a/net/netfilter/ipvs/ip_vs_proto_sctp.c b/net/netfilter/ipvs/ip_vs_proto_sctp.c
-index f6f732b7dfa86..3dbd3096e1637 100644
---- a/net/netfilter/ipvs/ip_vs_proto_sctp.c
-+++ b/net/netfilter/ipvs/ip_vs_proto_sctp.c
-@@ -121,7 +121,7 @@ sctp_snat_handler(struct sk_buff *skb, struct ip_vs_protocol *pp,
- 			payload_csum = true;
- 	}
- 
--	sctph = (void *) skb_network_header(skb) + sctphoff;
-+	sctph = (void *)skb->data + sctphoff;
- 
- 	/* Only update csum if we really have to */
- 	if (sctph->source != cp->vport || payload_csum ||
-@@ -169,7 +169,7 @@ sctp_dnat_handler(struct sk_buff *skb, struct ip_vs_protocol *pp,
- 			payload_csum = true;
- 	}
- 
--	sctph = (void *) skb_network_header(skb) + sctphoff;
-+	sctph = (void *)skb->data + sctphoff;
- 
- 	/* Only update csum if we really have to */
- 	if (sctph->dest != cp->dport || payload_csum ||
-diff --git a/net/netfilter/ipvs/ip_vs_proto_tcp.c b/net/netfilter/ipvs/ip_vs_proto_tcp.c
-index 533fce3e5e4e4..99a286fdc90c6 100644
---- a/net/netfilter/ipvs/ip_vs_proto_tcp.c
-+++ b/net/netfilter/ipvs/ip_vs_proto_tcp.c
-@@ -179,7 +179,7 @@ tcp_snat_handler(struct sk_buff *skb, struct ip_vs_protocol *pp,
- 			payload_csum = true;
- 	}
- 
--	tcph = (void *)skb_network_header(skb) + tcphoff;
-+	tcph = (void *)skb->data + tcphoff;
- 	tcph->source = cp->vport;
- 
- 	/* Adjust TCP checksums */
-@@ -260,7 +260,7 @@ tcp_dnat_handler(struct sk_buff *skb, struct ip_vs_protocol *pp,
- 			payload_csum = true;
- 	}
- 
--	tcph = (void *)skb_network_header(skb) + tcphoff;
-+	tcph = (void *)skb->data + tcphoff;
- 	tcph->dest = cp->dport;
- 
- 	/*
-diff --git a/net/netfilter/ipvs/ip_vs_proto_udp.c b/net/netfilter/ipvs/ip_vs_proto_udp.c
-index de3597347542e..f32785682402d 100644
---- a/net/netfilter/ipvs/ip_vs_proto_udp.c
-+++ b/net/netfilter/ipvs/ip_vs_proto_udp.c
-@@ -170,7 +170,7 @@ udp_snat_handler(struct sk_buff *skb, struct ip_vs_protocol *pp,
- 			payload_csum = true;
- 	}
- 
--	udph = (void *)skb_network_header(skb) + udphoff;
-+	udph = (void *)skb->data + udphoff;
- 	udph->source = cp->vport;
- 
- 	/*
-@@ -254,7 +254,7 @@ udp_dnat_handler(struct sk_buff *skb, struct ip_vs_protocol *pp,
- 			payload_csum = true;
- 	}
- 
--	udph = (void *)skb_network_header(skb) + udphoff;
-+	udph = (void *)skb->data + udphoff;
- 	udph->dest = cp->dport;
- 
- 	/*
+ out:
+ 	if (likely(!new_cp))
 diff --git a/net/netfilter/ipvs/ip_vs_xmit.c b/net/netfilter/ipvs/ip_vs_xmit.c
-index 9fef4335da13f..c23401c789de3 100644
+index c23401c789de3..0b0c5304993a9 100644
 --- a/net/netfilter/ipvs/ip_vs_xmit.c
 +++ b/net/netfilter/ipvs/ip_vs_xmit.c
-@@ -1502,8 +1502,9 @@ ip_vs_dr_xmit_v6(struct sk_buff *skb, struct ip_vs_conn *cp,
-  */
+@@ -1503,13 +1503,14 @@ ip_vs_dr_xmit_v6(struct sk_buff *skb, struct ip_vs_conn *cp,
  int
  ip_vs_icmp_xmit(struct sk_buff *skb, struct ip_vs_conn *cp,
--		struct ip_vs_protocol *pp, int offset, unsigned int hooknum,
--		struct ip_vs_iphdr *iph)
-+		struct ip_vs_protocol *pp, unsigned int toff,
-+		unsigned int wlen, unsigned int hooknum,
-+		struct ip_vs_iphdr *ciph)
+ 		struct ip_vs_protocol *pp, unsigned int toff,
+-		unsigned int wlen, unsigned int hooknum,
+-		struct ip_vs_iphdr *ciph)
++		unsigned int hooknum, struct ip_vs_iphdr *ciph)
  {
  	struct rtable	*rt;	/* Route to the other host */
  	int rc;
-@@ -1515,7 +1516,7 @@ ip_vs_icmp_xmit(struct sk_buff *skb, struct ip_vs_conn *cp,
- 	   translate address/port back */
- 	if (IP_VS_FWD_METHOD(cp) != IP_VS_CONN_F_MASQ) {
- 		if (cp->packet_xmit)
--			rc = cp->packet_xmit(skb, cp, pp, iph);
-+			rc = cp->packet_xmit(skb, cp, pp, ciph);
- 		else
- 			rc = NF_ACCEPT;
- 		/* do not touch skb anymore */
-@@ -1533,7 +1534,7 @@ ip_vs_icmp_xmit(struct sk_buff *skb, struct ip_vs_conn *cp,
- 		  IP_VS_RT_MODE_LOCAL | IP_VS_RT_MODE_NON_LOCAL |
- 		  IP_VS_RT_MODE_RDR : IP_VS_RT_MODE_NON_LOCAL;
- 	local = __ip_vs_get_out_rt(cp->ipvs, cp->af, skb, cp->dest, cp->daddr.ip, rt_mode,
--				   NULL, iph);
-+				   NULL, ciph);
- 	if (local < 0)
+ 	int local;
+ 	int rt_mode, was_input;
++	bool has_ports = false;
++	unsigned int wlen;
+ 
+ 	/* The ICMP packet for VS/TUN, VS/DR and LOCALNODE will be
+ 	   forwarded directly here, because there is no need to
+@@ -1565,6 +1566,13 @@ ip_vs_icmp_xmit(struct sk_buff *skb, struct ip_vs_conn *cp,
  		goto tx_error;
- 	rt = skb_rtable(skb);
-@@ -1565,13 +1566,13 @@ ip_vs_icmp_xmit(struct sk_buff *skb, struct ip_vs_conn *cp,
  	}
  
++	wlen = ciph->len;
++	if (ciph->protocol == IPPROTO_TCP || ciph->protocol == IPPROTO_UDP ||
++	    ciph->protocol == IPPROTO_SCTP) {
++		wlen += 2 * sizeof(__u16); /* Also mangle ports */
++		has_ports = true;
++	}
++
  	/* copy-on-write the packet before mangling it */
--	if (skb_ensure_writable(skb, offset))
-+	if (skb_ensure_writable(skb, wlen))
+ 	if (skb_ensure_writable(skb, wlen))
  		goto tx_error;
- 
+@@ -1572,7 +1580,7 @@ ip_vs_icmp_xmit(struct sk_buff *skb, struct ip_vs_conn *cp,
  	if (skb_cow(skb, rt->dst.dev->hard_header_len))
  		goto tx_error;
  
--	ip_vs_nat_icmp(skb, pp, cp, 0);
-+	ip_vs_nat_icmp(skb, pp, cp, 0, toff);
+-	ip_vs_nat_icmp(skb, pp, cp, 0, toff);
++	ip_vs_nat_icmp(skb, pp, cp, 0, toff, has_ports);
  
  	/* Another hack: avoid icmp_send in ip_fragment */
  	skb->ignore_df = 1;
-@@ -1587,8 +1588,9 @@ ip_vs_icmp_xmit(struct sk_buff *skb, struct ip_vs_conn *cp,
- #ifdef CONFIG_IP_VS_IPV6
+@@ -1589,10 +1597,11 @@ ip_vs_icmp_xmit(struct sk_buff *skb, struct ip_vs_conn *cp,
  int
  ip_vs_icmp_xmit_v6(struct sk_buff *skb, struct ip_vs_conn *cp,
--		struct ip_vs_protocol *pp, int offset, unsigned int hooknum,
--		struct ip_vs_iphdr *ipvsh)
-+		struct ip_vs_protocol *pp, unsigned int toff,
-+		unsigned int wlen, unsigned int hooknum,
-+		struct ip_vs_iphdr *ciph)
+ 		struct ip_vs_protocol *pp, unsigned int toff,
+-		unsigned int wlen, unsigned int hooknum,
+-		struct ip_vs_iphdr *ciph)
++		unsigned int hooknum, struct ip_vs_iphdr *ciph)
  {
++	bool has_ports = false;
  	struct rt6_info	*rt;	/* Route to the other host */
++	unsigned int wlen;
  	int rc;
-@@ -1600,7 +1602,7 @@ ip_vs_icmp_xmit_v6(struct sk_buff *skb, struct ip_vs_conn *cp,
- 	   translate address/port back */
- 	if (IP_VS_FWD_METHOD(cp) != IP_VS_CONN_F_MASQ) {
- 		if (cp->packet_xmit)
--			rc = cp->packet_xmit(skb, cp, pp, ipvsh);
-+			rc = cp->packet_xmit(skb, cp, pp, ciph);
- 		else
- 			rc = NF_ACCEPT;
- 		/* do not touch skb anymore */
-@@ -1617,7 +1619,7 @@ ip_vs_icmp_xmit_v6(struct sk_buff *skb, struct ip_vs_conn *cp,
- 		  IP_VS_RT_MODE_LOCAL | IP_VS_RT_MODE_NON_LOCAL |
- 		  IP_VS_RT_MODE_RDR : IP_VS_RT_MODE_NON_LOCAL;
- 	local = __ip_vs_get_out_rt_v6(cp->ipvs, cp->af, skb, cp->dest,
--				      &cp->daddr.in6, NULL, ipvsh, 0, rt_mode);
-+				      &cp->daddr.in6, NULL, ciph, 0, rt_mode);
- 	if (local < 0)
+ 	int local;
+ 	int rt_mode;
+@@ -1650,6 +1659,13 @@ ip_vs_icmp_xmit_v6(struct sk_buff *skb, struct ip_vs_conn *cp,
  		goto tx_error;
- 	rt = dst_rt6_info(skb_dst(skb));
-@@ -1649,13 +1651,13 @@ ip_vs_icmp_xmit_v6(struct sk_buff *skb, struct ip_vs_conn *cp,
  	}
  
++	wlen = ciph->len;
++	if (ciph->protocol == IPPROTO_TCP || ciph->protocol == IPPROTO_UDP ||
++	    ciph->protocol == IPPROTO_SCTP) {
++		wlen += 2 * sizeof(__u16); /* Also mangle ports */
++		has_ports = true;
++	}
++
  	/* copy-on-write the packet before mangling it */
--	if (skb_ensure_writable(skb, offset))
-+	if (skb_ensure_writable(skb, wlen))
+ 	if (skb_ensure_writable(skb, wlen))
  		goto tx_error;
- 
+@@ -1657,7 +1673,7 @@ ip_vs_icmp_xmit_v6(struct sk_buff *skb, struct ip_vs_conn *cp,
  	if (skb_cow(skb, rt->dst.dev->hard_header_len))
  		goto tx_error;
  
--	ip_vs_nat_icmp_v6(skb, pp, cp, 0);
-+	ip_vs_nat_icmp_v6(skb, pp, cp, 0, toff, ciph);
+-	ip_vs_nat_icmp_v6(skb, pp, cp, 0, toff, ciph);
++	ip_vs_nat_icmp_v6(skb, pp, cp, 0, toff, has_ports, ciph);
  
  	/* Another hack: avoid icmp_send in ip_fragment */
  	skb->ignore_df = 1;
