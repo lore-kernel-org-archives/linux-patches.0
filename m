@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 706B24756B3;
-	Fri,  7 Aug 2026 15:04:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 475324756C9;
+	Fri,  7 Aug 2026 15:04:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115074; cv=none; b=F+Eyq5zqf8raVBCiGtiRKEGqcnEMfc7JNt7yX0r6ysL3aHARwEQ4zttU9RGNqu0HIk22fpFmEF9NbPeqRprpNM2PIPtcrrI+rTQUt5fzvIc/q/HPfliobTU/FV3odB5XUjZU0HWvF539tzEwfdu9Ir8Mk6sIwuFC0RfwYpOjoVQ=
+	t=1786115074; cv=none; b=JngGEUoGd4Cbxt5MHuGsfMjBKXyonoDTGvPfsmbDJlLgTfgfu+PWaZTUd3teB+Qw7lDPfKHZPv79yVU1gd7f5/zSyBs5mwbBFy336wxhCj7IP5f2IAuw0PQtN1pdPngR/VMNhMJceos9YqlMz5rwIv3WQvb/W4oEEGW8zH2rqgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1786115074; c=relaxed/simple;
-	bh=eA60QuSFxeH0tR24jKaveiPRDcOAuYZB5z659SfTXbk=;
+	bh=9nPAAHIWB+7/Gg39Z1eNeJGAEa0q6oGWzrM3It/H22Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sk+uffHXOCa3F6Gty3KexB46i8XCSZ6efX0qSiQGamAZmT8wo1wvYAfF+o5lcswY1L5UbJEY4J0k5/MiSj/fr/IpfZdmm7A0ltyY24bSiTPGjSa50mSGbs6nbj2Rz+BH2v2tW7/lDDusninSUvscqP/LNKblx+tXMV3zp2722kw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y0+biRmI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=I5LYAMnDBXb1j0iIct3w2yogpm4vNJw18dULv73RsR6b0ljVDIqO5RZllcopHJv8SYePklun+PWM0DxoZm3ZnVL6nkztRBnbAzqEj69xaMjyScdnO++zwopXTmx4dpQ7GmtdbNbdmGMsLVoYP2Pdf2E1BxJNPOP6q23Riqazi8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0j51AKjV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y0+biRmI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 296D31F000E9;
-	Fri,  7 Aug 2026 15:04:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0j51AKjV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D1B41F00A3A;
+	Fri,  7 Aug 2026 15:04:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115067;
-	bh=MlniHY0aVTxZ14H4nRu7654GXPet/nQa64eVw2bWsCM=;
+	s=korg; t=1786115064;
+	bh=RGXWZbsKAfwSPDrXbgmotfHTdv41696Ni5qa0L9wB8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y0+biRmIjbrH8Wbt622nJ6luwKbIK9YJKsbiMuWvKleCuxx9r1mYhmjs6VvItTaXc
-	 miVEwm0P3+NtqSY7Y//UyumFWbeNCum/I0X8A1coXLZ/LrBUEjzLCd3zd6RUlkIuR8
-	 PxykbVOXTQ0BlKhBWj/me0R60IltXVxLxoLHIcyU=
+	b=0j51AKjVqNI0A8QSvixYvNnKj22NO4Ht1WK9NvyXLhEhDcnCUiearIqrXU/88LISs
+	 kyLNxwpeNzDJAteInscCyV2t2w+ShKX/v6+KKFHuvj5zzLnE0zLtDTyV7RT/IiW7uG
+	 3phEPoYItmY33u0seWftpGEecs9fB+9FuVWdIuN0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yun Lu <luyun@kylinos.cn>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Justin Lai <justinlai0215@realtek.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Chenguang Zhao <zhaochenguang@kylinos.cn>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 092/396] rtase: fix double free of multi-frag skb on DMA map failure
-Date: Fri,  7 Aug 2026 16:34:12 +0200
-Message-ID: <20260807143426.264916292@linuxfoundation.org>
+Subject: [PATCH 6.18 101/396] net: ethernet: mtk_eth_soc: pass eth to mtk_handle_irq_rx in poll_controller
+Date: Fri,  7 Aug 2026 16:34:21 +0200
+Message-ID: <20260807143426.471556797@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -53,45 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yun Lu <luyun@kylinos.cn>
+From: Chenguang Zhao <zhaochenguang@kylinos.cn>
 
-[ Upstream commit 6fb7b769d6ed6d1d2e02af4a80e57a2477f35086 ]
+[ Upstream commit e095f249e2209674f6366f6db0383a2b96e19239 ]
 
-In rtase_start_xmit(), when the head buffer DMA mapping fails after
-rtase_xmit_frags() has mapped all fragments, the error path clears
-the fragment descriptors with rtase_tx_clear_range(), which frees
-the skb through the last-frag slot and accounts tx_dropped. Control
-then falls through to the common error label, which frees the same
-skb a second time and counts it again.
+mtk_handle_irq_rx expects a struct mtk_eth * (matching the request_irq
+cookie), but mtk_poll_controller incorrectly passed the net_device *.
+Calling ndo_poll_controller with CONFIG_NET_POLL_CONTROLLER enabled
+would then crash.
 
-Return right after clearing the fragments when the skb owns frags;
-the no-frag case still drops through and frees the head skb once.
-
-Fixes: d6e882b89fdf ("rtase: Implement .ndo_start_xmit function")
-Signed-off-by: Yun Lu <luyun@kylinos.cn>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Reviewed-by: Justin Lai <justinlai0215@realtek.com>
-Link: https://patch.msgid.link/20260721023836.6691-1-luyun_611@163.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 8186f6e382d8 ("net-next: mediatek: fix compile error inside mtk_poll_controller()")
+Signed-off-by: Chenguang Zhao <zhaochenguang@kylinos.cn>
+Link: https://patch.msgid.link/20260723055735.885112-1-chenguang.zhao@linux.dev
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/realtek/rtase/rtase_main.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/mediatek/mtk_eth_soc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/realtek/rtase/rtase_main.c b/drivers/net/ethernet/realtek/rtase/rtase_main.c
-index a57a525327a3b..bc9b14614f7a7 100644
---- a/drivers/net/ethernet/realtek/rtase/rtase_main.c
-+++ b/drivers/net/ethernet/realtek/rtase/rtase_main.c
-@@ -1620,6 +1620,9 @@ static netdev_tx_t rtase_start_xmit(struct sk_buff *skb,
- err_dma_1:
- 	ring->skbuff[entry] = NULL;
- 	rtase_tx_clear_range(ring, ring->cur_idx + 1, frags);
-+	if (frags)
-+		/* the frags were cleared above, along with the skb */
-+		return NETDEV_TX_OK;
+diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+index 065f969ee44ef..98cf11a706e14 100644
+--- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
++++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+@@ -3446,7 +3446,7 @@ static void mtk_poll_controller(struct net_device *dev)
  
- err_dma_0:
- 	tp->stats.tx_dropped++;
+ 	mtk_tx_irq_disable(eth, MTK_TX_DONE_INT);
+ 	mtk_rx_irq_disable(eth, eth->soc->rx.irq_done_mask);
+-	mtk_handle_irq_rx(eth->irq[MTK_FE_IRQ_RX], dev);
++	mtk_handle_irq_rx(eth->irq[MTK_FE_IRQ_RX], eth);
+ 	mtk_tx_irq_enable(eth, MTK_TX_DONE_INT);
+ 	mtk_rx_irq_enable(eth, eth->soc->rx.irq_done_mask);
+ }
 -- 
 2.53.0
 
