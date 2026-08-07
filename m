@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 262D63AD506;
-	Fri,  7 Aug 2026 14:48:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57F903A1E7E;
+	Fri,  7 Aug 2026 14:48:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114136; cv=none; b=VOR6azXlmbQF0exAPaIA36bXFLZFXGLjj300z24loJzF+EBtDFhqaPbK1XZiXihpnT5swPaznUCdoFXTQMS54vVfpwUIechWDYrwI8qf8N34X3BPAuJIXiKcXxqH3Mz6PtVy6WQNCwTIXuzDHdUz9usgWFqsiZydTD+Yob0Zi1k=
+	t=1786114137; cv=none; b=dcb3Od0JYFX1MX1YnZqPGbNj+zEYWFPQP1d3bBfZ/9TQ+CDUzSgOlsQCgfxVfPjbGyHNaZGMmt/gYP1HaFNPpxZFYi/ipJhKuDP6eUIo4lav3E+LRCSeSn+3dbHb8SQWB2+sjjvUQdIyiOSEVAlIHP9IAr3cKieWB63ulWOCXXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114136; c=relaxed/simple;
-	bh=4Qwbank8X+xGwPhAI0SgDrLOeJU5eoWEHExwa9cCZSY=;
+	s=arc-20240116; t=1786114137; c=relaxed/simple;
+	bh=qe6yAaOqhcMvRF6PrYnO7qx174oNH/YppL62P8D6aGw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oPnXYiJHmzfWsdSkZUDO8JZelZ5qYM8vVwgfWxnM5cb47V3SuRv2JJ3caJuU13AyVwBe6mn5gPGNukuMQaixOXIAilTE8B+VBt5i2ynauYM38AcZahDSn30B9pmu3kSKoUROyGHakGdrNuYft4I9F3dWLyyl926M7TfhvYUoFzs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HxulxcOZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=t2QpnuRx+DK2nvhvREmpcgNMsNLJQTuvt5nAJHadrXU5Cmn823FxzkQvWSu7J7GeVqpQnTAmIyotCeBnutnleA0vh77QsnTFHPvi1Bi5n2bV8Vp3/999n6bcCCWZE7zjyRzCYbVVCfQ/me094N2sbXSy75EDNLXv6Snvf0Hf4lQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zUYcvDgC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HxulxcOZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E06FB1F000E9;
-	Fri,  7 Aug 2026 14:48:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zUYcvDgC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B35471F00A3A;
+	Fri,  7 Aug 2026 14:48:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114133;
-	bh=0lHeeRIgl7hxnaRma4DePXq86X3YOpSXr6D2tYFYgRM=;
+	s=korg; t=1786114136;
+	bh=OyK/F4yRHssxhV4GLCG1pZp62EKfZwCJ8NiVbzHm2FI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HxulxcOZYsp7jButxZF44gWP+4WSzxv13/iVst2DfFSnTv9QUiKX/+P63jF0IiRZU
-	 zE8ALAXkdoouSYBQVX0iykKe0SgkfzAgAL35+ggstT8RnBS2Kt9G76TbirPJUiYVgA
-	 bWAZ2vEnDhlud7F/cuQ2XIgjaIIxWORZRKEMRb2s=
+	b=zUYcvDgC4vUimZXUghEXgBq1OvmxoLtBJtbpWXHTKMqut2iDc/TyCjawQxHrNbX2m
+	 IiGesIEdGdk3uJN9x0E3MJDpVC5g/yi/GdhXU/uBQSidvZPukebELm9uWdv7SkjeJy
+	 HvOHxtXbECv+5bAX+sSU4EVFflPhpSL0oz5ltES8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Subject: [PATCH 6.12 155/337] ALSA: 6fire: Fix UAF at error handling during probe
-Date: Fri,  7 Aug 2026 16:35:58 +0200
-Message-ID: <20260807143421.911473589@linuxfoundation.org>
+	Xu Rao <raoxu@uniontech.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.12 156/337] ALSA: lx6464es: fix period byte count for 16-bit streams
+Date: Fri,  7 Aug 2026 16:35:59 +0200
+Message-ID: <20260807143421.931920799@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -50,39 +50,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Xu Rao <raoxu@uniontech.com>
 
-commit a54bf16965f896415c3337bc4fbb40fb11941d99 upstream.
+commit 6437033bffe8bd2af174d139af552d90d40c7ac6 upstream.
 
-Although 6fire driver had a few fixes for dealing with the early error
-handling during the probe phase, it forgot a pending URB before
-freeing the resources, which may lead to a UAF.
+The lx6464es driver advertises both 16-bit and packed 24-bit PCM formats,
+but lx_trigger_start() and lx_interrupt_request_new_buffer() calculate the
+DMA period size as runtime->period_size * runtime->channels * 3.  That is
+only correct for the packed 24-bit formats.
 
-This patch addresses it by doing the almost same cleanup procedure
-like the normal disconnect phase at the error path.
+For 16-bit streams the driver submits buffers that are 50% larger than the
+actual ALSA period and advances the DMA address by the same wrong amount.
+For example, with 2 channels, 256 frames and 4 periods, the third buffer
+already extends beyond the ALSA buffer and the fourth buffer starts outside
+it.
 
-Reported-and-tested-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Closes: https://lore.kernel.org/20260724030900.1984491-1-shuangpeng.kernel@gmail.com
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20260726074821.2288158-1-tiwai@suse.de
+Use snd_pcm_lib_period_bytes() so the byte count matches the runtime
+format, channel count and period size.
+
+Fixes: 02bec4904508 ("ALSA: lx6464es - driver for the digigram lx6464es interface")
+Cc: stable@vger.kernel.org
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
+Link: https://patch.msgid.link/8BB12E8D92A7CDBA+20260723085710.2567463-1-raoxu@uniontech.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/6fire/chip.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ sound/pci/lx6464es/lx6464es.c |    5 +----
+ sound/pci/lx6464es/lx_core.c  |    5 +----
+ 2 files changed, 2 insertions(+), 8 deletions(-)
 
---- a/sound/usb/6fire/chip.c
-+++ b/sound/usb/6fire/chip.c
-@@ -158,6 +158,10 @@ static int usb6fire_chip_probe(struct us
- 	return 0;
+--- a/sound/pci/lx6464es/lx6464es.c
++++ b/sound/pci/lx6464es/lx6464es.c
+@@ -410,11 +410,8 @@ static void lx_trigger_start(struct lx64
  
- destroy_chip:
-+	chip->shutdown = true;
-+	if (card)
-+		snd_card_disconnect(card);
-+	usb6fire_chip_abort(chip);
- 	snd_card_free(card);
- 	return ret;
- }
+ 	int err;
+ 
+-	const u32 channels = substream->runtime->channels;
+-	const u32 bytes_per_frame = channels * 3;
+-	const u32 period_size = substream->runtime->period_size;
+ 	const u32 periods = substream->runtime->periods;
+-	const u32 period_bytes = period_size * bytes_per_frame;
++	const u32 period_bytes = snd_pcm_lib_period_bytes(substream);
+ 
+ 	dma_addr_t buf = substream->dma_buffer.addr;
+ 	int i;
+--- a/sound/pci/lx6464es/lx_core.c
++++ b/sound/pci/lx6464es/lx_core.c
+@@ -1015,10 +1015,7 @@ static int lx_interrupt_request_new_buff
+ 	const unsigned int is_capture = lx_stream->is_capture;
+ 	int err;
+ 
+-	const u32 channels = substream->runtime->channels;
+-	const u32 bytes_per_frame = channels * 3;
+-	const u32 period_size = substream->runtime->period_size;
+-	const u32 period_bytes = period_size * bytes_per_frame;
++	const u32 period_bytes = snd_pcm_lib_period_bytes(substream);
+ 	const u32 pos = lx_stream->frame_pos;
+ 	const u32 next_pos = ((pos+1) == substream->runtime->periods) ?
+ 		0 : pos + 1;
 
 
