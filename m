@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E782E3DEAF6;
-	Fri,  7 Aug 2026 15:02:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAF7342DA3F;
+	Fri,  7 Aug 2026 15:02:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114944; cv=none; b=IaBvjQ5K6MVdUm7a2+PfpTKPlAWylhod1QDmPjZxs5lHi69Dp9sNkNXNQtOg9zXetgvIskTxvjmSznO2KWlJzB4A5YRxMZCrMS96+P8L/F80B3RyWJ94hUPThINqhFsB8R5C6M5tFcZsH9OGyUKdJfdy+8tW3nRNkwuOBmj3r84=
+	t=1786114946; cv=none; b=ix5Te6IrBOXWOIwLDJ3oJCsT5n/WctWygmHiOOMYTbET68lX0rDiL2MjrVQbUYk+grvKTCAcbKb+N9Qfjj5qpz+h1ARuO5HQgunScTNLmZ/Z2Hj8/CTx0oLSkvFv2/MDknfBH8+dHigshcznLsazuSE5X2WsxY9pEIAvC9IGnUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114944; c=relaxed/simple;
-	bh=89HGfamyqsfUK8VhXc6HdDlGCJ2dsOwoKGO2amT87b4=;
+	s=arc-20240116; t=1786114946; c=relaxed/simple;
+	bh=Y1s6pivy4pM/6DTvgHsZGUYoFkzqOzeo8l6hnL1OqeU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sn90HvYR0pSs97LOflii70VBUbudJtkuQLbewXdxTJiqoN8c0epo0E1G3Uvi7CCMqknMQSprmBkORFaWSL2yrXMfZ3H0U9cPxdMDJxNjliqbnPhXBCQUrquN8dL4UF7ijWZJKT+6QVrXqq36N8ij5+VlfOBa5wWRXI7w3C/W1PU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qWU1aFOB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=skPcKdSHdPWe8ATZxi+3xeVTq1y16a4HrXhX8NFerINkrW+l7CSHTtqB6bkaFe6FosdDaoBWLyvDUeYvHOnS2iRwqV1ol9hld02lHDQJmEoeW9R8QxBuRrk8lUXFiF20iEXWghoCTycEUnhZY9G5fEtQspq1WeVU+8Sr8qnCE4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yz2UXFTt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qWU1aFOB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 495071F00A3D;
-	Fri,  7 Aug 2026 15:02:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yz2UXFTt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22C461F000E9;
+	Fri,  7 Aug 2026 15:02:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114942;
-	bh=uE20KUQ2wAPWXHP5B9A8VOXQmdqdDnxMsupHpZ+lZfE=;
+	s=korg; t=1786114945;
+	bh=hybxOFNlX+HkJlkQ0cFL4A0TAj0oo8pE9WA1Lkm8l3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qWU1aFOB7w2AShxI3s+wFeSHfkhjWuUjjZj4d/7/M1bFsw78nCXYesIXQYhfJNymW
-	 /eLnEtvPBjRzMDwrHUZaC1Tcbit+jAnVLMjWfxNGz3I8tzsqOvcMf/Afz5I4vbXl61
-	 nQunkESofF7xJJDck+TbBtj4RluccPU+9YNArpo8=
+	b=yz2UXFTtpddf27mY2uOZPzHBtzIj9wCQnF2edpmtvEDNZchoBKOrfEqC6xXycNa4v
+	 NUCuJmLYoU1Yb63Z0KvPt5ATQn3XVte5nVFYPBOLOmd0o/BeNYqSFmtb1Lk3p4M9FJ
+	 YvfNKVORm+oiL/qpDGqw9/IxfOntBSRBP39nECKw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joshua Hay <joshua.a.hay@intel.com>,
+	Yuho Choi <dbgh9129@gmail.com>,
 	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
 	Samuel Salin <Samuel.salin@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 103/396] idpf: adjust TxQ ring count minimum
-Date: Fri,  7 Aug 2026 16:34:23 +0200
-Message-ID: <20260807143426.514970827@linuxfoundation.org>
+Subject: [PATCH 6.18 104/396] idpf: Fix mailbox IRQ name leak on request failure
+Date: Fri,  7 Aug 2026 16:34:24 +0200
+Message-ID: <20260807143426.536243475@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -53,70 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joshua Hay <joshua.a.hay@intel.com>
+From: Yuho Choi <dbgh9129@gmail.com>
 
-[ Upstream commit bef152db47debcd14cbacefc5767f6f026c4bc89 ]
+[ Upstream commit 9bff30482c10f70d9e56c0633a6616e07140e217 ]
 
-Set the TxQ ring count minimum to 128 descriptors. Any lower than this,
-and the queue will stall and trigger Tx timeouts in flow based
-scheduling mode. This is because next_to_clean might never be updated.
+idpf_mb_intr_req_irq() allocates the mailbox IRQ name before calling
+request_irq(). On success, the name is released later through
+kfree(free_irq()), but request_irq() failure returns without freeing it.
 
-In flow based scheduling mode, next_to_clean is only updated after a
-descriptor completion is processed, i.e. after the RE bit is set in the
-last descriptor of a Tx packet. This will never happen with a ring size
-of 64 and an IDPF_TX_SPLITQ_RE_MIN_GAP of 64. No matter what the value
-of last_re is initialized/set to, the calculated gap will be at most 63
-and never trigger the RE bit.
+Free the allocated name on the request_irq() failure path.
 
-Even a ring size of 96 does not solve this. Because of how infrequent
-next_to_clean is updated and how small the ring is, IDPF_DESC_UNUSED
-will be much smaller on average. This increases the chance the queue
-will be stopped because a multi-descriptor packet, e.g. a large LSO
-packet, does not see enough resources on the ring. In this case, the
-queue will trigger the stop logic. The queue permanently stalls because
-there is no chance for a descriptor completion to update next_to_clean
-since it is dependent on a packet being sent.
-
-Fixes: 5f417d551324 ("idpf: replace flow scheduling buffer ring with buffer pool")
-Signed-off-by: Joshua Hay <joshua.a.hay@intel.com>
+Fixes: 4930fbf419a7 ("idpf: add core init and interrupt request")
+Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
 Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
 Tested-by: Samuel Salin <Samuel.salin@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/idpf/idpf_txrx.c | 5 +----
- drivers/net/ethernet/intel/idpf/idpf_txrx.h | 2 +-
- 2 files changed, 2 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/intel/idpf/idpf_lib.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/idpf/idpf_txrx.c b/drivers/net/ethernet/intel/idpf/idpf_txrx.c
-index c859665b2dc89..e6563ad31f5ca 100644
---- a/drivers/net/ethernet/intel/idpf/idpf_txrx.c
-+++ b/drivers/net/ethernet/intel/idpf/idpf_txrx.c
-@@ -3075,10 +3075,7 @@ static netdev_tx_t idpf_tx_splitq_frame(struct sk_buff *skb,
+diff --git a/drivers/net/ethernet/intel/idpf/idpf_lib.c b/drivers/net/ethernet/intel/idpf/idpf_lib.c
+index 131a8121839bd..590119f4097d0 100644
+--- a/drivers/net/ethernet/intel/idpf/idpf_lib.c
++++ b/drivers/net/ethernet/intel/idpf/idpf_lib.c
+@@ -139,7 +139,7 @@ static int idpf_mb_intr_req_irq(struct idpf_adapter *adapter)
+ 	if (err) {
+ 		dev_err(&adapter->pdev->dev,
+ 			"IRQ request for mailbox failed, error: %d\n", err);
+-
++		kfree(name);
+ 		return err;
+ 	}
  
- 		tx_params.dtype = IDPF_TX_DESC_DTYPE_FLEX_FLOW_SCHE;
- 		tx_params.eop_cmd = IDPF_TXD_FLEX_FLOW_CMD_EOP;
--		/* Set the RE bit to periodically "clean" the descriptor ring.
--		 * MIN_GAP is set to MIN_RING size to ensure it will be set at
--		 * least once each time around the ring.
--		 */
-+		/* Set the RE bit periodically to "clean" the descriptor ring */
- 		if (idpf_tx_splitq_need_re(tx_q)) {
- 			tx_params.eop_cmd |= IDPF_TXD_FLEX_FLOW_CMD_RE;
- 			tx_q->txq_grp->num_completions_pending++;
-diff --git a/drivers/net/ethernet/intel/idpf/idpf_txrx.h b/drivers/net/ethernet/intel/idpf/idpf_txrx.h
-index 423cc9486dce7..aa0b93b5c8599 100644
---- a/drivers/net/ethernet/intel/idpf/idpf_txrx.h
-+++ b/drivers/net/ethernet/intel/idpf/idpf_txrx.h
-@@ -21,7 +21,7 @@
- /* Mailbox Queue */
- #define IDPF_MAX_MBXQ				1
- 
--#define IDPF_MIN_TXQ_DESC			64
-+#define IDPF_MIN_TXQ_DESC			128
- #define IDPF_MIN_RXQ_DESC			64
- #define IDPF_MIN_TXQ_COMPLQ_DESC		256
- #define IDPF_MAX_QIDS				256
 -- 
 2.53.0
 
