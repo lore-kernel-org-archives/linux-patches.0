@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 484BA385D86;
-	Fri,  7 Aug 2026 14:44:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0E9F40EB9D;
+	Fri,  7 Aug 2026 14:44:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786113884; cv=none; b=ViCl3hD45PhIl0vz0kvk9T+q2X0rWK9NbZ61cipQvU85rpVu368gJGXlduolHqTfgR06yOETbLjHUIoxrtnF2aip8sYQc3wXGb/lvN5TlHO3IbUDAZ7fElAn/F8+GrX1+2hRwRVbqsdOr5a4tcF9QRkrdyWevOZAleQagtlj/xc=
+	t=1786113890; cv=none; b=InvoGpENBAVSV9JT/18YhQCWDiMkS5lSM18hZCzd0CHMU5DUJgNZHbbh/njMsOQAxCnnBJ6aIhYsXQB4t3ReLcMatN17H2qjsHqB+y8rzOE46D1ZheiuPI8l802yBdToF9Os97L9Fn20W/SmCoI5qkTbmztgQ/HLd6si6w1RAy8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786113884; c=relaxed/simple;
-	bh=oRpNXkeBghZkTQo9BQhv/z0Thz2t9pRkyTekKwlASYs=;
+	s=arc-20240116; t=1786113890; c=relaxed/simple;
+	bh=ilAgG5SeEIK51He05ZHTcjqNvsR525lXs9FzRFn1qdc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=r4NZ4gZ7X8fxu6hWSMA7KZP40ujhJspeRk/xAetz4BAKQmF2do9ApInTkWjCEaBZ8U1d8Vq7ynqSScBdsmgaS6kPVT67bz8NvziYqgJodUyJUBNv0PmTaOPh0JWiE+4tsIIRUaEha9adi3l0OglTWJ1tcIam8J/meUosCEXZaJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cRNXpUm6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=oYxMoYQILJryW+hvpC73xm10HsuXl/47WDGC0eKqLXucp3wgjU+On7XkzbbhIEMb3CexyFBVXBuLqpDtZbCqITyJ+7phsaE6pV9ILeFMCgnVV6jWgoCXCa68rduQRA3hmRcR5u/8lR/06Xj+k6pA9w04tahDp8JeY7UygKyOCvQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TcTyKIdz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cRNXpUm6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BB371F00A3D;
-	Fri,  7 Aug 2026 14:44:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TcTyKIdz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 615E41F00A3E;
+	Fri,  7 Aug 2026 14:44:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786113877;
-	bh=IHAnmiib5WgPkRYFQBtfpzFkApHF15SoY1on+fqqyOw=;
+	s=korg; t=1786113879;
+	bh=3v/1NasXlAQs4e1vg0ctJV5/xD0nM/tDDIKO7+uQQjg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cRNXpUm6AV+CcQGs2Uol78HSOc4HkwYaUuS0n7K50rX0/BC5yPErRwHgNo28LUZW0
-	 xoFlZBA1ABGeygp8nCfz2sNvAqvxOzCaAU9YiEcpX7Q7s8Fo4I1xzEAmKcRIte5iPR
-	 iUvtWufN+vhPKFMjUgc4UCnWeYBZMdcPjC8zz+2I=
+	b=TcTyKIdzr1f8ljKYKluCYwll1tm/lAbOkgyNcMjfAAW6GAym+cE/uhkr930KDENHO
+	 GUo8RHQIKqYZh2Bh7d0j80d3XN+o7j/Eh33lLyeIkpvEmm4j2R3WgtECKW9M3vI0aN
+	 EzILVy8FEw0PAjQV23qqR8ndVK8T+DcE+jvL1/qU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Ray <ian.ray@gehealthcare.com>,
-	Jens Almer <bagawk@gmail.com>,
 	Jonas Rebmann <jre@pengutronix.de>,
 	Guenter Roeck <linux@roeck-us.net>,
-	Sasha Levin <sashal@kernel.org>,
-	=?UTF-8?q?Bence=20Cs=C3=B3k=C3=A1s?= <bence98@sch.bme.hu>
-Subject: [PATCH 6.12 065/337] hwmon: (ina2xx) Add support for INA234
-Date: Fri,  7 Aug 2026 16:34:28 +0200
-Message-ID: <20260807143419.921997115@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 066/337] hwmon: (ina2xx) Shift INA234 shunt and current registers
+Date: Fri,  7 Aug 2026 16:34:29 +0200
+Message-ID: <20260807143419.942850604@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -55,128 +52,161 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Ray <ian.ray@gehealthcare.com>
+From: Jonas Rebmann <jre@pengutronix.de>
 
-[ Upstream commit 88a928eebccdc5445d874ddcbf1683b76c9f1431 ]
+[ Upstream commit eeca1114d1e2cc0eacaebb80f3f2afbaebfc60be ]
 
-INA234 is register compatible to INA226 (excepting manufacturer and die
-or device id registers) but has different scaling.
+The INA219 has the lowest three bits of the bus voltage register
+zero-reserved, the bus_voltage_shift ina2xx_config field was introduced
+to accommodate for that.
 
-Signed-off-by: Ian Ray <ian.ray@gehealthcare.com>
-Reviewed-by: Bence Csókás <bence98@sch.bme.hu> # v2
-Tested-by: Jens Almer <bagawk@gmail.com>
-Tested-by: Jonas Rebmann <jre@pengutronix.de>
-Link: https://lore.kernel.org/r/20260220112024.97446-4-ian.ray@gehealthcare.com
+The INA234 has four bits of the bus voltage, of the shunt voltage, and
+of the current registers zero-reserved but the latter two were
+implemented by choosing a 16x higher shunt_div instead of a separate
+field specifying a bit shift.
+
+This is possible because shunt voltage and current are divided by
+shunt_div, hence a 16x higher shunt_div results in a 16x smaller LSB for
+both the shunt voltage and the current register, perfectly accounting
+for the missing bit shift.
+
+For consistency and correctness, account for the reserved bits via
+shunt_voltage_shift and current_shift configuration fields as already
+done for voltage registers and use the conversion constants given in the
+INA234 datasheet.
+
+Signed-off-by: Jonas Rebmann <jre@pengutronix.de>
+Link: https://lore.kernel.org/r/20260303-ina234-shift-v1-2-318c33ac4480@pengutronix.de
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Stable-dep-of: e6c80061ca23 ("hwmon: (ina2xx) Fix various overflow issues")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/hwmon/ina2xx.rst | 13 ++++++++++++-
- drivers/hwmon/Kconfig          |  2 +-
- drivers/hwmon/ina2xx.c         | 18 ++++++++++++++++++
- 3 files changed, 31 insertions(+), 2 deletions(-)
+ drivers/hwmon/ina2xx.c | 22 +++++++++++++++++++---
+ 1 file changed, 19 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/hwmon/ina2xx.rst b/Documentation/hwmon/ina2xx.rst
-index a4ddf4bd2b081..d64e7af46a124 100644
---- a/Documentation/hwmon/ina2xx.rst
-+++ b/Documentation/hwmon/ina2xx.rst
-@@ -74,6 +74,16 @@ Supported chips:
- 	       https://us1.silergy.com/
- 
- 
-+  * Texas Instruments INA234
-+
-+    Prefix: 'ina234'
-+
-+    Addresses: I2C 0x40 - 0x43
-+
-+    Datasheet: Publicly available at the Texas Instruments website
-+
-+	       https://www.ti.com/
-+
- Author: Lothar Felten <lothar.felten@gmail.com>
- 
- Description
-@@ -89,7 +99,7 @@ interface. The INA220 monitors both shunt drop and supply voltage.
- The INA226 is a current shunt and power monitor with an I2C interface.
- The INA226 monitors both a shunt voltage drop and bus supply voltage.
- 
--INA230 and INA231 are high or low side current shunt and power monitors
-+INA230, INA231, and INA234 are high or low side current shunt and power monitors
- with an I2C interface. The chips monitor both a shunt voltage drop and
- bus supply voltage.
- 
-@@ -132,6 +142,7 @@ Additional entries are available for the following chips:
-   * ina226
-   * ina230
-   * ina231
-+  * ina234
-   * ina260
-   * sy24655
- 
-diff --git a/drivers/hwmon/Kconfig b/drivers/hwmon/Kconfig
-index 195c7b505a853..848b9cfcb1d87 100644
---- a/drivers/hwmon/Kconfig
-+++ b/drivers/hwmon/Kconfig
-@@ -2170,7 +2170,7 @@ config SENSORS_INA2XX
- 	select REGMAP_I2C
- 	help
- 	  If you say yes here you get support for INA219, INA220, INA226,
--	  INA230, INA231, INA260, and SY24655 power monitor chips.
-+	  INA230, INA231, INA234, INA260, and SY24655 power monitor chips.
- 
- 	  The INA2xx driver is configured for the default configuration of
- 	  the part as described in the datasheet.
 diff --git a/drivers/hwmon/ina2xx.c b/drivers/hwmon/ina2xx.c
-index 97ec0e0218307..be6e214fae21f 100644
+index be6e214fae21f..d671d546b2054 100644
 --- a/drivers/hwmon/ina2xx.c
 +++ b/drivers/hwmon/ina2xx.c
-@@ -138,6 +138,7 @@ static const struct regmap_config ina2xx_regmap_config = {
- enum ina2xx_ids {
- 	ina219,
- 	ina226,
-+	ina234,
- 	ina260,
- 	sy24655
+@@ -151,9 +151,11 @@ struct ina2xx_config {
+ 	bool has_update_interval;
+ 	int calibration_value;
+ 	int shunt_div;
++	int shunt_voltage_shift;
+ 	int bus_voltage_shift;
+ 	int bus_voltage_lsb;	/* uV */
+ 	int power_lsb_factor;
++	int current_shift;
  };
-@@ -192,6 +193,18 @@ static const struct ina2xx_config ina2xx_config[] = {
+ 
+ struct ina2xx_data {
+@@ -173,59 +175,69 @@ static const struct ina2xx_config ina2xx_config[] = {
+ 		.config_default = INA219_CONFIG_DEFAULT,
+ 		.calibration_value = 4096,
+ 		.shunt_div = 100,
++		.shunt_voltage_shift = 0,
+ 		.bus_voltage_shift = 3,
+ 		.bus_voltage_lsb = 4000,
+ 		.power_lsb_factor = 20,
+ 		.has_alerts = false,
+ 		.has_ishunt = false,
  		.has_power_average = false,
++		.current_shift = 0,
+ 		.has_update_interval = false,
+ 	},
+ 	[ina226] = {
+ 		.config_default = INA226_CONFIG_DEFAULT,
+ 		.calibration_value = 2048,
+ 		.shunt_div = 400,
++		.shunt_voltage_shift = 0,
+ 		.bus_voltage_shift = 0,
+ 		.bus_voltage_lsb = 1250,
+ 		.power_lsb_factor = 25,
+ 		.has_alerts = true,
+ 		.has_ishunt = false,
+ 		.has_power_average = false,
++		.current_shift = 0,
  		.has_update_interval = true,
  	},
-+	[ina234] = {
-+		.config_default = INA226_CONFIG_DEFAULT,
-+		.calibration_value = 2048,
-+		.shunt_div = 400, /* 2.5 µV/LSB raw ADC reading from INA2XX_SHUNT_VOLTAGE */
-+		.bus_voltage_shift = 4,
-+		.bus_voltage_lsb = 25600,
-+		.power_lsb_factor = 32,
-+		.has_alerts = true,
-+		.has_ishunt = false,
-+		.has_power_average = false,
-+		.has_update_interval = true,
-+	},
+ 	[ina234] = {
+ 		.config_default = INA226_CONFIG_DEFAULT,
+ 		.calibration_value = 2048,
+-		.shunt_div = 400, /* 2.5 µV/LSB raw ADC reading from INA2XX_SHUNT_VOLTAGE */
++		.shunt_div = 25, /* 2.5 µV/LSB raw ADC reading from INA2XX_SHUNT_VOLTAGE */
++		.shunt_voltage_shift = 4,
+ 		.bus_voltage_shift = 4,
+ 		.bus_voltage_lsb = 25600,
+ 		.power_lsb_factor = 32,
+ 		.has_alerts = true,
+ 		.has_ishunt = false,
+ 		.has_power_average = false,
++		.current_shift = 4,
+ 		.has_update_interval = true,
+ 	},
  	[ina260] = {
  		.config_default = INA260_CONFIG_DEFAULT,
  		.shunt_div = 400,
-@@ -996,6 +1009,7 @@ static const struct i2c_device_id ina2xx_id[] = {
- 	{ "ina226", ina226 },
- 	{ "ina230", ina226 },
- 	{ "ina231", ina226 },
-+	{ "ina234", ina234 },
- 	{ "ina260", ina260 },
- 	{ "sy24655", sy24655 },
- 	{ }
-@@ -1027,6 +1041,10 @@ static const struct of_device_id __maybe_unused ina2xx_of_match[] = {
- 		.compatible = "ti,ina231",
- 		.data = (void *)ina226
++		.shunt_voltage_shift = 0,
+ 		.bus_voltage_shift = 0,
+ 		.bus_voltage_lsb = 1250,
+ 		.power_lsb_factor = 8,
+ 		.has_alerts = true,
+ 		.has_ishunt = true,
+ 		.has_power_average = false,
++		.current_shift = 0,
+ 		.has_update_interval = true,
  	},
-+	{
-+		.compatible = "ti,ina234",
-+		.data = (void *)ina234
-+	},
- 	{
- 		.compatible = "ti,ina260",
- 		.data = (void *)ina260
+ 	[sy24655] = {
+ 		.config_default = SY24655_CONFIG_DEFAULT,
+ 		.calibration_value = 4096,
+ 		.shunt_div = 400,
++		.shunt_voltage_shift = 0,
+ 		.bus_voltage_shift = 0,
+ 		.bus_voltage_lsb = 1250,
+ 		.power_lsb_factor = 25,
+ 		.has_alerts = true,
+ 		.has_ishunt = false,
+ 		.has_power_average = true,
++		.current_shift = 0,
+ 		.has_update_interval = false,
+ 	},
+ };
+@@ -279,7 +291,8 @@ static int ina2xx_get_value(struct ina2xx_data *data, u8 reg,
+ 	switch (reg) {
+ 	case INA2XX_SHUNT_VOLTAGE:
+ 		/* signed register */
+-		val = DIV_ROUND_CLOSEST((s16)regval, data->config->shunt_div);
++		val = (s16)regval >> data->config->shunt_voltage_shift;
++		val = DIV_ROUND_CLOSEST(val, data->config->shunt_div);
+ 		break;
+ 	case INA2XX_BUS_VOLTAGE:
+ 		val = (regval >> data->config->bus_voltage_shift) *
+@@ -291,7 +304,8 @@ static int ina2xx_get_value(struct ina2xx_data *data, u8 reg,
+ 		break;
+ 	case INA2XX_CURRENT:
+ 		/* signed register, result in mA */
+-		val = (s16)regval * data->current_lsb_uA;
++		val = ((s16)regval >> data->config->current_shift) *
++		  data->current_lsb_uA;
+ 		val = DIV_ROUND_CLOSEST(val, 1000);
+ 		break;
+ 	case INA2XX_CALIBRATION:
+@@ -385,6 +399,7 @@ static u16 ina226_alert_to_reg(struct ina2xx_data *data, int reg, long val)
+ 	case INA2XX_SHUNT_VOLTAGE:
+ 		val = clamp_val(val, 0, SHRT_MAX * data->config->shunt_div);
+ 		val *= data->config->shunt_div;
++		val <<= data->config->shunt_voltage_shift;
+ 		return clamp_val(val, 0, SHRT_MAX);
+ 	case INA2XX_BUS_VOLTAGE:
+ 		val = clamp_val(val, 0, 200000);
+@@ -399,6 +414,7 @@ static u16 ina226_alert_to_reg(struct ina2xx_data *data, int reg, long val)
+ 		val = clamp_val(val, INT_MIN / 1000, INT_MAX / 1000);
+ 		/* signed register, result in mA */
+ 		val = DIV_ROUND_CLOSEST(val * 1000, data->current_lsb_uA);
++		val <<= data->config->current_shift;
+ 		return clamp_val(val, SHRT_MIN, SHRT_MAX);
+ 	default:
+ 		/* programmer goofed */
 -- 
 2.53.0
 
