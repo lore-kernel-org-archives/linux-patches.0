@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E6542E762C;
-	Fri,  7 Aug 2026 14:54:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23F8A37757C;
+	Fri,  7 Aug 2026 14:54:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114497; cv=none; b=PGfsf/C8k9aOP77xk8najV8tzEm9atx1B7aefBe92PlbLs47LuGOI/zEh/5rfuUtm2xC/vDWRQdlZSPtss9bpuSpsfq2Ow5xs2wbeiyrA8+wctI4apANsKUY0du5ogq3xEL9l+BiHhCUWMVBSqpoQcxvNARg1aEJFTnZ9mt0Omg=
+	t=1786114501; cv=none; b=L6c0BnHjlIWSlG1O5VE+rip61BOYyKoz0jkRxmH77e/rNsYTO0jMLzcKir5Kjz84szdz2ineBVgPHFn7Aym0in3QRq7+8ACTFFtzdZu7/cJyNc+SniOIrqDfET1dfNmUiT52QGtrd5su3zWoa35/ClzNVwkJTTAdfBKgf6/+KKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114497; c=relaxed/simple;
-	bh=3lrlTKyxkkx2FTCEJuS2pxuwvFSms3bT5Gz1FTjjjF0=;
+	s=arc-20240116; t=1786114501; c=relaxed/simple;
+	bh=CRPaA3N9uVR1cqkE2kAtb88vKTeYU19o9HyXxH+Mx0Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kiuYlnUqjgCrQdjC3v8cRiY/r1iNxzOyM7sjarAK2rSHuUs17J/nBf44f8QR2enIvExu0mSeKWXzrZzOpppIH9FouArPuFkuzsR6PqTYWNJfAeU6PNDoaHiHJYzVC+4B/dmdTLvi+WDUEUkeY9lSq9QjLvx7EE6rN5Gu86QZUeQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H9Vmy40/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OM+4j+SdubwxDUdbLWv71zrZbPYv9XLjVXUdwDEI3nmtEBD6CKNcfQnwzFO0ZS5cgHZUQ4Lg1h41/iiLBacUBpqywZ8XPc3zJBqL5DyenuhvA/e6DTdZPpQ6e1PDKHSmIIWDJN4v0+SzoTwmiyogxtDn2pjfuBuSjrizvOf8FxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YWd/NAl9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H9Vmy40/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A19B1F000E9;
-	Fri,  7 Aug 2026 14:54:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YWd/NAl9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 787B31F000E9;
+	Fri,  7 Aug 2026 14:54:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114496;
-	bh=AFsdDie6/JGbB3k7VHVTW3DnzjOV5og96DzTLYceGTQ=;
+	s=korg; t=1786114499;
+	bh=O8MvMtR1dzEi5EE1yiqX+j6oFIszoeQdNrVzhhvjieU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H9Vmy40/awwgS5VzmMExqLq9hvrF36//J95CQyxjyHSSYchDRh2FfV/i/9+o/W6uw
-	 /iNzfQIy99k3i8mQTEjX+0cJ4QrNld4wrDqqASYFc19sO7HL45n+T0/ni+kIr2ZPpO
-	 zZVwN4URlaerOmoJSLJ/Zc2kx5AJ/zCMzkQWOBLE=
+	b=YWd/NAl9QzDVCL/5myaKk/pe+pRPHIeCVXxIZkDKPiM7KEGdLHsU/fSJTGeN0xqXZ
+	 1n0ZKKrMXLeg4BBDCSjDUnj0bhQnNvwv4roIeqZE26CfcBmSrBqKju4T/YBySTfow0
+	 0Tl8EiiITlY4pD7fdtwMQC/UNI/yJ6JfZJ+fiTfA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ashutosh Dixit <ashutosh.dixit@intel.com>,
-	Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>,
+	Kiryl Shutsemau <kas@kernel.org>,
+	Sashiko AI review <sashiko-bot@kernel.org>,
+	David Hildenbrand <david@kernel.org>,
+	Muchun Song <muchun.song@linux.dev>,
+	Oscar Salvador <osalvador@suse.de>,
+	Peter Xu <peterx@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 284/337] drm/xe/rtp: Ensure locking/ref counting for OA whitelists
-Date: Fri,  7 Aug 2026 16:38:07 +0200
-Message-ID: <20260807143424.689841059@linuxfoundation.org>
+Subject: [PATCH 6.12 285/337] mm/hugetlb: fix swap entry corruption when clearing uffd-wp at fork()
+Date: Fri,  7 Aug 2026 16:38:08 +0200
+Message-ID: <20260807143424.712117463@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -51,75 +56,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ashutosh Dixit <ashutosh.dixit@intel.com>
+From: Kiryl Shutsemau (Meta) <kas@kernel.org>
 
-[ Upstream commit ef78e2a22f72c892fd6663f0760abd208d49a3e2 ]
+[ Upstream commit 83abe2fd5b3aeb3123b5408a5a91709c5538fb23 ]
 
-Since multiple OA streams might be open in parallel on a gt, ensure that
-proper locking is in place. Also ensure that OA registers are whitelisted
-when the first OA stream is open and de-whitelisted after the last OA
-stream is closed.
+copy_hugetlb_page_range() clears the uffd-wp bit of migration and hwpoison
+entries with huge_pte_clear_uffd_wp(), which operates on the present-PTE
+bit position.  Swap entries keep the uffd-wp state elsewhere -- the
+migration branch reads and sets it with pte_swp_uffd_wp() and
+pte_swp_mkuffd_wp() -- and the present-PTE position falls into the swap
+payload.  On x86-64 it lands in the inverted swap offset, where a
+naturally-aligned hugetlb PFN always has the affected bit set, so the
+clear advances the encoded PFN by two pages.
 
-Fixes: 828a8eaf37c3 ("drm/xe/oa: Add MMIO trigger support")
-Cc: stable@vger.kernel.org # v6.12+
-Signed-off-by: Ashutosh Dixit <ashutosh.dixit@intel.com>
-Reviewed-by: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
-Link: https://patch.msgid.link/20260615224227.34880-10-ashutosh.dixit@intel.com
+No userfaultfd needs to be involved: the clear is guarded only by the
+child VMA not being uffd-wp registered, so a plain fork() with an
+in-flight hugetlb migration entry (or a poisoned hugetlb page) corrupts
+the entry copied into the child.  Instrumenting the clear and forking
+after MADV_HWPOISON on a 2MB anon hugetlb page shows:
+
+  offset before=120e00
+  offset after =120e02
+
+The fallout is mostly latent: rmap walks match migration entries by folio
+range and remove_migration_pte() rebuilds the PTE from the folio, so a
+within-folio PFN skew heals once migration completes.  But any path that
+re-encodes the corrupted offset -- e.g.  hugetlb_change_protection()
+rewriting a writable migration entry via
+make_readable_migration_entry(swp_offset(entry)) -- propagates it.
+
+Migration entries legitimately carry uffd-wp, so clear it with
+pte_swp_clear_uffd_wp(), matching copy_nonpresent_pte() and
+move_huge_pte().
+
+A hwpoison entry, on the other hand, never carries the uffd-wp bit: it is
+installed fresh by make_hwpoison_entry() (try_to_unmap_one() does not
+preserve uffd-wp on the hwpoison path) and hugetlb_change_protection()
+leaves hwpoison entries untouched.  There was nothing to clear there, only
+the corruption, so drop the clear entirely.
+
+Link: https://lore.kernel.org/20260708090110.136162-1-kirill@shutemov.name
+Fixes: bc70fbf269fd ("mm/hugetlb: handle uffd-wp during fork()")
+Signed-off-by: Kiryl Shutsemau <kas@kernel.org>
+Reported-by: Sashiko AI review <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/all/20260703140011.99E601F000E9@smtp.kernel.org/
+Suggested-by: David Hildenbrand <david@kernel.org>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Assisted-by: Claude:claude-fable-5
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+(cherry picked from commit 83abe2fd5b3aeb3123b5408a5a91709c5538fb23)
+[ kas: adapt to the pre-softleaf idiom ]
+Signed-off-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_oa_types.h      |  3 +++
- drivers/gpu/drm/xe/xe_reg_whitelist.c | 10 ++++++++++
- 2 files changed, 13 insertions(+)
+ mm/hugetlb.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_oa_types.h b/drivers/gpu/drm/xe/xe_oa_types.h
-index fea9d981e414f..0faec73954b70 100644
---- a/drivers/gpu/drm/xe/xe_oa_types.h
-+++ b/drivers/gpu/drm/xe/xe_oa_types.h
-@@ -120,6 +120,9 @@ struct xe_oa_gt {
- 
- 	/** @oa_unit: array of oa_units */
- 	struct xe_oa_unit *oa_unit;
-+
-+	/** @whitelist_count: number of open streams for which oa registers are whitelisted */
-+	u32 whitelist_count;
- };
- 
- /**
-diff --git a/drivers/gpu/drm/xe/xe_reg_whitelist.c b/drivers/gpu/drm/xe/xe_reg_whitelist.c
-index 8a1c3f3c82973..4b70460d6e002 100644
---- a/drivers/gpu/drm/xe/xe_reg_whitelist.c
-+++ b/drivers/gpu/drm/xe/xe_reg_whitelist.c
-@@ -9,6 +9,7 @@
- #include "regs/xe_gt_regs.h"
- #include "regs/xe_oa_regs.h"
- #include "regs/xe_regs.h"
-+#include "xe_assert.h"
- #include "xe_gt.h"
- #include "xe_gt_printk.h"
- #include "xe_platform_types.h"
-@@ -188,6 +189,10 @@ void xe_reg_whitelist_oa_regs(struct xe_gt *gt)
- 	struct xe_hw_engine *hwe;
- 	enum xe_hw_engine_id id;
- 
-+	lockdep_assert_held(&gt->oa.gt_lock);
-+	if (gt->oa.whitelist_count++)
-+		return;
-+
- 	for_each_hw_engine(hwe, gt, id)
- 		__whitelist_oa_regs(hwe, true);
- }
-@@ -203,6 +208,11 @@ void xe_reg_dewhitelist_oa_regs(struct xe_gt *gt)
- 	struct xe_hw_engine *hwe;
- 	enum xe_hw_engine_id id;
- 
-+	lockdep_assert_held(&gt->oa.gt_lock);
-+	xe_assert(gt_to_xe(gt), gt->oa.whitelist_count);
-+	if (--gt->oa.whitelist_count)
-+		return;
-+
- 	for_each_hw_engine(hwe, gt, id)
- 		__whitelist_oa_regs(hwe, false);
- }
+diff --git a/mm/hugetlb.c b/mm/hugetlb.c
+index 2fb6e45a1ea0d..e910ed0c43d0b 100644
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -5281,8 +5281,12 @@ int copy_hugetlb_page_range(struct mm_struct *dst, struct mm_struct *src,
+ 			 */
+ 			;
+ 		} else if (unlikely(is_hugetlb_entry_hwpoisoned(entry))) {
+-			if (!userfaultfd_wp(dst_vma))
+-				entry = huge_pte_clear_uffd_wp(entry);
++			/*
++			 * A hwpoison entry never carries the uffd-wp bit: it is
++			 * installed fresh by make_hwpoison_entry() and
++			 * hugetlb_change_protection() leaves it untouched, so
++			 * there is nothing to clear for the child.
++			 */
+ 			set_huge_pte_at(dst, addr, dst_pte, entry, sz);
+ 		} else if (unlikely(is_hugetlb_entry_migration(entry))) {
+ 			swp_entry_t swp_entry = pte_to_swp_entry(entry);
+@@ -5301,7 +5305,7 @@ int copy_hugetlb_page_range(struct mm_struct *dst, struct mm_struct *src,
+ 				set_huge_pte_at(src, addr, src_pte, entry, sz);
+ 			}
+ 			if (!userfaultfd_wp(dst_vma))
+-				entry = huge_pte_clear_uffd_wp(entry);
++				entry = pte_swp_clear_uffd_wp(entry);
+ 			set_huge_pte_at(dst, addr, dst_pte, entry, sz);
+ 		} else if (unlikely(is_pte_marker(entry))) {
+ 			pte_marker marker = copy_pte_marker(
 -- 
 2.53.0
 
