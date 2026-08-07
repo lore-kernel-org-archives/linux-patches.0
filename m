@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2990944684F;
-	Fri,  7 Aug 2026 15:42:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2171473C84;
+	Fri,  7 Aug 2026 15:42:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786117334; cv=none; b=LI4uJYYft80nZaEuchK+mtGcW2v+FS7/fDPox9loKwaUMFzkBMlNM5gesf/yawvU1apThN5xKV4r+zp/GV0XQXDd4RDlqEOzuPAMNylCeETbDXkYdluzpglyt896TBV9pjtyTDtvX/tC7c+J7BL9YLmwDDrenBx/fbDeeKHruvE=
+	t=1786117337; cv=none; b=kP2r/o1Bf66WkqPRycaWVCev1Y0FJG5QQI5mIc9BJkHOcA7pTP9VPjn/8YnoOGTaKABdKna9e+PsoPTi6W1n9Kk1cBn1uIGbhoJ6qMmIMqYi/AL+ld2oD2hjFya3/j+HBBAjOaFg+8gOPR3wyrqwr4e+is5SAX7GDK0eR0L6tOk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786117334; c=relaxed/simple;
-	bh=whtfurcB8qSJRfOcJmDlTASdxFKex49M1Vh9FeChJSE=;
+	s=arc-20240116; t=1786117337; c=relaxed/simple;
+	bh=+N/Hu/LHBkjK3YAntiokTU+geeIwaoERK9cgeveLbxE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OYcg/F515F0clIiBjSRtwJ5FkzMx7eR5S7VOU3ix2PY32A18+ySST1yexJwE1bKuOlUnitXlJfx8M5hOL8E3zCP0E/2l0HYW7aj+yuWqzBpqcbmXSrnAFZ9INxfIZdVZbdWf3tu5V7YqZXnHJAqbHJbyTHZ7KxUxqOqukhcwN2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NgIO/yYt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=flBnghUA2kno3KH00DKwjwU1g57St/9zH60b/CeFgm7fWujqiYyS3RvkZdTjwCJgkXwwPlJmSU7Q+wNj8Us47wHHZBuK2llVLlwnWrI7y0zy0Xk6oEMwCLNk4r6zi/A3YpR8JGLX/hWN7kj5yl1A2XnTTVLpiQjl0Lyqt28KahM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HFP3piUK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NgIO/yYt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 855EC1F000E9;
-	Fri,  7 Aug 2026 15:42:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HFP3piUK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 622D01F000E9;
+	Fri,  7 Aug 2026 15:42:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786117333;
-	bh=bP2GE1oIFa8tbJgNKZDL7Pn1RYWvUkTvEVMG4zKMl/0=;
+	s=korg; t=1786117335;
+	bh=cgd+tvREcDgorXI43Sim7+LNx6l7R1blN/O9msFIXMI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NgIO/yYtLUC9kJO3iJXFOtYmPwj4LcVLoM2pmrENEDsGUueQiRMy18HzokT9B1XRd
-	 2r3m6h2AwsPLNTvoPMw2FSJvJHZuLF64ODNwcNqJO+txBl7w+/yvOSIHNXRuWlwvrf
-	 2LGVBcA9pyO3AqpEX8W2jKeDM9rw0MQ8IvQfJ3v0=
+	b=HFP3piUKVc5OErrudKY06LQyeYFrG1qa9xd6ln2rRBSgT9U3t097zNY1kfT2ZQ8Z5
+	 imsrVa1Gx6JjpeKSnnsEvth5MmPPTBK1jcihDsQBKAEknSPcX5Y2fo4z3gLI9C9RPr
+	 pJQ5dkIZJfbk/019miMTZVeKQpIGu0zPWHcnwhTc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carlo Caione <ccaione@baylibre.com>,
-	"Rob Herring (Arm)" <robh@kernel.org>
-Subject: [PATCH 7.1 282/438] of/address: Fix NULL bus dereference in of_pci_range_parser_one()
-Date: Fri,  7 Aug 2026 16:37:58 +0200
-Message-ID: <20260807143433.992590596@linuxfoundation.org>
+	Soeren Moch <smoch@web.de>,
+	Richard Zhu <hongxing.zhu@nxp.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Manivannan Sadhasivam <mani@kernel.org>
+Subject: [PATCH 7.1 283/438] PCI: imx6: Keep i.MX6 Root Port MSI/MSI-X Capabilities with iMSI-RX to work around hardware bug
+Date: Fri,  7 Aug 2026 16:37:59 +0200
+Message-ID: <20260807143434.013729744@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -50,90 +53,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carlo Caione <ccaione@baylibre.com>
+From: Soeren Moch <smoch@web.de>
 
-commit bba13ad17b1a11b3f1ed9b3a5d556191d7755a59 upstream.
+commit b4bee12ebeccfcd5959ace2c3a4af08f5a917d4c upstream.
 
-The bus matching rework made of_match_bus() return NULL for nodes with
-ranges/dma-ranges but no local #address-cells. parser_init() stored that
-NULL bus, and the range iterator later dereferenced it.
+On some NXP chipsets, disabling Root Port MSI/MSI-X Capabilities blocks
+MSIs originating from Endpoints from reaching the iMSI-RX controller.
 
-Reject such nodes in parser_init(), leaving an explicit empty
-iterator for callers that ignore the init return, and make
-of_dma_get_max_cpu_address() honour the init failure so a rejected node
-cannot clamp the DMA limit.
+To address this hardware bug, commit 3a4e8302e72f ("PCI: imx6: Keep Root
+Port MSI capability with iMSI-RX to work around hardware bug") preserves
+Root Port MSI and MSI-X Capabilities on i.MX7D, i.MX8MM, and i.MX8MQ
+when iMSI-RX is in use.
 
-Fixes: 64ee3cf096ac ("of/address: Rework bus matching to avoid warnings")
-Cc: stable@vger.kernel.org
-Signed-off-by: Carlo Caione <ccaione@baylibre.com>
-Link: https://patch.msgid.link/20260727-of-range-parser-null-bus-v3-1-be01b708a4ce@baylibre.com
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+The same applies to i.MX6Q, i.MX6QP, and i.MX6SX, so preserve Root Port
+MSI/MSI-X Capabilities there as well.
+
+Note that preserving these Capabilities means Root Port-originated MSIs
+such as AER and PME won't be received due to separate hardware limitations.
+Users may need to use workarounds such as passing the 'pcie_pme=nomsi'
+command-line parameter.
+
+Fixes: f5cd8a929c825 ("PCI: dwc: Remove MSI/MSIX capability for Root Port if iMSI-RX is used as MSI controller")
+Signed-off-by: Soeren Moch <smoch@web.de>
+Signed-off-by: Richard Zhu <hongxing.zhu@nxp.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Acked-by: Richard Zhu <hongxing.zhu@nxp.com>
+Cc: stable@vger.kernel.org # 7.0+
+Link: https://patch.msgid.link/20260717033203.2965045-1-hongxing.zhu@oss.nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/of/address.c |   22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
+ drivers/pci/controller/dwc/pci-imx6.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/drivers/of/address.c
-+++ b/drivers/of/address.c
-@@ -753,6 +753,7 @@ EXPORT_SYMBOL(of_property_read_reg);
- static int parser_init(struct of_pci_range_parser *parser,
- 			struct device_node *node, const char *name)
- {
-+	const __be32 *range;
- 	int rlen;
- 
- 	parser->node = node;
-@@ -761,12 +762,20 @@ static int parser_init(struct of_pci_ran
- 	parser->ns = of_bus_n_size_cells(node);
- 	parser->dma = !strcmp(name, "dma-ranges");
- 	parser->bus = of_match_bus(node);
-+	parser->range = NULL;
-+	parser->end = NULL;
- 
--	parser->range = of_get_property(node, name, &rlen);
--	if (parser->range == NULL)
-+	range = of_get_property(node, name, &rlen);
-+	if (!range)
- 		return -ENOENT;
- 
--	parser->end = parser->range + rlen / sizeof(__be32);
-+	if (!parser->bus ||
-+	    !OF_CHECK_COUNTS(parser->na, parser->ns) ||
-+	    !OF_CHECK_ADDR_COUNT(parser->pna))
-+		return -EINVAL;
-+
-+	parser->range = range;
-+	parser->end = range + rlen / sizeof(__be32);
- 
- 	return 0;
- }
-@@ -792,7 +801,7 @@ struct of_pci_range *of_pci_range_parser
- 	int na = parser->na;
- 	int ns = parser->ns;
- 	int np = parser->pna + na + ns;
--	int busflag_na = parser->bus->flag_cells;
-+	int busflag_na;
- 
- 	if (!range)
- 		return NULL;
-@@ -800,6 +809,8 @@ struct of_pci_range *of_pci_range_parser
- 	if (!parser->range || parser->range + np > parser->end)
- 		return NULL;
- 
-+	busflag_na = parser->bus->flag_cells;
-+
- 	range->flags = parser->bus->get_flags(parser->range);
- 
- 	range->bus_addr = of_read_number(parser->range + busflag_na, na - busflag_na);
-@@ -976,8 +987,7 @@ phys_addr_t __init of_dma_get_max_cpu_ad
- 		np = of_root;
- 
- 	ranges = of_get_property(np, "dma-ranges", &len);
--	if (ranges && len) {
--		of_dma_range_parser_init(&parser, np);
-+	if (ranges && len && !of_dma_range_parser_init(&parser, np)) {
- 		for_each_of_range(&parser, &range)
- 			if (range.cpu_addr + range.size > cpu_end)
- 				cpu_end = range.cpu_addr + range.size - 1;
+--- a/drivers/pci/controller/dwc/pci-imx6.c
++++ b/drivers/pci/controller/dwc/pci-imx6.c
+@@ -1884,7 +1884,8 @@ static const struct imx_pcie_drvdata drv
+ 		.flags = IMX_PCIE_FLAG_IMX_PHY |
+ 			 IMX_PCIE_FLAG_SPEED_CHANGE_WORKAROUND |
+ 			 IMX_PCIE_FLAG_BROKEN_SUSPEND |
+-			 IMX_PCIE_FLAG_SUPPORTS_SUSPEND,
++			 IMX_PCIE_FLAG_SUPPORTS_SUSPEND |
++			 IMX_PCIE_FLAG_KEEP_MSI_CAP,
+ 		.dbi_length = 0x200,
+ 		.gpr = "fsl,imx6q-iomuxc-gpr",
+ 		.ltssm_off = IOMUXC_GPR12,
+@@ -1900,7 +1901,8 @@ static const struct imx_pcie_drvdata drv
+ 		.flags = IMX_PCIE_FLAG_IMX_PHY |
+ 			 IMX_PCIE_FLAG_SPEED_CHANGE_WORKAROUND |
+ 			 IMX_PCIE_FLAG_SKIP_L23_READY |
+-			 IMX_PCIE_FLAG_SUPPORTS_SUSPEND,
++			 IMX_PCIE_FLAG_SUPPORTS_SUSPEND |
++			 IMX_PCIE_FLAG_KEEP_MSI_CAP,
+ 		.gpr = "fsl,imx6q-iomuxc-gpr",
+ 		.ltssm_off = IOMUXC_GPR12,
+ 		.ltssm_mask = IMX6Q_GPR12_PCIE_CTL_2,
+@@ -1915,7 +1917,8 @@ static const struct imx_pcie_drvdata drv
+ 		.flags = IMX_PCIE_FLAG_IMX_PHY |
+ 			 IMX_PCIE_FLAG_SPEED_CHANGE_WORKAROUND |
+ 			 IMX_PCIE_FLAG_SKIP_L23_READY |
+-			 IMX_PCIE_FLAG_SUPPORTS_SUSPEND,
++			 IMX_PCIE_FLAG_SUPPORTS_SUSPEND |
++			 IMX_PCIE_FLAG_KEEP_MSI_CAP,
+ 		.dbi_length = 0x200,
+ 		.gpr = "fsl,imx6q-iomuxc-gpr",
+ 		.ltssm_off = IOMUXC_GPR12,
 
 
