@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3E283A3E7A;
-	Fri,  7 Aug 2026 15:25:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CC2A3A3E7A;
+	Fri,  7 Aug 2026 15:25:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116332; cv=none; b=iDOU7KWZIhorsUMtVk4ujF3WIPP5Af4cgw8dGYTWlVt+ckfzJfXo98h0mHqoMIhfoMDDDPzoCxoOehIVWkt119JEe6qPoHo1sHcaJYisK28L1X/gZF8PO1LQCrJ6tihzz9uaIsksPg/ceQdDW98tgmltaFWXaDTiiN/to4b2hbQ=
+	t=1786116335; cv=none; b=Fnw+yaf4NSXBSgHOWjr4Xqj22SRmZabCOY5mZJYQe8NoAZwvAYadAN5Mx0a4ibjcIFK4xbneWy8GlQejsb95Q228UauGXh0bwCCV+pbYIUwamHanI+jXaeBSLuQDLgGhzbiI98fCShGxpe4DOb2HvkvvcRFyG4I3bGQwFbWI0kc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116332; c=relaxed/simple;
-	bh=FulGE1InOzhaxZMjONQzepJ/YutnfO9MfbNDNh2CMC0=;
+	s=arc-20240116; t=1786116335; c=relaxed/simple;
+	bh=4ykZohksBRhhzcL8/8m8cGBh5663ICh8KEMNgctEz1I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YZsVra7y+U1Vk2zfVHJbvRzcQEAiAizQ8iUkwcz07zUezye7Fw9lv0EFwqiiMB3cpI2QzAVrsi1ZJRgQOsOnxbWLrNZiRHDGHRwXGrzuhMa0Di1UccEMpGcGI9ROpPbnLQ4BQu1DFkoVB/N0Kd81eCU4AloMhVpxRX73Fg82z5s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cM8oFeBC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mxCd4KbkBa1oYXoMqmjmQCCi5G5zqIkBLcbblboiTqMmyTHkKmpZGd2Hia80l8lgEwRvsocfLpGHNoUMPudOjz6qLR6W9e/I5mzVFeRA9ZLFXeRmzcpQLNCFFWtKAGNAxiZcbpbpiY48UitdY/oJO2ZM5ylIe8+/HkbMUH0BhS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KJdB9ir9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cM8oFeBC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C06321F000E9;
-	Fri,  7 Aug 2026 15:25:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KJdB9ir9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A0C11F000E9;
+	Fri,  7 Aug 2026 15:25:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116331;
-	bh=f7eYSTa8EuvGsemt902iSQm7AyMM1v+rC/g+3HcDOFE=;
+	s=korg; t=1786116334;
+	bh=81hvEw9F59dwgVUGGSa7XqtBybMDeKuvnnrnu4594Rc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cM8oFeBCUorQQM+3F/FPhzwz1vH16VOWdWMsRyzWF0/usviYP6e7KwtDR8KnBMK8H
-	 lVf9Hm6z/+KOzLdvUzIHSXKe1JFCNUk7hQDNPyjg7oz9FavyoPHTNhzfYIYgFt3iJy
-	 Tww83x0CAD/zmcPKKMEWbYeJh1Ahq03XeN0UXoKg=
+	b=KJdB9ir9s59DDX0zMTmXBzUlHc5AFjnViOyBR07KYmPPvEq8i7FzAhpDouDDqqNsk
+	 gXt+AWezvWyq6AJ40jX2AqhBfnuJwBcE8FkmFusky35uxuN7TtBTRSspojizSXNr7R
+	 gRWJuSJKYTfncCcg5Y+srAOuxqDRCNrzv66gbxPA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gang Ba <Gang.Ba@amd.com>,
-	Kent Russell <kent.russell@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 193/261] drm/amdkfd: Fix missing authorization check in KFD_IOC_DBG_TRAP_DISABLE
-Date: Fri,  7 Aug 2026 16:39:10 +0200
-Message-ID: <20260807143419.532020019@linuxfoundation.org>
+	"Deucher, Alexander" <alexander.deucher@amd.com>,
+	Vladimir Marioukhine <Vladimir.Marioukhine@amd.com>,
+	Kent Russell <kent.russell@amd.com>
+Subject: [PATCH 6.6 194/261] drm/amdkfd: fix QID bit leak in pqm_create_queue()
+Date: Fri,  7 Aug 2026 16:39:11 +0200
+Message-ID: <20260807143419.553843534@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143415.358597922@linuxfoundation.org>
 References: <20260807143415.358597922@linuxfoundation.org>
@@ -51,43 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gang Ba <Gang.Ba@amd.com>
+From: Vladimir Marioukhine <Vladimir.Marioukhine@amd.com>
 
-commit 99b2fe4f19e3be0a8d0a0b5ea98d855970889653 upstream.
+commit 38b73293f38658a4685ffcea666462024f858ad9 upstream.
 
-Prevent unauthorized termination of active GPU debug sessions.
-Previously, users with /dev/kfd access could terminate another process's
-debug session without proper ownership or ptrace authorization.
+When MES is enabled and amdgpu_amdkfd_alloc_kernel_mem() fails during
+the first queue creation for a process, pqm_create_queue() returns
+early via 'return retval' without going through the err_create_queue
+cleanup label.
 
-Signed-off-by: Gang Ba <Gang.Ba@amd.com>
+This means clear_bit(*qid, pqm->queue_slot_bitmap) is never called,
+leaving the reserved QID bit permanently set in queue_slot_bitmap.
+Over time this leaks QID slots, potentially exhausting all available
+queue slots.
+
+Fix this by replacing 'return retval' with 'goto err_allocate_pqn'
+so that clear_bit() is always called on the error path without
+touching the uninitialized pqn pointer.
+
+AILIKFD-813
+
+Reported-by: Deucher, Alexander <alexander.deucher@amd.com>
+Signed-off-by: Vladimir Marioukhine <Vladimir.Marioukhine@amd.com>
 Reviewed-by: Kent Russell <kent.russell@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 4db4c5ffd5585b72622ecf6ffedf2da258ee23f5)
+(cherry picked from commit a107f74c38edbb80d6ab64dcaeeb292c14e9779f)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_chardev.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-@@ -2977,10 +2977,14 @@ static int kfd_ioctl_set_debug_trap(stru
- 		goto out;
- 	}
- 
--	/* Check if target is still PTRACED. */
-+	/*
-+	 * Verify debugger has permission to debug target process.
-+	 * For cross-process debugging, require active ptrace relationship.
-+	 * This applies to ALL operations to prevent unauthorized interference.
-+	 */
- 	rcu_read_lock();
--	if (target != p && args->op != KFD_IOC_DBG_TRAP_DISABLE
--				&& ptrace_parent(target->lead_thread) != current) {
-+	if (target != p && ptrace_parent(target->lead_thread) != current
-+			&& target->debugger_process != p) {
- 		pr_err("PID %i is not PTRACED and cannot be debugged\n", args->pid);
- 		r = -EPERM;
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
+@@ -344,7 +344,7 @@ int pqm_create_queue(struct process_queu
+ 						     false);
+ 		if (retval) {
+ 			dev_err(dev->adev->dev, "failed to allocate process context bo\n");
+-			return retval;
++			goto err_allocate_pqn;
+ 		}
+ 		memset(pdd->proc_ctx_cpu_ptr, 0, AMDGPU_MES_PROC_CTX_SIZE);
  	}
 
 
