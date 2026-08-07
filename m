@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D3BD471436;
-	Fri,  7 Aug 2026 15:44:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E44F4472790;
+	Fri,  7 Aug 2026 15:44:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786117482; cv=none; b=Xz3Vk8SXJyAe4/yby0/amXnnBZx9YPDHgyYMIRITtDT08X9XT+9ffkywymhnL0Ib9Z5LKlKjbGB1Wq9PNQNlMdwiEYB6/Wy0bwudYk8f+m13jvk8acSYDWv0Q83Sb/hEWbQgmPycuPvQUo50HnpZEFyBUHY7ElIccehowPsoAZU=
+	t=1786117485; cv=none; b=ZOGH64VdeMmBXQFy1xjYW2g2XRIiw7zmoMV9QCSrFuTHxSflAhYqdmF724tl8gVPfXlk32DtO5CVR4uhlKUSQQrWudN1gEwvVoqvM0d11SYaxZuDYWLA8elZ97KXBu89B3+VM+QT9dFzp5j+8uuTkUUonqfNqpzcBbJ2SLD+/l8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786117482; c=relaxed/simple;
-	bh=kSMkEU6wqevhvjxFWgieFYJrLDMdNhVpX8sVn0gTP6Y=;
+	s=arc-20240116; t=1786117485; c=relaxed/simple;
+	bh=po1J7daejPkpE2+tXbNXFJ3tsvXMEdzLiseYQyG/ne0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TOphkrKecmugPCf+fzdzf1giI9JP5ul2jVztxVIamrIayadm7b5V0bQ35ZsXM+/FipZ7cH68lkc7oppjRmcTUYW5S9vzcRP19qDVQivO65InykEp8wPIPnF/qFJNOCRRRqGBAH9L2A8gAhpV+dGUTJ1pkX732h1FIChWELAhCyw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TVoN9XIW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ABJn9mSpX8eHUQIPtG9Py9VqAZ+8UtgMGbMnk5jeFUZKBd3oKUm5EjAWbDGmZMvVUobTY4pOsOHvFCIEWDTSCaRKPH8RfCRdynR5Zxy7yIaxt59kEZrP/F91L0S+8BG2Htw6eZh+/jZ5tM+N3K99Q6Xc2JIC9n74V39tiLKMYl4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iGskqObt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TVoN9XIW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 684EF1F00A3E;
-	Fri,  7 Aug 2026 15:44:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iGskqObt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 451671F000E9;
+	Fri,  7 Aug 2026 15:44:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786117481;
-	bh=QiMlpbipj+4dCqoUYBIdksBsVfiIjpf8IrDkVBjIepc=;
+	s=korg; t=1786117483;
+	bh=oq+f4fAQVbAdwgLIzK8BQBNjTPBYP+cFnN3wHIcNoHw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TVoN9XIWdq2DmlsXOifXAjo0n90AsCkAiglXNyRXrdOXkTuVIlnAD3wZZqIigg2Vm
-	 OnSyLxcpsNy9BSf5Zvipdg7ArHCVjen1k41/x0lL4CMzbUKYjfOsdRs2Zqs22gN00m
-	 qV2C27R8X8xxukUayqlXhtxtIfKBb2vcl7go6spI=
+	b=iGskqObt4NSv4yUeo2upqAViI87s0BrxcBsjyKuooEg5wuVEgUHHV5FCV9afgIPZM
+	 0WlfT2YZi5oDZiFNJ/ZXavEJnZQje2+z8DwaLBT3/xFi1a+F9Jesep+l4OW5XdPYdc
+	 DAZ+b2ucOZrTYdzzOqaWNKKhqr08uijQJ4NPaP9E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.1 307/438] vxlan: unclone skb head before modifying eth header in route_shortcircuit()
-Date: Fri,  7 Aug 2026 16:38:23 +0200
-Message-ID: <20260807143434.517251113@linuxfoundation.org>
+	Xu Rao <raoxu@uniontech.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>
+Subject: [PATCH 7.1 334/438] power: supply: bq25890: fix the -10 C NTC lookup entry
+Date: Fri,  7 Aug 2026 16:38:50 +0200
+Message-ID: <20260807143435.093571229@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -50,45 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Xu Rao <raoxu@uniontech.com>
 
-commit 760d36e737f2b3867762f42af36c663f55babcc4 upstream.
+commit 160a783aa65b74782bc17cb874af1a6d3f5fba3c upstream.
 
-When route_shortcircuit() performs L3 short-circuit routing, it modifies
-the Ethernet header of the skb in-place:
-    memcpy(eth_hdr(skb)->h_source, eth_hdr(skb)->h_dest, dev->addr_len);
-    memcpy(eth_hdr(skb)->h_dest, n->ha, dev->addr_len);
+The TSPCT lookup table is monotonically decreasing except for ADC code
+121, where the sequence reads -9.0 C, -1.0 C, -12.0 C.  This makes the
+reported battery temperature jump upward by eight degrees for one code
+and then downward by eleven degrees for the next code.
 
-If the incoming skb is cloned (for example by packet sockets, tcpdump, or
-dev_queue_xmit), modifying the Ethernet header without uncloning can corrupt
-the packet header for other readers holding a reference to the cloned skb.
+The entry is a missing zero: use -10.0 C so the sequence remains
+monotonic between -9.0 C and -12.0 C.
 
-Ensure the skb header is writable and unshared by calling skb_cow_head(skb, 0)
-prior to updating the Ethernet header. If skb_cow_head() fails, abort short-circuiting
-and return false to allow standard packet processing fallback.
-
-Fixes: e4f67addf158 ("add DOVE extensions for VXLAN")
+Fixes: 9652c02428f3 ("power: bq25890: add POWER_SUPPLY_PROP_TEMP")
 Cc: stable@vger.kernel.org
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260723144249.759100-3-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
+Link: https://patch.msgid.link/0619C8BF15F43B7C+20260723065444.1796002-1-raoxu@uniontech.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/vxlan/vxlan_core.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/power/supply/bq25890_charger.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/vxlan/vxlan_core.c
-+++ b/drivers/net/vxlan/vxlan_core.c
-@@ -2164,6 +2164,10 @@ static bool route_shortcircuit(struct ne
+--- a/drivers/power/supply/bq25890_charger.c
++++ b/drivers/power/supply/bq25890_charger.c
+@@ -320,7 +320,7 @@ static const u32 bq25890_tspct_tbl[] = {
+ 	145, 140, 130, 120, 115, 110, 100, 90,
+ 	80, 70, 60, 50, 40, 30, 20, 10,
+ 	0, -10, -20, -30, -40, -60, -70, -80,
+-	-90, -10, -120, -140, -150, -170, -190, -210,
++	-90, -100, -120, -140, -150, -170, -190, -210,
+ };
  
- 		diff = !ether_addr_equal(eth_hdr(skb)->h_dest, n->ha);
- 		if (diff) {
-+			if (skb_cow_head(skb, 0)) {
-+				neigh_release(n);
-+				return false;
-+			}
- 			memcpy(eth_hdr(skb)->h_source, eth_hdr(skb)->h_dest,
- 				dev->addr_len);
- 			memcpy(eth_hdr(skb)->h_dest, n->ha, dev->addr_len);
+ #define BQ25890_TSPCT_TBL_SIZE		ARRAY_SIZE(bq25890_tspct_tbl)
 
 
