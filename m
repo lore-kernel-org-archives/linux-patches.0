@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CEF5280331;
-	Fri,  7 Aug 2026 15:37:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7375471252;
+	Fri,  7 Aug 2026 15:37:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786117029; cv=none; b=eebfp6qZBHt8IkjXvqBVaP+Y4MnWqRMAXzSEDJhGN/c7xCnnjwgw4oW0u5oupARTChXIeIcvAjcDxIJgPJSoKZq9odYE8lbzqOv+UREy8I5y8Sc64pf/E/Que5O2cYGmCkVcauyQd+yzzxqnJqqOUe6aFuv5pW0YBgJnqpnb2vM=
+	t=1786117032; cv=none; b=XqiHNscTk++pB+w0sp9ypJy1UntlAIrlKAApozrnjaS4Hai3qIyiv3uHpMlLc79mZVg6Z6f1Ru5yV+n0tYHMd2TpyB9NLvF56Zl+N75vtCrJ7uW3zh3aBdZA8f8kU0xVmtzb9Vvd71Um5fDntbxK0I7iAM28TimHam0LzieZyog=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786117029; c=relaxed/simple;
-	bh=uPDeyH8ogba8SsWW9sVAXVwQbYpIgam/96AUoxSkbaA=;
+	s=arc-20240116; t=1786117032; c=relaxed/simple;
+	bh=N0PPYcEMJ6PElHKJf12Hg/YCUNrT1QNwhje1sKsz1bQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pRQUY+ywE0O9k387aTan1FMHS5ldl4F2eeYP4wobPzXbnOB/kXdhQonPvxzRjfWH/U5Z0wbTt+jBZ53V/1/+adPeQFwW96LkynPPgOTa+mTPpY/obSqv39ZvqiBp8857pmcQM9pVTlms4+Qgm2E/shqcyUKnhov5/PEU3G/NkVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JbnQTkrl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AH9Jmz4EA/PGvPUUdcqjwd+rwaalvqR9Y74ubVh4+nR5CY1BA7DgTbxh83/WGz+/OLgOK4APUx9/k5hwBv/OZMLaxfYR6u0EAg8B/VsLhGGpiKlHFMUZSoT8cUXs8txrSHZ69wE3+pYP37nWyMJ1pcuIBuWDUfqjtths1/HIEP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RrhT2PUa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JbnQTkrl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4389D1F000E9;
-	Fri,  7 Aug 2026 15:37:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RrhT2PUa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C9771F000E9;
+	Fri,  7 Aug 2026 15:37:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786117027;
-	bh=obgX0C5aERvmfXLj4B2CXwOTrZAfkog4LdNtwmaE0Nw=;
+	s=korg; t=1786117030;
+	bh=hyu/c8IrYHLsUtcGWDvvZMtyq8H5hLnRf8YrEV70KHc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JbnQTkrlffPD6NjuQgWxE586J7Menc2NKqjHNTVTJILkcaq9s9HeKru2ATC+b0FvW
-	 tx2Zh70U0/JIVo8KtNk3+Ugh/otGaRZjCZugbdG4llNm/0E5jvT3v4ZwUxLQvMuKdh
-	 fH57xsB1s/NUv5Ko+sln6W8j56k9Btyos7L/wqsE=
+	b=RrhT2PUaSXWm3SNoruJpkoCAb9GMyCxFTcnww3lrfpT23GFkwWT7jKLiFyzdTw7qs
+	 sC6/yfGgsleIF7bL2lom0ZVj1fvZuPNX35UsKeZ/miNPSZwx+RH2D+jNmRAvDiPQOG
+	 WsbcVQ+yDpovuJmz7WwxNp2V8dVwOBWcX/8p3AWc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Golle <daniel@makrotopia.org>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Rohan G Thomas <rohan.g.thomas@altera.com>,
+	Nazim Amirul <muhammad.nazim.amirul.nazle.asmade@altera.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 176/438] net: dsa: mt7530: error out on failed reads in MT7531 PHY polling
-Date: Fri,  7 Aug 2026 16:36:12 +0200
-Message-ID: <20260807143431.787592595@linuxfoundation.org>
+Subject: [PATCH 7.1 177/438] net: stmmac: Fix E2E delay mechanism
+Date: Fri,  7 Aug 2026 16:36:13 +0200
+Message-ID: <20260807143431.808316751@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -52,189 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Golle <daniel@makrotopia.org>
+From: Nazim Amirul <muhammad.nazim.amirul.nazle.asmade@altera.com>
 
-[ Upstream commit 77a9ebe8818cf6dd1699bd6728cb5d66307801d7 ]
+[ Upstream commit b041ed62aa6e3b2d7d36127e0e5d7bf2701f8231 ]
 
-The MT7531 indirect PHY access functions poll MT7531_PHY_IAC through
-a helper which returns 0 when the underlying read fails, so a failed
-bus transaction clears MT7531_PHY_ACS_ST and the access carries on,
-returning garbage PHY register data to phylib.
+For E2E delay mechanism, "received DELAY_REQ without timestamp" error
+messages show up for dwmac v3.70+ and dwxgmac IPs.
 
-Poll using regmap_read_poll_timeout(), which stops on read errors and
-propagates them. These functions hold the MDIO bus lock across the
-whole sequence, so the unlocked regmap accesses remain correct. Remove
-the now-unused _mt7530_unlocked_read().
+This issue affects socfpga platforms, Agilex7 (dwmac 3.70) and
+Agilex5 (dwxgmac). According to the databook, to enable timestamping
+for all events, the SNAPTYPSEL bits in the MAC_Timestamp_Control
+register must be set to 2'b01, and the TSEVNTENA bit must be cleared
+to 0'b0.
 
-Fixes: c288575f7810 ("net: dsa: mt7530: Add the support of MT7531 switch")
-Signed-off-by: Daniel Golle <daniel@makrotopia.org>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/79e85d68d210cc37342978171aa6432aa2954333.1785213071.git.daniel@makrotopia.org
+Commit 3cb958027cb8 ("net: stmmac: Fix E2E delay mechanism") already
+addresses this problem for all dwmacs above version v4.10. However,
+same holds true for v3.70 and above, as well as for dwxgmac. Updates
+the check accordingly.
+
+Fixes: 14f347334bf2 ("net: stmmac: Correctly take timestamp for PTPv2")
+Fixes: f2fb6b6275eb ("net: stmmac: enable timestamp snapshot for required PTP packets in dwmac v5.10a")
+Fixes: 3cb958027cb8 ("net: stmmac: Fix E2E delay mechanism")
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Signed-off-by: Rohan G Thomas <rohan.g.thomas@altera.com>
+Signed-off-by: Nazim Amirul <muhammad.nazim.amirul.nazle.asmade@altera.com>
+Link: https://patch.msgid.link/20260728060904.31993-1-muhammad.nazim.amirul.nazle.asmade@altera.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mt7530.c | 58 ++++++++++++++--------------------------
- 1 file changed, 20 insertions(+), 38 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
-index 292cde961f1af..aa33d94e11b5f 100644
---- a/drivers/net/dsa/mt7530.c
-+++ b/drivers/net/dsa/mt7530.c
-@@ -191,12 +191,6 @@ mt7530_write(struct mt7530_priv *priv, u32 reg, u32 val)
- 	mt7530_mutex_unlock(priv);
- }
- 
--static u32
--_mt7530_unlocked_read(struct mt7530_dummy_poll *p)
--{
--	return mt7530_mii_read(p->priv, p->reg);
--}
--
- static u32
- _mt7530_read(struct mt7530_dummy_poll *p)
- {
-@@ -553,16 +547,13 @@ static int
- mt7531_ind_c45_phy_read(struct mt7530_priv *priv, int port, int devad,
- 			int regnum)
- {
--	struct mt7530_dummy_poll p;
- 	u32 reg, val;
- 	int ret;
- 
--	INIT_MT7530_DUMMY_POLL(&p, priv, MT7531_PHY_IAC);
--
- 	mt7530_mutex_lock(priv);
- 
--	ret = readx_poll_timeout(_mt7530_unlocked_read, &p, val,
--				 !(val & MT7531_PHY_ACS_ST), 20, 100000);
-+	ret = regmap_read_poll_timeout(priv->regmap, MT7531_PHY_IAC, val,
-+				       !(val & MT7531_PHY_ACS_ST), 20, 100000);
- 	if (ret < 0) {
- 		dev_err(priv->dev, "poll timeout\n");
- 		goto out;
-@@ -572,8 +563,8 @@ mt7531_ind_c45_phy_read(struct mt7530_priv *priv, int port, int devad,
- 	      MT7531_MDIO_DEV_ADDR(devad) | regnum;
- 	mt7530_mii_write(priv, MT7531_PHY_IAC, reg | MT7531_PHY_ACS_ST);
- 
--	ret = readx_poll_timeout(_mt7530_unlocked_read, &p, val,
--				 !(val & MT7531_PHY_ACS_ST), 20, 100000);
-+	ret = regmap_read_poll_timeout(priv->regmap, MT7531_PHY_IAC, val,
-+				       !(val & MT7531_PHY_ACS_ST), 20, 100000);
- 	if (ret < 0) {
- 		dev_err(priv->dev, "poll timeout\n");
- 		goto out;
-@@ -583,8 +574,8 @@ mt7531_ind_c45_phy_read(struct mt7530_priv *priv, int port, int devad,
- 	      MT7531_MDIO_DEV_ADDR(devad);
- 	mt7530_mii_write(priv, MT7531_PHY_IAC, reg | MT7531_PHY_ACS_ST);
- 
--	ret = readx_poll_timeout(_mt7530_unlocked_read, &p, val,
--				 !(val & MT7531_PHY_ACS_ST), 20, 100000);
-+	ret = regmap_read_poll_timeout(priv->regmap, MT7531_PHY_IAC, val,
-+				       !(val & MT7531_PHY_ACS_ST), 20, 100000);
- 	if (ret < 0) {
- 		dev_err(priv->dev, "poll timeout\n");
- 		goto out;
-@@ -601,16 +592,13 @@ static int
- mt7531_ind_c45_phy_write(struct mt7530_priv *priv, int port, int devad,
- 			 int regnum, u16 data)
- {
--	struct mt7530_dummy_poll p;
- 	u32 val, reg;
- 	int ret;
- 
--	INIT_MT7530_DUMMY_POLL(&p, priv, MT7531_PHY_IAC);
--
- 	mt7530_mutex_lock(priv);
- 
--	ret = readx_poll_timeout(_mt7530_unlocked_read, &p, val,
--				 !(val & MT7531_PHY_ACS_ST), 20, 100000);
-+	ret = regmap_read_poll_timeout(priv->regmap, MT7531_PHY_IAC, val,
-+				       !(val & MT7531_PHY_ACS_ST), 20, 100000);
- 	if (ret < 0) {
- 		dev_err(priv->dev, "poll timeout\n");
- 		goto out;
-@@ -620,8 +608,8 @@ mt7531_ind_c45_phy_write(struct mt7530_priv *priv, int port, int devad,
- 	      MT7531_MDIO_DEV_ADDR(devad) | regnum;
- 	mt7530_mii_write(priv, MT7531_PHY_IAC, reg | MT7531_PHY_ACS_ST);
- 
--	ret = readx_poll_timeout(_mt7530_unlocked_read, &p, val,
--				 !(val & MT7531_PHY_ACS_ST), 20, 100000);
-+	ret = regmap_read_poll_timeout(priv->regmap, MT7531_PHY_IAC, val,
-+				       !(val & MT7531_PHY_ACS_ST), 20, 100000);
- 	if (ret < 0) {
- 		dev_err(priv->dev, "poll timeout\n");
- 		goto out;
-@@ -631,8 +619,8 @@ mt7531_ind_c45_phy_write(struct mt7530_priv *priv, int port, int devad,
- 	      MT7531_MDIO_DEV_ADDR(devad) | data;
- 	mt7530_mii_write(priv, MT7531_PHY_IAC, reg | MT7531_PHY_ACS_ST);
- 
--	ret = readx_poll_timeout(_mt7530_unlocked_read, &p, val,
--				 !(val & MT7531_PHY_ACS_ST), 20, 100000);
-+	ret = regmap_read_poll_timeout(priv->regmap, MT7531_PHY_IAC, val,
-+				       !(val & MT7531_PHY_ACS_ST), 20, 100000);
- 	if (ret < 0) {
- 		dev_err(priv->dev, "poll timeout\n");
- 		goto out;
-@@ -647,16 +635,13 @@ mt7531_ind_c45_phy_write(struct mt7530_priv *priv, int port, int devad,
- static int
- mt7531_ind_c22_phy_read(struct mt7530_priv *priv, int port, int regnum)
- {
--	struct mt7530_dummy_poll p;
- 	int ret;
- 	u32 val;
- 
--	INIT_MT7530_DUMMY_POLL(&p, priv, MT7531_PHY_IAC);
--
- 	mt7530_mutex_lock(priv);
- 
--	ret = readx_poll_timeout(_mt7530_unlocked_read, &p, val,
--				 !(val & MT7531_PHY_ACS_ST), 20, 100000);
-+	ret = regmap_read_poll_timeout(priv->regmap, MT7531_PHY_IAC, val,
-+				       !(val & MT7531_PHY_ACS_ST), 20, 100000);
- 	if (ret < 0) {
- 		dev_err(priv->dev, "poll timeout\n");
- 		goto out;
-@@ -667,8 +652,8 @@ mt7531_ind_c22_phy_read(struct mt7530_priv *priv, int port, int regnum)
- 
- 	mt7530_mii_write(priv, MT7531_PHY_IAC, val | MT7531_PHY_ACS_ST);
- 
--	ret = readx_poll_timeout(_mt7530_unlocked_read, &p, val,
--				 !(val & MT7531_PHY_ACS_ST), 20, 100000);
-+	ret = regmap_read_poll_timeout(priv->regmap, MT7531_PHY_IAC, val,
-+				       !(val & MT7531_PHY_ACS_ST), 20, 100000);
- 	if (ret < 0) {
- 		dev_err(priv->dev, "poll timeout\n");
- 		goto out;
-@@ -685,16 +670,13 @@ static int
- mt7531_ind_c22_phy_write(struct mt7530_priv *priv, int port, int regnum,
- 			 u16 data)
- {
--	struct mt7530_dummy_poll p;
- 	int ret;
- 	u32 reg;
- 
--	INIT_MT7530_DUMMY_POLL(&p, priv, MT7531_PHY_IAC);
--
- 	mt7530_mutex_lock(priv);
- 
--	ret = readx_poll_timeout(_mt7530_unlocked_read, &p, reg,
--				 !(reg & MT7531_PHY_ACS_ST), 20, 100000);
-+	ret = regmap_read_poll_timeout(priv->regmap, MT7531_PHY_IAC, reg,
-+				       !(reg & MT7531_PHY_ACS_ST), 20, 100000);
- 	if (ret < 0) {
- 		dev_err(priv->dev, "poll timeout\n");
- 		goto out;
-@@ -705,8 +687,8 @@ mt7531_ind_c22_phy_write(struct mt7530_priv *priv, int port, int regnum,
- 
- 	mt7530_mii_write(priv, MT7531_PHY_IAC, reg | MT7531_PHY_ACS_ST);
- 
--	ret = readx_poll_timeout(_mt7530_unlocked_read, &p, reg,
--				 !(reg & MT7531_PHY_ACS_ST), 20, 100000);
-+	ret = regmap_read_poll_timeout(priv->regmap, MT7531_PHY_IAC, reg,
-+				       !(reg & MT7531_PHY_ACS_ST), 20, 100000);
- 	if (ret < 0) {
- 		dev_err(priv->dev, "poll timeout\n");
- 		goto out;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index 755f48a34314b..f28367fbcaf81 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -755,7 +755,8 @@ static int stmmac_hwtstamp_set(struct net_device *dev,
+ 			config->rx_filter = HWTSTAMP_FILTER_PTP_V2_EVENT;
+ 			ptp_v2 = PTP_TCR_TSVER2ENA;
+ 			snap_type_sel = PTP_TCR_SNAPTYPSEL_1;
+-			if (priv->synopsys_id < DWMAC_CORE_4_10)
++			if (priv->synopsys_id < DWMAC_CORE_3_70 &&
++			    priv->plat->core_type != DWMAC_CORE_XGMAC)
+ 				ts_event_en = PTP_TCR_TSEVNTENA;
+ 			ptp_over_ipv4_udp = PTP_TCR_TSIPV4ENA;
+ 			ptp_over_ipv6_udp = PTP_TCR_TSIPV6ENA;
 -- 
 2.53.0
 
