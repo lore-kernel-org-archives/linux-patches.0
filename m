@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB7B022B594;
-	Fri,  7 Aug 2026 14:46:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C7993A8FE9;
+	Fri,  7 Aug 2026 14:46:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114013; cv=none; b=WXAg7XzBLWWC+3cQVS+m7L8XVXzIp4co1R+TFlgZXM5KX3w0MIPRdYOGVSDJ6v9a0Fm1FvCE8XxG6+sqX9srhgp77UGHXRpun5zYBW6m9hkMazZ9OuzWe+fezo8yE1qsIiZgN5eiar4n1eqANKYGWmokT61bY53aunSJZduCt7w=
+	t=1786114017; cv=none; b=FygInWQ9r6x1X44+N9XXWC6pSRIogmRP8dwLMcX8z5G/3NMSSw3DJWgjp7GUcz6eCKVjTixHgIiU6nLxQcd3ITBUJ9oj3zFAOVl2RzSlEo1D/1DsFmS8cDg1OWXsM+9vqympJbwnNpBuLovqqAw3r6SX1M1542tI/V0Gf896WFk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114013; c=relaxed/simple;
-	bh=NV3MH+feR/3NPZ3F/8M2WDcQnkreQ3uceIzMXFvgNRM=;
+	s=arc-20240116; t=1786114017; c=relaxed/simple;
+	bh=fbyfzNZfsFxdr3rtEN6wLPuLIkXcK5ZZwKtT8YY8HK4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eZ4gqrI3tnnWc3Ugoxc2BsTDxfMExXV5zXcZPet5ntTbIwfl7FLgaCQ6PfjJpT0KVHJr8mJqXWa+/l9r9dLQ/r4/R4hsTQ7JYU7yX+GcabIf3j6AAn9FS+K6NT5ebUYbvR7wQ1TpJaaIVFapbEOiWlEddhSHbDVPRb73nLuO9EY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K+ao16rt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nmAm73nc5J5qnt6eO3QnESjnV9wLT4+kblMoMwwWd92endEBpEOLOtNLG1V1LUQzirc3/kKVsAIryoDgiQnXtccg9FlQjm13xDJs1730BfmBhlad9YOsJxgKelSuejBpMYbsO8J0dOOPRXIeerXCeI8/PooPDb3uVf8/BnftS0Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VKVMAh+M; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K+ao16rt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C025E1F000E9;
-	Fri,  7 Aug 2026 14:46:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VKVMAh+M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D7301F000E9;
+	Fri,  7 Aug 2026 14:46:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114011;
-	bh=xiutd1QlgJ4oEJQKUruu8LwojRlsnAZfKkA3SL9902k=;
+	s=korg; t=1786114014;
+	bh=hLDru/ZqyJGw/d8exSVHhcTsT4wtYIg+z9lorUAieGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K+ao16rtRB8DYBwKsTLdM2J28KeCYRFZwDPsomhxdR46+nS3aj04syz/80KQ55UA6
-	 kuT7A0D08I7WVqXdXgyGZyeK329dU0eo9fW+9/ZDkoL4nzu8f3dtGupod5dWzgn5Lk
-	 u/dgWuHQlTsUuXcr+Ual5/AOowWSv8QeQg59BIMg=
+	b=VKVMAh+M0W2gQV6IbNQ98hvmPY/ZhAmc/f5CYygdOAOKc29ucJPt3N/3NXDaXetU4
+	 AXgtQmdatJajf2/a7na909Z39loprMINvcoDOTjjbH+1u6fmD7vV3i91v2kpLzeqF9
+	 SLqWvooWvLaPLA9Zsh+PYolEt1cm7KQlgb428F9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 112/337] net: sxgbe: free TX rings on RX allocation failure
-Date: Fri,  7 Aug 2026 16:35:15 +0200
-Message-ID: <20260807143420.960379992@linuxfoundation.org>
+Subject: [PATCH 6.12 113/337] net: sxgbe: check descriptor ring allocation failures
+Date: Fri,  7 Aug 2026 16:35:16 +0200
+Message-ID: <20260807143420.980895996@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -54,13 +54,11 @@ Content-Transfer-Encoding: 8bit
 
 From: Chenguang Zhao <zhaochenguang@kylinos.cn>
 
-[ Upstream commit c870f7e2890b9f78ac84515a9809cc5c183c975e ]
+[ Upstream commit 51b093a7ba27476e1f639455f005e8d2e75390e4 ]
 
-When RX descriptor ring allocation fails, init_dma_desc_rings() only
-frees the partially allocated RX rings and returns. The TX rings that
-were allocated earlier in the same function are leaked.
-
-Rearrange error labels to clean up TX rings upon RX failures.
+sxgbe_open() ignores the return value of init_dma_desc_rings() and
+continues to program DMA with invalid ring addresses when allocation
+fails. Check the return value and disconnect the PHY on failure.
 
 Fixes: 1edb9ca69e8a ("net: sxgbe: add basic framework for Samsung 10Gb ethernet driver")
 Signed-off-by: Chenguang Zhao <zhaochenguang@kylinos.cn>
@@ -68,32 +66,32 @@ Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/samsung/sxgbe/sxgbe_main.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/samsung/sxgbe/sxgbe_main.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/net/ethernet/samsung/sxgbe/sxgbe_main.c b/drivers/net/ethernet/samsung/sxgbe/sxgbe_main.c
-index d2ba283f6123f..a4f457fa570d9 100644
+index a4f457fa570d9..4afa2b2c67b47 100644
 --- a/drivers/net/ethernet/samsung/sxgbe/sxgbe_main.c
 +++ b/drivers/net/ethernet/samsung/sxgbe/sxgbe_main.c
-@@ -598,14 +598,13 @@ static int init_dma_desc_rings(struct net_device *netd)
+@@ -1079,7 +1079,9 @@ static int sxgbe_open(struct net_device *dev)
+ 	priv->dma_buf_sz = SXGBE_ALIGN(DMA_BUFFER_SIZE);
+ 	priv->tx_tc = TC_DEFAULT;
+ 	priv->rx_tc = TC_DEFAULT;
+-	init_dma_desc_rings(dev);
++	ret = init_dma_desc_rings(dev);
++	if (ret)
++		goto init_phy_error;
  
- 	return 0;
+ 	/* DMA initialization and SW reset */
+ 	ret = sxgbe_init_dma_engine(priv);
+@@ -1188,6 +1190,7 @@ static int sxgbe_open(struct net_device *dev)
  
--txalloc_err:
--	while (queue_num--)
--		free_tx_ring(priv->device, priv->txq[queue_num], tx_rsize);
--	return ret;
--
- rxalloc_err:
- 	while (queue_num--)
- 		free_rx_ring(priv->device, priv->rxq[queue_num], rx_rsize);
-+	queue_num = SXGBE_TX_QUEUES;
-+txalloc_err:
-+	while (queue_num--)
-+		free_tx_ring(priv->device, priv->txq[queue_num], tx_rsize);
- 	return ret;
- }
- 
+ init_error:
+ 	free_dma_desc_resources(priv);
++init_phy_error:
+ 	if (dev->phydev)
+ 		phy_disconnect(dev->phydev);
+ phy_error:
 -- 
 2.53.0
 
