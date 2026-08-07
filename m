@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65719418372;
-	Fri,  7 Aug 2026 14:57:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A638E449EA6;
+	Fri,  7 Aug 2026 14:57:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114633; cv=none; b=Kqbi9buzqaIF9umAMmRN48aPbM3lC2Y+5e+dmdjeaVZq4ylZ385jXCm8p81L/HITBbD4W+pL+gbrPjdhC9ehBhgFMtBQcgfA+81dKDiKi4mDPsa6FDKzDPDHWZbWLxHyqiqFr+AhlGeTTdnvQuS9akkNnqgkug7EeFOaaynenms=
+	t=1786114635; cv=none; b=bzJI091CHEjIg0GtMuZBhAz4WJdPspg9sYy+OVMzSeG6VBCbxy/6YA63mZLUSj9AU8QcyrVroplPV6RHnkULUFFl3qwBQUsYMG98ex7TvvY3XVLmGCFkjAkAHw6gKz9/KPJF05jj3QUpRS/WMXW5v632pPOG0xk8kpAklOaxu7o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114633; c=relaxed/simple;
-	bh=YvV0xqusadnHv26xl1Mxm4DoKCPbq/OamoqJJXdxNmE=;
+	s=arc-20240116; t=1786114635; c=relaxed/simple;
+	bh=Do7d1bMICicdGCodTO7xXfmmGCYvlcJdzC7ZnyPZZ40=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b6JlWdH4spjBGxqefPd6Sdtn17zOB8ZqypjSajbpnku4NukZNSYRWUzVh4ItBRcLPRBCRrb3Q93UX96rL9tPlb1yyeZ9RC53vFbWuW8CHteJKHRoMCZQEhRIdDobjeXMwRUzqkjROLSoAxFt5Y+AdDR24mTbqn/VOw0mi6/10Kc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vyJIztDq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TilBTSRuqZvmNbdfbKYVQuVVPB2FT5cUoc4eKSj3PCLuAcNDJ0u51ExukKJkf49Bd1zTi0JX4Qa2UvxFurM7Qtf7eRmWVSWTucXd5axHuniG8OlZHXIWKnSnCjzs9li7eI27m/srJMcl8ANGaCEneu9ItamNIqan3S2MVs9tVnM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zxZ9Pw/u; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vyJIztDq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A67A41F000E9;
-	Fri,  7 Aug 2026 14:57:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zxZ9Pw/u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40BB11F00A3E;
+	Fri,  7 Aug 2026 14:57:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114622;
-	bh=T4FtDcEt2cCERWtvJk+wp4ITOBfeSOLUCIIdfshTkzo=;
+	s=korg; t=1786114627;
+	bh=CsrajBtXRuR+RZaZDr4af7l1yECa6mseXnmmlY/HZW8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vyJIztDqnWPjrACxl8leGRAtcd2CjE+U8WR/14caMg1USqNAZkcx4S5doVdE96XG6
-	 wWQ9VowZcUAfECmwvbwdFyopTh3xdTvqtR4+RtXgKjLAmfmaieImsHIatRha5tJkkF
-	 spBwpp4yUFFqIvmaoz1/prQY1LQkINCbb5kNwyzI=
+	b=zxZ9Pw/uTZ27VZLMGHQreo1kjiVybjHUC5RvAEDYFJk2tF1GQb8+1Qs0m4js7UHRR
+	 KT7QzINZqGWYWBtejjwzT6NZTKhlO1pMFg3rglTqkv9hgVifzPqyemH0AwhOV85Zld
+	 9QllL/nKVYWQI4fxa+/fzRQ+LVAg3JlkIwdWiC9k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	linux-afs@lists.infradead.org,
-	Jakub Kicinski <kuba@kernel.org>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Asad Kamal <asad.kamal@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 329/337] rxrpc: Adjust the rxrpc_rtt_rx tracepoint
-Date: Fri,  7 Aug 2026 16:38:52 +0200
-Message-ID: <20260807143425.673911720@linuxfoundation.org>
+Subject: [PATCH 6.12 313/337] drm/amdgpu/gfx: fix cleaner shader IB buffer overflow
+Date: Fri,  7 Aug 2026 16:38:36 +0200
+Message-ID: <20260807143425.313884819@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -53,110 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Asad Kamal <asad.kamal@amd.com>
 
-[ Upstream commit 93dfca65a1df42a3c8b1094299dc42ab8f18e5c8 ]
+[ Upstream commit 3e864bf2a32a1cbdf1e0f9c5a5a4176e8575f4a3 ]
 
-Adjust the rxrpc_rtt_rx tracepoint in the following ways:
+The cleaner shader sysfs path allocates a 16-dword (64 byte) IB but
+incorrectly fills (align_mask + 1) dwords. On GFX rings align_mask is
+0xff, so the loop wrote 256 dwords into a 64-byte buffer, causing a
+kernel page fault.
 
- (1) Display the collected RTT sample in the rxrpc_rtt_rx trace.
+The IB only needs to be a minimal NOP shell to schedule the job; the
+cleaner shader itself is emitted on the ring via emit_cleaner_shader().
+Fill 16 dwords to match the allocation.
 
- (2) Move the division of srtt by 8 to the TP_printk() rather doing it
-     before invoking the trace point.
+v2: Use ib_size_dw variable (Lijo)
 
- (3) Display the min_rtt value.
-
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: linux-afs@lists.infradead.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: e4d2878369d5 ("rxrpc: Fix irq-disabled in local_bh_enable()")
+Fixes: d361ad5d2fc0 ("drm/amdgpu: Add sysfs interface for running cleaner shader")
+Suggested-by: Lijo Lazar <lijo.lazar@amd.com>
+Signed-off-by: Asad Kamal <asad.kamal@amd.com>
+Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit bf21af331ebf72d0935fd70c73192414a422c03a)
+CC: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/trace/events/rxrpc.h |   14 ++++++++++----
- net/rxrpc/input.c            |    4 ++--
- net/rxrpc/rtt.c              |    2 +-
- 3 files changed, 13 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/include/trace/events/rxrpc.h
-+++ b/include/trace/events/rxrpc.h
-@@ -1308,9 +1308,9 @@ TRACE_EVENT(rxrpc_rtt_rx,
- 	    TP_PROTO(struct rxrpc_call *call, enum rxrpc_rtt_rx_trace why,
- 		     int slot,
- 		     rxrpc_serial_t send_serial, rxrpc_serial_t resp_serial,
--		     u32 rtt, u32 rto),
-+		     u32 rtt, u32 srtt, u32 rto),
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
+@@ -1426,12 +1426,13 @@ static int amdgpu_gfx_run_cleaner_shader
+ 	struct amdgpu_device *adev = ring->adev;
+ 	struct drm_gpu_scheduler *sched = &ring->sched;
+ 	struct drm_sched_entity entity;
++	unsigned int ib_size_dw = 16;
+ 	static atomic_t counter;
+ 	struct dma_fence *f;
+ 	struct amdgpu_job *job;
+ 	struct amdgpu_ib *ib;
+ 	void *owner;
+-	int i, r;
++	int r;
  
--	    TP_ARGS(call, why, slot, send_serial, resp_serial, rtt, rto),
-+	    TP_ARGS(call, why, slot, send_serial, resp_serial, rtt, srtt, rto),
+ 	/* Initialize the scheduler entity */
+ 	r = drm_sched_entity_init(&entity, DRM_SCHED_PRIORITY_NORMAL,
+@@ -1449,7 +1450,7 @@ static int amdgpu_gfx_run_cleaner_shader
+ 	owner = (void *)(unsigned long)atomic_inc_return(&counter);
  
- 	    TP_STRUCT__entry(
- 		    __field(unsigned int,		call)
-@@ -1319,7 +1319,9 @@ TRACE_EVENT(rxrpc_rtt_rx,
- 		    __field(rxrpc_serial_t,		send_serial)
- 		    __field(rxrpc_serial_t,		resp_serial)
- 		    __field(u32,			rtt)
-+		    __field(u32,			srtt)
- 		    __field(u32,			rto)
-+		    __field(u32,			min_rtt)
- 			     ),
+ 	r = amdgpu_job_alloc_with_ib(ring->adev, &entity, owner,
+-				     64, 0, &job,
++				     ib_size_dw * sizeof(uint32_t), 0, &job,
+ 				     AMDGPU_KERNEL_JOB_ID_CLEANER_SHADER);
+ 	if (r)
+ 		goto err;
+@@ -1457,9 +1458,8 @@ static int amdgpu_gfx_run_cleaner_shader
+ 	job->enforce_isolation = true;
  
- 	    TP_fast_assign(
-@@ -1329,17 +1331,21 @@ TRACE_EVENT(rxrpc_rtt_rx,
- 		    __entry->send_serial = send_serial;
- 		    __entry->resp_serial = resp_serial;
- 		    __entry->rtt = rtt;
-+		    __entry->srtt = srtt;
- 		    __entry->rto = rto;
-+		    __entry->min_rtt = minmax_get(&call->peer->min_rtt)
- 			   ),
+ 	ib = &job->ibs[0];
+-	for (i = 0; i <= ring->funcs->align_mask; ++i)
+-		ib->ptr[i] = ring->funcs->nop;
+-	ib->length_dw = ring->funcs->align_mask + 1;
++	memset32(ib->ptr, ring->funcs->nop, ib_size_dw);
++	ib->length_dw = ib_size_dw;
  
--	    TP_printk("c=%08x [%d] %s sr=%08x rr=%08x rtt=%u rto=%u",
-+	    TP_printk("c=%08x [%d] %s sr=%08x rr=%08x rtt=%u srtt=%u rto=%u min=%u",
- 		      __entry->call,
- 		      __entry->slot,
- 		      __print_symbolic(__entry->why, rxrpc_rtt_rx_traces),
- 		      __entry->send_serial,
- 		      __entry->resp_serial,
- 		      __entry->rtt,
--		      __entry->rto)
-+		      __entry->srtt / 8,
-+		      __entry->rto,
-+		      __entry->min_rtt)
- 	    );
+ 	f = amdgpu_job_submit(job);
  
- TRACE_EVENT(rxrpc_timer_set,
---- a/net/rxrpc/input.c
-+++ b/net/rxrpc/input.c
-@@ -674,7 +674,7 @@ static void rxrpc_complete_rtt_probe(str
- 		 */
- 		if (after(acked_serial, orig_serial)) {
- 			trace_rxrpc_rtt_rx(call, rxrpc_rtt_rx_obsolete, i,
--					   orig_serial, acked_serial, 0, 0);
-+					   orig_serial, acked_serial, 0, 0, 0);
- 			clear_bit(i + RXRPC_CALL_RTT_PEND_SHIFT, &call->rtt_avail);
- 			smp_wmb();
- 			set_bit(i, &call->rtt_avail);
-@@ -682,7 +682,7 @@ static void rxrpc_complete_rtt_probe(str
- 	}
- 
- 	if (!matched)
--		trace_rxrpc_rtt_rx(call, rxrpc_rtt_rx_lost, 9, 0, acked_serial, 0, 0);
-+		trace_rxrpc_rtt_rx(call, rxrpc_rtt_rx_lost, 9, 0, acked_serial, 0, 0, 0);
- }
- 
- /*
---- a/net/rxrpc/rtt.c
-+++ b/net/rxrpc/rtt.c
-@@ -175,7 +175,7 @@ void rxrpc_peer_add_rtt(struct rxrpc_cal
- 	spin_unlock(&peer->rtt_input_lock);
- 
- 	trace_rxrpc_rtt_rx(call, why, rtt_slot, send_serial, resp_serial,
--			   peer->srtt_us >> 3, peer->rto_us);
-+			   rtt_us, peer->srtt_us, peer->rto_us);
- }
- 
- /*
 
 
