@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE2BC4746D1;
-	Fri,  7 Aug 2026 15:26:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAEAC381E96;
+	Fri,  7 Aug 2026 15:26:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116395; cv=none; b=uBiGdgr40bzvJko3zXRgcb9Y1g7S16Cb8xGv94/UI9eEqDEo7PuKdisufxbJIiiWh9ISRp2MXGSoWww6Sygp7G9szwUVRVjNhOpzquwvEN8LIzqdJwsn2gl3ljoEf+wQzFqNl8zwzMokdkvJsi17WRa7SKJNfu8fMI0my6o0/zw=
+	t=1786116398; cv=none; b=bqBYNHe8hKwCy5F+zkdrMj3iKFZylxK3qqpfGbpf/lCrtoChFRrYVbOhLI3W8Cmh3V59enbIzdyaeOGGr1CgTnHhcZOEc/laK/QA+81kTtA1C2VoVZH8A+7mQeA1U0TEOcyDzbzEde/0XK07oRy7+OhSDZBmgiNtsSTWqQ9E6XA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116395; c=relaxed/simple;
-	bh=U/c2jeZxatr1qlC0eHl3+bagaBEHCPAWPqQHwkU2mNE=;
+	s=arc-20240116; t=1786116398; c=relaxed/simple;
+	bh=E6JvyEiOxRBKuo6LReKIqm5TheTtTyNMmrGp89DG3zY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=llai/kFRNRnfWl6lfxbNPeKs3eOu5d9UsppwIeL3En6VVh1wjbQxjHmpq8Vhd1s3JfftBASgJwAUUjvVxSCoAvYfjpaXJl1A8t5EDXACbprntwXf0BXpDM2NFHpFzXP1ZOAZy79BPU5ns7sOisloNUEdBfHs+DxtgGkKsXY+Uvg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rolsn3LC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=epICIwueQw4RHc1ZdvrcXkyk/zhLlK90bvQY5XZpgqw7N+L0pI38hY92nRwYpjtGb/4w1QxSXuGc7nJmyt2+HgmGMs1iEqcs8+idotYcvf3sinKzZWXZr4NeJqxiLAguqeTcvcfjjJDbeC991ggeGRkvaEm6QEPXJ80tYGMTlk8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h0Xxf1TD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rolsn3LC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A1D81F000E9;
-	Fri,  7 Aug 2026 15:26:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h0Xxf1TD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC7A21F000E9;
+	Fri,  7 Aug 2026 15:26:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116393;
-	bh=+/8KJQtiYKL6bnSbVEaAhWef+YSeURv5iBokd8VJYV4=;
+	s=korg; t=1786116396;
+	bh=stmE1UNY9zbVbH6NAB3km3NBDs8c47Q4650MZEc5gv4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rolsn3LCwflaLqXUlyI24DApLeJ6jKl8vQitbIwAdPgeKim7FhqiVTFFMjw+KtLxv
-	 Ir5ACYTYl/KEv9LyzDvmQYVspVNhaWJbsB/eRMrjm9UMThfXVNH1pI52rbtdeWPxEy
-	 xRPj/kAG9jJdvFJZLSojFJ04gvuA01n8AJgOvRWw=
+	b=h0Xxf1TDWbGvgPdgEFvbVURh2U6JH0BA8RDqGiUg60g1mVHBjI5fZx+681kjcGBiS
+	 O4spCvUfM8Dm0XlP65g6NO8JK5oQ4+Q9EVEVuTg1E6GLUej+CoPO9eVdt2tP5iCyYj
+	 VAYEQA/OTlJChH0T1HCep9r+T4Q23ZD4IDIYdpDU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kiryl Shutsemau <kas@kernel.org>,
-	Sashiko AI review <sashiko-bot@kernel.org>,
-	David Hildenbrand <david@kernel.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Oscar Salvador <osalvador@suse.de>,
-	Peter Xu <peterx@redhat.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	stable <stable@kernel.org>,
+	Cen Zhang <zzzccc427@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 209/261] mm/hugetlb: fix swap entry corruption when clearing uffd-wp at fork()
-Date: Fri,  7 Aug 2026 16:39:26 +0200
-Message-ID: <20260807143419.876077927@linuxfoundation.org>
+Subject: [PATCH 6.6 218/261] usb: gadget: f_tcm: synchronize delayed set_alt with teardown
+Date: Fri,  7 Aug 2026 16:39:35 +0200
+Message-ID: <20260807143420.073208878@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143415.358597922@linuxfoundation.org>
 References: <20260807143415.358597922@linuxfoundation.org>
@@ -56,96 +51,385 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kiryl Shutsemau (Meta) <kas@kernel.org>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 83abe2fd5b3aeb3123b5408a5a91709c5538fb23 ]
+[ Upstream commit 79e2d75725c85607f8a9d87ae9cace62a19f767d ]
 
-copy_hugetlb_page_range() clears the uffd-wp bit of migration and hwpoison
-entries with huge_pte_clear_uffd_wp(), which operates on the present-PTE
-bit position.  Swap entries keep the uffd-wp state elsewhere -- the
-migration branch reads and sets it with pte_swp_uffd_wp() and
-pte_swp_mkuffd_wp() -- and the present-PTE position falls into the swap
-payload.  On x86-64 it lands in the inverted swap offset, where a
-naturally-aligned hugetlb PFN always has the affected bit set, so the
-clear advances the encoded PFN by two pages.
+The f_tcm set_alt() path defers endpoint setup to a work item and
+completes the delayed status response from process context. The delayed
+work uses f_tcm private state and may complete the setup request after
+disconnect or function teardown has already moved on.
 
-No userfaultfd needs to be involved: the clear is guarded only by the
-child VMA not being uffd-wp registered, so a plain fork() with an
-in-flight hugetlb migration entry (or a poisoned hugetlb page) corrupts
-the entry copied into the child.  Instrumenting the clear and forking
-after MADV_HWPOISON on a 2MB anon hugetlb page shows:
+Cancel and drain the delayed set_alt work when the function is unbound or
+freed. For disable paths, which are reached under the composite device
+lock, use a small state machine and a non-sleeping cancellation path
+instead of cancel_work_sync(). If the work is already running, mark it
+cancelled and let the worker own the cleanup; otherwise tcm_disable() can
+cancel the queued work and clean up immediately.
 
-  offset before=120e00
-  offset after =120e02
+Also serialize the final delayed-status completion with the cancellation
+check while holding the composite device lock. This prevents a disconnect
+from clearing delayed_status while the worker is about to complete the
+control request.
 
-The fallout is mostly latent: rmap walks match migration entries by folio
-range and remove_migration_pte() rebuilds the PTE from the folio, so a
-within-folio PFN skew heals once migration completes.  But any path that
-re-encodes the corrupted offset -- e.g.  hugetlb_change_protection()
-rewriting a writable migration entry via
-make_readable_migration_entry(swp_offset(entry)) -- propagates it.
+Validation reproduced this kernel report:
+BUG: KASAN: slab-use-after-free in tcm_delayed_set_alt+0x6c/0xef0
 
-Migration entries legitimately carry uffd-wp, so clear it with
-pte_swp_clear_uffd_wp(), matching copy_nonpresent_pte() and
-move_huge_pte().
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x66/0xa0
+ print_report+0xce/0x630
+ ? tcm_delayed_set_alt+0x6c/0xef0
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ ? __virt_addr_valid+0x188/0x320
+ ? tcm_delayed_set_alt+0x6c/0xef0
+ kasan_report+0xe0/0x110
+ ? tcm_delayed_set_alt+0x6c/0xef0
+ tcm_delayed_set_alt+0x6c/0xef0
+ ? __pfx_tcm_delayed_set_alt+0x10/0x10
+ ? process_one_work+0x4cb/0xb90
+ ? rcu_is_watching+0x20/0x50
+ ? tcm_delayed_set_alt+0x9/0xef0
+ process_one_work+0x4d7/0xb90
+ ? __pfx_process_one_work+0x10/0x10
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ ? __list_add_valid_or_report+0x37/0xf0
+ ? __pfx_tcm_delayed_set_alt+0x10/0x10
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ worker_thread+0x2d8/0x570
+ ? __pfx_worker_thread+0x10/0x10
+ kthread+0x1ad/0x1f0
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork+0x3c9/0x540
+ ? __pfx_ret_from_fork+0x10/0x10
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ ? __switch_to+0x2e9/0x730
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork_asm+0x1a/0x30
+ </TASK>
 
-A hwpoison entry, on the other hand, never carries the uffd-wp bit: it is
-installed fresh by make_hwpoison_entry() (try_to_unmap_one() does not
-preserve uffd-wp on the hwpoison path) and hugetlb_change_protection()
-leaves hwpoison entries untouched.  There was nothing to clear there, only
-the corruption, so drop the clear entirely.
+Allocated by task 544:
+ kasan_save_stack+0x33/0x60
+ kasan_save_track+0x14/0x30
+ __kasan_kmalloc+0x8f/0xa0
+ tcm_alloc+0x68/0x180
+ usb_get_function+0x36/0x60
+ config_usb_cfg_link+0x125/0x1b0
+ configfs_symlink+0x322/0x890
+ vfs_symlink+0xc2/0x270
+ filename_symlinkat+0x295/0x2f0
+ __x64_sys_symlinkat+0x62/0x90
+ do_syscall_64+0x115/0x6a0
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-Link: https://lore.kernel.org/20260708090110.136162-1-kirill@shutemov.name
-Fixes: bc70fbf269fd ("mm/hugetlb: handle uffd-wp during fork()")
-Signed-off-by: Kiryl Shutsemau <kas@kernel.org>
-Reported-by: Sashiko AI review <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/all/20260703140011.99E601F000E9@smtp.kernel.org/
-Suggested-by: David Hildenbrand <david@kernel.org>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Assisted-by: Claude:claude-fable-5
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-(cherry picked from commit 83abe2fd5b3aeb3123b5408a5a91709c5538fb23)
-[ kas: adapt to the pre-softleaf idiom ]
-Signed-off-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
+Freed by task 661:
+ kasan_save_stack+0x33/0x60
+ kasan_save_track+0x14/0x30
+ kasan_save_free_info+0x3b/0x60
+ __kasan_slab_free+0x43/0x70
+ kfree+0x2f9/0x530
+ config_usb_cfg_unlink+0x173/0x1e0
+ configfs_unlink+0x1fa/0x340
+ vfs_unlink+0x15c/0x510
+ filename_unlinkat+0x2ba/0x450
+ __x64_sys_unlinkat+0x63/0x90
+ do_syscall_64+0x115/0x6a0
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Fixes: c52661d60f63 ("usb-gadget: Initial merge of target module for UASP + BOT")
+Cc: stable <stable@kernel.org>
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Link: https://patch.msgid.link/20260627104153.3822495-1-zzzccc427@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[ adjusted context for 6.12's scalar `struct usbg_cdb cmd` and missing `stream_hash`, dropping the `hash_init()` context line ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/hugetlb.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/usb/gadget/function/f_tcm.c |  192 ++++++++++++++++++++++++++++++------
+ drivers/usb/gadget/function/tcm.h   |   13 ++
+ 2 files changed, 177 insertions(+), 28 deletions(-)
 
-diff --git a/mm/hugetlb.c b/mm/hugetlb.c
-index af4533028f62e..edae641407b96 100644
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -5112,8 +5112,12 @@ int copy_hugetlb_page_range(struct mm_struct *dst, struct mm_struct *src,
- 			 */
- 			;
- 		} else if (unlikely(is_hugetlb_entry_hwpoisoned(entry))) {
--			if (!userfaultfd_wp(dst_vma))
--				entry = huge_pte_clear_uffd_wp(entry);
-+			/*
-+			 * A hwpoison entry never carries the uffd-wp bit: it is
-+			 * installed fresh by make_hwpoison_entry() and
-+			 * hugetlb_change_protection() leaves it untouched, so
-+			 * there is nothing to clear for the child.
-+			 */
- 			set_huge_pte_at(dst, addr, dst_pte, entry, sz);
- 		} else if (unlikely(is_hugetlb_entry_migration(entry))) {
- 			swp_entry_t swp_entry = pte_to_swp_entry(entry);
-@@ -5132,7 +5136,7 @@ int copy_hugetlb_page_range(struct mm_struct *dst, struct mm_struct *src,
- 				set_huge_pte_at(src, addr, src_pte, entry, sz);
- 			}
- 			if (!userfaultfd_wp(dst_vma))
--				entry = huge_pte_clear_uffd_wp(entry);
-+				entry = pte_swp_clear_uffd_wp(entry);
- 			set_huge_pte_at(dst, addr, dst_pte, entry, sz);
- 		} else if (unlikely(is_pte_marker(entry))) {
- 			pte_marker marker = copy_pte_marker(
--- 
-2.53.0
-
+--- a/drivers/usb/gadget/function/f_tcm.c
++++ b/drivers/usb/gadget/function/f_tcm.c
+@@ -2011,31 +2011,158 @@ ep_fail:
+ 	return -ENOTSUPP;
+ }
+ 
+-struct guas_setup_wq {
+-	struct work_struct work;
+-	struct f_uas *fu;
+-	unsigned int alt;
+-};
++static void tcm_cleanup_old_alt(struct f_uas *fu)
++{
++	if (fu->flags & USBG_IS_UAS)
++		uasp_cleanup_old_alt(fu);
++	else if (fu->flags & USBG_IS_BOT)
++		bot_cleanup_old_alt(fu);
++	fu->flags = 0;
++}
++
++static void tcm_delayed_set_alt_done(struct f_uas *fu)
++{
++	unsigned long flags;
++
++	spin_lock_irqsave(&fu->delayed_set_alt_lock, flags);
++	fu->delayed_set_alt_state = USBG_DELAYED_SET_ALT_IDLE;
++	fu->delayed_set_alt_cancel = false;
++	spin_unlock_irqrestore(&fu->delayed_set_alt_lock, flags);
++}
++
++static bool tcm_delayed_set_alt_cancelled(struct f_uas *fu)
++{
++	bool cancelled;
++	unsigned long flags;
++
++	spin_lock_irqsave(&fu->delayed_set_alt_lock, flags);
++	cancelled = fu->delayed_set_alt_cancel;
++	spin_unlock_irqrestore(&fu->delayed_set_alt_lock, flags);
++
++	return cancelled;
++}
++
++static bool tcm_complete_delayed_status(struct f_uas *fu)
++{
++	struct usb_composite_dev *cdev = fu->function.config->cdev;
++	struct usb_request *req = cdev->req;
++	unsigned long cdev_flags;
++	bool cancelled;
++	int ret;
++
++	spin_lock_irqsave(&cdev->lock, cdev_flags);
++	spin_lock(&fu->delayed_set_alt_lock);
++	cancelled = fu->delayed_set_alt_cancel;
++	if (!cancelled) {
++		fu->delayed_set_alt_state = USBG_DELAYED_SET_ALT_IDLE;
++		fu->delayed_set_alt_cancel = false;
++	}
++	spin_unlock(&fu->delayed_set_alt_lock);
++
++	if (cancelled) {
++		spin_unlock_irqrestore(&cdev->lock, cdev_flags);
++		return false;
++	}
++
++	if (cdev->delayed_status == 0) {
++		WARN(cdev, "%s: Unexpected call\n", __func__);
++	} else if (--cdev->delayed_status == 0) {
++		req->length = 0;
++		req->context = cdev;
++		ret = usb_ep_queue(cdev->gadget->ep0, req, GFP_ATOMIC);
++		if (ret == 0) {
++			cdev->setup_pending = true;
++		} else {
++			req->status = 0;
++			req->complete(cdev->gadget->ep0, req);
++		}
++	}
++
++	spin_unlock_irqrestore(&cdev->lock, cdev_flags);
++
++	return true;
++}
++
++static bool tcm_cancel_delayed_set_alt(struct f_uas *fu)
++{
++	bool cleanup = false;
++	bool cancel = false;
++	unsigned long flags;
++
++	spin_lock_irqsave(&fu->delayed_set_alt_lock, flags);
++	switch (fu->delayed_set_alt_state) {
++	case USBG_DELAYED_SET_ALT_IDLE:
++		cleanup = true;
++		break;
++	case USBG_DELAYED_SET_ALT_QUEUED:
++	case USBG_DELAYED_SET_ALT_RUNNING:
++		fu->delayed_set_alt_cancel = true;
++		cancel = true;
++		break;
++	}
++	spin_unlock_irqrestore(&fu->delayed_set_alt_lock, flags);
++
++	if (cancel && cancel_work(&fu->delayed_set_alt)) {
++		spin_lock_irqsave(&fu->delayed_set_alt_lock, flags);
++		if (fu->delayed_set_alt_state == USBG_DELAYED_SET_ALT_QUEUED) {
++			fu->delayed_set_alt_state = USBG_DELAYED_SET_ALT_IDLE;
++			fu->delayed_set_alt_cancel = false;
++			cleanup = true;
++		}
++		spin_unlock_irqrestore(&fu->delayed_set_alt_lock, flags);
++	}
++
++	return cleanup;
++}
++
++static void tcm_cancel_delayed_set_alt_sync(struct f_uas *fu)
++{
++	unsigned long flags;
++
++	spin_lock_irqsave(&fu->delayed_set_alt_lock, flags);
++	if (fu->delayed_set_alt_state != USBG_DELAYED_SET_ALT_IDLE)
++		fu->delayed_set_alt_cancel = true;
++	spin_unlock_irqrestore(&fu->delayed_set_alt_lock, flags);
++
++	cancel_work_sync(&fu->delayed_set_alt);
++
++	spin_lock_irqsave(&fu->delayed_set_alt_lock, flags);
++	fu->delayed_set_alt_state = USBG_DELAYED_SET_ALT_IDLE;
++	fu->delayed_set_alt_cancel = false;
++	spin_unlock_irqrestore(&fu->delayed_set_alt_lock, flags);
++}
+ 
+ static void tcm_delayed_set_alt(struct work_struct *wq)
+ {
+-	struct guas_setup_wq *work = container_of(wq, struct guas_setup_wq,
+-			work);
+-	struct f_uas *fu = work->fu;
+-	int alt = work->alt;
++	struct f_uas *fu = container_of(wq, struct f_uas, delayed_set_alt);
++	unsigned long flags;
++	unsigned int alt;
++
++	spin_lock_irqsave(&fu->delayed_set_alt_lock, flags);
++	if (fu->delayed_set_alt_state != USBG_DELAYED_SET_ALT_QUEUED) {
++		spin_unlock_irqrestore(&fu->delayed_set_alt_lock, flags);
++		return;
++	}
++	fu->delayed_set_alt_state = USBG_DELAYED_SET_ALT_RUNNING;
++	alt = fu->delayed_alt;
++	spin_unlock_irqrestore(&fu->delayed_set_alt_lock, flags);
+ 
+-	kfree(work);
++	tcm_cleanup_old_alt(fu);
+ 
+-	if (fu->flags & USBG_IS_BOT)
+-		bot_cleanup_old_alt(fu);
+-	if (fu->flags & USBG_IS_UAS)
+-		uasp_cleanup_old_alt(fu);
++	if (tcm_delayed_set_alt_cancelled(fu))
++		goto out_done;
+ 
+ 	if (alt == USB_G_ALT_INT_BBB)
+ 		bot_set_alt(fu);
+ 	else if (alt == USB_G_ALT_INT_UAS)
+ 		uasp_set_alt(fu);
+-	usb_composite_setup_continue(fu->function.config->cdev);
++
++	if (tcm_complete_delayed_status(fu))
++		return;
++
++	tcm_cleanup_old_alt(fu);
++out_done:
++	tcm_delayed_set_alt_done(fu);
+ }
+ 
+ static int tcm_get_alt(struct usb_function *f, unsigned intf)
+@@ -2061,15 +2188,20 @@ static int tcm_set_alt(struct usb_functi
+ 		return -EOPNOTSUPP;
+ 
+ 	if ((alt == USB_G_ALT_INT_BBB) || (alt == USB_G_ALT_INT_UAS)) {
+-		struct guas_setup_wq *work;
++		unsigned long flags;
++
++		spin_lock_irqsave(&fu->delayed_set_alt_lock, flags);
++		if (fu->delayed_set_alt_state != USBG_DELAYED_SET_ALT_IDLE) {
++			spin_unlock_irqrestore(&fu->delayed_set_alt_lock,
++					       flags);
++			return -EBUSY;
++		}
++		fu->delayed_alt = alt;
++		fu->delayed_set_alt_cancel = false;
++		fu->delayed_set_alt_state = USBG_DELAYED_SET_ALT_QUEUED;
++		spin_unlock_irqrestore(&fu->delayed_set_alt_lock, flags);
+ 
+-		work = kmalloc(sizeof(*work), GFP_ATOMIC);
+-		if (!work)
+-			return -ENOMEM;
+-		INIT_WORK(&work->work, tcm_delayed_set_alt);
+-		work->fu = fu;
+-		work->alt = alt;
+-		schedule_work(&work->work);
++		schedule_work(&fu->delayed_set_alt);
+ 		return USB_GADGET_DELAYED_STATUS;
+ 	}
+ 	return -EOPNOTSUPP;
+@@ -2079,11 +2211,8 @@ static void tcm_disable(struct usb_funct
+ {
+ 	struct f_uas *fu = to_f_uas(f);
+ 
+-	if (fu->flags & USBG_IS_UAS)
+-		uasp_cleanup_old_alt(fu);
+-	else if (fu->flags & USBG_IS_BOT)
+-		bot_cleanup_old_alt(fu);
+-	fu->flags = 0;
++	if (tcm_cancel_delayed_set_alt(fu))
++		tcm_cleanup_old_alt(fu);
+ }
+ 
+ static int tcm_setup(struct usb_function *f,
+@@ -2231,11 +2360,16 @@ static void tcm_free(struct usb_function
+ {
+ 	struct f_uas *tcm = to_f_uas(f);
+ 
++	tcm_cancel_delayed_set_alt_sync(tcm);
+ 	kfree(tcm);
+ }
+ 
+ static void tcm_unbind(struct usb_configuration *c, struct usb_function *f)
+ {
++	struct f_uas *fu = to_f_uas(f);
++
++	tcm_cancel_delayed_set_alt_sync(fu);
++	tcm_cleanup_old_alt(fu);
+ 	usb_free_all_descriptors(f);
+ }
+ 
+@@ -2268,6 +2402,8 @@ static struct usb_function *tcm_alloc(st
+ 	fu->function.disable = tcm_disable;
+ 	fu->function.free_func = tcm_free;
+ 	fu->tpg = tpg_instances[i].tpg;
++	INIT_WORK(&fu->delayed_set_alt, tcm_delayed_set_alt);
++	spin_lock_init(&fu->delayed_set_alt_lock);
+ 	mutex_unlock(&tpg_instances_lock);
+ 
+ 	return &fu->function;
+--- a/drivers/usb/gadget/function/tcm.h
++++ b/drivers/usb/gadget/function/tcm.h
+@@ -3,6 +3,7 @@
+ #define __TARGET_USB_GADGET_H__
+ 
+ #include <linux/kref.h>
++#include <linux/spinlock.h>
+ /* #include <linux/usb/uas.h> */
+ #include <linux/usb/composite.h>
+ #include <linux/usb/uas.h>
+@@ -26,6 +27,12 @@ enum {
+ 
+ #define USB_G_DEFAULT_SESSION_TAGS	128
+ 
++enum {
++	USBG_DELAYED_SET_ALT_IDLE = 0,
++	USBG_DELAYED_SET_ALT_QUEUED,
++	USBG_DELAYED_SET_ALT_RUNNING,
++};
++
+ struct tcm_usbg_nexus {
+ 	struct se_session *tvn_se_sess;
+ };
+@@ -117,6 +124,12 @@ struct f_uas {
+ #define USBG_IS_BOT		(1 << 3)
+ #define USBG_BOT_CMD_PEND	(1 << 4)
+ 
++	struct work_struct	delayed_set_alt;
++	spinlock_t		delayed_set_alt_lock; /* protects delayed_set_alt_* */
++	unsigned int		delayed_alt;
++	unsigned int		delayed_set_alt_state;
++	bool			delayed_set_alt_cancel;
++
+ 	struct usbg_cdb		cmd;
+ 	struct usb_ep		*ep_in;
+ 	struct usb_ep		*ep_out;
 
 
