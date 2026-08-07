@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95F8E33344A;
-	Fri,  7 Aug 2026 15:21:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80A513491C9;
+	Fri,  7 Aug 2026 15:21:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116074; cv=none; b=dNE5ZlBVnKyZnpSVx2WELnr7LbNdEa18YklaNIcQX6Ashx2erbbl4vdAzK8UeVj0UMZAk2n+FboqwsnCtm2MnB2kfJnwJY0iNKnbtHNx9JjzAZ5qdXm45H+UJQHDKKYRtiMmbGBsNXQ4UEZnAVRPfifrGl87t65qzuLr9txNCEo=
+	t=1786116077; cv=none; b=c27Ejytcug7Xu75qaYqSUyEDUvIkKp8Hlg4tVo9kUjq6xWa3p91YZSULzlCRWQXX8UID8PlViC3c6s5YcSEccRTccTmKombgYWM9XSIJrT26BENnhgFUVmKo24Md9lpklUNE/sw5ejgX5zfvPdEvolKMwmWAStOWPZqwk7cNuAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116074; c=relaxed/simple;
-	bh=0MQyTMj4Ii+dQJvAWAf8gR6X+ZFpoYyvkOWLCzw+ZRs=;
+	s=arc-20240116; t=1786116077; c=relaxed/simple;
+	bh=4I9YITIYheIFk4X4bVBWvpfMOKThyiKHX6Vdo7S80eY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BTKpc/c/c8NCh0/dU7NqjCRJggDfc7qhR52nI1hFAhERgVBmfiomoESytM4JrEMhBL0pNgxxAIuYnEGSiVyuhOwX5PA3eGwDaUXRRWOmS/SUkyoCFkXyr+fK60Q/GS0vAndeB4xp7UiHBiN1o5ueUimIGweEEXW2JSA7l0s9E70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lR58hOcO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MoHCXlU6agbQedG3AMGM91hu6TkxNkjbFBxaAFE3wMI1HwahejjDuUKVyd/MPk8UAiqCRjIAjX5kWcX+ExHz9f7Y6V8DVsckHNFNT73XcftPX5eAHjZzB9PmcRtvnTxrPDIp+n1ISD2Luw00a4TrK6DpVOJbtm0aTDmqKdiQxkI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CK/i6+OH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lR58hOcO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8FAD1F000E9;
-	Fri,  7 Aug 2026 15:21:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CK/i6+OH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D57F01F000E9;
+	Fri,  7 Aug 2026 15:21:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116073;
-	bh=NQ00TNwnvtNEuaq+9c1m8wOxL6TvD9LybSoBAl/7e7o=;
+	s=korg; t=1786116076;
+	bh=AS953PpJylhR0jR6cVNtk51UccxvMe6gxD7KRyhgOH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lR58hOcObXN884k7OGPPzQVI29D24sgmtN530o+Dw6/UimpFgMHDj40jRmoMSYMry
-	 jxJp+HbjttnwkoFvoOWC05m6e8+xt416LvWBOMDhFAENCCgJbY5spdv0K1yvH3z99n
-	 3gJu3nC/u5P8dLSQW0Rkn/RIMgXKk0QuhTTidEdo=
+	b=CK/i6+OH3Q4tG8rPePJejge2UHiKsi0aEDp46P3OGwISo8ihOAZJWbcFOGaBiOxO8
+	 k8X15bHUE5gMbZn3L7ZFRqlKfbDNOxKSjGfPdpwxdG6oL/x8B9G5+AjAL22VTlgcJi
+	 RK22XKOymgK8ABZu6N2BpZfkmJoEMTf/moIF4Zm0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Luxiao Xu <rakukuip@gmail.com>,
-	Ren Wei <enjou1224z@gmail.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 6.6 102/261] audit: fix potential use-after-free in audit_del_rule()
-Date: Fri,  7 Aug 2026 16:37:39 +0200
-Message-ID: <20260807143417.579352107@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.6 103/261] Bluetooth: btmtk: Fix short read errors in btmtk_usb_uhw_reg_read()
+Date: Fri,  7 Aug 2026 16:37:40 +0200
+Message-ID: <20260807143417.600959447@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143415.358597922@linuxfoundation.org>
 References: <20260807143415.358597922@linuxfoundation.org>
@@ -52,55 +50,167 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luxiao Xu <rakukuip@gmail.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 246df90b5f1a8a6e6abbd2f058b029558720adec upstream.
+commit b186c18c4843dd58adc29443369bddc71cb626a3 upstream.
 
-`audit_del_rule()` destroys `e->rule.exe` via `audit_remove_mark_rule()`
-before unlinking the rule from RCU-visible filter lists and waiting for a
-grace period. Concurrent readers in `audit_filter()` and
-`audit_filter_rules()` still dereference `e->rule.exe`, while the fsnotify
-mark can be freed on an independent lifetime path. This creates a
-use-after-free window during rule deletion.
+If btmtk_usb_uhw_reg_read() gets a "short" read from a device, it will
+accidentally treat that as a "real" read and populate the returned value
+with some unknown and probably totally invalid data.
 
-Fix this by unlinking the rule from the RCU-visible lists and invoking
-`synchronize_rcu()` before calling `audit_remove_mark_rule()` (and other
-rule removal helpers). This ensures that all existing RCU readers have
-exited the critical section before any underlying resources are destroyed.
+Fix this logic error up by calling usb_control_msg_recv() which
+guarantees a "full" read happens, and then simplify the error checking
+for when btmtk_usb_uhw_reg_read() is called.
 
-Cc: stable@vger.kernel.org
-Fixes: 34d99af52ad4 ("audit: implement audit by executable")
-Reported-by: Vega <vega@nebusec.ai>
-Assisted-by: Codex:gpt-5.4
-Signed-off-by: Luxiao Xu <rakukuip@gmail.com>
-Signed-off-by: Ren Wei <enjou1224z@gmail.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Note, one caller of btmtk_usb_uhw_reg_read() does not check the return
+value, but as we pre-initialize the return value as 0, an incorrect read
+will not do anything wrong.
+
+Cc: stable <stable@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/auditfilter.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/bluetooth/btmtk.c |   50 ++++++++++++++++++++--------------------------
+ 1 file changed, 22 insertions(+), 28 deletions(-)
 
---- a/kernel/auditfilter.c
-+++ b/kernel/auditfilter.c
-@@ -1047,6 +1047,10 @@ int audit_del_rule(struct audit_entry *e
- 		goto out;
+--- a/drivers/bluetooth/btmtk.c
++++ b/drivers/bluetooth/btmtk.c
+@@ -760,30 +760,24 @@ static int btmtk_usb_uhw_reg_write(struc
+ static int btmtk_usb_uhw_reg_read(struct hci_dev *hdev, u32 reg, u32 *val)
+ {
+ 	struct btmtk_data *data = hci_get_priv(hdev);
+-	int pipe, err;
+-	void *buf;
+-
+-	buf = kzalloc(4, GFP_KERNEL);
+-	if (!buf)
+-		return -ENOMEM;
++	u8 buf[sizeof(u32)];
++	int err;
+ 
+-	pipe = usb_rcvctrlpipe(data->udev, 0);
+-	err = usb_control_msg(data->udev, pipe, 0x01,
+-			      0xDE,
+-			      reg >> 16, reg & 0xffff,
+-			      buf, 4, USB_CTRL_GET_TIMEOUT);
+-	if (err < 0) {
++	*val = 0;
++	err = usb_control_msg_recv(data->udev, 0, 0x01,
++				   0xDE,
++				   reg >> 16, reg & 0xffff,
++				   buf, sizeof(buf), USB_CTRL_GET_TIMEOUT,
++				   GFP_KERNEL);
++	if (err) {
+ 		bt_dev_err(hdev, "Failed to read uhw reg(%d)", err);
+-		goto err_free_buf;
++		return err;
  	}
  
-+	list_del_rcu(&e->list);
-+	list_del(&e->rule.list);
-+	synchronize_rcu();
-+
- 	if (e->rule.watch)
- 		audit_remove_watch_rule(&e->rule);
+ 	*val = get_unaligned_le32(buf);
+ 	bt_dev_dbg(hdev, "reg=%x, value=0x%08x", reg, *val);
  
-@@ -1064,8 +1068,6 @@ int audit_del_rule(struct audit_entry *e
- 		audit_signals--;
- #endif
+-err_free_buf:
+-	kfree(buf);
+-
+-	return err;
++	return 0;
+ }
  
--	list_del_rcu(&e->list);
--	list_del(&e->rule.list);
- 	call_rcu(&e->rcu, audit_free_rule_rcu);
+ static int btmtk_usb_reg_read(struct hci_dev *hdev, u32 reg, u32 *val)
+@@ -833,7 +827,7 @@ int btmtk_usb_subsys_reset(struct hci_de
  
- out:
+ 	if (dev_id == 0x7922) {
+ 		err = btmtk_usb_uhw_reg_read(hdev, MTK_BT_SUBSYS_RST, &val);
+-		if (err < 0)
++		if (err)
+ 			return err;
+ 		val |= 0x00002020;
+ 		err = btmtk_usb_uhw_reg_write(hdev, MTK_BT_SUBSYS_RST, val);
+@@ -843,7 +837,7 @@ int btmtk_usb_subsys_reset(struct hci_de
+ 		if (err < 0)
+ 			return err;
+ 		err = btmtk_usb_uhw_reg_read(hdev, MTK_BT_SUBSYS_RST, &val);
+-		if (err < 0)
++		if (err)
+ 			return err;
+ 		val |= BIT(0);
+ 		err = btmtk_usb_uhw_reg_write(hdev, MTK_BT_SUBSYS_RST, val);
+@@ -852,14 +846,14 @@ int btmtk_usb_subsys_reset(struct hci_de
+ 		msleep(100);
+ 	} else if (dev_id == 0x7925) {
+ 		err = btmtk_usb_uhw_reg_read(hdev, MTK_BT_RESET_REG_CONNV3, &val);
+-		if (err < 0)
++		if (err)
+ 			return err;
+ 		val |= (1 << 5);
+ 		err = btmtk_usb_uhw_reg_write(hdev, MTK_BT_RESET_REG_CONNV3, val);
+ 		if (err < 0)
+ 			return err;
+ 		err = btmtk_usb_uhw_reg_read(hdev, MTK_BT_RESET_REG_CONNV3, &val);
+-		if (err < 0)
++		if (err)
+ 			return err;
+ 		val &= 0xFFFF00FF;
+ 		val |= (1 << 13);
+@@ -870,7 +864,7 @@ int btmtk_usb_subsys_reset(struct hci_de
+ 		if (err < 0)
+ 			return err;
+ 		err = btmtk_usb_uhw_reg_read(hdev, MTK_BT_RESET_REG_CONNV3, &val);
+-		if (err < 0)
++		if (err)
+ 			return err;
+ 		val |= (1 << 0);
+ 		err = btmtk_usb_uhw_reg_write(hdev, MTK_BT_RESET_REG_CONNV3, val);
+@@ -880,13 +874,13 @@ int btmtk_usb_subsys_reset(struct hci_de
+ 		if (err < 0)
+ 			return err;
+ 		err = btmtk_usb_uhw_reg_read(hdev, MTK_UDMA_INT_STA_BT, &val);
+-		if (err < 0)
++		if (err)
+ 			return err;
+ 		err = btmtk_usb_uhw_reg_write(hdev, MTK_UDMA_INT_STA_BT1, 0x000000FF);
+ 		if (err < 0)
+ 			return err;
+ 		err = btmtk_usb_uhw_reg_read(hdev, MTK_UDMA_INT_STA_BT1, &val);
+-		if (err < 0)
++		if (err)
+ 			return err;
+ 		msleep(100);
+ 	} else {
+@@ -896,7 +890,7 @@ int btmtk_usb_subsys_reset(struct hci_de
+ 		if (err < 0)
+ 			return err;
+ 		err = btmtk_usb_uhw_reg_read(hdev, MTK_BT_WDT_STATUS, &val);
+-		if (err < 0)
++		if (err)
+ 			return err;
+ 		/* Reset the bluetooth chip via USB interface. */
+ 		err = btmtk_usb_uhw_reg_write(hdev, MTK_BT_SUBSYS_RST, 1);
+@@ -906,13 +900,13 @@ int btmtk_usb_subsys_reset(struct hci_de
+ 		if (err < 0)
+ 			return err;
+ 		err = btmtk_usb_uhw_reg_read(hdev, MTK_UDMA_INT_STA_BT, &val);
+-		if (err < 0)
++		if (err)
+ 			return err;
+ 		err = btmtk_usb_uhw_reg_write(hdev, MTK_UDMA_INT_STA_BT1, 0x000000FF);
+ 		if (err < 0)
+ 			return err;
+ 		err = btmtk_usb_uhw_reg_read(hdev, MTK_UDMA_INT_STA_BT1, &val);
+-		if (err < 0)
++		if (err)
+ 			return err;
+ 		/* MT7921 need to delay 20ms between toggle reset bit */
+ 		msleep(20);
+@@ -920,7 +914,7 @@ int btmtk_usb_subsys_reset(struct hci_de
+ 		if (err < 0)
+ 			return err;
+ 		err = btmtk_usb_uhw_reg_read(hdev, MTK_BT_SUBSYS_RST, &val);
+-		if (err < 0)
++		if (err)
+ 			return err;
+ 	}
+ 
 
 
