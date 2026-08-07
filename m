@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73B54364941;
-	Fri,  7 Aug 2026 14:51:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39A40380FCA;
+	Fri,  7 Aug 2026 14:51:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114301; cv=none; b=jnxR3tBbVA9LSkgoD/klQbY9OUE2keOuePWs+QCQON92K10RHAwGt4cW/MyfnIdLH43+QWkx13jhhc/qLg1efzyEe4APpn4ncuOZAwD56ri4jhqOxzuh24NyekBEuDUjeNide/chReqg06zAIs8/gTK+yFvtLwrBN7XGmjnHvIk=
+	t=1786114304; cv=none; b=i0hAvKda4Eq0YINiKfig+/bS3/j5YGYkpIfxPr4R4IP92oIfv8gVP9rdSLUbpzoc8+fCnZ1j8qM7SPfXd4VMxRlhXOGownf7eqFXkvMm1gTT4jTP+lVfqbahY1WXHhAxoC040RIAjIP1D7BQfICLPVM7ezwsuPRX8dqcefcfd4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114301; c=relaxed/simple;
-	bh=BQynxRtX9/P82uXGvHadflPw3aF2DS5Uf5lIdj2jZk8=;
+	s=arc-20240116; t=1786114304; c=relaxed/simple;
+	bh=VCR/Ba7fh2GMeMeto6VPW5IWdvrxWY/Kx2vdFlGUhwY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JVbHBKceLmLKuIfQzhjRWwUC+krIOMPf9Oo3cf5f2zhCNzkeHiNyN+nwRYeXcAmVYFAC2d+qHEJWjyLPYmr60BIGG2Gtr083TlxTSqOQWxcqquLCnnuBJk4YR85/SLoladSA2W6FRBCVenVQtUfKjbZz/yvzwN7sPmzxjDxlIEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R64GxR+h; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IobFzy42HpbPLcu1Rd9+jQmbqqVj/EvSMBA363yeyQVZ0xz/lGSxxdJeXiqG+qXsigWCAT0s+bc0WihWG7uOS6KLIdcHki31wxTMffqq4JMAF6RN+T7VoNBrAuBIPiFVUN9eGhcnFJ633LDqSF3N6RwHxZujxAKH5z74hBLrN6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t0biUtaS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R64GxR+h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF4231F000E9;
-	Fri,  7 Aug 2026 14:51:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t0biUtaS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 955971F000E9;
+	Fri,  7 Aug 2026 14:51:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114300;
-	bh=mJnZ6TlUz3D2W/qRiZgHl7pdNAnc/zLVJQ9qnDIidmU=;
+	s=korg; t=1786114303;
+	bh=VYp3k2D9H+Er5HfR29guodrLkyy1V0S/VL+r3J/JveQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R64GxR+h4lEmaeRse4lyJ3vxKgIhW3EvCPk+1pEYlpn2nyL2TYc8px8gRjKVIERnh
-	 FIkynn7JqJT9x/LKmv7L+IEZaWwAtrdTpFHjf4DXpWuR6eLX6TdSbBx7GJlKsoldZK
-	 wdM2iQjpsHjxN7Bp7GBfxpRR2Jr/KPAIXTfZTxEg=
+	b=t0biUtaSP6RfKz+q+Ock3eeRqctL3qKBU8jkNGIpt/6jgpnzQvl7dbvGchB/GYlwb
+	 iaoxoR3DM5fxA2Opjawg8vXj8HPuQYixeabwD29RJZCGZ0m9hPCvM95RO/x/fvqQ0i
+	 7/U+8+evSjN5DvTQ+ZMPxKm8xmlNhe7GcJ+uf8Hc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Holger Dengler <dengler@linux.ibm.com>,
 	Harald Freudenberger <freude@linux.ibm.com>,
 	Vasily Gorbik <gor@linux.ibm.com>
-Subject: [PATCH 6.12 213/337] s390/zcrypt: Validate length for CCA AES cipher key requests
-Date: Fri,  7 Aug 2026 16:36:56 +0200
-Message-ID: <20260807143423.172157743@linuxfoundation.org>
+Subject: [PATCH 6.12 214/337] s390/zcrypt: Validate length for CCA ECC private key requests
+Date: Fri,  7 Aug 2026 16:36:57 +0200
+Message-ID: <20260807143423.192361718@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -53,16 +53,16 @@ Content-Transfer-Encoding: 8bit
 
 From: Holger Dengler <dengler@linux.ibm.com>
 
-commit 06afe425d5283b9764303de47f554da5a808ce8a upstream.
+commit a9ae0f6dd45c3ccc1d69363f7aea8af179122730 upstream.
 
-cca_cipher2protkey() derives the copy length for the CPRB parameter
+cca_ecc2protkey() derives the copy length for the CPRB parameter
 block directly from the length field in the key token. Reject the
 request early if the token length exceeds the available space in the
 parameter block.
 
-Fixes: 4bc123b18ce6 ("s390/zcrypt: Add low level functions for CCA AES cipher keys")
+Fixes: fa6999e326fe ("s390/pkey: support CCA and EP11 secure ECC private keys")
 Signed-off-by: Holger Dengler <dengler@linux.ibm.com>
-Cc: stable@vger.kernel.org # 5.4+
+Cc: stable@vger.kernel.org # 5.10+
 Reviewed-by: Harald Freudenberger <freude@linux.ibm.com>
 Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
@@ -72,11 +72,11 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/drivers/s390/crypto/zcrypt_ccamisc.c
 +++ b/drivers/s390/crypto/zcrypt_ccamisc.c
-@@ -1218,6 +1218,9 @@ int cca_cipher2protkey(u16 cardnr, u16 d
+@@ -1384,6 +1384,9 @@ int cca_ecc2protkey(u16 cardnr, u16 doma
  	} __packed * prepparm;
- 	int keytoklen = ((struct cipherkeytoken *)ckey)->len;
+ 	int keylen = ((struct eccprivkeytoken *)key)->len;
  
-+	if (keytoklen > PARMBSIZE - sizeof(struct aureqparm))
++	if (keylen > PARMBSIZE - sizeof(struct aureqparm))
 +		return -EINVAL;
 +
  	/* get already prepared memory for 2 cprbs with param block each */
