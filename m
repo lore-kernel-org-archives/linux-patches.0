@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F0B438F626;
-	Fri,  7 Aug 2026 14:44:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1655228E0;
+	Fri,  7 Aug 2026 14:44:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786113874; cv=none; b=rk7xqJ6Izswpl2yfQSHfC0i4Hh/69ENSZZke7DCoqTVLzT6Ea3kz3vcXnc2gkqU1oFJVlVNOp/S41seVtS/eecjslSqWYA2NgrNwYueSVSfhqgvtGDgw0WMUyruc1lJA58Sl0nSAMsLEgYlVVq+M3n4xBNbVLpxF2zhs5kOveNQ=
+	t=1786113876; cv=none; b=orAoCIhGfnlv++qTm2SMOEP/+/XK/BbXQmPT/zgmzGQxDyxqzsw/LziQUOGy59d2gA6p+hDvf2lUFmMnZQTCStlja3Xeb4Zx+iIu6/HIEYiS8wc4sBanoBnk2972b59ybLp6JPL6EOYexciZW0QNSrMXh+uhJRZfPd/fAy3Gl54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786113874; c=relaxed/simple;
-	bh=LsrpOLRqnUnOgH3OhrroG8cTHuABlpDB7SjqXw1oWzU=;
+	s=arc-20240116; t=1786113876; c=relaxed/simple;
+	bh=Mf+tok6goaHLf6gNgTbsHUEl6piaYRS2fUfAha5j5NQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OGKDqmntPPBv6m20bjAgiEhMyO4omGMXLDWqI3C6W2TKOPvXPJHvHevFZRM6YjmENxrR5qp2fV5BvYkCR0S0kYaCq2heJv2scFEu8K0QvGVI0mH5spa1a+f4d33lCBAMK3BSYsIKA4eVcxPF66Z0/3cYx2pUZOOIkBiQBqBpHq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tDILcnDA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gjfbDBsey6En3wEIdjnmujLO0OCHFv1Jk12B1UdtoQtXArVs3WHdaPwM1+APzKH9KOBY9TOLB+ZpLZRRz+KdFqLBuv9mni7dvBYn3iJPr1Rj1TttYhLa4F7S/95NsQzBVOSujFTe1sNojrEkcM5eAIlTd5hTThbu1cWYPyXivBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cxZF7sGx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tDILcnDA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7860B1F00A3D;
-	Fri,  7 Aug 2026 14:44:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cxZF7sGx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A2551F00A3E;
+	Fri,  7 Aug 2026 14:44:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786113860;
-	bh=799aolc3UL0MI7u7xUKxY0YWCThVmpoFRWZOYafUGgI=;
+	s=korg; t=1786113865;
+	bh=2eEkjNvbhvWk4j8SOpOLjsmCwqrs42g6zltQ4J+h/5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tDILcnDATamubhVzbbNTO916afwjR/GKPY0Tul076Q/Z41W5Ub02Nrz3sVcwIDMfV
-	 U3R92ckkO5wxzWvxKsoEg0erHTHvKc1b4dRsGSUu0V2OrJvZp6RSnlnZ+Oux859i6F
-	 wSfBm6Qdsrg2RVVdOMQQfcblxQox/WIaVoZmwvwQ=
+	b=cxZF7sGxnDLw83Una7ZwOq5jHATYYwmjwPjSTT6nNGhBnyJCVmJPqGizE9TXgqAof
+	 m7blZPJUIucACzbj/Iz0xUKewSOQ0RIfZVN6bf18lg8InoqHyuI0tgpCB5IQR0efBo
+	 atF1Ytogy4G5WbKVwL4Q69ZUO7jlZ2RZW69spMA0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srikanth Boyapally <srikanth.boyapally@amd.com>,
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
-	Mark Brown <broonie@kernel.org>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 059/337] spi: spi-cadence: Move TX FIFO full busy-wait into FIFO
-Date: Fri,  7 Aug 2026 16:34:22 +0200
-Message-ID: <20260807143419.791917288@linuxfoundation.org>
+Subject: [PATCH 6.12 061/337] hwmon: (ina2xx) Add support for has_alerts configuration flag
+Date: Fri,  7 Aug 2026 16:34:24 +0200
+Message-ID: <20260807143419.835604708@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -46,113 +45,116 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Srikanth Boyapally <srikanth.boyapally@amd.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit d9eadfce2fac49445db40808fe4d8259f20a9d2b ]
+[ Upstream commit de0da6ae1908b43b23782d64b4564b5ca3119f7f ]
 
-SPI host transfers could intermittently stall with spi_transfer timeouts.
-The TXFULL condition was checked only once in cdns_transfer_one() before
-cdns_spi_process_fifo(), so if the FIFO became full again during refill,
-writes could be dropped and the transfer would never complete.
+Add configuration flag indicating if the chip supports alerts and limits
+to prepare for adding INA260 support.
 
-Move the TXFULL busy-wait into the TX path of cdns_spi_process_fifo() so
-the 10µs back-off is applied per FIFO entry during filling, ensuring
-forward progress and eliminating spurious timeouts.
-
-Restrict the delay to host mode using spi_controller_is_target(), the
-controller is passed into cdns_spi_process_fifo() so the check is made at
-the point of use. In target mode this delay must not run as it causes the
-target to miss its transfer window and corrupt data.
-
-Fixes: 49530e641178 ("spi: cadence: Add usleep_range() for cdns_spi_fill_tx_fifo()")
-Signed-off-by: Srikanth Boyapally <srikanth.boyapally@amd.com>
-Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Link: https://patch.msgid.link/20260720125510.60166-1-srikanth.boyapally@amd.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reviewed-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Stable-dep-of: e6c80061ca23 ("hwmon: (ina2xx) Fix various overflow issues")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-cadence.c | 26 ++++++++++++++++----------
- 1 file changed, 16 insertions(+), 10 deletions(-)
+ drivers/hwmon/ina2xx.c | 18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/spi/spi-cadence.c b/drivers/spi/spi-cadence.c
-index fee908b7f327e..015dce7fc9d81 100644
---- a/drivers/spi/spi-cadence.c
-+++ b/drivers/spi/spi-cadence.c
-@@ -388,11 +388,13 @@ static inline void cdns_spi_writer(struct cdns_spi *xspi)
+diff --git a/drivers/hwmon/ina2xx.c b/drivers/hwmon/ina2xx.c
+index f0fa6d073627f..03a011c9b73da 100644
+--- a/drivers/hwmon/ina2xx.c
++++ b/drivers/hwmon/ina2xx.c
+@@ -129,6 +129,7 @@ enum ina2xx_ids { ina219, ina226 };
  
- /**
-  * cdns_spi_process_fifo - Fills the TX FIFO, and drain the RX FIFO
-+ * @ctlr:	Pointer to the spi_controller structure
-  * @xspi:	Pointer to the cdns_spi structure
-  * @ntx:	Number of bytes to pack into the TX FIFO
-  * @nrx:	Number of bytes to drain from the RX FIFO
-  */
--static void cdns_spi_process_fifo(struct cdns_spi *xspi, int ntx, int nrx)
-+static void cdns_spi_process_fifo(struct spi_controller *ctlr,
-+				  struct cdns_spi *xspi, int ntx, int nrx)
+ struct ina2xx_config {
+ 	u16 config_default;
++	bool has_alerts;	/* chip supports alerts and limits */
+ 	int calibration_value;
+ 	int shunt_div;
+ 	int bus_voltage_shift;
+@@ -155,6 +156,7 @@ static const struct ina2xx_config ina2xx_config[] = {
+ 		.bus_voltage_shift = 3,
+ 		.bus_voltage_lsb = 4000,
+ 		.power_lsb_factor = 20,
++		.has_alerts = false,
+ 	},
+ 	[ina226] = {
+ 		.config_default = INA226_CONFIG_DEFAULT,
+@@ -163,6 +165,7 @@ static const struct ina2xx_config ina2xx_config[] = {
+ 		.bus_voltage_shift = 0,
+ 		.bus_voltage_lsb = 1250,
+ 		.power_lsb_factor = 25,
++		.has_alerts = true,
+ 	},
+ };
+ 
+@@ -624,6 +627,7 @@ static umode_t ina2xx_is_visible(const void *_data, enum hwmon_sensor_types type
+ 				 u32 attr, int channel)
  {
- 	ntx = clamp(ntx, 0, xspi->tx_bytes);
- 	nrx = clamp(nrx, 0, xspi->rx_bytes);
-@@ -407,6 +409,16 @@ static void cdns_spi_process_fifo(struct cdns_spi *xspi, int ntx, int nrx)
- 		}
+ 	const struct ina2xx_data *data = _data;
++	bool has_alerts = data->config->has_alerts;
+ 	enum ina2xx_ids chip = data->chip;
  
- 		if (ntx) {
-+			/* When xspi in busy condition, bytes may send failed,
-+			 * then spi control didn't work thoroughly, add one byte
-+			 * delay. Only in host mode; in target mode this delay
-+			 * causes data corruption as the target fails to prepare
-+			 * data in time.
-+			 */
-+			if (!spi_controller_is_target(ctlr) &&
-+			    (cdns_spi_read(xspi, CDNS_SPI_ISR) & CDNS_SPI_IXR_TXFULL))
-+				udelay(10);
-+
- 			cdns_spi_writer(xspi);
- 			ntx--;
- 		}
-@@ -460,14 +472,14 @@ static irqreturn_t cdns_spi_irq(int irq, void *dev_id)
- 			cdns_spi_write(xspi, CDNS_SPI_THLD, 1);
+ 	switch (type) {
+@@ -633,12 +637,12 @@ static umode_t ina2xx_is_visible(const void *_data, enum hwmon_sensor_types type
+ 			return 0444;
+ 		case hwmon_in_lcrit:
+ 		case hwmon_in_crit:
+-			if (chip == ina226)
++			if (has_alerts)
+ 				return 0644;
+ 			break;
+ 		case hwmon_in_lcrit_alarm:
+ 		case hwmon_in_crit_alarm:
+-			if (chip == ina226)
++			if (has_alerts)
+ 				return 0444;
+ 			break;
+ 		default:
+@@ -651,12 +655,12 @@ static umode_t ina2xx_is_visible(const void *_data, enum hwmon_sensor_types type
+ 			return 0444;
+ 		case hwmon_curr_lcrit:
+ 		case hwmon_curr_crit:
+-			if (chip == ina226)
++			if (has_alerts)
+ 				return 0644;
+ 			break;
+ 		case hwmon_curr_lcrit_alarm:
+ 		case hwmon_curr_crit_alarm:
+-			if (chip == ina226)
++			if (has_alerts)
+ 				return 0444;
+ 			break;
+ 		default:
+@@ -668,11 +672,11 @@ static umode_t ina2xx_is_visible(const void *_data, enum hwmon_sensor_types type
+ 		case hwmon_power_input:
+ 			return 0444;
+ 		case hwmon_power_crit:
+-			if (chip == ina226)
++			if (has_alerts)
+ 				return 0644;
+ 			break;
+ 		case hwmon_power_crit_alarm:
+-			if (chip == ina226)
++			if (has_alerts)
+ 				return 0444;
+ 			break;
+ 		default:
+@@ -802,7 +806,7 @@ static int ina2xx_init(struct device *dev, struct ina2xx_data *data)
+ 	if (ret < 0)
+ 		return ret;
  
- 		if (xspi->tx_bytes) {
--			cdns_spi_process_fifo(xspi, trans_cnt, trans_cnt);
-+			cdns_spi_process_fifo(ctlr, xspi, trans_cnt, trans_cnt);
- 		} else {
- 			/* Fixed delay due to controller limitation with
- 			 * RX_NEMPTY incorrect status
- 			 * Xilinx AR:65885 contains more details
- 			 */
- 			udelay(10);
--			cdns_spi_process_fifo(xspi, 0, trans_cnt);
-+			cdns_spi_process_fifo(ctlr, xspi, 0, trans_cnt);
- 			cdns_spi_write(xspi, CDNS_SPI_IDR,
- 				       CDNS_SPI_IXR_DEFAULT);
- 			spi_finalize_current_transfer(ctlr);
-@@ -520,17 +532,11 @@ static int cdns_transfer_one(struct spi_controller *ctlr,
- 			cdns_spi_write(xspi, CDNS_SPI_THLD, xspi->tx_fifo_depth >> 1);
- 	}
+-	if (data->chip == ina226) {
++	if (data->config->has_alerts) {
+ 		bool active_high = device_property_read_bool(dev, "ti,alert-polarity-active-high");
  
--	/* When xspi in busy condition, bytes may send failed,
--	 * then spi control didn't work thoroughly, add one byte delay
--	 */
--	if (cdns_spi_read(xspi, CDNS_SPI_ISR) & CDNS_SPI_IXR_TXFULL)
--		udelay(10);
--
- 	xspi->n_bytes = cdns_spi_n_bytes(transfer);
- 	xspi->tx_bytes = DIV_ROUND_UP(xspi->tx_bytes, xspi->n_bytes);
- 	xspi->rx_bytes = DIV_ROUND_UP(xspi->rx_bytes, xspi->n_bytes);
- 
--	cdns_spi_process_fifo(xspi, xspi->tx_fifo_depth, 0);
-+	cdns_spi_process_fifo(ctlr, xspi, xspi->tx_fifo_depth, 0);
- 
- 	cdns_spi_write(xspi, CDNS_SPI_IER, CDNS_SPI_IXR_DEFAULT);
- 	return transfer->len;
+ 		regmap_update_bits(regmap, INA226_MASK_ENABLE,
 -- 
 2.53.0
 
