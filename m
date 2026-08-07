@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07A1F381AE4;
-	Fri,  7 Aug 2026 14:48:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 467443E0732;
+	Fri,  7 Aug 2026 14:48:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114084; cv=none; b=PeP5YRO90ONfl9kRev1Y4YamcrnfA/ICn8nCk483GxsGp6XrzWXQoq0MROl6KIL3NsMEF3D0iO18Qr66I+o4BUM9onXxWQrGANHvdqZEGZSpnRLeqmwvZP4SgfpNU6sSKGJAOvJMZ2oXDKDNvk2OOi7yxh9xgIyKwPE7uws4Gfc=
+	t=1786114087; cv=none; b=YpX8/xPonJ9T6PsOsiRxQ+f4/35ExcePpyTQMVJFAcD3Qdn4q3HyXxZOwvSnLbytEjRMHPyozTNAD7AWKl/Pb4biS1oGwKn/G+9mH4SXei/3Lbk0e2octc9YdFp/LVisB8vnKXevX9SxXfgnI/Q6ZvHCNEprB9oagH1CalcNbLw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114084; c=relaxed/simple;
-	bh=hlx3y4Mm/l3qeOg1Wi/mZCU6Yb/1dl4yCXh+2XeBsN4=;
+	s=arc-20240116; t=1786114087; c=relaxed/simple;
+	bh=dI+6iPvLMcCS9sTvj8FzWssGKHZXxAggFzxaVq0yyDE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gujTHH1yoPBXdWDdztumTq2laXAnAgu3jCE6Vnpae25dzD6Whzwi4APF2pPtGNWpPKPVq2zqHwVlcvE0SwpKf3ZmroaxYkqocLkxLsPQ8uFr4t7gWZAi7GWWiR7U0VeOL2iwK5lvtPjAX6LIpPSns69lUqb3e6tUeXrbfRvv+rY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F/IPLBmF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NGpQeDxa4Faia5OUnU6afpQoZ/b43Fx7kdPZ1zuhsaAOdRrr+sKYc/azUN5qBRZ+n6RHdkNe6mfuY4yupsQKTDHaw72Zuy4DJgQViRSlu6AT6UJUQEzLVFJgQ58YUc6PzJJd3GJjkzjym6ahmdwkaPvrY/XO6PHB8a5g06Hyecs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PptJ0mqh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F/IPLBmF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D25151F000E9;
-	Fri,  7 Aug 2026 14:48:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PptJ0mqh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D6D81F000E9;
+	Fri,  7 Aug 2026 14:48:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114082;
-	bh=HPntIiSko5l8FYmoLyzF8Iypvfgcfuf8LzwmO1hUeoA=;
+	s=korg; t=1786114085;
+	bh=3gqTtK5tzClE2R6CytnrFdSTCFZZzef1JtXv+PLbkyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F/IPLBmF1K9wMAm95vVQezz1brkdOZzZ54igm0coucmIxKhFc/png5ApfdH/l2xFK
-	 TWzvkXf5AsnrxkWjOfObMJ/RxJy+eBbljYbQE0XqNik/LII5vzr6SQALttmmqS+vbM
-	 y2QLce1kUYcJiiyaCHKbL8xfRQPkcu3tC4AROxzM=
+	b=PptJ0mqhlaXDlV4Ov0GxiAaZyBSnKbLgltuGcDzfiNpIg5IVXib96zgVD8vG9L3Uf
+	 m9JGojIgs0ltvah6ky0+EsemATgjEBat4gNe1r39fI2xCCM0kJSufPINiPbrGO6P5h
+	 JkyRffaiTBZq9vaS6pQIkUdJgXCaKN3omBMKo7ds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raushan Patel <raushan.jhon@gmail.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 6.12 139/337] tracing/probes: Reject $arg0 in meta argument expansion
-Date: Fri,  7 Aug 2026 16:35:42 +0200
-Message-ID: <20260807143421.548391164@linuxfoundation.org>
+	Yosry Ahmed <yosry@kernel.org>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.12 140/337] KVM: SVM: Update x2APIC MSR intercepts if AVIC is inhibited while L2 is active
+Date: Fri,  7 Aug 2026 16:35:43 +0200
+Message-ID: <20260807143421.568927078@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -50,48 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raushan Patel <raushan.jhon@gmail.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 00a8ce2a2a9fa17674e1feec4d9105c1a5d6a419 upstream.
+commit 7d3aae206663c4e006b25a1c7a20a4029e67da76 upstream.
 
-traceprobe_expand_meta_args() parses $argN with simple_strtoul() and
-calls sprint_nth_btf_arg(n - 1, ...). For $arg0, n is 0 so the index is
--1. Because ctx->nr_params is signed, the "idx >= nr_params" guard in
-sprint_nth_btf_arg() does not catch the negative index, and
-ctx->params[-1].name_off is read out of bounds.
+Always update x2APIC MSR intercepts for L1 when AVIC is deactivated, even
+if L2 is active and KVM is using a separate MSR bitmap to run L2.  If AVIC
+is fully enabled prior to running L2, and is then inhibited while L2 is
+active (for a VM-scoped inhibit), then KVM will run L1 with AVIC disabled,
+but with x2APIC MSR intercepts disabled, i.e. will allow L1 to read most of
+the host's APIC state, send arbitrary interrupts, change task priority, and
+ultimately trivially DoS the host.
 
-The normal per-argument path (parse_probe_vars()) already rejects
-$arg0 via its argument-number check, but meta-argument expansion runs
-before per-argument parsing and substitutes the value first, bypassing
-that check.
+E.g. sending a self-IPI in L1 on HYPERV_REENLIGHTENMENT_VECTOR, 0xee, with
+CONFIG_HYPERV=n in the host kernel as a "safe" PoC, yields:
 
-Reject $arg0 explicitly during expansion.
+  Spurious interrupt (vector 0xee) on CPU#425. Acked
 
-Link: https://lore.kernel.org/all/20260724054435.146279-1-raushan.jhon@gmail.com/
+And hacking KVM to abuse kvm_set_posted_intr_wakeup_handler() to register a
+handler and WARN on POSTED_INTR_WAKEUP_VECTOR yields:
 
-Fixes: 18b1e870a496 ("tracing/probes: Add $arg* meta argument for all function args")
+  ------------[ cut here ]------------
+  WARNING: arch/x86/kvm/svm/svm.c:5594 at pi_wakeup_handler+0x9/0x10 [kvm_amd], CPU#156: nested_x2apic_t/316940
+  CPU: 156 UID: 0 PID: 316940 Comm: nested_x2apic_t Tainted: G S   U
+  Tainted: [S]=CPU_OUT_OF_SPEC, [U]=USER
+  Hardware name: Google Astoria-Turin/astoria, BIOS 0.20260209.0-0 02/09/2026
+  RIP: 0010:pi_wakeup_handler+0x9/0x10 [kvm_amd]
+  Call Trace:
+   <IRQ>
+   sysvec_kvm_posted_intr_wakeup_ipi+0x64/0x80
+   </IRQ>
+   <TASK>
+   asm_sysvec_kvm_posted_intr_wakeup_ipi+0x1a/0x20
+  RIP: 0010:vcpu_run+0x1430/0x1e40 [kvm]
+   kvm_arch_vcpu_ioctl_run+0x2c1/0x600 [kvm]
+   kvm_vcpu_ioctl+0x580/0x6b0 [kvm]
+   __se_sys_ioctl+0x6d/0xb0
+   do_syscall_64+0x10a/0x480
+   entry_SYSCALL_64_after_hwframe+0x4b/0x53
+  RIP: 0033:0x46ff4b
+   </TASK>
+  ---[ end trace 0000000000000000 ]---
+
+Fixes: 091abbf578f9 ("KVM: x86: nSVM: optimize svm_set_x2apic_msr_interception")
 Cc: stable@vger.kernel.org
-Signed-off-by: Raushan Patel <raushan.jhon@gmail.com>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Cc: Yosry Ahmed <yosry@kernel.org>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Link: https://patch.msgid.link/20260729213558.639074-1-pbonzini@redhat.com/
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_probe.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ arch/x86/kvm/svm/avic.c |    8 --------
+ 1 file changed, 8 deletions(-)
 
---- a/kernel/trace/trace_probe.c
-+++ b/kernel/trace/trace_probe.c
-@@ -1766,7 +1766,11 @@ const char **traceprobe_expand_meta_args
- 				ret = -ENOENT;
- 				goto error;
- 			}
--			/* Note: $argN starts from $arg1 */
-+			/* Note: $argN starts from $arg1, so $arg0 is invalid. */
-+			if (n == 0) {
-+				trace_probe_log_err(0, BAD_ARG_NUM);
-+				return ERR_PTR(-EINVAL);
-+			}
- 			ret = sprint_nth_btf_arg(n - 1, type, buf + used,
- 						 bufsize - used, ctx);
- 			if (ret < 0)
+--- a/arch/x86/kvm/svm/avic.c
++++ b/arch/x86/kvm/svm/avic.c
+@@ -167,14 +167,6 @@ static void avic_deactivate_vmcb(struct
+ 	if (!sev_es_guest(svm->vcpu.kvm))
+ 		svm_set_intercept(svm, INTERCEPT_CR8_WRITE);
+ 
+-	/*
+-	 * If running nested and the guest uses its own MSR bitmap, there
+-	 * is no need to update L0's msr bitmap
+-	 */
+-	if (is_guest_mode(&svm->vcpu) &&
+-	    vmcb12_is_intercept(&svm->nested.ctl, INTERCEPT_MSR_PROT))
+-		return;
+-
+ 	/* Enabling MSR intercept for x2APIC registers */
+ 	svm_set_x2apic_msr_interception(svm, true);
+ }
 
 
