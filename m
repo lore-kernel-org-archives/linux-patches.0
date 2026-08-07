@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AB6023EAA0;
-	Fri,  7 Aug 2026 14:45:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F61B3AC0D8;
+	Fri,  7 Aug 2026 14:45:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786113907; cv=none; b=LsyIJAqrKpHdEuy7TfYWvvB8Mkzf1t5r7STNUxiwV1I/h4Wb5I406TgMiUKxm2SVCdrgIBxKIPAvb7J0sPNj6Jzoobreog0THj5jMlBkRDQ/Bv5EQsEca0iS5qg7i8U/IlYyEIwjjA+oQ7EPTFJgviWaZO4wpMly0Lv+/47fKTA=
+	t=1786113910; cv=none; b=aZqtjjzZCowJ8Jp5x8rLBwCe4cBJOhfy2FvVbShg9PdjTo2cQKXR0M53K9VL25b9hJGzJY4NWO06gmvSX6q3l9eybBAN2RfTTrpXlgg1QG+8CZXADLKcn7fgwQmYFjfn7SCfoG9fvjwuloUf2ICzHlnVdZXimcYW6fzuqq2bWqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786113907; c=relaxed/simple;
-	bh=EcXTxgVMW2U+u7qdJEXOqZr2x7Xty864leBCOjLL+/Y=;
+	s=arc-20240116; t=1786113910; c=relaxed/simple;
+	bh=CVFIniUcQcpuEUiBgnQFW9vO268JOUr26b6d4qmLDXs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hqGx91JrBl9acS51i+TA4VGvG9pOwM1CZ43uW8Lah5xpAGXJ9LUyX8BTGCIAfmb9FqhWSeJZcn7JbY1fKzvw4+eZVus4e5kQ5XaMCdmgMizfth1bfbCBgjiWMO5AxLqFIpUMFLyRHmp9a9z0t0PJzlaa5KxiOMYS5AC9COtTLhM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aHhn8uXW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cQegqgouHyTdYb6HIoUoY2Rx5yhbys3YmtT45okaklNpGvsIzQj6YGP/dJ9Svx+B4MN1SS+qCdL/Jld/NsEMnN88+95L83+siwcGlIGMqN3EV8V1BymQNKX2UJNJT5rF+p8TIVqbbikauseSzjKqFUorrkNdGOn4N4odbLsEFFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mIiGlnnH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aHhn8uXW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 552921F000E9;
-	Fri,  7 Aug 2026 14:45:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mIiGlnnH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C5211F00A3E;
+	Fri,  7 Aug 2026 14:45:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786113902;
-	bh=TI2gL4GDdRs11lJ7O8wyc09Ibm9yXb/jqNri/iij4Ww=;
+	s=korg; t=1786113905;
+	bh=B0NBY+ahdBgaAy5+9VuNgm9XQZOi3kRD8mSvYgvuqVU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aHhn8uXWoOADiqD1wjABffwdj6P4H7q/pnfZWDxKfPoM0jjELAhZgPb8WxABW1GaP
-	 ADf7zM/Ozuk3YKxf0iMxIJb2u+hH5cLkDDcdAw3UShJmbpqkwRyZjFmeL+9LSB1nN+
-	 +3TSF+tBIzdSnxJODinLHmBhKwqiibwqNscvhaDk=
+	b=mIiGlnnH4oszZ+hLzviq2uzh29i7E2MWjmtpzI0bq4aL3omiAxRegpEkEEO3hELmW
+	 ZIkmJv0cokXKOUVR6jyxrOVnDuigeZvnebGFPOVmOhthqhx6GyJD9WHS9xJCpxSpoh
+	 H5sjxrs8qFRf8rCClkKIFaiMQTdIa/d2Ur3asIqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	=?UTF-8?q?Bj=C3=B6rn=20Gerhart?= <gerhart@posteo.de>,
-	Florian Bezdeka <florian.bezdeka@siemens.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Sang-Heon Jeon <ekffu200098@gmail.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 073/337] hwmon: (nct6775-core) Prevent access to unsupported weight registers
-Date: Fri,  7 Aug 2026 16:34:36 +0200
-Message-ID: <20260807143420.094172563@linuxfoundation.org>
+Subject: [PATCH 6.12 032/337] of: reserved_mem: prevent OOB when too many dynamic regions are defined
+Date: Fri,  7 Aug 2026 16:33:55 +0200
+Message-ID: <20260807143419.214144193@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -47,76 +45,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Sang-Heon Jeon <ekffu200098@gmail.com>
 
-[ Upstream commit d0b704e569ac3b8416d8e02270cdc9bf830ed395 ]
+[ Upstream commit db3dbdfea1b8f38774419c5c2c14e4b81c48708d ]
 
-Sashiko reports:
+On boot, fdt_scan_reserved_mem() saves each dynamically-placed
+/reserved-memory subnode into a local array of size
+MAX_RESERVED_REGIONS.
 
-During initialization of the nct6116 chip, the driver sets data->pwm_num
-to 5. However, it assigns several NCT6106 register arrays (such as
-NCT6106_REG_WEIGHT_DUTY_STEP, NCT6106_REG_WEIGHT_TEMP_SEL, and
-NCT6106_REG_WEIGHT_TEMP_*) to data->REG_PWM and data->REG_WEIGHT_TEMP.
-These arrays only contain 3 elements.
+If the device tree defines more than MAX_RESERVED_REGIONS
+dynamically-placed regions, fdt_scan_reserved_mem() writes past the
+end of the local array.
 
-In nct6775_update_pwm(), the driver iterates up to data->pwm_num. If
-data->has_pwm has bits 3 or 4 set (which is structurally possible for
-nct6116), the loop attempts to read elements at index 3 and 4 from these
-3-element arrays. This results in a global out-of-bounds read, which can
-be caught by KASAN.
+Add a bounds check that logs an error and skips the excess regions,
+restoring the original behavior.
 
-Furthermore, the driver uses these garbage out-of-bounds values as
-hardware register addresses for subsequent read and write operations. This
-leads to invalid hardware register access, potentially causing hardware
-misconfiguration or system crashes.
-
-The underlying problem is that the chip does support up to five fan
-control channels, but only the first three support weight control.
-Fix the problem by extending the affected weight register arrays with
-zeroed fields. The driver uses zeroed register addresses to determine
-if a register is supported or not, and skips accesses for unsupported
-registers.
-
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Fixes: 29c7cb485b32 ("hwmon: (nct6775) Integrate new model nct6116")
-Cc: Björn Gerhart <gerhart@posteo.de>
-Cc: Florian Bezdeka <florian.bezdeka@siemens.com>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 8a6e02d0c00e ("of: reserved_mem: Restructure how the reserved memory regions are processed")
+Signed-off-by: Sang-Heon Jeon <ekffu200098@gmail.com>
+Link: https://patch.msgid.link/20260614133807.2165124-2-ekffu200098@gmail.com
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/nct6775-core.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/of/of_reserved_mem.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/hwmon/nct6775-core.c b/drivers/hwmon/nct6775-core.c
-index 506d57025c3bd..ce2cf1f229004 100644
---- a/drivers/hwmon/nct6775-core.c
-+++ b/drivers/hwmon/nct6775-core.c
-@@ -791,12 +791,12 @@ static const u16 NCT6106_REG_TOLERANCE_H[] = { 0x112, 0x122, 0x132 };
- 
- static const u16 NCT6106_REG_TARGET[] = { 0x111, 0x121, 0x131 };
- 
--static const u16 NCT6106_REG_WEIGHT_TEMP_SEL[] = { 0x168, 0x178, 0x188 };
--static const u16 NCT6106_REG_WEIGHT_TEMP_STEP[] = { 0x169, 0x179, 0x189 };
--static const u16 NCT6106_REG_WEIGHT_TEMP_STEP_TOL[] = { 0x16a, 0x17a, 0x18a };
--static const u16 NCT6106_REG_WEIGHT_DUTY_STEP[] = { 0x16b, 0x17b, 0x18b };
--static const u16 NCT6106_REG_WEIGHT_TEMP_BASE[] = { 0x16c, 0x17c, 0x18c };
--static const u16 NCT6106_REG_WEIGHT_DUTY_BASE[] = { 0x16d, 0x17d, 0x18d };
-+static const u16 NCT6106_REG_WEIGHT_TEMP_SEL[] = { 0x168, 0x178, 0x188, 0, 0 };
-+static const u16 NCT6106_REG_WEIGHT_TEMP_STEP[] = { 0x169, 0x179, 0x189, 0, 0 };
-+static const u16 NCT6106_REG_WEIGHT_TEMP_STEP_TOL[] = { 0x16a, 0x17a, 0x18a, 0, 0 };
-+static const u16 NCT6106_REG_WEIGHT_DUTY_STEP[] = { 0x16b, 0x17b, 0x18b, 0, 0 };
-+static const u16 NCT6106_REG_WEIGHT_TEMP_BASE[] = { 0x16c, 0x17c, 0x18c, 0, 0 };
-+static const u16 NCT6106_REG_WEIGHT_DUTY_BASE[] = { 0x16d, 0x17d, 0x18d, 0, 0 };
- 
- static const u16 NCT6106_REG_AUTO_TEMP[] = { 0x160, 0x170, 0x180 };
- static const u16 NCT6106_REG_AUTO_PWM[] = { 0x164, 0x174, 0x184 };
+diff --git a/drivers/of/of_reserved_mem.c b/drivers/of/of_reserved_mem.c
+index 02d3c3284f886..9f4f0306b834f 100644
+--- a/drivers/of/of_reserved_mem.c
++++ b/drivers/of/of_reserved_mem.c
+@@ -317,6 +317,7 @@ int __init fdt_scan_reserved_mem(void)
+ 		err = __reserved_mem_reserve_reg(child, uname);
+ 		if (!err)
+ 			count++;
++
+ 		/*
+ 		 * Save the nodes for the dynamically-placed regions
+ 		 * into an array which will be used for allocation right
+@@ -324,10 +325,17 @@ int __init fdt_scan_reserved_mem(void)
+ 		 * or marked as no-map. This is done to avoid dynamically
+ 		 * allocating from one of the statically-placed regions.
+ 		 */
+-		if (err == -ENOENT && of_get_flat_dt_prop(child, "size", NULL)) {
+-			dynamic_nodes[dynamic_nodes_cnt] = child;
+-			dynamic_nodes_cnt++;
++		if (err != -ENOENT || !of_get_flat_dt_prop(child, "size", NULL))
++			continue;
++
++		if (dynamic_nodes_cnt == MAX_RESERVED_REGIONS) {
++			pr_err("too many defined dynamic regions, skip '%s'\n",
++			       uname);
++			continue;
+ 		}
++
++		dynamic_nodes[dynamic_nodes_cnt] = child;
++		dynamic_nodes_cnt++;
+ 	}
+ 	for (int i = 0; i < dynamic_nodes_cnt; i++) {
+ 		const char *uname;
 -- 
 2.53.0
 
