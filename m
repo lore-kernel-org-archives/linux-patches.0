@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2723346D090;
-	Fri,  7 Aug 2026 15:13:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37ADB38655E;
+	Fri,  7 Aug 2026 15:13:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115606; cv=none; b=lWCeUoL1yixvL4HkK2eVVWPKJgmAAZUyWKY32Sbu47tgcoJ7GrfUF/f9BSUuLJEQUbTtyxXqz7mqNPa+cN43Abz8EG8ONgXq0tEh059n63ntd3njksR6AV27G/BWW/YcYF0Mxg9ktl81trJ4tzi+RkWdu1qpxMTrYeWxRdxrs50=
+	t=1786115609; cv=none; b=dT10QfZ7RPmiunM5iTXEaPJjuArYDCbyfHP6baDU7hDjWAn/aqaW9NNxGE0G0qATnPDLzI4jkGXL4bmTrBzVckUDJ6CBAZSlR/kHXqq6Mm22cHZkGnNVr+TiO3iUrjf2L43KnKH3Mf5gE/xcA10V+5Vp7jojcoIM7vCnC1yO/fk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115606; c=relaxed/simple;
-	bh=OHehQUegIjbMRtVMXcMkVbbIauEFN6F35Sx2F1Cpfqc=;
+	s=arc-20240116; t=1786115609; c=relaxed/simple;
+	bh=zqoHXe6YSUl4VHq0GAQ0bwsrbOTsUoHHVyamjgM5T0w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OqTE2/zSRnuFqSdvCDumnHvuMe+ipL4DKMY9iw/GUTM570UsylUE9ojy86FCC+9klX6xC4AUP8Z4NnSubi2cyHPlWfzBQ026altGccnuxoiE483sWmXFCIfZFiPFRupF99ZU8HahMadMZo8HGN49qHmN2ohCSQsPodjJwlRA2ik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qo6e0Bd+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=R4looB44d6p5QEBjNpX088nJYfQo6wEoqoMIM25aI56R9yM495d6sQv4Km5OEP3sK6e/wsmipftuuW4k3ScrmMYkzsomkhYO1kIC6xGpthqV2ILPmr4PgVQaM/DrYVyJbnNqN2DCFw6FSCmtftEYH0R4/8L9mEfAFlR+lo/gXYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LUFTnMYi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qo6e0Bd+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82BD11F00A3D;
-	Fri,  7 Aug 2026 15:13:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LUFTnMYi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 542D41F00A3E;
+	Fri,  7 Aug 2026 15:13:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115605;
-	bh=rWhdmTx2ukOD2dEvaOjh989Di72EbXsTnTAgjoJTpDI=;
+	s=korg; t=1786115607;
+	bh=gmmbs+jKZGll2Xy12XbwOa8ntTsAhtBupkOaZYIwRbw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qo6e0Bd+iKdnLPKQJya0OohLwTjxptE1s3/B0idjEczxhd8FYkVplXPQmdyXfWIc5
-	 w1b7jXCVbkKMfOyIvJ9NuzpxP4eKkPdqtNUKqdSbqfvU9knMt39rSqhF4yELv4QdlM
-	 EPBSRK+oQzlxjWA00g2WcMEARXWftyVDY3snSu/M=
+	b=LUFTnMYiur2mj5hODzv98XpxXlgnbzbzZ82hBVDW24SSdjk7O2Uce2PgI61jmc7mN
+	 PDYhWHB8HX6nZSWLd6WrPEdPYdp564W4H0FAfah1mVLXOD5k3fv9ZHodhA5Z6m/+PX
+	 L7u95H5/h6F/22Jy+N66YNAfX5FTMKjcQz1BSaB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"H. Nikolaus Schaller" <hns@goldelico.com>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.18 290/396] i2c: jz4780: Cache host clock rate at probe to prevent CCF prepare_lock deadlock
-Date: Fri,  7 Aug 2026 16:37:30 +0200
-Message-ID: <20260807143430.526632858@linuxfoundation.org>
+	Nava kishore Manne <nava.kishore.manne@amd.com>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	Michal Simek <michal.simek@amd.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 6.18 281/396] phy: zynqmp: keep SERDES scrambler and 8b/10b enabled for USB
+Date: Fri,  7 Aug 2026 16:37:21 +0200
+Message-ID: <20260807143430.328566954@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -50,75 +52,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: H. Nikolaus Schaller <hns@goldelico.com>
+From: Nava kishore Manne <nava.kishore.manne@amd.com>
 
-commit d99607c888f26e8a4e9fe9772860cef4aff86bb4 upstream.
+commit 7eb61caf45607e1e1270f51f8f93f0ded53146da upstream.
 
-Fix a severe AB/BA deadlock between the Common Clock Framework (CCF)
-and the I2C adapter lock, which triggers when an I2C-controlled clock
-generator client (like the Si5351) is registered or modified under the CCF.
+USB Gen1 requires scrambling and 8b/10b encoding to be performed in the
+physical layer. Do not bypass PHY-side scrambler or encoder/decoder for
+USB operation, as mandated by the USB 3.x specification.
 
-During an i2c client clock (generator) frequency change, the CCF acquires its global
-'prepare_lock' mutex and the driver calls i2c_transfer() to update the client's
-chip registers, stalling for the adapter's I2C bus lock.
+Scrambler and 8b/10b bypass remain restricted to SATA and SGMII
+modes, where encoding is handled in the controller.
 
-Concurrently, an independent, parallel transfer on the same bus (e.g., a GPIO
-expander handling LEDs) can hold the I2C adapter lock. Inside this parallel
-transfer path, jz4780_i2c_set_speed() calls clk_get_rate() on the host
-controller's input clock to calculate bus timings. This call attempts to acquire
-the blocked CCF 'prepare_lock', creating a circular dependency that freezes
-the system.
-
-The jz4780 host controller clock itself is static and never changes at runtime.
-
-However, calling clk_get_rate() inside the active transfer path introduces
-an unnecessary dependency on the CCF internal locks.
-
-Eliminate this synchronous clk_get_rate() call from the active transfer
-path by caching the static host peripheral clock rate once - inside the private
-jz4780_i2c structure during jz4780_i2c_probe(). Update jz4780_i2c_set_speed()
-to use this cached value, safely decoupling active I2C transactions from the
-CCF internal locks without any risk of stale timings.
-
-Assisted-by web based Google AI (pinpointing the bug and writing the message).
-
-Fixes: ba92222ed63a12 ("i2c: jz4780: Add i2c bus controller driver for Ingenic JZ4780")
-Signed-off-by: H. Nikolaus Schaller <hns@goldelico.com>
-Cc: <stable@vger.kernel.org> # v4.1+
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/2db6fd233aceb7238474e4833f4d25ca681c3ffb.1784492382.git.hns@goldelico.com
+Fixes: 4a33bea00314 ("phy: zynqmp: Add PHY driver for the Xilinx ZynqMP Gigabit Transceiver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Nava kishore Manne <nava.kishore.manne@amd.com>
+Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Acked-by: Michal Simek <michal.simek@amd.com>
+Link: https://patch.msgid.link/20260627155229.2791113-4-radhey.shyam.pandey@amd.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-jz4780.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/phy/xilinx/phy-zynqmp.c |   39 +++++++++++++++++++++++++++++----------
+ 1 file changed, 29 insertions(+), 10 deletions(-)
 
---- a/drivers/i2c/busses/i2c-jz4780.c
-+++ b/drivers/i2c/busses/i2c-jz4780.c
-@@ -141,6 +141,7 @@ struct jz4780_i2c {
- 	void __iomem		*iomem;
- 	int			 irq;
- 	struct clk		*clk;
-+	unsigned long		 clk_rate_khz;
- 	struct i2c_adapter	 adap;
- 	const struct ingenic_i2c_config *cdata;
+--- a/drivers/phy/xilinx/phy-zynqmp.c
++++ b/drivers/phy/xilinx/phy-zynqmp.c
+@@ -502,15 +502,30 @@ static void xpsgtr_lane_set_protocol(str
+ 	}
+ }
  
-@@ -246,7 +247,7 @@ static int jz4780_i2c_set_target(struct
- 
- static int jz4780_i2c_set_speed(struct jz4780_i2c *i2c)
+-/* Bypass (de)scrambler and 8b/10b decoder and encoder. */
+-static void xpsgtr_bypass_scrambler_8b10b(struct xpsgtr_phy *gtr_phy)
++/**
++ * xpsgtr_bypass_scrambler_8b10b - Configure scrambler/encoder behavior
++ * @gtr_phy: pointer to lane context
++ * @bypass: true to enable scrambler/encoder bypass (SATA/SGMII),
++ *          false to disable scrambler/encoder bypass (USB3)
++ *
++ * Uses RMW to preserve reserved and unrelated register fields.
++ */
++static void xpsgtr_bypass_scrambler_8b10b(struct xpsgtr_phy *gtr_phy,
++					  bool bypass)
  {
--	int dev_clk_khz = clk_get_rate(i2c->clk) / 1000;
-+	int dev_clk_khz = i2c->clk_rate_khz;
- 	int cnt_high = 0;	/* HIGH period count of the SCL clock */
- 	int cnt_low = 0;	/* LOW period count of the SCL clock */
- 	int cnt_period = 0;	/* period count of the SCL clock */
-@@ -796,6 +797,8 @@ static int jz4780_i2c_probe(struct platf
- 	if (IS_ERR(i2c->clk))
- 		return PTR_ERR(i2c->clk);
+-	xpsgtr_clr_set_phy(gtr_phy, L0_TM_DIG_6,
+-			   L0_TM_DIS_DESCRAMBLE_DECODER,
+-			   L0_TM_DIS_DESCRAMBLE_DECODER);
+-	xpsgtr_clr_set_phy(gtr_phy, L0_TX_DIG_61,
+-			   L0_TM_DISABLE_SCRAMBLE_ENCODER,
+-			   L0_TM_DISABLE_SCRAMBLE_ENCODER);
++	if (bypass) {
++		xpsgtr_clr_set_phy(gtr_phy, L0_TM_DIG_6,
++				   L0_TM_DIS_DESCRAMBLE_DECODER,
++				   L0_TM_DIS_DESCRAMBLE_DECODER);
++		xpsgtr_clr_set_phy(gtr_phy, L0_TX_DIG_61,
++				   L0_TM_DISABLE_SCRAMBLE_ENCODER,
++				   L0_TM_DISABLE_SCRAMBLE_ENCODER);
++	} else {
++		xpsgtr_clr_set_phy(gtr_phy, L0_TM_DIG_6,
++				   L0_TM_DIS_DESCRAMBLE_DECODER, 0);
++		xpsgtr_clr_set_phy(gtr_phy, L0_TX_DIG_61,
++				   L0_TM_DISABLE_SCRAMBLE_ENCODER, 0);
++	}
+ }
  
-+	i2c->clk_rate_khz = clk_get_rate(i2c->clk) / 1000;
+ /* DP-specific initialization. */
+@@ -531,7 +546,7 @@ static void xpsgtr_phy_init_sata(struct
+ {
+ 	struct xpsgtr_dev *gtr_dev = gtr_phy->dev;
+ 
+-	xpsgtr_bypass_scrambler_8b10b(gtr_phy);
++	xpsgtr_bypass_scrambler_8b10b(gtr_phy, true);
+ 
+ 	writel(gtr_phy->lane, gtr_dev->siou + SATA_CONTROL_OFFSET);
+ }
+@@ -547,7 +562,7 @@ static void xpsgtr_phy_init_sgmii(struct
+ 	xpsgtr_clr_set(gtr_dev, TX_PROT_BUS_WIDTH, mask, val);
+ 	xpsgtr_clr_set(gtr_dev, RX_PROT_BUS_WIDTH, mask, val);
+ 
+-	xpsgtr_bypass_scrambler_8b10b(gtr_phy);
++	xpsgtr_bypass_scrambler_8b10b(gtr_phy, true);
+ }
+ 
+ /* Configure TX de-emphasis and margining for DP. */
+@@ -708,6 +723,10 @@ static int xpsgtr_phy_init(struct phy *p
+ 	case ICM_PROTOCOL_SGMII:
+ 		xpsgtr_phy_init_sgmii(gtr_phy);
+ 		break;
 +
- 	ret = of_property_read_u32(pdev->dev.of_node, "clock-frequency",
- 				   &clk_freq);
- 	if (ret) {
++	case ICM_PROTOCOL_USB:
++		xpsgtr_bypass_scrambler_8b10b(gtr_phy, false);
++		break;
+ 	}
+ 
+ 	goto out;
 
 
