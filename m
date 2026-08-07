@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AF4D388E43;
-	Fri,  7 Aug 2026 15:08:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE657442396;
+	Fri,  7 Aug 2026 15:08:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115327; cv=none; b=cv4n6YkeRCoctwNBw5qsMEN1JumyzNjV4GecA8w42SIZA7Fe6LdEYulfABIE5GbjavPUhCBUxrz/jtNyyZV2OBhni1h8+FGT2nwh5RAnHIyB5HtXS6TJRIA719y/E7uSeJX/E/JrQAakWR8nbAz7tMtx6Y2gbGaMsXfrMsvWsIE=
+	t=1786115330; cv=none; b=Jd5uuhINwqcx29LWOLhrOpODqsDakGaKXJY0Cc/T6G/gCbD1pOHuVnCMTPXhmB60fQ13El70RrT2NAWC63T7KQtXd76UXOM5Bx+JqnSa7R959cxdbfYxsfdx2O1skB3mgLKuNBtKxcMaWbX6immsFAHMJt8vZLpznM8oS8aUXV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115327; c=relaxed/simple;
-	bh=3G0Hi/P8MyFB+fzZ+nRLk3cSm/RJ/3QJ8Kjkwi/ghWA=;
+	s=arc-20240116; t=1786115330; c=relaxed/simple;
+	bh=FatLM3jj4NfM43OftpKBFo5MsxkE2ClU9Iq9UKCRUBI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uTElQTK9R9nUmDKTB3cp8Q/X2xoVzSjiZ1CkATdHvPbO1yZtPXAegoApqMua5fF3JLAzosqhN/GDYCIl8oaVAu0+irCnfFfWoOxiLWsqCkwVVTqIRSZeqmcM3PGEp/DGOXLV+hFu5BpOac6KHyNotrnLghJzW+D6w4p6RmXiuTo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tzsuJzBn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=N7ERkOFzZ/PEVjO9c5g5HpdAsTCuDcnXOLK8KzY9fOIFABwWJ0BnH4Bh3rvvsP5hncBH9Sb7NmqtEgKa6f8M0Mbin72QK/USAMwmZhkBPerUOhRqOmaxDwWIo4LPtdBHXKOnzujgmAdgP3Av0T7mHiYcxmb8Fedy7ImybN4qOI4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2NQy1DdT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tzsuJzBn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 874C71F000E9;
-	Fri,  7 Aug 2026 15:08:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2NQy1DdT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 574A71F00A3E;
+	Fri,  7 Aug 2026 15:08:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115326;
-	bh=/P6K/ReDtoixtTY4ohCtS3tTmoFPAbt+fbNJMGPTxqk=;
+	s=korg; t=1786115328;
+	bh=AZwtCML77SZRbAP3DDFHFyJGAYBznneY0Ir9hMysCxA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tzsuJzBn/S6KPqfftY8uD9aBPfCrhcRkq9MHABVSJwOTgyfliB7Io3aJKU/N0+DCZ
-	 relF5r2EJB5daIZRBUTOnYLHBbe/eZzod6R447yzLBqgUfDTDX57b5dfpSZxstYmM0
-	 mbY2d/npu58iEYZjq9CUUMdUOl5M5vDImKfpB6eg=
+	b=2NQy1DdT5/EPWYj3XyhQ2pcGBC6Pgn/ASLx8yxG040puhnc7BjlbnbbEaspW8tgRv
+	 qlrPGDXsTNjGLv1rRipa+Us0o3zbbl6kFOcjwcm/oz23BsLtcd26cbFBu17/94MmCd
+	 5Ppnj0cb2H5rs6hfueeEI1qDSPBZARbL6d4xp9iA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
-	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
+	Vega <vega@nebusec.ai>,
+	Zihan Xi <xizh2024@lzu.edu.cn>,
+	Ren Wei <enjou1224z@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.18 192/396] Bluetooth: SCO: give the socket its own sco_conn reference
-Date: Fri,  7 Aug 2026 16:35:52 +0200
-Message-ID: <20260807143428.425980783@linuxfoundation.org>
+Subject: [PATCH 6.18 193/396] Bluetooth: mgmt: fix UAF in pair command cancellation
+Date: Fri,  7 Aug 2026 16:35:53 +0200
+Message-ID: <20260807143428.447508704@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -51,164 +52,198 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+From: Zihan Xi <xizh2024@lzu.edu.cn>
 
-commit abd93c85c8667add738ee82aeab95dd9fc8265a2 upstream.
+commit d0a7b48ad0921bd88effaee10bf970ab1d5d0ddd upstream.
 
-sco_conn_del() drops a reference it does not own. It takes one transient
-reference via sco_conn_hold_unless_zero() and releases it with the
-sco_conn_put() that follows sco_sock_hold(); the additional put in the
-!sk branch releases a second one:
+The pairing completion and authentication failure callbacks look up the
+pending MGMT_OP_PAIR_DEVICE command by walking hdev->mgmt_pending. The
+lookup returned a command that was still linked on the shared pending list,
+without keeping mgmt_pending_lock held for the later dereference and
+removal.
 
-    conn = sco_conn_hold_unless_zero(conn);
-    ...
-    sk = sco_sock_hold(conn);
-    sco_conn_unlock(conn);
-    sco_conn_put(conn);
+A concurrent MGMT_OP_CANCEL_PAIR_DEVICE request can remove and free the
+same pending command before the callback uses it. The reverse race is also
+possible when cancel_pair_device() gets a command from pending_find() and a
+callback removes it before the cancel path dereferences it. This can lead
+to a use-after-free and a second list_del().
 
-    if (!sk) {
-            sco_conn_put(conn);
-            return;
-    }
+Make the pairing lookup helpers transfer ownership of the pending command
+by removing it from hdev->mgmt_pending while holding mgmt_pending_lock.
+The callbacks and cancel path then complete the command and free it
+directly, so racing paths cannot find or free the same command again. Take
+a temporary hci_conn reference in cancel_pair_device() because the command
+completion drops the reference stored in the pending command.
 
-When close() races the controller's Disconnection Complete, sco_chan_del()
-clears conn->sk and drops the socket's reference while sco_conn_del() is
-running. sco_conn_del() then sees sk == NULL, its own put drops the count
-to zero and frees the conn, and the second put writes to the freed kref:
-
-    BUG: KASAN: slab-use-after-free in sco_conn_put.part.0+0x1a/0x190
-    Write of size 4 at addr ffff8881099dec74 by task kworker/u17:3/413
-    Workqueue: hci1 hci_rx_work
-    Call Trace:
-     sco_conn_put.part.0+0x1a/0x190
-     hci_disconn_complete_evt+0x1ee/0x3e0
-     hci_event_packet+0x54a/0x650
-     hci_rx_work+0x321/0x3d0
-    Allocated by task 413:
-     sco_conn_add+0x72/0x1a0
-     sco_connect_cfm+0x88/0x670
-    Freed by task 413:
-     sco_conn_del.isra.0+0x3f/0xf0
-     hci_disconn_complete_evt+0x1ee/0x3e0
-    refcount_t: underflow; use-after-free.
-
-The root cause is that the socket stores the connection without holding a
-reference of its own. __sco_chan_add() does:
-
-    sco_pi(sk)->conn = conn;
-
-so the socket borrows whatever reference its caller happened to hold, and
-the callers paper over that with ad-hoc holds and puts. Give the socket a
-counted reference instead: __sco_chan_add() takes one and it is released
-together with the channel (sco_chan_del()) and in sco_sock_destruct().
-With the socket holding its own reference, sco_conn_del() no longer needs
-the extra put and the redundant hold in sco_conn_ready() goes away.
-
-Making the socket own its reference means the connection is now actually
-freed on the error paths of sco_connect() where it used to leak, which in
-turn runs sco_conn_free() and its hci_conn_drop(conn->hcon). To keep the
-hci_conn accounting balanced, make that ownership explicit as well:
-sco_conn_add() consumes one hci_conn reference and the sco_conn owns it for
-its lifetime. sco_connect() hands over the reference returned by
-hci_connect_sco() and no longer drops it on the error paths;
-sco_connect_cfm(), which is not given a reference, takes one with
-hci_conn_hold() before handing it to sco_conn_add() (and drops it again if
-the allocation fails); and the explicit hci_conn_hold() in sco_conn_ready()
-is removed. Every reference then has a single, clear owner.
-
-Fixes: e6720779ae61 ("Bluetooth: SCO: Use kref to track lifetime of sco_conn")
+Fixes: e9a416b5ce0c ("Bluetooth: Add mgmt_pair_device command")
 Cc: stable@vger.kernel.org
-Suggested-by: Pauli Virtanen <pav@iki.fi>
-Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+Reported-by: Vega <vega@nebusec.ai>
+Assisted-by: Codex:gpt-5.4
+Signed-off-by: Zihan Xi <xizh2024@lzu.edu.cn>
+Reviewed-by: Ren Wei <enjou1224z@gmail.com>
+Reported-by: Vega <vega@nebusec.ai>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/sco.c |   22 +++++++++++++---------
- 1 file changed, 13 insertions(+), 9 deletions(-)
+ net/bluetooth/mgmt.c |   64 ++++++++++++++++++++++++++++++++++++---------------
+ 1 file changed, 46 insertions(+), 18 deletions(-)
 
---- a/net/bluetooth/sco.c
-+++ b/net/bluetooth/sco.c
-@@ -190,6 +190,9 @@ static void sco_sock_clear_timer(struct
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -3527,11 +3527,13 @@ static int set_io_capability(struct sock
+ 				 NULL, 0);
  }
  
- /* ---- SCO connections ---- */
-+/* Consumes a reference on @hcon, which the returned sco_conn owns until it is
-+ * freed. On failure (NULL return) the reference is left for the caller to drop.
-+ */
- static struct sco_conn *sco_conn_add(struct hci_conn *hcon)
+-static struct mgmt_pending_cmd *find_pairing(struct hci_conn *conn)
++static struct mgmt_pending_cmd *remove_pairing(struct hci_conn *conn)
  {
- 	struct sco_conn *conn = hcon->sco_data;
-@@ -200,6 +203,9 @@ static struct sco_conn *sco_conn_add(str
- 			sco_conn_lock(conn);
- 			conn->hcon = hcon;
- 			sco_conn_unlock(conn);
-+		} else {
-+			/* conn already owns a reference on hcon */
-+			hci_conn_drop(hcon);
- 		}
- 		return conn;
- 	}
-@@ -267,10 +273,8 @@ static void sco_conn_del(struct hci_conn
- 	sco_conn_unlock(conn);
- 	sco_conn_put(conn);
+ 	struct hci_dev *hdev = conn->hdev;
+ 	struct mgmt_pending_cmd *cmd;
  
--	if (!sk) {
--		sco_conn_put(conn);
-+	if (!sk)
++	mutex_lock(&hdev->mgmt_pending_lock);
++
+ 	list_for_each_entry(cmd, &hdev->mgmt_pending, list) {
+ 		if (cmd->opcode != MGMT_OP_PAIR_DEVICE)
+ 			continue;
+@@ -3539,9 +3541,39 @@ static struct mgmt_pending_cmd *find_pai
+ 		if (cmd->user_data != conn)
+ 			continue;
+ 
++		list_del(&cmd->list);
++		mutex_unlock(&hdev->mgmt_pending_lock);
+ 		return cmd;
+ 	}
+ 
++	mutex_unlock(&hdev->mgmt_pending_lock);
++
++	return NULL;
++}
++
++static struct mgmt_pending_cmd *remove_pairing_by_addr(struct hci_dev *hdev,
++						       bdaddr_t *bdaddr)
++{
++	struct mgmt_pending_cmd *cmd;
++	struct hci_conn *conn;
++
++	mutex_lock(&hdev->mgmt_pending_lock);
++
++	list_for_each_entry(cmd, &hdev->mgmt_pending, list) {
++		if (cmd->opcode != MGMT_OP_PAIR_DEVICE)
++			continue;
++
++		conn = cmd->user_data;
++		if (bacmp(bdaddr, &conn->dst) != 0)
++			continue;
++
++		list_del(&cmd->list);
++		mutex_unlock(&hdev->mgmt_pending_lock);
++		return cmd;
++	}
++
++	mutex_unlock(&hdev->mgmt_pending_lock);
++
+ 	return NULL;
+ }
+ 
+@@ -3579,10 +3611,10 @@ void mgmt_smp_complete(struct hci_conn *
+ 	u8 status = complete ? MGMT_STATUS_SUCCESS : MGMT_STATUS_FAILED;
+ 	struct mgmt_pending_cmd *cmd;
+ 
+-	cmd = find_pairing(conn);
++	cmd = remove_pairing(conn);
+ 	if (cmd) {
+ 		cmd->cmd_complete(cmd, status);
+-		mgmt_pending_remove(cmd);
++		mgmt_pending_free(cmd);
+ 	}
+ }
+ 
+@@ -3592,14 +3624,14 @@ static void pairing_complete_cb(struct h
+ 
+ 	BT_DBG("status %u", status);
+ 
+-	cmd = find_pairing(conn);
++	cmd = remove_pairing(conn);
+ 	if (!cmd) {
+ 		BT_DBG("Unable to find a pending command");
  		return;
+ 	}
+ 
+ 	cmd->cmd_complete(cmd, mgmt_status(status));
+-	mgmt_pending_remove(cmd);
++	mgmt_pending_free(cmd);
+ }
+ 
+ static void le_pairing_complete_cb(struct hci_conn *conn, u8 status)
+@@ -3611,14 +3643,14 @@ static void le_pairing_complete_cb(struc
+ 	if (!status)
+ 		return;
+ 
+-	cmd = find_pairing(conn);
++	cmd = remove_pairing(conn);
+ 	if (!cmd) {
+ 		BT_DBG("Unable to find a pending command");
+ 		return;
+ 	}
+ 
+ 	cmd->cmd_complete(cmd, mgmt_status(status));
+-	mgmt_pending_remove(cmd);
++	mgmt_pending_free(cmd);
+ }
+ 
+ static int pair_device(struct sock *sk, struct hci_dev *hdev, void *data,
+@@ -3775,23 +3807,17 @@ static int cancel_pair_device(struct soc
+ 		goto unlock;
+ 	}
+ 
+-	cmd = pending_find(MGMT_OP_PAIR_DEVICE, hdev);
++	cmd = remove_pairing_by_addr(hdev, &addr->bdaddr);
+ 	if (!cmd) {
+ 		err = mgmt_cmd_status(sk, hdev->id, MGMT_OP_CANCEL_PAIR_DEVICE,
+ 				      MGMT_STATUS_INVALID_PARAMS);
+ 		goto unlock;
+ 	}
+ 
+-	conn = cmd->user_data;
+-
+-	if (bacmp(&addr->bdaddr, &conn->dst) != 0) {
+-		err = mgmt_cmd_status(sk, hdev->id, MGMT_OP_CANCEL_PAIR_DEVICE,
+-				      MGMT_STATUS_INVALID_PARAMS);
+-		goto unlock;
 -	}
++	conn = hci_conn_get(cmd->user_data);
  
- 	/* Kill socket */
- 	lock_sock(sk);
-@@ -285,7 +289,7 @@ static void __sco_chan_add(struct sco_co
- {
- 	BT_DBG("conn %p", conn);
+ 	cmd->cmd_complete(cmd, MGMT_STATUS_CANCELLED);
+-	mgmt_pending_remove(cmd);
++	mgmt_pending_free(cmd);
  
--	sco_pi(sk)->conn = conn;
-+	sco_pi(sk)->conn = sco_conn_hold(conn);
- 	conn->sk = sk;
+ 	err = mgmt_cmd_complete(sk, hdev->id, MGMT_OP_CANCEL_PAIR_DEVICE, 0,
+ 				addr, sizeof(*addr));
+@@ -3809,6 +3835,8 @@ static int cancel_pair_device(struct soc
+ 	if (conn->conn_reason == CONN_REASON_PAIR_DEVICE)
+ 		hci_abort_conn(conn, HCI_ERROR_REMOTE_USER_TERM);
  
- 	if (parent)
-@@ -368,15 +372,15 @@ static int sco_connect(struct sock *sk)
- 	 */
- 	if (sk->sk_state != BT_OPEN && sk->sk_state != BT_BOUND) {
- 		release_sock(sk);
--		hci_conn_drop(hcon);
-+		sco_conn_put(conn);
- 		err = -EBADFD;
- 		goto unlock;
++	hci_conn_put(conn);
++
+ unlock:
+ 	hci_dev_unlock(hdev);
+ 	return err;
+@@ -10135,14 +10163,14 @@ void mgmt_auth_failed(struct hci_conn *c
+ 	ev.addr.type = link_to_bdaddr(conn->type, conn->dst_type);
+ 	ev.status = status;
+ 
+-	cmd = find_pairing(conn);
++	cmd = remove_pairing(conn);
+ 
+ 	mgmt_event(MGMT_EV_AUTH_FAILED, conn->hdev, &ev, sizeof(ev),
+ 		    cmd ? cmd->sk : NULL);
+ 
+ 	if (cmd) {
+ 		cmd->cmd_complete(cmd, status);
+-		mgmt_pending_remove(cmd);
++		mgmt_pending_free(cmd);
  	}
+ }
  
- 	err = sco_chan_add(conn, sk, NULL);
-+	sco_conn_put(conn);
- 	if (err) {
- 		release_sock(sk);
--		hci_conn_drop(hcon);
- 		goto unlock;
- 	}
- 
-@@ -1452,8 +1456,6 @@ static void sco_conn_ready(struct sco_co
- 		bacpy(&sco_pi(sk)->src, &conn->hcon->src);
- 		bacpy(&sco_pi(sk)->dst, &conn->hcon->dst);
- 
--		sco_conn_hold(conn);
--		hci_conn_hold(conn->hcon);
- 		__sco_chan_add(conn, sk, parent);
- 
- 		if (test_bit(BT_SK_DEFER_SETUP, &bt_sk(parent)->flags))
-@@ -1509,10 +1511,12 @@ static void sco_connect_cfm(struct hci_c
- 	if (!status) {
- 		struct sco_conn *conn;
- 
--		conn = sco_conn_add(hcon);
-+		conn = sco_conn_add(hci_conn_hold(hcon));
- 		if (conn) {
- 			sco_conn_ready(conn);
- 			sco_conn_put(conn);
-+		} else {
-+			hci_conn_drop(hcon);
- 		}
- 	} else
- 		sco_conn_del(hcon, bt_to_errno(status));
 
 
