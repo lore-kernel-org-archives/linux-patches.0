@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7226431327A;
-	Fri,  7 Aug 2026 15:20:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 308CD3264D6;
+	Fri,  7 Aug 2026 15:20:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116001; cv=none; b=lWUu2GkeDiJz48jkdLkiUwX54yIpuDxygLvi+MB5o7mBXmNigqVp/ke4atB/SiMTS0NaYK1BiNdFGSGrDlq5tzmB13ClkRo8UITSE6lZ8vysaqoI231BwIxQDilBerI2aK5gHYEwmohL+Ts2/+g0LHxq8+GtWHFOlJmlXPFzOp8=
+	t=1786116004; cv=none; b=tQKaKZAB0vM5KO1JncqAYcCGoBu78P1glIu7jcFjnoQ63JlIlQTNwU80Ljlm3KUbdpvp81Oj8zUqfw8RzypSZ9U+cP9loZD/c2BIen/xxg30Bt+Zvy1TSQ9yWhPWN+qcSVsq4l+TOM4LMIrEt/8JsnRnS9m3ZcfgZW0PJ6XYIh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116001; c=relaxed/simple;
-	bh=9uD8fx5D1Ilpbox6z0apM/p6azj9zbICveB3PEg9duU=;
+	s=arc-20240116; t=1786116004; c=relaxed/simple;
+	bh=k0M1mXrU66AHGkvzZiWEHhfi2WqLssH0hjEGSVpvN28=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B0ra3v1aBQ/T8abGesLvjN3XwyGH4+xnTDrOoICTnRRmUVZyc1pGXNsVCvfNiY/Fo0WcXi4cp/miGPfM4utFI9OJPFQhTh89fmDiCMw+UvxsucmPgxCPg+UGmT2aVwk838Ex5yoURJhDyq/eQvq9I51G67XlItSG8ylH8LL0/ME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uiwvuCCB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=A5PXHLq3kznIg6sUzqlilHErdl6JyKl/97y2wQBLa5wtrt1wa/FNl4IsSYdyh/LArtt4GHwMhMPvp9QpINRnkvc+e4ZNDKHURk1gaqVTzpbOIoTlvDJtHg6XHTjjdxbugQP8CmVkB87AhwBo4ofgx46M0dmzjyOhLEymyw0x9AU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jN28+mAJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uiwvuCCB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD4661F000E9;
-	Fri,  7 Aug 2026 15:19:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jN28+mAJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B3C31F00A3A;
+	Fri,  7 Aug 2026 15:20:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116000;
-	bh=x1Sbfu8kF3y1Gzzqe8KfD+QNEqTUHVlXAGoTtLS9u9Q=;
+	s=korg; t=1786116003;
+	bh=2F1Y9c5h55z3oKJG3GeIbPBvd2mb+6uHyLwNXUeqMO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uiwvuCCBIbKn+L5Vqsaoi81Uj2tDQB2t/OvBTer82Ujh1JfLYSOiwTFPVDWBJIjnN
-	 AA2qQpYyZJuYs+ZZ8h47ucKXYIBu2gN3HA9VhDi8Ct5EuVTAJ6DdbF7ESrzFgBep6Y
-	 BUwWOfCS4R+6HFBxMLHKQGQZ3FuTMAP/yh3e1dI4=
+	b=jN28+mAJe4Vv/rP6JkRX7l56qOqr//tI2zFtbpRXNL0sEVvzNYe4GyAZ29gYJKhS3
+	 UyYp9NtqkN1noM/5LEBAcQy+3mO/GRtOW51sICKm30SJKYJbbp4KK1fOJD5mki30Ng
+	 yXP+X/Las0VlYF06NYJHQe0B4iBrn1qy+tVPEIfc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Minhong He <heminhong@kylinos.cn>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 078/261] can: isotp: check register_netdevice_notifier() error in module init
-Date: Fri,  7 Aug 2026 16:37:15 +0200
-Message-ID: <20260807143417.069335826@linuxfoundation.org>
+Subject: [PATCH 6.6 079/261] tracing/mmiotrace: Reset dropped_count in mmio_reset_data()
+Date: Fri,  7 Aug 2026 16:37:16 +0200
+Message-ID: <20260807143417.089762615@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143415.358597922@linuxfoundation.org>
 References: <20260807143415.358597922@linuxfoundation.org>
@@ -51,55 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Minhong He <heminhong@kylinos.cn>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-[ Upstream commit ef09a13c5afac41a3c4b5f22b8572820d9e7518c ]
+[ Upstream commit c786d2bdf1f3964deee192ad942dee2a741c1e2c ]
 
-Register the netdevice notifier before can_proto_register() and check the
-return value. If protocol registration fails, unregister the notifier
-before returning the error.
+mmio_reset_data() is called during tracer initialization, reset, and
+start. While it resets overrun_detected and prev_overruns, it neglects
+to reset dropped_count. Consequently, dropped event counts from prior
+tracing sessions persist in dropped_count and corrupt overrun reports
+in subsequent runs.
 
-Align isotp_module_init() with the reordering already done for raw.c
-(commit c28b3bffe49e ("can: raw: process optimization in raw_init()")) and
-bcm.c (commit edd1a7e42f1d ("can: bcm: registration process optimization
-in bcm_module_init()")).
+Fix this by explicitly calling atomic_set(&dropped_count, 0) in
+mmio_reset_data().
 
-Fixes: 8d0caedb7596 ("can: bcm/raw/isotp: use per module netdevice notifier")
-Signed-off-by: Minhong He <heminhong@kylinos.cn>
-Link: https://patch.msgid.link/20260729085656.134523-1-heminhong@kylinos.cn
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Link: https://patch.msgid.link/178524299122.56416.16277704230639425172.stgit@devnote2
+Fixes: 173ed24ee2d6 ("mmiotrace: count events lost due to not recording")
+Assisted-by: Antigravity:gemini-3.6-flash
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/can/isotp.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ kernel/trace/trace_mmiotrace.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/can/isotp.c b/net/can/isotp.c
-index efc5eeac7c886..062b7bbf1b098 100644
---- a/net/can/isotp.c
-+++ b/net/can/isotp.c
-@@ -1883,13 +1883,18 @@ static __init int isotp_module_init(void)
+diff --git a/kernel/trace/trace_mmiotrace.c b/kernel/trace/trace_mmiotrace.c
+index 4d9e5c830dbe1..c523ce5aa4958 100644
+--- a/kernel/trace/trace_mmiotrace.c
++++ b/kernel/trace/trace_mmiotrace.c
+@@ -29,6 +29,7 @@ static void mmio_reset_data(struct trace_array *tr)
+ {
+ 	overrun_detected = false;
+ 	prev_overruns = 0;
++	atomic_set(&dropped_count, 0);
  
- 	pr_info("can: isotp protocol (max_pdu_size %d)\n", max_pdu_size);
- 
-+	err = register_netdevice_notifier(&canisotp_notifier);
-+	if (err)
-+		return err;
-+
- 	err = can_proto_register(&isotp_can_proto);
--	if (err < 0)
-+	if (err < 0) {
- 		pr_err("can: registration of isotp protocol failed %pe\n", ERR_PTR(err));
--	else
--		register_netdevice_notifier(&canisotp_notifier);
-+		unregister_netdevice_notifier(&canisotp_notifier);
-+		return err;
-+	}
- 
--	return err;
-+	return 0;
+ 	tracing_reset_online_cpus(&tr->array_buffer);
  }
- 
- static __exit void isotp_module_exit(void)
 -- 
 2.53.0
 
