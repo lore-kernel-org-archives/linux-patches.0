@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A01633C1AD;
-	Fri,  7 Aug 2026 15:14:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AFC333C1AD;
+	Fri,  7 Aug 2026 15:14:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115685; cv=none; b=trXt7YAmuVceuzkFS1i+ADM7pYkUGI/I3VV4iS+wVijfAV2vnyhqoQtDzb2gjdVzqQSLvgzb29LLGKQdlXpMpDYbIUb19CQnnvu1KGF15w+RUzDOSXxsYhOmTUg7iWPGQ7Sum1yGY/XD0mzIGf0khttU32UXqceK5EZj4ofWh1s=
+	t=1786115688; cv=none; b=QrvJI2ju8l2kemlt/tnr07ghVgAWizXN2ZiQSC1jmzxzdlyxpzMgTkvNFrmwsv+/6v285+mfjrfqooBX4RL3CVpQqk4omkcR0yiBhenOTPi4IQq+H3HhvDdvL8kLvv/VGb0/LlGigKD9v4W3rToeZPH4HsWKaBOez/CTdRtorbs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115685; c=relaxed/simple;
-	bh=Sj6U1E3pISnUFTFg4HiRwBwUEUHIinNiT3xr+DaQnMs=;
+	s=arc-20240116; t=1786115688; c=relaxed/simple;
+	bh=cvfIEN8WwXMBTAHQ5IHTkvsTsmSAtg7XFShpymGJCVQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ad5uQ84pVVf5kcCGb6STECBLtnIoXrjjw1Tl0VvwVUFnZjsMoqnWIPTSWrcIc3flX7+1vf9nCo5oZrEjWvLUVguLtsc5xI5S5Kr7UtE7mfaa1dYzVouI6FjERb8+dL+2Dh2jVNaR4+n/c8x7X+Y9Jvty9yMfZUZdBNqyuVcS44g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2NuDEu1u; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k9iLt/Es8gLLCmKQGqM2WWN/Ve9ALQLKDdz6CRfpzrHhWl5eFuo4QowZQM2h+z90iq2j9F9rI9c11Y4q/hBOcnxjlGAwxoPtX0ONdWi6PjhjxJT7T8jt2u90I9OIMUGF0nz3enKSQ1KCd1oxqzbdHwdhrTKf9RMGoKVz3dkhRW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KcMgARPx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2NuDEu1u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F15B31F000E9;
-	Fri,  7 Aug 2026 15:14:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KcMgARPx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C653D1F000E9;
+	Fri,  7 Aug 2026 15:14:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115684;
-	bh=/mAZmXoVhMCF3DL7ZinmojOWqsqTuiQYWy1pF2NaorY=;
+	s=korg; t=1786115687;
+	bh=pMkfyqDdE00nfrV6KsByP5/KZCK0LQTahKS4pVx2le8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2NuDEu1uUZ1zws5M5AQ0an/SjP8wVfq/bzwqOug2Ptb5z3ekBbdiv05M6LqyoSsGd
-	 cLn4NvaHvJ47LqHPctXJpM3wpLkovpAyZIQMer8nZrJ5jIOqoTDvebaKPnSYC5jNia
-	 vJrELs+zC7G7Ev9fUYLc0uKZbVqYlVhIQBi4slt0=
+	b=KcMgARPxjdVCQ+xIWbUH/jd1/tyqPtRtE1vb13R626eN3+ENiAJPe28wiuoqhoxsm
+	 SV8C2tjnqApcAo+Snwtv4hH5EbZJSL8P1+BjRlnHUP7D8BoKzPqe7r+Sd5L/vqZI/k
+	 Z5GTuvZD5aq3oUyN6NVZau+rm7gBGi9C44WwTHJw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Wentao Guan <guanwentao@uniontech.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 362/396] net/handshake: Close the submit-side sock_hold race
-Date: Fri,  7 Aug 2026 16:38:42 +0200
-Message-ID: <20260807143432.092721150@linuxfoundation.org>
+Subject: [PATCH 6.18 363/396] net/handshake: Drain pending requests at net namespace exit
+Date: Fri,  7 Aug 2026 16:38:43 +0200
+Message-ID: <20260807143432.114568851@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -55,79 +55,110 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 5da98f55b13173c08f003011b76531b25c821c07 ]
+[ Upstream commit ea5fe6a73ca57e5150b8a38b341aef2636eb72f0 ]
 
-handshake_req_submit() publishes the request via
-handshake_req_hash_add() and __add_pending_locked(), drops
-hn_lock, and calls handshake_genl_notify() (which can sleep)
-before taking sock_hold() on req->hr_sk. A fast tlshd ACCEPT
-followed by DONE can drive handshake_complete()'s sock_put()
-into the window between the spin_unlock and the late
-sock_hold(); on a system where the consumer's fd held the
-only sk reference, the late sock_hold() then operates on an
-sk whose refcount has reached zero.
+The arguments to list_splice_init() in handshake_net_exit() are
+reversed. The call moves the local empty "requests" list onto
+hn->hn_requests, leaving the local list empty, so the subsequent
+drain loop runs zero iterations. Pending handshake requests that
+had not yet been accepted are not torn down when the net namespace
+is destroyed; each one keeps a reference on a socket file and on
+the handshake_req allocation.
 
-The preceding two patches install an explicit file reference
-on struct handshake_req. That file pins sock->file, which
-pins the embedded struct socket, which defers inet_release()'s
-sock_put(). As long as hr_file is held, sk cannot reach refcount
-zero from the consumer side, and the submit-side sock_hold()
-with its matching sock_put() calls in handshake_complete() and
-handshake_req_cancel() is now redundant.
+Pass the source and destination in the documented order
+(list_splice_init(list, head) moves list onto head) so the pending
+list is transferred to the local scratch list and drained through
+handshake_complete().
 
-Drop all three. The file reference already keeps each request's
-socket alive, and the lifetime story is contained in a single
-get_file()/fput() pair.
+Fixing the splice direction exposes a list-corruption race. After
+the splice each req->hr_list still has non-empty link pointers,
+threading the stack-local scratch list rather than hn_requests.
+A concurrent handshake_req_cancel() -- for example, from sunrpc's
+TLS timeout on a kernel socket whose netns reference was not
+taken -- finds the request through the rhashtable, calls
+remove_pending(), and sees !list_empty(&req->hr_list).
+__remove_pending_locked() then list_del_init()s an entry off the
+scratch list while the drain iterates, corrupting it. The same
+call arriving after the drain loop has run list_del() on an
+entry hits LIST_POISON instead.
+
+Have remove_pending() check HANDSHAKE_F_NET_DRAINING under
+hn_lock and report not-found when drain is in progress. The
+drain has already taken ownership; handshake_complete()'s existing
+test_and_set on HANDSHAKE_F_REQ_COMPLETED still arbitrates
+between drain and cancel for who calls the consumer's hp_done. Use
+list_del_init() rather than list_del() in the drain so req->hr_list
+does not carry LIST_POISON after drain releases the entry.
+
+The DRAINING guard in remove_pending() makes cancel return false,
+but cancel still falls through to test_and_set_bit on
+HANDSHAKE_F_REQ_COMPLETED and drops the request's hr_file reference.
+Without another pin, if that is the last reference, sk_destruct frees
+the request while it is still linked on the drain loop's local list.
+Pin each request's hr_file under hn_lock before releasing the list,
+and drop that drain pin after the loop finishes with the request.
 
 Fixes: 3b3009ea8abb ("net/handshake: Create a NETLINK service for handling handshake requests")
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Link: https://patch.msgid.link/20260525-handshake-file-pin-v3-6-66c616906ead@oracle.com
+Link: https://patch.msgid.link/20260525-handshake-file-pin-v3-8-66c616906ead@oracle.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-(cherry picked from commit 5da98f55b13173c08f003011b76531b25c821c07)
+(cherry picked from commit ea5fe6a73ca57e5150b8a38b341aef2636eb72f0)
 Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/handshake/request.c | 12 ------------
- 1 file changed, 12 deletions(-)
+ net/handshake/netlink.c | 10 ++++++++--
+ net/handshake/request.c |  5 ++++-
+ 2 files changed, 12 insertions(+), 3 deletions(-)
 
+diff --git a/net/handshake/netlink.c b/net/handshake/netlink.c
+index 21d6cbd52fcdb..3fd4fef9bab1a 100644
+--- a/net/handshake/netlink.c
++++ b/net/handshake/netlink.c
+@@ -201,13 +201,19 @@ static void __net_exit handshake_net_exit(struct net *net)
+ 	 */
+ 	spin_lock_bh(&hn->hn_lock);
+ 	set_bit(HANDSHAKE_F_NET_DRAINING, &hn->hn_flags);
+-	list_splice_init(&requests, &hn->hn_requests);
++	list_splice_init(&hn->hn_requests, &requests);
++	list_for_each_entry(req, &requests, hr_list)
++		get_file(req->hr_file);
+ 	spin_unlock_bh(&hn->hn_lock);
+ 
+ 	while (!list_empty(&requests)) {
++		struct file *file;
++
+ 		req = list_first_entry(&requests, struct handshake_req, hr_list);
+-		list_del(&req->hr_list);
++		file = req->hr_file;
++		list_del_init(&req->hr_list);
+ 		handshake_complete(req, -ETIMEDOUT, NULL);
++		fput(file);
+ 	}
+ }
+ 
 diff --git a/net/handshake/request.c b/net/handshake/request.c
-index 4bf98793491aa..035bb2d7471c9 100644
+index 035bb2d7471c9..d4a3a50f8a3b5 100644
 --- a/net/handshake/request.c
 +++ b/net/handshake/request.c
-@@ -301,13 +301,6 @@ int handshake_req_submit(struct socket *sock, struct handshake_req *req,
- 			goto out_err;
+@@ -163,13 +163,16 @@ static void __remove_pending_locked(struct handshake_net *hn,
+  * otherwise %false.
+  *
+  * If @req was on a pending list, it has not yet been accepted.
++ * Returns %false when the net namespace is draining; the drain
++ * loop has taken ownership of the pending list.
+  */
+ static bool remove_pending(struct handshake_net *hn, struct handshake_req *req)
+ {
+ 	bool ret = false;
+ 
+ 	spin_lock_bh(&hn->hn_lock);
+-	if (!list_empty(&req->hr_list)) {
++	if (!test_bit(HANDSHAKE_F_NET_DRAINING, &hn->hn_flags) &&
++	    !list_empty(&req->hr_list)) {
+ 		__remove_pending_locked(hn, req);
+ 		ret = true;
  	}
- 
--	/*
--	 * Pin struct sock so sk_destruct does not run until the
--	 * handshake completion path releases it; struct socket is
--	 * held separately via hr_file above.
--	 */
--	sock_hold(req->hr_sk);
--
- 	trace_handshake_submit(net, req, req->hr_sk);
- 	return 0;
- 
-@@ -337,9 +330,6 @@ void handshake_complete(struct handshake_req *req, int status,
- 		trace_handshake_complete(net, req, sk, status);
- 		req->hr_proto->hp_done(req, status, info);
- 
--		/* Handshake request is no longer pending */
--		sock_put(sk);
--
- 		fput(file);
- 	}
- }
-@@ -387,8 +377,6 @@ bool handshake_req_cancel(struct sock *sk)
- out_true:
- 	trace_handshake_cancel(net, req, sk);
- 
--	/* Handshake request is no longer pending */
--	sock_put(sk);
- 	fput(req->hr_file);
- 	return true;
- }
 -- 
 2.53.0
 
