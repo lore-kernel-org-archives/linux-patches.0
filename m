@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2C87311C07;
-	Fri,  7 Aug 2026 14:46:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9A34305665;
+	Fri,  7 Aug 2026 14:46:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786113961; cv=none; b=EMTqe5qyj0Hc5m7EHXYbDJ/DUCME85vuWSsHUY3sOwGp199mq0YcBFO2Vj3U6Z7qB6jePPOH96a1onzs2m3rKNDY3QoZkaKZffqRnB9YMmZXF9mdFHTFSPpqhO4cFbFGvpJwOl5HCfPmpg98QIKNdRxstbgcDtKs7ATvc7DAn0M=
+	t=1786113964; cv=none; b=dZDiyXpzGePr8dcjOCF0FXZ0oSPWmEpG8xgJ7oxAOtTW/cBnIrdd0DfH152f34szH5WNhuDPqnHMdGipx7dMAnKRUKkxzJTzgAiom2PAtY82NtN69nAf/M/NZUFHdiwqEEc/FHhIrV8aGWKAhPaDOpkrO57aoVaSgOgpGJUarYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786113961; c=relaxed/simple;
-	bh=OHwhds5HfyUikZ5I/4lDKUpOjYjd5/uj8xuNWCF4+k0=;
+	s=arc-20240116; t=1786113964; c=relaxed/simple;
+	bh=xq1x5Ni4nsbo6TejmksLZw5VlLhCAJq6ngO2WhIg6ac=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XmRkgNXZtAMPz76CjqOLpBIXQ/YHHgXk5fgut7m8FJxDvHgz7mEF5p3v0AkR7QAf8CS0HlOu3FLEC/J4gGs7IwU44V03KtxwsvxDNGTvEbWcsqoktQKAiNGMRjS8811JELkdqIbNZsoaUJe5Gn4axBK7s7H8ndjD3GNdbNfvrlA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hl43dTNd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MhUK751By+vvsoCOx4YBzJ7jIGkrNR1/M0k2ujb4tZdaRfOsp6mxYzvJIqi3hwTq6wRAyAuBVay2FGTAvwhWIr1N2EX6k0OnU0+3zIkpyA60M9jcPke5HHxXZ1XWWvIO7p0mNpZKbkPXqNJWNckSZVt22G/NGhI2/KZAgHg9Sv8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L73qFGxg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hl43dTNd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B25C1F000E9;
-	Fri,  7 Aug 2026 14:45:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L73qFGxg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FA511F000E9;
+	Fri,  7 Aug 2026 14:46:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786113960;
-	bh=05RxvnkWrZpIlGzT/hzL1T/JBcJyI9lM2uv4Rt4/CU0=;
+	s=korg; t=1786113962;
+	bh=k0vHX7giBVJnRsEffEzK5uFOx8lQhLzZ5YuEy5AzaI0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Hl43dTNdlL6EE/2y69YdyBqn2VlLujafl50C4rt5zDdgcq4ES0vJzcEswUpAsnNVr
-	 7E377hEyah3A9vHILbU5iWEG9LkHX6eay6k+madC9MfYJBwTzq/dmIwMzotkTXsHh8
-	 Go/sz6ZW3jWTx9v4bQSS6tV+5TwxZC5CwjbI32/U=
+	b=L73qFGxgMxQsBzVTunzt7j9CjexCVhsWmPxt7LuwUowN9tIYrm+Canv9CM/SETA+g
+	 41343GIyJ/9a6W2d+5V1IYvLT8bNoRrSn75UKtByR98DW/fjvtJZbINRni6rrGooq5
+	 rlOnh8Wyw09CWrEOHIDQdWTe4qB3W+88BYr8Zb/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Samuel Salin <Samuel.salin@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Pauli Virtanen <pav@iki.fi>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 095/337] idpf: Fix mailbox IRQ name leak on request failure
-Date: Fri,  7 Aug 2026 16:34:58 +0200
-Message-ID: <20260807143420.601179361@linuxfoundation.org>
+Subject: [PATCH 6.12 096/337] Bluetooth: ISO: clear iso_data always when detaching conn from hcon
+Date: Fri,  7 Aug 2026 16:34:59 +0200
+Message-ID: <20260807143420.622335414@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -53,39 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit 9bff30482c10f70d9e56c0633a6616e07140e217 ]
+[ Upstream commit d57e506f6a1e3929611340fae87c1e4823f4d85c ]
 
-idpf_mb_intr_req_irq() allocates the mailbox IRQ name before calling
-request_irq(). On success, the name is released later through
-kfree(free_irq()), but request_irq() failure returns without freeing it.
+When setting conn->hcon = NULL, also conn->hcon->iso_data = NULL is
+necessary, otherwise later iso_conn_free() will UAF.
 
-Free the allocated name on the request_irq() failure path.
+Fix clearing of iso_data in iso_sock_disconn()
 
-Fixes: 4930fbf419a7 ("idpf: add core init and interrupt request")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Tested-by: Samuel Salin <Samuel.salin@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes KASAN: slab-use-after-free in iso_conn_hold_unless_zero on
+iso_sock_release() followed by hci_abort_conn_sync().
+
+Fixes: fbdc4bc47268 ("Bluetooth: ISO: Use defer setup to separate PA sync and BIG sync")
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/idpf/idpf_lib.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/iso.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/intel/idpf/idpf_lib.c b/drivers/net/ethernet/intel/idpf/idpf_lib.c
-index 4973135c346a2..c2101f7f6e1bf 100644
---- a/drivers/net/ethernet/intel/idpf/idpf_lib.c
-+++ b/drivers/net/ethernet/intel/idpf/idpf_lib.c
-@@ -134,7 +134,7 @@ static int idpf_mb_intr_req_irq(struct idpf_adapter *adapter)
- 	if (err) {
- 		dev_err(&adapter->pdev->dev,
- 			"IRQ request for mailbox failed, error: %d\n", err);
--
-+		kfree(name);
- 		return err;
- 	}
- 
+diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
+index 12a01dc6dbde3..1d3e4616ee700 100644
+--- a/net/bluetooth/iso.c
++++ b/net/bluetooth/iso.c
+@@ -811,6 +811,7 @@ static void iso_sock_disconn(struct sock *sk)
+ 	sk->sk_state = BT_DISCONN;
+ 	iso_conn_lock(iso_pi(sk)->conn);
+ 	hci_conn_drop(iso_pi(sk)->conn->hcon);
++	iso_pi(sk)->conn->hcon->iso_data = NULL;
+ 	iso_pi(sk)->conn->hcon = NULL;
+ 	iso_conn_unlock(iso_pi(sk)->conn);
+ }
 -- 
 2.53.0
 
