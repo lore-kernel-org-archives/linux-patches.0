@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A08373806B0;
-	Fri,  7 Aug 2026 15:36:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0CE54734CD;
+	Fri,  7 Aug 2026 15:36:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116986; cv=none; b=olNEFzMkp0YhYaIH47gMpE5FIL39Qg3HLJ4lZZkRyJxByLJX5ZO4t31yVyGVoUBjL111Hf7mLypEEyehGCrdrolanvS3agiyrwPhkZ1HZ/qBGKlHTDySdieaTeBGDtNn9tsJ+uS8TXzjyOPnxgFa2zrvYjV3wb5zOq2AIi4Izow=
+	t=1786116989; cv=none; b=uQYdthj6oKTgu4FkO6srPNPKrvyl21wKkvSLxVuIa3ovKQKy5uQcUHh9rtvFf+24Phsvj8TyN03Dxd77BGa6W34zLNYmPiPTQvAS95mvw2lLqOq95Mm0Tap5SSCpb/a+Bxsfm66vr11fS7nTxomK3W7eTXY3aJzFI8DEp1o2SJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116986; c=relaxed/simple;
-	bh=GH3ykSyS0WQDaH8bZPSliZ9Kti8P+4A1f3ODZZA3acA=;
+	s=arc-20240116; t=1786116989; c=relaxed/simple;
+	bh=jJUrFVtWPIXGH0JuNzSKHZnoZ/dTcdcLz/sP7FLrDII=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nDvw5GOUNvOrIfEaNbzG33G9HUxvo1tnnqwi+ZWBwYWGvGOadGSJQ9C0IOBQv2oTolp9ubH/fx/jhC7/FRkSj1BPQHWur9R3lq/2R4kD8WgHFuKVHo/b9bl2J28lqs7+FgdX+zDY6907itcf/qoBeKJDdUraFeVqxHkMHdMlCYg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Df+H0ZRN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lKSLC9lIdbEeYIC1wRdCzZVv5k4g89mZlWjgDqKLYsaMavrWwxSnvzDlANoZv8BSRcbcDIUbnLCF6RBPXOFJ/WnM8U8ct6ibR+Lf0L8uHXoiEXJrZzeTTMp3CrpwoIwPm/ICbCGMANyYsqa43NYofDU5Z7hVINIFP7Z5KckPPnE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Vkz/4W8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Df+H0ZRN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 028771F000E9;
-	Fri,  7 Aug 2026 15:36:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Vkz/4W8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE1A01F000E9;
+	Fri,  7 Aug 2026 15:36:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116985;
-	bh=lP8bRK6ZdZALvB0Ut7YYREr2goHJHHv2Kkfd9hxiynE=;
+	s=korg; t=1786116988;
+	bh=PSyv+awXsPtht/Pnh0+7CHeNC9QNXWAYM/AZ+0kIA/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Df+H0ZRN89r+Z9LEF4M6GrlmvhOV4ltmINW/6fGLNRNC5Q2aIeCJun0i4tPlxGQqD
-	 YPyBIBPgNhBuIZb11H8zu6BYSAzzuw5KtvZYHT5TQ4mv91ZV5ov0bsoiIhoqwPL/yT
-	 HJ62vA0V6p8Z7iPKOu91EQk1yu+GAkKqag8JoqX8=
+	b=2Vkz/4W8wyti9Sv7+wSPeTK6LoqF9oX3XPr26Yv+W4oqX6zaDdl76WLXyE0dHn5Fp
+	 m0HgDiHiA6z9MhjdGEeFwRaOMEWlXFlJ6ZMk4lzqomXLsc4Kzs6rHirzt4CyFvphlY
+	 huGRCLDog/5xAFmeOBwMJDhwfQ3CWlh5RyNRSQ6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Chandrakanth Patil <chandrakanth.patil@broadcom.com>,
+	Jiazi Li <jiazi.li@transsion.com>,
+	Ao Sun <ao.sun@transsion.com>,
+	Bean Huo <beanhuo@micron.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 158/438] scsi: mpi3mr: Fix potential deadlock in mpi3mr_fault_uevent_emit
-Date: Fri,  7 Aug 2026 16:35:54 +0200
-Message-ID: <20260807143431.402972074@linuxfoundation.org>
+Subject: [PATCH 7.1 159/438] scsi: ufs: core: Initialize hba->rpmbs list in ufshcd
+Date: Fri,  7 Aug 2026 16:35:55 +0200
+Message-ID: <20260807143431.423308598@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -52,67 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
+From: Ao Sun <ao.sun@transsion.com>
 
-[ Upstream commit ccff8c92571500fcfed21281e33daaf645bf692f ]
+[ Upstream commit 0279fd451a9971c0d5b959fc59f3e11b55e1694e ]
 
-mpi3mr_fault_uevent_emit() runs from the fault watchdog and reset paths
-where host I/O may already be blocked. GFP_KERNEL allocations here, both
-the local kzalloc_obj() and the ones inside kobject_uevent_env() itself,
-can trigger reclaim that waits on that blocked I/O and deadlock.
+Initialize the hba->rpmbs list in ufshcd_alloc_host() to prevent NULL
+pointer dereference in the device teardown path if ufs_rpmb_probe()
+fails.
 
-Use memalloc_noio_save()/restore() to cover the whole call instead of
-just the local allocation.
-
-Fixes: ec54b348f274 ("scsi: mpi3mr: Record and report controller firmware faults")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260724164630.924288-1-chandrakanth.patil%40broadcom.com
-Signed-off-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
-Link: https://patch.msgid.link/20260724175231.935192-1-chandrakanth.patil@broadcom.com
+Fixes: b06b8c421485 ("scsi: ufs: core: Add OP-TEE based RPMB driver for UFS devices")
+Co-developed-by: Jiazi Li <jiazi.li@transsion.com>
+Signed-off-by: Jiazi Li <jiazi.li@transsion.com>
+Signed-off-by: Ao Sun <ao.sun@transsion.com>
+Reviewed-by: Bean Huo <beanhuo@micron.com>
+Link: https://patch.msgid.link/20260723034440.217-1-ao.sun@transsion.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_fw.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/ufs/core/ufs-rpmb.c | 2 --
+ drivers/ufs/core/ufshcd.c   | 1 +
+ 2 files changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_fw.c b/drivers/scsi/mpi3mr/mpi3mr_fw.c
-index 31b19ed1528e5..681868716ebdb 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_fw.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_fw.c
-@@ -9,6 +9,7 @@
+diff --git a/drivers/ufs/core/ufs-rpmb.c b/drivers/ufs/core/ufs-rpmb.c
+index ffad049872b9a..62120dc2e9da7 100644
+--- a/drivers/ufs/core/ufs-rpmb.c
++++ b/drivers/ufs/core/ufs-rpmb.c
+@@ -152,8 +152,6 @@ int ufs_rpmb_probe(struct ufs_hba *hba)
+ 		return -EINVAL;
+ 	}
  
- #include "mpi3mr.h"
- #include <linux/io-64-nonatomic-lo-hi.h>
-+#include <linux/sched/mm.h>
- 
- static int
- mpi3mr_issue_reset(struct mpi3mr_ioc *mrioc, u16 reset_type, u16 reset_reason);
-@@ -1287,11 +1288,14 @@ static void mpi3mr_alloc_ioctl_dma_memory(struct mpi3mr_ioc *mrioc)
- static void mpi3mr_fault_uevent_emit(struct mpi3mr_ioc *mrioc)
- {
- 	struct kobj_uevent_env *env;
-+	unsigned int noio_flag;
- 	int ret;
- 
-+	noio_flag = memalloc_noio_save();
-+
- 	env = kzalloc_obj(*env);
- 	if (!env)
--		return;
-+		goto out_restore;
- 
- 	ret = add_uevent_var(env, "DRIVER=%s", mrioc->driver_name);
- 	if (ret)
-@@ -1326,7 +1330,8 @@ static void mpi3mr_fault_uevent_emit(struct mpi3mr_ioc *mrioc)
- 
- out_free:
- 	kfree(env);
+-	INIT_LIST_HEAD(&hba->rpmbs);
 -
-+out_restore:
-+	memalloc_noio_restore(noio_flag);
- }
+ 	struct rpmb_descr descr = {
+ 		.type = RPMB_TYPE_UFS,
+ 		.route_frames = ufs_rpmb_route_frames,
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index 082eac1e13463..d6444b3c2ef16 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -10924,6 +10924,7 @@ int ufshcd_alloc_host(struct device *dev, struct ufs_hba **hba_handle)
+ 	hba->nop_out_timeout = NOP_OUT_TIMEOUT;
+ 	ufshcd_set_sg_entry_size(hba, sizeof(struct ufshcd_sg_entry));
+ 	INIT_LIST_HEAD(&hba->clk_list_head);
++	INIT_LIST_HEAD(&hba->rpmbs);
+ 	spin_lock_init(&hba->outstanding_lock);
  
- /**
+ 	*hba_handle = hba;
 -- 
 2.53.0
 
