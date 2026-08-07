@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 307B73101A7;
-	Fri,  7 Aug 2026 14:45:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07358325495;
+	Fri,  7 Aug 2026 14:45:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786113929; cv=none; b=mcK0mCHKmKdMtv0DR0FwuMn72bbnOq8eOOtDveOIjNqEoUa1ukT8WyMdHyoreAitlkI6vLYRC2ojPIxMNjRuNTeXfKkP4bTccbnUjFVHc2D/TkfsxjyeLEVMGjb+9gqemYPD4UJRPTQFQ49q1Xjfa4N4hJWtP6LB2qJyhoJkim4=
+	t=1786113930; cv=none; b=MovI0EPuf6xnckqcwVBf5sjjyM5QfP+Eb2P9uoymXe/lfVLUf4LAQ/EjbXreXagUDPq3ena+Uxnx3lf5dGXcYq03J9rxsyZRmtCMV/YLsz+FkVMkI75Me/KZ7FfAcMTwXyh4Mt/L5hpC6CmD0TUn0iRs4Fj18XrVKKVqoyud8tE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786113929; c=relaxed/simple;
-	bh=XECQIdOxiyiCKVmufUjqWrV7iRU0VYFsSVHs1w8HyRc=;
+	s=arc-20240116; t=1786113930; c=relaxed/simple;
+	bh=91cwdhb6QKMzHdH5bKAGr27nlOKIfBvo5i4iIUWJp6Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HL64JoBA9gE2WTglJBfzkGfz2DUu2mj3O5N6q1bri9zs/V+Kc1I+mI+WmyBTxQZodLpoykUBXLkr3XiutnMJ/lQm1tNBtgibAwH0xx3hSdBiTDoWMfAUxWGwso6K7SWZQiuTDhdN1HsxcydrfEg207J48c8up5MZSgoay1PZVV0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WNwt+Aht; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rReQaLBuIc239WvWKJm8cSnVTw1Czb4iMh+UxQcGMgVyvK35rAQfui3Mla+QB26jRLJH2vXKw+5L7nk16gTCvp657taHaHWp18ERSyavNxeFuhK6wPhgJRcKgjAjKaIms/nsx8Keo/f4QSCOEUZCvRVGBUPqDJ+Q9w6ignrTTqE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KICTv8y0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WNwt+Aht"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6159E1F00A3D;
-	Fri,  7 Aug 2026 14:45:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KICTv8y0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29D8D1F000E9;
+	Fri,  7 Aug 2026 14:45:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786113923;
-	bh=qy0gdL+aCeczDwFKLhJx1iZHg9i6US5afo+e5U5LQiA=;
+	s=korg; t=1786113928;
+	bh=y3RvMlG+VhyGDK8e2Ea+vR7fQTSBECJokxDbUsk4xfI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WNwt+AhtL4WRKhJV3MSOEZjJ91DIJ30L2+52eMe952DFgaVvRPIsIVLmUlXkhgCWw
-	 Mv+SvO+zVLC7QxEyn1/RXIGOx4aXuk9y1c+qUxL6YZoEPHMe6azp0/PbC8VVQxSqMq
-	 M+bCz9ZWedUPw/Y1Ni6IU4G5WODXWGwesbpea9sI=
+	b=KICTv8y0bYXgFxhLnlNHol+5HRWqfuG085e9Vru4P+MZtiveloCEJJzxxZn7h6Trk
+	 8UXzI15yrwYPMpXD1o1bgiVwetFa4Dz/5FwuJDZKHiiHRzXf8sYfIhAwtCRMT0AHuz
+	 ZmR4NaSE60o9g3GB7vy5LpuTcgaolCCecAEiqY88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chenguang Zhao <zhaochenguang@kylinos.cn>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 075/337] forcedeth: fix UAF of txrx_stats in nv_remove
-Date: Fri,  7 Aug 2026 16:34:38 +0200
-Message-ID: <20260807143420.140850399@linuxfoundation.org>
+Subject: [PATCH 6.12 085/337] powerpc/boot: Fix simpleboot CPU node lookup check
+Date: Fri,  7 Aug 2026 16:34:48 +0200
+Message-ID: <20260807143420.355917334@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -53,45 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chenguang Zhao <zhaochenguang@kylinos.cn>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit 22666ba1420164753d7b0f5a841986b25ace5435 ]
+[ Upstream commit c824ab65685bb119c6c6a3a200b3428c72862d5a ]
 
-nv_remove() frees the per-CPU txrx_stats before unregister_netdev().
-Until unregister completes, ndo_get_stats64, the NAPI/xmit data path,
-and nv_close()/drain may still access txrx_stats, leading to a
-use-after-free.
+fdt_node_offset_by_prop_value() returns a negative error code on
+failure - fix the check accordingly.
 
-Free the stats only after unregister_netdev().
-
-Fixes: f4b633b911fd ("forcedeth: use per cpu to collect xmit/recv statistics")
-Signed-off-by: Chenguang Zhao <zhaochenguang@kylinos.cn>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Link: https://patch.msgid.link/20260723092637.2135095-1-chenguang.zhao@linux.dev
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: d2477b5cc8ca ("[POWERPC] bootwrapper: Add a firmware-independent simpleboot target.")
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260702211554.56923-4-thorsten.blum@linux.dev
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/nvidia/forcedeth.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/powerpc/boot/simpleboot.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/nvidia/forcedeth.c b/drivers/net/ethernet/nvidia/forcedeth.c
-index 720f577929dbf..11eb3751ad27b 100644
---- a/drivers/net/ethernet/nvidia/forcedeth.c
-+++ b/drivers/net/ethernet/nvidia/forcedeth.c
-@@ -6199,10 +6199,10 @@ static void nv_remove(struct pci_dev *pci_dev)
- 	struct net_device *dev = pci_get_drvdata(pci_dev);
- 	struct fe_priv *np = netdev_priv(dev);
- 
--	free_percpu(np->txrx_stats);
--
- 	unregister_netdev(dev);
- 
-+	free_percpu(np->txrx_stats);
-+
- 	nv_restore_mac_addr(pci_dev);
- 
- 	/* restore any phy related changes */
+diff --git a/arch/powerpc/boot/simpleboot.c b/arch/powerpc/boot/simpleboot.c
+index c80691d83880b..27591df41e9e8 100644
+--- a/arch/powerpc/boot/simpleboot.c
++++ b/arch/powerpc/boot/simpleboot.c
+@@ -68,7 +68,7 @@ void platform_init(unsigned long r3, unsigned long r4, unsigned long r5,
+ 	/* finally, setup the timebase */
+ 	node = fdt_node_offset_by_prop_value(_dtb_start, -1, "device_type",
+ 					     "cpu", sizeof("cpu"));
+-	if (!node)
++	if (node < 0)
+ 		fatal("Cannot find cpu node\n");
+ 	timebase = fdt_getprop(_dtb_start, node, "timebase-frequency", &size);
+ 	if (timebase && (size == 4))
 -- 
 2.53.0
 
