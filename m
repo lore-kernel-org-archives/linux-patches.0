@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BF45473C73;
-	Fri,  7 Aug 2026 14:59:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82C1F324B0A;
+	Fri,  7 Aug 2026 14:59:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114790; cv=none; b=YPVE+BYB7i+FAG22U3ufK16WQwHdLO6PiABsuhTbvCTHawABOxPA7kY+uHtgzV7ZPRHp4TZYM4UWL4OGQwuIORvoZqon/Bz9AvMkjUpE7NzZQsfg8+xq78Adt2kwkX18l1ncnP0LsTU+i9bomiYQyqPnAEs4H6Mfv8JZUoSLZvo=
+	t=1786114793; cv=none; b=lEbZjDSoB4qdSk+W6tPFqbzJpoAhQoaUAdxP5Rnx2n7slTpoPgeaOcY9yWJGLFW6r/5VAay/WOJAjdL9aASG8TM4HRizTG/oSNE95U3uLvTEaCOZtbwU3phr6jQMbuL6frrbbG385fOOVUw0QG2GL9FcHHQte+FKZjzv3qtpNlI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114790; c=relaxed/simple;
-	bh=670wLWZqPAEd8Feb+lJn3V5XSHalCJYA2z+qtlASFr0=;
+	s=arc-20240116; t=1786114793; c=relaxed/simple;
+	bh=hI7LN8DLNz3G07bL4Hipwo1q+oTkBNs0awodxT7mD2Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WIUxGO5jQmJTKnfE2tennRuAgV9KqCt5vj/MjXo6ZWOqfJShX/htWXDvOJsGcBhSr8m8kk9/MqJvI5UrXW0vVAFKqzZw4HS6gXC35gymApFpjXUJ/bSku5znHt/zaIScDgDWEyenkW8v6cUCh2HLXjT+IKGBT3d1CvFJWo/ngOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eKJytyU0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rG7ketnq/ovOkaZLkXq0j9MlGyD5P+EmtOzMyCwmxujLMnsbwbo3UHhelw3ALknnAdea/UQ3SGGJHN1jxQF8xJWdc3K8NOxx6nKatWlFjCPnPeXigq+GmZ3vQhwXn+2n1qyJW9A9F9Ksm4k28WUQUNxtNqho+/aBuB8wPg1uYZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=La0nPbSR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eKJytyU0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 034511F000E9;
-	Fri,  7 Aug 2026 14:59:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="La0nPbSR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7CA21F000E9;
+	Fri,  7 Aug 2026 14:59:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114789;
-	bh=rO6KULJrgbhj3mtQIkFJnfwdBbR7mNeZpnsLG3S30Vg=;
+	s=korg; t=1786114792;
+	bh=dQ7kouNiHOjGi98FqCPw9JCPICUulExK6CzfVvPRvGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eKJytyU0nSPrdRfcKz/i6flqeivSbZWAgwollJNADQcyyKN2G8mZRYxMv93B4xCDX
-	 VMf6cVAWgfbHmshnzitEgyPC/joG0jtxo5tKazYNYHxrLDVcC3VKEe6wgJKETSM7B0
-	 h8iIQZekwjYhTsh5+NaY0Fd3LJcdBrZSKvujS/bA=
+	b=La0nPbSRQ8C4rF9k/M78Qm/xk5f4EtjYXLoZ7b5IlDbvREvlDNVgyTG6nQYYvMXGx
+	 rdzRkTm3wrByRdZircas6cN3AcE3tNWZLY6hFl36+v+zz1Blzq0YS37QadVDPr3AeE
+	 QSraSJ3JLeThgk2NVS6K01hYKhbu4Z/XEk5OH7gs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Lee Jones <lee@kernel.org>,
 	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 008/396] HID: logitech-dj: Standardise hid_report_enum variable nomenclature
-Date: Fri,  7 Aug 2026 16:32:48 +0200
-Message-ID: <20260807143424.453414014@linuxfoundation.org>
+Subject: [PATCH 6.18 009/396] HID: logitech-dj: Prevent REPORT_ID_DJ_SHORT related user initiated OOB write
+Date: Fri,  7 Aug 2026 16:32:49 +0200
+Message-ID: <20260807143424.473532992@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -53,74 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Lee Jones <lee@kernel.org>
 
-[ Upstream commit a940aee176437046598dfc786b719bd96db3c74c ]
+[ Upstream commit b6a57912854e7ea36f3b270032661140cc4209cd ]
 
-Since we will need to differentiate between the two report_enum types
-soon, let's unify the naming conventions now to save confusion and/or
-unnecessary/unrelated changes in upcoming commits.
-
-{input,output}_report_enum is used in other places to let's conform.
+logi_dj_recv_send_report() assumes that all incoming REPORT_ID_DJ_SHORT
+reports are 14 Bytes (DJREPORT_SHORT_LENGTH - 1) long.  It uses that
+assumption to load the associated field's 'value' array with 14 Bytes of
+data.  However, if a malicious user only sends say 1 Byte of data,
+'report_count' will be 1 and only 1 Byte of memory will be allocated to
+the 'value' Byte array.  When we come to populate 'value[1-13]' we will
+experience an OOB write.
 
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-logitech-dj.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/hid/hid-logitech-dj.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
 diff --git a/drivers/hid/hid-logitech-dj.c b/drivers/hid/hid-logitech-dj.c
-index 3b5412541c925..d6fb7015f0d77 100644
+index d6fb7015f0d77..3a37d61616293 100644
 --- a/drivers/hid/hid-logitech-dj.c
 +++ b/drivers/hid/hid-logitech-dj.c
-@@ -1749,7 +1749,7 @@ static int logi_dj_raw_event(struct hid_device *hdev,
- static int logi_dj_probe(struct hid_device *hdev,
+@@ -1750,6 +1750,7 @@ static int logi_dj_probe(struct hid_device *hdev,
  			 const struct hid_device_id *id)
  {
--	struct hid_report_enum *rep_enum;
-+	struct hid_report_enum *input_report_enum;
+ 	struct hid_report_enum *input_report_enum;
++	struct hid_report_enum *output_report_enum;
  	struct hid_report *rep;
  	struct dj_receiver_dev *djrcv_dev;
  	struct usb_interface *intf;
-@@ -1793,10 +1793,10 @@ static int logi_dj_probe(struct hid_device *hdev,
+@@ -1793,6 +1794,15 @@ static int logi_dj_probe(struct hid_device *hdev,
  		}
  	}
  
--	rep_enum = &hdev->report_enum[HID_INPUT_REPORT];
-+	input_report_enum = &hdev->report_enum[HID_INPUT_REPORT];
++	output_report_enum = &hdev->report_enum[HID_OUTPUT_REPORT];
++	rep = output_report_enum->report_id_hash[REPORT_ID_DJ_SHORT];
++
++	if (rep->maxfield < 1 || rep->field[0]->report_count != DJREPORT_SHORT_LENGTH - 1) {
++		hid_err(hdev, "Expected size of DJ short report is %d, but got %d",
++			DJREPORT_SHORT_LENGTH - 1, rep->field[0]->report_count);
++		return -EINVAL;
++	}
++
+ 	input_report_enum = &hdev->report_enum[HID_INPUT_REPORT];
  
  	/* no input reports, bail out */
--	if (list_empty(&rep_enum->report_list))
-+	if (list_empty(&input_report_enum->report_list))
- 		return -ENODEV;
- 
- 	/*
-@@ -1804,7 +1804,7 @@ static int logi_dj_probe(struct hid_device *hdev,
- 	 * Note: we should theoretically check for HID++ and DJ
- 	 * collections, but this will do.
- 	 */
--	list_for_each_entry(rep, &rep_enum->report_list, list) {
-+	list_for_each_entry(rep, &input_report_enum->report_list, list) {
- 		if (rep->application == 0xff000001)
- 			has_hidpp = true;
- 	}
-@@ -1817,7 +1817,7 @@ static int logi_dj_probe(struct hid_device *hdev,
- 		return -ENODEV;
- 
- 	/* get the current application attached to the node */
--	rep = list_first_entry(&rep_enum->report_list, struct hid_report, list);
-+	rep = list_first_entry(&input_report_enum->report_list, struct hid_report, list);
- 	djrcv_dev = dj_get_receiver_dev(hdev, id->driver_data,
- 					rep->application, has_hidpp);
- 	if (!djrcv_dev) {
-@@ -1825,7 +1825,7 @@ static int logi_dj_probe(struct hid_device *hdev,
- 		return -ENOMEM;
- 	}
- 
--	if (!rep_enum->numbered)
-+	if (!input_report_enum->numbered)
- 		djrcv_dev->unnumbered_application = rep->application;
- 
- 	/* Starts the usb device and connects to upper interfaces hiddev and
 -- 
 2.53.0
 
