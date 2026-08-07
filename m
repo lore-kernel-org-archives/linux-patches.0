@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48A494756C0;
-	Fri,  7 Aug 2026 15:04:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 706B24756B3;
+	Fri,  7 Aug 2026 15:04:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115068; cv=none; b=FON7hkemTG4/twz/hZ7UA3ZAmbqpHPkD0CGqCBCuHpXB5K5kml53tIcUe/WI55MoUGQuxUjPNKQalwB40ElSk/PuT7jP9Vt+7NuonZr+D0QyO8Lf6Rf8HhSXMhWrPGhWGpVDwQjDxs2NUrJSC5A3d4Zo06lT1hoke4TJDOwvkUg=
+	t=1786115074; cv=none; b=F+Eyq5zqf8raVBCiGtiRKEGqcnEMfc7JNt7yX0r6ysL3aHARwEQ4zttU9RGNqu0HIk22fpFmEF9NbPeqRprpNM2PIPtcrrI+rTQUt5fzvIc/q/HPfliobTU/FV3odB5XUjZU0HWvF539tzEwfdu9Ir8Mk6sIwuFC0RfwYpOjoVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115068; c=relaxed/simple;
-	bh=zt3Ym8BUVCfs1snCGUHZ8E+Q18k1WIE3DJUgJIsFfWM=;
+	s=arc-20240116; t=1786115074; c=relaxed/simple;
+	bh=eA60QuSFxeH0tR24jKaveiPRDcOAuYZB5z659SfTXbk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QjYhWES4vlx4G/lC0oxcrUNovnUeZAoIi0EKR+AhMEEi8yS7D4+tk8yTa1bynAaeH3XYlvbFxBEPQBff1Lnafnbp/gUYeluqj5dn/WC8KSGRbu8nruNPtu8aX+l1qsM7aJYO/YnWYC+VSdHFVxfkMJLR3LShpN295Hd5DkDxz1A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ehucX7/k; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Sk+uffHXOCa3F6Gty3KexB46i8XCSZ6efX0qSiQGamAZmT8wo1wvYAfF+o5lcswY1L5UbJEY4J0k5/MiSj/fr/IpfZdmm7A0ltyY24bSiTPGjSa50mSGbs6nbj2Rz+BH2v2tW7/lDDusninSUvscqP/LNKblx+tXMV3zp2722kw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y0+biRmI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ehucX7/k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D9201F00ACA;
-	Fri,  7 Aug 2026 15:04:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y0+biRmI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 296D31F000E9;
+	Fri,  7 Aug 2026 15:04:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115062;
-	bh=KKwYASy8iEmaggnH4zDEzyn+L5qxUqgfFXeddLXV0kQ=;
+	s=korg; t=1786115067;
+	bh=MlniHY0aVTxZ14H4nRu7654GXPet/nQa64eVw2bWsCM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ehucX7/kfKdZoRRbwkyN+XB6UorhN4HexKPW/Nks4Cd67jL9Iflhhef9jCnTa4q+V
-	 7NKF/Yl17u4ctxpYkspPaCw9YFOBuQvNAXnYulSHSeqx8KZKvKXawSJl4UuTR0c/sU
-	 aQjMmOtUk6CQ+gVlNZeLx4ZBs14azpqUi/hVEXoE=
+	b=y0+biRmIjbrH8Wbt622nJ6luwKbIK9YJKsbiMuWvKleCuxx9r1mYhmjs6VvItTaXc
+	 miVEwm0P3+NtqSY7Y//UyumFWbeNCum/I0X8A1coXLZ/LrBUEjzLCd3zd6RUlkIuR8
+	 PxykbVOXTQ0BlKhBWj/me0R60IltXVxLxoLHIcyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yichong Chen <chenyichong@uniontech.com>,
-	David Howells <dhowells@redhat.com>,
-	Paulo Alcantara <pc@manguebit.org>,
-	netfs@lists.linux.dev,
-	linux-fsdevel@vger.kernel.org,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Yun Lu <luyun@kylinos.cn>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Justin Lai <justinlai0215@realtek.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 100/396] netfs: release readahead folios on iterator preparation failure
-Date: Fri,  7 Aug 2026 16:34:20 +0200
-Message-ID: <20260807143426.448761635@linuxfoundation.org>
+Subject: [PATCH 6.18 092/396] rtase: fix double free of multi-frag skb on DMA map failure
+Date: Fri,  7 Aug 2026 16:34:12 +0200
+Message-ID: <20260807143426.264916292@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -55,47 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yichong Chen <chenyichong@uniontech.com>
+From: Yun Lu <luyun@kylinos.cn>
 
-[ Upstream commit 87eb3d272dcbcbbfe5c1576c10e5dc72810cf1f6 ]
+[ Upstream commit 6fb7b769d6ed6d1d2e02af4a80e57a2477f35086 ]
 
-netfs_prepare_read_iterator() batches readahead folios in put_batch so that
-the folio references can be dropped after the I/O iterator has been
-prepared.
+In rtase_start_xmit(), when the head buffer DMA mapping fails after
+rtase_xmit_frags() has mapped all fragments, the error path clears
+the fragment descriptors with rtase_tx_clear_range(), which frees
+the skb through the last-frag slot and accounts tx_dropped. Control
+then falls through to the common error label, which frees the same
+skb a second time and counts it again.
 
-If rolling_buffer_load_from_ra() fails after earlier folios have been
-batched, the function returns immediately and leaves those references held.
-Release the batch before returning the error.
+Return right after clearing the fragments when the skb owns frags;
+the no-frag case still drops through and frees the head skb once.
 
-Fixes: 06fa229ceb36 ("netfs: Abstract out a rolling folio buffer implementation")
-Signed-off-by: Yichong Chen <chenyichong@uniontech.com>
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://patch.msgid.link/20260727130716.1099906-4-dhowells@redhat.com
-cc: Paulo Alcantara <pc@manguebit.org>
-cc: netfs@lists.linux.dev
-cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: d6e882b89fdf ("rtase: Implement .ndo_start_xmit function")
+Signed-off-by: Yun Lu <luyun@kylinos.cn>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Justin Lai <justinlai0215@realtek.com>
+Link: https://patch.msgid.link/20260721023836.6691-1-luyun_611@163.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/netfs/buffered_read.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/realtek/rtase/rtase_main.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/netfs/buffered_read.c b/fs/netfs/buffered_read.c
-index fab3181c7f869..221287f8925a9 100644
---- a/fs/netfs/buffered_read.c
-+++ b/fs/netfs/buffered_read.c
-@@ -102,8 +102,10 @@ static ssize_t netfs_prepare_read_iterator(struct netfs_io_subrequest *subreq,
+diff --git a/drivers/net/ethernet/realtek/rtase/rtase_main.c b/drivers/net/ethernet/realtek/rtase/rtase_main.c
+index a57a525327a3b..bc9b14614f7a7 100644
+--- a/drivers/net/ethernet/realtek/rtase/rtase_main.c
++++ b/drivers/net/ethernet/realtek/rtase/rtase_main.c
+@@ -1620,6 +1620,9 @@ static netdev_tx_t rtase_start_xmit(struct sk_buff *skb,
+ err_dma_1:
+ 	ring->skbuff[entry] = NULL;
+ 	rtase_tx_clear_range(ring, ring->cur_idx + 1, frags);
++	if (frags)
++		/* the frags were cleared above, along with the skb */
++		return NETDEV_TX_OK;
  
- 			added = rolling_buffer_load_from_ra(&rreq->buffer, ractl,
- 							    &put_batch);
--			if (added < 0)
-+			if (added < 0) {
-+				folio_batch_release(&put_batch);
- 				return added;
-+			}
- 			rreq->submitted += added;
- 		}
- 		folio_batch_release(&put_batch);
+ err_dma_0:
+ 	tp->stats.tx_dropped++;
 -- 
 2.53.0
 
