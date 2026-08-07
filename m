@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ED0A473C63;
-	Fri,  7 Aug 2026 15:38:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 595273806B0;
+	Fri,  7 Aug 2026 15:38:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786117098; cv=none; b=dC9SEaVYYdYmFupTNeFhzDd2tW8zahhRg63Lsgm4ehepdWy+tFDD4GTwS6E7bD1IW2Az+epAAoKuxRFuuQKtTfHMqBq7cI9i8g16YApRpMWzr2SAKDhxU8Q7eLbnNbp3ssTEmK5uU7k+JiUaZS53FBNAxWCwZTi7H+cJThBxCAM=
+	t=1786117101; cv=none; b=GCeBkJ+vhh6lm9OC7lzVI8LW61bGHDfx6XnnztEAbnzfbv7pWOCCUspx05iaSNvYs0/Z2VHXsDY0CUSknsYeUO716EZ6Q5rpiqlS3UjdBC4TsZj7uxJtxS0J7KYieEH+BTpyR4Lob5nHgxRBBfWjQIhNKBZwTogTqpch4lmtL/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786117098; c=relaxed/simple;
-	bh=9x1KcNpJOi5GYGyr+GgOvGCCOgFH9AwupcG9L74LR+c=;
+	s=arc-20240116; t=1786117101; c=relaxed/simple;
+	bh=Q05TKpqbWOd/g3KzG9ITA9JEBYc/VEp8i7USZvC4ei8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RqH8T85HEztAIlGiFvWDA6KRP3MVwXV/yUxcZXlqHFES4BokocgGv8veyFY9ymQXaGLWjWMUj+cYkyMBElvXFfFlzrOTYcU+xN41qcNaEFtAEjZzd3lxlixebdtjl2ksXTm0QY9rvsDsL4R1lJDCcPqatiXsNGdqwLdtD41NBww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UAFTO1Mp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YsLMup8nM2GZ0KShSfuSZ5yMlxKoqYtvSRTXu05sPZNqtrU4JhmEb3zNSUDMoYHwaJHMYFfvAHmaqi9mv/W9ACvmaQiTGhvNHyZTZPeFL1aliH//jMRdiHdMWkUs5jS3Gxvbh5IqwBzxkaZcFoeEQs4gGVn+FairrSu0WCL1+n0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sBHBrsjE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UAFTO1Mp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D54EA1F000E9;
-	Fri,  7 Aug 2026 15:38:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sBHBrsjE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B55D91F000E9;
+	Fri,  7 Aug 2026 15:38:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786117097;
-	bh=ccY1ZmUjWz0zoESbmyR+4Nh2+Lw/Dtk0gL+0ZGTYrow=;
+	s=korg; t=1786117100;
+	bh=1TQv6eNKTS6Rzjq/Qst1PE3oFgM/3OBunIvz67lSMF0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UAFTO1MpuXLs/MxQQbLMKopu6JHvL9U0N6NS/xX4LokStRKD8Fo5/05LOPDXsLAzq
-	 +FWV/YVc/FqzB3fL3Nna66PDMOxFbAQbgnxPwR4NmHbWA0rf5cyNKhpwfI9Pv9ywce
-	 gowHQZ+C9HvL59Imvydd2oCPxIUAzL7dpcI7GB0U=
+	b=sBHBrsjEyAo/iaJkz5h8hSfUD3uenV3xSYIn1UBJO56ni7Y58PfEu71DnVS4mj7z7
+	 yROdo8XlvqxbIjfNACPq8lSxdIivdyX9ugHTYrbIiQUVQDfiW3L1GKPoQF0/Xvt6Vm
+	 nHxO+KLXltU8f+YdcZQ90qdiYRf+FtN6198/2QrI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Peiyang He <peiyang_he@smail.nju.edu.cn>,
 	Kevin Tian <kevin.tian@intel.com>,
-	Pranjal Shrivastava <praan@google.com>,
-	Nicolin Chen <nicolinc@nvidia.com>,
 	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 7.1 198/438] iommufd/viommu: Publish a vDEVICE only after vdevice_init() succeeds
-Date: Fri,  7 Aug 2026 16:36:34 +0200
-Message-ID: <20260807143432.244662068@linuxfoundation.org>
+Subject: [PATCH 7.1 199/438] iommufd: Reject DMABUF pages from the access pin path
+Date: Fri,  7 Aug 2026 16:36:35 +0200
+Message-ID: <20260807143432.265252162@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -52,79 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolin Chen <nicolinc@nvidia.com>
+From: Peiyang He <peiyang_he@smail.nju.edu.cn>
 
-commit 9be311cfbe6154da146a7408e0d5e518a9321ed3 upstream.
+commit 5f3fc0ad9a41883a62098359b9fdbe4257f20e53 upstream.
 
-iommufd_vdevice_alloc_ioctl() adds the vDEVICE to the viommu->vdevs xarray
-with xa_cmpxchg() before the driver's vdevice_init() op runs. That op is
-where a driver validates the device and may reject it, but the xarray entry
-is already live by then: a concurrent IOMMU_HWPT_INVALIDATE can look it up
-with iommufd_viommu_find_dev() and run the driver invalidation path against
-a device that vdevice_init() would have refused.
+DMABUF pages are not supported for iommufd access pinning.
+iommufd_access_pin_pages() returns struct page pointers for
+in-kernel CPU access, but DMABUF-backed iopt_pages do not carry
+a userspace address that can be passed to the GUP path.
 
-Reserve the index with xa_insert(): it stores a zero entry that reads back
-as NULL, and returns -EBUSY on a duplicate virt_id. Run vdevice_init() and
-store the vDEVICE pointer only once it succeeds. A failed vdevice_init()
-releases the reservation, so lookups observe the vDEVICE only after it is
-fully initialized and accepted.
+iopt_pages_rw_access() already rejects IOPT_ADDRESS_DMABUF before doing
+CPU access. Apply the same rejection to iopt_area_add_access() before it
+takes pages->mutex and calls iopt_pages_fill_xarray().
+Otherwise a DMABUF-backed iopt_pages can reach the hole-fill path, where
+pfn_reader_user_pin() interprets the union as uptr and
+calls pin_user_pages_fast()/pin_user_pages_remote().
 
-Fixes: ed42eee797ff3 ("iommufd/viommu: Add driver-defined vDEVICE support")
-Link: https://patch.msgid.link/r/1e05999347f4bf583edbc6a1312c857d5548708c.1783311134.git.nicolinc@nvidia.com
+This fix also avoids the lockdep warning reported from that path, where
+pages_dmabuf_mutex_key is held while gup_fast_fallback() may acquire
+mmap_lock.
+
+Link: https://patch.msgid.link/r/CD68F549BF3761B7+20260709050800.520607-1-peiyang_he@smail.nju.edu.cn
+Reported-by: Peiyang He <peiyang_he@smail.nju.edu.cn>
+Closes: https://lore.kernel.org/all/E8540D7D05768C91+8b2ef227-3368-494e-909d-7b28e1489dfb@smail.nju.edu.cn/
+Fixes: 71db84a092c3 ("iommufd: Add DMABUF to iopt_pages")
 Cc: stable@vger.kernel.org
+Tested-by: Peiyang He <peiyang_he@smail.nju.edu.cn>
+Signed-off-by: Peiyang He <peiyang_he@smail.nju.edu.cn>
 Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Assisted-by: Claude:claude-opus-4-8
-Reviewed-by: Pranjal Shrivastava <praan@google.com>
-Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/iommufd/viommu.c |   20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+ drivers/iommu/iommufd/pages.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/iommu/iommufd/viommu.c
-+++ b/drivers/iommu/iommufd/viommu.c
-@@ -143,7 +143,7 @@ void iommufd_vdevice_destroy(struct iomm
- int iommufd_vdevice_alloc_ioctl(struct iommufd_ucmd *ucmd)
- {
- 	struct iommu_vdevice_alloc *cmd = ucmd->cmd;
--	struct iommufd_vdevice *vdev, *curr;
-+	struct iommufd_vdevice *vdev;
- 	size_t vdev_size = sizeof(*vdev);
- 	struct iommufd_viommu *viommu;
- 	struct iommufd_device *idev;
-@@ -218,18 +218,28 @@ int iommufd_vdevice_alloc_ioctl(struct i
- 	 */
- 	idev->vdev = vdev;
+--- a/drivers/iommu/iommufd/pages.c
++++ b/drivers/iommu/iommufd/pages.c
+@@ -2451,6 +2451,9 @@ int iopt_area_add_access(struct iopt_are
+ 	if ((flags & IOMMUFD_ACCESS_RW_WRITE) && !pages->writable)
+ 		return -EPERM;
  
--	curr = xa_cmpxchg(&viommu->vdevs, virt_id, NULL, vdev, GFP_KERNEL);
--	if (curr) {
--		rc = xa_err(curr) ?: -EEXIST;
-+	/*
-+	 * Reserve the slot with a zero entry (reads back as NULL) until the
-+	 * vdevice_init() op accepts the vDEVICE. Only the xa_* helpers hide a
-+	 * reserved entry, so never use a raw xas_* iterator on this xarray.
-+	 */
-+	rc = xa_insert(&viommu->vdevs, virt_id, NULL, GFP_KERNEL);
-+	if (rc) {
-+		if (rc == -EBUSY)
-+			rc = -EEXIST;
- 		goto out_abort;
- 	}
- 
- 	if (viommu->ops && viommu->ops->vdevice_init) {
- 		rc = viommu->ops->vdevice_init(vdev);
--		if (rc)
-+		if (rc) {
-+			xa_release(&viommu->vdevs, virt_id);
- 			goto out_abort;
-+		}
- 	}
- 
-+	xa_store(&viommu->vdevs, virt_id, vdev, GFP_KERNEL);
++	if (iopt_is_dmabuf(pages))
++		return -EINVAL;
 +
- 	cmd->out_vdevice_id = vdev->obj.id;
- 	rc = iommufd_ucmd_respond(ucmd, sizeof(*cmd));
- 	if (rc)
+ 	mutex_lock(&pages->mutex);
+ 	access = iopt_pages_get_exact_access(pages, start_index, last_index);
+ 	if (access) {
 
 
