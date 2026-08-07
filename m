@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1EAA412C05;
-	Fri,  7 Aug 2026 14:43:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AEA040EB9D;
+	Fri,  7 Aug 2026 14:42:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786113809; cv=none; b=u5p4u3RDTMOgr6AWzahxMONhh0G4sVdp7PprHZ+4Zrcqpf25jYPHqKbtV8bRix51RDtrkYZBn7y8sOJm06cp1FJbSl+y30wwf6h58GpuQzAAoHQ7Laz2+er/UtFHD6+0Cg6bxvdto/YXchU8JtLwkktYbIxc8gYRiENiFgyDxo8=
+	t=1786113810; cv=none; b=D/q33OjypXk+fhjEDrzY6FNV3Mn55jz1+82QX05ODwawil8e6PzB9JB1Xob9RuA0ddmXm/+ZRfwLIOR5T60pO1DNQ+Lq3DqHpvMQNb382WRgINXFg+JVXTMnHIVQsk+IzxVvrUCzZoFoVSOaoZREa9wYZOR9B64pvIDy9psOT6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786113809; c=relaxed/simple;
-	bh=9UxOV6MB6AIfTe8Hj5Wtm7Ars73pcSrOf2hb8nmALYc=;
+	s=arc-20240116; t=1786113810; c=relaxed/simple;
+	bh=3btkHCADDerrm5fnFOjakSXiVVu4jZy2s6zhwhPAdTs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ioQJjKDJHLgy6a1KMPAR/85BNbSoqdgdy8TOYvJyjCXiJX1Oo6a6zXyAYefWiIoySB+nErkDpyNCK1uunmpJzMUzaz8XpIB9xZPx5BeMDQ10ZYAFZchn1CgQuWrNwnHynPv7yS2a9MiKVUotF00HUH7uR40hp2L0aSCq1A2Zj48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AlREf4p3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kwtu1XT6QmPYpnpxlxMe38VCM5R14R1L+t3F0sq7CQLeEh8lPeQTyHs97+DWLu56I8qiWDH6QOJJXovrouiHiUmncFu9BKoWBv8cCYxcvwODLgyqhzGPtMeg0vvxGulUllLIlIYib0rfSn1gFofWe5pl+sIS88E8la3uyQ+S/nE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U9Fc72wp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AlREf4p3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF13B1F00ADE;
-	Fri,  7 Aug 2026 14:43:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U9Fc72wp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 451B11F00ACA;
+	Fri,  7 Aug 2026 14:42:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786113791;
-	bh=6L0uJDuOugR4vgraVSg/14HaD0tQ9WlSamttK2Ty5X4=;
+	s=korg; t=1786113779;
+	bh=yN6qE/CUhfQxG4PG0YYO/l7YlaUag8E6ufTJgZufohQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AlREf4p3OAEPP8qUVo33qSVF1qfnv0FcwJwauQWofcLiJbi311CXcq7bIN3t5qaMT
-	 DW+AjIvD35pYBeeuaDB7erolq4CzREWF/sc2qKe3cFC6S2WFr+RZymUd6v2+EgQTPx
-	 j7aaNxjj2wDFMsOxykgjAtz+AeLUS2DycEyDmQvY=
+	b=U9Fc72wps8aAZ+/HWGPz8njCkepe70SptC0cwE09v7O86LAjhJOe+LUU99MbKmTPS
+	 NQkPtzksGbYzICZ9boTBtgNLX++5AtTp6u7gyeUbZflOrpbeo4ITYBlnMIFaNlaZh9
+	 EyUGahfLlgDHjiJ7IGQQA3BGYR+966fGFfvZaF+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
-	Michal Simek <michal.simek@amd.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Shuvam Pandey <shuvampandey1@gmail.com>,
+	David Gow <david@davidgow.net>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 037/337] phy: zynqmp: fix runtime PM leak on probe allocation failure
-Date: Fri,  7 Aug 2026 16:34:00 +0200
-Message-ID: <20260807143419.321749008@linuxfoundation.org>
+Subject: [PATCH 6.12 009/337] kunit: tool: skip stty when stdin is not a tty
+Date: Fri,  7 Aug 2026 16:33:32 +0200
+Message-ID: <20260807143418.725150846@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -52,54 +53,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+From: Shuvam Pandey <shuvampandey1@gmail.com>
 
-[ Upstream commit f3506e15cf72e94f62d5f2d173e5b7008f644cde ]
+commit e42c349f4cdfa43cb39a68c8f764f8cafc23a9a9 upstream.
 
-Allocate saved_regs before pm_runtime_resume_and_get() so a
-devm_kmalloc() failure does not leave an unreleased runtime PM usage
-counter.
+run_kernel() cleanup and signal_handler() invoke stty unconditionally.
+When stdin is not a tty (for example in CI or unit tests), this writes
+noise to stderr.
 
-Fixes: 5af9b304bc60 ("phy: xilinx: phy-zynqmp: Fix SGMII linkup failure on resume")
-Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Reviewed-by: Michal Simek <michal.simek@amd.com>
-Link: https://patch.msgid.link/20260720153832.1130006-3-radhey.shyam.pandey@amd.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Call stty only when stdin is a tty.
+
+Add regression tests for these paths:
+- run_kernel() with non-tty stdin
+- signal_handler() with non-tty stdin
+- signal_handler() with tty stdin
+
+Signed-off-by: Shuvam Pandey <shuvampandey1@gmail.com>
+Reviewed-by: David Gow <david@davidgow.net>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+[florian: add missing 'import sys' required by sys.stdin.isatty(); the
+module was already present in the mainline tree before this commit but
+was absent from the 6.12 base of kunit_kernel.py]
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/xilinx/phy-zynqmp.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ tools/testing/kunit/kunit_kernel.py    | 11 +++++--
+ tools/testing/kunit/kunit_tool_test.py | 42 ++++++++++++++++++++++++++
+ 2 files changed, 51 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/phy/xilinx/phy-zynqmp.c b/drivers/phy/xilinx/phy-zynqmp.c
-index 5039b0e89cba4..1ec5722ac427c 100644
---- a/drivers/phy/xilinx/phy-zynqmp.c
-+++ b/drivers/phy/xilinx/phy-zynqmp.c
-@@ -1044,6 +1044,12 @@ static int xpsgtr_probe(struct platform_device *pdev)
- 		return PTR_ERR(provider);
- 	}
+diff --git a/tools/testing/kunit/kunit_kernel.py b/tools/testing/kunit/kunit_kernel.py
+index 3f2979f2f6ea..c09b66ba734b 100644
+--- a/tools/testing/kunit/kunit_kernel.py
++++ b/tools/testing/kunit/kunit_kernel.py
+@@ -14,6 +14,7 @@ import os
+ import shlex
+ import shutil
+ import signal
++import sys
+ import threading
+ from typing import Iterator, List, Optional, Tuple, Any
+ from types import FrameType
+@@ -333,6 +334,12 @@ class LinuxSourceTree:
+ 			return False
+ 		return self.validate_config(build_dir)
  
-+	gtr_dev->saved_regs = devm_kmalloc(gtr_dev->dev,
-+					   sizeof(save_reg_address),
-+					   GFP_KERNEL);
-+	if (!gtr_dev->saved_regs)
-+		return -ENOMEM;
++	def _restore_terminal_if_tty(self) -> None:
++		# stty requires a controlling terminal; skip headless runs.
++		if sys.stdin is None or not sys.stdin.isatty():
++			return
++		subprocess.call(['stty', 'sane'])
 +
- 	pm_runtime_set_active(gtr_dev->dev);
- 	pm_runtime_enable(gtr_dev->dev);
+ 	def run_kernel(self, args: Optional[List[str]]=None, build_dir: str='', filter_glob: str='', filter: str='', filter_action: Optional[str]=None, timeout: Optional[int]=None) -> Iterator[str]:
+ 		# Copy to avoid mutating the caller-supplied list. exec_tests() reuses
+ 		# the same args across repeated run_kernel() calls (e.g. --run_isolated),
+@@ -380,11 +387,11 @@ class LinuxSourceTree:
+ 			output.close()
  
-@@ -1053,12 +1059,6 @@ static int xpsgtr_probe(struct platform_device *pdev)
- 		return ret;
- 	}
+ 			waiter.join()
+-			subprocess.call(['stty', 'sane'])
++			self._restore_terminal_if_tty()
  
--	gtr_dev->saved_regs = devm_kmalloc(gtr_dev->dev,
--					   sizeof(save_reg_address),
--					   GFP_KERNEL);
--	if (!gtr_dev->saved_regs)
--		return -ENOMEM;
--
- 	return 0;
- }
+ 	def signal_handler(self, unused_sig: int, unused_frame: Optional[FrameType]) -> None:
+ 		logging.error('Build interruption occurred. Cleaning console.')
+ 		if self._process:
+ 				self._process.terminate()
+ 				self._process.wait()
+-		subprocess.call(['stty', 'sane'])
++		self._restore_terminal_if_tty()
+diff --git a/tools/testing/kunit/kunit_tool_test.py b/tools/testing/kunit/kunit_tool_test.py
+index 70e5d0abe87f..6e6200d52540 100755
+--- a/tools/testing/kunit/kunit_tool_test.py
++++ b/tools/testing/kunit/kunit_tool_test.py
+@@ -503,6 +503,48 @@ class LinuxSourceTreeTest(unittest.TestCase):
+ 				self.assertIn('kunit.filter_glob=suite.test1', start_calls[0])
+ 				self.assertIn('kunit.filter_glob=suite.test2', start_calls[1])
  
++	def test_run_kernel_skips_terminal_reset_without_tty(self):
++		def fake_start(unused_args, unused_build_dir):
++			return subprocess.Popen(['printf', 'KTAP version 1\n'],
++						text=True, stdout=subprocess.PIPE)
++
++		non_tty_stdin = mock.Mock()
++		non_tty_stdin.isatty.return_value = False
++
++		with tempfile.TemporaryDirectory('') as build_dir:
++			tree = kunit_kernel.LinuxSourceTree(build_dir, kunitconfig_paths=[os.devnull])
++			with mock.patch.object(tree._ops, 'start', side_effect=fake_start), \
++			     mock.patch.object(kunit_kernel.sys, 'stdin', non_tty_stdin), \
++			     mock.patch.object(kunit_kernel.subprocess, 'call') as mock_call:
++				for _ in tree.run_kernel(build_dir=build_dir):
++					pass
++
++				mock_call.assert_not_called()
++
++	def test_signal_handler_skips_terminal_reset_without_tty(self):
++		non_tty_stdin = mock.Mock()
++		non_tty_stdin.isatty.return_value = False
++		tree = kunit_kernel.LinuxSourceTree('', kunitconfig_paths=[os.devnull])
++
++		with mock.patch.object(kunit_kernel.sys, 'stdin', non_tty_stdin), \
++		     mock.patch.object(kunit_kernel.subprocess, 'call') as mock_call, \
++		     mock.patch.object(kunit_kernel.logging, 'error') as mock_error:
++			tree.signal_handler(signal.SIGINT, None)
++			mock_error.assert_called_once()
++			mock_call.assert_not_called()
++
++	def test_signal_handler_resets_terminal_with_tty(self):
++		tty_stdin = mock.Mock()
++		tty_stdin.isatty.return_value = True
++		tree = kunit_kernel.LinuxSourceTree('', kunitconfig_paths=[os.devnull])
++
++		with mock.patch.object(kunit_kernel.sys, 'stdin', tty_stdin), \
++		     mock.patch.object(kunit_kernel.subprocess, 'call') as mock_call, \
++		     mock.patch.object(kunit_kernel.logging, 'error') as mock_error:
++			tree.signal_handler(signal.SIGINT, None)
++			mock_error.assert_called_once()
++			mock_call.assert_called_once_with(['stty', 'sane'])
++
+ 	def test_build_reconfig_no_config(self):
+ 		with tempfile.TemporaryDirectory('') as build_dir:
+ 			with open(kunit_kernel.get_kunitconfig_path(build_dir), 'w') as f:
 -- 
 2.53.0
 
