@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F49F4746A9;
-	Fri,  7 Aug 2026 15:48:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12387313527;
+	Fri,  7 Aug 2026 15:48:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786117696; cv=none; b=On3xKkXpgJ6Ax2djAtYCwThCA+SBabFwmLK9okDizTPAu0qB+boMqVw6dO2QgeywMqZuBXW5wcW3OzlpwVfDuwzauyKRMBzFHtGhybiVVQ8s/d8at5gF+5qpwT73jx1mRcNdz7u130WU1WJrSfAy1tmQRHbWJdoNxLtEEEEjlMc=
+	t=1786117699; cv=none; b=JzY/BuBJTDqXaDOXcyzVxl3O5jnPbxQ1QWcPgKuZie7UAwQgvM2bR/2UczjLvylgYiPtD0nG0T6dWz8xAuVwv0KD7i4pM67cO/Ck6BANPodN9QHFQ75EzXxdlvacRAyuOIubAIIFhRIHObobI+xC4OMWYjo6wXtG6y6ztvCRWlQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786117696; c=relaxed/simple;
-	bh=KNJTWUGCORZ/UfmCCegLd6o+1kz4vmPj3Qu2Q7Mdmow=;
+	s=arc-20240116; t=1786117699; c=relaxed/simple;
+	bh=u6xChClO6BQUOpdF3dHD1hQLav5vBO0K8NM9mnkky9s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QENUahbg2vvArZCOyPj9VYyDUMYq1mLMXMin/zocyue8N8C+fNHwRWR6w+gX85SocktZDAT5up17i6kZBPnoA5y6VijcWzvEUH9tkQnMTr1SA+IeDOOiFT6gv1biDuPZb8s4eFC82V6x52r9RWQv4YbsKLJAytZEf8RnGkkaSag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J8t4BPiP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ckKDM3wLCLjvE8ZoDms3fYHq0YHTdt4IdVL333i/HTkC7pbjkaThwdsc9twPHflWfiO4dm7sd4pOlntLlkdIardWs2EaOTb+KBN2QC1TvvDWoPz2ZO5cDGI4K9/f2hprs2OR7c47WHplw4rQEWhqeOQNcEfk6e/oqG573uDiIvE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y+Lfa+oJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J8t4BPiP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 363331F000E9;
-	Fri,  7 Aug 2026 15:48:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y+Lfa+oJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 280551F000E9;
+	Fri,  7 Aug 2026 15:48:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786117694;
-	bh=ik4GfzBc52vw8AchDi7h1nYk8YCVrLE4yJZETT6KaOo=;
+	s=korg; t=1786117697;
+	bh=NpjjO9LbZoWaJjTWRnKugktBdG8r10bKwA/PKZt6NrY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J8t4BPiPf+13i5oFv3nk50VcJ0A5K5LjQeCAwrmYNs6NEG9rxW2pF2uio++2hTPO+
-	 nusUh93FiW6Oi/mmLas3SAOqoIbGDj7k5pwC86aEA0acSa1Et8TeSrHAuDy1xysf9p
-	 l727l0bKWaM1aePphxRbYVR7w8gz8VXJfrnC/6WY=
+	b=y+Lfa+oJf5AuYF4fv9RlB9C+ps+3cHc2Vdut5EnzHXgnFAPwnNqACT+mnHCw6l7R5
+	 M+lkGRnorNtb9ETePHuXo1OoSpcDtA7Da0pUowTTggLDLCwz/dP6xgDlpj5PAEyhwt
+	 6OxmA5Ng3AGni+StfSIBRXaswFo4cmzJYf9Gkzxs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Zack Rusin <zack.rusin@broadcom.com>,
 	Ian Forbes <ian.forbes@broadcom.com>
-Subject: [PATCH 7.1 410/438] drm/vmwgfx: take fman->lock around fence list mutation in fifo_down
-Date: Fri,  7 Aug 2026 16:40:06 +0200
-Message-ID: <20260807143436.707094753@linuxfoundation.org>
+Subject: [PATCH 7.1 411/438] drm/vmwgfx: drop dma_buf reference on foreign-fd prime import
+Date: Fri,  7 Aug 2026 16:40:07 +0200
+Message-ID: <20260807143436.727656885@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -52,62 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Zack Rusin <zack.rusin@broadcom.com>
 
-commit 250af2e8c3e90dc978e062a936b633870a22e660 upstream.
+commit f739416dc555fa205a785e5135d73fa39b26f35d upstream.
 
-vmw_fence_fifo_down() drops fman->lock to wait on a fence and, on
-timeout, mutates fman->fence_list via list_del_init() and signals
-the fence without re-acquiring the lock.  __vmw_fences_update() walks
-and removes entries from the same list under fman->lock from any
-other waiter, the fence-IRQ thread, or vmw_fences_update(), so the
-unlocked list_del_init() can corrupt the list head.
+ttm_prime_fd_to_handle() returns -ENOSYS when the imported fd's
+dma_buf->ops do not match the ttm_object_device's ops, but does so
+without releasing the reference acquired by dma_buf_get().  Any
+unprivileged renderD client passing a non-vmwgfx prime fd through the
+DRM_VMW_GB_SURFACE_REF{,_EXT} path leaks one dma_buf reference per
+call and indefinitely pins the foreign exporter's GEM resources.
 
-Re-take fman->lock before manipulating fence->head and use
-dma_fence_signal_locked().  Wrap the locked signalling in
-dma_fence_begin_signalling() / dma_fence_end_signalling() so the
-lockdep annotation that dma_fence_signal() previously provided is
-preserved (the same pattern as __vmw_fences_update()).
+Funnel the error path through the existing dma_buf_put() so the
+reference is always dropped.
 
-dma_fence_put() is moved outside the lock to avoid a recursive
-acquire from vmw_fence_obj_destroy(), which also takes fman->lock.
-
-Fixes: ae2a104058e2 ("vmwgfx: Implement fence objects")
+Fixes: 65981f7681ab ("drm/ttm: Add a minimal prime implementation for ttm base objects")
 Cc: stable@vger.kernel.org
 Assisted-by: Claude:claude-opus-4.7
 Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
 Reviewed-by: Ian Forbes <ian.forbes@broadcom.com>
-Link: https://patch.msgid.link/20260505222728.519626-5-zack.rusin@broadcom.com
+Link: https://patch.msgid.link/20260505222728.519626-6-zack.rusin@broadcom.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_fence.c |   13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/vmwgfx/ttm_object.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_fence.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_fence.c
-@@ -367,13 +367,24 @@ void vmw_fence_fifo_down(struct vmw_fenc
- 		ret = vmw_fence_obj_wait(fence, false, false,
- 					 VMW_FENCE_WAIT_TIMEOUT);
+--- a/drivers/gpu/drm/vmwgfx/ttm_object.c
++++ b/drivers/gpu/drm/vmwgfx/ttm_object.c
+@@ -547,14 +547,17 @@ int ttm_prime_fd_to_handle(struct ttm_ob
+ 	if (IS_ERR(dma_buf))
+ 		return PTR_ERR(dma_buf);
  
-+		spin_lock(&fman->lock);
- 		if (unlikely(ret != 0)) {
-+			bool cookie = dma_fence_begin_signalling();
-+
- 			list_del_init(&fence->head);
--			dma_fence_signal(&fence->base);
-+			if (fence->waiter_added) {
-+				vmw_seqno_waiter_remove(fman->dev_priv);
-+				fence->waiter_added = false;
-+			}
-+			dma_fence_signal_locked(&fence->base);
-+			dma_fence_end_signalling(cookie);
- 		}
+-	if (dma_buf->ops != &tdev->ops)
+-		return -ENOSYS;
++	if (dma_buf->ops != &tdev->ops) {
++		ret = -ENOSYS;
++		goto out;
++	}
  
- 		BUG_ON(!list_empty(&fence->head));
-+		spin_unlock(&fman->lock);
-+
- 		dma_fence_put(&fence->base);
-+
- 		spin_lock(&fman->lock);
- 	}
- 	spin_unlock(&fman->lock);
+ 	prime = (struct ttm_prime_object *) dma_buf->priv;
+ 	base = &prime->base;
+ 	*handle = base->handle;
+ 	ret = ttm_ref_object_add(tfile, base, NULL, false);
+ 
++out:
+ 	dma_buf_put(dma_buf);
+ 
+ 	return ret;
 
 
