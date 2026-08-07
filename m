@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4C0441A90B;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC29B3BB13B;
 	Fri,  7 Aug 2026 14:42:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786113747; cv=none; b=oNavz0SQd9eXfFvnEuUcF9XcgMEjQPgIB9Wc8qTjqNL/FhnSpa1/royNaXum0S/xkvDZpdwfPnXBPeZCoc9efV4L+5F+Obg1oyBC8VX3RwcaszN20X+vDMK6W7z4rIgTJymkfg/qu31RAVy5e3xGpxyEABuS+3HIH9lPzv96Wks=
+	t=1786113747; cv=none; b=jBLK7ks8UI9Cgy5tRSgllIBpB9En1TcGkugLQbtgJGI71MzvmbgagSGaydz6rK73gaXzZZ4A/0T3qIDLFLUYCmjYEk6AD43S4A7I1zsKrSKsAW4bmAIKnDFRJEukkMVxKIYKen68bKTqhIG04wugAzYd1bD6jZTQv5otjGkA2jA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1786113747; c=relaxed/simple;
-	bh=2KdPgcOdcVZsNpOVcLfXEghxgqPZcx3eaSuwkF04rQg=;
+	bh=NrhHup/6FeQ9qb2qnnQ1sCgPTupob9Yw6bWhjNsAubE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S4hov2y6iktSQIwxlxGwon3vkxiO4y4ws3Sv0P3ycMR1rcT+9rKpVYGltj65IRjfByK2w4gIWFddJnxLOw7CH9qX2SYhrC/UdHSCkOhI9h4Mrc4Ch5YejWemvk0uwX3yAnxPWq7nn6AtgeeniGGEhsJMGsZF9yYqYr+/Opsep7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RPNasBXx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kMAu9GgnOUatC/47d3vN3Eal589pqERGPg+5xHsPkaybZbliyJBRdycebGb3hBGT/cQjornPQRlcmtD4hz4hAQmqdTsWmqU/vhn9hBNqSjQBXivNltJByKe2LGZnJzKPwGHjoOUxYQr0LI/nMW5K8isnGUhGicKvNST84L1W0xs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mgM3AZAn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RPNasBXx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49A4E1F00A3F;
-	Fri,  7 Aug 2026 14:42:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mgM3AZAn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC8C81F00A3E;
+	Fri,  7 Aug 2026 14:42:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786113722;
-	bh=e/Ot7dXBXa0qPsohSDcs3+dcnnSbw0/Pz/o4m+yIygE=;
+	s=korg; t=1786113725;
+	bh=0PciCLGpxGdly/3IFQKN9T/RT2ovzWNALzenDXOxgB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RPNasBXx66xoTExZ1qc2e9LdbYBJ7hMnMD5jAEk+Dk9rO7suzu39p+8q71u8MzpVd
-	 K30WOzxnocns+kPguJGfbQIiDQlmio4zlnPEJRBJt0aKXlFBCfxkb9EESjfj2sq4kM
-	 ds/w/Oj+/OAZ0833hP8cnfWXg25HC4bsrgGs6zFE=
+	b=mgM3AZAn461NkIVM8TabdFSXBn4jD9CBP4V6wAVFi72fu9Qc2zzndNAGXriio5lJn
+	 7j+YUdHme76VX7Dz/p7jtkP0mVNKmBf4aMEcM5sCGh/Zp/CpZ4raR0wCl/SwG7sLMU
+	 2kkvSNU1CyQpZ/kjpFwkI0+bEpGqYcs5yQW4q0U4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Lee Jones <lee@kernel.org>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 013/337] net: mpls: initialize rtm_tos in mpls_getroute()
-Date: Fri,  7 Aug 2026 16:33:36 +0200
-Message-ID: <20260807143418.807320488@linuxfoundation.org>
+Subject: [PATCH 6.12 014/337] HID: logitech-dj: Standardise hid_report_enum variable nomenclature
+Date: Fri,  7 Aug 2026 16:33:37 +0200
+Message-ID: <20260807143418.829313327@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -51,72 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+From: Lee Jones <lee@kernel.org>
 
-[ Upstream commit 295dd295e2137e10e9a5b1891d97e0f08de76f03 ]
+[ Upstream commit a940aee176437046598dfc786b719bd96db3c74c ]
 
-mpls_getroute() builds the RTM_NEWROUTE reply to an RTM_GETROUTE
-request by filling a struct rtmsg allocated from an skb whose data
-area is not zeroed (alloc_skb(NLMSG_GOODSIZE, ...)). It sets every
-field of the header except rtm_tos:
+Since we will need to differentiate between the two report_enum types
+soon, let's unify the naming conventions now to save confusion and/or
+unnecessary/unrelated changes in upcoming commits.
 
-	r = nlmsg_data(nlh);
-	r->rtm_family	 = AF_MPLS;
-	r->rtm_dst_len	= 20;
-	r->rtm_src_len	= 0;
-	r->rtm_table	= RT_TABLE_MAIN;
-	r->rtm_type	= RTN_UNICAST;
-	r->rtm_scope	= RT_SCOPE_UNIVERSE;
-	r->rtm_protocol = rt->rt_protocol;
-	r->rtm_flags	= 0;
+{input,output}_report_enum is used in other places to let's conform.
 
-struct rtmsg has no padding, so the one uninitialised byte rtm_tos
-(offset 3) is copied straight to user space on recvmsg(), leaking a
-byte of uninitialised heap memory. This is in contrast to
-mpls_dump_route(), which fills the very same header and does set
-rtm_tos = 0.
-
-Initialize rtm_tos to 0, matching mpls_dump_route().
-
-Reproduced with KMSAN by adding an MPLS route and issuing a
-non-RTM_F_FIB_MATCH RTM_GETROUTE for its label:
-
-  BUG: KMSAN: kernel-infoleak in _copy_to_iter+0x36c/0x33f0
-   _copy_to_iter+0x36c/0x33f0
-   __skb_datagram_iter+0x196/0x12c0
-   skb_copy_datagram_iter+0x5b/0x210
-   netlink_recvmsg+0x37b/0xef0
-   ...
-  Uninit was created at:
-   __alloc_skb+0x8ca/0x10e0
-   mpls_getroute+0x1280/0x3a40
-   rtnetlink_rcv_msg+0x1138/0x15a0
-   ...
-  Byte 19 of 64 is uninitialized
-
-(byte 19 = nlmsghdr(16) + rtmsg offset 3 = rtm_tos)
-
-Fixes: 397fc9e5cefe ("mpls: route get support")
-Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
-Link: https://patch.msgid.link/20260723010830.289917-1-yhlee@isslab.korea.ac.kr
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mpls/af_mpls.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/hid/hid-logitech-dj.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/net/mpls/af_mpls.c b/net/mpls/af_mpls.c
-index 98816e51e01a..0379540d601a 100644
---- a/net/mpls/af_mpls.c
-+++ b/net/mpls/af_mpls.c
-@@ -2468,6 +2468,7 @@ static int mpls_getroute(struct sk_buff *in_skb, struct nlmsghdr *in_nlh,
- 	r->rtm_family	 = AF_MPLS;
- 	r->rtm_dst_len	= 20;
- 	r->rtm_src_len	= 0;
-+	r->rtm_tos	= 0;
- 	r->rtm_table	= RT_TABLE_MAIN;
- 	r->rtm_type	= RTN_UNICAST;
- 	r->rtm_scope	= RT_SCOPE_UNIVERSE;
+diff --git a/drivers/hid/hid-logitech-dj.c b/drivers/hid/hid-logitech-dj.c
+index 3b5412541c925..d6fb7015f0d77 100644
+--- a/drivers/hid/hid-logitech-dj.c
++++ b/drivers/hid/hid-logitech-dj.c
+@@ -1749,7 +1749,7 @@ static int logi_dj_raw_event(struct hid_device *hdev,
+ static int logi_dj_probe(struct hid_device *hdev,
+ 			 const struct hid_device_id *id)
+ {
+-	struct hid_report_enum *rep_enum;
++	struct hid_report_enum *input_report_enum;
+ 	struct hid_report *rep;
+ 	struct dj_receiver_dev *djrcv_dev;
+ 	struct usb_interface *intf;
+@@ -1793,10 +1793,10 @@ static int logi_dj_probe(struct hid_device *hdev,
+ 		}
+ 	}
+ 
+-	rep_enum = &hdev->report_enum[HID_INPUT_REPORT];
++	input_report_enum = &hdev->report_enum[HID_INPUT_REPORT];
+ 
+ 	/* no input reports, bail out */
+-	if (list_empty(&rep_enum->report_list))
++	if (list_empty(&input_report_enum->report_list))
+ 		return -ENODEV;
+ 
+ 	/*
+@@ -1804,7 +1804,7 @@ static int logi_dj_probe(struct hid_device *hdev,
+ 	 * Note: we should theoretically check for HID++ and DJ
+ 	 * collections, but this will do.
+ 	 */
+-	list_for_each_entry(rep, &rep_enum->report_list, list) {
++	list_for_each_entry(rep, &input_report_enum->report_list, list) {
+ 		if (rep->application == 0xff000001)
+ 			has_hidpp = true;
+ 	}
+@@ -1817,7 +1817,7 @@ static int logi_dj_probe(struct hid_device *hdev,
+ 		return -ENODEV;
+ 
+ 	/* get the current application attached to the node */
+-	rep = list_first_entry(&rep_enum->report_list, struct hid_report, list);
++	rep = list_first_entry(&input_report_enum->report_list, struct hid_report, list);
+ 	djrcv_dev = dj_get_receiver_dev(hdev, id->driver_data,
+ 					rep->application, has_hidpp);
+ 	if (!djrcv_dev) {
+@@ -1825,7 +1825,7 @@ static int logi_dj_probe(struct hid_device *hdev,
+ 		return -ENOMEM;
+ 	}
+ 
+-	if (!rep_enum->numbered)
++	if (!input_report_enum->numbered)
+ 		djrcv_dev->unnumbered_application = rep->application;
+ 
+ 	/* Starts the usb device and connects to upper interfaces hiddev and
 -- 
 2.53.0
 
