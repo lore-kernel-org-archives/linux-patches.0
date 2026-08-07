@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36DC3293458;
-	Fri,  7 Aug 2026 14:52:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E2BA345EB7;
+	Fri,  7 Aug 2026 14:52:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114355; cv=none; b=tJDvqB3j8qL2gCaOdl7gESxsHP7Yu3Pz7il6bwjCa+FUu4rDI+5S6bo2si8qUFOtd3SDiUkQo79ZPh6mIEAwGSCINJG+kY/H2R30Gja+R3dScngiGzAlXh68HGx5F/kw64ZQ2bXQ1mxj7Zbw0GXrhJLlv/IIy61Wix6f/p6ilck=
+	t=1786114358; cv=none; b=PXmtQE6h275SZggqgb/CLHMhLHrocPZ9PWue5TBrh4icMw9EwI3/upQx4DT0VdxzhFX1gaKLTWkBgL+lxDhcWNpD4e8A+BxYjz3avP3OCpQHibPM7N33q4U4dkPbbj72gARJ6r2FRRXSVxK2HnVrYK0UL8iRoDOjSDWnW+zT2SU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114355; c=relaxed/simple;
-	bh=yzeDVdGMKv6RsHfdHQ2nxxVw5qQBTzXJi8GT8TVu5+g=;
+	s=arc-20240116; t=1786114358; c=relaxed/simple;
+	bh=XDDb615OCpGmDA7J4xXDGIXHuscHqPeBTJT1PZBVN0k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QnKR5g8crOAWM5zJsYqf4oNaUVxz1sMw7hUBwfbSR6m27V2snL15na21cBYLAxydSXYTAJS76LMXMWVJD9+/Qx/NUM1wbgIY0jrUCc8rCfdEDvRfpRqGbPHao3bQB3AdFv643jfJRqRx5gsirftOca8nvyNaAZwh/KEdaxRkJak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aTBFDS2A; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GGyOgChkd5F4/fBOk0ER0uEFdM7r3rDoCWFtXG7A9Ygd2BF1g3y3xY4sMS7oGfWruboMCIExMi+19QqvkQKUaWOwKXdAOPLu+BxNuAO1NvTRoNVshA3nE6/ioYnW1o9EugBy6Y83rtxGzSQKl07UIFUpAlGXpwWcuoZI2p26kWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=075SuZzO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aTBFDS2A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 931461F000E9;
-	Fri,  7 Aug 2026 14:52:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="075SuZzO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6922F1F000E9;
+	Fri,  7 Aug 2026 14:52:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114354;
-	bh=WoySnqa+znH4S7vLgvTn9e4ULHae7q33DpKK/BoQdlc=;
+	s=korg; t=1786114357;
+	bh=EDjkKPxC7NRF4I3n/h6GSFZ73FDK+PxrahvPVHsGGvQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aTBFDS2AvV25oQjKFQxzddN0iFKK8uxQyXGkOIydPVDWA3hmbwZwsfOR9T4w97of9
-	 x0fWl4QPD0HOFgsukM3fmKbJO7Moej9oADfbshRnVWCGrTUG88rsa8TdkyarITv8D0
-	 pcuDMTn+UqVbx2bwvnmf6qwtEtYHqC4A42zXgE88=
+	b=075SuZzOeUDuqRuRu0tKLlUKnRFU9J8VB8FtjRrseFXrJ11jkf4u6gd5CfYozWQ+b
+	 RlqFJYZ6fdn3FtDLYGpZtpB533YFG30/20NC4m8Jzv7kU92U+UoO0XxO4Tzn9j+kUJ
+	 nCgjcZltmbS7AoaD8aPYjhnGWwlPT3JbDBFCRZZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	stable@kernel.org,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.12 235/337] can: softing: fw_parse(): validate firmware record spans
-Date: Fri,  7 Aug 2026 16:37:18 +0200
-Message-ID: <20260807143423.646143970@linuxfoundation.org>
+	Ilya Maximets <i.maximets@ovn.org>,
+	Eelco Chaudron <echaudro@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.12 218/337] net: openvswitch: fix potential UAF on meter attach failure
+Date: Fri,  7 Aug 2026 16:37:01 +0200
+Message-ID: <20260807143423.279144059@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -51,158 +51,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Ilya Maximets <i.maximets@ovn.org>
 
-commit 856d6cb04e5407523566b075841dcd6423757d1c upstream.
+commit a58a2b0ce354df531ebc71fc870058c2feb59f6b upstream.
 
-fw_parse() reads a fixed record header, a firmware-provided payload,
-and a trailing checksum without knowing the end of the firmware blob. A
-truncated record can therefore make those reads exceed the blob.
+While attaching a newly created meter attach_meter() function makes
+the new meter visible to other CPUs but can still fail afterwards.
+On failure, it detaches the meter back and returns an error.
 
-The same record also supplies addresses and lengths for writes into
-DPRAM. The generic loader uses wrap-prone mixed signed arithmetic for its
-bounds check, while the application loader does not bound the staging
-copy at all.
+However, this is an unexpected behavior for the ovs_meter_cmd_set()
+that uses a plain kfree(meter) on attach failure without waiting for
+RCU readers to stop using it, assuming it was never visible.
 
-Pass the firmware end to the parser and validate the full source record.
-Use a signed wide offset for generic DPRAM records and validate the
-application staging span against the mapped DPRAM before copying.
+This is never a problem for ovs-vswitchd as it always creates meters
+before creating any flows that use them.  But the UAF can be triggered
+with a custom application using uAPI:
 
-Fixes: 03fd3cf5a179 ("can: add driver for Softing card")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260722044347.2708-1-pengpeng@iscas.ac.cn
-Cc: stable@kernel.org
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+ BUG: KASAN: slab-use-after-free in ovs_meter_execute (net/openvswitch/meter.c:653)
+ Read of size 8 at addr ffff88810d152650 by task meter/2508
+
+ Call Trace:
+  ovs_meter_execute (net/openvswitch/meter.c:653)
+  do_execute_actions (net/openvswitch/actions.c:1407)
+  ovs_execute_actions (net/openvswitch/actions.c:1584)
+  ovs_packet_cmd_execute (net/openvswitch/datapath.c:703)
+  ...
+  netlink_sendmsg (af_netlink.c:1900)
+
+ Allocated by task 2519:
+  __kasan_kmalloc (mm/kasan/common.c:398 mm/kasan/common.c:415)
+  ovs_meter_cmd_set (net/openvswitch/meter.c:422)
+  ...
+  netlink_sendmsg (af_netlink.c:1900)
+
+ Freed by task 2519:
+  kfree (mm/slub.c:2705 mm/slub.c:6405 mm/slub.c:6720)
+  ovs_meter_cmd_set (net/openvswitch/meter.c:479)
+  ...
+  netlink_sendmsg (af_netlink.c:1900)
+
+Fix that by making sure attach_meter() doesn't make the meter visible
+until all the checks are done and the function can't fail anymore.
+
+This also makes sure the "hash" value is calculated after the potential
+re-sizing of the table.
+
+Reported by Trend Micro's Zero Day Initiative as ZDI-CAN-31642.
+
+Fixes: c7c4c44c9a95 ("net: openvswitch: expand the meters supported number")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
+Reviewed-by: Eelco Chaudron <echaudro@redhat.com>
+Link: https://patch.msgid.link/20260727121022.198461-1-i.maximets@ovn.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/softing/softing_fw.c |   46 ++++++++++++++++++++++++-----------
- 1 file changed, 32 insertions(+), 14 deletions(-)
+ net/openvswitch/meter.c |   33 +++++++++++++++++++--------------
+ 1 file changed, 19 insertions(+), 14 deletions(-)
 
---- a/drivers/net/can/softing/softing_fw.c
-+++ b/drivers/net/can/softing/softing_fw.c
-@@ -91,12 +91,12 @@ int softing_bootloader_command(struct so
- 	return ret;
- }
+--- a/net/openvswitch/meter.c
++++ b/net/openvswitch/meter.c
+@@ -133,18 +133,10 @@ static void dp_meter_instance_remove(str
  
--static int fw_parse(const uint8_t **pmem, uint16_t *ptype, uint32_t *paddr,
--		uint16_t *plen, const uint8_t **pdat)
-+static int fw_parse(const u8 **pmem, const u8 *limit, u16 *ptype,
-+		    u32 *paddr, u16 *plen, const u8 **pdat)
+ static int attach_meter(struct dp_meter_table *tbl, struct dp_meter *meter)
  {
- 	uint16_t checksum[2];
--	const uint8_t *mem;
--	const uint8_t *end;
-+	const u8 *mem;
-+	const u8 *record_end;
+-	struct dp_meter_instance *ti = rcu_dereference_ovsl(tbl->ti);
+-	u32 hash = meter_hash(ti, meter->id);
++	struct dp_meter_instance *ti;
++	u32 hash;
+ 	int err;
  
- 	/*
- 	 * firmware records are a binary, unaligned stream composed of:
-@@ -114,14 +114,21 @@ static int fw_parse(const uint8_t **pmem
- 	 * endianness & alignment.
- 	 */
- 	mem = *pmem;
-+	/* A record needs an 8-byte prefix and a 2-byte checksum. */
-+	if (mem > limit || limit - mem < 10)
-+		return -EINVAL;
-+
- 	*ptype = le16_to_cpup((void *)&mem[0]);
- 	*paddr = le32_to_cpup((void *)&mem[2]);
- 	*plen = le16_to_cpup((void *)&mem[6]);
-+	if (*plen > limit - mem - 10)
-+		return -EINVAL;
-+
- 	*pdat = &mem[8];
- 	/* verify checksum */
--	end = &mem[8 + *plen];
--	checksum[0] = le16_to_cpup((void *)end);
--	for (checksum[1] = 0; mem < end; ++mem)
-+	record_end = &mem[8 + *plen];
-+	checksum[0] = le16_to_cpup((void *)record_end);
-+	for (checksum[1] = 0; mem < record_end; ++mem)
- 		checksum[1] += *mem;
- 	if (checksum[0] != checksum[1])
- 		return -EINVAL;
-@@ -139,6 +146,7 @@ int softing_load_fw(const char *file, st
- 	uint16_t type, len;
- 	uint32_t addr;
- 	uint8_t *buf = NULL, *new_buf;
-+	s64 dpram_offset;
- 	int buflen = 0;
- 	int8_t type_end = 0;
- 
-@@ -153,7 +161,7 @@ int softing_load_fw(const char *file, st
- 	mem = fw->data;
- 	end = &mem[fw->size];
- 	/* look for header record */
--	ret = fw_parse(&mem, &type, &addr, &len, &dat);
-+	ret = fw_parse(&mem, end, &type, &addr, &len, &dat);
- 	if (ret < 0)
- 		goto failed;
- 	if (type != 0xffff)
-@@ -164,7 +172,7 @@ int softing_load_fw(const char *file, st
+-	/* In generally, slots selected should be empty, because
+-	 * OvS uses id-pool to fetch a available id.
+-	 */
+-	if (unlikely(rcu_dereference_ovsl(ti->dp_meters[hash])))
+-		return -EBUSY;
+-
+-	dp_meter_instance_insert(ti, meter);
+-
+ 	/* That function is thread-safe. */
+ 	tbl->count++;
+ 	if (tbl->count >= tbl->max_meters_allowed) {
+@@ -152,16 +144,29 @@ static int attach_meter(struct dp_meter_
+ 		goto attach_err;
  	}
- 	/* ok, we had a header */
- 	while (mem < end) {
--		ret = fw_parse(&mem, &type, &addr, &len, &dat);
-+		ret = fw_parse(&mem, end, &type, &addr, &len, &dat);
- 		if (ret < 0)
- 			goto failed;
- 		if (type == 3) {
-@@ -179,9 +187,13 @@ int softing_load_fw(const char *file, st
- 			goto failed;
- 		}
  
--		if ((addr + len + offset) > size)
-+		dpram_offset = (s64)addr + offset;
-+		if (dpram_offset < 0 || dpram_offset > size ||
-+		    len > size - dpram_offset) {
-+			ret = -EINVAL;
- 			goto failed;
--		memcpy_toio(&dpram[addr + offset], dat, len);
-+		}
-+		memcpy_toio(&dpram[dpram_offset], dat, len);
- 		/* be sure to flush caches from IO space */
- 		mb();
- 		if (len > buflen) {
-@@ -195,7 +207,7 @@ int softing_load_fw(const char *file, st
- 			buf = new_buf;
- 		}
- 		/* verify record data */
--		memcpy_fromio(buf, &dpram[addr + offset], len);
-+		memcpy_fromio(buf, &dpram[dpram_offset], len);
- 		if (memcmp(buf, dat, len)) {
- 			/* is not ok */
- 			dev_alert(&card->pdev->dev, "DPRAM readback failed\n");
-@@ -237,7 +249,7 @@ int softing_load_app_fw(const char *file
- 	mem = fw->data;
- 	end = &mem[fw->size];
- 	/* look for header record */
--	ret = fw_parse(&mem, &type, &addr, &len, &dat);
-+	ret = fw_parse(&mem, end, &type, &addr, &len, &dat);
- 	if (ret)
- 		goto failed;
- 	ret = -EINVAL;
-@@ -253,7 +265,7 @@ int softing_load_app_fw(const char *file
- 	}
- 	/* ok, we had a header */
- 	while (mem < end) {
--		ret = fw_parse(&mem, &type, &addr, &len, &dat);
-+		ret = fw_parse(&mem, end, &type, &addr, &len, &dat);
- 		if (ret)
- 			goto failed;
- 
-@@ -279,6 +291,12 @@ int softing_load_app_fw(const char *file
- 		/* work in 16bit (target) */
- 		sum &= 0xffff;
- 
-+		if (card->pdat->app.offs > card->dpram_size ||
-+		    len > card->dpram_size - card->pdat->app.offs) {
-+			ret = -EINVAL;
-+			goto failed;
-+		}
+-	if (tbl->count >= ti->n_meters &&
+-	    dp_meter_instance_realloc(tbl, ti->n_meters * 2)) {
+-		err = -ENOMEM;
++	ti = rcu_dereference_ovsl(tbl->ti);
++	if (tbl->count >= ti->n_meters) {
++		err = dp_meter_instance_realloc(tbl, ti->n_meters * 2);
++		if (err)
++			goto attach_err;
 +
- 		memcpy_toio(&card->dpram[card->pdat->app.offs], dat, len);
- 		iowrite32(card->pdat->app.offs + card->pdat->app.addr,
- 				&card->dpram[DPRAM_COMMAND + 2]);
++		ti = rcu_dereference_ovsl(tbl->ti);
++	}
++
++	hash = meter_hash(ti, meter->id);
++
++	/* In general, selected slots should be empty, because
++	 * OvS uses id-pool to fetch available ids.
++	 */
++	if (unlikely(rcu_dereference_ovsl(ti->dp_meters[hash]))) {
++		err = -EBUSY;
+ 		goto attach_err;
+ 	}
+ 
++	dp_meter_instance_insert(ti, meter);
+ 	return 0;
+ 
+ attach_err:
+-	dp_meter_instance_remove(ti, meter);
+ 	tbl->count--;
+ 	return err;
+ }
 
 
