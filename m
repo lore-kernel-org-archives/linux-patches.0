@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62BC534216C;
-	Fri,  7 Aug 2026 15:33:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81707280331;
+	Fri,  7 Aug 2026 15:33:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116835; cv=none; b=PHR93S5YKk46tMcBJBfCSTOU4tWKVtMluzywPGO8CM711cC43q6PhGaLc36K1rJl0b7P1lPKuKu6pc9z1SWEaqUOdwmUWXZRjII98pu6Dcl5ZmRi3c8mNbI4ShwOtyRXeuN0XCvJtlL8BLr/n6fqczCeiZnKOjedOGpway0yeGM=
+	t=1786116838; cv=none; b=Q0QB5n+1CDausVxw68qfKChPZZnWQ1KyURaqDBpPP/fgYonw7Ic826BSm2Za646Y4nowPu5rqe+a/aNb0L8O2vItbG2Jd0a00ABtP0EKFJW81OerkwHq+s2FWnDUPOOyZ7rVqfeBbq98Fj+2E4IEOYJv9Fx2LEgTTgRHyRepieE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116835; c=relaxed/simple;
-	bh=zq2aRQ4YdAqGUWKthkVO5ckw89FhFfkUKmsSxiIAJas=;
+	s=arc-20240116; t=1786116838; c=relaxed/simple;
+	bh=dg3rJYqK7n2CH3HL4egVdSJasurlFt0z9vfJKh07Aok=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uuodmWDnaymPZTgjo80/mRJYFFf9Q/wLJFkfSp7ncchG5ygD3xPrVuxd0ngP5hWz6zopYffn5+zU64QQ0U79epxZaruB2FtCz80k6hibRTmiFMd6sgYvMpZZ5QftIXwiJ1ZbgKo15WpWQw9TfQXEx0pxRtjU7IqmFZORRVKkJW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DDxCLL9K; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cjBXgH+sGLkxD5VseoDfpOb0jSmOnT1JFfMLrHZTuZBYqMd2gCkQ8c5u/CCHyTxC+T3S7SWSTAjJSeAbiv4wJH5ZFMgnlty2HZ/WhF0AVdUe6Omd+wyqZHnlr1tlxO7EX7nFhqjXCOq1pvAayuR3b1fewrTHPkMnUpf9gnqTDpw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WKS2K2eU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DDxCLL9K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8667B1F00A3A;
-	Fri,  7 Aug 2026 15:33:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WKS2K2eU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F05C1F00A3A;
+	Fri,  7 Aug 2026 15:33:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116834;
-	bh=Si/kt3ei5ejuizySIWopZ9cROZ1zj6UeEWPD1QBGAhI=;
+	s=korg; t=1786116837;
+	bh=u7Ut2eVBeoaPzgibGT8kYNv9pTnDtt3q4VoRCfShjVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DDxCLL9KKK/QHYdrgXwSJdK+OPH/4ucs/Sfl0w2kXAedcYHriCgNzMkcdyxeere3U
-	 25qJ5Ol/mSrlXLnqYo2ToqnyKNWo13ByI3cJsqateRkkfPd5G2rMSAGYKe+eVkfQt0
-	 2S4ARreAeEO+xTLh0kBcT6bwPuz05jyfrZVSxkCo=
+	b=WKS2K2eUJ1pUzU8LTIVelN+CzJRXKuF+fOY8GxrgjhD1DFDWoYEu2E2HKPHoUvOAS
+	 SGuRvEa8Q1l25XUQdy8TCzIXw7gaDduuqLZdy9M5ag+UD9drZXlLoBElD5okB4RAIa
+	 4B0DW5LMl12Is/i9xqv+g2PfEP4gaT0ib/WIIero=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Luiz Angelo Daros de Luca <luizluca@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 070/438] nexthop: avoid unlocked f6i_list walk in nh_rt_cache_flush
-Date: Fri,  7 Aug 2026 16:34:26 +0200
-Message-ID: <20260807143429.478691412@linuxfoundation.org>
+Subject: [PATCH 7.1 106/438] hwmon: (adt7470) Fix swapped PWM3 and PWM4 auto mode masks
+Date: Fri,  7 Aug 2026 16:35:02 +0200
+Message-ID: <20260807143430.247577752@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -53,69 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei (Microsoft) <xmei5@asu.edu>
+From: Luiz Angelo Daros de Luca <luizluca@gmail.com>
 
-[ Upstream commit 4787a6d2629b4e8c0b6bacab1f75c1660eca44d9 ]
+[ Upstream commit a3850231521b06bbbb18c8ebea100320c14a08be ]
 
-nh_rt_cache_flush() walks nh->f6i_list during an RTNL-serialized nexthop
-replace without holding nh->lock, racing the unlocked IPv6 route
-add/delete that mutate the list under nh->lock and free fib6_info
-entries (nh_rt_cache_flush() is inlined into rtm_new_nexthop()):
+The ADT7470_PWM3_AUTO_MASK and ADT7470_PWM4_AUTO_MASK macros are
+currently defined with swapped bit values.
 
-  BUG: KASAN: slab-use-after-free in nh_rt_cache_flush (net/ipv4/nexthop.c:2243)
-  Read of size 8 at addr ffff888012953e18 by task exploit/146
-   nh_rt_cache_flush (net/ipv4/nexthop.c:2243)
-   replace_nexthop (net/ipv4/nexthop.c:2610)
-   rtm_new_nexthop (net/ipv4/nexthop.c:3323)
-   rtnetlink_rcv_msg (net/core/rtnetlink.c:7076)
+According to Table 22 of the ADT7470 datasheet, the Fan Control Mode
+Configuration for register 0x69 follows the exact same bit position
+layout as register 0x68:
+- 0x68 Bit[7] corresponds to BHVR1 (PWM1) -> 0x80
+- 0x68 Bit[6] corresponds to BHVR2 (PWM2) -> 0x40
+- 0x69 Bit[7] corresponds to BHVR3 (PWM3) -> 0x80
+- 0x69 Bit[6] corresponds to BHVR4 (PWM4) -> 0x40
 
-Unlike the other f6i_list walks, this one bumps each route's sernum via
-fib6_update_sernum_upto_root(), which needs tb6_lock; taking nh->lock
-around it would invert the established tb6_lock -> nh->lock order and
-deadlock. As the only purpose is to invalidate cached dsts, bump the
-IPv6 sernum for the whole netns with rt_genid_bump_ipv6() instead,
-mirroring the rt_cache_flush() already done for IPv4 just above.
+Consequently, PWM3 should use mask 0x80 and PWM4 should use 0x40.
 
-Fixes: 081efd18326e ("ipv6: Protect nh->f6i_list with spinlock and flag.")
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Signed-off-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260722002951.2614721-2-xmei5@asu.edu
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This typo did not cause any functional bugs because these specific
+macros are never referenced in the driver code. Instead, the driver
+correctly applies the configuration by relying on the modulo parity of
+the channel index (e.g., `channel % 2`) to selectively apply either
+ADT7470_PWM1_AUTO_MASK (0x80) or ADT7470_PWM2_AUTO_MASK (0x40).
+Since the bit layout is identical between the two configuration
+registers, the hardware is currently configured correctly.
+
+Fix the macro definitions to reflect the datasheet accurately and
+prevent future bugs or confusion during code review and refactoring.
+As this is a purely cosmetic fix with no functional impact, a backport
+to stable kernels is not necessary.
+
+Fixes: 6f9703d0be16 ("hwmon: add support for adt7470")
+Signed-off-by: Luiz Angelo Daros de Luca <luizluca@gmail.com>
+Link: https://lore.kernel.org/r/20260727-adt7470_fixes-v2-4-598e38a46ba6@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/nexthop.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/hwmon/adt7470.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/nexthop.c b/net/ipv4/nexthop.c
-index 8b1f3382a998a..1bfc429fc9607 100644
---- a/net/ipv4/nexthop.c
-+++ b/net/ipv4/nexthop.c
-@@ -2223,18 +2223,18 @@ static void remove_nexthop(struct net *net, struct nexthop *nh,
- static void nh_rt_cache_flush(struct net *net, struct nexthop *nh,
- 			      struct nexthop *replaced_nh)
- {
--	struct fib6_info *f6i;
- 	struct nh_group *nhg;
-+	bool have_f6i;
- 	int i;
- 
- 	if (!list_empty(&nh->fi_list))
- 		rt_cache_flush(net);
- 
--	list_for_each_entry(f6i, &nh->f6i_list, nh_list) {
--		spin_lock_bh(&f6i->fib6_table->tb6_lock);
--		fib6_update_sernum_upto_root(net, f6i);
--		spin_unlock_bh(&f6i->fib6_table->tb6_lock);
--	}
-+	spin_lock_bh(&nh->lock);
-+	have_f6i = !list_empty(&nh->f6i_list);
-+	spin_unlock_bh(&nh->lock);
-+	if (have_f6i)
-+		rt_genid_bump_ipv6(net);
- 
- 	/* if an IPv6 group was replaced, we have to release all old
- 	 * dsts to make sure all refcounts are released
+diff --git a/drivers/hwmon/adt7470.c b/drivers/hwmon/adt7470.c
+index 428bd1d91e700..c6fc7d38d698c 100644
+--- a/drivers/hwmon/adt7470.c
++++ b/drivers/hwmon/adt7470.c
+@@ -70,8 +70,8 @@ static const unsigned short normal_i2c[] = { 0x2C, 0x2E, 0x2F, I2C_CLIENT_END };
+ #define		ADT7470_PWM1_AUTO_MASK		0x80
+ #define		ADT7470_PWM_AUTO_MASK		0xC0
+ #define ADT7470_REG_PWM34_CFG			0x69
+-#define		ADT7470_PWM3_AUTO_MASK		0x40
+-#define		ADT7470_PWM4_AUTO_MASK		0x80
++#define		ADT7470_PWM4_AUTO_MASK		0x40
++#define		ADT7470_PWM3_AUTO_MASK		0x80
+ #define	ADT7470_REG_PWM_MIN_BASE_ADDR		0x6A
+ #define ADT7470_REG_PWM_MIN_MAX_ADDR		0x6D
+ #define ADT7470_REG_PWM_TEMP_MIN_BASE_ADDR	0x6E
 -- 
 2.53.0
 
