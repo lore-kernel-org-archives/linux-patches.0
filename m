@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54B7937206E;
-	Fri,  7 Aug 2026 15:06:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C06946D0B0;
+	Fri,  7 Aug 2026 15:06:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115173; cv=none; b=SVH65PLVhyB3Jpp6KazOgwWPvW0xfKOPDxzV/tuPe1NFeYsACPGYc7CDrvOUOud2RMy2LUbditdn2PTjfv09p80d1SDRO5R8nOxrIgdIB6UUoFlccbttN1tj66FP3V9plkVtr5iAD32CZdUzMXmiZe6A1C30KD0yCoCOon7OwSk=
+	t=1786115175; cv=none; b=XadMKZkW48e6HAYCPBBGTH0NqDm9vASqPsGp//TnKe1RjkOTeA/ZIQvNMXBeAev04k7m2aThhLPRjVuNq4OU5uf1S+xrpAZldmcqTuvrlfbwH7QnLZjIhqwpXArebRi/5N1+qF2impeNlQrJkote4apv25dU7zIOYFSyFG9Zvbg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115173; c=relaxed/simple;
-	bh=cDZ5lyb6UzLH3PJwSGPpymrMyqojoF8CJ8Owc/asNGM=;
+	s=arc-20240116; t=1786115175; c=relaxed/simple;
+	bh=RutgQxq+JZSADnr681jKXDlpRDpLaR6m2nQZdPNgyZA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RENCmTjyf78uHDI/cfG2EZCwzi4siPuyOqqHtZfgcAiBhz2ZJrax7bj4XZ3+lPJFYVQXCidIyO1OzMfkoS46r3GFj4G4Ksnf+iqLLtIQUVV0jb1d0hmSVWs3BXWFDt60EwdcqRv7UZ1OQoZ/KwM1+NX+LbyLtk4CMOmvSmEAwEM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gn2k2xVP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QQJdyGUZnXqxL4R9ciOXFomUqAHNzR10UIjY7C6AESjduadPP6uPtDNJv/ACDUOb33K9i5K2zbRrXt6VAITOLNXgeuoIn2oI9OWSk4CxYo08kJFOKAvjDjNXHRjWAg3pFAxLQFpIL8FAwU3/7n1tzwjgKhcQwPzINIyGCIW5mII=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nG6I0Ttw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gn2k2xVP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C35E51F00A3E;
-	Fri,  7 Aug 2026 15:06:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nG6I0Ttw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0B221F00A3A;
+	Fri,  7 Aug 2026 15:06:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115169;
-	bh=mXHk6px2hn1upq6IvqkN/mS5yXv/CQs+jgKD9LR1D4A=;
+	s=korg; t=1786115166;
+	bh=iGViOoxJ3z5WfPI7/OcRln5p5SwbJY3IwGOW5HMgwlI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gn2k2xVPr2H5bBKqxvrVfscj/4XhRVGa1bAeCnANqHV7J5FRcs5QNKBwAZ1iBau1X
-	 XVFbNlDWkK/ELY4s+Pa8ivWASAvaD47Cw45HHvu3+vieNn5spXd/gDUYhFLe4NQjx6
-	 Ldp7N4deazaio/AJefV7tm0F3oRMYXErmmcjSZks=
+	b=nG6I0TtwPOHdHcFspLNjR7iPOI6OyKRx8P2phJh2HFWGzQNLCp17LXftOug74vDu7
+	 wHfcMtle/O2mXkat1XUTxeZ570Q/zKw7+IrdNP20T6X5HarRtfuvOMgww7hn8vCwjb
+	 zrV5b2HFGKlll/v0fnsH085Krv3+4Cq3ClCU/l1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Matthew Rosato <mjrosato@linux.ibm.com>,
-	Farhan Ali <alifm@linux.ibm.com>
-Subject: [PATCH 6.18 180/396] KVM: s390: pci: Reject adapter interrupt forwarding if already enabled
-Date: Fri,  7 Aug 2026 16:35:40 +0200
-Message-ID: <20260807143428.178000579@linuxfoundation.org>
+	Yosry Ahmed <yosry@kernel.org>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.18 179/396] KVM: SVM: Update x2APIC MSR intercepts if AVIC is inhibited while L2 is active
+Date: Fri,  7 Aug 2026 16:35:39 +0200
+Message-ID: <20260807143428.156105397@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -51,40 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Farhan Ali <alifm@linux.ibm.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 8fa01be5a6149404adb82c0979a78f6347edd3ef upstream.
+commit 7d3aae206663c4e006b25a1c7a20a4029e67da76 upstream.
 
-The MPCIFC instruction doesn't allow registering adapter interrupts without
-first unregistering. So reject any request to enable interrupt forwarding
-if its already enabled for the zPCI device. This also fixes overwriting and
-thus leaking resources when the ioctl is called multiple times for the same
-device.
+Always update x2APIC MSR intercepts for L1 when AVIC is deactivated, even
+if L2 is active and KVM is using a separate MSR bitmap to run L2.  If AVIC
+is fully enabled prior to running L2, and is then inhibited while L2 is
+active (for a VM-scoped inhibit), then KVM will run L1 with AVIC disabled,
+but with x2APIC MSR intercepts disabled, i.e. will allow L1 to read most of
+the host's APIC state, send arbitrary interrupts, change task priority, and
+ultimately trivially DoS the host.
 
-Fixes: 3c5a1b6f0a18 ("KVM: s390: pci: provide routines for enabling/disabling interrupt forwarding")
+E.g. sending a self-IPI in L1 on HYPERV_REENLIGHTENMENT_VECTOR, 0xee, with
+CONFIG_HYPERV=n in the host kernel as a "safe" PoC, yields:
+
+  Spurious interrupt (vector 0xee) on CPU#425. Acked
+
+And hacking KVM to abuse kvm_set_posted_intr_wakeup_handler() to register a
+handler and WARN on POSTED_INTR_WAKEUP_VECTOR yields:
+
+  ------------[ cut here ]------------
+  WARNING: arch/x86/kvm/svm/svm.c:5594 at pi_wakeup_handler+0x9/0x10 [kvm_amd], CPU#156: nested_x2apic_t/316940
+  CPU: 156 UID: 0 PID: 316940 Comm: nested_x2apic_t Tainted: G S   U
+  Tainted: [S]=CPU_OUT_OF_SPEC, [U]=USER
+  Hardware name: Google Astoria-Turin/astoria, BIOS 0.20260209.0-0 02/09/2026
+  RIP: 0010:pi_wakeup_handler+0x9/0x10 [kvm_amd]
+  Call Trace:
+   <IRQ>
+   sysvec_kvm_posted_intr_wakeup_ipi+0x64/0x80
+   </IRQ>
+   <TASK>
+   asm_sysvec_kvm_posted_intr_wakeup_ipi+0x1a/0x20
+  RIP: 0010:vcpu_run+0x1430/0x1e40 [kvm]
+   kvm_arch_vcpu_ioctl_run+0x2c1/0x600 [kvm]
+   kvm_vcpu_ioctl+0x580/0x6b0 [kvm]
+   __se_sys_ioctl+0x6d/0xb0
+   do_syscall_64+0x10a/0x480
+   entry_SYSCALL_64_after_hwframe+0x4b/0x53
+  RIP: 0033:0x46ff4b
+   </TASK>
+  ---[ end trace 0000000000000000 ]---
+
+Fixes: 091abbf578f9 ("KVM: x86: nSVM: optimize svm_set_x2apic_msr_interception")
 Cc: stable@vger.kernel.org
-Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
-Tested-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Cc: Yosry Ahmed <yosry@kernel.org>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Link: https://patch.msgid.link/20260729213558.639074-1-pbonzini@redhat.com/
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kvm/pci.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ arch/x86/kvm/svm/avic.c |    8 --------
+ 1 file changed, 8 deletions(-)
 
---- a/arch/s390/kvm/pci.c
-+++ b/arch/s390/kvm/pci.c
-@@ -238,6 +238,10 @@ static int kvm_s390_pci_aif_enable(struc
- 	if (zdev->gisa == 0)
- 		return -EINVAL;
+--- a/arch/x86/kvm/svm/avic.c
++++ b/arch/x86/kvm/svm/avic.c
+@@ -220,14 +220,6 @@ static void avic_deactivate_vmcb(struct
+ 	if (!sev_es_guest(svm->vcpu.kvm))
+ 		svm_set_intercept(svm, INTERCEPT_CR8_WRITE);
  
-+	/* AIF already enabled for the device */
-+	if (zdev->kzdev->fib.fmt0.aibv != 0)
-+		return -EINVAL;
-+
- 	kvm = zdev->kzdev->kvm;
- 	msi_vecs = min_t(unsigned int, fib->fmt0.noi, zdev->max_msi);
- 
+-	/*
+-	 * If running nested and the guest uses its own MSR bitmap, there
+-	 * is no need to update L0's msr bitmap
+-	 */
+-	if (is_guest_mode(&svm->vcpu) &&
+-	    vmcb12_is_intercept(&svm->nested.ctl, INTERCEPT_MSR_PROT))
+-		return;
+-
+ 	/* Enabling MSR intercept for x2APIC registers */
+ 	avic_set_x2apic_msr_interception(svm, true);
+ }
 
 
