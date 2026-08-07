@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 750B73F327A;
-	Fri,  7 Aug 2026 15:24:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4396A470452;
+	Fri,  7 Aug 2026 15:24:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116287; cv=none; b=PuoTJVk65ciVtS/2uEA0VNMEScHnM8zEcNv7HZE+lswwmnBxr5tDy8Xi/DTALQRnfCmfGCrNZze6kBx8tOb50NJCGEpBaVYdTbdgN880oJ/DV56aHOK8/BsPdo+OtMtYaeCrHxfMdh69nW7lapgpUe3My7t7a5JfNmdwNLDXB5E=
+	t=1786116290; cv=none; b=SU6wCM60rRwkFs7eOwhzAjd6jTyeL0WDgGYL83DMpepItxQ02VXpZ8URLJYZJ1yz+8YUnpU+OtyxYvkHeGGgEuYOaUfsz1LrQaT7R3sUXPh6hCz3YgxKl2Yz1MSdW0PeqaSIsDus7KDHv/Xd0HlVgWsFG2QxpG72D09pVmY+fGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116287; c=relaxed/simple;
-	bh=J6xnkUO/UfLc9KYyyqxnZkNLvSNcve6xxSMD3Sft4qM=;
+	s=arc-20240116; t=1786116290; c=relaxed/simple;
+	bh=ew9KUbVkBMHB3lmOkOZrmQRKmbXxM2NMLy5O2D2/Xz4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rVdYYwL20IarLgmr5llBLmCTEnaDrgwz5mxDe29p8KuP+Q4d0SdYPC6JdhqPZJ6UuKubyYmrtxX6grDV3mxMj60Nh16VyEiexwYpkoJQ5J3UI/XCYuZDFbmWXjnl4oRvQu7s6rG454V+mQkeEyUO3NkixUtkj5DEz6OlljQ6k8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pvboiy14; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TLfCiilp5vvGQMBY/VpYtHgmVgSzd3RMTlt8VoCZbE3ESBn2T2AvQboZcXrv/GKBViVfzsISZUidcoqyOy17glale1MLq57Bmts1P9taflL09YhqCebBamee6PenCsHRr889JAc2XFUJRo5cL/wKKaE/mP5ZOLcF2WU/Zt5S9oU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fQdPWmtr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pvboiy14"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1EF41F000E9;
-	Fri,  7 Aug 2026 15:24:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fQdPWmtr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A88E1F000E9;
+	Fri,  7 Aug 2026 15:24:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116286;
-	bh=Yso2HGvnGN+LHlmu/uTdvZZcLgLJkKWVag93YVWqnHs=;
+	s=korg; t=1786116289;
+	bh=cpjoamHIdbRWvbfZgdT7i4drbOVauSvbvho3ERuWuwY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Pvboiy14LlrKda3UbkNmmN4pPWUD6gs9alialoZx7QInpSxLeJR86Sy0eMs7yHMBG
-	 HCsaMQ2nEs+dioTfyCV6W6MalPGt5hxpJkiRpvqbAhJr8Q4Rqsaq7Y+kEOOoKCF0C+
-	 ysZnVY+RUePzpYsMB9/Uw8rc2b9znki5nP5jjbVc=
+	b=fQdPWmtr0IzFd5ROnYTceAUdtXzjbpVtf0SZ9KtL8PCvql6dhvLu0O6B0QVxshJ2N
+	 O9oPhGllpK90yCLzz3WPMkafAaDyCnYTTpaHiH+dGRmz/pE/LFRDjVOeEI9xavo88Y
+	 hbEdJbDyoai3gbi7DP6PX3oK7409OIiLWWNATkrI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Gao <jamesgao5@outlook.com>,
-	Vincent Mailhol <mailhol@kernel.org>,
-	stable@kernel.org,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.6 179/261] can: peak_usb: add bounds check for USB channel index
-Date: Fri,  7 Aug 2026 16:38:56 +0200
-Message-ID: <20260807143419.224240117@linuxfoundation.org>
+	Ilya Maximets <i.maximets@ovn.org>,
+	Eelco Chaudron <echaudro@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.6 162/261] net: openvswitch: fix potential UAF on meter attach failure
+Date: Fri,  7 Aug 2026 16:38:39 +0200
+Message-ID: <20260807143418.858844954@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143415.358597922@linuxfoundation.org>
 References: <20260807143415.358597922@linuxfoundation.org>
@@ -52,74 +51,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Gao <jamesgao5@outlook.com>
+From: Ilya Maximets <i.maximets@ovn.org>
 
-commit 39132f166ca8ce00ae60d8a9068e06a60943cc4b upstream.
+commit a58a2b0ce354df531ebc71fc870058c2feb59f6b upstream.
 
-The channel control index ctrl_idx is derived from rx->len which comes
-directly from a device USB payload. The mask 0x0f allows values 0-15, but
-the array size of usb_if->dev[] is only 2. Values 2-15 cause heap
-out-of-bounds read, eventually causing kernel panic in the IRQ context.
+While attaching a newly created meter attach_meter() function makes
+the new meter visible to other CPUs but can still fail afterwards.
+On failure, it detaches the meter back and returns an error.
 
-Add bounds checking for ctrl_idx before the array access in both
-pcan_usb_pro_handle_canmsg() and pcan_usb_pro_handle_error().
+However, this is an unexpected behavior for the ovs_meter_cmd_set()
+that uses a plain kfree(meter) on attach failure without waiting for
+RCU readers to stop using it, assuming it was never visible.
 
-Fixes: d8a199355f8f ("can: usb: PEAK-System Technik PCAN-USB Pro specific part")
-Signed-off-by: James Gao <jamesgao5@outlook.com>
-Reviewed-by: Vincent Mailhol <mailhol@kernel.org>
-Link: https://patch.msgid.link/TYWPR01MB8559DBAAAA6A7F410400329CF0012@TYWPR01MB8559.jpnprd01.prod.outlook.com
-Cc: stable@kernel.org
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+This is never a problem for ovs-vswitchd as it always creates meters
+before creating any flows that use them.  But the UAF can be triggered
+with a custom application using uAPI:
+
+ BUG: KASAN: slab-use-after-free in ovs_meter_execute (net/openvswitch/meter.c:653)
+ Read of size 8 at addr ffff88810d152650 by task meter/2508
+
+ Call Trace:
+  ovs_meter_execute (net/openvswitch/meter.c:653)
+  do_execute_actions (net/openvswitch/actions.c:1407)
+  ovs_execute_actions (net/openvswitch/actions.c:1584)
+  ovs_packet_cmd_execute (net/openvswitch/datapath.c:703)
+  ...
+  netlink_sendmsg (af_netlink.c:1900)
+
+ Allocated by task 2519:
+  __kasan_kmalloc (mm/kasan/common.c:398 mm/kasan/common.c:415)
+  ovs_meter_cmd_set (net/openvswitch/meter.c:422)
+  ...
+  netlink_sendmsg (af_netlink.c:1900)
+
+ Freed by task 2519:
+  kfree (mm/slub.c:2705 mm/slub.c:6405 mm/slub.c:6720)
+  ovs_meter_cmd_set (net/openvswitch/meter.c:479)
+  ...
+  netlink_sendmsg (af_netlink.c:1900)
+
+Fix that by making sure attach_meter() doesn't make the meter visible
+until all the checks are done and the function can't fail anymore.
+
+This also makes sure the "hash" value is calculated after the potential
+re-sizing of the table.
+
+Reported by Trend Micro's Zero Day Initiative as ZDI-CAN-31642.
+
+Fixes: c7c4c44c9a95 ("net: openvswitch: expand the meters supported number")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
+Reviewed-by: Eelco Chaudron <echaudro@redhat.com>
+Link: https://patch.msgid.link/20260727121022.198461-1-i.maximets@ovn.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/usb/peak_usb/pcan_usb_pro.c |   20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
+ net/openvswitch/meter.c |   33 +++++++++++++++++++--------------
+ 1 file changed, 19 insertions(+), 14 deletions(-)
 
---- a/drivers/net/can/usb/peak_usb/pcan_usb_pro.c
-+++ b/drivers/net/can/usb/peak_usb/pcan_usb_pro.c
-@@ -534,12 +534,18 @@ static int pcan_usb_pro_handle_canmsg(st
- 				      struct pcan_usb_pro_rxmsg *rx)
- {
- 	const unsigned int ctrl_idx = (rx->len >> 4) & 0x0f;
--	struct peak_usb_device *dev = usb_if->dev[ctrl_idx];
--	struct net_device *netdev = dev->netdev;
-+	struct peak_usb_device *dev;
-+	struct net_device *netdev;
- 	struct can_frame *can_frame;
- 	struct sk_buff *skb;
- 	struct skb_shared_hwtstamps *hwts;
+--- a/net/openvswitch/meter.c
++++ b/net/openvswitch/meter.c
+@@ -133,18 +133,10 @@ static void dp_meter_instance_remove(str
  
-+	if (ctrl_idx >= ARRAY_SIZE(usb_if->dev))
-+		return -EINVAL;
-+
-+	dev = usb_if->dev[ctrl_idx];
-+	netdev = dev->netdev;
-+
- 	skb = alloc_can_skb(netdev, &can_frame);
- 	if (!skb)
- 		return -ENOMEM;
-@@ -573,14 +579,20 @@ static int pcan_usb_pro_handle_error(str
+ static int attach_meter(struct dp_meter_table *tbl, struct dp_meter *meter)
  {
- 	const u16 raw_status = le16_to_cpu(er->status);
- 	const unsigned int ctrl_idx = (er->channel >> 4) & 0x0f;
--	struct peak_usb_device *dev = usb_if->dev[ctrl_idx];
--	struct net_device *netdev = dev->netdev;
-+	struct peak_usb_device *dev;
-+	struct net_device *netdev;
- 	struct can_frame *can_frame;
- 	enum can_state new_state = CAN_STATE_ERROR_ACTIVE;
- 	u8 err_mask = 0;
- 	struct sk_buff *skb;
- 	struct skb_shared_hwtstamps *hwts;
+-	struct dp_meter_instance *ti = rcu_dereference_ovsl(tbl->ti);
+-	u32 hash = meter_hash(ti, meter->id);
++	struct dp_meter_instance *ti;
++	u32 hash;
+ 	int err;
  
-+	if (ctrl_idx >= ARRAY_SIZE(usb_if->dev))
-+		return -EINVAL;
+-	/* In generally, slots selected should be empty, because
+-	 * OvS uses id-pool to fetch a available id.
+-	 */
+-	if (unlikely(rcu_dereference_ovsl(ti->dp_meters[hash])))
+-		return -EBUSY;
+-
+-	dp_meter_instance_insert(ti, meter);
+-
+ 	/* That function is thread-safe. */
+ 	tbl->count++;
+ 	if (tbl->count >= tbl->max_meters_allowed) {
+@@ -152,16 +144,29 @@ static int attach_meter(struct dp_meter_
+ 		goto attach_err;
+ 	}
+ 
+-	if (tbl->count >= ti->n_meters &&
+-	    dp_meter_instance_realloc(tbl, ti->n_meters * 2)) {
+-		err = -ENOMEM;
++	ti = rcu_dereference_ovsl(tbl->ti);
++	if (tbl->count >= ti->n_meters) {
++		err = dp_meter_instance_realloc(tbl, ti->n_meters * 2);
++		if (err)
++			goto attach_err;
 +
-+	dev = usb_if->dev[ctrl_idx];
-+	netdev = dev->netdev;
++		ti = rcu_dereference_ovsl(tbl->ti);
++	}
 +
- 	/* nothing should be sent while in BUS_OFF state */
- 	if (dev->can.state == CAN_STATE_BUS_OFF)
- 		return 0;
++	hash = meter_hash(ti, meter->id);
++
++	/* In general, selected slots should be empty, because
++	 * OvS uses id-pool to fetch available ids.
++	 */
++	if (unlikely(rcu_dereference_ovsl(ti->dp_meters[hash]))) {
++		err = -EBUSY;
+ 		goto attach_err;
+ 	}
+ 
++	dp_meter_instance_insert(ti, meter);
+ 	return 0;
+ 
+ attach_err:
+-	dp_meter_instance_remove(ti, meter);
+ 	tbl->count--;
+ 	return err;
+ }
 
 
