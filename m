@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26E69293458;
-	Fri,  7 Aug 2026 14:52:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDB353382C5;
+	Fri,  7 Aug 2026 14:52:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114341; cv=none; b=nLRxxy+CrvqZjzKFHdLrD+KGzlP0y8hS3ayxXCdZXrrb5Uz7Mrz517OGqmymE1D/A+oC+/YikNAiQjpKDczkP0LX/nkMjFO6r13ZRqcBF2eIJIM6U+FBVjcBdEmDTbd4/S7bZAjsYly3r66/vo+2aUFmhU0uxhzJbjF+Cg0o3XE=
+	t=1786114344; cv=none; b=dtq2YICW02IPSVUWhGIi+WNVj08Jh2mElE15Xs3NpuH45TYJiL8nGUJdQMuNRAWUeU2c4O7eu49Q7unfwmN7+mMFYxZdCWV+MQuHAd0q/7JcV0Hgg7VZgdBTZxBDeB0nsw016pgWQR12tVyAZF79DshAegqev+HMeSTVrinIbCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114341; c=relaxed/simple;
-	bh=adW44iWiD6VGw33EkzA2GvL/92gu7STgO71/bYQSz4o=;
+	s=arc-20240116; t=1786114344; c=relaxed/simple;
+	bh=n9RKF9LO/OFHjb+f3Gj3wnD+8zxqTC/rlpZhikQ9PBo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nrvYjrpwlaXd25dXiCWQKV4A2WL42q2Jvx7rYNnXMa4vgmz3YojpppKQ3nTFcD2iyucJx/7cvs2H+7Wg0nNmiIbA2zWi11cwVXW59KP9E/TvM6+tHdsXOBUjmTPyxoa0uAjJzqbSPF/kSISsM1QFq66mUUiT7mK5fHpcpdNPugU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ePf9Q19; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pDqtTyaJRh9O3tVyDBiCKruoh9LPMAtVbbVvTI2lQJGTF8NadxDx1jNDwKrMYFovy766fjMHJGh7oGXKYSd4Nb0/wArM8BSlzAQtlN3vMRTR42T7bi+CgerTuCG9as81+DVV5s5YQstO7eknuaFJjvczcmO48CCbvxEYElwUvAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o/rn3ePY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ePf9Q19"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A4DE1F000E9;
-	Fri,  7 Aug 2026 14:52:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o/rn3ePY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36B901F000E9;
+	Fri,  7 Aug 2026 14:52:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114339;
-	bh=dRPpHtj11H6cE+r+EjM0dlyL1fYWkGoZVYAQ2y0/fp8=;
+	s=korg; t=1786114342;
+	bh=tSjfR1015LWPRlZ8OYmLySdh/pQvL2HrPBB2Sw6owv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1ePf9Q19zH+lPo91X3OTza3R6eoxe7+aVOUvr1K2K1GpRWzuZ0RfIB67F4kpMtes8
-	 sUr1HV3Jxt8jlnOoWP6XIBk+c6ZYeUsXDiHRs0sV4ddMyTnmIx6ROOYwhEqyw7a3AC
-	 RvkvFpq1ASek/ZcdWv73qxtrWEaLXqJLd49C+SU8=
+	b=o/rn3ePYsEVza0x1533/8jDLsl5AXgYAE7myhSmTWQwAeHCu6YxxKFWe9a7p8kPNP
+	 Ro3iWds2IyYDGsqfhL/NhBMGGKzfgUHh/saqia9IQqdo5DgsGLa2aDCgjB4fZE3Yfn
+	 4o/yh+kmNlI5uKVwoRYQFzfYaAc1USevcDhfA82c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Jian Zhou <eilaimemedsnaimel@gmail.com>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
 	stable@kernel.org,
 	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.12 230/337] can: gs_usb: gs_usb_receive_bulk_callback(): resubmit URB on skb allocation failure
-Date: Fri,  7 Aug 2026 16:37:13 +0200
-Message-ID: <20260807143423.539021729@linuxfoundation.org>
+Subject: [PATCH 6.12 231/337] can: j1939: transport: j1939_session_fresh_new(): initialize receive buffer
+Date: Fri,  7 Aug 2026 16:37:14 +0200
+Message-ID: <20260807143423.560743932@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -50,49 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-commit 68c5724ecd159992f76edb7b57dc508a44c8b7da upstream.
+commit eb96c58907922546e415e545fe9a14ea63b02719 upstream.
 
-If the allocation of the SKB in gs_usb_receive_bulk_callback() fails, the
-driver returns from the callback without resubmitting the URB in order to
-receive further USB in URBs.
+Zero the allocated buffer in j1939_session_fresh_new() to ensure it
+contains no residual data.
 
-This results in a silent performance degradation which, if it occurs
-repeatedly, results in starvation of USB in traffic.
+While there is a potential performance impact if users allocate maximum
+sized ETP buffers, most real-world use cases are not noticeably affected
+since the maximum known buffer size is typically around 65K.
 
-Instead of returning immediately, try to resend the URB. If this also
-fails, this is logged as an info message.
-
-Fixes: d08e973a77d1 ("can: gs_usb: Added support for the GS_USB CAN devices")
-Fixes: 26949ac935e3 ("can: gs_usb: add CAN-FD support")
-Link: https://patch.msgid.link/20260709-gs_usb-resubmit-urb-v1-1-4dd40030cc84@pengutronix.de
+Fixes: 9d71dd0c7009 ("can: add support of SAE J1939 protocol")
+Reported-by: Ji'an Zhou <eilaimemedsnaimel@gmail.com>
+Message-ID: <CAPAUci5dykCLjoijqkUtFqJFesgncrD7+S6y_V=gjbFkY2Tifg@mail.gmail.com>
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://patch.msgid.link/20260728055835.1151785-3-o.rempel@pengutronix.de
 Cc: stable@kernel.org
+[mkl: add Message-ID]
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/usb/gs_usb.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/can/j1939/transport.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/can/usb/gs_usb.c
-+++ b/drivers/net/can/usb/gs_usb.c
-@@ -671,7 +671,7 @@ static void gs_usb_receive_bulk_callback
- 		if (hf->flags & GS_CAN_FLAG_FD) {
- 			skb = alloc_canfd_skb(netdev, &cfd);
- 			if (!skb)
--				return;
-+				goto resubmit_urb;
+--- a/net/can/j1939/transport.c
++++ b/net/can/j1939/transport.c
+@@ -1562,7 +1562,7 @@ j1939_session *j1939_session_fresh_new(s
+ 	}
  
- 			cfd->can_id = le32_to_cpu(hf->can_id);
- 			cfd->len = data_length;
-@@ -684,7 +684,7 @@ static void gs_usb_receive_bulk_callback
- 		} else {
- 			skb = alloc_can_skb(netdev, &cf);
- 			if (!skb)
--				return;
-+				goto resubmit_urb;
- 
- 			cf->can_id = le32_to_cpu(hf->can_id);
- 			can_frame_set_cc_len(cf, hf->can_dlc, dev->can.ctrlmode);
+ 	/* alloc data area */
+-	skb_put(skb, size);
++	skb_put_zero(skb, size);
+ 	/* skb is recounted in j1939_session_new() */
+ 	return session;
+ }
 
 
