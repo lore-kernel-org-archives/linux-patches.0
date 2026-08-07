@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C144D31327A;
-	Fri,  7 Aug 2026 15:32:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ACA1280331;
+	Fri,  7 Aug 2026 15:32:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116747; cv=none; b=q+Xupq0CI5ajXjVzPq4yc5zTxJXTB+8jCDRYUEvOOF7u/YciL5QJKjrUceOa+BKmI1a53hDsHo70r+ALhk8HLwXM4Lp3AqYCSU47nAPDt8XxvCSmEkWVMGeKOwFaORk1q+v9JSsvQHLJzD11dLGbOvzahGz9Hf7lVHX6EjSocTc=
+	t=1786116749; cv=none; b=sRwz+9Ls1H0/QAmmeW73JPjRA6aQmsanoUeIBXxAlzSQtxKfXp0X6bPnWMa/DyWIRwMPpghO7DtJnjUi5GoHMLaaQWEEsxgmPuGmFNQktiX2UgaSWn7hRGfdBFcO8ujH63CPAb3LUpojbViLdj+qdMzA8/8BEvhLcAzQDuUwTEM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116747; c=relaxed/simple;
-	bh=/tDQgvpYK0oR4H6vZaplLuT/ASYitCqtoFE40tmNs1Y=;
+	s=arc-20240116; t=1786116749; c=relaxed/simple;
+	bh=QRj0TjNc9NRZI0tRZZV2eFQNWWP6zv7/jjPzqStu+YQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nDmkfzeC4UTRDAu7iKVxrBalmGihpuFPnpcNVEB5YEaY1Syxz46qnIYH3Ujn5DQQeYRL/+PO9jJzReLhkyegQTfsscoWVJqRs3Uw+7HQ/xOkQyz03pM19visMbqSnXfe54X2UcjDmmYa+vHs1a8zTWH1m3z5yp/cmeQsp5sJGnM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zPJR41OC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ort5jCgFgHFQ6i16KOSIUpAz30KF7NasA/N+IILtG4iE02zxwFnCDjM1x+zN0wiW+81s7tFIXOEjh8Hvrgh1p2P7/syf7CrVUKwMMOHZj4ELr0PreBOJeJKBgk/iYClIkSrZ6MM2WxJUwhoZO4folzfnUr/QX73RqDTfV+DXKm4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GbARNOv7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zPJR41OC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 299BF1F000E9;
-	Fri,  7 Aug 2026 15:32:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GbARNOv7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 028F81F000E9;
+	Fri,  7 Aug 2026 15:32:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116745;
-	bh=sEF5e5mW2Zsq2eakUhTnuO9ANrFnz1mwpGu3ZHUHtx4=;
+	s=korg; t=1786116748;
+	bh=BTMjyniJjKe6VDG/Zq2+VT/CT85jRc8vMQtH/aZQ4w0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zPJR41OCiTuSJ+ozYedgAXclWZaZmDzFqNkr4jZlYEylG4RMnOemIXrI3Kxfj8E53
-	 IGHOaKBlEBEmL0Vj7XmDE10PthipVFPSRw/IJl3WtcIPA1nKse0ts1F7/fQmxDlLPa
-	 zIAZxujVatAvY8aB4bzbfW0IPYEpgMhXSo6gyu3c=
+	b=GbARNOv7rXksKWAqU7KInWAWRPzJMEHtLEGr9I/Y5or/qsyqboJX1oBc0g9YDDdhk
+	 iBvOpmD4u1LEE7EXtMsp2KJIM1ebHuVo9iOBqXxkC3PNl3IRNjnD1b4/Q+7tnZLdzU
+	 CtT3EAVjl930TXYWoDaxdN31gxPXy4FrgLm4tTIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jonas=20K=C3=B6ppeler?= <j.koeppeler@tu-berlin.de>,
-	Mike Pham <mikepham4321@gmail.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 077/438] net/sched: sch_cake: skip clearing unused tins during rate adjustment
-Date: Fri,  7 Aug 2026 16:34:33 +0200
-Message-ID: <20260807143429.625983236@linuxfoundation.org>
+Subject: [PATCH 7.1 078/438] pinctrl-amd: Dont clear S4 wake bits at probe
+Date: Fri,  7 Aug 2026 16:34:34 +0200
+Message-ID: <20260807143429.646910226@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -47,89 +45,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jonas Köppeler <j.koeppeler@tu-berlin.de>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit a3729e0df005a936ceb3c2b0d167f01a2b03f970 ]
+[ Upstream commit ffe8a0c6b55285ceaf2f42fc20c3a0594d14f1e9 ]
 
-When cake_configure_rates() is called from the dequeue path with
-rate_adjust=true, it only needs to update the rate parameters. The
-loop that clears the unused tins is both unnecessary and harmful in
-this path:
+commit 6bc3462a0f5e ("pinctrl: amd: Mask wake bits on probe again")
+introduced a regression where Wake-on-LAN no longer works after suspend
+or shutdown on some AMD platforms.
 
- - cake_clear_tin() overwrites q->cur_tin and q->cur_flow, which are
-   actively used by cake_dequeue(), corrupting the dequeue state.
- - iterating over the unused tins and their internal queues to purge
-   packets adds needless overhead to the hot path.
+Firmware-programmed S4 wake bits for devices like PCIe NICs using PCI
+PME are cleared at probe, but nothing restores them. Unlike S0i3/S3 wake
+sources that use enable_irq_wake() -> amd_gpio_irq_set_wake(), PCIe PME
+does not use GPIO IRQ infrastructure and relies on firmware configuration.
 
-Skip the entire loop when rate_adjust is set, as neither
-cake_clear_tin() nor the mtu_time update are needed when only the
-rate changes.
+The original intent of commit 6bc3462a0f5e ("pinctrl: amd: Mask wake
+bits on probe again") was to clear spurious wake bits left by firmware
+to prevent unwanted wakeups. However, S4 wake bits are used for
+hardware-level wake sources like WoL that bypass the kernel's IRQ wake
+API.
 
-The clearing loop runs on every rate adjustment from the dequeue path,
-clearing (max_tins - cur_tins) tins each time, so the cost grows the
-fewer tins the configured mode actually uses. Testing cake_mq over veth
-(8 rx/tx queues, 2 Gbit limit) with flent's [1] rrul and tcp_nup tests and
-32 TCP upstreams shows a large drop in loaded latency and a throughput
-gain, restoring behaviour to pre-15c2715a5264 levels:
+Fix by preserving S4 wake bits at probe and only clearing S0i3/S3 bits:
+- Firmware-configured S4 wake sources (WoL) continue working
+- Kernel maintains control of S3/S0i3 wake policy via set_wake()
+- S3-only wake sources work correctly per commit f31f33dbb3ba ("pinctrl:
+  amd: Take suspend type into consideration which pins are non-wake")
 
-  +------------+------+------+-------+-------+---------+
-  | kernel     | mode | test |  base |  load |    tput |
-  |            |      |      |  (ms) |  (ms) |  (Mbit) |
-  +------------+------+------+-------+-------+---------+
-  | net-next   | be   | rrul | 0.810 | 11.78 | 1469.67 |
-  | net-next   | be   | nup  | 0.637 | 85.71 | 1243.15 |
-  | net-next   | ds3  | rrul | 0.397 | 15.28 | 1770.06 |
-  | net-next   | ds3  | nup  | 0.351 | 15.98 | 1799.39 |
-  +------------+------+------+-------+-------+---------+
-  | patched    | be   | rrul | 0.092 |  0.56 | 1873.40 |
-  | patched    | be   | nup  | 0.109 |  1.82 | 1869.12 |
-  | patched    | ds3  | rrul | 0.097 |  0.98 | 1866.10 |
-  | patched    | ds3  | nup  | 0.101 |  0.51 | 1861.79 |
-  +------------+------+------+-------+-------+---------+
+The trade-off is that firmware-programmed spurious S4 wake bits remain
+set, but this is less problematic than breaking WoL.
 
-The same trend holds on real hardware (IPQ8074A, 4 rx/tx queues,
-OpenWrt): in besteffort mode the tcp_nup loaded latency drops from
-~470 ms to ~4 ms.
-
-[1] https://flent.org
-
-Fixes: 15c2715a5264 ("net/sched: sch_cake: fixup cake_mq rate adjustment for diffserv config")
-Signed-off-by: Jonas Köppeler <j.koeppeler@tu-berlin.de>
-Tested-by: Mike Pham <mikepham4321@gmail.com>
-Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Link: https://patch.msgid.link/20260720-sch_cake-skip-clearing-tins-v2-1-e6a8b0275c73@tu-berlin.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 6bc3462a0f5e ("pinctrl: amd: Mask wake bits on probe again")
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_cake.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/pinctrl/pinctrl-amd.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/net/sched/sch_cake.c b/net/sched/sch_cake.c
-index b967b7153ad34..8965fe252471c 100644
---- a/net/sched/sch_cake.c
-+++ b/net/sched/sch_cake.c
-@@ -2609,9 +2609,11 @@ static void cake_configure_rates(struct Qdisc *sch, u64 rate, bool rate_adjust)
- 		break;
- 	}
+diff --git a/drivers/pinctrl/pinctrl-amd.c b/drivers/pinctrl/pinctrl-amd.c
+index e3128b0045d22..15a398bb3be23 100644
+--- a/drivers/pinctrl/pinctrl-amd.c
++++ b/drivers/pinctrl/pinctrl-amd.c
+@@ -884,8 +884,7 @@ static void amd_gpio_irq_init(struct amd_gpio *gpio_dev)
+ 	u32 pin_reg, mask;
+ 	int i;
  
--	for (c = qd->tin_cnt; c < CAKE_MAX_TINS; c++) {
--		cake_clear_tin(sch, c);
--		qd->tins[c].cparams.mtu_time = qd->tins[ft].cparams.mtu_time;
-+	if (!rate_adjust) {
-+		for (c = qd->tin_cnt; c < CAKE_MAX_TINS; c++) {
-+			cake_clear_tin(sch, c);
-+			qd->tins[c].cparams.mtu_time = qd->tins[ft].cparams.mtu_time;
-+		}
- 	}
+-	mask = BIT(WAKE_CNTRL_OFF_S0I3) | BIT(WAKE_CNTRL_OFF_S3) |
+-		BIT(WAKE_CNTRL_OFF_S4);
++	mask = BIT(WAKE_CNTRL_OFF_S0I3) | BIT(WAKE_CNTRL_OFF_S3);
  
- 	qd->rate_ns   = qd->tins[ft].tin_rate_ns;
+ 	for (i = 0; i < desc->npins; i++) {
+ 		int pin = desc->pins[i].number;
 -- 
 2.53.0
 
