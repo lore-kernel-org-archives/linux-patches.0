@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C883352008;
-	Fri,  7 Aug 2026 15:49:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4851313527;
+	Fri,  7 Aug 2026 15:49:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786117793; cv=none; b=LDajnOW9SXR3a8gaqkW57wgP75qosBPFQLsZ4XVNbY4kkkv6YPlSuy13nxT2U57UYCcPWkr4WYyANYBDDtYRypgLeBAyh5aBdn+5rG43mWfWzi7+hSZz3AOk0QWaJ6lhRxFW9vdmbo5hoTsz8SQivS7BBDYYKiIstbvW8qhCeF8=
+	t=1786117795; cv=none; b=picU83bQsfu53TcZPruXjfEr1ir55XUpli4BneqI8NAfqAbMu5/EcjRwl0A2sUyuqHpGWflhiW2a+65rUoe5JI6zyUeUZHLf5KmEabM3yZYb/ZooETQS3avB5OJHbDBUd2pVIp/kC4JBPRb8uG3dE8Q3SshMUWAUVpwcJ0NLDto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786117793; c=relaxed/simple;
-	bh=KK0SRpipCiyE5yooy/9WdHhCuWklaLWJHJyxuaVmjkY=;
+	s=arc-20240116; t=1786117795; c=relaxed/simple;
+	bh=RbLKkxv92tI+BxzPEBsD7jIfHMZW8QDxPCr9AuYQIqU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V6/nErS8kxaPbGCBD5rh/fsiUEUBCfvEgFZRMmIKSEHayucvCLESjJzyHD5fprNSxt4y4Ob2B4VmKdKfLj75JqizRQboiBcCy3tWppCc7LN6y1wNV+flO36ZyrKvgNE/qGjg7kwEkCenxeM/iSClYC5KEMLEGRRCwzNrWU6V3aw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lrFhnoJp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k2cVo0TpGdu7YzaxXlNkOMX91xOoAXFzUf54Qb0GvlyoZoeMUOKxG9HYtMDwP16GTvB197g5CRMjtNmnveGDkTicxlOFALmg7Yn3529mgOEBcYHALTaHBtcwc2q2N9VyuhZYaHw+hmcLzTV8MRokIS7t3lOTEg+jmGmVqusFbjg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I0jRbaA4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lrFhnoJp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 616401F000E9;
-	Fri,  7 Aug 2026 15:49:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I0jRbaA4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D6261F000E9;
+	Fri,  7 Aug 2026 15:49:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786117791;
-	bh=vkQEuAEAKNbOu38LlRHqGPd8A4RVLyB5xXs1+ULA50s=;
+	s=korg; t=1786117794;
+	bh=ZyeAjvQbTaYtBhbyBedS7P+R4Vfvfle0P42aAxP1F7w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lrFhnoJpi5EvH5PnYUN9UC6fWXfHdJUje/wWeaK15GqNclAfT03oQW3aKxj004+mO
-	 YsHKOCcFi6WUZGwOtTF2Cf3X3GGYmFK9K2dunM4ygULT15fKyTyQp1zmQQTMmoSMRC
-	 qNHmidQ/67s5Nyr1YvjeJ0zHPqsZcrLBQ0Ov5jik=
+	b=I0jRbaA4C/qOqiCovEjh5F4Lvo3IiFnMoA4hAZcZy/HakSVe/A/9IdsvEp1iMzCux
+	 NqSeKgMxEYhA2guK8mW0pFamv6p/UhejKp9NHR+x/F2saxSGfX84nBCQs2/oykjQM/
+	 /RniWMlOoDsHGrT5zzldTIB+RSJU8jLNwVu8R5H4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Palacek <William.Palacek@amd.com>,
-	Alysa Liu <Alysa.Liu@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.1 406/438] drm/amdkfd: hold event_mutex while checkpointing CRIU events
-Date: Fri,  7 Aug 2026 16:40:02 +0200
-Message-ID: <20260807143436.618914745@linuxfoundation.org>
+	Zack Rusin <zack.rusin@broadcom.com>,
+	Ian Forbes <ian.forbes@broadcom.com>
+Subject: [PATCH 7.1 407/438] drm/vmwgfx: fix guest_memory_dirty bitfield clobbered as size
+Date: Fri,  7 Aug 2026 16:40:03 +0200
+Message-ID: <20260807143436.639760072@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -51,83 +50,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: William Palacek <William.Palacek@amd.com>
+From: Zack Rusin <zack.rusin@broadcom.com>
 
-commit ff8bc5a68a9a70bdc38d61a72c7a49c56063f9d2 upstream.
+commit 83195b778f2d109a3a4f3ffaba4dce7e4cdb58aa upstream.
 
-kfd_criu_checkpoint_events() counts the entries in p->event_idr via
-kfd_get_num_events(), allocates an array sized to that count, and then
-walks the same IDR to fill it. Neither the count nor the walk holds
-p->event_mutex.
+Two sites in vmwgfx_resource.c assign boolean literals to
+res->guest_memory_size, which is an unsigned long allocation-size
+field; the intended target is the adjacent res->guest_memory_dirty
+bitfield.  After the assignments the field holds 0 or 1 instead of
+the resource's MOB allocation size:
 
-The CRIU checkpoint caller holds only p->mutex. Event create and destroy
-(kfd_event_create()/kfd_event_destroy()) take p->event_mutex and do not
-take p->mutex, so a second thread in the same process can insert or remove
-events between the count and the walk. If an event is inserted, the walk
-iterates more entries than were counted and writes past the end of the
-ev_privs allocation; if an event is removed, the walk dereferences an
-entry that is being freed.
+  - vmw_resource_release()       writes 0 (false), and
+  - vmw_resource_unbind_list()   writes 1 (true).
 
-Hold p->event_mutex across the count and the walk so both observe a
-consistent view of p->event_idr. The lock is released before
-copy_to_user(), which only touches the local buffer. The caller already
-holds p->mutex and the create/destroy paths never take p->mutex, so the
-p->mutex -> p->event_mutex order is not inverted and no deadlock is
-introduced.
+Subsequent revalidation paths read guest_memory_size when computing
+the dirty page range (vmw_bo_dirty_transfer_to_res()) and the buffer
+allocation size (vmw_resource_buf_alloc()), producing zero-length
+walks or wrap-around ranges that read or write past the MOB bitmap.
+The dirty-tracking intent of the original code (mark the resource as
+dirtied since the last sync) is also lost, since guest_memory_dirty
+is never updated.
 
-Fixes: 40e8a766a761 ("drm/amdkfd: CRIU checkpoint and restore events")
-Signed-off-by: William Palacek <William.Palacek@amd.com>
-Reviewed-by: Alysa Liu <Alysa.Liu@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit ff57e223ab105795b05d3ef3f3c35a5a441bcbaa)
+Rename both assignments to guest_memory_dirty.
+
+Fixes: 668b206601c5 ("drm/vmwgfx: Stop using raw ttm_buffer_object's")
 Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-4.7
+Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
+Reviewed-by: Ian Forbes <ian.forbes@broadcom.com>
+Link: https://patch.msgid.link/20260505222728.519626-2-zack.rusin@broadcom.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_events.c |   22 ++++++++++++++++++----
- 1 file changed, 18 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/vmwgfx/vmwgfx_resource.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdkfd/kfd_events.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_events.c
-@@ -548,15 +548,27 @@ int kfd_criu_checkpoint_events(struct kf
- 	int ret =  0;
- 	struct kfd_event *ev;
- 	uint32_t ev_id;
-+	uint32_t num_events;
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_resource.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_resource.c
+@@ -136,7 +136,7 @@ static void vmw_resource_release(struct
+ 			val_buf.num_shared = 0;
+ 			res->func->unbind(res, false, &val_buf);
+ 		}
+-		res->guest_memory_size = false;
++		res->guest_memory_dirty = false;
+ 		vmw_resource_mob_detach(res);
+ 		if (res->dirty)
+ 			res->func->dirty_free(res);
+@@ -773,7 +773,7 @@ void vmw_resource_unbind_list(struct vmw
+ 		if (!WARN_ON_ONCE(!res->func->unbind))
+ 			(void) res->func->unbind(res, res->res_dirty, &val_buf);
  
--	uint32_t num_events = kfd_get_num_events(p);
--
--	if (!num_events)
-+	/* Serialize the count and the walk below against concurrent event
-+	 * create/destroy. Those paths take only p->event_mutex, not the
-+	 * p->mutex held by the CRIU checkpoint caller, so without this the
-+	 * event_idr can grow between kfd_get_num_events() and the loop and the
-+	 * walk writes past the ev_privs allocation.
-+	 */
-+	mutex_lock(&p->event_mutex);
-+
-+	num_events = kfd_get_num_events(p);
-+	if (!num_events) {
-+		mutex_unlock(&p->event_mutex);
- 		return 0;
-+	}
- 
- 	ev_privs = kvzalloc(num_events * sizeof(*ev_privs), GFP_KERNEL);
--	if (!ev_privs)
-+	if (!ev_privs) {
-+		mutex_unlock(&p->event_mutex);
- 		return -ENOMEM;
-+	}
- 
- 
- 	idr_for_each_entry(&p->event_idr, ev, ev_id) {
-@@ -597,6 +609,8 @@ int kfd_criu_checkpoint_events(struct kf
- 		i++;
+-		res->guest_memory_size = true;
++		res->guest_memory_dirty = true;
+ 		res->res_dirty = false;
+ 		vmw_resource_mob_detach(res);
  	}
- 
-+	mutex_unlock(&p->event_mutex);
-+
- 	ret = copy_to_user(user_priv_data + *priv_data_offset,
- 			   ev_privs, num_events * sizeof(*ev_privs));
- 	if (ret) {
 
 
