@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E99E146C851;
-	Fri,  7 Aug 2026 15:42:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAE104746B1;
+	Fri,  7 Aug 2026 15:42:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786117357; cv=none; b=Dv1sEjXjWtb5e6Ax3AKkgFpswOFmu7oO6g7Mn5/d9I2hQ7lu9C6q3qe2np5nSx2riV9QvLE3ifDdp97xbF9ZwnCr+lg7Wpat6o0IkhSQ4e83cPs/wHEj6umRAZNqDhre6dBXXjGuCndVlX5M7JDDQCJ+C3aXUEolNOAldvl4v3E=
+	t=1786117360; cv=none; b=qfCzo5pNae3+cPIqGQR6eYDJl1BPilYausTUkFQJ0aH4Mrr8Q0MX8n6mNEayCtbyM6jiyFJIbGqMY0VgmwAusU0uWUFpdYDD9xgpQBRbFRbEJLDt4dkTDCB9K7cmkWgSdlseEremtHYxALO6HDigpXDvCOTnelChllCmC408gJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786117357; c=relaxed/simple;
-	bh=+OCqOTXfks3i1/ghMaiACvfXtYkH5GmaCruWiQ8oIZQ=;
+	s=arc-20240116; t=1786117360; c=relaxed/simple;
+	bh=mEO/d0tSMoW1G3+iEnuu+JJfrn2FOzv+cyP5hGAE1UA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b4su0tRmGTrT94FQJ65CsboHP1I/bT2uKEQW1GTTURPr2Vh+2gYxrOjXASBx4+rNyeTvcRuaq5wKPwpF15/pDMz9E3GLGncK9B/KWUW8QanWSWveKQmUZD86YusG43LJec6Dy0Mj4UB1rQdjRy9wmpQAzm3CgOhM5pF3SWU30VY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pf2X1sRs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kuDe1nXtZRpiH667FzDx2ShLTxjxBxCNhU3Vitocls7SDc3eaIEEb+e1aLmw15AymsIlFDqd9RCv7/pxSC1IATdU5Yfpt5IswWWd0duB8SSXQRay+Ye1aL46H4ZmlcaECydn8bphNP9dvQsD04X3/bqDIf7xsyYtIYmVSCOUzw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u8JiTeVW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pf2X1sRs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2831A1F000E9;
-	Fri,  7 Aug 2026 15:42:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u8JiTeVW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18D5D1F000E9;
+	Fri,  7 Aug 2026 15:42:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786117355;
-	bh=UEFelk8HR9lIIT1v5YorbDYqLp26C6Qs9cL6maRPDw4=;
+	s=korg; t=1786117358;
+	bh=g1ROr5nCqqQP/qHOkgPmy+WAY1w0sRyNo3+iGl9PUhk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Pf2X1sRsH0IvneWkTa+l+3fKoPi6k0J6UhaS1CKiGb1yk5Md/LE1WC9Sn0ec4ie99
-	 J60PKhQaJQXtiiJxtb5IM7Dve93jme2yhLC8CVyKVeo1F8jZZiwpIwPPOUjmv3HXSb
-	 jUcmTCAsCpUq8X4028WXSLBpUpRNhS/OldGU9M8A=
+	b=u8JiTeVWM+zKyNpN022gilxaF41xIchBDFqfgpIQsiKZl01dIV4pB067TefFN+WjY
+	 Ai9SOA6kIGFIWX7tCNqHBNMGrGB6U+L3ATuWlyhmrfWdmkXqVt5OsNNccAz9A6QN88
+	 czskuTed68oIOoSSpGpR12JCmXcJzaCGSHzsyJmA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 7.1 289/438] binfmt_misc: use exe_file_deny_write_access() for the interpreter clone
-Date: Fri,  7 Aug 2026 16:38:05 +0200
-Message-ID: <20260807143434.137367487@linuxfoundation.org>
+Subject: [PATCH 7.1 290/438] binfmt_misc: reject a flag character as the field delimiter
+Date: Fri,  7 Aug 2026 16:38:06 +0200
+Message-ID: <20260807143434.158592595@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -51,57 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Brauner <brauner@kernel.org>
 
-commit fa5990ca8fd917003e526036bcc50413edb9722c upstream.
+commit 8e85d50ba1117fd446bf9a250bd8a97d48384bdc upstream.
 
-For MISC_FMT_OPEN_FILE entries load_misc_binary() clones the
-registered interpreter file and denies write access to the clone via
-plain deny_write_access(). The clone is installed as
-bprm->interpreter and later released by the exec machinery through
-exe_file_allow_write_access() which skips the i_writecount increment
-for files with FMODE_FSNOTIFY_HSM set.
+The registration string starts with a user chosen delimiter that
+separates the individual fields. So that the field parsers terminate
+even on a truncated string create_entry() pads the buffer with that
+same delimiter:
 
-The deny and allow side can therefore come to different conclusions
-when pre-content watches are in play: if a pre-content watch is added
-to the interpreter after registration every subsequent exec through
-that entry takes a write denial on the clone that is never paired
-with a write allowance, driving the interpreter inode's i_writecount
-further down with each exec and leaving the interpreter unwritable
-even after the entry and all its users are gone.
+	memset(buf + count, del, 8);
 
-Take the write denial via exe_file_deny_write_access() so both sides
-of the pairing base their decision on the same file mode, and
-propagate failure instead of silently ignoring it: an interpreter
-that is concurrently open for writing now fails the exec with
-ETXTBSY, exactly like an interpreter freshly opened via open_exec()
-would.
+Most fields are scanned for the delimiter with strchr()/scanarg() and
+happily stop on the padding. The flags field is different: instead of
+scanning for the delimiter check_special_flags() consumes the flag
+characters 'P', 'O', 'C' and 'F' and stops at the first byte that is
+none of them, relying on the trailing delimiter to end the scan.
 
-Link: https://patch.msgid.link/20260710-work-binfmt_misc-locking-v3-2-a162f7cb58d6@kernel.org
-Fixes: 0357ef03c94e ("fs: don't block write during exec on pre-content watched files")
+If the delimiter is itself a flag character the padding no longer acts
+as a terminator. The scan swallows all eight padding bytes and keeps
+reading past the end of the allocation until it hits a byte that is
+not a flag character. For example registering
+
+	PaPEPPxPPiP
+
+with 'P' as the delimiter (name "a", type extension, magic "x",
+interpreter "i", empty flags) leaves the flag scan running off the end
+of the buffer. The registration is rejected in the end because the
+parser does not stop exactly at buf + count, but only after the out of
+bounds read has already happened. With an unlucky allocation layout the
+scan can walk into an unmapped page; under KASAN it is reported as a
+slab out of bounds read. binfmt_misc mounts are available to
+unprivileged users in a user namespace so the read is reachable without
+privileges.
+
+Reject a delimiter that is one of the flag characters up front. Such a
+registration was always rejected anyway, only after the out of bounds
+read, so no valid registration string changes meaning.
+
+Link: https://patch.msgid.link/20260710-work-binfmt_misc-locking-v3-3-a162f7cb58d6@kernel.org
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/binfmt_misc.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ fs/binfmt_misc.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
 --- a/fs/binfmt_misc.c
 +++ b/fs/binfmt_misc.c
-@@ -249,8 +249,14 @@ static int load_misc_binary(struct linux
+@@ -384,6 +384,10 @@ static Node *create_entry(const char __u
  
- 	if (fmt->flags & MISC_FMT_OPEN_FILE) {
- 		interp_file = file_clone_open(fmt->interp_file);
--		if (!IS_ERR(interp_file))
--			deny_write_access(interp_file);
-+		if (!IS_ERR(interp_file)) {
-+			int err = exe_file_deny_write_access(interp_file);
+ 	pr_debug("register: delim: %#x {%c}\n", del, del);
+ 
++	/* A flag-char delimiter runs the flag scan off the buffer. */
++	if (del == 'P' || del == 'O' || del == 'C' || del == 'F')
++		goto einval;
 +
-+			if (err) {
-+				fput(interp_file);
-+				interp_file = ERR_PTR(err);
-+			}
-+		}
- 	} else {
- 		interp_file = open_exec(fmt->interpreter);
- 	}
+ 	/* Pad the buffer with the delim to simplify parsing below. */
+ 	memset(buf + count, del, 8);
+ 
 
 
