@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A1FD324B0A;
-	Fri,  7 Aug 2026 15:30:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D09E29AB1A;
+	Fri,  7 Aug 2026 15:30:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116641; cv=none; b=DF77kRC/xj/Z82A2JTBNFn0Lt53d6pvvlFRfTk7aPJ9PbGqGiP2mTzsxICTh9iRPymDwxSNXdFJTqiBCY9S2CODxSkLOgSy9mWBgRAJMkyvRZYiOrnZ3u1/16RQpDUAavkidST5nv05+Lq8RtU8BT51jOVfdcNlCWHQ+wwqosDg=
+	t=1786116644; cv=none; b=Sd7kw1s//85EKPTyVDVLxEJ0ulDvATRyDU++lCUr6ETcIe23LpPKPQTRF2kmcQHAPGx/m2qaT0HuNxW6PJuSEGszRrco1Rwc2H/AyFxRb2ioBbr13Us9zTPH3EXhDjFcbBra+KacXqJTQZyfk1QCaYETPliyJn3hjDUFH+Z3kZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116641; c=relaxed/simple;
-	bh=aywnZAi50/+Jh/jqz0tlXOHsfBa9BKjn5n9fsf+tK0c=;
+	s=arc-20240116; t=1786116644; c=relaxed/simple;
+	bh=L90jC27e/jSCs0lVXqY1Kc3texsz5xtnnQ+bgGtJJi4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IgBACvN2V1OQvXPONB6u5vY5CZZmcTl28fefVV9slMxekiPa/EZxoT/nZy6HjORBwIWQ0lcDyBA71QAYPvjnaytNCgoZcqOoI2RB/ijdKGULNGHr1Z13fSc6CNpxCA2hEDeCqWuHp2kl1ymLhBKhx2PgU+X8QI7y0ULPMmlijJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=weC9ew7l; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AJU6E8ywBaHCc6/xMDnB9ollV3kHdwM9Af7ibKAU/X31RAIt2NlZesqhiAlng7252xey3OJrqjSQygUl4tXywgo3jxD4hJh9Y/QWtRZfoqsm+vzqhukh5FVugZBBBbyYY0ZG/ScYtpj/oIfZqoBDogChex5ZzpGHmijbBmiM2hk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LaSdKCUO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="weC9ew7l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8681D1F000E9;
-	Fri,  7 Aug 2026 15:30:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LaSdKCUO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C2421F000E9;
+	Fri,  7 Aug 2026 15:30:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116640;
-	bh=BkaBC2Ue/wX4NQacaI0g4yKgu0khmV+ewvWfx4QpW9M=;
+	s=korg; t=1786116643;
+	bh=pbBqN0RkbrqDB1MOUb+IJVj/9LrTipGc0ZCy4m9xMJs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=weC9ew7lczXrLcngp+i72IpRSjKd0UuMmtISPo3c/FmVtdgjFhJwBJBE/v+ww7zug
-	 zrFyc+hA59poiJMuOldKUExRtxNB4FywyYlZ2Q4XqGxn/DJkXnK1pHr37aKkouze3s
-	 ZgGbbstbAoAu5g8PDyZ4OCNz1Urw6cqMqtrJUv7w=
+	b=LaSdKCUOOtsxREkThVjo3+g1MIF8T0LWjL00OE9YpFzrC3XOEm6RqTt6CQHQIC2fe
+	 W7OGzEc0bAUcWBM4S9jU2AsZLHDCUVuXBp3f/AGewx99sdfLX8b9oSJGvRuTXtTGNA
+	 LqtACEje2ieuzPrvtW+aYc97/GOwbmWv83oQIRVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jaeyeong Lee <iostreampy@proton.me>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	CK Hu <ck.hu@mediatek.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 039/438] netfilter: nf_conntrack_expect: add and use nf_ct_expect_related_pair()
-Date: Fri,  7 Aug 2026 16:33:55 +0200
-Message-ID: <20260807143428.836599791@linuxfoundation.org>
+Subject: [PATCH 7.1 040/438] drm/mediatek: Check CRTC state before freeing
+Date: Fri,  7 Aug 2026 16:33:56 +0200
+Message-ID: <20260807143428.856335845@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -51,192 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit 4aa63842fc92de1bce59d4709a0d32e718890bb2 ]
+[ Upstream commit 233a4d3a39fc1585f5e271b2adab43c6af025ae0 ]
 
-Add a new function to insert a pair of expectations, this is required by
-the SIP and H323 NAT helpers. The spinlock is held to check if there is
-a slot for both expectations, in such case, insert them.
+mtk_crtc_reset() destroys the current CRTC state only when crtc->state
+is non-NULL, but it always converts crtc->state to struct mtk_crtc_state
+and passes the result to kfree().
 
-This removes the need for nf_ct_unexpect_related() inside the loop to
-find a pair of consecutive ports, otherwise inserting expectations whose
-dead flag is already set on can happen.
+When reset is called without an existing state, container_of(NULL, ...)
+does not produce NULL. Keep the mtk state free in the same crtc->state
+guard as the helper state destruction.
 
-Bump master_help->expecting for the expectation class after checking if
-the expectation fits in the master expectation list, which is needed for
-this new _pair() function variant to run the eviction routine including
-the preallocated slot for the first expectation in the pair.
+This issue was found by a static analysis checker and confirmed by
+manual source review.
 
-Fixes: b8b09dc2bf35 ("netfilter: nf_conntrack_expect: use conntrack GC to reap expectations")
-Reported-by: Jaeyeong Lee <iostreampy@proton.me>
-Link: https://patch.msgid.link/178377968720.33756.12204817361601593230@proton.me/
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 2d267b81898e ("drm/mtk: Use __drm_atomic_helper_crtc_reset")
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Reviewed-by: CK Hu <ck.hu@mediatek.com>
+Link: https://patchwork.kernel.org/project/linux-mediatek/patch/20260707150528.2270739-1-ruoyuw560@gmail.com/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_conntrack_expect.h |  3 ++
- net/ipv4/netfilter/nf_nat_h323.c            | 22 +++++--------
- net/netfilter/nf_conntrack_expect.c         | 35 ++++++++++++++++++++-
- net/netfilter/nf_nat_sip.c                  | 20 ++++--------
- 4 files changed, 50 insertions(+), 30 deletions(-)
+ drivers/gpu/drm/mediatek/mtk_crtc.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/include/net/netfilter/nf_conntrack_expect.h b/include/net/netfilter/nf_conntrack_expect.h
-index c024345c9bd86..26d6babd92fcd 100644
---- a/include/net/netfilter/nf_conntrack_expect.h
-+++ b/include/net/netfilter/nf_conntrack_expect.h
-@@ -161,6 +161,9 @@ static inline int nf_ct_expect_related(struct nf_conntrack_expect *expect,
- 	return nf_ct_expect_related_report(expect, 0, 0, flags);
- }
- 
-+int nf_ct_expect_related_pair(struct nf_conntrack_expect *expect[],
-+			      unsigned int flag);
-+
- struct nf_conn_help;
- void nf_ct_expectation_gc(struct nf_conn_help *master_help);
- 
-diff --git a/net/ipv4/netfilter/nf_nat_h323.c b/net/ipv4/netfilter/nf_nat_h323.c
-index 183e8a3ff2bab..6bcd6734769b5 100644
---- a/net/ipv4/netfilter/nf_nat_h323.c
-+++ b/net/ipv4/netfilter/nf_nat_h323.c
-@@ -182,6 +182,7 @@ static int nat_rtp_rtcp(struct sk_buff *skb, struct nf_conn *ct,
- 			struct nf_conntrack_expect *rtp_exp,
- 			struct nf_conntrack_expect *rtcp_exp)
+diff --git a/drivers/gpu/drm/mediatek/mtk_crtc.c b/drivers/gpu/drm/mediatek/mtk_crtc.c
+index fcb16f3f7b23b..b01162a7df7fa 100644
+--- a/drivers/gpu/drm/mediatek/mtk_crtc.c
++++ b/drivers/gpu/drm/mediatek/mtk_crtc.c
+@@ -153,10 +153,10 @@ static void mtk_crtc_reset(struct drm_crtc *crtc)
  {
-+	struct nf_conntrack_expect *rtp_pair[2] = { rtp_exp, rtcp_exp };
- 	struct nf_ct_h323_master *info = nfct_help_data(ct);
- 	int dir = CTINFO2DIR(ctinfo);
- 	int i;
-@@ -227,22 +228,13 @@ static int nat_rtp_rtcp(struct sk_buff *skb, struct nf_conn *ct,
- 		int ret;
+ 	struct mtk_crtc_state *state;
  
- 		rtp_exp->tuple.dst.u.udp.port = htons(nated_port);
--		ret = nf_ct_expect_related(rtp_exp, 0);
-+		rtcp_exp->tuple.dst.u.udp.port = htons(nated_port + 1);
-+		ret = nf_ct_expect_related_pair(rtp_pair, 0);
- 		if (ret == 0) {
--			rtcp_exp->tuple.dst.u.udp.port =
--			    htons(nated_port + 1);
--			ret = nf_ct_expect_related(rtcp_exp, 0);
--			if (ret == 0)
--				break;
--			else if (ret == -EBUSY) {
--				nf_ct_unexpect_related(rtp_exp);
--				continue;
--			} else if (ret < 0) {
--				nf_ct_unexpect_related(rtp_exp);
--				nated_port = 0;
--				break;
--			}
--		} else if (ret != -EBUSY) {
-+			break;
-+		} else if (ret == -EBUSY) {
-+			continue;
-+		} else if (ret < 0) {
- 			nated_port = 0;
- 			break;
- 		}
-diff --git a/net/netfilter/nf_conntrack_expect.c b/net/netfilter/nf_conntrack_expect.c
-index 38630c5e006f0..16520a41fe5f0 100644
---- a/net/netfilter/nf_conntrack_expect.c
-+++ b/net/netfilter/nf_conntrack_expect.c
-@@ -426,7 +426,6 @@ static void nf_ct_expect_insert(struct nf_conntrack_expect *exp,
- 		exp->timeout += helper->expect_policy[exp->class].timeout * HZ;
- 
- 	hlist_add_head_rcu(&exp->lnode, &master_help->expectations);
--	master_help->expecting[exp->class]++;
- 
- 	hlist_add_head_rcu(&exp->hnode, &nf_ct_expect_hash[h]);
- 	cnet = nf_ct_pernet(net);
-@@ -533,6 +532,7 @@ int nf_ct_expect_related_report(struct nf_conntrack_expect *expect,
- 	if (ret < 0)
- 		goto out;
- 
-+	master_help->expecting[expect->class]++;
- 	nf_ct_expect_insert(expect, master_help);
- 
- 	nf_ct_expect_event_report(IPEXP_NEW, expect, portid, report);
-@@ -545,6 +545,39 @@ int nf_ct_expect_related_report(struct nf_conntrack_expect *expect,
- }
- EXPORT_SYMBOL_GPL(nf_ct_expect_related_report);
- 
-+int nf_ct_expect_related_pair(struct nf_conntrack_expect *expect[],
-+			      unsigned int flags)
-+{
-+	struct nf_conn_help *master_help;
-+	int i, ret;
-+
-+	spin_lock_bh(&nf_conntrack_expect_lock);
-+	master_help = nfct_help(expect[0]->master);
-+	if (!master_help || master_help != nfct_help(expect[1]->master)) {
-+		ret = -EINVAL;
-+		goto out;
+-	if (crtc->state)
++	if (crtc->state) {
+ 		__drm_atomic_helper_crtc_destroy_state(crtc->state);
+-
+-	kfree(to_mtk_crtc_state(crtc->state));
++		kfree(to_mtk_crtc_state(crtc->state));
 +	}
-+
-+	for (i = 0; i < 2; i++) {
-+		ret = __nf_ct_expect_check(expect[i], master_help, flags);
-+		if (ret < 0) {
-+			if (i == 1)
-+				master_help->expecting[expect[0]->class]--;
-+			goto out;
-+		}
-+		master_help->expecting[expect[i]->class]++;
-+	}
-+
-+	for (i = 0; i < 2; i++) {
-+		nf_ct_expect_insert(expect[i], master_help);
-+		nf_ct_expect_event_report(IPEXP_NEW, expect[i], 0, 0);
-+	}
-+out:
-+	spin_unlock_bh(&nf_conntrack_expect_lock);
-+	return ret;
-+}
-+EXPORT_SYMBOL_GPL(nf_ct_expect_related_pair);
-+
- void nf_ct_expect_iterate_destroy(bool (*iter)(struct nf_conntrack_expect *e, void *data),
- 				  void *data)
- {
-diff --git a/net/netfilter/nf_nat_sip.c b/net/netfilter/nf_nat_sip.c
-index a93eaf0f7d305..133bd713fe0c2 100644
---- a/net/netfilter/nf_nat_sip.c
-+++ b/net/netfilter/nf_nat_sip.c
-@@ -592,6 +592,7 @@ static unsigned int nf_nat_sdp_media(struct sk_buff *skb, unsigned int protoff,
- 				     unsigned int medialen,
- 				     union nf_inet_addr *rtp_addr)
- {
-+	struct nf_conntrack_expect *rtp_pair[2] = { rtp_exp, rtcp_exp };
- 	enum ip_conntrack_info ctinfo;
- 	struct nf_conn *ct = nf_ct_get(skb, &ctinfo);
- 	enum ip_conntrack_dir dir = CTINFO2DIR(ctinfo);
-@@ -622,24 +623,15 @@ static unsigned int nf_nat_sdp_media(struct sk_buff *skb, unsigned int protoff,
- 		int ret;
+ 	crtc->state = NULL;
  
- 		rtp_exp->tuple.dst.u.udp.port = htons(port);
--		ret = nf_ct_expect_related(rtp_exp,
--					   NF_CT_EXP_F_SKIP_MASTER);
--		if (ret == -EBUSY)
--			continue;
--		else if (ret < 0) {
--			port = 0;
--			break;
--		}
- 		rtcp_exp->tuple.dst.u.udp.port = htons(port + 1);
--		ret = nf_ct_expect_related(rtcp_exp,
--					   NF_CT_EXP_F_SKIP_MASTER);
-+
-+		ret = nf_ct_expect_related_pair(rtp_pair,
-+						NF_CT_EXP_F_SKIP_MASTER);
- 		if (ret == 0)
- 			break;
--		else if (ret == -EBUSY) {
--			nf_ct_unexpect_related(rtp_exp);
-+		else if (ret == -EBUSY)
- 			continue;
--		} else if (ret < 0) {
--			nf_ct_unexpect_related(rtp_exp);
-+		else if (ret < 0) {
- 			port = 0;
- 			break;
- 		}
+ 	state = kzalloc_obj(*state);
 -- 
 2.53.0
 
