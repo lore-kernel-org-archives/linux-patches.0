@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C68833E355;
-	Fri,  7 Aug 2026 15:35:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36BD64749FA;
+	Fri,  7 Aug 2026 15:35:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116941; cv=none; b=TZ/5gZsHrpoZIfkp5YQ7W63eULiUu6FBtrmbAJOlLOq6lnRJQGY1wiiUMWZlHOPi3GV0Vc85sN1BUoIomd+YCKzfJpp9W8YQZLj9oLFLY9U1BeYN1yuAVPoSBgupiJFu8cZ56m0EvUJXFVj4IqsWoxBnBFRjIeyX2Ma9RRDlT9U=
+	t=1786116944; cv=none; b=Zsae8DoIfZIjhHt3d1kfAJkGoZjW8KRYjqUHvl5MBTLlEHfYGRlb5v/jhtvk3tNeQX1zKZSycim68YqB04d3U8C4tIzVezyfAVdJ+P58UJFFX5Ab59jknX4IMyTBhbw+uCxXddw45Wi6eA+zI7Tjx9fk+omCaURvmdzXCUku1bk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116941; c=relaxed/simple;
-	bh=3AYeO+wXBbimTA3bDAaC5QloYytvsiMBxhd4z9FJmF0=;
+	s=arc-20240116; t=1786116944; c=relaxed/simple;
+	bh=0NK9USArL3YNV2qW6oEqWNcBop44Yg7rb3xJauJIjDU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pz1UfvMzrJiI5y4rNsCdFnGRwm7HFx+OFQrHaAUhy4uljRQamNeuG+/0XcQ/fXPVnQhPEnU9ZIpyzkyamxPfcKi+DvajR9h7z6We5j9rXNMxnaaxyqMCeownOwVOO+v1qhN9M9elfKMUsPOG3DLygLvPB8WnU5NnvpwxD4WXNWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=adVMuN0f; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tLR4C7tkiw5gD+KuoAmr7NtIjKGAAOKlgT69QUnAJWKBtFvzRqdWDv3M2IlLngR+JVuxmQthD89DEEbRhl1g/InBiOiEDwSTQkyfJRRZ5cliQw0lZD55SfUaZJy3aQ9ZlLjMwVdhnFZoIndAgauM+npNSJyrOF585JgiN3fa350=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AwGQ/+hF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="adVMuN0f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C07071F00A3A;
-	Fri,  7 Aug 2026 15:35:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AwGQ/+hF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89FFE1F000E9;
+	Fri,  7 Aug 2026 15:35:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116940;
-	bh=P9rW5eUAXH0RfKuPP6Q7PfIfg4UWbjHDySE/wN4kMXk=;
+	s=korg; t=1786116943;
+	bh=f+v0xndrP3VG9roFoKIA6oWY++PR+JZMU+8TmeEEMA8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=adVMuN0fViTvNncTQZ35UUBe+X4bEYuWBSdOVGyLDi69Z5j9n8TNt62BvNDnrjWMd
-	 3c5yLAylbn+0CkVpl/BrUO4R9hMiBoFh5diLXyR7CMB42YAXKKUaImTvmPveII9DOr
-	 nC9cvbjmRZav8tDlVBG4JZoN0gO/QWkMtPNm5zsI=
+	b=AwGQ/+hFnONE1Dv6noFwy0z71ocG3t99Gt68I0hVFhSI6sNkonqOktjskeyeeIZEN
+	 zGa/lr/tUbqREUPynE7tf7q5W85NUEss2VPDvWdjTH3iWb2OqCqo2xLhLXImPH9Uwy
+	 3/6cP85ae2pFPLtIYB1Wx1hihUXsfMU12hZ3Egj0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Li <enderaoelyther@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Pauli Virtanen <pav@iki.fi>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 117/438] wifi: mac80211: validate individual TWT params before driver setup
-Date: Fri,  7 Aug 2026 16:35:13 +0200
-Message-ID: <20260807143430.488418107@linuxfoundation.org>
+Subject: [PATCH 7.1 144/438] Bluetooth: hci_sync: hold conn in hci_connect_big_sync() callback
+Date: Fri,  7 Aug 2026 16:35:40 +0200
+Message-ID: <20260807143431.075095968@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -51,50 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Li <enderaoelyther@gmail.com>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit 0502d5077e419427d80f4d46ba95d0067f5fb916 ]
+[ Upstream commit 56e78b670356caab0b607e8aad4cf819a1909d07 ]
 
-ieee80211_process_rx_twt_action() only partially validates a received
-S1G TWT setup frame before queueing it.
+There is theoretical UAF if the conn is freed while the hci_sync task is
+running.
 
-An individual agreement can therefore reach ieee80211_s1g_rx_twt_setup()
-with twt->length too short for the full struct ieee80211_twt_params.
+Hold refcount to avoid that. Handle NULL hcon, return 0 + do nothing to
+match the previous behavior.
 
-The individual path passes twt to drv_add_twt_setup(). Both the tracepoint
-and the driver callback consume the complete parameters block, not merely
-req_type. Do not pass a short individual agreement to the driver.
-Broadcast agreements remain unchanged because they are rejected locally
-after accessing only req_type.
-
-Fixes: f5a4c24e689f ("mac80211: introduce individual TWT support in AP mode")
-Assisted-by: Codex:gpt-5
-Assisted-by: Claude:opus-4.8
-Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Link: https://patch.msgid.link/20260723010928.76551-1-enderaoelyther@gmail.com
-[edit commit message to not overclaim lack of validation nor
- understate driver impact]
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 024421cf3992 ("Bluetooth: hci_conn: Fix not setting timeout for BIG Create Sync")
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/s1g.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/bluetooth/hci_sync.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/net/mac80211/s1g.c b/net/mac80211/s1g.c
-index 5af4a0c6c6424..abc338e22e59c 100644
---- a/net/mac80211/s1g.c
-+++ b/net/mac80211/s1g.c
-@@ -101,6 +101,10 @@ ieee80211_s1g_rx_twt_setup(struct ieee80211_sub_if_data *sdata,
- 	struct ieee80211_twt_setup *twt = (void *)mgmt->u.action.s1g.variable;
- 	struct ieee80211_twt_params *twt_agrt = (void *)twt->params;
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index 2cac69922353a..2860779e6a791 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -7437,10 +7437,12 @@ static void create_big_complete(struct hci_dev *hdev, void *data, int err)
+ 	bt_dev_dbg(hdev, "err %d", err);
  
-+	if (!(twt->control & IEEE80211_TWT_CONTROL_NEG_TYPE_BROADCAST) &&
-+	    twt->length < sizeof(twt->control) + sizeof(*twt_agrt))
-+		return;
+ 	if (err == -ECANCELED)
+-		return;
++		goto done;
+ 
+-	if (hci_conn_valid(hdev, conn))
+-		clear_bit(HCI_CONN_CREATE_BIG_SYNC, &conn->flags);
++	clear_bit(HCI_CONN_CREATE_BIG_SYNC, &conn->flags);
 +
- 	twt_agrt->req_type &= cpu_to_le16(~IEEE80211_TWT_REQTYPE_REQUEST);
++done:
++	hci_conn_put(conn);
+ }
  
- 	/* broadcast TWT not supported yet */
+ static int hci_le_big_create_sync(struct hci_dev *hdev, void *data)
+@@ -7492,8 +7494,14 @@ int hci_connect_big_sync(struct hci_dev *hdev, struct hci_conn *conn)
+ {
+ 	int err;
+ 
+-	err = hci_cmd_sync_queue_once(hdev, hci_le_big_create_sync, conn,
++	if (!conn)
++		return 0;
++
++	err = hci_cmd_sync_queue_once(hdev, hci_le_big_create_sync,
++				      hci_conn_get(conn),
+ 				      create_big_complete);
++	if (err)
++		hci_conn_put(conn);
+ 	return (err == -EEXIST) ? 0 : err;
+ }
+ 
 -- 
 2.53.0
 
