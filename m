@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C6F747DD77;
-	Fri,  7 Aug 2026 15:36:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1551247885C;
+	Fri,  7 Aug 2026 15:36:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786117009; cv=none; b=rfhlUX/E0Hl8Cqw0w2vGXdRg/TtGmVSUtwogi0YlC9Xj1Ee8a6Vx4fTPMb7Uzpv3S6DIyWk7fc88j+mK8YIs3ksvHUX8qpwU4KiK80YjpNpHktbk+h2bCvUOnlJysQvnlRd9JzMesWGbW3WDDU0DSeFoiwZHJ2YFEU238ENLI9g=
+	t=1786117012; cv=none; b=qAtrKydK/Pv+VqbGMlx2I7RBeeW2+7BVwDoFcVNoMQfWgwIzZAB5zH6I5BPH69zkSDhUZMrBB11uJa0py3WR1Rif7bs6S/xdIpuHrTqJctP6xEjxpJUQn5QRRIebufdXhg3dqx2wfVxy2igroACK3yPVm0V3Yuc5UCcPq+mrc/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786117009; c=relaxed/simple;
-	bh=gPIE/zupC/llvsNJKoVpKMWs/45yzmeAVFJYYFhUvm8=;
+	s=arc-20240116; t=1786117012; c=relaxed/simple;
+	bh=R8YomU0mP8JzgXn41sVpqNwtkCRgQswyorVcpSlPNVc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V/gegzDqA+iAkiW+no9HLpKPqNu23/zMa4HZXVvcpRpaguO+z8zxEus17Etz8Q3fRlTBd+sj+PpZZrT40mGyqMq6BWBRb1ry8/c8Auc/aQOaVJKFXujHFXbVqtmepa5rUbykUeKC2pVD4v9CcJQTt/cU457I8f4V6Kzj6Y/ORQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mY1W5fLR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=m1YJdGQXCBJ9+YZPspjTDtr+zNzGNNBmDnWOaJKHCIXdIARpRFxDYRjFcAZKEiuPDYI1/+9zR2ugJHVFZJhzlwstWAjFxG3oy0uqFyJfNvwK3sPxU9vzfXCy7UBAmcLKO5Af4UTLn0O0JMSlQh3WfvZ4BnGRs55/zx7Q9XqKAWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ty0SRwG0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mY1W5fLR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A08111F000E9;
-	Fri,  7 Aug 2026 15:36:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ty0SRwG0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EC751F000E9;
+	Fri,  7 Aug 2026 15:36:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786117008;
-	bh=MuyNqpCXC6wTYtlBkxYybKoYfEG08QI77XNfm8PkOKY=;
+	s=korg; t=1786117011;
+	bh=b/8JjgLnPkAgKHqNLCVi7Kmm3IZrGJQp4fMTzu5Vrq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mY1W5fLRVAAEQ7BHATB2Gzzh73Acqrb5HnO4H/5DvraVTyNro63c7ezlAbxGOE5zN
-	 b+hEPBQxv0frC2mOjqmLNX5ckpncDdM/P1mrQbIcvamdIY5kjgvS5SDiJlJh/LSYc8
-	 liYDx4APQtvKAE5rhFzCJAeLoKORnXQalSPPiitg=
+	b=Ty0SRwG0ZbakicJ3wMIBWZJUwr3jCx/o0Aroyv4AqQvlSjw8QNMQIxmKkb5nJxQkR
+	 VobOhc0cn+SvRtpveZ88BKoELiuJGg5vMvPiu80wfXuMX7jklZU5Ek90ga2TaS3KHo
+	 E0Oj2bemDV2pmc5rSfxBi3U1frDTEyZc+Rq9N654=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 123/438] hwmon: (pmbus) Fix return value from pmbus_update_byte_data()
-Date: Fri,  7 Aug 2026 16:35:19 +0200
-Message-ID: <20260807143430.617687928@linuxfoundation.org>
+Subject: [PATCH 7.1 114/438] powerpc/boot: Fix treeboot-akebono CPU node lookup check
+Date: Fri,  7 Aug 2026 16:35:10 +0200
+Message-ID: <20260807143430.425435925@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -50,37 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit a19038a200f18d9e74ac30081797917d0886e16b ]
+[ Upstream commit b24fc8278b70a9d27ec801a427ab4de9b769d69a ]
 
-pmbus_update_byte_data() is supposed to return a negative error code or 0.
-However, if no change is made to the register, it actually returns the
-register value. This can result in problems if the calling code explicitly
-expects to see an error code or 0.
+fdt_node_offset_by_prop_value() returns a negative error code on
+failure - fix the check accordingly.
 
-Fix it to return 0 on success or the error code as expected.
-
-Fixes: 11c119986f270 ("hwmon: (pmbus) add helpers for byte write and read modify write")
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 2a2c74b2efcb ("IBM Akebono: Add the Akebono platform")
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260702211554.56923-6-thorsten.blum@linux.dev
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/pmbus/pmbus_core.c | 2 +-
+ arch/powerpc/boot/treeboot-akebono.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/pmbus/pmbus_core.c b/drivers/hwmon/pmbus/pmbus_core.c
-index 3143b9e0316c4..7f2d28e41d816 100644
---- a/drivers/hwmon/pmbus/pmbus_core.c
-+++ b/drivers/hwmon/pmbus/pmbus_core.c
-@@ -513,7 +513,7 @@ int pmbus_update_byte_data(struct i2c_client *client, int page, u8 reg,
- 	if (tmp != rv)
- 		rv = _pmbus_write_byte_data(client, page, reg, tmp);
+diff --git a/arch/powerpc/boot/treeboot-akebono.c b/arch/powerpc/boot/treeboot-akebono.c
+index e3cc2599869cc..1b529037480fb 100644
+--- a/arch/powerpc/boot/treeboot-akebono.c
++++ b/arch/powerpc/boot/treeboot-akebono.c
+@@ -146,7 +146,7 @@ void platform_init(char *userdata)
  
--	return rv;
-+	return rv < 0 ? rv : 0;
- }
- EXPORT_SYMBOL_NS_GPL(pmbus_update_byte_data, "PMBUS");
- 
+ 	node = fdt_node_offset_by_prop_value(_dtb_start, -1, "device_type",
+ 					     "cpu", sizeof("cpu"));
+-	if (!node)
++	if (node < 0)
+ 		fatal("Cannot find cpu node\n");
+ 	timebase = fdt_getprop(_dtb_start, node, "timebase-frequency", &size);
+ 	if (timebase && (size == 4))
 -- 
 2.53.0
 
