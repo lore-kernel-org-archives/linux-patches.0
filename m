@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AEA040EB9D;
-	Fri,  7 Aug 2026 14:42:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 645BA3AD50F;
+	Fri,  7 Aug 2026 14:43:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786113810; cv=none; b=D/q33OjypXk+fhjEDrzY6FNV3Mn55jz1+82QX05ODwawil8e6PzB9JB1Xob9RuA0ddmXm/+ZRfwLIOR5T60pO1DNQ+Lq3DqHpvMQNb382WRgINXFg+JVXTMnHIVQsk+IzxVvrUCzZoFoVSOaoZREa9wYZOR9B64pvIDy9psOT6o=
+	t=1786113813; cv=none; b=GgflCKPZNt7BBokrUkJrCjcIfrLU5mkjn2SL6jhoq25NN/A0WGJHwSFVVLW1Qa+nWm4/vQIKAb4RsQx57+yJZtG/N2P1EkJwstEOWtYWxzFoBtBjPvDrGMaXK1hm9l1QT9yxqILJuZ0sf9yD1IEToNpjkGbsge+y3qp0qk8L0O0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786113810; c=relaxed/simple;
-	bh=3btkHCADDerrm5fnFOjakSXiVVu4jZy2s6zhwhPAdTs=;
+	s=arc-20240116; t=1786113813; c=relaxed/simple;
+	bh=bWky3KRCACMSsdJ8L4iJLJqIDbK+OaOjcdUrPwJ2MSs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kwtu1XT6QmPYpnpxlxMe38VCM5R14R1L+t3F0sq7CQLeEh8lPeQTyHs97+DWLu56I8qiWDH6QOJJXovrouiHiUmncFu9BKoWBv8cCYxcvwODLgyqhzGPtMeg0vvxGulUllLIlIYib0rfSn1gFofWe5pl+sIS88E8la3uyQ+S/nE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U9Fc72wp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TV7kI1w2+03bYPhQV3rpPd9Vs4034yIxYMtcXF6kLgt1VCyExO+NxI+P09tl5qNz2pCNtL7Ajkz4SOK8bmGq2RBiFrNxxwp9uW19ARGmB8O77tnixggfklt6MpBIu1Fc956rvKb4wBvaEc4ZbBg64Edqc8KxhvM7+bbxyb+4lVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZQMalMIL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U9Fc72wp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 451B11F00ACA;
-	Fri,  7 Aug 2026 14:42:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZQMalMIL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D4221F00A3D;
+	Fri,  7 Aug 2026 14:43:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786113779;
-	bh=yN6qE/CUhfQxG4PG0YYO/l7YlaUag8E6ufTJgZufohQ=;
+	s=korg; t=1786113799;
+	bh=wWpPv12nhr/sVcqqVVoYXW+EheXCC1MeBvlvJHCQwaI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U9Fc72wps8aAZ+/HWGPz8njCkepe70SptC0cwE09v7O86LAjhJOe+LUU99MbKmTPS
-	 NQkPtzksGbYzICZ9boTBtgNLX++5AtTp6u7gyeUbZflOrpbeo4ITYBlnMIFaNlaZh9
-	 EyUGahfLlgDHjiJ7IGQQA3BGYR+966fGFfvZaF+M=
+	b=ZQMalMILWSdgPMtxR5eswRItlwnZtQd1GL+4dnR7ibLqQ8o3hSgrkewIHOEI8WCfd
+	 XUs0HhwvVFeaLdGvBu7l3RBXgg1G8RA/B+4Ewb1IMYWYIWxfj6cgBAMmGlznxDlwpx
+	 +m9oHET/Vz5R3Uhwv0KDl21pYZwuAoHNjxdeSNTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuvam Pandey <shuvampandey1@gmail.com>,
-	David Gow <david@davidgow.net>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 009/337] kunit: tool: skip stty when stdin is not a tty
-Date: Fri,  7 Aug 2026 16:33:32 +0200
-Message-ID: <20260807143418.725150846@linuxfoundation.org>
+Subject: [PATCH 6.12 040/337] Drivers: hv: vmbus: Replace lockdep_hardirq_threaded() with lockdep annotation
+Date: Fri,  7 Aug 2026 16:34:03 +0200
+Message-ID: <20260807143419.383706873@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -53,126 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuvam Pandey <shuvampandey1@gmail.com>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-commit e42c349f4cdfa43cb39a68c8f764f8cafc23a9a9 upstream.
+[ Upstream commit 8c7ab779c8850f4dab8473463cca9a7d52fdaecc ]
 
-run_kernel() cleanup and signal_handler() invoke stty unconditionally.
-When stdin is not a tty (for example in CI or unit tests), this writes
-noise to stderr.
+lockdep_hardirq_threaded() is supposed to be used within IRQ core code
+and not within drivers. It is not obvious from within the driver, that
+this is the only interrupt service routing and that it is not shared
+handler.
 
-Call stty only when stdin is a tty.
+Replace lockdep_hardirq_threaded() with a lockdep annotation limiting
+threaded context on PREEMPT_RT to __vmbus_isr().
 
-Add regression tests for these paths:
-- run_kernel() with non-tty stdin
-- signal_handler() with non-tty stdin
-- signal_handler() with tty stdin
-
-Signed-off-by: Shuvam Pandey <shuvampandey1@gmail.com>
-Reviewed-by: David Gow <david@davidgow.net>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
-[florian: add missing 'import sys' required by sys.stdin.isatty(); the
-module was already present in the mainline tree before this commit but
-was absent from the 6.12 base of kunit_kernel.py]
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Fixes: f8e6343b7a89c ("Drivers: hv: vmbus: Use kthread for vmbus interrupts on PREEMPT_RT")
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/kunit/kunit_kernel.py    | 11 +++++--
- tools/testing/kunit/kunit_tool_test.py | 42 ++++++++++++++++++++++++++
- 2 files changed, 51 insertions(+), 2 deletions(-)
+ drivers/hv/vmbus_drv.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/kunit/kunit_kernel.py b/tools/testing/kunit/kunit_kernel.py
-index 3f2979f2f6ea..c09b66ba734b 100644
---- a/tools/testing/kunit/kunit_kernel.py
-+++ b/tools/testing/kunit/kunit_kernel.py
-@@ -14,6 +14,7 @@ import os
- import shlex
- import shutil
- import signal
-+import sys
- import threading
- from typing import Iterator, List, Optional, Tuple, Any
- from types import FrameType
-@@ -333,6 +334,12 @@ class LinuxSourceTree:
- 			return False
- 		return self.validate_config(build_dir)
+diff --git a/drivers/hv/vmbus_drv.c b/drivers/hv/vmbus_drv.c
+index 83f3215bc5bd5..db1c71832f2a8 100644
+--- a/drivers/hv/vmbus_drv.c
++++ b/drivers/hv/vmbus_drv.c
+@@ -1320,8 +1320,19 @@ static void vmbus_isr(void)
+ 	if (IS_ENABLED(CONFIG_PREEMPT_RT)) {
+ 		vmbus_irqd_wake();
+ 	} else {
+-		lockdep_hardirq_threaded();
++		static DEFINE_WAIT_OVERRIDE_MAP(vmbus_map, LD_WAIT_CONFIG);
++
++		/*
++		 * vmbus_isr is never force-threaded and always invoked at hard
++		 * IRQ level. __vmbus_isr() below can acquire a spinlock_t
++		 * which becomes a sleeping lock and must not be acquired in
++		 * this context. Therefore on PREEMPT_RT this will be threaded
++		 * via vmbus_irqd_wake(). On non-PREEMPT the annotation lets
++		 * lockdep know that acquiring a spinlock_t is not an issue.
++		 */
++		lock_map_acquire_try(&vmbus_map);
+ 		__vmbus_isr();
++		lock_map_release(&vmbus_map);
+ 	}
+ }
  
-+	def _restore_terminal_if_tty(self) -> None:
-+		# stty requires a controlling terminal; skip headless runs.
-+		if sys.stdin is None or not sys.stdin.isatty():
-+			return
-+		subprocess.call(['stty', 'sane'])
-+
- 	def run_kernel(self, args: Optional[List[str]]=None, build_dir: str='', filter_glob: str='', filter: str='', filter_action: Optional[str]=None, timeout: Optional[int]=None) -> Iterator[str]:
- 		# Copy to avoid mutating the caller-supplied list. exec_tests() reuses
- 		# the same args across repeated run_kernel() calls (e.g. --run_isolated),
-@@ -380,11 +387,11 @@ class LinuxSourceTree:
- 			output.close()
- 
- 			waiter.join()
--			subprocess.call(['stty', 'sane'])
-+			self._restore_terminal_if_tty()
- 
- 	def signal_handler(self, unused_sig: int, unused_frame: Optional[FrameType]) -> None:
- 		logging.error('Build interruption occurred. Cleaning console.')
- 		if self._process:
- 				self._process.terminate()
- 				self._process.wait()
--		subprocess.call(['stty', 'sane'])
-+		self._restore_terminal_if_tty()
-diff --git a/tools/testing/kunit/kunit_tool_test.py b/tools/testing/kunit/kunit_tool_test.py
-index 70e5d0abe87f..6e6200d52540 100755
---- a/tools/testing/kunit/kunit_tool_test.py
-+++ b/tools/testing/kunit/kunit_tool_test.py
-@@ -503,6 +503,48 @@ class LinuxSourceTreeTest(unittest.TestCase):
- 				self.assertIn('kunit.filter_glob=suite.test1', start_calls[0])
- 				self.assertIn('kunit.filter_glob=suite.test2', start_calls[1])
- 
-+	def test_run_kernel_skips_terminal_reset_without_tty(self):
-+		def fake_start(unused_args, unused_build_dir):
-+			return subprocess.Popen(['printf', 'KTAP version 1\n'],
-+						text=True, stdout=subprocess.PIPE)
-+
-+		non_tty_stdin = mock.Mock()
-+		non_tty_stdin.isatty.return_value = False
-+
-+		with tempfile.TemporaryDirectory('') as build_dir:
-+			tree = kunit_kernel.LinuxSourceTree(build_dir, kunitconfig_paths=[os.devnull])
-+			with mock.patch.object(tree._ops, 'start', side_effect=fake_start), \
-+			     mock.patch.object(kunit_kernel.sys, 'stdin', non_tty_stdin), \
-+			     mock.patch.object(kunit_kernel.subprocess, 'call') as mock_call:
-+				for _ in tree.run_kernel(build_dir=build_dir):
-+					pass
-+
-+				mock_call.assert_not_called()
-+
-+	def test_signal_handler_skips_terminal_reset_without_tty(self):
-+		non_tty_stdin = mock.Mock()
-+		non_tty_stdin.isatty.return_value = False
-+		tree = kunit_kernel.LinuxSourceTree('', kunitconfig_paths=[os.devnull])
-+
-+		with mock.patch.object(kunit_kernel.sys, 'stdin', non_tty_stdin), \
-+		     mock.patch.object(kunit_kernel.subprocess, 'call') as mock_call, \
-+		     mock.patch.object(kunit_kernel.logging, 'error') as mock_error:
-+			tree.signal_handler(signal.SIGINT, None)
-+			mock_error.assert_called_once()
-+			mock_call.assert_not_called()
-+
-+	def test_signal_handler_resets_terminal_with_tty(self):
-+		tty_stdin = mock.Mock()
-+		tty_stdin.isatty.return_value = True
-+		tree = kunit_kernel.LinuxSourceTree('', kunitconfig_paths=[os.devnull])
-+
-+		with mock.patch.object(kunit_kernel.sys, 'stdin', tty_stdin), \
-+		     mock.patch.object(kunit_kernel.subprocess, 'call') as mock_call, \
-+		     mock.patch.object(kunit_kernel.logging, 'error') as mock_error:
-+			tree.signal_handler(signal.SIGINT, None)
-+			mock_error.assert_called_once()
-+			mock_call.assert_called_once_with(['stty', 'sane'])
-+
- 	def test_build_reconfig_no_config(self):
- 		with tempfile.TemporaryDirectory('') as build_dir:
- 			with open(kunit_kernel.get_kunitconfig_path(build_dir), 'w') as f:
 -- 
 2.53.0
 
