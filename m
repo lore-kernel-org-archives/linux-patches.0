@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34C8E29D27A;
-	Fri,  7 Aug 2026 14:55:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A1892F8E8B;
+	Fri,  7 Aug 2026 14:55:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114541; cv=none; b=DJ9toi9Dl4RTdlJn1qRBoKGwLaYAAQPE+uJD0jtqjbHGBI/d3a+XqDNNNTgTjou8UPzETIm6/2tgCjLCCnfnwoiEMSlQVqLTvQbSz/SiHIxyoVn4kaULNGZ3wNibTusfNqeESBX12QafBr+0SL9+F0ymxuuRmzxuV9IMeLLvXpc=
+	t=1786114543; cv=none; b=qLkD381OuvwFyjXBsClCXQBKO/BIeXWDqWEm+Z+1roK0VdXdG4Zx/zqesXjWTIwCYNWrdMB+bKa4I2tRdZQiGh/r9ZrZsFyhPqXVXYYO750fkD+mjNrGLlLA4y2cjiR46sucq5V9BokLxokA/IZmjJNcmowPryCxUvkgnh4dIZ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114541; c=relaxed/simple;
-	bh=cLnu0x5h6zvsJ+ZDJSdaSBeglyOr3iTZNT3lYh3YK10=;
+	s=arc-20240116; t=1786114543; c=relaxed/simple;
+	bh=GpzzUqpRJ2foLsbdZcIcPBmV9VEvyjgMo/JH/UxCDvI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dpf6fxUeiRhBXayB5AgRCOzK2saTlNtrdZovF0YCFN4Ak7h5GCq1Ua6bkVmCA937eDC9AeMGeMS5e1/8VtJ72nb+Dpp178YGG6vrAPGKYY9HyikJsjPf+8y4+me+3Efv6Qu2w99TtfG5Xgsup+wk2vygTiMkWE542/pwRfRx2Kw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GA7yM/2F; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mgIVBxoDOnKZ5lG4aRhIYkWnsPWz74Nhg5V80ydG5F+FvPFDkE1+yrBP23Pz4bihkjczmITl+0DaAkwIGY4P6Qrz7ATyj1ZXk+imNBpKc6cyMWs5DciK+KntIPNbl1iQMkG6j2C0n3rFSYTARym5Xr3cxxBIPxocI9tpT/E97Lo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=clePEtRz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GA7yM/2F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84D151F000E9;
-	Fri,  7 Aug 2026 14:55:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="clePEtRz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 703991F00A3A;
+	Fri,  7 Aug 2026 14:55:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114539;
-	bh=E5xEpnPSkF6qbK60vYPjkEtKhkYBO0TgffyrLQMTLwA=;
+	s=korg; t=1786114542;
+	bh=NVlx/Dqi1jt4EzDUZbWKzYoE9rMAHBrvfs7Z+QD9mr8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GA7yM/2FUBQgyl3qhMYQyE66sm79GOeZ3NuQrtGZWNN/93TV4/pb98FWpX8696IPN
-	 H3Bkn5SLt0phyWpOs2hZ+a9FZhbLUvn7KtIMue4t7rI40y88Kt6L6lhhDAP1+b7nxa
-	 zJ4gz3ytjnCjXJb8WIj0wmlachYIdKP+STh7R0dA=
+	b=clePEtRzrDMqeLYy6biiltlBH7mYSCIYv6MQzFJmwUOMiE/WFgKcKZ/9XOO7ctY+h
+	 Cj6vP3stP9zUwC0kcro9a0IE3rJ67Mrapp/s9SUczsYZCEJVnPAXnEU5IkaNQjbWZG
+	 LzbctGwMxuWcd9rj2yokZi7+eUnTQlPUGyAWpu+U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Daniel Hodges <git@danielhodges.dev>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 298/337] wifi: brcmfmac: drain bus_reset work on device removal
-Date: Fri,  7 Aug 2026 16:38:21 +0200
-Message-ID: <20260807143424.987276234@linuxfoundation.org>
+Subject: [PATCH 6.12 299/337] wifi: ath6kl: fix use-after-free in aggr_reset_state()
+Date: Fri,  7 Aug 2026 16:38:22 +0200
+Message-ID: <20260807143425.009488081@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -52,289 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Daniel Hodges <git@danielhodges.dev>
 
-[ Upstream commit 43b25879f004c98defa2776bedc6ca4763c51945 ]
+[ Upstream commit ba7debb4dd6427386862220e8335a53a4bfc235d ]
 
-brcmf_fw_crashed() and the debugfs "reset" entry both schedule
-drvr->bus_reset, whose callback recovers drvr through container_of()
-and dereferences it.  The removal path frees drvr (brcmf_free ->
-wiphy_free) without draining the work, so a bus_reset callback pending
-or running during removal can outlive drvr.
+The aggr_reset_state() function uses timer_delete() (non-synchronous)
+for the aggregation timer before proceeding to delete TID state and
+before the structure is freed by callers like aggr_module_destroy().
 
-Cancellation cannot live in brcmf_detach() or brcmf_free(): the work
-callback reaches teardown through the bus .reset op (PCIe
-brcmf_pcie_reset -> brcmf_detach; SDIO brcmf_sdio_bus_reset ->
-brcmf_sdiod_remove -> brcmf_free), so cancelling there would wait for
-the running work and deadlock.
+If the timer callback (aggr_timeout) is executing when aggr_reset_state()
+is called, the callback will continue to access aggr_conn fields like
+rx_tid[] and stat[] which may be freed immediately after by
+kfree(aggr_info->aggr_conn) in aggr_module_destroy().
 
-Add a per-bus mutex (bus_reset_lock) and route all arming through
-brcmf_bus_schedule_reset(), which under the lock skips when the bus is
-marked removing.  Each bus remove entry calls
-brcmf_bus_cancel_reset_work(), which under the same lock sets removing
-and cancels the work.  Holding the mutex across cancel_work_sync() makes
-the set-removing + drain step atomic.  Every producer reaches the arming
-path from process context -- the PCIe firmware-halt notification runs in
-the threaded IRQ handler (brcmf_pcie_isr_thread) and the SDIO hostmail
-path runs from the data workqueue -- so the mutex is taken only in
-sleepable contexts.  Where applicable the remove entry first stops the
-firmware-crash producer: on PCIe mask the mailbox and synchronize_irq;
-on SDIO unregister the bus interrupt and cancel the data worker, which
-also reports firmware halts through brcmf_fw_crashed().  The mutex is
-initialized at bus allocation.  The SDIO suspend power-off path frees
-drvr through the same brcmf_sdiod_remove() and takes the same lock;
-resume re-allows the work only on a successful re-probe.
+Additionally, the timer callback can re-arm itself via mod_timer() while
+aggr_reset_state() is running, creating a more complex race condition.
 
-Also guard brcmf_fw_crashed() against a NULL bus_if/drvr: it can fire
-before brcmf_attach() wires up drvr, and it dereferences drvr
-(bphy_err/brcmf_dev_coredump) before reaching the arming gate.
+Use timer_delete_sync() instead to ensure any running timer callback
+has completed before returning.
 
-The bus_reset work is shared across buses, so the drain is applied to
-every remove path: PCIe (the .reset op introduced by the Fixes commit),
-SDIO (arms the same work through brcmf_fw_crashed()), and USB (via the
-debugfs "reset" entry).  cancel_work_sync() drains a running or pending
-bus_reset work item before removal frees drvr, and patch 1/2 makes the
-scratch-buffer release safe when reset teardown has already released
-those DMA buffers.
-
-This patch fixes the lifetime of the bus_reset work item itself.  It does
-not attempt to address the separate, pre-existing lifetime of the
-asynchronous firmware completion started by the PCIe reset path.  That
-callback needs its own lifetime/ownership protocol and is being tracked
-separately.
-
-This issue was found by an in-house static analysis tool.
-
-Fixes: 4684997d9eea ("brcmfmac: reset PCIe bus on a firmware crash")
+Fixes: bdcd81707973 ("Add ath6kl cleaned up driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Assisted-by: Codex:gpt-5.6
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Link: https://patch.msgid.link/20260718024353.3147201-3-fanwu01@zju.edu.cn
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Daniel Hodges <git@danielhodges.dev>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260206185207.30098-1-git@danielhodges.dev
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c |   13 +++
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/bus.h    |    6 +
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c   |   46 ++++++++++++--
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c   |    6 +
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c   |    6 +
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.h   |    1 
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c    |    3 
- 7 files changed, 77 insertions(+), 4 deletions(-)
+ drivers/net/wireless/ath/ath6kl/txrx.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
-@@ -1064,6 +1064,7 @@ static int brcmf_ops_sdio_probe(struct s
- 	bus_if = kzalloc(sizeof(*bus_if), GFP_KERNEL);
- 	if (!bus_if)
- 		return -ENOMEM;
-+	mutex_init(&bus_if->bus_reset_lock);
- 	sdiodev = kzalloc(sizeof(*sdiodev), GFP_KERNEL);
- 	if (!sdiodev) {
- 		kfree(bus_if);
-@@ -1125,6 +1126,14 @@ static void brcmf_ops_sdio_remove(struct
- 		if (func->num != 1)
- 			return;
- 
-+		/* Drain bus_reset before the shared brcmf_sdiod_remove()
-+		 * teardown, which the SDIO reset callback also reaches.  The
-+		 * data worker can arm bus_reset via brcmf_fw_crashed(); cancel
-+		 * it first.
-+		 */
-+		brcmf_sdio_cancel_datawork(sdiodev->bus);
-+		brcmf_bus_cancel_reset_work(bus_if);
-+
- 		/* only proceed with rest of cleanup if func 1 */
- 		brcmf_sdiod_remove(sdiodev);
- 
-@@ -1199,6 +1208,8 @@ static int brcmf_ops_sdio_suspend(struct
- 	} else {
- 		/* power will be cut so remove device, probe again in resume */
- 		brcmf_sdiod_intr_unregister(sdiodev);
-+		brcmf_sdio_cancel_datawork(sdiodev->bus);
-+		brcmf_bus_cancel_reset_work(bus_if);
- 		ret = brcmf_sdiod_remove(sdiodev);
- 		if (ret)
- 			brcmf_err("Failed to remove device on suspend\n");
-@@ -1224,6 +1235,8 @@ static int brcmf_ops_sdio_resume(struct
- 		ret = brcmf_sdiod_probe(sdiodev);
- 		if (ret)
- 			brcmf_err("Failed to probe device on resume\n");
-+		else
-+			brcmf_bus_allow_reset_work(bus_if);
- 	} else {
- 		if (sdiodev->wowl_enabled && sdiodev->settings->bus.sdio.oob_irq_supported)
- 			disable_irq_wake(sdiodev->settings->bus.sdio.oob_irq_nr);
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bus.h
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bus.h
-@@ -9,6 +9,7 @@
- #include <linux/kernel.h>
- #include <linux/firmware.h>
- #include <linux/device.h>
-+#include <linux/mutex.h>
- #include "debug.h"
- 
- /* IDs of the 6 default common rings of msgbuf protocol */
-@@ -179,6 +180,8 @@ struct brcmf_bus {
- 	enum brcmf_fwvendor fwvid;
- 	bool always_use_fws_queue;
- 	bool wowl_supported;
-+	bool removing;		/* device removal in progress; quiesce async work */
-+	struct mutex bus_reset_lock;
- 
- 	const struct brcmf_bus_ops *ops;
- 	struct brcmf_bus_msgbuf *msgbuf;
-@@ -186,6 +189,9 @@ struct brcmf_bus {
- 	struct list_head list;
- };
- 
-+void brcmf_bus_cancel_reset_work(struct brcmf_bus *bus_if);
-+void brcmf_bus_allow_reset_work(struct brcmf_bus *bus_if);
-+
- /*
-  * callback wrappers
-  */
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/core.c
-@@ -1162,6 +1162,35 @@ static int brcmf_revinfo_read(struct seq
- 	return 0;
- }
- 
-+/*
-+ * Serialize arming from debugfs reset and brcmf_fw_crashed() against
-+ * teardown.  The remove path sets ->removing and drains the work while
-+ * holding bus_reset_lock, so a racing armer is either drained or skips it.
-+ */
-+static void brcmf_bus_schedule_reset(struct brcmf_bus *bus_if)
-+{
-+	mutex_lock(&bus_if->bus_reset_lock);
-+	if (bus_if->drvr && bus_if->drvr->bus_reset.func && !bus_if->removing)
-+		schedule_work(&bus_if->drvr->bus_reset);
-+	mutex_unlock(&bus_if->bus_reset_lock);
-+}
-+
-+void brcmf_bus_cancel_reset_work(struct brcmf_bus *bus_if)
-+{
-+	mutex_lock(&bus_if->bus_reset_lock);
-+	bus_if->removing = true;
-+	if (bus_if->drvr)
-+		cancel_work_sync(&bus_if->drvr->bus_reset);
-+	mutex_unlock(&bus_if->bus_reset_lock);
-+}
-+
-+void brcmf_bus_allow_reset_work(struct brcmf_bus *bus_if)
-+{
-+	mutex_lock(&bus_if->bus_reset_lock);
-+	bus_if->removing = false;
-+	mutex_unlock(&bus_if->bus_reset_lock);
-+}
-+
- static void brcmf_core_bus_reset(struct work_struct *work)
- {
- 	struct brcmf_pub *drvr = container_of(work, struct brcmf_pub,
-@@ -1182,7 +1211,7 @@ static ssize_t bus_reset_write(struct fi
- 	if (value != 1)
- 		return -EINVAL;
- 
--	schedule_work(&drvr->bus_reset);
-+	brcmf_bus_schedule_reset(drvr->bus_if);
- 
- 	return count;
- }
-@@ -1410,14 +1439,23 @@ void brcmf_dev_coredump(struct device *d
- void brcmf_fw_crashed(struct device *dev)
- {
- 	struct brcmf_bus *bus_if = dev_get_drvdata(dev);
--	struct brcmf_pub *drvr = bus_if->drvr;
-+	struct brcmf_pub *drvr;
-+
-+	/* May fire before brcmf_attach() wires up drvr, or after removal
-+	 * has cleared it; guard the derefs below (and the arming gate in
-+	 * brcmf_bus_schedule_reset() already checks drvr/->removing).
-+	 */
-+	if (!bus_if)
-+		return;
-+	drvr = bus_if->drvr;
-+	if (!drvr)
-+		return;
- 
- 	bphy_err(drvr, "Firmware has halted or crashed\n");
- 
- 	brcmf_dev_coredump(dev);
- 
--	if (drvr->bus_reset.func)
--		schedule_work(&drvr->bus_reset);
-+	brcmf_bus_schedule_reset(bus_if);
- }
- 
- void brcmf_detach(struct device *dev)
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-@@ -2462,6 +2462,7 @@ brcmf_pcie_probe(struct pci_dev *pdev, c
- 		ret = -ENOMEM;
- 		goto fail;
- 	}
-+	mutex_init(&bus->bus_reset_lock);
- 	bus->msgbuf = kzalloc(sizeof(*bus->msgbuf), GFP_KERNEL);
- 	if (!bus->msgbuf) {
- 		ret = -ENOMEM;
-@@ -2547,6 +2548,11 @@ brcmf_pcie_remove(struct pci_dev *pdev)
- 	if (devinfo->ci)
- 		brcmf_pcie_intr_disable(devinfo);
- 
-+	if (devinfo->irq_allocated)
-+		synchronize_irq(pdev->irq);
-+
-+	brcmf_bus_cancel_reset_work(bus);
-+
- 	brcmf_detach(&pdev->dev);
- 	brcmf_free(&pdev->dev);
- 
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-@@ -4550,6 +4550,12 @@ fail:
- 	return NULL;
- }
- 
-+void brcmf_sdio_cancel_datawork(struct brcmf_sdio *bus)
-+{
-+	if (bus)
-+		cancel_work_sync(&bus->datawork);
-+}
-+
- /* Detach and free everything */
- void brcmf_sdio_remove(struct brcmf_sdio *bus)
- {
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.h
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.h
-@@ -361,6 +361,7 @@ int brcmf_sdiod_remove(struct brcmf_sdio
- struct brcmf_sdio *brcmf_sdio_probe(struct brcmf_sdio_dev *sdiodev);
- void brcmf_sdio_remove(struct brcmf_sdio *bus);
- void brcmf_sdio_isr(struct brcmf_sdio *bus, bool in_isr);
-+void brcmf_sdio_cancel_datawork(struct brcmf_sdio *bus);
- 
- void brcmf_sdio_wd_timer(struct brcmf_sdio *bus, bool active);
- void brcmf_sdio_wowl_config(struct device *dev, bool enabled);
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
-@@ -1254,6 +1254,7 @@ static int brcmf_usb_probe_cb(struct brc
- 		ret = -ENOMEM;
- 		goto fail;
- 	}
-+	mutex_init(&bus->bus_reset_lock);
- 
- 	bus->dev = dev;
- 	bus_pub->bus = bus;
-@@ -1320,6 +1321,8 @@ brcmf_usb_disconnect_cb(struct brcmf_usb
+--- a/drivers/net/wireless/ath/ath6kl/txrx.c
++++ b/drivers/net/wireless/ath/ath6kl/txrx.c
+@@ -1829,7 +1829,7 @@ void aggr_reset_state(struct aggr_info_c
  		return;
- 	brcmf_dbg(USB, "Enter, bus_pub %p\n", devinfo);
  
-+	brcmf_bus_cancel_reset_work(devinfo->bus_pub.bus);
-+
- 	brcmf_detach(devinfo->dev);
- 	brcmf_free(devinfo->dev);
- 	kfree(devinfo->bus_pub.bus);
+ 	if (aggr_conn->timer_scheduled) {
+-		del_timer(&aggr_conn->timer);
++		timer_delete_sync(&aggr_conn->timer);
+ 		aggr_conn->timer_scheduled = false;
+ 	}
+ 
 
 
