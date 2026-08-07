@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CE013A6F0A;
-	Fri,  7 Aug 2026 14:44:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3267305665;
+	Fri,  7 Aug 2026 14:44:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786113883; cv=none; b=JIqzJXAElnoLQeXSx3gPZjNZIFbGALtFSLJ0RBw6ptoAbJ8iJiY+6wEg9B0fulPZnv4zDjDKtY6tQrc1GnFZ3tssnXvGjwsy115fWQrfJokT9yyLYpuP2nVG4X7lCgYYFXB8ZkGvvmCPG+4N+jKbrkfEfmRuRqJWWpalbCRu6tg=
+	t=1786113882; cv=none; b=WzPeZ5UBexErE7ZIhffhFCVcyA7adM4E0YSUFHeKla5Blvx47MXhYkNeUtJUdwPNDip474nTIlXSeJeG39FkeeNTTT1SyoEHl24V05ry9JkckZCeTWUi1cU8N1jEqN+M/w0hYQnA83d1nK38peQpSjaXdPrk8hXge2jNfzekwYI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786113883; c=relaxed/simple;
-	bh=BZBfV3uSKMcegFgk0StdQZjGjuUZzGZMLVrH0YD+rTM=;
+	s=arc-20240116; t=1786113882; c=relaxed/simple;
+	bh=PyqOvE0Hym8oPfsniUUgAOaB6XPsAdfbTJhLHtLZoZw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XXPZgpL3P1yzPwe5wAsOW8CAlbsUPnltAEClKzvysk9Ab0wJho/HsihxGCrimCNISuVsJJi4/d9fjQAmkVMThrO1ddGWRe/mF3W5S5bOwYbE/9m1Tn+uAV7ipbEYk9EMbaDtiJGgnWH1TGTCzIGKZflE0qoFQKJ7WjeKgEcJtvo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I41MFyMH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qHhyqefWrhydpF148HWJjdS0WVz44rpsJ+A1GUGFc8jVlmVdSlqEOs9Q0XHTVJP5KULTGUPL9O9PbTqKiPElLXsQmq2cgi3Rs5n1852ztg51JXave3f4TvnJx/kmH2mOLExP90G/JcQqdiYfpepnsIwlLxsmMfi6xwOLhMlwzSg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mYAAERkj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I41MFyMH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1753D1F00A3A;
-	Fri,  7 Aug 2026 14:44:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mYAAERkj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D63C81F00A3F;
+	Fri,  7 Aug 2026 14:44:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786113868;
-	bh=7snUZB/T4RC4rmfSFuBB8TFC0XNTsVI2ycbkcQSrEMY=;
+	s=korg; t=1786113871;
+	bh=BCPOU1Czp4YHT3aUV7rVLglir6JfGBPEUdKDWXcMRSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I41MFyMH26EybWJcYc1zZfmGwWh0aJBz8wqb3OpDte+tiEUaNC1mlfmx03SXsURpT
-	 QTLopSp8sx8r04yMuTpuh3Xe0jMohys5dsVRYw0xncFNCtY2eT214v+tQzf3KvFBBX
-	 YY0DTXUAZie0sj1du9X/bV7E+DrmBdlHX0hLkA5g=
+	b=mYAAERkjUt8mdUzBlI7DFByzX91Gv1oX9RsxXszyt/F7fcfci9TqhQdlrrtZ/xRkS
+	 2UZ+heKLDMI09gPXaV7R1Xym7uoU7k0Kf+T/assVUITylTFLYRVmCDPDFvQy+DQtNI
+	 cOSqqDUenOlkzCMfxQrf7ZyEBn3IXptlecajq/6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Loic Guegan <loic.guegan@mailbox.org>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Wenliang Yan <wenliang202407@163.com>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 062/337] hwmon: (ina2xx) Add support for INA260
-Date: Fri,  7 Aug 2026 16:34:25 +0200
-Message-ID: <20260807143419.857455894@linuxfoundation.org>
+Subject: [PATCH 6.12 063/337] hwmon: (ina226) Add support for SY24655
+Date: Fri,  7 Aug 2026 16:34:26 +0200
+Message-ID: <20260807143419.877504547@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -52,232 +51,324 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Wenliang Yan <wenliang202407@163.com>
 
-[ Upstream commit 70fb84a109c639637f0636281dbdb21ed8ffb000 ]
+[ Upstream commit 52172ad87a22ed6e687ca678da21d3c949bc89a1 ]
 
-INA260 is similar to other chips of the series, except it has an internal
-shunt resistor. The calibration register is therefore not present. Also,
-the current register address was changed, though that does not matter for
-the driver since the shunt voltage register (which is now the current
-register) value is already used to read the current.
+SY24655: Support for current and voltage detection as well as
+power calculation.
 
-Cc: Loic Guegan <loic.guegan@mailbox.org>
-Reviewed-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Signed-off-by: Wenliang Yan <wenliang202407@163.com>
+Message-ID: <20241106150547.2538-1-wenliang202407@163.com>
+[groeck: Changed order of compatible entries;
+ dropped spurious extra return statement in is_visible();
+ fixed code problems]
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Stable-dep-of: e6c80061ca23 ("hwmon: (ina2xx) Fix various overflow issues")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/hwmon/ina2xx.rst | 23 +++++++++++++++----
- drivers/hwmon/Kconfig          |  5 ++--
- drivers/hwmon/ina2xx.c         | 42 ++++++++++++++++++++++++++++++----
- 3 files changed, 59 insertions(+), 11 deletions(-)
+ Documentation/hwmon/ina2xx.rst | 27 +++++++++-
+ drivers/hwmon/Kconfig          |  2 +-
+ drivers/hwmon/ina2xx.c         | 94 ++++++++++++++++++++++++++++++++--
+ 3 files changed, 116 insertions(+), 7 deletions(-)
 
 diff --git a/Documentation/hwmon/ina2xx.rst b/Documentation/hwmon/ina2xx.rst
-index 7f1939b40f74f..1ce161e6c0bf0 100644
+index 1ce161e6c0bf0..a3860aae444c0 100644
 --- a/Documentation/hwmon/ina2xx.rst
 +++ b/Documentation/hwmon/ina2xx.rst
-@@ -53,6 +53,16 @@ Supported chips:
+@@ -63,6 +63,17 @@ Supported chips:
  
  	       https://www.ti.com/
  
-+  * Texas Instruments INA260
++  * Silergy SY24655
 +
-+    Prefix: 'ina260'
++    Prefix: 'sy24655'
 +
 +    Addresses: I2C 0x40 - 0x4f
 +
-+    Datasheet: Publicly available at the Texas Instruments website
++    Datasheet: Publicly available at the Silergy website
 +
-+	       https://www.ti.com/
++	       https://us1.silergy.com/
++
 +
  Author: Lothar Felten <lothar.felten@gmail.com>
  
  Description
-@@ -72,6 +82,9 @@ INA230 and INA231 are high or low side current shunt and power monitors
- with an I2C interface. The chips monitor both a shunt voltage drop and
- bus supply voltage.
+@@ -85,6 +96,11 @@ bus supply voltage.
+ INA260 is a high or low side current and power monitor with integrated shunt
+ resistor.
  
-+INA260 is a high or low side current and power monitor with integrated shunt
-+resistor.
++The SY24655 is a high- and low-side current shunt and power monitor with an I2C
++interface. The SY24655 supports both shunt drop and supply voltage, with
++programmable calibration value and conversion times. The SY24655 can also
++calculate average power for use in energy conversion.
 +
  The shunt value in micro-ohms can be set via platform data or device tree at
  compile-time or via the shunt_resistor attribute in sysfs at run-time. Please
  refer to the Documentation/devicetree/bindings/hwmon/ti,ina2xx.yaml for bindings
-@@ -87,16 +100,16 @@ The actual programmed interval may vary from the desired value.
- General sysfs entries
- ---------------------
+@@ -108,8 +124,8 @@ power1_input		Power(uW) measurement channel
+ shunt_resistor		Shunt resistance(uOhm) channel (not for ina260)
+ ======================= ===============================================
  
--======================= ===============================
-+======================= ===============================================
- in0_input		Shunt voltage(mV) channel
- in1_input		Bus voltage(mV) channel
- curr1_input		Current(mA) measurement channel
- power1_input		Power(uW) measurement channel
--shunt_resistor		Shunt resistance(uOhm) channel
--======================= ===============================
-+shunt_resistor		Shunt resistance(uOhm) channel (not for ina260)
-+======================= ===============================================
- 
--Sysfs entries for ina226, ina230 and ina231 only
--------------------------------------------------
-+Additional sysfs entries for ina226, ina230, ina231, and ina260
-+---------------------------------------------------------------
+-Additional sysfs entries for ina226, ina230, ina231, and ina260
+----------------------------------------------------------------
++Additional sysfs entries for ina226, ina230, ina231, ina260, and sy24655
++------------------------------------------------------------------------
  
  ======================= ====================================================
  curr1_lcrit		Critical low current
+@@ -130,6 +146,13 @@ update_interval		data conversion time; affects number of samples used
+ 			to average results for shunt and bus voltages.
+ ======================= ====================================================
+ 
++Sysfs entries for sy24655 only
++------------------------------
++
++======================= ====================================================
++power1_average		average power from last reading to the present.
++======================= ====================================================
++
+ .. note::
+ 
+    - Configure `shunt_resistor` before configure `power1_crit`, because power
 diff --git a/drivers/hwmon/Kconfig b/drivers/hwmon/Kconfig
-index acd0f86cb9b38..681722626bc48 100644
+index 681722626bc48..195c7b505a853 100644
 --- a/drivers/hwmon/Kconfig
 +++ b/drivers/hwmon/Kconfig
-@@ -2170,11 +2170,12 @@ config SENSORS_INA2XX
+@@ -2170,7 +2170,7 @@ config SENSORS_INA2XX
  	select REGMAP_I2C
  	help
  	  If you say yes here you get support for INA219, INA220, INA226,
--	  INA230, and INA231 power monitor chips.
-+	  INA230, INA231, and INA260 power monitor chips.
+-	  INA230, INA231, and INA260 power monitor chips.
++	  INA230, INA231, INA260, and SY24655 power monitor chips.
  
  	  The INA2xx driver is configured for the default configuration of
  	  the part as described in the datasheet.
--	  Default value for Rshunt is 10 mOhms.
-+	  Default value for Rshunt is 10 mOhms except for INA260 which has an
-+	  internal 2 mOhm shunt resistor.
- 	  This driver can also be built as a module. If so, the module
- 	  will be called ina2xx.
- 
 diff --git a/drivers/hwmon/ina2xx.c b/drivers/hwmon/ina2xx.c
-index 03a011c9b73da..cecc80a41a974 100644
+index cecc80a41a974..345fe7db9de94 100644
 --- a/drivers/hwmon/ina2xx.c
 +++ b/drivers/hwmon/ina2xx.c
-@@ -56,12 +56,14 @@
+@@ -51,12 +51,19 @@
+ #define INA226_ALERT_LIMIT		0x07
+ #define INA226_DIE_ID			0xFF
+ 
+-#define INA2XX_MAX_REGISTERS		8
++/* SY24655 register definitions */
++#define SY24655_EIN				0x0A
++#define SY24655_ACCUM_CONFIG	0x0D
++#define INA2XX_MAX_REGISTERS		0x0D
+ 
  /* settings - depend on use case */
  #define INA219_CONFIG_DEFAULT		0x399F	/* PGA=8 */
  #define INA226_CONFIG_DEFAULT		0x4527	/* averages=16 */
-+#define INA260_CONFIG_DEFAULT		0x6527	/* averages=16 */
+ #define INA260_CONFIG_DEFAULT		0x6527	/* averages=16 */
++#define SY24655_CONFIG_DEFAULT		0x4527	/* averages=16 */
++
++/* (only for sy24655) */
++#define SY24655_ACCUM_CONFIG_DEFAULT	0x044C	/* continuous mode, clear after read*/
  
  /* worst case is 68.10 ms (~14.6Hz, ina219) */
  #define INA2XX_CONVERSION_RATE		15
- #define INA2XX_MAX_DELAY		69 /* worst case delay in ms */
- 
- #define INA2XX_RSHUNT_DEFAULT		10000
-+#define INA260_RSHUNT			2000
- 
- /* bit mask for reading the averaging setting in the configuration register */
- #define INA226_AVG_RD_MASK		GENMASK(11, 9)
-@@ -125,11 +127,12 @@ static const struct regmap_config ina2xx_regmap_config = {
+@@ -97,6 +104,7 @@ static bool ina2xx_writeable_reg(struct device *dev, unsigned int reg)
+ 	case INA2XX_CALIBRATION:
+ 	case INA226_MASK_ENABLE:
+ 	case INA226_ALERT_LIMIT:
++	case SY24655_ACCUM_CONFIG:
+ 		return true;
+ 	default:
+ 		return false;
+@@ -127,12 +135,13 @@ static const struct regmap_config ina2xx_regmap_config = {
  	.writeable_reg = ina2xx_writeable_reg,
  };
  
--enum ina2xx_ids { ina219, ina226 };
-+enum ina2xx_ids { ina219, ina226, ina260 };
+-enum ina2xx_ids { ina219, ina226, ina260 };
++enum ina2xx_ids { ina219, ina226, ina260, sy24655 };
  
  struct ina2xx_config {
  	u16 config_default;
  	bool has_alerts;	/* chip supports alerts and limits */
-+	bool has_ishunt;	/* chip has internal shunt resistor */
+ 	bool has_ishunt;	/* chip has internal shunt resistor */
++	bool has_power_average;	/* chip has internal shunt resistor */
  	int calibration_value;
  	int shunt_div;
  	int bus_voltage_shift;
-@@ -157,6 +160,7 @@ static const struct ina2xx_config ina2xx_config[] = {
- 		.bus_voltage_lsb = 4000,
+@@ -149,6 +158,7 @@ struct ina2xx_data {
+ 	long power_lsb_uW;
+ 	struct mutex config_lock;
+ 	struct regmap *regmap;
++	struct i2c_client *client;
+ };
+ 
+ static const struct ina2xx_config ina2xx_config[] = {
+@@ -161,6 +171,7 @@ static const struct ina2xx_config ina2xx_config[] = {
  		.power_lsb_factor = 20,
  		.has_alerts = false,
-+		.has_ishunt = false,
+ 		.has_ishunt = false,
++		.has_power_average = false,
  	},
  	[ina226] = {
  		.config_default = INA226_CONFIG_DEFAULT,
-@@ -166,6 +170,16 @@ static const struct ina2xx_config ina2xx_config[] = {
- 		.bus_voltage_lsb = 1250,
+@@ -171,6 +182,7 @@ static const struct ina2xx_config ina2xx_config[] = {
  		.power_lsb_factor = 25,
  		.has_alerts = true,
-+		.has_ishunt = false,
+ 		.has_ishunt = false,
++		.has_power_average = false,
+ 	},
+ 	[ina260] = {
+ 		.config_default = INA260_CONFIG_DEFAULT,
+@@ -180,6 +192,18 @@ static const struct ina2xx_config ina2xx_config[] = {
+ 		.power_lsb_factor = 8,
+ 		.has_alerts = true,
+ 		.has_ishunt = true,
++		.has_power_average = false,
 +	},
-+	[ina260] = {
-+		.config_default = INA260_CONFIG_DEFAULT,
++	[sy24655] = {
++		.config_default = SY24655_CONFIG_DEFAULT,
++		.calibration_value = 4096,
 +		.shunt_div = 400,
 +		.bus_voltage_shift = 0,
 +		.bus_voltage_lsb = 1250,
-+		.power_lsb_factor = 8,
++		.power_lsb_factor = 25,
 +		.has_alerts = true,
-+		.has_ishunt = true,
++		.has_ishunt = false,
++		.has_power_average = true,
  	},
  };
  
-@@ -257,6 +271,15 @@ static int ina2xx_read_init(struct device *dev, int reg, long *val)
- 	unsigned int regval;
- 	int ret, retry;
+@@ -485,6 +509,41 @@ static int ina2xx_in_read(struct device *dev, u32 attr, int channel, long *val)
+ 	return 0;
+ }
  
-+	if (data->config->has_ishunt) {
-+		/* No calibration needed */
-+		ret = regmap_read(regmap, reg, &regval);
-+		if (ret < 0)
-+			return ret;
-+		*val = ina2xx_get_value(data, reg, regval);
++/*
++ * Configuring the READ_EIN (bit 10) of the ACCUM_CONFIG register to 1
++ * can clear accumulator and sample_count after reading the EIN register.
++ * This way, the average power between the last read and the current
++ * read can be obtained. By combining with accurate time data from
++ * outside, the energy consumption during that period can be calculated.
++ */
++static int sy24655_average_power_read(struct ina2xx_data *data, u8 reg, long *val)
++{
++	u8 template[6];
++	int ret;
++	long accumulator_24, sample_count;
++
++	/* 48-bit register read */
++	ret = i2c_smbus_read_i2c_block_data(data->client, reg, 6, template);
++	if (ret < 0)
++		return ret;
++	if (ret != 6)
++		return -EIO;
++	accumulator_24 = ((template[3] << 16) |
++				(template[4] << 8) |
++				template[5]);
++	sample_count = ((template[0] << 16) |
++				(template[1] << 8) |
++				template[2]);
++	if (sample_count <= 0) {
++		*val = 0;
 +		return 0;
 +	}
 +
- 	for (retry = 5; retry; retry--) {
- 		ret = regmap_read(regmap, reg, &regval);
- 		if (ret < 0)
-@@ -686,7 +709,7 @@ static umode_t ina2xx_is_visible(const void *_data, enum hwmon_sensor_types type
- 	case hwmon_chip:
- 		switch (attr) {
- 		case hwmon_chip_update_interval:
--			if (chip == ina226)
-+			if (chip == ina226 || chip == ina260)
- 				return 0644;
++	*val = DIV_ROUND_CLOSEST(accumulator_24, sample_count) * data->power_lsb_uW;
++
++	return 0;
++}
++
+ static int ina2xx_power_read(struct device *dev, u32 attr, long *val)
+ {
+ 	struct ina2xx_data *data = dev_get_drvdata(dev);
+@@ -492,6 +551,8 @@ static int ina2xx_power_read(struct device *dev, u32 attr, long *val)
+ 	switch (attr) {
+ 	case hwmon_power_input:
+ 		return ina2xx_read_init(dev, INA2XX_POWER, val);
++	case hwmon_power_average:
++		return sy24655_average_power_read(data, SY24655_EIN, val);
+ 	case hwmon_power_crit:
+ 		return ina226_alert_limit_read(data, INA226_POWER_OVER_LIMIT_MASK,
+ 					       INA2XX_POWER, val);
+@@ -651,6 +712,7 @@ static umode_t ina2xx_is_visible(const void *_data, enum hwmon_sensor_types type
+ {
+ 	const struct ina2xx_data *data = _data;
+ 	bool has_alerts = data->config->has_alerts;
++	bool has_power_average = data->config->has_power_average;
+ 	enum ina2xx_ids chip = data->chip;
+ 
+ 	switch (type) {
+@@ -702,6 +764,10 @@ static umode_t ina2xx_is_visible(const void *_data, enum hwmon_sensor_types type
+ 			if (has_alerts)
+ 				return 0444;
  			break;
++		case hwmon_power_average:
++			if (has_power_average)
++				return 0444;
++			break;
  		default:
-@@ -795,7 +818,9 @@ static int ina2xx_init(struct device *dev, struct ina2xx_data *data)
- 	u32 shunt;
- 	int ret;
+ 			break;
+ 		}
+@@ -734,7 +800,8 @@ static const struct hwmon_channel_info * const ina2xx_info[] = {
+ 	HWMON_CHANNEL_INFO(curr, HWMON_C_INPUT | HWMON_C_CRIT | HWMON_C_CRIT_ALARM |
+ 			   HWMON_C_LCRIT | HWMON_C_LCRIT_ALARM),
+ 	HWMON_CHANNEL_INFO(power,
+-			   HWMON_P_INPUT | HWMON_P_CRIT | HWMON_P_CRIT_ALARM),
++			   HWMON_P_INPUT | HWMON_P_CRIT | HWMON_P_CRIT_ALARM |
++			   HWMON_P_AVERAGE),
+ 	NULL
+ };
  
--	if (device_property_read_u32(dev, "shunt-resistor", &shunt) < 0)
-+	if (data->config->has_ishunt)
-+		shunt = INA260_RSHUNT;
-+	else if (device_property_read_u32(dev, "shunt-resistor", &shunt) < 0)
- 		shunt = INA2XX_RSHUNT_DEFAULT;
- 
- 	ret = ina2xx_set_shunt(data, shunt);
-@@ -815,6 +840,9 @@ static int ina2xx_init(struct device *dev, struct ina2xx_data *data)
+@@ -839,6 +906,19 @@ static int ina2xx_init(struct device *dev, struct ina2xx_data *data)
+ 				   INA226_ALERT_LATCH_ENABLE |
  						FIELD_PREP(INA226_ALERT_POLARITY, active_high));
  	}
++	if (data->config->has_power_average) {
++		if (data->chip == sy24655) {
++			/*
++			 * Initialize the power accumulation method to continuous
++			 * mode and clear the EIN register after each read of the
++			 * EIN register
++			 */
++			ret = regmap_write(regmap, SY24655_ACCUM_CONFIG,
++					   SY24655_ACCUM_CONFIG_DEFAULT);
++			if (ret < 0)
++				return ret;
++		}
++	}
  
-+	if (data->config->has_ishunt)
-+		return 0;
-+
- 	/*
- 	 * Calibration register is set to the best value, which eliminates
- 	 * truncation errors on calculating current register in hardware.
-@@ -860,7 +888,8 @@ static int ina2xx_probe(struct i2c_client *client)
+ 	if (data->config->has_ishunt)
+ 		return 0;
+@@ -868,6 +948,7 @@ static int ina2xx_probe(struct i2c_client *client)
+ 		return -ENOMEM;
  
- 	hwmon_dev = devm_hwmon_device_register_with_info(dev, client->name,
- 							 data, &ina2xx_chip_info,
--							 ina2xx_groups);
-+							 data->config->has_ishunt ?
-+								NULL : ina2xx_groups);
- 	if (IS_ERR(hwmon_dev))
- 		return PTR_ERR(hwmon_dev);
- 
-@@ -876,6 +905,7 @@ static const struct i2c_device_id ina2xx_id[] = {
- 	{ "ina226", ina226 },
+ 	/* set the device type */
++	data->client = client;
+ 	data->config = &ina2xx_config[chip];
+ 	data->chip = chip;
+ 	mutex_init(&data->config_lock);
+@@ -906,11 +987,16 @@ static const struct i2c_device_id ina2xx_id[] = {
  	{ "ina230", ina226 },
  	{ "ina231", ina226 },
-+	{ "ina260", ina260 },
+ 	{ "ina260", ina260 },
++	{ "sy24655", sy24655 },
  	{ }
  };
  MODULE_DEVICE_TABLE(i2c, ina2xx_id);
-@@ -901,6 +931,10 @@ static const struct of_device_id __maybe_unused ina2xx_of_match[] = {
- 		.compatible = "ti,ina231",
- 		.data = (void *)ina226
- 	},
+ 
+ static const struct of_device_id __maybe_unused ina2xx_of_match[] = {
 +	{
-+		.compatible = "ti,ina260",
-+		.data = (void *)ina260
++		.compatible = "silergy,sy24655",
++		.data = (void *)sy24655
 +	},
- 	{ },
+ 	{
+ 		.compatible = "ti,ina219",
+ 		.data = (void *)ina219
+@@ -935,7 +1021,7 @@ static const struct of_device_id __maybe_unused ina2xx_of_match[] = {
+ 		.compatible = "ti,ina260",
+ 		.data = (void *)ina260
+ 	},
+-	{ },
++	{ }
  };
  MODULE_DEVICE_TABLE(of, ina2xx_of_match);
+ 
 -- 
 2.53.0
 
