@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13E96418379;
-	Fri,  7 Aug 2026 14:42:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 298EE397958;
+	Fri,  7 Aug 2026 14:42:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786113758; cv=none; b=Snf/prxsfr6k4P9zhdScSbUHO35KM1KYPdpW/yDUklTMKsDFFZsPhKBnDfBRPyE+0TZnW26670jQNsZ3U0WPLMmjbePOwJJs8RXR8fnRmN09e9FJfIOr+Gv1J6GrRmzfCBdB3Emoaw/B/u9TZDAM5i8kX5htH8EjEHnSQAuo8qg=
+	t=1786113761; cv=none; b=q59jTY2gL90zX/WrrSvlZxEmkTmWhdEBOqzf0/mXpyeXcOLlUjsM7ie9+vvfQRCJN82rdY7Q0VI3ft5puiEW/wxyxxigXuwyf3iXuK1FdHZa5AEqTktXRRGp6tHaP7UZdREvu5ibsG2QgBJH/uxn6ROaolgzAJTI7Lx/Jsg36w0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786113758; c=relaxed/simple;
-	bh=wpuSVQDq/5kexiSjfUSWNgjNLAQt+TVboqjqLudGQJw=;
+	s=arc-20240116; t=1786113761; c=relaxed/simple;
+	bh=1f3Bop/jJejV086Ouy+C9+zGl0SYkDfl28y3MLVW1Zg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fLUwZuPSbRqi5kH6VXqH6FvKmSIXRK0yUotGxBhh2NYTGNIyLVU2223cTUbG0qSb3wO/uYvWfgQZElLZVQgXYOtPBkPNts4pTMuYkW+rZ2taG3ivbH7OLguw7Q9A5vgp3NuJxzROvZg3odqLVxE3/5wyzk5R/wVT0M2sQgXPSIY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2czzdi2P; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LkFxeyicxzzeJHQIVNSHkUteVe5YFXCXxLFnWCPXr3pzKAw9i3rEjLb0nM05PY0FackiMAKJxGjIxGQJPUzn8ABkVFbzAPPGkhDSP2E/q0En01APASlvNxBoMSIC82INKMkvcK8kAAkw2T/X4BlYubInFLbwzz9LCpgeDkRs4S4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DBXUBUqg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2czzdi2P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 921881F00A3A;
-	Fri,  7 Aug 2026 14:42:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DBXUBUqg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A90531F00A3F;
+	Fri,  7 Aug 2026 14:42:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786113734;
-	bh=cFthRWzzULuz3kYInFFjzMaWXGVE9v+2zwJzfSs1zFU=;
+	s=korg; t=1786113751;
+	bh=t+hulkq6LXHhZJshBaRgEL55YU9cHBcwtBa0bvSP2z0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2czzdi2PkgKj8v/dMHSdzLGl0FD1vVMwoHiSNtsfSgv6vnGY3PeEx+aj+l2csciyQ
-	 R3SiFKQAvQZhH9O2DvrlfFCD4FJ2pcotkd8dnDDUg5IxriSj5csWupGiqvL883Rxd5
-	 ZVScbPC5N4qnm9g9Ix711n5hPSh+mEqUc6Bm1VDo=
+	b=DBXUBUqgDOyOpIQoJTD3XFPQ2E24SKgRiQuyMDab/uunTdCjDqQH9cwRJvGpRoSpI
+	 zDE0OpHzhzodo80klVs1ZFHT132hl9QnzFtkSmPsb17vFr0cfDrJaHleU8WH88YOg1
+	 OtlbB23YnGyX/jh7yLIjIE7yCdjunlTj1JhMxK0E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tristan Madani <tristan@talencesecurity.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Hongling Zeng <zenghongling@kylinos.cn>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Frank Li <Frank.li@oss.nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 017/337] bpf: Reset register bounds before narrowing retval range in check_mem_access()
-Date: Fri,  7 Aug 2026 16:33:40 +0200
-Message-ID: <20260807143418.893602209@linuxfoundation.org>
+Subject: [PATCH 6.12 022/337] dmaengine: sun6i-dma: Fix reclaim descriptors while terminating DMA
+Date: Fri,  7 Aug 2026 16:33:45 +0200
+Message-ID: <20260807143418.999362096@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -52,50 +54,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tristan Madani <tristan@talencesecurity.com>
+From: Hongling Zeng <zenghongling@kylinos.cn>
 
-[ Upstream commit 5e0b273e0a62cc04ec338c7b502797c66c2ed42a ]
+[ Upstream commit ab1150115e68a46b687eb38c1ab92782018c9f2c ]
 
-When the BPF verifier processes a context load of an LSM hook return
-value, it calls __mark_reg_s32_range() to narrow the register to the
-hook's valid range. However, __mark_reg_s32_range() intersects the new
-range with the register's existing bounds using max_t()/min_t() rather
-than replacing them.
+When terminating DMA transfers, active descriptors are not properly
+reclaimed. Only cyclic descriptors were handled, leaving non-cyclic
+descriptors and their LLI chains to be permanently leaked.
 
-If the destination register carries stale bounds from a prior instruction
-(e.g. BPF_MOV64_IMM), the intersection can produce a range narrower than
-reality. The verifier then believes it knows the register's exact value,
-while at runtime the actual hook return value is loaded, creating a
-verifier/runtime mismatch that can be used to bypass BPF memory safety
-checks.
+Fix by using vchan_terminate_vdesc() which handles both cyclic and
+non-cyclic descriptors by adding them to desc_terminated queue for
+proper cleanup.
 
-The else branch already calls mark_reg_unknown() to reset register state
-before any narrowing. Apply the same reset in the is_retval path so
-stale bounds are cleared before __mark_reg_s32_range() intersects.
+Add pchan->desc != pchan->done check to prevent double-adding completed
+descriptors, which would corrupt the list.
 
-Fixes: 5d99e198be27 ("bpf, lsm: Add check for BPF LSM return value")
-Cc: stable@vger.kernel.org
-Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/r/20260622230123.3695446-2-tristmd@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 555859308723 ("dmaengine: sun6i: Add driver for the Allwinner A31 DMA controller")
+Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
+Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Suggested-by: Frank Li <Frank.li@oss.nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260701045733.33654-1-zenghongling@kylinos.cn
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/dma/sun6i-dma.c | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 8c3c4ab989a05..77183b436da5e 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -7234,6 +7234,7 @@ static int check_mem_access(struct bpf_verifier_env *env, int insn_idx, u32 regn
- 			 */
- 			if (reg_type == SCALAR_VALUE) {
- 				if (is_retval && get_func_retval_range(env->prog, &range)) {
-+					mark_reg_unknown(env, regs, value_regno);
- 					err = __mark_reg_s32_range(env, regs, value_regno,
- 								   range.minval, range.maxval);
- 					if (err)
+diff --git a/drivers/dma/sun6i-dma.c b/drivers/dma/sun6i-dma.c
+index c97027379263d..1f1e21d48ad76 100644
+--- a/drivers/dma/sun6i-dma.c
++++ b/drivers/dma/sun6i-dma.c
+@@ -934,16 +934,13 @@ static int sun6i_dma_terminate_all(struct dma_chan *chan)
+ 
+ 	spin_lock_irqsave(&vchan->vc.lock, flags);
+ 
+-	if (vchan->cyclic) {
+-		vchan->cyclic = false;
+-		if (pchan && pchan->desc) {
+-			struct virt_dma_desc *vd = &pchan->desc->vd;
+-			struct virt_dma_chan *vc = &vchan->vc;
++	if (pchan && pchan->desc && pchan->desc != pchan->done) {
++		struct virt_dma_desc *vd = &pchan->desc->vd;
+ 
+-			list_add_tail(&vd->node, &vc->desc_completed);
+-		}
++		vchan_terminate_vdesc(vd);
+ 	}
+ 
++	vchan->cyclic = false;
+ 	vchan_get_all_descriptors(&vchan->vc, &head);
+ 
+ 	if (pchan) {
 -- 
 2.53.0
 
