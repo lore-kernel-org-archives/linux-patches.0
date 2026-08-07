@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF2B42D12ED;
-	Fri,  7 Aug 2026 15:22:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5596A281369;
+	Fri,  7 Aug 2026 15:22:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116128; cv=none; b=MLihGes045Hd5bUd9RlqEUSmW6I4z8WVDI72XoDFVAQL13YtRSYbIwi0pN6mB2wvKV4ArkiO3stXJ6rCEeVm1mPoXR3VpkwZ0bM0wuYErOIVnfDTy8UKBS6AW6Pk6j5OrH6Za5V6qU8nk9UeYmd6VubxoNv2ePoQfMaumH2AeGw=
+	t=1786116131; cv=none; b=ksNWx6dQ0SsNJbEZQnNPefD3Sw2zC3v4rIFzYhyVFImo5O/VJoPOGMldozkhPtZkhOLs7wj6GsTeDAUFswJZ2W8zW6k039ZfWfdmUvpycXhjFloWVnaZJIyIMiopGer0lreXeoad9tTGETswgsqytPmMeGd9P7rgbnv0vpSijn4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116128; c=relaxed/simple;
-	bh=OHS+t1R6clLAk1dGlU/CdlAZVAr+C0tiOtnHrgeAmbk=;
+	s=arc-20240116; t=1786116131; c=relaxed/simple;
+	bh=/Xd03DyMAXOYMKA4wLNU+W0RCCpFzeaJIux7b28BAyo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aJxWUvNtG7j+eugOzKbTLdExObbvEE+9m+JX9d9epQhm7NFQzPjyFScUE0CP/W32/GqTgGncz/zDZyY1VejaB8cr4ghPOQPhsnBGuKeXrpzhXZJChmRLYiwuD3vKctQW6FSgqYSy8mGi5WR3B8Un0cFPy+pNkHQ5TX7eMWLfxis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bGMUKwvt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oh+kv1FkA2YbRM/pDWqY5rbAU4OGRj7pyQ2SdfHfg9t0OIWlRwf3hNIiDGoElmRtBBESBYPanOvZwydezxLYDpN5oEWyOmsD2c6xWfBVpiG3Bt2oX9Shvv4vvF8yRLzj7DQXO63y4x93XpTejtbPhwbe+WEs3PnphsbRgidlTFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qDPiSgkk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bGMUKwvt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEE161F000E9;
-	Fri,  7 Aug 2026 15:22:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qDPiSgkk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A94931F000E9;
+	Fri,  7 Aug 2026 15:22:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116127;
-	bh=wEtE0tcj1EGlA4N9ZzbvmGQDzeJdYSHmpL9E62tr/oc=;
+	s=korg; t=1786116130;
+	bh=eWhR3xdZNPxyd2DRdZ8hQvbJIKZBA839cTEvoreZVPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bGMUKwvthbMlperZnL+dlhKwqiMuGW1JWdUzd6dyrV9Wa8IWiue+Sxs3XC+1rLFC9
-	 IAKG77pNZB2fFcroSE9qXoEpjSgw6jX+C6pV6gsS+AeTIpKjSPXrtttP/dtvhtrKA5
-	 fs1eKjKuXcge1yKAtHpouOSX9pie6SYhPzyZ2V+4=
+	b=qDPiSgkkW8NcN7LY0VVEBhX9+TCNAYEvyP1jqffD8O8/4rgUgdPoP//U1Pqa56BGd
+	 lCbrpD8u9aNwk71LPefZ//9wV7HNnKNQ74hIh/zbJYoH4ZqFWj52LWYYtWTiQ2+Ity
+	 5ZEbLGGwxLZwXSyktqraycTUGo6hDqfIAW7BRgRY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Julian Anastasov <ja@ssi.bg>,
-	Zhiling Zou <roxy520tt@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 6.6 123/261] ipvs: do not propagate one-packet flag to synced conns
-Date: Fri,  7 Aug 2026 16:38:00 +0200
-Message-ID: <20260807143418.023875431@linuxfoundation.org>
+	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
+	Mahanta Jambigi <mjambigi@linux.ibm.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.6 124/261] net/smc: fix socket use-after-free during link group termination
+Date: Fri,  7 Aug 2026 16:38:01 +0200
+Message-ID: <20260807143418.044442300@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143415.358597922@linuxfoundation.org>
 References: <20260807143415.358597922@linuxfoundation.org>
@@ -56,50 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <roxy520tt@gmail.com>
+From: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
 
-commit a63d2dbaeb50a85d4c976b15a36e6b0c7113db5b upstream.
+commit f621d6ebeebb6374342571e4ddf45fdbc420f6cd upstream.
 
-Synced connections can be created before their destination exists. When
-the destination is later added, ip_vs_bind_dest() copies connection flags
-from the destination into cp->flags.
+__smc_lgr_terminate() drops conns_lock after finding a connection in
+lgr->conns_all, but before taking a reference on its socket. The connection
+is embedded in the socket, and its registration reference protects it only
+while the connection remains in the tree.
 
-IP_VS_CONN_F_ONE_PACKET connections are not synced. If a synced
-connection inherits IP_VS_CONN_F_ONE_PACKET while it is already hashed,
-expiry can treat it as a one-packet connection and skip unlinking the
-existing conn_tab node, leaving stale hash nodes pointing at a freed
-struct ip_vs_conn.
+A concurrent close can unregister the connection and drop that reference,
+freeing the socket before the termination worker reaches sock_hold().
 
-Drop IP_VS_CONN_F_ONE_PACKET from destination flags when binding synced
-connections.
+The race is reachable when close overlaps link group termination.
+Local stress testing reproduced the use-after-free and KASAN reported:
 
-Fixes: 26ec037f9841 ("IPVS: one-packet scheduling")
+  BUG: KASAN: slab-use-after-free in __smc_lgr_terminate.part.0 [smc]
+  Write of size 4 by task kworker/3:3
+  Workqueue: events smc_lgr_terminate_work [smc]
+  __smc_lgr_terminate.part.0 [smc]
+
+The socket was allocated by smc_create(), freed through
+slab_free_after_rcu_debug(), and was followed by:
+
+  refcount_t: addition on 0; use-after-free.
+  __smc_lgr_terminate.part.0 [smc]
+
+Take the socket reference while conns_lock still protects the tree entry.
+The unregister path then cannot drop the last reference until termination
+has finished using the socket.
+
+Fixes: 69318b5215f2 ("net/smc: improve abnormal termination locking")
 Cc: stable@vger.kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Suggested-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: Zhiling Zou <roxy520tt@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Acked-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+Reviewed-by: Mahanta Jambigi <mjambigi@linux.ibm.com>
+Link: https://patch.msgid.link/20260723105454.87016-1-xuanqiang.luo@linux.dev
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/ipvs/ip_vs_conn.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/smc/smc_core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/netfilter/ipvs/ip_vs_conn.c
-+++ b/net/netfilter/ipvs/ip_vs_conn.c
-@@ -598,6 +598,9 @@ ip_vs_bind_dest(struct ip_vs_conn *cp, s
- 	flags = cp->flags;
- 	/* Bind with the destination and its corresponding transmitter */
- 	if (flags & IP_VS_CONN_F_SYNC) {
-+		/* Synced conns are hashed, so they can not get this flag */
-+		conn_flags &= ~IP_VS_CONN_F_ONE_PACKET;
-+
- 		/* if the connection is not template and is created
- 		 * by sync, preserve the activity flag.
- 		 */
+--- a/net/smc/smc_core.c
++++ b/net/smc/smc_core.c
+@@ -1502,10 +1502,10 @@ static void __smc_lgr_terminate(struct s
+ 	read_lock_bh(&lgr->conns_lock);
+ 	node = rb_first(&lgr->conns_all);
+ 	while (node) {
+-		read_unlock_bh(&lgr->conns_lock);
+ 		conn = rb_entry(node, struct smc_connection, alert_node);
+ 		smc = container_of(conn, struct smc_sock, conn);
+ 		sock_hold(&smc->sk); /* sock_put below */
++		read_unlock_bh(&lgr->conns_lock);
+ 		lock_sock(&smc->sk);
+ 		smc_conn_kill(conn, soft);
+ 		release_sock(&smc->sk);
 
 
