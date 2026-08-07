@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86531371076;
-	Fri,  7 Aug 2026 14:42:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B747F429CE0;
+	Fri,  7 Aug 2026 14:42:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786113778; cv=none; b=LJb4/nosI68FMZOZOh1mOvD2BUDi0VrPzCr0rC8jSbIk8DQUqLtrc9iWKBrIKA2dee5VbxAK7/myW7eSxDO0uxrPELHL/1CWVVNbh+3C39xAcSjUCIQTIz3pcpiYCJE+mZ40ZrUpr69//GGex2ZDfHynpDLY7DjWD1ja0jEBDxk=
+	t=1786113783; cv=none; b=j17wXb0cMXYeEt3L9x6Y/eie135zgSaPBUYHdXiGIkIU1EVjHr+00xTMKOmbTde8ftd6HM9Kd2b3MAQP0nP4DHBij4KAjTLKMyx5D9B1F37kmQ+bRoGn/h8xrGJL75HixErnatbRutYiL1FzHarT6Z5AB1TtpyregEXca3o3Huw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786113778; c=relaxed/simple;
-	bh=qRYk/3Q0DcPn70hwHaLxDv40iWPGG/w5oazj/YYCClo=;
+	s=arc-20240116; t=1786113783; c=relaxed/simple;
+	bh=LZK6hZNlk8IP8XLEjExIs4eQ8998oxH4BQUAcjSolhk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MOekmWAbMugERBYfc/aPg7NPm/WzBzq8Jxnx2pdT3ki+RG62j61Tvma3oCTjKzGx2tRCoJ35xTnZv4atS+qdNwk0NZawlbkaA+xP6ya+l1MLZYy8MU56L4B2MUh/yVF9beluOpfhMlCo+wLVPVZjMooe+3qVFHvcl2oyMWh8s+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UfzF0XAX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qpB053sihPLfSC3GT9JTxpGie5HSIHVnlG3EO06IbCSRtwDaSubEEg5xdEyMlWdkQUpuMw2dXa0mpCB9oPScYaYESLX7ni+i9n+UA9TrLKzGq2RtAQk+7jvGbqV2qIoRz7MwFlvPHFb7gtxCfLZ1f4IP+5KILf0YdTA8di1V6QQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iD1kVLTr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UfzF0XAX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7988A1F01558;
-	Fri,  7 Aug 2026 14:42:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iD1kVLTr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EE201F01559;
+	Fri,  7 Aug 2026 14:42:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786113754;
-	bh=ntaw7rKa3JFf3fZvCvrvdNwGomi4whBr2vRWFAS0oB0=;
+	s=korg; t=1786113765;
+	bh=A5gLHMdDLH+w41LSW5c+9wxbc+F1Uz5F+hzS0zOI+tE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UfzF0XAXJf+qkgKninhiMjCO35/ucyjY2ZG5wq4bKfEuQZbAEZ3W1/B1WoiaDOi2F
-	 93MIl5MCGwvnebXujVKi5m5Xju8K/6rsPxREyITlAmcGt0ASOPFGAaiv1HGDebhGyi
-	 uvzi/fBh+U7ksOABMljeTVneUUrNKrEujddyyx5Y=
+	b=iD1kVLTrv7f+BOhhecmii+MR3rgFZOCH+0P45SxNQk5eCYtJSvbXZ0lOT7d8VFusF
+	 bEYZvIGupRJCErzvPhhvpmLnyOLdUPNjAjWLAJEgYlu0JihoWCBrCmJbQ5YqeZcDMo
+	 dK+0eA0xULvtWUL6nzHZqhImePZKLX3JjNcLJ/K0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Tiwei Bie <tiwei.btw@antgroup.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 023/337] dmaengine: idxd: fix fdev setup failure cleanup in idxd_cdev_open()
-Date: Fri,  7 Aug 2026 16:33:46 +0200
-Message-ID: <20260807143419.021628405@linuxfoundation.org>
+Subject: [PATCH 6.12 004/337] um: Use os_set_pdeathsig helper in winch thread/process
+Date: Fri,  7 Aug 2026 16:33:27 +0200
+Message-ID: <20260807143418.616390047@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -53,63 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Tiwei Bie <tiwei.btw@antgroup.com>
 
-[ Upstream commit ee1d7274102285d78a53161fc705a8d8cd40b066 ]
+commit 42b8b00c8ab1ac18fccde3f29ee589626a561ea7 upstream.
 
-The failed_dev_add and failed_dev_name paths drop the file-device
-reference while wq->wq_lock is still held. If put_device(fdev) drops the
-last reference, idxd_file_dev_release() runs synchronously and tries to
-take wq->wq_lock again, deadlocking.
+Since we have a helper now, let's switch to using it. It will make
+the code slightly more consistent.
 
-Those paths also fall through into the later ctx cleanup labels even
-though idxd_file_dev_release() owns that cleanup and frees ctx. This can
-make idxd_xa_pasid_remove(ctx) and kfree(ctx) operate on a freed context.
-
-Move idxd_wq_get() before file-device setup can fail, since the release
-callback always calls idxd_wq_put(). Then unlock wq->wq_lock before
-put_device(fdev) and return directly from the file-device setup failure
-path, leaving ctx cleanup to the release callback.
-
-Fixes: e6fd6d7e5f0fe ("dmaengine: idxd: add a device to represent the file opened")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Link: https://patch.msgid.link/20260525141550.1385581-1-dbgh9129@gmail.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Tiwei Bie <tiwei.btw@antgroup.com>
+Link: https://patch.msgid.link/20241024142828.2612828-5-tiwei.btw@antgroup.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/idxd/cdev.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/um/drivers/chan_user.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/dma/idxd/cdev.c b/drivers/dma/idxd/cdev.c
-index 8dcd2331bb1ac..14b322ac6e6c6 100644
---- a/drivers/dma/idxd/cdev.c
-+++ b/drivers/dma/idxd/cdev.c
-@@ -293,6 +293,7 @@ static int idxd_cdev_open(struct inode *inode, struct file *filp)
- 	fdev->parent = cdev_dev(idxd_cdev);
- 	fdev->bus = &dsa_bus_type;
- 	fdev->type = &idxd_cdev_file_type;
-+	idxd_wq_get(wq);
+diff --git a/arch/um/drivers/chan_user.c b/arch/um/drivers/chan_user.c
+index 1434114b2f34..35f9beeb19b3 100644
+--- a/arch/um/drivers/chan_user.c
++++ b/arch/um/drivers/chan_user.c
+@@ -10,7 +10,6 @@
+ #include <signal.h>
+ #include <termios.h>
+ #include <sys/ioctl.h>
+-#include <sys/prctl.h>
+ #include "chan_user.h"
+ #include <os.h>
+ #include <um_malloc.h>
+@@ -162,7 +161,7 @@ static __noreturn int winch_thread(void *arg)
+ 	int count;
+ 	char c = 1;
  
- 	rc = dev_set_name(fdev, "file%d", ctx->id);
- 	if (rc < 0) {
-@@ -306,13 +307,14 @@ static int idxd_cdev_open(struct inode *inode, struct file *filp)
- 		goto failed_dev_add;
- 	}
+-	prctl(PR_SET_PDEATHSIG, SIGKILL);
++	os_set_pdeathsig();
  
--	idxd_wq_get(wq);
- 	mutex_unlock(&wq->wq_lock);
- 	return 0;
- 
- failed_dev_add:
- failed_dev_name:
-+	mutex_unlock(&wq->wq_lock);
- 	put_device(fdev);
-+	return rc;
- failed_ida:
- failed_set_pasid:
- 	if (device_user_pasid_enabled(idxd))
+ 	pty_fd = data->pty_fd;
+ 	pipe_fd = data->pipe_fd;
 -- 
 2.53.0
 
