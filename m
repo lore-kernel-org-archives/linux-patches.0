@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00CE344236B;
-	Fri,  7 Aug 2026 14:56:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49F18331200;
+	Fri,  7 Aug 2026 14:57:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114624; cv=none; b=TIywQB68V6Bez6/BWiczEArnu8Es84tpMbiQTFKZP0kE9j5Yb+NF3mh0wYoL9jxqwl7LjZrLBJOwEgojzgqwgE2YeT6YQTgESTqpHBkWwdhuyrJw7fKuMz7185fK5kuhXHZKPh+mjtguN5Mg/00KQyVpM9cHXfm837jhrqxA5u8=
+	t=1786114628; cv=none; b=mBgo0hKvNLkorv6uxquHvMdAKZ6oeVvT/co5UV8/t/AF8IzgCaAuYgxWIzqDC5Gxod4warQl21wDjrXERN7SeClm0llsq3mi72P5UAaSYqNUaD2qrsUUW7NA59L7Wn3fATw265vhsOqaIHf/N1eIJbVZTAyWHPXbUQL1tTl6QXk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114624; c=relaxed/simple;
-	bh=OWDAsBkjuo6PEXMFcyHJOoBR5yIwTF3yMGC2Sfp5ss8=;
+	s=arc-20240116; t=1786114628; c=relaxed/simple;
+	bh=FVbx4VSmuMwtATLkqYtJrq+abEVxsv+vrOdsreefMAA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aJflvsvHJZ6Re7dvQqj3CIeuWIymGB8SS3WUO2qVFXqerh1Lj9z//9ulG6QsBeaV82d2Y9dnCBtIRCKXI59JZyF7e5gNdBWOCM/vO4IAFuHN0HRIQhpummoZ0Axai2A96JVXPRSKqFnH4iJisOLQfvy8XveSel4qqQykZYaBJHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P+v5QQ9z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ijes/RSRKtpqi5YOvjUwXmz23oxXQCNxmBzJsGAeZnhi4wkVMk+h+DBn9/XY5rwORx14ttKgyMPjmER2PXJay396ba/eqax+0Sqlw5t1+4o6LzETfYqLZhKmDNsR9s9ooLzlZpJtZjpWGs4rFEhY7hjq/EtZo4bhu975FeX1Lho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ABra4gM4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P+v5QQ9z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F00CB1F00A3A;
-	Fri,  7 Aug 2026 14:56:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ABra4gM4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D06861F00A3D;
+	Fri,  7 Aug 2026 14:56:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114616;
-	bh=ELG7nqEEIWSXpPsuff9ZU6qqRJR8UoYjMPzdDoeGiUU=;
+	s=korg; t=1786114619;
+	bh=PFkd3NFehkxlubiAZU0Pkwt1y10VMDXUK9TM5GyZh3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P+v5QQ9zIcj2X7Q6LFtLv9v1UcFlVwKuQ+smV4CuaAOErl1g6CbG61II+/Xe2k85q
-	 /R1dHzV7WE+62jGjUxbwxRQcvO/gTrkCNHIGpVA86w/hpPqsroMOXFcKdHaRpp3CUy
-	 o1KE+WcbDEh7fkUqwJpXrJ2grazphUHLHOXZnMFE=
+	b=ABra4gM46Q2z5M0Vwey1+E8hlAe8tUEJe56jLUl51BEYnR+LRPkURZKbk7smqvJ+p
+	 L/imNps5CEtDHDtYRgQDXbhuzrjHlbjjmwRkwKOmUivuxZQPQYoY2f6xk1URWYR9hN
+	 o/MmVQW3+YwSnbXucIvQV44eH3wqD/8Ja214iZEQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Auld <matthew.auld@intel.com>,
-	Zongyao Bai <zongyao.bai@intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	linux-afs@lists.infradead.org,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 327/337] drm/xe/pt: Reset current_op in xe_pt_update_ops_init()
-Date: Fri,  7 Aug 2026 16:38:50 +0200
-Message-ID: <20260807143425.629203659@linuxfoundation.org>
+Subject: [PATCH 6.12 328/337] rxrpc: Generate rtt_min
+Date: Fri,  7 Aug 2026 16:38:51 +0200
+Message-ID: <20260807143425.652017439@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -47,70 +47,94 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zongyao Bai <zongyao.bai@intel.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 6384271ac1ac0099198d15df79212a19ebdb929d ]
+[ Upstream commit c637bd066841de6d0a204898a62f1d9bb8fa1b7f ]
 
-xe_pt_update_ops_init() fails to reset current_op to 0. On the
-vm_bind path, ops_execute() calls xe_pt_update_ops_prepare() inside
-the xe_validation_guard() / drm_exec_until_all_locked() loop. When
-that loop retries due to lock contention or OOM eviction
-(drm_exec_retry_on_contention() / xe_validation_retry_on_oom()),
-xe_pt_update_ops_prepare() runs again on the same vops, and each
-call to bind_op_prepare() increments current_op without resetting it.
+Generate rtt_min as this is required by RACK-TLP.
 
-After N retries current_op exceeds the array size allocated by
-xe_vma_ops_alloc(), causing an out-of-bounds write into
-SLUB-poisoned memory and a subsequent UAF crash in
-xe_migrate_update_pgtables_cpu() when reading the corrupted pt_op->bind.
-
-Also reset needs_svm_lock and needs_invalidation which are derived in
-the same prepare pass and would otherwise cause wrong migrate ops
-selection and redundant TLB invalidation on retry.
-
-Fix this by resetting current_op, needs_svm_lock and needs_invalidation
-in xe_pt_update_ops_init().
-
-v2 (Matt):
-   - Add details in commit message.
-   - Add Fixes tag and Cc to stable@vger.kernel.org
-
-Fixes: e8babb280b5e ("drm/xe: Convert multiple bind ops into single job")
-Suggested-by: Matthew Auld <matthew.auld@intel.com>
-Cc: stable@vger.kernel.org
-Assisted-by: GitHub-Copilot:claude-sonnet-4.6
-Signed-off-by: Zongyao Bai <zongyao.bai@intel.com>
-Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
-Link: https://patch.msgid.link/20260714232433.2737533-1-zongyao.bai@intel.com
-(cherry picked from commit 046045543e530605c441063535e7dca0075369a6)
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
+Link: https://patch.msgid.link/20241204074710.990092-27-dhowells@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: e4d2878369d5 ("rxrpc: Fix irq-disabled in local_bh_enable()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_pt.c |    3 +++
- 1 file changed, 3 insertions(+)
+ lib/win_minmax.c        |    1 +
+ net/rxrpc/ar-internal.h |    2 ++
+ net/rxrpc/rtt.c         |   20 ++++++++++++++++----
+ 3 files changed, 19 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/xe/xe_pt.c
-+++ b/drivers/gpu/drm/xe/xe_pt.c
-@@ -1833,8 +1833,11 @@ static void
- xe_pt_update_ops_init(struct xe_vm_pgtable_update_ops *pt_update_ops)
- {
- 	init_llist_head(&pt_update_ops->deferred);
-+	pt_update_ops->current_op = 0;
- 	pt_update_ops->start = ~0x0ull;
- 	pt_update_ops->last = 0x0ull;
-+	pt_update_ops->needs_userptr_lock = false;
-+	pt_update_ops->needs_invalidation = false;
+--- a/lib/win_minmax.c
++++ b/lib/win_minmax.c
+@@ -97,3 +97,4 @@ u32 minmax_running_min(struct minmax *m,
+ 
+ 	return minmax_subwin_update(m, win, &val);
+ }
++EXPORT_SYMBOL(minmax_running_min);
+--- a/net/rxrpc/ar-internal.h
++++ b/net/rxrpc/ar-internal.h
+@@ -349,6 +349,8 @@ struct rxrpc_peer {
+ 	spinlock_t		rtt_input_lock;	/* RTT lock for input routine */
+ 	ktime_t			rtt_last_req;	/* Time of last RTT request */
+ 	unsigned int		rtt_count;	/* Number of samples we've got */
++	unsigned int		rtt_taken;	/* Number of samples taken (wrapping) */
++	struct minmax		min_rtt;	/* Estimated minimum RTT */
+ 
+ 	u32			srtt_us;	/* smoothed round trip time << 3 in usecs */
+ 	u32			mdev_us;	/* medium deviation			*/
+--- a/net/rxrpc/rtt.c
++++ b/net/rxrpc/rtt.c
+@@ -127,16 +127,27 @@ static void rxrpc_set_rto(struct rxrpc_p
+ 	peer->rto_us = rxrpc_bound_rto(rto);
  }
  
- /**
+-static void rxrpc_ack_update_rtt(struct rxrpc_peer *peer, long rtt_us)
++static void rxrpc_update_rtt_min(struct rxrpc_peer *peer, ktime_t resp_time, long rtt_us)
++{
++	/* Window size 5mins in approx usec (ipv4.sysctl_tcp_min_rtt_wlen) */
++	u32 wlen_us = 5ULL * NSEC_PER_SEC / 1024;
++
++	minmax_running_min(&peer->min_rtt, wlen_us, resp_time / 1024,
++			   (u32)rtt_us ? : jiffies_to_usecs(1));
++}
++
++static void rxrpc_ack_update_rtt(struct rxrpc_peer *peer, ktime_t resp_time, long rtt_us)
+ {
+ 	if (rtt_us < 0)
+ 		return;
+ 
+-	//rxrpc_update_rtt_min(peer, rtt_us);
++	/* Update RACK min RTT [RFC8985 6.1 Step 1]. */
++	rxrpc_update_rtt_min(peer, resp_time, rtt_us);
++
+ 	rxrpc_rtt_estimator(peer, rtt_us);
+ 	rxrpc_set_rto(peer);
+ 
+-	/* RFC6298: only reset backoff on valid RTT measurement. */
++	/* Only reset backoff on valid RTT measurement [RFC6298]. */
+ 	peer->backoff = 0;
+ }
+ 
+@@ -157,9 +168,10 @@ void rxrpc_peer_add_rtt(struct rxrpc_cal
+ 		return;
+ 
+ 	spin_lock(&peer->rtt_input_lock);
+-	rxrpc_ack_update_rtt(peer, rtt_us);
++	rxrpc_ack_update_rtt(peer, resp_time, rtt_us);
+ 	if (peer->rtt_count < 3)
+ 		peer->rtt_count++;
++	peer->rtt_taken++;
+ 	spin_unlock(&peer->rtt_input_lock);
+ 
+ 	trace_rxrpc_rtt_rx(call, why, rtt_slot, send_serial, resp_serial,
 
 
