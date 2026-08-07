@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8FCC4749C4;
-	Fri,  7 Aug 2026 15:35:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B58C73A6F0A;
+	Fri,  7 Aug 2026 15:35:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116933; cv=none; b=pbgCsR1CbeQ2LPIU9ElB3hCvIsrf1uJjE86riI//Oo8qucefWASd3sGAa5CI6wR0d37jLN1iekm29yDVbrN42ETBknRbEobzQ+Bvo1ocd5UorveCt2C2ZU4tDDywcIUU/dFi7kFd1O74hIrFXfHCGtiMLLvGWg/eAfI9QEMy3PE=
+	t=1786116935; cv=none; b=ORpwR1Iasnhiz8A600YEi6sIPSycgiXFPso6jBtp8vwh8UaMbhfvDb0j++Dk3S6KO/g3O8FCG0PRTavnyBPYBU1h0MJ++o6j9jy+UaoE/Vn7jxwquFPPSbOQjzQ5MFum2ToSp4wf1tjFXWQh76KFOMOE4+Pq4awZKPVXZAKzBfQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116933; c=relaxed/simple;
-	bh=agFUz7Q3PwrOq6BTAMoA/4BGWOJMybnE5Np6Nd6KqE0=;
+	s=arc-20240116; t=1786116935; c=relaxed/simple;
+	bh=YEXg4sUvYPyZlZdsciJrDqTlD/BJe8Pi5yfxaXHYwPA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tSFOlF5BRpH4idpVJOS0ONVp/QwXye37OYdEdlTSCeSfooBlEz1XFVa7ujCAe0i0DHRw4p+APU3vYxRodYGomET06Sc+ahAweZMjMXgfZ4wfK4W4jdzTP18r6sWW03XoNIh6ZLCH0jG8uFZTugvEZcMP5Cuu7M2SrwlZBw//UT4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TjVsoVqS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=McKhNg02LL+PCwy9h35k8lQnPlDZiQHLtco07OeLjoCZNGF1FG3OyS3aZ9fAzq8/EboGlqPdYPuTumR74sxore+Woswid5BWETT0Cv4RhmOgNYB92piPt6cMDa9QzOD/QvSJyN9bjTJEnsAqe6wSZRTA5E+MsmmgOFBnXaRON/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BHErQ21z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TjVsoVqS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50FD21F000E9;
-	Fri,  7 Aug 2026 15:35:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BHErQ21z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C6401F000E9;
+	Fri,  7 Aug 2026 15:35:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116931;
-	bh=ET6Sdp/TsnvsApURiPslOY2+mB1M0qkzX1pEf5Sbf/I=;
+	s=korg; t=1786116934;
+	bh=EpO0VarNIPqGLNbqEm/VnVY2O8nKE/bAL9PJxTfPNoo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TjVsoVqSvOsjXbtkyi52WMTwPfb8X3NrYwpvhlRjl/v5VACL6iek4D2YPomUvTmwP
-	 uutdZL+va6OrhYmRW2YGVb88MDOHmNx8huyHnUUdqIdMXsXQ+1qGmSx/28FvW0BdYd
-	 ILpUqk9PepW4Tca9gRjlNCb0XZOUD9SVRqSO1pt4=
+	b=BHErQ21zbYxLNApHmwEJR2kHnZH/9NKsDlv9aGoWJRClyCw9+/5o+9Ybwh51gteRM
+	 3u9c5zT7wrdcpTyRYPSJEI68WMKZ1dB0j9zrBMVeWj2vPvmsyGfSSPDcuhti3rbQOQ
+	 wTzCrQVTxq0DdQUm54r4I06WXlsRPuAdNcqVE8K8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijun Hu <zijun.hu@oss.qualcomm.com>,
+	Pauli Virtanen <pav@iki.fi>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 141/438] Bluetooth: btintel: Validate length before parsing diagnostics TLV
-Date: Fri,  7 Aug 2026 16:35:37 +0200
-Message-ID: <20260807143431.009910091@linuxfoundation.org>
+Subject: [PATCH 7.1 142/438] Bluetooth: hci_conn: hold conn reference in abort_conn_sync()
+Date: Fri,  7 Aug 2026 16:35:38 +0200
+Message-ID: <20260807143431.032764913@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -51,38 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijun Hu <zijun.hu@oss.qualcomm.com>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit b640ff9af3c809ff5ea2077fbba17df1594ec1e4 ]
+[ Upstream commit 5761d003daa987ac81463f570713ce9c9dd204e5 ]
 
-btintel_diagnostics() accesses tlv->val[0] without first validating
-that the diagnostics VSE is long enough to contain that field, so
-may cause reading data beyond the received frame.
+There is theoretical UAF if the conn is freed while the hci_sync task is
+running.
 
-Fix by validating the length before access.
+Hold refcount to avoid that.
 
-Fixes: af395330abed ("Bluetooth: btintel: Add Intel devcoredump support")
-Signed-off-by: Zijun Hu <zijun.hu@oss.qualcomm.com>
+Fixes: 227a0cdf4a02 ("Bluetooth: MGMT: Fix not generating command complete for MGMT_OP_DISCONNECT")
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btintel.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/bluetooth/hci_conn.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
-index 5e9cac090bd8f..bf567b7c5f00b 100644
---- a/drivers/bluetooth/btintel.c
-+++ b/drivers/bluetooth/btintel.c
-@@ -3771,6 +3771,9 @@ static int btintel_diagnostics(struct hci_dev *hdev, struct sk_buff *skb)
- {
- 	struct intel_tlv *tlv = (void *)&skb->data[5];
+diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
+index 924c7795e368a..fb96d019cf856 100644
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -3168,6 +3168,13 @@ static int abort_conn_sync(struct hci_dev *hdev, void *data)
+ 	return hci_abort_conn_sync(hdev, conn, conn->abort_reason);
+ }
  
-+	if (skb->len < 5 + sizeof(*tlv) + sizeof(tlv->val[0]))
-+		goto recv_frame;
++static void abort_conn_destroy(struct hci_dev *hdev, void *data, int err)
++{
++	struct hci_conn *conn = data;
 +
- 	/* The first event is always an event type TLV */
- 	if (tlv->type != INTEL_TLV_TYPE_ID)
- 		goto recv_frame;
++	hci_conn_put(conn);
++}
++
+ int hci_abort_conn(struct hci_conn *conn, u8 reason)
+ {
+ 	struct hci_dev *hdev = conn->hdev;
+@@ -3193,7 +3200,10 @@ int hci_abort_conn(struct hci_conn *conn, u8 reason)
+ 	 * as a result to MGMT_OP_DISCONNECT/MGMT_OP_UNPAIR which does
+ 	 * already queue its callback on cmd_sync_work.
+ 	 */
+-	err = hci_cmd_sync_run_once(hdev, abort_conn_sync, conn, NULL);
++	err = hci_cmd_sync_run_once(hdev, abort_conn_sync, hci_conn_get(conn),
++				    abort_conn_destroy);
++	if (err)
++		hci_conn_put(conn);
+ 	return (err == -EEXIST) ? 0 : err;
+ }
+ 
 -- 
 2.53.0
 
