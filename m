@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EFC9442372;
-	Fri,  7 Aug 2026 14:58:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B825466B01;
+	Fri,  7 Aug 2026 14:58:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114717; cv=none; b=Mj8m35ifM6Btm7l4bwJb1GCqqnlNpiEuEi7yp23jrh2AOSXv4jTUYjY4+xB0UgOo6rqmhCfAObCXFC9sQ8tRCoQUAFk0dteA5aI93QIwYoA6mIzwVAE6ny9HVerYimSF+VJuulTRlDtVkdHQKiOwwzdoBnn1HoE3JN4xKLXovGM=
+	t=1786114720; cv=none; b=gvpT0dnHtEKJomucASA8fMrTiSLOJZczfBWy0oIEe4I3IelZp0yAM1Uqp1DvPIKTWHz4LiQNdFKkVF1dVRMRFTn5sUh2hqJ0lHK9mjCllT8AeaD2f5hGeBjLtrhRksn4C/7ZU2z+ABQfr6nh+9crvQ0v/6n7JyddEdG0q2o58/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114717; c=relaxed/simple;
-	bh=Kf3E/JXlng83hYe532LM1VFIbQD6DCgJbj665ID3tYc=;
+	s=arc-20240116; t=1786114720; c=relaxed/simple;
+	bh=ymD1SzkNdOuZmCq7Td+lWSFTzLfmuIeIN9/7g8f0XjE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XCrQZDSSDtxMKB+lu5Glk5KTt28kX0O0uwIrhuGDI3kDepIVQMo0a05IYhHHTMe3996NTB4n7XS8GQ3AeLVp5z06RGcEI9ltfS0DeL5+BXSpPuwQFwboPHHg56WBIwZ9qRUPZvjUuOgc3EnxK0rCylMxvF4K6de1KSgSihElGkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MdkIhngS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=um/GtgwmERqIdQ9rcG85e5AdsWKU7lVE+9fd0z26w3eKPFzi//hi+5sR7puxsOCDMrmInFBwAII27a8XcyVelaFRYiYbQKWC6GZxnLcuzwl2mIZVKxnIYzfZgUE8c5fMD1aoMgYMG73+Nw56VkghV9N1ckQk72LGiDJA2lkmTTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Im9CR2IO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MdkIhngS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 821941F000E9;
-	Fri,  7 Aug 2026 14:58:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Im9CR2IO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 554381F000E9;
+	Fri,  7 Aug 2026 14:58:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114716;
-	bh=O7lzAeRzCqPNlfO29rr+R0dHBHIGeJPtnxQI1y90qXk=;
+	s=korg; t=1786114718;
+	bh=cWKGY9f+CyZwJ7jz+LTbb0OrgTrnf34tDeb3830bWbE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MdkIhngSESYEhHUQQRnz+jhjDbicJniAARswMN8TtRtyWijCtUaGNaH8ZNQW0jIJq
-	 peX5uV4BjdpMWy8lpQJURcsgifR8X3c9JT7BNrkZGgeGax/omSMWwagIPWC8UsOYbv
-	 aVMupiSM5Q0xdVhaxkyJStRkM4qZT7z5eZQ0J0zY=
+	b=Im9CR2IOQgc6UEZ1yuxNP/G8a3huq7FjDuTQrd+CKfdN3IrC9rRRE196xIE/rLY/C
+	 cdpXr0izYfZbFaGenh5M50XyDZ3XgPstmp1nDPokmrVnYsi5+idq6DP1kpoNQ8n/5h
+	 QflH+cFLy5QiJ1l7uB9Qn3crZIYRwbZd1anI9zgQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
+	Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 023/396] ata: ahci_ceva: fix error paths in ceva_ahci_platform_enable_resources()
-Date: Fri,  7 Aug 2026 16:33:03 +0200
-Message-ID: <20260807143424.775784372@linuxfoundation.org>
+Subject: [PATCH 6.18 024/396] phy: qcom: m31-eusb2: Fix return value of init call
+Date: Fri,  7 Aug 2026 16:33:04 +0200
+Message-ID: <20260807143424.796530110@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -51,73 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+From: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
 
-[ Upstream commit 4d99a91574c420decab56cc880fad0dc15b8a7a3 ]
+[ Upstream commit 361f533a2dce2c2841fe4dc0c9d85a67117edf95 ]
 
-On phy_init() failure the error path fallsthrough to disable_rsts, which
-deasserts the controller reset and then enters disable_phys calling
-phy_power_off() on PHYs that were never powered on. That corrupts the PHY
-power_count and triggers an extra runtime PM put.
+The init call currently returns success irrespective of any failures
+during repeater init or clock enablement. Return appropriate error value
+in the init call failure path.
 
-Use a separate exit_phys path that unwinds with phy_exit() only and falls
-through to disable_clks while the controller remains in reset.  Reserve
-phy_power_off() for the phy_power_on() failure path only, and skip
-masked-out ports in both unwind loops.
-
-On phy_power_on() failure re-assert the controller reset before disabling
-clocks and regulators, matching the teardown order used by
-ahci_platform_enable_resources() and ahci_platform_disable_resources().
-
-Fixes: 26c8404e162b ("ata: ahci_ceva: fix error handling for Xilinx GT PHY support")
-Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Fixes: 9c8504861cc4 ("phy: qcom: Add M31 based eUSB2 PHY driver")
+Signed-off-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260718-m31-eusb2-fix-v1-1-8588a1b94d76@oss.qualcomm.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/ahci_ceva.c | 18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ drivers/phy/qualcomm/phy-qcom-m31-eusb2.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/ata/ahci_ceva.c b/drivers/ata/ahci_ceva.c
-index 2d6a08c23d6ad..2961e53288f42 100644
---- a/drivers/ata/ahci_ceva.c
-+++ b/drivers/ata/ahci_ceva.c
-@@ -211,7 +211,7 @@ static int ceva_ahci_platform_enable_resources(struct ahci_host_priv *hpriv)
+diff --git a/drivers/phy/qualcomm/phy-qcom-m31-eusb2.c b/drivers/phy/qualcomm/phy-qcom-m31-eusb2.c
+index 68f1ba8fec4ad..9434bd22ef32d 100644
+--- a/drivers/phy/qualcomm/phy-qcom-m31-eusb2.c
++++ b/drivers/phy/qualcomm/phy-qcom-m31-eusb2.c
+@@ -221,7 +221,7 @@ static int m31eusb2_phy_init(struct phy *uphy)
+ disable_vreg:
+ 	regulator_bulk_disable(M31_EUSB_NUM_VREGS, phy->vregs);
  
- 		rc = phy_init(hpriv->phys[i]);
- 		if (rc)
--			goto disable_rsts;
-+			goto exit_phys;
- 	}
+-	return 0;
++	return ret;
+ }
  
- 	/* De-assert the controller reset */
-@@ -230,14 +230,24 @@ static int ceva_ahci_platform_enable_resources(struct ahci_host_priv *hpriv)
- 
- 	return 0;
- 
--disable_rsts:
--	ahci_platform_deassert_rsts(hpriv);
--
- disable_phys:
- 	while (--i >= 0) {
-+		if (ahci_ignore_port(hpriv, i))
-+			continue;
-+
- 		phy_power_off(hpriv->phys[i]);
- 		phy_exit(hpriv->phys[i]);
- 	}
-+	ahci_platform_assert_rsts(hpriv);
-+	goto disable_clks;
-+
-+exit_phys:
-+	while (--i >= 0) {
-+		if (ahci_ignore_port(hpriv, i))
-+			continue;
-+
-+		phy_exit(hpriv->phys[i]);
-+	}
- 
- disable_clks:
- 	ahci_platform_disable_clks(hpriv);
+ static int m31eusb2_phy_exit(struct phy *uphy)
 -- 
 2.53.0
 
