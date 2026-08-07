@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B662B35E95F;
-	Fri,  7 Aug 2026 14:44:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF111372EED;
+	Fri,  7 Aug 2026 14:45:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786113906; cv=none; b=mQGeMJ267aTKBpn79gz48ajfXMgIe67+8nmr19dIfI+hCEZMIj/+ckfAx38Wwb3T745Z9GWOAjIiSggsmaSS8bv9K7H0bJbaLI0zeBkqLJEe9psdaL69NY8WcBHkLPxjBNYRi0XhSXhNb35dyNSNbRpNvMXFAiI2jGIEv2Sq5i0=
+	t=1786113907; cv=none; b=JA+2mrKBtiZjyVRPXLsvsyckLXpU+aRf7UjUXoOIK9tY914W0nR6TROOx+ErL4ebHjSeuzAGoZjzms03/NkslFAXkwF6EP4rzDJo5OsOO4hPURmx1EyPf0HY3OD10jXlBdd6E8QehYEZTRfuqRmNJL7ggdDNDIVnCG3b4ZUH3j4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786113906; c=relaxed/simple;
-	bh=JJ/VrUb49zIgI/WfZb22X+IhsTtga0Jp9HGhwcxQUTM=;
+	s=arc-20240116; t=1786113907; c=relaxed/simple;
+	bh=rU/L84ROtpBibOtvzvOrH8tLTiKBzqxqr0hTzfL//KE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DowZnwudC/5F1d8U0zzw1+5r25JYqNudGgEeoHvLsibZvEjIHMCUs3mEdH6rmTsYh3Q07fKA+nO6yXPATC0eIDFze8HNvIvZnbjNhEVS0GZPN+msrqZ9H7qAiNYw7uHcnKKr6OjOQ8SKWCNfPo/joWPKF2/UwnooSUvcaZn5qPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ysd1GMtC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rI77qNFkseY7PxpUoX+jUEnsgOsGal33XQZ9o6Ipu5b0tzCeiFglkMNzYsWmwF6pqSBHikX7bYH5+syPuH4iJHFpweZLq7iQLBvrpiJ9kq673TiWIdz5/aJRSiKqQQ+XcuZKXxuhC6463TOluS4qWp9W64Mb9wCZQOWtEvdGxpA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DpP+RDbM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ysd1GMtC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A66D31F00A3A;
-	Fri,  7 Aug 2026 14:44:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DpP+RDbM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C4EB1F00A3D;
+	Fri,  7 Aug 2026 14:44:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786113897;
-	bh=mVbjpZoX/CHNf4/U1pq83OJYgrhHYDhqa4Faf2ELvzc=;
+	s=korg; t=1786113900;
+	bh=LqJb95+wq5fpl8zppp0HxOnJU9WQXslJL8wlbkhLToc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ysd1GMtCRo56K/c26NGVYFwJ9WO5Hrbf1N46EMNpa9Q0BJLpGB8Hk6ZSU9irjeKMP
-	 meGM6fqPqlzNvIfJ96P20TE3reqWiOexbnthO/3/+eMFD3dWTeaRHta/NYQAq7wsI4
-	 pBxAIBXmjlFrYX4bB4JPAr9ssxz4JmFqOoCSqUyE=
+	b=DpP+RDbMw/1c8Ol3X9bm581eHHuutXsS3UbMH27r6Dyj/aoe3swhp5uVU0eOs7Egv
+	 BJ+7Y1XvGV1GDEMN5FN4RsCxup2MHKv3AhCYuWzTBBu+RDO6lUbtIkWs+0zpkXc7SX
+	 8e0Q8wVJVKnivUvxhDy3DfSt9xO24K5FQTTx28oQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Aleksandr Mezin <mezin.alexander@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 071/337] hwmon: (nzxt-smart2) DMA-align output buffer
-Date: Fri,  7 Aug 2026 16:34:34 +0200
-Message-ID: <20260807143420.049996651@linuxfoundation.org>
+Subject: [PATCH 6.12 072/337] net: do not send ICMP/NDISC Redirects when peer allocation fails
+Date: Fri,  7 Aug 2026 16:34:35 +0200
+Message-ID: <20260807143420.072010531@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -52,51 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 080bbf42faf77e6489ab30d5114c5f8f6ccbb1b8 ]
+[ Upstream commit dbc3791e3b2472e1ccc08947e0f83b443470ff4f ]
 
-Sashiko reports:
+When inet_getpeer_v4() or inet_getpeer_v6() fails to allocate a peer entry
+under memory pressure or tree size caps, redirect handlers previously fell
+back to sending un-rate-limited ICMP/NDISC Redirect messages.
 
-When send_output_report() calls hid_hw_output_report(), the underlying USB
-HID core calls usb_interrupt_msg() which maps this buffer directly for DMA.
+In IPv4, ip_rt_send_redirect() called icmp_send() directly when peer == NULL.
+In IPv6, ip6_forward() and ndisc_send_redirect() passed a NULL peer into
+inet_peer_xrlim_allow(), which returned true when peer == NULL.
 
-When the DMA mapping flushes or invalidates the cacheline, it will corrupt
-the adjacent variables (mutex, update_interval) that were modified
-concurrently by the CPU. This causes memory corruption due to cacheline
-sharing on non-coherent CPU architectures (such as ARM or MIPS). The DMA
-API debugging tool (CONFIG_DMA_API_DEBUG) will trigger runtime warnings
-for this violation.
+Because ICMP/NDISC Redirects are not part of the default global rate limit
+mask (sysctl_icmp_ratemask), sending redirects when peer == NULL creates
+an un-rate-limited ICMP packet storm.
 
-Any operation that triggers send_output_report() (like setting a fan speed
-or updating the interval) causes the USB DMA mapping. On systems with
-non-coherent caches, this structural bug causes immediate and deterministic
-memory corruption.
+Fix this by failing closed in ip_rt_send_redirect(), ip6_forward(), and
+ndisc_send_redirect() when peer is NULL.
 
-Align the output buffer to ARCH_DMA_MINALIGN to fix the problem.
-
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Fixes: 53e68c20aeb1 ("hwmon: add driver for NZXT RGB&Fan Controller/Smart Device v2.")
-Cc: Aleksandr Mezin <mezin.alexander@gmail.com>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 92d868292634 ("inetpeer: Move ICMP rate limiting state into inet_peer entries.")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260724072901.1633601-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/nzxt-smart2.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/route.c      | 2 --
+ net/ipv6/ip6_output.c | 2 +-
+ net/ipv6/ndisc.c      | 2 ++
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/hwmon/nzxt-smart2.c b/drivers/hwmon/nzxt-smart2.c
-index 6f8febda4277c..66c5886f411a6 100644
---- a/drivers/hwmon/nzxt-smart2.c
-+++ b/drivers/hwmon/nzxt-smart2.c
-@@ -203,7 +203,7 @@ struct drvdata {
- 	 */
- 	struct mutex mutex;
- 	long update_interval;
--	u8 output_buffer[OUTPUT_REPORT_SIZE];
-+	u8 output_buffer[OUTPUT_REPORT_SIZE] __aligned(ARCH_DMA_MINALIGN);
- };
+diff --git a/net/ipv4/route.c b/net/ipv4/route.c
+index 4dce0de6ab898..2b8c29a29c4ae 100644
+--- a/net/ipv4/route.c
++++ b/net/ipv4/route.c
+@@ -890,8 +890,6 @@ void ip_rt_send_redirect(struct sk_buff *skb)
+ 	peer = inet_getpeer_v4(net->ipv4.peers, ip_hdr(skb)->saddr, vif);
+ 	if (!peer) {
+ 		rcu_read_unlock();
+-		icmp_send(skb, ICMP_REDIRECT, ICMP_REDIR_HOST,
+-			  rt_nexthop(rt, ip_hdr(skb)->daddr));
+ 		return;
+ 	}
  
- static long scale_pwm_value(long val, long orig_max, long new_max)
+diff --git a/net/ipv6/ip6_output.c b/net/ipv6/ip6_output.c
+index 50b41be5d38d0..5d17982cb9946 100644
+--- a/net/ipv6/ip6_output.c
++++ b/net/ipv6/ip6_output.c
+@@ -627,7 +627,7 @@ int ip6_forward(struct sk_buff *skb)
+ 		/* Limit redirects both by destination (here)
+ 		   and by source (inside ndisc_send_redirect)
+ 		 */
+-		if (inet_peer_xrlim_allow(peer, 1*HZ))
++		if (peer && inet_peer_xrlim_allow(peer, 1*HZ))
+ 			ndisc_send_redirect(skb, target);
+ 		rcu_read_unlock();
+ 	} else {
+diff --git a/net/ipv6/ndisc.c b/net/ipv6/ndisc.c
+index 73e2e457e30be..1a759519a90f9 100644
+--- a/net/ipv6/ndisc.c
++++ b/net/ipv6/ndisc.c
+@@ -1739,6 +1739,8 @@ void ndisc_send_redirect(struct sk_buff *skb, const struct in6_addr *target)
+ 
+ 	rcu_read_lock();
+ 	peer = inet_getpeer_v6(net->ipv6.peers, &ipv6_hdr(skb)->saddr);
++	if (!peer)
++		goto release;
+ 	ret = inet_peer_xrlim_allow(peer, 1*HZ);
+ 	rcu_read_unlock();
+ 
 -- 
 2.53.0
 
