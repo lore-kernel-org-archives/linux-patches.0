@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7E543E0732;
-	Fri,  7 Aug 2026 14:42:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86531371076;
+	Fri,  7 Aug 2026 14:42:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786113771; cv=none; b=We11u4xhAJ63oLWAQmco96UmH6N9WPsHGnZXLdJdNpqVUn5QR81cBOhwafpJXJ2Szu/URRu5WQw2LY/iGJ68wrvHTzBJLAzl2hjueeNwmQ6p0+EVkYcFtzW2n9mBLPWDNkP+0SLvJZAH2BFY+6v1/N2HM9DaekY5XJDt7UZJDWs=
+	t=1786113778; cv=none; b=LJb4/nosI68FMZOZOh1mOvD2BUDi0VrPzCr0rC8jSbIk8DQUqLtrc9iWKBrIKA2dee5VbxAK7/myW7eSxDO0uxrPELHL/1CWVVNbh+3C39xAcSjUCIQTIz3pcpiYCJE+mZ40ZrUpr69//GGex2ZDfHynpDLY7DjWD1ja0jEBDxk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786113771; c=relaxed/simple;
-	bh=/8TfETz8Fw8gwNz3LS91RNwKqIsBNNlq1aQRBhZepnM=;
+	s=arc-20240116; t=1786113778; c=relaxed/simple;
+	bh=qRYk/3Q0DcPn70hwHaLxDv40iWPGG/w5oazj/YYCClo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fflTjc2TADWKYndm39gOK911XV0zIPGKwQVBSBHTZZ92ziPtOnk98AHUwj4lIDS8kzrdGNJjEDTg9E/uQylMWJNOOZlc80TpYsp0osXpwR+7PhVTFlDgr9mYOgDC+B3q6nisgBdJZMIIld4gOVVOv5CTwMaM/LxJTivfvfx0tWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ig7lOvob; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MOekmWAbMugERBYfc/aPg7NPm/WzBzq8Jxnx2pdT3ki+RG62j61Tvma3oCTjKzGx2tRCoJ35xTnZv4atS+qdNwk0NZawlbkaA+xP6ya+l1MLZYy8MU56L4B2MUh/yVF9beluOpfhMlCo+wLVPVZjMooe+3qVFHvcl2oyMWh8s+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UfzF0XAX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ig7lOvob"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C53BA1F00ACA;
-	Fri,  7 Aug 2026 14:42:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UfzF0XAX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7988A1F01558;
+	Fri,  7 Aug 2026 14:42:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786113728;
-	bh=u6w8FzQJ6TOK/keEUm5zYq7vMj5RmphAfe9zBL9/Zbs=;
+	s=korg; t=1786113754;
+	bh=ntaw7rKa3JFf3fZvCvrvdNwGomi4whBr2vRWFAS0oB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ig7lOvobzcVs6iKQZELuu+km7siLD+eAKohUSqTCkL+pXxoQsGZ7gxATf+5g/oyn3
-	 AqCO7aZQUNrTIHycU4XjCxvlej8CRK0xbVxpLx55jwmgfVuMYy+IJ+LUz7TbCyJfD4
-	 6zi4fB2JhbIkAqSoSraBnGt6XFqqJHNx99ahDsLw=
+	b=UfzF0XAXJf+qkgKninhiMjCO35/ucyjY2ZG5wq4bKfEuQZbAEZ3W1/B1WoiaDOi2F
+	 93MIl5MCGwvnebXujVKi5m5Xju8K/6rsPxREyITlAmcGt0ASOPFGAaiv1HGDebhGyi
+	 uvzi/fBh+U7ksOABMljeTVneUUrNKrEujddyyx5Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lee Jones <lee@kernel.org>,
-	Jiri Kosina <jkosina@suse.com>,
+	Yuho Choi <dbgh9129@gmail.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 015/337] HID: logitech-dj: Prevent REPORT_ID_DJ_SHORT related user initiated OOB write
-Date: Fri,  7 Aug 2026 16:33:38 +0200
-Message-ID: <20260807143418.849473617@linuxfoundation.org>
+Subject: [PATCH 6.12 023/337] dmaengine: idxd: fix fdev setup failure cleanup in idxd_cdev_open()
+Date: Fri,  7 Aug 2026 16:33:46 +0200
+Message-ID: <20260807143419.021628405@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -51,53 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lee Jones <lee@kernel.org>
+From: Yuho Choi <dbgh9129@gmail.com>
 
-[ Upstream commit b6a57912854e7ea36f3b270032661140cc4209cd ]
+[ Upstream commit ee1d7274102285d78a53161fc705a8d8cd40b066 ]
 
-logi_dj_recv_send_report() assumes that all incoming REPORT_ID_DJ_SHORT
-reports are 14 Bytes (DJREPORT_SHORT_LENGTH - 1) long.  It uses that
-assumption to load the associated field's 'value' array with 14 Bytes of
-data.  However, if a malicious user only sends say 1 Byte of data,
-'report_count' will be 1 and only 1 Byte of memory will be allocated to
-the 'value' Byte array.  When we come to populate 'value[1-13]' we will
-experience an OOB write.
+The failed_dev_add and failed_dev_name paths drop the file-device
+reference while wq->wq_lock is still held. If put_device(fdev) drops the
+last reference, idxd_file_dev_release() runs synchronously and tries to
+take wq->wq_lock again, deadlocking.
 
-Signed-off-by: Lee Jones <lee@kernel.org>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Those paths also fall through into the later ctx cleanup labels even
+though idxd_file_dev_release() owns that cleanup and frees ctx. This can
+make idxd_xa_pasid_remove(ctx) and kfree(ctx) operate on a freed context.
+
+Move idxd_wq_get() before file-device setup can fail, since the release
+callback always calls idxd_wq_put(). Then unlock wq->wq_lock before
+put_device(fdev) and return directly from the file-device setup failure
+path, leaving ctx cleanup to the release callback.
+
+Fixes: e6fd6d7e5f0fe ("dmaengine: idxd: add a device to represent the file opened")
+Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+Link: https://patch.msgid.link/20260525141550.1385581-1-dbgh9129@gmail.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-logitech-dj.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/dma/idxd/cdev.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hid/hid-logitech-dj.c b/drivers/hid/hid-logitech-dj.c
-index d6fb7015f0d77..3a37d61616293 100644
---- a/drivers/hid/hid-logitech-dj.c
-+++ b/drivers/hid/hid-logitech-dj.c
-@@ -1750,6 +1750,7 @@ static int logi_dj_probe(struct hid_device *hdev,
- 			 const struct hid_device_id *id)
- {
- 	struct hid_report_enum *input_report_enum;
-+	struct hid_report_enum *output_report_enum;
- 	struct hid_report *rep;
- 	struct dj_receiver_dev *djrcv_dev;
- 	struct usb_interface *intf;
-@@ -1793,6 +1794,15 @@ static int logi_dj_probe(struct hid_device *hdev,
- 		}
+diff --git a/drivers/dma/idxd/cdev.c b/drivers/dma/idxd/cdev.c
+index 8dcd2331bb1ac..14b322ac6e6c6 100644
+--- a/drivers/dma/idxd/cdev.c
++++ b/drivers/dma/idxd/cdev.c
+@@ -293,6 +293,7 @@ static int idxd_cdev_open(struct inode *inode, struct file *filp)
+ 	fdev->parent = cdev_dev(idxd_cdev);
+ 	fdev->bus = &dsa_bus_type;
+ 	fdev->type = &idxd_cdev_file_type;
++	idxd_wq_get(wq);
+ 
+ 	rc = dev_set_name(fdev, "file%d", ctx->id);
+ 	if (rc < 0) {
+@@ -306,13 +307,14 @@ static int idxd_cdev_open(struct inode *inode, struct file *filp)
+ 		goto failed_dev_add;
  	}
  
-+	output_report_enum = &hdev->report_enum[HID_OUTPUT_REPORT];
-+	rep = output_report_enum->report_id_hash[REPORT_ID_DJ_SHORT];
-+
-+	if (rep->maxfield < 1 || rep->field[0]->report_count != DJREPORT_SHORT_LENGTH - 1) {
-+		hid_err(hdev, "Expected size of DJ short report is %d, but got %d",
-+			DJREPORT_SHORT_LENGTH - 1, rep->field[0]->report_count);
-+		return -EINVAL;
-+	}
-+
- 	input_report_enum = &hdev->report_enum[HID_INPUT_REPORT];
+-	idxd_wq_get(wq);
+ 	mutex_unlock(&wq->wq_lock);
+ 	return 0;
  
- 	/* no input reports, bail out */
+ failed_dev_add:
+ failed_dev_name:
++	mutex_unlock(&wq->wq_lock);
+ 	put_device(fdev);
++	return rc;
+ failed_ida:
+ failed_set_pasid:
+ 	if (device_user_pasid_enabled(idxd))
 -- 
 2.53.0
 
