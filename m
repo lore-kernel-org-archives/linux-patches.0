@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B6E5281369;
-	Fri,  7 Aug 2026 15:20:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D126E281369;
+	Fri,  7 Aug 2026 15:20:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116021; cv=none; b=UG8KcyXhysW2YEX3PtIIlMS9U8I/j0aOwKK5cHm7SK/TRcKOjATbEdFonQtTSEhCmvOA8hlv0I8WUtq6kIFsnqTqSpNpHEEBThY11I2vDcZhEdiw1WknwNCMu2DbaJ00adhBMSR3tmfS76Z/Piq9y9PBVvYKQK2fa/GiFfrFDrU=
+	t=1786116023; cv=none; b=U8zsYBJK5eugCEac54J8xRcfHrZmEz0RkjvD3RZDWqFGcziNKXWFQxzl8YTnoFMUQWhwpdhJJqPH1tEAVaUCnogcPGoVVrwzke7msqgJahQB6vuP/wMXRDzKx/fRbJoahFPFWlhXfDjIQ0UuKaC6Rg+Svbnua132VxUtAMS11Gw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116021; c=relaxed/simple;
-	bh=fbMn/5wxM6yx5+SrCTGl6V+sHIKFrCxd4Ue1hZXiKR4=;
+	s=arc-20240116; t=1786116023; c=relaxed/simple;
+	bh=4PlqMZlRGR0plAtVultT9lp+9+DgVGD437/j2FVR5tw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aj2joKck5DgPQ+/qYetyVMLSnMW3Hpe9WdxY6XDG3aiVEyHYpFWXbybMhq0fssnsLbJ85PlXvO/DPOfD+eiJUvxGe6DAZOfvW7MvrpTlf5/0wOLEr9Sx4PzDvD6C/X/PsnHA2xOICo8vPaZfLKmrUqrKpc8SJ/OJB0UIjE3CeSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NBTfljNr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hpCroiMrqHAY66tAw2kSP4BodhpmG21wSieTU9JCFCCywPnxF2izrv0VZLE6YqhmJhJJAMe5VoYLmMrPJX4YS/EXYDtKQ2vkre2uvrmio6JgurXdUeW7DUcaQhKsrezbvoU9OIa+TyIjFs2Av0W7tmrvdzZY47LvR8bztJMTwQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GcomP9bg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NBTfljNr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71E2C1F000E9;
-	Fri,  7 Aug 2026 15:20:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GcomP9bg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 395971F00A3A;
+	Fri,  7 Aug 2026 15:20:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116020;
-	bh=PuS8empqJzEBhqLaGlMKbO/Sqsg8zY+U0Vy+eBuPY5s=;
+	s=korg; t=1786116022;
+	bh=m1W+ziERWv2yT+Yoi3vIVlLJzJPWjUP5tMNvEO8pb60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NBTfljNrviognRj7NIHDaZh5iC0JDodhhZNRSsi/p1u3JgsJOuqWEDyc6aIWtZ1i4
-	 1wLfTD4iCYkLadHCIshnfOZBODW/keqKGmtIZO17qPfX+lrC/6xTzLNls5oPhQoUs0
-	 gfwH2qT/YXZANqUPvXnSnuoGfLw//KG0QG/B0zpQ=
+	b=GcomP9bgO904KdNU4nboGrL4bo1smc92hNV7ivWFA1wD2H7o0QZw/xqPPps44of2d
+	 /nzXnKvlUzmecRP1XB/gFWt+SQW1t39dvffISszmSZnSNsrIT9yrcXiZKUOuvV4nTL
+	 QyVGM+kFe1eSaX1//fr61DmrXipQVHIiKhNfmaUo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunseong Kim <yunseong.kim@est.tech>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Pauli Virtanen <pav@iki.fi>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 085/261] ksmbd: fix use-after-free in __close_file_table_ids()
-Date: Fri,  7 Aug 2026 16:37:22 +0200
-Message-ID: <20260807143417.220407599@linuxfoundation.org>
+Subject: [PATCH 6.6 068/261] Bluetooth: hci_conn: hold conn reference in abort_conn_sync()
+Date: Fri,  7 Aug 2026 16:37:05 +0200
+Message-ID: <20260807143416.850911845@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143415.358597922@linuxfoundation.org>
 References: <20260807143415.358597922@linuxfoundation.org>
@@ -52,48 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit e7188199eff46a636f3436356f0aae039be6dd66 ]
+[ Upstream commit 5761d003daa987ac81463f570713ce9c9dd204e5 ]
 
-A ksmbd_file can remain alive after logical close while another session
-holds a temporary reference obtained through ksmbd_lookup_fd_inode().
-ksmbd_close_fd() currently marks the file closed and drops the idr-owned
-reference, but leaves the pointer published in the closing session's idr
-until the final reference is dropped.
+There is theoretical UAF if the conn is freed while the hci_sync task is
+running.
 
-If the foreign holder performs the final ksmbd_fd_put(), __put_fd_final()
-supplies the foreign session's file table to __ksmbd_close_fd(). The object
-is then freed without being removed from its owner's idr, and the owner
-session later dereferences the stale pointer during file-table teardown.
+Hold refcount to avoid that.
 
-Remove the volatile id from the owner's idr while ksmbd_close_fd() still
-holds that table's lock, and clear volatile_id before dropping
-the idr-owned reference. A later foreign final put then only performs
-physical destruction and cannot remove the object from the wrong table.
-
-Fixes: 8510a043d334 ("ksmbd: increment reference count of parent fp")
-Reported-by: Yunseong Kim <yunseong.kim@est.tech>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 227a0cdf4a02 ("Bluetooth: MGMT: Fix not generating command complete for MGMT_OP_DISCONNECT")
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/vfs_cache.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/bluetooth/hci_conn.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/server/vfs_cache.c b/fs/smb/server/vfs_cache.c
-index 320d467d46ca8..a15c427248494 100644
---- a/fs/smb/server/vfs_cache.c
-+++ b/fs/smb/server/vfs_cache.c
-@@ -502,6 +502,8 @@ int ksmbd_close_fd(struct ksmbd_work *work, u64 id)
- 			fp = NULL;
- 		else {
- 			fp->f_state = FP_CLOSED;
-+			idr_remove(ft->idr, id);
-+			fp->volatile_id = KSMBD_NO_FID;
- 			closed = true;
- 			if (!atomic_dec_and_test(&fp->refcount))
- 				fp = NULL;
+diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
+index 7625461dff7ae..e4364a64ffd57 100644
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -2896,6 +2896,13 @@ static int abort_conn_sync(struct hci_dev *hdev, void *data)
+ 	return hci_abort_conn_sync(hdev, conn, conn->abort_reason);
+ }
+ 
++static void abort_conn_destroy(struct hci_dev *hdev, void *data, int err)
++{
++	struct hci_conn *conn = data;
++
++	hci_conn_put(conn);
++}
++
+ int hci_abort_conn(struct hci_conn *conn, u8 reason)
+ {
+ 	struct hci_dev *hdev = conn->hdev;
+@@ -2921,6 +2928,9 @@ int hci_abort_conn(struct hci_conn *conn, u8 reason)
+ 	 * as a result to MGMT_OP_DISCONNECT/MGMT_OP_UNPAIR which does
+ 	 * already queue its callback on cmd_sync_work.
+ 	 */
+-	err = hci_cmd_sync_run_once(hdev, abort_conn_sync, conn, NULL);
++	err = hci_cmd_sync_run_once(hdev, abort_conn_sync, hci_conn_get(conn),
++				    abort_conn_destroy);
++	if (err)
++		hci_conn_put(conn);
+ 	return (err == -EEXIST) ? 0 : err;
+ }
 -- 
 2.53.0
 
