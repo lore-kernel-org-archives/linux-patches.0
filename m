@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E02C037AA9A;
-	Fri,  7 Aug 2026 14:56:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 258D8339B41;
+	Fri,  7 Aug 2026 14:56:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114573; cv=none; b=Yz9I4KKEhbfgxrZW50Y4Ofe9OigS64LJ5y6ZzhqRUvLlBk0WwlRsmBBtwETF9CISc0IL9OB0UcszlEDXUad35Idg9L5psG0akirCSzqI3AgXgMjkmEj9P+mF2tqB236CoZHYTXGVcNQ3/fkUl/niE5T9cdGczX8BPHcqeqtuCfc=
+	t=1786114578; cv=none; b=pK2i4++LiaiCKf2dqiNeU682WkeL5GEY8OgqKJ7gQSghF2A+Wa7W4WL+8Obb6MAWrfV9TvqacuXknUA3MY7j1Zjc/Z7AhF/bTkvSGll+sLvBcNQ4RGtD34nWFf4HGQ9DzRgpLx03w9W+d30Mv7AimDMhfy0/7v2tKHMNMPvubuI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114573; c=relaxed/simple;
-	bh=hGyMRFQHxqLTn0GTxQAnEHhygqR9ZMGOy1+Qu5vp9jM=;
+	s=arc-20240116; t=1786114578; c=relaxed/simple;
+	bh=eIP+E2CXV4IXNHXG2P1NrC6TiC6HoL5U76sVQeI2r2I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RdE7kmBvKpWcTjkTwDXZJVM1OkEGeh1CwX2jY+AXb4fx0HN5tu/t4RhRYWSrWUhqw4PdOcfTz7BSEa9vpeHdQUSw9of6rh2sNEx9SBncKQS2nnAtE0S32gQV4psZlqVOwFN7n8mtSxOt7hx1ZaVHz7cm3SD44rZNC9vsTSx4XOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZIRID+Y+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=H75RfM00/cy74yQadipe1F0GO00w9GkuL5s66RgIsHyYqX29USOuR5SwxotmIHZ49+X8onEHFWfbdelYZ020xOwWBCQsnlts4IPWI0G5qOQpdf4Rm7NQKyTat6MeOHHkAlOqtWzmsTqP+I0w3knp6ObR/9AGArVPNTs+3tDiSUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nSK0M/QR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZIRID+Y+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF7681F000E9;
-	Fri,  7 Aug 2026 14:56:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nSK0M/QR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCEAC1F00A3A;
+	Fri,  7 Aug 2026 14:56:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114570;
-	bh=mHOoZ7Pg6zfSvqXYwGNioQF3mkfPxiRFiRtyDPjRPAU=;
+	s=korg; t=1786114573;
+	bh=ADIbMot0fR09Sv64F062xL0YM3YANUz3yM+TnEmKsMI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZIRID+Y+/Z0UjZJZKQyZxKZdrGyHDaLXE7LRZnQnqzHxTgqo0E7JAP8NCXvWUzH1+
-	 vYqag+DEgwPHefwJnpKvUg+wiUa/94QHffIXuLAxepLe4sRis+z/x5PY0m/7J6dzqS
-	 9Kd033PeZ84dg0O+9/BhtyS4yVF6WC0W6cH7KApM=
+	b=nSK0M/QR4k07RuUMgvazDCmYiHimfJmhig/ajMl6wtDetmSLnZz9eCao1sJINswbo
+	 gRcb7rT/ZrLNQCRdW1PNVBqqfIQqwwD/6e/86Tc64SjMatf/jnEN22APzdCT0vzTSV
+	 Wt+jzN3f181mXJP8h3ikowljU0dIp3wmgmgYyWCk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Pavel Tikhomirov <ptikhomirov@virtuozzo.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 308/337] mm/kmemleak: fix checksum computation for per-cpu objects
-Date: Fri,  7 Aug 2026 16:38:31 +0200
-Message-ID: <20260807143425.203880134@linuxfoundation.org>
+Subject: [PATCH 6.12 309/337] drm/amdgpu: Respect placement requirements in amdgpu_gtt_mgr functions
+Date: Fri,  7 Aug 2026 16:38:32 +0200
+Message-ID: <20260807143425.226459323@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -47,81 +46,79 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-[ Upstream commit 79c37ae3733e93d9d8ea12ecb44f717e61439024 ]
+[ Upstream commit 8882f8897e554053af9e72f4c2da8b1e2cce56c7 ]
 
-The per-cpu object checksum folds each CPU's CRC together with XOR and
-seeds every CRC with 0.  Both choices make update_checksum() miss content
-changes:
+When testing intersection and compatibility, respect
+the actual placement requirements. This is a pre-requisite
+for ensuring that UVD CS BOs do not cross 256M segments.
 
-  - XOR is self-cancelling, so equal contents on two CPUs cancel out and
-    simultaneous identical changes leave the checksum unchanged.
-  - crc32(0, ...) over all-zero content is 0, so a freshly allocated,
-    zeroed per-cpu area checksums to 0, matching the initial value, and
-    the object is never seen to change.
-
-See discussions at [0].
-
-When update_checksum() wrongly reports an actively modified object as
-unchanged, kmemleak stops greying it for an extra scan and can report a
-live per-cpu object as a leak.
-
-Fold the per-cpu CRC as a single rolling checksum across all CPUs and
-initialise the object checksum to ~0 so the first computed value always
-registers as a change, even for content that hashes to 0.
-reset_checksum() is seeded the same way.
-
-Link: https://lore.kernel.org/all/akfYImSNDh3OjIfR@gmail.com [0]
-Link: https://lore.kernel.org/20260703-kmemleak_checksum-v1-1-5e0ab7d6966f@debian.org
-Fixes: 6c99d4eb7c5e ("kmemleak: enable tracking for percpu pointers")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Co-developed-by: Catalin Marinas <catalin.marinas@arm.com>
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
-Reviewed-by: Pavel Tikhomirov <ptikhomirov@virtuozzo.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: ded910f368a5 ("drm/amdgpu: Implement intersect/compatible functions")
+Suggested-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit bc06579ca29dee9c245a41b12e39c7bb6938af5d)
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/kmemleak.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_gtt_mgr.c |   30 ++++++++++++++++++++++++++--
+ 1 file changed, 28 insertions(+), 2 deletions(-)
 
---- a/mm/kmemleak.c
-+++ b/mm/kmemleak.c
-@@ -671,7 +671,7 @@ static struct kmemleak_object *__alloc_o
- 	atomic_set(&object->use_count, 1);
- 	object->excess_ref = 0;
- 	object->count = 0;			/* white color initially */
--	object->checksum = 0;
-+	object->checksum = ~0;
- 	object->del_state = 0;
- 
- 	/* task information */
-@@ -967,7 +967,7 @@ static void reset_checksum(unsigned long
- 	}
- 
- 	raw_spin_lock_irqsave(&object->lock, flags);
--	object->checksum = 0;
-+	object->checksum = ~0;
- 	raw_spin_unlock_irqrestore(&object->lock, flags);
- 	put_object(object);
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gtt_mgr.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gtt_mgr.c
+@@ -217,7 +217,20 @@ static bool amdgpu_gtt_mgr_intersects(st
+ 				      const struct ttm_place *place,
+ 				      size_t size)
+ {
+-	return !place->lpfn || amdgpu_gtt_mgr_has_gart_addr(res);
++	const struct drm_mm_node *const node = &to_ttm_range_mgr_node(res)->mm_nodes[0];
++	const u32 num_pages = PFN_UP(size);
++
++	if (!place->lpfn)
++		return true;
++
++	if (!amdgpu_gtt_mgr_has_gart_addr(res))
++		return false;
++
++	if (place->fpfn >= (node->start + num_pages) ||
++	    (place->lpfn && place->lpfn <= node->start))
++		return false;
++
++	return true;
  }
-@@ -1382,7 +1382,8 @@ static bool update_checksum(struct kmeml
- 		for_each_possible_cpu(cpu) {
- 			void *ptr = per_cpu_ptr((void __percpu *)object->pointer, cpu);
  
--			object->checksum ^= crc32(0, kasan_reset_tag((void *)ptr), object->size);
-+			object->checksum = crc32(object->checksum,
-+						 kasan_reset_tag((void *)ptr), object->size);
- 		}
- 	} else {
- 		object->checksum = crc32(0, kasan_reset_tag((void *)object->pointer), object->size);
+ /**
+@@ -235,7 +248,20 @@ static bool amdgpu_gtt_mgr_compatible(st
+ 				      const struct ttm_place *place,
+ 				      size_t size)
+ {
+-	return !place->lpfn || amdgpu_gtt_mgr_has_gart_addr(res);
++	const struct drm_mm_node *const node = &to_ttm_range_mgr_node(res)->mm_nodes[0];
++	const u32 num_pages = PFN_UP(size);
++
++	if (!place->lpfn)
++		return true;
++
++	if (!amdgpu_gtt_mgr_has_gart_addr(res))
++		return false;
++
++	if (node->start < place->fpfn ||
++	    (place->lpfn && (node->start + num_pages) > place->lpfn))
++		return false;
++
++	return true;
+ }
+ 
+ /**
 
 
