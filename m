@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E41B4766BC;
-	Fri,  7 Aug 2026 15:36:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BAA04766BE;
+	Fri,  7 Aug 2026 15:36:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116981; cv=none; b=NeCeSpuBmgDeAE7IjSmrDWuDXQfbEGnCfhNaSsXnjBPX1O3cevChdOITAjhI2hbXf8q3H43Al/+JMR216D1yQmfj1a0UeiEKSAWS572w368KBakyS7SxChDz0UiS3k7zXrYIS7K29UvY51//muwPiIPXxTbPiMYu/ZiPRO4MdAs=
+	t=1786116984; cv=none; b=d5AHxWWUs32RIPPLdOa5/f9wL7GxSCoCZydTz2EaN/5QEDsITLA41JkkSpBw+gJEO2kI80Rn+oeTYm+uzTqGYSIydvbW2DnP8hPZDJQDhRaBjz0p8T+nkpFeq8fK2yANuMCeiO0xGAW93YdYv2xuh0HW7/zeDjhKCVPLDDrZ9ho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116981; c=relaxed/simple;
-	bh=dFPLOtvqStVFi7ODN+S5ogjFGE7aD8T+OzFM/Ku2J7w=;
+	s=arc-20240116; t=1786116984; c=relaxed/simple;
+	bh=K6MuT0AlWZfvx/McSD5KfFJ3/dScKzIn0O00Lbutp3U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fvIG++PjAE1lEN+UNd7v4JiODEzdzN9PlAJN4xHetRqD3LUx6w/bmz+OySItjtNQta+dbt7OfcpyYQjs9HqMFWn+R5x89PdSpdUV1TDDdslQrD98RtbFqtb0Oz/tz/Uzn469p5dHLAuiEu03BUfGfzF19ixB1vIz5NfknX8ylg4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bBp1xRbg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lTiE2yiFiA420AYCNZQ05B4HbN4teONVFddcCOOj5X+J+RnUFpvijSk2E7+5rjPZGYPYdQCuTu5F2jursv6jKhLitQsMMK2cmvraq1fjs7uo8nH/taY4rRUwl5jtfAfazmHYWpvFljIB7eE2HbRUyR6IuS8IyhySHanGkEg4G2Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qp3B1GQm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bBp1xRbg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 413FA1F000E9;
-	Fri,  7 Aug 2026 15:36:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qp3B1GQm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 179BD1F000E9;
+	Fri,  7 Aug 2026 15:36:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116979;
-	bh=GypU/DdSAuWQDvUstaClShOBh+7cFq97oxCQc8uhk34=;
+	s=korg; t=1786116982;
+	bh=iqWR4vE/6hj0A5GE3ARr9JCfB/agy4kfSCM9dCB+NRA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bBp1xRbgvh11tcePqzUf21TGPjULXHPOZz1qBUzfesnGpE2gLIOrWQOuOS58Lbsrt
-	 kPU9a4QSxW8dut+LHHtWyZ5ngMcWWsAaC9t2PX2HfN0crRor0l6oLYQg1F0HK987Iq
-	 YUYUzRni3hU+iq4j6pLPmdDd227bO1wpuUcq6g0s=
+	b=Qp3B1GQmfRJTqoOleFaG06k/5YuPWEMHWb2E1e9diMjbY1enOvgkeinePBwe4XMMg
+	 JST1fxnvCbq5BsSUi5aeV7s8XwxzTtBuZ00CMGekjjd7hdxRMqj/5koHjKufGktYTq
+	 w+Y7nxmGueGazJUINOF/rqlndP+JltbwUCM8cES4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Geetha sowjanya <gakula@marvell.com>,
+	Hariprasad Kelam <hkelam@marvell.com>,
 	Ratheesh Kannoth <rkannoth@marvell.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 156/438] octeontx2: cn20k: Coordinate default rules with NIX LF lifecycle
-Date: Fri,  7 Aug 2026 16:35:52 +0200
-Message-ID: <20260807143431.361593447@linuxfoundation.org>
+Subject: [PATCH 7.1 157/438] octeontx2-af: Block VFs from clobbering special CGX PKIND state
+Date: Fri,  7 Aug 2026 16:35:53 +0200
+Message-ID: <20260807143431.381873777@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -51,317 +53,286 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ratheesh Kannoth <rkannoth@marvell.com>
+From: Hariprasad Kelam <hkelam@marvell.com>
 
-[ Upstream commit aac055dbc0fadf64c9d6fbcfc066b8ba33216dc4 ]
+[ Upstream commit 3bd438a58e910db5dc369aa25dfed1fc95f1b596 ]
 
-Add NIX_LF_DONT_FREE_DFT_IDXS so the PF can send NIX LF free during hw
-reinit or teardown without the AF freeing CN20K default NPC rule indexes
-while the driver still owns that state (otx2_init_hw_resources and
-otx2_free_hw_resources).
+PF and VF NIX LFs that share a CGX LMAC reuse the same hardware PKIND
+programming. When HiGig2 or EDSA parsing is enabled, a VF NIX LF alloc must
+not reset the LMAC RX PKIND or default TX parse config over the PF setup.
 
-On CN20K, allocate default NPC rules from NIX LF alloc before
-nix_interface_init, roll back with npc_cn20k_dft_rules_free on failure,
-and free from NIX LF free when the new flag is not set. Tighten
-rvu_mbox_handler_nix_lf_alloc error handling: use a single rc, propagate
-qmem_alloc and other errors, and set -ENOMEM only when kcalloc fails
-(remove the blanket -ENOMEM at the free_mem path).
+Add cgx_get_pkind() and rvu_cgx_is_pkind_config_permitted() so VFs skip
+cgx_set_pkind(), rvu_npc_set_pkind(), and NIX_AF_LFX_TX_PARSE_CFG updates
+when the LMAC is using NPC_RX_HIGIG_PKIND or NPC_RX_EDSA_PKIND.
 
+Fixes: 94d942c5fb97 ("octeontx2-af: Config pkind for CGX mapped PFs")
+Cc: Geetha sowjanya <gakula@marvell.com>
+Signed-off-by: Hariprasad Kelam <hkelam@marvell.com>
 Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
-Link: https://patch.msgid.link/20260609040453.711932-7-rkannoth@marvell.com
+Link: https://patch.msgid.link/20260722081229.1653619-1-rkannoth@marvell.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 3bd438a58e91 ("octeontx2-af: Block VFs from clobbering special CGX PKIND state")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/marvell/octeontx2/af/mbox.h  |  1 +
- .../ethernet/marvell/octeontx2/af/rvu_nix.c   | 77 +++++++++++++------
- .../ethernet/marvell/octeontx2/af/rvu_npc.c   | 20 +++--
- .../ethernet/marvell/octeontx2/nic/otx2_pf.c  |  6 +-
- 4 files changed, 69 insertions(+), 35 deletions(-)
+ .../net/ethernet/marvell/octeontx2/af/cgx.c   | 12 +++
+ .../net/ethernet/marvell/octeontx2/af/cgx.h   |  1 +
+ .../net/ethernet/marvell/octeontx2/af/rvu.h   |  2 +
+ .../ethernet/marvell/octeontx2/af/rvu_cgx.c   | 79 +++++++++++++++++++
+ .../ethernet/marvell/octeontx2/af/rvu_nix.c   | 22 +++++-
+ .../ethernet/marvell/octeontx2/af/rvu_npc.c   | 29 ++++---
+ 6 files changed, 131 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/mbox.h b/drivers/net/ethernet/marvell/octeontx2/af/mbox.h
-index 44fdd6ba7307c..714e47f68d932 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/mbox.h
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/mbox.h
-@@ -1008,6 +1008,7 @@ struct nix_lf_free_req {
- 	struct mbox_msghdr hdr;
- #define NIX_LF_DISABLE_FLOWS		BIT_ULL(0)
- #define NIX_LF_DONT_FREE_TX_VTAG	BIT_ULL(1)
-+#define NIX_LF_DONT_FREE_DFT_IDXS	BIT_ULL(2)
- 	u64 flags;
- };
- 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-index 219fc44ab68d4..6a0ce2665031d 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-@@ -16,6 +16,7 @@
- #include "cgx.h"
- #include "lmac_common.h"
- #include "rvu_npc_hash.h"
-+#include "cn20k/npc.h"
- 
- static void nix_free_tx_vtag_entries(struct rvu *rvu, u16 pcifunc);
- static int rvu_nix_get_bpid(struct rvu *rvu, struct nix_bp_cfg_req *req,
-@@ -1504,9 +1505,11 @@ int rvu_mbox_handler_nix_lf_alloc(struct rvu *rvu,
- 				  struct nix_lf_alloc_req *req,
- 				  struct nix_lf_alloc_rsp *rsp)
- {
--	int nixlf, qints, hwctx_size, intf, err, rc = 0;
-+	int nixlf, qints, hwctx_size, intf, rc = 0;
-+	u16 bcast, mcast, promisc, ucast;
- 	struct rvu_hwinfo *hw = rvu->hw;
- 	u16 pcifunc = req->hdr.pcifunc;
-+	bool rules_created = false;
- 	struct rvu_block *block;
- 	struct rvu_pfvf *pfvf;
- 	u64 cfg, ctx_cfg;
-@@ -1560,8 +1563,8 @@ int rvu_mbox_handler_nix_lf_alloc(struct rvu *rvu,
- 		return NIX_AF_ERR_RSS_GRPS_INVALID;
- 
- 	/* Reset this NIX LF */
--	err = rvu_lf_reset(rvu, block, nixlf);
--	if (err) {
-+	rc = rvu_lf_reset(rvu, block, nixlf);
-+	if (rc) {
- 		dev_err(rvu->dev, "Failed to reset NIX%d LF%d\n",
- 			block->addr - BLKADDR_NIX0, nixlf);
- 		return NIX_AF_ERR_LF_RESET;
-@@ -1571,13 +1574,15 @@ int rvu_mbox_handler_nix_lf_alloc(struct rvu *rvu,
- 
- 	/* Alloc NIX RQ HW context memory and config the base */
- 	hwctx_size = 1UL << ((ctx_cfg >> 4) & 0xF);
--	err = qmem_alloc(rvu->dev, &pfvf->rq_ctx, req->rq_cnt, hwctx_size);
--	if (err)
-+	rc = qmem_alloc(rvu->dev, &pfvf->rq_ctx, req->rq_cnt, hwctx_size);
-+	if (rc)
- 		goto free_mem;
- 
- 	pfvf->rq_bmap = kcalloc(req->rq_cnt, sizeof(long), GFP_KERNEL);
--	if (!pfvf->rq_bmap)
-+	if (!pfvf->rq_bmap) {
-+		rc = -ENOMEM;
- 		goto free_mem;
-+	}
- 
- 	rvu_write64(rvu, blkaddr, NIX_AF_LFX_RQS_BASE(nixlf),
- 		    (u64)pfvf->rq_ctx->iova);
-@@ -1588,13 +1593,15 @@ int rvu_mbox_handler_nix_lf_alloc(struct rvu *rvu,
- 
- 	/* Alloc NIX SQ HW context memory and config the base */
- 	hwctx_size = 1UL << (ctx_cfg & 0xF);
--	err = qmem_alloc(rvu->dev, &pfvf->sq_ctx, req->sq_cnt, hwctx_size);
--	if (err)
-+	rc = qmem_alloc(rvu->dev, &pfvf->sq_ctx, req->sq_cnt, hwctx_size);
-+	if (rc)
- 		goto free_mem;
- 
- 	pfvf->sq_bmap = kcalloc(req->sq_cnt, sizeof(long), GFP_KERNEL);
--	if (!pfvf->sq_bmap)
-+	if (!pfvf->sq_bmap) {
-+		rc = -ENOMEM;
- 		goto free_mem;
-+	}
- 
- 	rvu_write64(rvu, blkaddr, NIX_AF_LFX_SQS_BASE(nixlf),
- 		    (u64)pfvf->sq_ctx->iova);
-@@ -1604,13 +1611,15 @@ int rvu_mbox_handler_nix_lf_alloc(struct rvu *rvu,
- 
- 	/* Alloc NIX CQ HW context memory and config the base */
- 	hwctx_size = 1UL << ((ctx_cfg >> 8) & 0xF);
--	err = qmem_alloc(rvu->dev, &pfvf->cq_ctx, req->cq_cnt, hwctx_size);
--	if (err)
-+	rc = qmem_alloc(rvu->dev, &pfvf->cq_ctx, req->cq_cnt, hwctx_size);
-+	if (rc)
- 		goto free_mem;
- 
- 	pfvf->cq_bmap = kcalloc(req->cq_cnt, sizeof(long), GFP_KERNEL);
--	if (!pfvf->cq_bmap)
-+	if (!pfvf->cq_bmap) {
-+		rc = -ENOMEM;
- 		goto free_mem;
-+	}
- 
- 	rvu_write64(rvu, blkaddr, NIX_AF_LFX_CQS_BASE(nixlf),
- 		    (u64)pfvf->cq_ctx->iova);
-@@ -1620,18 +1629,18 @@ int rvu_mbox_handler_nix_lf_alloc(struct rvu *rvu,
- 
- 	/* Initialize receive side scaling (RSS) */
- 	hwctx_size = 1UL << ((ctx_cfg >> 12) & 0xF);
--	err = nixlf_rss_ctx_init(rvu, blkaddr, pfvf, nixlf, req->rss_sz,
--				 req->rss_grps, hwctx_size, req->way_mask,
--				 !!(req->flags & NIX_LF_RSS_TAG_LSB_AS_ADDER));
--	if (err)
-+	rc = nixlf_rss_ctx_init(rvu, blkaddr, pfvf, nixlf, req->rss_sz,
-+				req->rss_grps, hwctx_size, req->way_mask,
-+				!!(req->flags & NIX_LF_RSS_TAG_LSB_AS_ADDER));
-+	if (rc)
- 		goto free_mem;
- 
- 	/* Alloc memory for CQINT's HW contexts */
- 	cfg = rvu_read64(rvu, blkaddr, NIX_AF_CONST2);
- 	qints = (cfg >> 24) & 0xFFF;
- 	hwctx_size = 1UL << ((ctx_cfg >> 24) & 0xF);
--	err = qmem_alloc(rvu->dev, &pfvf->cq_ints_ctx, qints, hwctx_size);
--	if (err)
-+	rc = qmem_alloc(rvu->dev, &pfvf->cq_ints_ctx, qints, hwctx_size);
-+	if (rc)
- 		goto free_mem;
- 
- 	rvu_write64(rvu, blkaddr, NIX_AF_LFX_CINTS_BASE(nixlf),
-@@ -1644,8 +1653,8 @@ int rvu_mbox_handler_nix_lf_alloc(struct rvu *rvu,
- 	cfg = rvu_read64(rvu, blkaddr, NIX_AF_CONST2);
- 	qints = (cfg >> 12) & 0xFFF;
- 	hwctx_size = 1UL << ((ctx_cfg >> 20) & 0xF);
--	err = qmem_alloc(rvu->dev, &pfvf->nix_qints_ctx, qints, hwctx_size);
--	if (err)
-+	rc = qmem_alloc(rvu->dev, &pfvf->nix_qints_ctx, qints, hwctx_size);
-+	if (rc)
- 		goto free_mem;
- 
- 	rvu_write64(rvu, blkaddr, NIX_AF_LFX_QINTS_BASE(nixlf),
-@@ -1689,10 +1698,22 @@ int rvu_mbox_handler_nix_lf_alloc(struct rvu *rvu,
- 	if (is_sdp_pfvf(rvu, pcifunc))
- 		intf = NIX_INTF_TYPE_SDP;
- 
--	err = nix_interface_init(rvu, pcifunc, intf, nixlf, rsp,
--				 !!(req->flags & NIX_LF_LBK_BLK_SEL));
--	if (err)
--		goto free_mem;
-+	if (is_cn20k(rvu->pdev)) {
-+		rc = npc_cn20k_dft_rules_idx_get(rvu, pcifunc, &bcast, &mcast,
-+						 &promisc, &ucast);
-+		if (rc) {
-+			rc = npc_cn20k_dft_rules_alloc(rvu, pcifunc);
-+			if (rc)
-+				goto free_mem;
-+
-+			rules_created = true;
-+		}
-+	}
-+
-+	rc = nix_interface_init(rvu, pcifunc, intf, nixlf, rsp,
-+				!!(req->flags & NIX_LF_LBK_BLK_SEL));
-+	if (rc)
-+		goto free_dft;
- 
- 	/* Disable NPC entries as NIXLF's contexts are not initialized yet */
- 	rvu_npc_disable_default_entries(rvu, pcifunc, nixlf);
-@@ -1704,9 +1725,12 @@ int rvu_mbox_handler_nix_lf_alloc(struct rvu *rvu,
- 
- 	goto exit;
- 
-+free_dft:
-+	if (is_cn20k(rvu->pdev) && rules_created)
-+		npc_cn20k_dft_rules_free(rvu, pcifunc);
-+
- free_mem:
- 	nix_ctx_free(rvu, pfvf);
--	rc = -ENOMEM;
- 
- exit:
- 	/* Set macaddr of this PF/VF */
-@@ -1780,6 +1804,9 @@ int rvu_mbox_handler_nix_lf_free(struct rvu *rvu, struct nix_lf_free_req *req,
- 
- 	nix_ctx_free(rvu, pfvf);
- 
-+	if (is_cn20k(rvu->pdev) && !(req->flags & NIX_LF_DONT_FREE_DFT_IDXS))
-+		npc_cn20k_dft_rules_free(rvu, pcifunc);
-+
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/cgx.c b/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
+index 2e94d5105016b..f5fd6138c352f 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
+@@ -518,6 +518,18 @@ int cgx_set_pkind(void *cgxd, u8 lmac_id, int pkind)
  	return 0;
  }
  
++int cgx_get_pkind(void *cgxd, u8 lmac_id, int *pkind)
++{
++	struct cgx *cgx = cgxd;
++
++	if (!is_lmac_valid(cgx, lmac_id))
++		return -ENODEV;
++
++	*pkind = cgx_read(cgx, lmac_id, cgx->mac_ops->rxid_map_offset);
++	*pkind = *pkind & 0x3F;
++	return 0;
++}
++
+ static u8 cgx_get_lmac_type(void *cgxd, int lmac_id)
+ {
+ 	struct cgx *cgx = cgxd;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/cgx.h b/drivers/net/ethernet/marvell/octeontx2/af/cgx.h
+index 92ccf343dfe04..8411a75dd723f 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/cgx.h
++++ b/drivers/net/ethernet/marvell/octeontx2/af/cgx.h
+@@ -141,6 +141,7 @@ int cgx_get_cgxid(void *cgxd);
+ int cgx_get_lmac_cnt(void *cgxd);
+ void *cgx_get_pdata(int cgx_id);
+ int cgx_set_pkind(void *cgxd, u8 lmac_id, int pkind);
++int cgx_get_pkind(void *cgxd, u8 lmac_id, int *pkind);
+ int cgx_lmac_evh_register(struct cgx_event_cb *cb, void *cgxd, int lmac_id);
+ int cgx_lmac_evh_unregister(void *cgxd, int lmac_id);
+ int cgx_get_tx_stats(void *cgxd, int lmac_id, int idx, u64 *tx_stat);
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu.h b/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
+index 65397daae4c2f..635a7630238e6 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
+@@ -1113,6 +1113,8 @@ void npc_read_mcam_entry(struct rvu *rvu, struct npc_mcam *mcam,
+ 			 u8 *intf, u8 *ena);
+ int npc_config_cntr_default_entries(struct rvu *rvu, bool enable);
+ bool is_cgx_config_permitted(struct rvu *rvu, u16 pcifunc);
++bool rvu_cgx_check_permission_and_set_pkind(struct rvu *rvu, u16 pcifunc, int pkind);
++bool rvu_cgx_is_pkind_config_permitted(struct rvu *rvu, u16 pcifunc);
+ bool is_mac_feature_supported(struct rvu *rvu, int pf, int feature);
+ u32  rvu_cgx_get_fifolen(struct rvu *rvu);
+ void *rvu_first_cgx_pdata(struct rvu *rvu);
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c
+index 4ff3935ed3fe8..87d21889dc49e 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c
+@@ -1355,3 +1355,82 @@ void rvu_mac_reset(struct rvu *rvu, u16 pcifunc)
+ 	if (mac_ops->mac_reset(cgxd, lmac, !is_vf(pcifunc)))
+ 		dev_err(rvu->dev, "Failed to reset MAC\n");
+ }
++
++/* Do not allow CGX-mapped VFs to overwrite PKIND when special parse kinds
++ * (HiGig, EDSA, etc.) are in use on the shared LMAC. VFs must not program
++ * NPC_TX_DEF_PKIND on NIX_AF_LFX_TX_PARSE_CFG in that case: the PF owns
++ * parse mode and no separate NPC_TX_HIGIG_PKIND is installed on the VF LF.
++ * TX-parse callers skip the write when denied; rvu_lf_reset() clears each LF
++ * before alloc so the next permitted owner programs NPC_TX_DEF_PKIND.
++ */
++bool rvu_cgx_is_pkind_config_permitted(struct rvu *rvu, u16 pcifunc)
++{
++	int pf, err, rxpkind;
++	u8 cgx_id, lmac_id;
++	void *cgxd;
++
++	pf = rvu_get_pf(rvu->pdev, pcifunc);
++
++	if (!(pcifunc & RVU_PFVF_FUNC_MASK))
++		return true;
++
++	if (!is_pf_cgxmapped(rvu, pf))
++		return true;
++
++	rvu_get_cgx_lmac_id(rvu->pf2cgxlmac_map[pf], &cgx_id, &lmac_id);
++	cgxd = rvu_cgx_pdata(cgx_id, rvu);
++	err = cgx_get_pkind(cgxd, lmac_id, &rxpkind);
++	if (err)
++		return false;
++
++	switch (rxpkind) {
++	case NPC_RX_HIGIG_PKIND:
++	case NPC_RX_EDSA_PKIND:
++		return false;
++	default:
++		return true;
++	}
++}
++
++/* Do not allow CGX-mapped VFs to overwrite PKIND when special parse kinds
++ * (HiGig, EDSA, etc.) are in use on the shared LMAC.
++ */
++bool rvu_cgx_check_permission_and_set_pkind(struct rvu *rvu, u16 pcifunc, int pkind)
++{
++	int pf, err, rxpkind;
++	u8 cgx_id, lmac_id;
++	struct cgx *cgxd;
++
++	pf = rvu_get_pf(rvu->pdev, pcifunc);
++
++	if (!is_pf_cgxmapped(rvu, pf))
++		return false;
++
++	rvu_get_cgx_lmac_id(rvu->pf2cgxlmac_map[pf], &cgx_id, &lmac_id);
++	cgxd = rvu_cgx_pdata(cgx_id, rvu);
++
++	mutex_lock(&cgxd->lock);
++	if (!is_vf(pcifunc))
++		goto set;
++
++	err = cgx_get_pkind(cgxd, lmac_id, &rxpkind);
++	if (err)
++		goto err;
++
++	switch (rxpkind) {
++	case NPC_RX_HIGIG_PKIND:
++	case NPC_RX_EDSA_PKIND:
++		goto err;
++	default:
++		break;
++	}
++
++set:
++	cgx_set_pkind(rvu_cgx_pdata(cgx_id, rvu), lmac_id, pkind);
++	mutex_unlock(&cgxd->lock);
++	return true;
++
++err:
++	mutex_unlock(&cgxd->lock);
++	return false;
++}
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
+index 6a0ce2665031d..964bcaae098e2 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
+@@ -363,8 +363,8 @@ static int nix_interface_init(struct rvu *rvu, u16 pcifunc, int type, int nixlf,
+ 		pfvf->tx_chan_cnt = 1;
+ 		rsp->tx_link = cgx_id * hw->lmac_per_cgx + lmac_id;
+ 
+-		cgx_set_pkind(rvu_cgx_pdata(cgx_id, rvu), lmac_id, pkind);
+-		rvu_npc_set_pkind(rvu, pkind, pfvf);
++		if (rvu_cgx_check_permission_and_set_pkind(rvu, pcifunc, pkind))
++			rvu_npc_set_pkind(rvu, pkind, pfvf);
+ 		break;
+ 	case NIX_INTF_TYPE_LBK:
+ 		vf = (pcifunc & RVU_PFVF_FUNC_MASK) - 1;
+@@ -1505,13 +1505,15 @@ int rvu_mbox_handler_nix_lf_alloc(struct rvu *rvu,
+ 				  struct nix_lf_alloc_req *req,
+ 				  struct nix_lf_alloc_rsp *rsp)
+ {
+-	int nixlf, qints, hwctx_size, intf, rc = 0;
++	int nixlf, qints, hwctx_size, intf, rc = 0, pf;
+ 	u16 bcast, mcast, promisc, ucast;
+ 	struct rvu_hwinfo *hw = rvu->hw;
+ 	u16 pcifunc = req->hdr.pcifunc;
++	u8 cgx_id = 0, lmac_id = 0;
+ 	bool rules_created = false;
+ 	struct rvu_block *block;
+ 	struct rvu_pfvf *pfvf;
++	struct cgx *cgxd;
+ 	u64 cfg, ctx_cfg;
+ 	int blkaddr;
+ 
+@@ -1685,8 +1687,20 @@ int rvu_mbox_handler_nix_lf_alloc(struct rvu *rvu,
+ 	rvu_write64(rvu, blkaddr, NIX_AF_LFX_RX_CFG(nixlf), req->rx_cfg);
+ 
+ 	/* Configure pkind for TX parse config */
++
++	pf = rvu_get_pf(rvu->pdev, pcifunc);
+ 	cfg = NPC_TX_DEF_PKIND;
+-	rvu_write64(rvu, blkaddr, NIX_AF_LFX_TX_PARSE_CFG(nixlf), cfg);
++
++	if (is_pf_cgxmapped(rvu, pf) && is_vf(pcifunc)) {
++		rvu_get_cgx_lmac_id(rvu->pf2cgxlmac_map[pf], &cgx_id, &lmac_id);
++		cgxd = rvu_cgx_pdata(cgx_id, rvu);
++		mutex_lock(&cgxd->lock);
++		if (rvu_cgx_is_pkind_config_permitted(rvu, pcifunc))
++			rvu_write64(rvu, blkaddr, NIX_AF_LFX_TX_PARSE_CFG(nixlf), cfg);
++		mutex_unlock(&cgxd->lock);
++	} else {
++		rvu_write64(rvu, blkaddr, NIX_AF_LFX_TX_PARSE_CFG(nixlf), cfg);
++	}
+ 
+ 	if (is_rep_dev(rvu, pcifunc)) {
+ 		pfvf->tx_chan_base = RVU_SWITCH_LBK_CHAN;
 diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
-index 4994385a822b7..41d92eb652af9 100644
+index 41d92eb652af9..1e090508f958d 100644
 --- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
 +++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
-@@ -1285,11 +1285,18 @@ void npc_enadis_default_mce_entry(struct rvu *rvu, u16 pcifunc,
- 	struct nix_mce_list *mce_list;
- 	int index, blkaddr, mce_idx;
- 	struct rvu_pfvf *pfvf;
-+	u16 ptr[4];
+@@ -19,6 +19,7 @@
+ #include "cn20k/npc.h"
+ #include "rvu_npc.h"
+ #include "cn20k/reg.h"
++#include "lmac_common.h"
  
- 	/* multicast pkt replication is not enabled for AF's VFs & SDP links */
- 	if (is_lbk_vf(rvu, pcifunc) || is_sdp_pfvf(rvu, pcifunc))
- 		return;
+ #define RSVD_MCAM_ENTRIES_PER_PF	3 /* Broadcast, Promisc and AllMulticast */
+ #define RSVD_MCAM_ENTRIES_PER_NIXLF	1 /* Ucast for LFs */
+@@ -3912,10 +3913,11 @@ int rvu_npc_set_parse_mode(struct rvu *rvu, u16 pcifunc, u64 mode, u8 dir,
  
-+	/* In cn20k, only CGX mapped devices have default MCAST entry */
-+	if (is_cn20k(rvu->pdev) &&
-+	    npc_cn20k_dft_rules_idx_get(rvu, pcifunc, &ptr[0], &ptr[1],
-+					&ptr[2], &ptr[3]))
-+		return;
-+
- 	blkaddr = rvu_get_blkaddr(rvu, BLKTYPE_NPC, 0);
- 	if (blkaddr < 0)
- 		return;
-@@ -1329,9 +1336,12 @@ static void npc_enadis_default_entries(struct rvu *rvu, u16 pcifunc,
+ {
  	struct rvu_pfvf *pfvf = rvu_get_pfvf(rvu, pcifunc);
- 	struct npc_mcam *mcam = &rvu->hw->mcam;
- 	int index, blkaddr;
-+	u16 ptr[4];
+-	int blkaddr, nixlf, rc, intf_mode;
+ 	int pf = rvu_get_pf(rvu->pdev, pcifunc);
++	int blkaddr, nixlf, rc, intf_mode;
++	u8 cgx_id = 0, lmac_id = 0;
+ 	u64 rxpkind, txpkind;
+-	u8 cgx_id, lmac_id;
++	struct cgx *cgxd;
  
- 	/* only CGX or LBK interfaces have default entries */
--	if (is_cn20k(rvu->pdev) && !npc_is_cgx_or_lbk(rvu, pcifunc))
-+	if (is_cn20k(rvu->pdev) &&
-+	    npc_cn20k_dft_rules_idx_get(rvu, pcifunc, &ptr[0], &ptr[1],
-+					&ptr[2], &ptr[3]))
- 		return;
- 
- 	blkaddr = rvu_get_blkaddr(rvu, BLKTYPE_NPC, 0);
-@@ -4075,12 +4085,10 @@ void rvu_npc_clear_ucast_entry(struct rvu *rvu, int pcifunc, int nixlf)
- 
- 	ucast_idx = npc_get_nixlf_mcam_index(mcam, pcifunc,
- 					     nixlf, NIXLF_UCAST_ENTRY);
--	if (ucast_idx < 0) {
--		dev_err(rvu->dev,
--			"%s: Error to get ucast entry for pcifunc=%#x\n",
--			__func__, pcifunc);
-+
-+	/* In cn20k, default rules are freed before detach rsrc */
-+	if (ucast_idx < 0)
- 		return;
--	}
- 
- 	npc_enable_mcam_entry(rvu, mcam, blkaddr, ucast_idx, false);
- 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
-index 617a0db97e804..2e33b33ec9934 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
-@@ -1053,7 +1053,6 @@ irqreturn_t otx2_pfaf_mbox_intr_handler(int irq, void *pf_irq)
- 	/* Clear the IRQ */
- 	otx2_write64(pf, RVU_PF_INT, BIT_ULL(0));
- 
+ 	/* use default pkind to disable edsa/higig */
+ 	rxpkind = rvu_npc_get_pkind(rvu, pf);
+@@ -3939,12 +3941,8 @@ int rvu_npc_set_parse_mode(struct rvu *rvu, u16 pcifunc, u64 mode, u8 dir,
+ 		/* rx pkind set req valid only for cgx mapped PFs */
+ 		if (!is_cgx_config_permitted(rvu, pcifunc))
+ 			return 0;
+-		rvu_get_cgx_lmac_id(rvu->pf2cgxlmac_map[pf], &cgx_id, &lmac_id);
 -
- 	mbox_data = otx2_read64(pf, RVU_PF_PFAF_MBOX0);
- 
- 	if (mbox_data & MBOX_UP_MSG) {
-@@ -1727,7 +1726,7 @@ int otx2_init_hw_resources(struct otx2_nic *pf)
- 	mutex_lock(&mbox->lock);
- 	free_req = otx2_mbox_alloc_msg_nix_lf_free(mbox);
- 	if (free_req) {
--		free_req->flags = NIX_LF_DISABLE_FLOWS;
-+		free_req->flags = NIX_LF_DISABLE_FLOWS | NIX_LF_DONT_FREE_DFT_IDXS;
- 		if (otx2_sync_mbox_msg(mbox))
- 			dev_err(pf->dev, "%s failed to free nixlf\n", __func__);
+-		rc = cgx_set_pkind(rvu_cgx_pdata(cgx_id, rvu), lmac_id,
+-				   rxpkind);
+-		if (rc)
+-			return rc;
++		if (!rvu_cgx_check_permission_and_set_pkind(rvu, pcifunc, rxpkind))
++			return -EINVAL;
  	}
-@@ -1801,7 +1800,7 @@ void otx2_free_hw_resources(struct otx2_nic *pf)
- 	/* Reset NIX LF */
- 	free_req = otx2_mbox_alloc_msg_nix_lf_free(mbox);
- 	if (free_req) {
--		free_req->flags = NIX_LF_DISABLE_FLOWS;
-+		free_req->flags = NIX_LF_DISABLE_FLOWS | NIX_LF_DONT_FREE_DFT_IDXS;
- 		if (!(pf->flags & OTX2_FLAG_PF_SHUTDOWN))
- 			free_req->flags |= NIX_LF_DONT_FREE_TX_VTAG;
- 		if (otx2_sync_mbox_msg(mbox))
-@@ -1924,7 +1923,6 @@ int otx2_alloc_queue_mem(struct otx2_nic *pf)
- 	struct otx2_qset *qset = &pf->qset;
- 	struct otx2_cq_poll *cq_poll;
  
--
- 	/* RQ and SQs are mapped to different CQs,
- 	 * so find out max CQ IRQs (i.e CINTs) needed.
- 	 */
+ 	if (dir & PKIND_TX) {
+@@ -3953,8 +3951,19 @@ int rvu_npc_set_parse_mode(struct rvu *rvu, u16 pcifunc, u64 mode, u8 dir,
+ 		if (rc)
+ 			return rc;
+ 
+-		rvu_write64(rvu, blkaddr, NIX_AF_LFX_TX_PARSE_CFG(nixlf),
+-			    txpkind);
++		if (is_pf_cgxmapped(rvu, pf) && is_vf(pcifunc)) {
++			rvu_get_cgx_lmac_id(rvu->pf2cgxlmac_map[pf], &cgx_id,
++					    &lmac_id);
++			cgxd = rvu_cgx_pdata(cgx_id, rvu);
++			mutex_lock(&cgxd->lock);
++			if (rvu_cgx_is_pkind_config_permitted(rvu, pcifunc))
++				rvu_write64(rvu, blkaddr, NIX_AF_LFX_TX_PARSE_CFG(nixlf),
++					    txpkind);
++			mutex_unlock(&cgxd->lock);
++		} else {
++			rvu_write64(rvu, blkaddr, NIX_AF_LFX_TX_PARSE_CFG(nixlf),
++				    txpkind);
++		}
+ 	}
+ 
+ 	pfvf->intf_mode = intf_mode;
 -- 
 2.53.0
 
