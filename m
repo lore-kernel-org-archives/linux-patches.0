@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E111C31578E;
-	Fri,  7 Aug 2026 14:49:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA3203955FB;
+	Fri,  7 Aug 2026 14:49:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114162; cv=none; b=NGVV64SJnS2f4KZT+AQYy2eLEXvGwffBF/nFjXhNZGKwDw9c/bq+YkLTQxd5Vr93VEZbdLxcferx1SzSoWnQtYHbkrIGPIUdaDClc3nJM/l5j6G0C5oi43JaqhrFSvNUEd6RqN8277Lh6HliyPBVBYM1PAl3A4n+F5YfQtBcddI=
+	t=1786114165; cv=none; b=oXUrdgF8kLFz9fdGMsHh3YsG196VYK5a1CqoBNsxuvq8EjRGZZhe3jPiS2KkpKzuCX4PmWFZ8/ZrP40ScffZvKXetn4u1YqWvmOxr3n47qEPD06inQ6JYsz8oEuJyexCPdUfeuBo84fEgNubwz2J9+rqinMoE3nNfAQ1l77/AFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114162; c=relaxed/simple;
-	bh=SO/VvQVLx8bQXstk1KzVhnhkNNUPZ993C0a7X6zrc8c=;
+	s=arc-20240116; t=1786114165; c=relaxed/simple;
+	bh=nMj5F7cMdUhS6rEDXfvxLxmmgoBasv3o2w8qxeOVtdc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ovZdJrChV2Gf2Wr6e5/g7BmbDNpBAh7Gr2kvn4R9a/dUgWVI8YlcBwlmCS9C136Tlws/b2QnmqMPkTsRN78gm2ISZagHxU1AF17mf9Gajh7hBS0b+aCAE7IRCUXxSWqU4BE628xSkccpldOSGSgKKm4ApWZ84+v2L+dFq9qatBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hIJH9RHn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MyuCpkx5p5TYCBT4I0V3oR96hdb3MqYD2KwEIAZ1FQNa+E0olBrrmmG5QmaH6do0yOGi7QNwK0YS8yLA7HDw41PRDjuVjTBGt1bFp6Aj04vpcHwvnSqkryOyV4fkf9kQqT/eDXPUjFz+euiUFScNsXIduH7mDGUHr9pQISzibns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hmEAMZ44; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hIJH9RHn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 497181F000E9;
-	Fri,  7 Aug 2026 14:49:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hmEAMZ44"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 112D21F000E9;
+	Fri,  7 Aug 2026 14:49:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114161;
-	bh=uoWHrPJGnlMb5dTdjC/9/Ez21wZWlke3dUOwhdPfews=;
+	s=korg; t=1786114164;
+	bh=Z1KpVtJZKpgygLdqE2JtQfCoAHA9BoEer7NlpToQJQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hIJH9RHntMLQphhl+yp5g/80XQ+QBDix77Q7P+tQqMW2CTMnw7ye+kLJpKmj7GyRK
-	 cz5ET0jJSJUU5bcITuBwmoOgcTUaTcq8LFJnn0Qs5zOmIlc0Doxk4vH+GRdPXgQpY1
-	 v86ILacCpijbeFSW2w4n4DOpjV69y0TdBQ0jcnsE=
+	b=hmEAMZ44sbD9B14/DYyoYMeSQPGy4yN8+G1d9lFKiy2QKZIfBOIcehSD9fwx4cIcj
+	 77k/CkWgBlbOfMryBeKnqwv/4pehtx9uZRx/go6pd4lrYNYZzaDavGAwwtayoU5ZQ3
+	 M03pdd3g6Mlc/VfXWfHpF8Z2aRAd0gs8qimvV3y4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
-	Damien Le Moal <dlemoal@kernel.org>
-Subject: [PATCH 6.12 164/337] ata: libata-sata: fix ata_scsi_lpm_supported() iteration
-Date: Fri,  7 Aug 2026 16:36:07 +0200
-Message-ID: <20260807143422.107348726@linuxfoundation.org>
+	Federico Kirschbaum <federico.kirschbaum@xbow.com>,
+	Baul Lee <baul.lee@xbow.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.12 165/337] ALSA: usb-audio: fix use-after-free in ump_to_endpoint()
+Date: Fri,  7 Aug 2026 16:36:08 +0200
+Message-ID: <20260807143422.130206432@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -51,48 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Baul Lee <baul.lee@xbow.com>
 
-commit 3fd70e96914d761c17c376aadd0b0d1a3c9badba upstream.
+commit 4a05b2d1b4642df74f30b6f54843e825c4a2bfd3 upstream.
 
-The inner loop of ata_scsi_lpm_supported() uses the wrong variable when
-iterating.
+create_midi2_ump() registers a card-owned snd_ump_endpoint and stores a
+back-pointer to its per-interface snd_usb_midi2_ump object in
+ump->private_data, but it never installs an ump->private_free hook and
+never clears that pointer.
 
-It should obviously use the link that we are currently iterating over,
-rather than always using the host link.
+If a later step of snd_usb_midi_v2_create() fails, its error path calls
+free_all_midi2_umps(), which kfree()s the snd_usb_midi2_ump object while
+the already-registered endpoint keeps pointing at it.  The created
+/dev/snd/umpC*D* node stays exposed, so the first operation of any UMP
+open, ump_to_endpoint(), dereferences the dangling ump->private_data and
+reads rmidi->eps[dir] out of freed memory.
 
-ata_scsi_lpm_supported() is used to control if a user should be allowed
-to change lpm policy (from the default) via sysfs.
+A malicious USB MIDI 2.0 device that makes creation fail after the
+endpoint is registered can thus trigger a slab use-after-free read on a
+subsequent open of the UMP node.
 
-Thus, this bug could potentially disallow users to change the LPM policy
-for certain SATA devices via sysfs.
+Clear the endpoint's back-pointer before freeing the object, and let
+ump_to_endpoint() tolerate a NULL private_data so the open/close/trigger
+callbacks fail cleanly (their callers already handle a NULL endpoint)
+instead of dereferencing a stale pointer.
 
+Discovered by XBOW, triaged by Baul Lee <baul.lee@xbow.com>
+
+Fixes: ff49d1df79ae ("ALSA: usb-audio: USB MIDI 2.0 UMP support")
+Reported-by: Federico Kirschbaum <federico.kirschbaum@xbow.com>
+Reported-by: Baul Lee <baul.lee@xbow.com>
 Cc: stable@vger.kernel.org
-Fixes: 0060beec0bfa ("ata: libata-sata: Add link_power_management_supported sysfs attribute")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://lore.kernel.org/linux-ide/20260728112200.B99F21F000E9@smtp.kernel.org/
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Baul Lee <baul.lee@xbow.com>
+Link: https://patch.msgid.link/20260726051337.41124-1-baul.lee@xbow.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/libata-sata.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/usb/midi2.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/ata/libata-sata.c b/drivers/ata/libata-sata.c
-index b0706c30da05..ad40f516c6d4 100644
---- a/drivers/ata/libata-sata.c
-+++ b/drivers/ata/libata-sata.c
-@@ -913,7 +913,7 @@ static bool ata_scsi_lpm_supported(struct ata_port *ap)
- 		return false;
+--- a/sound/usb/midi2.c
++++ b/sound/usb/midi2.c
+@@ -337,7 +337,7 @@ ump_to_endpoint(struct snd_ump_endpoint
+ {
+ 	struct snd_usb_midi2_ump *rmidi = ump->private_data;
  
- 	ata_for_each_link(link, ap, EDGE) {
--		ata_for_each_dev(dev, &ap->link, ENABLED) {
-+		ata_for_each_dev(dev, link, ENABLED) {
- 			if (dev->quirks & ATA_QUIRK_NOLPM)
- 				return false;
- 		}
--- 
-2.55.0
-
+-	return rmidi->eps[dir];
++	return rmidi ? rmidi->eps[dir] : NULL;
+ }
+ 
+ /* ump open callback */
+@@ -693,6 +693,8 @@ static void free_all_midi2_umps(struct s
+ 		rmidi = list_first_entry(&umidi->rawmidi_list,
+ 					 struct snd_usb_midi2_ump, list);
+ 		list_del(&rmidi->list);
++		if (rmidi->ump)
++			rmidi->ump->private_data = NULL;
+ 		kfree(rmidi);
+ 	}
+ }
 
 
