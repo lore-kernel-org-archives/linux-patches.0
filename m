@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5451F2F8E8B;
-	Fri,  7 Aug 2026 15:08:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 600C02F8E8B;
+	Fri,  7 Aug 2026 15:08:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115301; cv=none; b=XpNgagHXFruwN/blQdHlIY61ncdWGSB1DCYJtvMtcSBtvv4l1DWn7QHX7rgbp3rlSvAOPPlmeVOGtRgj6UIUv30FB1yGCq+9fMClBH/ayO0nk5O51SAvUczLEmZPexz8d+dFY7nsjEDfauGZtg+oyVmWzcLK8/IywlVFd51kbbQ=
+	t=1786115304; cv=none; b=XSPAMy2uJ8e2Cbjnv8cVVJDD2VLlhSwY59XvB/Qz2EwLSP5JVUIk3MK0Sdw+59fSUCnDQFDHepRbOfhyAlpopPk/B246tkLC7NGRhBPwUQG1LInSxSr1HNhO3I5PvD2TH1ggB9BaMeJJI9rRMyM2QDTKzIuN8YwMIpAVVI0R8n0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115301; c=relaxed/simple;
-	bh=dVsjYZNntEZglwMFxOzEiBGDqcb6CuRzBEKcIQnJCcQ=;
+	s=arc-20240116; t=1786115304; c=relaxed/simple;
+	bh=hU+TzxibW+i7ApbP69cvpmmsES1ggdE1Xaqwu9so6T8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mFv1WYe6Jy2NO1ALkWFf7wHCe/JWeRYWZ6pLIOx+cPKiXX0grX+qDovRSFUU/Yy+cX1oXFboLpBK+32iaChg/zmqMdcjr/qZj6SMVoeTrgVmrYIWZ6T27YWRaPLA/g4mjz6LGQjN3QF7h02Cy8lCpkRkBEZie5BEKyxAQVIixFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lviOnDqP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EKUXGYP6ESeUc2T+uKoNkhkXlXjsfZKMP9Z216YwnYSV0aVmujINcbGnNSSEtrTepDKDgA/F0io4oWlEgmY3magZn00FUH8hpStD6cKxyrxCxepyhaNFnOV/QqBQ6eC1qH2roZVGXPn3hxaJU5sndBlr3XwwgXVZi37gqnu/N1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sC9k9cpJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lviOnDqP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF32B1F000E9;
-	Fri,  7 Aug 2026 15:08:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sC9k9cpJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 837751F00A3A;
+	Fri,  7 Aug 2026 15:08:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115300;
-	bh=O+3ouD3GtP/enX7ojqhAs8DHWZQx/g8tK7JgmrKiWgA=;
+	s=korg; t=1786115303;
+	bh=7UPPQIbQl/RJTPEMZd6325bE9DC+m/NQuJSpe+61S20=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lviOnDqPpMlBdGNBqV752IoLS6UIEQrc29FPIJKcQKHEBg3ZNYZbkEo4gpXg95fkA
-	 h80R9mYLxkhM+ThyFyvH0UWEmqpF44GpoterE6bh7XpRarCtHnIYcjU6ySRcWE3Zx2
-	 9cA343KdfVsQ46/W7a5ysuISCL+wHlvfmN6B1OrY=
+	b=sC9k9cpJByUZaBBipTEATv43VZECEEDP/4RMvUWLHlxcMpY/YrRJGqrsw3K31tRrz
+	 05jdaA6nzTwGW41I+rcGYyL/6Q28upTWwl1zFAjtXsK2vIHxbtNi2AqzHqtj0+NIlt
+	 DLJ69styIsGparuMyjsT+l1yeQx4txalbAdSI2YI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
-	Mahanta Jambigi <mjambigi@linux.ibm.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.18 226/396] net/smc: fix socket use-after-free during link group termination
-Date: Fri,  7 Aug 2026 16:36:26 +0200
-Message-ID: <20260807143429.137014456@linuxfoundation.org>
+	David Lee <david.lee@trailofbits.com>,
+	Jozsef Kadlecsik <kadlec@netfilter.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 6.18 227/396] netfilter: ipset: do not update comments from kernel-side hash adds
+Date: Fri,  7 Aug 2026 16:36:27 +0200
+Message-ID: <20260807143429.156981956@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -51,60 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+From: David Lee <david.lee@trailofbits.com>
 
-commit f621d6ebeebb6374342571e4ddf45fdbc420f6cd upstream.
+commit f30415929be8aeb002d557c8d3f7ab2d2188003a upstream.
 
-__smc_lgr_terminate() drops conns_lock after finding a connection in
-lgr->conns_all, but before taking a reference on its socket. The connection
-is embedded in the socket, and its registration reference protects it only
-while the connection remains in the tree.
+mtype_resize() copies comment pointers with memcpy(), not the comment
+objects themselves. During the window after an entry has been copied but
+before the table swap and backlog replay, the old table is still
+published for packet-side updates while the replacement-table entry
+already holds the same ip_set_comment_rcu pointer.
 
-A concurrent close can unregister the connection and drop that reference,
-freeing the socket before the termination worker reaches sock_hold().
+If xt_SET --add-set ... --exist hits that old entry in this window,
+mtype_add() calls ip_set_init_comment() even though packet-side adds
+carry no comment payload. That call frees the shared comment through the
+old entry, so the replacement-table entry now holds a stale pointer.
+When the queued add is replayed on the new table, mtype_add() calls
+ip_set_init_comment() again and strlen() dereferences the stale pointer.
 
-The race is reachable when close overlaps link group termination.
-Local stress testing reproduced the use-after-free and KASAN reported:
+Fix this in mtype_add() by skipping ip_set_init_comment() when
+ext->target marks a packet-side add. Userspace adds still update
+comments, while packet-side adds can no longer free comment storage
+shared with a resize copy.
 
-  BUG: KASAN: slab-use-after-free in __smc_lgr_terminate.part.0 [smc]
-  Write of size 4 by task kworker/3:3
-  Workqueue: events smc_lgr_terminate_work [smc]
-  __smc_lgr_terminate.part.0 [smc]
-
-The socket was allocated by smc_create(), freed through
-slab_free_after_rcu_debug(), and was followed by:
-
-  refcount_t: addition on 0; use-after-free.
-  __smc_lgr_terminate.part.0 [smc]
-
-Take the socket reference while conns_lock still protects the tree entry.
-The unregister path then cannot drop the last reference until termination
-has finished using the socket.
-
-Fixes: 69318b5215f2 ("net/smc: improve abnormal termination locking")
+Fixes: f66ee0410b1c ("netfilter: ipset: Fix "INFO: rcu detected stall in hash_xxx" reports")
 Cc: stable@vger.kernel.org
-Signed-off-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
-Reviewed-by: Mahanta Jambigi <mjambigi@linux.ibm.com>
-Link: https://patch.msgid.link/20260723105454.87016-1-xuanqiang.luo@linux.dev
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: David Lee <david.lee@trailofbits.com>
+Assisted-by: Codex:gpt-5.5
+Acked-by: Jozsef Kadlecsik <kadlec@netfilter.org>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/smc/smc_core.c |    2 +-
+ net/netfilter/ipset/ip_set_hash_gen.h |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/smc/smc_core.c
-+++ b/net/smc/smc_core.c
-@@ -1558,10 +1558,10 @@ static void __smc_lgr_terminate(struct s
- 	read_lock_bh(&lgr->conns_lock);
- 	node = rb_first(&lgr->conns_all);
- 	while (node) {
--		read_unlock_bh(&lgr->conns_lock);
- 		conn = rb_entry(node, struct smc_connection, alert_node);
- 		smc = container_of(conn, struct smc_sock, conn);
- 		sock_hold(&smc->sk); /* sock_put below */
-+		read_unlock_bh(&lgr->conns_lock);
- 		lock_sock(&smc->sk);
- 		smc_conn_kill(conn, soft);
- 		release_sock(&smc->sk);
+--- a/net/netfilter/ipset/ip_set_hash_gen.h
++++ b/net/netfilter/ipset/ip_set_hash_gen.h
+@@ -984,7 +984,7 @@ overwrite_extensions:
+ #endif
+ 	if (SET_WITH_COUNTER(set))
+ 		ip_set_init_counter(ext_counter(data, set), ext);
+-	if (SET_WITH_COMMENT(set))
++	if (SET_WITH_COMMENT(set) && !ext->target)
+ 		ip_set_init_comment(set, ext_comment(data, set), ext);
+ 	if (SET_WITH_SKBINFO(set))
+ 		ip_set_init_skbinfo(ext_skbinfo(data, set), ext);
 
 
