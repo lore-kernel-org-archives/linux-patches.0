@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D8DA443A9A;
-	Fri,  7 Aug 2026 15:02:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70B9144238D;
+	Fri,  7 Aug 2026 15:02:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114966; cv=none; b=u6HJV1XJuK9p1HYtIOK2Et/hgrFtAgW8OK3x32wyb0HXEQZU34zyR5UrNCprhpRc59pNY8TqO2ytZqxb9G7YGGCwKCoE6FgE0hZlGjB/lixP5HKsjPX32At6NbxCX2gbMDhcl3Qp96QGQDTDYUjrMDj25W7egKfzuTt3IwFvU08=
+	t=1786114969; cv=none; b=AU56yzvrVsI/OHw2hgKQEptsA5ooMXHNYRi0XRgvfKfkKxui16S6dtAXhidZFGGmEXSBU8OdEc3GuShxdc9xyQy1CzBY1ebxR7CO36/oCbsBi5jScd0R6JmBINGz1KDwyYeQc6CEQ+YaOmZJHraMGM19xTcwJzA+lCURGRwRU0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114966; c=relaxed/simple;
-	bh=DTA3jcOZ5AtohNql1V3tj9+tnwtB0kRrWw1hTyJpLM0=;
+	s=arc-20240116; t=1786114969; c=relaxed/simple;
+	bh=PN+OdNR1mQBw3Vg+mU0PwC6J7kcdSCXyr7vUS8oRSfk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=StKtikzMHCnPJ4zHadMChte4HN6ccMDj4/0xNGSSzD42VT1jlvp3jrFTv+qrCvBKF7afui3hsWKxCyscjlxaWyMjzlZH7EwrfmzeX7lMqLwCynWlhYCWPcBpybYmIoa95oP44P2qYGrhNpoIMw7qx7FQ5PL09mdEiWvArmE8vxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zx3okliQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fr1VV316DYs8sx/be0hCbjWV/heOEQ7TKxXvonSNVuP9lfE7hM/TWEdVxL1hNGtAxTJmgAKzZHBbRDQVUMRidopDHq1dcBntbYqZl9NvD1NxfkbMyFMpuMykw200BAKm7YIeiamc0Ydr8E4Bhm3QCCNMYBIe/5620tRSPGLY3qY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OqnNemvn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zx3okliQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 054121F000E9;
-	Fri,  7 Aug 2026 15:02:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OqnNemvn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCACB1F000E9;
+	Fri,  7 Aug 2026 15:02:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114965;
-	bh=7xlYBMBhrpuD2FyZVI7AwTJwq9c/c1RyxI/Tud3XUWc=;
+	s=korg; t=1786114968;
+	bh=BgCofxMSvz9G8K0rdogCRTlEjFfzJSFvQgfxMGzZPE0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zx3okliQ7lK9oaf5G06vUjJSR/O9P+lQzvSHOdAz72M65NU7t+U4Sh7CJc5/RlKZC
-	 uL1dG8ynGvhKhXlvxX2zRfMy7UPeyeYjOk7+kPq86Czc9fUeuKBKcgHBucEFh/WonD
-	 GuTwudeC4yW+M19q+Xc6kueDcaXjW8Kg7lZEvzyQ=
+	b=OqnNemvnjqbExTHR3uGxAuK4vvqezRhlw5HCE/b+2kxZuOIDqMDM4i4tkkVp8OCyP
+	 Be2OdSLKiO7sUEaoc0ym0PA99cs5hW6Ow95jjdIPFHzftS4thGjUxahxgd8I7tPy37
+	 0FcepxLjefUOU7emHpO/4uWsu3C53c8tL1/GOXRY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 111/396] Bluetooth: ISO: lock sk in iso_connect_ind
-Date: Fri,  7 Aug 2026 16:34:31 +0200
-Message-ID: <20260807143426.688751984@linuxfoundation.org>
+Subject: [PATCH 6.18 094/396] powerpc/boot: Fix treeboot-currituck CPU node lookup check
+Date: Fri,  7 Aug 2026 16:34:14 +0200
+Message-ID: <20260807143426.307999075@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -51,90 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit 4311fd6f429065a8ba208660360a895627a00cf3 ]
+[ Upstream commit 43863f6575d2211e8c5157fefb83ad0ad046aab4 ]
 
-Accessing iso_pi(sk)->conn requires lock_sock, which is not taken in the
-"ev3" part of iso_connect_ind.  It may also be NULL if socket has
-transitioned away from the LISTEN/CONNECT states before locking.
+fdt_node_offset_by_prop_value() returns a negative error code on
+failure - fix the check accordingly.
 
-Fix by adding lock/release. Recheck hcon is valid after lock acquire
-where needed.
-
-Fixes: 168d9bf9c7f0 ("Bluetooth: ISO: Reassemble PA data for bcast sink")
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 228d55053397 ("powerpc/47x: Add support for the new IBM currituck platform")
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260702211554.56923-5-thorsten.blum@linux.dev
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/iso.c | 19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+ arch/powerpc/boot/treeboot-currituck.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
-index 4377fe6cf14df..d667cbf8a1392 100644
---- a/net/bluetooth/iso.c
-+++ b/net/bluetooth/iso.c
-@@ -2246,7 +2246,7 @@ int iso_connect_ind(struct hci_dev *hdev, bdaddr_t *bdaddr, __u8 *flags)
+diff --git a/arch/powerpc/boot/treeboot-currituck.c b/arch/powerpc/boot/treeboot-currituck.c
+index d53e8a592f816..5b5363b74f9f3 100644
+--- a/arch/powerpc/boot/treeboot-currituck.c
++++ b/arch/powerpc/boot/treeboot-currituck.c
+@@ -102,7 +102,7 @@ void platform_init(void)
  
- 			lock_sock(sk);
- 
--			hcon = iso_pi(sk)->conn->hcon;
-+			hcon = iso_pi(sk)->conn ? iso_pi(sk)->conn->hcon : NULL;
- 			iso_pi(sk)->qos.bcast.encryption = ev2->encryption;
- 
- 			if (ev2->num_bis < iso_pi(sk)->bc_num_bis)
-@@ -2286,9 +2286,11 @@ int iso_connect_ind(struct hci_dev *hdev, bdaddr_t *bdaddr, __u8 *flags)
- 		if (!sk)
- 			goto done;
- 
--		hcon = iso_pi(sk)->conn->hcon;
-+		lock_sock(sk);
-+
-+		hcon = iso_pi(sk)->conn ? iso_pi(sk)->conn->hcon : NULL;
- 		if (!hcon)
--			goto done;
-+			goto release3;
- 
- 		if (ev3->data_status == LE_PA_DATA_TRUNCATED) {
- 			/* The controller was unable to retrieve PA data. */
-@@ -2296,12 +2298,12 @@ int iso_connect_ind(struct hci_dev *hdev, bdaddr_t *bdaddr, __u8 *flags)
- 			       HCI_MAX_PER_AD_TOT_LEN);
- 			hcon->le_per_adv_data_len = 0;
- 			hcon->le_per_adv_data_offset = 0;
--			goto done;
-+			goto release3;
- 		}
- 
- 		if (hcon->le_per_adv_data_offset + ev3->length >
- 		    HCI_MAX_PER_AD_TOT_LEN)
--			goto done;
-+			goto release3;
- 
- 		memcpy(hcon->le_per_adv_data + hcon->le_per_adv_data_offset,
- 		       ev3->data, ev3->length);
-@@ -2320,18 +2322,19 @@ int iso_connect_ind(struct hci_dev *hdev, bdaddr_t *bdaddr, __u8 *flags)
- 						    &base_len);
- 
- 			if (!base || base_len > BASE_MAX_LENGTH)
--				goto done;
-+				goto release3;
- 
--			lock_sock(sk);
- 			memcpy(iso_pi(sk)->base, base, base_len);
- 			iso_pi(sk)->base_len = base_len;
--			release_sock(sk);
- 		} else {
- 			/* This is a PA data fragment. Keep pa_data_len set to 0
- 			 * until all data has been reassembled.
- 			 */
- 			hcon->le_per_adv_data_len = 0;
- 		}
-+
-+release3:
-+		release_sock(sk);
- 	} else {
- 		sk = iso_get_sock(&hdev->bdaddr, BDADDR_ANY,
- 				  BT_LISTEN, NULL, NULL);
+ 	node = fdt_node_offset_by_prop_value(_dtb_start, -1, "device_type",
+ 	                                     "cpu", sizeof("cpu"));
+-	if (!node)
++	if (node < 0)
+ 		fatal("Cannot find cpu node\n");
+ 	timebase = fdt_getprop(_dtb_start, node, "timebase-frequency", &size);
+ 	if (timebase && (size == 4))
 -- 
 2.53.0
 
