@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 059CA1C84D0;
-	Fri,  7 Aug 2026 15:21:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25BAA35B631;
+	Fri,  7 Aug 2026 15:21:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116106; cv=none; b=HTOTFs09b7o76rY8rA4O4nY8fOaY0gNyjMyAyJ5uoA0mnFhaPFZ+cfWAWvsFNqvJNtdz2EnWwNmmD/2C5m4ee0yPHxE797XBzEvv43lHd5lSr8mWnSNN7eIdvRIVIFZESJIEPXGhXPY20Hj/DzzK8r9wsbUzVu9yLnh4NWXwYpE=
+	t=1786116110; cv=none; b=J2Fhke1gqzWq/S587o9dtcXMw2aGALTqgZHvb5zcuIsS70YhIouQW3/qgSdHsMxtukBhYjqcxmIPsRuYcnoplf+0thHNYab5gO547PCn9ob2VwUVWh0AD/6riVRGWzflXwvxYeF82J+gjH5hKTSY0kCmRk4/rWR2CmA4cya4tj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116106; c=relaxed/simple;
-	bh=mYthdjBnxYDglXbNR4nTSRI2bBErv6nYBB0mzWeIq0s=;
+	s=arc-20240116; t=1786116110; c=relaxed/simple;
+	bh=Vwc0XadB7gE2ioQqVez/+VrI99hm622X1PFQV57A9cA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lb8FX0NAetJpya80n+jexdrtdEIgUh3S/GcafUeJWfQLYZ9/0ZsAk5n/ipnZa7/X/TC+KmWD4GANCpAI9ZSYO236Qce/9kH65wmzEU4V96vn11rk3uhd8U1DKf3W7iKIQilSj2xy0IK2owzJcYPaXD/exJfSl/O8Aqq5gLRkKG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x6Hirky8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oF34lTHsI/dSlIdrNjRbS3j8anUW2cxqNDwbjggkGHSxOvt3XZGDBYmuFPapyPdWzqNrAHGGq4lrGaPyqHdp8G49EFmgO2qpSoOlAFha2lZ3O9z5XioeescCTga0vpAMh2JcUJEwxznfBfHzQvGDQ7hm1QRrGnNkKUgmzynHRmc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QtMUpEKE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x6Hirky8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F9A51F000E9;
-	Fri,  7 Aug 2026 15:21:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QtMUpEKE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FD8B1F000E9;
+	Fri,  7 Aug 2026 15:21:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116104;
-	bh=Fk9DhUBxNBzF7yAv18IhVtM0eZ4W+Ntn0TM64rYv/RM=;
+	s=korg; t=1786116107;
+	bh=AzM4WkHEPdFsJQffi3cNNwzIrOUtkMx/zBUyPLDK1Jo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x6Hirky8QxaGzOb8qCkAZnak0/0t9M2qbRvla4c7UlZp+18h8cYB1Qz85mTcrnjDm
-	 vx5DGEmnBPqGozFf6VU76HWElZ4zEoWNUvPylDKVaJ2ffGtkRKzKhUA4OeitO96Ugf
-	 Ht6wdz/H84sc4EYMsR+0DOO98sJ+yehNFwfzEsE4=
+	b=QtMUpEKEAPU9iL6TRF+riWXDoPOiOfUc9g+qR2+vbg4kpURDZg/QXb7sgGCz/otf+
+	 ImdDqdl3xqU4B4zxIxE0joqhNWYN264defY/oVIGMIZiKfST0lED6tM6oJ2s6NRdXU
+	 QHVtFO963XcSros+aJbkHWL6uw5I3ZygqvbO572U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Federico Kirschbaum <federico.kirschbaum@xbow.com>,
-	Baul Lee <baul.lee@xbow.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.6 112/261] ALSA: ump: fix double free of out_cvts on rawmidi error
-Date: Fri,  7 Aug 2026 16:37:49 +0200
-Message-ID: <20260807143417.795895897@linuxfoundation.org>
+	Christian Marangi <ansuelsmth@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 071/261] net: phylink: put link_gpio if phylink_create fails
+Date: Fri,  7 Aug 2026 16:37:08 +0200
+Message-ID: <20260807143416.916324963@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143415.358597922@linuxfoundation.org>
 References: <20260807143415.358597922@linuxfoundation.org>
@@ -51,46 +52,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baul Lee <baul.lee@xbow.com>
+From: Christian Marangi <ansuelsmth@gmail.com>
 
-commit 70c977815af0d997feb2d0c5d284d55689bf7051 upstream.
+[ Upstream commit 0fe1e3e8f3380d7862296a73b528d164e96c76b8 ]
 
-snd_ump_attach_legacy_rawmidi() allocates the legacy conversion array
-ump->out_cvts and, on the snd_rawmidi_new() error path, frees it with
-kfree() but leaves ump->out_cvts pointing at the freed memory.  When the
-endpoint is later torn down, snd_ump_endpoint_free() frees ump->out_cvts
-a second time, resulting in a double free.
+In phylink_create() if phylink_register_sfp() returns an error, link_gpio
+obtained by phylink_parse_fixedlink() is never released. While this is a
+very unlikely scenario, it's worth to fix/handle this.
 
-The host snd-usb-audio driver attaches the legacy rawmidi for any USB
-MIDI 2.0 (UMP) device, so a device that makes snd_rawmidi_new() fail
-reaches this path on enumeration.
+This was present from the very first implementation of phylink but got
+relevant only with the introduction of ce0aa27ff3f6 ("sfp: add sfp-bus to
+bridge between network devices and sfp cages") where additional function
+were added after phylink_parse_fixedlink() making the release of link_gpio
+needed if such additional function errored out.
 
-Clear ump->out_cvts after freeing it on the error path so it is not
-freed again during teardown.
+While at it, restructure the exit condition of phylink_create() with the
+goto pattern to reduce code duplication on handling error conditions.
 
-Discovered by XBOW, triaged by Baul Lee <baul.lee@xbow.com>
-
-Fixes: 33cd7630782d ("ALSA: ump: Export MIDI1 / UMP conversion helpers")
-Reported-by: Federico Kirschbaum <federico.kirschbaum@xbow.com>
-Reported-by: Baul Lee <baul.lee@xbow.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Baul Lee <baul.lee@xbow.com>
-Link: https://patch.msgid.link/20260726051633.41206-1-baul.lee@xbow.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: ce0aa27ff3f6 ("sfp: add sfp-bus to bridge between network devices and sfp cages")
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20260726150806.2437-1-ansuelsmth@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/ump.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/phy/phylink.c | 29 +++++++++++++++--------------
+ 1 file changed, 15 insertions(+), 14 deletions(-)
 
---- a/sound/core/ump.c
-+++ b/sound/core/ump.c
-@@ -1286,6 +1286,7 @@ int snd_ump_attach_legacy_rawmidi(struct
- 			      &rmidi);
- 	if (err < 0) {
- 		kfree(ump->out_cvts);
-+		ump->out_cvts = NULL;
- 		return err;
+diff --git a/drivers/net/phy/phylink.c b/drivers/net/phy/phylink.c
+index 800e8b9eb4532..6d8ff73a7ebae 100644
+--- a/drivers/net/phy/phylink.c
++++ b/drivers/net/phy/phylink.c
+@@ -1635,8 +1635,8 @@ struct phylink *phylink_create(struct phylink_config *config,
+ 	} else if (config->type == PHYLINK_DEV) {
+ 		pl->dev = config->dev;
+ 	} else {
+-		kfree(pl);
+-		return ERR_PTR(-EINVAL);
++		ret = -EINVAL;
++		goto free_pl;
  	}
  
+ 	pl->using_mac_select_pcs = using_mac_select_pcs;
+@@ -1660,28 +1660,29 @@ struct phylink *phylink_create(struct phylink_config *config,
+ 	phylink_validate(pl, pl->supported, &pl->link_config);
+ 
+ 	ret = phylink_parse_mode(pl, fwnode);
+-	if (ret < 0) {
+-		kfree(pl);
+-		return ERR_PTR(ret);
+-	}
++	if (ret < 0)
++		goto free_pl;
+ 
+ 	if (pl->cfg_link_an_mode == MLO_AN_FIXED) {
+ 		ret = phylink_parse_fixedlink(pl, fwnode);
+-		if (ret < 0) {
+-			kfree(pl);
+-			return ERR_PTR(ret);
+-		}
++		if (ret < 0)
++			goto release_link_gpio;
+ 	}
+ 
+ 	pl->cur_link_an_mode = pl->cfg_link_an_mode;
+ 
+ 	ret = phylink_register_sfp(pl, fwnode);
+-	if (ret < 0) {
+-		kfree(pl);
+-		return ERR_PTR(ret);
+-	}
++	if (ret < 0)
++		goto release_link_gpio;
+ 
+ 	return pl;
++
++release_link_gpio:
++	if (pl->link_gpio)
++		gpiod_put(pl->link_gpio);
++free_pl:
++	kfree(pl);
++	return ERR_PTR(ret);
+ }
+ EXPORT_SYMBOL_GPL(phylink_create);
+ 
+-- 
+2.53.0
+
 
 
