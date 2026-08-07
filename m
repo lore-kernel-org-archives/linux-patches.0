@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD43842882B;
-	Fri,  7 Aug 2026 15:07:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11FE2418372;
+	Fri,  7 Aug 2026 15:07:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115252; cv=none; b=YuAIDhMnSlD0L16XI5aHxAbnCN4oRc9A0ztg/sTNsxg6GOmXM5d4T+Ua6TIWjUDQBAHMLpug8Qm/HvB/8sk2gjIaiT0fH+6op2OWbVw/26L1dCIlHFk92DU7vf9+6bE54Y/r/ez9Oc6BxBs3kAaIPfrl1ijm2mek4Hj2+9nJu/U=
+	t=1786115256; cv=none; b=oc0eXSXkf23tzIz1f8QDlGsNWVisS6NO/r6xC2uYQc+bfGbwtgg2H6FdL8ByVADCv9gEqFPuk+5osZVVe7SJeyVYic0pkshnlqr62UGH9FqRePG8dMfrJK19g2BqZhnKKnIO9DuVlRlKBJgXRgZDJi0+wDrdxaa2MkXiLvaAADs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115252; c=relaxed/simple;
-	bh=oVmUTNyXLSc/w+I+aQmqVigbFLGlAct6Q2lfBaCxfTI=;
+	s=arc-20240116; t=1786115256; c=relaxed/simple;
+	bh=orUl7UX5W2MZmME7tR55fFi4Tb46QJffsXDBLfwCQR8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mH5WIEBg6F1LpmO60EznIRRW8O2fU6C20YYmyQvTq9CDeY8yyPFW5S8RqmvrZy9AL/bcA+kz2DzMLi+/JznqZGVOqg1W9lhwtOrQDNsaVIKIIg19T3h67nEksISgerE0Gg/ErGEyzKqK6CjZkja06BwRYE2/s+5eVk1uUz9xmbI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a0UytS0V; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gzQR/0wrDiH9nxYmjQ8NsPkL3lx+2UIt8UR9Q12AphQVfQbAE1i1iDSIESw4V+vbpzG26IzZisO4TUP7saHiwypy3S2C3R55FJfRQ+chcAftjiWC7yKC+xmrHBCrifWzizpoX24rvCe5sL4G9OrDn5McGQmJfW+yyOHIoGpdMfA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hKQW+7dG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a0UytS0V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 248BE1F000E9;
-	Fri,  7 Aug 2026 15:07:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hKQW+7dG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1134F1F000E9;
+	Fri,  7 Aug 2026 15:07:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115251;
-	bh=okHU1t3mkEUuF3aYyvMpqAuZBSNHbFkePkHu/o6ru6U=;
+	s=korg; t=1786115254;
+	bh=UBu6Vf8Sqx8nbAhpZagCjV24PIP95Mw9j0nTsqwslVI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a0UytS0VihtsuYKN1LYaJIwM8Qp/iM4O4VwK1bDuHIOrsGq293Wo8Kxd6mUE/terG
-	 9loG7+eChSU8yDzjJJjiGPp+N4YIAFB27K/K9ddEItDev2yiGCt/34VnGTtwFxa0i3
-	 dPppE4GQ2W+Z8DrmpRCTXo2puxlVNuYopOlCHUR4=
+	b=hKQW+7dG5BL2hcofthZWCbO6W00tgyvJEgXVfjRFj9YGMUXTaFVhxasN0GNuLdjI4
+	 dKfrHpk2kwkNgN20T4rZNrvlEHf0fIoddzyRZv1lzbGdtsvk2VrTi3IQ19J+Byw6eB
+	 RtVarcBtJpwypHVu/6OuJptoAK5uyARvt4AaxklI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haidar Lee <haidar.lee@adlinktech.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.18 211/396] ASoC: tas2562: fix broken entries in the volume lookup table
-Date: Fri,  7 Aug 2026 16:36:11 +0200
-Message-ID: <20260807143428.823629186@linuxfoundation.org>
+	Matt Vollrath <tactii@gmail.com>,
+	Damien Le Moal <dlemoal@kernel.org>
+Subject: [PATCH 6.18 212/396] ata: libata-eh: Increase STANDBY IMMEDIATE timeout
+Date: Fri,  7 Aug 2026 16:36:12 +0200
+Message-ID: <20260807143428.844126791@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -50,53 +50,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haidar Lee <haidar.lee@adlinktech.com>
+From: Matt Vollrath <tactii@gmail.com>
 
-commit bdb0fd6de403fcea7b85dc9d38f0a571583ebe80 upstream.
+commit 1e024d2b41ee32bc06818f7f09a3562c58842cf9 upstream.
 
-The float_vol_db_lookup table is supposed to hold
-round(10^(dB/20) * 2^30) for every 2 dB step from -110 dB to 0 dB,
-which is 56 entries, but it only has 55: the -90 dB entry duplicates
-the -92 dB value (0x0000695b) and the -20 dB entry (0x06666666) is
-missing altogether. As a result every step between -90 dB and -22 dB
-is off by 2 dB, and the control's maximum raw value of 110 indexes one
-element past the end of the array.
+Correct a previous change (see Fixes) which reduced the standby timeout
+from 30 to 5 seconds. Increase it to 15 seconds.
 
-Replace the duplicated -90 dB entry with the correct value 0x000084a3
-and add the missing -20 dB entry, bringing the table to the full 56
-entries so index 55 (raw value 110, 0 dB) is in range again.
+I was troubleshooting an error spotted during system suspend:
 
-Fixes: bf726b1c86f2 ("ASoC: tas2562: Add support for digital volume control")
+    [ 1217.152867] ata1.00: Entering standby power mode
+    [ 1222.322948] ata1.00: qc timeout after 5000 msecs (cmd 0xe0)
+    [ 1222.324010] ata1.00: STANDBY IMMEDIATE failed (err_mask=0x4)
+
+This drive is a Samsung 870 EVO SSD in good SMART standing, and I wasn't
+aware of any reason it should be taking so long to standby. The issue is
+intermittent, but I observed it sometimes taking 7 seconds to manually
+standby. I assume this was interruption of background maintenance after
+a power outage.
+
+As a desktop user, I would prefer to wait the extra 2 seconds at suspend
+to let the drive finish its business rather than drop the rails from
+under it.
+
+The change from 30 to 5 seconds was implicit when switching suspend
+from START STOP UNIT to an internal command with no timeout table entry.
+No reason was stated for the change.
+
+Fixes: aa3998dbeb3a ("ata: libata-scsi: Disable scsi device manage_system_start_stop")
 Cc: stable@vger.kernel.org
-Signed-off-by: Haidar Lee <haidar.lee@adlinktech.com>
-Link: https://patch.msgid.link/20260715-tas2562-dvc-fix-v1-2-072b13901b20@adlinktech.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Matt Vollrath <tactii@gmail.com>
+Assisted-by: Claude:claude-5-fable
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/tas2562.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/ata/libata-eh.c |    8 ++++++++
+ include/linux/libata.h  |    2 +-
+ 2 files changed, 9 insertions(+), 1 deletion(-)
 
---- a/sound/soc/codecs/tas2562.c
-+++ b/sound/soc/codecs/tas2562.c
-@@ -32,15 +32,16 @@
- static const unsigned int float_vol_db_lookup[] = {
- 0x00000d43, 0x000010b2, 0x00001505, 0x00001a67, 0x00002151,
- 0x000029f1, 0x000034cd, 0x00004279, 0x000053af, 0x0000695b,
--0x0000695b, 0x0000a6fa, 0x0000d236, 0x000108a4, 0x00014d2a,
-+0x000084a3, 0x0000a6fa, 0x0000d236, 0x000108a4, 0x00014d2a,
- 0x0001a36e, 0x00021008, 0x000298c0, 0x000344df, 0x00041d8f,
- 0x00052e5a, 0x000685c8, 0x00083621, 0x000a566d, 0x000d03a7,
- 0x0010624d, 0x0014a050, 0x0019f786, 0x0020b0bc, 0x0029279d,
- 0x0033cf8d, 0x004139d3, 0x00521d50, 0x00676044, 0x0082248a,
- 0x00a3d70a, 0x00ce4328, 0x0103ab3d, 0x0146e75d, 0x019b8c27,
- 0x02061b89, 0x028c423f, 0x03352529, 0x0409c2b0, 0x05156d68,
--0x080e9f96, 0x0a24b062, 0x0cc509ab, 0x10137987, 0x143d1362,
--0x197a967f, 0x2013739e, 0x28619ae9, 0x32d64617, 0x40000000
-+0x06666666, 0x080e9f96, 0x0a24b062, 0x0cc509ab, 0x10137987,
-+0x143d1362, 0x197a967f, 0x2013739e, 0x28619ae9, 0x32d64617,
-+0x40000000
+--- a/drivers/ata/libata-eh.c
++++ b/drivers/ata/libata-eh.c
+@@ -106,6 +106,12 @@ static const unsigned int ata_eh_flush_t
+ 	UINT_MAX,
  };
  
- struct tas2562_data {
++static const unsigned int ata_eh_standby_timeouts[] = {
++	15000,	/* Some drives may be slow to standby */
++	/* but don't hold up a suspend too long waiting for them */
++	UINT_MAX,
++};
++
+ static const unsigned int ata_eh_other_timeouts[] = {
+ 	 5000,	/* same rationale as identify timeout */
+ 	10000,	/* ditto */
+@@ -147,6 +153,8 @@ ata_eh_cmd_timeout_table[ATA_EH_CMD_TIME
+ 	  .timeouts = ata_eh_other_timeouts, },
+ 	{ .commands = CMDS(ATA_CMD_FLUSH, ATA_CMD_FLUSH_EXT),
+ 	  .timeouts = ata_eh_flush_timeouts },
++	{ .commands = CMDS(ATA_CMD_STANDBYNOW1),
++	  .timeouts = ata_eh_standby_timeouts },
+ 	{ .commands = CMDS(ATA_CMD_VERIFY),
+ 	  .timeouts = ata_eh_reset_timeouts },
+ };
+--- a/include/linux/libata.h
++++ b/include/linux/libata.h
+@@ -389,7 +389,7 @@ enum {
+ 	/* This should match the actual table size of
+ 	 * ata_eh_cmd_timeout_table in libata-eh.c.
+ 	 */
+-	ATA_EH_CMD_TIMEOUT_TABLE_SIZE = 8,
++	ATA_EH_CMD_TIMEOUT_TABLE_SIZE = 9,
+ 
+ 	/*
+ 	 * Quirk flags: may be set by libata or controller drivers on drives.
 
 
