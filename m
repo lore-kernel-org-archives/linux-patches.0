@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89D95474275;
-	Fri,  7 Aug 2026 15:04:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7839F4756BB;
+	Fri,  7 Aug 2026 15:04:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115063; cv=none; b=O0xIUqWlbAmApmGpWN0zgEGq3pDJbpD7yd61S/1c7vecIwJg53/Z1gNKFB1OLhqjjBEPf1F9eOfCljQ5v3TBjCAATiWotVcNNM0YQg/o8HhoyseE3yLp8lPRPopBdwvW6ySsIWOOOhcYlzODgDFrqPYc3j5mQo78KFxl28kwVxg=
+	t=1786115065; cv=none; b=R4n1RM7Ap5m1N5jqVkip+eq/k0wnywkIwy6tfp8c4KFcwFlGu6IecJcc+KWrNTm4OZSk3KDMBG4UQYExpHfIEv4kZzlbYynjhHtgT2udMKDsWWJFybORiSfeC8UBuY9+eFH3sKkhdkU2AgpkhH8kec1ac4BPC7k6FUo0VHHdEx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115063; c=relaxed/simple;
-	bh=bmMTedOrvigIn7r4b6G3IRg8V9X6sxg84ed0QdkJfzA=;
+	s=arc-20240116; t=1786115065; c=relaxed/simple;
+	bh=G3PgBkegK14GkvDauW/uoxilVyPrVXhreZit1IpmSro=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J9KMu0VBbTL353low05nS0gMb3NvJCZDRNvH1MXlWYAyu5Iq8p1Jk2oliDTmhIkG3dM7GF8SxplHX02dehpDAnK4UFyfqqWJLFlTu3l6hZpJ5S2waQTm+320pSMwjPbSdXQgV6F4YzTQtRR4bWfLA9et3eVPaNqF1nDyexE8RJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cMd6kbv8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uTdtCygogUxmMifR0nj5GzekeCIdh5jWOKd5ybKH3tPrc4ThBXw5rUoUv6QJBWIeZNlb66Nq+kz7O6wTSHNChmRpETQeDMlPmPrRyfqE+sTUqXTLfidK/O4F2InpFaoOdxTIlK7WCKP4KZjI7ounCnw7sc7K71ogmigtuPkRZy0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FoUEFQJC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cMd6kbv8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 547CB1F00A3D;
-	Fri,  7 Aug 2026 15:04:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FoUEFQJC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1AA81F000E9;
+	Fri,  7 Aug 2026 15:04:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115050;
-	bh=/zxC3KO3tcmQ4Sfs7IcD1Jbsu4IkgBUSJt9lJ2JQgUg=;
+	s=korg; t=1786115059;
+	bh=2yyd283gN0ssyFozjAP6TltQzeMkybBTvH25YghcAoU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cMd6kbv8zuViJEYC8NTL8as2ilkAy5Q5QmnkBBb66xhduD7u6JfjsVVfcrysVk33e
-	 a/TmfaYEh6O0PugMxHDxIXrTblX/KRsVsyNDWloVXkeJhV57k+Wuq1xWCh4fjiPfBu
-	 KKKjSnxIh3ZkbyqBnn9IZSHdQXhzWKoo/gLlE5RM=
+	b=FoUEFQJCdalw7WbQERg/qTBCHeGmO74yO9XMnJ2TMFpp2IgYwlMtP2BszqMxY13vi
+	 p7Tyjdj3fAw71s0mPknXyuCCNNS+efaBL+WXDqxkdRK4yjPowZTV8i21VKZy9/mwNY
+	 E2z9m/iXLKnluO7MTMxh1oDvdaxdcZYDCJA94aPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Yichong Chen <chenyichong@uniontech.com>,
+	David Howells <dhowells@redhat.com>,
+	Paulo Alcantara <pc@manguebit.org>,
+	netfs@lists.linux.dev,
+	linux-fsdevel@vger.kernel.org,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 138/396] fprobe: Fix module reference count leak on error in register_fprobe()
-Date: Fri,  7 Aug 2026 16:34:58 +0200
-Message-ID: <20260807143427.286414393@linuxfoundation.org>
+Subject: [PATCH 6.18 099/396] netfs: handle single writeback rolling buffer allocation failure
+Date: Fri,  7 Aug 2026 16:34:19 +0200
+Message-ID: <20260807143426.427241025@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -50,46 +55,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Yichong Chen <chenyichong@uniontech.com>
 
-[ Upstream commit 8cf2f40ceb85047ad8a84dffae3bebc9fed18216 ]
+[ Upstream commit 37a1c535c80c67d98668d190c7432f9ebda43310 ]
 
-In register_fprobe(), get_ips_from_filter() resolves target function
-addresses and increments module reference counts via try_module_get() for
-symbols in kernel modules. If get_ips_from_filter() fails on the second
-pass and returns an error, register_fprobe() returned directly without
-releasing module references acquired up to that point.
+netfs_write_folio_single() takes an extra folio reference before
+appending the folio to the rolling buffer.
 
-Fix this by ensuring the cleanup loop executing module_put() runs even when
-get_ips_from_filter() returns a negative error.
+rolling_buffer_append() can fail if it cannot allocate another
+folio_queue. Check the return value and drop the extra folio reference
+before returning the error.
 
-Link: https://lore.kernel.org/all/178528125360.101985.4144133640239273153.stgit@devnote2/
-
-Fixes: d24fa977eec5 ("tracing: fprobe: Fix to lock module while registering fprobe")
-Assisted-by: Antigravity:gemini-3.6-flash
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Fixes: 49866ce7ea8d ("netfs: Add support for caching single monolithic objects such as AFS dirs")
+Signed-off-by: Yichong Chen <chenyichong@uniontech.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://patch.msgid.link/20260727130716.1099906-3-dhowells@redhat.com
+cc: Paulo Alcantara <pc@manguebit.org>
+cc: netfs@lists.linux.dev
+cc: linux-fsdevel@vger.kernel.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/fprobe.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ fs/netfs/write_issue.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/trace/fprobe.c b/kernel/trace/fprobe.c
-index 01f98f8a86e60..1c9ae332afad1 100644
---- a/kernel/trace/fprobe.c
-+++ b/kernel/trace/fprobe.c
-@@ -868,10 +868,8 @@ int register_fprobe(struct fprobe *fp, const char *filter, const char *notfilter
- 		return -ENOMEM;
+diff --git a/fs/netfs/write_issue.c b/fs/netfs/write_issue.c
+index 76614339554ea..5f216907b1e50 100644
+--- a/fs/netfs/write_issue.c
++++ b/fs/netfs/write_issue.c
+@@ -730,6 +730,7 @@ static int netfs_write_folio_single(struct netfs_io_request *wreq,
+ 	size_t iter_off = 0;
+ 	size_t fsize = folio_size(folio), flen;
+ 	loff_t fpos = folio_pos(folio);
++	ssize_t ret;
+ 	bool to_eof = false;
+ 	bool no_debug = false;
  
- 	ret = get_ips_from_filter(filter, notfilter, addrs, mods, num);
--	if (ret < 0)
--		return ret;
--
--	ret = register_fprobe_ips(fp, addrs, ret);
-+	if (ret >= 0)
-+		ret = register_fprobe_ips(fp, addrs, ret);
+@@ -758,7 +759,11 @@ static int netfs_write_folio_single(struct netfs_io_request *wreq,
  
- 	for (int i = 0; i < num; i++) {
- 		if (mods[i])
+ 	/* Attach the folio to the rolling buffer. */
+ 	folio_get(folio);
+-	rolling_buffer_append(&wreq->buffer, folio, NETFS_ROLLBUF_PUT_MARK);
++	ret = rolling_buffer_append(&wreq->buffer, folio, NETFS_ROLLBUF_PUT_MARK);
++	if (ret < 0) {
++		folio_put(folio);
++		return ret;
++	}
+ 
+ 	/* Move the submission point forward to allow for write-streaming data
+ 	 * not starting at the front of the page.  We don't do write-streaming
 -- 
 2.53.0
 
