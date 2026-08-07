@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F39B31A681E;
-	Fri,  7 Aug 2026 15:10:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D800B40911F;
+	Fri,  7 Aug 2026 15:10:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115449; cv=none; b=m2LzyKRjJ5R9tpSTIGGnP1y7EJbbbTcNu2UcWfW79BuLZ1OSPsUJU5SMDnfLtlMRwH9Z9V6cE3NDGr4Fxjt4GwYYiVQFxxp9YaqlryZzS+4kfoMXzb8wzQeBAhk/iia9qlJ7ewDYzUM+6f9l18iKlAGHzVKoEy3ip+RKqxxEltc=
+	t=1786115452; cv=none; b=U0r4hzjRpoP0pZI6DNeuY2IhLtt8DdrNyAoL2qplTu6ugZFWh4QMCtZcvH7083ODUW5bDNZlslaR9iMeAZZGUjAzaMQJVoAglPOWvhuzQnHXTKRXH95IAWFn7V8Luq2WT8uc9Wbu/tU2qM2eJG0lyNuhKhRVOrDD51QoJrrhfWo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115449; c=relaxed/simple;
-	bh=5xhQh4vVaYJhCF40lLB+LhBhmcJX+89QL+3tmQAKugM=;
+	s=arc-20240116; t=1786115452; c=relaxed/simple;
+	bh=VvZC7YUpoKrKMJFaofRSzLT/4wd4oo3ZLGLsky/HDuM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MM+V/V11QINsLvwzuqdI4jdlcmeXlFJ7y6ZNidJ1ktE5GUqP7NMPgW7sZxUnPyU3nn6amZnYNqPgh1A0jMoz+C8P1obNfpFC1rX6+xnL+9Sff3V6HdMqq1wd68KtHEFtpZYRgmK1JqnjinPW5r1Zj5RWjo7BXdrOwBPWP2+cb74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ik4AmgCj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Vzh0GhrYxCLTZ674pTp5wxpIDMzo1A7KR9pMHZxgJeBF9mUfPx316xR4wAl0SH8v/BQRj5rzAurqjl5CezGnJhsmr6XNB2kbUNCor7ZGWXUWVvWvyhzIG68AzZxsVRLP1CcN1ZSXHSpgU2lYa92w5YJ1ct/G9+OsfRPu0dOsihs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=utgx0Xki; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ik4AmgCj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AC7B1F00A3A;
-	Fri,  7 Aug 2026 15:10:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="utgx0Xki"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D73A1F000E9;
+	Fri,  7 Aug 2026 15:10:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115447;
-	bh=ajBkrnR0HBSSTEkyGSTLYjiUTdjLUvzeqmYXAVKWYzM=;
+	s=korg; t=1786115450;
+	bh=WtwEcLmu+TmGvozGOQ0r7CS99ERKuMSg1D/lkN4+BBk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ik4AmgCjskXcYE+pkmQEdBj942KHWhdrOIFxyLy98fIn++gnoeBrYyjF9zI9B/m+t
-	 lqoXAC9ijZf4O0OgVHL5O9Jf3iiC4IJs3chLAeg4jyQ/okgpeCcSw42oOtMe2Y4fWO
-	 tM528xKBNcs8Gy9j1hqZGxFE6PTl/30xJIqQGzm0=
+	b=utgx0Xkibao4/g+DfCHse4FDF6v9Lgyg7raYtvVQpF20kOwfxEtWsDM+MrcQyYWai
+	 pcu2LeGwQgpqP5U/+VK88Y1WVcPeGp3DyrzKeLy9I3EE+kudXuKR8NnfWBp3kw2/5U
+	 9h1YIsZ6U0Vd59ObSmnDKgsmVsyd8pTIu4GnWmsw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Holger Dengler <dengler@linux.ibm.com>,
-	Harald Freudenberger <freude@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>
-Subject: [PATCH 6.18 278/396] s390/zcrypt: Validate length for CCA ECC private key requests
-Date: Fri,  7 Aug 2026 16:37:18 +0200
-Message-ID: <20260807143430.252179455@linuxfoundation.org>
+	Nava kishore Manne <nava.kishore.manne@amd.com>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	Michal Simek <michal.simek@amd.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 6.18 279/396] phy: zynqmp: fix L0_TM_DISABLE_SCRAMBLE_ENCODER mask
+Date: Fri,  7 Aug 2026 16:37:19 +0200
+Message-ID: <20260807143430.276291632@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -51,36 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Holger Dengler <dengler@linux.ibm.com>
+From: Nava kishore Manne <nava.kishore.manne@amd.com>
 
-commit a9ae0f6dd45c3ccc1d69363f7aea8af179122730 upstream.
+commit 6cb22477929489a412df8d153e550e77a012e701 upstream.
 
-cca_ecc2protkey() derives the copy length for the CPRB parameter
-block directly from the length field in the key token. Reject the
-request early if the token length exceeds the available space in the
-parameter block.
+The L0_TX_DIG_61 register bit 2 is a reserved read-only field.
+The previous mask value 0x0f incorrectly included bit 2, causing
+unintended writes to a reserved bit on every scrambler bypass
+operation.
 
-Fixes: fa6999e326fe ("s390/pkey: support CCA and EP11 secure ECC private keys")
-Signed-off-by: Holger Dengler <dengler@linux.ibm.com>
-Cc: stable@vger.kernel.org # 5.10+
-Reviewed-by: Harald Freudenberger <freude@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Correct the mask to (BIT(3) | GENMASK(1, 0)) to cover only the
+valid scramble bypass control bits.
+
+Fixes: 4a33bea00314 ("phy: zynqmp: Add PHY driver for the Xilinx ZynqMP Gigabit Transceiver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Nava kishore Manne <nava.kishore.manne@amd.com>
+Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Acked-by: Michal Simek <michal.simek@amd.com>
+Link: https://patch.msgid.link/20260627155229.2791113-2-radhey.shyam.pandey@amd.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/crypto/zcrypt_ccamisc.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/phy/xilinx/phy-zynqmp.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/s390/crypto/zcrypt_ccamisc.c
-+++ b/drivers/s390/crypto/zcrypt_ccamisc.c
-@@ -1480,6 +1480,9 @@ int cca_ecc2protkey(u16 cardnr, u16 doma
- 	} __packed * prepparm;
- 	int keylen = ((struct eccprivkeytoken *)key)->len;
+--- a/drivers/phy/xilinx/phy-zynqmp.c
++++ b/drivers/phy/xilinx/phy-zynqmp.c
+@@ -53,7 +53,7 @@
+ #define L0_TM_DIG_6			0x106c
+ #define L0_TM_DIS_DESCRAMBLE_DECODER	0x0f
+ #define L0_TX_DIG_61			0x00f4
+-#define L0_TM_DISABLE_SCRAMBLE_ENCODER	0x0f
++#define L0_TM_DISABLE_SCRAMBLE_ENCODER	(BIT(3) | GENMASK(1, 0))
  
-+	if (keylen > PARMBSIZE - sizeof(struct aureqparm))
-+		return -EINVAL;
-+
- 	/* get already prepared memory for 2 cprbs with param block each */
- 	rc = alloc_and_prep_cprbmem(PARMBSIZE, &mem,
- 				    &preqcblk, &prepcblk, xflags);
+ /* PLL Test Mode register parameters */
+ #define L0_TM_PLL_DIG_37		0x2094
 
 
