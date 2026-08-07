@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92C91390608;
-	Fri,  7 Aug 2026 15:28:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E3FF390608;
+	Fri,  7 Aug 2026 15:28:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116494; cv=none; b=MlimV5zWQd/0RBtTNBovEUKve6ENKBoBeAQpATC4da4UYozxqbJk+5DBebrsWopJIKYX4mPOX1ZmlS8Mz6CRW2cvs9KKz4WiHqNE8k9qoB8mgzrfKUhlyn+nRuKofcsia7ccdXaUbEu0DZC7o3JKqHyDxKo+b6eoYarBLvon3ek=
+	t=1786116497; cv=none; b=XH3ZN6FGIimvWeWSjLiQpsYduGUunf/O/Ax38AKqtbztmU4XXWtiLuLD5truDw5VaCA98zVdtNDKN56p7QyaFiuT+9vxynaFt1BowN1mr3mX8wS1qxqXIV9H/r6rNl9d0+RbGf1iRkb/zxrS383Vg1BdsaMPqbNIUAjpNXeREU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116494; c=relaxed/simple;
-	bh=mG3eWKpu9GfvGt5SxLDHoZUZppRmkI2cAe0Ot2zpdR8=;
+	s=arc-20240116; t=1786116497; c=relaxed/simple;
+	bh=4UMtbdy9gaUoUA2EmvDmYBR00ZZyDzZT4FtVM7aSO5I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TVFTlZA6OGHaKPhHczfMGnpve/2Xnzxvj9dpUh690sa5CtVadtfrtc8C5ZX/ogRXXtz/bp2n5+p8NXp4WV9yqZ3A/0uJkX+OxgpYM4AkzlzWznq2m/H/pyL2DG2UKfZKZsM/P/nNxhI9vHH6eMvLBjQL4MYp4YWYkGC4RTMkmoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qbdB55IW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iQXdUaE8ZBStEVetXc5Z5A2U0yFjkSCiD/wkcEiBayEWrzBey2uM+c2z4nwegzrfid2NswGIn1yEbIHPkAfVOrOojW3jK5HnK8WY0t0PPK26727gTsa/U4pOj+oDh80q2wCrJ5Hs+FiJgkLHOs6IeyjUjB4P4wt1TLABeeEgKRY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ifoQzLay; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qbdB55IW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF6111F00A3A;
-	Fri,  7 Aug 2026 15:28:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ifoQzLay"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3BBD1F00A3A;
+	Fri,  7 Aug 2026 15:28:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116493;
-	bh=fX7iqBxQDIqP+AaQbAdULnkK/Kk6Q5fdTio3cSW5mk4=;
+	s=korg; t=1786116496;
+	bh=BUYUP0Ww9wWureGGOZAykJ8kHdJpiJYqsOqcEhyafXE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qbdB55IWJUH5MArUOAyC/2ZZEd79VJP3MG0VSGIUfWvh711beSLqbA2vlnsxOSf0c
-	 fmS5m+Z4hB1QHtCFqlm2NkB0Of1x8J2FlvHBO6EwWZbA9KObqD4IhTk+XlYNUVe0j7
-	 73/x9hbsZZqwWbDGOWNGsIqb4aZcG8F4dD87jms8=
+	b=ifoQzLayGFXRiCA0/zZRYF72MHJmVGB1kUsaAJDN6Fk28q3hsZNp1wlASRU14NguF
+	 gNxaKm7fOFEly/92lnQp3Ds20LtxTRyzKRG8ZWlNZBU5DzDxzbCQI4oAzu14K77PYb
+	 yKyJsVugSGXOBqnG/vrocn7ygahiS6ixMuSoE4fU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	WenTao Liang <vulab@iscas.ac.cn>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Geliang Tang <tanggeliang@kylinos.cn>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 248/261] ceph: fix refcount leak in ceph_readdir()
-Date: Fri,  7 Aug 2026 16:40:05 +0200
-Message-ID: <20260807143420.769546457@linuxfoundation.org>
+Subject: [PATCH 6.6 249/261] mptcp: pm: avoid code duplication to lookup endp
+Date: Fri,  7 Aug 2026 16:40:06 +0200
+Message-ID: <20260807143420.790898965@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143415.358597922@linuxfoundation.org>
 References: <20260807143415.358597922@linuxfoundation.org>
@@ -53,52 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: WenTao Liang <vulab@iscas.ac.cn>
+From: Geliang Tang <tanggeliang@kylinos.cn>
 
-[ Upstream commit c3e64079d8b9663e3998d0caac9aba915b6b93ae ]
+[ Upstream commit 1d7fa6ceb91fddbe38cae3521d5d1075bce6a00e ]
 
-The ceph_readdir() function allocates a ceph_mds_request via
-ceph_mdsc_create_request() and stores it in dfi->last_readdir. In
-the directory entry processing loop, if the entry's offset is less
-than ctx->pos or if the inode pointer is unexpectedly NULL, the
-function returns -EIO without releasing the reference held by
-dfi->last_readdir, causing a refcount leak.
+The helper __lookup_addr() can be used in mptcp_pm_nl_get_local_id()
+and mptcp_pm_nl_is_backup() to simplify the code, and avoid code
+duplication.
 
-Fix this by adding ceph_mdsc_put_request(dfi->last_readdir) before
-returning on these error paths. Also set dfi->last_readdir to NULL
-for safety, matching the cleanup done at the normal exit.
-
-Cc: stable@vger.kernel.org
-Fixes: af9ffa6df7e3 ("ceph: add support to readdir for encrypted names")
-Signed-off-by: WenTao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Co-developed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20241115-net-next-mptcp-pm-lockless-dump-v1-2-f4a1bcb4ca2c@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 9bc6d5e4ca9f ("mptcp: pm: userspace: fix use-after-free in get_local_id")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/dir.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ net/mptcp/pm_netlink.c |   20 ++++++--------------
+ 1 file changed, 6 insertions(+), 14 deletions(-)
 
---- a/fs/ceph/dir.c
-+++ b/fs/ceph/dir.c
-@@ -546,11 +546,16 @@ more:
- 			pr_warn_client(cl,
- 				"%p %llx.%llx rde->offset 0x%llx ctx->pos 0x%llx\n",
- 				inode, ceph_vinop(inode), rde->offset, ctx->pos);
-+			ceph_mdsc_put_request(dfi->last_readdir);
-+			dfi->last_readdir = NULL;
- 			return -EIO;
- 		}
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -1281,17 +1281,13 @@ int mptcp_pm_nl_get_local_id(struct mptc
+ {
+ 	struct mptcp_pm_addr_entry *entry;
+ 	struct pm_nl_pernet *pernet;
+-	int ret = -1;
++	int ret;
  
--		if (WARN_ON_ONCE(!rde->inode.in))
-+		if (WARN_ON_ONCE(!rde->inode.in)) {
-+			ceph_mdsc_put_request(dfi->last_readdir);
-+			dfi->last_readdir = NULL;
- 			return -EIO;
-+		}
+ 	pernet = pm_nl_get_pernet_from_msk(msk);
  
- 		ctx->pos = rde->offset;
- 		doutc(cl, "%p %llx.%llx (%d/%d) -> %llx '%.*s' %p\n", inode,
+ 	rcu_read_lock();
+-	list_for_each_entry_rcu(entry, &pernet->local_addr_list, list) {
+-		if (mptcp_addresses_equal(&entry->addr, skc, entry->addr.port)) {
+-			ret = entry->addr.id;
+-			break;
+-		}
+-	}
++	entry = __lookup_addr(pernet, skc);
++	ret = entry ? entry->addr.id : -1;
+ 	rcu_read_unlock();
+ 	if (ret >= 0)
+ 		return ret;
+@@ -1318,15 +1314,11 @@ bool mptcp_pm_nl_is_backup(struct mptcp_
+ {
+ 	struct pm_nl_pernet *pernet = pm_nl_get_pernet_from_msk(msk);
+ 	struct mptcp_pm_addr_entry *entry;
+-	bool backup = false;
++	bool backup;
+ 
+ 	rcu_read_lock();
+-	list_for_each_entry_rcu(entry, &pernet->local_addr_list, list) {
+-		if (mptcp_addresses_equal(&entry->addr, skc, entry->addr.port)) {
+-			backup = !!(entry->flags & MPTCP_PM_ADDR_FLAG_BACKUP);
+-			break;
+-		}
+-	}
++	entry = __lookup_addr(pernet, skc);
++	backup = entry && !!(entry->flags & MPTCP_PM_ADDR_FLAG_BACKUP);
+ 	rcu_read_unlock();
+ 
+ 	return backup;
 
 
