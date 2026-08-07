@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42F3438424C;
-	Fri,  7 Aug 2026 15:48:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BFE2472771;
+	Fri,  7 Aug 2026 15:48:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786117687; cv=none; b=VZAvcS8o4/IEwTNi9dVyuEWY7VEz7g1aVCcmeJBgCCbkkVhKkrktFYFmTLClGYkEvgIbsP3x7vQKR1lx8vD9KXhj7aYNqSFoXHVcbgSqgH6+CmLKc6rHddeTDw99Zm950ArqTxCxMAMzaBAibYuLTGr4cjxYFl51Rw9fui4Ir+k=
+	t=1786117690; cv=none; b=LnDhn9KUmWBy3JhvyVIbw76UA2B5MGRqTuvswn8oD3ti5VPhVxdhu8OvTm9oJBsIDBO00zjug41ERAgfCmBIaor1W0W5zhhliPef6NKl4vnHyhtkkE1f06irm89CskwYDgMEz2DSt67SoiuFy4fOT8J0ygsZyJ7Sj4rpEZtSiWo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786117687; c=relaxed/simple;
-	bh=5TZXMwXXiMcHGk/WAmo+m1dHyre2er1ghmBtf0W5xsM=;
+	s=arc-20240116; t=1786117690; c=relaxed/simple;
+	bh=S89GF84+Z3lren1WFQVK//gN2ImfyfwyNWVzhrCRmIE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lh3IrKkDyZa0nbYaSk9vn3f45N/Tl2dQZKVIEqJqOwEfQ7uu/fg5TEhLYHBZ7YxfkSuAQgs4rnL1qAtPVzrT0KBKZCWq2cXgcuquTRScwLUSPYopnAff9XnOnEYDruJjeudeCcsFBMFvC6tKO9QUXmwnK3NPGD094lS+7ydzIbs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KtgkJ3Sz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pya5wTXHzSk6xZT4vS+h1exrUj9AyEGLk37M4tzImWjtfZmvNVPHpRUIkzOiFQiWhST9wX7Xkv7yWOJOksxraxYrSt2BMi55cAjLsP5RnjuOiQQzpIeFhHKQul/uad0KQyeOgoCOpOvk1thwr7CsD7uarq2GfKXZBML05u3hrRI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qHph7uPN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KtgkJ3Sz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E0CE1F000E9;
-	Fri,  7 Aug 2026 15:48:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qHph7uPN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F4A01F000E9;
+	Fri,  7 Aug 2026 15:48:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786117686;
-	bh=KLz9HAZyXew+zJ7RGXV3gBua0Y9PCexu3IAigQ3Tqfo=;
+	s=korg; t=1786117689;
+	bh=fWno6lQ3K3vG8/JWdmwk/Led/XwmVtKbF8Bv7d+0vvs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KtgkJ3SzEslAuPFqoq6QvGoEw7+IVeoEdi12VBwTc29wjjIALqe7Nyjmm/VnP1Akn
-	 2om7bNLci4i6YXtaU/fFmc0xDPC4vJo3OslbEjYSqb5gwMeVutJrvtQPONagfgXqXx
-	 en53oQDvF+GZcr8k9wIVq1S9Kj5yGaAVvxIzTtSc=
+	b=qHph7uPN15WNFl70dmWP/XVBBK5cZFtCXaxFOx2LT5TjwgOde1hiRK1TOlODkfNzJ
+	 XviYtFhkndCNneu/5mdarcYUUkEWU1SVp8D8w62zokCXn/OIo4OBi+TUxcCPPr8LNf
+	 oBByCsiKw57AOmEkCv8FupRAqFQTHPe54Whr9kJg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Aaron Conole <aconole@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.1 351/438] net: openvswitch: fix skb leak on flow key update failure during recirculation
-Date: Fri,  7 Aug 2026 16:39:07 +0200
-Message-ID: <20260807143435.454947113@linuxfoundation.org>
+	Alan Swanson <reiver@improbability.net>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 7.1 400/438] drm/amd/display: Silence link_dpms I2C retimer failures
+Date: Fri,  7 Aug 2026 16:39:56 +0200
+Message-ID: <20260807143436.488222220@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -51,58 +50,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Maximets <i.maximets@ovn.org>
+From: Alan Swanson <reiver@improbability.net>
 
-commit e1cf066244dad576221b7123a0e5005967f25a20 upstream.
+commit 8ccb87b1c9be594fc2c36b0a4006a66f08dee1c8 upstream.
 
-do_execute_actions() returns right away when execute_recirc() fails on
-the last action as it assumes this function always takes ownership of
-the skb when 'last' is true.  But when the flow key update fails, the
-function doesn't free the skb and it ends up leaked.
+Commit a4f01bf729b2 ("drm/amd/display: Refactor and fix link_dpms I2C")
+had also changed the "Set retimer failed" messages from DC_LOG_DEBUG()
+to DC_LOG_ERROR(). This unfortunately can create log spam.
 
-This is a very unlikely scenario as it requires the packet to become
-unparseable by applying a set of actions on a previously parseable skb,
-but should be fixed nevertheless.
+Change those back to DC_LOG_DEBUG() only.
 
-Reported by Sashiko.
-
-Fixes: 971427f353f3 ("openvswitch: Add recirc and hash action.")
+Fixes: a4f01bf729b2 ("drm/amd/display: Refactor and fix link_dpms I2C")
+Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/5520
+Signed-off-by: Alan Swanson <reiver@improbability.net>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit da8609eef18b0a3490d0e1fa9440659fadc8194d)
 Cc: stable@vger.kernel.org
-Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
-Reviewed-by: Aaron Conole <aconole@redhat.com>
-Link: https://patch.msgid.link/20260727181851.306076-2-i.maximets@ovn.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/openvswitch/actions.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/link/link_dpms.c |   16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
---- a/net/openvswitch/actions.c
-+++ b/net/openvswitch/actions.c
-@@ -1108,6 +1108,10 @@ static int execute_masked_set_action(str
- 	return err;
- }
+--- a/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
++++ b/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
+@@ -379,7 +379,7 @@ static bool write_i2c_retimer_vga(
  
-+/* When 'last' is true, recirc() should always consume the 'skb'.
-+ * Otherwise, recirc() should keep 'skb' intact regardless what
-+ * actions are executed on recirculation.
-+ */
- static int execute_recirc(struct datapath *dp, struct sk_buff *skb,
- 			  struct sw_flow_key *key,
- 			  const struct nlattr *a, bool last)
-@@ -1118,8 +1122,12 @@ static int execute_recirc(struct datapat
- 		int err;
- 
- 		err = ovs_flow_key_update(skb, key);
--		if (err)
-+		if (err) {
-+			if (last)
-+				ovs_kfree_skb_reason(skb,
-+						     OVS_DROP_ACTION_ERROR);
- 			return err;
-+		}
+ 	for (size_t i = 0; i < ARRAY_SIZE(vga_data); i++) {
+ 		if (!write_i2c_retimer_offset_value(link, address, vga_data[i][0], vga_data[i][1])) {
+-			DC_LOG_ERROR("Set retimer failed, vga index: %zu\n", i);
++			DC_LOG_DEBUG("Set retimer failed, vga index: %zu\n", i);
+ 			return false;
+ 		}
  	}
- 	BUG_ON(!is_flow_key_valid(key));
+@@ -400,7 +400,7 @@ static bool write_i2c_retimer_byte(
+ 		return true;
+ 
+ 	if (!write_i2c_retimer_offset_value(link, address, index, value)) {
+-		DC_LOG_ERROR("Set retimer failed, 3g index: 0x%x, value: 0x%x\n", index, value);
++		DC_LOG_DEBUG("Set retimer failed, 3g index: 0x%x, value: 0x%x\n", index, value);
+ 		return false;
+ 	}
+ 
+@@ -416,14 +416,14 @@ static bool write_i2c_retimer_byte(
+ 			if (!link_query_ddc_data(
+ 					link->ddc, address, &offset, 1, &value, 1
+ 			)) {
+-				DC_LOG_ERROR("Set retimer failed, link_query_ddc_data\n");
++				DC_LOG_DEBUG("Set retimer failed, link_query_ddc_data\n");
+ 				return false;
+ 			}
+ 		}
+ 
+ 		value |= apply_rx_tx_change;
+ 		if (!write_i2c_retimer_offset_value(link, address, offset, value)) {
+-			DC_LOG_ERROR("Set retimer failed, 3g offset: 0x%x, value: 0x%x\n", offset, value);
++			DC_LOG_DEBUG("Set retimer failed, 3g offset: 0x%x, value: 0x%x\n", offset, value);
+ 			return false;
+ 		}
+ 	}
+@@ -444,7 +444,7 @@ static bool write_i2c_retimer_setting(
+ 		uint8_t value = settings->reg_settings[i].i2c_reg_val;
+ 
+ 		if (!write_i2c_retimer_byte(link, address, index, value)) {
+-			DC_LOG_ERROR("Set retimer failed, index: %zu\n", i);
++			DC_LOG_DEBUG("Set retimer failed, index: %zu\n", i);
+ 			return false;
+ 		}
+ 	}
+@@ -455,7 +455,7 @@ static bool write_i2c_retimer_setting(
+ 			uint8_t value = settings->reg_settings_6g[i].i2c_reg_val;
+ 
+ 			if (!write_i2c_retimer_byte(link, address, index, value)) {
+-				DC_LOG_ERROR("Set retimer failed, 6g index: %zu\n", i);
++				DC_LOG_DEBUG("Set retimer failed, 6g index: %zu\n", i);
+ 				return false;
+ 			}
+ 		}
+@@ -487,7 +487,7 @@ static bool write_i2c_default_retimer_se
+ 
+ 	for (size_t i = 0; i < ARRAY_SIZE(data); i++) {
+ 		if (!write_i2c_retimer_offset_value(link, address, data[i][0], data[i][1])) {
+-			DC_LOG_ERROR("Set default retimer failed, index: %zu\n", i);
++			DC_LOG_DEBUG("Set default retimer failed, index: %zu\n", i);
+ 			return false;
+ 		}
+ 	}
+@@ -519,7 +519,7 @@ static bool write_i2c_redriver_setting(
+ 	);
+ 
+ 	if (!success)
+-		DC_LOG_ERROR("Set redriver failed");
++		DC_LOG_DEBUG("Set redriver failed");
+ 	return success;
+ }
  
 
 
