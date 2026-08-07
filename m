@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A85F448D18;
-	Fri,  7 Aug 2026 15:44:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4081F396597;
+	Fri,  7 Aug 2026 15:44:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786117470; cv=none; b=C4DJxsm7UvAqFURSuhZ4/IQwDisyw2HpiHNSziYEkoAfbgzIqxNBLuZxsdAi55chl9/EOzH76DN1bpzJgRjFGcoJTlr0ApoeKbsNdfvgUaKmepu1ZmwCnOT0DmA4psmaUPZcRywVlBUS8YNYCu9NYvMoBWVP8QguU5jzL2GVl/4=
+	t=1786117473; cv=none; b=Xe9i/qaH/xIidSNmEmuH1cq+FnN3qK/sDbYHkZECx+dTwtU+JrZQV3T1tYh7rftFzF15eU3ZXb4aGWKw/HJPNBWKPlSpBkG6GwgmzQi2Hqj31ilmGIGZadtxhgg5Q0SaYUKf3LeSV+P3UCCan9BIHNOsX1Eov/295fQtwYffC3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786117470; c=relaxed/simple;
-	bh=Bwn0ka1UYyJpNoKpCntPruj9wlIft35HXZ/lhXhX2SY=;
+	s=arc-20240116; t=1786117473; c=relaxed/simple;
+	bh=TLr75ubtW48yCptkeoYYPZYFjZOlD2mhYUfyQFiFJcM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d36SMHt4fZdLFf2+2M6xpYZy01PCsFSiGJ4B62vzmHEXADsAPPp0gk6jg3RiFjxeQAJT1+tgD0s9UM3t8NIPNVcsAbRr2WhXK6gqHsw6QeCQubepIeIljC9xbcI20G9RnZPVA2mmw/hnRON8ABwiyiL5K68S4NMFVgqigTA4+B8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DhyAjScW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dRksTWo16bHpsBCPdH273hrBwavikNLpfGXjPwlteUOV2LBtn36MhmqP5pLVS7uC7lH3FpjAOJza3nx2TOK4Ig3S3p+0Uuf4tbZLZUova1TvevRT5CgPxZz3S2a9J6g/b8XkOFFGZOsjINeIhhCd6ug/A813okTtkihAP25Stx8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=znyfViEF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DhyAjScW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C01751F000E9;
-	Fri,  7 Aug 2026 15:44:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="znyfViEF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DAAB1F000E9;
+	Fri,  7 Aug 2026 15:44:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786117469;
-	bh=NFCKMNuTlopKMfu8dOSqmnkd0ctFhEt2Icssr8+GEaA=;
+	s=korg; t=1786117472;
+	bh=i0dESlNu6+P0by+ZHg2egiEY7X7b7SgYMclS/wE1/7M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DhyAjScWFLV5Afduupysoa+pwKmnLJ70fZGjKIFnu77oU9Qm45wNEiSIh1Emwb7ff
-	 OD4XHaajiwNvtqKEpjdFe3SzwFqPEAhMfSlVojKQ0zjCtrQZpbZtdZyWNXkyr4CH/H
-	 IXQfsAnG7wRqYOuikvw0pbmWOvJvQRcaPxV6w9Bo=
+	b=znyfViEFzXp3eQ5s5yFRzfGYqiN2e67ZXWftvCIMdu2I7Q3mCmkMI9a3n3FD+ow0V
+	 feBxmocK4faSyu9hsyHxusAC1MJ9Hyzsnf27sJzw6DtVhiHMxlrcPbyZADpcibSHvk
+	 STQrgpJH15ITpQ9UsIyX4LGK2u+RGntY+7cvaLWY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Paulo Alcantara <pc@manguebit.org>,
-	Huiwen He <hehuiwen@kylinos.cn>,
-	Frank Sorenson <sorenson@redhat.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 7.1 330/438] cifs: add fscache_resize_cookie() to cifs_setsize()
-Date: Fri,  7 Aug 2026 16:38:46 +0200
-Message-ID: <20260807143435.009394145@linuxfoundation.org>
+	Christian Loehle <christian.loehle@arm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 7.1 331/438] cpufreq: cppc: Sanitize lockless policy limit snapshots
+Date: Fri,  7 Aug 2026 16:38:47 +0200
+Message-ID: <20260807143435.030735036@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -53,50 +50,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Sorenson <sorenson@redhat.com>
+From: Christian Loehle <christian.loehle@arm.com>
 
-commit fa724e235cfdb0fb0bb427d0f9dfe864ae27403e upstream.
+commit 9753c0ab89b7516aba4884dc3cc725ca33c2e3da upstream.
 
-Several code paths update the VFS inode size by calling
-netfs_resize_file() and cifs_setsize(), but omit the corresponding
-fscache_resize_cookie() call, leaving the fscache cookie out of sync
-with the actual file size:
+cppc_cpufreq_update_perf_limits() reads policy->min and policy->max
+without holding the policy lock. The cpufreq core updates those fields
+with separate stores, so a reader can observe the old minimum together
+with the new maximum and construct MIN_PERF greater than MAX_PERF.
 
-  - cifs_file_set_size() in inode.c: server-side truncation via setattr
-  - cifs_do_truncate() in file.c: truncates to zero on O_TRUNC open
-  - smb2_duplicate_extents() in smb2ops.c: file clone extending EOF
-  - smb3_simple_falloc() in smb2ops.c: two branches that extend EOF
-    via write-range and SMB2_set_eof respectively
+Read both fields once and, if the lockless snapshot is inconsistent,
+reduce the minimum to the observed maximum. This matches the conservative
+correction used by cpufreq_driver_resolve_freq() and ensures that CPPC
+never receives an inverted limit pair.
 
-Since every caller of cifs_setsize() must resize the fscache cookie,
-add the call to cifs_setsize() itself, consistent with how
-truncate_pagecache() is already consolidated there.
-
-Fixes: 70431bfd825d ("cifs: Support fscache indexing rewrite")
-Fixes: 93a43155127f ("cifs: Fix missing set of remote_i_size")
-Fixes: 110fee6b9bb5 ("smb: client: fix missing timestamp updates with O_TRUNC")
-Fixes: 7a06d3b816d7 ("smb/client: emulate small EOF-extending mode 0 fallocate ranges")
+Fixes: ea3db45ae476 ("cpufreq: cppc: Update MIN_PERF/MAX_PERF in target callbacks")
 Cc: stable@vger.kernel.org
-Cc: David Howells <dhowells@redhat.com>
-Cc: Paulo Alcantara <pc@manguebit.org>
-Cc: Huiwen He <hehuiwen@kylinos.cn>
-Signed-off-by: Frank Sorenson <sorenson@redhat.com>
-Reviewed-by: Paulo Alcantara <pc@manguebit.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Christian Loehle <christian.loehle@arm.com>
+Link: https://patch.msgid.link/20260722093825.1030594-3-christian.loehle@arm.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/inode.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/cpufreq/cppc_cpufreq.c |   31 ++++++++++++++++++++++---------
+ 1 file changed, 22 insertions(+), 9 deletions(-)
 
---- a/fs/smb/client/inode.c
-+++ b/fs/smb/client/inode.c
-@@ -3051,6 +3051,7 @@ void cifs_setsize(struct inode *inode, l
- 	inode_set_mtime_to_ts(inode, inode_set_ctime_current(inode));
- 	truncate_pagecache(inode, offset);
- 	netfs_wait_for_outstanding_io(inode);
-+	fscache_resize_cookie(cifs_inode_cookie(inode), offset);
+--- a/drivers/cpufreq/cppc_cpufreq.c
++++ b/drivers/cpufreq/cppc_cpufreq.c
+@@ -290,19 +290,32 @@ static inline void cppc_freq_invariance_
+ }
+ #endif /* CONFIG_ACPI_CPPC_CPUFREQ_FIE */
+ 
+-static void cppc_cpufreq_update_perf_limits(struct cppc_cpudata *cpu_data,
+-					    struct cpufreq_policy *policy)
++static void cppc_cpufreq_get_perf_limits(struct cppc_cpudata *cpu_data,
++					 struct cpufreq_policy *policy,
++					 u32 *min_perf, u32 *max_perf)
+ {
+ 	struct cppc_perf_caps *caps = &cpu_data->perf_caps;
+-	u32 min_perf, max_perf;
++	unsigned int min_freq, max_freq;
++	u32 min, max;
++
++	min_freq = READ_ONCE(policy->min);
++	max_freq = READ_ONCE(policy->max);
++	if (unlikely(min_freq > max_freq))
++		min_freq = max_freq;
++
++	min = cppc_khz_to_perf(caps, min_freq);
++	max = cppc_khz_to_perf(caps, max_freq);
+ 
+-	min_perf = cppc_khz_to_perf(caps, policy->min);
+-	max_perf = cppc_khz_to_perf(caps, policy->max);
++	*min_perf = clamp_t(u32, min, caps->lowest_perf, caps->highest_perf);
++	*max_perf = clamp_t(u32, max, caps->lowest_perf, caps->highest_perf);
++}
+ 
+-	cpu_data->perf_ctrls.min_perf =
+-		clamp_t(u32, min_perf, caps->lowest_perf, caps->highest_perf);
+-	cpu_data->perf_ctrls.max_perf =
+-		clamp_t(u32, max_perf, caps->lowest_perf, caps->highest_perf);
++static void cppc_cpufreq_update_perf_limits(struct cppc_cpudata *cpu_data,
++					    struct cpufreq_policy *policy)
++{
++	cppc_cpufreq_get_perf_limits(cpu_data, policy,
++				     &cpu_data->perf_ctrls.min_perf,
++				     &cpu_data->perf_ctrls.max_perf);
  }
  
- int cifs_file_set_size(const unsigned int xid, struct dentry *dentry,
+ static int cppc_cpufreq_set_target(struct cpufreq_policy *policy,
 
 
