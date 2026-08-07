@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A68F4749EF;
-	Fri,  7 Aug 2026 15:44:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4064C38D3ED;
+	Fri,  7 Aug 2026 15:44:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786117493; cv=none; b=XKv7vwirnJkrvCtpmvUMMgNu/PhqNOl0iF6YDsKg9KdkHRYUQwzDi4C6HSzMJPna4wnQeYBgqQtOfNHq4VhXLs4IIQ4e8wlMHAj2b0RR32wQCz2aTo+SNHy0jry53pmJ2949/btlU18UFkpqFvg6BxezdEssbcCLcQo9jQd43yw=
+	t=1786117496; cv=none; b=NRWWP8qEvx1LbidBxKcuDRetkNlDUM/WXEsSSMKimC6/qsUffbUk4DhVGWmS1+JS60Byn6nT+c+nnJwp3j81Q7dC1FaBK1Z1SFUKs8ZtLaLKprDduHQzhfAzGVO3B1sA8Hl9QzJ1rTGdvAKPedfssO/5H4SAp/KZgnmQkCuMcUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786117493; c=relaxed/simple;
-	bh=4kRLAS8eC88m4xWNBHreli/3dzm4hyU+NDvu7TEOC78=;
+	s=arc-20240116; t=1786117496; c=relaxed/simple;
+	bh=4wKANM4YaBBJBs+TcW/VTJJFhaa3nH0ZkNoib9fc1Ew=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G/fuGBDCT+sGEk+lwhVjpBGpkOpiTnT07ZEF+a4uWJjKI9f5sJ9rR4kUcRS3fc/lvo0fLNu2msJ+BbAUODAQmQ1IRrxSik3I5Tsv3t9KOxqjnBilDEXhbwvnUvYqNaIO8NZUr3aWB/KA911qL8cojf8rfad6DUCd2cZwzSfuu90=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vYNJaskH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bUuJYy2YI291K/CHWWIQauLLnsgp+3yAXRaPSM8Py5tXRwxoZ+jUBiQvOs7AwnSH2RRKXBIxOTZeGw/to3J++wTO8XqmIVTlsKEA2tMaiAkN5ZOcOO2A0gGMXwgeCXWOytDcgehHgKq4XOIz/Yodna6D8RWAqJKQH2ZCvtsDwK0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TNEmhaST; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vYNJaskH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1BD71F000E9;
-	Fri,  7 Aug 2026 15:44:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TNEmhaST"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93E2F1F000E9;
+	Fri,  7 Aug 2026 15:44:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786117492;
-	bh=1+4dmq1sYYH62FiqOnYWkFx1TAFjgP+NOWTL1peLQCY=;
+	s=korg; t=1786117495;
+	bh=BbmG79pFaMQV2sWbGvInjEa4AvCLs5wxPufkTWndvt8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vYNJaskH3M4nq6d+Cp4J4wqplQzl/Wqh2S2Gt9A7/DimQAvmCKQJ4EAoXPzRpVI56
-	 DFkaJXxxN0IAJ3qfDo3Jue28p3Fy5E/XJdhdHSBKkVS2cTQX3fLSi/3zpxDPeolGSP
-	 FaPQrVAfACZOygEUPbWsPIn6rKKby7G67XLN23KA=
+	b=TNEmhaSTOJ7DBS9wF9zFB1tMvp32+bP/3qFGDSMGk3xJFxXkg/OME7ledktKCtgWJ
+	 PR88WioyVCUNt3ycrOSetYzj1ecHHmJMhiOW5oNB6Q3NUUbNNRirMFrhNVDVJTE9ef
+	 TbE9QNMYkbFkuh+iJwrYOOT9sdzgHteJJ/x+0zWY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julian Ruess <julianr@linux.ibm.com>,
-	Farhan Ali <alifm@linux.ibm.com>,
-	Niklas Schnelle <schnelle@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>
-Subject: [PATCH 7.1 337/438] s390/pci: Fix s390_pci_mmio_write syscall error return without MIO
-Date: Fri,  7 Aug 2026 16:38:53 +0200
-Message-ID: <20260807143435.157365398@linuxfoundation.org>
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Alexandra Winter <wintera@linux.ibm.com>,
+	Aswin Karuvally <aswin@linux.ibm.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.1 338/438] s390/qeth: Check CAP_NET_ADMIN for private ioctls
+Date: Fri,  7 Aug 2026 16:38:54 +0200
+Message-ID: <20260807143435.177892859@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -52,41 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Schnelle <schnelle@linux.ibm.com>
+From: Aswin Karuvally <aswin@linux.ibm.com>
 
-commit b7ab86bdc65eadcfc43a0e3faf682a3f750cfb96 upstream.
+commit d211028bac1bd0fff0026bfa2a8328e5b78cd0e6 upstream.
 
-On a machine without PCI memory-I/O (MIO) support or when running with
-pci=nomio the s390 specific PCI MMIO write syscall checks if the MMIO
-cookie is above ZPCI_IOMAP_ADDR_BASE as a sanity check before even
-trying to perform the MMIO. If this check fails the return value was
-left unchanged and thus 0 from prior operations falsely indicating
-success. This could potentially confuse user-space into falsely
-believing the MMIO, on a mapping not valid for MMIO was successful.
+Gate the SIOCDEVPRIVATE ioctl commands SIOC_QETH_ADP_SET_SNMP_CONTROL,
+SIOC_QETH_GET_CARD_TYPE and SIOC_QETH_QUERY_OAT with CAP_NET_ADMIN
+capable check to ensure unprivileged users cannot invoke them.
 
-Fix this by setting the return value to -EFAULT prior to the check
-following the same pattern as elsewhere in the same function.
-
+Fixes: 18787eeebd71 ("qeth: use ndo_siocdevprivate")
 Cc: stable@vger.kernel.org
-Reviewed-by: Julian Ruess <julianr@linux.ibm.com>
-Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
-Fixes: a67a88b0b8de ("s390/pci: remove races against pte updates")
-Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Suggested-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
+Signed-off-by: Aswin Karuvally <aswin@linux.ibm.com>
+Link: https://patch.msgid.link/20260723140050.762991-1-aswin@linux.ibm.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/pci/pci_mmio.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/s390/net/qeth_core_main.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/arch/s390/pci/pci_mmio.c
-+++ b/arch/s390/pci/pci_mmio.c
-@@ -188,6 +188,7 @@ SYSCALL_DEFINE3(s390_pci_mmio_write, uns
- 			goto out_unlock_mmap;
- 	}
+--- a/drivers/s390/net/qeth_core_main.c
++++ b/drivers/s390/net/qeth_core_main.c
+@@ -6525,6 +6525,9 @@ int qeth_siocdevprivate(struct net_devic
+ 	struct qeth_card *card = dev->ml_priv;
+ 	int rc = 0;
  
-+	ret = -EFAULT;
- 	io_addr = (void __iomem *)((args.pfn << PAGE_SHIFT) |
- 			(mmio_addr & ~PAGE_MASK));
- 
++	if (!capable(CAP_NET_ADMIN))
++		return -EPERM;
++
+ 	switch (cmd) {
+ 	case SIOC_QETH_ADP_SET_SNMP_CONTROL:
+ 		rc = qeth_snmp_command(card, data);
 
 
