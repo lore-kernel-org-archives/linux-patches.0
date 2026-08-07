@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9920935F5ED;
-	Fri,  7 Aug 2026 14:50:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88300345EB7;
+	Fri,  7 Aug 2026 14:50:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114255; cv=none; b=nhvQOBbmrFx352B9651RWeFcMk1xc70ACt/1nqJzVpRjWf9i3HAn2XSenp8ScjLT9nuJz9DnYXF36Ik843E6svSY56ltzTB2eSpow3QGZ7KpAcQN4L2ZKyPBo9Mm+BFOtqjjuLEd7wEwwHror1NF+yTMmLT6PkcBJ9lgmuN8gx4=
+	t=1786114255; cv=none; b=L14qQCqauzOU2KPAhVZuhbj40RbSVxSuvSPxy/j+rgCbINMB4ie9P1JKVWSW8JaJZgkf1JBJ2zwVVXYpw2eLtwmwFrw2QDLHCKH291Z2IjbP56Ke/XecbDhRNSRA7TADBL1QIwI/Kq7YhRQIoj0i0V2D8ZX4Vhm6vaR7nPWwORc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1786114255; c=relaxed/simple;
-	bh=VNGT16qwCBGEDZq0womCi9F8+/6iiNpAVmoz5de+R0U=;
+	bh=It+3bUQFyhntYpoT+3nYJqWyGukEFrNVBgXAI6TIUd4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lfley44zUSp+ffoNOvDD94AYa+V1duuNajfmyOb8ejsOeuh3B5nSuRt9VZCmssRVzigQRXueAYXES8jUFxQxf1KcHunC+GnOvzSH42V3klfmEiQiC0M7lMjIBuNLiiO1rzqPEeJpLGR9EXsMRrQA+QECSbyFPAmstJxjw2b+pAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GkF7RQIm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X1FM6Eimmx0XE/LfASL5lDxnjMvMor3eq7A1XH8j/sYn27wehE2KGWmH/rsTHEelcs2Cwi/u6Mfa+0KEGAY3dubQoL+AFPa0PpMPvydDDFthhGbB1JzqSII0ArZkt1UzfxMuzE4qBctgL6KuXSdXEdTO08Lz2LfodWbeJ5T+ZYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZX7d2HSg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GkF7RQIm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A69161F00A3D;
-	Fri,  7 Aug 2026 14:50:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZX7d2HSg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4E1B1F000E9;
+	Fri,  7 Aug 2026 14:50:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114252;
-	bh=yF6eRYCRxZ6OTJdZqclXgF4xdPivYC4zcUcKDnLPf3U=;
+	s=korg; t=1786114249;
+	bh=qxQNbpjw0Xz/Skk+mXuLsquEO3oWUz29LNAkqVVwKbY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GkF7RQIm0XeWfYIJjQZNViIrgWbeFfMA9rkEHAMwHVJ2c2u2maRiiv6Q0NLJmBOZ8
-	 zN6ZQqAskAUK/Itcg5zCa7KSfayb0vGzrSRB138hDa69/qis39zFjrrLZ0rQECWD3e
-	 ZmuB1zL2ZDZbSTn7bbf1nY2zQpAvg7zcU/OzjzG4=
+	b=ZX7d2HSgbsVf87sw814cvER7RHGlw/DJ8CI0y5eUQfO/pL5GVbLuJp17c54v6FYyx
+	 yatYe1bcgbkwW6JR1s/CJjjFTvcWRK7cjWV5nq0QRc0rY/7FA/mi5OHPTMybIvGSmj
+	 BSNyUF38kPSEeeDwidML1wShqHzOvlPD/HcIDrwg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 198/337] sctp: reject stale cookies with mismatched verification tags
-Date: Fri,  7 Aug 2026 16:36:41 +0200
-Message-ID: <20260807143422.845752363@linuxfoundation.org>
+	Damien Le Moal <dlemoal@kernel.org>,
+	Ibrahim Hashimov <security@auditcode.ai>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.12 197/337] scsi: scsi_debug: Fix REPORT ZONES alloc_len underflow OOB write
+Date: Fri,  7 Aug 2026 16:36:40 +0200
+Message-ID: <20260807143422.824673786@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -51,65 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
+From: Ibrahim Hashimov <security@auditcode.ai>
 
-commit 9d8da8e0a9bce4a340af60dd0446bc7eb8d07587 upstream.
+commit 93dde0bf2f39a0f9f57fd610aa3201ce5b753433 upstream.
 
-sctp_unpack_cookie() skips cookie expiration checks whenever an
-association already exists.  This is broader than the exception in
-RFC 9260 Section 5.2.4.
+resp_report_zones() sizes the reply buffer from the CDB allocation
+length. The v3 fix rounds alloc_len up with ALIGN() before deriving the
+descriptor count:
 
-For an existing association, Section 5.2.4 permits an expired State
-Cookie only when both Verification Tags in the cookie match the current
-association.  Otherwise, the packet SHOULD be discarded and a Stale
-Cookie ERROR MUST be sent.
+	rep_max_zones = (ALIGN((u64)alloc_len, RZONES_DESC_HD) -
+			 RZONES_DESC_HD) >> ilog2(RZONES_DESC_HD);
+	arr_len = (u64)RZONES_DESC_HD * (rep_max_zones + 1);
 
-The broad check lets an expired Action A restart cookie reach
-sctp_sf_do_dupcook_a().  In a runtime test with the default 60 second
-cookie lifetime, replaying such a cookie after 65 seconds returned a
-COOKIE-ACK and restarted the association.
+For alloc_len in 0xFFFFFFC1..0xFFFFFFFF, ALIGN() rounds up to
+0x100000000, so arr_len is 4 GB. On 32-bit, kzalloc()'s size_t is 32-bit
+and truncates 0x100000000 to 0; kzalloc(0) returns ZERO_SIZE_PTR, which
+passes the !arr check, and desc = arr + 64 is then dereferenced in the
+loop -> out-of-bounds write / panic.
 
-Check cookie expiration unless both Verification Tags match.  This
-preserves the Action D exception for a lost COOKIE ACK while rejecting
-expired cookies in all other cases.
+Clamp rep_max_zones to devip->nr_zones. The loop already stops at
+sdebug_capacity (after nr_zones zones), so a report can never hold more
+than nr_zones descriptors; the clamp does not change the report, it only
+bounds arr_len to (nr_zones + 1) * RZONES_DESC_HD, a real device
+property that can never reach 0x100000000.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 7db0e0c8190a ("scsi: scsi_debug: Fix buffer size of REPORT ZONES command")
+Suggested-by: Damien Le Moal <dlemoal@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20260723225623.2658868-1-yangyx22@mails.tsinghua.edu.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Ibrahim Hashimov <security@auditcode.ai>
+Assisted-by: AuditCode-AI:2026.07
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/20260712183739.83915-1-security@auditcode.ai
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/sm_make_chunk.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/scsi/scsi_debug.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/net/sctp/sm_make_chunk.c
-+++ b/net/sctp/sm_make_chunk.c
-@@ -1821,9 +1821,9 @@ no_hmac:
- 		goto fail;
+--- a/drivers/scsi/scsi_debug.c
++++ b/drivers/scsi/scsi_debug.c
+@@ -5191,6 +5191,7 @@ static int resp_report_zones(struct scsi
+ 	u32 alloc_len, rep_opts, rep_len;
+ 	bool partial;
+ 	u64 lba, zs_lba;
++	u64 arr_len;
+ 	u8 *arr = NULL, *desc;
+ 	u8 *cmd = scp->cmnd;
+ 	struct sdeb_zone_state *zsp = NULL;
+@@ -5212,9 +5213,12 @@ static int resp_report_zones(struct scsi
+ 		return check_condition_result;
  	}
  
--	/* Check to see if the cookie is stale.  If there is already
--	 * an association, there is no need to check cookie's expiration
--	 * for init collision case of lost COOKIE ACK.
-+	/* Check to see if the cookie is stale.  RFC 9260 Section 5.2.4
-+	 * exempts an expired cookie only when both Verification Tags match
-+	 * the current association.
- 	 * If skb has been timestamped, then use the stamp, otherwise
- 	 * use current time.  This introduces a small possibility that
- 	 * a cookie may be considered expired, but this would only slow
-@@ -1834,7 +1834,10 @@ no_hmac:
- 	else
- 		kt = ktime_get_real();
+-	rep_max_zones = (alloc_len - 64) >> ilog2(RZONES_DESC_HD);
++	rep_max_zones = (ALIGN((u64)alloc_len, RZONES_DESC_HD) - RZONES_DESC_HD) >>
++			ilog2(RZONES_DESC_HD);
++	rep_max_zones = min_t(unsigned int, rep_max_zones, devip->nr_zones);
++	arr_len = (u64)RZONES_DESC_HD * (rep_max_zones + 1);
  
--	if (!asoc && ktime_before(bear_cookie->expiration, kt)) {
-+	if ((!asoc ||
-+	     asoc->c.my_vtag != bear_cookie->my_vtag ||
-+	     asoc->c.peer_vtag != bear_cookie->peer_vtag) &&
-+	    ktime_before(bear_cookie->expiration, kt)) {
- 		suseconds_t usecs = ktime_to_us(ktime_sub(kt, bear_cookie->expiration));
- 		__be32 n = htonl(usecs);
- 
+-	arr = kzalloc(alloc_len, GFP_ATOMIC | __GFP_NOWARN);
++	arr = kzalloc(arr_len, GFP_ATOMIC | __GFP_NOWARN);
+ 	if (!arr) {
+ 		mk_sense_buffer(scp, ILLEGAL_REQUEST, INSUFF_RES_ASC,
+ 				INSUFF_RES_ASCQ);
 
 
