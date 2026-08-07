@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D158E306744;
-	Fri,  7 Aug 2026 15:11:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14BDE4B0480;
+	Fri,  7 Aug 2026 15:11:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115475; cv=none; b=R7r8Hr/UlJnifDi7Iu1fUJXLMO7Gp7OT1WSyU930v7zgrUdUWjRiIWD/1AB7kiHQsOyLl5k0sOSna2Gjm0xVUKDdmN/E5AS4/ACzMNBvjKwDqU0JV+WmvdlIazCowABxqGoOK1tplnHnwjJQe3Gf0CwSWwNRw7JsTeOHAWyyx74=
+	t=1786115478; cv=none; b=U0TKUSMXgJyz4QKorPUyyHn6/bk8g2JEf/sDHf2KBxHItSWRFhxibhdTBA7Oot8PuUZctVFnwoAa1c7jUZUhXKd40mXnEpqS6On7ikqPmywIhDmYZY5t5mHxf5K08lpazIy1ZHGGUR9Bc/u40qKQqBvGNtc9QuQyVzkan/tFdHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115475; c=relaxed/simple;
-	bh=GaIxLoX+NVV4pWg4UhZr3UlLNFdD7u1aQTmIG/caoLM=;
+	s=arc-20240116; t=1786115478; c=relaxed/simple;
+	bh=2MUoJxHxWBezwbMVBZq+9ZNBTOFKJzf6VuA/eJg+k4M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KrEsbb8VBvMaEp+NV9QGEPUIoZ6LSNOgkUKjckOm9mtV0ipVLjVr5KNRwDP6WuTDdBG8HWHFh4xR00OwjY8hkS+SKq/ZMraJb62OrChBlQDxroSujOwAh0HxKSspphvCANs2CmvC0ipcjEb0eSFMtmp8fWmsuZLAC6nnQlTfIZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y692x4Wk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jgxy09z58c2i5EFpvqJkkkAj4olFuojLBmKbjTq3XmL/45ZHZRnqr9TiqBJXcoBteLH6DPI0QZ2ZxHTRg3L3d4vhlVWN9CRwpnqgIeLVf+l0UHwvDRGx34BjXnBdF4OUeJzD4VED8/aCyG1qvlmixKHwbWNdVxWzH9Q0ccQ7VQo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ZQXTjFF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y692x4Wk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 339F21F00A3A;
-	Fri,  7 Aug 2026 15:11:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ZQXTjFF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25D8A1F00A3A;
+	Fri,  7 Aug 2026 15:11:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115473;
-	bh=4pzFzsOyRXapHs1kIEmWTcJP3SmO6+P40P5Z/HML72E=;
+	s=korg; t=1786115476;
+	bh=b4d+3SS/nz/9pVBA7VbPDtiTNrlrNQooolJVs5zrIzo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y692x4Wkn7Szex/wxayp51jvS+4lkJ0Mf0v0xdcKj71ctpS4GUxcg59fUS3QoPTob
-	 CoKlOMpaEx0IRV+Woq7nY/AQvu0CAMu7QtHhSsWoXxLr9Su6GqAp/SvWASnt88abk1
-	 kAGvY0a5gol9/Sk5ZXI3u0I2+2Vm20CenbhWBocA=
+	b=2ZQXTjFFROw/TZIUDn3eI5K0W8P0LRXtlTjtMUIPo6DBjfEQxFZnIlCMA6EZO7I7s
+	 GGVm0LRv/1ZMbtJVvUb2A/Hb63jzT15SMUJ7PlShUFKc5fAsXomHQprm01S6CthcNT
+	 hAJuIYWT9/fg0hGTCt3umnHtk0+duv+qSBZb+MMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Eelco Chaudron <echaudro@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.18 282/396] net: openvswitch: fix potential UAF on meter attach failure
-Date: Fri,  7 Aug 2026 16:37:22 +0200
-Message-ID: <20260807143430.348629457@linuxfoundation.org>
+	Jonas Gorski <jonas.gorski@bisdn.de>,
+	Ray Jui <ray.jui@broadcom.com>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH 6.18 291/396] i2c: iproc: reset bus after timeout if START_BUSY is stuck
+Date: Fri,  7 Aug 2026 16:37:31 +0200
+Message-ID: <20260807143430.547660098@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -51,120 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Maximets <i.maximets@ovn.org>
+From: Jonas Gorski <jonas.gorski@bisdn.de>
 
-commit a58a2b0ce354df531ebc71fc870058c2feb59f6b upstream.
+commit 98f2e9e6d6f91a6abb43f166b244b428ba85fa2b upstream.
 
-While attaching a newly created meter attach_meter() function makes
-the new meter visible to other CPUs but can still fail afterwards.
-On failure, it detaches the meter back and returns an error.
+If a transaction times out, the START_BUSY signal can stay up, and
+subsequent transactaction attempts will fail as the bus is still
+considered busy.
 
-However, this is an unexpected behavior for the ovs_meter_cmd_set()
-that uses a plain kfree(meter) on attach failure without waiting for
-RCU readers to stop using it, assuming it was never visible.
+I can easily trigger this by attempting to read from an address with no
+device, e.g. when running i2cdetect. After the first read times out, all
+subsequent read attempts return busy.
 
-This is never a problem for ovs-vswitchd as it always creates meters
-before creating any flows that use them.  But the UAF can be triggered
-with a custom application using uAPI:
+To get to a working state again, the controller needs to be reset to
+clear the START_BUSY signal. So check for START_BUSY still asserted on a
+timeout, and do reset in case it is,
 
- BUG: KASAN: slab-use-after-free in ovs_meter_execute (net/openvswitch/meter.c:653)
- Read of size 8 at addr ffff88810d152650 by task meter/2508
+This is also done by the original non-upstream iproc-smbus driver
+implementation [1].
 
- Call Trace:
-  ovs_meter_execute (net/openvswitch/meter.c:653)
-  do_execute_actions (net/openvswitch/actions.c:1407)
-  ovs_execute_actions (net/openvswitch/actions.c:1584)
-  ovs_packet_cmd_execute (net/openvswitch/datapath.c:703)
-  ...
-  netlink_sendmsg (af_netlink.c:1900)
+Works around situations like:
 
- Allocated by task 2519:
-  __kasan_kmalloc (mm/kasan/common.c:398 mm/kasan/common.c:415)
-  ovs_meter_cmd_set (net/openvswitch/meter.c:422)
-  ...
-  netlink_sendmsg (af_netlink.c:1900)
+    bcm-iproc-2c 1803b000.i2c: transaction timed out
+    bcm-iproc-2c 1803b000.i2c: bus is busy
+    bcm-iproc-2c 1803b000.i2c: bus is busy
+    bcm-iproc-2c 1803b000.i2c: bus is busy
+    bcm-iproc-2c 1803b000.i2c: bus is busy
+    bcm-iproc-2c 1803b000.i2c: bus is busy
+    ...
 
- Freed by task 2519:
-  kfree (mm/slub.c:2705 mm/slub.c:6405 mm/slub.c:6720)
-  ovs_meter_cmd_set (net/openvswitch/meter.c:479)
-  ...
-  netlink_sendmsg (af_netlink.c:1900)
+where the bus never recovers after a timeout.
 
-Fix that by making sure attach_meter() doesn't make the meter visible
-until all the checks are done and the function can't fail anymore.
+[1] https://github.com/opencomputeproject/onie/blob/master/patches/kernel/3.2.69/driver-iproc-smbus.patch
 
-This also makes sure the "hash" value is calculated after the potential
-re-sizing of the table.
-
-Reported by Trend Micro's Zero Day Initiative as ZDI-CAN-31642.
-
-Fixes: c7c4c44c9a95 ("net: openvswitch: expand the meters supported number")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
-Reviewed-by: Eelco Chaudron <echaudro@redhat.com>
-Link: https://patch.msgid.link/20260727121022.198461-1-i.maximets@ovn.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: e6e5dd3566e0 ("i2c: iproc: Add Broadcom iProc I2C Driver")
+Signed-off-by: Jonas Gorski <jonas.gorski@bisdn.de>
+Cc: <stable@vger.kernel.org> # v4.0+
+Acked-by: Ray Jui <ray.jui@broadcom.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/20260717085507.34209-1-jonas.gorski@bisdn.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/openvswitch/meter.c |   33 +++++++++++++++++++--------------
- 1 file changed, 19 insertions(+), 14 deletions(-)
+ drivers/i2c/busses/i2c-bcm-iproc.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/net/openvswitch/meter.c
-+++ b/net/openvswitch/meter.c
-@@ -133,18 +133,10 @@ static void dp_meter_instance_remove(str
- 
- static int attach_meter(struct dp_meter_table *tbl, struct dp_meter *meter)
- {
--	struct dp_meter_instance *ti = rcu_dereference_ovsl(tbl->ti);
--	u32 hash = meter_hash(ti, meter->id);
-+	struct dp_meter_instance *ti;
-+	u32 hash;
- 	int err;
- 
--	/* In generally, slots selected should be empty, because
--	 * OvS uses id-pool to fetch a available id.
--	 */
--	if (unlikely(rcu_dereference_ovsl(ti->dp_meters[hash])))
--		return -EBUSY;
--
--	dp_meter_instance_insert(ti, meter);
--
- 	/* That function is thread-safe. */
- 	tbl->count++;
- 	if (tbl->count >= tbl->max_meters_allowed) {
-@@ -152,16 +144,29 @@ static int attach_meter(struct dp_meter_
- 		goto attach_err;
+--- a/drivers/i2c/busses/i2c-bcm-iproc.c
++++ b/drivers/i2c/busses/i2c-bcm-iproc.c
+@@ -803,6 +803,17 @@ static int bcm_iproc_i2c_xfer_wait(struc
  	}
  
--	if (tbl->count >= ti->n_meters &&
--	    dp_meter_instance_realloc(tbl, ti->n_meters * 2)) {
--		err = -ENOMEM;
-+	ti = rcu_dereference_ovsl(tbl->ti);
-+	if (tbl->count >= ti->n_meters) {
-+		err = dp_meter_instance_realloc(tbl, ti->n_meters * 2);
-+		if (err)
-+			goto attach_err;
+ 	if (!time_left && !iproc_i2c->xfer_is_done) {
++		/*
++		 * The controller may fail to clear START_BUSY after a timeout,
++		 * reset the controller to recover in that case.
++		 */
++		if (!!(iproc_i2c_rd_reg(iproc_i2c, M_CMD_OFFSET) &
++		       BIT(M_CMD_START_BUSY_SHIFT))) {
++			bcm_iproc_i2c_enable_disable(iproc_i2c, false);
++			bcm_iproc_i2c_init(iproc_i2c);
++			bcm_iproc_i2c_enable_disable(iproc_i2c, true);
++		}
 +
-+		ti = rcu_dereference_ovsl(tbl->ti);
-+	}
-+
-+	hash = meter_hash(ti, meter->id);
-+
-+	/* In general, selected slots should be empty, because
-+	 * OvS uses id-pool to fetch available ids.
-+	 */
-+	if (unlikely(rcu_dereference_ovsl(ti->dp_meters[hash]))) {
-+		err = -EBUSY;
- 		goto attach_err;
- 	}
- 
-+	dp_meter_instance_insert(ti, meter);
- 	return 0;
- 
- attach_err:
--	dp_meter_instance_remove(ti, meter);
- 	tbl->count--;
- 	return err;
- }
+ 		/* flush both TX/RX FIFOs */
+ 		val = BIT(M_FIFO_RX_FLUSH_SHIFT) | BIT(M_FIFO_TX_FLUSH_SHIFT);
+ 		iproc_i2c_wr_reg(iproc_i2c, M_FIFO_CTRL_OFFSET, val);
 
 
