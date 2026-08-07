@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAEF0404BC8;
-	Fri,  7 Aug 2026 15:40:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A34CF3A6F0A;
+	Fri,  7 Aug 2026 15:40:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786117240; cv=none; b=OyzMknRXoD8Q6Ge28r5iM/E0r7ScwT/WrAGAJNiAtihcIgvg5MPAmeiHaGE8e3P5cNsyf1ica4ZMmjMsCXrit3bj4kx9WP96ExfHx06TancLIsTvP1fJpfOUb+VRBfLxf4dfzUCPZrSoORpWmXvT6GL7IKSjF/20e5CrRaCr/TY=
+	t=1786117243; cv=none; b=W1g/rweK0t8aiDLdrFhe68XSOltYMyazw2VMwizPEBKoh3PsfvJCec7mVxMoefHn1yIQmdoYA4ATSuQexDcbL8MefOYZZfVWUJXnfOo2FBipO46/bp+BrpvdR2vquzejtswHM4ioJarT8eexJZVH7R2cp/+3xbSC3wHaFYuPGVE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786117240; c=relaxed/simple;
-	bh=7dNO30rZ5jas83Oqbf4bSFYayyp7VCPpty3LcNSwbTE=;
+	s=arc-20240116; t=1786117243; c=relaxed/simple;
+	bh=AM7klv9qdBmZIh5WW5G8oZMbpmRpnQJ8rGdYSWkY3J8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=re9Niv2w9yBaLZAHgwP0R0Tyja07h18zMdsM51x5htHwC41IRCMstz4Y1aVPZmGF5Qlgu2O9FrKeVWQIOpC3bW2ytNp80NLA9ZP5qy7LH/emO5ZJubM/Hstm+SYiP6eO41XrMmy/0prQQP8gERku6qWxCXZdnPiArO+SIAMkKc0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W605wQ0h; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=prgKLLdMX/TUF0dKFBCfHXP9oay8MQ1vmqzuNcuuPfQOLVTb0YFQ4c/lwCRCXSd2EwqVcc9gZgflBtSMZGu2i7hWjoCCdFzL9jUxmaBqH4TWnlEpQaqPsjd2F3QH5PrFn5VIVBUeYAdO6taUMNgRfwM3LaTHvEQwBU1N2la5hWM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1zmJs2vl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W605wQ0h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E7891F000E9;
-	Fri,  7 Aug 2026 15:40:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1zmJs2vl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B3CF1F000E9;
+	Fri,  7 Aug 2026 15:40:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786117239;
-	bh=zp7nT7JgjlxA7lmNozhK52vW/FQCl6VChT1PegDYLkc=;
+	s=korg; t=1786117242;
+	bh=s1g5fwN3wj7JR3pgJDfUOj/NXSZkIGTJ1fPzoQTBMQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W605wQ0h6ce1SvzCKuSwm/Sf/hHF1YyMtAvfL4au03azedW83g5GBLa7AUF8d+3vz
-	 XZ4LJs96sdQjO5T6I+GqMhpe+L1fKzQOLblzC7mqb5A0Hg3ege6P39V29UQ1Mza66h
-	 oDbez+wXmKCCK3q5YXzaswPk0XFkdZwmke8unFpo=
+	b=1zmJs2vluC/yi/RbVhfgVAouRYdoviTdrhM5UwinF1TWiURq553NE6FT5iHJ2nzq1
+	 +M60/41lI9wQbCGVk2NGz7+FL4MJjqMGOrkdPbcY3TVyjGP26PAlyUhhtWYyB2KbpB
+	 OLq6ObHJXeqePNKNr7LYHv72Aj7gsMnfm/ePqw+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 7.1 248/438] bpf: lwt: Fix dst reference leak on reroute failure
-Date: Fri,  7 Aug 2026 16:37:24 +0200
-Message-ID: <20260807143433.285361891@linuxfoundation.org>
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Guanghui Yang <3497809730@qq.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 7.1 213/438] btrfs: zoned: fix missing chunk metadata reservation
+Date: Fri,  7 Aug 2026 16:36:49 +0200
+Message-ID: <20260807143432.552670362@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -50,41 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+From: Guanghui Yang <3497809730@qq.com>
 
-commit 88c17de85ddb459c3fe1e3c65d61fa366b1cf0a8 upstream.
+commit 8bc4d7209611e8aa9d5409b6a4a86a9eb91b69a3 upstream.
 
-bpf_lwt_xmit_reroute() obtains a referenced dst from the route
-lookup. When skb_cow_head() fails before that dst is installed on the
-skb, the error path only frees the skb. The skb still owns its previous
-dst, so the newly looked up dst reference is leaked.
+reserve_chunk_space() stores the return value of
+btrfs_zoned_activate_one_bg() in ret. The helper can return 1 after
+successfully activating a block group, but ret is later used to decide
+whether to reserve metadata for chunk tree updates.
 
-Release the new dst reference before freeing the skb on this error
-path.
+As a result, successful activation skips btrfs_block_rsv_add() and leaves
+trans->chunk_bytes_reserved unchanged. Use a separate variable for the
+activation result so positive success does not affect the later
+reservation. Keep activation failures in ret instead of returning early so
+the function uses the common tail path.
 
-Fixes: 3bd0b15281af ("bpf: add handling of BPF_LWT_REROUTE to lwt_bpf.c")
-Cc: stable@vger.kernel.org
-Signed-off-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
-Link: https://patch.msgid.link/20260723060445.21926-1-xuanqiang.luo@linux.dev
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: b6a98021e401 ("btrfs: zoned: activate necessary block group")
+CC: stable@vger.kernel.org
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Guanghui Yang <3497809730@qq.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/lwt_bpf.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/btrfs/block-group.c |   34 +++++++++++++++++++---------------
+ 1 file changed, 19 insertions(+), 15 deletions(-)
 
---- a/net/core/lwt_bpf.c
-+++ b/net/core/lwt_bpf.c
-@@ -255,8 +255,10 @@ static int bpf_lwt_xmit_reroute(struct s
- 	 * if there is enough header space in skb.
- 	 */
- 	err = skb_cow_head(skb, LL_RESERVED_SPACE(dst->dev));
--	if (unlikely(err))
-+	if (unlikely(err)) {
-+		dst_release(dst);
- 		goto err;
-+	}
+--- a/fs/btrfs/block-group.c
++++ b/fs/btrfs/block-group.c
+@@ -4504,25 +4504,29 @@ static void reserve_chunk_space(struct b
+ 		if (IS_ERR(bg)) {
+ 			ret = PTR_ERR(bg);
+ 		} else {
++			int activate_ret;
++
+ 			/*
+ 			 * We have a new chunk. We also need to activate it for
+ 			 * zoned filesystem.
+ 			 */
+-			ret = btrfs_zoned_activate_one_bg(info, true);
+-			if (ret < 0)
+-				return;
+-
+-			/*
+-			 * If we fail to add the chunk item here, we end up
+-			 * trying again at phase 2 of chunk allocation, at
+-			 * btrfs_create_pending_block_groups(). So ignore
+-			 * any error here. An ENOSPC here could happen, due to
+-			 * the cases described at do_chunk_alloc() - the system
+-			 * block group we just created was just turned into RO
+-			 * mode by a scrub for example, or a running discard
+-			 * temporarily removed its free space entries, etc.
+-			 */
+-			btrfs_chunk_alloc_add_chunk_item(trans, bg);
++			activate_ret = btrfs_zoned_activate_one_bg(info, true);
++			if (activate_ret < 0) {
++				ret = activate_ret;
++			} else {
++				/*
++				 * If we fail to add the chunk item here, we end
++				 * up trying again at phase 2 of chunk allocation,
++				 * at btrfs_create_pending_block_groups(). So
++				 * ignore any error here. An ENOSPC here could
++				 * happen, due to the cases described at
++				 * do_chunk_alloc() - the system block group we
++				 * just created was just turned into RO mode by a
++				 * scrub for example, or a running discard
++				 * temporarily removed its free space entries, etc.
++				 */
++				btrfs_chunk_alloc_add_chunk_item(trans, bg);
++			}
+ 		}
+ 	}
  
- 	skb_dst_drop(skb);
- 	skb_dst_set(skb, dst);
 
 
