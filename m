@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61ED5280331;
-	Fri,  7 Aug 2026 15:30:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A1FD324B0A;
+	Fri,  7 Aug 2026 15:30:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116638; cv=none; b=G1RpMxwK2/9lRkUT14dOikIHiN05k/HzYDnX1AJImoUD+gH6K1I6UPBxIgTXmAadFikoZhBt9oCcvPWl7eVm0AqkA5umBhQucNl7ehKmR8eRbXSz+afI2k72btDIc8PaQzTGtfMRm865QH9sqA3epxQgu6zsqhfMxdNHK194Hio=
+	t=1786116641; cv=none; b=DF77kRC/xj/Z82A2JTBNFn0Lt53d6pvvlFRfTk7aPJ9PbGqGiP2mTzsxICTh9iRPymDwxSNXdFJTqiBCY9S2CODxSkLOgSy9mWBgRAJMkyvRZYiOrnZ3u1/16RQpDUAavkidST5nv05+Lq8RtU8BT51jOVfdcNlCWHQ+wwqosDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116638; c=relaxed/simple;
-	bh=X1ybEMxy1W7xlyBQqJrCyUXbhzIBrEPw7YOJXqhQrxE=;
+	s=arc-20240116; t=1786116641; c=relaxed/simple;
+	bh=aywnZAi50/+Jh/jqz0tlXOHsfBa9BKjn5n9fsf+tK0c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eAMr8Y0K+BKIzUXpkUXkY0K7sSGvIBgoU+JA7oI74HfE0Os2yaR47dj/iNmUPU/fNPXaR1bqPw8hwZLMz8hXz0S7DmcQDoNkNq6FNTCzyCYR9OVicW1N6P7TdMU57cYUxJ9txFq0cy+HD5Y1R0g4PUUBal84vpU8MMoPfNJWi7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IlQyS3IC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IgBACvN2V1OQvXPONB6u5vY5CZZmcTl28fefVV9slMxekiPa/EZxoT/nZy6HjORBwIWQ0lcDyBA71QAYPvjnaytNCgoZcqOoI2RB/ijdKGULNGHr1Z13fSc6CNpxCA2hEDeCqWuHp2kl1ymLhBKhx2PgU+X8QI7y0ULPMmlijJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=weC9ew7l; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IlQyS3IC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF2321F000E9;
-	Fri,  7 Aug 2026 15:30:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="weC9ew7l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8681D1F000E9;
+	Fri,  7 Aug 2026 15:30:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116637;
-	bh=7Okx5YAAr6jeXzSKelQnsLpWjSBWVvm2z/UO9NI/Ois=;
+	s=korg; t=1786116640;
+	bh=BkaBC2Ue/wX4NQacaI0g4yKgu0khmV+ewvWfx4QpW9M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IlQyS3ICkw4ujYhWnKZY/q8ESrqNdCF2cEC65IJ+/+OJ0wafbv6ORf28+heG6h5Tr
-	 OWG1iOBeJGCj2rHe/IbsgDzJIYgeqqQ02ExwtagQn1r8kc0b80vV3d6aTM8zRurYi+
-	 IQWHUoAwe0e7UicYXcKM22MZUe2hNLzku2CAPuN4=
+	b=weC9ew7lczXrLcngp+i72IpRSjKd0UuMmtISPo3c/FmVtdgjFhJwBJBE/v+ww7zug
+	 zrFyc+hA59poiJMuOldKUExRtxNB4FywyYlZ2Q4XqGxn/DJkXnK1pHr37aKkouze3s
+	 ZgGbbstbAoAu5g8PDyZ4OCNz1Urw6cqMqtrJUv7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Jaeyeong Lee <iostreampy@proton.me>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 038/438] selftests: netfilter: nft_flowtable.sh: fix offload counter verification for tunnel tests
-Date: Fri,  7 Aug 2026 16:33:54 +0200
-Message-ID: <20260807143428.817069897@linuxfoundation.org>
+Subject: [PATCH 7.1 039/438] netfilter: nf_conntrack_expect: add and use nf_ct_expect_related_pair()
+Date: Fri,  7 Aug 2026 16:33:55 +0200
+Message-ID: <20260807143428.836599791@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -45,102 +45,198 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 1d6123f87eebb5148844cd43045c6e598799720b ]
+[ Upstream commit 4aa63842fc92de1bce59d4709a0d32e718890bb2 ]
 
-The IPIP and IP6IP6 tunnel tests call check_counters() to verify
-flowtable offloading occurred, but the flow-add rule only matches
-meta oif "veth1". When traffic is routed through a tunnel device,
-oif is the tunnel interface (tun0, tun6, etc.), not veth1, so
-the flow-add rule never fires, no flowtable entry is created,
-and counters stay at zero — producing a silent false pass.
-Fix by adding tunnel-specific flow-add rules for each tunnel
-interface. These match TCP dport 12345 traffic before the bare
-accept rule, set ct mark, add the flow to the flowtable, and
-increment routed_orig. The existing routed_repl rule on veth0
-already handles the reply direction since decapsulated reply
-packets exit through the physical interface.
-Also add check_counters() for the IP6IP6 non-VLAN and
-IP6IP6-over-VLAN tests which previously used a bare PASS message.
+Add a new function to insert a pair of expectations, this is required by
+the SIP and H323 NAT helpers. The spinlock is held to check if there is
+a slot for both expectations, in such case, insert them.
 
-Fixes: fe8313316eaf ("selftests: netfilter: nft_flowtable.sh: Add IPIP flowtable selftest")
-Fixes: 5e5180352193 ("selftests: netfilter: nft_flowtable.sh: Add IP6IP6 flowtable selftest")
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+This removes the need for nf_ct_unexpect_related() inside the loop to
+find a pair of consecutive ports, otherwise inserting expectations whose
+dead flag is already set on can happen.
+
+Bump master_help->expecting for the expectation class after checking if
+the expectation fits in the master expectation list, which is needed for
+this new _pair() function variant to run the eviction routine including
+the preallocated slot for the first expectation in the pair.
+
+Fixes: b8b09dc2bf35 ("netfilter: nf_conntrack_expect: use conntrack GC to reap expectations")
+Reported-by: Jaeyeong Lee <iostreampy@proton.me>
+Link: https://patch.msgid.link/178377968720.33756.12204817361601593230@proton.me/
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/net/netfilter/nft_flowtable.sh       | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ include/net/netfilter/nf_conntrack_expect.h |  3 ++
+ net/ipv4/netfilter/nf_nat_h323.c            | 22 +++++--------
+ net/netfilter/nf_conntrack_expect.c         | 35 ++++++++++++++++++++-
+ net/netfilter/nf_nat_sip.c                  | 20 ++++--------
+ 4 files changed, 50 insertions(+), 30 deletions(-)
 
-diff --git a/tools/testing/selftests/net/netfilter/nft_flowtable.sh b/tools/testing/selftests/net/netfilter/nft_flowtable.sh
-index 08ad07500e8a7..d9a21ca8ed2cb 100755
---- a/tools/testing/selftests/net/netfilter/nft_flowtable.sh
-+++ b/tools/testing/selftests/net/netfilter/nft_flowtable.sh
-@@ -617,7 +617,11 @@ ip -6 -net "$nsr2" route add default via fee1:3::1
- ip -net "$ns2" route add default via 10.0.2.1
- ip -6 -net "$ns2" route add default via dead:2::1
+diff --git a/include/net/netfilter/nf_conntrack_expect.h b/include/net/netfilter/nf_conntrack_expect.h
+index c024345c9bd86..26d6babd92fcd 100644
+--- a/include/net/netfilter/nf_conntrack_expect.h
++++ b/include/net/netfilter/nf_conntrack_expect.h
+@@ -161,6 +161,9 @@ static inline int nf_ct_expect_related(struct nf_conntrack_expect *expect,
+ 	return nf_ct_expect_related_report(expect, 0, 0, flags);
+ }
  
-+ip netns exec "$nsr1" nft -a insert rule inet filter forward \
-+	'meta oif tun0 tcp dport 12345 ct mark set 1 flow add @f1 counter name routed_orig accept'
- ip netns exec "$nsr1" nft -a insert rule inet filter forward 'meta oif tun0 accept'
-+ip netns exec "$nsr1" nft -a insert rule inet filter forward \
-+	'meta oif tun6 tcp dport 12345 ct mark set 1 flow add @f1 counter name routed_orig accept'
- ip netns exec "$nsr1" nft -a insert rule inet filter forward 'meta oif tun6 accept'
- ip netns exec "$nsr1" nft -a insert rule inet filter forward \
- 	'meta oif "veth0" tcp sport 12345 ct mark set 1 flow add @f1 counter name routed_repl accept'
-@@ -629,7 +633,7 @@ if ! test_tcp_forwarding_nat "$ns1" "$ns2" 1 "IPIP tunnel"; then
- fi
++int nf_ct_expect_related_pair(struct nf_conntrack_expect *expect[],
++			      unsigned int flag);
++
+ struct nf_conn_help;
+ void nf_ct_expectation_gc(struct nf_conn_help *master_help);
  
- if test_tcp_forwarding "$ns1" "$ns2" 1 6 "[dead:2::99]" 12345; then
--	echo "PASS: flow offload for ns1/ns2 IP6IP6 tunnel"
-+	check_counters "flow offload for ns1/ns2 IP6IP6 tunnel"
- else
- 	echo "FAIL: flow offload for ns1/ns2 with IP6IP6 tunnel" 1>&2
- 	ip netns exec "$nsr1" nft list ruleset
-@@ -642,6 +646,8 @@ ip -net "$nsr1" link set veth1.10 up
- ip -net "$nsr1" addr add 192.168.20.1/24 dev veth1.10
- ip -net "$nsr1" addr add fee1:4::1/64 dev veth1.10 nodad
- ip netns exec "$nsr1" sysctl net.ipv4.conf.veth1/10.forwarding=1 > /dev/null
-+ip netns exec "$nsr1" nft -a insert rule inet filter forward \
-+	'meta oif veth1.10 tcp dport 12345 ct mark set 1 flow add @f1 counter name routed_orig accept'
- ip netns exec "$nsr1" nft -a insert rule inet filter forward 'meta oif veth1.10 accept'
+diff --git a/net/ipv4/netfilter/nf_nat_h323.c b/net/ipv4/netfilter/nf_nat_h323.c
+index 183e8a3ff2bab..6bcd6734769b5 100644
+--- a/net/ipv4/netfilter/nf_nat_h323.c
++++ b/net/ipv4/netfilter/nf_nat_h323.c
+@@ -182,6 +182,7 @@ static int nat_rtp_rtcp(struct sk_buff *skb, struct nf_conn *ct,
+ 			struct nf_conntrack_expect *rtp_exp,
+ 			struct nf_conntrack_expect *rtcp_exp)
+ {
++	struct nf_conntrack_expect *rtp_pair[2] = { rtp_exp, rtcp_exp };
+ 	struct nf_ct_h323_master *info = nfct_help_data(ct);
+ 	int dir = CTINFO2DIR(ctinfo);
+ 	int i;
+@@ -227,22 +228,13 @@ static int nat_rtp_rtcp(struct sk_buff *skb, struct nf_conn *ct,
+ 		int ret;
  
- ip -net "$nsr1" link add name tun0.10 type ipip local 192.168.20.1 remote 192.168.20.2
-@@ -649,6 +655,8 @@ ip -net "$nsr1" link set tun0.10 up
- ip -net "$nsr1" addr add 192.168.200.1/24 dev tun0.10
- ip -net "$nsr1" route change default via 192.168.200.2
- ip netns exec "$nsr1" sysctl net.ipv4.conf.tun0/10.forwarding=1 > /dev/null
-+ip netns exec "$nsr1" nft -a insert rule inet filter forward \
-+	'meta oif tun0.10 tcp dport 12345 ct mark set 1 flow add @f1 counter name routed_orig accept'
- ip netns exec "$nsr1" nft -a insert rule inet filter forward 'meta oif tun0.10 accept'
+ 		rtp_exp->tuple.dst.u.udp.port = htons(nated_port);
+-		ret = nf_ct_expect_related(rtp_exp, 0);
++		rtcp_exp->tuple.dst.u.udp.port = htons(nated_port + 1);
++		ret = nf_ct_expect_related_pair(rtp_pair, 0);
+ 		if (ret == 0) {
+-			rtcp_exp->tuple.dst.u.udp.port =
+-			    htons(nated_port + 1);
+-			ret = nf_ct_expect_related(rtcp_exp, 0);
+-			if (ret == 0)
+-				break;
+-			else if (ret == -EBUSY) {
+-				nf_ct_unexpect_related(rtp_exp);
+-				continue;
+-			} else if (ret < 0) {
+-				nf_ct_unexpect_related(rtp_exp);
+-				nated_port = 0;
+-				break;
+-			}
+-		} else if (ret != -EBUSY) {
++			break;
++		} else if (ret == -EBUSY) {
++			continue;
++		} else if (ret < 0) {
+ 			nated_port = 0;
+ 			break;
+ 		}
+diff --git a/net/netfilter/nf_conntrack_expect.c b/net/netfilter/nf_conntrack_expect.c
+index 38630c5e006f0..16520a41fe5f0 100644
+--- a/net/netfilter/nf_conntrack_expect.c
++++ b/net/netfilter/nf_conntrack_expect.c
+@@ -426,7 +426,6 @@ static void nf_ct_expect_insert(struct nf_conntrack_expect *exp,
+ 		exp->timeout += helper->expect_policy[exp->class].timeout * HZ;
  
- ip -net "$nsr1" link add name tun6.10 type ip6tnl local fee1:4::1 remote fee1:4::2 encaplimit none
-@@ -656,6 +664,8 @@ ip -net "$nsr1" link set tun6.10 up
- ip -net "$nsr1" addr add fee1:5::1/64 dev tun6.10 nodad
- ip -6 -net "$nsr1" route delete default
- ip -6 -net "$nsr1" route add default via fee1:5::2
-+ip netns exec "$nsr1" nft -a insert rule inet filter forward \
-+	'meta oif tun6.10 tcp dport 12345 ct mark set 1 flow add @f1 counter name routed_orig accept'
- ip netns exec "$nsr1" nft -a insert rule inet filter forward 'meta oif tun6.10 accept'
+ 	hlist_add_head_rcu(&exp->lnode, &master_help->expectations);
+-	master_help->expecting[exp->class]++;
  
- ip -net "$nsr2" link add link veth0 name veth0.10 type vlan id 10
-@@ -683,7 +693,7 @@ if ! test_tcp_forwarding_nat "$ns1" "$ns2" 1 "IPIP tunnel over vlan"; then
- fi
+ 	hlist_add_head_rcu(&exp->hnode, &nf_ct_expect_hash[h]);
+ 	cnet = nf_ct_pernet(net);
+@@ -533,6 +532,7 @@ int nf_ct_expect_related_report(struct nf_conntrack_expect *expect,
+ 	if (ret < 0)
+ 		goto out;
  
- if test_tcp_forwarding "$ns1" "$ns2" 1 6 "[dead:2::99]" 12345; then
--	echo "PASS: flow offload for ns1/ns2 IP6IP6 tunnel over vlan"
-+	check_counters "flow offload for ns1/ns2 IP6IP6 tunnel over vlan"
- else
- 	echo "FAIL: flow offload for ns1/ns2 with IP6IP6 tunnel over vlan" 1>&2
- 	ip netns exec "$nsr1" nft list ruleset
++	master_help->expecting[expect->class]++;
+ 	nf_ct_expect_insert(expect, master_help);
+ 
+ 	nf_ct_expect_event_report(IPEXP_NEW, expect, portid, report);
+@@ -545,6 +545,39 @@ int nf_ct_expect_related_report(struct nf_conntrack_expect *expect,
+ }
+ EXPORT_SYMBOL_GPL(nf_ct_expect_related_report);
+ 
++int nf_ct_expect_related_pair(struct nf_conntrack_expect *expect[],
++			      unsigned int flags)
++{
++	struct nf_conn_help *master_help;
++	int i, ret;
++
++	spin_lock_bh(&nf_conntrack_expect_lock);
++	master_help = nfct_help(expect[0]->master);
++	if (!master_help || master_help != nfct_help(expect[1]->master)) {
++		ret = -EINVAL;
++		goto out;
++	}
++
++	for (i = 0; i < 2; i++) {
++		ret = __nf_ct_expect_check(expect[i], master_help, flags);
++		if (ret < 0) {
++			if (i == 1)
++				master_help->expecting[expect[0]->class]--;
++			goto out;
++		}
++		master_help->expecting[expect[i]->class]++;
++	}
++
++	for (i = 0; i < 2; i++) {
++		nf_ct_expect_insert(expect[i], master_help);
++		nf_ct_expect_event_report(IPEXP_NEW, expect[i], 0, 0);
++	}
++out:
++	spin_unlock_bh(&nf_conntrack_expect_lock);
++	return ret;
++}
++EXPORT_SYMBOL_GPL(nf_ct_expect_related_pair);
++
+ void nf_ct_expect_iterate_destroy(bool (*iter)(struct nf_conntrack_expect *e, void *data),
+ 				  void *data)
+ {
+diff --git a/net/netfilter/nf_nat_sip.c b/net/netfilter/nf_nat_sip.c
+index a93eaf0f7d305..133bd713fe0c2 100644
+--- a/net/netfilter/nf_nat_sip.c
++++ b/net/netfilter/nf_nat_sip.c
+@@ -592,6 +592,7 @@ static unsigned int nf_nat_sdp_media(struct sk_buff *skb, unsigned int protoff,
+ 				     unsigned int medialen,
+ 				     union nf_inet_addr *rtp_addr)
+ {
++	struct nf_conntrack_expect *rtp_pair[2] = { rtp_exp, rtcp_exp };
+ 	enum ip_conntrack_info ctinfo;
+ 	struct nf_conn *ct = nf_ct_get(skb, &ctinfo);
+ 	enum ip_conntrack_dir dir = CTINFO2DIR(ctinfo);
+@@ -622,24 +623,15 @@ static unsigned int nf_nat_sdp_media(struct sk_buff *skb, unsigned int protoff,
+ 		int ret;
+ 
+ 		rtp_exp->tuple.dst.u.udp.port = htons(port);
+-		ret = nf_ct_expect_related(rtp_exp,
+-					   NF_CT_EXP_F_SKIP_MASTER);
+-		if (ret == -EBUSY)
+-			continue;
+-		else if (ret < 0) {
+-			port = 0;
+-			break;
+-		}
+ 		rtcp_exp->tuple.dst.u.udp.port = htons(port + 1);
+-		ret = nf_ct_expect_related(rtcp_exp,
+-					   NF_CT_EXP_F_SKIP_MASTER);
++
++		ret = nf_ct_expect_related_pair(rtp_pair,
++						NF_CT_EXP_F_SKIP_MASTER);
+ 		if (ret == 0)
+ 			break;
+-		else if (ret == -EBUSY) {
+-			nf_ct_unexpect_related(rtp_exp);
++		else if (ret == -EBUSY)
+ 			continue;
+-		} else if (ret < 0) {
+-			nf_ct_unexpect_related(rtp_exp);
++		else if (ret < 0) {
+ 			port = 0;
+ 			break;
+ 		}
 -- 
 2.53.0
 
