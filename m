@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B20242FCB7;
-	Fri,  7 Aug 2026 14:50:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C923A418348;
+	Fri,  7 Aug 2026 14:50:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114226; cv=none; b=Mn67H5Ppb0Sx+B+JFkvAiUKo+ttjG2Lg3rGNHIyC/Frk6rghJEAleKWpFLdOeWlpUO4Dzvpa8nJHwvMPIitB7kOBFUkakFzfEfsBlzsN5NLayUv8j5syC5N4r5MwDoQBxNwcSCzn7+KouiSLboicqQTk+Y68yds5qcR++1BNDi8=
+	t=1786114231; cv=none; b=TDgpuEGrtP52caB4aawMYicCkNdYSqVz4RiEN9THN/2W3BtKFnM+diqpp++fLoul1r7edyL4rfy9W8RgS8TBQrwdnsZUDzjgQKD3B2QsKp6MNDAHE9mBW8BoufRQmwiOqga0MYPYG+v5BCGQ4dlgn6kytsA2R7GjNIqHXYO3Nv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114226; c=relaxed/simple;
-	bh=2GV+EbTwn39fEWO/hDohPXQivf/fQH79crAo1sPmcfA=;
+	s=arc-20240116; t=1786114231; c=relaxed/simple;
+	bh=XWHdV04X+CfxDROrHBjzVKDmtLOOk6YZnN7MRvMTcXQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MojAMGLRbbRc21WgV0n0itzG1VDQaEjKFFmtR2Jt2gz1r8QajOGq5QMUIORlAKRqSfIBnn/d+LbtQa9+DcJK2/IUz3AW1xTU0/77Uz3JEW67l8Wd3MBlmH9AirlVz4IY/9nKWXKEq4GHEKs2dVKrAAXBkVK7OQqfo7Qekh9WhVw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R6Is0zdS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Eee0CoXD+wj9n/+oEWlUwV2dnOl/iFHeLcW155V/J7TmWomrpKtxvw1qK9NKp4Phr7Ma6Ohg+Hho8GCj74EDCduR4eSM9K+/r2DAKWKo9QZVtqBSsqQzl/qMvMSMk5x80uNwWhDXajUyJXEQqG0Wszwy/RRuuZTWGb/nwe3q8BE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KEWTBivT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R6Is0zdS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8950C1F00A3A;
-	Fri,  7 Aug 2026 14:50:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KEWTBivT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F6B31F000E9;
+	Fri,  7 Aug 2026 14:50:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114221;
-	bh=QqcxGiRUtq9voVv9TJncuk2Ae8b76pNBWF/wWlzKmC0=;
+	s=korg; t=1786114223;
+	bh=N4/xSdk/GYFXVvfzPjczMPiMJbAQYkf55Nf302OXbso=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R6Is0zdSR3UCj6IaRhTq9VLB2W7L8tsk5S/cFvt9XxB9FVJexeF2Fkjt2D9spI3ku
-	 Wc7HIrPStUdHnvf7eY4YW0umqw2o6/is3LUCDTjynr5JyQv6yCFFCb7cpANKPGok4Q
-	 tmTuLUN27yDX733jCeJP6pG0DRQvMBmb4mvLhklM=
+	b=KEWTBivTtdz5duRi63bhmCsf4xn7ENJP3XubIf7C0ZhKzUrQ9prTzwWz7/uieCfT1
+	 UvD6NsPY69GdboSilI+3GjCbWlgFOkHB5JDvNbIs6EqEycucYeLmh68z4T7l7B6au0
+	 ExdzyvwHzuXpeTvAyF2mZR7uMBfhBTgm+9V4whyc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 188/337] vxlan: unclone skb head before modifying eth header in route_shortcircuit()
-Date: Fri,  7 Aug 2026 16:36:31 +0200
-Message-ID: <20260807143422.631341102@linuxfoundation.org>
+	Zilin Guan <zilin@seu.edu.cn>,
+	Dawei Feng <dawei.feng@seu.edu.cn>,
+	Dima Ruinskiy <dima.ruinskiy@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>
+Subject: [PATCH 6.12 171/337] e1000: fix memory leak in e1000_probe()
+Date: Fri,  7 Aug 2026 16:36:14 +0200
+Message-ID: <20260807143422.263700360@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -50,45 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Dawei Feng <dawei.feng@seu.edu.cn>
 
-commit 760d36e737f2b3867762f42af36c663f55babcc4 upstream.
+commit 816419dfea5c88126f35eb7a1b429a1bf546665e upstream.
 
-When route_shortcircuit() performs L3 short-circuit routing, it modifies
-the Ethernet header of the skb in-place:
-    memcpy(eth_hdr(skb)->h_source, eth_hdr(skb)->h_dest, dev->addr_len);
-    memcpy(eth_hdr(skb)->h_dest, n->ha, dev->addr_len);
+In the e1000_probe() path, e1000_sw_init() allocates adapter->tx_ring and
+adapter->rx_ring. If the subsequent CE4100-specific MDIO BAR mapping
+fails, the error handling jumps past the ring cleanup code, leaking both
+allocations.
 
-If the incoming skb is cloned (for example by packet sockets, tcpdump, or
-dev_queue_xmit), modifying the Ethernet header without uncloning can corrupt
-the packet header for other readers holding a reference to the cloned skb.
+Fix this leak by moving the err_mdio_ioremap label above the ring
+deallocation logic. This guarantees the proper release of these resources
+and prevents the memory leak.
 
-Ensure the skb header is writable and unshared by calling skb_cow_head(skb, 0)
-prior to updating the Ethernet header. If skb_cow_head() fails, abort short-circuiting
-and return false to allow standard packet processing fallback.
+The bug was first flagged by an experimental analysis tool we are
+developing for kernel memory-management bugs while analyzing
+v6.13-rc1. The tool is still under development and is not yet publicly
+available. Manual inspection confirms that the bug is still
+present in v7.1-rc6.
 
-Fixes: e4f67addf158 ("add DOVE extensions for VXLAN")
+An x86_64 allyesconfig build showed no new warnings. As we do not have a
+CE4100 reference platform to test with, no runtime testing was able to
+be performed.
+
+Fixes: 5377a4160bb65 ("e1000: Add support for the CE4100 reference platform")
 Cc: stable@vger.kernel.org
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260723144249.759100-3-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
+Reviewed-by: Dima Ruinskiy <dima.ruinskiy@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/vxlan/vxlan_core.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/ethernet/intel/e1000/e1000_main.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/vxlan/vxlan_core.c
-+++ b/drivers/net/vxlan/vxlan_core.c
-@@ -2190,6 +2190,10 @@ static bool route_shortcircuit(struct ne
+--- a/drivers/net/ethernet/intel/e1000/e1000_main.c
++++ b/drivers/net/ethernet/intel/e1000/e1000_main.c
+@@ -1225,11 +1225,11 @@ err_eeprom:
  
- 		diff = !ether_addr_equal(eth_hdr(skb)->h_dest, n->ha);
- 		if (diff) {
-+			if (skb_cow_head(skb, 0)) {
-+				neigh_release(n);
-+				return false;
-+			}
- 			memcpy(eth_hdr(skb)->h_source, eth_hdr(skb)->h_dest,
- 				dev->addr_len);
- 			memcpy(eth_hdr(skb)->h_dest, n->ha, dev->addr_len);
+ 	if (hw->flash_address)
+ 		iounmap(hw->flash_address);
++err_mdio_ioremap:
+ 	kfree(adapter->tx_ring);
+ 	kfree(adapter->rx_ring);
+ err_dma:
+ err_sw_init:
+-err_mdio_ioremap:
+ 	iounmap(hw->ce4100_gbe_mdio_base_virt);
+ 	iounmap(hw->hw_addr);
+ err_ioremap:
 
 
