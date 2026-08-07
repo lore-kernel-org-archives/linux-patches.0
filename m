@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A3B34334AF;
-	Fri,  7 Aug 2026 15:33:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BFFE280331;
+	Fri,  7 Aug 2026 15:33:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116829; cv=none; b=DyyjgYMxArWCix6Q2EfLmhC/Yx8ZLlFvLtY/W31gES/NPsBP3K3bScK3S/2FT/aG1jba4Vjb8NellIjtQJ2K2qyGPQZqAQH8L9lAW35Q7XRGm6IF6rG4/pzpcTxXeMy/vUVRT6T3Vfe2ginWszRHJvX8ICk1Iyw0rWCR4McWtko=
+	t=1786116832; cv=none; b=bIDuWCQDqyY3fwUMZvYOJKvUv9xaaj2O1tldcwYV5uqPDBUhwQP1M6Qz/SsQJi1/9Qve3OGI6ToWwVkwwu7L3ZmnRo28eMNE2Kyge/e3s70ee4luRqSmRBX23+zk64sBNKUlc2wf2U11RXBXUpwHi5K/XjuXyfwIxzEfldXXH2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116829; c=relaxed/simple;
-	bh=DsxQIhxNJ7HTJV4N82a5wrQlR4NDF/TlNtaDK+4mLjM=;
+	s=arc-20240116; t=1786116832; c=relaxed/simple;
+	bh=ft1p7Bdm+91TC2QRxhoCJhTNCOTOgPazOd2P7b9f7GE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BFcMyZ05fjqu9j4MUuzbbmXaYELsvcHMPzppewDrpNF2Pz0TN1jbaU0widZTHbOrrSngJAAeOO7Sp0TbHlz73hwrvx+WNeciqd7lSmOKYAyQax9HyeIT6Gc5Z7o1pGKd/zd0MueeSVUq4Vbqmu87mo71w/HHRvyRF854eJdI3fM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XfP26S4T; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=L2UlWBGmJThYNztgv5P7l/OUsKPCXsAL0+YyKX7vrR1G2Qz8zFZUX0oPPVudKtQC9JuA8WpLJDwkz6F1tuWbqmfX+7yz0WiJiwcHI2wscb4z4FPnBnpcrzcSi/TYSKjUrTa14eTbSkT3yifrzcPdi6K3d/tH1eQdmugyGQb87KY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C50DsTrP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XfP26S4T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA5071F000E9;
-	Fri,  7 Aug 2026 15:33:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C50DsTrP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B194B1F000E9;
+	Fri,  7 Aug 2026 15:33:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116828;
-	bh=geeW5lBWIcj7i6ZCQYtUqM2fGudx4WwlvY3GsmZA19o=;
+	s=korg; t=1786116831;
+	bh=Qy2pW1dRZ49QPmabYygfjXYxBaL5sO0xHJjOGZMo158=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XfP26S4TWWS5q54PXZ2pBBVLVya8ybYum9rP/zG0nsURJur0PpA2pYrXPCfXxxt3m
-	 +Ntm9YQvKADD9YKVF/Od5BLbCCQ7CMEKBGDbMSYiWQsmwEY8QwXQow+76DXQfQe6QQ
-	 IdWC3y54FX6EkZD41VascJK/Vm3D5nrr1yVZ/xZU=
+	b=C50DsTrPliIlF8KyWtinVxjOJKDI+n4LYNbEEVgQO/XyU43DiXqnpst79+pRBLxbC
+	 GxOhGF4SBHqB99LKHpskSYqEwdJKIZ7ttjDJuruZ2zZVD1FncbiSR0jWhdWWO/bD8/
+	 CKGOMB+2+bRlUsa1XP5txV9JunOpLNd0ESCT3YgA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Luiz Angelo Daros de Luca <luizluca@gmail.com>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 104/438] hwmon: (adt7470) Fix busy-loop and I2C flooding in update thread
-Date: Fri,  7 Aug 2026 16:35:00 +0200
-Message-ID: <20260807143430.204181569@linuxfoundation.org>
+Subject: [PATCH 7.1 105/438] hwmon: (adt7470) Fix temperature alarm logic in hwmon_temp_read()
+Date: Fri,  7 Aug 2026 16:35:01 +0200
+Message-ID: <20260807143430.226395329@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -54,47 +54,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Luiz Angelo Daros de Luca <luizluca@gmail.com>
 
-[ Upstream commit cb0b7f9c43b0abbd422a7e4c2c85e91db429207c ]
+[ Upstream commit 1a18c79c4bc44cc5349c60e16b0b744dc6ec5f77 ]
 
-When userspace configures 'auto_update_interval' to 0 via sysfs, the
-background kthread executes schedule_timeout_interruptible(0), which
-returns immediately.
-
-If 'num_temp_sensors' is concurrently or previously set to 0, the
-msleep_interruptible() delay inside adt7470_read_temperatures() also
-becomes 0. This combination forces the background thread into a tight,
-unbounded busy-loop, hogging the CPU and flooding the I2C bus with a
-continuous stream of transactions.
-
-Fix this vulnerability by raising the lower limit of the clamp_val in
-auto_update_interval_store() from 0 to 500 milliseconds. This guarantees
-a reasonable minimum sleep window between sensor updates, protecting the
-system from intentional or accidental I2C bus denial of service.
+During the conversion the alarm callback started interpreting the
+channel index as an alarm bitmask, resulting in incorrect alarm
+reporting. Compute the proper alarm bit instead.
 
 Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/r/20260716213252.EACA71F000E9@smtp.kernel.org
-Fixes: 89fac11cb3e7 ("adt7470: make automatic fan control really work")
+Closes: https://lore.kernel.org/r/20260717211224.B9E291F000E9@smtp.kernel.org
+Fixes: fc958a61ff6d ("hwmon: (adt7470) Convert to devm_hwmon_device_register_with_info API")
 Signed-off-by: Luiz Angelo Daros de Luca <luizluca@gmail.com>
-Link: https://lore.kernel.org/r/20260727-adt7470_fixes-v2-3-598e38a46ba6@gmail.com
+Link: https://lore.kernel.org/r/20260727-adt7470_fixes-v2-5-598e38a46ba6@gmail.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/adt7470.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwmon/adt7470.c | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/hwmon/adt7470.c b/drivers/hwmon/adt7470.c
-index 62ec68ea0a406..0b19b0925d1c7 100644
+index 0b19b0925d1c7..428bd1d91e700 100644
 --- a/drivers/hwmon/adt7470.c
 +++ b/drivers/hwmon/adt7470.c
-@@ -509,7 +509,7 @@ static ssize_t auto_update_interval_store(struct device *dev,
- 	if (kstrtol(buf, 10, &temp))
- 		return -EINVAL;
+@@ -110,6 +110,21 @@ static const unsigned short normal_i2c[] = { 0x2C, 0x2E, 0x2F, I2C_CLIENT_END };
  
--	temp = clamp_val(temp, 0, 60000);
-+	temp = clamp_val(temp, 500, 60000);
+ #define ALARM2(x)		((x) << 8)
  
- 	mutex_lock(&data->lock);
- 	data->auto_update_interval = temp;
++/* TEMP1..TEMP7 (ch 0..6) are, respectively BIT(0)..BIT(6) of reg 0x41 and
++ * 0x72, or BIT(0)..BIT(6) of data->alarm.
++ * TEMP8..TEMP9 (ch 7..9) are, respectively BIT(0)..BIT(2) of reg 0x42 and
++ * 0x73, or BIT(8)..BIT(10) of data->alarm.
++ */
++#define TEMP_ALARM_BIT(ch)	({		\
++	typeof(ch) _ch = (ch);			\
++	(1 << (_ch < 7 ? _ch : _ch + 1));	\
++})
++
++/* FAN1..FAN4 (ch 0..3) are respectively BIT(4)..BIT(7) in
++ * reg 0x42 and 0x73 or BIT(12)..BIT(15) in data->alarm.
++ */
++#define FAN_ALARM_BIT(ch)	(1 << (12 + (ch)))
++
+ #define ADT7470_VENDOR		0x41
+ #define ADT7470_DEVICE		0x70
+ /* datasheet only mentions a revision 2 */
+@@ -569,7 +584,7 @@ static int adt7470_temp_read(struct device *dev, u32 attr, int channel, long *va
+ 		*val = 1000 * data->temp_max[channel];
+ 		break;
+ 	case hwmon_temp_alarm:
+-		*val = !!(data->alarm & channel);
++		*val = !!(data->alarm & TEMP_ALARM_BIT(channel));
+ 		break;
+ 	default:
+ 		return -EOPNOTSUPP;
+@@ -668,7 +683,7 @@ static int adt7470_fan_read(struct device *dev, u32 attr, int channel, long *val
+ 			*val = 0;
+ 		break;
+ 	case hwmon_fan_alarm:
+-		*val = !!(data->alarm & (1 << (12 + channel)));
++		*val = !!(data->alarm & FAN_ALARM_BIT(channel));
+ 		break;
+ 	default:
+ 		return -EOPNOTSUPP;
 -- 
 2.53.0
 
