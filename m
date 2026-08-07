@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C63C466B5E;
-	Fri,  7 Aug 2026 15:36:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C6F747DD77;
+	Fri,  7 Aug 2026 15:36:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786117006; cv=none; b=qTnZsGdASIMLwzZAb5wlPDpLD3Z7eokZsSQJ5df6fUrgPg9wt2FJF9Dpn2NQ0QircX8an6DyDpOkwMMmuPUi+ERpAxdFvushYM/7KMG9ZCawsp9jXL/hY1lmcFPVjixTF3895J5h1Fm00RQaWxgbgK+NpBeoWSuSISxFnqDKHek=
+	t=1786117009; cv=none; b=rfhlUX/E0Hl8Cqw0w2vGXdRg/TtGmVSUtwogi0YlC9Xj1Ee8a6Vx4fTPMb7Uzpv3S6DIyWk7fc88j+mK8YIs3ksvHUX8qpwU4KiK80YjpNpHktbk+h2bCvUOnlJysQvnlRd9JzMesWGbW3WDDU0DSeFoiwZHJ2YFEU238ENLI9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786117006; c=relaxed/simple;
-	bh=mG2p4tu+vBrETuT1BdqvsdGJpwG+xVxd/zaPmcfEADo=;
+	s=arc-20240116; t=1786117009; c=relaxed/simple;
+	bh=gPIE/zupC/llvsNJKoVpKMWs/45yzmeAVFJYYFhUvm8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fP4fUhZJpe++slCSRMxpNmQmyDqhHtNJtL0CkOyDAjUw6oQ1fI3z/XgDsVasJ6VYYwGbqHqYiZVbqumRApgda+6b9B8ejemqCJZEX6akjqughWCNpchD7DC/avEpVrjNkK72if1UKh1USF5PurRH954KfYJvpfmUX8nrHb77dKI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HEsCdUrd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=V/gegzDqA+iAkiW+no9HLpKPqNu23/zMa4HZXVvcpRpaguO+z8zxEus17Etz8Q3fRlTBd+sj+PpZZrT40mGyqMq6BWBRb1ry8/c8Auc/aQOaVJKFXujHFXbVqtmepa5rUbykUeKC2pVD4v9CcJQTt/cU457I8f4V6Kzj6Y/ORQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mY1W5fLR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HEsCdUrd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9F921F000E9;
-	Fri,  7 Aug 2026 15:36:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mY1W5fLR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A08111F000E9;
+	Fri,  7 Aug 2026 15:36:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786117005;
-	bh=XDTewr82kqoDxg+wRWU9FAN08OQWBJCho/lDMnjMALA=;
+	s=korg; t=1786117008;
+	bh=MuyNqpCXC6wTYtlBkxYybKoYfEG08QI77XNfm8PkOKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HEsCdUrd74zMML1FwoDXhaGWioJV9MZLDPr+5hUimXxmoYimigMam+fahj5BZbfGK
-	 qrmcqFuCY08hZtLSR29W5jPfvY8BFp7GOQhrQ6IQYFQXEHqBP1QUiy/7a+KRdpSyp9
-	 PGoku3M6s/NQ8SRDMCnw50/QC9bG1i5rVEiIeJU4=
+	b=mY1W5fLRVAAEQ7BHATB2Gzzh73Acqrb5HnO4H/5DvraVTyNro63c7ezlAbxGOE5zN
+	 b+hEPBQxv0frC2mOjqmLNX5ckpncDdM/P1mrQbIcvamdIY5kjgvS5SDiJlJh/LSYc8
+	 liYDx4APQtvKAE5rhFzCJAeLoKORnXQalSPPiitg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chenguang Zhao <zhaochenguang@kylinos.cn>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 122/438] net: ethernet: mtk_eth_soc: pass eth to mtk_handle_irq_rx in poll_controller
-Date: Fri,  7 Aug 2026 16:35:18 +0200
-Message-ID: <20260807143430.596314118@linuxfoundation.org>
+Subject: [PATCH 7.1 123/438] hwmon: (pmbus) Fix return value from pmbus_update_byte_data()
+Date: Fri,  7 Aug 2026 16:35:19 +0200
+Message-ID: <20260807143430.617687928@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -51,37 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chenguang Zhao <zhaochenguang@kylinos.cn>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit e095f249e2209674f6366f6db0383a2b96e19239 ]
+[ Upstream commit a19038a200f18d9e74ac30081797917d0886e16b ]
 
-mtk_handle_irq_rx expects a struct mtk_eth * (matching the request_irq
-cookie), but mtk_poll_controller incorrectly passed the net_device *.
-Calling ndo_poll_controller with CONFIG_NET_POLL_CONTROLLER enabled
-would then crash.
+pmbus_update_byte_data() is supposed to return a negative error code or 0.
+However, if no change is made to the register, it actually returns the
+register value. This can result in problems if the calling code explicitly
+expects to see an error code or 0.
 
-Fixes: 8186f6e382d8 ("net-next: mediatek: fix compile error inside mtk_poll_controller()")
-Signed-off-by: Chenguang Zhao <zhaochenguang@kylinos.cn>
-Link: https://patch.msgid.link/20260723055735.885112-1-chenguang.zhao@linux.dev
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fix it to return 0 on success or the error code as expected.
+
+Fixes: 11c119986f270 ("hwmon: (pmbus) add helpers for byte write and read modify write")
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mediatek/mtk_eth_soc.c | 2 +-
+ drivers/hwmon/pmbus/pmbus_core.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-index 5d291e50a47bb..351444fb48716 100644
---- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-+++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-@@ -3467,7 +3467,7 @@ static void mtk_poll_controller(struct net_device *dev)
+diff --git a/drivers/hwmon/pmbus/pmbus_core.c b/drivers/hwmon/pmbus/pmbus_core.c
+index 3143b9e0316c4..7f2d28e41d816 100644
+--- a/drivers/hwmon/pmbus/pmbus_core.c
++++ b/drivers/hwmon/pmbus/pmbus_core.c
+@@ -513,7 +513,7 @@ int pmbus_update_byte_data(struct i2c_client *client, int page, u8 reg,
+ 	if (tmp != rv)
+ 		rv = _pmbus_write_byte_data(client, page, reg, tmp);
  
- 	mtk_tx_irq_disable(eth, MTK_TX_DONE_INT);
- 	mtk_rx_irq_disable(eth, eth->soc->rx.irq_done_mask);
--	mtk_handle_irq_rx(eth->irq[MTK_FE_IRQ_RX], dev);
-+	mtk_handle_irq_rx(eth->irq[MTK_FE_IRQ_RX], eth);
- 	mtk_tx_irq_enable(eth, MTK_TX_DONE_INT);
- 	mtk_rx_irq_enable(eth, eth->soc->rx.irq_done_mask);
+-	return rv;
++	return rv < 0 ? rv : 0;
  }
+ EXPORT_SYMBOL_NS_GPL(pmbus_update_byte_data, "PMBUS");
+ 
 -- 
 2.53.0
 
