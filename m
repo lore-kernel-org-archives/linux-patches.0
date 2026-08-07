@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9ADB3101A7;
-	Fri,  7 Aug 2026 15:19:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2C943264D6;
+	Fri,  7 Aug 2026 15:19:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115973; cv=none; b=ltHzEVwgspjhYFw3epJZ6yQ36Gl4tSCSGiDmRHm+lghpYvGB9G0PyjBVNvJOnFfS6jqd/0AdZV/qQJWA0B/yElKctTleWYanx/S2+nVYCGL9PtFpWXihA2Fux4REruZR5a1lZbVYNd3L2lViMptlu7lEjR9P5YYRCtd9qfoCJrw=
+	t=1786115976; cv=none; b=ECXA7W1CYlXL73v3tLM26v6+5jOjja9PxF+Kun3IY+dA0rcZfKwx0fw2sx6vJlnsPGxQ8xnW1guft1W44hU8cMXeStR3JKqOZG5Tc7q28fSD3/oaUAk7DLrpP3thZUR0oM0y7dv3CeO7qySpmPfOSZgGCM+MOsWzgXxzOthZdLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115973; c=relaxed/simple;
-	bh=qm77M13yVDJ3rOpqcsuAmHcHugyYrRIyDmkRxu++9XM=;
+	s=arc-20240116; t=1786115976; c=relaxed/simple;
+	bh=kAhsMlIts/jjtQisi3rK+JzEEqDqrR/qMFsrL/0J4L8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gal/JKNYF+jSwG8waeAsCZ/nf3Az8IzMoWQ4RcfpfUcEwURL5JBbBOxR91zAdV/dI1jNh/JDLO1LwUeXm19EeIIjNEh9ZhM93d3eqGEa1kJjea1MaY00aVzQFIJf56aNU3UhJ+f1f7n90SiO1Uvzl9Yb2+CkRjFsBRYF7ljqLz4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SgEQ41mf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gBKhTj6g45yVocjXgoToEyoy2PIj88SU1OjLtjCqI/DxzlkqNJz9tLyRl0OtEG0jq4K55rSO3VkfAL8LOD6KfhWIKGTMzcZl7FXFe3+bvEJ4ffGiecVAlJzt0pBOSr+WwueaOH4K2x2djjgiI5GhsYz1a56/i8suAccWCO72UQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qOu1syaD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SgEQ41mf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B5A31F000E9;
-	Fri,  7 Aug 2026 15:19:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qOu1syaD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42DA91F000E9;
+	Fri,  7 Aug 2026 15:19:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115971;
-	bh=1Mgs+V9MMxUp7wpyaxAW9Yi6J6TN+PMYJG46xReKs7k=;
+	s=korg; t=1786115974;
+	bh=efTBXsnm8z4B/8jOH8ZUXig2AFn8hO6AX0DlbgQSPJ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SgEQ41mf/WVd4reYTKsJ57otSYRsQIWQeCrPlHLaUd6j0yPy31GgHN4mvIYVVU/iW
-	 lHBt0DZ7teX4uu5LtxINkkKZc15IjqaapXIAv+OUSZMh/BoF4gUDCiePWvB8atFKem
-	 UEp4WBpNk25j1IG/a/6PS5EVym79GBHC1C+pNFWM=
+	b=qOu1syaD1OPv7ecdaFlR8CJVT667ODNM7/9CaYOvBW8favhxEhDWbm+WUf4WD+WSs
+	 Wr9SDqW8g5/z8ayDgaDGfYR+/I+gczFbVI5yMUUMpcouO1vCWQW6rglM+rpY/cdeUE
+	 l0m7fc7y86rqOag57bEFTzUgK6Py5B6YpTG9mhUc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 065/261] Bluetooth: ISO: fix timeout vs sync_timeout typo in check_bcast_qos
-Date: Fri,  7 Aug 2026 16:37:02 +0200
-Message-ID: <20260807143416.784809874@linuxfoundation.org>
+Subject: [PATCH 6.6 023/261] netfilter: nf_conntrack_sip: widen NAT rewrite delta to s32 in sip_help_tcp()
+Date: Fri,  7 Aug 2026 16:36:20 +0200
+Message-ID: <20260807143415.870432641@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143415.358597922@linuxfoundation.org>
 References: <20260807143415.358597922@linuxfoundation.org>
@@ -51,36 +52,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit e9cb51813d79fc9aae4a2098aab3ab6ebd7fb6c8 ]
+[ Upstream commit db3d0e0e5d4bc5ab4fe445b9f413d1b486508ca5 ]
 
-In iso.c check_bcast_qos(), missing bcast.timeout is not set to its
-default value, and appears typoed as bcast.sync_timeout.
+sip_help_tcp() stores the size change of each NAT-rewritten SIP message
+in s16 diff and accumulates it in s16 tdiff, but a single message can
+grow by more than S16_MAX while the packet stays under the 65535
+enlarge_skb() limit: nf_nat_sip() rewrites every matching URI, and a long
+Contact list expands the message by tens of kilobytes. diff then wraps,
+and "datalen = datalen + diff - msglen" yields a huge unsigned datalen,
+so the next iteration's ct_sip_get_header() reads past the linearized skb
+tail.
 
-Fix the typo.
+Widen diff, tdiff and the seq_adjust hook to s32. Both are bounded by the
+65535 byte packet limit, and the seqadj core is already s32
+(nf_ct_seqadj_set() takes s32), so no previously accepted input is
+rejected.
 
-Fixes: b37cab587aa3 ("Bluetooth: ISO: Don't reject BT_ISO_QOS if parameters are unset")
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  BUG: KASAN: use-after-free in ct_sip_get_header (net/netfilter/nf_conntrack_sip.c:464)
+  Read of size 1 at addr ffff888010800000 by task ksoftirqd/1/25
+   ct_sip_get_header (net/netfilter/nf_conntrack_sip.c:464)
+   sip_help_tcp (net/netfilter/nf_conntrack_sip.c:1694)
+   nf_confirm (net/netfilter/nf_conntrack_proto.c:183)
+   nf_hook_slow (net/netfilter/core.c:619)
+   ip6_output (net/ipv6/ip6_output.c:246)
+   ip6_forward (net/ipv6/ip6_output.c:690)
+   ipv6_rcv (net/ipv6/ip6_input.c:351)
+   __netif_receive_skb_one_core (net/core/dev.c:6212)
+   process_backlog (net/core/dev.c:6676)
+   __napi_poll (net/core/dev.c:7735)
+   net_rx_action (net/core/dev.c:7955)
+   handle_softirqs (kernel/softirq.c:622)
+   run_ksoftirqd (kernel/softirq.c:1076)
+   ...
+
+Fixes: f5b321bd37fb ("netfilter: nf_conntrack_sip: add TCP support")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Link: https://patch.msgid.link/netfilter-devel/20260712234201.3213635-1-xmei5@asu.edu
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/iso.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/netfilter/nf_conntrack_sip.h | 2 +-
+ net/netfilter/nf_conntrack_sip.c           | 2 +-
+ net/netfilter/nf_nat_sip.c                 | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
-index 51d0065f058c1..a67bce151aaff 100644
---- a/net/bluetooth/iso.c
-+++ b/net/bluetooth/iso.c
-@@ -1439,7 +1439,7 @@ static bool check_bcast_qos(struct bt_iso_qos *qos)
- 		return false;
+diff --git a/include/linux/netfilter/nf_conntrack_sip.h b/include/linux/netfilter/nf_conntrack_sip.h
+index dbc614dfe0d56..aafa0c04f917e 100644
+--- a/include/linux/netfilter/nf_conntrack_sip.h
++++ b/include/linux/netfilter/nf_conntrack_sip.h
+@@ -115,7 +115,7 @@ struct nf_nat_sip_hooks {
+ 			    unsigned int *datalen);
  
- 	if (!qos->bcast.timeout)
--		qos->bcast.sync_timeout = BT_ISO_SYNC_TIMEOUT;
-+		qos->bcast.timeout = BT_ISO_SYNC_TIMEOUT;
+ 	void (*seq_adjust)(struct sk_buff *skb,
+-			   unsigned int protoff, s16 off);
++			   unsigned int protoff, s32 off);
  
- 	if (qos->bcast.timeout < 0x000a || qos->bcast.timeout > 0x4000)
- 		return false;
+ 	unsigned int (*expect)(struct sk_buff *skb,
+ 			       unsigned int protoff,
+diff --git a/net/netfilter/nf_conntrack_sip.c b/net/netfilter/nf_conntrack_sip.c
+index 852c0b74b8a77..4f975b83c84f6 100644
+--- a/net/netfilter/nf_conntrack_sip.c
++++ b/net/netfilter/nf_conntrack_sip.c
+@@ -1629,7 +1629,7 @@ static int sip_help_tcp(struct sk_buff *skb, unsigned int protoff,
+ 	unsigned int matchoff, matchlen;
+ 	unsigned int msglen, origlen;
+ 	const char *dptr, *end;
+-	s16 diff, tdiff = 0;
++	s32 diff, tdiff = 0;
+ 	int ret = NF_ACCEPT;
+ 	unsigned long clen;
+ 	bool term;
+diff --git a/net/netfilter/nf_nat_sip.c b/net/netfilter/nf_nat_sip.c
+index f7be30c69b5c8..a1c41defaf22d 100644
+--- a/net/netfilter/nf_nat_sip.c
++++ b/net/netfilter/nf_nat_sip.c
+@@ -315,7 +315,7 @@ static unsigned int nf_nat_sip(struct sk_buff *skb, unsigned int protoff,
+ }
+ 
+ static void nf_nat_sip_seq_adjust(struct sk_buff *skb, unsigned int protoff,
+-				  s16 off)
++				  s32 off)
+ {
+ 	enum ip_conntrack_info ctinfo;
+ 	struct nf_conn *ct = nf_ct_get(skb, &ctinfo);
 -- 
 2.53.0
 
