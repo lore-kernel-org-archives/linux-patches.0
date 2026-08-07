@@ -1,51 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18EEF2DC765;
-	Fri,  7 Aug 2026 15:14:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 081492F0C74;
+	Fri,  7 Aug 2026 15:14:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115663; cv=none; b=kQudsk4dLPIwOODTZpouEQuF+0RI2/eD4qplT6e0ElHTOHpEsfFpXtArBLIyRf0ftoodEj04uHf/jYJTh5NGlJYjEUCVWvfJi4QUpWfvVhfbIogjNiqAZGc/tN4WHiU8P5pqoh1ZmLe3KvmD96lBE6AduEUctOMVQ4DM5dG7spI=
+	t=1786115666; cv=none; b=uO8caN3+RdQw3qJAqTn7StEnI7Xnsn/KnT5tTD9a5XeDhWWsD21SkexrSV7FvRREYD8c+jeiMgQGWIjX5Q0F7RDeU+jL6UsHf6/gO+tN4SUaxhxsjwms/kbMkJ2uqqh8g0T39+EVat/Fo/XJoCpVfESSv2h2L6+RXzEWM9jEioI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115663; c=relaxed/simple;
-	bh=Chi+oXO2fri+jzJFgugxh3cKPE5N9JgBmF35fHyZDME=;
+	s=arc-20240116; t=1786115666; c=relaxed/simple;
+	bh=cRGCwfPPrR2vwJ0lg8gujAAWvnW5B68md2M0IUkA7LQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EcydThyTJtL3mPiWaW8TBAaSSsbB2ID6ajnx8sGKTMQ/hMLs7JonkOA4b+dYBSj9ZkBHyYxvHVB9HB6n1EoWpmr96FFI9QzyjC/bGf1w5BfhNQNtxHeFpPjwVTGobNVMgnpKAx6iG0Otr4uSguVdWfTAaqjjtKmUjzI6I/eDetQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I7iI5+V+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qzevYboT6NvWuAsZmjQA1407T/ToBL6X3+rlepfhUpAeM8RY2LpTei99Mxefvb2rYoH55eAvtyTB4JVZjmBjQxcqgq4QNMw3nWBrJQ3Taf6OGrcBnsul5bAIrBdtNmWzXyThmDUxdi8UlHBzbb1AVivEF3fZBfHTLHtHpnA12jk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tW9t6mqH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I7iI5+V+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E3151F000E9;
-	Fri,  7 Aug 2026 15:14:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tW9t6mqH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C91A1F000E9;
+	Fri,  7 Aug 2026 15:14:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115661;
-	bh=u8c3QqKUU3DmvQ+OjER9ElDQyLJ1dszm79W6P7wyyA0=;
+	s=korg; t=1786115664;
+	bh=tEG/rwlqNL8bveDITZBnVux1ohK1oSbm1kUZwYTxoYk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I7iI5+V+HzXN/7PRofivaUStbrtfVbRUOlvpqgN4powlNnVitazutPJ5/xzzL/khX
-	 b/uiHMethrjgLd4oLLg79R2sC7fhnRLCisL6HiLZUAbsCicRMtuBpHdIHKjA4nDVUR
-	 0StB183Zu/AVGAMkD/vGyjnaMCvImIqOa18Is3zw=
+	b=tW9t6mqH7hYN7VAqHBUCRIlcJJFg3ufN6clrq8QZaVJHEddDRyzcUYdojgk/JQr/M
+	 RoQl0Z8QnX0fRHmiUxnBpr7CAUDVnvpE95QkQmg+qw55Ka4lzhawohzo8iwlAV47m1
+	 ggyNdyi4Xo+qplhsXn2xzPbTcBJ33iXWcf81SCow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
-	Hao Zhang <zhanghao1@kylinos.cn>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Zi Yan <ziy@nvidia.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Barry Song <baohua@kernel.org>,
-	Dev Jain <dev.jain@arm.com>,
-	Lance Yang <lance.yang@linux.dev>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Naoya Horiguchi <nao.horiguchi@gmail.com>,
-	Nico Pache <npache@redhat.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Christian Brauner <brauner@kernel.org>,
+	Wentao Guan <guanwentao@uniontech.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 355/396] mm/huge_memory: unlock i_mmap_rwsem before releasing after-split folios
-Date: Fri,  7 Aug 2026 16:38:35 +0200
-Message-ID: <20260807143431.942123397@linuxfoundation.org>
+Subject: [PATCH 6.18 356/396] file: add FD_{ADD,PREPARE}()
+Date: Fri,  7 Aug 2026 16:38:36 +0200
+Message-ID: <20260807143431.962701214@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -64,100 +51,232 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kiryl Shutsemau (Meta) <kas@kernel.org>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit e923bd21058ea02fd0dcd3549d151d143fd036e5 ]
+[ Upstream commit 011703a9acd76edc7c85d80dbccb6e50dba53aad ]
 
-__folio_split() keeps dereferencing the mapping after the split:
-shmem_uncharge(mapping->host) and remap_page() while the folios are still
-frozen/locked, and i_mmap_unlock_read(mapping) at the very end, after the
-after-split folios have been unlocked and freed.
+I've been playing with this to allow for moderately flexible usage of
+the get_unused_fd_flags() + create file + fd_install() pattern that's
+used quite extensively.
 
-Nothing holds an inode reference across that.  The split relies on @folio
--- which the beyond-EOF drop loop never removes, as it starts at
-folio_next(folio) -- staying locked and in the page cache to hold off
-eviction.  But the unlock loop unlocks @folio before i_mmap_unlock_read()
-runs.  If the caller's @lock_at is a tail beyond EOF, as memory_failure()
-passes when splitting a poisoned tail of a shmem THP that reaches past
-i_size during truncation, it too is gone from the page cache; so once
-@folio is unlocked no locked, in-cache folio pins the inode, and a
-concurrent final iput() can evict and RCU-free it before
-i_mmap_unlock_read() touches i_mmap_rwsem:
+How callers allocate files is really heterogenous so it's not really
+convenient to fold them into a single class. It's possibe to split them
+into subclasses like for anon inodes. I think that's not necessarily
+nice as well.
 
-  BUG: KASAN: slab-use-after-free in __up_read+0x634/0x790
-   i_mmap_unlock_read include/linux/fs.h:537 [inline]
-   __folio_split+0x732/0x1640 mm/huge_memory.c:4100
-   try_to_split_thp_page+0xab/0x390 mm/memory-failure.c:1675
-   memory_failure+0x1394/0x26e0 mm/memory-failure.c:2470
+My take is to add two primites:
+(1) FD_ADD() the simple cases a file is installed:
 
-  Freed by task 4601:
-   shmem_free_in_core_inode+0x54/0xb0 mm/shmem.c:5177
-   evict+0x57f/0xac0 fs/inode.c:870
+    fd = FD_ADD(O_CLOEXEC, open_file(some, args)));
+    if (fd >= 0)
+            kvm_get_kvm(vcpu->kvm);
+    return fd;
 
-Do every mapping dereference while @folio still pins the inode: drop
-i_mmap_rwsem right after remap_page(), before the loop that unlocks and
-frees the after-split folios, and clear @mapping so the exit path does not
-unlock it again.  shmem_uncharge() and remap_page() already run before
-that point, so after this nothing past the unlock loop touches the inode
-or the mapping.
+(2) FD_PREPARE() that captures all the cases where access to fd or file
+    or additional work before publishing the fd is needed:
 
-This is now a rule the split depends on, alongside keeping @folio frozen
-until the page cache is updated: no inode or mapping dereference once the
-after-split folios start being unlocked.
+    FD_PREPARE(fdf, open_flag, file_open_handle(&path, open_flag));
+    if (fdf.err)
+            return fdf.err;
 
-Link: https://lore.kernel.org/20260716095424.471052-1-kirill@shutemov.name
-Fixes: baa355fd3314 ("thp: file pages support for split_huge_page()")
-Signed-off-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
-Reported-by: Hao Zhang <zhanghao1@kylinos.cn>
-Closes: https://lore.kernel.org/linux-mm/20260710071344.GA106129@zh-pc
-Co-developed-by: Hao Zhang <zhanghao1@kylinos.cn>
-Signed-off-by: Hao Zhang <zhanghao1@kylinos.cn>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Reviewed-by: Miaohe Lin <linmiaohe@huawei.com>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Barry Song <baohua@kernel.org>
-Cc: Dev Jain <dev.jain@arm.com>
-Cc: Lance Yang <lance.yang@linux.dev>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
-Cc: Nico Pache <npache@redhat.com>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-(cherry picked from commit e923bd21058ea02fd0dcd3549d151d143fd036e5)
+    if (copy_to_user(/* something something */))
+            return -EFAULT;
 
-Signed-off-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
+    return fd_publish(fdf);
+
+I've converted all of the easy cases over to it and it gets rid of an
+aweful lot of convoluted cleanup logic.
+
+It's centered around struct fd_prepare. FD_PREPARE() encapsulates all of
+allocation and cleanup logic and must be followed by a call to
+fd_publish() which associates the fd with the file and installs it into
+the callers fdtable. If fd_publish() isn't called both are deallocated.
+
+It mandates a specific order namely that first we allocate the fd and
+then instantiate the file. But that shouldn't be a problem nearly
+everyone I've converted uses this exact pattern anyway.
+
+There's a bunch of additional cases where it would be easy to convert
+them to this pattern. For example, the whole sync file stuff in dma
+currently retains the containing structure of the file instead of the
+file itself even though it's only used to allocate files. Changing that
+would make it fall into the FD_PREPARE() pattern easily. I've not done
+that work yet.
+
+There's room for extending this in a way that wed'd have subclasses for
+some particularly often use patterns but as I said I'm not even sure
+that's worth it.
+
+Link: https://patch.msgid.link/20251123-work-fd-prepare-v4-1-b6efa1706cfd@kernel.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+(cherry picked from commit 011703a9acd76edc7c85d80dbccb6e50dba53aad)
+Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/huge_memory.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ include/linux/cleanup.h |   7 +++
+ include/linux/file.h    | 126 ++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 133 insertions(+)
 
-diff --git a/mm/huge_memory.c b/mm/huge_memory.c
-index c08aa3db96431..bd3093a6cc628 100644
---- a/mm/huge_memory.c
-+++ b/mm/huge_memory.c
-@@ -3871,6 +3871,18 @@ static int __folio_split(struct folio *folio, unsigned int new_order,
- 		remap_flags = RMP_USE_SHARED_ZEROPAGE;
- 	remap_page(folio, 1 << order, remap_flags);
+diff --git a/include/linux/cleanup.h b/include/linux/cleanup.h
+index a1194e44b5276..bacefa0f1512f 100644
+--- a/include/linux/cleanup.h
++++ b/include/linux/cleanup.h
+@@ -261,6 +261,10 @@ const volatile void * __must_check_fn(const volatile void *val)
+  * CLASS(name, var)(args...):
+  *	declare the variable @var as an instance of the named class
+  *
++ * CLASS_INIT(name, var, init_expr):
++ *	declare the variable @var as an instance of the named class with
++ *	custom initialization expression.
++ *
+  * Ex.
+  *
+  * DEFINE_CLASS(fdget, struct fd, fdput(_T), fdget(fd), int fd)
+@@ -290,6 +294,9 @@ static inline class_##_name##_t class_##_name##ext##_constructor(_init_args) \
+ 	class_##_name##_t var __cleanup(class_##_name##_destructor) =	\
+ 		class_##_name##_constructor
  
-+	/*
-+	 * Drop the mapping while the inode is still pinned. @folio stays
-+	 * locked and present in the page cache until the loop below, so
-+	 * eviction cannot free the inode yet; @lock_at is not enough, it may
-+	 * be a tail beyond EOF that the split already dropped from the page
-+	 * cache. Nothing past this point may touch the inode or the mapping.
-+	 */
-+	if (mapping) {
-+		i_mmap_unlock_read(mapping);
-+		mapping = NULL;
-+	}
++#define CLASS_INIT(_name, _var, _init_expr)                             \
++        class_##_name##_t _var __cleanup(class_##_name##_destructor) = (_init_expr)
 +
- 	/*
- 	 * Unlock all after-split folios except the one containing
- 	 * @lock_at page. If @folio is not split, it will be kept locked.
+ #define __scoped_class(_name, var, _label, args...)        \
+ 	for (CLASS(_name, var)(args); ; ({ goto _label; })) \
+ 		if (0) {                                   \
+diff --git a/include/linux/file.h b/include/linux/file.h
+index af1768d934a01..cf389fde9bc28 100644
+--- a/include/linux/file.h
++++ b/include/linux/file.h
+@@ -127,4 +127,130 @@ extern void __fput_sync(struct file *);
+ 
+ extern unsigned int sysctl_nr_open_min, sysctl_nr_open_max;
+ 
++/*
++ * fd_prepare: Combined fd + file allocation cleanup class.
++ * @err: Error code to indicate if allocation succeeded.
++ * @__fd: Allocated fd (may not be accessed directly)
++ * @__file: Allocated struct file pointer (may not be accessed directly)
++ *
++ * Allocates an fd and a file together. On error paths, automatically cleans
++ * up whichever resource was successfully allocated. Allows flexible file
++ * allocation with different functions per usage.
++ *
++ * Do not use directly.
++ */
++struct fd_prepare {
++	s32 err;
++	s32 __fd; /* do not access directly */
++	struct file *__file; /* do not access directly */
++};
++
++/* Typedef for fd_prepare cleanup guards. */
++typedef struct fd_prepare class_fd_prepare_t;
++
++/*
++ * Accessors for fd_prepare class members.
++ * _Generic() is used for zero-cost type safety.
++ */
++#define fd_prepare_fd(_fdf) \
++	(_Generic((_fdf), struct fd_prepare: (_fdf).__fd))
++
++#define fd_prepare_file(_fdf) \
++	(_Generic((_fdf), struct fd_prepare: (_fdf).__file))
++
++/* Do not use directly. */
++static inline void class_fd_prepare_destructor(const struct fd_prepare *fdf)
++{
++	if (unlikely(fdf->err)) {
++		if (likely(fdf->__fd >= 0))
++			put_unused_fd(fdf->__fd);
++		if (unlikely(!IS_ERR_OR_NULL(fdf->__file)))
++			fput(fdf->__file);
++	}
++}
++
++/* Do not use directly. */
++static inline int class_fd_prepare_lock_err(const struct fd_prepare *fdf)
++{
++	if (unlikely(fdf->err))
++		return fdf->err;
++	if (unlikely(fdf->__fd < 0))
++		return fdf->__fd;
++	if (unlikely(IS_ERR(fdf->__file)))
++		return PTR_ERR(fdf->__file);
++	if (unlikely(!fdf->__file))
++		return -ENOMEM;
++	return 0;
++}
++
++/*
++ * __FD_PREPARE_INIT - Helper to initialize fd_prepare class.
++ * @_fd_flags: flags for get_unused_fd_flags()
++ * @_file_owned: expression that returns struct file *
++ *
++ * Returns a struct fd_prepare with fd, file, and err set.
++ * If fd allocation fails, fd will be negative and err will be set. If
++ * fd succeeds but file_init_expr fails, file will be ERR_PTR and err
++ * will be set. The err field is the single source of truth for error
++ * checking.
++ */
++#define __FD_PREPARE_INIT(_fd_flags, _file_owned)                 \
++	({                                                        \
++		struct fd_prepare fdf = {                         \
++			.__fd = get_unused_fd_flags((_fd_flags)), \
++		};                                                \
++		if (likely(fdf.__fd >= 0))                        \
++			fdf.__file = (_file_owned);               \
++		fdf.err = ACQUIRE_ERR(fd_prepare, &fdf);          \
++		fdf;                                              \
++	})
++
++/*
++ * FD_PREPARE - Macro to declare and initialize an fd_prepare variable.
++ *
++ * Declares and initializes an fd_prepare variable with automatic
++ * cleanup. No separate scope required - cleanup happens when variable
++ * goes out of scope.
++ *
++ * @_fdf: name of struct fd_prepare variable to define
++ * @_fd_flags: flags for get_unused_fd_flags()
++ * @_file_owned: struct file to take ownership of (can be expression)
++ */
++#define FD_PREPARE(_fdf, _fd_flags, _file_owned) \
++	CLASS_INIT(fd_prepare, _fdf, __FD_PREPARE_INIT(_fd_flags, _file_owned))
++
++/*
++ * fd_publish - Publish prepared fd and file to the fd table.
++ * @_fdf: struct fd_prepare variable
++ */
++#define fd_publish(_fdf)                                       \
++	({                                                     \
++		struct fd_prepare *fdp = &(_fdf);              \
++		VFS_WARN_ON_ONCE(fdp->err);                    \
++		VFS_WARN_ON_ONCE(fdp->__fd < 0);               \
++		VFS_WARN_ON_ONCE(IS_ERR_OR_NULL(fdp->__file)); \
++		fd_install(fdp->__fd, fdp->__file);            \
++		fdp->__fd;                                     \
++	})
++
++/* Do not use directly. */
++#define __FD_ADD(_fdf, _fd_flags, _file_owned)            \
++	({                                                \
++		FD_PREPARE(_fdf, _fd_flags, _file_owned); \
++		s32 ret = _fdf.err;                       \
++		if (likely(!ret))                         \
++			ret = fd_publish(_fdf);           \
++		ret;                                      \
++	})
++
++/*
++ * FD_ADD - Allocate and install an fd and file in one step.
++ * @_fd_flags: flags for get_unused_fd_flags()
++ * @_file_owned: struct file to take ownership of
++ *
++ * Returns the allocated fd number, or negative error code on failure.
++ */
++#define FD_ADD(_fd_flags, _file_owned) \
++	__FD_ADD(__UNIQUE_ID(fd_prepare), _fd_flags, _file_owned)
++
+ #endif /* __LINUX_FILE_H */
 -- 
 2.53.0
 
