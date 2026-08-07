@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B11039CD16;
-	Fri,  7 Aug 2026 14:48:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 295E74B0482;
+	Fri,  7 Aug 2026 14:48:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114089; cv=none; b=u/a8ErertAzL2LpIvufqrj1VRJOAuagcHTVCn66KUGu8G1LpBjMCbIDV21b4xulBOc6VnzUSO+q+ZgYur/i+s10jy9Hj9bgPDEZJnMtP7zpe66F6xZ4QVNTE5L9YmEL3RRyCeGXe2nIukpiYNM/Eoc8uzkvyicd04i/nxhQPmo4=
+	t=1786114092; cv=none; b=f/nndT+UeRZk6Ne6hC7tzbKqnACgDCtjq2BmN8zb6NWL+EU4LNgp0cv/fVqcvHGR0g5GS/6RTrLM++0W8rKruayZWe8PL5faI/heijaB5FAdu8Z2IG9iFNK7cky+B5qtbIth2gQCt0S6GS4jMtlS6hDHc+WMMCZKn8YbOwj4Kl4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114089; c=relaxed/simple;
-	bh=LKY5O5WQK8FXJVTEugNkdvN5ws+uBuqPzdiJvBNGj8M=;
+	s=arc-20240116; t=1786114092; c=relaxed/simple;
+	bh=sBWI/k+6NfVoW0/M76GVHAeLoUTGLV4fnXLfABtsLUE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mr/MNnjAjWepotiIlUYCGPfq4KCZXfaV0eyDoqJ2Ju7GK+fMgFLtJMJMcUapaDn3yEh1+2L7y2ek0/lq0rGjXXg9wYmXmAlJFirc7EtreAEuSXbY6nc16n5xL9F46URvKHFaFOT34u12YCyyZplyFaLhNbdLG2zwaoDfMY+sA0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MYvL4/n1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RMfdDNALxoG3ttJQ4fGaGRPBJMloLlzgRiu/s/DAULR5LTChoLAK3n/sqfF960jWw8nUFI+0Go5lgkXI3KqrQ+RUIeXL40Diie5ftDjuqxBEOLC6ela7y7kFMSEoZwz3yjQx33WWPqtYNHfTEccXCibKbUCojy9aY9lMqgzjgoM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DE97+PCT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MYvL4/n1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72FCE1F000E9;
-	Fri,  7 Aug 2026 14:48:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DE97+PCT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48D621F000E9;
+	Fri,  7 Aug 2026 14:48:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114088;
-	bh=zQaQ6qJaAEL4hR31KrW96Myfv70Z6c76XaUhxRIGcQQ=;
+	s=korg; t=1786114090;
+	bh=cR/aqD6f1laEHSZe8qbg9WURa8IG2sBlXREOyPu6VqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MYvL4/n1NzwBvmbagV91lQGCyoOT1kkC4vb9pA/ocRgR7zWW5CARyVcTknON++y8k
-	 27i7uDMmJFWOKexRweqVLjuknANENs4qxlVTrIKuL6OxpZ7TvWLsr6TaKKkGpuDMo4
-	 aRMZhiKi3w3JUKeHjoD21jbiC6n0X2hOHNLbd4uU=
+	b=DE97+PCT1hKqzOoa2UAHHkxmsWLWOHEuQ7s4cVikjzmy3BDCq+qy7KWR9mNWJMyLc
+	 C4iavNqc4H0Uer9/kHmiOTWM2g78sZLqFsZSffVN5YoAVDU2+/QehlgEEmWnV3+Gz5
+	 G+jlHMyHP1cIVL105iO54Y9dBqHrIDVXnqsUwNek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Matthew Rosato <mjrosato@linux.ibm.com>,
-	Farhan Ali <alifm@linux.ibm.com>
-Subject: [PATCH 6.12 141/337] KVM: s390: pci: Reject adapter interrupt forwarding if already enabled
-Date: Fri,  7 Aug 2026 16:35:44 +0200
-Message-ID: <20260807143421.590195550@linuxfoundation.org>
+	Gabriele Monaco <gmonaco@redhat.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Juri Lelli <juri.lelli@redhat.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 124/337] sched/deadline: Use revised wakeup rule only for running dl_server
+Date: Fri,  7 Aug 2026 16:35:27 +0200
+Message-ID: <20260807143421.219275239@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -51,40 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Farhan Ali <alifm@linux.ibm.com>
+From: Gabriele Monaco <gmonaco@redhat.com>
 
-commit 8fa01be5a6149404adb82c0979a78f6347edd3ef upstream.
+[ Upstream commit 1842bf97af109f5ebf830175c9725bf81ebb78b1 ]
 
-The MPCIFC instruction doesn't allow registering adapter interrupts without
-first unregistering. So reject any request to enable interrupt forwarding
-if its already enabled for the zPCI device. This also fixes overwriting and
-thus leaking resources when the ioctl is called multiple times for the same
-device.
+Commit 14a857056466 ("sched/deadline: Use revised wakeup rule for
+dl_server") applies the revised wakeup rule to any server, as a result
+servers that are not running (dl_defer_running == 0) and start with a
+deadline overflow get enqueued and can boost tasks as if they were
+running, invalidating the defer rule and the documented state model.
 
-Fixes: 3c5a1b6f0a18 ("KVM: s390: pci: provide routines for enabling/disabling interrupt forwarding")
-Cc: stable@vger.kernel.org
-Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
-Tested-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Apply the revised wakeup rule only for deferrable servers that are
+marked as running.
+
+Fixes: 14a857056466 ("sched/deadline: Use revised wakeup rule for dl_server")
+Signed-off-by: Gabriele Monaco <gmonaco@redhat.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Acked-by: Juri Lelli <juri.lelli@redhat.com>
+Tested-by: Andrea Righi <arighi@nvidia.com>
+Link: https://patch.msgid.link/20260522125833.264145-1-gmonaco@redhat.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kvm/pci.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ kernel/sched/deadline.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/arch/s390/kvm/pci.c
-+++ b/arch/s390/kvm/pci.c
-@@ -239,6 +239,10 @@ static int kvm_s390_pci_aif_enable(struc
- 	if (zdev->gisa == 0)
- 		return -EINVAL;
+diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
+index cb8eff0ebd228..f5c64d1a019d5 100644
+--- a/kernel/sched/deadline.c
++++ b/kernel/sched/deadline.c
+@@ -1079,7 +1079,8 @@ static void update_dl_entity(struct sched_dl_entity *dl_se)
+ 	if (dl_time_before(dl_se->deadline, rq_clock(rq)) ||
+ 	    dl_entity_overflow(dl_se, rq_clock(rq))) {
  
-+	/* AIF already enabled for the device */
-+	if (zdev->kzdev->fib.fmt0.aibv != 0)
-+		return -EINVAL;
-+
- 	kvm = zdev->kzdev->kvm;
- 	msi_vecs = min_t(unsigned int, fib->fmt0.noi, zdev->max_msi);
- 
+-		if (unlikely((!dl_is_implicit(dl_se) || dl_se->dl_defer) &&
++		if (unlikely((!dl_is_implicit(dl_se) ||
++			      (dl_se->dl_defer && dl_se->dl_defer_running)) &&
+ 			     !dl_time_before(dl_se->deadline, rq_clock(rq)) &&
+ 			     !is_dl_boosted(dl_se))) {
+ 			update_dl_revised_wakeup(dl_se, rq);
+-- 
+2.53.0
+
 
 
