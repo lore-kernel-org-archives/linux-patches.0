@@ -1,36 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A53593F58C4;
-	Fri,  7 Aug 2026 14:49:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4971F3FB7E0;
+	Fri,  7 Aug 2026 14:49:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114196; cv=none; b=QxzsWJu8bMUonTaMSoBrhKB8HddGxq0xHbIOrbL1mxv1Iv8vh/Oj04Or+Q1jpLYWhNcVDlmMuYwWw6M5Um+L++wg0angDPw2PHAYdTuTXFXwm9ZfI0stknDlf8BmQ6cXE0l+51vEqWqiLTcfJDKP7HpFnit8cgm6ncxmxzgP3iQ=
+	t=1786114199; cv=none; b=K/R3fGWoov6ctYd5LQo92Jd8/0EaJQR6MRgMjv1AAPh6NQUnL/XmElURFEi+Xi9HQ5BpGkNFjy9I51z3gqGgy3aDPdRIe/61l7knWWKDoDLJw+bOfoVC9m63ZvXPSiOisp92teikPmVtr2LwIM8jiAEviMPOJe0z8G6uFYwqth4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114196; c=relaxed/simple;
-	bh=P4+lfs31hRUhLGiHL/AGfLPvep/tuDKsQ+mv3dgLt+U=;
+	s=arc-20240116; t=1786114199; c=relaxed/simple;
+	bh=rz+qFSQQewGac+18y0YmCK9F/99WmO4x6r+XPud7PiY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JfjiAcit2HA8EFtkH3ZKIhuKDXWkEOsTj8/8/TmdmpQwL9zL2PJ0zwBtLbZEr/Jph/nZozuDcrPstcE5uMQBu/67yCycDJGhDU3PhmXDiI/YDZiNBVwkUWmUcEMfNICXEkhA9qhlgMzv1YuZGYLb7LLtpW84O6zWDHyWHyVWmgY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hYUXzFRt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=lFrgasjdbOzUx7EAdZRD4jynjvyCHBvNg0FTcnMNJam6/MZjLTneWe0CpdaHLbN3sbfsNNUB4tioL98wmCMxK5yu3Ft7lXA3z0LC5h7oZqvwMfqykkKv8M+3H+sWN4c1t6a7xhLdqO42Yv4yQaIS1xY0AcyLXQsNCQj71JfptMo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hxl1ZU2e; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hYUXzFRt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02CE01F000E9;
-	Fri,  7 Aug 2026 14:49:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hxl1ZU2e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A13291F000E9;
+	Fri,  7 Aug 2026 14:49:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114195;
-	bh=0XhXX9jLAw5ByXHrgaKfMi6+gyKzCDG3AJCYc479RuU=;
+	s=korg; t=1786114198;
+	bh=4fIYmBubnEkLE9l2ExVBjGr8BkA0bSuYwl5BHa7rGjk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hYUXzFRt3maOVmQlYYskrLA4HwvM3Ds4/yhDDh749dl568VpFA7Uu4hYxjvVQyyOh
-	 QHnI2C8VGXVjudxBXS95Q+8VajoJH8Rd2ywz6lxLBnNX5d3nLivKvYNuHsyrKkmi1J
-	 CYfuwd/+bN7h0LQedoiq1cU06ud08eLAWByqNsAE=
+	b=hxl1ZU2e3THduQh2+uDwkABtkpBhLMkl2jJHPkkKDQwV2dsxEUkmMJqvWS5S38x8z
+	 OXbn+72SxidAyx7Rl4JBK0H8BxAaCL8gP1VFtDjpT7k0eSjKj5qDK8aw2vQaQjfETV
+	 yX9JhFI45iIpsxdWXOk1L6MUIEXaEgojGDJ+5sYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.12 179/337] binfmt_misc: dont let an F entry pin its own instance
-Date: Fri,  7 Aug 2026 16:36:22 +0200
-Message-ID: <20260807143422.441184101@linuxfoundation.org>
+	Link Lin <linkl@google.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	David Rientjes <rientjes@google.com>,
+	Alexander Duyck <alexander.duyck@gmail.com>,
+	Greg Thelen <gthelen@google.com>,
+	James Houghton <jthoughton@google.com>,
+	Jason Wang <jasowang@redhat.com>,
+	Jiaqi Yan <jiaqiyan@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 180/337] mm/page_reporting: use system_freezable_wq to fix UAF during suspend
+Date: Fri,  7 Aug 2026 16:36:23 +0200
+Message-ID: <20260807143422.463246834@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -43,77 +54,102 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Link Lin <linkl@google.com>
 
-commit 79055d82772b9584f259b747fe40ff56a076678d upstream.
+commit 0b45f6927a14914ff685fe0e6f9d11232a1e03df upstream.
 
-An entry registered with 'F' opens its interpreter at registration time
-and holds that file until the entry is freed. Any entry nobody removes
-by hand only gets closed once the binfmt_misc superblock is shut down.
-If the interpreter lives on a mount that keeps that superblock alive the
-two pin each other:
+During PM freeze (e.g.  S3 suspend or S4 hibernation), device drivers like
+virtio_balloon reset their underlying virtio devices and delete their
+virtqueues via vdev->config->del_vqs().
 
-    binfmt_misc sb -> inode -> entry -> interp_file -> vfsmount -> binfmt_misc sb
+However, page reporting work (page_reporting_process) was scheduled on the
+global system_wq.  Because system_wq lacks the WQ_FREEZABLE flag, the PM
+freezer skips it, leaving page_reporting_process active during suspend.
 
-TL;DR the file is never closed. Once the mount namespace is gone there
-is nothing left to unregister through either.
+If pages are freed into the buddy allocator while suspending (for example,
+when core MM invokes the balloon shrinker during S4 hibernation image
+saving), page reporting triggers virtballoon_free_page_report() on deleted
+virtqueues, resulting in a Use-After-Free / General Protection Fault:
 
-There are two ways to trigger this bug:
+    [  196.795226] general protection fault, probably for non-canonical address 0xaa1436fe70dae6df: 0000 [#1] SMP NOPTI
+    [  196.825967] Workqueue: events page_reporting_process
+    [  196.831038] RIP: 0010:virtqueue_add_split+0x233/0x4c0 [virtio_ring]
+    [  196.927073] virtballoon_free_page_report+0x3a/0xe0 [virtio_balloon]
+    [  196.946943] page_reporting_process+0x370/0x4f0
 
-- Point the interpreter at the instance itself. Its files are regular
-  files owned by the mounter and both bm_get_inode() and
-  simple_fill_super() leave i_op at empty_iops. So notify_change() falls
-  back to simple_setattr() and chmod +x works. We never set SB_I_NOEXEC
-  and so open_exec() accepts it.
+Fix this by switching page reporting work to system_freezable_wq.  This
+ensures that the PM freezer pauses page_reporting_process before device
+drivers destroy their reporting virtqueues.  Because the reporting worker
+is frozen, memory reclamation/freeing (e.g.  via shrinker execution) can
+safely return pages to MM during freeze without triggering unfrozen
+reporting work on deleted virtqueues.
 
-- Use the instance as an overlayfs lower layer. The overlay superblock
-  holds a clone_private_mount() of every layer until it is destroyed and
-  that clone is in no namespace. So umount_tree() never reaches it.
+This aligns with the driver's existing design. The comment in
+virtballoon_freeze() states:
+    /*
+     * The workqueue is already frozen by the PM core before this
+     * function is called.
+     */
 
-That's a DoS. And it isn't only the superblock that leaks. It pins the
-user namespace it was mounted in, so every iteration permanently eats
-one of the caller's user namespace charges.
+Testing:
+I have verified these fixes using Google’s virtualization infrastructure
+by running continuous suspend/resume iterations (40+ cycles) while
+churning memory using stress-ng (`stress-ng --vm 4 --vm-bytes 60%
+--timeout 1`) to constantly create free pages for the buddy allocator.  We
+also set the `page_reporting_order` parameter to 0 to make the page
+reporting worker highly sensitive, forcing it to pick up any 4K free
+pages.  This confirmed that the UAF crashes are no longer reproducible.
 
-So let's just do the sane thing. SB_I_NOEXEC makes open_exec() fail on
-the instance's own files and s_stack_depth makes overlayfs reject the
-layer before it ever takes a clone. That also covers the ecryptfs and
-fuse passthrough variants. What 'F' promises is unchanged.
-
-The stable tag is narrower than the Fixes tags on purpose. Before
-sandboxed mounts this needed global root against the single instance
-everyone shares, and the change doesn't apply to those trees anyway.
-
-Note that SB_I_NODEV is implicitly raised for userns mounts but raise it
-explicitly here as well.
-
-Link: https://patch.msgid.link/20260728-work-binfmt_misc-selfpin-v1-1-74df5daeca5b@kernel.org
-Fixes: 948b701a607f ("binfmt_misc: add persistent opened binary handler for containers")
-Fixes: 21ca59b365c0 ("binfmt_misc: enable sandboxed mounts")
-Cc: stable@vger.kernel.org # v6.7+
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Link: https://lore.kernel.org/20260721005603.1710551-1-linkl@google.com
+Fixes: 36e66c554b5c ("mm: introduce Reported pages")
+Signed-off-by: Link Lin <linkl@google.com>
+Suggested-by: David Hildenbrand (Arm) <david@kernel.org>
+Suggested-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: David Rientjes <rientjes@google.com>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Cc: Alexander Duyck <alexander.duyck@gmail.com>
+Cc: Greg Thelen <gthelen@google.com>
+Cc: James Houghton <jthoughton@google.com>
+Cc: Jason Wang <jasowang@redhat.com>
+Cc: Jiaqi Yan <jiaqiyan@google.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/binfmt_misc.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ mm/page_reporting.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/fs/binfmt_misc.c
-+++ b/fs/binfmt_misc.c
-@@ -986,6 +986,10 @@ static int bm_fill_super(struct super_bl
- 	if (WARN_ON(user_ns != current_user_ns()))
- 		return -EINVAL;
+--- a/mm/page_reporting.c
++++ b/mm/page_reporting.c
+@@ -80,7 +80,8 @@ __page_reporting_request(struct page_rep
+ 	 * now we are limiting this to running no more than once every
+ 	 * couple of seconds.
+ 	 */
+-	schedule_delayed_work(&prdev->work, PAGE_REPORTING_DELAY);
++	queue_delayed_work(system_freezable_wq, &prdev->work,
++			   PAGE_REPORTING_DELAY);
+ }
  
-+	/* Never exec off this instance and never let anything stack on it. */
-+	sb->s_iflags |= SB_I_NOEXEC | SB_I_NODEV;
-+	sb->s_stack_depth = FILESYSTEM_MAX_STACK_DEPTH;
-+
- 	/*
- 	 * Lazily allocate a new binfmt_misc instance for this namespace, i.e.
- 	 * do it here during the first mount of binfmt_misc. We don't need to
+ /* notify prdev of free page reporting request */
+@@ -343,7 +344,8 @@ err_out:
+ 	 */
+ 	state = atomic_cmpxchg(&prdev->state, state, PAGE_REPORTING_IDLE);
+ 	if (state == PAGE_REPORTING_REQUESTED)
+-		schedule_delayed_work(&prdev->work, PAGE_REPORTING_DELAY);
++		queue_delayed_work(system_freezable_wq, &prdev->work,
++				   PAGE_REPORTING_DELAY);
+ }
+ 
+ static DEFINE_MUTEX(page_reporting_mutex);
 
 
