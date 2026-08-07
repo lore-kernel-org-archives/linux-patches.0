@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C760A368276;
-	Fri,  7 Aug 2026 14:53:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46097368276;
+	Fri,  7 Aug 2026 14:53:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114387; cv=none; b=JgfefgEfaapUA1yVrKXQnpcdM/Zj9xlE74mOiI5evK15ZHsuUPAv2LHH+bcvfGPgZTZXVYCGbmc+xRA/lannvuZK8DGybeb41AT5M1DH2TrMW1Paq23RW8Y98974vxMRkNJ2uf3apJE7MgyldJHMG2//kBKNWZcq6oFTYp/A9ZU=
+	t=1786114389; cv=none; b=heOPhBv3xzSwjKUqrm/1sJFEPuTqv2ZkJadk643ctQZXlwl2fUTtZi6inifHTguf6vE1bPVrKdqBQol1hgY56tiNBfEDFBPzLiKdJxjPo9G06gIekHGnBKQPu+Rb47rZEcxylmd41lRR7E/2fEggN8AkISBqE1wH36qui0xqTHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114387; c=relaxed/simple;
-	bh=KFFaA4Ovkp//97vtygaBlbbAfwyoS3RqNRfUUOCiNPw=;
+	s=arc-20240116; t=1786114389; c=relaxed/simple;
+	bh=B4a8BpEPEz4ghi3ddCd6B6UXNQYk1H/KwXJfH1nOM7Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=inny8dJE+FJepUe556wqqv6HzkOa0D731R5uDeoE+mBYGOyQB4m9V6DZnWJYFK9w89Nf3m1h2hHWVGGTVbvyqe9HyTl4pwRoMl+MYA4GZYH26PZyswvBV/eJosdeq4XIeYM98X4p39qEYXdNnJs/Z17bgz3zCEbStKzWBOPKbzQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fNSHPVnB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uoKzgFs0TDG5eMQDowuxtBJffEE43xK4ylFicRLFrT858iQvbC5q5kqEIT33zj+WUZF54UC3onnvitXFNbHXxsdP8lqwwWpFuYPinPMoW0b2GoZMoI+XWZA3IaLpP4knz7O1oSH4dl4DwVxpw/ybsub4kNlWGL0zO2ldpwhalz0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mBuU+Bgf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fNSHPVnB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9F6D1F000E9;
-	Fri,  7 Aug 2026 14:53:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mBuU+Bgf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A17AE1F000E9;
+	Fri,  7 Aug 2026 14:53:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114385;
-	bh=xQy1bBRHII9ymc1qON/SRI5jIrTd0hiu32vNtjprNjs=;
+	s=korg; t=1786114388;
+	bh=lYPvrFrwzAzcOvfjnUJGr9+4vWv2NSwxCXJeGt6CTNc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fNSHPVnBQthjga7HYN9+3mdVBqVVyuxkQkWMwG9/R5AxGSMDYhxHeLiNEuiuljGJ4
-	 eic4/q4OjISyew9Zy8iia+bM8g0b+onu5yBFqQHwxW+kDK9MbvQo1KetGsW27Ro+P8
-	 MZ/l4u8TfoGGCcsEDkwP9dGHKd7jtYbgP589XRrc=
+	b=mBuU+BgfiHPtJKGU9kmal0TRG0inUFQLL6DU5qPPl20Ldg8Hi50NxjPG8EuaXR/ov
+	 nJanAhsaQC1fGye2Kxteu7Tr3WhfNTg+B5kdugnjKz4QMKFMx657sY4NbXbFfZ+zqV
+	 7OcmXRyuk5Nj9iIefSj5lxgQMc/hXRyDH6PSkFNc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jose Maria Casanova Crespo <jmcasanova@igalia.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
-	Iago Toral Quiroga <itoral@igalia.com>
-Subject: [PATCH 6.12 245/337] drm/vc4: Supply the overflow slot size in BPOS, not the whole bin BO size
-Date: Fri,  7 Aug 2026 16:37:28 +0200
-Message-ID: <20260807143423.860923684@linuxfoundation.org>
+	Ilya Maximets <i.maximets@ovn.org>,
+	Aaron Conole <aconole@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 219/337] net: openvswitch: fix skb leak on flow key update failure during recirculation
+Date: Fri,  7 Aug 2026 16:37:02 +0200
+Message-ID: <20260807143423.302163438@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -45,56 +45,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jose Maria Casanova Crespo <jmcasanova@igalia.com>
+From: Ilya Maximets <i.maximets@ovn.org>
 
-commit 6395789e4739aa5177bbec0fa0f07ccc38d249b0 upstream.
+commit e1cf066244dad576221b7123a0e5005967f25a20 upstream.
 
-vc4_overflow_mem_work() points BPOA at a 512KB slot inside the 16MB
-binner BO, but writes the size of the whole BO to BPOS. On every binner
-out-of-memory event the PTB is therefore authorized to write tile lists
-across all the other slots (which may hold the tile state, tile alloc and
-overflow memory of in-flight jobs) and, for any slot but the first, past
-the end of the binner BO into unrelated CMA memory.
+do_execute_actions() returns right away when execute_recirc() fails on
+the last action as it assumes this function always takes ownership of
+the skb when 'last' is true.  But when the flow key update fails, the
+function doesn't free the skb and it ends up leaked.
 
-Since CMA pages are recycled into page cache and user allocations, this
-is arbitrary memory corruption by GPU DMA. In practice it shows up as GPU
-hangs with corrupted control list pointers, userspace heap corruption, a
-GPU that stays permanently wedged after the first hang, and occasional
-full system crashes, whenever a job overflows the initial binner slot.
+This is a very unlikely scenario as it requires the packet to become
+unparseable by applying a set of actions on a previously parseable skb,
+but should be fixed nevertheless.
 
-The bug dates back to the conversion from a dedicated overflow BO (where
-writing the full BO size was correct) to the slotted binner BO.
+Reported by Sashiko.
 
-Fixes: 553c942f8b2c ("drm/vc4: Allow using more than 256MB of CMA memory.")
+Fixes: 971427f353f3 ("openvswitch: Add recirc and hash action.")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4.8
-Signed-off-by: Jose Maria Casanova Crespo <jmcasanova@igalia.com>
-Reviewed-by: Maíra Canal <mcanal@igalia.com>
-Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
-Link: https://patch.msgid.link/20260727-vc4-bin-oom-fixes-v2-1-0d8a5eddc7c9@igalia.com
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
+Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
+Reviewed-by: Aaron Conole <aconole@redhat.com>
+Link: https://patch.msgid.link/20260727181851.306076-2-i.maximets@ovn.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/vc4/vc4_irq.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/openvswitch/actions.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/vc4/vc4_irq.c
-+++ b/drivers/gpu/drm/vc4/vc4_irq.c
-@@ -104,7 +104,7 @@ vc4_overflow_mem_work(struct work_struct
- 	vc4->bin_alloc_overflow = BIT(bin_bo_slot);
+--- a/net/openvswitch/actions.c
++++ b/net/openvswitch/actions.c
+@@ -1146,6 +1146,10 @@ static int execute_masked_set_action(str
+ 	return err;
+ }
  
- 	V3D_WRITE(V3D_BPOA, bo->base.dma_addr + bin_bo_slot * vc4->bin_alloc_size);
--	V3D_WRITE(V3D_BPOS, bo->base.base.size);
-+	V3D_WRITE(V3D_BPOS, vc4->bin_alloc_size);
- 	V3D_WRITE(V3D_INTCTL, V3D_INT_OUTOMEM);
- 	V3D_WRITE(V3D_INTENA, V3D_INT_OUTOMEM);
- 	spin_unlock_irqrestore(&vc4->job_lock, irqflags);
++/* When 'last' is true, recirc() should always consume the 'skb'.
++ * Otherwise, recirc() should keep 'skb' intact regardless what
++ * actions are executed on recirculation.
++ */
+ static int execute_recirc(struct datapath *dp, struct sk_buff *skb,
+ 			  struct sw_flow_key *key,
+ 			  const struct nlattr *a, bool last)
+@@ -1156,8 +1160,12 @@ static int execute_recirc(struct datapat
+ 		int err;
+ 
+ 		err = ovs_flow_key_update(skb, key);
+-		if (err)
++		if (err) {
++			if (last)
++				ovs_kfree_skb_reason(skb,
++						     OVS_DROP_ACTION_ERROR);
+ 			return err;
++		}
+ 	}
+ 	BUG_ON(!is_flow_key_valid(key));
+ 
 
 
