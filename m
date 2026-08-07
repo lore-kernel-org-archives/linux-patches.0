@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D61D3AD50F;
-	Fri,  7 Aug 2026 14:51:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53154372B3C;
+	Fri,  7 Aug 2026 14:51:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114286; cv=none; b=HccXYEnFtEflW6jDuHtGEcZi/4NUaw7dcIhivLrrFHpQGAWXtKEJ4vq7a3zzH4PdYVz0zqKULcpTqMfqtl1kdDXpAg/vfTg1Topzw6tgHFfszrvEjTlqoFwy4QgiLvBhH75cqTci4K3B1AeUvq1XnQRYAy1GQaAz7KQt+Y3NtMo=
+	t=1786114289; cv=none; b=BO4k8B96orjTIlj8BFWaUIqIPRAtPW64WMqvGObesCKxm1HwhhTxUkk0zmtqAmQtPp4I1eN4xTwxZp5f69ZjyMPCgdLfiFAmI/ymgjMbBSLBFIPD5MQEZB0GMZzTTdAAEzjr0MEqD1us2PjVMVBABQTl3dFCfzVqBPsgDU82qv0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114286; c=relaxed/simple;
-	bh=zuVKBi9PrUEyOzd2x7iofXSbpO8p3sqThtEz8FA0IfQ=;
+	s=arc-20240116; t=1786114289; c=relaxed/simple;
+	bh=akBdJLubIiBze81Ljlgla1rD5XBO+YwXfL1PHMOLCiU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ISlr+vJZgtXADvDbQ3JWOZbr7qPUFSIgqB0Uck8Gk+rFb64mPuQDCKfsJPithI8lpqBQUG62FaY5BrgzzUyoz75dNeR1P5RIhJ1+nzFTuLH4MvQUZlL2SbXz0R3ypQNdzLQY36VrDjVOPe3WbFNvgX0dhm0YLU0ZZ0wO9xSgm9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cq7pl+9/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lx8Z6t6pWIVdgss+UjHKQFP6aYAaFsBm3flp4k+HImVxB5UV+5MZY9boGPKkAFGiGV/s8WRow787hhg6mYLLcpYMXMKD+NeMclkwaUrt70Wk4QQg622vzHvpAZ8UcRSkOGdlqcHVAb7NIFgI8DfAXTszYbSMTDxsOmSxFLXVsaE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sLcoQals; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cq7pl+9/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 013DA1F000E9;
-	Fri,  7 Aug 2026 14:51:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sLcoQals"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA9891F00A3A;
+	Fri,  7 Aug 2026 14:51:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114283;
-	bh=FiyB3u+lfHK3LHp0Om7NF/pJyBrKWf5/ctvP1LSF7fw=;
+	s=korg; t=1786114286;
+	bh=qb0j4UkLTRnUdueXFJVeSs3Ta2MifUM/ECW77jLEPWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cq7pl+9/B2pfL24b008pO12YMsADJ89eKWyJKZXLOY330UQ8VHDAuQwE534rSslST
-	 7GNl+dH2vECzuIZit4xObR2xjfzJS7+kDEgkz2BN1RdEaI4E3ERirNaMexBs6TFBJS
-	 iGBqb6AYWUBhxkayYmBAIu6iZEMy0yEnk5Ei0K6g=
+	b=sLcoQalsrt0KVgL3Mh8Zlg0uqudi0tMjUtzxYkzSIv/cFwXw83p4RzhXMV/s0Rs7v
+	 6SROCYmExByfz6OGcOv5yuc/weHQy3jreyXJshWphA0N0zSK4lGAkyxeQzO3WA0xkS
+	 fBz4j/uYye1T6idHBVX3FPeMSDU9RZLY4EDW18cM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julian Ruess <julianr@linux.ibm.com>,
-	Farhan Ali <alifm@linux.ibm.com>,
-	Niklas Schnelle <schnelle@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>
-Subject: [PATCH 6.12 208/337] s390/pci: Fix s390_pci_mmio_write syscall error return without MIO
-Date: Fri,  7 Aug 2026 16:36:51 +0200
-Message-ID: <20260807143423.065555552@linuxfoundation.org>
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Julian Anastasov <ja@ssi.bg>,
+	Zhiling Zou <roxy520tt@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 6.12 173/337] ipvs: do not propagate one-packet flag to synced conns
+Date: Fri,  7 Aug 2026 16:36:16 +0200
+Message-ID: <20260807143422.311317074@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -52,41 +56,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Schnelle <schnelle@linux.ibm.com>
+From: Zhiling Zou <roxy520tt@gmail.com>
 
-commit b7ab86bdc65eadcfc43a0e3faf682a3f750cfb96 upstream.
+commit a63d2dbaeb50a85d4c976b15a36e6b0c7113db5b upstream.
 
-On a machine without PCI memory-I/O (MIO) support or when running with
-pci=nomio the s390 specific PCI MMIO write syscall checks if the MMIO
-cookie is above ZPCI_IOMAP_ADDR_BASE as a sanity check before even
-trying to perform the MMIO. If this check fails the return value was
-left unchanged and thus 0 from prior operations falsely indicating
-success. This could potentially confuse user-space into falsely
-believing the MMIO, on a mapping not valid for MMIO was successful.
+Synced connections can be created before their destination exists. When
+the destination is later added, ip_vs_bind_dest() copies connection flags
+from the destination into cp->flags.
 
-Fix this by setting the return value to -EFAULT prior to the check
-following the same pattern as elsewhere in the same function.
+IP_VS_CONN_F_ONE_PACKET connections are not synced. If a synced
+connection inherits IP_VS_CONN_F_ONE_PACKET while it is already hashed,
+expiry can treat it as a one-packet connection and skip unlinking the
+existing conn_tab node, leaving stale hash nodes pointing at a freed
+struct ip_vs_conn.
 
+Drop IP_VS_CONN_F_ONE_PACKET from destination flags when binding synced
+connections.
+
+Fixes: 26ec037f9841 ("IPVS: one-packet scheduling")
 Cc: stable@vger.kernel.org
-Reviewed-by: Julian Ruess <julianr@linux.ibm.com>
-Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
-Fixes: a67a88b0b8de ("s390/pci: remove races against pte updates")
-Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Suggested-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Zhiling Zou <roxy520tt@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Acked-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/pci/pci_mmio.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/netfilter/ipvs/ip_vs_conn.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/arch/s390/pci/pci_mmio.c
-+++ b/arch/s390/pci/pci_mmio.c
-@@ -178,6 +178,7 @@ SYSCALL_DEFINE3(s390_pci_mmio_write, uns
- 			goto out_unlock_mmap;
- 	}
- 
-+	ret = -EFAULT;
- 	io_addr = (void __iomem *)((args.pfn << PAGE_SHIFT) |
- 			(mmio_addr & ~PAGE_MASK));
- 
+--- a/net/netfilter/ipvs/ip_vs_conn.c
++++ b/net/netfilter/ipvs/ip_vs_conn.c
+@@ -599,6 +599,9 @@ ip_vs_bind_dest(struct ip_vs_conn *cp, s
+ 	flags = cp->flags;
+ 	/* Bind with the destination and its corresponding transmitter */
+ 	if (flags & IP_VS_CONN_F_SYNC) {
++		/* Synced conns are hashed, so they can not get this flag */
++		conn_flags &= ~IP_VS_CONN_F_ONE_PACKET;
++
+ 		/* if the connection is not template and is created
+ 		 * by sync, preserve the activity flag.
+ 		 */
 
 
