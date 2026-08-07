@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4D4539CD16;
-	Fri,  7 Aug 2026 14:47:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C93B41D4F1;
+	Fri,  7 Aug 2026 14:47:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114035; cv=none; b=GMqHjyTY2QIOZdoPw43FV+AEJp0Ayh2IWLbPZBmG2i50dAORpkIWPXMNY3g4wgpJQ2FWzbwvz8tGVQBxJZPrPDJ1odBHzbpwj5WO6OxAV3XAOLo5uyJYIqfS7F04cAd9vulmlNL17EfvEVZe5LVNQutoojgI99UOz94KV6eLjAw=
+	t=1786114038; cv=none; b=B7btTTkYZ/dx+J4SeGwA5AYA98xsbRpK9iob9DxxfgIpqAUnW9z0c/b9ZxesUkx5NGw8o7gJMqbCzllWKXBREWSeSoWO167xXgJCzRXHwrAH7clDQWG8szlx8Itv2VDSRzr88Fz8NVeA9WqYzCRP1Y/4U/jBigY6Ic/fb7SQId0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114035; c=relaxed/simple;
-	bh=O729qGnrTPAEKtlU28waYVP7Srmho4w2jgllthFsDoU=;
+	s=arc-20240116; t=1786114038; c=relaxed/simple;
+	bh=hLajU9ahbV22UdQWzAOgqX8a5YZWLKcsTSMkRJtNiEs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=phAPk1IHj0fbcbtLBzYDUCoPlIoFIdd1j6UMxsxSzg5q337N6JtzUW4VoExUHpu1BA69/FhyVPmV9KBvxCTganClGJYxNsjiUINLZTpwbdn9FHA+3zdfQdX8PgVxMZy6Fz+/4SA+gGPgbNUHZBP6gFG5TXJq5rqloeyZNXp/Bf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j84vYJM/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u0pC6VkPk5L/4MmtlTJdlwZDb4dLUBnmdMXGmoIACh/H0FB1upkdkB0dH5Kvuj8On6W3Uapg1MsvaJTKmU04p2WgNsJPCqIE8oaLhGFrHA6InTx7FqRVrxYFqkE70UnJtZGKEo6JhqTfhNyEFQ68jCtYOPNSjXXKNEs/oRxhekQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xgmX3CIS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j84vYJM/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C64821F00A3A;
-	Fri,  7 Aug 2026 14:47:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xgmX3CIS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8E111F000E9;
+	Fri,  7 Aug 2026 14:47:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114031;
-	bh=1TiaVHQ6YhkstE13ceBA2Q/sqFKk6Pm+M/0BaLovK3o=;
+	s=korg; t=1786114034;
+	bh=SDvU6/U+/+7Dm8IRGTVUtMn8Jd4CxdejuBf9DS0QLIU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j84vYJM/+ShUkO7KR59HtSOO7yKiOl4gIYHl87i7AtR3kMCDb/QkQZTS+VNCn3rcL
-	 Nz+9KrWwBvjbRA282Ksa3r8MRIUzTDaypIO43PVRr3RrJj/yo29P/cqllCpxvg2qlG
-	 Oyi2/KeK3/Y0xfrRg/H8OOmyCKe4rJe6zwB0Vj5o=
+	b=xgmX3CISllZh3GYOonnoTAgoQgIoSGAFKCiwcIQRuJUkNDR9LlQzGUjEpsfeprZoD
+	 ml8RJoibVlYRyi8BrN62K69ZYTbWcVCPfvj8qd5GMklC6vMGkigtYMoQ46+0Hh0jst
+	 gveE/LwzAAR/aHgQuIkdYKGw60SB9DZ6CDPQpqdM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Bilal <meatuni001@gmail.com>,
-	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Paul Walmsley <pjw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 118/337] accel/qaic: use sizeof(*trans_hdr) for transaction length check
-Date: Fri,  7 Aug 2026 16:35:21 +0200
-Message-ID: <20260807143421.088754591@linuxfoundation.org>
+Subject: [PATCH 6.12 119/337] riscv: mm: Fix out-of-bounds page-table walk during memory hot-remove
+Date: Fri,  7 Aug 2026 16:35:22 +0200
+Message-ID: <20260807143421.110176283@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -51,47 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muhammad Bilal <meatuni001@gmail.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit d6c075f797a672a6e3bd2fd44aee713801698ec2 ]
+[ Upstream commit a0188cc133696627857d16054e43f9ebc7efc821 ]
 
-In encode_message() the per-transaction lower-bound check compares
-trans_hdr->len against sizeof(trans_hdr), i.e. the size of the pointer,
-instead of sizeof(*trans_hdr), the size of struct qaic_manage_trans_hdr.
+remove_pud_mapping() and remove_p4d_mapping() obtain a child table base
+with pud_offset(p4dp, 0) and p4d_offset(pgd, 0), then add the index for
+addr.
 
-Every other length check in this file (encode_message() at the loop
-guard, decode_message(), etc.) correctly uses sizeof(*trans_hdr), so
-this is an inconsistency. On 64-bit builds the pointer and the struct
-are both 8 bytes, so the check is correct by coincidence and there is
-no behavioural change. On 32-bit builds the pointer is 4 bytes, which
-weakens the minimum-length check below the 8-byte header size.
+RISC-V folds page-table levels at runtime. When a level is folded, its
+offset helper returns the parent entry itself, but the index can still be
+nonzero. Adding it walks past the parent table. Sv48 folds P4D, while Sv39
+folds both P4D and PUD, so memory hot-remove can descend into unrelated
+memory and pass an invalid page to __free_pages(). This can trigger:
 
-Use sizeof(*trans_hdr) so the check validates against the actual
-transaction header size on all builds.
+  kernel BUG at include/linux/mm.h:1810!
+  VM_BUG_ON_PAGE(page_ref_count(page) == 0)
+  arch_remove_memory+0x1e/0x5c
+  try_remove_memory+0x15e/0x200
+  remove_memory+0x24/0x3c
 
-Fixes: ea33cb6fc278 ("accel/qaic: tighten bounds checking in encode_message()")
-Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-Reviewed-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-Signed-off-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260617212520.59801-1-meatuni001@gmail.com
+Only add the index when the corresponding page-table level is enabled,
+matching p4d_offset() and pud_offset().
+
+Fixes: c75a74f4ba19 ("riscv: mm: Add memory hotplugging support")
+Assisted-by: Claude:claude-fable-5
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Link: https://patch.msgid.link/20260729012132.24882-1-kmehltretter@gmail.com
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/qaic/qaic_control.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/riscv/mm/init.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/accel/qaic/qaic_control.c b/drivers/accel/qaic/qaic_control.c
-index 8eae30fe14f98..8759b53ba38eb 100644
---- a/drivers/accel/qaic/qaic_control.c
-+++ b/drivers/accel/qaic/qaic_control.c
-@@ -782,7 +782,7 @@ static int encode_message(struct qaic_device *qdev, struct manage_msg *user_msg,
- 			break;
- 		}
- 		trans_hdr = (struct qaic_manage_trans_hdr *)(user_msg->data + user_len);
--		if (trans_hdr->len < sizeof(trans_hdr) ||
-+		if (trans_hdr->len < sizeof(*trans_hdr) ||
- 		    size_add(user_len, trans_hdr->len) > user_msg->len) {
- 			ret = -EINVAL;
- 			break;
+diff --git a/arch/riscv/mm/init.c b/arch/riscv/mm/init.c
+index 4594f77a06ee3..e52f7dabb370c 100644
+--- a/arch/riscv/mm/init.c
++++ b/arch/riscv/mm/init.c
+@@ -1726,7 +1726,7 @@ static void __meminit remove_pud_mapping(pud_t *pud_base, unsigned long addr, un
+ 
+ 	for (; addr < end; addr = next) {
+ 		next = pud_addr_end(addr, end);
+-		pudp = pud_base + pud_index(addr);
++		pudp = pgtable_l4_enabled ? pud_base + pud_index(addr) : pud_base;
+ 		pud = pudp_get(pudp);
+ 		if (!pud_present(pud))
+ 			continue;
+@@ -1757,7 +1757,7 @@ static void __meminit remove_p4d_mapping(p4d_t *p4d_base, unsigned long addr, un
+ 
+ 	for (; addr < end; addr = next) {
+ 		next = p4d_addr_end(addr, end);
+-		p4dp = p4d_base + p4d_index(addr);
++		p4dp = pgtable_l5_enabled ? p4d_base + p4d_index(addr) : p4d_base;
+ 		p4d = p4dp_get(p4dp);
+ 		if (!p4d_present(p4d))
+ 			continue;
 -- 
 2.53.0
 
