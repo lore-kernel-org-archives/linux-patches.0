@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42EA33438A7;
-	Fri,  7 Aug 2026 14:58:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D78563F0A94;
+	Fri,  7 Aug 2026 14:58:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114683; cv=none; b=dYXBc3E9maAKTgXvFoPWJ++umF94rGRxKKXT1KEV7zoyssnRGe7w14VVMqeAWEy+p4mcqZXfAe5VvaxUe13xnkhDeeMLC+360Lvt14jXtppaK2CZSSoMovsXcGfBAV3SeDfhWyRPN7vcjhJxecO+82ttvlfSf/mll+Ms5dr3v04=
+	t=1786114686; cv=none; b=SyXoXK5vgIYhcRQSglWYMQhfL1EHavAeaeyORND2wnxvvw5Lw0fqPlL3fyByFkj1EA9zn67RB8dOAhNMZ7tAQbPoOiUfqxvuISSI5LL13QXMj18sk4U1jdOrL1eYr0qKWl1Y6yEO285U+dI8J3aj2hGKfFzMjMn1lFdEFGFgY3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114683; c=relaxed/simple;
-	bh=9bBsvMtsQq3OnWBSnJxAj9/krnmIQ/ETFj0c/H1UEOY=;
+	s=arc-20240116; t=1786114686; c=relaxed/simple;
+	bh=YwuDEUk/RmcbFgYwHDDqF4tFlGWb6bjjzlluEA2Sj8s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HftPsrA1BxgFgjq8HskS3KmX1Lx6LMxoNLqupa/+OXQ8103oVHMRYJGTcjHNXh0HD0iATKjgk6N6UoA4qxemkVDZf8fOuQhthyiOGyRW6qZrZmgp+IGUH9xP+BZlqVIurXzcFKz5+b1EMwnyGNGzV0P2fxC+nxlZ/U+xOk5FXko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SQWcn4AU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rKyQS4EyFzvDw21qNPjWKC9N65naKgcO9oQ2q3cnw4NsAwzYXO15mADwqkHbIN79z5MqHrpEH2382PyYZmN60ilWC2uo6BWvmF12B0KmaH7lBBUmaxaDZjbLYOcZFAjbsH1XLvhIt9DmHoknjM7PjuxnBL9fKCOJwLhqudW3vpQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iueYyk1n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SQWcn4AU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C2671F000E9;
-	Fri,  7 Aug 2026 14:58:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iueYyk1n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F87C1F000E9;
+	Fri,  7 Aug 2026 14:58:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114681;
-	bh=1t+PoQa5aW62wh3GEqpNsEvcrGvphzPJ0CuI5sQwhzo=;
+	s=korg; t=1786114684;
+	bh=3yDttG0tuiDT9Nzao5Nm9N+7btPIX9KfcRTUThxGVig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SQWcn4AU7rQeDcwLJ++XWLuNkWlLEEws5Jt1ZVWZbz3afXooXiiz3pT0dDLgVgtwr
-	 nFO9Bl8LlLCFAWhof3XR6ihNL1JmRdevJ50JYqfKGzLoHlpQ+rSQDg5Sqs5RSs77zr
-	 JUiKo8ORN8V0cTYsKkGzbtJZHN7/Cds/waaJBiN0=
+	b=iueYyk1nlujUjrbNAR5yFme9AEcy0Os4Jg2EVr+naOP5hv9q+QTBcVXhymy7qla4i
+	 FD/BsoNhMtfQubxOitpZHJXibrmr0S7Qa2J/4I/FVI/gbPbsW8j5i61gMCDgUJRK4A
+	 ivajex4UFCAIjJtHB1z8e3FcOm97zcPUVVUKq34c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danielle Costantino <dcostantino@meta.com>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	"Harry Yoo (Oracle)" <harry@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 012/396] mm/slab: prevent unbounded recursion in free path with new kmalloc type
-Date: Fri,  7 Aug 2026 16:32:52 +0200
-Message-ID: <20260807143424.541269916@linuxfoundation.org>
+Subject: [PATCH 6.18 013/396] thunderbolt: Prevent XDomain delayed work use-after-free on disconnect
+Date: Fri,  7 Aug 2026 16:32:53 +0200
+Message-ID: <20260807143424.564107942@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -54,384 +51,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harry Yoo (Oracle) <harry@kernel.org>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit d9e6a7623938968e3752b67e37eaff097e559a54 upstream.
+[ Upstream commit 2c5d2d3c3f70cde2565d7b279b544893a2035842 ]
 
-Commit 280ea9c3154b ("mm/slab: avoid allocating slabobj_ext array from
-its own slab") avoided recursive allocation of obj_exts from kmalloc
-caches of the same size, by bumping the obj_exts array's allocation
-size whenever the array size equals the size of the object being
-allocated.
+tb_xdp_handle_request() runs on system_wq and queues
+xd->state_work via queue_delayed_work() in three request handlers:
+PROPERTIES_CHANGED_REQUEST, UUID_REQUEST (via start_handshake),
+and LINK_STATE_CHANGE_REQUEST.  Similarly, update_xdomain() queues
+xd->properties_changed_work when local properties change.
 
-However, as reported by Danielle Costantino and Shakeel Butt,
-even slabs from kmalloc caches of different sizes can form a cycle
-by allocating obj_exts arrays from each other [1]:
+Concurrently, tb_xdomain_remove() calls stop_handshake() which does
+cancel_delayed_work_sync() on both delayed works.  Later,
+tb_xdomain_unregister() calls device_unregister() which eventually
+frees the xdomain.  Since commit 559c1e1e0134 ("thunderbolt: Run
+tb_xdp_handle_request() in system workqueue") moved the request
+handler off tb->wq, the handler and the remove path are no longer
+serialized.  If queue_delayed_work() executes after
+cancel_delayed_work_sync() but before the xdomain is freed, the
+delayed work fires on a freed object.
 
-  What happened: a KMALLOC_NORMAL slab's obj_exts array (used by
-  allocation profiling / memcg accounting) is itself kmalloc()'d from a
-  KMALLOC_NORMAL cache, so the "slab holds another slab's obj_exts array"
-  relation can form cycles. With sizeof(struct slabobj_ext) == 16 and
-  the host's geometry:
+Add xd->removing that tb_xdomain_remove() sets under xd->lock
+before calling stop_handshake().  Each external queue site holds
+the same lock and checks removing before calling
+queue_delayed_work().  This provides the mutual exclusion needed:
+either the queue site acquires the lock first and queues work that
+the subsequent cancel will see, or the remove path acquires the
+lock first and the queue site observes removing == true and skips
+the queue.
 
-  - kmalloc-512 has 64 objects/slab -> array is 64*16 == 1024 bytes,
-    served from kmalloc-1k;
-  - kmalloc-1k  has 32 objects/slab -> array is 32*16 ==  512 bytes,
-    served from kmalloc-512.
-
-  A kmalloc-512 slab and a kmalloc-1k slab therefore hold each other's
-  obj_exts array.  Discarding one frees the other's array, which empties
-  and discards that slab, which frees the first's array, and so on:
-  __free_slab() -> free_slab_obj_exts() -> kfree() -> discard_slab() ->
-  __free_slab() recurses along the cycle until the stack is exhausted.
-
-With memory allocation profiling, this allows unbounded recursion
-in the free path and led to a stack overflow on a production host in
-the Meta fleet [1]:
-
-  BUG: TASK stack guard page was hit
-  Oops: stack guard page
-  RIP: 0010:kfree+0x8/0x5d0
-  Call Trace:
-   __free_slab+0x66/0xc0
-   kfree+0x3f0/0x5d0
-   ... ( ~125x __free_slab <-> kfree ) ...
-   <kernel driver freeing a resource>
-   do_syscall_64
-
-It is proposed [1] to resolve this issue by always serving the obj_exts
-array allocation from kmalloc caches (or large kmalloc) of sizes larger
-than the object size. However, as pointed out by Vlastimil Babka [2],
-this can waste an excessive amount of memory as slabs from large
-kmalloc sizes (e.g. kmalloc-8k) generally need obj_exts arrays much
-smaller than the object size.
-
-Therefore, rather than bumping the size, let us take a different
-approach; disallow formation of cycles between kmalloc types when
-allocating obj_exts arrays. Currently, all obj_exts arrays are served
-from normal kmalloc caches. Cycles cannot be created if obj_exts arrays
-of normal kmalloc caches are served from a special kmalloc type that can
-never have obj_exts arrays.
-
-To achieve this, create a new kmalloc type called KMALLOC_NO_OBJ_EXT.
-KMALLOC_NO_OBJ_EXT caches are created with SLAB_NO_OBJ_EXT flag when
-either 1) memory allocation profiling is not permanently disabled,
-or 2) kmalloc types with a priority higher than KMALLOC_CGROUP are
-aliased with KMALLOC_NORMAL.
-
-Sheaf bootstrapping for KMALLOC_NO_OBJ_EXT caches now must be deferred
-because allocation of a barn can trigger obj_exts array allocation of
-normal kmalloc caches when the KMALLOC_NO_OBJ_EXT cache for that size
-is not ready yet. For simplicity, perform bootstrapping of sheaves for
-all kmalloc caches later.
-
-Introduce a new slab alloc flag, SLAB_ALLOC_NO_OBJ_EXT, to prevent
-allocation of obj_exts arrays, and let kmalloc_slab() override the type
-to KMALLOC_NO_OBJ_EXT when specified. Note that kmalloc_type() remains
-unchanged because kmalloc_flags() bypasses the kmalloc fastpath.
-
-Do not pass SLAB_ALLOC_NO_RECURSE to kmalloc_flags() in
-alloc_slab_obj_exts() and instead use SLAB_ALLOC_NO_OBJ_EXT only when
-the objects are allocated from normal kmalloc caches. While this
-prevents unbounded recursive allocation of obj_exts, it allows
-KMALLOC_NO_OBJ_EXT caches to have sheaves.
-
-Since sheaf allocations specify SLAB_ALLOC_NO_RECURSE that prevents
-allocation of both sheaves and obj_exts arrays, the recursion depth
-is bounded.
-
-obj_exts arrays for non-kmalloc-normal caches can now have a valid tag.
-Do not call mark_obj_codetag_empty() when freeing an obj_exts array to
-avoid false warnings. KMALLOC_NO_OBJ_EXT don't need this as they never
-allocate those arrays.
-
-Reported-by: Danielle Costantino <dcostantino@meta.com>
-Reported-by: Shakeel Butt <shakeel.butt@linux.dev>
-Closes: https://lore.kernel.org/linux-mm/20260625230029.703750-1-shakeel.butt@linux.dev [1]
-Fixes: 4b8736964640 ("mm/slab: add allocation accounting into slab allocation and free paths")
+Fixes: 559c1e1e0134 ("thunderbolt: Run tb_xdp_handle_request() in system workqueue")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/linux-mm/c5c4208d-a6f0-413e-bad9-49be12f12d55@kernel.org [2]
-Signed-off-by: Harry Yoo (Oracle) <harry@kernel.org>
-Reviewed-by: Suren Baghdasaryan <surenb@google.com>
-Link: https://patch.msgid.link/20260713-kmalloc-no-objext-v3-4-47c7bd138de7@kernel.org
-Signed-off-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
-[harry@kernel.org: Backport notes:
- - Fix a minor conflict due to missing partitioned
-   kmalloc caches in 6.18.
-
- - Use __GFP_NO_OBJ_EXT instead of SLAB_ALLOC_NO_OBJ_EXT
-   since slab's internal alloc_flags do not exist in 6.18.
-
- - Deferring sheaf bootstrapping for kmalloc caches is not applied
-   as they don't have sheaves in 6.18.
-
- - Adjust the comment for SLAB_NO_OBJ_EXT, like in the commit
-   982e31382d9a ("mm/slab: decouple SLAB_NO_SHEAVES from
-   SLAB_NO_OBJ_EXT"). The rest of that commit is a no-op in 6.18 as
-   kmalloc caches don't have sheaves and thus only adjust the comment.
-
- - Apply the __GFP_NO_OBJ_EXT flag to the !allow_spin path in
-   alloc_slab_obj_exts(). ]
-Signed-off-by: Harry Yoo <harry@kernel.org>
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/slab.h |  8 ++++-
- mm/slab.h            | 28 ++++++++++++++--
- mm/slab_common.c     | 13 ++++++++
- mm/slub.c            | 76 ++++++++++++++------------------------------
- 4 files changed, 70 insertions(+), 55 deletions(-)
+ drivers/thunderbolt/xdomain.c | 40 ++++++++++++++++++++++++++---------
+ include/linux/thunderbolt.h   |  3 +++
+ 2 files changed, 33 insertions(+), 10 deletions(-)
 
-diff --git a/include/linux/slab.h b/include/linux/slab.h
-index 22daf3f34a76f..a12601cc93a1b 100644
---- a/include/linux/slab.h
-+++ b/include/linux/slab.h
-@@ -238,7 +238,7 @@ enum _slab_flag_bits {
- #endif
- #define SLAB_TEMPORARY		SLAB_RECLAIM_ACCOUNT	/* Objects are short-lived */
- 
--/* Slab created using create_boot_cache */
-+/* Slab caches without obj_exts array */
- #ifdef CONFIG_SLAB_OBJ_EXT
- #define SLAB_NO_OBJ_EXT		__SLAB_FLAG_BIT(_SLAB_NO_OBJ_EXT)
- #else
-@@ -641,6 +641,9 @@ enum kmalloc_cache_type {
- #endif
- #ifndef CONFIG_MEMCG
- 	KMALLOC_CGROUP = KMALLOC_NORMAL,
-+#endif
-+#ifndef CONFIG_SLAB_OBJ_EXT
-+	KMALLOC_NO_OBJ_EXT = KMALLOC_NORMAL,
- #endif
- 	KMALLOC_RANDOM_START = KMALLOC_NORMAL,
- 	KMALLOC_RANDOM_END = KMALLOC_RANDOM_START + RANDOM_KMALLOC_CACHES_NR,
-@@ -654,6 +657,9 @@ enum kmalloc_cache_type {
- #endif
- #ifdef CONFIG_MEMCG
- 	KMALLOC_CGROUP,
-+#endif
-+#ifdef CONFIG_SLAB_OBJ_EXT
-+	KMALLOC_NO_OBJ_EXT,
- #endif
- 	NR_KMALLOC_TYPES
- };
-diff --git a/mm/slab.h b/mm/slab.h
-index 36893299fa67c..c452f2a32c801 100644
---- a/mm/slab.h
-+++ b/mm/slab.h
-@@ -394,9 +394,13 @@ static inline struct kmem_cache *
- kmalloc_slab(size_t size, kmem_buckets *b, gfp_t flags, unsigned long caller)
- {
- 	unsigned int index;
-+	enum kmalloc_cache_type type = kmalloc_type(flags, caller);
-+
-+	if (flags & __GFP_NO_OBJ_EXT)
-+		type = KMALLOC_NO_OBJ_EXT;
- 
- 	if (!b)
--		b = &kmalloc_caches[kmalloc_type(flags, caller)];
-+		b = &kmalloc_caches[type];
- 	if (size <= 192)
- 		index = kmalloc_size_index[size_index_elem(size)];
- 	else
-@@ -435,7 +439,8 @@ static inline bool is_kmalloc_normal(struct kmem_cache *s)
- {
- 	if (!is_kmalloc_cache(s))
- 		return false;
--	return !(s->flags & (SLAB_CACHE_DMA|SLAB_ACCOUNT|SLAB_RECLAIM_ACCOUNT));
-+
-+	return !(s->flags & (SLAB_CACHE_DMA|SLAB_ACCOUNT|SLAB_RECLAIM_ACCOUNT|SLAB_NO_OBJ_EXT));
- }
- 
- bool __kfree_rcu_sheaf(struct kmem_cache *s, void *obj);
-@@ -520,6 +525,25 @@ bool slab_in_kunit_test(void);
- static inline bool slab_in_kunit_test(void) { return false; }
- #endif
- 
-+/*
-+ * Return true if KMALLOC_NORMAL caches may need obj_exts arrays.
-+ *
-+ * Memory allocation profiling requires obj_exts for all caches.
-+ * Memcg usually doesn't need them for normal kmalloc caches, but kmalloc types
-+ * with a priority higher than KMALLOC_CGROUP can be aliased with KMALLOC_NORMAL.
-+ */
-+static inline bool need_kmalloc_no_objext(void)
-+{
-+	if (!mem_alloc_profiling_permanently_disabled())
-+		return true;
-+
-+	if (!mem_cgroup_kmem_disabled() &&
-+			(KMALLOC_NORMAL == KMALLOC_RECLAIM))
-+		return true;
-+
-+	return false;
-+}
-+
- #ifdef CONFIG_SLAB_OBJ_EXT
- 
- /*
-diff --git a/mm/slab_common.c b/mm/slab_common.c
-index 04583044a2bf0..085af9a96fd92 100644
---- a/mm/slab_common.c
-+++ b/mm/slab_common.c
-@@ -803,6 +803,12 @@ EXPORT_SYMBOL(kmalloc_size_roundup);
- #define KMALLOC_RANDOM_NAME(N, sz)
- #endif
- 
-+#ifdef CONFIG_SLAB_OBJ_EXT
-+#define KMALLOC_NO_OBJ_EXT_NAME(sz) .name[KMALLOC_NO_OBJ_EXT] = "kmalloc-no-objext-" #sz,
-+#else
-+#define KMALLOC_NO_OBJ_EXT_NAME(sz)
-+#endif
-+
- #define INIT_KMALLOC_INFO(__size, __short_size)			\
- {								\
- 	.name[KMALLOC_NORMAL]  = "kmalloc-" #__short_size,	\
-@@ -810,6 +816,7 @@ EXPORT_SYMBOL(kmalloc_size_roundup);
- 	KMALLOC_CGROUP_NAME(__short_size)			\
- 	KMALLOC_DMA_NAME(__short_size)				\
- 	KMALLOC_RANDOM_NAME(RANDOM_KMALLOC_CACHES_NR, __short_size)	\
-+	KMALLOC_NO_OBJ_EXT_NAME(__short_size)			\
- 	.size = __size,						\
- }
- 
-@@ -917,6 +924,12 @@ new_kmalloc_cache(int idx, enum kmalloc_cache_type type)
- 			return;
- 		}
- 		flags |= SLAB_ACCOUNT;
-+	} else if (IS_ENABLED(CONFIG_SLAB_OBJ_EXT) && type == KMALLOC_NO_OBJ_EXT) {
-+		if (!need_kmalloc_no_objext()) {
-+			kmalloc_caches[type][idx] = kmalloc_caches[KMALLOC_NORMAL][idx];
-+			return;
-+		}
-+		flags |= SLAB_NO_OBJ_EXT | SLAB_NO_MERGE;
- 	} else if (IS_ENABLED(CONFIG_ZONE_DMA) && (type == KMALLOC_DMA)) {
- 		flags |= SLAB_CACHE_DMA;
- 	}
-diff --git a/mm/slub.c b/mm/slub.c
-index 71e09c675047d..5ddd2a5c9e79b 100644
---- a/mm/slub.c
-+++ b/mm/slub.c
-@@ -2096,42 +2096,6 @@ static inline void init_slab_obj_exts(struct slab *slab)
- 	slab->obj_exts = 0;
- }
- 
--/*
-- * Calculate the allocation size for slabobj_ext array.
-- *
-- * When memory allocation profiling is enabled, the obj_exts array
-- * could be allocated from the same slab cache it's being allocated for.
-- * This would prevent the slab from ever being freed because it would
-- * always contain at least one allocated object (its own obj_exts array).
-- *
-- * To avoid this, increase the allocation size when we detect the array
-- * may come from the same cache, forcing it to use a different cache.
-- */
--static inline size_t obj_exts_alloc_size(struct kmem_cache *s,
--					 struct slab *slab, gfp_t gfp)
--{
--	size_t sz = sizeof(struct slabobj_ext) * slab->objects;
--	struct kmem_cache *obj_exts_cache;
--
--	if (sz > KMALLOC_MAX_CACHE_SIZE)
--		return sz;
--
--	if (!is_kmalloc_normal(s))
--		return sz;
--
--	obj_exts_cache = kmalloc_slab(sz, NULL, gfp, 0);
--	/*
--	 * We can't simply compare s with obj_exts_cache, because random kmalloc
--	 * caches have multiple caches per size, selected by caller address.
--	 * Since caller address may differ between kmalloc_slab() and actual
--	 * allocation, bump size when sizes are equal.
--	 */
--	if (s->object_size == obj_exts_cache->object_size)
--		return obj_exts_cache->object_size + 1;
--
--	return sz;
--}
--
- int alloc_slab_obj_exts(struct slab *slab, struct kmem_cache *s,
- 		        gfp_t gfp, bool new_slab)
- {
-@@ -2140,13 +2104,17 @@ int alloc_slab_obj_exts(struct slab *slab, struct kmem_cache *s,
- 	unsigned long new_exts;
- 	unsigned long old_exts;
- 	struct slabobj_ext *vec;
--	size_t sz;
-+	size_t sz = sizeof(struct slabobj_ext) * slab->objects;
- 
- 	gfp &= ~OBJCGS_CLEAR_MASK;
--	/* Prevent recursive extension vector allocation */
--	gfp |= __GFP_NO_OBJ_EXT;
- 
--	sz = obj_exts_alloc_size(s, slab, gfp);
-+	/*
-+	 * In most cases, obj_exts arrays are allocated from normal kmalloc.
-+	 * However, normal kmalloc caches must allocate them from
-+	 * KMALLOC_NO_OBJ_EXT caches to prevent recursion.
-+	 */
-+	if (is_kmalloc_normal(s))
-+		gfp |= __GFP_NO_OBJ_EXT;
- 
- 	/*
- 	 * Note that allow_spin may be false during early boot and its
-@@ -2155,7 +2123,7 @@ int alloc_slab_obj_exts(struct slab *slab, struct kmem_cache *s,
- 	 * very early allocations on those.
- 	 */
- 	if (unlikely(!allow_spin))
--		vec = kmalloc_nolock(sz, __GFP_ZERO | __GFP_NO_OBJ_EXT,
-+		vec = kmalloc_nolock(sz, __GFP_ZERO | (gfp & __GFP_NO_OBJ_EXT),
- 				     slab_nid(slab));
- 	else
- 		vec = kmalloc_node(sz, gfp | __GFP_ZERO, slab_nid(slab));
-@@ -2173,8 +2141,21 @@ int alloc_slab_obj_exts(struct slab *slab, struct kmem_cache *s,
- 		return -ENOMEM;
- 	}
- 
--	VM_WARN_ON_ONCE(virt_to_slab(vec) != NULL &&
--			virt_to_slab(vec)->slab_cache == s);
-+	if (IS_ENABLED(CONFIG_DEBUG_VM)) {
-+		struct kmem_cache *exts_cache;
-+		struct slab *exts_slab;
-+
-+		exts_slab = virt_to_slab(vec);
-+		if (exts_slab) {
-+			/*
-+			 * The vector must be allocated from either normal or
-+			 * KMALLOC_NO_OBJ_EXT kmalloc caches to avoid cycles.
-+			 */
-+			exts_cache = exts_slab->slab_cache;
-+			WARN_ON_ONCE(!is_kmalloc_normal(exts_cache) &&
-+					!(exts_cache->flags & SLAB_NO_OBJ_EXT));
-+		}
-+	}
- 
- 	new_exts = (unsigned long)vec;
- 	if (unlikely(!allow_spin))
-@@ -2198,7 +2179,6 @@ int alloc_slab_obj_exts(struct slab *slab, struct kmem_cache *s,
- 		 * assign slabobj_exts in parallel. In this case the existing
- 		 * objcg vector should be reused.
+diff --git a/drivers/thunderbolt/xdomain.c b/drivers/thunderbolt/xdomain.c
+index 458476907eab0..6b16fc7254b8e 100644
+--- a/drivers/thunderbolt/xdomain.c
++++ b/drivers/thunderbolt/xdomain.c
+@@ -785,9 +785,13 @@ static void tb_xdp_handle_request(struct work_struct *work)
+ 		 * the xdomain related to this connection as well in
+ 		 * case there is a change in services it offers.
  		 */
--		mark_objexts_empty(vec);
- 		if (unlikely(!allow_spin))
- 			kfree_nolock(vec);
- 		else
-@@ -2229,14 +2209,6 @@ static inline void free_slab_obj_exts(struct slab *slab)
- 		return;
+-		if (xd && device_is_registered(&xd->dev))
+-			queue_delayed_work(tb->wq, &xd->state_work,
+-					   msecs_to_jiffies(XDOMAIN_SHORT_TIMEOUT));
++		if (xd) {
++			mutex_lock(&xd->lock);
++			if (!xd->removing && device_is_registered(&xd->dev))
++				queue_delayed_work(tb->wq, &xd->state_work,
++						   msecs_to_jiffies(XDOMAIN_SHORT_TIMEOUT));
++			mutex_unlock(&xd->lock);
++		}
+ 		break;
+ 
+ 	case UUID_REQUEST_OLD:
+@@ -800,8 +804,12 @@ static void tb_xdp_handle_request(struct work_struct *work)
+ 		 * received UUID request from the remote host.
+ 		 */
+ 		if (!ret && xd && xd->state == XDOMAIN_STATE_ERROR) {
+-			dev_dbg(&xd->dev, "restarting handshake\n");
+-			start_handshake(xd);
++			mutex_lock(&xd->lock);
++			if (!xd->removing) {
++				dev_dbg(&xd->dev, "restarting handshake\n");
++				start_handshake(xd);
++			}
++			mutex_unlock(&xd->lock);
+ 		}
+ 		break;
+ 
+@@ -829,9 +837,13 @@ static void tb_xdp_handle_request(struct work_struct *work)
+ 
+ 			ret = tb_xdp_link_state_change_response(ctl, route,
+ 								sequence, 0);
+-			xd->target_link_width = lsc->tlw;
+-			queue_delayed_work(tb->wq, &xd->state_work,
+-					   msecs_to_jiffies(XDOMAIN_SHORT_TIMEOUT));
++			mutex_lock(&xd->lock);
++			if (!xd->removing) {
++				xd->target_link_width = lsc->tlw;
++				queue_delayed_work(tb->wq, &xd->state_work,
++						   msecs_to_jiffies(XDOMAIN_SHORT_TIMEOUT));
++			}
++			mutex_unlock(&xd->lock);
+ 		} else {
+ 			tb_xdp_error_response(ctl, route, sequence,
+ 					      ERROR_NOT_READY);
+@@ -2074,6 +2086,10 @@ void tb_xdomain_remove(struct tb_xdomain *xd)
+ {
+ 	tb_xdomain_debugfs_remove(xd);
+ 
++	mutex_lock(&xd->lock);
++	xd->removing = true;
++	mutex_unlock(&xd->lock);
++
+ 	stop_handshake(xd);
+ 
+ 	device_for_each_child_reverse(&xd->dev, xd, unregister_service);
+@@ -2484,8 +2500,12 @@ static int update_xdomain(struct device *dev, void *data)
+ 
+ 	xd = tb_to_xdomain(dev);
+ 	if (xd) {
+-		queue_delayed_work(xd->tb->wq, &xd->properties_changed_work,
+-				   msecs_to_jiffies(50));
++		mutex_lock(&xd->lock);
++		if (!xd->removing)
++			queue_delayed_work(xd->tb->wq,
++					   &xd->properties_changed_work,
++					   msecs_to_jiffies(50));
++		mutex_unlock(&xd->lock);
  	}
  
--	/*
--	 * obj_exts was created with __GFP_NO_OBJ_EXT flag, therefore its
--	 * corresponding extension will be NULL. alloc_tag_sub() will throw a
--	 * warning if slab has extensions but the extension of an object is
--	 * NULL, therefore replace NULL with CODETAG_EMPTY to indicate that
--	 * the extension for obj_exts is expected to be NULL.
--	 */
--	mark_objexts_empty(obj_exts);
- 	if (unlikely(READ_ONCE(slab->obj_exts) & OBJEXTS_NOSPIN_ALLOC))
- 		kfree_nolock(obj_exts);
- 	else
+ 	return 0;
+diff --git a/include/linux/thunderbolt.h b/include/linux/thunderbolt.h
+index 0ba112175bb39..7204586c10c3e 100644
+--- a/include/linux/thunderbolt.h
++++ b/include/linux/thunderbolt.h
+@@ -209,6 +209,8 @@ enum tb_link_width {
+  * @link_width: Width of the downstream facing link
+  * @link_usb4: Downstream link is USB4
+  * @is_unplugged: The XDomain is unplugged
++ * @removing: Set by tb_xdomain_remove() under @lock to prevent
++ *	      concurrent delayed work queueing
+  * @needs_uuid: If the XDomain does not have @remote_uuid it will be
+  *		queried first
+  * @service_ids: Used to generate IDs for the services
+@@ -257,6 +259,7 @@ struct tb_xdomain {
+ 	enum tb_link_width link_width;
+ 	bool link_usb4;
+ 	bool is_unplugged;
++	bool removing;
+ 	bool needs_uuid;
+ 	struct ida service_ids;
+ 	struct ida in_hopids;
 -- 
 2.53.0
 
