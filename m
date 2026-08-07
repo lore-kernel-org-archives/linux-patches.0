@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAE104746B1;
-	Fri,  7 Aug 2026 15:42:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE621432E85;
+	Fri,  7 Aug 2026 15:42:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786117360; cv=none; b=qfCzo5pNae3+cPIqGQR6eYDJl1BPilYausTUkFQJ0aH4Mrr8Q0MX8n6mNEayCtbyM6jiyFJIbGqMY0VgmwAusU0uWUFpdYDD9xgpQBRbFRbEJLDt4dkTDCB9K7cmkWgSdlseEremtHYxALO6HDigpXDvCOTnelChllCmC408gJA=
+	t=1786117362; cv=none; b=THNF21We9/SHWUug06ApOe1HI7bg/DltXWCzfGTQYf9lBKPEVC3ekPiG0EiJ20nyjQpkEOkEX9musl51jGtyqMlUE1RgvCnwaAKjGm+lvgFme1WK7e/Pb8rF5IcPsb7nwcyhh5aKqEKdWz1L6zHo8/WMlEAvjepxnHgLF4EkzC8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786117360; c=relaxed/simple;
-	bh=mEO/d0tSMoW1G3+iEnuu+JJfrn2FOzv+cyP5hGAE1UA=;
+	s=arc-20240116; t=1786117362; c=relaxed/simple;
+	bh=Y8LFSVpVBayPu14StAxTf/wDPaAAPX3b+vki4VclDpI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kuDe1nXtZRpiH667FzDx2ShLTxjxBxCNhU3Vitocls7SDc3eaIEEb+e1aLmw15AymsIlFDqd9RCv7/pxSC1IATdU5Yfpt5IswWWd0duB8SSXQRay+Ye1aL46H4ZmlcaECydn8bphNP9dvQsD04X3/bqDIf7xsyYtIYmVSCOUzw8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u8JiTeVW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MdHCYLsryUyEYGbgcRbo8zaBTGV5/0+LNRmSdEwdr0moU9uagqggxAJftYOOOunEtL78Sxx8xE9wf6cOTf9YQsd2Wjd6iMPBdv/zUMu2giCj2S01S04FUlENpAecd3vihEWNodpPiBIz0znxSVNw9m0+KBRyZs+TUJ7S0n99Xmo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sLa5u4XO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u8JiTeVW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18D5D1F000E9;
-	Fri,  7 Aug 2026 15:42:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sLa5u4XO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 083E41F000E9;
+	Fri,  7 Aug 2026 15:42:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786117358;
-	bh=g1ROr5nCqqQP/qHOkgPmy+WAY1w0sRyNo3+iGl9PUhk=;
+	s=korg; t=1786117361;
+	bh=XKCTJQ1CQq7eQ0y71hDRinKOsGEKhg4bNaUIZamxa1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u8JiTeVWM+zKyNpN022gilxaF41xIchBDFqfgpIQsiKZl01dIV4pB067TefFN+WjY
-	 Ai9SOA6kIGFIWX7tCNqHBNMGrGB6U+L3ATuWlyhmrfWdmkXqVt5OsNNccAz9A6QN88
-	 czskuTed68oIOoSSpGpR12JCmXcJzaCGSHzsyJmA=
+	b=sLa5u4XOwBP2NIjagXuCrW0xsnroi4BR3L7KMKiLkANbf3E8SpFoRZ7Z27Q+pBfWS
+	 tECuLUwvFFnhIv4VOqS52c3w3ifGtoDXN2HG0nz1QPdyab7SF+7RnREjQgXH5aNKTM
+	 l1hdOgKBSUcSx5bZBQ6rMbkdiQ9s9bs0GzB8I1F8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 7.1 290/438] binfmt_misc: reject a flag character as the field delimiter
-Date: Fri,  7 Aug 2026 16:38:06 +0200
-Message-ID: <20260807143434.158592595@linuxfoundation.org>
+Subject: [PATCH 7.1 291/438] binfmt_misc: dont let an F entry pin its own instance
+Date: Fri,  7 Aug 2026 16:38:07 +0200
+Message-ID: <20260807143434.179126635@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -51,45 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Brauner <brauner@kernel.org>
 
-commit 8e85d50ba1117fd446bf9a250bd8a97d48384bdc upstream.
+commit 79055d82772b9584f259b747fe40ff56a076678d upstream.
 
-The registration string starts with a user chosen delimiter that
-separates the individual fields. So that the field parsers terminate
-even on a truncated string create_entry() pads the buffer with that
-same delimiter:
+An entry registered with 'F' opens its interpreter at registration time
+and holds that file until the entry is freed. Any entry nobody removes
+by hand only gets closed once the binfmt_misc superblock is shut down.
+If the interpreter lives on a mount that keeps that superblock alive the
+two pin each other:
 
-	memset(buf + count, del, 8);
+    binfmt_misc sb -> inode -> entry -> interp_file -> vfsmount -> binfmt_misc sb
 
-Most fields are scanned for the delimiter with strchr()/scanarg() and
-happily stop on the padding. The flags field is different: instead of
-scanning for the delimiter check_special_flags() consumes the flag
-characters 'P', 'O', 'C' and 'F' and stops at the first byte that is
-none of them, relying on the trailing delimiter to end the scan.
+TL;DR the file is never closed. Once the mount namespace is gone there
+is nothing left to unregister through either.
 
-If the delimiter is itself a flag character the padding no longer acts
-as a terminator. The scan swallows all eight padding bytes and keeps
-reading past the end of the allocation until it hits a byte that is
-not a flag character. For example registering
+There are two ways to trigger this bug:
 
-	PaPEPPxPPiP
+- Point the interpreter at the instance itself. Its files are regular
+  files owned by the mounter and both bm_get_inode() and
+  simple_fill_super() leave i_op at empty_iops. So notify_change() falls
+  back to simple_setattr() and chmod +x works. We never set SB_I_NOEXEC
+  and so open_exec() accepts it.
 
-with 'P' as the delimiter (name "a", type extension, magic "x",
-interpreter "i", empty flags) leaves the flag scan running off the end
-of the buffer. The registration is rejected in the end because the
-parser does not stop exactly at buf + count, but only after the out of
-bounds read has already happened. With an unlucky allocation layout the
-scan can walk into an unmapped page; under KASAN it is reported as a
-slab out of bounds read. binfmt_misc mounts are available to
-unprivileged users in a user namespace so the read is reachable without
-privileges.
+- Use the instance as an overlayfs lower layer. The overlay superblock
+  holds a clone_private_mount() of every layer until it is destroyed and
+  that clone is in no namespace. So umount_tree() never reaches it.
 
-Reject a delimiter that is one of the flag characters up front. Such a
-registration was always rejected anyway, only after the out of bounds
-read, so no valid registration string changes meaning.
+That's a DoS. And it isn't only the superblock that leaks. It pins the
+user namespace it was mounted in, so every iteration permanently eats
+one of the caller's user namespace charges.
 
-Link: https://patch.msgid.link/20260710-work-binfmt_misc-locking-v3-3-a162f7cb58d6@kernel.org
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
+So let's just do the sane thing. SB_I_NOEXEC makes open_exec() fail on
+the instance's own files and s_stack_depth makes overlayfs reject the
+layer before it ever takes a clone. That also covers the ecryptfs and
+fuse passthrough variants. What 'F' promises is unchanged.
+
+The stable tag is narrower than the Fixes tags on purpose. Before
+sandboxed mounts this needed global root against the single instance
+everyone shares, and the change doesn't apply to those trees anyway.
+
+Note that SB_I_NODEV is implicitly raised for userns mounts but raise it
+explicitly here as well.
+
+Link: https://patch.msgid.link/20260728-work-binfmt_misc-selfpin-v1-1-74df5daeca5b@kernel.org
+Fixes: 948b701a607f ("binfmt_misc: add persistent opened binary handler for containers")
+Fixes: 21ca59b365c0 ("binfmt_misc: enable sandboxed mounts")
+Cc: stable@vger.kernel.org # v6.7+
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
@@ -98,16 +104,16 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/fs/binfmt_misc.c
 +++ b/fs/binfmt_misc.c
-@@ -384,6 +384,10 @@ static Node *create_entry(const char __u
+@@ -949,6 +949,10 @@ static int bm_fill_super(struct super_bl
+ 	if (WARN_ON(user_ns != current_user_ns()))
+ 		return -EINVAL;
  
- 	pr_debug("register: delim: %#x {%c}\n", del, del);
- 
-+	/* A flag-char delimiter runs the flag scan off the buffer. */
-+	if (del == 'P' || del == 'O' || del == 'C' || del == 'F')
-+		goto einval;
++	/* Never exec off this instance and never let anything stack on it. */
++	sb->s_iflags |= SB_I_NOEXEC | SB_I_NODEV;
++	sb->s_stack_depth = FILESYSTEM_MAX_STACK_DEPTH;
 +
- 	/* Pad the buffer with the delim to simplify parsing below. */
- 	memset(buf + count, del, 8);
- 
+ 	/*
+ 	 * Lazily allocate a new binfmt_misc instance for this namespace, i.e.
+ 	 * do it here during the first mount of binfmt_misc. We don't need to
 
 
