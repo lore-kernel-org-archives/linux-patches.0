@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0CE54734CD;
-	Fri,  7 Aug 2026 15:36:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63430476CDD;
+	Fri,  7 Aug 2026 15:36:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116989; cv=none; b=uQYdthj6oKTgu4FkO6srPNPKrvyl21wKkvSLxVuIa3ovKQKy5uQcUHh9rtvFf+24Phsvj8TyN03Dxd77BGa6W34zLNYmPiPTQvAS95mvw2lLqOq95Mm0Tap5SSCpb/a+Bxsfm66vr11fS7nTxomK3W7eTXY3aJzFI8DEp1o2SJ8=
+	t=1786116992; cv=none; b=YJOg7dI/Vt7HsdUjJQeIhqESnQbWaU6eMQfY8AxnUfW7dHreNI9KFWdBc/YtH2CpXO24gfPdAmlotbmW2OET/KjUCW/rvyFICrSmepJzpQkbw/9ARTiVnEVBzM7AkhDs9mPsi9uQycZaonl5F2H2uidZ6ugbthJSdGsPe3O3Q70=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116989; c=relaxed/simple;
-	bh=jJUrFVtWPIXGH0JuNzSKHZnoZ/dTcdcLz/sP7FLrDII=;
+	s=arc-20240116; t=1786116992; c=relaxed/simple;
+	bh=Vj0jeo9VPZm1G9dvV8ZXJg7RFZxcygOc/hodTMNgKcI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lKSLC9lIdbEeYIC1wRdCzZVv5k4g89mZlWjgDqKLYsaMavrWwxSnvzDlANoZv8BSRcbcDIUbnLCF6RBPXOFJ/WnM8U8ct6ibR+Lf0L8uHXoiEXJrZzeTTMp3CrpwoIwPm/ICbCGMANyYsqa43NYofDU5Z7hVINIFP7Z5KckPPnE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Vkz/4W8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YwiokYgrAXvvQBpcP7XeX9G1AJbs3xc+wtTIB5Tq/hcS7ZVi1F9cI+ev4o39v30fQD89RWcUFd7MiaLtkrka/BHCjNgxTaadiEisCivTyrq03NKP5A4jcgspAN7fYVesnOkp40Hqsd1NczTKisEV9y52h/fVDpCrU8zQUb+9dDQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q9iA+CU3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Vkz/4W8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE1A01F000E9;
-	Fri,  7 Aug 2026 15:36:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q9iA+CU3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEEE71F00A3E;
+	Fri,  7 Aug 2026 15:36:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116988;
-	bh=PSyv+awXsPtht/Pnh0+7CHeNC9QNXWAYM/AZ+0kIA/I=;
+	s=korg; t=1786116991;
+	bh=gSrynSg9Q/1l+agq8z+SN8Ibjl09gQnwR9AEKPO0kx4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2Vkz/4W8wyti9Sv7+wSPeTK6LoqF9oX3XPr26Yv+W4oqX6zaDdl76WLXyE0dHn5Fp
-	 m0HgDiHiA6z9MhjdGEeFwRaOMEWlXFlJ6ZMk4lzqomXLsc4Kzs6rHirzt4CyFvphlY
-	 huGRCLDog/5xAFmeOBwMJDhwfQ3CWlh5RyNRSQ6s=
+	b=q9iA+CU3NUt2KLz790fKLB+t0a93Y9A60kz3mBZA4N9yjlZrwl4A5q47kv7fAg3F4
+	 4e5nodxDw4dknJUX1uVpaPuIzeoqBFLB6f7jnjjjKorpjTbaHav5sKEpc9YKvk4AwY
+	 jyJP3aPzrtPw4W4eZbt9AsyKuiy7xCPgk8s+L/bo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiazi Li <jiazi.li@transsion.com>,
-	Ao Sun <ao.sun@transsion.com>,
-	Bean Huo <beanhuo@micron.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Chenguang Zhao <zhaochenguang@kylinos.cn>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 159/438] scsi: ufs: core: Initialize hba->rpmbs list in ufshcd
-Date: Fri,  7 Aug 2026 16:35:55 +0200
-Message-ID: <20260807143431.423308598@linuxfoundation.org>
+Subject: [PATCH 7.1 160/438] net: sxgbe: free TX rings on RX allocation failure
+Date: Fri,  7 Aug 2026 16:35:56 +0200
+Message-ID: <20260807143431.446536239@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -53,52 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ao Sun <ao.sun@transsion.com>
+From: Chenguang Zhao <zhaochenguang@kylinos.cn>
 
-[ Upstream commit 0279fd451a9971c0d5b959fc59f3e11b55e1694e ]
+[ Upstream commit c870f7e2890b9f78ac84515a9809cc5c183c975e ]
 
-Initialize the hba->rpmbs list in ufshcd_alloc_host() to prevent NULL
-pointer dereference in the device teardown path if ufs_rpmb_probe()
-fails.
+When RX descriptor ring allocation fails, init_dma_desc_rings() only
+frees the partially allocated RX rings and returns. The TX rings that
+were allocated earlier in the same function are leaked.
 
-Fixes: b06b8c421485 ("scsi: ufs: core: Add OP-TEE based RPMB driver for UFS devices")
-Co-developed-by: Jiazi Li <jiazi.li@transsion.com>
-Signed-off-by: Jiazi Li <jiazi.li@transsion.com>
-Signed-off-by: Ao Sun <ao.sun@transsion.com>
-Reviewed-by: Bean Huo <beanhuo@micron.com>
-Link: https://patch.msgid.link/20260723034440.217-1-ao.sun@transsion.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Rearrange error labels to clean up TX rings upon RX failures.
+
+Fixes: 1edb9ca69e8a ("net: sxgbe: add basic framework for Samsung 10Gb ethernet driver")
+Signed-off-by: Chenguang Zhao <zhaochenguang@kylinos.cn>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufs-rpmb.c | 2 --
- drivers/ufs/core/ufshcd.c   | 1 +
- 2 files changed, 1 insertion(+), 2 deletions(-)
+ drivers/net/ethernet/samsung/sxgbe/sxgbe_main.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/ufs/core/ufs-rpmb.c b/drivers/ufs/core/ufs-rpmb.c
-index ffad049872b9a..62120dc2e9da7 100644
---- a/drivers/ufs/core/ufs-rpmb.c
-+++ b/drivers/ufs/core/ufs-rpmb.c
-@@ -152,8 +152,6 @@ int ufs_rpmb_probe(struct ufs_hba *hba)
- 		return -EINVAL;
- 	}
+diff --git a/drivers/net/ethernet/samsung/sxgbe/sxgbe_main.c b/drivers/net/ethernet/samsung/sxgbe/sxgbe_main.c
+index 5051ada43d2fa..9b48a587d5c2e 100644
+--- a/drivers/net/ethernet/samsung/sxgbe/sxgbe_main.c
++++ b/drivers/net/ethernet/samsung/sxgbe/sxgbe_main.c
+@@ -597,14 +597,13 @@ static int init_dma_desc_rings(struct net_device *netd)
  
--	INIT_LIST_HEAD(&hba->rpmbs);
+ 	return 0;
+ 
+-txalloc_err:
+-	while (queue_num--)
+-		free_tx_ring(priv->device, priv->txq[queue_num], tx_rsize);
+-	return ret;
 -
- 	struct rpmb_descr descr = {
- 		.type = RPMB_TYPE_UFS,
- 		.route_frames = ufs_rpmb_route_frames,
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index 082eac1e13463..d6444b3c2ef16 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -10924,6 +10924,7 @@ int ufshcd_alloc_host(struct device *dev, struct ufs_hba **hba_handle)
- 	hba->nop_out_timeout = NOP_OUT_TIMEOUT;
- 	ufshcd_set_sg_entry_size(hba, sizeof(struct ufshcd_sg_entry));
- 	INIT_LIST_HEAD(&hba->clk_list_head);
-+	INIT_LIST_HEAD(&hba->rpmbs);
- 	spin_lock_init(&hba->outstanding_lock);
+ rxalloc_err:
+ 	while (queue_num--)
+ 		free_rx_ring(priv->device, priv->rxq[queue_num], rx_rsize);
++	queue_num = SXGBE_TX_QUEUES;
++txalloc_err:
++	while (queue_num--)
++		free_tx_ring(priv->device, priv->txq[queue_num], tx_rsize);
+ 	return ret;
+ }
  
- 	*hba_handle = hba;
 -- 
 2.53.0
 
