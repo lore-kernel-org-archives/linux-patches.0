@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D9D0435EEC;
-	Fri,  7 Aug 2026 14:49:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 106F6432E60;
+	Fri,  7 Aug 2026 14:49:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114188; cv=none; b=UT+l+fdzBA/lZtiyVJTITEclvej4SXQqCD7j44C66GTpAGXJvHB8KEMkxgh0GRU1+T8yqjzzQMj5S5bdvfgLPFvxCKriSHI9HHXf/FhnKz740IyeJDyQZzSyS/7cQtca4L8v/E9JdRUmziydtyllHJKPEXRxdfaOf8/bkAYubTY=
+	t=1786114191; cv=none; b=VdoVU7ovQ+EBe4fJgiu8tdAYyKF7RgmCDQuyavq/awNKBQVspuaWcqFCLAZt6n5JIqOHtIVScu0jwMr+XM5BH89doPh1pY83L8H9Rev24WVvdNvY5E7TExAj1Q6enqI5uARS/We0wqwn7URyoV29HoYDoareWuX5+82kUY3U4MI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114188; c=relaxed/simple;
-	bh=Vry3ypEbA0fJBGKrK7g3B4EjyLnt7eDxPaouj5l8rhE=;
+	s=arc-20240116; t=1786114191; c=relaxed/simple;
+	bh=E8GUTYe6gUnlWdMbVOQVcY6WxsAikMcd8EWOgGqFTAc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JbUlOdExS5uYv9iYegXcnqtAq8kUzdiunad4tQe6kI1Jyr58JyYUBH8akvOvVzfoLG1nbRtfVuhc8/vdXz69QvUAz8g0hAtY02yh66rDcjGW691eDdlHRD8t/MVfYZ/WXlcPPNG3BGBZEVSJlVqtyP4WdJAMbf5dRIOHpIrgMfo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zjIwjTs7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=psQszBMTtMjCl6kB/B92NN3KXrogaXvBezN9hRlC6DZS+WPZIhaBEe3XPsNdmju+9cpGOA0W4VrsePHCpWftmsQTVO/tZZR/ReoW4bofIQc2dNkZb2tEUZIY6hgrN01oOZEYQtApj8T5ETut3bWY2k+2csi4EwYheDb5oAp+Eq0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JIvUUTMV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zjIwjTs7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 973A21F00A3A;
-	Fri,  7 Aug 2026 14:49:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JIvUUTMV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CD6D1F000E9;
+	Fri,  7 Aug 2026 14:49:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114187;
-	bh=ye2Lp1dSHOVinOhXEYb/mxjzYzsAgED++5voB7j2V4M=;
+	s=korg; t=1786114190;
+	bh=3jIUdluz4Kq7Zi/RvFAtNBI8hBIXnjwuchwMn6iAz8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zjIwjTs7NqOAFiJuy9c0E+KYl4eakbaWVHSOfRhOr8YcQFfoiKTqs+CueFQ2SplUg
-	 JR8JPtp+UNgfkLQ0BpBMZCAK5iVBaINWig/5qJVenxcciQ4dNnRsXrpoYyVhjZgLf4
-	 7hojcP+IiCm8NuIctR40foz0k/i6Z9kYPbVQeKYQ=
+	b=JIvUUTMVKFQ8snEwazkFydgR90Ww7JRJf4XbXP6m3tr6n9OUUM/IWuaSS4x5gSMzF
+	 jxucsCXq3IOdAOJtF46eMLg7bvqOFcyFXBMUsbW8Zku930pPZwDwIzz6GMn/Xce2Nb
+	 6ukouKpgmBoakNeM1I7yA83MiIcBlhe+qY7QBqE8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>
-Subject: [PATCH 6.12 131/337] erofs: cap LZMA stream pool size
-Date: Fri,  7 Aug 2026 16:35:34 +0200
-Message-ID: <20260807143421.373614133@linuxfoundation.org>
+	Jiawen Wu <jiawenwu@trustnetic.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 122/337] net: libwx: fix FDIR ATR queue mismatch for software VLAN packets
+Date: Fri,  7 Aug 2026 16:35:25 +0200
+Message-ID: <20260807143421.175202060@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -50,73 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Jiawen Wu <jiawenwu@trustnetic.com>
 
-commit c9b47e6b23114e939b17f818471c7a46e59006e7 upstream.
+[ Upstream commit 732ed8f75ce583d115716f668dc80d730f3ad610 ]
 
-fs/erofs/decompressor_lzma.c sizes the module-global MicroLZMA stream
-pool from num_possible_cpus() when the lzma_streams module parameter is
-unset, then z_erofs_load_lzma_config() preallocates one image-supplied
-dictionary per stream, accepting dictionaries up to 8 MiB.  On high-CPU
-systems, a small EROFS image can pin hundreds of MiB of vmalloc-backed
-decoder state until the erofs module is unloaded.
+When TX VLAN hardware offload is disabled, VLAN tags are embedded in
+the packet payload (software VLAN). Previously, the driver failed to
+set the WX_TX_FLAGS_SW_VLAN flag for these packets during transmission.
 
-Impact: An EROFS image mounted by the system can pin up to 8 MiB of
-vmalloc memory per LZMA stream, either as intended or unexpectedly.
+This missing flag caused the txgbe FDIR ATR logic to fall through to the
+default hash calculation path. This resulted in asymmetric hash values
+for Tx and Rx flows, preventing return packets from being steered to the
+same queue as the transmit packets.
 
-Bound the default stream count by a new
-CONFIG_EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS option, default 16, so the
-worst-case default preallocation is 128 MiB if the number of CPUs is no
-less than 16 while preserving the existing per-image dictionary limit.
-An explicit lzma_streams module parameter is still honoured as-is, so
-administrators who deliberately size the pool are not affected.
+Fix this by detecting software VLANs via eth_type_vlan(skb->protocol)
+and setting WX_TX_FLAGS_SW_VLAN. This ensures the ATR feature selects
+the correct hashing algorithm to maintain Tx/Rx queue symmetry.
 
-Fixes: 622ceaddb764 ("erofs: lzma compression support")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: b501d261a5b3 ("net: txgbe: add FDIR ATR support")
+Signed-off-by: Jiawen Wu <jiawenwu@trustnetic.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/0879DA38A8E32701+20260724074657.10773-1-jiawenwu@trustnetic.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/Kconfig             |   14 ++++++++++++++
- fs/erofs/decompressor_lzma.c |    3 ++-
- 2 files changed, 16 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/wangxun/libwx/wx_lib.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/erofs/Kconfig
-+++ b/fs/erofs/Kconfig
-@@ -114,6 +114,20 @@ config EROFS_FS_ZIP_LZMA
+diff --git a/drivers/net/ethernet/wangxun/libwx/wx_lib.c b/drivers/net/ethernet/wangxun/libwx/wx_lib.c
+index 4c203f4afd689..3666302e3401b 100644
+--- a/drivers/net/ethernet/wangxun/libwx/wx_lib.c
++++ b/drivers/net/ethernet/wangxun/libwx/wx_lib.c
+@@ -1481,6 +1481,8 @@ static netdev_tx_t wx_xmit_frame_ring(struct sk_buff *skb,
+ 	if (skb_vlan_tag_present(skb)) {
+ 		tx_flags |= skb_vlan_tag_get(skb) << WX_TX_FLAGS_VLAN_SHIFT;
+ 		tx_flags |= WX_TX_FLAGS_HW_VLAN;
++	} else if (eth_type_vlan(skb->protocol)) {
++		tx_flags |= WX_TX_FLAGS_SW_VLAN;
+ 	}
  
- 	  If unsure, say N.
- 
-+config EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS
-+	int "EROFS LZMA default maximum decompression streams"
-+	depends on EROFS_FS_ZIP_LZMA
-+	range 1 NR_CPUS
-+	default 16
-+	help
-+	  By default EROFS allocates one LZMA decompression stream per CPU.
-+	  Each stream can hold a dictionary of up to 8 MiB taken from the
-+	  mounted image, so on systems with many CPUs this can reserve a lot
-+	  of memory.  This caps the default; the lzma_streams module parameter
-+	  still overrides it.
-+
-+	  If unsure, keep the default of 16.
-+
- config EROFS_FS_ZIP_DEFLATE
- 	bool "EROFS DEFLATE compressed data support"
- 	depends on EROFS_FS_ZIP
---- a/fs/erofs/decompressor_lzma.c
-+++ b/fs/erofs/decompressor_lzma.c
-@@ -51,7 +51,8 @@ static int __init z_erofs_lzma_init(void
- 
- 	/* by default, use # of possible CPUs instead */
- 	if (!z_erofs_lzma_nstrms)
--		z_erofs_lzma_nstrms = num_possible_cpus();
-+		z_erofs_lzma_nstrms = min_t(unsigned int, num_possible_cpus(),
-+				CONFIG_EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS);
- 
- 	for (i = 0; i < z_erofs_lzma_nstrms; ++i) {
- 		struct z_erofs_lzma *strm = kzalloc(sizeof(*strm), GFP_KERNEL);
+ 	/* record initial flags and protocol */
+-- 
+2.53.0
+
 
 
