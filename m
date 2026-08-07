@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEAF247799F;
-	Fri,  7 Aug 2026 15:46:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 121783A3E7A;
+	Fri,  7 Aug 2026 15:46:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786117585; cv=none; b=Cd0ijuOGcXPMRIED5BTj8zmMKE8DCkDad687XnKFx6YTcIc3F1oA4FxtCFt2ERwpceHVxwtpcXlrvEXBf01wAdncj1T2GaUpIDBMl9w+XsovsHOoE0e8jphb1ZfPFFQ/hrm8LD4qdCvNQzpNStQBMWnX9zmC+SoEsMb4SeiVIXo=
+	t=1786117588; cv=none; b=k/PT2jNbl4zVO1MwsINPdRQpzMpG5WT+cZMOy77mVmtyLi4XIoPOvkevLxZKXIK2V3P68kKc/Z2drc0XgTZmfqO4aNkmnCGTWzpj3+om9BlJoI9w9hqVW4SJxVKfd1ooseUJtyiTmXmIx1NfNpLpe2hXMqLaV9SrTMs0KhcMstw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786117585; c=relaxed/simple;
-	bh=YFxHZBIwwQEgyy9mksv0k2OJwFTHESyq14BedLl2rQY=;
+	s=arc-20240116; t=1786117588; c=relaxed/simple;
+	bh=vctz7i1kXh7zIORNQlwUfLE06l276Ps/4aKFnlrPgzI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nXyos0sE0JZfbURF0PqBkuVTtRy57LUX2IhyP9h9N23sI8NP/7Uwlqe+YVmkPRpASuAWWx3nglXMlSQW67/vX8I412Zg6f4oSKZ68IEA5XnMtbr6vGsfTvpBBPgjBp1G6Uz+/ueXEz0XZundbl6yf2iOwM+CjW5unzz4+brlbPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vsEpzEdJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rhzFX4injm1BRbgwP+mdkTyNTec63/unkDPVw4tCWbL0IFR/ZJfUrNZoB01jjbJF5cXNEwadfrbUm2Qyx8+YPNbU3l0WxBHA+t/L/V0nirr2d+XNhbIyFEAO38vbraFCV17BoEawkyDg5b6lt/ZhQYLE6knpfIVj1J/ZQfST4t4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TRpqJ9vM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vsEpzEdJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 605CF1F000E9;
-	Fri,  7 Aug 2026 15:46:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TRpqJ9vM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FF6F1F000E9;
+	Fri,  7 Aug 2026 15:46:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786117583;
-	bh=avxu9bAXH63tbajjmSw5BWxVFqNAXoEVY4XgNl5axqc=;
+	s=korg; t=1786117586;
+	bh=O2ecqr5YaW1KQcozhCvqZ2oD2JsURUVdCQR3sjiNAtU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vsEpzEdJ40EOVINhrnpKNF/1Q99qZhH9q3x/SPYdypA4XQvkeTHS6AkKZzqu9FS9A
-	 w4LTUIH78A8F+6XleLXtreLS2aaslwJa+enDU746Hjhsn4scuIp6BQqwL5aw5l4mqi
-	 O1zn+69CQ+WkTjGA82h8Du0IStXCplFJReivB8Ks=
+	b=TRpqJ9vMyPU2dPdGkNqrvuqo8VQDUjCeQwM2k7Vy3lkhIIh8V7PNRHJaWViW7QEpo
+	 CYlWEP+BnPHZ9wQPZAoZFHpLjn77mefTc1nnTJvQxKNp6p+DBxvRSy3wJAxgOkBVlp
+	 PXPbJQH2STjm/VnVaZTqkiaVIsEpnkfocmvskOuk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kohei Enju <kohei@enjuk.jp>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Aaron Ma <aaron.ma@canonical.com>,
-	Alexander Nowlin <alexander.nowlin@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>
-Subject: [PATCH 7.1 353/438] ice: wait for reset completion in ice_resume()
-Date: Fri,  7 Aug 2026 16:39:09 +0200
-Message-ID: <20260807143435.496485299@linuxfoundation.org>
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	stable@kernel.org,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 7.1 371/438] can: kvaser_usb_leaf: kvaser_usb_leaf_wait_cmd(): validate received command extents
+Date: Fri,  7 Aug 2026 16:39:27 +0200
+Message-ID: <20260807143435.880140042@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -54,65 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aaron Ma <aaron.ma@canonical.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-commit c2816d613f388814d27bc9fd6dbd931a88056e19 upstream.
+commit 0293dd153f9dbc1ddf5dacdccc76b363bce4a8ee upstream.
 
-ice_resume() schedules an asynchronous PF reset and returns
-immediately. The reset runs later in ice_service_task(). If
-userspace tries to bring up the net device before the reset
-finishes, ice_open() fails with -EBUSY:
+The wait and bulk receive paths walk variable-length commands from a
+USB buffer. A nonzero command shorter than CMD_HEADER_LEN can still be
+dispatched, and the wait path copies a matching command into a fixed
+caller-owned struct kvaser_cmd using the device-provided length.
 
-  ice_resume()
-    ice_schedule_reset()          # sets ICE_PFR_REQ, returns
-  ...
-  ice_open()
-    ice_is_reset_in_progress()    # ICE_PFR_REQ still set, -EBUSY
-  ...
-  ice_service_task()
-    ice_do_reset()
-      ice_rebuild()               # clears ICE_PFR_REQ, too late
+Reject nonzero commands that do not contain the fixed header or that
+extend beyond the current USB buffer item. In the wait path, also reject
+a matching command that exceeds the destination before copying it.
 
-Reproduced on E800 series NICs during suspend/resume with irdma
-enabled, where the aux device probe widens the race window.
-
-  ice 0000:81:00.0: can't open net device while reset is in progress
-
-Add a best-effort wait (10s timeout, matching ice_devlink_info_get())
-for the reset to complete before returning from ice_resume(). In
-practice the reset completes in ~300ms.
-
-Fixes: 769c500dcc1e ("ice: Add advanced power mgmt for WoL")
-Cc: stable@vger.kernel.org
-Reviewed-by: Kohei Enju <kohei@enjuk.jp>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Signed-off-by: Aaron Ma <aaron.ma@canonical.com>
-Tested-by: Alexander Nowlin <alexander.nowlin@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: 080f40a6fa28 ("can: kvaser_usb: Add support for Kvaser CAN/USB devices")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260722042221.44066-1-pengpeng@iscas.ac.cn
+Cc: stable@kernel.org
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/ice/ice_main.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
---- a/drivers/net/ethernet/intel/ice/ice_main.c
-+++ b/drivers/net/ethernet/intel/ice/ice_main.c
-@@ -5637,6 +5637,16 @@ static int ice_resume(struct device *dev
- 	/* Restart the service task */
- 	mod_timer(&pf->serv_tmr, round_jiffies(jiffies + pf->serv_tmr_period));
+--- a/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
++++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
+@@ -691,13 +691,22 @@ static int kvaser_usb_leaf_wait_cmd(cons
+ 				continue;
+ 			}
  
-+	/* Best-effort wait for the scheduled reset to finish so that the
-+	 * device is operational before returning. Without this, userspace
-+	 * (e.g. NetworkManager) may try to open the net device while the
-+	 * asynchronous reset is still in progress, hitting -EBUSY.
-+	 */
-+	ret = ice_wait_for_reset(pf, secs_to_jiffies(10));
-+	if (ret)
-+		dev_err(dev, "Wait for reset timed out (10s) during resume: %d\n",
-+			ret);
+-			if (pos + tmp->len > actual_len) {
++			if (tmp->len < CMD_HEADER_LEN ||
++			    tmp->len > actual_len - pos) {
+ 				dev_err_ratelimited(&dev->intf->dev,
+ 						    "Format error\n");
+ 				break;
+ 			}
+ 
+ 			if (tmp->id == id) {
++				if (tmp->len > sizeof(*cmd)) {
++					dev_err_ratelimited(&dev->intf->dev,
++							    "Received command %u too large (%u)\n",
++							    tmp->id, tmp->len);
++					err = -EIO;
++					goto end;
++				}
 +
- 	return 0;
- }
+ 				memcpy(cmd, tmp, tmp->len);
+ 				goto end;
+ 			}
+@@ -1737,7 +1746,7 @@ static void kvaser_usb_leaf_read_bulk_ca
+ 			continue;
+ 		}
  
+-		if (pos + cmd->len > len) {
++		if (cmd->len < CMD_HEADER_LEN || cmd->len > len - pos) {
+ 			dev_err_ratelimited(&dev->intf->dev, "Format error\n");
+ 			break;
+ 		}
 
 
