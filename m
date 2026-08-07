@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F8793557F3;
-	Fri,  7 Aug 2026 14:57:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFB5F3B9943;
+	Fri,  7 Aug 2026 14:57:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114642; cv=none; b=SENuk5kaQw5pL81EO3oS2xepmiIF76+U0vuWsbsFxiIDXqsGL74lizza/FhhIglVacCfnAtm00VzAPnd8GpKQ7tqwLy9XXr79JXfvD6tS0XaAvH4/fNlHTLFp2F/KH4ZYagq1Ivnd3Mf5DnJhDAexBdJSBdogubHrA1gCQgJfbU=
+	t=1786114642; cv=none; b=RiL9UwE8DWW4KGgv93cnXcdy/nlP+i7h6ZZbngMVQWjHHtquh821+E19S4QqIsPFhEXQjpKchsW3lUU4A13Abg4r8yKffkBB/zK+Frxu8sC+tXNfiPGIg5txXaFhpSto0U+HTps6S7/RyOYlY6awZdZUZN0i0ItxfY2+8tIpDMg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1786114642; c=relaxed/simple;
-	bh=txYgJr6suTCZ8beOSuYgPApQ6lSqs5nuPQZryIjJq50=;
+	bh=PbHoj93mLX0aHozdsG/qedhPOn4q+xJ69+Xt5pKxqN4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ALTx+1KRidVcEATa1LyGCGnh9qr2G2f7X3bAS4IdMwZo++Uk8b+NwKaeENogNBGLBXeDNq/S/rsVVti1cfREWkKG0ULd1XmM+hazMOdJ8olm7nX8C8vEA6kLs5c4/vP3Vu3rN/Vu7tXiCwmPE/cJXg44Dt9MXbmh+xO6hs+0mHo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=saqXsCte; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kU0nIBSeix4Z89uitY0+WvZ2GTkgosgiEa2S/t5wSYewiUdPgqndB7Ge7jIAvZpdbqOh8lfqE7u8YTrgNWYBp25JUgv0RyhgEbnXMxjMYNziONIEQvrtBZYI4qNq38HfL9nROp7+tXhyv5C0cIFGMIJRfqIh/WKXOdPwazls1j8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XwmKwgin; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="saqXsCte"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0B931F000E9;
-	Fri,  7 Aug 2026 14:57:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XwmKwgin"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02E7C1F00A3A;
+	Fri,  7 Aug 2026 14:57:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114636;
-	bh=h6fp8tRJly0AddQDjbTHB56tguGoyEv+TI/NJbZZ5Kc=;
+	s=korg; t=1786114633;
+	bh=mdNhsGnojBKAky1p+SKGzeo60NWLmSN4flTW0qD2uR8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=saqXsCteX0BFeVaHnfCbZeykbVAQ8rmh483MJQfYgoo/NAd6irs7LvdO33YxJKzpR
-	 TjcT4GHaWZjjAapuJCwy15Nffi03dCnDPbi4wv74DrpJI7o2/HUgBBAyNi6khSr9QG
-	 /3yrez6LLsa1r5t/xcYg0eiT+qHTOhkDLO15jvGI=
+	b=XwmKwginja7Lda+CInbCPYGW/k5WFc6nbgmt1V20mKI08PP0HC60fcs0X4gKZdYUO
+	 iK5dW+IJIq+kYh/7TzI6nBY5ipykwrWHEBAxZ1q4mUs6uks29gAZED6WHds3fKcUEB
+	 TDxOUMGAMtTimumKHa0alqjEhs/OLnbtIniiUhYI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.12 333/337] can: use skb hash instead of private variable in headroom
-Date: Fri,  7 Aug 2026 16:38:56 +0200
-Message-ID: <20260807143425.759326450@linuxfoundation.org>
+	David Howells <dhowells@redhat.com>,
+	Jeffrey Altman <jaltman@auristor.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	"Junvyyang, Tencent Zhuque Lab" <zhuque@tencent.com>,
+	LePremierHomme <kwqcheii@proton.me>,
+	Simon Horman <horms@kernel.org>,
+	linux-afs@lists.infradead.org,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 332/337] rxrpc: Fix irq-disabled in local_bh_enable()
+Date: Fri,  7 Aug 2026 16:38:55 +0200
+Message-ID: <20260807143425.738699850@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -51,218 +57,144 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Hartkopp <socketcan@hartkopp.net>
+From: David Howells <dhowells@redhat.com>
 
-commit d4fb6514ff8ed6912a71294e6b66a5d59ee88007 upstream.
+[ Upstream commit e4d2878369d590bf8455e3678a644e503172eafa ]
 
-The can_skb_priv::skbcnt variable is used to identify CAN skbs in the RX
-path analogue to the skb->hash.
+The rxrpc_assess_MTU_size() function calls down into the IP layer to find
+out the MTU size for a route.  When accepting an incoming call, this is
+called from rxrpc_new_incoming_call() which holds interrupts disabled
+across the code that calls down to it.  Unfortunately, the IP layer uses
+local_bh_enable() which, config dependent, throws a warning if IRQs are
+enabled:
 
-As the skb hash is not filled in CAN skbs move the private skbcnt value to
-skb->hash and set skb->sw_hash accordingly. The skb->hash is a value used
-for RPS to identify skbs. Use it as intended.
+WARNING: CPU: 1 PID: 5544 at kernel/softirq.c:387 __local_bh_enable_ip+0x43/0xd0
+...
+RIP: 0010:__local_bh_enable_ip+0x43/0xd0
+...
+Call Trace:
+ <TASK>
+ rt_cache_route+0x7e/0xa0
+ rt_set_nexthop.isra.0+0x3b3/0x3f0
+ __mkroute_output+0x43a/0x460
+ ip_route_output_key_hash+0xf7/0x140
+ ip_route_output_flow+0x1b/0x90
+ rxrpc_assess_MTU_size.isra.0+0x2a0/0x590
+ rxrpc_new_incoming_peer+0x46/0x120
+ rxrpc_alloc_incoming_call+0x1b1/0x400
+ rxrpc_new_incoming_call+0x1da/0x5e0
+ rxrpc_input_packet+0x827/0x900
+ rxrpc_io_thread+0x403/0xb60
+ kthread+0x2f7/0x310
+ ret_from_fork+0x2a/0x230
+ ret_from_fork_asm+0x1a/0x30
+...
+hardirqs last  enabled at (23): _raw_spin_unlock_irq+0x24/0x50
+hardirqs last disabled at (24): _raw_read_lock_irq+0x17/0x70
+softirqs last  enabled at (0): copy_process+0xc61/0x2730
+softirqs last disabled at (25): rt_add_uncached_list+0x3c/0x90
 
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://patch.msgid.link/20260201-can_skb_ext-v8-1-3635d790fe8b@hartkopp.net
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Fix this by moving the call to rxrpc_assess_MTU_size() out of
+rxrpc_init_peer() and further up the stack where it can be done without
+interrupts disabled.
+
+It shouldn't be a problem for rxrpc_new_incoming_call() to do it after the
+locks are dropped as pmtud is going to be performed by the I/O thread - and
+we're in the I/O thread at this point.
+
+Fixes: a2ea9a907260 ("rxrpc: Use irq-disabling spinlocks between app and I/O thread")
+Signed-off-by: David Howells <dhowells@redhat.com>
+Reviewed-by: Jeffrey Altman <jaltman@auristor.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: Junvyyang, Tencent Zhuque Lab <zhuque@tencent.com>
+cc: LePremierHomme <kwqcheii@proton.me>
+cc: Simon Horman <horms@kernel.org>
+cc: linux-afs@lists.infradead.org
+Link: https://patch.msgid.link/20250717074350.3767366-2-dhowells@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/dev/skb.c |    2 --
- include/linux/can/core.h  |    1 +
- include/linux/can/skb.h   |    2 --
- net/can/af_can.c          |   14 +++++++++++---
- net/can/bcm.c             |    2 --
- net/can/isotp.c           |    3 ---
- net/can/j1939/socket.c    |    1 -
- net/can/j1939/transport.c |    2 --
- net/can/raw.c             |    7 +++----
- 9 files changed, 15 insertions(+), 19 deletions(-)
+ net/rxrpc/ar-internal.h |    1 +
+ net/rxrpc/call_accept.c |    1 +
+ net/rxrpc/peer_object.c |   12 +++++++-----
+ 3 files changed, 9 insertions(+), 5 deletions(-)
 
---- a/drivers/net/can/dev/skb.c
-+++ b/drivers/net/can/dev/skb.c
-@@ -202,7 +202,6 @@ static void init_can_skb_reserve(struct
- 	skb_reset_transport_header(skb);
+--- a/net/rxrpc/ar-internal.h
++++ b/net/rxrpc/ar-internal.h
+@@ -1183,6 +1183,7 @@ struct rxrpc_peer *rxrpc_lookup_peer_rcu
+ 					 const struct sockaddr_rxrpc *);
+ struct rxrpc_peer *rxrpc_lookup_peer(struct rxrpc_local *local,
+ 				     struct sockaddr_rxrpc *srx, gfp_t gfp);
++void rxrpc_assess_MTU_size(struct rxrpc_local *local, struct rxrpc_peer *peer);
+ struct rxrpc_peer *rxrpc_alloc_peer(struct rxrpc_local *, gfp_t,
+ 				    enum rxrpc_peer_trace);
+ void rxrpc_new_incoming_peer(struct rxrpc_local *local, struct rxrpc_peer *peer);
+--- a/net/rxrpc/call_accept.c
++++ b/net/rxrpc/call_accept.c
+@@ -407,6 +407,7 @@ bool rxrpc_new_incoming_call(struct rxrp
  
- 	can_skb_reserve(skb);
--	can_skb_prv(skb)->skbcnt = 0;
- }
+ 	spin_unlock(&rx->incoming_lock);
+ 	read_unlock_irq(&local->services_lock);
++	rxrpc_assess_MTU_size(local, call->peer);
  
- struct sk_buff *alloc_can_skb(struct net_device *dev, struct can_frame **cf)
-@@ -312,7 +311,6 @@ static bool can_skb_headroom_valid(struc
- 	if (skb->ip_summed == CHECKSUM_NONE) {
- 		/* init headroom */
- 		can_skb_prv(skb)->ifindex = dev->ifindex;
--		can_skb_prv(skb)->skbcnt = 0;
- 
- 		skb->ip_summed = CHECKSUM_UNNECESSARY;
- 
---- a/include/linux/can/core.h
-+++ b/include/linux/can/core.h
-@@ -58,6 +58,7 @@ extern void can_rx_unregister(struct net
- 			      void *data);
- 
- extern int can_send(struct sk_buff *skb, int loop);
-+void can_set_skb_uid(struct sk_buff *skb);
- void can_sock_destruct(struct sock *sk);
- 
- #endif /* !_CAN_CORE_H */
---- a/include/linux/can/skb.h
-+++ b/include/linux/can/skb.h
-@@ -49,13 +49,11 @@ bool can_dropped_invalid_skb(struct net_
- /**
-  * struct can_skb_priv - private additional data inside CAN sk_buffs
-  * @ifindex:	ifindex of the first interface the CAN frame appeared on
-- * @skbcnt:	atomic counter to have an unique id together with skb pointer
-  * @frame_len:	length of CAN frame in data link layer
-  * @cf:		align to the following CAN frame at skb->data
+ 	if (hlist_unhashed(&call->error_link)) {
+ 		spin_lock_irq(&call->peer->lock);
+--- a/net/rxrpc/peer_object.c
++++ b/net/rxrpc/peer_object.c
+@@ -149,8 +149,7 @@ struct rxrpc_peer *rxrpc_lookup_peer_rcu
+  * assess the MTU size for the network interface through which this peer is
+  * reached
   */
- struct can_skb_priv {
- 	int ifindex;
--	int skbcnt;
- 	unsigned int frame_len;
- 	struct can_frame cf[];
- };
---- a/net/can/af_can.c
-+++ b/net/can/af_can.c
-@@ -639,6 +639,16 @@ static int can_rcv_filter(struct can_dev
- 	return matches;
+-static void rxrpc_assess_MTU_size(struct rxrpc_local *local,
+-				  struct rxrpc_peer *peer)
++void rxrpc_assess_MTU_size(struct rxrpc_local *local, struct rxrpc_peer *peer)
+ {
+ 	struct net *net = local->net;
+ 	struct dst_entry *dst;
+@@ -162,6 +161,8 @@ static void rxrpc_assess_MTU_size(struct
+ #endif
+ 
+ 	peer->if_mtu = 1500;
++	peer->mtu = peer->if_mtu;
++	peer->maxdata = peer->mtu - peer->hdrsize;
+ 
+ 	memset(&fl, 0, sizeof(fl));
+ 	switch (peer->srx.transport.family) {
+@@ -201,6 +202,9 @@ static void rxrpc_assess_MTU_size(struct
+ 	peer->if_mtu = dst_mtu(dst);
+ 	dst_release(dst);
+ 
++	peer->mtu = peer->if_mtu;
++	peer->maxdata = peer->mtu - peer->hdrsize;
++
+ 	_leave(" [if_mtu %u]", peer->if_mtu);
  }
  
-+void can_set_skb_uid(struct sk_buff *skb)
-+{
-+	/* create non-zero unique skb identifier together with *skb */
-+	while (!(skb->hash))
-+		skb->hash = atomic_inc_return(&skbcounter);
-+
-+	skb->sw_hash = 1;
-+}
-+EXPORT_SYMBOL(can_set_skb_uid);
-+
- static void can_receive(struct sk_buff *skb, struct net_device *dev)
+@@ -239,8 +243,6 @@ static void rxrpc_init_peer(struct rxrpc
+ 			    unsigned long hash_key)
  {
- 	struct can_dev_rcv_lists *dev_rcv_lists;
-@@ -650,9 +660,7 @@ static void can_receive(struct sk_buff *
- 	atomic_long_inc(&pkg_stats->rx_frames);
- 	atomic_long_inc(&pkg_stats->rx_frames_delta);
+ 	peer->hash_key = hash_key;
+-	rxrpc_assess_MTU_size(local, peer);
+-	peer->mtu = peer->if_mtu;
  
--	/* create non-zero unique skb identifier together with *skb */
--	while (!(can_skb_prv(skb)->skbcnt))
--		can_skb_prv(skb)->skbcnt = atomic_inc_return(&skbcounter);
-+	can_set_skb_uid(skb);
- 
- 	rcu_read_lock();
- 
---- a/net/can/bcm.c
-+++ b/net/can/bcm.c
-@@ -350,7 +350,6 @@ static void bcm_can_tx(struct bcm_op *op
- 
- 	can_skb_reserve(skb);
- 	can_skb_prv(skb)->ifindex = dev->ifindex;
--	can_skb_prv(skb)->skbcnt = 0;
- 
- 	skb_put_data(skb, cf, op->cfsiz);
- 
-@@ -1624,7 +1623,6 @@ static int bcm_tx_send(struct msghdr *ms
+ 	switch (peer->srx.transport.family) {
+ 	case AF_INET:
+@@ -264,7 +266,6 @@ static void rxrpc_init_peer(struct rxrpc
  	}
  
- 	can_skb_prv(skb)->ifindex = dev->ifindex;
--	can_skb_prv(skb)->skbcnt = 0;
- 	skb->dev = dev;
- 	can_skb_set_owner(skb, sk);
- 	err = can_send(skb, 1); /* send with loopback */
---- a/net/can/isotp.c
-+++ b/net/can/isotp.c
-@@ -232,7 +232,6 @@ static int isotp_send_fc(struct sock *sk
+ 	peer->hdrsize += sizeof(struct rxrpc_wire_header);
+-	peer->maxdata = peer->mtu - peer->hdrsize;
+ }
  
- 	can_skb_reserve(nskb);
- 	can_skb_prv(nskb)->ifindex = dev->ifindex;
--	can_skb_prv(nskb)->skbcnt = 0;
+ /*
+@@ -283,6 +284,7 @@ static struct rxrpc_peer *rxrpc_create_p
+ 	if (peer) {
+ 		memcpy(&peer->srx, srx, sizeof(*srx));
+ 		rxrpc_init_peer(local, peer, hash_key);
++		rxrpc_assess_MTU_size(local, peer);
+ 	}
  
- 	nskb->dev = dev;
- 	can_skb_set_owner(nskb, sk);
-@@ -798,7 +797,6 @@ static void isotp_send_cframe(struct iso
- 
- 	can_skb_reserve(skb);
- 	can_skb_prv(skb)->ifindex = dev->ifindex;
--	can_skb_prv(skb)->skbcnt = 0;
- 
- 	cf = (struct canfd_frame *)skb->data;
- 	skb_put_zero(skb, so->ll.mtu);
-@@ -1104,7 +1102,6 @@ static int isotp_sendmsg(struct socket *
- 
- 	can_skb_reserve(skb);
- 	can_skb_prv(skb)->ifindex = dev->ifindex;
--	can_skb_prv(skb)->skbcnt = 0;
- 
- 	so->tx.len = size;
- 	so->tx.idx = 0;
---- a/net/can/j1939/socket.c
-+++ b/net/can/j1939/socket.c
-@@ -889,7 +889,6 @@ static struct sk_buff *j1939_sk_alloc_sk
- 
- 	can_skb_reserve(skb);
- 	can_skb_prv(skb)->ifindex = ndev->ifindex;
--	can_skb_prv(skb)->skbcnt = 0;
- 	skb_reserve(skb, offsetof(struct can_frame, data));
- 
- 	ret = memcpy_from_msg(skb_put(skb, size), msg, size);
---- a/net/can/j1939/transport.c
-+++ b/net/can/j1939/transport.c
-@@ -613,7 +613,6 @@ sk_buff *j1939_tp_tx_dat_new(struct j193
- 	skb->dev = priv->ndev;
- 	can_skb_reserve(skb);
- 	can_skb_prv(skb)->ifindex = priv->ndev->ifindex;
--	can_skb_prv(skb)->skbcnt = 0;
- 	/* reserve CAN header */
- 	skb_reserve(skb, offsetof(struct can_frame, data));
- 
-@@ -1553,7 +1552,6 @@ j1939_session *j1939_session_fresh_new(s
- 	skb->dev = priv->ndev;
- 	can_skb_reserve(skb);
- 	can_skb_prv(skb)->ifindex = priv->ndev->ifindex;
--	can_skb_prv(skb)->skbcnt = 0;
- 	skcb = j1939_skb_to_cb(skb);
- 	memcpy(skcb, rel_skcb, sizeof(*skcb));
- 
---- a/net/can/raw.c
-+++ b/net/can/raw.c
-@@ -75,8 +75,8 @@ MODULE_ALIAS("can-proto-1");
-  */
- 
- struct uniqframe {
--	int skbcnt;
- 	const struct sk_buff *skb;
-+	u32 hash;
- 	unsigned int join_rx_count;
- };
- 
-@@ -163,7 +163,7 @@ static void raw_rcv(struct sk_buff *oskb
- 
- 	/* eliminate multiple filter matches for the same skb */
- 	if (this_cpu_ptr(ro->uniq)->skb == oskb &&
--	    this_cpu_ptr(ro->uniq)->skbcnt == can_skb_prv(oskb)->skbcnt) {
-+	    this_cpu_ptr(ro->uniq)->hash == oskb->hash) {
- 		if (!ro->join_filters)
- 			return;
- 
-@@ -173,7 +173,7 @@ static void raw_rcv(struct sk_buff *oskb
- 			return;
- 	} else {
- 		this_cpu_ptr(ro->uniq)->skb = oskb;
--		this_cpu_ptr(ro->uniq)->skbcnt = can_skb_prv(oskb)->skbcnt;
-+		this_cpu_ptr(ro->uniq)->hash = oskb->hash;
- 		this_cpu_ptr(ro->uniq)->join_rx_count = 1;
- 		/* drop first frame to check all enabled filters? */
- 		if (ro->join_filters && ro->count > 1)
-@@ -945,7 +945,6 @@ static int raw_sendmsg(struct socket *so
- 
- 	can_skb_reserve(skb);
- 	can_skb_prv(skb)->ifindex = dev->ifindex;
--	can_skb_prv(skb)->skbcnt = 0;
- 
- 	/* fill the skb before testing for valid CAN frames */
- 	err = memcpy_from_msg(skb_put(skb, size), msg, size);
+ 	_leave(" = %p", peer);
 
 
