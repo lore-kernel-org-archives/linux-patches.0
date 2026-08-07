@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A14C933C1AD;
-	Fri,  7 Aug 2026 14:55:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2A4137F334;
+	Fri,  7 Aug 2026 14:55:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114523; cv=none; b=FpIQbAnuiYSPTxAXwT/QIgSu/V8/dKOj+jxf/5jFoKyPpCFF/h+QoltwtHMdxA3iGQ6gwXUQMt+HHw2pTIH7mbj4OTWLIuQSLP1kMoLLLIT8+3QW3Q716fgvrFfbHgnldgwNHpiIYPadOhAFospgL9IuGOUaOZS4RziZUZAzxbA=
+	t=1786114524; cv=none; b=Io14hU5+E8+LTHm4TM+gGM1DDXS8X6xvlbUvYndjuPX/QC8kdUyFQ0330kwpqPVQGzOSiK5WAexjpUFYUo7B+1r/Zg9QXJ9fkMAQIotEcBqOAe+NrFB59v+PAqQ6UhLGExXEjPZ/17Gb9H8i5F4F234HlRa/+/7Z5Esqm10MVjg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114523; c=relaxed/simple;
-	bh=kM+rIFW3kCYibZEk3Gsyvh+HwrIv4OrGZTHHhLKSzdo=;
+	s=arc-20240116; t=1786114524; c=relaxed/simple;
+	bh=lLdYcU2/BNeU/BoX5GfkHSeeosA477jsu8z/RBTRmVk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CvZIaYC2EGravuz8a80JTVKNHET4TrJXDAx6cdB5pg6QUeSDoWwjPMpDWGS1yw7Ay41hGSKZpJs2Q/N1GpvwPgWtEfcsvbPhrDEQSNv9O4KYqKKB0CBTKe/lcYdwDEtwVpnVZ0iwOk12efyvcd86emsAZ2Z8fSdF7+uuZW2SL+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hN6NbZti; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=A9c2YBuwEgu1UTLQMX5L9DwUhKYZ0o+0ndLqWp3zBvGr56xw0PHF0GPb+GwkHB7+VUkahoakVqf/I+2mwXTkaeXx//aLoL+aJsetK1HXtmdKizPKnHDJ28QY/JonyX9nh0lf2ryRAcg93PwVSDr4KnuyduA2PbSEbCYCiW1mYpI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MAHY+htG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hN6NbZti"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C93D71F000E9;
-	Fri,  7 Aug 2026 14:55:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MAHY+htG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E5601F00A3E;
+	Fri,  7 Aug 2026 14:55:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114510;
-	bh=JidP54RBTvoIqvVP5rfidaGr0zqULh1hsjVKo1Fhf+Y=;
+	s=korg; t=1786114516;
+	bh=p7WidOy9NIcmkCNU5p8Rk2DIdmm4hWleoj0jajPsJzI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hN6NbZti0dIKaXVEeCN1eNoOgffDUZqUTVK1Kp7BoZMcclhXwdjaqOFEQJ+v+r+Wk
-	 qxh2efwWR0iPAlEkCMSjF6AyCcT/7Ws/bAJYSxjwm9OxSIuB7uFum+g12eyeTrCJom
-	 hzR91M4rlpiYqmo1qOCZt6Z8WAwxJjDWbw6xerdE=
+	b=MAHY+htGwWmPLgOww2IFBEx1KInM6geP0W+irc8hObnbCj0UkVev2z8pxDykr3toH
+	 5+tyWA3y5oZArtyWQyCBFThdh6Ugy81LmsoQiyoz0aaA1EXumh0QMbfYkfyHJ2GqzC
+	 jbTDJgRnb24pID8CqHKxamAQV1P7U/mfp/Pptq1Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danielle Costantino <dcostantino@meta.com>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	"Harry Yoo (Oracle)" <harry@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
+	stable <stable@kernel.org>,
+	Cen Zhang <zzzccc427@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 289/337] mm/slab: prevent unbounded recursion in free path with new kmalloc type
-Date: Fri,  7 Aug 2026 16:38:12 +0200
-Message-ID: <20260807143424.797445703@linuxfoundation.org>
+Subject: [PATCH 6.12 291/337] usb: gadget: f_tcm: synchronize delayed set_alt with teardown
+Date: Fri,  7 Aug 2026 16:38:14 +0200
+Message-ID: <20260807143424.838461346@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -54,330 +51,385 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harry Yoo (Oracle) <harry@kernel.org>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-commit d9e6a7623938968e3752b67e37eaff097e559a54 upstream.
+[ Upstream commit 79e2d75725c85607f8a9d87ae9cace62a19f767d ]
 
-Commit 280ea9c3154b ("mm/slab: avoid allocating slabobj_ext array from
-its own slab") avoided recursive allocation of obj_exts from kmalloc
-caches of the same size, by bumping the obj_exts array's allocation
-size whenever the array size equals the size of the object being
-allocated.
+The f_tcm set_alt() path defers endpoint setup to a work item and
+completes the delayed status response from process context. The delayed
+work uses f_tcm private state and may complete the setup request after
+disconnect or function teardown has already moved on.
 
-However, as reported by Danielle Costantino and Shakeel Butt,
-even slabs from kmalloc caches of different sizes can form a cycle
-by allocating obj_exts arrays from each other [1]:
+Cancel and drain the delayed set_alt work when the function is unbound or
+freed. For disable paths, which are reached under the composite device
+lock, use a small state machine and a non-sleeping cancellation path
+instead of cancel_work_sync(). If the work is already running, mark it
+cancelled and let the worker own the cleanup; otherwise tcm_disable() can
+cancel the queued work and clean up immediately.
 
-  What happened: a KMALLOC_NORMAL slab's obj_exts array (used by
-  allocation profiling / memcg accounting) is itself kmalloc()'d from a
-  KMALLOC_NORMAL cache, so the "slab holds another slab's obj_exts array"
-  relation can form cycles. With sizeof(struct slabobj_ext) == 16 and
-  the host's geometry:
+Also serialize the final delayed-status completion with the cancellation
+check while holding the composite device lock. This prevents a disconnect
+from clearing delayed_status while the worker is about to complete the
+control request.
 
-  - kmalloc-512 has 64 objects/slab -> array is 64*16 == 1024 bytes,
-    served from kmalloc-1k;
-  - kmalloc-1k  has 32 objects/slab -> array is 32*16 ==  512 bytes,
-    served from kmalloc-512.
+Validation reproduced this kernel report:
+BUG: KASAN: slab-use-after-free in tcm_delayed_set_alt+0x6c/0xef0
 
-  A kmalloc-512 slab and a kmalloc-1k slab therefore hold each other's
-  obj_exts array.  Discarding one frees the other's array, which empties
-  and discards that slab, which frees the first's array, and so on:
-  __free_slab() -> free_slab_obj_exts() -> kfree() -> discard_slab() ->
-  __free_slab() recurses along the cycle until the stack is exhausted.
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x66/0xa0
+ print_report+0xce/0x630
+ ? tcm_delayed_set_alt+0x6c/0xef0
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ ? __virt_addr_valid+0x188/0x320
+ ? tcm_delayed_set_alt+0x6c/0xef0
+ kasan_report+0xe0/0x110
+ ? tcm_delayed_set_alt+0x6c/0xef0
+ tcm_delayed_set_alt+0x6c/0xef0
+ ? __pfx_tcm_delayed_set_alt+0x10/0x10
+ ? process_one_work+0x4cb/0xb90
+ ? rcu_is_watching+0x20/0x50
+ ? tcm_delayed_set_alt+0x9/0xef0
+ process_one_work+0x4d7/0xb90
+ ? __pfx_process_one_work+0x10/0x10
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ ? __list_add_valid_or_report+0x37/0xf0
+ ? __pfx_tcm_delayed_set_alt+0x10/0x10
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ worker_thread+0x2d8/0x570
+ ? __pfx_worker_thread+0x10/0x10
+ kthread+0x1ad/0x1f0
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork+0x3c9/0x540
+ ? __pfx_ret_from_fork+0x10/0x10
+ ? srso_alias_return_thunk+0x5/0xfbef5
+ ? __switch_to+0x2e9/0x730
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork_asm+0x1a/0x30
+ </TASK>
 
-With memory allocation profiling, this allows unbounded recursion
-in the free path and led to a stack overflow on a production host in
-the Meta fleet [1]:
+Allocated by task 544:
+ kasan_save_stack+0x33/0x60
+ kasan_save_track+0x14/0x30
+ __kasan_kmalloc+0x8f/0xa0
+ tcm_alloc+0x68/0x180
+ usb_get_function+0x36/0x60
+ config_usb_cfg_link+0x125/0x1b0
+ configfs_symlink+0x322/0x890
+ vfs_symlink+0xc2/0x270
+ filename_symlinkat+0x295/0x2f0
+ __x64_sys_symlinkat+0x62/0x90
+ do_syscall_64+0x115/0x6a0
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-  BUG: TASK stack guard page was hit
-  Oops: stack guard page
-  RIP: 0010:kfree+0x8/0x5d0
-  Call Trace:
-   __free_slab+0x66/0xc0
-   kfree+0x3f0/0x5d0
-   ... ( ~125x __free_slab <-> kfree ) ...
-   <kernel driver freeing a resource>
-   do_syscall_64
+Freed by task 661:
+ kasan_save_stack+0x33/0x60
+ kasan_save_track+0x14/0x30
+ kasan_save_free_info+0x3b/0x60
+ __kasan_slab_free+0x43/0x70
+ kfree+0x2f9/0x530
+ config_usb_cfg_unlink+0x173/0x1e0
+ configfs_unlink+0x1fa/0x340
+ vfs_unlink+0x15c/0x510
+ filename_unlinkat+0x2ba/0x450
+ __x64_sys_unlinkat+0x63/0x90
+ do_syscall_64+0x115/0x6a0
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-It is proposed [1] to resolve this issue by always serving the obj_exts
-array allocation from kmalloc caches (or large kmalloc) of sizes larger
-than the object size. However, as pointed out by Vlastimil Babka [2],
-this can waste an excessive amount of memory as slabs from large
-kmalloc sizes (e.g. kmalloc-8k) generally need obj_exts arrays much
-smaller than the object size.
-
-Therefore, rather than bumping the size, let us take a different
-approach; disallow formation of cycles between kmalloc types when
-allocating obj_exts arrays. Currently, all obj_exts arrays are served
-from normal kmalloc caches. Cycles cannot be created if obj_exts arrays
-of normal kmalloc caches are served from a special kmalloc type that can
-never have obj_exts arrays.
-
-To achieve this, create a new kmalloc type called KMALLOC_NO_OBJ_EXT.
-KMALLOC_NO_OBJ_EXT caches are created with SLAB_NO_OBJ_EXT flag when
-either 1) memory allocation profiling is not permanently disabled,
-or 2) kmalloc types with a priority higher than KMALLOC_CGROUP are
-aliased with KMALLOC_NORMAL.
-
-Sheaf bootstrapping for KMALLOC_NO_OBJ_EXT caches now must be deferred
-because allocation of a barn can trigger obj_exts array allocation of
-normal kmalloc caches when the KMALLOC_NO_OBJ_EXT cache for that size
-is not ready yet. For simplicity, perform bootstrapping of sheaves for
-all kmalloc caches later.
-
-Introduce a new slab alloc flag, SLAB_ALLOC_NO_OBJ_EXT, to prevent
-allocation of obj_exts arrays, and let kmalloc_slab() override the type
-to KMALLOC_NO_OBJ_EXT when specified. Note that kmalloc_type() remains
-unchanged because kmalloc_flags() bypasses the kmalloc fastpath.
-
-Do not pass SLAB_ALLOC_NO_RECURSE to kmalloc_flags() in
-alloc_slab_obj_exts() and instead use SLAB_ALLOC_NO_OBJ_EXT only when
-the objects are allocated from normal kmalloc caches. While this
-prevents unbounded recursive allocation of obj_exts, it allows
-KMALLOC_NO_OBJ_EXT caches to have sheaves.
-
-Since sheaf allocations specify SLAB_ALLOC_NO_RECURSE that prevents
-allocation of both sheaves and obj_exts arrays, the recursion depth
-is bounded.
-
-obj_exts arrays for non-kmalloc-normal caches can now have a valid tag.
-Do not call mark_obj_codetag_empty() when freeing an obj_exts array to
-avoid false warnings. KMALLOC_NO_OBJ_EXT don't need this as they never
-allocate those arrays.
-
-Reported-by: Danielle Costantino <dcostantino@meta.com>
-Reported-by: Shakeel Butt <shakeel.butt@linux.dev>
-Closes: https://lore.kernel.org/linux-mm/20260625230029.703750-1-shakeel.butt@linux.dev [1]
-Fixes: 4b8736964640 ("mm/slab: add allocation accounting into slab allocation and free paths")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/linux-mm/c5c4208d-a6f0-413e-bad9-49be12f12d55@kernel.org [2]
-Signed-off-by: Harry Yoo (Oracle) <harry@kernel.org>
-Reviewed-by: Suren Baghdasaryan <surenb@google.com>
-Link: https://patch.msgid.link/20260713-kmalloc-no-objext-v3-4-47c7bd138de7@kernel.org
-Signed-off-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
-[harry@kernel.org: Backport notes:
- - Fix a minor conflict due to missing partitioned
-   kmalloc caches in 6.12.
-
- - Use __GFP_NO_OBJ_EXT instead of SLAB_ALLOC_NO_OBJ_EXT
-   since slab's internal alloc_flags do not exist in 6.12.
-
- - Deferring sheaf bootstrapping for kmalloc caches is not applied
-   as 6.12 doesn't have sheaves.
-
- - Adjust the comment for SLAB_NO_OBJ_EXT, like in the commit
-   982e31382d9a ("mm/slab: decouple SLAB_NO_SHEAVES from
-   SLAB_NO_OBJ_EXT"). The rest of that commit is a no-op in 6.12 as
-   sheaves are not supported. Thus only adjust the comment.
-
- - Resolve conflicts due to missing kmalloc_nolock() support in 6.12.
-
- - Mark need_kmalloc_no_objext() __always_inline to make sure
-   the compiler does not generate a out-of-line function that could
-   access mem_profiling_support (which is marked __init) ]
-Signed-off-by: Harry Yoo <harry@kernel.org>
+Fixes: c52661d60f63 ("usb-gadget: Initial merge of target module for UASP + BOT")
+Cc: stable <stable@kernel.org>
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Link: https://patch.msgid.link/20260627104153.3822495-1-zzzccc427@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[ adjusted context for 6.12's scalar `struct usbg_cdb cmd` and missing `stream_hash`, dropping the `hash_init()` context line ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/slab.h |  8 +++++++-
- mm/slab.h            | 28 ++++++++++++++++++++++++++--
- mm/slab_common.c     | 13 +++++++++++++
- mm/slub.c            | 34 +++++++++++++++++++++++-----------
- 4 files changed, 69 insertions(+), 14 deletions(-)
+ drivers/usb/gadget/function/f_tcm.c |  192 ++++++++++++++++++++++++++++++------
+ drivers/usb/gadget/function/tcm.h   |   13 ++
+ 2 files changed, 177 insertions(+), 28 deletions(-)
 
-diff --git a/include/linux/slab.h b/include/linux/slab.h
-index 773843a71960d..28eba6cbb7670 100644
---- a/include/linux/slab.h
-+++ b/include/linux/slab.h
-@@ -206,7 +206,7 @@ enum _slab_flag_bits {
- #endif
- #define SLAB_TEMPORARY		SLAB_RECLAIM_ACCOUNT	/* Objects are short-lived */
- 
--/* Slab created using create_boot_cache */
-+/* Slab caches without obj_exts array */
- #ifdef CONFIG_SLAB_OBJ_EXT
- #define SLAB_NO_OBJ_EXT		__SLAB_FLAG_BIT(_SLAB_NO_OBJ_EXT)
- #else
-@@ -578,6 +578,9 @@ enum kmalloc_cache_type {
- #endif
- #ifndef CONFIG_MEMCG
- 	KMALLOC_CGROUP = KMALLOC_NORMAL,
-+#endif
-+#ifndef CONFIG_SLAB_OBJ_EXT
-+	KMALLOC_NO_OBJ_EXT = KMALLOC_NORMAL,
- #endif
- 	KMALLOC_RANDOM_START = KMALLOC_NORMAL,
- 	KMALLOC_RANDOM_END = KMALLOC_RANDOM_START + RANDOM_KMALLOC_CACHES_NR,
-@@ -591,6 +594,9 @@ enum kmalloc_cache_type {
- #endif
- #ifdef CONFIG_MEMCG
- 	KMALLOC_CGROUP,
-+#endif
-+#ifdef CONFIG_SLAB_OBJ_EXT
-+	KMALLOC_NO_OBJ_EXT,
- #endif
- 	NR_KMALLOC_TYPES
- };
-diff --git a/mm/slab.h b/mm/slab.h
-index b65d2462b3fdb..34a3d65b4ef5f 100644
---- a/mm/slab.h
-+++ b/mm/slab.h
-@@ -413,9 +413,13 @@ static inline struct kmem_cache *
- kmalloc_slab(size_t size, kmem_buckets *b, gfp_t flags, unsigned long caller)
- {
- 	unsigned int index;
-+	enum kmalloc_cache_type type = kmalloc_type(flags, caller);
-+
-+	if (flags & __GFP_NO_OBJ_EXT)
-+		type = KMALLOC_NO_OBJ_EXT;
- 
- 	if (!b)
--		b = &kmalloc_caches[kmalloc_type(flags, caller)];
-+		b = &kmalloc_caches[type];
- 	if (size <= 192)
- 		index = kmalloc_size_index[size_index_elem(size)];
- 	else
-@@ -454,7 +458,8 @@ static inline bool is_kmalloc_normal(struct kmem_cache *s)
- {
- 	if (!is_kmalloc_cache(s))
- 		return false;
--	return !(s->flags & (SLAB_CACHE_DMA|SLAB_ACCOUNT|SLAB_RECLAIM_ACCOUNT));
-+
-+	return !(s->flags & (SLAB_CACHE_DMA|SLAB_ACCOUNT|SLAB_RECLAIM_ACCOUNT|SLAB_NO_OBJ_EXT));
+--- a/drivers/usb/gadget/function/f_tcm.c
++++ b/drivers/usb/gadget/function/f_tcm.c
+@@ -2014,31 +2014,158 @@ ep_fail:
+ 	return -ENOTSUPP;
  }
  
- /* Legal flag mask for kmem_cache_create(), for various configurations */
-@@ -557,6 +562,25 @@ bool slab_in_kunit_test(void);
- static inline bool slab_in_kunit_test(void) { return false; }
- #endif
- 
-+/*
-+ * Return true if KMALLOC_NORMAL caches may need obj_exts arrays.
-+ *
-+ * Memory allocation profiling requires obj_exts for all caches.
-+ * Memcg usually doesn't need them for normal kmalloc caches, but kmalloc types
-+ * with a priority higher than KMALLOC_CGROUP can be aliased with KMALLOC_NORMAL.
-+ */
-+static __always_inline inline bool need_kmalloc_no_objext(void)
+-struct guas_setup_wq {
+-	struct work_struct work;
+-	struct f_uas *fu;
+-	unsigned int alt;
+-};
++static void tcm_cleanup_old_alt(struct f_uas *fu)
 +{
-+	if (!mem_alloc_profiling_permanently_disabled())
-+		return true;
-+
-+	if (!mem_cgroup_kmem_disabled() &&
-+			(KMALLOC_NORMAL == KMALLOC_RECLAIM))
-+		return true;
-+
-+	return false;
++	if (fu->flags & USBG_IS_UAS)
++		uasp_cleanup_old_alt(fu);
++	else if (fu->flags & USBG_IS_BOT)
++		bot_cleanup_old_alt(fu);
++	fu->flags = 0;
 +}
 +
- #ifdef CONFIG_SLAB_OBJ_EXT
- 
- /*
-diff --git a/mm/slab_common.c b/mm/slab_common.c
-index 477fa471da185..4cc96c3ea18e0 100644
---- a/mm/slab_common.c
-+++ b/mm/slab_common.c
-@@ -793,6 +793,12 @@ EXPORT_SYMBOL(kmalloc_size_roundup);
- #define KMALLOC_RANDOM_NAME(N, sz)
- #endif
- 
-+#ifdef CONFIG_SLAB_OBJ_EXT
-+#define KMALLOC_NO_OBJ_EXT_NAME(sz) .name[KMALLOC_NO_OBJ_EXT] = "kmalloc-no-objext-" #sz,
-+#else
-+#define KMALLOC_NO_OBJ_EXT_NAME(sz)
-+#endif
++static void tcm_delayed_set_alt_done(struct f_uas *fu)
++{
++	unsigned long flags;
 +
- #define INIT_KMALLOC_INFO(__size, __short_size)			\
- {								\
- 	.name[KMALLOC_NORMAL]  = "kmalloc-" #__short_size,	\
-@@ -800,6 +806,7 @@ EXPORT_SYMBOL(kmalloc_size_roundup);
- 	KMALLOC_CGROUP_NAME(__short_size)			\
- 	KMALLOC_DMA_NAME(__short_size)				\
- 	KMALLOC_RANDOM_NAME(RANDOM_KMALLOC_CACHES_NR, __short_size)	\
-+	KMALLOC_NO_OBJ_EXT_NAME(__short_size)			\
- 	.size = __size,						\
- }
- 
-@@ -907,6 +914,12 @@ new_kmalloc_cache(int idx, enum kmalloc_cache_type type)
- 			return;
- 		}
- 		flags |= SLAB_ACCOUNT;
-+	} else if (IS_ENABLED(CONFIG_SLAB_OBJ_EXT) && type == KMALLOC_NO_OBJ_EXT) {
-+		if (!need_kmalloc_no_objext()) {
-+			kmalloc_caches[type][idx] = kmalloc_caches[KMALLOC_NORMAL][idx];
-+			return;
-+		}
-+		flags |= SLAB_NO_OBJ_EXT | SLAB_NO_MERGE;
- 	} else if (IS_ENABLED(CONFIG_ZONE_DMA) && (type == KMALLOC_DMA)) {
- 		flags |= SLAB_CACHE_DMA;
- 	}
-diff --git a/mm/slub.c b/mm/slub.c
-index cf678f4617258..b61225c3503bf 100644
---- a/mm/slub.c
-+++ b/mm/slub.c
-@@ -1997,8 +1997,13 @@ int alloc_slab_obj_exts(struct slab *slab, struct kmem_cache *s,
- 	struct slabobj_ext *vec;
- 
- 	gfp &= ~OBJCGS_CLEAR_MASK;
--	/* Prevent recursive extension vector allocation */
--	gfp |= __GFP_NO_OBJ_EXT;
-+	/*
-+	 * In most cases, obj_exts arrays are allocated from normal kmalloc.
-+	 * However, normal kmalloc caches must allocate them from
-+	 * KMALLOC_NO_OBJ_EXT caches to prevent recursion.
-+	 */
-+	if (is_kmalloc_normal(s))
-+		gfp |= __GFP_NO_OBJ_EXT;
- 	vec = kcalloc_node(objects, sizeof(struct slabobj_ext), gfp,
- 			   slab_nid(slab));
- 	if (!vec) {
-@@ -2014,6 +2019,22 @@ int alloc_slab_obj_exts(struct slab *slab, struct kmem_cache *s,
- 		return -ENOMEM;
- 	}
- 
-+	if (IS_ENABLED(CONFIG_DEBUG_VM)) {
-+		struct kmem_cache *exts_cache;
-+		struct slab *exts_slab;
++	spin_lock_irqsave(&fu->delayed_set_alt_lock, flags);
++	fu->delayed_set_alt_state = USBG_DELAYED_SET_ALT_IDLE;
++	fu->delayed_set_alt_cancel = false;
++	spin_unlock_irqrestore(&fu->delayed_set_alt_lock, flags);
++}
 +
-+		exts_slab = virt_to_slab(vec);
-+		if (exts_slab) {
-+			/*
-+			 * The vector must be allocated from either normal or
-+			 * KMALLOC_NO_OBJ_EXT kmalloc caches to avoid cycles.
-+			 */
-+			exts_cache = exts_slab->slab_cache;
-+			WARN_ON_ONCE(!is_kmalloc_normal(exts_cache) &&
-+					!(exts_cache->flags & SLAB_NO_OBJ_EXT));
++static bool tcm_delayed_set_alt_cancelled(struct f_uas *fu)
++{
++	bool cancelled;
++	unsigned long flags;
++
++	spin_lock_irqsave(&fu->delayed_set_alt_lock, flags);
++	cancelled = fu->delayed_set_alt_cancel;
++	spin_unlock_irqrestore(&fu->delayed_set_alt_lock, flags);
++
++	return cancelled;
++}
++
++static bool tcm_complete_delayed_status(struct f_uas *fu)
++{
++	struct usb_composite_dev *cdev = fu->function.config->cdev;
++	struct usb_request *req = cdev->req;
++	unsigned long cdev_flags;
++	bool cancelled;
++	int ret;
++
++	spin_lock_irqsave(&cdev->lock, cdev_flags);
++	spin_lock(&fu->delayed_set_alt_lock);
++	cancelled = fu->delayed_set_alt_cancel;
++	if (!cancelled) {
++		fu->delayed_set_alt_state = USBG_DELAYED_SET_ALT_IDLE;
++		fu->delayed_set_alt_cancel = false;
++	}
++	spin_unlock(&fu->delayed_set_alt_lock);
++
++	if (cancelled) {
++		spin_unlock_irqrestore(&cdev->lock, cdev_flags);
++		return false;
++	}
++
++	if (cdev->delayed_status == 0) {
++		WARN(cdev, "%s: Unexpected call\n", __func__);
++	} else if (--cdev->delayed_status == 0) {
++		req->length = 0;
++		req->context = cdev;
++		ret = usb_ep_queue(cdev->gadget->ep0, req, GFP_ATOMIC);
++		if (ret == 0) {
++			cdev->setup_pending = true;
++		} else {
++			req->status = 0;
++			req->complete(cdev->gadget->ep0, req);
 +		}
 +	}
 +
- 	new_exts = (unsigned long)vec;
- #ifdef CONFIG_MEMCG
- 	new_exts |= MEMCG_DATA_OBJEXTS;
-@@ -2034,7 +2055,6 @@ int alloc_slab_obj_exts(struct slab *slab, struct kmem_cache *s,
- 		 * assign slabobj_exts in parallel. In this case the existing
- 		 * objcg vector should be reused.
- 		 */
--		mark_objexts_empty(vec);
- 		kfree(vec);
- 		return 0;
- 	} else if (cmpxchg(&slab->obj_exts, old_exts, new_exts) != old_exts) {
-@@ -2061,14 +2081,6 @@ static inline void free_slab_obj_exts(struct slab *slab)
- 		return;
- 	}
++	spin_unlock_irqrestore(&cdev->lock, cdev_flags);
++
++	return true;
++}
++
++static bool tcm_cancel_delayed_set_alt(struct f_uas *fu)
++{
++	bool cleanup = false;
++	bool cancel = false;
++	unsigned long flags;
++
++	spin_lock_irqsave(&fu->delayed_set_alt_lock, flags);
++	switch (fu->delayed_set_alt_state) {
++	case USBG_DELAYED_SET_ALT_IDLE:
++		cleanup = true;
++		break;
++	case USBG_DELAYED_SET_ALT_QUEUED:
++	case USBG_DELAYED_SET_ALT_RUNNING:
++		fu->delayed_set_alt_cancel = true;
++		cancel = true;
++		break;
++	}
++	spin_unlock_irqrestore(&fu->delayed_set_alt_lock, flags);
++
++	if (cancel && cancel_work(&fu->delayed_set_alt)) {
++		spin_lock_irqsave(&fu->delayed_set_alt_lock, flags);
++		if (fu->delayed_set_alt_state == USBG_DELAYED_SET_ALT_QUEUED) {
++			fu->delayed_set_alt_state = USBG_DELAYED_SET_ALT_IDLE;
++			fu->delayed_set_alt_cancel = false;
++			cleanup = true;
++		}
++		spin_unlock_irqrestore(&fu->delayed_set_alt_lock, flags);
++	}
++
++	return cleanup;
++}
++
++static void tcm_cancel_delayed_set_alt_sync(struct f_uas *fu)
++{
++	unsigned long flags;
++
++	spin_lock_irqsave(&fu->delayed_set_alt_lock, flags);
++	if (fu->delayed_set_alt_state != USBG_DELAYED_SET_ALT_IDLE)
++		fu->delayed_set_alt_cancel = true;
++	spin_unlock_irqrestore(&fu->delayed_set_alt_lock, flags);
++
++	cancel_work_sync(&fu->delayed_set_alt);
++
++	spin_lock_irqsave(&fu->delayed_set_alt_lock, flags);
++	fu->delayed_set_alt_state = USBG_DELAYED_SET_ALT_IDLE;
++	fu->delayed_set_alt_cancel = false;
++	spin_unlock_irqrestore(&fu->delayed_set_alt_lock, flags);
++}
  
--	/*
--	 * obj_exts was created with __GFP_NO_OBJ_EXT flag, therefore its
--	 * corresponding extension will be NULL. alloc_tag_sub() will throw a
--	 * warning if slab has extensions but the extension of an object is
--	 * NULL, therefore replace NULL with CODETAG_EMPTY to indicate that
--	 * the extension for obj_exts is expected to be NULL.
--	 */
--	mark_objexts_empty(obj_exts);
- 	kfree(obj_exts);
- 	slab->obj_exts = 0;
+ static void tcm_delayed_set_alt(struct work_struct *wq)
+ {
+-	struct guas_setup_wq *work = container_of(wq, struct guas_setup_wq,
+-			work);
+-	struct f_uas *fu = work->fu;
+-	int alt = work->alt;
++	struct f_uas *fu = container_of(wq, struct f_uas, delayed_set_alt);
++	unsigned long flags;
++	unsigned int alt;
++
++	spin_lock_irqsave(&fu->delayed_set_alt_lock, flags);
++	if (fu->delayed_set_alt_state != USBG_DELAYED_SET_ALT_QUEUED) {
++		spin_unlock_irqrestore(&fu->delayed_set_alt_lock, flags);
++		return;
++	}
++	fu->delayed_set_alt_state = USBG_DELAYED_SET_ALT_RUNNING;
++	alt = fu->delayed_alt;
++	spin_unlock_irqrestore(&fu->delayed_set_alt_lock, flags);
+ 
+-	kfree(work);
++	tcm_cleanup_old_alt(fu);
+ 
+-	if (fu->flags & USBG_IS_BOT)
+-		bot_cleanup_old_alt(fu);
+-	if (fu->flags & USBG_IS_UAS)
+-		uasp_cleanup_old_alt(fu);
++	if (tcm_delayed_set_alt_cancelled(fu))
++		goto out_done;
+ 
+ 	if (alt == USB_G_ALT_INT_BBB)
+ 		bot_set_alt(fu);
+ 	else if (alt == USB_G_ALT_INT_UAS)
+ 		uasp_set_alt(fu);
+-	usb_composite_setup_continue(fu->function.config->cdev);
++
++	if (tcm_complete_delayed_status(fu))
++		return;
++
++	tcm_cleanup_old_alt(fu);
++out_done:
++	tcm_delayed_set_alt_done(fu);
  }
--- 
-2.53.0
-
+ 
+ static int tcm_get_alt(struct usb_function *f, unsigned intf)
+@@ -2064,15 +2191,20 @@ static int tcm_set_alt(struct usb_functi
+ 		return -EOPNOTSUPP;
+ 
+ 	if ((alt == USB_G_ALT_INT_BBB) || (alt == USB_G_ALT_INT_UAS)) {
+-		struct guas_setup_wq *work;
++		unsigned long flags;
++
++		spin_lock_irqsave(&fu->delayed_set_alt_lock, flags);
++		if (fu->delayed_set_alt_state != USBG_DELAYED_SET_ALT_IDLE) {
++			spin_unlock_irqrestore(&fu->delayed_set_alt_lock,
++					       flags);
++			return -EBUSY;
++		}
++		fu->delayed_alt = alt;
++		fu->delayed_set_alt_cancel = false;
++		fu->delayed_set_alt_state = USBG_DELAYED_SET_ALT_QUEUED;
++		spin_unlock_irqrestore(&fu->delayed_set_alt_lock, flags);
+ 
+-		work = kmalloc(sizeof(*work), GFP_ATOMIC);
+-		if (!work)
+-			return -ENOMEM;
+-		INIT_WORK(&work->work, tcm_delayed_set_alt);
+-		work->fu = fu;
+-		work->alt = alt;
+-		schedule_work(&work->work);
++		schedule_work(&fu->delayed_set_alt);
+ 		return USB_GADGET_DELAYED_STATUS;
+ 	}
+ 	return -EOPNOTSUPP;
+@@ -2082,11 +2214,8 @@ static void tcm_disable(struct usb_funct
+ {
+ 	struct f_uas *fu = to_f_uas(f);
+ 
+-	if (fu->flags & USBG_IS_UAS)
+-		uasp_cleanup_old_alt(fu);
+-	else if (fu->flags & USBG_IS_BOT)
+-		bot_cleanup_old_alt(fu);
+-	fu->flags = 0;
++	if (tcm_cancel_delayed_set_alt(fu))
++		tcm_cleanup_old_alt(fu);
+ }
+ 
+ static int tcm_setup(struct usb_function *f,
+@@ -2234,11 +2363,16 @@ static void tcm_free(struct usb_function
+ {
+ 	struct f_uas *tcm = to_f_uas(f);
+ 
++	tcm_cancel_delayed_set_alt_sync(tcm);
+ 	kfree(tcm);
+ }
+ 
+ static void tcm_unbind(struct usb_configuration *c, struct usb_function *f)
+ {
++	struct f_uas *fu = to_f_uas(f);
++
++	tcm_cancel_delayed_set_alt_sync(fu);
++	tcm_cleanup_old_alt(fu);
+ 	usb_free_all_descriptors(f);
+ }
+ 
+@@ -2271,6 +2405,8 @@ static struct usb_function *tcm_alloc(st
+ 	fu->function.disable = tcm_disable;
+ 	fu->function.free_func = tcm_free;
+ 	fu->tpg = tpg_instances[i].tpg;
++	INIT_WORK(&fu->delayed_set_alt, tcm_delayed_set_alt);
++	spin_lock_init(&fu->delayed_set_alt_lock);
+ 	mutex_unlock(&tpg_instances_lock);
+ 
+ 	return &fu->function;
+--- a/drivers/usb/gadget/function/tcm.h
++++ b/drivers/usb/gadget/function/tcm.h
+@@ -3,6 +3,7 @@
+ #define __TARGET_USB_GADGET_H__
+ 
+ #include <linux/kref.h>
++#include <linux/spinlock.h>
+ /* #include <linux/usb/uas.h> */
+ #include <linux/usb/composite.h>
+ #include <linux/usb/uas.h>
+@@ -26,6 +27,12 @@ enum {
+ 
+ #define USB_G_DEFAULT_SESSION_TAGS	128
+ 
++enum {
++	USBG_DELAYED_SET_ALT_IDLE = 0,
++	USBG_DELAYED_SET_ALT_QUEUED,
++	USBG_DELAYED_SET_ALT_RUNNING,
++};
++
+ struct tcm_usbg_nexus {
+ 	struct se_session *tvn_se_sess;
+ };
+@@ -117,6 +124,12 @@ struct f_uas {
+ #define USBG_IS_BOT		(1 << 3)
+ #define USBG_BOT_CMD_PEND	(1 << 4)
+ 
++	struct work_struct	delayed_set_alt;
++	spinlock_t		delayed_set_alt_lock; /* protects delayed_set_alt_* */
++	unsigned int		delayed_alt;
++	unsigned int		delayed_set_alt_state;
++	bool			delayed_set_alt_cancel;
++
+ 	struct usbg_cdb		cmd;
+ 	struct usb_ep		*ep_in;
+ 	struct usb_ep		*ep_out;
 
 
