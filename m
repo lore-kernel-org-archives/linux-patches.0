@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 475324756C9;
-	Fri,  7 Aug 2026 15:04:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 587A94749F0;
+	Fri,  7 Aug 2026 15:04:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115074; cv=none; b=JngGEUoGd4Cbxt5MHuGsfMjBKXyonoDTGvPfsmbDJlLgTfgfu+PWaZTUd3teB+Qw7lDPfKHZPv79yVU1gd7f5/zSyBs5mwbBFy336wxhCj7IP5f2IAuw0PQtN1pdPngR/VMNhMJceos9YqlMz5rwIv3WQvb/W4oEEGW8zH2rqgQ=
+	t=1786115077; cv=none; b=PuXfol4rijz74bX3ChaOoYmi1G5mbSxDn+QuTsVUCVyutKGpv13Nqf7aZrn/mKhQg3UNrudrWAPfYt6tEWKHuYXn6GnptQBY4Zfve8luCJyQ+sRmcncxLq/UmPz0sDda0SZlL+jLKQA1hrFccItuMUM/6zsqMtpIFSzpksO/lUg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115074; c=relaxed/simple;
-	bh=9nPAAHIWB+7/Gg39Z1eNeJGAEa0q6oGWzrM3It/H22Q=;
+	s=arc-20240116; t=1786115077; c=relaxed/simple;
+	bh=1O/p+PHVrp8p4+aP7JMyGcwSPlishZPd931brLvyMgg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I5LYAMnDBXb1j0iIct3w2yogpm4vNJw18dULv73RsR6b0ljVDIqO5RZllcopHJv8SYePklun+PWM0DxoZm3ZnVL6nkztRBnbAzqEj69xaMjyScdnO++zwopXTmx4dpQ7GmtdbNbdmGMsLVoYP2Pdf2E1BxJNPOP6q23Riqazi8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0j51AKjV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rNumsLPZFRFhqJgJd0PdbFYATOwu5gnoZps9ZUXKZZvhhWTCgh55fUDf4IW70CwO8cI3Y0ySVCoo49YoT//F5c8zDKgumnWmRJZrlcvFJ3Ueuh5JWlKyLOrUZMvpGmyRsYuhQh9qjimxui7JoY7mRj4Til1vK5gBr4kkOF+Lqzs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CHkrwrCy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0j51AKjV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D1B41F00A3A;
-	Fri,  7 Aug 2026 15:04:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CHkrwrCy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F8B61F00A3F;
+	Fri,  7 Aug 2026 15:04:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115064;
-	bh=RGXWZbsKAfwSPDrXbgmotfHTdv41696Ni5qa0L9wB8s=;
+	s=korg; t=1786115070;
+	bh=zx011pyxRaSq4qMGMGHtZzZz0NuU7Y8iGL2eA2gv+AU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0j51AKjVqNI0A8QSvixYvNnKj22NO4Ht1WK9NvyXLhEhDcnCUiearIqrXU/88LISs
-	 kyLNxwpeNzDJAteInscCyV2t2w+ShKX/v6+KKFHuvj5zzLnE0zLtDTyV7RT/IiW7uG
-	 3phEPoYItmY33u0seWftpGEecs9fB+9FuVWdIuN0=
+	b=CHkrwrCy+zQr2hwxr1MrFQW4b0hbitPQ+PY70tdSRvnogQyNfEhPi9Y8VmzPthft0
+	 Y3X+ECT+lrlV1OyjIdd7gR0UD8JNSD9eW1b0d712OA4D42rTGJl/yWUT2I+hLf1wD/
+	 HL1kctctf5j6nwhpr4Ly3TA8pCCkWBlFL1v7/M34=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chenguang Zhao <zhaochenguang@kylinos.cn>,
-	Paolo Abeni <pabeni@redhat.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 101/396] net: ethernet: mtk_eth_soc: pass eth to mtk_handle_irq_rx in poll_controller
-Date: Fri,  7 Aug 2026 16:34:21 +0200
-Message-ID: <20260807143426.471556797@linuxfoundation.org>
+Subject: [PATCH 6.18 140/396] tracing/mmiotrace: Add NULL check for mmio_trace_array in logging functions
+Date: Fri,  7 Aug 2026 16:35:00 +0200
+Message-ID: <20260807143427.330117927@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -51,37 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chenguang Zhao <zhaochenguang@kylinos.cn>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-[ Upstream commit e095f249e2209674f6366f6db0383a2b96e19239 ]
+[ Upstream commit 12b80cdbc54cf615b4717a4e8180063408091ea2 ]
 
-mtk_handle_irq_rx expects a struct mtk_eth * (matching the request_irq
-cookie), but mtk_poll_controller incorrectly passed the net_device *.
-Calling ndo_poll_controller with CONFIG_NET_POLL_CONTROLLER enabled
-would then crash.
+mmio_trace_rw() and mmio_trace_mapping() retrieve mmio_trace_array into
+tr and pass it to __trace_mmiotrace_rw() and __trace_mmiotrace_map().
+If these functions are invoked while mmio_trace_array is NULL (e.g. before
+initialization or after disabled), accessing tr->array_buffer.buffer will
+result in a NULL pointer dereference crash.
 
-Fixes: 8186f6e382d8 ("net-next: mediatek: fix compile error inside mtk_poll_controller()")
-Signed-off-by: Chenguang Zhao <zhaochenguang@kylinos.cn>
-Link: https://patch.msgid.link/20260723055735.885112-1-chenguang.zhao@linux.dev
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fix this by adding an explicit NULL check for tr at the beginning of
+__trace_mmiotrace_rw() and __trace_mmiotrace_map().
+
+Link: https://patch.msgid.link/178524300062.56416.8362487250709962380.stgit@devnote2
+Fixes: f984b51e0779 ("ftrace: add mmiotrace plugin")
+Assisted-by: Antigravity:gemini-3.6-flash
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mediatek/mtk_eth_soc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/trace_mmiotrace.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-index 065f969ee44ef..98cf11a706e14 100644
---- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-+++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-@@ -3446,7 +3446,7 @@ static void mtk_poll_controller(struct net_device *dev)
+diff --git a/kernel/trace/trace_mmiotrace.c b/kernel/trace/trace_mmiotrace.c
+index e16b15d7c84aa..32b7e1d972a47 100644
+--- a/kernel/trace/trace_mmiotrace.c
++++ b/kernel/trace/trace_mmiotrace.c
+@@ -294,11 +294,15 @@ device_initcall(init_mmio_trace);
+ static void __trace_mmiotrace_rw(struct trace_array *tr,
+ 				struct mmiotrace_rw *rw)
+ {
+-	struct trace_buffer *buffer = tr->array_buffer.buffer;
++	struct trace_buffer *buffer;
+ 	struct ring_buffer_event *event;
+ 	struct trace_mmiotrace_rw *entry;
+ 	unsigned int trace_ctx;
  
- 	mtk_tx_irq_disable(eth, MTK_TX_DONE_INT);
- 	mtk_rx_irq_disable(eth, eth->soc->rx.irq_done_mask);
--	mtk_handle_irq_rx(eth->irq[MTK_FE_IRQ_RX], dev);
-+	mtk_handle_irq_rx(eth->irq[MTK_FE_IRQ_RX], eth);
- 	mtk_tx_irq_enable(eth, MTK_TX_DONE_INT);
- 	mtk_rx_irq_enable(eth, eth->soc->rx.irq_done_mask);
- }
++	if (!tr)
++		return;
++
++	buffer = tr->array_buffer.buffer;
+ 	trace_ctx = tracing_gen_ctx_flags(0);
+ 	event = trace_buffer_lock_reserve(buffer, TRACE_MMIO_RW,
+ 					  sizeof(*entry), trace_ctx);
+@@ -321,11 +325,15 @@ void mmio_trace_rw(struct mmiotrace_rw *rw)
+ static void __trace_mmiotrace_map(struct trace_array *tr,
+ 				struct mmiotrace_map *map)
+ {
+-	struct trace_buffer *buffer = tr->array_buffer.buffer;
++	struct trace_buffer *buffer;
+ 	struct ring_buffer_event *event;
+ 	struct trace_mmiotrace_map *entry;
+ 	unsigned int trace_ctx;
+ 
++	if (!tr)
++		return;
++
++	buffer = tr->array_buffer.buffer;
+ 	trace_ctx = tracing_gen_ctx_flags(0);
+ 	event = trace_buffer_lock_reserve(buffer, TRACE_MMIO_MAP,
+ 					  sizeof(*entry), trace_ctx);
 -- 
 2.53.0
 
