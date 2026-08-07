@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2171473C84;
-	Fri,  7 Aug 2026 15:42:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF31246E00D;
+	Fri,  7 Aug 2026 15:42:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786117337; cv=none; b=kP2r/o1Bf66WkqPRycaWVCev1Y0FJG5QQI5mIc9BJkHOcA7pTP9VPjn/8YnoOGTaKABdKna9e+PsoPTi6W1n9Kk1cBn1uIGbhoJ6qMmIMqYi/AL+ld2oD2hjFya3/j+HBBAjOaFg+8gOPR3wyrqwr4e+is5SAX7GDK0eR0L6tOk=
+	t=1786117339; cv=none; b=jd0c/6ssd2vhhljq0k+wqOGprPnFKeDOWMQ0JejWDDxgd3ZU6Ti5P1P88wigyLgXAg4Utii/ss8frsi3iF41sqxu6ZpLvHwwNDa24PddWuPXczoBqnVkgfDz2wm5spZIKwjBxE3C0VIg1Ab1euxjr+pNQa/zo2htLXxihCQAhmY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786117337; c=relaxed/simple;
-	bh=+N/Hu/LHBkjK3YAntiokTU+geeIwaoERK9cgeveLbxE=;
+	s=arc-20240116; t=1786117339; c=relaxed/simple;
+	bh=Rd5dmZukWvku9uhcbbe3/XPlXd1qlxB5gGHmdJpbmK8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=flBnghUA2kno3KH00DKwjwU1g57St/9zH60b/CeFgm7fWujqiYyS3RvkZdTjwCJgkXwwPlJmSU7Q+wNj8Us47wHHZBuK2llVLlwnWrI7y0zy0Xk6oEMwCLNk4r6zi/A3YpR8JGLX/hWN7kj5yl1A2XnTTVLpiQjl0Lyqt28KahM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HFP3piUK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=M4FQdfYu+qWMfHuhJ7EFfbn7sp2ft+8LYz/d4y4hw2pVbE5ovjuzlXdbvbOuKgIszo6b4PDcP99p5IFThChw/dTIBSoWLOXxRtoy5oTE1S4PE4m70h4DZNi9AChmlflc7qeR0TAU70SImaYKmsxbIjFyPkgWczjMPM+Q+tVyx/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AcFSuot0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HFP3piUK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 622D01F000E9;
-	Fri,  7 Aug 2026 15:42:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AcFSuot0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B2D31F000E9;
+	Fri,  7 Aug 2026 15:42:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786117335;
-	bh=cgd+tvREcDgorXI43Sim7+LNx6l7R1blN/O9msFIXMI=;
+	s=korg; t=1786117338;
+	bh=AxoMWC3NGqA9GuTDd1feVuDaBdCe463QAVyvsyJ2cuw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HFP3piUKVc5OErrudKY06LQyeYFrG1qa9xd6ln2rRBSgT9U3t097zNY1kfT2ZQ8Z5
-	 imsrVa1Gx6JjpeKSnnsEvth5MmPPTBK1jcihDsQBKAEknSPcX5Y2fo4z3gLI9C9RPr
-	 pJQ5dkIZJfbk/019miMTZVeKQpIGu0zPWHcnwhTc=
+	b=AcFSuot0OBndXc1/XyGT2ZZnMQeyuEhaC3pgVuObJVQUxqbqie+uKIhURDGK+qgB0
+	 YUvVG7keixppLmjLSMg0tZXkAb2HgQLVNRGF8yRCleKZX8ltdyVBm+BO3zskLauCVm
+	 /F2z0pS0otHTi72eKq3J7pjKISWBW3BHUPJ62m6Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Soeren Moch <smoch@web.de>,
-	Richard Zhu <hongxing.zhu@nxp.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Manivannan Sadhasivam <mani@kernel.org>
-Subject: [PATCH 7.1 283/438] PCI: imx6: Keep i.MX6 Root Port MSI/MSI-X Capabilities with iMSI-RX to work around hardware bug
-Date: Fri,  7 Aug 2026 16:37:59 +0200
-Message-ID: <20260807143434.013729744@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Zihan Xi <zihanx@nebusec.ai>,
+	Ren Wei <enjou1224z@gmail.com>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.1 284/438] tipc: avoid use-after-free in poll trace queue dumps
+Date: Fri,  7 Aug 2026 16:38:00 +0200
+Message-ID: <20260807143434.034729663@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -53,71 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Soeren Moch <smoch@web.de>
+From: Zihan Xi <zihanx@nebusec.ai>
 
-commit b4bee12ebeccfcd5959ace2c3a4af08f5a917d4c upstream.
+commit b4f1719dfea023220e0e6bd892b087d76b2a6a49 upstream.
 
-On some NXP chipsets, disabling Root Port MSI/MSI-X Capabilities blocks
-MSIs originating from Endpoints from reaching the iMSI-RX controller.
+TIPC socket tracepoints dump queue state through tipc_sk_dump(). Most
+queue-dump callsites already serialize that walk under the socket lock or
+sk->sk_lock.slock, but tipc_poll() calls trace_tipc_sk_poll(...,
+TIPC_DUMP_ALL, ...) without holding either lock.
 
-To address this hardware bug, commit 3a4e8302e72f ("PCI: imx6: Keep Root
-Port MSI capability with iMSI-RX to work around hardware bug") preserves
-Root Port MSI and MSI-X Capabilities on i.MX7D, i.MX8MM, and i.MX8MQ
-when iMSI-RX is in use.
+That lets the poll trace path reach tipc_list_dump() and backlog head/tail
+dumping while another context dequeues and frees an skb, leaving the trace
+helper dereferencing a stale queue entry.
 
-The same applies to i.MX6Q, i.MX6QP, and i.MX6SX, so preserve Root Port
-MSI/MSI-X Capabilities there as well.
+Stop the unlocked poll trace site from requesting queue dumps. Other queue
+dump trace callsites keep their existing output under the locking they
+already provide, while poll still emits the event itself without walking
+live queue members from an unlocked context.
 
-Note that preserving these Capabilities means Root Port-originated MSIs
-such as AER and PME won't be received due to separate hardware limitations.
-Users may need to use workarounds such as passing the 'pcie_pme=nomsi'
-command-line parameter.
-
-Fixes: f5cd8a929c825 ("PCI: dwc: Remove MSI/MSIX capability for Root Port if iMSI-RX is used as MSI controller")
-Signed-off-by: Soeren Moch <smoch@web.de>
-Signed-off-by: Richard Zhu <hongxing.zhu@nxp.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-Acked-by: Richard Zhu <hongxing.zhu@nxp.com>
-Cc: stable@vger.kernel.org # 7.0+
-Link: https://patch.msgid.link/20260717033203.2965045-1-hongxing.zhu@oss.nxp.com
+Fixes: b4b9771bcbbd ("tipc: enable tracepoints in tipc")
+Cc: stable@vger.kernel.org
+Reported-by: Vega <vega@nebusec.ai>
+Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
+Signed-off-by: Ren Wei <enjou1224z@gmail.com>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/f8119abd5e5ecc400597de667ae9d39656de56d0.1784794294.git.zihanx@nebusec.ai
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/dwc/pci-imx6.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ net/tipc/socket.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/pci/controller/dwc/pci-imx6.c
-+++ b/drivers/pci/controller/dwc/pci-imx6.c
-@@ -1884,7 +1884,8 @@ static const struct imx_pcie_drvdata drv
- 		.flags = IMX_PCIE_FLAG_IMX_PHY |
- 			 IMX_PCIE_FLAG_SPEED_CHANGE_WORKAROUND |
- 			 IMX_PCIE_FLAG_BROKEN_SUSPEND |
--			 IMX_PCIE_FLAG_SUPPORTS_SUSPEND,
-+			 IMX_PCIE_FLAG_SUPPORTS_SUSPEND |
-+			 IMX_PCIE_FLAG_KEEP_MSI_CAP,
- 		.dbi_length = 0x200,
- 		.gpr = "fsl,imx6q-iomuxc-gpr",
- 		.ltssm_off = IOMUXC_GPR12,
-@@ -1900,7 +1901,8 @@ static const struct imx_pcie_drvdata drv
- 		.flags = IMX_PCIE_FLAG_IMX_PHY |
- 			 IMX_PCIE_FLAG_SPEED_CHANGE_WORKAROUND |
- 			 IMX_PCIE_FLAG_SKIP_L23_READY |
--			 IMX_PCIE_FLAG_SUPPORTS_SUSPEND,
-+			 IMX_PCIE_FLAG_SUPPORTS_SUSPEND |
-+			 IMX_PCIE_FLAG_KEEP_MSI_CAP,
- 		.gpr = "fsl,imx6q-iomuxc-gpr",
- 		.ltssm_off = IOMUXC_GPR12,
- 		.ltssm_mask = IMX6Q_GPR12_PCIE_CTL_2,
-@@ -1915,7 +1917,8 @@ static const struct imx_pcie_drvdata drv
- 		.flags = IMX_PCIE_FLAG_IMX_PHY |
- 			 IMX_PCIE_FLAG_SPEED_CHANGE_WORKAROUND |
- 			 IMX_PCIE_FLAG_SKIP_L23_READY |
--			 IMX_PCIE_FLAG_SUPPORTS_SUSPEND,
-+			 IMX_PCIE_FLAG_SUPPORTS_SUSPEND |
-+			 IMX_PCIE_FLAG_KEEP_MSI_CAP,
- 		.dbi_length = 0x200,
- 		.gpr = "fsl,imx6q-iomuxc-gpr",
- 		.ltssm_off = IOMUXC_GPR12,
+--- a/net/tipc/socket.c
++++ b/net/tipc/socket.c
+@@ -795,7 +795,7 @@ static __poll_t tipc_poll(struct file *f
+ 	__poll_t revents = 0;
+ 
+ 	sock_poll_wait(file, sock, wait);
+-	trace_tipc_sk_poll(sk, NULL, TIPC_DUMP_ALL, " ");
++	trace_tipc_sk_poll(sk, NULL, TIPC_DUMP_NONE, " ");
+ 
+ 	if (sk->sk_shutdown & RCV_SHUTDOWN)
+ 		revents |= EPOLLRDHUP | EPOLLIN | EPOLLRDNORM;
 
 
