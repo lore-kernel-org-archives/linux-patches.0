@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FFC8395AE9;
-	Fri,  7 Aug 2026 14:43:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 670383F9A1A;
+	Fri,  7 Aug 2026 14:43:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786113823; cv=none; b=fetEWYQxMwQOJYx+RtT0WID27809nOkuwNs/Kq2lK6jKO1oaRvjlTtmxmWhJoplWewl7EWmoAJBb+lThCCUBEGKO9s5iZKJrj9FzWZQF8itCIWifoTLzB6c/ai3dj17ICtuXyCg6Yh5JQw47bAWNnKYHNEMcE4sH9YIfndhN4FA=
+	t=1786113829; cv=none; b=IIXxqpQzJJKiwwvw8FjlQIbLZXLRCjGBuoyLWq6aWzxnJCiQePrxgLwZE1L6FGtsYfaVp+og8J4mQFg5WodmBH0OhBRttZrQe4qFq9beJ1Yfu6+45mFcrNQ2hiXpL8WvsE6bEcnC2QZj9KF0UKFS5hUpG1+A6sHVBB9mUEdV+vU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786113823; c=relaxed/simple;
-	bh=2MpOArJNd874rvbxcoIke+rfaaGe2A7fJ9p8Jgg/GH8=;
+	s=arc-20240116; t=1786113829; c=relaxed/simple;
+	bh=/o0Hz6YCiIQME+4D8v4Z4RPB+S+siDigqdmKenpHgA4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XmeQOz+whxncrYzFAx7SseDx+kkdtGM2fW0jmKjCZzlRhfdZQqi27L88lt+acDhO0XmRizdogpaISxU2gqZSCaJhvoKHKmITlVPfoEInfG0ZexswyQMdUC9/Mgfbh+RvD/rsJEI+8ApYUJkZ1q5v+NjGWl9iSuwONorlVBXRuAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=efaepoWQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZA2Y/9NefFSR80ZSlK6yc720yTjOeYA/C9/V09rnlzx8k+0mpLhVWgP9d7ta25zno/skHwAudLeVABqOtXOehmG+5mjQugaHhEKL/nyaDHn3wz8EQzu0x2OLnuV7KCqyIRbT1qm4jVdKq+JDVkMQg7EUL6Tw331K3KfyI6iCrfI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uT6ZnKQS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="efaepoWQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF6D81F00A3F;
-	Fri,  7 Aug 2026 14:43:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uT6ZnKQS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CA341F00A3E;
+	Fri,  7 Aug 2026 14:43:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786113808;
-	bh=phBSHHzGuPI6Up0uv2Gleh4iHpoQA6blqq0ScXTsLck=;
+	s=korg; t=1786113802;
+	bh=7ENyDc9tp4jPZsPzwJz4/P0sBwxffcLNwle9ItQKnks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=efaepoWQ6U8uh7yr/kE+UkJ/YxlXUk37KH1fda103sCM14OQJ5qLp2dqaFpKrEwIN
-	 SXGQ8ifw9ACLoNlg6zLLxdjnI//7qAvBqSWQGuEbNJp5E8Gqd9tU0AXQh9OpqzD9bC
-	 g6BhQvfUc/ntuiT5aHGyfyVfJV3m+TtD0E+PQE4w=
+	b=uT6ZnKQSysfpeAVeRnpPYJUMqC3ZYrjkw9pOMmKunR57gL6wDNdTNn4cjeA401O2d
+	 2xMe4kjoXRXbKLYu+YDKDc9qQ8CTLvRETWJxGfbmY9W4XavHAVvBQ2ZpUkbu0mf7dR
+	 KeQghsFkmACBA0wk/xSnDuuVvastfG0EpLWemGGg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
+	Fabrice Derepas <fabrice.derepas@canonical.com>,
+	David Gstir <david@sigma-star.at>,
+	Richard Weinberger <richard@nod.at>,
 	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 043/337] keys: make keyring key-chunk byte order agree with keyring_diff_objects()
-Date: Fri,  7 Aug 2026 16:34:06 +0200
-Message-ID: <20260807143419.449370006@linuxfoundation.org>
+Subject: [PATCH 6.12 041/337] KEYS: trusted: dcp: fix key_len validation and calc_blob_len() return type
+Date: Fri,  7 Aug 2026 16:34:04 +0200
+Message-ID: <20260807143419.404243047@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -51,60 +53,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Fabrice Derepas <fabrice.derepas@canonical.com>
 
-[ Upstream commit 58565eef0f8d861aae92abfb7658458d661cee17 ]
+[ Upstream commit 35d661c98fe4733490f20b4311616a3c2c30abc0 ]
 
-keyring_get_key_chunk() loads description bytes into the index chunk low
-address first, while keyring_diff_objects() numbers the first differing
-bit from the low end and folds the absolute byte index into the level
-without removing the inline-prefix offset the level already carries.
-The two disagree on byte order and bit position, so the array can be
-told two keys first differ at a bit that does not differ in the chunk
-the walker uses, letting crafted descriptions collide into one node.
+Two correctness and type-hygiene issues exist in the DCP trusted keys
+implementation.
 
-Load the chunk in the order keyring_diff_objects() assumes and drop the
-inline-prefix length when folding the byte index into the level.  This
-only changes the in-memory ordering used to place keys within a keyring;
-add, search and read of non-colliding keys are unaffected.
+First, trusted_dcp_unseal() reads p->key_len from a user-supplied blob
+without checking if it exceeds MAX_KEY_SIZE.  If a crafted blob provides a
+payload_len larger than 128, the subsequent do_aead_crypto() call writes
+past the end of the p->key array into the adjacent p->blob buffer within
+the same struct trusted_key_payload -- the caller's own input, not
+unrelated kernel memory.  While not exploitable, this violates strict array
+bounds and triggers static analyzers.  Fix this by adding a validation
+check against MIN_KEY_SIZE and MAX_KEY_SIZE immediately after reading the
+length, matching the checks already done in trusted_core.c.
 
-Fixes: f771fde82051 ("keys: Simplify key description management")
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Second, calc_blob_len() calculates a sum in size_t that truncates to
+unsigned int on 64-bit platforms.  Because the DCP hardware is only present
+on 32-bit i.MX SoC platforms, size_t and unsigned int are functionally
+equivalent in production, making this truncation harmless in practice.
+Nevertheless, updating the return type to size_t (and subsequently updating
+'blen' in the seal/unseal paths) resolves type-narrowing warnings and
+improves overall code hygiene.
+
+Fixes: 2e8a0f40a39c ("KEYS: trusted: Introduce NXP DCP-backed trusted keys")
+Signed-off-by: Fabrice Derepas <fabrice.derepas@canonical.com>
+Reviewed-by: David Gstir <david@sigma-star.at>
+Reviewed-by: Richard Weinberger <richard@nod.at>
 Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
 Tested-by: Jarkko Sakkinen <jarkko@kernel.org>
-Link: https://lore.kernel.org/r/20260719161505.2423935-3-michael.bommarito@gmail.com
+Link: https://lore.kernel.org/r/20260719163939.3624767-1-fabrice.derepas@canonical.com
 Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/keys/keyring.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ security/keys/trusted-keys/trusted_dcp.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/security/keys/keyring.c b/security/keys/keyring.c
-index b9ca9dc9b0c3f..fd95a0eb7a466 100644
---- a/security/keys/keyring.c
-+++ b/security/keys/keyring.c
-@@ -293,9 +293,10 @@ static unsigned long keyring_get_key_chunk(const void *data, int level)
- 		desc_len -= offset;
- 		if (desc_len > n)
- 			desc_len = n;
-+		d += desc_len;
- 		do {
- 			chunk <<= 8;
--			chunk |= *d++;
-+			chunk |= *--d;
- 		} while (--desc_len > 0);
- 		return chunk;
- 	}
-@@ -376,7 +377,7 @@ static int keyring_diff_objects(const void *object, const void *data)
- 	return -1;
+diff --git a/security/keys/trusted-keys/trusted_dcp.c b/security/keys/trusted-keys/trusted_dcp.c
+index 7b6eb655df0cb..c078adebe190e 100644
+--- a/security/keys/trusted-keys/trusted_dcp.c
++++ b/security/keys/trusted-keys/trusted_dcp.c
+@@ -69,7 +69,7 @@ static bool skip_zk_test;
+ module_param_named(dcp_skip_zk_test, skip_zk_test, bool, 0);
+ MODULE_PARM_DESC(dcp_skip_zk_test, "Don't test whether device keys are zero'ed");
  
- differ_plus_i:
--	level += i;
-+	level += i - (int)sizeof(a->desc);
- differ:
- 	i = level * 8 + __ffs(seg_a ^ seg_b);
- 	return i;
+-static unsigned int calc_blob_len(unsigned int payload_len)
++static size_t calc_blob_len(unsigned int payload_len)
+ {
+ 	return sizeof(struct dcp_blob_fmt) + payload_len + DCP_BLOB_AUTHLEN;
+ }
+@@ -200,7 +200,8 @@ static int encrypt_blob_key(u8 *plain_key, u8 *encrypted_key)
+ static int trusted_dcp_seal(struct trusted_key_payload *p, char *datablob)
+ {
+ 	struct dcp_blob_fmt *b = (struct dcp_blob_fmt *)p->blob;
+-	int blen, ret;
++	size_t blen;
++	int ret;
+ 	u8 *plain_blob_key;
+ 
+ 	blen = calc_blob_len(p->key_len);
+@@ -242,7 +243,8 @@ static int trusted_dcp_seal(struct trusted_key_payload *p, char *datablob)
+ static int trusted_dcp_unseal(struct trusted_key_payload *p, char *datablob)
+ {
+ 	struct dcp_blob_fmt *b = (struct dcp_blob_fmt *)p->blob;
+-	int blen, ret;
++	size_t blen;
++	int ret;
+ 	u8 *plain_blob_key = NULL;
+ 
+ 	if (b->fmt_version != DCP_BLOB_VERSION) {
+@@ -253,9 +255,14 @@ static int trusted_dcp_unseal(struct trusted_key_payload *p, char *datablob)
+ 	}
+ 
+ 	p->key_len = le32_to_cpu(b->payload_len);
++	if (p->key_len < MIN_KEY_SIZE || p->key_len > MAX_KEY_SIZE) {
++		ret = -EINVAL;
++		goto out;
++	}
++
+ 	blen = calc_blob_len(p->key_len);
+ 	if (blen != p->blob_len) {
+-		pr_err("DCP blob has bad length: %i != %i\n", blen,
++		pr_err("DCP blob has bad length: %zu != %u\n", blen,
+ 		       p->blob_len);
+ 		ret = -EINVAL;
+ 		goto out;
 -- 
 2.53.0
 
