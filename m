@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3129476CE1;
-	Fri,  7 Aug 2026 15:00:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93F0737AA9A;
+	Fri,  7 Aug 2026 15:00:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114827; cv=none; b=NVDC7d1XFso2fCgXOiY5+xkGp/TpYL9jOV2mjlEaElONJ9tIpn+1zAoxj82XWdkJeMTTKzyJFlKhhmOdTgwpsuUxrnd3DFo9L1rLpZ1qKYs/ga4tiFTVoI8JUMC0CEThprxL36hfm87ieG03FMOJPaa9SI+qIka8SEgxZ/dUKlE=
+	t=1786114830; cv=none; b=asR5DGd4vIhND+POUXesghOJJ70oyBKbVe0UdvGib3qFISKIAMlvuf+09ICUpKipR+hxtrTRwWp7ZnYF1Qh08EWHhbmtozvsaa9MG2lIKPZYT7UVnoTe3KR5nbE6in6aVmyXDjfNhdxhntWCvYHSy4Ty2zX8KhGJ6lf2GboM3Aw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114827; c=relaxed/simple;
-	bh=XOjq5jjhKAGsTfAR2SzfaUe+D08TbYsJ+dvZNHDOsbs=;
+	s=arc-20240116; t=1786114830; c=relaxed/simple;
+	bh=ZkSolZwv8SZiRWT4v5cTty1kBkn+vWwzJMTEhsCJrWM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nc9ZNe8XpHibaxdhAX/01MiIpF7hDnQRBE6rJUE78hCje2EN50ZqqS6zknIu5Hywnr1gnCLSgnto84iRVLrYMYpBl88i2dQ9WH6pj3Izevo4cfBEXN3y9RgxVR3QRCWJDWmfg14rN4HBWXC7hcRyy0PXkmoywDsYhFsy3dlClSA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i+jVnJWM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bdZgYgu8CECYJpddvsXchvjHhD9V4mtxNoLkj6FNvRFhsB9608PA8mYZJ0C68JDwP07oLlfbTYTlJ8+yGwZyU1NE6m2PgTFll043TTwbNeR8mkp5vva9f4Bw0Krj4uBVanegu9hdrEwcP6pSD6W7CTZVV/AMnTccNwbfvFP8K3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FsIEM+X7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i+jVnJWM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E1961F000E9;
-	Fri,  7 Aug 2026 15:00:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FsIEM+X7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF9521F000E9;
+	Fri,  7 Aug 2026 15:00:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114825;
-	bh=01k1otC35+RqOIOsCaf3Jy3jjX/BytkBlTbdkelT6As=;
+	s=korg; t=1786114828;
+	bh=mNiPxP0/htN5DGicr8I8pFAWJQM4s1LZ/CFO6L9Cahg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i+jVnJWMWj9454iDmUmLYcDRUtqqK1b3Y12wJsJbFGnp+cJp5sfW3ztAIURrCTWkV
-	 axREF06z175rqeC1vP0WKoRncczWO3gZCcqX1geOWN5aKGUEw0Is76gPNG4D2Og0yJ
-	 jDQrjBiiJJLyBk3J6FzotT/1SdcyMNs7aYcbRrzY=
+	b=FsIEM+X7uTMKae7j9hXX4m76tBYZCIfRpZE1W8XYG1he6bAevKBphiurjNMJcTbY7
+	 XeItEp8hYpCWOmkbu0YdRQ4Dw3Zj1STotzJV7+6TFphrD0P8vA++xANK61UdB4EVWR
+	 v6viM0S5+n6nNMDsUjyHzguVElsh/wGi1uIFvvoU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Xing <kernelxing@tencent.com>,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 062/396] xsk: drain continuation descs after overflow in xsk_build_skb()
-Date: Fri,  7 Aug 2026 16:33:42 +0200
-Message-ID: <20260807143425.610933134@linuxfoundation.org>
+Subject: [PATCH 6.18 063/396] pinctrl-amd: Dont clear S4 wake bits at probe
+Date: Fri,  7 Aug 2026 16:33:43 +0200
+Message-ID: <20260807143425.632901005@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -53,142 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Xing <kernelxing@tencent.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit bd44a6dcd4248883de90f5dad53ae80066e27096 ]
+[ Upstream commit ffe8a0c6b55285ceaf2f42fc20c3a0594d14f1e9 ]
 
-Fix generic xmit path multi-buffer logic when packets are either too big
-(count of descriptors exceed MAX_SKB_FRAGS) or an invalid descriptor is
-included in fragmented packet. Introduce xdp_sock::drain_cont and act
-upon this flag - when it is set, keep on consuming descriptors from
-AF_XDP Tx ring and put them directly onto Cq. Previously these
-descriptors were silently lost and could never be reached again.
+commit 6bc3462a0f5e ("pinctrl: amd: Mask wake bits on probe again")
+introduced a regression where Wake-on-LAN no longer works after suspend
+or shutdown on some AMD platforms.
 
-Fixes: cf24f5a5feea ("xsk: add support for AF_XDP multi-buffer on Tx path")
-Closes: https://lore.kernel.org/all/20260425041726.85FB3C2BCB2@smtp.kernel.org/
-Reviewed-by: Jason Xing <kernelxing@tencent.com>
-Co-developed-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com> # wrapped cq addr submission onto routine
-Signed-off-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Signed-off-by: Jason Xing <kernelxing@tencent.com>
-Acked-by: Stanislav Fomichev <sdf@fomichev.me>
-Link: https://patch.msgid.link/20260719135609.147823-3-maciej.fijalkowski@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Firmware-programmed S4 wake bits for devices like PCIe NICs using PCI
+PME are cleared at probe, but nothing restores them. Unlike S0i3/S3 wake
+sources that use enable_irq_wake() -> amd_gpio_irq_set_wake(), PCIe PME
+does not use GPIO IRQ infrastructure and relies on firmware configuration.
+
+The original intent of commit 6bc3462a0f5e ("pinctrl: amd: Mask wake
+bits on probe again") was to clear spurious wake bits left by firmware
+to prevent unwanted wakeups. However, S4 wake bits are used for
+hardware-level wake sources like WoL that bypass the kernel's IRQ wake
+API.
+
+Fix by preserving S4 wake bits at probe and only clearing S0i3/S3 bits:
+- Firmware-configured S4 wake sources (WoL) continue working
+- Kernel maintains control of S3/S0i3 wake policy via set_wake()
+- S3-only wake sources work correctly per commit f31f33dbb3ba ("pinctrl:
+  amd: Take suspend type into consideration which pins are non-wake")
+
+The trade-off is that firmware-programmed spurious S4 wake bits remain
+set, but this is less problematic than breaking WoL.
+
+Fixes: 6bc3462a0f5e ("pinctrl: amd: Mask wake bits on probe again")
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/xdp_sock.h |  1 +
- net/xdp/xsk.c          | 45 +++++++++++++++++++++++++++++++++++++++---
- 2 files changed, 43 insertions(+), 3 deletions(-)
+ drivers/pinctrl/pinctrl-amd.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/include/net/xdp_sock.h b/include/net/xdp_sock.h
-index 7c2bc46c67050..8a0967af8f0c4 100644
---- a/include/net/xdp_sock.h
-+++ b/include/net/xdp_sock.h
-@@ -80,6 +80,7 @@ struct xdp_sock {
- 	 * call of __xsk_generic_xmit().
- 	 */
- 	struct sk_buff *skb;
-+	bool drain_cont;
+diff --git a/drivers/pinctrl/pinctrl-amd.c b/drivers/pinctrl/pinctrl-amd.c
+index 2dac5c71eb008..d962f2e1d2acd 100644
+--- a/drivers/pinctrl/pinctrl-amd.c
++++ b/drivers/pinctrl/pinctrl-amd.c
+@@ -886,8 +886,7 @@ static void amd_gpio_irq_init(struct amd_gpio *gpio_dev)
+ 	u32 pin_reg, mask;
+ 	int i;
  
- 	struct list_head map_list;
- 	/* Protects map_list */
-diff --git a/net/xdp/xsk.c b/net/xdp/xsk.c
-index 72d83b671f844..70c57c5d8e1da 100644
---- a/net/xdp/xsk.c
-+++ b/net/xdp/xsk.c
-@@ -623,6 +623,19 @@ static void xsk_cq_submit_addr_locked(struct xsk_buff_pool *pool,
- 	spin_unlock_irqrestore(&pool->cq_prod_lock, flags);
- }
+-	mask = BIT(WAKE_CNTRL_OFF_S0I3) | BIT(WAKE_CNTRL_OFF_S3) |
+-		BIT(WAKE_CNTRL_OFF_S4);
++	mask = BIT(WAKE_CNTRL_OFF_S0I3) | BIT(WAKE_CNTRL_OFF_S3);
  
-+static void xsk_cq_submit_addr_single_locked(struct xsk_buff_pool *pool,
-+					     struct xdp_desc *desc)
-+{
-+	unsigned long flags;
-+	u32 idx;
-+
-+	spin_lock_irqsave(&pool->cq_prod_lock, flags);
-+	idx = xskq_get_prod(pool->cq);
-+	xskq_prod_write_addr(pool->cq, idx, desc->addr);
-+	xskq_prod_submit_n(pool->cq, 1);
-+	spin_unlock_irqrestore(&pool->cq_prod_lock, flags);
-+}
-+
- static void xsk_cq_cancel_locked(struct xsk_buff_pool *pool, u32 n)
- {
- 	spin_lock(&pool->cq_cached_prod_lock);
-@@ -913,13 +926,14 @@ static struct sk_buff *xsk_build_skb(struct xdp_sock *xs,
- static int __xsk_generic_xmit(struct sock *sk)
- {
- 	struct xdp_sock *xs = xdp_sk(sk);
--	bool sent_frame = false;
- 	struct xdp_desc desc;
- 	struct sk_buff *skb;
-+	u32 cached_cons;
- 	u32 max_batch;
- 	int err = 0;
- 
- 	mutex_lock(&xs->mutex);
-+	cached_cons = xs->tx->cached_cons;
- 
- 	/* Since we dropped the RCU read lock, the socket state might have changed. */
- 	if (unlikely(!xsk_is_bound(xs))) {
-@@ -948,11 +962,21 @@ static int __xsk_generic_xmit(struct sock *sk)
- 			goto out;
- 		}
- 
-+		if (unlikely(xs->drain_cont)) {
-+			xsk_cq_submit_addr_single_locked(xs->pool, &desc);
-+			xs->tx->invalid_descs++;
-+			xskq_cons_release(xs->tx);
-+			xs->drain_cont = xp_mb_desc(&desc);
-+			continue;
-+		}
-+
- 		skb = xsk_build_skb(xs, &desc);
- 		if (IS_ERR(skb)) {
- 			err = PTR_ERR(skb);
- 			if (err != -EOVERFLOW)
- 				goto out;
-+			if (xp_mb_desc(&desc))
-+				xs->drain_cont = true;
- 			err = 0;
- 			continue;
- 		}
-@@ -981,18 +1005,33 @@ static int __xsk_generic_xmit(struct sock *sk)
- 			goto out;
- 		}
- 
--		sent_frame = true;
- 		xs->skb = NULL;
- 	}
- 
- 	if (xskq_has_descs(xs->tx)) {
-+		bool drain = xs->skb || xs->drain_cont || xp_mb_desc(&desc);
-+
-+		err = xsk_cq_reserve_locked(xs->pool);
-+		if (err) {
-+			xs->tx->invalid_descs--;
-+			if (xs->skb)
-+				xsk_drop_skb(xs->skb);
-+			xs->drain_cont = drain;
-+			err = -EAGAIN;
-+			goto out;
-+		}
-+
- 		if (xs->skb)
- 			xsk_drop_skb(xs->skb);
-+
-+		xsk_cq_submit_addr_single_locked(xs->pool, &desc);
-+
- 		xskq_cons_release(xs->tx);
-+		xs->drain_cont = xp_mb_desc(&desc);
- 	}
- 
- out:
--	if (sent_frame)
-+	if (xs->tx->cached_cons != cached_cons)
- 		__xsk_tx_release(xs);
- 
- 	mutex_unlock(&xs->mutex);
+ 	for (i = 0; i < desc->npins; i++) {
+ 		int pin = desc->pins[i].number;
 -- 
 2.53.0
 
