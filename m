@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8484D4756D5;
-	Fri,  7 Aug 2026 15:43:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E92B4756D5;
+	Fri,  7 Aug 2026 15:43:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786117386; cv=none; b=fT+smm3ofH+yUHvDRjj0C7XObaOqWZP4uwfEyqodtd/l3bgKxLvvc6ca3j/yiWeoIZNHL81yyEsxurlJR79IcwPjUhpereDfdSIczlZqUFXvJC2JwcG0X12R5IzTYKeneofQ8x5P8hIl8XABxToCxJxZvM3x3NoZ5nITX8FZAbs=
+	t=1786117388; cv=none; b=BgBDl9JsM/FGs4qrJo47eiMAe4SAyBsAhFhlXgB+V6LiUKChfQ22XLBdRG2TkdIH6YLsR4GpznA2CwticAFQnZ2X1m2IURFXh2/Q2bPKkbvuzLDTslLKUVVJhqmsGsIwYcKXHAZKxqjcOZY+X2xlICXZbRpOzkEktfmVb6XBYrM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786117386; c=relaxed/simple;
-	bh=apBF3RMRJiUp7zAhjfjlMMiaARoezf1CzARMLd8ylJg=;
+	s=arc-20240116; t=1786117388; c=relaxed/simple;
+	bh=IuxwfhQj+cle3zSZjsZnX5IhclJSt17PhGH4aCcd4+w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XUqIYoNjapZwu24q9tnjczJMjtDjLCbX4wS0zBzcGTKTXAiRBrhYlz0sZHHAAJPuAb0vl9UOjHtwuAikWUi8lr2j+epQoITw6pNQn/zhbbY56Z/QvWka79EFlp3f4Rp+1jgw/VpJ4FZEam0UlvAdnhK/NLdc/e+NVli9OC6waGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fT6q0VcH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pWBKXse60B2LDiXEA936SmX9+dvTy33XhWojxc8qkvsWfTl7bWGhMiFK0730uc8U06ICHhUnnRXXCZYlUn+uk5Mo0tHA6AWqIsFrYQxvgoxhoe/0K5DVMg7bwKA2UY4dOPzsWzZJrKB7X8WR/QrLlxGuhFvCqUHlarJFKltLQQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HPVN4Yks; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fT6q0VcH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B844E1F000E9;
-	Fri,  7 Aug 2026 15:43:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HPVN4Yks"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A66CE1F00A3A;
+	Fri,  7 Aug 2026 15:43:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786117384;
-	bh=U/47Hsb0NKEHt1jIfzAYkGGjE4m8/hpGOYudGqYIwYg=;
+	s=korg; t=1786117387;
+	bh=oXnQpPPUMkJF+W/+sRBpXLG68T+xDD3vZyugh452O/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fT6q0VcHpC/ZbjUgaOUGEHzaXn4Ir/G92QvF1a83vdNGjEtyQ8Yc/pvvF4esaqQbe
-	 gnXEYU3H644bzCjWKX0aGs+vO7XFCfOB27Ikn1a3dfhaxzwl34+SLw0/JyQiA2ReHb
-	 sl3uk6YtBxz4Z2xwl+7V9RzoakHQaeJBKfJvlMd8=
+	b=HPVN4YksXUUB+DR20x+PDznwe/Gi+fuAlvAgW5HWsS4OovTGG1xlXhYaYQb4XmBpo
+	 kWPRLfj5MCYTjAJEVaCnycH2CCdj0oYRAM4gRJe8ZfPiP+iZN7oFUFYsPgFqUTn3xl
+	 1aYVnaYpG2eeHOBdGSqgQWmxNAXfC8ApQBLweTHg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,11 +30,11 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Vega <vega@nebusec.ai>,
 	Zhiling Zou <zhilinz@nebusec.ai>,
 	Ren Wei <enjou1224z@gmail.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.1 298/438] net: bridge: stop fast-leave after deleting a port group
-Date: Fri,  7 Aug 2026 16:38:14 +0200
-Message-ID: <20260807143434.325695174@linuxfoundation.org>
+Subject: [PATCH 7.1 299/438] net: ipv6: clear suppressed fib6 rule result
+Date: Fri,  7 Aug 2026 16:38:15 +0200
+Message-ID: <20260807143434.346473211@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -55,45 +55,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhiling Zou <zhilinz@nebusec.ai>
 
-commit a39789f211b8a4125f0c70e05b30cf715f4f187d upstream.
+commit 6aea62e433fe1b586202a5fee8b5807ce635e1d7 upstream.
 
-br_multicast_leave_group() iterates mp->ports with pp = &p->next in
-its fast-leave path. After br_multicast_del_pg() removes p,
-continuing the loop advances pp through the deleted entry.
+fib6_rule_suppress() drops a suppressed route with ip6_rt_put_flags(),
+but leaves res->rt6 pointing at the released rt6_info.
 
-If multicast-to-unicast was enabled, the bridge can hold multiple port
-groups for the same port and group with different source MAC
-addresses. Once multicast-to-unicast is disabled,
-br_port_group_equal() matches those entries by port only. A fast leave
-can then delete one entry and continue from its stale next pointer,
-leaving mp->ports pointing at a deleted port group.
+If no later rule supplies a replacement, fib6_rule_lookup() still sees
+res.rt6 and returns that stale dst to its caller. A suppressing rule can
+therefore leak a released route back to rt6_lookup(), and the next put
+hits rcuref_put_slowpath() from dst_release().
 
-Fast leave only needs to remove one matching port group. Break after
-br_multicast_del_pg() so the loop stops before dereferencing the
-removed entry.
+Clear res->rt6 when suppressing the route so suppressed lookups fall
+through to the null dst instead of reusing the released one.
 
-Fixes: 6db6f0eae605 ("bridge: multicast to unicast")
+Fixes: cdef485217d3 ("ipv6: fix memory leak in fib6_rule_suppress")
 Cc: stable@vger.kernel.org
 Reported-by: Vega <vega@nebusec.ai>
 Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
 Signed-off-by: Ren Wei <enjou1224z@gmail.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/1cf0898872ef7c72d5f4c0304414a192c6dac591.1784707712.git.zhilinz@nebusec.ai
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/4b8acb7787d54e440155585dd32ebdf0bef7d122.1784710966.git.zhilinz@nebusec.ai
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bridge/br_multicast.c |    1 +
+ net/ipv6/fib6_rules.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/net/bridge/br_multicast.c
-+++ b/net/bridge/br_multicast.c
-@@ -3686,6 +3686,7 @@ br_multicast_leave_group(struct net_brid
+--- a/net/ipv6/fib6_rules.c
++++ b/net/ipv6/fib6_rules.c
+@@ -308,6 +308,7 @@ INDIRECT_CALLABLE_SCOPE bool fib6_rule_s
  
- 			p->flags |= MDB_PG_FLAGS_FAST_LEAVE;
- 			br_multicast_del_pg(mp, p, pp);
-+			break;
- 		}
- 		goto out;
- 	}
+ suppress_route:
+ 	ip6_rt_put_flags(rt, flags);
++	res->rt6 = NULL;
+ 	return true;
+ }
+ 
 
 
