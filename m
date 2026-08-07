@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AD6E39A4C4;
-	Fri,  7 Aug 2026 15:37:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB32A35CB60;
+	Fri,  7 Aug 2026 15:37:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786117063; cv=none; b=CKgj7b/1VAFGV4LNDreeNkOAIVhyXoDWNGKTknfelkdIkkVS9Sc+YcURs2sfR5uunJEIib7fsNcDfw8jtJZV2z1dTneJoFyhHnqW8NpqmGdU9h6OeJzeJSxeHir8ED4y60OBm99saN3yqjeG9Ye3ja3IsiEyvvaWzff2bTz57EY=
+	t=1786117065; cv=none; b=M5fc7dylP381696OM7ZA13ntv7KCQyvxCLZW60eypoq+j+/VgMrb8uPJP4zilAjuTWMckqeQNw/AszDstLRwL8qpdv/nF3kUOC05h0TRv9fVH9r0y5p55lK1yLotpIrDNSwol97FggcgxI8onlMMELb6be5yyY5kOC8PhDtl41M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786117063; c=relaxed/simple;
-	bh=0Tgml5MELG/1Cp6F3OmYUZ2XqdBVLL5NDAGvPSdOhyY=;
+	s=arc-20240116; t=1786117065; c=relaxed/simple;
+	bh=+GqawOJ7803Rv3mLE64hW8hTU7IyVo8yo3ZsSYUvWZA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hqVjrggH3vqg/GYZqEEulyo06x2Gngakr80gSVSx6ydbGbRbdqNp4A1ymeWXoF9xl0WQcJ65msgMUAo6awvHOJuPqLlM+MwqxevvtFgeKhu8W2fYhqhFg2VCLeWHHW0h3lGoivWPk2kzScBtQIVZLyK/0w1EIujXEDVoPwgVhqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V/kJsPRP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jnIH3UGCAKM8t5IURRKrwUTeCVPQxdqE1aJqPG+c6u+UKDgser0dZtgsIkT0LxR9upXIXTTd+rGpqAoyX0uDes0ssQO/eKjTYmaAFXSr7Umt39JQlyxgn1hQoWG7CEGuWOtZXtJNRbMAanNzHEOHroeP7kk3XBe5T+8dunQZbBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vF2WOJYi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V/kJsPRP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6703B1F000E9;
-	Fri,  7 Aug 2026 15:37:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vF2WOJYi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32BBD1F000E9;
+	Fri,  7 Aug 2026 15:37:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786117061;
-	bh=X/iDI/FsAeA0FuxAQElXWHuN+TgdQPy5+IxiY1dRl2g=;
+	s=korg; t=1786117064;
+	bh=7tR83qAVQmDWY4D1TuaAOtp2f7xWn1++KUl6PUd6g+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V/kJsPRPpOXfK5mMoVptHrGa4aA6L7KenWgGBct2hKcqWZE2AUuJ3mNvvUqWkC7Sk
-	 YrNOIaUYR+2Oy25phXLns613ri2xul18jZaXU7se0xVR4LKQMMwVbpMpNpOGkjSiaa
-	 l3FFhqeAe0ctUqROpstvGQbLaoMDA0nm5WoBb0os=
+	b=vF2WOJYiRohzbfGS7Y3MmUBpstPJEtv0h5i8md2/XNtUGEpc4Cs3bkYDXYNag7hcK
+	 Y6gvpUivQ56GE34BaGp11RJRGxqOmOaFHE+cMeUp4KuWToYQwjVHYQwNHEBknLwxJS
+	 PeKmP21c+8qFqTb6k29sAF6OYnUW+fnvVuUMisvY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Yunseong Kim <yunseong.kim@est.tech>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 187/438] ksmbd: return success for deferred final close
-Date: Fri,  7 Aug 2026 16:36:23 +0200
-Message-ID: <20260807143432.019039449@linuxfoundation.org>
+Subject: [PATCH 7.1 188/438] ksmbd: fix use-after-free in __close_file_table_ids()
+Date: Fri,  7 Aug 2026 16:36:24 +0200
+Message-ID: <20260807143432.039521762@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -53,60 +54,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit c5db4de8988f1a621556ca5c4537f77b766ca07d ]
+[ Upstream commit e7188199eff46a636f3436356f0aae039be6dd66 ]
 
-ksmbd_close_fd() marks an open file as FP_CLOSED and drops the file table
-reference. If another in-flight request still holds a reference, the final
-close is deferred until that request drops its reference.
+A ksmbd_file can remain alive after logical close while another session
+holds a temporary reference obtained through ksmbd_lookup_fd_inode().
+ksmbd_close_fd() currently marks the file closed and drops the idr-owned
+reference, but leaves the pointer published in the closing session's idr
+until the final reference is dropped.
 
-The function currently returns -EINVAL in that deferred-final-close case
-because fp is cleared when the reference count does not reach zero.  That
-turns a valid close into STATUS_FILE_CLOSED.
+If the foreign holder performs the final ksmbd_fd_put(), __put_fd_final()
+supplies the foreign session's file table to __ksmbd_close_fd(). The object
+is then freed without being removed from its owner's idr, and the owner
+session later dereferences the stale pointer during file-table teardown.
 
-smb2.compound_find.compound_find_close sends QUERY_DIRECTORY and then
-closes the same directory handle before receiving the find response.
-The query holds a reference while it builds the response, so close must
-mark the handle closed and return success even though final teardown is
-delayed. Track whether the handle was successfully transitioned to
-FP_CLOSED and return success when only the final close is deferred.
+Remove the volatile id from the owner's idr while ksmbd_close_fd() still
+holds that table's lock, and clear volatile_id before dropping
+the idr-owned reference. A later foreign final put then only performs
+physical destruction and cannot remove the object from the wrong table.
 
+Fixes: 8510a043d334 ("ksmbd: increment reference count of parent fp")
+Reported-by: Yunseong Kim <yunseong.kim@est.tech>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
-Stable-dep-of: e7188199eff4 ("ksmbd: fix use-after-free in __close_file_table_ids()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/vfs_cache.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/smb/server/vfs_cache.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/fs/smb/server/vfs_cache.c b/fs/smb/server/vfs_cache.c
-index aa0924c9fdf96..b12c0bb527e41 100644
+index b12c0bb527e41..c7d49aac7470a 100644
 --- a/fs/smb/server/vfs_cache.c
 +++ b/fs/smb/server/vfs_cache.c
-@@ -580,6 +580,7 @@ int ksmbd_close_fd(struct ksmbd_work *work, u64 id)
- {
- 	struct ksmbd_file	*fp;
- 	struct ksmbd_file_table	*ft;
-+	bool closed = false;
- 
- 	if (!has_file_id(id))
- 		return 0;
-@@ -594,6 +595,7 @@ int ksmbd_close_fd(struct ksmbd_work *work, u64 id)
+@@ -595,6 +595,8 @@ int ksmbd_close_fd(struct ksmbd_work *work, u64 id)
  			fp = NULL;
  		else {
  			fp->f_state = FP_CLOSED;
-+			closed = true;
++			idr_remove(ft->idr, id);
++			fp->volatile_id = KSMBD_NO_FID;
+ 			closed = true;
  			if (!atomic_dec_and_test(&fp->refcount))
  				fp = NULL;
- 		}
-@@ -601,7 +603,7 @@ int ksmbd_close_fd(struct ksmbd_work *work, u64 id)
- 	write_unlock(&ft->lock);
- 
- 	if (!fp)
--		return -EINVAL;
-+		return closed ? 0 : -EINVAL;
- 
- 	__put_fd_final(work, fp);
- 	return 0;
 -- 
 2.53.0
 
