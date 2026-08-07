@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A48A6313527;
-	Fri,  7 Aug 2026 15:18:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AB932F0C74;
+	Fri,  7 Aug 2026 15:18:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115927; cv=none; b=UD4pxPFEGld0amhXpX1a46GZXgPcr2AHADIiOGhwi/ncofFSgRXb9mAmUQSbSR5N9BZuPWFTl5VxI+yEj6DNENiWqvtj+k5GJEX+JjjvK/0grHNqteh8seUaSVwDrDZff79QlT9awBVl4R3X9qw0VpKmgLMcseCpJKEi5FdYnD0=
+	t=1786115930; cv=none; b=WYmwSDAFw5D7KsIrLpjFLL2ip8SVoXOBkFeSJ04kRhA6VX3WTMiIGC33GrEnraD6AOHPeQPhvdDpdn6vNdMmVjv0AvMckDXRs11zs6IlISMyPerReshrRT+W3WTMx8UyZqz0Alm0CGDE+hozat696UOC5YOUm437hQ3GvXsg70s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115927; c=relaxed/simple;
-	bh=YhKrD/HuEv1ymWpgzW+JIi5jz6BN8RvJ87KckISYIVw=;
+	s=arc-20240116; t=1786115930; c=relaxed/simple;
+	bh=/R0nDAcZRPXyNS1cyqh1Y6IbzBZlMM2L53HRihVtV1k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sULcUuil3svx1DBV0d7nN0UFHZeJc+cttnmdYzzGaesiNiTVMH/9GirCK2kPuy8xNF2Vx6Kjk2lZuSSadrCO37fgqsugOzOudXzINknBAWe8vX/R51epJS9zWIpiOsbwjhgnf4EPKOGhfTV6ajkrDyoUs/A8nYLFfPLP0vxoJ3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gLTTUhFM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=d/v8pK2hOPuPwctaVl7ZWp8pF8ev4+QjH7W4rmywu095j+csZ4pALF5aSwJBwAbU4CzEhkX8AAA6DYwQa/QoAGgV7ym3UlUdjlQjDa70GjnUQW2UG3r47O6uFi91U4pJ6baAPzOSre43grbnsFvZG2QkJx2HIs59mofo1dwjUr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fJWheyRK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gLTTUhFM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0609B1F000E9;
-	Fri,  7 Aug 2026 15:18:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fJWheyRK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D641A1F000E9;
+	Fri,  7 Aug 2026 15:18:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115926;
-	bh=O5d4YPKtHgaH6pyfbboLY++svWGZXrDhVEOIg8qMQyc=;
+	s=korg; t=1786115929;
+	bh=17Xl9ZqE4rxde8zV89tKmhekUgabvtAJQL4RNuGuHAM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gLTTUhFM81cA970YTt4phEV7tVQhHiea4CcjzEF9JUc2pq14WlvJtqPtAGmCkovbg
-	 QLkLRr1Ybbd6nUJswj0FjB9oUeAP8StEqqpyE9FKfarS1nwQeSjSglMIBHdjbVRzDR
-	 rCYCRj0KGM+6SIEbABFH/gQaZnYAdBq4zJsvEopI=
+	b=fJWheyRKVN8sIXMWSz0HBr1Ka5NcqgW1ZGnycvN6+gIIeVkX/CivSWbroLkc/nXa/
+	 wFVR3/jtegxt27ohOFtE+m5XydLV/bEIPETxweCiaUuUQ6yh4Zx/7sYlvi6h6jnCLh
+	 diFr7TaCLwaVtmyxczLiYYGiQLdKqLCWJXgUxovw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
 	Luiz Angelo Daros de Luca <luizluca@gmail.com>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 050/261] hwmon: (adt7470) Fix fans stuck in manual mode on I2C errors
-Date: Fri,  7 Aug 2026 16:36:47 +0200
-Message-ID: <20260807143416.467417253@linuxfoundation.org>
+Subject: [PATCH 6.6 051/261] hwmon: (adt7470) Fix cache updated before hardware write on I2C error
+Date: Fri,  7 Aug 2026 16:36:48 +0200
+Message-ID: <20260807143416.487636471@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143415.358597922@linuxfoundation.org>
 References: <20260807143415.358597922@linuxfoundation.org>
@@ -54,111 +53,79 @@ Content-Transfer-Encoding: 8bit
 
 From: Luiz Angelo Daros de Luca <luizluca@gmail.com>
 
-[ Upstream commit 625a2c02a1c04571232a746fe188b4d9a8d63edd ]
+[ Upstream commit 05270bd38d9bf88a2f4c212246a8fa29f4032078 ]
 
-During adt7470_read_temperatures(), the driver temporarily switches
-the PWM channels to manual mode, performs the temperature collection,
-and then restores the original configuration registers.
+adt7470_temp_write() and adt7470_pwm_write() update the driver's
+cached values (temp_min, temp_max, pwm_input, pwm_enable) before issuing
+the corresponding regmap_write(), and never check whether the write
+succeeded before committing that update. If the I2C transaction fails,
+the function correctly propagates the error to the caller, but the cache
+silently keeps the new value, which was never actually applied to the
+hardware. Subsequent reads then report a value that does not match the
+device state.
 
-However, if an I2C transaction fails at any point after entering manual
-mode, the function aborts and returns immediately. This leaves the
-configuration registers un-restored, permanently trapping the fans in
-manual mode.
+Reorder both write paths to update the cache only after a successful
+regmap_write(), so the cache always reflects what was actually
+written to the hardware.
 
-Introduce a recovery path to ensure that the original PWM configuration
-registers are always restored, even when intermediate I2C operations
-fail.
-
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/r/20260716213252.EACA71F000E9@smtp.kernel.org
 Fixes: ef67959c4253 ("hwmon: (adt7470) Convert to use regmap")
 Signed-off-by: Luiz Angelo Daros de Luca <luizluca@gmail.com>
-Link: https://lore.kernel.org/r/20260727-adt7470_fixes-v2-1-598e38a46ba6@gmail.com
+Link: https://lore.kernel.org/r/20260727-adt7470_fixes-v2-2-598e38a46ba6@gmail.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/adt7470.c | 40 +++++++++++++++++++++++++++++-----------
- 1 file changed, 29 insertions(+), 11 deletions(-)
+ drivers/hwmon/adt7470.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/hwmon/adt7470.c b/drivers/hwmon/adt7470.c
-index c4b3a4a18670c..0e0d2236dc536 100644
+index 0e0d2236dc536..3d4b4b6bd47fd 100644
 --- a/drivers/hwmon/adt7470.c
 +++ b/drivers/hwmon/adt7470.c
-@@ -205,11 +205,12 @@ static inline int adt7470_write_word_data(struct adt7470_data *data, unsigned in
- /* Probe for temperature sensors.  Assumes lock is held */
- static int adt7470_read_temperatures(struct adt7470_data *data)
- {
--	unsigned long res;
-+	struct device *dev = regmap_get_device(data->regmap);
-+	u8 pwm[ADT7470_FAN_COUNT];
- 	unsigned int pwm_cfg[2];
--	int err;
-+	unsigned long res;
-+	int err, err2;
- 	int i;
--	u8 pwm[ADT7470_FAN_COUNT];
- 
- 	/* save pwm[1-4] config register */
- 	err = regmap_read(data->regmap, ADT7470_REG_PWM_CFG(0), &pwm_cfg[0]);
-@@ -233,19 +234,19 @@ static int adt7470_read_temperatures(struct adt7470_data *data)
- 	err = regmap_update_bits(data->regmap, ADT7470_REG_PWM_CFG(2),
- 				 ADT7470_PWM_AUTO_MASK, 0);
- 	if (err < 0)
--		return err;
-+		goto out_restore;
- 
- 	/* write pwm control to whatever it was */
- 	err = regmap_bulk_write(data->regmap, ADT7470_REG_PWM(0), &pwm[0],
- 				ADT7470_PWM_COUNT);
- 	if (err < 0)
--		return err;
-+		goto out_restore;
- 
- 	/* start reading temperature sensors */
- 	err = regmap_update_bits(data->regmap, ADT7470_REG_CFG,
- 				 ADT7470_T05_STB_MASK, ADT7470_T05_STB_MASK);
- 	if (err < 0)
--		return err;
-+		goto out_restore;
- 
- 	/* Delay is 200ms * number of temp sensors. */
- 	res = msleep_interruptible((data->num_temp_sensors >= 0 ?
-@@ -256,13 +257,30 @@ static int adt7470_read_temperatures(struct adt7470_data *data)
- 	err = regmap_update_bits(data->regmap, ADT7470_REG_CFG,
- 				 ADT7470_T05_STB_MASK, 0);
- 	if (err < 0)
--		return err;
-+		goto out_restore;
- 
-+out_restore:
- 	/* restore pwm[1-4] config registers */
--	err = regmap_write(data->regmap, ADT7470_REG_PWM_CFG(0), pwm_cfg[0]);
--	if (err < 0)
--		return err;
--	err = regmap_write(data->regmap, ADT7470_REG_PWM_CFG(2), pwm_cfg[1]);
-+	err2 = regmap_write(data->regmap, ADT7470_REG_PWM_CFG(0), pwm_cfg[0]);
-+	if (err2 < 0) {
-+		dev_warn_ratelimited(dev,
-+				     "failed to restore PWM{1,2} config (%d)\n",
-+				     err2);
-+
+@@ -589,14 +589,16 @@ static int adt7470_temp_write(struct device *dev, u32 attr, int channel, long va
+ 	switch (attr) {
+ 	case hwmon_temp_min:
+ 		mutex_lock(&data->lock);
+-		data->temp_min[channel] = val;
+ 		err = regmap_write(data->regmap, ADT7470_TEMP_MIN_REG(channel), val);
 +		if (!err)
-+			err = err2;
-+	}
-+
-+	err2 = regmap_write(data->regmap, ADT7470_REG_PWM_CFG(2), pwm_cfg[1]);
-+	if (err2 < 0) {
-+		dev_warn_ratelimited(dev,
-+				     "failed to restore PWM{3,4} config (%d)\n",
-+				     err2);
-+
++			data->temp_min[channel] = val;
+ 		mutex_unlock(&data->lock);
+ 		break;
+ 	case hwmon_temp_max:
+ 		mutex_lock(&data->lock);
+-		data->temp_max[channel] = val;
+ 		err = regmap_write(data->regmap, ADT7470_TEMP_MAX_REG(channel), val);
 +		if (!err)
-+			err = err2;
-+	}
-+
- 	if (err < 0)
- 		return err;
++			data->temp_max[channel] = val;
+ 		mutex_unlock(&data->lock);
+ 		break;
+ 	default:
+@@ -839,9 +841,10 @@ static int adt7470_pwm_write(struct device *dev, u32 attr, int channel, long val
+ 	case hwmon_pwm_input:
+ 		val = clamp_val(val, 0, 255);
+ 		mutex_lock(&data->lock);
+-		data->pwm[channel] = val;
+ 		err = regmap_write(data->regmap, ADT7470_REG_PWM(channel),
+-				   data->pwm[channel]);
++				   val);
++		if (!err)
++			data->pwm[channel] = val;
+ 		mutex_unlock(&data->lock);
+ 		break;
+ 	case hwmon_pwm_enable:
+@@ -855,10 +858,11 @@ static int adt7470_pwm_write(struct device *dev, u32 attr, int channel, long val
+ 		val--;
  
+ 		mutex_lock(&data->lock);
+-		data->pwm_automatic[channel] = val;
+ 		err = regmap_update_bits(data->regmap, ADT7470_REG_PWM_CFG(channel),
+ 					 pwm_auto_reg_mask,
+ 					 val ? pwm_auto_reg_mask : 0);
++		if (!err)
++			data->pwm_automatic[channel] = val;
+ 		mutex_unlock(&data->lock);
+ 		break;
+ 	case hwmon_pwm_freq:
 -- 
 2.53.0
 
