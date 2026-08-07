@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 342E52F5337;
-	Fri,  7 Aug 2026 15:07:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17BED3749E8;
+	Fri,  7 Aug 2026 15:07:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115224; cv=none; b=EsoHlWu7M5SJmJUl1yV/vbNfrTEFhKKWPhoP1uwIi+x7sJDX90nvRTFKdHt28lcRoJXh2P02pXMjWaObQS45uQWghyGr8S4AX7FetMjmvIfVGQYwMn6n5LcWiEzbbZiWdhXOc0783IABMGyZJrmiJXTAK7AaZ1Vf67QVER1r7lg=
+	t=1786115227; cv=none; b=q5FGENfNG1o69YhTUOit8aJaPzJ6ySJOfPUU0HC4KpWJq5TggnKMwC7NpKiL1Bz/aMWWf15SnHdiGFzLFzSMPUkPCvldIR7KD+WCQ7uBgtsNnMYkd8yC0PhYu2DUO2iFfcJUWf9209iQNg3KxJdYSzuMVuzySfLpcd6USp53oh0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115224; c=relaxed/simple;
-	bh=izrF7RBQhy/bNBAk3geq+VTVFEfuFAyXvUbDRwyZL9Y=;
+	s=arc-20240116; t=1786115227; c=relaxed/simple;
+	bh=SET6hTvpbk7DoxStHoZ65nQoz6uh9jU4QqIGb6ZGjhg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Luw0k3ieyB3R3KqMl+kz369EfeWpEmXXX3Cr90q6/WoPgKVixTQzMQqtXdsl8K967qepSNfsdwjY6odsG5UmH9pbfgZHsnKvU9PeZd4lfqzPLUlZWyg+AThkgvWDze5fF3tpyVk+rTKjYszqZymQfY04wB8oAYjMHZ7QVATAb4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w6N1HeFW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dRiQQ04/vCHeJRzjc3aRHeCQjRYLelfZ805BTijvtby7Sm70Ucej5TfHv2zrLGoivToNpGoygEidPuQ6MH7qLaZ2rnhpW6/qz8knsMoiGbzoNd1lxRVOZLx5R7KEdSSA6EqL94KzcprgRl9f1sHZ55U0A+HtjDQC4g3ajPaDfAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d2Fk9na3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w6N1HeFW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6B8C1F000E9;
-	Fri,  7 Aug 2026 15:07:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d2Fk9na3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 695021F000E9;
+	Fri,  7 Aug 2026 15:07:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115223;
-	bh=2PRRcQF39kTdjqRT0ehfJnoLoDemQe6FfXTkB/AN8l8=;
+	s=korg; t=1786115226;
+	bh=DHcxj9ujbI0XvTxIbvgFv0jf34ouTF1t5ecmTgY5kro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w6N1HeFWQv/e01iS+aO+3TEvBl8/twfQEu++JAqTh4B6rrtJ7gFqrzu9vinKXPM/K
-	 NkaN7P+qjJg0iN2fKYpZxZNduWvDEbxUskelckx9RGqTNYQ1E66fvOISsdBK10NiMI
-	 GIX6c2J+38BIywHmCTzhzjGl1dJHPbw99auck7aY=
+	b=d2Fk9na3ppyI07/1kZtf6bw/DHHJZJm0vkkSKkWzrAzzxLIPrs6mY/v5J7xocHTSu
+	 61pCyl8lhhaUDmtze9+rG3hnkWRuEIBE7nHRMJL+sdk2xwhJN3nMfeV8OykHTNX1Au
+	 0UxgQ6Wa7Jgg6PeIj1qZIrJGH1pEOq+duNx0aiLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eckhart Mohr <e.mohr@tuxedocomputers.com>,
-	Werner Sembach <wse@tuxedocomputers.com>,
+	Xu Rao <raoxu@uniontech.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.18 202/396] ALSA: hda/realtek: Add quirk for TongFang X6SP45xU
-Date: Fri,  7 Aug 2026 16:36:02 +0200
-Message-ID: <20260807143428.638072065@linuxfoundation.org>
+Subject: [PATCH 6.18 203/396] ALSA: lx6464es: fix period byte count for 16-bit streams
+Date: Fri,  7 Aug 2026 16:36:03 +0200
+Message-ID: <20260807143428.658352294@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -51,36 +50,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eckhart Mohr <e.mohr@tuxedocomputers.com>
+From: Xu Rao <raoxu@uniontech.com>
 
-commit 26a94400ffa4fcbeff32e23abebb83a1a20eb401 upstream.
+commit 6437033bffe8bd2af174d139af552d90d40c7ac6 upstream.
 
-TongFang X6KK45xU and X6SP45xU have actually different PCI IDs. This patch
-Adds the missing PCI ID to fix headphone detection and clarifies the
-naming.
+The lx6464es driver advertises both 16-bit and packed 24-bit PCM formats,
+but lx_trigger_start() and lx_interrupt_request_new_buffer() calculate the
+DMA period size as runtime->period_size * runtime->channels * 3.  That is
+only correct for the packed 24-bit formats.
 
-Fixes: d595255241e5 ("ALSA: hda/realtek: Add quirk for TongFang X6xx45xU")
-Signed-off-by: Eckhart Mohr <e.mohr@tuxedocomputers.com>
+For 16-bit streams the driver submits buffers that are 50% larger than the
+actual ALSA period and advances the DMA address by the same wrong amount.
+For example, with 2 channels, 256 frames and 4 periods, the third buffer
+already extends beyond the ALSA buffer and the fourth buffer starts outside
+it.
+
+Use snd_pcm_lib_period_bytes() so the byte count matches the runtime
+format, channel count and period size.
+
+Fixes: 02bec4904508 ("ALSA: lx6464es - driver for the digigram lx6464es interface")
 Cc: stable@vger.kernel.org
-Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
-Link: https://patch.msgid.link/20260724190109.169889-1-wse@tuxedocomputers.com
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
+Link: https://patch.msgid.link/8BB12E8D92A7CDBA+20260723085710.2567463-1-raoxu@uniontech.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/hda/codecs/realtek/alc269.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/pci/lx6464es/lx6464es.c |    5 +----
+ sound/pci/lx6464es/lx_core.c  |    5 +----
+ 2 files changed, 2 insertions(+), 8 deletions(-)
 
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -7560,7 +7560,8 @@ static const struct hda_quirk alc269_fix
- 	SND_PCI_QUIRK(0x1d05, 0x300f, "TongFang X6AR5xxY", ALC2XX_FIXUP_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1d05, 0x3019, "TongFang X6FR5xxY", ALC2XX_FIXUP_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1d05, 0x3031, "TongFang X6AR55xU", ALC2XX_FIXUP_HEADSET_MIC),
--	SND_PCI_QUIRK(0x1d05, 0x3034, "TongFang X6xx45xU", ALC2XX_FIXUP_HEADSET_MIC),
-+	SND_PCI_QUIRK(0x1d05, 0x3033, "TongFang X6SP45xU", ALC2XX_FIXUP_HEADSET_MIC),
-+	SND_PCI_QUIRK(0x1d05, 0x3034, "TongFang X6KK45xU", ALC2XX_FIXUP_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1d17, 0x3288, "Haier Boyue G42", ALC269VC_FIXUP_ACER_VCOPPERBOX_PINS),
- 	SND_PCI_QUIRK(0x1d72, 0x1602, "RedmiBook", ALC255_FIXUP_XIAOMI_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1d72, 0x1701, "XiaomiNotebook Pro", ALC298_FIXUP_DELL1_MIC_NO_PRESENCE),
+--- a/sound/pci/lx6464es/lx6464es.c
++++ b/sound/pci/lx6464es/lx6464es.c
+@@ -402,11 +402,8 @@ static void lx_trigger_start(struct lx64
+ 
+ 	int err;
+ 
+-	const u32 channels = substream->runtime->channels;
+-	const u32 bytes_per_frame = channels * 3;
+-	const u32 period_size = substream->runtime->period_size;
+ 	const u32 periods = substream->runtime->periods;
+-	const u32 period_bytes = period_size * bytes_per_frame;
++	const u32 period_bytes = snd_pcm_lib_period_bytes(substream);
+ 
+ 	dma_addr_t buf = substream->dma_buffer.addr;
+ 	int i;
+--- a/sound/pci/lx6464es/lx_core.c
++++ b/sound/pci/lx6464es/lx_core.c
+@@ -969,10 +969,7 @@ static int lx_interrupt_request_new_buff
+ 	const unsigned int is_capture = lx_stream->is_capture;
+ 	int err;
+ 
+-	const u32 channels = substream->runtime->channels;
+-	const u32 bytes_per_frame = channels * 3;
+-	const u32 period_size = substream->runtime->period_size;
+-	const u32 period_bytes = period_size * bytes_per_frame;
++	const u32 period_bytes = snd_pcm_lib_period_bytes(substream);
+ 	const u32 pos = lx_stream->frame_pos;
+ 	const u32 next_pos = ((pos+1) == substream->runtime->periods) ?
+ 		0 : pos + 1;
 
 
