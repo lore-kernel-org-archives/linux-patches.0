@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DC3746C851;
-	Fri,  7 Aug 2026 15:37:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56E8C431A22;
+	Fri,  7 Aug 2026 15:37:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786117043; cv=none; b=fRVBMWdkwdB3O0unUtS5RRC2CGPUIZptobKSOe/rvh/hjfh8WM7adItle3nFoKV3WNJtk1kmSdM5Ff7XjNyqf6G+GKlnVBxQfVvKGfzpeVxikdVXzNXBz9McjSs4LTJ0m2bxivZp3gZ/FjS5oWh04YR7CWVsQchMOu4Ett7IPo0=
+	t=1786117046; cv=none; b=Z1/DVUFg1qxgZc4gjkKjaCqiYvzIA6W2Z+GbFNnMaex/mTm7LhSFJwHMvUT2+uDS3Agk/ZNipM8sVb0an7rQxtYUSI50SUrNNHC586oo6x8dHz3Ax0jONnmy+wISTByvfDLgyVRBxCB82OtgbWAirI8VFDbpQp+3Ck5NYKuyZaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786117043; c=relaxed/simple;
-	bh=ldqqvdK8Vz3PTy+OH5IrQgCvK45HjUyIxF5d3KiuiD0=;
+	s=arc-20240116; t=1786117046; c=relaxed/simple;
+	bh=HZktA+RRD0YEDeWJ2iDZZvBYSyg/Rev/GletV/DXJXE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iTCsM0OuVR8mxhTZAYNdUMSBV/0UG8b9sKwytqlA9vtETQEvl3nidqCRwQAtX+P/W3EGdpuuZ8RQhnfXwb7Gm7cMHRQazftyHdLcxvMtJxMqe7nQqITP3oU/4ocXmw9sRcJFMNyMwpWyiXNf2/0kMmE4XDb2uPsByZI4UkB6DVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l2R//0hQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=optbxCeAjv0xqnj4tFHoBcKP9Bi6uCBu0LSCMzzbmz62YMkxhIdFflNKDvzXCXcbrQobPv5PlB5pKIdViH7eDXFnHAoQfE0mzdIEUHFG7/CH/KiZxTUT/evc04iLsCeR8w6HdQValzwZn04lojQgtpTnpLZGaG3gEBQfAZIZq8Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B90D/vIC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l2R//0hQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 999851F000E9;
-	Fri,  7 Aug 2026 15:37:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B90D/vIC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6586D1F000E9;
+	Fri,  7 Aug 2026 15:37:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786117042;
-	bh=qhOEG9vKmCvHQMcMtnhM/6+pzRpeQcW35nhLOlZU5UY=;
+	s=korg; t=1786117044;
+	bh=ZHE13bUMPbrNW49XAH4KqG+1FSn7fTLZh7c4Rp5hspQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l2R//0hQA2NYDCFnf/d7thjzxzltwvwEY2r0emZS6zDYCZahGBHRunXBJJgpYh7qP
-	 apmfmA6i7f5o/uksdyPd3RHQBMVRrCeTe2pCZb6k8l9Pn30nSS8Xk6uwnhoI4JSEMS
-	 3woqOsJvdIpkRySGAsHLr/fSdXKfm2iVfdY1FSPM=
+	b=B90D/vICr0jOr8U5TjmM22SV7+AGs3yEwp0Ug0II9RL5GFCa1k7L6zkDXKuMcTaE6
+	 rlTCUILh30W8NACkND/2WCd/LAJiTPnViUR8KpeETzWzTLeNXDf8puX6biPSYd5Q8F
+	 eaC+bBZrCfC08UXZv0v7i7M1w7QTUi/cDNtbrUgQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiawen Wu <jiawenwu@trustnetic.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 181/438] net: libwx: fix FDIR ATR queue mismatch for software VLAN packets
-Date: Fri,  7 Aug 2026 16:36:17 +0200
-Message-ID: <20260807143431.891186353@linuxfoundation.org>
+Subject: [PATCH 7.1 164/438] drm/xe/pt: check no-DMA huge-pte cases before DMA segment test
+Date: Fri,  7 Aug 2026 16:36:00 +0200
+Message-ID: <20260807143431.528810539@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -52,46 +53,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiawen Wu <jiawenwu@trustnetic.com>
+From: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
 
-[ Upstream commit 732ed8f75ce583d115716f668dc80d730f3ad610 ]
+[ Upstream commit d94f82d57e7a86def6946f22b34eb53f96628f8a ]
 
-When TX VLAN hardware offload is disabled, VLAN tags are embedded in
-the packet payload (software VLAN). Previously, the driver failed to
-set the WX_TX_FLAGS_SW_VLAN flag for these packets during transmission.
+On a non-range clear, curs.size is never set, so the segment test
+(next - va_curs_start > curs->size) returns false for every level > 0
+before the clear_pt short-circuit is reached. The clear then descends to
+level 0 instead of forming a huge zero-leaf, wasting page tables and
+risking -ENOMEM on unbind.
 
-This missing flag caused the txgbe FDIR ATR logic to fall through to the
-default hash calculation path. This resulted in asymmetric hash values
-for Tx and Rx flows, preventing return packets from being steered to the
-same queue as the transmit packets.
+Move the null-VMA, purged-BO and clear_pt short-circuits above the
+curs->size test. The bind path always sets curs.size, so it is unaffected.
 
-Fix this by detecting software VLANs via eth_type_vlan(skb->protocol)
-and setting WX_TX_FLAGS_SW_VLAN. This ensures the ATR feature selects
-the correct hashing algorithm to maintain Tx/Rx queue symmetry.
+v2
+- Also set curs.size on the clear path so the cursor stays meaningful
+during the walk. clear_pt is only reached with range == NULL, so assert
+that invariant. (Matthew Brost)
 
-Fixes: b501d261a5b3 ("net: txgbe: add FDIR ATR support")
-Signed-off-by: Jiawen Wu <jiawenwu@trustnetic.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/0879DA38A8E32701+20260724074657.10773-1-jiawenwu@trustnetic.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Fixes: 5b658b7e89c3 ("drm/xe: Clear scratch page on vm_bind")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://patch.msgid.link/20260728055916.593707-2-himal.prasad.ghimiray@intel.com
+Signed-off-by: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
+(cherry picked from commit 04eeeb45cb61b8a3e9d785003457e550c920ba49)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/wangxun/libwx/wx_lib.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/xe/xe_pt.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/wangxun/libwx/wx_lib.c b/drivers/net/ethernet/wangxun/libwx/wx_lib.c
-index 5c2cd5756f8a9..a553365b69943 100644
---- a/drivers/net/ethernet/wangxun/libwx/wx_lib.c
-+++ b/drivers/net/ethernet/wangxun/libwx/wx_lib.c
-@@ -1606,6 +1606,8 @@ static netdev_tx_t wx_xmit_frame_ring(struct sk_buff *skb,
- 	if (skb_vlan_tag_present(skb)) {
- 		tx_flags |= skb_vlan_tag_get(skb) << WX_TX_FLAGS_VLAN_SHIFT;
- 		tx_flags |= WX_TX_FLAGS_HW_VLAN;
-+	} else if (eth_type_vlan(skb->protocol)) {
-+		tx_flags |= WX_TX_FLAGS_SW_VLAN;
+diff --git a/drivers/gpu/drm/xe/xe_pt.c b/drivers/gpu/drm/xe/xe_pt.c
+index cf371c0d7b2bb..a4d0d9bf0c8eb 100644
+--- a/drivers/gpu/drm/xe/xe_pt.c
++++ b/drivers/gpu/drm/xe/xe_pt.c
+@@ -442,10 +442,6 @@ static bool xe_pt_hugepte_possible(u64 addr, u64 next, unsigned int level,
+ 	if (!xe_pt_covers(addr, next, level, &xe_walk->base))
+ 		return false;
+ 
+-	/* Does the DMA segment cover the whole pte? */
+-	if (next - xe_walk->va_curs_start > xe_walk->curs->size)
+-		return false;
+-
+ 	/* null VMA's and purged BO's do not have dma addresses */
+ 	if (xe_vma_is_null(xe_walk->vma) || (bo && xe_bo_is_purged(bo)))
+ 		return true;
+@@ -454,6 +450,10 @@ static bool xe_pt_hugepte_possible(u64 addr, u64 next, unsigned int level,
+ 	if (xe_walk->clear_pt)
+ 		return true;
+ 
++	/* Does the DMA segment cover the whole pte? */
++	if (next - xe_walk->va_curs_start > xe_walk->curs->size)
++		return false;
++
+ 	/* Is the DMA address huge PTE size aligned? */
+ 	size = next - addr;
+ 	dma = addr - xe_walk->va_curs_start + xe_res_dma(xe_walk->curs);
+@@ -774,8 +774,11 @@ xe_pt_stage_bind(struct xe_tile *tile, struct xe_vma *vma,
  	}
  
- 	if (unlikely(skb_shinfo(skb)->tx_flags & SKBTX_HW_TSTAMP) &&
+ 	xe_walk.needs_64K = (vm->flags & XE_VM_FLAG_64K);
+-	if (clear_pt)
++	if (clear_pt) {
++		xe_assert(xe, !range);
++		curs.size = xe_vma_size(vma);
+ 		goto walk_pt;
++	}
+ 
+ 	if (vma->gpuva.flags & XE_VMA_ATOMIC_PTE_BIT) {
+ 		xe_walk.default_vram_pte = xe_atomic_for_vram(vm, vma) ? XE_USM_PPGTT_PTE_AE : 0;
 -- 
 2.53.0
 
