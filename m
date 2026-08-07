@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E05A4746D7;
-	Fri,  7 Aug 2026 15:26:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1747438E8AD;
+	Fri,  7 Aug 2026 15:26:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116366; cv=none; b=aHLnt+IqGoQTJCqtB0Ohi+7VOvZJoNGTSR0Pl6ps+dXwrwIUPReNRVzGusVTk2lGQHzJLAfr6lBZjdHtH4OH2Hho2cPxjIpohToYabi4wJ+Y3RHfMh71X7rC2lEHcEJUco2knuYl+C6f11vtibRJABy41c91bH3kRd+Y3f+8JE0=
+	t=1786116369; cv=none; b=jLvbRrjalHGbFawwiDNvaE35c89YrqhzsGN5suzzSyvnd9gkpKFltZvPjL9tma0MOFUnJs/cUyrckC0fXE69l3y7R1IQYRKb9WZhvOVg4V6pz0nTfLkv+GZLr6d9Nq3cEA2JNCsH84X1ssxbkyH+KUFkD/gJTmz9oVqi8CCfX48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116366; c=relaxed/simple;
-	bh=oLRgAFT4vp2X/v6wiqDgppJMs4sP2xF5Flc5QWOV4Gc=;
+	s=arc-20240116; t=1786116369; c=relaxed/simple;
+	bh=1qAlJBD06nsmCb+BU/GlPyKOHNt5A+AAEDCSJu/9Q2M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PirXsPyU7BO96qBoBDIVwIPDEEIG6o25jILvBs+6azYVPHW4IizAfowY/6R7Sl+REvQqMiCpcUSQT8lVf9Yk3GhnaT+6NXZJIy4/BcbXsOA4TAo9hR00hKXiS1sE4vuR1EbuUEkcGgwkunFs3QYCNo54jjh+Fx62PMHrzSvYf7A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AbMN+mrN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EPdCk3mscuhzJ16iJ45BmzRV1B9NZrS8QqrXcci5dctX87YS+F1bcgl6XPygCk2XRWGfLB5sXIh1CE2FkK8rOGDBNMJDD+Z+spTd6NmYNt5qS0r2VVXhDQFRJ6BJmI5f4wBO9YdR5QNHBd/J4eYhvV8+tad0WRbhzz7FkzNHQ74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b2NefNFH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AbMN+mrN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A2201F000E9;
-	Fri,  7 Aug 2026 15:26:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b2NefNFH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69FE61F000E9;
+	Fri,  7 Aug 2026 15:26:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116365;
-	bh=q9WBP9Q0lE5bhUVgOJg3GcD3UiJ1lUizAX2ibGId+xo=;
+	s=korg; t=1786116368;
+	bh=yIfXDNnBOvAshHy5ygA7wamOml59d5AJetJ4b/XeJus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AbMN+mrN5R3y+8TfT/jE96QQcemaMtghWkmrxDMCIc0CS8/Um7AOyntJrMnduFtWM
-	 gATlEcR4Q66pMN6Vt5PUsn2iguu8LokRfHMRXLEnd+ThQLZpi2eYvCyscmge2bQNxk
-	 vrURlOkkYdBLnSkhD7ss9vm4LmQyaFskh4t+sw2g=
+	b=b2NefNFHo6VipgBy7uo/SMxuu2TjGJ/SjoeFOht/vzYZ7EWXAYTa+jMN0PVqzTAx7
+	 RmKyKwMJHihWo4BbbjYQ8DEo0ZNx8VQ+PIKhgoJJC7ywoq6zMGRHo80ZVkG7gq8kH5
+	 0pxyMB6BHic5iNiR8oZokyfXIwiq/liUKyBezvkU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rodrigo Alencar <455.rodrigo.alencar@gmail.com>,
-	Jun Guo <jun.guo@cixtech.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 204/261] spi: spi-cadence: enable SPI_CONTROLLER_MUST_TX
-Date: Fri,  7 Aug 2026 16:39:21 +0200
-Message-ID: <20260807143419.766646172@linuxfoundation.org>
+	HyeongJun An <sammiee5311@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 6.6 205/261] HID: logitech-dj: Fix maxfield check in DJ short report validation
+Date: Fri,  7 Aug 2026 16:39:22 +0200
+Message-ID: <20260807143419.787165961@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143415.358597922@linuxfoundation.org>
 References: <20260807143415.358597922@linuxfoundation.org>
@@ -51,35 +50,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jun Guo <jun.guo@cixtech.com>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-commit f6b625639e39bc384a7bddbf134a698d40258b3b upstream.
+commit 590cc4d782487632a52f37c2171bee1eeea29627 upstream.
 
-During an SPI read operation, even if the xspi->txbuf passed to the
-cdns_spi_writerinterface is empty, it is still necessary to call
-cdns_spi_write(xspi, CDNS_SPI_TXD, txw); otherwise, the read operation
-will fail to obtain data correctly due to a lack of clocks.
+Commit b6a57912854e ("HID: logitech-dj: Prevent REPORT_ID_DJ_SHORT
+related user initiated OOB write") added validation for the DJ short
+output report, but the error path dereferences rep->field[0] even when
+rep->maxfield is zero.
 
-Fixes: 4e00135b2dd1 ("spi: spi-cadence: supports transmission with bits_per_word of 16 and 32")
-Reported-by: Rodrigo Alencar <455.rodrigo.alencar@gmail.com>
-Closes: https://lore.kernel.org/all/lbijvnnwsnddonmm5pveqzap6iibxhl4maneq43x4j6w64dev6@u75qhm5cwiob/
-Signed-off-by: Jun Guo <jun.guo@cixtech.com>
-Link: https://patch.msgid.link/20260115091924.844179-1-jun.guo@cixtech.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Commit 8b9a097eb2fc ("HID: logitech-dj: fix wrong detection of bad
+DJ_SHORT output report") made the check conditional on rep being present,
+but a crafted descriptor can still create report ID 0x20 with only padding
+output items. hid-core registers the report, ignores the padding field,
+and leaves rep->maxfield as zero.
+
+In that case the validation enters the rep->maxfield < 1 branch and then
+dereferences rep->field[0]->report_count while printing the error message,
+causing a NULL pointer dereference during probe. This is reproducible with
+uhid by emulating a Logitech receiver with a padding-only DJ short output
+report:
+
+  BUG: KASAN: null-ptr-deref in logi_dj_probe+0xb1/0x754 [hid_logitech_dj]
+  Read of size 4 at addr 0000000000000028 by task kworker/4:1/129
+  ...
+  Call Trace:
+   logi_dj_probe+0xb1/0x754 [hid_logitech_dj]
+   hid_device_probe+0x329/0x3f0 [hid]
+   really_probe+0x162/0x570
+   __device_attach+0x137/0x2c0
+   bus_probe_device+0x38/0xc0
+   device_add+0xa56/0xce0
+   hid_add_device+0x19c/0x280 [hid]
+   uhid_device_add_worker+0x2c/0xb0 [uhid]
+
+Reject the zero-field report before printing the field report_count.
+
+Fixes: b6a57912854e ("HID: logitech-dj: Prevent REPORT_ID_DJ_SHORT related user initiated OOB write")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-cadence.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/hid/hid-logitech-dj.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/spi/spi-cadence.c
-+++ b/drivers/spi/spi-cadence.c
-@@ -722,6 +722,7 @@ static int cdns_spi_probe(struct platfor
- 	ctlr->unprepare_transfer_hardware = cdns_unprepare_transfer_hardware;
- 	ctlr->mode_bits = SPI_CPOL | SPI_CPHA;
- 	ctlr->bits_per_word_mask = SPI_BPW_MASK(8);
-+	ctlr->flags = SPI_CONTROLLER_MUST_TX;
+--- a/drivers/hid/hid-logitech-dj.c
++++ b/drivers/hid/hid-logitech-dj.c
+@@ -1797,8 +1797,13 @@ static int logi_dj_probe(struct hid_devi
+ 	output_report_enum = &hdev->report_enum[HID_OUTPUT_REPORT];
+ 	rep = output_report_enum->report_id_hash[REPORT_ID_DJ_SHORT];
  
- 	if (of_device_is_compatible(pdev->dev.of_node, "cix,sky1-spi-r1p6"))
- 		ctlr->bits_per_word_mask |= SPI_BPW_MASK(16) | SPI_BPW_MASK(32);
+-	if (rep && (rep->maxfield < 1 ||
+-		    rep->field[0]->report_count != DJREPORT_SHORT_LENGTH - 1)) {
++	if (rep && rep->maxfield < 1) {
++		hid_err(hdev, "Expected size of DJ short report is %d, but got 0",
++			DJREPORT_SHORT_LENGTH - 1);
++		return -EINVAL;
++	}
++
++	if (rep && rep->field[0]->report_count != DJREPORT_SHORT_LENGTH - 1) {
+ 		hid_err(hdev, "Expected size of DJ short report is %d, but got %d",
+ 			DJREPORT_SHORT_LENGTH - 1, rep->field[0]->report_count);
+ 		return -EINVAL;
 
 
