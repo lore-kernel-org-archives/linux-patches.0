@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D09E29AB1A;
-	Fri,  7 Aug 2026 15:30:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE49329AB1A;
+	Fri,  7 Aug 2026 15:30:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116644; cv=none; b=Sd7kw1s//85EKPTyVDVLxEJ0ulDvATRyDU++lCUr6ETcIe23LpPKPQTRF2kmcQHAPGx/m2qaT0HuNxW6PJuSEGszRrco1Rwc2H/AyFxRb2ioBbr13Us9zTPH3EXhDjFcbBra+KacXqJTQZyfk1QCaYETPliyJn3hjDUFH+Z3kZE=
+	t=1786116646; cv=none; b=gbyykx6vuMMrGYowUvcbIz559TdsQ3csUYJOPngqBhkrxXGx6Kgd2DIHiKbBA0zTxUxzo0C+MeMK8mhEktFV7rr3WWsnK5/24YNrP8/eD9gcHjD57/b51/WA7z6WSBhy5cznMHug56X0HXYR+ByG//robBqE3NceXRMd+1myrPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116644; c=relaxed/simple;
-	bh=L90jC27e/jSCs0lVXqY1Kc3texsz5xtnnQ+bgGtJJi4=;
+	s=arc-20240116; t=1786116646; c=relaxed/simple;
+	bh=ll5o1ZRSDHtBPDiMQ0tJhMz34knoOVDqwtl5hMY/7gY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AJU6E8ywBaHCc6/xMDnB9ollV3kHdwM9Af7ibKAU/X31RAIt2NlZesqhiAlng7252xey3OJrqjSQygUl4tXywgo3jxD4hJh9Y/QWtRZfoqsm+vzqhukh5FVugZBBBbyYY0ZG/ScYtpj/oIfZqoBDogChex5ZzpGHmijbBmiM2hk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LaSdKCUO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aOK9fuWbePdCZHD5iIh8GoXCP5ZN2Qqtsawy+lIVFh/G+MQIs4YkYSSVoD+rDLHr4PKzLT80WOJFDJ3V3+tJDniWDUWO6rAG3OL3hQqtn8fOlEbtMyPk4k5Ni8YYQsntulSL1N8Lm2A+duVQODS8c+sxTcgD6oCA/LDWopn7FG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VLPQ30Yn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LaSdKCUO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C2421F000E9;
-	Fri,  7 Aug 2026 15:30:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VLPQ30Yn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 466F21F000E9;
+	Fri,  7 Aug 2026 15:30:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116643;
-	bh=pbBqN0RkbrqDB1MOUb+IJVj/9LrTipGc0ZCy4m9xMJs=;
+	s=korg; t=1786116645;
+	bh=w7j5FMHtFS3G/BbBoz+2fnakynLYAs2azJsQyXQi+I8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LaSdKCUOOtsxREkThVjo3+g1MIF8T0LWjL00OE9YpFzrC3XOEm6RqTt6CQHQIC2fe
-	 W7OGzEc0bAUcWBM4S9jU2AsZLHDCUVuXBp3f/AGewx99sdfLX8b9oSJGvRuTXtTGNA
-	 LqtACEje2ieuzPrvtW+aYc97/GOwbmWv83oQIRVc=
+	b=VLPQ30YnTJ4Aw4T6Iwg5Mxm2j79PDegmB1pgtUe9H09H4ZJQodRdxYY5rfqYO4gEw
+	 DFaf9OHu0TqIEwFOK4trl6nsCKQF8YbbzXEyF6ThSpW2Yoxf8DiW5lM2gOLsycyUMj
+	 xngqve2g2M7jXPce44TntDB3gwZxwZYiplB3D9GA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
-	CK Hu <ck.hu@mediatek.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Yi Xie <xieyi@kylinos.cn>,
+	Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>,
+	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 040/438] drm/mediatek: Check CRTC state before freeing
-Date: Fri,  7 Aug 2026 16:33:56 +0200
-Message-ID: <20260807143428.856335845@linuxfoundation.org>
+Subject: [PATCH 7.1 041/438] mshv_vtl: fix fd leak in mshv_ioctl_create_vtl()
+Date: Fri,  7 Aug 2026 16:33:57 +0200
+Message-ID: <20260807143428.877382715@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -52,49 +52,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Yi Xie <xieyi@kylinos.cn>
 
-[ Upstream commit 233a4d3a39fc1585f5e271b2adab43c6af025ae0 ]
+[ Upstream commit ec08dd5b9ffa52980908805bdc8a55a8f1bc6667 ]
 
-mtk_crtc_reset() destroys the current CRTC state only when crtc->state
-is non-NULL, but it always converts crtc->state to struct mtk_crtc_state
-and passes the result to kfree().
+put_unused_fd() if anon_inode_getfile() fails.
 
-When reset is called without an existing state, container_of(NULL, ...)
-does not produce NULL. Keep the mtk state free in the same crtc->state
-guard as the helper state destruction.
-
-This issue was found by a static analysis checker and confirmed by
-manual source review.
-
-Fixes: 2d267b81898e ("drm/mtk: Use __drm_atomic_helper_crtc_reset")
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Reviewed-by: CK Hu <ck.hu@mediatek.com>
-Link: https://patchwork.kernel.org/project/linux-mediatek/patch/20260707150528.2270739-1-ruoyuw560@gmail.com/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Fixes: 7bfe3b8ea6e30 ("Drivers: hv: Introduce mshv_vtl driver")
+Signed-off-by: Yi Xie <xieyi@kylinos.cn>
+Reviewed-by: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_crtc.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/hv/mshv_vtl_main.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_crtc.c b/drivers/gpu/drm/mediatek/mtk_crtc.c
-index fcb16f3f7b23b..b01162a7df7fa 100644
---- a/drivers/gpu/drm/mediatek/mtk_crtc.c
-+++ b/drivers/gpu/drm/mediatek/mtk_crtc.c
-@@ -153,10 +153,10 @@ static void mtk_crtc_reset(struct drm_crtc *crtc)
- {
- 	struct mtk_crtc_state *state;
- 
--	if (crtc->state)
-+	if (crtc->state) {
- 		__drm_atomic_helper_crtc_destroy_state(crtc->state);
--
--	kfree(to_mtk_crtc_state(crtc->state));
-+		kfree(to_mtk_crtc_state(crtc->state));
-+	}
- 	crtc->state = NULL;
- 
- 	state = kzalloc_obj(*state);
+diff --git a/drivers/hv/mshv_vtl_main.c b/drivers/hv/mshv_vtl_main.c
+index c194007014678..3ce4b4d6c11eb 100644
+--- a/drivers/hv/mshv_vtl_main.c
++++ b/drivers/hv/mshv_vtl_main.c
+@@ -129,6 +129,7 @@ mshv_ioctl_create_vtl(void __user *user_arg, struct device *module_dev)
+ 	file = anon_inode_getfile("mshv_vtl", &mshv_vtl_fops,
+ 				  vtl, O_RDWR);
+ 	if (IS_ERR(file)) {
++		put_unused_fd(fd);
+ 		kfree(vtl);
+ 		return PTR_ERR(file);
+ 	}
 -- 
 2.53.0
 
