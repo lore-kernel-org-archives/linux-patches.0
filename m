@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 473BC472F91;
-	Fri,  7 Aug 2026 15:27:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 096424766A5;
+	Fri,  7 Aug 2026 15:27:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116465; cv=none; b=p56LxsztQZeGEShjdhizH2Fs3N9/5mulqmyo/nwAHPdV3Z5X0kdd0rSfMzZBBvwR79zk1RGEplXWEDkQY/sWD71hZ+qEuREhhWwzrbPRZFmZVa8GYM7oJ+OoLfQszkNmvAMnPrEkOuPNXbLOQnnN02uOepKZpZF4X12a1GRGrQI=
+	t=1786116468; cv=none; b=NeGDF3JzdVtdxkXLsL2pZl83rrCwxC/auGOmSd9oU/oh8cVe1L1uRfErtRQkYh4vWCHVdx6fwaacJhy5r77cE/P/BzkFN//1VQXHnaBg4YkpGxBQL0jslLMS3ctPS9EIq/bmH374Tjovn6bRGFGgY8CpEOG6VAOELcxq2rR0fnw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116465; c=relaxed/simple;
-	bh=zOnqqO4UlYtz6uQe0PXUIfMTuRkeEPhhmjFbZfOl0Q4=;
+	s=arc-20240116; t=1786116468; c=relaxed/simple;
+	bh=fJjsnPApVPtaVFRgTRX/yFEUxEv62zANzX58f2ezYWo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U+TSML1W8ZlLJIkDXx+dX9I/GMU/H7uWII+bs+0LGWCc8End/Rgr9h66gJyesoR66IP/nv/ZIuZrlPoV3TPTLRDRSOXch7e9FM65pgfrYPkepIGor8AXnQjRlgCyQdc3MxZvoZNzJMj1Q+Wk67XCNJytu0uBnrHwNSUXhzHhqP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i7qmNwFz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KOzDhb6mAbc3ZGkYvKybJDDSfiikBFaCXGaIM7As75vOy+a1Ac7ccrksu8/AqW9U7Yso+yEwhlwAKiJWxf7fKef23bpnUFR8thuQEkC8LyL/LD6NJn6hluaQcn1LfwidJKkXEJ13EEzmwDHk/D7mmrOcMd4DFROUPxnck5Fr2xI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WQcdt1pc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i7qmNwFz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 598B21F00A3A;
-	Fri,  7 Aug 2026 15:27:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WQcdt1pc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 506AD1F00A3A;
+	Fri,  7 Aug 2026 15:27:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116463;
-	bh=rM5JLx6glmKm4HJEz/ubWmUWQw6Mf4rw8sDlKCRl/fA=;
+	s=korg; t=1786116466;
+	bh=ttxpJKsOWlu3hXghLgrmLigH2BbpzQwI0uercaQ0IEg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i7qmNwFzRafkdH2cyV0vcJt4I6UvSxUmAGEp+B5e8DIXli+P6g2P1DLnKf9d/L6X1
-	 YQPnyt5heukdc06+TdN6CRIR46sQvCASu6HvoDCnO7nucdB9fIMWxOn7WlnkAoaz+8
-	 GF16jqmw243hZn7Q83SwPz1fI7L/Alk14y5fPOzs=
+	b=WQcdt1pcJZZ2nbhGc4rjslAObS3w6rj0F8/3fDzDF0ska42OmhkRcQ1ZTw3uAVABz
+	 fjADCh24Bgb3cqQAb/c5GsfKhNMqoMWenAMrE6xVjQoShQtZvB8s9w1PJ5mJf+0u7h
+	 yjl81f12HIbmzw/NIjZE+l3E0s2bhxpn4RAauioM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>,
+	LiangCheng Wang <zaq14760@gmail.com>,
 	Arend van Spriel <arend.vanspriel@broadcom.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 239/261] wifi: brcmfmac: fix 43752 SDIO FWVID incorrectly labelled as Cypress (CYW)
-Date: Fri,  7 Aug 2026 16:39:56 +0200
-Message-ID: <20260807143420.558343208@linuxfoundation.org>
+Subject: [PATCH 6.6 240/261] wifi: brcmfmac: set F2 blocksize to 256 for BCM43752
+Date: Fri,  7 Aug 2026 16:39:57 +0200
+Message-ID: <20260807143420.581472591@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143415.358597922@linuxfoundation.org>
 References: <20260807143415.358597922@linuxfoundation.org>
@@ -52,127 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
+From: LiangCheng Wang <zaq14760@gmail.com>
 
-[ Upstream commit 74e2ef72bd4b25ce21c8f309d4f5b91b5df9ff5b ]
+[ Upstream commit 29ab31f3f27157648f2f7e6d5e1fd9792fdf0614 ]
 
-Cypress(Infineon) is not the vendor for this 43752 SDIO WLAN chip, and so
-has not officially released any firmware binary for it. It is incorrect to
-maintain this WLAN chip with firmware vendor ID as "CYW". So relabel the
-chip's firmware Vendor ID as "WCC" as suggested by the maintainer.
+The BCM43752 is not reliable with the default 512-byte SDIO function 2
+block size: on an i.MX8MP board with an AMPAK AP6275S module at
+SDR104 / 200 MHz, an iperf TX stress test kills WLAN within seconds:
+
+  mmc_submit_one: CMD53 sg block write failed -84
+  brcmf_sdio_dpc: failed backplane access over SDIO, halting operation
+
+Commit d2587c57ffd8 ("brcmfmac: add 43752 SDIO ids and initialization")
+set up the 43752 like the 4373 for the F2 watermark but missed the F2
+block size, which the 4373 limits to 256 bytes. The vendor driver
+(bcmdhd) also programs a 256-byte F2 block size for this chip and runs
+the same hardware without errors.
+
+Group the 43752 with the 4373, matching the F2 watermark handling.
+With this change a 10-minute bidirectional iperf3 soak completes with
+zero SDIO errors at ~270 Mbit/s in each direction.
+
+Backporting note: kernels before v6.18 name this id
+SDIO_DEVICE_ID_BROADCOM_CYPRESS_43752, so on those trees the case
+label added by this patch must be adjusted to that name. Cherry-picking
+the rename commit 74e2ef72bd4b ("wifi: brcmfmac: fix 43752 SDIO FWVID
+incorrectly labelled as Cypress (CYW)") first is not a clean
+alternative: on trees before v6.17 its context collides with the 43751
+additions, and trees before v6.2 lack the FWVID framework it touches.
 
 Fixes: d2587c57ffd8 ("brcmfmac: add 43752 SDIO ids and initialization")
-Fixes: f74f1ec22dc2 ("wifi: brcmfmac: add support for Cypress firmware api")
-Signed-off-by: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
+Cc: stable@vger.kernel.org # see patch description, needs adjustments for <= 6.17
+Signed-off-by: LiangCheng Wang <zaq14760@gmail.com>
 Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Link: https://patch.msgid.link/20250724101136.6691-1-gokulkumar.sivakumar@infineon.com
+Link: https://patch.msgid.link/20260715-b43752-f2-blksz-v2-1-f9be49856050@gmail.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Stable-dep-of: 29ab31f3f271 ("wifi: brcmfmac: set F2 blocksize to 256 for BCM43752")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c     |    2 +-
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c       |    4 ++--
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c       |    8 ++++----
- drivers/net/wireless/broadcom/brcm80211/include/brcm_hw_ids.h |    2 +-
- include/linux/mmc/sdio_ids.h                                  |    2 +-
- 5 files changed, 9 insertions(+), 9 deletions(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c |    1 +
+ 1 file changed, 1 insertion(+)
 
 --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
 +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
-@@ -991,9 +991,9 @@ static const struct sdio_device_id brcmf
- 	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_4354, WCC),
- 	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_4356, WCC),
- 	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_4359, WCC),
-+	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_43752, WCC),
- 	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_CYPRESS_4373, CYW),
- 	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_CYPRESS_43012, CYW),
--	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_CYPRESS_43752, CYW),
- 	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_CYPRESS_89359, CYW),
- 	CYW_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_CYPRESS_43439, CYW),
- 	{ /* end: all zeroes */ }
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c
-@@ -738,7 +738,7 @@ static u32 brcmf_chip_tcm_rambase(struct
- 	case BRCM_CC_4364_CHIP_ID:
- 	case CY_CC_4373_CHIP_ID:
- 		return 0x160000;
--	case CY_CC_43752_CHIP_ID:
-+	case BRCM_CC_43752_CHIP_ID:
- 	case BRCM_CC_4377_CHIP_ID:
- 		return 0x170000;
- 	case BRCM_CC_4378_CHIP_ID:
-@@ -1465,7 +1465,7 @@ bool brcmf_chip_sr_capable(struct brcmf_
- 		reg = chip->ops->read32(chip->ctx, addr);
- 		return (reg & CC_SR_CTL0_ENABLE_MASK) != 0;
- 	case BRCM_CC_4359_CHIP_ID:
--	case CY_CC_43752_CHIP_ID:
-+	case BRCM_CC_43752_CHIP_ID:
- 	case CY_CC_43012_CHIP_ID:
- 		addr = CORE_CC_REG(pmu->base, retention_ctl);
- 		reg = chip->ops->read32(chip->ctx, addr);
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-@@ -654,10 +654,10 @@ static const struct brcmf_firmware_mappi
- 	BRCMF_FW_ENTRY(BRCM_CC_4354_CHIP_ID, 0xFFFFFFFF, 4354),
- 	BRCMF_FW_ENTRY(BRCM_CC_4356_CHIP_ID, 0xFFFFFFFF, 4356),
- 	BRCMF_FW_ENTRY(BRCM_CC_4359_CHIP_ID, 0xFFFFFFFF, 4359),
-+	BRCMF_FW_ENTRY(BRCM_CC_43752_CHIP_ID, 0xFFFFFFFF, 43752),
- 	BRCMF_FW_ENTRY(CY_CC_4373_CHIP_ID, 0xFFFFFFFF, 4373),
- 	BRCMF_FW_ENTRY(CY_CC_43012_CHIP_ID, 0xFFFFFFFF, 43012),
- 	BRCMF_FW_ENTRY(CY_CC_43439_CHIP_ID, 0xFFFFFFFF, 43439),
--	BRCMF_FW_ENTRY(CY_CC_43752_CHIP_ID, 0xFFFFFFFF, 43752)
- };
- 
- #define TXCTL_CREDITS	2
-@@ -3425,8 +3425,8 @@ err:
- 
- static bool brcmf_sdio_aos_no_decode(struct brcmf_sdio *bus)
- {
--	if (bus->ci->chip == CY_CC_43012_CHIP_ID ||
--	    bus->ci->chip == CY_CC_43752_CHIP_ID)
-+	if (bus->ci->chip == BRCM_CC_43752_CHIP_ID ||
-+	    bus->ci->chip == CY_CC_43012_CHIP_ID)
- 		return true;
- 	else
- 		return false;
-@@ -4274,8 +4274,8 @@ static void brcmf_sdio_firmware_callback
- 				   bus->hostintmask, NULL);
- 
- 		switch (sdiod->func1->device) {
-+		case SDIO_DEVICE_ID_BROADCOM_43752:
- 		case SDIO_DEVICE_ID_BROADCOM_CYPRESS_4373:
--		case SDIO_DEVICE_ID_BROADCOM_CYPRESS_43752:
- 			brcmf_dbg(INFO, "set F2 watermark to 0x%x*4 bytes\n",
- 				  CY_4373_F2_WATERMARK);
- 			brcmf_sdiod_writeb(sdiod, SBSDIO_WATERMARK,
---- a/drivers/net/wireless/broadcom/brcm80211/include/brcm_hw_ids.h
-+++ b/drivers/net/wireless/broadcom/brcm80211/include/brcm_hw_ids.h
-@@ -52,13 +52,13 @@
- #define BRCM_CC_43664_CHIP_ID		43664
- #define BRCM_CC_43666_CHIP_ID		43666
- #define BRCM_CC_4371_CHIP_ID		0x4371
-+#define BRCM_CC_43752_CHIP_ID		43752
- #define BRCM_CC_4377_CHIP_ID		0x4377
- #define BRCM_CC_4378_CHIP_ID		0x4378
- #define BRCM_CC_4387_CHIP_ID		0x4387
- #define CY_CC_4373_CHIP_ID		0x4373
- #define CY_CC_43012_CHIP_ID		43012
- #define CY_CC_43439_CHIP_ID		43439
--#define CY_CC_43752_CHIP_ID		43752
- 
- /* USB Device IDs */
- #define BRCM_USB_43143_DEVICE_ID	0xbd1e
---- a/include/linux/mmc/sdio_ids.h
-+++ b/include/linux/mmc/sdio_ids.h
-@@ -76,7 +76,7 @@
- #define SDIO_DEVICE_ID_BROADCOM_43430		0xa9a6
- #define SDIO_DEVICE_ID_BROADCOM_43439		0xa9af
- #define SDIO_DEVICE_ID_BROADCOM_43455		0xa9bf
--#define SDIO_DEVICE_ID_BROADCOM_CYPRESS_43752	0xaae8
-+#define SDIO_DEVICE_ID_BROADCOM_43752		0xaae8
- 
- #define SDIO_VENDOR_ID_CYPRESS			0x04b4
- #define SDIO_DEVICE_ID_BROADCOM_CYPRESS_43439	0xbd3d
+@@ -906,6 +906,7 @@ int brcmf_sdiod_probe(struct brcmf_sdio_
+ 		return ret;
+ 	}
+ 	switch (sdiodev->func2->device) {
++	case SDIO_DEVICE_ID_BROADCOM_43752:
+ 	case SDIO_DEVICE_ID_BROADCOM_CYPRESS_4373:
+ 		f2_blksz = SDIO_4373_FUNC2_BLOCKSIZE;
+ 		break;
 
 
