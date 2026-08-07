@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE7EB471275;
-	Fri,  7 Aug 2026 15:03:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7D05472790;
+	Fri,  7 Aug 2026 15:03:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114998; cv=none; b=QKzDlgB1FulsiCVTNJpKAQOS5cpTlWblOukaqdxqEcNPM+betmCNZASYgQutIk05AsLQ5SvqIeTGxJyJE0TjhXa7/8U0u4ztS98OrzU3vw0lo4T0IThUhv5jtsY6X6eq+qfEM+ZYg+D+qIXAxdPX66LhbmLfQoM7HWqPs4hDAPs=
+	t=1786115000; cv=none; b=QTnyAw/83H76UTsa1xICFGVBVN19h34dHm4/O86oy4GCB2bJm3kia3dgmBiYFUaalnOIk6F1tL/jxt5Nq55YM4+DhlFixIUgkuqhQ/Ne3zbGtG0dnWdldwen7D+2h0FlqZA1/3H3WCYLLTHjB2LWZYHpSsF/2BiXapoYwtR8TCc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114998; c=relaxed/simple;
-	bh=TOd95fw/axbFRcOhjL4E5PRxScWPnsV3s4eoFJeeTYI=;
+	s=arc-20240116; t=1786115000; c=relaxed/simple;
+	bh=JlNkDdcp1YQM4YFmKKLzX9zWfGMLjD0mu2UJqPzofXs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gHJQlgwyEEWkfSGk9ZNoYJLwTsa+gJPhNVzpEPASeJe6QCOWUvIHW4JrJtwsRgtq8+32/58PaUc6br7tp5Py8Ja5kcBsfWt62xJPx8AaftWWwA2QnAEP8lKjHkgBO1gBLWI+9cnAEmEeFjYRdkmRCqWoSQ8jJ9uYg935pEONYqc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yuRhlxDY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=T9YJepImItdLO3Bf2B9PyK1hhSMP/aMx17GQ1O/WuuOpoCu0Y0r0TUECCkIpXm7W7BnB4gNhgX4p34EMi5iKG8ggpKnvjo9beyDm8qPAhs3P3LMtHsoV5JgsT/AcrLyQDlss2K1qvWHYQU732AeVi3dr+7thAgfnps+E7SSQyYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gGBAd9fs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yuRhlxDY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 455A81F000E9;
-	Fri,  7 Aug 2026 15:03:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gGBAd9fs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D2461F000E9;
+	Fri,  7 Aug 2026 15:03:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114996;
-	bh=cjOFo7lrbsi1+8WQ6jGJoriv3wyJs+wY7qGyJSlQxZM=;
+	s=korg; t=1786114999;
+	bh=qqxn43/uWJdEYTJIuwrucpM5+6GIPeqeBi7v5Lhi/Vw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yuRhlxDYqIcZBrrJSmc8ufMLxPJ7EUwf3o8mCOz2yMJswQwODNJHhHQnBv3k8SUXR
-	 NBxrig/SUak+dgWoF9NiPGDErHcGSTH2zvfM1eUWAdnaKJJuZc+EkVEDK8jS+9hmXp
-	 XPq9SAU9UGUfx2haYZzmLghm3IUwBigJ+P7Zk0Vc=
+	b=gGBAd9fszFEdy5vv8uw2aZqGypjED8FUYy1NjZiWUWukiCdkUgZuIjXoJMsiVgzwg
+	 FyVGg3d337yTnnROK17vztSRZejZa9yW52x26QmhECt2vDRjKahQV2U0H09B059/7W
+	 zV/sTiCLB6JGYfHbrw48xyV3IwgbacAfIVQq5t6Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijun Hu <zijun.hu@oss.qualcomm.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 121/396] Bluetooth: btintel: Validate length before parsing diagnostics TLV
-Date: Fri,  7 Aug 2026 16:34:41 +0200
-Message-ID: <20260807143426.915660121@linuxfoundation.org>
+Subject: [PATCH 6.18 095/396] powerpc/boot: Fix treeboot-akebono CPU node lookup check
+Date: Fri,  7 Aug 2026 16:34:15 +0200
+Message-ID: <20260807143426.329549970@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -51,38 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijun Hu <zijun.hu@oss.qualcomm.com>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit b640ff9af3c809ff5ea2077fbba17df1594ec1e4 ]
+[ Upstream commit b24fc8278b70a9d27ec801a427ab4de9b769d69a ]
 
-btintel_diagnostics() accesses tlv->val[0] without first validating
-that the diagnostics VSE is long enough to contain that field, so
-may cause reading data beyond the received frame.
+fdt_node_offset_by_prop_value() returns a negative error code on
+failure - fix the check accordingly.
 
-Fix by validating the length before access.
-
-Fixes: af395330abed ("Bluetooth: btintel: Add Intel devcoredump support")
-Signed-off-by: Zijun Hu <zijun.hu@oss.qualcomm.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 2a2c74b2efcb ("IBM Akebono: Add the Akebono platform")
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260702211554.56923-6-thorsten.blum@linux.dev
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btintel.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/powerpc/boot/treeboot-akebono.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
-index 5e0a05edcbfd1..4d6b6bbb4267e 100644
---- a/drivers/bluetooth/btintel.c
-+++ b/drivers/bluetooth/btintel.c
-@@ -3694,6 +3694,9 @@ static int btintel_diagnostics(struct hci_dev *hdev, struct sk_buff *skb)
- {
- 	struct intel_tlv *tlv = (void *)&skb->data[5];
+diff --git a/arch/powerpc/boot/treeboot-akebono.c b/arch/powerpc/boot/treeboot-akebono.c
+index e3cc2599869cc..1b529037480fb 100644
+--- a/arch/powerpc/boot/treeboot-akebono.c
++++ b/arch/powerpc/boot/treeboot-akebono.c
+@@ -146,7 +146,7 @@ void platform_init(char *userdata)
  
-+	if (skb->len < 5 + sizeof(*tlv) + sizeof(tlv->val[0]))
-+		goto recv_frame;
-+
- 	/* The first event is always an event type TLV */
- 	if (tlv->type != INTEL_TLV_TYPE_ID)
- 		goto recv_frame;
+ 	node = fdt_node_offset_by_prop_value(_dtb_start, -1, "device_type",
+ 					     "cpu", sizeof("cpu"));
+-	if (!node)
++	if (node < 0)
+ 		fatal("Cannot find cpu node\n");
+ 	timebase = fdt_getprop(_dtb_start, node, "timebase-frequency", &size);
+ 	if (timebase && (size == 4))
 -- 
 2.53.0
 
