@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 593CA331A61;
-	Fri,  7 Aug 2026 14:57:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C34D38C2C0;
+	Fri,  7 Aug 2026 14:57:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114677; cv=none; b=aJ+d7kWURgkAGLaEOI9KzLOyFJBvpLjYLeSYZrUfFh6THZSEYiWeap8nyNgtz0+S6K7u+ST2BJ00Ucqpm9mQ7l6mmA5a4js8sWiphgAo+QoNKbRqiLaPpM2FlESrgaZsPHJkKnVSCNakWImjaQotxV03nXFlQR9LtCsbHpC+Soc=
+	t=1786114680; cv=none; b=bTpExXdugsmlF6BpWODVaytZWyPtwAI734Y/VblDGhcJ3hRlzZiP1jh4fCqXpsxa9KhxFqDMMfuA/7rO+qWDti6S/XuScd+tHBGQvsjxhtCjREDKaLFOcXwlIM6yxuAPLgcDS60j+HTSDzJ77SjMiX6BxRYqObrXqDEY32clE4c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114677; c=relaxed/simple;
-	bh=WofYrSHOEF9dmdAraZVa8u1eiDKsuXZvFEY8zs2NyEM=;
+	s=arc-20240116; t=1786114680; c=relaxed/simple;
+	bh=+9NXwu8KDVVmHy2vjtEjatv1w4hnAmWNiOvXui+gCxA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IHUS/7MXCVh91G4nHEhmC2UUpHD8mYSnHWTEY0372/iwpwR7OcC1lWQQrnCDbXVN8GLgHImADeJncIY4kzJ+r3DdMMRwbkpH0E/UR+hvyIEdFQAuAWtJj8c0qjdD95kagSBC9+LLDEelQaQlpvCCqKEOQDRQUtGjl2v5hZ6Pfg8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hmmpCBo/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SFy8GBTdo/uXL+qN7vLMj4+RPpa6IoOVG2d24tvfbGSo1UlV4Q9dQ80SlHPTJdqwEu7VNRe4VBncp9YbzbZLl1NOJZIoaPQFXN0dxyHi9ItXxelGFrrD/OgfMUFqP3bDnEzdSCYadc/cHdwgzjF13SBuLIChbPojphu9PdUKa/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A9mG3T1R; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hmmpCBo/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B49611F000E9;
-	Fri,  7 Aug 2026 14:57:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A9mG3T1R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 898D51F000E9;
+	Fri,  7 Aug 2026 14:57:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114676;
-	bh=TpQPj0JF/t53ABjqC1tr3NzZYbe3LdflpySoLv4tb/A=;
+	s=korg; t=1786114679;
+	bh=DNMdHC5fTKhR4UMLzOtCbBG09JL12XjkLKD3jfw9eWA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hmmpCBo/4Xqx8vYGt9httrVBIMQAVaHOYd++0v655sWf13cr4jQG5bWbMO+rWEmrM
-	 4GMgPXtZ8Pc962lh04QTNxmbvot0LWwMaI8nXLI+EoC/ABNCw/ARc35X50YWkWEQlK
-	 vnSMiek9NmGARcAnieF3sD40vHX0B0WV8j6kXGt8=
+	b=A9mG3T1R65/7dGvok3fssAvHR3v4/Co5zok+rnp9PBLi8HKSx5fmXYUBMATC+PpP1
+	 NfImTFDPkRePuQ8qLDsmX9Od6KyCN+Qbs27Ggfmq+2yUStp2JNDHck7uj0gbRg/r4D
+	 FzzCRLAlnHoEdha8hBABt+8Vq6+xRMTLJGVVLFQw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Tissoires <bentiss@kernel.org>,
-	Jiri Kosina <jkosina@suse.com>,
+	"Harry Yoo (Oracle)" <harry@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 010/396] HID: logitech-dj: fix wrong detection of bad DJ_SHORT output report
-Date: Fri,  7 Aug 2026 16:32:50 +0200
-Message-ID: <20260807143424.495046061@linuxfoundation.org>
+Subject: [PATCH 6.18 011/396] lib/alloc_tag: introduce mem_alloc_profiling_permanently_disabled()
+Date: Fri,  7 Aug 2026 16:32:51 +0200
+Message-ID: <20260807143424.519857608@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -51,43 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Tissoires <bentiss@kernel.org>
+From: Harry Yoo (Oracle) <harry@kernel.org>
 
-[ Upstream commit 8b9a097eb2fc37b486afd81388c693bf3ab44466 ]
+commit a37b0066a10aabf3c968b4566706fb866eaf9a85 upstream.
 
-commit b6a57912854e ("HID: logitech-dj: Prevent REPORT_ID_DJ_SHORT
-related user initiated OOB write") assumed that all HID devices attached
-to the logitech-dj driver was having an output report of DJ_SHORT.
+mem_alloc_profiling_enabled() tells whether memalloc profiling is
+currently enabled. However, even when this function returns false,
+it can be enabled later.
 
-However, on the receiver itself, we have 2 other HID device we attach
-here: the mouse emulation and the keyboard emulation. For those devices
-the value of rep is NULL and we are triggered a segfault here.
+However, this is not enough. Some optimizations can be applied only when
+memalloc profiling is permanently disabled. For example, to skip the
+creation of KMALLOC_NO_OBJ_EXT caches at boot time, mem_profiling must
+be set to "never", "0" w/ debugging on, or have been shutdown so that
+it can no longer be enabled.
 
-This is doubly required because logitech-dj also handles non DJ devices
-that might not have the DJ collection.
+Introduce mem_alloc_profiling_permanently_disabled() for this purpose.
 
-Fixes: b6a57912854e ("HID: logitech-dj: Prevent REPORT_ID_DJ_SHORT related user initiated OOB write")
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Harry Yoo (Oracle) <harry@kernel.org>
+Acked-by: Suren Baghdasaryan <surenb@google.com>
+Link: https://patch.msgid.link/20260713-kmalloc-no-objext-v3-3-47c7bd138de7@kernel.org
+Signed-off-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+Signed-off-by: Harry Yoo <harry@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-logitech-dj.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/linux/alloc_tag.h | 3 +++
+ lib/alloc_tag.c           | 9 +++++++++
+ 2 files changed, 12 insertions(+)
 
-diff --git a/drivers/hid/hid-logitech-dj.c b/drivers/hid/hid-logitech-dj.c
-index 3a37d61616293..f1e923ed9d1c5 100644
---- a/drivers/hid/hid-logitech-dj.c
-+++ b/drivers/hid/hid-logitech-dj.c
-@@ -1797,7 +1797,8 @@ static int logi_dj_probe(struct hid_device *hdev,
- 	output_report_enum = &hdev->report_enum[HID_OUTPUT_REPORT];
- 	rep = output_report_enum->report_id_hash[REPORT_ID_DJ_SHORT];
+diff --git a/include/linux/alloc_tag.h b/include/linux/alloc_tag.h
+index 02de2ede560f3..7e7cdc7612bed 100644
+--- a/include/linux/alloc_tag.h
++++ b/include/linux/alloc_tag.h
+@@ -134,6 +134,8 @@ static inline bool mem_alloc_profiling_enabled(void)
+ 				   &mem_alloc_profiling_key);
+ }
  
--	if (rep->maxfield < 1 || rep->field[0]->report_count != DJREPORT_SHORT_LENGTH - 1) {
-+	if (rep && (rep->maxfield < 1 ||
-+		    rep->field[0]->report_count != DJREPORT_SHORT_LENGTH - 1)) {
- 		hid_err(hdev, "Expected size of DJ short report is %d, but got %d",
- 			DJREPORT_SHORT_LENGTH - 1, rep->field[0]->report_count);
- 		return -EINVAL;
++bool mem_alloc_profiling_permanently_disabled(void);
++
+ static inline struct alloc_tag_counters alloc_tag_read(struct alloc_tag *tag)
+ {
+ 	struct alloc_tag_counters v = { 0, 0 };
+@@ -239,6 +241,7 @@ static inline bool alloc_tag_is_inaccurate(struct alloc_tag *tag)
+ 
+ #define DEFINE_ALLOC_TAG(_alloc_tag)
+ static inline bool mem_alloc_profiling_enabled(void) { return false; }
++static inline bool mem_alloc_profiling_permanently_disabled(void) { return true; }
+ static inline void alloc_tag_add(union codetag_ref *ref, struct alloc_tag *tag,
+ 				 size_t bytes) {}
+ static inline void alloc_tag_sub(union codetag_ref *ref, size_t bytes) {}
+diff --git a/lib/alloc_tag.c b/lib/alloc_tag.c
+index 3082d977efaae..7c6d3a086fdc4 100644
+--- a/lib/alloc_tag.c
++++ b/lib/alloc_tag.c
+@@ -26,6 +26,15 @@ static bool mem_profiling_support = true;
+ static bool mem_profiling_support;
+ #endif
+ 
++/*
++ * Memory allocation profiling is permanently disabled and cannot be enabled.
++ * Must be called after setup_early_mem_profiling().
++ */
++bool mem_alloc_profiling_permanently_disabled(void)
++{
++	return !mem_profiling_support;
++}
++
+ static struct codetag_type *alloc_tag_cttype;
+ 
+ #ifdef CONFIG_ARCH_MODULE_NEEDS_WEAK_PER_CPU
 -- 
 2.53.0
 
