@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E52FE46D2CC;
-	Fri,  7 Aug 2026 15:12:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B36D3F58C4;
+	Fri,  7 Aug 2026 15:12:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115565; cv=none; b=qOA7DS2F4vPW6r0uZaSgm2lyB3GEtPxWmSkf/13dLvEEsLqljDfkgXoCbWasVJyxTE/9M7xOBZZGrp69d2Au3fSxXQZ9cIHOxmi46m/60yWWDDbaMTgGtnTUPsNjCo+nlch4VYAQyPAs5LYgXfq899X+oqPTYJJ9nCdKmJ65ppY=
+	t=1786115566; cv=none; b=mpDnod3sKnkN4YDNbLLRDJHNIlD+N9zvwF7ysmb1UD42kWB3dHNFjuRNfqsDk01yhn/zXgzlpJ4/y1si3Hf/kuU65KgTlw4IjRRdLbOzCX9o9oIKT3NJcH1PCDQ7XwabhBLWFfJfEcNJa9UbefcV0ZywUt5EAGlBPNBKeUAaTX0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115565; c=relaxed/simple;
-	bh=cJVwupU63Bg0O8spco42NrZiN58FyhnMbjltN8XW2mY=;
+	s=arc-20240116; t=1786115566; c=relaxed/simple;
+	bh=iAWg0SWvQU9+hZ5yai26YzVIxaGVzcZxw4XiGhXnvo0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qATQkRnbXaiMtZUwyNoS0tZa+EUD5MOI1jT3vguubRfuzt/cwIVm4escv4niXN5N3G2svTex1dMdLX4s7RP1UlLdXAUQnmXPyENXAHuJSdTmnLwnBBuJFFev2+6D17sC47Yh9656ooLqqwkPLUhHBdH9pojFv9D7NslulqgsQik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1FG9w1uT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=eveSFwsPH3i4o5FARqE19cmMg4hwIqL3gCj2nNH6iMNR7S1wbKeWICc+gD2H6oX6F3Ip5lBLOFU2qft/nQqVqxnvMTDD8GzLUegChW4XLX1XhtsQpRk4og+p0CalGyX8yJ8BujAZngzDAg5dVZGj4zIMGDdBbi8QIlUkPVtI2zc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EUfhMCnY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1FG9w1uT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A3001F00A3D;
-	Fri,  7 Aug 2026 15:12:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EUfhMCnY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F394D1F00AC4;
+	Fri,  7 Aug 2026 15:12:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115559;
-	bh=bQe4dTblQuoTtQ4C9i4al0eFLnGlm3c/dkH1uRDG5A8=;
+	s=korg; t=1786115562;
+	bh=YjR/ze/N03Ty8msmHzTlP99QyLIOhy3Uum43JaPzd+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1FG9w1uTxlfow8IkapAMCrUNk+yhYSqavRmDZJkCtEtuxNK9z7H1LVqBgiYXYLZy7
-	 iPEFFVvg1P7yOf9WrImQGt5fSVclzJs8vrHRXd2cqKQ3gzCmhgJkQl7QWwO991WxW3
-	 RhnIOKDmV6PEvQNON/unr0OGKtscBHlhNJLkmEwA=
+	b=EUfhMCnYLoFLi8/D3xS90MFAsNiFmQ7hOxN7aFWQE1+7X5n4gzR5lsMs7ss+P23jw
+	 deiBfLEweGJ1s+16PBqwObmGTED2BhjCS0NYtBfWQOcNY6fR/yubd+r3OAhB4Jg/ep
+	 oVpDGPNzRTcmrjEXbB4UYgGxpRwrgeQor8oDbTvU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	CK Hu <ck.hu@mediatek.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>
-Subject: [PATCH 6.18 318/396] drm/mediatek: ovl_adaptor: balance component registrations
-Date: Fri,  7 Aug 2026 16:37:58 +0200
-Message-ID: <20260807143431.123954986@linuxfoundation.org>
+	Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.18 319/396] drm/amdgpu: move debug_vm handling to amdgpu_cs_parser_fini
+Date: Fri,  7 Aug 2026 16:37:59 +0200
+Message-ID: <20260807143431.146869156@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -46,80 +45,87 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
 
-commit 533e3469a57996905cdb95f178e7efe38c21aeb2 upstream.
+commit d8726ef11512754a68c0ab53c57634a569b8feff upstream.
 
-The OVL adaptor registers both an aggregate driver for its child devices
-and a component for the main DRM aggregate. Probe currently ignores an
-error from registering the child aggregate and leaves that aggregate
-registered if registering the DRM component fails. The remove callback
-also leaves the DRM component registered.
+The commit referenced below restarts the CS if the validation is
+still in progress. When debug_vm is enabled, all BOs from the CS
+are invalidated so we will hit an infinite loop.
 
-These imbalances can leave component framework entries referring to a
-device whose probe failed or whose driver has been detached. The aggregate
-unbind callback also fails to undo component_bind_all(), leaving its child
-components marked as bound when the aggregate is removed.
+To avoid that, defer BO invalidation to amdgpu_cs_parser_fini.
 
-Check the aggregate registration result, unwind it when the component
-registration fails, and unregister the component before the aggregate on
-remove. Keep runtime PM enabled until both framework registrations have
-been removed, and unbind all child components from the aggregate unbind
-callback.
-
-Fixes: 453c3364632a ("drm/mediatek: Add ovl_adaptor support for MT8195")
-Cc: stable@vger.kernel.org # 6.4+
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Reviewed-by: CK Hu <ck.hu@mediatek.com>
-Link: https://patchwork.kernel.org/project/linux-mediatek/patch/20260721152242.47138-1-mhun512@gmail.com/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Fixes: 59720bfd8c6d ("drm/amdgpu: restart the CS if some parts of the VM are still invalidated")
+Signed-off-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 8c990ee9daa295462df24982ce6878db997a380a)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/mediatek/mtk_disp_ovl_adaptor.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c |   30 ++++++++++++++++--------------
+ 1 file changed, 16 insertions(+), 14 deletions(-)
 
---- a/drivers/gpu/drm/mediatek/mtk_disp_ovl_adaptor.c
-+++ b/drivers/gpu/drm/mediatek/mtk_disp_ovl_adaptor.c
-@@ -625,6 +625,7 @@ static void mtk_disp_ovl_adaptor_master_
- 	struct mtk_disp_ovl_adaptor *priv = dev_get_drvdata(dev);
- 
- 	priv->children_bound = false;
-+	component_unbind_all(dev, priv->mmsys_dev);
- }
- 
- static const struct component_master_ops mtk_disp_ovl_adaptor_master_ops = {
-@@ -651,12 +652,15 @@ static int mtk_disp_ovl_adaptor_probe(st
- 
- 	priv->mmsys_dev = pdev->dev.platform_data;
- 
--	component_master_add_with_match(dev, &mtk_disp_ovl_adaptor_master_ops, match);
-+	ret = component_master_add_with_match(dev, &mtk_disp_ovl_adaptor_master_ops, match);
-+	if (ret)
-+		return dev_err_probe(dev, ret, "Failed to add component master\n");
- 
- 	pm_runtime_enable(dev);
- 
- 	ret = component_add(dev, &mtk_disp_ovl_adaptor_comp_ops);
- 	if (ret != 0) {
-+		component_master_del(dev, &mtk_disp_ovl_adaptor_master_ops);
- 		pm_runtime_disable(dev);
- 		return dev_err_probe(dev, ret, "Failed to add component\n");
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
+@@ -1187,19 +1187,6 @@ static int amdgpu_cs_vm_handling(struct
+ 		job->vm_pd_addr = amdgpu_gmc_pd_addr(vm->root.bo);
  	}
-@@ -666,6 +670,7 @@ static int mtk_disp_ovl_adaptor_probe(st
  
- static void mtk_disp_ovl_adaptor_remove(struct platform_device *pdev)
- {
-+	component_del(&pdev->dev, &mtk_disp_ovl_adaptor_comp_ops);
- 	component_master_del(&pdev->dev, &mtk_disp_ovl_adaptor_master_ops);
- 	pm_runtime_disable(&pdev->dev);
+-	if (adev->debug_vm) {
+-		/* Invalidate all BOs to test for userspace bugs */
+-		amdgpu_bo_list_for_each_entry(e, p->bo_list) {
+-			struct amdgpu_bo *bo = e->bo;
+-
+-			/* ignore duplicates */
+-			if (!bo)
+-				continue;
+-
+-			amdgpu_vm_bo_invalidate(bo, false);
+-		}
+-	}
+-
+ 	return 0;
  }
+ 
+@@ -1389,6 +1376,8 @@ static int amdgpu_cs_submit(struct amdgp
+ /* Cleanup the parser structure */
+ static void amdgpu_cs_parser_fini(struct amdgpu_cs_parser *parser)
+ {
++	struct amdgpu_device *adev = parser->adev;
++	struct amdgpu_bo_list_entry *e;
+ 	unsigned int i;
+ 
+ 	amdgpu_sync_free(&parser->sync);
+@@ -1404,8 +1393,21 @@ static void amdgpu_cs_parser_fini(struct
+ 
+ 	if (parser->ctx)
+ 		amdgpu_ctx_put(parser->ctx);
+-	if (parser->bo_list)
++	if (parser->bo_list) {
++		if (adev->debug_vm) {
++			/* Invalidate all BOs to test for userspace bugs */
++			amdgpu_bo_list_for_each_entry(e, parser->bo_list) {
++				struct amdgpu_bo *bo = e->bo;
++
++				/* ignore duplicates */
++				if (!bo)
++					continue;
++
++				amdgpu_vm_bo_invalidate(bo, false);
++			}
++		}
+ 		amdgpu_bo_list_put(parser->bo_list);
++	}
+ 
+ 	for (i = 0; i < parser->nchunks; i++)
+ 		kvfree(parser->chunks[i].kdata);
 
 
