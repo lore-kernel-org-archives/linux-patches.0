@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0E9F40EB9D;
-	Fri,  7 Aug 2026 14:44:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F52D343D85;
+	Fri,  7 Aug 2026 14:44:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786113890; cv=none; b=InvoGpENBAVSV9JT/18YhQCWDiMkS5lSM18hZCzd0CHMU5DUJgNZHbbh/njMsOQAxCnnBJ6aIhYsXQB4t3ReLcMatN17H2qjsHqB+y8rzOE46D1ZheiuPI8l802yBdToF9Os97L9Fn20W/SmCoI5qkTbmztgQ/HLd6si6w1RAy8=
+	t=1786113893; cv=none; b=hRGENK2+UdNTSdF/skl+R8mRs2QIk2/kLm0zVmJ7nnonlPTxB7yTIaTcRXNOgfv3Ya60oUwl1Q68+FYogT8G2ABWmhsqCrWC1aW36wt3Gb5iCQOd7OPB/wm/1WafjgvMp8bPIKI5NiNzocLuCs4int7t04WsnAdfIS9U8CNfvZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786113890; c=relaxed/simple;
-	bh=ilAgG5SeEIK51He05ZHTcjqNvsR525lXs9FzRFn1qdc=;
+	s=arc-20240116; t=1786113893; c=relaxed/simple;
+	bh=BWVInZz5lwzoI0D1cmg2u0vftSTIzPhLO5kprchCUVE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oYxMoYQILJryW+hvpC73xm10HsuXl/47WDGC0eKqLXucp3wgjU+On7XkzbbhIEMb3CexyFBVXBuLqpDtZbCqITyJ+7phsaE6pV9ILeFMCgnVV6jWgoCXCa68rduQRA3hmRcR5u/8lR/06Xj+k6pA9w04tahDp8JeY7UygKyOCvQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TcTyKIdz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RmWcQ3byOAlR+zK77p4fAsJXlTWVD77vxVhOkUN7+urgwxocnnH0uPPEmzb2lTYimn3UFOeE5QnAcSUbjABkvk6lNO/FX5PjuXqz5PcLhYqSZGTgeykhXRqIVyDphqP+eCDKdeggQaZ8+wE0gh8SHe0XcXVI03VmcsMcAQRPR10=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w0qNW+O8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TcTyKIdz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 615E41F00A3E;
-	Fri,  7 Aug 2026 14:44:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w0qNW+O8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 341581F000E9;
+	Fri,  7 Aug 2026 14:44:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786113879;
-	bh=3v/1NasXlAQs4e1vg0ctJV5/xD0nM/tDDIKO7+uQQjg=;
+	s=korg; t=1786113882;
+	bh=3yEXzZr2nj9QvbCAzvJ9Lva872HZqiEE7C5pTieAmB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TcTyKIdzr1f8ljKYKluCYwll1tm/lAbOkgyNcMjfAAW6GAym+cE/uhkr930KDENHO
-	 GUo8RHQIKqYZh2Bh7d0j80d3XN+o7j/Eh33lLyeIkpvEmm4j2R3WgtECKW9M3vI0aN
-	 EzILVy8FEw0PAjQV23qqR8ndVK8T+DcE+jvL1/qU=
+	b=w0qNW+O8Tr5bXy76cHubRFQi9vRzCHhOsr/QdEY3+MnUkPVzGGrezqMhTfDs+sb66
+	 fV08Oo67/b8ZLn4Mz++E0lBIvcNJxIxKDRACoK8Ec6I4YdL8E7u5upx8f0RKCIaifL
+	 9+lpFYCIrKP6R6n7FfKs8uh5/I9Nvu3FO47PqGoI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Rebmann <jre@pengutronix.de>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Oreoluwa Babatunde <quic_obabatun@quicinc.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 066/337] hwmon: (ina2xx) Shift INA234 shunt and current registers
-Date: Fri,  7 Aug 2026 16:34:29 +0200
-Message-ID: <20260807143419.942850604@linuxfoundation.org>
+Subject: [PATCH 6.12 031/337] of: reserved_mem: Add code to dynamically allocate reserved_mem array
+Date: Fri,  7 Aug 2026 16:33:54 +0200
+Message-ID: <20260807143419.192606547@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -45,168 +45,176 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jonas Rebmann <jre@pengutronix.de>
+From: Oreoluwa Babatunde <quic_obabatun@quicinc.com>
 
-[ Upstream commit eeca1114d1e2cc0eacaebb80f3f2afbaebfc60be ]
+[ Upstream commit 00c9a452a235c61f099504783badd9a7675ff5a5 ]
 
-The INA219 has the lowest three bits of the bus voltage register
-zero-reserved, the bus_voltage_shift ina2xx_config field was introduced
-to accommodate for that.
+The reserved_mem array is statically allocated with a size of
+MAX_RESERVED_REGIONS(64). Therefore, if the number of reserved_mem
+regions exceeds this size, there will not be enough space to store
+all the data.
 
-The INA234 has four bits of the bus voltage, of the shunt voltage, and
-of the current registers zero-reserved but the latter two were
-implemented by choosing a 16x higher shunt_div instead of a separate
-field specifying a bit shift.
+Hence, extend the use of the static array by introducing a
+dynamically allocated array based on the number of reserved memory
+regions specified in the DT.
 
-This is possible because shunt voltage and current are divided by
-shunt_div, hence a 16x higher shunt_div results in a 16x smaller LSB for
-both the shunt voltage and the current register, perfectly accounting
-for the missing bit shift.
+On architectures such as arm64, memblock allocated memory is not
+writable until after the page tables have been setup. Hence, the
+dynamic allocation of the reserved_mem array will need to be done only
+after the page tables have been setup.
 
-For consistency and correctness, account for the reserved bits via
-shunt_voltage_shift and current_shift configuration fields as already
-done for voltage registers and use the conversion constants given in the
-INA234 datasheet.
+As a result, a temporary static array is still needed in the initial
+stages to store the information of the dynamically-placed reserved
+memory regions because the start address is selected only at run-time
+and is not stored anywhere else.
+It is not possible to wait until the reserved_mem array is allocated
+because this is done after the page tables are setup and the reserved
+memory regions need to be initialized before then.
 
-Signed-off-by: Jonas Rebmann <jre@pengutronix.de>
-Link: https://lore.kernel.org/r/20260303-ina234-shift-v1-2-318c33ac4480@pengutronix.de
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Stable-dep-of: e6c80061ca23 ("hwmon: (ina2xx) Fix various overflow issues")
+After the reserved_mem array is allocated, all entries from the static
+array is copied over to the new array, and the rest of the information
+for the statically-placed reserved memory regions are read in from the
+DT and stored in the new array as well.
+
+Once the init process is completed, the temporary static array is
+released back to the system because it is no longer needed. This is
+achieved by marking it as __initdata.
+
+Signed-off-by: Oreoluwa Babatunde <quic_obabatun@quicinc.com>
+Link: https://lore.kernel.org/r/20241008220624.551309-3-quic_obabatun@quicinc.com
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Stable-dep-of: db3dbdfea1b8 ("of: reserved_mem: prevent OOB when too many dynamic regions are defined")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/ina2xx.c | 22 +++++++++++++++++++---
- 1 file changed, 19 insertions(+), 3 deletions(-)
+ drivers/of/of_reserved_mem.c | 63 +++++++++++++++++++++++++++++++++---
+ 1 file changed, 59 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/hwmon/ina2xx.c b/drivers/hwmon/ina2xx.c
-index be6e214fae21f..d671d546b2054 100644
---- a/drivers/hwmon/ina2xx.c
-+++ b/drivers/hwmon/ina2xx.c
-@@ -151,9 +151,11 @@ struct ina2xx_config {
- 	bool has_update_interval;
- 	int calibration_value;
- 	int shunt_div;
-+	int shunt_voltage_shift;
- 	int bus_voltage_shift;
- 	int bus_voltage_lsb;	/* uV */
- 	int power_lsb_factor;
-+	int current_shift;
- };
+diff --git a/drivers/of/of_reserved_mem.c b/drivers/of/of_reserved_mem.c
+index 7b5d6562fe4a0..02d3c3284f886 100644
+--- a/drivers/of/of_reserved_mem.c
++++ b/drivers/of/of_reserved_mem.c
+@@ -28,7 +28,9 @@
  
- struct ina2xx_data {
-@@ -173,59 +175,69 @@ static const struct ina2xx_config ina2xx_config[] = {
- 		.config_default = INA219_CONFIG_DEFAULT,
- 		.calibration_value = 4096,
- 		.shunt_div = 100,
-+		.shunt_voltage_shift = 0,
- 		.bus_voltage_shift = 3,
- 		.bus_voltage_lsb = 4000,
- 		.power_lsb_factor = 20,
- 		.has_alerts = false,
- 		.has_ishunt = false,
- 		.has_power_average = false,
-+		.current_shift = 0,
- 		.has_update_interval = false,
- 	},
- 	[ina226] = {
- 		.config_default = INA226_CONFIG_DEFAULT,
- 		.calibration_value = 2048,
- 		.shunt_div = 400,
-+		.shunt_voltage_shift = 0,
- 		.bus_voltage_shift = 0,
- 		.bus_voltage_lsb = 1250,
- 		.power_lsb_factor = 25,
- 		.has_alerts = true,
- 		.has_ishunt = false,
- 		.has_power_average = false,
-+		.current_shift = 0,
- 		.has_update_interval = true,
- 	},
- 	[ina234] = {
- 		.config_default = INA226_CONFIG_DEFAULT,
- 		.calibration_value = 2048,
--		.shunt_div = 400, /* 2.5 µV/LSB raw ADC reading from INA2XX_SHUNT_VOLTAGE */
-+		.shunt_div = 25, /* 2.5 µV/LSB raw ADC reading from INA2XX_SHUNT_VOLTAGE */
-+		.shunt_voltage_shift = 4,
- 		.bus_voltage_shift = 4,
- 		.bus_voltage_lsb = 25600,
- 		.power_lsb_factor = 32,
- 		.has_alerts = true,
- 		.has_ishunt = false,
- 		.has_power_average = false,
-+		.current_shift = 4,
- 		.has_update_interval = true,
- 	},
- 	[ina260] = {
- 		.config_default = INA260_CONFIG_DEFAULT,
- 		.shunt_div = 400,
-+		.shunt_voltage_shift = 0,
- 		.bus_voltage_shift = 0,
- 		.bus_voltage_lsb = 1250,
- 		.power_lsb_factor = 8,
- 		.has_alerts = true,
- 		.has_ishunt = true,
- 		.has_power_average = false,
-+		.current_shift = 0,
- 		.has_update_interval = true,
- 	},
- 	[sy24655] = {
- 		.config_default = SY24655_CONFIG_DEFAULT,
- 		.calibration_value = 4096,
- 		.shunt_div = 400,
-+		.shunt_voltage_shift = 0,
- 		.bus_voltage_shift = 0,
- 		.bus_voltage_lsb = 1250,
- 		.power_lsb_factor = 25,
- 		.has_alerts = true,
- 		.has_ishunt = false,
- 		.has_power_average = true,
-+		.current_shift = 0,
- 		.has_update_interval = false,
- 	},
- };
-@@ -279,7 +291,8 @@ static int ina2xx_get_value(struct ina2xx_data *data, u8 reg,
- 	switch (reg) {
- 	case INA2XX_SHUNT_VOLTAGE:
- 		/* signed register */
--		val = DIV_ROUND_CLOSEST((s16)regval, data->config->shunt_div);
-+		val = (s16)regval >> data->config->shunt_voltage_shift;
-+		val = DIV_ROUND_CLOSEST(val, data->config->shunt_div);
- 		break;
- 	case INA2XX_BUS_VOLTAGE:
- 		val = (regval >> data->config->bus_voltage_shift) *
-@@ -291,7 +304,8 @@ static int ina2xx_get_value(struct ina2xx_data *data, u8 reg,
- 		break;
- 	case INA2XX_CURRENT:
- 		/* signed register, result in mA */
--		val = (s16)regval * data->current_lsb_uA;
-+		val = ((s16)regval >> data->config->current_shift) *
-+		  data->current_lsb_uA;
- 		val = DIV_ROUND_CLOSEST(val, 1000);
- 		break;
- 	case INA2XX_CALIBRATION:
-@@ -385,6 +399,7 @@ static u16 ina226_alert_to_reg(struct ina2xx_data *data, int reg, long val)
- 	case INA2XX_SHUNT_VOLTAGE:
- 		val = clamp_val(val, 0, SHRT_MAX * data->config->shunt_div);
- 		val *= data->config->shunt_div;
-+		val <<= data->config->shunt_voltage_shift;
- 		return clamp_val(val, 0, SHRT_MAX);
- 	case INA2XX_BUS_VOLTAGE:
- 		val = clamp_val(val, 0, 200000);
-@@ -399,6 +414,7 @@ static u16 ina226_alert_to_reg(struct ina2xx_data *data, int reg, long val)
- 		val = clamp_val(val, INT_MIN / 1000, INT_MAX / 1000);
- 		/* signed register, result in mA */
- 		val = DIV_ROUND_CLOSEST(val * 1000, data->current_lsb_uA);
-+		val <<= data->config->current_shift;
- 		return clamp_val(val, SHRT_MIN, SHRT_MAX);
- 	default:
- 		/* programmer goofed */
+ #include "of_private.h"
+ 
+-static struct reserved_mem reserved_mem[MAX_RESERVED_REGIONS];
++static struct reserved_mem reserved_mem_array[MAX_RESERVED_REGIONS] __initdata;
++static struct reserved_mem *reserved_mem __refdata = reserved_mem_array;
++static int total_reserved_mem_cnt = MAX_RESERVED_REGIONS;
+ static int reserved_mem_count;
+ 
+ static int __init early_init_dt_alloc_reserved_memory_arch(phys_addr_t size,
+@@ -57,6 +59,50 @@ static int __init early_init_dt_alloc_reserved_memory_arch(phys_addr_t size,
+ 	return err;
+ }
+ 
++/*
++ * alloc_reserved_mem_array() - allocate memory for the reserved_mem
++ * array using memblock
++ *
++ * This function is used to allocate memory for the reserved_mem
++ * array according to the total number of reserved memory regions
++ * defined in the DT.
++ * After the new array is allocated, the information stored in
++ * the initial static array is copied over to this new array and
++ * the new array is used from this point on.
++ */
++static void __init alloc_reserved_mem_array(void)
++{
++	struct reserved_mem *new_array;
++	size_t alloc_size, copy_size, memset_size;
++
++	alloc_size = array_size(total_reserved_mem_cnt, sizeof(*new_array));
++	if (alloc_size == SIZE_MAX) {
++		pr_err("Failed to allocate memory for reserved_mem array with err: %d", -EOVERFLOW);
++		return;
++	}
++
++	new_array = memblock_alloc(alloc_size, SMP_CACHE_BYTES);
++	if (!new_array) {
++		pr_err("Failed to allocate memory for reserved_mem array with err: %d", -ENOMEM);
++		return;
++	}
++
++	copy_size = array_size(reserved_mem_count, sizeof(*new_array));
++	if (copy_size == SIZE_MAX) {
++		memblock_free(new_array, alloc_size);
++		total_reserved_mem_cnt = MAX_RESERVED_REGIONS;
++		pr_err("Failed to allocate memory for reserved_mem array with err: %d", -EOVERFLOW);
++		return;
++	}
++
++	memset_size = alloc_size - copy_size;
++
++	memcpy(new_array, reserved_mem, copy_size);
++	memset(new_array + reserved_mem_count, 0, memset_size);
++
++	reserved_mem = new_array;
++}
++
+ static void __init fdt_init_reserved_mem_node(struct reserved_mem *rmem);
+ /*
+  * fdt_reserved_mem_save_node() - save fdt node for second pass initialization
+@@ -66,7 +112,7 @@ static void __init fdt_reserved_mem_save_node(unsigned long node, const char *un
+ {
+ 	struct reserved_mem *rmem = &reserved_mem[reserved_mem_count];
+ 
+-	if (reserved_mem_count == ARRAY_SIZE(reserved_mem)) {
++	if (reserved_mem_count == total_reserved_mem_cnt) {
+ 		pr_err("not enough space for all defined regions.\n");
+ 		return;
+ 	}
+@@ -199,6 +245,9 @@ void __init fdt_scan_reserved_mem_reg_nodes(void)
+ 		return;
+ 	}
+ 
++	/* Attempt dynamic allocation of a new reserved_mem array */
++	alloc_reserved_mem_array();
++
+ 	if (__reserved_mem_check_root(node)) {
+ 		pr_err("Reserved memory: unsupported node format, ignoring\n");
+ 		return;
+@@ -243,7 +292,7 @@ static int __init __reserved_mem_alloc_size(unsigned long node, const char *unam
+ int __init fdt_scan_reserved_mem(void)
+ {
+ 	int node, child;
+-	int dynamic_nodes_cnt = 0;
++	int dynamic_nodes_cnt = 0, count = 0;
+ 	int dynamic_nodes[MAX_RESERVED_REGIONS];
+ 	const void *fdt = initial_boot_params;
+ 
+@@ -266,6 +315,8 @@ int __init fdt_scan_reserved_mem(void)
+ 		uname = fdt_get_name(fdt, child, NULL);
+ 
+ 		err = __reserved_mem_reserve_reg(child, uname);
++		if (!err)
++			count++;
+ 		/*
+ 		 * Save the nodes for the dynamically-placed regions
+ 		 * into an array which will be used for allocation right
+@@ -280,11 +331,15 @@ int __init fdt_scan_reserved_mem(void)
+ 	}
+ 	for (int i = 0; i < dynamic_nodes_cnt; i++) {
+ 		const char *uname;
++		int err;
+ 
+ 		child = dynamic_nodes[i];
+ 		uname = fdt_get_name(fdt, child, NULL);
+-		__reserved_mem_alloc_size(child, uname);
++		err = __reserved_mem_alloc_size(child, uname);
++		if (!err)
++			count++;
+ 	}
++	total_reserved_mem_cnt = count;
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
