@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 059E9412C05;
-	Fri,  7 Aug 2026 14:57:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F8793557F3;
+	Fri,  7 Aug 2026 14:57:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114640; cv=none; b=qlZBbNh3uKrs7rF3oIOJfVlmoyPef2FPUH3EGDPATR8f+YQvAcWJxw2ekydtvqdeP7Dj5UovdfiZbQ5tcCcSzl+niUvGxIYFCWpX0/CYNOqiphH8/glr5WwTfzlv0VgsajhdJ6sqje/P70jO3wUN0nQC5cYW+ncXSYAweOa22Gg=
+	t=1786114642; cv=none; b=SENuk5kaQw5pL81EO3oS2xepmiIF76+U0vuWsbsFxiIDXqsGL74lizza/FhhIglVacCfnAtm00VzAPnd8GpKQ7tqwLy9XXr79JXfvD6tS0XaAvH4/fNlHTLFp2F/KH4ZYagq1Ivnd3Mf5DnJhDAexBdJSBdogubHrA1gCQgJfbU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114640; c=relaxed/simple;
-	bh=luXfj5qdgjZxREswET7ZNLl9ZtmjwsveQDjcSdLhOGU=;
+	s=arc-20240116; t=1786114642; c=relaxed/simple;
+	bh=txYgJr6suTCZ8beOSuYgPApQ6lSqs5nuPQZryIjJq50=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=st1HPqtJ7lh4FBPjW+qNx2Ypl0CN9lljaklx8Wi9EBWGMRGoH5jfuyeg4LxgpbVs1XXjtcT3jFKNicUnWrTP1s2glfvJEnDo18H7kgdoL0vD6UorjysArPP87d2e0T1ZjKr4P3QKTzOoTO6OZK4vgqMy/stFEPOk05y3SG5X3cM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LZfYz/Am; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ALTx+1KRidVcEATa1LyGCGnh9qr2G2f7X3bAS4IdMwZo++Uk8b+NwKaeENogNBGLBXeDNq/S/rsVVti1cfREWkKG0ULd1XmM+hazMOdJ8olm7nX8C8vEA6kLs5c4/vP3Vu3rN/Vu7tXiCwmPE/cJXg44Dt9MXbmh+xO6hs+0mHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=saqXsCte; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LZfYz/Am"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1599A1F00A3D;
-	Fri,  7 Aug 2026 14:57:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="saqXsCte"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0B931F000E9;
+	Fri,  7 Aug 2026 14:57:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114630;
-	bh=Fmme764+iim3jMfGEbvIPvBJfKhuSbs4n/B8pmY2S+4=;
+	s=korg; t=1786114636;
+	bh=h6fp8tRJly0AddQDjbTHB56tguGoyEv+TI/NJbZZ5Kc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LZfYz/AmsR+TpI6NTbiAYgpyV2F1fDA3ELCyxHKuWkeDELxtM4L8Cf2tZ2j5DsRZz
-	 r9b7ZyrHdLfKMhe8hjGqPtD6fydB/jLJafDDmYX5OFgp59GxVuwOBmZMy2IjCGQ2hV
-	 DEIcngm5Gt0tloq6BuFHTKHJx4wg7+esDz1rWR6Q=
+	b=saqXsCteX0BFeVaHnfCbZeykbVAQ8rmh483MJQfYgoo/NAd6irs7LvdO33YxJKzpR
+	 TjcT4GHaWZjjAapuJCwy15Nffi03dCnDPbi4wv74DrpJI7o2/HUgBBAyNi6khSr9QG
+	 /3yrez6LLsa1r5t/xcYg0eiT+qHTOhkDLO15jvGI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	linux-afs@lists.infradead.org,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 331/337] rxrpc: Manage RTT per-call rather than per-peer
-Date: Fri,  7 Aug 2026 16:38:54 +0200
-Message-ID: <20260807143425.717848644@linuxfoundation.org>
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.12 333/337] can: use skb hash instead of private variable in headroom
+Date: Fri,  7 Aug 2026 16:38:56 +0200
+Message-ID: <20260807143425.759326450@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -53,544 +51,218 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Oliver Hartkopp <socketcan@hartkopp.net>
 
-[ Upstream commit b40ef2b85a7d117dd323b5910e504899e0a3e7dc ]
+commit d4fb6514ff8ed6912a71294e6b66a5d59ee88007 upstream.
 
-Manage the determination of RTT on a per-call (ie. per-RPC op) basis rather
-than on a per-peer basis, averaging across all calls going to that peer.
-The problem is that the RTT measurements from the initial packets on a call
-may be off because the server may do some setting up (such as getting a
-lock on a file) before accepting the rest of the data in the RPC and,
-further, the RTT may be affected by server-side file operations, for
-instance if a large amount of data is being written or read.
+The can_skb_priv::skbcnt variable is used to identify CAN skbs in the RX
+path analogue to the skb->hash.
 
-Note: When handling the FS.StoreData-type RPCs, for example, the server
-uses the userStatus field in the header of ACK packets as supplementary
-flow control to aid in managing this.  AF_RXRPC does not yet support this,
-but it should be added.
+As the skb hash is not filled in CAN skbs move the private skbcnt value to
+skb->hash and set skb->sw_hash accordingly. The skb->hash is a value used
+for RPS to identify skbs. Use it as intended.
 
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: linux-afs@lists.infradead.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: e4d2878369d5 ("rxrpc: Fix irq-disabled in local_bh_enable()")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://patch.msgid.link/20260201-can_skb_ext-v8-1-3635d790fe8b@hartkopp.net
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/trace/events/rxrpc.h |    2 
- net/rxrpc/ar-internal.h      |   39 +++++++++---------
- net/rxrpc/call_event.c       |   18 ++++----
- net/rxrpc/call_object.c      |    2 
- net/rxrpc/input.c            |    8 +--
- net/rxrpc/output.c           |   14 +++---
- net/rxrpc/peer_object.c      |    8 ---
- net/rxrpc/proc.c             |    6 +-
- net/rxrpc/rtt.c              |   93 +++++++++++++++++++++----------------------
- net/rxrpc/sendmsg.c          |    2 
- 10 files changed, 97 insertions(+), 95 deletions(-)
+ drivers/net/can/dev/skb.c |    2 --
+ include/linux/can/core.h  |    1 +
+ include/linux/can/skb.h   |    2 --
+ net/can/af_can.c          |   14 +++++++++++---
+ net/can/bcm.c             |    2 --
+ net/can/isotp.c           |    3 ---
+ net/can/j1939/socket.c    |    1 -
+ net/can/j1939/transport.c |    2 --
+ net/can/raw.c             |    7 +++----
+ 9 files changed, 15 insertions(+), 19 deletions(-)
 
---- a/include/trace/events/rxrpc.h
-+++ b/include/trace/events/rxrpc.h
-@@ -1333,7 +1333,7 @@ TRACE_EVENT(rxrpc_rtt_rx,
- 		    __entry->rtt = rtt;
- 		    __entry->srtt = srtt;
- 		    __entry->rto = rto;
--		    __entry->min_rtt = minmax_get(&call->peer->min_rtt)
-+		    __entry->min_rtt = minmax_get(&call->min_rtt)
- 			   ),
+--- a/drivers/net/can/dev/skb.c
++++ b/drivers/net/can/dev/skb.c
+@@ -202,7 +202,6 @@ static void init_can_skb_reserve(struct
+ 	skb_reset_transport_header(skb);
  
- 	    TP_printk("c=%08x [%d] %s sr=%08x rr=%08x rtt=%u srtt=%u rto=%u min=%u",
---- a/net/rxrpc/ar-internal.h
-+++ b/net/rxrpc/ar-internal.h
-@@ -344,20 +344,9 @@ struct rxrpc_peer {
- 	int			debug_id;	/* debug ID for printks */
- 	struct sockaddr_rxrpc	srx;		/* remote address */
+ 	can_skb_reserve(skb);
+-	can_skb_prv(skb)->skbcnt = 0;
+ }
  
--	/* calculated RTT cache */
--#define RXRPC_RTT_CACHE_SIZE 32
--	spinlock_t		rtt_input_lock;	/* RTT lock for input routine */
--	ktime_t			rtt_last_req;	/* Time of last RTT request */
--	unsigned int		rtt_count;	/* Number of samples we've got */
--	unsigned int		rtt_taken;	/* Number of samples taken (wrapping) */
--	struct minmax		min_rtt;	/* Estimated minimum RTT */
--
--	u32			srtt_us;	/* smoothed round trip time << 3 in usecs */
--	u32			mdev_us;	/* medium deviation			*/
--	u32			mdev_max_us;	/* maximal mdev for the last rtt period	*/
--	u32			rttvar_us;	/* smoothed mdev_max			*/
--	u32			rto_us;		/* Retransmission timeout in usec */
--	u8			backoff;	/* Backoff timeout (as shift) */
-+	/* Calculated RTT cache */
-+	unsigned int		recent_srtt_us;
-+	unsigned int		recent_rto_us;
+ struct sk_buff *alloc_can_skb(struct net_device *dev, struct can_frame **cf)
+@@ -312,7 +311,6 @@ static bool can_skb_headroom_valid(struc
+ 	if (skb->ip_summed == CHECKSUM_NONE) {
+ 		/* init headroom */
+ 		can_skb_prv(skb)->ifindex = dev->ifindex;
+-		can_skb_prv(skb)->skbcnt = 0;
  
- 	u8			cong_ssthresh;	/* Congestion slow-start threshold */
+ 		skb->ip_summed = CHECKSUM_UNNECESSARY;
+ 
+--- a/include/linux/can/core.h
++++ b/include/linux/can/core.h
+@@ -58,6 +58,7 @@ extern void can_rx_unregister(struct net
+ 			      void *data);
+ 
+ extern int can_send(struct sk_buff *skb, int loop);
++void can_set_skb_uid(struct sk_buff *skb);
+ void can_sock_destruct(struct sock *sk);
+ 
+ #endif /* !_CAN_CORE_H */
+--- a/include/linux/can/skb.h
++++ b/include/linux/can/skb.h
+@@ -49,13 +49,11 @@ bool can_dropped_invalid_skb(struct net_
+ /**
+  * struct can_skb_priv - private additional data inside CAN sk_buffs
+  * @ifindex:	ifindex of the first interface the CAN frame appeared on
+- * @skbcnt:	atomic counter to have an unique id together with skb pointer
+  * @frame_len:	length of CAN frame in data link layer
+  * @cf:		align to the following CAN frame at skb->data
+  */
+ struct can_skb_priv {
+ 	int ifindex;
+-	int skbcnt;
+ 	unsigned int frame_len;
+ 	struct can_frame cf[];
  };
-@@ -742,6 +731,18 @@ struct rxrpc_call {
- 	rxrpc_seq_t		acks_hard_ack;	/* Latest hard-ack point */
- 	rxrpc_seq_t		acks_lowest_nak; /* Lowest NACK in the buffer (or ==tx_hard_ack) */
- 	rxrpc_serial_t		acks_highest_serial; /* Highest serial number ACK'd */
+--- a/net/can/af_can.c
++++ b/net/can/af_can.c
+@@ -639,6 +639,16 @@ static int can_rcv_filter(struct can_dev
+ 	return matches;
+ }
+ 
++void can_set_skb_uid(struct sk_buff *skb)
++{
++	/* create non-zero unique skb identifier together with *skb */
++	while (!(skb->hash))
++		skb->hash = atomic_inc_return(&skbcounter);
 +
-+	/* Calculated RTT cache */
-+	ktime_t			rtt_last_req;	/* Time of last RTT request */
-+	unsigned int		rtt_count;	/* Number of samples we've got */
-+	unsigned int		rtt_taken;	/* Number of samples taken (wrapping) */
-+	struct minmax		min_rtt;	/* Estimated minimum RTT */
-+	u32			srtt_us;	/* smoothed round trip time << 3 in usecs */
-+	u32			mdev_us;	/* medium deviation			*/
-+	u32			mdev_max_us;	/* maximal mdev for the last rtt period	*/
-+	u32			rttvar_us;	/* smoothed mdev_max			*/
-+	u32			rto_us;		/* Retransmission timeout in usec */
-+	u8			backoff;	/* Backoff timeout (as shift) */
++	skb->sw_hash = 1;
++}
++EXPORT_SYMBOL(can_set_skb_uid);
++
+ static void can_receive(struct sk_buff *skb, struct net_device *dev)
+ {
+ 	struct can_dev_rcv_lists *dev_rcv_lists;
+@@ -650,9 +660,7 @@ static void can_receive(struct sk_buff *
+ 	atomic_long_inc(&pkg_stats->rx_frames);
+ 	atomic_long_inc(&pkg_stats->rx_frames_delta);
+ 
+-	/* create non-zero unique skb identifier together with *skb */
+-	while (!(can_skb_prv(skb)->skbcnt))
+-		can_skb_prv(skb)->skbcnt = atomic_inc_return(&skbcounter);
++	can_set_skb_uid(skb);
+ 
+ 	rcu_read_lock();
+ 
+--- a/net/can/bcm.c
++++ b/net/can/bcm.c
+@@ -350,7 +350,6 @@ static void bcm_can_tx(struct bcm_op *op
+ 
+ 	can_skb_reserve(skb);
+ 	can_skb_prv(skb)->ifindex = dev->ifindex;
+-	can_skb_prv(skb)->skbcnt = 0;
+ 
+ 	skb_put_data(skb, cf, op->cfsiz);
+ 
+@@ -1624,7 +1623,6 @@ static int bcm_tx_send(struct msghdr *ms
+ 	}
+ 
+ 	can_skb_prv(skb)->ifindex = dev->ifindex;
+-	can_skb_prv(skb)->skbcnt = 0;
+ 	skb->dev = dev;
+ 	can_skb_set_owner(skb, sk);
+ 	err = can_send(skb, 1); /* send with loopback */
+--- a/net/can/isotp.c
++++ b/net/can/isotp.c
+@@ -232,7 +232,6 @@ static int isotp_send_fc(struct sock *sk
+ 
+ 	can_skb_reserve(nskb);
+ 	can_skb_prv(nskb)->ifindex = dev->ifindex;
+-	can_skb_prv(nskb)->skbcnt = 0;
+ 
+ 	nskb->dev = dev;
+ 	can_skb_set_owner(nskb, sk);
+@@ -798,7 +797,6 @@ static void isotp_send_cframe(struct iso
+ 
+ 	can_skb_reserve(skb);
+ 	can_skb_prv(skb)->ifindex = dev->ifindex;
+-	can_skb_prv(skb)->skbcnt = 0;
+ 
+ 	cf = (struct canfd_frame *)skb->data;
+ 	skb_put_zero(skb, so->ll.mtu);
+@@ -1104,7 +1102,6 @@ static int isotp_sendmsg(struct socket *
+ 
+ 	can_skb_reserve(skb);
+ 	can_skb_prv(skb)->ifindex = dev->ifindex;
+-	can_skb_prv(skb)->skbcnt = 0;
+ 
+ 	so->tx.len = size;
+ 	so->tx.idx = 0;
+--- a/net/can/j1939/socket.c
++++ b/net/can/j1939/socket.c
+@@ -889,7 +889,6 @@ static struct sk_buff *j1939_sk_alloc_sk
+ 
+ 	can_skb_reserve(skb);
+ 	can_skb_prv(skb)->ifindex = ndev->ifindex;
+-	can_skb_prv(skb)->skbcnt = 0;
+ 	skb_reserve(skb, offsetof(struct can_frame, data));
+ 
+ 	ret = memcpy_from_msg(skb_put(skb, size), msg, size);
+--- a/net/can/j1939/transport.c
++++ b/net/can/j1939/transport.c
+@@ -613,7 +613,6 @@ sk_buff *j1939_tp_tx_dat_new(struct j193
+ 	skb->dev = priv->ndev;
+ 	can_skb_reserve(skb);
+ 	can_skb_prv(skb)->ifindex = priv->ndev->ifindex;
+-	can_skb_prv(skb)->skbcnt = 0;
+ 	/* reserve CAN header */
+ 	skb_reserve(skb, offsetof(struct can_frame, data));
+ 
+@@ -1553,7 +1552,6 @@ j1939_session *j1939_session_fresh_new(s
+ 	skb->dev = priv->ndev;
+ 	can_skb_reserve(skb);
+ 	can_skb_prv(skb)->ifindex = priv->ndev->ifindex;
+-	can_skb_prv(skb)->skbcnt = 0;
+ 	skcb = j1939_skb_to_cb(skb);
+ 	memcpy(skcb, rel_skcb, sizeof(*skcb));
+ 
+--- a/net/can/raw.c
++++ b/net/can/raw.c
+@@ -75,8 +75,8 @@ MODULE_ALIAS("can-proto-1");
+  */
+ 
+ struct uniqframe {
+-	int skbcnt;
+ 	const struct sk_buff *skb;
++	u32 hash;
+ 	unsigned int join_rx_count;
  };
  
- /*
-@@ -1222,10 +1223,12 @@ static inline int rxrpc_abort_eproto(str
- /*
-  * rtt.c
-  */
--void rxrpc_peer_add_rtt(struct rxrpc_call *, enum rxrpc_rtt_rx_trace, int,
--			rxrpc_serial_t, rxrpc_serial_t, ktime_t, ktime_t);
--ktime_t rxrpc_get_rto_backoff(struct rxrpc_peer *peer, bool retrans);
--void rxrpc_peer_init_rtt(struct rxrpc_peer *);
-+void rxrpc_call_add_rtt(struct rxrpc_call *call, enum rxrpc_rtt_rx_trace why,
-+			int rtt_slot,
-+			rxrpc_serial_t send_serial, rxrpc_serial_t resp_serial,
-+			ktime_t send_time, ktime_t resp_time);
-+ktime_t rxrpc_get_rto_backoff(struct rxrpc_call *call, bool retrans);
-+void rxrpc_call_init_rtt(struct rxrpc_call *call);
+@@ -163,7 +163,7 @@ static void raw_rcv(struct sk_buff *oskb
  
- /*
-  * rxkad.c
---- a/net/rxrpc/call_event.c
-+++ b/net/rxrpc/call_event.c
-@@ -44,8 +44,8 @@ void rxrpc_propose_delay_ACK(struct rxrp
+ 	/* eliminate multiple filter matches for the same skb */
+ 	if (this_cpu_ptr(ro->uniq)->skb == oskb &&
+-	    this_cpu_ptr(ro->uniq)->skbcnt == can_skb_prv(oskb)->skbcnt) {
++	    this_cpu_ptr(ro->uniq)->hash == oskb->hash) {
+ 		if (!ro->join_filters)
+ 			return;
  
- 	trace_rxrpc_propose_ack(call, why, RXRPC_ACK_DELAY, serial);
- 
--	if (call->peer->srtt_us)
--		delay = (call->peer->srtt_us >> 3) * NSEC_PER_USEC;
-+	if (call->srtt_us)
-+		delay = (call->srtt_us >> 3) * NSEC_PER_USEC;
- 	else
- 		delay = ms_to_ktime(READ_ONCE(rxrpc_soft_ack_delay));
- 	ktime_add_ms(delay, call->tx_backoff);
-@@ -72,7 +72,7 @@ void rxrpc_resend(struct rxrpc_call *cal
- 	struct rxrpc_txbuf *txb;
- 	rxrpc_seq_t transmitted = call->tx_transmitted;
- 	ktime_t next_resend = KTIME_MAX;
--	ktime_t rto = rxrpc_get_rto_backoff(call->peer, false);
-+	ktime_t rto = rxrpc_get_rto_backoff(call, false);
- 	ktime_t resend_at = KTIME_MAX, now, delay;
- 	bool unacked = false, did_send = false;
- 	unsigned int i;
-@@ -174,7 +174,7 @@ void rxrpc_resend(struct rxrpc_call *cal
- no_further_resend:
- no_resend:
- 	if (resend_at < KTIME_MAX) {
--		delay = rxrpc_get_rto_backoff(call->peer, did_send);
-+		delay = rxrpc_get_rto_backoff(call, did_send);
- 		resend_at = ktime_add(resend_at, delay);
- 		trace_rxrpc_timer_set(call, resend_at - now, rxrpc_timer_trace_resend_reset);
- 	}
-@@ -189,7 +189,7 @@ no_resend:
- 	 */
- 	if (!did_send) {
- 		ktime_t next_ping = ktime_add_us(call->acks_latest_ts,
--						 call->peer->srtt_us >> 3);
-+						 call->srtt_us >> 3);
- 
- 		if (ktime_sub(next_ping, now) <= 0)
- 			rxrpc_send_ACK(call, RXRPC_ACK_PING, 0,
-@@ -306,8 +306,8 @@ static void rxrpc_transmit_some_data(str
-  */
- static void rxrpc_send_initial_ping(struct rxrpc_call *call)
- {
--	if (call->peer->rtt_count < 3 ||
--	    ktime_before(ktime_add_ms(call->peer->rtt_last_req, 1000),
-+	if (call->rtt_count < 3 ||
-+	    ktime_before(ktime_add_ms(call->rtt_last_req, 1000),
- 			 ktime_get_real()))
- 		rxrpc_send_ACK(call, RXRPC_ACK_PING, 0,
- 			       rxrpc_propose_ack_ping_for_params);
-@@ -438,10 +438,10 @@ bool rxrpc_input_call_event(struct rxrpc
- 			       rxrpc_propose_ack_rx_idle);
- 
- 	if (call->ackr_nr_unacked > 2) {
--		if (call->peer->rtt_count < 3)
-+		if (call->rtt_count < 3)
- 			rxrpc_send_ACK(call, RXRPC_ACK_PING, 0,
- 				       rxrpc_propose_ack_ping_for_rtt);
--		else if (ktime_before(ktime_add_ms(call->peer->rtt_last_req, 1000),
-+		else if (ktime_before(ktime_add_ms(call->rtt_last_req, 1000),
- 				      ktime_get_real()))
- 			rxrpc_send_ACK(call, RXRPC_ACK_PING, 0,
- 				       rxrpc_propose_ack_ping_for_old_rtt);
---- a/net/rxrpc/call_object.c
-+++ b/net/rxrpc/call_object.c
-@@ -178,6 +178,8 @@ struct rxrpc_call *rxrpc_alloc_call(stru
- 	call->cong_cwnd = RXRPC_MIN_CWND;
- 	call->cong_ssthresh = RXRPC_TX_MAX_WINDOW;
- 
-+	rxrpc_call_init_rtt(call);
-+
- 	call->rxnet = rxnet;
- 	call->rtt_avail = RXRPC_CALL_RTT_AVAIL_MASK;
- 	atomic_inc(&rxnet->nr_calls);
---- a/net/rxrpc/input.c
-+++ b/net/rxrpc/input.c
-@@ -83,11 +83,11 @@ static void rxrpc_congestion_management(
- 		/* We analyse the number of packets that get ACK'd per RTT
- 		 * period and increase the window if we managed to fill it.
- 		 */
--		if (call->peer->rtt_count == 0)
-+		if (call->rtt_count == 0)
- 			goto out;
- 		if (ktime_before(skb->tstamp,
- 				 ktime_add_us(call->cong_tstamp,
--					      call->peer->srtt_us >> 3)))
-+					      call->srtt_us >> 3)))
- 			goto out_no_clear_ca;
- 		change = rxrpc_cong_rtt_window_end;
- 		call->cong_tstamp = skb->tstamp;
-@@ -197,7 +197,7 @@ void rxrpc_congestion_degrade(struct rxr
- 	if (__rxrpc_call_state(call) == RXRPC_CALL_CLIENT_AWAIT_REPLY)
- 		return;
- 
--	rtt = ns_to_ktime(call->peer->srtt_us * (1000 / 8));
-+	rtt = ns_to_ktime(call->srtt_us * (NSEC_PER_USEC / 8));
- 	now = ktime_get_real();
- 	if (!ktime_before(ktime_add(call->tx_last_sent, rtt), now))
- 		return;
-@@ -664,7 +664,7 @@ static void rxrpc_complete_rtt_probe(str
- 			clear_bit(i + RXRPC_CALL_RTT_PEND_SHIFT, &call->rtt_avail);
- 			smp_mb(); /* Read data before setting avail bit */
- 			set_bit(i, &call->rtt_avail);
--			rxrpc_peer_add_rtt(call, type, i, acked_serial, ack_serial,
-+			rxrpc_call_add_rtt(call, type, i, acked_serial, ack_serial,
- 					   sent_at, resp_time);
- 			matched = true;
- 		}
---- a/net/rxrpc/output.c
-+++ b/net/rxrpc/output.c
-@@ -220,7 +220,7 @@ static void rxrpc_send_ack_packet(struct
- 		if (ack->reason == RXRPC_ACK_PING)
- 			rxrpc_begin_rtt_probe(call, txb->serial, now, rxrpc_rtt_tx_ping);
- 		if (txb->flags & RXRPC_REQUEST_ACK)
--			call->peer->rtt_last_req = now;
-+			call->rtt_last_req = now;
- 		rxrpc_set_keepalive(call, now);
- 	}
- 	rxrpc_tx_backoff(call, ret);
-@@ -358,9 +358,9 @@ static void rxrpc_prepare_data_subpacket
- 		why = rxrpc_reqack_slow_start;
- 	else if (call->tx_winsize <= 2)
- 		why = rxrpc_reqack_small_txwin;
--	else if (call->peer->rtt_count < 3 && txb->seq & 1)
-+	else if (call->rtt_count < 3)
- 		why = rxrpc_reqack_more_rtt;
--	else if (ktime_before(ktime_add_ms(call->peer->rtt_last_req, 1000), ktime_get_real()))
-+	else if (ktime_before(ktime_add_ms(call->rtt_last_req, 1000), ktime_get_real()))
- 		why = rxrpc_reqack_old_rtt;
- 	else
- 		goto dont_set_request_ack;
-@@ -407,9 +407,9 @@ static void rxrpc_tstamp_data_packets(st
- 	if (ack_requested) {
- 		rxrpc_begin_rtt_probe(call, txb->serial, now, rxrpc_rtt_tx_data);
- 
--		call->peer->rtt_last_req = now;
--		if (call->peer->rtt_count > 1) {
--			ktime_t delay = rxrpc_get_rto_backoff(call->peer, false);
-+		call->rtt_last_req = now;
-+		if (call->rtt_count > 1) {
-+			ktime_t delay = rxrpc_get_rto_backoff(call, false);
- 
- 			call->ack_lost_at = ktime_add(now, delay);
- 			trace_rxrpc_timer_set(call, delay, rxrpc_timer_trace_lost_ack);
-@@ -727,7 +727,7 @@ void rxrpc_transmit_one(struct rxrpc_cal
- 			rxrpc_instant_resend(call, txb);
- 		}
+@@ -173,7 +173,7 @@ static void raw_rcv(struct sk_buff *oskb
+ 			return;
  	} else {
--		ktime_t delay = ns_to_ktime(call->peer->rto_us * NSEC_PER_USEC);
-+		ktime_t delay = ns_to_ktime(call->rto_us * NSEC_PER_USEC);
+ 		this_cpu_ptr(ro->uniq)->skb = oskb;
+-		this_cpu_ptr(ro->uniq)->skbcnt = can_skb_prv(oskb)->skbcnt;
++		this_cpu_ptr(ro->uniq)->hash = oskb->hash;
+ 		this_cpu_ptr(ro->uniq)->join_rx_count = 1;
+ 		/* drop first frame to check all enabled filters? */
+ 		if (ro->join_filters && ro->count > 1)
+@@ -945,7 +945,6 @@ static int raw_sendmsg(struct socket *so
  
- 		call->resend_at = ktime_add(ktime_get_real(), delay);
- 		trace_rxrpc_timer_set(call, delay, rxrpc_timer_trace_resend_tx);
---- a/net/rxrpc/peer_object.c
-+++ b/net/rxrpc/peer_object.c
-@@ -222,11 +222,8 @@ struct rxrpc_peer *rxrpc_alloc_peer(stru
- 		peer->service_conns = RB_ROOT;
- 		seqlock_init(&peer->service_conn_lock);
- 		spin_lock_init(&peer->lock);
--		spin_lock_init(&peer->rtt_input_lock);
- 		peer->debug_id = atomic_inc_return(&rxrpc_debug_id);
--
--		rxrpc_peer_init_rtt(peer);
--
-+		peer->recent_srtt_us = UINT_MAX;
- 		peer->cong_ssthresh = RXRPC_TX_MAX_WINDOW;
- 		trace_rxrpc_peer(peer->debug_id, 1, why);
- 	}
-@@ -244,7 +241,6 @@ static void rxrpc_init_peer(struct rxrpc
- 	peer->hash_key = hash_key;
- 	rxrpc_assess_MTU_size(local, peer);
- 	peer->mtu = peer->if_mtu;
--	peer->rtt_last_req = ktime_get_real();
+ 	can_skb_reserve(skb);
+ 	can_skb_prv(skb)->ifindex = dev->ifindex;
+-	can_skb_prv(skb)->skbcnt = 0;
  
- 	switch (peer->srx.transport.family) {
- 	case AF_INET:
-@@ -480,7 +476,7 @@ EXPORT_SYMBOL(rxrpc_kernel_get_call_peer
-  */
- unsigned int rxrpc_kernel_get_srtt(const struct rxrpc_peer *peer)
- {
--	return peer->rtt_count > 0 ? peer->srtt_us >> 3 : UINT_MAX;
-+	return READ_ONCE(peer->recent_srtt_us);
- }
- EXPORT_SYMBOL(rxrpc_kernel_get_srtt);
- 
---- a/net/rxrpc/proc.c
-+++ b/net/rxrpc/proc.c
-@@ -299,15 +299,15 @@ static int rxrpc_peer_seq_show(struct se
- 	now = ktime_get_seconds();
- 	seq_printf(seq,
- 		   "UDP   %-47.47s %-47.47s %3u"
--		   " %3u %5u %6ds %8u %8u\n",
-+		   " %3u %5u %6ds %8d %8d\n",
- 		   lbuff,
- 		   rbuff,
- 		   refcount_read(&peer->ref),
- 		   peer->cong_ssthresh,
- 		   peer->mtu,
- 		   (s32)now - (s32)READ_ONCE(peer->last_tx_at),
--		   peer->srtt_us >> 3,
--		   peer->rto_us);
-+		   READ_ONCE(peer->recent_srtt_us),
-+		   READ_ONCE(peer->recent_rto_us));
- 
- 	return 0;
- }
---- a/net/rxrpc/rtt.c
-+++ b/net/rxrpc/rtt.c
-@@ -12,17 +12,17 @@
- #include "ar-internal.h"
- 
- #define RXRPC_RTO_MAX	(120 * USEC_PER_SEC)
--#define RXRPC_TIMEOUT_INIT ((unsigned int)(1 * MSEC_PER_SEC)) /* RFC6298 2.1 initial RTO value */
-+#define RXRPC_TIMEOUT_INIT ((unsigned int)(1 * USEC_PER_SEC)) /* RFC6298 2.1 initial RTO value */
- #define rxrpc_jiffies32 ((u32)jiffies)		/* As rxrpc_jiffies32 */
- 
--static u32 rxrpc_rto_min_us(struct rxrpc_peer *peer)
-+static u32 rxrpc_rto_min_us(struct rxrpc_call *call)
- {
- 	return 200;
- }
- 
--static u32 __rxrpc_set_rto(const struct rxrpc_peer *peer)
-+static u32 __rxrpc_set_rto(const struct rxrpc_call *call)
- {
--	return (peer->srtt_us >> 3) + peer->rttvar_us;
-+	return (call->srtt_us >> 3) + call->rttvar_us;
- }
- 
- static u32 rxrpc_bound_rto(u32 rto)
-@@ -40,10 +40,10 @@ static u32 rxrpc_bound_rto(u32 rto)
-  * To save cycles in the RFC 1323 implementation it was better to break
-  * it up into three procedures. -- erics
-  */
--static void rxrpc_rtt_estimator(struct rxrpc_peer *peer, long sample_rtt_us)
-+static void rxrpc_rtt_estimator(struct rxrpc_call *call, long sample_rtt_us)
- {
- 	long m = sample_rtt_us; /* RTT */
--	u32 srtt = peer->srtt_us;
-+	u32 srtt = call->srtt_us;
- 
- 	/*	The following amusing code comes from Jacobson's
- 	 *	article in SIGCOMM '88.  Note that rtt and mdev
-@@ -66,7 +66,7 @@ static void rxrpc_rtt_estimator(struct r
- 		srtt += m;		/* rtt = 7/8 rtt + 1/8 new */
- 		if (m < 0) {
- 			m = -m;		/* m is now abs(error) */
--			m -= (peer->mdev_us >> 2);   /* similar update on mdev */
-+			m -= (call->mdev_us >> 2);   /* similar update on mdev */
- 			/* This is similar to one of Eifel findings.
- 			 * Eifel blocks mdev updates when rtt decreases.
- 			 * This solution is a bit different: we use finer gain
-@@ -78,31 +78,31 @@ static void rxrpc_rtt_estimator(struct r
- 			if (m > 0)
- 				m >>= 3;
- 		} else {
--			m -= (peer->mdev_us >> 2);   /* similar update on mdev */
-+			m -= (call->mdev_us >> 2);   /* similar update on mdev */
- 		}
- 
--		peer->mdev_us += m;		/* mdev = 3/4 mdev + 1/4 new */
--		if (peer->mdev_us > peer->mdev_max_us) {
--			peer->mdev_max_us = peer->mdev_us;
--			if (peer->mdev_max_us > peer->rttvar_us)
--				peer->rttvar_us = peer->mdev_max_us;
-+		call->mdev_us += m;		/* mdev = 3/4 mdev + 1/4 new */
-+		if (call->mdev_us > call->mdev_max_us) {
-+			call->mdev_max_us = call->mdev_us;
-+			if (call->mdev_max_us > call->rttvar_us)
-+				call->rttvar_us = call->mdev_max_us;
- 		}
- 	} else {
- 		/* no previous measure. */
- 		srtt = m << 3;		/* take the measured time to be rtt */
--		peer->mdev_us = m << 1;	/* make sure rto = 3*rtt */
--		peer->rttvar_us = max(peer->mdev_us, rxrpc_rto_min_us(peer));
--		peer->mdev_max_us = peer->rttvar_us;
-+		call->mdev_us = m << 1;	/* make sure rto = 3*rtt */
-+		call->rttvar_us = umax(call->mdev_us, rxrpc_rto_min_us(call));
-+		call->mdev_max_us = call->rttvar_us;
- 	}
- 
--	peer->srtt_us = max(1U, srtt);
-+	call->srtt_us = umax(srtt, 1);
- }
- 
- /*
-  * Calculate rto without backoff.  This is the second half of Van Jacobson's
-  * routine referred to above.
-  */
--static void rxrpc_set_rto(struct rxrpc_peer *peer)
-+static void rxrpc_set_rto(struct rxrpc_call *call)
- {
- 	u32 rto;
- 
-@@ -113,7 +113,7 @@ static void rxrpc_set_rto(struct rxrpc_p
- 	 *    is invisible. Actually, Linux-2.4 also generates erratic
- 	 *    ACKs in some circumstances.
- 	 */
--	rto = __rxrpc_set_rto(peer);
-+	rto = __rxrpc_set_rto(call);
- 
- 	/* 2. Fixups made earlier cannot be right.
- 	 *    If we do not estimate RTO correctly without them,
-@@ -124,73 +124,73 @@ static void rxrpc_set_rto(struct rxrpc_p
- 	/* NOTE: clamping at RXRPC_RTO_MIN is not required, current algo
- 	 * guarantees that rto is higher.
- 	 */
--	peer->rto_us = rxrpc_bound_rto(rto);
-+	call->rto_us = rxrpc_bound_rto(rto);
- }
- 
--static void rxrpc_update_rtt_min(struct rxrpc_peer *peer, ktime_t resp_time, long rtt_us)
-+static void rxrpc_update_rtt_min(struct rxrpc_call *call, ktime_t resp_time, long rtt_us)
- {
- 	/* Window size 5mins in approx usec (ipv4.sysctl_tcp_min_rtt_wlen) */
- 	u32 wlen_us = 5ULL * NSEC_PER_SEC / 1024;
- 
--	minmax_running_min(&peer->min_rtt, wlen_us, resp_time / 1024,
-+	minmax_running_min(&call->min_rtt, wlen_us, resp_time / 1024,
- 			   (u32)rtt_us ? : jiffies_to_usecs(1));
- }
- 
--static void rxrpc_ack_update_rtt(struct rxrpc_peer *peer, ktime_t resp_time, long rtt_us)
-+static void rxrpc_ack_update_rtt(struct rxrpc_call *call, ktime_t resp_time, long rtt_us)
- {
- 	if (rtt_us < 0)
- 		return;
- 
- 	/* Update RACK min RTT [RFC8985 6.1 Step 1]. */
--	rxrpc_update_rtt_min(peer, resp_time, rtt_us);
-+	rxrpc_update_rtt_min(call, resp_time, rtt_us);
- 
--	rxrpc_rtt_estimator(peer, rtt_us);
--	rxrpc_set_rto(peer);
-+	rxrpc_rtt_estimator(call, rtt_us);
-+	rxrpc_set_rto(call);
- 
- 	/* Only reset backoff on valid RTT measurement [RFC6298]. */
--	peer->backoff = 0;
-+	call->backoff = 0;
- }
- 
- /*
-  * Add RTT information to cache.  This is called in softirq mode and has
-- * exclusive access to the peer RTT data.
-+ * exclusive access to the call RTT data.
-  */
--void rxrpc_peer_add_rtt(struct rxrpc_call *call, enum rxrpc_rtt_rx_trace why,
-+void rxrpc_call_add_rtt(struct rxrpc_call *call, enum rxrpc_rtt_rx_trace why,
- 			int rtt_slot,
- 			rxrpc_serial_t send_serial, rxrpc_serial_t resp_serial,
- 			ktime_t send_time, ktime_t resp_time)
- {
--	struct rxrpc_peer *peer = call->peer;
- 	s64 rtt_us;
- 
- 	rtt_us = ktime_to_us(ktime_sub(resp_time, send_time));
- 	if (rtt_us < 0)
- 		return;
- 
--	spin_lock(&peer->rtt_input_lock);
--	rxrpc_ack_update_rtt(peer, resp_time, rtt_us);
--	if (peer->rtt_count < 3)
--		peer->rtt_count++;
--	peer->rtt_taken++;
--	spin_unlock(&peer->rtt_input_lock);
-+	rxrpc_ack_update_rtt(call, resp_time, rtt_us);
-+	if (call->rtt_count < 3)
-+		call->rtt_count++;
-+	call->rtt_taken++;
-+
-+	WRITE_ONCE(call->peer->recent_srtt_us, call->srtt_us / 8);
-+	WRITE_ONCE(call->peer->recent_rto_us, call->rto_us);
- 
- 	trace_rxrpc_rtt_rx(call, why, rtt_slot, send_serial, resp_serial,
--			   rtt_us, peer->srtt_us, peer->rto_us);
-+			   rtt_us, call->srtt_us, call->rto_us);
- }
- 
- /*
-  * Get the retransmission timeout to set in nanoseconds, backing it off each
-  * time we retransmit.
-  */
--ktime_t rxrpc_get_rto_backoff(struct rxrpc_peer *peer, bool retrans)
-+ktime_t rxrpc_get_rto_backoff(struct rxrpc_call *call, bool retrans)
- {
- 	u64 timo_us;
--	u32 backoff = READ_ONCE(peer->backoff);
-+	u32 backoff = READ_ONCE(call->backoff);
- 
--	timo_us = peer->rto_us;
-+	timo_us = call->rto_us;
- 	timo_us <<= backoff;
- 	if (retrans && timo_us * 2 <= RXRPC_RTO_MAX)
--		WRITE_ONCE(peer->backoff, backoff + 1);
-+		WRITE_ONCE(call->backoff, backoff + 1);
- 
- 	if (timo_us < 1)
- 		timo_us = 1;
-@@ -198,10 +198,11 @@ ktime_t rxrpc_get_rto_backoff(struct rxr
- 	return ns_to_ktime(timo_us * NSEC_PER_USEC);
- }
- 
--void rxrpc_peer_init_rtt(struct rxrpc_peer *peer)
-+void rxrpc_call_init_rtt(struct rxrpc_call *call)
- {
--	peer->rto_us	= RXRPC_TIMEOUT_INIT;
--	peer->mdev_us	= RXRPC_TIMEOUT_INIT;
--	peer->backoff	= 0;
--	//minmax_reset(&peer->rtt_min, rxrpc_jiffies32, ~0U);
-+	call->rtt_last_req = KTIME_MIN;
-+	call->rto_us	= RXRPC_TIMEOUT_INIT;
-+	call->mdev_us	= RXRPC_TIMEOUT_INIT;
-+	call->backoff	= 0;
-+	//minmax_reset(&call->rtt_min, rxrpc_jiffies32, ~0U);
- }
---- a/net/rxrpc/sendmsg.c
-+++ b/net/rxrpc/sendmsg.c
-@@ -133,7 +133,7 @@ static int rxrpc_wait_for_tx_window_wait
- 	rxrpc_seq_t tx_start, tx_win;
- 	signed long rtt, timeout;
- 
--	rtt = READ_ONCE(call->peer->srtt_us) >> 3;
-+	rtt = READ_ONCE(call->srtt_us) >> 3;
- 	rtt = usecs_to_jiffies(rtt) * 2;
- 	if (rtt < 2)
- 		rtt = 2;
+ 	/* fill the skb before testing for valid CAN frames */
+ 	err = memcpy_from_msg(skb_put(skb, size), msg, size);
 
 
