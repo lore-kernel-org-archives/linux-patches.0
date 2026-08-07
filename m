@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53154372B3C;
-	Fri,  7 Aug 2026 14:51:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DF50293458;
+	Fri,  7 Aug 2026 14:51:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114289; cv=none; b=BO4k8B96orjTIlj8BFWaUIqIPRAtPW64WMqvGObesCKxm1HwhhTxUkk0zmtqAmQtPp4I1eN4xTwxZp5f69ZjyMPCgdLfiFAmI/ymgjMbBSLBFIPD5MQEZB0GMZzTTdAAEzjr0MEqD1us2PjVMVBABQTl3dFCfzVqBPsgDU82qv0=
+	t=1786114290; cv=none; b=GEjsYlJi5uEvun4wyCkY5hl54+iPKbZ0LnQjPpJJccx2NKTNRARvjqTxhF7bDjWhGWNcibvLuNYgqj1j1NeGm+17QEep2vI9ojuNNr8VyYPgrn5Ohnj+43yo8ZmnRqhxPBYupK7iQv4tjL4/AXfdHM6WxtQP2fT87PFc4iGVdNA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114289; c=relaxed/simple;
-	bh=akBdJLubIiBze81Ljlgla1rD5XBO+YwXfL1PHMOLCiU=;
+	s=arc-20240116; t=1786114290; c=relaxed/simple;
+	bh=eRTupB7mq2GbfAMbD2BI5PEUtZ34F+hZGKyCNKjkdF8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lx8Z6t6pWIVdgss+UjHKQFP6aYAaFsBm3flp4k+HImVxB5UV+5MZY9boGPKkAFGiGV/s8WRow787hhg6mYLLcpYMXMKD+NeMclkwaUrt70Wk4QQg622vzHvpAZ8UcRSkOGdlqcHVAb7NIFgI8DfAXTszYbSMTDxsOmSxFLXVsaE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sLcoQals; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=c+FWWtLwrENUHwWdUncj5OQH1LdIle9uUd6iDkgoVS/ayNIhsPC2Pfw8PK8DqgsAXN3aivN3kg713YzX5h8KCVedWgI5DAYDslr7v3sjbszXoDrBJngBJnr7/A7tYmzRFW+/LNzX/Anzs48dY22WxGanBbfseHgxQfn0o9ffl8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ILMYh7Tl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sLcoQals"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA9891F00A3A;
-	Fri,  7 Aug 2026 14:51:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ILMYh7Tl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96B601F000E9;
+	Fri,  7 Aug 2026 14:51:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114286;
-	bh=qb0j4UkLTRnUdueXFJVeSs3Ta2MifUM/ECW77jLEPWE=;
+	s=korg; t=1786114289;
+	bh=l5eRPytcq5l/J+MK3KcNLGG+CpftB1QNrV2tygmr2v0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sLcoQalsrt0KVgL3Mh8Zlg0uqudi0tMjUtzxYkzSIv/cFwXw83p4RzhXMV/s0Rs7v
-	 6SROCYmExByfz6OGcOv5yuc/weHQy3jreyXJshWphA0N0zSK4lGAkyxeQzO3WA0xkS
-	 fBz4j/uYye1T6idHBVX3FPeMSDU9RZLY4EDW18cM=
+	b=ILMYh7Tl0rToUobfH3XMJwdKxcLim41rgEbxca8uPP+rEdsq7lovNbvJTkhdGXupA
+	 nYMxoF1nBBoqzqu79yZ6LmVuj2bT1wyLzDjG16uB1uctV01yBlZm8K3+RmcXCs20gU
+	 l5UguPO0Cq7Y+Ti5WLpxZGwM5Tsxi5QYf+MvhbwI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Julian Anastasov <ja@ssi.bg>,
-	Zhiling Zou <roxy520tt@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 6.12 173/337] ipvs: do not propagate one-packet flag to synced conns
-Date: Fri,  7 Aug 2026 16:36:16 +0200
-Message-ID: <20260807143422.311317074@linuxfoundation.org>
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Alexandra Winter <wintera@linux.ibm.com>,
+	Aswin Karuvally <aswin@linux.ibm.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 209/337] s390/qeth: Check CAP_NET_ADMIN for private ioctls
+Date: Fri,  7 Aug 2026 16:36:52 +0200
+Message-ID: <20260807143423.086622141@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -56,50 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <roxy520tt@gmail.com>
+From: Aswin Karuvally <aswin@linux.ibm.com>
 
-commit a63d2dbaeb50a85d4c976b15a36e6b0c7113db5b upstream.
+commit d211028bac1bd0fff0026bfa2a8328e5b78cd0e6 upstream.
 
-Synced connections can be created before their destination exists. When
-the destination is later added, ip_vs_bind_dest() copies connection flags
-from the destination into cp->flags.
+Gate the SIOCDEVPRIVATE ioctl commands SIOC_QETH_ADP_SET_SNMP_CONTROL,
+SIOC_QETH_GET_CARD_TYPE and SIOC_QETH_QUERY_OAT with CAP_NET_ADMIN
+capable check to ensure unprivileged users cannot invoke them.
 
-IP_VS_CONN_F_ONE_PACKET connections are not synced. If a synced
-connection inherits IP_VS_CONN_F_ONE_PACKET while it is already hashed,
-expiry can treat it as a one-packet connection and skip unlinking the
-existing conn_tab node, leaving stale hash nodes pointing at a freed
-struct ip_vs_conn.
-
-Drop IP_VS_CONN_F_ONE_PACKET from destination flags when binding synced
-connections.
-
-Fixes: 26ec037f9841 ("IPVS: one-packet scheduling")
+Fixes: 18787eeebd71 ("qeth: use ndo_siocdevprivate")
 Cc: stable@vger.kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Suggested-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: Zhiling Zou <roxy520tt@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Acked-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Suggested-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
+Signed-off-by: Aswin Karuvally <aswin@linux.ibm.com>
+Link: https://patch.msgid.link/20260723140050.762991-1-aswin@linux.ibm.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/ipvs/ip_vs_conn.c |    3 +++
+ drivers/s390/net/qeth_core_main.c |    3 +++
  1 file changed, 3 insertions(+)
 
---- a/net/netfilter/ipvs/ip_vs_conn.c
-+++ b/net/netfilter/ipvs/ip_vs_conn.c
-@@ -599,6 +599,9 @@ ip_vs_bind_dest(struct ip_vs_conn *cp, s
- 	flags = cp->flags;
- 	/* Bind with the destination and its corresponding transmitter */
- 	if (flags & IP_VS_CONN_F_SYNC) {
-+		/* Synced conns are hashed, so they can not get this flag */
-+		conn_flags &= ~IP_VS_CONN_F_ONE_PACKET;
+--- a/drivers/s390/net/qeth_core_main.c
++++ b/drivers/s390/net/qeth_core_main.c
+@@ -6526,6 +6526,9 @@ int qeth_siocdevprivate(struct net_devic
+ 	struct qeth_card *card = dev->ml_priv;
+ 	int rc = 0;
+ 
++	if (!capable(CAP_NET_ADMIN))
++		return -EPERM;
 +
- 		/* if the connection is not template and is created
- 		 * by sync, preserve the activity flag.
- 		 */
+ 	switch (cmd) {
+ 	case SIOC_QETH_ADP_SET_SNMP_CONTROL:
+ 		rc = qeth_snmp_command(card, data);
 
 
