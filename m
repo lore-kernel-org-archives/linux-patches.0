@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AFC333C1AD;
-	Fri,  7 Aug 2026 15:14:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58ACD368276;
+	Fri,  7 Aug 2026 15:14:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115688; cv=none; b=QrvJI2ju8l2kemlt/tnr07ghVgAWizXN2ZiQSC1jmzxzdlyxpzMgTkvNFrmwsv+/6v285+mfjrfqooBX4RL3CVpQqk4omkcR0yiBhenOTPi4IQq+H3HhvDdvL8kLvv/VGb0/LlGigKD9v4W3rToeZPH4HsWKaBOez/CTdRtorbs=
+	t=1786115691; cv=none; b=Mkls6+uJ7OFD4uhrXUVdAmBdTo0SST/CCCu+m+30kq0RoNAKXB8E41A69DxTaoO2joxTeyyI9TN0liG0ecdLcXHtQacN53SJj4tq6bcjJsyYxcEhCcNMlVrI40GnDJjzINl50lV9TgkNGsAxiQczd4lGo1pYqKeg3X3PVHof4qM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115688; c=relaxed/simple;
-	bh=cvfIEN8WwXMBTAHQ5IHTkvsTsmSAtg7XFShpymGJCVQ=;
+	s=arc-20240116; t=1786115691; c=relaxed/simple;
+	bh=ORLwihstGqAVtHU7Jtby/ZiYjfutwjncwyc9hLCJ7Os=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k9iLt/Es8gLLCmKQGqM2WWN/Ve9ALQLKDdz6CRfpzrHhWl5eFuo4QowZQM2h+z90iq2j9F9rI9c11Y4q/hBOcnxjlGAwxoPtX0ONdWi6PjhjxJT7T8jt2u90I9OIMUGF0nz3enKSQ1KCd1oxqzbdHwdhrTKf9RMGoKVz3dkhRW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KcMgARPx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QHvlq2IwiMNDndFCeOaSjZmavonI4vHhfRHFVNH6m597/16j9kRx6nTjMBvL3lQ7BTQhsr0sXk5i5VjeGWa5dlYWTjyTPzG3YTETjZ7MCurUeh0QaMV1fsO2m6/84PJSHwm3yU8uDRC+CmnBWLLuKrZspdn0ijg+YKWtiV9T91k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U1OO0zAg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KcMgARPx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C653D1F000E9;
-	Fri,  7 Aug 2026 15:14:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U1OO0zAg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE8A91F000E9;
+	Fri,  7 Aug 2026 15:14:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115687;
-	bh=pMkfyqDdE00nfrV6KsByP5/KZCK0LQTahKS4pVx2le8=;
+	s=korg; t=1786115690;
+	bh=vYK60Yt9VJefXQl9NF7zSOBg7DiTQatBqv0XfjOmGos=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KcMgARPxjdVCQ+xIWbUH/jd1/tyqPtRtE1vb13R626eN3+ENiAJPe28wiuoqhoxsm
-	 SV8C2tjnqApcAo+Snwtv4hH5EbZJSL8P1+BjRlnHUP7D8BoKzPqe7r+Sd5L/vqZI/k
-	 Z5GTuvZD5aq3oUyN6NVZau+rm7gBGi9C44WwTHJw=
+	b=U1OO0zAgYNv31n+Itzp0kasXOVSIQcja3wzcUK+mLdNTvLovtL2PHIziycSLossbc
+	 MW1L32zcnI/j8R130G5zmLu4HgB/ZFU9giL8bHlfbDy/JohIekFP6S9mYrr8aTtfwI
+	 fCx9cIFMwXUeKbxyiNZAAgibDFNFrtHHN83yDv5M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Hannes Reinecke <hare@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Wentao Guan <guanwentao@uniontech.com>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 363/396] net/handshake: Drain pending requests at net namespace exit
-Date: Fri,  7 Aug 2026 16:38:43 +0200
-Message-ID: <20260807143432.114568851@linuxfoundation.org>
+Subject: [PATCH 6.18 364/396] usb: typec: ucsi: split connector lock classes
+Date: Fri,  7 Aug 2026 16:38:44 +0200
+Message-ID: <20260807143432.134481149@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -53,114 +51,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Sergey Senozhatsky <senozhatsky@chromium.org>
 
-[ Upstream commit ea5fe6a73ca57e5150b8a38b341aef2636eb72f0 ]
+[ Upstream commit 8c22256bbafad3dc5fdbe9f684d045b67ff06a68 ]
 
-The arguments to list_splice_init() in handshake_net_exit() are
-reversed. The call moves the local empty "requests" list onto
-hn->hn_requests, leaving the local list empty, so the subsequent
-drain loop runs zero iterations. Pending handshake requests that
-had not yet been accepted are not torn down when the net namespace
-is destroyed; each one keeps a reference on a socket file and on
-the handshake_req allocation.
+Lockdep detects a possible recursive locking scenario during
+ucsi init:
 
-Pass the source and destination in the documented order
-(list_splice_init(list, head) moves list onto head) so the pending
-list is transferred to the local scratch list and drained through
-handshake_complete().
+[    5.418616] ============================================
+[    5.418634] WARNING: possible recursive locking detected
+[    5.418706] --------------------------------------------
+[    5.418725] kworker/4:1/82 is trying to acquire lock:
+[    5.418759] ffff888119a34648 (&con->lock){+.+.}-{3:3}, at: ucsi_init_work+0x1a78/0x2eb0 [typec_ucsi]
+[    5.418801]
+               but task is already holding lock:
+[    5.418835] ffff888119a34080 (&con->lock){+.+.}-{3:3}, at: ucsi_init_work+0x1a78/0x2eb0 [typec_ucsi]
+[    5.418884]
+               other info that might help us debug this:
+[    5.418904]  Possible unsafe locking scenario:
 
-Fixing the splice direction exposes a list-corruption race. After
-the splice each req->hr_list still has non-empty link pointers,
-threading the stack-local scratch list rather than hn_requests.
-A concurrent handshake_req_cancel() -- for example, from sunrpc's
-TLS timeout on a kernel socket whose netns reference was not
-taken -- finds the request through the rhashtable, calls
-remove_pending(), and sees !list_empty(&req->hr_list).
-__remove_pending_locked() then list_del_init()s an entry off the
-scratch list while the drain iterates, corrupting it. The same
-call arriving after the drain loop has run list_del() on an
-entry hits LIST_POISON instead.
+[    5.418937]        CPU0
+[    5.418956]        ----
+[    5.418991]   lock(&con->lock);
+[    5.419013]   lock(&con->lock);
+[    5.419033]
+                *** DEADLOCK ***
 
-Have remove_pending() check HANDSHAKE_F_NET_DRAINING under
-hn_lock and report not-found when drain is in progress. The
-drain has already taken ownership; handshake_complete()'s existing
-test_and_set on HANDSHAKE_F_REQ_COMPLETED still arbitrates
-between drain and cancel for who calls the consumer's hp_done. Use
-list_del_init() rather than list_del() in the drain so req->hr_list
-does not carry LIST_POISON after drain releases the entry.
+[    5.419387] Call Trace:
+[    5.419406]  <TASK>
+[    5.419425]  dump_stack_lvl+0x61/0xa0
+[    5.419448]  print_deadlock_bug+0x4a6/0x650
+[    5.419483]  __lock_acquire+0x62b6/0x7f50
+[    5.419507]  lock_acquire+0x11b/0x390
+[    5.419654]  __mutex_lock+0xbc/0xcd0
+[    5.419741]  ucsi_init_work+0x1a78/0x2eb0
+[    5.419785]  ? worker_thread+0xf53/0x2bc0
+[    5.419819]  worker_thread+0xff4/0x2bc0
+[    5.419842]  kthread+0x2a7/0x330
+[    5.419863]  ? __pfx_worker_thread+0x10/0x10
+[    5.419896]  ? __pfx_kthread+0x10/0x10
+[    5.419916]  ret_from_fork+0x38/0x70
+[    5.419936]  ? __pfx_kthread+0x10/0x10
+[    5.419969]  ret_from_fork_asm+0x1b/0x30
+[    5.419991]  </TASK>
+[    5.420009] ---[ end trace 0000000000000000 ]---
 
-The DRAINING guard in remove_pending() makes cancel return false,
-but cancel still falls through to test_and_set_bit on
-HANDSHAKE_F_REQ_COMPLETED and drops the request's hr_file reference.
-Without another pin, if that is the last reference, sk_destruct frees
-the request while it is still linked on the drain loop's local list.
-Pin each request's hr_file under hn_lock before releasing the list,
-and drop that drain pin after the loop finishes with the request.
+The problem is that all connector locks belong to the same
+lockdep lock class, so the following loop:
 
-Fixes: 3b3009ea8abb ("net/handshake: Create a NETLINK service for handling handshake requests")
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Link: https://patch.msgid.link/20260525-handshake-file-pin-v3-8-66c616906ead@oracle.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-(cherry picked from commit ea5fe6a73ca57e5150b8a38b341aef2636eb72f0)
-Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
+	for (i = 0; i < ucsi->cap.num_connectors; i++)
+		ucsi_register_port(connector[i])
+			mutex_lock(&connector[i]->lock)
+
+looks like a recursive acquire of the same mutex.  Put each connector
+lock into a dedicated lock class so that lockdep doesn't see it as a
+possible recursion.
+
+Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://patch.msgid.link/20260515060042.136083-1-senozhatsky@chromium.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 7aa7d4bf9d3f ("usb: typec: ucsi: Fix race condition and ordering in port unregistration")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/handshake/netlink.c | 10 ++++++++--
- net/handshake/request.c |  5 ++++-
- 2 files changed, 12 insertions(+), 3 deletions(-)
+ drivers/usb/typec/ucsi/ucsi.c |    8 ++++++++
+ drivers/usb/typec/ucsi/ucsi.h |    1 +
+ 2 files changed, 9 insertions(+)
 
-diff --git a/net/handshake/netlink.c b/net/handshake/netlink.c
-index 21d6cbd52fcdb..3fd4fef9bab1a 100644
---- a/net/handshake/netlink.c
-+++ b/net/handshake/netlink.c
-@@ -201,13 +201,19 @@ static void __net_exit handshake_net_exit(struct net *net)
- 	 */
- 	spin_lock_bh(&hn->hn_lock);
- 	set_bit(HANDSHAKE_F_NET_DRAINING, &hn->hn_flags);
--	list_splice_init(&requests, &hn->hn_requests);
-+	list_splice_init(&hn->hn_requests, &requests);
-+	list_for_each_entry(req, &requests, hr_list)
-+		get_file(req->hr_file);
- 	spin_unlock_bh(&hn->hn_lock);
+--- a/drivers/usb/typec/ucsi/ucsi.c
++++ b/drivers/usb/typec/ucsi/ucsi.c
+@@ -1741,6 +1741,7 @@ static int ucsi_register_port(struct ucs
+ 	INIT_WORK(&con->work, ucsi_handle_connector_change);
+ 	init_completion(&con->complete);
+ 	mutex_init(&con->lock);
++	lockdep_set_class(&con->lock, &con->lock_key);
+ 	INIT_LIST_HEAD(&con->partner_tasks);
+ 	con->ucsi = ucsi;
  
- 	while (!list_empty(&requests)) {
-+		struct file *file;
+@@ -1981,6 +1982,9 @@ static int ucsi_init(struct ucsi *ucsi)
+ 		goto err_reset;
+ 	}
+ 
++	for (i = 0; i < ucsi->cap.num_connectors; i++)
++		lockdep_register_key(&connector[i].lock_key);
 +
- 		req = list_first_entry(&requests, struct handshake_req, hr_list);
--		list_del(&req->hr_list);
-+		file = req->hr_file;
-+		list_del_init(&req->hr_list);
- 		handshake_complete(req, -ETIMEDOUT, NULL);
-+		fput(file);
- 	}
- }
+ 	/* Register all connectors */
+ 	for (i = 0; i < ucsi->cap.num_connectors; i++) {
+ 		connector[i].num = i + 1;
+@@ -2010,6 +2014,9 @@ static int ucsi_init(struct ucsi *ucsi)
+ 	return 0;
  
-diff --git a/net/handshake/request.c b/net/handshake/request.c
-index 035bb2d7471c9..d4a3a50f8a3b5 100644
---- a/net/handshake/request.c
-+++ b/net/handshake/request.c
-@@ -163,13 +163,16 @@ static void __remove_pending_locked(struct handshake_net *hn,
-  * otherwise %false.
-  *
-  * If @req was on a pending list, it has not yet been accepted.
-+ * Returns %false when the net namespace is draining; the drain
-+ * loop has taken ownership of the pending list.
-  */
- static bool remove_pending(struct handshake_net *hn, struct handshake_req *req)
- {
- 	bool ret = false;
- 
- 	spin_lock_bh(&hn->hn_lock);
--	if (!list_empty(&req->hr_list)) {
-+	if (!test_bit(HANDSHAKE_F_NET_DRAINING, &hn->hn_flags) &&
-+	    !list_empty(&req->hr_list)) {
- 		__remove_pending_locked(hn, req);
- 		ret = true;
+ err_unregister:
++	for (i = 0; i < ucsi->cap.num_connectors; i++)
++		lockdep_unregister_key(&connector[i].lock_key);
++
+ 	for (con = connector; con->port; con++) {
+ 		if (con->wq)
+ 			destroy_workqueue(con->wq);
+@@ -2280,6 +2287,7 @@ void ucsi_unregister(struct ucsi *ucsi)
+ 		usb_power_delivery_unregister(ucsi->connector[i].pd);
+ 		ucsi->connector[i].pd = NULL;
+ 		typec_unregister_port(ucsi->connector[i].port);
++		lockdep_unregister_key(&ucsi->connector[i].lock_key);
  	}
--- 
-2.53.0
-
+ 
+ 	kfree(ucsi->connector);
+--- a/drivers/usb/typec/ucsi/ucsi.h
++++ b/drivers/usb/typec/ucsi/ucsi.h
+@@ -502,6 +502,7 @@ struct ucsi_connector {
+ 
+ 	struct ucsi *ucsi;
+ 	struct mutex lock; /* port lock */
++	struct lock_class_key lock_key;
+ 	struct work_struct work;
+ 	struct completion complete;
+ 	struct workqueue_struct *wq;
 
 
