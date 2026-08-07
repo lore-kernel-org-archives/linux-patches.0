@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C17EC4749FA;
-	Fri,  7 Aug 2026 15:04:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90DCC4756A6;
+	Fri,  7 Aug 2026 15:04:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115058; cv=none; b=udaaleklrjqNpSOB3+1q+VwfxMsYjcgWoC+ZiUpoWbcwpvI+mZSRWkmxhz5ODhMGo0r4iCu61y/fPIiAVSeV4g2uukEak1WoCie9KsLSL4mSz9rcBG0m25yHHionpSmT1nuUyYIUOG00Hd36IfrgPRR5cM3GFY35P0Tn5fxiMuI=
+	t=1786115061; cv=none; b=nBdfCOcHKFuUIsh1sF7OPwgN5tKYWbxxqZ5do1ePfW80t6FrDQ2yvtCz0FIgBtmfL8XKeRxcy/yv2LLjMvWP4hlzVbASNv6LpdpTGY05iNecJVoVfnLTLAOf/hziI4Bdp/ghRWesJF1mq3bqNJCd0ALDCaYzyYkecpJhx9I2u0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115058; c=relaxed/simple;
-	bh=O1JiNMHamZk5iZvH5E4CI/PcATD/xHlBx7w6N4ok0TM=;
+	s=arc-20240116; t=1786115061; c=relaxed/simple;
+	bh=NdXj7gmagZgpRZrsZN0cZwyEa9+sKf/EUKHRnU7bD2Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t+SjBVeMUKjo7BhYkrbWXVWes1yN8HXbgrlkgopJPq/p3lnVuwcXSCsFApjMKdRArB8Kf8eekokS33WqZPQmMJt2A4COC2k0U9+j+P1pBY6i0I7wXxnzaU/uTqjVjr5Se1vEwF2R5B7f7j+jQ7ZQN8kh+OkH5Twq/p3QwtzckOw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tMoBGUG6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=qRK7ntyz9/HewbQVguT+3WpQNOckdnBjZNG68Rsq2Avr50JHXHEjI3vMG8l4tRJgl0agHv92zls+XxGnX0Q/j4khmG+MpXIXhAUbda73EDmIFxSJu2Dc27s89gyVRdSLMPHIb88OVQB7LEnk5000SRwRPaOuKfXzKhiVoty8RNg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eav8DqaO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tMoBGUG6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1F881F000E9;
-	Fri,  7 Aug 2026 15:04:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eav8DqaO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 798591F00A3A;
+	Fri,  7 Aug 2026 15:04:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115045;
-	bh=FghwCG+8JpTICx4YlJJamoZwLweM9rWh833vXxnA//g=;
+	s=korg; t=1786115048;
+	bh=X2bYcZxMklD9Q06ufgES+elHsVF90macP4DQ1aKk8Pg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tMoBGUG6sHAT0wrJU4MWsCR4XXEGt9Sgmr+dkQSy6IXB/wtfB6cenXP5vQ0FTV/6I
-	 pj762prWxxTy63Y1eyeRUFGfSbhcCMEHrn1eujKCkTYiJTPxfZooanhPsfkNo+P0RZ
-	 ONr9nUXSTgymDPuxUoq4co5WHTEanCWrb73Y9Jf4=
+	b=eav8DqaOHqzxt9uUSAjGEm8VxTiQgE2dkaQKgFe3PtYUFG4NSy1i0wTCs+KsWppbQ
+	 ouQBKn1lmkEX2g4ioAPmbnTp5JJqW6OWrvzMhD6gYIIGt6tAH+AN4RxYLcWivhWI1f
+	 jt4lNqcTSBoV/yYqNgcaNc0vv2GvvVk8n6K4vxb8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Minhong He <heminhong@kylinos.cn>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Alexander Kaplan <alexander.kaplan@sms-medipool.de>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 136/396] can: isotp: check register_netdevice_notifier() error in module init
-Date: Fri,  7 Aug 2026 16:34:56 +0200
-Message-ID: <20260807143427.240140413@linuxfoundation.org>
+Subject: [PATCH 6.18 137/396] drm/i915/dp: Ignore the sinks DSC max FRL rate without a PCON DSC encoder
+Date: Fri,  7 Aug 2026 16:34:57 +0200
+Message-ID: <20260807143427.264242706@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -45,61 +47,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Minhong He <heminhong@kylinos.cn>
+From: Alexander Kaplan <alexander.kaplan@sms-medipool.de>
 
-[ Upstream commit ef09a13c5afac41a3c4b5f22b8572820d9e7518c ]
+[ Upstream commit 8891e39e89042e285fd82fdde325d1311ec750a1 ]
 
-Register the netdevice notifier before can_proto_register() and check the
-return value. If protocol registration fails, unregister the notifier
-before returning the error.
+intel_dp_hdmi_sink_max_frl() limits the sink's max FRL rate by its
+DSC max FRL rate whenever the sink supports DSC 1.2.
+However, the DSC max FRL rate (HF-VSDB DSC_Max_FRL_Rate) only applies
+to compressed video transport, which requires a DSC 1.2 encoder in
+the PCON (configured via intel_dp_pcon_dsc_configure()).
+Without such an encoder the HDMI link always carries uncompressed
+video, for which the regular Max_FRL_Rate is the correct limit.
 
-Align isotp_module_init() with the reordering already done for raw.c
-(commit c28b3bffe49e ("can: raw: process optimization in raw_init()")) and
-bcm.c (commit edd1a7e42f1d ("can: bcm: registration process optimization
-in bcm_module_init()")).
+Applying the DSC limit unconditionally trains the FRL link at a lower
+rate than both the PCON and the sink support.
+E.g. an LG OLED G4 (Max_FRL_Rate 48 Gbps, DSC_Max_FRL_Rate 24 Gbps)
+behind a Synaptics VMM7100 PCON (PCON max FRL bw 48 Gbps, no DSC
+encoder):
 
-Fixes: 8d0caedb7596 ("can: bcm/raw/isotp: use per module netdevice notifier")
-Signed-off-by: Minhong He <heminhong@kylinos.cn>
-Link: https://patch.msgid.link/20260729085656.134523-1-heminhong@kylinos.cn
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+  Sink max rate from EDID = 24 Gbps
+  FRL trained with : 24 Gbps
+
+while Windows/macOS train the same hardware at 40/48 Gbps.
+The too low FRL rate needlessly constrains the formats available to
+the sink.
+
+Only apply the sink's DSC max FRL rate if the PCON has a DSC 1.2
+encoder, matching the gate in intel_dp_pcon_dsc_configure().
+PCONs with a DSC encoder keep the current conservative behavior,
+since the link is trained once and compressed transport may be used
+for any subsequent mode.
+With this the setup above trains at 48 Gbps.
+
+Tested on PTL (xe) with the above PCON/sink combo.
+
+Fixes: 10fec80b48c5 ("drm/i915/display: Configure PCON for DSC1.1 to DSC1.2 encoding")
+Cc: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
+Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Reviewed-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
+Signed-off-by: Alexander Kaplan <alexander.kaplan@sms-medipool.de>
+Signed-off-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
+Link: https://patch.msgid.link/20260718105207.5565-3-alexander.kaplan@sms-medipool.de
+(cherry picked from commit 71b57dd92f94569dca4bdf883fbd8ca5d4ed4bae)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/can/isotp.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/i915/display/intel_dp.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/net/can/isotp.c b/net/can/isotp.c
-index c21d816a52747..95e14631a1eb9 100644
---- a/net/can/isotp.c
-+++ b/net/can/isotp.c
-@@ -1888,13 +1888,18 @@ static __init int isotp_module_init(void)
+diff --git a/drivers/gpu/drm/i915/display/intel_dp.c b/drivers/gpu/drm/i915/display/intel_dp.c
+index 2a0750acf2053..84fca860c93ee 100644
+--- a/drivers/gpu/drm/i915/display/intel_dp.c
++++ b/drivers/gpu/drm/i915/display/intel_dp.c
+@@ -3859,7 +3859,14 @@ static int intel_dp_hdmi_sink_max_frl(struct intel_dp *intel_dp)
+ 	rate_per_lane = info->hdmi.max_frl_rate_per_lane;
+ 	max_frl_rate = max_lanes * rate_per_lane;
  
- 	pr_info("can: isotp protocol (max_pdu_size %d)\n", max_pdu_size);
- 
-+	err = register_netdevice_notifier(&canisotp_notifier);
-+	if (err)
-+		return err;
-+
- 	err = can_proto_register(&isotp_can_proto);
--	if (err < 0)
-+	if (err < 0) {
- 		pr_err("can: registration of isotp protocol failed %pe\n", ERR_PTR(err));
--	else
--		register_netdevice_notifier(&canisotp_notifier);
-+		unregister_netdevice_notifier(&canisotp_notifier);
-+		return err;
-+	}
- 
--	return err;
-+	return 0;
- }
- 
- static __exit void isotp_module_exit(void)
+-	if (info->hdmi.dsc_cap.v_1p2) {
++	/*
++	 * The sink's DSC max FRL rate only applies to compressed video
++	 * transport, which requires a DSC 1.2 encoder in the PCON. Without
++	 * one the HDMI link always carries uncompressed video, for which
++	 * the regular max FRL rate is the limit.
++	 */
++	if (drm_dp_pcon_enc_is_dsc_1_2(intel_dp->pcon_dsc_dpcd) &&
++	    info->hdmi.dsc_cap.v_1p2) {
+ 		max_dsc_lanes = info->hdmi.dsc_cap.max_lanes;
+ 		dsc_rate_per_lane = info->hdmi.dsc_cap.max_frl_rate_per_lane;
+ 		if (max_dsc_lanes && dsc_rate_per_lane)
 -- 
 2.53.0
 
