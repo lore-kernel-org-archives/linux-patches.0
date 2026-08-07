@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11FE2418372;
-	Fri,  7 Aug 2026 15:07:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB31634BA24;
+	Fri,  7 Aug 2026 15:07:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115256; cv=none; b=oc0eXSXkf23tzIz1f8QDlGsNWVisS6NO/r6xC2uYQc+bfGbwtgg2H6FdL8ByVADCv9gEqFPuk+5osZVVe7SJeyVYic0pkshnlqr62UGH9FqRePG8dMfrJK19g2BqZhnKKnIO9DuVlRlKBJgXRgZDJi0+wDrdxaa2MkXiLvaAADs=
+	t=1786115258; cv=none; b=lHHDRmpP+ADDRfWl5ttkZHQVJtR7Cc+P0M1rckZGUo69OZu/V+tPTadzsLSHLfyT07SdqRCJA9bicjrcL+dXRSWy/YfWgHmCE2+nONQsB6buA5Wg0lzQA0UiaxTnxeWqnkoDfxOonh46764ev/HZ0hTb4rWWiwK4dbl9ZLbhvjg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115256; c=relaxed/simple;
-	bh=orUl7UX5W2MZmME7tR55fFi4Tb46QJffsXDBLfwCQR8=;
+	s=arc-20240116; t=1786115258; c=relaxed/simple;
+	bh=GWdU5Gkzfw1ctCwm4k2f2y4Ytaeu30m3eyqoxOSyOd8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gzQR/0wrDiH9nxYmjQ8NsPkL3lx+2UIt8UR9Q12AphQVfQbAE1i1iDSIESw4V+vbpzG26IzZisO4TUP7saHiwypy3S2C3R55FJfRQ+chcAftjiWC7yKC+xmrHBCrifWzizpoX24rvCe5sL4G9OrDn5McGQmJfW+yyOHIoGpdMfA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hKQW+7dG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jBpYuW/go6lTHcG9F7Ac1gegAadabn8R3kUrh7z1eYEub+Qk6+YLOJWCuaYbTXPGWL3RpezwBrUGj/4kdqseH4c4aDtjI1GnbBGKk4saDFx2IKoYN5LlUjAjVD7EZcVRon0Zp9ibYfXiTQq/dnFb0MHnTxMkGoQAKWJ4QsW8w7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ydLZkCLS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hKQW+7dG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1134F1F000E9;
-	Fri,  7 Aug 2026 15:07:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ydLZkCLS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E44E01F000E9;
+	Fri,  7 Aug 2026 15:07:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115254;
-	bh=UBu6Vf8Sqx8nbAhpZagCjV24PIP95Mw9j0nTsqwslVI=;
+	s=korg; t=1786115257;
+	bh=xURoC6boqQNV8LB2kmRQZ2dBh79jDc2XATlp0+p8Bs8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hKQW+7dG5BL2hcofthZWCbO6W00tgyvJEgXVfjRFj9YGMUXTaFVhxasN0GNuLdjI4
-	 dKfrHpk2kwkNgN20T4rZNrvlEHf0fIoddzyRZv1lzbGdtsvk2VrTi3IQ19J+Byw6eB
-	 RtVarcBtJpwypHVu/6OuJptoAK5uyARvt4AaxklI=
+	b=ydLZkCLS/CMIZTs759OtrpwgPwooM3Iz/NTX97FnwJZRL9ud2Lb//IY9cZ9eYdUgK
+	 s264ei12PBfkS16ZbqIpz8Bqjk0/90PmVV3M61iNbwOIsgbg4oiRnhvOSIQcGjwCL2
+	 CRsI3BPxawdCB6Ip1jIguvwrlpb/XGO3nBO64q+k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Vollrath <tactii@gmail.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
 	Damien Le Moal <dlemoal@kernel.org>
-Subject: [PATCH 6.18 212/396] ata: libata-eh: Increase STANDBY IMMEDIATE timeout
-Date: Fri,  7 Aug 2026 16:36:12 +0200
-Message-ID: <20260807143428.844126791@linuxfoundation.org>
+Subject: [PATCH 6.18 213/396] ata: libata-sata: fix ata_scsi_lpm_supported() iteration
+Date: Fri,  7 Aug 2026 16:36:13 +0200
+Message-ID: <20260807143428.863575574@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -50,78 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matt Vollrath <tactii@gmail.com>
+From: Niklas Cassel <cassel@kernel.org>
 
-commit 1e024d2b41ee32bc06818f7f09a3562c58842cf9 upstream.
+commit 3fd70e96914d761c17c376aadd0b0d1a3c9badba upstream.
 
-Correct a previous change (see Fixes) which reduced the standby timeout
-from 30 to 5 seconds. Increase it to 15 seconds.
+The inner loop of ata_scsi_lpm_supported() uses the wrong variable when
+iterating.
 
-I was troubleshooting an error spotted during system suspend:
+It should obviously use the link that we are currently iterating over,
+rather than always using the host link.
 
-    [ 1217.152867] ata1.00: Entering standby power mode
-    [ 1222.322948] ata1.00: qc timeout after 5000 msecs (cmd 0xe0)
-    [ 1222.324010] ata1.00: STANDBY IMMEDIATE failed (err_mask=0x4)
+ata_scsi_lpm_supported() is used to control if a user should be allowed
+to change lpm policy (from the default) via sysfs.
 
-This drive is a Samsung 870 EVO SSD in good SMART standing, and I wasn't
-aware of any reason it should be taking so long to standby. The issue is
-intermittent, but I observed it sometimes taking 7 seconds to manually
-standby. I assume this was interruption of background maintenance after
-a power outage.
+Thus, this bug could potentially disallow users to change the LPM policy
+for certain SATA devices via sysfs.
 
-As a desktop user, I would prefer to wait the extra 2 seconds at suspend
-to let the drive finish its business rather than drop the rails from
-under it.
-
-The change from 30 to 5 seconds was implicit when switching suspend
-from START STOP UNIT to an internal command with no timeout table entry.
-No reason was stated for the change.
-
-Fixes: aa3998dbeb3a ("ata: libata-scsi: Disable scsi device manage_system_start_stop")
 Cc: stable@vger.kernel.org
-Signed-off-by: Matt Vollrath <tactii@gmail.com>
-Assisted-by: Claude:claude-5-fable
+Fixes: 0060beec0bfa ("ata: libata-sata: Add link_power_management_supported sysfs attribute")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Link: https://lore.kernel.org/linux-ide/20260728112200.B99F21F000E9@smtp.kernel.org/
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/libata-eh.c |    8 ++++++++
- include/linux/libata.h  |    2 +-
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ drivers/ata/libata-sata.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/ata/libata-eh.c
-+++ b/drivers/ata/libata-eh.c
-@@ -106,6 +106,12 @@ static const unsigned int ata_eh_flush_t
- 	UINT_MAX,
- };
+--- a/drivers/ata/libata-sata.c
++++ b/drivers/ata/libata-sata.c
+@@ -913,7 +913,7 @@ static bool ata_scsi_lpm_supported(struc
+ 		return false;
  
-+static const unsigned int ata_eh_standby_timeouts[] = {
-+	15000,	/* Some drives may be slow to standby */
-+	/* but don't hold up a suspend too long waiting for them */
-+	UINT_MAX,
-+};
-+
- static const unsigned int ata_eh_other_timeouts[] = {
- 	 5000,	/* same rationale as identify timeout */
- 	10000,	/* ditto */
-@@ -147,6 +153,8 @@ ata_eh_cmd_timeout_table[ATA_EH_CMD_TIME
- 	  .timeouts = ata_eh_other_timeouts, },
- 	{ .commands = CMDS(ATA_CMD_FLUSH, ATA_CMD_FLUSH_EXT),
- 	  .timeouts = ata_eh_flush_timeouts },
-+	{ .commands = CMDS(ATA_CMD_STANDBYNOW1),
-+	  .timeouts = ata_eh_standby_timeouts },
- 	{ .commands = CMDS(ATA_CMD_VERIFY),
- 	  .timeouts = ata_eh_reset_timeouts },
- };
---- a/include/linux/libata.h
-+++ b/include/linux/libata.h
-@@ -389,7 +389,7 @@ enum {
- 	/* This should match the actual table size of
- 	 * ata_eh_cmd_timeout_table in libata-eh.c.
- 	 */
--	ATA_EH_CMD_TIMEOUT_TABLE_SIZE = 8,
-+	ATA_EH_CMD_TIMEOUT_TABLE_SIZE = 9,
- 
- 	/*
- 	 * Quirk flags: may be set by libata or controller drivers on drives.
+ 	ata_for_each_link(link, ap, EDGE) {
+-		ata_for_each_dev(dev, &ap->link, ENABLED) {
++		ata_for_each_dev(dev, link, ENABLED) {
+ 			if (dev->quirks & ATA_QUIRK_NOLPM)
+ 				return false;
+ 		}
 
 
