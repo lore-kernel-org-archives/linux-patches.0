@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C93B41D4F1;
-	Fri,  7 Aug 2026 14:47:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7E57429CE0;
+	Fri,  7 Aug 2026 14:47:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114038; cv=none; b=B7btTTkYZ/dx+J4SeGwA5AYA98xsbRpK9iob9DxxfgIpqAUnW9z0c/b9ZxesUkx5NGw8o7gJMqbCzllWKXBREWSeSoWO167xXgJCzRXHwrAH7clDQWG8szlx8Itv2VDSRzr88Fz8NVeA9WqYzCRP1Y/4U/jBigY6Ic/fb7SQId0=
+	t=1786114039; cv=none; b=AdpD2yKL0WBlXEOXmji3knwBWHw4HecccPRQaoJlT/a8BE0gOEpqMjjdx7NBq1XX9dgdn0tnZts3QWY++7ujDGpwIVAdpk7tK1l7KgAK4c/c7458r5zVpUSXxWJIDxzm/Oy2c1jwXEUoprNQ/oYkF0RbBCdATEKC/UwLpXIQkV0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114038; c=relaxed/simple;
-	bh=hLajU9ahbV22UdQWzAOgqX8a5YZWLKcsTSMkRJtNiEs=;
+	s=arc-20240116; t=1786114039; c=relaxed/simple;
+	bh=nP/DlsTZj+PYGLPvpdJbHaaunBKerQwkwhOm8r5SIAA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u0pC6VkPk5L/4MmtlTJdlwZDb4dLUBnmdMXGmoIACh/H0FB1upkdkB0dH5Kvuj8On6W3Uapg1MsvaJTKmU04p2WgNsJPCqIE8oaLhGFrHA6InTx7FqRVrxYFqkE70UnJtZGKEo6JhqTfhNyEFQ68jCtYOPNSjXXKNEs/oRxhekQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xgmX3CIS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RWLSxGFAGUhjhmH0dG2qw3k/t1DAT9f1hOiwaJEN/YJUxSD8/KSd7K0kfhNY6AXoSh6I4qEaByKUmGET+60nejXlKZf7abHQwTRTzDLqiThsntQJ2+esr2ZeynrKGTsv0Mn10Gs48xVih9IhVg3skbJoR0ajLjA59tvxu8l3qhU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o4/yPeK/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xgmX3CIS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8E111F000E9;
-	Fri,  7 Aug 2026 14:47:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o4/yPeK/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3FCD1F00A3A;
+	Fri,  7 Aug 2026 14:47:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114034;
-	bh=SDvU6/U+/+7Dm8IRGTVUtMn8Jd4CxdejuBf9DS0QLIU=;
+	s=korg; t=1786114037;
+	bh=Dn+qK0rjlzVuicZeaRXBskZvmc6LTFkgBlzeOdeNfl0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xgmX3CISllZh3GYOonnoTAgoQgIoSGAFKCiwcIQRuJUkNDR9LlQzGUjEpsfeprZoD
-	 ml8RJoibVlYRyi8BrN62K69ZYTbWcVCPfvj8qd5GMklC6vMGkigtYMoQ46+0Hh0jst
-	 gveE/LwzAAR/aHgQuIkdYKGw60SB9DZ6CDPQpqdM=
+	b=o4/yPeK/kBWDlMOFIWAUZjvGjjwxL5ql1IIy3oUb9XYRiMPM3r6C4EmeJeTIrwfVH
+	 GubNmfDYZdWtTgLe3lHgxnpGfdPK56+FmRr/00xRo2WMNf/cpZjAMl9Jo/mRjHUwc3
+	 M/0vNXABPVd2bdvEe0UkQ0oFnY+uJwgbQPHI1+X8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Paul Walmsley <pjw@kernel.org>,
+	Daniel Golle <daniel@makrotopia.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 119/337] riscv: mm: Fix out-of-bounds page-table walk during memory hot-remove
-Date: Fri,  7 Aug 2026 16:35:22 +0200
-Message-ID: <20260807143421.110176283@linuxfoundation.org>
+Subject: [PATCH 6.12 120/337] net: dsa: mt7530: check bus->read() errors in the MDIO regmap backend
+Date: Fri,  7 Aug 2026 16:35:23 +0200
+Message-ID: <20260807143421.132624785@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -51,61 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Daniel Golle <daniel@makrotopia.org>
 
-[ Upstream commit a0188cc133696627857d16054e43f9ebc7efc821 ]
+[ Upstream commit b4ce102b2cd88424c5860fbbb20b9eb343a93bf4 ]
 
-remove_pud_mapping() and remove_p4d_mapping() obtain a child table base
-with pud_offset(p4dp, 0) and p4d_offset(pgd, 0), then add the index for
-addr.
+bus->read() returns a negative errno on failure, but
+mt7530_regmap_read() assigns it to a u16, truncating e.g. -ETIMEDOUT
+into 0xff92, and returns success. The garbage word is then consumed as
+register data, and read-modify-write cycles write it back to the
+switch. Check both reads and propagate their errors.
 
-RISC-V folds page-table levels at runtime. When a level is folded, its
-offset helper returns the parent entry itself, but the index can still be
-nonzero. Adding it walks past the parent table. Sv48 folds P4D, while Sv39
-folds both P4D and PUD, so memory hot-remove can descend into unrelated
-memory and pass an invalid page to __free_pages(). This can trigger:
+The same defect existed in mt7530_mii_read() since the driver was
+introduced and moved into the regmap backend unchanged.
 
-  kernel BUG at include/linux/mm.h:1810!
-  VM_BUG_ON_PAGE(page_ref_count(page) == 0)
-  arch_remove_memory+0x1e/0x5c
-  try_remove_memory+0x15e/0x200
-  remove_memory+0x24/0x3c
-
-Only add the index when the corresponding page-table level is enabled,
-matching p4d_offset() and pud_offset().
-
-Fixes: c75a74f4ba19 ("riscv: mm: Add memory hotplugging support")
-Assisted-by: Claude:claude-fable-5
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Link: https://patch.msgid.link/20260729012132.24882-1-kmehltretter@gmail.com
-Signed-off-by: Paul Walmsley <pjw@kernel.org>
+Fixes: b8f126a8d543 ("net-next: dsa: add dsa support for Mediatek MT7530 switch")
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/3c628e48276c2e5522c8795a6be60d11c7a76a7d.1785213071.git.daniel@makrotopia.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/mm/init.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/dsa/mt7530-mdio.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/arch/riscv/mm/init.c b/arch/riscv/mm/init.c
-index 4594f77a06ee3..e52f7dabb370c 100644
---- a/arch/riscv/mm/init.c
-+++ b/arch/riscv/mm/init.c
-@@ -1726,7 +1726,7 @@ static void __meminit remove_pud_mapping(pud_t *pud_base, unsigned long addr, un
+diff --git a/drivers/net/dsa/mt7530-mdio.c b/drivers/net/dsa/mt7530-mdio.c
+index 51df42ccdbe62..e19b46449ffe6 100644
+--- a/drivers/net/dsa/mt7530-mdio.c
++++ b/drivers/net/dsa/mt7530-mdio.c
+@@ -55,8 +55,15 @@ mt7530_regmap_read(void *context, unsigned int reg, unsigned int *val)
+ 	if (ret < 0)
+ 		return ret;
  
- 	for (; addr < end; addr = next) {
- 		next = pud_addr_end(addr, end);
--		pudp = pud_base + pud_index(addr);
-+		pudp = pgtable_l4_enabled ? pud_base + pud_index(addr) : pud_base;
- 		pud = pudp_get(pudp);
- 		if (!pud_present(pud))
- 			continue;
-@@ -1757,7 +1757,7 @@ static void __meminit remove_p4d_mapping(p4d_t *p4d_base, unsigned long addr, un
+-	lo = bus->read(bus, priv->mdiodev->addr, r);
+-	hi = bus->read(bus, priv->mdiodev->addr, 0x10);
++	ret = bus->read(bus, priv->mdiodev->addr, r);
++	if (ret < 0)
++		return ret;
++	lo = ret;
++
++	ret = bus->read(bus, priv->mdiodev->addr, 0x10);
++	if (ret < 0)
++		return ret;
++	hi = ret;
  
- 	for (; addr < end; addr = next) {
- 		next = p4d_addr_end(addr, end);
--		p4dp = p4d_base + p4d_index(addr);
-+		p4dp = pgtable_l5_enabled ? p4d_base + p4d_index(addr) : p4d_base;
- 		p4d = p4dp_get(p4dp);
- 		if (!p4d_present(p4d))
- 			continue;
+ 	*val = (hi << 16) | (lo & 0xffff);
+ 
 -- 
 2.53.0
 
