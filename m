@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73261320CB1;
-	Fri,  7 Aug 2026 14:54:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C62031CA4E;
+	Fri,  7 Aug 2026 14:54:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114454; cv=none; b=rDQlo4++1NoXKaFRd9lb46gorcI9PAUvbo/LaNbKtlzOktO1arX6HUM8SlzSOO5wjLfq0V6FjKGq+UM9g7ESZE4iKayP6ZYE+2PjG+Vm4G115NeDWqlF5b3BcciNsdzpKTx5DWEitxvAQSSw/W9RAA61LizSZsp5m+lCABMYpEc=
+	t=1786114457; cv=none; b=YkIJ9cS3UTXBnkcjzyTxfZnGqTLZMAuHVoeJ283wW8GOdJAAl7i3RDMVkF6oElSdXsKkmAp1pab0ZTjGZIzgsPDT62ld2jHonuxRXbSBYvP5C7LhjPKFOpGxVqMwjhx5+vhu6bXD81fFyRot+PORvxVK+j9bCFqCCjyaSAlGMBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114454; c=relaxed/simple;
-	bh=K9bob6TEGDWUXCHGPEqJAKVfw2lbu3WF6jcjOEfQB5Q=;
+	s=arc-20240116; t=1786114457; c=relaxed/simple;
+	bh=JmALDYKC6E7cvctMgCA602nt9KFV4tBtnITgLxjESJ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eNADVz6y5XfxMLz56MbXCfOMgsqqdu9WMeNIRVLCb0tN2T3sa7Cp0234Hafm4ZQK1bWhbgJZ98bLoV5B3C3Y1Qm/xwDjbK2uKq4EzHInSGAAXQnKOReTLmODURyO/J0moBfb1mAYGg9VmYJz7KQlkdVbvntXyNA5UJnqj3cJhvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZkB4qW1Y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=flgjBmy/1yyjToCy+RxJzuB594/sG+S/27+rPcntMo8p0cMr5Apz6S1knyNruGfuJhu3nXGUkCOliDFw/r0JCAb+OTBOO/gDRxqdRkkRKZ3oIfA5M53D33jqAvJMWWASoNeQ0saH7NKaYZ6fSccP98qL6Q2rmoSH4OJf9ivYHFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x9tnaTJb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZkB4qW1Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF7ED1F000E9;
-	Fri,  7 Aug 2026 14:54:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x9tnaTJb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3D081F000E9;
+	Fri,  7 Aug 2026 14:54:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114453;
-	bh=1TF/pEEc/RYS1tVi6kRQcePoxWXmpncaW959jrBa/hE=;
+	s=korg; t=1786114456;
+	bh=heGXFFyCbP9S/yrBKXDGNbuHsOW3TrI/jIZ2fHJbvnc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZkB4qW1Yo611t9jtHtC9HYOz7VaoXF25US0Z4NHeX2iotzvF1DAxPW5pDYioHSick
-	 0yElxfAtlLk8QBUNSP5GXxngzeRaDJFL/QKmXUEFJDTKyzRcWx8TspgO1tzdow3Z9A
-	 Cct+rfoTiq6IyRLqlplP0A7tAjxA5OXtrvIZpWeg=
+	b=x9tnaTJbBDaYtD7Lf/xIJIPdFYYTXFJ1gOuCR9uEliIDa1JBceEItZBNZtSDkuJqF
+	 YlgKWTSxFywyEwLczpQfYaq9uSjRwXMuoiIqCskwt3VcUT9E5g5+HDixB+ILGhuooG
+	 wJpi7bOLBo02wmdwMOqi79K062OHYrd/DHn0anqA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Gorski <jonas.gorski@bisdn.de>,
-	Ray Jui <ray.jui@broadcom.com>,
+	Liem <liem16213@gmail.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Carlos Song <carlos.song@nxp.com>,
 	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.12 224/337] i2c: iproc: reset bus after timeout if START_BUSY is stuck
-Date: Fri,  7 Aug 2026 16:37:07 +0200
-Message-ID: <20260807143423.411723235@linuxfoundation.org>
+Subject: [PATCH 6.12 225/337] i2c: imx: Fix slave registration race and error handling
+Date: Fri,  7 Aug 2026 16:37:08 +0200
+Message-ID: <20260807143423.433154922@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -51,69 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonas Gorski <jonas.gorski@bisdn.de>
+From: Liem <liem16213@gmail.com>
 
-commit 98f2e9e6d6f91a6abb43f166b244b428ba85fa2b upstream.
+commit d64ec362c369bbc33833f7936d5f3a706b0d5c45 upstream.
 
-If a transaction times out, the START_BUSY signal can stay up, and
-subsequent transactaction attempts will fail as the bus is still
-considered busy.
+In i2c_imx_reg_slave(), the slave pointer was assigned before
+pm_runtime_resume_and_get().  If pm_runtime_resume_and_get() failed,
+the error path returned without clearing i2c_imx->slave, leaving it
+non-NULL and causing all subsequent registration attempts to fail
+with -EBUSY.
 
-I can easily trigger this by attempting to read from an address with no
-device, e.g. when running i2cdetect. After the first read times out, all
-subsequent read attempts return busy.
+Additionally, because this driver uses a shared IRQ, the interrupt
+handler i2c_imx_isr() can execute concurrently and, after acquiring
+slave_lock, dereference i2c_imx->slave.  The previous fix attempt
+added a lockless i2c_imx->slave = NULL on the error path, but that
+could race with the ISR under the lock and still cause a NULL pointer
+dereference.
 
-To get to a working state again, the controller needs to be reset to
-clear the START_BUSY signal. So check for START_BUSY still asserted on a
-timeout, and do reset in case it is,
+Fix both issues by deferring the assignment of i2c_imx->slave and
+i2c_imx->last_slave_event to after a successful resume, and by
+performing the assignment inside the slave_lock critical section.
+This guarantees that the slave pointer is never left stale on the
+error path and is always valid when observed by the interrupt handler.
 
-This is also done by the original non-upstream iproc-smbus driver
-implementation [1].
-
-Works around situations like:
-
-    bcm-iproc-2c 1803b000.i2c: transaction timed out
-    bcm-iproc-2c 1803b000.i2c: bus is busy
-    bcm-iproc-2c 1803b000.i2c: bus is busy
-    bcm-iproc-2c 1803b000.i2c: bus is busy
-    bcm-iproc-2c 1803b000.i2c: bus is busy
-    bcm-iproc-2c 1803b000.i2c: bus is busy
-    ...
-
-where the bus never recovers after a timeout.
-
-[1] https://github.com/opencomputeproject/onie/blob/master/patches/kernel/3.2.69/driver-iproc-smbus.patch
-
-Fixes: e6e5dd3566e0 ("i2c: iproc: Add Broadcom iProc I2C Driver")
-Signed-off-by: Jonas Gorski <jonas.gorski@bisdn.de>
-Cc: <stable@vger.kernel.org> # v4.0+
-Acked-by: Ray Jui <ray.jui@broadcom.com>
+Fixes: f7414cd6923f ("i2c: imx: support slave mode for imx I2C driver")
+Signed-off-by: Liem <liem16213@gmail.com>
+Cc: <stable@vger.kernel.org> # v5.11+
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Acked-by: Carlos Song <carlos.song@nxp.com>
 Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20260717085507.34209-1-jonas.gorski@bisdn.de
+Link: https://lore.kernel.org/r/20260629023829.152651-2-liem16213@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-bcm-iproc.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/i2c/busses/i2c-imx.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/drivers/i2c/busses/i2c-bcm-iproc.c
-+++ b/drivers/i2c/busses/i2c-bcm-iproc.c
-@@ -811,6 +811,17 @@ static int bcm_iproc_i2c_xfer_wait(struc
+--- a/drivers/i2c/busses/i2c-imx.c
++++ b/drivers/i2c/busses/i2c-imx.c
+@@ -866,9 +866,6 @@ static int i2c_imx_reg_slave(struct i2c_
+ 	if (i2c_imx->slave)
+ 		return -EBUSY;
+ 
+-	i2c_imx->slave = client;
+-	i2c_imx->last_slave_event = I2C_SLAVE_STOP;
+-
+ 	/* Resume */
+ 	ret = pm_runtime_resume_and_get(i2c_imx->adapter.dev.parent);
+ 	if (ret < 0) {
+@@ -876,6 +873,11 @@ static int i2c_imx_reg_slave(struct i2c_
+ 		return ret;
  	}
  
- 	if (!time_left && !iproc_i2c->xfer_is_done) {
-+		/*
-+		 * The controller may fail to clear START_BUSY after a timeout,
-+		 * reset the controller to recover in that case.
-+		 */
-+		if (!!(iproc_i2c_rd_reg(iproc_i2c, M_CMD_OFFSET) &
-+		       BIT(M_CMD_START_BUSY_SHIFT))) {
-+			bcm_iproc_i2c_enable_disable(iproc_i2c, false);
-+			bcm_iproc_i2c_init(iproc_i2c);
-+			bcm_iproc_i2c_enable_disable(iproc_i2c, true);
-+		}
++	scoped_guard(spinlock_irqsave, &i2c_imx->slave_lock) {
++		i2c_imx->slave = client;
++		i2c_imx->last_slave_event = I2C_SLAVE_STOP;
++	}
 +
- 		/* flush both TX/RX FIFOs */
- 		val = BIT(M_FIFO_RX_FLUSH_SHIFT) | BIT(M_FIFO_TX_FLUSH_SHIFT);
- 		iproc_i2c_wr_reg(iproc_i2c, M_FIFO_CTRL_OFFSET, val);
+ 	i2c_imx_slave_init(i2c_imx);
+ 
+ 	return 0;
 
 
