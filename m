@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E5E625F988;
-	Fri,  7 Aug 2026 15:31:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 351F1412C05;
+	Fri,  7 Aug 2026 15:31:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116692; cv=none; b=X0iwKNVkF+LFSeLqEq1geFlwdpwTtOc0yJa1TNgEaZ/pR/vdw7znkXmuI5rkaNzVGbreHypAhZQJQL6WGCdZfK5y3FtDO+ZpBfGo90MODM6sDT5WC3OwMVNk3RYHSCrfTO7aI4mK28Cpd+9YUze1OyrkE42N6IHNAIdx9qfNsM0=
+	t=1786116695; cv=none; b=ZSIfrHMsE2G3UeMokaaYDmIl+9unZ/YSPOfY8zVqg5HYKKU8EhvDQRJGuwyJuVdn06voXDc7mBr7Wj3+xKLiXxRjPqFmPiVnZ+CvH+N90M3FlMEwlGeRExbVLmAvLbKov1mDKpd0LUPnpRKtU4IQ0c7GCyQ+Matw5EIo5dm/+Us=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116692; c=relaxed/simple;
-	bh=BK/+DS28XZx+spvGzIaLExw2YnGbLn8/SqncqETEVxE=;
+	s=arc-20240116; t=1786116695; c=relaxed/simple;
+	bh=PYx0AVOwFixiIgEFIggt/lWc7xG2ny63Zhbap1veih4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FMTKYE81bWtNtKMHY4XinrlItIuDkrY6oAjZfAl3eGNa5imdGD4FPkhOFin3lhLadU//8AHpcmquWZgAzCLXgy/LACH/RC/Thl7J9CPS5kCb0vAMSSSlQ1jqqac5v5Jwt3uK9Q1LLatDm5efsrLl+tLakHkWqCbGaOPVEmVNQxo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u3XdBm98; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=n4LZGYf9wlH9fhrDL7STVTm+llFwZM0Frr2rPIOkO81SsLeHyo9UKWkfsgfGdJMxI6dA42I0nl/Nxr1OouPBy9rPRDq7FvOYWK6yvUbaAGWTsbuQOmQcWA4+iihkMlHH+eCqIWtc/Swazw4FM0nrz7fBr4SoTOSQpjiEJWVPvZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bM6r3ORv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u3XdBm98"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B81831F00A3A;
-	Fri,  7 Aug 2026 15:31:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bM6r3ORv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 915E51F000E9;
+	Fri,  7 Aug 2026 15:31:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116691;
-	bh=0TVy4Pi6yIRxexynTYKx3vBRGXDHs2iM4M4G/pw68XQ=;
+	s=korg; t=1786116694;
+	bh=AFw3Z7bXQBaphBjMDu9VJ5qsQpQQCm6nM2bBVaNTETs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u3XdBm98DN/0lyfTNl8x16TiUzao7VMvX/luum+n9uUV1G86om7iKqqhQpsW7LIOa
-	 AbAVJ5imvBlKUYAzAXdEcKpsv8wCdsD9yh7de0ggehuwAoHhCcpPHnIjwFYP6SPOHE
-	 d+eAM1iU+RYh3tKApUcDuyzmN2Wp9bxEvXEYUH4o=
+	b=bM6r3ORvZ62gXkyn4NFyZ8y+ilV/Z+VVq6b1AZno5L5RKwnrx33lcBAcrEuQ4X4i9
+	 RxPfXlpy/pV7/UZ9SlD3aj77p3/1F0J1RZxBXkW8nzngN45jxNhnl6uHDzSnw0z+tp
+	 EEZ3uOuh5A9KlvXB19Gvon2m3cJ6lYJAMkh0CkVM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhiling Zou <roxy520tt@gmail.com>,
-	Julian Anastasov <ja@ssi.bg>,
+	Florian Westphal <fw@strlen.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 056/438] ipvs: adjust double hashing when fwd method changes
-Date: Fri,  7 Aug 2026 16:34:12 +0200
-Message-ID: <20260807143429.185507113@linuxfoundation.org>
+Subject: [PATCH 7.1 057/438] netfilter: nf_tables: make nft_object rhltable per table
+Date: Fri,  7 Aug 2026 16:34:13 +0200
+Message-ID: <20260807143429.206023798@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -52,342 +51,203 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Julian Anastasov <ja@ssi.bg>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 712d2993bea555f1f09cd53cbdb25714f28e85db ]
+[ Upstream commit f4f699790590bd0896c48a71e9232a65198f92f0 ]
 
-Synced conns can be created with one forwarding method
-and later updated with different one after the dest
-server is configured. This needs adjusting the hashing
-for node hn1 because only MASQ supports double hashing.
+The nft_object rhltable is global, this allows for accessing objects
+that are being dismangled from lookup path by other existing netns.
+Given the nft_obj_destroy() releases the object inmediately, this might
+lead to use-after-free of these objects that are being released.
+Make the existing rhltable per table to address this issue to deal with
+with the nft_rcv_nl_event() path too.
 
-Modify conn_tab_lock() to support seeking for hash node
-hn0 together with adding for hn1. By this way we can
-safely modify the forwarding method and hn1.hash_key
-under bucket lock for the first node hn0. The forwarding
-method is also protected by cp->lock as it is part of
-cp->flags.
+Update nft_obj_lookup() to take the table as non-const, otherwise,
+compiler complains when passing the objname_ht to rhltable_lookup().
 
-Fix the usage of stale idx/idx2 values in conn_tab_lock
-after jumping to the retry label. Instead, use idx/idx2
-values just to order the locking for the old/new tables.
-
-Reported-by: Zhiling Zou <roxy520tt@gmail.com>
-Link: https://patch.msgid.link/1b914f41d725bc064c9ba9830dc8169329737270.1782540466.git.roxy520tt@gmail.com/
-Link: https://sashiko.dev/#/patchset/CALMqdkR704S2BG_QD_bgHTFp2%2B1QCi7n0T4zoZyTo8mDZevYSA%40mail.gmail.com
-Fixes: f20c73b0460d ("ipvs: use more keys for connection hashing")
-Signed-off-by: Julian Anastasov <ja@ssi.bg>
+Fixes: 4d44175aa5bb ("netfilter: nf_tables: handle nft_object lookups via rhltable")
+Suggested-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipvs/ip_vs_conn.c | 189 +++++++++++++++++++++++++-------
- 1 file changed, 147 insertions(+), 42 deletions(-)
+ include/net/netfilter/nf_tables.h |  4 +++-
+ net/netfilter/nf_tables_api.c     | 34 +++++++++++++++----------------
+ 2 files changed, 19 insertions(+), 19 deletions(-)
 
-diff --git a/net/netfilter/ipvs/ip_vs_conn.c b/net/netfilter/ipvs/ip_vs_conn.c
-index b457dd2f6bc89..26f2233b34b04 100644
---- a/net/netfilter/ipvs/ip_vs_conn.c
-+++ b/net/netfilter/ipvs/ip_vs_conn.c
-@@ -70,25 +70,45 @@ static struct kmem_cache *ip_vs_conn_cachep __read_mostly;
-  * bucket or hash table
-  * - hash table resize works like rehash but always rehashes into new table
-  * - bit lock on bucket serializes all operations that modify the chain
-+ * - on resize, bucket from the old table is locked before bucket from the
-+ * new table
-  * - cp->lock protects conn fields like cp->flags, cp->dest
-  */
+diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
+index 9d844354c4d95..3be612145c130 100644
+--- a/include/net/netfilter/nf_tables.h
++++ b/include/net/netfilter/nf_tables.h
+@@ -1294,6 +1294,7 @@ static inline void nft_use_inc_restore(u32 *use)
+  *	@sets: sets in the table
+  *	@objects: stateful objects in the table
+  *	@flowtables: flow tables in the table
++ *	@objname_ht: hashtable for objects lookup by name
+  *	@hgenerator: handle generator state
+  *	@handle: table handle
+  *	@use: number of chain references to this table
+@@ -1313,6 +1314,7 @@ struct nft_table {
+ 	struct list_head		sets;
+ 	struct list_head		objects;
+ 	struct list_head		flowtables;
++	struct rhltable			objname_ht;
+ 	u64				hgenerator;
+ 	u64				handle;
+ 	u32				use;
+@@ -1400,7 +1402,7 @@ static inline void *nft_obj_data(const struct nft_object *obj)
+ #define nft_expr_obj(expr)	*((struct nft_object **)nft_expr_priv(expr))
  
--/* Lock conn_tab bucket for conn hash/unhash, not for rehash */
-+/**
-+ * conn_tab_lock - Lock conn_tab buckets for conn hash/unhash, not for rehash
-+ * @t:		hash table for hn0, new_tbl when new_hash=true
-+ * @t2:		hash table for hn1, new_tbl when new_hash2=true
-+ * @cp:		connection
-+ * @hash_key:	hash key for hn0
-+ * @hash_key2:	hash key for hn1
-+ * @use2:	using hn1 (double hashing) based on the forwarding method
-+ * @new_hash:	mode for hn0, hash node (true) or seek node (false)
-+ * @new_hash2:	mode for hn1, hash node (true) or seek node (false)
-+ * @head_ret:	returned head for hn0
-+ * @head2_ret:	returned head for hn1
-+ *
-+ * We support 3 modes:
-+ * - seek mode for both nodes, used for unhashing
-+ * - hash mode for both nodes, used for hashing
-+ * - seek hn0 and hash hn1, used when forwarding method is changed
-+ */
- static __always_inline void
--conn_tab_lock(struct ip_vs_rht *t, struct ip_vs_conn *cp, u32 hash_key,
--	      u32 hash_key2, bool use2, bool new_hash,
--	      struct hlist_bl_head **head_ret, struct hlist_bl_head **head2_ret)
-+conn_tab_lock(struct ip_vs_rht *t, struct ip_vs_rht *t2, struct ip_vs_conn *cp,
-+	      u32 hash_key, u32 hash_key2, bool use2, bool new_hash,
-+	      bool new_hash2, struct hlist_bl_head **head_ret,
-+	      struct hlist_bl_head **head2_ret)
- {
- 	struct hlist_bl_head *head, *head2;
- 	u32 hash_key_new, hash_key_new2;
--	struct ip_vs_rht *t2 = t;
--	u32 idx, idx2;
-+	int idx = 0, idx2 = 0;
-+
-+	/* Advance idx2 when new_hash is not set but hash_key2
-+	 * is for new table
-+	 */
-+	if (new_hash2 && use2 && t != t2)
-+		idx2++;
+ struct nft_object *nft_obj_lookup(const struct net *net,
+-				  const struct nft_table *table,
++				  struct nft_table *table,
+ 				  const struct nlattr *nla, u32 objtype,
+ 				  u8 genmask);
  
--	idx = hash_key & t->mask;
--	if (use2)
--		idx2 = hash_key2 & t->mask;
--	else
--		idx2 = idx;
- 	if (!new_hash) {
- 		/* We need to lock the bucket in the right table */
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index e1db3e678656d..c89e55ffc77d1 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -45,8 +45,6 @@ enum {
+ 	NFT_VALIDATE_DO,
+ };
  
-@@ -100,46 +120,45 @@ conn_tab_lock(struct ip_vs_rht *t, struct ip_vs_conn *cp, u32 hash_key,
- 			 * both nodes in different tables, use idx/idx2
- 			 * for proper lock ordering for heads.
- 			 */
--			idx = hash_key & t->mask;
--			idx |= IP_VS_RHT_TABLE_ID_MASK;
--		}
--		if (use2) {
--			if (!ip_vs_rht_same_table(t2, hash_key2)) {
--				/* It is already moved to new table */
--				t2 = rcu_dereference(t2->new_tbl);
--				idx2 = hash_key2 & t2->mask;
--				idx2 |= IP_VS_RHT_TABLE_ID_MASK;
--			}
--		} else {
--			idx2 = idx;
-+			idx++;
- 		}
- 	}
-+	if (use2 && !new_hash2 && !ip_vs_rht_same_table(t2, hash_key2)) {
-+		/* It is already moved to new table */
-+		t2 = rcu_dereference(t2->new_tbl);
-+		idx2++;
-+	}
- 
-+	if (!use2)
-+		idx2 = idx;
- 	head = t->buckets + (hash_key & t->mask);
- 	head2 = use2 ? t2->buckets + (hash_key2 & t2->mask) : head;
- 
--	local_bh_disable();
--	/* Do not touch seqcount, this is a safe operation */
+-static struct rhltable nft_objname_ht;
 -
--	if (idx <= idx2) {
-+	if (idx > idx2 || (head > head2 && idx == idx2)) {
-+		hlist_bl_lock(head2);
- 		hlist_bl_lock(head);
--		if (head != head2)
--			hlist_bl_lock(head2);
- 	} else {
--		hlist_bl_lock(head2);
- 		hlist_bl_lock(head);
-+		if (head != head2)
-+			hlist_bl_lock(head2);
- 	}
- 	if (!new_hash) {
-+		bool changed;
+ static u32 nft_chain_hash(const void *data, u32 len, u32 seed);
+ static u32 nft_chain_hash_obj(const void *data, u32 len, u32 seed);
+ static int nft_chain_hash_cmp(struct rhashtable_compare_arg *, const void *);
+@@ -1635,6 +1633,10 @@ static int nf_tables_newtable(struct sk_buff *skb, const struct nfnl_info *info,
+ 	if (err)
+ 		goto err_chain_ht;
+ 
++	err = rhltable_init(&table->objname_ht, &nft_objname_ht_params);
++	if (err < 0)
++		goto err_obj_ht;
 +
- 		/* Ensure hash_key is read under lock */
- 		hash_key_new = READ_ONCE(cp->hn0.hash_key);
--		hash_key_new2 = READ_ONCE(cp->hn1.hash_key);
-+		changed = hash_key != hash_key_new;
-+		if (use2 && !new_hash2) {
-+			hash_key_new2 = READ_ONCE(cp->hn1.hash_key);
-+			changed |= hash_key2 != hash_key_new2;
-+		} else {
-+			hash_key_new2 = hash_key2;
-+		}
- 		/* Hash changed ? */
--		if (hash_key != hash_key_new ||
--		    (hash_key2 != hash_key_new2 && use2)) {
-+		if (changed) {
- 			if (head != head2)
- 				hlist_bl_unlock(head2);
- 			hlist_bl_unlock(head);
--			local_bh_enable();
- 			hash_key = hash_key_new;
- 			hash_key2 = hash_key_new2;
- 			goto retry;
-@@ -155,7 +174,6 @@ static inline void conn_tab_unlock(struct hlist_bl_head *head,
- 	if (head != head2)
- 		hlist_bl_unlock(head2);
- 	hlist_bl_unlock(head);
--	local_bh_enable();
- }
+ 	INIT_LIST_HEAD(&table->chains);
+ 	INIT_LIST_HEAD(&table->sets);
+ 	INIT_LIST_HEAD(&table->objects);
+@@ -1653,6 +1655,8 @@ static int nf_tables_newtable(struct sk_buff *skb, const struct nfnl_info *info,
+ 	list_add_tail_rcu(&table->list, &nft_net->tables);
+ 	return 0;
+ err_trans:
++	rhltable_destroy(&table->objname_ht);
++err_obj_ht:
+ 	rhltable_destroy(&table->chains_ht);
+ err_chain_ht:
+ 	kfree(table->udata);
+@@ -1819,6 +1823,7 @@ static void nf_tables_table_destroy(struct nft_table *table)
+ 		return;
  
- static void ip_vs_conn_expire(struct timer_list *t);
-@@ -268,8 +286,9 @@ static inline int ip_vs_conn_hash(struct ip_vs_conn *cp)
- 		use2 = false;
- 	}
+ 	rhltable_destroy(&table->chains_ht);
++	rhltable_destroy(&table->objname_ht);
+ 	kfree(table->name);
+ 	kfree(table->udata);
+ 	kfree(table);
+@@ -8082,7 +8087,7 @@ void nft_unregister_obj(struct nft_object_type *obj_type)
+ EXPORT_SYMBOL_GPL(nft_unregister_obj);
  
--	conn_tab_lock(t, cp, hash_key, hash_key2, use2, true /* new_hash */,
--		      &head, &head2);
-+	local_bh_disable();
-+	conn_tab_lock(t, t, cp, hash_key, hash_key2, use2, true /* new_hash */,
-+		      true /* new_hash2 */, &head, &head2);
- 
- 	cp->flags |= IP_VS_CONN_F_HASHED;
- 	WRITE_ONCE(cp->hn0.hash_key, hash_key);
-@@ -280,6 +299,7 @@ static inline int ip_vs_conn_hash(struct ip_vs_conn *cp)
- 		hlist_bl_add_head_rcu(&cp->hn1.node, head2);
- 
- 	conn_tab_unlock(head, head2);
-+	local_bh_enable();
- 	ret = 1;
- 
- 	/* Schedule resizing if load increases */
-@@ -306,18 +326,20 @@ static inline bool ip_vs_conn_unlink(struct ip_vs_conn *cp)
- 		return refcount_dec_if_one(&cp->refcnt);
+ struct nft_object *nft_obj_lookup(const struct net *net,
+-				  const struct nft_table *table,
++				  struct nft_table *table,
+ 				  const struct nlattr *nla, u32 objtype,
+ 				  u8 genmask)
+ {
+@@ -8098,7 +8103,7 @@ struct nft_object *nft_obj_lookup(const struct net *net,
+ 		     !lockdep_commit_lock_is_held(net));
  
  	rcu_read_lock();
-+	local_bh_disable();
+-	list = rhltable_lookup(&nft_objname_ht, &k, nft_objname_ht_params);
++	list = rhltable_lookup(&table->objname_ht, &k, nft_objname_ht_params);
+ 	if (!list)
+ 		goto out;
  
- 	t = rcu_dereference(ipvs->conn_tab);
- 	hash_key = READ_ONCE(cp->hn0.hash_key);
- 	hash_key2 = READ_ONCE(cp->hn1.hash_key);
- 	use2 = ip_vs_conn_use_hash2(cp);
+@@ -8376,7 +8381,7 @@ static int nf_tables_newobj(struct sk_buff *skb, const struct nfnl_info *info,
+ 	if (err < 0)
+ 		goto err_trans;
  
--	conn_tab_lock(t, cp, hash_key, hash_key2, use2, false /* new_hash */,
--		      &head, &head2);
-+	conn_tab_lock(t, t, cp, hash_key, hash_key2, use2, false /* new_hash */,
-+		      false /* new_hash2 */, &head, &head2);
- 
- 	if (cp->flags & IP_VS_CONN_F_HASHED) {
- 		/* Decrease refcnt and unlink conn only if we are last user */
--		if (refcount_dec_if_one(&cp->refcnt)) {
-+		if (use2 == ip_vs_conn_use_hash2(cp) &&
-+		    refcount_dec_if_one(&cp->refcnt)) {
- 			hlist_bl_del_rcu(&cp->hn0.node);
- 			if (use2)
- 				hlist_bl_del_rcu(&cp->hn1.node);
-@@ -328,6 +350,7 @@ static inline bool ip_vs_conn_unlink(struct ip_vs_conn *cp)
- 
- 	conn_tab_unlock(head, head2);
- 
-+	local_bh_enable();
- 	rcu_read_unlock();
- 
- 	return ret;
-@@ -632,6 +655,7 @@ void ip_vs_conn_fill_cport(struct ip_vs_conn *cp, __be16 cport)
- 	int ntbl;
- 	int dir;
- 
-+restart:
- 	/* No packets from inside, so we can do it in 2 steps. */
- 	dir = use2 ? 1 : 0;
- 
-@@ -686,6 +710,23 @@ void ip_vs_conn_fill_cport(struct ip_vs_conn *cp, __be16 cport)
- 	/* Protect the cp->flags modification */
- 	spin_lock_bh(&cp->lock);
- 
-+	/* Recheck the forwarding method under lock */
-+	if (use2 != ip_vs_conn_use_hash2(cp)) {
-+		use2 = !use2;
-+		if (use2) {
-+			spin_unlock_bh(&cp->lock);
-+			/* Restart with new use2 value */
-+			goto restart;
-+		}
-+		if (dir) {
-+			/* Not started yet, so just skip dir 1 */
-+			spin_unlock_bh(&cp->lock);
-+			dir--;
-+			goto next_dir;
-+		}
-+		/* Just finish dir 0 */
-+	}
-+
- 	/* Lock seqcount only for the old bucket, even if we are on new table
- 	 * because it affects the del operation, not the adding.
- 	 */
-@@ -752,6 +793,61 @@ void ip_vs_conn_fill_cport(struct ip_vs_conn *cp, __be16 cport)
- 		goto next_dir;
+-	err = rhltable_insert(&nft_objname_ht, &obj->rhlhead,
++	err = rhltable_insert(&table->objname_ht, &obj->rhlhead,
+ 			      nft_objname_ht_params);
+ 	if (err < 0)
+ 		goto err_obj_ht;
+@@ -8561,8 +8566,8 @@ nf_tables_getobj_single(u32 portid, const struct nfnl_info *info,
+ 	struct netlink_ext_ack *extack = info->extack;
+ 	u8 genmask = nft_genmask_cur(info->net);
+ 	u8 family = info->nfmsg->nfgen_family;
+-	const struct nft_table *table;
+ 	struct net *net = info->net;
++	struct nft_table *table;
+ 	struct nft_object *obj;
+ 	struct sk_buff *skb2;
+ 	u32 objtype;
+@@ -10423,9 +10428,9 @@ static void nf_tables_commit_chain(struct net *net, struct nft_chain *chain)
+ 		nf_tables_commit_chain_free_rules_old(g0);
  }
  
-+/* Change forwarding method for hashed conn */
-+static void ip_vs_conn_change_fwd_mask(struct ip_vs_conn *cp, u32 new_flags)
-+{
-+	struct netns_ipvs *ipvs = cp->ipvs;
-+	struct hlist_bl_head *head, *head2;
-+	u32 hash2, hash_key, hash_key2;
-+	struct ip_vs_rht *t, *t2;
-+
-+	/* See ip_vs_conn_use_hash2() for reference */
-+	if ((cp->flags & IP_VS_CONN_F_TEMPLATE) ||
-+	    /* No change in double hashing ? */
-+	    (IP_VS_FWD_METHOD(cp) == IP_VS_CONN_F_MASQ) ==
-+	    ((new_flags & IP_VS_CONN_F_FWD_MASK) == IP_VS_CONN_F_MASQ)) {
-+		cp->flags = new_flags;
-+		return;
-+	}
-+	t = rcu_dereference(ipvs->conn_tab);
-+	if (ip_vs_conn_use_hash2(cp)) {
-+		/* Stop double hashing */
-+		hash_key = READ_ONCE(cp->hn0.hash_key);
-+		hash_key2 = READ_ONCE(cp->hn1.hash_key);
-+
-+		conn_tab_lock(t, t, cp, hash_key, hash_key2, true /* use2 */,
-+			      false /* new_hash */, false /* new_hash2 */,
-+			      &head, &head2);
-+
-+		/* Keep both hash keys in same table */
-+		hash_key = READ_ONCE(cp->hn0.hash_key);
-+		WRITE_ONCE(cp->hn1.hash_key, hash_key);
-+		hlist_bl_del_rcu(&cp->hn1.node);
-+		cp->flags = new_flags;
-+
-+		conn_tab_unlock(head, head2);
-+	} else {
-+		/* Start double hashing */
-+
-+		hash_key = READ_ONCE(cp->hn0.hash_key);
-+
-+		t2 = rcu_dereference(t->new_tbl);
-+		hash2 = ip_vs_conn_hashkey_conn(t2, cp, true);
-+		hash_key2 = ip_vs_rht_build_hash_key(t2, hash2);
-+
-+		/* Change the forwarding method under locked hn0 */
-+		conn_tab_lock(t, t2, cp, hash_key, hash_key2, true /* use2 */,
-+			      false /* new_hash */, true /* new_hash2 */,
-+			      &head, &head2);
-+
-+		WRITE_ONCE(cp->hn1.hash_key, hash_key2);
-+		cp->flags = new_flags;
-+		hlist_bl_add_head_rcu(&cp->hn1.node, head2);
-+
-+		conn_tab_unlock(head, head2);
-+	}
-+}
-+
- /* Get default load factor to map conn_count/u_thresh to t->size */
- static int ip_vs_conn_default_load_factor(struct netns_ipvs *ipvs)
+-static void nft_obj_del(struct nft_object *obj)
++static void nft_obj_del(struct nft_table *table, struct nft_object *obj)
  {
-@@ -1021,9 +1117,18 @@ ip_vs_bind_dest(struct ip_vs_conn *cp, struct ip_vs_dest *dest)
- 			conn_flags &= ~IP_VS_CONN_F_INACTIVE;
- 		/* connections inherit forwarding method from dest */
- 		flags &= ~(IP_VS_CONN_F_FWD_MASK | IP_VS_CONN_F_NOOUTPUT);
-+		flags |= conn_flags;
-+		/* Changing forwarding method for hashed conn can
-+		 * happen only under locks
-+		 */
-+		if (cp->flags & IP_VS_CONN_F_HASHED)
-+			ip_vs_conn_change_fwd_mask(cp, flags);
-+		else
-+			cp->flags = flags;
-+	} else {
-+		flags |= conn_flags;
-+		cp->flags = flags;
- 	}
--	flags |= conn_flags;
--	cp->flags = flags;
- 	cp->dest = dest;
+-	rhltable_remove(&nft_objname_ht, &obj->rhlhead, nft_objname_ht_params);
++	rhltable_remove(&table->objname_ht, &obj->rhlhead, nft_objname_ht_params);
+ 	list_del_rcu(&obj->list);
+ }
  
- 	IP_VS_DBG_BUF(7, "Bind-dest %s c:%s:%d v:%s:%d "
+@@ -11110,7 +11115,7 @@ static int nf_tables_commit(struct net *net, struct sk_buff *skb)
+ 			break;
+ 		case NFT_MSG_DELOBJ:
+ 		case NFT_MSG_DESTROYOBJ:
+-			nft_obj_del(nft_trans_obj(trans));
++			nft_obj_del(table, nft_trans_obj(trans));
+ 			nf_tables_obj_notify(&ctx, nft_trans_obj(trans),
+ 					     trans->msg_type);
+ 			break;
+@@ -11402,7 +11407,7 @@ static int __nf_tables_abort(struct net *net, enum nfnl_abort_action action)
+ 				nft_trans_destroy(trans);
+ 			} else {
+ 				nft_use_dec_restore(&table->use);
+-				nft_obj_del(nft_trans_obj(trans));
++				nft_obj_del(table, nft_trans_obj(trans));
+ 			}
+ 			break;
+ 		case NFT_MSG_DELOBJ:
+@@ -12025,7 +12030,7 @@ static void __nft_release_table(struct net *net, struct nft_table *table)
+ 		nft_set_destroy(&ctx, set);
+ 	}
+ 	list_for_each_entry_safe(obj, ne, &table->objects, list) {
+-		nft_obj_del(obj);
++		nft_obj_del(table, obj);
+ 		nft_use_dec(&table->use);
+ 		nft_obj_destroy(&ctx, obj);
+ 	}
+@@ -12207,10 +12212,6 @@ static int __init nf_tables_module_init(void)
+ 	if (err < 0)
+ 		goto err_netdev_notifier;
+ 
+-	err = rhltable_init(&nft_objname_ht, &nft_objname_ht_params);
+-	if (err < 0)
+-		goto err_rht_objname;
+-
+ 	err = nft_offload_init();
+ 	if (err < 0)
+ 		goto err_offload;
+@@ -12233,8 +12234,6 @@ static int __init nf_tables_module_init(void)
+ err_netlink_notifier:
+ 	nft_offload_exit();
+ err_offload:
+-	rhltable_destroy(&nft_objname_ht);
+-err_rht_objname:
+ 	unregister_netdevice_notifier(&nf_tables_flowtable_notifier);
+ err_netdev_notifier:
+ 	nf_tables_core_module_exit();
+@@ -12256,7 +12255,6 @@ static void __exit nf_tables_module_exit(void)
+ 	unregister_pernet_subsys(&nf_tables_net_ops);
+ 	cancel_work_sync(&trans_gc_work);
+ 	rcu_barrier();
+-	rhltable_destroy(&nft_objname_ht);
+ 	nf_tables_core_module_exit();
+ }
+ 
 -- 
 2.53.0
 
