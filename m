@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C31EB46D2CC;
-	Fri,  7 Aug 2026 15:38:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C56A742D758;
+	Fri,  7 Aug 2026 15:38:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786117089; cv=none; b=tpleNiaQOUGuFB7epkGXgA9bzEGtDeZ5AVhfDzZzzuKyrfZDZUzur44zJAaPqVPStG/iVatkNSK1aMfRS62ZNFRy4UydAopbKeU6n/7/NXklTQ2vcOBtsOJ92tMkZ3DnV7/ZH1ot+DirL5ocHGvwfy1AEmop6qt7HsFg+tWHQBY=
+	t=1786117092; cv=none; b=nSywmvIwvGut93BY4K3ORf3vF4LiWF3/7lJOdC+Gm5ltchkiyprEHpUaz/lWCmjV/zc5cO08qpbCkbeBDA9wKHMe4sKJpmMA/Krdtvcw6gysZK8zz8MM1CWO4oPl/DorpGR7ZJv8v5OeNMeWuUcAW0rVJ6aLfWgYkkSdDiKC+As=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786117089; c=relaxed/simple;
-	bh=UhocW1AiNC/NTYvoiQbavKc+aRut3v1I+XlBc07apIc=;
+	s=arc-20240116; t=1786117092; c=relaxed/simple;
+	bh=puHc30Jcx8j/lM1exE8jT+w+nt5jDuTV9ERbdCQNYp8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hET2zG6VkocuDwEYAoLOi4wgqvuzkest/DuaK8o8irCqZbJqClcjSBG0fMWGkk8ho+tNL3qZPmwyt0yl9vJR3p3IZZa6XhVMtwQYj27RgQimSVGO27n65lK8uzU68FqUATtr566tuvIQ7bqS2Wglhya/I6QeIny8tD/vEA9rS2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IdyRx/tM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YOrX1hqksD7Ufqd8hNyK5OOughcmP1kLxyRzTWPIbNETmfd4MaZfMSndEi8Icd7j7zr+DVC8QGRuOoJVvLFWvylx02K0ldSB3na9nQAEOXGDser78AA7cquhKcgJm8884EyAFBU4nXwJ8ylesiAXpZmxiK5W6qdV4fMrYdUWrlE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bs+hKTbe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IdyRx/tM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C80C1F000E9;
-	Fri,  7 Aug 2026 15:38:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bs+hKTbe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1692F1F000E9;
+	Fri,  7 Aug 2026 15:38:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786117088;
-	bh=jPMg5GbPKUtGRAyCFWnvWwx0PWlnRni7vXlmm5PG6aY=;
+	s=korg; t=1786117091;
+	bh=GtAwcA6F5gFYkZpbUK5nIsr94sH4aOzD5SqOqpk67GU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IdyRx/tMAxt1TtkFK2fHTfXsTfpEkpErdqrIGurpI97eoh71b1k3JogKxH0oA3/i0
-	 WCCtSH5qMfVRoNjslCVlkF4bjUtbDC+s+RCvIL5F81MB/RbIujaNQ3lA731USPjQcG
-	 U3wsSIrEimJITBc6tH3cTmBMOSUrbr+bxzuoQnYk=
+	b=Bs+hKTbeKpOaoVzN6nNQwrPPhxBXJruRbu6xCbeI2E7ldGDGa01qJfzjh4p8tg3uk
+	 IClLFS9enLyptH6MyftSg+dBnmZZsfWDR9BJXjkqMov21AnH2QMPOljy0KL/4Hhjys
+	 AFaRuwE4aO+LzdETVD4fe5QBDz1NmhEPNiPG9eLo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanislav Kinsburskii <skinsburskii@linux.microsoft.com>,
-	"Anirudh Rayabharam (Microsoft)" <anirudh@anirudhrb.com>,
-	Wei Liu <wei.liu@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Vincent Donnefort <vdonnefort@google.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 195/438] mshv: Publish VP to pt_vp_array before installing the file descriptor
-Date: Fri,  7 Aug 2026 16:36:31 +0200
-Message-ID: <20260807143432.183964313@linuxfoundation.org>
+Subject: [PATCH 7.1 196/438] ring-buffer: Fix subbuf_ids memory leak in rb_allocate_cpu_buffer() error path
+Date: Fri,  7 Aug 2026 16:36:32 +0200
+Message-ID: <20260807143432.204402149@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -46,98 +46,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stanislav Kinsburskii <skinsburskii@linux.microsoft.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-[ Upstream commit 72e3b0311aa90568a4b42a64445d1d3e1dc5a34d ]
+[ Upstream commit 260b20d9b78bf002f89088fb62d60e8dee98f6f8 ]
 
-mshv_partition_ioctl_create_vp() called anon_inode_getfd() before
-publishing the new VP into partition->pt_vp_array.  anon_inode_getfd()
-includes fd_install(), so the fd was live in current->files before the
-publish ran.
+In rb_allocate_cpu_buffer(), cpu_buffer->subbuf_ids is allocated using
+kcalloc() when buffer->remote is non-NULL. If a subsequent page allocation
+fails (e.g., ring_buffer_desc_page() returns NULL or rb_allocate_pages()
+fails), execution jumps to fail_free_reader.
 
-A concurrent MSHV_RUN_VP ioctl on that fd does not serialise against the
-in-progress MSHV_CREATE_VP — it takes vp->vp_mutex, not the partition
-mutex.  Once the VP starts running and traps, mshv_intercept_isr() can look
-up partition->pt_vp_array[vp_index] and observe NULL, silently dropping the
-intercept message.
+While __free(kfree) automatically frees the outer cpu_buffer structure
+at scope exit, kfree(cpu_buffer) does not recursively free nested heap
+pointers such as cpu_buffer->subbuf_ids, resulting in a memory leak.
 
-Split the fd creation: reserve an fd with get_unused_fd_flags(), create the
-file with anon_inode_getfile(), publish the VP via smp_store_release(), and
-finally call fd_install() as the userspace-visibility commit point.
+Fix this by explicitly freeing cpu_buffer->subbuf_ids in the
+fail_free_reader error unwinding path when cpu_buffer->remote is set.
 
-Fixes: 621191d709b14 ("Drivers: hv: Introduce mshv_root module to expose /dev/mshv to VMMs")
-Signed-off-by: Stanislav Kinsburskii <skinsburskii@linux.microsoft.com>
-Reviewed-by: Anirudh Rayabharam (Microsoft) <anirudh@anirudhrb.com>
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Link: https://patch.msgid.link/178550740672.380917.6067449683620196150.stgit@devnote2
+Fixes: 2e67fabd8b77 ("ring-buffer: Introduce ring-buffer remotes")
+Assisted-by: Antigravity:gemini-3.6-flash
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Reviewed-by: Vincent Donnefort <vdonnefort@google.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hv/mshv_root_main.c | 29 ++++++++++++++++++++++-------
- 1 file changed, 22 insertions(+), 7 deletions(-)
+ kernel/trace/ring_buffer.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/hv/mshv_root_main.c b/drivers/hv/mshv_root_main.c
-index 8a15448e2ace9..cc2cfce2aefdb 100644
---- a/drivers/hv/mshv_root_main.c
-+++ b/drivers/hv/mshv_root_main.c
-@@ -1072,6 +1072,8 @@ mshv_partition_ioctl_create_vp(struct mshv_partition *partition,
- 	struct mshv_vp *vp;
- 	struct page *intercept_msg_page, *register_page, *ghcb_page;
- 	struct hv_stats_page *stats_pages[2];
-+	struct file *file;
-+	int fd;
- 	long ret;
+diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
+index d896fb25de702..d2e2cf18bfdbe 100644
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -2489,6 +2489,7 @@ rb_allocate_cpu_buffer(struct trace_buffer *buffer, long nr_pages, int cpu)
+ 	return_ptr(cpu_buffer);
  
- 	if (copy_from_user(&args, arg, sizeof(args)))
-@@ -1146,14 +1148,18 @@ mshv_partition_ioctl_create_vp(struct mshv_partition *partition,
- 	if (ret)
- 		goto put_partition;
+  fail_free_reader:
++	kfree(cpu_buffer->subbuf_ids);
+ 	free_buffer_page(cpu_buffer->reader_page);
  
--	/*
--	 * Keep anon_inode_getfd last: it installs fd in the file struct and
--	 * thus makes the state accessible in user space.
--	 */
--	ret = anon_inode_getfd("mshv_vp", &mshv_vp_fops, vp,
--			       O_RDWR | O_CLOEXEC);
--	if (ret < 0)
-+	fd = get_unused_fd_flags(O_RDWR | O_CLOEXEC);
-+	if (fd < 0) {
-+		ret = fd;
- 		goto remove_debugfs_vp;
-+	}
-+
-+	file = anon_inode_getfile("mshv_vp", &mshv_vp_fops, vp,
-+				  O_RDWR | O_CLOEXEC);
-+	if (IS_ERR(file)) {
-+		ret = PTR_ERR(file);
-+		goto put_unused_vp_fd;
-+	}
- 
- 	/* already exclusive with the partition mutex for all ioctls */
- 	partition->pt_vp_count++;
-@@ -1165,8 +1171,17 @@ mshv_partition_ioctl_create_vp(struct mshv_partition *partition,
- 	 */
- 	smp_store_release(&partition->pt_vp_array[args.vp_index], vp);
- 
-+	/*
-+	 * fd_install() is the userspace-visibility commit point.  Must be the
-+	 * last operation that can fail or be observed.
-+	 */
-+	fd_install(fd, file);
-+	ret = fd;
-+
- 	goto out;
- 
-+put_unused_vp_fd:
-+	put_unused_fd(fd);
- remove_debugfs_vp:
- 	mshv_debugfs_vp_remove(vp);
- put_partition:
+ 	return NULL;
 -- 
 2.53.0
 
