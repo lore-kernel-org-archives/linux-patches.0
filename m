@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19A721C84D0;
-	Fri,  7 Aug 2026 15:21:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2E6A27466A;
+	Fri,  7 Aug 2026 15:21:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116086; cv=none; b=YuwaKfRQqsgIES7tcSl9zRwlueJN1oN6AnfyBNUQ7pxgkalNHYGE/g+Jah1vF1aZLapUWJUHPlp3A6pwTw2cb700FQStJzOZPHzTQORz9Ox7nA36ogwQC5jc5WD7MltaN/VivJxdPDyv51JGuttq0MtmIyyaOfHqvWJaAxXY5/w=
+	t=1786116089; cv=none; b=F06hUevu4epkVG+ub0f2O+I3a3teLlHHCQD+7kwcbe+s/49GgmlK+l6U1aF5ocIkH9Wc1v1vm4f2OVIXQK/Pwc+WcaGsuDk5Tfmx1C1/p+SHKk7ld2FnFaAoLSHci+CdhMOj3oUbjiKz+HPcegR2lnInTUDK/DAkYnTuDApA0CM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116086; c=relaxed/simple;
-	bh=FSZSASTapPWsxtkS4m6X1mw3ItM/s4Gh1NlgnC86+1U=;
+	s=arc-20240116; t=1786116089; c=relaxed/simple;
+	bh=POGMpIV4TKh7a+J474CfMOlHu2Iox4Hix5Ohw74I6Cs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P3OoMz3JcBaDkUT0Pk+/F+YfpS01Dv6N42bqBRFjHQrkkpScYwijDMxLke25BzMq0MzBUIobsbQlL0jz3itAeNwL1pAXI0eSLRm1QBagbtdA1KZwWGSWR/QslfdpqeAK7bbT1dAxicXAn0Zr0OHZOoa+gEtHHU1JwO/otNNLVOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XpWDtsRc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XVCEtB3ZWJ3KLZfAbnrFKFtZG3oULSTWYe3V3LOSSPiRR/Sel+c2AsIiz5hnKpF1/Vq+KzWYWCnsZC3xp3lbwa8hBIIOZ21dovZRm7AbZU4XQY6JBV6fcHv01ie/DRF0jdV+16ayXTdvOjs+Cb7fhRIc1foveF85Wi+IpyvH+Eg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iV4kYf1k; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XpWDtsRc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75CD71F000E9;
-	Fri,  7 Aug 2026 15:21:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iV4kYf1k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B1EE1F000E9;
+	Fri,  7 Aug 2026 15:21:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116085;
-	bh=RfNsT8M4PVcNCr6XNLYwC5TWhSfVHnptZoW4i/M/oYA=;
+	s=korg; t=1786116087;
+	bh=WRoo+cxut6MLZQF6cyCrzXDp+JNIs8IS7Npy2Hcy0f0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XpWDtsRcu56Q0Ii/zd9TAqXQkM2b33WYQnzOYOpVWp+8okSWGUgHFZDm0fX9aJXfS
-	 5xGjbF9I/3MwWcS2VaCnsIYeaQFOn27016iymvxji5f5RSpGQAAv/v5qkuzntVc20l
-	 6Eqa9T2UvFUaI6rfhthy+nCtAaTNvi+iCg6ouDOM=
+	b=iV4kYf1km/HtSmq/f3O+HGNkTKyq71DkybQwoh+rG44U5SZ1GK1Fu5Kr1lIKhS8/W
+	 4ekuznznGFsP/1W/PLuAeiM9DiTj5HGTQmU8vR1ytCQLFTgYJ+bENRvHpuebUkFp5Q
+	 ZfhZGFkZdGYLeVnq4sIPVGC0JnzXFxMEQfZwFL0A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 070/261] Bluetooth: hci_sync: remove unnecessary hci_conn_get in create_conn_sync
-Date: Fri,  7 Aug 2026 16:37:07 +0200
-Message-ID: <20260807143416.894841268@linuxfoundation.org>
+	Sangho Lee <kudo3228@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.6 106/261] Bluetooth: HIDP: reject frames without a transaction header
+Date: Fri,  7 Aug 2026 16:37:43 +0200
+Message-ID: <20260807143417.666963171@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143415.358597922@linuxfoundation.org>
 References: <20260807143415.358597922@linuxfoundation.org>
@@ -51,79 +50,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Sangho Lee <kudo3228@gmail.com>
 
-[ Upstream commit c0a9dcd2be398eee505d4b254ec3a845aa8ab189 ]
+commit 47778d2c2087b5d192398f6fddf692d16a5431cf upstream.
 
-hci_conn_get() without already held reference is data race against
-concurrent deletion.
+hidp_recv_ctrl_frame() and hidp_recv_intr_frame() read skb->data[0]
+before checking that the L2CAP SDU contains a transaction header. A
+connected HIDP peer can send an empty basic-mode SDU and make both paths
+use an uninitialized byte from skb tailroom.
 
-In previous patches, the refcount has been changed to be taken before
-starting the hci_sync task, so remove these extra get() + put() as they
-are not needed.
+KMSAN reports the use in hidp_session_run(), with the uninitialized value
+originating in __alloc_skb() through vhci_write(). The control path
+produces two reports and the interrupt path produces one.
 
-Fixes: 12917f591cea ("Bluetooth: hci_conn: Fix null ptr deref in hci_abort_conn()")
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
+The byte can also be controlled by a malformed lower-layer packet. If an
+HCI ACL packet contains an L2CAP PDU with a declared zero-length payload
+followed by an extra 0x15 byte, l2cap_recv_acldata() reduces skb->len to
+the declared PDU length before dispatch. The current HIDP path nevertheless
+consumes the extra byte as HIDP_TRANS_HID_CONTROL |
+HIDP_CTRL_VIRTUAL_CABLE_UNPLUG and terminates the HIDP session. With this
+change, the same packet is discarded and a subsequent feature report
+request succeeds.
+
+Pull the transaction header with skb_pull_data() and discard frames that
+do not contain it.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sangho Lee <kudo3228@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_sync.c | 13 -------------
- 1 file changed, 13 deletions(-)
+ net/bluetooth/hidp/core.c |   25 +++++++++++++++----------
+ 1 file changed, 15 insertions(+), 10 deletions(-)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index 6a5ec74eaf25a..9dec36467fead 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -6566,11 +6566,6 @@ static int hci_le_create_conn_sync(struct hci_dev *hdev, void *data)
+--- a/net/bluetooth/hidp/core.c
++++ b/net/bluetooth/hidp/core.c
+@@ -563,16 +563,18 @@ static int hidp_process_data(struct hidp
+ static void hidp_recv_ctrl_frame(struct hidp_session *session,
+ 					struct sk_buff *skb)
+ {
+-	unsigned char hdr, type, param;
++	unsigned char type, param;
++	u8 *hdr;
+ 	int free_skb = 1;
  
- 	bt_dev_dbg(hdev, "conn %p", conn);
+ 	BT_DBG("session %p skb %p len %u", session, skb, skb->len);
  
--	/* Hold a reference so conn stays valid for the HCI_CONN_CREATE
--	 * clear_bit() at done.
--	 */
--	hci_conn_get(conn);
--
- 	clear_bit(HCI_CONN_SCANNING, &conn->flags);
- 	conn->state = BT_CONNECT;
+-	hdr = skb->data[0];
+-	skb_pull(skb, 1);
++	hdr = skb_pull_data(skb, 1);
++	if (!hdr)
++		goto free;
  
-@@ -6585,7 +6580,6 @@ static int hci_le_create_conn_sync(struct hci_dev *hdev, void *data)
- 			conn->state = BT_OPEN;
- 			hci_abort_conn_sync(hdev, conn,
- 					    HCI_ERROR_REJ_LIMITED_RESOURCES);
--			hci_conn_put(conn);
- 			return -EBUSY;
+-	type = hdr & HIDP_HEADER_TRANS_MASK;
+-	param = hdr & HIDP_HEADER_PARAM_MASK;
++	type = *hdr & HIDP_HEADER_TRANS_MASK;
++	param = *hdr & HIDP_HEADER_PARAM_MASK;
+ 
+ 	switch (type) {
+ 	case HIDP_TRANS_HANDSHAKE:
+@@ -593,6 +595,7 @@ static void hidp_recv_ctrl_frame(struct
+ 		break;
+ 	}
+ 
++free:
+ 	if (free_skb)
+ 		kfree_skb(skb);
+ }
+@@ -600,14 +603,15 @@ static void hidp_recv_ctrl_frame(struct
+ static void hidp_recv_intr_frame(struct hidp_session *session,
+ 				struct sk_buff *skb)
+ {
+-	unsigned char hdr;
++	u8 *hdr;
+ 
+ 	BT_DBG("session %p skb %p len %u", session, skb, skb->len);
+ 
+-	hdr = skb->data[0];
+-	skb_pull(skb, 1);
++	hdr = skb_pull_data(skb, 1);
++	if (!hdr)
++		goto free;
+ 
+-	if (hdr == (HIDP_TRANS_DATA | HIDP_DATA_RTYPE_INPUT)) {
++	if (*hdr == (HIDP_TRANS_DATA | HIDP_DATA_RTYPE_INPUT)) {
+ 		hidp_set_timer(session);
+ 
+ 		if (session->input)
+@@ -619,9 +623,10 @@ static void hidp_recv_intr_frame(struct
+ 			BT_DBG("report len %d", skb->len);
  		}
+ 	} else {
+-		BT_DBG("Unsupported protocol header 0x%02x", hdr);
++		BT_DBG("Unsupported protocol header 0x%02x", *hdr);
+ 	}
  
-@@ -6679,7 +6673,6 @@ static int hci_le_create_conn_sync(struct hci_dev *hdev, void *data)
- 
- 	/* Re-enable advertising after the connection attempt is finished. */
- 	hci_resume_advertising_sync(hdev);
--	hci_conn_put(conn);
- 	return err;
++free:
+ 	kfree_skb(skb);
  }
  
-@@ -6958,11 +6951,6 @@ static int hci_acl_create_conn_sync(struct hci_dev *hdev, void *data)
- 	else
- 		cp.role_switch = 0x00;
- 
--	/* Hold a reference so conn stays valid for the HCI_CONN_CREATE
--	 * clear_bit() below.
--	 */
--	hci_conn_get(conn);
--
- 	/* Mark create connection in flight so hci_cancel_connect_sync() can
- 	 * cancel it while blocking on the connection complete event.
- 	 */
-@@ -6974,7 +6962,6 @@ static int hci_acl_create_conn_sync(struct hci_dev *hdev, void *data)
- 				       conn->conn_timeout, NULL);
- 
- 	clear_bit(HCI_CONN_CREATE, &conn->flags);
--	hci_conn_put(conn);
- 
- 	return err;
- }
--- 
-2.53.0
-
 
 
