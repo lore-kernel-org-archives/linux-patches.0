@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F02937E5DD;
-	Fri,  7 Aug 2026 14:45:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63B6934250E;
+	Fri,  7 Aug 2026 14:45:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786113941; cv=none; b=EFMh5ZKrots3EwXgEwTaJ8rmO1CQpxAELJA2sGoaBv6QfgBgs8Vm3HAJ1XfF9KAxVeNX84q4xOExE24t+ABuILXmRGi3Pwk79LYBvcddxgbIud259FS/D3u6tRbh2qmfuhUZ4yL8+ijJlUvVqXrGm9F52enD1sr+/rLtBz9aXAw=
+	t=1786113944; cv=none; b=F6Qz8R7OUcxJM2f2m+VMmZqsABHjuT/FCuUKLAQvlxax1+0/1Z3+CjDXSUgwPGqIAdSUCJ0Zt12sPwhYiabvOeVFLGZgl0IO2R24a5KwH4cEQg2p7NcNmcFcqZo4B2Blm/TaCrlkzJyof+sXQJ42sX3AJo6DYC2RKZiUSnPMdtw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786113941; c=relaxed/simple;
-	bh=wG5hEbkB/eYIxvqS/QRqDprrVc/H6vlN0YvIWfumWWM=;
+	s=arc-20240116; t=1786113944; c=relaxed/simple;
+	bh=9B62b2Gc+fdY/Yi0aV6hO5XxaaA96ZV5d0zkn+UQ/0U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sf00aXNjcDz16ofNxQTdcosmvazgOjoqpbgClIjIfuJgBzZ4Tgo3D4YVQE5OKQap1OSbW0atIda3SAAZD6Msq1dRRFzkbb8KdBLxTd16BPTix6qCvpEnezY1u+H92dYnjuS0QW0KKtriFLYKFzNPcXVu4jIN+aZmq4CRlR12iPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KX/jlYeZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WCzKVLnsEq+Kn/eo+tZ9JA+GJpo6MVm+uqX4LOT+tGiVfzvO/OnsJ6SnIwrlkLXVCGRMhLrWCbNtMN1deVwLJ1d5uCqGVTHBGKl4GgwmtRde2/Kvr8r7sc6sgJ8qJCc4L/qSH93nMbUgFGWeafxHZKou+tq/Lt+uMyvviw+UA/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K9N5qHPt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KX/jlYeZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6A591F000E9;
-	Fri,  7 Aug 2026 14:45:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K9N5qHPt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7331C1F000E9;
+	Fri,  7 Aug 2026 14:45:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786113940;
-	bh=wZHMmFqqDmLYp7D6L2BQSku/pBne4mcf8b1nWCAQ+UA=;
+	s=korg; t=1786113943;
+	bh=OZvgDEr60o9KCyLcjfnhv3gAZ0KuMrhCn7GBZpTOvjI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KX/jlYeZ56tkG6yFfTu1GoRwgWWC0kxJn5EC7P3XvkBBEayFUYJX/QAUGI3kUo7k+
-	 DMC8HUoHpMG3PBv7IjWjn/1Trl9acut0GevF9E1c0dkCRGfRTogKrsTJBEIsC10DJl
-	 MuD1r3gSjjxtUq7/oACDbkqLVBJPHNzS1vbkttqA=
+	b=K9N5qHPtyryMShwmeOFmtK5ZwglOfSUUyFg/xRFzFGbK8znN9vQj5RC7GDKFYvSEm
+	 aUwcRvI35vay4iXr5XyLftn+GL10XToL1PNzBlfKp2IVDVVXwenamgo7hulz9PMrrw
+	 AQGIRuMx3ZSNA7Tc83zeuZ/eB6bkl9tmmBaqYacY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Li <enderaoelyther@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Frank Wunderlich <frank-w@public-files.de>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 089/337] wifi: mac80211: validate individual TWT params before driver setup
-Date: Fri,  7 Aug 2026 16:34:52 +0200
-Message-ID: <20260807143420.444608388@linuxfoundation.org>
+Subject: [PATCH 6.12 090/337] net: ethernet: mtk_eth_soc: support named IRQs
+Date: Fri,  7 Aug 2026 16:34:53 +0200
+Message-ID: <20260807143420.466574387@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -51,50 +52,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Li <enderaoelyther@gmail.com>
+From: Frank Wunderlich <frank-w@public-files.de>
 
-[ Upstream commit 0502d5077e419427d80f4d46ba95d0067f5fb916 ]
+[ Upstream commit ee85b483fefbbebe1e6e61c53169f864bbdd8f13 ]
 
-ieee80211_process_rx_twt_action() only partially validates a received
-S1G TWT setup frame before queueing it.
+Add named interrupts and keep index based fallback for existing
+devicetrees.
 
-An individual agreement can therefore reach ieee80211_s1g_rx_twt_setup()
-with twt->length too short for the full struct ieee80211_twt_params.
+Currently only rx and tx IRQs are defined to be used with mt7988, but
+later extended with RSS/LRO support.
 
-The individual path passes twt to drv_add_twt_setup(). Both the tracepoint
-and the driver callback consume the complete parameters block, not merely
-req_type. Do not pass a short individual agreement to the driver.
-Broadcast agreements remain unchanged because they are rejected locally
-after accessing only req_type.
-
-Fixes: f5a4c24e689f ("mac80211: introduce individual TWT support in AP mode")
-Assisted-by: Codex:gpt-5
-Assisted-by: Claude:opus-4.8
-Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Link: https://patch.msgid.link/20260723010928.76551-1-enderaoelyther@gmail.com
-[edit commit message to not overclaim lack of validation nor
- understate driver impact]
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Frank Wunderlich <frank-w@public-files.de>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250619132125.78368-2-linux@fw-web.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: e095f249e220 ("net: ethernet: mtk_eth_soc: pass eth to mtk_handle_irq_rx in poll_controller")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/s1g.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/ethernet/mediatek/mtk_eth_soc.c | 46 ++++++++++++++++-----
+ 1 file changed, 35 insertions(+), 11 deletions(-)
 
-diff --git a/net/mac80211/s1g.c b/net/mac80211/s1g.c
-index d4ed0c0a335ca..2a23e431cbb5a 100644
---- a/net/mac80211/s1g.c
-+++ b/net/mac80211/s1g.c
-@@ -101,6 +101,10 @@ ieee80211_s1g_rx_twt_setup(struct ieee80211_sub_if_data *sdata,
- 	struct ieee80211_twt_setup *twt = (void *)mgmt->u.action.u.s1g.variable;
- 	struct ieee80211_twt_params *twt_agrt = (void *)twt->params;
+diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+index ebf5432cb328d..4305779459efd 100644
+--- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
++++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+@@ -3210,6 +3210,37 @@ static void mtk_tx_timeout(struct net_device *dev, unsigned int txqueue)
+ 	schedule_work(&eth->pending_work);
+ }
  
-+	if (!(twt->control & IEEE80211_TWT_CONTROL_NEG_TYPE_BROADCAST) &&
-+	    twt->length < sizeof(twt->control) + sizeof(*twt_agrt))
-+		return;
++static int mtk_get_irqs(struct platform_device *pdev, struct mtk_eth *eth)
++{
++	int i;
 +
- 	twt_agrt->req_type &= cpu_to_le16(~IEEE80211_TWT_REQTYPE_REQUEST);
++	/* future SoCs beginning with MT7988 should use named IRQs in dts */
++	eth->irq[1] = platform_get_irq_byname(pdev, "fe1");
++	eth->irq[2] = platform_get_irq_byname(pdev, "fe2");
++	if (eth->irq[1] >= 0 && eth->irq[2] >= 0)
++		return 0;
++
++	/* legacy way:
++	 * On MTK_SHARED_INT SoCs (MT7621 + MT7628) the first IRQ is taken
++	 * from devicetree and used for both RX and TX - it is shared.
++	 * On SoCs with non-shared IRQs the first entry is not used,
++	 * the second is for TX, and the third is for RX.
++	 */
++	for (i = 0; i < 3; i++) {
++		if (MTK_HAS_CAPS(eth->soc->caps, MTK_SHARED_INT) && i > 0)
++			eth->irq[i] = eth->irq[0];
++		else
++			eth->irq[i] = platform_get_irq(pdev, i);
++
++		if (eth->irq[i] < 0) {
++			dev_err(&pdev->dev, "no IRQ%d resource found\n", i);
++			return -ENXIO;
++		}
++	}
++
++	return 0;
++}
++
+ static irqreturn_t mtk_handle_irq_rx(int irq, void *_eth)
+ {
+ 	struct mtk_eth *eth = _eth;
+@@ -4986,17 +5017,10 @@ static int mtk_probe(struct platform_device *pdev)
+ 		}
+ 	}
  
- 	/* broadcast TWT not supported yet */
+-	for (i = 0; i < 3; i++) {
+-		if (MTK_HAS_CAPS(eth->soc->caps, MTK_SHARED_INT) && i > 0)
+-			eth->irq[i] = eth->irq[0];
+-		else
+-			eth->irq[i] = platform_get_irq(pdev, i);
+-		if (eth->irq[i] < 0) {
+-			dev_err(&pdev->dev, "no IRQ%d resource found\n", i);
+-			err = -ENXIO;
+-			goto err_wed_exit;
+-		}
+-	}
++	err = mtk_get_irqs(pdev, eth);
++	if (err)
++		goto err_wed_exit;
++
+ 	for (i = 0; i < ARRAY_SIZE(eth->clks); i++) {
+ 		eth->clks[i] = devm_clk_get(eth->dev,
+ 					    mtk_clks_source_name[i]);
 -- 
 2.53.0
 
