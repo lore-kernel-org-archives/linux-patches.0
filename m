@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E4021C84D0;
-	Fri,  7 Aug 2026 15:08:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B0E2339387;
+	Fri,  7 Aug 2026 15:08:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115284; cv=none; b=nOFIjl1u8u+ulOJ2I10Gz2Xykq1v1ziHKGyB6p9FNFKCefgKCL5BiIveEM/sxDCrsgM1wpCFVa68StwXeF2PLL1sjACljkhedZkNUms9eBNYES1ZaNDFJL/uLA1pGbpl9GAVh2ZUaWYd5Zy3dbW1f7adegzjTqyoeUcEiN6HgAE=
+	t=1786115287; cv=none; b=CjDlb7EJHqruM4pdnagqWJSFbXHyOail3wh4xlAMx6WXzH+WlrLjr7uOEYW+ykoY7GX4d4/T/SrmvUo16G7cQMmnXbLdRC0vJOP94Rb4SeRIe1xXLBOR26SHqAPi68VvIVSbrVZqgwdQlue+3nqmL5fMXXknNS8laBaLnQ/O808=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115284; c=relaxed/simple;
-	bh=iIzHv6LI0JRXvlYY8YQyrQUSxp00f4D/NfiMl7p1XyI=;
+	s=arc-20240116; t=1786115287; c=relaxed/simple;
+	bh=gANHdNHmVTFg4nrlsHkUswOLQI2mcctRxvNeAEmbLEI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rABfxqkrEBNRhS3zglLNocY3au7WpuFKJHwGKw+R2w6cpi3c5FiKSBucLN9tvfxtUuMXOSFnfjBzMEk90lcxmk9wxriMMYIlBTVPTn9hz8XIzSnD2chWT/QCV6alww7bHEir1v+jgEl7F0oYRgI0EdOCAY4qjTX99NAy4Xp44y0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mc0ywwvc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=c6HN/Wa3AgI+feflo44uRGsMDuldXSGe28HfcYqsooyNrXN6eSKEz/oqowqX6VZIKvQBoHcjQmtjA80PNcMgLZM7a1lYWOmQwFNv3rSrDxZmZZKPKNvA1F3xuYOZMuUFtsVDSTFtF7UhViR6k1hFD1uqwEKIza/DOTgcBGTE85c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tEsuFONJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mc0ywwvc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D57E21F000E9;
-	Fri,  7 Aug 2026 15:08:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tEsuFONJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 842871F00A3A;
+	Fri,  7 Aug 2026 15:08:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115283;
-	bh=sVspKSCJuadO4CDOKQ0U/5TQ4s8xTzzUZSPZTFsHmnI=;
+	s=korg; t=1786115286;
+	bh=9Lo0c+/Z4Exmh1xg2Au0q+AOmvkYHjvuLGwQ0p1naaQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mc0ywwvcTMXL3O4bUNrIbMzobNQspf3HuxbfvbLgwdK1r1Cpp/YvovQ8p96SQdx8r
-	 PVuhKA8Z5xE2oL+WsDgE7UXlyL8w0ujK6jQtxzkOFz0+y7sN/pPIiPKcX+iap0emSf
-	 BdwfVlJbcote09ctoSKfYhgfcP6En+a0H4hWECFw=
+	b=tEsuFONJCpcw5KER+acp8MZMqvK+9ex7y809ebd16XpHufoIREYTebzLHP8I9QTSE
+	 IZa6NZXuCiLBcmk6z9ELaYMkNxZLaAVKr0TwkoEoaOaGSx2OuVhu1NrRfYZ5+Mxy6+
+	 RfGEwUpTanxKk53sGMipZhTrVI1SW49sOy34MKnY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Vollrath <tactii@gmail.com>,
+	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
+	David Carlier <devnexen@gmail.com>,
+	Dima Ruinskiy <dima.ruinskiy@intel.com>,
+	Moriya Kadosh <moriyax.kadosh@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>
-Subject: [PATCH 6.18 221/396] igbvf: Fix leak in TX DMA error cleanup
-Date: Fri,  7 Aug 2026 16:36:21 +0200
-Message-ID: <20260807143429.031953266@linuxfoundation.org>
+Subject: [PATCH 6.18 222/396] igc: remove napi_synchronize() in igc_down()
+Date: Fri,  7 Aug 2026 16:36:22 +0200
+Message-ID: <20260807143429.052716310@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -50,42 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matt Vollrath <tactii@gmail.com>
+From: David Carlier <devnexen@gmail.com>
 
-commit 0565052b7e2f436b7f1541f4849da96dc0aa7a0e upstream.
+commit 5ffab5b9589c50e4cfc0cf36ffd76c89422d4019 upstream.
 
-If an error is encountered while mapping TX buffers, the driver should
-unmap any buffers already mapped for that skb.
+When an AF_XDP zero-copy application is killed abruptly, the XSK pool is
+torn down but NAPI keeps polling. igc_clean_rx_irq_zc() then returns the
+full budget on every poll, so napi_complete_done() never clears
+NAPI_STATE_SCHED.
 
-Because count is incremented before each frag mapping, it will always
-match the correct number of unmappings needed when dma_error is reached.
-Decrementing count before the while loop in dma_error causes an
-off-by-one error. If any mapping was successful before an unsuccessful
-mapping, exactly one DMA mapping (the head) would leak.
+igc_down() calls napi_synchronize() before napi_disable(), so it spins
+forever waiting for that bit and the interface never goes down. Drop the
+napi_synchronize() and let napi_disable() do the job -- it sets
+NAPI_STATE_DISABLE, which forces the stuck poll to complete. Reorder it
+ahead of igc_set_queue_napi() so the NAPI mapping is cleared only after
+polling has stopped, matching the recent igb fix b1e067240379.
 
-This bug was introduced by a 2010 fix for an endless loop in dma_error.
-All other affected drivers have already been fixed.
-
-Fixes: c1fa347f20f1 ("e1000/e1000e/igb/igbvf/ixgb/ixgbe: Fix tests of unsigned in *_tx_map()")
+Fixes: fc9df2a0b520 ("igc: Enable RX via AF_XDP zero-copy")
+Suggested-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-4-7-opus
-Signed-off-by: Matt Vollrath <tactii@gmail.com>
+Signed-off-by: David Carlier <devnexen@gmail.com>
+Reviewed-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Reviewed-by: Dima Ruinskiy <dima.ruinskiy@intel.com>
+Tested-by: Moriya Kadosh <moriyax.kadosh@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/igbvf/netdev.c |    2 --
- 1 file changed, 2 deletions(-)
+ drivers/net/ethernet/intel/igc/igc_main.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/net/ethernet/intel/igbvf/netdev.c
-+++ b/drivers/net/ethernet/intel/igbvf/netdev.c
-@@ -2191,8 +2191,6 @@ dma_error:
- 	buffer_info->time_stamp = 0;
- 	buffer_info->length = 0;
- 	buffer_info->mapped_as_page = false;
--	if (count)
--		count--;
+--- a/drivers/net/ethernet/intel/igc/igc_main.c
++++ b/drivers/net/ethernet/intel/igc/igc_main.c
+@@ -5354,9 +5354,8 @@ void igc_down(struct igc_adapter *adapte
  
- 	/* clear timestamp and dma mappings for remaining portion of packet */
- 	while (count--) {
+ 	for (i = 0; i < adapter->num_q_vectors; i++) {
+ 		if (adapter->q_vector[i]) {
+-			napi_synchronize(&adapter->q_vector[i]->napi);
+-			igc_set_queue_napi(adapter, i, NULL);
+ 			napi_disable(&adapter->q_vector[i]->napi);
++			igc_set_queue_napi(adapter, i, NULL);
+ 		}
+ 	}
+ 
 
 
