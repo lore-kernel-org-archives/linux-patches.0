@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 946073F888A;
-	Fri,  7 Aug 2026 15:16:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A8B4429CE0;
+	Fri,  7 Aug 2026 15:16:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115776; cv=none; b=mNFN75lyOIrBtoP6unMcSAIWOcyxm+mozRlw0WsTxefPO0tEIHCYN5WbyNAghqzGBtwLzUWO9wR3BARCe2YRy3PpSIyKFhszw8mEl8SElOdW4lA1EyTLAw2nbn5OZ+y/UXhPwsDiKGPQ2iqdMkaaVw8hqC3zzMH/IM/30mJKhYc=
+	t=1786115779; cv=none; b=ctPMSxsb6wIaLse+h+UpITN3Fuy/7mI3m/c8qelQq8dQGDrsAsV7kWCXaa8fapHXFgx2UcLd84j/BU/zKjs62hs6iR0J3pvO28UHph4Omm3Qe48csEn/JWOO86Y9warI5yFFV4IlVYaep6Sl8NdRmq4b+TaqcRZD2uWofZZZLAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115776; c=relaxed/simple;
-	bh=H8yrn3zU88+YGZpMsb1tWv156XW4OskATJzzKfHsKY4=;
+	s=arc-20240116; t=1786115779; c=relaxed/simple;
+	bh=4jnQkGTkYEZFvsjkJPc8M1f9QpUx+iLluasD5PDoq6U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jl7dYwAlinrkyqo9p+qb5n2Y53IJ3M0j5bLJcBIb3/yU3Mc4TeJkMeFPwdwMTGcm4j25YIL5ZlbcaUjEirQ2mwNbxQ5WtMr2gz7x/i4bOrrjQV3CQp2BJ4DB5A9Hg0TJ4gEIDnkV9hD8Gv9W5kX7YU6ikSlM1cZAXfAFdU7Dxc0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RXWnnIa2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Z4gGUNSKsf5zNCEtD4xlg+VnKKbmX9r/SYr8SXJKfKpeBieQgvS7Pslj/4CV88FEgqZ3FNgEd3ptgEu8vxJ7RtW7SfeIj3jzIpHRGlTgOenQ/wQqz/HhAq6qkLEEkbdG/BM60B6YtdJYIU6KokNE7ZPtKJ2xjIZrrHU3yUU1i6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jQUdHQf6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RXWnnIa2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFA0A1F000E9;
-	Fri,  7 Aug 2026 15:16:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jQUdHQf6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B75B61F000E9;
+	Fri,  7 Aug 2026 15:16:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115775;
-	bh=0I6fBDlFuWE44Yo92mGchDuIndWnToG3oAGouaYZ5G8=;
+	s=korg; t=1786115778;
+	bh=k8ScaZ7sHzPlNPbTXewMsSo0lvvGGyTy4eq5vZR1mgY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RXWnnIa2KYCe42/H3AnRQtkuwVnnopmG7kV2VsTVztGmOW5k9vrQChP6rpuWJDyja
-	 lRuEbxSLSRs9S8XYB1f4NpCe5C/JTOi7llwwOThEIbxD6vRQfsdZGG9W5dxSuNUXJu
-	 lSYv5HJyUK9HnEn065YsWphb6HsB1siRm6RBdjsQ=
+	b=jQUdHQf6pvptdk4iKlgPnM5wRd7sJapiwXPpaGQcFAsuAstD6s05NBrRtkvl9iVBx
+	 KfAimGuziUrHhI/q9yuSigJWWcLJg4Aiztf2+PNBotjTzkB4g+VWmimTuRt3vFAzAG
+	 RqnarHFZQhMGNXShF8NkQ1tfKKprKlRxZ08jfbtw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	linux-tegra@vger.kernel.org,
-	Thierry Reding <treding@nvidia.com>
-Subject: [PATCH 6.18 396/396] drm/tegra: fbdev: Do not assign to struct drm_fb_helper.info
-Date: Fri,  7 Aug 2026 16:39:16 +0200
-Message-ID: <20260807143432.815447802@linuxfoundation.org>
+	Martin Hodo <martin.hodo@intel.com>,
+	Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 387/396] drm/i915/vrr: require valid min/max vfreq for VRR
+Date: Fri,  7 Aug 2026 16:39:07 +0200
+Message-ID: <20260807143432.624264081@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -51,32 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Jani Nikula <jani.nikula@intel.com>
 
-commit d23bd83f3e47a928e783c0d6a004737519dc77dc upstream.
+[ Upstream commit f8a9262c7a6fc2de9802e14b0228114f0333869e ]
 
-That field already contains the value being assigned. No need to do
-this twice.
+Ensure the EDID provided min/max vfreq are valid. Most scenarios are
+already covered (by coincidence) through the checks in
+intel_vrr_is_capable() and intel_vrr_is_in_range(), but be more explicit
+about it. At worst, a zero min_vfreq could lead to a division by zero in
+intel_vrr_compute_vmax().
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Fixes: 63c971af4036 ("drm/fb-helper: Allocate and release fb_info in single place")
-Cc: linux-tegra@vger.kernel.org
-Signed-off-by: Thierry Reding <treding@nvidia.com>
-Link: https://patch.msgid.link/20260421073646.144712-2-tzimmermann@suse.de
+Discovered using AI-assisted static analysis confirmed by Intel Product
+Security.
+
+Reported-by: Martin Hodo <martin.hodo@intel.com>
+Fixes: 117cd09ba528 ("drm/i915/display/dp: Compute VRR state in atomic_check")
+Cc: stable@vger.kernel.org # v5.12+
+Cc: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
+Reviewed-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
+Link: https://patch.msgid.link/20260625131040.1051272-1-jani.nikula@intel.com
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+(cherry picked from commit 1765cf59f517b02f3b0591fe5120930d08bddeb6)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/tegra/fbdev.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/gpu/drm/i915/display/intel_vrr.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/gpu/drm/tegra/fbdev.c
-+++ b/drivers/gpu/drm/tegra/fbdev.c
-@@ -111,7 +111,6 @@ int tegra_fbdev_driver_fbdev_probe(struc
+--- a/drivers/gpu/drm/i915/display/intel_vrr.c
++++ b/drivers/gpu/drm/i915/display/intel_vrr.c
+@@ -49,6 +49,10 @@ bool intel_vrr_is_capable(struct intel_c
+ 		return false;
+ 	}
  
- 	helper->funcs = &tegra_fbdev_helper_funcs;
- 	helper->fb = fb;
--	helper->info = info;
- 
- 	info->fbops = &tegra_fb_ops;
++	if (!info->monitor_range.min_vfreq || !info->monitor_range.max_vfreq ||
++	    info->monitor_range.min_vfreq > info->monitor_range.max_vfreq)
++		return false;
++
+ 	return info->monitor_range.max_vfreq - info->monitor_range.min_vfreq > 10;
+ }
  
 
 
