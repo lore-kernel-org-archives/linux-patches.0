@@ -1,37 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 164B33F58C4;
-	Fri,  7 Aug 2026 14:47:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E271390C90;
+	Fri,  7 Aug 2026 14:47:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114070; cv=none; b=X0NlPDpIvPrcAG123wPUJDy1DtPggJFiWjnhjvmORVipkGDTCaxhmqeBNLQ/WRq9ItcDKvhU0G+0xZP31oCdMhuWfY4M70Uh9zOl6vnhAADtwHU43cDvfIedsoxblamMXIzaWwL95g0YJwoX5BY5915s/aswfFeI8JF7JrXw2Wc=
+	t=1786114070; cv=none; b=YJlWZfg2PkSr0KP0CySzR8v6VRm4LJ5YRjOA4KnHPy3/LsFu+b5d9f/DplSjla6kQT7++T44c7Vwv+8R4BudWnsmh2pgMajgTp7fWViZqn5/84ejz5KOnBfPTwQ/OWKdeJ3m9PRindF/0PySoV7nFj1bnBkIdPjLf66R93qMjwY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1786114070; c=relaxed/simple;
-	bh=4iR8hIMcCA754yXZt0ev4IgJ3QGRNT2XLh2jVoRz59c=;
+	bh=1NZg7t+1b6OMhSzHByyORiXYNSG4UOLJwoSjUa4lggo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B1NzF8De2VSn8vZ/cwsq2eLD5IbCiqbts1OFNbTV5TYQN1l7vo0+YqeakOJIcS0mT4QMtK1bdp1YeDq319sIhfSaVIhiOPbyuyi5b6/Yj0Tr3uPqjHgRTfOqrLUx1q0nlgeHZ+cqpQkGkJ4b6UcA06T1L5UuCwwzw+81zoMeRHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K7Lyct6Z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=N/VIXZ644bBq9idyWv3h9hEpJWNNfFqaNIIbxcfllV3oYhUBwb0/Np42BOEam93o1mYehmj+z9Mlj+hGSHmfTH7ebeAExscWVng/wy0Zx9+fSlbkj9NHTiY67zLYmRUdlS+J7NGUnh3G1BBMKCH0dHsiSBVLysGYyjO4/9XSf4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FiagcMgf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K7Lyct6Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37A9B1F00A3A;
-	Fri,  7 Aug 2026 14:47:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FiagcMgf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D83161F000E9;
+	Fri,  7 Aug 2026 14:47:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114065;
-	bh=HLCBAylvVEyup9kR1DNf9/snZNyIFuDT7aS2M+cmeKA=;
+	s=korg; t=1786114068;
+	bh=dH6hZKgMqN99mlcrmJqKgWyaGKI5EgQF3cKZPRqJLg8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K7Lyct6Zt89bjF7HftqHdI688CrDFxh8QiVTuwuWjxZKaVdr+AKP9NlJtNNV2v5st
-	 3vX/LlRWKSEFkLGl/dSNc8SKi1yA1HbCWEUUB9yleP4x7K8sAxjMG1EHbczaw/zK49
-	 Xi9TJcU92pAsro8A80o6/0bS1b0uQVdqZ9xXqLRQ=
+	b=FiagcMgf5OQSZHtPYYXWsxNhoIsSVRsKrDTrTojB/qLasySGEHpmppJ2oR7Q3KYoG
+	 Kl6MdY7H9Q0KHtEl+Pf0AdjiM4VlnSD8UINad3DyL+SriXhmdKSpvlY6HlsrI6RKn6
+	 OlkIM6/rzOFvAUFf9xxUHyWqhljJvWdwbROMRLvM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Kees Cook <kees@kernel.org>
-Subject: [PATCH 6.12 133/337] fortify: Disable -Wstringop-overread in tests
-Date: Fri,  7 Aug 2026 16:35:36 +0200
-Message-ID: <20260807143421.417594372@linuxfoundation.org>
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Balbir Singh <balbirs@nvidia.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Alistair Popple <apopple@nvidia.com>,
+	Byungchul Park <byungchul@sk.com>,
+	David Hildenbrand <david@kernel.org>,
+	Gregory Price <gourry@gourry.net>,
+	"Huang, Ying" <ying.huang@linux.alibaba.com>,
+	Joshua Hahn <joshua.hahnjy@gmail.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Rakie Kim <rakie.kim@sk.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 134/337] mm: migrate_device: fix pte_pfn/pte_dirty called on non-present PTE
+Date: Fri,  7 Aug 2026 16:35:37 +0200
+Message-ID: <20260807143421.438312219@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -50,55 +60,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Kefeng Wang <wangkefeng.wang@huawei.com>
 
-commit c1f3e770eec26d6f96dd6d2ea30555ba7c09a244 upstream.
+commit 63867c82d0c0c2d182016a32b1cc0103116b0ea5 upstream.
 
-clang recently added support for -Wstringop-overread [1], which is on by
-default like -Wfortify-source. This breaks the usage of -Werror in the
-fortify tests, resulting in the following false positive warnings in the
-kernel build:
+pte_pfn() and pte_dirty() have undefined behaviour when called on a
+non-present PTE. In migrate_vma_collect_pmd(), these functions may be
+invoked on non-present entries (e.g., device-private entries), leading
+to potential crashes from pte_pfn() or incorrect dirty folio accounting
+from pte_dirty(). Fix both by guarding with pte_present() checks.
 
-  warning: unsafe memcmp() usage lacked '__read_overflow2' warning in lib/test_fortify/read_overflow2-memcmp.c
-  warning: unsafe memcmp() usage lacked '__read_overflow' warning in lib/test_fortify/read_overflow-memcmp.c
-  warning: unsafe memchr() usage lacked '__read_overflow' warning in lib/test_fortify/read_overflow-memchr.c
-
-Examining the fortify test logs shows a warning like the following in
-each of the failed logs:
-
-  In file included from lib/test_fortify/read_overflow2-memcmp.c:5:
-  lib/test_fortify/test_fortify.h:34:2: error: 'memcmp' reading 17 bytes from a region of size 16 [-Werror,-Wstringop-overread]
-     34 |         TEST;
-        |         ^
-  lib/test_fortify/read_overflow2-memcmp.c:3:2: note: expanded from macro 'TEST'
-      3 |         memcmp(large, small, sizeof(small) + 1)
-        |         ^
-  1 error generated.
-
-Disable -Wstringop-overread for the fortify tests, as it defeats the
-purpose of testing the Linux specific implementation of fortify, like
--Wfortify-source.
-
-Cc: stable@vger.kernel.org
-Closes: https://github.com/ClangBuiltLinux/linux/issues/2168
-Link: https://github.com/llvm/llvm-project/commit/86f2e71cb8d165b59ad31a442b2391e23826133e [1]
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://patch.msgid.link/20260623-fix-test_fortify-for-clang-stringop-overread-v1-1-15ee8342a953@kernel.org
-Signed-off-by: Kees Cook <kees@kernel.org>
+Link: https://lore.kernel.org/20260708003955.4024340-1-wangkefeng.wang@huawei.com
+Link: https://lore.kernel.org/20260706111958.3649651-1-wangkefeng.wang@huawei.com
+Fixes: fd35ca3d12cc ("mm/migrate_device.c: copy pte dirty bit to page")
+Fixes: 6c287605fd56 ("mm: remember exclusively mapped anonymous pages with PG_anon_exclusive")
+Signed-off-by: Kefeng Wang <wangkefeng.wang@huawei.com>
+Reviewed-by: Balbir Singh <balbirs@nvidia.com>
+Acked-by: Zi Yan <ziy@nvidia.com>
+Cc: Alistair Popple <apopple@nvidia.com>
+Cc: Byungchul Park <byungchul@sk.com>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Gregory Price <gourry@gourry.net>
+Cc: "Huang, Ying" <ying.huang@linux.alibaba.com>
+Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: Rakie Kim <rakie.kim@sk.com>
+Cc: Ying Huang <ying.huang@linux.alibaba.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/test_fortify/Makefile |    1 +
- 1 file changed, 1 insertion(+)
+ mm/migrate_device.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/lib/test_fortify/Makefile
-+++ b/lib/test_fortify/Makefile
-@@ -1,6 +1,7 @@
- # SPDX-License-Identifier: GPL-2.0
+--- a/mm/migrate_device.c
++++ b/mm/migrate_device.c
+@@ -196,7 +196,8 @@ again:
+ 			bool anon_exclusive;
+ 			pte_t swp_pte;
  
- ccflags-y := $(call cc-disable-warning,fortify-source)
-+ccflags-y += $(call cc-disable-warning,stringop-overread)
+-			flush_cache_page(vma, addr, pte_pfn(pte));
++			if (pte_present(pte))
++				flush_cache_page(vma, addr, pte_pfn(pte));
+ 			anon_exclusive = folio_test_anon(folio) &&
+ 					  PageAnonExclusive(page);
+ 			if (anon_exclusive) {
+@@ -216,7 +217,7 @@ again:
+ 			migrate->cpages++;
  
- quiet_cmd_test_fortify = TEST    $@
-       cmd_test_fortify = $(CONFIG_SHELL) $(src)/test_fortify.sh \
+ 			/* Set the dirty flag on the folio now the pte is gone. */
+-			if (pte_dirty(pte))
++			if (pte_present(pte) && pte_dirty(pte))
+ 				folio_mark_dirty(folio);
+ 
+ 			/* Setup special migration page table entry */
 
 
