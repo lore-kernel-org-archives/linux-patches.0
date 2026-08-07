@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9195473C9F;
-	Fri,  7 Aug 2026 15:38:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 908AA3557F3;
+	Fri,  7 Aug 2026 15:38:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786117130; cv=none; b=oOXG0mKVxh/5w6ILyGC+X4nObqAFR7lX59vZm6uioIoDeHdZwX3RR8LSh20jDKVKA0ai3bbPJDDI3Sbl62dlc7GxBgpRlKgDekgfR+bR+/XMrKBPtFa9KMZJF8flre3RLeMBJ0DMx5k04Ok31mZXlWoWADptBlrCTtZDIA6wgWE=
+	t=1786117132; cv=none; b=Lwjcu60YIXbY/Dmp9E5INV70NiNnGNjKJYQmFJW257QKownpVYzXkNSrZIlpXk62gzYw5v82OICPA/JgeNYWtB39u1ldsnHNvGQkOwr2FApGBvtD3LHfYDB1YWvOwgJ1CjWjVcuiKX5hueB8wjVtCsn2dpIwoayyX1Ypc/hbS3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786117130; c=relaxed/simple;
-	bh=+QUIVSjAnt8Pe+Gb8Rm8ZjPMfIDFf3c2vM97wRis9eI=;
+	s=arc-20240116; t=1786117132; c=relaxed/simple;
+	bh=1O302omRooPb9E2sdvgKUl7Djxz+VE9/5YiCYMZ+SDk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cs41ffM6cM5SAW3SCuEwQaxM8tVjGTho4PRoEphbX1rUwNIkDl91xRJU3F8vBgBjMcofXqMwDYs541PIdooSNhMwrM5MGQJ8aGbJyeg65HbuCjHS8Fre+Sf7fguIqXTcSttwY8Bm/eikO5vgki1CY+LwyDWX6O2vZd4eCsNGPFU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GgchvPwx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dr43p16nrHnn+U/HKDPrNTvTH+HwkArtqNQVTTXmJqbmONu4OdH2iMXtQ28MEVtEcQ4O/FJK0/LVKBqA8L5AMvaTYouO5HX8cWFE239Hj2McnvKEGQK2sfFrr7LA+NpdcC7lEsiIR0/e8UqCPonT0jxJm8A5bL4A5DYnD8kCPAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZBwvPAZX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GgchvPwx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 110501F000E9;
-	Fri,  7 Aug 2026 15:38:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZBwvPAZX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E82A61F000E9;
+	Fri,  7 Aug 2026 15:38:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786117128;
-	bh=YqA8KxsOObTfll9E4Hyb1kzSuWt3H4IJvum+ZzlbnNE=;
+	s=korg; t=1786117131;
+	bh=TAi5Lt09tSLDqEDSKwSPaCXF9AgpG6pkH5QWYB9uJeQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GgchvPwxvJL117RL5WCP47bz3r7Miu4I4uHVqtYa96pBaHEndDGRzyXvB2CLW5Yhl
-	 kOfNdhKt+omJU757S/axUxRM2yROW1DmnY/xmkqmGnLfBK8Npwj0A79VzH/m+NbyGS
-	 1MqPMifSu/xRHP5vOdztG6fyiaG7JT2LDD3OadKU=
+	b=ZBwvPAZX+xBFR4k34+9Ga+MygmPpJxkzU0BSKtN4HbiRLlTu232RuKGnVKopKbNvg
+	 M5DOYK+0o62qAa6DUIEKJCBy7I4c2n8sOzau6XLtxyOLjk7fsqszIL5NKewrT2Mb7/
+	 yJSoonzh//mChNw5GyeqrUVKGQCtmWwOltcRvNbc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <quwenruo.btrfs@gmx.com>,
-	Qu Wenruo <wqu@suse.com>,
-	Mykola Lysenko <nickolay.lysenko@gmail.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 7.1 208/438] btrfs: raid56: fix scrub read assembly submitting no reads
-Date: Fri,  7 Aug 2026 16:36:44 +0200
-Message-ID: <20260807143432.450127110@linuxfoundation.org>
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.1 167/438] tracing/mmiotrace: Add NULL check for mmio_trace_array in logging functions
+Date: Fri,  7 Aug 2026 16:36:03 +0200
+Message-ID: <20260807143431.594269035@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -52,96 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mykola Lysenko <nickolay.lysenko@gmail.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit c4c0673e4cb15b0c127e6d00732a2427bdd12c11 upstream.
+[ Upstream commit 12b80cdbc54cf615b4717a4e8180063408091ea2 ]
 
-Commit 5387bd958180 ("btrfs: raid56: remove sector_ptr structure")
-converted the bio-list membership checks from sector pointers to
-physical addresses. The two conversions in rmw_assemble_write_bios()
-kept their polarity (skip the sector when it is NOT in the bio list,
-i.e. when there is nothing to write), but scrub_assemble_read_bios()
-has the opposite polarity -- skip the sector when it IS in the bio
-list, because then there is nothing to read -- and the conversion
-flipped it:
+mmio_trace_rw() and mmio_trace_mapping() retrieve mmio_trace_array into
+tr and pass it to __trace_mmiotrace_rw() and __trace_mmiotrace_map().
+If these functions are invoked while mmio_trace_array is NULL (e.g. before
+initialization or after disabled), accessing tr->array_buffer.buffer will
+result in a NULL pointer dereference crash.
 
-	-	sector = sector_in_rbio(rbio, stripe, sectornr, 1);
-	-	if (sector)
-	+	paddr = sector_paddr_in_rbio(rbio, stripe, sectornr, 1);
-	+	if (paddr == INVALID_PADDR)
-		continue;
+Fix this by adding an explicit NULL check for tr at the beginning of
+__trace_mmiotrace_rw() and __trace_mmiotrace_map().
 
-Since a parity-scrub rbio's bio list only holds the empty completion
-bio, the result is that scrub_assemble_read_bios() submits no reads at
-all. finish_parity_scrub() then compares the parity it computes from
-the (cached, correct) data stripes against whatever happens to be in
-the freshly allocated, uninitialized stripe pages:
-
-  - if the garbage differs from the computed parity, the sector is
-    "repaired" and written back -- accidentally producing the correct
-    on-disk result;
-
-  - if a recycled page happens to still hold the old (correct) parity
-    content, the sector is deemed clean, dropped from dbitmap, and the
-    actually-corrupt on-disk parity is left in place. (Scrub reports
-    no errors either way: there is no counter for P/Q corruption by
-    design, so the bug here is purely the failure to read and repair.)
-
-The second case is intermittent because it depends on page-allocator
-recycling. Observed with fstests btrfs/297 (raid5, 2 devices): the
-corrupted P stripe intermittently stays corrupt after a scrub --
-roughly 1/10 runs on x86-64 KVM and up to 7/8 on a UML build whose
-timing favors page reuse.
-
-Since the bio-list check can never be true for a parity-scrub rbio --
-raid56_parity_alloc_scrub_rbio() adds a single empty completion bio
-(asserting bi_size == 0), bio_paddrs[] is only populated by
-index_rbio_pages() which is never called for BTRFS_RBIO_PARITY_SCRUB,
-and rbio_can_merge() refuses to merge rbios of different operations --
-remove the dead check entirely and assert the invariant instead, as
-suggested by Qu Wenruo.
-
-After this fix the injected corruption is read, detected and repaired
-in every run (8/8 UML, 10/10 KVM), and the new assertion never fires
-across the full fstests raid group.
-
-Fixes: 5387bd958180 ("btrfs: raid56: remove sector_ptr structure")
-CC: stable@vger.kernel.org # 7.1+
-Suggested-by: Qu Wenruo <quwenruo.btrfs@gmx.com>
-Assisted-by: Claude:claude-fable-5
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Mykola Lysenko <nickolay.lysenko@gmail.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/178524300062.56416.8362487250709962380.stgit@devnote2
+Fixes: f984b51e0779 ("ftrace: add mmiotrace plugin")
+Assisted-by: Antigravity:gemini-3.6-flash
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/raid56.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ kernel/trace/trace_mmiotrace.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/fs/btrfs/raid56.c b/fs/btrfs/raid56.c
-index 3f2896e793e3..ca94c9e3d563 100644
---- a/fs/btrfs/raid56.c
-+++ b/fs/btrfs/raid56.c
-@@ -2911,13 +2911,12 @@ static int scrub_assemble_read_bios(struct btrfs_raid_bio *rbio)
- 			continue;
+diff --git a/kernel/trace/trace_mmiotrace.c b/kernel/trace/trace_mmiotrace.c
+index e064ba3f28cb9..df8692c2dea8a 100644
+--- a/kernel/trace/trace_mmiotrace.c
++++ b/kernel/trace/trace_mmiotrace.c
+@@ -294,11 +294,15 @@ device_initcall(init_mmio_trace);
+ static void __trace_mmiotrace_rw(struct trace_array *tr,
+ 				struct mmiotrace_rw *rw)
+ {
+-	struct trace_buffer *buffer = tr->array_buffer.buffer;
++	struct trace_buffer *buffer;
+ 	struct ring_buffer_event *event;
+ 	struct trace_mmiotrace_rw *entry;
+ 	unsigned int trace_ctx;
  
- 		/*
--		 * We want to find all the sectors missing from the rbio and
--		 * read them from the disk. If sector_paddr_in_rbio() finds a sector
--		 * in the bio list we don't need to read it off the stripe.
-+		 * A parity-scrub rbio carries no data in its bio list: the
-+		 * only bio there is the empty completion bio added by
-+		 * raid56_parity_alloc_scrub_rbio().  Every sector is read
-+		 * from the stripe, so only assert that invariant here.
- 		 */
--		paddrs = sector_paddrs_in_rbio(rbio, stripe, sectornr, 1);
--		if (paddrs == NULL)
--			continue;
-+		ASSERT(!sector_paddrs_in_rbio(rbio, stripe, sectornr, 1));
++	if (!tr)
++		return;
++
++	buffer = tr->array_buffer.buffer;
+ 	trace_ctx = tracing_gen_ctx_flags(0);
+ 	event = trace_buffer_lock_reserve(buffer, TRACE_MMIO_RW,
+ 					  sizeof(*entry), trace_ctx);
+@@ -321,11 +325,15 @@ void mmio_trace_rw(struct mmiotrace_rw *rw)
+ static void __trace_mmiotrace_map(struct trace_array *tr,
+ 				struct mmiotrace_map *map)
+ {
+-	struct trace_buffer *buffer = tr->array_buffer.buffer;
++	struct trace_buffer *buffer;
+ 	struct ring_buffer_event *event;
+ 	struct trace_mmiotrace_map *entry;
+ 	unsigned int trace_ctx;
  
- 		paddrs = rbio_stripe_paddrs(rbio, stripe, sectornr);
- 		/*
++	if (!tr)
++		return;
++
++	buffer = tr->array_buffer.buffer;
+ 	trace_ctx = tracing_gen_ctx_flags(0);
+ 	event = trace_buffer_lock_reserve(buffer, TRACE_MMIO_MAP,
+ 					  sizeof(*entry), trace_ctx);
 -- 
-2.55.0
+2.53.0
 
 
 
