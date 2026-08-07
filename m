@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CEE63A5436;
-	Fri,  7 Aug 2026 15:25:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6728472F89;
+	Fri,  7 Aug 2026 15:25:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116352; cv=none; b=vF2W2emPLPQZTQYIN+L1LgakgISOjac8sX3ET5VbDDbiQE3MPV4puOqrGFSMYPFxIUf7K4fVpU5mKiLftoJzN9od+i2fQbCdiekHb4ebu9cl5KgxMkbJBzGWBd+c6c0Cs31HZ9V44PeEZ6CEOGXgeWmgqf/y3HkbnC5dIVeMst4=
+	t=1786116355; cv=none; b=BH1xXfGg1RXZQHBVD8srr5zfjsmqab7xwtY3orW65zZ/80WM03CAc8oUBeiQ2aj6Gi0/Q1p7z0El/APx6x61IXd+d6bBS6Q94fUHXg8YpGmakQ+fAIZGyYvlwv+X3FUiscYDiAHiMCIR3BLrEyO9FbTF02Gvdx91HAyIEyoDteM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116352; c=relaxed/simple;
-	bh=N3oQ+/dUVzY7WuQkrVqt5egqTikOCc5onmaIbapA8l0=;
+	s=arc-20240116; t=1786116355; c=relaxed/simple;
+	bh=xq6bFk8UowVUbLxrnsCaMg8/Bm8euSezoyztybIt9lA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b4MKSDb8BjbYAHCmWRvubD2hYZEu0KyaxLEw04n+dr6NeC+r6WO3qmONBKvpbrf0oK7MEe91vU1tfW46egC4vKy7xYD1jNVk5bJYE/hKhI7vs3jfe1BMiSGqb8/2IVjQ7zeEUvXdOzOCGUNkZZ9EIK2gg2sLiBfXb3rzIM79v8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PFQbKpjW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=keAEiS1t/Z1MsBuvA74k/WCtTV/dpf5er/jnRgttfnUkSGB6eU5o5qIWd7gxljz1aSjpgTZbrw0MoSH2xod/mOhxY1jtjIZvmrPK53AarNSZ2vd4zJZJaEyxJcIwhT6R/DmY2CZgukcEpEd1emg08CV+NuEQfSJxWHve1VPcj50=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SDKpA8AD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PFQbKpjW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67FF81F00A3A;
-	Fri,  7 Aug 2026 15:25:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SDKpA8AD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EEA11F000E9;
+	Fri,  7 Aug 2026 15:25:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116350;
-	bh=3tMBjL/CV4FQ0hV5WNMit91/oRXOeLNL63sWTxGY/tc=;
+	s=korg; t=1786116353;
+	bh=DsJ1Qs4jiGNDvlYc3p/qfhKIOfcfzQO0jjSY0pEOUBo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PFQbKpjWx1wbef7Xt+7nwHxO2o0Dk/HXhFTZOSFoZWb4kdqb0fDQ0X7AzXWIUcIh4
-	 PPfyp36EP7gkZMZ121JyBuqqErxtBqAu+LocMRCMkvo7TedA9wgBug6k6oKpQUdtNZ
-	 QsRu0zf1xMJSGlq1y91epgl5DrJXVlH60O95wJjo=
+	b=SDKpA8ADsBEVwppbgozeajj9lIMbCTZ/SyNE3AeSpQMvetivNj2ul93Vdzg/JiYiR
+	 nFGsmFtGIdety7DjAB6RBWkoaZU/36plDZw8GKIo+Dx1Us4GUukPcGcGK67pCQLF1i
+	 OCZQCwYgN7wpBrUPwyVj/QLcIKXDThqIB1+/GN+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Aaron Conole <aconole@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 164/261] net: openvswitch: fix skb leak on flow key update failure during ct
-Date: Fri,  7 Aug 2026 16:38:41 +0200
-Message-ID: <20260807143418.902006745@linuxfoundation.org>
+	Zack Rusin <zack.rusin@broadcom.com>,
+	Ian Forbes <ian.forbes@broadcom.com>
+Subject: [PATCH 6.6 200/261] drm/vmwgfx: validate DRAW_PRIMITIVES header size before division
+Date: Fri,  7 Aug 2026 16:39:17 +0200
+Message-ID: <20260807143419.681719625@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143415.358597922@linuxfoundation.org>
 References: <20260807143415.358597922@linuxfoundation.org>
@@ -51,44 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Maximets <i.maximets@ovn.org>
+From: Zack Rusin <zack.rusin@broadcom.com>
 
-commit bc62e843bc48f933da765ce47079fd992e535794 upstream.
+commit 85891d174707d8bddcec7a888fb4e1d17def34f3 upstream.
 
-ovs_ct_execute() always steals or frees the skb on failure while
-ovs_flow_key_update() does not.  So, if it fails and we return right
-away, the skb ends up leaked.
+vmw_cmd_draw() computes
 
-Fix that by breaking instead and letting the common error handling
-code at the bottom of the loop to free the skb properly.
+	maxnum = (header->size - sizeof(cmd->body)) / sizeof(*decl);
 
-This is a very unlikely scenario as it requires the packet to become
-unparseable by applying a set of actions on a previously parseable skb,
-but should be fixed nevertheless.
+where header->size is u32 and is taken straight from the user-supplied
+command stream.  When header->size is less than sizeof(cmd->body) the
+unsigned subtraction wraps to nearly 4 GiB, producing a huge maxnum.
+Any user-controlled cmd->body.numVertexDecls then passes the bound and
+the loop dereferences decl[i] far past the end of the kernel command
+bounce buffer, producing an out-of-bounds read of kernel memory.
 
-Reported by Sashiko.
+Reject undersized headers up front.
 
-Fixes: ec0d043d05e6 ("openvswitch: Ensure flow is valid before executing ct")
+Fixes: 7a73ba7469cb ("drm/vmwgfx: Use TTM handles instead of SIDs as user-space surface handles.")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
-Reviewed-by: Aaron Conole <aconole@redhat.com>
-Link: https://patch.msgid.link/20260727181851.306076-3-i.maximets@ovn.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Assisted-by: Claude:claude-opus-4.7
+Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
+Reviewed-by: Ian Forbes <ian.forbes@broadcom.com>
+Link: https://patch.msgid.link/20260505222728.519626-7-zack.rusin@broadcom.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/openvswitch/actions.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/net/openvswitch/actions.c
-+++ b/net/openvswitch/actions.c
-@@ -1354,7 +1354,7 @@ static int do_execute_actions(struct dat
- 			if (!is_flow_key_valid(key)) {
- 				err = ovs_flow_key_update(skb, key);
- 				if (err)
--					return err;
-+					break;
- 			}
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
+@@ -1588,11 +1588,17 @@ static int vmw_cmd_draw(struct vmw_priva
+ 	uint32_t maxnum;
+ 	int ret;
  
- 			err = ovs_ct_execute(ovs_dp_get_net(dp), skb, key,
++	cmd = container_of(header, typeof(*cmd), header);
++
++	if (unlikely(header->size < sizeof(cmd->body))) {
++		VMW_DEBUG_USER("Illegal DRAW_PRIMITIVES header size.\n");
++		return -EINVAL;
++	}
++
+ 	ret = vmw_cmd_cid_check(dev_priv, sw_context, header);
+ 	if (unlikely(ret != 0))
+ 		return ret;
+ 
+-	cmd = container_of(header, typeof(*cmd), header);
+ 	maxnum = (header->size - sizeof(cmd->body)) / sizeof(*decl);
+ 
+ 	if (unlikely(cmd->body.numVertexDecls > maxnum)) {
 
 
