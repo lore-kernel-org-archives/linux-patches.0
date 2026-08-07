@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B8BE478869;
-	Fri,  7 Aug 2026 15:00:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4992D47AF5C;
+	Fri,  7 Aug 2026 15:00:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114852; cv=none; b=CaWzOkBt6ihivYT3SPH8txlyYm/CRpdmHl1QlRc5iQQomoYLi3pr1OMySgvZDA0f3JJh8fONuL2HDkgHVQLyuXl/i+bqDUQRXcKrd31eUPA9ADxB1yiY26aq1KTJmAQmFh9nVKbrePeM0u9oL6fsUETUiJtlfIL/XnVeJ7AajMY=
+	t=1786114855; cv=none; b=tQHOwLPUSAYIj40rY2/xlqSJ4Qjg94pqrjuX8ufAVCRR7PPmAKlgviUw1tBaT75dgE+tTlAIQIp2pvNb81WvyKkoXDOBXr/F8GozUdC2nEvQyimPvNI7qgb+mDJwdEvYYp8kOYYseEQqxfzHUX4VfrvKbDbPTlYUrgFa7eBw9QM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114852; c=relaxed/simple;
-	bh=H31+ha+2G361rzC3U3MdhIboiIMJif+W2X/sKjgbavM=;
+	s=arc-20240116; t=1786114855; c=relaxed/simple;
+	bh=K84cO+sB/Ft0lR4qEXaEJMJgyw/oAIa+7HgKetXcJnY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bTV7Gz4S0miVZuRtrX7E0/BxviprCIPRtKJt3irRxa3abgQ2jBNpTNGh72wApsW6rRxz9ySgoQrirRD70jlzciMu2DkNYjihqV3uowTguG9M//dpB4ZD2Zu3Wlr6ZCr3msq9TGRycfPCF7B2kAYHRZotpF2dzMSRn5GFfxFJNIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FxRj/upn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Sf+hzcqelOsDRopD/DqF9byW+Kiip+AcSOEQfS2KtWgmqpQ6nOEzWDg4WkCaGasj/KZYL4r4WwZB17HpyeTXCyYqyA23emNTSYuQpnqvnjYdFxHf5g+UWd/JtXh7xjsLbuvJnWslRhW9asVYD3HCGsksLLilYvUwLjF9bm9+hQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yrvl5oqw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FxRj/upn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D70591F000E9;
-	Fri,  7 Aug 2026 15:00:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yrvl5oqw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A23471F000E9;
+	Fri,  7 Aug 2026 15:00:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114851;
-	bh=Bv0hkO8Yj8YzAIOsEeCWOJgFp0cXf8f76VBW2W0Z3Xk=;
+	s=korg; t=1786114854;
+	bh=zc5cXVUaZz8hHYRuKkqAy3FmsXa8d4zjrivucT2G+tg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FxRj/upnhwoI7Bg2XFGjFgwtwFSlInliLXQmLUx5VB9B7tjA7czDKPXGbnDbmjB0Z
-	 f91ZFElJmY94ALM9lFHSCTI46Lm1tzCtZapHN0Ep1aJE8AczZsy/wzjklUO49zgMrY
-	 O3hK/vYHkmxpByO1laVDvwv5M3xF6jauwel/J/aU=
+	b=Yrvl5oqwxHiurPFOlExixC1OR1WjGn8Mk9LemYKbbCtxFtIAIVMpeJk7HQQZY+6Xf
+	 9Q7zyPyx6akEbYEbTPO19Ybp1t0TxJ+7M3kL5rOUKTKRy66Qq+am6JqOVcdpyjPfPt
+	 o+Cx1R4P5bnzj9e/uFMTh28XXZaIJBZuzrJ74u0k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srikanth Boyapally <srikanth.boyapally@amd.com>,
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
-	Mark Brown <broonie@kernel.org>,
+	Florian Bezdeka <florian.bezdeka@siemens.com>,
+	=?UTF-8?q?Bj=C3=B6rn=20Gerhart?= <gerhart@posteo.de>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 070/396] spi: spi-cadence: Move TX FIFO full busy-wait into FIFO
-Date: Fri,  7 Aug 2026 16:33:50 +0200
-Message-ID: <20260807143425.780420460@linuxfoundation.org>
+Subject: [PATCH 6.18 071/396] hwmon: (nct6775-core) Fix number of temperature registers for NCT6116
+Date: Fri,  7 Aug 2026 16:33:51 +0200
+Message-ID: <20260807143425.800458306@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -53,106 +53,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srikanth Boyapally <srikanth.boyapally@amd.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit d9eadfce2fac49445db40808fe4d8259f20a9d2b ]
+[ Upstream commit b0e8adb2ccb43009796897ced09f91636685c9d3 ]
 
-SPI host transfers could intermittently stall with spi_transfer timeouts.
-The TXFULL condition was checked only once in cdns_transfer_one() before
-cdns_spi_process_fifo(), so if the FIFO became full again during refill,
-writes could be dropped and the transfer would never complete.
+Unlike NCT6106, NCT6116 only has three temperature registers, and with
+it only three temperature source and temperature source configuration
+registers. The register addresses match those of NCT6106 and can be
+re-used.
 
-Move the TXFULL busy-wait into the TX path of cdns_spi_process_fifo() so
-the 10µs back-off is applied per FIFO entry during filling, ensuring
-forward progress and eliminating spurious timeouts.
+The code used a separate array to list the temperature source registers
+for NCT6116, but used the size of the NCT6106 register array to set
+the number of registers. The NCT6106 register array provides six addresses,
+while the temperature source register array for NCT6116 only provides three
+addresses. This causes a KASAN report.
 
-Restrict the delay to host mode using spi_controller_is_target(), the
-controller is passed into cdns_spi_process_fifo() so the check is made at
-the point of use. In target mode this delay must not run as it causes the
-target to miss its transfer window and corrupt data.
+BUG: KASAN: global-out-of-bounds in nct6775_probe+0x936/0x46f0 [nct6775]
+Read of size 2 at addr ffffffffc19561a6 by task modprobe/954
+...
+Call Trace:
+ dump_stack+0x7d/0xa7
+ print_address_description.constprop.0+0x1c/0x220
+ ? __kasan_kmalloc.constprop.0+0xc9/0xd0
+ ? __kmalloc_node_track_caller+0x194/0x5b0
+ ? nct6775_probe+0x936/0x46f0 [nct6775]
+ ? nct6775_probe+0x936/0x46f0 [nct6775]
+...
 
-Fixes: 49530e641178 ("spi: cadence: Add usleep_range() for cdns_spi_fill_tx_fifo()")
-Signed-off-by: Srikanth Boyapally <srikanth.boyapally@amd.com>
-Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Link: https://patch.msgid.link/20260720125510.60166-1-srikanth.boyapally@amd.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fix the problem by hard-coding the number of temperature and temperature
+configuration registers to three for NCT6116. Drop the unnecessary
+NCT6116_REG_TEMP_SOURCE array and re-use NCT6106_REG_TEMP_SOURCE.
+
+Reported-by: Florian Bezdeka <florian.bezdeka@siemens.com>
+Closes: https://lore.kernel.org/linux-hwmon/57cfc3fa-d4e9-4c10-8aa7-4ad0af7ebebe@roeck-us.net/T/#t
+Fixes: 29c7cb485b32 ("hwmon: (nct6775) Integrate new model nct6116")
+Cc: Björn Gerhart <gerhart@posteo.de>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-cadence.c | 26 ++++++++++++++++----------
- 1 file changed, 16 insertions(+), 10 deletions(-)
+ drivers/hwmon/nct6775-core.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/spi/spi-cadence.c b/drivers/spi/spi-cadence.c
-index 75803a7f4cb11..403e8141dff89 100644
---- a/drivers/spi/spi-cadence.c
-+++ b/drivers/spi/spi-cadence.c
-@@ -388,11 +388,13 @@ static inline void cdns_spi_writer(struct cdns_spi *xspi)
+diff --git a/drivers/hwmon/nct6775-core.c b/drivers/hwmon/nct6775-core.c
+index 79bc67ffb9986..506d57025c3bd 100644
+--- a/drivers/hwmon/nct6775-core.c
++++ b/drivers/hwmon/nct6775-core.c
+@@ -846,8 +846,6 @@ static const u16 NCT6116_FAN_PULSE_SHIFT[] = { 0, 2, 4, 6, 6 };
+ static const u16 NCT6116_REG_PWM[] = { 0x119, 0x129, 0x139, 0x199, 0x1a9 };
+ static const u16 NCT6116_REG_FAN_MODE[] = { 0x113, 0x123, 0x133, 0x193, 0x1a3 };
+ static const u16 NCT6116_REG_TEMP_SEL[] = { 0x110, 0x120, 0x130, 0x190, 0x1a0 };
+-static const u16 NCT6116_REG_TEMP_SOURCE[] = {
+-	0xb0, 0xb1, 0xb2 };
  
- /**
-  * cdns_spi_process_fifo - Fills the TX FIFO, and drain the RX FIFO
-+ * @ctlr:	Pointer to the spi_controller structure
-  * @xspi:	Pointer to the cdns_spi structure
-  * @ntx:	Number of bytes to pack into the TX FIFO
-  * @nrx:	Number of bytes to drain from the RX FIFO
-  */
--static void cdns_spi_process_fifo(struct cdns_spi *xspi, int ntx, int nrx)
-+static void cdns_spi_process_fifo(struct spi_controller *ctlr,
-+				  struct cdns_spi *xspi, int ntx, int nrx)
- {
- 	ntx = clamp(ntx, 0, xspi->tx_bytes);
- 	nrx = clamp(nrx, 0, xspi->rx_bytes);
-@@ -407,6 +409,16 @@ static void cdns_spi_process_fifo(struct cdns_spi *xspi, int ntx, int nrx)
- 		}
+ static const u16 NCT6116_REG_CRITICAL_TEMP[] = {
+ 	0x11a, 0x12a, 0x13a, 0x19a, 0x1aa };
+@@ -3650,7 +3648,7 @@ int nct6775_probe(struct device *dev, struct nct6775_data *data,
+ 		  = NCT6106_CRITICAL_PWM_ENABLE_MASK;
+ 		data->REG_CRITICAL_PWM = NCT6116_REG_CRITICAL_PWM;
+ 		data->REG_TEMP_OFFSET = NCT6106_REG_TEMP_OFFSET;
+-		data->REG_TEMP_SOURCE = NCT6116_REG_TEMP_SOURCE;
++		data->REG_TEMP_SOURCE = NCT6106_REG_TEMP_SOURCE;
+ 		data->REG_TEMP_SEL = NCT6116_REG_TEMP_SEL;
+ 		data->REG_WEIGHT_TEMP_SEL = NCT6106_REG_WEIGHT_TEMP_SEL;
+ 		data->REG_WEIGHT_TEMP[0] = NCT6106_REG_WEIGHT_TEMP_STEP;
+@@ -3664,13 +3662,13 @@ int nct6775_probe(struct device *dev, struct nct6775_data *data,
  
- 		if (ntx) {
-+			/* When xspi in busy condition, bytes may send failed,
-+			 * then spi control didn't work thoroughly, add one byte
-+			 * delay. Only in host mode; in target mode this delay
-+			 * causes data corruption as the target fails to prepare
-+			 * data in time.
-+			 */
-+			if (!spi_controller_is_target(ctlr) &&
-+			    (cdns_spi_read(xspi, CDNS_SPI_ISR) & CDNS_SPI_IXR_TXFULL))
-+				udelay(10);
-+
- 			cdns_spi_writer(xspi);
- 			ntx--;
- 		}
-@@ -460,14 +472,14 @@ static irqreturn_t cdns_spi_irq(int irq, void *dev_id)
- 			cdns_spi_write(xspi, CDNS_SPI_THLD, 1);
- 
- 		if (xspi->tx_bytes) {
--			cdns_spi_process_fifo(xspi, trans_cnt, trans_cnt);
-+			cdns_spi_process_fifo(ctlr, xspi, trans_cnt, trans_cnt);
- 		} else {
- 			/* Fixed delay due to controller limitation with
- 			 * RX_NEMPTY incorrect status
- 			 * Xilinx AR:65885 contains more details
- 			 */
- 			udelay(10);
--			cdns_spi_process_fifo(xspi, 0, trans_cnt);
-+			cdns_spi_process_fifo(ctlr, xspi, 0, trans_cnt);
- 			cdns_spi_write(xspi, CDNS_SPI_IDR,
- 				       CDNS_SPI_IXR_DEFAULT);
- 			spi_finalize_current_transfer(ctlr);
-@@ -520,17 +532,11 @@ static int cdns_transfer_one(struct spi_controller *ctlr,
- 			cdns_spi_write(xspi, CDNS_SPI_THLD, xspi->tx_fifo_depth >> 1);
- 	}
- 
--	/* When xspi in busy condition, bytes may send failed,
--	 * then spi control didn't work thoroughly, add one byte delay
--	 */
--	if (cdns_spi_read(xspi, CDNS_SPI_ISR) & CDNS_SPI_IXR_TXFULL)
--		udelay(10);
--
- 	xspi->n_bytes = cdns_spi_n_bytes(transfer);
- 	xspi->tx_bytes = DIV_ROUND_UP(xspi->tx_bytes, xspi->n_bytes);
- 	xspi->rx_bytes = DIV_ROUND_UP(xspi->rx_bytes, xspi->n_bytes);
- 
--	cdns_spi_process_fifo(xspi, xspi->tx_fifo_depth, 0);
-+	cdns_spi_process_fifo(ctlr, xspi, xspi->tx_fifo_depth, 0);
- 
- 	cdns_spi_write(xspi, CDNS_SPI_IER, CDNS_SPI_IXR_DEFAULT);
- 	return transfer->len;
+ 		reg_temp = NCT6106_REG_TEMP;
+ 		reg_temp_mon = NCT6106_REG_TEMP_MON;
+-		num_reg_temp = ARRAY_SIZE(NCT6106_REG_TEMP);
++		num_reg_temp = 3;
+ 		num_reg_temp_mon = ARRAY_SIZE(NCT6106_REG_TEMP_MON);
+ 		num_reg_tsi_temp = ARRAY_SIZE(NCT6116_REG_TSI_TEMP);
+ 		reg_temp_over = NCT6106_REG_TEMP_OVER;
+ 		reg_temp_hyst = NCT6106_REG_TEMP_HYST;
+ 		reg_temp_config = NCT6106_REG_TEMP_CONFIG;
+-		num_reg_temp_config = ARRAY_SIZE(NCT6106_REG_TEMP_CONFIG);
++		num_reg_temp_config = 3;
+ 		reg_temp_alternate = NCT6106_REG_TEMP_ALTERNATE;
+ 		reg_temp_crit = NCT6106_REG_TEMP_CRIT;
+ 		reg_temp_crit_l = NCT6106_REG_TEMP_CRIT_L;
 -- 
 2.53.0
 
