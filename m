@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CAB242C4E8;
-	Fri,  7 Aug 2026 14:42:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A8FD415F2D;
+	Fri,  7 Aug 2026 14:42:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786113768; cv=none; b=IBxiDIHxe2MDZAmeRqIkbvrJmpFGXFAxG0EkH271OL5LJZhMJhdbYL6pXdseJGbDBzmzeqdZAsPuX5RIYIG0CLKqXfaO/oVbKMTCb2qi+HsozbjxIcGJ2dnRa8Fd4OPLr0QPuBdRk++1DKsMIBPlXUpCjVPwRzSGEovkhTdYGrM=
+	t=1786113767; cv=none; b=qERUjv7ciQk8x0r16C2pC02x9zS42NJAa7pIBAxy7j8fjvrgdaewApGY9wmMoAcHwHooxNQMIExZ+djyuquUG2rduCSXYOI9qyuQzCK9YqEHm25fsvF0SxiNnXtewA3I4mYsN2eYic0nvHZcssIm1Evo3Duhuke3+cfMAE7Dxlw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786113768; c=relaxed/simple;
-	bh=oKqSUuioZ+Gch0z6mjq3LZAhqc2oDuxi4YNStvtxJFI=;
+	s=arc-20240116; t=1786113767; c=relaxed/simple;
+	bh=5BjmdDBU3odaS97h8moET/DJWI8AySP1kpgSXr39XDQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=goV9usSLrdRLckB4jscVz5EnkPJoYc4pkLlf12FZ38UTJPwj56AzFwbcKwgwG1wj1xflYZ1BMttbaMI6ciChJ4vwgQiO4Be9RZIr59N6/8CqgX/WvLvrN/tCtrVllCu7/Y4/MTMPSFSl1mwiJ1Ym1c3/dfLmt8V9RqBRe/eXuEw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AoqZk4RX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RHbhFaOdFqWY346+BoRQaG4DB6R8gt8176+LpvkZLnDydtYdHg5/+CBV3M6Tfs1Xr3t/0Qzv8t5lo3oo6i6WYmp1rijvRR0u7oD0sAjr3/gUvCuy+iJ8iGmo6tX04lCKnMXPuV/h8b32B0l2sa8DPte/jczVnC4UkeJLAUCjE0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EX3Jj0W7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AoqZk4RX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E584B1F00A3D;
-	Fri,  7 Aug 2026 14:42:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EX3Jj0W7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 441341F00A3A;
+	Fri,  7 Aug 2026 14:42:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786113745;
-	bh=hCGgHmzaesImvJdpupJSwuHEXDh8dyC2aWkfun5qfX4=;
+	s=korg; t=1786113759;
+	bh=zEp4j5pqDbes0SW3EdNer7Vh8AT2N8lhIq6ozVUR+lM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AoqZk4RXvoag5ez3Ob95eENzLT8jN3RAcnQnl+/W2BqbnQceeHygVrc8SDmWC5Dsv
-	 ptJW0yIS9nAiDofzzeELuFGTg+sOd3z8oXZgUQncquKsSKBdhWR522VqVdnZOiWPI4
-	 tgRSQD+agIXjjJ2NJQqXHIRlO76PQ9Z/zFyIgJKg=
+	b=EX3Jj0W74oFIQ7dKOFgdC8ovzuDIaR4N9hLTtJ+J02hRdahGY+ckyGfD7WwB+R2wr
+	 x5ee64qnurDd/dqylBDMAPcTYF/qjR8jqamzB/weA+zWHvLeqo2M6iLlwiklC3DU/F
+	 AJtr4C+9apUdUdiMAxHxyiS/W4dgx0YRZgULkVNg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Berg <benjamin.berg@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Rosen Penev <rosenp@gmail.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 003/337] um: Set parent death signal for winch thread/process
-Date: Fri,  7 Aug 2026 16:33:26 +0200
-Message-ID: <20260807143418.593750999@linuxfoundation.org>
+Subject: [PATCH 6.12 025/337] ata: sata_mv: accept 1 or 2 resources in platform probe
+Date: Fri,  7 Aug 2026 16:33:48 +0200
+Message-ID: <20260807143419.064680241@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -52,44 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Berg <benjamin.berg@intel.com>
+From: Rosen Penev <rosenp@gmail.com>
 
-commit fdb2ecd35d327a1fc6bba69b97f85b494e1f4b6b upstream.
+[ Upstream commit ef19a9cf037957fe3a35df8355c76ff0a63a0436 ]
 
-The winch "thread" is really a separate process. Using prctl to set
-PR_SET_PDEATHSIG ensures that this separate thread will be killed if the
-UML kernel itself dies unexpectedly and does not perform proper cleanup.
+Board files in arch/arm/plat-orion, arch/arm/mach-dove,
+arch/arm/mach-mv78xx0 and arch/arm/mach-orion5x still register the
+"sata_mv" device with two resources (IORESOURCE_MEM plus IORESOURCE_IRQ).
+Those devices are rejected with -EINVAL, so SATA no longer probes on
+legacy Marvell Orion/Kirkwood-style boards.
 
-Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
-Link: https://patch.msgid.link/20240919124511.282088-5-benjamin@sipsolutions.net
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Accept both 1 resource (DT, IRQ fetched via platform_get_irq()) and 2
+resources (legacy, IRQ supplied as a second resource) so both probing
+paths work.
+
+Fixes: b3b2bec9646e ("ata: sata_mv: Fixes expected number of resources now IRQs are gone")
+Assisted-by: opencode:big-pickle
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/um/drivers/chan_user.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/ata/sata_mv.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/um/drivers/chan_user.c b/arch/um/drivers/chan_user.c
-index a66e556012c4..1434114b2f34 100644
---- a/arch/um/drivers/chan_user.c
-+++ b/arch/um/drivers/chan_user.c
-@@ -10,6 +10,7 @@
- #include <signal.h>
- #include <termios.h>
- #include <sys/ioctl.h>
-+#include <sys/prctl.h>
- #include "chan_user.h"
- #include <os.h>
- #include <um_malloc.h>
-@@ -161,6 +162,8 @@ static __noreturn int winch_thread(void *arg)
- 	int count;
- 	char c = 1;
- 
-+	prctl(PR_SET_PDEATHSIG, SIGKILL);
-+
- 	pty_fd = data->pty_fd;
- 	pipe_fd = data->pipe_fd;
- 	count = write(pipe_fd, &c, sizeof(c));
+diff --git a/drivers/ata/sata_mv.c b/drivers/ata/sata_mv.c
+index 05c905827dc5c..40fdc422940dd 100644
+--- a/drivers/ata/sata_mv.c
++++ b/drivers/ata/sata_mv.c
+@@ -4026,7 +4026,7 @@ static int mv_platform_probe(struct platform_device *pdev)
+ 	/*
+ 	 * Simple resource validation ..
+ 	 */
+-	if (unlikely(pdev->num_resources != 1)) {
++	if (unlikely(pdev->num_resources != 1 && pdev->num_resources != 2)) {
+ 		dev_err(&pdev->dev, "invalid number of resources\n");
+ 		return -EINVAL;
+ 	}
 -- 
 2.53.0
 
