@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B703F377A8A;
-	Fri,  7 Aug 2026 15:30:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3B53412C05;
+	Fri,  7 Aug 2026 15:30:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116613; cv=none; b=VqApNzQ1Gg8BDyGGReOe2HwUtHPMt5hiGWnEcWPn9uxsvZC+DSmGKDUbCvKWBxMtERJh1Dyg7knv2mSW0EFtjp9dBXYBChTwog3Q2TcaQO+UETgjLu3jb2OfjMfmSM1a5zcp0K0ptOC9avBIQxq+XV3jW4ug2qtkoDyQBmZeH8o=
+	t=1786116615; cv=none; b=sNTjyn+LzQoRrxadcw91VReMfCN4A/WDijn72QrItxfkTnsNo4swtW2yvvQdLCNWlZaOWlqcFn4T2mkwlL0gtqXJWOThmIBxbG0qj2bPU4lFdqE/NYW28jvmqZsqWLFlHIoNtTKJwzmejQJ43e34Vu9lNLJuPhu6k1NpFYcC9is=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116613; c=relaxed/simple;
-	bh=kda5oAhC6/Q889HJ1aKGB00pDE9uZW6oZXIoDCcbHh4=;
+	s=arc-20240116; t=1786116615; c=relaxed/simple;
+	bh=9qd3/0AvGYXMpExhUkcBeoWtVkQhtUxWZgj/cK82vvE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k5aql/o4k69Ju0DRqaJoCQXhakYspO8+XshFRnpCDH+p5Wnb3g3S4zICh1WyrZowq4PYt0lmqwA1xwTY4JGKtPgUlHgRIrTjRuwXli9HLvQO6HSQtQToHgu0GOKVWD+Dh4a6mhzW/2Smjthrry/ajiOj/kTEtO0+iNa6ecNiNFw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rHdRkfPh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JC0/uL9vJkDz1oIZbvL5qcfibnDfJ1aUX486T8qvNQ9l1OOt3uubxWizop6nbw/52g7Rk1S3PJbgitS3e509PbEBZELoM85/sKFQdWtY6u+vepMvqPnpW38J3V63zyjw0E78ltXQfZX6N7IRTlnrC06UYTFXXI2eqMFk8tOy/yA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PS1oCkV6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rHdRkfPh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F59D1F000E9;
-	Fri,  7 Aug 2026 15:30:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PS1oCkV6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D2231F000E9;
+	Fri,  7 Aug 2026 15:30:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116611;
-	bh=QYcfymb2ppXg7oVGkzlBkCQz6y5FnnNuVceAFpdtX8M=;
+	s=korg; t=1786116614;
+	bh=D58BEQQ4CN3TS/Cy3kFufSu+aBH+prPMsredtlPsMEM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rHdRkfPhg481P0k2HSNcLh1X+Q+yLMJEo5mnPBdjAJ021W7Pa8+qWQ/pIpP/q+8OL
-	 FQy36T8DoZmKBpN4tzNS/1nqFg6rI4fZIuQ92/lU0BwyFiploBdrNlh0wfvbwrVrvA
-	 sq7DxUy+u9rBNYU5vyz9U6CihczcEt/fY+V/MCKI=
+	b=PS1oCkV67PpzfYVdOcw28xBfSSLxNqM4fOWvwrCWiPqb7lq13PHjymzJZShRZ+qJ+
+	 QDNQX+kdmIOuUEu5NmdyUwBbg2NKW46AueNrKxUSVfyo3jNNmUKBlubgjQ/wAfzedy
+	 n9CMIHu4ALvaQQghsXGbJImGAEVX+YOnjcYwu5fU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Vacek <neelx@suse.com>,
 	Qu Wenruo <wqu@suse.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 030/438] btrfs: raid56: fix an incorrect csum skip during scrub
-Date: Fri,  7 Aug 2026 16:33:46 +0200
-Message-ID: <20260807143428.650380207@linuxfoundation.org>
+Subject: [PATCH 7.1 031/438] btrfs: zoned: skip fully truncated ordered extents at zone finish
+Date: Fri,  7 Aug 2026 16:33:47 +0200
+Message-ID: <20260807143428.671988539@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -52,56 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 
-[ Upstream commit 330dcc553f282e8dc0b88c9495b4c296465364e1 ]
+[ Upstream commit ab602da96a915d42dcb1b0b322e8daea0f71b51f ]
 
-Commit 7425a2894019 ("btrfs: introduce btrfs_bio_for_each_block_all()
-helper") uses the new helper to replace the nested loop inside
-verify_bio_data_sectors(), which simplifies the code.
+A fully truncated ordered extent (truncated_len == 0) wrote no data, so its
+->csum_list is empty and btrfs_finish_ordered_zoned() trips:
 
-However that also changed the behavior of "continue" when a block has no
-data checksum.
+  assertion failed: !list_empty(&ordered->csum_list), in fs/btrfs/zoned.c:2141
 
-Previously the "continue" would skip the old for() loop, which would also
-increase @total_sector_nr.
+Since commit 66ff4d366e7e a short or cancelled direct IO write finishes the
+unsubmitted ordered extent as truncated with uptodate = true instead of
+setting BTRFS_ORDERED_IOERR, so it now reaches btrfs_finish_ordered_zoned()
+rather than being skipped by the IOERR check in btrfs_finish_ordered_io().
+generic/208 hits this on a zoned filesystem.
 
-Now the "continue" will skip the new btrfs_bio_for_each_block_all()
-loop, which doesn't update @total_sector_nr.
+Return early for these, like the BTRFS_ORDERED_PREALLOC case; there is no
+zone append result to record and btrfs_finish_one_ordered() skips them too.
 
-This means if we hit a block that has no data checksum, we will skip all
-the remaining blocks no matter if they have data checksum.
-As @total_sector_nr will never be updated, and that test_bit() will
-always return false.
-
-Fix it by increasing @total_sector_nr before calling "continue".
-
-Fixes: 7425a2894019 ("btrfs: introduce btrfs_bio_for_each_block_all() helper")
-Reviewed-by: Daniel Vacek <neelx@suse.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
+Fixes: 66ff4d366e7e ("btrfs: fix false IO failure after falling back to buffered write")
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/raid56.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/btrfs/zoned.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/fs/btrfs/raid56.c b/fs/btrfs/raid56.c
-index 08ee8f316d96d..515ffa4b02114 100644
---- a/fs/btrfs/raid56.c
-+++ b/fs/btrfs/raid56.c
-@@ -1679,8 +1679,10 @@ static void verify_bio_data_sectors(struct btrfs_raid_bio *rbio,
- 			continue;
+diff --git a/fs/btrfs/zoned.c b/fs/btrfs/zoned.c
+index 6963e9068a565..e9d72401d328f 100644
+--- a/fs/btrfs/zoned.c
++++ b/fs/btrfs/zoned.c
+@@ -2136,6 +2136,16 @@ void btrfs_finish_ordered_zoned(struct btrfs_ordered_extent *ordered)
+ 	if (test_bit(BTRFS_ORDERED_PREALLOC, &ordered->flags))
+ 		return;
  
- 		/* No csum for this sector, skip to the next sector. */
--		if (!test_bit(total_sector_nr, rbio->csum_bitmap))
-+		if (!test_bit(total_sector_nr, rbio->csum_bitmap)) {
-+			total_sector_nr++;
- 			continue;
-+		}
- 
- 		expected_csum = rbio->csum_buf + total_sector_nr * fs_info->csum_size;
- 		btrfs_calculate_block_csum_pages(fs_info, paddrs, csum_buf);
++	/*
++	 * A fully truncated ordered extent wrote no data and so has
++	 * no zone append result to record.
++	 */
++	if (test_bit(BTRFS_ORDERED_TRUNCATED, &ordered->flags) &&
++	    ordered->truncated_len == 0) {
++		ASSERT(list_empty(&ordered->csum_list));
++		return;
++	}
++
+ 	ASSERT(!list_empty(&ordered->csum_list));
+ 	sum = list_first_entry(&ordered->csum_list, struct btrfs_ordered_sum, list);
+ 	logical = sum->logical;
 -- 
 2.53.0
 
