@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EC6C41836D;
-	Fri,  7 Aug 2026 15:14:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 355DD46D0B0;
+	Fri,  7 Aug 2026 15:14:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115671; cv=none; b=pWBxcmchAPEYa6HUTpJ8lHJQnnuc314ANNnbyweX5+QFwTToGK05XpzO7BMJHmhZMcq692IB2GzvaawccoKi6jtet8d6ZiWHUdgNggvqykaKDwev7Qk6NwY7OxkZ7Rm62tzTUSiqus5a/Bz4s2Dx38HxJcRYHkVFwGITvc/bobY=
+	t=1786115674; cv=none; b=TiTv37ZkLvHUly+jZw9unNa5OJxE6roR6sbCLxLOXJZRp+qLctFkd+DIQ6PFD2ATItN3WcU3r8cqTQwQ0k30awJVHxDMmgaLQ6yoBln1CqDxECwF3Hv3kYBJ6CJpOFCvFyWBdTXDlwW7ExlnYnGucvaNQOX/uVyiHJJwkum2EyQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115671; c=relaxed/simple;
-	bh=RI9RqMh7osk+igrXWX0LpwTDif1zdEuLYabZiXl1eCY=;
+	s=arc-20240116; t=1786115674; c=relaxed/simple;
+	bh=H3HNkzBBZ115MwH+Gqqd3PGuWTvUsMCek39akB1jOys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j8IRR6VHtCV4Px7fKgbupDw8oFtsTxVTZJFanXFCncz8yLvaFUb54wavK8CuaWw1BPxQQQ4qWposXwsU9GHBLTKVmO4tR7sDkoJ3rJ3W6884EeDfPY82WxBGlbkKWTwe7PzPiCaMxvtm3mZMrxKReCdzTcQYavQQ6B/AuMA1eyM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EYQWUnuL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EGVehOou4GxqruXocjN5UIB8ucS/CAbXpZyd6CDBK8FQbngDl/0WJ60saWvW/SX6koieiSCX331+TXbjNM3nGAIDTNQKpDGWCZa2md96KH1uEsXFlQToXGqxo4XpNUhWCwca2RZT3QT/HXDhRcwL6Z4Chz4xQ1U2DX5+GLMm9tY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=khNa/5JW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EYQWUnuL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B96371F000E9;
-	Fri,  7 Aug 2026 15:14:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="khNa/5JW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91D551F000E9;
+	Fri,  7 Aug 2026 15:14:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115670;
-	bh=4sY7L9v0vZEgVTocKY45sVeZarT2WOE2v+kCfQPBTok=;
+	s=korg; t=1786115673;
+	bh=x7vXA67tDmBrgAPsex5lNdCTuQcRajP3CsqyfE9ctx8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EYQWUnuLxp6dQuiYzHJE4Pau7Du5wgXzWqjnSEaBgRd4lmURtmPGeSAurkOfTPh9N
-	 wXHwBrkPcu6ZDNcO/Gn4BOMHMUxAWI95gv46GG801f5wvHRExO9RqcsR/+fulxcXDF
-	 sm7nQpNGPcQQdAnK4LpOgEmvjA8i66KwfFcgKZP8=
+	b=khNa/5JW5EyjFhot7zn0qXd4dSmIq2m5Xgrfk//diRmXE4nzyEyuxd+A6tfqaREwn
+	 RDsCZPC824JGk3p56QcruuBlPFBjKrIyqbsP5l5CSni3nJxaDEpYcqYUQznmh22x6f
+	 rANm1f/FTCwZzHrIVfTwViECuB+yw/obK3clDB9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Brauner <brauner@kernel.org>,
-	Wentao Guan <guanwentao@uniontech.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 358/396] net/handshake: convert handshake_nl_accept_doit() to FD_PREPARE()
-Date: Fri,  7 Aug 2026 16:38:38 +0200
-Message-ID: <20260807143432.007137667@linuxfoundation.org>
+	Zack Rusin <zack.rusin@broadcom.com>,
+	Ian Forbes <ian.forbes@broadcom.com>
+Subject: [PATCH 6.18 332/396] drm/vmwgfx: clamp dirty-page range with min, not max
+Date: Fri,  7 Aug 2026 16:38:12 +0200
+Message-ID: <20260807143431.450931322@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -51,79 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Zack Rusin <zack.rusin@broadcom.com>
 
-[ Upstream commit fe67b063f687d8f32c466778aad57508bc1c618a ]
+commit f47d542d5912f236273399d7139b522f6950e2e4 upstream.
 
-Link: https://patch.msgid.link/20251123-work-fd-prepare-v4-27-b6efa1706cfd@kernel.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-(cherry picked from commit fe67b063f687d8f32c466778aad57508bc1c618a)
-Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+vmw_bo_dirty_transfer_to_res() and vmw_bo_dirty_clear() compute the
+intersection of a resource's page range with the BO's tracked dirty
+range, but clamp res_end against dirty->end with max() instead of
+min().  When dirty->end exceeds the resource end, the loop walks past
+the resource's pages, calls vmw_resource_dirty_update() for ranges
+owned by other resources sharing the same backing MOB and clears
+their pending dirty bits via bitmap_clear().  The result is silent
+loss of writeback for unrelated resources whenever two resources
+share a MOB.
+
+Use min() in both functions so the loop is bounded to the
+intersection of the resource and dirty ranges.
+
+Fixes: b7468b15d271 ("drm/vmwgfx: Implement an infrastructure for write-coherent resources")
+Fixes: 965544150d1c ("drm/vmwgfx: Refactor cursor handling")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-4.7
+Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
+Reviewed-by: Ian Forbes <ian.forbes@broadcom.com>
+Link: https://patch.msgid.link/20260505222728.519626-4-zack.rusin@broadcom.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/handshake/netlink.c | 38 ++++++++++++++++++--------------------
- 1 file changed, 18 insertions(+), 20 deletions(-)
+ drivers/gpu/drm/vmwgfx/vmwgfx_page_dirty.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/handshake/netlink.c b/net/handshake/netlink.c
-index d8211e0ba75c6..7b1d42607ae68 100644
---- a/net/handshake/netlink.c
-+++ b/net/handshake/netlink.c
-@@ -93,7 +93,7 @@ int handshake_nl_accept_doit(struct sk_buff *skb, struct genl_info *info)
- 	struct handshake_net *hn = handshake_pernet(net);
- 	struct handshake_req *req = NULL;
- 	struct socket *sock;
--	int class, fd, err;
-+	int class, err;
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_page_dirty.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_page_dirty.c
+@@ -311,7 +311,7 @@ void vmw_bo_dirty_transfer_to_res(struct
+ 		return;
  
- 	err = -EOPNOTSUPP;
- 	if (!hn)
-@@ -106,27 +106,25 @@ int handshake_nl_accept_doit(struct sk_buff *skb, struct genl_info *info)
+ 	cur = max(res_start, dirty->start);
+-	res_end = max(res_end, dirty->end);
++	res_end = min(res_end, dirty->end);
+ 	while (cur < res_end) {
+ 		unsigned long num;
  
- 	err = -EAGAIN;
- 	req = handshake_req_next(hn, class);
--	if (!req)
--		goto out_status;
--
--	sock = req->hr_sk->sk_socket;
--	fd = get_unused_fd_flags(O_CLOEXEC);
--	if (fd < 0) {
--		err = fd;
--		goto out_complete;
--	}
--
--	err = req->hr_proto->hp_accept(req, info, fd);
--	if (err) {
--		put_unused_fd(fd);
--		goto out_complete;
-+	if (req) {
-+		sock = req->hr_sk->sk_socket;
-+
-+		FD_PREPARE(fdf, O_CLOEXEC, sock->file);
-+		if (fdf.err) {
-+			err = fdf.err;
-+			goto out_complete;
-+		}
-+
-+		get_file(sock->file); /* FD_PREPARE() consumes a reference. */
-+		err = req->hr_proto->hp_accept(req, info, fd_prepare_fd(fdf));
-+		if (err)
-+			goto out_complete; /* Automatic cleanup handles fput */
-+
-+		trace_handshake_cmd_accept(net, req, req->hr_sk, fd_prepare_fd(fdf));
-+		fd_publish(fdf);
-+		return 0;
- 	}
+@@ -347,7 +347,7 @@ void vmw_bo_dirty_clear(struct vmw_bo *v
+ 		return;
  
--	fd_install(fd, get_file(sock->file));
--
--	trace_handshake_cmd_accept(net, req, req->hr_sk, fd);
--	return 0;
--
- out_complete:
- 	handshake_complete(req, -EIO, NULL);
- out_status:
--- 
-2.53.0
-
+ 	cur = max(res_start, dirty->start);
+-	res_end = max(res_end, dirty->end);
++	res_end = min(res_end, dirty->end);
+ 	while (cur < res_end) {
+ 		unsigned long num;
+ 
 
 
