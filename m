@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36EE63264D6;
-	Fri,  7 Aug 2026 15:01:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28944442363;
+	Fri,  7 Aug 2026 15:01:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114892; cv=none; b=KO3Jm/8AN00pGqD453O0+wNpYstTy86IQrFN4164teS3h3uPe5AsBOQ3bWE4yFutDrDMJyHe5G3T5QDMn0QmYYhGe2WtOBDCx0V0likH7dhI0HKaUwnK81I1DSJb/iLV55aiYwlK8ypR8eCKTqUp1nsZsTaL32ek2QuqzUTlxnM=
+	t=1786114895; cv=none; b=jrEjzEa0Y0Bud6P0uJZelMI8IPvk33IDV6hVL08ypoS1syCexLXsuIF0VjXOTYCCxwMDpnG8Jm7UFRkqum0D9qzqPHQUJeoVd0en2f5ZKidh7kILVIhgd89TDeAqA21QRW6biJytzbyGtnbpRmnWjjFCgyxfP/zAEu67oKuyCoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114892; c=relaxed/simple;
-	bh=zGDn1j/+q8S0M89pKPrd+M16aZywek/QH8SLBOifcyg=;
+	s=arc-20240116; t=1786114895; c=relaxed/simple;
+	bh=8PVon2aFGivzTEzN05ATcfIn8wg9VgLF3uVGzMay+1Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iXr2s+iwTaWb3FGZpSeupLUOloxSQS7Qx2UMewjj3snNyoiNF1s8X13caSoZnzN3EmeV3Ns4tru/HFYjClVCYgd5hJcpwdoUZ02xKIBsPEdC4XnwIWz0NPViClndnRnUBtDYsSyqh/jNbLpXa6GHxuaQZase8RnAwVkbCIWKAF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BsAAiJMC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IU0V7W1Chq+hKqh0+s97p7KgJf7fcf54oR8RVBBYsiEq4Biz6P06QLg5EVRWpyk6e2bQ0faeFYR+PMHbSFy/fGEii0j7Z1DVKlBWwe94QS569n6jx95OmQ7Y7JTMYbdfu+3dfEwtyudjjgcWBJDkT/EIertzEgnNm+lH2Mj8dF4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tWCT5cwJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BsAAiJMC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89DA01F00A3A;
-	Fri,  7 Aug 2026 15:01:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tWCT5cwJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DEE71F000E9;
+	Fri,  7 Aug 2026 15:01:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114891;
-	bh=fsU4UgHK1Wylj/gVYa/vFTd/31U/bjftpgMdKN5nzbg=;
+	s=korg; t=1786114894;
+	bh=Whoy0fhQTPJh5UaJ+XgOTYWGpq4rcIgCsmhAQRGActw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BsAAiJMCsANrurYNPMaYlTgQp9+p2j/j4Oa+E+EO023wTdr9XSdSONmU76SmNxEHL
-	 xkLKzKmsPUwavX7lhL8jZ6KjAc5XZsL+ulrSw3KBMPyghLslETJ5GIk0wWbSqxweYN
-	 D2EHaBnYpvzPDVSu0QLQKcScR8eUl/g/LynbbeBc=
+	b=tWCT5cwJGt21UEqkmWUtlHE1TdyEENcVijgdJCF7sKpnI/nAafEOcNV4rf58/5KFX
+	 pADHopZFrvrr880AQNOJ4qvywiS9GcibcS/ZTdqz/3dcrGGz5jSEv3BguWNs3qFLfW
+	 0Uo4PSj3zEAp21x/A2joMQe9U36A6ufySVebO3yo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chenguang Zhao <zhaochenguang@kylinos.cn>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 083/396] forcedeth: fix UAF of txrx_stats in nv_remove
-Date: Fri,  7 Aug 2026 16:34:03 +0200
-Message-ID: <20260807143426.064868735@linuxfoundation.org>
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Talha Berk Arslan <talha.anything.info@gmail.com>
+Subject: [PATCH 6.18 048/396] netfilter: xt_hashlimit: validate hashtable supports XT_HASHLIMIT_RATE_MATCH
+Date: Fri,  7 Aug 2026 16:33:28 +0200
+Message-ID: <20260807143425.302763076@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -53,45 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chenguang Zhao <zhaochenguang@kylinos.cn>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 22666ba1420164753d7b0f5a841986b25ace5435 ]
+[ Upstream commit 305b63e1402267459fdabb183af4527f6799eebf ]
 
-nv_remove() frees the per-CPU txrx_stats before unregister_netdev().
-Until unregister completes, ndo_get_stats64, the NAPI/xmit data path,
-and nv_close()/drain may still access txrx_stats, leading to a
-use-after-free.
+The XT_HASHLIMIT_RATE_MATCH flag mode changes the semantics of the
+dsthash_ent structure which represents an entry in the hashtable.  There
+is a union area which uses a different layout to express the rate match
+mode.
 
-Free the stats only after unregister_netdev().
+Update .checkentry path to validate the XT_HASHLIMIT_RATE_MATCH mode
+flag is requested by two or more different rules that refer to the same
+hashtable. Otherwise, uninitialized access to the burst field in the
+union is possible.
 
-Fixes: f4b633b911fd ("forcedeth: use per cpu to collect xmit/recv statistics")
-Signed-off-by: Chenguang Zhao <zhaochenguang@kylinos.cn>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Link: https://patch.msgid.link/20260723092637.2135095-1-chenguang.zhao@linux.dev
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reject the use of the XT_HASHLIMIT_RATE_MATCH mode flag if set on by
+revision less than 3 too.
+
+Fixes: bea74641e378 ("netfilter: xt_hashlimit: add rate match mode")
+Reported-and-tested-by: Talha Berk Arslan <talha.anything.info@gmail.com>
+Link: https://patch.msgid.link/20260721074629.668-1-talha.anything.info@gmail.com/
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/nvidia/forcedeth.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/netfilter/xt_hashlimit.c | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/nvidia/forcedeth.c b/drivers/net/ethernet/nvidia/forcedeth.c
-index 19aa1f1538aa3..c09fb7694facb 100644
---- a/drivers/net/ethernet/nvidia/forcedeth.c
-+++ b/drivers/net/ethernet/nvidia/forcedeth.c
-@@ -6187,10 +6187,10 @@ static void nv_remove(struct pci_dev *pci_dev)
- 	struct net_device *dev = pci_get_drvdata(pci_dev);
- 	struct fe_priv *np = netdev_priv(dev);
+diff --git a/net/netfilter/xt_hashlimit.c b/net/netfilter/xt_hashlimit.c
+index 3b507694e81e5..b3f15bbf259e2 100644
+--- a/net/netfilter/xt_hashlimit.c
++++ b/net/netfilter/xt_hashlimit.c
+@@ -117,6 +117,7 @@ struct xt_hashlimit_htable {
+ 	refcount_t use;
+ 	u_int8_t family;
+ 	bool rnd_initialized;
++	bool ratematch;
  
--	free_percpu(np->txrx_stats);
--
- 	unregister_netdev(dev);
+ 	struct hashlimit_cfg3 cfg;	/* config */
  
-+	free_percpu(np->txrx_stats);
+@@ -323,6 +324,7 @@ static int htable_create(struct net *net, struct hashlimit_cfg3 *cfg,
+ 		kvfree(hinfo);
+ 		return -ENOMEM;
+ 	}
++	hinfo->ratematch = !!(cfg->mode & XT_HASHLIMIT_RATE_MATCH);
+ 	spin_lock_init(&hinfo->lock);
+ 
+ 	switch (revision) {
+@@ -870,7 +872,10 @@ static int hashlimit_mt_check_common(const struct xt_mtchk_param *par,
+ 	}
+ 
+ 	/* Check for overflow. */
+-	if (revision >= 3 && cfg->mode & XT_HASHLIMIT_RATE_MATCH) {
++	if (cfg->mode & XT_HASHLIMIT_RATE_MATCH) {
++		if (revision < 3)
++			return -EINVAL;
 +
- 	nv_restore_mac_addr(pci_dev);
+ 		if (cfg->avg == 0 || cfg->avg > U32_MAX) {
+ 			pr_info_ratelimited("invalid rate\n");
+ 			return -ERANGE;
+@@ -903,6 +908,15 @@ static int hashlimit_mt_check_common(const struct xt_mtchk_param *par,
+ 			mutex_unlock(&hashlimit_mutex);
+ 			return ret;
+ 		}
++	} else {
++		if ((cfg->mode & XT_HASHLIMIT_RATE_MATCH &&
++		     !(*hinfo)->ratematch) ||
++		    (!(cfg->mode & XT_HASHLIMIT_RATE_MATCH) &&
++		      (*hinfo)->ratematch)) {
++			mutex_unlock(&hashlimit_mutex);
++			htable_put(*hinfo);
++			return -EINVAL;
++		}
+ 	}
+ 	mutex_unlock(&hashlimit_mutex);
  
- 	/* restore any phy related changes */
 -- 
 2.53.0
 
