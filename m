@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E050C390608;
-	Fri,  7 Aug 2026 15:47:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70B3846E00D;
+	Fri,  7 Aug 2026 15:47:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786117645; cv=none; b=nf3ZGiyr48I8/ESUGUjSvow3TfT9LeI9WbAFa8OOyErLJak5cQItFFqNtFaCJzzw3IcjCVaXW/naf06LdAFXXFRJAslfXr8k/RCCe56XNlJRy//ITYd9wufG0sNF1vibbDc3o4kbt+JjaBJcEHVA1uTNRUKUSEcXzaw5/tWBgxA=
+	t=1786117647; cv=none; b=MZvGUQpyWWJDnf7H0XtZqn0bR0OT3f8CA2FLwlA05ENWLOdRTKxzJh+ykkFj7XndtqwC7HR0wI5fAV57HZrmbJoRjfStxsaLlgRqNc+jTZz4x9W1s701BbUV560OeGYKqXORdvnVwzI981zIRCst0buwrHmy/wdhgoSe7hECnUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786117645; c=relaxed/simple;
-	bh=bVc+tHir2zIyRQ3WKCcG+VK7AxwZnt/PHNoQLjQKYuc=;
+	s=arc-20240116; t=1786117647; c=relaxed/simple;
+	bh=m1DDu/HBUch469Qrfgm8z0I1wM3H5lZxgBQS9nryEsM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ESS5nHueCeHqFpzxMem+qwA5CYsDuha9Nh5sI0ZSQhh5sSzXYRzS1QZPnjtCJHepwa+xQv96krjes5S62t+qN1c8vb/2b/Moa83xjTmYhugtsClCwU9rSFaEteR+YdZ2qeuV41muuCBaZYN0HwCCBw6AY/PfOVYvcZX026Qe7js=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QVdpCt0j; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Uxmavqw4ND1iQ9JEvmMHzj6/mGsnncv2pFMJkJDb5t9MXhjO6hScpYbI7F+XTM6fR6qVS3A36aH5GV6HPc8u/uWPWFZ21Tc450tXqEexroxjaTQTokjW+tnLNXOHY/OrEJR3OSMKkoZPDTL/R+Hp6Fbck/d4BM4V2RuHZkrY+Qc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=daODW+eA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QVdpCt0j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0534C1F000E9;
-	Fri,  7 Aug 2026 15:47:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="daODW+eA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC69D1F000E9;
+	Fri,  7 Aug 2026 15:47:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786117643;
-	bh=qziFWxhQfGXVOMGijirgJ/SYbx32nMrgTZygjUMg0nM=;
+	s=korg; t=1786117646;
+	bh=/XpVKP8RK3BMH58YXNo30FMcnUtHMvv0sXU3RotRoKQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QVdpCt0jRyFjq1QsIvu7WJra+zSQ8lxCtkYQV1aMiYWpWDCivTQVgNqQxI7dK4wb5
-	 XfeC2cYd7KZkrUod7HgwL8v2UsAy84jH055F4GvDSsW+MiXo6SDMj/+1m2XmljhWKz
-	 1Ibt1xvKbwqV1id5xIh6l6xXBxyPO232E4OoDuZY=
+	b=daODW+eA5JcuROowTD+NyR3sseBklswfj0iFwpv541vpuHXdQC+ikUzF/cACttkcJ
+	 a1T62JIPonSwYz6BzSpwRS2tguQC9rIW8ARW5mfC8sVk+3qpNTDjmELaGmG0Bq0/v7
+	 hdbO2FTf4yZrERcAxu5CMTAlrcHvrvM+km4zDSt4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.1 390/438] drm/amdgpu: move debug_vm handling to amdgpu_cs_parser_fini
-Date: Fri,  7 Aug 2026 16:39:46 +0200
-Message-ID: <20260807143436.279653201@linuxfoundation.org>
+	Dawei Feng <dawei.feng@seu.edu.cn>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Rinitha S <sx.rinitha@intel.com>
+Subject: [PATCH 7.1 355/438] ice: fix memory leak in ice_lbtest_prepare_rings()
+Date: Fri,  7 Aug 2026 16:39:11 +0200
+Message-ID: <20260807143435.538156255@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -45,87 +46,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+From: Dawei Feng <dawei.feng@seu.edu.cn>
 
-commit d8726ef11512754a68c0ab53c57634a569b8feff upstream.
+commit 3a9de5590da4ffd9e9c541c4c4d492aa2b54cf6e upstream.
 
-The commit referenced below restarts the CS if the validation is
-still in progress. When debug_vm is enabled, all BOs from the CS
-are invalidated so we will hit an infinite loop.
+ice_lbtest_prepare_rings() frees Rx rings only when
+ice_vsi_start_all_rx_rings() fails. If ice_vsi_setup_rx_rings() fails
+after allocating some descriptors, or if ice_vsi_cfg_lan() fails after
+the Rx rings were prepared, the function reaches the Tx cleanup path
+without releasing the initialized Rx resources.
 
-To avoid that, defer BO invalidation to amdgpu_cs_parser_fini.
+Fix this by adding separate unwind paths for Rx setup failure and LAN
+configuration failure. The Rx setup failure path releases the partially
+prepared Rx rings before freeing Tx rings, while later failures first
+undo the LAN Tx configuration and then release the Rx rings in reverse
+setup order.
 
-Fixes: 59720bfd8c6d ("drm/amdgpu: restart the CS if some parts of the VM are still invalidated")
-Signed-off-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 8c990ee9daa295462df24982ce6878db997a380a)
+The bug was first flagged by an experimental analysis tool we are
+developing for kernel memory-management bugs while analyzing
+v6.13-rc1. The tool is still under development and is not yet publicly
+available. Manual inspection confirms that the bug is still
+present in v7.1-rc7.
+
+An x86_64 allyesconfig build showed no new warnings. As we do not have an
+Intel E800 Series adapter available to run the ethtool offline loopback
+selftest, no runtime testing was able to be performed.
+
+Fixes: 0e674aeb0b77 ("ice: Add handler for ethtool selftest")
 Cc: stable@vger.kernel.org
+Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c |   30 ++++++++++++++++--------------
- 1 file changed, 16 insertions(+), 14 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_ethtool.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-@@ -1182,19 +1182,6 @@ static int amdgpu_cs_vm_handling(struct
- 		job->vm_pd_addr = amdgpu_gmc_pd_addr(vm->root.bo);
- 	}
+--- a/drivers/net/ethernet/intel/ice/ice_ethtool.c
++++ b/drivers/net/ethernet/intel/ice/ice_ethtool.c
+@@ -1069,18 +1069,18 @@ static int ice_lbtest_prepare_rings(stru
  
--	if (adev->debug_vm) {
--		/* Invalidate all BOs to test for userspace bugs */
--		amdgpu_bo_list_for_each_entry(e, p->bo_list) {
--			struct amdgpu_bo *bo = e->bo;
--
--			/* ignore duplicates */
--			if (!bo)
--				continue;
--
--			amdgpu_vm_bo_invalidate(bo, false);
--		}
--	}
--
+ 	status = ice_vsi_cfg_lan(vsi);
+ 	if (status)
+-		goto err_setup_rx_ring;
++		goto err_cfg_lan;
+ 
+ 	status = ice_vsi_start_all_rx_rings(vsi);
+ 	if (status)
+-		goto err_start_rx_ring;
++		goto err_cfg_lan;
+ 
  	return 0;
- }
  
-@@ -1384,6 +1371,8 @@ static int amdgpu_cs_submit(struct amdgp
- /* Cleanup the parser structure */
- static void amdgpu_cs_parser_fini(struct amdgpu_cs_parser *parser)
- {
-+	struct amdgpu_device *adev = parser->adev;
-+	struct amdgpu_bo_list_entry *e;
- 	unsigned int i;
+-err_start_rx_ring:
+-	ice_vsi_free_rx_rings(vsi);
+-err_setup_rx_ring:
++err_cfg_lan:
+ 	ice_vsi_stop_lan_tx_rings(vsi, ICE_NO_RESET, 0);
++err_setup_rx_ring:
++	ice_vsi_free_rx_rings(vsi);
+ err_setup_tx_ring:
+ 	ice_vsi_free_tx_rings(vsi);
  
- 	amdgpu_sync_free(&parser->sync);
-@@ -1399,8 +1388,21 @@ static void amdgpu_cs_parser_fini(struct
- 
- 	if (parser->ctx)
- 		amdgpu_ctx_put(parser->ctx);
--	if (parser->bo_list)
-+	if (parser->bo_list) {
-+		if (adev->debug_vm) {
-+			/* Invalidate all BOs to test for userspace bugs */
-+			amdgpu_bo_list_for_each_entry(e, parser->bo_list) {
-+				struct amdgpu_bo *bo = e->bo;
-+
-+				/* ignore duplicates */
-+				if (!bo)
-+					continue;
-+
-+				amdgpu_vm_bo_invalidate(bo, false);
-+			}
-+		}
- 		amdgpu_bo_list_put(parser->bo_list);
-+	}
- 
- 	for (i = 0; i < parser->nchunks; i++)
- 		kvfree(parser->chunks[i].kdata);
 
 
