@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17FD33B2FF2;
-	Fri,  7 Aug 2026 15:11:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFC992F1FDF;
+	Fri,  7 Aug 2026 15:11:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115506; cv=none; b=IabEas3O6QsYO7yiQh/xXzQ2qvI3f5nXoAVLkMrEkk/xW4vycox/XrNwOQ4Qn3IIi6DT3W1T1rL7qeQgejWLN7/CbKRsyqY8+7BMEZAV2Q707TPFL4VjAdsXJVMmxkV8jzHyzqAH8Q7x0QOXZiZM9MBaVxCzfl3Wt3nD5pird2s=
+	t=1786115507; cv=none; b=UXfrxrGYvqwPL/14G7LQ05kBkPpRrgrVAarSX7wD0gHMmcj957e7JFr1iIC/Kf7K93n9ZE/9o8L/2jh+Iu69qspTvvRu7ZnNmx2/L/kyPz0mn1uz7A55fv+ib0b69YqD/qn64hPSYmJXa5QGbIMtKtPVEUJnMlUGSL1y8P5O5to=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115506; c=relaxed/simple;
-	bh=xqhQ2NFErcSxPWSELgJZWYLtYoR5rxqbH+7o/smlzwc=;
+	s=arc-20240116; t=1786115507; c=relaxed/simple;
+	bh=6FNsdSmEMGtitV/Atd3oP6jsZAABjxuZ6ttQ+JH4Pl0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=emeyoolSiiMbt1WDg/r9ulvPzV3Cn0KKPDn+9IWOYd4x288DGhLZHLeRBn8K92yoqvCf7x4OmL0DNCMnlDAURZTUUMxcbAn4OoP1ibOjZckXLeS6Qv63h21nud8MNuO1mdvWAjp40MBfLdFhQeSeCkeYWORh7uRzZP05dmBASQQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l0RfjpX9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sJL1Czy6xiexr1o9KjLRWrXrT1A2b45K+UNIP/G7KL1ZvGG8B/1ZWCEbfTWYzJ/QPMvRSTGRjGlMMIiAnHUBaUccIDz9i/Cte6kyLq4Q2yoOI6z1nSdhvgQXO5KnYwIs2GAn/w1m2JlK1ySi3uj4K+A4X3nQunl1TgSii8XtIl0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BbNLHXcD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l0RfjpX9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7171E1F000E9;
-	Fri,  7 Aug 2026 15:11:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BbNLHXcD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 431651F00A3A;
+	Fri,  7 Aug 2026 15:11:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115500;
-	bh=lBv/rDZv53SG4rVgZA5Fo0z9Kl0OJJ2UVDQAYyIYJxw=;
+	s=korg; t=1786115502;
+	bh=TRjBJZvd0m/kWXjFes338TC5NC+jtZf17oWX6QRm3rU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l0RfjpX9/HWJnNtIDNqRGc9mW1vTT6HHhSs1cCUBcM+GEv3lFPIagdDcRaw7fcFIG
-	 Xq6raRDQjJVyOzRCd2QozzkItdGC9C496raAgx3WGrcqUOchB6xbX7BcTuRHp6gVAl
-	 1ZxUm06hLoSdYQm6nWao1uPThMoSXbGOHY2zhZAg=
+	b=BbNLHXcDh3+sevsLTjd1UzQsP8PUuA0pGPJxYODD3nMWTruFmLDU756prOYUzi0mO
+	 41S3ZxtMy8KJtnWDlJLF0WNl6WbnX+3HQBCkAjbcBg5yxjI3reELllJxDdWqStCf7o
+	 +Qls0Y5cgkoaZfWUVL37CUYj+BKD66lvJb3+d+vk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jian Zhou <eilaimemedsnaimel@gmail.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
 	Oleksij Rempel <o.rempel@pengutronix.de>,
 	stable@kernel.org,
 	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.18 299/396] can: j1939: transport: j1939_session_fresh_new(): initialize receive buffer
-Date: Fri,  7 Aug 2026 16:37:39 +0200
-Message-ID: <20260807143430.718879122@linuxfoundation.org>
+Subject: [PATCH 6.18 300/396] can: j1939: use netdevice_tracker for j1939_{priv,session,ecu} tracking
+Date: Fri,  7 Aug 2026 16:37:40 +0200
+Message-ID: <20260807143430.739468676@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -52,40 +52,162 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleksij Rempel <o.rempel@pengutronix.de>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-commit eb96c58907922546e415e545fe9a14ea63b02719 upstream.
+commit d2fb981384b3a45f690616d550b29046e8ad16a4 upstream.
 
-Zero the allocated buffer in j1939_session_fresh_new() to ensure it
-contains no residual data.
+syzbot is still reporting
 
-While there is a potential performance impact if users allocate maximum
-sized ETP buffers, most real-world use cases are not noticeably affected
-since the maximum known buffer size is typically around 65K.
+  unregister_netdevice: waiting for vcan0 to become free. Usage count = 2
 
-Fixes: 9d71dd0c7009 ("can: add support of SAE J1939 protocol")
-Reported-by: Ji'an Zhou <eilaimemedsnaimel@gmail.com>
-Message-ID: <CAPAUci5dykCLjoijqkUtFqJFesgncrD7+S6y_V=gjbFkY2Tifg@mail.gmail.com>
+problem. A debug printk() patch in linux-next-20260508 identified that
+there is dev_hold()/dev_put() imbalance in j1939_priv management.
+
+  Call trace for vcan0[26] +4 at
+     __dev_hold include/linux/netdevice.h:4470 [inline]
+     netdev_hold include/linux/netdevice.h:4513 [inline]
+     dev_hold include/linux/netdevice.h:4536 [inline]
+     j1939_priv_create net/can/j1939/main.c:140 [inline]
+     j1939_netdev_start+0x36b/0xc10 net/can/j1939/main.c:268
+     j1939_sk_bind+0x853/0xb30 net/can/j1939/socket.c:506
+     __sys_bind_socket net/socket.c:1948 [inline]
+     __sys_bind+0x2e9/0x410 net/socket.c:1979
+
+  Call trace for vcan0[28] -3 at
+     __dev_put include/linux/netdevice.h:4456 [inline]
+     netdev_put include/linux/netdevice.h:4523 [inline]
+     dev_put include/linux/netdevice.h:4548 [inline]
+     __j1939_priv_release net/can/j1939/main.c:166 [inline]
+     kref_put include/linux/kref.h:65 [inline]
+     j1939_priv_put+0x128/0x270 net/can/j1939/main.c:172
+     j1939_sk_sock_destruct+0x52/0x90 net/can/j1939/socket.c:388
+     __sk_destruct+0x8d/0x9d0 net/core/sock.c:2352
+     rcu_do_batch kernel/rcu/tree.c:2617 [inline]
+     rcu_core kernel/rcu/tree.c:2869 [inline]
+     rcu_cpu_kthread+0x99e/0x1470 kernel/rcu/tree.c:2957
+     smpboot_thread_fn+0x541/0xa50 kernel/smpboot.c:160
+     kthread+0x388/0x470 kernel/kthread.c:436
+     ret_from_fork+0x514/0xb70 arch/x86/kernel/process.c:158
+     ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
+
+This refcount leak in j1939_priv might be caused by a refcount leak in
+j1939_{session,ecu} because j1939_{session,ecu} holds a ref on j1939_priv.
+For further investigation using upstream kernels, enable netdevice_tracker
+in j1939_{priv,session,ecu} management.
+
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
 Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://patch.msgid.link/20260728055835.1151785-3-o.rempel@pengutronix.de
+Link: https://patch.msgid.link/20260728055835.1151785-2-o.rempel@pengutronix.de
 Cc: stable@kernel.org
-[mkl: add Message-ID]
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/can/j1939/transport.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/can/j1939/bus.c        |    2 ++
+ net/can/j1939/j1939-priv.h |    3 +++
+ net/can/j1939/main.c       |    8 ++++----
+ net/can/j1939/transport.c  |    2 ++
+ 4 files changed, 11 insertions(+), 4 deletions(-)
 
+--- a/net/can/j1939/bus.c
++++ b/net/can/j1939/bus.c
+@@ -20,6 +20,7 @@ static void __j1939_ecu_release(struct k
+ 	struct j1939_priv *priv = ecu->priv;
+ 
+ 	list_del(&ecu->list);
++	netdev_put(priv->ndev, &ecu->priv_dev_tracker);
+ 	kfree(ecu);
+ 	j1939_priv_put(priv);
+ }
+@@ -155,6 +156,7 @@ struct j1939_ecu *j1939_ecu_create_locke
+ 	if (!ecu)
+ 		return ERR_PTR(-ENOMEM);
+ 	kref_init(&ecu->kref);
++	netdev_hold(priv->ndev, &ecu->priv_dev_tracker, gfp_any());
+ 	ecu->addr = J1939_IDLE_ADDR;
+ 	ecu->name = name;
+ 
+--- a/net/can/j1939/j1939-priv.h
++++ b/net/can/j1939/j1939-priv.h
+@@ -38,6 +38,7 @@ struct j1939_ecu {
+ 	struct hrtimer ac_timer;
+ 	struct kref kref;
+ 	struct j1939_priv *priv;
++	netdevice_tracker priv_dev_tracker;
+ 
+ 	/* count users, to help transport protocol decide for interaction */
+ 	int nusers;
+@@ -60,6 +61,7 @@ struct j1939_priv {
+ 	rwlock_t lock;
+ 
+ 	struct net_device *ndev;
++	netdevice_tracker dev_tracker;
+ 
+ 	/* list of 256 ecu ptrs, that cache the claimed addresses.
+ 	 * also protected by the above lock
+@@ -230,6 +232,7 @@ enum j1939_session_state {
+ 
+ struct j1939_session {
+ 	struct j1939_priv *priv;
++	netdevice_tracker priv_dev_tracker;
+ 	struct list_head active_session_list_entry;
+ 	struct list_head sk_session_queue_entry;
+ 	struct kref kref;
+--- a/net/can/j1939/main.c
++++ b/net/can/j1939/main.c
+@@ -137,7 +137,7 @@ static struct j1939_priv *j1939_priv_cre
+ 	priv->ndev = ndev;
+ 	kref_init(&priv->kref);
+ 	kref_init(&priv->rx_kref);
+-	dev_hold(ndev);
++	netdev_hold(ndev, &priv->dev_tracker, GFP_KERNEL);
+ 
+ 	netdev_dbg(priv->ndev, "%s : 0x%p\n", __func__, priv);
+ 
+@@ -163,7 +163,7 @@ static void __j1939_priv_release(struct
+ 	WARN_ON_ONCE(!list_empty(&priv->ecus));
+ 	WARN_ON_ONCE(!list_empty(&priv->j1939_socks));
+ 
+-	dev_put(ndev);
++	netdev_put(ndev, &priv->dev_tracker);
+ 	kfree(priv);
+ }
+ 
+@@ -281,7 +281,7 @@ struct j1939_priv *j1939_netdev_start(st
+ 		 */
+ 		kref_get(&priv_new->rx_kref);
+ 		mutex_unlock(&j1939_netdev_lock);
+-		dev_put(ndev);
++		netdev_put(ndev, &priv->dev_tracker);
+ 		kfree(priv);
+ 		return priv_new;
+ 	}
+@@ -298,7 +298,7 @@ struct j1939_priv *j1939_netdev_start(st
+ 	j1939_priv_set(ndev, NULL);
+ 	mutex_unlock(&j1939_netdev_lock);
+ 
+-	dev_put(ndev);
++	netdev_put(ndev, &priv->dev_tracker);
+ 	kfree(priv);
+ 
+ 	return ERR_PTR(ret);
 --- a/net/can/j1939/transport.c
 +++ b/net/can/j1939/transport.c
-@@ -1558,7 +1558,7 @@ j1939_session *j1939_session_fresh_new(s
+@@ -282,6 +282,7 @@ static void j1939_session_destroy(struct
+ 		kfree_skb(skb);
  	}
- 
- 	/* alloc data area */
--	skb_put(skb, size);
-+	skb_put_zero(skb, size);
- 	/* skb is recounted in j1939_session_new() */
- 	return session;
+ 	__j1939_session_drop(session);
++	netdev_put(session->priv->ndev, &session->priv_dev_tracker);
+ 	j1939_priv_put(session->priv);
+ 	kfree(session);
  }
+@@ -1510,6 +1511,7 @@ static struct j1939_session *j1939_sessi
+ 	INIT_LIST_HEAD(&session->active_session_list_entry);
+ 	INIT_LIST_HEAD(&session->sk_session_queue_entry);
+ 	kref_init(&session->kref);
++	netdev_hold(priv->ndev, &session->priv_dev_tracker, gfp_any());
+ 
+ 	j1939_priv_get(priv);
+ 	session->priv = priv;
 
 
