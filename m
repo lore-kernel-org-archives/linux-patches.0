@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70B3846E00D;
-	Fri,  7 Aug 2026 15:47:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50C77390608;
+	Fri,  7 Aug 2026 15:47:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786117647; cv=none; b=MZvGUQpyWWJDnf7H0XtZqn0bR0OT3f8CA2FLwlA05ENWLOdRTKxzJh+ykkFj7XndtqwC7HR0wI5fAV57HZrmbJoRjfStxsaLlgRqNc+jTZz4x9W1s701BbUV560OeGYKqXORdvnVwzI981zIRCst0buwrHmy/wdhgoSe7hECnUs=
+	t=1786117650; cv=none; b=lty5yNqoGO0HmHQWazvzYKDBTuG0NWkovQKKvkYQeCVgzLeXsnN+V2Qf20ysYXufPHE41U3X+ika5yVT4sb47hCGR0GUUoVS02NLONKB8HvJkVKyvWImtqEHfgeovIiuSpKr+B45BcP0qA7o+O8qNcXHDjvguJsq0nbdT1YwFNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786117647; c=relaxed/simple;
-	bh=m1DDu/HBUch469Qrfgm8z0I1wM3H5lZxgBQS9nryEsM=;
+	s=arc-20240116; t=1786117650; c=relaxed/simple;
+	bh=cqZfrkalYHLrqsWggy55F8Ot5QmXxgMUJSQRUvF5YKU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Uxmavqw4ND1iQ9JEvmMHzj6/mGsnncv2pFMJkJDb5t9MXhjO6hScpYbI7F+XTM6fR6qVS3A36aH5GV6HPc8u/uWPWFZ21Tc450tXqEexroxjaTQTokjW+tnLNXOHY/OrEJR3OSMKkoZPDTL/R+Hp6Fbck/d4BM4V2RuHZkrY+Qc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=daODW+eA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rT9spk6sxQl4tQExY77M8M4M7ArOn+4VtJGsyegdoXOu2OtgpaOItpOTlZ2HTBSAEZEgNO7wJihIUX4XWXZIeK7YRwkcjjqDpxWJCelUg4An7X+EfHyYRjHF8g1s2d4oAI4uH7bXoPflu/5w0E94scQL+XjRy/Jh4x5VWTs7kRY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uwoiYe+6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="daODW+eA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC69D1F000E9;
-	Fri,  7 Aug 2026 15:47:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uwoiYe+6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A43E71F000E9;
+	Fri,  7 Aug 2026 15:47:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786117646;
-	bh=/XpVKP8RK3BMH58YXNo30FMcnUtHMvv0sXU3RotRoKQ=;
+	s=korg; t=1786117649;
+	bh=8KBqvQiqZVKvg8X2O7tnZDJw/LGStfsTJNGljyJSeeM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=daODW+eA5JcuROowTD+NyR3sseBklswfj0iFwpv541vpuHXdQC+ikUzF/cACttkcJ
-	 a1T62JIPonSwYz6BzSpwRS2tguQC9rIW8ARW5mfC8sVk+3qpNTDjmELaGmG0Bq0/v7
-	 hdbO2FTf4yZrERcAxu5CMTAlrcHvrvM+km4zDSt4=
+	b=uwoiYe+6K2ofZqo05q/06Av+zi1mUB3671viX+SnF7g4jnpUkpO3ARS9q2+Mhuu6w
+	 u36FJYiiKPuD3njLAKg0oSWTkUd3RZfcCkYZYDIYzfDnPBwckJaA3sfM3WxvYO2OOP
+	 mR3XIZwuYOLgt2tvRYm6QjAGv43Hwft7zF1brvgI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dawei Feng <dawei.feng@seu.edu.cn>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Rinitha S <sx.rinitha@intel.com>
-Subject: [PATCH 7.1 355/438] ice: fix memory leak in ice_lbtest_prepare_rings()
-Date: Fri,  7 Aug 2026 16:39:11 +0200
-Message-ID: <20260807143435.538156255@linuxfoundation.org>
+	Candice Li <candice.li@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Yang Wang <kevinyang.wang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 7.1 391/438] drm/amdgpu: restore UMD profile pstate after runtime resume
+Date: Fri,  7 Aug 2026 16:39:47 +0200
+Message-ID: <20260807143436.300297948@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -52,68 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dawei Feng <dawei.feng@seu.edu.cn>
+From: Candice Li <candice.li@amd.com>
 
-commit 3a9de5590da4ffd9e9c541c4c4d492aa2b54cf6e upstream.
+commit f931c54b241ce2f36bfc34955aec43a188276b8d upstream.
 
-ice_lbtest_prepare_rings() frees Rx rings only when
-ice_vsi_start_all_rx_rings() fails. If ice_vsi_setup_rx_rings() fails
-after allocating some descriptors, or if ice_vsi_cfg_lan() fails after
-the Rx rings were prepared, the function reaches the Tx cleanup path
-without releasing the initialized Rx resources.
+Runtime suspend runs GFX hw_fini and clears perfmon clock gating while
+the UMD profile DPM level remains set in software.  Re-apply stable
+pstate after a successful runtime resume when a profile mode is active.
 
-Fix this by adding separate unwind paths for Rx setup failure and LAN
-configuration failure. The Rx setup failure path releases the partially
-prepared Rx rings before freeing Tx rings, while later failures first
-undo the LAN Tx configuration and then release the Rx rings in reverse
-setup order.
-
-The bug was first flagged by an experimental analysis tool we are
-developing for kernel memory-management bugs while analyzing
-v6.13-rc1. The tool is still under development and is not yet publicly
-available. Manual inspection confirms that the bug is still
-present in v7.1-rc7.
-
-An x86_64 allyesconfig build showed no new warnings. As we do not have an
-Intel E800 Series adapter available to run the ethtool offline loopback
-selftest, no runtime testing was able to be performed.
-
-Fixes: 0e674aeb0b77 ("ice: Add handler for ethtool selftest")
+Signed-off-by: Candice Li <candice.li@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 138531c8850cc247aa12b104bb29ea387bcdcbb1)
 Cc: stable@vger.kernel.org
-Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/ice/ice_ethtool.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c |   15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
---- a/drivers/net/ethernet/intel/ice/ice_ethtool.c
-+++ b/drivers/net/ethernet/intel/ice/ice_ethtool.c
-@@ -1069,18 +1069,18 @@ static int ice_lbtest_prepare_rings(stru
- 
- 	status = ice_vsi_cfg_lan(vsi);
- 	if (status)
--		goto err_setup_rx_ring;
-+		goto err_cfg_lan;
- 
- 	status = ice_vsi_start_all_rx_rings(vsi);
- 	if (status)
--		goto err_start_rx_ring;
-+		goto err_cfg_lan;
- 
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+@@ -2876,6 +2876,19 @@ static int amdgpu_pmops_runtime_suspend(
  	return 0;
+ }
  
--err_start_rx_ring:
--	ice_vsi_free_rx_rings(vsi);
--err_setup_rx_ring:
-+err_cfg_lan:
- 	ice_vsi_stop_lan_tx_rings(vsi, ICE_NO_RESET, 0);
-+err_setup_rx_ring:
-+	ice_vsi_free_rx_rings(vsi);
- err_setup_tx_ring:
- 	ice_vsi_free_tx_rings(vsi);
++static void amdgpu_restore_umd_profile_pstate_after_runpm(struct amdgpu_device *adev)
++{
++	enum amd_dpm_forced_level level;
++	uint32_t profile_mode_mask = AMD_DPM_FORCED_LEVEL_PROFILE_STANDARD |
++		AMD_DPM_FORCED_LEVEL_PROFILE_MIN_SCLK |
++		AMD_DPM_FORCED_LEVEL_PROFILE_MIN_MCLK |
++		AMD_DPM_FORCED_LEVEL_PROFILE_PEAK;
++
++	level = amdgpu_dpm_get_performance_level(adev);
++	if (level & profile_mode_mask)
++		amdgpu_asic_update_umd_stable_pstate(adev, true);
++}
++
+ static int amdgpu_pmops_runtime_resume(struct device *dev)
+ {
+ 	struct pci_dev *pdev = to_pci_dev(dev);
+@@ -2920,6 +2933,8 @@ static int amdgpu_pmops_runtime_resume(s
  
+ 	if (adev->pm.rpm_mode == AMDGPU_RUNPM_PX)
+ 		drm_dev->switch_power_state = DRM_SWITCH_POWER_ON;
++
++	amdgpu_restore_umd_profile_pstate_after_runpm(adev);
+ 	adev->in_runpm = false;
+ 	return 0;
+ }
 
 
