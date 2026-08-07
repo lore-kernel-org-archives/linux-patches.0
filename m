@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 996304749F0;
-	Fri,  7 Aug 2026 15:34:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A94863B9943;
+	Fri,  7 Aug 2026 15:34:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116875; cv=none; b=s2Qfqk/PAhL5MPWx08ZPArNRrXMojjfxn5I0nwPxXtVosvRHnlgwgEIsWH7CT9oqlBOWzcVjkjyrHVgLeE5Ty352sCQ8d/aPJ7Go31x8NtP4OIjpy8ZdbaHgAYddU/IhL5oX57KjsD+rIK4fo1aZtkpcFId9ZeLEtH4uk7dj9sE=
+	t=1786116878; cv=none; b=JLZ7/4JXB2+PnnCyAdT5fgClwgsB+zLY9CDFSYO/Cl4SuioNd6G3NL6t9Q3fOvEPQ2ZWYwaa1PnOtCzOKPDk84+W2G1xA7VBu3uRf5tfOxX0QWaRCGWXALf0SX31vCV2hD7Lw2gMPs1q/kreSzVKeKPtKh/t+q6SzhUfXgUT9ws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116875; c=relaxed/simple;
-	bh=zDuKMxl79e2TZpH1OsUEu3pK/s1VW4rx2fdc99AiLcs=;
+	s=arc-20240116; t=1786116878; c=relaxed/simple;
+	bh=r72LiJLgEs4OwFm7Y8FFwr83Jhmzt2nWGeQQUef3WFA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=do3LQTVAWG3PahqltYYfSFyOgZ/hYYmzmdx2/IgQFkIWsdLrNrLkht82Nr0G0YdgQDaP1StU/3crftYKKXhdItKeury9GMCXAcVyf2/byNf9JxbAcKt81J5diYLpk1FKf+6bmYsJmM7G83PhtSnY9YqXq9m9WDqcIW28hdJn8L0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cMnNxNx5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bQpxMuN2bmJU6U8YrLbhiMAF7cT4rpJt4KRLGjhvqpr2Vu/yLUVKAAzMINLVFovt9Qls++Yax+oo597Q2aBYd8u5g32DO8wo5oevRf4yHgSMiiHbMc1Xx1CKffDOweka8prhALe8fO4oCpRooV12jBtTvv1FKsDTneji3dIXCv4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bta9DfmQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cMnNxNx5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 013811F000E9;
-	Fri,  7 Aug 2026 15:34:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bta9DfmQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB97B1F000E9;
+	Fri,  7 Aug 2026 15:34:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116874;
-	bh=NebEIZ/okAEb4M56K+t8QeYMzvzm8tXdh1eMJo/vELw=;
+	s=korg; t=1786116877;
+	bh=uwtwbWAsgFXciQ22zDgPDSkqyNPbkNWhWc3bcglPsx4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cMnNxNx5swtrgaOK4r7n+OElKl5VhtR0dtIKUe2Vn7S0qgfzDeEgka2YZfRBbmezo
-	 i0CtCn0wWKB/EtP8njeMw9d3wcjT9MwrdttcWTz+DpHRCWB/IlfMBuiU5s6nlzyi88
-	 7W9rk2WlOI+5W6zGeolnIjjCueMiDXcBO5oDW7KQ=
+	b=bta9DfmQuSw4msCP5ly+H4+a9qvoEY/VkYKqgT6ehiD1rN4QzX5CaKLr1srcOpl0Z
+	 U1H9a0Mw/1TDpPlRNXJ/mYyK36wIzJYHfMg4iwot3Mz2/OeycJrhOHX4g6eKb6LmJo
+	 QX0yqC8i5V+9+NA89CgKmli/6QoDmrCsuaUikfc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
-	Mark Brown <broonie@kernel.org>,
+	AutonomousCodeSecurity@microsoft.com,
+	"Cen Zhang (Microsoft)" <blbllhy@gmail.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 066/438] ASoC: SDCA: Make UMP message size check more robust
-Date: Fri,  7 Aug 2026 16:34:22 +0200
-Message-ID: <20260807143429.397439086@linuxfoundation.org>
+Subject: [PATCH 7.1 115/438] net/sched: cls_u32: validate offshift to prevent shift-out-of-bounds
+Date: Fri,  7 Aug 2026 16:35:11 +0200
+Message-ID: <20260807143430.446268503@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -52,46 +54,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charles Keepax <ckeepax@opensource.cirrus.com>
+From: Cen Zhang (Microsoft) <blbllhy@gmail.com>
 
-[ Upstream commit 556d872e7c2a0b570c5b0974813847ef0d0cd637 ]
+[ Upstream commit aef96eead2860cbfa371e4471d4f04412213b958 ]
 
-If message offset was larger than the buffer length the size
-check will pass incorrectly. Refactor the check such that it is
-more robust to invalid sizes.
+u32_change() copies the user-provided tc_u32_sel.offshift (unsigned char,
+0-255) into the kernel knode object without bounds validation. When a
+packet later hits u32_classify() with TC_U32_VAROFFSET set, it evaluates
+`ntohs(offmask & *data) >> offshift` where the left operand is a 16-bit
+value promoted to a 32-bit int. Any offshift >= 32 is undefined behavior
+per C11 6.5.7p3, triggerable by an unprivileged user via user/network
+namespaces.
 
-Fixes: daab108504be ("ASoC: SDCA: Add UMP buffer helper functions")
-Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>
-Link: https://patch.msgid.link/20260722103500.872714-4-ckeepax@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+UBSAN: shift-out-of-bounds in net/sched/cls_u32.c:236:43
+shift exponent 32 is too large for 32-bit type int
+
+Fix this by rejecting offshift >= 16 during filter creation in
+u32_change().
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: AutonomousCodeSecurity@microsoft.com
+Link: https://lore.kernel.org/all/20260720034514.23053-1-blbllhy@gmail.com
+Signed-off-by: Cen Zhang (Microsoft) <blbllhy@gmail.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Tested-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Tested-by: Victor Nogueira <victor@mojatatu.com>
+Link: https://patch.msgid.link/20260723044955.89471-1-blbllhy@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sdca/sdca_ump.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/sched/cls_u32.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/sound/soc/sdca/sdca_ump.c b/sound/soc/sdca/sdca_ump.c
-index a86bb28c6d0ad..82a8bf75bbca5 100644
---- a/sound/soc/sdca/sdca_ump.c
-+++ b/sound/soc/sdca/sdca_ump.c
-@@ -141,7 +141,7 @@ int sdca_ump_read_message(struct device *dev,
- 		return ret;
+diff --git a/net/sched/cls_u32.c b/net/sched/cls_u32.c
+index 8f30cc82181d9..ac98b1c2144a7 100644
+--- a/net/sched/cls_u32.c
++++ b/net/sched/cls_u32.c
+@@ -1107,6 +1107,13 @@ static int u32_change(struct net *net, struct sk_buff *in_skb,
+ 		goto erridr;
  	}
  
--	if (msg_len > buf_len - msg_offset) {
-+	if (msg_offset + msg_len > buf_len) {
- 		dev_err(dev, "%s: message too big for UMP buffer: %d\n",
- 			entity->label, msg_len);
- 		return -EINVAL;
-@@ -207,7 +207,7 @@ int sdca_ump_write_message(struct device *dev,
- 	buf_len = sdca_range(range, SDCA_MESSAGEOFFSET_BUFFER_LENGTH, 0);
- 	ump_mode = sdca_range(range, SDCA_MESSAGEOFFSET_UMP_MODE, 0);
- 
--	if (msg_len > buf_len - msg_offset) {
-+	if (msg_offset + msg_len > buf_len) {
- 		dev_err(dev, "%s: message too big for UMP buffer: %d\n",
- 			entity->label, msg_len);
- 		return -EINVAL;
++	if (s->offshift >= 16) {
++		NL_SET_ERR_MSG_MOD(extack,
++				   "offshift must be less than 16");
++		err = -EINVAL;
++		goto erridr;
++	}
++
+ 	n = kzalloc_flex(*n, sel.keys, s->nkeys);
+ 	if (n == NULL) {
+ 		err = -ENOBUFS;
 -- 
 2.53.0
 
