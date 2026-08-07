@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCEE840911F;
-	Fri,  7 Aug 2026 14:57:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97A1647D44A;
+	Fri,  7 Aug 2026 14:57:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114672; cv=none; b=Jj0RTXVt2tct147yNnnHbvBexHEcMy2TEBS43scLYYPJhR1rSa8FfYKNNETj3M+a2zlSF1Agi7F6r5epEUxwB+aYLZI0oO51vvyhqOEztguWE8RdWvMfixsiRBfPFHSNvS9mK0I6dtT9xfc1smczcxv7y88+PZX8hVPVP9BybFc=
+	t=1786114675; cv=none; b=MXmoOWWy+VHpQTlL3d+cTQjGGWSQ0/ivz+YTBQfqsaP32bNadQ3k1fw0uryxxtjemWjnI2LBcD9Aw332Q1BkR0nA8Da+PTNiBQIltJWfxqKhsUNzwVnFB+jspaAl7xP/VyaeYtKAjWFeJQZ2oyDo8W71nvAohab7WKhzWujW4w8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114672; c=relaxed/simple;
-	bh=ttWLDdMd637uOgCJeRuRybRXWnVFTHwScUCRtrWEeSM=;
+	s=arc-20240116; t=1786114675; c=relaxed/simple;
+	bh=mgFYT8/CQf+nosyqVld1CB4D7VJPgA56sX/N77jIiqs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LXYOKc+dr5osbFxdo/oeuC13lCf77Qi84l9f9bbxwsSeEdmeQPKMn+KJOLE/uFl3qnJ13Vd3dS5hQ0vpKSWxlvbXCwKYwh/dBwQomVGUHv9Qav1JwSyX/sDeOeXpPpu02zI0CeVe/qt1B5rxIzWCIg54g9CHet1UthYMVAd4LfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JRs/L+Ri; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=STGIuBgwnIEVevAot4T5fO87qStv/Ew90ScqJKZ304fBsYS3taeS5G4gS2vsrQcMM9BhIaBXDg5+rXsyeg0fK5/neOY3DybSiH/11MX1DEnNfCijAL2LRXm0XfAzawH40qmfzlWsGrVBgVS3FTx2HfXfg4b4MkmZmE9YsI8DcTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W+okXSNN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JRs/L+Ri"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A03D1F000E9;
-	Fri,  7 Aug 2026 14:57:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W+okXSNN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E42E71F000E9;
+	Fri,  7 Aug 2026 14:57:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114670;
-	bh=U6vpffaYGf/veBVI9asLqSZ13zyqrX+Bl/hsjc8bJBU=;
+	s=korg; t=1786114673;
+	bh=ePnOt5++zJhrO4qL5kB9yANH0uB/uBtcE2xju3sWBjk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JRs/L+RiRv5QOnsd5Eti7M7UsEBGyAZq29j42LW8LuWfiTKRL1uPoc69/R04ACXib
-	 vFj9QnpqspigHO3Bwqnf1mmcxnrpi8QC529ZVqAR5vY7IpmonUyXZuwmH/Sutg4uOa
-	 o7FTezIj+z5XiJhIaNO40WjkeX0ASwPUxtswvfR0=
+	b=W+okXSNNPbx+TuDzjhu69sL5IPpW27Nu+9vwon8AXRsFCIyIfXIXqlXgzcb2hjlkd
+	 z4qWGYsMl3s7I+6ukCUFxCpw/TeX3ii04MzSqR3SJgw5mG9LG0Oae4aTiWD1EacfNe
+	 MHArxnwEzq3LCvLj88NvUub32u90WPnSJuJy96hg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
-	Philipp Stanner <phasta@kernel.org>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 311/337] drm/sched: Store the drm client_id in drm_sched_fence
-Date: Fri,  7 Aug 2026 16:38:34 +0200
-Message-ID: <20260807143425.268495936@linuxfoundation.org>
+Subject: [PATCH 6.18 001/396] netfilter: nf_conntrack_expect: restore helper propagation via expectation
+Date: Fri,  7 Aug 2026 16:32:41 +0200
+Message-ID: <20260807143424.308517634@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
-References: <20260807143418.516897842@linuxfoundation.org>
+In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
+References: <20260807143424.272339768@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,453 +45,272 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 2956554823cedb390b7ec4534afa898176317638 ]
+[ Upstream commit dcb0f9aefdd604d36710fda53c25bd7cf4a3e37a ]
 
-This will be used in a later commit to trace the drm client_id in
-some of the gpu_scheduler trace events.
+A recent series to fix expectations broke helper propagation via
+expectation, this mechanism is used by the sip and h323 helper. This
+also propagates the conntrack helper to expected connections. I changed
+semantics of exp->helper which now tells us the actual helper that
+created the expectation.
 
-This requires changing all the users of drm_sched_job_init to
-add an extra parameter.
+Add an explicit assign_helper field to expectations for this purpose
+and update helpers to use it.
 
-The newly added drm_client_id field in the drm_sched_fence is a bit
-of a duplicate of the owner one. One suggestion I received was to
-merge those 2 fields - this can't be done right now as amdgpu uses
-some special values (AMDGPU_FENCE_OWNER_*) that can't really be
-translated into a client id. Christian is working on getting rid of
-those; when it's done we should be able to squash owner/drm_client_id
-together.
+Restore this feature for userspace conntrack helper via ctnetlink
+nfqueue integration so it is again possible to attach a helper to an
+expectation, where it makes sense. This is not restored via ctnetlink
+expectation creation as there is no client for such feature. Use the
+expectation layer 4 protocol number for the helper lookup for
+consistency.
 
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
-Signed-off-by: Philipp Stanner <phasta@kernel.org>
-Link: https://lore.kernel.org/r/20250526125505.2360-3-pierre-eric.pelloux-prayer@amd.com
-Stable-dep-of: 3e864bf2a32a ("drm/amdgpu/gfx: fix cleaner shader IB buffer overflow")
+Make sure the expectation using this helper propagation mechanism also
+go away when the helper is unregistered.
+
+Fixes: 9c42bc9db90a ("netfilter: nf_conntrack_expect: honor expectation helper field")
+Fixes: 917b61fa2042 ("netfilter: ctnetlink: ignore explicit helper on new expectations")
+Reported-by: Ilya Maximets <i.maximets@ovn.org>
+Tested-by: Ilya Maximets <i.maximets@ovn.org>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c   |    2 +-
- drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c       |    3 ++-
- drivers/gpu/drm/amd/amdgpu/amdgpu_job.c      |    8 +++++---
- drivers/gpu/drm/amd/amdgpu/amdgpu_job.h      |    3 ++-
- drivers/gpu/drm/etnaviv/etnaviv_gem_submit.c |    2 +-
- drivers/gpu/drm/imagination/pvr_job.c        |    2 +-
- drivers/gpu/drm/imagination/pvr_queue.c      |    5 +++--
- drivers/gpu/drm/imagination/pvr_queue.h      |    2 +-
- drivers/gpu/drm/lima/lima_gem.c              |    2 +-
- drivers/gpu/drm/lima/lima_sched.c            |    6 ++++--
- drivers/gpu/drm/lima/lima_sched.h            |    3 ++-
- drivers/gpu/drm/msm/msm_gem_submit.c         |    8 +++++---
- drivers/gpu/drm/nouveau/nouveau_sched.c      |    3 ++-
- drivers/gpu/drm/panfrost/panfrost_drv.c      |    2 +-
- drivers/gpu/drm/panthor/panthor_drv.c        |    3 ++-
- drivers/gpu/drm/panthor/panthor_mmu.c        |    2 +-
- drivers/gpu/drm/panthor/panthor_sched.c      |    5 +++--
- drivers/gpu/drm/panthor/panthor_sched.h      |    3 ++-
- drivers/gpu/drm/scheduler/sched_fence.c      |    4 +++-
- drivers/gpu/drm/scheduler/sched_main.c       |    7 +++++--
- drivers/gpu/drm/v3d/v3d_submit.c             |    2 +-
- drivers/gpu/drm/xe/xe_sched_job.c            |    3 ++-
- include/drm/gpu_scheduler.h                  |   12 ++++++++++--
- 23 files changed, 60 insertions(+), 32 deletions(-)
+ include/net/netfilter/nf_conntrack_expect.h |  5 ++++-
+ net/netfilter/nf_conntrack_broadcast.c      |  1 +
+ net/netfilter/nf_conntrack_core.c           |  7 +++++--
+ net/netfilter/nf_conntrack_expect.c         |  1 +
+ net/netfilter/nf_conntrack_h323_main.c      | 12 ++++++------
+ net/netfilter/nf_conntrack_helper.c         |  5 +++++
+ net/netfilter/nf_conntrack_netlink.c        | 18 ++++++++++++++++--
+ net/netfilter/nf_conntrack_sip.c            |  2 +-
+ 8 files changed, 39 insertions(+), 12 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c
-@@ -681,7 +681,7 @@ int amdgpu_amdkfd_submit_ib(struct amdgp
- 		goto err;
- 	}
+diff --git a/include/net/netfilter/nf_conntrack_expect.h b/include/net/netfilter/nf_conntrack_expect.h
+index e9a8350e7ccf..80f50fd0f7ad 100644
+--- a/include/net/netfilter/nf_conntrack_expect.h
++++ b/include/net/netfilter/nf_conntrack_expect.h
+@@ -45,9 +45,12 @@ struct nf_conntrack_expect {
+ 	void (*expectfn)(struct nf_conn *new,
+ 			 struct nf_conntrack_expect *this);
  
--	ret = amdgpu_job_alloc(adev, NULL, NULL, NULL, 1, &job);
-+	ret = amdgpu_job_alloc(adev, NULL, NULL, NULL, 1, &job, 0);
- 	if (ret)
- 		goto err;
+-	/* Helper to assign to new connection */
++	/* Helper that created this expectation */
+ 	struct nf_conntrack_helper __rcu *helper;
  
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-@@ -297,7 +297,8 @@ static int amdgpu_cs_pass1(struct amdgpu
++	/* Helper to assign to new connection */
++	struct nf_conntrack_helper __rcu *assign_helper;
++
+ 	/* The conntrack of the master connection */
+ 	struct nf_conn *master;
  
- 	for (i = 0; i < p->gang_size; ++i) {
- 		ret = amdgpu_job_alloc(p->adev, vm, p->entities[i], vm,
--				       num_ibs[i], &p->jobs[i]);
-+				       num_ibs[i], &p->jobs[i],
-+				       p->filp->client_id);
- 		if (ret)
- 			goto free_all_kdata;
- 		p->jobs[i]->enforce_isolation = p->adev->enforce_isolation[fpriv->xcp_id];
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
-@@ -187,7 +187,8 @@ exit:
+diff --git a/net/netfilter/nf_conntrack_broadcast.c b/net/netfilter/nf_conntrack_broadcast.c
+index 4f39bf7c843f..75e53fde6b29 100644
+--- a/net/netfilter/nf_conntrack_broadcast.c
++++ b/net/netfilter/nf_conntrack_broadcast.c
+@@ -72,6 +72,7 @@ int nf_conntrack_broadcast_help(struct sk_buff *skb,
+ 	exp->flags                = NF_CT_EXPECT_PERMANENT;
+ 	exp->class		  = NF_CT_EXPECT_CLASS_DEFAULT;
+ 	rcu_assign_pointer(exp->helper, helper);
++	rcu_assign_pointer(exp->assign_helper, NULL);
+ 	write_pnet(&exp->net, net);
+ #ifdef CONFIG_NF_CONNTRACK_ZONES
+ 	exp->zone = ct->zone;
+diff --git a/net/netfilter/nf_conntrack_core.c b/net/netfilter/nf_conntrack_core.c
+index a877f9ad1cf2..44fa3224cc87 100644
+--- a/net/netfilter/nf_conntrack_core.c
++++ b/net/netfilter/nf_conntrack_core.c
+@@ -1771,14 +1771,17 @@ init_conntrack(struct net *net, struct nf_conn *tmpl,
+ 		spin_lock_bh(&nf_conntrack_expect_lock);
+ 		exp = nf_ct_find_expectation(net, zone, tuple, !tmpl || nf_ct_is_confirmed(tmpl));
+ 		if (exp) {
++			struct nf_conntrack_helper *assign_helper;
++
+ 			/* Welcome, Mr. Bond.  We've been expecting you... */
+ 			__set_bit(IPS_EXPECTED_BIT, &ct->status);
+ 			/* exp->master safe, refcnt bumped in nf_ct_find_expectation */
+ 			ct->master = exp->master;
+-			if (exp->helper) {
++			assign_helper = rcu_dereference(exp->assign_helper);
++			if (assign_helper) {
+ 				help = nf_ct_helper_ext_add(ct, GFP_ATOMIC);
+ 				if (help)
+-					rcu_assign_pointer(help->helper, exp->helper);
++					rcu_assign_pointer(help->helper, assign_helper);
+ 			}
  
- int amdgpu_job_alloc(struct amdgpu_device *adev, struct amdgpu_vm *vm,
- 		     struct drm_sched_entity *entity, void *owner,
--		     unsigned int num_ibs, struct amdgpu_job **job)
-+		     unsigned int num_ibs, struct amdgpu_job **job,
-+		     u64 drm_client_id)
- {
- 	if (num_ibs == 0)
- 		return -EINVAL;
-@@ -210,7 +211,8 @@ int amdgpu_job_alloc(struct amdgpu_devic
- 	if (!entity)
- 		return 0;
+ #ifdef CONFIG_NF_CONNTRACK_MARK
+diff --git a/net/netfilter/nf_conntrack_expect.c b/net/netfilter/nf_conntrack_expect.c
+index 24d0576d84b7..8e943efbdf0a 100644
+--- a/net/netfilter/nf_conntrack_expect.c
++++ b/net/netfilter/nf_conntrack_expect.c
+@@ -344,6 +344,7 @@ void nf_ct_expect_init(struct nf_conntrack_expect *exp, unsigned int class,
+ 		helper = rcu_dereference(help->helper);
  
--	return drm_sched_job_init(&(*job)->base, entity, 1, owner);
-+	return drm_sched_job_init(&(*job)->base, entity, 1, owner,
-+				  drm_client_id);
+ 	rcu_assign_pointer(exp->helper, helper);
++	rcu_assign_pointer(exp->assign_helper, NULL);
+ 	write_pnet(&exp->net, net);
+ #ifdef CONFIG_NF_CONNTRACK_ZONES
+ 	exp->zone = ct->zone;
+diff --git a/net/netfilter/nf_conntrack_h323_main.c b/net/netfilter/nf_conntrack_h323_main.c
+index bd7e9e13e4f6..a116c6629e2b 100644
+--- a/net/netfilter/nf_conntrack_h323_main.c
++++ b/net/netfilter/nf_conntrack_h323_main.c
+@@ -642,7 +642,7 @@ static int expect_h245(struct sk_buff *skb, struct nf_conn *ct,
+ 			  &ct->tuplehash[!dir].tuple.src.u3,
+ 			  &ct->tuplehash[!dir].tuple.dst.u3,
+ 			  IPPROTO_TCP, NULL, &port);
+-	rcu_assign_pointer(exp->helper, &nf_conntrack_helper_h245);
++	rcu_assign_pointer(exp->assign_helper, &nf_conntrack_helper_h245);
+ 
+ 	nathook = rcu_dereference(nfct_h323_nat_hook);
+ 	if (memcmp(&ct->tuplehash[dir].tuple.src.u3,
+@@ -766,7 +766,7 @@ static int expect_callforwarding(struct sk_buff *skb,
+ 	nf_ct_expect_init(exp, NF_CT_EXPECT_CLASS_DEFAULT, nf_ct_l3num(ct),
+ 			  &ct->tuplehash[!dir].tuple.src.u3, &addr,
+ 			  IPPROTO_TCP, NULL, &port);
+-	rcu_assign_pointer(exp->helper, nf_conntrack_helper_q931);
++	rcu_assign_pointer(exp->assign_helper, nf_conntrack_helper_q931);
+ 
+ 	nathook = rcu_dereference(nfct_h323_nat_hook);
+ 	if (memcmp(&ct->tuplehash[dir].tuple.src.u3,
+@@ -1233,7 +1233,7 @@ static int expect_q931(struct sk_buff *skb, struct nf_conn *ct,
+ 				&ct->tuplehash[!dir].tuple.src.u3 : NULL,
+ 			  &ct->tuplehash[!dir].tuple.dst.u3,
+ 			  IPPROTO_TCP, NULL, &port);
+-	rcu_assign_pointer(exp->helper, nf_conntrack_helper_q931);
++	rcu_assign_pointer(exp->assign_helper, nf_conntrack_helper_q931);
+ 	exp->flags = NF_CT_EXPECT_PERMANENT;	/* Accept multiple calls */
+ 
+ 	nathook = rcu_dereference(nfct_h323_nat_hook);
+@@ -1305,7 +1305,7 @@ static int process_gcf(struct sk_buff *skb, struct nf_conn *ct,
+ 	nf_ct_expect_init(exp, NF_CT_EXPECT_CLASS_DEFAULT, nf_ct_l3num(ct),
+ 			  &ct->tuplehash[!dir].tuple.src.u3, &addr,
+ 			  IPPROTO_UDP, NULL, &port);
+-	rcu_assign_pointer(exp->helper, nf_conntrack_helper_ras);
++	rcu_assign_pointer(exp->assign_helper, nf_conntrack_helper_ras);
+ 
+ 	if (nf_ct_expect_related(exp, 0) == 0) {
+ 		pr_debug("nf_ct_ras: expect RAS ");
+@@ -1522,7 +1522,7 @@ static int process_acf(struct sk_buff *skb, struct nf_conn *ct,
+ 			  &ct->tuplehash[!dir].tuple.src.u3, &addr,
+ 			  IPPROTO_TCP, NULL, &port);
+ 	exp->flags = NF_CT_EXPECT_PERMANENT;
+-	rcu_assign_pointer(exp->helper, nf_conntrack_helper_q931);
++	rcu_assign_pointer(exp->assign_helper, nf_conntrack_helper_q931);
+ 
+ 	if (nf_ct_expect_related(exp, 0) == 0) {
+ 		pr_debug("nf_ct_ras: expect Q.931 ");
+@@ -1576,7 +1576,7 @@ static int process_lcf(struct sk_buff *skb, struct nf_conn *ct,
+ 			  &ct->tuplehash[!dir].tuple.src.u3, &addr,
+ 			  IPPROTO_TCP, NULL, &port);
+ 	exp->flags = NF_CT_EXPECT_PERMANENT;
+-	rcu_assign_pointer(exp->helper, nf_conntrack_helper_q931);
++	rcu_assign_pointer(exp->assign_helper, nf_conntrack_helper_q931);
+ 
+ 	if (nf_ct_expect_related(exp, 0) == 0) {
+ 		pr_debug("nf_ct_ras: expect Q.931 ");
+diff --git a/net/netfilter/nf_conntrack_helper.c b/net/netfilter/nf_conntrack_helper.c
+index 9150bcfd7ca8..ea0cdb7ec915 100644
+--- a/net/netfilter/nf_conntrack_helper.c
++++ b/net/netfilter/nf_conntrack_helper.c
+@@ -419,6 +419,11 @@ static bool expect_iter_me(struct nf_conntrack_expect *exp, void *data)
+ 
+ 	this = rcu_dereference_protected(exp->helper,
+ 					 lockdep_is_held(&nf_conntrack_expect_lock));
++	if (this == me)
++		return true;
++
++	this = rcu_dereference_protected(exp->assign_helper,
++					 lockdep_is_held(&nf_conntrack_expect_lock));
+ 	return this == me;
  }
  
- int amdgpu_job_alloc_with_ib(struct amdgpu_device *adev,
-@@ -220,7 +222,7 @@ int amdgpu_job_alloc_with_ib(struct amdg
+diff --git a/net/netfilter/nf_conntrack_netlink.c b/net/netfilter/nf_conntrack_netlink.c
+index c8fe284b86db..3df7e5fc76c8 100644
+--- a/net/netfilter/nf_conntrack_netlink.c
++++ b/net/netfilter/nf_conntrack_netlink.c
+@@ -2635,6 +2635,7 @@ static const struct nla_policy exp_nla_policy[CTA_EXPECT_MAX+1] = {
+ 
+ static struct nf_conntrack_expect *
+ ctnetlink_alloc_expect(const struct nlattr *const cda[], struct nf_conn *ct,
++		       const struct nf_conntrack_helper *assign_helper,
+ 		       struct nf_conntrack_tuple *tuple,
+ 		       struct nf_conntrack_tuple *mask);
+ 
+@@ -2861,6 +2862,7 @@ static int
+ ctnetlink_glue_attach_expect(const struct nlattr *attr, struct nf_conn *ct,
+ 			     u32 portid, u32 report)
  {
- 	int r;
- 
--	r = amdgpu_job_alloc(adev, NULL, entity, owner, 1, job);
-+	r = amdgpu_job_alloc(adev, NULL, entity, owner, 1, job, 0);
- 	if (r)
- 		return r;
- 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_job.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_job.h
-@@ -90,7 +90,8 @@ static inline struct amdgpu_ring *amdgpu
- 
- int amdgpu_job_alloc(struct amdgpu_device *adev, struct amdgpu_vm *vm,
- 		     struct drm_sched_entity *entity, void *owner,
--		     unsigned int num_ibs, struct amdgpu_job **job);
-+		     unsigned int num_ibs, struct amdgpu_job **job,
-+		     u64 drm_client_id);
- int amdgpu_job_alloc_with_ib(struct amdgpu_device *adev,
- 			     struct drm_sched_entity *entity, void *owner,
- 			     size_t size, enum amdgpu_ib_pool_type pool_type,
---- a/drivers/gpu/drm/etnaviv/etnaviv_gem_submit.c
-+++ b/drivers/gpu/drm/etnaviv/etnaviv_gem_submit.c
-@@ -535,7 +535,7 @@ int etnaviv_ioctl_gem_submit(struct drm_
- 
- 	ret = drm_sched_job_init(&submit->sched_job,
- 				 &ctx->sched_entity[args->pipe],
--				 1, submit->ctx);
-+				 1, submit->ctx, file->client_id);
- 	if (ret)
- 		goto err_submit_put;
- 
---- a/drivers/gpu/drm/imagination/pvr_job.c
-+++ b/drivers/gpu/drm/imagination/pvr_job.c
-@@ -453,7 +453,7 @@ create_job(struct pvr_device *pvr_dev,
- 	if (err)
- 		goto err_put_job;
- 
--	err = pvr_queue_job_init(job);
-+	err = pvr_queue_job_init(job, pvr_file->file->client_id);
- 	if (err)
- 		goto err_put_job;
- 
---- a/drivers/gpu/drm/imagination/pvr_queue.c
-+++ b/drivers/gpu/drm/imagination/pvr_queue.c
-@@ -1088,6 +1088,7 @@ static int pvr_queue_cleanup_fw_context(
- /**
-  * pvr_queue_job_init() - Initialize queue related fields in a pvr_job object.
-  * @job: The job to initialize.
-+ * @drm_client_id: drm_file.client_id submitting the job
-  *
-  * Bind the job to a queue and allocate memory to guarantee pvr_queue_job_arm()
-  * and pvr_queue_job_push() can't fail. We also make sure the context type is
-@@ -1097,7 +1098,7 @@ static int pvr_queue_cleanup_fw_context(
-  *  * 0 on success, or
-  *  * An error code if something failed.
-  */
--int pvr_queue_job_init(struct pvr_job *job)
-+int pvr_queue_job_init(struct pvr_job *job, u64 drm_client_id)
- {
- 	/* Fragment jobs need at least one native fence wait on the geometry job fence. */
- 	u32 min_native_dep_count = job->type == DRM_PVR_JOB_TYPE_FRAGMENT ? 1 : 0;
-@@ -1114,7 +1115,7 @@ int pvr_queue_job_init(struct pvr_job *j
- 	if (!pvr_cccb_cmdseq_can_fit(&queue->cccb, job_cmds_size(job, min_native_dep_count)))
- 		return -E2BIG;
- 
--	err = drm_sched_job_init(&job->base, &queue->entity, 1, THIS_MODULE);
-+	err = drm_sched_job_init(&job->base, &queue->entity, 1, THIS_MODULE, drm_client_id);
- 	if (err)
++	struct nf_conntrack_helper *assign_helper = NULL;
+ 	struct nlattr *cda[CTA_EXPECT_MAX+1];
+ 	struct nf_conntrack_tuple tuple, mask;
+ 	struct nf_conntrack_expect *exp;
+@@ -2876,8 +2878,18 @@ ctnetlink_glue_attach_expect(const struct nlattr *attr, struct nf_conn *ct,
+ 	if (err < 0)
  		return err;
  
---- a/drivers/gpu/drm/imagination/pvr_queue.h
-+++ b/drivers/gpu/drm/imagination/pvr_queue.h
-@@ -143,7 +143,7 @@ struct pvr_queue {
- 
- bool pvr_queue_fence_is_ufo_backed(struct dma_fence *f);
- 
--int pvr_queue_job_init(struct pvr_job *job);
-+int pvr_queue_job_init(struct pvr_job *job, u64 drm_client_id);
- 
- void pvr_queue_job_cleanup(struct pvr_job *job);
- 
---- a/drivers/gpu/drm/lima/lima_gem.c
-+++ b/drivers/gpu/drm/lima/lima_gem.c
-@@ -341,7 +341,7 @@ int lima_gem_submit(struct drm_file *fil
- 
- 	err = lima_sched_task_init(
- 		submit->task, submit->ctx->context + submit->pipe,
--		bos, submit->nr_bos, vm);
-+		bos, submit->nr_bos, vm, file->client_id);
- 	if (err)
- 		goto err_out1;
- 
---- a/drivers/gpu/drm/lima/lima_sched.c
-+++ b/drivers/gpu/drm/lima/lima_sched.c
-@@ -113,7 +113,8 @@ static inline struct lima_sched_pipe *to
- int lima_sched_task_init(struct lima_sched_task *task,
- 			 struct lima_sched_context *context,
- 			 struct lima_bo **bos, int num_bos,
--			 struct lima_vm *vm)
-+			 struct lima_vm *vm,
-+			 u64 drm_client_id)
- {
- 	int err, i;
- 
-@@ -124,7 +125,8 @@ int lima_sched_task_init(struct lima_sch
- 	for (i = 0; i < num_bos; i++)
- 		drm_gem_object_get(&bos[i]->base.base);
- 
--	err = drm_sched_job_init(&task->base, &context->base, 1, vm);
-+	err = drm_sched_job_init(&task->base, &context->base, 1, vm,
-+				 drm_client_id);
- 	if (err) {
- 		kfree(task->bos);
- 		return err;
---- a/drivers/gpu/drm/lima/lima_sched.h
-+++ b/drivers/gpu/drm/lima/lima_sched.h
-@@ -88,7 +88,8 @@ struct lima_sched_pipe {
- int lima_sched_task_init(struct lima_sched_task *task,
- 			 struct lima_sched_context *context,
- 			 struct lima_bo **bos, int num_bos,
--			 struct lima_vm *vm);
-+			 struct lima_vm *vm,
-+			 u64 drm_client_id);
- void lima_sched_task_fini(struct lima_sched_task *task);
- 
- int lima_sched_context_init(struct lima_sched_pipe *pipe,
---- a/drivers/gpu/drm/msm/msm_gem_submit.c
-+++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-@@ -30,7 +30,7 @@
- static struct msm_gem_submit *submit_create(struct drm_device *dev,
- 		struct msm_gpu *gpu,
- 		struct msm_gpu_submitqueue *queue, uint32_t nr_bos,
--		uint32_t nr_cmds)
-+		uint32_t nr_cmds, u64 drm_client_id)
- {
- 	static atomic_t ident = ATOMIC_INIT(0);
- 	struct msm_gem_submit *submit;
-@@ -54,7 +54,8 @@ static struct msm_gem_submit *submit_cre
- 		return ERR_PTR(ret);
- 	}
- 
--	ret = drm_sched_job_init(&submit->base, queue->entity, 1, queue);
-+	ret = drm_sched_job_init(&submit->base, queue->entity, 1, queue,
-+				 drm_client_id);
- 	if (ret) {
- 		kfree(submit->hw_fence);
- 		kfree(submit);
-@@ -712,7 +713,8 @@ int msm_ioctl_gem_submit(struct drm_devi
- 		}
- 	}
- 
--	submit = submit_create(dev, gpu, queue, args->nr_bos, args->nr_cmds);
-+	submit = submit_create(dev, gpu, queue, args->nr_bos, args->nr_cmds,
-+			       file->client_id);
- 	if (IS_ERR(submit)) {
- 		ret = PTR_ERR(submit);
- 		goto out_post_unlock;
---- a/drivers/gpu/drm/nouveau/nouveau_sched.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_sched.c
-@@ -87,7 +87,8 @@ nouveau_job_init(struct nouveau_job *job
- 	}
- 
- 	ret = drm_sched_job_init(&job->base, &sched->entity,
--				 args->credits, NULL);
-+				 args->credits, NULL,
-+				 job->file_priv->client_id);
- 	if (ret)
- 		goto err_free_chains;
- 
---- a/drivers/gpu/drm/panfrost/panfrost_drv.c
-+++ b/drivers/gpu/drm/panfrost/panfrost_drv.c
-@@ -273,7 +273,7 @@ static int panfrost_ioctl_submit(struct
- 
- 	ret = drm_sched_job_init(&job->base,
- 				 &file_priv->sched_entity[slot],
--				 1, NULL);
-+				 1, NULL, file->client_id);
- 	if (ret)
- 		goto out_put_job;
- 
---- a/drivers/gpu/drm/panthor/panthor_drv.c
-+++ b/drivers/gpu/drm/panthor/panthor_drv.c
-@@ -908,7 +908,8 @@ static int panthor_ioctl_group_submit(st
- 		const struct drm_panthor_queue_submit *qsubmit = &jobs_args[i];
- 		struct drm_sched_job *job;
- 
--		job = panthor_job_create(pfile, args->group_handle, qsubmit);
-+		job = panthor_job_create(pfile, args->group_handle, qsubmit,
-+					 file->client_id);
- 		if (IS_ERR(job)) {
- 			ret = PTR_ERR(job);
- 			goto out_cleanup_submit_ctx;
---- a/drivers/gpu/drm/panthor/panthor_mmu.c
-+++ b/drivers/gpu/drm/panthor/panthor_mmu.c
-@@ -2498,7 +2498,7 @@ panthor_vm_bind_job_create(struct drm_fi
- 	kref_init(&job->refcount);
- 	job->vm = panthor_vm_get(vm);
- 
--	ret = drm_sched_job_init(&job->base, &vm->entity, 1, vm);
-+	ret = drm_sched_job_init(&job->base, &vm->entity, 1, vm, file->client_id);
- 	if (ret)
- 		goto err_put_job;
- 
---- a/drivers/gpu/drm/panthor/panthor_sched.c
-+++ b/drivers/gpu/drm/panthor/panthor_sched.c
-@@ -3664,7 +3664,8 @@ struct panthor_vm *panthor_job_vm(struct
- struct drm_sched_job *
- panthor_job_create(struct panthor_file *pfile,
- 		   u16 group_handle,
--		   const struct drm_panthor_queue_submit *qsubmit)
-+		   const struct drm_panthor_queue_submit *qsubmit,
-+		   u64 drm_client_id)
- {
- 	struct panthor_group_pool *gpool = pfile->groups;
- 	struct panthor_job *job;
-@@ -3736,7 +3737,7 @@ panthor_job_create(struct panthor_file *
- 
- 	ret = drm_sched_job_init(&job->base,
- 				 &job->group->queues[job->queue_idx]->entity,
--				 credits, job->group);
-+				 credits, job->group, drm_client_id);
- 	if (ret)
- 		goto err_put_job;
- 
---- a/drivers/gpu/drm/panthor/panthor_sched.h
-+++ b/drivers/gpu/drm/panthor/panthor_sched.h
-@@ -28,7 +28,8 @@ int panthor_group_get_state(struct panth
- struct drm_sched_job *
- panthor_job_create(struct panthor_file *pfile,
- 		   u16 group_handle,
--		   const struct drm_panthor_queue_submit *qsubmit);
-+		   const struct drm_panthor_queue_submit *qsubmit,
-+		   u64 drm_client_id);
- struct drm_sched_job *panthor_job_get(struct drm_sched_job *job);
- struct panthor_vm *panthor_job_vm(struct drm_sched_job *sched_job);
- void panthor_job_put(struct drm_sched_job *job);
---- a/drivers/gpu/drm/scheduler/sched_fence.c
-+++ b/drivers/gpu/drm/scheduler/sched_fence.c
-@@ -204,7 +204,8 @@ struct drm_sched_fence *to_drm_sched_fen
- EXPORT_SYMBOL(to_drm_sched_fence);
- 
- struct drm_sched_fence *drm_sched_fence_alloc(struct drm_sched_entity *entity,
--					      void *owner)
-+					      void *owner,
-+					      u64 drm_client_id)
- {
- 	struct drm_sched_fence *fence = NULL;
- 
-@@ -213,6 +214,7 @@ struct drm_sched_fence *drm_sched_fence_
- 		return NULL;
- 
- 	fence->owner = owner;
-+	fence->drm_client_id = drm_client_id;
- 	spin_lock_init(&fence->lock);
- 
- 	return fence;
---- a/drivers/gpu/drm/scheduler/sched_main.c
-+++ b/drivers/gpu/drm/scheduler/sched_main.c
-@@ -772,6 +772,8 @@ EXPORT_SYMBOL(drm_sched_resubmit_jobs);
-  * @credits: the number of credits this job contributes to the schedulers
-  * credit limit
-  * @owner: job owner for debugging
-+ * @drm_client_id: &struct drm_file.client_id of the owner (used by trace
-+ * events)
-  *
-  * Refer to drm_sched_entity_push_job() documentation
-  * for locking considerations.
-@@ -788,7 +790,8 @@ EXPORT_SYMBOL(drm_sched_resubmit_jobs);
-  */
- int drm_sched_job_init(struct drm_sched_job *job,
- 		       struct drm_sched_entity *entity,
--		       u32 credits, void *owner)
-+		       u32 credits, void *owner,
-+		       uint64_t drm_client_id)
- {
- 	if (!entity->rq) {
- 		/* This will most likely be followed by missing frames
-@@ -814,7 +817,7 @@ int drm_sched_job_init(struct drm_sched_
- 
- 	job->entity = entity;
- 	job->credits = credits;
--	job->s_fence = drm_sched_fence_alloc(entity, owner);
-+	job->s_fence = drm_sched_fence_alloc(entity, owner, drm_client_id);
- 	if (!job->s_fence)
- 		return -ENOMEM;
- 
---- a/drivers/gpu/drm/v3d/v3d_submit.c
-+++ b/drivers/gpu/drm/v3d/v3d_submit.c
-@@ -186,7 +186,7 @@ v3d_job_init(struct v3d_dev *v3d, struct
- 	job->file = file_priv;
- 
- 	ret = drm_sched_job_init(&job->base, &v3d_priv->sched_entity[queue],
--				 1, v3d_priv);
-+				 1, v3d_priv, file_priv->client_id);
- 	if (ret)
- 		return ret;
- 
---- a/drivers/gpu/drm/xe/xe_sched_job.c
-+++ b/drivers/gpu/drm/xe/xe_sched_job.c
-@@ -113,7 +113,8 @@ struct xe_sched_job *xe_sched_job_create
- 	kref_init(&job->refcount);
- 	xe_exec_queue_get(job->q);
- 
--	err = drm_sched_job_init(&job->drm, q->entity, 1, NULL);
-+	err = drm_sched_job_init(&job->drm, q->entity, 1, NULL,
-+				 q->xef ? q->xef->drm->client_id : 0);
- 	if (err)
- 		goto err_free;
- 
---- a/include/drm/gpu_scheduler.h
-+++ b/include/drm/gpu_scheduler.h
-@@ -309,6 +309,13 @@ struct drm_sched_fence {
-          * @owner: job owner for debugging
-          */
- 	void				*owner;
++	if (cda[CTA_EXPECT_HELP_NAME]) {
++		const char *helpname = nla_data(cda[CTA_EXPECT_HELP_NAME]);
 +
-+	/**
-+	 * @drm_client_id:
-+	 *
-+	 * The client_id of the drm_file which owns the job.
-+	 */
-+	uint64_t			drm_client_id;
- };
++		assign_helper = __nf_conntrack_helper_find(helpname,
++							   nf_ct_l3num(ct),
++							   tuple.dst.protonum);
++		if (!assign_helper)
++			return -EOPNOTSUPP;
++	}
++
+ 	exp = ctnetlink_alloc_expect((const struct nlattr * const *)cda, ct,
+-				     &tuple, &mask);
++				     assign_helper, &tuple, &mask);
+ 	if (IS_ERR(exp))
+ 		return PTR_ERR(exp);
  
- struct drm_sched_fence *to_drm_sched_fence(struct dma_fence *f);
-@@ -553,7 +560,8 @@ int drm_sched_init(struct drm_gpu_schedu
- void drm_sched_fini(struct drm_gpu_scheduler *sched);
- int drm_sched_job_init(struct drm_sched_job *job,
- 		       struct drm_sched_entity *entity,
--		       u32 credits, void *owner);
-+		       u32 credits, void *owner,
-+		       u64 drm_client_id);
- void drm_sched_job_arm(struct drm_sched_job *job);
- int drm_sched_job_add_dependency(struct drm_sched_job *job,
- 				 struct dma_fence *fence);
-@@ -613,7 +621,7 @@ bool drm_sched_entity_is_ready(struct dr
- int drm_sched_entity_error(struct drm_sched_entity *entity);
+@@ -3516,6 +3528,7 @@ ctnetlink_parse_expect_nat(const struct nlattr *attr,
  
- struct drm_sched_fence *drm_sched_fence_alloc(
--	struct drm_sched_entity *s_entity, void *owner);
-+	struct drm_sched_entity *s_entity, void *owner, u64 drm_client_id);
- void drm_sched_fence_init(struct drm_sched_fence *fence,
- 			  struct drm_sched_entity *entity);
- void drm_sched_fence_free(struct drm_sched_fence *fence);
+ static struct nf_conntrack_expect *
+ ctnetlink_alloc_expect(const struct nlattr * const cda[], struct nf_conn *ct,
++		       const struct nf_conntrack_helper *assign_helper,
+ 		       struct nf_conntrack_tuple *tuple,
+ 		       struct nf_conntrack_tuple *mask)
+ {
+@@ -3569,6 +3582,7 @@ ctnetlink_alloc_expect(const struct nlattr * const cda[], struct nf_conn *ct,
+ 	exp->zone = ct->zone;
+ #endif
+ 	rcu_assign_pointer(exp->helper, helper);
++	rcu_assign_pointer(exp->assign_helper, assign_helper);
+ 	exp->tuple = *tuple;
+ 	exp->mask.src.u3 = mask->src.u3;
+ 	exp->mask.src.u.all = mask->src.u.all;
+@@ -3624,7 +3638,7 @@ ctnetlink_create_expect(struct net *net,
+ 	ct = nf_ct_tuplehash_to_ctrack(h);
+ 
+ 	rcu_read_lock();
+-	exp = ctnetlink_alloc_expect(cda, ct, &tuple, &mask);
++	exp = ctnetlink_alloc_expect(cda, ct, NULL, &tuple, &mask);
+ 	if (IS_ERR(exp)) {
+ 		err = PTR_ERR(exp);
+ 		goto err_rcu;
+diff --git a/net/netfilter/nf_conntrack_sip.c b/net/netfilter/nf_conntrack_sip.c
+index 147043f19521..4bebf66410ea 100644
+--- a/net/netfilter/nf_conntrack_sip.c
++++ b/net/netfilter/nf_conntrack_sip.c
+@@ -1386,7 +1386,7 @@ static int process_register_request(struct sk_buff *skb, unsigned int protoff,
+ 	nf_ct_expect_init(exp, SIP_EXPECT_SIGNALLING, nf_ct_l3num(ct),
+ 			  saddr, &daddr, proto, NULL, &port);
+ 	exp->timeout.expires = sip_timeout * HZ;
+-	rcu_assign_pointer(exp->helper, helper);
++	rcu_assign_pointer(exp->assign_helper, helper);
+ 	exp->flags = NF_CT_EXPECT_PERMANENT | NF_CT_EXPECT_INACTIVE;
+ 
+ 	hooks = rcu_dereference(nf_nat_sip_hooks);
+-- 
+2.53.0
+
 
 
