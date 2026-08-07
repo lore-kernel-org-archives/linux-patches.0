@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97A1647D44A;
-	Fri,  7 Aug 2026 14:57:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 593CA331A61;
+	Fri,  7 Aug 2026 14:57:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114675; cv=none; b=MXmoOWWy+VHpQTlL3d+cTQjGGWSQ0/ivz+YTBQfqsaP32bNadQ3k1fw0uryxxtjemWjnI2LBcD9Aw332Q1BkR0nA8Da+PTNiBQIltJWfxqKhsUNzwVnFB+jspaAl7xP/VyaeYtKAjWFeJQZ2oyDo8W71nvAohab7WKhzWujW4w8=
+	t=1786114677; cv=none; b=aJ+d7kWURgkAGLaEOI9KzLOyFJBvpLjYLeSYZrUfFh6THZSEYiWeap8nyNgtz0+S6K7u+ST2BJ00Ucqpm9mQ7l6mmA5a4js8sWiphgAo+QoNKbRqiLaPpM2FlESrgaZsPHJkKnVSCNakWImjaQotxV03nXFlQR9LtCsbHpC+Soc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114675; c=relaxed/simple;
-	bh=mgFYT8/CQf+nosyqVld1CB4D7VJPgA56sX/N77jIiqs=;
+	s=arc-20240116; t=1786114677; c=relaxed/simple;
+	bh=WofYrSHOEF9dmdAraZVa8u1eiDKsuXZvFEY8zs2NyEM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=STGIuBgwnIEVevAot4T5fO87qStv/Ew90ScqJKZ304fBsYS3taeS5G4gS2vsrQcMM9BhIaBXDg5+rXsyeg0fK5/neOY3DybSiH/11MX1DEnNfCijAL2LRXm0XfAzawH40qmfzlWsGrVBgVS3FTx2HfXfg4b4MkmZmE9YsI8DcTc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W+okXSNN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IHUS/7MXCVh91G4nHEhmC2UUpHD8mYSnHWTEY0372/iwpwR7OcC1lWQQrnCDbXVN8GLgHImADeJncIY4kzJ+r3DdMMRwbkpH0E/UR+hvyIEdFQAuAWtJj8c0qjdD95kagSBC9+LLDEelQaQlpvCCqKEOQDRQUtGjl2v5hZ6Pfg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hmmpCBo/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W+okXSNN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E42E71F000E9;
-	Fri,  7 Aug 2026 14:57:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hmmpCBo/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B49611F000E9;
+	Fri,  7 Aug 2026 14:57:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114673;
-	bh=ePnOt5++zJhrO4qL5kB9yANH0uB/uBtcE2xju3sWBjk=;
+	s=korg; t=1786114676;
+	bh=TpQPj0JF/t53ABjqC1tr3NzZYbe3LdflpySoLv4tb/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W+okXSNNPbx+TuDzjhu69sL5IPpW27Nu+9vwon8AXRsFCIyIfXIXqlXgzcb2hjlkd
-	 z4qWGYsMl3s7I+6ukCUFxCpw/TeX3ii04MzSqR3SJgw5mG9LG0Oae4aTiWD1EacfNe
-	 MHArxnwEzq3LCvLj88NvUub32u90WPnSJuJy96hg=
+	b=hmmpCBo/4Xqx8vYGt9httrVBIMQAVaHOYd++0v655sWf13cr4jQG5bWbMO+rWEmrM
+	 4GMgPXtZ8Pc962lh04QTNxmbvot0LWwMaI8nXLI+EoC/ABNCw/ARc35X50YWkWEQlK
+	 vnSMiek9NmGARcAnieF3sD40vHX0B0WV8j6kXGt8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Benjamin Tissoires <bentiss@kernel.org>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 001/396] netfilter: nf_conntrack_expect: restore helper propagation via expectation
-Date: Fri,  7 Aug 2026 16:32:41 +0200
-Message-ID: <20260807143424.308517634@linuxfoundation.org>
+Subject: [PATCH 6.18 010/396] HID: logitech-dj: fix wrong detection of bad DJ_SHORT output report
+Date: Fri,  7 Aug 2026 16:32:50 +0200
+Message-ID: <20260807143424.495046061@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -51,264 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Benjamin Tissoires <bentiss@kernel.org>
 
-[ Upstream commit dcb0f9aefdd604d36710fda53c25bd7cf4a3e37a ]
+[ Upstream commit 8b9a097eb2fc37b486afd81388c693bf3ab44466 ]
 
-A recent series to fix expectations broke helper propagation via
-expectation, this mechanism is used by the sip and h323 helper. This
-also propagates the conntrack helper to expected connections. I changed
-semantics of exp->helper which now tells us the actual helper that
-created the expectation.
+commit b6a57912854e ("HID: logitech-dj: Prevent REPORT_ID_DJ_SHORT
+related user initiated OOB write") assumed that all HID devices attached
+to the logitech-dj driver was having an output report of DJ_SHORT.
 
-Add an explicit assign_helper field to expectations for this purpose
-and update helpers to use it.
+However, on the receiver itself, we have 2 other HID device we attach
+here: the mouse emulation and the keyboard emulation. For those devices
+the value of rep is NULL and we are triggered a segfault here.
 
-Restore this feature for userspace conntrack helper via ctnetlink
-nfqueue integration so it is again possible to attach a helper to an
-expectation, where it makes sense. This is not restored via ctnetlink
-expectation creation as there is no client for such feature. Use the
-expectation layer 4 protocol number for the helper lookup for
-consistency.
+This is doubly required because logitech-dj also handles non DJ devices
+that might not have the DJ collection.
 
-Make sure the expectation using this helper propagation mechanism also
-go away when the helper is unregistered.
-
-Fixes: 9c42bc9db90a ("netfilter: nf_conntrack_expect: honor expectation helper field")
-Fixes: 917b61fa2042 ("netfilter: ctnetlink: ignore explicit helper on new expectations")
-Reported-by: Ilya Maximets <i.maximets@ovn.org>
-Tested-by: Ilya Maximets <i.maximets@ovn.org>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: b6a57912854e ("HID: logitech-dj: Prevent REPORT_ID_DJ_SHORT related user initiated OOB write")
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_conntrack_expect.h |  5 ++++-
- net/netfilter/nf_conntrack_broadcast.c      |  1 +
- net/netfilter/nf_conntrack_core.c           |  7 +++++--
- net/netfilter/nf_conntrack_expect.c         |  1 +
- net/netfilter/nf_conntrack_h323_main.c      | 12 ++++++------
- net/netfilter/nf_conntrack_helper.c         |  5 +++++
- net/netfilter/nf_conntrack_netlink.c        | 18 ++++++++++++++++--
- net/netfilter/nf_conntrack_sip.c            |  2 +-
- 8 files changed, 39 insertions(+), 12 deletions(-)
+ drivers/hid/hid-logitech-dj.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/net/netfilter/nf_conntrack_expect.h b/include/net/netfilter/nf_conntrack_expect.h
-index e9a8350e7ccf..80f50fd0f7ad 100644
---- a/include/net/netfilter/nf_conntrack_expect.h
-+++ b/include/net/netfilter/nf_conntrack_expect.h
-@@ -45,9 +45,12 @@ struct nf_conntrack_expect {
- 	void (*expectfn)(struct nf_conn *new,
- 			 struct nf_conntrack_expect *this);
+diff --git a/drivers/hid/hid-logitech-dj.c b/drivers/hid/hid-logitech-dj.c
+index 3a37d61616293..f1e923ed9d1c5 100644
+--- a/drivers/hid/hid-logitech-dj.c
++++ b/drivers/hid/hid-logitech-dj.c
+@@ -1797,7 +1797,8 @@ static int logi_dj_probe(struct hid_device *hdev,
+ 	output_report_enum = &hdev->report_enum[HID_OUTPUT_REPORT];
+ 	rep = output_report_enum->report_id_hash[REPORT_ID_DJ_SHORT];
  
--	/* Helper to assign to new connection */
-+	/* Helper that created this expectation */
- 	struct nf_conntrack_helper __rcu *helper;
- 
-+	/* Helper to assign to new connection */
-+	struct nf_conntrack_helper __rcu *assign_helper;
-+
- 	/* The conntrack of the master connection */
- 	struct nf_conn *master;
- 
-diff --git a/net/netfilter/nf_conntrack_broadcast.c b/net/netfilter/nf_conntrack_broadcast.c
-index 4f39bf7c843f..75e53fde6b29 100644
---- a/net/netfilter/nf_conntrack_broadcast.c
-+++ b/net/netfilter/nf_conntrack_broadcast.c
-@@ -72,6 +72,7 @@ int nf_conntrack_broadcast_help(struct sk_buff *skb,
- 	exp->flags                = NF_CT_EXPECT_PERMANENT;
- 	exp->class		  = NF_CT_EXPECT_CLASS_DEFAULT;
- 	rcu_assign_pointer(exp->helper, helper);
-+	rcu_assign_pointer(exp->assign_helper, NULL);
- 	write_pnet(&exp->net, net);
- #ifdef CONFIG_NF_CONNTRACK_ZONES
- 	exp->zone = ct->zone;
-diff --git a/net/netfilter/nf_conntrack_core.c b/net/netfilter/nf_conntrack_core.c
-index a877f9ad1cf2..44fa3224cc87 100644
---- a/net/netfilter/nf_conntrack_core.c
-+++ b/net/netfilter/nf_conntrack_core.c
-@@ -1771,14 +1771,17 @@ init_conntrack(struct net *net, struct nf_conn *tmpl,
- 		spin_lock_bh(&nf_conntrack_expect_lock);
- 		exp = nf_ct_find_expectation(net, zone, tuple, !tmpl || nf_ct_is_confirmed(tmpl));
- 		if (exp) {
-+			struct nf_conntrack_helper *assign_helper;
-+
- 			/* Welcome, Mr. Bond.  We've been expecting you... */
- 			__set_bit(IPS_EXPECTED_BIT, &ct->status);
- 			/* exp->master safe, refcnt bumped in nf_ct_find_expectation */
- 			ct->master = exp->master;
--			if (exp->helper) {
-+			assign_helper = rcu_dereference(exp->assign_helper);
-+			if (assign_helper) {
- 				help = nf_ct_helper_ext_add(ct, GFP_ATOMIC);
- 				if (help)
--					rcu_assign_pointer(help->helper, exp->helper);
-+					rcu_assign_pointer(help->helper, assign_helper);
- 			}
- 
- #ifdef CONFIG_NF_CONNTRACK_MARK
-diff --git a/net/netfilter/nf_conntrack_expect.c b/net/netfilter/nf_conntrack_expect.c
-index 24d0576d84b7..8e943efbdf0a 100644
---- a/net/netfilter/nf_conntrack_expect.c
-+++ b/net/netfilter/nf_conntrack_expect.c
-@@ -344,6 +344,7 @@ void nf_ct_expect_init(struct nf_conntrack_expect *exp, unsigned int class,
- 		helper = rcu_dereference(help->helper);
- 
- 	rcu_assign_pointer(exp->helper, helper);
-+	rcu_assign_pointer(exp->assign_helper, NULL);
- 	write_pnet(&exp->net, net);
- #ifdef CONFIG_NF_CONNTRACK_ZONES
- 	exp->zone = ct->zone;
-diff --git a/net/netfilter/nf_conntrack_h323_main.c b/net/netfilter/nf_conntrack_h323_main.c
-index bd7e9e13e4f6..a116c6629e2b 100644
---- a/net/netfilter/nf_conntrack_h323_main.c
-+++ b/net/netfilter/nf_conntrack_h323_main.c
-@@ -642,7 +642,7 @@ static int expect_h245(struct sk_buff *skb, struct nf_conn *ct,
- 			  &ct->tuplehash[!dir].tuple.src.u3,
- 			  &ct->tuplehash[!dir].tuple.dst.u3,
- 			  IPPROTO_TCP, NULL, &port);
--	rcu_assign_pointer(exp->helper, &nf_conntrack_helper_h245);
-+	rcu_assign_pointer(exp->assign_helper, &nf_conntrack_helper_h245);
- 
- 	nathook = rcu_dereference(nfct_h323_nat_hook);
- 	if (memcmp(&ct->tuplehash[dir].tuple.src.u3,
-@@ -766,7 +766,7 @@ static int expect_callforwarding(struct sk_buff *skb,
- 	nf_ct_expect_init(exp, NF_CT_EXPECT_CLASS_DEFAULT, nf_ct_l3num(ct),
- 			  &ct->tuplehash[!dir].tuple.src.u3, &addr,
- 			  IPPROTO_TCP, NULL, &port);
--	rcu_assign_pointer(exp->helper, nf_conntrack_helper_q931);
-+	rcu_assign_pointer(exp->assign_helper, nf_conntrack_helper_q931);
- 
- 	nathook = rcu_dereference(nfct_h323_nat_hook);
- 	if (memcmp(&ct->tuplehash[dir].tuple.src.u3,
-@@ -1233,7 +1233,7 @@ static int expect_q931(struct sk_buff *skb, struct nf_conn *ct,
- 				&ct->tuplehash[!dir].tuple.src.u3 : NULL,
- 			  &ct->tuplehash[!dir].tuple.dst.u3,
- 			  IPPROTO_TCP, NULL, &port);
--	rcu_assign_pointer(exp->helper, nf_conntrack_helper_q931);
-+	rcu_assign_pointer(exp->assign_helper, nf_conntrack_helper_q931);
- 	exp->flags = NF_CT_EXPECT_PERMANENT;	/* Accept multiple calls */
- 
- 	nathook = rcu_dereference(nfct_h323_nat_hook);
-@@ -1305,7 +1305,7 @@ static int process_gcf(struct sk_buff *skb, struct nf_conn *ct,
- 	nf_ct_expect_init(exp, NF_CT_EXPECT_CLASS_DEFAULT, nf_ct_l3num(ct),
- 			  &ct->tuplehash[!dir].tuple.src.u3, &addr,
- 			  IPPROTO_UDP, NULL, &port);
--	rcu_assign_pointer(exp->helper, nf_conntrack_helper_ras);
-+	rcu_assign_pointer(exp->assign_helper, nf_conntrack_helper_ras);
- 
- 	if (nf_ct_expect_related(exp, 0) == 0) {
- 		pr_debug("nf_ct_ras: expect RAS ");
-@@ -1522,7 +1522,7 @@ static int process_acf(struct sk_buff *skb, struct nf_conn *ct,
- 			  &ct->tuplehash[!dir].tuple.src.u3, &addr,
- 			  IPPROTO_TCP, NULL, &port);
- 	exp->flags = NF_CT_EXPECT_PERMANENT;
--	rcu_assign_pointer(exp->helper, nf_conntrack_helper_q931);
-+	rcu_assign_pointer(exp->assign_helper, nf_conntrack_helper_q931);
- 
- 	if (nf_ct_expect_related(exp, 0) == 0) {
- 		pr_debug("nf_ct_ras: expect Q.931 ");
-@@ -1576,7 +1576,7 @@ static int process_lcf(struct sk_buff *skb, struct nf_conn *ct,
- 			  &ct->tuplehash[!dir].tuple.src.u3, &addr,
- 			  IPPROTO_TCP, NULL, &port);
- 	exp->flags = NF_CT_EXPECT_PERMANENT;
--	rcu_assign_pointer(exp->helper, nf_conntrack_helper_q931);
-+	rcu_assign_pointer(exp->assign_helper, nf_conntrack_helper_q931);
- 
- 	if (nf_ct_expect_related(exp, 0) == 0) {
- 		pr_debug("nf_ct_ras: expect Q.931 ");
-diff --git a/net/netfilter/nf_conntrack_helper.c b/net/netfilter/nf_conntrack_helper.c
-index 9150bcfd7ca8..ea0cdb7ec915 100644
---- a/net/netfilter/nf_conntrack_helper.c
-+++ b/net/netfilter/nf_conntrack_helper.c
-@@ -419,6 +419,11 @@ static bool expect_iter_me(struct nf_conntrack_expect *exp, void *data)
- 
- 	this = rcu_dereference_protected(exp->helper,
- 					 lockdep_is_held(&nf_conntrack_expect_lock));
-+	if (this == me)
-+		return true;
-+
-+	this = rcu_dereference_protected(exp->assign_helper,
-+					 lockdep_is_held(&nf_conntrack_expect_lock));
- 	return this == me;
- }
- 
-diff --git a/net/netfilter/nf_conntrack_netlink.c b/net/netfilter/nf_conntrack_netlink.c
-index c8fe284b86db..3df7e5fc76c8 100644
---- a/net/netfilter/nf_conntrack_netlink.c
-+++ b/net/netfilter/nf_conntrack_netlink.c
-@@ -2635,6 +2635,7 @@ static const struct nla_policy exp_nla_policy[CTA_EXPECT_MAX+1] = {
- 
- static struct nf_conntrack_expect *
- ctnetlink_alloc_expect(const struct nlattr *const cda[], struct nf_conn *ct,
-+		       const struct nf_conntrack_helper *assign_helper,
- 		       struct nf_conntrack_tuple *tuple,
- 		       struct nf_conntrack_tuple *mask);
- 
-@@ -2861,6 +2862,7 @@ static int
- ctnetlink_glue_attach_expect(const struct nlattr *attr, struct nf_conn *ct,
- 			     u32 portid, u32 report)
- {
-+	struct nf_conntrack_helper *assign_helper = NULL;
- 	struct nlattr *cda[CTA_EXPECT_MAX+1];
- 	struct nf_conntrack_tuple tuple, mask;
- 	struct nf_conntrack_expect *exp;
-@@ -2876,8 +2878,18 @@ ctnetlink_glue_attach_expect(const struct nlattr *attr, struct nf_conn *ct,
- 	if (err < 0)
- 		return err;
- 
-+	if (cda[CTA_EXPECT_HELP_NAME]) {
-+		const char *helpname = nla_data(cda[CTA_EXPECT_HELP_NAME]);
-+
-+		assign_helper = __nf_conntrack_helper_find(helpname,
-+							   nf_ct_l3num(ct),
-+							   tuple.dst.protonum);
-+		if (!assign_helper)
-+			return -EOPNOTSUPP;
-+	}
-+
- 	exp = ctnetlink_alloc_expect((const struct nlattr * const *)cda, ct,
--				     &tuple, &mask);
-+				     assign_helper, &tuple, &mask);
- 	if (IS_ERR(exp))
- 		return PTR_ERR(exp);
- 
-@@ -3516,6 +3528,7 @@ ctnetlink_parse_expect_nat(const struct nlattr *attr,
- 
- static struct nf_conntrack_expect *
- ctnetlink_alloc_expect(const struct nlattr * const cda[], struct nf_conn *ct,
-+		       const struct nf_conntrack_helper *assign_helper,
- 		       struct nf_conntrack_tuple *tuple,
- 		       struct nf_conntrack_tuple *mask)
- {
-@@ -3569,6 +3582,7 @@ ctnetlink_alloc_expect(const struct nlattr * const cda[], struct nf_conn *ct,
- 	exp->zone = ct->zone;
- #endif
- 	rcu_assign_pointer(exp->helper, helper);
-+	rcu_assign_pointer(exp->assign_helper, assign_helper);
- 	exp->tuple = *tuple;
- 	exp->mask.src.u3 = mask->src.u3;
- 	exp->mask.src.u.all = mask->src.u.all;
-@@ -3624,7 +3638,7 @@ ctnetlink_create_expect(struct net *net,
- 	ct = nf_ct_tuplehash_to_ctrack(h);
- 
- 	rcu_read_lock();
--	exp = ctnetlink_alloc_expect(cda, ct, &tuple, &mask);
-+	exp = ctnetlink_alloc_expect(cda, ct, NULL, &tuple, &mask);
- 	if (IS_ERR(exp)) {
- 		err = PTR_ERR(exp);
- 		goto err_rcu;
-diff --git a/net/netfilter/nf_conntrack_sip.c b/net/netfilter/nf_conntrack_sip.c
-index 147043f19521..4bebf66410ea 100644
---- a/net/netfilter/nf_conntrack_sip.c
-+++ b/net/netfilter/nf_conntrack_sip.c
-@@ -1386,7 +1386,7 @@ static int process_register_request(struct sk_buff *skb, unsigned int protoff,
- 	nf_ct_expect_init(exp, SIP_EXPECT_SIGNALLING, nf_ct_l3num(ct),
- 			  saddr, &daddr, proto, NULL, &port);
- 	exp->timeout.expires = sip_timeout * HZ;
--	rcu_assign_pointer(exp->helper, helper);
-+	rcu_assign_pointer(exp->assign_helper, helper);
- 	exp->flags = NF_CT_EXPECT_PERMANENT | NF_CT_EXPECT_INACTIVE;
- 
- 	hooks = rcu_dereference(nf_nat_sip_hooks);
+-	if (rep->maxfield < 1 || rep->field[0]->report_count != DJREPORT_SHORT_LENGTH - 1) {
++	if (rep && (rep->maxfield < 1 ||
++		    rep->field[0]->report_count != DJREPORT_SHORT_LENGTH - 1)) {
+ 		hid_err(hdev, "Expected size of DJ short report is %d, but got %d",
+ 			DJREPORT_SHORT_LENGTH - 1, rep->field[0]->report_count);
+ 		return -EINVAL;
 -- 
 2.53.0
 
