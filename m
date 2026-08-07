@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30CE0374195;
-	Fri,  7 Aug 2026 15:16:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 038ED449EA6;
+	Fri,  7 Aug 2026 15:16:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115782; cv=none; b=qoonKuzlE0lucI9jYUEaAPz6NW3C6QYCxnefAfFPKsFjfcGnQLMDU0N36vL5zFPHcsf2F5yLRO2SRmpcQu9K7bzwYebeh/Cg9zPZdZIlnarb1FxZoyvF4xHmZrA4Yxwqqin34dhD9wiVN7k/JIVrPLcG1VFAnOIPr3B8d3kN4Xc=
+	t=1786115785; cv=none; b=fbrg5aBuO3dtFSQyiBgJynxfTqtfqylsDiblZ+T4+L2PSnrllDpdJaHn/ytkhmMihoH5Vr4Ln97WO6D2499sIw0P7pwScB1AuVwMC4j0ljJncaZaB5wiZ9kBBK7xOnbTTIg9vLqiTNqVGffOhzoYuw5RToi9e0Zr9iTO+yz10kY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115782; c=relaxed/simple;
-	bh=xXSn48xfq9V4BM00gVyrMbZGaxzLx5py7hVHearu+oM=;
+	s=arc-20240116; t=1786115785; c=relaxed/simple;
+	bh=g3v1k8ppNYzG1MjDlwCPX3PXsrxKg7Tra6UrfwQ5Tr0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n0ZFAMEdtyMX3zhc+56ZrwK6nHP83gxKuN/krZ/wWPtlJNXvLG5RCT2Ar1R6ow7rRZ8Px60eDirW+WH8ETp+Ly953r8yfqjcv8UwgIHZej8o4+iN7Ez0If8xO/xWXZYX0qU3TjWGblcUUaTEUMNtu7ybfIEd7WAVIde6PRdD01I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hLuhlfRE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=rUAal+6Pfvl1IbU3eqeAs2s6yb332x48a67UtyxSI3otXOnO57m+/510rTDP9KprfG/312tai+9S6Ici4m+8cAvh4RjLZI2qoRT6G/fxvyJ2tPx3jM8IA4pLn2wj+OgQZi6LmEy+wLWYcy+pgB9yAyN2c2Az+BSWMFyEFvPfUZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YGEoaAC2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hLuhlfRE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BBAD1F000E9;
-	Fri,  7 Aug 2026 15:16:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YGEoaAC2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EB2B1F000E9;
+	Fri,  7 Aug 2026 15:16:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115781;
-	bh=sags9Zzp3z7yLXGnQAB2ek2WjfOMOI/MtDxPpENKwAM=;
+	s=korg; t=1786115783;
+	bh=0OdIoFDGgLPjyThKp7hJKXg/0jo78rcbQWYnXClVYag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hLuhlfRE3D7j/mYHq+SNN6NusUn/lmFYvq1xXkx2uJ4PNehJ2XQW/blBaHE/OsC/D
-	 7HAdR00JU2GuGsSUVwLg+8xL2Aj4miq2osUATN4nHyHKVTikEzd4OEijW+y1qjuLjs
-	 TSED4Z/3IZII2f/bgoXqTsYoHST8hTxWk36aqDUQ=
+	b=YGEoaAC2WFCdssG/WrCLHUavy+Rf4P9TrPRGNufCELFxqvbEQdEXubU1WH5zZWCWo
+	 T3g2jNzSrc+8GlNiqrx7lJwBySqQpjxWPuw2FDMFzsPH4CJOyZTJIAJJyg5+eCs0Tk
+	 cvbm3e4k1aRQgiHNHwWQHt1cy9keXL7NO88ECfrs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Matthew Brost <matthew.brost@intel.com>,
-	Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Francois Dugast <francois.dugast@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 388/396] drm/xe: Use SVM range helpers in PT layer
-Date: Fri,  7 Aug 2026 16:39:08 +0200
-Message-ID: <20260807143432.645764992@linuxfoundation.org>
+Subject: [PATCH 6.18 389/396] drm/xe: Stub out new pagefault layer
+Date: Fri,  7 Aug 2026 16:39:09 +0200
+Message-ID: <20260807143432.666709598@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -45,6 +46,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
@@ -53,113 +55,276 @@ Content-Transfer-Encoding: 8bit
 
 From: Matthew Brost <matthew.brost@intel.com>
 
-[ Upstream commit 9ea9b45701ab50049a722450abc28346d1121e6e ]
+[ Upstream commit 620a09fb0bddf387f418663478b48ca4ba62b6d6 ]
 
-We have helpers SVM range start, end, and size. Use them in the PT
-layer rather than directly looking at the struct.
+Stub out the new page fault layer and add kernel documentation. This is
+intended as a replacement for the GT page fault layer, enabling multiple
+producers to hook into a shared page fault consumer interface.
+
+v2:
+ - Fix kernel doc typo (checkpatch)
+ - Remove comment around GT (Stuart)
+ - Add explaination around reclaim (Francois)
+ - Add comment around u8 vs enum (Francois)
+ - Include engine instance (Stuart)
+v3:
+ - Fix XE_PAGEFAULT_TYPE_ATOMIC_ACCESS_VIOLATION kernel doc (Stuart)
 
 Signed-off-by: Matthew Brost <matthew.brost@intel.com>
-Reviewed-by: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
-Link: https://lore.kernel.org/r/20251022230122.922382-1-matthew.brost@intel.com
+Reviewed-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Tested-by: Francois Dugast <francois.dugast@intel.com>
+Link: https://patch.msgid.link/20251031165416.2871503-2-matthew.brost@intel.com
 Stable-dep-of: 6384271ac1ac ("drm/xe/pt: Reset current_op in xe_pt_update_ops_init()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_pt.c |   28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+ drivers/gpu/drm/xe/Makefile             |    1 
+ drivers/gpu/drm/xe/xe_pagefault.c       |   65 +++++++++++++++
+ drivers/gpu/drm/xe/xe_pagefault.h       |   19 ++++
+ drivers/gpu/drm/xe/xe_pagefault_types.h |  136 ++++++++++++++++++++++++++++++++
+ 4 files changed, 221 insertions(+)
+ create mode 100644 drivers/gpu/drm/xe/xe_pagefault.c
+ create mode 100644 drivers/gpu/drm/xe/xe_pagefault.h
+ create mode 100644 drivers/gpu/drm/xe/xe_pagefault_types.h
 
---- a/drivers/gpu/drm/xe/xe_pt.c
-+++ b/drivers/gpu/drm/xe/xe_pt.c
-@@ -715,7 +715,7 @@ xe_pt_stage_bind(struct xe_tile *tile, s
- 		.vm = vm,
- 		.tile = tile,
- 		.curs = &curs,
--		.va_curs_start = range ? range->base.itree.start :
-+		.va_curs_start = range ? xe_svm_range_start(range) :
- 			xe_vma_start(vma),
- 		.vma = vma,
- 		.wupd.entries = entries,
-@@ -734,7 +734,7 @@ xe_pt_stage_bind(struct xe_tile *tile, s
- 		}
- 		if (xe_svm_range_has_dma_mapping(range)) {
- 			xe_res_first_dma(range->base.pages.dma_addr, 0,
--					 range->base.itree.last + 1 - range->base.itree.start,
-+					 xe_svm_range_size(range),
- 					 &curs);
- 			xe_svm_range_debug(range, "BIND PREPARE - MIXED");
- 		} else {
-@@ -778,8 +778,8 @@ xe_pt_stage_bind(struct xe_tile *tile, s
- 
- walk_pt:
- 	ret = xe_pt_walk_range(&pt->base, pt->level,
--			       range ? range->base.itree.start : xe_vma_start(vma),
--			       range ? range->base.itree.last + 1 : xe_vma_end(vma),
-+			       range ? xe_svm_range_start(range) : xe_vma_start(vma),
-+			       range ? xe_svm_range_end(range) : xe_vma_end(vma),
- 			       &xe_walk.base);
- 
- 	*num_entries = xe_walk.wupd.num_used_entries;
-@@ -983,8 +983,8 @@ bool xe_pt_zap_ptes_range(struct xe_tile
- 	if (!(pt_mask & BIT(tile->id)))
- 		return false;
- 
--	(void)xe_pt_walk_shared(&pt->base, pt->level, range->base.itree.start,
--				range->base.itree.last + 1, &xe_walk.base);
-+	(void)xe_pt_walk_shared(&pt->base, pt->level, xe_svm_range_start(range),
-+				xe_svm_range_end(range), &xe_walk.base);
- 
- 	return xe_walk.needs_invalidate;
- }
-@@ -1711,8 +1711,8 @@ static unsigned int xe_pt_stage_unbind(s
- 				       struct xe_svm_range *range,
- 				       struct xe_vm_pgtable_update *entries)
- {
--	u64 start = range ? range->base.itree.start : xe_vma_start(vma);
--	u64 end = range ? range->base.itree.last + 1 : xe_vma_end(vma);
-+	u64 start = range ? xe_svm_range_start(range) : xe_vma_start(vma);
-+	u64 end = range ? xe_svm_range_end(range) : xe_vma_end(vma);
- 	struct xe_pt_stage_unbind_walk xe_walk = {
- 		.base = {
- 			.ops = &xe_pt_stage_unbind_ops,
-@@ -1922,7 +1922,7 @@ static int bind_range_prepare(struct xe_
- 
- 	vm_dbg(&xe_vma_vm(vma)->xe->drm,
- 	       "Preparing bind, with range [%lx...%lx)\n",
--	       range->base.itree.start, range->base.itree.last);
-+	       xe_svm_range_start(range), xe_svm_range_end(range) - 1);
- 
- 	pt_op->vma = NULL;
- 	pt_op->bind = true;
-@@ -1937,8 +1937,8 @@ static int bind_range_prepare(struct xe_
- 					pt_op->num_entries, true);
- 
- 		xe_pt_update_ops_rfence_interval(pt_update_ops,
--						 range->base.itree.start,
--						 range->base.itree.last + 1);
-+						 xe_svm_range_start(range),
-+						 xe_svm_range_end(range));
- 		++pt_update_ops->current_op;
- 		pt_update_ops->needs_svm_lock = true;
- 
-@@ -2033,7 +2033,7 @@ static int unbind_range_prepare(struct x
- 
- 	vm_dbg(&vm->xe->drm,
- 	       "Preparing unbind, with range [%lx...%lx)\n",
--	       range->base.itree.start, range->base.itree.last);
-+	       xe_svm_range_start(range), xe_svm_range_end(range) - 1);
- 
- 	pt_op->vma = XE_INVALID_VMA;
- 	pt_op->bind = false;
-@@ -2044,8 +2044,8 @@ static int unbind_range_prepare(struct x
- 
- 	xe_vm_dbg_print_entries(tile_to_xe(tile), pt_op->entries,
- 				pt_op->num_entries, false);
--	xe_pt_update_ops_rfence_interval(pt_update_ops, range->base.itree.start,
--					 range->base.itree.last + 1);
-+	xe_pt_update_ops_rfence_interval(pt_update_ops, xe_svm_range_start(range),
-+					 xe_svm_range_end(range));
- 	++pt_update_ops->current_op;
- 	pt_update_ops->needs_svm_lock = true;
- 	pt_update_ops->needs_invalidation |= xe_vm_has_scratch(vm) ||
+--- a/drivers/gpu/drm/xe/Makefile
++++ b/drivers/gpu/drm/xe/Makefile
+@@ -94,6 +94,7 @@ xe-y += xe_bb.o \
+ 	xe_nvm.o \
+ 	xe_oa.o \
+ 	xe_observation.o \
++	xe_pagefault.o \
+ 	xe_pat.o \
+ 	xe_pci.o \
+ 	xe_pcode.o \
+--- /dev/null
++++ b/drivers/gpu/drm/xe/xe_pagefault.c
+@@ -0,0 +1,65 @@
++// SPDX-License-Identifier: MIT
++/*
++ * Copyright © 2025 Intel Corporation
++ */
++
++#include "xe_pagefault.h"
++#include "xe_pagefault_types.h"
++
++/**
++ * DOC: Xe page faults
++ *
++ * Xe page faults are handled in two layers. The producer layer interacts with
++ * hardware or firmware to receive and parse faults into struct xe_pagefault,
++ * then forwards them to the consumer. The consumer layer services the faults
++ * (e.g., memory migration, page table updates) and acknowledges the result back
++ * to the producer, which then forwards the results to the hardware or firmware.
++ * The consumer uses a page fault queue sized to absorb all potential faults and
++ * a multi-threaded worker to process them. Multiple producers are supported,
++ * with a single shared consumer.
++ *
++ * xe_pagefault.c implements the consumer layer.
++ */
++
++/**
++ * xe_pagefault_init() - Page fault init
++ * @xe: xe device instance
++ *
++ * Initialize Xe page fault state. Must be done after reading fuses.
++ *
++ * Return: 0 on Success, errno on failure
++ */
++int xe_pagefault_init(struct xe_device *xe)
++{
++	/* TODO - implement */
++	return 0;
++}
++
++/**
++ * xe_pagefault_reset() - Page fault reset for a GT
++ * @xe: xe device instance
++ * @gt: GT being reset
++ *
++ * Reset the Xe page fault state for a GT; that is, squash any pending faults on
++ * the GT.
++ */
++void xe_pagefault_reset(struct xe_device *xe, struct xe_gt *gt)
++{
++	/* TODO - implement */
++}
++
++/**
++ * xe_pagefault_handler() - Page fault handler
++ * @xe: xe device instance
++ * @pf: Page fault
++ *
++ * Sink the page fault to a queue (i.e., a memory buffer) and queue a worker to
++ * service it. Safe to be called from IRQ or process context. Reclaim safe.
++ *
++ * Return: 0 on success, errno on failure
++ */
++int xe_pagefault_handler(struct xe_device *xe, struct xe_pagefault *pf)
++{
++	/* TODO - implement */
++	return 0;
++}
+--- /dev/null
++++ b/drivers/gpu/drm/xe/xe_pagefault.h
+@@ -0,0 +1,19 @@
++/* SPDX-License-Identifier: MIT */
++/*
++ * Copyright © 2025 Intel Corporation
++ */
++
++#ifndef _XE_PAGEFAULT_H_
++#define _XE_PAGEFAULT_H_
++
++struct xe_device;
++struct xe_gt;
++struct xe_pagefault;
++
++int xe_pagefault_init(struct xe_device *xe);
++
++void xe_pagefault_reset(struct xe_device *xe, struct xe_gt *gt);
++
++int xe_pagefault_handler(struct xe_device *xe, struct xe_pagefault *pf);
++
++#endif
+--- /dev/null
++++ b/drivers/gpu/drm/xe/xe_pagefault_types.h
+@@ -0,0 +1,136 @@
++/* SPDX-License-Identifier: MIT */
++/*
++ * Copyright © 2025 Intel Corporation
++ */
++
++#ifndef _XE_PAGEFAULT_TYPES_H_
++#define _XE_PAGEFAULT_TYPES_H_
++
++#include <linux/workqueue.h>
++
++struct xe_gt;
++struct xe_pagefault;
++
++/** enum xe_pagefault_access_type - Xe page fault access type */
++enum xe_pagefault_access_type {
++	/** @XE_PAGEFAULT_ACCESS_TYPE_READ: Read access type */
++	XE_PAGEFAULT_ACCESS_TYPE_READ	= 0,
++	/** @XE_PAGEFAULT_ACCESS_TYPE_WRITE: Write access type */
++	XE_PAGEFAULT_ACCESS_TYPE_WRITE	= 1,
++	/** @XE_PAGEFAULT_ACCESS_TYPE_ATOMIC: Atomic access type */
++	XE_PAGEFAULT_ACCESS_TYPE_ATOMIC	= 2,
++};
++
++/** enum xe_pagefault_type - Xe page fault type */
++enum xe_pagefault_type {
++	/** @XE_PAGEFAULT_TYPE_NOT_PRESENT: Not present */
++	XE_PAGEFAULT_TYPE_NOT_PRESENT			= 0,
++	/** @XE_PAGEFAULT_TYPE_WRITE_ACCESS_VIOLATION: Write access violation */
++	XE_PAGEFAULT_TYPE_WRITE_ACCESS_VIOLATION	= 1,
++	/** @XE_PAGEFAULT_TYPE_ATOMIC_ACCESS_VIOLATION: Atomic access violation */
++	XE_PAGEFAULT_TYPE_ATOMIC_ACCESS_VIOLATION	= 2,
++};
++
++/** struct xe_pagefault_ops - Xe pagefault ops (producer) */
++struct xe_pagefault_ops {
++	/**
++	 * @ack_fault: Ack fault
++	 * @pf: Page fault
++	 * @err: Error state of fault
++	 *
++	 * Page fault producer receives acknowledgment from the consumer and
++	 * sends the result to the HW/FW interface.
++	 */
++	void (*ack_fault)(struct xe_pagefault *pf, int err);
++};
++
++/**
++ * struct xe_pagefault - Xe page fault
++ *
++ * Generic page fault structure for communication between producer and consumer.
++ * Carefully sized to be 64 bytes. Upon a device page fault, the producer
++ * populates this structure, and the consumer copies it into the page-fault
++ * queue for deferred handling.
++ */
++struct xe_pagefault {
++	/**
++	 * @gt: GT of fault
++	 */
++	struct xe_gt *gt;
++	/**
++	 * @consumer: State for the software handling the fault. Populated by
++	 * the producer and may be modified by the consumer to communicate
++	 * information back to the producer upon fault acknowledgment.
++	 */
++	struct {
++		/** @consumer.page_addr: address of page fault */
++		u64 page_addr;
++		/** @consumer.asid: address space ID */
++		u32 asid;
++		/**
++		 * @consumer.access_type: access type, u8 rather than enum to
++		 * keep size compact
++		 */
++		u8 access_type;
++		/**
++		 * @consumer.fault_type: fault type, u8 rather than enum to
++		 * keep size compact
++		 */
++		u8 fault_type;
++#define XE_PAGEFAULT_LEVEL_NACK		0xff	/* Producer indicates nack fault */
++		/** @consumer.fault_level: fault level */
++		u8 fault_level;
++		/** @consumer.engine_class: engine class */
++		u8 engine_class;
++		/** @consumer.engine_instance: engine instance */
++		u8 engine_instance;
++		/** consumer.reserved: reserved bits for future expansion */
++		u8 reserved[7];
++	} consumer;
++	/**
++	 * @producer: State for the producer (i.e., HW/FW interface). Populated
++	 * by the producer and should not be modified—or even inspected—by the
++	 * consumer, except for calling operations.
++	 */
++	struct {
++		/** @producer.private: private pointer */
++		void *private;
++		/** @producer.ops: operations */
++		const struct xe_pagefault_ops *ops;
++#define XE_PAGEFAULT_PRODUCER_MSG_LEN_DW	4
++		/**
++		 * @producer.msg: page fault message, used by producer in fault
++		 * acknowledgment to formulate response to HW/FW interface.
++		 * Included in the page-fault message because the producer
++		 * typically receives the fault in a context where memory cannot
++		 * be allocated (e.g., atomic context or the reclaim path).
++		 */
++		u32 msg[XE_PAGEFAULT_PRODUCER_MSG_LEN_DW];
++	} producer;
++};
++
++/**
++ * struct xe_pagefault_queue: Xe pagefault queue (consumer)
++ *
++ * Used to capture all device page faults for deferred processing. Size this
++ * queue to absorb the device’s worst-case number of outstanding faults.
++ */
++struct xe_pagefault_queue {
++	/**
++	 * @data: Data in queue containing struct xe_pagefault, protected by
++	 * @lock
++	 */
++	void *data;
++	/** @size: Size of queue in bytes */
++	u32 size;
++	/** @head: Head pointer in bytes, moved by producer, protected by @lock */
++	u32 head;
++	/** @tail: Tail pointer in bytes, moved by consumer, protected by @lock */
++	u32 tail;
++	/** @lock: protects page fault queue */
++	spinlock_t lock;
++	/** @worker: to process page faults */
++	struct work_struct worker;
++};
++
++#endif
 
 
