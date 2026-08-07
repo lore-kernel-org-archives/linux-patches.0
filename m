@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F66D449EA6;
-	Fri,  7 Aug 2026 15:24:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 750B73F327A;
+	Fri,  7 Aug 2026 15:24:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116284; cv=none; b=Ju5UWEfVvQc0voCcKGj/mlPnhPmSWmQzDQ5uxpP9E1JNEuD3SbqZ0tGiFQ+Td29Vp28UfjrcWnNXD4GsZU3X8FMNMOjxZ/euYpmIG+QcQ+Ca5JJOjIDe7SHCCDrB3NxY2vI9qSIV921cfvjbz9Ot4s9iSv++ldE1GFyhU6OU5jI=
+	t=1786116287; cv=none; b=PuoTJVk65ciVtS/2uEA0VNMEScHnM8zEcNv7HZE+lswwmnBxr5tDy8Xi/DTALQRnfCmfGCrNZze6kBx8tOb50NJCGEpBaVYdTbdgN880oJ/DV56aHOK8/BsPdo+OtMtYaeCrHxfMdh69nW7lapgpUe3My7t7a5JfNmdwNLDXB5E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116284; c=relaxed/simple;
-	bh=IOqqGhgDkmdK8qpEBtBeQN9Gdrt9Hcf0ahlqzPORZOA=;
+	s=arc-20240116; t=1786116287; c=relaxed/simple;
+	bh=J6xnkUO/UfLc9KYyyqxnZkNLvSNcve6xxSMD3Sft4qM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iVE3V1BENgdgw3JvGmOiwCPLPK36s0XH6W/hz+2F067cEVTd3vhky28E50yNFbB1JZdPV2XbWDY7oQhjfP4G2562Ki+oT4LjWfEgwxh1jplxnWZN6yni0BmIOAICwUOWJi1Db9tkvRTZ63K+I6zO/VogLkZZ3qvROxcQADJHy2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tOuwBRMb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rVdYYwL20IarLgmr5llBLmCTEnaDrgwz5mxDe29p8KuP+Q4d0SdYPC6JdhqPZJ6UuKubyYmrtxX6grDV3mxMj60Nh16VyEiexwYpkoJQ5J3UI/XCYuZDFbmWXjnl4oRvQu7s6rG454V+mQkeEyUO3NkixUtkj5DEz6OlljQ6k8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pvboiy14; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tOuwBRMb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E36C91F000E9;
-	Fri,  7 Aug 2026 15:24:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pvboiy14"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1EF41F000E9;
+	Fri,  7 Aug 2026 15:24:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116283;
-	bh=DvupIrIzqpecgwhIRje9sKiRj1id1Q8ur6TUJRFqZGs=;
+	s=korg; t=1786116286;
+	bh=Yso2HGvnGN+LHlmu/uTdvZZcLgLJkKWVag93YVWqnHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tOuwBRMbIDClhBZzfoNue9k/2qr5xnaIMYvw3ZPZLBqh57X9FmY+JDv821jtDSaaz
-	 JC4kv43FAYmzvSBREUYOSeTjRh+SEpHSWIg2W7tNiyaa1BsAYQzVOdaio1IlXuiyyA
-	 1Ao2lM0ALT/hs9rxjghIwu6PfSCVu7vePENEARgY=
+	b=Pvboiy14LlrKda3UbkNmmN4pPWUD6gs9alialoZx7QInpSxLeJR86Sy0eMs7yHMBG
+	 HCsaMQ2nEs+dioTfyCV6W6MalPGt5hxpJkiRpvqbAhJr8Q4Rqsaq7Y+kEOOoKCF0C+
+	 ysZnVY+RUePzpYsMB9/Uw8rc2b9znki5nP5jjbVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	James Gao <jamesgao5@outlook.com>,
+	Vincent Mailhol <mailhol@kernel.org>,
 	stable@kernel.org,
 	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.6 178/261] can: softing: fw_parse(): validate firmware record spans
-Date: Fri,  7 Aug 2026 16:38:55 +0200
-Message-ID: <20260807143419.203492276@linuxfoundation.org>
+Subject: [PATCH 6.6 179/261] can: peak_usb: add bounds check for USB channel index
+Date: Fri,  7 Aug 2026 16:38:56 +0200
+Message-ID: <20260807143419.224240117@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143415.358597922@linuxfoundation.org>
 References: <20260807143415.358597922@linuxfoundation.org>
@@ -51,158 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: James Gao <jamesgao5@outlook.com>
 
-commit 856d6cb04e5407523566b075841dcd6423757d1c upstream.
+commit 39132f166ca8ce00ae60d8a9068e06a60943cc4b upstream.
 
-fw_parse() reads a fixed record header, a firmware-provided payload,
-and a trailing checksum without knowing the end of the firmware blob. A
-truncated record can therefore make those reads exceed the blob.
+The channel control index ctrl_idx is derived from rx->len which comes
+directly from a device USB payload. The mask 0x0f allows values 0-15, but
+the array size of usb_if->dev[] is only 2. Values 2-15 cause heap
+out-of-bounds read, eventually causing kernel panic in the IRQ context.
 
-The same record also supplies addresses and lengths for writes into
-DPRAM. The generic loader uses wrap-prone mixed signed arithmetic for its
-bounds check, while the application loader does not bound the staging
-copy at all.
+Add bounds checking for ctrl_idx before the array access in both
+pcan_usb_pro_handle_canmsg() and pcan_usb_pro_handle_error().
 
-Pass the firmware end to the parser and validate the full source record.
-Use a signed wide offset for generic DPRAM records and validate the
-application staging span against the mapped DPRAM before copying.
-
-Fixes: 03fd3cf5a179 ("can: add driver for Softing card")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260722044347.2708-1-pengpeng@iscas.ac.cn
+Fixes: d8a199355f8f ("can: usb: PEAK-System Technik PCAN-USB Pro specific part")
+Signed-off-by: James Gao <jamesgao5@outlook.com>
+Reviewed-by: Vincent Mailhol <mailhol@kernel.org>
+Link: https://patch.msgid.link/TYWPR01MB8559DBAAAA6A7F410400329CF0012@TYWPR01MB8559.jpnprd01.prod.outlook.com
 Cc: stable@kernel.org
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/softing/softing_fw.c |   46 ++++++++++++++++++++++++-----------
- 1 file changed, 32 insertions(+), 14 deletions(-)
+ drivers/net/can/usb/peak_usb/pcan_usb_pro.c |   20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
---- a/drivers/net/can/softing/softing_fw.c
-+++ b/drivers/net/can/softing/softing_fw.c
-@@ -91,12 +91,12 @@ int softing_bootloader_command(struct so
- 	return ret;
- }
- 
--static int fw_parse(const uint8_t **pmem, uint16_t *ptype, uint32_t *paddr,
--		uint16_t *plen, const uint8_t **pdat)
-+static int fw_parse(const u8 **pmem, const u8 *limit, u16 *ptype,
-+		    u32 *paddr, u16 *plen, const u8 **pdat)
+--- a/drivers/net/can/usb/peak_usb/pcan_usb_pro.c
++++ b/drivers/net/can/usb/peak_usb/pcan_usb_pro.c
+@@ -534,12 +534,18 @@ static int pcan_usb_pro_handle_canmsg(st
+ 				      struct pcan_usb_pro_rxmsg *rx)
  {
- 	uint16_t checksum[2];
--	const uint8_t *mem;
--	const uint8_t *end;
-+	const u8 *mem;
-+	const u8 *record_end;
+ 	const unsigned int ctrl_idx = (rx->len >> 4) & 0x0f;
+-	struct peak_usb_device *dev = usb_if->dev[ctrl_idx];
+-	struct net_device *netdev = dev->netdev;
++	struct peak_usb_device *dev;
++	struct net_device *netdev;
+ 	struct can_frame *can_frame;
+ 	struct sk_buff *skb;
+ 	struct skb_shared_hwtstamps *hwts;
  
- 	/*
- 	 * firmware records are a binary, unaligned stream composed of:
-@@ -114,14 +114,21 @@ static int fw_parse(const uint8_t **pmem
- 	 * endianness & alignment.
- 	 */
- 	mem = *pmem;
-+	/* A record needs an 8-byte prefix and a 2-byte checksum. */
-+	if (mem > limit || limit - mem < 10)
++	if (ctrl_idx >= ARRAY_SIZE(usb_if->dev))
 +		return -EINVAL;
 +
- 	*ptype = le16_to_cpup((void *)&mem[0]);
- 	*paddr = le32_to_cpup((void *)&mem[2]);
- 	*plen = le16_to_cpup((void *)&mem[6]);
-+	if (*plen > limit - mem - 10)
++	dev = usb_if->dev[ctrl_idx];
++	netdev = dev->netdev;
++
+ 	skb = alloc_can_skb(netdev, &can_frame);
+ 	if (!skb)
+ 		return -ENOMEM;
+@@ -573,14 +579,20 @@ static int pcan_usb_pro_handle_error(str
+ {
+ 	const u16 raw_status = le16_to_cpu(er->status);
+ 	const unsigned int ctrl_idx = (er->channel >> 4) & 0x0f;
+-	struct peak_usb_device *dev = usb_if->dev[ctrl_idx];
+-	struct net_device *netdev = dev->netdev;
++	struct peak_usb_device *dev;
++	struct net_device *netdev;
+ 	struct can_frame *can_frame;
+ 	enum can_state new_state = CAN_STATE_ERROR_ACTIVE;
+ 	u8 err_mask = 0;
+ 	struct sk_buff *skb;
+ 	struct skb_shared_hwtstamps *hwts;
+ 
++	if (ctrl_idx >= ARRAY_SIZE(usb_if->dev))
 +		return -EINVAL;
 +
- 	*pdat = &mem[8];
- 	/* verify checksum */
--	end = &mem[8 + *plen];
--	checksum[0] = le16_to_cpup((void *)end);
--	for (checksum[1] = 0; mem < end; ++mem)
-+	record_end = &mem[8 + *plen];
-+	checksum[0] = le16_to_cpup((void *)record_end);
-+	for (checksum[1] = 0; mem < record_end; ++mem)
- 		checksum[1] += *mem;
- 	if (checksum[0] != checksum[1])
- 		return -EINVAL;
-@@ -139,6 +146,7 @@ int softing_load_fw(const char *file, st
- 	uint16_t type, len;
- 	uint32_t addr;
- 	uint8_t *buf = NULL, *new_buf;
-+	s64 dpram_offset;
- 	int buflen = 0;
- 	int8_t type_end = 0;
- 
-@@ -153,7 +161,7 @@ int softing_load_fw(const char *file, st
- 	mem = fw->data;
- 	end = &mem[fw->size];
- 	/* look for header record */
--	ret = fw_parse(&mem, &type, &addr, &len, &dat);
-+	ret = fw_parse(&mem, end, &type, &addr, &len, &dat);
- 	if (ret < 0)
- 		goto failed;
- 	if (type != 0xffff)
-@@ -164,7 +172,7 @@ int softing_load_fw(const char *file, st
- 	}
- 	/* ok, we had a header */
- 	while (mem < end) {
--		ret = fw_parse(&mem, &type, &addr, &len, &dat);
-+		ret = fw_parse(&mem, end, &type, &addr, &len, &dat);
- 		if (ret < 0)
- 			goto failed;
- 		if (type == 3) {
-@@ -179,9 +187,13 @@ int softing_load_fw(const char *file, st
- 			goto failed;
- 		}
- 
--		if ((addr + len + offset) > size)
-+		dpram_offset = (s64)addr + offset;
-+		if (dpram_offset < 0 || dpram_offset > size ||
-+		    len > size - dpram_offset) {
-+			ret = -EINVAL;
- 			goto failed;
--		memcpy_toio(&dpram[addr + offset], dat, len);
-+		}
-+		memcpy_toio(&dpram[dpram_offset], dat, len);
- 		/* be sure to flush caches from IO space */
- 		mb();
- 		if (len > buflen) {
-@@ -195,7 +207,7 @@ int softing_load_fw(const char *file, st
- 			buf = new_buf;
- 		}
- 		/* verify record data */
--		memcpy_fromio(buf, &dpram[addr + offset], len);
-+		memcpy_fromio(buf, &dpram[dpram_offset], len);
- 		if (memcmp(buf, dat, len)) {
- 			/* is not ok */
- 			dev_alert(&card->pdev->dev, "DPRAM readback failed\n");
-@@ -237,7 +249,7 @@ int softing_load_app_fw(const char *file
- 	mem = fw->data;
- 	end = &mem[fw->size];
- 	/* look for header record */
--	ret = fw_parse(&mem, &type, &addr, &len, &dat);
-+	ret = fw_parse(&mem, end, &type, &addr, &len, &dat);
- 	if (ret)
- 		goto failed;
- 	ret = -EINVAL;
-@@ -253,7 +265,7 @@ int softing_load_app_fw(const char *file
- 	}
- 	/* ok, we had a header */
- 	while (mem < end) {
--		ret = fw_parse(&mem, &type, &addr, &len, &dat);
-+		ret = fw_parse(&mem, end, &type, &addr, &len, &dat);
- 		if (ret)
- 			goto failed;
- 
-@@ -279,6 +291,12 @@ int softing_load_app_fw(const char *file
- 		/* work in 16bit (target) */
- 		sum &= 0xffff;
- 
-+		if (card->pdat->app.offs > card->dpram_size ||
-+		    len > card->dpram_size - card->pdat->app.offs) {
-+			ret = -EINVAL;
-+			goto failed;
-+		}
++	dev = usb_if->dev[ctrl_idx];
++	netdev = dev->netdev;
 +
- 		memcpy_toio(&card->dpram[card->pdat->app.offs], dat, len);
- 		iowrite32(card->pdat->app.offs + card->pdat->app.addr,
- 				&card->dpram[DPRAM_COMMAND + 2]);
+ 	/* nothing should be sent while in BUS_OFF state */
+ 	if (dev->can.state == CAN_STATE_BUS_OFF)
+ 		return 0;
 
 
