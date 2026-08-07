@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ACA1280331;
-	Fri,  7 Aug 2026 15:32:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81BE6314B6D;
+	Fri,  7 Aug 2026 15:32:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116749; cv=none; b=sRwz+9Ls1H0/QAmmeW73JPjRA6aQmsanoUeIBXxAlzSQtxKfXp0X6bPnWMa/DyWIRwMPpghO7DtJnjUi5GoHMLaaQWEEsxgmPuGmFNQktiX2UgaSWn7hRGfdBFcO8ujH63CPAb3LUpojbViLdj+qdMzA8/8BEvhLcAzQDuUwTEM=
+	t=1786116752; cv=none; b=DhAaMmOD8tNlokL0uv0dPuMz8e2CFlH0Ay78ktkhoR1K8/EFTBpGA6doXyYuS2y9J+4T4EjCaySm3bBi9sUyWlUybcfI6Uhmp8c+4KeSfB6s7soccHiZAktFLkUcFWcGUcJhV6S1Yz+3X859fKCc75NHALXQ3RbvFbaHpoQPJZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116749; c=relaxed/simple;
-	bh=QRj0TjNc9NRZI0tRZZV2eFQNWWP6zv7/jjPzqStu+YQ=;
+	s=arc-20240116; t=1786116752; c=relaxed/simple;
+	bh=FaJY7fsN/l9C9MFZ4gVHrtL6qGYVSk8cb6OEZdRTdvo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ort5jCgFgHFQ6i16KOSIUpAz30KF7NasA/N+IILtG4iE02zxwFnCDjM1x+zN0wiW+81s7tFIXOEjh8Hvrgh1p2P7/syf7CrVUKwMMOHZj4ELr0PreBOJeJKBgk/iYClIkSrZ6MM2WxJUwhoZO4folzfnUr/QX73RqDTfV+DXKm4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GbARNOv7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NhMAGEfB+uqx8YoyA5NoAt6AvzQMJ3zelnELVWBX8XciMSy23PHyHo5OpkMCp4RJfLJDw5Msls7nJOOcShTtedIDQ4/t6KyAIZ2CuFg+99KA9eCdGEfu3dcYbBDTZslSOwngkSeJ2arByH+MZsMFbgXmDeLs/FdqbD0EjOkUN9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aPqaquo8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GbARNOv7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 028F81F000E9;
-	Fri,  7 Aug 2026 15:32:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aPqaquo8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7AF51F000E9;
+	Fri,  7 Aug 2026 15:32:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116748;
-	bh=BTMjyniJjKe6VDG/Zq2+VT/CT85jRc8vMQtH/aZQ4w0=;
+	s=korg; t=1786116751;
+	bh=XeJJwtGFIebbPZoN1WmwuIeOqL4vLl0yZExd3fSzIe0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GbARNOv7rXksKWAqU7KInWAWRPzJMEHtLEGr9I/Y5or/qsyqboJX1oBc0g9YDDdhk
-	 iBvOpmD4u1LEE7EXtMsp2KJIM1ebHuVo9iOBqXxkC3PNl3IRNjnD1b4/Q+7tnZLdzU
-	 CtT3EAVjl930TXYWoDaxdN31gxPXy4FrgLm4tTIg=
+	b=aPqaquo8LqHadUwpL4TpcczfrKMGwYlw8u7aIGp0HchLJegUtjs6J/RZjxA/hOFqp
+	 bAk4/kZlJmcweS4J6yWKSApA9osbaFG9VkmV5LnC9gurvs6zTVvJOvZki4yV3VJGnp
+	 IpV5t5rpwhmYX9uzK7c87BC0FTxusxRMODU2xJuE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Linus Walleij <linusw@kernel.org>,
+	Sashiko AI <sashiko-bot@kernel.org>,
+	HyeongJun An <sammiee5311@gmail.com>,
+	Chris Leech <cleech@redhat.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 078/438] pinctrl-amd: Dont clear S4 wake bits at probe
-Date: Fri,  7 Aug 2026 16:34:34 +0200
-Message-ID: <20260807143429.646910226@linuxfoundation.org>
+Subject: [PATCH 7.1 079/438] scsi: libiscsi: Fix stale-data leak into the SCSI sense buffer
+Date: Fri,  7 Aug 2026 16:34:35 +0200
+Message-ID: <20260807143429.667435403@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -51,56 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit ffe8a0c6b55285ceaf2f42fc20c3a0594d14f1e9 ]
+[ Upstream commit 98b87885de4b7f605533a2860685f5689fce8e82 ]
 
-commit 6bc3462a0f5e ("pinctrl: amd: Mask wake bits on probe again")
-introduced a regression where Wake-on-LAN no longer works after suspend
-or shutdown on some AMD platforms.
+iscsi_scsi_cmd_rsp() copies the sense data of a SCSI Response from the
+target-supplied data segment.  The segment carries a 2-byte sense length
+followed by the sense bytes, so it must hold 2 + senselen bytes, but the
+bounds check only requires datalen >= senselen:
 
-Firmware-programmed S4 wake bits for devices like PCIe NICs using PCI
-PME are cleared at probe, but nothing restores them. Unlike S0i3/S3 wake
-sources that use enable_irq_wake() -> amd_gpio_irq_set_wake(), PCIe PME
-does not use GPIO IRQ infrastructure and relies on firmware configuration.
+	senselen = get_unaligned_be16(data);
+	if (datalen < senselen)
+		goto invalid_datalen;
+	memcpy(sc->sense_buffer, data + 2,
+	       min_t(uint16_t, senselen, SCSI_SENSE_BUFFERSIZE));
 
-The original intent of commit 6bc3462a0f5e ("pinctrl: amd: Mask wake
-bits on probe again") was to clear spurious wake bits left by firmware
-to prevent unwanted wakeups. However, S4 wake bits are used for
-hardware-level wake sources like WoL that bypass the kernel's IRQ wake
-API.
+A target that returns a SCSI Response whose datalen equals senselen
+(with senselen <= SCSI_SENSE_BUFFERSIZE) makes the memcpy() from data +
+2 read up to two bytes past the received data.  Those bytes are stale
+conn->data contents and end up in the command's sense buffer, which is
+returned to userspace.
 
-Fix by preserving S4 wake bits at probe and only clearing S0i3/S3 bits:
-- Firmware-configured S4 wake sources (WoL) continue working
-- Kernel maintains control of S3/S0i3 wake policy via set_wake()
-- S3-only wake sources work correctly per commit f31f33dbb3ba ("pinctrl:
-  amd: Take suspend type into consideration which pins are non-wake")
+Account for the 2-byte sense length prefix in the check.
 
-The trade-off is that firmware-programmed spurious S4 wake bits remain
-set, but this is less problematic than breaking WoL.
-
-Fixes: 6bc3462a0f5e ("pinctrl: amd: Mask wake bits on probe again")
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Fixes: 7996a778ff8c ("[SCSI] iscsi: add libiscsi")
+Suggested-by: Sashiko AI <sashiko-bot@kernel.org>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Acked-by: Chris Leech <cleech@redhat.com>
+Link: https://patch.msgid.link/20260714104934.1404423-1-sammiee5311@gmail.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-amd.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/scsi/libiscsi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/pinctrl-amd.c b/drivers/pinctrl/pinctrl-amd.c
-index e3128b0045d22..15a398bb3be23 100644
---- a/drivers/pinctrl/pinctrl-amd.c
-+++ b/drivers/pinctrl/pinctrl-amd.c
-@@ -884,8 +884,7 @@ static void amd_gpio_irq_init(struct amd_gpio *gpio_dev)
- 	u32 pin_reg, mask;
- 	int i;
+diff --git a/drivers/scsi/libiscsi.c b/drivers/scsi/libiscsi.c
+index 25857d6ed6e84..1b4e6af37c927 100644
+--- a/drivers/scsi/libiscsi.c
++++ b/drivers/scsi/libiscsi.c
+@@ -918,7 +918,7 @@ static void iscsi_scsi_cmd_rsp(struct iscsi_conn *conn, struct iscsi_hdr *hdr,
+ 		}
  
--	mask = BIT(WAKE_CNTRL_OFF_S0I3) | BIT(WAKE_CNTRL_OFF_S3) |
--		BIT(WAKE_CNTRL_OFF_S4);
-+	mask = BIT(WAKE_CNTRL_OFF_S0I3) | BIT(WAKE_CNTRL_OFF_S3);
+ 		senselen = get_unaligned_be16(data);
+-		if (datalen < senselen)
++		if (datalen < senselen + 2)
+ 			goto invalid_datalen;
  
- 	for (i = 0; i < desc->npins; i++) {
- 		int pin = desc->pins[i].number;
+ 		memcpy(sc->sense_buffer, data + 2,
 -- 
 2.53.0
 
