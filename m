@@ -1,37 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 918BD390608;
-	Fri,  7 Aug 2026 15:38:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9607E390608;
+	Fri,  7 Aug 2026 15:38:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786117115; cv=none; b=mu91eCP+p7ELJR6NAPrttEKe584TKYQNTzYh1/1b2noMvdBeZ9WPr5i2IgqFyEHrqY6cRaRTnX3s/b0tte+0wT/SZkJMflY0mtYIz5VKVEEznBGpN5rpoExOKd8CO20sr4A8Jt38+EEDK8OtJDBXTA22949LU/mmVCIMRaaNVdo=
+	t=1786117118; cv=none; b=TxavbU2ai79W3bEKC9IWLBaLFcxFKmP5jpsdbFxHeuWkWIR+/DPN3imSLOfGYl+D3KkqnTgmTW1ZF4rs2ws5z+4Pfjmir9YZRpMGB/GBfw0vKouWCytvn/d/07QNZg8LNOTo5sVwPb0ayyC39DyF/SQQOi+1ZNpCFmE6nf3vluI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786117115; c=relaxed/simple;
-	bh=fZ7jXpdxd4tup5Pxk5L/EqXTNT3qESY5KVqn1JCJ8tU=;
+	s=arc-20240116; t=1786117118; c=relaxed/simple;
+	bh=kjyT3ZfkxUghjGG51aM0kmRBZb8rbQjGwBj8aai9Zzw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fEAYuncMaLQhitu0K0VqYN20sHaf6dFGp+q7xRSaIioFephLnlY6ZOhI4PgyvlyAD79nC/2zQrv55Uf5HnngiBCcdqqAu0AWEd0vUG0POOSJDkZDHHNj6w4sCmgpEIMacQUSWLpEsjKWLOkv3cPJKGu6/ZkdedkFU9nR0yNGZyU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J8Yq/Y9C; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JnmMOrtXOhc8A55y2anejsS5Y33iVdl4tynZHZXxvfjnFT5NvQBf14kI9/k5B9gpP/k9JhL28Hi/QSDPPCi631Bg1o8m1tcUc9EQp10FEmq091ZidcDjDsnIIjjIkzdxmeMxrn8nGrD+x4bZnLoVsRRempId2N+U6g1EGU7mJMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L4U8B33/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J8Yq/Y9C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E28351F000E9;
-	Fri,  7 Aug 2026 15:38:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L4U8B33/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9302D1F000E9;
+	Fri,  7 Aug 2026 15:38:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786117114;
-	bh=Zu6tffF6YJZvMOjMoLDv/DZMQVmir5CthhQWu+aeL84=;
+	s=korg; t=1786117117;
+	bh=rcP3Aliv/SFXCvtRBv4qhw0p42WZbuRnYW2LKz+Ae6Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J8Yq/Y9CAxqggOudOMIndKxP3O+XXah25wtRpG+ngzwgcNrYXb/b+Y+Q7Kmc8gkoh
-	 OTRknlsDNrCp8oyOqwDnsaKq8QECpTJGcb6SxE8u8g6V+k4MP8FeSWCuodHUHJQQ6y
-	 uNmO0GjuV72Qj0Rmn8zkju7wj6Vi1oBnYArV169E=
+	b=L4U8B33/BzzpwFS/IpjkuhF7Qa4LM0ZRTcmeRrnZiqT9bv24Wjf5qg6LNT+OKKlUR
+	 GFeBCOrrN7K8NViiNuJp8JEa+ul2gn+MfEwnvTZh7sKqJUCwyyvaeYYZ0i8ZcA4LKm
+	 +TdVc4D7PYHq/2iYFZ0xPwEImG5GntRJyD8iMUOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Loehle <christian.loehle@arm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 7.1 203/438] ACPI: CPPC: Check all controls for fast switching
-Date: Fri,  7 Aug 2026 16:36:39 +0200
-Message-ID: <20260807143432.348664499@linuxfoundation.org>
+	Qi Zheng <zhengqi.arch@bytedance.com>,
+	Peiyang He <peiyang_he@smail.nju.edu.cn>,
+	"Harry Yoo (Oracle)" <harry@kernel.org>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Axel Rasmussen <axelrasmussen@google.com>,
+	Barry Song <baohua@kernel.org>,
+	David Hildenbrand <david@kernel.org>,
+	Kairui Song <kasong@tencent.com>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@kernel.org>,
+	Muchun Song <muchun.song@linux.dev>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Wei Xu <weixugc@google.com>,
+	Yuanchu Xie <yuanchu@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 7.1 204/438] mm: mglru: fix stale batch updates after memcg reparenting
+Date: Fri,  7 Aug 2026 16:36:40 +0200
+Message-ID: <20260807143432.369143156@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -50,106 +64,153 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Loehle <christian.loehle@arm.com>
+From: Qi Zheng <zhengqi.arch@bytedance.com>
 
-commit 11055a46f398779b69aa36afb7c9f4124529a075 upstream.
+commit de4660898b7aa7e03d3b120a6bfa6b26211e4e77 upstream.
 
-ACPI 6.2, Section 6.2.11.2 permits _CPC registers to use flexible
-address spaces. Linux advertises that capability through _OSC and parses
-the address space of each _CPC register independently. A directly
-accessible DESIRED_PERF combined with PCC-backed limits is therefore a
-valid configuration.
+The mglru page table walker batches per-generation size deltas in
+walk->nr_pages while walking page tables without holding the lruvec lock.
+The reset_batch_size() later folds those deltas into walk->lruvec under
+the lruvec lock.
 
-cppc_allow_fast_switch() only checks DESIRED_PERF, although the fast-switch
-callback passes DESIRED_PERF, MIN_PERF and MAX_PERF to cppc_set_perf(). If
-a limit uses PCC, that function can sleep while called from scheduler
-context.
+The page table walker can run concurrently with the memcg reparenting path
+as follows:
 
-Allow fast switching only when every supported control used by the
-callback has an address space already accepted for fast access. Check the
-complete policy domain, including initialized CPUs that are currently
-offline and may later become the policy's managing CPU.
+CPU0                           CPU1
+====                           ====
 
-Fixes: 658fa7b1c47a ("ACPI: CPPC: Add cppc_get_perf() API to read performance controls")
-Cc: stable@vger.kernel.org
-Signed-off-by: Christian Loehle <christian.loehle@arm.com>
-Link: https://patch.msgid.link/20260722093825.1030594-2-christian.loehle@arm.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+walk_mm
+--> walk_page_range
+    --> update_batch_size
+        --> walk->nr_pages += delta
+
+                              mem_cgroup_css_offline
+                              --> memcg_reparent_objcgs
+                                  --> lock lruvec
+                                      lru_gen_reparent_memcg
+                                      --> reparent child folios to parent
+                                      unlock lruvec
+
+    lock lruvec
+    reset_batch_size
+    --> child lrugen->nr_pages += delta
+
+This will trigger the following warning in lru_gen_exit_memcg():
+
+	VM_WARN_ON_ONCE(memchr_inv(lruvec->lrugen.nr_pages, 0,
+				   sizeof(lruvec->lrugen.nr_pages)));
+
+And the user-visible impact of underestimated nr_pages in MGLRU was
+premature OOMs because MGLRU does not try to reclaim memory when nr_pages
+reaches zero, but there are still more pages.
+
+To fix it, make reset_batch_size() check CSS_DYING under RCU before
+flushing the pending batch.  A non-dying memcg keeps the original lruvec
+stable against RCU-delayed offlining; a dying memcg redirects the deltas
+to the first non-dying ancestor.
+
+Link: https://lore.kernel.org/20260710154318.75388-1-qi.zheng@linux.dev
+Fixes: f304652609ea ("mm: vmscan: prepare for reparenting MGLRU folios")
+Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
+Reported-by: Peiyang He <peiyang_he@smail.nju.edu.cn>
+Closes: https://lore.kernel.org/all/5A9E929D82717101+12fcf643-efb8-4b9a-a53a-1e28cc894f0b@smail.nju.edu.cn
+Reviewed-by: Harry Yoo (Oracle) <harry@kernel.org>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Axel Rasmussen <axelrasmussen@google.com>
+Cc: Barry Song <baohua@kernel.org>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Kairui Song <kasong@tencent.com>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Wei Xu <weixugc@google.com>
+Cc: Yuanchu Xie <yuanchu@google.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/cppc_acpi.c       |   22 +++++++++++++++++-----
- drivers/cpufreq/cppc_cpufreq.c |    2 +-
- include/acpi/cppc_acpi.h       |    5 +++--
- 3 files changed, 21 insertions(+), 8 deletions(-)
+ include/linux/memcontrol.h |   25 +++++++++++++++++++++++++
+ mm/vmscan.c                |   11 ++++-------
+ 2 files changed, 29 insertions(+), 7 deletions(-)
 
---- a/drivers/acpi/cppc_acpi.c
-+++ b/drivers/acpi/cppc_acpi.c
-@@ -475,17 +475,29 @@ bool acpi_cpc_valid(void)
+--- a/include/linux/memcontrol.h
++++ b/include/linux/memcontrol.h
+@@ -1475,6 +1475,31 @@ static inline void lruvec_lock_irq(struc
+ 	spin_lock_irq(&lruvec->lru_lock);
  }
- EXPORT_SYMBOL_GPL(acpi_cpc_valid);
  
--bool cppc_allow_fast_switch(void)
-+bool cppc_allow_fast_switch(const struct cpumask *cpus)
- {
--	struct cpc_register_resource *desired_reg;
-+	struct cpc_register_resource *desired_reg, *min_reg, *max_reg;
- 	struct cpc_desc *cpc_ptr;
- 	int cpu;
- 
--	for_each_online_cpu(cpu) {
-+	for_each_cpu(cpu, cpus) {
- 		cpc_ptr = per_cpu(cpc_desc_ptr, cpu);
-+		if (!cpc_ptr)
-+			return false;
- 		desired_reg = &cpc_ptr->cpc_regs[DESIRED_PERF];
--		if (!CPC_IN_SYSTEM_MEMORY(desired_reg) &&
--				!CPC_IN_SYSTEM_IO(desired_reg))
-+		min_reg = &cpc_ptr->cpc_regs[MIN_PERF];
-+		max_reg = &cpc_ptr->cpc_regs[MAX_PERF];
++static inline struct lruvec *lruvec_live_lock_irq(struct lruvec *lruvec)
++{
++#ifdef CONFIG_MEMCG
++	struct pglist_data *pgdat = lruvec_pgdat(lruvec);
++	struct mem_cgroup *memcg = lruvec_memcg(lruvec);
 +
-+		if (!CPC_SUPPORTED(desired_reg) ||
-+		    (!CPC_IN_SYSTEM_MEMORY(desired_reg) &&
-+		     !CPC_IN_SYSTEM_IO(desired_reg)) ||
-+		    (CPC_SUPPORTED(min_reg) &&
-+		     !CPC_IN_SYSTEM_MEMORY(min_reg) &&
-+		     !CPC_IN_SYSTEM_IO(min_reg)) ||
-+		    (CPC_SUPPORTED(max_reg) &&
-+		     !CPC_IN_SYSTEM_MEMORY(max_reg) &&
-+		     !CPC_IN_SYSTEM_IO(max_reg)))
- 			return false;
++	rcu_read_lock();
++
++	/*
++	 * The memcg can be NULL when the memory controller is disabled.
++	 * Otherwise, the caller keeps the memcg owning @lruvec alive.
++	 */
++	while (unlikely(memcg && css_is_dying(&memcg->css))) {
++		memcg = parent_mem_cgroup(memcg);
++		lruvec = mem_cgroup_lruvec(memcg, pgdat);
++	}
++
++	spin_lock_irq(&lruvec->lru_lock);
++#else
++	lruvec_lock_irq(lruvec);
++#endif
++
++	return lruvec;
++}
++
+ static inline void lruvec_unlock(struct lruvec *lruvec)
+ {
+ 	spin_unlock(&lruvec->lru_lock);
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -3268,7 +3268,7 @@ static void update_batch_size(struct lru
+ static void reset_batch_size(struct lru_gen_mm_walk *walk)
+ {
+ 	int gen, type, zone;
+-	struct lruvec *lruvec = walk->lruvec;
++	struct lruvec *lruvec = lruvec_live_lock_irq(walk->lruvec);
+ 	struct lru_gen_folio *lrugen = &lruvec->lrugen;
+ 
+ 	walk->batched = 0;
+@@ -3288,6 +3288,8 @@ static void reset_batch_size(struct lru_
+ 			lru += LRU_ACTIVE;
+ 		__update_lru_size(lruvec, lru, zone, delta);
+ 	}
++
++	lruvec_unlock_irq(lruvec);
+ }
+ 
+ static int should_skip_vma(unsigned long start, unsigned long end, struct mm_walk *args)
+@@ -3782,11 +3784,8 @@ static void walk_mm(struct mm_struct *mm
+ 			mmap_read_unlock(mm);
+ 		}
+ 
+-		if (walk->batched) {
+-			lruvec_lock_irq(lruvec);
++		if (walk->batched)
+ 			reset_batch_size(walk);
+-			lruvec_unlock_irq(lruvec);
+-		}
+ 
+ 		cond_resched();
+ 	} while (err == -EAGAIN);
+@@ -4884,9 +4883,7 @@ retry:
+ 	walk = current->reclaim_state->mm_walk;
+ 	if (walk && walk->batched) {
+ 		walk->lruvec = lruvec;
+-		lruvec_lock_irq(lruvec);
+ 		reset_batch_size(walk);
+-		lruvec_unlock_irq(lruvec);
  	}
  
---- a/drivers/cpufreq/cppc_cpufreq.c
-+++ b/drivers/cpufreq/cppc_cpufreq.c
-@@ -694,7 +694,7 @@ static int cppc_cpufreq_cpu_init(struct
- 		goto out;
- 	}
- 
--	policy->fast_switch_possible = cppc_allow_fast_switch();
-+	policy->fast_switch_possible = cppc_allow_fast_switch(policy->cpus);
- 	policy->dvfs_possible_from_any_cpu = true;
- 
- 	/*
---- a/include/acpi/cppc_acpi.h
-+++ b/include/acpi/cppc_acpi.h
-@@ -166,7 +166,7 @@ extern u64 cppc_get_dmi_max_khz(void);
- extern unsigned int cppc_perf_to_khz(struct cppc_perf_caps *caps, unsigned int perf);
- extern unsigned int cppc_khz_to_perf(struct cppc_perf_caps *caps, unsigned int freq);
- extern bool acpi_cpc_valid(void);
--extern bool cppc_allow_fast_switch(void);
-+bool cppc_allow_fast_switch(const struct cpumask *cpus);
- extern int acpi_get_psd_map(unsigned int cpu, struct cppc_cpudata *cpu_data);
- extern int cppc_get_transition_latency(int cpu);
- extern bool cpc_ffh_supported(void);
-@@ -230,7 +230,8 @@ static inline bool acpi_cpc_valid(void)
- {
- 	return false;
- }
--static inline bool cppc_allow_fast_switch(void)
-+
-+static inline bool cppc_allow_fast_switch(const struct cpumask *cpus)
- {
- 	return false;
- }
+ 	mod_lruvec_state(lruvec, PGDEMOTE_KSWAPD + reclaimer_offset(sc),
 
 
