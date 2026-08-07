@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BADE92DC765;
-	Fri,  7 Aug 2026 15:10:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C32E038C42A;
+	Fri,  7 Aug 2026 15:10:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115413; cv=none; b=S5Jy64+RjvYHW0EYLTZVbbR3PFy+tBbNh7er9kkIkTRa63qAUH5/NbnW5DMOPEFV2SMXjXA/bP+/ybgkvOql98YjnkcJfpZw0YqndJGmIw9SyVdyURZYiI/GjtFxSyeLYYxJfSAxowytqpjWUtt3vLY+bB1tr5TFdHrbGc5eWIk=
+	t=1786115415; cv=none; b=Y5rX2EF+jb8WLqTVXJG4iID3dheXup6F9y1LN8sgb+48Qe4q8j+U7QUfo26enztgHQI4o0fxbqdhQDdNJwqihmkgudZxm+7yUYCbg0TBWI/VO57ACR49i9ROZ6m82bl35yjNV0RPREJRh+4W1RDzBfzFt2KZR8C+BCS9ajrrWbE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115413; c=relaxed/simple;
-	bh=IC6GjOtNRjSCfkzPQy3fMFG/jYc9hBk+T4I4KBuRT/g=;
+	s=arc-20240116; t=1786115415; c=relaxed/simple;
+	bh=3opVg1MUN2X2hp40sn5zMFDmsomS6KmQ4XiQwFtrI6E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ghksnNFdkCkQp9L1TSFw4oa2uhHLxMoPF4PEbKs84orZNYHhDIXqPn2qSrkSF0WQMPrgfDkF5Y6zKEDGNtBvh5i720M27c8EYEWrWRPejqgISJFxgHkf23Zw0l82lhDPglO5J/0Kq50WvbR6fYV1SCxKFfx34igbla1Nl30Jze0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s8urt5t3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UEKuSooQbaC2e6w09UMrkRk52jLNW995TXeY7tSfvsNfUHyC9yG+CLf6PxvvO6lKAlus4/+YhOehdr6vIMEaMGG50RMXo9voChdHed8CHqm6ZrIb/RWugJRwZd1YvcrPO+kgrQ9gDgkXCCG2MOdiq8LyVsdl2YNuvhN9uTFbV2M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=deGjRlQn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s8urt5t3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50FF81F000E9;
-	Fri,  7 Aug 2026 15:10:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="deGjRlQn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 293711F00A3A;
+	Fri,  7 Aug 2026 15:10:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115410;
-	bh=d457lm6mJW4AsC/NF6YOtW8EL5tSvJSMjApbD0pRbH0=;
+	s=korg; t=1786115413;
+	bh=Zd12R4gRQYcEnchuFtw9zm1dzBnESoqEvA5yo4shFFU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s8urt5t3pq7uHyFDR05o1OCQEE9y6CicWHOGAGNR8wRHsoHpNS3raQqhRykGK17W5
-	 ovH10x5IkV+vnEh5FBG1sh+uTEeBYo6GjfnGIbkiOFKDzeQsTHGmZrYZMI/oO/6dT7
-	 4aq7VKmp44uhHsQPJOmiuXVjxrjenL9TBlYjZyhQ=
+	b=deGjRlQnScY89XeS9hlm/lpSq749gLf+QkJPT5l9agC91btgSh3BjINx8clVtRmLl
+	 S/6BqYXm3r3ej0Z+t6DUA9HkHreZ1OyCnet6difnFEiHAZz4vQ15HfTBU/el0ToxLJ
+	 NEmSNrQJIgMOr/uEeFVXwjxmmxNASufuxinUYjTE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
 	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
+	Christian Loehle <christian.loehle@arm.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.18 266/396] cpufreq: powernow-k8: Fix possible memory leak in powernowk8_cpu_init()
-Date: Fri,  7 Aug 2026 16:37:06 +0200
-Message-ID: <20260807143429.995029166@linuxfoundation.org>
+Subject: [PATCH 6.18 267/396] cpufreq: schedutil: Publish util hooks only after all sg_cpu are initialized
+Date: Fri,  7 Aug 2026 16:37:07 +0200
+Message-ID: <20260807143430.016054383@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -52,35 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+From: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
 
-commit d5f8e5f6040d052d44fcbf4f31dd35145c0c8d7d upstream.
+commit f0a3f042293a8c5a2152346b3637ea60866c503a upstream.
 
-The memory allocated for data->powernow_table inside
-powernow_k8_cpu_init_acpi() or find_psb_table() is not freed in one of
-the error paths in powernowk8_cpu_init(). Fix that by adding a kfree().
+Commit 16a03c71bba0 ("cpufreq: schedutil: Merge initialization code of
+sg_cpu in single loop") merged the per-CPU initialization and the
+utilization-hook registration into a single loop in sugov_start().
 
-Fixes: 1ff6e97f1d99 ("[CPUFREQ] cpumask: avoid playing with cpus_allowed in powernow-k8.c")
+For a shared cpufreq policy this re-introduces the race originally fixed
+by commit ab2f7cf141aa ("cpufreq: schedutil: Fix sugov_start() versus
+sugov_update_shared() race").
+
+The scheduler's util path reaches the hook under RCU-sched and never takes
+policy->rwsem, so the rwsem held across sugov_start() cannot serialize the
+two. Once the first CPU's hook is published, sugov_update_shared() may run
+and, via sugov_next_freq_shared(), read/write each sibling sugov_cpu
+(iowait_boost, util, bw_min, ...) concurrently with the memset() still
+initializing them, with no lock common to both sides: the update side holds
+sg_policy->update_lock while the init side holds only policy->rwsem, which
+the scheduler's util path never takes.
+
+The walk only accesses scalar members, never a pointer like ->sg_policy,
+so it does not crash today; it merely uses stale (or zero on first start)
+values that skew the frequency selection and tracepoints. It is still a
+genuine data race, and a latent crash once any pointer member is
+dereferenced there.
+
+Restore the two-phase approach: initialize all per-CPU structures first,
+and only then publish the per-CPU utilization update hooks.
+
+Fixes: 16a03c71bba0 ("cpufreq: schedutil: Merge initialization code of sg_cpu in single loop")
 Cc: stable@vger.kernel.org
-Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
-Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
-Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260727093553.98246-1-nihaal@cse.iitm.ac.in
+Signed-off-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+Reviewed-by: Christian Loehle <christian.loehle@arm.com>
+Link: https://patch.msgid.link/20260716115159.848403-1-zhongqiu.han@oss.qualcomm.com
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/powernow-k8.c |    1 +
- 1 file changed, 1 insertion(+)
+ kernel/sched/cpufreq_schedutil.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/drivers/cpufreq/powernow-k8.c
-+++ b/drivers/cpufreq/powernow-k8.c
-@@ -1083,6 +1083,7 @@ static int powernowk8_cpu_init(struct cp
+--- a/kernel/sched/cpufreq_schedutil.c
++++ b/kernel/sched/cpufreq_schedutil.c
+@@ -870,8 +870,19 @@ static int sugov_start(struct cpufreq_po
+ 		memset(sg_cpu, 0, sizeof(*sg_cpu));
+ 		sg_cpu->cpu = cpu;
+ 		sg_cpu->sg_policy = sg_policy;
++	}
++
++	/*
++	 * Publish the hooks only after all per-CPU data is initialized, so a
++	 * shared policy's sugov_update_shared() never reads an uninitialized
++	 * sibling sugov_cpu.
++	 */
++	for_each_cpu(cpu, policy->cpus) {
++		struct sugov_cpu *sg_cpu = &per_cpu(sugov_cpu, cpu);
++
+ 		cpufreq_add_update_util_hook(cpu, &sg_cpu->update_util, uu);
+ 	}
++
+ 	return 0;
+ }
  
- err_out_exit_acpi:
- 	powernow_k8_cpu_exit_acpi(data);
-+	kfree(data->powernow_table);
- 
- err_out:
- 	kfree(data);
 
 
