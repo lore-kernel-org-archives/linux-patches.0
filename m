@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53184331200;
-	Fri,  7 Aug 2026 15:06:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23D94331200;
+	Fri,  7 Aug 2026 15:06:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115204; cv=none; b=UoOf52G5EjIJPVJdOXWjuB3xRtnbpXoAf+ZzUhr45hYW98+c5P5JhYvMQTI1d4uiQS55HYgodxxxJH+QUYtlgcrYBmm3Z5GDy+AdjOLoEYUDz81zYyxqeBSR/sS/+E3P2TZV+Tt3uSup+ITVeoNt3nErw5DwbelH3RpPTTIKHEo=
+	t=1786115207; cv=none; b=a/UdzKOaQSMQTnYfBLS0RLB24+2Q/h5Vaneezm3+1Fqrdaf18ClJIR3OmRpSOZWy6BFs4kh4pCT65Vnk6xAadCXtcACjU+4f6hF6zHptK2FCwU8CiLSVZtRnouNnWaAp7v4XfOys/7uANEqWgzXUFJRPAhdcyCqsaAiPnfHJWn8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115204; c=relaxed/simple;
-	bh=y+Qw/ZYUCXaQNVPAIOd94NzvrAuLkep4DiK47egaA+E=;
+	s=arc-20240116; t=1786115207; c=relaxed/simple;
+	bh=74A2t1Ly8eLX1UQ3WHof+kkCE2y5ujGrHNU/+eZ0ty0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KRWfF+MQf+Bb7OKDMM+yJiH+MxGl1a7kEZNiG/6h+KvOjF9urNi4etA+7dOSgDyF3BivsWeZL+KwEYTQNTf0ZYq1rNM71DTWFdOSir8FNFyrZXyGe/s9etJpmSmLZvAOeYmRXDSQiu6LsgCuh/tB+xBNKfUIA1vO+ryeYJkrCu4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s9ash5Ie; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=joFOJ79tfcb+RQsKkQa24RT+erqLdbxRae0RFKZmMTUwcx8dJpbPbCFyEwVQmLJm/WD3ybvvJkk2KBjaEkx8TedVtfM52mSEiUa9pFbGClawSTilr0079IS8z0VFXDI5Ae7MXqL55HVrqN3OZ3K3FK4UCNcg0f4mp6PV5t4wOKk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y4iMAKv3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s9ash5Ie"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFE0A1F00A3A;
-	Fri,  7 Aug 2026 15:06:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y4iMAKv3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 808FB1F000E9;
+	Fri,  7 Aug 2026 15:06:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115203;
-	bh=8SK33VaIzm8ezNA35jAU481qyc0idMKLafamm6htTKk=;
+	s=korg; t=1786115206;
+	bh=MwIeiqzu+IX3YixAPLJaRjARLHt5rwPqlMJ+Hyi5fCQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s9ash5IefrtCuYAPkTYZJTllnTiL+1sWriYoH/XVSzEuW7gk/wc1jTQqpO7JjFtZi
-	 R3ewS8lo9RpvAoh332esyiIcdHwz9K9tl0hfQtgWDF4Cr83iEEXnFnUyprzJ/Xv1In
-	 8Kv/T74UnPezvunjih/WIij5D6+yX3ZAVvVUrjvA=
+	b=y4iMAKv3NyEMq45TE1MhRxQOI7GSJwiCM0o78nFoUSAuDdHgMlRFwJ4BpYuhBD1I5
+	 G5q8TEuS30XZsddSRwXb6UPYUM6FH6k+MFYu+jt79jo1TnqWEd2OlpXdE4NTOfAgE6
+	 s/eRAazAWWbG1eJ9nfrEnhEG42YSApfq99o6cbRU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhan Xusheng <zhanxusheng@xiaomi.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 6.18 187/396] audit: fix potential integer overflow in audit_log_n_string()
-Date: Fri,  7 Aug 2026 16:35:47 +0200
-Message-ID: <20260807143428.321639334@linuxfoundation.org>
+	Sangho Lee <kudo3228@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.18 196/396] Bluetooth: HIDP: validate numbered report payloads
+Date: Fri,  7 Aug 2026 16:35:56 +0200
+Message-ID: <20260807143428.510821973@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -50,61 +50,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhan Xusheng <zhanxusheng1024@gmail.com>
+From: Sangho Lee <kudo3228@gmail.com>
 
-commit f865c143629d4094866a811dba5f329250bad486 upstream.
+commit 34f53d27b81a16a02828c8fdfa4e02badc326f17 upstream.
 
-audit_log_n_string() computes new_len as "slen + 3" (enclosing quotes
-plus the NUL terminator) and stores it into an int, while slen is a
-size_t.  For a sufficiently large slen the addition can overflow and/or
-the result be truncated when assigned to the int new_len, so the
-"new_len > avail" check can be bypassed and the subsequent
-memcpy(ptr, string, slen) can write past the skb tail.
+When hidp_get_raw_report() waits for a numbered report,
+hidp_process_data() compares the expected report number with skb->data[0].
+A connected HIDP peer can reply with only a DATA transaction header,
+leaving the skb empty after the header is removed.
 
-This is the same class of bug that was fixed for the hex sibling in
-commit 65dfde57d1e2 ("audit: fix potential integer overflow in
-audit_log_n_hex()"); both helpers are reached through
-audit_log_n_untrustedstring() with the same length source.
+KMSAN reports an uninitialized-value use in hidp_session_run(), with the
+value originating in __alloc_skb() through vhci_write(). The transaction
+header checks remove the empty-frame reports, but this report remains until
+the payload check is added.
 
-Make new_len a size_t and use check_add_overflow() to catch the
-overflow, mirroring the audit_log_n_hex() fix.  No functional change for
-the in-tree callers, which all pass bounded lengths.
+The comparison can also consume a peer-controlled byte beyond the declared
+L2CAP PDU. A DATA | FEATURE response followed by an extra 0x01 byte made
+the current code accept that byte as report ID 1 and complete
+HIDIOCGFEATURE with a zero-byte result. With this change the malformed
+response is rejected with -EIO, while a subsequent valid response still
+succeeds.
 
+Require a payload byte before comparing a numbered report ID. Unnumbered
+reports continue to accept an empty payload.
+
+Fixes: 0ff1731a1ae5 ("HID: bt: Add support for hidraw HIDIOCGFEATURE and HIDIOCSFEATURE")
 Cc: stable@vger.kernel.org
-Fixes: 168b7173959f ("AUDIT: Clean up logging of untrusted strings")
-Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Sangho Lee <kudo3228@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/audit.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ net/bluetooth/hidp/core.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/kernel/audit.c
-+++ b/kernel/audit.c
-@@ -2115,7 +2115,8 @@ void audit_log_n_hex(struct audit_buffer
- void audit_log_n_string(struct audit_buffer *ab, const char *string,
- 			size_t slen)
- {
--	int avail, new_len;
-+	int avail;
-+	size_t new_len;
- 	unsigned char *ptr;
- 	struct sk_buff *skb;
+--- a/net/bluetooth/hidp/core.c
++++ b/net/bluetooth/hidp/core.c
+@@ -546,9 +546,10 @@ static int hidp_process_data(struct hidp
+ 	}
  
-@@ -2125,7 +2126,13 @@ void audit_log_n_string(struct audit_buf
- 	BUG_ON(!ab->skb);
- 	skb = ab->skb;
- 	avail = skb_tailroom(skb);
--	new_len = slen + 3;	/* enclosing quotes + null terminator */
-+
-+	/* enclosing quotes + null terminator */
-+	if (check_add_overflow(slen, 3, &new_len)) {
-+		audit_log_format(ab, "?");
-+		return;
-+	}
-+
- 	if (new_len > avail) {
- 		avail = audit_expand(ab, new_len);
- 		if (!avail)
+ 	if (test_bit(HIDP_WAITING_FOR_RETURN, &session->flags) &&
+-				param == session->waiting_report_type) {
++	    param == session->waiting_report_type) {
+ 		if (session->waiting_report_number < 0 ||
+-		    session->waiting_report_number == skb->data[0]) {
++		    (skb->len &&
++		     session->waiting_report_number == skb->data[0])) {
+ 			/* hidp_get_raw_report() is waiting on this report. */
+ 			session->report_return = skb;
+ 			done_with_skb = 0;
 
 
