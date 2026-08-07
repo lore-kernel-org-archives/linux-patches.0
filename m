@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D7254B0480;
-	Fri,  7 Aug 2026 15:11:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E264C3101A7;
+	Fri,  7 Aug 2026 15:11:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115469; cv=none; b=c4tHwO1VDrxeQFqs/giXvoe+z9o3dAU2wIVzRBNbapKM9vrTTsMpcsGdiAGMBcxBfXYdQXVQYJihOtXdKX6ECouM816yTb6CnsJ67nNsRy6+jOUo092W8GaVwKEBXFQ5zcxYPosDVImBA0SGAJbhgmYseMdq2Yd2ukYXDHCS2yc=
+	t=1786115472; cv=none; b=sPMXAxBtX12U+LqBn5DdKaghlFEqT/oh9h1yvsaohuHMtgF3CINtqksTGkuGIIGeqfPS8oP0eseB58e8J9EU2t2B28MD8FCD7UuLbr0o5WpCamu83Mu2jsfhSRlfFxMTyN9V7XZQ0WT5cGg82KqjzHGRBbm3aHCBYYUsC5g3EQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115469; c=relaxed/simple;
-	bh=P/r9e6pBpJ6kLbeGjWo28J5oQ6hRUbb5AQsbVg2TnvM=;
+	s=arc-20240116; t=1786115472; c=relaxed/simple;
+	bh=bkZBog54VyExC+3+6p+6+dfPk0zhYaEHxFfMg5ksNs8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P+9KyhYpFqMWR9nKXslBvhKGzQVdzw4cxLoSIPyyafJp/qb61j2mx2uGTeWh0bpU871gqw4Dpw9Qku00LRC2w08ni6oy0Tr417Aw5Qyymw6TDsP35NEDUWM1Aa6caogN7p9HxDU4BMspBVoF/tS+krEQ38UUMWZzJGPM/4qylxU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UG50pWYn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rCU6AFfM7zOEmC34LOP8goqAJNoQtNaQeHng0ytmXxwjNp6xWAI+5cErVMFwk2F8ZYtbPs7MAg4dBGxPoh54/7i/tLx0wr3IME5POmum6a4kaH74u3fAQxs5maQ+hIbmqCT0BoTbjzGFZEydvvR0YSvCRjcb0/hMtMC82UGXnSA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bx2grHkQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UG50pWYn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 608C81F00A3D;
-	Fri,  7 Aug 2026 15:11:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bx2grHkQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 453831F000E9;
+	Fri,  7 Aug 2026 15:11:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115467;
-	bh=sqCfuxg3rZ0X+j3R+q0LPU6f6LQ+0ymyTFYyK3fjRv8=;
+	s=korg; t=1786115470;
+	bh=mM85KS+N0NgZBa8D7IZo6rvJnAXv8vMXjMBhnmua/m8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UG50pWYnKJiWZ/tuzYur3+gmdv/P7tzF/MRaraOI3YITW5KtMFFuFgcd/Rdltv0qA
-	 bd22aNdVrtLHwbmpsEzGeBdiTVlDdVD/ohnoXl/tqR7a6OKLX9B1KXzlL5pFF6wAJr
-	 GXV7RbcLGfpywyKrVw+7EGHN8zbJHvRUpkfSk9LE=
+	b=bx2grHkQDt7pLQuaSugMziwqNFWZqCzAtyR+Jx5+P6tAoOM4TXg1VOlkgMHeGug0m
+	 4/EQ7E+gU+ZDLFJJkH8+DE+8OLpOlZ+OYi/RrI1C+2m6Qs3FE0TmCmWyY0YFKZmwOu
+	 EHhqNCaZ9RcEF8wKWDZ2jqHcS4qNL73f94R+CuUg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Andrii Nakryiko <andrii@kernel.org>
-Subject: [PATCH 6.18 243/396] uprobes: Fix NULL pointer dereference in hprobe_expire()
-Date: Fri,  7 Aug 2026 16:36:43 +0200
-Message-ID: <20260807143429.494068598@linuxfoundation.org>
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 6.18 234/396] binfmt_misc: dont let an F entry pin its own instance
+Date: Fri,  7 Aug 2026 16:36:34 +0200
+Message-ID: <20260807143429.305141111@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -52,65 +49,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Christian Brauner <brauner@kernel.org>
 
-commit cc679d7a6303e84d769f2afcde1fc51c51f127cd upstream.
+commit 79055d82772b9584f259b747fe40ff56a076678d upstream.
 
-Forking a task that has a pending uretprobe can oops the kernel with a
-NULL pointer dereference in the clone() path:
+An entry registered with 'F' opens its interpreter at registration time
+and holds that file until the entry is freed. Any entry nobody removes
+by hand only gets closed once the binfmt_misc superblock is shut down.
+If the interpreter lives on a mount that keeps that superblock alive the
+two pin each other:
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000018
-  Oops: 0002 [#1] SMP NOPTI
-  RIP: 0010:hprobe_expire
-  CR2: 0000000000000018
-  Call Trace:
-   uprobe_copy_process
-   copy_process
-   kernel_clone
-   __x64_sys_clone
-   do_syscall_64
-   entry_SYSCALL_64_after_hwframe
+    binfmt_misc sb -> inode -> entry -> interp_file -> vfsmount -> binfmt_misc sb
 
-This was found on real hosts on Meta fleet.
+TL;DR the file is never closed. Once the mount namespace is gone there
+is nothing left to unregister through either.
 
-I've got the impression that this is what is happening:
+There are two ways to trigger this bug:
 
-  CPU 1                          CPU 2 (traced task)
-  -----                          -------------------
-                                 hit uprobe, prepare_uretprobe():
-                                   hprobe LEASED, refcount >= 1
-  uprobe_unregister()
-    put_uprobe(): refcount -> 0
-                                 fork() -> dup_utask()
-                                   hprobe_expire(hprobe, true)
-                                     try_get_uprobe() -> NULL
-                                     get_uprobe(NULL)   <-- Oops
+- Point the interpreter at the instance itself. Its files are regular
+  files owned by the mounter and both bm_get_inode() and
+  simple_fill_super() leave i_op at empty_iops. So notify_change() falls
+  back to simple_setattr() and chmod +x works. We never set SB_I_NOEXEC
+  and so open_exec() accepts it.
 
-Only take the extra reference when the uprobe is non-NULL; a NULL means
-it is gone and is the correct value to return.
+- Use the instance as an overlayfs lower layer. The overlay superblock
+  holds a clone_private_mount() of every layer until it is destroyed and
+  that clone is in no namespace. So umount_tree() never reaches it.
 
-Fixes: dd1a7567784e ("uprobes: SRCU-protect uretprobe lifetime (with timeout)")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Acked-by: Oleg Nesterov <oleg@redhat.com>
-Acked-by: Andrii Nakryiko <andrii@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260729-uprobe-v1-1-61896b87c867@debian.org
+That's a DoS. And it isn't only the superblock that leaks. It pins the
+user namespace it was mounted in, so every iteration permanently eats
+one of the caller's user namespace charges.
+
+So let's just do the sane thing. SB_I_NOEXEC makes open_exec() fail on
+the instance's own files and s_stack_depth makes overlayfs reject the
+layer before it ever takes a clone. That also covers the ecryptfs and
+fuse passthrough variants. What 'F' promises is unchanged.
+
+The stable tag is narrower than the Fixes tags on purpose. Before
+sandboxed mounts this needed global root against the single instance
+everyone shares, and the change doesn't apply to those trees anyway.
+
+Note that SB_I_NODEV is implicitly raised for userns mounts but raise it
+explicitly here as well.
+
+Link: https://patch.msgid.link/20260728-work-binfmt_misc-selfpin-v1-1-74df5daeca5b@kernel.org
+Fixes: 948b701a607f ("binfmt_misc: add persistent opened binary handler for containers")
+Fixes: 21ca59b365c0 ("binfmt_misc: enable sandboxed mounts")
+Cc: stable@vger.kernel.org # v6.7+
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/events/uprobes.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/binfmt_misc.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/kernel/events/uprobes.c
-+++ b/kernel/events/uprobes.c
-@@ -830,7 +830,7 @@ static struct uprobe *hprobe_expire(stru
- 		if (try_cmpxchg(&hprobe->state, &hstate, uprobe ? HPROBE_STABLE : HPROBE_GONE)) {
- 			/* We won the race, we are the ones to unlock SRCU */
- 			__srcu_read_unlock(&uretprobes_srcu, hprobe->srcu_idx);
--			return get ? get_uprobe(uprobe) : uprobe;
-+			return get && uprobe ? get_uprobe(uprobe) : uprobe;
- 		}
+--- a/fs/binfmt_misc.c
++++ b/fs/binfmt_misc.c
+@@ -956,6 +956,10 @@ static int bm_fill_super(struct super_bl
+ 	if (WARN_ON(user_ns != current_user_ns()))
+ 		return -EINVAL;
  
- 		/*
++	/* Never exec off this instance and never let anything stack on it. */
++	sb->s_iflags |= SB_I_NOEXEC | SB_I_NODEV;
++	sb->s_stack_depth = FILESYSTEM_MAX_STACK_DEPTH;
++
+ 	/*
+ 	 * Lazily allocate a new binfmt_misc instance for this namespace, i.e.
+ 	 * do it here during the first mount of binfmt_misc. We don't need to
 
 
