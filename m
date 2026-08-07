@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 747131A681E;
-	Fri,  7 Aug 2026 15:28:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CD89404BC8;
+	Fri,  7 Aug 2026 15:28:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116514; cv=none; b=GPCoBgVlNU4R1xh3juZXgYd8PO4F3WJiZw6sYB07RJKq/WYqm9FYBl5UXgenEC+WqKmOMslcLasgW4R7KnW0dlXP+zQELkGlVvxb+gKkc/trfQYqpXhkq6SaYJ+gF47Q55FghvnDxyskYcMwGxqKh9Ua8ni2yXnbgUOcBgDElSc=
+	t=1786116517; cv=none; b=lSs2zuyUR1w7WzPuKTTL8roDtNL9ie0KFkx4L4bg8XrqAXVLE9wdjsiwur/blhf86IrDO68OjzYFncIgF95qllPkmhmA/x63HOsEWh5NQg3XA0ewxs5JUVakjJpaD6xKBtVoAF5lNKsU4gcgA32IMIPksM4qad88XeGrUQjzb78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116514; c=relaxed/simple;
-	bh=B7mVCkqwnWuDBDwEFhKKqOGBeEIM+d1N01v38q0mOVk=;
+	s=arc-20240116; t=1786116517; c=relaxed/simple;
+	bh=Q/Sd0XYihZRa/WgLPlzSeFudeVEX3z3gtMM56CpBGdY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bISjFe/+29majotPKx12AazUWQBqFbWLY9JRGQI/4CVf3xkdzIlXgXZ1zOUBAgis+fTB2rwJWypVMwuYDBLi2fsqJqu6LBhvLgMqd8OHwtBDnCpnBB+Aji8312veqZoxn3Abg/MZv+T3kXdRu0Wo8nUjoVuLo+pG/7YmW2Q8gAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hoe263xO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=M/V0JFCbdOaeEkFXv7d2mrlAX7X6v4QScEDqdQQJz+5+kE3ICQGr1V9xyCzRyJH5SLFr5/GlZek0a6cJMl7V29CV0NcvtFvwJ++GNrsHZ4AMMVAx6RE91YeSXSetUqmgG9aaa+C6LjIXFoSXwQIhcmNo31m6eTl40EvEfJ0UOoY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pkuo/Z/9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hoe263xO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF9CE1F000E9;
-	Fri,  7 Aug 2026 15:28:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pkuo/Z/9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C285F1F000E9;
+	Fri,  7 Aug 2026 15:28:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116513;
-	bh=3c6iGWzRfCskJg/JNJaiPq43if9Rp+/S1Qv+MjYgAKs=;
+	s=korg; t=1786116516;
+	bh=ez3dni34m21KjyMsz3u5DpJT2m3WvYNtHAYKXfnnWTo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hoe263xOvr7kKH2ugmXeRwQBaD4vO0MfmEX8gzGAGJIhP70xIVhVAu48MNRCV34ic
-	 8w9X3GfFRAVY6wMzsWtOrxDZ2zLaN868eFi1DqW8Ob5HuHWkYCmEkTnUbMWi5OsAZD
-	 pYPR7CWEHbpGfUh/SJRpNfFr86rhC1BxZGg84RrY=
+	b=pkuo/Z/99Bev11aL6Giekc+Z0F8XxxmNymn+nBh5TJby0IVpZI9VaB03zwYEEAs3e
+	 QmB5kGsYLKTYXz7SVsuByq0pjimjPM2cVyEdUQaggPGZpMHya73FLAS7tlbwbhXXVm
+	 pW4uUQMWW1ZCRssrmSk0EBbvkl2ldWwTtQ1/5Os4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Scheiner <frank.scheiner@web.de>
-Subject: [PATCH 6.6 213/261] Revert "ia64: Make acpi_cpufreq_cpu_exit return void"
-Date: Fri,  7 Aug 2026 16:39:30 +0200
-Message-ID: <20260807143419.962113448@linuxfoundation.org>
+	Johan Hovold <johan@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 214/261] usb: musb: omap2430: clean up probe error handling
+Date: Fri,  7 Aug 2026 16:39:31 +0200
+Message-ID: <20260807143419.983657323@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143415.358597922@linuxfoundation.org>
 References: <20260807143415.358597922@linuxfoundation.org>
@@ -49,42 +50,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Scheiner <frank.scheiner@web.de>
+From: Johan Hovold <johan@kernel.org>
 
-Commit b4b1ddc9dfe9 ("cpufreq: Make cpufreq_driver->exit() return
-void") was part of v6.6.145-rc1. But as it was derived from a
-later Linux version w/o support for ia64 it didn't touch all
-relevant parts in linux-6.6.y. Which now required an extra fix to
-build correctly for ia64. But b4b1ddc9dfe9 was then not part of
-the release v6.6.145. So the extra fix can go now, too.
+[ Upstream commit 51d4b0a44c82e5eff056ef76acd2c3c605a8eb74 ]
 
-This reverts commit bb51b626b5a8ef349b11876572540f19ad4d5030.
+Using numbered error labels is discouraged (e.g. as it requires
+renumbering them when adding a new intermediate error path).
 
-Signed-off-by: Frank Scheiner <frank.scheiner@web.de>
+Rename the error labels after what they do.
+
+While at it, drop the redundant platform allocation failure dev_err()
+as the error would already have been logged by the allocator.
+
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://lore.kernel.org/r/20250724091910.21092-6-johan@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: c947360ae63e ("usb: musb: omap2430: Do not put borrowed of_node in probe")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/ia64-acpi-cpufreq.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/usb/musb/omap2430.c |   23 ++++++++++-------------
+ 1 file changed, 10 insertions(+), 13 deletions(-)
 
---- a/drivers/cpufreq/ia64-acpi-cpufreq.c
-+++ b/drivers/cpufreq/ia64-acpi-cpufreq.c
-@@ -302,7 +302,7 @@ acpi_cpufreq_cpu_init (
- }
+--- a/drivers/usb/musb/omap2430.c
++++ b/drivers/usb/musb/omap2430.c
+@@ -318,13 +318,11 @@ static int omap2430_probe(struct platfor
  
+ 	glue = devm_kzalloc(&pdev->dev, sizeof(*glue), GFP_KERNEL);
+ 	if (!glue)
+-		goto err0;
++		return -ENOMEM;
  
--static void
-+static int
- acpi_cpufreq_cpu_exit (
- 	struct cpufreq_policy   *policy)
- {
-@@ -316,6 +316,8 @@ acpi_cpufreq_cpu_exit (
- 		kfree(policy->freq_table);
- 		kfree(data);
+ 	musb = platform_device_alloc("musb-hdrc", PLATFORM_DEVID_AUTO);
+-	if (!musb) {
+-		dev_err(&pdev->dev, "failed to allocate musb device\n");
+-		goto err0;
+-	}
++	if (!musb)
++		return -ENOMEM;
+ 
+ 	musb->dev.parent		= &pdev->dev;
+ 	musb->dev.dma_mask		= &omap2430_dmamask;
+@@ -348,15 +346,15 @@ static int omap2430_probe(struct platfor
+ 
+ 	pdata = devm_kzalloc(&pdev->dev, sizeof(*pdata), GFP_KERNEL);
+ 	if (!pdata)
+-		goto err2;
++		goto err_put_musb;
+ 
+ 	data = devm_kzalloc(&pdev->dev, sizeof(*data), GFP_KERNEL);
+ 	if (!data)
+-		goto err2;
++		goto err_put_musb;
+ 
+ 	config = devm_kzalloc(&pdev->dev, sizeof(*config), GFP_KERNEL);
+ 	if (!config)
+-		goto err2;
++		goto err_put_musb;
+ 
+ 	of_property_read_u32(np, "mode", (u32 *)&pdata->mode);
+ 	of_property_read_u32(np, "interface-type",
+@@ -379,7 +377,7 @@ static int omap2430_probe(struct platfor
+ 		if (!control_pdev) {
+ 			dev_err(&pdev->dev, "Failed to get control device\n");
+ 			ret = -EINVAL;
+-			goto err2;
++			goto err_put_musb;
+ 		}
+ 		glue->control_otghs = &control_pdev->dev;
  	}
-+
-+	return (0);
- }
+@@ -455,22 +453,21 @@ static int omap2430_probe(struct platfor
+ 	ret = platform_device_add(musb);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "failed to register musb device\n");
+-		goto err3;
++		goto err_disable_rpm;
+ 	}
+ 	of_node_put(np);
  
+ 	return 0;
+ 
+-err3:
++err_disable_rpm:
+ 	pm_runtime_disable(glue->dev);
+ err_put_control_otghs:
+ 	if (!IS_ERR(glue->control_otghs))
+ 		put_device(glue->control_otghs);
+-err2:
++err_put_musb:
+ 	of_node_put(np);
+ 	platform_device_put(musb);
+ 
+-err0:
+ 	return ret;
+ }
  
 
 
