@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C1FA313527;
-	Fri,  7 Aug 2026 14:52:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26E69293458;
+	Fri,  7 Aug 2026 14:52:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114338; cv=none; b=ZMRzyMtTEko8XJYWw5o1AAiupA19FVhbuV8UvbHAhwE+g0oEVmDBPZqn5fsuPEc7iSNitjxDgjHUEyb5j9nS0EmWwq99cVD6WfXFrsaY9+SR6jMw9gSOiOO0QbtjsktOqTr8ONE5lAvcOQsB6oNBM+HeluFFPqyrwJ2RrFrb7DU=
+	t=1786114341; cv=none; b=nLRxxy+CrvqZjzKFHdLrD+KGzlP0y8hS3ayxXCdZXrrb5Uz7Mrz517OGqmymE1D/A+oC+/YikNAiQjpKDczkP0LX/nkMjFO6r13ZRqcBF2eIJIM6U+FBVjcBdEmDTbd4/S7bZAjsYly3r66/vo+2aUFmhU0uxhzJbjF+Cg0o3XE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114338; c=relaxed/simple;
-	bh=FnqgoOa9rUhNP5enhSeefrls1wDgoj6zmuIRFPYSuiM=;
+	s=arc-20240116; t=1786114341; c=relaxed/simple;
+	bh=adW44iWiD6VGw33EkzA2GvL/92gu7STgO71/bYQSz4o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UjZAeP8ILjDjEwmaBoxG+RjXvYrgSYpTPHBKdf3IIyfMRlA0kP9lWys6cXJhfyI2qDbMZ/nj4qtztD9FgvGDMWv95v1Dsv0TJGh3bcyfMS7oBevPWTXgii7geDH5K6Pp1q5G7XFyRqLo/iYMA0KWMDbTwV2vQHM0zJXKibiOvlM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o5BNUnaR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nrvYjrpwlaXd25dXiCWQKV4A2WL42q2Jvx7rYNnXMa4vgmz3YojpppKQ3nTFcD2iyucJx/7cvs2H+7Wg0nNmiIbA2zWi11cwVXW59KP9E/TvM6+tHdsXOBUjmTPyxoa0uAjJzqbSPF/kSISsM1QFq66mUUiT7mK5fHpcpdNPugU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ePf9Q19; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o5BNUnaR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 685FE1F000E9;
-	Fri,  7 Aug 2026 14:52:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ePf9Q19"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A4DE1F000E9;
+	Fri,  7 Aug 2026 14:52:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114336;
-	bh=tMyYrl9pql9rUccjGLf46h6+uMzZNjLxXI7hkxOzp4o=;
+	s=korg; t=1786114339;
+	bh=dRPpHtj11H6cE+r+EjM0dlyL1fYWkGoZVYAQ2y0/fp8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o5BNUnaRYzIsMjU5otxRdEo1HGn8gJsw+OpVZiF/zd6BMKu1+xQ+FIVGsB4r4PiSP
-	 GXX+xqE2ePrxecwU2iW+5X6j+AXTPDyhmYiunCrDDUuK5ctMl6xPGB+0nMsfzc4pFK
-	 NW5e6DC/hPvme9cmpbu1eO9JoEg3hMg/2p0M+EtM=
+	b=1ePf9Q19zH+lPo91X3OTza3R6eoxe7+aVOUvr1K2K1GpRWzuZ0RfIB67F4kpMtes8
+	 sUr1HV3Jxt8jlnOoWP6XIBk+c6ZYeUsXDiHRs0sV4ddMyTnmIx6ROOYwhEqyw7a3AC
+	 RvkvFpq1ASek/ZcdWv73qxtrWEaLXqJLd49C+SU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Vincent Mailhol <mailhol@kernel.org>,
 	stable@kernel.org,
 	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.12 229/337] can: etas_es58x: es58x_read_bulk_callback(): fix RX buffer leak on URB resubmit failure
-Date: Fri,  7 Aug 2026 16:37:12 +0200
-Message-ID: <20260807143423.518942481@linuxfoundation.org>
+Subject: [PATCH 6.12 230/337] can: gs_usb: gs_usb_receive_bulk_callback(): resubmit URB on skb allocation failure
+Date: Fri,  7 Aug 2026 16:37:13 +0200
+Message-ID: <20260807143423.539021729@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -52,41 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-commit 7a0cf2b2497c757c3cb1286eddf2986abb0d387b upstream.
+commit 68c5724ecd159992f76edb7b57dc508a44c8b7da upstream.
 
-es58x_read_bulk_callback() resubmits the RX URB after processing a received
-packet. If the resubmit succeeds, the URB remains anchored and will be
-handled by the normal RX path or by teardown.
+If the allocation of the SKB in gs_usb_receive_bulk_callback() fails, the
+driver returns from the callback without resubmitting the URB in order to
+receive further USB in URBs.
 
-However, if usb_submit_urb() fails, the callback unanchors the URB and then
-returns directly. This skips the existing free_urb path, so the coherent
-transfer buffer allocated with usb_alloc_coherent() is not released.
+This results in a silent performance degradation which, if it occurs
+repeatedly, results in starvation of USB in traffic.
 
-Reuse the existing free_urb path after a resubmit failure so that the RX
-coherent buffer is freed before leaving the callback.
+Instead of returning immediately, try to resend the URB. If this also
+fails, this is logged as an info message.
 
-Fixes: 5eaad4f76826 ("can: usb: etas_es58x: correctly anchor the urb in the read bulk callback")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Reviewed-by: Vincent Mailhol <mailhol@kernel.org>
-Link: https://patch.msgid.link/20260706014601.415445-1-lgs201920130244@gmail.com
+Fixes: d08e973a77d1 ("can: gs_usb: Added support for the GS_USB CAN devices")
+Fixes: 26949ac935e3 ("can: gs_usb: add CAN-FD support")
+Link: https://patch.msgid.link/20260709-gs_usb-resubmit-urb-v1-1-4dd40030cc84@pengutronix.de
 Cc: stable@kernel.org
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/usb/etas_es58x/es58x_core.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/net/can/usb/gs_usb.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/net/can/usb/etas_es58x/es58x_core.c
-+++ b/drivers/net/can/usb/etas_es58x/es58x_core.c
-@@ -1476,7 +1476,6 @@ static void es58x_read_bulk_callback(str
- 		dev_err_ratelimited(dev,
- 				    "Failed resubmitting read bulk urb: %pe\n",
- 				    ERR_PTR(ret));
--	return;
+--- a/drivers/net/can/usb/gs_usb.c
++++ b/drivers/net/can/usb/gs_usb.c
+@@ -671,7 +671,7 @@ static void gs_usb_receive_bulk_callback
+ 		if (hf->flags & GS_CAN_FLAG_FD) {
+ 			skb = alloc_canfd_skb(netdev, &cfd);
+ 			if (!skb)
+-				return;
++				goto resubmit_urb;
  
-  free_urb:
- 	usb_free_coherent(urb->dev, urb->transfer_buffer_length,
+ 			cfd->can_id = le32_to_cpu(hf->can_id);
+ 			cfd->len = data_length;
+@@ -684,7 +684,7 @@ static void gs_usb_receive_bulk_callback
+ 		} else {
+ 			skb = alloc_can_skb(netdev, &cf);
+ 			if (!skb)
+-				return;
++				goto resubmit_urb;
+ 
+ 			cf->can_id = le32_to_cpu(hf->can_id);
+ 			can_frame_set_cc_len(cf, hf->can_dlc, dev->can.ctrlmode);
 
 
