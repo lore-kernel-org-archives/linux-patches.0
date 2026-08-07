@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 857A73B2FF2;
-	Fri,  7 Aug 2026 15:13:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98DD72DB7BB;
+	Fri,  7 Aug 2026 15:13:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115617; cv=none; b=vC6aPgJJU1g/uo4t0h9pn10eHiucmDxglnEyvdSHBD+NXQLktSDMWKmajK3Ott0SwFM6HrpovAp5H5hmj4ejRcaUsTYa+bb+420FtCNSVZbGq1JYnDZII11+DDZROFKwG5xC3ce5wyuh9Sp156hiMCtl0Xcrs5UIJ4v9TAujEco=
+	t=1786115620; cv=none; b=R2FaCMZ14+YSIqcFXf78pfa7+zGhLQtsGZ5E8NyeRJp6IOi97OWza7jNW+V3YSFYRg2ah8pQ0xk1mPCD0TJeYxqVduSUe1ORiFbp3wo/H8Xdwamu4wpOE6PoTE7cM/4d+BHEHj/YQhQDCkz5jDBwfEfTawEzuZJYz/L9lGscJjw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115617; c=relaxed/simple;
-	bh=AW1wtM92kJxo0lVorvhqYxHBmRET+7iNv2+fYN+Lxzg=;
+	s=arc-20240116; t=1786115620; c=relaxed/simple;
+	bh=wlGlHi9GkUd/Q5eMdDBwPLOlALmSo9MBGYOsXcfDb6g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KiKdBAFCTUNcz7dYzBHWsQYp5Eusjudfb1rvAQ/ZxNUXL0+ADhh9JYVap6ZjahSalXNe21ldv+Y95oDjazgtRjQ/uVBMc6WfTcSHWhYGXlBhM8yDMBKpY4jn2m20K6yz1BaskH3NI96OksQENLEHtQDTF51VYuaCwem7YMZCG0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VUPF17iK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cJvJVKcPxXKMBm4MDwnBURUO666vV5j50/EwishAFUK5UkJdHFrfJErs0SY/sOGWwZ2u+Pv/hnp6hyZ2Ud9ObS1mlSCDegPVdHfDTo+XOtQKkxI1hKHkmBileh17c+h3bK+q2cBBYjnDfR/gxqqCVw+kPvMMYCkzV6Toai3kmVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LdGKWHql; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VUPF17iK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E24DC1F00A3A;
-	Fri,  7 Aug 2026 15:13:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LdGKWHql"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA2301F00A3A;
+	Fri,  7 Aug 2026 15:13:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115616;
-	bh=QAofuyh8I2iqhetJW/AvhawDl39ssJXYXtf3Imm1jnI=;
+	s=korg; t=1786115619;
+	bh=V/nWBBYDSmwEBBH+O8ETRXjK4S51Joz0WGmTVUqC3qc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VUPF17iKk6fxXjdJEjNBud9QOd2pcjc/w5zIGJiXciifp+p93O3PGfRdq5UU5dMdW
-	 T00/C1BhvP0UazvBDxXEVP13KA4kE1Q92CovcEpaPSYIwpqqtuYoHeWZcTmZTrfeAc
-	 bHb3NztqBGFKSKvnG8hgXk2ahz/XisxHv28UM8Qc=
+	b=LdGKWHqlmrzSLhXRplWLuPu+It8+ouLMdnvzyidfSWgi3OmJXkeES7T+5TNhGFD/4
+	 hPcKgYDtEvMZkW9bX0bmuDdx/76hfWLUHdlcqD+jX0faOxl/FRSHEwo+XCZnK5yoZt
+	 bm8sbq+AT1MPX4BGxk93WNeTMZHjoOgaMXoy2Tu4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zack Rusin <zack.rusin@broadcom.com>,
-	Ian Forbes <ian.forbes@broadcom.com>
-Subject: [PATCH 6.18 340/396] drm/vmwgfx: validate external BO copy bounds for both stride paths
-Date: Fri,  7 Aug 2026 16:38:20 +0200
-Message-ID: <20260807143431.620286370@linuxfoundation.org>
+	Rodrigo Alencar <455.rodrigo.alencar@gmail.com>,
+	Jun Guo <jun.guo@cixtech.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.18 341/396] spi: spi-cadence: enable SPI_CONTROLLER_MUST_TX
+Date: Fri,  7 Aug 2026 16:38:21 +0200
+Message-ID: <20260807143431.640905078@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -50,131 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zack Rusin <zack.rusin@broadcom.com>
+From: Jun Guo <jun.guo@cixtech.com>
 
-commit 706c93c5813caabbb0d0a576c017d15aeec2c113 upstream.
+commit f6b625639e39bc384a7bddbf134a698d40258b3b upstream.
 
-vmw_external_bo_copy() trusts caller-supplied offsets, strides, and
-heights and operates on imported dma-buf vmaps:
+During an SPI read operation, even if the xspi->txbuf passed to the
+cdns_spi_writerinterface is empty, it is still necessary to call
+cdns_spi_write(xspi, CDNS_SPI_TXD, txw); otherwise, the read operation
+will fail to obtain data correctly due to a lack of clocks.
 
-  - The equal-stride memcpy() bound was clamped after subtracting the
-    offsets from dst_size and src_size; an offset larger than the BO
-    size wraps the unsigned subtraction to a huge value and the
-    resulting memcpy() runs off the end of the vmap.  dst_stride *
-    height is also a u32 multiplication that can overflow.
-  - The non-equal-stride row-by-row path had no bound at all.  The
-    loop touches bytes through offset + (height - 1) * stride +
-    width_in_bytes, with only a WARN_ON(dst_stride < width_in_bytes),
-    and could likewise step past the end of either mapping.
-
-The offsets and strides are derived from STDU/SOU plane state, so a
-configured CRTC submitting a crafted atomic commit on an imported
-framebuffer can reach this path.
-
-Validate the exact row-copy endpoint against each BO's size up front
-using check_mul_overflow() and check_add_overflow().  Use the bulk
-memcpy() path only when width_in_bytes covers the whole stride;
-otherwise copy one row at a time so partial-row updates near the bottom
-of a framebuffer remain valid.  Also reject zero strides and stride <
-width_in_bytes, both of which the row-by-row path cannot represent
-safely.
-
-Fixes: 50f119925091 ("drm/vmwgfx: Fix prime with external buffers")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4.7
-Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
-Reviewed-by: Ian Forbes <ian.forbes@broadcom.com>
-Link: https://patch.msgid.link/20260505222728.519626-13-zack.rusin@broadcom.com
+Fixes: 4e00135b2dd1 ("spi: spi-cadence: supports transmission with bits_per_word of 16 and 32")
+Reported-by: Rodrigo Alencar <455.rodrigo.alencar@gmail.com>
+Closes: https://lore.kernel.org/all/lbijvnnwsnddonmm5pveqzap6iibxhl4maneq43x4j6w64dev6@u75qhm5cwiob/
+Signed-off-by: Jun Guo <jun.guo@cixtech.com>
+Link: https://patch.msgid.link/20260115091924.844179-1-jun.guo@cixtech.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_blit.c |   39 +++++++++++++++++++++++++++--------
- 1 file changed, 31 insertions(+), 8 deletions(-)
+ drivers/spi/spi-cadence.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_blit.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_blit.c
-@@ -30,6 +30,7 @@
+--- a/drivers/spi/spi-cadence.c
++++ b/drivers/spi/spi-cadence.c
+@@ -735,6 +735,7 @@ static int cdns_spi_probe(struct platfor
+ 	ctlr->unprepare_transfer_hardware = cdns_unprepare_transfer_hardware;
+ 	ctlr->mode_bits = SPI_CPOL | SPI_CPHA;
+ 	ctlr->bits_per_word_mask = SPI_BPW_MASK(8);
++	ctlr->flags = SPI_CONTROLLER_MUST_TX;
  
- #include "vmwgfx_bo.h"
- #include <linux/highmem.h>
-+#include <linux/overflow.h>
- 
- /*
-  * Template that implements find_first_diff() for a generic
-@@ -463,19 +464,42 @@ static int vmw_external_bo_copy(struct v
- 		container_of(dst->tbo.bdev, struct vmw_private, bdev);
- 	size_t dst_size = dst->tbo.resource->size;
- 	size_t src_size = src->tbo.resource->size;
-+	size_t dst_end, src_end;
- 	struct iosys_map dst_map = {0};
- 	struct iosys_map src_map = {0};
-+	bool dst_mapped = false;
-+	bool src_mapped = false;
- 	int ret, i;
- 	int x_in_bytes;
- 	u8 *vsrc;
- 	u8 *vdst;
- 
-+	if (!height || !width_in_bytes)
-+		return 0;
-+
-+	if (!dst_stride || !src_stride)
-+		return -EINVAL;
-+	if (dst_stride < width_in_bytes || src_stride < width_in_bytes)
-+		return -EINVAL;
-+	if (check_mul_overflow((size_t)dst_stride, (size_t)height - 1, &dst_end) ||
-+	    check_add_overflow(dst_end, (size_t)width_in_bytes, &dst_end) ||
-+	    check_add_overflow((size_t)dst_offset, dst_end, &dst_end) ||
-+	    dst_end > dst_size ||
-+	    check_mul_overflow((size_t)src_stride, (size_t)height - 1, &src_end) ||
-+	    check_add_overflow(src_end, (size_t)width_in_bytes, &src_end) ||
-+	    check_add_overflow((size_t)src_offset, src_end, &src_end) ||
-+	    src_end > src_size) {
-+		drm_dbg_driver(&vmw->drm, "Out-of-bounds external BO copy\n");
-+		return -EINVAL;
-+	}
-+
- 	vsrc = map_external(src, &src_map);
- 	if (!vsrc) {
- 		drm_dbg_driver(&vmw->drm, "Wasn't able to map src\n");
- 		ret = -ENOMEM;
- 		goto out;
- 	}
-+	src_mapped = true;
- 
- 	vdst = map_external(dst, &dst_map);
- 	if (!vdst) {
-@@ -483,16 +507,13 @@ static int vmw_external_bo_copy(struct v
- 		ret = -ENOMEM;
- 		goto out;
- 	}
-+	dst_mapped = true;
- 
- 	vsrc += src_offset;
- 	vdst += dst_offset;
--	if (src_stride == dst_stride) {
--		dst_size -= dst_offset;
--		src_size -= src_offset;
--		memcpy(vdst, vsrc,
--		       min(dst_stride * height, min(dst_size, src_size)));
-+	if (src_stride == dst_stride && width_in_bytes == dst_stride) {
-+		memcpy(vdst, vsrc, dst_stride * (size_t)height);
- 	} else {
--		WARN_ON(dst_stride < width_in_bytes);
- 		for (i = 0; i < height; ++i) {
- 			memcpy(vdst, vsrc, width_in_bytes);
- 			vsrc += src_stride;
-@@ -508,8 +529,10 @@ static int vmw_external_bo_copy(struct v
- 
- 	ret = 0;
- out:
--	unmap_external(src, &src_map);
--	unmap_external(dst, &dst_map);
-+	if (src_mapped)
-+		unmap_external(src, &src_map);
-+	if (dst_mapped)
-+		unmap_external(dst, &dst_map);
- 
- 	return ret;
- }
+ 	if (of_device_is_compatible(pdev->dev.of_node, "cix,sky1-spi-r1p6"))
+ 		ctlr->bits_per_word_mask |= SPI_BPW_MASK(16) | SPI_BPW_MASK(32);
 
 
