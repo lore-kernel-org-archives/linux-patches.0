@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70B9144238D;
-	Fri,  7 Aug 2026 15:02:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46DE146C839;
+	Fri,  7 Aug 2026 15:02:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114969; cv=none; b=AU56yzvrVsI/OHw2hgKQEptsA5ooMXHNYRi0XRgvfKfkKxui16S6dtAXhidZFGGmEXSBU8OdEc3GuShxdc9xyQy1CzBY1ebxR7CO36/oCbsBi5jScd0R6JmBINGz1KDwyYeQc6CEQ+YaOmZJHraMGM19xTcwJzA+lCURGRwRU0M=
+	t=1786114972; cv=none; b=pltPXe8qiALeIWGwj/QZ6Ebj5jV1FXlzFAeB4b8n7SpZTP0SDHkVJsNrJNnqxO3V9P9Q5ne8m5C2vBTqO6gZXfxChtGgv+i0V5xWK5knz06mSX6PdvKzUkpvKpeZLHQYka47LrvUDUINlFeGGfvuRbbAHIYh6ADMv+ebXOGy4sQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114969; c=relaxed/simple;
-	bh=PN+OdNR1mQBw3Vg+mU0PwC6J7kcdSCXyr7vUS8oRSfk=;
+	s=arc-20240116; t=1786114972; c=relaxed/simple;
+	bh=sngmWIQ46kg8ye4m2tFKfRhqlyFxnwv5kIx+S8P6IZ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fr1VV316DYs8sx/be0hCbjWV/heOEQ7TKxXvonSNVuP9lfE7hM/TWEdVxL1hNGtAxTJmgAKzZHBbRDQVUMRidopDHq1dcBntbYqZl9NvD1NxfkbMyFMpuMykw200BAKm7YIeiamc0Ydr8E4Bhm3QCCNMYBIe/5620tRSPGLY3qY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OqnNemvn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QRMwyLgZE67wfiDPd2K9yRX1QiRMtW1jdWEAKGgn3alr0IUHQrRe1caGzEDYVhrhqYxM0+aiZgUdumVjy0Kxc9KLwHDrJ30I365qvqa0tj9OREupPUBhJfry6Fy+6s5vIabmTC9igcc7QBBSuy2sMywyNVpMbghUrku33pr8RFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mxby3jb+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OqnNemvn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCACB1F000E9;
-	Fri,  7 Aug 2026 15:02:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mxby3jb+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1F911F000E9;
+	Fri,  7 Aug 2026 15:02:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114968;
-	bh=BgCofxMSvz9G8K0rdogCRTlEjFfzJSFvQgfxMGzZPE0=;
+	s=korg; t=1786114971;
+	bh=h9wmR0zp+z+7xDR/Mx9pD8mTQ7WWENP+/3SGw4aJyeA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OqnNemvnjqbExTHR3uGxAuK4vvqezRhlw5HCE/b+2kxZuOIDqMDM4i4tkkVp8OCyP
-	 Be2OdSLKiO7sUEaoc0ym0PA99cs5hW6Ow95jjdIPFHzftS4thGjUxahxgd8I7tPy37
-	 0FcepxLjefUOU7emHpO/4uWsu3C53c8tL1/GOXRY=
+	b=mxby3jb+WZjY7dUQaxLwi1Ghfpr5W2mXWhJ/iKiV38qoMlFrMyD2WBdbDfuSeQW4m
+	 MKDIjr2xVdAh0uW3l1Mgg0o6eizMc7sJVFe12+4Rwl+Ij5OFCMDWNOX14y41vUyRvo
+	 Dd96yrBwJMfPaoqa5gZtBcAb3SpxCH+aKIc+qRb4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Pauli Virtanen <pav@iki.fi>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 094/396] powerpc/boot: Fix treeboot-currituck CPU node lookup check
-Date: Fri,  7 Aug 2026 16:34:14 +0200
-Message-ID: <20260807143426.307999075@linuxfoundation.org>
+Subject: [PATCH 6.18 112/396] Bluetooth: ISO: fix timeout vs sync_timeout typo in check_bcast_qos
+Date: Fri,  7 Aug 2026 16:34:32 +0200
+Message-ID: <20260807143426.710878814@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -52,36 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit 43863f6575d2211e8c5157fefb83ad0ad046aab4 ]
+[ Upstream commit e9cb51813d79fc9aae4a2098aab3ab6ebd7fb6c8 ]
 
-fdt_node_offset_by_prop_value() returns a negative error code on
-failure - fix the check accordingly.
+In iso.c check_bcast_qos(), missing bcast.timeout is not set to its
+default value, and appears typoed as bcast.sync_timeout.
 
-Fixes: 228d55053397 ("powerpc/47x: Add support for the new IBM currituck platform")
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260702211554.56923-5-thorsten.blum@linux.dev
+Fix the typo.
+
+Fixes: b37cab587aa3 ("Bluetooth: ISO: Don't reject BT_ISO_QOS if parameters are unset")
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/boot/treeboot-currituck.c | 2 +-
+ net/bluetooth/iso.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/boot/treeboot-currituck.c b/arch/powerpc/boot/treeboot-currituck.c
-index d53e8a592f816..5b5363b74f9f3 100644
---- a/arch/powerpc/boot/treeboot-currituck.c
-+++ b/arch/powerpc/boot/treeboot-currituck.c
-@@ -102,7 +102,7 @@ void platform_init(void)
+diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
+index d667cbf8a1392..a0ef76ecb80b8 100644
+--- a/net/bluetooth/iso.c
++++ b/net/bluetooth/iso.c
+@@ -1709,7 +1709,7 @@ static bool check_bcast_qos(struct bt_iso_qos *qos)
+ 		return false;
  
- 	node = fdt_node_offset_by_prop_value(_dtb_start, -1, "device_type",
- 	                                     "cpu", sizeof("cpu"));
--	if (!node)
-+	if (node < 0)
- 		fatal("Cannot find cpu node\n");
- 	timebase = fdt_getprop(_dtb_start, node, "timebase-frequency", &size);
- 	if (timebase && (size == 4))
+ 	if (!qos->bcast.timeout)
+-		qos->bcast.sync_timeout = BT_ISO_SYNC_TIMEOUT;
++		qos->bcast.timeout = BT_ISO_SYNC_TIMEOUT;
+ 
+ 	if (qos->bcast.timeout < 0x000a || qos->bcast.timeout > 0x4000)
+ 		return false;
 -- 
 2.53.0
 
