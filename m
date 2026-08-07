@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7F3B3806B0;
-	Fri,  7 Aug 2026 14:57:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 831AA42C4E9;
+	Fri,  7 Aug 2026 14:57:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114655; cv=none; b=M0IvkiOoHWVt9LCXtA5Qs3fR1knq435FpcUQ/f01XA3h1w78KU/4uEcGdBfOG/R54ujZtF1GxPilSNxpiVdKYrMBpsXnkI9QZ14ZaOjEksh24seGkKXc1haTPuycjVpDiWQjCCHkkNrpDxTPM7J4KvnQYyRBzqAT/4piLhhdsoY=
+	t=1786114657; cv=none; b=qQLW/xbYpExSVTUS/4DAKqO/7vNtIA7Ya1fyygMfDSkGUNBjvIqsJFMPs7iRGVc9h2IYn27LYSissPX14zNX6nVtqNO3il+L0vMAGrOH7cexqdMORxhOKFmTkirig7M6Hr3hX7E71oBEf8U/xbzU4DPhgjns2ETqwBG+g7RxD24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114655; c=relaxed/simple;
-	bh=aNgMHEfDOGGzw8tlco2WHQ9jFA9iz3aKFKegSbUkGbk=;
+	s=arc-20240116; t=1786114657; c=relaxed/simple;
+	bh=v1jDSiEEBoC11Kh/TC0cc8hRQKrMmpmD7FLMiy/4v5g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jXhxz959bFEGrEPv6mU5goABurOuLh/lFCg3AGgAZjeXnNeN+hRYQZ2C9vspBE+ULl/7851hTcn+HkVgRmIca+Iso2Zc7mhpGhwU3Ovbq2UDi1EtHoA29K+fHpSNjnu3RYBFoTuRje/3K+Rp9ZBPNwMek5+dnN3BtQ82vk2UMEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0OiSKdHm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=hiGO8iqZsMTiioJTnJxAjfIrIkbVy83e/vcqjapxFFqP2ik54HR0PLJMjucyof1MRN0mk34/SSU5WpitCxTwXkx0NqGDHuVM8MJDRv2T/fQI4/pVHb8vvrPO0uQshzNnxrVzm01AsR7DN50c7GsGvMiNCeOc2cKg8DwOvUpBACg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b6olRZBw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0OiSKdHm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18FFF1F000E9;
-	Fri,  7 Aug 2026 14:57:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b6olRZBw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDE4D1F000E9;
+	Fri,  7 Aug 2026 14:57:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114653;
-	bh=i7qAU9PC85pfCMpTQw3RP3v9Z9elbZRQagbuUnQXWrc=;
+	s=korg; t=1786114656;
+	bh=GluO16Xn36NrLhLjg48RgB7CGWuSVmsWLlaveoTtijI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0OiSKdHmExVI5i1sO+qICb7IuNeeWXFdiYR9Wi78F7D7XvzQzEEVBxxUMEcAw87Vc
-	 QTgXpk/vxf/0qveEBQL0IeC04hEk44J72t3nmR5khc/9uMipB4CzbXFvsaPJRNz8uT
-	 RhdA9ePb3WjFAZCOweLmSDuwoOLNh+wki8NOXQc0=
+	b=b6olRZBwkjaKa03O3K+aeRfH6cfh8cT5IsMrHqpYGOnrnnSX7eB6S1w2kpuiMpgyT
+	 YfZKoRwphhHNbVw736z+Ux+ixZwwrHwOKlYWC4qnwFlnoT8+5ycVwyd0RNV9+Jb8zl
+	 jnXRwO50icg49yKwNILuwSlBfher6OWLJhvvryCs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	dri-devel@lists.freedesktop.org,
-	linux-tegra@vger.kernel.org,
-	Thierry Reding <treding@nvidia.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 315/337] drm/tegra: fbdev: Remove offset into framebuffer memory
-Date: Fri,  7 Aug 2026 16:38:38 +0200
-Message-ID: <20260807143425.357899490@linuxfoundation.org>
+Subject: [PATCH 6.12 316/337] drm/exec: Remove the index parameter from drm_exec_for_each_locked_obj[_reverse]
+Date: Fri,  7 Aug 2026 16:38:39 +0200
+Message-ID: <20260807143425.379571307@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -47,64 +45,199 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 
-[ Upstream commit a18b6e30ecd69096beda4a0c96d2570900c3879a ]
+[ Upstream commit ce44b78512e9102aea54ff6b6e521d6c8de9f31c ]
 
-The screen_buffer field in struct fb_info contains the kernel address
-of the first byte of framebuffer memory. Do not add the display offset.
-This offset only describes scrolling during scanout.
+Nobody makes any use of it. Possible internal future users can
+instead use the _index variable. External users shouldn't use
+it since the array it's pointing into is internal drm_exec state.
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Fixes: de2ba664c30f ("gpu: host1x: drm: Add memory manager and fb")
-Cc: dri-devel@lists.freedesktop.org
-Cc: linux-tegra@vger.kernel.org
-Cc: <stable@vger.kernel.org> # v3.10+
-Signed-off-by: Thierry Reding <treding@nvidia.com>
-Link: https://patch.msgid.link/20260421073646.144712-3-tzimmermann@suse.de
+v2:
+- Use a unique id for the loop variable (Christian)
+
+Assisted-by: GitHub Copilot:claude-sonnet-4.6
+Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Link: https://patch.msgid.link/20260520101616.41284-2-thomas.hellstrom@linux.intel.com
+Stable-dep-of: af80e2bfde93 ("drm/xe: Wait on external BO kernel fences in exec IOCTL")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/tegra/fbdev.c |    8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c |    9 +++------
+ drivers/gpu/drm/drm_exec.c             |    6 ++----
+ drivers/gpu/drm/drm_gpuvm.c            |    3 +--
+ drivers/gpu/drm/xe/xe_vm.c             |    3 +--
+ include/drm/drm_exec.h                 |   20 ++++++++++++--------
+ 5 files changed, 19 insertions(+), 22 deletions(-)
 
---- a/drivers/gpu/drm/tegra/fbdev.c
-+++ b/drivers/gpu/drm/tegra/fbdev.c
-@@ -75,7 +75,6 @@ static int tegra_fbdev_probe(struct drm_
- 	struct fb_info *info = helper->info;
- 	unsigned int bytes_per_pixel;
- 	struct drm_framebuffer *fb;
--	unsigned long offset;
- 	struct tegra_bo *bo;
- 	size_t size;
- 	int err;
-@@ -112,9 +111,6 @@ static int tegra_fbdev_probe(struct drm_
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
+@@ -848,7 +848,6 @@ static int amdgpu_cs_parser_bos(struct a
+ 	struct amdgpu_vm *vm = &fpriv->vm;
+ 	struct amdgpu_bo_list_entry *e;
+ 	struct drm_gem_object *obj;
+-	unsigned long index;
+ 	unsigned int i;
+ 	int r;
  
- 	drm_fb_helper_fill_info(info, helper, sizes);
- 
--	offset = info->var.xoffset * bytes_per_pixel +
--		 info->var.yoffset * fb->pitches[0];
--
- 	if (bo->pages) {
- 		bo->vaddr = vmap(bo->pages, bo->num_pages, VM_MAP,
- 				 pgprot_writecombine(PAGE_KERNEL));
-@@ -126,9 +122,9 @@ static int tegra_fbdev_probe(struct drm_
+@@ -969,7 +968,7 @@ static int amdgpu_cs_parser_bos(struct a
+ 		goto out_free_user_pages;
  	}
  
- 	info->flags |= FBINFO_VIRTFB;
--	info->screen_buffer = bo->vaddr + offset;
-+	info->screen_buffer = bo->vaddr;
- 	info->screen_size = size;
--	info->fix.smem_start = (unsigned long)(bo->iova + offset);
-+	info->fix.smem_start = (unsigned long)(bo->iova);
- 	info->fix.smem_len = size;
+-	drm_exec_for_each_locked_object(&p->exec, index, obj) {
++	drm_exec_for_each_locked_object(&p->exec, obj) {
+ 		r = amdgpu_cs_bo_validate(p, gem_to_amdgpu_bo(obj));
+ 		if (unlikely(r))
+ 			goto out_free_user_pages;
+@@ -1207,7 +1206,6 @@ static int amdgpu_cs_sync_rings(struct a
+ 	struct drm_gpu_scheduler *sched;
+ 	struct drm_gem_object *obj;
+ 	struct dma_fence *fence;
+-	unsigned long index;
+ 	unsigned int i;
+ 	int r;
  
- 	return 0;
+@@ -1218,7 +1216,7 @@ static int amdgpu_cs_sync_rings(struct a
+ 		return r;
+ 	}
+ 
+-	drm_exec_for_each_locked_object(&p->exec, index, obj) {
++	drm_exec_for_each_locked_object(&p->exec, obj) {
+ 		struct amdgpu_bo *bo = gem_to_amdgpu_bo(obj);
+ 
+ 		struct dma_resv *resv = bo->tbo.base.resv;
+@@ -1286,7 +1284,6 @@ static int amdgpu_cs_submit(struct amdgp
+ 	struct amdgpu_vm *vm = &fpriv->vm;
+ 	struct amdgpu_bo_list_entry *e;
+ 	struct drm_gem_object *gobj;
+-	unsigned long index;
+ 	unsigned int i;
+ 	uint64_t seq;
+ 	int r;
+@@ -1337,7 +1334,7 @@ static int amdgpu_cs_submit(struct amdgp
+ 	}
+ 
+ 	p->fence = dma_fence_get(&leader->base.s_fence->finished);
+-	drm_exec_for_each_locked_object(&p->exec, index, gobj) {
++	drm_exec_for_each_locked_object(&p->exec, gobj) {
+ 
+ 		ttm_bo_move_to_lru_tail_unlocked(&gem_to_amdgpu_bo(gobj)->tbo);
+ 
+--- a/drivers/gpu/drm/drm_exec.c
++++ b/drivers/gpu/drm/drm_exec.c
+@@ -22,7 +22,6 @@
+  *
+  *	struct drm_gem_object *obj;
+  *	struct drm_exec exec;
+- *	unsigned long index;
+  *	int ret;
+  *
+  *	drm_exec_init(&exec, DRM_EXEC_INTERRUPTIBLE_WAIT);
+@@ -38,7 +37,7 @@
+  *			goto error;
+  *	}
+  *
+- *	drm_exec_for_each_locked_object(&exec, index, obj) {
++ *	drm_exec_for_each_locked_object(&exec, obj) {
+  *		dma_resv_add_fence(obj->resv, fence, DMA_RESV_USAGE_READ);
+  *		...
+  *	}
+@@ -54,9 +53,8 @@
+ static void drm_exec_unlock_all(struct drm_exec *exec)
+ {
+ 	struct drm_gem_object *obj;
+-	unsigned long index;
+ 
+-	drm_exec_for_each_locked_object_reverse(exec, index, obj) {
++	drm_exec_for_each_locked_object_reverse(exec, obj) {
+ 		dma_resv_unlock(obj->resv);
+ 		drm_gem_object_put(obj);
+ 	}
+--- a/drivers/gpu/drm/drm_gpuvm.c
++++ b/drivers/gpu/drm/drm_gpuvm.c
+@@ -1451,9 +1451,8 @@ drm_gpuvm_resv_add_fence(struct drm_gpuv
+ 			 enum dma_resv_usage extobj_usage)
+ {
+ 	struct drm_gem_object *obj;
+-	unsigned long index;
+ 
+-	drm_exec_for_each_locked_object(exec, index, obj) {
++	drm_exec_for_each_locked_object(exec, obj) {
+ 		dma_resv_assert_held(obj->resv);
+ 		dma_resv_add_fence(obj->resv, fence,
+ 				   drm_gpuvm_is_extobj(gpuvm, obj) ?
+--- a/drivers/gpu/drm/xe/xe_vm.c
++++ b/drivers/gpu/drm/xe/xe_vm.c
+@@ -418,7 +418,6 @@ int xe_vm_validate_rebind(struct xe_vm *
+ 			  unsigned int num_fences)
+ {
+ 	struct drm_gem_object *obj;
+-	unsigned long index;
+ 	int ret;
+ 
+ 	do {
+@@ -431,7 +430,7 @@ int xe_vm_validate_rebind(struct xe_vm *
+ 			return ret;
+ 	} while (!list_empty(&vm->gpuvm.evict.list));
+ 
+-	drm_exec_for_each_locked_object(exec, index, obj) {
++	drm_exec_for_each_locked_object(exec, obj) {
+ 		ret = dma_resv_reserve_fences(obj->resv, num_fences);
+ 		if (ret)
+ 			return ret;
+--- a/include/drm/drm_exec.h
++++ b/include/drm/drm_exec.h
+@@ -65,31 +65,35 @@ drm_exec_obj(struct drm_exec *exec, unsi
+ 	return index < exec->num_objects ? exec->objects[index] : NULL;
+ }
+ 
++/* Helper for drm_exec_for_each_locked_object(). Internal use only. */
++#define __drm_exec_for_each_locked_object(exec, obj, __index)		\
++	for (unsigned long __index = 0; ((obj) = drm_exec_obj(exec, __index)); ++__index)
+ /**
+  * drm_exec_for_each_locked_object - iterate over all the locked objects
+  * @exec: drm_exec object
+- * @index: unsigned long index for the iteration
+  * @obj: the current GEM object
+  *
+  * Iterate over all the locked GEM objects inside the drm_exec object.
+  */
+-#define drm_exec_for_each_locked_object(exec, index, obj)		\
+-	for ((index) = 0; ((obj) = drm_exec_obj(exec, index)); ++(index))
++#define drm_exec_for_each_locked_object(exec, obj)			\
++	__drm_exec_for_each_locked_object(exec, obj, __UNIQUE_ID(drm_exec))
+ 
++/* Helper for drm_exec_for_each_locked_object_reverse(). Internal use only. */
++#define __drm_exec_for_each_locked_object_reverse(exec, obj, __index)	\
++	for (unsigned long __index = (exec)->num_objects - 1;		\
++	     ((obj) = drm_exec_obj(exec, __index)); --__index)
+ /**
+  * drm_exec_for_each_locked_object_reverse - iterate over all the locked
+  * objects in reverse locking order
+  * @exec: drm_exec object
+- * @index: unsigned long index for the iteration
+  * @obj: the current GEM object
+  *
+  * Iterate over all the locked GEM objects inside the drm_exec object in
+- * reverse locking order. Note that @index may go below zero and wrap,
++ * reverse locking order. Note that the internal index may wrap around,
+  * but that will be caught by drm_exec_obj(), returning a NULL object.
+  */
+-#define drm_exec_for_each_locked_object_reverse(exec, index, obj)	\
+-	for ((index) = (exec)->num_objects - 1;				\
+-	     ((obj) = drm_exec_obj(exec, index)); --(index))
++#define drm_exec_for_each_locked_object_reverse(exec, obj)		\
++	__drm_exec_for_each_locked_object_reverse(exec, obj, __UNIQUE_ID(drm_exec))
+ 
+ /**
+  * drm_exec_until_all_locked - loop until all GEM objects are locked
 
 
