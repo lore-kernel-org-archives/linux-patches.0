@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90DCC4756A6;
-	Fri,  7 Aug 2026 15:04:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89D95474275;
+	Fri,  7 Aug 2026 15:04:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115061; cv=none; b=nBdfCOcHKFuUIsh1sF7OPwgN5tKYWbxxqZ5do1ePfW80t6FrDQ2yvtCz0FIgBtmfL8XKeRxcy/yv2LLjMvWP4hlzVbASNv6LpdpTGY05iNecJVoVfnLTLAOf/hziI4Bdp/ghRWesJF1mq3bqNJCd0ALDCaYzyYkecpJhx9I2u0M=
+	t=1786115063; cv=none; b=O0xIUqWlbAmApmGpWN0zgEGq3pDJbpD7yd61S/1c7vecIwJg53/Z1gNKFB1OLhqjjBEPf1F9eOfCljQ5v3TBjCAATiWotVcNNM0YQg/o8HhoyseE3yLp8lPRPopBdwvW6ySsIWOOOhcYlzODgDFrqPYc3j5mQo78KFxl28kwVxg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115061; c=relaxed/simple;
-	bh=NdXj7gmagZgpRZrsZN0cZwyEa9+sKf/EUKHRnU7bD2Y=;
+	s=arc-20240116; t=1786115063; c=relaxed/simple;
+	bh=bmMTedOrvigIn7r4b6G3IRg8V9X6sxg84ed0QdkJfzA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qRK7ntyz9/HewbQVguT+3WpQNOckdnBjZNG68Rsq2Avr50JHXHEjI3vMG8l4tRJgl0agHv92zls+XxGnX0Q/j4khmG+MpXIXhAUbda73EDmIFxSJu2Dc27s89gyVRdSLMPHIb88OVQB7LEnk5000SRwRPaOuKfXzKhiVoty8RNg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eav8DqaO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=J9KMu0VBbTL353low05nS0gMb3NvJCZDRNvH1MXlWYAyu5Iq8p1Jk2oliDTmhIkG3dM7GF8SxplHX02dehpDAnK4UFyfqqWJLFlTu3l6hZpJ5S2waQTm+320pSMwjPbSdXQgV6F4YzTQtRR4bWfLA9et3eVPaNqF1nDyexE8RJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cMd6kbv8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eav8DqaO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 798591F00A3A;
-	Fri,  7 Aug 2026 15:04:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cMd6kbv8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 547CB1F00A3D;
+	Fri,  7 Aug 2026 15:04:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115048;
-	bh=X2bYcZxMklD9Q06ufgES+elHsVF90macP4DQ1aKk8Pg=;
+	s=korg; t=1786115050;
+	bh=/zxC3KO3tcmQ4Sfs7IcD1Jbsu4IkgBUSJt9lJ2JQgUg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eav8DqaOHqzxt9uUSAjGEm8VxTiQgE2dkaQKgFe3PtYUFG4NSy1i0wTCs+KsWppbQ
-	 ouQBKn1lmkEX2g4ioAPmbnTp5JJqW6OWrvzMhD6gYIIGt6tAH+AN4RxYLcWivhWI1f
-	 jt4lNqcTSBoV/yYqNgcaNc0vv2GvvVk8n6K4vxb8=
+	b=cMd6kbv8zuViJEYC8NTL8as2ilkAy5Q5QmnkBBb66xhduD7u6JfjsVVfcrysVk33e
+	 a/TmfaYEh6O0PugMxHDxIXrTblX/KRsVsyNDWloVXkeJhV57k+Wuq1xWCh4fjiPfBu
+	 KKKjSnxIh3ZkbyqBnn9IZSHdQXhzWKoo/gLlE5RM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Alexander Kaplan <alexander.kaplan@sms-medipool.de>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 137/396] drm/i915/dp: Ignore the sinks DSC max FRL rate without a PCON DSC encoder
-Date: Fri,  7 Aug 2026 16:34:57 +0200
-Message-ID: <20260807143427.264242706@linuxfoundation.org>
+Subject: [PATCH 6.18 138/396] fprobe: Fix module reference count leak on error in register_fprobe()
+Date: Fri,  7 Aug 2026 16:34:58 +0200
+Message-ID: <20260807143427.286414393@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -47,81 +44,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexander Kaplan <alexander.kaplan@sms-medipool.de>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-[ Upstream commit 8891e39e89042e285fd82fdde325d1311ec750a1 ]
+[ Upstream commit 8cf2f40ceb85047ad8a84dffae3bebc9fed18216 ]
 
-intel_dp_hdmi_sink_max_frl() limits the sink's max FRL rate by its
-DSC max FRL rate whenever the sink supports DSC 1.2.
-However, the DSC max FRL rate (HF-VSDB DSC_Max_FRL_Rate) only applies
-to compressed video transport, which requires a DSC 1.2 encoder in
-the PCON (configured via intel_dp_pcon_dsc_configure()).
-Without such an encoder the HDMI link always carries uncompressed
-video, for which the regular Max_FRL_Rate is the correct limit.
+In register_fprobe(), get_ips_from_filter() resolves target function
+addresses and increments module reference counts via try_module_get() for
+symbols in kernel modules. If get_ips_from_filter() fails on the second
+pass and returns an error, register_fprobe() returned directly without
+releasing module references acquired up to that point.
 
-Applying the DSC limit unconditionally trains the FRL link at a lower
-rate than both the PCON and the sink support.
-E.g. an LG OLED G4 (Max_FRL_Rate 48 Gbps, DSC_Max_FRL_Rate 24 Gbps)
-behind a Synaptics VMM7100 PCON (PCON max FRL bw 48 Gbps, no DSC
-encoder):
+Fix this by ensuring the cleanup loop executing module_put() runs even when
+get_ips_from_filter() returns a negative error.
 
-  Sink max rate from EDID = 24 Gbps
-  FRL trained with : 24 Gbps
+Link: https://lore.kernel.org/all/178528125360.101985.4144133640239273153.stgit@devnote2/
 
-while Windows/macOS train the same hardware at 40/48 Gbps.
-The too low FRL rate needlessly constrains the formats available to
-the sink.
-
-Only apply the sink's DSC max FRL rate if the PCON has a DSC 1.2
-encoder, matching the gate in intel_dp_pcon_dsc_configure().
-PCONs with a DSC encoder keep the current conservative behavior,
-since the link is trained once and compressed transport may be used
-for any subsequent mode.
-With this the setup above trains at 48 Gbps.
-
-Tested on PTL (xe) with the above PCON/sink combo.
-
-Fixes: 10fec80b48c5 ("drm/i915/display: Configure PCON for DSC1.1 to DSC1.2 encoding")
-Cc: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
-Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Reviewed-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
-Signed-off-by: Alexander Kaplan <alexander.kaplan@sms-medipool.de>
-Signed-off-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
-Link: https://patch.msgid.link/20260718105207.5565-3-alexander.kaplan@sms-medipool.de
-(cherry picked from commit 71b57dd92f94569dca4bdf883fbd8ca5d4ed4bae)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Fixes: d24fa977eec5 ("tracing: fprobe: Fix to lock module while registering fprobe")
+Assisted-by: Antigravity:gemini-3.6-flash
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_dp.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ kernel/trace/fprobe.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_dp.c b/drivers/gpu/drm/i915/display/intel_dp.c
-index 2a0750acf2053..84fca860c93ee 100644
---- a/drivers/gpu/drm/i915/display/intel_dp.c
-+++ b/drivers/gpu/drm/i915/display/intel_dp.c
-@@ -3859,7 +3859,14 @@ static int intel_dp_hdmi_sink_max_frl(struct intel_dp *intel_dp)
- 	rate_per_lane = info->hdmi.max_frl_rate_per_lane;
- 	max_frl_rate = max_lanes * rate_per_lane;
+diff --git a/kernel/trace/fprobe.c b/kernel/trace/fprobe.c
+index 01f98f8a86e60..1c9ae332afad1 100644
+--- a/kernel/trace/fprobe.c
++++ b/kernel/trace/fprobe.c
+@@ -868,10 +868,8 @@ int register_fprobe(struct fprobe *fp, const char *filter, const char *notfilter
+ 		return -ENOMEM;
  
--	if (info->hdmi.dsc_cap.v_1p2) {
-+	/*
-+	 * The sink's DSC max FRL rate only applies to compressed video
-+	 * transport, which requires a DSC 1.2 encoder in the PCON. Without
-+	 * one the HDMI link always carries uncompressed video, for which
-+	 * the regular max FRL rate is the limit.
-+	 */
-+	if (drm_dp_pcon_enc_is_dsc_1_2(intel_dp->pcon_dsc_dpcd) &&
-+	    info->hdmi.dsc_cap.v_1p2) {
- 		max_dsc_lanes = info->hdmi.dsc_cap.max_lanes;
- 		dsc_rate_per_lane = info->hdmi.dsc_cap.max_frl_rate_per_lane;
- 		if (max_dsc_lanes && dsc_rate_per_lane)
+ 	ret = get_ips_from_filter(filter, notfilter, addrs, mods, num);
+-	if (ret < 0)
+-		return ret;
+-
+-	ret = register_fprobe_ips(fp, addrs, ret);
++	if (ret >= 0)
++		ret = register_fprobe_ips(fp, addrs, ret);
+ 
+ 	for (int i = 0; i < num; i++) {
+ 		if (mods[i])
 -- 
 2.53.0
 
