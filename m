@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33A4A418372;
-	Fri,  7 Aug 2026 14:56:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B237A418372;
+	Fri,  7 Aug 2026 14:56:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114613; cv=none; b=LaBXgq2/3ogfs+IJc6ejyKKZC/dwPgo3bMHQMWW5Kc2ro292RRYSHAaCQ5M/g7s/ucv59nraFm34yWw3XZ076JoPVSlQEMmcsVKCy1U8nm97gNNuKrKB6eATbcDRDxrEAH6HA015us7EtLZktswyekLyefxSclkcgMCYoa+G98A=
+	t=1786114619; cv=none; b=nWk2aDiyhpmv3ipjfuilivchRNhwX3Rgnm0O+itqzTF4hwzZ2bGO1PgTsqC7rzv+p7h7KCiFP1hYJ6yCg8gc17tl8z2pGOS0/RMpabO6BEldnLR//FGE1kOMwfcle6gBW4HGjUxLlDE0TOLq0sAqQAOB2WYmOmMdJU9sstj474g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114613; c=relaxed/simple;
-	bh=neaO/ul91aR7iOz3fPFIGFIs4Bjnf+iRqoEfe7xwMZk=;
+	s=arc-20240116; t=1786114619; c=relaxed/simple;
+	bh=EV5H6KJjP7AODn893I9Nl7GgjgIG+/d9aConWJzGWSw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rQIznYEZ38S5cOpgUuJumFoWEj3cdq7/g/wQcchFKxyaXFNUy8kxVF9mTLmgiqBZuRWOoi32Dj8bhTpEyg/ug6pEDEebyQo4SXhumKM25VddVR9+DHiJNxZrnu271/58ub1IRvbcv/J04JhbZjfkGG6Sc8hxU1+NRa4rp6H7KpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nukFkviD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=FDwTNFdmRDNF4sl2NtEf5zMoeL3d0m76szezWWC4jMPxSQHFBILchv1+g1IYdTKOxS8Z9o+xSS3TMgo1R2a7iMB/4kR/Kufp6u/KIuIEBVyOx088CgJTlmUGQg3eJY9M2ph76RJ2CW5Nn3vpuuUZR4x08kdZQfHuxEs8/rVQL/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=al2r7Qt6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nukFkviD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 406881F00A3A;
-	Fri,  7 Aug 2026 14:56:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="al2r7Qt6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09C271F000E9;
+	Fri,  7 Aug 2026 14:56:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114610;
-	bh=Y41e+evg6o97u7MW9Sysg3+IWCfaDZfPoz5J0BLZy8w=;
+	s=korg; t=1786114613;
+	bh=lxSCUUxfCRoA1RZ5xJj4VT7PUgAaH05Rkk2KUV0+IKI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nukFkviD+1RoJRYs/8ZdvD5AdURBEllKuISL+0kIteEmVIJfQbiKEiEwqEJYKzF6q
-	 8LNkIsownHqQxBuMFjr0pegQk7amoylK2CbXA64CZs5/TNj/BFT27ib4opBsMX3SKn
-	 XlALPgFMhYwV+bDWNmsAG1yHnZ53lmm17LOAzGYk=
+	b=al2r7Qt6lOu5V7SEWCB2Ur+HqklYQHQ9dFKILnTGQxY62lqExFfJqlTysFWM7iuPD
+	 vFZrHUFPG/swmTB9/emO+oBC9ibaVApBhQmcPVBPW+3SrPKxW9FNu/nZ77qJayO0rc
+	 S+0WlscVN2/3KQugGWFOQcYc7b73EBAATNYZr/Sg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Hodo <martin.hodo@intel.com>,
-	Anshuman Gupta <anshuman.gupta@intel.com>,
-	Suraj Kandpal <suraj.kandpal@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Francois Dugast <francois.dugast@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 325/337] drm/i915/hdcp: check streams[] bounds before overflow
-Date: Fri,  7 Aug 2026 16:38:48 +0200
-Message-ID: <20260807143425.584452053@linuxfoundation.org>
+Subject: [PATCH 6.12 326/337] drm/xe: Stub out new pagefault layer
+Date: Fri,  7 Aug 2026 16:38:49 +0200
+Message-ID: <20260807143425.606457140@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -48,62 +46,285 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jani Nikula <jani.nikula@intel.com>
+From: Matthew Brost <matthew.brost@intel.com>
 
-[ Upstream commit bbb15a6b042d02e5508a02b4847e02d2579ee7bc ]
+[ Upstream commit 620a09fb0bddf387f418663478b48ca4ba62b6d6 ]
 
-The data->streams[] overflow check is done after the buffer overflow has
-already happened. Move the overflow check before the write.
+Stub out the new page fault layer and add kernel documentation. This is
+intended as a replacement for the GT page fault layer, enabling multiple
+producers to hook into a shared page fault consumer interface.
 
-Side note, emitting a warning splat with a backtrace might be overkill
-here, but prefer not changing the behaviour other than not doing the
-overrun.
+v2:
+ - Fix kernel doc typo (checkpatch)
+ - Remove comment around GT (Stuart)
+ - Add explaination around reclaim (Francois)
+ - Add comment around u8 vs enum (Francois)
+ - Include engine instance (Stuart)
+v3:
+ - Fix XE_PAGEFAULT_TYPE_ATOMIC_ACCESS_VIOLATION kernel doc (Stuart)
 
-Discovered using AI-assisted static analysis confirmed by Intel Product
-Security.
-
-Reported-by: Martin Hodo <martin.hodo@intel.com>
-Fixes: e03187e12cae ("drm/i915/hdcp: MST streams support in hdcp port_data")
-Cc: stable@vger.kernel.org # v5.12+
-Cc: Anshuman Gupta <anshuman.gupta@intel.com>
-Cc: Suraj Kandpal <suraj.kandpal@intel.com>
-Reviewed-by: Suraj Kandpal <suraj.kandpal@intel.com>
-Link: https://patch.msgid.link/20260625170304.1104723-1-jani.nikula@intel.com
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-(cherry picked from commit 9284ab3b6e776c315883ac2611283d263c9460fd)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Reviewed-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Tested-by: Francois Dugast <francois.dugast@intel.com>
+Link: https://patch.msgid.link/20251031165416.2871503-2-matthew.brost@intel.com
+Stable-dep-of: 6384271ac1ac ("drm/xe/pt: Reset current_op in xe_pt_update_ops_init()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_hdcp.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/xe/Makefile             |    1 
+ drivers/gpu/drm/xe/xe_pagefault.c       |   65 +++++++++++++++
+ drivers/gpu/drm/xe/xe_pagefault.h       |   19 ++++
+ drivers/gpu/drm/xe/xe_pagefault_types.h |  136 ++++++++++++++++++++++++++++++++
+ 4 files changed, 221 insertions(+)
+ create mode 100644 drivers/gpu/drm/xe/xe_pagefault.c
+ create mode 100644 drivers/gpu/drm/xe/xe_pagefault.h
+ create mode 100644 drivers/gpu/drm/xe/xe_pagefault_types.h
 
---- a/drivers/gpu/drm/i915/display/intel_hdcp.c
-+++ b/drivers/gpu/drm/i915/display/intel_hdcp.c
-@@ -129,6 +129,9 @@ intel_hdcp_required_content_stream(struc
- 		if (!new_conn_state || !new_conn_state->crtc)
- 			continue;
- 
-+		if (drm_WARN_ON(display->drm, data->k >= INTEL_NUM_PIPES(display)))
-+			return -EINVAL;
+--- a/drivers/gpu/drm/xe/Makefile
++++ b/drivers/gpu/drm/xe/Makefile
+@@ -78,6 +78,7 @@ xe-y += xe_bb.o \
+ 	xe_module.o \
+ 	xe_oa.o \
+ 	xe_observation.o \
++	xe_pagefault.o \
+ 	xe_pat.o \
+ 	xe_pci.o \
+ 	xe_pcode.o \
+--- /dev/null
++++ b/drivers/gpu/drm/xe/xe_pagefault.c
+@@ -0,0 +1,65 @@
++// SPDX-License-Identifier: MIT
++/*
++ * Copyright © 2025 Intel Corporation
++ */
 +
- 		data->streams[data->k].stream_id =
- 			intel_conn_to_vcpi(state, connector);
- 		data->k++;
-@@ -139,7 +142,7 @@ intel_hdcp_required_content_stream(struc
- 	}
- 	drm_connector_list_iter_end(&conn_iter);
- 
--	if (drm_WARN_ON(display->drm, data->k > INTEL_NUM_PIPES(display) || data->k == 0))
-+	if (drm_WARN_ON(display->drm, !data->k))
- 		return -EINVAL;
- 
- 	/*
++#include "xe_pagefault.h"
++#include "xe_pagefault_types.h"
++
++/**
++ * DOC: Xe page faults
++ *
++ * Xe page faults are handled in two layers. The producer layer interacts with
++ * hardware or firmware to receive and parse faults into struct xe_pagefault,
++ * then forwards them to the consumer. The consumer layer services the faults
++ * (e.g., memory migration, page table updates) and acknowledges the result back
++ * to the producer, which then forwards the results to the hardware or firmware.
++ * The consumer uses a page fault queue sized to absorb all potential faults and
++ * a multi-threaded worker to process them. Multiple producers are supported,
++ * with a single shared consumer.
++ *
++ * xe_pagefault.c implements the consumer layer.
++ */
++
++/**
++ * xe_pagefault_init() - Page fault init
++ * @xe: xe device instance
++ *
++ * Initialize Xe page fault state. Must be done after reading fuses.
++ *
++ * Return: 0 on Success, errno on failure
++ */
++int xe_pagefault_init(struct xe_device *xe)
++{
++	/* TODO - implement */
++	return 0;
++}
++
++/**
++ * xe_pagefault_reset() - Page fault reset for a GT
++ * @xe: xe device instance
++ * @gt: GT being reset
++ *
++ * Reset the Xe page fault state for a GT; that is, squash any pending faults on
++ * the GT.
++ */
++void xe_pagefault_reset(struct xe_device *xe, struct xe_gt *gt)
++{
++	/* TODO - implement */
++}
++
++/**
++ * xe_pagefault_handler() - Page fault handler
++ * @xe: xe device instance
++ * @pf: Page fault
++ *
++ * Sink the page fault to a queue (i.e., a memory buffer) and queue a worker to
++ * service it. Safe to be called from IRQ or process context. Reclaim safe.
++ *
++ * Return: 0 on success, errno on failure
++ */
++int xe_pagefault_handler(struct xe_device *xe, struct xe_pagefault *pf)
++{
++	/* TODO - implement */
++	return 0;
++}
+--- /dev/null
++++ b/drivers/gpu/drm/xe/xe_pagefault.h
+@@ -0,0 +1,19 @@
++/* SPDX-License-Identifier: MIT */
++/*
++ * Copyright © 2025 Intel Corporation
++ */
++
++#ifndef _XE_PAGEFAULT_H_
++#define _XE_PAGEFAULT_H_
++
++struct xe_device;
++struct xe_gt;
++struct xe_pagefault;
++
++int xe_pagefault_init(struct xe_device *xe);
++
++void xe_pagefault_reset(struct xe_device *xe, struct xe_gt *gt);
++
++int xe_pagefault_handler(struct xe_device *xe, struct xe_pagefault *pf);
++
++#endif
+--- /dev/null
++++ b/drivers/gpu/drm/xe/xe_pagefault_types.h
+@@ -0,0 +1,136 @@
++/* SPDX-License-Identifier: MIT */
++/*
++ * Copyright © 2025 Intel Corporation
++ */
++
++#ifndef _XE_PAGEFAULT_TYPES_H_
++#define _XE_PAGEFAULT_TYPES_H_
++
++#include <linux/workqueue.h>
++
++struct xe_gt;
++struct xe_pagefault;
++
++/** enum xe_pagefault_access_type - Xe page fault access type */
++enum xe_pagefault_access_type {
++	/** @XE_PAGEFAULT_ACCESS_TYPE_READ: Read access type */
++	XE_PAGEFAULT_ACCESS_TYPE_READ	= 0,
++	/** @XE_PAGEFAULT_ACCESS_TYPE_WRITE: Write access type */
++	XE_PAGEFAULT_ACCESS_TYPE_WRITE	= 1,
++	/** @XE_PAGEFAULT_ACCESS_TYPE_ATOMIC: Atomic access type */
++	XE_PAGEFAULT_ACCESS_TYPE_ATOMIC	= 2,
++};
++
++/** enum xe_pagefault_type - Xe page fault type */
++enum xe_pagefault_type {
++	/** @XE_PAGEFAULT_TYPE_NOT_PRESENT: Not present */
++	XE_PAGEFAULT_TYPE_NOT_PRESENT			= 0,
++	/** @XE_PAGEFAULT_TYPE_WRITE_ACCESS_VIOLATION: Write access violation */
++	XE_PAGEFAULT_TYPE_WRITE_ACCESS_VIOLATION	= 1,
++	/** @XE_PAGEFAULT_TYPE_ATOMIC_ACCESS_VIOLATION: Atomic access violation */
++	XE_PAGEFAULT_TYPE_ATOMIC_ACCESS_VIOLATION	= 2,
++};
++
++/** struct xe_pagefault_ops - Xe pagefault ops (producer) */
++struct xe_pagefault_ops {
++	/**
++	 * @ack_fault: Ack fault
++	 * @pf: Page fault
++	 * @err: Error state of fault
++	 *
++	 * Page fault producer receives acknowledgment from the consumer and
++	 * sends the result to the HW/FW interface.
++	 */
++	void (*ack_fault)(struct xe_pagefault *pf, int err);
++};
++
++/**
++ * struct xe_pagefault - Xe page fault
++ *
++ * Generic page fault structure for communication between producer and consumer.
++ * Carefully sized to be 64 bytes. Upon a device page fault, the producer
++ * populates this structure, and the consumer copies it into the page-fault
++ * queue for deferred handling.
++ */
++struct xe_pagefault {
++	/**
++	 * @gt: GT of fault
++	 */
++	struct xe_gt *gt;
++	/**
++	 * @consumer: State for the software handling the fault. Populated by
++	 * the producer and may be modified by the consumer to communicate
++	 * information back to the producer upon fault acknowledgment.
++	 */
++	struct {
++		/** @consumer.page_addr: address of page fault */
++		u64 page_addr;
++		/** @consumer.asid: address space ID */
++		u32 asid;
++		/**
++		 * @consumer.access_type: access type, u8 rather than enum to
++		 * keep size compact
++		 */
++		u8 access_type;
++		/**
++		 * @consumer.fault_type: fault type, u8 rather than enum to
++		 * keep size compact
++		 */
++		u8 fault_type;
++#define XE_PAGEFAULT_LEVEL_NACK		0xff	/* Producer indicates nack fault */
++		/** @consumer.fault_level: fault level */
++		u8 fault_level;
++		/** @consumer.engine_class: engine class */
++		u8 engine_class;
++		/** @consumer.engine_instance: engine instance */
++		u8 engine_instance;
++		/** consumer.reserved: reserved bits for future expansion */
++		u8 reserved[7];
++	} consumer;
++	/**
++	 * @producer: State for the producer (i.e., HW/FW interface). Populated
++	 * by the producer and should not be modified—or even inspected—by the
++	 * consumer, except for calling operations.
++	 */
++	struct {
++		/** @producer.private: private pointer */
++		void *private;
++		/** @producer.ops: operations */
++		const struct xe_pagefault_ops *ops;
++#define XE_PAGEFAULT_PRODUCER_MSG_LEN_DW	4
++		/**
++		 * @producer.msg: page fault message, used by producer in fault
++		 * acknowledgment to formulate response to HW/FW interface.
++		 * Included in the page-fault message because the producer
++		 * typically receives the fault in a context where memory cannot
++		 * be allocated (e.g., atomic context or the reclaim path).
++		 */
++		u32 msg[XE_PAGEFAULT_PRODUCER_MSG_LEN_DW];
++	} producer;
++};
++
++/**
++ * struct xe_pagefault_queue: Xe pagefault queue (consumer)
++ *
++ * Used to capture all device page faults for deferred processing. Size this
++ * queue to absorb the device’s worst-case number of outstanding faults.
++ */
++struct xe_pagefault_queue {
++	/**
++	 * @data: Data in queue containing struct xe_pagefault, protected by
++	 * @lock
++	 */
++	void *data;
++	/** @size: Size of queue in bytes */
++	u32 size;
++	/** @head: Head pointer in bytes, moved by producer, protected by @lock */
++	u32 head;
++	/** @tail: Tail pointer in bytes, moved by consumer, protected by @lock */
++	u32 tail;
++	/** @lock: protects page fault queue */
++	spinlock_t lock;
++	/** @worker: to process page faults */
++	struct work_struct worker;
++};
++
++#endif
 
 
