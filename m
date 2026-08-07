@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 913DC3264D6;
-	Fri,  7 Aug 2026 15:22:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6140B31327A;
+	Fri,  7 Aug 2026 15:22:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116159; cv=none; b=hbVe+0EzI9LKm8836Ey/7PpmPm/06CMS5Hzxn7rqJtm+O8iuGHYjIL3uU88LBhaauBH98/8sYNbQG6NZu2+P91T3Rq+LxDvM+dLtNxTovm/PSGw6a8JYjH0ykG/AVQBu5uEAYGFqx7hO3cFdpMedhkWe0sEcmVO4ixydeqWdnZo=
+	t=1786116162; cv=none; b=BR7xrIiZL1vYdwZCFNFT1NdH8+SRconNgwAjdNbfBpC1cVA1VoDGJ8q8vMcmuMCjxR3555AD1cAwirDFSJkgmsTP4pDLQe9c2w37FyBBJsFcZMf4wAzcTcRoNV7UpDr/SvjYZDWFcOnwkVREMLogPHpxVsytsqZvIxa3Q2L0qt0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116159; c=relaxed/simple;
-	bh=WKnGqnSJ7BmgdFn2PRDEpnNBYtcaAztxWkEpdEBDfOY=;
+	s=arc-20240116; t=1786116162; c=relaxed/simple;
+	bh=35iY/jVB7fFCEQgtnIoDRUUlwZR6QhXRjtG2JnJj9pA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G1yeGlbMRsoHv00eCqptz7YlBRmjqVyqf2JMB3LaqvOWRtgjWxm02h9l6xr77k2MRZFzygA0N1zRNkxCCZ3pHzx3E6xvvCDeopewZ22V7oa1kOfn7JwFoRz2ZCZsPklm2Ojn/tU6mlnr2hQEUPptTCERl4fRK0I4cxZI37YXovY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KXJLmWU1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fUJf0kMln0PohFiwGwebqTzPd48Dd4gUTtioPxZOS4EcsEwtns+DuuCGMTLshYG1JDAE0UI8Rdjqk+FwP7WXWFfhCwkaj3mNE+ibUV6Hc8+GPz4A8iHasj+6q23LGRPvOu7VmxyPUiTErtq9O6IlbaVxNiWlkS7IFm0hvkkp0Xs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ft17CZE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KXJLmWU1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3A3E1F000E9;
-	Fri,  7 Aug 2026 15:22:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ft17CZE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC89A1F000E9;
+	Fri,  7 Aug 2026 15:22:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116158;
-	bh=cOw7bOQu/TaM4zNA57lqSEwsuVnJSE9krAURtlncs54=;
+	s=korg; t=1786116161;
+	bh=QbrTYomTszofV6so3qTxAO/E9MLxFnSG+yZGobWsL/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KXJLmWU1dR+JQyDKvQU9h8EUv3hL2Ci3hO2PyLxdkpJSAon4U6PL8IEvg0P9ftaql
-	 Dk/x/8DOI8jCTJ/0bfPuTWJYJL4AoNg0BFr3adKhKqfy6hYfmCZq7Z0z11ZAEWsway
-	 yD1N3QZBNhqAaCX80VLzjIf+PxrK7+Z1ItV2/D/E=
+	b=2ft17CZEqiU7wkTN4pcQiWr2kdub02TyQM9yO1RfTsE6fLvMy/vZEnKywiMsf6abV
+	 LoRjwTc1e3TMkyvBPiQzHD0W36DuPLB2LWjr9LcQ4MD6uy+d9rC3isLyBu8+6zTDSS
+	 WBiAv8fL/OP85liyuHT3n9yeaWwMjDI12nzsQTE8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Richard Weinberger <richard@nod.at>
-Subject: [PATCH 6.6 133/261] um: vector: fix use-after-free in vector_mmsg_rx()
-Date: Fri,  7 Aug 2026 16:38:10 +0200
-Message-ID: <20260807143418.235916827@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 134/261] vxlan: re-fetch eth header after route_shortcircuit()
+Date: Fri,  7 Aug 2026 16:38:11 +0200
+Message-ID: <20260807143418.258277868@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143415.358597922@linuxfoundation.org>
 References: <20260807143415.358597922@linuxfoundation.org>
@@ -50,58 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit af421e9aed3920c7ac88c24daa48606c7112feca upstream.
+commit 1395a676ec15a0a02a2a6d86602324f2d5fd41d5 upstream.
 
-When vector_mmsg_rx() discards a packet whose overlay header fails
-verify_header(), it frees the skb and continues the loop:
+Before route_shortcircuit(), the eth header pointer is cached from eth_hdr(skb).
 
-	if (header_check < 0) {
-		dev_kfree_skb_irq(skb);
-		vp->estats.rx_encaps_errors++;
-		continue;
-	}
+Inside route_shortcircuit(), pskb_may_pull() can be called, which may
+reallocate skb->head.
 
-The normal and short-packet paths fall through to the bottom of the
-loop body, which clears the consumed slot and advances the cursors:
+In this case, returning to vxlan_xmit() leaves the cached eth pointer pointing to
+freed memory, leading to a use-after-free when dereferencing eth->h_dest.
 
-	(*skbuff_vector) = NULL;
-	mmsg_vector++;
-	skbuff_vector++;
+Fix this by updating eth = eth_hdr(skb) after calling route_shortcircuit().
 
-The verify_header() < 0 path skips that via continue, so the freed skb
-is left in skbuff_vector[] and the cursors do not advance. The next
-iteration reads the same slot, gets the freed skb, and frees it again,
-producing a refcount underflow / use-after-free in the RX path.
-
-Discard the slot the same way the other paths do before continuing.
-
-Only transports whose verify_header() can return negative are affected:
-GRE and L2TPv3 do so on a cookie/session-id mismatch (raw/tap do not),
-so any peer on such a transport can trigger it without authentication.
-
-Fixes: 49da7e64f33e ("High Performance UML Vector Network Driver")
+Fixes: ae8840825605 ("VXLAN: Allow L2 redirection with L3 switching")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Link: https://patch.msgid.link/20260723144249.759100-2-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/um/drivers/vector_kern.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/vxlan/vxlan_core.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/um/drivers/vector_kern.c
-+++ b/arch/um/drivers/vector_kern.c
-@@ -1007,6 +1007,9 @@ static int vector_mmsg_rx(struct vector_
- 				 */
- 					dev_kfree_skb_irq(skb);
- 					vp->estats.rx_encaps_errors++;
-+					(*skbuff_vector) = NULL;
-+					mmsg_vector++;
-+					skbuff_vector++;
- 					continue;
- 				}
- 				if (header_check > 0) {
+--- a/drivers/net/vxlan/vxlan_core.c
++++ b/drivers/net/vxlan/vxlan_core.c
+@@ -2863,6 +2863,7 @@ static netdev_tx_t vxlan_xmit(struct sk_
+ 	    (ntohs(eth->h_proto) == ETH_P_IP ||
+ 	     ntohs(eth->h_proto) == ETH_P_IPV6)) {
+ 		did_rsc = route_shortcircuit(dev, skb);
++		eth = eth_hdr(skb);
+ 		if (did_rsc)
+ 			f = vxlan_find_mac(vxlan, eth->h_dest, vni);
+ 	}
 
 
