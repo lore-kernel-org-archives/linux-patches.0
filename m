@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7930A476CFD;
-	Fri,  7 Aug 2026 15:35:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2479E473C8C;
+	Fri,  7 Aug 2026 15:35:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116904; cv=none; b=eIsuUDTr98MJMc8jdT1SaqUTYlVwgTB93rtsbJ6Ks+lsa/P5VOB13FnPIMeIGGw7oswLF1OyJlaMIptyb7XBCTx1rS9RWjm65jIGWvdCJyNmNp5O90pJSO1bC8ponTSkV/F1nt4ZyxmiIBWlyHzmFKxN6pasIedC4NZUw3PhPV4=
+	t=1786116907; cv=none; b=TX/ft4v3f0K17Z7pHYP1KEis1CmI/nEW8KuYHc6R4MKN61hLUErrUnkUyBbaSx9bSIKLFwT53P8n9RXyVEO3D0vZtB4akhYoWwnKttMm5Jq+RaCl/eRpYDnkJNzFev8pO5adyY25Atg2HW1bsDaYcH1ZvAdowBogVgZSWzHBqIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116904; c=relaxed/simple;
-	bh=e7qTLFqlTktOlIfbdpeaO1zFeL2GRlQJDc7/Cx71ezs=;
+	s=arc-20240116; t=1786116907; c=relaxed/simple;
+	bh=AmPoOUKo3dpc/LiBRFw9CulpO9dLF4iDm9ILAHVR1Jg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j/5Qg662/uNLbkT33GErxO2HzG77u2jgXh9qTk0jiM7OThPFa36RzlDJAryLNvD8Yyjd0oHdcqOxma9+w9r3jrVXV3YCvjHb2Sstek6Ltl1OGu+b0xRTNhGGV7zkHUurDLXOEhydip54t+1lXJfwq+YlGIivmxnVuwQJ/byVfA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UkBtJYsT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dvd+0nghYjYTo4YVjNmgb0FrP45bKzS4GmrLdyVwlwnFioYsZHOse3p+t8Oi+hRYO2n2aInwNJ34BqDWkER2kJSWHBut5aEaZ4q15xwrNsfT48nZz/dVP/QOUL2ylZU4XTqPgx3cS+BR31/5YrTqqx4bVEIUA6r7K0fK5vC5vGs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PfcxpRmS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UkBtJYsT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4CD81F00A3D;
-	Fri,  7 Aug 2026 15:35:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PfcxpRmS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81B9C1F000E9;
+	Fri,  7 Aug 2026 15:35:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116903;
-	bh=r+4KFjlNya2Nw90xAINvVRfKtoFSqI4jvrOESjPkEPw=;
+	s=korg; t=1786116906;
+	bh=v8wa4L7iG0YE4+/3wLPu1adFw2qyxaOVZj9BOaYaB4M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UkBtJYsTPpURkqRGOHRVsuz+0P4wY2b/AsDMztue/weNgdaRo9EdblwWsoIYlWlwk
-	 q45drEe5m9yyuslnQ59lLhNh6tGN7Ly8D+t8i1MW1wT332k2Mh2G8pE+bTIeFRp2Cr
-	 ZjttkfJVqczhzYD4U+eoKHuVAZx7MiKTiPzlMZfM=
+	b=PfcxpRmSSb55UZcOhciF4tobzQE9RAttkgg9JkgNzpObTd7WJ7Na6zFBYRQfu4Z0R
+	 RzLi5/a1qlFwu51s/13de8B5pmBBtxZqtOtG9CTRfdBAanOJF1LQmITg5QblDRzFcM
+	 XSMXR3Ai/ZiJEs+GSEIP6BzW29sDYQEWPIVV0M5g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Pauli Virtanen <pav@iki.fi>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 132/438] Bluetooth: ISO: lock sk in iso_connect_ind
-Date: Fri,  7 Aug 2026 16:35:28 +0200
-Message-ID: <20260807143430.808596696@linuxfoundation.org>
+Subject: [PATCH 7.1 133/438] Bluetooth: ISO: fix timeout vs sync_timeout typo in check_bcast_qos
+Date: Fri,  7 Aug 2026 16:35:29 +0200
+Message-ID: <20260807143430.831827021@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -53,88 +53,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit 4311fd6f429065a8ba208660360a895627a00cf3 ]
+[ Upstream commit e9cb51813d79fc9aae4a2098aab3ab6ebd7fb6c8 ]
 
-Accessing iso_pi(sk)->conn requires lock_sock, which is not taken in the
-"ev3" part of iso_connect_ind.  It may also be NULL if socket has
-transitioned away from the LISTEN/CONNECT states before locking.
+In iso.c check_bcast_qos(), missing bcast.timeout is not set to its
+default value, and appears typoed as bcast.sync_timeout.
 
-Fix by adding lock/release. Recheck hcon is valid after lock acquire
-where needed.
+Fix the typo.
 
-Fixes: 168d9bf9c7f0 ("Bluetooth: ISO: Reassemble PA data for bcast sink")
+Fixes: b37cab587aa3 ("Bluetooth: ISO: Don't reject BT_ISO_QOS if parameters are unset")
 Signed-off-by: Pauli Virtanen <pav@iki.fi>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/iso.c | 19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+ net/bluetooth/iso.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
-index 476c679791234..6fadaeb1f7e96 100644
+index 6fadaeb1f7e96..7e8f8a51eebd2 100644
 --- a/net/bluetooth/iso.c
 +++ b/net/bluetooth/iso.c
-@@ -2368,7 +2368,7 @@ int iso_connect_ind(struct hci_dev *hdev, bdaddr_t *bdaddr, __u8 *flags)
+@@ -1795,7 +1795,7 @@ static bool check_bcast_qos(struct bt_iso_qos *qos)
+ 		return false;
  
- 			lock_sock(sk);
+ 	if (!qos->bcast.timeout)
+-		qos->bcast.sync_timeout = BT_ISO_SYNC_TIMEOUT;
++		qos->bcast.timeout = BT_ISO_SYNC_TIMEOUT;
  
--			hcon = iso_pi(sk)->conn->hcon;
-+			hcon = iso_pi(sk)->conn ? iso_pi(sk)->conn->hcon : NULL;
- 			iso_pi(sk)->qos.bcast.encryption = ev2->encryption;
- 
- 			if (ev2->num_bis < iso_pi(sk)->bc_num_bis)
-@@ -2408,9 +2408,11 @@ int iso_connect_ind(struct hci_dev *hdev, bdaddr_t *bdaddr, __u8 *flags)
- 		if (!sk)
- 			goto done;
- 
--		hcon = iso_pi(sk)->conn->hcon;
-+		lock_sock(sk);
-+
-+		hcon = iso_pi(sk)->conn ? iso_pi(sk)->conn->hcon : NULL;
- 		if (!hcon)
--			goto done;
-+			goto release3;
- 
- 		if (ev3->data_status == LE_PA_DATA_TRUNCATED) {
- 			/* The controller was unable to retrieve PA data. */
-@@ -2418,12 +2420,12 @@ int iso_connect_ind(struct hci_dev *hdev, bdaddr_t *bdaddr, __u8 *flags)
- 			       HCI_MAX_PER_AD_TOT_LEN);
- 			hcon->le_per_adv_data_len = 0;
- 			hcon->le_per_adv_data_offset = 0;
--			goto done;
-+			goto release3;
- 		}
- 
- 		if (hcon->le_per_adv_data_offset + ev3->length >
- 		    HCI_MAX_PER_AD_TOT_LEN)
--			goto done;
-+			goto release3;
- 
- 		memcpy(hcon->le_per_adv_data + hcon->le_per_adv_data_offset,
- 		       ev3->data, ev3->length);
-@@ -2442,18 +2444,19 @@ int iso_connect_ind(struct hci_dev *hdev, bdaddr_t *bdaddr, __u8 *flags)
- 						    &base_len);
- 
- 			if (!base || base_len > BASE_MAX_LENGTH)
--				goto done;
-+				goto release3;
- 
--			lock_sock(sk);
- 			memcpy(iso_pi(sk)->base, base, base_len);
- 			iso_pi(sk)->base_len = base_len;
--			release_sock(sk);
- 		} else {
- 			/* This is a PA data fragment. Keep pa_data_len set to 0
- 			 * until all data has been reassembled.
- 			 */
- 			hcon->le_per_adv_data_len = 0;
- 		}
-+
-+release3:
-+		release_sock(sk);
- 	} else {
- 		sk = iso_get_sock(hdev, &hdev->bdaddr, BDADDR_ANY,
- 				  BT_LISTEN, iso_match_dst, BDADDR_ANY);
+ 	if (qos->bcast.timeout < 0x000a || qos->bcast.timeout > 0x4000)
+ 		return false;
 -- 
 2.53.0
 
