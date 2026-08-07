@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C45AE442371;
-	Fri,  7 Aug 2026 14:59:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BC3347605B;
+	Fri,  7 Aug 2026 15:00:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114799; cv=none; b=EQu5Xa/lcM6z/uavwBiPi3woLruwK6f0kcBrNmQ0NH8+1TYUKtw30fkUUjePZZT6VKQTk8Pm2ALxLxQTGsCcRCKZgMwVFCpBIMD/ezoyNx2rgt3APHryy76LE6QQ8iQNxu0+XdVeXdBNHMMt28Nq1OOkRZUTjQuklWJhkW0CUp4=
+	t=1786114803; cv=none; b=tgOWuel3I7w65RbQM/Z98Dw6IJbuBowuEgob5H9SyCRA8UA4D97H0fTjMUCn8o1jCQV3PSdEjEDRclpb4RTNxn8s/hruaoQJOdhstWuIq751u9ArVzudCeEuigZ+2tBGwReQ1i2roEKq7a/3/fJp+qzA2eF6OAROWD1qSw5TjNA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114799; c=relaxed/simple;
-	bh=qdjntRtI4U5kuoemzonmF0TJ20vEaoKsJI9eCP3SNWg=;
+	s=arc-20240116; t=1786114803; c=relaxed/simple;
+	bh=xzK6BzCBLrkxbiDpPjRsX7hkItpfsjhiGiwOky52J8M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WYbcEnbfO6nJCytKrfIBK6gr73PK0yM6XMkCEGttx69aIrf0pip0VAIMeAYddzVEzz+CK8uLUrY+r6CGDEwXkcl3lnFvTYQlNYyR9VzrtPZlouqbVHEUyjWsV+SWj8q3xdXu0/TgddWmeTDvAGH+57Vpe/g362BHEFX7W0uCetM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kibcxtKS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=I9uHOqCOYH9JTD5cGnXYbc0XMzvzJt9aMuuOeA5ANmXvEMsYF5QT95CrEV/nERUNJRJeYzCz7pmPbVjUtlxjSgI4CO6zeyu4xUPgcuB6/fpXYCIpdIswXOcUPzY3D+pT6sAvfvQSsJRsMQui5cs3kT/wU3t1gVNtlqW5tidLavg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yGLvFqlO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kibcxtKS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB3411F00A3A;
-	Fri,  7 Aug 2026 14:59:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yGLvFqlO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13F341F00A3D;
+	Fri,  7 Aug 2026 15:00:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114798;
-	bh=zymJhRhUYwL2QGanmxCoCDKmu4FFk/+H5zXcb6rtYEk=;
+	s=korg; t=1786114802;
+	bh=lA9ntTYKrs8EB7Kzh+Wz730yQZ87h/iopYxQw4pweBs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kibcxtKSZa7svevKNNxv9FM4wLfE5hXM/NTqenjZ2OeXE72kOcu92PZsLRgqMNqQx
-	 OG2yuz1AHB/uJFXt7hBQDRVeAb/IgB1FhYU+I7lVsiSFlhsY9VjpU2Y9JRhLOCfm6H
-	 T38slnQXdco61UhJfGuH0deYJFMQnLr7FFHNe8AQ=
+	b=yGLvFqlObYR08amMY0rjnAhRYKdXGgYSs0vI3Sm9tLUCet1a2x0XrJsNDUYYYtOGu
+	 8RuMvzMnkgj43e5cu8PK6ygAEW0fkBeK+OQPUhsVqm2Cby1ctyxNHdC9KeRmofpyjt
+	 MAU6Hgqs6BVfltSCsCsVXgyLasBiizLn8C6y2Grw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
+	Ilia Gavrilov <Ilia.Gavrilov@infotecs.ru>,
+	Allison Henderson <achender@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 045/396] keys: make keyring key-chunk byte order agree with keyring_diff_objects()
-Date: Fri,  7 Aug 2026 16:33:25 +0200
-Message-ID: <20260807143425.239538231@linuxfoundation.org>
+Subject: [PATCH 6.18 054/396] rds: Fix inet6_addr_lst NULL dereference when IPv6 is disabled
+Date: Fri,  7 Aug 2026 16:33:34 +0200
+Message-ID: <20260807143425.435262212@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -51,60 +52,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Ilia Gavrilov <Ilia.Gavrilov@infotecs.ru>
 
-[ Upstream commit 58565eef0f8d861aae92abfb7658458d661cee17 ]
+[ Upstream commit 9c805e592a29be9e4e61ff1bd567da04aa8fd6f9 ]
 
-keyring_get_key_chunk() loads description bytes into the index chunk low
-address first, while keyring_diff_objects() numbers the first differing
-bit from the low end and folds the absolute byte index into the level
-without removing the inline-prefix offset the level already carries.
-The two disagree on byte order and bit position, so the array can be
-told two keys first differ at a bit that does not differ in the chunk
-the walker uses, letting crafted descriptions collide into one node.
+When booting with the 'ipv6.disable=1' parameter, inet6_addr_lst
+is never initialized because inet6_init() exits before addrconf_init()
+is called to initialize it. An attempt to bind an RDS socket to
+an ipv6 address results in a crash in __ipv6_chk_addr_and_flags()
 
-Load the chunk in the order keyring_diff_objects() assumes and drop the
-inline-prefix length when folding the byte index into the level.  This
-only changes the in-memory ordering used to place keys within a keyring;
-add, search and read of non-colliding keys are unaffected.
+KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
+RIP: 0010:__ipv6_chk_addr_and_flags+0x1df/0x7e0
+Call Trace:
+ <TASK>
+ ipv6_chk_addr+0x3b/0x50
+ rds_tcp_laddr_check+0x155/0x3b0 [rds_tcp]
+ rds_trans_get_preferred+0x15d/0x2d0 [rds]
+ ? trace_hardirqs_on+0x2d/0x110
+ rds_bind+0x1433/0x1d60 [rds]
+ ? rds_remove_bound+0xd50/0xd50 [rds]
+ ? aa_af_perm+0x250/0x250
+ ? __might_fault+0xde/0x190
+ ? __sys_bind+0x1dc/0x210
+ __sys_bind+0x1dc/0x210
+ ? __ia32_sys_socketpair+0x100/0x100
+ ? restore_fpregs_from_fpstate+0x53/0x100
+ __x64_sys_bind+0x73/0xb0
+ ? syscall_enter_from_user_mode+0x1c/0x50
+ do_syscall_64+0x34/0x80
+ entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+RIP: 0033:0x7f47f8269ea9
+ </TASK>
 
-Fixes: f771fde82051 ("keys: Simplify key description management")
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Tested-by: Jarkko Sakkinen <jarkko@kernel.org>
-Link: https://lore.kernel.org/r/20260719161505.2423935-3-michael.bommarito@gmail.com
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+The following code reproduces the issue:
+
+struct sockaddr_in6 addr;
+s = socket(PF_RDS, SOCK_SEQPACKET, 0);
+
+memset(&addr, 0, sizeof(addr));
+inet_pton(AF_INET6, ADDRESS, &addr.sin6_addr);
+addr.sin6_family = AF_INET6;
+addr.sin6_port = htons(PORT);
+
+bind(s, &addr, sizeof(addr));
+
+Found by InfoTeCS on behalf of Linux Verification Center
+(linuxtesting.org) with Syzkaller.
+
+Fixes: eee2fa6ab322 ("rds: Changing IP address internal representation to struct in6_addr")
+Fixes: 1e2b44e78eea ("rds: Enable RDS IPv6 support")
+Signed-off-by: Ilia Gavrilov <Ilia.Gavrilov@infotecs.ru>
+Reviewed-by: Allison Henderson <achender@kernel.org>
+Link: https://patch.msgid.link/20260709162723.367523-1-Ilia.Gavrilov@infotecs.ru
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 78f75d632f74 ("rds: tcp: hold the RCU lock across ipv6_chk_addr() in rds_tcp_laddr_check()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/keys/keyring.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/rds/ib.c    | 4 ++++
+ net/rds/ib_cm.c | 4 ++++
+ net/rds/tcp.c   | 8 +++++---
+ 3 files changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/security/keys/keyring.c b/security/keys/keyring.c
-index b9ca9dc9b0c3f..fd95a0eb7a466 100644
---- a/security/keys/keyring.c
-+++ b/security/keys/keyring.c
-@@ -293,9 +293,10 @@ static unsigned long keyring_get_key_chunk(const void *data, int level)
- 		desc_len -= offset;
- 		if (desc_len > n)
- 			desc_len = n;
-+		d += desc_len;
- 		do {
- 			chunk <<= 8;
--			chunk |= *d++;
-+			chunk |= *--d;
- 		} while (--desc_len > 0);
- 		return chunk;
+diff --git a/net/rds/ib.c b/net/rds/ib.c
+index ce5be43c5fbac..1061bcf7d1315 100644
+--- a/net/rds/ib.c
++++ b/net/rds/ib.c
+@@ -431,6 +431,10 @@ static int rds_ib_laddr_check_cm(struct net *net, const struct in6_addr *addr,
+ 		sa = (struct sockaddr *)&sin;
+ 	} else {
+ #if IS_ENABLED(CONFIG_IPV6)
++		if (!ipv6_mod_enabled()) {
++			ret = -EADDRNOTAVAIL;
++			goto out;
++		}
+ 		memset(&sin6, 0, sizeof(sin6));
+ 		sin6.sin6_family = AF_INET6;
+ 		sin6.sin6_addr = *addr;
+diff --git a/net/rds/ib_cm.c b/net/rds/ib_cm.c
+index 5289afbb61aa7..e50e01abb0799 100644
+--- a/net/rds/ib_cm.c
++++ b/net/rds/ib_cm.c
+@@ -810,6 +810,10 @@ int rds_ib_cm_handle_connect(struct rdma_cm_id *cm_id,
+ 	dp = event->param.conn.private_data;
+ 	if (isv6) {
+ #if IS_ENABLED(CONFIG_IPV6)
++		if (!ipv6_mod_enabled()) {
++			err = -EOPNOTSUPP;
++			goto out;
++		}
+ 		dp_cmn = &dp->ricp_v6.dp_cmn;
+ 		saddr6 = &dp->ricp_v6.dp_saddr;
+ 		daddr6 = &dp->ricp_v6.dp_daddr;
+diff --git a/net/rds/tcp.c b/net/rds/tcp.c
+index 06a2d8d48bbac..87e6ab0e93b71 100644
+--- a/net/rds/tcp.c
++++ b/net/rds/tcp.c
+@@ -342,9 +342,11 @@ int rds_tcp_laddr_check(struct net *net, const struct in6_addr *addr,
+ 		rcu_read_unlock();
  	}
-@@ -376,7 +377,7 @@ static int keyring_diff_objects(const void *object, const void *data)
- 	return -1;
- 
- differ_plus_i:
--	level += i;
-+	level += i - (int)sizeof(a->desc);
- differ:
- 	i = level * 8 + __ffs(seg_a ^ seg_b);
- 	return i;
+ #if IS_ENABLED(CONFIG_IPV6)
+-	ret = ipv6_chk_addr(net, addr, dev, 0);
+-	if (ret)
+-		return 0;
++	if (ipv6_mod_enabled()) {
++		ret = ipv6_chk_addr(net, addr, dev, 0);
++		if (ret)
++			return 0;
++	}
+ #endif
+ 	return -EADDRNOTAVAIL;
+ }
 -- 
 2.53.0
 
