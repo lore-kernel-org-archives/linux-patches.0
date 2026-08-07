@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E80D280331;
-	Fri,  7 Aug 2026 15:44:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05A5542902A;
+	Fri,  7 Aug 2026 15:44:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786117456; cv=none; b=Dw9lFrIBYs9uo7D0Z4B6T/L9HBtx88gbQXw+PZq3a5vMLsR3sSkqsUp9/5F68pZQOATBZpepYCb1AWJH/uePtvjGlfxBDjucFBxaGQBK056JO0bAI4hMaLsI6QawntAFRkv/lSZnVHd3IoJ5SPHFy+KPFQOb5zKrcfH76ncrL7A=
+	t=1786117459; cv=none; b=YKVv/QWUdblEZiijSmnaIxn+62XcfTIiTY5m9TqY2ipWX4ZvhhT3C2lNYOwOEb+ulxvl6MjEWCl5pepGvEbdDJeB2qvbE1ZiOriD8LQI6GAHi0mNsKayLGnHVCwbN3huPCKSHRBjKDLfrBkHfMXsct0Z6NyDBvKVlEkewno2RYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786117456; c=relaxed/simple;
-	bh=/3RU1eY5WoQnB54zxNnfMmwf419c+5stUZI0RnFU8wM=;
+	s=arc-20240116; t=1786117459; c=relaxed/simple;
+	bh=50Sghhq9EMIH/oww6TEZKxXxx8VhO4pMS9YZ9+gOicg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l47KyRCxLZi50orEn9LQrpRD7hqPKXUGX8/lNGOL5buhtj6afQEgmld5+Xv3TviV/ZvS1VkKyxOrc8yygqhy6qk276HMJ16FZ/4li6UMGBKPHVxW02QDagU+R3z994+Z/PQeryd0Bg0XZdgztIe8tvNM8zjC6qn/K3Db2+QtRQQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=icHgFe20; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZhPBgU3bZ5F/eMdLo90TiRPi4JIcjYvc74HOU54uc/7NrJYpSEN5bFEbwrrMfPvXmVi1k8k8EFDE5k/MM2SogOrt5NGQ+F5PGjMkFcpuY7eyVCFfymN7H4i+p4F3BeVkmSRe25cz0Y477chEjBzlWvSTwLq21PKTYAchGwjy4Tk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jgEiM6QM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="icHgFe20"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A2401F000E9;
-	Fri,  7 Aug 2026 15:44:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jgEiM6QM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61B901F000E9;
+	Fri,  7 Aug 2026 15:44:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786117455;
-	bh=39C0pPPMYP0DZSjWpaStQWynVMINn3Lcp28bF2UgxiI=;
+	s=korg; t=1786117457;
+	bh=M7ae1pcQzADXCahpkAyQTNFiIuPVJ327DEY5lJfkSiE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=icHgFe20uYFviB1kPSKlQ03l31CYH4Fx2P3onKDZjLhMIK9+cTn8YZZ3D8WuU3yWE
-	 PpP9Rp4Kn2vYLP1/F2mWfG83gV1mutYsx5wcPWsjp/seoHqItMRGXSdxYA/C1g1von
-	 5IeAALaCAyTK/RvaR84VGlXCmmwI7IQ7bCbfXhsw=
+	b=jgEiM6QMw3xEZym2O4OFYr0XpKcRMUeTA/2fLwfitfZgeOdjBPv+SaXWILEtNSLVZ
+	 6Y0GmYzrBDCPK1e60PdETCwKzBPkwLE7r9JzjVNBoW+7RD3Gn+uJ2AfocEEVYhUEoG
+	 EqgSQdTISk3eE2npcGdTBdsqXm985L3gZAQF15wg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Hardik Prakash <hardikprakash.official@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 7.1 325/438] i2c: amd-mp2: Unregister callback on adapter add failure
-Date: Fri,  7 Aug 2026 16:38:41 +0200
-Message-ID: <20260807143434.903714178@linuxfoundation.org>
+Subject: [PATCH 7.1 326/438] i2c: designware: defer probe if child GpioInt controllers are not bound
+Date: Fri,  7 Aug 2026 16:38:42 +0200
+Message-ID: <20260807143434.924930262@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -51,43 +53,155 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Hardik Prakash <hardikprakash.official@gmail.com>
 
-commit 82048795242f04275a3f49ffc66ad851b6120954 upstream.
+commit 0a4bb2abc3e56d7be6e69b050c88ba52c87e22bf upstream.
 
-amd_mp2_register_cb() stores the platform I2C context in the MP2 PCI
-driver's callback table before the adapter is registered. If
-i2c_add_adapter() fails, probe returns and devres frees the context,
-but the PCI driver can still dereference the stale pointer from its IRQ
-and system-sleep callbacks.
+I2C controllers may have child devices with GpioInt resources that
+depend on GPIO controllers being fully initialized. If the I2C
+controller probes and enumerates children before the referenced GPIO
+controller has completed probe, GPIO interrupts may not be properly
+configured, leading to device failures.
 
-Unregister the callback before returning the adapter registration error.
+On Lenovo Yoga 7 14AGP11, the WACF2200 touchscreen (child of
+AMDI0010:02) has a GpioInt resource pointing to GPIO 157 on the
+pinctrl-amd controller (AMDI0030:00). When i2c-designware probes
+AMDI0010:02 before pinctrl-amd finishes initializing, I2C transactions
+fail with lost arbitration errors:
 
-Fixes: 529766e0a011 ("i2c: Add drivers for the AMD PCIe MP2 I2C controller")
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Cc: <stable@vger.kernel.org> # v5.2+
+  0.285952  amd_gpio_probe: registering gpiochip  <- GPIO chip visible
+  0.287121  amd_gpio_probe: requesting parent IRQ <- probe still running
+  0.301454  AMDI0010:02 dw_i2c_plat_probe: start  <- races here
+  2.348157  lost arbitration
+
+Add a dependency check that walks ACPI child devices and defers probe
+until any referenced GPIO controller is bound.
+
+Fixes: 3812a9e84265 ("pinctrl-amd: enable IRQ for WACF2200 touchscreen on Lenovo Yoga 7 14AGP11")
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221494
+Suggested-by: Mario Limonciello <mario.limonciello@amd.com>
+Suggested-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Signed-off-by: Hardik Prakash <hardikprakash.official@gmail.com>
+Assisted-by: Claude:claude-sonnet-5
+Assisted-by: DeepSeek:deepseek-v4-pro
+Cc: <stable@vger.kernel.org> # v7.1+
+Acked-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
 Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20260721144147.31150-1-mhun512@gmail.com
+Link: https://lore.kernel.org/r/20260718054330.8975-2-hardikprakash.official@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-amd-mp2-plat.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-designware-platdrv.c |   80 ++++++++++++++++++++++++++++
+ 1 file changed, 80 insertions(+)
 
---- a/drivers/i2c/busses/i2c-amd-mp2-plat.c
-+++ b/drivers/i2c/busses/i2c-amd-mp2-plat.c
-@@ -316,8 +316,10 @@ static int i2c_amd_probe(struct platform
- 
- 	amd_mp2_pm_runtime_put(mp2_dev);
- 
--	if (ret < 0)
-+	if (ret < 0) {
- 		dev_err(&pdev->dev, "i2c add adapter failed = %d\n", ret);
-+		amd_mp2_unregister_cb(&i2c_dev->common);
-+	}
- 
- 	return ret;
+--- a/drivers/i2c/busses/i2c-designware-platdrv.c
++++ b/drivers/i2c/busses/i2c-designware-platdrv.c
+@@ -8,12 +8,14 @@
+  * Copyright (C) 2007 MontaVista Software Inc.
+  * Copyright (C) 2009 Provigent Ltd.
+  */
++#include <linux/acpi.h>
+ #include <linux/clk-provider.h>
+ #include <linux/clk.h>
+ #include <linux/delay.h>
+ #include <linux/dmi.h>
+ #include <linux/err.h>
+ #include <linux/errno.h>
++#include <linux/gpio/driver.h>
+ #include <linux/i2c.h>
+ #include <linux/interrupt.h>
+ #include <linux/io.h>
+@@ -130,6 +132,80 @@ static int i2c_dw_probe_lock_support(str
+ 	return 0;
  }
+ 
++#if defined(CONFIG_ACPI) && defined(CONFIG_GPIOLIB)
++/*
++ * Check whether an ACPI GpioInt resource's referenced GPIO controller
++ * has finished probing. Resources with no named controller (resource
++ * source string) are skipped, since they can't be resolved to a
++ * struct device.
++ */
++static int check_gpioint_resource(struct acpi_resource *ares, void *data)
++{
++	struct acpi_resource_gpio *agpio;
++	struct acpi_device *gpio_adev;
++	struct device *gpio_dev;
++	acpi_handle handle;
++	acpi_status status;
++
++	if (!acpi_gpio_get_irq_resource(ares, &agpio))
++		return 1; /* not a GpioInt resource, skip */
++
++	if (!agpio->resource_source.string_length)
++		return 1; /* no named controller, skip */
++
++	status = acpi_get_handle(NULL, agpio->resource_source.string_ptr, &handle);
++	if (ACPI_FAILURE(status))
++		return 1;
++
++	gpio_adev = acpi_fetch_acpi_dev(handle);
++	if (!gpio_adev)
++		return 1;
++
++	struct gpio_device *gdev __free(gpio_device_put) =
++		gpio_device_find_by_fwnode(acpi_fwnode_handle(gpio_adev));
++	if (!gdev)
++		return -EPROBE_DEFER; /* controller not registered yet: abort walk */
++
++	gpio_dev = gpio_device_to_device(gdev)->parent;
++
++	guard(device)(gpio_dev);
++	if (!device_is_bound(gpio_dev))
++		return -EPROBE_DEFER; /* controller not bound yet: abort walk */
++
++	return 1; /* bound, skip adding to resource list, continue walk */
++}
++
++static int check_child_gpioint(struct acpi_device *adev, void *data)
++{
++	LIST_HEAD(res_list);
++	int ret;
++
++	ret = acpi_dev_get_resources(adev, &res_list, check_gpioint_resource, NULL);
++	if (ret < 0)
++		return ret;
++
++	acpi_dev_free_resource_list(&res_list);
++
++	return 0;
++}
++
++static int i2c_dw_check_gpio_dependencies(struct device *dev)
++{
++	struct acpi_device *adev;
++
++	adev = ACPI_COMPANION(dev);
++	if (!adev)
++		return 0;
++
++	return acpi_dev_for_each_child(adev, check_child_gpioint, NULL);
++}
++#else
++static int i2c_dw_check_gpio_dependencies(struct device *dev)
++{
++	return 0;
++}
++#endif /* CONFIG_ACPI && CONFIG_GPIOLIB */
++
+ static int dw_i2c_plat_probe(struct platform_device *pdev)
+ {
+ 	u32 flags = (uintptr_t)device_get_match_data(&pdev->dev);
+@@ -138,6 +214,10 @@ static int dw_i2c_plat_probe(struct plat
+ 	struct dw_i2c_dev *dev;
+ 	int irq, ret;
+ 
++	ret = i2c_dw_check_gpio_dependencies(device);
++	if (ret)
++		return ret;
++
+ 	irq = platform_get_irq_optional(pdev, 0);
+ 	if (irq == -ENXIO)
+ 		flags |= ACCESS_POLLING;
 
 
