@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8C373D5227;
-	Fri,  7 Aug 2026 14:56:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3529F41837A;
+	Fri,  7 Aug 2026 14:56:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114607; cv=none; b=a/aRCx2kyoWyfaBFAF8JHgPBP+cRjxYjv27IMUwM7WazGn1m2lnLoVHjIwqf1zmWxtkvj7ZfM/vNkBXPRO2oSkXho4lguQO7WRifJKBRyG1ubGUK+AK5pKZJDV5O3P249itHQJTnbXXOkoV42Cshk8UFcJf/oV6BAd/dwAsI/Lw=
+	t=1786114611; cv=none; b=am03v3v/YJ+QYeBfKGlrvG7Hm9xCyecrYXgkMdE6tfqFcAJ9pwzhS/9ujCKtil90FWnDDKB9ofw45UTgxpqLKeXnKB3i+1Ii65hkuEh8rpNq0hgm3WQAOZT+XmSBLdyDNC78mpZtpYO0b797bwciw99izRavgXVCugya0MbDxno=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114607; c=relaxed/simple;
-	bh=6hYk3FZahXrZXNV/m/l3YP4lX3cvNPBN1ohAyVUKIh4=;
+	s=arc-20240116; t=1786114611; c=relaxed/simple;
+	bh=0JRUygIWrJyymD7ZIhSMeqcr2E8tSNgyh5hO2JpVzzs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h+2tZ/HdFq3BUDV6SuIEnmwZn64EmkS/9/3b4xJsy6eVHEXCp24jFUUnU9lJBEG11AAYPzQ5mj40Tz0FW+BGNbiUJe3wle5XyGw6IT9lrpRe/Q53HIpFaCnZsB8tIgkaWuMZ2gHyfoiXtaUKsKe+6ZILjJ8keEuc7F+ENDa9+p8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W97Cpjta; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XuexqzWYJ/pgjjJedwcBI8M9h5FJ1Y3tdTbUtljsf8iKcBQ0Wj71dsBy9vstQo3L9JQaZVzLHgB52OZDLeOJX2ZYRb4klYah+Xjg7AAwsqXybD2UtbjMfcAl0BxoBccojchc7TqFlMtDGutnSja0gCHr1m+0oJJ2fBSAlMPlcuo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V6IrbULR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W97Cpjta"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A56831F00A3E;
-	Fri,  7 Aug 2026 14:56:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V6IrbULR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7974D1F000E9;
+	Fri,  7 Aug 2026 14:56:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114605;
-	bh=jRM8LHDfAXRMUJtvCYm3QGnme8llPTQdKjjYF7ta8VY=;
+	s=korg; t=1786114608;
+	bh=KMTrSUVfry6Xu8xhUbKClJFBYvA7yFlt0rzQZ4ZXvVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W97CpjtaQCrld33/ZZBocwxxdu+l5WZRHUTXIr8WiRYPHLbdvOcNWpcfenSIuvbMo
-	 7EQSuq46JGysIhMeI8L3ZOEKHqfxP2RYF6RIkGnPKQXcposn+C1mcIx8f40BlCcHbk
-	 bXgKNfBSDO2LMwjQnCorSyNOzSY8rpaQg4BWNktE=
+	b=V6IrbULRGVQcqA0uOY6KV3xhUmKtJ8DOkNb8JInCOGWtSQHi7IxIY9kRS657wsZRm
+	 tqi/pnCIVTUXXviaI7pw4X0JFq+1C+UotLHuzcGEj4992JqSzphlPF6xWbnQkqTnz5
+	 f/JjC/dQpg3Ir09bQka9gkA0Kl7mlyamSGGfyatU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Hodo <martin.hodo@intel.com>,
 	Suraj Kandpal <suraj.kandpal@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Santhosh Reddy Guddati <santhosh.reddy.guddati@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 323/337] drm/i915/hdcp: require monotonically increasing seq_num_v
-Date: Fri,  7 Aug 2026 16:38:46 +0200
-Message-ID: <20260807143425.537743000@linuxfoundation.org>
+Subject: [PATCH 6.12 324/337] drm/i915/hdcp: Skip inactive MST connectors when building stream list
+Date: Fri,  7 Aug 2026 16:38:47 +0200
+Message-ID: <20260807143425.561506875@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -53,51 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jani Nikula <jani.nikula@intel.com>
+From: Suraj Kandpal <suraj.kandpal@intel.com>
 
-[ Upstream commit db9e64c983dcb07ff256bd455f258c44aa530ff8 ]
+[ Upstream commit 0161e2c2016337a2f22ef79dff0aee43c0841bce ]
 
-The HDCP 2.2 specification requires the seq_num_v to be monotonically
-increasing, and repeated seq_num_v needs to be treated as an integrity
-failure. Make it so.
+intel_hdcp_required_content_stream() walks every connector on the
+digital port to populate hdcp_port_data->streams[]. The only filter is
+connector_status_disconnected, which reflects physical presence on the
+MST topology, not whether the connector currently drives a stream.
+On a multi-sink MST setup where only a subset of sinks are modeset,
+the loop can pick a sibling MST connector that is connected but has
+no active CRTC / VC payload. intel_conn_to_vcpi() then logs "MST
+Payload not present" and returns 0, and the bogus StreamID=0 is
+written to the repeater in RepeaterAuth_Stream_Manage (DPCD 0x693F0).
+Authentication completes, but the repeater shortly raises
+LINK_INTEGRITY_FAILURE (RxStatus 0x69493 bit4) because the StreamID
+does not match any stream on its input. The HDCP check work then
+tears the link down, the Content Protection property drops back to
+DESIRED, and userspace observes a spurious HDCP enable failure.
+Filter the connector iteration to only those with a CRTC assigned in
+the new atomic state, so intel_conn_to_vcpi() is called for the
+connector actually being enabled and reads its real VCPI from the MST
+topology state.
 
-For the first message, seq_num_v must be zero, and is already
-checked. We can only check for less-than-or-equal for the subsequent
-messages, where hdcp2_encrypted is true.
-
-Discovered using AI-assisted static analysis confirmed by Intel Product
-Security.
-
-Reported-by: Martin Hodo <martin.hodo@intel.com>
-Fixes: d849178e2c9e ("drm/i915: Implement HDCP2.2 repeater authentication")
-Cc: stable@vger.kernel.org # v5.2+
-Cc: Suraj Kandpal <suraj.kandpal@intel.com>
-Reviewed-by: Suraj Kandpal <suraj.kandpal@intel.com>
-Link: https://patch.msgid.link/20260625104407.1025614-1-jani.nikula@intel.com
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-(cherry picked from commit 58a224375c81179b52558c53d8857b93196d2687)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Signed-off-by: Suraj Kandpal <suraj.kandpal@intel.com>
+Reviewed-by: Santhosh Reddy Guddati <santhosh.reddy.guddati@intel.com>
+Link: https://patch.msgid.link/20260505094022.4064256-1-suraj.kandpal@intel.com
+Stable-dep-of: bbb15a6b042d ("drm/i915/hdcp: check streams[] bounds before overflow")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_hdcp.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/i915/display/intel_hdcp.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
 --- a/drivers/gpu/drm/i915/display/intel_hdcp.c
 +++ b/drivers/gpu/drm/i915/display/intel_hdcp.c
-@@ -1742,9 +1742,10 @@ int hdcp2_authenticate_repeater_topology
- 		return -EINVAL;
- 	}
+@@ -97,6 +97,7 @@ intel_hdcp_required_content_stream(struc
+ {
+ 	struct intel_display *display = to_intel_display(state);
+ 	struct drm_connector_list_iter conn_iter;
++	struct drm_connector_state *new_conn_state;
+ 	struct intel_digital_port *conn_dig_port;
+ 	struct intel_connector *connector;
+ 	struct hdcp_port_data *data = &dig_port->hdcp_port_data;
+@@ -123,6 +124,11 @@ intel_hdcp_required_content_stream(struc
+ 		if (conn_dig_port != dig_port)
+ 			continue;
  
--	if (seq_num_v < hdcp->seq_num_v) {
--		/* Roll over of the seq_num_v from repeater. Reauthenticate. */
--		drm_dbg_kms(display->drm, "Seq_num_v roll over.\n");
-+	if (hdcp->hdcp2_encrypted && seq_num_v <= hdcp->seq_num_v) {
-+		/* Reauthenticate on Seq_num_v repeat or rollover */
-+		drm_dbg_kms(display->drm, "Seq_num_v %s\n",
-+			    seq_num_v == hdcp->seq_num_v ? "repeat" : "rollover");
- 		return -EINVAL;
- 	}
- 
++		new_conn_state = drm_atomic_get_new_connector_state(&state->base,
++								    &connector->base);
++		if (!new_conn_state || !new_conn_state->crtc)
++			continue;
++
+ 		data->streams[data->k].stream_id =
+ 			intel_conn_to_vcpi(state, connector);
+ 		data->k++;
 
 
