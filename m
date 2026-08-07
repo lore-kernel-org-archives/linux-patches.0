@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2FEA17A309;
-	Fri,  7 Aug 2026 15:15:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86BEF372EF5;
+	Fri,  7 Aug 2026 15:15:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115702; cv=none; b=fD0A3MSvP7GtFL89HVjd9gYQKFsnnC7sR9MA9O0rUTnH3ChdlUHhLOwe6+kW0hFy4lLy2Kq8wAs9gl1OWHJ4Jir4V/r4HJ+EONVBrVUJScYRo6f5TIt0itElEhW9ch0d+m1zZZNYFThkH4ETsRSF9A1WyESsi/eGkFfAwS1Sst4=
+	t=1786115705; cv=none; b=e96ESkAbc6QvdYx8IjcHrra1a4WYrcDl15jkZNAzhuofxWQLr5o4ypbXbRIpAPkf+Y5h4yZ+Ixy/JOtpHI0u0mbEAaiZfT34FgsnHF/oy9ICmQuZZDYmqq9+zBBxPIXEB7B1hgLob+ItdPlHE4TQsaADcNTIvoRN0wSJOrWijaw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115702; c=relaxed/simple;
-	bh=rGb0can5FnYKQ55hxJMKQaF369Ga3p3kb3OKlHIAtMQ=;
+	s=arc-20240116; t=1786115705; c=relaxed/simple;
+	bh=5civfpDxJwANR4eZVkHXJwxCKKLMqn8QVbN22Xafbrs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GD8tgpTAPJKwip2JmsAzMeXp+uV/mJ+myvxhcbUZ1qI54en8tvB+0dDkPA2VNGrK82d3uipuVn6yK55Axom0Q2exNS4yiI1HMiskwrW+1G4Kb+JTCo/7EaawI53h1ZC3rcPf1s6T6Glb8LsDfqo30/lQ8HCP2+U9lhvx4RH1hHE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mnsFm+Ay; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Uq61ix/521ZAFDolG3isQEf1JedXDNgO/zd9jfQ3vTnQW/3BH/T24qsPMY0c2yGz04sFNW3xvBa5u9jZ2rQiCo9xsH7ekGwEPO9mDxJbV95eEiGEruSdRV8dtn90avNVjBcseseXDU4a0Vus2lBiKj70HphLyru7vBvopoedbbA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pdg5uOOZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mnsFm+Ay"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AFD81F000E9;
-	Fri,  7 Aug 2026 15:15:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pdg5uOOZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E26621F000E9;
+	Fri,  7 Aug 2026 15:15:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115701;
-	bh=bfCR2bi3VykZwnvvDXJVfzIaKBgtb2RZWhFxpI5Nlss=;
+	s=korg; t=1786115704;
+	bh=MMZiVyIKENlN5cWlrEWqx7y5i749frVdF7NV181toAw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mnsFm+AyWLCjcuTR9wUUEQBJa6as5AgoGEKOhGhl43PItofWU/UrdS1683xx/w7EB
-	 9DQlDRkHiwDLztktqGvXdoae+ryFNPYKGuaQZ2MTzc1oCiftAAsXOMh/Krix8pVhAZ
-	 YI91AtLYNGAvlEMBgn4fNvbQcytWTc2q8lu7wmuY=
+	b=pdg5uOOZBa63Qak3Q1GChE01s1V63kEpz4ZKprnfzgMIMMtNg/wAwoWThzqoumMZh
+	 M06E+QGQxWNeNQidDMdpXJ6ADUj9uTO6tfztYZdBj09uIF4PleR7nBnmpwu/czw6HI
+	 G5PYQ61huWoK+XreXhlU6z+WwBK4/KV09ubawRi4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Bryan ODonoghue <bod@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 368/396] media: qcom: camss: Fix RDI streaming for CSID 340
-Date: Fri,  7 Aug 2026 16:38:48 +0200
-Message-ID: <20260807143432.217513566@linuxfoundation.org>
+	Zack Rusin <zack.rusin@broadcom.com>,
+	Ian Forbes <ian.forbes@broadcom.com>
+Subject: [PATCH 6.18 333/396] drm/vmwgfx: take fman->lock around fence list mutation in fifo_down
+Date: Fri,  7 Aug 2026 16:38:13 +0200
+Message-ID: <20260807143431.472691792@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -53,88 +50,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+From: Zack Rusin <zack.rusin@broadcom.com>
 
-[ Upstream commit cc1c35619c9895f918f9e388e3caa6ab2ff2fbe7 ]
+commit 250af2e8c3e90dc978e062a936b633870a22e660 upstream.
 
-Fix streaming from CSIDn RDI1 and RDI2 to VFEn RDI1 and RDI2. A pattern we
-have replicated throughout CAMSS where we use the VC number to populate
-both the VC fields and port fields of the CSID means that in practice only
-VC = 0 on CSIDn:RDI0 to VFEn:RDI0 works.
+vmw_fence_fifo_down() drops fman->lock to wait on a fence and, on
+timeout, mutates fman->fence_list via list_del_init() and signals
+the fence without re-acquiring the lock.  __vmw_fences_update() walks
+and removes entries from the same list under fman->lock from any
+other waiter, the fence-IRQ thread, or vmw_fences_update(), so the
+unlocked list_del_init() can corrupt the list head.
 
-Fix that for CSID 340 by separating VC and port. Fix to VC zero as a bugfix
-we will look to properly populate the VC field with follow on patches
-later.
+Re-take fman->lock before manipulating fence->head and use
+dma_fence_signal_locked().  Wrap the locked signalling in
+dma_fence_begin_signalling() / dma_fence_end_signalling() so the
+lockdep annotation that dma_fence_signal() previously provided is
+preserved (the same pattern as __vmw_fences_update()).
 
-Fixes: f0fc808a466a ("media: qcom: camss: Add CSID 340 support")
+dma_fence_put() is moved outside the lock to avoid a recursive
+acquire from vmw_fence_obj_destroy(), which also takes fman->lock.
+
+Fixes: ae2a104058e2 ("vmwgfx: Implement fence objects")
 Cc: stable@vger.kernel.org
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Assisted-by: Claude:claude-opus-4.7
+Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
+Reviewed-by: Ian Forbes <ian.forbes@broadcom.com>
+Link: https://patch.msgid.link/20260505222728.519626-5-zack.rusin@broadcom.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/camss/camss-csid-340.c |   18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/vmwgfx/vmwgfx_fence.c |   13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
---- a/drivers/media/platform/qcom/camss/camss-csid-340.c
-+++ b/drivers/media/platform/qcom/camss/camss-csid-340.c
-@@ -74,9 +74,9 @@ static void __csid_ctrl_rdi(struct csid_
- 	writel_relaxed(!!enable, csid->base + CSID_RDI_CTRL(rdi));
- }
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_fence.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_fence.c
+@@ -366,13 +366,24 @@ void vmw_fence_fifo_down(struct vmw_fenc
+ 		ret = vmw_fence_obj_wait(fence, false, false,
+ 					 VMW_FENCE_WAIT_TIMEOUT);
  
--static void __csid_configure_rdi_stream(struct csid_device *csid, u8 enable, u8 vc)
-+static void __csid_configure_rdi_stream(struct csid_device *csid, u8 enable, u8 port, u8 vc)
- {
--	struct v4l2_mbus_framefmt *input_format = &csid->fmt[MSM_CSID_PAD_FIRST_SRC + vc];
-+	struct v4l2_mbus_framefmt *input_format = &csid->fmt[MSM_CSID_PAD_FIRST_SRC + port];
- 	const struct csid_format_info *format = csid_get_fmt_entry(csid->res->formats->formats,
- 								   csid->res->formats->nformats,
- 								   input_format->code);
-@@ -88,14 +88,14 @@ static void __csid_configure_rdi_stream(
- 	 * the four least significant bits of the five bit VC
- 	 * bitfield to generate an internal CID value.
- 	 *
--	 * CSID_RDI_CFG0(vc)
-+	 * CSID_RDI_CFG0(port)
- 	 * DT_ID : 28:27
- 	 * VC    : 26:22
- 	 * DT    : 21:16
- 	 *
- 	 * CID   : VC 3:0 << 2 | DT_ID 1:0
- 	 */
--	dt_id = vc & 0x03;
-+	dt_id = port & 0x03;
- 
- 	val = CSID_RDI_CFG0_DECODE_FORMAT_NOP; /* only for RDI path */
- 	val |= FIELD_PREP(CSID_RDI_CFG0_DT_MASK, format->data_type);
-@@ -105,10 +105,11 @@ static void __csid_configure_rdi_stream(
- 	if (enable)
- 		val |= CSID_RDI_CFG0_ENABLE;
- 
--	dev_dbg(csid->camss->dev, "CSID%u: Stream %s (dt:0x%x vc=%u)\n",
--		csid->id, enable ? "enable" : "disable", format->data_type, vc);
-+	dev_dbg(csid->camss->dev, "CSID%u: Stream %s (dt:0x%x port=%u vc=%u)\n",
-+		csid->id, enable ? "enable" : "disable", format->data_type,
-+		port, vc);
- 
--	writel_relaxed(val, csid->base + CSID_RDI_CFG0(vc));
-+	writel_relaxed(val, csid->base + CSID_RDI_CFG0(port));
- }
- 
- static void csid_configure_stream(struct csid_device *csid, u8 enable)
-@@ -117,9 +118,10 @@ static void csid_configure_stream(struct
- 
- 	__csid_configure_rx(csid, &csid->phy);
- 
-+	/* Loop through all enabled ports and configure a stream for each */
- 	for (i = 0; i < MSM_CSID_MAX_SRC_STREAMS; i++) {
- 		if (csid->phy.en_vc & BIT(i)) {
--			__csid_configure_rdi_stream(csid, enable, i);
-+			__csid_configure_rdi_stream(csid, enable, i, 0);
- 			__csid_ctrl_rdi(csid, enable, i);
++		spin_lock(&fman->lock);
+ 		if (unlikely(ret != 0)) {
++			bool cookie = dma_fence_begin_signalling();
++
+ 			list_del_init(&fence->head);
+-			dma_fence_signal(&fence->base);
++			if (fence->waiter_added) {
++				vmw_seqno_waiter_remove(fman->dev_priv);
++				fence->waiter_added = false;
++			}
++			dma_fence_signal_locked(&fence->base);
++			dma_fence_end_signalling(cookie);
  		}
+ 
+ 		BUG_ON(!list_empty(&fence->head));
++		spin_unlock(&fman->lock);
++
+ 		dma_fence_put(&fence->base);
++
+ 		spin_lock(&fman->lock);
  	}
+ 	spin_unlock(&fman->lock);
 
 
