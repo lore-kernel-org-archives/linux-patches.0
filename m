@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8365C3557F3;
-	Fri,  7 Aug 2026 15:47:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55A4038DC4C;
+	Fri,  7 Aug 2026 15:47:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786117666; cv=none; b=UDbp8xo8NM5+Y1J3fHdEZEE6+rGzKKyXxmMSYCv+S8qsBMKIQnPmxKNPktSCcCkxtDCN2HcC3cm1H8oXQ8hmTwfur1EXvtuh8LmBHJbJGycZHblkYZqLUdpGmbnZ64XoNGEKsJGUMdOpHTJk3AMvMiqmUrhb2GkN0lmjlccS2dU=
+	t=1786117667; cv=none; b=TBphg4TWQ1LjQ0DZsFrWFCjsC068UCywdHQjHQkNZgmo5L5p/Z8t/QDJ7hRDXQAxmt5gIwUOJFXLPntMCLDEpO1+l1X7xBc1kSqnkrEp7cc4EmpprV6yayyodfd3i+Gu5No2y1SsNN7wBK8piopZ9olxXm2AT4O/LtEA6w+gGl4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786117666; c=relaxed/simple;
-	bh=7nnJAnZzoelkLoGDc0seybZ5DTz1wXU3M/5TsIucgP4=;
+	s=arc-20240116; t=1786117667; c=relaxed/simple;
+	bh=xE+nywl5fvThhuLZm+5PDUNb8z/k3nenfu/2VDzAwi4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VRMWhFDUqFnT5PXbF3rPboB6M/qsaWR2xrv0MYG1PWbpklgqTMyRUKpCiRVJWeoAlDvg4oBAZ5SDO0LlXO3+/nYDyxW2PsHcxJ8ta+0jJT7o5U9NY6epWQhvqyRBrpO2ah6/CRppNHlSEgJ2fLFvDsl2SVqOvxUtv7HetplZ+aI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DwRyrL8k; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GPkN9Z7tNZ5GYZFiOLgp+vZXELeNlzGAtu/h87zoAZDr2PfnWuSL+jvfRVZ4r7h+ED5Kj9kbIzOB2WEeUzxzxS8NeSisBAZlgOyApHu9w0uEqq12ymJd7ytRPnSWn2RzVI/4pS8VJ6ZEzXgbwIZtECcTrDJPYsBDlfjOGV7iFDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ryV4rCSm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DwRyrL8k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCAC31F000E9;
-	Fri,  7 Aug 2026 15:47:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ryV4rCSm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2F281F00A3A;
+	Fri,  7 Aug 2026 15:47:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786117663;
-	bh=/McjZh8rjzNPN/8SXiNBogUrUfG67iKLOicmCWFYzqM=;
+	s=korg; t=1786117666;
+	bh=GJGdaBmA+JJziNjksmeoEHoeHv2EsXQ1SsoArV3cHJ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DwRyrL8k26kvoKV7hm2/g3Sls5H/aINudQfqYR51dFXFn0c3TOun7M4hqwcVQYl2s
-	 uYmz+cxx+ICYR8tGxINgjpq7IH1cb0jzQ/TiAHF/Qu5ZbKms29leHiugTg/M55g1ZI
-	 nD32FRe03OwrVUS12PthFMtS70TrPetDUcDVEHxU=
+	b=ryV4rCSmQPi9ty8sLiBE7sv+icHVJEPRipLoKnjd4sGBEVU1CSmXJFJVOSmR6m2KU
+	 hX9oQmGEzh6iK6s//FFfWeAv1IMUqIjaJm1mO9ZuFXJNMBk86/bywIaU6fifs7MXQw
+	 S1JKzN2OzAitCQdBGJGqh3/a6jKxQNjfPfzPNlxI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Wang <kevinyang.wang@amd.com>,
-	Kenneth Feng <kenneth.feng@amd.com>,
-	Lars Nieradzik <l.nieradzik@gmail.com>,
+	Dillon Varone <dillon.varone@amd.com>,
+	Fangzhi Zuo <jerry.zuo@amd.com>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.1 396/438] drm/amd/pm: use milliwatts for GPU power sensors
-Date: Fri,  7 Aug 2026 16:39:52 +0200
-Message-ID: <20260807143436.404354420@linuxfoundation.org>
+Subject: [PATCH 7.1 397/438] drm/amd/display: check if dml21_add_phantom_plane() is successful
+Date: Fri,  7 Aug 2026 16:39:53 +0200
+Message-ID: <20260807143436.424300328@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -52,507 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Wang <kevinyang.wang@amd.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit 1849a64165ccc23d3e5fc22b8be19227c21c1871 upstream.
+commit 000acb4ce7fb9feba3072ce468ad681f6585cd5d upstream.
 
-GPU average and input power backends report a mix of whole watts,
-milliwatts, Q24.8 watts and decimal-packed fractions. Q24.8 is inherited
-from the legacy PowerPlay sensor format. Milliwatts are a more natural unit
-for the hwmon and pm_info consumers in amdgpu_pm.c. A common decoder cannot
-distinguish these formats, and converting native milliwatts through Q24.8
-also loses precision.
+Verify that the phantom plane was allocated to avoid a later
+segfault.
 
-Use milliwatts as the internal unit across all PPT and PowerPlay backends.
-Decode Q24.8 only at the legacy smu7 input boundary and encode it only for
-the raw amdgpu_sensors debugfs interface. This gives hwmon, pm_info and the
-sensor ioctl one unambiguous unit while preserving the format used by UMR.
-
-Fixes: 5b79d0482f3c ("drm/amd/pp: Remove struct pp_gpu_power")
-Fixes: 01992b121fb6 ("drm/amd/pm: fix amdgpu_pm_info power display units")
-Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
-Reviewed-by: Kenneth Feng <kenneth.feng@amd.com>
-Reported-by: Lars Nieradzik <l.nieradzik@gmail.com>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4970
+Fixes: 70839da63605 ("drm/amd/display: Add new DCN401 sources")
+Reviewed-by: Dillon Varone <dillon.varone@amd.com>
+Signed-off-by: Fangzhi Zuo <jerry.zuo@amd.com>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 757ba0790bafec47a507e9662bf380f2e027d420)
+(cherry picked from commit 5adb54abe5a8e82cbff7f8806db30a5f4924329f)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c             |    9 +++++++++
- drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c                 |    4 ++--
- drivers/gpu/drm/amd/include/kgd_pp_interface.h          |    6 ++++--
- drivers/gpu/drm/amd/pm/amdgpu_pm.c                      |    8 +++-----
- drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c     |    4 ++--
- drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c   |    4 ++--
- drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega12_hwmgr.c   |    2 +-
- drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_hwmgr.c   |    5 +++--
- drivers/gpu/drm/amd/pm/powerplay/inc/hwmgr.h            |    5 +++++
- drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c       |    2 +-
- drivers/gpu/drm/amd/pm/swsmu/smu11/cyan_skillfish_ppt.c |    6 ++----
- drivers/gpu/drm/amd/pm/swsmu/smu11/navi10_ppt.c         |    8 ++++----
- drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c |    7 ++++---
- drivers/gpu/drm/amd/pm/swsmu/smu11/vangogh_ppt.c        |    9 +++------
- drivers/gpu/drm/amd/pm/swsmu/smu12/renoir_ppt.c         |    5 +++--
- drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c      |    3 ++-
- drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c    |    2 +-
- drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_12_ppt.c   |    3 ++-
- drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_4_ppt.c    |    4 ++--
- drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_5_ppt.c    |    2 +-
- drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c    |    3 ++-
- drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c    |    2 +-
- drivers/gpu/drm/amd/pm/swsmu/smu13/yellow_carp_ppt.c    |    2 +-
- drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_0_ppt.c    |    3 +--
- drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c    |    2 +-
- drivers/gpu/drm/amd/pm/swsmu/smu15/smu_v15_0_0_ppt.c    |    3 +--
- drivers/gpu/drm/amd/pm/swsmu/smu15/smu_v15_0_8_ppt.c    |    3 ++-
- 27 files changed, 65 insertions(+), 51 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dml2_0/dml21/dml21_utils.c |   15 ++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
-@@ -43,6 +43,11 @@
+--- a/drivers/gpu/drm/amd/display/dc/dml2_0/dml21/dml21_utils.c
++++ b/drivers/gpu/drm/amd/display/dc/dml2_0/dml21/dml21_utils.c
+@@ -359,14 +359,13 @@ void dml21_handle_phantom_streams_planes
+ 					main_plane = main_stream_status->plane_states[dc_plane_index];
  
- #if defined(CONFIG_DEBUG_FS)
- 
-+/* Encode milliwatts in the raw Q24.8 sensor report format used by UMR. */
-+#define AMDGPU_DEBUGFS_PWR_MW_TO_Q24_8(power_mw) \
-+	DIV_ROUND_CLOSEST_ULL((u64)(power_mw) * BIT(8), \
-+			      MILLIWATT_PER_WATT)
-+
- /**
-  * amdgpu_debugfs_process_reg_op - Handle MMIO register reads/writes
-  *
-@@ -1104,6 +1109,10 @@ static ssize_t amdgpu_debugfs_sensor_rea
- 		return r;
- 	}
- 
-+	if (idx == AMDGPU_PP_SENSOR_GPU_AVG_POWER ||
-+	    idx == AMDGPU_PP_SENSOR_GPU_INPUT_POWER)
-+		values[0] = AMDGPU_DEBUGFS_PWR_MW_TO_Q24_8(values[0]);
-+
- 	if (size > valuesize) {
- 		amdgpu_virt_disable_access_debugfs(adev);
- 		return -EINVAL;
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
-@@ -1210,7 +1210,7 @@ int amdgpu_info_ioctl(struct drm_device
- 					return -EINVAL;
+ 					/* create phantom planes for subvp enabled plane */
+-					dml21_add_phantom_plane(dml_ctx,
+-							dc,
+-							context,
+-							phantom_stream,
+-							main_plane,
+-							&dml_ctx->v21.mode_programming.programming->plane_programming[dml_plane_index]);
+-
+-					phantoms_added = true;
++					if (dml21_add_phantom_plane(dml_ctx,
++								    dc,
++								    context,
++								    phantom_stream,
++								    main_plane,
++								    &dml_ctx->v21.mode_programming.programming->plane_programming[dml_plane_index]))
++						phantoms_added = true;
  				}
  			}
--			ui32 >>= 8;
-+			ui32 /= MILLIWATT_PER_WATT;
- 			break;
- 		case AMDGPU_INFO_SENSOR_GPU_INPUT_POWER:
- 			/* get input GPU power */
-@@ -1219,7 +1219,7 @@ int amdgpu_info_ioctl(struct drm_device
- 						   (void *)&ui32, &ui32_size)) {
- 				return -EINVAL;
- 			}
--			ui32 >>= 8;
-+			ui32 /= MILLIWATT_PER_WATT;
- 			break;
- 		case AMDGPU_INFO_SENSOR_VDDNB:
- 			/* get VDDNB in millivolts */
---- a/drivers/gpu/drm/amd/include/kgd_pp_interface.h
-+++ b/drivers/gpu/drm/amd/include/kgd_pp_interface.h
-@@ -24,6 +24,8 @@
- #ifndef __KGD_PP_INTERFACE_H__
- #define __KGD_PP_INTERFACE_H__
- 
-+#include <linux/units.h>
-+
- extern const struct amdgpu_ip_block_version pp_smu_ip_block;
- extern const struct amdgpu_ip_block_version smu_v11_0_ip_block;
- extern const struct amdgpu_ip_block_version smu_v12_0_ip_block;
-@@ -150,8 +152,8 @@ enum amd_pp_sensors {
- 	AMDGPU_PP_SENSOR_MEM_TEMP,
- 	AMDGPU_PP_SENSOR_VCE_POWER,
- 	AMDGPU_PP_SENSOR_UVD_POWER,
--	AMDGPU_PP_SENSOR_GPU_AVG_POWER,
--	AMDGPU_PP_SENSOR_GPU_INPUT_POWER,
-+	AMDGPU_PP_SENSOR_GPU_AVG_POWER, /* milliwatts */
-+	AMDGPU_PP_SENSOR_GPU_INPUT_POWER, /* milliwatts */
- 	AMDGPU_PP_SENSOR_SS_APU_SHARE,
- 	AMDGPU_PP_SENSOR_SS_DGPU_SHARE,
- 	AMDGPU_PP_SENSOR_STABLE_PSTATE_SCLK,
---- a/drivers/gpu/drm/amd/pm/amdgpu_pm.c
-+++ b/drivers/gpu/drm/amd/pm/amdgpu_pm.c
-@@ -41,8 +41,6 @@
- 
- #define DEVICE_ATTR_IS(_name)		(attr_id == device_attr_id__##_name)
- 
--#define power_2_mwatt(power)	(((power) >> 8) * 1000 + ((power) & 0xff))
--
- struct od_attribute {
- 	struct kobj_attribute	attribute;
- 	struct list_head	entry;
-@@ -3335,7 +3333,7 @@ static int amdgpu_hwmon_get_power(struct
- 		return r;
- 
- 	/* convert to microwatts */
--	return power_2_mwatt(query) * 1000;
-+	return query * 1000;
- }
- 
- static ssize_t amdgpu_hwmon_show_power_avg(struct device *dev,
-@@ -4898,7 +4896,7 @@ static int amdgpu_debugfs_pm_info_pp(str
- 		seq_printf(m, "\t%u mV (VDDNB)\n", value);
- 	size = sizeof(uint32_t);
- 	if (!amdgpu_dpm_read_sensor(adev, AMDGPU_PP_SENSOR_GPU_AVG_POWER, (void *)&query, &size)) {
--		mwatt = power_2_mwatt(query);
-+		mwatt = query;
- 		centiwatt = DIV_ROUND_CLOSEST(mwatt, 10);
- 		if (adev->flags & AMD_IS_APU)
- 			seq_printf(m, "\t%u.%02u W (average SoC including CPU)\n", centiwatt / 100, centiwatt % 100);
-@@ -4907,7 +4905,7 @@ static int amdgpu_debugfs_pm_info_pp(str
- 	}
- 	size = sizeof(uint32_t);
- 	if (!amdgpu_dpm_read_sensor(adev, AMDGPU_PP_SENSOR_GPU_INPUT_POWER, (void *)&query, &size)) {
--		mwatt = power_2_mwatt(query);
-+		mwatt = query;
- 		centiwatt = DIV_ROUND_CLOSEST(mwatt, 10);
- 		if (adev->flags & AMD_IS_APU)
- 			seq_printf(m, "\t%u.%02u W (current SoC including CPU)\n", centiwatt / 100, centiwatt % 100);
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
-@@ -4062,7 +4062,7 @@ static int smu7_get_gpu_power(struct pp_
- 	    (adev->asic_type != CHIP_FIJI) &&
- 	    (adev->asic_type != CHIP_TONGA)) {
- 		smum_send_msg_to_smc_with_parameter(hwmgr, PPSMC_MSG_GetCurrPkgPwr, 0, &tmp);
--		*query = tmp;
-+		*query = PP_PWR_Q24_8_TO_MW(tmp);
- 
- 		if (tmp != 0)
- 			return 0;
-@@ -4081,7 +4081,7 @@ static int smu7_get_gpu_power(struct pp_
- 		if (tmp != 0)
- 			break;
- 	}
--	*query = tmp;
-+	*query = PP_PWR_Q24_8_TO_MW(tmp);
- 
- 	return 0;
- }
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
-@@ -3937,8 +3937,8 @@ static int vega10_get_gpu_power(struct p
- 	if (ret)
- 		return ret;
- 
--	/* SMC returning actual watts, keep consistent with legacy asics, low 8 bit as 8 fractional bits */
--	*query = value << 8;
-+	/* SMC returns whole Watts, while power sensors use milliwatts. */
-+	*query = value * MILLIWATT_PER_WATT;
- 
- 	return 0;
- }
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega12_hwmgr.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega12_hwmgr.c
-@@ -1419,7 +1419,7 @@ static int vega12_get_gpu_power(struct p
- 	if (ret)
- 		return ret;
- 
--	*query = metrics_table.CurrSocketPower << 8;
-+	*query = metrics_table.CurrSocketPower * MILLIWATT_PER_WATT;
- 
- 	return ret;
- }
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_hwmgr.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_hwmgr.c
-@@ -2154,12 +2154,13 @@ static int vega20_get_gpu_power(struct p
- 	switch (idx) {
- 	case AMDGPU_PP_SENSOR_GPU_AVG_POWER:
- 		if (hwmgr->smu_version == 0x282e00)
--			*query = metrics_table.AverageSocketPower << 8;
-+			*query = metrics_table.AverageSocketPower *
-+				 MILLIWATT_PER_WATT;
- 		else
- 			ret = -EOPNOTSUPP;
- 		break;
- 	case AMDGPU_PP_SENSOR_GPU_INPUT_POWER:
--		*query = metrics_table.CurrSocketPower << 8;
-+		*query = metrics_table.CurrSocketPower * MILLIWATT_PER_WATT;
- 		break;
- 	}
- 
---- a/drivers/gpu/drm/amd/pm/powerplay/inc/hwmgr.h
-+++ b/drivers/gpu/drm/amd/pm/powerplay/inc/hwmgr.h
-@@ -35,6 +35,11 @@ struct pp_hwmgr;
- struct phm_fan_speed_info;
- struct pp_atomctrl_voltage_table;
- 
-+/* Decode legacy unsigned Q24.8 watts to internal milliwatts. */
-+#define PP_PWR_Q24_8_TO_MW(power) \
-+	DIV_ROUND_CLOSEST_ULL((u64)(power) * MILLIWATT_PER_WATT, \
-+			      BIT(8))
-+
- #define VOLTAGE_SCALE 4
- #define VOLTAGE_VID_OFFSET_SCALE1   625
- #define VOLTAGE_VID_OFFSET_SCALE2   100
---- a/drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c
-@@ -658,7 +658,7 @@ static int arcturus_get_smu_metrics_data
- 		*value = metrics->VcnActivityPercentage;
- 		break;
- 	case METRICS_AVERAGE_SOCKETPOWER:
--		*value = metrics->AverageSocketPower << 8;
-+		*value = metrics->AverageSocketPower * MILLIWATT_PER_WATT;
- 		break;
- 	case METRICS_TEMPERATURE_EDGE:
- 		*value = metrics->TemperatureEdge *
---- a/drivers/gpu/drm/amd/pm/swsmu/smu11/cyan_skillfish_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/cyan_skillfish_ppt.c
-@@ -158,12 +158,10 @@ cyan_skillfish_get_smu_metrics_data(stru
- 		*value = metrics->Current.MemclkFrequency;
- 		break;
- 	case METRICS_CURR_SOCKETPOWER:
--		*value = (metrics->Current.CurrentSocketPower << 8) /
--				1000;
-+		*value = metrics->Current.CurrentSocketPower;
- 		break;
- 	case METRICS_AVERAGE_SOCKETPOWER:
--		*value = (metrics->Average.CurrentSocketPower << 8) /
--				1000;
-+		*value = metrics->Average.CurrentSocketPower;
- 		break;
- 	case METRICS_TEMPERATURE_EDGE:
- 		*value = metrics->Current.GfxTemperature / 100 *
---- a/drivers/gpu/drm/amd/pm/swsmu/smu11/navi10_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/navi10_ppt.c
-@@ -602,7 +602,7 @@ static int navi10_get_legacy_smu_metrics
- 		*value = metrics->AverageUclkActivity;
- 		break;
- 	case METRICS_AVERAGE_SOCKETPOWER:
--		*value = metrics->AverageSocketPower << 8;
-+		*value = metrics->AverageSocketPower * MILLIWATT_PER_WATT;
- 		break;
- 	case METRICS_TEMPERATURE_EDGE:
- 		*value = metrics->TemperatureEdge *
-@@ -691,7 +691,7 @@ static int navi10_get_smu_metrics_data(s
- 		*value = metrics->AverageUclkActivity;
- 		break;
- 	case METRICS_AVERAGE_SOCKETPOWER:
--		*value = metrics->AverageSocketPower << 8;
-+		*value = metrics->AverageSocketPower * MILLIWATT_PER_WATT;
- 		break;
- 	case METRICS_TEMPERATURE_EDGE:
- 		*value = metrics->TemperatureEdge *
-@@ -777,7 +777,7 @@ static int navi12_get_legacy_smu_metrics
- 		*value = metrics->AverageUclkActivity;
- 		break;
- 	case METRICS_AVERAGE_SOCKETPOWER:
--		*value = metrics->AverageSocketPower << 8;
-+		*value = metrics->AverageSocketPower * MILLIWATT_PER_WATT;
- 		break;
- 	case METRICS_TEMPERATURE_EDGE:
- 		*value = metrics->TemperatureEdge *
-@@ -866,7 +866,7 @@ static int navi12_get_smu_metrics_data(s
- 		*value = metrics->AverageUclkActivity;
- 		break;
- 	case METRICS_AVERAGE_SOCKETPOWER:
--		*value = metrics->AverageSocketPower << 8;
-+		*value = metrics->AverageSocketPower * MILLIWATT_PER_WATT;
- 		break;
- 	case METRICS_TEMPERATURE_EDGE:
- 		*value = metrics->TemperatureEdge *
---- a/drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/sienna_cichlid_ppt.c
-@@ -855,9 +855,10 @@ static int sienna_cichlid_get_smu_metric
- 			metrics->AverageUclkActivity;
- 		break;
- 	case METRICS_AVERAGE_SOCKETPOWER:
--		*value = use_metrics_v3 ? metrics_v3->AverageSocketPower << 8 :
--			use_metrics_v2 ? metrics_v2->AverageSocketPower << 8 :
--			metrics->AverageSocketPower << 8;
-+		*value = use_metrics_v3 ? metrics_v3->AverageSocketPower :
-+			use_metrics_v2 ? metrics_v2->AverageSocketPower :
-+			metrics->AverageSocketPower;
-+		*value *= MILLIWATT_PER_WATT;
- 		break;
- 	case METRICS_TEMPERATURE_EDGE:
- 		*value = (use_metrics_v3 ? metrics_v3->TemperatureEdge :
---- a/drivers/gpu/drm/amd/pm/swsmu/smu11/vangogh_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/vangogh_ppt.c
-@@ -310,8 +310,7 @@ static int vangogh_get_legacy_smu_metric
- 		*value = metrics->UvdActivity / 100;
- 		break;
- 	case METRICS_AVERAGE_SOCKETPOWER:
--		*value = (metrics->CurrentSocketPower << 8) /
--		1000 ;
-+		*value = metrics->CurrentSocketPower;
- 		break;
- 	case METRICS_TEMPERATURE_EDGE:
- 		*value = metrics->GfxTemperature / 100 *
-@@ -379,12 +378,10 @@ static int vangogh_get_smu_metrics_data(
- 		*value = metrics->Current.UvdActivity;
- 		break;
- 	case METRICS_AVERAGE_SOCKETPOWER:
--		*value = (metrics->Average.CurrentSocketPower << 8) /
--		1000;
-+		*value = metrics->Average.CurrentSocketPower;
- 		break;
- 	case METRICS_CURR_SOCKETPOWER:
--		*value = (metrics->Current.CurrentSocketPower << 8) /
--		1000;
-+		*value = metrics->Current.CurrentSocketPower;
- 		break;
- 	case METRICS_TEMPERATURE_EDGE:
- 		*value = metrics->Current.GfxTemperature / 100 *
---- a/drivers/gpu/drm/amd/pm/swsmu/smu12/renoir_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu12/renoir_ppt.c
-@@ -1215,9 +1215,10 @@ static int renoir_get_smu_metrics_data(s
- 		    ((amdgpu_ip_version(adev, MP1_HWIP, 0) ==
- 		      IP_VERSION(12, 0, 0)) &&
- 		     (adev->pm.fw_version >= 0x373200)))
--			*value = metrics->CurrentSocketPower << 8;
-+			*value = metrics->CurrentSocketPower *
-+				 MILLIWATT_PER_WATT;
- 		else
--			*value = (metrics->CurrentSocketPower << 8) / 1000;
-+			*value = metrics->CurrentSocketPower;
- 		break;
- 	case METRICS_TEMPERATURE_EDGE:
- 		*value = (metrics->GfxTemperature / 100) *
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/aldebaran_ppt.c
-@@ -677,7 +677,8 @@ static int aldebaran_get_smu_metrics_dat
- 	case METRICS_AVERAGE_SOCKETPOWER:
- 		/* Valid power data is available only from primary die */
- 		if (aldebaran_is_primary(smu))
--			*value = metrics->AverageSocketPower << 8;
-+			*value = metrics->AverageSocketPower *
-+				 MILLIWATT_PER_WATT;
- 		else
- 			ret = -EOPNOTSUPP;
- 		break;
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
-@@ -807,7 +807,7 @@ static int smu_v13_0_0_get_smu_metrics_d
- 			     metrics->Vcn1ActivityPercentage);
- 		break;
- 	case METRICS_AVERAGE_SOCKETPOWER:
--		*value = metrics->AverageSocketPower << 8;
-+		*value = metrics->AverageSocketPower * MILLIWATT_PER_WATT;
- 		break;
- 	case METRICS_TEMPERATURE_EDGE:
- 		*value = metrics->AvgTemperature[TEMP_EDGE] *
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_12_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_12_ppt.c
-@@ -434,7 +434,8 @@ int smu_v13_0_12_get_smu_metrics_data(st
- 		*value = SMUQ10_ROUND(metrics->DramBandwidthUtilization);
- 		break;
- 	case METRICS_CURR_SOCKETPOWER:
--		*value = SMUQ10_ROUND(metrics->SocketPower) << 8;
-+		*value = SMUQ10_ROUND(metrics->SocketPower) *
-+			 MILLIWATT_PER_WATT;
- 		break;
- 	case METRICS_TEMPERATURE_HOTSPOT:
- 		*value = SMUQ10_ROUND(metrics->MaxSocketTemperature) *
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_4_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_4_ppt.c
-@@ -338,10 +338,10 @@ static int smu_v13_0_4_get_smu_metrics_d
- 		*value = metrics->UvdActivity / 100;
- 		break;
- 	case METRICS_AVERAGE_SOCKETPOWER:
--		*value = (metrics->AverageSocketPower << 8) / 1000;
-+		*value = metrics->AverageSocketPower;
- 		break;
- 	case METRICS_CURR_SOCKETPOWER:
--		*value = (metrics->CurrentSocketPower << 8) / 1000;
-+		*value = metrics->CurrentSocketPower;
- 		break;
- 	case METRICS_TEMPERATURE_EDGE:
- 		*value = metrics->GfxTemperature / 100 *
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_5_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_5_ppt.c
-@@ -295,7 +295,7 @@ static int smu_v13_0_5_get_smu_metrics_d
- 		*value = metrics->UvdActivity / 100;
- 		break;
- 	case METRICS_CURR_SOCKETPOWER:
--		*value = (metrics->CurrentSocketPower << 8) / 1000;
-+		*value = metrics->CurrentSocketPower;
- 		break;
- 	case METRICS_TEMPERATURE_EDGE:
- 		*value = metrics->GfxTemperature / 100 *
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_6_ppt.c
-@@ -1317,7 +1317,8 @@ static int smu_v13_0_6_get_smu_metrics_d
- 		*value = SMUQ10_ROUND(GET_METRIC_FIELD(DramBandwidthUtilization, version));
- 		break;
- 	case METRICS_CURR_SOCKETPOWER:
--		*value = SMUQ10_ROUND(GET_METRIC_FIELD(SocketPower, version)) << 8;
-+		*value = SMUQ10_ROUND(GET_METRIC_FIELD(SocketPower, version)) *
-+			 MILLIWATT_PER_WATT;
- 		break;
- 	case METRICS_TEMPERATURE_HOTSPOT:
- 		*value = SMUQ10_ROUND(GET_METRIC_FIELD(MaxSocketTemperature, version)) *
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
-@@ -817,7 +817,7 @@ static int smu_v13_0_7_get_smu_metrics_d
- 		*value = smu_safe_u16_nn(metrics->AverageUclkActivity);
- 		break;
- 	case METRICS_AVERAGE_SOCKETPOWER:
--		*value = metrics->AverageSocketPower << 8;
-+		*value = metrics->AverageSocketPower * MILLIWATT_PER_WATT;
- 		break;
- 	case METRICS_TEMPERATURE_EDGE:
- 		*value = metrics->AvgTemperature[TEMP_EDGE] *
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/yellow_carp_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/yellow_carp_ppt.c
-@@ -372,7 +372,7 @@ static int yellow_carp_get_smu_metrics_d
- 		*value = metrics->UvdActivity / 100;
- 		break;
- 	case METRICS_CURR_SOCKETPOWER:
--		*value = (metrics->CurrentSocketPower << 8) / 1000;
-+		*value = metrics->CurrentSocketPower;
- 		break;
- 	case METRICS_TEMPERATURE_EDGE:
- 		*value = metrics->GfxTemperature / 100 *
---- a/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_0_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_0_ppt.c
-@@ -312,8 +312,7 @@ static int smu_v14_0_0_get_smu_metrics_d
- 		break;
- 	case METRICS_AVERAGE_SOCKETPOWER:
- 	case METRICS_CURR_SOCKETPOWER:
--		*value = (metrics->SocketPower / 1000 << 8) +
--		(metrics->SocketPower % 1000 / 10);
-+		*value = metrics->SocketPower;
- 		break;
- 	case METRICS_TEMPERATURE_EDGE:
- 		*value = metrics->GfxTemperature / 100 *
---- a/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c
-@@ -695,7 +695,7 @@ static int smu_v14_0_2_get_smu_metrics_d
- 			     metrics->Vcn1ActivityPercentage);
- 		break;
- 	case METRICS_AVERAGE_SOCKETPOWER:
--		*value = metrics->AverageSocketPower << 8;
-+		*value = metrics->AverageSocketPower * MILLIWATT_PER_WATT;
- 		break;
- 	case METRICS_TEMPERATURE_EDGE:
- 		*value = metrics->AvgTemperature[TEMP_EDGE] *
---- a/drivers/gpu/drm/amd/pm/swsmu/smu15/smu_v15_0_0_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu15/smu_v15_0_0_ppt.c
-@@ -383,8 +383,7 @@ static int smu_v15_0_0_get_smu_metrics_d
- 		break;
- 	case METRICS_AVERAGE_SOCKETPOWER:
- 	case METRICS_CURR_SOCKETPOWER:
--		*value = (metrics->SocketPower / 1000 << 8) +
--		(metrics->SocketPower % 1000 / 10);
-+		*value = metrics->SocketPower;
- 		break;
- 	case METRICS_TEMPERATURE_EDGE:
- 		*value = metrics->GfxTemperature / 100 *
---- a/drivers/gpu/drm/amd/pm/swsmu/smu15/smu_v15_0_8_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu15/smu_v15_0_8_ppt.c
-@@ -402,7 +402,8 @@ static int smu_v15_0_8_get_smu_metrics_d
- 		*value = SMUQ10_ROUND(metrics->DramBandwidthUtilization);
- 		break;
- 	case METRICS_CURR_SOCKETPOWER:
--		*value = SMUQ10_ROUND(metrics->SocketPower) << 8;
-+		*value = SMUQ10_ROUND(metrics->SocketPower) *
-+			 MILLIWATT_PER_WATT;
- 		break;
- 	case METRICS_TEMPERATURE_HOTSPOT:
- 		*value = SMUQ10_ROUND(metrics->MaxSocketTemperature) *
+ 		}
 
 
