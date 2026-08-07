@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 928A127466A;
-	Fri,  7 Aug 2026 15:17:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DA5C27466A;
+	Fri,  7 Aug 2026 15:17:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115871; cv=none; b=raiwAjkBrHJ2MQUPEmE5x/RUctR9ZOjpVkzjFK9wjauSXLGK6aQnR5KxrbrdpU486XQUB1ip6/Db3jjY8ZTI4y1wmwdgpRFr2u2gvkhhPGj6uB7GwUv9lrqh4K62yqwIu4ZIaFWe4kU6HFr0RBt/mCvRaLg7DfLOhTfNgC7vs3c=
+	t=1786115873; cv=none; b=sCdzg3flhZPBZ6i4aHA+JHp/yiS75xFy00kWk8r0v57qB6k+S/TsUnzQf7R6H3i8TOJ7m1rAJnK8As7nFXJEz2MvhkMdF1mLrG+v4tX3fIsP5oxqJlLS9/SrAyoBLDGWQCYVt9J3zbLL7UgzE/4FSlRjGQEFI6sKXToe3rSCt4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115871; c=relaxed/simple;
-	bh=66ZMZB5pkdkY490O0wBrb2otOTLsESPuCSncJ37Yhaw=;
+	s=arc-20240116; t=1786115873; c=relaxed/simple;
+	bh=9oS3LrebIAZwbDOwZmNq8i5Dm2k+W+Z4KVux8M2k640=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B4ckOrzz8swoxnp9OssSj1okijSL4f7qMsMSvpRQpkTp4p7QSTPBhvfGOSypHGnFJBrDjEa7pwuYnoReB/7SS7jMjyM4yeQiZBf/Z3NCpWuiZZlnFNQXraoqdqlQJRdn1weBJpxm7m12JWmNUNoWR/QlbvxmSn94y9ABCHegwBI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TCSGoEWI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SMcB/x65B/EooimwGiYNht70l7FjyajUflLH7HuIqDz+lBNZ+LPUmfAnQ3Adw0ospRCj1JJGOxMu1kJ1mchd4VPgLPwynrmQVfxvf7hR0c1TioJoAfi8j/i06xeAQ6X8vOMGsXo0MW/B+8jwcAwIA7w/xRINHjixZMI+b1AtHQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f7wdJJjH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TCSGoEWI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED51A1F00A3A;
-	Fri,  7 Aug 2026 15:17:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f7wdJJjH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D45521F000E9;
+	Fri,  7 Aug 2026 15:17:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115869;
-	bh=H1lrCgl3tkHkW7qnQSQpuCs/WQuDmAsrLzjz3ShT0fE=;
+	s=korg; t=1786115872;
+	bh=GQaR6VB02kJnwzo28D49G5r0Vu48UJC7uvJ9NSjwFVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TCSGoEWIq1l4kAIZnMHZHSMKkrNaISJ3RgOQZbkLgSFXs02FfNkv/xZvreXjibHvS
-	 ezGZj4tdzYQ/s3qDJHJuVa2h304rTrLaaL4nbTn1G/vCgsQHLu2l9V3j+HKvC1qq8+
-	 cKlW6fdXy0VmsrDRMqn0MaaMelnI+uDNHcrGtU6c=
+	b=f7wdJJjHU5u05ek2EFjA0faYEzhelmrUb/eLcR8M3JPDH0Wg64LNu/P+wpXlT0ZRP
+	 cm7EO0lAxWd8MbyqyQTFghT6+g3hig/DNgmlvVZfb8Y8RQ1wDtGpZnAcx9mbEpol3u
+	 AfsCsuq3D7pM9DlKoyqVo1uh/KOxHzBknew1eVnM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julian Anastasov <ja@ssi.bg>,
+	AutonomousCodeSecurity@microsoft.com,
+	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 032/261] ipvs: do not mangle ICMP replies for non-first fragments
-Date: Fri,  7 Aug 2026 16:36:29 +0200
-Message-ID: <20260807143416.072342651@linuxfoundation.org>
+Subject: [PATCH 6.6 033/261] netfilter: nft_payload: fix mask build for partial field offload
+Date: Fri,  7 Aug 2026 16:36:30 +0200
+Message-ID: <20260807143416.092929972@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143415.358597922@linuxfoundation.org>
 References: <20260807143415.358597922@linuxfoundation.org>
@@ -51,333 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Julian Anastasov <ja@ssi.bg>
+From: Xiang Mei (Microsoft) <xmei5@asu.edu>
 
-[ Upstream commit 342e24a339b90e8e339a0f8c151ca479b8565661 ]
+[ Upstream commit 39e88f28fb32bf02bd4b525c24c842c9cff5663d ]
 
-Sashiko warns that ip_vs_nat_icmp() unconditionally mangles the
-payload for embedded non-first IPv4 fragments. The problem is
-in the very old inverted pp->dont_defrag check which should not
-continue when embedded is a non-first TCP/UDP/SCTP fragment.
+nft_payload_offload_mask() builds the offload match mask for a payload
+expression that covers only part of a header field.  For a partial IPv6
+address match (field_len = 16, priv_len = 1) that shift is 1 << 120, which
+is undefined on the 32-bit int operand.  It also trims only one word, so
+the remaining words stay 0xffffffff (and when priv_len is a multiple of 4
+the trim is skipped entirely), leaving the mask covering more bytes than
+the rule matches.
 
-Check for embedded non-first fragment is also missing from
-ip_vs_out_icmp_v6(), it is needed before any connection
-lookups that expect ports after the network headers.
+  UBSAN: shift-out-of-bounds in net/netfilter/nft_payload.c:278:20
+  shift exponent 120 is too large for 32-bit type 'int'
+  ...
 
-Drop the blocking code from ip_vs_in_icmp_v6() which prevents
-ICMPv6 from local clients to use non-MASQ forwarding.
+The match is byte-granular and struct nft_data is zero-initialised, so the
+correct mask is simply the first priv_len bytes set to 0xff. Set those
+bytes directly and drop the word/shift trimming; this removes the undefined
+shift and no longer over-masks the trailing bytes.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Link: https://sashiko.dev/#/patchset/20260720201122.79882-1-ja%40ssi.bg
-Signed-off-by: Julian Anastasov <ja@ssi.bg>
+Fixes: a5d45bc0dc50 ("netfilter: nftables_offload: build mask based from the matching bytes")
+Reported-by: AutonomousCodeSecurity@microsoft.com
+Signed-off-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/ip_vs.h             | 11 +++---
- net/netfilter/ipvs/ip_vs_core.c | 61 ++++++++++++---------------------
- net/netfilter/ipvs/ip_vs_xmit.c | 28 +++++++++++----
- 3 files changed, 48 insertions(+), 52 deletions(-)
+ net/netfilter/nft_payload.c | 12 +-----------
+ 1 file changed, 1 insertion(+), 11 deletions(-)
 
-diff --git a/include/net/ip_vs.h b/include/net/ip_vs.h
-index a44979db80134..6935ec09af24d 100644
---- a/include/net/ip_vs.h
-+++ b/include/net/ip_vs.h
-@@ -1627,8 +1627,7 @@ int ip_vs_dr_xmit(struct sk_buff *skb, struct ip_vs_conn *cp,
- 		  struct ip_vs_protocol *pp, struct ip_vs_iphdr *iph);
- int ip_vs_icmp_xmit(struct sk_buff *skb, struct ip_vs_conn *cp,
- 		    struct ip_vs_protocol *pp, unsigned int toff,
--		    unsigned int wlen, unsigned int hooknum,
--		    struct ip_vs_iphdr *ciph);
-+		    unsigned int hooknum, struct ip_vs_iphdr *ciph);
- void ip_vs_dest_dst_rcu_free(struct rcu_head *head);
- 
- #ifdef CONFIG_IP_VS_IPV6
-@@ -1642,8 +1641,7 @@ int ip_vs_dr_xmit_v6(struct sk_buff *skb, struct ip_vs_conn *cp,
- 		     struct ip_vs_protocol *pp, struct ip_vs_iphdr *iph);
- int ip_vs_icmp_xmit_v6(struct sk_buff *skb, struct ip_vs_conn *cp,
- 		       struct ip_vs_protocol *pp, unsigned int toff,
--		       unsigned int wlen, unsigned int hooknum,
--		       struct ip_vs_iphdr *ciph);
-+		       unsigned int hooknum, struct ip_vs_iphdr *ciph);
- #endif
- 
- #ifdef CONFIG_SYSCTL
-@@ -1708,12 +1706,13 @@ static inline char ip_vs_fwd_tag(struct ip_vs_conn *cp)
- }
- 
- void ip_vs_nat_icmp(struct sk_buff *skb, struct ip_vs_protocol *pp,
--		    struct ip_vs_conn *cp, int dir, unsigned int toff);
-+		    struct ip_vs_conn *cp, int dir, unsigned int toff,
-+		    bool has_ports);
- 
- #ifdef CONFIG_IP_VS_IPV6
- void ip_vs_nat_icmp_v6(struct sk_buff *skb, struct ip_vs_protocol *pp,
- 		       struct ip_vs_conn *cp, int dir, unsigned int toff,
--		       struct ip_vs_iphdr *ciph);
-+		       bool has_ports, struct ip_vs_iphdr *ciph);
- #endif
- 
- static inline __wsum ip_vs_check_diff4(__be32 old, __be32 new, __wsum oldsum)
-diff --git a/net/netfilter/ipvs/ip_vs_core.c b/net/netfilter/ipvs/ip_vs_core.c
-index d5b886ded5f11..e49a4840effb3 100644
---- a/net/netfilter/ipvs/ip_vs_core.c
-+++ b/net/netfilter/ipvs/ip_vs_core.c
-@@ -746,7 +746,8 @@ static int ip_vs_route_me_harder(struct netns_ipvs *ipvs, int af,
-  * - inout: 1=in->out, 0=out->in
-  */
- void ip_vs_nat_icmp(struct sk_buff *skb, struct ip_vs_protocol *pp,
--		    struct ip_vs_conn *cp, int inout, unsigned int toff)
-+		    struct ip_vs_conn *cp, int inout, unsigned int toff,
-+		    bool has_ports)
+diff --git a/net/netfilter/nft_payload.c b/net/netfilter/nft_payload.c
+index 36c31ad2d64c1..15feb49e0b663 100644
+--- a/net/netfilter/nft_payload.c
++++ b/net/netfilter/nft_payload.c
+@@ -253,9 +253,7 @@ static int nft_payload_dump(struct sk_buff *skb,
+ static bool nft_payload_offload_mask(struct nft_offload_reg *reg,
+ 				     u32 priv_len, u32 field_len)
  {
- 	struct iphdr *iph	 = ip_hdr(skb);
- 	struct icmphdr *icmph	 = (struct icmphdr *)(skb->data + toff);
-@@ -766,8 +767,7 @@ void ip_vs_nat_icmp(struct sk_buff *skb, struct ip_vs_protocol *pp,
+-	unsigned int remainder, delta, k;
+ 	struct nft_data mask = {};
+-	__be32 remainder_mask;
+ 
+ 	if (priv_len == field_len) {
+ 		memset(&reg->mask, 0xff, priv_len);
+@@ -264,15 +262,7 @@ static bool nft_payload_offload_mask(struct nft_offload_reg *reg,
+ 		return false;
  	}
  
- 	/* the TCP/UDP/SCTP port */
--	if (IPPROTO_TCP == ciph->protocol || IPPROTO_UDP == ciph->protocol ||
--	    IPPROTO_SCTP == ciph->protocol) {
-+	if (has_ports) {
- 		__be16 *ports = (void *)ciph + ciph->ihl*4;
- 
- 		if (inout)
-@@ -792,18 +792,15 @@ void ip_vs_nat_icmp(struct sk_buff *skb, struct ip_vs_protocol *pp,
- #ifdef CONFIG_IP_VS_IPV6
- void ip_vs_nat_icmp_v6(struct sk_buff *skb, struct ip_vs_protocol *pp,
- 		       struct ip_vs_conn *cp, int inout, unsigned int toff,
--		       struct ip_vs_iphdr *ciph)
-+		       bool has_ports, struct ip_vs_iphdr *ciph)
- {
- 	struct ipv6hdr *iph	 = ipv6_hdr(skb);
--	int protocol;
- 	struct icmp6hdr *icmph;
- 	struct ipv6hdr *cih;
- 
- 	icmph = (struct icmp6hdr *)(skb->data + toff);
- 	cih = (struct ipv6hdr *)(skb->data + ciph->off);
- 
--	protocol = ciph->protocol;
--
- 	if (inout) {
- 		iph->saddr = cp->vaddr.in6;
- 		cih->daddr = cp->vaddr.in6;
-@@ -813,9 +810,7 @@ void ip_vs_nat_icmp_v6(struct sk_buff *skb, struct ip_vs_protocol *pp,
- 	}
- 
- 	/* the TCP/UDP/SCTP port */
--	if (!ciph->fragoffs &&
--	    (protocol == IPPROTO_TCP  || protocol == IPPROTO_UDP ||
--	     protocol == IPPROTO_SCTP)) {
-+	if (has_ports) {
- 		__be16 *ports = (void *)(skb->data + ciph->len);
- 
- 		IP_VS_DBG(11, "%s() changed port %d to %d\n", __func__,
-@@ -857,6 +852,7 @@ static int handle_response_icmp(int af, struct sk_buff *skb,
- 	int iproto = af == AF_INET6 ? IPPROTO_ICMPV6 : IPPROTO_ICMP;
- 	unsigned int verdict = NF_DROP;
- 	unsigned int ctoff = ciph->len;
-+	bool has_ports = false;
- 
- 	if (IP_VS_FWD_METHOD(cp) != IP_VS_CONN_F_MASQ)
- 		goto after_nat;
-@@ -870,17 +866,19 @@ static int handle_response_icmp(int af, struct sk_buff *skb,
- 	}
- 
- 	if (ciph->protocol == IPPROTO_TCP || ciph->protocol == IPPROTO_UDP ||
--	    ciph->protocol == IPPROTO_SCTP)
-+	    ciph->protocol == IPPROTO_SCTP) {
- 		ctoff += 2 * sizeof(__u16);
-+		has_ports = true;
-+	}
- 	if (skb_ensure_writable(skb, ctoff))
- 		goto out;
- 
- #ifdef CONFIG_IP_VS_IPV6
- 	if (af == AF_INET6)
--		ip_vs_nat_icmp_v6(skb, pp, cp, 1, toff, ciph);
-+		ip_vs_nat_icmp_v6(skb, pp, cp, 1, toff, has_ports, ciph);
- 	else
- #endif
--		ip_vs_nat_icmp(skb, pp, cp, 1, toff);
-+		ip_vs_nat_icmp(skb, pp, cp, 1, toff, has_ports);
- 
- 	if (ip_vs_route_me_harder(cp->ipvs, af, skb, hooknum))
- 		goto out;
-@@ -964,8 +962,7 @@ static int ip_vs_out_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb,
- 		return NF_ACCEPT;
- 
- 	/* Is the embedded protocol header present? */
--	if (unlikely(cih->frag_off & htons(IP_OFFSET) &&
--		     pp->dont_defrag))
-+	if (unlikely(cih->frag_off & htons(IP_OFFSET) && !pp->dont_defrag))
- 		return NF_ACCEPT;
- 
- 	IP_VS_DBG_PKT(11, AF_INET, pp, skb, offset,
-@@ -1029,6 +1026,10 @@ static int ip_vs_out_icmp_v6(struct netns_ipvs *ipvs, struct sk_buff *skb,
- 	if (!pp)
- 		return NF_ACCEPT;
- 
-+	/* Is the embedded protocol header present? */
-+	if (unlikely(ciph.fragoffs && !pp->dont_defrag))
-+		return NF_ACCEPT;
-+
- 	/* The embedded headers contain source and dest in reverse order */
- 	cp = INDIRECT_CALL_1(pp->conn_out_get, ip_vs_conn_out_get_proto,
- 			     ipvs, AF_INET6, skb, &ciph);
-@@ -1683,8 +1684,7 @@ ip_vs_in_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb, int *related,
- 	pp = pd->pp;
- 
- 	/* Is the embedded protocol header present? */
--	if (unlikely(cih->frag_off & htons(IP_OFFSET) &&
--		     pp->dont_defrag))
-+	if (unlikely(cih->frag_off & htons(IP_OFFSET) && !pp->dont_defrag))
- 		return NF_ACCEPT;
- 
- 	IP_VS_DBG_PKT(11, AF_INET, pp, skb, offset,
-@@ -1692,7 +1692,6 @@ ip_vs_in_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb, int *related,
- 
- 	offset2 = offset;
- 	ip_vs_fill_iph_skb_icmp(AF_INET, skb, offset, !tunnel, &ciph);
--	offset = ciph.len;
- 
- 	/* The embedded headers contain source and dest in reverse order.
- 	 * For IPIP/UDP/GRE tunnel this is error for request, not for reply.
-@@ -1786,11 +1785,7 @@ ip_vs_in_icmp(struct netns_ipvs *ipvs, struct sk_buff *skb, int *related,
- 
- 	/* do the statistics and put it back */
- 	ip_vs_in_stats(cp, skb);
--	if (IPPROTO_TCP == cih->protocol || IPPROTO_UDP == cih->protocol ||
--	    IPPROTO_SCTP == cih->protocol)
--		offset += 2 * sizeof(__u16);
--	verdict = ip_vs_icmp_xmit(skb, cp, pp, iph->len, offset, hooknum,
--				  &ciph);
-+	verdict = ip_vs_icmp_xmit(skb, cp, pp, iph->len, hooknum, &ciph);
- 
- out:
- 	if (likely(!new_cp))
-@@ -1850,8 +1845,8 @@ static int ip_vs_in_icmp_v6(struct netns_ipvs *ipvs, struct sk_buff *skb,
- 		return NF_ACCEPT;
- 	pp = pd->pp;
- 
--	/* Cannot handle fragmented embedded protocol */
--	if (ciph.fragoffs)
-+	/* Is the embedded protocol header present? */
-+	if (ciph.fragoffs && !pp->dont_defrag)
- 		return NF_ACCEPT;
- 
- 	IP_VS_DBG_PKT(11, AF_INET6, pp, skb, offset,
-@@ -1875,13 +1870,6 @@ static int ip_vs_in_icmp_v6(struct netns_ipvs *ipvs, struct sk_buff *skb,
- 		new_cp = true;
- 	}
- 
--	/* VS/TUN, VS/DR and LOCALNODE just let it go */
--	if ((hooknum == NF_INET_LOCAL_OUT) &&
--	    (IP_VS_FWD_METHOD(cp) != IP_VS_CONN_F_MASQ)) {
--		verdict = NF_ACCEPT;
--		goto out;
+-	memset(&mask, 0xff, field_len);
+-	remainder = priv_len % sizeof(u32);
+-	if (remainder) {
+-		k = priv_len / sizeof(u32);
+-		delta = field_len - priv_len;
+-		remainder_mask = htonl(~((1 << (delta * BITS_PER_BYTE)) - 1));
+-		mask.data[k] = (__force u32)remainder_mask;
 -	}
 -
- 	verdict = NF_DROP;
++	memset(&mask, 0xff, priv_len);
+ 	memcpy(&reg->mask, &mask, field_len);
  
- 	/* Ensure the checksum is correct */
-@@ -1897,14 +1885,7 @@ static int ip_vs_in_icmp_v6(struct netns_ipvs *ipvs, struct sk_buff *skb,
- 	/* do the statistics and put it back */
- 	ip_vs_in_stats(cp, skb);
- 
--	/* Need to mangle contained IPv6 header in ICMPv6 packet */
--	offset = ciph.len;
--	if (IPPROTO_TCP == ciph.protocol || IPPROTO_UDP == ciph.protocol ||
--	    IPPROTO_SCTP == ciph.protocol)
--		offset += 2 * sizeof(__u16); /* Also mangle ports */
--
--	verdict = ip_vs_icmp_xmit_v6(skb, cp, pp, iph->len, offset, hooknum,
--				     &ciph);
-+	verdict = ip_vs_icmp_xmit_v6(skb, cp, pp, iph->len, hooknum, &ciph);
- 
- out:
- 	if (likely(!new_cp))
-diff --git a/net/netfilter/ipvs/ip_vs_xmit.c b/net/netfilter/ipvs/ip_vs_xmit.c
-index db562dac31c72..c214e5d05524c 100644
---- a/net/netfilter/ipvs/ip_vs_xmit.c
-+++ b/net/netfilter/ipvs/ip_vs_xmit.c
-@@ -1474,13 +1474,14 @@ ip_vs_dr_xmit_v6(struct sk_buff *skb, struct ip_vs_conn *cp,
- int
- ip_vs_icmp_xmit(struct sk_buff *skb, struct ip_vs_conn *cp,
- 		struct ip_vs_protocol *pp, unsigned int toff,
--		unsigned int wlen, unsigned int hooknum,
--		struct ip_vs_iphdr *ciph)
-+		unsigned int hooknum, struct ip_vs_iphdr *ciph)
- {
- 	struct rtable	*rt;	/* Route to the other host */
- 	int rc;
- 	int local;
- 	int rt_mode, was_input;
-+	bool has_ports = false;
-+	unsigned int wlen;
- 
- 	/* The ICMP packet for VS/TUN, VS/DR and LOCALNODE will be
- 	   forwarded directly here, because there is no need to
-@@ -1536,6 +1537,13 @@ ip_vs_icmp_xmit(struct sk_buff *skb, struct ip_vs_conn *cp,
- 		goto tx_error;
- 	}
- 
-+	wlen = ciph->len;
-+	if (ciph->protocol == IPPROTO_TCP || ciph->protocol == IPPROTO_UDP ||
-+	    ciph->protocol == IPPROTO_SCTP) {
-+		wlen += 2 * sizeof(__u16); /* Also mangle ports */
-+		has_ports = true;
-+	}
-+
- 	/* copy-on-write the packet before mangling it */
- 	if (skb_ensure_writable(skb, wlen))
- 		goto tx_error;
-@@ -1543,7 +1551,7 @@ ip_vs_icmp_xmit(struct sk_buff *skb, struct ip_vs_conn *cp,
- 	if (skb_cow(skb, rt->dst.dev->hard_header_len))
- 		goto tx_error;
- 
--	ip_vs_nat_icmp(skb, pp, cp, 0, toff);
-+	ip_vs_nat_icmp(skb, pp, cp, 0, toff, has_ports);
- 
- 	/* Another hack: avoid icmp_send in ip_fragment */
- 	skb->ignore_df = 1;
-@@ -1560,10 +1568,11 @@ ip_vs_icmp_xmit(struct sk_buff *skb, struct ip_vs_conn *cp,
- int
- ip_vs_icmp_xmit_v6(struct sk_buff *skb, struct ip_vs_conn *cp,
- 		struct ip_vs_protocol *pp, unsigned int toff,
--		unsigned int wlen, unsigned int hooknum,
--		struct ip_vs_iphdr *ciph)
-+		unsigned int hooknum, struct ip_vs_iphdr *ciph)
- {
-+	bool has_ports = false;
- 	struct rt6_info	*rt;	/* Route to the other host */
-+	unsigned int wlen;
- 	int rc;
- 	int local;
- 	int rt_mode;
-@@ -1621,6 +1630,13 @@ ip_vs_icmp_xmit_v6(struct sk_buff *skb, struct ip_vs_conn *cp,
- 		goto tx_error;
- 	}
- 
-+	wlen = ciph->len;
-+	if (ciph->protocol == IPPROTO_TCP || ciph->protocol == IPPROTO_UDP ||
-+	    ciph->protocol == IPPROTO_SCTP) {
-+		wlen += 2 * sizeof(__u16); /* Also mangle ports */
-+		has_ports = true;
-+	}
-+
- 	/* copy-on-write the packet before mangling it */
- 	if (skb_ensure_writable(skb, wlen))
- 		goto tx_error;
-@@ -1628,7 +1644,7 @@ ip_vs_icmp_xmit_v6(struct sk_buff *skb, struct ip_vs_conn *cp,
- 	if (skb_cow(skb, rt->dst.dev->hard_header_len))
- 		goto tx_error;
- 
--	ip_vs_nat_icmp_v6(skb, pp, cp, 0, toff, ciph);
-+	ip_vs_nat_icmp_v6(skb, pp, cp, 0, toff, has_ports, ciph);
- 
- 	/* Another hack: avoid icmp_send in ip_fragment */
- 	skb->ignore_df = 1;
+ 	return true;
 -- 
 2.53.0
 
