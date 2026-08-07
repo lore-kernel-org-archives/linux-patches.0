@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75A564772AE;
-	Fri,  7 Aug 2026 15:44:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A85F448D18;
+	Fri,  7 Aug 2026 15:44:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786117467; cv=none; b=cVYMfbrRQesYOQRTvJWgYXNLP+IFbPYGKt5jiMBOCJWeM9jxUL3oo5d3Gnkz/ZJigbvm1UXOgFJ5NVjHoYp3fpgyGWZj2FYA+F+N3ikEAAijNDX/Oyh3ALzISiZI8rL0IvNWiRA6nKu+GzP7t2/Mq00nUeY4+90NGCv+ghxPtyM=
+	t=1786117470; cv=none; b=C4DJxsm7UvAqFURSuhZ4/IQwDisyw2HpiHNSziYEkoAfbgzIqxNBLuZxsdAi55chl9/EOzH76DN1bpzJgRjFGcoJTlr0ApoeKbsNdfvgUaKmepu1ZmwCnOT0DmA4psmaUPZcRywVlBUS8YNYCu9NYvMoBWVP8QguU5jzL2GVl/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786117467; c=relaxed/simple;
-	bh=R9Ocawk+45QFWLnyxdUElOcYGmbj+ITRH1sFSeZe1DM=;
+	s=arc-20240116; t=1786117470; c=relaxed/simple;
+	bh=Bwn0ka1UYyJpNoKpCntPruj9wlIft35HXZ/lhXhX2SY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uNjpYNZHoNtNf3svxySSKkOQGw4N+MdGhWM4dr3obWr2zx5MqI47OYd/3ZsrY3qW56SjAIon1WMz4AhkDR4tH3qhD0qWvK982zSOKoS59hDIUGAcSaAG/PYq1AsCKOPJEyQw19lLVk3imKAExS6JOmg2Ll+2qbHg5Lbb6Z4Nlzo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KJNBos8R; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=d36SMHt4fZdLFf2+2M6xpYZy01PCsFSiGJ4B62vzmHEXADsAPPp0gk6jg3RiFjxeQAJT1+tgD0s9UM3t8NIPNVcsAbRr2WhXK6gqHsw6QeCQubepIeIljC9xbcI20G9RnZPVA2mmw/hnRON8ABwiyiL5K68S4NMFVgqigTA4+B8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DhyAjScW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KJNBos8R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D12161F000E9;
-	Fri,  7 Aug 2026 15:44:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DhyAjScW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C01751F000E9;
+	Fri,  7 Aug 2026 15:44:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786117466;
-	bh=apuxNQ3cvz22zkVDA/vUMCaRjQP+2OQuDytvAN4+YKI=;
+	s=korg; t=1786117469;
+	bh=NFCKMNuTlopKMfu8dOSqmnkd0ctFhEt2Icssr8+GEaA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KJNBos8RCpqV3PI4/+ZVw4D1VI7CeToZ5PGFizkDTcbfRkXz85k9uGGgfrh+2NBxA
-	 9ZPlkRgXTCJ+zfQOkyAJiHlwiZ40GP+ohW8xO0SuUMnkvvz3lJ/++h77IC7ye3W5Hx
-	 PAhqC/KUh4Hw84x1mp80lqtrraXn5CPEjoOV3gyw=
+	b=DhyAjScWFLV5Afduupysoa+pwKmnLJ70fZGjKIFnu77oU9Qm45wNEiSIh1Emwb7ff
+	 OD4XHaajiwNvtqKEpjdFe3SzwFqPEAhMfSlVojKQ0zjCtrQZpbZtdZyWNXkyr4CH/H
+	 IXQfsAnG7wRqYOuikvw0pbmWOvJvQRcaPxV6w9Bo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junjie Cao <junjie.cao@intel.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: [PATCH 7.1 329/438] gpio: pch: use raw_spinlock_t for the register lock
-Date: Fri,  7 Aug 2026 16:38:45 +0200
-Message-ID: <20260807143434.988122028@linuxfoundation.org>
+	David Howells <dhowells@redhat.com>,
+	Paulo Alcantara <pc@manguebit.org>,
+	Huiwen He <hehuiwen@kylinos.cn>,
+	Frank Sorenson <sorenson@redhat.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 7.1 330/438] cifs: add fscache_resize_cookie() to cifs_setsize()
+Date: Fri,  7 Aug 2026 16:38:46 +0200
+Message-ID: <20260807143435.009394145@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -51,173 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junjie Cao <junjie.cao@intel.com>
+From: Frank Sorenson <sorenson@redhat.com>
 
-commit a02b8950d619123da64f69b70fe1dadef217dfe4 upstream.
+commit fa724e235cfdb0fb0bb427d0f9dfe864ae27403e upstream.
 
-pch_irq_type() is registered as the irq_chip .irq_set_type callback and
-takes chip->spinlock with spin_lock_irqsave().  This callback is reached
-from __setup_irq() -> __irq_set_trigger() -> chip->irq_set_type() while
-the caller holds desc->lock, a raw_spinlock_t, with hardirqs disabled.
-That context is not sleepable, but on PREEMPT_RT a regular spinlock_t is
-an rtmutex-backed sleeping lock, so acquiring it there is invalid.
+Several code paths update the VFS inode size by calling
+netfs_resize_file() and cifs_setsize(), but omit the corresponding
+fscache_resize_cookie() call, leaving the fscache cookie out of sync
+with the actual file size:
 
-This was confirmed on a PREEMPT_RT kernel with lockdep
-(PROVE_RAW_LOCK_NESTING and DEBUG_ATOMIC_SLEEP).  A grounded PoC mirrored
-pch_irq_type()'s locking and drove it through the real genirq carrier
-irq_set_irq_type() -> __irq_set_trigger() -> chip->irq_set_type(), i.e.
-the same __irq_set_trigger() edge that __setup_irq() takes for a
-requested IRQ.  With the original spin_lock_irqsave() edge lockdep
-reported an invalid wait context, immediately followed by:
+  - cifs_file_set_size() in inode.c: server-side truncation via setattr
+  - cifs_do_truncate() in file.c: truncates to zero on O_TRUNC open
+  - smb2_duplicate_extents() in smb2ops.c: file clone extending EOF
+  - smb3_simple_falloc() in smb2ops.c: two branches that extend EOF
+    via write-range and SMB2_set_eof respectively
 
-  BUG: sleeping function called from invalid context at kernel/locking/spinlock_rt.c:48
-  in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 95, name: insmod
-  hardirqs last disabled at (3784): _raw_spin_lock_irqsave+0x4f/0x60
-   rt_spin_lock+0x3a/0x1c0
-   repro_irq_set_type+0x64/0xa0 [pch_repro]
-   __irq_set_trigger+0x69/0x140
-   irq_set_irq_type+0x78/0xd0
+Since every caller of cifs_setsize() must resize the fscache cookie,
+add the call to cifs_setsize() itself, consistent with how
+truncate_pagecache() is already consolidated there.
 
-Switching the mirrored lock to raw_spinlock_t made both splats go away.
-
-Convert the register lock to raw_spinlock_t.  The same lock also
-serializes the GPIO direction/value callbacks and the suspend/resume
-register save/restore, but all of those critical sections only perform
-MMIO register accesses (ioread32()/iowrite32()) and
-irq_set_handler_locked(); none of them contain sleepable operations.
-Keeping this register lock non-sleeping is therefore appropriate for the
-irqchip callbacks and does not change the GPIO-side locking contract.
-
-This is the same class of issue and fix as recently addressed for other
-GPIO controllers, e.g. commit 286533cb14a3 ("gpio: sch: use raw_spinlock_t
-in the irq startup path") and commit 90f0109019e6 ("gpio: eic-sprd: use
-raw_spinlock_t in the irq startup path").
-
-Fixes: 38eb18a6f92d ("gpio-pch: Support interrupt function")
+Fixes: 70431bfd825d ("cifs: Support fscache indexing rewrite")
+Fixes: 93a43155127f ("cifs: Fix missing set of remote_i_size")
+Fixes: 110fee6b9bb5 ("smb: client: fix missing timestamp updates with O_TRUNC")
+Fixes: 7a06d3b816d7 ("smb/client: emulate small EOF-extending mode 0 fallocate ranges")
 Cc: stable@vger.kernel.org
-Signed-off-by: Junjie Cao <junjie.cao@intel.com>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260723014129.1129730-1-junjie.cao@intel.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Cc: David Howells <dhowells@redhat.com>
+Cc: Paulo Alcantara <pc@manguebit.org>
+Cc: Huiwen He <hehuiwen@kylinos.cn>
+Signed-off-by: Frank Sorenson <sorenson@redhat.com>
+Reviewed-by: Paulo Alcantara <pc@manguebit.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-pch.c |   28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+ fs/smb/client/inode.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpio/gpio-pch.c
-+++ b/drivers/gpio/gpio-pch.c
-@@ -96,7 +96,7 @@ struct pch_gpio {
- 	struct pch_gpio_reg_data pch_gpio_reg;
- 	int irq_base;
- 	enum pch_type_t ioh;
--	spinlock_t spinlock;
-+	raw_spinlock_t spinlock;
- };
- 
- static int pch_gpio_set(struct gpio_chip *gpio, unsigned int nr, int val)
-@@ -105,7 +105,7 @@ static int pch_gpio_set(struct gpio_chip
- 	struct pch_gpio *chip =	gpiochip_get_data(gpio);
- 	unsigned long flags;
- 
--	spin_lock_irqsave(&chip->spinlock, flags);
-+	raw_spin_lock_irqsave(&chip->spinlock, flags);
- 	reg_val = ioread32(&chip->reg->po);
- 	if (val)
- 		reg_val |= BIT(nr);
-@@ -113,7 +113,7 @@ static int pch_gpio_set(struct gpio_chip
- 		reg_val &= ~BIT(nr);
- 
- 	iowrite32(reg_val, &chip->reg->po);
--	spin_unlock_irqrestore(&chip->spinlock, flags);
-+	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
- 
- 	return 0;
- }
-@@ -133,7 +133,7 @@ static int pch_gpio_direction_output(str
- 	u32 reg_val;
- 	unsigned long flags;
- 
--	spin_lock_irqsave(&chip->spinlock, flags);
-+	raw_spin_lock_irqsave(&chip->spinlock, flags);
- 
- 	reg_val = ioread32(&chip->reg->po);
- 	if (val)
-@@ -147,7 +147,7 @@ static int pch_gpio_direction_output(str
- 	pm |= BIT(nr);
- 	iowrite32(pm, &chip->reg->pm);
- 
--	spin_unlock_irqrestore(&chip->spinlock, flags);
-+	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
- 
- 	return 0;
- }
-@@ -158,12 +158,12 @@ static int pch_gpio_direction_input(stru
- 	u32 pm;
- 	unsigned long flags;
- 
--	spin_lock_irqsave(&chip->spinlock, flags);
-+	raw_spin_lock_irqsave(&chip->spinlock, flags);
- 	pm = ioread32(&chip->reg->pm);
- 	pm &= BIT(gpio_pins[chip->ioh]) - 1;
- 	pm &= ~BIT(nr);
- 	iowrite32(pm, &chip->reg->pm);
--	spin_unlock_irqrestore(&chip->spinlock, flags);
-+	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
- 
- 	return 0;
- }
-@@ -265,7 +265,7 @@ static int pch_irq_type(struct irq_data
- 		return 0;
- 	}
- 
--	spin_lock_irqsave(&chip->spinlock, flags);
-+	raw_spin_lock_irqsave(&chip->spinlock, flags);
- 
- 	/* Set interrupt mode */
- 	im = ioread32(im_reg) & ~(PCH_IM_MASK << (im_pos * 4));
-@@ -277,7 +277,7 @@ static int pch_irq_type(struct irq_data
- 	else if (type & IRQ_TYPE_EDGE_BOTH)
- 		irq_set_handler_locked(d, handle_edge_irq);
- 
--	spin_unlock_irqrestore(&chip->spinlock, flags);
-+	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
- 	return 0;
+--- a/fs/smb/client/inode.c
++++ b/fs/smb/client/inode.c
+@@ -3051,6 +3051,7 @@ void cifs_setsize(struct inode *inode, l
+ 	inode_set_mtime_to_ts(inode, inode_set_ctime_current(inode));
+ 	truncate_pagecache(inode, offset);
+ 	netfs_wait_for_outstanding_io(inode);
++	fscache_resize_cookie(cifs_inode_cookie(inode), offset);
  }
  
-@@ -374,7 +374,7 @@ static int pch_gpio_probe(struct pci_dev
- 	chip->ioh = id->driver_data;
- 	chip->reg = chip->base;
- 	pci_set_drvdata(pdev, chip);
--	spin_lock_init(&chip->spinlock);
-+	raw_spin_lock_init(&chip->spinlock);
- 	pch_gpio_setup(chip);
- 
- 	ret = devm_gpiochip_add_data(dev, &chip->gpio, chip);
-@@ -407,9 +407,9 @@ static int pch_gpio_suspend(struct devic
- 	struct pch_gpio *chip = dev_get_drvdata(dev);
- 	unsigned long flags;
- 
--	spin_lock_irqsave(&chip->spinlock, flags);
-+	raw_spin_lock_irqsave(&chip->spinlock, flags);
- 	pch_gpio_save_reg_conf(chip);
--	spin_unlock_irqrestore(&chip->spinlock, flags);
-+	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
- 
- 	return 0;
- }
-@@ -419,11 +419,11 @@ static int pch_gpio_resume(struct device
- 	struct pch_gpio *chip = dev_get_drvdata(dev);
- 	unsigned long flags;
- 
--	spin_lock_irqsave(&chip->spinlock, flags);
-+	raw_spin_lock_irqsave(&chip->spinlock, flags);
- 	iowrite32(0x01, &chip->reg->reset);
- 	iowrite32(0x00, &chip->reg->reset);
- 	pch_gpio_restore_reg_conf(chip);
--	spin_unlock_irqrestore(&chip->spinlock, flags);
-+	raw_spin_unlock_irqrestore(&chip->spinlock, flags);
- 
- 	return 0;
- }
+ int cifs_file_set_size(const unsigned int xid, struct dentry *dentry,
 
 
