@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E908473C71;
-	Fri,  7 Aug 2026 15:03:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 847B22E7377;
+	Fri,  7 Aug 2026 15:03:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115024; cv=none; b=dmCf0zzK1E9JzliR8W59z/lXngE7ADhgMuGTwr8LBxmEii9xOWwR3d/Cfl0QbguEFDGzow5ZjeaPg+JpGeBEc2aANPJh1jBktDD61f3gBQvQ1sl5VQcuwUj3xP2WwM6Z9zHQI4vV0lKvNi8kVI9fF51Terx1tYvprYIlqm3BH+o=
+	t=1786115026; cv=none; b=uA5YjbFHN3vVJ8a5TPAUqBnU+vqS8wpyTiZtASXtXmPowAL7EVVybdUWTXeraTgxfBvrepDwnAMvg6Qqu3qru5eD7izybKpfEWyeqCk1QttynaVH/jyG8PlOtTkSermGI2WBkRHn9bgP3WPYgm9UZtwUE/ureVrXtSEq/NvFlYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115024; c=relaxed/simple;
-	bh=8Gzrfd46V7IUEP/6PU67Y+fIihUAH9QaUqPNPgRbDmk=;
+	s=arc-20240116; t=1786115026; c=relaxed/simple;
+	bh=w0cK/7mVpd0cpEhZGmf43jdYwmOfc/+G0rhjzan45IM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iMupBrD9BWOnKMUib8im0q5QV12iDYgaHW+oBCmGIaa6l7GMXBpSkebsO4ozzOC4wRceetqyKQ6rh3bvbCRDWDD/8/enEfrYDAASBZhMdtGufeajQ6NSKtWXWvyUx/o/KsNcpp8f4z9UHtcbsHGJe7KoYRLwN1jYZWIERMTh9QE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oaqa0M4S; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MJpp0CkLtDWn5X5AWZLDxcHqQResiYfy6QXHv5oPZDrm9twou1OIcWZ1bNdRAMl9WdtOv7F4GAWNfoHMP1FD//OOQm/0jwiSO6xRgl/A9oo6Aoa1USESwdApW2hHqQ8n3oO7oNBYEqWCmMjxI6iUw9aY9ydwldst1OtwdKAXet8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WV8OYxXv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oaqa0M4S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E97F21F000E9;
-	Fri,  7 Aug 2026 15:03:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WV8OYxXv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C06211F000E9;
+	Fri,  7 Aug 2026 15:03:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115022;
-	bh=LKkyaW0KGLZP4Blxypc8awnfAxGkHIZyVhQ895lZ83I=;
+	s=korg; t=1786115025;
+	bh=B6EYxY75i5yN8WOki0xW4B4fB7UaxKix8FKoS5+e6hE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Oaqa0M4SfCYdSFKf+OKWGjlkBkIC1v2WIKvGII0BlMDQL0Q6zFwVvM6n7Bs/b4d6L
-	 ELwWacPUZexJGj0IBqCKnS9eiwE2RIrRmcznjxKAtmhImJFqyqBrYczX7OZtlc3xiH
-	 pJFaaauQ7EFaV7vOyu8RL07lzivqGJonbgSlXxlc=
+	b=WV8OYxXvyrTk0srZkmM0E6H40FbLmQ/jJvb5cCxSHytBo8sfBfcf8M0SNLpfHesv6
+	 tpxWuLQdsSQQ47FZMJWd4N1oNKQxbxXSrgX949UbjMOBwxgMZF9gJeXbKTcD0jhoQ6
+	 NsGoZporo1y2kRnzsCjRHezdytWuCZXoEIP7ReUs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
 	Peter Wang <peter.wang@mediatek.com>,
-	Bean Huo <beanhuo@micron.com>,
 	Bart Van Assche <bvanassche@acm.org>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 129/396] scsi: ufs: core: Cancel RTC work in active-active suspend
-Date: Fri,  7 Aug 2026 16:34:49 +0200
-Message-ID: <20260807143427.090801028@linuxfoundation.org>
+Subject: [PATCH 6.18 130/396] scsi: ufs: core: Avoid IRQ thread wakeup during active UIC command
+Date: Fri,  7 Aug 2026 16:34:50 +0200
+Message-ID: <20260807143427.110996590@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -54,68 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Peter Wang <peter.wang@mediatek.com>
 
-[ Upstream commit f71b4a30983b846b4075bf544e835121e70e6a43 ]
+[ Upstream commit 6475cfb81fc4f6175b6d15d1c205a5168dc10b46 ]
 
-UFS RTC support schedules ufs_rtc_update_work to periodically update the
-device RTC. The work can issue query commands and access the UFS host
-controller.
+Only return IRQ_WAKE_THREAD when MCQ and ESI are not enabled and no UIC
+command is active. The default UIC command timeout is 500ms, Using threaded
+IRQs during an active UIC command increases the risk of timeout due to
+possible preemption by other system IRQs.
 
-A previous change moved the RTC work cancellation before the PRE_CHANGE
-vendor suspend callback to close a race in the common suspend path.
-However, the active-active path jumps directly to vops_suspend after
-flushing exception handling work and therefore bypasses the
-cancellation.
-
-If the RTC work runs while the vendor suspend callback is gating or
-otherwise changing hardware state, it can access the controller during
-suspend and trigger an SError.
-
-Cancel the RTC work before entering the vendor suspend callback in the
-active-active path. Since this path now cancels the work, move the RTC
-work scheduling outside the device and link state restoration block in
-the resume path. This restarts RTC updates after an active-active
-suspend and resume cycle.
-
-Fixes: b0bd84c39289 ("scsi: ufs: core: Fix SError in ufshcd_rtc_work() during UFS suspend")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Reviewed-by: Peter Wang <peter.wang@mediatek.com>
-Reviewed-by: Bean Huo <beanhuo@micron.com>
+Signed-off-by: Peter Wang <peter.wang@mediatek.com>
 Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20260714172726.1736967-1-lgs201920130244@gmail.com
+Link: https://patch.msgid.link/20260306054419.3816557-1-peter.wang@mediatek.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Stable-dep-of: 8a309036f557 ("scsi: ufs: core: Revert "Delegate the interrupt service routine to a threaded IRQ handler"")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufshcd.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/ufs/core/ufshcd.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index 8de3d0886a121..2545f7a51211b 100644
+index 2545f7a51211b..482a9299a5894 100644
 --- a/drivers/ufs/core/ufshcd.c
 +++ b/drivers/ufs/core/ufshcd.c
-@@ -9873,6 +9873,7 @@ static int __ufshcd_wl_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op)
- 			req_link_state == UIC_LINK_ACTIVE_STATE) {
- 		ufshcd_disable_auto_bkops(hba);
- 		flush_work(&hba->eeh_work);
-+		cancel_delayed_work_sync(&hba->ufs_rtc_update_work);
- 		goto vops_suspend;
- 	}
+@@ -7190,8 +7190,12 @@ static irqreturn_t ufshcd_intr(int irq, void *__hba)
+ 	struct ufs_hba *hba = __hba;
+ 	u32 intr_status, enabled_intr_status;
  
-@@ -10082,10 +10083,11 @@ static int __ufshcd_wl_resume(struct ufs_hba *hba, enum ufs_pm_op pm_op)
- 		if (ret)
- 			goto set_old_link_state;
- 		ufshcd_set_timestamp_attr(hba);
--		schedule_delayed_work(&hba->ufs_rtc_update_work,
--				      msecs_to_jiffies(UFS_RTC_UPDATE_INTERVAL_MS));
- 	}
+-	/* Move interrupt handling to thread when MCQ & ESI are not enabled */
+-	if (!hba->mcq_enabled || !hba->mcq_esi_enabled)
++	/*
++	 * Handle interrupt in thread if MCQ or ESI is disabled,
++	 * and no active UIC command.
++	 */
++	if ((!hba->mcq_enabled || !hba->mcq_esi_enabled) &&
++	    !hba->active_uic_cmd)
+ 		return IRQ_WAKE_THREAD;
  
-+	schedule_delayed_work(&hba->ufs_rtc_update_work,
-+			      msecs_to_jiffies(UFS_RTC_UPDATE_INTERVAL_MS));
-+
- 	if (ufshcd_keep_autobkops_enabled_except_suspend(hba))
- 		ufshcd_enable_auto_bkops(hba);
- 	else
+ 	intr_status = ufshcd_readl(hba, REG_INTERRUPT_STATUS);
 -- 
 2.53.0
 
