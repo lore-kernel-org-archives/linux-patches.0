@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CE9C38947F;
-	Fri,  7 Aug 2026 14:44:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06C94360EFF;
+	Fri,  7 Aug 2026 14:44:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786113898; cv=none; b=PvugaHDJkI2U4hrqlIBDdV0lJ3+ZtwrTR5bT6kh7xTVjStjvVeKdvYR/gsG+uztU3K8BlFZ8DaLuSHTZD1oazM/NitmNPUbCKleTw5XWxgFXqrDsMQPNBL58EczNSTQu5gfowRVw4mPV8l1dGLpVdYtkN6gndTTvRENWuYG41NE=
+	t=1786113901; cv=none; b=I8B9bF9PSwP5pbJK7JzGroUSwW/Xw2PlzYOcCmUatpeNwtJe3TWAH5TEHIBBNtEqXvl+tot36WQN83UHQ7rpOHBB3TOooFw11R2CRmtI91HbQ8LqtVtx5Ieo7pY0+kyEg+eeUw/hMWBMseVE+wDS06jgvua+ADornFl2E1UxjH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786113898; c=relaxed/simple;
-	bh=LghAJt8bTtRxdO2kTTv3oJ8ev/mQtSGvPHZLvkiVulM=;
+	s=arc-20240116; t=1786113901; c=relaxed/simple;
+	bh=OIjEIprQSOKeFF5sjLUISuax+yXfP+pCLQWzB0F9LYk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j6ZKrR2cP4EFzXzsy+1d3FHSiLc+GUfSP0T51o2wDYpNtpAodpHEMwqqbhSVy2xp5g9Odf5+c7H06r74nEyOysdNkVEtQU9YoujVS95kQhtQiuXL+veoHHJ5hE/nrrPzf1HqL3xX8bYhGClof2J9apIYPs9uHYXME46ymlBkQu0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mALZ75W9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=THbTEgblypH/fOrT9KFA/EYnsT+s5PlCv2SeaBWnAVN23srhNM7xDzyPKemn7wE4pSdXnmqwMOdz9soie3l4L8/bS4eCA20EI1k/6c48ikKo2/QGBu1ZUnlCItCWocNxe34u18x2hA2SrZKW7yakd0YGC5L+eZ3cyMpKE2zV+Rs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jmUleTCR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mALZ75W9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F27841F00A3E;
-	Fri,  7 Aug 2026 14:44:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jmUleTCR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D00FF1F000E9;
+	Fri,  7 Aug 2026 14:44:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786113891;
-	bh=1SENbf2Fp9RL3cYe9pkjiSfqg+rJQi+oQzGcyJtLyG8=;
+	s=korg; t=1786113894;
+	bh=uOMuVhoCFfJPn0UV9l47JItjhDbguKr6MiIRf9NyfVc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mALZ75W9F/LreDYUmW24H073oV3XTL1Z/rU73wDAVA/9bOhLls4nuyvoMg7f44ui0
-	 zbcGKAF0RLBzeogqJEXghJuTDEc/A+14+j/j7hwLmNmgtQV9lylWuWkrr71Ul6O6Ox
-	 6GWKQY/1czU3KVyb6WBDXsPIqKyqD/O4j4gjbT6U=
+	b=jmUleTCRD4lK3R6aAVd+NBCqyyol37KCbZL81aWR4gfCn/NI8xkCwlmHBhD/4CV13
+	 bHF6yqgRi8/V7soBaFDdcoIGLK2PWtBEQBJ4nVJCvP8PrTNW+gOobGvArx9pN/R+YZ
+	 412Q727quNRcURaPGTv7OZqmPNq5HpCJ3G/XMYiA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sashiko <sashiko-bot@kernel.org>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 069/337] hwmon: (sht3x) Fix unaligned accesses
-Date: Fri,  7 Aug 2026 16:34:32 +0200
-Message-ID: <20260807143420.010165735@linuxfoundation.org>
+Subject: [PATCH 6.12 070/337] hwmon: (lm90) Only report alarms if driver is ready
+Date: Fri,  7 Aug 2026 16:34:33 +0200
+Message-ID: <20260807143420.029670772@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -53,72 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit f46d5ab43a572b84773015a76966f5da56fc1748 ]
+[ Upstream commit aa9429edf9fc0e90d6f4da19ea4b5495a54ab117 ]
 
-Sashiko reports:
+Userspace can read sysfs attributes before driver registration is complete,
+immediately after devm_hwmon_device_register_with_info() has been called.
+At that time, data->hwmon_dev is not yet initialized. This can trigger
+a NULL pointer access since lm90_update_device() and with it
+lm90_update_alarms_locked() will be called. This call schedules
+report_work and lm90_report_alarms(), which passes the still-NULL
+data->hwmon_dev to hwmon_notify_event() and triggers a NULL pointer
+dereference.
 
-In sht3x_update_client(), the 16-bit temperature and humidity values are
-extracted from a stack-allocated byte array using be16_to_cpup(). The
-pointers passed to this function are calculated as buf and buf + 3. Since
-the difference between the two pointers is an odd number of bytes, at
-least one of them is guaranteed to be at an unaligned offset.
+Fix the problem by only scheduling the report and alert workers
+data->hwmon_dev is set.
 
-This will trigger an alignment fault on strict-alignment architectures
-such as ARMv5 or SPARC, resulting in a kernel panic.
-
-Fix the problem by using get_unaligned_be16() instead of be16_to_cpup(),
-and put_unaligned_be16() instead of cpu_to_be16().
-
-Fixes: 7c84f7f80d6f ("hwmon: add support for Sensirion SHT3x sensors")
 Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: f6d0775119fb9 ("hwmon: (lm90) Rework alarm/status handling")
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/sht3x.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/hwmon/lm90.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hwmon/sht3x.c b/drivers/hwmon/sht3x.c
-index 94466e28dc56f..1f63c07cfb085 100644
---- a/drivers/hwmon/sht3x.c
-+++ b/drivers/hwmon/sht3x.c
-@@ -21,6 +21,7 @@
- #include <linux/module.h>
- #include <linux/slab.h>
- #include <linux/jiffies.h>
-+#include <linux/unaligned.h>
+diff --git a/drivers/hwmon/lm90.c b/drivers/hwmon/lm90.c
+index 511d95a0efb36..45d5a2427dcb1 100644
+--- a/drivers/hwmon/lm90.c
++++ b/drivers/hwmon/lm90.c
+@@ -1149,7 +1149,7 @@ static int lm90_update_alarms_locked(struct lm90_data *data, bool force)
+ 		check_enable = (client->irq || !(data->config_orig & 0x80)) &&
+ 			(data->config & 0x80);
  
- /* commands (high repeatability mode) */
- static const unsigned char sht3x_cmd_measure_single_hpm[] = { 0x24, 0x00 };
-@@ -279,9 +280,9 @@ static struct sht3x_data *sht3x_update_client(struct device *dev)
- 		if (ret)
- 			goto out;
+-		if (force || check_enable)
++		if (data->hwmon_dev && (force || check_enable))
+ 			schedule_work(&data->report_work);
  
--		val = be16_to_cpup((__be16 *)buf);
-+		val = get_unaligned_be16(buf);
- 		data->temperature = sht3x_extract_temperature(val);
--		val = be16_to_cpup((__be16 *)(buf + 3));
-+		val = get_unaligned_be16(buf + 3);
- 		data->humidity = sht3x_extract_humidity(val);
- 		data->last_update = jiffies;
- 	}
-@@ -339,7 +340,7 @@ static int limits_update(struct sht3x_data *data)
- 		if (ret)
- 			return ret;
- 
--		raw = be16_to_cpup((__be16 *)buffer);
-+		raw = get_unaligned_be16(buffer);
- 		temperature = sht3x_extract_temperature((raw & 0x01ff) << 7);
- 		humidity = sht3x_extract_humidity(raw & 0xfe00);
- 		data->temperature_limits[index] = temperature;
-@@ -392,7 +393,7 @@ static size_t limit_write(struct device *dev,
- 	raw = ((u32)(temperature + 45000) * 24543) >> (16 + 7);
- 	raw |= ((humidity * 42950) >> 16) & 0xfe00;
- 
--	*((__be16 *)position) = cpu_to_be16(raw);
-+	put_unaligned_be16(raw, position);
- 	position += SHT3X_WORD_LEN;
- 	*position = crc8(sht3x_crc8_table,
- 			 position - SHT3X_WORD_LEN,
+ 		/*
+@@ -1157,7 +1157,7 @@ static int lm90_update_alarms_locked(struct lm90_data *data, bool force)
+ 		 * alarms are all clear, and alerts are currently disabled.
+ 		 * Otherwise (re)schedule worker if needed.
+ 		 */
+-		if (check_enable) {
++		if (check_enable && data->hwmon_dev) {
+ 			if (!(data->current_alarms & data->alert_alarms)) {
+ 				dev_dbg(&client->dev, "Re-enabling ALERT#\n");
+ 				lm90_update_confreg(data, data->config & ~0x80);
 -- 
 2.53.0
 
