@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F6A038E121;
-	Fri,  7 Aug 2026 14:51:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81D43293458;
+	Fri,  7 Aug 2026 14:51:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114280; cv=none; b=f0Yea4eeo0fv6/jT+PTVKsmUaYmZYVk3yfl4qqiECKnYE2OuaZhrlOJ6NYK6/cWv/K1Cdu4+MyA8InRkzGYzJ2+5tdbu6w9dDjjcQWmEe304/gPYPyPn7qTdItUx3NMdsV6pOtJ91+2viYX2GNA5QyULeSS3ghK81VFBnYkN7kA=
+	t=1786114281; cv=none; b=El1Rb9Y4Gp95FuWesUk+Ty9jKZ31ONAXcLaQmvjzM4ggzw8O6nCUF+BhG4UHfnhrvi5bzv6rIBP5cpFkcUCnifiLvnidE5VGDued0AeBCi5BHYS2Zd9IZKuk2wJAeEYFU2VaDcpsFrNm9m8LozTWi7SShyuk8VsbyDSK0MJ3NAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114280; c=relaxed/simple;
-	bh=/um3vBSG/TPRQelgCEhO3g8FxeIpi5/8j61txiv3AiE=;
+	s=arc-20240116; t=1786114281; c=relaxed/simple;
+	bh=FgLVBjeLFs6Jng1FxxDnZDKG0BfrjTAOdsWkYZLx+7E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=flVn0m+yvm1/4aDtHbOVuWJioAO5Im/BqqbyKggMBgXUHT9NBCM5vaoZJ2iOkrzeDmEt6tNYCJZdryN0q3vgfIpp6DUQdEDs1O1Zo/YRT8bkkKbNMcVAwuUFw7jhRCAM1qHSEYkq/arYrIDnlI+GoS4hNuN00fwAmjKuPjZBsVk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iDYj+Ipz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kn5ARYxe/f+PIJxnKp4qXf+k92vs7dB8ju2a123ndL+8tW4UxAgeN0ox0WR+3duvzPwMlebuVGoDdXR+SklCVo57NgKpEoKx6HPi88afNGVvkb9RuLXk6BbkBpNZ2xoWI0cqXyg4wr6zzoU/ofmUmgKKltVVMIWHrg7MdPntqxE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EeMA7ECK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iDYj+Ipz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B3DF1F00A3A;
-	Fri,  7 Aug 2026 14:51:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EeMA7ECK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 318AC1F000E9;
+	Fri,  7 Aug 2026 14:51:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114274;
-	bh=x0UZ9IsAAjnGQSvUaGP0z9qIZbpWOxGzP73wbRUG84E=;
+	s=korg; t=1786114277;
+	bh=675pH44o3LZlPWbWTJGxOZLgQuNs5Tu0B/7mFeAbw+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iDYj+Ipz+TPB6KZ6Bg2Bl/udM4lwT4lA/KUujHZJskh7LMRtPdi4bSdgm7tpiJC+H
-	 hIfTqzzwBvOCdgmT6HQwXCAG4h8xVclUIp5pe5vkHSAMZEuHHazPicy31jViNsZodA
-	 pG+Id0bq8zIFuoOSfU8jK8heXivyGmW+6LpIlUvM=
+	b=EeMA7ECKmxiByfd7UoHdAFSXCKuPBdzUcd5SCFm1izbxBpM90J72lMcs+8mTGk2Pt
+	 eDtnNcYSJc4fDPagS2jRQLVUSa2YrQLDrGTCg2CiUW0sHHvLVY0K8gqJjgRVenfnvc
+	 a8rkDmzidbCupPwxSPXfAb7J40RCNH/OvTWtpiac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
-	Christian Loehle <christian.loehle@arm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.12 205/337] cpufreq: schedutil: Publish util hooks only after all sg_cpu are initialized
-Date: Fri,  7 Aug 2026 16:36:48 +0200
-Message-ID: <20260807143422.999907121@linuxfoundation.org>
+	Xu Rao <raoxu@uniontech.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>
+Subject: [PATCH 6.12 206/337] power: supply: bq25890: fix the -10 C NTC lookup entry
+Date: Fri,  7 Aug 2026 16:36:49 +0200
+Message-ID: <20260807143423.021969995@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -51,68 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+From: Xu Rao <raoxu@uniontech.com>
 
-commit f0a3f042293a8c5a2152346b3637ea60866c503a upstream.
+commit 160a783aa65b74782bc17cb874af1a6d3f5fba3c upstream.
 
-Commit 16a03c71bba0 ("cpufreq: schedutil: Merge initialization code of
-sg_cpu in single loop") merged the per-CPU initialization and the
-utilization-hook registration into a single loop in sugov_start().
+The TSPCT lookup table is monotonically decreasing except for ADC code
+121, where the sequence reads -9.0 C, -1.0 C, -12.0 C.  This makes the
+reported battery temperature jump upward by eight degrees for one code
+and then downward by eleven degrees for the next code.
 
-For a shared cpufreq policy this re-introduces the race originally fixed
-by commit ab2f7cf141aa ("cpufreq: schedutil: Fix sugov_start() versus
-sugov_update_shared() race").
+The entry is a missing zero: use -10.0 C so the sequence remains
+monotonic between -9.0 C and -12.0 C.
 
-The scheduler's util path reaches the hook under RCU-sched and never takes
-policy->rwsem, so the rwsem held across sugov_start() cannot serialize the
-two. Once the first CPU's hook is published, sugov_update_shared() may run
-and, via sugov_next_freq_shared(), read/write each sibling sugov_cpu
-(iowait_boost, util, bw_min, ...) concurrently with the memset() still
-initializing them, with no lock common to both sides: the update side holds
-sg_policy->update_lock while the init side holds only policy->rwsem, which
-the scheduler's util path never takes.
-
-The walk only accesses scalar members, never a pointer like ->sg_policy,
-so it does not crash today; it merely uses stale (or zero on first start)
-values that skew the frequency selection and tracepoints. It is still a
-genuine data race, and a latent crash once any pointer member is
-dereferenced there.
-
-Restore the two-phase approach: initialize all per-CPU structures first,
-and only then publish the per-CPU utilization update hooks.
-
-Fixes: 16a03c71bba0 ("cpufreq: schedutil: Merge initialization code of sg_cpu in single loop")
+Fixes: 9652c02428f3 ("power: bq25890: add POWER_SUPPLY_PROP_TEMP")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
-Reviewed-by: Christian Loehle <christian.loehle@arm.com>
-Link: https://patch.msgid.link/20260716115159.848403-1-zhongqiu.han@oss.qualcomm.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
+Link: https://patch.msgid.link/0619C8BF15F43B7C+20260723065444.1796002-1-raoxu@uniontech.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/cpufreq_schedutil.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/power/supply/bq25890_charger.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/sched/cpufreq_schedutil.c
-+++ b/kernel/sched/cpufreq_schedutil.c
-@@ -880,8 +880,19 @@ static int sugov_start(struct cpufreq_po
- 		memset(sg_cpu, 0, sizeof(*sg_cpu));
- 		sg_cpu->cpu = cpu;
- 		sg_cpu->sg_policy = sg_policy;
-+	}
-+
-+	/*
-+	 * Publish the hooks only after all per-CPU data is initialized, so a
-+	 * shared policy's sugov_update_shared() never reads an uninitialized
-+	 * sibling sugov_cpu.
-+	 */
-+	for_each_cpu(cpu, policy->cpus) {
-+		struct sugov_cpu *sg_cpu = &per_cpu(sugov_cpu, cpu);
-+
- 		cpufreq_add_update_util_hook(cpu, &sg_cpu->update_util, uu);
- 	}
-+
- 	return 0;
- }
+--- a/drivers/power/supply/bq25890_charger.c
++++ b/drivers/power/supply/bq25890_charger.c
+@@ -320,7 +320,7 @@ static const u32 bq25890_tspct_tbl[] = {
+ 	145, 140, 130, 120, 115, 110, 100, 90,
+ 	80, 70, 60, 50, 40, 30, 20, 10,
+ 	0, -10, -20, -30, -40, -60, -70, -80,
+-	-90, -10, -120, -140, -150, -170, -190, -210,
++	-90, -100, -120, -140, -150, -170, -190, -210,
+ };
  
+ #define BQ25890_TSPCT_TBL_SIZE		ARRAY_SIZE(bq25890_tspct_tbl)
 
 
