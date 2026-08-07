@@ -1,46 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D35C731327A;
-	Fri,  7 Aug 2026 15:23:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC09E314B6D;
+	Fri,  7 Aug 2026 15:23:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116185; cv=none; b=rQTYBfY2ADBPay/SGK1L0QapqgFqmURkEUlMTy8AJ+Ge76hIc/FCBfZThC90cNQNj95OvDEvOqshmpKXmZoepzUcrV9htyDlAyjM9qKqTJfU8Nr1bWeXZIRKVkytHLSqnXGE/m7TaHDa5B3znJyXsWBFPDWX12wVOvCDdVIHxL8=
+	t=1786116187; cv=none; b=OpYB3ZBiogBkmtcC2jjEw5GPp1ih+rmhwYGGBXolcwC8z92HdfAu1Q1aJpT7Nf3Kr/dI5gUz/5XAFM1wmIOefhnDkPSlxEKppLdyCAYaokZvrwlJz7OjBQqoZhCbOMj/GD8oyOj9XzwbA/Ij1ZSlti02xzassEcMp4Dn2+iEEJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116185; c=relaxed/simple;
-	bh=+eM4PKTCBwUovOPKBeW/9A39YV5A/VSxZG6tPWD3eGg=;
+	s=arc-20240116; t=1786116187; c=relaxed/simple;
+	bh=k33Y+lUIGTMNR77MFXgD/10ghh4tFpsjO5lKuhhoaCw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e3uKvyr5d6JUM/aefvW1Q4xlPyrpzq58uRbYcTAn3IZn0DL5QcCVlVJaVXkzjxmdnZX14zp4zzbox9/2dxI8w/xHNq63RmAYB1w23ILg1pAm/obcaN/NGza157S2+1u6IV7ko0dCaFYU1814fSw/KNMkJBEnFvCeWXaNrXrfTAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yZeP2t2l; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mp/ir6c0g/cNtQ1hDoftBFkrMYSpNznuwjZV6y2gn0E91z4ZObV2TsjLzxPiJoxY6JamjqQgjtIMMn1nhPGvl//kG+6v45o0PDdk5R9348n9DDziCg69WduDGEKthm5RqfluDAw1W1ufdCVtmK6llQm0aMY7IVGEJBJcGhgS5Sg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nZHKm3nD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yZeP2t2l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30E8D1F000E9;
-	Fri,  7 Aug 2026 15:23:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nZHKm3nD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 136281F000E9;
+	Fri,  7 Aug 2026 15:23:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116183;
-	bh=2WK243fROM5wljrz4TnJssR7GF6scYao2ON4+HQgLTQ=;
+	s=korg; t=1786116186;
+	bh=XGa7udNZKqysK7kURFp8ffAkz0hcURIm9q+qrRqGrvY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yZeP2t2lEh6wY6PSvLBKJQ6yCFVXLAtI9s7aCTAUS3eAA2dSygFiUp8V6KOPk1siq
-	 126GgfBcYmXwwEbZJVbQjt1iQmwy1tlIxjXMZCSlcGKFfz55qIgG4vToK+qBPvFlg/
-	 wFUlYrN5VRVMBVcmiLrHBBFg+A+DEJ+Tye0zyQk4=
+	b=nZHKm3nDv3EjYbc5OypaHfiuONR7IKwihRGxaiaPLAK/tMtzCcjKz8pqTXnV9UEGk
+	 CPviNpKA/lg3p4bKnpw3/Vgb84FwJ22QKiQho5pEq0R/CRBAlfkvVYXKjqbCNL/Ycm
+	 fSpxPj7hqsYVTpeSdLh/rfUGQ4FKxBiSMUQ7+kv0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Gellermann <christian.gellermann@codasip.com>,
-	"David Hildenbrand (arm)" <david@kernel.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Christian Brauner <brauner@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Shuah Khan <shuah@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 142/261] selftests/mm: fix potential wild pointer access of getline due to missing init
-Date: Fri,  7 Aug 2026 16:38:19 +0200
-Message-ID: <20260807143418.427105656@linuxfoundation.org>
+	Federico Kirschbaum <federico.kirschbaum@xbow.com>,
+	Baul Lee <baul.lee@xbow.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.6 116/261] ALSA: usb-audio: fix use-after-free in ump_to_endpoint()
+Date: Fri,  7 Aug 2026 16:37:53 +0200
+Message-ID: <20260807143417.876735575@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143415.358597922@linuxfoundation.org>
 References: <20260807143415.358597922@linuxfoundation.org>
@@ -59,52 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Gellermann <christian.gellermann@codasip.com>
+From: Baul Lee <baul.lee@xbow.com>
 
-commit 9f1d75a4ce04095afdb63d8e540092ff8151dacf upstream.
+commit 4a05b2d1b4642df74f30b6f54843e825c4a2bfd3 upstream.
 
-This is another occurrence of using getline where the code assumes that
-getline allocates memory to store the line, but the pointer passed to it
-is uninitialized and potentially a non-null pointer.  This violates the
-Open Group Spec[1] and caused a segfault in a similar situation in
-selftest/clone3/clone3_set_tid.  Fix it by initializing the line pointer
-to NULL.
+create_midi2_ump() registers a card-owned snd_ump_endpoint and stores a
+back-pointer to its per-interface snd_usb_midi2_ump object in
+ump->private_data, but it never installs an ump->private_free hook and
+never clears that pointer.
 
-The issue has been found by simply grepping through the selftest code
-after running into the issue in clone3_set_tid.  Whether it segfaults in
-its current state is unknown to me.  But it's good to be addressed due to
-defensive reasons.
+If a later step of snd_usb_midi_v2_create() fails, its error path calls
+free_all_midi2_umps(), which kfree()s the snd_usb_midi2_ump object while
+the already-registered endpoint keeps pointing at it.  The created
+/dev/snd/umpC*D* node stays exposed, so the first operation of any UMP
+open, ump_to_endpoint(), dereferences the dangling ump->private_data and
+reads rmidi->eps[dir] out of freed memory.
 
-Link: https://lore.kernel.org/20260722130246.2135563-3-christian.gellermann@codasip.com
-Link: https://pubs.opengroup.org/onlinepubs/9799919799/functions/getline.html [1]
-Fixes: 26b4224d9961 ("selftests: expanding more mlock selftest")
-Signed-off-by: Chris Gellermann <christian.gellermann@codasip.com>
-Acked-by: David Hildenbrand (arm) <david@kernel.org>
-Reviewed-by: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+A malicious USB MIDI 2.0 device that makes creation fail after the
+endpoint is registered can thus trigger a slab use-after-free read on a
+subsequent open of the UMP node.
+
+Clear the endpoint's back-pointer before freeing the object, and let
+ump_to_endpoint() tolerate a NULL private_data so the open/close/trigger
+callbacks fail cleanly (their callers already handle a NULL endpoint)
+instead of dereferencing a stale pointer.
+
+Discovered by XBOW, triaged by Baul Lee <baul.lee@xbow.com>
+
+Fixes: ff49d1df79ae ("ALSA: usb-audio: USB MIDI 2.0 UMP support")
+Reported-by: Federico Kirschbaum <federico.kirschbaum@xbow.com>
+Reported-by: Baul Lee <baul.lee@xbow.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Baul Lee <baul.lee@xbow.com>
+Link: https://patch.msgid.link/20260726051337.41124-1-baul.lee@xbow.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/mm/mlock-random-test.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/usb/midi2.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/tools/testing/selftests/mm/mlock-random-test.c
-+++ b/tools/testing/selftests/mm/mlock-random-test.c
-@@ -86,7 +86,7 @@ int get_proc_locked_vm_size(void)
- int get_proc_page_size(unsigned long addr)
+--- a/sound/usb/midi2.c
++++ b/sound/usb/midi2.c
+@@ -337,7 +337,7 @@ ump_to_endpoint(struct snd_ump_endpoint
  {
- 	FILE *smaps;
--	char *line;
-+	char *line = NULL;
- 	unsigned long mmupage_size = 0;
- 	size_t size;
+ 	struct snd_usb_midi2_ump *rmidi = ump->private_data;
  
+-	return rmidi->eps[dir];
++	return rmidi ? rmidi->eps[dir] : NULL;
+ }
+ 
+ /* ump open callback */
+@@ -703,6 +703,8 @@ static void free_all_midi2_umps(struct s
+ 		rmidi = list_first_entry(&umidi->rawmidi_list,
+ 					 struct snd_usb_midi2_ump, list);
+ 		list_del(&rmidi->list);
++		if (rmidi->ump)
++			rmidi->ump->private_data = NULL;
+ 		kfree(rmidi);
+ 	}
+ }
 
 
