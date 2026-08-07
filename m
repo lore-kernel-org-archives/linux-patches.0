@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5F043264D6;
-	Fri,  7 Aug 2026 15:20:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F26633344A;
+	Fri,  7 Aug 2026 15:20:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116044; cv=none; b=KYDfT5owsAgFxxl2CCEAZO5suG4HLZIyChBKqKpn7b4pRE/bgaMrPxNKrDIsq24Eh/6RHZr2JJmBLanPKPIiRfDeRQap9AqvhBr6nPv9o1cAjsa2k8tsdaJROx4YlW/0wQMV6eHr7fKraZ9XZqNshsZF9ljgMJ4wUGUPZSI8ab8=
+	t=1786116046; cv=none; b=b0fKdoZ0aU3eyVKFgr0Ol1WnzX2hWpgPWpljOsGwE0Vb7l3IFrMnekZY8qnI1z2At9ZfGxCITJ2zrnyIfLnLyjPykG/qT5bAPCezu2OCxSPTIHDedBQSJbECKvvsuOxZ/OnKCEZAD/nUmx+6sAexXs/tB5SkDxMeufPKxA2GgxU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116044; c=relaxed/simple;
-	bh=xpzJZFqoBGrj5Mk6fkNr+CGms841Y+HdlhXmCTlj55A=;
+	s=arc-20240116; t=1786116046; c=relaxed/simple;
+	bh=RGIfAb/Uim9VPp9ONKRakNj1Zj8lbt98RnpIruBayLU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tldVlq0e1FqblecLVkJoxkVMnxxed4Ss8Po2gxzIzm0rJEXTJezt9XbUmhpdH9k2c/F8Sa2i8LSUk+M4teEDr50d0UN//FpOAv0JxF0USjzTzTbJsro3iY9whWww5CpytU2HVVXRVjKjDxHl8dxEWtCi1n+zo06t7O3p5ljqqgA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M/SHkMlX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=q2pdj3ajMhyL4U3iA/422BidTZA/YcX3p8bE05RM6702U/SHjgqbY892sMQ4xkTXIeQH1C8EvXhoDqGc5Dz47MAOaAuwO50x05DaOzV2CJYOfDLZMT2EvIWJtCeN1xEI4EWQJV6oKInP3YE1Y0k25joEP1kYEcnxVzYtufL/RAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bZbIhI4A; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M/SHkMlX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03E351F000E9;
-	Fri,  7 Aug 2026 15:20:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bZbIhI4A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C06F61F000E9;
+	Fri,  7 Aug 2026 15:20:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116042;
-	bh=DQ4BKG7fGt2QL38gxu1x3e2t1BkU3uePRr+olN8bBhk=;
+	s=korg; t=1786116045;
+	bh=FwJgSe85k644oRac2btujgGqqltvYilXNkuVlLfOtzk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M/SHkMlXibilJB8T3pmwuJ5Cks1q3G5eCQWrbk/3D/UziJGxHSeDuR8EPpI/GI0Ko
-	 d+aYfVxsAeABmQlFNUTsC4SlrjnrJUVb31BmT+gAg41AubmE8ueX5+vsblk5OBNNP0
-	 icDQJmJn4wyx0GNOcEVUmIHe6fmPr0/Bt4zMal5k=
+	b=bZbIhI4AbUnE8qSwWW8Z6Ubwlke1uHt8CP1erfWQ9E4PXCPCuu2zdOpjjPBK9TSo1
+	 tOTnV/Gx9udg3AqeJGodefn7D6zlcuyziiMEgD94MpMExdCF2+bad6+TaEOeO7iI4x
+	 J1MEd0smh3ZEu7bD8XJYblqkgD0NBnLrB0yn9zFM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Zi Yan <ziy@nvidia.com>,
-	Dennis Zhou <dennis@kernel.org>,
-	Christoph Lameter <cl@linux.com>,
-	Tejun Heo <tj@kernel.org>,
+	Xiangfeng Cai <caixiangfeng@bytedance.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	Baoquan He <baoquan.he@linux.dev>,
+	David Hildenbrand <david@kernel.org>,
+	Oscar Salvador <osalvador@suse.de>,
+	Shuah Khan <shuah@kernel.org>,
+	Wei Yang <richard.weiyang@linux.alibaba.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 092/261] mm/percpu-km: fix bitmap overflow and accounting in pcpu_create_chunk()
-Date: Fri,  7 Aug 2026 16:37:29 +0200
-Message-ID: <20260807143417.371252994@linuxfoundation.org>
+Subject: [PATCH 6.6 093/261] mm/hugetlb: fix list corruption in allocate_file_region_entries()
+Date: Fri,  7 Aug 2026 16:37:30 +0200
+Message-ID: <20260807143417.391632342@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143415.358597922@linuxfoundation.org>
 References: <20260807143415.358597922@linuxfoundation.org>
@@ -54,53 +56,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zi Yan <ziy@nvidia.com>
+From: Xiangfeng Cai <caixiangfeng@bytedance.com>
 
-commit 89b1b79c308818a715e75f28744b70d8940a07c9 upstream.
+commit dd9623f58ec702a07b2d67179d6fcea79c52231a upstream.
 
-In pcpu_create_chunk(), nr_pages is the total contiguous backing
-allocation, i.e., nr_units * pcpu_unit_pages, but pcpu_chunk_populated()
-uses it to set chunk->populated, whose size is pcpu_unit_pages, bitmap.
-Since bit N in chunk->populated means page offset N inside every unit is
-backed.  When nr_units > 1, the function writes beyond chunk->populated.
-Fix it by using chunk->nr_pages.
+allocate_file_region_entries() tops up resv->region_cache with freshly
+allocated file_region descriptors.  The allocation uses GFP_KERNEL, so
+resv->lock is dropped around it: the new entries are gathered on a
+stack-local list head, allocated_regions, and spliced into
+resv->region_cache once the lock is re-acquired.
 
-It also fixes the global pcpu_nr_empty_pop_pages accounting, since
-pcpu_balance_free() only iterates up to chunk->nr_pages.
+The splice used list_splice(), which moves the entries but does not
+re-initialize the source head, so allocated_regions is left pointing at an
+entry that now lives on resv->region_cache.  The top-up runs in a while
+loop that re-checks the cache deficit after re-acquiring the lock.  For a
+shared mapping the resv_map is shared by every mapper of the hugetlbfs
+inode, so a concurrent region_chg()/region_add()/region_del() on the same
+resv_map can consume cache entries during the unlocked window and force a
+second iteration.  That iteration calls list_add() on the stale head and
+corrupts the list; with CONFIG_DEBUG_LIST the __list_add_valid() check
+trips:
 
-Commit a63d4ac4ab609 ("percpu: make percpu-km set chunk->populated bitmap
-properly") introduced the bitmap overflow issue.  Later, commit
-b539b87fed37f ("percpu: implmeent pcpu_nr_empty_pop_pages and
-chunk->nr_populated") added pcpu_nr_empty_pop_pages and caused the
-accounting issue.
+  list_add corruption. next->prev should be prev (ffffc900011ff7f8),
+  but was ffff88814c281460. (next=ffff88814c545640).
+  kernel BUG at lib/list_debug.c:31!
+   allocate_file_region_entries+0x191/0x420
+   region_chg+0x267/0x300
+   hugetlb_reserve_pages+0x387/0xc80
+   hugetlbfs_file_mmap+0x2ce/0x3f0
+   mmap_region+0x1348/0x1a80
+   do_mmap+0x85e/0xb90
+   vm_mmap_pgoff+0x18c/0x330
+   ksys_mmap_pgoff+0x2a1/0x3e0
+   do_syscall_64+0xd7/0x420
 
-Link: https://lore.kernel.org/20260709-fix-pcpu_create_chunk-in-percpu-km-v1-1-1f64745a84cc@nvidia.com
-Fixes: a63d4ac4ab609 ("percpu: make percpu-km set chunk->populated bitmap properly")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260703-keep-subpage-private-zero-at-free-v2-0-2970fe777dd6%40nvidia.com?part=1
-Assisted-by: Codex:GPT-5
-Signed-off-by: Zi Yan <ziy@nvidia.com>
-Acked-by: Dennis Zhou <dennis@kernel.org>
-Cc: Christoph Lameter <cl@linux.com>
-Cc: Tejun Heo <tj@kernel.org>
-Cc: Zi Yan <ziy@nvidia.com>
+Without CONFIG_DEBUG_LIST the bad list_add() silently links a kernel-stack
+address into resv->region_cache, leading to later use-after-free.
+
+This was observed as a real host panic on a dense KVM host where a QEMU
+guest-RAM hugetlbfs file was mapped MAP_SHARED by both QEMU and a separate
+SPDK/DPDK vhost-user target, generating concurrent region_* traffic on one
+shared resv_map.
+
+Use list_splice_init() so the source head is re-initialized empty after
+each splice, making the retry loop safe.
+
+Link: https://lore.kernel.org/20260713171456.300518-2-caixiangfeng@bytedance.com
+Fixes: d3ec7b6e09e5 ("mm/hugetlb: use list_splice to merge two list at once")
+Signed-off-by: Xiangfeng Cai <caixiangfeng@bytedance.com>
+Reviewed-by: Muchun Song <muchun.song@linux.dev>
+Cc: Baoquan He <baoquan.he@linux.dev>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Wei Yang <richard.weiyang@linux.alibaba.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/percpu-km.c |    2 +-
+ mm/hugetlb.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/percpu-km.c
-+++ b/mm/percpu-km.c
-@@ -75,7 +75,7 @@ static struct pcpu_chunk *pcpu_create_ch
- 	chunk->base_addr = page_address(pages);
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -674,7 +674,7 @@ static int allocate_file_region_entries(
  
- 	spin_lock_irqsave(&pcpu_lock, flags);
--	pcpu_chunk_populated(chunk, 0, nr_pages);
-+	pcpu_chunk_populated(chunk, 0, chunk->nr_pages);
- 	spin_unlock_irqrestore(&pcpu_lock, flags);
+ 		spin_lock(&resv->lock);
  
- 	pcpu_stats_chunk_alloc();
+-		list_splice(&allocated_regions, &resv->region_cache);
++		list_splice_init(&allocated_regions, &resv->region_cache);
+ 		resv->region_cache_count += to_allocate;
+ 	}
+ 
 
 
