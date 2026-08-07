@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01F8E331A61;
-	Fri,  7 Aug 2026 15:20:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7F172F5337;
+	Fri,  7 Aug 2026 15:20:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116038; cv=none; b=G2h3Po/qwl1ANe5Yq36mUwWl0SqsUfP+Hd3+S5rTSBC01j5WvyQmLVHYgD+74Lwpu8Y7bcZdKSg07lSP5fAPrlfIE6k5EsvRFcftOdutkK+6QNrNqT3VtQqTBSAWj8Yp6hfwfpSVCl5kR1FqWwTeh4DTq56YcXWbV51EsrpbP64=
+	t=1786116040; cv=none; b=kYsS7L2F5eKC5NYu6TlqOcuZNi5wgk/YVqI4jS81kEvqgDWcBAkvhO6ssEiJUz0K1KYUa9vfRO7XbW3+2YFEXfOsWGqB4NWKB+srATu3fjfozZs2UOjCVAZQtflVIfVtnUoPBNG0GmanD62MZEXg13U3Snk9SwhR2SKpaqN+ZDA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116038; c=relaxed/simple;
-	bh=0Meyu6Wdu4XNmmibDvw1xFCOkw0H6Qbu5a0DMEn4r74=;
+	s=arc-20240116; t=1786116040; c=relaxed/simple;
+	bh=g3u4AvxhIy3K5IhZ83oq0+88DQ8u9i+LQ+SpuIYThtw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G9mQG+0KPbOap+5rhFLRqwwL4GN8h3tbxtnlZ46LqDUoXnEpCYckoFH1HxlsMrPbL03EMhPAqGFSU4Kg2fFPeVV4syICSaxKzNdbSpyEEG/HIqF1MshR0ArfX3G6ydODB8ReHpJu9cxWxRxiVYRodYaEbCBh0o2oh5eiKUrjyhc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xSC+xmP1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mXhTfz7QrlT6RY8Yx93JlPFkLuKSsq4/Pq70uj5sJmPagbjGwubLF+TtswpIyts60GZ2DqPCaYMdA5vRV2NQGT/88tw76OaG7iuBQfGqk28vxXfL06LUgJRu9MNXXDqfTs2Q5vf9snPPTNyzrhP44UTF0jQ7LXEcIEaTJwJg7Y8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0l4cm8KM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xSC+xmP1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DE561F000E9;
-	Fri,  7 Aug 2026 15:20:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0l4cm8KM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EAF01F000E9;
+	Fri,  7 Aug 2026 15:20:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116036;
-	bh=IqftRjpTWRnthDdMHkcgA+8g1OZaSgjm3cdHZt6PtG0=;
+	s=korg; t=1786116039;
+	bh=kvJxBd3gc8t2QJ3OWeXPqsrbX6KOFd4kM0p1pakGax8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xSC+xmP1VIaIVv5w2lREGX9bPATAB5FtrfuEg+g4Th15/xBw6jnZgIAszb03LfqTR
-	 U05YoM1cpu+IlNLXYm1u3fI7xPedvQ/je4MhFmcxvuShuKfYr79MD1UyKNoLf4q4M5
-	 1p6huyHLDJ+c2Nxt9pySVrbewFR4GDp49HIp6vHY=
+	b=0l4cm8KMRshO70nppJhVKYLURxcKGpDdNjUoMjEwbcCXnmVLYxWPx/JufgjpkqC6r
+	 cMV9MONtfOeuvM4oz2dzW3QKNFe8OI+9Gqy7T11YjZ/NSIJC7cwsn74a/ADfDv7ybI
+	 o7E8W8zsN5b34AzgZBrP+CIOxf/WDMahnpndd0tk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>
-Subject: [PATCH 6.6 090/261] erofs: cap LZMA stream pool size
-Date: Fri,  7 Aug 2026 16:37:27 +0200
-Message-ID: <20260807143417.329789069@linuxfoundation.org>
+	Benjamin Boortz <bennib@mailbox.org>,
+	Linus Walleij <linusw@kernel.org>
+Subject: [PATCH 6.6 091/261] pinctrl: bm1880: add missing select GENERIC_PINCONF
+Date: Fri,  7 Aug 2026 16:37:28 +0200
+Message-ID: <20260807143417.349801867@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143415.358597922@linuxfoundation.org>
 References: <20260807143415.358597922@linuxfoundation.org>
@@ -50,73 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Benjamin Boortz <bennib@mailbox.org>
 
-commit c9b47e6b23114e939b17f818471c7a46e59006e7 upstream.
+commit dad6e107b3cd9d20514e7799b7ad8674f81e3f30 upstream.
 
-fs/erofs/decompressor_lzma.c sizes the module-global MicroLZMA stream
-pool from num_possible_cpus() when the lzma_streams module parameter is
-unset, then z_erofs_load_lzma_config() preallocates one image-supplied
-dictionary per stream, accepting dictionaries up to 8 MiB.  On high-CPU
-systems, a small EROFS image can pin hundreds of MiB of vmalloc-backed
-decoder state until the erofs module is unloaded.
+drivers/pinctrl/pinctrl-bm1880.c initialises its pinconf_ops with
+.is_generic = true, but that field is only present when
+CONFIG_GENERIC_PINCONF is enabled (guarded by #ifdef in pinconf.h).
+The Kconfig entry for PINCTRL_BM1880 never selects GENERIC_PINCONF,
+so any config that enables CONFIG_PINCTRL_BM1880=y without
+CONFIG_GENERIC_PINCONF=y fails to compile:
 
-Impact: An EROFS image mounted by the system can pin up to 8 MiB of
-vmalloc memory per LZMA stream, either as intended or unexpectedly.
+  drivers/pinctrl/pinctrl-bm1880.c:1288:10: error: 'const struct pinconf_ops' has no member named 'is_generic'
 
-Bound the default stream count by a new
-CONFIG_EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS option, default 16, so the
-worst-case default preallocation is 128 MiB if the number of CPUs is no
-less than 16 while preserving the existing per-image dictionary limit.
-An explicit lzma_streams module parameter is still honoured as-is, so
-administrators who deliberately size the pool are not affected.
+Found by randconfig testing on arm64; tinyconfig reproducer below.
+Add the missing select to fix the build.
 
-Fixes: 622ceaddb764 ("erofs: lzma compression support")
+Fixes: 49bd61ebce5f ("pinctrl: Add pinconf support for BM1880 SoC")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Signed-off-by: Benjamin Boortz <bennib@mailbox.org>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/erofs/Kconfig             |   14 ++++++++++++++
- fs/erofs/decompressor_lzma.c |    3 ++-
- 2 files changed, 16 insertions(+), 1 deletion(-)
+ drivers/pinctrl/Kconfig |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/erofs/Kconfig
-+++ b/fs/erofs/Kconfig
-@@ -100,6 +100,20 @@ config EROFS_FS_ZIP_LZMA
+--- a/drivers/pinctrl/Kconfig
++++ b/drivers/pinctrl/Kconfig
+@@ -132,6 +132,7 @@ config PINCTRL_BM1880
+ 	depends on OF && (ARCH_BITMAIN || COMPILE_TEST)
+ 	default ARCH_BITMAIN
+ 	select PINMUX
++	select GENERIC_PINCONF
+ 	help
+ 	  Pinctrl driver for Bitmain BM1880 SoC.
  
- 	  If unsure, say N.
- 
-+config EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS
-+	int "EROFS LZMA default maximum decompression streams"
-+	depends on EROFS_FS_ZIP_LZMA
-+	range 1 NR_CPUS
-+	default 16
-+	help
-+	  By default EROFS allocates one LZMA decompression stream per CPU.
-+	  Each stream can hold a dictionary of up to 8 MiB taken from the
-+	  mounted image, so on systems with many CPUs this can reserve a lot
-+	  of memory.  This caps the default; the lzma_streams module parameter
-+	  still overrides it.
-+
-+	  If unsure, keep the default of 16.
-+
- config EROFS_FS_ZIP_DEFLATE
- 	bool "EROFS DEFLATE compressed data support"
- 	depends on EROFS_FS_ZIP
---- a/fs/erofs/decompressor_lzma.c
-+++ b/fs/erofs/decompressor_lzma.c
-@@ -53,7 +53,8 @@ int __init z_erofs_lzma_init(void)
- 
- 	/* by default, use # of possible CPUs instead */
- 	if (!z_erofs_lzma_nstrms)
--		z_erofs_lzma_nstrms = num_possible_cpus();
-+		z_erofs_lzma_nstrms = min_t(unsigned int, num_possible_cpus(),
-+				CONFIG_EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS);
- 
- 	for (i = 0; i < z_erofs_lzma_nstrms; ++i) {
- 		struct z_erofs_lzma *strm = kzalloc(sizeof(*strm), GFP_KERNEL);
 
 
