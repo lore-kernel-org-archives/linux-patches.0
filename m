@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9CE6277CA5;
-	Fri,  7 Aug 2026 14:46:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2C8335CB60;
+	Fri,  7 Aug 2026 14:46:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786113995; cv=none; b=KFPiH7P4+UnW2LrlY3D2j++LFnuLKFk7kbMNSuqdGGETHv0fg1TNfnhjwfuu3UtCYXompvn4kLGmE3EdZDLy6oVWqSxEzXwPKY5nQ8lpj3Y29CxhYGcI4Ilwf/ytWeVzmKebww0tif2ITVG/touSHKnwh6RVFKmPxhYwA+2pteE=
+	t=1786113998; cv=none; b=CTdidKuHB1m/eOQLvRbF4kadpoh4RTLrvX5Skfc39rhwqYE7ziA0LyX55l1yJol1budSBNawc77m9AEZI/cksU6vbCTi93+vUij7Pyas3SPTkrH1kO6dkU/sFBOg6siroM9PXTNe2XtbPVCwDRBS+Oy68bAaCvTN3tKdmMPBBN4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786113995; c=relaxed/simple;
-	bh=bUBuA3jcl4LocyYbEpttTs87gacvQmKH8cbTn0Ma23M=;
+	s=arc-20240116; t=1786113998; c=relaxed/simple;
+	bh=j5LW7ZEqZt/GSFoiRJk5JZZKHO66M56axgVG4hvztWo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bfjmCyqRrUf56CniNQacd1hUEhUJTPNcsMmw0hMgZ81Cgcgm+tP8mB9+SbLKLhzwHXvW5Bi9kls16TfPHj9HiX+VHuqGVw21A+rflrml7ufLlg7ti59tT9I7pcIIoXVQayR5W4xARt1PAsPePUs1BWWEFefevSdGcYZg0TvIhFM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IiEd4YVp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KUbVvYOGHrlH+l6PC4yyej8hPrAQZDDoT+4mreLHXN6yPBgzreJr8ClYpm+W0mnYRjqJv721UH/H249YtOzc95kA65MnMFQhwBylnNSiZFWHRTqIi92BV8gPHAO7Jm4DUDVquzSIQfxe819oveqtr3Z6+Jgrec40YTU1YrOs778=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o0l9nsWZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IiEd4YVp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF5071F000E9;
-	Fri,  7 Aug 2026 14:46:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o0l9nsWZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4EDA1F000E9;
+	Fri,  7 Aug 2026 14:46:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786113994;
-	bh=cN5lyX5Ma5pBcSGktZ9jgU91EBjgZwqAehqWihwUI5Q=;
+	s=korg; t=1786113997;
+	bh=Mk4TDBbHZBgQLfa07EU95WZRwbkMROH+egskZr94L0E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IiEd4YVppKVI7tUAJqLop8EdZF/27vnGiuxbcCNvFXg/IY9VdFST8Gfeog1vakv4/
-	 ZhmgDeF365R2BkXA2Q4I6h0DPRMK6bnXNnsw1Ae4DqCjiigNQEUUkaV/QbpVChJ/q+
-	 gvoXx3MF0kO6dmZF9aL6At7D4r9t+lh8/kAcbSz4=
+	b=o0l9nsWZNGlCHpcjwwOQckiE3MQdZC4W4jRBY+jKkAO3XhM9ybbtD/fNrEfGukHJG
+	 mn4Hyo1MDjV5KB0KNtfIIpA2z2gYrzYS0VuPQYFNOfnSEjLoqBoRahIEogIZXLvgh0
+	 Jf9z1WsaI01IRkNKHEWW9P2eWwwQ7T5jtSzoVXFU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Christian Marangi <ansuelsmth@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 106/337] Bluetooth: hci_sync: remove unnecessary hci_conn_get in create_conn_sync
-Date: Fri,  7 Aug 2026 16:35:09 +0200
-Message-ID: <20260807143420.836222269@linuxfoundation.org>
+Subject: [PATCH 6.12 107/337] net: phylink: put link_gpio if phylink_create fails
+Date: Fri,  7 Aug 2026 16:35:10 +0200
+Message-ID: <20260807143420.856908598@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -51,77 +52,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Christian Marangi <ansuelsmth@gmail.com>
 
-[ Upstream commit c0a9dcd2be398eee505d4b254ec3a845aa8ab189 ]
+[ Upstream commit 0fe1e3e8f3380d7862296a73b528d164e96c76b8 ]
 
-hci_conn_get() without already held reference is data race against
-concurrent deletion.
+In phylink_create() if phylink_register_sfp() returns an error, link_gpio
+obtained by phylink_parse_fixedlink() is never released. While this is a
+very unlikely scenario, it's worth to fix/handle this.
 
-In previous patches, the refcount has been changed to be taken before
-starting the hci_sync task, so remove these extra get() + put() as they
-are not needed.
+This was present from the very first implementation of phylink but got
+relevant only with the introduction of ce0aa27ff3f6 ("sfp: add sfp-bus to
+bridge between network devices and sfp cages") where additional function
+were added after phylink_parse_fixedlink() making the release of link_gpio
+needed if such additional function errored out.
 
-Fixes: 12917f591cea ("Bluetooth: hci_conn: Fix null ptr deref in hci_abort_conn()")
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+While at it, restructure the exit condition of phylink_create() with the
+goto pattern to reduce code duplication on handling error conditions.
+
+Fixes: ce0aa27ff3f6 ("sfp: add sfp-bus to bridge between network devices and sfp cages")
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20260726150806.2437-1-ansuelsmth@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sync.c | 13 -------------
- 1 file changed, 13 deletions(-)
+ drivers/net/phy/phylink.c | 29 +++++++++++++++--------------
+ 1 file changed, 15 insertions(+), 14 deletions(-)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index 8c48d459a5415..03bbf4c1d6e5a 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -6577,11 +6577,6 @@ static int hci_le_create_conn_sync(struct hci_dev *hdev, void *data)
+diff --git a/drivers/net/phy/phylink.c b/drivers/net/phy/phylink.c
+index b78dfcbec936c..e6f3963739ad6 100644
+--- a/drivers/net/phy/phylink.c
++++ b/drivers/net/phy/phylink.c
+@@ -1728,8 +1728,8 @@ struct phylink *phylink_create(struct phylink_config *config,
+ 	} else if (config->type == PHYLINK_DEV) {
+ 		pl->dev = config->dev;
+ 	} else {
+-		kfree(pl);
+-		return ERR_PTR(-EINVAL);
++		ret = -EINVAL;
++		goto free_pl;
+ 	}
  
- 	bt_dev_dbg(hdev, "conn %p", conn);
+ 	pl->using_mac_select_pcs = using_mac_select_pcs;
+@@ -1753,28 +1753,29 @@ struct phylink *phylink_create(struct phylink_config *config,
+ 	phylink_validate(pl, pl->supported, &pl->link_config);
  
--	/* Hold a reference so conn stays valid for the HCI_CONN_CREATE
--	 * clear_bit() at done.
--	 */
--	hci_conn_get(conn);
--
- 	clear_bit(HCI_CONN_SCANNING, &conn->flags);
- 	conn->state = BT_CONNECT;
+ 	ret = phylink_parse_mode(pl, fwnode);
+-	if (ret < 0) {
+-		kfree(pl);
+-		return ERR_PTR(ret);
+-	}
++	if (ret < 0)
++		goto free_pl;
  
-@@ -6596,7 +6591,6 @@ static int hci_le_create_conn_sync(struct hci_dev *hdev, void *data)
- 			conn->state = BT_OPEN;
- 			hci_abort_conn_sync(hdev, conn,
- 					    HCI_ERROR_REJ_LIMITED_RESOURCES);
--			hci_conn_put(conn);
- 			return -EBUSY;
- 		}
+ 	if (pl->cfg_link_an_mode == MLO_AN_FIXED) {
+ 		ret = phylink_parse_fixedlink(pl, fwnode);
+-		if (ret < 0) {
+-			kfree(pl);
+-			return ERR_PTR(ret);
+-		}
++		if (ret < 0)
++			goto release_link_gpio;
+ 	}
  
-@@ -6690,7 +6684,6 @@ static int hci_le_create_conn_sync(struct hci_dev *hdev, void *data)
+ 	pl->cur_link_an_mode = pl->cfg_link_an_mode;
  
- 	/* Re-enable advertising after the connection attempt is finished. */
- 	hci_resume_advertising_sync(hdev);
--	hci_conn_put(conn);
- 	return err;
+ 	ret = phylink_register_sfp(pl, fwnode);
+-	if (ret < 0) {
+-		kfree(pl);
+-		return ERR_PTR(ret);
+-	}
++	if (ret < 0)
++		goto release_link_gpio;
+ 
+ 	return pl;
++
++release_link_gpio:
++	if (pl->link_gpio)
++		gpiod_put(pl->link_gpio);
++free_pl:
++	kfree(pl);
++	return ERR_PTR(ret);
  }
+ EXPORT_SYMBOL_GPL(phylink_create);
  
-@@ -6965,11 +6958,6 @@ static int hci_acl_create_conn_sync(struct hci_dev *hdev, void *data)
- 	else
- 		cp.role_switch = 0x00;
- 
--	/* Hold a reference so conn stays valid for the HCI_CONN_CREATE
--	 * clear_bit() below.
--	 */
--	hci_conn_get(conn);
--
- 	/* Mark create connection in flight so hci_cancel_connect_sync() can
- 	 * cancel it while blocking on the connection complete event.
- 	 */
-@@ -6981,7 +6969,6 @@ static int hci_acl_create_conn_sync(struct hci_dev *hdev, void *data)
- 				       conn->conn_timeout, NULL);
- 
- 	clear_bit(HCI_CONN_CREATE, &conn->flags);
--	hci_conn_put(conn);
- 
- 	return err;
- }
 -- 
 2.53.0
 
