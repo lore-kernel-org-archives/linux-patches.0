@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFA1433C1AD;
-	Fri,  7 Aug 2026 15:10:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FAF233C1AD;
+	Fri,  7 Aug 2026 15:11:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115461; cv=none; b=oGsZBqu66oqgmaG/dO7sSodlargDBsK8PJ/yl8siM2QNWGznpzWoKZ1H2rNXPA8hl5yobWEtADTHtxviS/aeHyrjpgcftcXF3NG7QHjEKNSIglpLmVtHtKuGJLVtTcN2SApRMQ4pGD15cNBjr7DYIfHlq6bMgAH37WqAgjAKc1Q=
+	t=1786115463; cv=none; b=T1oJ1YoQ6stMhwHF2o1vRa1XjhKg12gakl60XAt3B4dQ3WUXOPcR5OIzo4gqBIMcrdjE/u+pxfIfxyEeZJsETYflLSwpRlwlmOB+BS37BpO2AH7I9HbXXlqrNiQmpP9i08JiDB0J0jhiS8lc6LE1nJyntnGf3j5wt7AAe9KYrrY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115461; c=relaxed/simple;
-	bh=J/hQryoA7dwTCuu/6Pb/sG/kHC/DoUPIbSmJrtr5S+8=;
+	s=arc-20240116; t=1786115463; c=relaxed/simple;
+	bh=KJEvvVTIxiID7IOuURj6ni/p4Agw6Bbygm7Qjj3rgAQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HGU9b3LIQPf6gbn0xX5z+NNcXPqnPB5JAkTxo/vo+zAAaR0jUudmtdcdeppca78pSSfvezIwFoXf4/TRs5xso5SirBv2NQ/Vs0p2MMLhNTRkSCwbcVFBBP5XD92GIuKcWf4Fegmfa89zC3vc2a0mdUmU/4zgB717ZnOhWVR3GSg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A8OjIANY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OJgKiRGfIuUE7JCmxD0lpnv0PwcRF2hBfjHS5lWX/j6X6UoVEeoYG8tCXg/erbbeDOVPKsNdJPMluZQKAJU87WfVmnBE9bUqeV5WE34tD2qR9rPCvxcrdexf6Su5f2hJ6xeR72+XyDuOSWP9kGpEgn1ifML0IiYm1H+hT0XfGIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S3LPQ7MK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A8OjIANY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A74981F000E9;
-	Fri,  7 Aug 2026 15:10:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S3LPQ7MK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 957B81F000E9;
+	Fri,  7 Aug 2026 15:11:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115459;
-	bh=uu+G3fgZAYEgu4wVM17q0kUASyYctvIw2EXbPNUUV/k=;
+	s=korg; t=1786115462;
+	bh=1Wlvr+Px+T3wwPHSIRNjeYZD8RExj/G82MFoo+NZjgc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A8OjIANYj1Qjge/z+Pljpart2eP4Oj3ZWp3cpRCOHDarqzMYTMzwSDyEpxYsA3hwh
-	 DbO+IEPqVOmyrhCT64cbTpSbn97hdpXYsX3gmHbPOzUnlKZKsFZAitwLFPserVJbzx
-	 GreWgATMnZ1WAaoQOhJuyXLKl1jBehqlkalPuDPg=
+	b=S3LPQ7MKR+iG61p/ltDY3cTASe9HWU4GhTqyqe1yG3OQqG2snwy8CtQUPcoLiAFv/
+	 Cu1XqMv4/rtygmJn1UpmMcBDAzpxiVlD8WrMc4f3V30YA6/e6j5WfB0fPq/BzzTeVk
+	 qtycF5HPPI5d0qhcQO2Z7U8pZqqQMmWt90qv73IY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 240/396] net: pktgen: fix proc entry use-after-free
-Date: Fri,  7 Aug 2026 16:36:40 +0200
-Message-ID: <20260807143429.431558985@linuxfoundation.org>
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>
+Subject: [PATCH 6.18 241/396] powerpc/ps3: Fix map failure path in dma_ioc0_map_pages()
+Date: Fri,  7 Aug 2026 16:36:41 +0200
+Message-ID: <20260807143429.452106445@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -51,79 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <nicoyip.dev@gmail.com>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-commit 817ff6efdb7f484ea547218e11e17d8e43daa3b4 upstream.
+commit 0bb024f11d120abff3e8db9144a585b9d7fb8459 upstream.
 
-pktgen_change_name() replaces pkt_dev->entry while holding t->if_lock.
-pktgen_remove_device() removes the same entry before
-_rem_dev_from_if_list() takes that lock.
+If lv1_put_iopte() fails in dma_ioc0_map_pages(), the error path
+decrements iopage but keeps using the failed mapping's offset. As a
+result, it repeatedly tries to invalidate the failed IOPTE slot and
+leaves the already installed IOPTEs valid.
 
-This allows the following interleaving:
+Recompute offset and invalidate the installed IOPTEs instead.
 
-  CPU 0 (NETDEV_CHANGENAME)       CPU 1 (kpktgend)
-  if_lock(t)
-  proc_remove(pkt_dev->entry)
-                                  proc_remove(pkt_dev->entry)
-  pkt_dev->entry = proc_create_data(...)
-  if_unlock(t)
-
-The kthread can pass the stale proc_dir_entry to proc_remove() after the
-rename path has freed it. A reproducer with a widened race window reports:
-
-  BUG: KASAN: slab-use-after-free in proc_remove+0x78/0x80
-  Read of size 8 at addr ffff8881478fea70 by task kpktgend_0/67
-  Call Trace:
-   proc_remove+0x78/0x80
-   pktgen_remove_device.isra.0+0x11c/0x4c0
-   pktgen_thread_worker+0x1214/0x6bc0
-   kthread+0x2c6/0x3b0
-  Allocated by task 95:
-   __proc_create+0x204/0x790
-   proc_create_data+0x72/0xe0
-   pktgen_thread_write+0xd61/0x1510
-  Freed by task 28:
-   kmem_cache_free+0xcb/0x3d0
-   proc_free_inode+0x5b/0x80
-   rcu_core+0x50a/0x1850
-  The buggy address belongs to the object at ffff8881478fea00
-   which belongs to the cache proc_dir_entry of size 192
-
-Move proc_remove() into the if_lock-protected list removal helper. Keep it
-before list_del_rcu() to preserve the ordering required by add_device().
-The rename path must then finish replacing the entry before removal, or
-it observes that the device is no longer on the list.
-
-Fixes: 39df232f1a9b ("[PKTGEN]: fix device name handling")
+Fixes: 6bb5cf102541 ("[POWERPC] PS3: System-bus rework")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260719145740.2888967-1-nicoyip.dev@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260711130931.740719-3-thorsten.blum@linux.dev
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/pktgen.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ arch/powerpc/platforms/ps3/mm.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/core/pktgen.c
-+++ b/net/core/pktgen.c
-@@ -3971,6 +3971,7 @@ static void _rem_dev_from_if_list(struct
- 	struct pktgen_dev *p;
+--- a/arch/powerpc/platforms/ps3/mm.c
++++ b/arch/powerpc/platforms/ps3/mm.c
+@@ -615,6 +615,7 @@ static int dma_ioc0_map_pages(struct ps3
  
- 	if_lock(t);
-+	proc_remove(pkt_dev->entry);
- 	list_for_each_safe(q, n, &t->if_list) {
- 		p = list_entry(q, struct pktgen_dev, list);
- 		if (p == pkt_dev)
-@@ -4000,9 +4001,6 @@ static int pktgen_remove_device(struct p
- 	 * list to determine if interface already exist, avoid race
- 	 * with proc_create_data()
- 	 */
--	proc_remove(pkt_dev->entry);
--
--	/* And update the thread if_list */
- 	_rem_dev_from_if_list(t, pkt_dev);
- 
- #ifdef CONFIG_XFRM
+ fail_map:
+ 	for (iopage--; 0 <= iopage; iopage--) {
++		offset = (1 << r->page_size) * iopage;
+ 		lv1_put_iopte(0,
+ 			      c->bus_addr + offset,
+ 			      c->lpar_addr + offset,
 
 
