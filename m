@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B820C3AB26D;
-	Fri,  7 Aug 2026 14:50:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F37FC378D70;
+	Fri,  7 Aug 2026 14:50:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114213; cv=none; b=KSew0uKKAgMsUcGPp7XOAZwFADF9Xf+WgVqFuFhFf0p4gCYTjObugHXc2rvEgm3H6l4qJ0Oju0wn7bNCbPemMs4iMGXug4+2b+SX0JHfP59sN80C1bJ6zutPoPUgZVlZTwKClNVeqrP6nCDvNT0JPccirUB1qXugRwCFILR+qa4=
+	t=1786114222; cv=none; b=GXcfv4RKm8vY624nw4qBDvzN8h+P0I6gAa3OfoBkI4VtE5Zj87Q4yHFxoXVqkC7xQaxSzExfqxlF+GfoCzZAP93/vJ43FwT3hWfyXisaLfhAXlJFRA1S2J51dy934lWu2J7JXlP3nubSS9XK5baVp8SKn2Aa+nHmsMuILNIIuWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114213; c=relaxed/simple;
-	bh=Gq0KxuzWTrv4C9oqNMndZcNV52j+nHT3hObEmHcj4fU=;
+	s=arc-20240116; t=1786114222; c=relaxed/simple;
+	bh=ZOTZPxRqLbOtaf+cXRgZgw0lrcmYHOLUXdu+3O3oVeY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sfZt9LJtPsGIx5SrnUqrleWWAsaXfj3/mgJJBwnE/+PlgaSIDXA8kuQP3gRiuY/qKeaMY0NfWPpsO5btm5xIItPdsH/NhfNTF+6E7JiavQ/wPDKEtQWHag084GRrmqcAlCXqHCabdphFY5xK4KWAJgxzyep1kkE1IWrp1rxQ7uc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JuPAcYpf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=lflII5ks8TH7NADwB6EEdCEDjqr+mJi8cUer4pjjwH3DJfNgjTN6+vEyhbxgJG58ZH503sDwQCj6BKO9Exj/UiDncZxqBgqfhlHfw2rcM7IJu3EVlGbNg4PMoFBGpfQWUzDGL2gAOfj2wmOM/61IgcvKQMVaj2HKI2Z4t7H9FdQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZgAJWkvU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JuPAcYpf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AB9D1F000E9;
-	Fri,  7 Aug 2026 14:50:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZgAJWkvU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E40551F000E9;
+	Fri,  7 Aug 2026 14:50:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114212;
-	bh=z1Rc6Ybad4eSW6s3IxbPgVzTIpTuSFBlQOtOH94/l2g=;
+	s=korg; t=1786114215;
+	bh=i7KmfJetjdoF7HK8NjkJBQkFnojNNIlXDqbn59/LKA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JuPAcYpfZDeBu5wJFxBU0deodIUhjRrggwbzYdJ0ZXvmGSZ4DNy7uAUmz5jak29gk
-	 TDPyBsinS6wySx491m7fgCj16b4n6JWzKIOvhEy31rH5Q7GJed182K4gXNnwd0Wdvj
-	 WOZOLnfZsyDTVDV7pGSOfyZ608LBD6rV1shce6G4=
+	b=ZgAJWkvUJ9/5HZfL3Jc7pE/AWrnlsOz7qRYenclI6yw3hnDJ3BBFsyngxGHN0dLkn
+	 5ZJzHJJ9PIgEMO1BE26ss9856v7By9ZigB3PB98UedXtlOoOxsx7GGNz0UEcUKtZjq
+	 ghkDPb1vyQPsKVw0NdTCP67FER+f//yAZqqc2ZnA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Richard Weinberger <richard@nod.at>
-Subject: [PATCH 6.12 185/337] um: vector: fix use-after-free in vector_mmsg_rx()
-Date: Fri,  7 Aug 2026 16:36:28 +0200
-Message-ID: <20260807143422.567974754@linuxfoundation.org>
+	Matt Fleming <mfleming@cloudflare.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 186/337] veth: convert frag_list skbs before running XDP
+Date: Fri,  7 Aug 2026 16:36:29 +0200
+Message-ID: <20260807143422.589384908@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -44,64 +46,100 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Matt Fleming <mfleming@cloudflare.com>
 
-commit af421e9aed3920c7ac88c24daa48606c7112feca upstream.
+commit d0d6415963040c401e7a7e4e482a698ba52448cb upstream.
 
-When vector_mmsg_rx() discards a packet whose overlay header fails
-verify_header(), it frees the skb and continues the loop:
+A frag_list skb can reach veth with data_len set but nr_frags zero.
+veth_convert_skb_to_xdp_buff() only converts skbs that are shared,
+locked, have frags[], or do not have enough headroom. It later uses
+skb_is_nonlinear() to decide whether to set XDP_FLAGS_HAS_FRAGS and
+xdp_frags_size.
 
-	if (header_check < 0) {
-		dev_kfree_skb_irq(skb);
-		vp->estats.rx_encaps_errors++;
-		continue;
-	}
+That exposes frag_list data to XDP as if it were stored in frags[], but
+frags[] is empty. AF_XDP copy mode can then trust the bogus XDP fragment
+metadata, walk an empty fragment entry, and crash in memcpy() from
+__xsk_rcv().
 
-The normal and short-packet paths fall through to the bottom of the
-loop body, which clears the consumed slot and advances the cursors:
+Route non-linear skbs through skb_pp_cow_data() before exposing them to
+XDP, and only advertise XDP frags when the resulting skb has frags[].
+skb_copy_bits() already handles frag_list input, and skb_pp_cow_data()
+builds frags[] output with skb_add_rx_frag(), which is the
+representation XDP multi-buffer expects.
 
-	(*skbuff_vector) = NULL;
-	mmsg_vector++;
-	skbuff_vector++;
-
-The verify_header() < 0 path skips that via continue, so the freed skb
-is left in skbuff_vector[] and the cursors do not advance. The next
-iteration reads the same slot, gets the freed skb, and frees it again,
-producing a refcount underflow / use-after-free in the RX path.
-
-Discard the slot the same way the other paths do before continuing.
-
-Only transports whose verify_header() can return negative are affected:
-GRE and L2TPv3 do so on a cookie/session-id mismatch (raw/tap do not),
-so any peer on such a transport can trigger it without authentication.
-
-Fixes: 49da7e64f33e ("High Performance UML Vector Network Driver")
+Fixes: 718a18a0c8a6 ("veth: Rework veth_xdp_rcv_skb in order to accept non-linear skb")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
+Signed-off-by: Matt Fleming <mfleming@cloudflare.com>
+Reviewed-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Link: https://patch.msgid.link/20260722191925.2192070-1-matt@readmodwrite.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/um/drivers/vector_kern.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/veth.c |    4 ++--
+ net/core/skbuff.c  |   18 ++++++++++++------
+ 2 files changed, 14 insertions(+), 8 deletions(-)
 
---- a/arch/um/drivers/vector_kern.c
-+++ b/arch/um/drivers/vector_kern.c
-@@ -999,6 +999,9 @@ static int vector_mmsg_rx(struct vector_
- 				 */
- 					dev_kfree_skb_irq(skb);
- 					vp->estats.rx_encaps_errors++;
-+					(*skbuff_vector) = NULL;
-+					mmsg_vector++;
-+					skbuff_vector++;
- 					continue;
- 				}
- 				if (header_check > 0) {
+--- a/drivers/net/veth.c
++++ b/drivers/net/veth.c
+@@ -756,7 +756,7 @@ static int veth_convert_skb_to_xdp_buff(
+ 	u32 frame_sz;
+ 
+ 	if (skb_shared(skb) || skb_head_is_locked(skb) ||
+-	    skb_shinfo(skb)->nr_frags ||
++	    skb_is_nonlinear(skb) ||
+ 	    skb_headroom(skb) < XDP_PACKET_HEADROOM) {
+ 		if (skb_pp_cow_data(rq->page_pool, pskb, XDP_PACKET_HEADROOM))
+ 			goto drop;
+@@ -771,7 +771,7 @@ static int veth_convert_skb_to_xdp_buff(
+ 	xdp_prepare_buff(xdp, skb->head, skb_headroom(skb),
+ 			 skb_headlen(skb), true);
+ 
+-	if (skb_is_nonlinear(skb)) {
++	if (skb_shinfo(skb)->nr_frags) {
+ 		skb_shinfo(skb)->xdp_frags_size = skb->data_len;
+ 		xdp_buff_set_frags_flag(xdp);
+ 	} else {
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -925,6 +925,18 @@ static void skb_clone_fraglist(struct sk
+ 		skb_get(list);
+ }
+ 
++/**
++ * skb_pp_cow_data() - copy skb data into page-pool backed storage
++ * @pool: page pool to allocate from
++ * @pskb: pointer to skb pointer, replaced with the copied skb on success
++ * @headroom: headroom to reserve in the copied skb
++ *
++ * skb_copy_bits() handles both frags[] and frag_list input. If the copied
++ * skb remains non-linear, it uses frags[], which is the representation used
++ * by XDP multi-buffer.
++ *
++ * Return: 0 on success or a negative errno on failure.
++ */
+ int skb_pp_cow_data(struct page_pool *pool, struct sk_buff **pskb,
+ 		    unsigned int headroom)
+ {
+@@ -934,12 +946,6 @@ int skb_pp_cow_data(struct page_pool *po
+ 	int err, i, head_off;
+ 	void *data;
+ 
+-	/* XDP does not support fraglist so we need to linearize
+-	 * the skb.
+-	 */
+-	if (skb_has_frag_list(skb))
+-		return -EOPNOTSUPP;
+-
+ 	max_head_size = SKB_WITH_OVERHEAD(PAGE_SIZE - headroom);
+ 	if (skb->len > max_head_size + MAX_SKB_FRAGS * PAGE_SIZE)
+ 		return -ENOMEM;
 
 
