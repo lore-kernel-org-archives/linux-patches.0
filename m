@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 295E74B0482;
-	Fri,  7 Aug 2026 14:48:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA14B33C1AD;
+	Fri,  7 Aug 2026 14:48:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114092; cv=none; b=f/nndT+UeRZk6Ne6hC7tzbKqnACgDCtjq2BmN8zb6NWL+EU4LNgp0cv/fVqcvHGR0g5GS/6RTrLM++0W8rKruayZWe8PL5faI/heijaB5FAdu8Z2IG9iFNK7cky+B5qtbIth2gQCt0S6GS4jMtlS6hDHc+WMMCZKn8YbOwj4Kl4=
+	t=1786114094; cv=none; b=k2qrlvrAr+CX8U5qpXYs4/ztz6EDirp+ka9Pf9ioL6UMhlNge88EMfZjVmmVLl47hhBMwFfjrSiY3OOXOmIoQPWGnfuzQaCAdtgS1RIi2VbYfE5dp91UydqPIngIUqRg6JFs6wamo4mmMNFNg0gShJzYOO0mmN+ILQUrnFZ1QcQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114092; c=relaxed/simple;
-	bh=sBWI/k+6NfVoW0/M76GVHAeLoUTGLV4fnXLfABtsLUE=;
+	s=arc-20240116; t=1786114094; c=relaxed/simple;
+	bh=P01tsB8RPRiK1qs6R03uR4gtZfPWcaSvvcf0sKrhCjE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RMfdDNALxoG3ttJQ4fGaGRPBJMloLlzgRiu/s/DAULR5LTChoLAK3n/sqfF960jWw8nUFI+0Go5lgkXI3KqrQ+RUIeXL40Diie5ftDjuqxBEOLC6ela7y7kFMSEoZwz3yjQx33WWPqtYNHfTEccXCibKbUCojy9aY9lMqgzjgoM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DE97+PCT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EbiPisX3Qw1iPDFUvEa/3IYFuewDpTsS5pLidFO8wSWMSZ+RX/PrkqpVp1RZTvkZTkXHqPcx6MdXGVDRorudHoB5Q0WAP60ZAZjiTnE/DIIQMZjBnbtCF7ftAu4kJpUOGQS9JmcrlHnK3CmURTEsJKYN7/2UCAKYeWWWSf2ue+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aGxqPn31; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DE97+PCT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48D621F000E9;
-	Fri,  7 Aug 2026 14:48:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aGxqPn31"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 120BF1F000E9;
+	Fri,  7 Aug 2026 14:48:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114090;
-	bh=cR/aqD6f1laEHSZe8qbg9WURa8IG2sBlXREOyPu6VqA=;
+	s=korg; t=1786114093;
+	bh=YtXstCFKvuM+m1Njj200MRW4p77wd7V1aoX+RtAjD54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DE97+PCT1hKqzOoa2UAHHkxmsWLWOHEuQ7s4cVikjzmy3BDCq+qy7KWR9mNWJMyLc
-	 C4iavNqc4H0Uer9/kHmiOTWM2g78sZLqFsZSffVN5YoAVDU2+/QehlgEEmWnV3+Gz5
-	 G+jlHMyHP1cIVL105iO54Y9dBqHrIDVXnqsUwNek=
+	b=aGxqPn318460ShWDySPZLWErDPGWF9T1WgvvxCoOeXoh9xDZjeUfjMmLdoaJ3fcl5
+	 afX4RJu6Ay06eOivTTI+tuiUzD2918UQdW8EZM+ZNSCzRFYJY71M/lpqxnUZHt8ohM
+	 xRBME/z6wL4q9+AtSHmE1VbkLZAeYuh9eqd57uFc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabriele Monaco <gmonaco@redhat.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 124/337] sched/deadline: Use revised wakeup rule only for running dl_server
-Date: Fri,  7 Aug 2026 16:35:27 +0200
-Message-ID: <20260807143421.219275239@linuxfoundation.org>
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Matthew Rosato <mjrosato@linux.ibm.com>,
+	Farhan Ali <alifm@linux.ibm.com>
+Subject: [PATCH 6.12 142/337] KVM: s390: pci: Fix NULL dereference on AIBV allocation failure
+Date: Fri,  7 Aug 2026 16:35:45 +0200
+Message-ID: <20260807143421.614596991@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -53,46 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabriele Monaco <gmonaco@redhat.com>
+From: Farhan Ali <alifm@linux.ibm.com>
 
-[ Upstream commit 1842bf97af109f5ebf830175c9725bf81ebb78b1 ]
+commit 8bf09b9b7d3232806df95f409581f8a9fd99a3fa upstream.
 
-Commit 14a857056466 ("sched/deadline: Use revised wakeup rule for
-dl_server") applies the revised wakeup rule to any server, as a result
-servers that are not running (dl_defer_running == 0) and start with a
-deadline overflow get enqueued and can boost tasks as if they were
-running, invalidating the defer rule and the documented state model.
+The airq_iv_create() can return NULL on failure, but the return value was
+never checked. If it fails, zdev->aibv will be NULL and fail when
+dereferenced in kvm_zpci_set_airq(). Add a NULL check and free the
+previously allocated AISB bit and zdev->aisb on failure.
 
-Apply the revised wakeup rule only for deferrable servers that are
-marked as running.
-
-Fixes: 14a857056466 ("sched/deadline: Use revised wakeup rule for dl_server")
-Signed-off-by: Gabriele Monaco <gmonaco@redhat.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Acked-by: Juri Lelli <juri.lelli@redhat.com>
-Tested-by: Andrea Righi <arighi@nvidia.com>
-Link: https://patch.msgid.link/20260522125833.264145-1-gmonaco@redhat.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 3c5a1b6f0a18 ("KVM: s390: pci: provide routines for enabling/disabling interrupt forwarding")
+Cc: stable@vger.kernel.org
+Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
+Tested-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/deadline.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/s390/kvm/pci.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
-index cb8eff0ebd228..f5c64d1a019d5 100644
---- a/kernel/sched/deadline.c
-+++ b/kernel/sched/deadline.c
-@@ -1079,7 +1079,8 @@ static void update_dl_entity(struct sched_dl_entity *dl_se)
- 	if (dl_time_before(dl_se->deadline, rq_clock(rq)) ||
- 	    dl_entity_overflow(dl_se, rq_clock(rq))) {
+--- a/arch/s390/kvm/pci.c
++++ b/arch/s390/kvm/pci.c
+@@ -295,6 +295,11 @@ static int kvm_s390_pci_aif_enable(struc
+ 				    AIRQ_IV_GUESTVEC,
+ 				    phys_to_virt(fib->fmt0.aibv));
  
--		if (unlikely((!dl_is_implicit(dl_se) || dl_se->dl_defer) &&
-+		if (unlikely((!dl_is_implicit(dl_se) ||
-+			      (dl_se->dl_defer && dl_se->dl_defer_running)) &&
- 			     !dl_time_before(dl_se->deadline, rq_clock(rq)) &&
- 			     !is_dl_boosted(dl_se))) {
- 			update_dl_revised_wakeup(dl_se, rq);
--- 
-2.53.0
-
++	if (!zdev->aibv) {
++		rc = -ENOMEM;
++		goto free_aisb;
++	}
++
+ 	spin_lock_irq(&aift->gait_lock);
+ 	gaite = aift->gait + zdev->aisb;
+ 
+@@ -331,6 +336,9 @@ static int kvm_s390_pci_aif_enable(struc
+ 	rc = kvm_zpci_set_airq(zdev);
+ 	return rc;
+ 
++free_aisb:
++	airq_iv_free_bit(aift->sbv, zdev->aisb);
++	zdev->aisb = 0;
+ unlock:
+ 	mutex_unlock(&aift->aift_lock);
+ unpin2:
 
 
