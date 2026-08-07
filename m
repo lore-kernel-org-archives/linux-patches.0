@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFF9B4B0480;
-	Fri,  7 Aug 2026 14:56:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E02C037AA9A;
+	Fri,  7 Aug 2026 14:56:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114569; cv=none; b=rYtkqJ/4F7VRxZwqffjTGvFoYWHI0ssvytBmWgAp/ODNjuh7CXX9Shy1GaC59kj4zpBp/CVwTr9YicTNPwDNtnmT2dgUkN2kI3jfYEmHq/XlkkdP5KBJ0WHsfHSr7hRWSfH70Nv1ZuJJA3ZzzjXZqk8yE9En9Hwre9yPSNXzDoc=
+	t=1786114573; cv=none; b=Yz9I4KKEhbfgxrZW50Y4Ofe9OigS64LJ5y6ZzhqRUvLlBk0WwlRsmBBtwETF9CISc0IL9OB0UcszlEDXUad35Idg9L5psG0akirCSzqI3AgXgMjkmEj9P+mF2tqB236CoZHYTXGVcNQ3/fkUl/niE5T9cdGczX8BPHcqeqtuCfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114569; c=relaxed/simple;
-	bh=/VHmZjga0hHEaZN0b6uID81pCzx95MOXC9B3/aIiPLM=;
+	s=arc-20240116; t=1786114573; c=relaxed/simple;
+	bh=hGyMRFQHxqLTn0GTxQAnEHhygqR9ZMGOy1+Qu5vp9jM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aBgZj8yE3+ZN2ZVqdpTKyWdy8Z6Slmf1RzYYoSRFRkLe4BdOiiUm2F7KuWxdvuI3cD+wzK8QZ1v1plDo2lhMtPsM+b59CIVk0mjJGYSTGTfduvEc2TKGj3OzvFWXw6VIFXRJ+dxwbwdz1i4YgmzdUjCNEqkskEVEyCe90pplhBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zKUdbp4x; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RdE7kmBvKpWcTjkTwDXZJVM1OkEGeh1CwX2jY+AXb4fx0HN5tu/t4RhRYWSrWUhqw4PdOcfTz7BSEa9vpeHdQUSw9of6rh2sNEx9SBncKQS2nnAtE0S32gQV4psZlqVOwFN7n8mtSxOt7hx1ZaVHz7cm3SD44rZNC9vsTSx4XOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZIRID+Y+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zKUdbp4x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E3DA1F000E9;
-	Fri,  7 Aug 2026 14:56:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZIRID+Y+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF7681F000E9;
+	Fri,  7 Aug 2026 14:56:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114567;
-	bh=v1QAOJ4wT17+qYQxCCTBziOE+lIPX3LJBwM/GB9zn1s=;
+	s=korg; t=1786114570;
+	bh=mHOoZ7Pg6zfSvqXYwGNioQF3mkfPxiRFiRtyDPjRPAU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zKUdbp4x+/VqA3kL09YPHo90ssi53bgpWiB0pmCwutFAhP4AVF2M351xR9X6fOqno
-	 Qc+VmTiirsz48Gs9MHziL7+mu6t7YznscDank/srkzceo/cAtQgosZq7ePaBSY9W8b
-	 STS+RiEV9COpiuAiELuhXFCXJ7IjCHlNUSvLFaiM=
+	b=ZIRID+Y+/Z0UjZJZKQyZxKZdrGyHDaLXE7LRZnQnqzHxTgqo0E7JAP8NCXvWUzH1+
+	 vYqag+DEgwPHefwJnpKvUg+wiUa/94QHffIXuLAxepLe4sRis+z/x5PY0m/7J6dzqS
+	 9Kd033PeZ84dg0O+9/BhtyS4yVF6WC0W6cH7KApM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Breno Leitao <leitao@debian.org>,
 	Catalin Marinas <catalin.marinas@arm.com>,
-	Ido Schimmel <idosch@idosch.org>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Joerg Roedel <joro@8bytes.org>,
-	Will Deacon <will@kernel.org>,
+	Pavel Tikhomirov <ptikhomirov@virtuozzo.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 307/337] kmemleak: iommu/iova: fix transient kmemleak false positive
-Date: Fri,  7 Aug 2026 16:38:30 +0200
-Message-ID: <20260807143425.181571712@linuxfoundation.org>
+Subject: [PATCH 6.12 308/337] mm/kmemleak: fix checksum computation for per-cpu objects
+Date: Fri,  7 Aug 2026 16:38:31 +0200
+Message-ID: <20260807143425.203880134@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -56,163 +53,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Catalin Marinas <catalin.marinas@arm.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 7591c127f3b17d5879f18819cad7058bf3a2e276 ]
+[ Upstream commit 79c37ae3733e93d9d8ea12ecb44f717e61439024 ]
 
-The introduction of iova_depot_pop() in 911aa1245da8 ("iommu/iova: Make
-the rcache depot scale better") confused kmemleak by moving a struct
-iova_magazine object from a singly linked list to rcache->depot and
-resetting the 'next' pointer referencing it.  Unlike doubly linked lists,
-the content of the object being referred is never changed on removal from
-a singly linked list and the kmemleak checksum heuristics do not detect
-such scenario.  This leads to false positives like:
+The per-cpu object checksum folds each CPU's CRC together with XOR and
+seeds every CRC with 0.  Both choices make update_checksum() miss content
+changes:
 
-unreferenced object 0xffff8881a5301000 (size 1024):
-  comm "softirq", pid 0, jiffies 4306297099 (age 462.991s)
-  hex dump (first 32 bytes):
-    00 00 00 00 00 00 00 00 e7 7d 05 00 00 00 00 00  .........}......
-    0f b4 05 00 00 00 00 00 b4 96 05 00 00 00 00 00  ................
-  backtrace:
-    [<ffffffff819f5f08>] __kmem_cache_alloc_node+0x1e8/0x320
-    [<ffffffff818a239a>] kmalloc_trace+0x2a/0x60
-    [<ffffffff8231d31e>] free_iova_fast+0x28e/0x4e0
-    [<ffffffff82310860>] fq_ring_free_locked+0x1b0/0x310
-    [<ffffffff8231225d>] fq_flush_timeout+0x19d/0x2e0
-    [<ffffffff813e95ba>] call_timer_fn+0x19a/0x5c0
-    [<ffffffff813ea16b>] __run_timers+0x78b/0xb80
-    [<ffffffff813ea5bd>] run_timer_softirq+0x5d/0xd0
-    [<ffffffff82f1d915>] __do_softirq+0x205/0x8b5
+  - XOR is self-cancelling, so equal contents on two CPUs cancel out and
+    simultaneous identical changes leave the checksum unchanged.
+  - crc32(0, ...) over all-zero content is 0, so a freshly allocated,
+    zeroed per-cpu area checksums to 0, matching the initial value, and
+    the object is never seen to change.
 
-Introduce kmemleak_transient_leak() which resets the object checksum
-requiring another scan pass before it is reported (if still unreferenced).
-Call this new API in iova_depot_pop().
+See discussions at [0].
 
-Link: https://lkml.kernel.org/r/20241104111944.2207155-1-catalin.marinas@arm.com
-Link: https://lore.kernel.org/r/ZY1osaGLyT-sdKE8@shredder/
+When update_checksum() wrongly reports an actively modified object as
+unchanged, kmemleak stops greying it for an extra scan and can report a
+live per-cpu object as a leak.
+
+Fold the per-cpu CRC as a single rolling checksum across all CPUs and
+initialise the object checksum to ~0 so the first computed value always
+registers as a change, even for content that hashes to 0.
+reset_checksum() is seeded the same way.
+
+Link: https://lore.kernel.org/all/akfYImSNDh3OjIfR@gmail.com [0]
+Link: https://lore.kernel.org/20260703-kmemleak_checksum-v1-1-5e0ab7d6966f@debian.org
+Fixes: 6c99d4eb7c5e ("kmemleak: enable tracking for percpu pointers")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Co-developed-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
-Reported-by: Ido Schimmel <idosch@idosch.org>
-Tested-by: Ido Schimmel <idosch@nvidia.com>
-Acked-by: Robin Murphy <robin.murphy@arm.com>
-Cc: Joerg Roedel <joro@8bytes.org>
-Cc: Will Deacon <will@kernel.org>
+Reviewed-by: Pavel Tikhomirov <ptikhomirov@virtuozzo.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: 79c37ae3733e ("mm/kmemleak: fix checksum computation for per-cpu objects")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/dev-tools/kmemleak.rst |    1 
- drivers/iommu/iova.c                 |    6 +++++
- include/linux/kmemleak.h             |    4 +++
- mm/kmemleak.c                        |   39 +++++++++++++++++++++++++++++++++++
- 4 files changed, 50 insertions(+)
+ mm/kmemleak.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/Documentation/dev-tools/kmemleak.rst
-+++ b/Documentation/dev-tools/kmemleak.rst
-@@ -161,6 +161,7 @@ See the include/linux/kmemleak.h header
- - ``kmemleak_free_percpu``	 - notify of a percpu memory block freeing
- - ``kmemleak_update_trace``	 - update object allocation stack trace
- - ``kmemleak_not_leak``	 - mark an object as not a leak
-+- ``kmemleak_transient_leak``	 - mark an object as a transient leak
- - ``kmemleak_ignore``		 - do not scan or report an object as leak
- - ``kmemleak_scan_area``	 - add scan areas inside a memory block
- - ``kmemleak_no_scan``	 - do not scan a memory block
---- a/drivers/iommu/iova.c
-+++ b/drivers/iommu/iova.c
-@@ -6,6 +6,7 @@
-  */
- 
- #include <linux/iova.h>
-+#include <linux/kmemleak.h>
- #include <linux/module.h>
- #include <linux/slab.h>
- #include <linux/smp.h>
-@@ -673,6 +674,11 @@ static struct iova_magazine *iova_depot_
- {
- 	struct iova_magazine *mag = rcache->depot;
- 
-+	/*
-+	 * As the mag->next pointer is moved to rcache->depot and reset via
-+	 * the mag->size assignment, mark it as a transient false positive.
-+	 */
-+	kmemleak_transient_leak(mag->next);
- 	rcache->depot = mag->next;
- 	mag->size = IOVA_MAG_SIZE;
- 	rcache->depot_size--;
---- a/include/linux/kmemleak.h
-+++ b/include/linux/kmemleak.h
-@@ -26,6 +26,7 @@ extern void kmemleak_free_part(const voi
- extern void kmemleak_free_percpu(const void __percpu *ptr) __ref;
- extern void kmemleak_update_trace(const void *ptr) __ref;
- extern void kmemleak_not_leak(const void *ptr) __ref;
-+extern void kmemleak_transient_leak(const void *ptr) __ref;
- extern void kmemleak_ignore(const void *ptr) __ref;
- extern void kmemleak_scan_area(const void *ptr, size_t size, gfp_t gfp) __ref;
- extern void kmemleak_no_scan(const void *ptr) __ref;
-@@ -93,6 +94,9 @@ static inline void kmemleak_update_trace
- static inline void kmemleak_not_leak(const void *ptr)
- {
- }
-+static inline void kmemleak_transient_leak(const void *ptr)
-+{
-+}
- static inline void kmemleak_ignore(const void *ptr)
- {
- }
 --- a/mm/kmemleak.c
 +++ b/mm/kmemleak.c
-@@ -951,6 +951,28 @@ static void make_black_object(unsigned l
+@@ -671,7 +671,7 @@ static struct kmemleak_object *__alloc_o
+ 	atomic_set(&object->use_count, 1);
+ 	object->excess_ref = 0;
+ 	object->count = 0;			/* white color initially */
+-	object->checksum = 0;
++	object->checksum = ~0;
+ 	object->del_state = 0;
+ 
+ 	/* task information */
+@@ -967,7 +967,7 @@ static void reset_checksum(unsigned long
+ 	}
+ 
+ 	raw_spin_lock_irqsave(&object->lock, flags);
+-	object->checksum = 0;
++	object->checksum = ~0;
+ 	raw_spin_unlock_irqrestore(&object->lock, flags);
+ 	put_object(object);
  }
+@@ -1382,7 +1382,8 @@ static bool update_checksum(struct kmeml
+ 		for_each_possible_cpu(cpu) {
+ 			void *ptr = per_cpu_ptr((void __percpu *)object->pointer, cpu);
  
- /*
-+ * Reset the checksum of an object. The immediate effect is that it will not
-+ * be reported as a leak during the next scan until its checksum is updated.
-+ */
-+static void reset_checksum(unsigned long ptr)
-+{
-+	unsigned long flags;
-+	struct kmemleak_object *object;
-+
-+	object = find_and_get_object(ptr, 0);
-+	if (!object) {
-+		kmemleak_warn("Not resetting the checksum of an unknown object at 0x%08lx\n",
-+			      ptr);
-+		return;
-+	}
-+
-+	raw_spin_lock_irqsave(&object->lock, flags);
-+	object->checksum = 0;
-+	raw_spin_unlock_irqrestore(&object->lock, flags);
-+	put_object(object);
-+}
-+
-+/*
-  * Add a scanning area to the object. If at least one such area is added,
-  * kmemleak will only scan these ranges rather than the whole memory block.
-  */
-@@ -1219,6 +1241,23 @@ void __ref kmemleak_not_leak(const void
- EXPORT_SYMBOL(kmemleak_not_leak);
- 
- /**
-+ * kmemleak_transient_leak - mark an allocated object as transient false positive
-+ * @ptr:	pointer to beginning of the object
-+ *
-+ * Calling this function on an object will cause the memory block to not be
-+ * reported as a leak temporarily. This may happen, for example, if the object
-+ * is part of a singly linked list and the ->next reference to it is changed.
-+ */
-+void __ref kmemleak_transient_leak(const void *ptr)
-+{
-+	pr_debug("%s(0x%px)\n", __func__, ptr);
-+
-+	if (kmemleak_enabled && ptr && !IS_ERR(ptr))
-+		reset_checksum((unsigned long)ptr);
-+}
-+EXPORT_SYMBOL(kmemleak_transient_leak);
-+
-+/**
-  * kmemleak_ignore - ignore an allocated object
-  * @ptr:	pointer to beginning of the object
-  *
+-			object->checksum ^= crc32(0, kasan_reset_tag((void *)ptr), object->size);
++			object->checksum = crc32(object->checksum,
++						 kasan_reset_tag((void *)ptr), object->size);
+ 		}
+ 	} else {
+ 		object->checksum = crc32(0, kasan_reset_tag((void *)object->pointer), object->size);
 
 
