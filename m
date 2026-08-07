@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C5973242CA;
-	Fri,  7 Aug 2026 14:55:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AAFE29D27A;
+	Fri,  7 Aug 2026 14:55:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114551; cv=none; b=IBWst5Sc5CKb506tYv6NxHi1UQFVarQ4Lau9ocZGk8xpHpNPpCv8Q0TzejRKfUY/jrWfgYy6oAYsXj3nlHVef024N1Rl6/aq1RxLGqsFMHVt5NPKcZY8IGT/MtF2TDQZXB/HPRSqIp85hvI4DoTy0pKVTGwMamH/ALn6dJxGqCM=
+	t=1786114554; cv=none; b=B4l9fkzRevu7VyA/ft2RJ7e5E6voxBNoqci2cOMZggMmeXeJpuz+1F9EH89uthahzqR/HoTFqpV30Es0vsuFvxVwFOPPfdPmyhlKmGo75Mt6IMc6QF/l5wdQmDvGhOXmy+GkKmDLNdxejhg4Y91q0LehbkZOqGHk56TxPq7a4L8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114551; c=relaxed/simple;
-	bh=l0A0YCfOwyjjSy0c7pamMX44KseXYdBmOcenHuETCG4=;
+	s=arc-20240116; t=1786114554; c=relaxed/simple;
+	bh=/xi32Fz8nI6gfaa3UIPCuwYUEkuxFVQOiH+nlMVirEQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T/zp/zU5P8603oMj/aO79g+0rFXiMGckN/4VNVdBesNK9qcOHUALbULZCS4OBegcXfjOT+KlWWxWiA3MxEfwN2bgD35NVBZiVRgKhPVlfZhKIxLgrtffnKZS/CPVzetzBFWKkrqCvTduEQjBimp50kcj3i8lixz/rG9xiFoqflw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V9xg6s0B; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cvb4ucmQYx6UcpbzdHuM0A3HMX3/iQjnYHH/970+gbnrGS08yPfi8/hVYMSFpMxZwP5/s469aL+cGFUwPQRSn/tnWS04WBtrQc/PPNkS3YT4x04YM4OpOZsoAwGgec9y0IfEh3FdawFQOtzEow/v+96pnJVMYKbR/Z8F1AMGRDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MId2JEOk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V9xg6s0B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D85231F000E9;
-	Fri,  7 Aug 2026 14:55:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MId2JEOk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0F1E1F00A3D;
+	Fri,  7 Aug 2026 14:55:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114550;
-	bh=IrUwjSunqaEkLdq4UFZ3Uu2I+VD2rLJqyY7a8XzSRcs=;
+	s=korg; t=1786114553;
+	bh=tlfW58I/c9NFdEeH/r0To4higa6aiSEcBwLaIko1+nI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V9xg6s0BOq2F1ZHIuQdffWKbIBLp8A6KOf2an0zjyFD92hFDi249xVp08Gr7FBhcG
-	 2gbiqLLhctH9dRkD2rKo44JPDmsGuQNB96AwmG8K504Fuupzr0+Xo9zGqh2OALVp8X
-	 wk6+ItCjkHkcmoYvghWRQyawyiFm6ZYAIyv4RfLk=
+	b=MId2JEOkQ5DWYeH9+SelCSGsvieSKAuHufpfV+WHlB92TkxfCuGjy9EKgMkhRsozK
+	 x5LtgwKXmgW+bRFWG76/0egB1tWHN6bYyohXt4CKwGF0gdT1rjlsK4dMNMk1mhQ7HT
+	 Xm9CL9Q2yCs5+VVmO+pcO5LEViTeP5xmy+BD2mJU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Kaplan <alexander.kaplan@sms-medipool.de>,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Geliang Tang <tanggeliang@kylinos.cn>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 302/337] ALSA: hda: codecs: hdmi: disable keep-alive before audio format change
-Date: Fri,  7 Aug 2026 16:38:25 +0200
-Message-ID: <20260807143425.074624835@linuxfoundation.org>
+Subject: [PATCH 6.12 303/337] mptcp: pm: avoid code duplication to lookup endp
+Date: Fri,  7 Aug 2026 16:38:26 +0200
+Message-ID: <20260807143425.096096372@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -52,127 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+From: Geliang Tang <tanggeliang@kylinos.cn>
 
-[ Upstream commit a3d6d3cedfe87bbd5a677d52b22ac20d28e59cf8 ]
+[ Upstream commit 1d7fa6ceb91fddbe38cae3521d5d1075bce6a00e ]
 
-When a keep-alive (KAE) silent stream is active on an Intel HDMI/DP
-codec, opening a real PCM stream reprograms the converter format and the
-audio infoframe in snd_hda_hdmi_generic_pcm_prepare(). Part of that
-reprogramming - the converter channel count and the channel mapping in
-snd_hda_hdmi_setup_audio_infoframe() - is not safe to do while a
-keep-alive stream is active. This is most visible when switching to a
-multichannel PCM configuration, where the active channel count actually
-changes. In that case the newly opened PCM stream plays no sound.
+The helper __lookup_addr() can be used in mptcp_pm_nl_get_local_id()
+and mptcp_pm_nl_is_backup() to simplify the code, and avoid code
+duplication.
 
-Add an optional hdmi_ops .prepare hook, called at the start of the
-PCM prepare sequence (before the format and infoframe are touched), and
-implement it for HSW+ to release keep-alive. Keep-alive is then
-re-enabled as before once the new stream has been set up, in the
-setup_stream op.
-
-Fixes: 15175a4f2bbb ("ALSA: hda/hdmi: add keep-alive support for ADL-P and DG2")
-Reported-by: Alexander Kaplan <alexander.kaplan@sms-medipool.de>
-Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/work_items/8412
-Tested-by: Alexander Kaplan <alexander.kaplan@sms-medipool.de>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
-Link: https://patch.msgid.link/20260715180610.1371243-1-kai.vehmanen@linux.intel.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-[ adapted three hunks from the post-6.12 split files (hdmi.c/hdmi_local.h/intelhdmi.c) back into the monolithic sound/pci/hda/patch_hdmi.c, with the prepare hook un-indented one level since 6.12 uses plain mutex_lock() instead of scoped_guard() ]
+Co-developed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20241115-net-next-mptcp-pm-lockless-dump-v1-2-f4a1bcb4ca2c@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 9bc6d5e4ca9f ("mptcp: pm: userspace: fix use-after-free in get_local_id")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_hdmi.c |   48 +++++++++++++++++++++++++++++++++++++++------
- 1 file changed, 42 insertions(+), 6 deletions(-)
+ net/mptcp/pm_netlink.c |   20 ++++++--------------
+ 1 file changed, 6 insertions(+), 14 deletions(-)
 
---- a/sound/pci/hda/patch_hdmi.c
-+++ b/sound/pci/hda/patch_hdmi.c
-@@ -111,6 +111,15 @@ struct hdmi_ops {
- 			    hda_nid_t pin_nid, int dev_id, u32 stream_tag,
- 			    int format);
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -1278,17 +1278,13 @@ int mptcp_pm_nl_get_local_id(struct mptc
+ {
+ 	struct mptcp_pm_addr_entry *entry;
+ 	struct pm_nl_pernet *pernet;
+-	int ret = -1;
++	int ret;
  
-+	/*
-+	 * Optional hook invoked at the beginning of the PCM prepare
-+	 * sequence, before the audio infoframe and stream format are
-+	 * (re)programmed. Used to disable keep-alive / silent stream so
-+	 * that the format change is not done while keep-alive is active.
-+	 */
-+	void (*prepare)(struct hda_codec *codec,
-+			struct hdmi_spec_per_pin *per_pin);
-+
- 	void (*pin_cvt_fixup)(struct hda_codec *codec,
- 			      struct hdmi_spec_per_pin *per_pin,
- 			      hda_nid_t cvt_nid);
-@@ -2134,6 +2143,9 @@ static int generic_hdmi_playback_pcm_pre
- 	per_pin->channels = substream->runtime->channels;
- 	per_pin->setup = true;
+ 	pernet = pm_nl_get_pernet_from_msk(msk);
  
-+	if (spec->ops.prepare)
-+		spec->ops.prepare(codec, per_pin);
-+
- 	if (get_wcaps(codec, cvt_nid) & AC_WCAP_STRIPE) {
- 		stripe = snd_hdac_get_stream_stripe_ctl(&codec->bus->core,
- 							substream);
-@@ -2901,6 +2913,28 @@ static void register_i915_notifier(struc
- 	codec->relaxed_resume = 1;
- }
- 
-+/*
-+ * prepare ops override for HSW+
-+ *
-+ * Disable keep-alive before the converter format and audio infoframe are
-+ * reprogrammed by the PCM prepare sequence. Changing the audio format (e.g.
-+ * the channel count when switching to multichannel PCM) while a keep-alive
-+ * stream is active is not safe, so release keep-alive here, early in the
-+ * sequence. It is re-enabled once the new stream has been set up, in
-+ * i915_hsw_setup_stream().
-+ */
-+static void i915_hsw_prepare(struct hda_codec *codec,
-+			     struct hdmi_spec_per_pin *per_pin)
-+{
-+	struct hdmi_spec *spec = codec->spec;
-+
-+	if (spec->silent_stream_type == SILENT_STREAM_KAE && per_pin->silent_stream) {
-+		silent_stream_set_kae(codec, per_pin, false);
-+		/* wait for pending transfers in codec to clear */
-+		usleep_range(100, 200);
-+	}
-+}
-+
- /* setup_stream ops override for HSW+ */
- static int i915_hsw_setup_stream(struct hda_codec *codec, hda_nid_t cvt_nid,
- 				 hda_nid_t pin_nid, int dev_id, u32 stream_tag,
-@@ -2918,15 +2952,16 @@ static int i915_hsw_setup_stream(struct
- 
- 	haswell_verify_D0(codec, cvt_nid, pin_nid);
- 
--	if (spec->silent_stream_type == SILENT_STREAM_KAE && per_pin && per_pin->silent_stream) {
--		silent_stream_set_kae(codec, per_pin, false);
--		/* wait for pending transfers in codec to clear */
--		usleep_range(100, 200);
+ 	rcu_read_lock();
+-	list_for_each_entry_rcu(entry, &pernet->local_addr_list, list) {
+-		if (mptcp_addresses_equal(&entry->addr, skc, entry->addr.port)) {
+-			ret = entry->addr.id;
+-			break;
+-		}
 -	}
--
- 	res = hdmi_setup_stream(codec, cvt_nid, pin_nid, dev_id,
- 				stream_tag, format);
++	entry = __lookup_addr(pernet, skc);
++	ret = entry ? entry->addr.id : -1;
+ 	rcu_read_unlock();
+ 	if (ret >= 0)
+ 		return ret;
+@@ -1315,15 +1311,11 @@ bool mptcp_pm_nl_is_backup(struct mptcp_
+ {
+ 	struct pm_nl_pernet *pernet = pm_nl_get_pernet_from_msk(msk);
+ 	struct mptcp_pm_addr_entry *entry;
+-	bool backup = false;
++	bool backup;
  
-+	/*
-+	 * Keep-alive was disabled in i915_hsw_prepare(), re-enable it now.
-+	 * The pin lookup above resolves to the same per_pin that prepare
-+	 * used (pin_nid comes from that per_pin), so this stays balanced; a
-+	 * NULL per_pin only occurs on a lookup failure that also implies no
-+	 * active keep-alive stream to restore.
-+	 */
- 	if (spec->silent_stream_type == SILENT_STREAM_KAE && per_pin && per_pin->silent_stream) {
- 		usleep_range(100, 200);
- 		silent_stream_set_kae(codec, per_pin, true);
-@@ -3100,6 +3135,7 @@ static int intel_hsw_common_init(struct
- 	codec->depop_delay = 0;
- 	codec->auto_runtime_pm = 1;
+ 	rcu_read_lock();
+-	list_for_each_entry_rcu(entry, &pernet->local_addr_list, list) {
+-		if (mptcp_addresses_equal(&entry->addr, skc, entry->addr.port)) {
+-			backup = !!(entry->flags & MPTCP_PM_ADDR_FLAG_BACKUP);
+-			break;
+-		}
+-	}
++	entry = __lookup_addr(pernet, skc);
++	backup = entry && !!(entry->flags & MPTCP_PM_ADDR_FLAG_BACKUP);
+ 	rcu_read_unlock();
  
-+	spec->ops.prepare = i915_hsw_prepare;
- 	spec->ops.setup_stream = i915_hsw_setup_stream;
- 	spec->ops.pin_cvt_fixup = i915_pin_cvt_fixup;
- 
+ 	return backup;
 
 
