@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CA113AB26D;
-	Fri,  7 Aug 2026 14:50:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B820C3AB26D;
+	Fri,  7 Aug 2026 14:50:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114211; cv=none; b=sKbEsistjx791fTQIfNfloeflPtJ16iSI9NeO/4Dj5JVcPoP1hS4ad5wF+eZ5X7aKPAIJ2MBI59H/tFZlH2WuL6wxGwjz67vSSxflbXdinHMUUTw7u8M3aWqK9ZQwDm9wSffLnzq/vS/Ou9FFti9rRKtxdeP1vKAOmO9fXdBeUo=
+	t=1786114213; cv=none; b=KSew0uKKAgMsUcGPp7XOAZwFADF9Xf+WgVqFuFhFf0p4gCYTjObugHXc2rvEgm3H6l4qJ0Oju0wn7bNCbPemMs4iMGXug4+2b+SX0JHfP59sN80C1bJ6zutPoPUgZVlZTwKClNVeqrP6nCDvNT0JPccirUB1qXugRwCFILR+qa4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114211; c=relaxed/simple;
-	bh=5RWaiNgGoit+HeTz4kAjwB2IgRBoO8pWnIfycR1IFNU=;
+	s=arc-20240116; t=1786114213; c=relaxed/simple;
+	bh=Gq0KxuzWTrv4C9oqNMndZcNV52j+nHT3hObEmHcj4fU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o8gPVhiFE7bYqViIzhuLkAed/u6kfl2zQjK0tydlt0LC32va3ER9OYDTfm5WvU6EoO9zptDOyR7Z3UtmD/3GOuB9WHmxzbUEm65TQpOPT5gsgIabgA6tWQJaCwTnKLnPOhtEDELldxIiSXnVWYCtu7MWpZCHBaBlVTPgrJe8lE4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vRbd0AvB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sfZt9LJtPsGIx5SrnUqrleWWAsaXfj3/mgJJBwnE/+PlgaSIDXA8kuQP3gRiuY/qKeaMY0NfWPpsO5btm5xIItPdsH/NhfNTF+6E7JiavQ/wPDKEtQWHag084GRrmqcAlCXqHCabdphFY5xK4KWAJgxzyep1kkE1IWrp1rxQ7uc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JuPAcYpf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vRbd0AvB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37E691F000E9;
-	Fri,  7 Aug 2026 14:50:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JuPAcYpf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AB9D1F000E9;
+	Fri,  7 Aug 2026 14:50:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114209;
-	bh=60S8FBra5ebZXhyYxRqxc/1ivTxZsBjCy0ourIiv3z4=;
+	s=korg; t=1786114212;
+	bh=z1Rc6Ybad4eSW6s3IxbPgVzTIpTuSFBlQOtOH94/l2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vRbd0AvBSjMir3U/x4cQO1rOpIK+7SUg7hgQwRy63wxnomqDijKm5i0e9Umbo4+P/
-	 fg20Qm+i6Y/+JIfZnnAvEhSSGru8sUzce/cjRebShgK3wHMwTEV17Jqhjj91kh+bTn
-	 u/gAHFR2KscxXFFtsmJfZ+FX06rAXYHAYhSGlpog=
+	b=JuPAcYpfZDeBu5wJFxBU0deodIUhjRrggwbzYdJ0ZXvmGSZ4DNy7uAUmz5jak29gk
+	 TDPyBsinS6wySx491m7fgCj16b4n6JWzKIOvhEy31rH5Q7GJed182K4gXNnwd0Wdvj
+	 WOZOLnfZsyDTVDV7pGSOfyZ608LBD6rV1shce6G4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>
-Subject: [PATCH 6.12 184/337] powerpc/ps3: Fix map failure path in dma_ioc0_map_pages()
-Date: Fri,  7 Aug 2026 16:36:27 +0200
-Message-ID: <20260807143422.547391680@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Richard Weinberger <richard@nod.at>
+Subject: [PATCH 6.12 185/337] um: vector: fix use-after-free in vector_mmsg_rx()
+Date: Fri,  7 Aug 2026 16:36:28 +0200
+Message-ID: <20260807143422.567974754@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -52,38 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 0bb024f11d120abff3e8db9144a585b9d7fb8459 upstream.
+commit af421e9aed3920c7ac88c24daa48606c7112feca upstream.
 
-If lv1_put_iopte() fails in dma_ioc0_map_pages(), the error path
-decrements iopage but keeps using the failed mapping's offset. As a
-result, it repeatedly tries to invalidate the failed IOPTE slot and
-leaves the already installed IOPTEs valid.
+When vector_mmsg_rx() discards a packet whose overlay header fails
+verify_header(), it frees the skb and continues the loop:
 
-Recompute offset and invalidate the installed IOPTEs instead.
+	if (header_check < 0) {
+		dev_kfree_skb_irq(skb);
+		vp->estats.rx_encaps_errors++;
+		continue;
+	}
 
-Fixes: 6bb5cf102541 ("[POWERPC] PS3: System-bus rework")
+The normal and short-packet paths fall through to the bottom of the
+loop body, which clears the consumed slot and advances the cursors:
+
+	(*skbuff_vector) = NULL;
+	mmsg_vector++;
+	skbuff_vector++;
+
+The verify_header() < 0 path skips that via continue, so the freed skb
+is left in skbuff_vector[] and the cursors do not advance. The next
+iteration reads the same slot, gets the freed skb, and frees it again,
+producing a refcount underflow / use-after-free in the RX path.
+
+Discard the slot the same way the other paths do before continuing.
+
+Only transports whose verify_header() can return negative are affected:
+GRE and L2TPv3 do so on a cookie/session-id mismatch (raw/tap do not),
+so any peer on such a transport can trigger it without authentication.
+
+Fixes: 49da7e64f33e ("High Performance UML Vector Network Driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260711130931.740719-3-thorsten.blum@linux.dev
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/platforms/ps3/mm.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/um/drivers/vector_kern.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/arch/powerpc/platforms/ps3/mm.c
-+++ b/arch/powerpc/platforms/ps3/mm.c
-@@ -615,6 +615,7 @@ static int dma_ioc0_map_pages(struct ps3
- 
- fail_map:
- 	for (iopage--; 0 <= iopage; iopage--) {
-+		offset = (1 << r->page_size) * iopage;
- 		lv1_put_iopte(0,
- 			      c->bus_addr + offset,
- 			      c->lpar_addr + offset,
+--- a/arch/um/drivers/vector_kern.c
++++ b/arch/um/drivers/vector_kern.c
+@@ -999,6 +999,9 @@ static int vector_mmsg_rx(struct vector_
+ 				 */
+ 					dev_kfree_skb_irq(skb);
+ 					vp->estats.rx_encaps_errors++;
++					(*skbuff_vector) = NULL;
++					mmsg_vector++;
++					skbuff_vector++;
+ 					continue;
+ 				}
+ 				if (header_check > 0) {
 
 
