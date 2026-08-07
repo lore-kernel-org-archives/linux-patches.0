@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4396A470452;
-	Fri,  7 Aug 2026 15:24:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2979A3C81B4;
+	Fri,  7 Aug 2026 15:24:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116290; cv=none; b=SU6wCM60rRwkFs7eOwhzAjd6jTyeL0WDgGYL83DMpepItxQ02VXpZ8URLJYZJ1yz+8YUnpU+OtyxYvkHeGGgEuYOaUfsz1LrQaT7R3sUXPh6hCz3YgxKl2Yz1MSdW0PeqaSIsDus7KDHv/Xd0HlVgWsFG2QxpG72D09pVmY+fGo=
+	t=1786116294; cv=none; b=NhwGUGB/F6UOwrXfKh+IZNWnV/djLIkcBHzW3nuR/T/I6vHSdjvcYe+cR1mU7idyeM0A7EZrpl6BlbZRuaB/y8C2Y0QNsGGqg9ciIXZ4/yqEaxpM2CmUgVj4EXgvp0dRkm6Ya0mxB1cJof/7463O89W81H4yOO8UhA5gxsvvGIA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116290; c=relaxed/simple;
-	bh=ew9KUbVkBMHB3lmOkOZrmQRKmbXxM2NMLy5O2D2/Xz4=;
+	s=arc-20240116; t=1786116294; c=relaxed/simple;
+	bh=C6RB+2vsMeSIzZVyXLzwA/oPqxuv+T/BP2FlYxxDXHs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TLfCiilp5vvGQMBY/VpYtHgmVgSzd3RMTlt8VoCZbE3ESBn2T2AvQboZcXrv/GKBViVfzsISZUidcoqyOy17glale1MLq57Bmts1P9taflL09YhqCebBamee6PenCsHRr889JAc2XFUJRo5cL/wKKaE/mP5ZOLcF2WU/Zt5S9oU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fQdPWmtr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iGI5CTXJRrWqMYPZDdWZjXm/wu1mvifVP262tlJ+3b7EOUH3w7g4GsxLph672sZ4Jfvg90/rQYCi5L8IacVXHzHmUok5fOvg9dSwJNK2FZ3MT9HqoADDBM8F6xKfms1da7Slvw/8G7bH1wWCv2UCLT7anfL5ub//8o5HTNm3Hhg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XQn78jUO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fQdPWmtr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A88E1F000E9;
-	Fri,  7 Aug 2026 15:24:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XQn78jUO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D8681F00A3F;
+	Fri,  7 Aug 2026 15:24:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116289;
-	bh=cpjoamHIdbRWvbfZgdT7i4drbOVauSvbvho3ERuWuwY=;
+	s=korg; t=1786116292;
+	bh=E4sejrHC5NJMwlN6tcgAVDvuGC3nrERxgkMyv+r537g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fQdPWmtr0IzFd5ROnYTceAUdtXzjbpVtf0SZ9KtL8PCvql6dhvLu0O6B0QVxshJ2N
-	 O9oPhGllpK90yCLzz3WPMkafAaDyCnYTTpaHiH+dGRmz/pE/LFRDjVOeEI9xavo88Y
-	 hbEdJbDyoai3gbi7DP6PX3oK7409OIiLWWNATkrI=
+	b=XQn78jUOZZsopDjS/QsMB9Ggkantyu2Ut8eNQ/4iRzINwDwIgVz2vUMP9JBJaZFbr
+	 IELiYrFPKy1VJg4iiUoBeQMh12v++o0C9a1prI2l2faaIZAVosJ7G24WznpbLb52l4
+	 Qi+A1FbNFROC9SCeYnYG5W3jkiGQCVUIia0AKea0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Eelco Chaudron <echaudro@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.6 162/261] net: openvswitch: fix potential UAF on meter attach failure
-Date: Fri,  7 Aug 2026 16:38:39 +0200
-Message-ID: <20260807143418.858844954@linuxfoundation.org>
+	Maoyi Xie <maoyixie.tju@gmail.com>,
+	Vincent Mailhol <mailhol@kernel.org>,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 6.6 180/261] can: peak_usb: peak_usb_start(): fix double free of transfer buffer on URB submit error
+Date: Fri,  7 Aug 2026 16:38:57 +0200
+Message-ID: <20260807143419.245454548@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143415.358597922@linuxfoundation.org>
 References: <20260807143415.358597922@linuxfoundation.org>
@@ -51,120 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Maximets <i.maximets@ovn.org>
+From: Maoyi Xie <maoyixie.tju@gmail.com>
 
-commit a58a2b0ce354df531ebc71fc870058c2feb59f6b upstream.
+commit 9b3d5a6d952c38bbcf07f903cbeadefdb56b9bc9 upstream.
 
-While attaching a newly created meter attach_meter() function makes
-the new meter visible to other CPUs but can still fail afterwards.
-On failure, it detaches the meter back and returns an error.
+In peak_usb_start(), each RX URB transfer buffer is allocated with kmalloc()
+and the URB is flagged URB_FREE_BUFFER so that the final usb_free_urb() also
+frees the transfer buffer.
 
-However, this is an unexpected behavior for the ovs_meter_cmd_set()
-that uses a plain kfree(meter) on attach failure without waiting for
-RCU readers to stop using it, assuming it was never visible.
+If usb_submit_urb() fails, the error path frees the buffer explicitly with
+kfree(buf) and then calls usb_free_urb(urb). Because URB_FREE_BUFFER is set,
+usb_free_urb() -> urb_destroy() frees the same buffer a second time, a double
+free of the transfer buffer.
 
-This is never a problem for ovs-vswitchd as it always creates meters
-before creating any flows that use them.  But the UAF can be triggered
-with a custom application using uAPI:
+  BUG: KASAN: double-free in usb_free_urb.part.0+0x91/0xb0
+  Free of addr ffff8881069ccb80 by task trigger.sh/285
 
- BUG: KASAN: slab-use-after-free in ovs_meter_execute (net/openvswitch/meter.c:653)
- Read of size 8 at addr ffff88810d152650 by task meter/2508
+  Call Trace:
+   kfree+0x113/0x3c0
+   usb_free_urb.part.0+0x91/0xb0
 
- Call Trace:
-  ovs_meter_execute (net/openvswitch/meter.c:653)
-  do_execute_actions (net/openvswitch/actions.c:1407)
-  ovs_execute_actions (net/openvswitch/actions.c:1584)
-  ovs_packet_cmd_execute (net/openvswitch/datapath.c:703)
-  ...
-  netlink_sendmsg (af_netlink.c:1900)
+Drop the redundant kfree(buf); usb_free_urb() already releases the transfer
+buffer. This mirrors commit 03819abbeb11 ("net: usb: lan78xx: Fix double free
+issue with interrupt buffer allocation").
 
- Allocated by task 2519:
-  __kasan_kmalloc (mm/kasan/common.c:398 mm/kasan/common.c:415)
-  ovs_meter_cmd_set (net/openvswitch/meter.c:422)
-  ...
-  netlink_sendmsg (af_netlink.c:1900)
-
- Freed by task 2519:
-  kfree (mm/slub.c:2705 mm/slub.c:6405 mm/slub.c:6720)
-  ovs_meter_cmd_set (net/openvswitch/meter.c:479)
-  ...
-  netlink_sendmsg (af_netlink.c:1900)
-
-Fix that by making sure attach_meter() doesn't make the meter visible
-until all the checks are done and the function can't fail anymore.
-
-This also makes sure the "hash" value is calculated after the potential
-re-sizing of the table.
-
-Reported by Trend Micro's Zero Day Initiative as ZDI-CAN-31642.
-
-Fixes: c7c4c44c9a95 ("net: openvswitch: expand the meters supported number")
+Fixes: bb4785551f64 ("can: usb: PEAK-System Technik USB adapters driver core")
+Closes: https://lore.kernel.org/linux-can/178159320216.2154888.16953451793788581739@maoyixie.com/T/#u
 Cc: stable@vger.kernel.org
-Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
-Reviewed-by: Eelco Chaudron <echaudro@redhat.com>
-Link: https://patch.msgid.link/20260727121022.198461-1-i.maximets@ovn.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
+Reviewed-by: Vincent Mailhol <mailhol@kernel.org>
+Link: https://patch.msgid.link/178163373110.2507866.216458825145756798@maoyixie.com
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/openvswitch/meter.c |   33 +++++++++++++++++++--------------
- 1 file changed, 19 insertions(+), 14 deletions(-)
+ drivers/net/can/usb/peak_usb/pcan_usb_core.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/net/openvswitch/meter.c
-+++ b/net/openvswitch/meter.c
-@@ -133,18 +133,10 @@ static void dp_meter_instance_remove(str
+--- a/drivers/net/can/usb/peak_usb/pcan_usb_core.c
++++ b/drivers/net/can/usb/peak_usb/pcan_usb_core.c
+@@ -470,7 +470,6 @@ static int peak_usb_start(struct peak_us
+ 				netif_device_detach(dev->netdev);
  
- static int attach_meter(struct dp_meter_table *tbl, struct dp_meter *meter)
- {
--	struct dp_meter_instance *ti = rcu_dereference_ovsl(tbl->ti);
--	u32 hash = meter_hash(ti, meter->id);
-+	struct dp_meter_instance *ti;
-+	u32 hash;
- 	int err;
- 
--	/* In generally, slots selected should be empty, because
--	 * OvS uses id-pool to fetch a available id.
--	 */
--	if (unlikely(rcu_dereference_ovsl(ti->dp_meters[hash])))
--		return -EBUSY;
--
--	dp_meter_instance_insert(ti, meter);
--
- 	/* That function is thread-safe. */
- 	tbl->count++;
- 	if (tbl->count >= tbl->max_meters_allowed) {
-@@ -152,16 +144,29 @@ static int attach_meter(struct dp_meter_
- 		goto attach_err;
- 	}
- 
--	if (tbl->count >= ti->n_meters &&
--	    dp_meter_instance_realloc(tbl, ti->n_meters * 2)) {
--		err = -ENOMEM;
-+	ti = rcu_dereference_ovsl(tbl->ti);
-+	if (tbl->count >= ti->n_meters) {
-+		err = dp_meter_instance_realloc(tbl, ti->n_meters * 2);
-+		if (err)
-+			goto attach_err;
-+
-+		ti = rcu_dereference_ovsl(tbl->ti);
-+	}
-+
-+	hash = meter_hash(ti, meter->id);
-+
-+	/* In general, selected slots should be empty, because
-+	 * OvS uses id-pool to fetch available ids.
-+	 */
-+	if (unlikely(rcu_dereference_ovsl(ti->dp_meters[hash]))) {
-+		err = -EBUSY;
- 		goto attach_err;
- 	}
- 
-+	dp_meter_instance_insert(ti, meter);
- 	return 0;
- 
- attach_err:
--	dp_meter_instance_remove(ti, meter);
- 	tbl->count--;
- 	return err;
- }
+ 			usb_unanchor_urb(urb);
+-			kfree(buf);
+ 			usb_free_urb(urb);
+ 			break;
+ 		}
 
 
