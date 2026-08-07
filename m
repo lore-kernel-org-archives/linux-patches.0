@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 816CE39CD16;
-	Fri,  7 Aug 2026 14:48:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 534573A6F05;
+	Fri,  7 Aug 2026 14:48:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114126; cv=none; b=ooO1wI5b3RhEb1PJDt46QZ+OLVjEhhQHisSo8dEjPUKOFmDKTDVrAXnd5K7cjyrSQR/ZI0GooRZ8tSmHr82nmPyAsGB6mme18OePN1crsW/18yjGIa0NLS5MYodcIbD7YupR7nF7U55fjmkJgD7ljBYpaumhStzoajSgd6euXk4=
+	t=1786114127; cv=none; b=NgMJp4UjFejR7zhBDl+j4dmFSmgqxy8UMdxvDP8r5cilVFficS8ftYDzYtitlAJfRJpA1wP4Bvak1PAldhHbUHMk2SoJdegJiC+3K5OrelvxUxd0EbjxMwOsEIXzBUtyrEa9pmFF/vD0KSb4z/oydgk8O0QU9TR7QaPOXeCnMyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114126; c=relaxed/simple;
-	bh=LBiMfh95oCPAJGrnsrIncfczwdyRHTRiILUEgqra9fM=;
+	s=arc-20240116; t=1786114127; c=relaxed/simple;
+	bh=nVB84pSrveAPCw/BuEAdLk26SYYCffo6zs9YbxsJEiQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UuVvpFDtAkn3GKbCG/mZx8UJp6ldMSy/4KjpWPS+ocXP/90wGRI1y1glUseVqVcM8KyZa2GGV4wJlcDOI0E0YEysY4dfR1qmL5+Vm+exo4pBpgjsvCSyq1Rpay7O0NcYUKN7LTe9ROoqrxNGdLu8xqiS9WalDCFHd7P7eFoAIQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UQCNqiJ1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OmdDFDtHP9M7HHGmtPJqn24ao/VvNnNvfA2xyw7CAEMfvuoJj2Xi1tID5k9jb0+2wHBYCIhOD/rAYi2HQK6On3pjmhYhL4JwdVn4/jA2j0PUa9BxuKG5aKoJCZsWs237mOEj+yLfSM92zkODCp1LjV2/rF4HE1ED/YbFWvlM+2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pSMJ3NsL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UQCNqiJ1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92E181F000E9;
-	Fri,  7 Aug 2026 14:48:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pSMJ3NsL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 713731F00A3A;
+	Fri,  7 Aug 2026 14:48:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114122;
-	bh=NBZGAwWaWN6WROklyHT53vqsR4qaeyaUJZ3pfLB27ko=;
+	s=korg; t=1786114125;
+	bh=HOt7oMLHIwOSBOK7AtVAxNVnOTw2zlV2gx6u5LpZJyg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UQCNqiJ1Y8E4AH3uD1LJr+AzPpyXe0dL1mGQAUkfIHuKVtpWvdipvHZFzPO12P3jc
-	 csn24cQ3XeEgQUDbTK65GZ+R6FFAFYGq7hxq5IleKX0HvTjEsp/5pMTl69jjP/Muid
-	 OsaZSiRMoSQ8IueM7KM3RadB5P0+6epiET9QkB1k=
+	b=pSMJ3NsLcokHSkleaKkBaQwvHSScDVbBKW22tYsOOoGBBjHwNxz2VAAcQt6uvFTQa
+	 VFVVurOlbGkz1gKLCVCJfG9a76eJ2acTt0XlEBKmXscBSd6IVFLCsyf7d4Q5JFkHhQ
+	 wqXONO3g+W54h3cpIlicXtIYv1mIf1/2FWpaV5G0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Denis V. Lunev" <den@openvz.org>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 125/337] qede: sync udp_tunnel ports outside qede_lock in the recovery path
-Date: Fri,  7 Aug 2026 16:35:28 +0200
-Message-ID: <20260807143421.242130171@linuxfoundation.org>
+	Sangho Lee <kudo3228@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.12 152/337] Bluetooth: HIDP: reject frames without a transaction header
+Date: Fri,  7 Aug 2026 16:35:55 +0200
+Message-ID: <20260807143421.847560921@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -56,169 +50,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Denis V. Lunev <den@openvz.org>
+From: Sangho Lee <kudo3228@gmail.com>
 
-[ Upstream commit 451c9075d6c53f2438d110addbeeeea6fac18567 ]
+commit 47778d2c2087b5d192398f6fddf692d16a5431cf upstream.
 
-A TX timeout on a qede NIC that has VXLAN/GENEVE tunnel ports
-configured wedges the rtnetlink control plane of the whole machine:
+hidp_recv_ctrl_frame() and hidp_recv_intr_frame() read skb->data[0]
+before checking that the L2CAP SDU contains a transaction header. A
+connected HIDP peer can send an empty basic-mode SDU and make both paths
+use an uninitialized byte from skb tailroom.
 
-  NETDEV WATCHDOG: ens6f1 (qede): transmit queue 2 timed out 10226 ms
-  [qede_tx_timeout:586(ens6f1)]TX timeout on queue 2!
-  [qede_recovery_handler:2665(ens6f0)]Starting a recovery process
+KMSAN reports the use in hidp_session_run(), with the uninitialized value
+originating in __alloc_skb() through vhci_write(). The control path
+produces two reports and the interrupt path produces one.
 
-The recovery path deadlocks on the driver's own mutex:
+The byte can also be controlled by a malformed lower-layer packet. If an
+HCI ACL packet contains an L2CAP PDU with a declared zero-length payload
+followed by an extra 0x15 byte, l2cap_recv_acldata() reduces skb->len to
+the declared PDU length before dispatch. The current HIDP path nevertheless
+consumes the extra byte as HIDP_TRANS_HID_CONTROL |
+HIDP_CTRL_VIRTUAL_CABLE_UNPLUG and terminates the HIDP session. With this
+change, the same packet is discarded and a subsequent feature report
+request succeeds.
 
-  qede_sp_task
-   rtnl_lock()
-   mutex_lock(&edev->qede_lock)        <- taken
-   qede_recovery_handler
-    qede_load
-    udp_tunnel_nic_reset_ntf
-     __udp_tunnel_nic_device_sync
-      info->sync_table == qede_udp_tunnel_sync
-       mutex_lock(&edev->qede_lock)    <- same task: deadlock
+Pull the transaction header with skb_pull_data() and discard frames that
+do not contain it.
 
-The mutex is not recursive, so the kworker blocks on itself with
-rtnl_lock held, and neither lock is ever released. Every task that
-calls rtnl_lock() afterwards (ip, ovs-vswitchd, lldpad, IPv6
-addrconf, sshd) blocks forever while the node still answers ping.
-In a vmcore from an affected production node rtnl_mutex.owner
-decodes to the very kworker blocked at the innermost mutex_lock()
-above.
-
-Re-sync the tunnel ports from qede_sp_task() after the internal lock
-is dropped, still under rtnl_lock as the udp_tunnel API requires.
-This mirrors qede_open(), which calls udp_tunnel_nic_reset_ntf()
-under rtnl without the internal lock.
-
-qede_recovery_handler() now returns whether it has successfully
-reloaded an open device, and the caller re-syncs the ports only in
-that case. This keeps the old gating exactly: a device that was down
-or a failed recovery returns false, as those paths never reached the
-udp_tunnel_nic_reset_ntf() call before either.
-
-This was the only user of the qede_lock()/qede_unlock() helpers, so
-remove them.
-
-Fixes: 8cd160a29415 ("qede: convert to new udp_tunnel_nic infra")
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-CC: Andrew Lunn <andrew+netdev@lunn.ch>
-CC: "David S. Miller" <davem@davemloft.net>
-CC: Eric Dumazet <edumazet@google.com>
-CC: Jakub Kicinski <kuba@kernel.org>
-CC: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20260726104311.1782900-1-den@openvz.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sangho Lee <kudo3228@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/qlogic/qede/qede_main.c | 44 ++++++++++----------
- 1 file changed, 22 insertions(+), 22 deletions(-)
+ net/bluetooth/hidp/core.c |   25 +++++++++++++++----------
+ 1 file changed, 15 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/ethernet/qlogic/qede/qede_main.c b/drivers/net/ethernet/qlogic/qede/qede_main.c
-index b5d744d2586f7..59a80f7193723 100644
---- a/drivers/net/ethernet/qlogic/qede/qede_main.c
-+++ b/drivers/net/ethernet/qlogic/qede/qede_main.c
-@@ -107,7 +107,7 @@ static void qede_remove(struct pci_dev *pdev);
- static void qede_shutdown(struct pci_dev *pdev);
- static void qede_link_update(void *dev, struct qed_link_output *link);
- static void qede_schedule_recovery_handler(void *dev);
--static void qede_recovery_handler(struct qede_dev *edev);
-+static bool qede_recovery_handler(struct qede_dev *edev);
- static void qede_schedule_hw_err_handler(void *dev,
- 					 enum qed_hw_err_type err_type);
- static void qede_get_eth_tlv_data(void *edev, void *data);
-@@ -1065,21 +1065,6 @@ void __qede_unlock(struct qede_dev *edev)
- 	mutex_unlock(&edev->qede_lock);
- }
- 
--/* This version of the lock should be used when acquiring the RTNL lock is also
-- * needed in addition to the internal qede lock.
-- */
--static void qede_lock(struct qede_dev *edev)
--{
--	rtnl_lock();
--	__qede_lock(edev);
--}
--
--static void qede_unlock(struct qede_dev *edev)
--{
--	__qede_unlock(edev);
--	rtnl_unlock();
--}
--
- static void qede_periodic_task(struct work_struct *work)
+--- a/net/bluetooth/hidp/core.c
++++ b/net/bluetooth/hidp/core.c
+@@ -563,16 +563,18 @@ static int hidp_process_data(struct hidp
+ static void hidp_recv_ctrl_frame(struct hidp_session *session,
+ 					struct sk_buff *skb)
  {
- 	struct qede_dev *edev = container_of(work, struct qede_dev,
-@@ -1116,6 +1101,8 @@ static void qede_sp_task(struct work_struct *work)
- 	 */
+-	unsigned char hdr, type, param;
++	unsigned char type, param;
++	u8 *hdr;
+ 	int free_skb = 1;
  
- 	if (test_and_clear_bit(QEDE_SP_RECOVERY, &edev->sp_flags)) {
-+		bool reloaded;
-+
- 		cancel_delayed_work_sync(&edev->periodic_task);
- #ifdef CONFIG_QED_SRIOV
- 		/* SRIOV must be disabled outside the lock to avoid a deadlock.
-@@ -1124,9 +1111,17 @@ static void qede_sp_task(struct work_struct *work)
- 		if (pci_num_vf(edev->pdev))
- 			qede_sriov_configure(edev->pdev, 0);
- #endif
--		qede_lock(edev);
--		qede_recovery_handler(edev);
--		qede_unlock(edev);
-+		rtnl_lock();
-+		__qede_lock(edev);
-+		reloaded = qede_recovery_handler(edev);
-+		__qede_unlock(edev);
-+
-+		/* The udp_tunnel core synchronously calls back into
-+		 * qede_udp_tunnel_sync(), which takes the qede lock.
-+		 */
-+		if (reloaded)
-+			udp_tunnel_nic_reset_ntf(edev->ndev);
-+		rtnl_unlock();
+ 	BT_DBG("session %p skb %p len %u", session, skb, skb->len);
+ 
+-	hdr = skb->data[0];
+-	skb_pull(skb, 1);
++	hdr = skb_pull_data(skb, 1);
++	if (!hdr)
++		goto free;
+ 
+-	type = hdr & HIDP_HEADER_TRANS_MASK;
+-	param = hdr & HIDP_HEADER_PARAM_MASK;
++	type = *hdr & HIDP_HEADER_TRANS_MASK;
++	param = *hdr & HIDP_HEADER_PARAM_MASK;
+ 
+ 	switch (type) {
+ 	case HIDP_TRANS_HANDSHAKE:
+@@ -593,6 +595,7 @@ static void hidp_recv_ctrl_frame(struct
+ 		break;
  	}
  
- 	__qede_lock(edev);
-@@ -2667,9 +2662,13 @@ static void qede_recovery_failed(struct qede_dev *edev)
- 		edev->ops->common->set_power_state(edev->cdev, PCI_D3hot);
++free:
+ 	if (free_skb)
+ 		kfree_skb(skb);
  }
- 
--static void qede_recovery_handler(struct qede_dev *edev)
-+/* Returns true if an open device was successfully reloaded and its
-+ * udp_tunnel ports need to be re-synced by the caller.
-+ */
-+static bool qede_recovery_handler(struct qede_dev *edev)
+@@ -600,14 +603,15 @@ static void hidp_recv_ctrl_frame(struct
+ static void hidp_recv_intr_frame(struct hidp_session *session,
+ 				struct sk_buff *skb)
  {
- 	u32 curr_state = edev->state;
-+	bool reloaded = false;
- 	int rc;
+-	unsigned char hdr;
++	u8 *hdr;
  
- 	DP_NOTICE(edev, "Starting a recovery process\n");
-@@ -2699,17 +2698,18 @@ static void qede_recovery_handler(struct qede_dev *edev)
- 			goto err;
+ 	BT_DBG("session %p skb %p len %u", session, skb, skb->len);
  
- 		qede_config_rx_mode(edev->ndev);
--		udp_tunnel_nic_reset_ntf(edev->ndev);
-+		reloaded = true;
+-	hdr = skb->data[0];
+-	skb_pull(skb, 1);
++	hdr = skb_pull_data(skb, 1);
++	if (!hdr)
++		goto free;
+ 
+-	if (hdr == (HIDP_TRANS_DATA | HIDP_DATA_RTYPE_INPUT)) {
++	if (*hdr == (HIDP_TRANS_DATA | HIDP_DATA_RTYPE_INPUT)) {
+ 		hidp_set_timer(session);
+ 
+ 		if (session->input)
+@@ -619,9 +623,10 @@ static void hidp_recv_intr_frame(struct
+ 			BT_DBG("report len %d", skb->len);
+ 		}
+ 	} else {
+-		BT_DBG("Unsupported protocol header 0x%02x", hdr);
++		BT_DBG("Unsupported protocol header 0x%02x", *hdr);
  	}
  
- 	edev->state = curr_state;
- 
- 	DP_NOTICE(edev, "Recovery handling is done\n");
- 
--	return;
-+	return reloaded;
- 
- err:
- 	qede_recovery_failed(edev);
-+	return false;
++free:
+ 	kfree_skb(skb);
  }
  
- static void qede_atomic_hw_err_handler(struct qede_dev *edev)
--- 
-2.53.0
-
 
 
