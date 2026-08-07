@@ -1,51 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9607E390608;
-	Fri,  7 Aug 2026 15:38:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28EC3390608;
+	Fri,  7 Aug 2026 15:38:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786117118; cv=none; b=TxavbU2ai79W3bEKC9IWLBaLFcxFKmP5jpsdbFxHeuWkWIR+/DPN3imSLOfGYl+D3KkqnTgmTW1ZF4rs2ws5z+4Pfjmir9YZRpMGB/GBfw0vKouWCytvn/d/07QNZg8LNOTo5sVwPb0ayyC39DyF/SQQOi+1ZNpCFmE6nf3vluI=
+	t=1786117121; cv=none; b=ADAHEHx4ZVxz7iDZ+Rvi4NSV2Y22G3xJimr4fCOS+ujx9TGJrZfCcTRekRPBPj9uhIMvMldw1Vs4T3m/1QyMxwSiB61fl3mNgmNHexQ11vRtOeaFh7WIAZjKf1ejzeUeRjQwaRj/RiwrGd5hoPfP8iZU9ymSkL1gYy+GYEopFjg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786117118; c=relaxed/simple;
-	bh=kjyT3ZfkxUghjGG51aM0kmRBZb8rbQjGwBj8aai9Zzw=;
+	s=arc-20240116; t=1786117121; c=relaxed/simple;
+	bh=eFuHM2vDD2RzRuJnIvek+VZKsxO0mZAyY7eP9Ga2+BA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JnmMOrtXOhc8A55y2anejsS5Y33iVdl4tynZHZXxvfjnFT5NvQBf14kI9/k5B9gpP/k9JhL28Hi/QSDPPCi631Bg1o8m1tcUc9EQp10FEmq091ZidcDjDsnIIjjIkzdxmeMxrn8nGrD+x4bZnLoVsRRempId2N+U6g1EGU7mJMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L4U8B33/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tgZFkVXLJdxwgrzsySqmnzl/7QryRrd+LM2kz0yy71jQiPd4ieLzXs5rpGAuRHktV4o9xXmDna7D4MsCBnuBrDuoLYnODOu0hXosQNVqsfYVgPi5rrE+5NJyHJFb893ZIhWkiDVt9qEhGH0u2+OtYN3pTYkxNBhGt0Fy93OwvSo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hR2k3Xtv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L4U8B33/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9302D1F000E9;
-	Fri,  7 Aug 2026 15:38:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hR2k3Xtv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88C6A1F000E9;
+	Fri,  7 Aug 2026 15:38:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786117117;
-	bh=rcP3Aliv/SFXCvtRBv4qhw0p42WZbuRnYW2LKz+Ae6Y=;
+	s=korg; t=1786117120;
+	bh=W37jdG94oX6eCkIs205L3MSq+8BWVLCSzT89mM1woQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L4U8B33/BzzpwFS/IpjkuhF7Qa4LM0ZRTcmeRrnZiqT9bv24Wjf5qg6LNT+OKKlUR
-	 GFeBCOrrN7K8NViiNuJp8JEa+ul2gn+MfEwnvTZh7sKqJUCwyyvaeYYZ0i8ZcA4LKm
-	 +TdVc4D7PYHq/2iYFZ0xPwEImG5GntRJyD8iMUOM=
+	b=hR2k3Xtv86saDkFkrHPD4D8oIncv2QWE6mttCIELR8KcRDarP3v3pa/d69xer0uWK
+	 OJSCMCmkTvxfDHUjP3nJw+RA00riQQbnuBqd2oHoeE7C6LVMsxqxbJVPXWb41wN16c
+	 Yipp89Ugl7dkCMsBX9kpIQbj0dfYlvBSPpIUC5Ls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qi Zheng <zhengqi.arch@bytedance.com>,
-	Peiyang He <peiyang_he@smail.nju.edu.cn>,
-	"Harry Yoo (Oracle)" <harry@kernel.org>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Axel Rasmussen <axelrasmussen@google.com>,
-	Barry Song <baohua@kernel.org>,
+	Kiryl Shutsemau <kas@kernel.org>,
+	Sashiko AI review <sashiko-bot@kernel.org>,
 	David Hildenbrand <david@kernel.org>,
-	Kairui Song <kasong@tencent.com>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Michal Hocko <mhocko@kernel.org>,
 	Muchun Song <muchun.song@linux.dev>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Wei Xu <weixugc@google.com>,
-	Yuanchu Xie <yuanchu@google.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Peter Xu <peterx@redhat.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.1 204/438] mm: mglru: fix stale batch updates after memcg reparenting
-Date: Fri,  7 Aug 2026 16:36:40 +0200
-Message-ID: <20260807143432.369143156@linuxfoundation.org>
+Subject: [PATCH 7.1 205/438] mm/hugetlb: fix swap entry corruption when clearing uffd-wp at fork()
+Date: Fri,  7 Aug 2026 16:36:41 +0200
+Message-ID: <20260807143432.389952630@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -64,153 +55,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qi Zheng <zhengqi.arch@bytedance.com>
+From: Kiryl Shutsemau (Meta) <kas@kernel.org>
 
-commit de4660898b7aa7e03d3b120a6bfa6b26211e4e77 upstream.
+commit 83abe2fd5b3aeb3123b5408a5a91709c5538fb23 upstream.
 
-The mglru page table walker batches per-generation size deltas in
-walk->nr_pages while walking page tables without holding the lruvec lock.
-The reset_batch_size() later folds those deltas into walk->lruvec under
-the lruvec lock.
+copy_hugetlb_page_range() clears the uffd-wp bit of migration and hwpoison
+entries with huge_pte_clear_uffd_wp(), which operates on the present-PTE
+bit position.  Swap entries keep the uffd-wp state elsewhere -- the
+migration branch reads and sets it with pte_swp_uffd_wp() and
+pte_swp_mkuffd_wp() -- and the present-PTE position falls into the swap
+payload.  On x86-64 it lands in the inverted swap offset, where a
+naturally-aligned hugetlb PFN always has the affected bit set, so the
+clear advances the encoded PFN by two pages.
 
-The page table walker can run concurrently with the memcg reparenting path
-as follows:
+No userfaultfd needs to be involved: the clear is guarded only by the
+child VMA not being uffd-wp registered, so a plain fork() with an
+in-flight hugetlb migration entry (or a poisoned hugetlb page) corrupts
+the entry copied into the child.  Instrumenting the clear and forking
+after MADV_HWPOISON on a 2MB anon hugetlb page shows:
 
-CPU0                           CPU1
-====                           ====
+  offset before=120e00
+  offset after =120e02
 
-walk_mm
---> walk_page_range
-    --> update_batch_size
-        --> walk->nr_pages += delta
+The fallout is mostly latent: rmap walks match migration entries by folio
+range and remove_migration_pte() rebuilds the PTE from the folio, so a
+within-folio PFN skew heals once migration completes.  But any path that
+re-encodes the corrupted offset -- e.g.  hugetlb_change_protection()
+rewriting a writable migration entry via
+make_readable_migration_entry(swp_offset(entry)) -- propagates it.
 
-                              mem_cgroup_css_offline
-                              --> memcg_reparent_objcgs
-                                  --> lock lruvec
-                                      lru_gen_reparent_memcg
-                                      --> reparent child folios to parent
-                                      unlock lruvec
+Migration entries legitimately carry uffd-wp, so clear it with
+pte_swp_clear_uffd_wp(), matching copy_nonpresent_pte() and
+move_huge_pte().
 
-    lock lruvec
-    reset_batch_size
-    --> child lrugen->nr_pages += delta
+A hwpoison entry, on the other hand, never carries the uffd-wp bit: it is
+installed fresh by make_hwpoison_entry() (try_to_unmap_one() does not
+preserve uffd-wp on the hwpoison path) and hugetlb_change_protection()
+leaves hwpoison entries untouched.  There was nothing to clear there, only
+the corruption, so drop the clear entirely.
 
-This will trigger the following warning in lru_gen_exit_memcg():
-
-	VM_WARN_ON_ONCE(memchr_inv(lruvec->lrugen.nr_pages, 0,
-				   sizeof(lruvec->lrugen.nr_pages)));
-
-And the user-visible impact of underestimated nr_pages in MGLRU was
-premature OOMs because MGLRU does not try to reclaim memory when nr_pages
-reaches zero, but there are still more pages.
-
-To fix it, make reset_batch_size() check CSS_DYING under RCU before
-flushing the pending batch.  A non-dying memcg keeps the original lruvec
-stable against RCU-delayed offlining; a dying memcg redirects the deltas
-to the first non-dying ancestor.
-
-Link: https://lore.kernel.org/20260710154318.75388-1-qi.zheng@linux.dev
-Fixes: f304652609ea ("mm: vmscan: prepare for reparenting MGLRU folios")
-Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
-Reported-by: Peiyang He <peiyang_he@smail.nju.edu.cn>
-Closes: https://lore.kernel.org/all/5A9E929D82717101+12fcf643-efb8-4b9a-a53a-1e28cc894f0b@smail.nju.edu.cn
-Reviewed-by: Harry Yoo (Oracle) <harry@kernel.org>
-Acked-by: Johannes Weiner <hannes@cmpxchg.org>
-Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: Axel Rasmussen <axelrasmussen@google.com>
-Cc: Barry Song <baohua@kernel.org>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Kairui Song <kasong@tencent.com>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Michal Hocko <mhocko@kernel.org>
+Link: https://lore.kernel.org/20260708090110.136162-1-kirill@shutemov.name
+Fixes: bc70fbf269fd ("mm/hugetlb: handle uffd-wp during fork()")
+Signed-off-by: Kiryl Shutsemau <kas@kernel.org>
+Reported-by: Sashiko AI review <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/all/20260703140011.99E601F000E9@smtp.kernel.org/
+Suggested-by: David Hildenbrand <david@kernel.org>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Assisted-by: Claude:claude-fable-5
 Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Wei Xu <weixugc@google.com>
-Cc: Yuanchu Xie <yuanchu@google.com>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Peter Xu <peterx@redhat.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/memcontrol.h |   25 +++++++++++++++++++++++++
- mm/vmscan.c                |   11 ++++-------
- 2 files changed, 29 insertions(+), 7 deletions(-)
+ mm/hugetlb.c |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/include/linux/memcontrol.h
-+++ b/include/linux/memcontrol.h
-@@ -1475,6 +1475,31 @@ static inline void lruvec_lock_irq(struc
- 	spin_lock_irq(&lruvec->lru_lock);
- }
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -4917,8 +4917,12 @@ again:
  
-+static inline struct lruvec *lruvec_live_lock_irq(struct lruvec *lruvec)
-+{
-+#ifdef CONFIG_MEMCG
-+	struct pglist_data *pgdat = lruvec_pgdat(lruvec);
-+	struct mem_cgroup *memcg = lruvec_memcg(lruvec);
-+
-+	rcu_read_lock();
-+
-+	/*
-+	 * The memcg can be NULL when the memory controller is disabled.
-+	 * Otherwise, the caller keeps the memcg owning @lruvec alive.
-+	 */
-+	while (unlikely(memcg && css_is_dying(&memcg->css))) {
-+		memcg = parent_mem_cgroup(memcg);
-+		lruvec = mem_cgroup_lruvec(memcg, pgdat);
-+	}
-+
-+	spin_lock_irq(&lruvec->lru_lock);
-+#else
-+	lruvec_lock_irq(lruvec);
-+#endif
-+
-+	return lruvec;
-+}
-+
- static inline void lruvec_unlock(struct lruvec *lruvec)
- {
- 	spin_unlock(&lruvec->lru_lock);
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -3268,7 +3268,7 @@ static void update_batch_size(struct lru
- static void reset_batch_size(struct lru_gen_mm_walk *walk)
- {
- 	int gen, type, zone;
--	struct lruvec *lruvec = walk->lruvec;
-+	struct lruvec *lruvec = lruvec_live_lock_irq(walk->lruvec);
- 	struct lru_gen_folio *lrugen = &lruvec->lrugen;
- 
- 	walk->batched = 0;
-@@ -3288,6 +3288,8 @@ static void reset_batch_size(struct lru_
- 			lru += LRU_ACTIVE;
- 		__update_lru_size(lruvec, lru, zone, delta);
- 	}
-+
-+	lruvec_unlock_irq(lruvec);
- }
- 
- static int should_skip_vma(unsigned long start, unsigned long end, struct mm_walk *args)
-@@ -3782,11 +3784,8 @@ static void walk_mm(struct mm_struct *mm
- 			mmap_read_unlock(mm);
- 		}
- 
--		if (walk->batched) {
--			lruvec_lock_irq(lruvec);
-+		if (walk->batched)
- 			reset_batch_size(walk);
--			lruvec_unlock_irq(lruvec);
--		}
- 
- 		cond_resched();
- 	} while (err == -EAGAIN);
-@@ -4884,9 +4883,7 @@ retry:
- 	walk = current->reclaim_state->mm_walk;
- 	if (walk && walk->batched) {
- 		walk->lruvec = lruvec;
--		lruvec_lock_irq(lruvec);
- 		reset_batch_size(walk);
--		lruvec_unlock_irq(lruvec);
- 	}
- 
- 	mod_lruvec_state(lruvec, PGDEMOTE_KSWAPD + reclaimer_offset(sc),
+ 		softleaf = softleaf_from_pte(entry);
+ 		if (unlikely(softleaf_is_hwpoison(softleaf))) {
+-			if (!userfaultfd_wp(dst_vma))
+-				entry = huge_pte_clear_uffd_wp(entry);
++			/*
++			 * A hwpoison entry never carries the uffd-wp bit: it is
++			 * installed fresh by make_hwpoison_entry() and
++			 * hugetlb_change_protection() leaves it untouched, so
++			 * there is nothing to clear for the child.
++			 */
+ 			set_huge_pte_at(dst, addr, dst_pte, entry, sz);
+ 		} else if (unlikely(softleaf_is_migration(softleaf))) {
+ 			bool uffd_wp = pte_swp_uffd_wp(entry);
+@@ -4936,7 +4940,7 @@ again:
+ 				set_huge_pte_at(src, addr, src_pte, entry, sz);
+ 			}
+ 			if (!userfaultfd_wp(dst_vma))
+-				entry = huge_pte_clear_uffd_wp(entry);
++				entry = pte_swp_clear_uffd_wp(entry);
+ 			set_huge_pte_at(dst, addr, dst_pte, entry, sz);
+ 		} else if (unlikely(pte_is_marker(entry))) {
+ 			const pte_marker marker = copy_pte_marker(softleaf, dst_vma);
 
 
