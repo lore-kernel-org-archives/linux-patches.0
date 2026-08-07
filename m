@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C86F2306754;
-	Fri,  7 Aug 2026 15:46:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69AD1395DAA;
+	Fri,  7 Aug 2026 15:46:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786117591; cv=none; b=X51bkwTkaBv2YlroksPDGNY18a4vcPiw0zog1EPKjV0emAQcGR1Rk3u5a2VXIGaD29kqlOoemgJQyRQ3p5/uZBncxN5QDLmva98N06K2UJPmMBwyqAWI8xRpfUWUi/nMBzwxhCeZA/32KVJ4p8FGkc9lC0Kwn96MxWiN/9Wy7GE=
+	t=1786117593; cv=none; b=kfI0Ov4qBdJ0alkuOpVYeHWBcLgCmc8ZPlOHA5RbmJZVOP+ywEmnWhgZt0y0sTID3fwQn6OdJlEqXUXjE+UyDUNs7JJPojkkxq7SXzxPYVPvpLxMtclP52xYg/TqnstbiKBNAJSULAM6mIIHY/c4nbH5XkFeQc4N4G8LfpLd/Bw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786117591; c=relaxed/simple;
-	bh=e+kziDSmXoe3hIIP1DOwZ1YZq7WjajXH90tUffKtb7o=;
+	s=arc-20240116; t=1786117593; c=relaxed/simple;
+	bh=ccprTxkF8FTrTsFK2Cem9qpiB5DSW1iaGsirexsxB40=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V2Rp4NhrP3/PWaMDveN9RlFCJT6wY95Lsw5c5XReS4SB5tEoyEylsQTrWTVQGTVxjyOWzwfYW/fiL7nZ8/2M7dBHUu9nMemrdoPgyeMpQLs1ieTkZmZshV/+jk8GSG3C69D0pYQQ/bdjs7IK8BtU77rxtslC6GnYtIKCfOHSPuc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PLAhA2Pk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F6EzLyTqvnWmu91zLZBtRZvDaaZK0d5WBYBKglbyNaMZ/Yv7c0nSPcAKM2Udc9aX+TAOVjiUnq0haddJCgmVMjGfAPfTBCoVvOicZR62LLu7ve+PUnACbJsAtjvXMnI1Zw3lTxOsOJfQCZV0jc9b8ZI/Y7xXankFuvA6pvsO6IA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jaj9413u; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PLAhA2Pk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 036CF1F000E9;
-	Fri,  7 Aug 2026 15:46:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jaj9413u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5D191F000E9;
+	Fri,  7 Aug 2026 15:46:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786117589;
-	bh=/1uRjGCxUAB6FN0/KzgdK6bhrJmLNZwTKD0XEGw42ZU=;
+	s=korg; t=1786117592;
+	bh=Rcjo5fJraOPQUvSw6IdeGrpY2W+EIjmWJ3F9BTGxQms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PLAhA2PkVurNlkxLhHiwNFn2sQYnF+I+/9EnaEwJ3+1jEWTkj4+sb7VhaLyyEOKAo
-	 FOe8xbD/hVjqbsWJl/MA23Y/nmOJ7RlOcsCvKIBkL9pLEtDYdD4MpSCnOMzW6sGz5e
-	 p4+VeH5O+Km1e7yxs++A5COx50nezzdV8TbqTsLg=
+	b=jaj9413uwkwgZ4xJT7+O9DEPXrfTsBuSjeAMapixo/hq5FC3k0f5JZta/9pHHk13l
+	 J1CLOBUijof/mb3o7e16Sc0vWS2ZBaGMlN04vC057bORM9C5koLS17MLFaPVDtoqEd
+	 mNZFFo5+1S8Ru4QumpoExeOBYAE+DRaaCZN5brPE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tu Nguyen <tu.nguyen.xg@renesas.com>,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Vincent Mailhol <mailhol@kernel.org>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
 	stable@kernel.org,
 	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 7.1 372/438] can: rcar_canfd: change the initializing flow for clocks and resets
-Date: Fri,  7 Aug 2026 16:39:28 +0200
-Message-ID: <20260807143435.901586471@linuxfoundation.org>
+Subject: [PATCH 7.1 373/438] can: softing: fw_parse(): validate firmware record spans
+Date: Fri,  7 Aug 2026 16:39:29 +0200
+Message-ID: <20260807143435.921577267@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -55,115 +51,158 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tu Nguyen <tu.nguyen.xg@renesas.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-commit bef9004c5b91debfceaea2841855a4ebe81ff2b3 upstream.
+commit 856d6cb04e5407523566b075841dcd6423757d1c upstream.
 
-Testing CANFD on RZ/G3E shows that many registers do not reset to their
-initial values with the current flow of deasserting resets first and then
-enabling clocks.
+fw_parse() reads a fixed record header, a firmware-provided payload,
+and a trailing checksum without knowing the end of the firmware blob. A
+truncated record can therefore make those reads exceed the blob.
 
-Based on the HW manual, clocks should be supplied first and the
-resets deasserted afterward.
+The same record also supplies addresses and lengths for writes into
+DPRAM. The generic loader uses wrap-prone mixed signed arithmetic for its
+bounds check, while the application loader does not bound the staging
+copy at all.
 
- section 7.4.3 Procedure for Activating Modules: RZ/G2L
- section 4.4.9.3 Procedure for Starting up Units: RZ/G3E
+Pass the firmware end to the parser and validate the full source record.
+Use a signed wide offset for generic DPRAM records and validate the
+application staging span against the mapped DPRAM before copying.
 
-So, update the order of the initializing flow for resets and clocks
-to match the hardware manual, resetting all CANFD registers to their
-initial values. Also update rcar_canfd_global_deinit() to assert
-resets before disabling clocks, so the teardown path mirrors the new
-init ordering.
-
-Fixes: 76e9353a80e9 ("can: rcar_canfd: Add support for RZ/G2L family")
-Signed-off-by: Tu Nguyen <tu.nguyen.xg@renesas.com>
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Tested-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Vincent Mailhol <mailhol@kernel.org>
-Link: https://patch.msgid.link/20260625135216.130450-1-biju.das.jz@bp.renesas.com
+Fixes: 03fd3cf5a179 ("can: add driver for Softing card")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260722044347.2708-1-pengpeng@iscas.ac.cn
 Cc: stable@kernel.org
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/rcar/rcar_canfd.c |   32 ++++++++++++++++----------------
- 1 file changed, 16 insertions(+), 16 deletions(-)
+ drivers/net/can/softing/softing_fw.c |   46 ++++++++++++++++++++++++-----------
+ 1 file changed, 32 insertions(+), 14 deletions(-)
 
---- a/drivers/net/can/rcar/rcar_canfd.c
-+++ b/drivers/net/can/rcar/rcar_canfd.c
-@@ -2003,20 +2003,12 @@ static int rcar_canfd_global_init(struct
- 	u32 ch, sts;
- 	int err;
- 
--	err = reset_control_reset(gpriv->rstc1);
--	if (err)
--		return err;
--
--	err = reset_control_reset(gpriv->rstc2);
--	if (err)
--		goto fail_reset1;
--
- 	/* Enable peripheral clock for register access */
- 	err = clk_prepare_enable(gpriv->clkp);
- 	if (err) {
- 		dev_err(dev, "failed to enable peripheral clock: %pe\n",
- 			ERR_PTR(err));
--		goto fail_reset2;
-+		return err;
- 	}
- 
- 	/* Enable RAM clock */
-@@ -2027,10 +2019,18 @@ static int rcar_canfd_global_init(struct
- 		goto fail_clk;
- 	}
- 
-+	err = reset_control_reset(gpriv->rstc1);
-+	if (err)
-+		goto fail_ram_clk;
-+
-+	err = reset_control_reset(gpriv->rstc2);
-+	if (err)
-+		goto fail_reset1;
-+
- 	err = rcar_canfd_reset_controller(gpriv);
- 	if (err) {
- 		dev_err(dev, "reset controller failed: %pe\n", ERR_PTR(err));
--		goto fail_ram_clk;
-+		goto fail_reset2;
- 	}
- 
- 	/* Controller in Global reset & Channel reset mode */
-@@ -2068,14 +2068,14 @@ static int rcar_canfd_global_init(struct
- 
- fail_mode:
- 	rcar_canfd_disable_global_interrupts(gpriv);
--fail_ram_clk:
--	clk_disable_unprepare(gpriv->clk_ram);
--fail_clk:
--	clk_disable_unprepare(gpriv->clkp);
- fail_reset2:
- 	reset_control_assert(gpriv->rstc2);
- fail_reset1:
- 	reset_control_assert(gpriv->rstc1);
-+fail_ram_clk:
-+	clk_disable_unprepare(gpriv->clk_ram);
-+fail_clk:
-+	clk_disable_unprepare(gpriv->clkp);
- 	return err;
+--- a/drivers/net/can/softing/softing_fw.c
++++ b/drivers/net/can/softing/softing_fw.c
+@@ -91,12 +91,12 @@ int softing_bootloader_command(struct so
+ 	return ret;
  }
  
-@@ -2090,10 +2090,10 @@ static void rcar_canfd_global_deinit(str
- 		rcar_canfd_set_bit(gpriv->base, RCANFD_GCTR, RCANFD_GCTR_GSLPR);
+-static int fw_parse(const uint8_t **pmem, uint16_t *ptype, uint32_t *paddr,
+-		uint16_t *plen, const uint8_t **pdat)
++static int fw_parse(const u8 **pmem, const u8 *limit, u16 *ptype,
++		    u32 *paddr, u16 *plen, const u8 **pdat)
+ {
+ 	uint16_t checksum[2];
+-	const uint8_t *mem;
+-	const uint8_t *end;
++	const u8 *mem;
++	const u8 *record_end;
+ 
+ 	/*
+ 	 * firmware records are a binary, unaligned stream composed of:
+@@ -114,14 +114,21 @@ static int fw_parse(const uint8_t **pmem
+ 	 * endianness & alignment.
+ 	 */
+ 	mem = *pmem;
++	/* A record needs an 8-byte prefix and a 2-byte checksum. */
++	if (mem > limit || limit - mem < 10)
++		return -EINVAL;
++
+ 	*ptype = le16_to_cpup((void *)&mem[0]);
+ 	*paddr = le32_to_cpup((void *)&mem[2]);
+ 	*plen = le16_to_cpup((void *)&mem[6]);
++	if (*plen > limit - mem - 10)
++		return -EINVAL;
++
+ 	*pdat = &mem[8];
+ 	/* verify checksum */
+-	end = &mem[8 + *plen];
+-	checksum[0] = le16_to_cpup((void *)end);
+-	for (checksum[1] = 0; mem < end; ++mem)
++	record_end = &mem[8 + *plen];
++	checksum[0] = le16_to_cpup((void *)record_end);
++	for (checksum[1] = 0; mem < record_end; ++mem)
+ 		checksum[1] += *mem;
+ 	if (checksum[0] != checksum[1])
+ 		return -EINVAL;
+@@ -139,6 +146,7 @@ int softing_load_fw(const char *file, st
+ 	uint16_t type, len;
+ 	uint32_t addr;
+ 	uint8_t *buf = NULL, *new_buf;
++	s64 dpram_offset;
+ 	int buflen = 0;
+ 	int8_t type_end = 0;
+ 
+@@ -153,7 +161,7 @@ int softing_load_fw(const char *file, st
+ 	mem = fw->data;
+ 	end = &mem[fw->size];
+ 	/* look for header record */
+-	ret = fw_parse(&mem, &type, &addr, &len, &dat);
++	ret = fw_parse(&mem, end, &type, &addr, &len, &dat);
+ 	if (ret < 0)
+ 		goto failed;
+ 	if (type != 0xffff)
+@@ -164,7 +172,7 @@ int softing_load_fw(const char *file, st
  	}
+ 	/* ok, we had a header */
+ 	while (mem < end) {
+-		ret = fw_parse(&mem, &type, &addr, &len, &dat);
++		ret = fw_parse(&mem, end, &type, &addr, &len, &dat);
+ 		if (ret < 0)
+ 			goto failed;
+ 		if (type == 3) {
+@@ -179,9 +187,13 @@ int softing_load_fw(const char *file, st
+ 			goto failed;
+ 		}
  
--	clk_disable_unprepare(gpriv->clk_ram);
--	clk_disable_unprepare(gpriv->clkp);
- 	reset_control_assert(gpriv->rstc2);
- 	reset_control_assert(gpriv->rstc1);
-+	clk_disable_unprepare(gpriv->clk_ram);
-+	clk_disable_unprepare(gpriv->clkp);
- }
+-		if ((addr + len + offset) > size)
++		dpram_offset = (s64)addr + offset;
++		if (dpram_offset < 0 || dpram_offset > size ||
++		    len > size - dpram_offset) {
++			ret = -EINVAL;
+ 			goto failed;
+-		memcpy_toio(&dpram[addr + offset], dat, len);
++		}
++		memcpy_toio(&dpram[dpram_offset], dat, len);
+ 		/* be sure to flush caches from IO space */
+ 		mb();
+ 		if (len > buflen) {
+@@ -195,7 +207,7 @@ int softing_load_fw(const char *file, st
+ 			buf = new_buf;
+ 		}
+ 		/* verify record data */
+-		memcpy_fromio(buf, &dpram[addr + offset], len);
++		memcpy_fromio(buf, &dpram[dpram_offset], len);
+ 		if (memcmp(buf, dat, len)) {
+ 			/* is not ok */
+ 			dev_alert(&card->pdev->dev, "DPRAM readback failed\n");
+@@ -237,7 +249,7 @@ int softing_load_app_fw(const char *file
+ 	mem = fw->data;
+ 	end = &mem[fw->size];
+ 	/* look for header record */
+-	ret = fw_parse(&mem, &type, &addr, &len, &dat);
++	ret = fw_parse(&mem, end, &type, &addr, &len, &dat);
+ 	if (ret)
+ 		goto failed;
+ 	ret = -EINVAL;
+@@ -253,7 +265,7 @@ int softing_load_app_fw(const char *file
+ 	}
+ 	/* ok, we had a header */
+ 	while (mem < end) {
+-		ret = fw_parse(&mem, &type, &addr, &len, &dat);
++		ret = fw_parse(&mem, end, &type, &addr, &len, &dat);
+ 		if (ret)
+ 			goto failed;
  
- static int rcar_canfd_probe(struct platform_device *pdev)
+@@ -279,6 +291,12 @@ int softing_load_app_fw(const char *file
+ 		/* work in 16bit (target) */
+ 		sum &= 0xffff;
+ 
++		if (card->pdat->app.offs > card->dpram_size ||
++		    len > card->dpram_size - card->pdat->app.offs) {
++			ret = -EINVAL;
++			goto failed;
++		}
++
+ 		memcpy_toio(&card->dpram[card->pdat->app.offs], dat, len);
+ 		iowrite32(card->pdat->app.offs + card->pdat->app.addr,
+ 				&card->dpram[DPRAM_COMMAND + 2]);
 
 
