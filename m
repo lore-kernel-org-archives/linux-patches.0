@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BFFD473C9A;
-	Fri,  7 Aug 2026 15:06:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D087A473C84;
+	Fri,  7 Aug 2026 15:06:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115183; cv=none; b=JKteLaHwfL0dt/fh9Dt/kQrSJKjPj+IBVWRqcyGTrkTY19RLXyPEf9Jqz4igaksSKc3aAN7OrZa7jzv3T2PQ2Qlxa7ja0/BxzqLSbnuK//Zzi5XbdOee/67PLy088IT+OQVyGN0LL33cnnqy4LWxW+8SX2anhdDHQ2feAiPgsCQ=
+	t=1786115186; cv=none; b=CdiDTzsdvCMTUR9OVg3DQFQ0WI4YUwNTenDQHzw1FAFiri4lZYKyN0/qDTgd2rp6SJcc8u0wxkY/SGTo3uNsV/x393hxS7jc70yYiVbsltlTBQRnHS56Av9iQdCgjvw6ClsSs5ZeeYgExCcmBja1x9sOjSL9y/TAXlHF4B7mq4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115183; c=relaxed/simple;
-	bh=kHFsfK1ijD65ih4LIZ4vsgNZPGQmLpsEScQCh6MGUw8=;
+	s=arc-20240116; t=1786115186; c=relaxed/simple;
+	bh=fPJ0gkvSrZJWFS5dq49NzwMB4Q/HmVKEtc+NEiF50ts=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iDDCumMY3MNnHZNtQHvbN65UeCNMa1XVsHp3EJrS/T7Xf3VdTiOMdDMJcsu6BneuCtcAoSzGL5I+aIYtXWs6m9JNUEmDLsYSvEdx5Yjq8rp6DYJzMaOUIIo4HyWJ4yDJbttAiFnzsWnN0nlf7j0NFbweYLkotebVxdsY52HGA74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ibab1n7q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aI+OoLuU+D0E83ydPW6LqvTL9N+Tpg1Twyihx0GgNfMoByadODU9sdREJBSRjifnNiO49qfR91RWpCCt25HYnAaIASlSeRrmP+KO+GpeMUQUG0xDT8ixZEOhw++NV/zkGJvUbxrQpWjUnri5UAiGBMZoGhXQD+wtYTjRlaF1VhA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GDWnFzPk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ibab1n7q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E4C81F000E9;
-	Fri,  7 Aug 2026 15:06:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GDWnFzPk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D90631F00A3A;
+	Fri,  7 Aug 2026 15:06:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115180;
-	bh=NjbHn/mJEV1IvxzfJ5xE9JAZFlJkWY4/nniy5r3ByCc=;
+	s=korg; t=1786115183;
+	bh=R4tudcRXaOxxtSvWH23VylkKO1+h/ocklY2fclgCiIM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ibab1n7qdr+oRhHzRR2IiG+a3RbacXFmTavDqHLkZn29N3rSGAeJe8ATjbtw8mOGJ
-	 eDg6Z405uKdIHC92Er/5A0XuzRDLQtHlzjohGPCSpY/sXY4Ftbuxw2DyinvkI3Pgy4
-	 Fd/3UfnT+ZXYDFjy15ybs0InoOyG4jEKKWVcRyfg=
+	b=GDWnFzPkkTMv8goD+0Dq29d7LOdigOws0EPaNaWoVwHDlJpJy/qwrA3MF6cPGc/9M
+	 bl/kb4h/dCFGpabVoPuC0Fpxy70NK4n0rIODqohpTmGbjJ132GylRaQmMBq4xYZR0/
+	 QxLgmpB+o7CnJCtFlIBaVobpT9PzCAr0MN2Ga+yw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Matthew Rosato <mjrosato@linux.ibm.com>,
-	Farhan Ali <alifm@linux.ibm.com>
-Subject: [PATCH 6.18 184/396] KVM: s390: pci: Validate AIBV and AISB before pinning guest pages
-Date: Fri,  7 Aug 2026 16:35:44 +0200
-Message-ID: <20260807143428.259478774@linuxfoundation.org>
+	Rahul Chandelkar <rc@rexion.ai>,
+	Hidayath Khan <hidayath@linux.ibm.com>,
+	Alexandra Winter <wintera@linux.ibm.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 185/396] dibs: fix use-after-free of dmb_node in loopback attach/detach/unregister
+Date: Fri,  7 Aug 2026 16:35:45 +0200
+Message-ID: <20260807143428.279904382@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -51,71 +52,180 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Farhan Ali <alifm@linux.ibm.com>
+From: Hidayath Khan <hidayath@linux.ibm.com>
 
-commit 868d32ac72cba21c5c6d8a66a814b7c25a3a5c01 upstream.
+commit a10ea943356b9d70c5616a0a06f6fa97cfdaccb1 upstream.
 
-The AIBV holds one bit per MSI-X vector for a given function. The size of
-the bit vector is derived from the NOI and the AIBVO. If the size of the
-AIBV exceeds a single page boundary, then reject the request as we cannot
-safely pin the guest AIBV.
+dibs_lo_attach_dmb(), dibs_lo_detach_dmb() and dibs_lo_unregister_dmb()
+look up the dmb_node under dmb_ht_lock, drop the lock and only then
+operate on the node's refcount. Nothing keeps the node alive across
+that window: __dibs_lo_unregister_dmb() removes the node from the hash
+table under the write lock and immediately frees it.
 
-Similarly reject the request if the AISB address is not 8-byte aligned as
-the architecture requires doubleword alignment for the summary bit address.
-Since the AISBO can address up to 64 bits, the size of the AISB can only be
-8 bytes for the function. This also ensures the AISB doesn't exceed a
-single page boundary.
+A concurrent final put can therefore free the node between the lookup
+and the refcount operation:
 
-Fixes: 3c5a1b6f0a18 ("KVM: s390: pci: provide routines for enabling/disabling interrupt forwarding")
+CPU0 (attach)                     CPU1 (owner unregisters)
+
+read_lock_bh(&dmb_ht_lock)
+find dmb_node (refcnt == 1)
+read_unlock_bh(&dmb_ht_lock)
+                                  refcount_dec_and_test() 1 -> 0
+                                  write_lock_bh(&dmb_ht_lock)
+                                  hash_del(&dmb_node->list)
+                                  write_unlock_bh(&dmb_ht_lock)
+                                  kfree(dmb_node)
+refcount_inc_not_zero(&dmb_node->refcnt)  <-- use-after-free
+
+The same window exists for the refcount_dec_and_test() calls in the
+detach and unregister paths.
+
+Close the race structurally by making hash table membership and the
+refcount transitions atomic with respect to each other:
+
+- Perform the final refcount_dec_and_test() and hash_del() in a single
+  dmb_ht_lock write-side critical section, in both the unregister and
+  the detach path. Freeing the node still happens after the lock is
+  dropped, which is safe because a node whose refcount reached zero has
+  left the hash table and can no longer be found.
+
+- This establishes the invariant that any node found in the hash table
+  holds at least one reference, and that the final reference can only
+  be dropped under the write lock. dibs_lo_attach_dmb() can thus take
+  its reference with a plain refcount_inc() while still holding the
+  read lock; refcount_inc_not_zero() is no longer needed.
+
+__dibs_lo_unregister_dmb() no longer touches the hash table and is
+renamed to dibs_lo_free_dmb() accordingly.
+
+Note: commit cc21191b584c ("dibs: Move data path to dibs layer") moved
+the code to its current location; the race was introduced earlier by
+commit c3a910f2380f ("net/smc: implement DMB-merged operations of
+loopback-ism").
+
+Tested SMC-D via ISM and dibs loopback.
+
 Cc: stable@vger.kernel.org
-Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
-Tested-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Fixes: c3a910f2380f ("net/smc: implement DMB-merged operations of loopback-ism")
+Reported-by: Rahul Chandelkar <rc@rexion.ai>
+Signed-off-by: Hidayath Khan <hidayath@linux.ibm.com>
+Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
+Link: https://patch.msgid.link/20260727093530.968834-1-hidayath@linux.ibm.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kvm/pci.c |   16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ drivers/dibs/dibs_loopback.c |   47 +++++++++++++++++++++----------------------
+ 1 file changed, 24 insertions(+), 23 deletions(-)
 
---- a/arch/s390/kvm/pci.c
-+++ b/arch/s390/kvm/pci.c
-@@ -245,7 +245,7 @@ static int kvm_s390_pci_aif_enable(struc
- 				   bool assist)
+--- a/drivers/dibs/dibs_loopback.c
++++ b/drivers/dibs/dibs_loopback.c
+@@ -118,14 +118,9 @@ err_bit:
+ 	return rc;
+ }
+ 
+-static void __dibs_lo_unregister_dmb(struct dibs_lo_dev *ldev,
+-				     struct dibs_lo_dmb_node *dmb_node)
++static void dibs_lo_free_dmb(struct dibs_lo_dev *ldev,
++			     struct dibs_lo_dmb_node *dmb_node)
  {
- 	struct page *pages[1], *aibv_page, *aisb_page = NULL;
--	unsigned int msi_vecs, idx;
-+	unsigned int msi_vecs, idx, size;
- 	struct zpci_gaite *gaite;
- 	unsigned long hva, bit;
- 	struct kvm *kvm;
-@@ -272,6 +272,14 @@ static int kvm_s390_pci_aif_enable(struc
- 		return gisc;
+-	/* remove dmb from hash table */
+-	write_lock_bh(&ldev->dmb_ht_lock);
+-	hash_del(&dmb_node->list);
+-	write_unlock_bh(&ldev->dmb_ht_lock);
+-
+ 	clear_bit(dmb_node->sba_idx, ldev->sba_idx_mask);
+ 	folio_put(virt_to_folio(dmb_node->cpu_addr));
+ 	kfree(dmb_node);
+@@ -139,27 +134,33 @@ static int dibs_lo_unregister_dmb(struct
+ 	struct dibs_lo_dmb_node *dmb_node = NULL, *tmp_node;
+ 	struct dibs_lo_dev *ldev;
+ 	unsigned long flags;
++	bool last;
  
- 	/* Replace AIBV address */
-+	size = BITS_TO_LONGS(msi_vecs + fib->fmt0.aibvo) * sizeof(unsigned long);
-+	npages = DIV_ROUND_UP((fib->fmt0.aibv & ~PAGE_MASK) + size, PAGE_SIZE);
-+	/* AIBV cannot span more than 1 page */
-+	if (npages > 1) {
-+		rc = -EINVAL;
-+		goto out;
+ 	ldev = dibs->drv_priv;
+ 
+ 	/* find dmb from hash table */
+-	read_lock_bh(&ldev->dmb_ht_lock);
++	write_lock_bh(&ldev->dmb_ht_lock);
+ 	hash_for_each_possible(ldev->dmb_ht, tmp_node, list, dmb->dmb_tok) {
+ 		if (tmp_node->token == dmb->dmb_tok) {
+ 			dmb_node = tmp_node;
+ 			break;
+ 		}
+ 	}
+-	read_unlock_bh(&ldev->dmb_ht_lock);
+-	if (!dmb_node)
++	if (!dmb_node) {
++		write_unlock_bh(&ldev->dmb_ht_lock);
+ 		return -EINVAL;
 +	}
-+
- 	idx = srcu_read_lock(&kvm->srcu);
- 	hva = gfn_to_hva(kvm, gpa_to_gfn((gpa_t)fib->fmt0.aibv));
- 	npages = pin_user_pages_fast(hva, 1, FOLL_WRITE | FOLL_LONGTERM, pages);
-@@ -287,6 +295,12 @@ static int kvm_s390_pci_aif_enable(struc
++	last = refcount_dec_and_test(&dmb_node->refcnt);
++	if (last)
++		hash_del(&dmb_node->list);
++	write_unlock_bh(&ldev->dmb_ht_lock);
  
- 	/* Pin the guest AISB if one was specified */
- 	if (fib->fmt0.sum == 1) {
-+		/* AISB must be dword aligned */
-+		if (fib->fmt0.aisb & 0x7) {
-+			rc = -EINVAL;
-+			goto unpin1;
-+		}
+-	if (refcount_dec_and_test(&dmb_node->refcnt)) {
++	if (last) {
+ 		spin_lock_irqsave(&dibs->lock, flags);
+ 		dibs->dmb_clientid_arr[dmb_node->sba_idx] = NO_DIBS_CLIENT;
+ 		spin_unlock_irqrestore(&dibs->lock, flags);
+ 
+-		__dibs_lo_unregister_dmb(ldev, dmb_node);
++		dibs_lo_free_dmb(ldev, dmb_node);
+ 	}
+ 	return 0;
+ }
+@@ -188,14 +189,9 @@ static int dibs_lo_attach_dmb(struct dib
+ 		read_unlock_bh(&ldev->dmb_ht_lock);
+ 		return -EINVAL;
+ 	}
++	refcount_inc(&dmb_node->refcnt);
+ 	read_unlock_bh(&ldev->dmb_ht_lock);
+ 
+-	if (!refcount_inc_not_zero(&dmb_node->refcnt))
+-		/* the dmb is being unregistered, but has
+-		 * not been removed from the hash table.
+-		 */
+-		return -EINVAL;
+-
+ 	/* provide dmb information */
+ 	dmb->idx = dmb_node->sba_idx;
+ 	dmb->dmb_tok = dmb_node->token;
+@@ -209,11 +205,12 @@ static int dibs_lo_detach_dmb(struct dib
+ {
+ 	struct dibs_lo_dmb_node *dmb_node = NULL, *tmp_node;
+ 	struct dibs_lo_dev *ldev;
++	bool last;
+ 
+ 	ldev = dibs->drv_priv;
+ 
+ 	/* find dmb_node according to dmb->dmb_tok */
+-	read_lock_bh(&ldev->dmb_ht_lock);
++	write_lock_bh(&ldev->dmb_ht_lock);
+ 	hash_for_each_possible(ldev->dmb_ht, tmp_node, list, token) {
+ 		if (tmp_node->token == token) {
+ 			dmb_node = tmp_node;
+@@ -221,13 +218,17 @@ static int dibs_lo_detach_dmb(struct dib
+ 		}
+ 	}
+ 	if (!dmb_node) {
+-		read_unlock_bh(&ldev->dmb_ht_lock);
++		write_unlock_bh(&ldev->dmb_ht_lock);
+ 		return -EINVAL;
+ 	}
+-	read_unlock_bh(&ldev->dmb_ht_lock);
++	last = refcount_dec_and_test(&dmb_node->refcnt);
++	if (last)
++		hash_del(&dmb_node->list);
++	write_unlock_bh(&ldev->dmb_ht_lock);
 +
- 		idx = srcu_read_lock(&kvm->srcu);
- 		hva = gfn_to_hva(kvm, gpa_to_gfn((gpa_t)fib->fmt0.aisb));
- 		npages = pin_user_pages_fast(hva, 1, FOLL_WRITE | FOLL_LONGTERM,
++	if (last)
++		dibs_lo_free_dmb(ldev, dmb_node);
+ 
+-	if (refcount_dec_and_test(&dmb_node->refcnt))
+-		__dibs_lo_unregister_dmb(ldev, dmb_node);
+ 	return 0;
+ }
+ 
 
 
