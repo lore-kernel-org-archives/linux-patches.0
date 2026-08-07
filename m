@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAF7342DA3F;
-	Fri,  7 Aug 2026 15:02:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F1843806B0;
+	Fri,  7 Aug 2026 15:02:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114946; cv=none; b=ix5Te6IrBOXWOIwLDJ3oJCsT5n/WctWygmHiOOMYTbET68lX0rDiL2MjrVQbUYk+grvKTCAcbKb+N9Qfjj5qpz+h1ARuO5HQgunScTNLmZ/Z2Hj8/CTx0oLSkvFv2/MDknfBH8+dHigshcznLsazuSE5X2WsxY9pEIAvC9IGnUs=
+	t=1786114949; cv=none; b=lFyE+w6TRtJCF2r0crFn4lWJg8/JxJC4u7vBqcG+/WOXmPvyJ/Yfa1Uep6NjWTQMkiUfeIvdkzlGkG3FR7EBQRi5i5E2IpiEmpOpx1nFz5lR8OT6r7CXy2/wFs/e3Br4PFy7y7KKjeWkwdPkBxhvzj5dOPFpFoEMtGwfhJdfcnw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114946; c=relaxed/simple;
-	bh=Y1s6pivy4pM/6DTvgHsZGUYoFkzqOzeo8l6hnL1OqeU=;
+	s=arc-20240116; t=1786114949; c=relaxed/simple;
+	bh=La6fovS4iWnlsXFcsEybuDTJpfLdwI7R8X1pBsTbEic=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=skPcKdSHdPWe8ATZxi+3xeVTq1y16a4HrXhX8NFerINkrW+l7CSHTtqB6bkaFe6FosdDaoBWLyvDUeYvHOnS2iRwqV1ol9hld02lHDQJmEoeW9R8QxBuRrk8lUXFiF20iEXWghoCTycEUnhZY9G5fEtQspq1WeVU+8Sr8qnCE4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yz2UXFTt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Y76TOsalEPfU6wYK3rvqxPT2JSxu/kLg/8MnMyKXp6OI0WQKRSGePtOkb9nrCVQHzmAx3OO1+nHi65/HCM6rv7iGhwbGTHXHfJ++IALMSmtQMzVgSH4RQaSGLUVrhpmA34QPnv5Mb+ngV9qhO/uthw+/YQAZk/M9ma49zx/g1dU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sl5FbRD/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yz2UXFTt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22C461F000E9;
-	Fri,  7 Aug 2026 15:02:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sl5FbRD/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1DD81F000E9;
+	Fri,  7 Aug 2026 15:02:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114945;
-	bh=hybxOFNlX+HkJlkQ0cFL4A0TAj0oo8pE9WA1Lkm8l3A=;
+	s=korg; t=1786114948;
+	bh=AzhGxd3K8F2Tax+YB1KcosTwnFm/Vi5szyprDFgD8gM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yz2UXFTtpddf27mY2uOZPzHBtzIj9wCQnF2edpmtvEDNZchoBKOrfEqC6xXycNa4v
-	 NUCuJmLYoU1Yb63Z0KvPt5ATQn3XVte5nVFYPBOLOmd0o/BeNYqSFmtb1Lk3p4M9FJ
-	 YvfNKVORm+oiL/qpDGqw9/IxfOntBSRBP39nECKw=
+	b=Sl5FbRD/CXrh82wz3hEaexPnYBCUBPt7opZ298b29P3aTEYHtvaZ9G8/xeaRkuqle
+	 hnL9gd5BpH29H0Z5y4qh4BNpb43P+7yQdCVKorw+ItdJTSoM08Le7Kq5e5z3u0JVQU
+	 aBuRBCebpTfmGtWX030OKPLhghti75OG954S57ig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
+	Przemyslaw Korba <przemyslaw.korba@intel.com>,
+	Simon Horman <horms@kernel.org>,
 	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Samuel Salin <Samuel.salin@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 104/396] idpf: Fix mailbox IRQ name leak on request failure
-Date: Fri,  7 Aug 2026 16:34:24 +0200
-Message-ID: <20260807143426.536243475@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Rinitha S <sx.rinitha@intel.com>
+Subject: [PATCH 6.18 105/396] ice: suppress DPLL errors during reset recovery
+Date: Fri,  7 Aug 2026 16:34:25 +0200
+Message-ID: <20260807143426.558340340@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -53,39 +54,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Przemyslaw Korba <przemyslaw.korba@intel.com>
 
-[ Upstream commit 9bff30482c10f70d9e56c0633a6616e07140e217 ]
+[ Upstream commit b00be7c6b4bd7da3d510753b27ff6cb7ec647d07 ]
 
-idpf_mb_intr_req_irq() allocates the mailbox IRQ name before calling
-request_irq(). On success, the name is released later through
-kfree(free_irq()), but request_irq() failure returns without freeing it.
+During reset recovery, the admin queue returns EBUSY which is expected
+behavior. However, the DPLL subsystem was logging these as errors and
+incrementing the error counter, potentially leading to unnecessary
+warnings and even disabling the DPLL periodic worker if the threshold
+was reached.
 
-Free the allocated name on the request_irq() failure path.
+Suppress error logging and error counter increments when the admin
+queue returns EBUSY, as this is expected during reset recovery and
+not a real failure condition.
 
-Fixes: 4930fbf419a7 ("idpf: add core init and interrupt request")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
+test case:
+- ethtool --reset eth3 irq-shared dma-shared filter-shared offload-shared
+mac-shared phy-shared ram-shared
+- observe if dmesg EBUSY errors are gone
+
+Fixes: d7999f5ea64b ("ice: implement dpll interface to control cgu")
+Signed-off-by: Przemyslaw Korba <przemyslaw.korba@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
 Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Tested-by: Samuel Salin <Samuel.salin@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/idpf/idpf_lib.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/intel/ice/ice_dpll.c | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/idpf/idpf_lib.c b/drivers/net/ethernet/intel/idpf/idpf_lib.c
-index 131a8121839bd..590119f4097d0 100644
---- a/drivers/net/ethernet/intel/idpf/idpf_lib.c
-+++ b/drivers/net/ethernet/intel/idpf/idpf_lib.c
-@@ -139,7 +139,7 @@ static int idpf_mb_intr_req_irq(struct idpf_adapter *adapter)
- 	if (err) {
- 		dev_err(&adapter->pdev->dev,
- 			"IRQ request for mailbox failed, error: %d\n", err);
--
-+		kfree(name);
- 		return err;
+diff --git a/drivers/net/ethernet/intel/ice/ice_dpll.c b/drivers/net/ethernet/intel/ice/ice_dpll.c
+index 023d0de12670c..2a47d9f3cf7ef 100644
+--- a/drivers/net/ethernet/intel/ice/ice_dpll.c
++++ b/drivers/net/ethernet/intel/ice/ice_dpll.c
+@@ -703,7 +703,7 @@ ice_dpll_pin_state_update(struct ice_pf *pf, struct ice_dpll_pin *pin,
+ 				   ret,
+ 				   libie_aq_str(pf->hw.adminq.sq_last_status),
+ 				   pin_type_name[pin_type], pin->idx);
+-	else
++	else if (pf->hw.adminq.sq_last_status != LIBIE_AQ_RC_EBUSY)
+ 		dev_err_ratelimited(ice_pf_to_dev(pf),
+ 				    "err:%d %s failed to update %s pin:%u\n",
+ 				    ret,
+@@ -2669,7 +2669,8 @@ static int ice_dpll_pps_update_phase_offsets(struct ice_pf *pf,
+ 	*phase_offset_pins_updated = 0;
+ 	ret = ice_aq_get_cgu_input_pin_measure(&pf->hw, DPLL_TYPE_PPS, meas,
+ 					       ARRAY_SIZE(meas));
+-	if (ret && pf->hw.adminq.sq_last_status == LIBIE_AQ_RC_EAGAIN) {
++	if (ret && (pf->hw.adminq.sq_last_status == LIBIE_AQ_RC_EAGAIN ||
++		    pf->hw.adminq.sq_last_status == LIBIE_AQ_RC_EBUSY)) {
+ 		return 0;
+ 	} else if (ret) {
+ 		dev_err(ice_pf_to_dev(pf),
+@@ -2731,10 +2732,12 @@ ice_dpll_update_state(struct ice_pf *pf, struct ice_dpll *d, bool init)
+ 		d->dpll_idx, d->prev_input_idx, d->input_idx,
+ 		d->dpll_state, d->prev_dpll_state, d->mode);
+ 	if (ret) {
+-		dev_err(ice_pf_to_dev(pf),
+-			"update dpll=%d state failed, ret=%d %s\n",
+-			d->dpll_idx, ret,
+-			libie_aq_str(pf->hw.adminq.sq_last_status));
++		/* EBUSY is expected during reset recovery, don't log error */
++		if (pf->hw.adminq.sq_last_status != LIBIE_AQ_RC_EBUSY)
++			dev_err(ice_pf_to_dev(pf),
++				"update dpll=%d state failed, ret=%d %s\n",
++				d->dpll_idx, ret,
++				libie_aq_str(pf->hw.adminq.sq_last_status));
+ 		return ret;
  	}
- 
+ 	if (init) {
+@@ -2803,7 +2806,9 @@ static void ice_dpll_periodic_work(struct kthread_work *work)
+ 	    d->periodic_counter % dp->phase_offset_monitor_period == 0)
+ 		ret = ice_dpll_pps_update_phase_offsets(pf, &phase_offset_ntf);
+ 	if (ret) {
+-		d->cgu_state_acq_err_num++;
++		/* EBUSY is expected during reset recovery */
++		if (pf->hw.adminq.sq_last_status != LIBIE_AQ_RC_EBUSY)
++			d->cgu_state_acq_err_num++;
+ 		/* stop rescheduling this worker */
+ 		if (d->cgu_state_acq_err_num >
+ 		    ICE_CGU_STATE_ACQ_ERR_THRESHOLD) {
 -- 
 2.53.0
 
