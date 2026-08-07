@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE2604746B1;
-	Fri,  7 Aug 2026 15:26:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93F3538E8A9;
+	Fri,  7 Aug 2026 15:26:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116374; cv=none; b=VOGS4mYPDz9htbCk1ztDglcA4Slz44sfLm+72ZfF6P+g4LTw2X0hSoNa3cpn0hlpgnODDDsUF4fKM2kdlvKg5AYQPbfs9nvQt00lznzngIF5dRag2dChRzc5uJYcC1pS7f5WFJz5FkFueccdWPg0lUpUOTuaoVrSnn8hzpAPnRg=
+	t=1786116377; cv=none; b=u8DrumEHN7zqZVnw54yIFbjzubGNNBn5t7JUVIjspJVnzhiQFvzVAXWrFrVJzXQM3SU255sywZv81Fa3PTLOLOiKkTCQXadNxwnecxRqorUBqphwocS266XfkYbF6qu3ZoMnxbP2pO7aTqfDkVfcpRsvvjQCOScdw5Ch95U8KHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116374; c=relaxed/simple;
-	bh=7qJX63TGI0IOaUDPKgx50DrvpAqrm/O70mooqTJrQTw=;
+	s=arc-20240116; t=1786116377; c=relaxed/simple;
+	bh=pzy/Pf2+FM40Ek4cH+2aWzrVhMroqfnwomhisEsdNpk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DspvRF1BEoVZJH9FqnyQFhB74rdrS4k0HQn+bvDmtnn0SkD210p1punQXKCxSbyys3sg0I5xduGOP6A3x8ngt0bJNoXlD/bNkxZUAUWucJAE3Q7dWOCeMjO/qd6dsP60keBFpjf7hsVOpAnhFanO0XiK7EslOLaLL3PJ3wysSHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wYLq7ov4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VGre25DwQtEtEuQBljuwM5NV1INn8iqsG1GONQw4hpgDzqQkt5rHQR34t+KVYCLZqro45zJvzvOYO3FYevz1dlunQp7gqqGkIj5mmizP8sp3tV2MJmVSRpIRq3Wqf3OaiHcJcooY9s0vOxF34Dt2/nFlV9WwuTzqnP/SfzVUekw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jsgBYJPn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wYLq7ov4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BBC71F000E9;
-	Fri,  7 Aug 2026 15:26:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jsgBYJPn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F11F71F000E9;
+	Fri,  7 Aug 2026 15:26:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116373;
-	bh=cccvEe6UFjYPIn+xNyk/kkjlg30aYSNyT3PSH2dLSds=;
+	s=korg; t=1786116376;
+	bh=CNuxKNP0k0QyWwwZV0PA5535/BmB61hafqhHktc3MCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wYLq7ov4+5OVXJl8UcwPs5B4thKZFm+yDhQSRg2hoGso6M0hB2N1vBRODRxXk8WQa
-	 fAYf0etxjneEc5KiBGiYVogRA7v627i8k8abMhbZLFMRvJ37qeYH0j2Hn2PZoml0Y1
-	 x2K2hATT9k5JEhV4EnCxibwj2GMrvEwMi9kil4zs=
+	b=jsgBYJPnzWyCkUntraPQSRVd4PmR5SkJBw8px/PQ4MTD0kytRybNnrpPj8CT7lwmQ
+	 Z0rZdaLp7eBsSve17btGiAD4d3tPM8Yt67BplB6Sl02S9rl47IxOyn+bCNa+/APRRV
+	 fXQs5UbE2Wyes6WGiz+Wx9mHl+NGwTStneHPB4r8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>
-Subject: [PATCH 6.6 207/261] ata: ahci: Make ahci_ignore_port() handle empty mask_port_map
-Date: Fri,  7 Aug 2026 16:39:24 +0200
-Message-ID: <20260807143419.831606761@linuxfoundation.org>
+	Kohei Enju <kohei@enjuk.jp>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Aaron Ma <aaron.ma@canonical.com>,
+	Alexander Nowlin <alexander.nowlin@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>
+Subject: [PATCH 6.6 165/261] ice: wait for reset completion in ice_resume()
+Date: Fri,  7 Aug 2026 16:38:42 +0200
+Message-ID: <20260807143418.927561557@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143415.358597922@linuxfoundation.org>
 References: <20260807143415.358597922@linuxfoundation.org>
@@ -45,78 +48,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Aaron Ma <aaron.ma@canonical.com>
 
-commit 130ff5c8b78e6fd05270a04985c50bce6a3de6c1 upstream.
+commit c2816d613f388814d27bc9fd6dbd931a88056e19 upstream.
 
-Commit 8c87215dd3a2 ("ata: libahci_platform: support non-consecutive port
-numbers") added a skip to ahci_platform_enable_phys() for ports that are
-not in mask_port_map.
+ice_resume() schedules an asynchronous PF reset and returns
+immediately. The reset runs later in ice_service_task(). If
+userspace tries to bring up the net device before the reset
+finishes, ice_open() fails with -EBUSY:
 
-The code in ahci_platform_get_resources(), will currently set mask_port_map
-for each child "port" node it finds in the device tree.
+  ice_resume()
+    ice_schedule_reset()          # sets ICE_PFR_REQ, returns
+  ...
+  ice_open()
+    ice_is_reset_in_progress()    # ICE_PFR_REQ still set, -EBUSY
+  ...
+  ice_service_task()
+    ice_do_reset()
+      ice_rebuild()               # clears ICE_PFR_REQ, too late
 
-However, device trees that do not have any child "port" nodes will not have
-mask_port_map set, and for non-device tree platforms mask_port_map will
-only exist as a quirk for specific PCI device + vendor IDs, or as a kernel
-module parameter, but will not be set by default.
+Reproduced on E800 series NICs during suspend/resume with irdma
+enabled, where the aux device probe widens the race window.
 
-Therefore, the common thing is that mask_port_map is only set if you do not
-want to use all ports (as defined by Offset 0Ch: PI – Ports Implemented
-register), but instead only want to use the ports in mask_port_map. If
-mask_port_map is not set, all ports are available.
+  ice 0000:81:00.0: can't open net device while reset is in progress
 
-Thus, ahci_ignore_port() must be able to handle an empty mask_port_map.
+Add a best-effort wait (10s timeout, matching ice_devlink_info_get())
+for the reset to complete before returning from ice_resume(). In
+practice the reset completes in ~300ms.
 
-Fixes: 8c87215dd3a2 ("ata: libahci_platform: support non-consecutive port numbers")
-Fixes: 2c202e6c4f4d ("ata: libahci_platform: Do not set mask_port_map when not needed")
-Fixes: c9b5be909e65 ("ahci: Introduce ahci_ignore_port() helper")
-Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Closes: https://lore.kernel.org/linux-ide/10b31dd0-d0bb-4f76-9305-2195c3e17670@samsung.com/
-Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Co-developed-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20250225141612.942170-2-cassel@kernel.org
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Fixes: 769c500dcc1e ("ice: Add advanced power mgmt for WoL")
+Cc: stable@vger.kernel.org
+Reviewed-by: Kohei Enju <kohei@enjuk.jp>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Signed-off-by: Aaron Ma <aaron.ma@canonical.com>
+Tested-by: Alexander Nowlin <alexander.nowlin@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/ahci.h    |    8 ++++++--
- drivers/ata/libahci.c |    1 +
- 2 files changed, 7 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_main.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/drivers/ata/ahci.h
-+++ b/drivers/ata/ahci.h
-@@ -388,8 +388,12 @@ struct ahci_host_priv {
- static inline bool ahci_ignore_port(struct ahci_host_priv *hpriv,
- 				    unsigned int portid)
- {
--	return portid >= hpriv->nports ||
--		!(hpriv->mask_port_map & (1 << portid));
-+	if (portid >= hpriv->nports)
-+		return true;
-+	/* mask_port_map not set means that all ports are available */
-+	if (!hpriv->mask_port_map)
-+		return false;
-+	return !(hpriv->mask_port_map & (1 << portid));
+--- a/drivers/net/ethernet/intel/ice/ice_main.c
++++ b/drivers/net/ethernet/intel/ice/ice_main.c
+@@ -5491,6 +5491,16 @@ static int __maybe_unused ice_resume(str
+ 	/* Restart the service task */
+ 	mod_timer(&pf->serv_tmr, round_jiffies(jiffies + pf->serv_tmr_period));
+ 
++	/* Best-effort wait for the scheduled reset to finish so that the
++	 * device is operational before returning. Without this, userspace
++	 * (e.g. NetworkManager) may try to open the net device while the
++	 * asynchronous reset is still in progress, hitting -EBUSY.
++	 */
++	ret = ice_wait_for_reset(pf, secs_to_jiffies(10));
++	if (ret)
++		dev_err(dev, "Wait for reset timed out (10s) during resume: %d\n",
++			ret);
++
+ 	return 0;
  }
- 
- extern int ahci_ignore_sss;
---- a/drivers/ata/libahci.c
-+++ b/drivers/ata/libahci.c
-@@ -541,6 +541,7 @@ void ahci_save_initial_config(struct dev
- 		hpriv->saved_port_map = port_map;
- 	}
- 
-+	/* mask_port_map not set means that all ports are available */
- 	if (hpriv->mask_port_map) {
- 		dev_warn(dev, "masking port_map 0x%lx -> 0x%lx\n",
- 			port_map,
+ #endif /* CONFIG_PM */
 
 
