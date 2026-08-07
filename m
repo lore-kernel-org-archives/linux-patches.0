@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF35C38947F;
-	Fri,  7 Aug 2026 15:28:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F75527466A;
+	Fri,  7 Aug 2026 15:28:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116508; cv=none; b=oOZoZOEithuSuCu59NC+01TN98OpPWxrmVJhWvYOeH+Bw515rM1mHf4LmjnN40Hplw0zTQ5naHSrrVBdwuEDrea1nMRZhV05PJ1G3N5Fk8ZOhVHL38Pg3b2ZtAXKQg/WX09zcFqEB8JvvoRMb9j3H6HkzBJJeWulyjlibgPYr1M=
+	t=1786116511; cv=none; b=eLNVr3vJzH9EV5QAUg2s/IPoCjdrC1FG+NZN4iA36fTZjjd6l8UgFd+1z5pwZyipCO4GOkCVaIBdfdhsni8bWGop4rd9A0CHLNzL4B1MTStXkFWDh6F77wjv5XTYT5M9Cap+C7/qy5w5mfOEeyuPMJuJ+aP7/2g4V+U0FsuHLto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116508; c=relaxed/simple;
-	bh=8wLiYgo0C0RPzqbYYUWs+5Zsw5U4IWFo9fPTBp9ZOII=;
+	s=arc-20240116; t=1786116511; c=relaxed/simple;
+	bh=k66pGLWwBJhPYXNqRMCR4uNkjKuLd+Ssl4Qr2+nxAaw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JYuzK2pqaOKtPBR5GYJfepCTTMAIRf8E6PLXM4mFY0Jf+OYdnwS7ulVEolnK7PJB6dQ0srBKnGOhZlTe6xsJYhfbKB0AOzA5VZ6Mss5v9cacSX+TwZt3pVBvAzOu5ZBj7CTcw8dFD9/zMzOtGaC3Bx3ErjhgOWEMm22uCv5fjCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gq4NXksB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Ll3ndpfqOz+lqZp0yizaQy8TwyNvOSOxP0djwUVi11xdexE8x4d07Fi4tvV++b2YC9vfZqM8XV1pFN7bcnPxwk2EZ3cNillOydS6epTjFP2wzDp9nMZk8C3KOcQ9V2UdEe7mZ/KhuFP79Hxl1sbYvcdyHyfOO22sJN3ZdDIExIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iTLeKxvN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gq4NXksB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CD2D1F000E9;
-	Fri,  7 Aug 2026 15:28:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iTLeKxvN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07FE11F000E9;
+	Fri,  7 Aug 2026 15:28:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116507;
-	bh=aL/SKxB9RMKmutjXLyyNvAepBmDVkGgNihWAu50nHRs=;
+	s=korg; t=1786116510;
+	bh=oxT0DyeiHo9BQyvHbRgFV6G35QJSr7nGcodCGjN84TE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gq4NXksBFKesKXPLhOuIImy/yaxseAedm9L6ruX7hJFKFq+CjqsnaARWJEGBcDxcv
-	 OI9MOqhXemZiT8XSqo+e4eW8VIHj6I9vV6Iv6mXRxCpHuJ6kdiWPiba6AXIWjHtomu
-	 7OHLFCtYrZvNbUGxC097PnaY7gOiwOQiIR90y2XY=
+	b=iTLeKxvNVwwn2HSP5xCOihXIZjLP2rzm4gqeFdlrr7kwDaAWCQ9doud9bFSaf0NG0
+	 RrZ5DQiCEGycYiqxoKxMrtWJtIt+F3ZOevhjPXj9Vfr4b9iNAZooejQJRk7Kigab2T
+	 ZjvmqHHfDeIqVlvCZPbFOAZ2V39fUxQlqy0m4yWU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Zhiling Zou <roxy520tt@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 253/261] sctp: close UDP tunnel sockets during netns teardown
-Date: Fri,  7 Aug 2026 16:40:10 +0200
-Message-ID: <20260807143420.876223720@linuxfoundation.org>
+Subject: [PATCH 6.6 254/261] drm/i915/fbc: Extract intel_fbc_has_fences()
+Date: Fri,  7 Aug 2026 16:40:11 +0200
+Message-ID: <20260807143420.896802999@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143415.358597922@linuxfoundation.org>
 References: <20260807143415.358597922@linuxfoundation.org>
@@ -48,50 +45,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhiling Zou <roxy520tt@gmail.com>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-[ Upstream commit ffb2bd7ade36ec4da32c46a6eddbf4515316d08c ]
+[ Upstream commit bc34d310b578952d37b5200a7fa7475ab2a2bd5e ]
 
-proc_sctp_do_udp_port() starts per-net SCTP UDP tunneling sockets when
-net.sctp.udp_port is set, and stops/restarts them when the sysctl value
-changes. The netns exit path does not stop these sockets, so a namespace
-can be torn down while its SCTP UDP tunnel sockets are still installed.
+Pull the "do we have fences?" check into a single helper in the FBC
+code. Avoids having to call to outside the display code in multiple
+places for this.
 
-Close the UDP tunnel sockets from sctp_ctrlsock_exit() after unregistering
-the per-net sysctl table. This prevents new sysctl writes from racing in
-while the sockets are being released, and closes the sockets before the
-control socket is destroyed.
-
-Fixes: 046c052b475e ("sctp: enable udp tunneling socks")
-Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/b9f1f02b0780ad6a719e2413f5f0bb8eb7702d94.1782585631.git.roxy520tt%40gmail.com
-Signed-off-by: Zhiling Zou <roxy520tt@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/6dab75f22855cb219e2e30a5497cab03b970ab91.1784033357.git.roxy520tt@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240705145254.3355-2-ville.syrjala@linux.intel.com
+Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Stable-dep-of: db9e64c983dc ("drm/i915/hdcp: require monotonically increasing seq_num_v")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/protocol.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/i915/display/intel_fbc.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/net/sctp/protocol.c
-+++ b/net/sctp/protocol.c
-@@ -1471,6 +1471,7 @@ static int __net_init sctp_ctrlsock_init
- static void __net_exit sctp_ctrlsock_exit(struct net *net)
- {
- 	sctp_sysctl_net_unregister(net);
-+	sctp_udp_sock_stop(net);
+--- a/drivers/gpu/drm/i915/display/intel_fbc.c
++++ b/drivers/gpu/drm/i915/display/intel_fbc.c
+@@ -223,6 +223,11 @@ static u16 intel_fbc_override_cfb_stride
+ 	return 0;
+ }
  
- 	/* Free the control endpoint.  */
- 	inet_ctl_sock_destroy(net->sctp.ctl_sock);
++static bool intel_fbc_has_fences(struct drm_i915_private *i915)
++{
++	return intel_gt_support_legacy_fencing(to_gt(i915));
++}
++
+ static u32 i8xx_fbc_ctl(struct intel_fbc *fbc)
+ {
+ 	const struct intel_fbc_state *fbc_state = &fbc->state;
+@@ -608,7 +613,7 @@ static void ivb_fbc_activate(struct inte
+ 	else if (DISPLAY_VER(i915) == 9)
+ 		skl_fbc_program_cfb_stride(fbc);
+ 
+-	if (intel_gt_support_legacy_fencing(to_gt(i915)))
++	if (intel_fbc_has_fences(i915))
+ 		snb_fbc_program_fence(fbc);
+ 
+ 	intel_de_write(i915, ILK_DPFC_CONTROL(fbc->id),
+@@ -992,7 +997,7 @@ static void intel_fbc_update_state(struc
+ 	fbc_state->fence_y_offset = intel_plane_fence_y_offset(plane_state);
+ 
+ 	drm_WARN_ON(&i915->drm, plane_state->flags & PLANE_HAS_FENCE &&
+-		    !intel_gt_support_legacy_fencing(to_gt(i915)));
++		    !intel_fbc_has_fences(i915));
+ 
+ 	if (plane_state->flags & PLANE_HAS_FENCE)
+ 		fbc_state->fence_id =  i915_vma_fence_id(plane_state->ggtt_vma);
 
 
