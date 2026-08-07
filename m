@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4606735CB60;
-	Fri,  7 Aug 2026 15:42:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3486A35CB60;
+	Fri,  7 Aug 2026 15:42:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786117368; cv=none; b=L1/rAWwwuSflfPnFWc9OyVyNqStyh3YXjFSYWxwAodrR20JDvefTGl/wZFFCsBE3GBb4KFUlil5mj7qovoc5PXE/7mdecv9j4n+/0NznmmNJLqzGZYaDw0EY0E9qMOiC58cv0vycD4ChaT+ZFKW4XylVy+L8gxZKBnOkAW92m6U=
+	t=1786117371; cv=none; b=JgFbbdAGU0MrBsTH4Pw3ysgFBWF78JBvlu1jPwA5ztMeicLRHrCSk68vvx70d+FItoH2wLuhzg9KMFUZVagzli3Nbd0Ip0yCSzV1V7X/s0dlJWzaDnrnJWwk6Nr5yN7uTy7ZOQktZwT3/ybimiB0tJpHU1G98DOPQDQq1wunG4g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786117368; c=relaxed/simple;
-	bh=Kq02ZdRH65DHCdKYcG6BoasWDZjFSdsct24gLy4WfrU=;
+	s=arc-20240116; t=1786117371; c=relaxed/simple;
+	bh=KcqZtHL4rBv4f2Pea9WU4xv+zkfoGiqAxynmL1+hvq0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YExouKWxnBqO5a22pUtAvWw2iV4Kk7m5+qoC/Ikh1tAavQs4VDJgryQEeJ2atGR1XqiBqP06lDI7HktS8jqFn8SfJmfEhStk18MZgVHehamk3sHfFfR+iJbF5rJSkv+xYlui5UJjNpxIl4wTCjHJyfngluAU+r/ANycxcbRzst8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h1x8dU1I; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a9VcoOKolBUpMEfsGRNuleQb33DyVXgf6jqaeVz9mEPE5pm7baYP9SxcKIhOS5vV8o7CHeo3nxiaXs8x2qWe4KS3rVfl2BJTHncyxBMX16rusMJehyn8ooUk0rHHKll2+mIH5QGKjJdBZti7/Y2+kIV5as2BKRnlHMvG7q3QuCk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L/VOTajC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h1x8dU1I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A17F51F000E9;
-	Fri,  7 Aug 2026 15:42:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L/VOTajC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AD581F000E9;
+	Fri,  7 Aug 2026 15:42:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786117367;
-	bh=HQzG7V6bhQiSqZYON741bmry3yB2orcDIavv2QK3qVc=;
+	s=korg; t=1786117370;
+	bh=5FqfGmvYwiKWozxmSZZrNp27mhpU8MqQqIJummdhng8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h1x8dU1IU54n9Izp4qxT4lkxIasOMOzYfsTVE1PWG8HGBXn4I42C7JnGhCvIHbFvD
-	 nSg9BSK5k9t9iXWXr6Bcy3L0A1ClU3IiqnFMQ4CIQ5q35K8UY5xeSm+Y/8oS+aEjNR
-	 IQhafINAYBGljx1qWZcuRpOxvYCtalEGEGHmcOuk=
+	b=L/VOTajC+OtbAUv8Tatfh+1zXFSEGpRlHHF9uD8qFG3zk/Z4FzuSAJmOMPq21PbN6
+	 /ys+O4zxip5jx0130iNRg8lpjXFtMfNykqQ8bTCwexGd+uQ0iMu8jFp9aBpwZBFxoA
+	 skOW70fqC0tsDf2vlOToYkTvgu9sVgdGDtuj1IwA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sung Keum <kambodi127@gmail.com>,
-	Gabriel Krisman Bertazi <krisman@suse.de>,
+	Kyumin Lee <fyonglkm@gmail.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 7.1 293/438] io_uring/net: initialize mshot_len for send
-Date: Fri,  7 Aug 2026 16:38:09 +0200
-Message-ID: <20260807143434.221513254@linuxfoundation.org>
+Subject: [PATCH 7.1 294/438] io_uring: preserve task restrictions across exec
+Date: Fri,  7 Aug 2026 16:38:10 +0200
+Message-ID: <20260807143434.241840054@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -51,38 +50,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Kyumin Lee <fyonglkm@gmail.com>
 
-commit c77ffbc980efb337fd750c337d8157d532ea14e5 upstream.
+commit bc0e8faf90e776a2f1f3967a04e8091e6bdb4977 upstream.
 
-Commit:
+Per-task restrictions apply to all rings created by a task. Once
+installed, they should not be dropped across exec.
 
-6a8afb9fff64 ("io_uring/net: allow multishot receive per-invocation cap")
+For a task that has used io_uring, the exec cancellation path calls
+__io_uring_free(). This frees both the task context and the per-task
+restriction, so a ring created after exec is unrestricted.
 
-changed how io_mshot_prep_retry() set sr->len, and added the same
-initialization in io_mshot_prep_retry(). But it neglected to touch the
-send path, which may also uses the mshot retry path. Ensure that
-sr->mshot_len always gets initialized correctly.
+Split task context cleanup into io_uring_free_tctx(), and use it from
+the exec cancellation path. Keep __io_uring_free() for final task
+cleanup, where both the context and restriction are released.
 
-Fixes: 6a8afb9fff64 ("io_uring/net: allow multishot receive per-invocation cap")
-Cc: stable@vger.kernel.org
-Reported-by: Sung Keum <kambodi127@gmail.com>
-Reviewed-by: Gabriel Krisman Bertazi <krisman@suse.de>
+Fixes: ed82f35b926b ("io_uring: allow registration of per-task restrictions")
+Cc: stable@vger.kernel.org # 7.1+
+Signed-off-by: Kyumin Lee <fyonglkm@gmail.com>
+Link: https://patch.msgid.link/20260730192734.459247-1-fyonglkm@gmail.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/net.c |    1 +
- 1 file changed, 1 insertion(+)
+ io_uring/cancel.c |    2 +-
+ io_uring/tctx.c   |    7 ++++++-
+ io_uring/tctx.h   |    1 +
+ 3 files changed, 8 insertions(+), 2 deletions(-)
 
---- a/io_uring/net.c
-+++ b/io_uring/net.c
-@@ -436,6 +436,7 @@ int io_sendmsg_prep(struct io_kiocb *req
- 		req->flags |= REQ_F_NOWAIT;
- 	if (req->flags & REQ_F_BUFFER_SELECT)
- 		sr->buf_group = req->buf_index;
-+	sr->mshot_total_len = sr->mshot_len = 0;
- 	if (sr->flags & IORING_RECVSEND_BUNDLE) {
- 		if (req->opcode == IORING_OP_SENDMSG)
- 			return -EINVAL;
+--- a/io_uring/cancel.c
++++ b/io_uring/cancel.c
+@@ -662,6 +662,6 @@ end_wait:
+ 		 */
+ 		atomic_dec(&tctx->in_cancel);
+ 		/* for exec all current's requests should be gone, kill tctx */
+-		__io_uring_free(current);
++		io_uring_free_tctx(current);
+ 	}
+ }
+--- a/io_uring/tctx.c
++++ b/io_uring/tctx.c
+@@ -43,7 +43,7 @@ static struct io_wq *io_init_wq_offload(
+ 	return io_wq_create(concurrency, &data);
+ }
+ 
+-void __io_uring_free(struct task_struct *tsk)
++void io_uring_free_tctx(struct task_struct *tsk)
+ {
+ 	struct io_uring_task *tctx = tsk->io_uring;
+ 	struct io_tctx_node *node;
+@@ -67,6 +67,11 @@ void __io_uring_free(struct task_struct
+ 		kfree(tctx);
+ 		tsk->io_uring = NULL;
+ 	}
++}
++
++void __io_uring_free(struct task_struct *tsk)
++{
++	io_uring_free_tctx(tsk);
+ 	if (tsk->io_uring_restrict) {
+ 		io_put_bpf_filters(tsk->io_uring_restrict);
+ 		kfree(tsk->io_uring_restrict);
+--- a/io_uring/tctx.h
++++ b/io_uring/tctx.h
+@@ -12,6 +12,7 @@ void io_uring_del_tctx_node(unsigned lon
+ int __io_uring_add_tctx_node(struct io_ring_ctx *ctx);
+ int __io_uring_add_tctx_node_from_submit(struct io_ring_ctx *ctx);
+ void io_uring_clean_tctx(struct io_uring_task *tctx);
++void io_uring_free_tctx(struct task_struct *tsk);
+ 
+ void io_uring_unreg_ringfd(void);
+ int io_ringfd_register(struct io_ring_ctx *ctx, void __user *__arg,
 
 
