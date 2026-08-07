@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22E4C331A61;
-	Fri,  7 Aug 2026 14:58:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07AB5331A61;
+	Fri,  7 Aug 2026 14:58:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114700; cv=none; b=IX//i43xjLA6gPgnvrF7u7fzBQbv9vwkPZ0wdEPnorgs3laO1kOLclGrUIVr3NhzQOg/RdovTC3Ek8ZWh07dLVEmrM87Qj0j2Xf88d2JWt2c2hhOTHyBF5lNIE6kl2cHviRM79o107PTw/dC+aBAatc6bQpTmgwaZ0rvZM44Kx8=
+	t=1786114703; cv=none; b=UjYgnDCS6UpukkZLJVhOJMKnjM+SSvAXSRbkbHFdT/pKYm8lnoxqbjB+8f9dAvIEVpnfRxyYhMIaaYqHKwBxbVD73kr22oeJCVYPaZG2L4cpmJ7bQZpOXqmaRau0xROxNtMFzacjuShK1T5kz3uZiNTZy4oIXtoM2oLti08enXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114700; c=relaxed/simple;
-	bh=RfgiCFtuaD0QHBLj62nzIcTa4GXz9Tei2SBzUa15Hcs=;
+	s=arc-20240116; t=1786114703; c=relaxed/simple;
+	bh=ZkYbXSQ0/qQU4m5ntiDJm3hb7Ph2JRetubM8JjIfakI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OmI25RvpNe73IDJJWS2H+psVuqElQ9lIqbByEIcNroTy6glbXZBAft2Px+bWIU0l2iLci2NjUnKS3uSEpAf0jCu0GVYZMLpKOnkJOhaSi42hLj7ZsvCZO4Swdf3bfGohgM7Qi60wA0VCDAk9LToZ4tvI0xINXj0RzIbxymfiyg4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jGpxeFlQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IQ5bd7f5sWrU1T6bITcMKLGab1DL34jgPhE9Oy0hGBgoz9sgAEXZ8C5xc0Bko9Ffs7ugrFFERLhyd2T635E1/NhXr5EWBfim4tqEJWrFhmYvPPcEwLyt24lCUTkwD3oZ5NBibqIo02TRbLX5JIkC0V2Q0NZ6nDxzwMcoLuGNbQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bMbFwEfI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jGpxeFlQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71B641F000E9;
-	Fri,  7 Aug 2026 14:58:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bMbFwEfI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B82E1F00A3A;
+	Fri,  7 Aug 2026 14:58:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114699;
-	bh=U0I07t82+wjtndi5scDPXx/t3zG7lyFTRNcKy40WyOw=;
+	s=korg; t=1786114701;
+	bh=uYG9kRC2GrHUbOxCTG0muTnVGqo5gYwS7574VCkQL48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jGpxeFlQNSFLoaTpo1+oJyHYh3wwsPFrtR1sTuq2UD3hSY6popsTLbkC+EYmfb5z6
-	 Y/Ht/jOr4BNX8ZdZ8kLfmFLqrn5FmiFbrsN/8G32qEsnhjEn9EkdSjhIRs8/j9c3Ep
-	 fY3waOBWIQwCMgA+Jpk0bjvol0KWRqopsc249g8I=
+	b=bMbFwEfI5KobNlJgdkz5CDmUpD+qMH+7TtbBO8/FREdzIZUJo7O3si/vmwFtLsmAf
+	 p/GgN79A1g/9BuXg9HdqIbehdGo5jEXIggRy8pKnoh07IKE8WF9m3ha9KqHY461fcf
+	 YiF0zh6w0UuLXieio54ikeVLJGqDDO2wa6VEZNHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Tian <kevin.tian@intel.com>,
-	Pranjal Shrivastava <praan@google.com>,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 018/396] iommu/arm-smmu-v3-iommufd: Require exactly one Stream ID for a vDEVICE
-Date: Fri,  7 Aug 2026 16:32:58 +0200
-Message-ID: <20260807143424.669146998@linuxfoundation.org>
+Subject: [PATCH 6.18 019/396] gpio: sloppy-logic-analyzer: Fix memory leak in gpio_la_poll_probe()
+Date: Fri,  7 Aug 2026 16:32:59 +0200
+Message-ID: <20260807143424.690071545@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -53,64 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolin Chen <nicolinc@nvidia.com>
+From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
 
-[ Upstream commit c3b8ee84a965058b41275069d4696f37a8b14bf6 ]
+[ Upstream commit 7a7baebd9f23ba4f24796775472b2fd00dcd95d9 ]
 
-arm_vsmmu_vsid_to_sid() maps a guest's vSID to a single physical Stream ID
-taken from master->streams[0], assuming a device has exactly one stream. A
-device with several streams gets only its first one mapped, so a guest vSID
-invalidation cannot reach the others' ATC and IOTLB entries; a device with
-none makes master->streams a ZERO_SIZE_PTR, read out of bounds.
+The memory allocated for priv->blob.data is not freed in the error paths
+that follow the fops_buf_size_set() call in gpio_la_poll_probe(), as
+well as in the remove function. Fix that by using device managed action
+to free the memory on remove.
 
-Add an arm_vsmmu_vdevice_init() op to reject the vDEVICE with -EOPNOTSUPP
-when master->num_streams is not one, rather than mapping it silently.
-
-Fixes: d68beb276ba26 ("iommu/arm-smmu-v3: Support IOMMU_HWPT_INVALIDATE using a VIOMMU object")
-Link: https://patch.msgid.link/r/b15f2b73520f389f3f57881da2f040e7bdc18876.1783311134.git.nicolinc@nvidia.com
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Assisted-by: Claude:claude-opus-4-8
-Reviewed-by: Pranjal Shrivastava <praan@google.com>
-Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: 7828b7bbbf20 ("gpio: add sloppy logic analyzer using polling")
+Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Link: https://patch.msgid.link/20260715075311.527753-1-nihaal@cse.iitm.ac.in
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c   | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/gpio/gpio-sloppy-logic-analyzer.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c
-index 9ec5591565083..a52f86454f77d 100644
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c
-@@ -285,6 +285,20 @@ static int arm_vsmmu_vsid_to_sid(struct arm_vsmmu *vsmmu, u32 vsid, u32 *sid)
- 	return ret;
+diff --git a/drivers/gpio/gpio-sloppy-logic-analyzer.c b/drivers/gpio/gpio-sloppy-logic-analyzer.c
+index 969dddd3d6faf..0f4a6228a7488 100644
+--- a/drivers/gpio/gpio-sloppy-logic-analyzer.c
++++ b/drivers/gpio/gpio-sloppy-logic-analyzer.c
+@@ -161,6 +161,13 @@ static int fops_buf_size_get(void *data, u64 *val)
+ 	return 0;
  }
  
-+static int arm_vsmmu_vdevice_init(struct iommufd_vdevice *vdev)
++static void fops_buf_release(void *data)
 +{
-+	struct device *dev = iommufd_vdevice_to_device(vdev);
-+	struct arm_smmu_master *master = dev_iommu_priv_get(dev);
++	struct gpio_la_poll_priv *priv = data;
 +
-+	/*
-+	 * arm_vsmmu_vsid_to_sid() maps a vSID to master->streams[0] alone, so
-+	 * more streams would leave the rest stale and none reads out of bounds.
-+	 */
-+	if (master->num_streams != 1)
-+		return -EOPNOTSUPP;
-+	return 0;
++	vfree(priv->blob.data);
 +}
 +
- /* This is basically iommu_viommu_arm_smmuv3_invalidate in u64 for conversion */
- struct arm_vsmmu_invalidation_cmd {
- 	union {
-@@ -391,6 +405,7 @@ int arm_vsmmu_cache_invalidate(struct iommufd_viommu *viommu,
- static const struct iommufd_viommu_ops arm_vsmmu_ops = {
- 	.alloc_domain_nested = arm_vsmmu_alloc_domain_nested,
- 	.cache_invalidate = arm_vsmmu_cache_invalidate,
-+	.vdevice_init = arm_vsmmu_vdevice_init,
- };
+ static int fops_buf_size_set(void *data, u64 val)
+ {
+ 	struct gpio_la_poll_priv *priv = data;
+@@ -239,6 +246,9 @@ static int gpio_la_poll_probe(struct platform_device *pdev)
+ 		return ret;
  
- size_t arm_smmu_get_viommu_size(struct device *dev,
+ 	fops_buf_size_set(priv, GPIO_LA_DEFAULT_BUF_SIZE);
++	ret = devm_add_action_or_reset(dev, fops_buf_release, priv);
++	if (ret)
++		return ret;
+ 
+ 	priv->descs = devm_gpiod_get_array(dev, "probe", GPIOD_IN);
+ 	if (IS_ERR(priv->descs))
 -- 
 2.53.0
 
