@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D05A1C84D0;
-	Fri,  7 Aug 2026 15:22:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8A50331A61;
+	Fri,  7 Aug 2026 15:22:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116123; cv=none; b=a+2NLgrEzJhjag7+TJ+11XaikBPVo3Lg+0WaLbDe2/ogRAj0eu25ecKat0zkoezsTwUF+fXx+3vG14M+HErufrj3zOnnJEvLMBIQ9KqpRh7xh+YS3kS8BcWTCVGDOPpw+V5N9YzCwAqG+oibEQ369IsligAcfL6CBAqfIMMJA6M=
+	t=1786116125; cv=none; b=quZsdsIin67L4d9uI7oOxYsUoT2GZbzrE1TDpz52JuyCeb0+/pzVuBOkXn2s2AYGg9ROvFhJYjghHWTpciyjta1f1sstKbMzF8JgL2zvqBb/tsvo9olPgfmUYwVf93Z28Nb552erSzk4fON9mOrr4WlbwB7bMTrP+5hdUbdVY9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116123; c=relaxed/simple;
-	bh=Lr172xOCNqieoczMBXVSSyDc1GKrk/1zTzL5csjaYnE=;
+	s=arc-20240116; t=1786116125; c=relaxed/simple;
+	bh=6H6Nc1zLR2+2GlNypam/wBh0HE2Uoecs0aH+PKRNAzU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cKpvav3PcWJ+MmZoeomTogxpiLj/s2t3Qfj0fPpuWp3GYoREJjAnXeena4G+tNwfwcq6N4fhzxaLYhezAI9M9jlWabXfOVnAPTn1OqEn0ISBRQsX9+p1KkEsps1q3Ar+fLJN8EmPm76pN3T//lmm3aCnMz5LiRUKwSnE5+wePOs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NUaLPRxk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=obuZ6Ath3+YX6qlrU1xT788WKJEHta7zS6M2KgJEskKMErx1vv4M96mVT8I4jWGTLeuVPzcc4Z+RmsFYtVILPP765shpvM55Z74a4uwsrAm8SSA1QvtI3/ke07OJovVg5rXQLT9SrMSkokTmT+/eBoYmUbzJNEewYAMvAUxvw+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AjSH0ceb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NUaLPRxk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EC9E1F000E9;
-	Fri,  7 Aug 2026 15:22:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AjSH0ceb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 120501F000E9;
+	Fri,  7 Aug 2026 15:22:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116121;
-	bh=ml6aPp3I2L0HjuPtwTQ1/O5R9umdd27PA3L1ondmyms=;
+	s=korg; t=1786116124;
+	bh=yAN0MPsPhcr3pJVb08lXKCFuz4dti9Jih+RxnvucDBI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NUaLPRxkBloqnzuFZbbfQhMTTAM3/2RjCu5+vdGAvLkpOz420y7KCoTJAHQSH6bKQ
-	 sQVcBXkmRNJOmln1ycamhAxf8uLl9zaJQrnrmqsq5kL4O1mXI0pRom3A3JjPMQRDN/
-	 vi+88gTYyk1fJuaPVnt5vJRTq/WMtxLnd1Gi2JN8=
+	b=AjSH0cebtOLZ/FJmyEGwCMznbMe8zJtWFlZU0ZfGAveMzGJgnLXP38OqEEkyZevSR
+	 rbYXD8zBIS8dg3qVqGBStfVV2ea+TsPU3wyDqS6Ut1bDq3XPtbLAFqFIv9ing4eSvK
+	 0EeMm/ArvAQyzukFyI4CUI8FNzBhJX2BX8vn+j7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijun Hu <zijun.hu@oss.qualcomm.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 066/261] Bluetooth: btintel: Validate length before parsing diagnostics TLV
-Date: Fri,  7 Aug 2026 16:37:03 +0200
-Message-ID: <20260807143416.806968101@linuxfoundation.org>
+	Haidar Lee <haidar.lee@adlinktech.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.6 114/261] ASoC: tas2562: fix broken entries in the volume lookup table
+Date: Fri,  7 Aug 2026 16:37:51 +0200
+Message-ID: <20260807143417.836311960@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143415.358597922@linuxfoundation.org>
 References: <20260807143415.358597922@linuxfoundation.org>
@@ -51,40 +50,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijun Hu <zijun.hu@oss.qualcomm.com>
+From: Haidar Lee <haidar.lee@adlinktech.com>
 
-[ Upstream commit b640ff9af3c809ff5ea2077fbba17df1594ec1e4 ]
+commit bdb0fd6de403fcea7b85dc9d38f0a571583ebe80 upstream.
 
-btintel_diagnostics() accesses tlv->val[0] without first validating
-that the diagnostics VSE is long enough to contain that field, so
-may cause reading data beyond the received frame.
+The float_vol_db_lookup table is supposed to hold
+round(10^(dB/20) * 2^30) for every 2 dB step from -110 dB to 0 dB,
+which is 56 entries, but it only has 55: the -90 dB entry duplicates
+the -92 dB value (0x0000695b) and the -20 dB entry (0x06666666) is
+missing altogether. As a result every step between -90 dB and -22 dB
+is off by 2 dB, and the control's maximum raw value of 110 indexes one
+element past the end of the array.
 
-Fix by validating the length before access.
+Replace the duplicated -90 dB entry with the correct value 0x000084a3
+and add the missing -20 dB entry, bringing the table to the full 56
+entries so index 55 (raw value 110, 0 dB) is in range again.
 
-Fixes: af395330abed ("Bluetooth: btintel: Add Intel devcoredump support")
-Signed-off-by: Zijun Hu <zijun.hu@oss.qualcomm.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: bf726b1c86f2 ("ASoC: tas2562: Add support for digital volume control")
+Cc: stable@vger.kernel.org
+Signed-off-by: Haidar Lee <haidar.lee@adlinktech.com>
+Link: https://patch.msgid.link/20260715-tas2562-dvc-fix-v1-2-072b13901b20@adlinktech.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btintel.c | 3 +++
- 1 file changed, 3 insertions(+)
+ sound/soc/codecs/tas2562.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
-index 25fcd00c6a174..4784da07dd8a1 100644
---- a/drivers/bluetooth/btintel.c
-+++ b/drivers/bluetooth/btintel.c
-@@ -2922,6 +2922,9 @@ static int btintel_diagnostics(struct hci_dev *hdev, struct sk_buff *skb)
- {
- 	struct intel_tlv *tlv = (void *)&skb->data[5];
+--- a/sound/soc/codecs/tas2562.c
++++ b/sound/soc/codecs/tas2562.c
+@@ -32,15 +32,16 @@
+ static const unsigned int float_vol_db_lookup[] = {
+ 0x00000d43, 0x000010b2, 0x00001505, 0x00001a67, 0x00002151,
+ 0x000029f1, 0x000034cd, 0x00004279, 0x000053af, 0x0000695b,
+-0x0000695b, 0x0000a6fa, 0x0000d236, 0x000108a4, 0x00014d2a,
++0x000084a3, 0x0000a6fa, 0x0000d236, 0x000108a4, 0x00014d2a,
+ 0x0001a36e, 0x00021008, 0x000298c0, 0x000344df, 0x00041d8f,
+ 0x00052e5a, 0x000685c8, 0x00083621, 0x000a566d, 0x000d03a7,
+ 0x0010624d, 0x0014a050, 0x0019f786, 0x0020b0bc, 0x0029279d,
+ 0x0033cf8d, 0x004139d3, 0x00521d50, 0x00676044, 0x0082248a,
+ 0x00a3d70a, 0x00ce4328, 0x0103ab3d, 0x0146e75d, 0x019b8c27,
+ 0x02061b89, 0x028c423f, 0x03352529, 0x0409c2b0, 0x05156d68,
+-0x080e9f96, 0x0a24b062, 0x0cc509ab, 0x10137987, 0x143d1362,
+-0x197a967f, 0x2013739e, 0x28619ae9, 0x32d64617, 0x40000000
++0x06666666, 0x080e9f96, 0x0a24b062, 0x0cc509ab, 0x10137987,
++0x143d1362, 0x197a967f, 0x2013739e, 0x28619ae9, 0x32d64617,
++0x40000000
+ };
  
-+	if (skb->len < 5 + sizeof(*tlv) + sizeof(tlv->val[0]))
-+		goto recv_frame;
-+
- 	/* The first event is always an event type TLV */
- 	if (tlv->type != INTEL_TLV_TYPE_ID)
- 		goto recv_frame;
--- 
-2.53.0
-
+ struct tas2562_data {
 
 
