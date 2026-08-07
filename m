@@ -1,96 +1,87 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mx.nabladev.com (mx.nabladev.com [178.251.229.89])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D4FF1A238F;
-	Fri,  7 Aug 2026 18:02:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C0323009F6
+	for <patches@lists.linux.dev>; Fri,  7 Aug 2026 18:31:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.251.229.89
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786125771; cv=none; b=IKQxHSAiuverD81g+P2UnZ9tKg48Hn97F9WYQKKLeTgwr99fD/Mkakr6hqBU5/DTXDrqUv/e3ggKnUFFA21uiRTga8wg9h8CXYmvELwRjxtLWQcDZck28xnJZdR2gcEEFR53Fc9hJpF+ZuIhs++NEPLW0H1qhCkoGvj9eU4B5Qg=
+	t=1786127499; cv=none; b=dhfB6eWM2rwnWGQB3G6ibd85sGPd4u91Rp3BnubaW0KcHfe//A8stXMBeeEHfAgD2PcSLA3MjJ/7N7V+jGFwfESN9myH96A0IYNK+MKPg5rLHuIRr9NDqZqeFH7n0te8DzkR444GzI2E7PNl9qt/sW0DQbA+W2C2gCu81fFsw5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786125771; c=relaxed/simple;
-	bh=RxyQK3gR41pgfj9aHowx/q7MbOyJ6ZdxFWz0PEZrQIo=;
+	s=arc-20240116; t=1786127499; c=relaxed/simple;
+	bh=DVnetUNhfhWLHpKOl7+YC8X48dgOoqqNZGPGOKABHDc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SGhd8+xGHeyFA7+mc9k6qvzDVn7JkNBp22jp6Os5m8r1w4pRfl38DNQyn8zUApZ62xArhiFLgXtf4nGdI+RsNtkxuJlKKywIKThYKGYNA+yFtxAzXg22ZdhhOk1cXvxaWUYn3KeSHdTkK+GSaLDjmmuNALLcvSihsqK1Rz192f4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nwqmqUXq; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=FJrmSem89JftF/vJPHrSp9J/7LGbtBVzwPjdaQd2Vj5ISoehVPHJ1EooWF7vdpQwqS0ZZvVBQpoAMzlIR/apDpc/1nqKoldGdOtRGTbDglu/mZgG9XXm5cNSFXh3nHvvf8sQ7AYSNGkVFc17HU5AzI8OdTkTjYmAicOYOsJHsH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nabladev.com; spf=pass smtp.mailfrom=nabladev.com; dkim=pass (2048-bit key) header.d=nabladev.com header.i=@nabladev.com header.b=ZWwI1Vjo; arc=none smtp.client-ip=178.251.229.89
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nabladev.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nabladev.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nwqmqUXq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6145A1F000E9;
-	Fri,  7 Aug 2026 18:02:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786125770;
-	bh=yPChVXoYVNGUn/NmW1gqR/GKKqRaql6iyBiVHocHgSY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=nwqmqUXqMXBEHaT0FaM+SICMoOQdlsgDaD09KuIhBuHIfYXAr7gVMKXunO3vatMCs
-	 1IjCFAGPrM2trDgzXhxu2bDiD0cAcscp8BrAA0OpA3ruzcrV4cXBNjMsDD833Sk9s0
-	 KkpBjgPJpoLlj+yas0h7ZoIjqW+glsizQsaScHTUn7RI+d1AxF/8FS/Vcl53QAAb1D
-	 6r5asQQapdNIhMa8laToHlqgXoks2UBgRa/uZsPURWQMEbeNkgzqfnrIbP8+W1JrHq
-	 O2dH9MV14Ea1gfT24k+LX/gGfk/6SVJ8Qm6psYTtjWBA9+/ASFNbmAuQl4pCNpLBGd
-	 Q716PT38xmVkg==
-Date: Fri, 7 Aug 2026 11:02:45 -0700
-From: Nathan Chancellor <nathan@kernel.org>
+	dkim=pass (2048-bit key) header.d=nabladev.com header.i=@nabladev.com header.b="ZWwI1Vjo"
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id B569111B0AF;
+	Fri, 07 Aug 2026 20:31:21 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nabladev.com;
+	s=dkim; t=1786127484;
+	h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 in-reply-to:references; bh=QfEB8ITGCKqjjI9htOofCc7++z2S5qKrfomp9/dVKo8=;
+	b=ZWwI1VjokfahvE5hveNMeg14DOhJwhjzGHVPK+LOMNbqL2cuyv1GKCoVOInQdNlusyTQiW
+	yt+4zExBd+y3xBtuk9MMr0BLybIQ5gJALcg/LnS4QEuFJVf5gZOH4talUMFuxQ4ah7Z2RP
+	9lv+mWOHkTkCT9YgQ+FiCk35Jj3FTK6/PWmP6fCKwOOudlOWSsgNKucRSPqrV77/ROi+JO
+	PRvXilfD5JxFHBWGlAmVyNn2icDAiFzAiS5RW+6GVtJ7SWUveOlyjDR95p6fS2YXWiSDNe
+	4yG7QrGheINvOmWOmBZ2fZWW4c0DVS87WT2yP4RqDA9v3qJfIZzMD8r1LnC5nA==
+Date: Fri, 7 Aug 2026 20:31:19 +0200
+From: Pavel Machek <pavel@nabladev.com>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Danielle Costantino <dcostantino@meta.com>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	"Harry Yoo (Oracle)" <harry@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.12 289/337] mm/slab: prevent unbounded recursion in
- free path with new kmalloc type
-Message-ID: <20260807180245.GA4067747@ax162>
-References: <20260807143418.516897842@linuxfoundation.org>
- <20260807143424.797445703@linuxfoundation.org>
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org,
+	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+	sr@sladewatkins.com
+Subject: Re: [PATCH 7.1 000/438] 7.1.8-rc1 review
+Message-ID: <anYkdwFdB72mZM6Y@duo.ucw.cz>
+References: <20260807143428.008222056@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="G0u54LwNZju6LvFE"
+Content-Disposition: inline
+In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
+X-Last-TLS-Session-Version: TLSv1.3
+
+
+--G0u54LwNZju6LvFE
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260807143424.797445703@linuxfoundation.org>
 
-On Fri, Aug 07, 2026 at 04:38:12PM +0200, Greg Kroah-Hartman wrote:
-...
->  - Mark need_kmalloc_no_objext() __always_inline to make sure
->    the compiler does not generate a out-of-line function that could
->    access mem_profiling_support (which is marked __init)
-...
-> diff --git a/mm/slab.h b/mm/slab.h
-> index b65d2462b3fdb..34a3d65b4ef5f 100644
-> --- a/mm/slab.h
-> +++ b/mm/slab.h
-> @@ -557,6 +562,25 @@ bool slab_in_kunit_test(void);
->  static inline bool slab_in_kunit_test(void) { return false; }
->  #endif
->  
-> +/*
-> + * Return true if KMALLOC_NORMAL caches may need obj_exts arrays.
-> + *
-> + * Memory allocation profiling requires obj_exts for all caches.
-> + * Memcg usually doesn't need them for normal kmalloc caches, but kmalloc types
-> + * with a priority higher than KMALLOC_CGROUP can be aliased with KMALLOC_NORMAL.
-> + */
-> +static __always_inline inline bool need_kmalloc_no_objext(void)
+Hi!
 
-This adjustment causes a clang warning (or error with CONFIG_WERROR):
+> This is the start of the stable review cycle for the 7.1.8 release.
+> There are 438 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-  In file included from linux/mm/mempool.c:21:
-  linux/mm/slab.h:572:24: error: duplicate 'inline' declaration specifier [-Werror,-Wduplicate-decl-specifier]
-    572 | static __always_inline inline bool need_kmalloc_no_objext(void)
-        |                        ^
-  linux/include/linux/compiler_types.h:249:16: note: expanded from macro 'inline'
-    249 | #define inline inline __gnu_inline __inline_maybe_unused notrace
-        |                ^
+CIP testing did not find any problems here:
 
-As originally reported by KernelCI at
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-7.1.y
 
-  https://lore.kernel.org/178611474407.7658.14431237412617748501@kernelci.org/
+Tested-by: Pavel Machek (CIP) <pavel@nabladev.com>
 
-The 'inline' should be dropped, as '__always_inline' includes 'inline'
-already.
+Best regards,
+                                                                Pavel
 
--- 
-Cheers,
-Nathan
+--G0u54LwNZju6LvFE
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCanYkdwAKCRAw5/Bqldv6
+8novAKCoLSH01ns5xVTrHDg09AxSyoqbFQCggg7pAZ5H7sf9lL/0/alRBPMKWKk=
+=L4Ku
+-----END PGP SIGNATURE-----
+
+--G0u54LwNZju6LvFE--
