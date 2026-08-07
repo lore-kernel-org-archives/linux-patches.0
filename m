@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59AFC311C07;
-	Fri,  7 Aug 2026 15:04:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53B3340911F;
+	Fri,  7 Aug 2026 15:04:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786115082; cv=none; b=C4+hc8pCBcH+8F+ottUiwffP61iI6oaeMPPU+BPDAdo06d3UvxzC5kE8VsMkCu1lRKBuEBGTIBkA9dCtSKPFd8BEd87NSUJAZ5zculOHtModUpOpwQjfuSVLC9rZGrRfuNJu+14RgP+fN9X/6I7zwsQmVpLLPH0VfBUtuKBDps0=
+	t=1786115085; cv=none; b=W0FFN8tSgyqV3AMFHjhNg7qIlT7NgAFdWAR2lbCxEqfK8mcbHvzf98uYhXBCTL4MOh+dAwldpTCPbdAfebzdpc1xuM6qPXb2u7zmxie8f0CQkylJp3Hh+nxYfRxM2+T+hlM/duNY/Oh/cjeRv/DgXev8E9N4LAaVOVSfolB/gBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786115082; c=relaxed/simple;
-	bh=DFe4A7Xqm1WDSLyIY9apTOiU6HYpaNCibEXAGOvp5Dw=;
+	s=arc-20240116; t=1786115085; c=relaxed/simple;
+	bh=OiOSjYnnjdVIxA4hDzlcv0xJ1A2SIyu0/GPXlvnSMiw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NTxQeNTjXp1UXXyQhbguwPWjlFliJFGQQH52gkEBiaTXy6m3y1GDmK3U8uwUkLK0xBBJQPs0ymeW4x6g6rMJZaz8Z1Ijf1iX/MTeNJejcmHkIoNs0aEjAIU2BFT1kK/GXs8Ya7WXr+0O1H6PSQuFmR16UB85wV8M+oWSZdPwFhw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tjWWkF5P; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=US1VA+TGePnK9oOCQYsQhA9tDqg2ulnbMravIB1zXK7PpWyKG/KOX1Z2S/eprv6uXEJpka3BvqUd4Q4n5y9jBv3UwEmSejnIUyhR4NIugJnp+fRzrX7jHDHWEnEBnKqTDMTCBbwPNAmJbnsZDxib1RFnq/7/zzAD5dsEaCKYdC4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1kJhJ7oN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tjWWkF5P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E87881F000E9;
-	Fri,  7 Aug 2026 15:04:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1kJhJ7oN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0C451F00A3A;
+	Fri,  7 Aug 2026 15:04:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786115076;
-	bh=KoOhw7jm3H83cbj1JMFPFIpfOqokQHhjTeT8SZsmPHo=;
+	s=korg; t=1786115079;
+	bh=+GGRc0/MIu/15p0ePTVN2xkNPKeMwD/A9rf729Er/14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tjWWkF5PrWuaer8EjlQrdA4cgL9UIjzzN36O+l/M+8m0rKkI3sE9Go5LQUHmBpORK
-	 y+Hd6N9kQSp5nAQPw1rZSl49YH6/vJewZv1OGN2f5p7PsWjR87RI9qs5Vw/MSSiTM2
-	 duULewhDm/Cj2MeExnvk82l/P4VWzVkIdoWipIN0=
+	b=1kJhJ7oN8u8yiDnQnClZMatLt2mfWhZkd+tGhsow4HCubxlmLtdkAIPJEbQXf01pX
+	 3wR8DNxpDwgxSAsf1bZ0HU2Io3sO9xhO7tsuXTt/Lhf2mVjmO9Q97OLoHdbfb3uIlA
+	 A0qdtRN89gjeNhvv36ne6Fe198NZNUz5mIuB+7c0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haibo Chen <haibo.chen@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	"Denis V. Lunev" <den@openvz.org>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 150/396] spi: spi-nxp-fspi: add per-SoC SDR/DTR clock rate limits for all supported SoCs
-Date: Fri,  7 Aug 2026 16:35:10 +0200
-Message-ID: <20260807143427.545399774@linuxfoundation.org>
+Subject: [PATCH 6.18 151/396] qede: sync udp_tunnel ports outside qede_lock in the recovery path
+Date: Fri,  7 Aug 2026 16:35:11 +0200
+Message-ID: <20260807143427.567579974@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143424.272339768@linuxfoundation.org>
 References: <20260807143424.272339768@linuxfoundation.org>
@@ -45,198 +50,173 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Haibo Chen <haibo.chen@nxp.com>
+From: Denis V. Lunev <den@openvz.org>
 
-[ Upstream commit 9c19d60fea9f46ed0c3394653ef4941f1a459968 ]
+[ Upstream commit 451c9075d6c53f2438d110addbeeeea6fac18567 ]
 
-The commit f43579ef3500 ("spi: spi-nxp-fspi: limit the clock rate for
-different sample clock source selection") introduced a global 166MHz
-cap for DTR mode (RXCLKSRC=3), based on the i.MX8MN datasheet timing
-specification (Section 3.9.9, page 65).
+A TX timeout on a qede NIC that has VXLAN/GENEVE tunnel ports
+configured wedges the rtnetlink control plane of the whole machine:
 
-After reviewing the FlexSPI timing parameters in the datasheets for all
-supported SoCs, the following corrections and additions are needed:
+  NETDEV WATCHDOG: ens6f1 (qede): transmit queue 2 timed out 10226 ms
+  [qede_tx_timeout:586(ens6f1)]TX timeout on queue 2!
+  [qede_recovery_handler:2665(ens6f0)]Starting a recovery process
 
-1. SDR mode (RXCLKSRC=0) limits vary per SoC:
-   - i.MX8MN/MM/MP/95: 66MHz  (IMX8MNCEC §3.9.9, IMX8MMCEC §3.9.10,
-                                IMX8MPCEC, IMX95CEC Rev.8 §4.11.7)
-   - i.MX8QXP/QM/DXL/ULP: 60MHz (IMX8QXPCEC, IMX8QMCEC, IMX8DXLCEC,
-                                   IMX8ULPCEC §7.3.1 ND mode)
-   - LX2160A: 100MHz            (LX2160ACEC FlexSPI timing parameters)
+The recovery path deadlocks on the driver's own mutex:
 
-2. DTR mode (RXCLKSRC=3) limits vary per SoC:
-   - i.MX8MN/MM/MP/ULP: 166MHz
-   - i.MX8QXP/QM/DXL: 200MHz   (same FlexSPI IP across this family)
-   - i.MX95: 200MHz             (IMX95CEC §4.11.7.3.2.3 Table 106)
-   - LX2160A: DTR disabled      (FSPI_QUIRK_DISABLE_DTR)
+  qede_sp_task
+   rtnl_lock()
+   mutex_lock(&edev->qede_lock)        <- taken
+   qede_recovery_handler
+    qede_load
+    udp_tunnel_nic_reset_ntf
+     __udp_tunnel_nic_device_sync
+      info->sync_table == qede_udp_tunnel_sync
+       mutex_lock(&edev->qede_lock)    <- same task: deadlock
 
-Update related platform data with correct speed limation according
-to datasheet.
+The mutex is not recursive, so the kworker blocks on itself with
+rtnl_lock held, and neither lock is ever released. Every task that
+calls rtnl_lock() afterwards (ip, ovs-vswitchd, lldpad, IPv6
+addrconf, sshd) blocks forever while the node still answers ping.
+In a vmcore from an affected production node rtnl_mutex.owner
+decodes to the very kworker blocked at the innermost mutex_lock()
+above.
 
-Fixes: f43579ef3500 ("spi: spi-nxp-fspi: limit the clock rate for different sample clock source selection")
-Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
-Link: https://patch.msgid.link/20260728-fspi-clock-v2-1-dbe786a4a6eb@nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Re-sync the tunnel ports from qede_sp_task() after the internal lock
+is dropped, still under rtnl_lock as the udp_tunnel API requires.
+This mirrors qede_open(), which calls udp_tunnel_nic_reset_ntf()
+under rtnl without the internal lock.
+
+qede_recovery_handler() now returns whether it has successfully
+reloaded an open device, and the caller re-syncs the ports only in
+that case. This keeps the old gating exactly: a device that was down
+or a failed recovery returns false, as those paths never reached the
+udp_tunnel_nic_reset_ntf() call before either.
+
+This was the only user of the qede_lock()/qede_unlock() helpers, so
+remove them.
+
+Fixes: 8cd160a29415 ("qede: convert to new udp_tunnel_nic infra")
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+CC: Andrew Lunn <andrew+netdev@lunn.ch>
+CC: "David S. Miller" <davem@davemloft.net>
+CC: Eric Dumazet <edumazet@google.com>
+CC: Jakub Kicinski <kuba@kernel.org>
+CC: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20260726104311.1782900-1-den@openvz.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-nxp-fspi.c | 83 ++++++++++++++++++++++++++++++++++++--
- 1 file changed, 80 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/qlogic/qede/qede_main.c | 44 ++++++++++----------
+ 1 file changed, 22 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/spi/spi-nxp-fspi.c b/drivers/spi/spi-nxp-fspi.c
-index 95ccb1f7dfafa..b504a5c86692a 100644
---- a/drivers/spi/spi-nxp-fspi.c
-+++ b/drivers/spi/spi-nxp-fspi.c
-@@ -340,6 +340,18 @@ struct nxp_fspi_devtype_data {
- 	unsigned int quirks;
- 	unsigned int lut_num;
- 	bool little_endian;
-+	/*
-+	 * The max clock rate (Hz) that FlexSPI can output to the device
-+	 * in SDR mode (RXCLKSRC=0). Defaults to 66MHz if zero.
-+	 * Some SoCs (e.g. LX2160A) support up to 100MHz in SDR mode.
-+	 */
-+	unsigned long max_sdr_rate;
-+	/*
-+	 * The max clock rate (Hz) that FlexSPI can output to the device
-+	 * in DTR mode (RXCLKSRC=3). Defaults to 166MHz if zero.
-+	 * Some SoCs (e.g. i.MX95, i.MX8QM, i.MX8DXL) support up to 200MHz.
-+	 */
-+	unsigned long max_dtr_rate;
- };
- 
- static struct nxp_fspi_devtype_data lx2160a_data = {
-@@ -349,6 +361,10 @@ static struct nxp_fspi_devtype_data lx2160a_data = {
- 	.quirks = FSPI_QUIRK_DISABLE_DTR,
- 	.lut_num = 32,
- 	.little_endian = true,  /* little-endian    */
-+	/*
-+	 * LX2160ACEC: SDR RXCLKSRC=0 max 100MHz, DTR disabled via quirk.
-+	 */
-+	.max_sdr_rate = 100000000,
- };
- 
- static struct nxp_fspi_devtype_data imx8mm_data = {
-@@ -358,6 +374,21 @@ static struct nxp_fspi_devtype_data imx8mm_data = {
- 	.quirks = 0,
- 	.lut_num = 32,
- 	.little_endian = true,  /* little-endian    */
-+	/* IMX8MMCEC §3.9.10: SDR RXCLKSRC=0 max 66MHz, DDR RXCLKSRC=3 max 166MHz */
-+	.max_sdr_rate = 66000000,
-+	.max_dtr_rate = 166000000,
-+};
-+
-+static struct nxp_fspi_devtype_data imx8mp_data = {
-+	.rxfifo = SZ_512,       /* (64  * 64 bits)  */
-+	.txfifo = SZ_1K,        /* (128 * 64 bits)  */
-+	.ahb_buf_size = SZ_2K,  /* (256 * 64 bits)  */
-+	.quirks = 0,
-+	.lut_num = 32,
-+	.little_endian = true,  /* little-endian    */
-+	/* IMX8MPCEC: SDR RXCLKSRC=0 max 66MHz, DDR RXCLKSRC=3 max 166MHz */
-+	.max_sdr_rate = 66000000,
-+	.max_dtr_rate = 166000000,
- };
- 
- static struct nxp_fspi_devtype_data imx8qxp_data = {
-@@ -367,6 +398,12 @@ static struct nxp_fspi_devtype_data imx8qxp_data = {
- 	.quirks = 0,
- 	.lut_num = 32,
- 	.little_endian = true,  /* little-endian    */
-+	/*
-+	 * IMX8QXPCEC: SDR RXCLKSRC=0 max 60MHz, DDR RXCLKSRC=3 max 200MHz.
-+	 * i.MX8QM and i.MX8DXL share the same FlexSPI IP and limits.
-+	 */
-+	.max_sdr_rate = 60000000,
-+	.max_dtr_rate = 200000000,
- };
- 
- static struct nxp_fspi_devtype_data imx8dxl_data = {
-@@ -376,6 +413,12 @@ static struct nxp_fspi_devtype_data imx8dxl_data = {
- 	.quirks = FSPI_QUIRK_USE_IP_ONLY,
- 	.lut_num = 32,
- 	.little_endian = true,  /* little-endian    */
-+	/*
-+	 * IMX8DXLCEC (i.MX 8XLite): SDR RXCLKSRC=0 max 60MHz,
-+	 * DDR RXCLKSRC=3 max 200MHz.
-+	 */
-+	.max_sdr_rate = 60000000,
-+	.max_dtr_rate = 200000000,
- };
- 
- static struct nxp_fspi_devtype_data imx8ulp_data = {
-@@ -385,6 +428,29 @@ static struct nxp_fspi_devtype_data imx8ulp_data = {
- 	.quirks = 0,
- 	.lut_num = 16,
- 	.little_endian = true,  /* little-endian    */
-+	/*
-+	 * IMX8ULPCEC §7.3.1, Normal Drive (ND, 1.0V) mode:
-+	 * SDR RXCLKSRC=0 max 60MHz, DDR RXCLKSRC=3 max 166MHz.
-+	 * Note: Overdrive (OD, 1.05V) allows up to 180MHz DTR
-+	 * but is not the default use case.
-+	 */
-+	.max_sdr_rate = 60000000,
-+	.max_dtr_rate = 166000000,
-+};
-+
-+static struct nxp_fspi_devtype_data imx95_data = {
-+	.rxfifo = SZ_512,       /* (64  * 64 bits)  */
-+	.txfifo = SZ_1K,        /* (128 * 64 bits)  */
-+	.ahb_buf_size = SZ_2K,  /* (256 * 64 bits)  */
-+	.quirks = 0,
-+	.lut_num = 32,
-+	.little_endian = true,  /* little-endian    */
-+	/*
-+	 * IMX95CEC Rev.8 §4.11.7: SDR RXCLKSRC=0 max 66MHz,
-+	 * DDR RXCLKSRC=3 max 200MHz (Nominal/Overdrive mode).
-+	 */
-+	.max_sdr_rate = 66000000,
-+	.max_dtr_rate = 200000000,
- };
- 
- struct nxp_fspi {
-@@ -691,10 +757,20 @@ static void nxp_fspi_select_rx_sample_clk_source(struct nxp_fspi *f,
- 	reg = fspi_readl(f, f->iobase + FSPI_MCR0);
- 	if (op_is_dtr) {
- 		reg |= FSPI_MCR0_RXCLKSRC(3);
--		f->max_rate = 166000000;
-+		/*
-+		 * Use the SoC-specific DTR max rate if provided, otherwise
-+		 * fall back to 166MHz (limit from IMX8MN datasheet §3.9.9).
-+		 */
-+		f->max_rate = f->devtype_data->max_dtr_rate ?
-+			      f->devtype_data->max_dtr_rate : 166000000;
- 	} else {	/*select mode 0 */
- 		reg &= ~FSPI_MCR0_RXCLKSRC(3);
--		f->max_rate = 66000000;
-+		/*
-+		 * Use the SoC-specific SDR max rate if provided, otherwise
-+		 * fall back to 66MHz (limit from IMX8MN datasheet §3.9.9).
-+		 */
-+		f->max_rate = f->devtype_data->max_sdr_rate ?
-+			      f->devtype_data->max_sdr_rate : 66000000;
- 	}
- 	fspi_writel(f, reg, f->iobase + FSPI_MCR0);
+diff --git a/drivers/net/ethernet/qlogic/qede/qede_main.c b/drivers/net/ethernet/qlogic/qede/qede_main.c
+index b5d744d2586f7..59a80f7193723 100644
+--- a/drivers/net/ethernet/qlogic/qede/qede_main.c
++++ b/drivers/net/ethernet/qlogic/qede/qede_main.c
+@@ -107,7 +107,7 @@ static void qede_remove(struct pci_dev *pdev);
+ static void qede_shutdown(struct pci_dev *pdev);
+ static void qede_link_update(void *dev, struct qed_link_output *link);
+ static void qede_schedule_recovery_handler(void *dev);
+-static void qede_recovery_handler(struct qede_dev *edev);
++static bool qede_recovery_handler(struct qede_dev *edev);
+ static void qede_schedule_hw_err_handler(void *dev,
+ 					 enum qed_hw_err_type err_type);
+ static void qede_get_eth_tlv_data(void *edev, void *data);
+@@ -1065,21 +1065,6 @@ void __qede_unlock(struct qede_dev *edev)
+ 	mutex_unlock(&edev->qede_lock);
  }
-@@ -1446,10 +1522,11 @@ static const struct dev_pm_ops nxp_fspi_pm_ops = {
- static const struct of_device_id nxp_fspi_dt_ids[] = {
- 	{ .compatible = "nxp,lx2160a-fspi", .data = (void *)&lx2160a_data, },
- 	{ .compatible = "nxp,imx8mm-fspi", .data = (void *)&imx8mm_data, },
--	{ .compatible = "nxp,imx8mp-fspi", .data = (void *)&imx8mm_data, },
-+	{ .compatible = "nxp,imx8mp-fspi", .data = (void *)&imx8mp_data, },
- 	{ .compatible = "nxp,imx8qxp-fspi", .data = (void *)&imx8qxp_data, },
- 	{ .compatible = "nxp,imx8dxl-fspi", .data = (void *)&imx8dxl_data, },
- 	{ .compatible = "nxp,imx8ulp-fspi", .data = (void *)&imx8ulp_data, },
-+	{ .compatible = "nxp,imx95-fspi",   .data = (void *)&imx95_data, },
- 	{ /* sentinel */ }
- };
- MODULE_DEVICE_TABLE(of, nxp_fspi_dt_ids);
+ 
+-/* This version of the lock should be used when acquiring the RTNL lock is also
+- * needed in addition to the internal qede lock.
+- */
+-static void qede_lock(struct qede_dev *edev)
+-{
+-	rtnl_lock();
+-	__qede_lock(edev);
+-}
+-
+-static void qede_unlock(struct qede_dev *edev)
+-{
+-	__qede_unlock(edev);
+-	rtnl_unlock();
+-}
+-
+ static void qede_periodic_task(struct work_struct *work)
+ {
+ 	struct qede_dev *edev = container_of(work, struct qede_dev,
+@@ -1116,6 +1101,8 @@ static void qede_sp_task(struct work_struct *work)
+ 	 */
+ 
+ 	if (test_and_clear_bit(QEDE_SP_RECOVERY, &edev->sp_flags)) {
++		bool reloaded;
++
+ 		cancel_delayed_work_sync(&edev->periodic_task);
+ #ifdef CONFIG_QED_SRIOV
+ 		/* SRIOV must be disabled outside the lock to avoid a deadlock.
+@@ -1124,9 +1111,17 @@ static void qede_sp_task(struct work_struct *work)
+ 		if (pci_num_vf(edev->pdev))
+ 			qede_sriov_configure(edev->pdev, 0);
+ #endif
+-		qede_lock(edev);
+-		qede_recovery_handler(edev);
+-		qede_unlock(edev);
++		rtnl_lock();
++		__qede_lock(edev);
++		reloaded = qede_recovery_handler(edev);
++		__qede_unlock(edev);
++
++		/* The udp_tunnel core synchronously calls back into
++		 * qede_udp_tunnel_sync(), which takes the qede lock.
++		 */
++		if (reloaded)
++			udp_tunnel_nic_reset_ntf(edev->ndev);
++		rtnl_unlock();
+ 	}
+ 
+ 	__qede_lock(edev);
+@@ -2667,9 +2662,13 @@ static void qede_recovery_failed(struct qede_dev *edev)
+ 		edev->ops->common->set_power_state(edev->cdev, PCI_D3hot);
+ }
+ 
+-static void qede_recovery_handler(struct qede_dev *edev)
++/* Returns true if an open device was successfully reloaded and its
++ * udp_tunnel ports need to be re-synced by the caller.
++ */
++static bool qede_recovery_handler(struct qede_dev *edev)
+ {
+ 	u32 curr_state = edev->state;
++	bool reloaded = false;
+ 	int rc;
+ 
+ 	DP_NOTICE(edev, "Starting a recovery process\n");
+@@ -2699,17 +2698,18 @@ static void qede_recovery_handler(struct qede_dev *edev)
+ 			goto err;
+ 
+ 		qede_config_rx_mode(edev->ndev);
+-		udp_tunnel_nic_reset_ntf(edev->ndev);
++		reloaded = true;
+ 	}
+ 
+ 	edev->state = curr_state;
+ 
+ 	DP_NOTICE(edev, "Recovery handling is done\n");
+ 
+-	return;
++	return reloaded;
+ 
+ err:
+ 	qede_recovery_failed(edev);
++	return false;
+ }
+ 
+ static void qede_atomic_hw_err_handler(struct qede_dev *edev)
 -- 
 2.53.0
 
