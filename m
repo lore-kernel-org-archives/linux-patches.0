@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1E793A3E7A;
-	Fri,  7 Aug 2026 15:37:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E73D380FFD;
+	Fri,  7 Aug 2026 15:37:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786117024; cv=none; b=ZZ8owlIDAHeOkZ3qNbcmtxHUGxXj1c/ajiP1k2t8e3kH6XCaG7JT6nlBvn1GlA8XMV+1o1JD59iMzDRKKrAXxomM3GCZ8/yyW+bttuHiKqgUHqGY6M8rmSpMgEt39beR3BQav7Jjczljw626Dl8kkkGDQb8LmJ4q+jSyXPWDAlY=
+	t=1786117026; cv=none; b=qD3FOVveBifjkz8PyzoP7jnxxC8OVGNeORLTXHZNYiEd4RUaOtvwzd6axNJIrkqlRVNM+Ozxl6F0hKJK6IpUBBBGW8QX8BrLUMV+L31hr3utFJrvZGWX5zIfcAxPbOaDoccF+liRjxzMSVZzuVs82FXFbqHO13HJeMbxu1yo1lc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786117024; c=relaxed/simple;
-	bh=6MeyMgE3/K6Aj3C8ocaeUvfvWnI4Fq2ZfkXy7HSjMtI=;
+	s=arc-20240116; t=1786117026; c=relaxed/simple;
+	bh=zKtqA2SWgrkIRiMDkOzYSai9N5Xelo+i8/vsVPIsmZc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gmLsNF9dq+CYorhXmEqAtneI012xnlDI7xCQLaCFYI3QxQ2mlKMRPq4KaXSgGUlrjjeTlGS73U2YuYf6xV8OEDUM9Rgen0N+JYlZL/Ulf/e/6Rrzg6M7v4yoeNu6onDURDpe+aGuo06946iuQdKQF8mFna2oRhvblQJ5lU2NWC8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mY99aN9+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YFtQTJbu/HC7dJGGbfyHe+0AJcaSJnNPXg+miq2tW6I0bCE/YF0uUTbOKz+BjXHKGpuB8Nf2Vm7SpS6VtesmNXXr/25XMXqb7EZ9QtMwfzyJIqdbnAEo7Puhyt3GZ4m6oxSG2wFl50MhFFFTsKqSj/MY+VL6MvvBMEOeYRAT2tI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XQZ0el7j; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mY99aN9+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B625E1F000E9;
-	Fri,  7 Aug 2026 15:37:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XQZ0el7j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BDF01F000E9;
+	Fri,  7 Aug 2026 15:37:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786117022;
-	bh=aIO558YPJ9wvKT/YPtYu9PffgcboiRGALv02jVdh+qE=;
+	s=korg; t=1786117025;
+	bh=1xJUCRtQLNOu6CZPMMzUe4qxGJH5Z+w5B/lJ+HoOIyU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mY99aN9+D+fK7C8ljSETCrB9B2DdZJbNMpn0MdXj8TOlXHFLroNyB/OQXu5QPqBpY
-	 HbmyymKeBCE6+mp+8iA9Hiqaju74PDgfzXgqKWUXVhNURVSU5Skp49QSqGc9vZyCwy
-	 YdIXSM7W7B86lcTwP9yT1ecOMtH0guaPf0MFTZMA=
+	b=XQZ0el7j1HyHw5+G3KqimESWEw7aF3PnnqlbijJ9N6oHhzfoI6agNwSl388p5Y2CE
+	 vpxT687z5elHxXYa7PtdqNbS151sMFr6pPVVhu1uScV6V8iSzoHXIOvc14sf/l5DB9
+	 UxQvyWCWY+FH5/4Jy7T6HMdBCduZb4ZQUBjiKnqk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Andrew Lunn <andrew@lunn.ch>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 174/438] net: dsa: mt7530: check bus->read() errors in the MDIO regmap backend
-Date: Fri,  7 Aug 2026 16:36:10 +0200
-Message-ID: <20260807143431.745917844@linuxfoundation.org>
+Subject: [PATCH 7.1 175/438] net: dsa: mt7530: error out on failed reads in ATC/VTCR command polling
+Date: Fri,  7 Aug 2026 16:36:11 +0200
+Message-ID: <20260807143431.766659816@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -54,49 +54,99 @@ Content-Transfer-Encoding: 8bit
 
 From: Daniel Golle <daniel@makrotopia.org>
 
-[ Upstream commit b4ce102b2cd88424c5860fbbb20b9eb343a93bf4 ]
+[ Upstream commit ed9adac35b8fac635f40e28461505e2e5b6c8fcc ]
 
-bus->read() returns a negative errno on failure, but
-mt7530_regmap_read() assigns it to a u16, truncating e.g. -ETIMEDOUT
-into 0xff92, and returns success. The garbage word is then consumed as
-register data, and read-modify-write cycles write it back to the
-switch. Check both reads and propagate their errors.
+mt7530_fdb_cmd() and mt7530_vlan_cmd() poll the command register
+through a helper which returns 0 when the underlying read fails. A
+failed bus transaction thus clears ATC_BUSY/VTCR_BUSY and is treated
+as successful command completion, and the subsequent ATC_INVALID and
+VTCR_INVALID checks are defeated the same way.
 
-The same defect existed in mt7530_mii_read() since the driver was
-introduced and moved into the regmap backend unchanged.
+Poll using regmap_read_poll_timeout(), which stops on read errors and
+propagates them, and check the completion status read as well. Take
+the MDIO bus lock across the sequence as the switch regmap is set up
+with locking disabled.
 
 Fixes: b8f126a8d543 ("net-next: dsa: add dsa support for Mediatek MT7530 switch")
+Fixes: 83163f7dca56 ("net: dsa: mediatek: add VLAN support for MT7530")
 Signed-off-by: Daniel Golle <daniel@makrotopia.org>
 Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/3c628e48276c2e5522c8795a6be60d11c7a76a7d.1785213071.git.daniel@makrotopia.org
+Link: https://patch.msgid.link/eea1d8f15c54375b3770c23e09fb3217df487169.1785213071.git.daniel@makrotopia.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mt7530-mdio.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/net/dsa/mt7530.c | 28 ++++++++++++++++++----------
+ 1 file changed, 18 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/dsa/mt7530-mdio.c b/drivers/net/dsa/mt7530-mdio.c
-index 11ea924a9f357..784dd58a71589 100644
---- a/drivers/net/dsa/mt7530-mdio.c
-+++ b/drivers/net/dsa/mt7530-mdio.c
-@@ -55,8 +55,15 @@ mt7530_regmap_read(void *context, unsigned int reg, unsigned int *val)
- 	if (ret < 0)
- 		return ret;
+diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
+index 3c2a3029b10cf..292cde961f1af 100644
+--- a/drivers/net/dsa/mt7530.c
++++ b/drivers/net/dsa/mt7530.c
+@@ -248,15 +248,20 @@ mt7530_fdb_cmd(struct mt7530_priv *priv, enum mt7530_fdb_cmd cmd, u32 *rsp)
+ {
+ 	u32 val;
+ 	int ret;
+-	struct mt7530_dummy_poll p;
  
--	lo = bus->read(bus, priv->mdiodev->addr, r);
--	hi = bus->read(bus, priv->mdiodev->addr, 0x10);
-+	ret = bus->read(bus, priv->mdiodev->addr, r);
-+	if (ret < 0)
-+		return ret;
-+	lo = ret;
+ 	/* Set the command operating upon the MAC address entries */
+ 	val = ATC_BUSY | ATC_MAT(0) | cmd;
+ 	mt7530_write(priv, MT7530_ATC, val);
+ 
+-	INIT_MT7530_DUMMY_POLL(&p, priv, MT7530_ATC);
+-	ret = readx_poll_timeout(_mt7530_read, &p, val,
+-				 !(val & ATC_BUSY), 20, 20000);
++	mt7530_mutex_lock(priv);
 +
-+	ret = bus->read(bus, priv->mdiodev->addr, 0x10);
-+	if (ret < 0)
-+		return ret;
-+	hi = ret;
++	ret = regmap_read_poll_timeout(priv->regmap, MT7530_ATC, val,
++				       !(val & ATC_BUSY), 20, 20000);
++	if (!ret)
++		ret = regmap_read(priv->regmap, MT7530_ATC, &val);
++
++	mt7530_mutex_unlock(priv);
++
+ 	if (ret < 0) {
+ 		dev_err(priv->dev, "reset timeout\n");
+ 		return ret;
+@@ -265,7 +270,6 @@ mt7530_fdb_cmd(struct mt7530_priv *priv, enum mt7530_fdb_cmd cmd, u32 *rsp)
+ 	/* Additional sanity for read command if the specified
+ 	 * entry is invalid
+ 	 */
+-	val = mt7530_read(priv, MT7530_ATC);
+ 	if ((cmd == MT7530_FDB_READ) && (val & ATC_INVALID))
+ 		return -EINVAL;
  
- 	*val = (hi << 16) | (lo & 0xffff);
+@@ -1626,22 +1630,26 @@ mt7530_port_bridge_join(struct dsa_switch *ds, int port,
+ static int
+ mt7530_vlan_cmd(struct mt7530_priv *priv, enum mt7530_vlan_cmd cmd, u16 vid)
+ {
+-	struct mt7530_dummy_poll p;
+ 	u32 val;
+ 	int ret;
  
+ 	val = VTCR_BUSY | VTCR_FUNC(cmd) | vid;
+ 	mt7530_write(priv, MT7530_VTCR, val);
+ 
+-	INIT_MT7530_DUMMY_POLL(&p, priv, MT7530_VTCR);
+-	ret = readx_poll_timeout(_mt7530_read, &p, val,
+-				 !(val & VTCR_BUSY), 20, 20000);
++	mt7530_mutex_lock(priv);
++
++	ret = regmap_read_poll_timeout(priv->regmap, MT7530_VTCR, val,
++				       !(val & VTCR_BUSY), 20, 20000);
++	if (!ret)
++		ret = regmap_read(priv->regmap, MT7530_VTCR, &val);
++
++	mt7530_mutex_unlock(priv);
++
+ 	if (ret < 0) {
+ 		dev_err(priv->dev, "poll timeout\n");
+ 		return ret;
+ 	}
+ 
+-	val = mt7530_read(priv, MT7530_VTCR);
+ 	if (val & VTCR_INVALID) {
+ 		dev_err(priv->dev, "read VTCR invalid\n");
+ 		return -EINVAL;
 -- 
 2.53.0
 
