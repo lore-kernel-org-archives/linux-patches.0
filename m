@@ -1,43 +1,52 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 350D547D92E;
-	Fri,  7 Aug 2026 15:39:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1149547884E;
+	Fri,  7 Aug 2026 15:39:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786117158; cv=none; b=vA9peT+Nys6nOHFadBHtd/vUe3fH6nd4NuCDGx1vt0L1dI5Rgm/n7LTNCJNw2wzzUD46xQRG+dWb7ogVKt6aUC+qhqEdsl/zNY6jfzRxpMtGujlNVg3edmp23VNVZ+mJu8U6Edm82+n0C4c85msf6s0MwzQdbNj4U/JX4PlHR1U=
+	t=1786117161; cv=none; b=APzbGC3fcJixKiK7IK3xGuiN1GRU2YVP7LQR9brJALMN72FRTWkVStHGATQtpe5u3m71n3O6hD0sC1jd7kRhr0bc3vxt4n34OwxILj+bBVGzj+bRL4yZTD87xYBQYhTdnmSGzjuc7NIezrZJZRWyi70mAu4NW38CjYX8IV2yq9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786117158; c=relaxed/simple;
-	bh=nuM0uRoe3ee5mFDiRR1qVre7kf7c3GNeCzaOohaSQVs=;
+	s=arc-20240116; t=1786117161; c=relaxed/simple;
+	bh=Os0bRZXd1ABCakQ5RG+WerokYGZ3rsqrMTdmGM7V0A8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q5cgd0raGdIhy1MSOuBthOKxBFR4gcPFxOi+ADhGNlgcGB1cODmfWx5yK0oPXBO5C+BwBwcoBw8KzFtXa6B4/oRqdoEKIH9AEOx4fZ37GNiC3XnZBDkqrwTe+0YpyujLyGujFbt22jgi27sKBSvlWqw83VycRVLoYAP9B9lTlko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mDU5Q1r2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bormrXWrxMD+++lKPaL88EVnNJhUTUSQQZ+q8Fi1Drb40SeMxhrKt7MNGTZSBxpmwgUHOJRq76IHun7T/f0o8Krre1dTWoZm7zOpoMth2zk4A5fdX06RHa0eKZ5QW/N0O3Bvp6ezvJqj7FtHC6wT2jPGnvtlI54op/wAlUIuHPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ppFsY5+I; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mDU5Q1r2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9734E1F00A3A;
-	Fri,  7 Aug 2026 15:39:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ppFsY5+I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E2AC1F000E9;
+	Fri,  7 Aug 2026 15:39:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786117157;
-	bh=YzMy7uGG0Kx1f2XHLErC2Vdxs3kG1aOG2wkJXaU81y4=;
+	s=korg; t=1786117159;
+	bh=W6OgVoHSbE+s3Xj8ycoWHLjPxEQLUJ/fSuAghD37mKk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mDU5Q1r2ppzOZUeXcryCwaTnNxbXzimNacQ1SxK9PxfDxMlFqI5RXow4Uz/lIjnO1
-	 TNQh1uqSGt3yG5HPS7ANmBU9hlo3KJWRtHpRfmipuQmeFUUEnTrO8UxzhCikUq6Tik
-	 pE3+oa8Uvw8aTBWWxCKwfmxwh6Z/bZIebLAe6g38=
+	b=ppFsY5+IldsRKEu669nA0aD3uTDPCBv0gZKpPFlKTPXF72zbvHHO201UMh/Clt2Dz
+	 TpS8hYwRPuvWoSkHvMYdScr+GzaALlofUpHG289mIwcfNnfsr6kUCkqWhoK8Fpmcj1
+	 2HxklLwCoU9XXwwCK9cpJQE40+2cHwfJc8Q6V0oQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiangfeng Cai <caixiangfeng@bytedance.com>,
-	Muchun Song <muchun.song@linux.dev>,
-	Baoquan He <baoquan.he@linux.dev>,
-	David Hildenbrand <david@kernel.org>,
-	Oscar Salvador <osalvador@suse.de>,
-	Shuah Khan <shuah@kernel.org>,
-	Wei Yang <richard.weiyang@linux.alibaba.com>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Usama Arif <usama.arif@linux.dev>,
+	Rik van Riel <riel@surriel.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Lance Yang <lance.yang@linux.dev>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Andrea Arcangeli <aarcange@redhat.com>,
+	Barry Song <baohua@kernel.org>,
+	Dev Jain <dev.jain@arm.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Nico Pache <npache@redhat.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Zi Yan <ziy@nvidia.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.1 221/438] mm/hugetlb: fix list corruption in allocate_file_region_entries()
-Date: Fri,  7 Aug 2026 16:36:57 +0200
-Message-ID: <20260807143432.718193112@linuxfoundation.org>
+Subject: [PATCH 7.1 222/438] userfaultfd: wait on source PMD during UFFDIO_MOVE
+Date: Fri,  7 Aug 2026 16:36:58 +0200
+Message-ID: <20260807143432.738677338@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -56,77 +65,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiangfeng Cai <caixiangfeng@bytedance.com>
+From: Usama Arif <usama.arif@linux.dev>
 
-commit dd9623f58ec702a07b2d67179d6fcea79c52231a upstream.
+commit 4165b7d1c45c2da0dfefe528f8d1fb7d79f0d344 upstream.
 
-allocate_file_region_entries() tops up resv->region_cache with freshly
-allocated file_region descriptors.  The allocation uses GFP_KERNEL, so
-resv->lock is dropped around it: the new entries are gathered on a
-stack-local list head, allocated_regions, and spliced into
-resv->region_cache once the lock is re-acquired.
+move_pages_huge_pmd() snapshots src_pmdval under src_ptl, drops the lock,
+and, for migration entries, waits with pmd_migration_entry_wait().
 
-The splice used list_splice(), which moves the entries but does not
-re-initialize the source head, so allocated_regions is left pointing at an
-entry that now lives on resv->region_cache.  The top-up runs in a while
-loop that re-checks the cache deficit after re-acquiring the lock.  For a
-shared mapping the resv_map is shared by every mapper of the hugetlbfs
-inode, so a concurrent region_chg()/region_add()/region_del() on the same
-resv_map can consume cache entries during the unlocked window and force a
-second iteration.  That iteration calls list_add() on the stale head and
-corrupts the list; with CONFIG_DEBUG_LIST the __list_add_valid() check
-trips:
+Passing &src_pmdval is wrong.  pmd_migration_entry_wait() must lock and
+re-read the real page-table PMD; on split-PMD-lock kernels, a stack
+address also resolves to the wrong lock.  softleaf_entry_wait_on_locked()
+then waits without a folio reference, which is safe only while serialized
+against migration-entry removal by the real PT lock.
 
-  list_add corruption. next->prev should be prev (ffffc900011ff7f8),
-  but was ffff88814c281460. (next=ffff88814c545640).
-  kernel BUG at lib/list_debug.c:31!
-   allocate_file_region_entries+0x191/0x420
-   region_chg+0x267/0x300
-   hugetlb_reserve_pages+0x387/0xc80
-   hugetlbfs_file_mmap+0x2ce/0x3f0
-   mmap_region+0x1348/0x1a80
-   do_mmap+0x85e/0xb90
-   vm_mmap_pgoff+0x18c/0x330
-   ksys_mmap_pgoff+0x2a1/0x3e0
-   do_syscall_64+0xd7/0x420
+Pass src_pmd, matching __handle_mm_fault() and hmm_vma_walk_pmd().
 
-Without CONFIG_DEBUG_LIST the bad list_add() silently links a kernel-stack
-address into resv->region_cache, leading to later use-after-free.
-
-This was observed as a real host panic on a dense KVM host where a QEMU
-guest-RAM hugetlbfs file was mapped MAP_SHARED by both QEMU and a separate
-SPDK/DPDK vhost-user target, generating concurrent region_* traffic on one
-shared resv_map.
-
-Use list_splice_init() so the source head is re-initialized empty after
-each splice, making the retry loop safe.
-
-Link: https://lore.kernel.org/20260713171456.300518-2-caixiangfeng@bytedance.com
-Fixes: d3ec7b6e09e5 ("mm/hugetlb: use list_splice to merge two list at once")
-Signed-off-by: Xiangfeng Cai <caixiangfeng@bytedance.com>
-Reviewed-by: Muchun Song <muchun.song@linux.dev>
-Cc: Baoquan He <baoquan.he@linux.dev>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Wei Yang <richard.weiyang@linux.alibaba.com>
+Link: https://lore.kernel.org/20260705131231.1499198-1-usama.arif@linux.dev
+Fixes: adef440691ba ("userfaultfd: UFFDIO_MOVE uABI")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Link: https://sashiko.dev/#/patchset/20260703173903.3789516-1-usama.arif%40linux.dev?part=8
+Signed-off-by: Usama Arif <usama.arif@linux.dev>
+Reviewed-by: Rik van Riel <riel@surriel.com>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Reviewed-by: Lance Yang <lance.yang@linux.dev>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Reviewed-by: Lance Yang <lance.yang@linux.dev>
+Reviewed-by: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Andrea Arcangeli <aarcange@redhat.com>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Dev Jain <dev.jain@arm.com>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Nico Pache <npache@redhat.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Zi Yan <ziy@nvidia.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/hugetlb.c |    2 +-
+ mm/huge_memory.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -693,7 +693,7 @@ static int allocate_file_region_entries(
- 
- 		spin_lock(&resv->lock);
- 
--		list_splice(&allocated_regions, &resv->region_cache);
-+		list_splice_init(&allocated_regions, &resv->region_cache);
- 		resv->region_cache_count += to_allocate;
- 	}
- 
+--- a/mm/huge_memory.c
++++ b/mm/huge_memory.c
+@@ -2836,7 +2836,7 @@ int move_pages_huge_pmd(struct mm_struct
+ 	if (!pmd_trans_huge(src_pmdval)) {
+ 		spin_unlock(src_ptl);
+ 		if (pmd_is_migration_entry(src_pmdval)) {
+-			pmd_migration_entry_wait(mm, &src_pmdval);
++			pmd_migration_entry_wait(mm, src_pmd);
+ 			return -EAGAIN;
+ 		}
+ 		return -ENOENT;
 
 
