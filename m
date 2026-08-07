@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F7EC422531;
-	Fri,  7 Aug 2026 15:34:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D550A339387;
+	Fri,  7 Aug 2026 15:34:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116867; cv=none; b=fWyuO8eCFvAoa2WQewjNfmV7nIF8DaiMuhLAHq8/72gGGSSZBT8l5qyZn4r6g7wG1zCMhJtB2MHn7mreB2zgsbONf4PgfuqtsvoO84DucjUvfVYqi0YdpI7iRVXSsVsLJXWeGCn9QWEO9Wahc7C//ftRp2i7AR8eXj3oTe3GJHw=
+	t=1786116870; cv=none; b=UNxJZmZOiDUFk/HLKes9uwBXcMxAKPGisfHFF7o/ITYgVJTY/+0aDqWB/k+GIuCJ0YuqrgZwNzmJXJeY+SIM39VHizyuQv3QEc90bCsooDtRaBLFHAVvD/DThS26FDekLYaClRpZixDtuKIG3LMszWlB2x+dy7DujyH8ogzYtus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116867; c=relaxed/simple;
-	bh=h6mnSsn5VIfdPKn53YPkOyPwAKJ5sA4+5Nmk82RjxmM=;
+	s=arc-20240116; t=1786116870; c=relaxed/simple;
+	bh=Bgjdblr+tI9FHgX5LVfnDQE706nyUSOz6aLkRSkeIvQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i/J5EpYQOgK9r1HSa8BqVac8IrKlSSVRb7FPJp2apCNLCbAJx437EXmHWuX2u02P7XCG5wlNdU1dIzWrQdp4EBUpr/RWIVFNBXbnLBV66xWWSY/O0h8cb0fGaxxhFxGwmTSy6Td+g+N3l8qI+yQyOJ5Ln9kg/6SAed/wLi1PL4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=woiBm2W2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G8HfIZox2WSE4mYxOuZ/9FDna4H+e3zCyv47ASXAVgAUwOciMHoyzf4ezJpW1MfDR6MGTq+HiP5Ifb6B8I/TxPd4aCdD7u26IbgDQ/ic3mK17rVk50x5R/6cLMznDCrSXG76vOsV+S8+yN01v29JngQRkHidfg6bFyt8kjTEXFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J8B0tG55; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="woiBm2W2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 403021F000E9;
-	Fri,  7 Aug 2026 15:34:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J8B0tG55"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D26F1F000E9;
+	Fri,  7 Aug 2026 15:34:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116865;
-	bh=xUhq4B8nobxI1en1ZKqnfas4mnb2EkSXqZK2hMBjjS0=;
+	s=korg; t=1786116868;
+	bh=xUbr9sH8+pXRgTuEMGvXg6B7P+T7EgTMHw7Ds69i0tc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=woiBm2W2M5o96v9g6lu+AVE/qQSoKwATvJVPzdo/hnk+gd9BvVldPbYOkFr7Hvr26
-	 S6WzxDJc9tbzj3Eg4hq2NbA73NloSFN28d8TMNoPp5dnvevUl3lk4nJv8J1zPIdrNr
-	 427WU49kpl35mfp5o5jSr2opp/7p43QCmp0t7Lzw=
+	b=J8B0tG55+IkYJi7kgYkywFqw7UTPj51ghfe93YL02ZCa/sTBrzYdao4D80zUcyH4D
+	 lDl+OLO0sPdgSr0fpjORvjqI/0uGso80fVjZ1nhD9lUZQytcCt+DfiTJee+1D77Oq7
+	 qufr1dUlRhtBf6soZLSbpGrkGW71ogePLKTpsibk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
 	Jason Xing <kernelxing@tencent.com>,
+	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
 	Stanislav Fomichev <sdf@fomichev.me>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 073/438] xsk: fix buffer leak in xsk_drop_skb() for AF_XDP multi-buffer Tx
-Date: Fri,  7 Aug 2026 16:34:29 +0200
-Message-ID: <20260807143429.543411721@linuxfoundation.org>
+Subject: [PATCH 7.1 074/438] xsk: drain continuation descs after overflow in xsk_build_skb()
+Date: Fri,  7 Aug 2026 16:34:30 +0200
+Message-ID: <20260807143429.563249728@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -55,102 +55,140 @@ Content-Transfer-Encoding: 8bit
 
 From: Jason Xing <kernelxing@tencent.com>
 
-[ Upstream commit a3c8382ebce4780c6b3ace2c09bc342313ac0186 ]
+[ Upstream commit bd44a6dcd4248883de90f5dad53ae80066e27096 ]
 
-This patch is inspired by the check[1] from sashiko. It says when
-overflow happens, the address of cq to be published is invalid.
-Actually the severer thing is the whole process of publishing the
-address of cq in this particular case is not right: it should truely
-publish the address and advance the cached_prod in cq as long as it
-reads descriptors from txq.
-
-The following is the full analysis.
-xsk_drop_skb() is called in three places, which all discard a partially
-built multi-buffer skb:
-1) xsk_build_skb() -EOVERFLOW error path: packet exceeds MAX_SKB_FRAGS
-2) __xsk_generic_xmit() post-loop cleanup: an invalid descriptor in
-   the TX ring prevents the partial packet from completing
-3) xsk_release(): socket close while xs->skb holds an incomplete packet
-
-In all three cases, the TX descriptors for the already-processed frags
-have been consumed from the TX ring (xskq_cons_release), and CQ slots
-have been reserved. However, xsk_drop_skb() calls xsk_consume_skb()
-which cancels the CQ reservations via xsk_cq_cancel_locked(). Since
-the buffer addresses never appear in the completion queue, userspace
-permanently loses track of these buffers.
-
-Fix this by letting consume_skb() trigger the existing xsk_destruct_skb
-destructor, which already submits buffer addresses to the CQ via
-xsk_cq_submit_addr_locked().
-
-Note that cancelling the descriptors back to the TX ring (via
-xskq_cons_cancel_n) is not a appropriate option because an oversized
-packet that always exceeds MAX_SKB_FRAGS would be retried indefinitely,
-which is an obviously deadlock bug in the TX path.
-
-Also move the desc->addr assignment in xsk_build_skb() above the
-overflow check so that the current descriptor's address is recorded
-before a potential -EOVERFLOW jump to free_err, consistent with the
-zerocopy path in xsk_build_skb_zerocopy().
-
-[1]: https://lore.kernel.org/all/20260425041726.85FB3C2BCB2@smtp.kernel.org/
+Fix generic xmit path multi-buffer logic when packets are either too big
+(count of descriptors exceed MAX_SKB_FRAGS) or an invalid descriptor is
+included in fragmented packet. Introduce xdp_sock::drain_cont and act
+upon this flag - when it is set, keep on consuming descriptors from
+AF_XDP Tx ring and put them directly onto Cq. Previously these
+descriptors were silently lost and could never be reached again.
 
 Fixes: cf24f5a5feea ("xsk: add support for AF_XDP multi-buffer on Tx path")
-Acked-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Closes: https://lore.kernel.org/all/20260425041726.85FB3C2BCB2@smtp.kernel.org/
+Reviewed-by: Jason Xing <kernelxing@tencent.com>
+Co-developed-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com> # wrapped cq addr submission onto routine
+Signed-off-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
 Signed-off-by: Jason Xing <kernelxing@tencent.com>
 Acked-by: Stanislav Fomichev <sdf@fomichev.me>
-Link: https://patch.msgid.link/20260719135609.147823-2-maciej.fijalkowski@intel.com
+Link: https://patch.msgid.link/20260719135609.147823-3-maciej.fijalkowski@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xdp/xsk.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ include/net/xdp_sock.h |  1 +
+ net/xdp/xsk.c          | 45 +++++++++++++++++++++++++++++++++++++++---
+ 2 files changed, 43 insertions(+), 3 deletions(-)
 
+diff --git a/include/net/xdp_sock.h b/include/net/xdp_sock.h
+index ebac60a3d8a17..8b51876efbed1 100644
+--- a/include/net/xdp_sock.h
++++ b/include/net/xdp_sock.h
+@@ -80,6 +80,7 @@ struct xdp_sock {
+ 	 * call of __xsk_generic_xmit().
+ 	 */
+ 	struct sk_buff *skb;
++	bool drain_cont;
+ 
+ 	struct list_head map_list;
+ 	/* Protects map_list */
 diff --git a/net/xdp/xsk.c b/net/xdp/xsk.c
-index f8c8a8c9dfba5..0a6203c425766 100644
+index 0a6203c425766..8dadc39ca81f3 100644
 --- a/net/xdp/xsk.c
 +++ b/net/xdp/xsk.c
-@@ -793,8 +793,11 @@ static void xsk_consume_skb(struct sk_buff *skb)
- 
- static void xsk_drop_skb(struct sk_buff *skb)
- {
--	xdp_sk(skb->sk)->tx->invalid_descs += xsk_get_num_desc(skb);
--	xsk_consume_skb(skb);
-+	struct xdp_sock *xs = xdp_sk(skb->sk);
-+
-+	xs->tx->invalid_descs += xsk_get_num_desc(skb);
-+	consume_skb(skb);
-+	xs->skb = NULL;
+@@ -736,6 +736,19 @@ static void xsk_cq_submit_addr_locked(struct xsk_buff_pool *pool,
+ 	spin_unlock_irqrestore(&pool->cq_prod_lock, flags);
  }
  
- static int xsk_skb_metadata(struct sk_buff *skb, void *buffer,
-@@ -876,7 +879,7 @@ static struct sk_buff *xsk_build_skb_zerocopy(struct xdp_sock *xs,
- 			return ERR_PTR(-ENOMEM);
- 
- 		/* in case of -EOVERFLOW that could happen below,
--		 * xsk_consume_skb() will release this node as whole skb
-+		 * xsk_drop_skb() will release this node as whole skb
- 		 * would be dropped, which implies freeing all list elements
- 		 */
- 		xsk_addr->addrs[xsk_addr->num_descs] = desc->addr;
-@@ -968,6 +971,8 @@ static struct sk_buff *xsk_build_skb(struct xdp_sock *xs,
- 				goto free_err;
- 			}
- 
-+			xsk_addr->addrs[xsk_addr->num_descs] = desc->addr;
++static void xsk_cq_submit_addr_single_locked(struct xsk_buff_pool *pool,
++					     struct xdp_desc *desc)
++{
++	unsigned long flags;
++	u32 idx;
 +
- 			if (unlikely(nr_frags == (MAX_SKB_FRAGS - 1) && xp_mb_desc(desc))) {
- 				err = -EOVERFLOW;
- 				goto free_err;
-@@ -985,8 +990,6 @@ static struct sk_buff *xsk_build_skb(struct xdp_sock *xs,
++	spin_lock_irqsave(&pool->cq_prod_lock, flags);
++	idx = xskq_get_prod(pool->cq);
++	xskq_prod_write_addr(pool->cq, idx, desc->addr);
++	xskq_prod_submit_n(pool->cq, 1);
++	spin_unlock_irqrestore(&pool->cq_prod_lock, flags);
++}
++
+ static void xsk_cq_cancel_locked(struct xsk_buff_pool *pool, u32 n)
+ {
+ 	spin_lock(&pool->cq->cq_cached_prod_lock);
+@@ -1027,13 +1040,14 @@ static struct sk_buff *xsk_build_skb(struct xdp_sock *xs,
+ static int __xsk_generic_xmit(struct sock *sk)
+ {
+ 	struct xdp_sock *xs = xdp_sk(sk);
+-	bool sent_frame = false;
+ 	struct xdp_desc desc;
+ 	struct sk_buff *skb;
++	u32 cached_cons;
+ 	u32 max_batch;
+ 	int err = 0;
  
- 			skb_add_rx_frag(skb, nr_frags, page, 0, len, PAGE_SIZE);
- 			refcount_add(PAGE_SIZE, &xs->sk.sk_wmem_alloc);
--
--			xsk_addr->addrs[xsk_addr->num_descs] = desc->addr;
+ 	mutex_lock(&xs->mutex);
++	cached_cons = xs->tx->cached_cons;
+ 
+ 	/* Since we dropped the RCU read lock, the socket state might have changed. */
+ 	if (unlikely(!xsk_is_bound(xs))) {
+@@ -1062,11 +1076,21 @@ static int __xsk_generic_xmit(struct sock *sk)
+ 			goto out;
  		}
+ 
++		if (unlikely(xs->drain_cont)) {
++			xsk_cq_submit_addr_single_locked(xs->pool, &desc);
++			xs->tx->invalid_descs++;
++			xskq_cons_release(xs->tx);
++			xs->drain_cont = xp_mb_desc(&desc);
++			continue;
++		}
++
+ 		skb = xsk_build_skb(xs, &desc);
+ 		if (IS_ERR(skb)) {
+ 			err = PTR_ERR(skb);
+ 			if (err != -EOVERFLOW)
+ 				goto out;
++			if (xp_mb_desc(&desc))
++				xs->drain_cont = true;
+ 			err = 0;
+ 			continue;
+ 		}
+@@ -1095,18 +1119,33 @@ static int __xsk_generic_xmit(struct sock *sk)
+ 			goto out;
+ 		}
+ 
+-		sent_frame = true;
+ 		xs->skb = NULL;
  	}
  
+ 	if (xskq_has_descs(xs->tx)) {
++		bool drain = xs->skb || xs->drain_cont || xp_mb_desc(&desc);
++
++		err = xsk_cq_reserve_locked(xs->pool);
++		if (err) {
++			xs->tx->invalid_descs--;
++			if (xs->skb)
++				xsk_drop_skb(xs->skb);
++			xs->drain_cont = drain;
++			err = -EAGAIN;
++			goto out;
++		}
++
+ 		if (xs->skb)
+ 			xsk_drop_skb(xs->skb);
++
++		xsk_cq_submit_addr_single_locked(xs->pool, &desc);
++
+ 		xskq_cons_release(xs->tx);
++		xs->drain_cont = xp_mb_desc(&desc);
+ 	}
+ 
+ out:
+-	if (sent_frame)
++	if (xs->tx->cached_cons != cached_cons)
+ 		__xsk_tx_release(xs);
+ 
+ 	mutex_unlock(&xs->mutex);
 -- 
 2.53.0
 
