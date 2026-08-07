@@ -1,43 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23F8A37757C;
-	Fri,  7 Aug 2026 14:54:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48290392C34;
+	Fri,  7 Aug 2026 14:55:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114501; cv=none; b=L6c0BnHjlIWSlG1O5VE+rip61BOYyKoz0jkRxmH77e/rNsYTO0jMLzcKir5Kjz84szdz2ineBVgPHFn7Aym0in3QRq7+8ACTFFtzdZu7/cJyNc+SniOIrqDfET1dfNmUiT52QGtrd5su3zWoa35/ClzNVwkJTTAdfBKgf6/+KKY=
+	t=1786114504; cv=none; b=sU3Wxg65NSrT4fiPydiQCC3h9YUSl4oO4W0k5prxVhgWyBBxsfWbdMqnfj0/42eQiDoJrhoAXty1HQtCcVBaAi1fA2Bf3GWHlWx8n45xCQgN0Q0Nj17F8kIzinWu00BwGONfgpNLeQJ2y9QXvUZrViOLUpi17nrmJjCadQ9hh/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114501; c=relaxed/simple;
-	bh=CRPaA3N9uVR1cqkE2kAtb88vKTeYU19o9HyXxH+Mx0Q=;
+	s=arc-20240116; t=1786114504; c=relaxed/simple;
+	bh=ivBwd5L09qm9trVoVECdfmzwj+3pxyhGTXf/L9vGWOE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OM+4j+SdubwxDUdbLWv71zrZbPYv9XLjVXUdwDEI3nmtEBD6CKNcfQnwzFO0ZS5cgHZUQ4Lg1h41/iiLBacUBpqywZ8XPc3zJBqL5DyenuhvA/e6DTdZPpQ6e1PDKHSmIIWDJN4v0+SzoTwmiyogxtDn2pjfuBuSjrizvOf8FxQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YWd/NAl9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Tb1AfyyWzzpBJQdMeLpy7plJZrmmJ2QlA8+K7JzsBYQBuneon9Vk22V/kLYHlggZe2dDCdr2uyrS8cX757YDyN4vn1rHTTgOJc+E6XccTjAJzisL19pBBMZYdUzKgIhIKA1FJC2AdmgHvPCB8nMqyfpm+FRy03rCNCSOZCoUtRs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EkHxs0UJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YWd/NAl9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 787B31F000E9;
-	Fri,  7 Aug 2026 14:54:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EkHxs0UJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BE6B1F00A3A;
+	Fri,  7 Aug 2026 14:55:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114499;
-	bh=O8MvMtR1dzEi5EE1yiqX+j6oFIszoeQdNrVzhhvjieU=;
+	s=korg; t=1786114501;
+	bh=1ozGw6CuxHqRb1y056NjIMgodcderwRgHQorcOauPqQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YWd/NAl9QzDVCL/5myaKk/pe+pRPHIeCVXxIZkDKPiM7KEGdLHsU/fSJTGeN0xqXZ
-	 1n0ZKKrMXLeg4BBDCSjDUnj0bhQnNvwv4roIeqZE26CfcBmSrBqKju4T/YBySTfow0
-	 0Tl8EiiITlY4pD7fdtwMQC/UNI/yJ6JfZJ+fiTfA=
+	b=EkHxs0UJ/esGLXzEkErg+Z0pBbnVEvyF8UcZ0sHYocPh5k4rT/VJSCRHzbTxJlGR9
+	 x72aY0TIzwjGawqGsDhtikASlzqshBDyvnp5tsm1dnrKcrBfIY3bwMumylsinRWNbV
+	 wXkoi+HmKoqKdTA1SW/qyZD1hbPN6RYgWYs7Pzi8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Kiryl Shutsemau <kas@kernel.org>,
-	Sashiko AI review <sashiko-bot@kernel.org>,
+	Muhammad Usama Anjum <usama.anjum@collabora.com>,
 	David Hildenbrand <david@kernel.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Oscar Salvador <osalvador@suse.de>,
+	Jann Horn <jannh@google.com>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Pedro Falcato <pfalcato@suse.de>,
 	Peter Xu <peterx@redhat.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 285/337] mm/hugetlb: fix swap entry corruption when clearing uffd-wp at fork()
-Date: Fri,  7 Aug 2026 16:38:08 +0200
-Message-ID: <20260807143424.712117463@linuxfoundation.org>
+Subject: [PATCH 6.12 286/337] fs/proc/task_mmu: fix PAGEMAP_SCAN written state for unpopulated ptes
+Date: Fri,  7 Aug 2026 16:38:09 +0200
+Message-ID: <20260807143424.733432014@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -58,92 +65,85 @@ Content-Transfer-Encoding: 8bit
 
 From: Kiryl Shutsemau (Meta) <kas@kernel.org>
 
-[ Upstream commit 83abe2fd5b3aeb3123b5408a5a91709c5538fb23 ]
+[ Upstream commit 07b4377bdbe74a3ec0c8da5849d014f70e003384 ]
 
-copy_hugetlb_page_range() clears the uffd-wp bit of migration and hwpoison
-entries with huge_pte_clear_uffd_wp(), which operates on the present-PTE
-bit position.  Swap entries keep the uffd-wp state elsewhere -- the
-migration branch reads and sets it with pte_swp_uffd_wp() and
-pte_swp_mkuffd_wp() -- and the present-PTE position falls into the swap
-payload.  On x86-64 it lands in the inverted swap offset, where a
-naturally-aligned hugetlb PFN always has the affected bit set, so the
-clear advances the encoded PFN by two pages.
+PAGEMAP_SCAN reports an unpopulated pte differently depending on which
+path serves the request.  The PAGE_IS_WRITTEN fast path in
+pagemap_scan_pmd_entry() reports a pte_none as written (and, under
+PM_SCAN_WP_MATCHING, arms a marker); pagemap_page_category() returns 0 for
+the same pte_none.  A request that cannot take the fast path (an extra
+category bit, category_anyof_mask or category_inverted) therefore reports
+the pte as clean and skips arming it.
 
-No userfaultfd needs to be involved: the clear is guarded only by the
-child VMA not being uffd-wp registered, so a plain fork() with an
-in-flight hugetlb migration entry (or a poisoned hugetlb page) corrupts
-the entry copied into the child.  Instrumenting the clear and forking
-after MADV_HWPOISON on a 2MB anon hugetlb page shows:
+A range that was populated and then MADV_DONTNEED'd reads as written via
+one mask and clean via another, and in the latter case is not re-armed for
+the next round -- an incremental-dump consumer (e.g.  CRIU) using a richer
+mask drops the zapped range and stops tracking writes to it.
 
-  offset before=120e00
-  offset after =120e02
+Report pte_none as written in pagemap_page_category() too.  A pte_none
+carries no uffd-wp marker, i.e.  it is not write-protected -- the same
+condition under which the present and swap cases already report
+PAGE_IS_WRITTEN.  The fast path applies no VMA test, so neither does this.
 
-The fallout is mostly latent: rmap walks match migration entries by folio
-range and remove_migration_pte() rebuilds the PTE from the folio, so a
-within-folio PFN skew heals once migration completes.  But any path that
-re-encodes the corrupted offset -- e.g.  hugetlb_change_protection()
-rewriting a writable migration entry via
-make_readable_migration_entry(swp_offset(entry)) -- propagates it.
+The hugetlb and fully-unpopulated-PMD (no page table) scans have no
+PAGE_IS_WRITTEN fast path, so they do not exhibit the per-entry divergence
+and are left unchanged.
 
-Migration entries legitimately carry uffd-wp, so clear it with
-pte_swp_clear_uffd_wp(), matching copy_nonpresent_pte() and
-move_huge_pte().
+Add a pagemap_ioctl selftest that populates a range, drops it with
+MADV_DONTNEED, and checks that the fast path and the generic
+(category_anyof_mask) path both report every page written.
 
-A hwpoison entry, on the other hand, never carries the uffd-wp bit: it is
-installed fresh by make_hwpoison_entry() (try_to_unmap_one() does not
-preserve uffd-wp on the hwpoison path) and hugetlb_change_protection()
-leaves hwpoison entries untouched.  There was nothing to clear there, only
-the corruption, so drop the clear entirely.
-
-Link: https://lore.kernel.org/20260708090110.136162-1-kirill@shutemov.name
-Fixes: bc70fbf269fd ("mm/hugetlb: handle uffd-wp during fork()")
+Link: https://lore.kernel.org/20260707151349.92143-1-kirill@shutemov.name
+Fixes: 12f6b01a0bcb ("fs/proc/task_mmu: add fast paths to get/clear PAGE_IS_WRITTEN flag")
 Signed-off-by: Kiryl Shutsemau <kas@kernel.org>
-Reported-by: Sashiko AI review <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/all/20260703140011.99E601F000E9@smtp.kernel.org/
-Suggested-by: David Hildenbrand <david@kernel.org>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Assisted-by: Claude:claude-fable-5
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Muhammad Usama Anjum <usama.anjum@collabora.com>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Jann Horn <jannh@google.com>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Pedro Falcato <pfalcato@suse.de>
 Cc: Peter Xu <peterx@redhat.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Assisted-by: Claude:claude-fable-5
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-(cherry picked from commit 83abe2fd5b3aeb3123b5408a5a91709c5538fb23)
-[ kas: adapt to the pre-softleaf idiom ]
+(cherry picked from commit 07b4377bdbe74a3ec0c8da5849d014f70e003384)
+[ kas: fix only; selftest hunk dropped (pagemap_ioctl.c differs on this tree) ]
+
 Signed-off-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/hugetlb.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ fs/proc/task_mmu.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/mm/hugetlb.c b/mm/hugetlb.c
-index 2fb6e45a1ea0d..e910ed0c43d0b 100644
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -5281,8 +5281,12 @@ int copy_hugetlb_page_range(struct mm_struct *dst, struct mm_struct *src,
- 			 */
- 			;
- 		} else if (unlikely(is_hugetlb_entry_hwpoisoned(entry))) {
--			if (!userfaultfd_wp(dst_vma))
--				entry = huge_pte_clear_uffd_wp(entry);
-+			/*
-+			 * A hwpoison entry never carries the uffd-wp bit: it is
-+			 * installed fresh by make_hwpoison_entry() and
-+			 * hugetlb_change_protection() leaves it untouched, so
-+			 * there is nothing to clear for the child.
-+			 */
- 			set_huge_pte_at(dst, addr, dst_pte, entry, sz);
- 		} else if (unlikely(is_hugetlb_entry_migration(entry))) {
- 			swp_entry_t swp_entry = pte_to_swp_entry(entry);
-@@ -5301,7 +5305,7 @@ int copy_hugetlb_page_range(struct mm_struct *dst, struct mm_struct *src,
- 				set_huge_pte_at(src, addr, src_pte, entry, sz);
- 			}
- 			if (!userfaultfd_wp(dst_vma))
--				entry = huge_pte_clear_uffd_wp(entry);
-+				entry = pte_swp_clear_uffd_wp(entry);
- 			set_huge_pte_at(dst, addr, dst_pte, entry, sz);
- 		} else if (unlikely(is_pte_marker(entry))) {
- 			pte_marker marker = copy_pte_marker(
+diff --git a/fs/proc/task_mmu.c b/fs/proc/task_mmu.c
+index a521f0faa0a49..44dc442b4f0e7 100644
+--- a/fs/proc/task_mmu.c
++++ b/fs/proc/task_mmu.c
+@@ -2097,6 +2097,19 @@ static unsigned long pagemap_page_category(struct pagemap_scan_private *p,
+ {
+ 	unsigned long categories = 0;
+ 
++	if (pte_none(pte)) {
++		/*
++		 * An unpopulated pte carries no uffd-wp marker, i.e. it is not
++		 * write-protected, the same condition under which the present
++		 * and swap cases below report PAGE_IS_WRITTEN. Report it here
++		 * too so this generic path agrees with the PAGE_IS_WRITTEN fast
++		 * path in pagemap_scan_pmd_entry(), which reports pte_none as
++		 * written and, under PM_SCAN_WP_MATCHING, arms a marker. The
++		 * fast path applies no VMA test, so neither does this.
++		 */
++		return PAGE_IS_WRITTEN;
++	}
++
+ 	if (pte_present(pte)) {
+ 		struct page *page;
+ 
 -- 
 2.53.0
 
