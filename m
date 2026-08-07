@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EE162F0C74;
-	Fri,  7 Aug 2026 15:31:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C957324B0A;
+	Fri,  7 Aug 2026 15:31:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786116675; cv=none; b=kaKQmCzzax6czhSCUYf8rQILmgrcRqA22l8Oqx1bgUPqncZAHjzfMpX/IF7kWvHJ9ATBUw584xZrqW2pjb51yuwLate8mI/YcZe0OqvYNIKQjNgFD4oDsg9A6g76rU4NC3TIfLkoGXGYLW/vN8V8SDQCkCvuKY9B9uYnTmJtkTU=
+	t=1786116678; cv=none; b=ITxeeyt1Lv/7RHWDh+2yh+rOZkwiQkwn+IzGS82vcxDRXqJ9/JNePI4HG8jXxi3ThiKC5zNzo0c6NcYkpbzDp/t3zI4LqeNAhxGIqinLnAKnOPQMNHcsyWRpwsqrC8OuhkSvZTVlx9LGaDiyfUa8BnabdRAWBq74k5DTSuqZ0TA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786116675; c=relaxed/simple;
-	bh=uzpIJAS2l2L0Fzg4mFCcDK4l7aCTEdGcvFGBLYJXURE=;
+	s=arc-20240116; t=1786116678; c=relaxed/simple;
+	bh=8RBq95lVCE4/AL4UeSv1IJzdwxRLKtlQH4FzbO9q5yU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KQV7k0Srj5BjC+UQlanghlc7iCtZVzCctc9nfElwYQdoo8FwP9YjMww7D6yCeT7e9V7feseKsezHA+OUC8Qp90PAn1v+4ciNCe+lm3eC/XEf58qXYWadLODHHTCLqSx6Yo2i41wMBDySBQJI5Hd8jy2VrOoa0ic5mHDtpu9ch+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PD98+p7A; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IHDUkqdQedWqs+yHKvXsq9tFBNjhEEHJ5hDT76OQ5hAj6qwy+7Nw39kWaoBk6NQtrJd3XCxzG70EGjXUOID4lh4pvJsezk/6hrApu/YJAlWKF5GIXDdFxBm/ZmYLF60QDkcWNwFkzQv5B9BsuLVivAYvKVTFYkG7rcSdv4tUdYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p0s9v8sw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PD98+p7A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B34D1F000E9;
-	Fri,  7 Aug 2026 15:31:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p0s9v8sw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 649371F000E9;
+	Fri,  7 Aug 2026 15:31:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786116674;
-	bh=FYrwOYCyLQ30xq8TLb8vwoVkRdEpkkftArL7bI2LE5g=;
+	s=korg; t=1786116676;
+	bh=hE412G0bDn0uBdi1fuDL1S2D1YN88xAvnrSfsVb8abQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PD98+p7AljhKLUKMwjkJjFcR6m+kZpFhPs9Ddpshlc59AylwdjjwheSoyQXsUGKTB
-	 LyjCPw3GRP4McNebinY9v1Vhuh+SzCwVDg60RgVyRMtNAbJqRgEzdm8OCqyiPT/t+R
-	 OmwlrjkRyWnmeuUozXoIY5CGK5ODrerHFtUir0wY=
+	b=p0s9v8swdxKvgyzRNdhyaWFAp1X4D75BXhtAZSMrFx1sR/hzdreAgcXDXh0euKWri
+	 b9CFG5dz1ifgvCAPQaSgFyaTlIXtxFY+c79MR0VJlejl+M3q9S6/z0hw9LKH1MkOqA
+	 RV94mgTANkR+0/oL81X88zcKoAEF5rFfYK3F2BLc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Donnefort <vdonnefort@google.com>,
-	Fuad Tabba <tabba@google.com>,
+	Fuad Tabba <fuad.tabba@linux.dev>,
+	Alexandru Elisei <alexandru.elisei@arm.com>,
 	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 050/438] KVM: arm64: Add missing hyp_enter when trapping sysreg
-Date: Fri,  7 Aug 2026 16:34:06 +0200
-Message-ID: <20260807143429.061635138@linuxfoundation.org>
+Subject: [PATCH 7.1 051/438] KVM: arm64: Reject guest_memfd memslots when the VM has MTE
+Date: Fri,  7 Aug 2026 16:34:07 +0200
+Message-ID: <20260807143429.082994036@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
 References: <20260807143428.008222056@linuxfoundation.org>
@@ -52,65 +52,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vincent Donnefort <vdonnefort@google.com>
+From: Alexandru Elisei <alexandru.elisei@arm.com>
 
-[ Upstream commit e7821048e8d72a94b1fb7422f8b45aa374ff076f ]
+[ Upstream commit 679d7201c1f09e37fa1c12ce28d84079c17fc87f ]
 
-Add a missing hypervisor event call for hyp_enter on sysreg trapping,
-causing an unbalanced hyp_enter/hyp_exit.
+The user cannot use MTE on VMAs created by mapping a guest_memfd file,
+as arch_calc_vm_flag_bits() does not set VM_MTE_ALLOWED.
 
-The enum hyp_enter_exit_reason is not ABI, so we can keep the ERET
-reasons at the end for clarity.
+When creating a guest_memfd backed memslot,
+kvm_arch_prepare_memory_region() rejects the memslot if MTE is enabled for
+the VM and if guest_memfd has been mapped in a VMA that intersects the
+memslot.
 
-Fixes: 696dfec22b8e ("KVM: arm64: Add hyp_enter/hyp_exit events to nVHE/pKVM hyp")
-Signed-off-by: Vincent Donnefort <vdonnefort@google.com>
-Reviewed-by: Fuad Tabba <tabba@google.com>
-Tested-by: Fuad Tabba <tabba@google.com>
-Link: https://patch.msgid.link/20260617095238.1530121-1-vdonnefort@google.com
+However, the documentation for KVM_SET_USER_MEMORY_REGION2 explicitly
+states that the only condition for userspace_addr is for it to be a legal
+userspace address, but the mapping is not required to be valid nor
+populated at memslot creation.
+
+If userspace sets userspace_addr to an address that hasn't been mapped, or
+if userspace_addr belongs to a VMA that isn't backed by the guest_memfd
+file, or if the VMA doesn't intersect the memslot, memslot creation is
+successful and KVM ends up with a VM with MTE and guest_memfd-backed
+memslots.
+
+The same happens if the order is reversed: when userspace enables MTE, KVM
+does not check if memslots backed by guest_memfd are already present.
+
+Fix both issues by rejecting guest_memfd-backed memslots when MTE is
+enabled, and by rejecting MTE when guest_memfd-backed memslots are already
+present.
+
+Fixes: 32e200bd6e44 ("KVM: arm64: Enable support for guest_memfd backed memory")
+Tested-by: Fuad Tabba <fuad.tabba@linux.dev>
+Reviewed-by: Fuad Tabba <fuad.tabba@linux.dev>
+Signed-off-by: Alexandru Elisei <alexandru.elisei@arm.com>
+Link: https://patch.msgid.link/20260722090354.94245-1-alexandru.elisei@arm.com
 Signed-off-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/kvm_hypevents.h | 1 +
- arch/arm64/kvm/hyp/nvhe/hyp-main.c     | 1 +
- arch/arm64/kvm/hyp_trace.c             | 1 +
- 3 files changed, 3 insertions(+)
+ Documentation/virt/kvm/api.rst |  6 ++++++
+ arch/arm64/kvm/arm.c           | 25 +++++++++++++++++++------
+ arch/arm64/kvm/mmu.c           |  4 ++++
+ 3 files changed, 29 insertions(+), 6 deletions(-)
 
-diff --git a/arch/arm64/include/asm/kvm_hypevents.h b/arch/arm64/include/asm/kvm_hypevents.h
-index 743c49bd878f7..5f6e6789d1211 100644
---- a/arch/arm64/include/asm/kvm_hypevents.h
-+++ b/arch/arm64/include/asm/kvm_hypevents.h
-@@ -12,6 +12,7 @@
- enum hyp_enter_exit_reason {
- 	HYP_REASON_SMC,
- 	HYP_REASON_HVC,
-+	HYP_REASON_SYS,
- 	HYP_REASON_PSCI,
- 	HYP_REASON_HOST_ABORT,
- 	HYP_REASON_GUEST_EXIT,
-diff --git a/arch/arm64/kvm/hyp/nvhe/hyp-main.c b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-index a0da08caa6c27..4cd321c27d042 100644
---- a/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-+++ b/arch/arm64/kvm/hyp/nvhe/hyp-main.c
-@@ -925,6 +925,7 @@ void handle_trap(struct kvm_cpu_context *host_ctxt)
- 		handle_host_mem_abort(host_ctxt);
+diff --git a/Documentation/virt/kvm/api.rst b/Documentation/virt/kvm/api.rst
+index 52bbbb553ce10..934ec29093e36 100644
+--- a/Documentation/virt/kvm/api.rst
++++ b/Documentation/virt/kvm/api.rst
+@@ -8401,6 +8401,12 @@ When this capability is enabled all memory in memslots must be mapped as
+ attempts to create a memslot with an invalid mmap will result in an
+ -EINVAL return.
+ 
++``guest_memfd``, even though it is an anonymous file, is not supported with MTE.
++Attempting to create a memslot backed by ``guest_memfd`` when the MTE capability
++is enabled, or attempting to enable the MTE capability after
++``guest_memfd``-backed memslots have been created, will result in an -EINVAL
++return.
++
+ When enabled the VMM may make use of the ``KVM_ARM_MTE_COPY_TAGS`` ioctl to
+ perform a bulk copy of tags to/from the guest.
+ 
+diff --git a/arch/arm64/kvm/arm.c b/arch/arm64/kvm/arm.c
+index 9ffd5d4079e6c..00df8783c30df 100644
+--- a/arch/arm64/kvm/arm.c
++++ b/arch/arm64/kvm/arm.c
+@@ -148,14 +148,27 @@ int kvm_vm_ioctl_enable_cap(struct kvm *kvm,
+ 		set_bit(KVM_ARCH_FLAG_RETURN_NISV_IO_ABORT_TO_USER,
+ 			&kvm->arch.flags);
  		break;
- 	case ESR_ELx_EC_SYS64:
-+		trace_hyp_enter(host_ctxt, HYP_REASON_SYS);
- 		if (handle_host_mte(esr))
- 			break;
- 		fallthrough;
-diff --git a/arch/arm64/kvm/hyp_trace.c b/arch/arm64/kvm/hyp_trace.c
-index 3f4ba2034a155..210807edacf7f 100644
---- a/arch/arm64/kvm/hyp_trace.c
-+++ b/arch/arm64/kvm/hyp_trace.c
-@@ -409,6 +409,7 @@ static const char *__hyp_enter_exit_reason_str(u8 reason)
- 	static const char strs[][12] = {
- 		"smc",
- 		"hvc",
-+		"sys",
- 		"psci",
- 		"host_abort",
- 		"guest_exit",
+-	case KVM_CAP_ARM_MTE:
+-		mutex_lock(&kvm->lock);
+-		if (system_supports_mte() && !kvm->created_vcpus) {
+-			r = 0;
+-			set_bit(KVM_ARCH_FLAG_MTE_ENABLED, &kvm->arch.flags);
++	case KVM_CAP_ARM_MTE: {
++		struct kvm_memory_slot *memslot;
++		int bkt;
++
++		guard(mutex)(&kvm->lock);
++		if (!system_supports_mte() || kvm->created_vcpus)
++			break;
++
++		r = 0;
++		guard(mutex)(&kvm->slots_lock);
++		kvm_for_each_memslot(memslot, bkt, kvm_memslots(kvm)) {
++			if (kvm_slot_has_gmem(memslot)) {
++				r = -EINVAL;
++				break;
++			}
+ 		}
+-		mutex_unlock(&kvm->lock);
++		if (r == 0)
++			set_bit(KVM_ARCH_FLAG_MTE_ENABLED, &kvm->arch.flags);
+ 		break;
++
++	}
+ 	case KVM_CAP_ARM_SYSTEM_SUSPEND:
+ 		r = 0;
+ 		set_bit(KVM_ARCH_FLAG_SYSTEM_SUSPEND_ENABLED, &kvm->arch.flags);
+diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
+index 6e95514d5a76e..726827c85c732 100644
+--- a/arch/arm64/kvm/mmu.c
++++ b/arch/arm64/kvm/mmu.c
+@@ -2625,6 +2625,10 @@ int kvm_arch_prepare_memory_region(struct kvm *kvm,
+ 	if (kvm_slot_has_gmem(new) && !kvm_memslot_is_gmem_only(new))
+ 		return -EINVAL;
+ 
++	/* guest_memfd is incompatible with MTE. */
++	if (kvm_slot_has_gmem(new) && kvm_has_mte(kvm))
++		return -EINVAL;
++
+ 	hva = new->userspace_addr;
+ 	reg_end = hva + (new->npages << PAGE_SHIFT);
+ 
 -- 
 2.53.0
 
