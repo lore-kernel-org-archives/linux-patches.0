@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AEA9331A61;
-	Fri,  7 Aug 2026 14:56:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1676F37BE84;
+	Fri,  7 Aug 2026 14:56:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786114584; cv=none; b=IZmMheh3Cj1TrJbmVRH1Xu5CHibhglb3pvEsh9UEAqriuzhRMaAgmFOhe9FRN+3y162uF/hbayGldnkiVugxSpdOtlO2S0/9jdB5DsuybgYf/Pr2lPeuzbEfXaAwsWw7mPlnbZsdypSWfd1QvzWzv0oK6axY9HmDGH2ZbOriWqQ=
+	t=1786114588; cv=none; b=rnMl0setN5BjO7aj3X2UDTUWH8Hl09XE+Y5MUQs4pHeN+PZYWwZvE0yYVg2AtVKKXjXo8Krpxqpx8uLXw2kKI9xMdEPlzns/5y+xp81K48d0pijIf0+tM8xetx+ESDFSa1IzL31FQdWOOTm9MYT8uF7AFH3fSvY6gE4ssdv5EAk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786114584; c=relaxed/simple;
-	bh=jT4Bq+DAZQXiGmRKLVRHrH+odJkzlh1CKaCBGQnOL3w=;
+	s=arc-20240116; t=1786114588; c=relaxed/simple;
+	bh=QBbWJwr2uSt+zBl9LORaiANYsz0LNMzljf8Hu2DrDoI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s6ZrXuLkpZJjlVcCUwhSknP5e789vEkGBbBRV+3UeAwFxL4x7V4+L0MqGKnsJaoFRZ09aBcMyS1mchmrB/FFmBnU1Lo1UZZsPxC7e63/kNBJiKSdKYj4wCdR060PpnxAByu9tXVMdlsVehaUIu/bWyzPf53yE8CjsMdf7wW/CX4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FsH/iwAU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VQHSS8CEeCOQ1+nf1blH/ZP8H2BgkYD/nBLWX9eSieUiqg7/EPm1odJgZ4gGHzQnDGVuyV3X2IsJFUm1XZ5rrCfDloZuA5/piTz477QIIRCsB4LiZ9q0r92Qrdhv1zQlc0jbj49yF8Bim2OR5pg2zGm3X6553dC3RwJIinLr1yo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FkfvN0R+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FsH/iwAU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B08B1F00A3D;
-	Fri,  7 Aug 2026 14:56:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FkfvN0R+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 105001F000E9;
+	Fri,  7 Aug 2026 14:56:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786114579;
-	bh=tLXgdHQEw79Er7EUNMHdaVmqxFv9kraoM5djjrMqWWY=;
+	s=korg; t=1786114584;
+	bh=weo2LQmtcxMNVaqQ0+ckN5+UCD2Rt7D6iKee+bYbXtA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FsH/iwAU2Tf4ohRH/gkRD5xCwvpahozICHb3DGNEXoRiBpk/eSE5PTNEy/zF93W41
-	 z6oGKEKnBhlK5QEkZY77kEZiGoNBlbtHBKcs/mpB/WbDoRb7vJQB4oHZEjklRUkthg
-	 UCkaenT6Vu4fhfL3GsNYAhV8g4ewHgI4X5HiGKvY=
+	b=FkfvN0R+0HbZgPMFG/t6GyIjNwdefPI1Y11j2vLJZiTsp4/rcLvrkAagsQ5U50erC
+	 8yBSeWkT3Jq/4efqm/jJdYUb4gsnjsncmPhPlW5Bpy3JLcgCGvoro30cVeIvVzxIYN
+	 06qwObiweIURgAeA57IflG9ZgXxz8mEocJOlhjAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Klaus Kudielka <klaus.kudielka@gmail.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Josua Mayer <josua@solid-run.com>,
-	Niklas Cassel <cassel@kernel.org>
-Subject: [PATCH 6.12 269/337] ata: libahci_platform: Do not set mask_port_map when not needed
-Date: Fri,  7 Aug 2026 16:37:52 +0200
-Message-ID: <20260807143424.372818403@linuxfoundation.org>
+	Wandun Chen <chenwandun@lixiang.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>
+Subject: [PATCH 6.12 271/337] of: reserved_mem: avoid post-init UAF when alloc_reserved_mem_array() fails
+Date: Fri,  7 Aug 2026 16:37:54 +0200
+Message-ID: <20260807143424.414888056@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260807143418.516897842@linuxfoundation.org>
 References: <20260807143418.516897842@linuxfoundation.org>
@@ -52,62 +50,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Wandun Chen <chenwandun@lixiang.com>
 
-commit 2c202e6c4f4dd19d2e8c1dfac9df05170aa3934f upstream.
+commit e1686ca81dbf3edbde589b7daf312b45cbf76e03 upstream.
 
-Commit 8c87215dd3a2 ("ata: libahci_platform: support non-consecutive
-port numbers") modified ahci_platform_get_resources() to allow
-identifying the ports of a controller that are defined as child nodes of
-the controller node in order to support non-consecutive port numbers (as
-defined by the platform device tree).
+The global pointer 'reserved_mem' continues to reference the
+reserved_mem_array which lives in __initdata if
+alloc_reserved_mem_array() fails. of_reserved_mem_lookup() is
+exported for post-init use, that would dereference freed memory
+and trigger a use-after-free.
 
-However, this commit also erroneously sets bit 0 of
-hpriv->mask_port_map when the platform devices tree does not define port
-child nodes, to match the fact that the temporary default number of
-ports used in that case is 1 (which is also consistent with the fact
-that only index 0 of hpriv->phys[] is initialized with the call to
-ahci_platform_get_phy(). But doing so causes ahci_platform_init_host()
-to initialize and probe only the first port, even if this function
-determines that the controller has in fact multiple ports using the
-capability register of the controller (through a call to
-ahci_nr_ports()). This can be seen with the ahci_mvebu driver (Armada
-385 SoC) with the second port declared as "dummy":
+So reset reserved_mem_count to 0 when alloc_reserved_mem_array()
+fails.
 
-ahci-mvebu f10a8000.sata: masking port_map 0x3 -> 0x1
-ahci-mvebu f10a8000.sata: AHCI vers 0001.0000, 32 command slots, 6 Gbps, platform mode
-ahci-mvebu f10a8000.sata: 1/2 ports implemented (port mask 0x1)
-ahci-mvebu f10a8000.sata: flags: 64bit ncq sntf led only pmp fbs pio slum part sxs
-scsi host0: ahci-mvebu
-scsi host1: ahci-mvebu
-ata1: SATA max UDMA/133 mmio [mem 0xf10a8000-0xf10a9fff] port 0x100 irq 40 lpm-pol 0
-ata2: DUMMY
-
-Fix this issue by removing setting bit 0 of hpriv->mask_port_map when
-the platform device tree does not define port child nodes.
-
-Reported-by: Klaus Kudielka <klaus.kudielka@gmail.com>
-Fixes: 8c87215dd3a2 ("ata: libahci_platform: support non-consecutive port numbers")
-Tested-by: Klaus Kudielka <klaus.kudielka@gmail.com>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Acked-by: Josua Mayer <josua@solid-run.com>
-Link: https://lore.kernel.org/r/20250207232915.1439174-1-dlemoal@kernel.org
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Fixes: 00c9a452a235 ("of: reserved_mem: Add code to dynamically allocate reserved_mem array")
+Signed-off-by: Wandun Chen <chenwandun@lixiang.com>
+Link: https://patch.msgid.link/20260604015332.3669384-1-chenwandun1@gmail.com
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/libahci_platform.c |    2 --
- 1 file changed, 2 deletions(-)
+ drivers/of/of_reserved_mem.c |   28 +++++++++++++++++++---------
+ 1 file changed, 19 insertions(+), 9 deletions(-)
 
---- a/drivers/ata/libahci_platform.c
-+++ b/drivers/ata/libahci_platform.c
-@@ -651,8 +651,6 @@ struct ahci_host_priv *ahci_platform_get
- 		 * If no sub-node was found, keep this for device tree
- 		 * compatibility
- 		 */
--		hpriv->mask_port_map |= BIT(0);
--
- 		rc = ahci_platform_get_phy(hpriv, 0, dev, dev->of_node);
- 		if (rc)
- 			goto err_out;
+--- a/drivers/of/of_reserved_mem.c
++++ b/drivers/of/of_reserved_mem.c
+@@ -70,29 +70,32 @@ static int __init early_init_dt_alloc_re
+  * the initial static array is copied over to this new array and
+  * the new array is used from this point on.
+  */
+-static void __init alloc_reserved_mem_array(void)
++static int __init alloc_reserved_mem_array(void)
+ {
+ 	struct reserved_mem *new_array;
+ 	size_t alloc_size, copy_size, memset_size;
++	int ret;
++
++	if (!total_reserved_mem_cnt)
++		return 0;
+ 
+ 	alloc_size = array_size(total_reserved_mem_cnt, sizeof(*new_array));
+ 	if (alloc_size == SIZE_MAX) {
+-		pr_err("Failed to allocate memory for reserved_mem array with err: %d", -EOVERFLOW);
+-		return;
++		ret = -EOVERFLOW;
++		goto fail;
+ 	}
+ 
+ 	new_array = memblock_alloc(alloc_size, SMP_CACHE_BYTES);
+ 	if (!new_array) {
+-		pr_err("Failed to allocate memory for reserved_mem array with err: %d", -ENOMEM);
+-		return;
++		ret = -ENOMEM;
++		goto fail;
+ 	}
+ 
+ 	copy_size = array_size(reserved_mem_count, sizeof(*new_array));
+ 	if (copy_size == SIZE_MAX) {
+ 		memblock_free(new_array, alloc_size);
+-		total_reserved_mem_cnt = MAX_RESERVED_REGIONS;
+-		pr_err("Failed to allocate memory for reserved_mem array with err: %d", -EOVERFLOW);
+-		return;
++		ret = -EOVERFLOW;
++		goto fail;
+ 	}
+ 
+ 	memset_size = alloc_size - copy_size;
+@@ -101,6 +104,12 @@ static void __init alloc_reserved_mem_ar
+ 	memset(new_array + reserved_mem_count, 0, memset_size);
+ 
+ 	reserved_mem = new_array;
++	return 0;
++
++fail:
++	pr_err("Failed to allocate memory for reserved_mem array with err: %d", ret);
++	reserved_mem_count = 0;
++	return ret;
+ }
+ 
+ static void __init fdt_init_reserved_mem_node(struct reserved_mem *rmem);
+@@ -246,7 +255,8 @@ void __init fdt_scan_reserved_mem_reg_no
+ 	}
+ 
+ 	/* Attempt dynamic allocation of a new reserved_mem array */
+-	alloc_reserved_mem_array();
++	if (alloc_reserved_mem_array())
++		return;
+ 
+ 	if (__reserved_mem_check_root(node)) {
+ 		pr_err("Reserved memory: unsupported node format, ignoring\n");
 
 
