@@ -1,96 +1,115 @@
-Received: from relay.hostedemail.com (smtprelay0015.hostedemail.com [216.40.44.15])
+Received: from omta036.useast.a.cloudfilter.net (omta036.useast.a.cloudfilter.net [44.202.169.35])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA61B379C4E
-	for <patches@lists.linux.dev>; Sat,  8 Aug 2026 22:22:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=216.40.44.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B54A6305057
+	for <patches@lists.linux.dev>; Sat,  8 Aug 2026 22:43:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=44.202.169.35
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786227780; cv=none; b=uPzqb84NtW3KHlm6NC/xY7k/9fLRwSmHw+VQJphfxcxnBOip6/4/Ue/tVgg8M+hlX9opsJD1ROyw5BZy9ZfWHcZbOiHkmEQmubF8ny9j7zEPQ8RY+hR78CQwuBfG2Q/dOO1O2UFFuKq79fhjVvzKWku1motWsbjN+5h35mVBFt4=
+	t=1786229027; cv=none; b=s29ltGlKxase5iqRph2LtHHQ4vJEY/1FBv4ezlEIkL9CynVXMF8/q4ThDr1K8W46Oaxw7U4/+rdVtmfzC/I3m0X3KU6bxOV1cyqoITezMaLPmqB8Po2T5xQnPgVHYeiJakW1VJ2EI6r7f/0q0EKWZJVDzofUF7f5XvMGpKzpRvc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786227780; c=relaxed/simple;
-	bh=lQpQYwkOvVwrgYs9az8mhZJeBerJ5y3FVv5cE6d3WEA=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ud+ghmkJ1gcnCw0yhB3SUJ/yg/snNlRxwxBjw4IsDs8C1sbWGMdG5E1BgVlWLxFqCm9zAlKapVulfa2iu3ku002y3nupGdalo/6fS2sk1kto2h195Y8o4lgsJjc6plt5lxKu5Upu86dJJgC3LbqsNvxE897kGMjcACaw3V26EIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org; spf=pass smtp.mailfrom=goodmis.org; arc=none smtp.client-ip=216.40.44.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goodmis.org
-Received: from omf01.hostedemail.com (lb01a-stub [10.200.18.249])
-	by unirelay04.hostedemail.com (Postfix) with ESMTP id 92E301A0460;
-	Sat,  8 Aug 2026 22:22:50 +0000 (UTC)
-Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf01.hostedemail.com (Postfix) with ESMTPA id A76126000C;
-	Sat,  8 Aug 2026 22:22:48 +0000 (UTC)
-Date: Sat, 8 Aug 2026 18:22:47 -0400
-From: Steven Rostedt <rostedt@goodmis.org>
-To: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
- patches@lists.linux.dev, "Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
- Sasha Levin <sashal@kernel.org>, vegard.nossum@oracle.com
-Subject: Re: [PATCH 6.12 117/337] tracing/mmiotrace: Add NULL check for
- mmio_trace_array in logging functions
-Message-ID: <20260808182247.39dc80fc@robin>
-In-Reply-To: <e4f43ad5-7f15-49bb-97b4-3035220261b8@oracle.com>
-References: <20260807143418.516897842@linuxfoundation.org>
-	<20260807143421.067366429@linuxfoundation.org>
-	<e4f43ad5-7f15-49bb-97b4-3035220261b8@oracle.com>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
+	s=arc-20240116; t=1786229027; c=relaxed/simple;
+	bh=WQNO37vNbjBWm/v0T9sYB4LoJdUqvKhHkyJsKNQtHd0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=MGjw7AR7bMjKFONoeDqA3/ZIFsp5Fww5yBm2+JBgSfZxxlcAwf4wfPsRWsOGicH4Zn3cno3eMqeu/Dea3d1P6KDZgGkAEtk/6PrRY3ks/FELKfnRWyzUw0kSayysFil9GNG5bRB0GLgIeoB715zAyLIcyvipRQEMvXCWmyL2S78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=FmnQFj9X; arc=none smtp.client-ip=44.202.169.35
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="FmnQFj9X"
+Received: from eig-obgw-6005b.ext.cloudfilter.net ([10.0.30.162])
+	by cmsmtp with ESMTPS
+	id sTXnwEciMD5Uispk0wX218; Sat, 08 Aug 2026 22:42:08 +0000
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTPS
+	id spjzwxQ72OYlBspk0wlcLD; Sat, 08 Aug 2026 22:42:08 +0000
+X-Authority-Analysis: v=2.4 cv=FLYbx/os c=1 sm=1 tr=0 ts=6a77b0c0
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=7vwVE5O1G3EA:10 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10
+ a=nmWuMzfKamIsx3l42hEX:22 a=L5EjiQpGQaFGZdqT14z7:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=HqJ6fxJBhJPsP3w6xxD6j9r1CBfPL7YdRkdOM3J2fbA=; b=FmnQFj9XBmLgK8+MuFm//VqJkH
+	MgjOtRre0FvK5z3gUmYyglWUDxM21ZPmrIxGKeHe89NfTQhxp9DwrKFDS4Fg0Z+rRrV4eN21i2tYd
+	LB2VmgHw90ECdx+JqSgbjT2+v+fKKAcqtkgk1sbvbxuaQllo93uzsZoN1U5ak/Tnv7idgFa2Y8j4l
+	Xx6AbHpPZenHQr9V0+WdWH6wwBIw4+PiPVc8JzSOeix1WkbYx42y9BNoRzupJzXjNdR2L5fy7ceMl
+	juBxuFXxQKUX/q1ZyXH5iGPDPoV1DpjfLukGnkgoP+8FuVIiqKeygk3RXcgS0c1Bd2H3T/cT9Ja0u
+	t9pKdaVw==;
+Received: from c-73-162-206-103.hsd1.ca.comcast.net ([73.162.206.103]:57908 helo=[10.0.1.180])
+	by box5620.bluehost.com with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
+	(Exim 4.99.5)
+	(envelope-from <re@w6rz.net>)
+	id 1wspjz-00000002yIA-1MwF;
+	Sat, 08 Aug 2026 16:42:07 -0600
+Message-ID: <0f2c030e-313f-4c6a-bb7c-4f274c0c3d72@w6rz.net>
+Date: Sat, 8 Aug 2026 15:42:05 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 7.1 000/438] 7.1.8-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com
+References: <20260807143428.008222056@linuxfoundation.org>
+Content-Language: en-US
+From: Ron Economos <re@w6rz.net>
+In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: A76126000C
-X-Stat-Signature: y58tmj3emswfysibbx5fajworgkrgscs
-X-Rspamd-Server: rspamout03
-X-Session-Marker: 726F737465647440676F6F646D69732E6F7267
-X-Session-ID: U2FsdGVkX19uVgCvDKBXhgXpCk74tNgA1LOKlSXpCG8=
-X-HE-Tag: 1786227768-843444
-X-HE-Meta: U2FsdGVkX1/BnnlPW2BlXgw76iE5QR6Jlg6f/6SHJ+QYF/aOvp0B2NOJX3QgV2VeOE8w8aJhTUfh6OUJVHLfgX0wEyQttZgh52Z5AS9PV03+0mvQEdvXRSXKNoPA9ZcZUIGCKKZENXenHGZyZsm9QtzSz5w7KIyRAf+kHJQqJJJBdyU7r7tofaPgsxN6cfdhxHzlKBpfZMh+OtiF60imLtm4lXO0Muh21m9dLkiM0mYQVm+1HnZzfgezH0HUbRHSg4FZb6c6s331IsqHRfn/aL5JNHa21BCEemiOPDAGm7RqzW3r+pN+SQlak1Mgbb0sAxeF7TMCoYdk4zXNNRoADNJZGiQencGu
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 73.162.206.103
+X-Source-L: No
+X-Exim-ID: 1wspjz-00000002yIA-1MwF
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-73-162-206-103.hsd1.ca.comcast.net ([10.0.1.180]) [73.162.206.103]:57908
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 18
+X-Org: HG=bhshared;ORG=bluehost;
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfFr0YSmI9ZETggYVeXlAtVnYOfXmFYXE8BzLMMn2psnzYHObVkeE7OqoDIs4o2d3mq9K0RaRGPFihWCYarGe52YvuEbrX4ABAx2wLsUEWTgREL+VASew
+ OztX303tDyOcroRHwC1pkG2SmTulkhrQt9TCOaavz5pKVd8sKO7LtQ5uE0BqGUTQrj2R2RLBPdKIJw==
 
-On Sat, 8 Aug 2026 22:53:31 +0530
-Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com> wrote:
+On 8/7/26 07:33, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 7.1.8 release.
+> There are 438 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Sun, 09 Aug 2026 14:33:46 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.1.8-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-7.1.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-> I ran an AI-assisted backport review and then checked the 6.12.y code. I
-> think this backport is missing a small prerequisite.
-> 
-> Upstream's wrappers pass tr directly to __trace_mmiotrace_rw() and
-> __trace_mmiotrace_map().Each function checks tr before dereferencing it:
-> 
-> if (!tr)
-> 	return;
-> buffer = tr->array_buffer.buffer;
-> 
-> 
-> The upstream fix follows commit: 6936298393d8 ("tracing/mmiotrace: 
-> Remove reference to unused per CPU data pointer"), which removes the 
-> unused data argument.
-> 
-> 6.12.y does not have that commit, so both functions still have that 
-> argument and their wrappers compute it first:
-> 
-> struct trace_array *tr = mmio_trace_array;
-> struct trace_array_cpu *data =
-> 	per_cpu_ptr(tr->array_buffer.data, smp_processor_id());
-> __trace_mmiotrace_rw(tr, data, rw);
-> 
-> 
-> Consequently, if mmio_trace_array is NULL, the dereference in
-> per_cpu_ptr(tr->array_buffer.data, ...) occurs before either function's 
-> new NULL check.
-> 
-> I think 6.12.y needs commit: 6936298393d8 ("tracing/mmiotrace: Remove
-> reference to unused per CPU data pointer") before this fix.
-> 
-> Thoughts?
-> 
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
 
-Yeah, it looks like the kernel could crash for the same reasons without
-commit 6936298393d8.
+Tested-by: Ron Economos <re@w6rz.net>
 
-Greg, care to backport that one too?
-
-Thanks,
-
--- Steve
