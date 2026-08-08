@@ -1,87 +1,96 @@
-Received: from mail.antaris-organics.com (mail.antaris-organics.com [91.227.220.155])
+Received: from relay.hostedemail.com (smtprelay0015.hostedemail.com [216.40.44.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F15D536B061
-	for <patches@lists.linux.dev>; Sat,  8 Aug 2026 20:40:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.227.220.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA61B379C4E
+	for <patches@lists.linux.dev>; Sat,  8 Aug 2026 22:22:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=216.40.44.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786221651; cv=none; b=EZQOsodFL4h6VgUN0f9U4SjYmzeurx9sBtKEB45B9UXdIwf47IruerTS4hhfOJhS8Bt7Inv1Gct529xilawBnxq4q8D/uzl8EuVRASY1hVPK49pHkC2FqF8nZKhNUwpS/iKLMdRLXj98h53OZa89V1NuvqRfsQuxVigpJOl5u7Q=
+	t=1786227780; cv=none; b=uPzqb84NtW3KHlm6NC/xY7k/9fLRwSmHw+VQJphfxcxnBOip6/4/Ue/tVgg8M+hlX9opsJD1ROyw5BZy9ZfWHcZbOiHkmEQmubF8ny9j7zEPQ8RY+hR78CQwuBfG2Q/dOO1O2UFFuKq79fhjVvzKWku1motWsbjN+5h35mVBFt4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786221651; c=relaxed/simple;
-	bh=xQhjgHxXBdiJCoWMmGbSDcxRXW1cz0OTA3OznWKl2pw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Jua9Vx4Uc4gJP9ESaXAQD5gNgNS2ziH5gjIsU7wKnXskPVG3sApoEILCgUMYAaCafwm3aMb8VuKLb7d1FSWVxmi+UdCI5nF7dXEcK/I+QSFXCFMNGftEAk7y478fz2hwau849hKXsZf/yigp78yLeVcN34qY8dsH+ZV1uv2RFCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mareichelt.com; spf=pass smtp.mailfrom=mareichelt.com; dkim=pass (2048-bit key) header.d=mareichelt.com header.i=@mareichelt.com header.b=YD7iKsXk; arc=none smtp.client-ip=91.227.220.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mareichelt.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mareichelt.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mareichelt.com header.i=@mareichelt.com header.b="YD7iKsXk"
-Date: Sat, 8 Aug 2026 22:34:25 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mareichelt.com;
-	s=202107; t=1786221266;
-	bh=auTh9iArIqF7lSmmKIQd4QVVbP4yfmPCYjLe6EciD1s=;
-	h=Date:From:To:Cc:Subject:Message-ID:Mail-Followup-To:References:
-	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To:date:
-	 author:from:to:subject:message-id:in-reply-to:references:
-	 mail-followup-to:openpgp:mime-version:content-type:
-	 content-transfer-encoding:author:from:subject:date:to:cc:
-	 resent-author:resent-date:resent-from:resent-sender:resent-to:
-	 resent-cc:resent-reply-to:resent-message-id:in-reply-to:references:
-	 mime-version:content-type:content-transfer-encoding:
-	 content-disposition:content-id:content-description:message-id:
-	 mail-followup-to:openpgp;
-	b=YD7iKsXkHffddM0Br9PLhdlKmg+4DY+K+lcOrVH88LlUvp+dyp17B+SL6LxYwSgqN
-	 vZ0aTjcc9pI/DpfBOHeszhAAmkfSKsgBlGax4oMaY+2i5KQgDVr7ulVfEz/G5rYMb1
-	 3SKVOTgAvHPnsKFUoDlStjjHX7OpNBV/9aBSfLy0iUJeLIfoKwE1ooKG/cj7B6aVOL
-	 1F3TN6x0pUqymg3SosZOCjc/ihl277vHeEWq6A4U0R7gbLd6Ng6erOISrJFMobCi80
-	 YZWYJQSHkMw1UoC7okcueLGlasEMq8dhlIky/ALjDli9u4U2wCPP2b+5biDEtoWUrE
-	 zZbWordg5mOcg==
-From: Markus Reichelt <lkt+2023@mareichelt.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
-	sr@sladewatkins.com
-Subject: Re: [PATCH 7.1 000/438] 7.1.8-rc1 review
-Message-ID: <20260808203425.GA4629@pc21.mareichelt.com>
-Mail-Followup-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
-	sr@sladewatkins.com
-References: <20260807143428.008222056@linuxfoundation.org>
+	s=arc-20240116; t=1786227780; c=relaxed/simple;
+	bh=lQpQYwkOvVwrgYs9az8mhZJeBerJ5y3FVv5cE6d3WEA=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Ud+ghmkJ1gcnCw0yhB3SUJ/yg/snNlRxwxBjw4IsDs8C1sbWGMdG5E1BgVlWLxFqCm9zAlKapVulfa2iu3ku002y3nupGdalo/6fS2sk1kto2h195Y8o4lgsJjc6plt5lxKu5Upu86dJJgC3LbqsNvxE897kGMjcACaw3V26EIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org; spf=pass smtp.mailfrom=goodmis.org; arc=none smtp.client-ip=216.40.44.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goodmis.org
+Received: from omf01.hostedemail.com (lb01a-stub [10.200.18.249])
+	by unirelay04.hostedemail.com (Postfix) with ESMTP id 92E301A0460;
+	Sat,  8 Aug 2026 22:22:50 +0000 (UTC)
+Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf01.hostedemail.com (Postfix) with ESMTPA id A76126000C;
+	Sat,  8 Aug 2026 22:22:48 +0000 (UTC)
+Date: Sat, 8 Aug 2026 18:22:47 -0400
+From: Steven Rostedt <rostedt@goodmis.org>
+To: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
+ patches@lists.linux.dev, "Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+ Sasha Levin <sashal@kernel.org>, vegard.nossum@oracle.com
+Subject: Re: [PATCH 6.12 117/337] tracing/mmiotrace: Add NULL check for
+ mmio_trace_array in logging functions
+Message-ID: <20260808182247.39dc80fc@robin>
+In-Reply-To: <e4f43ad5-7f15-49bb-97b4-3035220261b8@oracle.com>
+References: <20260807143418.516897842@linuxfoundation.org>
+	<20260807143421.067366429@linuxfoundation.org>
+	<e4f43ad5-7f15-49bb-97b4-3035220261b8@oracle.com>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260807143428.008222056@linuxfoundation.org>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Rspamd-Queue-Id: A76126000C
+X-Stat-Signature: y58tmj3emswfysibbx5fajworgkrgscs
+X-Rspamd-Server: rspamout03
+X-Session-Marker: 726F737465647440676F6F646D69732E6F7267
+X-Session-ID: U2FsdGVkX19uVgCvDKBXhgXpCk74tNgA1LOKlSXpCG8=
+X-HE-Tag: 1786227768-843444
+X-HE-Meta: U2FsdGVkX1/BnnlPW2BlXgw76iE5QR6Jlg6f/6SHJ+QYF/aOvp0B2NOJX3QgV2VeOE8w8aJhTUfh6OUJVHLfgX0wEyQttZgh52Z5AS9PV03+0mvQEdvXRSXKNoPA9ZcZUIGCKKZENXenHGZyZsm9QtzSz5w7KIyRAf+kHJQqJJJBdyU7r7tofaPgsxN6cfdhxHzlKBpfZMh+OtiF60imLtm4lXO0Muh21m9dLkiM0mYQVm+1HnZzfgezH0HUbRHSg4FZb6c6s331IsqHRfn/aL5JNHa21BCEemiOPDAGm7RqzW3r+pN+SQlak1Mgbb0sAxeF7TMCoYdk4zXNNRoADNJZGiQencGu
 
-* Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+On Sat, 8 Aug 2026 22:53:31 +0530
+Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com> wrote:
 
-> This is the start of the stable review cycle for the 7.1.8 release.
-> There are 438 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+> I ran an AI-assisted backport review and then checked the 6.12.y code. I
+> think this backport is missing a small prerequisite.
 > 
-> Responses should be made by Sun, 09 Aug 2026 14:33:46 +0000.
-> Anything received after that time might be too late.
+> Upstream's wrappers pass tr directly to __trace_mmiotrace_rw() and
+> __trace_mmiotrace_map().Each function checks tr before dereferencing it:
+> 
+> if (!tr)
+> 	return;
+> buffer = tr->array_buffer.buffer;
+> 
+> 
+> The upstream fix follows commit: 6936298393d8 ("tracing/mmiotrace: 
+> Remove reference to unused per CPU data pointer"), which removes the 
+> unused data argument.
+> 
+> 6.12.y does not have that commit, so both functions still have that 
+> argument and their wrappers compute it first:
+> 
+> struct trace_array *tr = mmio_trace_array;
+> struct trace_array_cpu *data =
+> 	per_cpu_ptr(tr->array_buffer.data, smp_processor_id());
+> __trace_mmiotrace_rw(tr, data, rw);
+> 
+> 
+> Consequently, if mmio_trace_array is NULL, the dereference in
+> per_cpu_ptr(tr->array_buffer.data, ...) occurs before either function's 
+> new NULL check.
+> 
+> I think 6.12.y needs commit: 6936298393d8 ("tracing/mmiotrace: Remove
+> reference to unused per CPU data pointer") before this fix.
+> 
+> Thoughts?
+> 
 
-Hi Greg
+Yeah, it looks like the kernel could crash for the same reasons without
+commit 6936298393d8.
 
-7.1.8-rc1 compiles on x86_64 (Xeon E5-1620 v2, Slackware64-15.0),
-and boots & runs on x86_64 (AMD Ryzen 5 7520U, Slackware64-current).
-No regressions observed during boot & my custom tests.
+Greg, care to backport that one too?
 
-Tested-by: Markus Reichelt <lkt+2023@mareichelt.com>
+Thanks,
+
+-- Steve
