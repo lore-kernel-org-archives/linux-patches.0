@@ -1,84 +1,65 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 306103C1D54;
-	Sun,  9 Aug 2026 11:55:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4447B384228;
+	Sun,  9 Aug 2026 15:08:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786276544; cv=none; b=R/XAnxnNGyvqLns5x1YtFCGeqgg3nHwFZ5EOuDh7EbaB9CaWVpkg3UywwsKUSn7cNcB0GrWakNsV83PiK8jFRZFDV1PNv/+w360A4q+xTyqxg0nfsX8V8pSQI6KuXnEXN5OShfYKnYMnpwFqWiJmmH5zd8F3IwLD5WzlgFj2yHg=
+	t=1786288121; cv=none; b=OUmQDProXaoqJTzJPEfHYoEyiSpbTtQgNOvCY2zic+YXALYhWgnp+1sZRNZgusLvnoCNQolRKYDng+Hy6RvshvgqnquH2DWqWX+K6yJGu0eXUBW1HtNLo4lq5Cuwf6NYa4+cG5tsS94NzdR0elxWwndH8U0aESnB3P/NQ5o8hiM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786276544; c=relaxed/simple;
-	bh=SVe5ieLcIIMtqtYJ90IlqvWZ1tL1OVfttq8B2mZA2Ag=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=E8PmRssLUeCK4OPVBnWWA/cSKi2gQS8SpJtkxN3vX7rfVxfBkuChynQbz55ACiUHKTyrmsa6BirZ5A1ubJsfqkPO6ZFDtIE68+mL3JPZpGWp3nbb4wNANvuSHZY9yYArBKU5izddmA+c5TPYf3rsnB4XSbPtax2S5Ga1EIcWuC8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O1+pzMzD; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1786288121; c=relaxed/simple;
+	bh=uVyFNbAydXVcOXqEoIbB6XNEVNr2+ioHjszQPcvc7CU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=qUQe9l1eN6rqK5BXRQ4UJG3THy97BPnwQLwSRkmmpobV91y50fWj9jDngalNyduzgCMmO50u+VzlSFwivMaEPj/uyJ2rFhe56rUyGOHprzdZzxV1yeuv5OIshM+9Yl36lSkrNkUwLpHAoB4+PriM8KJXHrITh+bNZoVmbnt8OSw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KbscRPPR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O1+pzMzD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92B831F000E9;
-	Sun,  9 Aug 2026 11:55:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KbscRPPR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0BF21F000E9;
+	Sun,  9 Aug 2026 15:08:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786276542;
-	bh=u6ZGJgajsf8ZW+aynThvKrp7vvQoQ1+V5ONDoS8lmMo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=O1+pzMzDw//2CpNH5YH/Oo4ZsJG58gql+Q1hwcriyM1LixKS9U1HF7Ps6MtTMEOEI
-	 GzCH0SxWUahvtDuk0mvyNyXgPG7F8CO/f8y3DAHHSDBtAca2rKp8d8ULfm9QVukhlM
-	 7h6BF39FjkeQPuHqBJwQsJOkzrjeaQFTdeHB7tXTomX+8AjYkLtIMlKzPWjVbj2r5k
-	 WsUCihwMJVRs/QTwUrA+eCGfIgBzW221+kxOmpGC2p8Fo93Ac4PgTem0Yd+s56irHO
-	 oBo6mz5rSAWjwLwytzHA2YPrdBjT+PaYlNRuV5jPetm8CpMEyvWYuURj8oB1EWcGdH
-	 2L0Kxqc3VLWXQ==
-Received: by finisterre.sirena.org.uk (Postfix, from userid 1000)
-	id 89A1B1AC56E2; Sun, 09 Aug 2026 12:55:39 +0100 (BST)
-Date: Sun, 9 Aug 2026 12:55:39 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, achill@achill.org, sr@sladewatkins.com
-Subject: Re: [PATCH 6.6 000/261] 6.6.151-rc1 review
-Message-ID: <anhqu9v9w_8PB26K@sirena.co.uk>
-References: <20260807143415.358597922@linuxfoundation.org>
+	s=k20260515; t=1786288119;
+	bh=vUTHfDjifbU3NWoVvPx4xceZFnQdOhGlPS5NWWI6u9k=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=KbscRPPRo5ueMhVQHmAjqa6fr50jHJfBqCrvv313OB6PfzfGXSYHNUSJI2iUJs+p2
+	 i8n248tn5Gpd1bBFOXTfZtNBjqYyAHcjqQyMRb+ZncIVTPYrdiXOsBNzHZwzWThlrk
+	 P3B83QqA1BO+y6PXAtDavRLEZ9+m1VEGSP3iNq5XqtU3kW4tIE/xnMXegVG6oePguz
+	 3l1t/lQ9ZJ/SxUvWA906IjYIo4WNqRNT8NdedFqtyPMpQh6pJpjMXMwb5hGcSoHNCb
+	 hi5S1INOvBqmGE6pp5szPsboP2LxvezOrroCPhKbMvrJUktZQThvLA7ilEptoNiy08
+	 KLORnINygbSgg==
+From: Sasha Levin <sashal@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	stable@vger.kernel.org
+Cc: Sasha Levin <sashal@kernel.org>,
+	patches@lists.linux.dev,
+	Pauli Virtanen <pav@iki.fi>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	vegard.nossum@oracle.com,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Subject: Re: [PATCH 6.12 106/337] Bluetooth: hci_sync: remove unnecessary hci_conn_get in create_conn_sync
+Date: Sun,  9 Aug 2026 11:08:34 -0400
+Message-ID: <20260809144635.1001.sashal@kernel.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <5fcf1911-1284-4791-a678-c54c544aba27@oracle.com>
+References: <20260807143418.516897842@linuxfoundation.org> <20260807143420.836222269@linuxfoundation.org> <5fcf1911-1284-4791-a678-c54c544aba27@oracle.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="vXnnEzZOAmr0pEV+"
-Content-Disposition: inline
-In-Reply-To: <20260807143415.358597922@linuxfoundation.org>
-X-Cookie: My vaseline is RUNNING...
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
+On Sat, Aug 08, 2026 at 10:38:00PM +0530, Harshit Mogalapalli wrote:
+> This backport nevertheless removes the worker-side get/put pairs. That
+> leaves the queued work without a reference if connection deletion races
+> it. I think 6.12.y misses commit: 2f5d635ad5906 ("Bluetooth:
+> hci_sync: hold conn in hci_connect_acl/le_sync() callbacks"); I think we
+> have to either queue this prerequisite or drop this, thoughts ?
 
---vXnnEzZOAmr0pEV+
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Good catch, thank you. The same problem is in 6.18.y and 6.6.y, not just
+6.12.y. I've dropped it from the 6.18, 6.12 and 6.6 queues.
 
-On Fri, Aug 07, 2026 at 04:35:57PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.6.151 release.
-> There are 261 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-
-Tested-by: Mark Brown <broonie@kernel.org>
-
---vXnnEzZOAmr0pEV+
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmp4aroACgkQJNaLcl1U
-h9Afzgf/f2dQBiiRWgLv2m8Ijlgs3QoWEqJ08S7N0JMj4qiomMNqH+BZkWmlhzqI
-u+okW2Gvu37QM2ZgjS1u47clkWo51U4xxw5jSLON36ZuL6KxcCU2TMFH6Fjlm09G
-wML/MWKH91RyQGvOlF9K/UvOpb7qXYn3Ww+wZI2M6BvbegKVDGt42e4puZylz5iw
-WugBHrCo8/AbSRcpSZBFT+P8/iQo4a5JmNkgbkFMPXcifYNOHy8mQyAc7NhPQG+J
-SwCptExW4YR2/IPEUogHQWiQBqwXTioCE5xKIiq863UNq1ocAmxdNgzSlEKZKWRm
-MYQVKOT63w5NekFXJrNmtI8gEVcSjg==
-=4b36
------END PGP SIGNATURE-----
-
---vXnnEzZOAmr0pEV+--
+-- 
+Thanks,
+Sasha
