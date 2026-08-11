@@ -1,66 +1,66 @@
-Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
+Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ECF13F54C8
-	for <patches@lists.linux.dev>; Tue, 11 Aug 2026 21:21:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AA614334C6
+	for <patches@lists.linux.dev>; Tue, 11 Aug 2026 21:22:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786483316; cv=none; b=fASOKmgBabjVdMMeJQA+UA/9GA4KYLYm8wwoD32EHLe1K/M4pI7WGWEB/fxMS2jVcfOQUiIg857vSbzHsoz2ag7fR/z4Stvg3duPSIswMhx0wCrEemQyLm+WE080lcFrVaTdQKqNYPxb/WACYCcxYu61yd6Ak1cBNNuTgkmQrMg=
+	t=1786483356; cv=none; b=UhmJ4dgCeIMaKQ4yQmMQYNynTz+Z0KXlp9UOdGI7js6RasiNtivpfp4e/PZymaShnSlzGHvaKTJNFGmmfIqjjcu4QB/QvvNed25FNe+cIcL5R5Zwt0Rt7SCEGXlyG1QMU91HndoZKbADHC7ieM60sGbg5f/l2ixZV9vg9JNW+HM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786483316; c=relaxed/simple;
-	bh=Fs1q1LuXAYTQ937j0F968WLbSfpvhN7jSqDN7Jd6uBw=;
+	s=arc-20240116; t=1786483356; c=relaxed/simple;
+	bh=NdaLGblalh7y8lVJYv0NjjfAvsT9Ho42+c6mULsp9Qg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VMcn4u1CuBJbo7bMvJ9latXKIS927JtQwE2OpJR7/llxG6MQcvq0wyIyCBjJJxtgzQGp7jN6HB5HvuqxiRPtMuuhe3/pMtHFe2eYQckp0vVtr4Zv9HDxMVzDKN/x7UIFftWDkz8gDHJb3THg/8uwmX/aQmZ+lJ9hdBPeKfUTrwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Yy22w9mW; arc=none smtp.client-ip=209.85.214.172
+	 Content-Type:Content-Disposition:In-Reply-To; b=MlQyk8ufZSvj3aA2kD9b4yBsqiIuNjKEH5nhTguSoVJLsEiiB8f003rSMg6WxYVaf/egBbA3nctSPj/1Wh3j3kQkYWNQxCP05/xPSkzYPD8KLhiPlLsysuFjOb5RDvRdG9T89/lTCVzj2VOhz6YFm9vzQP7NiuRM1vsydZ47uJ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=utCX4AmC; arc=none smtp.client-ip=209.85.216.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Yy22w9mW"
-Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-2ceb096e675so5286995ad.0
-        for <patches@lists.linux.dev>; Tue, 11 Aug 2026 14:21:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="utCX4AmC"
+Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-38125cebfdaso500322a91.1
+        for <patches@lists.linux.dev>; Tue, 11 Aug 2026 14:22:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1786483314; x=1787088114; darn=lists.linux.dev;
+        d=google.com; s=20251104; t=1786483354; x=1787088154; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=GgcKeBktnliFILPgH5Yp5qgxA2fPy6McTHeUrYz6elM=;
-        b=Yy22w9mWBs5EW7B63Krvt1hVMo7oQaCtk9roLp5Oks3V7U5F74qYQDma4Q7y7oWlwT
-         16T9MFwmCyyMgtDisI8GQafv6xzu9sR9idiukqza7LFZwDxYnaGH/pkxxacRysV0rTcl
-         Eu2weOGCQc8dgMt87hf66fIFgNj7RaFofK1d5v3hXEGF31HPjqhKIOCcVxW2BQXFUXke
-         TxushLvTAY0SnTJcuoHIv0llZ6FRRwQ/xaVJNZ+PIclJOxPi/hneRWjH9euhPIjBRxVC
-         dEQ3PgE8fSeaDgBSc19QHtoZ8GknrLe8vOpEM5TM08r6zH91Y+u04ibXKv48ZGQVk3BR
-         3mgg==
+        bh=hg+Yr9bSAREbkWFulA8TyFK9VZyeo5bqgSMI0IG+zlA=;
+        b=utCX4AmCqODdjRm6eJ3wT3PE95EVdlwzsFLddONW4VDt3bJjufRw3OOIY0L9Z4CKed
+         b4k6OkYAmT9PEHpkS3TkIHjAHrQDO9D1YgvwFBUZRQFACGPUA3+VoyCY0URy7TIy2N6h
+         WF61j5yLzEsuQXVcLQ+v18MK+aciaLlItNRjFhM6pJvv/pnKg0QACobTN+CLsp1hwQTT
+         P1eLmU/l+2L4/1y2dMnbJTXPCFyMQn5siZ0+h9fTMKVwVYT/w0GKa9gWOe8wSGttiKos
+         /eKLXhhEvvs4qLaxenVzMUoCfK4cfkxSKM9iTjTYIO72uoe0vbFHTY+33MVa9hbAe28E
+         gfNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786483314; x=1787088114;
+        d=1e100.net; s=20251104; t=1786483354; x=1787088154;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=GgcKeBktnliFILPgH5Yp5qgxA2fPy6McTHeUrYz6elM=;
-        b=daJnKp4iYJtQ2FeItdptYKDe3eMqOzHLyXEoDBlBDmiwoxEWFyHQaR3SOLCnQAKfcy
-         EPnyb5rLDvOvlOHoXOyNmWpe2AXNsZLGx5G5trUENbuUxo59tphgvZqtTElBLD2IKDSS
-         W4L/zGACp0hkLlN9n9tZgX0g5oDMszx9STgM8N9Cpay5hCB3ee6dp+4dI17ltV6hymdm
-         VsM7n+T+j5zIPZpob9EQm32LJshf7G4vUnMZgtvd4gAF+3rgvyoSwWUmBfCXc8ixK9La
-         Z1uRsEGVlzL5wghn/q+QDaTka/TDHunYgR7NJk8gT+B+vF+3HCS7lOoQmeP66r7GwaAK
-         VecA==
-X-Forwarded-Encrypted: i=1; AHgh+RqWQZ1WdHnd4n4EKvA7y4IQYvwZXeMCe9k2NEJWnAZM4OfgT+lWZkSfagvPRN8AB+Nw2ENePCfD@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy+OApD2+Dr73ciSoRQvLVKScDfyQbBrUF8P/103R6AFxsvZHtD
-	jeJvbcnuKzOAndkK5liZdd/qq2smmsnoFns+pi844LcTSB6cXvW4EPsRU44p5iETNA==
-X-Gm-Gg: AR+sD10zDMFf4LuNtIMtV2rxn3lOqq7nr0S1UGh2JPMxyAqi3CyzPNDfWZtUo3nj7CG
-	kTFsy7/VifJ90aLD4P5diyLK5zsMIeN03uR2wc8iuh+UViabf+HMfiQCOJ5WusDhR46ja2c2k1P
-	+cgbxcEDkR5qcNBnsHa69+HWLA5j+Uti8JhMK1Y/suXOJagZvAH3W7DER1LYcaTsJCkLEhcVnh9
-	xW53w9Nj14tgwy0L+snvbJRgyUBzXVJ2NhYJv7uDTvkNjAC8d5+58RMPvLpfHxbU9gPmD05C+71
-	Ac+fgpA7H3G7OI+ZhCOlC/uXXBYDSpeSJXJr0fm1iqWvBiEm4SfdIptpXxDisPtrL6gYoYbilaY
-	68hHOZbyFyURRY37lRKQ9Z1fQqsdsuc68slxhu8fLcn6nMhteS6iDLVf7BxKbkG0jcy7ZPsjwzz
-	sDSVGrBDQpAyzlsI8/SsLbkBoeL1/vIqxYhhBNqJj+83iSGdd3Sh7sZGZZaqaA+SAkK9RwjfMso
-	r8RQqPq1dEc9O+08r133o2kzkt7BRK0IrEhESPW
-X-Received: by 2002:a17:902:e946:b0:2d0:cc92:f7c2 with SMTP id d9443c01a7336-2d34535651emr6182815ad.1.1786483313141;
-        Tue, 11 Aug 2026 14:21:53 -0700 (PDT)
+        bh=hg+Yr9bSAREbkWFulA8TyFK9VZyeo5bqgSMI0IG+zlA=;
+        b=FS5GXJm2ZjhYcWVm+pK+C4S9Pxng14sHL2xMAMhNoYOLHUdF8TEjlsdUDk54UxKpYt
+         Itpi1CTrqlmjzOpy102I0LXuYL2q54fhW3NpziqFi0XB/MvYtzsuyag8/xyCTOluKMw8
+         Df7eVUlwmma/0wZd7KJiKUQNRavUNcVyqjqaXV2lgYmz/SxRo38oFJZUD3HSU6w4IMj6
+         KWzDih+c/n9ihD3LtlHdSxUGOkFPQKIc5T7XC9JHBZaJgxg9lbASB1XKvjuETBfV+rNz
+         8UB/SOAUlqXyY+s+T1I6Nrfd98HhtegjsAeBj0qPDnulvQNXLIJPLjueOW4hHRPFGhlv
+         Wz2A==
+X-Forwarded-Encrypted: i=1; AHgh+Rpyb+51gU4FbWGCkNdu67WcsPKz9Qc9EpDTWDzPheHVBU1E9rwn8PYp/i2awzbjv8KeSRqSUVLc@lists.linux.dev
+X-Gm-Message-State: AOJu0Ywus9w1Mks5oRe2zNj+ch9tR/rpiNigjj1QP3ezcdA5y846ZCB+
+	+IKsjKc+JCjPXo/D8Vz/Ay2MHgyXWlY7eIjHxXZPkOPPA0jcF6jeDXRbY5Edbr+M7g==
+X-Gm-Gg: AR+sD13xSjocVgN92kd3UJVQV4C8CnE3rReEehDDTWqDy2QEJRhG3/GsUXFCI1XUgwn
+	vbj7718t/FO6audquq8jypVByCA7LxC+vgvHSrLImVaSHNDJqugscd7/YG1EaEcw+tVSNTtfi0O
+	qOTJvbVkGGiPRuPCXfxGyO2MQuwKZjSWr69bqc/pWf1cWRvrr/ch1WpfZdUHbR6PEBbM1IJkchj
+	dECnxAxBAnrh6lz6sTjXk/vLSdw3L/KN9MVmBDIwzWjZKAk9zf+qdVHHLbgGVkM4ZQhZaMFY3br
+	aBzNEtZH4JMZXCl3VG+rzDMhx6xDrof9jC6Oz5q1u1Tkl8CfCXnMcgB1jcps1A0lOEJF7QF4yxm
+	yeoGqvUbRmu+q/hcQ3UTfbiMCc2T//LdCe7KIX0ajaXK4b83eg75QattqKDiurAGZDERDjnh1ce
+	wCs7BPb5uT1JFsCHioDflEx9uxJk5b3ikqzDvvJa+b8LElmr9RQ06R3wjx3iUA4YGRuk7LH4KYT
+	ft3uKybcPGhEEPMKHiW0ZPcOVSA/Q==
+X-Received: by 2002:a17:90b:4a82:b0:38e:101f:c867 with SMTP id 98e67ed59e1d1-392ec672d1emr6461856a91.18.1786483353815;
+        Tue, 11 Aug 2026 14:22:33 -0700 (PDT)
 Received: from google.com (132.200.185.35.bc.googleusercontent.com. [35.185.200.132])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2d315f29d82sm12934165ad.20.2026.08.11.14.21.52
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-392f85feb67sm1080532a91.0.2026.08.11.14.22.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Aug 2026 14:21:52 -0700 (PDT)
-Date: Tue, 11 Aug 2026 21:21:49 +0000
+        Tue, 11 Aug 2026 14:22:33 -0700 (PDT)
+Date: Tue, 11 Aug 2026 21:22:30 +0000
 From: David Matlack <dmatlack@google.com>
 To: Jason Gunthorpe <jgg@nvidia.com>
 Cc: Alex Williamson <alex@shazbot.org>,
@@ -72,11 +72,11 @@ Cc: Alex Williamson <alex@shazbot.org>,
 	Nick Desaulniers <ndesaulniers@google.com>, netdev@vger.kernel.org,
 	Saeed Mahameed <saeedm@nvidia.com>, Shuah Khan <shuah@kernel.org>,
 	Tariq Toukan <tariqt@nvidia.com>, patches@lists.linux.dev
-Subject: Re: [PATCH v3 09/11] vfio: selftests: Add mlx5 driver - HW init and
- command interface
-Message-ID: <anuSbSEiEfCC2MUR@google.com>
+Subject: Re: [PATCH v3 10/11] vfio: selftests: Add mlx5 driver - data path
+ and memcpy ops
+Message-ID: <anuSlnCd7NERCp4B@google.com>
 References: <0-v3-76f117ad04f1+28a90-mlx5st_jgg@nvidia.com>
- <9-v3-76f117ad04f1+28a90-mlx5st_jgg@nvidia.com>
+ <10-v3-76f117ad04f1+28a90-mlx5st_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -85,35 +85,17 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <9-v3-76f117ad04f1+28a90-mlx5st_jgg@nvidia.com>
+In-Reply-To: <10-v3-76f117ad04f1+28a90-mlx5st_jgg@nvidia.com>
 
 On 2026-07-16 02:03 PM, Jason Gunthorpe wrote:
-> Add an mlx5 ConnectX selftest driver that programs VFs and PFs
-> through the command interface. Create the driver skeleton with
-> probe(), the command interface, HCA boot sequence, and all resource
-> allocation up through ALLOC_PD + CREATE_MKEY.
+> Complete the mlx5 driver by adding CQ/QP creation, QP state
+> transitions, WQE posting, CQ polling, and the
+> memcpy_start/memcpy_wait callbacks. After this patch the driver is
+> functional for DMA tests.
 > 
-> The driver implements vfio_pci_driver_ops (probe/init/remove) and
-> registers with the VFIO selftest framework.  It matches the same
-> mlx5 ConnectX device IDs that the kernel matches.
-> 
-> init() brings the HCA to a running state:
->   - Command interface setup (two-slot: regular + async pages)
->   - ENABLE_HCA -> SET_ISSI -> QUERY/MANAGE_PAGES -> SET_HCA_CAP ->
->     INIT_HCA
->   - EQ creation (CMD + PAGE_REQUEST events for PF support)
->   - ALLOC_PD, CREATE_MKEY (PA-mode, covers all IOVAs)
->   - Force-loopback capability check
-> 
-> remove() tears down in reverse order through TEARDOWN_HCA and
-> DISABLE_HCA, including async pages slot drain and FW page reclaim.
-> 
-> The driver region (~18MB) holds all HW-visible DMA buffers (command
-> queue, mailboxes, EQ, FW pages) overlaid as a single struct on
-> device->driver.region.vaddr.
-> 
-> Data path ops (memcpy_start/memcpy_wait) are left as stubs for the
-> next patch.
+> The data path implements RDMA Write self-loopback via an RC QP with
+> force-loopback.  WQEs are posted to a 16-entry send queue with an
+> NC doorbell, and completions are polled from a 16-entry CQ.
 > 
 > Assisted-by: Claude:claude-opus-4.6
 > Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
