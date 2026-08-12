@@ -1,223 +1,166 @@
-Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from SN4PR0501CU005.outbound.protection.outlook.com (mail-southcentralusazon11011038.outbound.protection.outlook.com [40.93.194.38])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9516840F8ED
-	for <patches@lists.linux.dev>; Wed, 12 Aug 2026 22:13:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A78041E0E14
+	for <patches@lists.linux.dev>; Wed, 12 Aug 2026 23:32:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.194.38
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786572819; cv=pass; b=FrByASgk+uP2uTszRFOuQ76uPHsyqdYCXbgqgrWYGd5oxw6h/tkLHJLwCXjXBysGDdls0g3nlYqGaxE9knpn7nhkkLbOZBAfT78+E2L0++UvPPXK0cXiZkPDo6yaxGw0tVNOW8QtDATIMp6WyHaOGMTuKQZv9lgbzfSmQDS5lz0=
+	t=1786577536; cv=fail; b=SOYz/PtdalcavynuuzJlMDiuN6m7O37Xpuoofj0kVKwTlFxL7JztAIOV9H82lElIbS4/L9IlvhFx6BnIz4iRtYcTNJntAZ7MsNLNC4mSEiOmYyv3mzYofmSPJiG9NK0S3L6plJ9962VttvDgdaz08nAWEwjDWJihfiplErI5vno=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786572819; c=relaxed/simple;
-	bh=byyagvsc1UjkE8b+SW2ccxMNYjbe0DMj7QW0GEW3cJE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=UHrtRzzQ/MacU0g4tAp0a2jomA1oPoLpcGtw8vjAcT1uRMBPDWRIechwtRLPttqxDuoKgnc9Z9iKdSdNLcVfLzyXGly6K92YDPVIxIQ4ahD0QY2aX4GKPvkmdf4mObAUhs3V/DLzX9ySBtDnbjXUnkMa20gZprPPkNhoOy+xeeo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=txj7PkIG; arc=pass smtp.client-ip=209.85.216.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1786577536; c=relaxed/simple;
+	bh=7TliKQeO8lyGiJx2c6PoxprfAFSRQqEiJxq40HYfP/A=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=theaztCMeeCJtoYIiqMOH8AdLKWR9xl8FUjUR8XiVt1dSZITXDFx8ZNo10p10ahqe6/D7GszxBLy2Ri+/Qld6RrtZoJ3OX8zEOddrxsNmsAyVtJ4+Mztjpshgn/dvF25pavUpfPjpIbb4Oup4iOo8+mH8qwAN45m4v7OvcPZXHA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=jEtK3ZgH; arc=fail smtp.client-ip=40.93.194.38
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="txj7PkIG"
-Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-38e07ebd263so1195348a91.1
-        for <patches@lists.linux.dev>; Wed, 12 Aug 2026 15:13:37 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1786572817; cv=none;
-        d=google.com; s=arc-20260327;
-        b=S8Oy9X8A7PsAdfBk1j74DP+asP0KEmaKP7+9X63/5BNe1zoh5VxhTVlckfPD/q7vCi
-         7BRGXB9XhUh7Xjbr6Ot+jY1LlDZIjNZh5mznyCssMWYAnjQJxOlmpglqfTDAtUjxKsJt
-         63ME0VmRuN5UmnSWbLNQtj8nTR4LdtuIpr0sLz3kxdQMxy5ZhNa7PR6II+EJrZm/5Ra5
-         gpMpv3LpAfxmXd9WBwdv99Mw4qhIgXs1vu3SZ/hGW8uAkqyyQ6DzsHZYQ5B6aNyqVJfb
-         WA7OXw/2QfJqymDNkOZWBaiygBBY0ZDvNM0UIt/l8gr/B0pJaWfag4G41qWIl2Z2G8xH
-         whVA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=I2diJELU9B/EJYj35M681THFCJwWyYCFNlAAsuJpsCA=;
-        fh=j6lLTM3goqDPDEDNp6FsITx20nTQWI+X/0/mZcHfvoo=;
-        b=sg/NEnhlUhzhKfdMLRKhiVeNjz844+txgeRt1LZkAQoQveKzEgcai7M4ZTGM9zMXnW
-         qtB1+IJFzEgOVrMkwIdsR1g4z+hW3MlbaL7jNUW/xqPZs70B1v9X6Ehm/qbH1fX0Gb3s
-         SNPLmB70gAyv0ug/yzXHTruHdF8DEd9WiD/kOSjsr5LrfTZfcl5t2dYDIGV2ni7bc625
-         myYmXf2qHKZnrjO3UsyefPNH/TvcFdBPr0OKTrAybv6/tHaADf14iWEXvtmutOyB8Igh
-         reNoow8CYJak83fWhyoN3+w4GIXAl/krVBUKKntgW92+Q5sgsuHAg4y5L3TZxOOvBHDT
-         Hbng==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1786572817; x=1787177617; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=I2diJELU9B/EJYj35M681THFCJwWyYCFNlAAsuJpsCA=;
-        b=txj7PkIGzRxgrnXy8LQZq2WSK6GLS4rtLoeeK00RvFHGXCVcgCvR4LcaN3j3Jcygvu
-         QlVJbbnbB+gW3QFqbW064pYK9fhW6N999H7MdTYatwty5DEZCljqTB/OOX9C5dOIEMZV
-         kmwLQYAgN27ocAE40GG6XZq5AWG5FW3MFxQQi4RNlNitnLkQBer73mlpUfr62A8MbVKh
-         QtlSV4BWwJHFpB8Hr+Ae7mUqsMU/otJE2RwwxGq+Vns460gcZ/SKwxLnH6qIR9v5Rzg1
-         Pf3rxwzmLrlfTTM3teFa2cpdq+485v8FTl/+u63GDTr8S73oEs4YLL4lFOpQm8HE2Zbd
-         TofQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786572817; x=1787177617;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=I2diJELU9B/EJYj35M681THFCJwWyYCFNlAAsuJpsCA=;
-        b=G9KP4TGm3gmWB7d8gWXV661VPFTONrZiG7rV5HhZTgaBr/WjFYgF+QCbKgE1UMf014
-         p4Q10ZIHF/OB3zCI26ZqnOVmteDNbDjv5BS3LOax21GJ338RQ/URjqJ1UfstZpSKj3rt
-         TIwj42Vhlz7i3yxcbzVMEZ5ZL7In1Hd6Zoga5vVNoX8ou/GZZJjRBm1Z2G7dk3NfehC5
-         bPNL6egWAhCWOVjix4CCmbt5hdX7FkJK+BhyXSDtcB/uH+6kG56HYeFzzIOUiwL2pMRY
-         Dz63vsNxYDYfjlxBwrKXZgH4+heqCJXC8dD+dxSpCCI87Wa18R5Luj/BjB9f2TcZRmgm
-         43og==
-X-Forwarded-Encrypted: i=1; AHgh+RrDJF4Jot6Nnfu498vKuWK+K4+WT+j95aCvyLPoi3DZmJDI3LXlrg0w6xvFBeCs31NQA9MkEAo8@lists.linux.dev
-X-Gm-Message-State: AOJu0YxxAqNWZ1w4y/F8B/FfvjEvc4r0NDPyy2KMMUgNOZF1cCZOAoCx
-	bDdo842iLVisTjnv0Q7Dg0E19FySSHCQckrFj/7KDVyTlrtekXkRFZDVyWQ91Q4/EFhjOk3F8sF
-	/qIjk4qUBb+4Sebaw2m1dPng3mG7RRxIEf1Hk7Tut
-X-Gm-Gg: AR+sD12aHXzGVRhJoqeaxw9oNGudmhGU54PudFWOpkggZGMlTDsaGRjGE5euTdIzPHT
-	ZbYiKoIOig7zPVyW6Z6PqtbMtrT7bXlmB8CI3kp8XUbuUOfl8IFQGvcCDubR70x4yDCNpLJ9R0m
-	acvGUJbnhmKPV3AwNxwDPPK/uJZhsuJ1DJCaPj3vWBz+4ODPUGeDstCZRSoVAMc29RVUHqWgbH5
-	XeBlf3PiUF/C4OLZSNIPYhj/5TcbjiY7klTRjAkqri2Y9YFqQxkegWdl47znD+qvuu0qxORRB3k
-	Qe5mEcsT5/DKJAALL8f/yKicxukUC+Qv9Ve6WYJssLI7oLkXiR6e9lc=
-X-Received: by 2002:a17:90b:4e8e:b0:38e:5b59:c2ff with SMTP id
- 98e67ed59e1d1-3931dfd0888mr1664002a91.3.1786572816160; Wed, 12 Aug 2026
- 15:13:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="jEtK3ZgH"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=iTT+1qGHxGo4Re4azaDjJEBF4sQS+WZXX11hPV6SQlSYWHSlnvKYUpohmCCBFGk6u/iGCWgFOuHP11ELo/v5B43Vw/w1eC+bpIJHrajLNhMdfZgGzYZoPkmQ3kBkphd1jjOlVdwbdw0/EZfU7Kv970FlXoXN4sxH8l9ZmlOFTDBFXv9Icwe+ESz/uVocy193vdx4cHXtus/vjiPOy/m6jpSxGiCYQL2NdqY40AcjmNEevGB6pz5qFZ60iNHId/sJLt/QTHakuX3BQ/1DnefttAjVj1ZS8g9jQwCaVYNon7q+Q213VXel5vnIis3JtD9qQs1HsTkskNlZlbslpahuHg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=oO4xTIz1kZqIfG/4xJIUopLF37rH1ueyAMniA9yKx18=;
+ b=cqw2mrUE1ruV3TJ9znLxPjfISUYLwEPvk18TfbdUmVm6Tynd1ik25MaFb2SLis+Nkk7sw0MPlO8tMqPSUnGRvEAoSSIgmjZXY/PoZ+gPXTqES/CQ1lrGLNQWEdyXAlaMEokcr5pAq8AuO4sVE2JTt52nXjkvCW3kte0+J+UNY+d8r5X9uEyeY9eA3D+myOUoPRFPO6NkXqYRLUM/ci0kg91k/5eTIkelZ2LVjiqOxB4+AnbX1AstvWVOwjV804Lk4T5WF3xweLsOvEPeDaDAGqQSvc15faX6DaWdKimeFx1NWowbhNxEr5ulhAYvCtE27D6ZP0YpyDgJm8iTg0i3wA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=oO4xTIz1kZqIfG/4xJIUopLF37rH1ueyAMniA9yKx18=;
+ b=jEtK3ZgH3vcmAbgekINTFP+GCT31JV9srFCA81D4ePpKTFvM2KQm9CMpp6YCkBLYoN6jiSrtFFb58bpxaeIj35aT7Mw9YDqSHip+EbGpF1diB6hxEB2CRozN3+bdmGwEtpZ8hOxLBxt2pv0V/xj2XcJgpA9QJ+mHbDe6fAd9NMsYjH/99AH7BfHzq/+sb5dTXmvVdNfz0fST9m9cMQt9dRL/u/WSV+WivelXqywX9DhRhEkmnv+NbG+43jNeKfRQVK2sjsMkKCn4Kg5s/Rgl3ZV/6R4xtd3NwOn0gXJyPoub2CZ9GDiJLOifj3p6xxgBTvg6/mSRB3nuev9zj7NmYw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
+ by MW4PR12MB7336.namprd12.prod.outlook.com (2603:10b6:303:21a::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.12; Wed, 12 Aug
+ 2026 23:32:09 +0000
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528%4]) with mapi id 15.21.0315.011; Wed, 12 Aug 2026
+ 23:32:09 +0000
+Date: Wed, 12 Aug 2026 20:32:07 -0300
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: David Matlack <dmatlack@google.com>
+Cc: Alex Williamson <alex@shazbot.org>, kvm@vger.kernel.org,
+	Leon Romanovsky <leon@kernel.org>, linux-kselftest@vger.kernel.org,
+	linux-rdma@vger.kernel.org, Mark Bloch <mbloch@nvidia.com>,
+	netdev@vger.kernel.org, Saeed Mahameed <saeedm@nvidia.com>,
+	Shuah Khan <shuah@kernel.org>, Tariq Toukan <tariqt@nvidia.com>,
+	patches@lists.linux.dev
+Subject: Re: [PATCH v4 08/10] vfio: selftests: Add mlx5 driver - HW init and
+ command interface
+Message-ID: <20260812233207.GB730363@nvidia.com>
+References: <0-v4-021df3fb5a3f+98e-mlx5st_jgg@nvidia.com>
+ <8-v4-021df3fb5a3f+98e-mlx5st_jgg@nvidia.com>
+ <anzoiALsjiWrsZtl@google.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <anzoiALsjiWrsZtl@google.com>
+X-ClientProxiedBy: YT3PR01CA0088.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:b01:84::21) To LV8PR12MB9620.namprd12.prod.outlook.com
+ (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <0-v4-021df3fb5a3f+98e-mlx5st_jgg@nvidia.com> <6-v4-021df3fb5a3f+98e-mlx5st_jgg@nvidia.com>
- <anzvkibgzTae9eV9@google.com>
-In-Reply-To: <anzvkibgzTae9eV9@google.com>
-From: David Matlack <dmatlack@google.com>
-Date: Wed, 12 Aug 2026 15:13:09 -0700
-X-Gm-Features: AUfX_mwo8Ob8itM9mFOrvjUREAOlXg8MDm_8-_pKnvDnHzhEXLZf3Bq4dnwstOw
-Message-ID: <CALzav=dptFQTKyUAiDVsv4LF79pkhfHaVyaYE8FD4-5rrWHGZg@mail.gmail.com>
-Subject: Re: [PATCH v4 06/10] vfio: selftests: Allow drivers to specify
- required region size
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Alex Williamson <alex@shazbot.org>, kvm@vger.kernel.org, 
-	Leon Romanovsky <leon@kernel.org>, linux-kselftest@vger.kernel.org, 
-	linux-rdma@vger.kernel.org, Mark Bloch <mbloch@nvidia.com>, netdev@vger.kernel.org, 
-	Saeed Mahameed <saeedm@nvidia.com>, Shuah Khan <shuah@kernel.org>, Tariq Toukan <tariqt@nvidia.com>, 
-	patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|MW4PR12MB7336:EE_
+X-MS-Office365-Filtering-Correlation-Id: 75510834-ba59-47e8-5358-08def8c9ed62
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|1800799024|23010399003|366016|10067099003|56012099006|4143699003|11063799006|18002099003|6133799003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	QOV74R9AKrQt8JOtQ5E2plpXOGGvOaeHx73u4hFddyg/RUCLtBwSWWgKQ6VeA3Ano2XUDn/y1VxsRwiKmhNUEj4auSELmlw4eap/q19IySbxfznJmIrxRdpS46EXnc3ilTCOz3PUnKjQksf+08lH4bLjXwyZe3XPqDvDwDG6faem5sG6hbYOj/sYIo/bg5b0Pv/ENbGyGdtiFy9UHzPVd/AX8ZPe4+z35lr3Fe5gFfrmCvjWR6OGCHlJOohP97kjJsUZCRzr3kBCELT5zDEYYNrfBwzz3gYHvsLRPf4ThvsGEyZYAiuXbprjgqBzpjrVR6lAK9/CHA21s+x0cJjCsqFII3WVBkFLNgVBnH2f7nKNQSBSRTVGnpVEwv1gEy706fV2dzRrrsRw4B8H1NGgtCfykh8NWFUiZzDw+mXR81ZBTzSjzmZVg8jg79wTmB/cei7/vQV+fPZGpI3ej04tyXkIRXXFz33N1ibtwdCbDvRxcz4H32Qo83JcGPnN2xTADgRkJBczxdtBJ8PeMqWmxUVUIAuj+U74nUlS/KGXDX4qdnWt6iaZGJlTobzkdV9sHq398o9jikQKhzjQMeIdvEKEJMIAPfTF3KTF0MnTNx8grrt/78z9rcqaEGbWYCnfKS0hI1A/XiVJy42JWPprRwLECfgjGen/Bv9z/3IIxSk=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(23010399003)(366016)(10067099003)(56012099006)(4143699003)(11063799006)(18002099003)(6133799003)(22082099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?KRT2Mlxtf901ltuJpTh7iuaLk4ztIBiXaOALwmXyi9FgJhpeM+8kWtDqST52?=
+ =?us-ascii?Q?scTrgzlcWBqdNFdxDkXJxODcdYWJhBT3fYQ+zXw0dqadpdglRSaPlR8enxB8?=
+ =?us-ascii?Q?P/kfOGznAoqCB5mONfzR80AQ+0VDYj8xBoJEcLRgRz3evsGS3gFM0K5rgJGT?=
+ =?us-ascii?Q?+fIRC92OMK+LYKnQSpDjrVF5ggsmwiDkjgBKPsN6BDgeLfw6M6co99Bs66jb?=
+ =?us-ascii?Q?IZXFf8NJH4/z5JYOhiSB2CI+j7t0xSHMKld7qqAD5UH/bvc3UOnDURPga1YG?=
+ =?us-ascii?Q?KPjs7Q+3UL7HcXlDIBM4Yr/nVm+fpmFyu0Ckg/MAJg2uIahGs1Lx2xDaSjrI?=
+ =?us-ascii?Q?g0yhbS0mYN8CML/x6zImPOf/lf1oRyueIAy6iqUNWlWiVNLsuzqCcG2YbCL2?=
+ =?us-ascii?Q?9WjoQgUmztUdCPANAKJgWbWe1ZnRTtFA1MeoS3xiQ7hWS6/YEAC5P5B6iuxf?=
+ =?us-ascii?Q?zvo1/8NFoZfkDRv7FIYtmwMa+sPVvVDNIF/A98CVU40+tUdzN6lOhWmUyAOp?=
+ =?us-ascii?Q?pZxk4fZ4qQvXAzjHnISwlf+xHsKzq8PuF6+nhi3hLC5k492tv9SpZ/OZUdbz?=
+ =?us-ascii?Q?hmbikzd22kLD1vH8LsTVf5hkEO9A31WNzHgqro8J0AfHHtWX9EqDCOUC5kfX?=
+ =?us-ascii?Q?HBWjv/UPpm4977GQsfEboawcbt/NP4HBBJNjGL/3AFxOf6cfo9k9T/BNQbH6?=
+ =?us-ascii?Q?pDUtXssQl9mKKtCzZlqXWZZ7HiFF1domVYnTPUt1bHktMppVA6vbRqUbKqiY?=
+ =?us-ascii?Q?6c+74HjwVK3D4NGGW/Hqm5egTUJEP+BxrG3r7cWJzUXPE1ODHg8yjRd2B17t?=
+ =?us-ascii?Q?Fx564qGYnaQ7Ng8BDraI1xNfVM9OsZq+8vwxlZkFLAxEfaEE3NFBUIZAmZFJ?=
+ =?us-ascii?Q?RJy57J+eQQ8J/VoRz7BoGOwJi1KIenlkKVhn774amCxhzV70P3VVppq3C4Jq?=
+ =?us-ascii?Q?wCNcPdBvNUo7yYJgZwWocnWEZCT5LuYA2ZKMtKWi2yITNAirKzIswubKmvmG?=
+ =?us-ascii?Q?hDKIYE1R1yIu3NK8/DibnWtZbsAFqHFMjup9Hj/NY9iCNx9tgCbloGb8gCNd?=
+ =?us-ascii?Q?cE123WvHzyOEzBeXhxXuK5zvtJ59sTIyLZAIOiJO3Ksz2l/8lOkUzLvCX9sj?=
+ =?us-ascii?Q?eNBRpCs+AMMFbn2QhNoO25iCdUyC63A9kKmaqipgGAtndwkzn6PN1jIurylO?=
+ =?us-ascii?Q?V6SsSeEwXAMz2QQAh5u0De7kFuccpEbbkWarPfbC6n6YwU4vFVsrtXfMBBtj?=
+ =?us-ascii?Q?g9OTzTMZjoXBu4h8YUHsDk0iNhwq5ZOkxocBenRRSGJO5eJU3ESY2IQXP6WC?=
+ =?us-ascii?Q?e3vO/CCymn4a0q4blqvXR5EY/XD72bwpFUZfA6gmcTO1T0OW1G9JgQtHAyoO?=
+ =?us-ascii?Q?Ume8mfSqXn6FxWtvL1IM0ez+w+KYaVT7i+M/JbPXgjaLOF5sTMgaPHzjFHsg?=
+ =?us-ascii?Q?OH/Uuqwk80/GqThH1vFog1LHx9Hwkme+qWXr0F/10gcBJZoKw5Lo3BUnUIkw?=
+ =?us-ascii?Q?+NXCFLjjefvxBhahptqSrPWpBlmrevDq8Ms8jtNUA8U3QHTFcf7c4glnYaEy?=
+ =?us-ascii?Q?Evdh8xZL2oEncjrmgrS6RQYtWgg6hpP1Bn+UGEMTfQKr5KIZlSapI9Eg/C2c?=
+ =?us-ascii?Q?mpD2wvcHVlJtic1ga4GZrM42sahOAEyyupSZn6J3HVvpV/YfJ5RBc4V3en18?=
+ =?us-ascii?Q?9SEuPRUATxXmj0t3bQvGNavWzOrXyoHrdczSPYSPdRmnjXmwzWUvK//lQ9AR?=
+ =?us-ascii?Q?yFk+yT/VlA=3D=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 75510834-ba59-47e8-5358-08def8c9ed62
+X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Aug 2026 23:32:08.9888
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: AcDT33QuMVzObVH/2c8XWcvu0qMXg+EVE98gP2KwkR9AWL76akfAcT0mdvrLrqAa
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB7336
 
-On Wed, Aug 12, 2026 at 3:11=E2=80=AFPM David Matlack <dmatlack@google.com>=
- wrote:
->
+On Wed, Aug 12, 2026 at 09:41:28PM +0000, David Matlack wrote:
 > On 2026-08-12 11:59 AM, Jason Gunthorpe wrote:
-> > Add a region_size field to struct vfio_pci_driver_ops so drivers can
-> > declare how much DMA-mapped region they need. The mlx5 driver will need
-> > ~18MB for firmware pages. Existing drivers pass in the sizeof their sta=
-te
-> > struct. Since drivers all use only their declared state we can use the
-> > value directly and remove the SZ_2M hard coding.
-> >
-> > Assisted-by: Claude:claude-opus-4.6
-> > Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
->
-> ...
->
-> > diff --git a/tools/testing/selftests/vfio/lib/iova_allocator.c b/tools/=
-testing/selftests/vfio/lib/iova_allocator.c
-> > index 4a660f636f4972..c8075575e9131d 100644
-> > --- a/tools/testing/selftests/vfio/lib/iova_allocator.c
-> > +++ b/tools/testing/selftests/vfio/lib/iova_allocator.c
-> > @@ -13,8 +13,10 @@
-> >
-> >  #include <linux/iommufd.h>
-> >  #include <linux/limits.h>
-> > +#include <linux/log2.h>
-> >  #include <linux/mman.h>
-> >  #include <linux/overflow.h>
-> > +#include <linux/sizes.h>
-> >  #include <linux/types.h>
-> >  #include <linux/vfio.h>
-> >
-> > @@ -50,7 +52,8 @@ void iova_allocator_cleanup(struct iova_allocator *al=
-locator)
-> >  iova_t iova_allocator_alloc(struct iova_allocator *allocator, size_t s=
-ize)
-> >  {
-> >       VFIO_ASSERT_GT(size, 0, "Invalid size arg, zero\n");
-> > -     VFIO_ASSERT_EQ(size & (size - 1), 0, "Invalid size arg, non-power=
--of-2\n");
-> > +     /* Adjust the size to the allocator requirements */
-> > +     size =3D max_t(u64, roundup_pow_of_two(size), getpagesize());
->
-> ...
->
-> > diff --git a/tools/testing/selftests/vfio/lib/vfio_pci_driver.c b/tools=
-/testing/selftests/vfio/lib/vfio_pci_driver.c
-> > index 5e65434d2318b2..52b9c2a2bbb9b6 100644
-> > --- a/tools/testing/selftests/vfio/lib/vfio_pci_driver.c
-> > +++ b/tools/testing/selftests/vfio/lib/vfio_pci_driver.c
-> > @@ -32,6 +32,9 @@ void vfio_pci_driver_probe(struct vfio_pci_device *de=
-vice)
-> >                       continue;
-> >
-> >               device->driver.ops =3D ops;
+> > @@ -0,0 +1,108 @@
+> > +/* SPDX-License-Identifier: GPL-2.0 OR Linux-OpenIB */
+> > +/*
+> > + * mlx5 VFIO selftest driver - HW definitions
+> > + *
+> > + * Typed wrappers, constants, and helpers for programming mlx5 hardware
+> > + * via the VFIO selftest framework.  Most HW constants and all MLX5_SET/GET
+> > + * macros come from the kernel headers (mlx5_ifc.h, mlx5_ifc_macros.h).
+> > + */
+> > +#ifndef SELFTESTS_VFIO_MLX5_HW_H
+> > +#define SELFTESTS_VFIO_MLX5_HW_H
 > > +
-> > +             VFIO_ASSERT_NE(ops->region_size, 0);
-> > +             device->driver.region.size =3D ops->region_size;
->
-> I'm seeing failures with the IGB driver with this series. I think it's
-> coming from here. The region size needs to be page-aligned so that the
-> IOMMU map/unmap calls can work?
->
-> The size of struct igb is 0x20080 bytes which is not page-aligned. The
-> size of struct mlx5st_device is 0x200D000, which is page-aligned, so
-> that's probably why your Claude did not notice.
->
-> # #  RUN           vfio_pci_driver_test.iommufd.send_msi ...
-> # /usr/local/google/home/dmatlack/kernel/trees/review/tools/testing/selft=
-ests/vfio/lib/include/libvfio/iommu.h:42:
-> # Assertion Failure
-> #
-> #   Expression: __iommu_map(iommu, region) =3D=3D 0
-> #   Observed: 0xffffffffffffffea =3D=3D 0
-> #   [errno: 22 - Invalid argument]
-> #
-> # # send_msi: Test failed
-> # #          FAIL  vfio_pci_driver_test.iommufd.send_msi
-> # not ok 33 vfio_pci_driver_test.iommufd.send_msi
->
-> Applying this on top fixes things and also avoids a potential overflow
-> when doing the roundup_pow_of_two() in the allocator.
->
-> diff --git a/tools/testing/selftests/vfio/lib/iova_allocator.c b/tools/te=
-sting/selftests/vfio/lib/iova_allocator.c
-> index c8075575e913..66a160d4ff9d 100644
-> --- a/tools/testing/selftests/vfio/lib/iova_allocator.c
-> +++ b/tools/testing/selftests/vfio/lib/iova_allocator.c
-> @@ -52,8 +52,11 @@ void iova_allocator_cleanup(struct iova_allocator *all=
-ocator)
->  iova_t iova_allocator_alloc(struct iova_allocator *allocator, size_t siz=
-e)
->  {
->         VFIO_ASSERT_GT(size, 0, "Invalid size arg, zero\n");
-> -       /* Adjust the size to the allocator requirements */
-> -       size =3D max_t(u64, roundup_pow_of_two(size), getpagesize());
-> +       VFIO_ASSERT_LT(size, rounddown_pow_of_two(SIZE_MAX),
+> > +#include <linux/io.h>
+> > +#include <linux/build_bug.h>
+> > +#include <vdso/bits.h>
+> > +
+> > +#include "mlx5_ifc.h"
+> > +#include "mlx5_ifc_macros.h"
+> 
+> I'm getting a compiler warning here when building with clang which is
+> getting upgraded to error from -Werror.
 
-Oops, that should be VFIO_ASSERT_LE().
+I don't get that. My builds have -Wno-gnu-variable-sized-type-not-at-end
+which comes from here:
 
-> +                      "Invalid size arg, too large (%lu)\n", size);
-> +
-> +       size =3D roundup_pow_of_two(size);
->
->         for (;;) {
->                 struct iommu_iova_range *range;
-> diff --git a/tools/testing/selftests/vfio/lib/vfio_pci_driver.c b/tools/t=
-esting/selftests/vfio/lib/vfio_pci_driver.c
-> index 96a940ea59b5..b31abfe2c7ff 100644
-> --- a/tools/testing/selftests/vfio/lib/vfio_pci_driver.c
-> +++ b/tools/testing/selftests/vfio/lib/vfio_pci_driver.c
-> @@ -36,7 +36,8 @@ void vfio_pci_driver_probe(struct vfio_pci_device *devi=
-ce)
->                 device->driver.ops =3D ops;
->
->                 VFIO_ASSERT_NE(ops->region_size, 0);
-> -               device->driver.region.size =3D ops->region_size;
-> +               device->driver.region.size =3D
-> +                       round_up(ops->region_size, getpagesize());
->         }
->  }
+tools/testing/selftests/lib.mk:
+
+# gcc defaults to silence (off) for the following warnings, but clang defaults
+# to the opposite. The warnings are not useful for the kernel itself, which is
+# why they have remained disabled in gcc for the main kernel build. And it is
+# only due to including kernel data structures in the selftests, that we get the
+# warnings from clang. Therefore, disable the warnings for clang builds.
+CFLAGS += -Wno-address-of-packed-member
+CFLAGS += -Wno-gnu-variable-sized-type-not-at-end
+
+Why doesn't yours? Are you building it correctly?
+
+Jason
