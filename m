@@ -1,85 +1,81 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CCB1486621
-	for <patches@lists.linux.dev>; Thu, 13 Aug 2026 15:12:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E8D248C8AF
+	for <patches@lists.linux.dev>; Thu, 13 Aug 2026 15:40:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786633932; cv=none; b=hYMAe6wNdRkxtyqWkZVGJ2KBs9Ow+EvxAyWfode/1XasxvVJFr40kGLI71eUTzxD/wQTiqSKhbAAmU0TjkVobzanVOtcby6sILozZu/u9NUdCtXesCW8lDHp010MCmCK0ZBUVgMjaXqAKwnBzanAcDjN+1g4kUX9MEAhX4rsQ+w=
+	t=1786635641; cv=none; b=leCIhMboocaePcii7jm1dXOS9GKK8VkX/dhjhMFhWSlbOWS6DF6lDX3qzo6/klYBpwnOvp6Pgmm/AoxQ5EHrYvnDJbYEcIUsH0SGgPTffz7wXKfGoDy9nUuWugy7JgL1fxneNKAnvnoQfzId7scTLc6bDFKgPO6HQg3gFr0TEdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786633932; c=relaxed/simple;
-	bh=kh4zC29toRXjwtuA0yBHRcNgVKlbLvrLAXcDzghJHFc=;
+	s=arc-20240116; t=1786635641; c=relaxed/simple;
+	bh=WtqsLzrgSjg/xVRfW9WfYBYpQ3bP/9ChUav4NHg7yVg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hLhqqGaUeKykD+qi2q7WDZ+zUNxcnLZVbQSwnXwwosZodT43vKJRfokTrVpFaoKSXicMEWdylAIQdgZM5XbYUNKoEJwAQzUbWv+zjXdFcLPGbyWFKLI+WWAg8Iyn4wbnmvNEal3r2P1MUrwN7NfSDbGHQ+NQz+QKVQLYq/yoLzI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Qp8FXydi; arc=none smtp.client-ip=209.85.128.54
+	 Content-Type:Content-Disposition:In-Reply-To; b=WpOO6+fgw9DBH9id5wVaiDzKbEYMd7yk7LEuM608bqaioJyLXl1A7/PwPNleUwrY6vG4sr3Mv1B55CodBdq+/qRPTLreDrjW+pBxeL31tjWS2p4N/NQD9tDpFf+F+p3VXtxetuBC3C6lVn7W7kvPdcaiivulg2Z7kYHZlgnKNg0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=JWlDYb3h; arc=none smtp.client-ip=209.85.214.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Qp8FXydi"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-495509b08ebso48195e9.1
-        for <patches@lists.linux.dev>; Thu, 13 Aug 2026 08:12:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="JWlDYb3h"
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-2cc61541f8cso15399175ad.0
+        for <patches@lists.linux.dev>; Thu, 13 Aug 2026 08:40:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1786633928; x=1787238728; darn=lists.linux.dev;
+        d=google.com; s=20251104; t=1786635637; x=1787240437; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=jIiI9SltfPrXcp9GxH8c00S+yO98PCAJKDJI9QVodgA=;
-        b=Qp8FXydi6QhTptiIqN+KuKoZEUxSHOrwFVRyZ6hp5Zh7VutuGuQ4xBm+IZsv0bbkI3
-         oSdz4MdTysXV/jXAZTo3P8WjIKFquRLyBbA33kdPGSCx91BhiKvm0PVA2R9OQsY2jmMj
-         xYFJJKnGga751Eylar9+6ifvBjewHMmnoUSTygsb1pQg6H3/sFgCaqtUqYBgbfR11++O
-         TraKEOUzeL8WzI8DWiIxLBgL1p5xrl8JVJkTA0TXXBnvQQf6pOJ0Z4ApZyuEtokbwpXf
-         9fsN7OOF3dA1VhqPGClfMw8tGgb4c+zAqTnWvJff6Axr8h7IvktH0MZ2u14B0COwwmzb
-         burA==
+        bh=AcZvN96x3R8L9Ww6tvDjLJoxtHOJUhdmG67qkMsuoE8=;
+        b=JWlDYb3hVLxXjF5iN28cOZO2M6hHcUw5/1YozLU4eccvOvq239GqC8ID1kb7LRCMk6
+         UI260szi5SX9mrELVjmDG/fXWbtMa0q6XNqdu6v/Ap1qguOBypSAsYGarzqR8v9gHjEm
+         WiRnXMxhoS6hqseJ9Q3gvalknq9BngfMoXe7JT9CxlPiljgH+lFmy0yEEk+oMCLvNUBn
+         cjHDgbgUEfteT1U2X03ukJIGjp2vFCLkcg6cJglQ2dk0RJkRs0mhEFZJcEly1Ml5Cql8
+         Key4mSu/WZjQP6iosmPD8AXmXpeTObBhO8zzNJ0Z4+jgkUtkoEIjqXr8qEwc9QClzTmf
+         9TKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1786633928; x=1787238728;
+        d=1e100.net; s=20251104; t=1786635637; x=1787240437;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=jIiI9SltfPrXcp9GxH8c00S+yO98PCAJKDJI9QVodgA=;
-        b=aYc2cNpnlqJ2MBjObFH0GlPeDBh1oinUV6WtdMMjeyZd4qBGUEYRlBOsE+IQ99I9Zh
-         qvuCdvydhGOitzC1ZW0cfluYl8Drs/thpSWDv9b0x28S/gEU7ys4wIw86EqdLs4pSfF3
-         J1ppFp/XQ6Rmez5dXyUGjRUp8SEXfS5WAj7uSNv9X+NvjWfABRphmKXksZgMDq0uBX0T
-         48VWvjXvst114mRL4c2iyyUv/sC8J1Jj6oCHZyR7TafwhOZbuNaNlCzLzH4J1kmOuenV
-         Gr7r1RHFJ51XaN4P6aJOrEZ3DtoGdf4KADqfmpH+I85QvZ5GcuWhZFUnRyc+Ma5h4sVf
-         tayQ==
-X-Forwarded-Encrypted: i=1; AHgh+RryFNlgEOY+K8JDTa81ynETCId45H9IxQJqlpbxYEkIM02L38aJHsjPyxmsJoqynGzhIMir0Wy7@lists.linux.dev
-X-Gm-Message-State: AOJu0YztX0k8VRUIafUhUxsSBiGVzm/9+Q3bg0YrgseiPi41Mhq13iU9
-	zH7MiRRF1TGzbSOJcNUgf2eiCsXdI3NDRQNV64Kt+Ram9PcuXpXzWFVhMudQjyxDzA==
-X-Gm-Gg: AR+sD11f7hABLQsq66BfZVxQ9gZZltIziwIQDvcMmJoMlAPg05MPvTCrvoSqbwLkxdH
-	pJM9+DtD/DooDmhgopVhE442BaFQFLBB/vW36W9o+s+qhHOAxz8rDC4jOh67cE4XrSQlHeFEaoV
-	sufkyMVE+JXaJ3wTah8XxUkIfjJtdEAMWioEYz/T0q6K9KxtobnjyWvOfhSOyt3Chg7AZqqBlND
-	N6rkWJKNyg+TJmr33ZFcbCp/hJmhP5fvhZNl3E3gfpisRATMj3VLyZh4Vg1baoK3IUYHFfSFyw6
-	iaIvbMXkCVsT94tcEk4zw+sRA/x82a3nW44ZKxiQNZhRCoWB36Vvp0bAafi5Tri8zd0+vuwqITy
-	GU68DCV1XKHQLmVY3DBZJJuzmy02iqMem094XbsUPbujwQWXjzL0xY+SuEgOn113J1rX4LCdeXz
-	JvzjesXzWPJYXbzG0BCzaB061m4c/Mz2YKGvTCHEy05jT0Fw9Gf1UAxVsKlsk4UqBPcq/L+W1is
-	Vjtw3+R5ju9ebnaA+oljOFk7dM7MQ==
-X-Received: by 2002:a05:600c:6094:b0:499:83b9:4e4d with SMTP id 5b1f17b1804b1-49983b95116mr892995e9.0.1786633927802;
-        Thu, 13 Aug 2026 08:12:07 -0700 (PDT)
-Received: from google.com (250.192.189.35.bc.googleusercontent.com. [35.189.192.250])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4815f2cd7ecsm7938f8f.36.2026.08.13.08.12.06
+        bh=AcZvN96x3R8L9Ww6tvDjLJoxtHOJUhdmG67qkMsuoE8=;
+        b=HtxJ9uawq9LfA6a7llFJFVDf2ppQp0tdfeBrkGcxT1GjyxCuz9X8GXnBVJcTRx58Xx
+         aFOS3hLt/+P43t3gTJMxbUnDYlUqPKDiOxTr0agPLOiG0524+qkJTL//dIWZQdqbQIzT
+         sDAR4MM19n5NJyVgLhOCT+YZC0M1KIBFkeq8Yr4FPkCI7QQ7MaYdlGdLYx8mQaF6fOqQ
+         rqm1Wj/liHB5U7HsZOXY9+Mx4BdzAtsFXoCEiYBJOya3eSu49TJQp7tfEcMEtWd99JyA
+         bqsw3FcayX3fCxgqOMIyN0qEvWhdj9ww6hnhC+sFGGMF7q+3CvNvSOaX44fBhaymV/ad
+         r5EA==
+X-Forwarded-Encrypted: i=1; AHgh+RoC0LCx0N0waI+pq91QpjUuqh2R/bSk+RhE2m/ecFuKhbMToKEqfs9/4QYclfHkzBDf4CjjH5ou@lists.linux.dev
+X-Gm-Message-State: AOJu0YwXHLUzaAQYgppv3uzh/dMqmJvTnmO9x6HU0AvlkRmPK5Pdip0T
+	advDkjdLZrvHZEHMvrgzboj9nosUVYZy3zcwlq1FlQyN3L1oxasHqjBd2+lOS31WRQ==
+X-Gm-Gg: AR+sD11Im/tF9kz1iO4OlQL5InPi4DKEjLNjeiGJ6Hi4Zbe9yn5/sgzgLAVGaaKRR/R
+	7eaHZLvNNvLxEIDiYtzXNRpavHwNrO7QrLYaje/WEPe53gAjwwzqlcMfA+bkYv+Q3q9miGjEqB7
+	IKefmSvuvbZQyEqsckQO0t3RznCxvTyRN9+AAX1Z54Ms/Pk95tD5++FW9DOFocrC/2lY6/CCtQ/
+	9gW5fdUG8oTUeQoBsYgdcmYknT/aCtW5MMnvgRJsuGzaO4FBZUUeTOiO1gUhrWTARBXN19b3rgw
+	kdpUFDglpkeCHBWqc3AiKJTJvj8SwVN6+4trUoaihvRPGujMG64yJh9WxPbhRw/4cKUkdfOrtFs
+	L81s1AB7oEnv1VhrvAdOUa6pg8Bu+d2gq+3NIa84ZL0Q3o32Nd4Nvz676hf6tW4YAz7uMrQATjV
+	PTCB0l2w4W2Jf33EbywJoONQKWH8Ipz5u1Z09oW0EHmLiZs1Yvaa2mGgek9PBeauXpofQSYZxpS
+	ZWnK5e5fKBCWz0fCMGHfm55zNk8hRjp009gCiAB
+X-Received: by 2002:a17:902:f64e:b0:2cf:70d2:da7c with SMTP id d9443c01a7336-2d37f77fdfemr84524235ad.12.1786635636542;
+        Thu, 13 Aug 2026 08:40:36 -0700 (PDT)
+Received: from google.com (132.200.185.35.bc.googleusercontent.com. [35.185.200.132])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2d37c2000bbsm12399845ad.7.2026.08.13.08.40.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Aug 2026 08:12:06 -0700 (PDT)
-Date: Thu, 13 Aug 2026 15:12:03 +0000
-From: Mostafa Saleh <smostafa@google.com>
+        Thu, 13 Aug 2026 08:40:35 -0700 (PDT)
+Date: Thu, 13 Aug 2026 15:40:32 +0000
+From: David Matlack <dmatlack@google.com>
 To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: iommu@lists.linux.dev, "Joerg Roedel (AMD)" <joro@8bytes.org>,
-	Jean-Philippe Brucker <jpb@kernel.org>,
-	linux-arm-kernel@lists.infradead.org,
-	Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>,
-	David Matlack <dmatlack@google.com>,
-	Pasha Tatashin <pasha.tatashin@soleen.com>, patches@lists.linux.dev,
-	Pranjal Shrivastava <praan@google.com>,
-	Samiullah Khawaja <skhawaja@google.com>
-Subject: Re: [PATCH v2 3/8] iommu/arm-smmu-v3: Optimize range invalidation
- for latency
-Message-ID: <an3ew9xbnLe1dr5g@google.com>
-References: <0-v2-43074a57a53a+fb95-smmu_tlbi_jgg@nvidia.com>
- <3-v2-43074a57a53a+fb95-smmu_tlbi_jgg@nvidia.com>
- <akzm5BoV0rToJ7ij@google.com>
- <20260708001058.GA422027@nvidia.com>
- <an3MSKEj7VhT4WkP@google.com>
- <20260813141320.GF730363@nvidia.com>
+Cc: Alex Williamson <alex@shazbot.org>, kvm@vger.kernel.org,
+	Leon Romanovsky <leon@kernel.org>, linux-kselftest@vger.kernel.org,
+	linux-rdma@vger.kernel.org, Mark Bloch <mbloch@nvidia.com>,
+	netdev@vger.kernel.org, Saeed Mahameed <saeedm@nvidia.com>,
+	Shuah Khan <shuah@kernel.org>, Tariq Toukan <tariqt@nvidia.com>,
+	patches@lists.linux.dev
+Subject: Re: [PATCH v4 08/10] vfio: selftests: Add mlx5 driver - HW init and
+ command interface
+Message-ID: <an3lcKmhXbRnDpRL@google.com>
+References: <0-v4-021df3fb5a3f+98e-mlx5st_jgg@nvidia.com>
+ <8-v4-021df3fb5a3f+98e-mlx5st_jgg@nvidia.com>
+ <anzoiALsjiWrsZtl@google.com>
+ <20260812233207.GB730363@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -88,111 +84,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260813141320.GF730363@nvidia.com>
+In-Reply-To: <20260812233207.GB730363@nvidia.com>
 
-On Thu, Aug 13, 2026 at 11:13:20AM -0300, Jason Gunthorpe wrote:
-> 
-> > Sorry I lost track of this thread and I just saw v4.
+On 2026-08-12 08:32 PM, Jason Gunthorpe wrote:
+> On Wed, Aug 12, 2026 at 09:41:28PM +0000, David Matlack wrote:
+> > On 2026-08-12 11:59 AM, Jason Gunthorpe wrote:
+> > > @@ -0,0 +1,108 @@
+> > > +/* SPDX-License-Identifier: GPL-2.0 OR Linux-OpenIB */
+> > > +/*
+> > > + * mlx5 VFIO selftest driver - HW definitions
+> > > + *
+> > > + * Typed wrappers, constants, and helpers for programming mlx5 hardware
+> > > + * via the VFIO selftest framework.  Most HW constants and all MLX5_SET/GET
+> > > + * macros come from the kernel headers (mlx5_ifc.h, mlx5_ifc_macros.h).
+> > > + */
+> > > +#ifndef SELFTESTS_VFIO_MLX5_HW_H
+> > > +#define SELFTESTS_VFIO_MLX5_HW_H
+> > > +
+> > > +#include <linux/io.h>
+> > > +#include <linux/build_bug.h>
+> > > +#include <vdso/bits.h>
+> > > +
+> > > +#include "mlx5_ifc.h"
+> > > +#include "mlx5_ifc_macros.h"
 > > 
-> > In the mobile space, I haven't seen an SMMUv3 that does not support
-> > RIL.
+> > I'm getting a compiler warning here when building with clang which is
+> > getting upgraded to error from -Werror.
 > 
-> Oh? That's very surprising, AFAIK none of our embedded chips support it
-> yet.. Even the server chips are only just getting it. Are you sure?
-
-Yes, SMMUv3 is getting more and more common in moblie HW (opposed to
-custom SoC IOMMUs). Devices that I have seen in the market in the
-last couple of years have RIL. For example Pixel-10 which is currently
-getting upstreamed. Also, I have a mini desktop with QCOM X1 which
-have RIL.
-
-The only SMMUv3 I have seen without RIL, is an old morello board I
-have.
-
+> I don't get that. My builds have -Wno-gnu-variable-sized-type-not-at-end
+> which comes from here:
 > 
-> I gather it wasn't even available in ARM IP until recently ish?
+> tools/testing/selftests/lib.mk:
 > 
-> > However, I have seen workloads that are really sensitive to translation
-> > latency (display, camera...). And I'd be concerned about those
-> > regressing.
+> # gcc defaults to silence (off) for the following warnings, but clang defaults
+> # to the opposite. The warnings are not useful for the kernel itself, which is
+> # why they have remained disabled in gcc for the main kernel build. And it is
+> # only due to including kernel data structures in the selftests, that we get the
+> # warnings from clang. Therefore, disable the warnings for clang builds.
+> CFLAGS += -Wno-address-of-packed-member
+> CFLAGS += -Wno-gnu-variable-sized-type-not-at-end
 > 
-> Yes, those exist, but again, they are already facing these problems if
-> running without RIL.
+> Why doesn't yours? Are you building it correctly?
 
-Yes, but my point is that those typically support RIL and that change
-regresses them.
+Ah I see the problem. I was building with this command:
 
-> 
-> And, for the common case of putting something into a carve out region
-> it is not so likely even an expanded RIL will intersect with a
-> reserved IOVA that has a high alignment.
+  make CC=clang -C tools/testing/selftests/vfio
 
-Not necessarily, those devices can run with a small IOVA space to
-reduce the page table walk length making IOVAs quite close.
+But the correct way to build selftests with clang is to use:
 
-> 
-> At least the things we have built are calibrated to handle a TLB
-> reload occasionally. The isochronous TLB's are not even sized to be
-> never-miss for all cases because things like 4k media require such a
-> large amount of IOVA the area cost is too high.
-> 
-> While others can do something else you are reaching into a pretty
-> narrow condition to hit a problem:
->  - HW that must have a never-miss TLB to work
+  make LLVM=1 -C tools/testing/selftests/vfio
 
-I am not saying that, but we shouldn't over invalidate TLBs either
-when it is easy to avoid that.
-
->  - HW that doesn't have a carve out, or has a badly aligned carve out
-
-I do not think a carveout will help. But it's a very strong constraint
-to enforce carveout on all devices specially media which are quite
-complex and composite by nature.
-
->  - A SMMU that has RIL (non RIL is already worse)
-
-This regression only impacts RIL, otherwise it does not matter.
-
->  - A non-isochronos workload that regularly exceeds the RIL/single
->    expansion thresholds
->  - Unlucky IOVA allocation that places isochronous near other
->    workloads in the IOVA space.
-> 
-
-It is not just luck, it depends on the IOVA space and access patterns
-of the device.
-
-> > There is a clear trade-off here as you mentioned with TLBI latency,
-> > would it be make sense to make that behviour configurable from a
-> > module param?
-> 
-> I think it makes sense for a driver to indicate to the core code that
-> it needs isochronous and we can do more global things like change how
-> single works as well. Having an isochronous flag on the domain, for
-> example, would be a good overall direction.
-
-But according to what? It makes sense to optimize server chips,
-but that should not cause over-invalidation regressions on other
-hardware.
-
-> 
-> I'm inclined to leave this as is and let someone come with a specific
-> problematic HW, rather that try to badly guess without much
-> information if it might popssibly be a problem.
-> 
-
-It's not really a guess, I mentioned some examples above, that I
-have seen problems of translation latencies on them.
-
-And why not the other way around:
-- Which uses cases can't handle few RIL commands?
-- Why those drivers does not unmap memory with a granule/IOVA fitting
-  to RIL?
-- Why those systems does not use FQ domains in the first place?
-
-Thanks,
-Mostafa
-
-> Then we will know the HW and can mark the driver as I suggest above.
-> 
-> Jason
+LLVM=1 triggers the conditional logic to add
+-Wno-gnu-variable-sized-type-not-at-end to CFLAGS and the build works.
