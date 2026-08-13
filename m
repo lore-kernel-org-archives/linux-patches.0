@@ -1,146 +1,149 @@
-Received: from DM1PR04CU001.outbound.protection.outlook.com (mail-centralusazon11010001.outbound.protection.outlook.com [52.101.61.1])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D836C3B4E8B
-	for <patches@lists.linux.dev>; Wed, 12 Aug 2026 23:44:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.61.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D2B9473C65
+	for <patches@lists.linux.dev>; Thu, 13 Aug 2026 12:11:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=100.103.45.18
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786578294; cv=fail; b=YSxRboSnBoPlLc8/0+CKXQR0jYKnOAx1fg9fCl7fFvRzPWHsDinyDjWmIJxZO20zzRJED3f5N50Z/8X6eHCUHYCloyj8GZxt9UaFFA00e3ul2eJ5axwvMykMgWszTfddyOvlhCtmOxQYXjYNNcEZZgWipewSitxqy3yhEDHDbxw=
+	t=1786623079; cv=pass; b=unYoIE77tidTT9dA2m5ZykqfyqPf5fyQ7Dp6vJEAKHBGrtyswcn3o0LrARSwLm4otFqPtjVRYBz8WZ8VTDZIZf8dZkMpUxVspWj0hda7rEkwQ7wpVwRAWW7NMup9x//NvV0opz1m7B/NrxxuLi0FfSXxkDE+gTGBrUIYawoA980=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786578294; c=relaxed/simple;
-	bh=BJbYF9QXpwJ/8iFQZ0qeaUJeLK6UGA/GM8oPA5IGnfU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=lD/NczTm3Oo0pY6Cg8FFRgTjkyA2MAPafdo2MjOo9gbT9gLJHUmhkuYf5Y+/IdhEb+TXg3YE96quWPpY/ZjM11wq5gvZ7bBwPHASa1hc5HN7HvGUSAqQeEa+52qceuydId0XZCkqnuEe1357FgThsaM2wJCVZzO7TpC7LRmGwK8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=g7JCkBsr; arc=fail smtp.client-ip=52.101.61.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	s=arc-20240116; t=1786623079; c=relaxed/simple;
+	bh=/H+h37ktJXQFR3ayxqO5EhAjCsQanT1aeEs7IGCODHk=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=KpRJT7Q+XVmRwfJrrRhjROqweSGT9gmL0axnO9uoQMlksvKkI2rmBEJt2ZqEHJSJtolXYbsviW34hLkqUPsSdp0dpMnfzc/f7uYr0QPnZddYqyKY9kGXT87/8I16/prUIb1QTsJNrqu8Jc0LXqeO5rUUAannzqQYIK6r/YbwSvk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=thundersoft.com header.i=@thundersoft.com header.b=hmO2hLxo; arc=pass smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="g7JCkBsr"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=bTOSg6cPlRLK8lycY44M1Kort4XAc+xoFYqLPV5Wshd4++NyDE3bLquPhIEwgQn8su0x8Ee2Hay99z/UxEAQISceU8w+PMwpS0cA7JmO19wRKEZcubl0Ue8euzdAmIW2fMaHKOv58THQVah35Ub8/eJhhmzL+IcrDqG+JiFgftZClI8n/DL56EGUUy86YgQeCwuQE3hgM4lGZwy3GDadO9RXageCRz49tdO1Io0gGhxDMeht7xcgxdCJ9DA1ZJ5LRdEPye+ONh7tSWzSSK0prBeHr4faJ4Y3DI0gtSrwtA0UF9/JyAOz9o8gMW41wQDfP5Fbiuyr7GkzlvJWukgA4A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=sgNibX278PDZSe1ly2Wor/k94zn9eTn775n6iJfapYA=;
- b=SEjkbfrjSEzUuA5Tj6mNYnqulbVb3rv9sn/+sB1FuOMBMj8PYglaLyMxN9OjrJP1p3dRyKUVoY4K1VnCFZeLf6tjwgSJvWwfOgzTP1v5lai+CM3/6PmRG/wczAxYPCThP+eOdxRcGNh54gN6COoMU6Jsjp8uZCK+RL1CFdGE1dcn6uWscDm2XTBM4u91riMJ4Yhx2n/XC7kRF/0GgVk20K2SbDJrOdmfRJTIQSZn+cfCyE0J5RUWv3WUrZuWMZ3hIDy7PHeu2MLsd+G932qlexPT+wlp6AIlF0eU2hVP443m8UjFqTZhn/5SafvYFYQTMG8fcCmCZz+LzKpRdOXcjA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=sgNibX278PDZSe1ly2Wor/k94zn9eTn775n6iJfapYA=;
- b=g7JCkBsra8uTZFRR+EAxe0VyEOaSfb2VmR7vjUse0XVt6r//5lOd1eAk7ZWFgy9qzVB8upVDQrFR5CtaBrl+6D22ReOZISUS+C7r+x+wkSiZ0DpsasqMEZjGCDZn9mLJ5CmVSIdew1AGxjIUx0DdZmqFXoTeDuNCYHGvGJrFIaF9e3wzNqSc8Lu6l7gMVamCZRLimUAthT3xHKusUoYQun72MVEJgu2R8wbVSwxtqUe99I6AxOeoDDNJQAYJecNELN6RWJ1p9uDmoZ8XDjMSWavSbeTFEcaCLrLGdJQ9QfBIAq3v+35JA8WQS6ySFIzMqlRoniXEntISo9/sgz9Osg==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
- by DS0PR12MB6390.namprd12.prod.outlook.com (2603:10b6:8:ce::7) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.292.25; Wed, 12 Aug 2026 23:44:43 +0000
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528%4]) with mapi id 15.21.0315.011; Wed, 12 Aug 2026
- 23:44:43 +0000
-Date: Wed, 12 Aug 2026 20:44:41 -0300
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: David Matlack <dmatlack@google.com>
-Cc: Alex Williamson <alex@shazbot.org>, kvm@vger.kernel.org,
-	Leon Romanovsky <leon@kernel.org>, linux-kselftest@vger.kernel.org,
-	linux-rdma@vger.kernel.org, Mark Bloch <mbloch@nvidia.com>,
-	netdev@vger.kernel.org, Saeed Mahameed <saeedm@nvidia.com>,
-	Shuah Khan <shuah@kernel.org>, Tariq Toukan <tariqt@nvidia.com>,
-	patches@lists.linux.dev
-Subject: Re: [PATCH v4 06/10] vfio: selftests: Allow drivers to specify
- required region size
-Message-ID: <20260812234441.GC730363@nvidia.com>
-References: <0-v4-021df3fb5a3f+98e-mlx5st_jgg@nvidia.com>
- <6-v4-021df3fb5a3f+98e-mlx5st_jgg@nvidia.com>
- <anzvkibgzTae9eV9@google.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <anzvkibgzTae9eV9@google.com>
-X-ClientProxiedBy: YT4P288CA0030.CANP288.PROD.OUTLOOK.COM
- (2603:10b6:b01:d3::12) To LV8PR12MB9620.namprd12.prod.outlook.com
- (2603:10b6:408:2a1::19)
+	dkim=pass (1024-bit key) header.d=thundersoft.com header.i=@thundersoft.com header.b="hmO2hLxo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E02F1F000E9
+	for <patches@lists.linux.dev>; Thu, 13 Aug 2026 12:11:17 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+	dkim=pass (1024-bit key, unprotected) header.d=thundersoft.com header.i=@thundersoft.com header.a=rsa-sha256 header.s=default header.b=hmO2hLxo
+Resent-From: Mark Brown <broonie@kernel.org>
+Resent-Date: Thu, 13 Aug 2026 13:11:15 +0100
+Resent-Message-ID: <an20Y6qL2Tsthwnu@sirena.org.uk>
+Resent-To: patches@lists.linux.dev
+Received: from tor.source.kernel.org (tor.source.kernel.org [172.105.4.254])
+	by 172-238-120-221.ip.linodeusercontent.com (Postfix) with ESMTPS id 618A835853
+	for <broonie@sirena.co.uk>; Thu, 13 Aug 2026 11:54:02 +0000 (UTC)
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	by tor.source.kernel.org (Postfix) with ESMTP id 97E01600AD
+	for <broonie@sirena.co.uk>; Thu, 13 Aug 2026 11:54:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix)
+	id 637211F00A3D; Thu, 13 Aug 2026 11:54:01 +0000 (UTC)
+Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=8.221.36.76
+ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
+	t=1786622041;
+	b=NjE445n06S+Oo7zV6df/WZyzTHkh0zNootWpnEkdcSsCE/XsYMKSMO5ft1/6gbbYoPFG
+	 4dAs/Po/USBCxCtG1TONoePASgzFEed7iAlwZAubm0Ouy+34+PAKfxP23Sc2bdahDoova
+	 fYPy1k9rgOqCYg22Li3pKaCkjwnkWzWFEz+h/gQ1V4fSVY42bJE6dxAERZc1T0Yp/Wijk
+	 8AA3iT6JHND8P10bl2/0jLg8TW95mS5yUJDmdUXp2RZezo4h74yGRHbeRwo0w6NOXQx1a
+	 oY+iPYAsII9dOhuLwSVou4GOYSrdR5+wOwumGGCYcVjZVlzZa/odybCcp72tgL5S1qw==
+ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
+	c=relaxed/relaxed; t=1786622041;
+	h=DMARC-Filter:Received:From:Date:Subject:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding:Message-Id:X-B4-Tracking:X-Change-ID:To:Cc:
+	 X-Mailer:X-Developer-Signature:X-Developer-Key:X-HM-Tid:X-HM-MType:
+	 X-HM-Spam-Status:DKIM-Signature;
+	bh=/v4oCG7KsiGimIbQ0haXjVkJtc7ra71e9ZPL8hOWsr8=;
+	b=1gjYo+WN6eymoZK6ERwISnrMJb0DbX9lmtP4nxgf6jiU4MMASCGNTJ6XTIPfgi1vJH6C
+	 C4Rk7CUwTvIJBbyEJGuvl3iCxgWd742lB/4euKyhY+bfvozEbHE9Zav3TaKpfVzvq4kHF
+	 m8R76/iFbI/udWLtAxa6UjQFJ49Jx0dY7zvQ4LU7APcVLMx98Yz5piMzh0lH3W1rQ9o9s
+	 sWZUn2iM3yqpJGgW+e/nadQV0/i5L437DvqViMoBoPtpb9sd4YRxmmMFp0enFuBdRgg1c
+	 AT66q49ZyjDHXUAYgETIBYtla3Mm6gtrAy0n0QRXsLMJwRY+AI7UDwrVPSQrpfCCxWA==
+ARC-Authentication-Results: i=1; smtp.kernel.org; dkim=pass header.d=thundersoft.com header.i=@thundersoft.com header.a=rsa-sha256 header.s=default header.b=hmO2hLxo;
+	dmarc=pass header.from=thundersoft.com;
+	spf=pass smtp.mailfrom=thundersoft.com;
+	arc=none smtp.remote-ip=8.221.36.76
+Received: by smtp.kernel.org (Postfix) with ESMTPS id F2AE11F000E9;
+	Thu, 13 Aug 2026 11:53:55 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org F2AE11F000E9
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=thundersoft.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=thundersoft.com
+Received: from [127.0.1.1] (unknown [36.129.139.90])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 49e09c484;
+	Thu, 13 Aug 2026 19:53:43 +0800 (GMT+08:00)
+From: Hongyang Zhao <hongyang.zhao@thundersoft.com>
+Date: Thu, 13 Aug 2026 19:53:34 +0800
+Subject: [PATCH] ASoC: dt-bindings: es8316: Fix supply property constraints
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|DS0PR12MB6390:EE_
-X-MS-Office365-Filtering-Correlation-Id: 552983d3-6340-4d58-15df-08def8cbaefc
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|23010399003|366016|376014|56012099006|4143699003|10067099003|11063799006|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info:
-	1w2if82qLn8d9pPCfHGx/foUZDouGzOXwDw9+YOfwFMC8UJvMQamjUfBqnRtM2XORr/G1UPWlB7YZftF641iytRid7nZMUmscnNjIjJOiXf13q/IhhDUH+htb/vdNS3igiOwTBRVhVJpvsgbOKmkxcpDhmxrjTN6docMBpKNGnkD6t9kWqqb7AvJ/KZFGqgv8ACHBodDp4QcQKCMxEwwfsv9vAa9vkxLdK3EzSzl3wpuF5Tahm2xtsR/MKeFFm+lqsISEtCFsXl5+vvNsrO2SW9dctiiJWfyCMwc4F0sgnjIk9s11JL+ZRjcHFwYEYCdKVV+wjqh4r59ppucqhlGg1odGq8eZNm/V4aL4a8mBIeZBl++guL7Kr1AcIZ6GmX68N9pmmHhRE6mRDYIt2of+SVdBEBbVulOX5njmAFqiLNBHv9SHzYTEjlToq7UwzrZvveJ2P6mj2Aw8jIKHTet9mXLUUQlI617QkJrxuihAaXuZt7PfAXOBo26MKYqaxDhhdaC0KxK5gp1+60fCtr8OKLOn4QCBtPC8i4ZjFVCw995+z+9vwsRQzWhjMy890VFNizYgHdiZIPjchHlxfAqFRP0v0xe2HwbAuvCA6eDMHftV7n/U0QmN1t3sFz6hzqOFBOf5WWcSFvL9c/FWJDBQA74ZzxT2poGGJLIsluYL5A=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(23010399003)(366016)(376014)(56012099006)(4143699003)(10067099003)(11063799006)(22082099003)(18002099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?0+LeRsnoB7Xb4ife6VeJBQXcFCMqkyz9rQFsmkVqgVcCHOJi9Z9/qoPdvxm7?=
- =?us-ascii?Q?40Fr58HkslTUF3Fl1ZnvZ6TENaeO0FnKMx5WL5NLSTxBgUnkZnLTeR0l8HMX?=
- =?us-ascii?Q?ghqXATw0HSzBpgsl5eCOOMVoxOenIG4RX4UzoZ/OH7qE/ryMVb2jzMoJhBAj?=
- =?us-ascii?Q?SUIMrwNoAD6ChX8xYeQtK/LOQ+c0Sa42ynsmqSOKYlMiK8YLKknBDH+Z9zJI?=
- =?us-ascii?Q?gy/M/6WWEkeI3NzFtAPx2Cc/mI68WepIXhrk0voEfOShyvBySfjiR8cXwhJU?=
- =?us-ascii?Q?iEvNcAn4SivkadK52cwPHoQd4bOGgws+PPWg6MtmasrvHvA7Zm8OEpKxOLvy?=
- =?us-ascii?Q?+0GvGXSjaYrpbJw54TYkR9avZ6FH3kv+2z5d2gmUyaZJG78kfqjSt6ZX7vsF?=
- =?us-ascii?Q?5tE8FwoToHKavYpykKDsOXz3E0FqAFWE8y67Fwhj2kR8Vbuq8EriCPtOhBtS?=
- =?us-ascii?Q?troKDfwOXkGkhjKWs//TMWDUoAG0SHEN+SNvIWqOMVllt6srFJ4ruY1vUBGC?=
- =?us-ascii?Q?dSHSSo945p/JJjTZFcZU3bnj9L0iH6Mi2huX6+rVAvh5sfeGimtBb/w8Rexr?=
- =?us-ascii?Q?wnDYNoJyGoKh1cnzG27cjJFQwj1aNx/DSfOPk8QlZ/l0vH/UdGwick5mx+1j?=
- =?us-ascii?Q?XKd+JNDdMzAp6wb4QugwVof12Hfs+Ckt9ipJ160Zjx5/Y1NMCcD7ouGHipA+?=
- =?us-ascii?Q?Yk9WAsS5sEidSusVfIgXUgh9R7Mchfa7HozIrdk6AZQWRyhHxrKSiikS02ci?=
- =?us-ascii?Q?U7kXpSwVZQfMNFOyVY4Cb4yNFwTNvxmv+aP7Om+Zrih9B18A8IF95HwMMYF1?=
- =?us-ascii?Q?0aI/v9+qZL9Ua2vh53Sry43faVvjae6dAD3QFrwbmTiLrQyDOZk0zkV2Y0WD?=
- =?us-ascii?Q?NOlMzEaCA7WgcNG32BxQYgebrt8mIGX1z5kb9tJ/t/LfpwfOGGHRTZl7ksSl?=
- =?us-ascii?Q?XAYm+wpShPbWpjLK9W8WG8Obp+dFKW/t71dKMSOAB2xKjeOQm9iLeYyZ5OZV?=
- =?us-ascii?Q?OYlmohjiNpj0+4Ru12zvOjtsaJjGkw+VG2fkjBsILtPAcyAyZ7K1Zn8n4fQ7?=
- =?us-ascii?Q?5rtrBsAn9784O2p+Iih3rcokE3rtSG6aDiPc26DgfxXcnCzwY1kvRWTZopVf?=
- =?us-ascii?Q?Gz/xVs0c4RnWCLnJFKO3eCN5T5iyS+7kRuFu+vit+kZwQLHJOgBwtd6p5wJP?=
- =?us-ascii?Q?JByaH8iPnSn5SEnzQtqP+E9yPXOhiiNh+R73FrFY6IlWfz9MD1hI8JNl5TQo?=
- =?us-ascii?Q?bwQ0yVBm7BDdkEd/A/oHJzN0eecgF82Nq0Wwy/yEr17smxseEEMT5arMCSH8?=
- =?us-ascii?Q?F0sll7v9MJL9IKVtNbi1PXzIKX1cXDzZqyjUvUedJKdRJfkiiE3f1REDLY1k?=
- =?us-ascii?Q?KwSL74H5hneH08pZEZyiSOzk8HOQ/Kkq04dnBg4Oud1kCaZQUGaKrYh/jSxq?=
- =?us-ascii?Q?24SBg3VckE2ju8EkGlIaH2hi4eBX7Rz4Ekrf+0iQL93kXBaZujYziN5tV8IP?=
- =?us-ascii?Q?OuUHSV1SwLKxTsSXg1IGdbXIvlYIXPCQmHeKLVxhjByp/YpE2VdgiyK5hlBz?=
- =?us-ascii?Q?MZAzYk00wjxPC9vgxkwVoToTmYlrxDHASO5WUHjIiQPqmzijl1Upxtv/r9Rj?=
- =?us-ascii?Q?C3vLUVxDCwuLv1Ut6PMb8ZoSunAh1OOS5OeY+CL3whwfUInHcUNXmbysgOFY?=
- =?us-ascii?Q?f8DHJ0KRjsEMQtUrGmEbG9vXnmmzZ1Vg7zpwzlOnbEwX5gccXCVg9rWEh8Op?=
- =?us-ascii?Q?kYmHv7bb+w=3D=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 552983d3-6340-4d58-15df-08def8cbaefc
-X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Aug 2026 23:44:43.2060
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: xU6ZG6l0SaZdwD+YTFZaVtFlMnYvElVpfkfXP555DCEy0kurOvL3oQoP/qL262Jb
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB6390
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260813-b4-es8316-binding-conditional-fix-v1-1-6cd56aa1370c@thundersoft.com>
+X-B4-Tracking: v=1; b=H4sIAD2wfWoC/x2NwQqEMAxEf0VyNtDUXVF/RTzYNnUDUqUVWSj++
+ 4Y9DW/gzVQonIULTE2FzLcUOZICtQ34z5o2RgnKYI3tzUAduhdyGTrq0UkKkjb0h+al3rpjlC8
+ a5/xIb4ocLejOmVnr/8e8PM8PqUEbzXMAAAA=
+X-Change-ID: 20260813-b4-es8316-binding-conditional-fix-0bbc9151fef2
+To: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Daniel Drake <drake@endlessm.com>, 
+ Katsuhiro Suzuki <katsuhiro@katsuster.net>, 
+ Matteo Martelli <matteomartelli3@gmail.com>, 
+ Binbin Zhou <zhoubinbin@loongson.cn>
+Cc: linux-sound@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Roger Shimizu <rosh@debian.org>, 
+ Hongyang Zhao <hongyang.zhao@thundersoft.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1786622023; l=1569;
+ i=hongyang.zhao@thundersoft.com; s=20260127; h=from:subject:message-id;
+ bh=/H+h37ktJXQFR3ayxqO5EhAjCsQanT1aeEs7IGCODHk=;
+ b=imYgtZBUslINZE+SejnGIsjy2NA8dFogwaaP9RefhU4EgAhiiiFpdoyCdXixcUO7l434lMjRw
+ S5W+f4eCS+fBMieLkT7PBZCX6ltQhza8xCtr91DKiDDP81I9zZ8OY9m
+X-Developer-Key: i=hongyang.zhao@thundersoft.com; a=ed25519;
+ pk=D9yL5W9Zj0lPBDAq9gzY++1849VlXuTWAkROzZ88J/4=
+X-HM-Tid: 0a9ffaf8960009d5kunmf4a1915b47dc88
+X-HM-MType: 1
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFITzdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVlDSR1MVh5MTB8ZQkxDSUkeH1YVFA
+	kWGhdVEwETFhoSFyQUDg9ZV1kYEgtZQVlITVVKSUJVSkhCVUJLWVdZFhoPEhUdFFlBWU9LSFVKS0
+	lPT09IVUpLS1VKQktLWQY+
+DKIM-Signature: a=rsa-sha256;
+	b=hmO2hLxovFAuvK0oW2lCckNLuPFYH3Ry06aqW0xuLnD1UP090s0Wx6uhtf0Sntud+PKxw4B0twe6OyvRN5XpM5tcCl1h6JDHOkF9FPvdkeUllR6MOvHMfMnE2TsbZ2LVFKaxgnQ8KUSj+oFsx+tIhbqvas7e3hVHrveKaq1yS6M=; c=relaxed/relaxed; s=default; d=thundersoft.com; v=1;
+	bh=/v4oCG7KsiGimIbQ0haXjVkJtc7ra71e9ZPL8hOWsr8=;
+	h=date:mime-version:subject:message-id:from;
 
-On Wed, Aug 12, 2026 at 10:11:30PM +0000, David Matlack wrote:
-> > @@ -32,6 +32,9 @@ void vfio_pci_driver_probe(struct vfio_pci_device *device)
-> >  			continue;
-> >  
-> >  		device->driver.ops = ops;
-> > +
-> > +		VFIO_ASSERT_NE(ops->region_size, 0);
-> > +		device->driver.region.size = ops->region_size;
-> 
-> I'm seeing failures with the IGB driver with this series. I think it's
-> coming from here. The region size needs to be page-aligned so that the
-> IOMMU map/unmap calls can work?
-> 
-> The size of struct igb is 0x20080 bytes which is not page-aligned. The
-> size of struct mlx5st_device is 0x200D000, which is page-aligned, so
-> that's probably why your Claude did not notice.
+The DT meta-schema requires a `then` clause when an `if` condition has
+an `else` clause. Invert the compatible check and move the supply
+property restrictions to `then` so they remain allowed only for ES8316.
 
-Makes sense, I didn't use claude for this, but it explains why my
-tests passed. I've adjusted it as you showed
+Fixes: e9966d450b46 ("ASoC: dt-bindings: es8316: Add regulator supplies")
+Reported-by: Rob Herring <robh@kernel.org>
+Closes: https://lore.kernel.org/r/20260812194234.GA693895-robh@kernel.org
+Signed-off-by: Hongyang Zhao <hongyang.zhao@thundersoft.com>
+---
+Fix the conditional schema added by commit e9966d450b46. Invert the
+compatible check and move the supply restrictions under `then`.
+---
+ Documentation/devicetree/bindings/sound/everest,es8316.yaml | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-Jason
+diff --git a/Documentation/devicetree/bindings/sound/everest,es8316.yaml b/Documentation/devicetree/bindings/sound/everest,es8316.yaml
+index 276c73bb4790..f4ff23120c5b 100644
+--- a/Documentation/devicetree/bindings/sound/everest,es8316.yaml
++++ b/Documentation/devicetree/bindings/sound/everest,es8316.yaml
+@@ -33,9 +33,10 @@ allOf:
+   - if:
+       properties:
+         compatible:
+-          contains:
+-            const: everest,es8316
+-    else:
++          not:
++            contains:
++              const: everest,es8316
++    then:
+       properties:
+         avdd-supply: false
+         cpvdd-supply: false
+
+---
+base-commit: 79a883d53960fb2eaf02f72a37182078b4fc938e
+change-id: 20260813-b4-es8316-binding-conditional-fix-0bbc9151fef2
+
+Best regards,
+-- 
+Hongyang Zhao <hongyang.zhao@thundersoft.com>
+
