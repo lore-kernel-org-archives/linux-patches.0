@@ -1,194 +1,193 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 252EE38239F;
-	Thu, 13 Aug 2026 17:26:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786641967; cv=none; b=ToJkAYD/MdBy6AcNWEI5UZGs6ZUFlXYBAowMf96jwiDWOp0p+LU5yaEsSr42vVRbby6cEHWMOtDaGAI/lmsOpwFfoaxhmkaVyELnfEoxr91KTzgtDP3y9sQA+YRuWBNLAJg7U0jkqHIR1QEdxJidXzjIqToggHNsxHCiTqM+XJw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786641967; c=relaxed/simple;
-	bh=0qNjRcWOrWIUhU03ffUrB4IIh2/akNK5dYV6ljcH4Do=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=s24zJKgsnrE56WwDVsLGRncuCbhzGs3/jpJfK8YUWHB1TgS27dED0Ee7igs6KvuKIh8QyScAwOX2xkYte0z7n4dnVMOSPTf0DcSTh1kNdLSbaGfYf/8H4INJ+QTUah0pp1aF8MUAuMF/CWgaAth3gNyaXdFlKsI2ELjMX6ZpUys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=tppK8Bum; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from SA9PR02CU001.outbound.protection.outlook.com (mail-southcentralusazon11013049.outbound.protection.outlook.com [40.93.196.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BA5836EA80;
+	Thu, 13 Aug 2026 18:01:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.196.49
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786644073; cv=fail; b=VkVeZQGruonwPSswkyDLk/+SpYuVk78jAT1T1pq1f8WPZa2P4h6eSVSpl6kUvd/v48pVOlNilbDdV0bNG/EJFGQaBr7nD/v2EprcR1bG9Tk95LYuCe/XNMZmoDjHbJ65Ff6Lc70jUM+T2Lkv3+mS4kc4xVpWIA7LkRVR5+vxnY8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786644073; c=relaxed/simple;
+	bh=HqIDfCWf7slyDNWcU8hN56AosDq5qurOw2W05VuFqHI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=sTaAKalE13DpFBCj/COnRhDX8KLBnASf1texYPCnXC1kfY8Wd2VoTrYfiwhki7vmqrZbtx2jggLB1f3qhmOA4uwleQhbgcNB6dovMamH9EXzCkARFubvwMDMb7c1+eD57WKuHlDt3m5MfD6M11OMdajgbvs0Wd6qJt1MzwkuCDE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=qXB/2HZG; arc=fail smtp.client-ip=40.93.196.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="tppK8Bum"
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id EEB6B1596;
-	Thu, 13 Aug 2026 10:25:58 -0700 (PDT)
-Received: from [10.2.212.23] (e121345-lin.cambridge.arm.com [10.2.212.23])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 03D7F3F632;
-	Thu, 13 Aug 2026 10:26:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1786641962; bh=0qNjRcWOrWIUhU03ffUrB4IIh2/akNK5dYV6ljcH4Do=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=tppK8BumBPAbrAfRQmCD3DCnY1uqqULHCNqKQeWBbH8qhRpmhLdqwzu5s+lWT8N/3
-	 ieLFKhQNJpl4hvpIV4Szo/WxIXLEwgjqh3ev/ObpOBF1O4am5HbfRJx/KURkrzwPK0
-	 wArlBaOws2E/82N8w7tnISG2yYTUQQgd6k3IFVSw=
-Message-ID: <1791d7da-ecd9-4475-8f27-c8857477b442@arm.com>
-Date: Thu, 13 Aug 2026 18:25:59 +0100
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="qXB/2HZG"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=WeTDRdoWLztqDKA9Aaro56VTYkJZl6Ee3HN3LouRwc7vVXN731hJP3bay17KrnqFPPBkE8WJ4z0tD17cqHbMVOOgX/siNQGRY012kGlyPyXQBkMzjT3xxy0MKxOmou7C01akKiI49mehizdusoiQE0yaxFvmnOl6khZQOavjm8Ty7ZEQA8WYxTXfshZNqeQDKsBalT+hGX3PgMWnWR61UY8StE86FYLLkhB+7In4lf39hHsCp107uASeRxYfPT1cZD7qonZ0wsAwv5z0re3fgBZxf1dKGzHBdoW0Hmlqq//f8pVgv4o2Hll9JoYmMGR2sHaA0oDVRR7NQ5TowWaY0A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=4NHk5YlAmFT35MU5zx5bO5nv8YHpI89eMcfOEslHoGk=;
+ b=leBwkV+1Y4xsttNv7P74BdDp7Wrbj7phek+tIIju6p99HpvgEqTIY1L5GX+6AqQqvJkzV9VctsDJHzuC3V2SDrIl4Axy4t+J+3rzTfV6teLKi80KkLdUVzUI1prI1E8ZERhH/UDOuutBWPsjXpvZBby5ehLPutV3HtZkhqoyW2Mzjo3sFHWEyzFj/b4TECXCqnJd0zWbHqax0tGd8T0E6e4493VQOB7le4dofJ/7xtCjknsx0d9t+wm4DQP8vU4qaPnjoeOVE7n31GldrDaZjzUqRi/H+tcJoiLS9JtYMnFa+fb4sfQy2FHuKbXpaQxrHLYjq09yLcS3SQjAAP/rMg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=4NHk5YlAmFT35MU5zx5bO5nv8YHpI89eMcfOEslHoGk=;
+ b=qXB/2HZGQHdYExwfCVxQnwp6Z835/rcCb0IfIwf4Y+ZeNs+KmoN9UORU+s8j0idFZr0iwnnWx+NdmrsG8fQhVkGr1KzsTk5mGjJDwFZ6ajBnhZQWD7uKBT9OBexO8ZmJUr7fgFctgThaBYbn8fJXt8c0++BlaFaCxdyARIOBnp+vMBxhzduvTN0YVityzzxBs/MTVZXyi0uzYumEXZSLU9lZl1fukp0j5VZ3f0ZML+lg5Dm9A3l27QyFIoUWcuwOJzzuBGpGgPR3EUC/rvxHSczkxuAwDp4aRyygo9Lv6A4ZUqZJSmZ4Cuw8Vq9q+jj/2Jbimqhp3mWzTVLj5PNVjQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
+ by BY5PR12MB4033.namprd12.prod.outlook.com (2603:10b6:a03:213::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.15; Thu, 13 Aug
+ 2026 18:01:04 +0000
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528%4]) with mapi id 15.21.0315.014; Thu, 13 Aug 2026
+ 18:01:03 +0000
+Date: Thu, 13 Aug 2026 15:01:02 -0300
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Robin Murphy <robin.murphy@arm.com>
+Cc: Mostafa Saleh <smostafa@google.com>, iommu@lists.linux.dev,
+	"Joerg Roedel (AMD)" <joro@8bytes.org>,
+	Jean-Philippe Brucker <jpb@kernel.org>,
+	linux-arm-kernel@lists.infradead.org, Will Deacon <will@kernel.org>,
+	David Matlack <dmatlack@google.com>,
+	Pasha Tatashin <pasha.tatashin@soleen.com>, patches@lists.linux.dev,
+	Pranjal Shrivastava <praan@google.com>,
+	Samiullah Khawaja <skhawaja@google.com>
+Subject: Re: [PATCH v2 3/8] iommu/arm-smmu-v3: Optimize range invalidation
+ for latency
+Message-ID: <20260813180102.GH730363@nvidia.com>
+References: <0-v2-43074a57a53a+fb95-smmu_tlbi_jgg@nvidia.com>
+ <3-v2-43074a57a53a+fb95-smmu_tlbi_jgg@nvidia.com>
+ <akzm5BoV0rToJ7ij@google.com>
+ <20260708001058.GA422027@nvidia.com>
+ <an3MSKEj7VhT4WkP@google.com>
+ <20260813141320.GF730363@nvidia.com>
+ <an3ew9xbnLe1dr5g@google.com>
+ <1791d7da-ecd9-4475-8f27-c8857477b442@arm.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1791d7da-ecd9-4475-8f27-c8857477b442@arm.com>
+X-ClientProxiedBy: MN0PR03CA0008.namprd03.prod.outlook.com
+ (2603:10b6:208:52f::15) To LV8PR12MB9620.namprd12.prod.outlook.com
+ (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/8] iommu/arm-smmu-v3: Optimize range invalidation for
- latency
-To: Mostafa Saleh <smostafa@google.com>, Jason Gunthorpe <jgg@nvidia.com>
-Cc: iommu@lists.linux.dev, "Joerg Roedel (AMD)" <joro@8bytes.org>,
- Jean-Philippe Brucker <jpb@kernel.org>,
- linux-arm-kernel@lists.infradead.org, Will Deacon <will@kernel.org>,
- David Matlack <dmatlack@google.com>,
- Pasha Tatashin <pasha.tatashin@soleen.com>, patches@lists.linux.dev,
- Pranjal Shrivastava <praan@google.com>,
- Samiullah Khawaja <skhawaja@google.com>
-References: <0-v2-43074a57a53a+fb95-smmu_tlbi_jgg@nvidia.com>
- <3-v2-43074a57a53a+fb95-smmu_tlbi_jgg@nvidia.com>
- <akzm5BoV0rToJ7ij@google.com> <20260708001058.GA422027@nvidia.com>
- <an3MSKEj7VhT4WkP@google.com> <20260813141320.GF730363@nvidia.com>
- <an3ew9xbnLe1dr5g@google.com>
-From: Robin Murphy <robin.murphy@arm.com>
-Content-Language: en-GB
-In-Reply-To: <an3ew9xbnLe1dr5g@google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|BY5PR12MB4033:EE_
+X-MS-Office365-Filtering-Correlation-Id: ee27babd-247e-4303-500f-08def964d734
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|7416014|366016|1800799024|23010399003|18002099003|22082099003|11063799006|56012099006|3023799007|6133799003|4143699003|10067099003;
+X-Microsoft-Antispam-Message-Info:
+	eta9WtlV+GH3K30gzbQShObAyLOPnAE3qSVw32xRi0gTVRG4Vdxb+QaYYOqQKZECllzrhm788rKn5MmaS7GR9ytr261+mKBUpOmaxwqv//h5QUdhP1MbQEXpROT9Q4Sh+UOOmyvuIGKDQwtHlGC/eECc0EcOTSg8+nxlbueehlLsKRt1fX/bDK3YE6H50I3COIeQocL1gfEPzidVD0SphrdOX849XHasiQfVgOBJa4ojXtsjKO0q+sinVoFb0RDyrwAAS2LsPf+FNLHY3XnkH9mNHjotwDxay5lvkwM8QgbInuFQRmCDtVyXmPe3ZXUDL939CjYC8fXZEboL2OZa3t2MIpsemtrCij+W7eJ19VFK64zBn6LDqjh7pVyvFurdWHopUhHW4cgBM8tFP0qd6oqhYQ5C5KGHGc5/h3IteQ7bL2oQmeRjfEhrabiO82EdcT6mZ2tahTON39ad82Yu/41UfSNmeKwLbxIdaeMDX+dS/Goz4WjU99lvizWx4NaZDr9fPyvYBL2d+S0iulsx3IZY1HuIl5nPdnRPJQh/8ar6UvGRK+iF3p6soWP13b7KQzzx+7XFnTrgxfArsN8ZfCsf/N+r/lcBBtqAy3M9R7xhVKW0Usc/j2mAm2qjgUjjXSVKDSifqVhOXbuFslAFWsScDBB16E3cmLcadHSa6H0=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(366016)(1800799024)(23010399003)(18002099003)(22082099003)(11063799006)(56012099006)(3023799007)(6133799003)(4143699003)(10067099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?peNtk6Z/tP7v9T7JysaL4lG3j0jAa5y3rN+DLkTUPUVCydcmXsOKzncZLfvz?=
+ =?us-ascii?Q?1l1JEQvXVzwhgVp/3swJrx2A6jAr3Ijkdd2H/vhErbGR+ypLuPjbFqvKeFta?=
+ =?us-ascii?Q?z9A8E8YHpQnpzEQ/vxTn8tgxX1KsBoWF67+MtPzjNl9Oywgoq/bn1rogDczG?=
+ =?us-ascii?Q?qBTMQoaIKSdJ8rdrlceIgq8n4Re8qEeVFsyhrl3WcE4Gf6SmxVOnYRG+1ikq?=
+ =?us-ascii?Q?9DV8x8C3nPuCs3x7vOSdP6XS6f9xyzQG2L00yDB7SOBh3e7plf93Pmmbw0Px?=
+ =?us-ascii?Q?ky20dF6ry0dfuSyXVmOFt/h3NjJVCVjXN4qjnt7xi/1nIB1cZE3cuCAQVz9a?=
+ =?us-ascii?Q?gSUsGEKW75E5eLIvwrrP9VaUc74x/ON4EwNVZU9C9kYFqTdFaAD/Zj70LeOl?=
+ =?us-ascii?Q?9XwWgvnRXAPrMagIUAx2FY/zOGW3jjc3pgSiQ4QExaEs/RW/Is3W7ClNJmfQ?=
+ =?us-ascii?Q?HOVUKdjh/txow4bQpgat43kbw0lqqDsfndrMM/IWOgJmTQbjEDag1Ak9zu8o?=
+ =?us-ascii?Q?wEn1hAsPXWiP0/gZKSwh42j8JpvK6X9+qdQkLMusPv6ns65E/ugIFu3Su5zY?=
+ =?us-ascii?Q?bxoXYf3VtGRhDYzs05Ksnm3sUd8jQEYkGsKg2cX+2c5tcSDFd+rrzoZreg6d?=
+ =?us-ascii?Q?6aNxWmyGSUOgJZHD4C2ELhOlEDYOuXlLqciikq9zV5HvHYCrkw8H5c/TTVym?=
+ =?us-ascii?Q?e1SulXWuQXEpxGQ3zy0vkvmiOwGVaX361gw7Zbhfze7elQ9ebbUG6XAPyIRD?=
+ =?us-ascii?Q?WzBLpFsfFcYXWDyH5k5sBLRTQ3WyX7foiFampG9qVEJ/S4Eho5S3W/839pz+?=
+ =?us-ascii?Q?NlH6QeOcfz2/0P72lmCmiJC7GR4+fGM7ZV8E4L5IpATZGxUOHzBRDBhO9gIz?=
+ =?us-ascii?Q?TNDh3fQLgWMS1KawnVg19eNU3YMgJ5C8cNvJXF3lpdeaIlz8vbSyMFBdsdh9?=
+ =?us-ascii?Q?HFrSkagbjoU/2QNFWcLJuEpfKJWlhdpO6RzJYFQtBTpZFOXBzYZWzOW/YyWN?=
+ =?us-ascii?Q?zew16s28ga6gbBHKOo4tzx9G/4ZW+K0jJ0woHEPJpBzQ6q32YSkp1Y+C+Ate?=
+ =?us-ascii?Q?LZdmaTNMtePuz33ZahMFwiphC2FH2BdFooqYECWzva4AgpFIb/BI37nRdPIM?=
+ =?us-ascii?Q?bxpukZ41kh/IN83eME1qPq77HRSdCit5DeMYjqY7higvkFO2s1UdJ4sqXftb?=
+ =?us-ascii?Q?hcSbp+Rv3PY9z4z8FIdMxzMMKU0qaBSAzFHnoR8KPVzKT/jU9BbZKI5YlFD1?=
+ =?us-ascii?Q?jM4wRhyQStqsqXZ7NGUsxcGDozOVV9aNkRLVOkI+8atV4rwCyf4VJ+ZF4kdf?=
+ =?us-ascii?Q?J46YCnMGjWE49os2ZVolRblWkA2D1l2yCnYWdCL5cDrfIfhf+OcSSEF2pfwf?=
+ =?us-ascii?Q?GKXcy0JpGDvalQ93Bfnvd/jyHgo0mdHW4LrxwmFsE4abZ2KyW7yPpwBSPhpe?=
+ =?us-ascii?Q?+IITiv9hafxnrfS6fNnsTJ+u8zVj+Cmfqmcpxrwv/HLnHxoYGhqa1jTPNGGW?=
+ =?us-ascii?Q?WtvkIHRwtyU8B80OpOIP9oSTLsiiX2sTi805FUofLR4Sr290QggTEtAGBvuy?=
+ =?us-ascii?Q?p9NKp8NYVpMgyxlwWNpjpqzDv8cF6fGRecdiCGkqql1W0fP+Z78gfWhOWTxc?=
+ =?us-ascii?Q?r9ypm07Ydz8VlVx3xrQ+7mc1cKXiMKlkYpqzBjklEvsdrqP++AJICMb9tOHk?=
+ =?us-ascii?Q?MbUKszRQ+bLavLyuXlz9nEph9cn1tjnWESau4NuqQ74Kp2R09FpRqmyVZIca?=
+ =?us-ascii?Q?JnhE0HraZA=3D=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: ee27babd-247e-4303-500f-08def964d734
+X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Aug 2026 18:01:03.7286
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: CJ5eUodiwiWhBT67XZBtSqeNyEMjZZcxKfMMk30XMuq/G4JBaw2/sev1471yVwtJ
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR12MB4033
 
-On 13/08/2026 4:12 pm, Mostafa Saleh wrote:
-> On Thu, Aug 13, 2026 at 11:13:20AM -0300, Jason Gunthorpe wrote:
->>
->>> Sorry I lost track of this thread and I just saw v4.
->>>
->>> In the mobile space, I haven't seen an SMMUv3 that does not support
->>> RIL.
->>
->> Oh? That's very surprising, AFAIK none of our embedded chips support it
->> yet.. Even the server chips are only just getting it. Are you sure?
+On Thu, Aug 13, 2026 at 06:25:59PM +0100, Robin Murphy wrote:
+> > > Yes, those exist, but again, they are already facing these problems if
+> > > running without RIL.
+> > 
+> > Yes, but my point is that those typically support RIL and that change
+> > regresses them.
 > 
-> Yes, SMMUv3 is getting more and more common in moblie HW (opposed to
-> custom SoC IOMMUs). Devices that I have seen in the market in the
-> last couple of years have RIL. For example Pixel-10 which is currently
-> getting upstreamed. Also, I have a mini desktop with QCOM X1 which
-> have RIL.
-> 
-> The only SMMUv3 I have seen without RIL, is an old morello board I
-> have.
+> Not even that - the main concern is over-invalidation of adjacent in-use
+> buffers due to rounding up; non-RIL absolutely does not have that issue and
+> never has.
 
-Arm MMU-600 is in a few embedded parts - Rockchip RK3588, some of the TI 
-Keystone 3s IIRC - but indeed it's mostly all over the first couple of 
-generations of Neoverse stuff - Ampere Altra, AWS Graviton2 and so on. 
-Similarly the ThunderX2 and early HiSilicon SMMUs also predate RIL, but 
-those whole machines are all probably old enough now to no longer be 
-widely used.
+It certainly does! SMMUv3 got an invalidate all path a while back
+because doing single for >> MB's of IOVA effectively soft lockups the
+system - especially with SVA.
 
-Arm implementations from MMU-700 onward all support RIL - MMU-700 itself 
-was again more of a server-focused design (it's quite big), but has 
-found its way into at least some embedded/mobile SoCs; MMU L1 is the 
-first design targeted directly at client systems, so we should be seeing 
-more of that as time goes on.
+We set the cut off at ~2M which matches when the CPU goes to
+invalidate all. That's 512 commands max of single TBLIs before we just
+dump the entire TLB. That's a huge over invalidation.
 
->> I gather it wasn't even available in ARM IP until recently ish?
+> Note that with RIL, even precise invalidation should only actually need at
+> most two commands (excepting absurd off-the-scale sizes) - the trick is to
+> consider that they can overlap.
 
-If you'd consider 2019 recent ;)
+Oh that's really interesting, I never thought about doing it like
+that. It is way better than the algorithm that is there right now.
 
->>> However, I have seen workloads that are really sensitive to translation
->>> latency (display, camera...). And I'd be concerned about those
->>> regressing.
->>
->> Yes, those exist, but again, they are already facing these problems if
->> running without RIL.
-> 
-> Yes, but my point is that those typically support RIL and that change
-> regresses them.
+Let me try it, it seems like it would make everyone happy.
 
-Not even that - the main concern is over-invalidation of adjacent in-use 
-buffers due to rounding up; non-RIL absolutely does not have that issue 
-and never has.
+> Conversely though, if we really did have a demonstrable need to minimise the
+> number of commands issued then we should probably also not bother with the
+> TTL hint nor splitting leaf ranges from non-leaf, such that we can gather
+> pretty much any unmap into a single command.
 
->> And, for the common case of putting something into a carve out region
->> it is not so likely even an expanded RIL will intersect with a
->> reserved IOVA that has a high alignment.
-> 
-> Not necessarily, those devices can run with a small IOVA space to
-> reduce the page table walk length making IOVAs quite close.
-> 
->>
->> At least the things we have built are calibrated to handle a TLB
->> reload occasionally. The isochronous TLB's are not even sized to be
->> never-miss for all cases because things like 4k media require such a
->> large amount of IOVA the area cost is too high.
->>
->> While others can do something else you are reaching into a pretty
->> narrow condition to hit a problem:
->>   - HW that must have a never-miss TLB to work
-> 
-> I am not saying that, but we shouldn't over invalidate TLBs either
-> when it is easy to avoid that.
-> 
->>   - HW that doesn't have a carve out, or has a badly aligned carve out
-> 
-> I do not think a carveout will help. But it's a very strong constraint
-> to enforce carveout on all devices specially media which are quite
-> complex and composite by nature.
-> 
->>   - A SMMU that has RIL (non RIL is already worse)
-> 
-> This regression only impacts RIL, otherwise it does not matter.
-> 
->>   - A non-isochronos workload that regularly exceeds the RIL/single
->>     expansion thresholds
->>   - Unlucky IOVA allocation that places isochronous near other
->>     workloads in the IOVA space.
->>
-> 
-> It is not just luck, it depends on the IOVA space and access patterns
-> of the device.
-> 
->>> There is a clear trade-off here as you mentioned with TLBI latency,
->>> would it be make sense to make that behviour configurable from a
->>> module param?
->>
->> I think it makes sense for a driver to indicate to the core code that
->> it needs isochronous and we can do more global things like change how
->> single works as well. Having an isochronous flag on the domain, for
->> example, would be a good overall direction.
-> 
-> But according to what? It makes sense to optimize server chips,
-> but that should not cause over-invalidation regressions on other
-> hardware.
-> 
->>
->> I'm inclined to leave this as is and let someone come with a specific
->> problematic HW, rather that try to badly guess without much
->> information if it might popssibly be a problem.
->>
-> 
-> It's not really a guess, I mentioned some examples above, that I
-> have seen problems of translation latencies on them.
-> 
-> And why not the other way around:
-> - Which uses cases can't handle few RIL commands?
-> - Why those drivers does not unmap memory with a granule/IOVA fitting
->    to RIL?
-> - Why those systems does not use FQ domains in the first place?
+That is what I am doing. The series converting to iommupt also changes
+to use iommupt style gathers which default to combining everything
+into one gather.
 
-Note that with RIL, even precise invalidation should only actually need 
-at most two commands (excepting absurd off-the-scale sizes) - the trick 
-is to consider that they can overlap.
+One gather maps to one tlbi in this series and it turns into one
+RIL. The hints/etc are used if the gather happens to be compatible,
+otherwise the single RIL is still pushed un-hinted.
 
-Conversely though, if we really did have a demonstrable need to minimise 
-the number of commands issued then we should probably also not bother 
-with the TTL hint nor splitting leaf ranges from non-leaf, such that we 
-can gather pretty much any unmap into a single command.
+> This is probably something we'll end up wanting some kind of tunable
+> behaviour for, given that SMMUv3 hardware is going to be spanning an
+> increasingly wide range of use-cases with increasingly opposing requirements
+> - it's certainly more than just "hypervisor or not". For now, though, I'm
+> also not buying a dubious latency argument based on apparently no real-world
+> data other than "I think"...
 
-This is probably something we'll end up wanting some kind of tunable 
-behaviour for, given that SMMUv3 hardware is going to be spanning an 
-increasingly wide range of use-cases with increasingly opposing 
-requirements - it's certainly more than just "hypervisor or not". For 
-now, though, I'm also not buying a dubious latency argument based on 
-apparently no real-world data other than "I think"...
+We have data already showing that large numbers of invalidation
+commands cause soft lockups, and we had to fix SMMU for this.
+
+This is tied into the SVA path remember, latency directly effects mm
+application benchmarks and we have been consistently working toward
+bounding and reducing SVA invalidation latency. We actually did some
+studies recently and invalidation latency had a major impact on real
+application metrics. We did not build HW vCMDQ support to reduce
+invalidation latences in VMs for no reason. It is not "I think".
 
 Thanks,
-Robin.
+Jason
