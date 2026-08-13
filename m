@@ -1,50 +1,68 @@
-Received: from CY7PR03CU001.outbound.protection.outlook.com (mail-westcentralusazon11010037.outbound.protection.outlook.com [40.93.198.37])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40E5B480335;
-	Thu, 13 Aug 2026 14:13:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.198.37
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786630407; cv=fail; b=mFpMXN+Hl63kbiRce38qGi3nlOAcft+FqVDVwBlp0+aEA6gMi3nO6fDUHrcxicfYW0ZV/m+RxQL8Ae2BpY4i8ZnVUJ/37fPMdGsHXje6sYioDWx0XgbNFeMGOFjBanusGu2C5gjjJQl9VLJ2NPcgS4lmo6Nc1frEDDZkwptef3Y=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786630407; c=relaxed/simple;
-	bh=GA7E1UC6fGWBN1VzgQZKds/LLm+kCi2xJmifTJ7ekWo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=RTfYa31ZgUoFKP/JmHjN2MOC7pMOyb5E+7JLNEvu7rSKt/pLZJUIpiEqKF+T05xGCdgzXX9mvdtkCRxKZbqD/4CaY5IXbHJgh7u0n8fac3u0WDRcPkCWRhTAvTzpJlX+oBw3djiDBX05Xbx0srw0Qny/g005y64E6Toz0KYMWOk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=BVpbCQZT; arc=fail smtp.client-ip=40.93.198.37
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CCB1486621
+	for <patches@lists.linux.dev>; Thu, 13 Aug 2026 15:12:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1786633932; cv=none; b=hYMAe6wNdRkxtyqWkZVGJ2KBs9Ow+EvxAyWfode/1XasxvVJFr40kGLI71eUTzxD/wQTiqSKhbAAmU0TjkVobzanVOtcby6sILozZu/u9NUdCtXesCW8lDHp010MCmCK0ZBUVgMjaXqAKwnBzanAcDjN+1g4kUX9MEAhX4rsQ+w=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1786633932; c=relaxed/simple;
+	bh=kh4zC29toRXjwtuA0yBHRcNgVKlbLvrLAXcDzghJHFc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hLhqqGaUeKykD+qi2q7WDZ+zUNxcnLZVbQSwnXwwosZodT43vKJRfokTrVpFaoKSXicMEWdylAIQdgZM5XbYUNKoEJwAQzUbWv+zjXdFcLPGbyWFKLI+WWAg8Iyn4wbnmvNEal3r2P1MUrwN7NfSDbGHQ+NQz+QKVQLYq/yoLzI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Qp8FXydi; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="BVpbCQZT"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=tXIEZm3yH8SBJnBCukpSqa6vTswGi3c8NZyB/EEx1gLJgQEXpcQf3dze9NgqGvSYkUmRX/wlKRbEOXMtQM5Aa++yrFox1GR8XRrRzBwelZ13y+8Xz3NamAlXJseKvUgtj5YOxTxuFkcQFakz5hqk3/vudGatGkb0xZUGYN+/zLcYCOt79WoMRCSvjyEygUrDV5H/bPy/NQyoN0Sk6X18J8mkXJNr7TEhvcd6uA9Wpf6B4kyTt1Vn+W76MQhVD9RYacwGSdecIZ2DcPjTulVwVtUw8WcwAWzBWmDO6MMWhlwVuLqW4o9nu+z938oi5Zjbmy1dTtwzE5lKDTvaby/0fg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Mn6Vh1o932dhUDkIRW3So4IeXLZqoga7DH3eYMz50/s=;
- b=njWD/9QXR0aYcfSGwwGmtMJU1KlRXWWEUG9zNn8Fm2qFWRmrOHzCcmtumrEZ2QOCdKc1rN4eta7JbPXmaqHv0RwXB0KcddZ/xVNSioGbdNfv0JLfzJa50iRMtxfmSEsPtMuqYe1tYZWOjQKOrwOUyfCnJ5pn/lSH3ncJIjBA1DRcFY7RSAszuEDUsENaEoDtpt+9aM4iuOza8U25aRpP8qbWxACBtsPL4tAgj1R5hXuTpIR/zeIznmmeEIlxhr856Y8t7s0F1ezPFOz5dcy58iDBm9OmTJMmTsqQS9zk2AHQQRRzqnlqO40ZJo7XnwuM/JKnoe6IGue1YYzqzjdsjw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Mn6Vh1o932dhUDkIRW3So4IeXLZqoga7DH3eYMz50/s=;
- b=BVpbCQZTjmWATnt9OONDRbcFTN+hcclvtOXCPfucZQNmYnFCdtkOzGz7w0nBJaXoOOWVPPE4+EE3/V8kaqcJjaHYGz0/nHRShreDwPnZpcSkX+cLqgaLHBO6fODFJi7keAkXpnZcpKxhE3IwsaQdEE5PmeAiAva31qPHESctwMqkErTdLrF5JnNIGHZ382J/J+yLRMcOSjsIdnG6r5l+mQkP0Nr5f83WiFpjkRNi66ZmTWFRmxc/QhRf+0CeO4RkSmpnmuvt74qPnaQV13wyHt+Aza1hXMo+/5ImiRlQtdsN0QQryg2XqNE5AUBmollktvp0ayzxoByvODR8oFBZOg==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
- by SN7PR12MB8772.namprd12.prod.outlook.com (2603:10b6:806:341::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.292.25; Thu, 13 Aug
- 2026 14:13:21 +0000
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528%4]) with mapi id 15.21.0315.014; Thu, 13 Aug 2026
- 14:13:21 +0000
-Date: Thu, 13 Aug 2026 11:13:20 -0300
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Mostafa Saleh <smostafa@google.com>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Qp8FXydi"
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-495509b08ebso48195e9.1
+        for <patches@lists.linux.dev>; Thu, 13 Aug 2026 08:12:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20251104; t=1786633928; x=1787238728; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=jIiI9SltfPrXcp9GxH8c00S+yO98PCAJKDJI9QVodgA=;
+        b=Qp8FXydi6QhTptiIqN+KuKoZEUxSHOrwFVRyZ6hp5Zh7VutuGuQ4xBm+IZsv0bbkI3
+         oSdz4MdTysXV/jXAZTo3P8WjIKFquRLyBbA33kdPGSCx91BhiKvm0PVA2R9OQsY2jmMj
+         xYFJJKnGga751Eylar9+6ifvBjewHMmnoUSTygsb1pQg6H3/sFgCaqtUqYBgbfR11++O
+         TraKEOUzeL8WzI8DWiIxLBgL1p5xrl8JVJkTA0TXXBnvQQf6pOJ0Z4ApZyuEtokbwpXf
+         9fsN7OOF3dA1VhqPGClfMw8tGgb4c+zAqTnWvJff6Axr8h7IvktH0MZ2u14B0COwwmzb
+         burA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1786633928; x=1787238728;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=jIiI9SltfPrXcp9GxH8c00S+yO98PCAJKDJI9QVodgA=;
+        b=aYc2cNpnlqJ2MBjObFH0GlPeDBh1oinUV6WtdMMjeyZd4qBGUEYRlBOsE+IQ99I9Zh
+         qvuCdvydhGOitzC1ZW0cfluYl8Drs/thpSWDv9b0x28S/gEU7ys4wIw86EqdLs4pSfF3
+         J1ppFp/XQ6Rmez5dXyUGjRUp8SEXfS5WAj7uSNv9X+NvjWfABRphmKXksZgMDq0uBX0T
+         48VWvjXvst114mRL4c2iyyUv/sC8J1Jj6oCHZyR7TafwhOZbuNaNlCzLzH4J1kmOuenV
+         Gr7r1RHFJ51XaN4P6aJOrEZ3DtoGdf4KADqfmpH+I85QvZ5GcuWhZFUnRyc+Ma5h4sVf
+         tayQ==
+X-Forwarded-Encrypted: i=1; AHgh+RryFNlgEOY+K8JDTa81ynETCId45H9IxQJqlpbxYEkIM02L38aJHsjPyxmsJoqynGzhIMir0Wy7@lists.linux.dev
+X-Gm-Message-State: AOJu0YztX0k8VRUIafUhUxsSBiGVzm/9+Q3bg0YrgseiPi41Mhq13iU9
+	zH7MiRRF1TGzbSOJcNUgf2eiCsXdI3NDRQNV64Kt+Ram9PcuXpXzWFVhMudQjyxDzA==
+X-Gm-Gg: AR+sD11f7hABLQsq66BfZVxQ9gZZltIziwIQDvcMmJoMlAPg05MPvTCrvoSqbwLkxdH
+	pJM9+DtD/DooDmhgopVhE442BaFQFLBB/vW36W9o+s+qhHOAxz8rDC4jOh67cE4XrSQlHeFEaoV
+	sufkyMVE+JXaJ3wTah8XxUkIfjJtdEAMWioEYz/T0q6K9KxtobnjyWvOfhSOyt3Chg7AZqqBlND
+	N6rkWJKNyg+TJmr33ZFcbCp/hJmhP5fvhZNl3E3gfpisRATMj3VLyZh4Vg1baoK3IUYHFfSFyw6
+	iaIvbMXkCVsT94tcEk4zw+sRA/x82a3nW44ZKxiQNZhRCoWB36Vvp0bAafi5Tri8zd0+vuwqITy
+	GU68DCV1XKHQLmVY3DBZJJuzmy02iqMem094XbsUPbujwQWXjzL0xY+SuEgOn113J1rX4LCdeXz
+	JvzjesXzWPJYXbzG0BCzaB061m4c/Mz2YKGvTCHEy05jT0Fw9Gf1UAxVsKlsk4UqBPcq/L+W1is
+	Vjtw3+R5ju9ebnaA+oljOFk7dM7MQ==
+X-Received: by 2002:a05:600c:6094:b0:499:83b9:4e4d with SMTP id 5b1f17b1804b1-49983b95116mr892995e9.0.1786633927802;
+        Thu, 13 Aug 2026 08:12:07 -0700 (PDT)
+Received: from google.com (250.192.189.35.bc.googleusercontent.com. [35.189.192.250])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4815f2cd7ecsm7938f8f.36.2026.08.13.08.12.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 13 Aug 2026 08:12:06 -0700 (PDT)
+Date: Thu, 13 Aug 2026 15:12:03 +0000
+From: Mostafa Saleh <smostafa@google.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
 Cc: iommu@lists.linux.dev, "Joerg Roedel (AMD)" <joro@8bytes.org>,
 	Jean-Philippe Brucker <jpb@kernel.org>,
 	linux-arm-kernel@lists.infradead.org,
@@ -55,129 +73,126 @@ Cc: iommu@lists.linux.dev, "Joerg Roedel (AMD)" <joro@8bytes.org>,
 	Samiullah Khawaja <skhawaja@google.com>
 Subject: Re: [PATCH v2 3/8] iommu/arm-smmu-v3: Optimize range invalidation
  for latency
-Message-ID: <20260813141320.GF730363@nvidia.com>
+Message-ID: <an3ew9xbnLe1dr5g@google.com>
 References: <0-v2-43074a57a53a+fb95-smmu_tlbi_jgg@nvidia.com>
  <3-v2-43074a57a53a+fb95-smmu_tlbi_jgg@nvidia.com>
  <akzm5BoV0rToJ7ij@google.com>
  <20260708001058.GA422027@nvidia.com>
  <an3MSKEj7VhT4WkP@google.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <an3MSKEj7VhT4WkP@google.com>
-X-ClientProxiedBy: BL1PR13CA0316.namprd13.prod.outlook.com
- (2603:10b6:208:2c1::21) To LV8PR12MB9620.namprd12.prod.outlook.com
- (2603:10b6:408:2a1::19)
+ <20260813141320.GF730363@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|SN7PR12MB8772:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6bb8c9d6-30fb-40cd-ca87-08def94507cb
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|7416014|376014|23010399003|366016|1800799024|22082099003|11063799006|56012099006|18002099003|4143699003|10067099003;
-X-Microsoft-Antispam-Message-Info:
-	giELf6W9YNSQs7oIewePi6IsVKgqodwt/3/nyugQ6xwx8OEAAZVi92FnaNeBXrednBQcmfwh8XXSIV/v1w/UvRt3IVAR3jH1MldNi+KSTLw6ZZrpMZgdIlFnRR5L1a1/2Tp48+Bzv/rQ510Naq3WBf4Yfip5b04TlbX2JAlT/GfckJ8AR4xEhJFQxmEHZ7JfbYRaj1iXTu/UtMl4VzWjmCxYT26Pavu4IdEAQS3VHOyt5UTbDQLaynQwUfM/AOaIyhbaPMBaxXLhL0SCvKmPXCAInnuhckyqarsN+dwSCmqgoUHbnniX1QugzBMi1t5lxjL53J6sVpeAwMjvja7K4IdYq0ekoDJhFEqS39pNh3wWso1ybVM7DLvZWbwF+CL15EXUnMSDOZ9oTGQNpiY43+hqSEfffV+1RXD9ruaOPT7YrQOnAjfQrRTY5h4NUdaUE2tA1YM7fNdggDpB9Oi0PZfWR1QoNPzrrOvTB2Y+nEPJhc7XMqXSYIFCwGVVxSXvOM5zslZtYNveIDZ19sz3ZMrLp5oNV8ALV57dKefkiwNKMkuVe7M7sfj7lgtLUehakjp4E5eqs5utlbk81zQLFYsbZEkUzsmd//0PJnBiPZ7/AQDjIJDujIriOa8FVPdcN/Wx/f8zQWzLa5NhI/G9giH4cl4nEXBC0t+Dvm5g3BI=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(376014)(23010399003)(366016)(1800799024)(22082099003)(11063799006)(56012099006)(18002099003)(4143699003)(10067099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?Ms3WiUNO162t/0N55h0XDJcKBeDGnsYPfOMpup3jb5RGSSDulrORFfyXMivS?=
- =?us-ascii?Q?NDVeve72qm8BgNMMfoh0bHyu5QCqm82T0FE9RFnEpLUEXm2HO5Lg9GnB2PCv?=
- =?us-ascii?Q?NpT1BLr4XVFFjEu0kHgQVydZcPHTQvrnkEyiGJQC1rpuqUi/HaoqrmIFqlpu?=
- =?us-ascii?Q?2EqAbUdKV0qWUJUjYDSo8vLpV0AlPCuWHqUk6DMnlY6TBGS5h37/+fbqyLDy?=
- =?us-ascii?Q?XPA9DlJjrPb3EbxYmYjYA4RhLq8iv4XI7InLhZv4ieN2sVvtFItf15SpmEiL?=
- =?us-ascii?Q?QAdmTLYXubavh/y4nfAtvoe9MGH6U0VjC4kR4q6LvKFZFEIemOIf9QK3d+3E?=
- =?us-ascii?Q?AVXm5S/uY71NkirD23E1k0uCpQJGoHqrbGFt+HVc+DYq41ApSue5a6A2qiDe?=
- =?us-ascii?Q?dBgx2bvQqshlDZMp162Lttp22vJw117WxVPBVtl+qALc/M88jEB+4G3bD2IM?=
- =?us-ascii?Q?miVd9dvEXmFbiSPz+CxYRQT73rKviQ2xI41ov552I33VdUE3kP6VnD3tsDZv?=
- =?us-ascii?Q?3TrHuxWzUmEjTvD9TNu4zeTGahkEluQaY0T0iLaBeIhagjAIdOjJCdT57HHO?=
- =?us-ascii?Q?KUrcbVik5pXPIM2r8LYNwWukinpTF8YZZYgQQDznK7BCTEHDxhjafAsFtfBh?=
- =?us-ascii?Q?DvUUnUC6FpmBSRlA45g9EO7cm4+Y6fTEb1e0h/AwtA01lHp8qwektWnV2nT2?=
- =?us-ascii?Q?qEMRHujnlN7BEjIEWCzkr63ctWLMxUYxVfjgT8j2aAZymiab6jjT9P+h7lwY?=
- =?us-ascii?Q?PW9nhMUwez2niB+Qcaf6e3Zpx3Dj1UASRPgMfPGfEvL24a+xDPKxU9oiwHDN?=
- =?us-ascii?Q?IuOnhXJifpasspouj1CDTsudHS33v4fov3eVR4SEesFDMJ7GyiUkoW0k6ejP?=
- =?us-ascii?Q?uSoT7r0uo023owy/4HUuKY8ajrFh+/gGlszOYyOBQJrgEhGtfpWIVifl43Eb?=
- =?us-ascii?Q?8Opb3U5n9AUFBtxfHSTxO1QJ6aqAbs+Z1DLghSgXvzhpuc6hVSlnAmjwAqjc?=
- =?us-ascii?Q?Hwxp1Riu+q5xo/V0wsvsNxps9Jck6z4O1b8L6x7JLppT1F0nwissnqBeO8xB?=
- =?us-ascii?Q?KRsTLwBPjM39YMcFor9B8aJGZ/aDFH6D3OjOlxA2cU3Fm+04drX//+yelmCu?=
- =?us-ascii?Q?8CFNLfyLKbIv5PhoaOdnod/kk97uvk2uZF54G3PSPVhdOFM90+zJ0Emwtu6B?=
- =?us-ascii?Q?R1dikZ8xdVLHuNZ7ZI3qUxfXJz+ksP+Z20s4Y7qvzDGC4Uoeh/9XFX4oqHSA?=
- =?us-ascii?Q?iNZ1GCgTSzC+AmyAjrQ5iQDrv5dQFgxtgOqYj+xWeOtSskiKEAxBE3D63fCM?=
- =?us-ascii?Q?TVgBQubIzvBuYaUsdojE2CuGqeuY0sUVy9tz6ECzFa17JWBCs6lpnunWrR9g?=
- =?us-ascii?Q?gpXdBf8OgYwSsfmNk+r3EAbc/mzj5AA3AjO5/9NLAs8am69MMOlJRhjIRZIr?=
- =?us-ascii?Q?XO75a03QCrkeRB2T/PIMXe99FTnCGIYQR17zgYbrzFgGuueD+BnD4pp20meC?=
- =?us-ascii?Q?W+B+Gr9uIQwN1SYdZAg5ikqdP/kHCAzlWxyx9g+CWblrtJhxEx3tRenLeJUF?=
- =?us-ascii?Q?P0/BgQvugFPl5IksHzPupblziR+QyBKzuR3co16YnNANKCdcC3OLL/E5Rl0O?=
- =?us-ascii?Q?lhJb83CUhk+QnOZyRHHj2P4U6DPw+WF7tJGCkBaQSxE2/T3UCkQkgrVwc9iF?=
- =?us-ascii?Q?r3v1DiF6hEOIHttnbMPuT2nD6TVUBrla1HYSQNNQ1qFLrMElh31uXX6a3hKb?=
- =?us-ascii?Q?3v/uFvTaUw=3D=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6bb8c9d6-30fb-40cd-ca87-08def94507cb
-X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Aug 2026 14:13:21.3833
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 3Ny0w0refZrLGKp/rv5f0dI5kxHv9EmDkATVsaI0MfcZrcYyFwxv4ftOS0U49ONT
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB8772
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260813141320.GF730363@nvidia.com>
 
-
-> Sorry I lost track of this thread and I just saw v4.
+On Thu, Aug 13, 2026 at 11:13:20AM -0300, Jason Gunthorpe wrote:
 > 
-> In the mobile space, I haven't seen an SMMUv3 that does not support
-> RIL.
+> > Sorry I lost track of this thread and I just saw v4.
+> > 
+> > In the mobile space, I haven't seen an SMMUv3 that does not support
+> > RIL.
+> 
+> Oh? That's very surprising, AFAIK none of our embedded chips support it
+> yet.. Even the server chips are only just getting it. Are you sure?
 
-Oh? That's very surprising, AFAIK none of our embedded chips support it
-yet.. Even the server chips are only just getting it. Are you sure?
+Yes, SMMUv3 is getting more and more common in moblie HW (opposed to
+custom SoC IOMMUs). Devices that I have seen in the market in the
+last couple of years have RIL. For example Pixel-10 which is currently
+getting upstreamed. Also, I have a mini desktop with QCOM X1 which
+have RIL.
 
-I gather it wasn't even available in ARM IP until recently ish?
+The only SMMUv3 I have seen without RIL, is an old morello board I
+have.
 
-> However, I have seen workloads that are really sensitive to translation
-> latency (display, camera...). And I'd be concerned about those
-> regressing.
+> 
+> I gather it wasn't even available in ARM IP until recently ish?
+> 
+> > However, I have seen workloads that are really sensitive to translation
+> > latency (display, camera...). And I'd be concerned about those
+> > regressing.
+> 
+> Yes, those exist, but again, they are already facing these problems if
+> running without RIL.
 
-Yes, those exist, but again, they are already facing these problems if
-running without RIL.
+Yes, but my point is that those typically support RIL and that change
+regresses them.
 
-And, for the common case of putting something into a carve out region
-it is not so likely even an expanded RIL will intersect with a
-reserved IOVA that has a high alignment.
+> 
+> And, for the common case of putting something into a carve out region
+> it is not so likely even an expanded RIL will intersect with a
+> reserved IOVA that has a high alignment.
 
-At least the things we have built are calibrated to handle a TLB
-reload occasionally. The isochronous TLB's are not even sized to be
-never-miss for all cases because things like 4k media require such a
-large amount of IOVA the area cost is too high.
+Not necessarily, those devices can run with a small IOVA space to
+reduce the page table walk length making IOVAs quite close.
 
-While others can do something else you are reaching into a pretty
-narrow condition to hit a problem:
- - HW that must have a never-miss TLB to work
- - HW that doesn't have a carve out, or has a badly aligned carve out
- - A SMMU that has RIL (non RIL is already worse)
- - A non-isochronos workload that regularly exceeds the RIL/single
-   expansion thresholds
- - Unlucky IOVA allocation that places isochronous near other
-   workloads in the IOVA space.
+> 
+> At least the things we have built are calibrated to handle a TLB
+> reload occasionally. The isochronous TLB's are not even sized to be
+> never-miss for all cases because things like 4k media require such a
+> large amount of IOVA the area cost is too high.
+> 
+> While others can do something else you are reaching into a pretty
+> narrow condition to hit a problem:
+>  - HW that must have a never-miss TLB to work
 
-> There is a clear trade-off here as you mentioned with TLBI latency,
-> would it be make sense to make that behviour configurable from a
-> module param?
+I am not saying that, but we shouldn't over invalidate TLBs either
+when it is easy to avoid that.
 
-I think it makes sense for a driver to indicate to the core code that
-it needs isochronous and we can do more global things like change how
-single works as well. Having an isochronous flag on the domain, for
-example, would be a good overall direction.
+>  - HW that doesn't have a carve out, or has a badly aligned carve out
 
-I'm inclined to leave this as is and let someone come with a specific
-problematic HW, rather that try to badly guess without much
-information if it might popssibly be a problem.
+I do not think a carveout will help. But it's a very strong constraint
+to enforce carveout on all devices specially media which are quite
+complex and composite by nature.
 
-Then we will know the HW and can mark the driver as I suggest above.
+>  - A SMMU that has RIL (non RIL is already worse)
 
-Jason
+This regression only impacts RIL, otherwise it does not matter.
+
+>  - A non-isochronos workload that regularly exceeds the RIL/single
+>    expansion thresholds
+>  - Unlucky IOVA allocation that places isochronous near other
+>    workloads in the IOVA space.
+> 
+
+It is not just luck, it depends on the IOVA space and access patterns
+of the device.
+
+> > There is a clear trade-off here as you mentioned with TLBI latency,
+> > would it be make sense to make that behviour configurable from a
+> > module param?
+> 
+> I think it makes sense for a driver to indicate to the core code that
+> it needs isochronous and we can do more global things like change how
+> single works as well. Having an isochronous flag on the domain, for
+> example, would be a good overall direction.
+
+But according to what? It makes sense to optimize server chips,
+but that should not cause over-invalidation regressions on other
+hardware.
+
+> 
+> I'm inclined to leave this as is and let someone come with a specific
+> problematic HW, rather that try to badly guess without much
+> information if it might popssibly be a problem.
+> 
+
+It's not really a guess, I mentioned some examples above, that I
+have seen problems of translation latencies on them.
+
+And why not the other way around:
+- Which uses cases can't handle few RIL commands?
+- Why those drivers does not unmap memory with a granule/IOVA fitting
+  to RIL?
+- Why those systems does not use FQ domains in the first place?
+
+Thanks,
+Mostafa
+
+> Then we will know the HW and can mark the driver as I suggest above.
+> 
+> Jason
