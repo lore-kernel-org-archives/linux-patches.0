@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B46213D9545;
-	Mon, 17 Aug 2026 15:26:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5356D4457C5;
+	Mon, 17 Aug 2026 15:26:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786980411; cv=none; b=br+OAIDWEJJreD/mCbPXuVC18pIxgDMg6Q67LRNJFxlD1NWiQBL0086gvUdw+fLOTeetn6+sW587FWzY55xn3A1x08QuLBeZWhXIIFkfE3fOscpewqLYZW9m55BxhUq58+YHb2urerNauMfprREhDDg2Xv816S0W+ZQjyBAy8FU=
+	t=1786980415; cv=none; b=iebrI1BR0pG6WKC+4mW7JpRKKc8kdkACPQbnbqGRafPMONeToiokjFHYSyOvzXYUDTsTFMPPn2xJsxSnhBjkrI7i2Tovu6ZEMzrVbpLT92IwG9IH9zYCg0nUmwBxkihhUAP2DWp7J/bUBG2/xdJb1Gk8/q1safzHvx/mBVDgChE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786980411; c=relaxed/simple;
-	bh=8iyv+1/HiNMsC7WedV7x1uFhM5iYmkaHqE02MDsbFd0=;
+	s=arc-20240116; t=1786980415; c=relaxed/simple;
+	bh=3PdJ+a6UExwmCRTuRwbjEPkvdR/D6XETIkrEdE/k8QQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tch/8JoBn6vtDbM6cM7yKABVNDSrNPWn9y3jLDPvshESxVewy+S9xSRGmfwwU2+90lUUjPuGmkWd2ugQLXNTKjF65mEu90yzF8eTIaWXSYFsxdpA+W9Seob6Y36UuE4DNlgXQJu1XyhAdXJSa+5wC4lL5Ts2fqYw//o0dZ32AQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v9FeQ0AM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=eZSHCzT4jjlYKJURL2M/a42ZQ5cTaPeQch42Gpr7bu5HRZQtHgSpDJZVA22kTPdhIc2zw89KuOptFBiC/zOZyIhEnxKOtsoOK8xqyb0bZdhdgZM813ejd53zPglVEArctIx6vp31hinnsnNw++fbycor1RwmrM7TVHy7jUyv7oc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YAc7WoWj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v9FeQ0AM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C447B1F000E9;
-	Mon, 17 Aug 2026 15:26:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YAc7WoWj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F0A11F000E9;
+	Mon, 17 Aug 2026 15:26:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786980409;
-	bh=x/J88PW4LE/GaK+8elgO9RqMn21LFv40kSuP0Xd1RkU=;
+	s=korg; t=1786980413;
+	bh=Vpe9wae8j45l7EveomPpe2VT+20NxuSE4H8JfWtng24=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v9FeQ0AMYBgXLNPp+5GBJzWXPtU1WUTXlSJl/nHnfLYD5ngGcCnjsZ6E5Nb9EyxKz
-	 jPhwa+vzz3NHbQoo393mV71j7Q6fUFKpcFqG1ApaQ8Odo0xc06CRsVeqUhEiuSC7pb
-	 gxKuWJQh9fDLkgXmEmLGuQ4FBkKlLnmP6gLRPA4s=
+	b=YAc7WoWjeS1dTMnCEXaHieWHE9DIPw+95j8dAngq1l4ta5YXOJEsr5pmrwHknz86Y
+	 0vN9imPVmk2jp9r29Wh+wPJazyPxkzvPJtgtocXnP965a4xl3JcRm+5nbE6S2wLt58
+	 5pDjldHXqtip3FGzAdULkxe9w2sO1PARIWmyztTI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	nasm <n4sm@protonmail.com>,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 562/609] pinctrl: renesas: rzg2l: Use -ENOTSUPP instead of -EOPNOTSUPP
-Date: Mon, 17 Aug 2026 15:34:18 +0200
-Message-ID: <20260817132602.526052670@linuxfoundation.org>
+Subject: [PATCH 6.1 563/609] RDMA/rxe: Fix a use-after-free problem in rxe_mmap
+Date: Mon, 17 Aug 2026 15:34:19 +0200
+Message-ID: <20260817132602.563371333@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -46,68 +47,168 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Zhu Yanjun <yanjun.zhu@linux.dev>
 
-commit c1492da3939c89372929e062d731f328f7693f1e upstream.
+[ Upstream commit 35744ab3d03c5fca8c1752f53fc8fc674e14c561 ]
 
-The pinctrl and GPIO core code make exceptions for the -ENOTSUPP error
-code.  One such example is gpio_set_config_with_argument_optional(),
-which returns success when gpio_set_config_with_argument() returns
--ENOTSUPP, but reports failure for all other error codes.
+rxe_mmap() removes a rxe_mmap_info struct from the pending_mmaps list
+and releases pending_lock while the struct's kref is still at 1:
 
-Returning -EOPNOTSUPP from the pinctrl driver on the unsupported pinctrl
-operation may lead to boot failures when pinctrl drivers implements
-struct gpio_chip::set_config, the system uses GPIO hogs, and the
-struct gpio_chip::set_config implementation returns -EOPNOTSUPP for the
-unsupported operations.
+   list_del_init(&ip->pending_mmaps);
+   spin_unlock_bh(&rxe->pending_lock);   /* ref == 1, no lock held */
+   ret = remap_vmalloc_range(vma, ip->obj, 0);  /* walks PTEs */
+   [...]
+   rxe_vma_open(vma);                    /* kref_get, ref → 2 */
+   remap_vmalloc_range_partial() walks PTEs without any lock.
 
-Return -ENOTSUPP for the unsupported pinctrl operation.
+A concurrent DESTROY_CQ ioctl on another CPU calls:
 
-Fixes: 560c633d378a ("pinctrl: renesas: rzg2l: Drop oen_read and oen_write callbacks")
-Fixes: c4c4637eb57f ("pinctrl: renesas: Add RZ/G2L pin and gpio controller driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20260515124008.2947838-2-claudiu.beznea@kernel.org
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-[claudiu.beznea: fixed conflict by dropping the code not present in
- v6.1 stable]
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+    kref_put(&q->ip->ref, rxe_mmap_release)   /* ref 1→0 */
+    vfree(ip->obj)   /* clears vmalloc PTEs mid-walk */
+    kfree(ip)        /* frees rxe_mmap_info */
+
+This yields:
+
+   1. Kernel crash, vmalloc_to_page() returns NULL when vfree wins the
+   per-PTE race -> vm_insert_page(NULL) → GPF in validate_page_before_insert
+
+   2. Page UAF, vmalloc_to_page() reads a stale PTE before vfree clears
+   it. User VMA holds a PTE to a free'd page which might eventually get
+   reallocated later by vmalloc which allows the attacker to get a clean
+   page-level UAF.
+
+   It is worth noting that even though a page-level UAF is possible given
+   the strong primitive, it is statistically very difficult to achieve
+   given the very short time window (after the last insert_page and before
+   the kref_get).
+
+The call trace are as below:
+
+  Oops: general protection fault, probably for non-canonical address 0xdffffc0000000001: 0000 [#1] SMP KASAN NOPTI
+  KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
+  CPU: 0 UID: 1000 PID: 413 Comm: poc Not tainted 7.0.0-rc5-dirty #28 PREEMPT(lazy)
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+  RIP: 0010:validate_page_before_insert+0x32/0x300
+  Code: e5 41 57 41 56 49 89 fe 41 55 41 54 53 48 89 f3 e8 93 b5 a3 ff 48 8d 7b 08 48 b8 00 00 00 00 00 fc ff df 48 89 fa 48 c1 ea 03 <80> 3c 02 00 0f 85 7b 02 00 00 4c 8b 63 08 31 ff 4d 89 e5 41 83 e5
+  RSP: 0018:ffff88811b15f2f0 EFLAGS: 00000202
+  RAX: dffffc0000000000 RBX: 0000000000000000 RCX: 0000000000000000
+  RDX: 0000000000000001 RSI: 0000000000000000 RDI: 0000000000000008
+  RBP: ffff88811b15f318 R08: 0000000000000000 R09: 0000000000000000
+  R10: 0000000000000000 R11: 0000000000000000 R12: ffff8881181eee00
+  R13: 0000000000000000 R14: ffff8881181eee00 R15: ffff8881181eee20
+  FS:  00007b1e000f76c0(0000) GS:ffff8884268e0000(0000) knlGS:0000000000000000
+  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  CR2: 00007b1e00a24ac0 CR3: 0000000116eb3000 CR4: 00000000000006f0
+  Call Trace:
+   <TASK>
+   insert_page+0x8f/0x190
+   ? __pfx_insert_page+0x10/0x10
+   ? kasan_save_alloc_info+0x38/0x60
+   vm_insert_page+0x2e7/0x400
+   remap_vmalloc_range_partial+0x212/0x3e0
+   remap_vmalloc_range+0x6e/0xb0
+   ? __kasan_check_write+0x14/0x30
+   rxe_mmap+0x2e9/0x5d0
+   ib_uverbs_mmap+0x1ad/0x2c0
+   __mmap_region+0x12c2/0x2ad0
+   ? __pfx___mmap_region+0x10/0x10
+   ? __sanitizer_cov_trace_switch+0x58/0xb0
+   ? mas_prev_slot+0x360/0x39c0
+   ? __sanitizer_cov_trace_switch+0x58/0xb0
+   ? mas_next_slot+0x1e5b/0x2f40
+   ? __sanitizer_cov_trace_cmp8+0x18/0x30
+   ? unmapped_area_topdown+0x4dd/0x610
+   ? kfree+0x1b1/0x440
+   ? free_cpumask_var+0x16/0x30
+   ? __kasan_slab_free+0x7d/0xa0
+   ? __sanitizer_cov_trace_cmp8+0x18/0x30
+   mmap_region+0x2e6/0x3c0
+   do_mmap+0xa3e/0x12a0
+   ? __pfx_do_mmap+0x10/0x10
+   ? __kasan_check_write+0x14/0x30
+   ? down_write_killable+0xba/0x160
+   ? __pfx_down_write_killable+0x10/0x10
+   ? __sanitizer_cov_trace_cmp4+0x16/0x30
+   vm_mmap_pgoff+0x2d4/0x4a0
+   ? __pfx_vm_mmap_pgoff+0x10/0x10
+   ? fget+0x1bf/0x270
+   ksys_mmap_pgoff+0x40c/0x690
+   ? __sanitizer_cov_trace_const_cmp4+0x16/0x30
+   ? __pfx_ksys_mmap_pgoff+0x10/0x10
+   ? __kasan_check_write+0x14/0x30
+   ? _raw_spin_trylock+0xbb/0x130
+   ? __pfx__raw_spin_trylock+0x10/0x10
+   __x64_sys_mmap+0x135/0x1e0
+   x64_sys_call+0x1c14/0x2790
+   do_syscall_64+0xd2/0x1050
+   ? rcu_core+0x352/0x7d0
+   ? rcu_core_si+0xe/0x20
+   ? handle_softirqs+0x1aa/0x650
+   ? __sanitizer_cov_trace_cmp4+0x16/0x30
+   ? fpregs_assert_state_consistent+0xe1/0x160
+   ? irqentry_exit+0xb1/0x670
+   entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+Link: https://patch.msgid.link/r/20260515002537.6209-1-yanjun.zhu@linux.dev
+Reported-and-tested-by: nasm <n4sm@protonmail.com>
+Suggested-by: nasm <n4sm@protonmail.com>
+Fixes: 8700e3e7c485 ("Soft RoCE driver")
+Signed-off-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+(cherry picked from commit 35744ab3d03c5fca8c1752f53fc8fc674e14c561)
+[Harshit: Minor conflict resolution pr_err() vs rxe_dbg_dev() usage]
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/renesas/pinctrl-rzg2l.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/infiniband/sw/rxe/rxe_mmap.c | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/pinctrl/renesas/pinctrl-rzg2l.c b/drivers/pinctrl/renesas/pinctrl-rzg2l.c
-index 1304ab0bcac1e..85bcc9bbe6770 100644
---- a/drivers/pinctrl/renesas/pinctrl-rzg2l.c
-+++ b/drivers/pinctrl/renesas/pinctrl-rzg2l.c
-@@ -708,7 +708,7 @@ static int rzg2l_pinctrl_pinconf_set(struct pinctrl_dev *pctldev,
- 		}
+diff --git a/drivers/infiniband/sw/rxe/rxe_mmap.c b/drivers/infiniband/sw/rxe/rxe_mmap.c
+index 9149b60954296..2749ed48b014a 100644
+--- a/drivers/infiniband/sw/rxe/rxe_mmap.c
++++ b/drivers/infiniband/sw/rxe/rxe_mmap.c
+@@ -93,18 +93,31 @@ int rxe_mmap(struct ib_ucontext *context, struct vm_area_struct *vma)
+ 	goto done;
  
- 		default:
--			return -EOPNOTSUPP;
-+			return -ENOTSUPP;
- 		}
+ found_it:
++	/*
++	 * Increment refcount and check whether it is being freed atm while
++	 * holding lock to prevent UAF
++	 */
++	if (!kref_get_unless_zero(&ip->ref)) {
++		spin_unlock_bh(&rxe->pending_lock);
++		ret = -ENXIO;
++		goto done;
++	}
++
+ 	list_del_init(&ip->pending_mmaps);
+ 	spin_unlock_bh(&rxe->pending_lock);
+ 
++	vma->vm_ops = &rxe_vm_ops;
++	vma->vm_private_data = ip;
++
+ 	ret = remap_vmalloc_range(vma, ip->obj, 0);
+ 	if (ret) {
++		vma->vm_private_data = NULL;
++		vma->vm_ops = NULL;
++		kref_put(&ip->ref, rxe_mmap_release);
+ 		pr_err("err %d from remap_vmalloc_range\n", ret);
+ 		goto done;
  	}
  
-@@ -757,7 +757,7 @@ static int rzg2l_pinctrl_pinconf_group_get(struct pinctrl_dev *pctldev,
- 
- 		/* Check config matching between to pin  */
- 		if (i && prev_config != *config)
--			return -EOPNOTSUPP;
-+			return -ENOTSUPP;
- 
- 		prev_config = *config;
- 	}
+-	vma->vm_ops = &rxe_vm_ops;
+-	vma->vm_private_data = ip;
+-	rxe_vma_open(vma);
+ done:
+ 	return ret;
+ }
 -- 
 2.53.0
 
