@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FDA82BE7A7;
-	Mon, 17 Aug 2026 13:53:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6B013D7D9B;
+	Mon, 17 Aug 2026 13:53:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974831; cv=none; b=YZmSGNoA1TsACJx6RH1l/QIZBuraWKYWCsgd8EVWvqIbAJlaie3UtrEbvo+CK6DXx9giUCJt4j7evIDkYjSO8f04STaNvZGHb+2AdMG/AXls5PHu3/RMYCWp9jGWIz0eOahf9SLiGmroHeroEKFJbM1z+kMWRz67WScp4mDsdug=
+	t=1786974834; cv=none; b=A1NlDxpqNgbBeNx96LjUoK/nFWN+wk4VCslq9zMcNwyyx3uqR//+/hZ3njpTYXj5dHRKLL9Bk5FRXn44EERe8q787vZZUB7tmhNWa0K46XipamoNyvITK8ic1FozjexaJ9Cslq49dBnZTyYYhW4P6Mj2abo0uUDl/exXAt9zYd8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974831; c=relaxed/simple;
-	bh=cUjSOYEJF1NpLnuCarVJljRb1GewU43BXcAHueXGdN0=;
+	s=arc-20240116; t=1786974834; c=relaxed/simple;
+	bh=+oi4c6MqrJfXndhpRy6V2l5kp5EejyUWiskN53Ky3bc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bciq2nlYDuxWtOvW1c6bQy9WRfACupH5URDYfPT2YXs8/hJ4KJ8uVWn//s2keDbHW7IjamYqehGzgBGPXWiFJxgsQhWfhmIiANSyVy7TZmYAaqQHE7w+jTXwMYk7bvYhCD8xaKjr7/9CEoCJOWLlTh3VjFFzfZvSJuymLJg0FJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q+qOc72R; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=A/r6Or5NitW4IVuHKsO/vPp08dX3CoufHjGq2k26rIwJdd7d8J9wuB8qZtqawlicMpAiIKkW0EAQ+D+jkEETF/MeCu7R6nneu62bWDa/pjn6RWoZ8Jx6w8j/ZV6tspt0FEaF3AGWN6dCRZGFATVlfmAeJEJgNfojj04m4RCLJQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ezfSEFo3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q+qOc72R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 157531F000E9;
-	Mon, 17 Aug 2026 13:53:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ezfSEFo3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E98751F00A3E;
+	Mon, 17 Aug 2026 13:53:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974824;
-	bh=U3q7Y4ZcP6xk/ZSLsixx84XhCFHiReEbLQsyjqHIMvg=;
+	s=korg; t=1786974827;
+	bh=zT7Ca7VA7NN+dDOc0akLwbZ1U2ABq2GfnMPvIpY5ooQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q+qOc72Rd6FYqiq6xPhaRVI5xXKkLHn8AtWryey8ASHGwvlFHmJSHj1GAwhY24UcB
-	 a2OgFXEeSI4gvUH01C391iYvWG/ygXyZ0AzYWio2F55b7h20ocW5dl4KHDsD+tyQEd
-	 1Oh/qFGy4YRTNIcvqEtJJvF3TEH7L0Zb41lJlfFc=
+	b=ezfSEFo3fxG/85Qu9t2Ml4tX8qDc8AuqJgUwq6bEcwKpZeCFK5oVjl0aDZyneoP/Y
+	 0YLF13UyMl0e00oBeri6lfTHujawcYYVcPE8WXrJl8phiwGXD4S/VVJnNPBpmVLxB5
+	 z87MFhxpqNnXG7FGWfpxmlmeAqVgvlWBmvR7DfrQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Douglas Anderson <dianders@chromium.org>,
+	"Cen Zhang (Microsoft)" <blbllhy@gmail.com>,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 030/250] drm/bridge: ps8640: propagate AUX transfer register errors
-Date: Mon, 17 Aug 2026 15:29:51 +0200
-Message-ID: <20260817132537.684219769@linuxfoundation.org>
+Subject: [PATCH 6.18 066/250] xsk: pass TX metadata pointer by reference
+Date: Mon, 17 Aug 2026 15:30:27 +0200
+Message-ID: <20260817132539.154790253@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -51,77 +52,201 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Stanislav Fomichev <sdf.kernel@gmail.com>
 
-[ Upstream commit 20697ecb299cd77b4cf8b28f655e56606b0472d8 ]
+[ Upstream commit 19366db6dfccac9b0867a151678cd7b89fb8fd99 ]
 
-ps8640_aux_transfer_msg() programs the AUX address registers, starts the
-AUX transfer, waits for SWAUX_SEND to clear, and reads the AUX status
-register. Several of those regmap operations have return values, but the
-function only checks a stale ret after the status read.
+Completion handling needs to know whether a timestamp was requested when
+the metadata was processed. Let xsk_tx_metadata_request() update the
+caller's metadata pointer so that decision can be carried forward without
+rereading user-controlled flags.
 
-Propagate failures from the address write, transfer start, completion
-poll, and status read. This avoids returning a transfer length when the
-bridge register transaction or AUX completion wait failed.
+This only changes the interface; behavior remains unchanged.
 
-Fixes: 13afcdd7277e ("drm/bridge: parade-ps8640: Add support for AUX channel")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://patch.msgid.link/20260723103509.2-ps8640-v2-pengpeng@iscas.ac.cn
+Fixes: ca4419f15abd ("xsk: Add launch time hardware offload support to XDP Tx metadata")
+Cc: Cen Zhang (Microsoft) <blbllhy@gmail.com>
+Signed-off-by: Stanislav Fomichev <sdf@fomichev.me>
+Link: https://patch.msgid.link/20260727161959.885642-3-sdf@fomichev.me
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/parade-ps8640.c | 27 ++++++++++++++++++++------
- 1 file changed, 21 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/intel/igc/igc_main.c          |  2 +-
+ drivers/net/ethernet/mellanox/mlx5/core/en.h       |  2 +-
+ drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c   | 14 +++++++++-----
+ drivers/net/ethernet/mellanox/mlx5/core/en/xdp.h   |  4 ++--
+ .../net/ethernet/mellanox/mlx5/core/en/xsk/tx.c    |  2 +-
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c  |  2 +-
+ include/net/libeth/xsk.h                           |  2 +-
+ include/net/xdp_sock.h                             |  8 +++++---
+ 8 files changed, 21 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/parade-ps8640.c b/drivers/gpu/drm/bridge/parade-ps8640.c
-index 825777a5758f6..db8e5889dc7f1 100644
---- a/drivers/gpu/drm/bridge/parade-ps8640.c
-+++ b/drivers/gpu/drm/bridge/parade-ps8640.c
-@@ -257,8 +257,14 @@ static ssize_t ps8640_aux_transfer_msg(struct drm_dp_aux *aux,
- 	addr_len[PAGE0_SWAUX_LENGTH - base] = (len == 0) ? SWAUX_NO_PAYLOAD :
- 					      ((len - 1) & SWAUX_LENGTH_MASK);
+diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
+index 4ca242ebf3e34..f69523e35ac10 100644
+--- a/drivers/net/ethernet/intel/igc/igc_main.c
++++ b/drivers/net/ethernet/intel/igc/igc_main.c
+@@ -3082,7 +3082,7 @@ static void igc_xdp_xmit_zc(struct igc_ring *ring)
+ 		meta_req.tx_buffer = bi;
+ 		meta_req.meta = meta;
+ 		meta_req.used_desc = 0;
+-		xsk_tx_metadata_request(meta, &igc_xsk_tx_metadata_ops,
++		xsk_tx_metadata_request(&meta, &igc_xsk_tx_metadata_ops,
+ 					&meta_req);
  
--	regmap_bulk_write(map, PAGE0_SWAUX_ADDR_7_0, addr_len,
--			  ARRAY_SIZE(addr_len));
-+	ret = regmap_bulk_write(map, PAGE0_SWAUX_ADDR_7_0, addr_len,
-+				ARRAY_SIZE(addr_len));
-+	if (ret) {
-+		DRM_DEV_ERROR(dev,
-+			      "failed to write AUX address %#x, len %zu: %d\n",
-+			      msg->address, len, ret);
-+		return ret;
-+	}
+ 		/* xsk_tx_metadata_request() may have updated next_to_use */
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en.h b/drivers/net/ethernet/mellanox/mlx5/core/en.h
+index 3d8276a0692fc..91653b69328ee 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en.h
+@@ -477,7 +477,7 @@ typedef int (*mlx5e_fp_xmit_xdp_frame_check)(struct mlx5e_xdpsq *);
+ typedef bool (*mlx5e_fp_xmit_xdp_frame)(struct mlx5e_xdpsq *,
+ 					struct mlx5e_xmit_data *,
+ 					int,
+-					struct xsk_tx_metadata *);
++					struct xsk_tx_metadata **);
  
- 	if (len && (request == DP_AUX_NATIVE_WRITE ||
- 		    request == DP_AUX_I2C_WRITE)) {
-@@ -274,13 +280,22 @@ static ssize_t ps8640_aux_transfer_msg(struct drm_dp_aux *aux,
- 		}
+ struct mlx5e_xdpsq {
+ 	/* data path */
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c b/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c
+index 5322964214b22..e467a7b067c7a 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c
+@@ -451,11 +451,11 @@ INDIRECT_CALLABLE_SCOPE int mlx5e_xmit_xdp_frame_check_mpwqe(struct mlx5e_xdpsq
+ 
+ INDIRECT_CALLABLE_SCOPE bool
+ mlx5e_xmit_xdp_frame(struct mlx5e_xdpsq *sq, struct mlx5e_xmit_data *xdptxd,
+-		     int check_result, struct xsk_tx_metadata *meta);
++		     int check_result, struct xsk_tx_metadata **meta);
+ 
+ INDIRECT_CALLABLE_SCOPE bool
+ mlx5e_xmit_xdp_frame_mpwqe(struct mlx5e_xdpsq *sq, struct mlx5e_xmit_data *xdptxd,
+-			   int check_result, struct xsk_tx_metadata *meta)
++			   int check_result, struct xsk_tx_metadata **meta)
+ {
+ 	struct mlx5e_tx_mpwqe *session = &sq->mpwqe;
+ 	struct mlx5e_xdpsq_stats *stats = sq->stats;
+@@ -503,7 +503,10 @@ mlx5e_xmit_xdp_frame_mpwqe(struct mlx5e_xdpsq *sq, struct mlx5e_xmit_data *xdptx
+ 		 * and it's safe to complete it at any time.
+ 		 */
+ 		mlx5e_xdp_mpwqe_session_start(sq);
+-		xsk_tx_metadata_request(meta, &mlx5e_xsk_tx_metadata_ops, &session->wqe->eth);
++		if (meta)
++			xsk_tx_metadata_request(meta,
++						&mlx5e_xsk_tx_metadata_ops,
++						&session->wqe->eth);
  	}
  
--	regmap_write(map, PAGE0_SWAUX_CTRL, SWAUX_SEND);
-+	ret = regmap_write(map, PAGE0_SWAUX_CTRL, SWAUX_SEND);
-+	if (ret) {
-+		DRM_DEV_ERROR(dev, "failed to start AUX transfer: %d\n", ret);
-+		return ret;
-+	}
+ 	mlx5e_xdp_mpwqe_add_dseg(sq, p, stats);
+@@ -534,7 +537,7 @@ INDIRECT_CALLABLE_SCOPE int mlx5e_xmit_xdp_frame_check(struct mlx5e_xdpsq *sq)
  
- 	/* Zero delay loop because i2c transactions are slow already */
--	regmap_read_poll_timeout(map, PAGE0_SWAUX_CTRL, data,
--				 !(data & SWAUX_SEND), 0, 50 * 1000);
-+	ret = regmap_read_poll_timeout(map, PAGE0_SWAUX_CTRL, data,
-+				       !(data & SWAUX_SEND), 0, 50 * 1000);
-+	if (ret) {
-+		DRM_DEV_ERROR(dev, "failed to complete AUX transfer: %d\n",
-+			      ret);
-+		return ret;
-+	}
+ INDIRECT_CALLABLE_SCOPE bool
+ mlx5e_xmit_xdp_frame(struct mlx5e_xdpsq *sq, struct mlx5e_xmit_data *xdptxd,
+-		     int check_result, struct xsk_tx_metadata *meta)
++		     int check_result, struct xsk_tx_metadata **meta)
+ {
+ 	struct mlx5e_xmit_data_frags *xdptxdf =
+ 		container_of(xdptxd, struct mlx5e_xmit_data_frags, xd);
+@@ -648,7 +651,8 @@ mlx5e_xmit_xdp_frame(struct mlx5e_xdpsq *sq, struct mlx5e_xmit_data *xdptxd,
  
--	regmap_read(map, PAGE0_SWAUX_STATUS, &data);
-+	ret = regmap_read(map, PAGE0_SWAUX_STATUS, &data);
- 	if (ret) {
- 		DRM_DEV_ERROR(dev, "failed to read PAGE0_SWAUX_STATUS: %d\n",
- 			      ret);
+ 	sq->pc += num_wqebbs;
+ 
+-	xsk_tx_metadata_request(meta, &mlx5e_xsk_tx_metadata_ops, eseg);
++	if (meta)
++		xsk_tx_metadata_request(meta, &mlx5e_xsk_tx_metadata_ops, eseg);
+ 
+ 	sq->doorbell_cseg = cseg;
+ 
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.h b/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.h
+index 46ab0a9e8cddb..1a9eb77981cc3 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.h
+@@ -113,11 +113,11 @@ extern const struct xsk_tx_metadata_ops mlx5e_xsk_tx_metadata_ops;
+ INDIRECT_CALLABLE_DECLARE(bool mlx5e_xmit_xdp_frame_mpwqe(struct mlx5e_xdpsq *sq,
+ 							  struct mlx5e_xmit_data *xdptxd,
+ 							  int check_result,
+-							  struct xsk_tx_metadata *meta));
++							  struct xsk_tx_metadata **meta));
+ INDIRECT_CALLABLE_DECLARE(bool mlx5e_xmit_xdp_frame(struct mlx5e_xdpsq *sq,
+ 						    struct mlx5e_xmit_data *xdptxd,
+ 						    int check_result,
+-						    struct xsk_tx_metadata *meta));
++						    struct xsk_tx_metadata **meta));
+ INDIRECT_CALLABLE_DECLARE(int mlx5e_xmit_xdp_frame_check_mpwqe(struct mlx5e_xdpsq *sq));
+ INDIRECT_CALLABLE_DECLARE(int mlx5e_xmit_xdp_frame_check(struct mlx5e_xdpsq *sq));
+ 
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/xsk/tx.c b/drivers/net/ethernet/mellanox/mlx5/core/en/xsk/tx.c
+index a59199ed590da..827538d92ac23 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/xsk/tx.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/xsk/tx.c
+@@ -103,7 +103,7 @@ bool mlx5e_xsk_tx(struct mlx5e_xdpsq *sq, unsigned int budget)
+ 
+ 		ret = INDIRECT_CALL_2(sq->xmit_xdp_frame, mlx5e_xmit_xdp_frame_mpwqe,
+ 				      mlx5e_xmit_xdp_frame, sq, &xdptxd,
+-				      check_result, meta);
++				      check_result, &meta);
+ 		if (unlikely(!ret)) {
+ 			if (sq->mpwqe.wqe)
+ 				mlx5e_xdp_mpwqe_complete(sq);
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index 3be0b79532496..3380ce960de24 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -2574,7 +2574,7 @@ static bool stmmac_xdp_xmit_zc(struct stmmac_priv *priv, u32 queue, u32 budget)
+ 		meta_req.set_ic = &set_ic;
+ 		meta_req.tbs = tx_q->tbs;
+ 		meta_req.edesc = &tx_q->dma_entx[entry];
+-		xsk_tx_metadata_request(meta, &stmmac_xsk_tx_metadata_ops,
++		xsk_tx_metadata_request(&meta, &stmmac_xsk_tx_metadata_ops,
+ 					&meta_req);
+ 		if (set_ic) {
+ 			tx_q->tx_count_frames = 0;
+diff --git a/include/net/libeth/xsk.h b/include/net/libeth/xsk.h
+index 481a7b28e6f24..1a55daa32cf16 100644
+--- a/include/net/libeth/xsk.h
++++ b/include/net/libeth/xsk.h
+@@ -205,7 +205,7 @@ __libeth_xsk_xmit_fill_buf_md(const struct xdp_desc *xdesc,
+ 	BUILD_BUG_ON(!__builtin_constant_p(tmo == libeth_xsktmo));
+ 	tmo = tmo == libeth_xsktmo ? &__libeth_xsktmo : tmo;
+ 
+-	xsk_tx_metadata_request(ctx.meta, tmo, &desc);
++	xsk_tx_metadata_request(&ctx.meta, tmo, &desc);
+ 
+ 	return desc;
+ }
+diff --git a/include/net/xdp_sock.h b/include/net/xdp_sock.h
+index 8a0967af8f0c4..b93d6bd368d00 100644
+--- a/include/net/xdp_sock.h
++++ b/include/net/xdp_sock.h
+@@ -152,17 +152,19 @@ static inline void xsk_tx_metadata_to_compl(struct xsk_tx_metadata *meta,
+ /**
+  *  xsk_tx_metadata_request - Evaluate AF_XDP TX metadata at submission
+  *  and call appropriate xsk_tx_metadata_ops operation.
+- *  @meta: pointer to AF_XDP metadata area
++ *  @pmeta: pointer to pointer to AF_XDP metadata area
+  *  @ops: pointer to struct xsk_tx_metadata_ops
+  *  @priv: pointer to driver-private aread
+  *
+  *  This function should be called by the networking device when
+  *  it prepares AF_XDP egress packet.
+  */
+-static inline void xsk_tx_metadata_request(const struct xsk_tx_metadata *meta,
++static inline void xsk_tx_metadata_request(struct xsk_tx_metadata **pmeta,
+ 					   const struct xsk_tx_metadata_ops *ops,
+ 					   void *priv)
+ {
++	const struct xsk_tx_metadata *meta = *pmeta;
++
+ 	if (!meta)
+ 		return;
+ 
+@@ -224,7 +226,7 @@ static inline void xsk_tx_metadata_to_compl(struct xsk_tx_metadata *meta,
+ {
+ }
+ 
+-static inline void xsk_tx_metadata_request(struct xsk_tx_metadata *meta,
++static inline void xsk_tx_metadata_request(struct xsk_tx_metadata **pmeta,
+ 					   const struct xsk_tx_metadata_ops *ops,
+ 					   void *priv)
+ {
 -- 
 2.53.0
 
