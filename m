@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E35843DA2C;
-	Mon, 17 Aug 2026 14:42:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 799E12AEE1;
+	Mon, 17 Aug 2026 14:42:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977773; cv=none; b=NUseBakdDaQYrvZkzl2GPN5ND0PAMdaNWKmSSiqEDQ+o83hElFKTzrGZC4XbNIu7Y+HxpHgxPKdpPi/vIDS6/cIMWN/SDus6Zu4coGK0uNxYDq9ReJADv3smqsY+Y3yRpbKrGEjw2ATRX5zGwZnozB1X9B3PccELYgclPLaOqo4=
+	t=1786977774; cv=none; b=LuP1b2fYPbgaB6fs92+l1wAgaXSmT3m4CBW3dLtM+tGkE/OIImMo3qIgltg3Gt2qv3FFNdzLyvoA6PQeCY9slpX5Q3sP017LI+mJc2WzUjzsPuegI6N20EHFbBToI6rM4lqC7kLqIp0ySv2nBDh1dbVEfH7k3mWStd8scjrE4LU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977773; c=relaxed/simple;
-	bh=t5NVvuN1+jeaizjLz6sQiNjeBAqlz4nhAOWu2pem1L0=;
+	s=arc-20240116; t=1786977774; c=relaxed/simple;
+	bh=9fzEWrtODeO7XvA7ZOCByhU402QDVE3lDMOhPfa0bJk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VPUBcfjpWqiVsZUDUsitJozqrKC6wz/jr6gusRH9+CdvnO6ACBTL5WiBwBkzevb79K+jVV7zGjWYB4Tl2aMLkoNre4TlgKUEXwkp+yeS9+1wkP3slypdrC6W8nn/NJfYhxLIz/GPlO74YglF5GuSAAUoQeVDAk7JNrzG+ozOu74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KUtx1fWC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UeU6CGOwO2lJnl2DJlrOzrkADL4Ij6fs8SJBsN3T1OS5dg/sDYaPdkTJil6f9MxT8xljVczk7MnIg5khRyLxzVxtGNLNctSYrgno7CEq8ADaDscTC6Qe8sfJar/aAY09U0f72JOvjIB7x7Qb8Ph7iZ63f+do10et0vf5Ounawpc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k+nmEHm4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KUtx1fWC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F32561F000E9;
-	Mon, 17 Aug 2026 14:42:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k+nmEHm4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D29751F00A3A;
+	Mon, 17 Aug 2026 14:42:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977770;
-	bh=PL6NStFJiN91vlVdSdRr6txBdgonJXXgPjpn4lfCyjs=;
+	s=korg; t=1786977773;
+	bh=7tZVCyciHBFSjkR8sKFY8xbZrVIHZZuyBcmxJ60vWrU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KUtx1fWCFxQwIVpqhRrMpfbvQ0vPcWVEAHmct2r1+DMe/nExPbelClpngCwu2hIwg
-	 KJc7bhdYt2qhu6L5sCGU7N1dxQPZll7T/7+1UctLms/6434yeRFCzE4b+i+pUhnKis
-	 e6oN44laOSlcoBnfL5qO4Vb5jVtIXzd5b8TTYRnY=
+	b=k+nmEHm4FpGTrupgDPbtp6Pa56yY4cZhlTGbyHu7u06QHo0b63UlCMg0ckpiI2MdL
+	 corzGhxDHQh5B5HqRbNpcRGfWOreta8Z8jCIFfd1srInCTXXrQHymokqiv3vaDyghk
+	 +SQVBEA6ij2iKws5/FlhUA7jepXFdkZf2GS7q790=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan XinRan <shinjiangjiang@gmail.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 394/456] net: thunderbolt: Tear down DMA paths before stopping the rings
-Date: Mon, 17 Aug 2026 15:33:04 +0200
-Message-ID: <20260817132554.797359471@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Zhiling Zou <zhilinz@nebusec.ai>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 5.15 438/456] netfilter: bridge: release template ct on non-IP path
+Date: Mon, 17 Aug 2026 15:33:48 +0200
+Message-ID: <20260817132556.240420852@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -52,117 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan XinRan <shinjiangjiang@gmail.com>
+From: Zhiling Zou <zhilinz@nebusec.ai>
 
-[ Upstream commit 68bf02b6b4ad3f748c6db71fd77b6c0402d252f4 ]
+commit d45cc8020d7c0a9f01dee42ff5c40bc14c9af72f upstream.
 
-tbnet_tear_down() stops both rings and frees their frame buffers before
-calling tb_xdomain_disable_paths().  tb_ring_stop() zeroes the ring's
-descriptor base and tbnet_free_buffers() unmaps and frees the pages the
-frames sit in, so by the time __tb_path_deactivate_hop() polls the hop's
-'pending' bit, anything still in flight has nowhere to drain to.
+A bridge nftables ct zone set rule can attach a conntrack template to
+an skb before nf_ct_bridge_pre() sees it. For non-IPv4 and non-IPv6
+EtherTypes, nf_ct_bridge_pre() currently overwrites skb->_nfct with
+IP_CT_UNTRACKED without releasing the existing template reference.
 
-The teardown sequence has been in this order since the driver was added.
-The setup path has not: commit ff7cd07f3064 ("net: thunderbolt: Enable
-DMA paths only after rings are enabled") moved the path enable to the end
-of tbnet_connected_work() and documented why:
+That makes the per-cpu template, and any temporary templates allocated
+for concurrent use, unreachable and leaks memory until the host runs out
+of slab.
 
-	/* Both logins successful so enable the rings, high-speed DMA
-	 * paths and start the network device queue.
-	 *
-	 * Note we enable the DMA paths last to make sure we have primed
-	 * the Rx ring before any incoming packets are allowed to
-	 * arrive.
-	 */
+Reset the skb conntrack state before marking the frame untracked so the
+existing template reference is dropped on the non-IP path.
 
-Teardown was never updated to match, so the rings and the paths now come
-down in the same order they go up instead of in reverse.
-
-On an ASMedia ASM4242 host router the 'pending' bit then never clears:
-every teardown burns the full 500 ms timeout and
-__tb_path_deactivate_hop() returns -ETIMEDOUT.  Raising the timeout to
-5 s does not help, so the hop is not slow to drain, it never drains
-at all.
-
-The failure is invisible above the thunderbolt core.
-__tb_path_deactivate_hops() is void and only calls tb_port_warn();
-tb_path_deactivate(), tb_tunnel_deactivate() and
-__tb_disconnect_xdomain_paths() are void as well, and
-tb_disconnect_xdomain_paths() ends in an unconditional "return 0".  So
-tb_xdomain_disable_paths() reports success and the netdev_warn() below
-it never fires.  Repeated teardowns eventually take the XDomain control
-channel down, after which the peer node is gone and only a power cycle
-brings the controller back.
-
-Deactivating the paths first fixes it.  Measured with kretprobes on a
-stock v6.17 tree with no other patches applied, on a link that was up
-and had just carried traffic:
-
-  before: __tb_path_deactivate_hop() returns 0 for the first hop, then
-          -ETIMEDOUT for the second 500335 us later
-  after:  0 for both, 525 us apart
-
-Alternating the two orderings ABBA over three load levels, four
-teardowns per arm: every teardown failed before the change (21 of 21
-that ran), none failed after (0 of 24).  The before arms ran short
-because the link died partway through.  The same split shows up when
-the interface is enslaved to a bond instead of just brought down, which
-is how I ran into this in the first place.  Throughput and latency after
-the change are unchanged.
-
-Hosts whose routers drain the hop despite the stale descriptor base see
-no functional difference, since the paths end up deactivated either way.
-
-Fixes: e69b6c02b4c3 ("net: Add support for networking over Thunderbolt cable")
-Signed-off-by: Fan XinRan <shinjiangjiang@gmail.com>
-Acked-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Link: https://patch.msgid.link/20260803-b4-tbnet-teardown-v2-1-27de6a13ca2d@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 3c171f496ef5 ("netfilter: bridge: add connection tracking system")
+Cc: stable@vger.kernel.org
+Reported-by: Vega <vega@nebusec.ai>
+Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/thunderbolt.c | 20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+ net/bridge/netfilter/nf_conntrack_bridge.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/thunderbolt.c b/drivers/net/thunderbolt.c
-index ba9f7062f5a7d..53d56cc860cd2 100644
---- a/drivers/net/thunderbolt.c
-+++ b/drivers/net/thunderbolt.c
-@@ -373,11 +373,16 @@ static void tbnet_tear_down(struct tbnet *net, bool send_logout)
- 				break;
- 		}
- 
--		tb_ring_stop(net->rx_ring.ring);
--		tb_ring_stop(net->tx_ring.ring);
--		tbnet_free_buffers(&net->rx_ring);
--		tbnet_free_buffers(&net->tx_ring);
--
-+		/* Tear the paths down before stopping the rings.  This mirrors
-+		 * tbnet_connected_work(), which enables the paths last so the
-+		 * Rx ring is primed before packets can arrive.  Stopping a
-+		 * ring zeroes its descriptor base and tbnet_free_buffers()
-+		 * unmaps and frees the frame buffers, leaving anything still
-+		 * in flight with nowhere to drain to;
-+		 * __tb_path_deactivate_hop() then waits for the hop's
-+		 * 'pending' bit, which on some host routers never clears in
-+		 * that state.
-+		 */
- 		ret = tb_xdomain_disable_paths(net->xd,
- 					       net->local_transmit_path,
- 					       net->tx_ring.ring->hop,
-@@ -386,6 +391,11 @@ static void tbnet_tear_down(struct tbnet *net, bool send_logout)
- 		if (ret)
- 			netdev_warn(net->dev, "failed to disable DMA paths\n");
- 
-+		tb_ring_stop(net->rx_ring.ring);
-+		tb_ring_stop(net->tx_ring.ring);
-+		tbnet_free_buffers(&net->rx_ring);
-+		tbnet_free_buffers(&net->tx_ring);
-+
- 		tb_xdomain_release_in_hopid(net->xd, net->remote_transmit_path);
- 		net->remote_transmit_path = 0;
+--- a/net/bridge/netfilter/nf_conntrack_bridge.c
++++ b/net/bridge/netfilter/nf_conntrack_bridge.c
+@@ -280,6 +280,7 @@ static unsigned int nf_ct_bridge_pre(voi
+ 		ret = nf_ct_br_defrag6(skb, &bridge_state);
+ 		break;
+ 	default:
++		nf_reset_ct(skb);
+ 		nf_ct_set(skb, NULL, IP_CT_UNTRACKED);
+ 		return NF_ACCEPT;
  	}
--- 
-2.53.0
-
 
 
