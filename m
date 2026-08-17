@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DF4B4322E5;
-	Mon, 17 Aug 2026 14:50:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCF293F23B1;
+	Mon, 17 Aug 2026 14:50:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978238; cv=none; b=alxprEbarSaSQHweoaGTjKsYAJu8h6kLapQUJspyWr5S0zlxi2LHVmMPmrWebU0hcpgowDv+qx7SPaf49bmapmxzdoBxdKAsWSy2zoRTPEHdIg/BPKHAxRzFX9vGvMBJB6AriNotZqNtmuhefaQn1iThhrnXczLGle6bw2j065U=
+	t=1786978240; cv=none; b=YG74s7D36um/HfIe1RNJP+T5mwDGC5VC+m/oAvRAiNe48hi8vLKWAWZHf8tIXOE7+ULoAcun+7D0dmXhBHIEPE+gOpAZC1SCWm3zr5RwIje1HQRA9yBbCdJpe2Ht+S5NAzS8HlaG5jHK/Xv8h8r2mssdKobvcORBtM17LyNd7MQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978238; c=relaxed/simple;
-	bh=nlwRV/S0R/oO6T/3OVI9ighPrRIkDCnOShUzn9U3jSs=;
+	s=arc-20240116; t=1786978240; c=relaxed/simple;
+	bh=5UwOW3iQDrDlr/QcfvSZhgIBq44s1lOOqmV1uSnisHE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HbSVZYuVV1ukVTnIKutU52ZiJYS2vdQlboYFPXAyzIGuHi3nrLbKh9x+fu24PWt4PlrjN5ay7OCCzhTk8u6rx+seOW06uF8Fan/BPC3kt13DC29yMfPveBXofe7T2DcgXc56IsbkZEjf9iPm9lr/tTsIj5DIW2xPf8SFkFIYiEQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0m+KoKJn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KZWjlqRhqPGByWI/rFEsiSOC9YEPwhzRdubDmLN0Z721oWi+omN4GA96FE2xvj5OMVTkv+XQqQULVx8aZZ3QyOL+lcr3J7ShWxNdBBy+xoOcJHMQ0/IA0qMVWzYduHErgbnQ9a8uWTM1sMEfPsi9KqoU+1eFzP3NVY7nLWKesEs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DkYXTzo+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0m+KoKJn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 553EB1F000E9;
-	Mon, 17 Aug 2026 14:50:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DkYXTzo+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32F071F000E9;
+	Mon, 17 Aug 2026 14:50:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978236;
-	bh=P71epoDihCk8nZ8Lm3HZ38HmPeg/9hcd3ul21yuGiPs=;
+	s=korg; t=1786978239;
+	bh=ETmBgo6Hsv+gCmuujXxIUHKbYF7zq6dLMzf9+qraYaQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0m+KoKJnu2tyYdGNgdZPOBTn05fqYkuppUT0n72dTOTwYZtzG95HA5kRiMkM6/vS7
-	 Z0X5+uh710xHFJSadFuxD/VfcEKQEgYXxuDTF/7aqDHnug95dtB6GhZLmqQ92USpOM
-	 6CuG74C3B1NhQzzOcC9oMLDYoOtNTa4aj1XeZbyk=
+	b=DkYXTzo+6X5y7PWlgbcqu4IUuBCkD7QT8yIg+QYTYLpd9Z5pJjJzREdidSy7rXXVM
+	 Q9IhXQ9yXHUup5ubk5FvrorjmHylGN9tMsq1I3lQJMnIiDjV+V87hRx5aE5sA9FD/L
+	 qkr0GX8YD/YGBEqY2uz1YAIWQfOVAPjHdONtOC88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Menachem Adin <menachem.adin@intel.com>,
-	Alexander Usyskin <alexander.usyskin@intel.com>
-Subject: [PATCH 6.12 122/181] mei: pull kvfree out of spinlock
-Date: Mon, 17 Aug 2026 15:33:36 +0200
-Message-ID: <20260817132540.358897855@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 6.12 149/181] ovl: dont warn when the mount is completed from another user namespace
+Date: Mon, 17 Aug 2026 15:34:03 +0200
+Message-ID: <20260817132541.556924301@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
 References: <20260817132535.394764707@linuxfoundation.org>
@@ -51,96 +50,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Usyskin <alexander.usyskin@intel.com>
+From: Christian Brauner <brauner@kernel.org>
 
-commit b0495bb58af06a7de4628c72d500e3d5e180d808 upstream.
+commit 63981fc786daaa626cb14d9be1406f674d79f98f upstream.
 
-The read buffer allocation was changed from kmalloc() to kvmalloc().
+fsopen() records the caller's user namespace in fc->user_ns and hands
+back an ordinary file descriptor. Nothing ties the task that calls
+fsconfig(FSCONFIG_CMD_CREATE) to the task that created the context. The
+fd is inherited across fork() and exec() and it can be passed over a
+unix socket.
 
-This buffer is part of mei_cl_cb structure that can be queued in
-rd_complete queue protected by spinlock.
-Releasing the structure leads to errors like below when freeing buffer
-that allocated non-contiguous:
+Completing a context from another user namespace is allowed on purpose.
+vfs_cmd_create() authorizes the create with mount_capable(), which for
+FS_USERNS_MOUNT checks ns_capable(fc->user_ns, CAP_SYS_ADMIN), and that
+succeeds for a task holding CAP_SYS_ADMIN in an ancestor of fc->user_ns.
+So an unprivileged task can reach the WARN_ON() in ovl_fill_super():
+create a user and a mount namespace in a child, call fsopen("overlay")
+there, send the fscontext fd to the parent and let the parent issue
+FSCONFIG_CMD_CREATE. Both namespaces come from a plain unshare(1) and no
+capability is needed anywhere:
 
-BUG: sleeping function called from invalid context at mm/vmalloc.c:3448
+  WARNING: fs/overlayfs/super.c:1551 at ovl_fill_super+0x7b9/0x1e20 [overlay]
+  CPU: 3 UID: 1000 PID: 3243376 Comm: fswarn
+  Call Trace:
+   get_tree_nodev+0x71/0xa0
+   ovl_get_tree+0x15/0x20 [overlay]
+   vfs_get_tree+0x2a/0x100
+   vfs_cmd_create+0x60/0xf0
+   __do_sys_fsconfig+0x4b2/0x500
 
-Separate mei_cl_cb structure dequeue and release to
-perform only dequeue under spinlock and push release out of spinlock.
+The child needs the mount namespace because fsopen() itself gates on
+may_mount(), which asks for CAP_SYS_ADMIN in the user namespace owning
+the caller's mount namespace. fsconfig() doesn't repeat that check.
 
-Cc: stable <stable@kernel.org>
-Fixes: 4adf613e01bf ("mei: use kvmalloc for read buffer")
-Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/work_items/16359
-Reviewed-by: Menachem Adin <menachem.adin@intel.com>
-Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
-Link: https://patch.msgid.link/20260719-kvfree_out_of_spinlock-v1-1-e07d6333bea7@intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+It is a WARN_ON() and not a WARN_ON_ONCE(), so the condition can be
+raised in a loop to taint the kernel and flood the log, and it panics a
+kernel booted with panic_on_warn.
+
+Keep refusing the mount and stop warning about it. ovl_parse_param()
+already spells a user namespace check this way for Opt_override_creds.
+
+Fixes: 1784fbc2ed9c ("ovl: port to new mount api")
+Cc: stable@vger.kernel.org # v6.5+
+Link: https://patch.msgid.link/20260802-work-fill_super-warn-v1-1-4e987911a39a@kernel.org
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/mei/client.c |   25 +++++++++++++++----------
- 1 file changed, 15 insertions(+), 10 deletions(-)
+ fs/overlayfs/super.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/misc/mei/client.c
-+++ b/drivers/misc/mei/client.c
-@@ -447,18 +447,24 @@ static void mei_io_tx_list_free_cl(struc
- }
+--- a/fs/overlayfs/super.c
++++ b/fs/overlayfs/super.c
+@@ -1299,7 +1299,8 @@ int ovl_fill_super(struct super_block *s
+ 	int err;
  
- /**
-- * mei_io_list_free_fp - free cb from a list that matches file pointer
-+ * mei_io_rd_list_free_fp - free cb from a rd_completed list that matches file pointer
-  *
-- * @head: io list
-+ * @cl: host client
-  * @fp: file pointer (matching cb file object), may be NULL
-  */
--static void mei_io_list_free_fp(struct list_head *head, const struct file *fp)
-+static void mei_io_rd_list_free_fp(struct mei_cl *cl, const struct file *fp)
- {
- 	struct mei_cl_cb *cb, *next;
-+	LIST_HEAD(cmpl_list);
+ 	err = -EIO;
+-	if (WARN_ON(fc->user_ns != current_user_ns()))
++	/* The fscontext fd may have been passed to another user namespace. */
++	if (fc->user_ns != current_user_ns())
+ 		goto out_err;
  
--	list_for_each_entry_safe(cb, next, head, list)
-+	spin_lock(&cl->rd_completed_lock);
-+	list_for_each_entry_safe(cb, next, &cl->rd_completed, list)
- 		if (!fp || fp == cb->fp)
--			mei_io_cb_free(cb);
-+			list_move(&cb->list, &cmpl_list);
-+	spin_unlock(&cl->rd_completed_lock);
-+
-+	list_for_each_entry_safe(cb, next, &cmpl_list, list)
-+		mei_io_cb_free(cb);
- }
- 
- /**
-@@ -587,9 +593,7 @@ int mei_cl_flush_queues(struct mei_cl *c
- 		mei_io_list_flush_cl(&cl->dev->ctrl_rd_list, cl);
- 		mei_cl_free_pending(cl);
- 	}
--	spin_lock(&cl->rd_completed_lock);
--	mei_io_list_free_fp(&cl->rd_completed, fp);
--	spin_unlock(&cl->rd_completed_lock);
-+	mei_io_rd_list_free_fp(cl, fp);
- 
- 	return 0;
- }
-@@ -1426,7 +1430,7 @@ void mei_cl_add_rd_completed(struct mei_
- }
- 
- /**
-- * mei_cl_del_rd_completed - free read completed callback with lock
-+ * mei_cl_del_rd_completed - unlink read completed callback with lock and free it
-  *
-  * @cl: host client
-  * @cb: callback block
-@@ -1435,8 +1439,9 @@ void mei_cl_add_rd_completed(struct mei_
- void mei_cl_del_rd_completed(struct mei_cl *cl, struct mei_cl_cb *cb)
- {
- 	spin_lock(&cl->rd_completed_lock);
--	mei_io_cb_free(cb);
-+	list_del_init(&cb->list);
- 	spin_unlock(&cl->rd_completed_lock);
-+	mei_io_cb_free(cb);
- }
- 
- /**
+ 	sb->s_d_op = &ovl_dentry_operations;
 
 
