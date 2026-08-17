@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58F96175A6B;
-	Mon, 17 Aug 2026 14:40:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B6AA175A6B;
+	Mon, 17 Aug 2026 14:40:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977651; cv=none; b=IBM63AssM66nLND0sod3v5oNANQNRE0z83LkSN4WrdQzOwb07L3SB0L4hb3NFWhJY/P4Gkge2OJ4iNymB4XqB7x9D/ZDPpXUoTDndTf7NHjcsqgIV8pCF18yJJVs9lEDgtWE/WicseDFLEBx1CHRxRtEvqVWpC8U/ZKIuhL75Hk=
+	t=1786977654; cv=none; b=gVHj4HcMuzNzPPX2Hk/f/MoE0tJwfSx0TBxqYfQcqQaf2Dg3vU/8PaKGMZ4IG2rIlzp1ruc2b/+hNDtec5B/L/FxZ02XWIgLEndAWl/WrppYDVntwIdkXXTkJgO0OsahaT33OrmYpL3cA0JJEYajNvTGbd+ISDxkHadbrF7F0qY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977651; c=relaxed/simple;
-	bh=cRZKWZ3DbaAm1Xxy7Vr8GNssKJzFF8bp/bNCCo86QcI=;
+	s=arc-20240116; t=1786977654; c=relaxed/simple;
+	bh=riSwfmJlyxPF/QkUSSyyug88qt3vTvI5IRFKyAkNuJo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p0ZqcyQsV8mMHqJTUeb/NysMPrFZFocr/5WfSWxNRuIrcgrvYMA/bQck3gnl5GZMvEn6dueJVJb8iAi8sjLLIIG8SpFtsWfFoqrdNrACNcsJARuPiEukfZnzYF2wOs33CBApxhRj9z9P90vQXWkV7StS4zChrE73zN8MZot1avQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mTOmVlbr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZsC16m0lYUGqJhfdR2/TB1+5kKoE0O0xgrdDLABTFXeqxeJLFwmCOdDiW1rlltuN1hSIdtETbPQ/VEDzwSZ57qaFowIouHBvN5ChI6wat3pr2xDxjGDAcIZWn4wLDuQpYzy0PDvq+qLIXezHvnojrJxGYMmRF2H98kTuZu0JPvg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WkLCd8ku; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mTOmVlbr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FE311F000E9;
-	Mon, 17 Aug 2026 14:40:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WkLCd8ku"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8EAA1F000E9;
+	Mon, 17 Aug 2026 14:40:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977650;
-	bh=cNIZz/thK4eMXuURj7TiHV+WvO31earGHKSLUQb/fzc=;
+	s=korg; t=1786977653;
+	bh=X1rnCub5ZexALdCNmt2ug8unu3ByXV1evg8S7Ub3rCo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mTOmVlbro+2UmH8gS2S+cBtfZ36+IR0ql9NRcB7w1wlrdSTxOvmIPR/M+7ms0l5Hu
-	 h7X3Vu65zg/gOwd4JsWubU5ESxXTGu6z/2bpsfYmHuCOdoyNdGgWUAXHP6JzderGIV
-	 HixYpVPgCcwMkQXK0uQdr1+8ASoIDlSxEfNIotaM=
+	b=WkLCd8kun7kZFQBtFV9jfkVr6Uqy6ZfWz+avCgYp4sZlQAxOk/8FcY2/16wrZ2KmK
+	 mzrUGlLxXrZ5qmccbuHyaT4B8nomladTsU/EDgSCQ+9gOFz9kTYyOmQtNqQg70Vo08
+	 EHTN1u7VL+eAInjpzePi5CAdRJz+VNFaMsAtCqDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongyan Xu <getshell@seu.edu.cn>,
-	Niklas Cassel <cassel@kernel.org>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 395/456] ata: pata_sl82c105: fix bridge revision use-after-free
-Date: Mon, 17 Aug 2026 15:33:05 +0200
-Message-ID: <20260817132554.828982340@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	stable <stable@kernel.org>,
+	Pawel Laszczak <pawell@cadence.com>
+Subject: [PATCH 5.15 404/456] usb: cdnsp: fix incorrect endian conversions for APB timeout register
+Date: Mon, 17 Aug 2026 15:33:14 +0200
+Message-ID: <20260817132555.110406044@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -52,52 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongyan Xu <getshell@seu.edu.cn>
+From: Pawel Laszczak <pawell@cadence.com>
 
-[ Upstream commit 7700a31039cdc6715cb6cce7e7a664ee4e945f67 ]
+commit 50b303f3d0f7de543ee90d50879970783d06da33 upstream.
 
-pci_get_slot() returns a referenced PCI device. Commit 44c10138fd4b
-("PCI: Change all drivers to use pci_device->revision") replaced a
-configuration-space read with direct access to the cached revision field,
-but left that access after pci_dev_put(). The bridge may therefore be freed
-before its revision is read.
+readl() already returns a CPU-endian value. Passing its return value to
+le32_to_cpu() is therefore redundant and causes an incorrect double byte
+swap on big-endian systems.
 
-Read the revision before dropping the reference.
+Similarly, writel() expects a CPU-endian value, so passing the result of
+cpu_to_le32() is incorrect.
 
-Fixes: 44c10138fd4b ("PCI: Change all drivers to use pci_device->revision")
-Signed-off-by: Hongyan Xu <getshell@seu.edu.cn>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Remove the unnecessary conversions and operate on the MMIO register value
+as a CPU-endian u32.
+
+Fixes: 241e2ce88e5a ("usb: cdnsp: Fix issue with resuming from L1")
+Suggested-by: Arnd Bergmann <arnd@arndb.de>
+Cc: stable <stable@kernel.org>
+Signed-off-by: Pawel Laszczak <pawell@cadence.com>
+Acked-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://patch.msgid.link/20260720-endian-fix-v1-v1-1-b5681fa1ea9f@cadence.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/pata_sl82c105.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/usb/cdns3/cdnsp-gadget.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/ata/pata_sl82c105.c b/drivers/ata/pata_sl82c105.c
-index 8487470e2e01e..c32f3b490bb35 100644
---- a/drivers/ata/pata_sl82c105.c
-+++ b/drivers/ata/pata_sl82c105.c
-@@ -265,6 +265,7 @@ static struct ata_port_operations sl82c105_port_ops = {
- static int sl82c105_bridge_revision(struct pci_dev *pdev)
- {
- 	struct pci_dev *bridge;
-+	u8 revision;
+--- a/drivers/usb/cdns3/cdnsp-gadget.c
++++ b/drivers/usb/cdns3/cdnsp-gadget.c
+@@ -154,9 +154,9 @@ static void cdnsp_set_apb_timeout_value(
+ 	offset = cdnsp_find_next_ext_cap(base, offset, D_XEC_PRE_REGS_CAP);
+ 	reg = base + offset + REG_CHICKEN_BITS_3_OFFSET;
  
- 	/*
- 	 * The bridge should be part of the same device, but function 0.
-@@ -286,8 +287,9 @@ static int sl82c105_bridge_revision(struct pci_dev *pdev)
- 	/*
- 	 * We need to find function 0's revision, not function 1
- 	 */
-+	revision = bridge->revision;
- 	pci_dev_put(bridge);
--	return bridge->revision;
-+	return revision;
+-	val  = le32_to_cpu(readl(reg));
++	val  = readl(reg);
+ 	val = CHICKEN_APB_TIMEOUT_SET(val, cdns->override_apb_timeout);
+-	writel(cpu_to_le32(val), reg);
++	writel(val, reg);
  }
  
- static void sl82c105_fixup(struct pci_dev *pdev)
--- 
-2.53.0
-
+ static void cdnsp_set_chicken_bits_2(struct cdnsp_device *pdev, u32 bit)
 
 
