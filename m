@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FCD53C8C65;
-	Mon, 17 Aug 2026 13:39:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2192F32ED40;
+	Mon, 17 Aug 2026 13:39:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786973975; cv=none; b=AOTRT6xSRmQG+p//6XVUO8WmCEWhkl0HAkPGTRzDyo9tZwmMgThojveMIORMntHm0RzkoTlbp7Z19adoMxTrskbn9toQUZ/Mk150rPrsu5axdjauQho1I0hOK5wwYXkrgFcQQ4wB/pvk+UfMSOv9uhcmtBUbE19mdyCGq9zFmAo=
+	t=1786973978; cv=none; b=jwH2BYVTsGpfzM/+PlG9eERik8c7fFN0zNY2vDqz0Fo43VU19mDOCQXPsXaGd9Y+Ufa/qDb6tjKnxE5wPHEsmvQY1EXDA4OBZ/dmO0ctPOtaQeHHPQlgiSUdpbGSdYUGm6bkbQGkMWnx4+7iHOeZpdGPqTqfwCP7dRbzRNiYH9Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786973975; c=relaxed/simple;
-	bh=y5kt5TYTweyADIfKs3RO4oNMAO+JxgOZSxzdHOscEBM=;
+	s=arc-20240116; t=1786973978; c=relaxed/simple;
+	bh=//4zCm/6MK/OJrxBdzgfTsiAg5X293DJMbwyBsza7/0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AoWrHmsy5aAKbJVluDzcneK15cNNq6/5kESkjdLOHIjrYR9pN0p5vY3HWun4XMxio3ZyCChozXBMrk4IhEKyCy0NMzYnWDDsx6KTb6tzDZfClL9HRdYZCyjG0zLsGu3t5CaFIztrOuqG3AHAu3a2y8tjOSYcxNqNoQiNH3wR0iY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kpabgBzA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fJvgYy1K08uCX0rZE/8gu6jiyXyP73+GcjjS3L1+JxqnzDlSwPDZTG0LacnWkCA34qrGEdJVEeXj0c3MMyH+7uiyjacc/K47deyX6Bs9v99cDWK/QvrJ5NqIPkC1TXi8yKsu7mflMSYD35nsMqBtBx+g2q6h/NEmfeTsmHVUm1k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zrOcxMD/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kpabgBzA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A94781F00A3A;
-	Mon, 17 Aug 2026 13:39:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zrOcxMD/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B02C1F000E9;
+	Mon, 17 Aug 2026 13:39:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786973974;
-	bh=q5xY8ga6qypILzXgatQzQSvqXMjX3yXjuQaLs0hlGco=;
+	s=korg; t=1786973977;
+	bh=XZZju3Fl8B8eVcJ3khpQk1D95pz2gV4Dk4u8Z09bB/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kpabgBzAax6VhLhIvcomjBu3sGCgp3a0b1eEAnh74PCK7QAMhYIwR8g/YTNx1jDiO
-	 QoYg34yfHZdNyNz9iaRNMSOVkJCNB8HRPckexGDKcFPo71/rCb4Lz6tcasamDMdnaa
-	 /yZBKOAilujGcdwke/LYgj9RWc0fdVEdYRbeptrM=
+	b=zrOcxMD/r0tze7pAh4btF9IQY+KsnYQZCahqn5t3bn47ofWEe1ufFhULT/PXz0Buj
+	 fj5wGsjfW+QrCsEPHUsgFPWDINczMGOz2R2HG7/w0QWXKeCQv6hiWAa6T59Qjx1hKX
+	 x3xb0WdTLMMaIQd2qzGKEkLPvaEYsgOO4Rl37dPI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matti Vaittinen <mazziesaccount@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 046/271] watchdog: bd96801_wdt: Fix timeout for enabled WDG
-Date: Mon, 17 Aug 2026 15:29:31 +0200
-Message-ID: <20260817132538.626943952@linuxfoundation.org>
+Subject: [PATCH 7.1 047/271] btrfs: lzo: add error message for invalid headers
+Date: Mon, 17 Aug 2026 15:29:32 +0200
+Message-ID: <20260817132538.667346239@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -51,66 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matti Vaittinen <mazziesaccount@gmail.com>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 1246aa2b6ccc8944676bd24ff3e37cc56b93b51b ]
+[ Upstream commit 1cb15b153c636096740519f62040ec6dc3e50aef ]
 
-When watchdog is enabled at the probe time, the bd96801 driver retrieves
-the timeout configuration from the registers to set-up the heart-beat
-values.
+Inside btrfs we always pair -EUCLEAN error with an error message to
+indicate which data is corrupted.
 
-As Sashiko pointed out at
-https://lore.kernel.org/all/20260722085819.495211F000E9@smtp.kernel.org/
-the timeout values are incorrectly computed in driver, resulting wrong
-heartbeat. This leads to devere problems if watchdog was enabled at probe
-time.
+However there are 3 cases inside lzo decompression where there is no
+error message for corrupted headers.
 
-According to the data-sheet, the "too fast" ping limit is configured as
-multiple of FASTNG_MIN. Furthermore, the "too slow" ping limit is
-configured as multiples of "too fast" timeout. The FASTNG_MIN is set to
-11, meaning 1.1 mS and "too fast" and "too slow" limits are computed from
-this. Hence, converting the limits to mS should be done by dividing by 10,
-not by dividing by USEC_PER_MSEC.
+Add those missing error messages to show exactly where the corruption
+is.
 
-Fix this by dividing the timeout values with correct scaling factor.
-
-While at it, fix whitespace problem (double empty line).
-
-Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
-Fixes: 09dad69757b6 ("watchdog: ROHM BD96801 PMIC WDG driver")
-Link: https://lore.kernel.org/r/amxskHmQbi9v-8_l@mva-rohm
-[groeck: Added reference to whitespace change to description]
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Stable-dep-of: 0fa78ef637de ("btrfs: lzo: reject inline extents without valid headers")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/bd96801_wdt.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ fs/btrfs/lzo.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/watchdog/bd96801_wdt.c b/drivers/watchdog/bd96801_wdt.c
-index 12b74fd2bc052..a25b7cf1488b2 100644
---- a/drivers/watchdog/bd96801_wdt.c
-+++ b/drivers/watchdog/bd96801_wdt.c
-@@ -169,7 +169,6 @@ static int bd96801_set_wdt_mode(struct wdtbd96801 *w, unsigned int hw_margin,
- 	int fastng, slowng, type, ret, reg, mask;
- 	struct device *dev = w->dev;
+diff --git a/fs/btrfs/lzo.c b/fs/btrfs/lzo.c
+index 6e4aa22853aba..1531adb117d15 100644
+--- a/fs/btrfs/lzo.c
++++ b/fs/btrfs/lzo.c
+@@ -552,17 +552,26 @@ int lzo_decompress(struct list_head *ws, const u8 *data_in,
+ 	size_t max_segment_len = workspace_buf_length(fs_info);
+ 	int ret;
  
--
- 	if (hw_margin_min * 1000 > FASTNG_MAX_US) {
- 		dev_err(dev, "Unsupported fast timeout %u uS [max %u]\n",
- 			hw_margin_min * 1000, FASTNG_MAX_US);
-@@ -258,10 +257,10 @@ static int bd96801_set_heartbeat_from_hw(struct wdtbd96801 *w,
- 	fast = FASTNG_MIN << sel;
+-	if (unlikely(srclen < LZO_LEN || srclen > max_segment_len + LZO_LEN * 2))
++	if (unlikely(srclen < LZO_LEN || srclen > max_segment_len + LZO_LEN * 2)) {
++		btrfs_err(fs_info, "invalid lzo header length, has %zu expect (%u, %zu)",
++			  srclen, LZO_LEN, max_segment_len + LZO_LEN * 2);
+ 		return -EUCLEAN;
++	}
  
- 	sel = (val & BD96801_WD_RATIO_MASK) + 1;
--	w->wdt.max_hw_heartbeat_ms = (fast << sel) / USEC_PER_MSEC;
-+	w->wdt.max_hw_heartbeat_ms = (fast << sel) / 10;
+ 	in_len = get_unaligned_le32(data_in);
+-	if (unlikely(in_len != srclen))
++	if (unlikely(in_len != srclen)) {
++		btrfs_err(fs_info, "invalid lzo header length, has %zu expect %zu",
++			  in_len, srclen);
+ 		return -EUCLEAN;
++	}
+ 	data_in += LZO_LEN;
  
- 	if ((conf_reg & BD96801_WD_TYPE_MASK) == BD96801_WD_TYPE_WIN)
--		w->wdt.min_hw_heartbeat_ms = fast / USEC_PER_MSEC;
-+		w->wdt.min_hw_heartbeat_ms = fast / 10;
+ 	in_len = get_unaligned_le32(data_in);
+-	if (unlikely(in_len != srclen - LZO_LEN * 2))
++	if (unlikely(in_len != srclen - LZO_LEN * 2)) {
++		btrfs_err(fs_info, "invalid lzo segment length, has %zu expect %zu",
++			  in_len, srclen - LZO_LEN * 2);
+ 		return -EUCLEAN;
++	}
+ 	data_in += LZO_LEN;
  
- 	return 0;
- }
+ 	out_len = sectorsize;
 -- 
 2.53.0
 
