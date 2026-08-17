@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16A833E49E0;
-	Mon, 17 Aug 2026 14:06:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6AC83AAF76;
+	Mon, 17 Aug 2026 14:06:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975574; cv=none; b=KvGk9dg2pzyLVRhVPTHzcYqlvuRI+cuJlRFfmZN4MIOun9tt0aWWqPdcOFlEv5D7DNz/kHv9DoUq1XBIEaIBXVBaiYAq3ehZ/dLfZwnfg6cKf3XQeRqWP35ypIjp0V3YkdPi4JimRn+EgO9wT4THHoPdeNDyOQ5vP0m5hiGzbbg=
+	t=1786975577; cv=none; b=DBXVeA7Rp3fx4MF3rhHdsDODDpQOCQSvxljor5vRMjlkO/DLl/LpIy4ki4FGzEnodSnACM4pEdlOFhiNXsINcgX538G6dqK66coeYO9dct6g2J4sM3ISGTU56rbTE4nTGUA4QMCa8OGjlQ79B+yUpB/pAWtbgcfsi6LxZEiaUhM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975574; c=relaxed/simple;
-	bh=tqydv0MXxzQNefLP8mAbIS1XvBWhKd1+8+feDDUFHu0=;
+	s=arc-20240116; t=1786975577; c=relaxed/simple;
+	bh=ovWeTrDCfcGt51KgqKq4f4+tokiOV9B2ap0SOk7uOEM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U8esnAl3I76aAYbQAFyg/5OEYqe642Do0RTcy2Yho/650UkZVSIJDES2BDDMwscgWIiVw7jdHAULD8M8HWRA6/mScN8h7vQ2ObSQFcCnoVlw59wEJFRoYRJphUSiQmNDsoLOys6we8oJ46+2mGsWHguVMDxVrHG5sxebDwYILaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bHcUec/V; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OQPYJ0b1hz36f+kButAK9cJNikYXsG25RkMbX+VrJlU7/d/UKsQNnW6tnFK7S3VRvkBH87TGPjHMPX6Ebft0mng/BbSRCuE47eqobPQ89gw3m/vc2k7nF3xkHyGQjIsdz78x71N+OAa5ojqAY+UBWwGkhRLTA4InYryGxKn3GSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CbFD60JW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bHcUec/V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FB6A1F000E9;
-	Mon, 17 Aug 2026 14:06:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CbFD60JW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EA161F000E9;
+	Mon, 17 Aug 2026 14:06:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975573;
-	bh=dzlJVjkETt+pemL7B8nSFt4GN9t1kOjpoHKIk7pGerE=;
+	s=korg; t=1786975575;
+	bh=hyG1haz4V/FXrvXkA0MoN9v2YqrYPKPNVmB9Ur8w714=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bHcUec/VXQa2FjLEqSYbUGTI4xo8GAgq9VNjjp6MZYlh0FJK9lzzkJEMjpOWUI7tv
-	 RHCCrRPSyf29rtSZla4VEjKPMOpiME/5SRf1RabAVlZBPQK+XqVtPC8qMyqRyHCr8C
-	 IJ8P43UqhOQ5X1hCpYW0ExGkzBwaPOQGjKHzLZZA=
+	b=CbFD60JWYsPogGd2OfZzLUKCh/7GZC4RrlqxVJpbhEpYzFU5HvuAcgte3Ezh3iONd
+	 NxEtKz1l0r/0LO0/ruCgpbopZULyiPrhrn68rTXcDWNEPwx/GvUE0p1omEYSr+GPdB
+	 zckHhgekjNpls2hV5Jox9n37GjseP7vmRcM+4OGc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
-	Allison Henderson <achender@kernel.org>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Simon Horman <horms@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 075/389] rds: drop incoming messages that cross network namespace boundaries
-Date: Mon, 17 Aug 2026 15:28:34 +0200
-Message-ID: <20260817132542.027083842@linuxfoundation.org>
+Subject: [PATCH 5.10 076/389] nfp: Check resource mutex allocation
+Date: Mon, 17 Aug 2026 15:28:35 +0200
+Message-ID: <20260817132542.065595944@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -52,76 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit 5521ae71e32a8069ed4ca6e792179dc57bc43ab2 ]
+[ Upstream commit a61b4db34a753bdf5c9e77a7f3d3dddd41dcfacc ]
 
-rds_find_bound() looks up the destination socket using a global
-rhashtable keyed solely on (addr, port, scope_id).  Network namespaces
-are not part of the key, so a sender in netns A can deliver an incoming
-message (inc) to a socket that lives in a different netns B.
+nfp_cpp_resource_find() allocates a CPP mutex handle for the matching
+resource-table entry and then reports success.  nfp_resource_try_acquire()
+immediately passes that handle to nfp_cpp_mutex_trylock().
 
-When this happens, inc->i_conn points to an rds_connection whose c_net
-is netns A, but the receiving rs lives in netns B.  Once the child
-process that created netns A exits, cleanup_net() calls
-rds_loop_exit_net() -> rds_loop_kill_conns() -> rds_conn_destroy(),
-freeing that connection.  If the survivor socket in netns B still holds
-the inc, any subsequent dereference of inc->i_conn is a use-after-free.
+However, nfp_cpp_mutex_alloc() returns NULL on failure.  If that happens
+for a matching table entry, the resource lookup still returns success and
+the following trylock dereferences a NULL mutex pointer while opening the
+resource.
 
-There are two dangerous sites in rds_clear_recv_queue():
-  1. inc->i_conn->c_lcong (offset 88 of freed rds_connection, size 200)
-     read via rds_recv_rcvbuf_delta() -- confirmed by KASAN.
-  2. inc->i_conn->c_trans->inc_free(inc) (function pointer at offset 80)
-     called via rds_inc_put() when the inc refcount reaches zero -- same
-     race window, potential call-through-freed-object primitive.
+nfp_resource_acquire() already treats failure to allocate the table mutex
+as -ENOMEM.  Do the same for the resource mutex and fail the lookup before
+publishing the rest of the resource handle.
 
-The bug is reachable from unprivileged user namespaces
-(CLONE_NEWUSER + CLONE_NEWNET), available since Linux 3.8.
+This issue was found by a static analysis checker and confirmed by
+manual source review.
 
-Fix this by rejecting the delivery in rds_recv_incoming() when the
-socket returned by rds_find_bound() belongs to a different network
-namespace than the connection that carried the message.  Use the
-existing rds_conn_net() / sock_net() helpers and net_eq() for the
-comparison.
-
-Fixes: c809195f5523 ("rds: clean up loopback rds_connections on netns deletion")
-Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
-Reviewed-by: Allison Henderson <achender@kernel.org>
-Tested-by: Allison Henderson <achender@kernel.org>
-Signed-off-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20260708024314.601139-1-achender@kernel.org
+Fixes: f01a2161577d ("nfp: add support for resources")
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260708143408.3168425-1-ruoyuw560@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/recv.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/net/ethernet/netronome/nfp/nfpcore/nfp_resource.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/rds/recv.c b/net/rds/recv.c
-index f570d64367a410..24a82e335d5a62 100644
---- a/net/rds/recv.c
-+++ b/net/rds/recv.c
-@@ -365,6 +365,21 @@ void rds_recv_incoming(struct rds_connection *conn, struct in6_addr *saddr,
- 		goto out;
- 	}
- 
-+	/*
-+	 * rds_find_bound() uses a global (netns-agnostic) hash table.
-+	 * An RDS connection created in netns A can match a socket bound
-+	 * in the init netns, delivering inc cross-netns with inc->i_conn
-+	 * pointing into netns A.  When cleanup_net() then frees that conn,
-+	 * any subsequent dereference of inc->i_conn is a use-after-free.
-+	 * Drop the inc if the receiving socket lives in a different netns.
-+	 */
-+	if (!net_eq(sock_net(rds_rs_to_sk(rs)), rds_conn_net(conn))) {
-+		rds_stats_inc(s_recv_drop_no_sock);
-+		rds_sock_put(rs);
-+		rs = NULL;
-+		goto out;
-+	}
+diff --git a/drivers/net/ethernet/netronome/nfp/nfpcore/nfp_resource.c b/drivers/net/ethernet/netronome/nfp/nfpcore/nfp_resource.c
+index ce7492a6a98fad..908d99f398b819 100644
+--- a/drivers/net/ethernet/netronome/nfp/nfpcore/nfp_resource.c
++++ b/drivers/net/ethernet/netronome/nfp/nfpcore/nfp_resource.c
+@@ -96,6 +96,9 @@ static int nfp_cpp_resource_find(struct nfp_cpp *cpp, struct nfp_resource *res)
+ 		res->mutex =
+ 			nfp_cpp_mutex_alloc(cpp,
+ 					    NFP_RESOURCE_TBL_TARGET, addr, key);
++		if (!res->mutex)
++			return -ENOMEM;
 +
- 	/* Process extension headers */
- 	rds_recv_incoming_exthdrs(inc, rs);
- 
+ 		res->cpp_id = NFP_CPP_ID(entry.region.cpp_target,
+ 					 entry.region.cpp_action,
+ 					 entry.region.cpp_token);
 -- 
 2.53.0
 
