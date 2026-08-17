@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 082003F928B;
-	Mon, 17 Aug 2026 13:37:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1993D3F9287;
+	Mon, 17 Aug 2026 13:37:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786973879; cv=none; b=ZVVn69W482IxP2BqW7XzW5Mq8sL85hdFB2PQcXnF/pCrDrYOEsO5LVxM5Ot/qnJg04PNdQ57Fbi6rE1lAD0ySWEYBi7ze0sPb6yUOZAVzHmXDqiZ5NKxJCdNBW5AH/9zmkeYFpOOQi2Kyu3Y3ZxwamrIVJ2Iax3a5fnKXOfZFcw=
+	t=1786973882; cv=none; b=bCnRgGg8X+p6Ddf1NANy9g/HawxzpMrk2tf7FyPZzArHwWTs/rdbLR878oIm4tZaYr+Pg0Iirh22OT5G/B+rVW2nwu1HYxWeMvOe6uh93i31rZmeft72dXDrlI4TqSYRJHTf4sJVUXAJu4TnXudjQeJRoSSfGOPOCO16KwTJM/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786973879; c=relaxed/simple;
-	bh=czlMc+S93mkkkwbz11V8fq16XtoWN+CNkw5IgMnxyzQ=;
+	s=arc-20240116; t=1786973882; c=relaxed/simple;
+	bh=Pt1xOWfr4ORwdg9v1RMv2F42iq0fK2fC8MoybthM3h0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A5yYVbAl+cz07qD0JxEjGyoT4Q10FS8Efb2X2LkKlz8XMAT9IBCg06/Gb0MDf+0bYtfdWhi70Jzx2wIxedF+4iLHFnjCUcsM+kfvYVUkW9muyzbHT+iVR8CRK1jVeXwzSjhTCWZ0folq4DTTWMh4yOOlrKT/GCDe7L5YfHLPd1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=toEULNh6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=r+4ZDd8HFMxunpRYzcqYfNKINmHsgWm4MFNtjn74pN1qYZZfj1UcfYd6nPd/CAyXOXiIGloVgYnHWNUc/5CGOEmG7Hx6dapcnC+gqJTn61fhEZh9VCGZVAX41/ALr9W7xPcJbgLK92CfiN3jyJ3HLN1/7s3YDXujR0WWNHv41qU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mB62HWqk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="toEULNh6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 380721F00A3A;
-	Mon, 17 Aug 2026 13:37:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mB62HWqk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C2581F00A3D;
+	Mon, 17 Aug 2026 13:37:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786973874;
-	bh=c0UrAKGT47hejp+P5uJUfM4Hl9hEcjkRY5oDyWhbdGQ=;
+	s=korg; t=1786973877;
+	bh=FhteTHikJTy8n45/SstwAp9QF8eA8dgKp4XN1Tk1HGA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=toEULNh6Shljr19PJJiTCZGIRHmAEwKxC5iM2EKBR+C/nD88yOsXOyvZT6uxem9LH
-	 wG+F0Rgju5KLqRthyCDy0CX1Nvz2adg76MplLhWPxg3D514b8PUoHQHDngCb8NbzKe
-	 jyawhjIZVv8ggvVSFbd/0we/72fqnQ99BrCoGQe8=
+	b=mB62HWqkGE4VRB5PNoZ5q35Vl1udRgFtWBkCv8YOlIuyv2feh2c01MXSiYWLUJ1xX
+	 kmNfnc9ZwM03rvHT2fBqlagoQETGhMPBXfw93b7S+k0HRsOxHQHfxqIUu7giTq8atC
+	 ccTs/1Um0mW28e8MwPSKOaTLJuvQtBUfsJuC5K8A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Tejun Heo <tj@kernel.org>,
+	Andrea Righi <arighi@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 012/271] arm64: dts: qcom: sdm850-lenovo-yoga-c630: lower PSCI cluster idle
-Date: Mon, 17 Aug 2026 15:28:57 +0200
-Message-ID: <20260817132537.269870770@linuxfoundation.org>
+Subject: [PATCH 7.1 013/271] sched_ext: Reject setting disallow from init_task outside the enable path
+Date: Mon, 17 Aug 2026 15:28:58 +0200
+Message-ID: <20260817132537.310181777@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -52,43 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Tejun Heo <tj@kernel.org>
 
-[ Upstream commit 07db10de262f4150e24fd631a7a6c428f7bf80c9 ]
+[ Upstream commit 477869bfafea65492d23de62c1b5208147c09dd2 ]
 
-With the default PSCI suspend value for cluster idle state Lenovo Yoga
-C630 isn't stable enough. For example it might reset if display device
-isn't probed early enough. Drop the bit 0x4000 from the PSCI suspend
-value to make C630 work in stable way. The bit was found by
-expertimenting with the cluster idle PSCI value. Most likely it results
-in the less deep sleep and more energy beign spent in the suspend state,
-but it's better than the non-stable system behaviour.
+The p->scx.disallow revert assumes the root enable path, where the switching
+loop reads the reverted policy right afterwards and leaves the task off SCX.
+The sub-scheduler disable path also reaches it when re-initializing the
+returned tasks on a root parent. Nothing reads the policy there: the task is
+enabled on root anyway and keeps running on the ext class with a silently
+rewritten policy.
 
-Fixes: a1ade6cac5a2 ("arm64: dts: qcom: sdm845: Switch PSCI cpu idle states from PC to OSI")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260429-c630-fix-idle-v2-1-ac867dad6f21@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Kill the sched instead, matching the fork and non-root branches, and update
+the disallow documentation, which equated !fork with the load path and
+pointed at a stale debugfs path for nr_rejected.
+
+Fixes: 337ec00b1d9c ("sched_ext: Implement cgroup sub-sched enabling and disabling")
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Reviewed-by: Andrea Righi <arighi@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts | 4 ++++
- 1 file changed, 4 insertions(+)
+ include/linux/sched/ext.h | 10 +++++-----
+ kernel/sched/ext.c        |  3 +++
+ 2 files changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-index e41200839dbec..8cdaef5360d11 100644
---- a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-@@ -347,6 +347,10 @@ &cdsp_pas {
- 	status = "okay";
- };
+diff --git a/include/linux/sched/ext.h b/include/linux/sched/ext.h
+index 2129e18ada58b..31c810a3b808b 100644
+--- a/include/linux/sched/ext.h
++++ b/include/linux/sched/ext.h
+@@ -235,11 +235,11 @@ struct sched_ext_entity {
+ 	 * to %SCHED_EXT with -%EACCES.
+ 	 *
+ 	 * Can be set from ops.init_task() while the BPF scheduler is being
+-	 * loaded (!scx_init_task_args->fork). If set and the task's policy is
+-	 * already %SCHED_EXT, the task's policy is rejected and forcefully
+-	 * reverted to %SCHED_NORMAL. The number of such events are reported
+-	 * through /sys/kernel/debug/sched_ext::nr_rejected. Setting this flag
+-	 * during fork is not allowed.
++	 * loaded. If set and the task's policy is already %SCHED_EXT, the
++	 * task's policy is rejected and forcefully reverted to %SCHED_NORMAL.
++	 * The number of such events are reported through
++	 * /sys/kernel/sched_ext/nr_rejected. Setting this flag from any other
++	 * ops.init_task() invocation, such as during fork, fails the scheduler.
+ 	 */
+ 	bool			disallow;	/* reject switching into SCX */
  
-+&cluster_sleep_0 {
-+	arm,psci-suspend-param = <0x41008244>;
-+};
-+
- &gcc {
- 	protected-clocks = <GCC_QSPI_CORE_CLK>,
- 			   <GCC_QSPI_CORE_CLK_SRC>,
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index 5c780756e3623..6904d65d2b852 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -3581,6 +3581,9 @@ static int __scx_init_task(struct scx_sched *sch, struct task_struct *p, bool fo
+ 		} else if (unlikely(fork)) {
+ 			scx_error(sch, "ops.init_task() set task->scx.disallow for %s[%d] during fork",
+ 				  p->comm, p->pid);
++		} else if (unlikely(scx_enable_state() != SCX_ENABLING)) {
++			scx_error(sch, "ops.init_task() set task->scx.disallow for %s[%d] outside the enable path",
++				  p->comm, p->pid);
+ 		} else {
+ 			struct rq *rq;
+ 			struct rq_flags rf;
 -- 
 2.53.0
 
