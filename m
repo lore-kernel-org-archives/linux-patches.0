@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC9A33DC857;
-	Mon, 17 Aug 2026 14:06:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 573263BB687;
+	Mon, 17 Aug 2026 14:06:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975612; cv=none; b=IlY6sXv/EiOIPPXmG5P6u+sEYWhAsAKkTsEXafR8+RLz2sH5ZNujNF5JtY8rr1rKOeBubsnYzYwW2ma5oL7IAjJ9zqCKMILYuMnaSxnbuFRB+tQFDmKw+1t9jPa8aqbnfHQ6vy3+EXT48axDwxTdVtASQ42bWTFSfO258Ykm4WA=
+	t=1786975614; cv=none; b=ZwzNUoCGAsQA1kt8e5sF5smflFP9wX5fcJDJdnLGV41A+l/0j/skR/Q6SzcWBaW99i/iPhEVpy/lp/B8Xi6LXDlDSDa4cMSPAMd9X9SMhy2XP1ZrsSLOkgMy5ZORh3dH5rP3UxgJJmHe0SAUhayiCCTUbGxN2rdQ2ruWHOHwND8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975612; c=relaxed/simple;
-	bh=GIBVUF2JEt2FyS9cXEv2doLJUEjdoALPMLpp5AxWqQ8=;
+	s=arc-20240116; t=1786975614; c=relaxed/simple;
+	bh=z3ARN5POfDJK8jzvBqizwMxhpZMzG/MG6QSbm/aqLFQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OVJ7vHwGvEozQBYBnuNsMybBY32Ti+yBk5/DLM70Pqb3zWP++sH8bzWsHsL+Zl6rYaMWUA6NmzbfulW5RgpsjjMlC8ei3+D/JLy9xAz7oI4iMVbxInOCRaQlLxWyf5mjFzQ1QqgD4oERPu2mqBFCxKMDZSFdByNR/PN1IU2UYGY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bCjKX07v; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tB9sUaxDYCXgd6WNBkcr6RT0RfR18khW6Az3JcCT0LE/9LJ4ZPy5lAqmtPjNoGRJAoaFaCvXKF8RD+J64R7f5du6pJtrsuDdf8e2ZrGHSFr5uO3sEMuPwEl37LE2mjGV84/TMZoWhFFV1NXl1P4/E907q7OdhO4/8sYilO2CFek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p/3KqHkb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bCjKX07v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2DE51F000E9;
-	Mon, 17 Aug 2026 14:06:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p/3KqHkb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADBCE1F000E9;
+	Mon, 17 Aug 2026 14:06:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975610;
-	bh=t+kFgDAbtLwWvJQR7o07kSLTQ8EZTuoFX/8t6//G0k0=;
+	s=korg; t=1786975613;
+	bh=o2qXmq6gCIEIssczv1CnMcQRBFrjWNmTp7D/GqeCRa4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bCjKX07vxCYuXvAX/8NO9GV4g0eAoeTqaMkLJO4QuUMFTLsqEP7bttD8xJCdDeBnh
-	 Oegcv2dtLiDJjmUPcFGe8FJNhZG4HgjjKhCwCbZPcj2/8AEm7gqTqApPKYHW9TvDH7
-	 1iVLiwlvC5Kogm+iY9R2PGNFP/VVRRPVkqeReQW4=
+	b=p/3KqHkbCBNx0lt0JcAkFb+NzSTyLXcOdGoSyCDa+D4JupTVPywMm1Hxo2Sqa9nT9
+	 xzlHZvkgwU7R58uyVwmY+dD6S/QSoSADApgOHo4nVOnoKx/GSHFnCHWptJi6bwKyRs
+	 JrvPNvzWS2S5LN3jsBNQtC3Qs9kTtW/O+QuQ3z64=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolay Aleksandrov <nikolay@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 087/389] net: bridge: vlan: add support for dumping global vlan options
-Date: Mon, 17 Aug 2026 15:28:46 +0200
-Message-ID: <20260817132542.501198791@linuxfoundation.org>
+Subject: [PATCH 5.10 088/389] net: bridge: vlan: fix vlan range dumps starting with pvid
+Date: Mon, 17 Aug 2026 15:28:47 +0200
+Message-ID: <20260817132542.543321066@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -51,175 +52,147 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikolay Aleksandrov <nikolay@nvidia.com>
+From: Nikolay Aleksandrov <razor@blackwall.org>
 
-[ Upstream commit 743a53d9636aad83da63a8638e8365e817ef6365 ]
+[ Upstream commit 43171c97e4714bf601b468401b37732244639c21 ]
 
-Add a new vlan options dump flag which causes only global vlan options
-to be dumped. The dumps are done only with bridge devices, ports are
-ignored. They support vlan compression if the options in sequential
-vlans are equal (currently always true).
+There is a bug in all range dumps that rely on br_vlan_can_enter_range()
+when the PVID is a range starting VLAN, all following VLANs that match
+its flags can enter the range, but when the range is filled in only the
+PVID VLAN is dumped and the rest of the range is discarded because
+br_vlan_fill_vids() checks for the PVID flag. Since the PVID VLAN can
+be only one, we need to break ranges around it, the best way to do that
+consistently for all is to alter br_vlan_can_enter_range() to take into
+account the PVID and return false to break the range when it's matched.
 
-Signed-off-by: Nikolay Aleksandrov <nikolay@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 43171c97e471 ("net: bridge: vlan: fix vlan range dumps starting with pvid")
+Before the fix:
+$ ip l add br0 type bridge vlan_filtering 1
+$ ip l add dumdum type dummy
+$ ip l set dumdum master br0
+$ ip l set br0 up
+$ ip l set dumdum up
+$ bridge vlan add dev dumdum vid 1 pvid untagged master
+$ bridge vlan add dev dumdum vid 2 untagged master
+$ bridge vlan show dev dumdum # use legacy dump to show all vlans
+port              vlan-id
+dumdum            1 PVID Egress Untagged
+                  2 Egress Untagged
+
+$ bridge -d vlan show dev dumdum # use the new dump (RTM_GETVLAN)
+port              vlan-id
+dumdum            1 PVID Egress Untagged
+                    state forwarding mcast_router 1
+
+VLAN 2 is missing, and if there are more matching VLANs afterwards
+they'd be missing too.
+
+After the fix:
+[ same setup steps ]
+$ bridge vlan show dev dumdum
+port              vlan-id
+dumdum            1 PVID Egress Untagged
+                  2 Egress Untagged
+$ bridge -d vlan show dev dumdum # use the new dump (RTM_GETVLAN)
+port              vlan-id
+dumdum            1 PVID Egress Untagged
+                    state forwarding mcast_router 1
+                  2 Egress Untagged
+                    state forwarding mcast_router 1
+
+Fixes: 0ab558795184 ("net: bridge: vlan: add rtm range support")
+Signed-off-by: Nikolay Aleksandrov <razor@blackwall.org>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260721140922.682265-2-razor@blackwall.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/if_bridge.h |  1 +
- net/bridge/br_private.h        |  4 ++++
- net/bridge/br_vlan.c           | 41 +++++++++++++++++++++++++++-------
- net/bridge/br_vlan_options.c   | 31 +++++++++++++++++++++++++
- 4 files changed, 69 insertions(+), 8 deletions(-)
+ net/bridge/br_netlink_tunnel.c |  3 ++-
+ net/bridge/br_private.h        |  6 ++++--
+ net/bridge/br_vlan.c           | 10 ++++++----
+ net/bridge/br_vlan_options.c   |  3 +--
+ 4 files changed, 13 insertions(+), 9 deletions(-)
 
-diff --git a/include/uapi/linux/if_bridge.h b/include/uapi/linux/if_bridge.h
-index f56e9114558299..e4a94f5c3a147f 100644
---- a/include/uapi/linux/if_bridge.h
-+++ b/include/uapi/linux/if_bridge.h
-@@ -354,6 +354,7 @@ enum {
+diff --git a/net/bridge/br_netlink_tunnel.c b/net/bridge/br_netlink_tunnel.c
+index 8914290c75d480..e4aab077527011 100644
+--- a/net/bridge/br_netlink_tunnel.c
++++ b/net/bridge/br_netlink_tunnel.c
+@@ -268,7 +268,8 @@ static void __vlan_tunnel_handle_range(const struct net_bridge_port *p,
+ 	if (!*v_start)
+ 		goto out_init;
  
- /* flags used in BRIDGE_VLANDB_DUMP_FLAGS attribute to affect dumps */
- #define BRIDGE_VLANDB_DUMPF_STATS	(1 << 0) /* Include stats in the dump */
-+#define BRIDGE_VLANDB_DUMPF_GLOBAL	(1 << 1) /* Dump global vlan options only */
- 
- /* Bridge vlan RTM attributes
-  * [BRIDGE_VLANDB_ENTRY] = {
+-	if (v && curr_change && br_vlan_can_enter_range(v, *v_end)) {
++	if (v && curr_change &&
++	    br_vlan_can_enter_range(v, *v_end, br_get_pvid(vg))) {
+ 		*v_end = v;
+ 		return;
+ 	}
 diff --git a/net/bridge/br_private.h b/net/bridge/br_private.h
-index bd68d049c5fd93..b3a98ae8fbd619 100644
+index b3a98ae8fbd619..17327852c807d9 100644
 --- a/net/bridge/br_private.h
 +++ b/net/bridge/br_private.h
-@@ -1331,6 +1331,10 @@ int br_vlan_rtm_process_global_options(struct net_device *dev,
- 				       const struct nlattr *attr,
- 				       int cmd,
- 				       struct netlink_ext_ack *extack);
-+bool br_vlan_global_opts_can_enter_range(const struct net_bridge_vlan *v_curr,
-+					 const struct net_bridge_vlan *r_end);
-+bool br_vlan_global_opts_fill(struct sk_buff *skb, u16 vid, u16 vid_range,
-+			      const struct net_bridge_vlan *v_opts);
+@@ -1093,7 +1093,8 @@ void br_vlan_notify(const struct net_bridge *br,
+ 		    u16 vid, u16 vid_range,
+ 		    int cmd);
+ bool br_vlan_can_enter_range(const struct net_bridge_vlan *v_curr,
+-			     const struct net_bridge_vlan *range_end);
++			     const struct net_bridge_vlan *range_end,
++			     u16 pvid);
  
- /* vlan state manipulation helpers using *_ONCE to annotate lock-free access */
- static inline u8 br_vlan_get_state(const struct net_bridge_vlan *v)
+ static inline struct net_bridge_vlan_group *br_vlan_group(
+ 					const struct net_bridge *br)
+@@ -1309,7 +1310,8 @@ static inline void br_vlan_notify(const struct net_bridge *br,
+ }
+ 
+ static inline bool br_vlan_can_enter_range(const struct net_bridge_vlan *v_curr,
+-					   const struct net_bridge_vlan *range_end)
++					   const struct net_bridge_vlan *range_end,
++					   u16 pvid)
+ {
+ 	return true;
+ }
 diff --git a/net/bridge/br_vlan.c b/net/bridge/br_vlan.c
-index 0bd5a168943fd1..258702134d9bfc 100644
+index 258702134d9bfc..2eb9e33130e604 100644
 --- a/net/bridge/br_vlan.c
 +++ b/net/bridge/br_vlan.c
-@@ -1777,6 +1777,7 @@ static int br_vlan_dump_dev(const struct net_device *dev,
- 			    u32 dump_flags)
+@@ -1764,9 +1764,11 @@ void br_vlan_notify(const struct net_bridge *br,
+ 
+ /* check if v_curr can enter a range ending in range_end */
+ bool br_vlan_can_enter_range(const struct net_bridge_vlan *v_curr,
+-			     const struct net_bridge_vlan *range_end)
++			     const struct net_bridge_vlan *range_end,
++			     u16 pvid)
  {
- 	struct net_bridge_vlan *v, *range_start = NULL, *range_end = NULL;
-+	bool dump_global = !!(dump_flags & BRIDGE_VLANDB_DUMPF_GLOBAL);
- 	bool dump_stats = !!(dump_flags & BRIDGE_VLANDB_DUMPF_STATS);
- 	struct net_bridge_vlan_group *vg;
- 	int idx = 0, s_idx = cb->args[1];
-@@ -1795,6 +1796,10 @@ static int br_vlan_dump_dev(const struct net_device *dev,
- 		vg = br_vlan_group_rcu(br);
- 		p = NULL;
- 	} else {
-+		/* global options are dumped only for bridge devices */
-+		if (dump_global)
-+			return 0;
-+
- 		p = br_port_get_rcu(dev);
- 		if (WARN_ON(!p))
- 			return -EINVAL;
-@@ -1817,7 +1822,7 @@ static int br_vlan_dump_dev(const struct net_device *dev,
+-	return v_curr->vid - range_end->vid == 1 &&
++	return v_curr->vid != pvid && range_end->vid != pvid &&
++	       v_curr->vid - range_end->vid == 1 &&
+ 	       range_end->flags == v_curr->flags &&
+ 	       br_vlan_opts_eq_range(v_curr, range_end);
+ }
+@@ -1848,8 +1850,8 @@ static int br_vlan_dump_dev(const struct net_device *dev,
+ 			idx += range_end->vid - range_start->vid + 1;
  
- 	/* idx must stay at range's beginning until it is filled in */
- 	list_for_each_entry_rcu(v, &vg->vlan_list, vlist) {
--		if (!br_vlan_should_use(v))
-+		if (!dump_global && !br_vlan_should_use(v))
- 			continue;
- 		if (idx < s_idx) {
- 			idx++;
-@@ -1830,8 +1835,21 @@ static int br_vlan_dump_dev(const struct net_device *dev,
- 			continue;
- 		}
- 
--		if (dump_stats || v->vid == pvid ||
--		    !br_vlan_can_enter_range(v, range_end)) {
-+		if (dump_global) {
-+			if (br_vlan_global_opts_can_enter_range(v, range_end))
-+				continue;
-+			if (!br_vlan_global_opts_fill(skb, range_start->vid,
-+						      range_end->vid,
-+						      range_start)) {
-+				err = -EMSGSIZE;
-+				break;
-+			}
-+			/* advance number of filled vlans */
-+			idx += range_end->vid - range_start->vid + 1;
-+
-+			range_start = v;
-+		} else if (dump_stats || v->vid == pvid ||
-+			   !br_vlan_can_enter_range(v, range_end)) {
+ 			range_start = v;
+-		} else if (dump_stats || v->vid == pvid ||
+-			   !br_vlan_can_enter_range(v, range_end)) {
++		} else if (dump_stats ||
++			   !br_vlan_can_enter_range(v, range_end, pvid)) {
  			u16 vlan_flags = br_vlan_flags(range_start, pvid);
  
  			if (!br_vlan_fill_vids(skb, range_start->vid,
-@@ -1853,11 +1871,18 @@ static int br_vlan_dump_dev(const struct net_device *dev,
- 	 * - last vlan (range_start == range_end, not in range)
- 	 * - last vlan range (range_start != range_end, in range)
- 	 */
--	if (!err && range_start &&
--	    !br_vlan_fill_vids(skb, range_start->vid, range_end->vid,
--			       range_start, br_vlan_flags(range_start, pvid),
--			       dump_stats))
--		err = -EMSGSIZE;
-+	if (!err && range_start) {
-+		if (dump_global &&
-+		    !br_vlan_global_opts_fill(skb, range_start->vid,
-+					      range_end->vid, range_start))
-+			err = -EMSGSIZE;
-+		else if (!dump_global &&
-+			 !br_vlan_fill_vids(skb, range_start->vid,
-+					    range_end->vid, range_start,
-+					    br_vlan_flags(range_start, pvid),
-+					    dump_stats))
-+			err = -EMSGSIZE;
-+	}
- 
- 	cb->args[1] = err ? idx : 0;
- 
 diff --git a/net/bridge/br_vlan_options.c b/net/bridge/br_vlan_options.c
-index a7d5a233420732..f290f514054714 100644
+index f290f514054714..29fb37e7046ad3 100644
 --- a/net/bridge/br_vlan_options.c
 +++ b/net/bridge/br_vlan_options.c
-@@ -259,6 +259,37 @@ int br_vlan_process_options(const struct net_bridge *br,
- 	return err;
- }
+@@ -234,8 +234,7 @@ int br_vlan_process_options(const struct net_bridge *br,
+ 				continue;
+ 			}
  
-+bool br_vlan_global_opts_can_enter_range(const struct net_bridge_vlan *v_curr,
-+					 const struct net_bridge_vlan *r_end)
-+{
-+	return v_curr->vid - r_end->vid == 1;
-+}
-+
-+bool br_vlan_global_opts_fill(struct sk_buff *skb, u16 vid, u16 vid_range,
-+			      const struct net_bridge_vlan *v_opts)
-+{
-+	struct nlattr *nest;
-+
-+	nest = nla_nest_start(skb, BRIDGE_VLANDB_GLOBAL_OPTIONS);
-+	if (!nest)
-+		return false;
-+
-+	if (nla_put_u16(skb, BRIDGE_VLANDB_GOPTS_ID, vid))
-+		goto out_err;
-+
-+	if (vid_range && vid < vid_range &&
-+	    nla_put_u16(skb, BRIDGE_VLANDB_GOPTS_RANGE, vid_range))
-+		goto out_err;
-+
-+	nla_nest_end(skb, nest);
-+
-+	return true;
-+
-+out_err:
-+	nla_nest_cancel(skb, nest);
-+	return false;
-+}
-+
- static int br_vlan_process_global_one_opts(const struct net_bridge *br,
- 					   struct net_bridge_vlan_group *vg,
- 					   struct net_bridge_vlan *v,
+-			if (v->vid == pvid ||
+-			    !br_vlan_can_enter_range(v, curr_end)) {
++			if (!br_vlan_can_enter_range(v, curr_end, pvid)) {
+ 				br_vlan_notify(br, p, curr_start->vid,
+ 					       curr_end->vid, RTM_NEWVLAN);
+ 				curr_start = v;
 -- 
 2.53.0
 
