@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08A8C408617;
-	Mon, 17 Aug 2026 13:59:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E19373C3C08;
+	Mon, 17 Aug 2026 13:59:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975181; cv=none; b=myD2/L5pHnwQzIgY93tbSlQUsuS7x7r4ZSMCgCTPv2Idgk8+tphfInZee5V72lf7BpZL9kbQetuFk52T47ylg0Rji1YzlghTnL9JvmJ/RqkdhK0jtY9393vKb4g5Fr+cRFja/mAlPssAZs8NWCPGUQIRPbtqD9MibTNWKif/tss=
+	t=1786975184; cv=none; b=DaIpqtW1/UFtvJnKH82i43IbjngaIOK9t6p/npld7+5uyhNOmMa0slxK/65Sst++4vUJIcfz+ookB0xXTKmcVSGTaNUAfVdseKS36x8LURx+dylm5uRo8I+gqEpx2ZNv2LBYwIVf8KqKVTKBntCgNctbzO94qEiGZ3xwyaBHYMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975181; c=relaxed/simple;
-	bh=bt/lzdkzycgDS5suLsfbvvV3dwdK24dSvAVMAm0tkwY=;
+	s=arc-20240116; t=1786975184; c=relaxed/simple;
+	bh=/a7jRMGjPlhHYm8M7p6ZDqZZ06NzAzGZZ8rnzf5abQk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nqOiA79fktDfHdV/b0BgK5qkkBA9BzjREvJMmCv8WLKMWx/f4Qg/Rwykq8MRuy8cKwUHPkrcxDAvqH+j8elsOsYRquiX6HCrprogDqT8W6V5YUTn45Yc5UaybKH8tp6qJWsaPckiIoEEjdK3Cypb7RmRgTUxmsFBUGhen+FdSbk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=md6hiL+G; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=t62x8zaP6G6NJyvVOME9uVY3xopWKKg9sU2OEL3TfDhnTz5PtyIN9R8gIsYwsFpZGDi9f8tX5/VPR01aTYfsxMgIpwPAuI+FUvW4XTW/C3m+DfvuE3FlRQzNRtv7fqw8IfaAepkr4cZL7HR7jmR6M6yehSD2zqYh//OA85sBSS4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lz1MaQKQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="md6hiL+G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 619CD1F000E9;
-	Mon, 17 Aug 2026 13:59:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lz1MaQKQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DF841F000E9;
+	Mon, 17 Aug 2026 13:59:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975179;
-	bh=SgmkxlMl4ytLBLIyUDD22vkd4KTBnTpbR2bTGLnvdv4=;
+	s=korg; t=1786975182;
+	bh=Y1/EkkaaH5TkJz4Ggi6AkPnSIqRfalFvELYnkOvjU6I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=md6hiL+GcnvRrsjduE+cA6F59DOzf1NNMkY8MUZmL20xH+yuqpCz9iNzw6R+0t+aE
-	 pg25GtkcyCayLHV9veHSTarBJPcF/GnrqfZDCqjmD4aWExTiCmEAWW5CDPKn0B+n/t
-	 OHjMBNVlbqbOBT7/fiVgF3X6/uRLCj5ln7ptypQ8=
+	b=lz1MaQKQINz82xLxcyyLHSA2OjaNA3ieWLQ+FV68XcCTWjc+xkOP9UIAZ4grSkWL0
+	 KwzkoKhjLK84Up00HrzlUf4xmA/LkeeulM1dbaCobKm+48l4m23Z+zyZqc+KzKjb7q
+	 hoIz5vjjtekEMYxsCUrukzWqmbqLc/a01r8Yos90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aditya Chillara <aditya.chillara@oss.qualcomm.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>
-Subject: [PATCH 6.18 189/250] perf/core: Fix group leader use-after-free after sibling detach
-Date: Mon, 17 Aug 2026 15:32:30 +0200
-Message-ID: <20260817132544.291284692@linuxfoundation.org>
+	Michael Wu <michael@allwinnertech.com>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 6.18 190/250] tracing: Fix race between update_event_fields and, event_define_fields
+Date: Mon, 17 Aug 2026 15:32:31 +0200
+Message-ID: <20260817132544.327348892@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -51,177 +50,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aditya Chillara <aditya.chillara@oss.qualcomm.com>
+From: Michael Wu <michael@allwinnertech.com>
 
-commit 42c5ca1f0a288a52878bd72a5595b08261057438 upstream.
+commit c3730b8373bb5059d735509b9e6a00d7eb337d7c upstream.
 
-perf_group_detach() handles leader and sibling detach differently. When the
-group leader is detached, all siblings are promoted to singleton events and
-their group_leader pointer is reset to themselves. When a sibling is
-detached, it is removed from the leader's sibling_list, but its
-group_leader pointer is left pointing at the old leader.
+The following sequence may leads race between event_define_fields()
+and update_event_fields():
 
-That is harmless when the sibling is being closed and freed immediately, as
-in the DETACH_DEAD path. It is not safe when the sibling is detached but
-kept alive, such as during CPU hotplug with DETACH_GROUP. In that case the
-sibling is removed from the context, while its file descriptor can still
-keep it alive.
+ CPU0 (loads module A)                      CPU1 (loads module B)
+ ===============================            ===============================
+ load_module(A)                             load_module(B)
+   notifier_call_chain                        notifier_call_chain
+     trace_module_notify                        trace_module_notify
+       mutex_lock(&event_mutex)                   trace_event_update_all()
+         trace_module_add_events(A)                 down_write(&trace_event_sem)
+            __register_event(call_A)
+              __add_event_to_tracers(call_A)
+                event_define_fields(call_A)
+                  for each f:                         list_for_each_entry(field,
+                    list_add(&f->link,                                    &class->fields, link)
+                             &class->fields)            field = class->fields->next;
 
-A typical failing sequence is:
+Where access to the class->fields is not protected by the event_mutex in
+trace_event_update_all().
 
-  - A group contains leader L and sibling S.
-  - CPU hot-unplug detaches S with DETACH_GROUP, removing it from
-    L->sibling_list but leaving S->group_leader == L.
-  - L is later closed and freed.
-  - A PERF_IOC_FLAG_GROUP ioctl on S follows S->group_leader and
-    dereferences the freed leader.
+This produces the following panic:
+   Unable to handle kernel access ... at virtual address 0000000000000018
+   pc : update_event_fields+0xf8/0x368
+   Call trace:
+    update_event_fields+0xf8/0x368
+    trace_event_update_all+0x7c/0x2b4
+    trace_module_notify+0x4c/0x1dc
+    notifier_call_chain+0x84/0x168
+    blocking_notifier_call_chain_robust+0x64/0xd4
+    load_module+0x10c8/0x123c
+    __arm64_sys_finit_module+0x230/0x31c
 
-This was reproduced by running the perf event fuzzer, CPU hotplug, and a
-stress workload concurrently:
+Fix by taking event_mutex in trace_event_update_all() before
+trace_event_sem.
 
-  Unable to handle kernel paging request at virtual address 006b6b6b6b6b6cdb
-  CPU: 2 PID: 12489 Comm: perf_fuzzer 6.18.7 PREEMPT
-  pc : perf_ioctl+0x34c/0xc68
-  x20: ffffff89a3fa2c70 x8 : 6b6b6b6b6b6b6b6b
-  Code: 943c4a0e 340047a0 f9404a94 f9411e88 (f940b908)
-  Call trace:
-  perf_ioctl+0x34c/0xc68 (P)
-  __arm64_sys_ioctl+0xa0/0xf4
-  invoke_syscall+0x58/0xe4
-  el0_svc_common+0xa8/0xdc
-  do_el0_svc+0x1c/0x28
-  el0_svc+0x40/0xc0
-  el0t_64_sync_handler+0x68/0xdc
-  el0t_64_sync+0x1c4/0x1c8
-
-The fault happened in perf_ioctl(), where perf_event_for_each() follows
-the stale group_leader pointer and perf_event_for_each_child() then
-dereferences the freed leader's context.
-
-Fix the use-after-free by promoting the detached sibling to a singleton.
-Also fix __event_disable() cgroup accounting and event state change.
-
-Fixes: 8a49542c0554 ("perf_events: Fix races in group composition")
-Assisted-by: PatchWise:gpt-5.5
-Signed-off-by: Aditya Chillara <aditya.chillara@oss.qualcomm.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260807-fix-group-leader-uaf-v3-1-b0c2310c9a0d@oss.qualcomm.com
+Fixes: b3bc8547d3be ("tracing: Have TRACE_DEFINE_ENUM affect trace event types as well")
+Link: https://patch.msgid.link/2e5730d2-c631-da41-3a3a-ae35bb4895f3@allwinnertech.com
+Signed-off-by: Michael Wu <michael@allwinnertech.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/events/core.c |   67 ++++++++++++++++++++++++++++-----------------------
- 1 file changed, 37 insertions(+), 30 deletions(-)
+ kernel/trace/trace_events.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -2248,6 +2248,34 @@ static inline struct list_head *get_even
- 				    &event->pmu_ctx->flexible_active;
+--- a/kernel/trace/trace_events.c
++++ b/kernel/trace/trace_events.c
+@@ -3411,6 +3411,7 @@ void trace_event_update_all(struct trace
+ 	int last_i;
+ 	int i;
+ 
++	mutex_lock(&event_mutex);
+ 	down_write(&trace_event_sem);
+ 	list_for_each_entry_safe(call, p, &ftrace_events, list) {
+ 		/* events are usually grouped together with systems */
+@@ -3449,6 +3450,7 @@ void trace_event_update_all(struct trace
+ 		cond_resched();
+ 	}
+ 	up_write(&trace_event_sem);
++	mutex_unlock(&event_mutex);
  }
  
-+/* @sibling must already be unlinked from its old leader's sibling_list. */
-+static void perf_promote_sibling_to_leader(struct perf_event *sibling,
-+					   struct perf_event_context *ctx,
-+					   int group_caps)
-+{
-+	/*
-+	 * Events that have PERF_EV_CAP_SIBLING require being part of
-+	 * a group and cannot exist on their own, schedule them out
-+	 * and move them into the ERROR state. Also see
-+	 * _perf_event_enable(), it will not be able to recover this
-+	 * ERROR state.
-+	 */
-+	if (sibling->event_caps & PERF_EV_CAP_SIBLING)
-+		__event_disable(sibling, ctx, PERF_EVENT_STATE_ERROR);
-+
-+	sibling->group_leader = sibling;
-+	sibling->group_caps = group_caps;
-+
-+	if (sibling->attach_state & PERF_ATTACH_CONTEXT) {
-+		add_event_to_groups(sibling, ctx);
-+
-+		if (sibling->state == PERF_EVENT_STATE_ACTIVE)
-+			list_add_tail(&sibling->active_list, get_event_list(sibling));
-+	}
-+
-+	perf_event__header_size(sibling);
-+}
-+
- static void perf_group_detach(struct perf_event *event)
- {
- 	struct perf_event *leader = event->group_leader;
-@@ -2271,8 +2299,9 @@ static void perf_group_detach(struct per
- 	 */
- 	if (leader != event) {
- 		list_del_init(&event->sibling_list);
--		event->group_leader->nr_siblings--;
--		event->group_leader->group_generation++;
-+		leader->nr_siblings--;
-+		leader->group_generation++;
-+		perf_promote_sibling_to_leader(event, ctx, event->event_caps);
- 		goto out;
- 	}
- 
-@@ -2282,32 +2311,14 @@ static void perf_group_detach(struct per
- 	 * to whatever list we are on.
- 	 */
- 	list_for_each_entry_safe(sibling, tmp, &event->sibling_list, sibling_list) {
--
--		/*
--		 * Events that have PERF_EV_CAP_SIBLING require being part of
--		 * a group and cannot exist on their own, schedule them out
--		 * and move them into the ERROR state. Also see
--		 * _perf_event_enable(), it will not be able to recover this
--		 * ERROR state.
--		 */
--		if (sibling->event_caps & PERF_EV_CAP_SIBLING)
--			__event_disable(sibling, ctx, PERF_EVENT_STATE_ERROR);
--
--		sibling->group_leader = sibling;
- 		list_del_init(&sibling->sibling_list);
- 
- 		/* Inherit group flags from the previous leader */
--		sibling->group_caps = event->group_caps;
--
--		if (sibling->attach_state & PERF_ATTACH_CONTEXT) {
--			add_event_to_groups(sibling, event->ctx);
--
--			if (sibling->state == PERF_EVENT_STATE_ACTIVE)
--				list_add_tail(&sibling->active_list, get_event_list(sibling));
--		}
-+		perf_promote_sibling_to_leader(sibling, ctx, event->group_caps);
- 
- 		WARN_ON_ONCE(sibling->ctx != event->ctx);
- 	}
-+	event->nr_siblings = 0;
- 
- out:
- 	for_each_sibling_event(tmp, leader)
-@@ -2494,12 +2505,7 @@ __perf_remove_from_context(struct perf_e
- 	if (flags & DETACH_DEAD)
- 		state = PERF_EVENT_STATE_DEAD;
- 
--	event_sched_out(event, ctx);
--
--	if (event->state > PERF_EVENT_STATE_OFF)
--		perf_cgroup_event_disable(event, ctx);
--
--	perf_event_set_state(event, min(event->state, state));
-+	__event_disable(event, ctx, state);
- 
- 	if (flags & DETACH_GROUP)
- 		perf_group_detach(event);
-@@ -2568,8 +2574,9 @@ static void __event_disable(struct perf_
- 			    enum perf_event_state state)
- {
- 	event_sched_out(event, ctx);
--	perf_cgroup_event_disable(event, ctx);
--	perf_event_set_state(event, state);
-+	if (event->state > PERF_EVENT_STATE_OFF)
-+		perf_cgroup_event_disable(event, ctx);
-+	perf_event_set_state(event, min(event->state, state));
- }
- 
- /*
+ static bool event_in_systems(struct trace_event_call *call,
 
 
