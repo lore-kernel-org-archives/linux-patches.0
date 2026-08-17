@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3874A4457C4;
-	Mon, 17 Aug 2026 15:27:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EC8D4457C9;
+	Mon, 17 Aug 2026 15:27:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786980434; cv=none; b=hx3iGCawPvORs34VdYh53ZV2ApKSEEniA73nAJDvbYvwjy9iKWETDlTqh+1JDt8PzxhFW1lzyu9132NrPEwqdfUqcVwy02Sr0pdfylkGuESFvZhM31Jtb6qdKvtZf5DiygXNc4Mgpt436vtLTi8pfv8b2Ftm1khZjDtNnG74owg=
+	t=1786980438; cv=none; b=X3CRJPhC5OXeIuXDDfH2utsA8j2oQkC9vC0ED3bX/ZI6HKz2JcIYobl8Z457TAc3woXliyZgSde4oLyxVFO8EdsnrbrwPWv9bWMuS0Z8q2Fwd473DdTM1Sf1whXjbI/WnFwiZEH1W4IUYHhDz6LAdTBJZByb1ksaUdt5e/EbedY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786980434; c=relaxed/simple;
-	bh=tvsc9fpyHUB0nDSwEBW1CLP8ZYbpuyzF5iQcLVJ0hAg=;
+	s=arc-20240116; t=1786980438; c=relaxed/simple;
+	bh=lzo0iYKumerhb0KQ7awEH/qAolsIDICQ9PTadxelWnY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hPB/UxgLqorDQr7fPdwdyz7PKpPBfY/akXTGrHi+6j4Byr6ps0zs88qHz35NXob1KBWEHDQ4HlBT60q/I9jxioEc9cgqLuhxQ5OyL9+vpWwLzGbG6iiM351MgKAii4tZCXVAvIhjyFnVbbmxeQL7Ml93Rh9B9LcpNwprJwwh2kY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x+x+nvSe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HcbeA58DxWEBe2SbIa2MDpu7Z7A5bhY4SgxX9WX0SfuS+WrsMvXuyN+j7TxC8zvUdP0vOg60vrUJZimfPbstDeV9EBry/IDVAdLpdNcITVepBYSZll/OoELyLTAsZvrjDMgmKq04WkckhBcuZ+78pNoakW/7PbPFUASbwT36Qcs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DTJiCAdO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x+x+nvSe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 907881F000E9;
-	Mon, 17 Aug 2026 15:27:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DTJiCAdO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 760051F000E9;
+	Mon, 17 Aug 2026 15:27:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786980433;
-	bh=zPyv0S0f3P1J+Pxv7P7q899d4WlohMDPp2dHHothgvs=;
+	s=korg; t=1786980436;
+	bh=BODICF1Go0Pmeg3p+RWY7hGZDTeM2DEWHvdSuryQ1/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x+x+nvSeLRtcs8QUiSzgCRqkLA2prtEUxtMFAX2Hg3hjK4Qd9La/c/cnv2mCfSuH6
-	 VpatIvQXjvap4G7l4NW0OIER2xm0RXwLyCRXIaW2ny3/eT14aOO/Su7X1LgGqZ4Lx0
-	 2pImWkdhwPxaST14hIMWZ3fltUyvyH9mhNeDZB7Y=
+	b=DTJiCAdOoelkqqKF8jc0LDnqEzqCDl5TmvjzQQwLNLGAfQWgg5pFQdWj0eWbnTAga
+	 mK9Ta1JAqdu3zClwAqR4PZ6OG6xE2U5/JqJEjo8fVldJxiBZteIk9LCpaJM4dIIGz6
+	 zD0r+ii1IFzwoSkf4ltB1zPa9i3XzQm2Py0rs2gA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Wilken Gottwalt <wilken.gottwalt@posteo.net>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 531/609] tls: dont abort the connection on signal-interrupted sends
-Date: Mon, 17 Aug 2026 15:33:47 +0200
-Message-ID: <20260817132601.565007420@linuxfoundation.org>
+Subject: [PATCH 6.1 532/609] hwmon: (corsair-psu) fix possible out-of-bounds access on missing string termination
+Date: Mon, 17 Aug 2026 15:33:48 +0200
+Message-ID: <20260817132601.594060078@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -51,43 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>
+From: Wilken Gottwalt <wilken.gottwalt@posteo.net>
 
-[ Upstream commit af0e5cdd031f4f4a8f6d4160bfbda4f36872b0ed ]
+[ Upstream commit 36c4d73ce05d1d8896c2669eb0730d35a02a2ec1 ]
 
-When a signal interrupts a blocking send, tls_tx_records() treats the
-resulting -ERESTARTSYS as a transmission failure and marks the socket
-errored via tls_err_abort() with the raw error code. Later syscalls
-return the kernel-internal errno 512 (ERESTARTSYS) to userspace, as the
-signal it stems from is no longer pending during syscall exit and thus
-never translated.
+In theory it could be possible that the REPLY_SIZE sized buffers for
+holding the vendor and product strings could be end up missing the null
+termination (for example by malicious hardware built on purpose)
+required by the seq_printf() call. That limits the debugfs printf calls
+to a maximum string length of REPLY_SIZE.
 
-An interrupted send is not a connection error: the partially sent record
-stays queued and is resent later. Interrupt error codes are therefore
-excluded from the abort in the same way as -EAGAIN.
-
-Fixes: b341ca51d267 ("tls: Fix tls_sw_sendmsg error handling")
-Signed-off-by: Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>
-Link: https://patch.msgid.link/20260805063109.1772314-1-maxbr@linux.ibm.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: d115b51e0e567 ("hwmon: add Corsair PSU HID controller driver")
+Signed-off-by: Wilken Gottwalt <wilken.gottwalt@posteo.net>
+Link: https://lore.kernel.org/r/anLj9gPWRoRDbQBV@monster.localdomain
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_sw.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwmon/corsair-psu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
-index 1b4e35dcb996b..5eec7c10acc20 100644
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -457,7 +457,7 @@ int tls_tx_records(struct sock *sk, int flags)
- 	}
+diff --git a/drivers/hwmon/corsair-psu.c b/drivers/hwmon/corsair-psu.c
+index 2f2cbc067634a..8392a18758d21 100644
+--- a/drivers/hwmon/corsair-psu.c
++++ b/drivers/hwmon/corsair-psu.c
+@@ -647,7 +647,7 @@ static int vendor_show(struct seq_file *seqf, void *unused)
+ {
+ 	struct corsairpsu_data *priv = seqf->private;
  
- tx_err:
--	if (rc < 0 && rc != -EAGAIN)
-+	if (rc < 0 && rc != -EAGAIN && rc != -EINTR && rc != -ERESTARTSYS)
- 		tls_err_abort(sk, rc);
+-	seq_printf(seqf, "%s\n", priv->vendor);
++	seq_printf(seqf, "%.*s\n", REPLY_SIZE, priv->vendor);
  
- 	return rc;
+ 	return 0;
+ }
+@@ -657,7 +657,7 @@ static int product_show(struct seq_file *seqf, void *unused)
+ {
+ 	struct corsairpsu_data *priv = seqf->private;
+ 
+-	seq_printf(seqf, "%s\n", priv->product);
++	seq_printf(seqf, "%.*s\n", REPLY_SIZE, priv->product);
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
