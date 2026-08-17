@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A44E3DB33F;
-	Mon, 17 Aug 2026 13:52:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6F1F43CEC7;
+	Mon, 17 Aug 2026 13:52:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974775; cv=none; b=VKDbBjp1AAqUJpOJF4DX2VEj6Oz7787Xpg4D9tAKT0CjSOYqX8eHbt5FNXbDEGit0lbRVzk4F7Jskdvfz5lnt7pNoxYQSoZl8T7Z7pr56Z6ZquR4kUP5+ym65XAy9hGqtzEbOdqChXS3C4ljuiOPUX5K5fnN8WXSJcDJJVy5MB0=
+	t=1786974778; cv=none; b=P1nauj4ksgR7Y04+QttU8FGNevQanP2eQcMXIGFxkDevFiSdOnyrZ/fmCQnKzFv6errY2c3aGf33CaZ7ZAISNJvA30rDxjyA2uo5IhD/xK8GjP21v4HB6o66V8Z1nB0UmB5plLwO0pWdsgeaYqtEyh7DJ86HcOKcKMzJlQ0COak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974775; c=relaxed/simple;
-	bh=dR9ggaxZNngWHvFRbL0sr7vGAsaHUB0VgI++Clnitms=;
+	s=arc-20240116; t=1786974778; c=relaxed/simple;
+	bh=0P0b+9ZD5gROOX3Uga1Z4CccMQlxHemQjegj9DLb9YQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=srytEkLpVC80Z0wl2++YD24y+6gZmII/gnLvxkkVpKWxmhmgZQX+I3MdjZ8LIEOtya7T/cIK9oI+jhBooITq1tl/iEvLzQcE282M6MEjHzrboarrlqeTByBdH95G/qX0y0Gb22JNWc0UeTkj26OYl2NUvlTpWkSvxrh2/uhvgwo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oYik824P; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nr2vzNO5ReTyoqpP1mg0DjQMxN1Tr/jz4Y8DniEqcH3WuSQ6LluwCWFbJM7VolMFloczs9yAGelfxe1SeD/YxrFDOulst3tqgkhmWetns/gS5pjqKxwtB2xPlYH0+pRkqOkCCOVUcU650v1UVuxuZU6Ph52DrIJhuf9YuU8brf0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TmfFecRI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oYik824P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B16591F00A3E;
-	Mon, 17 Aug 2026 13:52:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TmfFecRI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 576EF1F00A3F;
+	Mon, 17 Aug 2026 13:52:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974764;
-	bh=yw9dX/t2XUCrM+Shfh2vIDS/zLmGmcodNhVuC9iYt/s=;
+	s=korg; t=1786974772;
+	bh=bJx/Pc+hVLN1+ReOJBkJRy1jKMfPb/1zavE2jVtQcl0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oYik824PNI9XxxgEmfjQwo+HydmqCemSidfQYuNTRJwWH0JAQA2CDW2CPxRBOCwPc
-	 KGerBtri/ofkDuNpk4Wm/zmSvQTuhNOxoIWYt48NiHzrlnNUe9ZfA428xtwu+0mj6k
-	 IWG3S44SP5n+8bcJqnJud9AFPGRJeULBHPRuexC0=
+	b=TmfFecRIQc0JI/WZOuHpxg33YC83Xy9ZPuqIV8E08jagSnU4eeWZRnpNewYOYCTcT
+	 TgUAo69AEcg+VWyUAfG6X1ZerDmxw0FX6rwAU8M8ZMScwF7eQk4x7FE/CoZiQZWO/e
+	 6UbZb/pAZLuGLK6UYpnxbb+KWZUkbFQjZgCDBmEo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mahanta Jambigi <mjambigi@linux.ibm.com>,
-	Hidayath Khan <hidayath@linux.ibm.com>,
-	Sidraya Jayagond <sidraya@linux.ibm.com>,
-	Dust Li <dust.li@linux.alibaba.com>,
+	Or Har-Toov <ohartoov@nvidia.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Antoine Tenart <atenart@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 046/250] net/smc: fix qentry overwrite for CONFIRM_LINK and ADD_LINK_CONT in smc_llc_event_handler()
-Date: Mon, 17 Aug 2026 15:30:07 +0200
-Message-ID: <20260817132538.335233742@linuxfoundation.org>
+Subject: [PATCH 6.18 049/250] devlink: fix net namespace reference leak in reload
+Date: Mon, 17 Aug 2026 15:30:10 +0200
+Message-ID: <20260817132538.453782760@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -54,54 +54,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mahanta Jambigi <mjambigi@linux.ibm.com>
+From: Or Har-Toov <ohartoov@nvidia.com>
 
-[ Upstream commit 976245094925bab9bc39366b2e9ab44ffcde61d0 ]
+[ Upstream commit 1c4dac9bf1d2ac31da63b794bdec697777cbd0fd ]
 
-The SMC_LLC_CONFIRM_LINK / SMC_LLC_ADD_LINK_CONT branch in
-smc_llc_event_handler() stores an incoming qentry into the local LLC flow
-without first checking whether a qentry is already pending. If a malicious or
-buggy peer sends a second CONFIRM_LINK or ADD_LINK_CONT request while a flow is
-active and flow->qentry is already set, smc_llc_flow_qentry_set() overwrites the
-pointer without freeing the previous allocation, leaking one kmalloc-96 object
-per spurious message.
+devlink_nl_reload_doit() calls devlink_netns_get(), which returns a net
+with a held reference. When the requested namespace differs from the
+current one and the reload action is not DRIVER_REINIT, the function
+returns -EOPNOTSUPP without releasing the reference. Add the missing
+put_net() on this error path.
 
-The sibling SMC_LLC_DELETE_LINK branch already has the correct !flow->qentry
-guard. Apply the same guard to the CONFIRM_LINK/ADD_LINK_CONT branch so that a
-duplicate message when qentry is already occupied falls through to break and is
-freed by the kfree(qentry) at the out: label, rather than silently leaking the
-existing allocation.
-
-The response direction (smc_llc_rx_response()) is unaffected: it already guards
-with flow->qentry at the equivalent site and drops duplicate responses
-correctly.
-
-Fixes: 0fb0b02bd6fd ("net/smc: adapt SMC client code to use the LLC flow")
-Signed-off-by: Mahanta Jambigi <mjambigi@linux.ibm.com>
-Reviewed-by: Hidayath Khan <hidayath@linux.ibm.com>
-Reviewed-by: Sidraya Jayagond <sidraya@linux.ibm.com>
-Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
-Link: https://patch.msgid.link/20260729130153.970800-1-mjambigi@linux.ibm.com
+Fixes: 2edd92570441 ("devlink: don't allow to change net namespace for FW_ACTIVATE reload action")
+Signed-off-by: Or Har-Toov <ohartoov@nvidia.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Reviewed-by: Antoine Tenart <atenart@kernel.org>
+Link: https://patch.msgid.link/20260729080600.2427721-1-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/smc_llc.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/devlink/dev.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/smc/smc_llc.c b/net/smc/smc_llc.c
-index f865c58c3aa77..28873ec06e3c1 100644
---- a/net/smc/smc_llc.c
-+++ b/net/smc/smc_llc.c
-@@ -1927,7 +1927,8 @@ static void smc_llc_event_handler(struct smc_llc_qentry *qentry)
- 		return;
- 	case SMC_LLC_CONFIRM_LINK:
- 	case SMC_LLC_ADD_LINK_CONT:
--		if (lgr->llc_flow_lcl.type != SMC_LLC_FLOW_NONE) {
-+		if (lgr->llc_flow_lcl.type != SMC_LLC_FLOW_NONE &&
-+		    !lgr->llc_flow_lcl.qentry) {
- 			/* a flow is waiting for this message */
- 			smc_llc_flow_qentry_set(&lgr->llc_flow_lcl, qentry);
- 			wake_up(&lgr->llc_msg_waiter);
+diff --git a/net/devlink/dev.c b/net/devlink/dev.c
+index 02602704bdeaa..ed442c1bed8db 100644
+--- a/net/devlink/dev.c
++++ b/net/devlink/dev.c
+@@ -577,6 +577,7 @@ int devlink_nl_reload_doit(struct sk_buff *skb, struct genl_info *info)
+ 		    action != DEVLINK_RELOAD_ACTION_DRIVER_REINIT) {
+ 			NL_SET_ERR_MSG_MOD(info->extack,
+ 					   "Changing namespace is only supported for reinit action");
++			put_net(dest_net);
+ 			return -EOPNOTSUPP;
+ 		}
+ 	}
 -- 
 2.53.0
 
