@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD73327FD74;
-	Mon, 17 Aug 2026 14:21:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AFB54315F;
+	Mon, 17 Aug 2026 14:21:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976477; cv=none; b=LZ7Z4iuRM++Adb52vqs9JQzsZeqWsYFOU+BmsWNw2lou2PJVVOV6u90W37HvyNVFy5zp25r1ZQm4DFsyS8Byy4U9ocUcbku6fl/yXvlE1OlnoAaAtknCnjWy0kDSm3BQoYm7jQjbP7lG/N6NFxlLe6X8Wes/QpwksLOFjKBgVZE=
+	t=1786976480; cv=none; b=C0m5RL3sIkjIuRASXT5PnJEcu58CWsj1Y/2lfyg0qDSTyBpO9uYstXk59ySHcy2/CNV2sdye6mRnYGAMgICRobxfVfxibjSQqW+ZMuYGZke9VQMJGgf4VJbgk++6MpI3SpVtMvTiLZGV5FbD4c5huCka5VbfP2K0JyDfo8f6K8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976477; c=relaxed/simple;
-	bh=T1nOtUcqq6ADCUt6qlgXd9rdF/CPzqv005vrC4zc1/I=;
+	s=arc-20240116; t=1786976480; c=relaxed/simple;
+	bh=qk6kYRNPkq453vZgWLa247FpxWsi0u6zjTzP02y8qcs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XjYx/4AFQNSBW4zNxc47Mf4E5xu99HJoeCFY5ryRRuT+V00s4giNt8GQTjxmbD6kZsoIM48PvcXqAWIMV/zJtVxztKHuAvpIWAzX0f3hDkJ3o3xJWVE/AIaZwQtQUYzp/0EmJTt7i8dcwbmnhbdH3wD3usvR1DB55VAqGA49vzo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZyAcniKQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qOvmj00hG7axKTuG0lZRBpzdFZRU90Ee73cmoafBJeNgM8cuif9XkCXauJ2TKZ1+HaWlfbciVEuIKoZF4RQmKI+XJi4Quo2ZapCOKcOCt9Meea6476KuXdEIQYBcSuQp/uRGY1heSLaDYQxkI5Sm7u+D6jm233UWIFVs8Ifl96c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s2SLCjA0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZyAcniKQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 177491F000E9;
-	Mon, 17 Aug 2026 14:21:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s2SLCjA0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2FF11F00A3A;
+	Mon, 17 Aug 2026 14:21:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976476;
-	bh=0deHSM5oKc3HVNj11oyKzDksYsMLxTSlmC55hquMgPQ=;
+	s=korg; t=1786976479;
+	bh=NrcPfI5ki7gklZXy2WGm/mW/R798Pk0Iv8nQH5CNbh0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZyAcniKQjloCoIaxM7F34umRjEUqBfaA0xC/L0NLlkl6uxNbtDi1nPIJhO4t+B4bP
-	 8ZEeNe3tVYiJZDQv/sXkETWe4ZTEq++HkMrJw1c9vW+f9Dd76ljXz6/Hb4FDqiPEqM
-	 v9PCyY0ra1lCee8UWvcgBxuqQ82O5LaOOpSoPhfE=
+	b=s2SLCjA0jlcLDvwVlhhFYc3ZBTxkfDNmfBGFI9DyasRE3hOvFJ+H6J8uOSdGN0lF7
+	 STHEfCy6/SmQEERUcIYCBKp9L8X9hOFBCxRmKR5BJxk+SNW8nHXGsNithMJ15PCpXe
+	 7CPZ0qQnG3kTT4s5FVK+Y3sq8hI4aHYbN/sNzA+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 5.10 386/389] thunderbolt: Bound the DROM dual link port number before indexing sw->ports
-Date: Mon, 17 Aug 2026 15:33:45 +0200
-Message-ID: <20260817132553.712241943@linuxfoundation.org>
+	Jonas Gorski <jonas.gorski@bisdn.de>,
+	Elad Nachman <enachman@marvell.com>,
+	Jesse Brandeburg <jesse.brandeburg@intel.com>,
+	Taras Chornyi <taras.chornyi@plvision.eu>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 387/389] prestera: fix fallback to previous version on same major version
+Date: Mon, 17 Aug 2026 15:33:46 +0200
+Message-ID: <20260817132553.755665088@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -50,49 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Jonas Gorski <jonas.gorski@bisdn.de>
 
-commit d6764992f17b23d91ff93ce905ab53c2aa7191f0 upstream.
+commit b755c25fbcd568821a3bb0e0d5c2daa5fcb00bba upstream.
 
-tb_drom_parse_entry_port() validates the device-supplied header->index
-against sw->config.max_port_number before indexing sw->ports[], but the
-sibling field entry->dual_link_port_nr -- a 6-bit value also read from
-the DROM -- indexes the same array with no such check. A malicious or
-malformed Thunderbolt device can set dual_link_port_nr beyond the
-allocated sw->ports[] (max_port_number + 1 entries), producing an
-out-of-bounds tb_port pointer that is stored and later dereferenced.
+When both supported and previous version have the same major version,
+and the firmwares are missing, the driver ends in a loop requesting the
+same (previous) version over and over again:
 
-Reject a port entry whose dual_link_port_nr exceeds max_port_number,
-the same bound already applied to header->index.
+    [   76.327413] Prestera DX 0000:01:00.0: missing latest mrvl/prestera/mvsw_prestera_fw-v4.1.img firmware, fall-back to previous 4.0 version
+    [   76.339802] Prestera DX 0000:01:00.0: missing latest mrvl/prestera/mvsw_prestera_fw-v4.0.img firmware, fall-back to previous 4.0 version
+    [   76.352162] Prestera DX 0000:01:00.0: missing latest mrvl/prestera/mvsw_prestera_fw-v4.0.img firmware, fall-back to previous 4.0 version
+    [   76.364502] Prestera DX 0000:01:00.0: missing latest mrvl/prestera/mvsw_prestera_fw-v4.0.img firmware, fall-back to previous 4.0 version
+    [   76.376848] Prestera DX 0000:01:00.0: missing latest mrvl/prestera/mvsw_prestera_fw-v4.0.img firmware, fall-back to previous 4.0 version
+    [   76.389183] Prestera DX 0000:01:00.0: missing latest mrvl/prestera/mvsw_prestera_fw-v4.0.img firmware, fall-back to previous 4.0 version
+    [   76.401522] Prestera DX 0000:01:00.0: missing latest mrvl/prestera/mvsw_prestera_fw-v4.0.img firmware, fall-back to previous 4.0 version
+    [   76.413860] Prestera DX 0000:01:00.0: missing latest mrvl/prestera/mvsw_prestera_fw-v4.0.img firmware, fall-back to previous 4.0 version
+    [   76.426199] Prestera DX 0000:01:00.0: missing latest mrvl/prestera/mvsw_prestera_fw-v4.0.img firmware, fall-back to previous 4.0 version
+    ...
 
-Fixes: cd22e73bdf5e ("thunderbolt: Read port configuration from eeprom.")
-Cc: stable@vger.kernel.org
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Fix this by inverting the check to that we aren't yet at the previous
+version, and also check the minor version.
+
+This also catches the case where both versions are the same, as it was
+after commit bb5dbf2cc64d ("net: marvell: prestera: add firmware v4.0
+support").
+
+With this fix applied:
+
+    [   88.499622] Prestera DX 0000:01:00.0: missing latest mrvl/prestera/mvsw_prestera_fw-v4.1.img firmware, fall-back to previous 4.0 version
+    [   88.511995] Prestera DX 0000:01:00.0: failed to request previous firmware: mrvl/prestera/mvsw_prestera_fw-v4.0.img
+    [   88.522403] Prestera DX: probe of 0000:01:00.0 failed with error -2
+
+Fixes: 47f26018a414 ("net: marvell: prestera: try to load previous fw version")
+Signed-off-by: Jonas Gorski <jonas.gorski@bisdn.de>
+Acked-by: Elad Nachman <enachman@marvell.com>
+Reviewed-by: Jesse Brandeburg <jesse.brandeburg@intel.com>
+Acked-by: Taras Chornyi <taras.chornyi@plvision.eu>
+Link: https://lore.kernel.org/r/20230802092357.163944-1-jonas.gorski@bisdn.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/eeprom.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/marvell/prestera/prestera_pci.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/thunderbolt/eeprom.c
-+++ b/drivers/thunderbolt/eeprom.c
-@@ -367,9 +367,16 @@ static int tb_drom_parse_entry_port(stru
- 			return -EIO;
- 		}
- 		port->link_nr = entry->link_nr;
--		if (entry->has_dual_link_port)
-+		if (entry->has_dual_link_port) {
-+			if (entry->dual_link_port_nr > sw->config.max_port_number) {
-+				tb_sw_warn(sw,
-+					"port entry has invalid dual link port number %u\n",
-+					entry->dual_link_port_nr);
-+				return -EIO;
-+			}
- 			port->dual_link_port =
- 				&port->sw->ports[entry->dual_link_port_nr];
-+		}
- 	}
- 	return 0;
- }
+--- a/drivers/net/ethernet/marvell/prestera/prestera_pci.c
++++ b/drivers/net/ethernet/marvell/prestera/prestera_pci.c
+@@ -629,7 +629,8 @@ pick_fw_ver:
+ 
+ 	err = request_firmware_direct(&fw->bin, fw_path, fw->dev.dev);
+ 	if (err) {
+-		if (ver_maj == PRESTERA_SUPP_FW_MAJ_VER) {
++		if (ver_maj != PRESTERA_PREV_FW_MAJ_VER ||
++		    ver_min != PRESTERA_PREV_FW_MIN_VER) {
+ 			ver_maj = PRESTERA_PREV_FW_MAJ_VER;
+ 			ver_min = PRESTERA_PREV_FW_MIN_VER;
+ 
 
 
