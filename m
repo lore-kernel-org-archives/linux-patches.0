@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A03D2DC331;
-	Mon, 17 Aug 2026 15:04:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BB112E8DEA;
+	Mon, 17 Aug 2026 15:04:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979091; cv=none; b=ZfH//UIftZrBJLihXjRDQtHDM3lowypqQQS5O1PV2eaNqB3+PMXx2su7untty6fTEZHkR+qC6l2cKgYSFzyVTN+k2SpKFgUuTLtWqOACAQKUEB2rxEb13+sgaWmpdtOuUL0AXjM6LxCQ26idRMfK5sp5rrzkSJqBTrDYg5xE+a8=
+	t=1786979094; cv=none; b=OtvriGC0m0pfYznivQtx0MooJTCumpCYn4LFhiEFudPSPuT+ig3bOi35wf2/xzymUtqtEZyxP4Ys2OOvMU/iUZLDFOKNFF4PFcEAql9kHGQwhx9VhYRcdR+p5KOI5AkJuMeMmu/P96V2BSw8QS7ghLtugwM1T5MBICAfx25q5sA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979091; c=relaxed/simple;
-	bh=7IZGHtu7gyYY3GWF+tuKoxndrfj0gP899V0tvWebRK8=;
+	s=arc-20240116; t=1786979094; c=relaxed/simple;
+	bh=4EjA/qMgSDUobzBRc3+dE/+Z7/jbaseRAa0vVTv6oNU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qMoRt3E3CPckesXm0yt/g5lcq2fW0i3/6Cz92km5AJnm0I+/4xXoy1/djsntlBuYFTxNYA/8sEHow04ZZz0dJxN12yJx/x6AskORpqDv7ewrm9bsLkEprj7p9wLo5WfFg5rsQebv9Gnqx3y1D/BN7eSps6Yvf2T6f9VPOOuqOac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gt1olMLx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TrLCvFhEZKYRSmEUBJDedrlzu/tmOo5A08c/DsHuyXqfzCmSa3U4j5tkm+S193+zBko7DDLIhXfLxjboMfTvSMtvZgiy/ERUSLAfkbcqiWw6T2f4cD8Vrw136HbY9oIDkF3sqDCZPTuDxsTzhjJyOevflLJPwITMqiQ3/tzk4Kw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=om+yw89k; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gt1olMLx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9432B1F000E9;
-	Mon, 17 Aug 2026 15:04:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="om+yw89k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73FFD1F000E9;
+	Mon, 17 Aug 2026 15:04:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979090;
-	bh=fQ/5zM5dRXS+40Dmswc3bHILZZBu7DPZb69kv2LEQU8=;
+	s=korg; t=1786979093;
+	bh=UEaY7cuShk+aN+u2Yk2FdVFAgG8/xCqVuId5eMCCptY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Gt1olMLxS7/vbPrnLfNxBhlT24Fuc7ueVx69+kYM9vxi8kvdilzK6pNXxH99nt6EB
-	 XEhGfhy1DftKAYvTPQPnu2ntibTQAcDFLMkdRY5v8xANzvWs7WIqxTbhmR3f2aU6jR
-	 T9o8nhr+q78doH08KV0CXVBH6VcmampNfVeEaGuI=
+	b=om+yw89kYuJLT7NtUPE7083ha9KCZRLmxIeDj1VMELhRXpgvcF9DYdF9EyBpIP8jQ
+	 MnvPUJAYu91gVUkm1DcjbzdKqPXMsGg3zJL1gQypUzwQKUk2biZESVFk9Pcg9+Equc
+	 aJtnIGPvq1nRbG9t6Tdn6Wx3FlwSA1RXZ+ZADNH0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Morgun <d.morgun@ispras.ru>,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Emre Cecanpunar <emreleno@gmail.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 104/609] wifi: ath11k: fix potential buffer underflow in ath11k_hal_rx_msdu_list_get()
-Date: Mon, 17 Aug 2026 15:26:40 +0200
-Message-ID: <20260817132547.212946167@linuxfoundation.org>
+Subject: [PATCH 6.1 069/609] drm/i915/selftests: Fix GT PM sort comparators
+Date: Mon, 17 Aug 2026 15:26:05 +0200
+Message-ID: <20260817132545.803847966@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -53,45 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Morgun <d.morgun@ispras.ru>
+From: Emre Cecanpunar <emreleno@gmail.com>
 
-[ Upstream commit 7f11e70629650ff6ea140984e5ce188b775b2683 ]
+[ Upstream commit 612978b83f45bf7018815209db5395d759db6f26 ]
 
-When the first entry in msdu_details has a zero buffer address,
-the code accesses msdu_details[i - 1] with i == 0, causing a
-buffer underflow.
+Compare the sampled clock values instead of their addresses. Comparing
+addresses leaves the samples unsorted, preventing the code from discarding
+the minimum and maximum samples.
 
-Fix similarly to ath12k_wifi7_hal_rx_msdu_list_get() by adding
-a separate check for i == 0 before the main condition to prevent
-the out-of-bounds access.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
-Signed-off-by: Dmitry Morgun <d.morgun@ispras.ru>
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260530114252.42615-1-d.morgun@ispras.ru
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: 1a5392479207 ("drm/i915/selftests: Measure CS_TIMESTAMP")
+Signed-off-by: Emre Cecanpunar <emreleno@gmail.com>
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
+Link: https://lore.kernel.org/r/20260714220430.238433-1-emreleno@gmail.com
+(cherry picked from commit 682ea2d28d18bb06f9fc663cb5ab7e80dc0e606a)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/dp_rx.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/i915/gt/selftest_gt_pm.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/dp_rx.c b/drivers/net/wireless/ath/ath11k/dp_rx.c
-index 397ce654bb3fd5..ac9796e8cd595c 100644
---- a/drivers/net/wireless/ath/ath11k/dp_rx.c
-+++ b/drivers/net/wireless/ath/ath11k/dp_rx.c
-@@ -4549,6 +4549,9 @@ static void ath11k_hal_rx_msdu_list_get(struct ath11k *ar,
- 	msdu_details = &msdu_link->msdu_link[0];
+diff --git a/drivers/gpu/drm/i915/gt/selftest_gt_pm.c b/drivers/gpu/drm/i915/gt/selftest_gt_pm.c
+index be94f863bdefff..0e237bcf324a83 100644
+--- a/drivers/gpu/drm/i915/gt/selftest_gt_pm.c
++++ b/drivers/gpu/drm/i915/gt/selftest_gt_pm.c
+@@ -16,9 +16,9 @@ static int cmp_u64(const void *A, const void *B)
+ {
+ 	const u64 *a = A, *b = B;
  
- 	for (i = 0; i < HAL_RX_NUM_MSDU_DESC; i++) {
-+		if (!i && FIELD_GET(BUFFER_ADDR_INFO0_ADDR,
-+				    msdu_details[i].buf_addr_info.info0) == 0)
-+			break;
- 		if (FIELD_GET(BUFFER_ADDR_INFO0_ADDR,
- 			      msdu_details[i].buf_addr_info.info0) == 0) {
- 			msdu_desc_info = &msdu_details[i - 1].rx_msdu_info;
+-	if (a < b)
++	if (*a < *b)
+ 		return -1;
+-	else if (a > b)
++	else if (*a > *b)
+ 		return 1;
+ 	else
+ 		return 0;
+@@ -28,9 +28,9 @@ static int cmp_u32(const void *A, const void *B)
+ {
+ 	const u32 *a = A, *b = B;
+ 
+-	if (a < b)
++	if (*a < *b)
+ 		return -1;
+-	else if (a > b)
++	else if (*a > *b)
+ 		return 1;
+ 	else
+ 		return 0;
 -- 
 2.53.0
 
