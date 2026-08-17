@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7242175A99;
-	Mon, 17 Aug 2026 14:27:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD7E7231830;
+	Mon, 17 Aug 2026 14:27:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976860; cv=none; b=rAkN5DAz2b9AyJxZxxCt4OuLwMTM5dfWiMP4tERgOwgk47Yu5iyVtwbE37u/74NkcAqDH+wQUfRrl//FilaiiTnpunc2ucI0hljAAIxHfTTMDrxtuEgijzjII/4F1iNm9l5O/KWEOdWMVCVf4wBluFDskjt9yY9bhc/gi4WoTEc=
+	t=1786976863; cv=none; b=kZMlh+0dfNt8/YTcfIOKH4KBQ2S85in1CzSZYUoD8MjvlBiaCNloYX3w+7igAO0DIcF/llJqCc34E/NZZj9GjkAcGZrxV8t8Lc99gne9gJrPI3HQf1MW+vXNE6pjrI5q3Klh4z85SN6vUff/jgLSIqmvEdAY9F60YA0dUsPf69M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976860; c=relaxed/simple;
-	bh=SBRZNMrx2dooXfiFZSWs+C3Ffwwwf5F7ssqtBBELV2A=;
+	s=arc-20240116; t=1786976863; c=relaxed/simple;
+	bh=7Sg8BdYC04TrodgbkW094aIo5zOykeK8TSn0e3w08TU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UFPEI1BoH7nZhHfwiK+BR+pRrZbEo7Gz21MQJa+mIL90Pz+UsCAPMfjFPbeT5eCsARH3xZt2ec2Wr/pBRLJuzqhu5vMuFsruykLQhqFQiIM70Z/CMMUxhK9p7nLQ6QuuwhzlcjQxfkVEQNveR6buuELVkYGs8NBXZOqLqahd/D4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n3YY0QqE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Yd8PVEPdww70sq59Bq7W+RmMYFT2bSQFVX0A5QptSDNzSSoFZcDgfbrKi8ThLzhZAnStbhtf2X5xMleDUb06deEtzAxhdKxjFq7+KJz9f1NhvcJSU5GqGG7KUB1L4l7BZcWy+b8n+jwl/DCHAuo0bjZEEBN4+4YRDABpXxQzkM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YAzzOxI7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n3YY0QqE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F4751F000E9;
-	Mon, 17 Aug 2026 14:27:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YAzzOxI7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB0221F000E9;
+	Mon, 17 Aug 2026 14:27:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976859;
-	bh=h2IzBQS6I+C6SIN+rpd2XBlYvHc0dUNswBvmrtDa4X4=;
+	s=korg; t=1786976862;
+	bh=eKnPUcTWQXiBD46fMRDyVawoE8LqM/pQNxlC8frw970=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n3YY0QqEErgC+dKpqbloLsYojbWDWWhpb5wP8LYG9gWD+/jJHlpdGn81EXeI+4Bm0
-	 Ucdr1eE//ivCCYUaAzw348i7ILtaD3u5T3N8qaC1sRYvTo2Gu9RgjH04nqy+6fmqgI
-	 2sT+tVjQ2080pYG57guNZ2zqZUpjYSxy/BI8YHUM=
+	b=YAzzOxI7IAoupno3ATMfWk264SDnHjdQlCJyPJRCfbZonAPeLQgnb0sBKv79B1Lu9
+	 pEDKiqScNj6sFquATrJ54JXZr77C4DmB2hvU7CIvTQs5keqPNa08lxpyTWMiL6bu8p
+	 nX4xTEHhT23k1414OH3F5vvcvthBPfzXfVSyJDOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Ioana Ciornei <ioana.ciornei@nxp.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Alexei Lazar <alazar@nvidia.com>,
+	Carolina Jubran <cjubran@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 102/456] dpaa2-eth: put MAC endpoint device on disconnect
-Date: Mon, 17 Aug 2026 15:28:12 +0200
-Message-ID: <20260817132544.086490722@linuxfoundation.org>
+Subject: [PATCH 5.15 129/456] net/mlx5e: Report zero bandwidth for non-ETS traffic classes
+Date: Mon, 17 Aug 2026 15:28:39 +0200
+Message-ID: <20260817132545.155982659@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -52,44 +54,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Alexei Lazar <alazar@nvidia.com>
 
-[ Upstream commit b4b201cc93ff70150853aba03e14d314d1980ca0 ]
+[ Upstream commit ffb1873b2df11945b8c395e859169248675c91c5 ]
 
-fsl_mc_get_endpoint() returns the MAC endpoint device with a reference
-taken through device_find_child(). The Ethernet connect path stores that
-device in mac->mc_dev and keeps it for the lifetime of the connected MAC
-object.
+The IEEE 802.1Qaz standard defines that bandwidth allocation percentages
+only apply to Enhanced Transmission Selection (ETS) traffic classes.
+For STRICT and VENDOR transmission selection algorithms, bandwidth
+percentage values are not applicable.
 
-However, the disconnect path only disconnects and closes the MAC before
-freeing the dpaa2_mac object. It does not drop the endpoint device
-reference stored in mac->mc_dev, so every successful connect leaks that
-device reference when the MAC is later disconnected.
+Currently for non-ETS 100 bandwidth is being reported for all traffic
+classes in the get operation due to hardware limitation, regardless of
+their TSA type.
 
-Drop the endpoint device reference after closing the MAC and before
-freeing the dpaa2_mac object.
+Fix this by reporting 0 for non-ETS traffic classes.
 
-Fixes: 719479230893 ("dpaa2-eth: add MAC/PHY support through phylink")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Reviewed-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Reviewed-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Link: https://patch.msgid.link/20260708111738.750391-1-lgs201920130244@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 820c2c5e773d ("net/mlx5e: Read ETS settings directly from firmware")
+Signed-off-by: Alexei Lazar <alazar@nvidia.com>
+Reviewed-by: Carolina Jubran <cjubran@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Link: https://patch.msgid.link/20260717075125.1244877-2-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
-index c6f20ceadede31..b21be20dcf8513 100644
---- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
-+++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
-@@ -4284,6 +4284,7 @@ static void dpaa2_eth_disconnect_mac(struct dpaa2_eth_priv *priv)
- 		dpaa2_mac_disconnect(mac);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c b/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
+index dae944d28ee26d..bb1dd223ecf5ed 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
+@@ -158,6 +158,13 @@ static int mlx5e_dcbnl_ieee_getets(struct net_device *netdev,
+ 	}
+ 	memcpy(ets->tc_tsa, priv->dcbx.tc_tsa, sizeof(ets->tc_tsa));
  
- 	dpaa2_mac_close(mac);
-+	put_device(&mac->mc_dev->dev);
- 	kfree(mac);
++	/* Report 0 for non ETS TSA */
++	for (i = 0; i < ets->ets_cap; i++) {
++		if (ets->tc_tx_bw[i] == MLX5E_MAX_BW_ALLOC &&
++		    priv->dcbx.tc_tsa[i] != IEEE_8021QAZ_TSA_ETS)
++			ets->tc_tx_bw[i] = 0;
++	}
++
+ 	return err;
  }
  
 -- 
