@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFE1E2E738B;
-	Mon, 17 Aug 2026 14:45:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8651429CD8;
+	Mon, 17 Aug 2026 14:45:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977921; cv=none; b=MJ6VWIh4OZdF3bCUKdJ4apOMHpt9nRkKAnajzlIKV5wOVRzYBtRYsGVgpe1Yu3i2/T6+X2CoTygDqC9viEg3/XNQ4pA0xs8jYSjs15/ZeV6gIhh1ANSJ+Hy8mdj5nxbQhT6itub4GILLVQT59IDOSFtRWapS7rWz/uLOhFD7r60=
+	t=1786977923; cv=none; b=VfUMepOu2/WDCR9rTXqoM6HTjUPnhYiBkH/ZC09uX4MTf+skmmB3e5zWl6ar/jUnaK6CO5dJmZESStSBdJNxgI5Ff0H44VHuNFG6J7IgZEn/WUDiF8pEs7hzMetVNsiuME2kButOi3h+7jW9FzW13/0/KZ1uM9avD1r/KjOz1y8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977921; c=relaxed/simple;
-	bh=lSGcaUIXNTgba8Ynn6P5VOaw8cvfq6vvwy0v2808hv8=;
+	s=arc-20240116; t=1786977923; c=relaxed/simple;
+	bh=3id6aUzk/mZPIqs8jHzXXaKTQUmJB3oRQHE7u23NJJw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iCOBcKBtBMllsv35Ob/nz85n5r6SU+l/oxTmDnNUJx6Sj5fPmk2E+p9AafaVI/GXS4ddnRtOq75uonVLoJ+QbEIu5ms+0KQdlgmU02XTmC4Ef1pshSNTSjNKwzYavMR03IJ6/B/iTLb8cvFa7Fx1nU8wMJE4N25c4j2M6z1QpW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L+7wPRf9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PLf4KfINbbAEpxpobSLHbhaWg99LtvGDa+jBrNdBpbh8BfSAXfElahvNZzKCuLxfBjsuTRodKzrK7zj2aD6UHLHQ4Mp7jzGJJvJhUWr0+qPwph8WgKH6OjCCYB4O8irYJ5CPKbBAQ3djMvaNCMZn4RPmLc7z+9aWTHiWfZKkNWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rPmG8731; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L+7wPRf9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E93C1F000E9;
-	Mon, 17 Aug 2026 14:45:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rPmG8731"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1FDB1F000E9;
+	Mon, 17 Aug 2026 14:45:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977919;
-	bh=QcRGj7cz/95AtmJ2RFWp+lyJa3x+aYTwsz/K+hyzYco=;
+	s=korg; t=1786977922;
+	bh=nPxp3weeYOGmJOmAwsI1Ly5suEu28z10O0T+2EbbiuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L+7wPRf9lFgQlv3El7Fet/HDxK6m2671TYm3ze0Q3vUy5ogdXot9WZBxc77nxk1d9
-	 AkhqrhGqOueVRR8/R5E4Svh7uV2iL6xEHKL8vXeShs1pz9yPXQb9j1IbpwbQsuNRXT
-	 X/W7JjoOJoBcGutZdWUewOiPDKMnBhddocnDTgRw=
+	b=rPmG8731Qq7+cYB2hDg2A4+0Ko+rkfAKjeRKRWDPE7YKjEtBsJSuVYXMgoI9/lO7B
+	 cC+v4DpxCoGpk4R/6zwje0OMX/F7putuhzG/h9MjVff9FPcmn6ewoESuIKYPg28i/v
+	 3lL3Ar3xD3l0wtD4yOf/j3I+ZPmIvCuR6e9ZPtGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Daniel Drake <dan@reactivated.net>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Yuho Choi <dbgh9129@gmail.com>,
+	Avi Fishman <avifishman70@gmail.com>,
+	Andrew Jeffery <andrew@codeconstruct.com.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 007/181] arm64: dts: broadcom: bcm2712: Remove non-functional EL2 virtual timer
-Date: Mon, 17 Aug 2026 15:31:41 +0200
-Message-ID: <20260817132535.685616836@linuxfoundation.org>
+Subject: [PATCH 6.12 008/181] ARM: npcm: Fix OF node refcount leaks in SMP setup
+Date: Mon, 17 Aug 2026 15:31:42 +0200
+Message-ID: <20260817132535.727893470@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
 References: <20260817132535.394764707@linuxfoundation.org>
@@ -52,49 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Drake <dan@reactivated.net>
+From: Yuho Choi <dbgh9129@gmail.com>
 
-[ Upstream commit 75952cfc7752c52a2b692b59d34ce160d3edabb2 ]
+[ Upstream commit 8eb052f48331474c2789d07b7f11165c323bd2f9 ]
 
-Commit d87773de9efe1 ("clocksource/drivers/arm_arch_timer: Default to EL2
-virtual timer when running VHE") causes boot to hang on Raspberry Pi 5.
-The newly-selected EL2 virtual timer does not generate any interrupts,
-even though the GIC_DIST_ENABLE_SET flag has been confirmed set via
-readback.
+npcm7xx_smp_boot_secondary() and npcm7xx_smp_prepare_cpus() look up
+the GCR and SCU nodes with of_find_compatible_node(). The returned
+nodes are used for of_iomap(), but the node references are never
+released.
 
-It is highly unusual that this timer interrupt is non-operational because
-this is a standard GIC interrupt corresponding to a standard Cortex-A76
-CPU timer. However, Broadcom have confirmed for this SoC:
+of_iomap() does not consume the device node reference, and iounmap()
+only releases the MMIO mapping. Drop each node reference after the
+corresponding mapping attempt.
 
-> the interrupt line was never connected in the first place as this was
-> not identified as being a requirement
-
-Remove the corresponding DeviceTree entry.
-
-Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Closes: https://lore.kernel.org/all/ea15cce1-b393-43f6-8d58-3d6f90f0c0cd@samsung.com/
-Fixes: faa3381267d0 ("arm64: dts: broadcom: Add minimal support for Raspberry Pi 5")
-Signed-off-by: Daniel Drake <dan@reactivated.net>
-Link: https://lore.kernel.org/r/20260716-bcm2712-el2-v2-1-e708f7fb42fa@reactivated.net
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Fixes: 7bffa14c9aed ("arm: npcm: add basic support for Nuvoton BMCs")
+Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
+Reviewed-by: Avi Fishman <avifishman70@gmail.com>
+Signed-off-by: Andrew Jeffery <andrew@codeconstruct.com.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/broadcom/bcm2712.dtsi | 2 --
- 1 file changed, 2 deletions(-)
+ arch/arm/mach-npcm/platsmp.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/broadcom/bcm2712.dtsi b/arch/arm64/boot/dts/broadcom/bcm2712.dtsi
-index 209f99b1ceae7..c8e809d77b3fe 100644
---- a/arch/arm64/boot/dts/broadcom/bcm2712.dtsi
-+++ b/arch/arm64/boot/dts/broadcom/bcm2712.dtsi
-@@ -279,8 +279,6 @@ IRQ_TYPE_LEVEL_LOW)>,
- 			     <GIC_PPI 11 (GIC_CPU_MASK_SIMPLE(4) |
- 					  IRQ_TYPE_LEVEL_LOW)>,
- 			     <GIC_PPI 10 (GIC_CPU_MASK_SIMPLE(4) |
--					  IRQ_TYPE_LEVEL_LOW)>,
--			     <GIC_PPI 12 (GIC_CPU_MASK_SIMPLE(4) |
- 					  IRQ_TYPE_LEVEL_LOW)>;
- 	};
- };
+diff --git a/arch/arm/mach-npcm/platsmp.c b/arch/arm/mach-npcm/platsmp.c
+index 41891d3aa1247..4c1fc9983746c 100644
+--- a/arch/arm/mach-npcm/platsmp.c
++++ b/arch/arm/mach-npcm/platsmp.c
+@@ -32,6 +32,7 @@ static int npcm7xx_smp_boot_secondary(unsigned int cpu,
+ 		goto out;
+ 	}
+ 	gcr_base = of_iomap(gcr_np, 0);
++	of_node_put(gcr_np);
+ 	if (!gcr_base) {
+ 		pr_err("could not iomap gcr");
+ 		ret = -ENOMEM;
+@@ -60,6 +61,7 @@ static void __init npcm7xx_smp_prepare_cpus(unsigned int max_cpus)
+ 		return;
+ 	}
+ 	scu_base = of_iomap(scu_np, 0);
++	of_node_put(scu_np);
+ 	if (!scu_base) {
+ 		pr_err("could not iomap scu");
+ 		return;
 -- 
 2.53.0
 
