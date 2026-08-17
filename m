@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFF2F2F1FDF;
-	Mon, 17 Aug 2026 15:25:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA2692F1FDF;
+	Mon, 17 Aug 2026 15:25:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786980327; cv=none; b=gcf8CQEfcgVXKaGk2K6nH50J6icWt0fYI7icRxeWTBwTlwiDAr1z8QtYYrHE2AAGmBHpBq/7ingkkWEuyBAYPl2XJHtFYOwXYobaEj4HxnXQSvFit8NEeOL79prKCvzs9MfeOX7IMw0Tly8COOALYKbQGD8MB3Dx9Ewo3VcKm4g=
+	t=1786980330; cv=none; b=udYWMsxpJp02rGG0iUbOoWi4NP33boDcAwFuw+V5/9jWLAjqs0wkOjGG7616TZkEhz6I36sguOdGmJ/ZKaEBxGh4U8TGF/p1Vyx/9YN0rb4jz8CDAtdOHqEmt4njl1rgKmW3vyVwtwmkFUzlRXQ4c0WEHkj7aj1bugctHrUAYQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786980327; c=relaxed/simple;
-	bh=bwgq5Alvbsc/1b1YpmyHf82FWdK/C8ei8YNihQmFG4c=;
+	s=arc-20240116; t=1786980330; c=relaxed/simple;
+	bh=myeaUheryEmzwhJmeqOqz3P7Tr3BEvssJsExmhQ79uU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dzi5EWgl5SlRU7OAnTKUnHpBtHoW5wfsdFO38lPvd9Vgi9nXqxNsjuLQMexU35vguSxCzPTy5Eokm6ZAFnaSZsVh03NrDPrxQtL+1oFgddBRvCpGx9j+7+f4az2uw/Y08VkXtJjvwENAlHAdl3KTyIVNlbZhS/gzEhRvkxYDkzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lGhr/vGi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JffWSaQyRFqWAxF4NxQcNei2S0qvOMlsbRyuuqncBVA3p3iO2nEjFpE7Ae2vGPOtDHGXx9KYHh/DNkRiz1BD158o9kE0u2fGYBgZgSXc13HSkju8iStkWWnC9/yivt+lSqdSypM9oytEHq/+tRv4aJB++KBoby+8vIx+kTZLEoA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j77D7VvS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lGhr/vGi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 252F41F000E9;
-	Mon, 17 Aug 2026 15:25:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j77D7VvS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 011421F000E9;
+	Mon, 17 Aug 2026 15:25:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786980325;
-	bh=LKuXaetHBlRbJpqWV8Xz4WUFpbp4Wv66+bYdZjeRpdo=;
+	s=korg; t=1786980328;
+	bh=TKD16pD3CsnfYp3s8YFyzIqFp5yGViF5GX29EV/IWnQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lGhr/vGi7t7kVLu5oadBS7+j+CqwAYH6jVZmw5FrDTNb0QO+SNUOeH4e9C/9yQgOK
-	 /At6rTzDTp6iZbB0ZjfJ0Eqm3woDdeDJPYB8i+z1OUefXSe4qXMdJPJfLMEF0Y4jDh
-	 x1X8HE33pZZDKnG0c3agHGe5swEmLBwPaTQPYb00=
+	b=j77D7VvSw1QIwozzzMHrXX3eClzyyYHcfc4ai56iutCqDej9tBHlLs1ECEcoQZoQF
+	 rsEwDZQtWs7skhUm92q8xX7U6MMPdZaGS8AL1borakrGZaQ0IJxuwoD6aZ63okfAE6
+	 htD0evbsZdys8xRZUfmhXUMC0nQT+qYQ6MAnv92s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan XinRan <shinjiangjiang@gmail.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 527/609] net: thunderbolt: Tear down DMA paths before stopping the rings
-Date: Mon, 17 Aug 2026 15:33:43 +0200
-Message-ID: <20260817132601.436968571@linuxfoundation.org>
+Subject: [PATCH 6.1 536/609] KVM: x86: Check for invalid/obsolete root *after* making MMU pages available
+Date: Mon, 17 Aug 2026 15:33:52 +0200
+Message-ID: <20260817132601.710107423@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -52,115 +52,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan XinRan <shinjiangjiang@gmail.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 68bf02b6b4ad3f748c6db71fd77b6c0402d252f4 ]
+[ Upstream commit 2abd5287f08319fa35764566b15c6e22cb1068db ]
 
-tbnet_tear_down() stops both rings and frees their frame buffers before
-calling tb_xdomain_disable_paths().  tb_ring_stop() zeroes the ring's
-descriptor base and tbnet_free_buffers() unmaps and frees the pages the
-frames sit in, so by the time __tb_path_deactivate_hop() polls the hop's
-'pending' bit, anything still in flight has nowhere to drain to.
+Check for a "stale" page fault, i.e. for an invalid and/or obsolete root,
+after making MMU pages available for the shadow MMU.  If reclaiming shadow
+pages zaps an in-use root, i.e. marks it invalid, then KVM will attempt to
+map memory into an invalid root.  On its own, populating an invalid root is
+"fine", but because child shadow pages inherit their parent's role, any
+children created during the map/fetch will be created as invalid pages,
+thus violating KVM's invariant that invalid pages are never on the list of
+active MMU pages.
 
-The teardown sequence has been in this order since the driver was added.
-The setup path has not: commit ff7cd07f3064 ("net: thunderbolt: Enable
-DMA paths only after rings are enabled") moved the path enable to the end
-of tbnet_connected_work() and documented why:
+Note, the underlying flaw has existed since KVM first started tracking
+invalid roots in 2008 (commit 2e53d63acba7, "KVM: MMU: ignore zapped root
+pagetables"), but the true badness only came along in 2020 (Linux 5.9)
+with the invariant that invalid shadow pages can't be on the list of
+active pages.
 
-	/* Both logins successful so enable the rings, high-speed DMA
-	 * paths and start the network device queue.
-	 *
-	 * Note we enable the DMA paths last to make sure we have primed
-	 * the Rx ring before any incoming packets are allowed to
-	 * arrive.
-	 */
+Note #2, inheriting role.invalid when creating child shadow pages is also
+far from ideal; that flaw will be addressed separately.
 
-Teardown was never updated to match, so the rings and the paths now come
-down in the same order they go up instead of in reverse.
-
-On an ASMedia ASM4242 host router the 'pending' bit then never clears:
-every teardown burns the full 500 ms timeout and
-__tb_path_deactivate_hop() returns -ETIMEDOUT.  Raising the timeout to
-5 s does not help, so the hop is not slow to drain, it never drains
-at all.
-
-The failure is invisible above the thunderbolt core.
-__tb_path_deactivate_hops() is void and only calls tb_port_warn();
-tb_path_deactivate(), tb_tunnel_deactivate() and
-__tb_disconnect_xdomain_paths() are void as well, and
-tb_disconnect_xdomain_paths() ends in an unconditional "return 0".  So
-tb_xdomain_disable_paths() reports success and the netdev_warn() below
-it never fires.  Repeated teardowns eventually take the XDomain control
-channel down, after which the peer node is gone and only a power cycle
-brings the controller back.
-
-Deactivating the paths first fixes it.  Measured with kretprobes on a
-stock v6.17 tree with no other patches applied, on a link that was up
-and had just carried traffic:
-
-  before: __tb_path_deactivate_hop() returns 0 for the first hop, then
-          -ETIMEDOUT for the second 500335 us later
-  after:  0 for both, 525 us apart
-
-Alternating the two orderings ABBA over three load levels, four
-teardowns per arm: every teardown failed before the change (21 of 21
-that ran), none failed after (0 of 24).  The before arms ran short
-because the link died partway through.  The same split shows up when
-the interface is enslaved to a bond instead of just brought down, which
-is how I ran into this in the first place.  Throughput and latency after
-the change are unchanged.
-
-Hosts whose routers drain the hop despite the stale descriptor base see
-no functional difference, since the paths end up deactivated either way.
-
-Fixes: e69b6c02b4c3 ("net: Add support for networking over Thunderbolt cable")
-Signed-off-by: Fan XinRan <shinjiangjiang@gmail.com>
-Acked-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Link: https://patch.msgid.link/20260803-b4-tbnet-teardown-v2-1-27de6a13ca2d@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Hyunwoo Kim <imv4bel@gmail.com>
+Fixes: f95eec9bed76 ("KVM: x86/mmu: Don't put invalid SPs back on the list of active pages")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/thunderbolt.c | 20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+ arch/x86/kvm/mmu/mmu.c         |  9 +++++----
+ arch/x86/kvm/mmu/paging_tmpl.h | 10 ++++++----
+ 2 files changed, 11 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/thunderbolt.c b/drivers/net/thunderbolt.c
-index 6f01089e6f47d..a14655b795cca 100644
---- a/drivers/net/thunderbolt.c
-+++ b/drivers/net/thunderbolt.c
-@@ -379,11 +379,16 @@ static void tbnet_tear_down(struct tbnet *net, bool send_logout)
- 				break;
- 		}
- 
--		tb_ring_stop(net->rx_ring.ring);
--		tb_ring_stop(net->tx_ring.ring);
--		tbnet_free_buffers(&net->rx_ring);
--		tbnet_free_buffers(&net->tx_ring);
--
-+		/* Tear the paths down before stopping the rings.  This mirrors
-+		 * tbnet_connected_work(), which enables the paths last so the
-+		 * Rx ring is primed before packets can arrive.  Stopping a
-+		 * ring zeroes its descriptor base and tbnet_free_buffers()
-+		 * unmaps and frees the frame buffers, leaving anything still
-+		 * in flight with nowhere to drain to;
-+		 * __tb_path_deactivate_hop() then waits for the hop's
-+		 * 'pending' bit, which on some host routers never clears in
-+		 * that state.
-+		 */
- 		ret = tb_xdomain_disable_paths(net->xd,
- 					       net->local_transmit_path,
- 					       net->tx_ring.ring->hop,
-@@ -392,6 +397,11 @@ static void tbnet_tear_down(struct tbnet *net, bool send_logout)
- 		if (ret)
- 			netdev_warn(net->dev, "failed to disable DMA paths\n");
- 
-+		tb_ring_stop(net->rx_ring.ring);
-+		tb_ring_stop(net->tx_ring.ring);
-+		tbnet_free_buffers(&net->rx_ring);
-+		tbnet_free_buffers(&net->tx_ring);
-+
- 		tb_xdomain_release_in_hopid(net->xd, net->remote_transmit_path);
- 		net->remote_transmit_path = 0;
+diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
+index 7fc8a819b31ac..34f09908961c5 100644
+--- a/arch/x86/kvm/mmu/mmu.c
++++ b/arch/x86/kvm/mmu/mmu.c
+@@ -4281,16 +4281,17 @@ static int direct_page_fault(struct kvm_vcpu *vcpu, struct kvm_page_fault *fault
+ 		return r;
  	}
+ 
+-	r = RET_PF_RETRY;
+ 	write_lock(&vcpu->kvm->mmu_lock);
+ 
+-	if (is_page_fault_stale(vcpu, fault))
+-		goto out_unlock;
+-
+ 	r = make_mmu_pages_available(vcpu);
+ 	if (r)
+ 		goto out_unlock;
+ 
++	if (is_page_fault_stale(vcpu, fault)) {
++		r = RET_PF_RETRY;
++		goto out_unlock;
++	}
++
+ 	r = direct_map(vcpu, fault);
+ 
+ out_unlock:
+diff --git a/arch/x86/kvm/mmu/paging_tmpl.h b/arch/x86/kvm/mmu/paging_tmpl.h
+index 8d1ab32ee5f9e..2ea7bd1a6bb5f 100644
+--- a/arch/x86/kvm/mmu/paging_tmpl.h
++++ b/arch/x86/kvm/mmu/paging_tmpl.h
+@@ -865,15 +865,17 @@ static int FNAME(page_fault)(struct kvm_vcpu *vcpu, struct kvm_page_fault *fault
+ 
+ 	orig_pfn = fault->pfn;
+ 
+-	r = RET_PF_RETRY;
+ 	write_lock(&vcpu->kvm->mmu_lock);
+ 
+-	if (is_page_fault_stale(vcpu, fault))
+-		goto out_unlock;
+-
+ 	r = make_mmu_pages_available(vcpu);
+ 	if (r)
+ 		goto out_unlock;
++
++	if (is_page_fault_stale(vcpu, fault)) {
++		r = RET_PF_RETRY;
++		goto out_unlock;
++	}
++
+ 	r = FNAME(fetch)(vcpu, fault, &walker);
+ 
+ out_unlock:
 -- 
 2.53.0
 
