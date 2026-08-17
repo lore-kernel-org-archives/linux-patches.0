@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEE1043D50C;
-	Mon, 17 Aug 2026 13:40:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6185C4399F8;
+	Mon, 17 Aug 2026 13:40:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974036; cv=none; b=akQIao6GoBbTfR/peK2tc2iXsoXsN1tT5LddQX9C7szakvzgf/uvj8o6pAvR8NXnqmxG9IK8o9iFgPWB8bjatgx0wFOMQsR+sKEXGvAaiu5H7uWMYt78sJ6AWORWt22PU4MDAGKC9c3VXYrnLJtb38pV+N5g83FQWXNfmz2JuGw=
+	t=1786974046; cv=none; b=BvsG8kH9b5KUmTJbizGe2nrjZYBNw6cFixWFsHpsMWEyBgA0NaL4JVcwNP9rtKzB2K7AvV2694u9UskZWlY3FA4Jvpdi05Wkc4dCC8VQ5sGgZG1lEYDUjMgk6Q3Hd5gNVCPExHW9ym7PGg1U9EI/ILK6f3uiFjz7K4ZQb7s72nI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974036; c=relaxed/simple;
-	bh=k3um3xjFBGSmtfoyniVcss9TSjdfEGO2v7T98ZT3aQo=;
+	s=arc-20240116; t=1786974046; c=relaxed/simple;
+	bh=160cfhS3oopcRR1+ovI3ICIZXO5igstJT+dsdV5Bci4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mDHML8k8JXuUpw8FFOjRFZroA0hbhVCTr/Gn6b2ldTjNqwlbUzeuzkQxmNGEQHIkVrcnD9foVG0sjPZbDrSP+dj8XGLaQ/W8x4tgQo4L8waHqd+PrliqG5oWflBx7GIl1QZuY5V3rWnuR8xaHZJvlJ0L5QGasDeq9R7SdS65wI8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N871OnCW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ouZR656UT5WJbzvEBUG4+LRPW0n8d6lAgsLaUS09xBqdjxqPwtXXM5CUYgseEjHuVlz/NqB3xeQrSf7OwM7r8y/GuQgW/XPBRN9guYLq86CnC285Amm893wlwjv8iLTj5DjoXEOL7fBKkAzkWWuk+GCAzj38r0SM77WqL16ebvk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xEJDoolH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N871OnCW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E16F41F00A3A;
-	Mon, 17 Aug 2026 13:40:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xEJDoolH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3AD01F00A3D;
+	Mon, 17 Aug 2026 13:40:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974034;
-	bh=jwPawwNC7hJD8CXJrXattx2nSnyqGMg2DfJP48KHhMY=;
+	s=korg; t=1786974037;
+	bh=NTftY8EudVSyUCpLhzJijkSBp7z5TEC+xv9K39w4feI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N871OnCWkeg6f/cAvi8qUHUnY6ncDG4RlSsjhIPtz0jQMLWCUP2WjH0StHvhuoZXY
-	 kjhHVhtp4wCUiH48dVnXakZeq+nZ/LRw6Of7lSPxEZMSI9yhdtEmRyZcGRgPcRgDCO
-	 hq/BpQWjqZGXDZMnaqFb8kM0NCZFtNL28p/ucVK8=
+	b=xEJDoolHAM2yCofknVV4kle1OB3sclQo0++5NLLaepQd+KppTBB3SVU6oNNoLjDzY
+	 orgmi9x/MD0rAZUAdyx3UCvG9erAYYwWlvQB8rVjQvlWA41VnRTehDbkzM6BT81BfU
+	 xAxkgeuWI+bDh1ptO1PUhHY62llCdPZTnE/mUr14=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Satish Kharat <satishkh@cisco.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Yousef Alhouseen <alhouseenyousef@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 039/271] enic: fix tx_hang_reset use-after-free on device removal
-Date: Mon, 17 Aug 2026 15:29:24 +0200
-Message-ID: <20260817132538.351618888@linuxfoundation.org>
+Subject: [PATCH 7.1 066/271] vhost/vdpa: reject overflowing PA map page counts on 32-bit
+Date: Mon, 17 Aug 2026 15:29:51 +0200
+Message-ID: <20260817132539.453853164@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -51,47 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Satish Kharat <satishkh@cisco.com>
+From: Yousef Alhouseen <alhouseenyousef@gmail.com>
 
-[ Upstream commit ec680ea4ba1bca92a767fb7e7869758bfdd886e3 ]
+[ Upstream commit 0619aaa34c0c2a2dcb07f0e9c8a34e7efb8c4cdf ]
 
-enic_remove() cancels the reset and change_mtu_work items but does not
-cancel tx_hang_reset. A TX timeout that fires while the device is being
-removed can schedule enic_tx_hang_reset() so that it runs after
-free_netdev(), resulting in a use-after-free.
+vhost_vdpa_pa_map() adds the IOVA page offset to the user-controlled map
+size before computing the number of pages to pin. On 32-bit systems,
+where unsigned long is narrower than u64, that addition can overflow and
+the code can pin and map fewer pages than the requested IOTLB range.
 
-cancel_work_sync() alone is not sufficient here: the still-live watchdog
-and notify paths can re-schedule these work items in the window between
-the cancel and unregister_netdev(). Use disable_work_sync(), which
-cancels the work and blocks any subsequent schedule_work() from
-requeuing it, and apply it to the reset and change_mtu_work items as
-well so the same requeue race is closed for all teardown work.
+Reject sizes that overflow the unsigned long page-count calculation.
 
-Fixes: 937317c7c109 ("enic: do hang reset only in case of tx timeout")
-Signed-off-by: Satish Kharat <satishkh@cisco.com>
-Link: https://patch.msgid.link/20260728062730.2394873-1-satishkh@cisco.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 22af48cf91aa ("vdpa: factor out vhost_vdpa_pa_map() and vhost_vdpa_pa_unmap()")
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <CAMuQ4bX-iDvcUOPPY+NLz95tkRJYwWqvzAr=U48uNaub_HZLGw@mail.gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cisco/enic/enic_main.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/vhost/vdpa.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/cisco/enic/enic_main.c b/drivers/net/ethernet/cisco/enic/enic_main.c
-index e7125b8180879..d98f7e7ccab9b 100644
---- a/drivers/net/ethernet/cisco/enic/enic_main.c
-+++ b/drivers/net/ethernet/cisco/enic/enic_main.c
-@@ -3011,8 +3011,9 @@ static void enic_remove(struct pci_dev *pdev)
- 	if (netdev) {
- 		struct enic *enic = netdev_priv(netdev);
+diff --git a/drivers/vhost/vdpa.c b/drivers/vhost/vdpa.c
+index ef642bc9f97e1..c3d913bd7cac7 100644
+--- a/drivers/vhost/vdpa.c
++++ b/drivers/vhost/vdpa.c
+@@ -1109,6 +1109,7 @@ static int vhost_vdpa_pa_map(struct vhost_vdpa *v,
+ 	unsigned int gup_flags = FOLL_LONGTERM;
+ 	unsigned long npages, cur_base, map_pfn, last_pfn = 0;
+ 	unsigned long lock_limit, sz2pin, nchunks, i;
++	unsigned long page_offset;
+ 	u64 start = iova;
+ 	long pinned;
+ 	int ret = 0;
+@@ -1121,7 +1122,13 @@ static int vhost_vdpa_pa_map(struct vhost_vdpa *v,
+ 	if (perm & VHOST_ACCESS_WO)
+ 		gup_flags |= FOLL_WRITE;
  
--		cancel_work_sync(&enic->reset);
--		cancel_work_sync(&enic->change_mtu_work);
-+		disable_work_sync(&enic->reset);
-+		disable_work_sync(&enic->tx_hang_reset);
-+		disable_work_sync(&enic->change_mtu_work);
- 		unregister_netdev(netdev);
- 		enic_dev_deinit(enic);
- 		vnic_dev_close(enic->vdev);
+-	npages = PFN_UP(size + (iova & ~PAGE_MASK));
++	page_offset = iova & ~PAGE_MASK;
++	if (size > ULONG_MAX - page_offset) {
++		ret = -EINVAL;
++		goto free;
++	}
++
++	npages = PFN_UP(size + page_offset);
+ 	if (!npages) {
+ 		ret = -EINVAL;
+ 		goto free;
 -- 
 2.53.0
 
