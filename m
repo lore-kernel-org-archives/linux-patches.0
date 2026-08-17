@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A52DC2D5A01;
-	Mon, 17 Aug 2026 14:00:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84EA52D5A01;
+	Mon, 17 Aug 2026 14:00:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975225; cv=none; b=A8zx0kSexXrnxn1bXxF9+AmK0rkw7ipmo9oglv9SMIk8B4zz7wkAXcJ/xlKQqDveTadd9mfiMf+Dj9F5Rlp4gnjTg6fC8fqBuXQ1mIgTqeuEJUYWiV97pXzV8yZF6HWFDnB8vgiLLGzugQ6AOgvxTiH9mBa5a2LHjf6qPeEHjBI=
+	t=1786975228; cv=none; b=scgwKqvRMyOdDCo3stjUKUwIv55lYRWd2ToSCGbR9Eb/IqRAs9HyQ+8yinnkJvw5tz3S9xHY+00dbfkNEuOBxiOu7ciDfdKzhvQaDC7zZSQPM4I7/+KbPkybg9cSotDZinApmZ8yXiLvO4oetsNO23+vASU2fd0m8+7dbfl5smk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975225; c=relaxed/simple;
-	bh=/linO9qX7BCihi4rmV/0Jz/8++SYxOkN0ihMnxUUizM=;
+	s=arc-20240116; t=1786975228; c=relaxed/simple;
+	bh=AB+ZgZ6T51Y0vgEGKZeWFNc0B1MsKET+at72F/JDWlA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QKnLiTTiO5O0BKYC0KA14rCkZcQj6sSjqGYcn9B0+OOmSobV46P5CWEmlDjQZpJEfKpMZ9zip9FUMuoiUdfqdjzG28K+02winD15GrCaJhArJPyRSIpyDdVAtaW2iND0gtdsnVmmgpfzX0ft2VCODAiWaT9PXzzEpM6kSYdjF8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RKs4LgMg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Pz2BPz5nfPCNyYdmeenXt7WkE1bQK9RNSH+7mbKfgy4X7m46TBW2/ou6AqXaWLhaLzDhycZcjJNZCz0SEdowGfjDq4nteazh+LiwcFw0Z26XzmFa9iOmjQKYxUHRHzvFG2Sz9a79alafNkAFxYx5wgc5MP9YODf9YFW+rBq2Ik8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KUZoE7IP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RKs4LgMg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A9F11F000E9;
-	Mon, 17 Aug 2026 14:00:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KUZoE7IP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCAD81F000E9;
+	Mon, 17 Aug 2026 14:00:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975224;
-	bh=D44P225S1vIe8QA7RIXhKRoaHs+B/+I7h2Arer2DCRA=;
+	s=korg; t=1786975227;
+	bh=sqz6Nx8hAmr4nW/e/tR8Kr5mnTe9WT2CAMDTgT/VNMc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RKs4LgMg36tDS05nonFAF1LuNVqBFQMbhhTO1hyUdfAYYRSn/+/WOQWfcbCWGA7Dm
-	 s+s8q587sAK5VVjmcvQzsbVa2mGN1+irFVw3acv3w8VLMijLdL3RL8fynz+KGK7HMS
-	 4ncr/CLRc1OaSMBhT9Z6KIWXG9EBM/y0hFhu6BSg=
+	b=KUZoE7IPPAZ+QJI26z86Q5KTy8JKB8V+URZqY7RTwwHJeg+alOq2+nCrb1dNDgTYB
+	 vLDxafL7w0PcXknLP0wNHO8cb4HzAcKnqC26U2wVgWOqFD6VVXU9tam3o63nze8XIo
+	 loJdb1B5TooHoNOu+Jv/rlOg8oM46W1wO0/wn8uU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hidayath Khan <hidayath@linux.ibm.com>,
-	Alexandra Winter <wintera@linux.ibm.com>,
-	Dust Li <dust.li@linux.alibaba.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 198/250] net/dibs: Correct freeing of dmb_clientid_arr
-Date: Mon, 17 Aug 2026 15:32:39 +0200
-Message-ID: <20260817132544.644444210@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 6.18 207/250] ovl: dont warn when the mount is completed from another user namespace
+Date: Mon, 17 Aug 2026 15:32:48 +0200
+Message-ID: <20260817132544.995814962@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -52,91 +50,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandra Winter <wintera@linux.ibm.com>
+From: Christian Brauner <brauner@kernel.org>
 
-commit 9e6869be49064915edb6c8776b27c376cfdb0df5 upstream.
+commit 63981fc786daaa626cb14d9be1406f674d79f98f upstream.
 
-A dibs device interrupt handler can be active after dibs_dev_del() and
-may still access dmb_clientid_arr. (UAF)
+fsopen() records the caller's user namespace in fc->user_ns and hands
+back an ordinary file descriptor. Nothing ties the task that calls
+fsconfig(FSCONFIG_CMD_CREATE) to the task that created the context. The
+fd is inherited across fork() and exec() and it can be passed over a
+unix socket.
 
-In case of a failure in dibs_dev_add() being called by dibs_lo_dev_probe()
-dmb_clientid_arr is freed twice (double free).
+Completing a context from another user namespace is allowed on purpose.
+vfs_cmd_create() authorizes the create with mount_capable(), which for
+FS_USERNS_MOUNT checks ns_capable(fc->user_ns, CAP_SYS_ADMIN), and that
+succeeds for a task holding CAP_SYS_ADMIN in an ancestor of fc->user_ns.
+So an unprivileged task can reach the WARN_ON() in ovl_fill_super():
+create a user and a mount namespace in a child, call fsopen("overlay")
+there, send the fscontext fd to the parent and let the parent issue
+FSCONFIG_CMD_CREATE. Both namespaces come from a plain unshare(1) and no
+capability is needed anywhere:
 
-Free dmb_clientid_arr in dibs_dev_release() after last reference is gone.
-Note that allocating in dibs_dev_add() instead of dibs_dev_alloc() is ok
-for now, because no dmbs can be registered before dibs_dev_add().
+  WARNING: fs/overlayfs/super.c:1551 at ovl_fill_super+0x7b9/0x1e20 [overlay]
+  CPU: 3 UID: 1000 PID: 3243376 Comm: fswarn
+  Call Trace:
+   get_tree_nodev+0x71/0xa0
+   ovl_get_tree+0x15/0x20 [overlay]
+   vfs_get_tree+0x2a/0x100
+   vfs_cmd_create+0x60/0xf0
+   __do_sys_fsconfig+0x4b2/0x500
 
-Fixes: cc21191b584c ("dibs: Move data path to dibs layer")
-Cc: stable@vger.kernel.org
-Co-developed-by: Hidayath Khan <hidayath@linux.ibm.com>
-Signed-off-by: Hidayath Khan <hidayath@linux.ibm.com>
-Signed-off-by: Alexandra Winter <wintera@linux.ibm.com>
-Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
-Link: https://patch.msgid.link/20260810111432.2334900-1-wintera@linux.ibm.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+The child needs the mount namespace because fsopen() itself gates on
+may_mount(), which asks for CAP_SYS_ADMIN in the user namespace owning
+the caller's mount namespace. fsconfig() doesn't repeat that check.
+
+It is a WARN_ON() and not a WARN_ON_ONCE(), so the condition can be
+raised in a loop to taint the kernel and flood the log, and it panics a
+kernel booted with panic_on_warn.
+
+Keep refusing the mount and stop warning about it. ovl_parse_param()
+already spells a user namespace check this way for Opt_override_creds.
+
+Fixes: 1784fbc2ed9c ("ovl: port to new mount api")
+Cc: stable@vger.kernel.org # v6.5+
+Link: https://patch.msgid.link/20260802-work-fill_super-warn-v1-1-4e987911a39a@kernel.org
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dibs/dibs_loopback.c |    1 -
- drivers/dibs/dibs_main.c     |   14 ++++----------
- 2 files changed, 4 insertions(+), 11 deletions(-)
+ fs/overlayfs/super.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/dibs/dibs_loopback.c
-+++ b/drivers/dibs/dibs_loopback.c
-@@ -335,7 +335,6 @@ static int dibs_lo_dev_probe(void)
- 	return 0;
+--- a/fs/overlayfs/super.c
++++ b/fs/overlayfs/super.c
+@@ -1381,7 +1381,8 @@ int ovl_fill_super(struct super_block *s
+ 	int err;
  
- err_reg:
--	kfree(dibs->dmb_clientid_arr);
- 	/* pairs with dibs_dev_alloc() */
- 	put_device(&dibs->dev);
- 	kfree(ldev);
---- a/drivers/dibs/dibs_main.c
-+++ b/drivers/dibs/dibs_main.c
-@@ -127,6 +127,7 @@ static void dibs_dev_release(struct devi
+ 	err = -EIO;
+-	if (WARN_ON(fc->user_ns != current_user_ns()))
++	/* The fscontext fd may have been passed to another user namespace. */
++	if (fc->user_ns != current_user_ns())
+ 		goto out_err;
  
- 	dibs = container_of(dev, struct dibs_dev, dev);
- 
-+	kfree(dibs->dmb_clientid_arr);
- 	kfree(dibs);
- }
- 
-@@ -193,12 +194,13 @@ int dibs_dev_add(struct dibs_dev *dibs)
- 
- 	ret = device_add(&dibs->dev);
- 	if (ret)
--		goto free_client_arr;
-+		return ret;
- 
- 	ret = sysfs_create_group(&dibs->dev.kobj, &dibs_dev_attr_group);
- 	if (ret) {
- 		dev_err(&dibs->dev, "sysfs_create_group failed for dibs_dev\n");
--		goto err_device_del;
-+		device_del(&dibs->dev);
-+		return ret;
- 	}
- 	mutex_lock(&dibs_dev_list.mutex);
- 	mutex_lock(&clients_lock);
-@@ -213,13 +215,6 @@ int dibs_dev_add(struct dibs_dev *dibs)
- 	mutex_unlock(&dibs_dev_list.mutex);
- 
- 	return 0;
--
--err_device_del:
--	device_del(&dibs->dev);
--free_client_arr:
--	kfree(dibs->dmb_clientid_arr);
--	return ret;
--
- }
- EXPORT_SYMBOL_GPL(dibs_dev_add);
- 
-@@ -246,7 +241,6 @@ void dibs_dev_del(struct dibs_dev *dibs)
- 	mutex_unlock(&dibs_dev_list.mutex);
- 
- 	device_del(&dibs->dev);
--	kfree(dibs->dmb_clientid_arr);
- }
- EXPORT_SYMBOL_GPL(dibs_dev_del);
- 
+ 	ovl_set_d_op(sb);
 
 
