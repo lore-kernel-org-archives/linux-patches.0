@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB84F3D5C07;
-	Mon, 17 Aug 2026 15:29:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92EEA421220;
+	Mon, 17 Aug 2026 15:29:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786980562; cv=none; b=Btpf6Fk/iUv/Tha6H26mZ2xCJUOq5FML2bwWJsNWBP/UNifP38E/kgnKyET/v1wLcCYpfPuJydJKQFZbm+jdt9ITa7cTincKJlsAcrI8y6fp7RwqMa+bAyhs2o1PtfLSGqdZK9xnZhjqJtaWXdPgBdv3z4hDqRWvFa7dthNJ+NQ=
+	t=1786980565; cv=none; b=DZsPyHy4bGlS5g+tH0rWPk7ZEbNhN2DmJAz0CcWbR6031Kiw7AowmbHg8cIRJ4lZeB8sLTsCN+8MW5/chevUGXYhI6gqEIsMiWKMH5PIqaJQamcia2aRC3ue92sGV7jzKretXs5cgi45nbpsC+mF3TlOR6GtPVz/14QnlrC0d9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786980562; c=relaxed/simple;
-	bh=C5X+ON7OQXdrdxU4X1RrviCWoRigUaMYa10oREnfhow=;
+	s=arc-20240116; t=1786980565; c=relaxed/simple;
+	bh=r43UqAmh4UWafSUhX0WIbNKkrd/Q8lVD7Qgt3+BKozI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R07L21bR4eS3DYFvIz7QRPVHdA0P2FrAhtw0qFxP4npompeVg3vygfwmrisgzOMixeu7D8ETC8415VRpaID/69LHMT+5a4DFh87MoMcMIavXc//it3JxGQCvpgyRgkbjciXXrT+6rF9aWFzx2f6nxCfE51OLvD/wv21XEFMqCuQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=krhGOxRZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s2D8d4zlDfHFY3nFbe3/wwBwtC9bO5GNRiN0D0nZbGaO+ZIJPD3zNf83q0G5zjWwmZzitL88sbeZUQnSEUYJDVoezsQWmBEcfPx/yjUof+hd8kOkRnfcesQgz+76s5K4OxX39O+LHRh12xe3S0FTmV20pksXuNew+NGvSZkm66g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PV+IUpVP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="krhGOxRZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 111A11F000E9;
-	Mon, 17 Aug 2026 15:29:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PV+IUpVP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAE931F000E9;
+	Mon, 17 Aug 2026 15:29:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786980561;
-	bh=X8q7MTW1TsPb6CmFoJU+uu8M2UGYOTSEGhHy2tpCWeU=;
+	s=korg; t=1786980564;
+	bh=GsHdtbYzFzQfzWY/hNxBlEwC0GOT4MMkGpSZP6sSErQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=krhGOxRZUAPZoS5Vf9/iYEq3XbKzS1x1awkR3mXkAf2zaSP7IVTEQkWmuLgqDPt61
-	 4427p3DPh4CzGhkIWkiHnQx/1dpVwgB5lJ2/l8ioHt24L/Ofr59tCME8Rm/0otPK6q
-	 Kk5HCb1djWtf2sq/Hj3p0ROffMgFAYHaP7wtRQXA=
+	b=PV+IUpVPSEkrgp0wZrqmCCpqfgGY/e0OauyGP6c1nEHVK82CNdTbOQjBYaKD+aYAc
+	 spSbdTyrWJi2RIgLV+7nATerSC5rs0AzFF2jaOeutUYHSdtHFv/nYUpc3Fwby/yQEz
+	 X/5fVBPmrJhrOYYJMq/B1y/f4wl3z+datjJM+i4I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Wu <michael@allwinnertech.com>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 6.1 578/609] tracing: Fix race between update_event_fields and, event_define_fields
-Date: Mon, 17 Aug 2026 15:34:34 +0200
-Message-ID: <20260817132603.043413071@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Cunhao Lu <1579567540@qq.com>
+Subject: [PATCH 6.1 569/609] serial: 8250_dma: Clear stale RX state on shutdown
+Date: Mon, 17 Aug 2026 15:34:25 +0200
+Message-ID: <20260817132602.760771663@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -50,72 +50,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Wu <michael@allwinnertech.com>
+From: Cunhao Lu <1579567540@qq.com>
 
-commit c3730b8373bb5059d735509b9e6a00d7eb337d7c upstream.
+commit e2fe6a0efecbef00e3ecc2db64dd5afa8c212b41 upstream.
 
-The following sequence may leads race between event_define_fields()
-and update_event_fields():
+serial8250_release_dma() terminates RX DMA and releases the channel, but
+leaves rx_running set.  If the port is closed while an RX transfer is
+active, the stale state remains while rxchan is NULL until the channel is
+requested again on the next open.
 
- CPU0 (loads module A)                      CPU1 (loads module B)
- ===============================            ===============================
- load_module(A)                             load_module(B)
-   notifier_call_chain                        notifier_call_chain
-     trace_module_notify                        trace_module_notify
-       mutex_lock(&event_mutex)                   trace_event_update_all()
-         trace_module_add_events(A)                 down_write(&trace_event_sem)
-            __register_event(call_A)
-              __add_event_to_tracers(call_A)
-                event_define_fields(call_A)
-                  for each f:                         list_for_each_entry(field,
-                    list_add(&f->link,                                    &class->fields, link)
-                             &class->fields)            field = class->fields->next;
+The DesignWare BUSY workaround added by commit a7b9ce39fbe4
+("serial: 8250_dw: Ensure BUSY is deasserted") calls
+serial8250_rx_dma_flush() from the LCR write path during startup.  This
+happens before serial8250_request_dma() obtains a new RX channel.  On
+reopen, the stale rx_running state therefore makes the flush path pass a
+NULL channel to dmaengine_pause(), causing a kernel Oops.
 
-Where access to the class->fields is not protected by the event_mutex in
-trace_event_update_all().
+Clear rx_running after terminating RX DMA, matching the TX cleanup.  Also
+make the flush helper return if the DMA object or RX channel is not
+available so startup and teardown paths cannot pass a NULL channel to the
+DMAengine API.
 
-This produces the following panic:
-   Unable to handle kernel access ... at virtual address 0000000000000018
-   pc : update_event_fields+0xf8/0x368
-   Call trace:
-    update_event_fields+0xf8/0x368
-    trace_event_update_all+0x7c/0x2b4
-    trace_module_notify+0x4c/0x1dc
-    notifier_call_chain+0x84/0x168
-    blocking_notifier_call_chain_robust+0x64/0xd4
-    load_module+0x10c8/0x123c
-    __arm64_sys_finit_module+0x230/0x31c
-
-Fix by taking event_mutex in trace_event_update_all() before
-trace_event_sem.
-
-Cc: stable@vger.kernel.org
-Fixes: b3bc8547d3be ("tracing: Have TRACE_DEFINE_ENUM affect trace event types as well")
-Link: https://patch.msgid.link/2e5730d2-c631-da41-3a3a-ae35bb4895f3@allwinnertech.com
-Signed-off-by: Michael Wu <michael@allwinnertech.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Fixes: 0fcb7901f9d6 ("tty: serial: 8250_dma: keep own book keeping about RX transfers")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Cunhao Lu <1579567540@qq.com>
+Link: https://patch.msgid.link/tencent_9EE2945F4C933B4D810C73C2D7485E000F06@qq.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/tty/serial/8250/8250_dma.c |   12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
---- a/kernel/trace/trace_events.c
-+++ b/kernel/trace/trace_events.c
-@@ -2904,6 +2904,7 @@ void trace_event_eval_update(struct trac
- 	int last_i;
- 	int i;
+--- a/drivers/tty/serial/8250/8250_dma.c
++++ b/drivers/tty/serial/8250/8250_dma.c
+@@ -195,11 +195,12 @@ void serial8250_rx_dma_flush(struct uart
+ {
+ 	struct uart_8250_dma *dma = p->dma;
  
-+	mutex_lock(&event_mutex);
- 	down_write(&trace_event_sem);
- 	list_for_each_entry_safe(call, p, &ftrace_events, list) {
- 		/* events are usually grouped together with systems */
-@@ -2937,6 +2938,7 @@ void trace_event_eval_update(struct trac
- 		cond_resched();
- 	}
- 	up_write(&trace_event_sem);
-+	mutex_unlock(&event_mutex);
+-	if (dma->rx_running) {
+-		dmaengine_pause(dma->rxchan);
+-		__dma_rx_complete(p);
+-		dmaengine_terminate_async(dma->rxchan);
+-	}
++	if (!dma || !dma->rxchan || !dma->rx_running)
++		return;
++
++	dmaengine_pause(dma->rxchan);
++	__dma_rx_complete(p);
++	dmaengine_terminate_async(dma->rxchan);
  }
+ EXPORT_SYMBOL_GPL(serial8250_rx_dma_flush);
  
- static struct trace_event_file *
+@@ -308,6 +309,7 @@ void serial8250_release_dma(struct uart_
+ 
+ 	/* Release RX resources */
+ 	dmaengine_terminate_sync(dma->rxchan);
++	dma->rx_running = 0;
+ 	dma_free_coherent(dma->rxchan->device->dev, dma->rx_size, dma->rx_buf,
+ 			  dma->rx_addr);
+ 	dma_release_channel(dma->rxchan);
 
 
