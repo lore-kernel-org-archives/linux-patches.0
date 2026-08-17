@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E16C93C8C46;
-	Mon, 17 Aug 2026 13:42:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9372439909;
+	Mon, 17 Aug 2026 13:42:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974122; cv=none; b=Rt3HHHhOfGoOkFzJL5K5kLbMGMkEyfHYwXF/eVfVljg1B9rMDEx3K78bIZpc49lKfsHJEiFeKRk56a3tPD/WKyoBhxCY5+IfMOkEU1btVV0efHex60LdIqOQvefgG0S8F/5QRXKRBMpuHgVnfIUFAZTKr0SQyvBCdXMjBIebxLc=
+	t=1786974126; cv=none; b=QUtA5sUT7hf4gukHoLLPmv1tOS4hQRpIeBUBx698OAUmaGHY3YfTYJPRyEX1mAHz/GxYadx5N2m0rV1Fm8RVOxzF0UBsggqJfiZR9XrPDWkqOOG+Lea7Mv0a16a0SNX33yCTZdFtfVwc0WYe5+19ASf5KWt2SbO/HNdmbccwNr8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974122; c=relaxed/simple;
-	bh=kIW6Ztw50UrvarckqzKhW8E04Yxzi+1H/nmfdJd6cY8=;
+	s=arc-20240116; t=1786974126; c=relaxed/simple;
+	bh=hpLb8A5CMOYSbVV02fCBeLbCCsw7rVb27UPrfziLy6s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZsipOAI7X3JeRr+R7//An2Tg/GLXzf4fEGS5d0FzbE6+hm+RE7SV11CBvtBfVoM2eKypvJ3ISrBVcKW50bBSoPiOF8Z/fwIC2eECuZ8DGgwn6khp8cuWZIVfAegS4WdW3nMjA/XzFncwl34HiMCsTijAyqsJU6r+SSM1AW+IDSE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Me7CCGOh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nqFaC9ANston1IzyiG+mlUOGKEiunF4NX7b1p4ImiMtamw/NWULcZB23dWKdVlfgNrhXp+sGpdQ5sQY7T06x5p+Xh7U9vF6aoKr5aML51WqgSNDaPaslcZXAzRMOLIIfiOqhtgl9g2xtHB/01pfk2KWchED2vLafqlIJeaRrCoI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bjq8HGjC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Me7CCGOh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24B791F00A3A;
-	Mon, 17 Aug 2026 13:41:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bjq8HGjC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 070211F000E9;
+	Mon, 17 Aug 2026 13:42:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974120;
-	bh=/5W/a2f3qySdmfv6A9hlv/fHBaxfAB+7hK0JBeKWGJ4=;
+	s=korg; t=1786974123;
+	bh=ppBd02aMZxpqRySr0nNyHg80ob63xoDgjOf5PJ80KSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Me7CCGOh990dzC1t+IjQiMvGTUs9vuuz2nse59XMLjBIhlTcSUNvLS2QfQAsYV31l
-	 2UjHaUBLroyiHSn/HqMn+Xn8tiSbEPcp95OECZfs83fxRpMdo/uVHm0EOLZollL8W5
-	 DssiWprArCYuCnoDc7K7F/KCrfFx68+8w0/3icIg=
+	b=Bjq8HGjC/aklmiQlM3xDjKBtW39LxJzGbNHFLLtdlw+yaGOxIO9BfWhkEc1c8B5za
+	 JQNprGsB2vgS0d9M4jC3aKcT9yVsQW24sbZrI3PDApmunFrA5xM74GmcqXBmohR3Dd
+	 BzPBoo3S7qDjHSAuY091KYjDWBQFCKDm3oudEG1Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	Keegan Freyhof <keegan.freyhof@broadcom.com>,
-	Michael Chan <michael.chan@broadcom.com>,
+	Qing Luo <luoqing@kylinos.cn>,
+	Xin Long <lucien.xin@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 097/271] bnxt_en: Fix PTP PPS setting bug
-Date: Mon, 17 Aug 2026 15:30:22 +0200
-Message-ID: <20260817132540.780430910@linuxfoundation.org>
+Subject: [PATCH 7.1 098/271] sctp: fix addip_serial increment on ASCONF_ACK allocation failure
+Date: Mon, 17 Aug 2026 15:30:23 +0200
+Message-ID: <20260817132540.834601195@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -53,52 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keegan Freyhof <keegan.freyhof@broadcom.com>
+From: Qing Luo <luoqing@kylinos.cn>
 
-[ Upstream commit 80eaf88efec33ac77ed7726d066c4f2f932cc329 ]
+[ Upstream commit aa2e13ae8d3cbe2c15ef4f7e971b2de0832794aa ]
 
-The existing driver logic is always turning on PTP_CLK_REQ_PPS
-regardless of the "on" parameter passed to bnxt_ptp_enable().
-During shutdown, PTP_CLK_REQ_PPS may be turned off and this
-bug will do the opposite and may trigger a PCIe PTM request TLP.
-On some systems this can trigger a PCIe AER.
+In sctp_process_asconf(), when sctp_make_asconf_ack() fails to allocate
+the ASCONF_ACK chunk due to memory pressure, the code jumps to the
+done label where asoc->peer.addip_serial is unconditionally incremented.
 
-Fix it by properly configuring PTP_CLK_REQ_PPS based on the "on"
-parameter.
+This leaves the peer's ASCONF (serial N) unacknowledged while the local
+endpoint now expects serial N+1. When the peer retransmits serial N, it
+falls into the serial < addip_serial + 1 branch ,
+which attempts to look up a cached ACK for serial N. No cached ACK
+exists since the allocation failed, so the retransmission is silently
+discarded. The peer eventually times out and ABORTs the association.
 
-Fixes: 9e518f25802c ("bnxt_en: 1PPS functions to configure TSIO pins")
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Signed-off-by: Keegan Freyhof <keegan.freyhof@broadcom.com>
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Link: https://patch.msgid.link/20260731190937.807270-6-michael.chan@broadcom.com
+Move the addip_serial increment inside the if (asconf_ack) block so that
+the serial number is only advanced when the ASCONF_ACK is successfully
+created and cached. This way, on allocation failure, the serial number
+is unchanged and the peer's retransmitted ASCONF will be correctly
+re-processed.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Qing Luo <luoqing@kylinos.cn>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20260804025514.241767-1-l1138897701@163.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ net/sctp/sm_make_chunk.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c
-index 5d41dc1bc7820..b89293dfd2d1e 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c
-@@ -495,12 +495,15 @@ static int bnxt_ptp_enable(struct ptp_clock_info *ptp_info,
- 		return rc;
- 	case PTP_CLK_REQ_PPS:
- 		/* Configure PHC PPS IN */
--		rc = bnxt_ptp_cfg_pin(bp, 0, BNXT_PPS_PIN_PPS_IN);
-+		pin_id = 0;
-+		if (!on)
-+			break;
-+		rc = bnxt_ptp_cfg_pin(bp, pin_id, BNXT_PPS_PIN_PPS_IN);
- 		if (rc)
- 			return rc;
- 		rc = bnxt_ptp_cfg_event(bp, BNXT_PPS_EVENT_INTERNAL);
- 		if (!rc)
--			ptp->pps_info.pins[0].event = BNXT_PPS_EVENT_INTERNAL;
-+			ptp->pps_info.pins[pin_id].event = BNXT_PPS_EVENT_INTERNAL;
- 		return rc;
- 	default:
- 		netdev_err(ptp->bp->dev, "Unrecognized PIN function\n");
+diff --git a/net/sctp/sm_make_chunk.c b/net/sctp/sm_make_chunk.c
+index 0ae30c3c8913a..e25612e9d0821 100644
+--- a/net/sctp/sm_make_chunk.c
++++ b/net/sctp/sm_make_chunk.c
+@@ -3336,12 +3336,11 @@ struct sctp_chunk *sctp_process_asconf(struct sctp_association *asoc,
+ 			goto done;
+ 	}
+ done:
+-	asoc->peer.addip_serial++;
+-
+ 	/* If we are sending a new ASCONF_ACK hold a reference to it in assoc
+ 	 * after freeing the reference to old asconf ack if any.
+ 	 */
+ 	if (asconf_ack) {
++		asoc->peer.addip_serial++;
+ 		sctp_chunk_hold(asconf_ack);
+ 		list_add_tail(&asconf_ack->transmitted_list,
+ 			      &asoc->asconf_ack_list);
 -- 
 2.53.0
 
