@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 206093ABD99;
-	Mon, 17 Aug 2026 14:44:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F55C39B96A;
+	Mon, 17 Aug 2026 14:44:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977872; cv=none; b=eIlQoZltfgPnmWSlzIGCV6XMI3Dxs4KRfXOLDmR/3HWee1yQeL34rIWRnesoDAwtFEnUGTjXC687DzQCl2vbwGNHAI3nHH90q9wK8SUTSfUigkg+J5HOleelpzpQUvgulYcvV73lfMZhdvywgUgQGbjJw7vvlfvDNc0jXZ7hJ20=
+	t=1786977875; cv=none; b=AjY7+0xtVxPIil0zxWu8JXxT3Os8VzJMtG7gQPakLPARh6mwqgLdL8BaHPGAeT6zG4JqehjrEPHgNpDiU9856+y7Zi1A4k0WOsroecatnEaCgbbOlDMKvXGysZ206WysurTfAb4k+Ail1DBaIjMysKXSbM19wUiikmAzf0Ket8M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977872; c=relaxed/simple;
-	bh=6ANojbVvJ1XsMcQdfNkCNgfYawGWgOnmwOTQ4kJzvyE=;
+	s=arc-20240116; t=1786977875; c=relaxed/simple;
+	bh=5TsghoFO/wW+Dadf/rxnZ/AX7ab0eYKNJx17HB2r+fE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vCa0nnGTaHebABxXm7vmPMHVvi4TY2msyrmCiYEdFqejx+ikWs5Ys4QOb7ByCfrM2Vkzm1f+KFRrbtOpFBKCiNaRtjj773ozO1hyszNc8Sb73NuOptqvRts4pjWJ5Ms8thefV/b3HwSle56pvlZ0VxQAqAhzwSBBTiCfxTFykgc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VhDcCJGZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FREAMWqC0UZlFP0pcZQ2rNlv5yNw2PiMYwKU56Ch7pKk0BwuEt3zA4dwfOwfN+TZXCs537uZoywIVq3vsn/lxi2ip6VLyz1LH/Bg7dOFf9jfymrXmfSISt4iUGKA2jRdfqrQ2+3a1G0DqThl5U5jTBFOj5IpLkbL/HFSppDFO4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qogppwdV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VhDcCJGZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 601E61F000E9;
-	Mon, 17 Aug 2026 14:44:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qogppwdV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38AE11F000E9;
+	Mon, 17 Aug 2026 14:44:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977870;
-	bh=JPwPftm3GTSUsZQRVmLwHbnP8HKWSjMAowNAHamKhXc=;
+	s=korg; t=1786977873;
+	bh=KCLgeQ7OcdN88CssUCP3apFrNJ6zgvzRDNyujmSFZGI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VhDcCJGZqD7BAGkw+dIV0zwWN6ZC1nQdSrJL9huVC/CeN2+NBrS6WR9EJM/BTUv/E
-	 zi30UTHag4rPha8SBR3cZ95xODPNBxtElxqKlw/Vonek8PJK9p7ALWBhtqcKifsT6b
-	 5C3aPcGmwDUWKgDsBw5iyBH6qU+CD9q1pz7Lg7zs=
+	b=qogppwdV/ho7MLJg2nFjULMLpFBcc2JjBY6Ol0YC2kfw2nkEfTc2p5UcFEK+O/AyA
+	 zyu+ZIBrfEId+9sJlb1K9xWBJONuU92x/C0g2YNVQnCwtt9akc0PuxdCTXRyvqdKmf
+	 Gv22pgOPtx+9NXcK+ddago/b8915aBSg49oEan20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	David Sterba <dsterba@suse.com>,
+	Yiyang Chen <chenyy23@mails.tsinghua.edu.cn>,
+	Daniel Wade <danjwade95@gmail.com>,
+	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
+	Eduard Zingerman <eddyz87@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 022/181] btrfs: fix memory leak in btrfs_do_encoded_write()
-Date: Mon, 17 Aug 2026 15:31:56 +0200
-Message-ID: <20260817132536.261230892@linuxfoundation.org>
+Subject: [PATCH 6.12 023/181] bpf: Preserve pointer state for commuted arithmetic
+Date: Mon, 17 Aug 2026 15:31:57 +0200
+Message-ID: <20260817132536.297005960@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
 References: <20260817132535.394764707@linuxfoundation.org>
@@ -52,94 +53,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Yiyang Chen <chenyy23@mails.tsinghua.edu.cn>
 
-[ Upstream commit d2a4e4e626b2f4670b69b430c357f03f53eb6632 ]
+[ Upstream commit a4c6f804b44c5c790269b25e0e61cf4e9f117c86 ]
 
-Local fuzzing of 6.12.94 has found the following memory leak:
+When scalar += pointer is handled in adjust_ptr_min_max_vals(), the
+destination register inherits the pointer state from the source pointer.
+Copying only selected fields is fragile because pointer provenance is
+tracked by several bpf_reg_state fields.
 
-Unreferenced object 0xffff888018050a80 (size 64):
-  comm "syz.0.17", pid 10297, jiffies 4294953601
-  hex dump (first 32 bytes):
-    00 10 00 00 00 00 00 00 01 00 00 00 00 00 00 00  ................
-    10 0a 05 18 80 88 ff ff 10 0a 05 18 80 88 ff ff  ................
-  backtrace (crc a8a6fc29):
-    kmemleak_alloc_recursive include/linux/kmemleak.h:42 [inline]
-    slab_post_alloc_hook mm/slub.c:4152 [inline]
-    slab_alloc_node mm/slub.c:4197 [inline]
-    __kmalloc_cache_noprof+0x168/0x2c0 mm/slub.c:4358
-    kmalloc_noprof include/linux/slab.h:878 [inline]
-    extent_changeset_alloc fs/btrfs/extent_io.h:207 [inline]
-    qgroup_reserve_data+0x1c5/0x7d0 fs/btrfs/qgroup.c:4305
-    btrfs_qgroup_reserve_data+0x2e/0xb0 fs/btrfs/qgroup.c:4355
-    btrfs_do_encoded_write+0x92e/0x1040 fs/btrfs/inode.c:9746
-    btrfs_encoded_write fs/btrfs/file.c:1482 [inline]
-    btrfs_do_write_iter+0x280/0x610 fs/btrfs/file.c:1507
-    btrfs_ioctl_encoded_write+0x3d6/0x490 fs/btrfs/ioctl.c:4738
-    btrfs_ioctl+0x6f9/0xc90 fs/btrfs/ioctl.c:-1
-    vfs_ioctl fs/ioctl.c:51 [inline]
-    __do_sys_ioctl fs/ioctl.c:906 [inline]
-    __se_sys_ioctl+0xf9/0x170 fs/ioctl.c:892
-    do_syscall_x64 arch/x86/entry/common.c:47 [inline]
-    do_syscall_64+0xbe/0x1a0 arch/x86/entry/common.c:78
-    entry_SYSCALL_64_after_hwframe+0x77/0x7f
+Use the caller's temporary offset register to preserve the scalar operand
+while replacing the destination with the full pointer state. This preserves
+the frame number for PTR_TO_STACK registers and keeps parent identity
+fields consistent.
 
-Unreferenced object 0xffff888018050a00 (size 64):
-  comm "syz.0.17", pid 10297, jiffies 4294953601
-  hex dump (first 32 bytes):
-    00 00 00 00 00 00 00 00 ff 0f 00 00 00 00 00 00  ................
-    90 0a 05 18 80 88 ff ff 90 0a 05 18 80 88 ff ff  ................
-  backtrace (crc cb5c9580):
-    kmemleak_alloc_recursive include/linux/kmemleak.h:42 [inline]
-    slab_post_alloc_hook mm/slub.c:4152 [inline]
-    slab_alloc_node mm/slub.c:4197 [inline]
-    __kmalloc_cache_noprof+0x168/0x2c0 mm/slub.c:4358
-    kmalloc_noprof include/linux/slab.h:878 [inline]
-    kzalloc_noprof include/linux/slab.h:1014 [inline]
-    ulist_prealloc+0x9c/0x110 fs/btrfs/ulist.c:114
-    extent_changeset_prealloc fs/btrfs/extent_io.h:217 [inline]
-    __set_extent_bit+0x16b/0x1a70 fs/btrfs/extent-io-tree.c:1086
-    set_record_extent_bits+0x50/0x90 fs/btrfs/extent-io-tree.c:1821
-    qgroup_reserve_data+0x274/0x7d0 fs/btrfs/qgroup.c:4312
-    btrfs_qgroup_reserve_data+0x2e/0xb0 fs/btrfs/qgroup.c:4355
-    btrfs_do_encoded_write+0x92e/0x1040 fs/btrfs/inode.c:9746
-    btrfs_encoded_write fs/btrfs/file.c:1482 [inline]
-    btrfs_do_write_iter+0x280/0x610 fs/btrfs/file.c:1507
-    btrfs_ioctl_encoded_write+0x3d6/0x490 fs/btrfs/ioctl.c:4738
-    btrfs_ioctl+0x6f9/0xc90 fs/btrfs/ioctl.c:-1
-    vfs_ioctl fs/ioctl.c:51 [inline]
-    __do_sys_ioctl fs/ioctl.c:906 [inline]
-    __se_sys_ioctl+0xf9/0x170 fs/ioctl.c:892
-    do_syscall_x64 arch/x86/entry/common.c:47 [inline]
-    do_syscall_64+0xbe/0x1a0 arch/x86/entry/common.c:78
-    entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Fix this by freeing an extent changeset before returning from
-btrfs_do_encoded_write().
-
-Fixes: 7c0c7269f7b5 ("btrfs: add BTRFS_IOC_ENCODED_WRITE")
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: f4d7e40a5b71 ("bpf: introduce function calls (verification)")
+Signed-off-by: Yiyang Chen <chenyy23@mails.tsinghua.edu.cn>
+Tested-by: Daniel Wade <danjwade95@gmail.com>
+Acked-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Link: https://patch.msgid.link/20260729-c3-035-public-bpf-v4-v4-2-8ee297e2346b@mails.tsinghua.edu.cn
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/inode.c | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/bpf/verifier.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
-index f60f8bf38dc50..ab7f19ca21457 100644
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -9684,6 +9684,7 @@ ssize_t btrfs_do_encoded_write(struct kiocb *iocb, struct iov_iter *from,
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 77183b436da5e..275c9fabc955e 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -13565,11 +13565,12 @@ static int adjust_ptr_min_max_vals(struct bpf_verifier_env *env,
+ 		return -EACCES;
  	}
- 	kvfree(folios);
- out:
-+	extent_changeset_free(data_reserved);
- 	if (ret >= 0)
- 		iocb->ki_pos += encoded->len;
- 	return ret;
+ 
+-	/* In case of 'scalar += pointer', dst_reg inherits pointer type and id.
+-	 * The id may be overwritten later if we create a new variable offset.
++	/* For 'scalar += pointer', dst_reg inherits the complete pointer
++	 * register state. Individual fields may be adjusted later by pointer
++	 * arithmetic. Callers guarantee that below does not overwrite off_reg.
+ 	 */
+-	dst_reg->type = ptr_reg->type;
+-	dst_reg->id = ptr_reg->id;
++	if (dst_reg != ptr_reg)
++		*dst_reg = *ptr_reg;
+ 
+ 	if (!check_reg_sane_offset(env, off_reg, ptr_reg->type) ||
+ 	    !check_reg_sane_offset(env, ptr_reg, ptr_reg->type))
+@@ -13631,7 +13632,7 @@ static int adjust_ptr_min_max_vals(struct bpf_verifier_env *env,
+ 		}
+ 		break;
+ 	case BPF_SUB:
+-		if (dst_reg == off_reg) {
++		if (dst_reg != ptr_reg) {
+ 			/* scalar -= pointer.  Creates an unknown scalar */
+ 			verbose(env, "R%d tried to subtract pointer from scalar\n",
+ 				dst);
+@@ -14490,8 +14491,8 @@ static int adjust_reg_min_max_vals(struct bpf_verifier_env *env,
+ 				err = mark_chain_precision(env, insn->dst_reg);
+ 				if (err)
+ 					return err;
+-				return adjust_ptr_min_max_vals(env, insn,
+-							       src_reg, dst_reg);
++				off_reg = *dst_reg;
++				return adjust_ptr_min_max_vals(env, insn, src_reg, &off_reg);
+ 			}
+ 		} else if (ptr_reg) {
+ 			/* pointer += scalar */
 -- 
 2.53.0
 
