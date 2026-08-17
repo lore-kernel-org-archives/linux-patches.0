@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE42242AF87;
-	Mon, 17 Aug 2026 15:14:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7B2743B4B5;
+	Mon, 17 Aug 2026 15:14:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979682; cv=none; b=soxTSEgn/KtHcRL2I24qUeXN1UlWsxWTAaPiFtiKUY533fG2ODexIdAaeC5JLK+DUrcoyxdDqNGDMc9ad8yVvt5xdHS2QGHFHVLIZ2v4rcV6RGCMbrqGfZcHZVg4FCVHicsOlJDcyYkS2wGLkcVHr6l0BSZFlHeqs6Zbw+k4m9Y=
+	t=1786979683; cv=none; b=iqOOfE3xGkxPPfxwMkESOjWlTtbZRisBWqNPP0FgRiOjo9FQtEY4xGV8qXgDItf4V6Rc0fRNVzgBRF+uSlFpRCltA8iqtIVzuIV5/VAQoBTY53ZIr9BhG/ewhJpqInCmRQH0ZysObzmIhTZYfD/s5sn8l4dcNy8usVUqf3hu5Ew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979682; c=relaxed/simple;
-	bh=8ALEpesLdx2FFg7+4tEsRX9xP1zY2D9qPCl8zMX2Bcc=;
+	s=arc-20240116; t=1786979683; c=relaxed/simple;
+	bh=LkPvmAMiIWtQBHENi1m2KLHVFUULUGh/tJSi6a2ZR0E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PvfEE3FPs9KZtdljqx3YBI71mtYVwND7L+PDC+vUhDn07EM0YJ+6r7xB8AwYbD9rUI7nNB/zpcvQoNec9+3jJ0MW7Lb7h3nmtt7t+lWaT4L77ApXArgM3LcfwRKbolWy21pJ5b0Eey+ULD2wv5vwG3cuR3vV8yVajZadYfr/9L8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nn8lP/1l; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FTul90anu+33ypeXojBGCj5Xo+XZ6x4oLvGk5HrnBqjum1n+ZNfc/WS79yZQ2PfxQTHyz6X/LqRzQEvURMwCLhxsSy95US09AifkZ92M4Co5MtKVLre6qIzlzosH7Qq4K4SYyzCMU3NGes2eYaJmVHo0BXzMVM7oOUZKKxMi6Lw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dyn4gU8B; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nn8lP/1l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3661D1F000E9;
-	Mon, 17 Aug 2026 15:14:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dyn4gU8B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C0711F00A3A;
+	Mon, 17 Aug 2026 15:14:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979679;
-	bh=m3eKnWZB9+UBDeOOjIk0ck915HoNuidFHjo25EIDyq4=;
+	s=korg; t=1786979682;
+	bh=eTVdlxDf0NF/FYEgc9trhWz5k8sj4DBhm2eNFZLHDFc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Nn8lP/1lPA2vpRubLejcV8n+/OkzS7CAp7mC0sXqYpykMPHnYq5qlqrBcXYhDnlbW
-	 h+cG4sqAacCPJjyKtXLEpoj+A+/fdO6fZ+/YSnpPFocQqXlui/bFN7D/z8++fP68aC
-	 e/xwlPcloAKixToaRhTKLxGnUBN6DObGVdC+F1fg=
+	b=Dyn4gU8B9fBMpcITmobZgW0UvRbqlFRJc/dhNljvYZytcoFcCU+VHNX4D6fTzqFhL
+	 He6Ucz+bMnjtXMXqAiOrHr/9K4x5Ag4uSe4ngVbdg0nL6FK9D3CA5zep+HOHn25KfA
+	 xhzbAHEC+F1Om1EM+ZUJZ7So11HhkAHwvRiOiLhU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Hongling Zeng <zenghongling@kylinos.cn>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Frank Li <Frank.li@oss.nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 309/609] pinctrl: qcom: sc8280xp: Add missing wakeup entries for GPIO143/151
-Date: Mon, 17 Aug 2026 15:30:05 +0200
-Message-ID: <20260817132554.591012889@linuxfoundation.org>
+Subject: [PATCH 6.1 310/609] dmaengine: sun6i-dma: Fix reclaim descriptors while terminating DMA
+Date: Mon, 17 Aug 2026 15:30:06 +0200
+Message-ID: <20260817132554.623739650@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -51,56 +54,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+From: Hongling Zeng <zenghongling@kylinos.cn>
 
-[ Upstream commit 437a8d2aa1aa442c4a176fdf4700a9b3bb0c8794 ]
+[ Upstream commit ab1150115e68a46b687eb38c1ab92782018c9f2c ]
 
-Pins 143 and 151 were not included in the PDC wakeup map. They are
-normally used for PCIe2A and PCIe3a PERST# respectively, so they're
-unlikely to be excercised in practice, but still add them for the sake
-of completeness.
+When terminating DMA transfers, active descriptors are not properly
+reclaimed. Only cyclic descriptors were handled, leaving non-cyclic
+descriptors and their LLI chains to be permanently leaked.
 
-Fixes: c0e4c71a9e7c ("pinctrl: qcom: Introduce sc8280xp TLMM driver")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260626-topic-8280_pinctrl_wakeup-v1-1-2ccb267148f5@oss.qualcomm.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Fix by using vchan_terminate_vdesc() which handles both cyclic and
+non-cyclic descriptors by adding them to desc_terminated queue for
+proper cleanup.
+
+Add pchan->desc != pchan->done check to prevent double-adding completed
+descriptors, which would corrupt the list.
+
+Fixes: 555859308723 ("dmaengine: sun6i: Add driver for the Allwinner A31 DMA controller")
+Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
+Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Suggested-by: Frank Li <Frank.li@oss.nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260701045733.33654-1-zenghongling@kylinos.cn
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/qcom/pinctrl-sc8280xp.c | 21 +++++++++++----------
- 1 file changed, 11 insertions(+), 10 deletions(-)
+ drivers/dma/sun6i-dma.c | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-sc8280xp.c b/drivers/pinctrl/qcom/pinctrl-sc8280xp.c
-index e96c00686a25b..aeeb40f4aa3da 100644
---- a/drivers/pinctrl/qcom/pinctrl-sc8280xp.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sc8280xp.c
-@@ -1892,16 +1892,17 @@ static const struct msm_gpio_wakeirq_map sc8280xp_pdc_map[] = {
- 	{ 126, 200 }, { 127, 225 }, { 128, 262 }, { 129, 201 },
- 	{ 130, 209 }, { 131, 173 }, { 132, 202 }, { 136, 210 },
- 	{ 138, 171 }, { 139, 226 }, { 140, 227 }, { 142, 228 },
--	{ 144, 229 }, { 145, 230 }, { 146, 231 }, { 148, 232 },
--	{ 149, 233 }, { 150, 234 }, { 152, 235 }, { 154, 212 },
--	{ 157, 213 }, { 161, 219 }, { 170, 236 }, { 171, 221 },
--	{ 174, 222 }, { 175, 237 }, { 176, 223 }, { 177, 170 },
--	{ 180, 238 }, { 181, 239 }, { 182, 240 }, { 183, 241 },
--	{ 184, 242 }, { 185, 243 }, { 190, 178 }, { 193, 184 },
--	{ 196, 185 }, { 198, 186 }, { 200, 174 }, { 201, 175 },
--	{ 205, 176 }, { 206, 177 }, { 208, 187 }, { 210, 198 },
--	{ 211, 199 }, { 212, 204 }, { 215, 205 }, { 220, 188 },
--	{ 221, 194 }, { 223, 195 }, { 225, 196 }, { 227, 197 },
-+	{ 143, 261 }, { 144, 229 }, { 145, 230 }, { 146, 231 },
-+	{ 148, 232 }, { 149, 233 }, { 150, 234 }, { 151, 264 },
-+	{ 152, 235 }, { 154, 212 }, { 157, 213 }, { 161, 219 },
-+	{ 170, 236 }, { 171, 221 }, { 174, 222 }, { 175, 237 },
-+	{ 176, 223 }, { 177, 170 }, { 180, 238 }, { 181, 239 },
-+	{ 182, 240 }, { 183, 241 }, { 184, 242 }, { 185, 243 },
-+	{ 190, 178 }, { 193, 184 }, { 196, 185 }, { 198, 186 },
-+	{ 200, 174 }, { 201, 175 }, { 205, 176 }, { 206, 177 },
-+	{ 208, 187 }, { 210, 198 }, { 211, 199 }, { 212, 204 },
-+	{ 215, 205 }, { 220, 188 }, { 221, 194 }, { 223, 195 },
-+	{ 225, 196 }, { 227, 197 },
- };
+diff --git a/drivers/dma/sun6i-dma.c b/drivers/dma/sun6i-dma.c
+index 7ca0c26f9e872..f6b5ad7683734 100644
+--- a/drivers/dma/sun6i-dma.c
++++ b/drivers/dma/sun6i-dma.c
+@@ -933,16 +933,13 @@ static int sun6i_dma_terminate_all(struct dma_chan *chan)
  
- static struct msm_pinctrl_soc_data sc8280xp_pinctrl = {
+ 	spin_lock_irqsave(&vchan->vc.lock, flags);
+ 
+-	if (vchan->cyclic) {
+-		vchan->cyclic = false;
+-		if (pchan && pchan->desc) {
+-			struct virt_dma_desc *vd = &pchan->desc->vd;
+-			struct virt_dma_chan *vc = &vchan->vc;
++	if (pchan && pchan->desc && pchan->desc != pchan->done) {
++		struct virt_dma_desc *vd = &pchan->desc->vd;
+ 
+-			list_add_tail(&vd->node, &vc->desc_completed);
+-		}
++		vchan_terminate_vdesc(vd);
+ 	}
+ 
++	vchan->cyclic = false;
+ 	vchan_get_all_descriptors(&vchan->vc, &head);
+ 
+ 	if (pchan) {
 -- 
 2.53.0
 
