@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A0623F23B1;
-	Mon, 17 Aug 2026 14:51:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7A3C4399F8;
+	Mon, 17 Aug 2026 14:51:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978318; cv=none; b=Aihhh0FyZBrk76NwpTaAoQQA08wGGt6M2Gp+uJWfNhI1sG2WcONHcWwGkljalxMFzXVzFfYgjcXWymhJFeEhSRdsODLDsL41x/mAP6fDGoynZOEbKmbljgzGZNYFl8rl55yKCtiw5PwnmNeDs84HbNbi5BQ/Dw0nc603rfA4dd0=
+	t=1786978320; cv=none; b=e9UCu5gzPUcVbCxzlo8hlAxwlqm5caJ1dPiLdm+Z054xfmxTZg7TL22Xg6pXD7JyqnIeM05L91eeZScnZ7cjsmTwFomT+BnqbNGSRMVXk2uZbSFoyRfDFvuL68JTgZsUCtPGGN5ixcS+Zhdvf0bF9PB33pTZX+TYAEf3KKAYufo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978318; c=relaxed/simple;
-	bh=ASAVCJPGyxmdkAcsGq2DFCBhbG05epkpL6cqcIiHcpk=;
+	s=arc-20240116; t=1786978320; c=relaxed/simple;
+	bh=MAbmenINmUv1KqaAKl68X+FH/isASyKX1PhQvX1fB7k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UV2nXwxzV4WJYj4WPqO664F6MDjsDutG+LDyc2QYsFKwk6XUTokEfMJjZQwXpNYzAceoA1tzArEGIu/w3FRHjAMgRh1guyZ66p7EEpS3J0L4TvwkrjziQD8Dv+i6vUrLw0jSS0r96eYk70gXeehzUWIn768nqSEZZ92BIXTdZWM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F7aCkiDJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MDldByRzCPcrA1lFKAVwGr7vcjB8U4E5EmCeJkhSM2XZOtHWC3AT+ejMSaIIFq0ZIz3gAhVFRD0EsBq/BJ7gkKaLd5Eu+YucP3H/E4ym6kh+DuxaJU0UzM0ZJNayvZ7RE6pr0/+t3Mkv5Rqch2spQnKGonKndibtUim2JwDyUEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qm836jxu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F7aCkiDJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 694D31F000E9;
-	Mon, 17 Aug 2026 14:51:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qm836jxu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 403741F000E9;
+	Mon, 17 Aug 2026 14:51:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978316;
-	bh=5aOHRPLnVsM9ncsFMxNsoC3CoytDq7GKB/OqWrAvPGw=;
+	s=korg; t=1786978318;
+	bh=9BCjvJWNy2hy/p4d2GMyDIDwjKSVyWI5eacgKiFtz8k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F7aCkiDJ7W3KrcAcLbUNw5EbUEtOAl1H/+FJSm5ShCA/fHlRerIog1WEBKwaIoHNs
-	 B7PSbSoLrsb9irrZ5aVM0m77tg26Ygm3KrIb6BiO7KJR3hagFrOWDuy9gby170Y/Nm
-	 DErwsc3/nnFdrV5gmxXtdFlvla5jojsVRUzcsNas=
+	b=Qm836jxuv1FuKJcJDa2E5gn1wHq1FNuCWap7JiSpfhUI45zYeqZeEQhiTO04ojjNh
+	 TXgM7TdeIZGWhEk73RwZhFyELIe37jIe+sk4W9S+EGbrCF5btZwFtgCiaRyK90IK+I
+	 dKZqjs0FolBBoYpOztO79BghbyVZ7d6QDmt2bLj4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Qing Ming <a0yami@mailbox.org>,
 	Xin Long <lucien.xin@gmail.com>,
-	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 177/181] sctp: fix use-after-free of cached ASCONF chunk
-Date: Mon, 17 Aug 2026 15:34:31 +0200
-Message-ID: <20260817132542.660555879@linuxfoundation.org>
+Subject: [PATCH 6.12 178/181] sctp: clear new_transport when removing a peer
+Date: Mon, 17 Aug 2026 15:34:32 +0200
+Message-ID: <20260817132542.697063351@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
 References: <20260817132535.394764707@linuxfoundation.org>
@@ -51,73 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
+From: Qing Ming <a0yami@mailbox.org>
 
-commit 8c283e7b56adce00193837f3311b06662466fb21 upstream.
+commit beb33f8ee1ca83acddb2a5ae80f3d22ec550b4c3 upstream.
 
-addip_last_asconf caches the outstanding outbound ASCONF chunk. The normal
-ASCONF-ACK completion path releases the chunk and clears the pointer.
+sctp_process_asconf_param() stores a newly added peer transport in
+asoc->new_transport. After all parameters in the ASCONF chunk have been
+processed, sctp_sf_do_asconf() uses this pointer to send a HEARTBEAT to the
+new transport.
 
-However, sctp_asconf_queue_teardown() releases the cached chunk without
-clearing addip_last_asconf. During peer restart handling,
-sctp_sf_do_dupcook_a() queues SCTP_CMD_PURGE_ASCONF_QUEUE, which invokes
-sctp_asconf_queue_teardown() while the association remains alive and leaves
-the pointer dangling.
+An authenticated ASCONF from a remote SCTP peer can add a transport and
+remove it again with a wildcard DEL-IP parameter in the same chunk. The
+wildcard deletion preserves the transport on which the ASCONF arrived, but
+removes the newly added transport through
+sctp_assoc_del_nonprimary_peers(). The removal does not clear
+asoc->new_transport, leaving it pointing to the removed transport.
 
-A delayed authenticated ASCONF-ACK can then reach sctp_sf_do_asconf_ack(),
-which accesses the stale chunk and passes it to sctp_process_asconf_ack(),
-causing a use-after-free and a second release.
+sctp_sf_do_asconf() then creates a HEARTBEAT whose chunk->transport points
+to the removed transport without holding a transport reference. During
+local address replacement, src_out_of_asoc_ok keeps this HEARTBEAT on
+control_chunk_list. After the transport is freed by RCU, a successful
+ASCONF_ACK for the replacement address releases the queued HEARTBEAT and
+sctp_outq_select_transport() reads the freed transport's state.
 
-Clearing the pointer exposes a race with T4 expiry. Peer restart handling
-queues the timer stop before the purge, but SCTP_CMD_TIMER_STOP uses
-timer_delete(), which does not wait for a callback already running on
-another CPU. Such a callback can reach sctp_sf_t4_timer_expire() after
-the purge and dereference NULL.
+The issue was found during a static audit of SCTP objects. With an
+authenticated peer, the reproducer triggered the same KASAN report in 2
+of 2 unpatched runs on a KASAN-enabled netdev/main kernel:
 
-Clear addip_last_asconf after releasing the cached chunk, and make
-sctp_sf_t4_timer_expire() consume a stale T4 expiry if no outstanding
-ASCONF remains.
+  BUG: KASAN: slab-use-after-free in sctp_outq_select_transport
+  Read of size 4 at addr ffff88800b9bd95c by task python3/197
 
-Fixes: a000c01e60e4 ("sctp: stop pending timers and purge queues when peer restart asoc")
+  Call Trace:
+   sctp_outq_select_transport+0x549/0x8b0 [sctp]
+   sctp_outq_flush+0x306/0x2c60 [sctp]
+   sctp_transport_immediate_rtx+0xaf/0x260 [sctp]
+   sctp_process_asconf_ack+0xa48/0xf70 [sctp]
+
+  Allocated by task 197:
+   sctp_transport_new+0x68/0x650 [sctp]
+   sctp_assoc_add_peer+0x258/0x12a0 [sctp]
+   sctp_process_asconf+0x5e9/0x1090 [sctp]
+
+  Last potentially related work creation:
+   __call_rcu_common.constprop.0+0x77/0xb70
+   sctp_assoc_del_nonprimary_peers+0x7c/0xd0 [sctp]
+   sctp_process_asconf+0xd9c/0x1090 [sctp]
+
+The first invalid access was a four-byte read of transport->state at
+net/sctp/outqueue.c:833. The same reproducer completed the full
+authenticated ASCONF and local-address replacement sequence with this
+change without a KASAN report or oops.
+
+Clear new_transport when its peer is removed, before it can be used to
+create the HEARTBEAT.
+
+Fixes: 6af29ccc223b ("sctp: Bundle HEAERTBEAT into ASCONF_ACK")
 Cc: stable@vger.kernel.org
-Suggested-by: Xin Long <lucien.xin@gmail.com>
-Signed-off-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
+Signed-off-by: Qing Ming <a0yami@mailbox.org>
 Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20260809043806.2768302-1-yangyx22@mails.tsinghua.edu.cn
+Link: https://patch.msgid.link/20260811152803.5629-1-a0yami@mailbox.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/associola.c    |    4 +++-
- net/sctp/sm_statefuns.c |    6 +++++-
- 2 files changed, 8 insertions(+), 2 deletions(-)
+ net/sctp/associola.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
 --- a/net/sctp/associola.c
 +++ b/net/sctp/associola.c
-@@ -1731,6 +1731,8 @@ void sctp_asconf_queue_teardown(struct s
- 	sctp_assoc_free_asconf_queue(asoc);
+@@ -543,6 +543,9 @@ void sctp_assoc_rm_peer(struct sctp_asso
+ 	    asoc->addip_last_asconf->transport == peer)
+ 		asoc->addip_last_asconf->transport = NULL;
  
- 	/* Free any cached ASCONF chunk. */
--	if (asoc->addip_last_asconf)
-+	if (asoc->addip_last_asconf) {
- 		sctp_chunk_free(asoc->addip_last_asconf);
-+		asoc->addip_last_asconf = NULL;
-+	}
- }
---- a/net/sctp/sm_statefuns.c
-+++ b/net/sctp/sm_statefuns.c
-@@ -6110,8 +6110,12 @@ enum sctp_disposition sctp_sf_t4_timer_e
- 					struct sctp_cmd_seq *commands)
- {
- 	struct sctp_chunk *chunk = asoc->addip_last_asconf;
--	struct sctp_transport *transport = chunk->transport;
-+	struct sctp_transport *transport;
- 
-+	if (!chunk)
-+		return SCTP_DISPOSITION_CONSUME;
++	if (asoc->new_transport == peer)
++		asoc->new_transport = NULL;
 +
-+	transport = chunk->transport;
- 	SCTP_INC_STATS(net, SCTP_MIB_T4_RTO_EXPIREDS);
- 
- 	/* ADDIP 4.1 B1) Increment the error counters and perform path failure
+ 	/* If we have something on the transmitted list, we have to
+ 	 * save it off.  The best place is the active path.
+ 	 */
 
 
