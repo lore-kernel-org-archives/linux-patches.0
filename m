@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0898F442FC0;
-	Mon, 17 Aug 2026 14:30:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD05444161B;
+	Mon, 17 Aug 2026 14:30:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977019; cv=none; b=SDJQd3PVkc2tE2kz7EcBjvgPyGJ2dw+OT6loG7JjBn1+oJNeIjoGdsOzLKXTxE8qPDq3tqzCYnhasLmMFZtw3DGY4H1FdNY+FJhiIRt1jLW0d+/sYDNC8VEDTE0huywoNqBLBwEHcgr/ZNz8xYwLo4mndFcGQNn4MOWGyeFVZgg=
+	t=1786977022; cv=none; b=l1ejPjHXzq5aNEotlvi5vxvdQqmX7HZM1V3mSIjkHXIAmt97YoMyyxbhlLZxWfeBWxoMO2qNy5jcQAzr4Hun4612VvJDZG0P3TXT/96x4gJSdBoMAbq+x8hm2VMxEL5X5irXZik85ilA5yKFf3WDPzOV/JyVpwtbRd33sW4iTNg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977019; c=relaxed/simple;
-	bh=dq1BhHjvb6HJv9HFInbzG3v/NjY4nbiKua0axnR3AWI=;
+	s=arc-20240116; t=1786977022; c=relaxed/simple;
+	bh=cKAkZLbHZZhRHNF6B3/ROuWvHeeN74oqcU+dFFcjPY0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IomLJniH1TVraFeCWxVQNkmIdpokhmNH/szV2p3nfXDo/28m8mD9M7i3KArzoYLpF7w6/ln6nHOrlCqXsi8Vhk17V33bzxEqBDE46W72hIbvcnmDFozrC9X/f/mnOeZD2iYdxVoY3MHiw3NJgZPHBOnwUxglsjpBym7NvCZctP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UWvghzde; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UmIpNymOWpBjgeTJyvoxhJLfw9Is6gipu1g8OtKB0e5KcCNbRf4B9odMLuvq5r2YkRso7HAnY/AX9NF6tdq0VUlsDuiVauzgyGtNItT/NRdtNWJq9rjYrG5XDpuWQPCnqO/1yfj2rr4OhoTDcth+354a1Es2NkGtOKaVb5qBMTw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qY4NlxgY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UWvghzde"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D8271F00A3E;
-	Mon, 17 Aug 2026 14:30:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qY4NlxgY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 425361F000E9;
+	Mon, 17 Aug 2026 14:30:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977017;
-	bh=fWyjN6PRdPRqHtQ14PNxXAx4/RZS6Y5VcbwHKQv5FaU=;
+	s=korg; t=1786977020;
+	bh=ekcMdLfGnp+r6Aby/TqqgIvjKsXga9Hd9/3uHR/YgmA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UWvghzdeYe1h+9KhTc2gb3BRZgNCfGL/B8SHNTHPh8eq+4vNs+t0kDOlggWv4WiG5
-	 pfI59GTFuS+k4TUl6SLKzy+3YmrIwumCtkLPr7+AuYtEvvXVo+zCIjN7rkiddQvQt0
-	 Laem5dS+WLn92LsPVTiSaI3/7OuzBFmTm+yPvpfk=
+	b=qY4NlxgY4TodaC5PsyB9IvyxbgikMVeH5ItHAFV98zf2O7bDQnSVlmZgf+97lFsbK
+	 1SO/b8ligdpgi5xbsc+zxplUkATSUFvakw3xh5WYP7RkMmD3RGx50eIOJ8jw3P0skz
+	 YJnf/X6t6hfsyKw6Kvr71BeSD4XyW6+4jPh0FqN4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Moksh Panicker <mokshpanicker.7@gmail.com>
-Subject: [PATCH 5.15 182/456] staging: rtl8723bs: fix OOB reads in rtw_get_wps_ie()
-Date: Mon, 17 Aug 2026 15:29:32 +0200
-Message-ID: <20260817132547.245871760@linuxfoundation.org>
+	MinJea Kim <qndkdrnl@gmail.com>
+Subject: [PATCH 5.15 183/456] staging: rtl8723bs: fix inverted HT40 secondary channel offset
+Date: Mon, 17 Aug 2026 15:29:33 +0200
+Message-ID: <20260817132547.285441155@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -50,49 +49,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Moksh Panicker <mokshpanicker.7@gmail.com>
+From: MinJea Kim <qndkdrnl@gmail.com>
 
-commit 0e95ff792ae0aa6fbad9455943e9e1e4062670e9 upstream.
+commit 30d49cba27f8905bc288cef5846963f0004f644c upstream.
 
-rtw_get_wps_ie() iterates over IE data from network frames without
-validating that the IE header and payload fit within the remaining
-buffer before reading them. Specifically:
+rtw_get_chan_type() maps the driver's channel offset to nl80211 channel
+types the wrong way around.
 
-- in_ie[cnt + 1] is read without checking cnt + 1 < in_len
-- memcmp(&in_ie[cnt + 2], ...) accesses cnt + 2 without bounds check
-- in_ie[cnt + 1] is used as length without verifying payload fits
+In this driver HAL_PRIME_CHNL_OFFSET_LOWER means the primary channel is
+the lower 20 MHz half of the 40 MHz pair, i.e. the secondary channel is
+above the primary one: rtw_get_center_ch() computes the center channel
+as "channel + 2" for OFFSET_LOWER, and bwmode_update_check() sets
+OFFSET_LOWER when the AP's HT operation IE announces SCA (secondary
+channel above). In nl80211 terms that is NL80211_CHAN_HT40PLUS, not
+HT40MINUS.
 
-Add bounds checks at the top of the loop body to break early if fewer
-than 2 bytes remain for the IE header, or if the declared payload
-extends past the end of the buffer. Also require at least 4 bytes of
-payload before comparing the WPS OUI.
+Because of the inversion, cfg80211_rtw_get_channel() reports an HT40+
+association as HT40-. For an HT40+ AP on a low channel (e.g. channel 3)
+the resulting chandef spans below the 2.4 GHz band edge and is invalid,
+so the regulatory core tears the connection down 60 seconds
+(REG_ENFORCE_GRACE_MS) after the AP's country IE triggers a regdomain
+change: reg_check_chans_work() considers the reported chandef unusable
+and calls cfg80211_leave(). The supplicant then reconnects, the country
+IE changes the regdomain again, and the cycle repeats, causing a
+disconnect/reconnect loop every ~65 seconds for as long as the link is
+up.
 
-Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Moksh Panicker <mokshpanicker.7@gmail.com>
-Link: https://patch.msgid.link/20260625202911.26782-1-mokshpanicker.7@gmail.com
+Observed on a TECLAST X80 Power tablet (RTL8723BS) associated to an
+HT40+ AP on channel 3 with a KR country IE; a kprobe trace showed
+cfg80211_disconnect() being invoked from reg_check_chans_work(). With
+the mapping fixed, "iw dev wlan0 info" reports the correct
+"width: 40 MHz, center1: 2432 MHz" and the periodic disconnects stop.
+
+Fixes: 5402cc178c5d ("staging: rtl8723bs: add get_channel cfg80211 implementation")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude-Code:claude-fable-5 bpftrace
+Signed-off-by: MinJea Kim <qndkdrnl@gmail.com>
+Link: https://patch.msgid.link/20260714131421.3980-1-qndkdrnl@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/rtl8723bs/core/rtw_ieee80211.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/staging/rtl8723bs/core/rtw_ieee80211.c
-+++ b/drivers/staging/rtl8723bs/core/rtw_ieee80211.c
-@@ -694,7 +694,14 @@ u8 *rtw_get_wps_ie(u8 *in_ie, uint in_le
- 	while (cnt < in_len) {
- 		eid = in_ie[cnt];
- 
--		if ((eid == WLAN_EID_VENDOR_SPECIFIC) && (!memcmp(&in_ie[cnt + 2], wps_oui, 4))) {
-+		if (cnt + 2 > in_len)
-+			break;
-+
-+		if (in_ie[cnt + 1] + 2 > in_len - cnt)
-+			break;
-+
-+		if ((eid == WLAN_EID_VENDOR_SPECIFIC) && (in_ie[cnt + 1] >= 4) &&
-+		    (!memcmp(&in_ie[cnt + 2], wps_oui, 4))) {
- 			wpsie_ptr = &in_ie[cnt];
- 
- 			if (wps_ie)
+--- a/drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c
++++ b/drivers/staging/rtl8723bs/os_dep/ioctl_cfg80211.c
+@@ -1996,7 +1996,7 @@ static u8 rtw_get_chan_type(struct adapt
+ 		else
+ 			return NL80211_CHAN_NO_HT;
+ 	case CHANNEL_WIDTH_40:
+-		if (mlme_ext->cur_ch_offset == HAL_PRIME_CHNL_OFFSET_UPPER)
++		if (mlme_ext->cur_ch_offset == HAL_PRIME_CHNL_OFFSET_LOWER)
+ 			return NL80211_CHAN_HT40PLUS;
+ 		else
+ 			return NL80211_CHAN_HT40MINUS;
 
 
