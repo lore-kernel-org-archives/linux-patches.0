@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4305D3CCFC3;
-	Mon, 17 Aug 2026 15:08:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22B2123AB9D;
+	Mon, 17 Aug 2026 15:08:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979290; cv=none; b=g+zYKyxWTkrKAzLesevJB0ZqedemOzm1CZiJ+mBHQSsj2SvpNisDaz3rwLbJKVVHQDA9MnqYQH7r8BsiOdVFpamo6hY4RzbaGK7XEHHJd8tBvLIPNs7x7iFJdRlZZ1Y0IrXpT26wKIaypqVsM0fMN/3gkKiLtfyVRN0IGDxuDEg=
+	t=1786979293; cv=none; b=jI9pTDZFffX/aqqzgHFziKUmWa8pqFMxBFJdUbo4dAuDczms190HWY1WkpxGabo8Ep7uKgznHPiC64x4EeL8jgFTlEShTTdjVOReS37aYVvmbVFAkO0tG7cjRoJ6ROYScmLgBVfVHGxUFbVMXcf7QLDxxPJ7P2ybOqaXjO1bvNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979290; c=relaxed/simple;
-	bh=TfrsNnO3z4IYGuIJV/8+/6B4TRronqW9zSfy768N+Js=;
+	s=arc-20240116; t=1786979293; c=relaxed/simple;
+	bh=9ejpgpPLhgXMi5tMNhp6jDL2/o9M7xUROOG38CKnawI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rYTvI7ndXO3N0g/kkz3r9poj4U3u1VFV6sSO70JpzgxFn9HMIY7ykDMAJ1HgCx/MnVtjTqQy4D5YD9Osk4+8Triwa5XzVImwWQuNebfT6+P5FPKUh4c0qfDg2XT8NML97k6CAnA9qBFSyoxErXd49om1Y+IJsSnP8v0RSObYXeM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mZZqy47D; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=HvnsK60la6b+lQDBxhrcvXbCKAziGdYDU0TreGGcca9oYGYX4Pi3i3M0nUKaDkF2htoknvgK403yYiDxsVpO6Mj4w9sDBIE7t2KrXESYo+4Yq+IttKaCSOjYzDNSahxBRNzipT8FkBr+/hpEBPUfXRXpqfx6oZ2feQIx6h1Oivg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y/r+W1kz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mZZqy47D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A9421F000E9;
-	Mon, 17 Aug 2026 15:08:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y/r+W1kz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CB2B1F00A3F;
+	Mon, 17 Aug 2026 15:08:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979289;
-	bh=HcWmnLM1KU3jUv0BD0Mm6M3PSDZcwMz2oiYfB3KbY7M=;
+	s=korg; t=1786979292;
+	bh=VlRh8WiqIKQYFgnZor1ntdFUW0GfkS8NNw5YQUMsBkg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mZZqy47DHiLxjOnH33cNJe9ZaTwlKxSNK7bDZ9f/LtNkUs4QSXvRKD/yyHKstB3gP
-	 IrVSqz9ZxBSH1x56gGPy0axV2/gx04ACYh3f2q2agqlcEL6JWExYULJuyFCp7PPfmx
-	 M06uggZwr3XLZ+X6UGjvLLwUmNN3Vj4pCdJWIQqU=
+	b=Y/r+W1kzNJ/LRhKDwxRka4wyqbnrIjoFSLryDdpLmgwkCuuXzbJCewdlI+a5baipn
+	 UIZ5OBBUjtin6jXRqAJ0c+tJaxSFTO44NKop7Q09Byey5YL258uQQ3useIi1nb131P
+	 BSImDdAUWr1PzjO0Z00Pu391M+1erhLcXejxbguw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Danilo Krummrich <dakr@kernel.org>
-Subject: [PATCH 6.1 174/609] drm/nouveau/acr: fix missing nvkm_done() in error path of nvkm_acr_oneinit()
-Date: Mon, 17 Aug 2026 15:27:50 +0200
-Message-ID: <20260817132549.876134611@linuxfoundation.org>
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	=?UTF-8?q?Pavel=20Ondra=C4=8Dka?= <pavel.ondracka@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 175/609] drm/radeon: fix r100_copy_blit for large BOs
+Date: Mon, 17 Aug 2026 15:27:51 +0200
+Message-ID: <20260817132549.921022864@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -44,50 +45,86 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Pavel Ondračka <pavel.ondracka@gmail.com>
 
-commit c3027973f692077a1b66a9fb26d6a7c46c0dc72c upstream.
+commit f896e86273dbbebb5eac966b4a201b5c62a02e9a upstream.
 
-In nvkm_acr_oneinit(), nvkm_kmap(acr->wpr) is invoked unconditionally
-at line 309 to obtain a mapping reference. Additionally, when both
-acr->wpr_fw and acr->wpr_comp are present, a second nvkm_kmap() is
-called inside the conditional block. Both mappings are expected to be
-released by nvkm_done(acr->wpr) at line 320 before the function returns
-successfully.
+r100_copy_blit() copies BOs as 1024-pixel-wide ARGB8888 blits, so one
+GPU page becomes one blit row. Large copies are split into chunks of at
+most 8191 rows.
 
-However, when a mismatch is detected during the loop within the
-conditional block, the function returns -EINVAL at line 318 without
-calling nvkm_done(). This results in a leak of the kmap reference(s)
-acquired earlier.
+The kernel register header names the packet coordinate dwords SRC_Y_X
+and DST_Y_X. In the BITBLT_MULTI description in
+R5xx_Acceleration_v1.5.pdf docs, these correspond to [SRC_X1 | SRC_Y1]
+and [DST_X1 | DST_Y1], which are signed 13-bit coordinates in the
+-8192..8191 range. The old code kept SRC/DST_PITCH_OFFSET at the BO base
+and used SRC_Y_X/DST_Y_X as the chunk address, so large BO moves could
+exceed that coordinate range.
 
-Fix the issue by invoking nvkm_done(acr->wpr) prior to the early return
-to ensure proper release of the mapping references.
+Compute per-chunk SRC/DST_PITCH_OFFSET bases and emit zero source and
+destination coordinates. r100_copy_blit() already packs
+SRC/DST_PITCH_OFFSET as pitch plus base offset, so large chunk addresses
+belong there rather than in the coordinate fields.
 
-Fixes: 22dcda45a3d1 ("drm/nouveau/acr: implement new subdev to replace "secure boot"")
+This fixes Prison Architect corruption with 4096x4096 mipped textures
+after they are evicted to GTT under memory pressure on RV530.
+
+Closes: https://gitlab.freedesktop.org/mesa/mesa/-/work_items/6716
+Acked-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Pavel Ondračka <pavel.ondracka@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 87be26aee76239c6da03e599f238a426897f78ad)
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20260606155606.77593-1-vulab@iscas.ac.cn
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nvkm/subdev/acr/base.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/radeon/r100.c |   13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/acr/base.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/acr/base.c
-@@ -314,6 +314,7 @@ nvkm_acr_oneinit(struct nvkm_subdev *sub
- 					  i, us, fw);
- 			}
+--- a/drivers/gpu/drm/radeon/r100.c
++++ b/drivers/gpu/drm/radeon/r100.c
+@@ -905,6 +905,7 @@ struct radeon_fence *r100_copy_blit(stru
+ {
+ 	struct radeon_ring *ring = &rdev->ring[RADEON_RING_TYPE_GFX_INDEX];
+ 	struct radeon_fence *fence;
++	uint64_t cur_src_offset, cur_dst_offset;
+ 	uint32_t cur_pages;
+ 	uint32_t stride_bytes = RADEON_GPU_PAGE_SIZE;
+ 	uint32_t pitch;
+@@ -933,6 +934,10 @@ struct radeon_fence *r100_copy_blit(stru
+ 			cur_pages = 8191;
  		}
-+		nvkm_done(acr->wpr);
- 		return -EINVAL;
+ 		num_gpu_pages -= cur_pages;
++		cur_src_offset = src_offset +
++			(uint64_t)num_gpu_pages * RADEON_GPU_PAGE_SIZE;
++		cur_dst_offset = dst_offset +
++			(uint64_t)num_gpu_pages * RADEON_GPU_PAGE_SIZE;
+ 
+ 		/* pages are in Y direction - height
+ 		   page width in X direction - width */
+@@ -949,13 +954,13 @@ struct radeon_fence *r100_copy_blit(stru
+ 				  RADEON_DP_SRC_SOURCE_MEMORY |
+ 				  RADEON_GMC_CLR_CMP_CNTL_DIS |
+ 				  RADEON_GMC_WR_MSK_DIS);
+-		radeon_ring_write(ring, (pitch << 22) | (src_offset >> 10));
+-		radeon_ring_write(ring, (pitch << 22) | (dst_offset >> 10));
++		radeon_ring_write(ring, (pitch << 22) | (cur_src_offset >> 10));
++		radeon_ring_write(ring, (pitch << 22) | (cur_dst_offset >> 10));
+ 		radeon_ring_write(ring, (0x1fff) | (0x1fff << 16));
+ 		radeon_ring_write(ring, 0);
+ 		radeon_ring_write(ring, (0x1fff) | (0x1fff << 16));
+-		radeon_ring_write(ring, num_gpu_pages);
+-		radeon_ring_write(ring, num_gpu_pages);
++		radeon_ring_write(ring, 0);
++		radeon_ring_write(ring, 0);
+ 		radeon_ring_write(ring, cur_pages | (stride_pixels << 16));
  	}
- 	nvkm_done(acr->wpr);
+ 	radeon_ring_write(ring, PACKET0(RADEON_DSTCACHE_CTLSTAT, 0));
 
 
