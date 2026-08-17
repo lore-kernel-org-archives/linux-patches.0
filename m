@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58FC043CEC7;
-	Mon, 17 Aug 2026 14:12:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A89FC3E95AB;
+	Mon, 17 Aug 2026 14:12:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975970; cv=none; b=At6VZN9U1DtQzWlAqNHTA4rt6DAaUZxnnM5EAEaaDml7evmCQo0FHYlfe9tGuFUC6toH/6QNACqwoqGffPKVD0niypwl+k2l5zIVU4LoxZD4NP1pOdXM86bAWDNhL5K6Gwi7SLOPAEyq6n3crKEMXygbbFuuwrbuhfq2m53sZL4=
+	t=1786975973; cv=none; b=B0HBdJuggk0kD9/qh4iQ+r8OtRpg96ceNuRtrgW6OewDgJMkI/PnJgq4BSdgyjRfoG03zMmIRsv9HpTOhRvILzls3Sg+jSqA14YpwG92SaNbQd2TYjqZ24BowC1SZ+Q662B/jZoRYdCl4ypS5SgM6SxvfKW6tbKGpWuLkzhYWQQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975970; c=relaxed/simple;
-	bh=2S+o863TCRYtw6wJvuxE7TTKk9dFqNHlM0/c62LUg+c=;
+	s=arc-20240116; t=1786975973; c=relaxed/simple;
+	bh=xN2FY8Q/yf7A6q0LgEYWttk282ym4Pr0Y5D9BZGWCVc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fqdG4cmDFio7uvMtkuqbRnNVB9NloEuPRxDw8AVem2/KuYL051yYfvFAjLN1ZhFIHrUhhSHUZNM7bT9pvGEmxsgoyyx4k8NcaoTV0rcEeFMU2flGTeoWPrjx7sCKPexOEKl/patgf6OwKocrimneXW53gZcL/GDqg6FdSb6pIWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xcELPADn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=inx2Ig5L6pnmoP7Qd7P4XBW5Kv0YoXlPiOCMl+7aeor4bVEHMFzUpeznSXHbTNC3lPAgeXonBwrs8bB7lgOC4mhhz9dqIjlITmGepC8FbF+5+gQnn7pxeOLgniwFul5Vfbk0b1KrvdnOx2y+3Gy9nWWSN4j5C8QEckMxdn3McN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TZp4Jpzo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xcELPADn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BBFB1F000E9;
-	Mon, 17 Aug 2026 14:12:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TZp4Jpzo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69B891F000E9;
+	Mon, 17 Aug 2026 14:12:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975968;
-	bh=nv4EqtiXx5rNBQWTUNCLP8xZkwgkBqWTSAVBAgnIV4g=;
+	s=korg; t=1786975971;
+	bh=/1YBe0r0lNDddEWLQmWFxPhKX7YSIamK24j0scUDfnY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xcELPADnRZmhmRd1w34qKmtA4wd6StJtjwmf4c0VdTII7U4AFgK/AKwBHvMn0FpgS
-	 FLc2zoUKwkodTiFntXZoS5ie4aEkFJahQKG1abck9hT251tN470lsYAZESZWvKtIM+
-	 J21HcLKYYNRamybm1Rs12scoJLFhVAttPaBZHBd8=
+	b=TZp4JpzoCyuqiEnf5/y45DXInrcZMFujmEFuxZPfSGW37S+4QvCLek1Myv+yZ8w1g
+	 oIgCf7mppv3KDuQ9mI+WcQJisBSz17ea4mC89uhNEIaaB7/nVIhl6oOrq/IT26rqRk
+	 WIYhbtfOycV+yomFb+B2csrwpknQzraRhingb/xw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Ilia Gavrilov <Ilia.Gavrilov@infotecs.ru>,
+	Allison Henderson <achender@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 194/389] net: mpls: initialize rtm_tos in mpls_getroute()
-Date: Mon, 17 Aug 2026 15:30:33 +0200
-Message-ID: <20260817132546.776124623@linuxfoundation.org>
+Subject: [PATCH 5.10 212/389] rds: Fix inet6_addr_lst NULL dereference when IPv6 is disabled
+Date: Mon, 17 Aug 2026 15:30:51 +0200
+Message-ID: <20260817132547.488616067@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -51,72 +52,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+From: Ilia Gavrilov <Ilia.Gavrilov@infotecs.ru>
 
-[ Upstream commit 295dd295e2137e10e9a5b1891d97e0f08de76f03 ]
+[ Upstream commit 9c805e592a29be9e4e61ff1bd567da04aa8fd6f9 ]
 
-mpls_getroute() builds the RTM_NEWROUTE reply to an RTM_GETROUTE
-request by filling a struct rtmsg allocated from an skb whose data
-area is not zeroed (alloc_skb(NLMSG_GOODSIZE, ...)). It sets every
-field of the header except rtm_tos:
+When booting with the 'ipv6.disable=1' parameter, inet6_addr_lst
+is never initialized because inet6_init() exits before addrconf_init()
+is called to initialize it. An attempt to bind an RDS socket to
+an ipv6 address results in a crash in __ipv6_chk_addr_and_flags()
 
-	r = nlmsg_data(nlh);
-	r->rtm_family	 = AF_MPLS;
-	r->rtm_dst_len	= 20;
-	r->rtm_src_len	= 0;
-	r->rtm_table	= RT_TABLE_MAIN;
-	r->rtm_type	= RTN_UNICAST;
-	r->rtm_scope	= RT_SCOPE_UNIVERSE;
-	r->rtm_protocol = rt->rt_protocol;
-	r->rtm_flags	= 0;
+KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
+RIP: 0010:__ipv6_chk_addr_and_flags+0x1df/0x7e0
+Call Trace:
+ <TASK>
+ ipv6_chk_addr+0x3b/0x50
+ rds_tcp_laddr_check+0x155/0x3b0 [rds_tcp]
+ rds_trans_get_preferred+0x15d/0x2d0 [rds]
+ ? trace_hardirqs_on+0x2d/0x110
+ rds_bind+0x1433/0x1d60 [rds]
+ ? rds_remove_bound+0xd50/0xd50 [rds]
+ ? aa_af_perm+0x250/0x250
+ ? __might_fault+0xde/0x190
+ ? __sys_bind+0x1dc/0x210
+ __sys_bind+0x1dc/0x210
+ ? __ia32_sys_socketpair+0x100/0x100
+ ? restore_fpregs_from_fpstate+0x53/0x100
+ __x64_sys_bind+0x73/0xb0
+ ? syscall_enter_from_user_mode+0x1c/0x50
+ do_syscall_64+0x34/0x80
+ entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+RIP: 0033:0x7f47f8269ea9
+ </TASK>
 
-struct rtmsg has no padding, so the one uninitialised byte rtm_tos
-(offset 3) is copied straight to user space on recvmsg(), leaking a
-byte of uninitialised heap memory. This is in contrast to
-mpls_dump_route(), which fills the very same header and does set
-rtm_tos = 0.
+The following code reproduces the issue:
 
-Initialize rtm_tos to 0, matching mpls_dump_route().
+struct sockaddr_in6 addr;
+s = socket(PF_RDS, SOCK_SEQPACKET, 0);
 
-Reproduced with KMSAN by adding an MPLS route and issuing a
-non-RTM_F_FIB_MATCH RTM_GETROUTE for its label:
+memset(&addr, 0, sizeof(addr));
+inet_pton(AF_INET6, ADDRESS, &addr.sin6_addr);
+addr.sin6_family = AF_INET6;
+addr.sin6_port = htons(PORT);
 
-  BUG: KMSAN: kernel-infoleak in _copy_to_iter+0x36c/0x33f0
-   _copy_to_iter+0x36c/0x33f0
-   __skb_datagram_iter+0x196/0x12c0
-   skb_copy_datagram_iter+0x5b/0x210
-   netlink_recvmsg+0x37b/0xef0
-   ...
-  Uninit was created at:
-   __alloc_skb+0x8ca/0x10e0
-   mpls_getroute+0x1280/0x3a40
-   rtnetlink_rcv_msg+0x1138/0x15a0
-   ...
-  Byte 19 of 64 is uninitialized
+bind(s, &addr, sizeof(addr));
 
-(byte 19 = nlmsghdr(16) + rtmsg offset 3 = rtm_tos)
+Found by InfoTeCS on behalf of Linux Verification Center
+(linuxtesting.org) with Syzkaller.
 
-Fixes: 397fc9e5cefe ("mpls: route get support")
-Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
-Link: https://patch.msgid.link/20260723010830.289917-1-yhlee@isslab.korea.ac.kr
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: eee2fa6ab322 ("rds: Changing IP address internal representation to struct in6_addr")
+Fixes: 1e2b44e78eea ("rds: Enable RDS IPv6 support")
+Signed-off-by: Ilia Gavrilov <Ilia.Gavrilov@infotecs.ru>
+Reviewed-by: Allison Henderson <achender@kernel.org>
+Link: https://patch.msgid.link/20260709162723.367523-1-Ilia.Gavrilov@infotecs.ru
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 78f75d632f74 ("rds: tcp: hold the RCU lock across ipv6_chk_addr() in rds_tcp_laddr_check()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mpls/af_mpls.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/rds/ib.c    | 4 ++++
+ net/rds/ib_cm.c | 4 ++++
+ net/rds/tcp.c   | 8 +++++---
+ 3 files changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/net/mpls/af_mpls.c b/net/mpls/af_mpls.c
-index 66f498667ed8..5c80fb93bb7a 100644
---- a/net/mpls/af_mpls.c
-+++ b/net/mpls/af_mpls.c
-@@ -2492,6 +2492,7 @@ static int mpls_getroute(struct sk_buff *in_skb, struct nlmsghdr *in_nlh,
- 	r->rtm_family	 = AF_MPLS;
- 	r->rtm_dst_len	= 20;
- 	r->rtm_src_len	= 0;
-+	r->rtm_tos	= 0;
- 	r->rtm_table	= RT_TABLE_MAIN;
- 	r->rtm_type	= RTN_UNICAST;
- 	r->rtm_scope	= RT_SCOPE_UNIVERSE;
+diff --git a/net/rds/ib.c b/net/rds/ib.c
+index ec45664f38767..810a9b76101f5 100644
+--- a/net/rds/ib.c
++++ b/net/rds/ib.c
+@@ -431,6 +431,10 @@ static int rds_ib_laddr_check_cm(struct net *net, const struct in6_addr *addr,
+ 		sa = (struct sockaddr *)&sin;
+ 	} else {
+ #if IS_ENABLED(CONFIG_IPV6)
++		if (!ipv6_mod_enabled()) {
++			ret = -EADDRNOTAVAIL;
++			goto out;
++		}
+ 		memset(&sin6, 0, sizeof(sin6));
+ 		sin6.sin6_family = AF_INET6;
+ 		sin6.sin6_addr = *addr;
+diff --git a/net/rds/ib_cm.c b/net/rds/ib_cm.c
+index f643d1f59c3be..f23233e0a53c7 100644
+--- a/net/rds/ib_cm.c
++++ b/net/rds/ib_cm.c
+@@ -844,6 +844,10 @@ int rds_ib_cm_handle_connect(struct rdma_cm_id *cm_id,
+ 	dp = event->param.conn.private_data;
+ 	if (isv6) {
+ #if IS_ENABLED(CONFIG_IPV6)
++		if (!ipv6_mod_enabled()) {
++			err = -EOPNOTSUPP;
++			goto out;
++		}
+ 		dp_cmn = &dp->ricp_v6.dp_cmn;
+ 		saddr6 = &dp->ricp_v6.dp_saddr;
+ 		daddr6 = &dp->ricp_v6.dp_daddr;
+diff --git a/net/rds/tcp.c b/net/rds/tcp.c
+index b560d06e6d96d..071f2a2f514ff 100644
+--- a/net/rds/tcp.c
++++ b/net/rds/tcp.c
+@@ -341,9 +341,11 @@ int rds_tcp_laddr_check(struct net *net, const struct in6_addr *addr,
+ 		rcu_read_unlock();
+ 	}
+ #if IS_ENABLED(CONFIG_IPV6)
+-	ret = ipv6_chk_addr(net, addr, dev, 0);
+-	if (ret)
+-		return 0;
++	if (ipv6_mod_enabled()) {
++		ret = ipv6_chk_addr(net, addr, dev, 0);
++		if (ret)
++			return 0;
++	}
+ #endif
+ 	return -EADDRNOTAVAIL;
+ }
 -- 
 2.53.0
 
