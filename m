@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22A7D43CE45;
-	Mon, 17 Aug 2026 14:46:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F4A34398EB;
+	Mon, 17 Aug 2026 14:47:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978020; cv=none; b=N76oBe7tS2fL8WBSuitj/rZCBybBCOjacbVlbggy2CJXMpyN+2ABAyb5cEpYyuMOz5+tfQfXhNQX+fKhocBdsZy3BbITAYERMXnhCIrd9nYzbmIqL9ZBCHfSyG+YJmHREdn7dFxLMgM/qIOcH/dSa3e4wwHSQInP+Nno1m0iDsw=
+	t=1786978023; cv=none; b=EjN7Unp01pl1cWs6yZO+DPjOdcOdvnHobYlZstuEFheyXjjkTHbvmx+jNprt4d7D9Ey5ToZFKqG++RRGuiuYaU20jff9YwgR44dETEUMCrX2tQrpIzM1GknsYQDtrptv1nU6k4Zq+0K/uZOWLOgODRl8dLIySZDwbOz5GVe8jWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978020; c=relaxed/simple;
-	bh=xsDiha/QRX5iJFMMNejW+/c/SXKG5Bpdz/7QhMY/cAU=;
+	s=arc-20240116; t=1786978023; c=relaxed/simple;
+	bh=8bWLUjAWsaSuKlvv9Drt4ZUKHuEE0J27Lj4IN34GJrU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rAgis3cqUiGJpR/4f04T+RkRCywm8K/2f/+SQMYR63fEs8hWJOTb2TpgNd3hXq+hUYoAegfrbFC8df7QcLcLeOMfmU5Me4zWZ/uAh3YgfE2g3m7IZIod/9ou/mn5s+9YIKNKYpsLdZeytJ9RLeryt2MiQuBWLrOGm7LRymL7nhQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DOvJW7+z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j1LIMey/jxMl2z1y6AfEfunUbww8VExfXzVsy/gAFZfxViyV6ioXOjGZhDRZcTvcEb61o9PyjIaqoW6qFSBuNCH+jr6gB+2oEzhm48o50W0zepVIA8+kVw/+tT/TxARkhnIkw1akURaXhP+kWxaJZaFHeX9ixwmBrWCJlJEh0oE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v9AfVmgc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DOvJW7+z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FD4F1F00A3E;
-	Mon, 17 Aug 2026 14:46:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v9AfVmgc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 594F11F000E9;
+	Mon, 17 Aug 2026 14:47:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978019;
-	bh=esQT/0xCf74vtP9jhe5mn27vDjpuXS9jercrT8/yzkw=;
+	s=korg; t=1786978021;
+	bh=GTOhgDtueiKnr5uyTGkmrN1WHlpv9xrvzfowSHBSiGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DOvJW7+zCX87MBoHD4zTwS7CElIVeSEwxlnGExwNcrCkCBE9YlBJsYfGumeKWBvdW
-	 P3B/XgfmI+4Pw9lOXIghuq3FMBlZiRDPC1rZZe26nWKJR/3pbTidYx1KfixCFk0t/V
-	 8PNv+A9s/auMsa1yShSzaTO1TvdeQxiYp9wopTS8=
+	b=v9AfVmgcdgxtgPII0Od/Vn1hNPqwtTw+bNSnc33B8MAegXYi9AyJVvwIYQmIzb4e1
+	 zTxxR/Tc8vg2jsm3zl4oTZjlVHAUsgNOlRny3Pi3ToxirF5ka6hUBQKuMpjN12Zy/v
+	 qZJ5Izb1Ce1ADOdWx/7HvObr/wFNt+ojvRYz5srY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Frieder Schrempf <frieder.schrempf@kontron.de>,
+	Guillaume Morin <guillaume@morinfr.org>,
+	Chris Li <chrisl@kernel.org>,
+	Zijiang Huang <kerayhuang@tencent.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 072/181] mtd: spinand: repeat reading in regular mode if continuous reading fails
-Date: Mon, 17 Aug 2026 15:32:46 +0200
-Message-ID: <20260817132538.278350659@linuxfoundation.org>
+Subject: [PATCH 6.12 073/181] swapfile: call cond_resched() before locking si->lock
+Date: Mon, 17 Aug 2026 15:32:47 +0200
+Message-ID: <20260817132538.321723720@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
 References: <20260817132535.394764707@linuxfoundation.org>
@@ -52,73 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>
+From: Guillaume Morin <guillaume@morinfr.org>
 
-[ Upstream commit 010dc7f2dd6a0078ade3f88f627ed5fbf45ceb94 ]
+The 6.12 backport of commit 66366d291f66 ("mm/swap: add cond_resched()
+in swap_reclaim_full_clusters to prevent softlockup"),
+added a cond_resched() after locking si->lock. Move cond_resched()
+before spin_lock().
 
-Continuous reading may result in multiple flash pages reading in one
-operation. Unfortunately, not all spinand controllers support such
-large reading. They will read less data. Unfortunately, the operation
-can't be continued.
-
-In this case:
- * disable continuous reading on this (not good enough) spi controller
- * repeat reading in regular mode.
-
+Signed-off-by: Guillaume Morin <guillaume@morinfr.org>
+Fixes: 60cbe67d1342 ("mm/swap: add cond_resched() in swap_reclaim_full_clusters to prevent softlockup")
+Link: https://lore.kernel.org/stable/ansgKOOXi6KE3oKf@bender.morinfr.org/
 Cc: stable@vger.kernel.org
-Signed-off-by: Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Signed-off-by: Frieder Schrempf <frieder.schrempf@kontron.de>
+Cc: Chris Li <chrisl@kernel.org>
+Cc: Zijiang Huang <kerayhuang@tencent.com>
+Cc: gregkh@linuxfoundation.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/spi/core.c | 25 +++++++++++++++++++++----
- 1 file changed, 21 insertions(+), 4 deletions(-)
+ mm/swapfile.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/nand/spi/core.c b/drivers/mtd/nand/spi/core.c
-index 10339209e7322..bf16901b77b64 100644
---- a/drivers/mtd/nand/spi/core.c
-+++ b/drivers/mtd/nand/spi/core.c
-@@ -427,8 +427,16 @@ static int spinand_read_from_cache_op(struct spinand_device *spinand,
- 		 * Dirmap accesses are allowed to toggle the CS.
- 		 * Toggling the CS during a continuous read is forbidden.
- 		 */
--		if (nbytes && req->continuous)
--			return -EIO;
-+		if (nbytes && req->continuous) {
-+			/*
-+			 * Spi controller with broken support of continuous
-+			 * reading was detected. Disable future use of
-+			 * continuous reading and return -EAGAIN to retry
-+			 * reading within regular mode.
-+			 */
-+			spinand->cont_read_possible = false;
-+			return -EAGAIN;
-+		}
+diff --git a/mm/swapfile.c b/mm/swapfile.c
+index 552df432c37f4..ed0a5ed25e65b 100644
+--- a/mm/swapfile.c
++++ b/mm/swapfile.c
+@@ -770,11 +770,11 @@ static void swap_reclaim_full_clusters(struct swap_info_struct *si, bool force)
+ 			}
+ 			offset++;
+ 		}
++		cond_resched();
+ 		spin_lock(&si->lock);
+ 
+ 		if (to_scan <= 0)
+ 			break;
+-		cond_resched();
  	}
+ }
  
- 	if (req->datalen)
-@@ -849,10 +857,19 @@ static int spinand_mtd_read(struct mtd_info *mtd, loff_t from,
- 
- 	old_stats = mtd->ecc_stats;
- 
--	if (spinand_use_cont_read(mtd, from, ops))
-+	if (spinand_use_cont_read(mtd, from, ops)) {
- 		ret = spinand_mtd_continuous_page_read(mtd, from, ops, &max_bitflips);
--	else
-+		if (ret == -EAGAIN && !spinand->cont_read_possible) {
-+			/*
-+			 * Spi controller with broken support of continuous
-+			 * reading was detected (see spinand_read_from_cache_op()),
-+			 * repeat reading in regular mode.
-+			 */
-+			ret = spinand_mtd_regular_page_read(mtd, from, ops, &max_bitflips);
-+		}
-+	} else {
- 		ret = spinand_mtd_regular_page_read(mtd, from, ops, &max_bitflips);
-+	}
- 
- 	if (ops->stats) {
- 		ops->stats->uncorrectable_errors +=
 -- 
 2.53.0
 
