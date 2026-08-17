@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2125943802D;
-	Mon, 17 Aug 2026 14:47:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2D273E5EC0;
+	Mon, 17 Aug 2026 14:47:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978069; cv=none; b=F5JSQKRmGd1bT1cOEpPeX9Gx7bJbNS7PHcATUkH2tfhinm2VxnHv98tWgTLK4dAtxRvE6qGiHzYxRi/Y5aIy/mdIrkVA6ILqt8QE33mli4jiMlMgZLKrnkIABnA+pO+apKCm/0uW+d4AAU3mJwhUBRd/wzmhAMXRLT+GExP+BBI=
+	t=1786978071; cv=none; b=R5UKHhWXhacrj/eGboHCjep5OmQBPfKhIaCYrZmTxqwByfUTkFqBQPRd9LfqKQYuHWqvlMLgnentZvvC3TozA7MjBP998YrLiKVp4ec3VwVzQBf7vEVdCT6/n9r/47P3BMjDVye3sovuE1ZUR03wUQj1O+QHZoZ6q6vgCLBqinY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978069; c=relaxed/simple;
-	bh=k8k7MRVw0UxZ87CeVG0hdSw1RJHxir+VL1OaFrGeq3M=;
+	s=arc-20240116; t=1786978071; c=relaxed/simple;
+	bh=F5m9hwL+XUZqVh5lCuD0VCbpofCEJc3QKlc5woBI3Nc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kL5WgfiNHSWxnm2G3OT38UbR43ywsFfpat8hq7Oa0gcMw67mR0yIrqpaQVWcQHj5F3GnuXA6lKZ/o45BcAio0ygRFjLhOaXo5WcnLnyUiVIQeQvuGPpXiigkYoUnEoVc7Sjk5Oz3GjxBWE1xgI0FF26O+11nGkpv6CtbeYjs6y0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kL4WeCDR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZgRnybK4x+z+M7VZV46Oe3FGICYp+hiRlhFmpbw6N9WgUr6zKDBZBSp9opWXiYDYp4eFmDbO6yp5tKKf2ee1pTYdXbC/lQ7tdx8ATir8NfrJzqYea7BnN9ZZahukYCtDfyHw15Fx9D5Y3nNn9n25V14skUYvGLM6/cODPXkIzx8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZbcxOQTM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kL4WeCDR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43C731F000E9;
-	Mon, 17 Aug 2026 14:47:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZbcxOQTM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29F621F000E9;
+	Mon, 17 Aug 2026 14:47:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978067;
-	bh=VmDxdRSRCFSXUylSD5v/1CSjc39p1kaai/lop9adsfc=;
+	s=korg; t=1786978070;
+	bh=LPlc99xbEgNc/QLnLahMFLrbMHkZhPyf6zdzxPshcf8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kL4WeCDR8GVZefpNzJvoIDmUHaoOYcB0C4xQbjfAgYkZKCmm7ml92Lz2/kWlQXgBZ
-	 K+2Af5ba6x3vTlhm/Qsgcd6l55rigNjIDGuPRUr9QvpWqVgFDcAhPADfflBnuLscs5
-	 PwttovwbTLJ3QrNmZ64fTX1aiLVeJeq34ulRW840=
+	b=ZbcxOQTMCxb81BBKRrsk9LrM+B1w7+ch2hy/vpONEAYb7SYa+iPS7tdihALRaHMMN
+	 FBjXHEkhW8Yb8Oi3cPT2g3Lwz8X11Jx0HpYeONbWp+52I9eLkwG6GlDD2CDw9iLLM2
+	 43EIE4f8J3VUcDuP5rQsYwUZ+F9qdos7Cr8D9D/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qihang Tang <q.h.hack.winter@gmail.com>,
+	Doruk Tan Ozturk <doruk@0sec.ai>,
 	Willem de Bruijn <willemb@google.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 091/181] packet: use consistent hard_header_len in TX_RING send path
-Date: Mon, 17 Aug 2026 15:33:05 +0200
-Message-ID: <20260817132539.027129583@linuxfoundation.org>
+Subject: [PATCH 6.12 092/181] net/packet: reset the MAC header on the packet-socket transmit path
+Date: Mon, 17 Aug 2026 15:33:06 +0200
+Message-ID: <20260817132539.066618717@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
 References: <20260817132535.394764707@linuxfoundation.org>
@@ -51,106 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qihang Tang <q.h.hack.winter@gmail.com>
+From: Doruk Tan Ozturk <doruk@0sec.ai>
 
-commit 21b5953e7494c16a42e6cd8cf110e18d13ae4a6b upstream.
+commit c2707480cfbf19c7619acc9c089d17f20869821f upstream.
 
-tpacket_snd() reads dev->hard_header_len independently for skb
-allocation and header construction in tpacket_fill_skb(). Concurrent
-netdevice reconfiguration can therefore make the reserved headroom
-smaller than the amount later pushed, or make copylen - hard_header_len
-negative.
+packet_parse_headers() resets the MAC header only for a SOCK_RAW frame
+whose socket did not bind a protocol. A protocol-bound SOCK_RAW socket,
+any SOCK_DGRAM frame, and the legacy SOCK_PACKET path therefore leave
+skb->mac_header unset here.
 
-Snapshot hard_header_len once before processing ring frames and use it
-for the frame limit, headroom allocation, copy length, and skb
-construction. Pass the snapshot to tpacket_fill_skb().
+For frames sent via __dev_queue_xmit() this is harmless: it resets the
+MAC header unconditionally. But the packet-socket PACKET_QDISC_BYPASS
+path uses dev_direct_xmit(), which does not, so the frame reaches
+ndo_start_xmit() with the MAC header unset. A driver that reads
+eth_hdr(skb) on transmit then dereferences skb->head + (u16)~0, an
+out-of-bounds access ~64 KiB past the head -- the same class fixed for
+one consumer in commit f5089008f90c ("macsec: do not read an unset MAC
+header in macsec_encrypt()").
 
-The separate SOCK_DGRAM consistency problem between hard_header_len and
-header_ops->create is not addressed here.
+packet_parse_headers() runs only on the transmit path, where skb->data
+points at the start of the L2 header for every packet-socket type
+regardless of its length: SOCK_RAW and SOCK_PACKET carry a user-supplied
+header and SOCK_DGRAM has one built by dev_hard_header(). Reset the MAC
+header unconditionally, mirroring __dev_queue_xmit(), so the frame is
+anchored on the bypass path too.
 
-Fixes: 69e3c75f4d54 ("net: TX_RING and packet mmap")
+Found by 0sec (https://0sec.ai) using automated source analysis;
+verified against source and matched to the macsec KASAN report in
+f5089008f90c. Compile-tested.
+
+Fixes: 75c65772c3d1 ("net/packet: Ask driver for protocol if not provided by user")
 Cc: stable@vger.kernel.org
-Signed-off-by: Qihang Tang <q.h.hack.winter@gmail.com>
+Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
 Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260805125729.19220-4-q.h.hack.winter@gmail.com
+Link: https://patch.msgid.link/20260724144015.63219-1-doruk@0sec.ai
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/packet/af_packet.c |   19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+ net/packet/af_packet.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
 --- a/net/packet/af_packet.c
 +++ b/net/packet/af_packet.c
-@@ -2626,6 +2626,7 @@ static int packet_snd_vnet_parse(struct
- static int tpacket_fill_skb(struct packet_sock *po, struct sk_buff *skb,
- 		void *frame, struct net_device *dev, void *data, int tp_len,
- 		__be16 proto, unsigned char *addr, int hlen, int copylen,
-+		int hard_header_len,
- 		const struct sockcm_cookie *sockc)
+@@ -1976,11 +1976,12 @@ static void packet_parse_headers(struct
  {
- 	union tpacket_uhdr ph;
-@@ -2657,8 +2658,8 @@ static int tpacket_fill_skb(struct packe
- 	} else if (copylen) {
- 		int hdrlen = min_t(int, copylen, tp_len);
+ 	int depth;
  
--		skb_push(skb, dev->hard_header_len);
--		skb_put(skb, copylen - dev->hard_header_len);
-+		skb_push(skb, hard_header_len);
-+		skb_put(skb, copylen - hard_header_len);
- 		err = skb_store_bits(skb, 0, data, hdrlen);
- 		if (unlikely(err))
- 			return err;
-@@ -2789,7 +2790,7 @@ static int tpacket_snd(struct packet_soc
- 	void *data;
- 	int len_sum = 0;
- 	int status = TP_STATUS_AVAILABLE;
--	int hlen, tlen, copylen = 0;
-+	int hard_header_len, hlen, tlen, copylen = 0;
- 	long timeo;
++	/* On TX skb->data is the L2 header; anchor it for all socket types. */
++	skb_reset_mac_header(skb);
++
+ 	if ((!skb->protocol || skb->protocol == htons(ETH_P_ALL)) &&
+-	    sock->type == SOCK_RAW) {
+-		skb_reset_mac_header(skb);
++	    sock->type == SOCK_RAW)
+ 		skb->protocol = dev_parse_header_protocol(skb);
+-	}
  
- 	mutex_lock(&po->pg_vec_lock);
-@@ -2836,8 +2837,9 @@ static int tpacket_snd(struct packet_soc
- 			goto out_put;
- 	}
- 
-+	hard_header_len = READ_ONCE(dev->hard_header_len);
- 	if (po->sk.sk_socket->type == SOCK_RAW)
--		reserve = dev->hard_header_len;
-+		reserve = hard_header_len;
- 	size_max = po->tx_ring.frame_size
- 		- (po->tp_hdrlen - sizeof(struct sockaddr_ll));
- 
-@@ -2874,7 +2876,7 @@ static int tpacket_snd(struct packet_soc
- 			goto tpacket_error;
- 
- 		status = TP_STATUS_SEND_REQUEST;
--		hlen = LL_RESERVED_SPACE(dev);
-+		hlen = LL_RESERVED_SPACE_EX(dev, hard_header_len);
- 		tlen = dev->needed_tailroom;
- 		if (vnet_hdr_sz) {
- 			data += vnet_hdr_sz;
-@@ -2892,10 +2894,10 @@ static int tpacket_snd(struct packet_soc
- 						    vnet_hdr.hdr_len);
- 			has_vnet_hdr = true;
- 		}
--		copylen = max_t(int, copylen, dev->hard_header_len);
-+		copylen = max_t(int, copylen, hard_header_len);
- 		skb = sock_alloc_send_skb(&po->sk,
- 				hlen + tlen + sizeof(struct sockaddr_ll) +
--				(copylen - dev->hard_header_len),
-+				(copylen - hard_header_len),
- 				!need_wait, &err);
- 
- 		if (unlikely(skb == NULL)) {
-@@ -2905,7 +2907,8 @@ static int tpacket_snd(struct packet_soc
- 			goto out_status;
- 		}
- 		tp_len = tpacket_fill_skb(po, skb, ph, dev, data, tp_len, proto,
--					  addr, hlen, copylen, &sockc);
-+					  addr, hlen, copylen, hard_header_len,
-+					  &sockc);
- 		if (likely(tp_len >= 0) &&
- 		    tp_len > dev->mtu + reserve &&
- 		    !vnet_hdr_sz &&
+ 	/* Move network header to the right position for VLAN tagged packets */
+ 	if (likely(skb->dev->type == ARPHRD_ETHER) &&
 
 
