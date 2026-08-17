@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3D453F7882;
-	Mon, 17 Aug 2026 13:43:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1BFA3BB57;
+	Mon, 17 Aug 2026 13:43:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974237; cv=none; b=g5iV94azHAGrFLfvieijT9j1o7W3gCPmeNMwJ1pkcujj1QxRP5XNT4GKZ5lhpQPhJdlHKXItb57xGlB4KQi8dkShe1K/bFP9Dj0icTQJXyBlMH/UMoyuhzWW2URfXkOBgLCVWw8I6EXRFgnt1bqjqUZ5DhJZ+AGHt4pqT4qFK4Q=
+	t=1786974239; cv=none; b=TrdyrYYTP5LsmLvH37fyugnd54glvIZn/bb/Bx+0QOsrmpGzu+6g1lvF1tsN8rL5ntdhZdb2wstJ334GEvTKeqhGEhLq2pnNBcz3zMV44bPkM2jphtoXc7IhCU7Q1RdTOT750Td423Tx/gqaPfzdJODMj9peBc7gdKT6DQyelhw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974237; c=relaxed/simple;
-	bh=NfY2olrZgkNwgRgDMKB2akgClbkRX2eyZOgaSJgBzhc=;
+	s=arc-20240116; t=1786974239; c=relaxed/simple;
+	bh=Ai+7IkpySoHeMRYVJqMR1F9zJLCJdEUZ1LDX06NHySA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OZXvZBExVwHMelbOLgIej0xSwAVSpUaTWryrTS/JeR+vfUNYX+DNClxjX6HlBYOi00WCDCF4rIvsCIHM9mKHS+2lDIX40EfpAH4myuUYuhksv0gYBXxi3LDLrMlKkQlhUyYs28cYtozV7GAtW8sH9g3Nfs7W791ZOX1MWzvjpQY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QXT3/FiO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=swt28WT2on5asa/FJXUSI1LlwHoMajyDfAsjrg6qhG4c38Y0F36XrQBqVcRDVCP6d/PgsXFJiwHj+7/kGHkdaBci7d43uN0UruNwipI2jGi3MVqn8QkjSj3eKfTjm+Hq9QqSgv75ShLtNHy3Nbr22pT7dSN7d+aetQ+bgTsvlhg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q/q7Ydz8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QXT3/FiO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37F021F00A3D;
-	Mon, 17 Aug 2026 13:43:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q/q7Ydz8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 220761F000E9;
+	Mon, 17 Aug 2026 13:43:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974235;
-	bh=IoISFnfwMOlsnrzeEcxtTXkUlN+Y+NI8bx3t0nMuSYA=;
+	s=korg; t=1786974238;
+	bh=aMvZ4ISD94jFG0tCVk4rnKWSKGS69LRjpaGu5ofrVkk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QXT3/FiOvwlUoJ+Lgi5T+wF3sXPF2fR7oFjaub8s6wGih+ttRHY2sgJC/enTZ73PI
-	 1uN4LxIVjijx7RKdiAmjhQA56zeRiin2AyHGKWWRKg7TPFGWC8FKocVH2JaC2YDGsP
-	 ZfkrQINM6GWosgrsF/1KTKMK4hdQUv5Ua1mBGqwc=
+	b=Q/q7Ydz80R3CtVJtTvsV9Ek9nJVN0xB4jVsHSeT1HZq12DzTf6AVHxLbMqRyxX1r3
+	 3J/9bbqcgfulkQLP19Eg9MQ8ECSmkzxzyPd2ArIgGP8TFRH6z0brdgAWvnRX5jTXJu
+	 xOTVoidNRLFyfKWwiQ1Tz+3M1NaiSTRRKrDHDOp4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	jarod@redhat.com,
-	Laurent Vivier <lvivier@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.1 137/271] usbnet: cap max_mtu for drivers without bind callback
-Date: Mon, 17 Aug 2026 15:31:02 +0200
-Message-ID: <20260817132542.487543657@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Joshua Rogers <linux@joshua.hu>
+Subject: [PATCH 7.1 138/271] vt: add permission check for KDSKBMETA ioctl
+Date: Mon, 17 Aug 2026 15:31:03 +0200
+Message-ID: <20260817132542.528446333@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -51,53 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laurent Vivier <lvivier@redhat.com>
+From: Joshua Rogers <linux@joshua.hu>
 
-commit 1505b2cb6ae1c7e8ac0c6e4590a204ffc3ab2b24 upstream.
+commit a7ad0034453ba4c353f9b8f810ee2569de33d283 upstream.
 
-usbnet_probe() initializes max_mtu to ETH_MAX_MTU and only caps it
-inside the if (info->bind) block. Drivers without a bind callback
-never enter this block, so max_mtu stays at ETH_MAX_MTU.
+KDSKBMETA modifies keyboard meta mode but lacks the !perm check that all
+other keyboard setter ioctls in vt_k_ioctl() enforce, allowing a process
+to change meta mode on a non-controlling console without authorization.
 
-QEMU's usb-net device (0x0525/0xa4a2) is claimed by the cdc_subset
-driver which has no bind callback. The guest accepts any MTU from DHCP
-(e.g. 65520 from passt), leading to TCP segments that exceed the
-device's 2048-byte receive buffer and are silently dropped.
-
-Initialize max_mtu to net->mtu at probe time and update it inside
-the bind block.
-
-Fixes: f77f0aee4da4 ("net: use core MTU range checking in USB NIC drivers")
-Cc: jarod@redhat.com
-Cc: stable@vger.kernel.org
-Link: https://gitlab.com/qemu-project/qemu/-/issues/3268
-Link: https://bugs.passt.top/show_bug.cgi?id=189
-Signed-off-by: Laurent Vivier <lvivier@redhat.com>
-Link: https://patch.msgid.link/20260731092711.857684-1-lvivier@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Assisted-by: AISLE:Snapshot
+Cc: stable <stable@kernel.org>
+Signed-off-by: Joshua Rogers <linux@joshua.hu>
+Link: https://patch.msgid.link/20260731-tty-vt-stuff-v1-2-be99b9da8e30@linuxfoundation.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/usbnet.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/tty/vt/vt_ioctl.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/net/usb/usbnet.c
-+++ b/drivers/net/usb/usbnet.c
-@@ -1798,7 +1798,7 @@ usbnet_probe(struct usb_interface *udev,
- 	 */
- 	dev->hard_mtu = net->mtu + net->hard_header_len;
- 	net->min_mtu = 0;
--	net->max_mtu = ETH_MAX_MTU;
-+	net->max_mtu = net->mtu;
+--- a/drivers/tty/vt/vt_ioctl.c
++++ b/drivers/tty/vt/vt_ioctl.c
+@@ -406,6 +406,8 @@ static int vt_k_ioctl(struct tty_struct
+ 	/* this could be folded into KDSKBMODE, but for compatibility
+ 	   reasons it is not so easy to fold KDGKBMETA into KDGKBMODE */
+ 	case KDSKBMETA:
++		if (!perm)
++			return -EPERM;
+ 		return vt_do_kdskbmeta(console, arg);
  
- 	net->netdev_ops = &usbnet_netdev_ops;
- 	net->watchdog_timeo = TX_TIMEOUT_JIFFIES;
-@@ -1808,6 +1808,7 @@ usbnet_probe(struct usb_interface *udev,
- 	// allow device-specific bind/init procedures
- 	// NOTE net->name still not usable ...
- 	if (info->bind) {
-+		net->max_mtu = ETH_MAX_MTU;
- 		status = info->bind(dev, udev);
- 		if (status < 0)
- 			goto out1;
+ 	case KDGKBMETA:
 
 
