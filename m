@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42C0D3F0ABE;
-	Mon, 17 Aug 2026 13:49:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D9223E0C76;
+	Mon, 17 Aug 2026 13:49:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974600; cv=none; b=NarJHBULersvsxPoSBImZzvs+w878wAQNPcOVhLbysoU4SKPD9M7keAVPYU8WC397UvDfMLUxDKMiVlPJfZr0x+yWi7ZOi02WvBXOz2VwDeLDi235XwLyAWOOQATmDGVJtN8XI+5Huq0InKKjxBGrcyJ6fyD+1GgQCgV3Xb+c0c=
+	t=1786974603; cv=none; b=ly0vdXnAD3DbM43PmxBO6khXKlu/kY7RgdZSUKTa6UzTV3ISTDX7jeDP8ZQygGVgWbmrrwIoDuvNmqKfbkriQQgBxElzSehCvkSH2A0FXUy/bVBOw2EfwLmcI+MHZId9o3gdz/mShL+8Vb7yh4DxxCfq/BGKSX9Udzv/hr9sZVs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974600; c=relaxed/simple;
-	bh=59En/gqm/nR3NkxGTo5bB62+w910bnezEUkBW9Fq0fI=;
+	s=arc-20240116; t=1786974603; c=relaxed/simple;
+	bh=wygAWLnw80k61MuDXL3W0Sq2xjLmU1OdNv70KaMSgR0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SjmCG0M0Vh1kIbsf0u8KDnpLe2zOhfWr+//deimos79k35sNwEbZhjPdlGFNcda3sqWxLY4cRbbKBZW7dPLJ7PiJBNFOx0gS4Xga4wlwxNE7V2aj4yiNhGgNz3Q2VDFNkI98I5FJjbNmZMON9/z+o5v+W0dEX8HF966YByeko9Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PmquYhXu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Kjr4jRd0Cd3wo4O0L0MHAJ3M5VXuzhkzDu0DT7x9VjTJCPQrGKryKyayMLa2tVJDjbx3fb4z3NBTYjXeyssVvKv5elBNk1/oVon5YIN5upB+HLTlSVV9PWT4GEmbmFn25+RGl9UyiVuzXsKsq0YseER4Cp10pt++XFsRjrYS32s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QWStZfrj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PmquYhXu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 269E81F00A3A;
-	Mon, 17 Aug 2026 13:49:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QWStZfrj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8B931F00A3F;
+	Mon, 17 Aug 2026 13:49:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974588;
-	bh=Hc73pzHaNhKn39FptiJzK30CjKkFLZurYu86qUTNwYU=;
+	s=korg; t=1786974594;
+	bh=XlnKN+t2/Rh9z6cTNOOAPcLn/L1DrkrvedBnYyXmSgs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PmquYhXu85JPgMeGdiARSX1XqLsqBE5bMe8hzMOOm8BkXRGzI0qtGEe1zChNTFCrE
-	 VvnRVPUBFVZAuYnx2ATw7fKhkPJSl1QAGtkB8t7+gRG5YkmViqa+r7wiJtKK1x8i8S
-	 Ggjy7e+QZo83LI8a0XYLmTJYkpm7IuuywFfMBNHI=
+	b=QWStZfrjtnUwnkEgpiwCSKlbL9k9ybi+9NLkc59aFhjsLTZAht4hTPM8+pFPPoolB
+	 /knvRa8jl+wu40UbPy8/XxuVz8Lk61OEtS+YqrzOVbLkj0lNd0AKeUgdHRa7f+fkGO
+	 0yL2MXLUk+S7Hg48dpXZXJWLKJKEqDPihxW4ugJ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko AI <sashiko-bot@kernel.org>,
 	Tejun Heo <tj@kernel.org>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Matt Fleming <mfleming@cloudflare.com>,
-	Suren Baghdasaryan <surenb@google.com>
-Subject: [PATCH 7.1 258/271] sched/psi: Shut down rtpoll_timer in psi_cgroup_free()
-Date: Mon, 17 Aug 2026 15:33:03 +0200
-Message-ID: <20260817132547.349821613@linuxfoundation.org>
+	Andrea Righi <arighi@nvidia.com>
+Subject: [PATCH 7.1 260/271] sched_ext: Take cgroup_lock() first in scx_cgroup_lock()
+Date: Mon, 17 Aug 2026 15:33:05 +0200
+Message-ID: <20260817132547.425654772@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -55,68 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 From: Tejun Heo <tj@kernel.org>
 
-commit 5457025fa8ca3c0d2732109513de839e3e797190 upstream.
+commit 5f8b69642d18e1f3e11996707842ac530444e959 upstream.
 
-psi_schedule_rtpoll_work() is called locklessly from the scheduler hotpath
-and can race psi_trigger_destroy() taking down the last rtpoll trigger under
-rtpoll_trigger_lock:
+scx_cgroup_lock() write-locks scx_cgroup_ops_rwsem and then takes
+cgroup_lock(), which can deadlock through kernfs:
 
-  psi_schedule_rtpoll_work()        psi_trigger_destroy()
+  scx enable/disable         cgroup rmdir           cpu.weight write
+  ------------------         ------------           ----------------
+                             cgroup_lock()
+  percpu_down_write(rwsem)
+  cgroup_lock()
+                                                    kernfs_get_active()
+                                                    percpu_down_read(rwsem)
+                             kernfs_drain()
 
-  rcu_read_lock();
-  task = rcu_dereference(rtpoll_task);
-                                    rcu_assign_pointer(rtpoll_task, NULL);
-                                    timer_delete(&rtpoll_timer);
-  mod_timer(&rtpoll_timer, ...);
-  rcu_read_unlock();
-                                    synchronize_rcu();
-                                    kthread_stop(task_to_destroy);
+The enable path waits for the rmdir to release cgroup_mutex. The rmdir,
+deactivating the cpu controller's files, waits in kernfs_drain() for the
+write's active reference. The write, in scx_group_set_weight(), waits for
+the rwsem behind the pending writer.
 
-The group can then be freed with the re-armed timer still pending, and
-poll_timer_fn() runs on freed memory.
+Take cgroup_lock() first. The set_* paths take no cgroup locks inside the
+read side, so a pending write-lock then only waits for read sections that
+always run to completion, and no dependency from the rwsem back to
+cgroup_mutex remains.
 
-461daba06bdc ("psi: eliminate kthread_worker from psi trigger scheduling
-mechanism") deleted the timer synchronously after the synchronize_rcu(),
-which prevented this but raced trigger creation instead: the deletion could
-cancel the timer that a new trigger set armed during the grace period and,
-as creation also reinitialized the timer at the time, corrupt it.
-8f91efd870ea ("psi: Fix race between psi_trigger_create/destroy") moved the
-initialization into group_init() and the deletion into the locked section,
-trading the creation races for the window above.
-
-Neither placement in the destruction path works. A pending timer firing
-while the group is alive is harmless though. poll_timer_fn() just wakes the
-rtpoll waitqueue and doesn't re-arm itself. Bind the timer to the group's
-lifetime instead and shut it down in psi_cgroup_free(). Nothing can arm it
-by then. timer_shutdown_sync() because the timer is never armed again.
-
-Fixes: 8f91efd870ea ("psi: Fix race between psi_trigger_create/destroy")
-Cc: stable@vger.kernel.org # v5.10+
-Reported-by: Sashiko AI <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/all/20260711000434.36C4A1F000E9@smtp.kernel.org/
+Fixes: a5bd6ba30b33 ("sched_ext: Use cgroup_lock/unlock() to synchronize against cgroup operations")
+Cc: stable@vger.kernel.org # v6.18+
 Signed-off-by: Tejun Heo <tj@kernel.org>
-Acked-by: Johannes Weiner <hannes@cmpxchg.org>
-Tested-by: Matt Fleming <mfleming@cloudflare.com>
-Acked-by: Suren Baghdasaryan <surenb@google.com>
+Reviewed-by: Andrea Righi <arighi@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/psi.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ kernel/sched/ext.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/kernel/sched/psi.c
-+++ b/kernel/sched/psi.c
-@@ -1134,6 +1134,12 @@ void psi_cgroup_free(struct cgroup *cgro
- 		return;
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -4515,20 +4515,25 @@ static struct cgroup *root_cgroup(void)
+ 	return &cgrp_dfl_root.cgrp;
+ }
  
- 	cancel_delayed_work_sync(&cgroup->psi->avgs_work);
-+	/*
-+	 * A psi_schedule_rtpoll_work() call racing the last trigger's
-+	 * destruction may have re-armed the timer after psi_trigger_destroy()
-+	 * deleted it. Spurious firing while the group is alive is harmless.
-+	 */
-+	timer_shutdown_sync(&cgroup->psi->rtpoll_timer);
- 	free_percpu(cgroup->psi->pcpu);
- 	/* All triggers must be removed by now */
- 	WARN_ONCE(cgroup->psi->rtpoll_states, "psi: trigger leak\n");
++/*
++ * cgroup_lock() must nest outside the rwsem write side: a writer waiting
++ * for cgroup_mutex deadlocks with cgroup teardown, which holds it while
++ * draining a set_* file write blocked on the rwsem behind the writer.
++ */
+ static void scx_cgroup_lock(void)
+ {
++	cgroup_lock();
+ #ifdef CONFIG_EXT_GROUP_SCHED
+ 	percpu_down_write(&scx_cgroup_ops_rwsem);
+ #endif
+-	cgroup_lock();
+ }
+ 
+ static void scx_cgroup_unlock(void)
+ {
+-	cgroup_unlock();
+ #ifdef CONFIG_EXT_GROUP_SCHED
+ 	percpu_up_write(&scx_cgroup_ops_rwsem);
+ #endif
++	cgroup_unlock();
+ }
+ #else	/* CONFIG_EXT_GROUP_SCHED || CONFIG_EXT_SUB_SCHED */
+ static struct cgroup *root_cgroup(void) { return NULL; }
 
 
