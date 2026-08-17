@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1B653B811F;
-	Mon, 17 Aug 2026 14:07:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF30C2D5A01;
+	Mon, 17 Aug 2026 14:07:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975623; cv=none; b=s/GX9tlzlizz7uQa+1mGZN7FQh59Ls4djnuOOXNDJgPIfg+ZGQeoZoLssFrdP0IBz7IX4hUnvzhv//zpZ1UVtRJyStn37BVediCGcKUa4fSRnseGSE3/GZ1SPZLP7lKs9GCWs+DRe0gOMCA11hTfiBMRqTInwe2xCbiYS1nCuyw=
+	t=1786975625; cv=none; b=lnYbLjBQNNQ/XMGsrk24jNSIOVfXgLgH+zMlCEhCZySEelnCy3arDqWwXxNyeUk8qD0bhip914Mu7JiOVb5IVG8a2wM0FIuHDMqH2kYMGH/LB55pomJtx6Sj64mHdN+tbyrazc6L73Qd5zIseYg0ntB+xe2ny11H/HZvLvZllBE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975623; c=relaxed/simple;
-	bh=xrFcLJ0mnAjgnRi8vhgIdO4vdnrtqdIjxVvgV46sBx4=;
+	s=arc-20240116; t=1786975625; c=relaxed/simple;
+	bh=M4JuEIadrNYIcDKGOJ48wBhuR9saRsbVY2YiON1CtVo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jdYQGgLr+Mgd4hdQHBlVnYOezOoq7Bc6fwoc/rLaLixzUFFy0MoIZFPajri9k+IhXkJ4Aqg8bXAMCbCBbyW5q4UmbNQz45xz/e9j9MmV3A6/uwCYpbXNLXjuYnbAB0P93W7KyezMwBGHQEWFbNlIDtZdseRxC9ev7zSWeBz0hYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EJRWBJNf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=B+T7cPBKSpXuc5E+9xqYaE5XFLvqf4KFTgzyB92lHxe0sAwDDxIdh8TJmwUP7+3IAwnqYNznZ3JrDOBh4vNSnuZyhAwuLSMtWQzVEEiey9PZXvyw2Z7hzY4pm3XZMymMjUvPTjygCJcJmbMhjkoxqmlVRBJuxFJKopqWHDc53cw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ES6II+it; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EJRWBJNf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39BCD1F00A3A;
-	Mon, 17 Aug 2026 14:07:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ES6II+it"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ABF11F000E9;
+	Mon, 17 Aug 2026 14:07:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975621;
-	bh=v5N6ZFZ8DSlMaaNjOGPHHDZdPFsITTKcHUmtvzxwFq0=;
+	s=korg; t=1786975624;
+	bh=IoKBhMFCDDP9s0agMdXbUs/g6RRzY+4mURHu8vNz72w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EJRWBJNfNwMYibRL2gwsToEV67JgcoKifQbuzMijaYRo1NMMxO1Nq9TpK3mNfXmkp
-	 ysX+sEuMpJek081H9jLrHMB003nEkNj6kt+urx8W+utyo3RJTMsBnxtsoCTPp5aIV7
-	 XttKmw2QVKjlrKaDSuE/YSSIeJk37hiwdwAUDPIU=
+	b=ES6II+iteowbaf6ZvliVp0XTkXtBGreo/K1pdhsOxnT/o+6VhYCnqi6iwmDnNlFcr
+	 0nKgPxijKYQKEaWAqzu7G/PxraIiCo69kgv+YY/HREv7ZOic8SkEpqDYpzz8s89z+9
+	 FHDG1MlePKU5XDHDhZSoW0iJODgujidD17o2IqnQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	"Cen Zhang (Microsoft)" <blbllhy@gmail.com>,
-	Simon Horman <horms@kernel.org>,
+	Rohan G Thomas <rohan.g.thomas@altera.com>,
+	Nazim Amirul <muhammad.nazim.amirul.nazle.asmade@altera.com>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Jakub Raczynski <j.raczynski@samsung.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 091/389] tipc: fix u16 MTU truncation in media and bearer MTU validation
-Date: Mon, 17 Aug 2026 15:28:50 +0200
-Message-ID: <20260817132542.657975689@linuxfoundation.org>
+Subject: [PATCH 5.10 092/389] net: stmmac: reset residual action in L3L4 filters on delete
+Date: Mon, 17 Aug 2026 15:28:51 +0200
+Message-ID: <20260817132542.699078110@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -54,67 +54,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang (Microsoft) <blbllhy@gmail.com>
+From: Nazim Amirul <muhammad.nazim.amirul.nazle.asmade@altera.com>
 
-[ Upstream commit 9f29cd8a8e7901a2617c8064ce9f50fc67b97cb8 ]
+[ Upstream commit a448f821289934b961dd9d8d0beb006cc8937ba2 ]
 
-Both TIPC_NL_MEDIA_SET and TIPC_NL_BEARER_SET accept user-supplied
-MTU values but only enforce a minimum bound, not a maximum. When a user
-sets the MTU to a value exceeding U16_MAX (65535), it passes validation
-but is silently truncated when assigned to u16 fields l->mtu and
-l->advertised_mtu in tipc_link_create(). Values like 65536 (0x10000)
-truncate to 0, causing a division by zero in tipc_link_set_queue_limits()
-which computes TIPC_MAX_PUBL / (l->mtu / ITEM_SIZE). Other overflowing
-values (e.g. 65537-131071) produce small incorrect MTU values, resulting
-in link malfunction behaviors.
+When deleting an L3/L4 flower filter entry, the action field is not
+reset. If a filter was previously configured with a drop action, that
+action may persist and affect subsequent filter configurations
+unintentionally.
 
-Crash stack (triggered as unprivileged user via user namespace):
+Clear the action field when the filter entry is deleted.
 
-  tipc_link_set_queue_limits  net/tipc/link.c:2531
-  tipc_link_create            net/tipc/link.c:520
-  tipc_node_check_dest        net/tipc/node.c:1279
-  tipc_disc_rcv               net/tipc/discover.c:252
-  tipc_rcv                    net/tipc/node.c:2129
-  tipc_udp_recv               net/tipc/udp_media.c:392
-
-Two independent paths lack the upper bound check:
-1. tipc_udp_mtu_bad() -- called from __tipc_nl_media_set() (MEDIA_SET)
-2. inline check in __tipc_nl_bearer_set() at bearer.c:1160 (BEARER_SET)
-
-Fix both by rejecting MTU values above U16_MAX.
-
-Fixes: 901271e0403a ("tipc: implement configuration of UDP media MTU")
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Closes: https://lore.kernel.org/all/CAB8m9WgETt0AjmFwE=F-CKjGXsK6_WDv0=kbYRcC8-noo+amnA@mail.gmail.com
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Signed-off-by: Cen Zhang (Microsoft) <blbllhy@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260714041541.307702-1-blbllhy@gmail.com
+Fixes: 425eabddaf0f ("net: stmmac: Implement L3/L4 Filters using TC Flower")
+Signed-off-by: Rohan G Thomas <rohan.g.thomas@altera.com>
+Signed-off-by: Nazim Amirul <muhammad.nazim.amirul.nazle.asmade@altera.com>
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Link: https://patch.msgid.link/20260714023716.29865-5-muhammad.nazim.amirul.nazle.asmade@altera.com
+Reviewed-by: Jakub Raczynski <j.raczynski@samsung.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/netlink.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/tipc/netlink.c
-+++ b/net/tipc/netlink.c
-@@ -113,12 +113,16 @@ const struct nla_policy tipc_nl_node_pol
- };
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
+index 3539c1542eb8c6..f5977539129cfd 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
+@@ -603,6 +603,7 @@ static int tc_del_flow(struct stmmac_priv *priv,
+ 	entry->in_use = false;
+ 	entry->cookie = 0;
+ 	entry->is_l4 = false;
++	entry->action = 0;
+ 	return ret;
+ }
  
- /* Properties valid for media, bearer and link */
-+static struct netlink_range_validation tipc_nl_mtu_range = {
-+	.max = U16_MAX,
-+};
-+
- const struct nla_policy tipc_nl_prop_policy[TIPC_NLA_PROP_MAX + 1] = {
- 	[TIPC_NLA_PROP_UNSPEC]		= { .type = NLA_UNSPEC },
- 	[TIPC_NLA_PROP_PRIO]		= { .type = NLA_U32 },
- 	[TIPC_NLA_PROP_TOL]		= { .type = NLA_U32 },
- 	[TIPC_NLA_PROP_WIN]		= { .type = NLA_U32 },
--	[TIPC_NLA_PROP_MTU]		= { .type = NLA_U32 },
-+	[TIPC_NLA_PROP_MTU]		= NLA_POLICY_FULL_RANGE(NLA_U32, &tipc_nl_mtu_range),
- 	[TIPC_NLA_PROP_BROADCAST]	= { .type = NLA_U32 },
- 	[TIPC_NLA_PROP_BROADCAST_RATIO]	= { .type = NLA_U32 }
- };
+-- 
+2.53.0
+
 
 
