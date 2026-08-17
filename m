@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8BF7426693;
-	Mon, 17 Aug 2026 14:45:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FB7442CB0D;
+	Mon, 17 Aug 2026 14:45:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977944; cv=none; b=l6RFONLpur8OX0Z7BhopRALHvJgmNxj3SfCgdSpmvBFbwLDHHmfZJEUdtkkMT3vU9atgDTeK+6dAgofNz0wV9oIYfUwXuQAKvFaHD6Oo5pJ9fnWfPJ3l8J/ap3akRINkCMTpVG/Lzahv3eQIZ3mpYe05R8IiSKOfI0Vs0WqPH5Y=
+	t=1786977946; cv=none; b=EZ/30fruGASn8N3VXJ47eV5SxQI6rJPprHNhZaGBM3wnY+lKAoS4rjyOLeSG5eMr85R9srVAwfl/2rFYKBHo/sR3wT0Ui8JoGoiNBUu44XyvlofkrO9pkqF1shKDASKXjEk5tCQeYgOxfqFwVELzbxFC82zum/kgvm58/5+2RZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977944; c=relaxed/simple;
-	bh=zO/4YvNtb6wucDOIIckRoKBwVobWRKIijfhm0UOEZZ0=;
+	s=arc-20240116; t=1786977946; c=relaxed/simple;
+	bh=u1AgHiyaccYVL3ebKJao93uaYELGCZ1Vv6i/S8DSuak=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=plQ8DOTC5S1WkbAzRevJq0wjHtYB69/Lo1lM4+2NRDybHyMmIkfS7qpK4OnPjbZt2R18EJmXoauR6Ie6Rxyj9Z+Q63RcqKVqLu/JW6yoRhAUoBK60+iZxYMWnnEc3saUGH22kd+WXcuvS/p8ozQ0F4V4bTN7rnYLSdgjgjcfCyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QPepb9Jc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=E3Oq3j8GlpKhtfnM/SjxpjLdl1ytc0sG/MmptJIBwm8SX0HV3cjn7jkEIyquQKO1VQrPy1he5rTrJCnftJuKX5bmCu5agXerd2soY1nHxAnHQDGpy14gBiwEpBEX7t5MZ4GUV0DW/tQzb40Dzqe9NOcqiG9e6nXCDTPl3RbuOjc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t/s2fWHL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QPepb9Jc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E81A1F000E9;
-	Mon, 17 Aug 2026 14:45:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t/s2fWHL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F22D21F000E9;
+	Mon, 17 Aug 2026 14:45:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977942;
-	bh=P8NO1LSC9CbDW4KMg3bNbuR+ZhWdksWLnbab3R65fGQ=;
+	s=korg; t=1786977945;
+	bh=SAmQ27DMK0a3Pj0y0HcTBgB70n8oJv/cmlI8i8D2BCo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QPepb9JcL/CGKHZwaI8DEgRsC4+xNiqYvzgbKHP/lhBg7z/EWiPxsB4xbshZ+PVRV
-	 F3BzJEBs4zhDx+oLjcpqbBeYIQzLwZBnFq1iP8Qd2WEwN/I2To3H6BpKiIKyi/7kaZ
-	 IWoVYLXvywbACAXVSIYRdy/yTh6jlcK4edpblb9Q=
+	b=t/s2fWHL+UIVBBRMQOtyIJ8OgNkcr9aO+8vN26oaUUhDTCJIi6FYLmX6Ii3Ak5Tjg
+	 BLAWseqE8klM2i36/Rfmvj9G+ct3BJ6oQW5TiddWywH+epqr9ZX1S3VV3w1zL1gpGg
+	 gpJZZyXhFyH6GMP0Ccho/69YLt7AFMmZuALas0XE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Michael Chan <michael.chan@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 048/181] bnxt_en: Determine and store default RX ring in vnic structure
-Date: Mon, 17 Aug 2026 15:32:22 +0200
-Message-ID: <20260817132537.288027059@linuxfoundation.org>
+Subject: [PATCH 6.12 049/181] bnxt_en: Refresh VNIC default ring on queue restart if needed
+Date: Mon, 17 Aug 2026 15:32:23 +0200
+Message-ID: <20260817132537.327976086@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
 References: <20260817132535.394764707@linuxfoundation.org>
@@ -56,151 +56,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Shravya KN <shravya.k-n@broadcom.com>
 
-[ Upstream commit 53f01cd594e223aabb538d5288e60111523c96f2 ]
+[ Upstream commit 0b137529a8997caf67190ca1d71ba8bbdb44fbfb ]
 
-Each VNIC has a default RX ring.  The purpose of the default RX ring
-is to provide a destination for any packets that cannot be parsed by
-the RSS logic.  Up until now, the default RX ring is always Ring 0.
-
-We neglected to take care of this default RX ring when adding the
-queue restart feature.  If ring 0 (default ring) is re-started, it
-may now have a new FW ring ID after freeing the old one and
-allocating a new one.  The VNIC now may have a stale default ring
-and it may generate an internal exception.  This exception may
-appear in dmesg:
+When a queue is restarted, refresh VNIC_CFG for all VNICs whose
+default RX ring is the restarted ring.  This will eliminate this
+possible FW warning caused by a stale default ring in the VNIC:
 
 FW reported unknown error type 10
 
-The best way to resolve this issue is to use a more appropriate
-ring for the default ring instead of always ring 0.  Ring 0 may not
-even be in the RSS table, especially on a new RSS context.
-
-This patch adds the logic to determine and store the proper default
-RX ring for a VNIC.  For an RSS VNIC, the default ring is the lowest
-ring number in the RSS table.  The next patch will add proper logic
-to update the VNIC if the default ring changes after queue restart.
-
+Fixes: 5ac066b7b062 ("bnxt_en: Fix queue start to update vnic RSS table")
 Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
 Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
 Signed-off-by: Shravya KN <shravya.k-n@broadcom.com>
 Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Link: https://patch.msgid.link/20260731190937.807270-3-michael.chan@broadcom.com
+Link: https://patch.msgid.link/20260731190937.807270-4-michael.chan@broadcom.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 0b137529a899 ("bnxt_en: Refresh VNIC default ring on queue restart if needed")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 33 +++++++++++++++--------
- drivers/net/ethernet/broadcom/bnxt/bnxt.h |  1 +
- 2 files changed, 23 insertions(+), 11 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
 diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index ce7de01000160..31971a45ac3d4 100644
+index 31971a45ac3d4..2356b7ba7fcfb 100644
 --- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
 +++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -6365,25 +6365,36 @@ int bnxt_get_nr_rss_ctxs(struct bnxt *bp, int rx_rings)
- static void bnxt_fill_hw_rss_tbl(struct bnxt *bp, struct bnxt_vnic_info *vnic)
- {
- 	bool no_rss = !(vnic->flags & BNXT_VNIC_RSS_FLAG);
--	u16 i, j;
-+	u16 i, j, min_j = bp->rx_nr_rings - 1;
- 
- 	if (!vnic->rss_table)
--		return;
-+		goto skip_rss_tbl;
- 
- 	/* Fill the RSS indirection table with ring group ids */
- 	for (i = 0, j = 0; i < HW_HASH_INDEX_SIZE; i++) {
- 		if (!no_rss)
- 			j = bp->rss_indir_tbl[i];
-+		min_j = min(j, min_j);
- 		vnic->rss_table[i] = cpu_to_le16(vnic->fw_grp_ids[j]);
+@@ -10531,6 +10531,11 @@ static int bnxt_set_vnic_mru_p5(struct bnxt *bp, struct bnxt_vnic_info *vnic,
+ 				   vnic->vnic_id, rc);
+ 			return rc;
+ 		}
++		if (rxr_id == vnic->default_rx_ring) {
++			rc = bnxt_hwrm_vnic_cfg(bp, vnic);
++			if (rc)
++				return rc;
++		}
  	}
-+
-+skip_rss_tbl:
-+	if (vnic->rss_table && !no_rss)
-+		vnic->default_rx_ring = min_j;
-+	else if (vnic->flags & BNXT_VNIC_RFS_FLAG)
-+		vnic->default_rx_ring = vnic->vnic_id - 1;
-+	else if ((vnic->vnic_id == 1) && BNXT_CHIP_TYPE_NITRO_A0(bp))
-+		vnic->default_rx_ring = bp->rx_nr_rings - 1;
-+	else
-+		vnic->default_rx_ring = 0;
- }
- 
- static void bnxt_fill_hw_rss_tbl_p5(struct bnxt *bp,
- 				    struct bnxt_vnic_info *vnic)
- {
-+	u16 tbl_size, i, min_j = bp->rx_nr_rings - 1;
- 	__le16 *ring_tbl = vnic->rss_table;
- 	struct bnxt_rx_ring_info *rxr;
--	u16 tbl_size, i;
- 
- 	tbl_size = bnxt_get_rxfh_indir_size(bp->dev);
- 
-@@ -6396,6 +6407,7 @@ static void bnxt_fill_hw_rss_tbl_p5(struct bnxt *bp,
- 			j = ethtool_rxfh_context_indir(vnic->rss_ctx)[i];
- 		else
- 			j = bp->rss_indir_tbl[i];
-+		min_j = min(j, min_j);
- 		rxr = &bp->rx_ring[j];
- 
- 		ring_id = rxr->rx_ring_struct.fw_ring_id;
-@@ -6403,6 +6415,7 @@ static void bnxt_fill_hw_rss_tbl_p5(struct bnxt *bp,
- 		ring_id = bnxt_cp_ring_for_rx(bp, rxr);
- 		*ring_tbl++ = cpu_to_le16(ring_id);
- 	}
-+	vnic->default_rx_ring = min_j;
- }
- 
- static void
-@@ -6600,8 +6613,9 @@ int bnxt_hwrm_vnic_cfg(struct bnxt *bp, struct bnxt_vnic_info *vnic)
- 		return rc;
- 
- 	if (bp->flags & BNXT_FLAG_CHIP_P5_PLUS) {
--		struct bnxt_rx_ring_info *rxr = &bp->rx_ring[0];
-+		struct bnxt_rx_ring_info *rxr;
- 
-+		rxr = &bp->rx_ring[vnic->default_rx_ring];
- 		req->default_rx_ring_id =
- 			cpu_to_le16(rxr->rx_ring_struct.fw_ring_id);
- 		req->default_cmpl_ring_id =
-@@ -6634,13 +6648,7 @@ int bnxt_hwrm_vnic_cfg(struct bnxt *bp, struct bnxt_vnic_info *vnic)
- 		req->cos_rule = cpu_to_le16(0xffff);
- 	}
- 
--	if (vnic->flags & BNXT_VNIC_RSS_FLAG)
--		ring = 0;
--	else if (vnic->flags & BNXT_VNIC_RFS_FLAG)
--		ring = vnic->vnic_id - 1;
--	else if ((vnic->vnic_id == 1) && BNXT_CHIP_TYPE_NITRO_A0(bp))
--		ring = bp->rx_nr_rings - 1;
--
-+	ring = vnic->default_rx_ring;
- 	grp_idx = bp->rx_ring[ring].bnapi->index;
- 	req->dflt_ring_grp = cpu_to_le16(bp->grp_info[grp_idx].fw_grp_id);
- 	req->lb_rule = cpu_to_le16(0xffff);
-@@ -10604,6 +10612,9 @@ static int bnxt_setup_nitroa0_vnic(struct bnxt *bp)
- 		return rc;
- 	}
- 
-+	/* Setup the proper default RX ring */
-+	bnxt_fill_hw_rss_tbl(bp, vnic);
-+
- 	rc = bnxt_hwrm_vnic_cfg(bp, vnic);
- 	if (rc) {
- 		netdev_err(bp->dev, "Cannot allocate special vnic for NS2 A0: %x\n",
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.h b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-index 37fb74f18eeec..f50fe72f83ac6 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-@@ -1300,6 +1300,7 @@ struct bnxt_vnic_info {
- #define BNXT_VNIC_RSSCTX_FLAG		0x40
- 	struct ethtool_rxfh_context *rss_ctx;
- 	u32		vnic_id;
-+	u16		default_rx_ring;
- };
- 
- struct bnxt_rss_ctx {
+ 	vnic->mru = mru;
+ 	bnxt_hwrm_vnic_update(bp, vnic,
 -- 
 2.53.0
 
