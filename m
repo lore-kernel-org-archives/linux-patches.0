@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89B713ACEFE;
-	Mon, 17 Aug 2026 14:47:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A95A429803;
+	Mon, 17 Aug 2026 14:47:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978077; cv=none; b=E/E+ZfnfZw6nfUQxF0z1sP/xuTB469RlNRlA6U7Uq9ehqnbrCHFvt5ZmONNEuWKCHh2MuDLC3Pu7QDtl3M6blRN8sqCIxBkjbiEsCygYGrWHRWyZDwjeShP3iWpBQIahYa+sKf691zonppwQQA+EJWvqKzr8DBcDg7brmixGte4=
+	t=1786978080; cv=none; b=BP0YG96vEmtn9Oz0lj2SnvI039ogRdLKvXkwWrupiLr/QPfITND/Sz+TIlWnwkRNQpsQQx0ZG6FFiEEGzmnSJDeRcShD85Rs1ccgdyI0OCIKgajpwc4zGZVDJz+/SC9O6NwOKTy6mQccRenakuDFZbb9zQ0uE24eufDVuggJ/PA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978077; c=relaxed/simple;
-	bh=lrTSFhpkLnJwvzAIJvzPMDRTji2BFLdj1SqYl6OtXbQ=;
+	s=arc-20240116; t=1786978080; c=relaxed/simple;
+	bh=R6lsnUSGA298/A4ooeexFB4jautTrmxZqVW9ZOwG+Vg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ANFg3CDGHIzfUzQ71Lmg/HJFhtUu6EXyBLa7+v5J4Ikcg0RrtecUxmW3+HtME8HMEBNzEkuF/9ya4keZOg24ZJkVufv5COmz5q3T7RJH98VluHQieLVncGALBzM4/ChM0WzK1/6ivIB3SE/QJ+Sd4oGZ4/Dnw3kWzaDdzH8eE0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uc2xvfIe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mdhlUDeNEhqzn1OnOHcPfSCwEu4NMWGRPKVAn/BnlLdXB9s0sZ1mJK7ydGK0jFHbifJnVZkdyw66JlkhhjumAMB5Miz+/UpUNHzC3rEay2ZaDtCKxYDmmhETqsi2OPT3BPByjkPWAZl08efblyStoODth2LjBjhpn/VXQZG431g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZgwqYBQH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uc2xvfIe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF2811F000E9;
-	Mon, 17 Aug 2026 14:47:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZgwqYBQH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2F8B1F000E9;
+	Mon, 17 Aug 2026 14:47:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978076;
-	bh=HY6iHbNWJgcwF3Nlw5RWXFPBmheJS9PlLW7Ca5mguWs=;
+	s=korg; t=1786978079;
+	bh=vKcj8IvJQXWQF2m3nNVa19DG9sfTOLqH3Z5QG2FPBSY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Uc2xvfIeX6pQ0n/h0Ca1Z60lpVxRrVlX5/swLRjw2ijahQiIlaLpF9s8SCSYsf13O
-	 bYI1zANA9oqBQ3xmU/3w5fSpM8GxMAVS8vF/IdHJ0kvov3kE5Fs6BE1iiBmQtIHpMg
-	 8TxA2Av54bxsemQN4NBpeBI0AgoGufQfBnEn610A=
+	b=ZgwqYBQH7ycmPS3YuXL0R0jqjQVEglZYKCnnZwwGAYHdGRzE04qBZipiwWPJeuxZW
+	 oYTFtCq8EHoLW7gZd17rpEWIPyBGiGl/UomDNwKErBzFjE17MSjHCJY1FoogQ8hOx0
+	 05ILpsqosydS1hXvh/qgYcCJ2Qwnd7fUv6lvdXX8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohsin Bashir <hmohsin@meta.com>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Sun Jian <sun.jian.kdev@gmail.com>,
+	Vega <vega@nebusec.ai>,
+	Zhiling Zou <zhilinz@nebusec.ai>,
+	Ilya Maximets <i.maximets@ovn.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 094/181] net: fix skb length accounting after generic XDP frag adjustment
-Date: Mon, 17 Aug 2026 15:33:08 +0200
-Message-ID: <20260817132539.152006661@linuxfoundation.org>
+Subject: [PATCH 6.12 095/181] net: openvswitch: reallocate update replies for mismatched IDs
+Date: Mon, 17 Aug 2026 15:33:09 +0200
+Message-ID: <20260817132539.196453175@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
 References: <20260817132535.394764707@linuxfoundation.org>
@@ -52,65 +52,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sun Jian <sun.jian.kdev@gmail.com>
+From: Zhiling Zou <zhilinz@nebusec.ai>
 
-commit 33f2b2eb33d666ecac68031e0f31424fb70528db upstream.
+commit 5d1c224dd914579524a183a514c12b95095d12ce upstream.
 
-Generic XDP exposes non-linear skb fragments through an xdp_buff. If an
-XDP program adjusts the fragment area, bpf_prog_run_generic_xdp() copies
-xdp_frags_size back to skb->data_len but leaves skb->len containing the
-old fragment contribution.
+ovs_flow_cmd_new() preallocates the optional reply skb before it takes
+ovs_mutex and before it knows which existing flow will be updated.
 
-After a fragment shrink, this makes skb_headlen() larger than the actual
-linear area. In the reproduced UDP receive path, __skb_datagram_iter()
-copied 1024 bytes past the actual linear tail to userspace, starting at
-struct skb_shared_info. The copied bytes included the affected skb's
-nr_frags, xdp_frags_size and a kernel pointer from
-skb_shinfo(skb)->frags[0]. Real packet data was displaced by the same
-amount and truncated at the end.
+That is normally fine because the skb is sized from the request flow
+identifier.  That identifier also becomes the inserted flow's identifier.
+For updates, however, a request with a UFID may miss the UFID lookup and
+then fall back to the flow key lookup.  That lookup can legitimately find
+an existing key-identified flow.  UFIDs are optional and the flow key is
+the primary identifier.
 
-Subtract the old data_len before replacing it and add the new data_len
-afterwards, keeping skb->len and skb->data_len synchronized.
+For echoed replies, ovs_flow_cmd_fill_info() writes the matched flow's
+identifier, not the request identifier used for the preallocation.  A short
+request UFID can therefore leave too little room for the key identifier.
+The fill can then fail with -EMSGSIZE and hit the BUG_ON(error < 0) in the
+update path.
 
-A 60000-byte UDP datagram on a veth pair with MTU 64000 was shortened by
-1024 bytes from its fragment area. Before the fix, all 10 runs produced
-corrupted payloads. After the fix, all 10 runs matched the expected
-payload exactly.
+Once the update target has been resolved, reallocate the reply skb if the
+matched flow needs a larger reply than the request identifier allowed.  Do
+this before replacing the actions so the request can still fail cleanly if
+the rare extra allocation fails.
 
-Fixes: e6d5dbdd20aa ("xdp: add multi-buff support for xdp running in generic mode")
+Fixes: 74ed7ab9264c ("openvswitch: Add support for unique flow IDs.")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/bpf/al9T9Eto%2FhRIzP5W@boxer/
-Reviewed-by: Mohsin Bashir <hmohsin@meta.com>
-Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Signed-off-by: Sun Jian <sun.jian.kdev@gmail.com>
-Link: https://patch.msgid.link/20260804054040.613675-2-sun.jian.kdev@gmail.com
+Reported-by: Vega <vega@nebusec.ai>
+Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
+Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
+Link: https://patch.msgid.link/f7bbd3c30ce81a39156e226b3872d73abed21d2f.1785644623.git.zhilinz@nebusec.ai
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/dev.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ net/openvswitch/datapath.c |   29 ++++++++++++++++++++++++++---
+ 1 file changed, 26 insertions(+), 3 deletions(-)
 
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -5116,12 +5116,16 @@ u32 bpf_prog_run_generic_xdp(struct sk_b
- 	}
- 
- 	/* XDP frag metadata (e.g. nr_frags) are updated in eBPF helpers
--	 * (e.g. bpf_xdp_adjust_tail), we need to update data_len here.
-+	 * (e.g. bpf_xdp_adjust_tail). Remove the old fragment contribution
-+	 * from skb->len before updating data_len, then add the new one back.
- 	 */
--	if (xdp_buff_has_frags(xdp))
-+	skb->len -= skb->data_len;
-+	if (xdp_buff_has_frags(xdp)) {
- 		skb->data_len = skb_shinfo(skb)->xdp_frags_size;
--	else
-+		skb->len += skb->data_len;
-+	} else {
- 		skb->data_len = 0;
-+	}
- 
- 	/* check if XDP changed eth hdr such SKB needs update */
- 	eth = (struct ethhdr *)xdp->data;
+--- a/net/openvswitch/datapath.c
++++ b/net/openvswitch/datapath.c
+@@ -1083,9 +1083,8 @@ static int ovs_flow_cmd_new(struct sk_bu
+ 			error = -EEXIST;
+ 			goto err_unlock_ovs;
+ 		}
+-		/* The flow identifier has to be the same for flow updates.
+-		 * Look for any overlapping flow.
+-		 */
++
++		/* Look for any overlapping flow. */
+ 		if (unlikely(!ovs_flow_cmp(flow, &match))) {
+ 			if (ovs_identifier_is_key(&flow->id))
+ 				flow = ovs_flow_tbl_lookup_exact(&dp->table,
+@@ -1097,6 +1096,30 @@ static int ovs_flow_cmd_new(struct sk_bu
+ 				goto err_unlock_ovs;
+ 			}
+ 		}
++
++		if (unlikely(reply)) {
++			size_t cur, req;
++
++			cur = ovs_flow_cmd_msg_size(acts, &new_flow->id,
++						    ufid_flags);
++			req = ovs_flow_cmd_msg_size(acts, &flow->id,
++						    ufid_flags);
++			if (cur < req) {
++				struct sk_buff *resized;
++
++				resized = ovs_flow_cmd_alloc_info(acts,
++								  &flow->id,
++								  info, false,
++								  ufid_flags);
++				if (IS_ERR(resized)) {
++					error = PTR_ERR(resized);
++					goto err_unlock_ovs;
++				}
++				kfree_skb(reply);
++				reply = resized;
++			}
++		}
++
+ 		/* Update actions. */
+ 		old_acts = ovsl_dereference(flow->sf_acts);
+ 		rcu_assign_pointer(flow->sf_acts, acts);
 
 
