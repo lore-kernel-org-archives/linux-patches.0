@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B1CC3D5C07;
-	Mon, 17 Aug 2026 15:25:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C2D33D5C07;
+	Mon, 17 Aug 2026 15:25:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786980306; cv=none; b=ncLWRa/LVvxu73DEvBQldN4djCyFZH2UOHaBoyrvXMBWvbJaryebEtNrJYzdNGx4HADvwlrxYjayi5esJL4q0Gm+jCYhEsQ93xZFa2o7ClY7j5UfD/JCImJ4rBKqTf7OMhh07lezg8NSuA4tFcCNGN86FXKUYT1T5HRVvbItV40=
+	t=1786980309; cv=none; b=sQGiYNWTWKnZP5G3p30K2IisFeopF8Xh/TmCXzZ6GYiBNOHbnzmCP7xHRPsmUo0nhaYS2BQl+bcn9Jwp1YG5wr734ZeHZ+1krM2u2XnfMP5AtA+gPjG9O3MxX+CNlIA/2nl2d9Ttq2Lzxeh1D0Dns/Fba2UR9YFUgA+KEswGxsY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786980306; c=relaxed/simple;
-	bh=IkIarc5QScnIS4DpnNymsnemkiBogZiJCvRHPUuvYpc=;
+	s=arc-20240116; t=1786980309; c=relaxed/simple;
+	bh=G5w5rL0C6I+LYwMJcoi9zFzGFy8+Ct88gEvDPum7Po8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xnwn3PW4KbD0tIh/CFipQY+GFJQi/Ay/mIZFpmB6Pny+aLd+XY2uQoeo3ByuEovm8meDkuu/EBEL2+0jQsmdg1cKOTNQobqC24ZsN1Nt2q/4OvYrj3LXth/vPxBVqesd3gJS1P+DWBS21bU0WMrr4MsOyieWpnEa7/qdV9bbnLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v8NWZ/co; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JfO96gKID/3vIHSbeReslTisQIbiixYEyBD9lshLpezDYqgpIFjk5t1TN/n7SifyIJduCgAkHqih6hN3ozbVNcAXahcDF7YssbFakyXOYnLQN3ToG5FMv/kUj5GiKmetEIJ6adW+1Y3v1MMPu1SWaXdWA8ZIqsHQCGqa4n97Jpo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OXA4zanA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v8NWZ/co"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05FB31F000E9;
-	Mon, 17 Aug 2026 15:25:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OXA4zanA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3EB01F000E9;
+	Mon, 17 Aug 2026 15:25:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786980305;
-	bh=Ep56zePf852T23hpSmv6C/VpsHryEn/pXQQDi7pqIec=;
+	s=korg; t=1786980308;
+	bh=yUYndBbTwA9Anf1pm+dHJk5x06OgYmjNIHACKzzfF3g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v8NWZ/coVQQ8LIjsB4RjXIhwm+vLAUh2Gg3QQfZKNA2jU+zFCSE2NNqMdCVMHscnU
-	 cROdGcEcww6biS5e+rNcs3DyAC6Sjgl7QRpPyD6QIc6XT561h9CSQ0rdFzujMdTIno
-	 ggBUfqdQsV6neBKZBElyWvep7WMyPLBTgOoCCUlo=
+	b=OXA4zanAUU03iZYn8W14eg80C/jsUA+2Wr80ZiASaOJDseohACpE9AEvLpX5ZdMxS
+	 WlhNGdtiuTf9FtlbHYsfJurA+nZoLZ3tdrkej6Ot4TP6/ix5zsdEMcofWo0ISuM3ZH
+	 6vR71HY912+WJ8h+JaK/d6F3VvEwgBi5QTmbHM80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mahanta Jambigi <mjambigi@linux.ibm.com>,
-	Sidraya Jayagond <sidraya@linux.ibm.com>,
-	Breno Leitao <leitao@debian.org>,
-	Dust Li <dust.li@linux.alibaba.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Yuho Choi <dbgh9129@gmail.com>,
+	Avi Fishman <avifishman70@gmail.com>,
+	Andrew Jeffery <andrew@codeconstruct.com.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 525/609] net/smc: fix TOCTOU race between smc_listen_out() and listener close
-Date: Mon, 17 Aug 2026 15:33:41 +0200
-Message-ID: <20260817132601.379333497@linuxfoundation.org>
+Subject: [PATCH 6.1 489/609] ARM: npcm: Fix OF node refcount leaks in SMP setup
+Date: Mon, 17 Aug 2026 15:33:05 +0200
+Message-ID: <20260817132600.286000889@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -54,69 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sidraya Jayagond <sidraya@linux.ibm.com>
+From: Yuho Choi <dbgh9129@gmail.com>
 
-[ Upstream commit 185a4caeecabc150106deda1da170b09f2ad803f ]
+[ Upstream commit 8eb052f48331474c2789d07b7f11165c323bd2f9 ]
 
-smc_listen_out() reads lsmc->sk.sk_state without the listener lock,
-then acquires lock_sock_nested() only after the check passes. This
-opens a window where smc_close_active() can transition the listener
-to SMC_CLOSED, call smc_close_cleanup_listen() to drain the accept
-queue, and release the lock, all between the lockless read and the
-delayed lock acquisition:
+npcm7xx_smp_boot_secondary() and npcm7xx_smp_prepare_cpus() look up
+the GCR and SCU nodes with of_find_compatible_node(). The returned
+nodes are used for of_iomap(), but the node references are never
+released.
 
-  smc_listen_work (smc_hs_wq)          smc_close_active()
-  -------------------------------      -------------------------
-  release_sock(child)
-  if (sk_state == SMC_LISTEN) TRUE
-                                        lock_sock(listener)
-                                        sk_state = SMC_CLOSED
-                                        smc_close_cleanup_listen()
-                                        release_sock(listener)
-                                        flush_work(tcp_listen_work)
-  lock_sock_nested(listener)
-  smc_accept_enqueue(listener, child) /* child enqueued on dead listener */
+of_iomap() does not consume the device node reference, and iounmap()
+only releases the MMIO mapping. Drop each node reference after the
+corresponding mapping attempt.
 
-smc_close_active() flushes only tcp_listen_work. Work items already
-dispatched onto smc_hs_wq for the CLC handshake continue running
-unguarded. smc_accept_enqueue() takes a sock_hold() on the child that
-is never released, so the child smc_sock, its clcsock, and the
-reference all leak. A remote peer that opens TCP connections while the
-server calls close() can exhaust kernel memory.
-
-Move lock_sock_nested() to before the sk_state check so that the test
-and the enqueue are atomic under the listener lock.
-
-Fixes: fd57770dd198 ("net/smc: wait for pending work before clcsock release_sock")
-Reviewed-by: Mahanta Jambigi <mjambigi@linux.ibm.com>
-Signed-off-by: Sidraya Jayagond <sidraya@linux.ibm.com>
-Reviewed-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
-Link: https://patch.msgid.link/20260803070701.126339-1-sidraya@linux.ibm.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 7bffa14c9aed ("arm: npcm: add basic support for Nuvoton BMCs")
+Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
+Reviewed-by: Avi Fishman <avifishman70@gmail.com>
+Signed-off-by: Andrew Jeffery <andrew@codeconstruct.com.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/af_smc.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/arm/mach-npcm/platsmp.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
-index ae97f47f4fda0..d069e5b156e51 100644
---- a/net/smc/af_smc.c
-+++ b/net/smc/af_smc.c
-@@ -1874,11 +1874,12 @@ static void smc_listen_out(struct smc_sock *new_smc)
- 		atomic_dec(&lsmc->queued_smc_hs);
- 
- 	release_sock(newsmcsk); /* lock in smc_listen_work() */
-+	lock_sock_nested(&lsmc->sk, SINGLE_DEPTH_NESTING);
- 	if (lsmc->sk.sk_state == SMC_LISTEN) {
--		lock_sock_nested(&lsmc->sk, SINGLE_DEPTH_NESTING);
- 		smc_accept_enqueue(&lsmc->sk, newsmcsk);
- 		release_sock(&lsmc->sk);
- 	} else { /* no longer listening */
-+		release_sock(&lsmc->sk);
- 		smc_close_non_accepted(newsmcsk);
+diff --git a/arch/arm/mach-npcm/platsmp.c b/arch/arm/mach-npcm/platsmp.c
+index 21633c70fe7fe..fe63edc9886df 100644
+--- a/arch/arm/mach-npcm/platsmp.c
++++ b/arch/arm/mach-npcm/platsmp.c
+@@ -35,6 +35,7 @@ static int npcm7xx_smp_boot_secondary(unsigned int cpu,
+ 		goto out;
  	}
- 
+ 	gcr_base = of_iomap(gcr_np, 0);
++	of_node_put(gcr_np);
+ 	if (!gcr_base) {
+ 		pr_err("could not iomap gcr");
+ 		ret = -ENOMEM;
+@@ -63,6 +64,7 @@ static void __init npcm7xx_smp_prepare_cpus(unsigned int max_cpus)
+ 		return;
+ 	}
+ 	scu_base = of_iomap(scu_np, 0);
++	of_node_put(scu_np);
+ 	if (!scu_base) {
+ 		pr_err("could not iomap scu");
+ 		return;
 -- 
 2.53.0
 
