@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 212B43B995E;
-	Mon, 17 Aug 2026 15:07:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 164EF3B9943;
+	Mon, 17 Aug 2026 15:07:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979276; cv=none; b=mE1lvJwC72/IY9cdkptIgM/tlwXhBPWAj5HhFMWCt5WRJ7fQFV4UHyB5ilTRvhxQnVQ/dgTvqmrs5SOqILmM3VwA2jMQKPcZKEI8oQnEI+nni1e1cQ8ZmNgV/sT3oIPrsXR3q2FpNnrBNASgugDxgNXPMjDPYIxVc+Okvc31vys=
+	t=1786979279; cv=none; b=h1xSd90hm5C4IA8bTSZ47ne8btQmkKZzFeboQxDg3KqwNKvcIR8lsZBw1xbbxrZdPx6ha5TNTSIWfua8vI+Oe/bJtkPubFGPBN3GudgyYG5nVwyq5V+RM4/uaoWaJHLexe9+5RrvdpX3m4LHBeyZuSXk2bChuGOdr5/Q/GDd99g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979276; c=relaxed/simple;
-	bh=1XorJxQJ90GNGzSPSGwpITFoieCZYtDNZDPh9rmO+Js=;
+	s=arc-20240116; t=1786979279; c=relaxed/simple;
+	bh=AT30yV7KFaWt+iM88vhMPItQJ2wo69qh1eJnvu7AvIQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YZpD70WythCqkmq36Eewc1/tcjo/NfhmuvlIQDRVl7LBFHSqkMCcbuJERfomfUXRSBVVBjGzTr6qMyio7duTyhNk6XMF3iIjMv63wCJFVEGuMpt7meseIqT8mMDYBTbU6Ldly1jAz6NUJ9e2nc5nE4vblqJsvvHcafnzUgs5siI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yVzvCmed; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=C2vpZ2IgJrOk4KrcDhY+odVIeHT6zvUyC9zh/Ji2F/Qa9KzgpoPky/+tLK2E3qUqfNpwZ+Tyvw9AyMbOyPzDLtAycMo3I+oV+Wg36CRZESdBBze/9ijuI7xVXSu98mRHg3rkFZGgyk5dYWrltEpMr0JPPWVdTeKHRxVTNGadq2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aOij2I+I; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yVzvCmed"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B83D1F000E9;
-	Mon, 17 Aug 2026 15:07:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aOij2I+I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6236E1F000E9;
+	Mon, 17 Aug 2026 15:07:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979275;
-	bh=lKQetaz8W5H6XgzEvJpFVV6kLigEDZUS3M3Z1+MyKSY=;
+	s=korg; t=1786979277;
+	bh=aPBeuZofqLPZipOoEnwKh+2JXJCbt5Bt9Ff1cdPMqDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yVzvCmed3Aak/Wv2T57lbix8u0GQTQtcsJEZLDUe2XiodZ3vOY82m9QlD+MGv3dqb
-	 uK8eF6oYO8cpA0uN1TRpEWcJWidc1dFsD/V7QdHwu5b+bTb8bNKmlN+zfwBCkUPY9d
-	 fKwDdpW+KyGKD5wsjpWgBjWRfVs274Bq7Uw0Xw2Y=
+	b=aOij2I+IsvJauTsJ4fN8iigApUYyGM+Yq2cKwcqLPzJ9DjkMXexxEvPMSPAl1e6oD
+	 O3bfUyXQDySJlhTVir7lcoqUD71ldCql4RPa407+S9dwhYHpDjA463T58JSB577/DP
+	 Tzto+bxKdrMCT6bq9Lj1EmgSFXxJNgpAHWhIX1U0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ashutosh Desai <ashutoshdesai993@gmail.com>,
 	Lyude Paul <lyude@redhat.com>
-Subject: [PATCH 6.1 169/609] drm/dp/mst: fix OOB reads in remote DPCD/I2C sideband reply parsers
-Date: Mon, 17 Aug 2026 15:27:45 +0200
-Message-ID: <20260817132549.690425222@linuxfoundation.org>
+Subject: [PATCH 6.1 170/609] drm/dp/mst: fix buffer overflows in sideband chunk accumulation
+Date: Mon, 17 Aug 2026 15:27:46 +0200
+Message-ID: <20260817132549.733263539@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -52,59 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 From: Ashutosh Desai <ashutoshdesai993@gmail.com>
 
-commit 1a8f537f5a1eeac941f262fe73078d6b08ba83c0 upstream.
+commit 55bd5e685bda455b9b50c835f8c8442d52a344a3 upstream.
 
-drm_dp_sideband_parse_remote_dpcd_read() reads num_bytes from the raw
-message and then unconditionally does:
+drm_dp_sideband_append_payload() has three related bugs when processing
+device-provided sideband reply data:
 
-  memcpy(bytes, &raw->msg[idx], num_bytes);
+1. Zero-length curchunk_len underflow: msg_len is a 6-bit field taken
+   directly from the DP sideband header. If a device sends msg_len=0,
+   curchunk_len is set to zero. The condition (curchunk_idx >= curchunk_len)
+   is immediately true, and curchunk_len-1 wraps to 255 (u8 underflow).
+   drm_dp_msg_data_crc4() reads 255 bytes from chunk[48], then memcpy()
+   writes 255 bytes into msg[], both far out of bounds.
 
-without checking that idx + num_bytes <= raw->curlen. raw->msg[] is
-256 bytes; if a malicious or misbehaving MST hub sets num_bytes larger
-than the remaining payload, the memcpy reads past the received data
-into whatever follows in raw->msg[].
+2. chunk[48] overflow: curchunk_len can reach 63 (6-bit field). chunk[] is
+   only 48 bytes. Multi-iteration payload assembly appends 16-byte blocks
+   until curchunk_idx reaches curchunk_len, writing up to 15 bytes past
+   the end of chunk[] into msg[].
 
-drm_dp_sideband_parse_remote_i2c_read_ack() has the same flaw (noted
-with a /* TODO check */ comment since the code was introduced).
+3. msg[256] overflow: each chunk contributes (curchunk_len-1) bytes to
+   msg[]. No check ensures curlen + (curchunk_len-1) stays within msg[256],
+   so the memcpy can spill into adjacent struct fields.
 
-Fix both functions by using a single combined check
-(idx + num_bytes > curlen) before each memcpy. Since num_bytes is u8,
-it is always >= 0, so this strictly subsumes the simpler idx > curlen
-form and no separate step is needed.
+All three are reachable from any DP MST device that can forge sideband
+reply messages on a physical connection.
 
 Fixes: ad7f8a1f9ced ("drm/helper: add Displayport multi-stream helper (v0.6)")
 Cc: <stable@vger.kernel.org> # v3.17+
 Signed-off-by: Ashutosh Desai <ashutoshdesai993@gmail.com>
 Reviewed-by: Lyude Paul <lyude@redhat.com>
-[added missing fixes tag]
 Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patch.msgid.link/20260510201733.2882224-1-ashutoshdesai993@gmail.com
+Link: https://patch.msgid.link/20260410041901.2438960-1-ashutoshdesai993@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/display/drm_dp_mst_topology.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/display/drm_dp_mst_topology.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
 --- a/drivers/gpu/drm/display/drm_dp_mst_topology.c
 +++ b/drivers/gpu/drm/display/drm_dp_mst_topology.c
-@@ -861,7 +861,7 @@ static bool drm_dp_sideband_parse_remote
- 		goto fail_len;
- 	repmsg->u.remote_dpcd_read_ack.num_bytes = raw->msg[idx];
- 	idx++;
--	if (idx > raw->curlen)
-+	if (idx + repmsg->u.remote_dpcd_read_ack.num_bytes > raw->curlen)
- 		goto fail_len;
+@@ -779,6 +779,12 @@ static bool drm_dp_sideband_append_paylo
+ {
+ 	u8 crc4;
  
- 	memcpy(repmsg->u.remote_dpcd_read_ack.bytes, &raw->msg[idx], repmsg->u.remote_dpcd_read_ack.num_bytes);
-@@ -897,7 +897,9 @@ static bool drm_dp_sideband_parse_remote
- 		goto fail_len;
- 	repmsg->u.remote_i2c_read_ack.num_bytes = raw->msg[idx];
- 	idx++;
--	/* TODO check */
-+	if (idx + repmsg->u.remote_i2c_read_ack.num_bytes > raw->curlen)
-+		goto fail_len;
++	/* curchunk_len must be >= 1 (min 1 CRC byte) and fit in chunk[] */
++	if (!msg->curchunk_len ||
++	    msg->curchunk_len > ARRAY_SIZE(msg->chunk) ||
++	    msg->curchunk_idx + replybuflen > ARRAY_SIZE(msg->chunk))
++		return false;
 +
- 	memcpy(repmsg->u.remote_i2c_read_ack.bytes, &raw->msg[idx], repmsg->u.remote_i2c_read_ack.num_bytes);
- 	return true;
- fail_len:
+ 	memcpy(&msg->chunk[msg->curchunk_idx], replybuf, replybuflen);
+ 	msg->curchunk_idx += replybuflen;
+ 
+@@ -789,6 +795,9 @@ static bool drm_dp_sideband_append_paylo
+ 			print_hex_dump(KERN_DEBUG, "wrong crc",
+ 				       DUMP_PREFIX_NONE, 16, 1,
+ 				       msg->chunk,  msg->curchunk_len, false);
++		/* Guard against accumulated msg[] overflow */
++		if (msg->curlen + msg->curchunk_len - 1 > ARRAY_SIZE(msg->msg))
++			return false;
+ 		/* copy chunk into bigger msg */
+ 		memcpy(&msg->msg[msg->curlen], msg->chunk, msg->curchunk_len - 1);
+ 		msg->curlen += msg->curchunk_len - 1;
 
 
