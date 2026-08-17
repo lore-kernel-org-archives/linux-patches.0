@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EB4343CE7F;
-	Mon, 17 Aug 2026 13:58:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74D5F43B483;
+	Mon, 17 Aug 2026 13:58:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975097; cv=none; b=ZTpAIaviZurGu7MgtcrYuPITrgdpSwllU7Vb4PZlPtdF1mAXZX9GWj9Q6tMkJpwlroo7VA0cQ6YkD2U7gG3PpfufDrZDDs8BSY3VC221WM9gIOQ/YlRGnV1lGu0XpnVyM5Tl7mOA0tYKdSaJwfrXvlAsJ5+Eb/0clKNIlzyCW28=
+	t=1786975100; cv=none; b=UAa7svXXu4FpvppQe69MRExC82SXzGKjsnyZPIshYlo58t77J9yUzXTi/zRsLSo8KGp6Wtpcw7krjzDTazRZ2UaZS1ibZRkQKlOueA0+37rqGIZvKoDGYW/qN8q8WyrqzGvlUg0srp8TQzRRpq1byU2LIZplLX2urJoWDbWo+O4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975097; c=relaxed/simple;
-	bh=HRbhfK3d8deySjfywUjFoiIMqIeFSSbLH96y5HhEuE0=;
+	s=arc-20240116; t=1786975100; c=relaxed/simple;
+	bh=+6Dt8ih/xuneZu7ZPRwvPciJM0+FByWzQPvU88WF4tE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iOygWzjI0wCActOKSA6gt5epasEtWSCqsXl8UAQOryPmOSLFpvoQMKd9SnVpc1IHwsai29OGtwA7MSq5OSo/PGlOOKzlGC+ZMJ0cfnoMG9P8qZQL2eGt6USYT50Ba86kARF/pMxxw1SOFNfnewgJtRqd0XWfaL1qrXsiZo85Tog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iW0Dnw0L; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JxvTmkUiD6R1j9/OHDq/vpCa/kDuhmONdcur3bPB89EyKWAomB6uTNadX0+nlHlzGMtRbblwdBeFOpKnNqnqPzvWBa5RkOGr5+jTdDb+HFwP4W4tPU1si6akj9/oS9mQfyH/T+NEvFVKTlrb7ICVyUAhohRru+6yAZS1AREvzBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QkLTg6TA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iW0Dnw0L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8AC01F000E9;
-	Mon, 17 Aug 2026 13:58:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QkLTg6TA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC7C71F000E9;
+	Mon, 17 Aug 2026 13:58:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975096;
-	bh=7xUcF3KDkVcEMA+ZlBlp2bKPNupY7yZgrNE1CD6INyE=;
+	s=korg; t=1786975099;
+	bh=ZKo05SEgLB9DEAKaRtxJtufxHsfLVfDw25/Eg6d4Zuo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iW0Dnw0LmYDcTr6oHYmG0DcOYaj0+8/jbak4nLXRD0zQ7/OtsirDqk57rDWHQGCRT
-	 xDw8OEm3Ymm1X8+WsVY61g0PaozlalVyfZqLpH99dCYu0TOPdpMYWtzLlfdD70uYwQ
-	 YlhNpKVyFSGZu4qFW1mD4h3XPzprQF6OTHmUeGY4=
+	b=QkLTg6TALenRMztZ10dulGGXtXyZdnVlz88C+m/Y8m2W+PGNnXQPzPV2Bclq3HMq8
+	 KPaPy6l9dC/O88GHeqWiE0chY5gRhPUMWs+bH/ETBZi30tlT6muHBv5UsWepjaAxhN
+	 NJxyaqHC/0btRRCzpnxjTjq29tHJ1IeTUcS5MZ9c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dongli Zhang <dongli.zhang@oracle.com>,
-	Willem de Bruijn <willemb@google.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 111/250] net: tap: set skb->dev before parsing virtio net header in tap_get_user_xdp()
-Date: Mon, 17 Aug 2026 15:31:12 +0200
-Message-ID: <20260817132541.104580250@linuxfoundation.org>
+	Nils Helmig <nils.helmig@web.de>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 155/250] Bluetooth: btusb: Add TP-Link UB600 for Realtek 8761BUV
+Date: Mon, 17 Aug 2026 15:31:56 +0200
+Message-ID: <20260817132542.892126797@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -52,82 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dongli Zhang <dongli.zhang@oracle.com>
+From: Nils Helmig <nils.helmig@web.de>
 
-commit 3874892dd27d5387aa9a06f58d9060f18f351d24 upstream.
+[ Upstream commit bc597f0cc44f0b173c50ee986a047219cd559ee9 ]
 
-The commit 4f61f133f354 ("net: tap: NULL pointer derefence in
-dev_parse_header_protocol when skb->dev is null") fixed a crash in
-tap_get_user() by assigning skb->dev before calling tun_vnet_hdr_to_skb().
-This is required because virtio_net_hdr_to_skb() may invoke
-dev_parse_header_protocol(), which dereferences skb->dev. Without the
-assignment, a NULL pointer dereference can occur.
+Add the vendor/product ID (0x37ad, 0x0600) to usb_device_id table
+for Realtek 8761BUV.
 
-However, tap_get_user_xdp() still parses the virtio-net header before
-assigning skb->dev. When the vhost TX path passes an XDP buffer containing
-a GSO virtio-net header but the protocol is set to zero on purpose,
-tun_vnet_hdr_to_skb() can reach dev_parse_header_protocol() while skb->dev
-is still NULL, resulting in a crash.
+The device info from /sys/kernel/debug/usb/devices as below.
 
-Fix this by looking up the tap device and assigning skb->dev before calling
-tun_vnet_hdr_to_skb(), matching the ordering already used in
-tap_get_user(). Preserve the existing RCU read-side critical section across
-dev_queue_xmit().
+T:  Bus=03 Lev=01 Prnt=01 Port=01 Cnt=01 Dev#=  4 Spd=12   MxCh= 0
+D:  Ver= 1.10 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=37ad ProdID=0600 Rev= 2.00
+S:  Manufacturer=
+S:  Product=TP-Link Bluetooth USB Adapter
+S:  SerialNumber=ACA7F14FD2A5
+C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
 
-Fixes: 924a9bc362a5 ("net: check if protocol extracted by virtio_net_hdr_set_proto is correct")
-Cc: stable@vger.kernel.org
-Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Link: https://patch.msgid.link/20260802224612.264563-1-dongli.zhang@oracle.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Nils Helmig <nils.helmig@web.de>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/tap.c |   24 ++++++++++++++----------
- 1 file changed, 14 insertions(+), 10 deletions(-)
+ drivers/bluetooth/btusb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/net/tap.c
-+++ b/drivers/net/tap.c
-@@ -1074,10 +1074,21 @@ static int tap_get_user_xdp(struct tap_q
- 	skb_reset_mac_header(skb);
- 	skb->protocol = eth_hdr(skb)->h_proto;
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index cb8f14b9cae80..ea9df7dc23165 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -802,6 +802,8 @@ static const struct usb_device_id quirks_table[] = {
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x2b89, 0x6275), .driver_info = BTUSB_REALTEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x37ad, 0x0600), .driver_info = BTUSB_REALTEK |
++						     BTUSB_WIDEBAND_SPEECH },
  
-+	rcu_read_lock();
-+	tap = rcu_dereference(q->tap);
-+	if (!tap) {
-+		kfree_skb(skb);
-+		rcu_read_unlock();
-+		return 0;
-+	}
-+	skb->dev = tap->dev;
-+
- 	if (vnet_hdr_len) {
- 		err = tun_vnet_hdr_to_skb(q->flags, skb, gso);
--		if (err)
-+		if (err) {
-+			rcu_read_unlock();
- 			goto err_kfree;
-+		}
- 	}
- 
- 	/* Move network header to the right position for VLAN tagged packets */
-@@ -1085,15 +1096,8 @@ static int tap_get_user_xdp(struct tap_q
- 	    vlan_get_protocol_and_depth(skb, skb->protocol, &depth) != 0)
- 		skb_set_network_header(skb, depth);
- 
--	rcu_read_lock();
--	tap = rcu_dereference(q->tap);
--	if (tap) {
--		skb->dev = tap->dev;
--		skb_probe_transport_header(skb);
--		dev_queue_xmit(skb);
--	} else {
--		kfree_skb(skb);
--	}
-+	skb_probe_transport_header(skb);
-+	dev_queue_xmit(skb);
- 	rcu_read_unlock();
- 
- 	return 0;
+ 	/* Additional Realtek 8821AE Bluetooth devices */
+ 	{ USB_DEVICE(0x0b05, 0x17dc), .driver_info = BTUSB_REALTEK },
+-- 
+2.53.0
+
 
 
