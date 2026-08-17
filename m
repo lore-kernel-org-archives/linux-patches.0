@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0741E315D5D;
-	Mon, 17 Aug 2026 13:43:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FF2640EBAE;
+	Mon, 17 Aug 2026 13:43:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974185; cv=none; b=jS1q2TKKE/k29SHvcJQxEE0pi36fN4NnMHGHeWSHa0HdbF0t3j5iELVAFod/4+5GADLBie3CCR2l/dprSE7hHe1nD3tvJSFWlUdjhllKUQgDnf5NOFDVAORcBma8diz3p01qpIYYBoa0xklpLAKvP2GkM4Z9dQc09MmJKXxXAko=
+	t=1786974188; cv=none; b=ShGyIGR6q9Rjj69hQ3neq8w2P1LOmczXc6XtMVqeDaEYXIOnGUs2rGOgQu9FOvWrSXdmizLVioCriFgAeTdILxIXXbBLR5fhrJYK2nWIpUbZzClGBFADL7KFOGHd9rlUdJOzEs7faV9TDS+H5FZXZoz3oh4JclqTijjENfCtHYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974185; c=relaxed/simple;
-	bh=qWpOw4Kio+nwhJY7tQb8xbq0GxcuVJ9Rf9RPcFC9R1Q=;
+	s=arc-20240116; t=1786974188; c=relaxed/simple;
+	bh=9HNkmcKrzOFK3SJ9xk551Xl9nLO6o4bd3JpUtVW2WQI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vo7/C13JTOV3vreYFy1qtW0NphjVOIdUD5sE6d5ePvhgbzeZ9JhfosUcsWArsZ0p8B16tlIl0Y4wvDfZz7OCfstRcJo8VL3EbZBn7g8iFyS39t4S/Z9MQKjjxCPMLtFNvmaCXmY/Dzo5DAcxRiZ9idqR/71GfEa6qNOxsgOzGIY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D/P8vO12; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=hnCXf8q6VQPZWv+zNmpou3rAKS8qSX/mAVk4u+mq02zYmmcQ8fPcv2iIc2vQ0YvC4JHImCh3m+E5mQfsQfdhqM+OIHdUwb3m2Vgf0PIeTJFwRhUprgw7Zp1Zp6gnmD5espvSxDeKY2dTXBRWAXs/fHKHXVL3h5baTMGHmhpFo4Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uwMWJ1Kx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D/P8vO12"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ED6F1F000E9;
-	Mon, 17 Aug 2026 13:43:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uwMWJ1Kx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FC191F000E9;
+	Mon, 17 Aug 2026 13:43:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974183;
-	bh=Lf+xOkkkDw70ozGSRdiLyiNGUzwfA9u9UL/cAh6+SaM=;
+	s=korg; t=1786974186;
+	bh=CnaxELv5WYMFIGFPai7q0b+DUlfviD5MBjVvWOGiQ68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D/P8vO12AHw6MmgYV4RwOKikh655MxAynnxqTsFeHEuAL1dWuXuLJsUf54PWGGpW6
-	 pGjQklbdG/SUpBfY15d3IiH/eYwRWGDHgRiBDCkN1t/WFOSZm08SwzkG+FZvLnUy6d
-	 c2f6SzcEzmjNJ87tB5zCDtW5yyAZ8y3jmHR0iO1M=
+	b=uwMWJ1Kx2mOMuBkx1AuYIZ/OYvt7NHSFxTbqxLA8I8eh6XnS718ZiOM3oKkXDZva/
+	 gBVhIHEuo9mhp9zs6c9b4XF5o55MkSG6cL3Fbyzb1Iq2TzwmQpMHoup4bP9JV+3iI7
+	 j5Vj1DnY4N8sX3yGtajIDX58fuIIg1NXog5IP2zc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qingshuang Fu <fuqingshuang@kylinos.cn>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Nuno Sa <nuno.sa@analog.com>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 117/271] hwmon: (ads7828) Fix external VREF regulator handling
-Date: Mon, 17 Aug 2026 15:30:42 +0200
-Message-ID: <20260817132541.692354055@linuxfoundation.org>
+Subject: [PATCH 7.1 118/271] hwmon: (ltc4282) Avoid overflow in maximum power calculation
+Date: Mon, 17 Aug 2026 15:30:43 +0200
+Message-ID: <20260817132541.729411799@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -45,75 +46,107 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Qingshuang Fu <fuqingshuang@kylinos.cn>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit fddb5ceaf901b050ed2a1a7deeecbf97e003435a ]
+[ Upstream commit edd11a94335747423569500a194c6eaa915f2963 ]
 
-The driver currently has two issues with the external VREF regulator
-handling in ads7828_probe():
+During device initialization in ltc4282_set_max_limits(), the calculation
+of the maximum power limit can suffer from a 32-bit integer overflow.
 
-1. All errors from devm_regulator_get_optional() are ignored, causing the
-   driver to incorrectly fall back to internal VREF even for transient
-   errors like -EPROBE_DEFER or genuine failures like -ENOMEM.
+static int ltc4282_set_max_limits(struct ltc4282_state *st)
+{
+    ...
+    st->power_max = DIV_ROUND_CLOSEST(st->vsense_max * DECA * MILLI,
+                                      st->rsense) * st->vfs_out;
+    ...
+}
 
-2. The external regulator is never enabled. The driver calls
-   regulator_get_voltage() without first calling regulator_enable(),
-   so the VREF pin may remain unpowered if the regulator is not
-   configured as always-on.
+The result of DIV_ROUND_CLOSEST() evaluates to a 32-bit unsigned integer
+on 32-bit architectures. This result is then multiplied by st->vfs_out,
+which is a 16-bit unsigned integer. According to C promotion rules, since
+both operands are 32-bit or smaller, the multiplication is performed in
+32-bit precision.
 
-Fix both issues by switching to devm_regulator_get_enable_read_voltage(),
-which handles regulator get, enable, and voltage read in one call.
-Only -ENODEV (no regulator specified in device tree) should trigger the
-fallback to internal VREF. All other errors are propagated to the caller.
+If the device is configured with a low sense resistor value via the device
+tree (for example, 100 nano-ohms, resulting in st->rsense = 1) and the
+voltage is high, the division result can reach 343,750,000 and st->vfs_out
+can be 33,280. The product of these values is approximately 11.44 trillion,
+which exceeds the maximum capacity of a 32-bit integer and overflows
+before being stored in st->power_max.
 
-Fixes: a8ddfea09566 ("hwmon: (ads7828) Accept optional parameters from device tree")
-Signed-off-by: Qingshuang Fu <fuqingshuang@kylinos.cn>
-Link: https://lore.kernel.org/r/20260805061645.1331652-1-fffsqian@163.com
+This overflow causes a truncated value to be assigned to st->power_max and
+written to the hardware limit register. An incorrect maximum power limit
+can trigger spurious power-bad faults or alarms, which may lead to the
+shutdown of the monitored power rail.
+
+Avoid the problem by calculating and storing the maximum power using 64-bit
+variables.
+
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: cbc29538dbf7d ("hwmon: Add driver for LTC4282")
+Cc: Nuno Sa <nuno.sa@analog.com>
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/ads7828.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/hwmon/ltc4282.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/hwmon/ads7828.c b/drivers/hwmon/ads7828.c
-index 149cfcec78dcc..f8f2f621dfeaf 100644
---- a/drivers/hwmon/ads7828.c
-+++ b/drivers/hwmon/ads7828.c
-@@ -106,12 +106,11 @@ static int ads7828_probe(struct i2c_client *client)
- 	struct ads7828_data *data;
- 	struct device *hwmon_dev;
- 	unsigned int vref_mv = ADS7828_INT_VREF_MV;
--	unsigned int vref_uv;
-+	int vref_uv;
- 	bool diff_input = false;
- 	bool ext_vref = false;
- 	unsigned int regval;
- 	enum ads7828_chips chip;
--	struct regulator *reg;
+diff --git a/drivers/hwmon/ltc4282.c b/drivers/hwmon/ltc4282.c
+index bdbf370233d71..9ccad99f42e7f 100644
+--- a/drivers/hwmon/ltc4282.c
++++ b/drivers/hwmon/ltc4282.c
+@@ -138,7 +138,7 @@ struct ltc4282_state {
+ 	 */
+ 	struct ltc4282_cache in0_1_cache[LTC4282_CHAN_VGPIO];
+ 	u32 vsense_max;
+-	long power_max;
++	s64 power_max;
+ 	u32 rsense;
+ 	u16 vdd;
+ 	u16 vfs_out;
+@@ -614,13 +614,12 @@ static int ltc4282_read(struct device *dev, enum hwmon_sensor_types type,
+ }
  
- 	data = devm_kzalloc(dev, sizeof(struct ads7828_data), GFP_KERNEL);
- 	if (!data)
-@@ -125,9 +124,11 @@ static int ads7828_probe(struct i2c_client *client)
- 	} else if (dev->of_node) {
- 		diff_input = of_property_read_bool(dev->of_node,
- 						   "ti,differential-input");
--		reg = devm_regulator_get_optional(dev, "vref");
--		if (!IS_ERR(reg)) {
--			vref_uv = regulator_get_voltage(reg);
-+		vref_uv = devm_regulator_get_enable_read_voltage(dev, "vref");
-+		if (vref_uv < 0) {
-+			if (vref_uv != -ENODEV)
-+				return vref_uv;
-+		} else {
- 			vref_mv = DIV_ROUND_CLOSEST(vref_uv, 1000);
- 			if (vref_mv < ADS7828_EXT_VREF_MV_MIN ||
- 			    vref_mv > ADS7828_EXT_VREF_MV_MAX)
+ static int ltc4282_write_power_byte(const struct ltc4282_state *st, u32 reg,
+-				    long val)
++				    s64 val)
+ {
+ 	u32 power;
+ 	u64 temp;
+ 
+-	if (val > st->power_max)
+-		val = st->power_max;
++	val = clamp(val, 0, st->power_max);
+ 
+ 	temp = val * int_pow(U8_MAX, 2) * st->rsense;
+ 	power = DIV64_U64_ROUND_CLOSEST(temp,
+@@ -630,7 +629,7 @@ static int ltc4282_write_power_byte(const struct ltc4282_state *st, u32 reg,
+ }
+ 
+ static int ltc4282_write_power_word(const struct ltc4282_state *st, u32 reg,
+-				    long val)
++				    u64 val)
+ {
+ 	u64 temp = int_pow(U16_MAX, 2) * st->rsense, temp_2;
+ 	__be16 __raw;
+@@ -1223,7 +1222,8 @@ static int ltc4282_set_max_limits(struct ltc4282_state *st)
+ 		return ret;
+ 
+ 	/* Power is given by ISENSE * Vout. */
+-	st->power_max = DIV_ROUND_CLOSEST(st->vsense_max * DECA * MILLI, st->rsense) * st->vfs_out;
++	st->power_max = DIV_ROUND_CLOSEST_ULL((u64)st->vsense_max * DECA * MILLI,
++					      st->rsense) * st->vfs_out;
+ 	ret = ltc4282_write_power_byte(st, LTC4282_POWER_MAX, st->power_max);
+ 	if (ret)
+ 		return ret;
 -- 
 2.53.0
 
