@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EAC432ED40;
-	Mon, 17 Aug 2026 13:40:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82CE63EDAB8;
+	Mon, 17 Aug 2026 13:40:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974018; cv=none; b=krx0K2f5ZR97RHTFiMgx9y/rUj2prdGYoEHnPc4AfusQP65iXYCrL/OF5mByerrTFdrbEn1I6BgTkouEPYSECvCXpS/LwqXxhdMSCEF2M0r4uOKzPYv5mgPzOlXTz0OHjqxZMjSLgs1atyNMVOgk7Ul8iMHHdHmBoI0+AXB/55I=
+	t=1786974022; cv=none; b=UWQFVfnTya8qouhtIQTt3+N9iZI6DdtNTyJnJvEdFsagqDOvInPNTi2eisF9FXawOe4q6ty1KdrpQc63PSfYwDxOboAF0r+E5eZn5Leb0QQsrIZndcmwlOqcgkaqsee0D5an9eux7wxCeOm4gm5Si9ikSHTjAjJOy0xYlu/MxNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974018; c=relaxed/simple;
-	bh=jMMkk9nYxrrN/3VtxC08xkgV8sgLU8LlTlTI5/O24dw=;
+	s=arc-20240116; t=1786974022; c=relaxed/simple;
+	bh=PhXZlyzaWuZ373VjolGptz1V1t/Ghwect2Px/eciTqo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TBEERccDbEEHQRYemAua6OdIpoHbxe37VGIthyTqCB6TA0yelrBSP61o1KlJjlwGw0b1DCLbQfN+dJEmjGqg2OAh8bZS5jiswYnTF7Le8+jO8PiZgzVJnVHgQTssJl2RMpBgda6gwJHs+DpbxyUBQv81i/B26rExE/ZkANcoAw8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CBMgNyLv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nrcHFLHr4aS6omxwWTn5fftbjbgMYS6mgfgPjjiI1vsbuneuz4oZuyLtV5yuTm/sH3lVRh5yhfKPe2B/oO3YTjTbCV/mlxKqPPL3/fv1DH7h+N5ZLMCtu2oA9lZnjmLLSAC3a4LLwU/WNWMGAkMFfaxe7A2vt33/7yoxN7FYsYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XMzj6n0p; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CBMgNyLv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D5BB1F00A3F;
-	Mon, 17 Aug 2026 13:40:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XMzj6n0p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D75F1F00A3A;
+	Mon, 17 Aug 2026 13:40:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974017;
-	bh=08EX107KmwoVygg28qW3gwZLRKhn3//Wh121OEucVNU=;
+	s=korg; t=1786974020;
+	bh=9GnYvIaZ5CdhG+Q/hexAfWN97+DN11LyIWHZJwuh3Mk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CBMgNyLvxnAWflGGyX2Yk0C5K1CJ05d+xym/tva2U/jmwNH+xC/wa6ORGltCbxjpN
-	 0pcxAVGJu5BuaYiYDactAsPcN4wofRcFoijX+ZJa0//YuxXSdnzkn93APscrdWvhFv
-	 pC6Hoxg2b9f/XeQJ9MeZAmOrIjQvKwg/SbdhHYfQ=
+	b=XMzj6n0pc73v99KewODVCqZXZoRJboQFtFOqFOrGiMXSveyhtHvmXFBgIxSg/vYhj
+	 /HUqCCVFxyA2vCSs9wc8zPgqItmgNopOOhkoorycN/WBw5WUyhoAfO8Yy3/gn8k8ch
+	 US7yuGOCRlNOCODpsGUqXx0KDXomZ3SpoB7cQx7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <nicoyip.dev@gmail.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Babanpreet Singh <bbnpreetsingh@gmail.com>,
+	Joshua Crofts <joshua.crofts1@gmail.com>,
+	William Breathitt Gray <wbg@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 060/271] bpf: Fix netns reference imbalance in conntrack kfuncs
-Date: Mon, 17 Aug 2026 15:29:45 +0200
-Message-ID: <20260817132539.214272110@linuxfoundation.org>
+Subject: [PATCH 7.1 061/271] counter: microchip-tcb-capture: Fix DT channel validation
+Date: Mon, 17 Aug 2026 15:29:46 +0200
+Message-ID: <20260817132539.255551955@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -52,207 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <nicoyip.dev@gmail.com>
+From: Babanpreet Singh <bbnpreetsingh@gmail.com>
 
-[ Upstream commit fdeba03fea78407a8c52faa99177c9f7f29f90eb ]
+[ Upstream commit f1a3a9946aab611dd2200c01ff122f64b033dad2 ]
 
-The opts argument of the BPF conntrack kfuncs can point to a shared
-map value.  __bpf_nf_ct_lookup() and __bpf_nf_ct_alloc_entry() read
-opts->netns_id separately when acquiring and releasing the network
-namespace reference.
+mchp_tc_probe() reads the devicetree "reg" cell - a u32, per the API
+contract of of_property_read_u32_index() - into a signed int, so the
+bounds check "channel > 2" fails to reject cell values at or above
+0x80000000: reinterpreted as a negative int, they compare below 2 and
+pass validation.
 
-The reference imbalance can occur as follows:
+A malformed devicetree can therefore drive a negative channel into the
+ATMEL_TC_REG() offset arithmetic, making the driver access syscon
+regmap offsets outside the TC block's register window, and into the
+"t%d_clk" clock-name formatting, where it truncates clk_name (sized
+for "t0_clk".."t2_clk").
 
-  CPU 0                                  CPU 1
-  read opts->netns_id (-1)
-  skip get_net_ns_by_id()
-                                         write opts->netns_id (id)
-  read opts->netns_id (id)
-  put_net(net) /* no matching get */
+Declare channel as u32, matching the API contract; the unsigned
+comparison then rejects everything except channels 0..2. Adjust the
+format specifier to %u accordingly, which also resolves the W=1
+warning that exposed the gap:
 
-The reverse transition leaks the reference.  Repeating the unmatched put
-can destroy a live namespace and crash later users.
+  microchip-tcb-capture.c:520:56: warning: '%d' directive output may
+    be truncated writing between 1 and 11 bytes into a region of size
+    6 [-Wformat-truncation=]
+  note: directive argument in the range [-2147483648, 2]
 
-The kernel reported:
+No behavior change for well-formed devicetrees: channels 0..2 take
+identical paths before and after.
 
-  Oops: general protection fault, probably for non-canonical address
-  KASAN: null-ptr-deref in range [0x00000000000000e8-0x00000000000000ef]
-  RIP: 0010:bpf_prog_test_run_xdp+0x52c/0x1700
-  Call Trace:
-   __sys_bpf+0x1662/0x50c0
-   __x64_sys_bpf+0x73/0xb0
-   do_syscall_64+0xf9/0x540
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-  Kernel panic - not syncing: Fatal exception
-
-Snapshot every input field of opts with READ_ONCE() before validating or
-using it.  The netns_id snapshot keeps the namespace get/put pair
-balanced, while the other snapshots keep the remaining options from
-changing partway through an invocation.  The individual reads can still
-observe an inconsistent combination during a concurrent update, but each
-selected field value remains stable for that invocation.
-
-Fixes: aed8ee7feb44 ("net: netfilter: Deduplicate code in bpf_{xdp,skb}_ct_lookup")
-Fixes: d7e79c97c00c ("net: netfilter: Add kfuncs to allocate and insert CT")
-Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Link: https://lore.kernel.org/bpf/20260731160921.3245840-1-nicoyip.dev@gmail.com
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Fixes: 106b104137fd ("counter: Add microchip TCB capture counter")
+Assisted-by: Claude:claude-fable-5 [gcc W=1]
+Signed-off-by: Babanpreet Singh <bbnpreetsingh@gmail.com>
+Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
+Link: https://lore.kernel.org/r/20260714042910.7-1-bbnpreetsingh@gmail.com
+Signed-off-by: William Breathitt Gray <wbg@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_bpf.c | 72 +++++++++++++++++++++-----------
- 1 file changed, 48 insertions(+), 24 deletions(-)
+ drivers/counter/microchip-tcb-capture.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/nf_conntrack_bpf.c b/net/netfilter/nf_conntrack_bpf.c
-index f98d1d4b42c3d..c2df7c9482812 100644
---- a/net/netfilter/nf_conntrack_bpf.c
-+++ b/net/netfilter/nf_conntrack_bpf.c
-@@ -122,42 +122,54 @@ __bpf_nf_ct_alloc_entry(struct net *net, struct bpf_sock_tuple *bpf_tuple,
- 	struct nf_conntrack_tuple otuple, rtuple;
- 	struct nf_conntrack_zone ct_zone;
- 	struct nf_conn *ct;
-+	u8 ct_zone_dir = 0;
-+	u16 ct_zone_id;
-+	s32 netns_id;
-+	u8 l4proto;
- 	int err;
+diff --git a/drivers/counter/microchip-tcb-capture.c b/drivers/counter/microchip-tcb-capture.c
+index 19d457ae4c3bb..e53a8390756b7 100644
+--- a/drivers/counter/microchip-tcb-capture.c
++++ b/drivers/counter/microchip-tcb-capture.c
+@@ -483,7 +483,7 @@ static int mchp_tc_probe(struct platform_device *pdev)
+ 	char clk_name[7];
+ 	struct regmap *regmap;
+ 	struct clk *clk[3];
+-	int channel;
++	u32 channel;
+ 	int ret, i;
  
- 	if (!(opts_len == NF_BPF_CT_OPTS_SZ || opts_len == 12))
- 		return ERR_PTR(-EINVAL);
-+
-+	netns_id = READ_ONCE(opts->netns_id);
-+	l4proto = READ_ONCE(opts->l4proto);
-+	ct_zone_id = READ_ONCE(opts->ct_zone_id);
- 	if (opts_len == NF_BPF_CT_OPTS_SZ) {
--		if (opts->reserved[0] || opts->reserved[1] || opts->reserved[2])
-+		ct_zone_dir = READ_ONCE(opts->ct_zone_dir);
-+		if (READ_ONCE(opts->reserved[0]) ||
-+		    READ_ONCE(opts->reserved[1]) ||
-+		    READ_ONCE(opts->reserved[2]))
- 			return ERR_PTR(-EINVAL);
- 	} else {
--		if (opts->ct_zone_id)
-+		if (ct_zone_id)
- 			return ERR_PTR(-EINVAL);
- 	}
+ 	counter = devm_counter_alloc(&pdev->dev, sizeof(*priv));
+@@ -517,7 +517,7 @@ static int mchp_tc_probe(struct platform_device *pdev)
  
--	if (unlikely(opts->netns_id < BPF_F_CURRENT_NETNS))
-+	if (unlikely(netns_id < BPF_F_CURRENT_NETNS))
- 		return ERR_PTR(-EINVAL);
+ 		priv->channel[i] = channel;
  
--	err = bpf_nf_ct_tuple_parse(bpf_tuple, tuple_len, opts->l4proto,
-+	err = bpf_nf_ct_tuple_parse(bpf_tuple, tuple_len, l4proto,
- 				    IP_CT_DIR_ORIGINAL, &otuple);
- 	if (err < 0)
- 		return ERR_PTR(err);
+-		snprintf(clk_name, sizeof(clk_name), "t%d_clk", channel);
++		snprintf(clk_name, sizeof(clk_name), "t%u_clk", channel);
  
--	err = bpf_nf_ct_tuple_parse(bpf_tuple, tuple_len, opts->l4proto,
-+	err = bpf_nf_ct_tuple_parse(bpf_tuple, tuple_len, l4proto,
- 				    IP_CT_DIR_REPLY, &rtuple);
- 	if (err < 0)
- 		return ERR_PTR(err);
- 
--	if (opts->netns_id >= 0) {
--		net = get_net_ns_by_id(net, opts->netns_id);
-+	if (netns_id >= 0) {
-+		net = get_net_ns_by_id(net, netns_id);
- 		if (unlikely(!net))
- 			return ERR_PTR(-ENONET);
- 	}
- 
- 	if (opts_len == NF_BPF_CT_OPTS_SZ) {
--		if (opts->ct_zone_dir == 0)
--			opts->ct_zone_dir = NF_CT_DEFAULT_ZONE_DIR;
--		nf_ct_zone_init(&ct_zone,
--				opts->ct_zone_id, opts->ct_zone_dir, 0);
-+		if (ct_zone_dir == 0) {
-+			ct_zone_dir = NF_CT_DEFAULT_ZONE_DIR;
-+			opts->ct_zone_dir = ct_zone_dir;
-+		}
-+		nf_ct_zone_init(&ct_zone, ct_zone_id, ct_zone_dir, 0);
- 	} else {
- 		ct_zone = nf_ct_zone_dflt;
- 	}
-@@ -171,7 +183,7 @@ __bpf_nf_ct_alloc_entry(struct net *net, struct bpf_sock_tuple *bpf_tuple,
- 	__nf_ct_set_timeout(ct, timeout * HZ);
- 
- out:
--	if (opts->netns_id >= 0)
-+	if (netns_id >= 0)
- 		put_net(net);
- 
- 	return ct;
-@@ -186,46 +198,58 @@ static struct nf_conn *__bpf_nf_ct_lookup(struct net *net,
- 	struct nf_conntrack_tuple tuple;
- 	struct nf_conntrack_zone ct_zone;
- 	struct nf_conn *ct;
-+	u8 ct_zone_dir = 0;
-+	u16 ct_zone_id;
-+	s32 netns_id;
-+	u8 l4proto;
- 	int err;
- 
- 	if (!opts || !bpf_tuple)
- 		return ERR_PTR(-EINVAL);
- 	if (!(opts_len == NF_BPF_CT_OPTS_SZ || opts_len == 12))
- 		return ERR_PTR(-EINVAL);
-+
-+	netns_id = READ_ONCE(opts->netns_id);
-+	l4proto = READ_ONCE(opts->l4proto);
-+	ct_zone_id = READ_ONCE(opts->ct_zone_id);
- 	if (opts_len == NF_BPF_CT_OPTS_SZ) {
--		if (opts->reserved[0] || opts->reserved[1] || opts->reserved[2])
-+		ct_zone_dir = READ_ONCE(opts->ct_zone_dir);
-+		if (READ_ONCE(opts->reserved[0]) ||
-+		    READ_ONCE(opts->reserved[1]) ||
-+		    READ_ONCE(opts->reserved[2]))
- 			return ERR_PTR(-EINVAL);
- 	} else {
--		if (opts->ct_zone_id)
-+		if (ct_zone_id)
- 			return ERR_PTR(-EINVAL);
- 	}
--	if (unlikely(opts->l4proto != IPPROTO_TCP && opts->l4proto != IPPROTO_UDP))
-+	if (unlikely(l4proto != IPPROTO_TCP && l4proto != IPPROTO_UDP))
- 		return ERR_PTR(-EPROTO);
--	if (unlikely(opts->netns_id < BPF_F_CURRENT_NETNS))
-+	if (unlikely(netns_id < BPF_F_CURRENT_NETNS))
- 		return ERR_PTR(-EINVAL);
- 
--	err = bpf_nf_ct_tuple_parse(bpf_tuple, tuple_len, opts->l4proto,
-+	err = bpf_nf_ct_tuple_parse(bpf_tuple, tuple_len, l4proto,
- 				    IP_CT_DIR_ORIGINAL, &tuple);
- 	if (err < 0)
- 		return ERR_PTR(err);
- 
--	if (opts->netns_id >= 0) {
--		net = get_net_ns_by_id(net, opts->netns_id);
-+	if (netns_id >= 0) {
-+		net = get_net_ns_by_id(net, netns_id);
- 		if (unlikely(!net))
- 			return ERR_PTR(-ENONET);
- 	}
- 
- 	if (opts_len == NF_BPF_CT_OPTS_SZ) {
--		if (opts->ct_zone_dir == 0)
--			opts->ct_zone_dir = NF_CT_DEFAULT_ZONE_DIR;
--		nf_ct_zone_init(&ct_zone,
--				opts->ct_zone_id, opts->ct_zone_dir, 0);
-+		if (ct_zone_dir == 0) {
-+			ct_zone_dir = NF_CT_DEFAULT_ZONE_DIR;
-+			opts->ct_zone_dir = ct_zone_dir;
-+		}
-+		nf_ct_zone_init(&ct_zone, ct_zone_id, ct_zone_dir, 0);
- 	} else {
- 		ct_zone = nf_ct_zone_dflt;
- 	}
- 
- 	hash = nf_conntrack_find_get(net, &ct_zone, &tuple);
--	if (opts->netns_id >= 0)
-+	if (netns_id >= 0)
- 		put_net(net);
- 	if (!hash)
- 		return ERR_PTR(-ENOENT);
+ 		clk[i] = of_clk_get_by_name(np->parent, clk_name);
+ 		if (IS_ERR(clk[i])) {
 -- 
 2.53.0
 
