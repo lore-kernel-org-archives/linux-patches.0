@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4065F3C8C65;
-	Mon, 17 Aug 2026 13:39:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2298A4B0492;
+	Mon, 17 Aug 2026 13:39:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786973981; cv=none; b=mHXXwJiq43qBqKvEDYBOBo9F7tT+Zbvgv9nPwvz2RzWf2kIL4lUndxc0dge5pHUrTHUqfy63/64AhdiyrvK6aaik8evAurYTHWtkJy7p4bPIlWnj/lM7XdScVxYCD3gcyFrneHY9LKaOrhtWYgC+S7rXFLWPrJ2wrkBSCwwtYZg=
+	t=1786973984; cv=none; b=b8srkgOmX5Z57G5g51kLJffUvO7Y9ZnBSlZmvmcHTrmqritTEOFsD8DbkZlkB7g9CuPsOvdhyqeiXj11OP1DIHGSBJMHp62yEOHLhIJs5r5FGwof/SUjDdBAJM9CyMZCwJratPXL+L4V0aPSqU54Z2xlOIi5vWui4ZqI6wGRhkw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786973981; c=relaxed/simple;
-	bh=geMVRQAnI+DRy+RVmazoT3u0rQfPX8dcIfybUjYpy94=;
+	s=arc-20240116; t=1786973984; c=relaxed/simple;
+	bh=1Icats3As0SnGBAVHAUbKdjQqVE3CwARtMpjZ4o3YF4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BgKoEXSCpBr9js9zPaS6GEQu2SCdmJnp01nk6hdUxA8ySngevOwo1P7q+0vYdc6zoAGIPDOR5cBTnfxVyKmZETeWeWqGSbfc+BHF7zrikcE4rhvNEaCaYdPu8JG86q84Kfv6nvAYbq9qPzODS7IX7OVQ+vaTqgOZyLYl4hZcRuA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J520tHtZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DA7/L+J4LcGLZZgChXb7fAaa/o7zh5rm1aejBvVyUis7L7fA4Xi1RyUEO3tGI1NGZ0jyVSBAS7qt9sPAYDHKvBs/C3Gj1G/9yLTsmGfYN3ZPMOIxiLoxsF4VCrsRulEV1gViga9SVv0am7pkZ2LDFT7lgJEUvwllMxx4kFE9rd8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QNp05qaJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J520tHtZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 543891F000E9;
-	Mon, 17 Aug 2026 13:39:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QNp05qaJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38BF71F000E9;
+	Mon, 17 Aug 2026 13:39:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786973979;
-	bh=/+WzQ1I3YaKRTzuq8rwstx20d2o5xZhgEe+XFoiNSmo=;
+	s=korg; t=1786973982;
+	bh=EBFUaqqQ0+JNVdFGjZkB+WT9Tg92eyQZKsie3QBQzRE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J520tHtZDgBxEatYQ0VZdSG+dykFW2EAQ1EYOJtwO5Nh+WGszrqQcwbpL1xib05RG
-	 OqRgekD7NvpzXd2JLTBtK3Hn2EapW7R1wnB9ZHHrsvZl2a2YVCpQOfECHbY7ms/00W
-	 48oOyyAQzih3NN/toGE69LwsvXLxUlG1+1Abl+YY=
+	b=QNp05qaJ0tJUdst/pXydPdk22SrXpm90Op43W2NjZLyQ7UcFQgI4oV7RWhW98pzyT
+	 LEeq1fifh6t1J5uyAasbvR5oI2V6Bli70/zvuZ3BOZ9T52ZtxpH5KenqMoZhGIFzoZ
+	 WLXf80CtAtkko2arbSu476JkrkVf9VSnbcCigfxM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lee <david.lee@trailofbits.com>,
-	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	Dmitry Antipov <dmantipov@yandex.ru>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 048/271] btrfs: lzo: reject inline extents without valid headers
-Date: Mon, 17 Aug 2026 15:29:33 +0200
-Message-ID: <20260817132538.707766150@linuxfoundation.org>
+Subject: [PATCH 7.1 049/271] btrfs: fix memory leak in btrfs_do_encoded_write()
+Date: Mon, 17 Aug 2026 15:29:34 +0200
+Message-ID: <20260817132538.755297361@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -52,92 +52,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Lee <david.lee@trailofbits.com>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit 0fa78ef637deb5dbe341582f88553a4bce496de0 ]
+[ Upstream commit d2a4e4e626b2f4670b69b430c357f03f53eb6632 ]
 
-[BUG]
-For a crafted btrfs image, the following KASAN can be triggered when
-reading an inline lzo compressed file extent:
+Local fuzzing of 6.12.94 has found the following memory leak:
 
-  BUG: KASAN: slab-out-of-bounds in lzo_decompress+0x57d/0x700
-  Read of size 4 at addr ffff888006f2e644 by task btrfs_lzo_inlin/77
+Unreferenced object 0xffff888018050a80 (size 64):
+  comm "syz.0.17", pid 10297, jiffies 4294953601
+  hex dump (first 32 bytes):
+    00 10 00 00 00 00 00 00 01 00 00 00 00 00 00 00  ................
+    10 0a 05 18 80 88 ff ff 10 0a 05 18 80 88 ff ff  ................
+  backtrace (crc a8a6fc29):
+    kmemleak_alloc_recursive include/linux/kmemleak.h:42 [inline]
+    slab_post_alloc_hook mm/slub.c:4152 [inline]
+    slab_alloc_node mm/slub.c:4197 [inline]
+    __kmalloc_cache_noprof+0x168/0x2c0 mm/slub.c:4358
+    kmalloc_noprof include/linux/slab.h:878 [inline]
+    extent_changeset_alloc fs/btrfs/extent_io.h:207 [inline]
+    qgroup_reserve_data+0x1c5/0x7d0 fs/btrfs/qgroup.c:4305
+    btrfs_qgroup_reserve_data+0x2e/0xb0 fs/btrfs/qgroup.c:4355
+    btrfs_do_encoded_write+0x92e/0x1040 fs/btrfs/inode.c:9746
+    btrfs_encoded_write fs/btrfs/file.c:1482 [inline]
+    btrfs_do_write_iter+0x280/0x610 fs/btrfs/file.c:1507
+    btrfs_ioctl_encoded_write+0x3d6/0x490 fs/btrfs/ioctl.c:4738
+    btrfs_ioctl+0x6f9/0xc90 fs/btrfs/ioctl.c:-1
+    vfs_ioctl fs/ioctl.c:51 [inline]
+    __do_sys_ioctl fs/ioctl.c:906 [inline]
+    __se_sys_ioctl+0xf9/0x170 fs/ioctl.c:892
+    do_syscall_x64 arch/x86/entry/common.c:47 [inline]
+    do_syscall_64+0xbe/0x1a0 arch/x86/entry/common.c:78
+    entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x5b/0x70
-   print_report+0xd1/0x610
-   kasan_report+0xe0/0x110
-   __asan_report_load_n_noabort+0x13/0x20
-   lzo_decompress+0x57d/0x700
-   btrfs_decompress+0x140/0x1c0
-   uncompress_inline+0x147/0x1b0
-   btrfs_get_extent+0xb23/0x10a0
-   btrfs_do_readpage.constprop.0+0x538/0x1ac0
-   btrfs_readahead+0x32f/0x5f0
-   read_pages+0x16f/0x850
-   page_cache_ra_unbounded+0x296/0x490
-   do_page_cache_ra+0xd9/0x130
-   page_cache_sync_ra+0x3ee/0x6f0
-   filemap_get_pages+0x306/0x15c0
-   filemap_read+0x329/0xd00
-   btrfs_file_read_iter+0x1f8/0x2b0
-   vfs_read+0x4ef/0x720
-   ksys_read+0xf8/0x1d0
-   __x64_sys_read+0x71/0xb0
-   x64_sys_call+0x1ab0/0x1b70
-   do_syscall_64+0x61/0x470
-   entry_SYSCALL_64_after_hwframe+0x4b/0x53
-   </TASK>
+Unreferenced object 0xffff888018050a00 (size 64):
+  comm "syz.0.17", pid 10297, jiffies 4294953601
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 ff 0f 00 00 00 00 00 00  ................
+    90 0a 05 18 80 88 ff ff 90 0a 05 18 80 88 ff ff  ................
+  backtrace (crc cb5c9580):
+    kmemleak_alloc_recursive include/linux/kmemleak.h:42 [inline]
+    slab_post_alloc_hook mm/slub.c:4152 [inline]
+    slab_alloc_node mm/slub.c:4197 [inline]
+    __kmalloc_cache_noprof+0x168/0x2c0 mm/slub.c:4358
+    kmalloc_noprof include/linux/slab.h:878 [inline]
+    kzalloc_noprof include/linux/slab.h:1014 [inline]
+    ulist_prealloc+0x9c/0x110 fs/btrfs/ulist.c:114
+    extent_changeset_prealloc fs/btrfs/extent_io.h:217 [inline]
+    __set_extent_bit+0x16b/0x1a70 fs/btrfs/extent-io-tree.c:1086
+    set_record_extent_bits+0x50/0x90 fs/btrfs/extent-io-tree.c:1821
+    qgroup_reserve_data+0x274/0x7d0 fs/btrfs/qgroup.c:4312
+    btrfs_qgroup_reserve_data+0x2e/0xb0 fs/btrfs/qgroup.c:4355
+    btrfs_do_encoded_write+0x92e/0x1040 fs/btrfs/inode.c:9746
+    btrfs_encoded_write fs/btrfs/file.c:1482 [inline]
+    btrfs_do_write_iter+0x280/0x610 fs/btrfs/file.c:1507
+    btrfs_ioctl_encoded_write+0x3d6/0x490 fs/btrfs/ioctl.c:4738
+    btrfs_ioctl+0x6f9/0xc90 fs/btrfs/ioctl.c:-1
+    vfs_ioctl fs/ioctl.c:51 [inline]
+    __do_sys_ioctl fs/ioctl.c:906 [inline]
+    __se_sys_ioctl+0xf9/0x170 fs/ioctl.c:892
+    do_syscall_x64 arch/x86/entry/common.c:47 [inline]
+    do_syscall_64+0xbe/0x1a0 arch/x86/entry/common.c:78
+    entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-[CAUSE]
-For an inline lzo compressed file extent, there should always be one lzo
-header, recording the total length of the compressed data, followed by
-one segment header, recording the compressed lzo payload.
+Fix this by freeing an extent changeset before returning from
+btrfs_do_encoded_write().
 
-But if a crafted inline lzo compressed file extent contains only an lzo
-header, without the segment header or payload, lzo_decompress() will
-still try to read the segment header, causing a read beyond the item
-boundary.
-
-Furthermore if the inline lzo compressed file extent is the first item
-of the leaf, it will be at the extent buffer boundary. The above
-out-of-boundary read will go beyond the extent buffer boundary,
-triggering the above KASAN report.
-
-[FIX]
-Validate the total length of the inlined lzo compressed file extent, to
-make sure there is at least one LZO header and one segment header, and a
-non-zero payload.
-
-Fixes: a6fa6fae40ec ("btrfs: Add lzo compression support")
-Assisted-by: Codex:gpt-5.5
-Signed-off-by: David Lee <david.lee@trailofbits.com>
-[ Rework the commit message to remove slop ]
-Signed-off-by: Qu Wenruo <wqu@suse.com>
+Fixes: 7c0c7269f7b5 ("btrfs: add BTRFS_IOC_ENCODED_WRITE")
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/lzo.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/btrfs/inode.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/btrfs/lzo.c b/fs/btrfs/lzo.c
-index 1531adb117d15..2f0996692da05 100644
---- a/fs/btrfs/lzo.c
-+++ b/fs/btrfs/lzo.c
-@@ -552,9 +552,10 @@ int lzo_decompress(struct list_head *ws, const u8 *data_in,
- 	size_t max_segment_len = workspace_buf_length(fs_info);
- 	int ret;
- 
--	if (unlikely(srclen < LZO_LEN || srclen > max_segment_len + LZO_LEN * 2)) {
-+	if (unlikely(srclen <= LZO_LEN * 2 ||
-+		     srclen > max_segment_len + LZO_LEN * 2)) {
- 		btrfs_err(fs_info, "invalid lzo header length, has %zu expect (%u, %zu)",
--			  srclen, LZO_LEN, max_segment_len + LZO_LEN * 2);
-+			  srclen, LZO_LEN * 2, max_segment_len + LZO_LEN * 2);
- 		return -EUCLEAN;
- 	}
- 
+diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
+index dc5148f176e77..a953d47eb2dd5 100644
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -10193,6 +10193,7 @@ ssize_t btrfs_do_encoded_write(struct kiocb *iocb, struct iov_iter *from,
+ 	if (cb)
+ 		cleanup_compressed_bio(cb);
+ out:
++	extent_changeset_free(data_reserved);
+ 	if (ret >= 0)
+ 		iocb->ki_pos += encoded->len;
+ 	return ret;
 -- 
 2.53.0
 
