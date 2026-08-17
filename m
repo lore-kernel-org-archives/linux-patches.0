@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4AC84457A3;
-	Mon, 17 Aug 2026 13:58:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A70CF43B483;
+	Mon, 17 Aug 2026 13:58:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975114; cv=none; b=W/TycrBaSJ7EJMkXzvyJHzsYpOUxvBV6chV6RqeM3Yxls3LtV5islIHLT67vzBrTX9itPDAXmVEL7slFgmfRquxcNi/liekvcmAD/udNdg0tCxnUI4gUSwf2DUjo+1s8Lvz8ElMiXFQF80A5M43pxYo73kuc52BnTmaAWzKHb+8=
+	t=1786975117; cv=none; b=BWM4VVYkrf5JKVgwzGcbSlKrJQuahjj/Xk82zgIY6XNKGoVm95C7h77l9Ie6EcLcQ509P5mVRdgvPuDvsin+pSC2YayG/O3dXpTMx7XkbvUlZ0X0E9asn0ikOP5vlcHWeaJBHGqGnwfg/c+1luTl0JjoRt+Qw8xwjG+uvmRI9Qg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975114; c=relaxed/simple;
-	bh=mcSngFKCsEZc90OszOwwA20ks90KEZ71jWTq+VS7RWw=;
+	s=arc-20240116; t=1786975117; c=relaxed/simple;
+	bh=lteoI74JntbfcskEiHb4xorWEo8LDU/32L8IyLavpCM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tqCQ9EAf4tx5wOZfLmWOEWfIsMU0IkfQcSOb/5PcdL0Qeer6WWBXjBecPNGu78vUU6i6BJZc2gw4yaN9S9nSzm8lhEX3xD/OuuLeKF9OicaTvQKHD4QpbXFstTxmqDDXO3dR1cf33KRlamHpIt8dcLf4KzIEXqZZwZzCm8gadsw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a+tyAvCq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NN7wnH/afV7JbJD+/uBjjCdDjr+XGp7OZtyitWZJ99NLKp4B5o+jKbdLNuj2F+Hs164A6lPDHHqDJbmzimy8RZrOuGnC9N72BKcJ1YFsv5aDEJn3ZxIQ6nFm2hVVKc5AYRfd/j6u5S0LXKgaXEnJ7MwfD3I5DmJRVdWRnTRN2QM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n3S6wvtm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a+tyAvCq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A4361F00A3A;
-	Mon, 17 Aug 2026 13:58:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n3S6wvtm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05A761F000E9;
+	Mon, 17 Aug 2026 13:58:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975113;
-	bh=1fPMm4wBolAsktAMvdJo4Q8iSwWdNNKGPJ6DIcVrgCs=;
+	s=korg; t=1786975116;
+	bh=AsYb6QOCjrzk100p3mRg18Ur/TYP1JKQivDAKruNQoc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a+tyAvCq5mXQQJhZF6/+IpZVXN2VGGwrWzTK7zGUUi7shMI+ldvt4JLnm4W/7Dxe8
-	 sAEpVWgFs+ZFIiRnHLMjp5lr9Tj9uUL0nmpYqSi0zM+IKWW9Egjb4pmV6Jw0zd8UlE
-	 /YPH8RZoAgdHkDEj2lrB+wqwWZ9gJuPt2Vvdo/d4=
+	b=n3S6wvtm9YKaZhD/sDgfjMD4C9AJhvMeJ0fHSb3/qyru9KIfGI4RjPQqmHpX7D4N9
+	 l4o0AQIifjBhhKSs45MDaj6siBlDeQIoLm2QvD8q6T2nl1KRk1J4pACggovfi/uwsC
+	 K29DBfrmqZtINKW0368HFNxVyT3pJ1Zh+cEwbyGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
 	Fan Wu <fanwu01@zju.edu.cn>
-Subject: [PATCH 6.18 168/250] serial: amba-pl011: cancel RS485 hrtimers after freeing IRQ
-Date: Mon, 17 Aug 2026 15:32:09 +0200
-Message-ID: <20260817132543.499996037@linuxfoundation.org>
+Subject: [PATCH 6.18 169/250] serial: amba-pl011: synchronize DMA teardown
+Date: Mon, 17 Aug 2026 15:32:10 +0200
+Message-ID: <20260817132543.539047200@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -52,116 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit 36672c8d7d14e9c43287528455d2c97b526ea6ad upstream.
+commit 440915499231e9db1c361aa45bb702e8fd3b4a32 upstream.
 
-The RS485 trigger hrtimers are embedded in the devm-managed port and can
-fire after it is freed. The IRQ handler can arm a timer, so free the IRQ
-first and then cancel both timers.
+dmaengine_terminate_all() does not wait for a running callback, so the TX
+callback can still touch the TX buffer after it is freed. The RX poll
+timer reads the RX buffers without the port lock.
 
-Complete the RS485 stop without arming a timer, and cancel the timers
-in remove() for the suspend-then-unbind path, where shutdown is not
-called.
+Switch to dmaengine_terminate_sync() and delete the RX timer before
+freeing the buffers.
 
-This issue was found by an in-house static analysis tool.
-
-Fixes: 2c1fd53af21b ("serial: amba-pl011: Fix RTS handling in RS485 mode")
+Fixes: ead76f329f77 ("ARM: 6763/1: pl011: add optional RX DMA to PL011 v2")
 Cc: stable <stable@kernel.org>
 Assisted-by: Codex:gpt-5.6
 Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Link: https://patch.msgid.link/20260731085915.326775-3-fanwu01@zju.edu.cn
+Link: https://patch.msgid.link/20260731085915.326775-4-fanwu01@zju.edu.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/amba-pl011.c |   52 ++++++++++++++++++++++++++--------------
- 1 file changed, 35 insertions(+), 17 deletions(-)
+ drivers/tty/serial/amba-pl011.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 --- a/drivers/tty/serial/amba-pl011.c
 +++ b/drivers/tty/serial/amba-pl011.c
-@@ -1269,11 +1269,30 @@ static inline bool pl011_dma_rx_running(
- #define pl011_dma_flush_buffer	NULL
- #endif
+@@ -1182,7 +1182,7 @@ static void pl011_dma_shutdown(struct ua
  
--static void pl011_rs485_tx_stop(struct uart_amba_port *uap)
-+static void pl011_rs485_tx_stop_now(struct uart_amba_port *uap)
- {
- 	struct uart_port *port = &uap->port;
- 	u32 cr;
- 
-+	cr = pl011_read(uap, REG_CR);
-+
-+	if (port->rs485.flags & SER_RS485_RTS_AFTER_SEND)
-+		cr &= ~UART011_CR_RTS;
-+	else
-+		cr |= UART011_CR_RTS;
-+
-+	/* Disable the transmitter and reenable the transceiver */
-+	cr &= ~UART011_CR_TXE;
-+	cr |= UART011_CR_RXE;
-+	pl011_write(cr, uap, REG_CR);
-+
-+	uap->rs485_tx_state = OFF;
-+}
-+
-+static void pl011_rs485_tx_stop(struct uart_amba_port *uap)
-+{
-+	struct uart_port *port = &uap->port;
-+
- 	if (uap->rs485_tx_state == SEND)
- 		uap->rs485_tx_state = WAIT_AFTER_SEND;
- 
-@@ -1297,19 +1316,7 @@ static void pl011_rs485_tx_stop(struct u
- 		hrtimer_try_to_cancel(&uap->trigger_start_tx);
+ 	if (uap->using_tx_dma) {
+ 		/* In theory, this should already be done by pl011_dma_flush_buffer */
+-		dmaengine_terminate_all(uap->dmatx.chan);
++		dmaengine_terminate_sync(uap->dmatx.chan);
+ 		if (uap->dmatx.queued) {
+ 			dma_unmap_single(uap->dmatx.chan->device->dev,
+ 					 uap->dmatx.dma, uap->dmatx.len,
+@@ -1195,12 +1195,12 @@ static void pl011_dma_shutdown(struct ua
  	}
  
--	cr = pl011_read(uap, REG_CR);
--
--	if (port->rs485.flags & SER_RS485_RTS_AFTER_SEND)
--		cr &= ~UART011_CR_RTS;
--	else
--		cr |= UART011_CR_RTS;
--
--	/* Disable the transmitter and reenable the transceiver */
--	cr &= ~UART011_CR_TXE;
--	cr |= UART011_CR_RXE;
--	pl011_write(cr, uap, REG_CR);
--
--	uap->rs485_tx_state = OFF;
-+	pl011_rs485_tx_stop_now(uap);
+ 	if (uap->using_rx_dma) {
+-		dmaengine_terminate_all(uap->dmarx.chan);
++		if (uap->dmarx.poll_rate)
++			timer_delete_sync(&uap->dmarx.timer);
++		dmaengine_terminate_sync(uap->dmarx.chan);
+ 		/* Clean up the RX DMA */
+ 		pl011_dmabuf_free(uap->dmarx.chan, &uap->dmarx.dbuf_a, DMA_FROM_DEVICE);
+ 		pl011_dmabuf_free(uap->dmarx.chan, &uap->dmarx.dbuf_b, DMA_FROM_DEVICE);
+-		if (uap->dmarx.poll_rate)
+-			timer_delete_sync(&uap->dmarx.timer);
+ 		uap->using_rx_dma = false;
+ 	}
  }
- 
- static void pl011_stop_tx(struct uart_port *port)
-@@ -2019,11 +2026,20 @@ static void pl011_shutdown(struct uart_p
- 
- 	pl011_dma_shutdown(uap);
- 
--	if ((port->rs485.flags & SER_RS485_ENABLED && uap->rs485_tx_state != OFF))
--		pl011_rs485_tx_stop(uap);
--
- 	free_irq(uap->port.irq, uap);
- 
-+	/*
-+	 * free_irq() drains the UART interrupt handler, which can arm either
-+	 * timer.  Cancel the timers afterwards to drain their callbacks too.
-+	 */
-+	hrtimer_cancel(&uap->trigger_start_tx);
-+	hrtimer_cancel(&uap->trigger_stop_tx);
-+
-+	uart_port_lock_irq(port);
-+	if (uap->rs485_tx_state != OFF)
-+		pl011_rs485_tx_stop_now(uap);
-+	uart_port_unlock_irq(port);
-+
- 	pl011_disable_uart(uap);
- 
- 	/*
-@@ -2941,6 +2957,8 @@ static void pl011_remove(struct amba_dev
- 	struct uart_amba_port *uap = amba_get_drvdata(dev);
- 
- 	uart_remove_one_port(&amba_reg, &uap->port);
-+	hrtimer_cancel(&uap->trigger_start_tx);
-+	hrtimer_cancel(&uap->trigger_stop_tx);
- 	pl011_unregister_port(uap);
- }
- 
 
 
