@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4410422522;
-	Mon, 17 Aug 2026 15:19:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D666443AB0;
+	Mon, 17 Aug 2026 15:19:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979972; cv=none; b=s9tW9flP5pzNaFEKA1ZgIfRDHwzNzuVEQic4TuHWUfHouJU4i6eaCDvEupVeYbDRRnFcdzbaJ48dInm6X8bxIcb9f1hOKdWEKe7RLtaKaCwBPyNWNIL0Qwmj4xp+Sd8Zm8H8RRwGZVGG2zDHTCL4CuK8v7Od4H6aeH6yw+AJM/k=
+	t=1786979973; cv=none; b=a9JDgI/k2krLdqm1jrmLaVVmAOBhv74i8KThLDBCwJuAs+bd6VdsNNnt2pgcIFlaqei8lFQZuNcxloNYUed9uTOECM+xFpLQ2BxRXcSj41U97VgPZ87zILUv46CtEDlW1C9dthzjPmR0H4BHmdqi0ju6m/mGfMWDHJCV+GF3wss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979972; c=relaxed/simple;
-	bh=SGhx4/eSrTqy+vblh6YXrtyxBcre7QWN4+gs3pf5Bns=;
+	s=arc-20240116; t=1786979973; c=relaxed/simple;
+	bh=dMvKA/ijYjGq0oBIVaWSnfgz8EnCa20/gyFPMh59K8g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R8gjHDu/DoqyQrrcwtPlUGDnHy3jE8qafrE/8o3iqqKbHmuR3g2mkwBmOvCxypShu7vJvM0JciaL5B4DhS1YTDceDEF734Wx+juecDpkUFUx2PnDJkV9uUUu3HkCiZVYB8ZxQVHyoyXcEEIJgj4Vb0fcyg5cZqWPDjAgOQ0cY5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PRekley0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o0t/QYS1V985MeYUIgIQAhHrlgtw3bcz4RLe4uyqI1j1g4F5/CBm/JnwxLt+fHonIs6kMxzIzfQXgFu9yBeoHD1/QIjNoMcgOv3AUAAJdaGt/+NiNnhSS6YHOa/QooONGW6XvJXPdEPLwjRAgfhsvBcIWPkFEDoMEhM0KiR+NuU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dvBjBWmf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PRekley0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32B2D1F00A3E;
-	Mon, 17 Aug 2026 15:19:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dvBjBWmf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 148E01F000E9;
+	Mon, 17 Aug 2026 15:19:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979962;
-	bh=WdEzIR83KvZ8isEoIp7MZRkDUEJpTnm10FERMdXkYSY=;
+	s=korg; t=1786979965;
+	bh=8+YF3oZPyK3czIdLJZkKuRb8jwgWsX7oV7PwGZ73W24=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PRekley0A2M+wIKALOqDosRs4y3B4F7skrPtIbQflENRfxXbt/Z9bdbhu183VzRuK
-	 aU4/G7bzm6rNJHEyjasAujDb6sZSFYCkzw2EZ4wC+OXQdeJtQ5Zalogvc2NMTIULMJ
-	 iHiIoyucHeWj6NfskLGJHFfuZwVBbZLAZUUoA6FI=
+	b=dvBjBWmf50vPl7JNe2pbsD3seAAOCDN31FNq7I+BDb+0oUhc7xPPkm+b3Y11t3LgB
+	 iUDPniKRhsaaLJAQ6k6fPAGn7K34FI78jAKgkMFEHb3oR6skbMUEUKX4bURS5lXlcb
+	 92JkYYp0w14hUr50ivHziJOldTHyq45HIqzugp/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haidar Lee <haidar.lee@adlinktech.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.1 401/609] ASoC: tas2562: fix broken entries in the volume lookup table
-Date: Mon, 17 Aug 2026 15:31:37 +0200
-Message-ID: <20260817132557.618971290@linuxfoundation.org>
+	David Lee <david.lee@trailofbits.com>,
+	Jozsef Kadlecsik <kadlec@netfilter.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 6.1 410/609] netfilter: ipset: do not update comments from kernel-side hash adds
+Date: Mon, 17 Aug 2026 15:31:46 +0200
+Message-ID: <20260817132557.882175878@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -50,53 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haidar Lee <haidar.lee@adlinktech.com>
+From: David Lee <david.lee@trailofbits.com>
 
-commit bdb0fd6de403fcea7b85dc9d38f0a571583ebe80 upstream.
+commit f30415929be8aeb002d557c8d3f7ab2d2188003a upstream.
 
-The float_vol_db_lookup table is supposed to hold
-round(10^(dB/20) * 2^30) for every 2 dB step from -110 dB to 0 dB,
-which is 56 entries, but it only has 55: the -90 dB entry duplicates
-the -92 dB value (0x0000695b) and the -20 dB entry (0x06666666) is
-missing altogether. As a result every step between -90 dB and -22 dB
-is off by 2 dB, and the control's maximum raw value of 110 indexes one
-element past the end of the array.
+mtype_resize() copies comment pointers with memcpy(), not the comment
+objects themselves. During the window after an entry has been copied but
+before the table swap and backlog replay, the old table is still
+published for packet-side updates while the replacement-table entry
+already holds the same ip_set_comment_rcu pointer.
 
-Replace the duplicated -90 dB entry with the correct value 0x000084a3
-and add the missing -20 dB entry, bringing the table to the full 56
-entries so index 55 (raw value 110, 0 dB) is in range again.
+If xt_SET --add-set ... --exist hits that old entry in this window,
+mtype_add() calls ip_set_init_comment() even though packet-side adds
+carry no comment payload. That call frees the shared comment through the
+old entry, so the replacement-table entry now holds a stale pointer.
+When the queued add is replayed on the new table, mtype_add() calls
+ip_set_init_comment() again and strlen() dereferences the stale pointer.
 
-Fixes: bf726b1c86f2 ("ASoC: tas2562: Add support for digital volume control")
+Fix this in mtype_add() by skipping ip_set_init_comment() when
+ext->target marks a packet-side add. Userspace adds still update
+comments, while packet-side adds can no longer free comment storage
+shared with a resize copy.
+
+Fixes: f66ee0410b1c ("netfilter: ipset: Fix "INFO: rcu detected stall in hash_xxx" reports")
 Cc: stable@vger.kernel.org
-Signed-off-by: Haidar Lee <haidar.lee@adlinktech.com>
-Link: https://patch.msgid.link/20260715-tas2562-dvc-fix-v1-2-072b13901b20@adlinktech.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: David Lee <david.lee@trailofbits.com>
+Assisted-by: Codex:gpt-5.5
+Acked-by: Jozsef Kadlecsik <kadlec@netfilter.org>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/tas2562.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ net/netfilter/ipset/ip_set_hash_gen.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/soc/codecs/tas2562.c
-+++ b/sound/soc/codecs/tas2562.c
-@@ -33,15 +33,16 @@
- static const unsigned int float_vol_db_lookup[] = {
- 0x00000d43, 0x000010b2, 0x00001505, 0x00001a67, 0x00002151,
- 0x000029f1, 0x000034cd, 0x00004279, 0x000053af, 0x0000695b,
--0x0000695b, 0x0000a6fa, 0x0000d236, 0x000108a4, 0x00014d2a,
-+0x000084a3, 0x0000a6fa, 0x0000d236, 0x000108a4, 0x00014d2a,
- 0x0001a36e, 0x00021008, 0x000298c0, 0x000344df, 0x00041d8f,
- 0x00052e5a, 0x000685c8, 0x00083621, 0x000a566d, 0x000d03a7,
- 0x0010624d, 0x0014a050, 0x0019f786, 0x0020b0bc, 0x0029279d,
- 0x0033cf8d, 0x004139d3, 0x00521d50, 0x00676044, 0x0082248a,
- 0x00a3d70a, 0x00ce4328, 0x0103ab3d, 0x0146e75d, 0x019b8c27,
- 0x02061b89, 0x028c423f, 0x03352529, 0x0409c2b0, 0x05156d68,
--0x080e9f96, 0x0a24b062, 0x0cc509ab, 0x10137987, 0x143d1362,
--0x197a967f, 0x2013739e, 0x28619ae9, 0x32d64617, 0x40000000
-+0x06666666, 0x080e9f96, 0x0a24b062, 0x0cc509ab, 0x10137987,
-+0x143d1362, 0x197a967f, 0x2013739e, 0x28619ae9, 0x32d64617,
-+0x40000000
- };
- 
- struct tas2562_data {
+--- a/net/netfilter/ipset/ip_set_hash_gen.h
++++ b/net/netfilter/ipset/ip_set_hash_gen.h
+@@ -971,7 +971,7 @@ overwrite_extensions:
+ #endif
+ 	if (SET_WITH_COUNTER(set))
+ 		ip_set_init_counter(ext_counter(data, set), ext);
+-	if (SET_WITH_COMMENT(set))
++	if (SET_WITH_COMMENT(set) && !ext->target)
+ 		ip_set_init_comment(set, ext_comment(data, set), ext);
+ 	if (SET_WITH_SKBINFO(set))
+ 		ip_set_init_skbinfo(ext_skbinfo(data, set), ext);
 
 
