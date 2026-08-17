@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0095F3DB324;
-	Mon, 17 Aug 2026 15:20:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15F7F43231F;
+	Mon, 17 Aug 2026 15:20:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786980021; cv=none; b=CDFTA7qdXDmV3QG8C/DkzPiwwYN+n77oUnrhO1mg2+1CUPksWUNQED87RyUXH+JKNUQzihh1vuTlqJS+cqyzVF31ja/zLdmKP0EHBsKqx5aKRKEdjfPxarmxgToozlB0vYtEKmr1kshy4On6SgX9oa/Ak5x/oiQMvqDxLZT9QpA=
+	t=1786980024; cv=none; b=CxK1hPyKW0cSTBDetphyplqyt8qLTR7BFijwh2IoijTB5BKWIVW1QjLU13x+rjmGQ7o41hKKe9/KFTKuSO6MfMPIv7It0URDlB9q2oy3S+9UZ0Yumz7WLQ0OWzbzccmmUCnfiqR6xoqljWS9hQPtrqW2taaaSsZN3AKQCQjflRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786980021; c=relaxed/simple;
-	bh=prasV0J0YFXBo3RUgs0hmEd6/jnVPtJii2CkQy1FMLk=;
+	s=arc-20240116; t=1786980024; c=relaxed/simple;
+	bh=E2f9ckRkUX9TMhvjipjSyITz4iNwLy+0eY5eFmtg5Ww=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SqlNRevtIkx6xDTz1Vq+XbJVsOOOHjUGBkVtkGeGngSGn/5/+3k7NIQ3pCcVKzCzMpe9VexGGDpObT5iL/2HUgSUsKkcxRjZVgNcBCe4bmflS/ST9QifWktmjGzFsQl8foAAsnt5q3aUL0YsMgITJUuWFBTyfFKSOVSQX9UwU5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ws6pxjBO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tLjpLiFk9751NySHRrbtfnpCN0NevttoZhb9fELXG0YhSXx3IqMYra0xyk1aWPN4TwWewGy4qqMvDCoG+bW+Eq45vB+OFqCbf40cLtnMQ/1NGPFN5EHzxMjQD1I2xtKvwNA0ayIlFmotM2bRPxRB5QY38nlbWTBIiLgNyNArYh8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FotPRcTV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ws6pxjBO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E7551F000E9;
-	Mon, 17 Aug 2026 15:20:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FotPRcTV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20C5F1F000E9;
+	Mon, 17 Aug 2026 15:20:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786980019;
-	bh=rpDFYtBHGx3krSileW/wN4HfTjf350Pu7zYCtuM5yHM=;
+	s=korg; t=1786980022;
+	bh=YhkVWhbbXA0F9ie7dPGadC38kkJkSzSpotcdX6dCicg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ws6pxjBO5YSo7AK1XAs0mpJQ+7g5SJBSQc3p32ibg/+kIztpwrA6nOU3rZnkSzgLq
-	 MaxQAhxrQefW7foZBs9Ft7UPQx/2yEqZP+GH0uLDT7vGYm8X+5valC7veVJZhACP1i
-	 P3zSaXY+WIxyLxrvHorT7t2VaXlz0maun429yzp4=
+	b=FotPRcTVVzDzH10SSxZ+xlViD86YyCkJBpck+YsiPLdOCZmM6vFWNh1KyGszdQDtH
+	 aUjNAtj8h2fE//P4OGeDCOwRj/SytFjLzjvdzxKK/vnnXLpdgoBg+SL6DCc24RkPtb
+	 Bs7RxGNB0CXNLH8SJV4bQUmvSyOH+O92fwoeIUs8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
+	Asim Viladi Oglu Manizada <manizada@pm.me>,
 	Xin Long <lucien.xin@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 428/609] sctp: reject stale cookies with mismatched verification tags
-Date: Mon, 17 Aug 2026 15:32:04 +0200
-Message-ID: <20260817132558.416695056@linuxfoundation.org>
+Subject: [PATCH 6.1 429/609] sctp: prevent peer transport count overflow
+Date: Mon, 17 Aug 2026 15:32:05 +0200
+Message-ID: <20260817132558.445642616@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -51,65 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
+From: Asim Viladi Oglu Manizada <manizada@pm.me>
 
-commit 9d8da8e0a9bce4a340af60dd0446bc7eb8d07587 upstream.
+commit bd0e9289e2642f6a5c54faad304ce0f41e926d22 upstream.
 
-sctp_unpack_cookie() skips cookie expiration checks whenever an
-association already exists.  This is broader than the exception in
-RFC 9260 Section 5.2.4.
+sctp_assoc_add_peer() increments the association's 16-bit transport_count
+for every new unique peer. Adding the 65,536th transport wraps the count to
+zero.
 
-For an existing association, Section 5.2.4 permits an expired State
-Cookie only when both Verification Tags in the cookie match the current
-association.  Otherwise, the packet SHOULD be discarded and a Stale
-Cookie ERROR MUST be sent.
+SCTP sock_diag uses transport_count to reserve the INET_DIAG_PEERS payload,
+then copies one sockaddr_storage for every entry in transport_addr_list.
+After the wrap, a diagnostic dump reserves an empty payload and writes
+8 MiB of peer addresses past the skb tail.
 
-The broad check lets an expired Action A restart cookie reach
-sctp_sf_do_dupcook_a().  In a runtime test with the default 60 second
-cookie lifetime, replaying such a cookie after 65 seconds returned a
-COOKIE-ACK and restarted the association.
+Reject a new unique peer when transport_count has reached U16_MAX. Perform
+the check after the existing-peer lookup so a duplicate address continues
+to return its existing transport at the limit.
 
-Check cookie expiration unless both Verification Tags match.  This
-preserves the Action D exception for a lost COOKIE ACK while rejecting
-expired cookies in all other cases.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 8f840e47f190 ("sctp: add the sctp_diag.c file")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
+Signed-off-by: Asim Viladi Oglu Manizada <manizada@pm.me>
 Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20260723225623.2658868-1-yangyx22@mails.tsinghua.edu.cn
+Link: https://patch.msgid.link/20260725032053.521705-1-manizada@pm.me
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/sm_make_chunk.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ net/sctp/associola.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/net/sctp/sm_make_chunk.c
-+++ b/net/sctp/sm_make_chunk.c
-@@ -1821,9 +1821,9 @@ no_hmac:
- 		goto fail;
+--- a/net/sctp/associola.c
++++ b/net/sctp/associola.c
+@@ -616,6 +616,9 @@ struct sctp_transport *sctp_assoc_add_pe
+ 		return peer;
  	}
  
--	/* Check to see if the cookie is stale.  If there is already
--	 * an association, there is no need to check cookie's expiration
--	 * for init collision case of lost COOKIE ACK.
-+	/* Check to see if the cookie is stale.  RFC 9260 Section 5.2.4
-+	 * exempts an expired cookie only when both Verification Tags match
-+	 * the current association.
- 	 * If skb has been timestamped, then use the stamp, otherwise
- 	 * use current time.  This introduces a small possibility that
- 	 * a cookie may be considered expired, but this would only slow
-@@ -1834,7 +1834,10 @@ no_hmac:
- 	else
- 		kt = ktime_get_real();
- 
--	if (!asoc && ktime_before(bear_cookie->expiration, kt)) {
-+	if ((!asoc ||
-+	     asoc->c.my_vtag != bear_cookie->my_vtag ||
-+	     asoc->c.peer_vtag != bear_cookie->peer_vtag) &&
-+	    ktime_before(bear_cookie->expiration, kt)) {
- 		suseconds_t usecs = ktime_to_us(ktime_sub(kt, bear_cookie->expiration));
- 		__be32 n = htonl(usecs);
- 
++	if (asoc->peer.transport_count == U16_MAX)
++		return NULL;
++
+ 	peer = sctp_transport_new(asoc->base.net, addr, gfp);
+ 	if (!peer)
+ 		return NULL;
 
 
