@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BAFD15E5BB;
-	Mon, 17 Aug 2026 14:22:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24B64153BE9;
+	Mon, 17 Aug 2026 14:22:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976532; cv=none; b=nwRo3GhUpZA79Uu31TmwOfQrDcDnutV+JbjcsPrZFBo9brIfWz/kFi78mebZMMHCF6ZqKA2tuPLxqxX9+spTF2HWSDjb+v76b5zD9hKTaQpsfQZgSu48KP86Tkw6TFgXXpzSK6CKiLzIOGwGsU7CMQ5jeVJVCQ4igZNzD5xpwuM=
+	t=1786976535; cv=none; b=AalyivZVp4jQxhFXw4L6xzQcVnXobftEZM+d2SLcAPOaB1usdstCJ/bWRcuzB1GtAFtb5I9NBGwCLJagggF3pF86zgXQvO7R9/g3Ngv0N7BGU7iRXDsV25Xr6w523TSXqqpESrCLTN4eRyvHXi1XWNbGct+NfKYGDavcpiVgSxE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976532; c=relaxed/simple;
-	bh=rKSeJF5BwB1NPas14zvEMDTFmOuYug6iLJc2Ue3X5Vc=;
+	s=arc-20240116; t=1786976535; c=relaxed/simple;
+	bh=9s0a503x7T54xQl49jKgUFTcAziPVT14dDMImwkaGzA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Elc/OpuklNFbyKBdtXgkInsLLmlaWhO/XRBqU+EtCsNYYBl4Yo58ddwtlaRsgISQkuKFXUr2kyJiVdRrVojQD87+Hr69eEKNRIHlNkEFETJycIB7EeOK5Ym/5DZYzAAto173RG+EAYbS1Q4gClQLWqec4q/I7aKSMCkvReTrpQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lSgSvjPx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FO11LXXrlv0ZEA5JKz5kTtJ+CEEJaKFi/kW+xAlrOCTQjhznkS1UXqYN7BwblclWPX3RDxs4kwfS7/dsAs6KDiEo45ZAnuC/k3fNGR/IIjjX0AUGRtIxQY85Wh/u4Lny8fkzemzYUYMA+K2IKmfMJh+9BRUCSZSsrYa3Hj4xuIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xrrezpMX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lSgSvjPx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 946281F000E9;
-	Mon, 17 Aug 2026 14:22:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xrrezpMX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 720061F000E9;
+	Mon, 17 Aug 2026 14:22:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976531;
-	bh=YavRK3A8NbRWHSr3+O4vEzWdkWdRPOGfC2/Z59G7rtU=;
+	s=korg; t=1786976534;
+	bh=OQh8BGHQtqDjTOBHxJP0i/mxc+29GdgQeaF8dbBherM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lSgSvjPxRalmB6u4OXN/BTrO3iOSKGQQs5ht5+ukbl32TE+vv4MpccBO8C+XekFeJ
-	 OsEpqXieEEcN29ldzCvuwP4+qlnDa95ZI7r9fD7HRRTbYwB/XlSshQNqp08kXK0Dys
-	 h/6G7jJtqxO0kuone2KWBbXEn4sBfdZKvRoCvEWI=
+	b=xrrezpMXmbYA1UCq4uaV3qxammfL5N70HI4M1R6+kxlmj/8GezXKyywgj4kZNEMy8
+	 O669m4fF0QY62NAUy1i2bGDMu/SuM9FUU95356KmMRv2RAVAEw1mBvUagCeY5jTUZv
+	 1uAqFo8YZ9/DfvZ8dXyKzQrDJ2YB1d4sPeWdLu+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daehyeon Ko <4ncienth@gmail.com>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 003/456] macsec: dont read an unset MAC header in macsec_encrypt()
-Date: Mon, 17 Aug 2026 15:26:33 +0200
-Message-ID: <20260817132539.951594834@linuxfoundation.org>
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 5.15 004/456] KVM: nVMX: Hide shadow VMCS right after VMCLEAR
+Date: Mon, 17 Aug 2026 15:26:34 +0200
+Message-ID: <20260817132539.995104731@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -52,53 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daehyeon Ko <4ncienth@gmail.com>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-commit f5089008f90c0a7c5520dff3934e0af00adf322d upstream.
+commit 622ebfac01ba4f9c0060cebd41257fe46fc4a0b3 upstream.
 
-macsec_encrypt() reads the Ethernet header via eth_hdr(skb)
-(skb->head + skb->mac_header) to memmove() the 12 source/destination MAC
-bytes forward and make room for the SecTAG.
+free_nested() frees the shadow VMCS while vmcs01 still points to it. But
+because it is asynchronous with respect to loaded_vmcs_clear(), the vCPU
+might migrate before the pointer is cleared and __loaded_vmcs_clear()
+may then execute VMCLEAR.
 
-On the AF_PACKET SOCK_RAW + PACKET_QDISC_BYPASS transmit path the skb
-reaches the macsec ndo_start_xmit() with the MAC header unset, so
-eth_hdr(skb) resolves to skb->head + (u16)~0 and the read is out of
-bounds: a 12-byte heap over-read that is also emitted on the wire as the
-frame's outer source/destination MAC. KASAN reports a slab-out-of-bounds
-read in macsec_start_xmit() on 6.0; on current mainline a CONFIG_DEBUG_NET
-build flags it as an unset mac header in skb_mac_header().
+The VMCS needs to stay attached until its explicit VMCLEAR completes, but
+then it can be hidden and the page safely freed.
 
-On the TX path the L2 header is at skb->data, so use skb_eth_hdr(), added
-by commit 96cc4b69581d ("macvlan: do not assume mac_header is set in
-macvlan_broadcast()") for exactly this purpose.
-
-Fixes: c09440f7dcb3 ("macsec: introduce IEEE 802.1AE driver")
+Fixes: 355f4fb1405e ("kvm: nVMX: VMCLEAR an active shadow VMCS after last use")
 Cc: stable@vger.kernel.org
-Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
-Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Link: https://patch.msgid.link/20260703083634.2035145-1-4ncienth@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/macsec.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kvm/vmx/nested.c |   11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/macsec.c b/drivers/net/macsec.c
-index 9b0cb78507384b..5de940761ebf1e 100644
---- a/drivers/net/macsec.c
-+++ b/drivers/net/macsec.c
-@@ -662,7 +662,7 @@ static struct sk_buff *macsec_encrypt(struct sk_buff *skb,
- 	}
+--- a/arch/x86/kvm/vmx/nested.c
++++ b/arch/x86/kvm/vmx/nested.c
+@@ -279,6 +279,7 @@ static void vmx_switch_vmcs(struct kvm_v
+ static void free_nested(struct kvm_vcpu *vcpu)
+ {
+ 	struct vcpu_vmx *vmx = to_vmx(vcpu);
++	struct vmcs *shadow_vmcs;
  
- 	unprotected_len = skb->len;
--	eth = eth_hdr(skb);
-+	eth = skb_eth_hdr(skb);
- 	sci_present = send_sci(secy);
- 	hh = skb_push(skb, macsec_extra_len(sci_present));
- 	memmove(hh, eth, 2 * ETH_ALEN);
--- 
-2.53.0
-
+ 	if (WARN_ON_ONCE(vmx->loaded_vmcs != &vmx->vmcs01))
+ 		vmx_switch_vmcs(vcpu, &vmx->vmcs01);
+@@ -295,9 +296,15 @@ static void free_nested(struct kvm_vcpu
+ 	vmx->nested.current_vmptr = -1ull;
+ 	if (enable_shadow_vmcs) {
+ 		vmx_disable_shadow_vmcs(vmx);
+-		vmcs_clear(vmx->vmcs01.shadow_vmcs);
+-		free_vmcs(vmx->vmcs01.shadow_vmcs);
++
++		/*
++		 * Keep the pointer visible until after VMCLEAR, so migration
++		 * can clear an active shadow VMCS on the old CPU.
++		 */
++		shadow_vmcs = vmx->vmcs01.shadow_vmcs;
++		vmcs_clear(shadow_vmcs);
+ 		vmx->vmcs01.shadow_vmcs = NULL;
++		free_vmcs(shadow_vmcs);
+ 	}
+ 	kfree(vmx->nested.cached_vmcs12);
+ 	vmx->nested.cached_vmcs12 = NULL;
 
 
