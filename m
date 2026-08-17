@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18A6E3EC699;
-	Mon, 17 Aug 2026 14:43:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F14C239B96A;
+	Mon, 17 Aug 2026 14:43:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977806; cv=none; b=CqTnl56xRY+mauJwkaNic1O34pIo1jlscLbEOPtJidMbLhPK7u83nZH9X6vft7+93Q56qp9gDNSwd0PxmynVuD9npPb1DBuVX4/l3/voB5RMKbpQXAkeHU8YBz7b6nyqguznz2qEc6w2X2ww7phhzQVTQFdmhC99kecR4cOo5OA=
+	t=1786977809; cv=none; b=HPXMG9Wxotx6sxfJLqaQJyCEHp6uMksKxDSAsMk2YbaNpaY6tiNtk9/cMNziWedPTXeRrNIgRnZM3NSLBYgO3xM0vDPBKOLv5XenGWlBPJBo93C2dEAQcQALrf7EFto3Q5AlUFAI0xev5UcY9sTGVNjJnG2zXxNOYir/K2qhGI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977806; c=relaxed/simple;
-	bh=/7aRTVdgEbbaPGhbD/K/9+JSmGZJFUQoi9djuSnw6hE=;
+	s=arc-20240116; t=1786977809; c=relaxed/simple;
+	bh=LJExUI/6ZbWEinl73J9TEfHGhOPoj0i8+gVcuH56Q04=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bPZrNU99SSNyJR3AcNnAEkgzwEJNeTH2rQE6PtDcrVUlJT7JOxO8M3KAWNUePXya9iYCnayY2PBskicdXZHpfZMLNLZbMRmmmQZMH/7pN2RDCJpHG3S7PsfvhovaDFlTpD8368jk3Zz5Rv/qMcaJElXkLVt6j5LMduQiqRR288Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LpGoZOVC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Umo6fLquh4Y+awAm1Dcck311T55y3gpzfwtr2BqLuPhVqQy2KVtnrUZ1EjJSxfW0YD0hcCSqpCSQNdsIkZEhCM4tJY1vcFtEnkgttkYYFLpSSYyQB2dsXGco7iQLYtLLBkR0/w5AiQpk5nAnYQcnEw2tFQYC2MYplum3qPFICCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dBZ3Z7Qk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LpGoZOVC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 712931F000E9;
-	Mon, 17 Aug 2026 14:43:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dBZ3Z7Qk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53E6E1F000E9;
+	Mon, 17 Aug 2026 14:43:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977805;
-	bh=FS2fkO9/N7WDAA3vVtzEQaaSIXKROQsFoxNtp350ucc=;
+	s=korg; t=1786977807;
+	bh=XOzy+l4Jsxzgis/G3uSRv1bhd49MTW0wdEt1yE7MRa4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LpGoZOVCylZbf91oa3w+NeeKlNUF/XpK9r1yc8d6Rvf3Ab03Ap37dc+Kpp9WKYU3p
-	 F2mSUzbSA6RUIHxtPhh+a3B+6a1WzUTIG3U8zdHOgKKBux0r+wvApaioMghTG1UgPA
-	 AIVc3QMZBujpTJy7EXD/HPzZJgfOJ0DY/Og5JFgQ=
+	b=dBZ3Z7QkE/4jNbJzs6AdsntYZ+X8HH2J9rKB/bS+P6MW3nbPra8dHjUROXHBQOjcg
+	 vHiOOPsBdnhRqi7sZ63zjwBu1b/sAyY+hlkTj487rwiYOe2qesIu1ymiKT1VxxxgtX
+	 tBIhLk+I5PMd4OzZQiGY3a55uYo5ZgQymet6e2FU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sukhdeep Singh <sukhdeeps@marvell.com>,
-	Yangyu Chen <cyy@cyyself.name>,
-	Mina Almasry <almasrymina@google.com>,
+	Hyunjung Ko <hj351016@gmail.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Victor Nogueira <victor@mojatatu.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 439/456] net: atlantic: free RX pages of consumed but not refilled buffers
-Date: Mon, 17 Aug 2026 15:33:49 +0200
-Message-ID: <20260817132556.274446207@linuxfoundation.org>
+Subject: [PATCH 5.15 440/456] net/sched: act_gact, act_police: range check the fallback control action
+Date: Mon, 17 Aug 2026 15:33:50 +0200
+Message-ID: <20260817132556.306402852@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -52,71 +52,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yangyu Chen <cyy@cyyself.name>
+From: Hyunjung Ko <hj351016@gmail.com>
 
-commit e8e7471ef686b6c002218fee9671cc61992ae01a upstream.
+commit 883b56ae58fe657d8497806c7059646e9ba6dbd0 upstream.
 
-aq_ring_rx_deinit() only walks [sw_head, sw_tail), the region posted to
-hardware. Since the page reuse strategy was added, a cleaned RX buffer
-keeps its page (and its DMA mapping) in the ring for reuse, and refill
-is batched: aq_ring_rx_fill() returns early until AQ_CFG_RX_REFILL_THRES
-slots are free. Slots that were consumed but not yet reposted therefore
-sit in the complementary [sw_tail, sw_head) gap with a live page, and
-the deinit walk never visits them: up to a refill batch worth of pages
-and DMA mappings leak on every interface down.
+tcf_action_check_ctrlact() range checks the primary control action:
 
-Walk the whole ring instead and release whatever is still there. Also
-bail out if the buffer ring is already gone: a partial
-aq_ptp_ring_alloc() failure frees the ring but leaves aq_nic set, so
-aq_ptp_ring_deinit() still gets here on the unwind path.
+	if (!opcode)
+		ret = action > TC_ACT_VALUE_MAX ? -EINVAL : 0;
 
-Cc: stable@vger.kernel.org # v5.2+
-Fixes: 46f4c29d9de6 ("net: aquantia: optimize rx performance by page reuse strategy")
-Reviewed-by: Sukhdeep Singh <sukhdeeps@marvell.com>
-Signed-off-by: Yangyu Chen <cyy@cyyself.name>
-Acked-by: Mina Almasry <almasrymina@google.com>
-Link: https://patch.msgid.link/tencent_607CBA8237DA438E36B844318B21538DE008@qq.com
+TC_ACT_VALUE_MAX is TC_ACT_TRAP, so kernel-internal verdicts above it
+cannot be set that way. But act_gact and act_police each carry a second,
+independent control action supplied by user space that never reaches that
+helper - TCA_GACT_PROB.paction and TCA_POLICE_RESULT. Both only reject
+TC_ACT_GOTO_CHAIN, so any other value is stored verbatim and returned
+verbatim from the action.
+
+In particular user space can store TC_ACT_CONSUMED, which is
+TC_ACT_VALUE_MAX + 1 and is deliberately not part of the UAPI value
+range. That verdict tells every caller the action took ownership of the
+skb, so nobody frees it: sch_handle_ingress(), sch_handle_egress() and
+tcf_qevent_handle() all deliberately skip the free for it. The result is
+one leaked sk_buff plus its data buffer per packet traversing the filter,
+unbounded, for all traffic on the chain including kernel-generated
+packets.
+
+Both are trivially deterministic. act_gact clamps tcfg_pval to >= 1, so
+with pval = 1 gact_determ() returns the fallback for every packet.
+act_police has no mandatory rate, so rate = 0 leaves tcfp_mtu = ~0 and
+tcf_police_mtu_check() always passes.
+
+TC_ACT_CONSUMED was added by commit 720f22fed81b ("net: sched: refactor
+reinsert action"), after both goto-chain guards were written:
+commit 9469f375ab09 ("net/sched: act_gact: disallow 'goto chain' on
+fallback control action") and
+commit c08f5ed5d625 ("net/sched: act_police: disallow 'goto chain' on
+fallback control action"). Neither guard was widened when the new
+verdict appeared.
+
+Factor the existing range test out of tcf_action_check_ctrlact() as
+tcf_action_valid() and apply it to both fallbacks. The helper cannot call
+tcf_action_check_ctrlact() directly because that also allocates a
+goto_chain, which is exactly what these two sites must not do.
+
+Reproduced on v7.2-rc6: kmemleak reports one leaked 232-byte
+skbuff_head_cache object plus its 704-byte data buffer per packet. With
+this patch both configurations are rejected with -EINVAL and kmemleak
+reports none.
+
+Fixes: 720f22fed81b ("net: sched: refactor reinsert action")
+Cc: stable@vger.kernel.org # v5.3+
+Signed-off-by: Hyunjung Ko <hj351016@gmail.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Tested-by: Victor Nogueira <victor@mojatatu.com>
+Link: https://patch.msgid.link/20260806101252.809593-1-hj351016@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/aquantia/atlantic/aq_ring.c |   22 ++++++++++++++++++----
- 1 file changed, 18 insertions(+), 4 deletions(-)
+ include/net/act_api.h  |   19 +++++++++++++++++++
+ net/sched/act_gact.c   |    5 +++++
+ net/sched/act_police.c |    6 ++++++
+ 3 files changed, 30 insertions(+)
 
---- a/drivers/net/ethernet/aquantia/atlantic/aq_ring.c
-+++ b/drivers/net/ethernet/aquantia/atlantic/aq_ring.c
-@@ -565,15 +565,29 @@ err_exit:
+--- a/include/net/act_api.h
++++ b/include/net/act_api.h
+@@ -249,6 +249,25 @@ int tcf_action_check_ctrlact(int action,
+ struct tcf_chain *tcf_action_set_ctrlact(struct tc_action *a, int action,
+ 					 struct tcf_chain *newchain);
  
- void aq_ring_rx_deinit(struct aq_ring_s *self)
- {
--	if (!self)
-+	unsigned int i;
++/* Range check for a control action supplied by user space.
++ *
++ * This is the same test tcf_action_check_ctrlact() applies to the primary
++ * control action, factored out for the *fallback* control actions
++ * (act_gact's TCA_GACT_PROB.paction and act_police's TCA_POLICE_RESULT),
++ * which must not reach tcf_action_check_ctrlact() because they have no
++ * goto_chain to allocate.  Without it, user space can store kernel-internal
++ * verdicts such as TC_ACT_CONSUMED, which is TC_ACT_VALUE_MAX + 1 and is
++ * deliberately not part of the UAPI value range.
++ */
++static inline bool tcf_action_valid(int action)
++{
++	int opcode = TC_ACT_EXT_OPCODE(action);
 +
-+	if (!self || !self->buff_ring)
- 		return;
- 
--	for (; self->sw_head != self->sw_tail;
--		self->sw_head = aq_ring_next_dx(self, self->sw_head)) {
--		struct aq_ring_buff_s *buff = &self->buff_ring[self->sw_head];
-+	/* Release every page still owned by the ring.
-+	 *
-+	 * Walking [sw_head, sw_tail) is not enough: refill is batched
-+	 * (aq_ring_rx_fill() waits for AQ_CFG_RX_REFILL_THRES free slots),
-+	 * so slots that were cleaned but not yet reposted accumulate in the
-+	 * [sw_tail, sw_head) gap, and they keep their page for reuse. Walk
-+	 * the whole ring and release whatever is left.
-+	 */
-+	for (i = 0; i < self->size; i++) {
-+		struct aq_ring_buff_s *buff = &self->buff_ring[i];
++	if (!opcode)
++		return action <= TC_ACT_VALUE_MAX;
++	return opcode <= TC_ACT_EXT_OPCODE_MAX || action == TC_ACT_UNSPEC;
++}
 +
-+		if (!buff->rxdata.page)
-+			continue;
+ #ifdef CONFIG_INET
+ DECLARE_STATIC_KEY_FALSE(tcf_frag_xmit_count);
+ #endif
+--- a/net/sched/act_gact.c
++++ b/net/sched/act_gact.c
+@@ -88,6 +88,11 @@ static int tcf_gact_init(struct net *net
+ 		p_parm = nla_data(tb[TCA_GACT_PROB]);
+ 		if (p_parm->ptype >= MAX_RAND)
+ 			return -EINVAL;
++		if (!tcf_action_valid(p_parm->paction)) {
++			NL_SET_ERR_MSG(extack,
++				       "invalid fallback control action");
++			return -EINVAL;
++		}
+ 		if (TC_ACT_EXT_CMP(p_parm->paction, TC_ACT_GOTO_CHAIN)) {
+ 			NL_SET_ERR_MSG(extack,
+ 				       "goto chain not allowed on fallback");
+--- a/net/sched/act_police.c
++++ b/net/sched/act_police.c
+@@ -136,6 +136,12 @@ static int tcf_police_init(struct net *n
  
- 		aq_free_rxpage(&buff->rxdata, aq_nic_get_dev(self->aq_nic));
- 	}
-+
-+	self->sw_head = self->sw_tail;
- }
- 
- void aq_ring_free(struct aq_ring_s *self)
+ 	if (tb[TCA_POLICE_RESULT]) {
+ 		tcfp_result = nla_get_u32(tb[TCA_POLICE_RESULT]);
++		if (!tcf_action_valid(tcfp_result)) {
++			NL_SET_ERR_MSG(extack,
++				       "invalid fallback control action");
++			err = -EINVAL;
++			goto failure;
++		}
+ 		if (TC_ACT_EXT_CMP(tcfp_result, TC_ACT_GOTO_CHAIN)) {
+ 			NL_SET_ERR_MSG(extack,
+ 				       "goto chain not allowed on fallback");
 
 
