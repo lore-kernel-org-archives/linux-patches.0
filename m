@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C6293AAF6D;
-	Mon, 17 Aug 2026 15:14:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F1DC3AAF6D;
+	Mon, 17 Aug 2026 15:14:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979643; cv=none; b=SJdUZ93JgGVkV9p7EVATC+DoWWoqD4yis5U4D2EUlowdnSPa2fguzw5u8PzIP/XB7tFclHcIuI/Ij0Jez6vksOeQLdkPoT6joj0lxKnvApUJBR14SZYPkepiXs+81JBxhcVVGVZeuXnP8XqaMRTT7XC7Fkdg1o+/I0AWiaQ7xuc=
+	t=1786979646; cv=none; b=CvYGWkX981NY+Y4KMm7y+bVj5suSjgHlMyG6+E2jPxUJGyWB7o6cvCoysOw9mltAE8SC0ZRmvZyHv3WC77VpMrf8GH+QTWPHIrNTVG+0cL9ZShJzyvTCcI9lsQczpIqmUcMCWLOVi4lNszyfVYcBJFYzgOowitn65Z6PYRoHgSw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979643; c=relaxed/simple;
-	bh=pTp32Vl5nut2nTnjiI4BER6pEjgdUv0MTEVDsKWgwX4=;
+	s=arc-20240116; t=1786979646; c=relaxed/simple;
+	bh=zmtU84zxbaz72Dd++hACuTRJ8cNS7KHAzxBQJzcHB6E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mO0VKrv41IjsGbV6Tn4mBBqKGcXhKp/0h75KC6ruSgBUdUGy2LKkRRqvgrr2Dp2E1SK2VWTgTbTCvB8XnB/G4BxbSC7ojC3j7dLnxTJli64GoGzZ54F4PL+DzBs1uLHIiIaXXnttrIB0hYkXPPuBvPIw2YD/53syZ20UbpMnD4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h0RJARq3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=V5KTuJxZPDVz7KMsnZAB56aO7dNVN+j9f2Z45rEBsmYJ1lb8LzBDUSobPUp+TueeJ3oZ1FMC+JYtF4oiLqDaSiL8deI0fBZ7D37xm3GcC5bpwWOoIw2c4DrzT1TMd4ZDo6Wh+rYdKzZWjXsCxRfIL0QVSs5ndHj9Kr1mzstWxK8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eI27tRCl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h0RJARq3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5FE01F000E9;
-	Mon, 17 Aug 2026 15:14:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eI27tRCl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C63791F000E9;
+	Mon, 17 Aug 2026 15:14:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979642;
-	bh=ztqZVVUK/hETcWfHR15n3yNIPULR+vgsEPc6Plh6Rws=;
+	s=korg; t=1786979645;
+	bh=LMmpWWGYO+CfyXltM8123VWgo5C3pldoySM8bBDwFBo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h0RJARq3PcaQsS3HijObcOBu0H/DfrVPBMaC214OlT7ecPo2BA+S73FTtb6oR1yyo
-	 F7zIjcb6gJf6RMj4f5+8V2OT0Gx8tMAxjNCfJBER4mctt4i4jA8H7elPlqNOfbNb/d
-	 bnSNVzqIFCO4JJTdx97WK01Y5Si99tQLwf6Wox/8=
+	b=eI27tRClRpYjrZiCVhIxVrJPOJLEFY0hRpPxR3tS658sWlDFeMFb4tqjYatA2rKGW
+	 YXr07/W+dyIcS/XoSMy2auI5okS1dK2fN1s0d7pwWxovfPLSZB0gKjYPrmazHOWn1a
+	 f5ojJcjwsiOb6CL/homVZacuZyLUxfUyWQVCRMSk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 297/609] mm/damon/core: disallow overlapping input ranges for damon_set_regions()
-Date: Mon, 17 Aug 2026 15:29:53 +0200
-Message-ID: <20260817132554.160636035@linuxfoundation.org>
+Subject: [PATCH 6.1 298/609] netfilter: nf_conntrack_expect: restore helper propagation via expectation
+Date: Mon, 17 Aug 2026 15:29:54 +0200
+Message-ID: <20260817132554.195400668@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -51,74 +51,266 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SJ Park <sj@kernel.org>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-commit 954157679ec34661c2e87e7eb796104a797c32db upstream.
+[ Upstream commit dcb0f9aefdd604d36710fda53c25bd7cf4a3e37a ]
 
-damon_set_regions() assumes the input ranges are sorted by the address and
-don't overlap each other.  Hence the assumption was initially to be
-explicitly validated.  But commit 97d482f4592f ("mm/damon/sysfs: reuse
-damon_set_regions() for regions setting") has mistakenly removed the
-validation.
+A recent series to fix expectations broke helper propagation via
+expectation, this mechanism is used by the sip and h323 helper. This
+also propagates the conntrack helper to expected connections. I changed
+semantics of exp->helper which now tells us the actual helper that
+created the expectation.
 
-This can make DAMON behave in unexpected ways.  At the best, the
-monitoring results snapshot will just look weird since there will be
-overlapping regions.  DAMOS will also work weirdly, applying the same
-action multiple times for overlapping regions, and make DAMOS quota weird.
-More seriously, depending on the setup and regions updates sequence,
-negative size regions can be made.  It will trigger WARN_ONCE() if the
-kernel is built with CONFIG_DAMON_DEBUG_SANITY=y.  Depending on the
-monitoring results, the negative size region can further trigger division
-by zero in damon_merge_two_regions().
+Add an explicit assign_helper field to expectations for this purpose
+and update helpers to use it.
 
-Note that some of the consequences including the WARN_ONCE() and the
-divide by zero depend on commits that were introduced after the root cause
-commit 97d482f4592f ("mm/damon/sysfs: reuse damon_set_regions() for
-regions setting").
+Restore this feature for userspace conntrack helper via ctnetlink
+nfqueue integration so it is again possible to attach a helper to an
+expectation, where it makes sense. This is not restored via ctnetlink
+expectation creation as there is no client for such feature. Use the
+expectation layer 4 protocol number for the helper lookup for
+consistency.
 
-Fix the problems by checking the assumption and returning an error if
-the input ranges don't meet the assumption.
+Make sure the expectation using this helper propagation mechanism also
+go away when the helper is unregistered.
 
-The issue was discovered [1] by Sashiko.
-
-Link: https://lore.kernel.org/20260703165610.92894-1-sj@kernel.org
-Link: https://lore.kernel.org/20260630041806.151124-1-sj@kernel.org [1]
-Fixes: 97d482f4592f ("mm/damon/sysfs: reuse damon_set_regions() for regions setting")
-Signed-off-by: SJ Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org> # 5.19.x
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: SJ Park <sj@kernel.org>
+Fixes: 9c42bc9db90a ("netfilter: nf_conntrack_expect: honor expectation helper field")
+Fixes: 917b61fa2042 ("netfilter: ctnetlink: ignore explicit helper on new expectations")
+Reported-by: Ilya Maximets <i.maximets@ovn.org>
+Tested-by: Ilya Maximets <i.maximets@ovn.org>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/damon/core.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ include/net/netfilter/nf_conntrack_expect.h |  5 ++++-
+ net/netfilter/nf_conntrack_broadcast.c      |  1 +
+ net/netfilter/nf_conntrack_core.c           |  7 +++++--
+ net/netfilter/nf_conntrack_expect.c         |  1 +
+ net/netfilter/nf_conntrack_h323_main.c      | 12 ++++++------
+ net/netfilter/nf_conntrack_helper.c         |  5 +++++
+ net/netfilter/nf_conntrack_netlink.c        | 18 ++++++++++++++++--
+ net/netfilter/nf_conntrack_sip.c            |  2 +-
+ 8 files changed, 39 insertions(+), 12 deletions(-)
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index 0a0bb033f28a..dd4eafe8b961 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -210,12 +210,19 @@ int damon_set_regions(struct damon_target *t, struct damon_addr_range *ranges,
- {
- 	struct damon_region *r, *next;
- 	unsigned int i;
-+	unsigned long last_end;
- 	int err;
+diff --git a/include/net/netfilter/nf_conntrack_expect.h b/include/net/netfilter/nf_conntrack_expect.h
+index e9a8350e7ccf..80f50fd0f7ad 100644
+--- a/include/net/netfilter/nf_conntrack_expect.h
++++ b/include/net/netfilter/nf_conntrack_expect.h
+@@ -45,9 +45,12 @@ struct nf_conntrack_expect {
+ 	void (*expectfn)(struct nf_conn *new,
+ 			 struct nf_conntrack_expect *this);
  
- 	for (i = 0; i < nr_ranges; i++) {
--		if (ALIGN_DOWN(ranges[i].start, DAMON_MIN_REGION) >=
--				ALIGN(ranges[i].end, DAMON_MIN_REGION))
-+		unsigned long start, end;
+-	/* Helper to assign to new connection */
++	/* Helper that created this expectation */
+ 	struct nf_conntrack_helper __rcu *helper;
+ 
++	/* Helper to assign to new connection */
++	struct nf_conntrack_helper __rcu *assign_helper;
 +
-+		start = ALIGN_DOWN(ranges[i].start, DAMON_MIN_REGION);
-+		end = ALIGN(ranges[i].end, DAMON_MIN_REGION);
-+		if (start >= end)
-+			return -EINVAL;
-+		if (i > 0 && last_end > start)
- 			return -EINVAL;
-+		last_end = end;
- 	}
+ 	/* The conntrack of the master connection */
+ 	struct nf_conn *master;
  
- 	/* Remove regions which are not in the new ranges */
+diff --git a/net/netfilter/nf_conntrack_broadcast.c b/net/netfilter/nf_conntrack_broadcast.c
+index d44d9379a8a0..ef8a7ca8c116 100644
+--- a/net/netfilter/nf_conntrack_broadcast.c
++++ b/net/netfilter/nf_conntrack_broadcast.c
+@@ -72,6 +72,7 @@ int nf_conntrack_broadcast_help(struct sk_buff *skb,
+ 	exp->flags                = NF_CT_EXPECT_PERMANENT;
+ 	exp->class		  = NF_CT_EXPECT_CLASS_DEFAULT;
+ 	rcu_assign_pointer(exp->helper, helper);
++	rcu_assign_pointer(exp->assign_helper, NULL);
+ 	write_pnet(&exp->net, net);
+ #ifdef CONFIG_NF_CONNTRACK_ZONES
+ 	exp->zone = ct->zone;
+diff --git a/net/netfilter/nf_conntrack_core.c b/net/netfilter/nf_conntrack_core.c
+index f5c466ea1e7d..342627b0d32b 100644
+--- a/net/netfilter/nf_conntrack_core.c
++++ b/net/netfilter/nf_conntrack_core.c
+@@ -1800,16 +1800,19 @@ init_conntrack(struct net *net, struct nf_conn *tmpl,
+ 		spin_lock_bh(&nf_conntrack_expect_lock);
+ 		exp = nf_ct_find_expectation(net, zone, tuple, !tmpl || nf_ct_is_confirmed(tmpl));
+ 		if (exp) {
++			struct nf_conntrack_helper *assign_helper;
++
+ 			pr_debug("expectation arrives ct=%p exp=%p\n",
+ 				 ct, exp);
+ 			/* Welcome, Mr. Bond.  We've been expecting you... */
+ 			__set_bit(IPS_EXPECTED_BIT, &ct->status);
+ 			/* exp->master safe, refcnt bumped in nf_ct_find_expectation */
+ 			ct->master = exp->master;
+-			if (exp->helper) {
++			assign_helper = rcu_dereference(exp->assign_helper);
++			if (assign_helper) {
+ 				help = nf_ct_helper_ext_add(ct, GFP_ATOMIC);
+ 				if (help)
+-					rcu_assign_pointer(help->helper, exp->helper);
++					rcu_assign_pointer(help->helper, assign_helper);
+ 			}
+ 
+ #ifdef CONFIG_NF_CONNTRACK_MARK
+diff --git a/net/netfilter/nf_conntrack_expect.c b/net/netfilter/nf_conntrack_expect.c
+index 379711ea5ab6..34324dece89d 100644
+--- a/net/netfilter/nf_conntrack_expect.c
++++ b/net/netfilter/nf_conntrack_expect.c
+@@ -344,6 +344,7 @@ void nf_ct_expect_init(struct nf_conntrack_expect *exp, unsigned int class,
+ 		helper = rcu_dereference(help->helper);
+ 
+ 	rcu_assign_pointer(exp->helper, helper);
++	rcu_assign_pointer(exp->assign_helper, NULL);
+ 	write_pnet(&exp->net, net);
+ #ifdef CONFIG_NF_CONNTRACK_ZONES
+ 	exp->zone = ct->zone;
+diff --git a/net/netfilter/nf_conntrack_h323_main.c b/net/netfilter/nf_conntrack_h323_main.c
+index 791aafe9f396..c42547284f35 100644
+--- a/net/netfilter/nf_conntrack_h323_main.c
++++ b/net/netfilter/nf_conntrack_h323_main.c
+@@ -642,7 +642,7 @@ static int expect_h245(struct sk_buff *skb, struct nf_conn *ct,
+ 			  &ct->tuplehash[!dir].tuple.src.u3,
+ 			  &ct->tuplehash[!dir].tuple.dst.u3,
+ 			  IPPROTO_TCP, NULL, &port);
+-	rcu_assign_pointer(exp->helper, &nf_conntrack_helper_h245);
++	rcu_assign_pointer(exp->assign_helper, &nf_conntrack_helper_h245);
+ 
+ 	nathook = rcu_dereference(nfct_h323_nat_hook);
+ 	if (memcmp(&ct->tuplehash[dir].tuple.src.u3,
+@@ -766,7 +766,7 @@ static int expect_callforwarding(struct sk_buff *skb,
+ 	nf_ct_expect_init(exp, NF_CT_EXPECT_CLASS_DEFAULT, nf_ct_l3num(ct),
+ 			  &ct->tuplehash[!dir].tuple.src.u3, &addr,
+ 			  IPPROTO_TCP, NULL, &port);
+-	rcu_assign_pointer(exp->helper, nf_conntrack_helper_q931);
++	rcu_assign_pointer(exp->assign_helper, nf_conntrack_helper_q931);
+ 
+ 	nathook = rcu_dereference(nfct_h323_nat_hook);
+ 	if (memcmp(&ct->tuplehash[dir].tuple.src.u3,
+@@ -1233,7 +1233,7 @@ static int expect_q931(struct sk_buff *skb, struct nf_conn *ct,
+ 				&ct->tuplehash[!dir].tuple.src.u3 : NULL,
+ 			  &ct->tuplehash[!dir].tuple.dst.u3,
+ 			  IPPROTO_TCP, NULL, &port);
+-	rcu_assign_pointer(exp->helper, nf_conntrack_helper_q931);
++	rcu_assign_pointer(exp->assign_helper, nf_conntrack_helper_q931);
+ 	exp->flags = NF_CT_EXPECT_PERMANENT;	/* Accept multiple calls */
+ 
+ 	nathook = rcu_dereference(nfct_h323_nat_hook);
+@@ -1305,7 +1305,7 @@ static int process_gcf(struct sk_buff *skb, struct nf_conn *ct,
+ 	nf_ct_expect_init(exp, NF_CT_EXPECT_CLASS_DEFAULT, nf_ct_l3num(ct),
+ 			  &ct->tuplehash[!dir].tuple.src.u3, &addr,
+ 			  IPPROTO_UDP, NULL, &port);
+-	rcu_assign_pointer(exp->helper, nf_conntrack_helper_ras);
++	rcu_assign_pointer(exp->assign_helper, nf_conntrack_helper_ras);
+ 
+ 	if (nf_ct_expect_related(exp, 0) == 0) {
+ 		pr_debug("nf_ct_ras: expect RAS ");
+@@ -1522,7 +1522,7 @@ static int process_acf(struct sk_buff *skb, struct nf_conn *ct,
+ 			  &ct->tuplehash[!dir].tuple.src.u3, &addr,
+ 			  IPPROTO_TCP, NULL, &port);
+ 	exp->flags = NF_CT_EXPECT_PERMANENT;
+-	rcu_assign_pointer(exp->helper, nf_conntrack_helper_q931);
++	rcu_assign_pointer(exp->assign_helper, nf_conntrack_helper_q931);
+ 
+ 	if (nf_ct_expect_related(exp, 0) == 0) {
+ 		pr_debug("nf_ct_ras: expect Q.931 ");
+@@ -1576,7 +1576,7 @@ static int process_lcf(struct sk_buff *skb, struct nf_conn *ct,
+ 			  &ct->tuplehash[!dir].tuple.src.u3, &addr,
+ 			  IPPROTO_TCP, NULL, &port);
+ 	exp->flags = NF_CT_EXPECT_PERMANENT;
+-	rcu_assign_pointer(exp->helper, nf_conntrack_helper_q931);
++	rcu_assign_pointer(exp->assign_helper, nf_conntrack_helper_q931);
+ 
+ 	if (nf_ct_expect_related(exp, 0) == 0) {
+ 		pr_debug("nf_ct_ras: expect Q.931 ");
+diff --git a/net/netfilter/nf_conntrack_helper.c b/net/netfilter/nf_conntrack_helper.c
+index 8e72c3d4db4a..efa080cb1709 100644
+--- a/net/netfilter/nf_conntrack_helper.c
++++ b/net/netfilter/nf_conntrack_helper.c
+@@ -422,6 +422,11 @@ static bool expect_iter_me(struct nf_conntrack_expect *exp, void *data)
+ 
+ 	this = rcu_dereference_protected(exp->helper,
+ 					 lockdep_is_held(&nf_conntrack_expect_lock));
++	if (this == me)
++		return true;
++
++	this = rcu_dereference_protected(exp->assign_helper,
++					 lockdep_is_held(&nf_conntrack_expect_lock));
+ 	return this == me;
+ }
+ 
+diff --git a/net/netfilter/nf_conntrack_netlink.c b/net/netfilter/nf_conntrack_netlink.c
+index a3b18042adec..55bc5626b967 100644
+--- a/net/netfilter/nf_conntrack_netlink.c
++++ b/net/netfilter/nf_conntrack_netlink.c
+@@ -2628,6 +2628,7 @@ static const struct nla_policy exp_nla_policy[CTA_EXPECT_MAX+1] = {
+ 
+ static struct nf_conntrack_expect *
+ ctnetlink_alloc_expect(const struct nlattr *const cda[], struct nf_conn *ct,
++		       const struct nf_conntrack_helper *assign_helper,
+ 		       struct nf_conntrack_tuple *tuple,
+ 		       struct nf_conntrack_tuple *mask);
+ 
+@@ -2854,6 +2855,7 @@ static int
+ ctnetlink_glue_attach_expect(const struct nlattr *attr, struct nf_conn *ct,
+ 			     u32 portid, u32 report)
+ {
++	struct nf_conntrack_helper *assign_helper = NULL;
+ 	struct nlattr *cda[CTA_EXPECT_MAX+1];
+ 	struct nf_conntrack_tuple tuple, mask;
+ 	struct nf_conntrack_expect *exp;
+@@ -2869,8 +2871,18 @@ ctnetlink_glue_attach_expect(const struct nlattr *attr, struct nf_conn *ct,
+ 	if (err < 0)
+ 		return err;
+ 
++	if (cda[CTA_EXPECT_HELP_NAME]) {
++		const char *helpname = nla_data(cda[CTA_EXPECT_HELP_NAME]);
++
++		assign_helper = __nf_conntrack_helper_find(helpname,
++							   nf_ct_l3num(ct),
++							   tuple.dst.protonum);
++		if (!assign_helper)
++			return -EOPNOTSUPP;
++	}
++
+ 	exp = ctnetlink_alloc_expect((const struct nlattr * const *)cda, ct,
+-				     &tuple, &mask);
++				     assign_helper, &tuple, &mask);
+ 	if (IS_ERR(exp))
+ 		return PTR_ERR(exp);
+ 
+@@ -3509,6 +3521,7 @@ ctnetlink_parse_expect_nat(const struct nlattr *attr,
+ 
+ static struct nf_conntrack_expect *
+ ctnetlink_alloc_expect(const struct nlattr * const cda[], struct nf_conn *ct,
++		       const struct nf_conntrack_helper *assign_helper,
+ 		       struct nf_conntrack_tuple *tuple,
+ 		       struct nf_conntrack_tuple *mask)
+ {
+@@ -3562,6 +3575,7 @@ ctnetlink_alloc_expect(const struct nlattr * const cda[], struct nf_conn *ct,
+ 	exp->zone = ct->zone;
+ #endif
+ 	rcu_assign_pointer(exp->helper, helper);
++	rcu_assign_pointer(exp->assign_helper, assign_helper);
+ 	exp->tuple = *tuple;
+ 	exp->mask.src.u3 = mask->src.u3;
+ 	exp->mask.src.u.all = mask->src.u.all;
+@@ -3617,7 +3631,7 @@ ctnetlink_create_expect(struct net *net,
+ 	ct = nf_ct_tuplehash_to_ctrack(h);
+ 
+ 	rcu_read_lock();
+-	exp = ctnetlink_alloc_expect(cda, ct, &tuple, &mask);
++	exp = ctnetlink_alloc_expect(cda, ct, NULL, &tuple, &mask);
+ 	if (IS_ERR(exp)) {
+ 		err = PTR_ERR(exp);
+ 		goto err_rcu;
+diff --git a/net/netfilter/nf_conntrack_sip.c b/net/netfilter/nf_conntrack_sip.c
+index ec31611b7a29..0af6ede4b92c 100644
+--- a/net/netfilter/nf_conntrack_sip.c
++++ b/net/netfilter/nf_conntrack_sip.c
+@@ -1384,7 +1384,7 @@ static int process_register_request(struct sk_buff *skb, unsigned int protoff,
+ 	nf_ct_expect_init(exp, SIP_EXPECT_SIGNALLING, nf_ct_l3num(ct),
+ 			  saddr, &daddr, proto, NULL, &port);
+ 	exp->timeout.expires = sip_timeout * HZ;
+-	rcu_assign_pointer(exp->helper, helper);
++	rcu_assign_pointer(exp->assign_helper, helper);
+ 	exp->flags = NF_CT_EXPECT_PERMANENT | NF_CT_EXPECT_INACTIVE;
+ 
+ 	hooks = rcu_dereference(nf_nat_sip_hooks);
 -- 
 2.53.0
 
