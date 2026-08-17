@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC1994457BD;
-	Mon, 17 Aug 2026 15:24:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB53B4457CF;
+	Mon, 17 Aug 2026 15:25:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786980301; cv=none; b=YjC2YCwgRqdEb9+JJ6BxHl4VGe6v1NpKJ6Xlaqlj7B7qV1vDB+IZf9PbOPbZbrYHS4Jf2yXULjiWpkJj2J5i17PoQtxYU3r6Gqm4U2iHFNiPMn/vl38e4bQgypiQ5cvVgzNp4+4ErjLE7SqNcc4VCt/gzg+eDOKVQ6Uqsbh5W7c=
+	t=1786980303; cv=none; b=dU7KbVLU3/nfq+DIlpW76WTXPddRq+5jvNvCVckRjyW6q4dLZbp2BRzUxPZ3qwk/kXWm8e135/6BDOvSA1vo6C3BQsvmnFctuH8U/a112yUg3Eik/NoAE/8ne/rdNx2HTppScoGgkfNY2Y1sxMqhlXfRi6IUtgvpwLZ1Vfow/d0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786980301; c=relaxed/simple;
-	bh=rCdgNKLFLE/pE76WG+OUKeYpeWWym+SjzWFvXzZBcFg=;
+	s=arc-20240116; t=1786980303; c=relaxed/simple;
+	bh=uDnlfAdP2+wolpLbnf9zAS1osFn0Oc1jYSB0QGgAShE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GoCcSKXX65kv+UEjNvOGpHKw2B/7itwyzFva0hpQ/P0VDx4kwoE/+RWwRjMP/S+2d3WoPmTTdxVrLWbSjEsVnJ15D7MDjiPozMRbqF2DEOn912CINKnW7jkHxcIBjCS3A3M7S/5X+33ZjNlI93oq8KSN02r+utSCisdY9g3yQI8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2KQyGn3Z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tKDAbav0Tw0qhnZ7qKF7RJiVhrMHbHKjfjkyMZek7U+O/rlFbuZRLUpVQW3AQk1oqY4Yh/DPTpdG6LitP/EH4/pkET8QYEVves7zQRjEfk2CGHm4/QejtvekLm4UizH1WvH27mPH1VXIGWBGH+9yrnbMYBio3BKFuyMpCD+PbDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bK7Vsb7o; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2KQyGn3Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4243A1F000E9;
-	Mon, 17 Aug 2026 15:24:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bK7Vsb7o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 202D11F000E9;
+	Mon, 17 Aug 2026 15:25:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786980299;
-	bh=D9mcrFwHXW4w95G4+iCRfQot7zvZ5QK0Gnq3AjVCEwk=;
+	s=korg; t=1786980302;
+	bh=t31hNfKR/aul2v0XkLYt4STu8MsNBvMEzT6X7glv/ms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2KQyGn3ZtIjjOgseVS5xMCX9gn67ts1cRy3BvKohMNbo859e3fORo0NSfrEm/ZoHw
-	 Y9jJZNV69sGNFKv5Wy3beZLB9xw1zb0VotcMJp2iiY40lsRnjw9j7aA7DlSKlvYmBY
-	 zVYnc/b5PK2TV5KAC8J2NycMiAen1jiDc6p+5Oo0=
+	b=bK7Vsb7oPG6561bRKJisdEbeKKhVaVpIcHJAO44bWzPXBiHt+lzfIK4JdYvffG5hB
+	 LzI2fqeZv/1mcVz1wTYkaijfdg2nAY4WmG5v5E1X5P1muIhOx/CKGRg6g9NhzgNjVh
+	 x8YQ9gO3pif+JC3KnhSLOHlVF9vVvIaizKW4+5H4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Aloni <dan.aloni@vastdata.com>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>,
+	syzbot+22c3218a6fa219e47321@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 488/609] NFS: Pin the struct nfs_server during a FREE_STATEID call
-Date: Mon, 17 Aug 2026 15:33:04 +0200
-Message-ID: <20260817132600.254646994@linuxfoundation.org>
+Subject: [PATCH 6.1 524/609] net: remove WARN_ON_ONCE() from sk_mc_loop()
+Date: Mon, 17 Aug 2026 15:33:40 +0200
+Message-ID: <20260817132601.347902187@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -51,48 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anna Schumaker <anna.schumaker@hammerspace.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit cf616096a0f3a2b60f7d68b6b39674a6867ded9c ]
+[ Upstream commit b8a39a09ae4eaae04309e1e38ed6a1101d967496 ]
 
-Dan Aloni reports that he was able to hit a use-after-free bug if a
-FREE_STATEID operation gets delayed for whatever reason. Fix this by
-bumping the refcount of the 'struct nfs_server' object for the duration
-of the FREE_STATEID so it doesn't get cleaned up from underneath us
-while operations are still in flight.
+sk_mc_loop() can be called for sockets that are neither AF_INET
+nor AF_INET6 (e.g. AF_PACKET sockets when sending packets via raw/packet
+socket over virtual devices such as VRF or ipvlan).
 
-Reported-by: Dan Aloni <dan.aloni@vastdata.com>
-Fixes: 7c1d5fae4a87 ("NFSv4: Convert nfs41_free_stateid to use an asynchronous RPC call")
-Tested-by: Dan Aloni <dan.aloni@vastdata.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
+In such cases, sk_family is not AF_INET/AF_INET6 and sk_mc_loop() falls
+through the switch statement and triggers WARN_ON_ONCE(1).
+
+Non-INET sockets do not support IP_MULTICAST_LOOP or IPV6_MULTICAST_LOOP
+options, so loopback should default to true without generating a warning.
+
+Fixes: f60e5990d9c1 ("ipv6: protect skb->sk accesses from recursive dereference inside the stack")
+Reported-by: syzbot+22c3218a6fa219e47321@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6a72024c.13623e66.bdc14.0019.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260804152048.2134341-1-edumazet@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4proc.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ net/core/sock.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
-index 8258bce82e5bc..9f352f1a6eb1e 100644
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -10388,6 +10388,7 @@ static void nfs41_free_stateid_release(void *calldata)
- 	struct nfs_free_stateid_data *data = calldata;
- 	struct nfs_client *clp = data->server->nfs_client;
- 
-+	nfs_sb_deactive(data->server->super);
- 	nfs_put_client(clp);
- 	kfree(calldata);
+diff --git a/net/core/sock.c b/net/core/sock.c
+index 5f79f0b78321c..2a701e0b052b7 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -772,7 +772,6 @@ bool sk_mc_loop(struct sock *sk)
+ 		return inet6_sk(sk)->mc_loop;
+ #endif
+ 	}
+-	WARN_ON_ONCE(1);
+ 	return true;
  }
-@@ -10429,6 +10430,10 @@ static int nfs41_free_stateid(struct nfs_server *server,
- 
- 	if (!refcount_inc_not_zero(&clp->cl_count))
- 		return -EIO;
-+	if (!nfs_sb_active(server->super)) {
-+		nfs_put_client(clp);
-+		return -EIO;
-+	}
- 
- 	nfs4_state_protect(server->nfs_client, NFS_SP4_MACH_CRED_STATEID,
- 		&task_setup.rpc_client, &msg);
+ EXPORT_SYMBOL(sk_mc_loop);
 -- 
 2.53.0
 
