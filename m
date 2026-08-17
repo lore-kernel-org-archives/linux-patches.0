@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D99CB3B811F;
-	Mon, 17 Aug 2026 14:09:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 881163B811F;
+	Mon, 17 Aug 2026 14:09:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975787; cv=none; b=DjHgxekfcyz/l5pgpRSQtmCbOqEMPf81epRlx+JJa+M7zp/IpSnEn62PUiHpivK5qixj/dnqGlBHS5C1HEEhoKROK3XahPD/RyouBqKBpcOwDzCtiRWNrrOvQPMDimLTH1s1cWKASGVJ610T5Jww/SU5YoaOswfoXHyHoCYlRQ8=
+	t=1786975789; cv=none; b=LNDM7a8JBpDNnudfuynGRvP2HEwwF6BZH6/Gyqlyoaj9XD5tHN+dGGyByF76I/xjzvL2xXhEeIWwaYZiKqWJvV0J3nxdXtmkcU6R5okI2z9iYhbYPGWbDKjqxdP8Kk7yRL1eiAB3juIryOty4Kf0bIaWEsZAXFKYV/UocRjYJYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975787; c=relaxed/simple;
-	bh=AcOFBbCOWnpe9rC20XP7UA94PpdXDKdGl/ZZToerbE0=;
+	s=arc-20240116; t=1786975789; c=relaxed/simple;
+	bh=Az6Y/nMgPPybSOaUiKd3O3RHN5/0QKthmZ0T79mDlIY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mQw/Fue2o+WjWFiau0wTmN98EIRHn9VJ8y4NAmFHg3aJpbcQSX+4gvW+zxdGatzP8NFLoh+Xvw5VE6D0U/A5vhGym0KinLkAkCxVv/FnFFt90uvraKwWEbDEcJy6oue3VFEtJyJSSTSXiuMk5zvFSwjBtDEfuWhNBqztjGIGnTE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o13PylKA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Pfyu61717J/z8fkfFvkFsiEjrz6uqJzLzqMYDQY0wHRluroPfl02HTUpoL4DczNCCh+4/GkRzEIPJ0e8+KmBhZQGOEejSxHZxCC2hpUnhnpVyx/hPa1/50Mz4yHgrnHYcmW4DtYP4DAqA77Jy28qBckmPCrRqvrtWMnYsRi/ElA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AwANxbe9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o13PylKA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0943B1F000E9;
-	Mon, 17 Aug 2026 14:09:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AwANxbe9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE7BA1F00A3A;
+	Mon, 17 Aug 2026 14:09:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975785;
-	bh=jYEqeLfL1Y1MlLLC0GMjlczV3T7Jm2UnAT6ZI4rBoy0=;
+	s=korg; t=1786975788;
+	bh=dgu8FLZS5rrei8vT/5z52WnRdEaIljF6ka6J1zRGROA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o13PylKAqfR+oaMz5PwP8KhGnQ1v2HDdnFKCgrOiME9vSXaEbe9Zi/RZdSIsgf8pp
-	 qvPQEO3iiMFPosdgGbsafFdEMfguMOMSpuFuZW3YcoXHxM75jWEIxalt+guxo4JE5D
-	 mcKyrjWkuGTeGzC7Nm/z3/P6VgmuPb7Uou3V7nKo=
+	b=AwANxbe9BbCOdgPe29RTbte4X+vvZLqeh/3FHvto7Mw93JaqKa5622bnLee927J8Y
+	 UYplxo+SCJX78BCdDvHFT1pnFHyzJBnTR8bQcZoccYnhBZUw5nfzS5AX78WH2Lvpq/
+	 2CkCzBUxdHBc1fXmRmpyeLJerYm2YVkc/mPMTKwU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	stable@kernel.org,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 111/389] can: bcm: validate frame length in bcm_rx_setup() for RTR replies
-Date: Mon, 17 Aug 2026 15:29:10 +0200
-Message-ID: <20260817132543.512977238@linuxfoundation.org>
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 5.10 147/389] exec: fix unsigned loop counter wrap in transfer_args_to_stack()
+Date: Mon, 17 Aug 2026 15:29:46 +0200
+Message-ID: <20260817132544.906518276@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -52,128 +50,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Hartkopp <socketcan@hartkopp.net>
+From: Christian Brauner <brauner@kernel.org>
 
-commit 62ec41f364648be79d54d94d0d240ee326948afd upstream.
+commit 16cc4f5c1c4b9e45eca7f7deefa5410a292db599 upstream.
 
-bcm_tx_setup() validates cf->len against the CAN/CAN FD DLC limits
-before installing frames for TX_SETUP, but bcm_rx_setup() never did
-the same for the RTR-reply frame configured via RX_SETUP with
-RX_RTR_FRAME.
+The stop value is derived from bprm->p >> PAGE_SHIFT. The index variable
+is an unsigned long. If bprm->p drops below PAGE_SIZE and stop becomes
+zero the loop condition index >= stop is always true.
 
-Fixes: ffd980f976e7 ("[CAN]: Add broadcast manager (bcm) protocol")
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://patch.msgid.link/20260714-bcm_fixes-v15-7-562f7e3e42da@hartkopp.net
-Cc: stable@kernel.org
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+After the index == 0 iteration the decrement wraps to ULONG_MAX and
+bprm->page[ULONG_MAX] reads sizeof(void *) bytes in front of the array.
+The pointer has wrapped to -1. That garbage pointer is then passed to
+kmap_local_page() and PAGE_SIZE bytes are copied from wherever that
+lands into the stack of the process being created. And the loop doesn't
+terminate either...
+
+Getting there only requires bprm->p < PAGE_SIZE. On !MMU
+bprm_set_stack_limit() and bprm_hit_stack_limit() are empty. So the only
+constraint on how far bprm->p is pushed down is valid_arg_len(), i.e.
+that each individual string still fits in what is left.
+
+bprm->p starts at PAGE_SIZE * MAX_ARG_PAGES - sizeof(void *) so a
+single argument or environment string of a little over 31 pages leaves
+it in the first page:
+
+  Oops - load access fault [#1]
+  CPU: 0 UID: 0 PID: 1 Comm: victim Not tainted 7.2.0-rc4 #1
+  epc : __memcpy+0xd4/0xf8
+   ra : transfer_args_to_stack+0xaa/0xae
+   s4 : ffffffffffffffff   s2 : 0000000000000000
+   a1 : ffffffdc98000000   a2 : 0000000000001000
+  status: 0000000a00001880 badaddr: ffffffdc98000000 cause: 0000000000000005
+  [<801a5324>] __memcpy+0xd4/0xf8
+  [<800d5f6a>] load_flat_binary+0x43a/0x65e
+  [<800a2de4>] bprm_execve+0x1d4/0x316
+  [<800a351a>] do_execveat_common+0x12e/0x138
+  [<800a3d44>] __riscv_sys_execve+0x38/0x4e
+  Kernel panic - not syncing: Fatal exception in interrupt
+
+This is an arcane bug but we should still fix it.
+
+Count down from MAX_ARG_PAGES so the loop ends when index reaches stop,
+stop == 0 included. The iterations performed are unchanged for every
+other value of stop.
+
+Only CONFIG_MMU=n builds are affected, transfer_args_to_stack() is used
+by binfmt_flat and binfmt_elf_fdpic on nommu only.
+
+The loop predates git history. commit 7e7ec6a93434
+("elf_fdpic_transfer_args_to_stack(): make it generic") only moved it
+from binfmt_elf_fdpic.c into fs/exec.c and narrowed the copy to the used
+part of the first page. The condition and the decrement are unchanged
+from 2.6.12-rc2.
+
+Link: https://patch.msgid.link/20260721-hochachtung-staumauer-pigmente-15d71f7d7d04@brauner
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Reviewed-by: David Hildenbrand (Arm) <david@kernel.org>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/can/bcm.c | 59 +++++++++++++++++++++++++++++++++++----------------
- 1 file changed, 41 insertions(+), 18 deletions(-)
+ fs/exec.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/can/bcm.c b/net/can/bcm.c
-index 93552b65c00ee4..d74c5d1e29358f 100644
---- a/net/can/bcm.c
-+++ b/net/can/bcm.c
-@@ -1194,22 +1194,37 @@ static int bcm_tx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
- 	return err;
- }
+--- a/fs/exec.c
++++ b/fs/exec.c
+@@ -876,7 +876,7 @@ int transfer_args_to_stack(struct linux_
+ 	stop = bprm->p >> PAGE_SHIFT;
+ 	sp = *sp_location;
  
--static void bcm_rx_setup_rtr_check(struct bcm_msg_head *msg_head,
--				   struct bcm_op *op, void *new_frames)
-+static int bcm_rx_setup_rtr_check(struct bcm_msg_head *msg_head,
-+				  struct bcm_op *op, void *new_frames)
- {
-+	struct canfd_frame *frame0 = new_frames;
-+
-+	if (!(msg_head->flags & RX_RTR_FRAME))
-+		return 0;
-+
-+	/* this frame is sent out as-is by bcm_can_tx() whenever a matching
-+	 * remote request is received, so validate its length the same way
-+	 * bcm_tx_setup() validates TX_SETUP frames before installing it
-+	 */
-+	if (msg_head->flags & CAN_FD_FRAME) {
-+		if (frame0->len > 64)
-+			return -EINVAL;
-+	} else {
-+		if (frame0->len > 8)
-+			return -EINVAL;
-+	}
-+
- 	/* funny feature in RX(!)_SETUP only for RTR-mode:
- 	 * copy can_id into frame BUT without RTR-flag to
- 	 * prevent a full-load-loopback-test ... ;-]
- 	 * normalize this on the staged buffer, before it is
- 	 * ever installed into op->frames.
- 	 */
--	if (msg_head->flags & RX_RTR_FRAME) {
--		struct canfd_frame *frame0 = new_frames;
-+	if ((msg_head->flags & TX_CP_CAN_ID) ||
-+	    frame0->can_id == op->can_id)
-+		frame0->can_id = op->can_id & ~CAN_RTR_FLAG;
- 
--		if ((msg_head->flags & TX_CP_CAN_ID) ||
--		    frame0->can_id == op->can_id)
--			frame0->can_id = op->can_id & ~CAN_RTR_FLAG;
--	}
-+	return 0;
- }
- 
- /*
-@@ -1272,7 +1287,11 @@ static int bcm_rx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
- 				return err;
- 			}
- 
--			bcm_rx_setup_rtr_check(msg_head, op, new_frames);
-+			err = bcm_rx_setup_rtr_check(msg_head, op, new_frames);
-+			if (err < 0) {
-+				kfree(new_frames);
-+				return err;
-+			}
- 		}
- 
- 		spin_lock_bh(&op->bcm_rx_update_lock);
-@@ -1345,16 +1364,12 @@ static int bcm_rx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
- 		if (msg_head->nframes) {
- 			err = memcpy_from_msg(op->frames, msg,
- 					      msg_head->nframes * op->cfsiz);
--			if (err < 0) {
--				if (op->frames != &op->sframe)
--					kfree(op->frames);
--				if (op->last_frames != &op->last_sframe)
--					kfree(op->last_frames);
--				kfree(op);
--				return err;
--			}
-+			if (err < 0)
-+				goto free_op;
- 
--			bcm_rx_setup_rtr_check(msg_head, op, op->frames);
-+			err = bcm_rx_setup_rtr_check(msg_head, op, op->frames);
-+			if (err < 0)
-+				goto free_op;
- 		}
- 
- 		/* bcm_can_tx / bcm_tx_timeout_handler needs this */
-@@ -1456,6 +1471,14 @@ static int bcm_rx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
- 	}
- 
- 	return msg_head->nframes * op->cfsiz + MHSIZ;
-+
-+free_op:
-+	if (op->frames != &op->sframe)
-+		kfree(op->frames);
-+	if (op->last_frames != &op->last_sframe)
-+		kfree(op->last_frames);
-+	kfree(op);
-+	return err;
- }
- 
- /*
--- 
-2.53.0
-
+-	for (index = MAX_ARG_PAGES - 1; index >= stop; index--) {
++	for (index = MAX_ARG_PAGES; index-- > stop; ) {
+ 		unsigned int offset = index == stop ? bprm->p & ~PAGE_MASK : 0;
+ 		char *src = kmap(bprm->page[index]) + offset;
+ 		sp -= PAGE_SIZE - offset;
 
 
