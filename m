@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D51E14B0492;
-	Mon, 17 Aug 2026 13:39:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABCBA4399F8;
+	Mon, 17 Aug 2026 13:39:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786973990; cv=none; b=o5OO5G4dq4g0Gnsr3FF9HWmGj+w6fGzmHpZcb1huJGvqV6IgClztO2m+dmeog5jlIPaFT7hWTOUZ4P6iUMFOV1YaprlF8rz+AB5ER2ybwaMdPeijLmDZ51wws3qKlhVawogLpUi/6eeQTetuJNLeWQaaPFCE9ay9BJM7YFPiLig=
+	t=1786973992; cv=none; b=b9cEmE1+7/UqJatK/k3Fx1GDFtmPApspIjY6TZEwZnV68jNGuDy7AU/eiXJP58F+jSGH/2k1ijmB5+YwR8o49Cw3pvnCU+xLyV/9/R3q8ktiFhs/raSvyrz8Hus5tbhOea/9xHa3weazD3RK65TPHMdd+7h5su/qNJUjeFi99B4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786973990; c=relaxed/simple;
-	bh=KWoQTIQcWzqpPTP/vV0Vz6xQthSXx2bn4PF74p3tCQE=;
+	s=arc-20240116; t=1786973992; c=relaxed/simple;
+	bh=07D0eV8nPWanvn3MNAIQjDSup5aTP98Dr7Nx5JaEQJs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PFyBX3yrBT6judPdpgI0pc4lwIVx0NtyuOWdr10Xoj85Z9MRxHWbdXoKAmYgos18RDQb8U2sBteGS9ycUr3dC7sdFuWih15YTCAfPucODQYXdGBHjSzHIEOtXoqySUnx0+7yT1Eps+WJZXPwtcb/coTq9joqQ2bfIFOhElpoq7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mkTKLNM5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=I1RcaDly0VqB8Prz232B+OhagqGmMGXC+A1z2kfc893ipA3WADq/ptz004jALzsjmU4G/P3XHgzRm6/nz2e4kxgDbE1wPCPZKEAcuPl8RWCtwf9wKgN+vZ0TDmj3YfiVP8fngCdU0277qsnvWATBixSvcCzKFApU6jAU+akGQkk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tnCWTCUM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mkTKLNM5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E75C81F000E9;
-	Mon, 17 Aug 2026 13:39:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tnCWTCUM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6F0F1F00A3D;
+	Mon, 17 Aug 2026 13:39:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786973988;
-	bh=fau163k163BwZjktE4fIJdOl0e1vFAJ5412ZQIZOifs=;
+	s=korg; t=1786973991;
+	bh=9nUVz+ZfB3A9EIKDZcJvh24qSdP52h+dIg22v4hcpjA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mkTKLNM5aVEPsicFD493Zua/C0UhlF0XoXGY68WG4YV+3x967LZThjnxgS1m9Iyps
-	 6yhzB7fvoLn3gvy2Acu/1qd+p/LOVCYieJoaIPo5nOj8GWduWQadxsVh2L/U7eeUfy
-	 CA5l4UPxMp0LCkyGvTXeeZ3Bcg6WGmgAKWIKTg/U=
+	b=tnCWTCUMT/9fcME72SOCt4+ZTvLZYNGYHYWAbpCuNdKtJuW85gVJNTA+q3wU3DiFf
+	 F17pSXToiv/8xdR2BgzpNhRmIFtE73ZEo4l5T8qDizx2Quh1+WbGB6+YNbfHRQQI6M
+	 GUSgCyLDey7EVH3z7lFk1VJq2ZBt+YWUPSrHkUVI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Zhen <max.zhen@amd.com>,
-	Lizhi Hou <lizhi.hou@amd.com>,
+	Yiyang Chen <chenyy23@mails.tsinghua.edu.cn>,
+	Daniel Wade <danjwade95@gmail.com>,
+	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
+	Eduard Zingerman <eddyz87@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 051/271] accel/amxdna: Fix page-insertion errors in amdxdna_insert_pages()
-Date: Mon, 17 Aug 2026 15:29:36 +0200
-Message-ID: <20260817132538.837294384@linuxfoundation.org>
+Subject: [PATCH 7.1 052/271] bpf: Preserve pointer state for commuted arithmetic
+Date: Mon, 17 Aug 2026 15:29:37 +0200
+Message-ID: <20260817132538.875133694@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -45,90 +47,78 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lizhi Hou <lizhi.hou@amd.com>
+From: Yiyang Chen <chenyy23@mails.tsinghua.edu.cn>
 
-[ Upstream commit 8d51e0fd3e698919d2adeff71936377f0c0d4aa0 ]
+[ Upstream commit a4c6f804b44c5c790269b25e0e61cf4e9f117c86 ]
 
-Two error paths in amdxdna_insert_pages() called vma->vm_ops->close(vma)
-before returning an error code to the caller.  This is incorrect:
-amdxdna_gem_obj_mmap() registers an HMM interval notifier before calling
-amdxdna_insert_pages(), and on a hard error it jumps to hmm_unreg to undo
-that registration.  Calling vm_ops->close() manually — which drops the
-shmem pages_pin_count and the GEM object reference that backs the VMA —
-before the mmap syscall has even returned causes those resources to be
-released while the VMA is still alive.  The kernel VMA teardown will call
-vm_ops->close() a second time when the process later unmaps the range,
-producing a reference count underflow.
+When scalar += pointer is handled in adjust_ptr_min_max_vals(), the
+destination register inherits the pointer state from the source pointer.
+Copying only selected fields is fragile because pointer provenance is
+tracked by several bpf_reg_state fields.
 
-Replace both hard-error returns with a deferred-fault approach that keeps
-the VMA alive and retries page insertion through the HMM range-fault path.
+Use the caller's temporary offset register to preserve the scalar operand
+while replacing the destination with the full pointer state. This preserves
+the frame number for PTR_TO_STACK registers and keeps parent identity
+fields consistent.
 
-Fixes: e486147c912f ("accel/amdxdna: Add BO import and export")
-Reviewed-by: Max Zhen <max.zhen@amd.com>
-Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
-Link: https://patch.msgid.link/20260723074256.2435143-1-lizhi.hou@amd.com
+Fixes: f4d7e40a5b71 ("bpf: introduce function calls (verification)")
+Signed-off-by: Yiyang Chen <chenyy23@mails.tsinghua.edu.cn>
+Tested-by: Daniel Wade <danjwade95@gmail.com>
+Acked-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Link: https://patch.msgid.link/20260729-c3-035-public-bpf-v4-v4-2-8ee297e2346b@mails.tsinghua.edu.cn
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/amdxdna/amdxdna_gem.c | 24 ++++++++++++++++++++----
- 1 file changed, 20 insertions(+), 4 deletions(-)
+ kernel/bpf/verifier.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/accel/amdxdna/amdxdna_gem.c b/drivers/accel/amdxdna/amdxdna_gem.c
-index cdf113dadc4db..41fb39d095749 100644
---- a/drivers/accel/amdxdna/amdxdna_gem.c
-+++ b/drivers/accel/amdxdna/amdxdna_gem.c
-@@ -371,6 +371,23 @@ static void amdxdna_gem_dev_obj_free(struct drm_gem_object *gobj)
- 	amdxdna_gem_destroy_obj(abo);
- }
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 523f00e609e2b..ab88988d483d2 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -13837,11 +13837,12 @@ static int adjust_ptr_min_max_vals(struct bpf_verifier_env *env,
+ 		return -EACCES;
+ 	}
  
-+static void amdxdna_mark_mapp_invalid(struct amdxdna_gem_obj *abo,
-+				      struct vm_area_struct *vma)
-+{
-+	struct amdxdna_dev *xdna = to_xdna_dev(to_gobj(abo)->dev);
-+	struct amdxdna_umap *mapp;
-+
-+	down_write(&xdna->notifier_lock);
-+	abo->mem.map_invalid = true;
-+	list_for_each_entry(mapp, &abo->mem.umap_list, node) {
-+		if (compare_range(mapp, vma->vm_mm, vma->vm_start, vma->vm_end)) {
-+			mapp->invalid = true;
-+			break;
-+		}
-+	}
-+	up_write(&xdna->notifier_lock);
-+}
-+
- static int amdxdna_insert_pages(struct amdxdna_gem_obj *abo,
- 				struct vm_area_struct *vma)
- {
-@@ -392,8 +409,7 @@ static int amdxdna_insert_pages(struct amdxdna_gem_obj *abo,
- 				      &num_pages);
- 		if (ret) {
- 			XDNA_ERR(xdna, "Failed insert pages %d", ret);
--			vma->vm_ops->close(vma);
--			return ret;
-+			amdxdna_mark_mapp_invalid(abo, vma);
+-	/* In case of 'scalar += pointer', dst_reg inherits pointer type and id.
+-	 * The id may be overwritten later if we create a new variable offset.
++	/* For 'scalar += pointer', dst_reg inherits the complete pointer
++	 * register state. Individual fields may be adjusted later by pointer
++	 * arithmetic. Callers guarantee that below does not overwrite off_reg.
+ 	 */
+-	dst_reg->type = ptr_reg->type;
+-	dst_reg->id = ptr_reg->id;
++	if (dst_reg != ptr_reg)
++		*dst_reg = *ptr_reg;
+ 
+ 	if (!check_reg_sane_offset_scalar(env, off_reg, ptr_reg->type) ||
+ 	    !check_reg_sane_offset_ptr(env, ptr_reg, ptr_reg->type))
+@@ -13893,7 +13894,7 @@ static int adjust_ptr_min_max_vals(struct bpf_verifier_env *env,
  		}
- 
- 		return 0;
-@@ -413,9 +429,9 @@ static int amdxdna_insert_pages(struct amdxdna_gem_obj *abo,
- 		fault_ret = handle_mm_fault(vma, vma->vm_start + offset,
- 					    FAULT_FLAG_WRITE, NULL);
- 		if (fault_ret & VM_FAULT_ERROR) {
--			vma->vm_ops->close(vma);
- 			XDNA_ERR(xdna, "Fault in page failed");
--			return -EFAULT;
-+			amdxdna_mark_mapp_invalid(abo, vma);
-+			break;
- 		}
- 
- 		offset += PAGE_SIZE;
+ 		break;
+ 	case BPF_SUB:
+-		if (dst_reg == off_reg) {
++		if (dst_reg != ptr_reg) {
+ 			/* scalar -= pointer.  Creates an unknown scalar */
+ 			verbose(env, "R%d tried to subtract pointer from scalar\n",
+ 				dst);
+@@ -15137,8 +15138,8 @@ static int adjust_reg_min_max_vals(struct bpf_verifier_env *env,
+ 				err = mark_chain_precision(env, insn->dst_reg);
+ 				if (err)
+ 					return err;
+-				return adjust_ptr_min_max_vals(env, insn,
+-							       src_reg, dst_reg);
++				off_reg = *dst_reg;
++				return adjust_ptr_min_max_vals(env, insn, src_reg, &off_reg);
+ 			}
+ 		} else if (ptr_reg) {
+ 			/* pointer += scalar */
 -- 
 2.53.0
 
