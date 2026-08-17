@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39BB423BCEE;
-	Mon, 17 Aug 2026 14:18:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F9F63B42DC;
+	Mon, 17 Aug 2026 14:18:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976326; cv=none; b=iAU4NF75zZnCE7z+ZRHoNb9vThNhLSVEz/Qphjq3EH2xcB5bo0eq6dYA8UESqnoM86MIMXmJ7sZbd992NaragbDrnCcjL0FH5sHBKeAuru9nGJuG3/vmV7/mKGZa/V3GOTjJxp9YVXIGhqeKgjmyX6XA4LIdRnP8M8KWygIrGqI=
+	t=1786976329; cv=none; b=jtbvyjtBjoAiTVJyKhJ8kfR6aejOSMSoPt6LnZhSmsnuIAEa+OraIdguUGE+heaBnnjC5dm/PfFGe8BOE/QRGKtAUA+JongL2J9EQv4bhoZrjlTR+bNPsI3mKgrS+KGxvU6WtEVLvJFWR5R+6X4JyvRxIYBHB8f8PMIGdEOKNNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976326; c=relaxed/simple;
-	bh=uqlIPRb/+tdeyIAGVHu5kHMSsZKs/Atijef49rdAjAQ=;
+	s=arc-20240116; t=1786976329; c=relaxed/simple;
+	bh=mPMFIAIJ+760oALxkQZKHCfBSwn4IgBiB2xNpECp7Ms=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dePVYVqD6bDMhdDwiiycuiRt5+NFYLeWk6Uo+VlmjbPUsiYbL9th8EQWcQXuUB+BcfGM87JgOwSlj2NBz4pmVJyarrjLQ1aGTI3XziX9lr0Nuvm/Da5EOaNYFvAENyeGPk4LA8mOJgHjTKFFFxhE3cjX2uBPyMVksIz4cVVLo2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rCP0Ii4/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EJnFMgu+RRv5U0WdST0Hl/DeGBwRGdxtf4f5hwK9L1efJMwCbtk6uWC4ZE7pW2slzTa+81pIh8hmqFjZtM4lhROZsds/6346fabpbrLHe5Oz99CtscVyQ3OeY9J4xL/GFjn1995fiUtC/qRoSzTwZHnj+9lHxKS4khI2qRaD7Gs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lpk3gElX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rCP0Ii4/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92C3E1F00A3A;
-	Mon, 17 Aug 2026 14:18:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lpk3gElX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74DB51F000E9;
+	Mon, 17 Aug 2026 14:18:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976325;
-	bh=gSLKIcthpFp1YcWHumXGhqROI6GEYF1Mg2clnOLP8mU=;
+	s=korg; t=1786976328;
+	bh=gEfVSuBAvQz4ZNwZ778KduR0xLzlyrBoQ25BixvjBN8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rCP0Ii4//Fg6MXCpcA2ZQthJ0zgtwqSTnsL8Uj0A7VQCo2vd52iY5dh2cg9WRMnIt
-	 eB+r25Q/2M8JozVL+l+9TBLNENDFFXT8T/9y6TEFm8Pvj1kNo/7pq5IEabs5QpfbiL
-	 nwY2EgiE868NV/3DFHhxUygZwO67rtbYT1aLjYU4=
+	b=Lpk3gElXAx8wEsLnAIQtLFdER6PnZDwW0C1NdYtm41SiBwTSIJFwM1slihWFyk7SP
+	 NJMnxm13PLCOVlZmkH8NdnONKHNIuaUDc08jIVi3iuHIlYSK2be2r8vKoWpnEbWXbB
+	 6AoGwLNecQEnwq/SlMYmJl2JJB3two6LlPidD3KI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongyan Xu <getshell@seu.edu.cn>,
-	Niklas Cassel <cassel@kernel.org>,
-	Damien Le Moal <dlemoal@kernel.org>,
+	Daniele Linguaglossa <danielelinguaglossa@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 335/389] ata: pata_sl82c105: fix bridge revision use-after-free
-Date: Mon, 17 Aug 2026 15:32:54 +0200
-Message-ID: <20260817132551.932201968@linuxfoundation.org>
+Subject: [PATCH 5.10 336/389] sctp: clear control chunk transport if it is being removed
+Date: Mon, 17 Aug 2026 15:32:55 +0200
+Message-ID: <20260817132551.964949977@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -52,50 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongyan Xu <getshell@seu.edu.cn>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit 7700a31039cdc6715cb6cce7e7a664ee4e945f67 ]
+[ Upstream commit c9158ceaf27780ef64534ad72f44ffde3f8ccc49 ]
 
-pci_get_slot() returns a referenced PCI device. Commit 44c10138fd4b
-("PCI: Change all drivers to use pci_device->revision") replaced a
-configuration-space read with direct access to the cached revision field,
-but left that access after pci_dev_put(). The bridge may therefore be freed
-before its revision is read.
+sctp_make_heartbeat_ack() caches the destination transport in
+chunk->transport without taking a reference. When src_out_of_asoc_ok is
+enabled, the HEARTBEAT ACK may remain queued on control_chunk_list instead
+of being transmitted immediately.
 
-Read the revision before dropping the reference.
+If the peer transport is removed while the chunk is still queued,
+sctp_assoc_rm_peer() drops the transport and schedules it for RCU freeing,
+but only clears cached transport pointers in out_chunk_list.  The queued
+control chunk therefore retains a dangling transport pointer.
 
-Fixes: 44c10138fd4b ("PCI: Change all drivers to use pci_device->revision")
-Signed-off-by: Hongyan Xu <getshell@seu.edu.cn>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Once an ASCONF_ACK clears the suppression and the queued control chunk is
+transmitted, SCTP dereferences the stale transport pointer, leading to a
+use-after-free.
+
+Fix this by also clearing chunk->transport for queued control chunks in
+control_chunk_list when removing the transport.
+
+Fixes: 8a07eb0a50ae ("sctp: Add ASCONF operation on the single-homed host")
+Reported-by: Daniele Linguaglossa <danielelinguaglossa@gmail.com>
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/7e1168cb722132152a29d47e5eafaeac4a3bf6f3.1785943120.git.lucien.xin@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/pata_sl82c105.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/sctp/associola.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/ata/pata_sl82c105.c b/drivers/ata/pata_sl82c105.c
-index ac7ddd87f188d..78275b2479df2 100644
---- a/drivers/ata/pata_sl82c105.c
-+++ b/drivers/ata/pata_sl82c105.c
-@@ -265,6 +265,7 @@ static struct ata_port_operations sl82c105_port_ops = {
- static int sl82c105_bridge_revision(struct pci_dev *pdev)
- {
- 	struct pci_dev *bridge;
-+	u8 revision;
+diff --git a/net/sctp/associola.c b/net/sctp/associola.c
+index 86d86ec9d90aa..122f0a948430f 100644
+--- a/net/sctp/associola.c
++++ b/net/sctp/associola.c
+@@ -572,6 +572,10 @@ void sctp_assoc_rm_peer(struct sctp_association *asoc,
+ 		if (ch->transport == peer)
+ 			ch->transport = NULL;
  
- 	/*
- 	 * The bridge should be part of the same device, but function 0.
-@@ -286,8 +287,9 @@ static int sl82c105_bridge_revision(struct pci_dev *pdev)
- 	/*
- 	 * We need to find function 0's revision, not function 1
- 	 */
-+	revision = bridge->revision;
- 	pci_dev_put(bridge);
--	return bridge->revision;
-+	return revision;
- }
++	list_for_each_entry(ch, &asoc->outqueue.control_chunk_list, list)
++		if (ch->transport == peer)
++			ch->transport = NULL;
++
+ 	asoc->peer.transport_count--;
  
- static void sl82c105_fixup(struct pci_dev *pdev)
+ 	sctp_ulpevent_notify_peer_addr_change(peer, SCTP_ADDR_REMOVED, 0);
 -- 
 2.53.0
 
