@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB45E3AAF76;
-	Mon, 17 Aug 2026 13:58:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 654233AAF76;
+	Mon, 17 Aug 2026 13:58:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975123; cv=none; b=dMN45ztNfzF4NTvmemO5SeZALkbFuuobJH20TRNgUtzBs/c2pLkMG/uOhtQ+fSLdPaVMhxjanpxDiFcpLjcxurkQspMPUOBurYZE77HYJ4+NsvuWDvLQLsOLKOf2pQZnMntOawdMcL6VkP5sTGq8XiLieA0w4QVHYamsOM9+o+w=
+	t=1786975126; cv=none; b=c9kWO8p6fGgwtpBl7pmDmM1lBVLWSzt8Cp8+70Vq2pvNaa/oHHVobUWjdEDX7jrf0KEktTdI1V4lc89Db2oXsMGi3+wMuUkMW9jQXSrfXKlDHR3FrnAe1+vsK2GI3l20h3qZ+zpDPLeZr1uWRMCjECDcrGN/xxjKgRYLEiypejY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975123; c=relaxed/simple;
-	bh=DIBFq7B6WqUBXppXIEiMs40bK19Neh5ecQr5TL/uweo=;
+	s=arc-20240116; t=1786975126; c=relaxed/simple;
+	bh=nj7QygZIK79FVl+N4oWytrAIMPkcrfv+5vDHjFUMm4I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CIY/78HlNgi7awMOsxK5FqXHiDszSRU9ietqvcD8ht64dC/puvIHfkXCfagKXO4tgnXp4NQbT5TEaERV9wT5alFiCW6o8q8IzGw1PdTp4e5G1DR2+XjVy22IZqYVe486Y2ezoJ5M3gVKeBQ5w5NIMHyxw0sGgcX3h6SESFJLljU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=avC54Q4r; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cell9EMZwIrmkWA5QCgNlTTzFf3SQbUYCEV1tcGOcDMkcaJ0Nja4HOR9vOsfJtfZwA0IIJe0P3Y3oEJK2YXmFjRk0UTq/Myzgl7GStqPLyyV27eRBEAdtQVr1eqxeZ6qo7hDLEpoQgvysYomKJjfpJAA4JGntv7btzEPquSwqTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YsH5qfTR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="avC54Q4r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B64921F000E9;
-	Mon, 17 Aug 2026 13:58:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YsH5qfTR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A28081F000E9;
+	Mon, 17 Aug 2026 13:58:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975122;
-	bh=4d4V7WXVpfYQ+TVqy17iRAPf4vqlvn82vCA/EJl2QFY=;
+	s=korg; t=1786975125;
+	bh=fCRQAwpuKjAsQtODs41hU2bYb7jNAFhg8Zk9RtWZTAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=avC54Q4rSUeQ2TKvEMr2W13/Hazz04nTEjorx3Z8XXBloPFD9Kw2/YpKlKSC3SJZo
-	 rJkjlUJUKw/3lGYc5nfqmN9Vz8C1t5bUtz/K/09Nq4UmVZHbO+rJMyXp4htzRFmXKj
-	 SCROsQ5A9ZJb80Y7Ncn23xKeizFvDlqMGuH2QH+E=
+	b=YsH5qfTRf6ZmHjtcRL9MOLm6tW6mhK/kAoofFg5ZxaZ56g3x7SB3sWgWSeosTopXT
+	 LDHS4h0ynF3lhoMcIYdpbML8di851qIymGyvgmlZ8nsmqV0vZ8RxWJUuHTvRDKTKP+
+	 Fa4QpbxyS1F0RHkAY2OoKxHj/aMYd1g6aNNw9UWA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Bilal <meatuni001@gmail.com>
-Subject: [PATCH 6.18 171/250] staging: rtl8723bs: fix OOB read in WMM_param_handler()
-Date: Mon, 17 Aug 2026 15:32:12 +0200
-Message-ID: <20260817132543.612492362@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Panagiotis Petrakopoulos <npetrakopoulos2003@gmail.com>
+Subject: [PATCH 6.18 172/250] staging: rtl8723bs: fix missing shared-key auth challenge length check
+Date: Mon, 17 Aug 2026 15:32:13 +0200
+Message-ID: <20260817132543.647258867@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -49,53 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muhammad Bilal <meatuni001@gmail.com>
+From: Panagiotis Petrakopoulos <npetrakopoulos2003@gmail.com>
 
-commit ae21407350151bddfd4fea7aa39bd0643c0ca9d3 upstream.
+commit 2c56ef658ac8c6bca36bc5574715e8f717207c6c upstream.
 
-WMM_param_handler() copies a fixed-size WMM parameter element out of a
-received information element without checking that the element is long
-enough, causing an out-of-bounds read for a short WMM IE.
+The WEP shared-key authentication handler uses the challenge-text
+element's attacker-controlled length without checking it against the
+fixed 128-byte chg_txt buffer.
 
-The handler reads sizeof(struct WMM_para_element) (18) bytes at
-pIE->data + 6, so it requires pIE->length to be at least 24
-(WLAN_WMM_LEN), but it never validates the length. Two of its three
-callers reach it after matching only the WMM OUI: OnAssocRsp() in
-rtw_mlme_ext.c matches a 6-byte OUI, and join_cmd_hdl() matches a
-4-byte OUI, before calling the handler. A vendor-specific IE carrying
-the WMM OUI but a length between 6 and 23, placed in an association
-response or in the IE blob handed to join_cmd_hdl(), passes the OUI
-check and then makes the memcmp() and memcpy() at pIE->data + 6 read
-past the end of the element. OnAssocRsp() parses a frame received from
-the AP, so this is reachable from a remote peer.
+In OnAuthClient() the length from rtw_get_ie() - up to 255 - is used
+to perform memcpy() into the 128-byte pmlmeinfo->chg_txt, so a
+malicious AP sending a malformed WLAN_EID_CHALLENGE element can
+overflow/underfill chg_txt by up to 127 bytes. It is reachable over the
+air, before association, during shared-key authentication. In the case
+of an overflow, the driver can write out of bounds. In the case of an
+underfill, the driver can echo stale buffer memory.
 
-The remaining caller in rtw_wlan_util.c already guards the handler with
-"pIE->length == WLAN_WMM_LEN". Move the equivalent check into the
-handler itself so every caller is covered; the sibling IE handlers in
-the same parsing loop (HT_caps_handler(), HT_info_handler(),
-ERP_IE_handler()) likewise bound their accesses by pIE->length.
+The challenge text is defined to be exactly 128 octets, which is
+already provided as the WLAN_AUTH_CHALLENGE_LEN define; require the
+element to be exactly that length before use.
 
 Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-Link: https://patch.msgid.link/20260719041509.97894-1-meatuni001@gmail.com
+Cc: stable <stable@kernel.org>
+Signed-off-by: Panagiotis Petrakopoulos <npetrakopoulos2003@gmail.com>
+Link: https://patch.msgid.link/20260720082409.168379-1-npetrakopoulos2003@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/rtl8723bs/core/rtw_wlan_util.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/staging/rtl8723bs/core/rtw_mlme_ext.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/staging/rtl8723bs/core/rtw_wlan_util.c
-+++ b/drivers/staging/rtl8723bs/core/rtw_wlan_util.c
-@@ -692,6 +692,9 @@ int WMM_param_handler(struct adapter *pa
- 		return false;
- 	}
+--- a/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
++++ b/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
+@@ -913,7 +913,7 @@ unsigned int OnAuthClient(struct adapter
+ 			p = rtw_get_ie(pframe + WLAN_HDR_A3_LEN + _AUTH_IE_OFFSET_, WLAN_EID_CHALLENGE, (int *)&len,
+ 				pkt_len - WLAN_HDR_A3_LEN - _AUTH_IE_OFFSET_);
  
-+	if (pIE->length != WLAN_WMM_LEN)
-+		return false;
-+
- 	if (!memcmp(&(pmlmeinfo->WMM_param), (pIE->data + 6), sizeof(struct WMM_para_element)))
- 		return false;
- 	else
+-			if (!p)
++			if (!p || len != WLAN_AUTH_CHALLENGE_LEN)
+ 				goto authclnt_fail;
+ 
+ 			memcpy((void *)(pmlmeinfo->chg_txt), (void *)(p + 2), len);
 
 
