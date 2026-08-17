@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 446C23DD851;
-	Mon, 17 Aug 2026 15:08:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1367123AB9D;
+	Mon, 17 Aug 2026 15:08:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979316; cv=none; b=VBpW8lFPFU6Ikl/AtHTcfNiPrXwjmA2A1u2unDysgbv7+N1JFJ3SmbAb4PN1qieBuisKIhEFbOulue8HIBcIBdttiNffTcKjN/CG5aXEYlFOcvif9VUS+Cou1W0SMQ5gmLyZAwd0dCquIXMUYi7BR1DeRL2V7d34kfh1b7nN3uI=
+	t=1786979319; cv=none; b=c5fq2Oj8dkMLizRHIYVACCmhA1KRTUcfnCEjqyTYisuh+RLvLJulZO90ILYox82dKAsM/sz3J77YTBEDeIsLd1i3NhN2avv/fQi+4lSzTrrEbBDmdkGcIMV6hmouRyQ+p7lvMeq8PpLlkGis1bvAiYXT9pTTXAqUDT4ubL0zVq8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979316; c=relaxed/simple;
-	bh=cSZh55Iqv9rXlo6lsCJX8xYlhj5HH4IKKA34igVaPNQ=;
+	s=arc-20240116; t=1786979319; c=relaxed/simple;
+	bh=pL+nfkpSxixlXictJ9kKEzhl2lfTqmDQFdzLY7I8QdU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aqAtUwWmJnVBxbPvNvCZJ2KbxcacH5jhJn5DnuN7IpzIv8Y/FW6r2KQtOA2gXAL/orwqkx/3bD/MBSAQbotyN/zg0dQEEv5fHfSUQv/+OxFOe2ix06t069AyKodJrbvBtbdn/UDsu+8Vm/6C3IBZL29qE1DEdZgKZQRVYcK9Pns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rWsK+UK4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SrnoYvW/2uR3IZ1nARNKYu6NfewvQSSpN4cjLPBogRgXHohtcz7vyIPmZHpiB1iBRLz1Z5+ed62Q9/Le/TCSqF/BNhblfaAB3cKfMJ+rmJTfebs17FirgLTdebQmtJN/FTXW4AtwnAeIBWHCQhQIJWZ0yVrJmUTDWExFjbB1eHA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zmX3TxQr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rWsK+UK4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5893A1F000E9;
-	Mon, 17 Aug 2026 15:08:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zmX3TxQr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A01A1F000E9;
+	Mon, 17 Aug 2026 15:08:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979314;
-	bh=1rI5O8OmhWd4kLhmPY5C/+zSM+dhB47Ea6js42Ui26A=;
+	s=korg; t=1786979317;
+	bh=nU+FpLCW2H8qweAxXz/sxhXpLAidIWh3dhSyUXrXuZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rWsK+UK4CWnb6efmReqqAJqPBhRp/nAtIJ/wJLVRJjGuFEowS2lejuj0xd5K/+C8I
-	 dmqkLogqMeG5OQ/TXtagYe9eTNtUyVmWc/ZDLVE8OSaa4AQHq5CpkdfEkQ7pDd8wbY
-	 yxZOHLFXkOw+qR2q9KySafWh09JfGozvr0VMgLYA=
+	b=zmX3TxQroMi9NDoI5Xd7gxGFanWZ1POYNOz915QeDa9t5AIvsgUVmZfUS6qczkOvE
+	 1sa8IZqvJYYfurB2oOyHiY3OWXUXt8Br/HUjGXzrEqr1HahC/J4VPmEss0XBiAuKwk
+	 vVEK71juQejvgohog04qBHgx4HsivwAeGcykIQL8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,11 +33,11 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
 	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
 	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
 	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.1 182/609] drm/i915/gem: Do not leak siblings[] on proto context error
-Date: Mon, 17 Aug 2026 15:27:58 +0200
-Message-ID: <20260817132550.157618467@linuxfoundation.org>
+Subject: [PATCH 6.1 183/609] drm/i915/gem: Fix NULL deref in I915_CONTEXT_PARAM_SSEU
+Date: Mon, 17 Aug 2026 15:27:59 +0200
+Message-ID: <20260817132550.202711054@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -58,11 +58,12 @@ Content-Transfer-Encoding: 8bit
 
 From: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 
-commit eed3de2acf6aa5154d49098b026710b646db67ee upstream.
+commit 2b56757a9a7456825eb668fde92299e01c5e2721 upstream.
 
-After a successful BALANCE/PARALLEL_SUBMIT extension on context
-creation, error during processing of next user extension leaks
-the siblings[] array. Fix that.
+Setting context engine slot N into I915_ENGINE_CLASS_INVALID /
+I915_ENGINE_CLASS_INVALID_NONE and attempting to apply
+I915_CONTEXT_PARAM_SSEU to the same slot N will deref NULL.
+Fix that.
 
 Discovered using AI-assisted static analysis confirmed by
 Intel Product Security.
@@ -76,64 +77,25 @@ Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
 Cc: <stable@vger.kernel.org> # v5.15+
 Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Reviewed-by: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
-Link: https://lore.kernel.org/r/20260701073030.44850-1-joonas.lahtinen@linux.intel.com
-(cherry picked from commit aa65e0a4b51b3b54b53e4142aaa2d997aa1061ff)
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Link: https://patch.msgid.link/20260701075555.52142-1-joonas.lahtinen@linux.intel.com
+(cherry picked from commit 36eda5b5c2d40da41cc0a5403c26986237cf9e87)
 Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/gem/i915_gem_context.c |   22 ++++++++++++++--------
- 1 file changed, 14 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/i915/gem/i915_gem_context.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/drivers/gpu/drm/i915/gem/i915_gem_context.c
 +++ b/drivers/gpu/drm/i915/gem/i915_gem_context.c
-@@ -768,8 +768,8 @@ static int set_proto_ctx_engines(struct
- 		struct intel_engine_cs *engine;
+@@ -855,7 +855,7 @@ static int set_proto_ctx_sseu(struct drm
+ 		pe = &pc->user_engines[idx];
  
- 		if (copy_from_user(&ci, &user->engines[n], sizeof(ci))) {
--			kfree(set.engines);
--			return -EFAULT;
-+			err = -EFAULT;
-+			goto err;
- 		}
+ 		/* Only render engine supports RPCS configuration. */
+-		if (pe->engine->class != RENDER_CLASS)
++		if (!pe->engine || pe->engine->class != RENDER_CLASS)
+ 			return -EINVAL;
  
- 		memset(&set.engines[n], 0, sizeof(set.engines[n]));
-@@ -785,8 +785,8 @@ static int set_proto_ctx_engines(struct
- 			drm_dbg(&i915->drm,
- 				"Invalid engine[%d]: { class:%d, instance:%d }\n",
- 				n, ci.engine_class, ci.engine_instance);
--			kfree(set.engines);
--			return -ENOENT;
-+			err = -ENOENT;
-+			goto err;
- 		}
- 
- 		set.engines[n].type = I915_GEM_ENGINE_TYPE_PHYSICAL;
-@@ -799,15 +799,21 @@ static int set_proto_ctx_engines(struct
- 					   set_proto_ctx_engines_extensions,
- 					   ARRAY_SIZE(set_proto_ctx_engines_extensions),
- 					   &set);
--	if (err) {
--		kfree(set.engines);
--		return err;
--	}
-+	if (err)
-+		goto err_extensions;
- 
- 	pc->num_user_engines = set.num_engines;
- 	pc->user_engines = set.engines;
- 
- 	return 0;
-+
-+err_extensions:
-+	for (n = 0; n < set.num_engines; n++)
-+		kfree(set.engines[n].siblings);
-+err:
-+	kfree(set.engines);
-+
-+	return err;
- }
- 
- static int set_proto_ctx_sseu(struct drm_i915_file_private *fpriv,
+ 		sseu = &pe->sseu;
 
 
