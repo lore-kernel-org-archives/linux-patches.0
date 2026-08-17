@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A19334315F;
-	Mon, 17 Aug 2026 14:22:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E55F13790B;
+	Mon, 17 Aug 2026 14:22:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976546; cv=none; b=i+O2AQFNeIukc0Om9mZC490oEkegP4GrI8J/qVCzEyoXimgSrrB3v96tlXmoJXxkg1uhr63f/IlKFF+Z/DIpKUYJPdle8MW6bM53cVEE4rl/4qvzrGvrFXnuWWnGpI4xcz2ti7EA3OuOg6PHblxKg9Avnrdq1eRFZUt2ZO5GlWM=
+	t=1786976549; cv=none; b=L4xIAS2eOT1Sn4YR6+cwEYpWDx4kSw5E+tt29MTha7/cqcC4uc4jAhaCRFajhBTgPDoophJzRF2DPjGx9Zc6KjIcRsftwJ0CaVvEW+L4g6L1BcEt3hXa4494aAUmRkOOhN2GFCc0XLzFL7kWp/pcb+hYNv3yf8j3AiSKuUD1/lM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976546; c=relaxed/simple;
-	bh=zVuksKJxpdGBkYY1DMC8bh/6xDbws2yvdcU44v2NanQ=;
+	s=arc-20240116; t=1786976549; c=relaxed/simple;
+	bh=XxypHOwUsbJPTIa3HvvA1ctBzRqmbwVMa86+PUYDuIQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pQQwhFmTagji0XF8RUqltJEazmXoNz7H+1BaOzkBvtRuGnyqLy9XRNJVUBkARKuG/x5aq4BWDcXG+YBkrkq/L4JNJ0H+StPIMGZ1J+FZPyC05uxKAy/EA8+9gVJx0QNwxmr/3jvEoHPxVON/01zg/zhWxPxo/Uh364ls0jRkpC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cuvCfmUy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qxp96ko35hX+PrwpEAj50Xwr2763YPIlXfyzZmeM7SMOFQ/adIWcECBm5dqxxAZcEFKn0sbs5QpHPWC9SvQktKjVQTKO90OeMOKDBoksNPKsCq7e59iMhwHyQ+Trhn3UddCuQfL6u59hUM1ELA3BlIuEKxkReOKO1MeYKTNwRhA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q/M1mnh2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cuvCfmUy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2C3D1F000E9;
-	Mon, 17 Aug 2026 14:22:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q/M1mnh2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A80401F000E9;
+	Mon, 17 Aug 2026 14:22:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976545;
-	bh=q1se0aSh7DN5aDVI7sIZAEqBmf72zl8J37Te77vmTdE=;
+	s=korg; t=1786976548;
+	bh=5N73vR5xU7HsF54QVD9aAdhu6Rq8KS5VlzuJOqiv5a8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cuvCfmUyxN/w+YgHEy1GlU+TqyuU65G6Ed1sTAD5jl0CDp/SbdUQFZURPm13rq2y4
-	 +ymiKr7aWxwCm2T0JAkcA7FfWGwVCugymR2AeTVbIdRVMxDPT1Ffh/HzRFeNE+oMJ0
-	 IpwRnsQpOJzqhyF/Dj5Dfs+qahDzw2Ya/4HpRl7M=
+	b=Q/M1mnh2ZHwooRhH/RVUmcbRrzrArt43nqxxULZwE1WCagvzre9fxrQ6M0VpzlOIi
+	 ep2z3eBLSYBJdivrI0q7Suvt+apxmUH6zfYWMzFybCVwrbBL29oY4vmBg2VFpSJ/vG
+	 GnroID+18KIIqmxpaPNZ4E1bzzkxD2u1cY4As1oE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	John Madieu <john.madieu.xa@bp.renesas.com>,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Sanghoon Choi <csh0052@gmail.com>,
+	Seungjin Bae <eeodqql09@gmail.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 008/456] dmaengine: sh: rz-dmac: Move interrupt request after everything is set up
-Date: Mon, 17 Aug 2026 15:26:38 +0200
-Message-ID: <20260817132540.186686647@linuxfoundation.org>
+Subject: [PATCH 5.15 009/456] Input: ims-pcu - fix heap-buffer-overflow in ims_pcu_process_data()
+Date: Mon, 17 Aug 2026 15:26:39 +0200
+Message-ID: <20260817132540.232142875@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -54,195 +52,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Seungjin Bae <eeodqql09@gmail.com>
 
-commit 731712403ddb39d1a76a11abf339a0615bc85de7 upstream.
+[ Upstream commit 875115b82c295277b81b6dfee7debc725f44e854 ]
 
-Once the interrupt is requested, the interrupt handler may run immediately.
-Since the IRQ handler can access channel->ch_base, which is initialized
-only after requesting the IRQ, this may lead to invalid memory access.
-Likewise, the IRQ thread may access uninitialized data (the ld_free,
-ld_queue, and ld_active lists), which may also lead to issues.
+The `ims_pcu_process_data()` processes incoming URB data byte by byte.
+However, it fails to check if the `read_pos` index exceeds
+IMS_PCU_BUF_SIZE.
 
-Request the interrupts only after everything is set up. To keep the error
-path simpler, use dmam_alloc_coherent() instead of dma_alloc_coherent().
+If a malicious USB device sends a packet larger than IMS_PCU_BUF_SIZE,
+`read_pos` will increment indefinitely. Moreover, since `read_pos` is
+located immediately after `read_buf`, the attacker can overwrite
+`read_pos` itself to arbitrarily control the index.
 
-Fixes: 5000d37042a6 ("dmaengine: sh: Add DMAC driver for RZ/G2L SoC")
-Cc: stable@vger.kernel.org
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Tested-by: John Madieu <john.madieu.xa@bp.renesas.com>
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Tested-by: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
-Link: https://patch.msgid.link/20260526084710.3491480-2-claudiu.beznea@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-[tm: kept channel->irq (a struct field, not a local irq variable) and
- the sprintf()/pdev_irqname[5] pair in rz_dmac_chan_probe(), and the
- mandatory platform_get_irq_byname() call for the error IRQ in
- rz_dmac_probe(), since e0c51fd02f9c ("Make channel irq local"),
- c4d6dcb3b625 ("Avoid format-overflow warning") and b34f3fcae72a
- ("make error interrupt optional") are not yet backported to this
- tree]
-Signed-off-by: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
+This manipulated `read_pos` is subsequently used in
+`ims_pcu_handle_response()` to copy data into `cmd_buf`, leading to a
+heap buffer overflow.
+
+Specifically, an attacker can overwrite the `cmd_done.wait.head` located
+at offset 136 relative to `cmd_buf` in the `ims_pcu_handle_response()`.
+Consequently, when the driver calls `complete(&pcu->cmd_done)`, it
+triggers a control flow hijack by using the manipulated pointer.
+
+Fix this by adding a bounds check for `read_pos` before writing to
+`read_buf`. If the packet is too long, discard it, log a warning,
+and reset the parser state.
+
+Fixes: 628329d524743 ("Input: add IMS Passenger Control Unit driver")
+Co-developed-by: Sanghoon Choi <csh0052@gmail.com>
+Signed-off-by: Sanghoon Choi <csh0052@gmail.com>
+Signed-off-by: Seungjin Bae <eeodqql09@gmail.com>
+Link: https://patch.msgid.link/20251221211442.841549-2-eeodqql09@gmail.com
+[dtor: factor out resetting packet state, reset checksum as well]
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/sh/rz-dmac.c | 94 ++++++++++++++++------------------------
- 1 file changed, 37 insertions(+), 57 deletions(-)
+ drivers/input/misc/ims-pcu.c | 32 ++++++++++++++++++++++++++------
+ 1 file changed, 26 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/dma/sh/rz-dmac.c b/drivers/dma/sh/rz-dmac.c
-index c22743e41640fd..cec94db38c550e 100644
---- a/drivers/dma/sh/rz-dmac.c
-+++ b/drivers/dma/sh/rz-dmac.c
-@@ -773,27 +773,6 @@ static int rz_dmac_chan_probe(struct rz_dmac *dmac,
- 	channel->index = index;
- 	channel->mid_rid = -EINVAL;
- 
--	/* Request the channel interrupt. */
--	sprintf(pdev_irqname, "ch%u", index);
--	channel->irq = platform_get_irq_byname(pdev, pdev_irqname);
--	if (channel->irq < 0)
--		return channel->irq;
--
--	irqname = devm_kasprintf(dmac->dev, GFP_KERNEL, "%s:%u",
--				 dev_name(dmac->dev), index);
--	if (!irqname)
--		return -ENOMEM;
--
--	ret = devm_request_threaded_irq(dmac->dev, channel->irq,
--					rz_dmac_irq_handler,
--					rz_dmac_irq_handler_thread, 0,
--					irqname, channel);
--	if (ret) {
--		dev_err(dmac->dev, "failed to request IRQ %u (%d)\n",
--			channel->irq, ret);
--		return ret;
--	}
--
- 	/* Set io base address for each channel */
- 	if (index < 8) {
- 		channel->ch_base = dmac->base + CHANNEL_0_7_OFFSET +
-@@ -806,9 +785,9 @@ static int rz_dmac_chan_probe(struct rz_dmac *dmac,
+diff --git a/drivers/input/misc/ims-pcu.c b/drivers/input/misc/ims-pcu.c
+index 59055818e0e6fc..b4e7dd8a993737 100644
+--- a/drivers/input/misc/ims-pcu.c
++++ b/drivers/input/misc/ims-pcu.c
+@@ -448,6 +448,14 @@ static void ims_pcu_handle_response(struct ims_pcu *pcu)
  	}
- 
- 	/* Allocate descriptors */
--	lmdesc = dma_alloc_coherent(&pdev->dev,
--				    sizeof(struct rz_lmdesc) * DMAC_NR_LMDESC,
--				    &channel->lmdesc.base_dma, GFP_KERNEL);
-+	lmdesc = dmam_alloc_coherent(&pdev->dev,
-+				     sizeof(struct rz_lmdesc) * DMAC_NR_LMDESC,
-+				     &channel->lmdesc.base_dma, GFP_KERNEL);
- 	if (!lmdesc) {
- 		dev_err(&pdev->dev, "Can't allocate memory (lmdesc)\n");
- 		return -ENOMEM;
-@@ -824,7 +803,26 @@ static int rz_dmac_chan_probe(struct rz_dmac *dmac,
- 	INIT_LIST_HEAD(&channel->ld_free);
- 	INIT_LIST_HEAD(&channel->ld_active);
- 
--	return 0;
-+	/* Request the channel interrupt. */
-+	sprintf(pdev_irqname, "ch%u", index);
-+	channel->irq = platform_get_irq_byname(pdev, pdev_irqname);
-+	if (channel->irq < 0)
-+		return channel->irq;
-+
-+	irqname = devm_kasprintf(dmac->dev, GFP_KERNEL, "%s:%u",
-+				 dev_name(dmac->dev), index);
-+	if (!irqname)
-+		return -ENOMEM;
-+
-+	ret = devm_request_threaded_irq(dmac->dev, channel->irq,
-+					rz_dmac_irq_handler,
-+					rz_dmac_irq_handler_thread, 0,
-+					irqname, channel);
-+	if (ret)
-+		dev_err(dmac->dev, "failed to request IRQ %u (%d)\n",
-+			channel->irq, ret);
-+
-+	return ret;
  }
  
- static int rz_dmac_parse_of(struct device *dev, struct rz_dmac *dmac)
-@@ -851,7 +849,6 @@ static int rz_dmac_probe(struct platform_device *pdev)
- 	const char *irqname = "error";
- 	struct dma_device *engine;
- 	struct rz_dmac *dmac;
--	int channel_num;
- 	unsigned int i;
- 	int ret;
- 	int irq;
-@@ -881,26 +878,28 @@ static int rz_dmac_probe(struct platform_device *pdev)
- 	if (IS_ERR(dmac->ext_base))
- 		return PTR_ERR(dmac->ext_base);
- 
-+	/* Initialize the channels. */
-+	INIT_LIST_HEAD(&dmac->engine.channels);
++static void ims_pcu_reset_packet(struct ims_pcu *pcu)
++{
++	pcu->have_stx = true;
++	pcu->have_dle = false;
++	pcu->read_pos = 0;
++	pcu->check_sum = 0;
++}
 +
-+	for (i = 0; i < dmac->n_channels; i++) {
-+		ret = rz_dmac_chan_probe(dmac, &dmac->channels[i], i);
-+		if (ret < 0)
-+			goto err;
-+	}
-+
- 	/* Register interrupt handler for error */
- 	irq = platform_get_irq_byname(pdev, irqname);
--	if (irq < 0)
--		return irq;
-+	if (irq < 0) {
-+		ret = irq;
-+		goto err;
-+	}
- 
- 	ret = devm_request_irq(&pdev->dev, irq, rz_dmac_irq_handler, 0,
- 			       irqname, NULL);
- 	if (ret) {
- 		dev_err(&pdev->dev, "failed to request IRQ %u (%d)\n",
- 			irq, ret);
--		return ret;
--	}
--
--	/* Initialize the channels. */
--	INIT_LIST_HEAD(&dmac->engine.channels);
--
--	for (i = 0; i < dmac->n_channels; i++) {
--		ret = rz_dmac_chan_probe(dmac, &dmac->channels[i], i);
--		if (ret < 0)
--			goto err;
-+		goto err;
- 	}
- 
- 	/* Register the DMAC as a DMA provider for DT. */
-@@ -940,32 +939,13 @@ static int rz_dmac_probe(struct platform_device *pdev)
- dma_register_err:
- 	of_dma_controller_free(pdev->dev.of_node);
- err:
--	channel_num = i ? i - 1 : 0;
--	for (i = 0; i < channel_num; i++) {
--		struct rz_dmac_chan *channel = &dmac->channels[i];
--
--		dma_free_coherent(&pdev->dev,
--				  sizeof(struct rz_lmdesc) * DMAC_NR_LMDESC,
--				  channel->lmdesc.base,
--				  channel->lmdesc.base_dma);
--	}
--
- 	return ret;
- }
- 
- static int rz_dmac_remove(struct platform_device *pdev)
+ static void ims_pcu_process_data(struct ims_pcu *pcu, struct urb *urb)
  {
- 	struct rz_dmac *dmac = platform_get_drvdata(pdev);
--	unsigned int i;
--
--	for (i = 0; i < dmac->n_channels; i++) {
--		struct rz_dmac_chan *channel = &dmac->channels[i];
+ 	int i;
+@@ -460,6 +468,14 @@ static void ims_pcu_process_data(struct ims_pcu *pcu, struct urb *urb)
+ 			continue;
  
--		dma_free_coherent(&pdev->dev,
--				  sizeof(struct rz_lmdesc) * DMAC_NR_LMDESC,
--				  channel->lmdesc.base,
--				  channel->lmdesc.base_dma);
--	}
- 	of_dma_controller_free(pdev->dev.of_node);
- 	dma_async_device_unregister(&dmac->engine);
+ 		if (pcu->have_dle) {
++			if (pcu->read_pos >= IMS_PCU_BUF_SIZE) {
++				dev_warn(pcu->dev,
++					 "Packet too long (%d bytes), discarding\n",
++					 pcu->read_pos);
++				ims_pcu_reset_packet(pcu);
++				continue;
++			}
++
+ 			pcu->have_dle = false;
+ 			pcu->read_buf[pcu->read_pos++] = data;
+ 			pcu->check_sum += data;
+@@ -472,10 +488,8 @@ static void ims_pcu_process_data(struct ims_pcu *pcu, struct urb *urb)
+ 				dev_warn(pcu->dev,
+ 					 "Unexpected STX at byte %d, discarding old data\n",
+ 					 pcu->read_pos);
++			ims_pcu_reset_packet(pcu);
+ 			pcu->have_stx = true;
+-			pcu->have_dle = false;
+-			pcu->read_pos = 0;
+-			pcu->check_sum = 0;
+ 			break;
  
+ 		case IMS_PCU_PROTOCOL_DLE:
+@@ -495,12 +509,18 @@ static void ims_pcu_process_data(struct ims_pcu *pcu, struct urb *urb)
+ 				ims_pcu_handle_response(pcu);
+ 			}
+ 
+-			pcu->have_stx = false;
+-			pcu->have_dle = false;
+-			pcu->read_pos = 0;
++			ims_pcu_reset_packet(pcu);
+ 			break;
+ 
+ 		default:
++			if (pcu->read_pos >= IMS_PCU_BUF_SIZE) {
++				dev_warn(pcu->dev,
++					 "Packet too long (%d bytes), discarding\n",
++					 pcu->read_pos);
++				ims_pcu_reset_packet(pcu);
++				continue;
++			}
++
+ 			pcu->read_buf[pcu->read_pos++] = data;
+ 			pcu->check_sum += data;
+ 			break;
 -- 
 2.53.0
 
