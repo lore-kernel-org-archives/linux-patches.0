@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDD78441616;
-	Mon, 17 Aug 2026 14:14:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 986B543E06D;
+	Mon, 17 Aug 2026 14:14:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976086; cv=none; b=nz6FvAWqNSVUirYJsos0kmabj7RKQJMIgSXEKYtHerWHNlYGBseCmq4t9NjyUt+kKoH2h67NnHyJJCArJyh7gAwhJTtMycQI13uUbG57gMyBP+DTUotxRYMhzZiuDJqvp44Ctt4qwGm+ELV0U1rfFKbeoxwg06CuqgAJacjZ2+4=
+	t=1786976089; cv=none; b=ec8EpkoAMSn3gTaHKiWOZgkzGJWrL4OPIONCZAwYpzNMwlBsjYg7NoKvKv4XCoBJp9+pX9UMudwLpYWO49TUcib+UhmGLIJb/WpgDNokaMNR9A7govNHPQ7nn+eeStWifTPrrDtkSpBSHahu+Lx25v/LYfk2JOBQEWXqNyKl3dg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976086; c=relaxed/simple;
-	bh=/LKmNZf1yiCqbLf8dZb7IbUS8akkw6or3mdpR352570=;
+	s=arc-20240116; t=1786976089; c=relaxed/simple;
+	bh=kA1q2kzHF/CGb1TamodsqKPiwoz3F+yPJsZRSAQWNmY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gRUMvD4mP4+PukiAWH28/OfzaVTGwSdeFneF/oaIBliXpHsg5/jcm4uhkD0Ad7k0lpfbLmV7dESsWWoMz4PUWsdXDBPF02kzUkWqzO2aXsLND5hrAZ0Z9fPfm4M+APkRCWFQJYWPNI6EmnDRX9tsiZiV8zRiuZCzLPdDYp0Vxlk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j8eVNEsz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=i6i1Lsc7wEJoMpz/Tm7V04uGf1XjrUBk/loZcprnpWlwjc49corIIyWlRJcugsc2rcZg1tMiXc9fNqdrA010y8uzpM7UHgKeu9s7oyi8yaJILaHs1jyNhWQaqow5wG3YQd38B1bQQK+0vUqMohQKr7M0RhB79i5fQOTbJwT97Do=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P8gAXzOE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j8eVNEsz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FB071F000E9;
-	Mon, 17 Aug 2026 14:14:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P8gAXzOE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2D371F000E9;
+	Mon, 17 Aug 2026 14:14:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976085;
-	bh=57SF+ABKtQKFt1xKkYJRYxvx1iLbzYgZkEkDfuoCioE=;
+	s=korg; t=1786976088;
+	bh=C5L57XmZ8XXWSMJ6QElbEGQEV/hwCVBIz0QEYPQUXS0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j8eVNEszx+vGnyGF5Vd1nYzQZBDNeWisAJVyuCX3HdrPKdDG5OgJk450diV470hIz
-	 55QYdEQS5y8kKgDXm3BUFFhXaPiT88ZDiq3jDqTNlogVmB0j5Kmvs7i/tNYY/uJqaw
-	 RW5oyDlO39v8RLS0xfjoXqu5BSLFD5t2zYlT/3YA=
+	b=P8gAXzOEUkmXM907yKYyvas8CHEmvQDSsoYJhhN6UZiyn8o30DcOnkHdOjokOk5pJ
+	 QbpHTwuShYypFOJaeUCxO0NE0k8DQYDWPDJFtMgutJOh0H4XI+nQWJw20im63zEZVo
+	 jb47ai3J5vkvi/xnkEgw2WWx93DYqzJoMGp/frO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haidar Lee <haidar.lee@adlinktech.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.10 253/389] ASoC: tas2562: fix broken entries in the volume lookup table
-Date: Mon, 17 Aug 2026 15:31:32 +0200
-Message-ID: <20260817132549.102095484@linuxfoundation.org>
+	Suman Ghosh <sumang@marvell.com>,
+	Ratheesh Kannoth <rkannoth@marvell.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 236/389] octeontx2-pf: Set correct sequence for carrier off and tx queue stop
+Date: Mon, 17 Aug 2026 15:31:15 +0200
+Message-ID: <20260817132548.482928841@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -50,53 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haidar Lee <haidar.lee@adlinktech.com>
+From: Suman Ghosh <sumang@marvell.com>
 
-commit bdb0fd6de403fcea7b85dc9d38f0a571583ebe80 upstream.
+[ Upstream commit 16809472409d998afcda402e32b8229b389337c4 ]
 
-The float_vol_db_lookup table is supposed to hold
-round(10^(dB/20) * 2^30) for every 2 dB step from -110 dB to 0 dB,
-which is 56 entries, but it only has 55: the -90 dB entry duplicates
-the -92 dB value (0x0000695b) and the -20 dB entry (0x06666666) is
-missing altogether. As a result every step between -90 dB and -22 dB
-is off by 2 dB, and the control's maximum raw value of 110 indexes one
-element past the end of the array.
+During link down event, we were doing netif_tx_stop_all_queues() first
+and then netif_carrier_off(). This can cause a potential race since
+carrier is still on during down event. This patch reverse the calling
+order to fix the issue.
 
-Replace the duplicated -90 dB entry with the correct value 0x000084a3
-and add the missing -20 dB entry, bringing the table to the full 56
-entries so index 55 (raw value 110, 0 dB) is in range again.
-
-Fixes: bf726b1c86f2 ("ASoC: tas2562: Add support for digital volume control")
-Cc: stable@vger.kernel.org
-Signed-off-by: Haidar Lee <haidar.lee@adlinktech.com>
-Link: https://patch.msgid.link/20260715-tas2562-dvc-fix-v1-2-072b13901b20@adlinktech.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 50fe6c02e5ad ("octeontx2-pf: Register and handle link notifications")
+Signed-off-by: Suman Ghosh <sumang@marvell.com>
+Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260724072831.2415281-1-rkannoth@marvell.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/tas2562.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/soc/codecs/tas2562.c
-+++ b/sound/soc/codecs/tas2562.c
-@@ -33,15 +33,16 @@
- static const unsigned int float_vol_db_lookup[] = {
- 0x00000d43, 0x000010b2, 0x00001505, 0x00001a67, 0x00002151,
- 0x000029f1, 0x000034cd, 0x00004279, 0x000053af, 0x0000695b,
--0x0000695b, 0x0000a6fa, 0x0000d236, 0x000108a4, 0x00014d2a,
-+0x000084a3, 0x0000a6fa, 0x0000d236, 0x000108a4, 0x00014d2a,
- 0x0001a36e, 0x00021008, 0x000298c0, 0x000344df, 0x00041d8f,
- 0x00052e5a, 0x000685c8, 0x00083621, 0x000a566d, 0x000d03a7,
- 0x0010624d, 0x0014a050, 0x0019f786, 0x0020b0bc, 0x0029279d,
- 0x0033cf8d, 0x004139d3, 0x00521d50, 0x00676044, 0x0082248a,
- 0x00a3d70a, 0x00ce4328, 0x0103ab3d, 0x0146e75d, 0x019b8c27,
- 0x02061b89, 0x028c423f, 0x03352529, 0x0409c2b0, 0x05156d68,
--0x080e9f96, 0x0a24b062, 0x0cc509ab, 0x10137987, 0x143d1362,
--0x197a967f, 0x2013739e, 0x28619ae9, 0x32d64617, 0x40000000
-+0x06666666, 0x080e9f96, 0x0a24b062, 0x0cc509ab, 0x10137987,
-+0x143d1362, 0x197a967f, 0x2013739e, 0x28619ae9, 0x32d64617,
-+0x40000000
- };
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
+index 50a36639e0ced..ca2b8ae98bd26 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
+@@ -840,8 +840,8 @@ static void otx2_handle_link_event(struct otx2_nic *pf)
+ 		netif_carrier_on(netdev);
+ 		netif_tx_start_all_queues(netdev);
+ 	} else {
+-		netif_tx_stop_all_queues(netdev);
+ 		netif_carrier_off(netdev);
++		netif_tx_stop_all_queues(netdev);
+ 	}
+ }
  
- struct tas2562_data {
+-- 
+2.53.0
+
 
 
