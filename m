@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9ED632ED40;
-	Mon, 17 Aug 2026 13:39:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 814B832ED40;
+	Mon, 17 Aug 2026 13:39:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786973948; cv=none; b=P89OXSGggNl9RAB760R9uYPUPHqT6jssVsCC0S3s4QtgTEc7CpgB0lyFf0ZVRrkHc8h5EPYRfPMe2Hc35tTvfyj2+hgOIaCpBygAGky3DL+x+QKdOShuj7mXVA43czvBxGL8ilU4YHu3Nz1+7DbQ06J8mlrq35znYuwBKT78wzY=
+	t=1786973950; cv=none; b=ijw5Dv2h8IsErYVl7mNQ8aoV6PsD2+VDiYNiFIbEKfLXVHQdHXCgfYPX+M8rWn8QA0HEPKTufJYvfb/kxupHB3LDQhaxEbdqePqjaoljTg2fFVrJE2cKmNlUyBlsmuMaaC44Fexrx6LiB9nWKHuY5728ny/qvSbp4+wAbUf2zY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786973948; c=relaxed/simple;
-	bh=EYwuGChoEpJ7IFhryunjvhFhmkBpROcbJs49lZuJS/s=;
+	s=arc-20240116; t=1786973950; c=relaxed/simple;
+	bh=9O89SkqjrHGpKyFFEO6co3HTONhYN2oJy83VFdZ77LE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d/uGCIHr10ao1WTlp8K7mcvvQTbRegI1zWdokXN9GXBEISaXS4mE0RyBISNXJd9+W3OOyjSH+Bp5KMHdVxu4JCOmkkEZdN2NdfAQ93ohLeZFmTSMx2r2AK7snV7wyq1xs6ZoNb9qgF7rG9LqEs5bs0RuGFfWPOHDgOPAcQBH8yU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dBHPZoDM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QItKGffUw4jhFccpIHf9T5k3Lcwmo/gpeE2kcpPiIRZSUy6Fs26Ighx2fV0RjR4BWmAvOlB5c0KA1rgwKV2BkwwHhyTRvulIWQ5VeJRqTcYGm+2PDT9Y4rW5E5c7OkqeTGkWbfaUkyVdvmo2ZSUDac2jVEr4L0IdTdansbSlpco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LJlU7piq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dBHPZoDM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03E7E1F000E9;
-	Mon, 17 Aug 2026 13:39:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LJlU7piq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DACA11F000E9;
+	Mon, 17 Aug 2026 13:39:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786973946;
-	bh=epeJW5eng/cqIWYCCu5+hRyrxFYPTrk5UYyEc6uiJnQ=;
+	s=korg; t=1786973949;
+	bh=mMMrtwFR1WbWLsxsJsGj4AHIh8BdWQ+AQxxAhGoqLyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dBHPZoDMW/EUb78aki+qiL1MxkdYpmvj46ul7YMs7Om2oTVZCTzNrdZvWGW3RsdZU
-	 cNL7P7iKD9leSQRQxQzzqynByPomCjl87O4iI/8SVsDSV+Con6XrC3mlIn2FBDK4kl
-	 eYFImCY88sRuJn1ve7mi3yi4flDSKta/BD8r/Kxk=
+	b=LJlU7piqza1xE+HwF+XvgrQyMzEnMnaAw+MYMq6S8Rue0nKKe5o7j0KGpHs99sXU4
+	 Ks8S1rw9zirgqiZV7VwPLQEIdMkQA3yR4VVAc3Euza0qDYz8WDtXDVupSzsX3lBqg6
+	 10DhoAu36HoxdU/lkpehv6ewB7mGegjPb70oT6UY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Douglas Anderson <dianders@chromium.org>,
+	Mark Tomlinson <mark.tomlinson@alliedtelesis.co.nz>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 035/271] drm/bridge: ps8640: propagate AUX transfer register errors
-Date: Mon, 17 Aug 2026 15:29:20 +0200
-Message-ID: <20260817132538.192262091@linuxfoundation.org>
+Subject: [PATCH 7.1 004/271] gpio: pca953x: fix pca953x_irq_bus_sync_unlock regmap lock
+Date: Mon, 17 Aug 2026 15:28:49 +0200
+Message-ID: <20260817132536.933568254@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -51,77 +51,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Mark Tomlinson <mark.tomlinson@alliedtelesis.co.nz>
 
-[ Upstream commit 20697ecb299cd77b4cf8b28f655e56606b0472d8 ]
+[ Upstream commit 9dc325327babe7f159e84cbe9380a45342da0585 ]
 
-ps8640_aux_transfer_msg() programs the AUX address registers, starts the
-AUX transfer, waits for SWAUX_SEND to clear, and reads the AUX status
-register. Several of those regmap operations have return values, but the
-function only checks a stale ret after the status read.
+Locking is disabled in the regmap config as this driver uses its own
+lock. This means that all calls to regmap functions (read or write) must
+hold the i2c_lock. The function pca953x_irq_bus_sync_unlock() did not do
+this, and it was therefore possible that multiple threads could cause an
+incorrect register to be read/written.
 
-Propagate failures from the address write, transfer start, completion
-poll, and status read. This avoids returning a transfer length when the
-bridge register transaction or AUX completion wait failed.
+A previous patch partly fixed this, but only protected the write to the
+interrupt mask register, and not the read from the direction register.
 
-Fixes: 13afcdd7277e ("drm/bridge: parade-ps8640: Add support for AUX channel")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://patch.msgid.link/20260723103509.2-ps8640-v2-pengpeng@iscas.ac.cn
+Fixes: bfc6444b57dc ("gpio: pca953x: fix pca953x_irq_bus_sync_unlock race")
+Cc: stable@vger.kernel.org
+Signed-off-by: Mark Tomlinson <mark.tomlinson@alliedtelesis.co.nz>
+Link: https://patch.msgid.link/20260709045116.2304246-1-mark.tomlinson@alliedtelesis.co.nz
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+(cherry picked from commit 9dc325327babe7f159e84cbe9380a45342da0585)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/parade-ps8640.c | 27 ++++++++++++++++++++------
- 1 file changed, 21 insertions(+), 6 deletions(-)
+ drivers/gpio/gpio-pca953x.c | 19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/parade-ps8640.c b/drivers/gpu/drm/bridge/parade-ps8640.c
-index 825777a5758f6..db8e5889dc7f1 100644
---- a/drivers/gpu/drm/bridge/parade-ps8640.c
-+++ b/drivers/gpu/drm/bridge/parade-ps8640.c
-@@ -257,8 +257,14 @@ static ssize_t ps8640_aux_transfer_msg(struct drm_dp_aux *aux,
- 	addr_len[PAGE0_SWAUX_LENGTH - base] = (len == 0) ? SWAUX_NO_PAYLOAD :
- 					      ((len - 1) & SWAUX_LENGTH_MASK);
+diff --git a/drivers/gpio/gpio-pca953x.c b/drivers/gpio/gpio-pca953x.c
+index 69c5bd9aaee7c..cb282b35fb58d 100644
+--- a/drivers/gpio/gpio-pca953x.c
++++ b/drivers/gpio/gpio-pca953x.c
+@@ -605,20 +605,28 @@ static int pca953x_read_regs(struct pca953x_chip *chip, int reg, unsigned long *
+ 	return 0;
+ }
  
--	regmap_bulk_write(map, PAGE0_SWAUX_ADDR_7_0, addr_len,
--			  ARRAY_SIZE(addr_len));
-+	ret = regmap_bulk_write(map, PAGE0_SWAUX_ADDR_7_0, addr_len,
-+				ARRAY_SIZE(addr_len));
-+	if (ret) {
-+		DRM_DEV_ERROR(dev,
-+			      "failed to write AUX address %#x, len %zu: %d\n",
-+			      msg->address, len, ret);
-+		return ret;
-+	}
+-static int pca953x_gpio_direction_input(struct gpio_chip *gc, unsigned off)
++static int pca953x_gpio_direction_input_unlocked(struct gpio_chip *gc,
++						 unsigned int off)
+ {
+ 	struct pca953x_chip *chip = gpiochip_get_data(gc);
+ 	u8 dirreg = chip->recalc_addr(chip, chip->regs->direction, off);
+ 	u8 bit = pca953x_get_bit_mask(chip, off);
  
- 	if (len && (request == DP_AUX_NATIVE_WRITE ||
- 		    request == DP_AUX_I2C_WRITE)) {
-@@ -274,13 +280,22 @@ static ssize_t ps8640_aux_transfer_msg(struct drm_dp_aux *aux,
- 		}
- 	}
+-	guard(mutex)(&chip->i2c_lock);
+-
+ 	if (PCA_CHIP_TYPE(chip->driver_data) == TCA6418_TYPE)
+ 		return regmap_update_bits(chip->regmap, dirreg, bit, 0);
  
--	regmap_write(map, PAGE0_SWAUX_CTRL, SWAUX_SEND);
-+	ret = regmap_write(map, PAGE0_SWAUX_CTRL, SWAUX_SEND);
-+	if (ret) {
-+		DRM_DEV_ERROR(dev, "failed to start AUX transfer: %d\n", ret);
-+		return ret;
-+	}
+ 	return regmap_update_bits(chip->regmap, dirreg, bit, bit);
+ }
  
- 	/* Zero delay loop because i2c transactions are slow already */
--	regmap_read_poll_timeout(map, PAGE0_SWAUX_CTRL, data,
--				 !(data & SWAUX_SEND), 0, 50 * 1000);
-+	ret = regmap_read_poll_timeout(map, PAGE0_SWAUX_CTRL, data,
-+				       !(data & SWAUX_SEND), 0, 50 * 1000);
-+	if (ret) {
-+		DRM_DEV_ERROR(dev, "failed to complete AUX transfer: %d\n",
-+			      ret);
-+		return ret;
-+	}
++static int pca953x_gpio_direction_input(struct gpio_chip *gc, unsigned int off)
++{
++	struct pca953x_chip *chip = gpiochip_get_data(gc);
++
++	guard(mutex)(&chip->i2c_lock);
++
++	return pca953x_gpio_direction_input_unlocked(gc, off);
++}
++
+ static int pca953x_gpio_direction_output(struct gpio_chip *gc,
+ 		unsigned off, int val)
+ {
+@@ -856,9 +864,10 @@ static void pca953x_irq_bus_sync_unlock(struct irq_data *d)
+ 	DECLARE_BITMAP(reg_direction, MAX_LINE);
+ 	int level;
  
--	regmap_read(map, PAGE0_SWAUX_STATUS, &data);
-+	ret = regmap_read(map, PAGE0_SWAUX_STATUS, &data);
- 	if (ret) {
- 		DRM_DEV_ERROR(dev, "failed to read PAGE0_SWAUX_STATUS: %d\n",
- 			      ret);
++	guard(mutex)(&chip->i2c_lock);
++
+ 	if (chip->driver_data & PCA_PCAL) {
+ 		DECLARE_BITMAP(latched_inputs, MAX_LINE);
+-		guard(mutex)(&chip->i2c_lock);
+ 
+ 		/* Enable latch on edge-triggered interrupt-enabled inputs */
+ 		bitmap_or(latched_inputs, chip->irq_trig_fall, chip->irq_trig_raise, gc->ngpio);
+@@ -882,7 +891,7 @@ static void pca953x_irq_bus_sync_unlock(struct irq_data *d)
+ 
+ 	/* Look for any newly setup interrupt */
+ 	for_each_set_bit(level, irq_mask, gc->ngpio)
+-		pca953x_gpio_direction_input(&chip->gpio_chip, level);
++		pca953x_gpio_direction_input_unlocked(&chip->gpio_chip, level);
+ 
+ 	mutex_unlock(&chip->irq_lock);
+ }
 -- 
 2.53.0
 
