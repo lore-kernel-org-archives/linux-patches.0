@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E520532ED40;
-	Mon, 17 Aug 2026 13:40:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6C483C8C65;
+	Mon, 17 Aug 2026 13:40:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974010; cv=none; b=Jxex2H1GGVZI181suSR5jydVSexnqSjUpj97AVZHjFJCQr3EOe1tQf1QrrJapB22WKvAHu7bF1CUd/34ubEsGRrap1nsE8bO367qE7WGNRv+mcZ1GynSnyY4NNpNxUZIEV23WMcWGuLYjVjz8Ql2Iota+Tf/4FvynFOZVLSU8DI=
+	t=1786974013; cv=none; b=EFQJhgSfAsezma2YDKGNdh1mgMKzxIb2SjkUEOnku3arKUzgqJXPIKHHISLnFhS81lFbJeOJ+czNygwOPO+8/JjJBuzmODobVmCDLK+qkhHcF+zv6Q0YOd18EeGhx3GxLtlV8Y0rU+3a/AINGCCIsFRdiWu19j4Mp/w9ikW3CcA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974010; c=relaxed/simple;
-	bh=gmsps2TjOdpATbzELg4QeN2hs0TzZcJJLxQzio1NLpI=;
+	s=arc-20240116; t=1786974013; c=relaxed/simple;
+	bh=75u/8/NNG7xqty1FE6H3soy930DD2qGdJKNRbDXOOzE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cGshL6WvTzM/AEJK++Yqt6y1wYlsngt24TcBw2Qg+HFx9ic0gJp4Jf5SJz6/JG27J8jLL9A/o1xrIh8iwq9/5VFfeZdojfFfGoN37hiEmTgmfr6AaTcmJAOIiJobNIZVaDAb43i0ft7K1OE26qMJTO7ZGQy2uBTG9gNEuGYjUEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wiyo/C/A; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pmhGCBGOyTlXbXmdpnoR7x4JFjXbj8A3bYjmiIY2TJY1JkiQuuJKGeEo7QX0um8vBw0LBvF3DVXFo3UuKOCqXB4P0NCRCj5MIj3pA+UWDsxVXcKKiPrb3tKZSpg1wsMbYRdIXscbDlVRNhG7uc57wBBevpMYO11cLTK/kn5dFuc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C8doajIN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wiyo/C/A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 069661F000E9;
-	Mon, 17 Aug 2026 13:40:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C8doajIN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4E0A1F000E9;
+	Mon, 17 Aug 2026 13:40:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974008;
-	bh=KThBSFpcIxxhaLzTrv4b/Wllfq9HR1Sdr562FDCMOBY=;
+	s=korg; t=1786974011;
+	bh=Qir9jbXJULA24BG8YHACZ/BxiaBo9D3ysLK87kWH6IM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Wiyo/C/AISfU7BjiaKw+ch14tCXwCsX6ie1VWi1tj/CV+IbFUA/20/vcDz+nH4urf
-	 6AslUfkoS7lXk9T8ztz//dHwVMa37z8ML2cfDVjRMX6EwX5nLM813GNKfs0yh04pNO
-	 LvCKucDk1VTM+phn8DLpXZlgvDNqC6L/7JuM6EaI=
+	b=C8doajINn2ic9JIPFpw4lbHtJ9N2FfRacAxxL6jHaam0lkoQMK+6p3ejty+h5BSLy
+	 cnWpOoMLW3BppXJrYsMOf9N7IW3Hl8hJElwEjmWEZatLFDTuISB0TsxcopZjDSrVGC
+	 U1XfflcTQVqC9F8qvJnjEvOUsc7K43m7YXEmlfy0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Or Har-Toov <ohartoov@nvidia.com>,
-	Jiri Pirko <jiri@nvidia.com>,
+	Michael Guralnik <michaelgur@nvidia.com>,
+	Shay Drori <shayd@nvidia.com>,
 	Tariq Toukan <tariqt@nvidia.com>,
-	Antoine Tenart <atenart@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 057/271] devlink: fix net namespace reference leak in reload
-Date: Mon, 17 Aug 2026 15:29:42 +0200
-Message-ID: <20260817132539.092653044@linuxfoundation.org>
+Subject: [PATCH 7.1 058/271] net/mlx5: fw_tracer, return NULL on create error
+Date: Mon, 17 Aug 2026 15:29:43 +0200
+Message-ID: <20260817132539.134684528@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -54,40 +53,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Or Har-Toov <ohartoov@nvidia.com>
+From: Michael Guralnik <michaelgur@nvidia.com>
 
-[ Upstream commit 1c4dac9bf1d2ac31da63b794bdec697777cbd0fd ]
+[ Upstream commit af39eb111ce6b5eba9c08513b62c4868eb7e7fd5 ]
 
-devlink_nl_reload_doit() calls devlink_netns_get(), which returns a net
-with a held reference. When the requested namespace differs from the
-current one and the reload action is not DRIVER_REINIT, the function
-returns -EOPNOTSUPP without releasing the reference. Add the missing
-put_net() on this error path.
+Tracer creation can fail by returning either NULL or ERR_PTR.
+The return value is stored without a check on the device, and users
+treat ERR_PTR and NULL the same way.
+This also causes a crash in the core dump logic, which is missing the
+ERR_PTR check and ends up dereferencing it, as shown in the trace below.
 
-Fixes: 2edd92570441 ("devlink: don't allow to change net namespace for FW_ACTIVATE reload action")
-Signed-off-by: Or Har-Toov <ohartoov@nvidia.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Switch tracer creation to return NULL on failure only, so callers only
+need a single NULL check.
+
+  Internal error: Oops: 0000000096000006 [#1]  SMP
+  Modules linked in: mlx5_ib ib_uverbs ib_core ipv6 mlx5_core
+  CPU: 1 UID: 0 PID: 12 Comm: kworker/u16:0 Not tainted 6.19.7 #1 PREEMPT(none)
+  Workqueue: mlx5_health0001:01:00.0 mlx5_fw_reporter_err_work [mlx5_core]
+  pstate: a3400009 (NzCv daif +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
+  pc : mlx5_fw_tracer_trigger_core_dump_general+0x58/0xe0 [mlx5_core]
+  lr : mlx5_fw_tracer_trigger_core_dump_general+0x40/0xe0 [mlx5_core]
+  sp : ffff800081cf3c40
+  x29: ffff800081cf3c90 x28: 0000000000000000 x27: 0000000000000000
+  x26: ffff000080018828 x25: 0000000000000000 x24: ffff000080304a05
+  x23: ffff800081cf3d80 x22: ffff0000847e01a0 x21: 0000000000000000
+  x20: ffff0000847e01a0 x19: ffffffffffffffa1 x18: ffff80008310bbf0
+  x17: ffff800080119650 x16: ffff80008010df54 x15: ffff80008010d4ac
+  x14: ffff800079c202e4 x13: ffff80008002fe60 x12: ffff800080119650
+  x11: ffff80008010df54 x10: ffff80008010d4ac x9 : ffff800079c203d8
+  x8 : ffff800081cf3c88 x7 : 0000000000000000 x6 : 0000000000000000
+  x5 : 0000000000000000 x4 : 0000000000000008 x3 : 0000000000000030
+  x2 : 0000000000000008 x1 : 0000000000000000 x0 : 00000000c5c4000e
+  Call trace:
+   mlx5_fw_tracer_trigger_core_dump_general+0x58/0xe0 [mlx5_core] (P)
+   mlx5_fw_reporter_dump+0x30/0x2e0 [mlx5_core]
+   devlink_health_do_dump+0x9c/0x160
+   devlink_health_report+0x1c0/0x288
+   mlx5_fw_reporter_err_work+0xac/0xc0 [mlx5_core]
+   process_one_work+0x15c/0x3d8
+   worker_thread+0x18c/0x320
+   kthread+0x148/0x228
+   ret_from_fork+0x10/0x20
+  Code: b9400000 5ac00800 7a401800 540003ca (3940a260)
+  ---[ end trace 0000000000000000 ]---
+  Kernel panic - not syncing: Oops: Fatal exception
+  SMP: stopping secondary CPUs
+  Kernel Offset: disabled
+  CPU features: 0x000000,00078031,75fce5a1,35fffe67
+  Memory Limit: none
+  ---[ end Kernel panic - not syncing: Oops: Fatal exception ]---
+
+Fixes: fd1483fe1f9f ("net/mlx5: Add support for FW reporter dump")
+Signed-off-by: Michael Guralnik <michaelgur@nvidia.com>
+Reviewed-by: Shay Drori <shayd@nvidia.com>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Antoine Tenart <atenart@kernel.org>
-Link: https://patch.msgid.link/20260729080600.2427721-1-tariqt@nvidia.com
+Link: https://patch.msgid.link/20260729080402.2427184-1-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/devlink/dev.c | 1 +
- 1 file changed, 1 insertion(+)
+ .../ethernet/mellanox/mlx5/core/diag/fw_tracer.c | 16 +++++++---------
+ 1 file changed, 7 insertions(+), 9 deletions(-)
 
-diff --git a/net/devlink/dev.c b/net/devlink/dev.c
-index 57b2b8f035436..fd5633fa88ecd 100644
---- a/net/devlink/dev.c
-+++ b/net/devlink/dev.c
-@@ -578,6 +578,7 @@ int devlink_nl_reload_doit(struct sk_buff *skb, struct genl_info *info)
- 		    action != DEVLINK_RELOAD_ACTION_DRIVER_REINIT) {
- 			NL_SET_ERR_MSG_MOD(info->extack,
- 					   "Changing namespace is only supported for reinit action");
-+			put_net(dest_net);
- 			return -EOPNOTSUPP;
- 		}
- 	}
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c b/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
+index adcc73e2a5b38..1493d8106c1a4 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
+@@ -1025,13 +1025,11 @@ struct mlx5_fw_tracer *mlx5_fw_tracer_create(struct mlx5_core_dev *dev)
+ 
+ 	tracer = kvzalloc_obj(*tracer);
+ 	if (!tracer)
+-		return ERR_PTR(-ENOMEM);
++		return NULL;
+ 
+ 	tracer->work_queue = create_singlethread_workqueue("mlx5_fw_tracer");
+-	if (!tracer->work_queue) {
+-		err = -ENOMEM;
++	if (!tracer->work_queue)
+ 		goto free_tracer;
+-	}
+ 
+ 	tracer->dev = dev;
+ 
+@@ -1073,7 +1071,7 @@ struct mlx5_fw_tracer *mlx5_fw_tracer_create(struct mlx5_core_dev *dev)
+ 	destroy_workqueue(tracer->work_queue);
+ free_tracer:
+ 	kvfree(tracer);
+-	return ERR_PTR(err);
++	return NULL;
+ }
+ 
+ static int fw_tracer_event(struct notifier_block *nb, unsigned long action, void *data);
+@@ -1084,7 +1082,7 @@ int mlx5_fw_tracer_init(struct mlx5_fw_tracer *tracer)
+ 	struct mlx5_core_dev *dev;
+ 	int err;
+ 
+-	if (IS_ERR_OR_NULL(tracer))
++	if (!tracer)
+ 		return 0;
+ 
+ 	if (!tracer->str_db.loaded)
+@@ -1134,7 +1132,7 @@ int mlx5_fw_tracer_init(struct mlx5_fw_tracer *tracer)
+ /* Stop tracer + Cleanup HW resources */
+ void mlx5_fw_tracer_cleanup(struct mlx5_fw_tracer *tracer)
+ {
+-	if (IS_ERR_OR_NULL(tracer))
++	if (!tracer)
+ 		return;
+ 
+ 	mutex_lock(&tracer->state_lock);
+@@ -1163,7 +1161,7 @@ void mlx5_fw_tracer_cleanup(struct mlx5_fw_tracer *tracer)
+ /* Free software resources (Buffers, etc ..) */
+ void mlx5_fw_tracer_destroy(struct mlx5_fw_tracer *tracer)
+ {
+-	if (IS_ERR_OR_NULL(tracer))
++	if (!tracer)
+ 		return;
+ 
+ 	mlx5_core_dbg(tracer->dev, "FWTracer: Destroy\n");
+@@ -1215,7 +1213,7 @@ int mlx5_fw_tracer_reload(struct mlx5_fw_tracer *tracer)
+ 	struct mlx5_core_dev *dev;
+ 	int err;
+ 
+-	if (IS_ERR_OR_NULL(tracer))
++	if (!tracer)
+ 		return 0;
+ 
+ 	dev = tracer->dev;
 -- 
 2.53.0
 
