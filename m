@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D260E2E7BD6;
-	Mon, 17 Aug 2026 15:18:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C8FD43F089;
+	Mon, 17 Aug 2026 15:18:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979918; cv=none; b=e1z0XpxmPYdy8hgVbjUDJDAe9d60zjBDpME2djzSCSwk5brneZt8sS4yB/BtXhUeEjjoeG+CjejPWJSaVDMKG+NtIK75ZCZzi8WDEtHKTY4Kj/LjQHZ/7lNhR33Edgfv9zZDYxwdM2n3NL1f0IaW8PsvCyUbgmIU1RxocesUxEI=
+	t=1786979920; cv=none; b=jGwzoWAmgUnZiRd38n+CZJfveoR0BJW4h6JxYZ6SiyrP13ytD/kPxeiBMnJM6TgJBexs2My5r3s0zF3PEep2SSdSgg6dDYt7mxWKDSq7zyA3n1xLD3uUNaTYUi2dNwDgsDZ1zf+9owB5F/Z1K/78yU6aEB2ekDNaGrojZEEJnFw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979918; c=relaxed/simple;
-	bh=quhPsdGQaEWal51Z5CIExQgEMHpg/KFc0aiSy9Xytvs=;
+	s=arc-20240116; t=1786979920; c=relaxed/simple;
+	bh=P+MBCptm3mFdTRDL4K3nLyRnm7q3urVGKTupLnXcDOA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hnvmlo2MuTRo0mwUmL18mhkJ7UsHRc48LRhpxzOKiNcwn5IlpJA/Rx0LYzRoBvO1Ey5B77uDz2NksjLoFeNHvMD2PJITcXikYEa/WDG0tQNzpqO+btrhSNWT2VtjOYwOXBJYYgRkGpVfjQLeuvkRzX0WqwKC7VhNQG2CdpZu164=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z0i+9/2J; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tin5inXU+4+yJyGOe6GDH+nm15iICf2qfR9l7TOkPi/BHr+3e/pemuNh8uWT/mS70RjIn6uzoQMSQweMV6RTci7/kxyMmiCbevvOzg6lEhsErbk2cESiWZW2PwEvfsnJlILcnPeOK+33DefzVnr56KTHDLlNylzTvqNViCPoYqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JSh7AkNX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z0i+9/2J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DD5D1F000E9;
-	Mon, 17 Aug 2026 15:18:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JSh7AkNX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 000511F000E9;
+	Mon, 17 Aug 2026 15:18:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979916;
-	bh=c3+NRqS6N4oVn6bU39TbDCXOtNVJFFa/c5QHBTKHZe0=;
+	s=korg; t=1786979919;
+	bh=wxVIuIUA6nqMc9aF5UnqqYckS/217DHVfz4zI2XZ3vI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z0i+9/2Jm2SEvxmXojczMEAPXSwDynU62IoyM4BhluvZs04/rYR84CVzRhlEWm71/
-	 Myp6Qv8/ZzHy7/Qa2V6N5QCDH9+WlkHtNCRZqou08s0Qntu/Oe1nebCXByuzccXkf0
-	 XpCwtap37wKjEV2BOmfxQtshAspTb0dCkn5lL/NY=
+	b=JSh7AkNXy4OrLWx4mcYtuZa4NifPGyd/hsbAnMFtNTXJesB3y3I6388ZJEOLRXl1z
+	 hPHqNg9m9bLHxJuytfUGse/5RWEUIU7k9xOAN1uVdTtAVlO34CFNchXn+FhGaeIyTs
+	 3VtWe1nku2EaDs8oxPcFZbONCa0Hu9Py28GDzKW4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Vosburgh <trilobyte777@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 391/609] sctp: validate Adaptation Indication parameter length
-Date: Mon, 17 Aug 2026 15:31:27 +0200
-Message-ID: <20260817132557.325600646@linuxfoundation.org>
+	Zhan Xusheng <zhanxusheng@xiaomi.com>,
+	Paul Moore <paul@paul-moore.com>
+Subject: [PATCH 6.1 392/609] audit: fix potential integer overflow in audit_log_n_string()
+Date: Mon, 17 Aug 2026 15:31:28 +0200
+Message-ID: <20260817132557.355301701@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -51,51 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charles Vosburgh <trilobyte777@gmail.com>
+From: Zhan Xusheng <zhanxusheng1024@gmail.com>
 
-commit 74b21f52c5c5a71a05c0ff70e513f4f04ff28b17 upstream.
+commit f865c143629d4094866a811dba5f329250bad486 upstream.
 
-The Adaptation Layer Indication parameter contains a fixed 32-bit
-Adaptation Code Point after its parameter header. However,
-sctp_verify_param() accepts a header-only parameter because the generic
-parameter walker only requires the header to be present.
+audit_log_n_string() computes new_len as "slen + 3" (enclosing quotes
+plus the NUL terminator) and stores it into an int, while slen is a
+size_t.  For a sufficiently large slen the addition can overflow and/or
+the result be truncated when assigned to the int new_len, so the
+"new_len > avail" check can be bypassed and the subsequent
+memcpy(ptr, string, slen) can write past the skb tail.
 
-sctp_process_param() then reads adaptation_ind beyond the declared
-parameter. When the malformed parameter is last in an INIT, the read
-starts at the receive skb tail, and the value is copied into the state
-cookie returned in the INIT ACK. This may disclose four receive-buffer
-tail bytes.
+This is the same class of bug that was fixed for the hex sibling in
+commit 65dfde57d1e2 ("audit: fix potential integer overflow in
+audit_log_n_hex()"); both helpers are reached through
+audit_log_n_untrustedstring() with the same length source.
 
-Require the declared parameter length to match the fixed structure size
-and abort the association through the existing invalid parameter length
-path otherwise.
+Make new_len a size_t and use check_add_overflow() to catch the
+overflow, mirroring the audit_log_n_hex() fix.  No functional change for
+the in-tree callers, which all pass bounded lengths.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Charles Vosburgh <trilobyte777@gmail.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20260727-sctp-adaptation-length-v1-1-0ab58b2810a5@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 168b7173959f ("AUDIT: Clean up logging of untrusted strings")
+Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/sm_make_chunk.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ kernel/audit.c |   11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
---- a/net/sctp/sm_make_chunk.c
-+++ b/net/sctp/sm_make_chunk.c
-@@ -2187,7 +2187,13 @@ static enum sctp_ierror sctp_verify_para
- 	case SCTP_PARAM_HEARTBEAT_INFO:
- 	case SCTP_PARAM_UNRECOGNIZED_PARAMETERS:
- 	case SCTP_PARAM_ECN_CAPABLE:
-+		break;
- 	case SCTP_PARAM_ADAPTATION_LAYER_IND:
-+		if (ntohs(param.p->length) != sizeof(*param.aind)) {
-+			sctp_process_inv_paramlength(asoc, param.p,
-+						     chunk, err_chunk);
-+			retval = SCTP_IERROR_ABORT;
-+		}
- 		break;
+--- a/kernel/audit.c
++++ b/kernel/audit.c
+@@ -2075,7 +2075,8 @@ void audit_log_n_hex(struct audit_buffer
+ void audit_log_n_string(struct audit_buffer *ab, const char *string,
+ 			size_t slen)
+ {
+-	int avail, new_len;
++	int avail;
++	size_t new_len;
+ 	unsigned char *ptr;
+ 	struct sk_buff *skb;
  
- 	case SCTP_PARAM_SUPPORTED_EXT:
+@@ -2085,7 +2086,13 @@ void audit_log_n_string(struct audit_buf
+ 	BUG_ON(!ab->skb);
+ 	skb = ab->skb;
+ 	avail = skb_tailroom(skb);
+-	new_len = slen + 3;	/* enclosing quotes + null terminator */
++
++	/* enclosing quotes + null terminator */
++	if (check_add_overflow(slen, 3, &new_len)) {
++		audit_log_format(ab, "?");
++		return;
++	}
++
+ 	if (new_len > avail) {
+ 		avail = audit_expand(ab, new_len);
+ 		if (!avail)
 
 
