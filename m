@@ -1,39 +1,52 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1073B43B6CF;
-	Mon, 17 Aug 2026 13:59:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF1464399CD;
+	Mon, 17 Aug 2026 13:59:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975197; cv=none; b=swLfTkSMzBPVc9dLPwb/sQvgTaOkREhSjDB0/qkn7YkwSQWoYvLRE9QhP7jGEI/seXITEpHkZ1pXoxWsadd3+89qnyZgVUZ5agIQ+0SLG3cwgmAxzMdJZ2ak/SDtgeb4JDcZezCD96Z+7CtUIh+tqfmXOARWl7IWU4/EN5vmBts=
+	t=1786975200; cv=none; b=YbpK9lGdIv7XPe4LdefwwUZ9I7ZexR9yFkmTx/xk8wXjW0jv/AZcClrLNCddgoONNUhnEW/yYA2TAMqZJj/Jt7TZqg0VTFA7gWgU/b1kJpvWDZpOkD+ameWktwxkg4fPhezyRj16bUgi2tE8P+5x+HToA3M/oMrez/855jWyEwg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975197; c=relaxed/simple;
-	bh=Ts5K8nvjU4IKGknHdZQ77p1Xlx0W08JU1TIzNuQiKRI=;
+	s=arc-20240116; t=1786975200; c=relaxed/simple;
+	bh=tcRL5mRbRhc3W/XNMsFyal7B9nGvN62v8uNi+h0/F/w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NGocdTiU2PzOEsHT1Bxqff7JPYw9rc3RYfeIxha5sHS3SN7roWsIKGuh2RuAZVRIHT2FZAJabtbI33DyDN0NI9CY6S5putGafaU/cg99EYVZwVGsfQNww9Z7URa4Rv4gN6vjesvTUntF1z7V/eOz+zIiFSRU79Oq92Jon490K74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nWy78RlF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dH9aXuiTociK+d7FzeR4DCvLnluuUu4AImgQKW9SP3jxbXWElEEdtikgKyOdhP+3rf85qy3nhKB42kotMLH0vps2qKgQwi5YqKtYPkVvmA8ibvGn/Ec3V7dv89afitQ+5Lde/8A9NgVhre7NNkSO6NnEbL2SlShYWz2apB2qQ+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zfSxiRok; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nWy78RlF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40DE21F000E9;
-	Mon, 17 Aug 2026 13:59:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zfSxiRok"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 102171F000E9;
+	Mon, 17 Aug 2026 13:59:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975195;
-	bh=0fUszGMKpIZ0YsKxAPqlNYLTZDMmln9P5E3IU6w+VUE=;
+	s=korg; t=1786975198;
+	bh=4xTD97iUFfD/BQysGNOxJp9A2igf0hagEIoPqOFM19c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nWy78RlFsL6zjqOoExkZkOWBdfy6gECWFx8hPVnzVW3HPuIl4JQva5jquSVP+bZPH
-	 rzhLItxmHFrxy2GnniZPrs3hn9itKerjsqcQc4G6w3PRrVAjs1MqpNbvHD0ooDJvvl
-	 VFxn+rrlqdmoV2qP6oOY5JDMk1IuP5AHKI0SXOTE=
+	b=zfSxiRokJP816EipQPDzxwZsrwFyZjgiTRckYFfjvMGo5entw2SgrIo8ZBbsjebLn
+	 9t/yPULLR4sTXPhuL99EtfjCLoo01JBsv3QoMUXt1cYsh8+XyXX4HtgZnfI+VnKu2W
+	 29/+Lh3Lm75bWxDe/u+Mi3S5HhJgYoWwg688r4gE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zihan Xi <zihanx@nebusec.ai>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 158/250] ipv4: Fix fib_nlmsg_size() for RTA_VIA nexthops
-Date: Mon, 17 Aug 2026 15:31:59 +0200
-Message-ID: <20260817132543.030452202@linuxfoundation.org>
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Hengbin Zhang <uqbarz@gmail.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Barry Song <baohua@kernel.org>,
+	Dev Jain <dev.jain@arm.com>,
+	Hannes Reinecke <hare@suse.de>,
+	Hugh Dickins <hughd@google.com>,
+	Kiryl Shutsemau <kas@kernel.org>,
+	Lance Yang <lance.yang@linux.dev>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Nico Pache <npache@redhat.com>,
+	Pankaj Raghav <p.raghav@samsung.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Yang Shi <shy828301@gmail.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 194/250] mm/huge_memory: fix huge_zero_pfn race
+Date: Mon, 17 Aug 2026 15:32:35 +0200
+Message-ID: <20260817132544.485010709@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -52,126 +65,258 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zihan Xi <zihanx@nebusec.ai>
+From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
 
-commit 4ff9548d84945d2cbf9e4c207288063a200ea397 upstream.
+commit 33192a26cddea7a7e4ca66e5c3eebd36fa8be2bb upstream.
 
-fib_nlmsg_size() still estimates nexthop space as if every gateway is
-encoded as an IPv4 RTA_GATEWAY attribute. IPv4 routes can also carry an
-IPv6 gateway, which fib_nexthop_info() dumps as RTA_VIA.
+Patch series "mm/huge_memory: fix huge_zero_pfn race", v2.
 
-As a result, route notifications can allocate an skb that is too small.
-fib_dump_info() then fails with -EMSGSIZE and rtmsg_fib() hits the
-WARN_ON() that marks such failures as a fib_nlmsg_size() bug. With
-panic_on_warn set, this becomes a kernel panic.
+There is a subtle race in the reference-counted huge_zero_folio
+implementation.
 
-Mirror the actual nexthop dump layout in fib_nlmsg_size(): account for
-IPv6 nexthop gateways dumped as RTA_VIA, for the no-header rtnexthop
-layout used inside RTA_MULTIPATH, and for RTA_FLOW only when it is
-actually present.
+The fast path atomic logic fails to account for the fact that the shrinker
+(which drops the final huge_zero_refcount pin) can overwrite huge_zero_pfn
+with the ~0UL sentinel value in shrink_huge_zero_folio_scan() after a
+racing get_huge_zero_folio() installed a valid value there.
 
-Fixes: d15662682db2 ("ipv4: Allow ipv6 gateway with ipv4 routes")
-Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/6f53fa797fcaeb26966432ed7ae9bb87c4961f37.1785411220.git.zihanx@nebusec.ai
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This results in huge_zero_folio being correctly set but huge_zero_pfn
+being set incorrectly and thus is_huge_zero_pfn() and consequently
+is_huge_zero_pmd() will misidentify the huge zero folio as being an
+ordinary THP folio.
+
+This can result in the huge zero folio being split and otherwise treated
+incorrectly.
+
+The solution to this is very subtle as there is an atomic fast path, and
+thus ordering in weakly ordered architectures has to be treated very
+carefully.
+
+The first commit fixes the issue by introducing a spinlock around
+huge_zero_[pfn, folio, refcount] write, with careful consideration paid to
+load/store ordering in the fast path.  It is placed first and kept as
+small as possible so that it can be backported on its own.
+
+The second commit is a pure cleanup which reworks the
+CONFIG_PERSISTENT_HUGE_ZERO_FOLIO logic to better separate the persistent
+logic from the dynamically allocated one.
+
+
+This patch (of 2):
+
+If !CONFIG_PERSISTENT_HUGE_ZERO_FOLIO, the huge_zero_folio is refcounted
+by huge_zero_refcount and returned by mm_get_huge_zero_folio().
+
+When the caller is done with the huge zero page, its reference count is
+decremented.  Only a shrinker can set the reference count to zero.
+
+A race can unfortunately occur between a shrinker decrementing the
+reference count to zero and a concurrent page fault.
+
+This is because shrink_huge_zero_folio_scan() might, if very unlucky, be
+preempted between setting huge_zero_refcount to zero and writing an
+invalid value.
+
+During this time get_huge_zero_folio() could write to huge_zero_pfn before
+shrink_huge_zero_folio_scan() resumes.
+
+In this event the huge zero folio will be persistently misidentified
+causing the THP code path to be entered inappropriately for the huge zero
+folio:
+
+                CPU 0                                   CPU 1
+=======================================|=================================
+shrink_huge_zero_folio_scan()          |
+   atomic_cmpxchg() sets refcount to 0 |
+   xchg() sets huge_zero_folio to NULL | get_huge_zero_folio()
+                 |                     |    atomic_inc_not_zero() -> zero
+      preempted for a long time        |    Allocate new huge zero folio
+                 |                     |    Write valid huge_zero_folio
+                 v                     |    Write valid huge_zero_pfn
+  Overwrite huge_zero_pfn with ~0UL   <--- Invalid overwrite!
+
+This results in is_huge_zero_pfn() and is_huge_zero_pmd() incorrectly
+returning false for a huge zero page which could result in issues like the
+huge zero folio being incorrectly split.
+
+Note that the issue is with huge_zero_pfn not huge_zero_folio, as
+get_huge_zero_folio() uses cmpxchg() gated on huge_zero_folio being NULL
+with a retry loop and shrink_huge_zero_folio_scan() uses xchg() to set
+huge_zero_folio.
+
+Fix the issue by introducing a spinlock, huge_zero_lock, to prevent
+concurrent write of huge_zero_folio, huge_zero_pfn and huge_zero_refcount.
+
+There needs to be significant care taken here to ensure correctness:
+
+The fast path in get_huge_zero_folio() uses atomic_inc_not_zero(), which
+is outside of the critical section, and means huge zero allocation is
+gated on zero huge_zero_refcount.
+
+The fast path doesn't use huge_zero_lock, so the critical section is
+irrelevant to it.
+
+So invariants are required - huge_zero_refcount MUST:
+
+* Only be set in the huge_zero_lock critical section to ensure
+  serialisation of huge_zero_pfn, huge_zero_folio and huge_zero_refcount
+  writes.
+
+* Be set non-zero only AFTER huge_zero_[pfn, folio] are set to valid values
+  so installation of the huge zero folio on read page fault ensures
+  concurrent is_huge_zero_*() calls correctly identify the huge zero folio.
+
+* Be set zero only BEFORE huge_zero_[pfn, folio] are set to NULL and ~0UL
+  respectively, and atomically.
+
+Establish these by:
+
+* Only setting huge_zero_refcount to zero or an absolute value in the
+  huge_zero_lock critical section in get_huge_zero_folio() and
+  shrink_huge_zero_folio_scan(), and always updating atomically there
+  and elsewhere.
+
+* Using atomic_set_release(&huge_zero_refcount) in get_huge_zero_folio()
+  after huge_zero_[pfn, folio] are set. This is paired with
+  atomic_inc_not_zero() to ensure atomic_inc_not_zero() only observes a
+  non-zero value if huge_zero_[pfn, folio] are set.
+
+* Using atomic_cmpxchg() in shrink_huge_zero_folio_scan() (as before) to
+  ensure that it is set zero only when equal to 1 and set atomically.
+
+* atomic_cmpxchg() being fully ordered ensures this is done prior to
+  huge_zero_[folio, pfn] being set to NULL and ~0UL respectively.
+
+Eliminate the retry loop in get_huge_zero_folio() as the atomic_cmpxchg()
+in shrink_huge_zero_folio_scan() is now performed under the lock, and
+replace with an equally locked atomic_inc() to set the reference count
+should the caller be raced on huge zero folio installation.
+
+folio_put() naturally implies a full memory barrier so its ordering is
+maintained correctly.
+
+The huge zero folio also cannot be released except when the shrinker does
+so as it is non-LRU and non-rmappable.
+
+Note that only the huge zero shrinker (via shrink_huge_zero_folio_scan())
+can actually set huge_zero_refcount to zero, which is the count of mm's
+which have at least one huge zero folio installed plus one shrinker pin.
+
+Additionally convert a BUG_ON() to a VM_WARN_ON_ONCE().
+
+Link: https://lore.kernel.org/20260730-fix-refcounted-huge-zero-v2-0-c5d8a41b317f@kernel.org
+Link: https://lore.kernel.org/20260730-fix-refcounted-huge-zero-v2-1-c5d8a41b317f@kernel.org
+Fixes: 3b77e8c8cde5 ("mm/thp: make is_huge_zero_pmd() safe and quicker")
+Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Reported-by: Hengbin Zhang <uqbarz@gmail.com>
+Closes: https://lore.kernel.org/linux-mm/20260727154001.4102341-1-uqbarz@gmail.com/
+Suggested-by: David Hildenbrand (Arm) <david@kernel.org>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Dev Jain <dev.jain@arm.com>
+Cc: Hannes Reinecke <hare@suse.de>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Kiryl Shutsemau <kas@kernel.org>
+Cc: Lance Yang <lance.yang@linux.dev>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Nico Pache <npache@redhat.com>
+Cc: Pankaj Raghav <p.raghav@samsung.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Yang Shi <shy828301@gmail.com>
+Cc: Zi Yan <ziy@nvidia.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/fib_semantics.c |   67 ++++++++++++++++++++++++++++++++++-------------
- 1 file changed, 49 insertions(+), 18 deletions(-)
+ mm/huge_memory.c |   43 +++++++++++++++++++++++++++++--------------
+ 1 file changed, 29 insertions(+), 14 deletions(-)
 
---- a/net/ipv4/fib_semantics.c
-+++ b/net/ipv4/fib_semantics.c
-@@ -492,6 +492,34 @@ int ip_fib_check_default(__be32 gw, stru
- 	return -1;
- }
+--- a/mm/huge_memory.c
++++ b/mm/huge_memory.c
+@@ -39,6 +39,7 @@
+ #include <linux/compat.h>
+ #include <linux/pgalloc_tag.h>
+ #include <linux/pagewalk.h>
++#include <linux/cleanup.h>
  
-+static size_t fib_nexthop_nlmsg_size(const struct fib_nh_common *nhc,
-+				     bool skip_oif)
-+{
-+	size_t nhsize = 0;
-+
-+	switch (nhc->nhc_gw_family) {
-+	case AF_INET:
-+		nhsize += nla_total_size(4); /* RTA_GATEWAY */
-+		break;
-+	case AF_INET6:
-+		nhsize += nla_total_size(sizeof(struct rtvia) +
-+					 sizeof(struct in6_addr));
-+		break;
-+	}
-+
-+	if (!skip_oif && nhc->nhc_dev)
-+		nhsize += nla_total_size(4); /* RTA_OIF */
-+
-+	if (nhc->nhc_lwtstate) {
-+		/* RTA_ENCAP */
-+		nhsize += lwtunnel_get_encap_size(nhc->nhc_lwtstate);
-+		/* RTA_ENCAP_TYPE */
-+		nhsize += nla_total_size(2);
-+	}
-+
-+	return nhsize;
-+}
-+
- size_t fib_nlmsg_size(struct fib_info *fi)
+ #include <asm/tlb.h>
+ #include <asm/pgalloc.h>
+@@ -75,6 +76,7 @@ static unsigned long deferred_split_scan
+ static bool split_underused_thp = true;
+ 
+ static atomic_t huge_zero_refcount;
++static DEFINE_SPINLOCK(huge_zero_lock);
+ struct folio *huge_zero_folio __read_mostly;
+ unsigned long huge_zero_pfn __read_mostly = ~0UL;
+ unsigned long huge_anon_orders_always __read_mostly;
+@@ -213,7 +215,8 @@ unsigned long __thp_vma_allowable_orders
+ static bool get_huge_zero_folio(void)
  {
- 	size_t payload = NLMSG_ALIGN(sizeof(struct rtmsg))
-@@ -509,32 +537,35 @@ size_t fib_nlmsg_size(struct fib_info *f
- 		payload += nla_total_size(4); /* RTA_NH_ID */
- 
- 	if (nhs) {
--		size_t nh_encapsize = 0;
--		/* Also handles the special case nhs == 1 */
--
--		/* each nexthop is packed in an attribute */
--		size_t nhsize = nla_total_size(sizeof(struct rtnexthop));
-+		size_t mpsize = 0;
- 		unsigned int i;
- 
--		/* may contain flow and gateway attribute */
--		nhsize += 2 * nla_total_size(4);
--
--		/* grab encap info */
- 		for (i = 0; i < fib_info_num_path(fi); i++) {
- 			struct fib_nh_common *nhc = fib_info_nhc(fi, i);
-+			size_t nhsize;
+ 	struct folio *zero_folio;
+-retry:
 +
-+			nhsize = fib_nexthop_nlmsg_size(nhc, nhs != 1);
++	/* Paired with atomic_set_release(). */
+ 	if (likely(atomic_inc_not_zero(&huge_zero_refcount)))
+ 		return true;
  
--			if (nhc->nhc_lwtstate) {
--				/* RTA_ENCAP_TYPE */
--				nh_encapsize += lwtunnel_get_encap_size(
--						nhc->nhc_lwtstate);
--				/* RTA_ENCAP */
--				nh_encapsize +=  nla_total_size(2);
-+			if (nhs != 1)
-+				nhsize += NLA_ALIGN(sizeof(struct rtnexthop));
+@@ -226,17 +229,22 @@ retry:
+ 	}
+ 	/* Ensure zero folio won't have large_rmappable flag set. */
+ 	folio_clear_large_rmappable(zero_folio);
+-	preempt_disable();
+-	if (cmpxchg(&huge_zero_folio, NULL, zero_folio)) {
+-		preempt_enable();
 +
-+#ifdef CONFIG_IP_ROUTE_CLASSID
-+			if (nhc->nhc_family == AF_INET) {
-+				struct fib_nh *nh;
-+
-+				nh = container_of(nhc, struct fib_nh, nh_common);
-+				if (nh->nh_tclassid)
-+					nhsize += nla_total_size(4);
- 			}
-+#endif
-+			if (nhs == 1)
-+				payload += nhsize;
-+			else
-+				mpsize += nhsize;
- 		}
++	/* Paired with critical section in shrink_huge_zero_folio_scan(). */
++	spin_lock(&huge_zero_lock);
++	if (huge_zero_folio) {
++		/* Somebody else already installed it. */
++		atomic_inc(&huge_zero_refcount);
++		spin_unlock(&huge_zero_lock);
+ 		folio_put(zero_folio);
+-		goto retry;
++		return true;
+ 	}
++	WRITE_ONCE(huge_zero_folio, zero_folio);
+ 	WRITE_ONCE(huge_zero_pfn, folio_pfn(zero_folio));
++	/* Paired with atomic_inc_not_zero(). +1 for shrinker pin. */
++	atomic_set_release(&huge_zero_refcount, 2);
++	spin_unlock(&huge_zero_lock);
  
--		/* all nexthops are packed in a nested attribute */
--		payload += nla_total_size((nhs * nhsize) + nh_encapsize);
--
-+		if (nhs != 1)
-+			payload += nla_total_size(mpsize);
+-	/* We take additional reference here. It will be put back by shrinker */
+-	atomic_set(&huge_zero_refcount, 2);
+-	preempt_enable();
+ 	count_vm_event(THP_ZERO_PAGE_ALLOC);
+ 	return true;
+ }
+@@ -286,15 +294,22 @@ static unsigned long shrink_huge_zero_fo
+ static unsigned long shrink_huge_zero_folio_scan(struct shrinker *shrink,
+ 						 struct shrink_control *sc)
+ {
+-	if (atomic_cmpxchg(&huge_zero_refcount, 1, 0) == 1) {
+-		struct folio *zero_folio = xchg(&huge_zero_folio, NULL);
+-		BUG_ON(zero_folio == NULL);
++	struct folio *zero_folio;
++
++	/* Paired with critical section in get_huge_zero_folio(). */
++	scoped_guard(spinlock, &huge_zero_lock) {
++		/* Paired with atomic_inc_not_zero() in get_huge_zero_folio(). */
++		if (atomic_cmpxchg(&huge_zero_refcount, 1, 0) != 1)
++			return 0;
++
++		zero_folio = huge_zero_folio;
++		VM_WARN_ON_ONCE(!zero_folio);
++		WRITE_ONCE(huge_zero_folio, NULL);
+ 		WRITE_ONCE(huge_zero_pfn, ~0UL);
+-		folio_put(zero_folio);
+-		return HPAGE_PMD_NR;
  	}
  
- 	return payload;
+-	return 0;
++	folio_put(zero_folio);
++	return HPAGE_PMD_NR;
+ }
+ 
+ static struct shrinker *huge_zero_folio_shrinker;
 
 
