@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EA223D9545;
-	Mon, 17 Aug 2026 15:28:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E152E29B795;
+	Mon, 17 Aug 2026 15:28:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786980517; cv=none; b=L6sgUMk1KvYPS0EIm9KyS+QQhzmBNNJOCcBm8b/TG1oOp2PPQnp+0BnUrATGqEJDganz1cP1XnLMXP2mLfLyTQxNxHsBnRK6DgB7lVMKEfqomlwlhuqoQdlSgVppPNe7ldCCeezigwtWqG2AIU1TAzpilj41Fvd4/NqRJ4PUbeM=
+	t=1786980520; cv=none; b=VTYbvLFHd6SinEBveMvecfnj35EXQU3rMBdm8aKKPECZwDYhMdf5l62nMpKvsSl3K0mth6j1cX21Em3RrByHcVVUc1VI/wCVTG88d5LBLbQcbeRrm+5vnQ4SoVbH2nB8qiVfaymgjTNamNuYlZryPkqahN2bKhrB5xXBZjDuVCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786980517; c=relaxed/simple;
-	bh=suIFdWqMtDyQ23szEzHq9/1jt9wavwaM3CZaT69tzGE=;
+	s=arc-20240116; t=1786980520; c=relaxed/simple;
+	bh=y+JGHdZ/6q4U/ZeIJvPr0oWDmr4Zf7gAAB423YRoplo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fa0vsgeMERUtPEynsxyYZhykSDNkTPO1igXDYcg8m97tze/x/Dn36wDK+/xLz8p8VT2T5/pWruIY+fPveyGr5QyhFlOPoo0tv2w0VSf1djxokm95RE0H+urZop8zGpVjoMbYhFQJJjXPulRhClP5011oO31ojhDRcD1ws9uipSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HJx7se3n; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Qskl6m81agUBaa7pFIHpXl5pkwnaasCuqRogbgF3sOu8+17pQBPw0GkzFoCkVpLceR9J2RNoOy1WO6YP38Tv9AB70J6jHFqvM6FK2vYY+rsPX12iV5AtR5NCzxOpKoR+mWayDe5FJudfNo8k5XFMLNoIzavBZFVJclS9MWNk4wE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iGI9exDe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HJx7se3n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 699151F000E9;
-	Mon, 17 Aug 2026 15:28:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iGI9exDe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 473791F000E9;
+	Mon, 17 Aug 2026 15:28:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786980516;
-	bh=NOZVrrrNZdalKhwo9S8rCJH3jV7bia8JjIMqPHxr28E=;
+	s=korg; t=1786980518;
+	bh=CSDEblUpMLIoG4nZ/L5GMZRPOoDOwwDvdjM9F5J3L14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HJx7se3nJJUJDRmUkHEE/k10o+aB7up5+2axJcUwJ8uNoaCKd0S3Pog9udajlkrcO
-	 cVxswKaF9xTkDd958xsRykQWH+sggV/0nobLuzxvqG64BWZ+zac2Cg/ENE7m9HYnFn
-	 VlhYz1Q5npyKn2Fm7pFZHUQhx6SjtcR366X6CkOU=
+	b=iGI9exDe6nBt8+t8Ss8rrgzrC2YAqWRZ0MjBWxvQU/Wgblay2NKoKX7sC7SwTxc/1
+	 8MHtzKDafKSN64IWfcwdaZwyPFbByjfN8xGx5gNaZRe7J+4SpYW1qvrwBBGLMm9tXb
+	 Zaa9IFTTr3tLJkRE3npV3i5hEfRO95cUJ3nTlPjs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko AI <sashiko-bot@kernel.org>,
-	Tejun Heo <tj@kernel.org>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Matt Fleming <mfleming@cloudflare.com>,
-	Suren Baghdasaryan <surenb@google.com>
-Subject: [PATCH 6.1 599/609] sched/psi: Shut down rtpoll_timer in psi_cgroup_free()
-Date: Mon, 17 Aug 2026 15:34:55 +0200
-Message-ID: <20260817132603.679152631@linuxfoundation.org>
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Subject: [PATCH 6.1 600/609] bpf, sockmap: Fix sk_redir use-after-free in send verdict
+Date: Mon, 17 Aug 2026 15:34:56 +0200
+Message-ID: <20260817132603.712490658@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -53,70 +52,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-commit 5457025fa8ca3c0d2732109513de839e3e797190 upstream.
+commit a76624733730e541e4955fdecf506af2f6b20558 upstream.
 
-psi_schedule_rtpoll_work() is called locklessly from the scheduler hotpath
-and can race psi_trigger_destroy() taking down the last rtpoll trigger under
-rtpoll_trigger_lock:
+sk_psock_msg_verdict() takes a socket reference for psock->sk_redir.
+tcp_bpf_send_verdict() copies that pointer while holding the source socket
+lock, but does not take a reference for the local copy before dropping the
+lock around tcp_bpf_sendmsg_redir().
 
-  psi_schedule_rtpoll_work()        psi_trigger_destroy()
+When apply_bytes keeps the cached verdict active, another sendmsg() on the
+same source socket can consume the remaining bytes and release the cached
+reference while the first thread still holds only the raw local pointer:
 
-  rcu_read_lock();
-  task = rcu_dereference(rtpoll_task);
-                                    rcu_assign_pointer(rtpoll_task, NULL);
-                                    timer_delete(&rtpoll_timer);
-  mod_timer(&rtpoll_timer, ...);
-  rcu_read_unlock();
-                                    synchronize_rcu();
-                                    kthread_stop(task_to_destroy);
+  CPU 0                                  CPU 1
+  sk_redir = psock->sk_redir
+  apply_bytes remains nonzero
+  release_sock(sk)
+                                         lock_sock(sk)
+                                         apply_bytes reaches zero
+                                         psock->sk_redir = NULL
+                                         release_sock(sk)
+                                         tcp_bpf_sendmsg_redir(sk_redir)
+                                         sock_put(sk_redir)
+  tcp_bpf_sendmsg_redir(sk_redir)
 
-The group can then be freed with the re-armed timer still pending, and
-poll_timer_fn() runs on freed memory.
+The final sock_put() can free sk_redir before CPU 0 dereferences it.
 
-461daba06bdc ("psi: eliminate kthread_worker from psi trigger scheduling
-mechanism") deleted the timer synchronously after the synchronize_rcu(),
-which prevented this but raced trigger creation instead: the deletion could
-cancel the timer that a new trigger set armed during the grace period and,
-as creation also reinitialized the timer at the time, corrupt it.
-8f91efd870ea ("psi: Fix race between psi_trigger_create/destroy") moved the
-initialization into group_init() and the deletion into the locked section,
-trading the creation races for the window above.
+KASAN reported:
 
-Neither placement in the destruction path works. A pending timer firing
-while the group is alive is harmless though. poll_timer_fn() just wakes the
-rtpoll waitqueue and doesn't re-arm itself. Bind the timer to the group's
-lifetime instead and shut it down in psi_cgroup_free(). Nothing can arm it
-by then. timer_shutdown_sync() because the timer is never armed again.
+  BUG: KASAN: slab-use-after-free in tcp_bpf_sendmsg_redir+0xf39/0x1020
+  Read of size 8 at addr ffff888108537090 by task poc/87
+  Call Trace:
+   tcp_bpf_sendmsg_redir+0xf39/0x1020
+   tcp_bpf_sendmsg+0x977/0x1a50
+   __sys_sendto+0x32c/0x3a0
+   __x64_sys_sendto+0xdb/0x1b0
+  Allocated by task 85:
+   sk_prot_alloc+0x56/0x210
+   sk_clone+0x6f/0x14b0
+   inet_csk_clone_lock+0x24/0x740
+   tcp_create_openreq_child+0x25/0x2710
+   tcp_v4_syn_recv_sock+0x10a/0xe00
+  Freed by task 0:
+   __kasan_slab_free+0x43/0x70
+   slab_free_after_rcu_debug+0xa6/0x1e0
+   rcu_core+0x50a/0x1850
+  Last potentially related work creation:
+   __sk_destruct+0x3da/0x540
+   sk_psock_destroy+0x81e/0xab0
+   process_one_work+0x63a/0x1070
 
-Fixes: 8f91efd870ea ("psi: Fix race between psi_trigger_create/destroy")
-Cc: stable@vger.kernel.org # v5.10+
-Reported-by: Sashiko AI <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/all/20260711000434.36C4A1F000E9@smtp.kernel.org/
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Acked-by: Johannes Weiner <hannes@cmpxchg.org>
-Tested-by: Matt Fleming <mfleming@cloudflare.com>
-Acked-by: Suren Baghdasaryan <surenb@google.com>
+Take a temporary socket reference while the source socket lock still
+protects psock->sk_redir, and drop it after tcp_bpf_sendmsg_redir()
+returns.  This keeps each unlocked use independent of cached-verdict
+ownership.
+
+Fixes: 604326b41a6f ("bpf, sockmap: convert to generic sk_msg interface")
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Reviewed-by: John Fastabend <john.fastabend@gmail.com>
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/bpf/20260719152207.2892156-1-nicoyip.dev@gmail.com
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/psi.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ net/ipv4/tcp_bpf.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/kernel/sched/psi.c
-+++ b/kernel/sched/psi.c
-@@ -1134,6 +1134,12 @@ void psi_cgroup_free(struct cgroup *cgro
- 		return;
+--- a/net/ipv4/tcp_bpf.c
++++ b/net/ipv4/tcp_bpf.c
+@@ -431,6 +431,7 @@ more_data:
+ 	case __SK_REDIRECT:
+ 		redir_ingress = psock->redir_ingress;
+ 		sk_redir = psock->sk_redir;
++		sock_hold(sk_redir);
+ 		sk_msg_apply_bytes(psock, tosend);
+ 		if (!psock->apply_bytes) {
+ 			/* Clean up before releasing the sock lock. */
+@@ -451,6 +452,7 @@ more_data:
  
- 	cancel_delayed_work_sync(&cgroup->psi->avgs_work);
-+	/*
-+	 * A psi_schedule_rtpoll_work() call racing the last trigger's
-+	 * destruction may have re-armed the timer after psi_trigger_destroy()
-+	 * deleted it. Spurious firing while the group is alive is harmless.
-+	 */
-+	timer_shutdown_sync(&cgroup->psi->rtpoll_timer);
- 	free_percpu(cgroup->psi->pcpu);
- 	/* All triggers must be removed by now */
- 	WARN_ONCE(cgroup->psi->rtpoll_states, "psi: trigger leak\n");
+ 		if (eval == __SK_REDIRECT)
+ 			sock_put(sk_redir);
++		sock_put(sk_redir);
+ 
+ 		lock_sock(sk);
+ 		sk_mem_uncharge(sk, sent);
 
 
