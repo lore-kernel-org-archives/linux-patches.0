@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1008F3EB7F8;
-	Mon, 17 Aug 2026 13:54:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 112A73D8105;
+	Mon, 17 Aug 2026 13:54:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974889; cv=none; b=AJTVKw8hWgmmYwuA/yVKPB2HXAFhuUw0nXPdGN0S2iwu+PA2S5xFRbYvZ8Wq8wysJx+SUZhboh7XdmkYfhh2ERWNI/S0GHpRamU7LZvnZa3d6OyXHtGklFR57HEeFa6qNhdgijUAP1eA8F9nyrWN4ZF3426zkQMHljbIM6hU7YI=
+	t=1786974892; cv=none; b=YzLgfdYqhiZDpZZzLwLUKUnTsrgX6wsyS4f1vXUgCRjNX0V0H2zWrCfOoe3tiKC0Tnkl3AK3srHoYMr4xCC7zXhHNxI0mvIRLaxdWP9FPyf+vJ5oiVgf5JceX4C3XdRGq40si3/uMl+0YvVPetd80gvdj7s/vmynDG2HN7cLiXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974889; c=relaxed/simple;
-	bh=kFwp5XxuZ3n+B1J98iGK5gIMqu4dNClIJmXHgtG7oEs=;
+	s=arc-20240116; t=1786974892; c=relaxed/simple;
+	bh=ofca9XGz8jSoBp8ckxxziTMpBBqPTJyfW2YaNzSRr58=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D+6QnH/dkSgzML7UXIOks8h3hC+Z2NEI6CnsHCLl2HbgxMVtQuleh4CZKH+oFdAjV2zy2VhCkhytZlhB8vXOTvreWXb8NbC6qe+TV1A+cgqwcM6uMzOoMLDaStK0q9bV5zzEGAVPY+l7V5ont3WFBM12cWEAFXy1BaLdonR1w7A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e42dUVr8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oONK88zl6b+VnOllMqfU5w4LRYPYEycQxXtfEadxe/VLTXo5Xwfo/Ckp66DuQ1pFef/SLn2x93Ra5skIXD+1JweV86aVFNit5cPmPEupXyeC1G+e1g0ftEMTGTydkoYxsl8B7osxoeol6Tg3oOo4A+lTqB+1Sw3gasg+8SQhrf0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bchxB1f1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e42dUVr8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F40C71F00A3D;
-	Mon, 17 Aug 2026 13:54:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bchxB1f1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE3EF1F000E9;
+	Mon, 17 Aug 2026 13:54:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974885;
-	bh=2TKcXLfbtj3xlhld36LMpJD3lOo2UpokBp3g/KQc/fs=;
+	s=korg; t=1786974889;
+	bh=FerI9sCtc29rQ7FJeDSUtxZm4KeE3bcGEyottcNaDA8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e42dUVr8XSFENkAmCTcMffTkrfE0uMvCkzG8pEIIKZ8B2rhocId8BfIsxjVLdaXhP
-	 9zzzcX5r9A7fS7XYhw5di4oyXgG2EFlKGvRSuvhdaQdwAk9y74TCbfr10qLuQtNGFP
-	 vROmV8SOnRcdeR0PBotN5YUgwPZJTf+Y2rdfmf6c=
+	b=bchxB1f1oP6gYMLP/AGF+0fgm+psMKJtPz43OvyxMCXloz2TgU6Wq5pXg9xZUM+vA
+	 3ryqUYDG/qvbvDntoLAoI8Yv6tt6dJJ36bDgDl57TitfXX1ewNavbR1GcM178E/xst
+	 Ibo0fzviXU2EsMCJD/JIsrsKpbGYIyoy4ecvUJnQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
-	Antoine Tenart <atenart@kernel.org>,
+	Qing Luo <luoqing@kylinos.cn>,
+	Xin Long <lucien.xin@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 071/250] udp: fix potential use-after-free in tunnel segmentation
-Date: Mon, 17 Aug 2026 15:30:32 +0200
-Message-ID: <20260817132539.350899370@linuxfoundation.org>
+Subject: [PATCH 6.18 089/250] sctp: fix addip_serial increment on ASCONF_ACK allocation failure
+Date: Mon, 17 Aug 2026 15:30:50 +0200
+Message-ID: <20260817132540.117787413@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -52,51 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+From: Qing Luo <luoqing@kylinos.cn>
 
-[ Upstream commit d0f86fb36eb260abd10007b62c9dcc1028e03e61 ]
+[ Upstream commit aa2e13ae8d3cbe2c15ef4f7e971b2de0832794aa ]
 
-__skb_udp_tunnel_segment() gets the UDP header before ensuring the
-tunnel header is in the skb head. If the pull reallocates skb->head,
-the saved UDP header pointer is no longer valid.
+In sctp_process_asconf(), when sctp_make_asconf_ack() fails to allocate
+the ASCONF_ACK chunk due to memory pressure, the code jumps to the
+done label where asoc->peer.addip_serial is unconditionally incremented.
 
-Get the UDP header after the pull to avoid a potential use-after-free.
+This leaves the peer's ASCONF (serial N) unacknowledged while the local
+endpoint now expects serial N+1. When the peer retransmits serial N, it
+falls into the serial < addip_serial + 1 branch ,
+which attempts to look up a cached ACK for serial N. No cached ACK
+exists since the allocation failed, so the retransmission is silently
+discarded. The peer eventually times out and ABORTs the association.
 
-Fixes: dbef491ebe7f ("udp: Use uh->len instead of skb->len to compute checksum in segmentation")
-Signed-off-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
-Reviewed-by: Antoine Tenart <atenart@kernel.org>
-Link: https://patch.msgid.link/20260730093554.68127-1-xuanqiang.luo@linux.dev
+Move the addip_serial increment inside the if (asconf_ack) block so that
+the serial number is only advanced when the ASCONF_ACK is successfully
+created and cached. This way, on allocation failure, the serial number
+is unchanged and the peer's retransmitted ASCONF will be correctly
+re-processed.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Qing Luo <luoqing@kylinos.cn>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20260804025514.241767-1-l1138897701@163.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/udp_offload.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/sctp/sm_make_chunk.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/net/ipv4/udp_offload.c b/net/ipv4/udp_offload.c
-index 589456bd8b5f1..4f7ae02df8d3a 100644
---- a/net/ipv4/udp_offload.c
-+++ b/net/ipv4/udp_offload.c
-@@ -178,17 +178,19 @@ static struct sk_buff *__skb_udp_tunnel_segment(struct sk_buff *skb,
- 	int tnl_hlen = skb_inner_mac_header(skb) - skb_transport_header(skb);
- 	bool remcsum, need_csum, offload_csum, gso_partial;
- 	struct sk_buff *segs = ERR_PTR(-EINVAL);
--	struct udphdr *uh = udp_hdr(skb);
- 	u16 mac_offset = skb->mac_header;
- 	__be16 protocol = skb->protocol;
- 	u16 mac_len = skb->mac_len;
- 	int udp_offset, outer_hlen;
-+	struct udphdr *uh;
- 	__wsum partial;
- 	bool need_ipsec;
- 
- 	if (unlikely(!pskb_may_pull(skb, tnl_hlen)))
- 		goto out;
- 
-+	uh = udp_hdr(skb);
-+
- 	/* Adjust partial header checksum to negate old length.
- 	 * We cannot rely on the value contained in uh->len as it is
- 	 * possible that the actual value exceeds the boundaries of the
+diff --git a/net/sctp/sm_make_chunk.c b/net/sctp/sm_make_chunk.c
+index 721e147091a97..757aff3e917dc 100644
+--- a/net/sctp/sm_make_chunk.c
++++ b/net/sctp/sm_make_chunk.c
+@@ -3336,12 +3336,11 @@ struct sctp_chunk *sctp_process_asconf(struct sctp_association *asoc,
+ 			goto done;
+ 	}
+ done:
+-	asoc->peer.addip_serial++;
+-
+ 	/* If we are sending a new ASCONF_ACK hold a reference to it in assoc
+ 	 * after freeing the reference to old asconf ack if any.
+ 	 */
+ 	if (asconf_ack) {
++		asoc->peer.addip_serial++;
+ 		sctp_chunk_hold(asconf_ack);
+ 		list_add_tail(&asconf_ack->transmitted_list,
+ 			      &asoc->asconf_ack_list);
 -- 
 2.53.0
 
