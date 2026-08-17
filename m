@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B27E4B04A7;
-	Mon, 17 Aug 2026 14:16:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 556A44B04A7;
+	Mon, 17 Aug 2026 14:16:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976208; cv=none; b=rl7nn0ivW94nUMikdrIyRUyuvCaXYso792ejhsGLtrP5GcmuMm1LVPhlXqEVdu20Sr/vZriSKQM2lIw/Bwk6n5oBieagwbApbp2T5vGUpYu8LDdeDg+8Ej1ahEKjaqCItCfARKjMvHe6AmqYocNKEP3NNoG6tRRGDQYnNk0T59A=
+	t=1786976211; cv=none; b=DXl2xsvxxAiPFudHtESuae9Gyd0ypq/pNV8SJxCAcabicml8MYJR+xG+eHX9KvVXtoyKvpQp4WT3ss3OlWnzgNDkmT7wLgQ0bGxSGIAZUJacPnC29PcmeOzsqS1Nb5IcFkStwMJVbv1Y2+rvSEenHilj+/gWf/DFaVZfq/3+I1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976208; c=relaxed/simple;
-	bh=lmqq71UyMb/qUGEAnuTa8BOQr722oB93DmhRGKXRI3U=;
+	s=arc-20240116; t=1786976211; c=relaxed/simple;
+	bh=qbM6UUdnwzqChkuRjScondTMhAuIRDEcjZZZ5Y0Du5w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jarpsg0k7w18U+w6nHIjzAUudaW9Y55QU98iB+FA4qV7uCwmGeY3HOsk2ik4mwHOaQePZ6a+mv/h865bq54oZPpNLMhF/L6ENEJhFXI40SLQcZ9k5/fvouyUP0dE9s9/PGvganytwRq0OaNhmyKKE1t41VmPP9D267ZiL8dxgY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v/NSiHsI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DylFpiJOCJEnHd/dJOZ3SrswBdSnF1geWdmKM4kzzZCm/iME+6b239yZE1ELUNCZJFbIayr2LGZ0hGK6Lzd3KXKvCrS7iLWBORLtLu3mOv7KLAVBEipljJnkK83TpATz0WnRHD+Smcbnoq1WtRTf2C6kjhJJLOIEmF50dRsRsaU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j92ZU+Ja; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v/NSiHsI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D88C61F000E9;
-	Mon, 17 Aug 2026 14:16:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j92ZU+Ja"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE3061F000E9;
+	Mon, 17 Aug 2026 14:16:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976207;
-	bh=W0Ky3mzQimtdxXNAjySzvhgA4UU+IoJGfgkTdpsjgzQ=;
+	s=korg; t=1786976210;
+	bh=IBteATW4+GEpJD7wQkbaM1w6leLy1VtYkBhqWGR06mg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v/NSiHsIbbQIcXYavmyiN50DeG4f0fn1vIMlyJ3J2/M0u7VkyFQd1AmPqnciFWHdz
-	 O3x1Lq1mKPJhYmrLttNK4SUhCTqRMtS1bgg4nBW3Tguk6fMzewty6oZDripFvbkqJt
-	 uI4qvYFK6JFGDMZYx48CJQx65qv4cYc8FnnaLoZ0=
+	b=j92ZU+JaDgT78gTtxRkv5My529Hj8RiHAh/4AaXq9opOPNJxpxtSOLuXgpoy6h1HZ
+	 6Ge8J4u/zSFx79BQ0+OLqeBY/F0vYEHXL413FU6kKTg5wne8Qu2AoLbC621bm4xM0X
+	 HdGPYHL9XnaI+vH20sQziYSfHaFOPALamRe+AUZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Gao <jamesgao5@outlook.com>,
-	Vincent Mailhol <mailhol@kernel.org>,
-	stable@kernel.org,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 5.10 295/389] can: peak_usb: add bounds check for USB channel index
-Date: Mon, 17 Aug 2026 15:32:14 +0200
-Message-ID: <20260817132550.576588224@linuxfoundation.org>
+	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 278/389] sctp: reject stale cookies with mismatched verification tags
+Date: Mon, 17 Aug 2026 15:31:57 +0200
+Message-ID: <20260817132549.989826348@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -52,74 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Gao <jamesgao5@outlook.com>
+From: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
 
-commit 39132f166ca8ce00ae60d8a9068e06a60943cc4b upstream.
+commit 9d8da8e0a9bce4a340af60dd0446bc7eb8d07587 upstream.
 
-The channel control index ctrl_idx is derived from rx->len which comes
-directly from a device USB payload. The mask 0x0f allows values 0-15, but
-the array size of usb_if->dev[] is only 2. Values 2-15 cause heap
-out-of-bounds read, eventually causing kernel panic in the IRQ context.
+sctp_unpack_cookie() skips cookie expiration checks whenever an
+association already exists.  This is broader than the exception in
+RFC 9260 Section 5.2.4.
 
-Add bounds checking for ctrl_idx before the array access in both
-pcan_usb_pro_handle_canmsg() and pcan_usb_pro_handle_error().
+For an existing association, Section 5.2.4 permits an expired State
+Cookie only when both Verification Tags in the cookie match the current
+association.  Otherwise, the packet SHOULD be discarded and a Stale
+Cookie ERROR MUST be sent.
 
-Fixes: d8a199355f8f ("can: usb: PEAK-System Technik PCAN-USB Pro specific part")
-Signed-off-by: James Gao <jamesgao5@outlook.com>
-Reviewed-by: Vincent Mailhol <mailhol@kernel.org>
-Link: https://patch.msgid.link/TYWPR01MB8559DBAAAA6A7F410400329CF0012@TYWPR01MB8559.jpnprd01.prod.outlook.com
-Cc: stable@kernel.org
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+The broad check lets an expired Action A restart cookie reach
+sctp_sf_do_dupcook_a().  In a runtime test with the default 60 second
+cookie lifetime, replaying such a cookie after 65 seconds returned a
+COOKIE-ACK and restarted the association.
+
+Check cookie expiration unless both Verification Tags match.  This
+preserves the Action D exception for a lost COOKIE ACK while rejecting
+expired cookies in all other cases.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20260723225623.2658868-1-yangyx22@mails.tsinghua.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/usb/peak_usb/pcan_usb_pro.c |   20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
+ net/sctp/sm_make_chunk.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
---- a/drivers/net/can/usb/peak_usb/pcan_usb_pro.c
-+++ b/drivers/net/can/usb/peak_usb/pcan_usb_pro.c
-@@ -521,12 +521,18 @@ static int pcan_usb_pro_handle_canmsg(st
- 				      struct pcan_usb_pro_rxmsg *rx)
- {
- 	const unsigned int ctrl_idx = (rx->len >> 4) & 0x0f;
--	struct peak_usb_device *dev = usb_if->dev[ctrl_idx];
--	struct net_device *netdev = dev->netdev;
-+	struct peak_usb_device *dev;
-+	struct net_device *netdev;
- 	struct can_frame *can_frame;
- 	struct sk_buff *skb;
- 	struct skb_shared_hwtstamps *hwts;
+--- a/net/sctp/sm_make_chunk.c
++++ b/net/sctp/sm_make_chunk.c
+@@ -1776,9 +1776,9 @@ no_hmac:
+ 		goto fail;
+ 	}
  
-+	if (ctrl_idx >= ARRAY_SIZE(usb_if->dev))
-+		return -EINVAL;
-+
-+	dev = usb_if->dev[ctrl_idx];
-+	netdev = dev->netdev;
-+
- 	skb = alloc_can_skb(netdev, &can_frame);
- 	if (!skb)
- 		return -ENOMEM;
-@@ -558,14 +564,20 @@ static int pcan_usb_pro_handle_error(str
- {
- 	const u16 raw_status = le16_to_cpu(er->status);
- 	const unsigned int ctrl_idx = (er->channel >> 4) & 0x0f;
--	struct peak_usb_device *dev = usb_if->dev[ctrl_idx];
--	struct net_device *netdev = dev->netdev;
-+	struct peak_usb_device *dev;
-+	struct net_device *netdev;
- 	struct can_frame *can_frame;
- 	enum can_state new_state = CAN_STATE_ERROR_ACTIVE;
- 	u8 err_mask = 0;
- 	struct sk_buff *skb;
- 	struct skb_shared_hwtstamps *hwts;
+-	/* Check to see if the cookie is stale.  If there is already
+-	 * an association, there is no need to check cookie's expiration
+-	 * for init collision case of lost COOKIE ACK.
++	/* Check to see if the cookie is stale.  RFC 9260 Section 5.2.4
++	 * exempts an expired cookie only when both Verification Tags match
++	 * the current association.
+ 	 * If skb has been timestamped, then use the stamp, otherwise
+ 	 * use current time.  This introduces a small possibility that
+ 	 * a cookie may be considered expired, but this would only slow
+@@ -1789,7 +1789,10 @@ no_hmac:
+ 	else
+ 		kt = ktime_get_real();
  
-+	if (ctrl_idx >= ARRAY_SIZE(usb_if->dev))
-+		return -EINVAL;
-+
-+	dev = usb_if->dev[ctrl_idx];
-+	netdev = dev->netdev;
-+
- 	/* nothing should be sent while in BUS_OFF state */
- 	if (dev->can.state == CAN_STATE_BUS_OFF)
- 		return 0;
+-	if (!asoc && ktime_before(bear_cookie->expiration, kt)) {
++	if ((!asoc ||
++	     asoc->c.my_vtag != bear_cookie->my_vtag ||
++	     asoc->c.peer_vtag != bear_cookie->peer_vtag) &&
++	    ktime_before(bear_cookie->expiration, kt)) {
+ 		suseconds_t usecs = ktime_to_us(ktime_sub(kt, bear_cookie->expiration));
+ 		__be32 n = htonl(usecs);
+ 
 
 
