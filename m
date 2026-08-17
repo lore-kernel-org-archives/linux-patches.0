@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73935441037;
-	Mon, 17 Aug 2026 15:19:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC3A343B498;
+	Mon, 17 Aug 2026 15:19:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979945; cv=none; b=i0NAzMdxKaoSeWzwXBe+OUWUOTsC+Ks/GtWW9o2B/8t5IQLT7tJTx5G6xzQLa7q7asp9/h1YCWWLeVzMF/IYlawg23RlMEFt2SO526x5qa03mqlCfraRkJbfpjz/MyNSB6kqfelmCt6AjeL9EqMWHrrKtZgilciH+OmNEBJyRxU=
+	t=1786979948; cv=none; b=NKGiGFrYKFTgy1Lm4OPxUvvSfWOqHKXfEob2Ghxi2R3x8vDyUEdajOLX0q8gWilPSkfm9PAyXCTMICm8Df/sDzXQ8F+p3GcYEPWPWglNsYIwUo5RYDUjkB5FvZQOkQGoqK2Whp55FS71XJipZUoF4IUXNWtgNYX4xZYxibwk3fw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979945; c=relaxed/simple;
-	bh=M9NopmatA+XWfITp4rVo4hy9OcsJhtDN87TVIocA8f0=;
+	s=arc-20240116; t=1786979948; c=relaxed/simple;
+	bh=Y/ReEc1zq3Nh1rYguoCKB8RcNaIydPwRqzntITmXRk4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iuVr0ycAQ+WGsJG5aweMQ5kLcrAsZDf0i8+giCebLGPpJNHSSoQWULMENVZrpJu0L9zT2NnG5samg6XJe1M5ZMU6F9L1XpMuNvhKTbX/lYSi8MITXwnf57F0KI0TCEIYlO79QevMT6d3UvgWwqDO4SU4MktTov9pZoed02KRGU4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uvb7VKun; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lwUlfHWmbHce5YToYyK6m/+gr4MD6MW0B2LfVtAwtu04SmY5t6ehx0h+kGmdX8dFpQyH9/5aOScs2q2NSr0HaMfeHzIj4Zn0Z89gR0gafgigVKxp6xz+BqotXY1ggvVH5LyPgdmrrcY9oU5zqvDKTjnG29WLnsVBhQSeIFLsIUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rdbW8wGR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uvb7VKun"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D30D41F000E9;
-	Mon, 17 Aug 2026 15:19:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rdbW8wGR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC5E81F00A3A;
+	Mon, 17 Aug 2026 15:19:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979942;
-	bh=d0f1N0fwNqDdlbD8SNKeyY8UKx5Qx3aLuivbjlzX53I=;
+	s=korg; t=1786979945;
+	bh=dV+LpaDE5SwYp++heIsCzZZP2zLVJvO4DrxdM2CzTOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Uvb7VKun5M9jZKH2bffLmHqAVS1NC+5gM7ywIOWIwtIK/n6sxulX5CYaDesdZxXlR
-	 7Y08iOtgVvDcRZ5MmRiim8GY1s3WF6flft3dQlRMsEdV2uSYoAtdEfCSRMVw6cOi2Q
-	 FG6WgqhOk9FY3CM4vA+xmfBTRYLVdnC2/s0yjl4Q=
+	b=rdbW8wGRuG7pM4jaTNOQPxAIWaCkluzTQILwdY0+thTYLR/Ilp1Oc4EoBJfa1NY2k
+	 gXAVzTeYjcaSc2R7pHzrxQXCPZIbO0qTV95+XxAyzivpBd5LtiWHI0CgJnwi1tpez8
+	 XVrtUyhjuwYAs1p3M8CYmAIgdTIIfTLi7Iq6Cz00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Norbert Szetei <norbert@doyensec.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 399/609] ALSA: pcm: wake linked drain waiters on unlink
-Date: Mon, 17 Aug 2026 15:31:35 +0200
-Message-ID: <20260817132557.562536237@linuxfoundation.org>
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 363/609] powerpc/boot: Fix treeboot-currituck CPU node lookup check
+Date: Mon, 17 Aug 2026 15:30:59 +0200
+Message-ID: <20260817132556.427928564@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -50,62 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Norbert Szetei <norbert@doyensec.com>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-commit f495b6c4c8594122918552c9be2b51eb71647cd9 upstream.
+[ Upstream commit 43863f6575d2211e8c5157fefb83ad0ad046aab4 ]
 
-snd_pcm_drain() on a linked stream parks an on-stack wait entry on the
-drained peer's runtime->sleep, and after schedule_timeout() removes it
-only if that peer is still found in the caller's group.  If group
-membership changes during the wait and the sleep ends by signal or
-timeout (so autoremove_wake_function() does not run), finish_wait() is
-skipped and snd_pcm_drain() returns with the entry still queued on that
-stream's sleep list; a later wake_up() then walks a freed stack frame.
-This is reachable by unlinking either the drained or the draining stream.
+fdt_node_offset_by_prop_value() returns a negative error code on
+failure - fix the check accordingly.
 
-Unlike the close path (snd_pcm_drop() -> snd_pcm_post_stop()),
-snd_pcm_unlink() never wakes the sleep queues.  Wake every group member
-under the group lock before the membership change, so a linked drainer is
-released and drops its entry while the streams are still grouped.
-
-The window was opened when snd_pcm_link_rwsem stopped being held across
-the wait and the removal became conditional on group membership (see
-Fixes). The later switch to finish_wait() kept that conditional removal,
-so the signal/timeout case remained.
-
-Fixes: f57f3df03a8e ("ALSA: pcm: More fine-grained PCM link locking")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Norbert Szetei <norbert@doyensec.com>
-Link: https://patch.msgid.link/A0705100-D10B-4286-9980-0142ABEEAD51@doyensec.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 228d55053397 ("powerpc/47x: Add support for the new IBM currituck platform")
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260702211554.56923-5-thorsten.blum@linux.dev
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/pcm_native.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/powerpc/boot/treeboot-currituck.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/core/pcm_native.c
-+++ b/sound/core/pcm_native.c
-@@ -2352,6 +2352,7 @@ static void relink_to_local(struct snd_p
+diff --git a/arch/powerpc/boot/treeboot-currituck.c b/arch/powerpc/boot/treeboot-currituck.c
+index d53e8a592f816..5b5363b74f9f3 100644
+--- a/arch/powerpc/boot/treeboot-currituck.c
++++ b/arch/powerpc/boot/treeboot-currituck.c
+@@ -102,7 +102,7 @@ void platform_init(void)
  
- static int snd_pcm_unlink(struct snd_pcm_substream *substream)
- {
-+	struct snd_pcm_substream *s;
- 	struct snd_pcm_group *group;
- 	bool nonatomic = substream->pcm->nonatomic;
- 	bool do_free = false;
-@@ -2367,6 +2368,12 @@ static int snd_pcm_unlink(struct snd_pcm
- 	group = substream->group;
- 	snd_pcm_group_lock_irq(group, nonatomic);
- 
-+	/* release drain waiters before changing membership, else snd_pcm_drain()
-+	 * leaves its on-stack wait entry queued on a member's sleep list
-+	 */
-+	snd_pcm_group_for_each_entry(s, substream)
-+		wake_up(&s->runtime->sleep);
-+
- 	relink_to_local(substream);
- 	refcount_dec(&group->refs);
- 
+ 	node = fdt_node_offset_by_prop_value(_dtb_start, -1, "device_type",
+ 	                                     "cpu", sizeof("cpu"));
+-	if (!node)
++	if (node < 0)
+ 		fatal("Cannot find cpu node\n");
+ 	timebase = fdt_getprop(_dtb_start, node, "timebase-frequency", &size);
+ 	if (timebase && (size == 4))
+-- 
+2.53.0
+
 
 
