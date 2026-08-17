@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2071E43BDA7;
-	Mon, 17 Aug 2026 13:41:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A36953E95AB;
+	Mon, 17 Aug 2026 13:41:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974117; cv=none; b=lmcw04vtYNunfl8eqr5dRgL20SqBaPo4px1Hte0sVA6d5qpPqVv9MqTk4/cN4PCnVDe6dMwJXHVF6NwHaTnBy3pucVMzlaWNT7RQwNhsvT7kA0FRv3Km5yTVIGtk5Si7C/puKTLueqb0ZzTWQ8mr79IBvKIgxbY6iw8w2sL/vhc=
+	t=1786974120; cv=none; b=IYWNYSJ1hOE5dY/46Ia48UdljgnFZ1xzkKt0o/iKC1T9QOQlJH2vS2YlCAYNMUvUbpMA4a9GdXWCnEgBtHCsH96Od2zaW7PjcqnAIWG54mW43v5HRs+61muS4DsM0Fr4MC1tNb2Mnkoz7SyasfB9sxrDxepG7qIXw3tSXof4tyo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974117; c=relaxed/simple;
-	bh=5MT1o3Og/ihoqYukMi+RunXLjkl9xWaxAHQJ+rvADnQ=;
+	s=arc-20240116; t=1786974120; c=relaxed/simple;
+	bh=BUDWEG+6/U+MPVuEtRQWpaxYuQYIGjfdtgis0aWXfGM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p8vvvnFFC+4+gKVJB9pxcp901bqKYfgb+iEj/DgRjwvLdz+g0RNDrWhXk66q61tcmPFt7dTGc59zzrH5u1OgBVYKgtd+psHb86m/GwNKZ79Kp5me0t/2NB8n9PMKmqyf/Y/THHds2cAl84Fg+sae+atYybgcd3L/yOrlqkl9urI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ilsO/acJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tGc4Jq/vmsycIlEUH3Drdx2YP4F8eG81JlABe1UrEc8BqNJ8mvCf34sgxJYQ3Z0WZutBekj1rscCf1L+7YMPRD3Y2bL/kEXQfd4ALNBleXZ4KHa7mpRJ606WPy+yf17B1wnNe51Fk/sL1FFHLJeraQ2oRrz+XGoSOjVY2AIqRk0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uxCpUeCt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ilsO/acJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 646871F00A3D;
-	Mon, 17 Aug 2026 13:41:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uxCpUeCt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 455031F000E9;
+	Mon, 17 Aug 2026 13:41:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974114;
-	bh=7yCs2sK9lI3Ss9itzOFiD9+67mQPAjHYzrK4ATsKjEc=;
+	s=korg; t=1786974117;
+	bh=aCmpAypGoXNkahBD7W7I2y3RKmCvmoedv5GO5AHM1Zc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ilsO/acJ2KCrRAREpRyPdVxDhrEN2NsukaU3aV7ciCoT54ZU1OtzYTZrihBSSJ6eT
-	 0QkFUWUfsq12uJIBfj4p1CMIIyrJrBhMN4oIm7qdEuA8DaT/4HDbe3ClrkfvRBxPA7
-	 YOETr7SgSti1o1Xr0UGWA7X1zZVPqiPukF9quyjg=
+	b=uxCpUeCtbSdPlts3TbiO2pbO8ZU0Pf7ihgDtOOg1p3UdVDdPrGPgLVktmLhqHx9bp
+	 F4F0FVuCK12vgQPHUB3rG/goO7kFg9Y80/xq0+PVWLKhtZwKvqG5yN+4BQgEaDYjU2
+	 efSKuX15QyCWGpnZFC3QQ0qj0zy+wsdTMd3zoTDA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
 	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	Shravya KN <shravya.k-n@broadcom.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
 	Michael Chan <michael.chan@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 095/271] bnxt_en: Refresh VNIC default ring on queue restart if needed
-Date: Mon, 17 Aug 2026 15:30:20 +0200
-Message-ID: <20260817132540.690115013@linuxfoundation.org>
+Subject: [PATCH 7.1 096/271] bnxt_en: Disable EOP for TPA on all chips to prevent data corruption
+Date: Mon, 17 Aug 2026 15:30:21 +0200
+Message-ID: <20260817132540.738517538@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -54,44 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shravya KN <shravya.k-n@broadcom.com>
+From: Michael Chan <michael.chan@broadcom.com>
 
-[ Upstream commit 0b137529a8997caf67190ca1d71ba8bbdb44fbfb ]
+[ Upstream commit c3faf548a00f4c17100cc9204746975fa46a73b9 ]
 
-When a queue is restarted, refresh VNIC_CFG for all VNICs whose
-default RX ring is the restarted ring.  This will eliminate this
-possible FW warning caused by a stale default ring in the VNIC:
+EOP (End of frame padding) on the AGG ring may cause overlapping of
+zero padding at the end of one segment with the next segment's data.
+If Relaxed Ordering (RO) is enabled, the zero padding may overwrite
+valid data in the next segment and corrupt the data.  Older chips
+(P5 and older) do not automatically disable RO when EOP is enabled.
+On some ARM systems, data corruption was reported on 57508 (P5)
+chips with RO enabled.
 
-FW reported unknown error type 10
+Always disable EOP on all chips on the AGG rings when TPA is enabled
+to fix the data corruption.
 
-Fixes: 5ac066b7b062 ("bnxt_en: Fix queue start to update vnic RSS table")
-Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Fixes: bfcd8d791ec1 ("bnxt_en: Add fast path logic for TPA on 57500 chips.")
 Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Signed-off-by: Shravya KN <shravya.k-n@broadcom.com>
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
 Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Link: https://patch.msgid.link/20260731190937.807270-4-michael.chan@broadcom.com
+Link: https://patch.msgid.link/20260731190937.807270-5-michael.chan@broadcom.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index 4ea6adfc5c22a..e7145537f3e73 100644
+index e7145537f3e73..1cd6e88d4e814 100644
 --- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
 +++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -11098,6 +11098,11 @@ static int bnxt_set_vnic_mru_p5(struct bnxt *bp, struct bnxt_vnic_info *vnic,
- 				   vnic->vnic_id, rc);
- 			return rc;
- 		}
-+		if (rxr_id == vnic->default_rx_ring) {
-+			rc = bnxt_hwrm_vnic_cfg(bp, vnic);
-+			if (rc)
-+				return rc;
-+		}
- 	}
- 	vnic->mru = mru;
- 	bnxt_hwrm_vnic_update(bp, vnic,
+@@ -4611,11 +4611,14 @@ static void bnxt_init_one_rx_agg_ring_rxbd(struct bnxt *bp,
+ 		type = ((u32)rxr->rx_page_size << RX_BD_LEN_SHIFT) |
+ 			RX_BD_TYPE_RX_AGG_BD;
+ 
+-		/* On P7, setting EOP will cause the chip to disable
+-		 * Relaxed Ordering (RO) for TPA data.  Disable EOP for
+-		 * potentially higher performance with RO.
++		/* Disable EOP if TPA is enabled to prevent overlapping zero
++		 * padding with the next segment's data.  On P7_PLUS, EOP will
++		 * automatically disable Relaxed Ordering (RO) to prevent
++		 * potential data corruption (and may degrade performance).  On
++		 * older chips, RO will not be automatically disabled and may
++		 * cause corruption.
+ 		 */
+-		if (BNXT_CHIP_P5_AND_MINUS(bp) || !(bp->flags & BNXT_FLAG_TPA))
++		if (!(bp->flags & BNXT_FLAG_TPA))
+ 			type |= RX_BD_FLAGS_AGG_EOP;
+ 
+ 		bnxt_init_rxbd_pages(ring, type);
 -- 
 2.53.0
 
