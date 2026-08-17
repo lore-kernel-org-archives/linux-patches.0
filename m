@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 799E12AEE1;
-	Mon, 17 Aug 2026 14:42:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59C723E9580;
+	Mon, 17 Aug 2026 14:42:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977774; cv=none; b=LuP1b2fYPbgaB6fs92+l1wAgaXSmT3m4CBW3dLtM+tGkE/OIImMo3qIgltg3Gt2qv3FFNdzLyvoA6PQeCY9slpX5Q3sP017LI+mJc2WzUjzsPuegI6N20EHFbBToI6rM4lqC7kLqIp0ySv2nBDh1dbVEfH7k3mWStd8scjrE4LU=
+	t=1786977777; cv=none; b=cVvEjI5dZbzPmZBmLs8RCOKVMcH4z1bYXcjCQTrkD55SQ4m1zsT/y7MN96OHai19XK2FlSAPgChvi+N/eiTYOWFjWvX9+SwEYaJKcqGCXPKDs4zbL/xvD08NnkRFw/Po4Kzupc0vPBJQZOBhTMwHj7c/2GeY97u3YixlCKon8T4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977774; c=relaxed/simple;
-	bh=9fzEWrtODeO7XvA7ZOCByhU402QDVE3lDMOhPfa0bJk=;
+	s=arc-20240116; t=1786977777; c=relaxed/simple;
+	bh=+1mWwrr3wUCNuRx4alLjr7KU4gznCbTPNipKrjtpnwE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UeU6CGOwO2lJnl2DJlrOzrkADL4Ij6fs8SJBsN3T1OS5dg/sDYaPdkTJil6f9MxT8xljVczk7MnIg5khRyLxzVxtGNLNctSYrgno7CEq8ADaDscTC6Qe8sfJar/aAY09U0f72JOvjIB7x7Qb8Ph7iZ63f+do10et0vf5Ounawpc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k+nmEHm4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qdjlHxFITtcZDEB+T9X14AJS5tZgVXWRirLQlWJsh0oGwAoTAPaKo8A5F0Ymd+fqykKIRWVGZwenDh00r9AKuMpH2tw2jvP/9gQXL6oYOWgH+E6iKViqPP86UvR59xOiRc0luc/mQE4yc7VQuI0SD8WdYW25qz5T+Dps/Dj1m4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cCxqTQwv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k+nmEHm4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D29751F00A3A;
-	Mon, 17 Aug 2026 14:42:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cCxqTQwv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3BF41F00A3A;
+	Mon, 17 Aug 2026 14:42:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977773;
-	bh=7tZVCyciHBFSjkR8sKFY8xbZrVIHZZuyBcmxJ60vWrU=;
+	s=korg; t=1786977776;
+	bh=2/VM+cb4VgwTRAwdmSIZ0SbxbvO4uMkZpcdqyGaa+VY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k+nmEHm4FpGTrupgDPbtp6Pa56yY4cZhlTGbyHu7u06QHo0b63UlCMg0ckpiI2MdL
-	 corzGhxDHQh5B5HqRbNpcRGfWOreta8Z8jCIFfd1srInCTXXrQHymokqiv3vaDyghk
-	 +SQVBEA6ij2iKws5/FlhUA7jepXFdkZf2GS7q790=
+	b=cCxqTQwvdoGvNR/FOjrgzMk3VSuSU1Qvn8kPyXyqIUKwyy8ZuTE0a/CllXCFsslqI
+	 CYvYkxtMKcVc/da0s9kiM3Df9iX/0qmGlCK9eMP0l4cQWqsKrpZW5m6e6ocQIXdUe9
+	 1egMZepOTp2vsicMA5xRQaCRC3zxXpSb5+33i11s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 5.15 438/456] netfilter: bridge: release template ct on non-IP path
-Date: Mon, 17 Aug 2026 15:33:48 +0200
-Message-ID: <20260817132556.240420852@linuxfoundation.org>
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Lukasz Luba <lukasz.luba@arm.com>
+Subject: [PATCH 5.15 447/456] Revert "thermal/drivers/hwmon: Cleanup coding style a bit"
+Date: Mon, 17 Aug 2026 15:33:57 +0200
+Message-ID: <20260817132556.538225603@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -51,41 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-commit d45cc8020d7c0a9f01dee42ff5c40bc14c9af72f upstream.
+commit ff8da20b6f47c48d46e47f93f7a59e2d56ee9107 upstream.
 
-A bridge nftables ct zone set rule can attach a conntrack template to
-an skb before nf_ct_bridge_pre() sees it. For non-IPv4 and non-IPv6
-EtherTypes, nf_ct_bridge_pre() currently overwrites skb->_nfct with
-IP_CT_UNTRACKED without releasing the existing template reference.
+Revert commit 030a48b0f6ce ("thermal/drivers/hwmon: Cleanup coding style
+a bit") that introduced a use-after-free into the error path of
+thermal_add_hwmon_sysfs() by removing a valid check from it.
 
-That makes the per-cpu template, and any temporary templates allocated
-for concurrent use, unreachable and leaks memory until the host runs out
-of slab.
-
-Reset the skb conntrack state before marking the frame untracked so the
-existing template reference is dropped on the non-IP path.
-
-Fixes: 3c171f496ef5 ("netfilter: bridge: add connection tracking system")
-Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Link: https://lore.kernel.org/linux-hwmon/20260803183915.4ED7D1F000E9@smtp.kernel.org/
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
+Link: https://patch.msgid.link/5123895.31r3eYUQgx@rafael.j.wysocki
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bridge/netfilter/nf_conntrack_bridge.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/thermal/thermal_hwmon.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/bridge/netfilter/nf_conntrack_bridge.c
-+++ b/net/bridge/netfilter/nf_conntrack_bridge.c
-@@ -280,6 +280,7 @@ static unsigned int nf_ct_bridge_pre(voi
- 		ret = nf_ct_br_defrag6(skb, &bridge_state);
- 		break;
- 	default:
-+		nf_reset_ct(skb);
- 		nf_ct_set(skb, NULL, IP_CT_UNTRACKED);
- 		return NF_ACCEPT;
- 	}
+--- a/drivers/thermal/thermal_hwmon.c
++++ b/drivers/thermal/thermal_hwmon.c
+@@ -209,7 +209,8 @@ int thermal_add_hwmon_sysfs(struct therm
+ 	if (new_hwmon_device)
+ 		hwmon_device_unregister(hwmon->device);
+  free_mem:
+-	kfree(hwmon);
++	if (new_hwmon_device)
++		kfree(hwmon);
+ 
+ 	return result;
+ }
 
 
