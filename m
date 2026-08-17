@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94ECB43F092;
-	Mon, 17 Aug 2026 14:54:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D43FC43B6E7;
+	Mon, 17 Aug 2026 14:54:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978444; cv=none; b=C0g5kuIsLN2gLEVM2csP46kNIArHaxpqQYtKFL7d2puAJDa18UifiME+YyJN7tDgTmo54AMoUm+LaLxzwWj+rNjLe23so0zKiS1nfy343vnnpr4BxJ9GcuxIQ6fekCibSvVJhHUgJv0W9HIAVXXveEfyOU/TgKyEQ6I5117ukFc=
+	t=1786978448; cv=none; b=FqKPOe0mUWjfk/mXuuqFwNxaNLQBopLj4IzxxY4sII3ylbP4ELa4stOYb5q0gHs629tnrRWMB1bTvLsEsFtjOKpz7L4iXxux/U2ICoa7ZvoCDj5xiipNCCFMLSbjEF4nh7eBhVgWV58pR0JZd9QZ+D7N5nA2P+BhkleJzT1Yo3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978444; c=relaxed/simple;
-	bh=fLfxd2ErkZ72fiIv3wM45CrO+hGcgi0octevLxbyesg=;
+	s=arc-20240116; t=1786978448; c=relaxed/simple;
+	bh=Tgi92XoitcQZw5abK6rhSCZdxFE1elDeDPx4vJedy5A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tTpildKtIHFbbmJhKpwoBEcjsMjpolNod7I9ZgocluPGXvz926PO13+gvhNvVLzefAUOhPUSYpFgeSAWehSE6xIILx6ZGExNCrtWXUppf4BkqJTbjAByed3tfqvkgV41UZtQ/xyt/A2OjaKGkHlLo+3PaywsJBTKvTwV9qbzVrE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iYQDGrbU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Fw68AFzRapy0pZ1Fhg7ffno49b21Pqtn/mtBRABV5/4+OEIgS8GsRfwnGfSHIVlpVfV4p5hfqMQcfkwrIEiqJQjXnauXw7eQicBIMcR4byaEjZCEEewkpleQYqdxjZ6Ksm1n/+0we1pj5qh9jnQu6PqEJ9Ee2b97t5BvqnCZ4HI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZEnlyJiM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iYQDGrbU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 501C01F000E9;
-	Mon, 17 Aug 2026 14:54:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZEnlyJiM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A8BD1F00A3A;
+	Mon, 17 Aug 2026 14:54:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978441;
-	bh=3Ay8lxf3n2fP16o1mtGx1SN9i8ZYyx65BAzkh8JoEUk=;
+	s=korg; t=1786978444;
+	bh=CNnUOrH3PdWNqRd+osxllaMTF82AG0bVsRqZmRymztc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iYQDGrbUOaRJy+fjPOxZx1u0wY3SW0fqp96KGJqUFxl6K7pVx8q2bE3olmZwwGBwj
-	 rXHwbi80YDIwzoUw7rYSuivpkc0BlUpnhAAFpyJlL6SsCOQk1zPEyW1eOjAX4rll8Y
-	 3LT85/f8OXsTE2yAbVH/sqdAY0tM8ctY1EU17XXs=
+	b=ZEnlyJiMMvqs3req0PlaqetlGnuR5mEQhMF7njUDmvy6+KctcI54oe3Fuv9ZMwpdo
+	 sXtwbYwOQZcPekQJLWZzfyha8fd5JAMVsav82NxYi8cMgdjjjTeaSoohc+dUqzfk6/
+	 oJnWyflG8oIxuHPl1c7KtPiwDCGAYlkg+cqEWKuw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 006/156] ARM: dts: BCM5301X: fix PCIe controller 2 second interrupt
-Date: Mon, 17 Aug 2026 15:32:20 +0200
-Message-ID: <20260817132534.905670348@linuxfoundation.org>
+Subject: [PATCH 6.6 007/156] drm/bridge: ps8640: propagate AUX transfer register errors
+Date: Mon, 17 Aug 2026 15:32:21 +0200
+Message-ID: <20260817132534.941632006@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132534.666299318@linuxfoundation.org>
 References: <20260817132534.666299318@linuxfoundation.org>
@@ -51,37 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit bab4d538f8485e0d48538fcb82b285df3779278e ]
+[ Upstream commit 20697ecb299cd77b4cf8b28f655e56606b0472d8 ]
 
-PCIe controller 2 has interrupts 0-4 mapping to GIC SPI 138-142. The
-mapping for interrupt 1 was incorrectly set to 138 due to a copy-paste
-error. Fix it to 139.
+ps8640_aux_transfer_msg() programs the AUX address registers, starts the
+AUX transfer, waits for SWAUX_SEND to clear, and reads the AUX status
+register. Several of those regmap operations have return values, but the
+function only checks a stale ret after the status read.
 
-Assisted-by: opencode:big-pickle
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Link: https://lore.kernel.org/r/20260725215722.9323-1-rosenp@gmail.com
-Fixes: 3b3e35b279be ("ARM: dts: BCM5301X: Relicense AXI interrupts code to the GPL 2.0+ / MIT")
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Propagate failures from the address write, transfer start, completion
+poll, and status read. This avoids returning a transfer length when the
+bridge register transaction or AUX completion wait failed.
+
+Fixes: 13afcdd7277e ("drm/bridge: parade-ps8640: Add support for AUX channel")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patch.msgid.link/20260723103509.2-ps8640-v2-pengpeng@iscas.ac.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/broadcom/bcm-ns.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/bridge/parade-ps8640.c | 27 ++++++++++++++++++++------
+ 1 file changed, 21 insertions(+), 6 deletions(-)
 
-diff --git a/arch/arm/boot/dts/broadcom/bcm-ns.dtsi b/arch/arm/boot/dts/broadcom/bcm-ns.dtsi
-index 88fda18af1f8e..06acd72f9835a 100644
---- a/arch/arm/boot/dts/broadcom/bcm-ns.dtsi
-+++ b/arch/arm/boot/dts/broadcom/bcm-ns.dtsi
-@@ -131,7 +131,7 @@ axi@18000000 {
+diff --git a/drivers/gpu/drm/bridge/parade-ps8640.c b/drivers/gpu/drm/bridge/parade-ps8640.c
+index 14d4dcf239da8..61ea855e55d87 100644
+--- a/drivers/gpu/drm/bridge/parade-ps8640.c
++++ b/drivers/gpu/drm/bridge/parade-ps8640.c
+@@ -258,8 +258,14 @@ static ssize_t ps8640_aux_transfer_msg(struct drm_dp_aux *aux,
+ 	addr_len[PAGE0_SWAUX_LENGTH - base] = (len == 0) ? SWAUX_NO_PAYLOAD :
+ 					      ((len - 1) & SWAUX_LENGTH_MASK);
  
- 			/* PCIe Controller 2 */
- 			<0x00014000 0 &gic GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>,
--			<0x00014000 1 &gic GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>,
-+			<0x00014000 1 &gic GIC_SPI 139 IRQ_TYPE_LEVEL_HIGH>,
- 			<0x00014000 2 &gic GIC_SPI 140 IRQ_TYPE_LEVEL_HIGH>,
- 			<0x00014000 3 &gic GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>,
- 			<0x00014000 4 &gic GIC_SPI 142 IRQ_TYPE_LEVEL_HIGH>,
+-	regmap_bulk_write(map, PAGE0_SWAUX_ADDR_7_0, addr_len,
+-			  ARRAY_SIZE(addr_len));
++	ret = regmap_bulk_write(map, PAGE0_SWAUX_ADDR_7_0, addr_len,
++				ARRAY_SIZE(addr_len));
++	if (ret) {
++		DRM_DEV_ERROR(dev,
++			      "failed to write AUX address %#x, len %zu: %d\n",
++			      msg->address, len, ret);
++		return ret;
++	}
+ 
+ 	if (len && (request == DP_AUX_NATIVE_WRITE ||
+ 		    request == DP_AUX_I2C_WRITE)) {
+@@ -275,13 +281,22 @@ static ssize_t ps8640_aux_transfer_msg(struct drm_dp_aux *aux,
+ 		}
+ 	}
+ 
+-	regmap_write(map, PAGE0_SWAUX_CTRL, SWAUX_SEND);
++	ret = regmap_write(map, PAGE0_SWAUX_CTRL, SWAUX_SEND);
++	if (ret) {
++		DRM_DEV_ERROR(dev, "failed to start AUX transfer: %d\n", ret);
++		return ret;
++	}
+ 
+ 	/* Zero delay loop because i2c transactions are slow already */
+-	regmap_read_poll_timeout(map, PAGE0_SWAUX_CTRL, data,
+-				 !(data & SWAUX_SEND), 0, 50 * 1000);
++	ret = regmap_read_poll_timeout(map, PAGE0_SWAUX_CTRL, data,
++				       !(data & SWAUX_SEND), 0, 50 * 1000);
++	if (ret) {
++		DRM_DEV_ERROR(dev, "failed to complete AUX transfer: %d\n",
++			      ret);
++		return ret;
++	}
+ 
+-	regmap_read(map, PAGE0_SWAUX_STATUS, &data);
++	ret = regmap_read(map, PAGE0_SWAUX_STATUS, &data);
+ 	if (ret) {
+ 		DRM_DEV_ERROR(dev, "failed to read PAGE0_SWAUX_STATUS: %d\n",
+ 			      ret);
 -- 
 2.53.0
 
