@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7AB5443E2D;
-	Mon, 17 Aug 2026 15:26:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95D3A3D5C07;
+	Mon, 17 Aug 2026 15:26:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786980386; cv=none; b=kEXC63xSOtO59XMg2p79IHNWwtZeVCI5XxZjZzDd32m2mNBJ4IJmn0Xh5Qfw/bBSHWz8F1V1XKh0TLb+rtWvWciqjSkFerIe15Nn7KzW/oRVhPZfWHKO+FJbkjE6X7tZ69XE4uTgmauXMUhBugSei+LZynw6muC1dzF2qFdhfTY=
+	t=1786980389; cv=none; b=JG5z23x+XAO6yB1z1lWJ+lUe0qUBXfVwf/8XCjB8It2/MCIbb5koL0V382SBp8p32lfPaSiRp+PvmUsDvt82i2BdMiHfjSoY2y2v/UVykL7YhF21YjYpqLZsTJHlOQDhvF3EpccVxpoSo95NgoPANFXNVm5DqpPb5Sy/YLlwM2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786980386; c=relaxed/simple;
-	bh=W5Kge/VQM6YmbrmYfMW0VTnV7GfU2toErcugTGKX2TM=;
+	s=arc-20240116; t=1786980389; c=relaxed/simple;
+	bh=RqzIXxkjkVMircxgOHCE0aCXTlQKdHQC6iE7oxpEix4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fDYD+52lHcb/0JizPCFy8xze3IHNER1lYT6fsJ8Ygqd4SzpyNfweg2QreoQNzXZGx/LFdJVhcsJ+XYzs/DAu/3/x9VAifZkmowrnwpEAzGc/lgJHLEPoLRI6xvpu/4hNUi3cYpQiIdo5TzI9C1BGEgCQH7jJAq1Q/8jZWs5ApRI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LpVgsYfw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cvZR/qMMr8zVU7fVthfidN0veOkAGLLQRmlzQS3PXAErgfnW0vp/T5+kXhDS7JMpR5IeyoTb+kp25QCm18K9NL9AX2T1j8tVFAbgT7SP9kKsgXxUfFsfDjcsVm96ciIGMrN2E0uZrXbkuBr74Ci7klnx7sCFdNz/myUYaDpjqyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vkatoe3w; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LpVgsYfw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C80D1F000E9;
-	Mon, 17 Aug 2026 15:26:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vkatoe3w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDFC11F00A3A;
+	Mon, 17 Aug 2026 15:26:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786980385;
-	bh=fTVJzF29EBbkoDAiI2mGb2/6ru/VJeWX61GmyHJTx7I=;
+	s=korg; t=1786980388;
+	bh=phouA+ugPyEa6cH2Uac3aTvRrIrF7P3xDx08cvl7bus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LpVgsYfwOGvmhnDHZXmbJO4d845YvYI7LLx5CK2jr3/sXiukE+dhGdak+Jb78MfK5
-	 Co0KiUxvt5aGZAKcdC9F8nDJhFOjRfzMl/aatBUm+LV1I5bMunuP9wkofglHFayqP7
-	 wQJZfcmq8n0m4t+U5Pj3CVVfpDhFbLNLGFOuK3RI=
+	b=Vkatoe3wSVJgxIz5aJhjiZMVzH4VpK4V1+jwGfVYTAkVnez1UvTUhbZNboXaWNwR+
+	 RmTiYrkPYVXgWMVSX/nsi5cm+jOxUbLbf636R9o6ap1OoSWz7bsU8F/DUmaOQxf1U+
+	 /kOf3Vy/apEjSOB/6cj/lfIC9z/SUpB7VG5bQ66U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Sergey V. Frolov" <Sergey.V.Frolov@kaspersky.com>,
-	Ratheesh Kannoth <rkannoth@marvell.com>,
-	Sunil Goutham <sgoutham@marvell.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.1 555/609] net: octeontx2-pf: Fix UB in shift operation
-Date: Mon, 17 Aug 2026 15:34:11 +0200
-Message-ID: <20260817132602.308155451@linuxfoundation.org>
+	syzbot+53ecc09fb81df10ef4de@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 529/609] net/atm: fix slab-out-of-bounds read in vcc_setsockopt()
+Date: Mon, 17 Aug 2026 15:33:45 +0200
+Message-ID: <20260817132601.496251375@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -52,62 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergey V. Frolov <Sergey.V.Frolov@kaspersky.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 7e2d693af0d4c05bddccb3541a0aabd69f4cb244 upstream.
+[ Upstream commit d0c80dbb970439bd2eeb0e5effff8c16a5f4e1e3 ]
 
-In function otx2_get_egress_burst_cfg, when the parameter `burst` is
-255 and the max mantissa is 255 (0xFFULL), `burst_exp` is set to
-`ilog2(255) - 1`, which equals 6.
+vcc_setsockopt() contained an ineffective optlen check:
+  if (__SO_LEVEL_MATCH(optname, level) && optlen != __SO_SIZE(optname))
+      return -EINVAL;
 
-This results in an unsigned wrap-around when calculating
-`(1ULL << (*burst_exp - 7))`, since `*burst_exp - 7` becomes -1,
-which makes the shift operand 0xFFFFFFFF. This value is greater than
-the width of the left operand.
+If __SO_LEVEL_MATCH(optname, level) evaluated to false (e.g. if the caller
+passed a mismatched level), the length check optlen != __SO_SIZE(optname)
+was short-circuited and bypassed. Execution then fell through to switch(optname),
+calling copy_from_sockptr() assuming optval contained sufficient space.
 
-According to standard 6.5.7 p.3:
-"The type of the result is that of the promoted left operand.
-If the value of the right operand is negative or is greater than
-or equal to the width of the promoted left operand, the behavior
-is undefined."
+Furthermore, even if level matched, a cgroup BPF setsockopt filter could shrink
+optlen after entry. Because copy_from_sockptr() on kernel pointers uses memcpy(),
+this leads to a KASAN slab-out-of-bounds read when optlen is smaller than the
+expected structure size.
 
-Fix the off-by-one boundary condition.
+Fix this by using copy_safe_from_sockptr(), which unconditionally validates
+that optlen is at least the expected size before copying. Also change the local
+'value' variable type from 'unsigned long' to 'int' so that SO_SETCLP matches
+its sizeof(int) ABI encoding on 64-bit systems.
 
-Add a WARN_ON(*burst_exp < 7) before the else branch as an
-explicit safeguard. This ensures that if max_mantissa ever changes
-in a way that reintroduces this condition, it will be immediately
-caught at runtime rather than silently triggering UB.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: e638a83f167e ("octeontx2-pf: TC_MATCHALL egress ratelimiting offload")
-Signed-off-by: Sergey V. Frolov <Sergey.V.Frolov@kaspersky.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Ratheesh Kannoth <rkannoth@marvell.com>
-Reviewed-by: Sunil Goutham <sgoutham@marvell.com>
-Link: https://patch.msgid.link/20260804120446.1955448-1-Sergey.V.Frolov@kaspersky.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+53ecc09fb81df10ef4de@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=53ecc09fb81df10ef4de
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260805131508.3227331-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ net/atm/common.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c
-@@ -86,10 +86,12 @@ static void otx2_get_egress_burst_cfg(st
- 	if (burst) {
- 		*burst_exp = ilog2(burst) ? ilog2(burst) - 1 : 0;
- 		tmp = burst - rounddown_pow_of_two(burst);
--		if (burst < max_mantissa)
-+		if (burst <= max_mantissa) {
- 			*burst_mantissa = tmp * 2;
--		else
-+		} else {
-+			WARN_ON(*burst_exp < 7);
- 			*burst_mantissa = tmp / (1ULL << (*burst_exp - 7));
-+		}
- 	} else {
- 		*burst_exp = MAX_BURST_EXPONENT;
- 		*burst_mantissa = max_mantissa;
+diff --git a/net/atm/common.c b/net/atm/common.c
+index 96f680a45e306..f3f68c231935a 100644
+--- a/net/atm/common.c
++++ b/net/atm/common.c
+@@ -760,7 +760,7 @@ int vcc_setsockopt(struct socket *sock, int level, int optname,
+ 		   sockptr_t optval, unsigned int optlen)
+ {
+ 	struct atm_vcc *vcc;
+-	unsigned long value;
++	int value;
+ 	int error;
+ 
+ 	if (__SO_LEVEL_MATCH(optname, level) && optlen != __SO_SIZE(optname))
+@@ -772,8 +772,10 @@ int vcc_setsockopt(struct socket *sock, int level, int optname,
+ 	{
+ 		struct atm_qos qos;
+ 
+-		if (copy_from_sockptr(&qos, optval, sizeof(qos)))
+-			return -EFAULT;
++		error = copy_safe_from_sockptr(&qos, sizeof(qos), optval,
++					       optlen);
++		if (error)
++			return error;
+ 		error = check_qos(&qos);
+ 		if (error)
+ 			return error;
+@@ -786,8 +788,10 @@ int vcc_setsockopt(struct socket *sock, int level, int optname,
+ 		return 0;
+ 	}
+ 	case SO_SETCLP:
+-		if (copy_from_sockptr(&value, optval, sizeof(value)))
+-			return -EFAULT;
++		error = copy_safe_from_sockptr(&value, sizeof(value), optval,
++					       optlen);
++		if (error)
++			return error;
+ 		if (value)
+ 			vcc->atm_options |= ATM_ATMOPT_CLP;
+ 		else
+-- 
+2.53.0
+
 
 
