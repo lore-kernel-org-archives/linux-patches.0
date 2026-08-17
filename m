@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 046FB411FBE;
-	Mon, 17 Aug 2026 14:43:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF4F0408617;
+	Mon, 17 Aug 2026 14:43:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977786; cv=none; b=FquU4sUUIjpcoQpsMO4kLeq7jSOBPJULBkHb53ZME81h8Kfk1I6ViEuJ3+umQIYm+/bvowWKWRkxw+i3WCAGVJwm6BDZ8eAVivh70NdzC9Q31nMSytH0+etwgnJhzXpkECC1MKMESBEd7n6zq7T8I8iphX+emQdL8kCt19eZRLA=
+	t=1786977789; cv=none; b=bjnVNrrhGVQtKcchJvDaN5LS0PCw3KCtmbf39UwYtYypjvdS4S6zIYKzOMO4Dd2+1y5UZ/QNzLJhs8uoW/vB+SYixyEJYrk+QJvRK8MCwqSj5r6DXr+CwOlLdInuN/u2zj0sYlrHnN8hJRuEnrvZp6H/xbyvY5RkpgUXYEXmnss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977786; c=relaxed/simple;
-	bh=06iOT8tQFU0lypHGwWvNTJk2L+SrjE96DfBYEwXahKI=;
+	s=arc-20240116; t=1786977789; c=relaxed/simple;
+	bh=Togtsr0F3brscqgAkuuvSVJqrxAZpAwFFNceBF4B8Pc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l6nH43BHKFmTUKjDYLegWAgfOq2sQeQg6K7hGX2Fi1dBXxKIX90itTJjPPqOtoJ++DC1wtt2DIZSoaDph5SVZwHT/MozZ1IcNARcwaa1eXVRfCFNUrFsZsB+8iFDj1nc8fuTLy06y2H4saZVtegnoo7R60hGH7rc9gr63MRG9IY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KjflSb/Q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uAqghEEgGAAu+SwA5O0eYHinj4jJtzzkRznr0fDn0lgsZgmq7LC835s83/GW7GcglDZwWFIg27BdYboo7rMgkUPajDRsZRjLgRkzo9fL2IHtWWwFcA10gyX8gWS2P3jgS5vyj+3X1U/0t8TV9b+A8MaJxfxq8SjMAAV0GNXN3bk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z3/Ye8rr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KjflSb/Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A69A1F000E9;
-	Mon, 17 Aug 2026 14:43:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z3/Ye8rr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3547C1F000E9;
+	Mon, 17 Aug 2026 14:43:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977784;
-	bh=ZWdVfxaw6KxLAThbmIYOM5MIhtcmlUC1Hc5R3kBrOu0=;
+	s=korg; t=1786977787;
+	bh=zCVpMCRYQAkyeJql4+KgPM66+merkQWf3Alcqp5bhOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KjflSb/Q9Hdd6czcJsFMasf2Ym0JV8w6X4p4nGC7jZBhmJe4k7KwyPHf4Hs9T0Gti
-	 s6k7qIwCkmcLBWpUqgQMYVJkJwb+SQSKt070N6bdSqOLYkVVMfqPlMJUVzNHKR4Qhz
-	 YMyNAvznpAgQbw3p/ZMOw1qJwxfrHxqubgmnD+cw=
+	b=Z3/Ye8rrCbmi2nnUQ2P6FtthajLcOJV3gAdLMpgkbJjuHBFCUGMYA3BTCGYdl6Prd
+	 YfAnUTb3NB+yDfMN0+X4+HMmOJnZFHj2lD4B4FyHgAvtAJOOn+zeltBvmGjbJIG/7W
+	 bYRUiCoJv96a/gn5uiz4/kKJ66NL32Q0rbE92mjk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 450/456] ip6_tunnel: clear skb2->cb[] in ip6ip6_err()
-Date: Mon, 17 Aug 2026 15:34:00 +0200
-Message-ID: <20260817132556.637533368@linuxfoundation.org>
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Subject: [PATCH 5.15 451/456] bpf, sockmap: Fix sk_redir use-after-free in send verdict
+Date: Mon, 17 Aug 2026 15:34:01 +0200
+Message-ID: <20260817132556.669271303@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -52,47 +52,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-commit f803c086399da277b5d0ff36a107d0f162751800 upstream.
+commit a76624733730e541e4955fdecf506af2f6b20558 upstream.
 
-ip6ip6_err() clones an outer IPv6 ICMP error skb, pulls it to the
-quoted inner IPv6 packet, and then passes the clone to icmpv6_send().
-The clone still carries the outer packet's inet6_skb_parm in skb->cb.
+sk_psock_msg_verdict() takes a socket reference for psock->sk_redir.
+tcp_bpf_send_verdict() copies that pointer while holding the source socket
+lock, but does not take a reference for the local copy before dropping the
+lock around tcp_bpf_sendmsg_redir().
 
-If the outer packet had a Home Address Option, IP6CB(skb2)->dsthao
-remains non-zero after skb_pull(). icmpv6_send() later calls
-mip6_addr_swap(), which uses that stale dsthao offset against the quoted
-inner packet. A malformed inner destination-options header can then make
-the HAO lookup and address swap run past the end of the quoted packet
-and corrupt skb_shared_info.
+When apply_bytes keeps the cached verdict active, another sendmsg() on the
+same source socket can consume the remaining bytes and release the cached
+reference while the first thread still holds only the raw local pointer:
 
-Clear skb2->cb[] before pulling the quoted inner IPv6 packet so the
-reply path does not reuse metadata left by the outer IPv6 stack.
+  CPU 0                                  CPU 1
+  sk_redir = psock->sk_redir
+  apply_bytes remains nonzero
+  release_sock(sk)
+                                         lock_sock(sk)
+                                         apply_bytes reaches zero
+                                         psock->sk_redir = NULL
+                                         release_sock(sk)
+                                         tcp_bpf_sendmsg_redir(sk_redir)
+                                         sock_put(sk_redir)
+  tcp_bpf_sendmsg_redir(sk_redir)
 
-Fixes: e490d1d85cf5 ("[IPV6] IP6TUNNEL: Split out generic routine in ip6ip6_err().")
+The final sock_put() can free sk_redir before CPU 0 dereferences it.
+
+KASAN reported:
+
+  BUG: KASAN: slab-use-after-free in tcp_bpf_sendmsg_redir+0xf39/0x1020
+  Read of size 8 at addr ffff888108537090 by task poc/87
+  Call Trace:
+   tcp_bpf_sendmsg_redir+0xf39/0x1020
+   tcp_bpf_sendmsg+0x977/0x1a50
+   __sys_sendto+0x32c/0x3a0
+   __x64_sys_sendto+0xdb/0x1b0
+  Allocated by task 85:
+   sk_prot_alloc+0x56/0x210
+   sk_clone+0x6f/0x14b0
+   inet_csk_clone_lock+0x24/0x740
+   tcp_create_openreq_child+0x25/0x2710
+   tcp_v4_syn_recv_sock+0x10a/0xe00
+  Freed by task 0:
+   __kasan_slab_free+0x43/0x70
+   slab_free_after_rcu_debug+0xa6/0x1e0
+   rcu_core+0x50a/0x1850
+  Last potentially related work creation:
+   __sk_destruct+0x3da/0x540
+   sk_psock_destroy+0x81e/0xab0
+   process_one_work+0x63a/0x1070
+
+Take a temporary socket reference while the source socket lock still
+protects psock->sk_redir, and drop it after tcp_bpf_sendmsg_redir()
+returns.  This keeps each unlocked use independent of cached-verdict
+ownership.
+
+Fixes: 604326b41a6f ("bpf, sockmap: convert to generic sk_msg interface")
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Reviewed-by: John Fastabend <john.fastabend@gmail.com>
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/fe1a5e765fbca88d69391887f0ed26a19e3e4d39.1785736562.git.zhilinz@nebusec.ai
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/bpf/20260719152207.2892156-1-nicoyip.dev@gmail.com
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/ip6_tunnel.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/ipv4/tcp_bpf.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/ipv6/ip6_tunnel.c
-+++ b/net/ipv6/ip6_tunnel.c
-@@ -677,6 +677,9 @@ ip6ip6_err(struct sk_buff *skb, struct i
- 		if (!skb2)
- 			return 0;
+--- a/net/ipv4/tcp_bpf.c
++++ b/net/ipv4/tcp_bpf.c
+@@ -390,6 +390,7 @@ more_data:
+ 	case __SK_REDIRECT:
+ 		redir_ingress = psock->redir_ingress;
+ 		sk_redir = psock->sk_redir;
++		sock_hold(sk_redir);
+ 		sk_msg_apply_bytes(psock, tosend);
+ 		if (!psock->apply_bytes) {
+ 			/* Clean up before releasing the sock lock. */
+@@ -410,6 +411,7 @@ more_data:
  
-+		/* Remove debris left by outer IPv6 stack. */
-+		memset(IP6CB(skb2), 0, sizeof(*IP6CB(skb2)));
-+
- 		skb_dst_drop(skb2);
- 		skb_pull(skb2, offset);
- 		skb_reset_network_header(skb2);
+ 		if (eval == __SK_REDIRECT)
+ 			sock_put(sk_redir);
++		sock_put(sk_redir);
+ 
+ 		lock_sock(sk);
+ 		sk_mem_uncharge(sk, sent);
 
 
