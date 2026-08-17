@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C3324322E5;
-	Mon, 17 Aug 2026 14:52:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA37241D111;
+	Mon, 17 Aug 2026 14:52:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978360; cv=none; b=SGLWJGlANCEYbDoaMrwZ6hiuLQMTjR2sOn4ttDks+RP60rBbGMus0Erb5l7uaVIyMdXrFm1wWcOS6Dzn46EmkTrZ33vwcNmKXvVytnPXAuxfgSlX7TQGruGtngNeB/m8pFgnW/VDvzzIho2T23p5mfa4419hjWGr+paboH/nh/A=
+	t=1786978363; cv=none; b=ijt3UXamuKBZ+/qQ1SRuMF1UpGGupU6G4qD5EiZubDB3F5NClo3lVw+KWZzY5LAzu3AAA+/9GBHdUp/Bq0vl1oBL0ZdzG3+xTL+/Qkfa5MbfsR8pLCJ71H2z5NXLQekQHtFpgXwgSYsifAd5aQqo2zWKPs3JMKhL+VFqmJfHwqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978360; c=relaxed/simple;
-	bh=sGlGz12z7D/XdZk9SpBcSuYMkHmYV6EnkDvWelAqPFs=;
+	s=arc-20240116; t=1786978363; c=relaxed/simple;
+	bh=GzxhZU4/oYEXkm1Gtgyqm7JKDuGJKLVKohiWWIS/sTo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D2kLSSp80pHIxHXzJ99wVkLWmq1erdt6auGyxDa6ZBtXhb/s10z5L+m7/dWwZaAOmtWS0ktTCG74sv3uShBY/tl0sD/WUo7wKT1gc+f6KurccSM/9yoCG0m8ClT7T1+94eQR/Y3W1uVVqnzm+9l9GslR+w2YyeTDzdlmeDosm34=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T2jjKm8N; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ixlmZvKnQcaKPKmMCo4JSEKgGo2H0G+WhAzwJ/xxDBXA058k/ko94/fJL/mz3Bxqqoi9USZKQPYW12TqSHKuOATFag64ivq6LVohK9IGCSHD2sEscLvxFpZ4MXq4TcQmZDQ7DPQwCTIq5JK+1OKtVKwMfacNCQaUGPPMvYx+tRw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xHSCdyWr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T2jjKm8N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 734411F00A3A;
-	Mon, 17 Aug 2026 14:52:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xHSCdyWr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C9F41F000E9;
+	Mon, 17 Aug 2026 14:52:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978359;
-	bh=XviUxBbsBGE1BejgrJHisgNmv03T9Eb1zunqAn80D0Q=;
+	s=korg; t=1786978361;
+	bh=Nmz/S/XD7CEBNXWqPhLvISvNTd58pFC9tbuSvEmM4jo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T2jjKm8Nw8Kmh5juIB7iQwwHT+wT2IaEpFLK8MWY//t2TPkUiyJgZ3XkhO7J77JN2
-	 UsOM5c0I0Vu8tepJm+6NNRil7wVwcxsOfoBUXo2m5Yinc4/wXeisZnd65HCOYF3tGo
-	 mqzGbGtLbqsYI08l3AiqTy9ALoCDMQLy3FT+jLo8=
+	b=xHSCdyWrBc/Gc/Sf4hCbW3CNJ5k7rSRXyePaPgtF/wbciGOQOjDnefK5tZXVgivyC
+	 y5T4DBD13jkc8NLY/5zdaA3WFFwiDKcBX8hClG1aEKGswvm3I64bNNFqWP0KUunrta
+	 iThsGuBhyR344W0UUF0BUcy2hY6ZOKCCK6SeX01w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shay Drory <shayd@nvidia.com>,
-	Cosmin Ratiu <cratiu@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jozsef Kadlecsik <kadlec@netfilter.org>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 010/156] net/mlx5e: TC, Check if flow is PEER before acquiring devcom lock
-Date: Mon, 17 Aug 2026 15:32:24 +0200
-Message-ID: <20260817132535.052572101@linuxfoundation.org>
+Subject: [PATCH 6.6 011/156] netfilter: ipset: switch ext_size to atomic64_t
+Date: Mon, 17 Aug 2026 15:32:25 +0200
+Message-ID: <20260817132535.089772874@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132534.666299318@linuxfoundation.org>
 References: <20260817132534.666299318@linuxfoundation.org>
@@ -53,98 +52,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shay Drory <shayd@nvidia.com>
+From: Jozsef Kadlecsik <kadlec@netfilter.org>
 
-[ Upstream commit 6ddfba2ea98db21b001e0e5c472499156224650c ]
+[ Upstream commit 712a6f545c359b427daa9a5a782e30d2f8331e25 ]
 
-In case __mlx5e_add_fdb_flow() fails in lower levels, the flow is
-deleted via mlx5e_tc_del_flow(), and mlx5e_tc_del_flow() is acquiring
-ESW devcom lock without condition. In addition, in case of peer_flow,
-__mlx5e_add_fdb_flow() is called while holding ESW devcom comp lock.
-This results in an AA deadlock.
+The hash types do not acquire set->lock, they use 'region locking' where
+only part of the hash table is locked. Parallel inserts and deletes are
+possible and CPUs can race on ->ext_size update.  Switch to atomic64_t.
 
-To fix this, introduce a new PEER flag that is set on flows created as
-peer flows (the duplicate flows on peer devices), and check it in
-mlx5e_tc_del_flow() before acquiring ESW devcom lock.
+This leaves another bug unresolved: there still can be a race on
+comment extension re-init.  This will be handled in a later commit
+when converting to rhashtable backend.
 
-Lockdep splat:
-============================================
-WARNING: possible recursive locking detected
-============================================
- Possible unsafe locking scenario:
-       CPU0
-       ----
-  lock(&comp->lock_key#2);
-  lock(&comp->lock_key#2);
- *** DEADLOCK ***
-Call Trace:
- <TASK>
- dump_stack_lvl+0x69/0xa0
- print_deadlock_bug.cold+0xbd/0xca
- __lock_acquire+0x1671/0x2ec0
- lock_acquire+0x10e/0x2e0
- down_read+0x95/0x430
- mlx5_devcom_for_each_peer_begin+0x4e/0xe0 [mlx5_core]
- mlx5e_tc_del_flow+0x11d/0xa70 [mlx5_core]
- mlx5e_flow_put+0x99/0x100 [mlx5_core]
- __mlx5e_add_fdb_flow+0x409/0xf00 [mlx5_core]
- mlx5e_configure_flower+0x2a86/0x4100 [mlx5_core]
- mlx5e_rep_setup_tc_cls_flower+0x12f/0x1b0 [mlx5_core]
- mlx5e_rep_setup_tc_cb+0x153/0x750 [mlx5_core]
- tc_setup_cb_add+0x1dc/0x470
- fl_change+0x2f4d/0x626d [cls_flower]
- tc_new_tfilter+0x79b/0x2310
- rtnetlink_rcv_msg+0x778/0xad0
- do_syscall_64+0x70/0x960
- entry_SYSCALL_64_after_hwframe+0x4b/0x53
- </TASK>
-
-Fixes: 04de7dda7394 ("net/mlx5e: Infrastructure for duplicated offloading of TC flows")
-Signed-off-by: Shay Drory <shayd@nvidia.com>
-Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260728044338.2271143-1-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: f66ee0410b1c ("netfilter: ipset: Fix "INFO: rcu detected stall in hash_xxx" reports")
+Signed-off-by: Jozsef Kadlecsik <kadlec@netfilter.org>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en/tc_priv.h | 1 +
- drivers/net/ethernet/mellanox/mlx5/core/en_tc.c      | 4 +++-
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ include/linux/netfilter/ipset/ip_set.h  | 2 +-
+ net/netfilter/ipset/ip_set_bitmap_gen.h | 4 ++--
+ net/netfilter/ipset/ip_set_core.c       | 6 +++---
+ net/netfilter/ipset/ip_set_hash_gen.h   | 2 +-
+ net/netfilter/ipset/ip_set_list_set.c   | 4 ++--
+ 5 files changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_priv.h b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_priv.h
-index 6cc23af66b5be..a23d0df42f027 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_priv.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_priv.h
-@@ -30,6 +30,7 @@ enum {
- 	MLX5E_TC_FLOW_FLAG_FAILED                = MLX5E_TC_FLOW_BASE + 9,
- 	MLX5E_TC_FLOW_FLAG_SAMPLE                = MLX5E_TC_FLOW_BASE + 10,
- 	MLX5E_TC_FLOW_FLAG_USE_ACT_STATS         = MLX5E_TC_FLOW_BASE + 11,
-+	MLX5E_TC_FLOW_FLAG_PEER                  = MLX5E_TC_FLOW_BASE + 12,
- };
+diff --git a/include/linux/netfilter/ipset/ip_set.h b/include/linux/netfilter/ipset/ip_set.h
+index b98331572ad29..cadae9b2578f1 100644
+--- a/include/linux/netfilter/ipset/ip_set.h
++++ b/include/linux/netfilter/ipset/ip_set.h
+@@ -273,7 +273,7 @@ struct ip_set {
+ 	/* Number of elements (vs timeout) */
+ 	u32 elements;
+ 	/* Size of the dynamic extensions (vs timeout) */
+-	size_t ext_size;
++	atomic64_t ext_size;
+ 	/* Element data size */
+ 	size_t dsize;
+ 	/* Offsets to extensions in elements */
+diff --git a/net/netfilter/ipset/ip_set_bitmap_gen.h b/net/netfilter/ipset/ip_set_bitmap_gen.h
+index 9523104a90da4..40f0383883f9d 100644
+--- a/net/netfilter/ipset/ip_set_bitmap_gen.h
++++ b/net/netfilter/ipset/ip_set_bitmap_gen.h
+@@ -75,7 +75,7 @@ mtype_flush(struct ip_set *set)
+ 		mtype_ext_cleanup(set);
+ 	bitmap_zero(map->members, map->elements);
+ 	set->elements = 0;
+-	set->ext_size = 0;
++	atomic64_set(&set->ext_size, 0);
+ }
  
- struct mlx5e_tc_flow_parse_attr {
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c b/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
-index f1f4225057311..8c52bbeabb7e0 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
-@@ -2043,7 +2043,8 @@ static void mlx5e_tc_del_flow(struct mlx5e_priv *priv,
- 	if (mlx5e_is_eswitch_flow(flow)) {
- 		struct mlx5_devcom_comp_dev *devcom = flow->priv->mdev->priv.eswitch->devcom;
+ /* Calculate the actual memory size of the set data */
+@@ -91,7 +91,7 @@ mtype_head(struct ip_set *set, struct sk_buff *skb)
+ {
+ 	const struct mtype *map = set->data;
+ 	struct nlattr *nested;
+-	size_t memsize = mtype_memsize(map, set->dsize) + set->ext_size;
++	size_t memsize = mtype_memsize(map, set->dsize) + atomic64_read(&set->ext_size);
  
--		if (!mlx5_devcom_for_each_peer_begin(devcom)) {
-+		if (flow_flag_test(flow, PEER) ||
-+		    !mlx5_devcom_for_each_peer_begin(devcom)) {
- 			mlx5e_tc_del_fdb_flow(priv, flow);
- 			return;
- 		}
-@@ -4489,6 +4490,7 @@ static int mlx5e_tc_add_fdb_peer_flow(struct flow_cls_offload *f,
- 	else
- 		in_mdev = priv->mdev;
+ 	nested = nla_nest_start(skb, IPSET_ATTR_DATA);
+ 	if (!nested)
+diff --git a/net/netfilter/ipset/ip_set_core.c b/net/netfilter/ipset/ip_set_core.c
+index f51a1af31513c..29bf5ee74fe36 100644
+--- a/net/netfilter/ipset/ip_set_core.c
++++ b/net/netfilter/ipset/ip_set_core.c
+@@ -350,7 +350,7 @@ ip_set_init_comment(struct ip_set *set, struct ip_set_comment *comment,
+ 	size_t len = ext->comment ? strlen(ext->comment) : 0;
  
-+	flow_flags |= BIT(MLX5E_TC_FLOW_FLAG_PEER);
- 	parse_attr = flow->attr->parse_attr;
- 	peer_flow = __mlx5e_add_fdb_flow(peer_priv, f, flow_flags,
- 					 parse_attr->filter_dev,
+ 	if (unlikely(c)) {
+-		set->ext_size -= sizeof(*c) + strlen(c->str) + 1;
++		atomic64_sub(sizeof(*c) + strlen(c->str) + 1, &set->ext_size);
+ 		rcu_assign_pointer(comment->c, NULL);
+ 		kfree_rcu(c, rcu);
+ 	}
+@@ -362,7 +362,7 @@ ip_set_init_comment(struct ip_set *set, struct ip_set_comment *comment,
+ 	if (unlikely(!c))
+ 		return;
+ 	strscpy(c->str, ext->comment, len + 1);
+-	set->ext_size += sizeof(*c) + strlen(c->str) + 1;
++	atomic64_add(sizeof(*c) + strlen(c->str) + 1, &set->ext_size);
+ 	rcu_assign_pointer(comment->c, c);
+ }
+ EXPORT_SYMBOL_GPL(ip_set_init_comment);
+@@ -392,7 +392,7 @@ ip_set_comment_free(struct ip_set *set, void *ptr)
+ 	c = rcu_dereference_protected(comment->c, 1);
+ 	if (unlikely(!c))
+ 		return;
+-	set->ext_size -= sizeof(*c) + strlen(c->str) + 1;
++	atomic64_sub(sizeof(*c) + strlen(c->str) + 1, &set->ext_size);
+ 	rcu_assign_pointer(comment->c, NULL);
+ 	kfree_rcu(c, rcu);
+ }
+diff --git a/net/netfilter/ipset/ip_set_hash_gen.h b/net/netfilter/ipset/ip_set_hash_gen.h
+index 81ad6747bc7a4..53b65f013594a 100644
+--- a/net/netfilter/ipset/ip_set_hash_gen.h
++++ b/net/netfilter/ipset/ip_set_hash_gen.h
+@@ -1288,7 +1288,7 @@ mtype_head(struct ip_set *set, struct sk_buff *skb)
+ 	rcu_read_lock_bh();
+ 	t = rcu_dereference_bh(h->table);
+ 	mtype_ext_size(set, &elements, &ext_size);
+-	memsize = mtype_ahash_memsize(h, t) + ext_size + set->ext_size;
++	memsize = mtype_ahash_memsize(h, t) + ext_size + atomic64_read(&set->ext_size);
+ 	htable_bits = t->htable_bits;
+ 	rcu_read_unlock_bh();
+ 
+diff --git a/net/netfilter/ipset/ip_set_list_set.c b/net/netfilter/ipset/ip_set_list_set.c
+index 83e1fdcc752d6..9d6ab69ca1a37 100644
+--- a/net/netfilter/ipset/ip_set_list_set.c
++++ b/net/netfilter/ipset/ip_set_list_set.c
+@@ -421,7 +421,7 @@ list_set_flush(struct ip_set *set)
+ 	list_for_each_entry_safe(e, n, &map->members, list)
+ 		list_set_del(set, e);
+ 	set->elements = 0;
+-	set->ext_size = 0;
++	atomic64_set(&set->ext_size, 0);
+ }
+ 
+ static void
+@@ -455,7 +455,7 @@ list_set_head(struct ip_set *set, struct sk_buff *skb)
+ {
+ 	const struct list_set *map = set->data;
+ 	struct nlattr *nested;
+-	size_t memsize = list_set_memsize(map, set->dsize) + set->ext_size;
++	size_t memsize = list_set_memsize(map, set->dsize) + atomic64_read(&set->ext_size);
+ 
+ 	nested = nla_nest_start(skb, IPSET_ATTR_DATA);
+ 	if (!nested)
 -- 
 2.53.0
 
