@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BA503F928B;
-	Mon, 17 Aug 2026 13:40:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EAC432ED40;
+	Mon, 17 Aug 2026 13:40:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974015; cv=none; b=kM0TN+J6a1GzUS0nj1wKCwqIk6QNq7En8O3zJ5UYhIEiIMwoVm5r+Lzci77+prku5uX0B/jUTjzNzgerjax8tQgLZuscS4aWRyC3XHdWS2n8AgxKg7ep0JYrrzrQjSt3wvw0mIGQ1VEC/RHpCoLUwaPJmmV3TCBVJ86K3J/9JvY=
+	t=1786974018; cv=none; b=krx0K2f5ZR97RHTFiMgx9y/rUj2prdGYoEHnPc4AfusQP65iXYCrL/OF5mByerrTFdrbEn1I6BgTkouEPYSECvCXpS/LwqXxhdMSCEF2M0r4uOKzPYv5mgPzOlXTz0OHjqxZMjSLgs1atyNMVOgk7Ul8iMHHdHmBoI0+AXB/55I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974015; c=relaxed/simple;
-	bh=49n+6hy4TujalgiKChwh9ybKJqoHLMC2NArixKqvugk=;
+	s=arc-20240116; t=1786974018; c=relaxed/simple;
+	bh=jMMkk9nYxrrN/3VtxC08xkgV8sgLU8LlTlTI5/O24dw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DQvEy2qX+mDXZTr07oisnFc/31FMUTG+WSWJHyZaxZOzl3nqVPOS437QQwk8r3ofprbF9+sC3306vfd9z0+8ivRf3k/ppWZonmXn9BzI7a1bslypodr1P3KfzgGAA3W6gL3VTChavNUrzmPiOf2DXe+WsZccce4Gv7KCxZ2h0zY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=udU/L97W; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TBEERccDbEEHQRYemAua6OdIpoHbxe37VGIthyTqCB6TA0yelrBSP61o1KlJjlwGw0b1DCLbQfN+dJEmjGqg2OAh8bZS5jiswYnTF7Le8+jO8PiZgzVJnVHgQTssJl2RMpBgda6gwJHs+DpbxyUBQv81i/B26rExE/ZkANcoAw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CBMgNyLv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="udU/L97W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB8B41F00A3E;
-	Mon, 17 Aug 2026 13:40:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CBMgNyLv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D5BB1F00A3F;
+	Mon, 17 Aug 2026 13:40:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974014;
-	bh=oheiPqSqZz2gDqIbGD/wdK0wdZKPP2WIKStU4A63k6A=;
+	s=korg; t=1786974017;
+	bh=08EX107KmwoVygg28qW3gwZLRKhn3//Wh121OEucVNU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=udU/L97WOCkg7ETtqVAe+ZlZo563QfekhZGCwEP9yVfQwtryXWBPvlQThy5A+15bf
-	 06VtOFTAAJrJlTKmsHZkRyABMDaePc2VNOApYpx55RRI3VnyDdEMv1LLrtTtGyWZty
-	 N8vkyTCnTLT61dp8BknZleXA1/EQItjfomIk0u00=
+	b=CBMgNyLvxnAWflGGyX2Yk0C5K1CJ05d+xym/tva2U/jmwNH+xC/wa6ORGltCbxjpN
+	 0pcxAVGJu5BuaYiYDactAsPcN4wofRcFoijX+ZJa0//YuxXSdnzkn93APscrdWvhFv
+	 pC6Hoxg2b9f/XeQJ9MeZAmOrIjQvKwg/SbdhHYfQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Zhen <max.zhen@amd.com>,
-	Lizhi Hou <lizhi.hou@amd.com>,
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 059/271] accel/amdxdna: Fix locally exploitable BUG_ON in amdxdna_insert_pages()
-Date: Mon, 17 Aug 2026 15:29:44 +0200
-Message-ID: <20260817132539.176627696@linuxfoundation.org>
+Subject: [PATCH 7.1 060/271] bpf: Fix netns reference imbalance in conntrack kfuncs
+Date: Mon, 17 Aug 2026 15:29:45 +0200
+Message-ID: <20260817132539.214272110@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -51,83 +52,207 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lizhi Hou <lizhi.hou@amd.com>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-[ Upstream commit 4a19f7ab5972ef608b31ae921419bc3e04b3f8ad ]
+[ Upstream commit fdeba03fea78407a8c52faa99177c9f7f29f90eb ]
 
-In amdxdna_insert_pages(), vm_flags_mod() sets VM_MIXEDMAP and clears
-VM_PFNMAP. If an unprivileged userspace process mmaps a non-imported GEM
-object and then calls madvise(MADV_DONTNEED), the PTEs will be
-successfully cleared because VM_MIXEDMAP allows this (unlike VM_PFNMAP).
+The opts argument of the BPF conntrack kfuncs can point to a shared
+map value.  __bpf_nf_ct_lookup() and __bpf_nf_ct_alloc_entry() read
+opts->netns_id separately when acquiring and releasing the network
+namespace reference.
 
-When userspace subsequently accesses the memory, drm_gem_shmem_fault()
-handles the page fault and attempts to map the backing shmem page via
-vmf_insert_pfn() which calls vmf_insert_pfn_prot(). Because the backing
-shmem page is normal system memory (pfn_valid(pfn) is true) and the VMA
-now has VM_MIXEDMAP set, won't this predictably trigger the explicit
-assertion BUG_ON((vma->vm_flags & VM_MIXEDMAP) && pfn_valid(pfn))
+The reference imbalance can occur as follows:
 
-Fix by removing the vm_flags_mod() call and replacing the vm_insert_pages()
-pre-population with the handle_mm_fault() loop that was already used for
-the import (dma-buf) path.
+  CPU 0                                  CPU 1
+  read opts->netns_id (-1)
+  skip get_net_ns_by_id()
+                                         write opts->netns_id (id)
+  read opts->netns_id (id)
+  put_net(net) /* no matching get */
 
-Fixes: e486147c912f ("accel/amdxdna: Add BO import and export")
-Reviewed-by: Max Zhen <max.zhen@amd.com>
-Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
-Link: https://patch.msgid.link/20260731185955.3449311-1-lizhi.hou@amd.com
+The reverse transition leaks the reference.  Repeating the unmatched put
+can destroy a live namespace and crash later users.
+
+The kernel reported:
+
+  Oops: general protection fault, probably for non-canonical address
+  KASAN: null-ptr-deref in range [0x00000000000000e8-0x00000000000000ef]
+  RIP: 0010:bpf_prog_test_run_xdp+0x52c/0x1700
+  Call Trace:
+   __sys_bpf+0x1662/0x50c0
+   __x64_sys_bpf+0x73/0xb0
+   do_syscall_64+0xf9/0x540
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  Kernel panic - not syncing: Fatal exception
+
+Snapshot every input field of opts with READ_ONCE() before validating or
+using it.  The netns_id snapshot keeps the namespace get/put pair
+balanced, while the other snapshots keep the remaining options from
+changing partway through an invocation.  The individual reads can still
+observe an inconsistent combination during a concurrent update, but each
+selected field value remains stable for that invocation.
+
+Fixes: aed8ee7feb44 ("net: netfilter: Deduplicate code in bpf_{xdp,skb}_ct_lookup")
+Fixes: d7e79c97c00c ("net: netfilter: Add kfuncs to allocate and insert CT")
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Link: https://lore.kernel.org/bpf/20260731160921.3245840-1-nicoyip.dev@gmail.com
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/amdxdna/amdxdna_gem.c | 27 ++++++++-------------------
- 1 file changed, 8 insertions(+), 19 deletions(-)
+ net/netfilter/nf_conntrack_bpf.c | 72 +++++++++++++++++++++-----------
+ 1 file changed, 48 insertions(+), 24 deletions(-)
 
-diff --git a/drivers/accel/amdxdna/amdxdna_gem.c b/drivers/accel/amdxdna/amdxdna_gem.c
-index 41fb39d095749..fff1c707d040a 100644
---- a/drivers/accel/amdxdna/amdxdna_gem.c
-+++ b/drivers/accel/amdxdna/amdxdna_gem.c
-@@ -402,25 +402,17 @@ static int amdxdna_insert_pages(struct amdxdna_gem_obj *abo,
- 			XDNA_ERR(xdna, "Failed shmem mmap %d", ret);
- 			return ret;
- 		}
--
--		/* The buffer is based on memory pages. Fix the flag. */
--		vm_flags_mod(vma, VM_MIXEDMAP, VM_PFNMAP);
--		ret = vm_insert_pages(vma, vma->vm_start, abo->base.pages,
--				      &num_pages);
-+	} else {
-+		vma->vm_private_data = NULL;
-+		vma->vm_ops = NULL;
-+		ret = dma_buf_mmap(abo->dma_buf, vma, 0);
- 		if (ret) {
--			XDNA_ERR(xdna, "Failed insert pages %d", ret);
--			amdxdna_mark_mapp_invalid(abo, vma);
-+			XDNA_ERR(xdna, "Failed to mmap dma buf %d", ret);
-+			return ret;
- 		}
+diff --git a/net/netfilter/nf_conntrack_bpf.c b/net/netfilter/nf_conntrack_bpf.c
+index f98d1d4b42c3d..c2df7c9482812 100644
+--- a/net/netfilter/nf_conntrack_bpf.c
++++ b/net/netfilter/nf_conntrack_bpf.c
+@@ -122,42 +122,54 @@ __bpf_nf_ct_alloc_entry(struct net *net, struct bpf_sock_tuple *bpf_tuple,
+ 	struct nf_conntrack_tuple otuple, rtuple;
+ 	struct nf_conntrack_zone ct_zone;
+ 	struct nf_conn *ct;
++	u8 ct_zone_dir = 0;
++	u16 ct_zone_id;
++	s32 netns_id;
++	u8 l4proto;
+ 	int err;
  
--		return 0;
--	}
--
--	vma->vm_private_data = NULL;
--	vma->vm_ops = NULL;
--	ret = dma_buf_mmap(abo->dma_buf, vma, 0);
--	if (ret) {
--		XDNA_ERR(xdna, "Failed to mmap dma buf %d", ret);
--		return ret;
-+		/* Drop the reference drm_gem_mmap_obj() acquired.*/
-+		drm_gem_object_put(to_gobj(abo));
+ 	if (!(opts_len == NF_BPF_CT_OPTS_SZ || opts_len == 12))
+ 		return ERR_PTR(-EINVAL);
++
++	netns_id = READ_ONCE(opts->netns_id);
++	l4proto = READ_ONCE(opts->l4proto);
++	ct_zone_id = READ_ONCE(opts->ct_zone_id);
+ 	if (opts_len == NF_BPF_CT_OPTS_SZ) {
+-		if (opts->reserved[0] || opts->reserved[1] || opts->reserved[2])
++		ct_zone_dir = READ_ONCE(opts->ct_zone_dir);
++		if (READ_ONCE(opts->reserved[0]) ||
++		    READ_ONCE(opts->reserved[1]) ||
++		    READ_ONCE(opts->reserved[2]))
+ 			return ERR_PTR(-EINVAL);
+ 	} else {
+-		if (opts->ct_zone_id)
++		if (ct_zone_id)
+ 			return ERR_PTR(-EINVAL);
  	}
  
- 	do {
-@@ -437,9 +429,6 @@ static int amdxdna_insert_pages(struct amdxdna_gem_obj *abo,
- 		offset += PAGE_SIZE;
- 	} while (--num_pages);
+-	if (unlikely(opts->netns_id < BPF_F_CURRENT_NETNS))
++	if (unlikely(netns_id < BPF_F_CURRENT_NETNS))
+ 		return ERR_PTR(-EINVAL);
  
--	/* Drop the reference drm_gem_mmap_obj() acquired.*/
--	drm_gem_object_put(to_gobj(abo));
--
- 	return 0;
- }
+-	err = bpf_nf_ct_tuple_parse(bpf_tuple, tuple_len, opts->l4proto,
++	err = bpf_nf_ct_tuple_parse(bpf_tuple, tuple_len, l4proto,
+ 				    IP_CT_DIR_ORIGINAL, &otuple);
+ 	if (err < 0)
+ 		return ERR_PTR(err);
  
+-	err = bpf_nf_ct_tuple_parse(bpf_tuple, tuple_len, opts->l4proto,
++	err = bpf_nf_ct_tuple_parse(bpf_tuple, tuple_len, l4proto,
+ 				    IP_CT_DIR_REPLY, &rtuple);
+ 	if (err < 0)
+ 		return ERR_PTR(err);
+ 
+-	if (opts->netns_id >= 0) {
+-		net = get_net_ns_by_id(net, opts->netns_id);
++	if (netns_id >= 0) {
++		net = get_net_ns_by_id(net, netns_id);
+ 		if (unlikely(!net))
+ 			return ERR_PTR(-ENONET);
+ 	}
+ 
+ 	if (opts_len == NF_BPF_CT_OPTS_SZ) {
+-		if (opts->ct_zone_dir == 0)
+-			opts->ct_zone_dir = NF_CT_DEFAULT_ZONE_DIR;
+-		nf_ct_zone_init(&ct_zone,
+-				opts->ct_zone_id, opts->ct_zone_dir, 0);
++		if (ct_zone_dir == 0) {
++			ct_zone_dir = NF_CT_DEFAULT_ZONE_DIR;
++			opts->ct_zone_dir = ct_zone_dir;
++		}
++		nf_ct_zone_init(&ct_zone, ct_zone_id, ct_zone_dir, 0);
+ 	} else {
+ 		ct_zone = nf_ct_zone_dflt;
+ 	}
+@@ -171,7 +183,7 @@ __bpf_nf_ct_alloc_entry(struct net *net, struct bpf_sock_tuple *bpf_tuple,
+ 	__nf_ct_set_timeout(ct, timeout * HZ);
+ 
+ out:
+-	if (opts->netns_id >= 0)
++	if (netns_id >= 0)
+ 		put_net(net);
+ 
+ 	return ct;
+@@ -186,46 +198,58 @@ static struct nf_conn *__bpf_nf_ct_lookup(struct net *net,
+ 	struct nf_conntrack_tuple tuple;
+ 	struct nf_conntrack_zone ct_zone;
+ 	struct nf_conn *ct;
++	u8 ct_zone_dir = 0;
++	u16 ct_zone_id;
++	s32 netns_id;
++	u8 l4proto;
+ 	int err;
+ 
+ 	if (!opts || !bpf_tuple)
+ 		return ERR_PTR(-EINVAL);
+ 	if (!(opts_len == NF_BPF_CT_OPTS_SZ || opts_len == 12))
+ 		return ERR_PTR(-EINVAL);
++
++	netns_id = READ_ONCE(opts->netns_id);
++	l4proto = READ_ONCE(opts->l4proto);
++	ct_zone_id = READ_ONCE(opts->ct_zone_id);
+ 	if (opts_len == NF_BPF_CT_OPTS_SZ) {
+-		if (opts->reserved[0] || opts->reserved[1] || opts->reserved[2])
++		ct_zone_dir = READ_ONCE(opts->ct_zone_dir);
++		if (READ_ONCE(opts->reserved[0]) ||
++		    READ_ONCE(opts->reserved[1]) ||
++		    READ_ONCE(opts->reserved[2]))
+ 			return ERR_PTR(-EINVAL);
+ 	} else {
+-		if (opts->ct_zone_id)
++		if (ct_zone_id)
+ 			return ERR_PTR(-EINVAL);
+ 	}
+-	if (unlikely(opts->l4proto != IPPROTO_TCP && opts->l4proto != IPPROTO_UDP))
++	if (unlikely(l4proto != IPPROTO_TCP && l4proto != IPPROTO_UDP))
+ 		return ERR_PTR(-EPROTO);
+-	if (unlikely(opts->netns_id < BPF_F_CURRENT_NETNS))
++	if (unlikely(netns_id < BPF_F_CURRENT_NETNS))
+ 		return ERR_PTR(-EINVAL);
+ 
+-	err = bpf_nf_ct_tuple_parse(bpf_tuple, tuple_len, opts->l4proto,
++	err = bpf_nf_ct_tuple_parse(bpf_tuple, tuple_len, l4proto,
+ 				    IP_CT_DIR_ORIGINAL, &tuple);
+ 	if (err < 0)
+ 		return ERR_PTR(err);
+ 
+-	if (opts->netns_id >= 0) {
+-		net = get_net_ns_by_id(net, opts->netns_id);
++	if (netns_id >= 0) {
++		net = get_net_ns_by_id(net, netns_id);
+ 		if (unlikely(!net))
+ 			return ERR_PTR(-ENONET);
+ 	}
+ 
+ 	if (opts_len == NF_BPF_CT_OPTS_SZ) {
+-		if (opts->ct_zone_dir == 0)
+-			opts->ct_zone_dir = NF_CT_DEFAULT_ZONE_DIR;
+-		nf_ct_zone_init(&ct_zone,
+-				opts->ct_zone_id, opts->ct_zone_dir, 0);
++		if (ct_zone_dir == 0) {
++			ct_zone_dir = NF_CT_DEFAULT_ZONE_DIR;
++			opts->ct_zone_dir = ct_zone_dir;
++		}
++		nf_ct_zone_init(&ct_zone, ct_zone_id, ct_zone_dir, 0);
+ 	} else {
+ 		ct_zone = nf_ct_zone_dflt;
+ 	}
+ 
+ 	hash = nf_conntrack_find_get(net, &ct_zone, &tuple);
+-	if (opts->netns_id >= 0)
++	if (netns_id >= 0)
+ 		put_net(net);
+ 	if (!hash)
+ 		return ERR_PTR(-ENOENT);
 -- 
 2.53.0
 
