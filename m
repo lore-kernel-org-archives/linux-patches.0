@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84ECE3EC829;
-	Mon, 17 Aug 2026 13:52:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CD0142254A;
+	Mon, 17 Aug 2026 13:52:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974756; cv=none; b=lpZY29BYLAogFWsJC3vnbNpa53vGKaFV6vFFev3SObtbih0MpYHiWA4wJ74YPyQb4lXlYm/dGv0xGc7gl40no1EAv2mmsRBkSAintk4oiXGbCgeyxjcdtUCAQxf/8X8mql/skGecy3TT66fuX8okAJxz8zlAhhsP29vP0Vno2G0=
+	t=1786974755; cv=none; b=gTLb3NCd+Q28UqFz9tToo17B8DXiwsZxc3nc2j/p0nqkJBl/uJ0X8h8uycZ4XWhJQmGhsTiARAqscu+XuzIFAc0zBU1CqgQxWhOLDKCuci+p7cPRmDV1q3nqeFwhUE+IiyK6K5Env5VL9O5y/mSlEFHYYtVYc7JkKivsg7pT9RY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974756; c=relaxed/simple;
-	bh=cQJdu+4QU2guWzOX5VayrEixewNinMMO6cRKvuniqTc=;
+	s=arc-20240116; t=1786974755; c=relaxed/simple;
+	bh=Wm1HguL2+G2Ts7Fkj2I+YfRyGRUpEQc9L6FHt4rRqvQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZEia9NRyT2z7WQK9/1EKFyMo7RAxg7LNx7uj9zE4ToOwhMmKTQbSrMLfDoal2tilW5fQNDdWHxjzohfAsvTkPKTNpNJp9t6vpmGyGkya4mW2UsSNBK+kmpWto8KtjYG0jR2EwoSw8GLMMmO5Z4WFIO3+nKMRHDQlYLUHgFmCPQk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aaIlbfQ9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S5YJsG8BHN4BJob33KCHPcrXr6uhPLpMAQasS/Pt2iMohKLEcRS5PM4sN5GEDRrVlDtCtaSYRe7CymJ2DUdp6sgCm1QPMF6GKTAFPQx5dSBA2nnVZcTQHNIPwsTCWuL2O8TODXDE8hFqR99nM9U57izNXfOzefPxFq1U9aOfGak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PIG/LKEm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aaIlbfQ9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BCB71F00A3D;
-	Mon, 17 Aug 2026 13:52:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PIG/LKEm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B7BB1F00A3A;
+	Mon, 17 Aug 2026 13:52:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974747;
-	bh=8LABmahqqdWiRWfTxTFTbKTbDZTTSXik/LaqEF6U4oM=;
+	s=korg; t=1786974744;
+	bh=Uqj0+JoBcm2BupG7GdSOtQY18E/bO0kVr/uZFxxw1bY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aaIlbfQ9rNXSNjgymG6ek55QvVv9X+8ZCS2OIqOBldGOSDZATXq/RkduBlqG9Zy3D
-	 HoFvqtfXdwI2AJ8L8i/2BfxE9ghI3Wei/j5D01KAQ8tQX6CIDlII/WCTookphjVmY0
-	 AqWncK8Zaw9rv/vmGF8fcKFa50fKd+NCxDudEadU=
+	b=PIG/LKEmvT4cC4Lio5hFNd/ki1m4lD3pNzNsHrKQgR48Wdlz1XnmHd1szxeScK5A5
+	 jYwSX4PsPO83Wfah5kxE7Xsk8y/4lc5fu7SboMB9muKKDPxLUnW/knLVaRefwKUoU9
+	 xSgWwjpJLnkjuVgAxzqb+Bgpc/aFyQTWqBE6jWos=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matti Vaittinen <mazziesaccount@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Julian Anastasov <ja@ssi.bg>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 041/250] watchdog: bd96801_wdt: Fix timeout for enabled WDG
-Date: Mon, 17 Aug 2026 15:30:02 +0200
-Message-ID: <20260817132538.131432455@linuxfoundation.org>
+Subject: [PATCH 6.18 040/250] ipvs: return the csum validation for forward hook
+Date: Mon, 17 Aug 2026 15:30:01 +0200
+Message-ID: <20260817132538.091967566@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -51,66 +51,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matti Vaittinen <mazziesaccount@gmail.com>
+From: Julian Anastasov <ja@ssi.bg>
 
-[ Upstream commit 1246aa2b6ccc8944676bd24ff3e37cc56b93b51b ]
+[ Upstream commit 99609cb0aa789c8d071050ce8579989551882cc6 ]
 
-When watchdog is enabled at the probe time, the bd96801 driver retrieves
-the timeout configuration from the registers to set-up the heart-beat
-values.
+Sashiko notes that playing games with the skb dst and rt
+flags instead of providing hooknum is not a good idea
+when validating the checksums.
 
-As Sashiko pointed out at
-https://lore.kernel.org/all/20260722085819.495211F000E9@smtp.kernel.org/
-the timeout values are incorrectly computed in driver, resulting wrong
-heartbeat. This leads to devere problems if watchdog was enabled at probe
-time.
+Also, skipping checksum validation for FORWARD packets
+risk silent data corruption, even if the only user is
+the FTP-CMD packets coming from the real server.
 
-According to the data-sheet, the "too fast" ping limit is configured as
-multiple of FASTNG_MIN. Furthermore, the "too slow" ping limit is
-configured as multiples of "too fast" timeout. The FASTNG_MIN is set to
-11, meaning 1.1 mS and "too fast" and "too slow" limits are computed from
-this. Hence, converting the limits to mS should be done by dividing by 10,
-not by dividing by USEC_PER_MSEC.
+Sashiko also noticed that by using common checksum
+helper in the previous commit we actually fixed old bug
+where the TCP/UDP checksum for IPv6 on CHECKSUM_COMPLETE
+was not validated correctly.
 
-Fix this by dividing the timeout values with correct scaling factor.
-
-While at it, fix whitespace problem (double empty line).
-
-Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
-Fixes: 09dad69757b6 ("watchdog: ROHM BD96801 PMIC WDG driver")
-Link: https://lore.kernel.org/r/amxskHmQbi9v-8_l@mva-rohm
-[groeck: Added reference to whitespace change to description]
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: e876b75b9020 ("ipvs: fix the checksum validations")
+Link: https://sashiko.dev/#/patchset/20260722211420.153933-1-pablo%40netfilter.org
+Link: https://sashiko.dev/#/patchset/20260727185024.67534-1-ja%40ssi.bg
+Link: https://sashiko.dev/#/patchset/20260728202520.59179-1-ja%40ssi.bg
+Signed-off-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/bd96801_wdt.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ include/net/ip_vs.h                   | 19 +++++--------------
+ net/netfilter/ipvs/ip_vs_proto_sctp.c |  2 +-
+ 2 files changed, 6 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/watchdog/bd96801_wdt.c b/drivers/watchdog/bd96801_wdt.c
-index 12b74fd2bc052..a25b7cf1488b2 100644
---- a/drivers/watchdog/bd96801_wdt.c
-+++ b/drivers/watchdog/bd96801_wdt.c
-@@ -169,7 +169,6 @@ static int bd96801_set_wdt_mode(struct wdtbd96801 *w, unsigned int hw_margin,
- 	int fastng, slowng, type, ret, reg, mask;
- 	struct device *dev = w->dev;
- 
--
- 	if (hw_margin_min * 1000 > FASTNG_MAX_US) {
- 		dev_err(dev, "Unsupported fast timeout %u uS [max %u]\n",
- 			hw_margin_min * 1000, FASTNG_MAX_US);
-@@ -258,10 +257,10 @@ static int bd96801_set_heartbeat_from_hw(struct wdtbd96801 *w,
- 	fast = FASTNG_MIN << sel;
- 
- 	sel = (val & BD96801_WD_RATIO_MASK) + 1;
--	w->wdt.max_hw_heartbeat_ms = (fast << sel) / USEC_PER_MSEC;
-+	w->wdt.max_hw_heartbeat_ms = (fast << sel) / 10;
- 
- 	if ((conf_reg & BD96801_WD_TYPE_MASK) == BD96801_WD_TYPE_WIN)
--		w->wdt.min_hw_heartbeat_ms = fast / USEC_PER_MSEC;
-+		w->wdt.min_hw_heartbeat_ms = fast / 10;
- 
- 	return 0;
+diff --git a/include/net/ip_vs.h b/include/net/ip_vs.h
+index cbad9c74a8868..d63d6459727d6 100644
+--- a/include/net/ip_vs.h
++++ b/include/net/ip_vs.h
+@@ -24,9 +24,7 @@
+ #include <linux/netfilter.h>		/* for union nf_inet_addr */
+ #include <linux/ip.h>
+ #include <linux/ipv6.h>			/* for struct ipv6hdr */
+-#include <net/route.h>
+ #include <net/ipv6.h>
+-#include <net/ip6_fib.h>
+ #if IS_ENABLED(CONFIG_NF_CONNTRACK)
+ #include <net/netfilter/nf_conntrack.h>
+ #endif
+@@ -1753,30 +1751,23 @@ static inline __wsum ip_vs_check_diff2(__be16 old, __be16 new, __wsum oldsum)
+ 	return csum_partial(diff, sizeof(diff), oldsum);
  }
+ 
+-static inline bool ip_vs_checksum_needed(struct sk_buff *skb, int af)
++static inline bool ip_vs_checksum_needed(struct sk_buff *skb)
+ {
+ 	/* Checksum unnecessary or already validated? */
+ 	if (skb_csum_unnecessary(skb))
+ 		return false;
+-	/* LOCAL_OUT ? */
+-	if (!skb->dev || skb->dev->flags & IFF_LOOPBACK)
++	/* Locally generated ? */
++	if (!skb->dev)
+ 		return false;
+-	/* !LOCAL_IN (FORWARD) ? */
+-	if (af == AF_INET6) {
+-		if (!(dst_rt6_info(skb_dst(skb))->rt6i_flags & RTF_LOCAL))
+-			return false;
+-	} else {
+-		if (!(skb_rtable(skb)->rt_flags & RTCF_LOCAL))
+-			return false;
+-	}
+ 	return true;
+ }
+ 
+ static inline bool ip_vs_checksum_common_check(struct sk_buff *skb,
+ 					       int offset, int proto, int af)
+ {
+-	if (!ip_vs_checksum_needed(skb, af))
++	if (!ip_vs_checksum_needed(skb))
+ 		return true;
++	/* Validate csum even for FORWARD */
+ 	return !nf_checksum(skb, NF_INET_LOCAL_IN, offset, proto, af);
+ }
+ 
+diff --git a/net/netfilter/ipvs/ip_vs_proto_sctp.c b/net/netfilter/ipvs/ip_vs_proto_sctp.c
+index 3dbd3096e1637..c80567c73469b 100644
+--- a/net/netfilter/ipvs/ip_vs_proto_sctp.c
++++ b/net/netfilter/ipvs/ip_vs_proto_sctp.c
+@@ -193,7 +193,7 @@ sctp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp,
+ 	struct sctphdr *sh;
+ 	__le32 cmp, val;
+ 
+-	if (!ip_vs_checksum_needed(skb, af))
++	if (!ip_vs_checksum_needed(skb))
+ 		return 1;
+ 	sh = (struct sctphdr *)(skb->data + sctphoff);
+ 	cmp = sh->checksum;
 -- 
 2.53.0
 
