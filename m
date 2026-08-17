@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F36843B811F;
-	Mon, 17 Aug 2026 14:08:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D76AB2D5A01;
+	Mon, 17 Aug 2026 14:08:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975686; cv=none; b=uFiCWfqfSeKw8GXKL+Xo/PPClzF1MzyGpWP8V8ltTvLrSV04nBBUw3CrwOByGYNHOv4dTFAHVw03wYIFrNbondUXWBoij8mE20o2aquZ6zTMR2EOtpafjN2wOug1sv9ScvJjvmWh8AmQtuSaTrWnKrsKtAdWy1UNvEY8hzri7C0=
+	t=1786975689; cv=none; b=WyFVwQvZiVAQ3Ajcx+zmvXjUEf2VuBoutHzyRlAWznuXVk7/KK6kBI3Kh9MO7xuVqQHK/OFon7I0h0ozUsuMKgvpaIldCuGGoK7kcy8fYQv4200CVtSDGLiK9UGETKL1JPxfgHXO60QV0zg9tzQuWGNUp9DZGkTktVsELwJ4UKo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975686; c=relaxed/simple;
-	bh=omEJPkNYbVzaAKnVQ7yg2ni+j7HgDN0pkooawRo0+rU=;
+	s=arc-20240116; t=1786975689; c=relaxed/simple;
+	bh=fog8tWHSycMPI3uyoB+GRzNBsqiU5iUuDghWaW2aJ1w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tS2FZCHUTDVJPt/u34uajAM+cIxTiLW9eocCCZLhXuYCwCWyhAspl3aZcRzlcpbIPHfQo9XJP1h1mW8oKgd2ULPIfLqcAXPJUV/J5xqensdXNGi41Aj60CTJZPYHXFXFIpWhx7TO3NLRecNUjoltcGd1p70r/jg8a01eJK57SmA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NWmruvEh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eL+U3e/JhNnRplPwq/3dS9qdMGq1cixNM8hO2ktZhe+FjktDvqucaQi/5hrhttniHHR+06F5xcWDOYr9UX/d942hM6YT3gkv1rqhz7D63P11A2PGSfOCQ2X8NdzhnKdWQFFMUA3Jb60i6bp2tb/KTorjPAlXvQBxXMq9VUxp+C8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Af6lqElo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NWmruvEh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 576C31F000E9;
-	Mon, 17 Aug 2026 14:08:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Af6lqElo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AF1C1F000E9;
+	Mon, 17 Aug 2026 14:08:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975684;
-	bh=gLQIykG7v+6ZZ455F3n1n9qT5ZrStdPzK5+QZdqtbR0=;
+	s=korg; t=1786975687;
+	bh=vKf0zb1QCHElnRAldyGwDjVFGljHy1nAMRw3x+2RPXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NWmruvEhlvFhp8D0puvIJraC65ExLXGzbSCf7VVwX0fzAs/lgmfKfotw9yir4pLxH
-	 aLjRDn3OsFWfQT4mfyfY6vLVYIZdASB0pbLt8eba8c7OTKdGMFadajcvqXMnWd7nzv
-	 S0eeXRPjM4L3drK9hD6v+Z2gar3SvUhffQYPza2s=
+	b=Af6lqEloL1oCcjDk46c43qDMO/0pViM/bTK9dPwWzPZlCoe7PpUo2a3kFQLbPLEqL
+	 KgyxVBpZ8/+sCXL/12lixDvyDKyH/oB6cSz+fgKjW55fKuGBDulfBlsxp7jSvbhha6
+	 9rpnB7Btzt8j/esTt3s+N3VzIJJq+p8v4OHUl4W8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lee <david.lee@trailofbits.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 074/389] net/packet: avoid fanout hook re-registration after unregister
-Date: Mon, 17 Aug 2026 15:28:33 +0200
-Message-ID: <20260817132541.988463857@linuxfoundation.org>
+Subject: [PATCH 5.10 065/389] firewire: net: Fix fragmented datagram reassembly
+Date: Mon, 17 Aug 2026 15:28:24 +0200
+Message-ID: <20260817132541.632122370@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -52,59 +51,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Lee <david.lee@trailofbits.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit 50aff80475abd3533eef4320477037e6fcc6b56e ]
+[ Upstream commit d52a13adbb8ccbab99cd3bad36804e87d8b5c052 ]
 
-packet_set_ring() temporarily detaches a socket from packet delivery while
-reconfiguring its ring. It records the previous running state, clears
-po->num, unregisters the protocol hook when needed, drops po->bind_lock,
-and later restores po->num and re-registers the hook from the saved
-was_running value.
+fwnet_frag_new() keeps a sorted list of received fragments for a partial
+datagram. When a new fragment is adjacent to an existing fragment, the
+code checks whether the new fragment also closes the gap to the next or
+previous list entry.
 
-That unlocked window can race with NETDEV_UNREGISTER. The notifier can
-observe the socket as not running, skip __unregister_prot_hook(), and
-invalidate the per-socket binding by setting po->ifindex to -1 and clearing
-po->prot_hook.dev. A one-member fanout group can still retain its shared
-fanout hook device pointer. When packet_set_ring() resumes, re-registering
-solely from the stale was_running state can re-add the fanout hook after
-the device has been unregistered.
+Those neighbor lookups currently assume that the current fragment always
+has a real next or previous fragment. At a list edge, the next or
+previous entry is the list head, not a struct fwnet_fragment_info.
 
-Treat po->ifindex == -1 as an invalidated binding after reacquiring
-po->bind_lock. This is distinct from ifindex 0, the normal
-unbound/wildcard state: ifindex -1 marks an existing device binding that
-was invalidated when the device was unregistered. Restore po->num as
-before, but do not re-register the hook if device unregister already
-detached the socket.
+The gap checks also compare against the old edge of the current fragment
+instead of the edge after adding the new fragment. As a result, a
+fragment that bridges two existing ranges may leave two adjacent ranges
+unmerged, so fwnet_pd_is_complete() can miss a complete datagram.
 
-Fixes: dc99f600698d ("packet: Add fanout support.")
-Link: https://lore.kernel.org/netdev/20260701113947.23180-1-david.lee@trailofbits.com/
-Signed-off-by: David Lee <david.lee@trailofbits.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260707104440.833129-1-david.lee@trailofbits.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Check for the list head before looking up the neighboring fragment, and
+compare the neighbor against the new fragment's far edge when deciding
+whether to merge all three ranges.
+
+This issue was found by a static analysis checker and confirmed by
+manual source review.
+
+Fixes: c76acec6d551 ("firewire: add IPv4 support")
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Link: https://lore.kernel.org/r/20260707150454.2265951-1-ruoyuw560@gmail.com
+Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/packet/af_packet.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/firewire/net.c | 39 +++++++++++++++++++++------------------
+ 1 file changed, 21 insertions(+), 18 deletions(-)
 
-diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
-index 793720e506799c..b09d1bbddde937 100644
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -4551,7 +4551,11 @@ static int packet_set_ring(struct sock *sk, union tpacket_req_u *req_u,
+diff --git a/drivers/firewire/net.c b/drivers/firewire/net.c
+index 715e491dfbc333..8678ded9360a63 100644
+--- a/drivers/firewire/net.c
++++ b/drivers/firewire/net.c
+@@ -306,31 +306,34 @@ static struct fwnet_fragment_info *fwnet_frag_new(
+ 		if (fi->offset + fi->len == offset) {
+ 			/* The new fragment can be tacked on to the end */
+ 			/* Did the new fragment plug a hole? */
+-			fi2 = list_entry(fi->fi_link.next,
+-					 struct fwnet_fragment_info, fi_link);
+-			if (fi->offset + fi->len == fi2->offset) {
+-				/* glue fragments together */
+-				fi->len += len + fi2->len;
+-				list_del(&fi2->fi_link);
+-				kfree(fi2);
+-			} else {
+-				fi->len += len;
++			if (!list_is_last(&fi->fi_link, &pd->fi_list)) {
++				fi2 = list_next_entry(fi, fi_link);
++				if (offset + len == fi2->offset) {
++					/* glue fragments together */
++					fi->len += len + fi2->len;
++					list_del(&fi2->fi_link);
++					kfree(fi2);
++
++					return fi;
++				}
+ 			}
++			fi->len += len;
  
- 	spin_lock(&po->bind_lock);
- 	WRITE_ONCE(po->num, num);
--	if (was_running)
-+	/*
-+	 * NETDEV_UNREGISTER may have invalidated the binding while bind_lock
-+	 * was dropped above.  Do not re-add a fanout hook to a dead device.
-+	 */
-+	if (was_running && READ_ONCE(po->ifindex) != -1)
- 		register_prot_hook(sk);
- 
- 	spin_unlock(&po->bind_lock);
+ 			return fi;
+ 		}
+ 		if (offset + len == fi->offset) {
+ 			/* The new fragment can be tacked on to the beginning */
+ 			/* Did the new fragment plug a hole? */
+-			fi2 = list_entry(fi->fi_link.prev,
+-					 struct fwnet_fragment_info, fi_link);
+-			if (fi2->offset + fi2->len == fi->offset) {
+-				/* glue fragments together */
+-				fi2->len += fi->len + len;
+-				list_del(&fi->fi_link);
+-				kfree(fi);
+-
+-				return fi2;
++			if (!list_is_first(&fi->fi_link, &pd->fi_list)) {
++				fi2 = list_prev_entry(fi, fi_link);
++				if (fi2->offset + fi2->len == offset) {
++					/* glue fragments together */
++					fi2->len += fi->len + len;
++					list_del(&fi->fi_link);
++					kfree(fi);
++
++					return fi2;
++				}
+ 			}
+ 			fi->offset = offset;
+ 			fi->len += len;
 -- 
 2.53.0
 
