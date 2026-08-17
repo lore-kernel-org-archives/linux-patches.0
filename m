@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA0FD303C97;
-	Mon, 17 Aug 2026 14:10:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7EAC3EC82D;
+	Mon, 17 Aug 2026 14:10:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975842; cv=none; b=LlhbQZ/z4pAR3LrKzXySG4s1WVWuXXVty7ISlV+aJ8iTWDtaBDFkHsariIcMNUK7F70GEfRHNpn8Kf8LMqftNp+CM61IDE6s+uHWRNhe5LLFLsbZQC9liNZXvpmA+nBGsKf37SbbMkVd+r5TkxEnJPhdrO6ZCTa4rsEA4gSJunI=
+	t=1786975845; cv=none; b=DwRIo9U5zhaNvaVGYQlem0gsagz7tJYqOvkMB9VeILtag+wkXKyAp9hchYMgKi2Mnxsr0WAPYuZVSdeDjJtcZOmd1RUwpEvGqBF4wuwL/F4KHY0lcGzqCFg40KoaseRB67FyTVf9KgZUYihG78dlRuYEq0H+lP1UWWJXAW5Zob0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975842; c=relaxed/simple;
-	bh=v+HYmy72dAZTfPVrW4iaVRnMswS9Y2RchKrD9nBuUtc=;
+	s=arc-20240116; t=1786975845; c=relaxed/simple;
+	bh=6v2z5jX1el4HNHFISbp6liTSAGtQphBECjVHMg9hLJ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kjuxGZY2qbSYjW/cE5rZXOb7TWt1aH+phZqjEyjosZA5yx/Yir2CQutpnp/aBnQm8k/EU3omoPDwMWxZyNb6TxdSJuEYSMo1I//FmWHACGtPX7Jq6YjldDUTOQy0s5oaXTmVoqx7IQZbiKlnQv2TluE0OO4vOlm0G3ey6aon3OU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tb+P6uPO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kUVAdS5OmQHJt6e6HkPeuMXDLkMtRPtUIvhHrdKzBmhWyOY358MMgUaartlAiwbOjJ1ZSURZ9M0mpQD7Rk6XA5m2CTwlgKT2MLyJMcYTSY4FTbsYxp/v5fVdx1GTBO+mHt1SkodOvyAI29kTO2ylTmUUIGcjUAmrySwg3tQw2cc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T1ixF9SP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tb+P6uPO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D8441F000E9;
-	Mon, 17 Aug 2026 14:10:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T1ixF9SP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC6071F000E9;
+	Mon, 17 Aug 2026 14:10:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975841;
-	bh=9Gh1FxyKjL6boUND48mPp7q4LAXh5QAOSzn2wBHnxT4=;
+	s=korg; t=1786975844;
+	bh=ABo2KqH4jePIaoL/DORLG7i6y5qrc/lPoLA92dAQzqg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tb+P6uPOfHDVmhbCLD+/6xY3/hSJarRlfJXF1t55g8ZZKMemORrGn3lQL823EIZcR
-	 y3bSsb82bT+rdaVOns0lpEL353h24cU1LcwQ4egIV3e7HKDo8vwkWpswsMGzdO7E1Q
-	 c9iwyeGWD8zN76MCaLpy7lEn999P/DE5kLHxAsQE=
+	b=T1ixF9SP11uvyQ1eqsxeGquWXzn0r/LhAeyC4/8oWOYn8jAXLG4uesyMdukQgDIvm
+	 kHDuHoYKPHBCj2Vzh1TNky6io60uCRQihVrV0CGGPfVk8LRKriErQLbyPKpY7GEqHj
+	 tC668oSIGFfF3B8XpOLhOwWLJRhBYh/UCZKNf3Eg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Samiullah Khawaja <skhawaja@google.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 5.10 168/389] iommu/vt-d: Disallow SVA if page walk is not coherent
-Date: Mon, 17 Aug 2026 15:30:07 +0200
-Message-ID: <20260817132545.732121650@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.10 151/389] intel_th: fix MSC output device reference leak
+Date: Mon, 17 Aug 2026 15:29:50 +0200
+Message-ID: <20260817132545.082790343@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -53,43 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lu Baolu <baolu.lu@linux.intel.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit 780dfed688622ea01be3c9c2c55eec2207f05e04 upstream.
+commit 761b785a0cfbce43761227bc42a7f984f31f8921 upstream.
 
-Hardware implementations report Scalable-Mode Page-walk Coherency Support
-via the SMPWCS field in the extended capability register. If the hardware
-does not support page-walk coherency, a clflush is required every time
-the page table entries (which are walked by the IOMMU hardware) are
-updated.
+intel_th_output_open() looks up the output device with
+bus_find_device_by_devt(), which returns the device with a reference that
+must be dropped after use.
 
-In the SVA case, page tables are managed by the CPU mm core, not by the
-IOMMU driver. Because the IOMMU driver has no way of knowing whether the
-CPU page table management code has ensured coherency via clflush, the
-driver must deny SVA if the hardware does not support coherent paging.
+commit 95fc36a234da ("intel_th: fix device leak on output open()")
+attempted to drop the reference from intel_th_output_release(). However,
+a successful open replaces file->f_op with the output driver file
+operations before returning, so close runs the output driver release
+callback instead.
 
-Fixes: ff3dc6521f78 ("iommu/vt-d: Fix CPU and IOMMU SVM feature matching checks")
-Cc: stable@vger.kernel.org
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Reviewed-by: Samiullah Khawaja <skhawaja@google.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+For MSC outputs, close runs intel_th_msc_release(), which only removes
+the per-file iterator and does not drop the device reference taken by
+intel_th_output_open(). Consequently, every successful MSC output open
+leaks one device reference.
+
+Drop the device reference from intel_th_msc_release(), which is the
+release path actually used for MSC output files. Remove the now-unused
+intel_th_output_release() callback from intel_th_output_fops.
+
+Fixes: 95fc36a234da ("intel_th: fix device leak on output open()")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Reviewed-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260715070851.2077965-1-lgs201920130244@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/intel/svm.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwtracing/intel_th/core.c |   10 ----------
+ drivers/hwtracing/intel_th/msu.c  |    2 ++
+ 2 files changed, 2 insertions(+), 10 deletions(-)
 
---- a/drivers/iommu/intel/svm.c
-+++ b/drivers/iommu/intel/svm.c
-@@ -98,7 +98,7 @@ static inline bool intel_svm_capable(str
+--- a/drivers/hwtracing/intel_th/core.c
++++ b/drivers/hwtracing/intel_th/core.c
+@@ -843,18 +843,8 @@ out_put_device:
+ 	return err;
+ }
  
- void intel_svm_check(struct intel_iommu *iommu)
+-static int intel_th_output_release(struct inode *inode, struct file *file)
+-{
+-	struct intel_th_device *thdev = file->private_data;
+-
+-	put_device(&thdev->dev);
+-
+-	return 0;
+-}
+-
+ static const struct file_operations intel_th_output_fops = {
+ 	.open	= intel_th_output_open,
+-	.release = intel_th_output_release,
+ 	.llseek	= noop_llseek,
+ };
+ 
+--- a/drivers/hwtracing/intel_th/msu.c
++++ b/drivers/hwtracing/intel_th/msu.c
+@@ -1463,8 +1463,10 @@ static int intel_th_msc_release(struct i
  {
--	if (!pasid_supported(iommu))
-+	if (!pasid_supported(iommu) || !ecap_smpwc(iommu->ecap))
- 		return;
+ 	struct msc_iter *iter = file->private_data;
+ 	struct msc *msc = iter->msc;
++	struct intel_th_device *thdev = msc->thdev;
  
- 	if (cpu_feature_enabled(X86_FEATURE_GBPAGES) &&
+ 	msc_iter_remove(iter, msc);
++	put_device(&thdev->dev);
+ 
+ 	return 0;
+ }
 
 
