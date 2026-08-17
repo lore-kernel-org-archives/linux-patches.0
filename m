@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56A5B43746C;
-	Mon, 17 Aug 2026 14:29:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F0E6421225;
+	Mon, 17 Aug 2026 14:29:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976981; cv=none; b=lLW+Sp5CmQunmUABW1s/0H92LjbCbC6y5FIFkCG+YZPqe/n4T91ZIbtpmmQz5z6sfrtWHw3khVsCoaMjrDqWGx2J9U6fQH+jQEXK0FfKTA0CmtYDUNd7ayoLEbi+GyaxjpgOLB+PA70tTXLfb8RtbWDO52h9EdVX6QDqe7893ao=
+	t=1786976985; cv=none; b=PNvodEGgKMa+mpv1zRr3umZFM/e+tQ5ayR+B1pyaKekuaOUTn73uabiAdj21K2BxW44cmJ85N/6VOFcmFdu3e86Vz/zbg70rb1Rz0M/ePDyn7ZzkLgJAj4FbFIE8Mqp1zXS3YXhrS4OP4ioOcjASQCWwOINrzzpxg9R7AcK0McQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976981; c=relaxed/simple;
-	bh=7CwRmfzBU/s38lB8FMW89X2/RUNGtNIHwE2XyqVCe0c=;
+	s=arc-20240116; t=1786976985; c=relaxed/simple;
+	bh=hQk4MaQpAAeQRHKG7UEg6SWSY7dVdKTRe2++05Q+yJ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GqWCWqkqn1UEbWwqJoMgMHFW7WkXVW/59qCPT61i2BBWU37PZt520Bxa4t9FrpudcOXB9A1v+x7Kf8o9Ha0aGecy8TwEVauausApu9bKiJH1UgJRve+G/L/5XDD8xQQPAu0oERFqpemU/uM6qoEm07LGw/dxLK0Rx447eLpBcJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DHwm3JSe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gGXSOMs2C2Ncc9zqG+kpSnQrhWgiRHBih8blWfcc03tCFcvqRzSSk47JGWEYlxNUHW4nBeiBCYV84Q4SzzbsUQjsmeGDrsrabWUkURcOzBTbmZcmfcGnQEk6SYsduoN3FuImSIJUEr/lCQWqnZRjbsF0uzL+PdVvQI2FomqAxvQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0i0/JZWh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DHwm3JSe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A95381F000E9;
-	Mon, 17 Aug 2026 14:29:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0i0/JZWh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95E3F1F000E9;
+	Mon, 17 Aug 2026 14:29:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976980;
-	bh=HaK9+Rc2jJy3OVBsksCOFUzQrrNX0RmOV06S/4i7v6I=;
+	s=korg; t=1786976983;
+	bh=Sl8kJwJBmHqJL5XKxdHu0Ubj8ONpZgl8cD2XyRx09ZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DHwm3JSeDE/swWXtN4ScUvff1Cfo9Xh2NZdAILXMXqMm+9rLN2gWMlneSb3vhyeXf
-	 H7z5lhdPntbkYDnXh0RJc3xEQCtLPjXt3cJ3UhHvoRxYH7Q9aajlj5k970jTUqqMRE
-	 +b1O/zzF4X/Exb52uIYm1e7BZYMSr3Hq4tEu0HDQ=
+	b=0i0/JZWhlXcs1r4N2Zk42QvwPa3OE0wLHo9yx5cGi3EFhxhUEelFtENk2w95lc6sb
+	 FNx6pd+J+bBxlVaenKLzIpzcoKUmcomEISWhq673sZZDjsLh92Md/HzSRxdNsXlyGZ
+	 BpmCbvBTUdV9PQqbhiDxb0/1qA1hJn6WCUFMcOak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Danilo Krummrich <dakr@kernel.org>
-Subject: [PATCH 5.15 144/456] drm/nouveau/acr: fix missing nvkm_done() in error path of nvkm_acr_oneinit()
-Date: Mon, 17 Aug 2026 15:28:54 +0200
-Message-ID: <20260817132545.716231823@linuxfoundation.org>
+	Valery Borovsky <vebohr@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 5.15 171/456] media: sun4i-csi: Return queued buffers on start_streaming() failure
+Date: Mon, 17 Aug 2026 15:29:21 +0200
+Message-ID: <20260817132546.801315036@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -50,44 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Valery Borovsky <vebohr@gmail.com>
 
-commit c3027973f692077a1b66a9fb26d6a7c46c0dc72c upstream.
+commit bbba3e260a62810a717b4442a3bb96d0ec0f6309 upstream.
 
-In nvkm_acr_oneinit(), nvkm_kmap(acr->wpr) is invoked unconditionally
-at line 309 to obtain a mapping reference. Additionally, when both
-acr->wpr_fw and acr->wpr_comp are present, a second nvkm_kmap() is
-called inside the conditional block. Both mappings are expected to be
-released by nvkm_done(acr->wpr) at line 320 before the function returns
-successfully.
+The vb2 framework hands buffers to the driver via buf_queue() before
+calling start_streaming().  If start_streaming() returns an error
+without first returning those buffers via vb2_buffer_done(),
+vb2_start_streaming() fires WARN_ON(owned_by_drv_count) and the queued
+buffers leak.
 
-However, when a mismatch is detected during the loop within the
-conditional block, the function returns -EINVAL at line 318 without
-calling nvkm_done(). This results in a leak of the kmap reference(s)
-acquired earlier.
+sun4i_csi_start_streaming() returned -EINVAL when no matching CSI
+format could be found, before any setup (scratch buffer allocation,
+pipeline start) had been performed.  The remaining error paths already
+converge on the err_clear_dma_queue label, which calls
+return_all_buffers(..., VB2_BUF_STATE_QUEUED) under csi->qlock.  Jump
+to that label directly: the intermediate err_disable_device /
+err_disable_pipeline / err_free_scratch_buffer labels are skipped,
+which is correct because nothing they would undo has happened yet.
 
-Fix the issue by invoking nvkm_done(acr->wpr) prior to the early return
-to ensure proper release of the mapping references.
+This mirrors the uvcvideo fix in commit 4cf3b6fd54eb ("media: uvcvideo:
+Return queued buffers on start_streaming() failure").
 
-Fixes: 22dcda45a3d1 ("drm/nouveau/acr: implement new subdev to replace "secure boot"")
+Fixes: 577bbf23b758 ("media: sunxi: Add A10 CSI driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20260606155606.77593-1-vulab@iscas.ac.cn
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Signed-off-by: Valery Borovsky <vebohr@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nvkm/subdev/acr/base.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/platform/sunxi/sun4i-csi/sun4i_dma.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/acr/base.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/acr/base.c
-@@ -314,6 +314,7 @@ nvkm_acr_oneinit(struct nvkm_subdev *sub
- 					  i, us, fw);
- 			}
- 		}
-+		nvkm_done(acr->wpr);
- 		return -EINVAL;
- 	}
- 	nvkm_done(acr->wpr);
+--- a/drivers/media/platform/sunxi/sun4i-csi/sun4i_dma.c
++++ b/drivers/media/platform/sunxi/sun4i-csi/sun4i_dma.c
+@@ -234,8 +234,10 @@ static int sun4i_csi_start_streaming(str
+ 	int ret;
+ 
+ 	csi_fmt = sun4i_csi_find_format(&csi->fmt.pixelformat, NULL);
+-	if (!csi_fmt)
+-		return -EINVAL;
++	if (!csi_fmt) {
++		ret = -EINVAL;
++		goto err_clear_dma_queue;
++	}
+ 
+ 	dev_dbg(csi->dev, "Starting capture\n");
+ 
 
 
