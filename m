@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E0A3D301E;
-	Mon, 17 Aug 2026 14:41:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EB4D3CDBC3;
+	Mon, 17 Aug 2026 14:41:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977680; cv=none; b=KEWCOyM3iriNRHJ8LLm1dy7NyraYagI3v6FmttSYlf1NCdI7iNdrLYO+Cmkx1MbJmqFAUhltALS7+24ugliF8JS42zzboDvPQ2Ai9LLhukYqXqUha2wyqNubmS3AndL6CM7yHlFlnCi5cAPvzvF4P3dQXx+5JnkiAP/BKuM/lt8=
+	t=1786977683; cv=none; b=X+peBrLePm8rY7IE2iuAv8TT1K+I3/FJdwDSzY6v7NeDefw1+/m4ihFtfeECtSSYK+Qiatd5KYd8A8/4f7IlSxYowSYYPvqPPIumwWkN2aAuzdoM+ZeQRAa8JIH5skZPF+fPOLMp3cwez9sRjuxteH8ZozCmb1gmVeWZAhTJyp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977680; c=relaxed/simple;
-	bh=h90cVJ0ASGvtPw94yQGGDjKWRM7vPsRdChbSVxZKCig=;
+	s=arc-20240116; t=1786977683; c=relaxed/simple;
+	bh=quGqYSMjwSACtan2Z2C5vONDGE4IMG14wLWdLIeA960=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=btCleXqkOw8maxP6+/9vh2a6ILUR9S46KWviZJVLQR3qv2H0S+YNfTM+3RrZWwcqX5HVj3HyTmmLVnKb0Siha8m+rf/z6UmWTGop4T+iwXYxFJi76sjABqqKvbAYny1t/GrW8zgMb6gP0awe6SAlPeadu78OywtYkbS1ntP35Bc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ii3kA6FC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AinMAVfkpj+SvAWYMXVjSb9cJOzlzG202/37LwgitoekOXrQfTfd5wVvVLo2NRR5EQ17/7w74FFTfPKG+wkbgar7Jot0s43XGRjf1d7oSp8v69HlfttbXtQ0OE1u9gklsTuc1YZnEPppsNqH3WVmiRXbHR5WUZOjf2Kt/68Wq8I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KO3jl24O; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ii3kA6FC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EEA01F000E9;
-	Mon, 17 Aug 2026 14:41:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KO3jl24O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EF361F000E9;
+	Mon, 17 Aug 2026 14:41:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977678;
-	bh=aQV6QBWkvBf0lbsxhSuCjNQC3v5WZ+33vrag4V8WTgg=;
+	s=korg; t=1786977681;
+	bh=LI5EhFkla7JBRfAczueZTDxVXjbyUqG5ORJ4VC24CCA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ii3kA6FCKdOWI6nCk7khjGCrSWMIIy2k7zJhRGl+bid7JOrMPDWlHJ/5qKcQsrV6j
-	 ZS0FeDsRX3BXE1Ncub/sfPk5aV4NRQWViYncyX/5ehmk8cZpMNmzk+3UcKn/Q0FxBu
-	 Wg3K/NkJNHBaaOOir5NzCxi3BqF4AK2g0amp6/vw=
+	b=KO3jl24OqrRKNuWeriwN9JBLV8EJuq944SEqXSS7f1Da3Byv6eFj6CiEYONMAGCv2
+	 WERz5AEfs59tcx7OINW1u7CEGN2B3v/hMYM9udapEtU1nAwy6QA9wLBhRsYv8k8coO
+	 nl1bArpdz8EHCiPCZ9EYCzDxDerJ2ePeIlEHzdR4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Willem de Bruijn <willemb@google.com>,
-	Qihang Tang <q.h.hack.winter@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 413/456] net: remove CAP_SYS_RAWIO zero-padding in dev_validate_header
-Date: Mon, 17 Aug 2026 15:33:23 +0200
-Message-ID: <20260817132555.398580751@linuxfoundation.org>
+	Daniele Linguaglossa <danielelinguaglossa@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 396/456] sctp: clear control chunk transport if it is being removed
+Date: Mon, 17 Aug 2026 15:33:06 +0200
+Message-ID: <20260817132554.860673127@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -51,64 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qihang Tang <q.h.hack.winter@gmail.com>
+From: Xin Long <lucien.xin@gmail.com>
 
-commit 3b9a324e646d3657a8d9806dfbfe4f3e4066e882 upstream.
+[ Upstream commit c9158ceaf27780ef64534ad72f44ffde3f8ccc49 ]
 
-dev_validate_header() reads dev->hard_header_len directly when
-zero-padding short link layer headers for CAP_SYS_RAWIO holders:
+sctp_make_heartbeat_ack() caches the destination transport in
+chunk->transport without taking a reference. When src_out_of_asoc_ok is
+enabled, the HEARTBEAT ACK may remain queued on control_chunk_list instead
+of being transmitted immediately.
 
-    if (capable(CAP_SYS_RAWIO)) {
-        memset(ll_header + len, 0, dev->hard_header_len - len);
-        return true;
-    }
+If the peer transport is removed while the chunk is still queued,
+sctp_assoc_rm_peer() drops the transport and schedules it for RCU freeing,
+but only clears cached transport pointers in out_chunk_list.  The queued
+control chunk therefore retains a dangling transport pointer.
 
-Packet send paths call dev_validate_header() on skbs whose headroom was
-allocated from an earlier hard_header_len read. If the device is
-reconfigured so that dev->hard_header_len increases before validation,
-the memset writes past the reserved buffer, an out-of-bounds write.
+Once an ASCONF_ACK clears the suppression and the queued control chunk is
+transmitted, SCTP dereferences the stale transport pointer, leading to a
+use-after-free.
 
-This out-of-bounds write is masked in some SOCK_RAW paths today because
-the same concurrent increase can first make skb_push() exceed the
-reserved headroom and trigger skb_under_panic(). Remove the zero-padding
-branch before making those hard_header_len reads consistent, so the
-snapshot fixes do not turn a loud panic into a silent overwrite.
+Fix this by also clearing chunk->transport for queued control chunks in
+control_chunk_list when removing the transport.
 
-This path is only reached for variable length L2 protocols, where
-len < hard_header_len but len >= min_header_len. No remaining in-tree
-variable length L2 protocol implements header_ops->validate, and the
-CAP_SYS_RAWIO bypass that zero-pads and accepts short headers has no
-real value beyond allowing testing of intentionally malformed input.
-
-Drop the CAP_SYS_RAWIO branch. The remaining reads of
-dev->hard_header_len in dev_validate_header() are comparisons only and
-have no memory safety impact.
-
-Suggested-by: Willem de Bruijn <willemb@google.com>
-Fixes: 2793a23aacbd ("net: validate variable length ll headers")
-Cc: stable@vger.kernel.org
-Signed-off-by: Qihang Tang <q.h.hack.winter@gmail.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260805125729.19220-2-q.h.hack.winter@gmail.com
+Fixes: 8a07eb0a50ae ("sctp: Add ASCONF operation on the single-homed host")
+Reported-by: Daniele Linguaglossa <danielelinguaglossa@gmail.com>
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/7e1168cb722132152a29d47e5eafaeac4a3bf6f3.1785943120.git.lucien.xin@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/netdevice.h |    5 -----
- 1 file changed, 5 deletions(-)
+ net/sctp/associola.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/include/linux/netdevice.h
-+++ b/include/linux/netdevice.h
-@@ -3333,11 +3333,6 @@ static inline bool dev_validate_header(c
- 	if (len < dev->min_header_len)
- 		return false;
+diff --git a/net/sctp/associola.c b/net/sctp/associola.c
+index 4dd36c8375507..4a79e855c85cd 100644
+--- a/net/sctp/associola.c
++++ b/net/sctp/associola.c
+@@ -575,6 +575,10 @@ void sctp_assoc_rm_peer(struct sctp_association *asoc,
+ 		if (ch->transport == peer)
+ 			ch->transport = NULL;
  
--	if (capable(CAP_SYS_RAWIO)) {
--		memset(ll_header + len, 0, dev->hard_header_len - len);
--		return true;
--	}
--
- 	if (dev->header_ops && dev->header_ops->validate)
- 		return dev->header_ops->validate(ll_header, len);
++	list_for_each_entry(ch, &asoc->outqueue.control_chunk_list, list)
++		if (ch->transport == peer)
++			ch->transport = NULL;
++
+ 	asoc->peer.transport_count--;
  
+ 	sctp_ulpevent_notify_peer_addr_change(peer, SCTP_ADDR_REMOVED, 0);
+-- 
+2.53.0
+
 
 
