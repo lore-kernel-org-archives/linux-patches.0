@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EB64442FD1;
-	Mon, 17 Aug 2026 15:20:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FCB82E7BD6;
+	Mon, 17 Aug 2026 15:20:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786980049; cv=none; b=WJP9LM3wAw4M0tS0p8c+0maDi+X3CGn6gyG8ZbzKhfOgLQOxYqgZ7fK6GI5Nxhd+ROm9V2+Eq7ILUEJxlvTiy0PRf+FmDzzsjS64k9t/OBiK9GI1RVE5wwoEMvSsifPeRayMEzsbBxKa6k9PqgZkSshxa6e8kpJYNAgMxKK+hl4=
+	t=1786980052; cv=none; b=TRVM7WO5EztFHrdSyzIblPAoOCtBuy6ndjGaAaVYylY/PE+w+kMVhKiKvGtb9XrwiyV8eajZTj+MCqY1wx/6xK9Pby7KGrnoXqOtlMOp84SUf7SuB6U099zDNK1GlJ86Qd82HE9Fp3H6WAYe6FsGu9Q8dCsqmtAcQ7MG34zpdAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786980049; c=relaxed/simple;
-	bh=Nzjx4Pu6L5JzxRAHsLs6LBgKcgqaKRWpwmNlO7ouUow=;
+	s=arc-20240116; t=1786980052; c=relaxed/simple;
+	bh=t7rEjYZXfEdlOuBdDhADqpCOjY7fEnZ1VUwq5Qk26sA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n5r/qHkfbrrDDGzsx2EmAKBpOFCLO0X79atkzYO1UcoPcjgCc8T+0LJ1qcGgfOI9DXu7e+Pzn84yk0iLpXSdM4N2F1GHglHj74xelSg24+LTuL54TNH6/HlhKT4QLpoyzfZg3DGbrYAbl3I7u8l/Tm/WjP+LcZoEl0X5t70oqxI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KinEgCb5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fEnPIwmV5pkzXdCzeR9jKiMtWMlvnzRnexHuyQJna0zGpgg0beDrkZbb79PP3VAO4j2zIl9+moXq+MybQV1WlMj3VGhv/h/f4hI6n1gn2cpClMdFAe88bzWYQ0piMMJrnZJxuxcHnj/IfHbEpHbGFR8PV4ey+/m5BshF9ErRPV4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fgK2hSU9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KinEgCb5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B68991F00A3E;
-	Mon, 17 Aug 2026 15:20:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fgK2hSU9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98E2E1F000E9;
+	Mon, 17 Aug 2026 15:20:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786980048;
-	bh=wATLH7eqpkZBKCtRBqwOAPV9g0YaUFDpiK8pLpHmsm4=;
+	s=korg; t=1786980051;
+	bh=MVo3tBOhKujEnqfzS+IQC2b83k3i+geA1/ELPH3OLBU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KinEgCb58kii4OTmEDfmqu0QbKMuY5QpNaXWZaQPC1xhOEQSusPAX8UQT3dYnBbMp
-	 6+rO+5t7iO6vlGa9PCVL52G4SBtkUf3Nf9OUakT9T6SSmGZCpzSKV5K3J1ZnwPCti6
-	 XIiiHNhQACPAmAlV2YwJ8bPOOyDmzXXWH6Hahak4=
+	b=fgK2hSU9XD/zpxDSvUxGLr8SkA0HmTu3+BOwrw0CX0sHFyI3pgAJKeaqKrjr5l/K9
+	 gkHmFK5PL5OcfnHm2viBbag+qhRtYWFlp1IHAYK+4IX1OTvL3HrKhxeBJ5QqEPc3xt
+	 c2C2m2vT/9Koaro0djsH10UhlVkNTr42wloMJfts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Finn Callies <fcallies@linux.ibm.com>,
+	Holger Dengler <dengler@linux.ibm.com>,
 	Harald Freudenberger <freude@linux.ibm.com>,
 	Vasily Gorbik <gor@linux.ibm.com>
-Subject: [PATCH 6.1 437/609] s390/zcrypt: Fix wrong domain value verification with EP11 CPRBs
-Date: Mon, 17 Aug 2026 15:32:13 +0200
-Message-ID: <20260817132558.729724577@linuxfoundation.org>
+Subject: [PATCH 6.1 438/609] s390/zcrypt: Validate length for CCA AES cipher key requests
+Date: Mon, 17 Aug 2026 15:32:14 +0200
+Message-ID: <20260817132558.757807976@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -51,36 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harald Freudenberger <freude@linux.ibm.com>
+From: Holger Dengler <dengler@linux.ibm.com>
 
-commit 983279d7f86ade73db86f886e09172dd567031b5 upstream.
+commit 06afe425d5283b9764303de47f554da5a808ce8a upstream.
 
-There is a wrong upper limit check for the domain value when an EP11
-CPRB is processed for sending to a crypto card. This check is only
-active on custom device nodes but may lead to access heap memory
-behind perms->adm when an administrative CPRB is sent.
-Add correct limit (AP_DOMAINS = 256) checking to fix this.
+cca_cipher2protkey() derives the copy length for the CPRB parameter
+block directly from the length field in the key token. Reject the
+request early if the token length exceeds the available space in the
+parameter block.
 
-Fixes: cfd68b33094e ("s390/zcrypt: Filter admin CPRBs on custom devices")
-Cc: stable@vger.kernel.org
-Reviewed-by: Finn Callies <fcallies@linux.ibm.com>
-Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
+Fixes: 4bc123b18ce6 ("s390/zcrypt: Add low level functions for CCA AES cipher keys")
+Signed-off-by: Holger Dengler <dengler@linux.ibm.com>
+Cc: stable@vger.kernel.org # 5.4+
+Reviewed-by: Harald Freudenberger <freude@linux.ibm.com>
 Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/crypto/zcrypt_api.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/s390/crypto/zcrypt_ccamisc.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/s390/crypto/zcrypt_api.c
-+++ b/drivers/s390/crypto/zcrypt_api.c
-@@ -1119,7 +1119,7 @@ static long _zcrypt_send_ep11_cprb(bool
- 	if (rc)
- 		goto out_free;
+--- a/drivers/s390/crypto/zcrypt_ccamisc.c
++++ b/drivers/s390/crypto/zcrypt_ccamisc.c
+@@ -1232,6 +1232,9 @@ int cca_cipher2protkey(u16 cardnr, u16 d
+ 	} __packed * prepparm;
+ 	int keytoklen = ((struct cipherkeytoken *)ckey)->len;
  
--	if (perms != &ap_perms && domain < AUTOSEL_DOM) {
-+	if (perms != &ap_perms && domain < AP_DOMAINS) {
- 		if (ap_msg.flags & AP_MSG_FLAG_ADMIN) {
- 			if (!test_bit_inv(domain, perms->adm)) {
- 				rc = -ENODEV;
++	if (keytoklen > PARMBSIZE - sizeof(struct aureqparm))
++		return -EINVAL;
++
+ 	/* get already prepared memory for 2 cprbs with param block each */
+ 	rc = alloc_and_prep_cprbmem(PARMBSIZE, &mem, &preqcblk, &prepcblk);
+ 	if (rc)
 
 
