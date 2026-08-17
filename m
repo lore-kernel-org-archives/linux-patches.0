@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5713D43C7DF;
-	Mon, 17 Aug 2026 14:18:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4C1F442124;
+	Mon, 17 Aug 2026 14:18:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976285; cv=none; b=gnTxXXU2m0aCcZi64SFUWx+qcO9YwdncqQsSWj/Fm9VElA/3ILM0HacTjAW36Ss0iWRb41vAdL3vyOkdXuUdFkIQxSQkiqmcXd+EoMXbwdkTzDfONrZCZ8+MnnvtfjgR4oADupldJW/NmAIQPBPra/RSSxg0n2XXGW8G6QKrYfg=
+	t=1786976288; cv=none; b=NW3ZKTQCCgyVdC3+S6/KwZMJ3R3wtJsptXmX/BR5siuCbVfhDTMTSLjqOKeTlIejAf63aI6vRnZco9YuECBGgAJFEGdVe/Fqlwvv+G4CUFpzNlJW43v5vGDXEWGYnVsmORmcT7hZO+SWyiVZ91CI+FWQm5E5jw9rpyAjDOJDqiY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976285; c=relaxed/simple;
-	bh=qpjJqmuHGPmWaMqqsDDjHAWK5cI5yPcdh/UlGpTqEG4=;
+	s=arc-20240116; t=1786976288; c=relaxed/simple;
+	bh=0tpES6ul3rBeH8saoVELbvc9JZjI38M1pvF74ainVZs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M0Yvya2KSUGFRSMN/ainkPF3Tt4f6Hp/KPf9w62zjTCaJD8kznrXoiXnjzQkVonvSKYVwPhzG2QpeMmyEdfuz3OEn06ykRMpnBqtt96ccRxiBX2iPPYHCdvFADCmar2+kmfpTaiMxFYW6mmwQn+zxJZ6sdU2Cs2ciws87Tb1bzs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s64RjnlJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=T1fIXBwr8/AQS6Vigi5deD36Hke/EW1btHIDU4YlGcDLW2mYAy59qNvu1j4XrnkAHlhCgmEFWXCA0Fr5jRVAgldB7NtaOFmI8PDGqYu04y+NK+0CpkGajVFQsqmNn8hbTEzUzNZV8q1iNykNvxGV26yZUG55ddD92cJb/unm5Xg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=It3hH518; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s64RjnlJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E7FD1F000E9;
-	Mon, 17 Aug 2026 14:18:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="It3hH518"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41CD81F000E9;
+	Mon, 17 Aug 2026 14:18:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976284;
-	bh=JEpJY6Mc6VO2AGrgyfhEclbex3oucXzO3DujbgF+zfA=;
+	s=korg; t=1786976286;
+	bh=BUbUOotUb9peFEIQlNDzSLm/WIthnrk/LZG6H+iqgJ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s64RjnlJpcVfPhmheLnPlM9vhBkFX49oHhX3YI828Oi+P3MGSso0hJPQKy7yQPC4V
-	 d4BKvrztHx/o8iSBEoz8o+PZrgppAOTav8ZDucyeOnJqL4SynJTEg6j/BxjEh4+fqu
-	 QMx2INRdsjKC/DYkiEbltbLjZ78AFsfFZjiwpX/Q=
+	b=It3hH518teZHcgRgSbmRRCyL005N5M3d9Pwu2WTthV0dDvGf8pL4022c6DjasiALA
+	 6nNHRfzh11n3GY7oKdn8u7Rz4P7/r0m29Kw+dhLBiX6U1Pnnu8OJZR0cGXqMmsbqP9
+	 xFqvbGklbHQ/O957uzQzdSRHn736rbpY4aCkw3F8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiawen Liu <1298662399@qq.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 318/389] net: hisilicon: hix5hd2_gmac: remove redundant NAPI delete
-Date: Mon, 17 Aug 2026 15:32:37 +0200
-Message-ID: <20260817132551.363651152@linuxfoundation.org>
+	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 5.10 281/389] cpufreq: powernow-k8: Fix possible memory leak in powernowk8_cpu_init()
+Date: Mon, 17 Aug 2026 15:32:00 +0200
+Message-ID: <20260817132550.090520383@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -51,42 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiawen Liu <1298662399@qq.com>
+From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
 
-[ Upstream commit f307a7dc32097c11413178fca437a10d20890bc2 ]
+commit d5f8e5f6040d052d44fcbf4f31dd35145c0c8d7d upstream.
 
-hix5hd2_dev_remove() calls netif_napi_del() before unregister_netdev().
-This is not needed because free_netdev() deletes all NAPI instances
-attached to the net_device.
+The memory allocated for data->powernow_table inside
+powernow_k8_cpu_init_acpi() or find_psb_table() is not freed in one of
+the error paths in powernowk8_cpu_init(). Fix that by adding a kfree().
 
-Remove the redundant call and let the networking core tear down the NAPI
-instance during unregister_netdev(). The probe error path still keeps its
-explicit netif_napi_del(), because the device has not been registered
-there.
-
-Fixes: 57c5bc9ad7d7 ("net: hisilicon: add hix5hd2 mac driver")
-Signed-off-by: Jiawen Liu <1298662399@qq.com>
-Link: https://patch.msgid.link/tencent_5FFD37A252B4FEA6A80AD25B17C8E904F005@qq.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 1ff6e97f1d99 ("[CPUFREQ] cpumask: avoid playing with cpus_allowed in powernow-k8.c")
+Cc: stable@vger.kernel.org
+Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
+Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260727093553.98246-1-nihaal@cse.iitm.ac.in
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/hisilicon/hix5hd2_gmac.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/cpufreq/powernow-k8.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/hisilicon/hix5hd2_gmac.c b/drivers/net/ethernet/hisilicon/hix5hd2_gmac.c
-index 43f3146caf07e..18495d80e2e74 100644
---- a/drivers/net/ethernet/hisilicon/hix5hd2_gmac.c
-+++ b/drivers/net/ethernet/hisilicon/hix5hd2_gmac.c
-@@ -1291,7 +1291,6 @@ static int hix5hd2_dev_remove(struct platform_device *pdev)
- 	struct net_device *ndev = platform_get_drvdata(pdev);
- 	struct hix5hd2_priv *priv = netdev_priv(ndev);
+--- a/drivers/cpufreq/powernow-k8.c
++++ b/drivers/cpufreq/powernow-k8.c
+@@ -1083,6 +1083,7 @@ static int powernowk8_cpu_init(struct cp
  
--	netif_napi_del(&priv->napi);
- 	unregister_netdev(ndev);
- 	mdiobus_unregister(priv->bus);
- 	mdiobus_free(priv->bus);
--- 
-2.53.0
-
+ err_out_exit_acpi:
+ 	powernow_k8_cpu_exit_acpi(data);
++	kfree(data->powernow_table);
+ 
+ err_out:
+ 	kfree(data);
 
 
