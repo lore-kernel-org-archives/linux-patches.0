@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC4593EAC68;
-	Mon, 17 Aug 2026 14:20:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19F393BF689;
+	Mon, 17 Aug 2026 14:20:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976407; cv=none; b=MoHYn5Wr6DkTW3FZ/LNtXblKBIztPlxGNOWv/jGRBBm95H60cWP5O2/D29IYBks756OjV3VGjyc0WRF3hOxu6GoDzWyVtYZ/FssV7VT60Xr4Q+tdbCrScVzKohF7INT8d90DH58yxdLMkZd0xatXBGrSdQxei9FM14EGJlo9HNI=
+	t=1786976410; cv=none; b=KtFOe7wm8w6vMcMNtqAyinjj+gKdvw362M6ESsK0RYHlUFZq8D7i0/OJXrMbzvQSdRySk77gspDfuZQJTL26pBuluEXGnq4xPRTTH72YNgnkn1y0Ntbn8nEIVso+T6LYYjASHd+ZI+CBKaj9vloVMLz6gj0ueyK/ClhvN+j+rKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976407; c=relaxed/simple;
-	bh=6FkV8d065g0cd2Hu4rg4OOmYZCcdKU/2x/WKS3iRg+M=;
+	s=arc-20240116; t=1786976410; c=relaxed/simple;
+	bh=GP0SEbcmvpcDHJWLRoLkr6ZYuVdFoBWgT/O56CLd+I8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b3aDtiLaHJKPPr5jKmuqJQqw5HLb+T62dupjg3elZayPkrc8KDwInsZj4dUa29llYSwOg2i0GQBpOSfaQb/0trHEdasreiqzv7nd9aoDwZNJO1xQHRfj2xk5pvMRHxdwDWPvAJwq0pU6PFjbBwcv4RA5YJOgz16Rbppiu58ig5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=15V8xVTr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=edylq7zBEXKzay08khRVQq+1wy6COjYpC/qYNqDOt8jDaqFkpnYxrOOeCOfJJI4oQm0bS8NPGs06jyJe7gGIWxJqh36LRQHZoPJLJq4ZSukNupConyEkzqyrBjNGCySbnECFtTst85zjw+eF0TTAiVX2gyoTk4bFbOeUSpfgqLI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jv7C6V1J; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="15V8xVTr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 464FF1F000E9;
-	Mon, 17 Aug 2026 14:20:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jv7C6V1J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 275371F000E9;
+	Mon, 17 Aug 2026 14:20:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976405;
-	bh=QyeuP6L2JfOCuGjbiWkgqJ1sJ93+SzntFphLGiaaQH8=;
+	s=korg; t=1786976408;
+	bh=ffB8hc/uv8Ofjbg3UtoJWDosk8RxF++vS7jC22ySmJA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=15V8xVTrhWOL6+OJepaAWB3su4H3HVpVxkGemkniRNgoJFMelDFpdqMMNlEi4/E4K
-	 WDtqONvWfIyKdRqbaigNhFI9rq+qnt5Z+Q1uZ+WXRKzb2EdC4C3V4RETn7z7/b+BH2
-	 2ubY0FAXShMjXLCdyjlSoQmGgr7F+pFYr5TYmMjY=
+	b=jv7C6V1JzPeO+0UEC4A697UoWJEXDjAnWD7YXPnsWt3SPrguR/cw36eXF3FOCmSYQ
+	 B9hCGooL73DqdpV5aCKFYYNhJqUV0x3OPJeOaKjgP7Mdez+LFyStdJkSjf0jlU9BdP
+	 lRy5NPuFbfZgV4RfOXqo64niBRBCyhAG0FwBMMfo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Keno Fischer <keno@juliahub.com>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Ingo Molnar <mingo@kernel.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 360/389] futex: Prevent robust futex exit race some more
-Date: Mon, 17 Aug 2026 15:33:19 +0200
-Message-ID: <20260817132552.783414559@linuxfoundation.org>
+Subject: [PATCH 5.10 324/389] net: openvswitch: Fix kerneldoc warnings
+Date: Mon, 17 Aug 2026 15:32:43 +0200
+Message-ID: <20260817132551.560738685@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -52,182 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keno Fischer <keno@juliacomputing.com>
+From: Andrew Lunn <andrew@lunn.ch>
 
-commit 6d4514ca9cdf61fec4ec634cf50386f6f7e69748 upstream.
+[ Upstream commit 210bba6790dc150c0dd65da2cbc4de39e5fa3a74 ]
 
-A robust futex unlock stores 0 over the whole futex value - wiping
-FUTEX_WAITERS - and wakes a single waiter. That wakeup is a one-shot
-notification: the protocol relies on its recipient to either acquire the
-futex (and eventually unlock while aware of the remaining contention) or
-re-arm FUTEX_WAITERS before sleeping again.  If the woken waiter is killed
-before it can do either, the kernel must jump in and wake the next task
-down the line.
+net/openvswitch/flow.c:303: warning: Function parameter or member 'key_vh' not described in 'parse_vlan_tag'
+net/openvswitch/flow.c:303: warning: Function parameter or member 'skb' not described in 'parse_vlan_tag'
+net/openvswitch/flow.c:303: warning: Function parameter or member 'untag_vlan' not described in 'parse_vlan_tag'
+net/openvswitch/vport.c:122: warning: Function parameter or member 'parms' not described in 'ovs_vport_alloc'
 
-This is a known complication of the futex protocol with a previous
-partial fix in commit ca16d5bee598 ("futex: Prevent robust futex exit
-race"). Unfortunately, that fix is insufficient.
-
-If a third task re-acquired the futex through the uncontended fast
-path in the meantime, the notification is lost: robust exit processing
-sees that it is owned by another task and does nothing, while the new
-owner sees no FUTEX_WAITERS when it unlocks and wakes nobody.
-The remaining waiters sleep forever behind a free futex:
-
-  A owns the futex, B and C sleep in FUTEX_WAIT
-                                        uval == A | FUTEX_WAITERS
-  A robust unlock: store 0, FUTEX_WAKE(1) wakes B
-                                        uval == 0
-  D fast path acquire: cmpxchg(0 -> D)
-                                        uval == D, no FUTEX_WAITERS
-  B killed before acting on the wakeup
-  B exit walk, pending op: owner D != B -> no action
-  D unlock: no FUTEX_WAITERS -> no wake
-                                        C sleeps forever
-
-This is clearly a shortcoming in the implementation, which fails to keep
-the FUTEX_WAITERS bit consistent.
-
-Work around this by augmenting the robust list exit processing to also
-perform the extra wakeup if the futex word is owned by another thread but
-FUTEX_WAITERS is not set.
-
-This does not fix the problem of a non-contended take over/release and free
-sequence, which has been discussed for years and has been addressed by
-commit 3ca9595d9fb6 ("futex: Add support for unlocking robust futexes") and
-subsequent changes, but failed to take the problem described above into
-account.
-
-A more complete solution which is based on the in kernel unlock of
-contended robust futexes has been discussed in the context of this change
-and should show up in mainline sooner than later.
-
-[ tglx: Amend change log slightly and fixup coding style ]
-
-Fixes: ca16d5bee598 ("futex: Prevent robust futex exit race")
-Signed-off-by: Keno Fischer <keno@juliahub.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Assisted-by: ClaudeCode:claude-fable-5 tla+
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260730194705.38981-1-keno@juliacomputing.com
+Signed-off-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://lore.kernel.org/r/20201028004849.930094-1-andrew@lunn.ch
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: cf6f8b29befb ("net/openvswitch: check Ethernet header length in key_extract()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/futex/core.c | 82 +++++++++++++++++++++++++++++++--------------
- 1 file changed, 56 insertions(+), 26 deletions(-)
+ net/openvswitch/flow.c  | 4 ++++
+ net/openvswitch/vport.c | 4 +++-
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/futex/core.c b/kernel/futex/core.c
-index df86c0e494184..d772b8ab29817 100644
---- a/kernel/futex/core.c
-+++ b/kernel/futex/core.c
-@@ -3428,8 +3428,11 @@ static int handle_futex_death(u32 __user *uaddr, struct task_struct *curr,
- 		return -1;
+diff --git a/net/openvswitch/flow.c b/net/openvswitch/flow.c
+index 94531289ed26a..beacb1b46706e 100644
+--- a/net/openvswitch/flow.c
++++ b/net/openvswitch/flow.c
+@@ -294,6 +294,10 @@ static bool icmp6hdr_ok(struct sk_buff *skb)
  
- 	/*
--	 * Special case for regular (non PI) futexes. The unlock path in
--	 * user space has two race scenarios:
-+	 * Special case for regular (non PI) futexes. Ordinarily, we do
-+	 * not perform any processing here unless the current thread was
-+	 * the owner of the futex (by the TID check below).
-+	 *
-+	 * However, the unlock path has three race scenarios:
- 	 *
- 	 * 1. The unlock path releases the user space futex value and
- 	 *    before it can execute the futex() syscall to wake up
-@@ -3438,41 +3441,68 @@ static int handle_futex_death(u32 __user *uaddr, struct task_struct *curr,
- 	 * 2. A woken up waiter is killed before it can acquire the
- 	 *    futex in user space.
- 	 *
--	 * In the second case, the wake up notification could be generated
--	 * by the unlock path in user space after setting the futex value
--	 * to zero or by the kernel after setting the OWNER_DIED bit below.
-+	 * 3. A woken up waiter is killed in user space after another
-+	 *    thread has acquired the futex, but before it can set
-+	 *    FUTEX_WAITERS.
-+	 *
-+	 * Note that, if userspace uses the FUTEX_ROBUST_UNLOCK flag, we
-+	 * will not see case 1 here.
-+	 *
-+	 * In the second and third case, the wake up notification could
-+	 * be generated from any of:
-+	 *
-+	 *    i.   An ordinary futex wakeup after unlock (with or
-+	 *         without FUTEX_ROBUST_UNLOCK)
-+	 *    ii.  A robust wakeup from another thread's death
-+	 *    iii. A previous round through this special case
-+	 *
-+	 * As a result, the futex world will be in one of four states:
- 	 *
--	 * In both cases the TID validation below prevents a wakeup of
--	 * potential waiters which can cause these waiters to block
--	 * forever.
-+	 *    A. The futex word is 0 (unlocked)
-+	 *    B. The futex word is owned by another thread
-+	 *       (FUTEX_WAITERS is not set)
-+	 *    C. The futex word is owned by another thread
-+	 *       (FUTEX_WAITERS set)
-+	 *    D. The futex's owner died and OWNER_DIED is set
-+	 *       (the owner part of the word is 0)
- 	 *
--	 * In both cases the following conditions are met:
-+	 * The key issue is that the kernel usually (at least from
-+	 * sources ii. and iii. or when so requested by userspace from
-+	 * source i.) only ever wakes *one* waiter at a time. If this
-+	 * waiter dies before acquiring the futex (or setting the
-+	 * FUTEX_WAITERS bit), the kernel *must* still wake the next
-+	 * waiter down the line to uphold the futex invariants and
-+	 * avoid lost wakeups. Note we do not need to handle state C,
-+	 * as it does not matter to us whether *we* successfully set
-+	 * the bit or a third thread did so in the meantime.
- 	 *
--	 *	1) task->robust_list->list_op_pending != NULL
--	 *	   @pending_op == true
--	 *	2) The owner part of user space futex value == 0
-+	 * Therefore, in these cases we must issue an additional
-+	 * futex_wake(). Note however that we *must not* set OWNER_DIED
-+	 * here. Our thread is *not* the owner of the futex.
-+	 *
-+	 * Thus to summarize, the conditions for needing the additional
-+	 * futex_wake() are:
-+	 *
-+	 *	1) @pending_op == true (the thread has not finished the
-+	 *	   mutex operation)
-+	 *	2) The futex word is in one of the states A, B or D
- 	 *	3) Regular futex: @pi == false
- 	 *
--	 * If these conditions are met, it is safe to attempt waking up a
--	 * potential waiter without touching the user space futex value and
--	 * trying to set the OWNER_DIED bit. If the futex value is zero,
--	 * the rest of the user space mutex state is consistent, so a woken
--	 * waiter will just take over the uncontended futex. Setting the
--	 * OWNER_DIED bit would create inconsistent state and malfunction
--	 * of the user space owner died handling. Otherwise, the OWNER_DIED
--	 * bit is already set, and the woken waiter is expected to deal with
--	 * this.
-+	 * Note in particular that in all of the states A-D the owner
-+	 * portion of the futex word differs from our thread's TID
-+	 * (unless the actual owner has the same TID in another PID
-+	 * namespace, but we cannot currently distinguish that
-+	 * scenario), so this can be a special-case wakeup in the bail
-+	 * path of the ordinary TID check.
- 	 */
- 	owner = uval & FUTEX_TID_MASK;
- 
--	if (pending_op && !pi && !owner) {
--		futex_wake(uaddr, 1, 1, FUTEX_BITSET_MATCH_ANY);
-+	if (owner != task_pid_vnr(curr)) {
-+		if (pending_op && !pi && (!owner || !(uval & FUTEX_WAITERS)))
-+			futex_wake(uaddr, 1, 1, FUTEX_BITSET_MATCH_ANY);
- 		return 0;
- 	}
- 
--	if (owner != task_pid_vnr(curr))
--		return 0;
--
- 	/*
- 	 * Ok, this dying thread is truly holding a futex
- 	 * of interest. Set the OWNER_DIED bit atomically
+ /**
+  * Parse vlan tag from vlan header.
++ * @skb: skb containing frame to parse
++ * @key_vh: pointer to parsed vlan tag
++ * @untag_vlan: should the vlan header be removed from the frame
++ *
+  * Returns ERROR on memory error.
+  * Returns 0 if it encounters a non-vlan or incomplete packet.
+  * Returns 1 after successfully parsing vlan tag.
+diff --git a/net/openvswitch/vport.c b/net/openvswitch/vport.c
+index ced707ff6dd97..2c876424864d2 100644
+--- a/net/openvswitch/vport.c
++++ b/net/openvswitch/vport.c
+@@ -111,10 +111,12 @@ struct vport *ovs_vport_locate(const struct net *net, const char *name)
+  *
+  * @priv_size: Size of private data area to allocate.
+  * @ops: vport device ops
++ * @parms: information about new vport.
+  *
+  * Allocate and initialize a new vport defined by @ops.  The vport will contain
+  * a private data area of size @priv_size that can be accessed using
+- * vport_priv().  vports that are no longer needed should be released with
++ * vport_priv().  Some parameters of the vport will be initialized from @parms.
++ * @vports that are no longer needed should be released with
+  * vport_free().
+  */
+ struct vport *ovs_vport_alloc(int priv_size, const struct vport_ops *ops,
 -- 
 2.53.0
 
