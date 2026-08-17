@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6C483C8C65;
-	Mon, 17 Aug 2026 13:40:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BA503F928B;
+	Mon, 17 Aug 2026 13:40:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974013; cv=none; b=EFQJhgSfAsezma2YDKGNdh1mgMKzxIb2SjkUEOnku3arKUzgqJXPIKHHISLnFhS81lFbJeOJ+czNygwOPO+8/JjJBuzmODobVmCDLK+qkhHcF+zv6Q0YOd18EeGhx3GxLtlV8Y0rU+3a/AINGCCIsFRdiWu19j4Mp/w9ikW3CcA=
+	t=1786974015; cv=none; b=kM0TN+J6a1GzUS0nj1wKCwqIk6QNq7En8O3zJ5UYhIEiIMwoVm5r+Lzci77+prku5uX0B/jUTjzNzgerjax8tQgLZuscS4aWRyC3XHdWS2n8AgxKg7ep0JYrrzrQjSt3wvw0mIGQ1VEC/RHpCoLUwaPJmmV3TCBVJ86K3J/9JvY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974013; c=relaxed/simple;
-	bh=75u/8/NNG7xqty1FE6H3soy930DD2qGdJKNRbDXOOzE=;
+	s=arc-20240116; t=1786974015; c=relaxed/simple;
+	bh=49n+6hy4TujalgiKChwh9ybKJqoHLMC2NArixKqvugk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pmhGCBGOyTlXbXmdpnoR7x4JFjXbj8A3bYjmiIY2TJY1JkiQuuJKGeEo7QX0um8vBw0LBvF3DVXFo3UuKOCqXB4P0NCRCj5MIj3pA+UWDsxVXcKKiPrb3tKZSpg1wsMbYRdIXscbDlVRNhG7uc57wBBevpMYO11cLTK/kn5dFuc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C8doajIN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DQvEy2qX+mDXZTr07oisnFc/31FMUTG+WSWJHyZaxZOzl3nqVPOS437QQwk8r3ofprbF9+sC3306vfd9z0+8ivRf3k/ppWZonmXn9BzI7a1bslypodr1P3KfzgGAA3W6gL3VTChavNUrzmPiOf2DXe+WsZccce4Gv7KCxZ2h0zY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=udU/L97W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C8doajIN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4E0A1F000E9;
-	Mon, 17 Aug 2026 13:40:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="udU/L97W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB8B41F00A3E;
+	Mon, 17 Aug 2026 13:40:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974011;
-	bh=Qir9jbXJULA24BG8YHACZ/BxiaBo9D3ysLK87kWH6IM=;
+	s=korg; t=1786974014;
+	bh=oheiPqSqZz2gDqIbGD/wdK0wdZKPP2WIKStU4A63k6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C8doajINn2ic9JIPFpw4lbHtJ9N2FfRacAxxL6jHaam0lkoQMK+6p3ejty+h5BSLy
-	 cnWpOoMLW3BppXJrYsMOf9N7IW3Hl8hJElwEjmWEZatLFDTuISB0TsxcopZjDSrVGC
-	 U1XfflcTQVqC9F8qvJnjEvOUsc7K43m7YXEmlfy0=
+	b=udU/L97WOCkg7ETtqVAe+ZlZo563QfekhZGCwEP9yVfQwtryXWBPvlQThy5A+15bf
+	 06VtOFTAAJrJlTKmsHZkRyABMDaePc2VNOApYpx55RRI3VnyDdEMv1LLrtTtGyWZty
+	 N8vkyTCnTLT61dp8BknZleXA1/EQItjfomIk0u00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Guralnik <michaelgur@nvidia.com>,
-	Shay Drori <shayd@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Max Zhen <max.zhen@amd.com>,
+	Lizhi Hou <lizhi.hou@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 058/271] net/mlx5: fw_tracer, return NULL on create error
-Date: Mon, 17 Aug 2026 15:29:43 +0200
-Message-ID: <20260817132539.134684528@linuxfoundation.org>
+Subject: [PATCH 7.1 059/271] accel/amdxdna: Fix locally exploitable BUG_ON in amdxdna_insert_pages()
+Date: Mon, 17 Aug 2026 15:29:44 +0200
+Message-ID: <20260817132539.176627696@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -53,132 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Guralnik <michaelgur@nvidia.com>
+From: Lizhi Hou <lizhi.hou@amd.com>
 
-[ Upstream commit af39eb111ce6b5eba9c08513b62c4868eb7e7fd5 ]
+[ Upstream commit 4a19f7ab5972ef608b31ae921419bc3e04b3f8ad ]
 
-Tracer creation can fail by returning either NULL or ERR_PTR.
-The return value is stored without a check on the device, and users
-treat ERR_PTR and NULL the same way.
-This also causes a crash in the core dump logic, which is missing the
-ERR_PTR check and ends up dereferencing it, as shown in the trace below.
+In amdxdna_insert_pages(), vm_flags_mod() sets VM_MIXEDMAP and clears
+VM_PFNMAP. If an unprivileged userspace process mmaps a non-imported GEM
+object and then calls madvise(MADV_DONTNEED), the PTEs will be
+successfully cleared because VM_MIXEDMAP allows this (unlike VM_PFNMAP).
 
-Switch tracer creation to return NULL on failure only, so callers only
-need a single NULL check.
+When userspace subsequently accesses the memory, drm_gem_shmem_fault()
+handles the page fault and attempts to map the backing shmem page via
+vmf_insert_pfn() which calls vmf_insert_pfn_prot(). Because the backing
+shmem page is normal system memory (pfn_valid(pfn) is true) and the VMA
+now has VM_MIXEDMAP set, won't this predictably trigger the explicit
+assertion BUG_ON((vma->vm_flags & VM_MIXEDMAP) && pfn_valid(pfn))
 
-  Internal error: Oops: 0000000096000006 [#1]  SMP
-  Modules linked in: mlx5_ib ib_uverbs ib_core ipv6 mlx5_core
-  CPU: 1 UID: 0 PID: 12 Comm: kworker/u16:0 Not tainted 6.19.7 #1 PREEMPT(none)
-  Workqueue: mlx5_health0001:01:00.0 mlx5_fw_reporter_err_work [mlx5_core]
-  pstate: a3400009 (NzCv daif +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
-  pc : mlx5_fw_tracer_trigger_core_dump_general+0x58/0xe0 [mlx5_core]
-  lr : mlx5_fw_tracer_trigger_core_dump_general+0x40/0xe0 [mlx5_core]
-  sp : ffff800081cf3c40
-  x29: ffff800081cf3c90 x28: 0000000000000000 x27: 0000000000000000
-  x26: ffff000080018828 x25: 0000000000000000 x24: ffff000080304a05
-  x23: ffff800081cf3d80 x22: ffff0000847e01a0 x21: 0000000000000000
-  x20: ffff0000847e01a0 x19: ffffffffffffffa1 x18: ffff80008310bbf0
-  x17: ffff800080119650 x16: ffff80008010df54 x15: ffff80008010d4ac
-  x14: ffff800079c202e4 x13: ffff80008002fe60 x12: ffff800080119650
-  x11: ffff80008010df54 x10: ffff80008010d4ac x9 : ffff800079c203d8
-  x8 : ffff800081cf3c88 x7 : 0000000000000000 x6 : 0000000000000000
-  x5 : 0000000000000000 x4 : 0000000000000008 x3 : 0000000000000030
-  x2 : 0000000000000008 x1 : 0000000000000000 x0 : 00000000c5c4000e
-  Call trace:
-   mlx5_fw_tracer_trigger_core_dump_general+0x58/0xe0 [mlx5_core] (P)
-   mlx5_fw_reporter_dump+0x30/0x2e0 [mlx5_core]
-   devlink_health_do_dump+0x9c/0x160
-   devlink_health_report+0x1c0/0x288
-   mlx5_fw_reporter_err_work+0xac/0xc0 [mlx5_core]
-   process_one_work+0x15c/0x3d8
-   worker_thread+0x18c/0x320
-   kthread+0x148/0x228
-   ret_from_fork+0x10/0x20
-  Code: b9400000 5ac00800 7a401800 540003ca (3940a260)
-  ---[ end trace 0000000000000000 ]---
-  Kernel panic - not syncing: Oops: Fatal exception
-  SMP: stopping secondary CPUs
-  Kernel Offset: disabled
-  CPU features: 0x000000,00078031,75fce5a1,35fffe67
-  Memory Limit: none
-  ---[ end Kernel panic - not syncing: Oops: Fatal exception ]---
+Fix by removing the vm_flags_mod() call and replacing the vm_insert_pages()
+pre-population with the handle_mm_fault() loop that was already used for
+the import (dma-buf) path.
 
-Fixes: fd1483fe1f9f ("net/mlx5: Add support for FW reporter dump")
-Signed-off-by: Michael Guralnik <michaelgur@nvidia.com>
-Reviewed-by: Shay Drori <shayd@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260729080402.2427184-1-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: e486147c912f ("accel/amdxdna: Add BO import and export")
+Reviewed-by: Max Zhen <max.zhen@amd.com>
+Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
+Link: https://patch.msgid.link/20260731185955.3449311-1-lizhi.hou@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/mellanox/mlx5/core/diag/fw_tracer.c | 16 +++++++---------
- 1 file changed, 7 insertions(+), 9 deletions(-)
+ drivers/accel/amdxdna/amdxdna_gem.c | 27 ++++++++-------------------
+ 1 file changed, 8 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c b/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
-index adcc73e2a5b38..1493d8106c1a4 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
-@@ -1025,13 +1025,11 @@ struct mlx5_fw_tracer *mlx5_fw_tracer_create(struct mlx5_core_dev *dev)
+diff --git a/drivers/accel/amdxdna/amdxdna_gem.c b/drivers/accel/amdxdna/amdxdna_gem.c
+index 41fb39d095749..fff1c707d040a 100644
+--- a/drivers/accel/amdxdna/amdxdna_gem.c
++++ b/drivers/accel/amdxdna/amdxdna_gem.c
+@@ -402,25 +402,17 @@ static int amdxdna_insert_pages(struct amdxdna_gem_obj *abo,
+ 			XDNA_ERR(xdna, "Failed shmem mmap %d", ret);
+ 			return ret;
+ 		}
+-
+-		/* The buffer is based on memory pages. Fix the flag. */
+-		vm_flags_mod(vma, VM_MIXEDMAP, VM_PFNMAP);
+-		ret = vm_insert_pages(vma, vma->vm_start, abo->base.pages,
+-				      &num_pages);
++	} else {
++		vma->vm_private_data = NULL;
++		vma->vm_ops = NULL;
++		ret = dma_buf_mmap(abo->dma_buf, vma, 0);
+ 		if (ret) {
+-			XDNA_ERR(xdna, "Failed insert pages %d", ret);
+-			amdxdna_mark_mapp_invalid(abo, vma);
++			XDNA_ERR(xdna, "Failed to mmap dma buf %d", ret);
++			return ret;
+ 		}
  
- 	tracer = kvzalloc_obj(*tracer);
- 	if (!tracer)
--		return ERR_PTR(-ENOMEM);
-+		return NULL;
- 
- 	tracer->work_queue = create_singlethread_workqueue("mlx5_fw_tracer");
--	if (!tracer->work_queue) {
--		err = -ENOMEM;
-+	if (!tracer->work_queue)
- 		goto free_tracer;
+-		return 0;
 -	}
+-
+-	vma->vm_private_data = NULL;
+-	vma->vm_ops = NULL;
+-	ret = dma_buf_mmap(abo->dma_buf, vma, 0);
+-	if (ret) {
+-		XDNA_ERR(xdna, "Failed to mmap dma buf %d", ret);
+-		return ret;
++		/* Drop the reference drm_gem_mmap_obj() acquired.*/
++		drm_gem_object_put(to_gobj(abo));
+ 	}
  
- 	tracer->dev = dev;
+ 	do {
+@@ -437,9 +429,6 @@ static int amdxdna_insert_pages(struct amdxdna_gem_obj *abo,
+ 		offset += PAGE_SIZE;
+ 	} while (--num_pages);
  
-@@ -1073,7 +1071,7 @@ struct mlx5_fw_tracer *mlx5_fw_tracer_create(struct mlx5_core_dev *dev)
- 	destroy_workqueue(tracer->work_queue);
- free_tracer:
- 	kvfree(tracer);
--	return ERR_PTR(err);
-+	return NULL;
+-	/* Drop the reference drm_gem_mmap_obj() acquired.*/
+-	drm_gem_object_put(to_gobj(abo));
+-
+ 	return 0;
  }
  
- static int fw_tracer_event(struct notifier_block *nb, unsigned long action, void *data);
-@@ -1084,7 +1082,7 @@ int mlx5_fw_tracer_init(struct mlx5_fw_tracer *tracer)
- 	struct mlx5_core_dev *dev;
- 	int err;
- 
--	if (IS_ERR_OR_NULL(tracer))
-+	if (!tracer)
- 		return 0;
- 
- 	if (!tracer->str_db.loaded)
-@@ -1134,7 +1132,7 @@ int mlx5_fw_tracer_init(struct mlx5_fw_tracer *tracer)
- /* Stop tracer + Cleanup HW resources */
- void mlx5_fw_tracer_cleanup(struct mlx5_fw_tracer *tracer)
- {
--	if (IS_ERR_OR_NULL(tracer))
-+	if (!tracer)
- 		return;
- 
- 	mutex_lock(&tracer->state_lock);
-@@ -1163,7 +1161,7 @@ void mlx5_fw_tracer_cleanup(struct mlx5_fw_tracer *tracer)
- /* Free software resources (Buffers, etc ..) */
- void mlx5_fw_tracer_destroy(struct mlx5_fw_tracer *tracer)
- {
--	if (IS_ERR_OR_NULL(tracer))
-+	if (!tracer)
- 		return;
- 
- 	mlx5_core_dbg(tracer->dev, "FWTracer: Destroy\n");
-@@ -1215,7 +1213,7 @@ int mlx5_fw_tracer_reload(struct mlx5_fw_tracer *tracer)
- 	struct mlx5_core_dev *dev;
- 	int err;
- 
--	if (IS_ERR_OR_NULL(tracer))
-+	if (!tracer)
- 		return 0;
- 
- 	dev = tracer->dev;
 -- 
 2.53.0
 
