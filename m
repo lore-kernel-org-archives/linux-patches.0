@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48D943D7D70;
-	Mon, 17 Aug 2026 15:23:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23A0E3D9545;
+	Mon, 17 Aug 2026 15:23:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786980215; cv=none; b=b1zuMY1XvrGR9WohG5Oj1Hty2uwN0vhdpNzVT49OMVGDdCsv/jUupmvGHjm2sCB05TAEd9j45JHaZitlMopdTfNGe9d0jjKdbWCCEgvW/j1FwaWsg/J5UCsQwV6Ht3uBQ/U8W5WEtOw7mc0CDiRldPA7ipV7s5ZLYKCPZFwtFvo=
+	t=1786980218; cv=none; b=fYe4LLn0w95prvEKMiSO6wDO+7oDWtnxEbkajhIi58dGJW/cgQkrzZ1Cx+CsHTxBjBXBVslq5hCBqZk3Kvd3o9XpttLHYWoAcs/6FASYNPvF+2VmtVzqFx/dWZT1Le0L5PuBTkqxkNBdCNGHSVHqfCgaTtWboqOWCnbfrkhLIMc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786980215; c=relaxed/simple;
-	bh=UdDzVAnH6gr8eCS/AdAGdTC4xKwVaguIqP/F0Qm/r9s=;
+	s=arc-20240116; t=1786980218; c=relaxed/simple;
+	bh=im02mxau+jwt5D0Ze6mpvWDkuJjzwbJnLWKwyr3KsBs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ddYGDyvu56K11N8H4eEoxxeT7nW3dM/+7OG8Czw0wRy7+RkoWqqnHSPS25Q5CdifiUafIMHWMKDOc66VAxHIoaTr8l+LODdfLiPuMM6s0Y9GNpQKLWJtcPh9vira9i0cWAbdY2ztw3LxB5W1Mocn4AtYuZUpWb0C12xaSkvGDUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CXJTbxWa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qAqedgxvdjwu1DutbaQFEmHp936du6GWdcOFArT+LfWk6f7AK2nk9EI4Z8htfoQG/x+htNn+q3GdJJs4mXdOrt8S1e36R40FBv8+T7AVqUR6C5jHogfVAbTyzXB6ZHdru31VrU8hLddLHxfAq/xgtTrhA046PhNRNfZOnx0HYkY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lMi8hdRf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CXJTbxWa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A480C1F000E9;
-	Mon, 17 Aug 2026 15:23:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lMi8hdRf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CA5A1F000E9;
+	Mon, 17 Aug 2026 15:23:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786980214;
-	bh=/deW7vJfCQFZS8UFwM0cn2aDC1sGhIb69JjDzHiatVc=;
+	s=korg; t=1786980217;
+	bh=W0LagJUXm6DT9vpQPSZoYVDDS0+LJCGzm4g4R5WAz40=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CXJTbxWap4aK+ugNEEFFNlUV+Dy7IsWmGT0cLl1SkUHjDpRl7Vo/BonlDUT/SKvIT
-	 SdHe3+op9TbikLsac9CoVtuRCH/I/osUdrZKFs+kMAwzOJyY4cVebW5Gb8QoYNU6qr
-	 7WSuC7oaRRKdkoowLkrfZEhbh89wnzjs+HQ+PW4w=
+	b=lMi8hdRfuoRJVHrvgKY4MfdbSIXsLBCRkHCWXzFWksuJjP/PyA+sCwf565tyt8YYU
+	 n0MiO7wM2+o6PoPvTAOYS9ciE+h6dzzbZyABYgKFM3gqMscmjvay3zScjN/7PhvDDm
+	 lq0ywfKXtE6wTMvaAyitHCUUxXbkiSjGpLa049qE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yiyang Chen <chenyy23@mails.tsinghua.edu.cn>,
-	Daniel Wade <danjwade95@gmail.com>,
-	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
+	Mahanta Jambigi <mjambigi@linux.ibm.com>,
+	Hidayath Khan <hidayath@linux.ibm.com>,
+	Sidraya Jayagond <sidraya@linux.ibm.com>,
+	Dust Li <dust.li@linux.alibaba.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 496/609] bpf: Preserve pointer state for commuted arithmetic
-Date: Mon, 17 Aug 2026 15:33:12 +0200
-Message-ID: <20260817132600.495990113@linuxfoundation.org>
+Subject: [PATCH 6.1 497/609] net/smc: fix qentry overwrite for CONFIRM_LINK and ADD_LINK_CONT in smc_llc_event_handler()
+Date: Mon, 17 Aug 2026 15:33:13 +0200
+Message-ID: <20260817132600.527287733@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -53,72 +54,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yiyang Chen <chenyy23@mails.tsinghua.edu.cn>
+From: Mahanta Jambigi <mjambigi@linux.ibm.com>
 
-[ Upstream commit a4c6f804b44c5c790269b25e0e61cf4e9f117c86 ]
+[ Upstream commit 976245094925bab9bc39366b2e9ab44ffcde61d0 ]
 
-When scalar += pointer is handled in adjust_ptr_min_max_vals(), the
-destination register inherits the pointer state from the source pointer.
-Copying only selected fields is fragile because pointer provenance is
-tracked by several bpf_reg_state fields.
+The SMC_LLC_CONFIRM_LINK / SMC_LLC_ADD_LINK_CONT branch in
+smc_llc_event_handler() stores an incoming qentry into the local LLC flow
+without first checking whether a qentry is already pending. If a malicious or
+buggy peer sends a second CONFIRM_LINK or ADD_LINK_CONT request while a flow is
+active and flow->qentry is already set, smc_llc_flow_qentry_set() overwrites the
+pointer without freeing the previous allocation, leaking one kmalloc-96 object
+per spurious message.
 
-Use the caller's temporary offset register to preserve the scalar operand
-while replacing the destination with the full pointer state. This preserves
-the frame number for PTR_TO_STACK registers and keeps parent identity
-fields consistent.
+The sibling SMC_LLC_DELETE_LINK branch already has the correct !flow->qentry
+guard. Apply the same guard to the CONFIRM_LINK/ADD_LINK_CONT branch so that a
+duplicate message when qentry is already occupied falls through to break and is
+freed by the kfree(qentry) at the out: label, rather than silently leaking the
+existing allocation.
 
-Fixes: f4d7e40a5b71 ("bpf: introduce function calls (verification)")
-Signed-off-by: Yiyang Chen <chenyy23@mails.tsinghua.edu.cn>
-Tested-by: Daniel Wade <danjwade95@gmail.com>
-Acked-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
-Link: https://patch.msgid.link/20260729-c3-035-public-bpf-v4-v4-2-8ee297e2346b@mails.tsinghua.edu.cn
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+The response direction (smc_llc_rx_response()) is unaffected: it already guards
+with flow->qentry at the equivalent site and drops duplicate responses
+correctly.
+
+Fixes: 0fb0b02bd6fd ("net/smc: adapt SMC client code to use the LLC flow")
+Signed-off-by: Mahanta Jambigi <mjambigi@linux.ibm.com>
+Reviewed-by: Hidayath Khan <hidayath@linux.ibm.com>
+Reviewed-by: Sidraya Jayagond <sidraya@linux.ibm.com>
+Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
+Link: https://patch.msgid.link/20260729130153.970800-1-mjambigi@linux.ibm.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ net/smc/smc_llc.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 4ff1d5007a23e..abb62b3e4f873 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -8491,11 +8491,12 @@ static int adjust_ptr_min_max_vals(struct bpf_verifier_env *env,
- 		break;
- 	}
- 
--	/* In case of 'scalar += pointer', dst_reg inherits pointer type and id.
--	 * The id may be overwritten later if we create a new variable offset.
-+	/* For 'scalar += pointer', dst_reg inherits the complete pointer
-+	 * register state. Individual fields may be adjusted later by pointer
-+	 * arithmetic. Callers guarantee that below does not overwrite off_reg.
- 	 */
--	dst_reg->type = ptr_reg->type;
--	dst_reg->id = ptr_reg->id;
-+	if (dst_reg != ptr_reg)
-+		*dst_reg = *ptr_reg;
- 
- 	if (!check_reg_sane_offset(env, off_reg, ptr_reg->type) ||
- 	    !check_reg_sane_offset(env, ptr_reg, ptr_reg->type))
-@@ -8563,7 +8564,7 @@ static int adjust_ptr_min_max_vals(struct bpf_verifier_env *env,
- 		}
- 		break;
- 	case BPF_SUB:
--		if (dst_reg == off_reg) {
-+		if (dst_reg != ptr_reg) {
- 			/* scalar -= pointer.  Creates an unknown scalar */
- 			verbose(env, "R%d tried to subtract pointer from scalar\n",
- 				dst);
-@@ -9422,8 +9423,8 @@ static int adjust_reg_min_max_vals(struct bpf_verifier_env *env,
- 				err = mark_chain_precision(env, insn->dst_reg);
- 				if (err)
- 					return err;
--				return adjust_ptr_min_max_vals(env, insn,
--							       src_reg, dst_reg);
-+				off_reg = *dst_reg;
-+				return adjust_ptr_min_max_vals(env, insn, src_reg, &off_reg);
- 			}
- 		} else if (ptr_reg) {
- 			/* pointer += scalar */
+diff --git a/net/smc/smc_llc.c b/net/smc/smc_llc.c
+index fcb24a0ccf761..761515b590f20 100644
+--- a/net/smc/smc_llc.c
++++ b/net/smc/smc_llc.c
+@@ -1901,7 +1901,8 @@ static void smc_llc_event_handler(struct smc_llc_qentry *qentry)
+ 		return;
+ 	case SMC_LLC_CONFIRM_LINK:
+ 	case SMC_LLC_ADD_LINK_CONT:
+-		if (lgr->llc_flow_lcl.type != SMC_LLC_FLOW_NONE) {
++		if (lgr->llc_flow_lcl.type != SMC_LLC_FLOW_NONE &&
++		    !lgr->llc_flow_lcl.qentry) {
+ 			/* a flow is waiting for this message */
+ 			smc_llc_flow_qentry_set(&lgr->llc_flow_lcl, qentry);
+ 			wake_up(&lgr->llc_msg_waiter);
 -- 
 2.53.0
 
