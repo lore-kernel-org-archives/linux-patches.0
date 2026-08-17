@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEBF21D435F;
-	Mon, 17 Aug 2026 14:02:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B02031D435F;
+	Mon, 17 Aug 2026 14:02:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975324; cv=none; b=KBnJ8vVfAZnXLhGKQsHFQF8XWeS0onShB8L3rAK0sQW/UhuaIa9xQPQrubv3sUBH6CzFXDIs70bQmyHwfQmgxMBnzxFCsHVRgLejE67dBTQvOdtlD4hY3Heyzq9LaVN9auOsCsVv7dpoSJgyBasmxOroKtMv+tfPP0Xs5pkUA4o=
+	t=1786975326; cv=none; b=SkOvTqPAFV0Z34LF7LY2Z7W9PIqgspIkwSNlsi/9E3CRuEzD9/9rxvfPi5uJQmnqfS6In/YXBPMh5fpJqkpHAjiAuhWy2YOGleXusYqxavDvP9Qc7dPtTSrICIoGwkO7pXCD0FCU3PkmZxrSETC6gyul2Z0W93TmtpiP6uoI3vM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975324; c=relaxed/simple;
-	bh=H9fnoyzRzEc8UJ9YOJqDNxxz2BWc8eDs9x0IeibwIVA=;
+	s=arc-20240116; t=1786975326; c=relaxed/simple;
+	bh=YyDFOaYwVeigTKcJQhC/ut6X2qPyKvQMFOlHBRI1rN8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eaiHuVn/9IBpXPci9GTfRWH/ENRr2d88dvsGD7w5NeUBpF83IcDqzgTNATTbaMFBCxTF0hUgN6jtXWmBPM1YL84lAF0qDUz0uw5mk65QSkIWTclc0Kb26c9ywHBxZqt104o3hThmVEtVlgTWFgJY6tKGCO0EwairjTW2ZVxCtgc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aMMtEKIU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o8xet8+KmOkbOXkkZL/r2oDVWg79fKXSJPaKOYj7jfxVkxvgk5cz0tX67uZ+pCJJGaF+X8ADFwCMuJGTXuH2gjlxn+BesTI7gSaYaZJ/HrqX75miHX/eFwIy30iv7jWNwDEV1Kf2e0zmqbIwfHcWBmwxdPAFZOwKCWtqj0nFmzk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Bwx+Hu3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aMMtEKIU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 244B61F000E9;
-	Mon, 17 Aug 2026 14:02:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Bwx+Hu3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1076A1F00A3A;
+	Mon, 17 Aug 2026 14:02:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975322;
-	bh=qTXVCDUAbtOJ6sZCw3SA///yu/E1zdAVZnbk3RAuAAk=;
+	s=korg; t=1786975325;
+	bh=pIzvtgQEpBsjPb7SEIG0YMlLSlFQzQ5SVjXirIMycrU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aMMtEKIU7yGvJZx/YccvtXTfHS+wn9IRFYUK7AKW2YW7qPwQEzLgXIpVXRTGzPGp0
-	 cw88AkTIo2rAFPd4QQFd+Z3Ny53XxWymG8yyh/weyy1Dt0bl3AHXBahoSWcvWxKoO4
-	 HnwBkkVeOrxlRikfp+jNe0GZgqzoV88HSP4gW7Hc=
+	b=2Bwx+Hu3ZFvd4aanBTFXmEebgrIggyGI4Zu185l6F2x4HP58+UrZj7oFlHDAdkgPC
+	 Xy4/M/DDV9ldL0QvcGSgafS+HoLF9CrQNr3R6vtUukBynutZiZd/ITKzcEhU0GMmMV
+	 B1qyKVnER69Z3/dFcDg4bijLpAeZOCwam9FQ571o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edward Adam Davis <eadavis@qq.com>,
-	Chen Ridong <chenridong@huaweicloud.com>,
-	Matt Fleming <mfleming@cloudflare.com>,
-	Tejun Heo <tj@kernel.org>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Suren Baghdasaryan <surenb@google.com>
-Subject: [PATCH 6.18 237/250] sched/psi: Create the psimon kthread outside of cgroup_mutex
-Date: Mon, 17 Aug 2026 15:33:18 +0200
-Message-ID: <20260817132546.172882963@linuxfoundation.org>
+	Frederick Lawler <fred@cloudflare.com>,
+	Mimi Zohar <zohar@linux.ibm.com>
+Subject: [PATCH 6.18 238/250] ima: Instantiate file_truncate and path_truncate hooks
+Date: Mon, 17 Aug 2026 15:33:19 +0200
+Message-ID: <20260817132546.212726253@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -54,225 +50,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: Mimi Zohar <zohar@linux.ibm.com>
 
-commit fadeedd7cfc5d73d33fa3d7ac54b9b27aabd09d2 upstream.
+commit b80bed5c871a80151351342c065579405ce77145 upstream.
 
-a5b98009f16d ("sched/psi: fix race between file release and pressure write")
-made pressure_write() hold cgroup_mutex across psi_trigger_create(), which
-forks the psimon kthread for the first rtpoll trigger. As kthread creation
-depends on the whole fork path, the commit inadvertently created a lot of
-unwanted locking dependencies from cgroup_mutex.
+Instantiate the file_truncate and path_truncate LSM hooks to reset the
+action cache flags (IMA_DONE_MASK) as soon as truncation is requested,
+so the file, based on policy, is re-collected, re-measured, re-audited,
+and re-appraised on next access.
 
-sched_ext got hit by one: its enable path blocks forks and then grabs
-cgroup_mutex, so a pressure write racing a scheduler enable deadlocks, with
-every other fork piling up behind.
-
-Fix it by splitting trigger creation so that the worker is forked with
-cgroup_mutex dropped and the kernfs active reference left broken. The latter
-matters because rmdir and cgroup.pressure writes drain active references
-under cgroup_mutex. Publishing the trigger last keeps error reporting
-synchronous and preserves the of->priv lifetime rules.
-
-The trigger registered in the first stage pins the group's rtpoll machinery
-across the unlocked window, leaving only creation races to resolve. The
-catch-up poll on installation covers scheduling attempts dropped while there
-was no worker.
-
-v2: Retagged sched/psi (was cgroup).
-
-Fixes: a5b98009f16d ("sched/psi: fix race between file release and pressure write")
+Tested-by: Frederick Lawler <fred@cloudflare.com>
 Cc: stable@vger.kernel.org
-Cc: Edward Adam Davis <eadavis@qq.com>
-Cc: Chen Ridong <chenridong@huaweicloud.com>
-Reported-by: Matt Fleming <mfleming@cloudflare.com>
-Closes: https://lore.kernel.org/all/20260710100441.2653477-1-matt@readmodwrite.com/
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Acked-by: Johannes Weiner <hannes@cmpxchg.org>
-Tested-by: Matt Fleming <mfleming@cloudflare.com>
-Acked-by: Suren Baghdasaryan <surenb@google.com>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/psi.h    |    4 ++
- kernel/cgroup/cgroup.c |   23 +++++++++++++++-
- kernel/sched/psi.c     |   69 +++++++++++++++++++++++++++++++++++++------------
- 3 files changed, 78 insertions(+), 18 deletions(-)
+ security/integrity/ima/ima_main.c |   39 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 39 insertions(+)
 
---- a/include/linux/psi.h
-+++ b/include/linux/psi.h
-@@ -25,7 +25,9 @@ void psi_memstall_leave(unsigned long *f
- int psi_show(struct seq_file *s, struct psi_group *group, enum psi_res res);
- struct psi_trigger *psi_trigger_create(struct psi_group *group, char *buf,
- 				       enum psi_res res, struct file *file,
--				       struct kernfs_open_file *of);
-+				       struct kernfs_open_file *of,
-+				       bool *need_rtpoll_worker);
-+int psi_trigger_create_rtpoll_worker(struct psi_group *group);
- void psi_trigger_destroy(struct psi_trigger *t);
- 
- __poll_t psi_trigger_poll(void **trigger_ptr, struct file *file,
---- a/kernel/cgroup/cgroup.c
-+++ b/kernel/cgroup/cgroup.c
-@@ -4001,6 +4001,7 @@ static ssize_t pressure_write(struct ker
- 	struct psi_trigger *new;
- 	struct cgroup *cgrp;
- 	struct psi_group *psi;
-+	bool need_rtpoll_worker;
- 	ssize_t ret = 0;
- 
- 	cgrp = cgroup_kn_lock_live(of->kn, false);
-@@ -4020,12 +4021,32 @@ static ssize_t pressure_write(struct ker
- 	}
- 
- 	psi = cgroup_psi(cgrp);
--	new = psi_trigger_create(psi, buf, res, of->file, of);
-+	new = psi_trigger_create(psi, buf, res, of->file, of,
-+				 &need_rtpoll_worker);
- 	if (IS_ERR(new)) {
- 		ret = PTR_ERR(new);
- 		goto out_unlock;
- 	}
- 
-+	/*
-+	 * The worker fork must run with neither cgroup_mutex nor the file's
-+	 * kernfs active reference held. The latter is broken since
-+	 * cgroup_kn_lock_live(). @of->priv may be released while unlocked, so
-+	 * recheck before publishing @new.
-+	 */
-+	if (need_rtpoll_worker) {
-+		cgroup_unlock();
-+		ret = psi_trigger_create_rtpoll_worker(psi);
-+		cgroup_lock();
-+
-+		if (!ret && !of->priv)
-+			ret = -ENODEV;
-+		if (ret) {
-+			psi_trigger_destroy(new);
-+			goto out_unlock;
-+		}
-+	}
-+
- 	smp_store_release(&ctx->psi.trigger, new);
- 
- out_unlock:
---- a/kernel/sched/psi.c
-+++ b/kernel/sched/psi.c
-@@ -1298,9 +1298,44 @@ int psi_show(struct seq_file *m, struct
- 	return 0;
+--- a/security/integrity/ima/ima_main.c
++++ b/security/integrity/ima/ima_main.c
+@@ -658,6 +658,43 @@ static int ima_file_check(struct file *f
+ 					   MAY_APPEND), FILE_CHECK);
  }
  
 +/*
-+ * Create @group's rtpoll worker after psi_trigger_create() reported the need
-+ * for one. kthread creation depends on the whole fork path and we don't want
-+ * all of that nested inside cgroup_mutex, so the caller must drop it and any
-+ * other lock that forks can wait behind. If two callers race, the loser stops
-+ * its never-woken kthread.
++ * ima_reset_action_flags - invalidate action flags after a content change
++ * @inode: inode of the file whose content is about to be truncated
++ *
++ * Clear IMA_DONE_MASK so the file is re-collected, re-measured,
++ * re-audited, and re-appraised on next access.
 + */
-+int psi_trigger_create_rtpoll_worker(struct psi_group *group)
++static void ima_reset_action_flags(struct inode *inode)
 +{
-+	struct task_struct *task;
++	struct ima_iint_cache *iint;
 +
-+	task = kthread_create(psi_rtpoll_worker, group, "psimon");
-+	if (IS_ERR(task))
-+		return PTR_ERR(task);
++	if (!ima_policy_flag || !S_ISREG(inode->i_mode))
++		return;
 +
-+	scoped_guard(mutex, &group->rtpoll_trigger_lock) {
-+		if (!rcu_access_pointer(group->rtpoll_task)) {
-+			atomic_set(&group->rtpoll_wakeup, 0);
-+			wake_up_process(task);
-+			rcu_assign_pointer(group->rtpoll_task, task);
++	iint = ima_iint_find(inode);
++	if (!iint)
++		return;
 +
-+			/*
-+			 * Poll once to catch up on scheduling attempts dropped
-+			 * while there was no rtpoll worker.
-+			 */
-+			psi_schedule_rtpoll_work(group, 1, true);
-+			return 0;
-+		}
-+	}
++	mutex_lock(&iint->mutex);
++	iint->flags &= ~IMA_DONE_MASK;
++	iint->measured_pcrs = 0;
++	mutex_unlock(&iint->mutex);
++	return;
++}
 +
-+	kthread_stop(task);
++static int ima_path_truncate(const struct path *path)
++{
++	ima_reset_action_flags(path->dentry->d_inode);
 +	return 0;
 +}
 +
- struct psi_trigger *psi_trigger_create(struct psi_group *group, char *buf,
- 				       enum psi_res res, struct file *file,
--				       struct kernfs_open_file *of)
-+				       struct kernfs_open_file *of,
-+				       bool *need_rtpoll_worker)
++static int ima_file_truncate(struct file *file)
++{
++	ima_reset_action_flags(file_inode(file));
++	return 0;
++}
++
+ static int __ima_inode_hash(struct inode *inode, struct file *file, char *buf,
+ 			    size_t buf_size)
  {
- 	struct psi_trigger *t;
- 	enum psi_states state;
-@@ -1308,6 +1343,8 @@ struct psi_trigger *psi_trigger_create(s
- 	bool privileged;
- 	u32 window_us;
- 
-+	*need_rtpoll_worker = false;
-+
- 	if (static_branch_likely(&psi_disabled))
- 		return ERR_PTR(-EOPNOTSUPP);
- 
-@@ -1368,26 +1405,14 @@ struct psi_trigger *psi_trigger_create(s
- 	if (privileged) {
- 		mutex_lock(&group->rtpoll_trigger_lock);
- 
--		if (!rcu_access_pointer(group->rtpoll_task)) {
--			struct task_struct *task;
--
--			task = kthread_create(psi_rtpoll_worker, group, "psimon");
--			if (IS_ERR(task)) {
--				kfree(t);
--				mutex_unlock(&group->rtpoll_trigger_lock);
--				return ERR_CAST(task);
--			}
--			atomic_set(&group->rtpoll_wakeup, 0);
--			wake_up_process(task);
--			rcu_assign_pointer(group->rtpoll_task, task);
--		}
--
- 		list_add(&t->node, &group->rtpoll_triggers);
- 		group->rtpoll_min_period = min(group->rtpoll_min_period,
- 			div_u64(t->win.size, UPDATES_PER_WINDOW));
- 		group->rtpoll_nr_triggers[t->state]++;
- 		group->rtpoll_states |= (1 << t->state);
- 
-+		*need_rtpoll_worker = !rcu_access_pointer(group->rtpoll_task);
-+
- 		mutex_unlock(&group->rtpoll_trigger_lock);
- 	} else {
- 		mutex_lock(&group->avgs_lock);
-@@ -1547,6 +1572,8 @@ static ssize_t psi_write(struct file *fi
- 	size_t buf_size;
- 	struct seq_file *seq;
- 	struct psi_trigger *new;
-+	bool need_rtpoll_worker;
-+	int ret;
- 
- 	if (static_branch_likely(&psi_disabled))
- 		return -EOPNOTSUPP;
-@@ -1571,12 +1598,22 @@ static ssize_t psi_write(struct file *fi
- 		return -EBUSY;
- 	}
- 
--	new = psi_trigger_create(&psi_system, buf, res, file, NULL);
-+	new = psi_trigger_create(&psi_system, buf, res, file, NULL,
-+				 &need_rtpoll_worker);
- 	if (IS_ERR(new)) {
- 		mutex_unlock(&seq->lock);
- 		return PTR_ERR(new);
- 	}
- 
-+	if (need_rtpoll_worker) {
-+		ret = psi_trigger_create_rtpoll_worker(&psi_system);
-+		if (ret) {
-+			psi_trigger_destroy(new);
-+			mutex_unlock(&seq->lock);
-+			return ret;
-+		}
-+	}
-+
- 	smp_store_release(&seq->private, new);
- 	mutex_unlock(&seq->lock);
- 
+@@ -1271,11 +1308,13 @@ static struct security_hook_list ima_hoo
+ 	LSM_HOOK_INIT(file_release, ima_file_free),
+ 	LSM_HOOK_INIT(mmap_file, ima_file_mmap),
+ 	LSM_HOOK_INIT(file_mprotect, ima_file_mprotect),
++	LSM_HOOK_INIT(file_truncate, ima_file_truncate),
+ 	LSM_HOOK_INIT(kernel_load_data, ima_load_data),
+ 	LSM_HOOK_INIT(kernel_post_load_data, ima_post_load_data),
+ 	LSM_HOOK_INIT(kernel_read_file, ima_read_file),
+ 	LSM_HOOK_INIT(kernel_post_read_file, ima_post_read_file),
+ 	LSM_HOOK_INIT(path_post_mknod, ima_post_path_mknod),
++	LSM_HOOK_INIT(path_truncate, ima_path_truncate),
+ #ifdef CONFIG_IMA_MEASURE_ASYMMETRIC_KEYS
+ 	LSM_HOOK_INIT(key_post_create_or_update, ima_post_key_create_or_update),
+ #endif
 
 
