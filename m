@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0826427FBF;
-	Mon, 17 Aug 2026 14:36:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A3A13E025C;
+	Mon, 17 Aug 2026 14:36:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977384; cv=none; b=nx1B1/ZTiLvQ65HIOsbnA75RRhPeKxq8bhPu973vQ8JWxbpwl9+V67HPaoZfsqw4uDRgBscB1BidqBXxhOxjx0B/xODIe7vXy1z0WeRmomfSd8hMga5DGi13lYyjm8mDXJMU7LLiAkW9bUpNaUm/O8/RtfgfA988+RXKE5JKy3I=
+	t=1786977387; cv=none; b=J6gOYDLXk8yD8fU5d14UGLOUTUIR6afkgbyW3tdmaI2mpw2Rbbz14Xx72Hm5MWytZCFQQ/n7Uj1A3yVQ3eKPInlC1tjoZWZECmyIwsjn1P7aRMLLIVQSePE6Uw+JohDr5B3x5Q5YZr7ehLWZGLT2+BtkcCnwkbQQtsu2cMsZ4Mg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977384; c=relaxed/simple;
-	bh=HkJe2v8Swt5osv9Mbyks0NBofDYWfvX9tBipGj7h29U=;
+	s=arc-20240116; t=1786977387; c=relaxed/simple;
+	bh=q6f0w8AA87o7NzHyjrpa0JdrwA9eJ4yMjcktxS4SnVI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sBTRuea5ViDV06u/r4371PiIEtvTKe5nawiIOA2QhIswsNrkpOm8rZRoCGVJI2JUgIHIsfExSMGwp24Nj8BBRaMOrO4KlspbBJyNQRS2zAfA6iL1jWwmm7z6J9G2gS5hj6BwhyQWLcIBOHRExe19r/6Lwrpj2qXVWY106CvFenI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KB744qDy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rUCuVNlydLoN3cpDVRk58JUJ2AYwrVVax3kLsSj17mdmE0z+yBoEOV6r/L7B6nGz+F1kVPe2z3bRRr0bj0n/UaSBqyd1K9qnrLxD6FROVOIR9xMtBK/46x0gK2j4sCmR/r6csvp1vEiVVKHPukoUODR9phKOIpb1zhPYLvuj4To=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TyLOflsE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KB744qDy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B11891F000E9;
-	Mon, 17 Aug 2026 14:36:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TyLOflsE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97F0A1F000E9;
+	Mon, 17 Aug 2026 14:36:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977383;
-	bh=zDPd7yEpZVRR0mmWinge4KXT6mN/Ik1G3CvZvmcY6rU=;
+	s=korg; t=1786977386;
+	bh=VydkJGi87q44B1THmK3co1AMrorZplAJlwBG87oKRac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KB744qDySBhIz25O08IrGQ5eREzZtMSP/PGHK6x3WFP9PopubR/1gYj81G59LmSD8
-	 GcCTy91cAaGrdx38P/EP5BBRDn6MC3wiwwLS2m4nybPSYI1/8A2yijE2QbHUhHjBn1
-	 d20n6/OvHRf76hLPfuvlzg2LbXxApaHVKOsihrsM=
+	b=TyLOflsEmQCuV/IoW119dYAVzNSui7hzOxa7aAfI2beP65NDySmNr2QIkDn4cmij6
+	 OKAY/M73UfKacTVSty8sLeIk3koXJkXQaHeKgw/vm7DkqADjGIkJYbrfJRDtu0aVcA
+	 1DoFj9P0PsatjdgCekXNNUU+toquzsGzSK5TQD1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sonali Pradhan <sonalipradhan@google.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 308/456] ALSA: usb-audio: Clamp frame size in implicit-feedback mode
-Date: Mon, 17 Aug 2026 15:31:38 +0200
-Message-ID: <20260817132551.814744567@linuxfoundation.org>
+	Lakshmi Sowjanya D <lakshmi.d@oss.qualcomm.com>,
+	Md Sadre Alam <md.alam@oss.qualcomm.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Varadarajan Narayanan <varadarajan.narayanan@oss.qualcomm.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 5.15 309/456] dmaengine: qcom: bam_dma: Fix command element mask field for BAM v1.6.0+
+Date: Mon, 17 Aug 2026 15:31:39 +0200
+Message-ID: <20260817132551.848647654@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -50,52 +54,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sonali Pradhan <sonalipradhan@google.com>
+From: Md Sadre Alam <md.alam@oss.qualcomm.com>
 
-commit 8d7a30c50c2e58a6839634ed0acde14466d1dc61 upstream.
+commit 867621ba203027338b525af6729719c544135336 upstream.
 
-snd_usb_handle_sync_urb() scales received sync packet sizes by the sender's
-stride and stores the result directly in out_packet->packet_size[i]. If a
-connected USB device sends an oversized sync packet, this frame count can
-exceed ep->maxframesize.
+BAM version 1.6.0 and later changed the behavior of the mask field in
+command elements for read operations.
 
-The un-clamped frame count then propagates to the playback endpoint queue,
-potentially driving packet transfers beyond the endpoint's hardware frame
-limits.
+In older BAM versions, or prior implementation assumptions, the mask
+field was effectively ignored for read commands. However, starting from
+BAM v1.6.0, the mask field for read commands is repurposed to carry the
+upper 4 bits of the destination address, enabling support for 36-bit
+addressing. For write commands, the mask field continues to function as
+a traditional write mask.
 
-Cap the calculated frame count against ep->maxframesize in
-snd_usb_handle_sync_urb() to prevent oversized packets from entering the
-playback queue.
+The current driver sets mask = 0xffffffff for all command elements.
+While this works for write operations, it breaks read operations on
+BAM v1.6.0+ hardware. In such cases, the hardware interprets the upper
+address bits as 0xf, resulting in an invalid destination address
+(0xf_xxxxxxxx instead of 0x0_xxxxxxxx).
 
-Fixes: 28acb12014fb ("ALSA: usb-audio: use sender stride for implicit feedback")
+This leads to failures such as NAND enumeration issues observed on
+platforms like IPQ5424.
+
+Fix this by assigning the mask field based on command type:
+  - For read commands: set mask = 0 (upper address bits = 0)
+  - For write commands: retain mask = 0xffffffff
+
+Also update the bam_cmd_element structure documentation to reflect the
+dual purpose of the mask field across BAM versions.
+
+This ensures correct behavior on BAM v1.6.0+ while maintaining backward
+compatibility with older hardware.
+
+Fixes: dfebb055f73a2 ("dmaengine: qcom: bam_dma: wrapper functions for command descriptor")
+Tested-by: Lakshmi Sowjanya D <lakshmi.d@oss.qualcomm.com>
+Signed-off-by: Md Sadre Alam <md.alam@oss.qualcomm.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Cc: stable@vger.kernel.org
-Assisted-by: Jetski:Gemini-3.6-Flash
-Signed-off-by: Sonali Pradhan <sonalipradhan@google.com>
-Link: https://patch.msgid.link/20260728202432.2354994-1-sonalipradhan@google.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Varadarajan Narayanan <varadarajan.narayanan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260615060908.1263171-1-varadarajan.narayanan@oss.qualcomm.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/endpoint.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ include/linux/dma/qcom_bam_dma.h |   21 ++++++++++++++++-----
+ 1 file changed, 16 insertions(+), 5 deletions(-)
 
---- a/sound/usb/endpoint.c
-+++ b/sound/usb/endpoint.c
-@@ -1821,11 +1821,13 @@ static void snd_usb_handle_sync_urb(stru
+--- a/include/linux/dma/qcom_bam_dma.h
++++ b/include/linux/dma/qcom_bam_dma.h
+@@ -13,9 +13,12 @@
+  * supported by BAM DMA Engine.
+  *
+  * @cmd_and_addr - upper 8 bits command and lower 24 bits register address.
+- * @data - for write command: content to be written into peripheral register.
+- *	   for read command: dest addr to write peripheral register value.
+- * @mask - register mask.
++ * @data - For write command: content to be written into peripheral register.
++ *	   For read command: lower 32 bits of destination address.
++ * @mask - For write command: register write mask.
++ *	   For read command on BAM v1.6.0+: upper 4 bits of destination address.
++ *	   For read command on BAM < v1.6.0: ignored by hardware.
++ *	   Setting to 0 ensures 32-bit addressing compatibility.
+  * @reserved - for future usage.
+  *
+  */
+@@ -42,6 +45,10 @@ enum bam_command_type {
+  * @addr: target address
+  * @cmd: BAM command
+  * @data: actual data for write and dest addr for read in le32
++ *
++ * For BAM v1.6.0+, the mask field behavior depends on command type:
++ * - Write commands: mask = write mask (typically 0xffffffff)
++ * - Read commands: mask = upper 4 bits of destination address (0 for 32-bit)
+  */
+ static inline void
+ bam_prep_ce_le32(struct bam_cmd_element *bam_ce, u32 addr,
+@@ -50,7 +57,11 @@ bam_prep_ce_le32(struct bam_cmd_element
+ 	bam_ce->cmd_and_addr =
+ 		cpu_to_le32((addr & 0xffffff) | ((cmd & 0xff) << 24));
+ 	bam_ce->data = data;
+-	bam_ce->mask = cpu_to_le32(0xffffffff);
++	if (cmd == BAM_READ_COMMAND)
++		bam_ce->mask = cpu_to_le32(0x0); /* 32-bit addressing */
++	else
++		bam_ce->mask = cpu_to_le32(0xffffffff); /* Write mask */
++	bam_ce->reserved = 0;
+ }
  
- 		out_packet->packets = in_ctx->packets;
- 		for (i = 0; i < in_ctx->packets; i++) {
--			if (urb->iso_frame_desc[i].status == 0)
--				out_packet->packet_size[i] =
-+			if (urb->iso_frame_desc[i].status == 0) {
-+				unsigned int frames =
- 					urb->iso_frame_desc[i].actual_length / sender->stride;
--			else
-+				out_packet->packet_size[i] = min(frames, ep->maxframesize);
-+			} else {
- 				out_packet->packet_size[i] = 0;
-+			}
- 		}
- 
- 		spin_unlock_irqrestore(&ep->lock, flags);
+ /*
+@@ -60,7 +71,7 @@ bam_prep_ce_le32(struct bam_cmd_element
+  * @bam_ce: BAM command element
+  * @addr: target address
+  * @cmd: BAM command
+- * @data: actual data for write and dest addr for read
++ * @data: actual data for write and destination address for read
+  */
+ static inline void
+ bam_prep_ce(struct bam_cmd_element *bam_ce, u32 addr,
 
 
