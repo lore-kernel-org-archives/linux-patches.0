@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DBEE42900D;
-	Mon, 17 Aug 2026 14:48:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6640B418344;
+	Mon, 17 Aug 2026 14:48:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978085; cv=none; b=ReVDQ1xv7bab+0Oec4nac9qEuApdtB0OOcf+kA3Tp/qiqshI+vcDhFLem7SennYAap8+PbHuqrBcX4m/L6x50nf76foBcIsdZiLOr2jVZFVO9scCR0CPtaQKnfjRVIntzHprmP8QJMTYoqP0RN6Y7fLjrCXHPD3jg9tig/4/MT0=
+	t=1786978087; cv=none; b=mOOdtk7DdkDmBtcWtZBzO1cWvjGKOvlJJqbxSNGXoWljUr6On4vMoMblnOGsGjkJP97t29JSPR0KdZNUNfD3xpF7JcPObi29ZYq6/TYL+u8XQNl/ZeeOsgVkEZub1faFLgJd/8yGWQnl3inmD3RWWiMtbQZayoo0xKb5oJ/K1Rw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978085; c=relaxed/simple;
-	bh=P8ngLWWy5hwrXcfL0vxesv83MWS31HdbfVknq2DDu6o=;
+	s=arc-20240116; t=1786978087; c=relaxed/simple;
+	bh=0KwaqOfNghZqtAN9JIE/akhRpKGQkZTalHi3S/4EOgg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=js+vEPI+gbQYa7zX2ekIzXth479Kv2GEr0Z6u7YWxkv33eexaGe7H0iEaieITddJtZv5WTRPaXNGW5kxuG/WvVJWUYdCpo024i/MDyzbv+nkBrcvp4CmT9FmPKh9rihmuBOamYB33q/IX+UILgBWvPPE1Yj0Pd9RExOpvItUfbo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KbgYvozz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UTED8MxjX26vE6FH7wo3MX0KonY2MWx8DgmUXnCORHqw8dmAmlgQp9dPW+Vd9vt97D6RZY46QoraC9CnpQ4TLBX7igT4QIaVJXPmXtv3Zk022m4W2aoOXhpK2lBMpLRN5/La60Nbqy5FCYa/q47fDZ+clRlRvsZ97TSOCGsubjo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LYeBWxYn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KbgYvozz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A894E1F000E9;
-	Mon, 17 Aug 2026 14:48:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LYeBWxYn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E3C81F00A3A;
+	Mon, 17 Aug 2026 14:48:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978082;
-	bh=KchC/OMDJMHSIqqfvUv95mJG3ByIhBCNh6GoQH1omQM=;
+	s=korg; t=1786978085;
+	bh=KzcPSeg1TMz910JrW+BgsvPsNcmGbvcvVPuGarpX1SM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KbgYvozzifBC8im6o4B3nfoXUJVqIIC3F6a5lagqvx2nVM/IaywVJLTjGYhwrjeym
-	 yv/lV7mMSvWuNSKU0GpbB9McvzkX5MawZgFrz3lSF6iQpag0wkO6oaZncj2g9/dIit
-	 jMfKDpSV9OWtqHjan2QCamFW2/O7lkn4dUwDXlP4=
+	b=LYeBWxYnBnHyQxqrsEDMq/RGcCMMGXKtHhU8pNSGCvowupoPMTKu8309LyYN4OOa5
+	 PV8ErjC+0Jsq6Y6OlCA2JPZ0Xs7Gr8kv6QM63odTwgZcG7BywCHF2phoyGKZYDDIbU
+	 CX1gWj72AvDF1Y3LHGmFpMFdh6Dd325kBW3o01vo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Vega <vega@nebusec.ai>,
-	Zijie Huang <milkory@outlook.com>,
-	Ren Wei <enjou1224z@gmail.com>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.12 096/181] net/sched: reject overly deep qdisc hierarchies
-Date: Mon, 17 Aug 2026 15:33:10 +0200
-Message-ID: <20260817132539.234781503@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Sonali Pradhan <sonalipradhan@google.com>
+Subject: [PATCH 6.12 079/181] usb: gadget: f_ncm: Use unsigned int for ndp_index
+Date: Mon, 17 Aug 2026 15:32:53 +0200
+Message-ID: <20260817132538.552286376@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
 References: <20260817132535.394764707@linuxfoundation.org>
@@ -54,73 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijie Huang <milkory@outlook.com>
+From: Sonali Pradhan <sonalipradhan@google.com>
 
-commit dedd34b0f2310e28c5f6d4875cfbf4b7ed821c01 upstream.
+commit 6b1c8a9403a26cb0fed7a648916c74dc236da591 upstream.
 
-Deep qdisc hierarchies can lead to excessive recursion in qdisc tree
-walkers and exhaust the kernel stack. The existing loop check does not
-cover the create-and-graft path, so a hierarchy can still be extended by
-creating a new child qdisc below an already deep parent.
+The variable ndp_index is declared as a signed integer, but it stores
+the return value of get_ncm(), which is unsigned.
 
-Store the hierarchy depth in struct Qdisc and update it when qdiscs are
-grafted. Reject new child qdiscs once the parent is already at the maximum
-allowed depth.
+A malicious host can supply a large offset that overflows the signed
+ndp_index, making it negative. Because ndp_index is compared against
+unsigned bounds, this negative value bypasses sanity checks and leads
+to an out-of-bounds read when calculating the address of the NDP
+block (ntb_ptr + ndp_index).
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Suggested-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reported-by: Vega <vega@nebusec.ai>
-Assisted-by: Codex:gpt-5.4
-Signed-off-by: Zijie Huang <milkory@outlook.com>
-Signed-off-by: Ren Wei <enjou1224z@gmail.com>
-Reviewed-by: Victor Nogueira <victor@mojatatu.com>
-Link: https://patch.msgid.link/1e9ab39597423fd5d13cfaaf52279b8ee3d9fc3c.1785434373.git.milkory@outlook.com
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fix this by changing ndp_index to unsigned int to ensure consistent
+unsigned comparisons throughout the function.
+
+Fixes: 370af734dfaf ("usb: gadget: NCM: RX function support multiple NDPs")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Sonali Pradhan <sonalipradhan@google.com>
+Link: https://patch.msgid.link/20260720165654.2224591-1-sonalipradhan@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/sch_generic.h |    1 +
- net/sched/sch_api.c       |    9 +++++++++
- 2 files changed, 10 insertions(+)
+ drivers/usb/gadget/function/f_ncm.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/net/sch_generic.h
-+++ b/include/net/sch_generic.h
-@@ -101,6 +101,7 @@ struct Qdisc {
- 	struct hlist_node       hash;
- 	u32			handle;
- 	u32			parent;
-+	int			depth;
- 
- 	struct netdev_queue	*dev_queue;
- 
---- a/net/sched/sch_api.c
-+++ b/net/sched/sch_api.c
-@@ -1095,6 +1095,9 @@ static int qdisc_graft(struct net_device
- 		unsigned int i, num_q, ingress;
- 		struct netdev_queue *dev_queue;
- 
-+		if (new)
-+			new->depth = 0;
-+
- 		ingress = 0;
- 		num_q = dev->num_tx_queues;
- 		if ((q && q->flags & TCQ_F_INGRESS) ||
-@@ -1192,9 +1195,15 @@ skip:
- 			NL_SET_ERR_MSG(extack, "STAB not supported on a non root");
- 			return -EINVAL;
- 		}
-+		if (new && parent->depth >= 7) {
-+			NL_SET_ERR_MSG(extack, "Qdisc hierarchy is too deep");
-+			return -E2BIG;
-+		}
- 		err = cops->graft(parent, cl, new, &old, extack);
- 		if (err)
- 			return err;
-+		if (new)
-+			new->depth = parent->depth + 1;
- 		notify_and_destroy(net, skb, n, classid, old, new, extack);
- 	}
- 	return 0;
+--- a/drivers/usb/gadget/function/f_ncm.c
++++ b/drivers/usb/gadget/function/f_ncm.c
+@@ -1171,7 +1171,7 @@ static int ncm_unwrap_ntb(struct gether
+ 	unsigned char	*ntb_ptr = skb->data;
+ 	__le16		*tmp;
+ 	unsigned	index, index2;
+-	int		ndp_index;
++	unsigned int	ndp_index;
+ 	unsigned	dg_len, dg_len2;
+ 	unsigned	ndp_len;
+ 	unsigned	block_len;
 
 
