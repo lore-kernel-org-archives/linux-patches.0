@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EB86175A99;
-	Mon, 17 Aug 2026 14:55:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35C68175A99;
+	Mon, 17 Aug 2026 14:55:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978509; cv=none; b=JWUdwBH18WkKQPdEUNcssqLeodg2K6KoJ9WYxlgyZkBVM2dkV4qYXvx7AFa95nnwff554w9zHTbPW/3m+fdzR7hF4n0NfzxsvGCsNve11Iydd3GeSmIdHNDRKvPv4gvHkfDsb0AJu2hgBOCk6yPTI3sR2QMrzsrji16Vb2edH48=
+	t=1786978512; cv=none; b=qijKK7VsiRaTo2NIwMvl3M4B/wHy/UGfPVu1AHziTkxbwZIs373Pn5uWOENm1ph6uCWp3EyKx2g+ACnrWGfIGutVqzhYoWZXeprabuLujphqzZS84bgGnvLoz8RQKU+swtgvkZid4khsVpdwO3WlaHOXrRWQnphUfffrsgSurWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978509; c=relaxed/simple;
-	bh=VgCkmhjkQN/Rx9DZ1NOS7ggbLrAlnEVbNw7NeVS9WFQ=;
+	s=arc-20240116; t=1786978512; c=relaxed/simple;
+	bh=dgSiAcyThQvqhU25f4h8qDSScXT1IG11XDPy3jlXnW8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BXmFGwyOty+PZVdGvyrYcH1pccZ/phd9vm64Tqirasks4ECjFj7N+T5lH+IVoIq0P8s+S/jSEZy8cR/GmWtwYlt53GWoNDzrMxRv60TFx5WchLlgYuHLXC98yflYyUQ3RJ5CHYJ2azivN9cKwdY4N1uhVQINcqQ2RoZQB4B8Tj8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v0ew9be5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XC3GI8bJHaIxnE86kXQXUSyqva3IWJTzLOcqnd6tIvvgdm4xv7IVY+lIDwZ2NTeEtTmN4q0+Tvr5x5ekJa3nMYSelowqEe85MJ/f9DIVMBqFPieP1faMwYxYWZo7BIwpmSPMHxULZ9WOuccs6aULGMtpZsKwq2n0sMcLccIk1Fs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LXZG5f6N; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v0ew9be5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B67D11F000E9;
-	Mon, 17 Aug 2026 14:55:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LXZG5f6N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D5141F000E9;
+	Mon, 17 Aug 2026 14:55:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978508;
-	bh=4T+TGiHWM67TCdxbM2h5nI2J+6ZhRTLW1e4GQvsIJq0=;
+	s=korg; t=1786978511;
+	bh=SDEUShZ8pYL/VEBAnwCpNSXYwUvAVUYHNeVvlr8LvqM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v0ew9be5ECzC3Iy4CtksPyndK9me8yUgjjL8wR6+lq6g5zWPXbNSvZZ6Sjn9Sw+2g
-	 2rYIcM8Se/mfR4kKKKC5AVm13YJE/2oOLVq8wmqt6Iu9zwNGyF06QgO8qWqJiYORsJ
-	 xiTRECtMjiz/na45yB/gvzwApKDVwCq2jOMzWeww=
+	b=LXZG5f6NTf+S0BeXosJUW5RsAcrqxH3cfGbfqPpVOgbmtaNEnALnHC0ylwRXn6owI
+	 e6pBz3+QHo9YTBYjKqhy/NCY9KkwGZwvqdwiNhwQWx/CCN7bMyzfq3mI2yMcpt6Rdv
+	 5cFHL+UHl3aqeHRFPr8jcWm+kLiKqIgEKBeGuP4U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qingshuang Fu <fuqingshuang@kylinos.cn>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Mehmet Fide <mehmet.fide@screeningeagle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 061/156] hwmon: (ads7828) Fix external VREF regulator handling
-Date: Mon, 17 Aug 2026 15:33:15 +0200
-Message-ID: <20260817132536.977123035@linuxfoundation.org>
+Subject: [PATCH 6.6 062/156] net: fec: do not release NULL pages when RX buffer allocation fails
+Date: Mon, 17 Aug 2026 15:33:16 +0200
+Message-ID: <20260817132537.015599671@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132534.666299318@linuxfoundation.org>
 References: <20260817132534.666299318@linuxfoundation.org>
@@ -51,69 +50,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qingshuang Fu <fuqingshuang@kylinos.cn>
+From: Mehmet Fide <mehmet.fide@screeningeagle.com>
 
-[ Upstream commit fddb5ceaf901b050ed2a1a7deeecbf97e003435a ]
+fec_enet_alloc_rxq_buffers() leaves the loop as soon as
+page_pool_dev_alloc_pages() returns NULL and jumps to err_alloc, which
+calls fec_enet_free_buffers(). That helper walks the whole ring and
+hands every rx_skb_info[i].page to page_pool_put_full_page(), including
+the entries the allocation loop never reached. Those are still NULL,
+because the queue was allocated with kzalloc(), and
+page_pool_put_full_page() dereferences the page, so an open that runs
+out of memory oopses instead of returning -ENOMEM:
 
-The driver currently has two issues with the external VREF regulator
-handling in ads7828_probe():
+  Unable to handle kernel NULL pointer dereference at virtual address 00000014 when read
+  Internal error: Oops: 5 [#1] SMP ARM
+  CPU: 0 PID: 384 Comm: connmand Not tainted 6.18.43 #1
+  Hardware name: Freescale Vybrid VF5xx/VF6xx (Device Tree)
+  PC is at fec_enet_free_buffers+0xb0/0x2a8
+  Call trace:
+   fec_enet_free_buffers from fec_enet_open+0x1e0/0x504
+   fec_enet_open from __dev_open+0x114/0x238
+   __dev_open from __dev_change_flags+0x190/0x208
+   __dev_change_flags from netif_change_flags+0x1c/0x58
+   netif_change_flags from dev_change_flags+0x44/0x74
+   dev_change_flags from devinet_ioctl+0x3a4/0x768
 
-1. All errors from devm_regulator_get_optional() are ignored, causing the
-   driver to incorrectly fall back to internal VREF even for transient
-   errors like -EPROBE_DEFER or genuine failures like -ENOMEM.
+Seen on a Colibri VF50, 128 MiB of RAM, on the first ifup after boot.
 
-2. The external regulator is never enabled. The driver calls
-   regulator_get_voltage() without first calling regulator_enable(),
-   so the VREF pin may remain unpowered if the regulator is not
-   configured as always-on.
+Skip the entries that hold no page, and clear the ones that do after
+releasing them, so that a later failed open cannot release the same page
+a second time.
 
-Fix both issues by switching to devm_regulator_get_enable_read_voltage(),
-which handles regulator get, enable, and voltage read in one call.
-Only -ENODEV (no regulator specified in device tree) should trigger the
-fallback to internal VREF. All other errors are propagated to the caller.
+Mainline is not affected. Commit a2ae70c0efe4 ("net: fec: add
+fec_alloc_rxq_buffers_pp() to allocate buffers from page pool") replaced
+this loop with fec_free_rxq_buffers(), which skips and clears the empty
+entries. That commit is part of the XDP zero copy series and is not a
+stable candidate, so this is the equivalent minimal fix for 6.18.y.
 
-Fixes: a8ddfea09566 ("hwmon: (ads7828) Accept optional parameters from device tree")
-Signed-off-by: Qingshuang Fu <fuqingshuang@kylinos.cn>
-Link: https://lore.kernel.org/r/20260805061645.1331652-1-fffsqian@163.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 95698ff6177b ("net: fec: using page pool to manage RX buffers")
+Cc: stable@vger.kernel.org
+Signed-off-by: Mehmet Fide <mehmet.fide@screeningeagle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/ads7828.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/freescale/fec_main.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hwmon/ads7828.c b/drivers/hwmon/ads7828.c
-index 809e830f52a6b..b9ed146a24cc1 100644
---- a/drivers/hwmon/ads7828.c
-+++ b/drivers/hwmon/ads7828.c
-@@ -108,12 +108,11 @@ static int ads7828_probe(struct i2c_client *client)
- 	struct ads7828_data *data;
- 	struct device *hwmon_dev;
- 	unsigned int vref_mv = ADS7828_INT_VREF_MV;
--	unsigned int vref_uv;
-+	int vref_uv;
- 	bool diff_input = false;
- 	bool ext_vref = false;
- 	unsigned int regval;
- 	enum ads7828_chips chip;
--	struct regulator *reg;
+diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
+index 49297b83c3fdb..ec7fe943e5682 100644
+--- a/drivers/net/ethernet/freescale/fec_main.c
++++ b/drivers/net/ethernet/freescale/fec_main.c
+@@ -3322,8 +3322,15 @@ static void fec_enet_free_buffers(struct net_device *ndev)
  
- 	data = devm_kzalloc(dev, sizeof(struct ads7828_data), GFP_KERNEL);
- 	if (!data)
-@@ -127,9 +126,11 @@ static int ads7828_probe(struct i2c_client *client)
- 	} else if (dev->of_node) {
- 		diff_input = of_property_read_bool(dev->of_node,
- 						   "ti,differential-input");
--		reg = devm_regulator_get_optional(dev, "vref");
--		if (!IS_ERR(reg)) {
--			vref_uv = regulator_get_voltage(reg);
-+		vref_uv = devm_regulator_get_enable_read_voltage(dev, "vref");
-+		if (vref_uv < 0) {
-+			if (vref_uv != -ENODEV)
-+				return vref_uv;
-+		} else {
- 			vref_mv = DIV_ROUND_CLOSEST(vref_uv, 1000);
- 			if (vref_mv < ADS7828_EXT_VREF_MV_MIN ||
- 			    vref_mv > ADS7828_EXT_VREF_MV_MAX)
+ 	for (q = 0; q < fep->num_rx_queues; q++) {
+ 		rxq = fep->rx_queue[q];
+-		for (i = 0; i < rxq->bd.ring_size; i++)
+-			page_pool_put_full_page(rxq->page_pool, rxq->rx_skb_info[i].page, false);
++		for (i = 0; i < rxq->bd.ring_size; i++) {
++			struct page *page = rxq->rx_skb_info[i].page;
++
++			if (!page)
++				continue;
++
++			page_pool_put_full_page(rxq->page_pool, page, false);
++			rxq->rx_skb_info[i].page = NULL;
++		}
+ 
+ 		for (i = 0; i < XDP_STATS_TOTAL; i++)
+ 			rxq->stats[i] = 0;
 -- 
 2.53.0
 
