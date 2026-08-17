@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 927AA15FA81;
-	Mon, 17 Aug 2026 14:23:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59274175A99;
+	Mon, 17 Aug 2026 14:23:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976632; cv=none; b=VdxFYayAOlhKY1sWKC97JirwHYUuhikFtw8UAMKwfvpemLDlclpFW7uPaP8/9m/XZI7Otip+ocm719DuG0rk1bOszXJV0YVYo2nLZProCt5qCEs1I3bYmIDeJtvaA5XMsSM9VSWVlSaL9Ji1yPBXyxIty6WJqIdmE+9F30OqHGM=
+	t=1786976635; cv=none; b=IpZU3AVwH02/GXg9tTVjj/FgmNREGS9aTEh4wF7WQCGASZIN0wDlPovlWSRwBFXrmDTvgbZsw0drOXWfRKB0hIhoA1oXIN7nP6eiPt886DquBsbkBK/q7fzPE7ij45LYcfPyHTKEB5lwzTgZ30Cy14u6MoOT3UHBTwgqKJe/E20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976632; c=relaxed/simple;
-	bh=rOhQd7+yR3DILSXda0tWCON9Yu1zz/sZhF706ux3kTY=;
+	s=arc-20240116; t=1786976635; c=relaxed/simple;
+	bh=du05Q/L3GQk16tfwaB2svk/N9yWtYSCYoZcvyrNi7io=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K4Epg91ZOXQfsgAsjbuziYlo5q7yOv98CBs3d4ha5f/VOXf4GFOsvi85vmynGZs/7Ku99/I+KRSUUebkOerfG34+NcM/E1dt5LHTY/71FBNtdUiI/rSK7yhJfLK5Jbgy0zUIvDeVp9K5Bw677LmGN475ULNaPeqRaGMY90IVyLU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mzAJ+GhZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u3yBwPnU2gE2/UBINJrctMJP/fIdq43dwJJ3h1l7Z7czGuffegrV/2fcymoxVrslnU5/i0UFFDLwmyxKUf09obsUFzMoCvV3FuflL89dM+ODElgOu+6Tv9XH5WXLN3eIB2Qe9VoODYM0E4HVUeDQA6RSLb7uBDLMOblsba7louU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zy4BQSz3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mzAJ+GhZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9F4F1F000E9;
-	Mon, 17 Aug 2026 14:23:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zy4BQSz3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B71EC1F000E9;
+	Mon, 17 Aug 2026 14:23:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976631;
-	bh=Mg1J18VfjSZlsNGuXnnva36QoSxc2q7CHgU8OsMg9YM=;
+	s=korg; t=1786976634;
+	bh=2beF2A60ztJ0AfLr/y2oox16Xyq/sltvFdDRY6lqRH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mzAJ+GhZj1KkBm1FvBiEdIE6dZtn1UhdG98i++X3YhcafZXaIsNruuNomCbNxCGmg
-	 xT0EC+M+MIOGpyXyNTc03skyLyBIQmziOYR2D3YNwpPGQ7zcFGTCdy3QqpEpb/qc/6
-	 OVsjH6bGLstFnDG7Z+z/JLaQP4YAQk1WDlQXNAWc=
+	b=zy4BQSz3mutkRQCtrScBhpD1kL0D7WZsHNNdZqZt0zJRPWdkzTnnuc7ruQhs+FkK3
+	 iXkbePL89CWcx+Zdj76p7lHrd1CfUl8628uDtRFbvJCsp196xxDpg8wgmnNUb6ZNUF
+	 FFyUT/0eBxHBdaOWpcblSudcvLXwX5RRYzTZSeIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Frederic Weisbecker <frederic@kernel.org>,
 	Nicholas Piggin <npiggin@gmail.com>,
 	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 049/456] powerpc: remove the last remnants of cputime_t
-Date: Mon, 17 Aug 2026 15:27:19 +0200
-Message-ID: <20260817132541.954412101@linuxfoundation.org>
+Subject: [PATCH 5.15 050/456] sched/vtime: Get rid of generic vtime_task_switch() implementation
+Date: Mon, 17 Aug 2026 15:27:20 +0200
+Message-ID: <20260817132541.992143810@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -51,112 +54,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicholas Piggin <npiggin@gmail.com>
+From: Alexander Gordeev <agordeev@linux.ibm.com>
 
-[ Upstream commit f985adaf2ff934ec869b32ca1f7f97e2825e3a49 ]
+[ Upstream commit 89d6910cc562ab34d1f1c08f3cf0a9700b8bf2c4 ]
 
-cputime_t was a core kernel type, removed by commits
-ed5c8c854f2b..b672592f0221. As explained in commit b672592f0221
-("sched/cputime: Remove generic asm headers"), the final cleanup
-is for the arch to provide cputime_to_nsec[s](). Commit ade7667a981b
-("powerpc: Add cputime_to_nsecs()") did that, but justdidn't remove
-the then-unused cputime_to_usecs(), cputime_t type, and associated
-remnants.
+The generic vtime_task_switch() implementation gets built only
+if __ARCH_HAS_VTIME_TASK_SWITCH is not defined, but requires an
+architecture to implement arch_vtime_task_switch() callback at
+the same time, which is confusing.
 
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/20221006105653.115829-1-npiggin@gmail.com
+Further, arch_vtime_task_switch() is implemented for 32-bit PowerPC
+architecture only and vtime_task_switch() generic variant is rather
+superfluous.
+
+Simplify the whole vtime_task_switch() wiring by moving the existing
+generic implementation to PowerPC.
+
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+Acked-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://lore.kernel.org/r/2cb6e3caada93623f6d4f78ad938ac6cd0e2fda8.1712760275.git.agordeev@linux.ibm.com
 Stable-dep-of: c1c1ffa490fc ("powerpc/vtime: Initialize starttime at boot for native accounting")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/cputime.h | 17 +----------------
- arch/powerpc/kernel/time.c         | 23 ++---------------------
- 2 files changed, 3 insertions(+), 37 deletions(-)
+ arch/powerpc/include/asm/cputime.h | 13 -------------
+ arch/powerpc/kernel/time.c         | 22 ++++++++++++++++++++++
+ kernel/sched/cputime.c             | 13 -------------
+ 3 files changed, 22 insertions(+), 26 deletions(-)
 
 diff --git a/arch/powerpc/include/asm/cputime.h b/arch/powerpc/include/asm/cputime.h
-index 504f7fe6711a32..a23356c05af193 100644
+index a23356c05af193..2e5cc3abd92df5 100644
 --- a/arch/powerpc/include/asm/cputime.h
 +++ b/arch/powerpc/include/asm/cputime.h
-@@ -20,23 +20,8 @@
- #include <asm/time.h>
- #include <asm/param.h>
+@@ -31,23 +31,10 @@
+ #ifdef CONFIG_PPC64
+ #define get_accounting(tsk)	(&get_paca()->accounting)
+ #define raw_get_accounting(tsk)	(&local_paca->accounting)
+-static inline void arch_vtime_task_switch(struct task_struct *tsk) { }
  
--typedef u64 __nocast cputime_t;
--typedef u64 __nocast cputime64_t;
--
--#define cmpxchg_cputime(ptr, old, new) cmpxchg(ptr, old, new)
--
- #ifdef __KERNEL__
+ #else
+ #define get_accounting(tsk)	(&task_thread_info(tsk)->accounting)
+ #define raw_get_accounting(tsk)	get_accounting(tsk)
 -/*
-- * Convert cputime <-> microseconds
+- * Called from the context switch with interrupts disabled, to charge all
+- * accumulated times to the current process, and to prepare accounting on
+- * the next process.
 - */
--extern u64 __cputime_usec_factor;
--
--static inline unsigned long cputime_to_usecs(const cputime_t ct)
+-static inline void arch_vtime_task_switch(struct task_struct *prev)
 -{
--	return mulhdu((__force u64) ct, __cputime_usec_factor);
--}
+-	struct cpu_accounting_data *acct = get_accounting(current);
+-	struct cpu_accounting_data *acct0 = get_accounting(prev);
 -
--#define cputime_to_nsecs(cputime) tb_to_ns((__force u64)cputime)
-+#define cputime_to_nsecs(cputime) tb_to_ns(cputime)
+-	acct->starttime = acct0->starttime;
+-}
+ #endif
  
  /*
-  * PPC64 uses PACA which is task independent for storing accounting data while
 diff --git a/arch/powerpc/kernel/time.c b/arch/powerpc/kernel/time.c
-index d3f579f9880173..d0e59f427fd6f1 100644
+index d0e59f427fd6f1..65235323bee49c 100644
 --- a/arch/powerpc/kernel/time.c
 +++ b/arch/powerpc/kernel/time.c
-@@ -123,7 +123,7 @@ unsigned long tb_ticks_per_jiffy;
- unsigned long tb_ticks_per_usec = 100; /* sane default */
- EXPORT_SYMBOL(tb_ticks_per_usec);
- unsigned long tb_ticks_per_sec;
--EXPORT_SYMBOL(tb_ticks_per_sec);	/* for cputime_t conversions */
-+EXPORT_SYMBOL(tb_ticks_per_sec);	/* for cputime conversions */
- 
- DEFINE_SPINLOCK(rtc_lock);
- EXPORT_SYMBOL_GPL(rtc_lock);
-@@ -143,21 +143,6 @@ EXPORT_SYMBOL_GPL(ppc_tb_freq);
- bool tb_invalid;
- 
- #ifdef CONFIG_VIRT_CPU_ACCOUNTING_NATIVE
--/*
-- * Factor for converting from cputime_t (timebase ticks) to
-- * microseconds. This is stored as 0.64 fixed-point binary fraction.
-- */
--u64 __cputime_usec_factor;
--EXPORT_SYMBOL(__cputime_usec_factor);
--
--static void calc_cputime_factors(void)
--{
--	struct div_result res;
--
--	div128_by_32(1000000, 0, tb_ticks_per_sec, &res);
--	__cputime_usec_factor = res.result_low;
--}
--
- /*
-  * Read the SPURR on systems that have it, otherwise the PURR,
-  * or if that doesn't exist return the timebase value passed in.
-@@ -444,10 +429,7 @@ void vtime_flush(struct task_struct *tsk)
+@@ -429,6 +429,28 @@ void vtime_flush(struct task_struct *tsk)
  	acct->hardirq_time = 0;
  	acct->softirq_time = 0;
  }
--
--#else /* ! CONFIG_VIRT_CPU_ACCOUNTING_NATIVE */
--#define calc_cputime_factors()
--#endif
-+#endif /* CONFIG_VIRT_CPU_ACCOUNTING_NATIVE */
++
++/*
++ * Called from the context switch with interrupts disabled, to charge all
++ * accumulated times to the current process, and to prepare accounting on
++ * the next process.
++ */
++void vtime_task_switch(struct task_struct *prev)
++{
++	if (is_idle_task(prev))
++		vtime_account_idle(prev);
++	else
++		vtime_account_kernel(prev);
++
++	vtime_flush(prev);
++
++	if (!IS_ENABLED(CONFIG_PPC64)) {
++		struct cpu_accounting_data *acct = get_accounting(current);
++		struct cpu_accounting_data *acct0 = get_accounting(prev);
++
++		acct->starttime = acct0->starttime;
++	}
++}
+ #endif /* CONFIG_VIRT_CPU_ACCOUNTING_NATIVE */
  
  void __no_kcsan __delay(unsigned long loops)
- {
-@@ -962,7 +944,6 @@ void __init time_init(void)
- 	tb_ticks_per_jiffy = ppc_tb_freq / HZ;
- 	tb_ticks_per_sec = ppc_tb_freq;
- 	tb_ticks_per_usec = ppc_tb_freq / 1000000;
--	calc_cputime_factors();
+diff --git a/kernel/sched/cputime.c b/kernel/sched/cputime.c
+index e3022598f7b02b..d71c4817996b32 100644
+--- a/kernel/sched/cputime.c
++++ b/kernel/sched/cputime.c
+@@ -406,19 +406,6 @@ static inline void irqtime_account_process_tick(struct task_struct *p, int user_
+  */
+ #ifdef CONFIG_VIRT_CPU_ACCOUNTING_NATIVE
  
- 	/*
- 	 * Compute scale factor for sched_clock.
+-# ifndef __ARCH_HAS_VTIME_TASK_SWITCH
+-void vtime_task_switch(struct task_struct *prev)
+-{
+-	if (is_idle_task(prev))
+-		vtime_account_idle(prev);
+-	else
+-		vtime_account_kernel(prev);
+-
+-	vtime_flush(prev);
+-	arch_vtime_task_switch(prev);
+-}
+-# endif
+-
+ void vtime_account_irq(struct task_struct *tsk, unsigned int offset)
+ {
+ 	unsigned int pc = irq_count() - offset;
 -- 
 2.53.0
 
