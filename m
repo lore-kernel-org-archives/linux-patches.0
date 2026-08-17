@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6F2A2EC54A;
-	Mon, 17 Aug 2026 15:06:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89D662E8DEC;
+	Mon, 17 Aug 2026 15:06:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979163; cv=none; b=QgZFJEntXk0tv9c0isN2IUcyoqSQ+2PtTr3Umk9rdKjHrijYiRfvlugjhKEzuAvelcwh3pBoqHa9NAJQaibbiu1En8uxqJ6kKd0AkhrY1QO373qWCf7EUES8Npfx8E6OswX8n+wXI6m7OZA2ZiLMyAHr8PeT+cF8/UnODFy1ip4=
+	t=1786979165; cv=none; b=Sy1gaJfLzV9ClLmkQPIP55SRfei2V5oP2TgWdC82/0Zciee6Bv/udQntXYvwCw6mzJ0W03vfONpUxNjRUdH/BBIBvqBlVMGjZsB8xt+OCvubqCoyjbN7/yQS2WcuSdbk/firkGXfXnSEQN0nChA8paIDzX42CVc4hjxLKNQaqkY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979163; c=relaxed/simple;
-	bh=xdBzabXSb8XGPAof+T0GuOZ44nwoLRmfFZuGTSDRsSo=;
+	s=arc-20240116; t=1786979165; c=relaxed/simple;
+	bh=L+i6PjBwStRZ1Uf3uDobhMox9F1PDoKzGpT10h7/2oY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=D6TbUolNaIrtjpNkytZcQvwsiO8U+JN7bWHSW9wavNwHSiCkdhvSdlpNP8+P5zFaLb1CnExalxRq8j/kVlNAjN14DAuPbT1p0eL9KuNgNBpBsU/0aTwy4PnXxVRoZ7eB6pqnPz0RQCuieGTMPDhaSPR2ojkHiYFU7m08LLIs9Mg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eDcSR/Z4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OltIWXPtb+pzpY2DZmLx/JcuVwm1xaljnT/N5KKQvEdYv6rmi6FjFlBNfdAocjUTPeXCCkx90V+hEGJvPndsVqD0WCJxa1JqVEpypzEReaYxXNG7+PtoE1nZWQT6O27fjGv4YdUD7cQ9fCJGOaWIPMpk5+Xh+nYVNkDiHZodqk8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bSTRuX+r; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eDcSR/Z4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 076071F000E9;
-	Mon, 17 Aug 2026 15:06:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bSTRuX+r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1A9B1F00A3A;
+	Mon, 17 Aug 2026 15:06:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979161;
-	bh=XDV7kt9InS8hpcmRWDN9Ynzv6pgkTPfxsSmhtBkn60Q=;
+	s=korg; t=1786979164;
+	bh=hoWnwXRJIgzm8kxxB17akjgpxQDg2zwNLQ7N2KsN/CM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eDcSR/Z4X6HXLyzXepedkQO9BZKwG7foTphuLQIhxfHU33Ddx3MOgCzhkUCEoqvCP
-	 CKAbESg6ws5Jb7Bt186fpIBOJwLJuUwcgvYWumn+jTXUd8Je9IOxNZ/r9eSEWBZ9q0
-	 +uxeXKLPozyKR986KU5uyXTKlpjdoXsyhyCzud5w=
+	b=bSTRuX+rRt8CocvxzKZWcwPxjdBRkUb93SQR+8iP4X1cE41VD5mx2Qh3Zxoy4f4Xz
+	 DszbSGjbRv1wTjrP2CMHxCSs8gZ+8CKjtw+V0ANu8Z5EBg4As+AEkvTbPwdhjwM0Jr
+	 B4XlU6fegvIsH29ZfnQiemlimfraPugKKWBmpeMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?HE=20WEI=20 ?= <skyexpoc@gmail.com>,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Ankit Soni <Ankit.Soni@amd.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 130/609] wifi: mwifiex: bound uAP association event IEs to the event buffer
-Date: Mon, 17 Aug 2026 15:27:06 +0200
-Message-ID: <20260817132548.224288946@linuxfoundation.org>
+Subject: [PATCH 6.1 131/609] iommu/amd: Bound the early ACPI HID map
+Date: Mon, 17 Aug 2026 15:27:07 +0200
+Message-ID: <20260817132548.262619047@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -46,106 +46,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: HE WEI (ギカク) <skyexpoc@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit f0858bfc7d3cab411a447b88e3ef970e575032c9 ]
+[ Upstream commit fb80117fddb5b477218dc99bb53911b72c3847f8 ]
 
-mwifiex_process_uap_event() handles EVENT_UAP_STA_ASSOC by exposing the
-(re)association request IEs that the firmware copies into the event:
+The ivrs_acpihid command-line parser appends entries to a fixed
+four-element early_acpihid_map array. Unlike the sibling IOAPIC and HPET
+parsers, it does not reject a fifth entry before incrementing the map size.
 
-	sinfo->assoc_req_ies = &event->data[len];
-	len = (u8 *)sinfo->assoc_req_ies - (u8 *)&event->frame_control;
-	sinfo->assoc_req_ies_len = le16_to_cpu(event->len) - (u16)len;
+Check the capacity at the common found label before parsing the HID and
+UID or writing the entry.
 
-event->len is supplied by the device firmware and is never validated,
-and the subtraction is unchecked.  assoc_req_ies points into
-adapter->event_body[MAX_EVENT_SIZE], a fixed-size array embedded in the
-kmalloc()'d struct mwifiex_adapter.
-
-On the ap_11n_enabled path mwifiex_set_sta_ht_cap() walks these IEs with
-cfg80211_find_ie(), whose for_each_element() loop dereferences each
-element header.  A firmware-reported event->len larger than the bytes
-actually received makes assoc_req_ies_len describe IEs that extend past
-event_body, so the walk reads out of the adapter slab object, a
-slab-out-of-bounds read (KASAN: slab-out-of-bounds in cfg80211_find_ie).
-An event->len smaller than the header instead makes the int subtraction
-negative, which wraps to a huge size_t when stored in assoc_req_ies_len.
-The same length is handed to cfg80211_new_sta(), so a more modest
-over-claim can also copy stale event_body bytes into the
-NL80211_CMD_NEW_STATION notification.
-
-A malicious or malfunctioning mwifiex device (USB/SDIO/PCIe) can deliver
-such an event while the interface is in AP/uAP mode.
-
-Validate event->len before use: reject a length that underflows the
-header or that would place the IEs outside the event_body[] buffer the
-event was copied into.  event->len here is struct mwifiex_assoc_event.len,
-a payload field internal to this event, not the transport frame length,
-so it is validated in this handler rather than at the generic
-MWIFIEX_TYPE_EVENT receive path, which only sees the event cause and the
-transport frame length.  The bound is against event_body[MAX_EVENT_SIZE]
-rather than the actually-received length because the transports store the
-event differently (USB and SDIO leave the 4-byte event header in
-event_skb, PCIe strips it via skb_pull), whereas event_body is the single
-fixed buffer all of them copy the event into.  This is the event-path
-analogue of the receive-path bounds checks added in commit 119585281617
-("wifi: mwifiex: Fix OOB and integer underflow when rx packets").
-
-Fixes: e568634ae7ac ("mwifiex: add AP event handling framework")
-Signed-off-by: HE WEI (ギカク) <skyexpoc@gmail.com>
-Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Link: https://patch.msgid.link/20260715135711.34688-1-skyexpoc@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: ca3bf5d47cec ("iommu/amd: Introduces ivrs_acpihid kernel parameter")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Reviewed-by: Ankit Soni <Ankit.Soni@amd.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/marvell/mwifiex/uap_event.c  | 24 +++++++++++++++++--
- 1 file changed, 22 insertions(+), 2 deletions(-)
+ drivers/iommu/amd/init.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/net/wireless/marvell/mwifiex/uap_event.c b/drivers/net/wireless/marvell/mwifiex/uap_event.c
-index 58ef5020a46a73..c7383abf064f50 100644
---- a/drivers/net/wireless/marvell/mwifiex/uap_event.c
-+++ b/drivers/net/wireless/marvell/mwifiex/uap_event.c
-@@ -123,11 +123,31 @@ int mwifiex_process_uap_event(struct mwifiex_private *priv)
- 				len = ETH_ALEN;
+diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
+index 9cb53e384247e9..a0342682c01d24 100644
+--- a/drivers/iommu/amd/init.c
++++ b/drivers/iommu/amd/init.c
+@@ -3603,6 +3603,12 @@ static int __init parse_ivrs_acpihid(char *str)
+ 	return 1;
  
- 			if (len != -1) {
-+				u16 evt_len = le16_to_cpu(event->len);
+ found:
++	if (early_acpihid_map_size == EARLY_MAP_SIZE) {
++		pr_err("Early ACPI HID map overflow - ignoring ivrs_acpihid%s\n",
++		       str);
++		return 1;
++	}
 +
- 				sinfo->assoc_req_ies = &event->data[len];
- 				len = (u8 *)sinfo->assoc_req_ies -
- 				      (u8 *)&event->frame_control;
--				sinfo->assoc_req_ies_len =
--					le16_to_cpu(event->len) - (u16)len;
-+
-+				/*
-+				 * event->len is reported by the device firmware
-+				 * and is not otherwise validated.  Reject a
-+				 * length that underflows the header, or that
-+				 * would place the association request IEs
-+				 * outside the fixed-size event_body[] buffer the
-+				 * event was copied into; otherwise the IE walk
-+				 * in mwifiex_set_sta_ht_cap() reads past
-+				 * event_body and out of the adapter slab object.
-+				 */
-+				if (evt_len < len ||
-+				    (u8 *)&event->frame_control + evt_len >
-+				    adapter->event_body + MAX_EVENT_SIZE) {
-+					mwifiex_dbg(adapter, ERROR,
-+						    "invalid STA assoc event length\n");
-+					kfree(sinfo);
-+					return -1;
-+				}
-+				sinfo->assoc_req_ies_len = evt_len - (u16)len;
- 			}
- 		}
- 		cfg80211_new_sta(priv->netdev, event->sta_addr, sinfo,
+ 	p = acpiid;
+ 	hid = strsep(&p, ":");
+ 	uid = p;
 -- 
 2.53.0
 
