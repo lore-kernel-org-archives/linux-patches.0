@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 195953DAABE;
-	Mon, 17 Aug 2026 14:28:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE4D7175A99;
+	Mon, 17 Aug 2026 14:28:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976901; cv=none; b=Z4rxlgDi7Kau2REtn4QjnXpnt0OtCXVFz9CFYVMpZJ5koD4p91xtTZq6TIoqvw1kx8/Nz6oRc8nYHD3xfOxrNIpHv1Iw5esugEbLs/YtH1golCK0sII3zA30eC4fNP2qQIROdRLwBHW0OBrrM3hP9fhbLCVyYDeS1UAmD3zDCZU=
+	t=1786976903; cv=none; b=Ioeq15eHTI+/2D2JiZrfx4aJX2OBp+uBblZYS/r2BSO6IwGZOfcEmfV8DNvd3l+wWSDn45nVJdDwc/RMTTx1OyfYIHZ6cyvxElGnGCT3rW5ZAm2ZRoLVGhAgGREkPelRdD8S9/lbZDo5rYdAlPTqjXFJq5ZWpoe94qPPp1tQ0Hw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976901; c=relaxed/simple;
-	bh=48mz/54R4HJsoAHFycHgykSNJawD31WTSay9V119wQM=;
+	s=arc-20240116; t=1786976903; c=relaxed/simple;
+	bh=oZrayCEJofRt+quVBj3pz+VlqmAuMb8KTbJGdcAw1u0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WDgHqvCuwoCCnIIWuQsjNga3uK3LB3hRz/4ISEYPQnKDiewwYG6NWEa/Dy0j+97tYRzOrk3Or7cBeQL2vWk6jwcxAwaUzHP380emGJ+ZN1GXUZCepgzc2KwUhIYSmauUatRSQkKaC8fqxxTpqLByMg50bQiPlo2LlVBD4uSxwkw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aWxnCNI5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=n/eDGbWKBBJX2whmAJ7D+Dc5tIwhPazFAM7q7jyt4fnx5Bra7saP5KRDjKgg7CjY6RP7Z/Mif/8PUt+VrcX8B30rJERhotPJ9od8K+PHny2F5yGzqXInZnOw2WUsszeFUUrCv4qALc3c27XexfC+jk3RmDtu0vjhnfyepe1MRaE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ff71ywIy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aWxnCNI5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36B491F000E9;
-	Mon, 17 Aug 2026 14:28:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ff71ywIy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1341F1F000E9;
+	Mon, 17 Aug 2026 14:28:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976899;
-	bh=8RR7Go2tSmBlyckKstAI2Qt1tJXdFLfJ5HYfNdpZ96k=;
+	s=korg; t=1786976902;
+	bh=MjzLVXdpOEUnX4jNJek2/Bq6T9cANYE4MXx+wwfVidw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aWxnCNI5pQhOrQjZ26sTP4OzrHpEzEgDz9TYlfcMe9eUyoqqeh/qFcOX5z3uoRrBp
-	 YUCnfCnJ9te1474WuEZAYZ3/dDObaiEYFrnqyH8vjpfQtLxE2cYR7OpjbCktUvcKHb
-	 d1dcZCraC0mWz5Wwsb3P8GXzSsOqAILRSlDJapOg=
+	b=Ff71ywIyZ1hMroZ/Ckv2ddpbQudMJnlWWMXwDQGxcfxIuFnr3rWXg8QSN+iOhM25Q
+	 z4WdC+83A0H5Ddn0bCuNnTQIYBa0MFNrwNx6vSySDsUfWjI+2qFvuOV5V6n/AhM1S2
+	 zDm6roGcfmNQlGzG2Mf8EsKSvCHPGoe/JUeMDZQA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	=?UTF-8?q?HE=20WEI=20 ?= <skyexpoc@gmail.com>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 104/456] wan: wanxl: Only reset hardware after BAR mapping
-Date: Mon, 17 Aug 2026 15:28:14 +0200
-Message-ID: <20260817132544.159859229@linuxfoundation.org>
+Subject: [PATCH 5.15 105/456] wifi: mwifiex: bound uAP association event IEs to the event buffer
+Date: Mon, 17 Aug 2026 15:28:15 +0200
+Message-ID: <20260817132544.200988752@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -45,55 +46,106 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: HE WEI (ギカク) <skyexpoc@gmail.com>
 
-[ Upstream commit 91957b89da995607cb654b1f9a3c126ddbaee10f ]
+[ Upstream commit f0858bfc7d3cab411a447b88e3ef970e575032c9 ]
 
-wanxl_pci_init_one() stores the freshly allocated card in driver data
-before the PLX BAR is mapped.  Several early probe failures then unwind
-through wanxl_pci_remove_one(), including failure to allocate the coherent
-status area or to restore the DMA mask.
+mwifiex_process_uap_event() handles EVENT_UAP_STA_ASSOC by exposing the
+(re)association request IEs that the firmware copies into the event:
 
-wanxl_pci_remove_one() unconditionally calls wanxl_reset(), and
-wanxl_reset() dereferences card->plx.  On those early failures card->plx
-is still NULL, so the error path can dereference a NULL MMIO pointer.
+	sinfo->assoc_req_ies = &event->data[len];
+	len = (u8 *)sinfo->assoc_req_ies - (u8 *)&event->frame_control;
+	sinfo->assoc_req_ies_len = le16_to_cpu(event->len) - (u16)len;
 
-Only issue the hardware reset once the BAR mapping exists.  The remaining
-cleanup in wanxl_pci_remove_one() already checks whether later resources
-were allocated.
+event->len is supplied by the device firmware and is never validated,
+and the subtraction is unchecked.  assoc_req_ies points into
+adapter->event_body[MAX_EVENT_SIZE], a fixed-size array embedded in the
+kmalloc()'d struct mwifiex_adapter.
 
-This issue was found by a static analysis checker and confirmed by
-manual source review.
+On the ap_11n_enabled path mwifiex_set_sta_ht_cap() walks these IEs with
+cfg80211_find_ie(), whose for_each_element() loop dereferences each
+element header.  A firmware-reported event->len larger than the bytes
+actually received makes assoc_req_ies_len describe IEs that extend past
+event_body, so the walk reads out of the adapter slab object, a
+slab-out-of-bounds read (KASAN: slab-out-of-bounds in cfg80211_find_ie).
+An event->len smaller than the header instead makes the int subtraction
+negative, which wraps to a huge size_t when stored in assoc_req_ies_len.
+The same length is handed to cfg80211_new_sta(), so a more modest
+over-claim can also copy stale event_body bytes into the
+NL80211_CMD_NEW_STATION notification.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Link: https://patch.msgid.link/20260708143415.3169358-1-ruoyuw560@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+A malicious or malfunctioning mwifiex device (USB/SDIO/PCIe) can deliver
+such an event while the interface is in AP/uAP mode.
+
+Validate event->len before use: reject a length that underflows the
+header or that would place the IEs outside the event_body[] buffer the
+event was copied into.  event->len here is struct mwifiex_assoc_event.len,
+a payload field internal to this event, not the transport frame length,
+so it is validated in this handler rather than at the generic
+MWIFIEX_TYPE_EVENT receive path, which only sees the event cause and the
+transport frame length.  The bound is against event_body[MAX_EVENT_SIZE]
+rather than the actually-received length because the transports store the
+event differently (USB and SDIO leave the 4-byte event header in
+event_skb, PCIe strips it via skb_pull), whereas event_body is the single
+fixed buffer all of them copy the event into.  This is the event-path
+analogue of the receive-path bounds checks added in commit 119585281617
+("wifi: mwifiex: Fix OOB and integer underflow when rx packets").
+
+Fixes: e568634ae7ac ("mwifiex: add AP event handling framework")
+Signed-off-by: HE WEI (ギカク) <skyexpoc@gmail.com>
+Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Link: https://patch.msgid.link/20260715135711.34688-1-skyexpoc@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wan/wanxl.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ .../net/wireless/marvell/mwifiex/uap_event.c  | 24 +++++++++++++++++--
+ 1 file changed, 22 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wan/wanxl.c b/drivers/net/wan/wanxl.c
-index 5a9e262188efe1..c38dd741401e13 100644
---- a/drivers/net/wan/wanxl.c
-+++ b/drivers/net/wan/wanxl.c
-@@ -514,7 +514,8 @@ static void wanxl_pci_remove_one(struct pci_dev *pdev)
- 	if (card->irq)
- 		free_irq(card->irq, card);
+diff --git a/drivers/net/wireless/marvell/mwifiex/uap_event.c b/drivers/net/wireless/marvell/mwifiex/uap_event.c
+index 9121447e270184..eebfc0eaf9056f 100644
+--- a/drivers/net/wireless/marvell/mwifiex/uap_event.c
++++ b/drivers/net/wireless/marvell/mwifiex/uap_event.c
+@@ -135,11 +135,31 @@ int mwifiex_process_uap_event(struct mwifiex_private *priv)
+ 				len = ETH_ALEN;
  
--	wanxl_reset(card);
-+	if (card->plx)
-+		wanxl_reset(card);
- 
- 	for (i = 0; i < RX_QUEUE_LENGTH; i++)
- 		if (card->rx_skbs[i]) {
+ 			if (len != -1) {
++				u16 evt_len = le16_to_cpu(event->len);
++
+ 				sinfo->assoc_req_ies = &event->data[len];
+ 				len = (u8 *)sinfo->assoc_req_ies -
+ 				      (u8 *)&event->frame_control;
+-				sinfo->assoc_req_ies_len =
+-					le16_to_cpu(event->len) - (u16)len;
++
++				/*
++				 * event->len is reported by the device firmware
++				 * and is not otherwise validated.  Reject a
++				 * length that underflows the header, or that
++				 * would place the association request IEs
++				 * outside the fixed-size event_body[] buffer the
++				 * event was copied into; otherwise the IE walk
++				 * in mwifiex_set_sta_ht_cap() reads past
++				 * event_body and out of the adapter slab object.
++				 */
++				if (evt_len < len ||
++				    (u8 *)&event->frame_control + evt_len >
++				    adapter->event_body + MAX_EVENT_SIZE) {
++					mwifiex_dbg(adapter, ERROR,
++						    "invalid STA assoc event length\n");
++					kfree(sinfo);
++					return -1;
++				}
++				sinfo->assoc_req_ies_len = evt_len - (u16)len;
+ 			}
+ 		}
+ 		cfg80211_new_sta(priv->netdev, event->sta_addr, sinfo,
 -- 
 2.53.0
 
