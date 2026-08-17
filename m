@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ADDA43BDCD;
-	Mon, 17 Aug 2026 14:34:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A40C943CE52;
+	Mon, 17 Aug 2026 14:34:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977276; cv=none; b=seJBeCBQ2jAx+74slplchsqT/iiu0kaoCMy48uub9OYkRiyrwRk+sl0oL8w4whqjPDpRhUiKjAhCIn8aErOCyWkbLY1GG/G/oSQp9bhAvQWArB/ZysgM6SJ15Wb9lLvEDJGfaY/YIblqXEW1pNoNnYl58Jzh6E4ZLkhNGSmVWtE=
+	t=1786977278; cv=none; b=etkjK0BXI+9cEoKMN24N8FT6KEExMix9evwF+tYpbV8R4tL6EEBRzJ7uHb/rRQaJxMDA0ARaXbE1X77iAHITYJ+POmllbgQq9Vyh7flyJoLv9AMQ9qUJ4Fnk7CCDSh4tctJr1yUD9ffjC5DWleHf5iA9bSw1GXkwJoz42EhhV5A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977276; c=relaxed/simple;
-	bh=HwTWyE8drbHheIbvo6xAjgExgtfhOkrQKYI79YHhQVI=;
+	s=arc-20240116; t=1786977278; c=relaxed/simple;
+	bh=rY8vKtVxDEcYju60Aha/85eKtBnYVzq/SrHmN72DSY8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e5MmTipq7FhdTTi9gfVw+a9f8oTdX3lbz/YmUQnlgu/rW4g3OaxpTI1rxfI5Te4X+mnd7kqUTtyiokvAR9Krku2y7xIXNnV3D3i3IZhQnVSEZEkM5TKwsy7M4dlncPYSjs+eFwatrPFv2C6cyj3X9CWAg6cWmH/cxz69KVlpBzU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I6iuy4vc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=elw/JZa3XQPw3d8REKgV+Pb7SQDWR3hu1pZoWmNjbP+1vzVCK5a6wUQI5dU2auCEG1+vXjmR+FrzPwEAoiNZxgqE5r+wdlsv4pHqLr3SD8pmHoVL6XtZtyz00Qy+8xOEMH5oyNpNCDKYYrYgpw+26UsLWm74ya2BgeDlMMo4Gzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZxgUoM44; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I6iuy4vc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F87C1F000E9;
-	Mon, 17 Aug 2026 14:34:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZxgUoM44"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09B701F000E9;
+	Mon, 17 Aug 2026 14:34:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977274;
-	bh=KPGUSt3SePQ7gE9V7vEUHTjNbq0nJQR7XmzQ+zv1iDE=;
+	s=korg; t=1786977277;
+	bh=D5uFs8f5QctM4suQ4XcsC9wFDF/b++20sx+VqWynYrk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I6iuy4vcguhf1aUbqwrdaGKTCVeesTxxTJFTuiiPUG9VzYInMDiF3rO2yyP9q8pFJ
-	 yr4NeR0X5CsmwSkpJVPT2nGkcDu8ZPbJgmDoGmHo29xusZfN4EoE+bm3kppO50GYhB
-	 zTfnPRD0QBlbwAfXHsBVe/pDpcFkxWEI6w/0wa8w=
+	b=ZxgUoM44guEZ3fJ1tONsuNnIxeL8hbT2CB1aiyVyXXVKjS1DY0Ns9hgku9smUnkm5
+	 yUx6BNZGOGtRy7q8aFruuOWfnb2FsqXoHVBwYWz7EtpfzqdWfQ3Mi4Rv9f/0ZJ0Fzz
+	 IsCf6eg651kG/WSVJ2R34SIrU2cGEfaRL1T9M7Z4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Sperbeck <jsperbeck@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 235/456] raw: fix a typo in raw_icmp_error()
-Date: Mon, 17 Aug 2026 15:30:25 +0200
-Message-ID: <20260817132549.286738984@linuxfoundation.org>
+	Vitaly Prosyak <vitaly.prosyak@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.15 226/456] drm/amdgpu/gfx10: replace BUG_ON() with WARN_ON()
+Date: Mon, 17 Aug 2026 15:30:16 +0200
+Message-ID: <20260817132548.983508865@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -51,36 +50,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit 97a4d46b1516250d640c1ae0c9e7129d160d6a1c upstream.
+commit d06c4173a7c38c7a39e98859f839ce714c7af2c9 upstream.
 
-I accidentally broke IPv4 traceroute, by swapping iph->saddr
-and iph->daddr.
+There's no need to crash the kernel for these cases.
 
-Probably because raw_icmp_error() and raw_v4_input()
-use different order for iph->saddr and iph->daddr.
-
-Fixes: ba44f8182ec2 ("raw: use more conventional iterators")
-Reported-by: John Sperbeck <jsperbeck@google.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20220623193540.2851799-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit ac6f00beb658239bced4aaed9efbb04a35348d48)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/raw.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c |   13 +++++--------
+ 1 file changed, 5 insertions(+), 8 deletions(-)
 
---- a/net/ipv4/raw.c
-+++ b/net/ipv4/raw.c
-@@ -279,7 +279,7 @@ void raw_icmp_error(struct sk_buff *skb,
- 	sk_for_each(sk, head) {
- 		iph = (const struct iphdr *)skb->data;
- 		if (!raw_v4_match(net, sk, iph->protocol,
--				  iph->saddr, iph->daddr, dif, sdif))
-+				  iph->daddr, iph->saddr, dif, sdif))
- 			continue;
- 		raw_err(sk, skb, info);
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c
+@@ -3854,7 +3854,7 @@ static void gfx_v10_0_wait_reg_mem(struc
+ 			   WAIT_REG_MEM_ENGINE(eng_sel)));
+ 
+ 	if (mem_space)
+-		BUG_ON(addr0 & 0x3); /* Dword align */
++		WARN_ON(addr0 & 0x3); /* Dword align */
+ 	amdgpu_ring_write(ring, addr0);
+ 	amdgpu_ring_write(ring, addr1);
+ 	amdgpu_ring_write(ring, ref);
+@@ -8629,7 +8629,7 @@ static void gfx_v10_0_ring_emit_ib_gfx(s
  	}
+ 
+ 	amdgpu_ring_write(ring, header);
+-	BUG_ON(ib->gpu_addr & 0x3); /* Dword align */
++	WARN_ON(ib->gpu_addr & 0x3); /* Dword align */
+ 	amdgpu_ring_write(ring,
+ #ifdef __BIG_ENDIAN
+ 		(2 << 0) |
+@@ -8664,7 +8664,7 @@ static void gfx_v10_0_ring_emit_ib_compu
+ 	}
+ 
+ 	amdgpu_ring_write(ring, PACKET3(PACKET3_INDIRECT_BUFFER, 2));
+-	BUG_ON(ib->gpu_addr & 0x3); /* Dword align */
++	WARN_ON(ib->gpu_addr & 0x3); /* Dword align */
+ 	amdgpu_ring_write(ring,
+ #ifdef __BIG_ENDIAN
+ 				(2 << 0) |
+@@ -8697,9 +8697,9 @@ static void gfx_v10_0_ring_emit_fence(st
+ 	 * aligned if only send 32bit data low (discard data high)
+ 	 */
+ 	if (write64bit)
+-		BUG_ON(addr & 0x7);
++		WARN_ON(addr & 0x7);
+ 	else
+-		BUG_ON(addr & 0x3);
++		WARN_ON(addr & 0x3);
+ 	amdgpu_ring_write(ring, lower_32_bits(addr));
+ 	amdgpu_ring_write(ring, upper_32_bits(addr));
+ 	amdgpu_ring_write(ring, lower_32_bits(seq));
+@@ -8735,9 +8735,6 @@ static void gfx_v10_0_ring_emit_fence_ki
+ {
+ 	struct amdgpu_device *adev = ring->adev;
+ 
+-	/* we only allocate 32bit for each seq wb address */
+-	BUG_ON(flags & AMDGPU_FENCE_FLAG_64BIT);
+-
+ 	/* write fence seq to the "addr" */
+ 	amdgpu_ring_write(ring, PACKET3(PACKET3_WRITE_DATA, 3));
+ 	amdgpu_ring_write(ring, (WRITE_DATA_ENGINE_SEL(0) |
 
 
