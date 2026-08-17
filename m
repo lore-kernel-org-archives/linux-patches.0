@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE05143BDDE;
-	Mon, 17 Aug 2026 13:41:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5890F439F6F;
+	Mon, 17 Aug 2026 13:41:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974092; cv=none; b=OrTmhhbol8+gSoN3+5VEbvOqvV60f/rQQ8+xEtuoO2vE9UIP0G1OssrD2h9SVCTD+1bsPHDKpzeieEdOZfNGsvPdceCL1aCXd/WtuigNgWvALqeTW5O8dxerTU7NZlk4AnLEJWXBy3qcvZIu2F4jYLqTWD/4yeaBJ9TdepItTTA=
+	t=1786974095; cv=none; b=Dvtg9B+DIH2UtCCfbCLZpOqwoI1PCNusuH59DdCFU7GYQXcXcUUVVwjYWeyEmGoyNZUJBr0GIdlFsgjPbUWIYPSB63co3GKHMUs6hQ8cUSCyHgdzAZMCqI8Pctjd30ULAx3GJtg0ZfA7ontAWQ0o26TAoP3rL3k/ivuqBjfsJwE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974092; c=relaxed/simple;
-	bh=9u+YxI6IhWEfX2gs2B28wanzPAcSiLadOmMXmR27TkY=;
+	s=arc-20240116; t=1786974095; c=relaxed/simple;
+	bh=T/GfSnULoswIn7+moinlXW1fLdVMTEnqpGvx4KXFsuE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oUx3auWQ7nXBbWOs3f1bGkvjFwO7QYHo/Z11mKWqkFubcgbVG/PvFqlXBjLtbrU0Q7lrIxNm0LQTSX10lLAXvLCIdrbXPcyhZXmpQ23iAuWJXlt3fnu2voreBU/CRTjk+XHuhjsnOgfFaDDReJnpcCoHmro7/7EidJjOOjsVzoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AbV01nXC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MA8G2JC3YGzDuiy6EiDgBhDoHwSxGrh5pxjGRmKZqNF+GAmv6VRk4pkkHg2OJJ2kzVKCCooXIruvIW/f4tDbN/OXbQj36MteyfXLgj4YBDR+V6EybzcCBhOwsKrKjsEbIDNGrG64fFjC8JSDJzs9bpqQQmX6QGIqMbxSOcLxFrg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1I/GkVod; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AbV01nXC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 923701F000E9;
-	Mon, 17 Aug 2026 13:41:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1I/GkVod"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76A231F00A3A;
+	Mon, 17 Aug 2026 13:41:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974089;
-	bh=Pb/tPN+gXMLhqTBVmP4oIXpdPdPqm88mXHrwYMd25TE=;
+	s=korg; t=1786974092;
+	bh=h8dVp2D8s60wRdnm+Fy1p39LFXm8of/ZRFmD2xe+JuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AbV01nXCavsxsQeKcoBwtt2Q+tzVO5nGmvhVjOwCnXl8sD2J+6QbKD82z5t+J20qi
-	 PwZc/kNB0yal7LBfXIEO3aGm/745clRLdcVe30lAnwDlwrMN9npNckv1p+O1fGlv1j
-	 HvTDaYd7xWWtjDpXX8IFuT8VZ8wleqwBtB+3VDas=
+	b=1I/GkVodc98EIlKNS36VisWZwaYKrUsWjwkExxmi3fVnRvwul5fZU4x39g6VHSnei
+	 OPz9X3kUARrzN4l6R+edmbOLP6+avGItuRLNljRITYqcaEKoN1CW7Xly/z47IVZFyk
+	 AWM+gU/+BUuriLF8lmuC6XCyrF9kqL0HEkn6xM3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julian Anastasov <ja@ssi.bg>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Jijie Shao <shaojijie@huawei.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 045/271] ipvs: return the csum validation for forward hook
-Date: Mon, 17 Aug 2026 15:29:30 +0200
-Message-ID: <20260817132538.586413033@linuxfoundation.org>
+Subject: [PATCH 7.1 036/271] net: hns3: fix speed configuration residue after driver reload
+Date: Mon, 17 Aug 2026 15:29:21 +0200
+Message-ID: <20260817132538.231565258@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -51,98 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Julian Anastasov <ja@ssi.bg>
+From: Jijie Shao <shaojijie@huawei.com>
 
-[ Upstream commit 99609cb0aa789c8d071050ce8579989551882cc6 ]
+[ Upstream commit 3860d8748af315bfee6fe669fddc1fc17d3214db ]
 
-Sashiko notes that playing games with the skb dst and rt
-flags instead of providing hooknum is not a good idea
-when validating the checksums.
+After setting a 100G optical port to 40G via ethtool and reloading
+the driver, the port remains at 40G instead of reverting to the
+firmware default speed of 100G.
 
-Also, skipping checksum validation for FORWARD packets
-risk silent data corruption, even if the only user is
-the FTP-CMD packets coming from the real server.
+The commit referenced in Fixes: added two overwrites in
+hclge_init_ae_dev() for non-copper media, so that optical ports
+connected to forced-mode remotes inherit the firmware-preset
+autoneg and speed instead of the hardcoded defaults:
 
-Sashiko also noticed that by using common checksum
-helper in the previous commit we actually fixed old bug
-where the TCP/UDP checksum for IPv6 on CHECKSUM_COMPLETE
-was not validated correctly.
+  req_autoneg = mac.autoneg
+  req_speed   = mac.speed         (when autoneg disabled)
 
-Fixes: e876b75b9020 ("ipvs: fix the checksum validations")
-Link: https://sashiko.dev/#/patchset/20260722211420.153933-1-pablo%40netfilter.org
-Link: https://sashiko.dev/#/patchset/20260727185024.67534-1-ja%40ssi.bg
-Link: https://sashiko.dev/#/patchset/20260728202520.59179-1-ja%40ssi.bg
-Signed-off-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+The autoneg overwrite keeps existing behavior:
+hclge_set_autoneg_speed_dup() already uses mac.autoneg (not
+req_autoneg) since it was introduced, so autoneg inheritance from
+firmware was already in place. This part is kept.
+
+The speed overwrite, however, introduces the residue: mac.speed
+reflects whatever was last programmed into the MAC, and after unload
+firmware does not restore the MAC speed to the flash default. So if
+the user changed speed via ethtool in a prior load, mac.speed still
+carries that value on reload and req_speed inherits it.
+
+Fix by dropping the req_speed overwrite only. req_speed keeps the
+firmware default value set in hclge_configure() (cfg.default_speed),
+so a reload reverts the speed to default, matching the expectation
+that a driver reload resets link configuration.
+
+Trade-off: on optical ports whose firmware default speed does not
+match a forced-mode remote, reload now drops the link and the user
+must re-apply ethtool configuration. This is acceptable: a driver
+reload is expected to reset link configuration, not to inherit
+runtime state from before unload. The autoneg inheritance is left
+in place as established behavior; changing it is out of scope for
+this patch and would itself be a user-perceivable behavior change.
+
+Fixes: d9d349c4e8a0 ("net: hns3: differentiate autoneg default values between copper and fiber")
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260724093036.426631-1-shaojijie@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/ip_vs.h                   | 19 +++++--------------
- net/netfilter/ipvs/ip_vs_proto_sctp.c |  2 +-
- 2 files changed, 6 insertions(+), 15 deletions(-)
+ drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/include/net/ip_vs.h b/include/net/ip_vs.h
-index ebd88f58afe16..ac82e6af55ec6 100644
---- a/include/net/ip_vs.h
-+++ b/include/net/ip_vs.h
-@@ -25,9 +25,7 @@
- #include <linux/netfilter.h>		/* for union nf_inet_addr */
- #include <linux/ip.h>
- #include <linux/ipv6.h>			/* for struct ipv6hdr */
--#include <net/route.h>
- #include <net/ipv6.h>
--#include <net/ip6_fib.h>
- #if IS_ENABLED(CONFIG_NF_CONNTRACK)
- #include <net/netfilter/nf_conntrack.h>
- #endif
-@@ -2073,30 +2071,23 @@ static inline __wsum ip_vs_check_diff2(__be16 old, __be16 new, __wsum oldsum)
- 	return csum_partial(diff, sizeof(diff), oldsum);
- }
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+index 2a6e4d17452c4..13c20a8ca3b0f 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+@@ -11926,12 +11926,8 @@ static int hclge_init_ae_dev(struct hnae3_ae_dev *ae_dev)
+ 	if (ret)
+ 		goto err_ptp_uninit;
  
--static inline bool ip_vs_checksum_needed(struct sk_buff *skb, int af)
-+static inline bool ip_vs_checksum_needed(struct sk_buff *skb)
- {
- 	/* Checksum unnecessary or already validated? */
- 	if (skb_csum_unnecessary(skb))
- 		return false;
--	/* LOCAL_OUT ? */
--	if (!skb->dev || skb->dev->flags & IFF_LOOPBACK)
-+	/* Locally generated ? */
-+	if (!skb->dev)
- 		return false;
--	/* !LOCAL_IN (FORWARD) ? */
--	if (af == AF_INET6) {
--		if (!(dst_rt6_info(skb_dst(skb))->rt6i_flags & RTF_LOCAL))
--			return false;
--	} else {
--		if (!(skb_rtable(skb)->rt_flags & RTCF_LOCAL))
--			return false;
+-	if (hdev->hw.mac.media_type != HNAE3_MEDIA_TYPE_COPPER) {
++	if (hdev->hw.mac.media_type != HNAE3_MEDIA_TYPE_COPPER)
+ 		hdev->hw.mac.req_autoneg = hdev->hw.mac.autoneg;
+-		if (hdev->hw.mac.autoneg == AUTONEG_DISABLE &&
+-		    hdev->hw.mac.speed != SPEED_UNKNOWN)
+-			hdev->hw.mac.req_speed = hdev->hw.mac.speed;
 -	}
- 	return true;
- }
  
- static inline bool ip_vs_checksum_common_check(struct sk_buff *skb,
- 					       int offset, int proto, int af)
- {
--	if (!ip_vs_checksum_needed(skb, af))
-+	if (!ip_vs_checksum_needed(skb))
- 		return true;
-+	/* Validate csum even for FORWARD */
- 	return !nf_checksum(skb, NF_INET_LOCAL_IN, offset, proto, af);
- }
- 
-diff --git a/net/netfilter/ipvs/ip_vs_proto_sctp.c b/net/netfilter/ipvs/ip_vs_proto_sctp.c
-index 3dbd3096e1637..c80567c73469b 100644
---- a/net/netfilter/ipvs/ip_vs_proto_sctp.c
-+++ b/net/netfilter/ipvs/ip_vs_proto_sctp.c
-@@ -193,7 +193,7 @@ sctp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp,
- 	struct sctphdr *sh;
- 	__le32 cmp, val;
- 
--	if (!ip_vs_checksum_needed(skb, af))
-+	if (!ip_vs_checksum_needed(skb))
- 		return 1;
- 	sh = (struct sctphdr *)(skb->data + sctphoff);
- 	cmp = sh->checksum;
+ 	ret = hclge_set_autoneg_speed_dup(hdev);
+ 	if (ret) {
 -- 
 2.53.0
 
