@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 064F23B995E;
-	Mon, 17 Aug 2026 15:14:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E163C3B995E;
+	Mon, 17 Aug 2026 15:14:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979698; cv=none; b=ld79JaxZMUxQG8iqudFJdmIHxAsYj9y5Q7SihRqgI9cJkY8ZAYG4dpyEgk9BqB+h6slZJPmomMoYUhnG9D1CGatYQdK6KTueBFF+6MmMHW45G2Dpmt60PTuib7I2uWshqUqCrXWnr3oPhz5p+5ntJHYanpE4c+OqsWLdegNag2c=
+	t=1786979701; cv=none; b=XRQHC6MZSSC3EPwvrODO1aCydkD0Bvpoc6d2Xez0JRU7wJeEGZpaE/4eXLWwvRzGmY8P04IzrphrqSzGzL4BiilktL538zSr+32e3xW2XleC0RaAmItn/25EIo0NosHN0WaMfZD5lgresGLuOJ6AlcDXCDOGqcyH3n7FicDZP08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979698; c=relaxed/simple;
-	bh=JW5ckiHZ6/0naZRQpNUnrwXrE+MwdfKJSTpcg2cR3cc=;
+	s=arc-20240116; t=1786979701; c=relaxed/simple;
+	bh=XQVngtrWnOeK0u9ubd/kkkHyqgSMhtPWko56AfkdIHE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oLofRAnyto0QGz5jdR5Y7FkP30DzfkyHtXtE42GfCnmwGnEFaSyEhqwqToo4t8DZz+lGSLuSDd0WvFFxXgv3/TOOHIja00YMOvDEt/p5J3hMVgiRKUqlfb7JLhFKMwAn4cOII4tUh5lhPMHfxmcHWsVm4qfiMxka6Z0s3Ocb94Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0dhwleyX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rMTpWl+XEg0paKDLxw+dC+hQb4mV4T180s84F6RIdXBcATiCMeXxZJgRZTqJG8EyWy523eB7IQmwOXNBQYuehS0/jzqMicwEQBy7uuBuGR+HkkA0ahkV+JjJMH52ErhNcqjf7iKprkUo7sB6yh1ZTfl/rAhbBiLfTbCZeAjHxsk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X9mhilH9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0dhwleyX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 603BA1F000E9;
-	Mon, 17 Aug 2026 15:14:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X9mhilH9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44C591F000E9;
+	Mon, 17 Aug 2026 15:14:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979696;
-	bh=RhdSFTZo8lKNv+TSEHzKtbV9QuzDMRMQ+4Pj4FTR90c=;
+	s=korg; t=1786979699;
+	bh=t2w2d89HgnmlqvU9xud6mT7STB6ICA18nHaFnSbElpc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0dhwleyXsVkGHUcCuEP1jVsolNTQsISRGHxz3pGKT5nTV3ot586n9TKavagJE3oIS
-	 oj4FGtvnLGuhyk0fH3Fqb3F7+skk0bmMMlpf8Y4zmtWw9BrhhZXhgQbltobgjiDZvB
-	 yilC66q0BLYB1r0JSqN1I2avLx0CKlGhRSnQN2Pk=
+	b=X9mhilH9Sx83N+1HNN+cQ6JRUoTTlQymXke9+WO+6ssyubKYrVmVC/7tin09SbDkH
+	 RRWETAY/S+zALFy4GFZAUCy0Ub5KNKOv06OW0ihtyaSaJUaRLh553hnyncGBsdmxEV
+	 8aMpxK8NNUc319j9VJYZhFVYiEhsLcLjJ/e/yU7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitaly Prosyak <vitaly.prosyak@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 279/609] drm/amdgpu/gfx10: replace BUG_ON() with WARN_ON()
-Date: Mon, 17 Aug 2026 15:29:35 +0200
-Message-ID: <20260817132553.494900016@linuxfoundation.org>
+	Uday Khare <udaykhare77@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 315/609] ASoC: max98095: fix missing IS_ERR() before PTR_ERR() on mclk lookup
+Date: Mon, 17 Aug 2026 15:30:11 +0200
+Message-ID: <20260817132554.780893604@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -50,71 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Uday Khare <udaykhare77@gmail.com>
 
-commit d06c4173a7c38c7a39e98859f839ce714c7af2c9 upstream.
+[ Upstream commit 317e21532e6ffa1de026bdbce5ba98e1b70ca5c6 ]
 
-There's no need to crash the kernel for these cases.
+In max98095_probe(), the -EPROBE_DEFER check after devm_clk_get() is
+broken due to a missing IS_ERR() guard.
 
-Reviewed-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit ac6f00beb658239bced4aaed9efbb04a35348d48)
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The code intends to return -EPROBE_DEFER only when the clock lookup
+fails with that specific error.  However, without IS_ERR() the check:
+
+    if (PTR_ERR(max98095->mclk) == -EPROBE_DEFER)
+
+is called unconditionally, including when devm_clk_get() succeeds and
+returns a valid pointer.  Calling PTR_ERR() on a valid pointer
+reinterprets its address as a signed long; the result is arbitrary
+and is almost never equal to -EPROBE_DEFER, so the check silently
+does nothing in the success case.  When devm_clk_get() fails with
+any error other than -EPROBE_DEFER the check is also skipped, leaving
+max98095->mclk holding an error pointer with no indication to the caller.
+
+This means a deferred probe will never actually be triggered for this
+device, and any non-EPROBE_DEFER clock error is silently swallowed with
+the error pointer left in the mclk field.
+
+Fix this by adding the missing IS_ERR() guard around the PTR_ERR() call,
+matching the pattern already used in the sibling max98088 and wm8960
+drivers.
+
+Fixes: e3048c3d2be5 ("ASoC: max98095: Add master clock handling")
+Signed-off-by: Uday Khare <udaykhare77@gmail.com>
+Link: https://patch.msgid.link/20260720103950.14474-1-udaykhare77@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c |   13 +++++--------
- 1 file changed, 5 insertions(+), 8 deletions(-)
+ sound/soc/codecs/max98095.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c
-@@ -3769,7 +3769,7 @@ static void gfx_v10_0_wait_reg_mem(struc
- 			   WAIT_REG_MEM_ENGINE(eng_sel)));
+diff --git a/sound/soc/codecs/max98095.c b/sound/soc/codecs/max98095.c
+index 44aa58fcc23f8..7b399564785c4 100644
+--- a/sound/soc/codecs/max98095.c
++++ b/sound/soc/codecs/max98095.c
+@@ -1984,8 +1984,9 @@ static int max98095_probe(struct snd_soc_component *component)
+ 	int ret = 0;
  
- 	if (mem_space)
--		BUG_ON(addr0 & 0x3); /* Dword align */
-+		WARN_ON(addr0 & 0x3); /* Dword align */
- 	amdgpu_ring_write(ring, addr0);
- 	amdgpu_ring_write(ring, addr1);
- 	amdgpu_ring_write(ring, ref);
-@@ -8513,7 +8513,7 @@ static void gfx_v10_0_ring_emit_ib_gfx(s
- 		control |= 0x400000;
+ 	max98095->mclk = devm_clk_get(component->dev, "mclk");
+-	if (PTR_ERR(max98095->mclk) == -EPROBE_DEFER)
+-		return -EPROBE_DEFER;
++	if (IS_ERR(max98095->mclk))
++		if (PTR_ERR(max98095->mclk) == -EPROBE_DEFER)
++			return -EPROBE_DEFER;
  
- 	amdgpu_ring_write(ring, header);
--	BUG_ON(ib->gpu_addr & 0x3); /* Dword align */
-+	WARN_ON(ib->gpu_addr & 0x3); /* Dword align */
- 	amdgpu_ring_write(ring,
- #ifdef __BIG_ENDIAN
- 		(2 << 0) |
-@@ -8552,7 +8552,7 @@ static void gfx_v10_0_ring_emit_ib_compu
- 	}
- 
- 	amdgpu_ring_write(ring, PACKET3(PACKET3_INDIRECT_BUFFER, 2));
--	BUG_ON(ib->gpu_addr & 0x3); /* Dword align */
-+	WARN_ON(ib->gpu_addr & 0x3); /* Dword align */
- 	amdgpu_ring_write(ring,
- #ifdef __BIG_ENDIAN
- 				(2 << 0) |
-@@ -8585,9 +8585,9 @@ static void gfx_v10_0_ring_emit_fence(st
- 	 * aligned if only send 32bit data low (discard data high)
- 	 */
- 	if (write64bit)
--		BUG_ON(addr & 0x7);
-+		WARN_ON(addr & 0x7);
- 	else
--		BUG_ON(addr & 0x3);
-+		WARN_ON(addr & 0x3);
- 	amdgpu_ring_write(ring, lower_32_bits(addr));
- 	amdgpu_ring_write(ring, upper_32_bits(addr));
- 	amdgpu_ring_write(ring, lower_32_bits(seq));
-@@ -8639,9 +8639,6 @@ static void gfx_v10_0_ring_emit_fence_ki
- {
- 	struct amdgpu_device *adev = ring->adev;
- 
--	/* we only allocate 32bit for each seq wb address */
--	BUG_ON(flags & AMDGPU_FENCE_FLAG_64BIT);
--
- 	/* write fence seq to the "addr" */
- 	amdgpu_ring_write(ring, PACKET3(PACKET3_WRITE_DATA, 3));
- 	amdgpu_ring_write(ring, (WRITE_DATA_ENGINE_SEL(0) |
+ 	/* reset the codec, the DSP core, and disable all interrupts */
+ 	max98095_reset(component);
+-- 
+2.53.0
+
 
 
