@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A18BD43802D;
-	Mon, 17 Aug 2026 14:46:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A947E43BDCD;
+	Mon, 17 Aug 2026 14:46:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977982; cv=none; b=E1vSIjjcRuNgkT+/ZL2XlnFi0m+MpK4sXPqlwhlTCVbZaxrLJnBWA8eA8QA+lry7Kk12TZMR43ZuSEXAn6ItUyXdrAaAyP7bE09laLf32uLZC/xgrhnb/tPCJcRJlD4JWlWaJAR6fTuFoP9hxPUuJGWWVzjjvqDCNJBdcqMgId8=
+	t=1786977985; cv=none; b=di7Uq1+xShSwsVpGYcB2/mMoqKD3jYfJYS1H4Xb2PWZL3wZoasknD5Ia9RslT84HMVvXBKKxHC5SJkWAr/3G5Xh6vQLf/aaCXr5raz6Lds+/B5KWwTrcKoK/FVazfDLZFiZWwTGba3gYfbSnwf1fiCRgnRmoCdtnYuYm78X8SXU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977982; c=relaxed/simple;
-	bh=JaguDEymoFtCK7UWqV1KlqwN3YHdCmUhvDWltBlDCIM=;
+	s=arc-20240116; t=1786977985; c=relaxed/simple;
+	bh=yzTPwpZNZrj1xh4cQf9IJb1j3S5C99HyCJ/o9v3VMXs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jYUuOdbXnKw4sKqyxCd5ue1Si1kh7vd1Fwxe8aD2hqKtFZ65dfsbkCcjjbxnKgGwmRPM8O2t/mTO4fb7UoASKPd0p1/fxiw0/He0panuI7owJBx4f+1GnKooefBme75kqBWdHttsSMxAYk4nkVZjcDofwE3896EhFCiWzirBW6E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z4FUleKV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sm4ImABnMTra3OasQ5o0/hRzhfhDB6zTWwCIS0SER+8LgF7IVSbs9qZ4bGJmFQ9SgRgRk3AQ5vtvqNzTW2WiS1nplnijZ81bthoDPoDbdB5YI8/sgmhRMoVqTXYkOmj0JHyz+cKjBo8b/2ycNMfsDfpw2B8l+sk6aMHmIYnv4dQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D3aycrrF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z4FUleKV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 059811F00A3A;
-	Mon, 17 Aug 2026 14:46:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D3aycrrF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE1661F000E9;
+	Mon, 17 Aug 2026 14:46:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977981;
-	bh=32ZywOErqoZ8o40YnF3htcwVuB0PZGoe6RfEGbfNTDo=;
+	s=korg; t=1786977984;
+	bh=/REEpX2e5nQZA9bgzR0aBs3Lc0TKxQHTcSJnlefXn/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z4FUleKVoiQnDcDpEvkrYSyKzorehUl4jGJC+ArNinZsUpHh1kXKfgsAtt7Ri7iDm
-	 /fwpeXvLFwUI8ximRNWaonmbYnHWbwoJjSgYixeGAdCJCnBHMAapI7c/Wtlj2D7uP8
-	 yW52AjSbUIDbCRBV+sMjVix8/S8/pJiZIcAd7Ugk=
+	b=D3aycrrFAv8jIkFu6eCHCaxWJ88py+nmNppLB7bec9GHadhRJuiH3cs7xpE9+5AJ5
+	 4vhm+upEzCTVOH7npbpNv61yBPguVvDxSgD6uak+7HmAM2D9oqCYeHu+XvMPBHkbH9
+	 FdNzWvgMCcafwMq8LL6X8dGuNTUlWPgJsOfT7EPk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniele Linguaglossa <danielelinguaglossa@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
+	Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 060/181] sctp: clear control chunk transport if it is being removed
-Date: Mon, 17 Aug 2026 15:32:34 +0200
-Message-ID: <20260817132537.782607208@linuxfoundation.org>
+Subject: [PATCH 6.12 061/181] tls: dont abort the connection on signal-interrupted sends
+Date: Mon, 17 Aug 2026 15:32:35 +0200
+Message-ID: <20260817132537.822170081@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
 References: <20260817132535.394764707@linuxfoundation.org>
@@ -52,52 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>
 
-[ Upstream commit c9158ceaf27780ef64534ad72f44ffde3f8ccc49 ]
+[ Upstream commit af0e5cdd031f4f4a8f6d4160bfbda4f36872b0ed ]
 
-sctp_make_heartbeat_ack() caches the destination transport in
-chunk->transport without taking a reference. When src_out_of_asoc_ok is
-enabled, the HEARTBEAT ACK may remain queued on control_chunk_list instead
-of being transmitted immediately.
+When a signal interrupts a blocking send, tls_tx_records() treats the
+resulting -ERESTARTSYS as a transmission failure and marks the socket
+errored via tls_err_abort() with the raw error code. Later syscalls
+return the kernel-internal errno 512 (ERESTARTSYS) to userspace, as the
+signal it stems from is no longer pending during syscall exit and thus
+never translated.
 
-If the peer transport is removed while the chunk is still queued,
-sctp_assoc_rm_peer() drops the transport and schedules it for RCU freeing,
-but only clears cached transport pointers in out_chunk_list.  The queued
-control chunk therefore retains a dangling transport pointer.
+An interrupted send is not a connection error: the partially sent record
+stays queued and is resent later. Interrupt error codes are therefore
+excluded from the abort in the same way as -EAGAIN.
 
-Once an ASCONF_ACK clears the suppression and the queued control chunk is
-transmitted, SCTP dereferences the stale transport pointer, leading to a
-use-after-free.
-
-Fix this by also clearing chunk->transport for queued control chunks in
-control_chunk_list when removing the transport.
-
-Fixes: 8a07eb0a50ae ("sctp: Add ASCONF operation on the single-homed host")
-Reported-by: Daniele Linguaglossa <danielelinguaglossa@gmail.com>
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/7e1168cb722132152a29d47e5eafaeac4a3bf6f3.1785943120.git.lucien.xin@gmail.com
+Fixes: b341ca51d267 ("tls: Fix tls_sw_sendmsg error handling")
+Signed-off-by: Maximilian Immanuel Brandtner <maxbr@linux.ibm.com>
+Link: https://patch.msgid.link/20260805063109.1772314-1-maxbr@linux.ibm.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/associola.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/tls/tls_sw.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sctp/associola.c b/net/sctp/associola.c
-index 44f06c5f1f256..ebdc48be47813 100644
---- a/net/sctp/associola.c
-+++ b/net/sctp/associola.c
-@@ -573,6 +573,10 @@ void sctp_assoc_rm_peer(struct sctp_association *asoc,
- 		if (ch->transport == peer)
- 			ch->transport = NULL;
+diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
+index 2b875369d5232..137a7914c3044 100644
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -458,7 +458,7 @@ int tls_tx_records(struct sock *sk, int flags)
+ 	}
  
-+	list_for_each_entry(ch, &asoc->outqueue.control_chunk_list, list)
-+		if (ch->transport == peer)
-+			ch->transport = NULL;
-+
- 	asoc->peer.transport_count--;
+ tx_err:
+-	if (rc < 0 && rc != -EAGAIN)
++	if (rc < 0 && rc != -EAGAIN && rc != -EINTR && rc != -ERESTARTSYS)
+ 		tls_err_abort(sk, rc);
  
- 	sctp_ulpevent_notify_peer_addr_change(peer, SCTP_ADDR_REMOVED, 0);
+ 	return rc;
 -- 
 2.53.0
 
