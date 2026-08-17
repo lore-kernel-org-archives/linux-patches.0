@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A959C2E762C;
-	Mon, 17 Aug 2026 15:18:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2914D2E762C;
+	Mon, 17 Aug 2026 15:18:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979886; cv=none; b=qWZlepQ9uxQs34H/oBfS7bCIW0isuDMSnXSNJhrR/UZpHXrEy6E4xt/rncxhEoZMIH4uA1U2F2sU0MkAO3Xn9/QY8X6SN4X8D1OHYlK/QzvGbyX5h5+uQQc1SkuDYu4wfeCjKoFXZz4pcJT9+PT/x5Z0VMPyrdouYmPBpLpPxjw=
+	t=1786979889; cv=none; b=pKQ+85U4emHCtk1Lq0xeAanwx0EB4FKWOdgNLdTckOyQngtj0PkiDnm0wfEYGeJPzgIL1Hd9DEY6/IUx4bw2tEjBr74QFfC8OVSvrTgSGcxZ/7Q0wGlov0SJJRMJ6pZXL2tyNxCktJAjnuTsvn0xY2GZv9zflZUmu8UQSprJWyk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979886; c=relaxed/simple;
-	bh=KR8nTmlIC37oC5cF5ji3JtpqEriKdTwrV5SHVQRqFQg=;
+	s=arc-20240116; t=1786979889; c=relaxed/simple;
+	bh=obje4y7f9IOSoJVNqRsrYCozg4jwWM9PTIWPebNQidw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=poe3dOC4MjU3/gK0lwo+oaEfKbJ7DK5DzLvA51O3PTsHgYifdzatov311944uoJtYe/gHE/fZTMlhkzo7PdfARJX0tiDfdG6VkhxkVGcodBVJCY8AhYODTibmXgkCNII2sd5+iFIZN/bmVVF3tZ4ts2zn7/6wyNCCLi3VWSbs4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FSywC9Yq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gkSTXQbCcMQ+q93OKcpLBNVJuAYxWbElgCaoiRPJrqVCLp0tiVHgfv88CVwvsziPWM2rD0qEw6aTUVTBIjq0AF3oiztu6MluaZ5atLQiM4k9ClnrMjWbf4d6m4pltOBdnz6eNSd8egE/mn3Eyzeu8lyss3dXbVHJNHUjuI6+Tr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mnsfy30E; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FSywC9Yq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEF741F000E9;
-	Mon, 17 Aug 2026 15:18:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mnsfy30E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8324E1F000E9;
+	Mon, 17 Aug 2026 15:18:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979885;
-	bh=ltBVGKLdl5ZbrRiEh0cIz8ROWesg4Dk4ACnQ3Fy99E8=;
+	s=korg; t=1786979888;
+	bh=ZUls6QG1Uounwq7dtk7i9+YvTXWXSih9bpbtZ7ufHvM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FSywC9YqvWIFb+6o41mthyg+AZ9h0zayc9qnwVeDA+Il9NKEkFKC7WGbx+CiNvfBx
-	 3h8/KgVPCg4j7efVRQb3mBcIFMiUurZdsUrOWklQSL1CSu61xvjVASZjuvH5ccV1NB
-	 jQQp/xmzEr3TwZoyMyrhzogH8ZMnNCdXeA3t9JHA=
+	b=Mnsfy30EUAq/mFZrN6ZOfraYxyltP6oU/oHsN0fga7SKZl3v7fkSDKpRSeTUy9aCL
+	 jz9QTL5bVukgmvijGkh7mwNXiiyLrfV9aFnGavOrg2BHfKf2EwlXFimkvytf+N+Abg
+	 udeNCT0yASaZG9RhRq2d6m9chETfyScrYgNVkXmI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	Yuan Tan <yuantan098@gmail.com>,
-	"Cen Zhang (Microsoft)" <blbllhy@gmail.com>,
-	NeilBrown <neil@brown.name>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 381/609] rhashtable: clear stale iter->p on table restart
-Date: Mon, 17 Aug 2026 15:31:17 +0200
-Message-ID: <20260817132557.012878011@linuxfoundation.org>
+	Benjamin Boortz <bennib@mailbox.org>,
+	Andy Shevchenko <andy@kernel.org>,
+	Linus Walleij <linusw@kernel.org>
+Subject: [PATCH 6.1 382/609] pinctrl: microchip-sgpio: add missing select REGMAP_MMIO
+Date: Mon, 17 Aug 2026 15:31:18 +0200
+Message-ID: <20260817132557.044022222@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -54,63 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang (Microsoft) <blbllhy@gmail.com>
+From: Benjamin Boortz <bennib@mailbox.org>
 
-[ Upstream commit 8173f7e2ce67e6ca1d4763f3da14e5b01ce77456 ]
+commit 25cb6e9a13123d1039cdc75b446ac52e1ebdc26d upstream.
 
-rhashtable_walk_start_check() has two restart paths when resuming a walk.
-When iter->walker.tbl is valid, it re-validates iter->p against the table
-and sets iter->p = NULL if the object is gone.  When iter->walker.tbl is
-NULL (table was freed during resize), it resets slot and skip but forgets
-to clear iter->p.
+The driver calls ocelot_regmap_from_resource() via <linux/mfd/ocelot.h>,
+which internally uses devm_regmap_init_mmio() and requires REGMAP_MMIO.
+The Kconfig entry does not select REGMAP_MMIO, causing a build failure
+when no other driver in the config happens to pull in REGMAP_MMIO:
 
-rhashtable_walk_next() then dereferences the stale iter->p, reading
-freed memory.  This is a use-after-free.
+  include/linux/mfd/ocelot.h:34:24: error: implicit declaration of function 'devm_regmap_init_mmio'
 
-Any caller that does multi-fragment rhashtable walks across
-walk_stop/walk_start boundaries is affected.  Concrete cases include
-netlink_diag (__netlink_diag_dump in net/netlink/diag.c) and TIPC
-(tipc_nl_sk_walk in net/tipc/socket.c).
+Found by randconfig testing on arm64; tinyconfig reproducer below.
 
-Crash stack (netlink_diag):
-  BUG: KASAN: slab-use-after-free in rhashtable_walk_next+0x365/0x3c0
-  Read of size 8 at addr ffff88801a9d2438 (freed kmalloc-2k, offset 1080)
-  Call Trace:
-   rhashtable_walk_next+0x365/0x3c0 (lib/rhashtable.c:1016)
-   __netlink_diag_dump+0x160/0x760 (net/netlink/diag.c:122)
-   netlink_diag_dump+0xc2/0x240
-   netlink_dump+0x5bc/0x1270
-   netlink_recvmsg+0x7a3/0x980
-   sock_recvmsg+0x1bc/0x200
-   __sys_recvfrom+0x1d4/0x2c0
-
-Fixes: 5d240a8936f6 ("rhashtable: improve rhashtable_walk stability when stop/start used.")
-Cc: <stable@vger.kernel.org>
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Closes: https://lore.kernel.org/linux-crypto/CAB8m9Wh559e+=n8z51gB8DrbEyCc2mc0MgGjrRR6_VXBmU=2AQ@mail.gmail.com
-Signed-off-by: Cen Zhang (Microsoft) <blbllhy@gmail.com>
-Reviewed-by: NeilBrown <neil@brown.name>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 2afbbab45c26 ("pinctrl: microchip-sgpio: update to support regmap")
+Cc: stable@vger.kernel.org
+Signed-off-by: Benjamin Boortz <bennib@mailbox.org>
+Reviewed-by: Andy Shevchenko <andy@kernel.org>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/rhashtable.c | 1 +
+ drivers/pinctrl/Kconfig |    1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/lib/rhashtable.c b/lib/rhashtable.c
-index e12bbfb240b81..c977468291ea0 100644
---- a/lib/rhashtable.c
-+++ b/lib/rhashtable.c
-@@ -730,6 +730,7 @@ int rhashtable_walk_start_check(struct rhashtable_iter *iter)
- 		iter->walker.tbl = rht_dereference_rcu(ht->tbl, ht);
- 		iter->slot = 0;
- 		iter->skip = 0;
-+		iter->p = NULL;
- 		return -EAGAIN;
- 	}
- 
--- 
-2.53.0
-
+--- a/drivers/pinctrl/Kconfig
++++ b/drivers/pinctrl/Kconfig
+@@ -315,6 +315,7 @@ config PINCTRL_MICROCHIP_SGPIO
+ 	select GENERIC_PINCTRL_GROUPS
+ 	select GENERIC_PINMUX_FUNCTIONS
+ 	select OF_GPIO
++	select REGMAP_MMIO
+ 	help
+ 	  Support for the serial GPIO interface used on Microsemi and
+ 	  Microchip SoCs. By using a serial interface, the SIO
 
 
