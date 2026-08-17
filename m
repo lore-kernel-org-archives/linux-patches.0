@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B32A424EA90;
-	Mon, 17 Aug 2026 14:25:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9938C38D01E;
+	Mon, 17 Aug 2026 14:25:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976713; cv=none; b=m5jP/LAyul0NooTp06xZvuwy7IVlGPoomTtFJCm3Q5nyKFVyTz9+8FkBaINGGMfrl4uXPx4A+H15FtcaFh1tu5R68gnzMgo6yGrK2WpnfG0ZqvWl3IanrMIg3p+IeeRqTHDuWL8jHGBmW163SKKk5udQksmv3+QUIjZz7R1gIi4=
+	t=1786976715; cv=none; b=u0AK+wnpXYJJPDSd9dwBg00RPogunLwHTVQ1REI2xnm3OZaQMtWQBTs8ReCFHO1JVtvycLPBhu7/g6v19IvvB+pqyMlq/vKRV01t6guC4jyCUuqKXoqPragGyDmBQpYFyrwK3Yahehn7EqmRyaWqWxNwZKnIibymKOS0MEjVezo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976713; c=relaxed/simple;
-	bh=Lj1zuAT1TJtCFrC7wY19wOA5cEB8flQSDtXuRY+XiEU=;
+	s=arc-20240116; t=1786976715; c=relaxed/simple;
+	bh=WihxARVswd/c1Z/DqXZyXdnBenVL903MhYkdHNLsHH0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rM2q7YDwI4plhPgb9JRKySFHgOUbYB/jm8o1aXnRPV4CxYF0q3NjZo+bb1CEZ+E4pKLvFRwskQrH5lw98jmSVQo1xGGa3Adq86yQjvg+UxwutXXyy7J3fKcAiqY+My6EU1wlrxsGgJJCSP+d26mgQqTsvFkRoh+kokPPg3jkuTE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=muUGBnTg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZgPbXmlmznpR9pWUP9v99A2VMWXGUKm2mxroiGyMSfR1FaYmC4h+9qYZmd/NdDdUCUdDUJOEmYjUUEuUWdjie654UNnfOztJ1m1SpX+Z6oV+aME3jqTnBzoPu/EzG3okubRYkIOwLCd4svl44+9Gn0qH+EbChAWQpy5yaqy2jwM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ofNnE4er; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="muUGBnTg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 190351F000E9;
-	Mon, 17 Aug 2026 14:25:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ofNnE4er"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB53A1F000E9;
+	Mon, 17 Aug 2026 14:25:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976711;
-	bh=DU6JrJEpd2ZAFdEyzGL4VD/QedJ1RQRUhbaufuwat+I=;
+	s=korg; t=1786976714;
+	bh=XaTKuqgCJkbr+/MArNQtBXK5/GCKHD/Ne8n444Trr+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=muUGBnTgzOVHhCtwpcdAauNBSsUY9ZC3dDpyuGYJwXGmHFD4C7cfGlF2BmC1XUwf8
-	 FV700LP5rXjc0vr6HcY91oMpiQJmeP+PwnD7EpDrvW2JJToPBsV/zYGc0Giv/g+a7v
-	 nQQOT2oZjKu8OZtI565ewfgMtTHB8GBWpSZxAF2M=
+	b=ofNnE4erx2kycyPkjdq8jB5TiIMBq1DmdweIjsDVnA1zG4aMSbq+YbBQ3iP5Khvax
+	 JYb0govM1bLwJkaHlWUGLGd6QCgYxLpeZmwzJ3MMbJ3bTEZVGzQLOY8Y9BExsFaLTX
+	 O4TWHqP7M0culr3umC0booNU/BKD5qqW4cLnTrBk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+50122cbc2874b1eb25b0@syzkaller.appspotmail.com,
-	Cheng Yongkang <teel4res@gmail.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	syzbot+9eebf5f6544c5e873858@syzkaller.appspotmail.com,
+	Edward Adam Davis <eadavis@qq.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 078/456] wifi: ath9k: hif_usb: dont dereference hif_dev after re-arming firmware request
-Date: Mon, 17 Aug 2026 15:27:48 +0200
-Message-ID: <20260817132543.132990486@linuxfoundation.org>
+Subject: [PATCH 5.15 079/456] hwmon: (corsair-psu) Stop device IO before calling hid_hw_stop
+Date: Mon, 17 Aug 2026 15:27:49 +0200
+Message-ID: <20260817132543.180771796@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -47,91 +46,93 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cheng Yongkang <teel4res@gmail.com>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit dad9f96945d77ecd4708f730c06ef54dcd8cc057 ]
+[ Upstream commit 9ab8656548cd737b98d0b19c4253aff8d68e97f4 ]
 
-ath9k_hif_request_firmware() re-arms an asynchronous firmware load via
-request_firmware_nowait(), passing hif_dev as the completion context, and
-then still dereferences hif_dev:
+hid_hw_stop() does not stop the device IO.
 
-	dev_info(&hif_dev->udev->dev, "ath9k_htc: Firmware %s requested\n",
-		 hif_dev->fw_name);
+This results in a race condition between hid_input_report() and the point
+immediately following the execution of hid_device_io_start() within
+corsairpsu_probe(). If the probe operation fails after "io start" has
+been initiated, this race condition will result in a uaf vulnerability
+[1].
 
-The re-armed callback ath9k_hif_usb_firmware_cb() runs on the "events"
-workqueue and, when the firmware is missing, walks the retry chain into
-ath9k_hif_usb_firmware_fail() -> complete_all(&hif_dev->fw_done). That
-releases the wait_for_completion(&hif_dev->fw_done) in a concurrent
-ath9k_hif_usb_disconnect(), which then kfree()s hif_dev. The trailing
-dev_info() in the frame that re-armed the request can therefore read freed
-memory (hif_dev->udev, the first field of struct hif_device_usb):
+CPU0				CPU1
+====				====
+corsairpsu_probe()
+ hid_device_io_start()
+  ... unlock driver_input_lock
+ hid_hw_stop()
+  kfree(hidraw)			__hid_input_report()
+				 ... acquire driver_input_lock
+				 hid_report_raw_event()
+				  hidraw_report_event()
+				   ... access hidraw's list_lock // trigger uaf
 
-  BUG: KASAN: slab-use-after-free in ath9k_hif_request_firmware
-  Read of size 8 ... by task kworker/...
-   ath9k_hif_request_firmware
-   ath9k_hif_usb_firmware_cb           drivers/net/wireless/ath/ath9k/hif_usb.c:1247
-   request_firmware_work_func
-  Allocated by ...:
-   ath9k_hif_usb_probe                 drivers/net/wireless/ath/ath9k/hif_usb.c
-  Freed by ...:
-   ath9k_hif_usb_disconnect -> kfree   drivers/net/wireless/ath/ath9k/hif_usb.c
+Consequently, when corsairpsu_probe() fails and hid_hw_stop() needs to
+be executed, the io_started flag is first cleared while holding the
+driver_input_lock to prevent potential race conditions involving input
+reports.
 
-The fw_done barrier only makes disconnect wait for the firmware chain to
-*terminate*; it does not protect the outer ath9k_hif_request_firmware()
-frame that re-armed the request and keeps touching hif_dev afterwards.
+[1]
+BUG: KASAN: slab-use-after-free in rt_spin_lock+0x83/0x400 kernel/locking/spinlock_rt.c:56
+Call Trace:
+ hidraw_report_event+0x5d/0x3a0 drivers/hid/hidraw.c:577
+ hid_report_raw_event+0x311/0x1730 drivers/hid/hid-core.c:2076
+ __hid_input_report drivers/hid/hid-core.c:2152 [inline]
+ hid_input_report+0x44e/0x580 drivers/hid/hid-core.c:2174
+ hid_irq_in+0x47e/0x6d0 drivers/hid/usbhid/hid-core.c:286
+ __usb_hcd_giveback_urb+0x3b3/0x5e0 drivers/usb/core/hcd.c:1657
+ dummy_timer+0x8a9/0x47d0 drivers/usb/gadget/udc/dummy_hcd.c:2005
 
-Drop the post-request dev_info(): it is the only use of hif_dev after the
-async request is armed, and it is purely informational (the dev_err() on the
-failure path runs only when request_firmware_nowait() did not arm a callback,
-so hif_dev is still alive there).
+Allocated by task 10:
+ hidraw_connect+0x57/0x430 drivers/hid/hidraw.c:606
+ hid_connect+0x5bf/0x19d0 drivers/hid/hid-core.c:2277
+ hid_hw_start+0xa8/0x120 drivers/hid/hid-core.c:2387
+ corsairpsu_probe+0xd9/0x3c0 drivers/hwmon/corsair-psu.c:782
 
-This was first reported by syzbot as a single, non-reproduced crash that was
-later auto-obsoleted, and was independently rediscovered by the reFuzz fuzzer,
-which produced a C reproducer (USB-gadget connect/disconnect of an ath9k_htc
-device whose firmware download fails). The vulnerable code is unchanged and
-still present in v7.1-rc6, where the slab-use-after-free reproduces under KASAN
-once the (sub-microsecond) race window is widened.
+Freed by task 10:
+ hidraw_disconnect+0x4f/0x60 drivers/hid/hidraw.c:662
+ hid_disconnect drivers/hid/hid-core.c:2362 [inline]
+ hid_hw_stop+0x101/0x1e0 drivers/hid/hid-core.c:2407
+ corsairpsu_probe+0x327/0x3c0 drivers/hwmon/corsair-psu.c:826
 
-Fixes: e904cf6fe230 ("ath9k_htc: introduce support for different fw versions")
-Reported-by: syzbot+50122cbc2874b1eb25b0@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=50122cbc2874b1eb25b0
-Signed-off-by: Cheng Yongkang <teel4res@gmail.com>
-Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Link: https://patch.msgid.link/20260605153210.20471-1-1020691186@qq.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fix the problem by calling hid_device_io_stop() before calling
+hid_hw_stop().
+
+Fixes: d115b51e0e56 ("hwmon: add Corsair PSU HID controller driver")
+Reported-by: syzbot+9eebf5f6544c5e873858@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=9eebf5f6544c5e873858
+Tested-by: syzbot+9eebf5f6544c5e873858@syzkaller.appspotmail.com
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Link: https://lore.kernel.org/r/tencent_BB7C33EB9EA41B7B4B5F1B8B25C0BA13BB08@qq.com
+[groeck: Updated subject and description;
+ call hid_device_io_stop() only if IO has been started]
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath9k/hif_usb.c | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ drivers/hwmon/corsair-psu.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/ath/ath9k/hif_usb.c b/drivers/net/wireless/ath/ath9k/hif_usb.c
-index 6c73c0c0b82a99..7650f14dca8dad 100644
---- a/drivers/net/wireless/ath/ath9k/hif_usb.c
-+++ b/drivers/net/wireless/ath/ath9k/hif_usb.c
-@@ -1227,15 +1227,10 @@ static int ath9k_hif_request_firmware(struct hif_device_usb *hif_dev,
- 	ret = request_firmware_nowait(THIS_MODULE, true, hif_dev->fw_name,
- 				      &hif_dev->udev->dev, GFP_KERNEL,
- 				      hif_dev, ath9k_hif_usb_firmware_cb);
--	if (ret) {
-+	if (ret)
- 		dev_err(&hif_dev->udev->dev,
- 			"ath9k_htc: Async request for firmware %s failed\n",
- 			hif_dev->fw_name);
--		return ret;
--	}
--
--	dev_info(&hif_dev->udev->dev, "ath9k_htc: Firmware %s requested\n",
--		 hif_dev->fw_name);
+diff --git a/drivers/hwmon/corsair-psu.c b/drivers/hwmon/corsair-psu.c
+index e3a46e5369c46e..e9518221efc4c9 100644
+--- a/drivers/hwmon/corsair-psu.c
++++ b/drivers/hwmon/corsair-psu.c
+@@ -742,6 +742,7 @@ static int corsairpsu_probe(struct hid_device *hdev, const struct hid_device_id
  
+ fail_and_close:
+ 	hid_hw_close(hdev);
++	hid_device_io_stop(hdev);
+ fail_and_stop:
+ 	hid_hw_stop(hdev);
  	return ret;
- }
 -- 
 2.53.0
 
