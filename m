@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77A5D3D3302;
-	Mon, 17 Aug 2026 13:37:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89AB53EDAB8;
+	Mon, 17 Aug 2026 13:37:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786973869; cv=none; b=OIcTwTCu5emaq/yWAG97BtMIHiD7DIDFfezbjsz15YKuss+KtuVICefkdY+XqRKwbggpMIvRUDL/LbNBdrWzxDj5h0+SwTtKILjbRMya78W5aFV317Wa2vPFLFX3zCsvB8M/MX4R3/k6y44byldWjOXwUx3xPaM7/E9Bxw+Yqr8=
+	t=1786973873; cv=none; b=ANzryobPX+owOr7+etHbkM4u5qvmVEeshthS5FpEMPuMEFrtB45+ckmV5ovCW/Gb0k4wV49uw4yZx80U9C71K/5xLHxqvh+APab1k/esILs6nwm2857So76/1r73C2rSHbz3SmMveIARaxfeQ/VOymnXFUl3kNIg77RYN/cDIQ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786973869; c=relaxed/simple;
-	bh=EU7+EVjgBelsUZyhtG1DYBiurIY+HV92Mxh5YoYUjdY=;
+	s=arc-20240116; t=1786973873; c=relaxed/simple;
+	bh=YKh884gZoWCwFm/r3FC0ZtoIp8B2bTrxKe0J1k6mgK8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zel7bF9A6ezG2fTClriB6KNUJpISN/M8f9ezUxmEDiLdI2Ald6mzKM73xSKqVps1RxzgpKGQ0aD9fyzrqysD0D6Y3tHDzRTv4HGJ8m2RXISwvfudwix7VzjIpyBrlgkXa+BnrMf43FpAJTxJyDOQo3klBMq36AX6lWqHXTp8lfo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qa/UUx3U; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dXFdOodGLaU+t9xnxxjuO4K7EfAHyOMGDfov0QWo3l0MDArPQ9fvRw41Q+2SrR/M8dGYMmCpXATOd6S8t0sgVMf3ohRlXhKEbfQ+HVttLVVyRkime34MtwBrtuHDIq6dwQI1qNssrkSyQRFcbRgc39myF/d8C0RiSj8ZnHtDkDk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j8x0qus5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qa/UUx3U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B1131F000E9;
-	Mon, 17 Aug 2026 13:37:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j8x0qus5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 700BA1F00A3D;
+	Mon, 17 Aug 2026 13:37:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786973866;
-	bh=aTfzxgfLnGzlysy1+QljsMtu17afPQITifZLJpAf9/g=;
+	s=korg; t=1786973869;
+	bh=zVVv+rTdQ+PvwTsXKaHOrLP3lQEQntnmKgoNdA/diPI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qa/UUx3UsVFF2/1xYmndYhAFQTKMRIIQ8JQH2/y/7Qoen9lsNzyuKpymTvhb+O/lS
-	 39CmBwECjmpbZoMRARcjTQMhxgehgvU3wawIzZbeJzYX9yJsUlAAWS4ecehyk1B//Q
-	 z/w619uLVsSy4saONtB0L9tG4yqdppWWGBwitV6E=
+	b=j8x0qus5RlmBaRYNSL62QE63KjSQpMhDq47JXvRRtik0be7WXzBTdveNR/avjxDBT
+	 +F+QwK1HusOFk4t93CHlMj3nwwDDn4AL/enyZgi1Q91Qg72k8hsfbetLnj5i0toJPf
+	 AQ67tBAlrqL8SNI4A3d2g79UysMCd1aPe9fHT2DY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Denis Arefev <arefev@swemel.ru>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 001/271] mount: honour SB_NOUSER in the new mount API
-Date: Mon, 17 Aug 2026 15:28:46 +0200
-Message-ID: <20260817132536.817918154@linuxfoundation.org>
+Subject: [PATCH 7.1 010/271] arm64: dts: qcom: monaco: Add default GIC address cells
+Date: Mon, 17 Aug 2026 15:28:55 +0200
+Message-ID: <20260817132537.184587343@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -52,36 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-[ Upstream commit 6dd3c6884cd9defb511284b566cef5ac8f657dbf ]
+[ Upstream commit d291245e2fb1eba55d751f88613a41e292958a96 ]
 
-One should *not* be allowed to mount one of those, new API or not.
+Add missing address-cells 0 to GIC interrupt node to silence W=1
+warning:
 
-Reported-by: Denis Arefev <arefev@swemel.ru>
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
-Link: https://patch.msgid.link/20260602020444.GP2636677@ZenIV
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+  monaco.dtsi:2326.4-2329.30: Warning (interrupt_map): /soc@0/pci@1c00000:interrupt-map:
+    Missing property '#address-cells' in node /soc@0/interrupt-controller@17a00000, using 0 as fallback
+
+Value '0' is correct because:
+1. GIC interrupt controller does not have children,
+2. interrupt-map property (in PCI node) consists of five components and
+   the fourth component 'parent unit address', which size is defined by
+   '#address-cells' of the node pointed to by the interrupt-parent
+   component, is not used (=0).
+
+Fixes: 46a7c01e7e9d ("arm64: dts: qcom: qcs8300: enable pcie0")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260407201518.24949-2-krzysztof.kozlowski@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/namespace.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/arm64/boot/dts/qcom/monaco.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/namespace.c b/fs/namespace.c
-index 341ddd353b3a8..841ef26127861 100644
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -4502,6 +4502,10 @@ SYSCALL_DEFINE3(fsmount, int, fs_fd, unsigned int, flags,
- 	new_mnt = vfs_create_mount(fc);
- 	if (IS_ERR(new_mnt))
- 		return PTR_ERR(new_mnt);
-+	if (new_mnt->mnt_sb->s_flags & SB_NOUSER) {
-+		mntput(new_mnt);
-+		return -EINVAL;
-+	}
- 	new_mnt->mnt_flags = mnt_flags;
+diff --git a/arch/arm64/boot/dts/qcom/monaco.dtsi b/arch/arm64/boot/dts/qcom/monaco.dtsi
+index fa13210fc539a..62e6b60087ee3 100644
+--- a/arch/arm64/boot/dts/qcom/monaco.dtsi
++++ b/arch/arm64/boot/dts/qcom/monaco.dtsi
+@@ -7384,6 +7384,7 @@ intc: interrupt-controller@17a00000 {
+ 			interrupt-controller;
+ 			#redistributor-regions = <1>;
+ 			redistributor-stride = <0x0 0x20000>;
++			#address-cells = <0>;
+ 		};
  
- 	new_path.dentry = dget(fc->root);
+ 		watchdog@17c10000 {
 -- 
 2.53.0
 
