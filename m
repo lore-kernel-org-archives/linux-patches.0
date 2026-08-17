@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EACA2EDD78;
-	Mon, 17 Aug 2026 15:03:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7853A2DC331;
+	Mon, 17 Aug 2026 15:03:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979019; cv=none; b=gpgp9LKP1PO27nl4izXcktG4Tad780XyhqJLLs9aCO110eZFq/Ati3nQa1at6954r7W+QIvaDpHEydAWcuyplsQu6XSgDYbYcIW1Y5NtVLJi2PmNXi9XEcp6BYMdZVnV1TqYS90WcQP3fskZaOnJgi96LTrRa+KTq/3Ry2kiBxk=
+	t=1786979023; cv=none; b=foo1ex6JyAnlDfdOFLOJEnYBYTCumO+ZPvXlddlZdndUzrGktIc2+jRfGc7m0mV315M3wVcKjuaywzbGBsthBTHKYqLoaE5WRN3LKO8Rk69Ktz6Bt+1WD7pbz1xQc1oN/vtXKVKx9IqneyKkezqPU3FY/WoMIDpJ90/X+eWsCD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979019; c=relaxed/simple;
-	bh=G8LCO4o3kgtj5+vLyBx2igZgzwEK6TuZpxkay/iClj4=;
+	s=arc-20240116; t=1786979023; c=relaxed/simple;
+	bh=XjE1oAxTPgbGMAKV5NDgMEZv1z59qdF5wMZRysx+of8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aLJgOSRWkdu6/ud1P1bhYbub/RbNopEnUwIIQAPm7YPZoFqZGFtFIIueZrL/OJUE4jcSZ4noNDSHjD6nf0L01gKuHlXJkR+bgGojuvuWeM/3g8k33MikDxG1HOl+OmRWqPJIzRZ2qBqGHOf6/+FNk9DDepBFYZtNAEkjr/i+cM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CVK+smyV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RAVGq6K61fri4fJFD7hO183U5nlA/Q0uj5Ou8yxcfdCLGdRBIM3myWZPbWsHBU+trycI679d/47FToNsPob8Vh0fviO+ujkfCO3k9MAohUCJaN7Sfh5bMZHdeQxNuQUfffpR/fzY5j97lyiL9qu/ByqTWV4JxNfU2e2tBB9KFFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kuVR0qQi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CVK+smyV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C455A1F000E9;
-	Mon, 17 Aug 2026 15:03:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kuVR0qQi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A78811F000E9;
+	Mon, 17 Aug 2026 15:03:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979018;
-	bh=q7cOqpXnSNjRt7Ttfg3xD8OIxXOe5lFO5DZoC/B/Jxc=;
+	s=korg; t=1786979021;
+	bh=a2EZ0Il5TX8I7HiA0NVvXkyuk0a9P9tzEnX/Xv6qn/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CVK+smyV+MbGIIGxRRceocS2NZnnncPhCnkErbxofLNrHoSjlc/KrAY8Ovtq9Cf+R
-	 4Rd1YpFO6HYdZjr0xP/py3keNIav3dyal6RrrM/II0nEpuHi/pYjcXhi4XwXnUGtuL
-	 yqETsDn4+4DuzSUfjVn+GtsSbzQSNpPGOi4CberE=
+	b=kuVR0qQiigNbSR49Knr14mCmZ/Z938eqgxaQEMdElIsiJAcOUNLbo/rK50NhiSJJL
+	 p7EKz68jItSyds4G4H3mjEhm3VWYIn5Z0Flh6UjgzhfvzPNIxzI3sONxmKUR5D0lzR
+	 dSFUtFgVrHr0GmpitzAELnI3nNeSbBpqH84QF6M0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Sonali Pradhan <sonalipradhan@google.com>
-Subject: [PATCH 6.1 081/609] usb: gadget: f_ncm: validate datagram bounds in ncm_unwrap_ntb()
-Date: Mon, 17 Aug 2026 15:26:17 +0200
-Message-ID: <20260817132546.285140770@linuxfoundation.org>
+	Fan Wu <fanwu01@zju.edu.cn>
+Subject: [PATCH 6.1 082/609] usb: gadget: udc: bdc: free IRQ and drain func_wake_notify before teardown
+Date: Mon, 17 Aug 2026 15:26:18 +0200
+Message-ID: <20260817132546.321782594@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -50,91 +50,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sonali Pradhan <sonalipradhan@google.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit 1febec7e47cdcd01f43fb0211094e3010474666e upstream.
+commit 0583f2fbf8f86ae3a0ce054f96783dd83e65d9bb upstream.
 
-When unpacking host-supplied NTBs, ncm_unwrap_ntb() checks datagram length
-against frame_max but does not verify that the datagram fits within the
-declared block length. Additionally, when decoding multiple NTBs from a
-single socket buffer, subsequent block lengths are not checked against the
-actual remaining buffer data.
+The Broadcom BDC UDC driver registers its IRQ handler with
+devm_request_irq() in bdc_udc_init(), so the IRQ is released by devm
+only after bdc_remove() returns.  devm releases resources in reverse
+LIFO order, but bdc_remove() runs bdc_udc_exit() and bdc_hw_exit() ->
+bdc_mem_free() manually before returning: bdc_udc_exit() tears down
+individual endpoint objects via bdc_free_ep(), while bdc_hw_exit() ->
+bdc_mem_free() frees and NULLs the DMA-coherent status-report ring
+(bdc->srr.sr_bds) and kfree()s bdc->bdc_ep_array.  Both happen while
+the IRQ handler (bdc_udc_interrupt, requested with IRQF_SHARED)
+remains deliverable in the window up to the post-remove devm
+free_irq().
 
-With these checks missing, a malicious USB host can specify datagram
-offsets and lengths that point beyond the block, or supply secondary NTB
-headers declaring lengths larger than the buffer. skb_put_data() then
-copies adjacent kernel memory from skb_shared_info into the network skb.
+On receipt of a shared interrupt in that window, bdc_udc_interrupt()
+dereferences bdc->srr.sr_bds[bdc->srr.dqp_index] (NULL or freed DMA)
+and dispatches sr_handler callbacks that index into bdc_ep_array,
+causing a NULL-deref or use-after-free.
 
-Fix this by verifying that sufficient buffer space remains for the NTB
-header before parsing, handling zero-length block declarations, ensuring
-that block lengths never exceed the remaining buffer space, and verifying
-that each datagram payload stays strictly within the block boundary.
+The same window affects the delayed_work bdc->func_wake_notify, which is
+armed from the IRQ handler via bdc_sr_uspc() -> handle_link_state_change()
+-> schedule_delayed_work() and may self-rearm from its own callback
+bdc_func_wake_timer().  No cancel exists anywhere in the driver, so a
+queued work item that fires after bdc_remove() returns and the bdc
+structure is devm-freed dereferences freed memory.
 
-Fixes: 427694cfaafa ("usb: gadget: ncm: Handle decoding of multiple NTB's in unwrap call")
-Fixes: 2b74b0a04d3e ("USB: gadget: f_ncm: add bounds checks to ncm_unwrap_ntb()")
+Replace devm_request_irq() with request_irq() and add an explicit
+free_irq(bdc->irq, bdc) in bdc_remove().  Clear BDC_GIE before
+free_irq() to stop the device from asserting interrupts, then
+free_irq() drains any in-flight handler, then cancel_delayed_work_sync()
+drains the func_wake_notify delayed work.  This ordering ensures the
+IRQ handler and delayed work cannot interfere with the subsequent
+endpoint and DMA teardown in bdc_udc_exit() and bdc_hw_exit().  Wire the
+matching free_irq() into the bdc_udc_init() error path so the IRQ is
+released on probe failure, and route the bdc_init_ep() failure through
+err0 instead of returning directly.
+
+This issue was found by an in-house static analysis tool.
+
+Fixes: efed421a94e6 ("usb: gadget: Add UDC driver for Broadcom USB3.0 device controller IP BDC")
 Cc: stable <stable@kernel.org>
-Assisted-by: Jetski:Gemini-2.5-Pro
-Signed-off-by: Sonali Pradhan <sonalipradhan@google.com>
-Link: https://patch.msgid.link/20260703083725.1903850-1-sonalipradhan@google.com
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Link: https://patch.msgid.link/20260709020904.502611-1-fanwu01@zju.edu.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_ncm.c |   17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ drivers/usb/gadget/udc/bdc/bdc_core.c |   20 ++++++++++++++++++++
+ drivers/usb/gadget/udc/bdc/bdc_udc.c  |    7 ++++---
+ 2 files changed, 24 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/gadget/function/f_ncm.c
-+++ b/drivers/usb/gadget/function/f_ncm.c
-@@ -1190,6 +1190,10 @@ static int ncm_unwrap_ntb(struct gether
- 	int		to_process = skb->len;
+--- a/drivers/usb/gadget/udc/bdc/bdc_core.c
++++ b/drivers/usb/gadget/udc/bdc/bdc_core.c
+@@ -586,9 +586,29 @@ disable_clk:
+ static int bdc_remove(struct platform_device *pdev)
+ {
+ 	struct bdc *bdc;
++	unsigned long flags;
++	u32 temp;
  
- parse_ntb:
-+	if (to_process < (int)opts->nth_size) {
-+		INFO(port->func.config->cdev, "Packet too small for headers\n");
-+		goto err;
-+	}
- 	tmp = (__le16 *)ntb_ptr;
+ 	bdc  = platform_get_drvdata(pdev);
+ 	dev_dbg(bdc->dev, "%s ()\n", __func__);
++	/*
++	 * Disable the device interrupt source before freeing the IRQ:
++	 * clear BDC_GIE so the controller stops asserting interrupts,
++	 * then free_irq drains any in-flight handler.
++	 */
++	spin_lock_irqsave(&bdc->lock, flags);
++	temp = bdc_readl(bdc->regs, BDC_BDCSC);
++	temp &= ~BDC_GIE;
++	bdc_writel(bdc->regs, BDC_BDCSC, temp);
++	spin_unlock_irqrestore(&bdc->lock, flags);
++	free_irq(bdc->irq, bdc);
++	/*
++	 * Drain func_wake_notify after free_irq: the IRQ handler arms this
++	 * delayed_work via bdc_sr_uspc -> handle_link_state_change ->
++	 * schedule_delayed_work (self-rearmed in bdc_func_wake_timer), so
++	 * the IRQ must be released first to prevent re-arm after cancel.
++	 */
++	cancel_delayed_work_sync(&bdc->func_wake_notify);
+ 	bdc_udc_exit(bdc);
+ 	bdc_hw_exit(bdc);
+ 	bdc_phy_exit(bdc);
+--- a/drivers/usb/gadget/udc/bdc/bdc_udc.c
++++ b/drivers/usb/gadget/udc/bdc/bdc_udc.c
+@@ -530,8 +530,8 @@ int bdc_udc_init(struct bdc *bdc)
  
- 	/* dwSignature */
-@@ -1210,8 +1214,12 @@ parse_ntb:
- 	tmp++; /* skip wSequence */
  
- 	block_len = get_ncm(&tmp, opts->block_length);
-+	if (block_len == 0)
-+		block_len = to_process;
-+
- 	/* (d)wBlockLength */
--	if ((block_len < opts->nth_size + opts->ndp_size) || (block_len > ntb_max)) {
-+	if ((block_len < opts->nth_size + opts->ndp_size) || (block_len > ntb_max) ||
-+			(block_len > to_process)) {
- 		INFO(port->func.config->cdev, "Bad block length: %#X\n", block_len);
- 		goto err;
+ 	bdc->gadget.name = BRCM_BDC_NAME;
+-	ret = devm_request_irq(bdc->dev, bdc->irq, bdc_udc_interrupt,
+-				IRQF_SHARED, BRCM_BDC_NAME, bdc);
++	ret = request_irq(bdc->irq, bdc_udc_interrupt, IRQF_SHARED,
++			  BRCM_BDC_NAME, bdc);
+ 	if (ret) {
+ 		dev_err(bdc->dev,
+ 			"failed to request irq #%d %d\n",
+@@ -542,7 +542,7 @@ int bdc_udc_init(struct bdc *bdc)
+ 	ret = bdc_init_ep(bdc);
+ 	if (ret) {
+ 		dev_err(bdc->dev, "bdc init ep fail: %d\n", ret);
+-		return ret;
++		goto err0;
  	}
-@@ -1274,7 +1282,7 @@ parse_ntb:
- 			index = index2;
- 			/* wDatagramIndex[0] */
- 			if ((index < opts->nth_size) ||
--					(index > block_len - opts->dpe_size)) {
-+					(index > block_len)) {
- 				INFO(port->func.config->cdev,
- 				     "Bad index: %#X\n", index);
- 				goto err;
-@@ -1286,7 +1294,8 @@ parse_ntb:
- 			 * ethernet hdr + crc or larger than max frame size
- 			 */
- 			if ((dg_len < 14 + crc_len) ||
--					(dg_len > frame_max)) {
-+					(dg_len > frame_max) ||
-+					(dg_len > block_len - index)) {
- 				INFO(port->func.config->cdev,
- 				     "Bad dgram length: %#X\n", dg_len);
- 				goto err;
-@@ -1311,7 +1320,7 @@ parse_ntb:
- 			dg_len2 = get_ncm(&tmp, opts->dgram_item_len);
  
- 			/* wDatagramIndex[1] */
--			if (index2 > block_len - opts->dpe_size) {
-+			if (index2 > block_len) {
- 				INFO(port->func.config->cdev,
- 				     "Bad index: %#X\n", index2);
- 				goto err;
+ 	ret = usb_add_gadget_udc(bdc->dev, &bdc->gadget);
+@@ -571,6 +571,7 @@ int bdc_udc_init(struct bdc *bdc)
+ err1:
+ 	usb_del_gadget_udc(&bdc->gadget);
+ err0:
++	free_irq(bdc->irq, bdc);
+ 	bdc_free_ep(bdc);
+ 
+ 	return ret;
 
 
