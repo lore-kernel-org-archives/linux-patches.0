@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D43FC43B6E7;
-	Mon, 17 Aug 2026 14:54:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5526E43CE6B;
+	Mon, 17 Aug 2026 14:54:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978448; cv=none; b=FqKPOe0mUWjfk/mXuuqFwNxaNLQBopLj4IzxxY4sII3ylbP4ELa4stOYb5q0gHs629tnrRWMB1bTvLsEsFtjOKpz7L4iXxux/U2ICoa7ZvoCDj5xiipNCCFMLSbjEF4nh7eBhVgWV58pR0JZd9QZ+D7N5nA2P+BhkleJzT1Yo3Y=
+	t=1786978451; cv=none; b=hQUa0M0yLwCC5coQSUKz3IanyRmBvJBI11tHg0s7w4VIzMgVFtSU56W8mok9gbd6rqChziq7JNuXlZNksu6DGO0Pyrc4GmhquZig5fRtqMI10eGDnGiUb8qfVB1XN5KjL9efDBaN8FsOcX/JFCCBwM3ZOi1cnRINE7xhkkOrBCc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978448; c=relaxed/simple;
-	bh=Tgi92XoitcQZw5abK6rhSCZdxFE1elDeDPx4vJedy5A=;
+	s=arc-20240116; t=1786978451; c=relaxed/simple;
+	bh=dTxi1dcQ7KRky/63TCtjNMIbhmxJiqOG8AIwsC+mDyM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fw68AFzRapy0pZ1Fhg7ffno49b21Pqtn/mtBRABV5/4+OEIgS8GsRfwnGfSHIVlpVfV4p5hfqMQcfkwrIEiqJQjXnauXw7eQicBIMcR4byaEjZCEEewkpleQYqdxjZ6Ksm1n/+0we1pj5qh9jnQu6PqEJ9Ee2b97t5BvqnCZ4HI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZEnlyJiM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Fu4uKz8SvcBrJ9Tf2IQdA+EAFJQZTBzWpXmLjKYHIOsf4f79msUPM0t/yqWeKWXxKRhiYziH4CjwJTq+/blr4k9xgJFiStCZnWipIiQSQ3yW5g7L7qDalfbXf+Sq//ckEXZsrTKdVkXWvGanxPo6aJwbFgKiWQTJkA0ZvqLpuLc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=skd9jzQj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZEnlyJiM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A8BD1F00A3A;
-	Mon, 17 Aug 2026 14:54:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="skd9jzQj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19F681F000E9;
+	Mon, 17 Aug 2026 14:54:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978444;
-	bh=CNnUOrH3PdWNqRd+osxllaMTF82AG0bVsRqZmRymztc=;
+	s=korg; t=1786978447;
+	bh=EpTjN/DaNpm/zfSWBhwFY5sikTKLYSNyRwO0jPyih00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZEnlyJiMMvqs3req0PlaqetlGnuR5mEQhMF7njUDmvy6+KctcI54oe3Fuv9ZMwpdo
-	 sXtwbYwOQZcPekQJLWZzfyha8fd5JAMVsav82NxYi8cMgdjjjTeaSoohc+dUqzfk6/
-	 oJnWyflG8oIxuHPl1c7KtPiwDCGAYlkg+cqEWKuw=
+	b=skd9jzQjBjt7J1IH4GRcUMIJhzWWIgJq7UStY0hrKmZprwP3gKhY254NYeql+SkBm
+	 VpV8FjC7o/GpE2leKGrRLd1XyPyGZlXMN8Y3z73MrxxOtVhS4wLIyaQpmtDvP1odQ4
+	 fTmPb+2M/XoFXYAuV92cDkwHSpDZ+7RCA1Op7ro0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Douglas Anderson <dianders@chromium.org>,
+	zhangjianrong <zhangjianrong5@huawei.com>,
+	Fan Ye <fy15309206903@gmail.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 007/156] drm/bridge: ps8640: propagate AUX transfer register errors
-Date: Mon, 17 Aug 2026 15:32:21 +0200
-Message-ID: <20260817132534.941632006@linuxfoundation.org>
+Subject: [PATCH 6.6 008/156] Revert "net: thunderbolt: Enable end-to-end flow control also in transmit"
+Date: Mon, 17 Aug 2026 15:32:22 +0200
+Message-ID: <20260817132534.977121378@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132534.666299318@linuxfoundation.org>
 References: <20260817132534.666299318@linuxfoundation.org>
@@ -51,77 +53,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Fan Ye <fy15309206903@gmail.com>
 
-[ Upstream commit 20697ecb299cd77b4cf8b28f655e56606b0472d8 ]
+[ Upstream commit 1881f2efbf7f78dc0a79a387b29fde6ff56d3731 ]
 
-ps8640_aux_transfer_msg() programs the AUX address registers, starts the
-AUX transfer, waits for SWAUX_SEND to clear, and reads the AUX status
-register. Several of those regmap operations have return values, but the
-function only checks a stale ret after the status read.
+This reverts commit a8065af3346ebd7c76ebc113451fb3ba94cf7769.
 
-Propagate failures from the address write, transfer start, completion
-poll, and status read. This avoids returning a transfer length when the
-bridge register transaction or AUX completion wait failed.
+Per the USB4 spec, a Transmit Descriptor Ring with E2E flow control
+disabled does not require any credits to be available before the Host
+Interface Adapter Layer transmits a tunneled packet from it. Once E2E is
+enabled on that ring the controller must first obtain end-to-end
+credits.
 
-Fixes: 13afcdd7277e ("drm/bridge: parade-ps8640: Add support for AUX channel")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://patch.msgid.link/20260723103509.2-ps8640-v2-pengpeng@iscas.ac.cn
+The ASMedia ASM4242 USB4 host router (PCI 1b21:2425) never delivers
+those credits. The controller does accept the configuration: reading the
+ring OPTIONS register back right after tb_ring_start() returns exactly
+what was written, including RING_FLAG_E2E_FLOW_CONTROL (bit 28) and the
+E2E HopID field. No credit ever arrives though, so the Tx ring's
+hardware consumer index never advances and the link carries no traffic
+at all.
+
+Measured on two hosts connected point to point, onboard ASM4242 on MSI
+X870E and X870, v6.17, stock drivers/net/thunderbolt/main.c with only
+this revert applied on top:
+
+  before: 100% packet loss to the peer; thunderbolt0 is up and the
+          XDomain handshake completes ("new host found"), but iperf3
+          fails with "No route to host" once the neighbour entry
+          expires
+  after:  0% packet loss, 0.28 ms RTT; iperf3 4.21 Gb/s one way and
+          5.17 Gb/s the other (5 runs each, stddev <= 0.02), 1
+          retransmit in 10 s
+
+An instrumented build additionally showed a frozen-Tx-consumer watchdog
+firing ~30k times in a 10 s window before this change.
+
+Rx-side E2E is not touched by this revert, so peers that do return
+credits keep receive-side flow control.
+
+ASMedia does not look like an isolated case. The out-of-tree
+thunderbolt-ibverbs project disables native E2E on AMD NHI by default,
+noting that "Strix Halo has reproduced TX completion wedges with
+multiple native E2E rings active" -- the same failure mode, on a
+different vendor. Since the driver has no way to tell in advance which
+host router returns the credits, going back to the previous behaviour
+looks safer than adding a quirk per affected part; Tx-side E2E can be
+reintroduced as an opt-in for controllers that are known to implement
+the credit return.
+
+Note that the reverted commit was not fixing a reported problem, it was
+derived from the spec wording alone, so this revert is not expected to
+regress a known workload. Cc'ing the original author in case there was
+one.
+
+Fixes: a8065af3346e ("net: thunderbolt: Enable end-to-end flow control also in transmit")
+Cc: zhangjianrong <zhangjianrong5@huawei.com>
+Signed-off-by: Fan Ye <fy15309206903@gmail.com>
+Acked-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Link: https://patch.msgid.link/20260727123002.25225-1-fy15309206903@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/parade-ps8640.c | 27 ++++++++++++++++++++------
- 1 file changed, 21 insertions(+), 6 deletions(-)
+ drivers/net/thunderbolt/main.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/parade-ps8640.c b/drivers/gpu/drm/bridge/parade-ps8640.c
-index 14d4dcf239da8..61ea855e55d87 100644
---- a/drivers/gpu/drm/bridge/parade-ps8640.c
-+++ b/drivers/gpu/drm/bridge/parade-ps8640.c
-@@ -258,8 +258,14 @@ static ssize_t ps8640_aux_transfer_msg(struct drm_dp_aux *aux,
- 	addr_len[PAGE0_SWAUX_LENGTH - base] = (len == 0) ? SWAUX_NO_PAYLOAD :
- 					      ((len - 1) & SWAUX_LENGTH_MASK);
+diff --git a/drivers/net/thunderbolt/main.c b/drivers/net/thunderbolt/main.c
+index 5d7d11d75b0b8..960839a651e51 100644
+--- a/drivers/net/thunderbolt/main.c
++++ b/drivers/net/thunderbolt/main.c
+@@ -928,12 +928,8 @@ static int tbnet_open(struct net_device *dev)
  
--	regmap_bulk_write(map, PAGE0_SWAUX_ADDR_7_0, addr_len,
--			  ARRAY_SIZE(addr_len));
-+	ret = regmap_bulk_write(map, PAGE0_SWAUX_ADDR_7_0, addr_len,
-+				ARRAY_SIZE(addr_len));
-+	if (ret) {
-+		DRM_DEV_ERROR(dev,
-+			      "failed to write AUX address %#x, len %zu: %d\n",
-+			      msg->address, len, ret);
-+		return ret;
-+	}
+ 	netif_carrier_off(dev);
  
- 	if (len && (request == DP_AUX_NATIVE_WRITE ||
- 		    request == DP_AUX_I2C_WRITE)) {
-@@ -275,13 +281,22 @@ static ssize_t ps8640_aux_transfer_msg(struct drm_dp_aux *aux,
- 		}
- 	}
+-	flags = RING_FLAG_FRAME;
+-	/* Only enable full E2E if the other end supports it too */
+-	if (tbnet_e2e && net->svc->prtcstns & TBNET_E2E)
+-		flags |= RING_FLAG_E2E;
+-
+-	ring = tb_ring_alloc_tx(xd->tb->nhi, -1, TBNET_RING_SIZE, flags);
++	ring = tb_ring_alloc_tx(xd->tb->nhi, -1, TBNET_RING_SIZE,
++				RING_FLAG_FRAME);
+ 	if (!ring) {
+ 		netdev_err(dev, "failed to allocate Tx ring\n");
+ 		return -ENOMEM;
+@@ -952,6 +948,11 @@ static int tbnet_open(struct net_device *dev)
+ 	sof_mask = BIT(TBIP_PDF_FRAME_START);
+ 	eof_mask = BIT(TBIP_PDF_FRAME_END);
  
--	regmap_write(map, PAGE0_SWAUX_CTRL, SWAUX_SEND);
-+	ret = regmap_write(map, PAGE0_SWAUX_CTRL, SWAUX_SEND);
-+	if (ret) {
-+		DRM_DEV_ERROR(dev, "failed to start AUX transfer: %d\n", ret);
-+		return ret;
-+	}
- 
- 	/* Zero delay loop because i2c transactions are slow already */
--	regmap_read_poll_timeout(map, PAGE0_SWAUX_CTRL, data,
--				 !(data & SWAUX_SEND), 0, 50 * 1000);
-+	ret = regmap_read_poll_timeout(map, PAGE0_SWAUX_CTRL, data,
-+				       !(data & SWAUX_SEND), 0, 50 * 1000);
-+	if (ret) {
-+		DRM_DEV_ERROR(dev, "failed to complete AUX transfer: %d\n",
-+			      ret);
-+		return ret;
-+	}
- 
--	regmap_read(map, PAGE0_SWAUX_STATUS, &data);
-+	ret = regmap_read(map, PAGE0_SWAUX_STATUS, &data);
- 	if (ret) {
- 		DRM_DEV_ERROR(dev, "failed to read PAGE0_SWAUX_STATUS: %d\n",
- 			      ret);
++	flags = RING_FLAG_FRAME;
++	/* Only enable full E2E if the other end supports it too */
++	if (tbnet_e2e && net->svc->prtcstns & TBNET_E2E)
++		flags |= RING_FLAG_E2E;
++
+ 	ring = tb_ring_alloc_rx(xd->tb->nhi, -1, TBNET_RING_SIZE, flags,
+ 				net->tx_ring.ring->hop, sof_mask,
+ 				eof_mask, tbnet_start_poll, net);
 -- 
 2.53.0
 
