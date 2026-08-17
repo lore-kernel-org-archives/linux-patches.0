@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D318A4477FD;
-	Mon, 17 Aug 2026 15:26:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2894442B32;
+	Mon, 17 Aug 2026 15:26:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786980404; cv=none; b=MlMEQcJ+SL2rePtiCebRl74a6w2xRZsXlwlGhXY4yJ2Obdn8Z0zXMeA6qrQa9njxJoCmpdQyE+mPDygmND9mTH66zefyyUSce1sWoccVBGiqh1c/YyJwoBJDGg7rikdngPN9hHMipEj0qf6IGOrTLDOvL9CgS2953UXQfFELi1o=
+	t=1786980406; cv=none; b=theHkzaEpkcWVgHplffQNxCi1/8vNKYTJy7vEyrJ8C1rEHzAZcsVd34Ok8PysewpgjIEwrNI+gvsTOODMA/q7pPd62Aun719Wy58hxlbw43w2p6bsV1VP0Oo/ChIRArm3g2wv0kTAggINXSIyFIy/adhEDSr1JfIZlz7ewbbrgg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786980404; c=relaxed/simple;
-	bh=BS/tRmsBF5h8z2KRsJm3aZjOOZroiZ0xlzLGXMW63zc=;
+	s=arc-20240116; t=1786980406; c=relaxed/simple;
+	bh=mEFUbkEDAZXQ85O86LQuxmfQSzxpGRAwAWzXPYB0oo8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DHKWjGxBpjBCQbZ+9mDuf/WCvLhE7Idq54pEiMLRJmj1FsOQs0gbu94fVpjaZOaba60JA8BxqIfPzB4VmOILzWNigVxyIRoL/t/9DLL0ih5D8enxitpmieMptmEj3xHe+AoeL+Jlc1sfMQAdwiLyWNY4EXurl/nH+zCc1MOqoq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TfbHRSym; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XE5jD9WIt8cvabPBNgvvJsOkMbiQSItYpQu5DrakhkAn2hJ54MGD8zzNzXrE1Kt45j9fg9/2GxXwMRy38qFU4cdXSTPDah0goUbx82yyBV2q5UzuJr+z1XRFhDZMGpw+fHfxM13wrus6TdAyATQzAzvb/6NMcGdw6ExSKUl4Dk0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LeZa0DKq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TfbHRSym"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6399F1F000E9;
-	Mon, 17 Aug 2026 15:26:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LeZa0DKq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17C341F000E9;
+	Mon, 17 Aug 2026 15:26:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786980402;
-	bh=zc6bINWz23IbLFz0Qhytt7JUrSLt2B36+Le9f+uuzdE=;
+	s=korg; t=1786980405;
+	bh=ExvH9Ca60zsln/2zArypg1FhOz7Kz3drjlMcyrQzebI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TfbHRSymUlLn4PSmfLuw9WHkB7/0MoIEuqiUDzWbHTQRnZh3w8PrGWQ2CTu3CQqiV
-	 EwxZE+hRMcwGbLOvZqbwayER6gpq104Be3hDk0qbJBcOOSAvIDcb2qsyCT2POd7d0X
-	 fmr6yw1F7O4zZ0hbQ9sMMKaNzlTCmfimgivbTOmI=
+	b=LeZa0DKqU+JCK1xSIuP/jomaWUI7RJRtJwdRd6R3IfXjDjbMPtcbhep70HgLLlLAf
+	 DOgj+Gh4i5Kod6SIPHJKcaY8xFmYTpZDdpFsRiCuJmL5O0ioFJp6RamO37YrD48+u0
+	 /m0SmwSUifmTHzJEMyu40dYMivnIidQGxFnU4Feg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Kees Cook <kees@kernel.org>,
 	Nathan Chancellor <nathan@kernel.org>,
+	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 560/609] fortify: refactor test_fortify Makefile to fix some build problems
-Date: Mon, 17 Aug 2026 15:34:16 +0200
-Message-ID: <20260817132602.469453799@linuxfoundation.org>
+Subject: [PATCH 6.1 561/609] fortify: Disable -Wstringop-overread in tests
+Date: Mon, 17 Aug 2026 15:34:17 +0200
+Message-ID: <20260817132602.497832293@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -52,173 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 4e9903b0861c9df3464b82db4a7025863bac1897 upstream.
+commit c1f3e770eec26d6f96dd6d2ea30555ba7c09a244 upstream.
 
-There are some issues in the test_fortify Makefile code.
+clang recently added support for -Wstringop-overread [1], which is on by
+default like -Wfortify-source. This breaks the usage of -Werror in the
+fortify tests, resulting in the following false positive warnings in the
+kernel build:
 
-Problem 1: cc-disable-warning invokes compiler dozens of times
+  warning: unsafe memcmp() usage lacked '__read_overflow2' warning in lib/test_fortify/read_overflow2-memcmp.c
+  warning: unsafe memcmp() usage lacked '__read_overflow' warning in lib/test_fortify/read_overflow-memcmp.c
+  warning: unsafe memchr() usage lacked '__read_overflow' warning in lib/test_fortify/read_overflow-memchr.c
 
-To see how many times the cc-disable-warning is evaluated, change
-this code:
+Examining the fortify test logs shows a warning like the following in
+each of the failed logs:
 
-  $(call cc-disable-warning,fortify-source)
+  In file included from lib/test_fortify/read_overflow2-memcmp.c:5:
+  lib/test_fortify/test_fortify.h:34:2: error: 'memcmp' reading 17 bytes from a region of size 16 [-Werror,-Wstringop-overread]
+     34 |         TEST;
+        |         ^
+  lib/test_fortify/read_overflow2-memcmp.c:3:2: note: expanded from macro 'TEST'
+      3 |         memcmp(large, small, sizeof(small) + 1)
+        |         ^
+  1 error generated.
 
-to:
+Disable -Wstringop-overread for the fortify tests, as it defeats the
+purpose of testing the Linux specific implementation of fortify, like
+-Wfortify-source.
 
-  $(call cc-disable-warning,$(shell touch /tmp/fortify-$$$$)fortify-source)
-
-Then, build the kernel with CONFIG_FORTIFY_SOURCE=y. You will see a
-large number of '/tmp/fortify-<PID>' files created:
-
-  $ ls -1 /tmp/fortify-* | wc
-       80      80    1600
-
-This means the compiler was invoked 80 times just for checking the
--Wno-fortify-source flag support.
-
-$(call cc-disable-warning,fortify-source) should be added to a simple
-variable instead of a recursive variable.
-
-Problem 2: do not recompile string.o when the test code is updated
-
-The test cases are independent of the kernel. However, when the test
-code is updated, $(obj)/string.o is rebuilt and vmlinux is relinked
-due to this dependency:
-
-  $(obj)/string.o: $(obj)/$(TEST_FORTIFY_LOG)
-
-always-y is suitable for building the log files.
-
-Problem 3: redundant code
-
-  clean-files += $(addsuffix .o, $(TEST_FORTIFY_LOGS))
-
-... is unneeded because the top Makefile globally cleans *.o files.
-
-This commit fixes these issues and makes the code readable.
-
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Link: https://lore.kernel.org/r/20240727150302.1823750-2-masahiroy@kernel.org
+Cc: stable@vger.kernel.org
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2168
+Link: https://github.com/llvm/llvm-project/commit/86f2e71cb8d165b59ad31a442b2391e23826133e [1]
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://patch.msgid.link/20260623-fix-test_fortify-for-clang-stringop-overread-v1-1-15ee8342a953@kernel.org
 Signed-off-by: Kees Cook <kees@kernel.org>
-[nathan: Fixed conflicts]
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/.gitignore              |  2 --
- lib/Makefile                | 34 +---------------------------------
- lib/test_fortify/.gitignore |  2 ++
- lib/test_fortify/Makefile   | 28 ++++++++++++++++++++++++++++
- scripts/remove-stale-files  |  2 ++
- 5 files changed, 33 insertions(+), 35 deletions(-)
- create mode 100644 lib/test_fortify/.gitignore
- create mode 100644 lib/test_fortify/Makefile
+ lib/test_fortify/Makefile | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/lib/.gitignore b/lib/.gitignore
-index 54596b634ecbf..101a4aa92fb53 100644
---- a/lib/.gitignore
-+++ b/lib/.gitignore
-@@ -5,5 +5,3 @@
- /gen_crc32table
- /gen_crc64table
- /oid_registry_data.c
--/test_fortify.log
--/test_fortify/*.log
-diff --git a/lib/Makefile b/lib/Makefile
-index 6ae66e13f3194..1081d0c161159 100644
---- a/lib/Makefile
-+++ b/lib/Makefile
-@@ -394,36 +394,4 @@ CFLAGS_longest_symbol_kunit.o += $(call cc-disable-warning, missing-prototypes)
- 
- obj-$(CONFIG_GENERIC_LIB_DEVMEM_IS_ALLOWED) += devmem_is_allowed.o
- 
--# FORTIFY_SOURCE compile-time behavior tests
--TEST_FORTIFY_SRCS = $(wildcard $(srctree)/$(src)/test_fortify/*-*.c)
--TEST_FORTIFY_LOGS = $(patsubst $(srctree)/$(src)/%.c, %.log, $(TEST_FORTIFY_SRCS))
--TEST_FORTIFY_LOG = test_fortify.log
--
--quiet_cmd_test_fortify = TEST    $@
--      cmd_test_fortify = $(CONFIG_SHELL) $(srctree)/scripts/test_fortify.sh \
--			$< $@ "$(NM)" $(CC) $(c_flags) \
--			$(call cc-disable-warning,fortify-source) \
--			-DKBUILD_EXTRA_WARN1
--
--targets += $(TEST_FORTIFY_LOGS)
--clean-files += $(TEST_FORTIFY_LOGS)
--clean-files += $(addsuffix .o, $(TEST_FORTIFY_LOGS))
--$(obj)/test_fortify/%.log: $(src)/test_fortify/%.c \
--			   $(src)/test_fortify/test_fortify.h \
--			   $(srctree)/include/linux/fortify-string.h \
--			   $(srctree)/scripts/test_fortify.sh \
--			   FORCE
--	$(call if_changed,test_fortify)
--
--quiet_cmd_gen_fortify_log = GEN     $@
--      cmd_gen_fortify_log = cat </dev/null $(filter-out FORCE,$^) 2>/dev/null > $@ || true
--
--targets += $(TEST_FORTIFY_LOG)
--clean-files += $(TEST_FORTIFY_LOG)
--$(obj)/$(TEST_FORTIFY_LOG): $(addprefix $(obj)/, $(TEST_FORTIFY_LOGS)) FORCE
--	$(call if_changed,gen_fortify_log)
--
--# Fake dependency to trigger the fortify tests.
--ifeq ($(CONFIG_FORTIFY_SOURCE),y)
--$(obj)/string.o: $(obj)/$(TEST_FORTIFY_LOG)
--endif
-+subdir-$(CONFIG_FORTIFY_SOURCE) += test_fortify
-diff --git a/lib/test_fortify/.gitignore b/lib/test_fortify/.gitignore
-new file mode 100644
-index 0000000000000..c1ba37d14b50e
---- /dev/null
-+++ b/lib/test_fortify/.gitignore
-@@ -0,0 +1,2 @@
-+# SPDX-License-Identifier: GPL-2.0-only
-+/*.log
 diff --git a/lib/test_fortify/Makefile b/lib/test_fortify/Makefile
-new file mode 100644
-index 0000000000000..7887e6126e79c
---- /dev/null
+index 7887e6126e79c..eba2ba0faeb6a 100644
+--- a/lib/test_fortify/Makefile
 +++ b/lib/test_fortify/Makefile
-@@ -0,0 +1,28 @@
-+# SPDX-License-Identifier: GPL-2.0
-+
-+ccflags-y := $(call cc-disable-warning,fortify-source)
-+
-+quiet_cmd_test_fortify = TEST    $@
-+      cmd_test_fortify = $(CONFIG_SHELL) $(srctree)/scripts/test_fortify.sh \
-+			$< $@ "$(NM)" $(CC) $(c_flags) -DKBUILD_EXTRA_WARN1
-+
-+$(obj)/%.log: $(src)/%.c $(srctree)/scripts/test_fortify.sh \
-+	      $(src)/test_fortify.h \
-+	      $(srctree)/include/linux/fortify-string.h \
-+	      FORCE
-+	$(call if_changed,test_fortify)
-+
-+logs = $(patsubst $(srctree)/$(src)/%.c, %.log, $(wildcard $(srctree)/$(src)/*-*.c))
-+targets += $(logs)
-+
-+quiet_cmd_gen_fortify_log = CAT     $@
-+      cmd_gen_fortify_log = cat $(or $(real-prereqs),/dev/null) > $@
-+
-+$(obj)/test_fortify.log: $(addprefix $(obj)/, $(logs)) FORCE
-+	$(call if_changed,gen_fortify_log)
-+
-+always-y += test_fortify.log
-+
-+# Some architectures define __NO_FORTIFY if __SANITIZE_ADDRESS__ is undefined.
-+# Pass CFLAGS_KASAN to avoid warnings.
-+KASAN_SANITIZE := y
-diff --git a/scripts/remove-stale-files b/scripts/remove-stale-files
-index ccadfa3afb2b8..c22fe4630bac0 100755
---- a/scripts/remove-stale-files
-+++ b/scripts/remove-stale-files
-@@ -47,3 +47,5 @@ rm -f arch/riscv/purgatory/kexec-purgatory.c
- rm -f scripts/extract-cert
+@@ -1,6 +1,7 @@
+ # SPDX-License-Identifier: GPL-2.0
  
- rm -f arch/x86/purgatory/kexec-purgatory.c
-+
-+rm -f lib/test_fortify.log
+ ccflags-y := $(call cc-disable-warning,fortify-source)
++ccflags-y += $(call cc-disable-warning,stringop-overread)
+ 
+ quiet_cmd_test_fortify = TEST    $@
+       cmd_test_fortify = $(CONFIG_SHELL) $(srctree)/scripts/test_fortify.sh \
 -- 
 2.53.0
 
