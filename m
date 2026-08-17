@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C8E83F12C6;
-	Mon, 17 Aug 2026 15:09:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D30B3DD851;
+	Mon, 17 Aug 2026 15:09:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979342; cv=none; b=MU8uUSj34jwYpEI25+cJ1rgnL7wxvjzS94kmRqloBMsUYde3UCQotWew5Ll4bvTN/+rmoQeaIeexfZ+2aa7nUkwpo9/DG30qZhWsmi9bzGTlOvhpuAl8+G14OZeSTP5bxx/bLy/wTqsBAvYt80KHJ/hhXlkWQgM9YLD+6hs/AgI=
+	t=1786979345; cv=none; b=lDuc2cqcQuMor2/aWuFm9JcOHObIblR+fxL1c/4M/DtAmSOR5cSmpJlND8z4kbABfMCz2qrolP4aWGSeTIBjoJsRwt4UQLnKT+VMbfcQs7MS8roW2oX7e60UzA0JHMisA5xQBw4ge0VWuB/bcxI/RgQuoacLhgrXBL44Fa2QCC4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979342; c=relaxed/simple;
-	bh=O7B1KdOcBeBp4DuRVsBDQAOEojBC0H2Ld/v3nIe1wCg=;
+	s=arc-20240116; t=1786979345; c=relaxed/simple;
+	bh=/+NSA4F8OOnHa4q5NrnngLXv42PFAjCKDM4kR3BMih4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CjwNFs1PgL6k/KtQU9ustTAJtglw7yP8NTVmvb1HVPrR1a/RvrCMDP3UITJF17W/xhkf20vwhAcGZhXYRvONTe/a1PXcIYuKNPVAJB45b3pPfG7l7xX+OPp0qbFj9aj2CzXhdPIclBwFYTQCIQUUQHo/e1fYKc3oq80PMn15hmU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MzBh0iio; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gY6DkI8poL+SmX5LuLiFctEqw8IDUeVaIeWh/77dFJ74hpON2h5XsJvMwpLrtYDHtYp8hTBquiNW/OL7sScbgn2+OyavRyqigF4mk3uVF7B1I2IGNmwH4sNIEGIZ8VoDv73zbEeFIQoniSd2v0UGB41dO75hIus820QmKXF06UQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MDq6/QqE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MzBh0iio"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11EF31F000E9;
-	Mon, 17 Aug 2026 15:08:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MDq6/QqE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BF511F000E9;
+	Mon, 17 Aug 2026 15:09:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979340;
-	bh=S5VAQYVuuNsvq+TUIURKZKC4mBEvgR+c+ZMJ3u66qJI=;
+	s=korg; t=1786979343;
+	bh=tTmMmMjFMHoBddvC/k6DWWF3ik50C12GHjiUqFxFNjI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MzBh0iio7CA3Z+hTdrYrHwrGwg55dHdaqM94iEET3EP1X5gYNlsTIrXZw3VC9ezns
-	 xz1usMlBOodXW+DpOESgUlAI/EE/jYA/C5iqz4Fu8asw2vusQcdvdbPNlNRPS5aDGK
-	 selR/LPXS9qTmr9FB1qlZvZCDdbS/fnjinlZiUuY=
+	b=MDq6/QqEuRZAXDGto0Uy4W5J2OZ6Mi4BeRHKHQUyaw0c69uounmlPy2btguMSh1IA
+	 DEuT2wJsoeorl0mw5/BdDD41EMvWNSmfeZum97muk9E3SQUZHj7HiOE4m04z3FmPFR
+	 5MprdGrNVeJ4yz44scZQeO9YLq3t324TdkRxH8QM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rohan G Thomas <rohan.g.thomas@altera.com>,
-	Nazim Amirul <muhammad.nazim.amirul.nazle.asmade@altera.com>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Jakub Raczynski <j.raczynski@samsung.com>,
+	Suman Ghosh <sumang@marvell.com>,
+	Ratheesh Kannoth <rkannoth@marvell.com>,
+	Simon Horman <horms@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 154/609] net: stmmac: reset residual action in L3L4 filters on delete
-Date: Mon, 17 Aug 2026 15:27:30 +0200
-Message-ID: <20260817132549.164493702@linuxfoundation.org>
+Subject: [PATCH 6.1 155/609] octeontx2-vf: set TC flower flag on MCAM entry allocation
+Date: Mon, 17 Aug 2026 15:27:31 +0200
+Message-ID: <20260817132549.199122189@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -54,41 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nazim Amirul <muhammad.nazim.amirul.nazle.asmade@altera.com>
+From: Suman Ghosh <sumang@marvell.com>
 
-[ Upstream commit a448f821289934b961dd9d8d0beb006cc8937ba2 ]
+[ Upstream commit 0d4d31e3cc5dd6204fa1495c4107f5075acce5ed ]
 
-When deleting an L3/L4 flower filter entry, the action field is not
-reset. If a filter was previously configured with a drop action, that
-action may persist and affect subsequent filter configurations
-unintentionally.
+When MCAM entries are allocated for a VF netdev via the devlink
+mcam_count parameter, only OTX2_FLAG_NTUPLE_SUPPORT was set. That
+enabled ethtool ntuple filters but not tc flower offload. Also set
+OTX2_FLAG_TC_FLOWER_SUPPORT when entries are successfully allocated.
 
-Clear the action field when the filter entry is deleted.
-
-Fixes: 425eabddaf0f ("net: stmmac: Implement L3/L4 Filters using TC Flower")
-Signed-off-by: Rohan G Thomas <rohan.g.thomas@altera.com>
-Signed-off-by: Nazim Amirul <muhammad.nazim.amirul.nazle.asmade@altera.com>
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/20260714023716.29865-5-muhammad.nazim.amirul.nazle.asmade@altera.com
-Reviewed-by: Jakub Raczynski <j.raczynski@samsung.com>
+Fixes: 2da489432747 ("octeontx2-pf: devlink params support to set mcam entry count")
+Signed-off-by: Suman Ghosh <sumang@marvell.com>
+Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260715052007.2099851-1-rkannoth@marvell.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c | 1 +
+ drivers/net/ethernet/marvell/octeontx2/nic/otx2_flows.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
-index 6bf198b3f12369..e9aac51c1b9b78 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
-@@ -671,6 +671,7 @@ static int tc_del_flow(struct stmmac_priv *priv,
- 	entry->in_use = false;
- 	entry->cookie = 0;
- 	entry->is_l4 = false;
-+	entry->action = 0;
- 	return ret;
- }
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_flows.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_flows.c
+index 7c7f8814fb3f95..cbf44f0d7d8bb6 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_flows.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_flows.c
+@@ -153,6 +153,7 @@ int otx2_alloc_mcam_entries(struct otx2_nic *pfvf, u16 count)
+ 	if (allocated) {
+ 		pfvf->flags |= OTX2_FLAG_MCAM_ENTRIES_ALLOC;
+ 		pfvf->flags |= OTX2_FLAG_NTUPLE_SUPPORT;
++		pfvf->flags |= OTX2_FLAG_TC_FLOWER_SUPPORT;
+ 	}
  
+ 	if (allocated != count)
 -- 
 2.53.0
 
