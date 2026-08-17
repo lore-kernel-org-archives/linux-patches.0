@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E60021D435F;
-	Mon, 17 Aug 2026 14:01:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D08751D435F;
+	Mon, 17 Aug 2026 14:01:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975263; cv=none; b=ctGKlPYhozlFVGz3/iGM2W9ucaJg9TNzdG4135Lkgui4+cWGxuUdVeg3tQ793yGt1wfydxhMOcf0opn/mH3tRHeksA9irdcG9/dN8JbYjkRqFoDshsUTuN6D7eppZkaVaLlldtxmR1dHrl+blNvDCqwuvsGuYjAX7A4v7qmGE0s=
+	t=1786975266; cv=none; b=Z9njw7hGxRImDPaOpVvYKOQ0jnQIbE/ySDtMBt+JoBedUhUGPNf93ZJgKNra+czThIC5cxoW+afP0WnRHuY4OmVb/vknlcSCeHM0ipIkje9DK2+FmO4rrwwYAQAHDN+geuxmy4dNtzhJI8l/g0Q3JVbmeFLyVFsrL50pzNG30Zk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975263; c=relaxed/simple;
-	bh=NaMUa+bpu5NoV2bE5Q529FImP5I957rgAkmdElmkoKY=;
+	s=arc-20240116; t=1786975266; c=relaxed/simple;
+	bh=Zj7gxzffd9ErdG0s6xerFk0rKGG4tXBmD5mPL7/t9mk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SuRc2Z1Gto2xVH34hl00reeIXYvzV9Qlk0qkijVidU8vDpkDjP+AOVM9u24/aFoDp2ffT65eNLo6lTHYPuN9v5Ubi6RP5HQO6MA/F0I98emhkLhQ2AgCyh7Hxstw3aVhSSOf0ngHtqzbN+cc8/jvNWRxcWcQ2UlvwIHP0mw8NVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zPIWwrlc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DOhlqvo3HL/llG/ke7DGnBQ8aaBK4cDAxm/ZaYphaS+v2fy/aip+mprrYVIxyEyOuXHW5tCCW/eppK1PmvdGtmYXZAwNy2u5qd7T4HVw0/Y9P6Luq9YQnOWmKc0dUH0CI7HhO60HXD0OgwDYXDoAtNJUrUjKH6a0xkJ/MzRS5WQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wMfELKBy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zPIWwrlc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B9411F000E9;
-	Mon, 17 Aug 2026 14:01:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wMfELKBy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32CB51F000E9;
+	Mon, 17 Aug 2026 14:01:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975261;
-	bh=bK638LTNF7rpQfKetx3mvn6T8446P4ryyIPlZ342FG0=;
+	s=korg; t=1786975264;
+	bh=qXRLGibxfGm5CKAm5OcXb3OPuAFxNnzvX6OgoYNmOgc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zPIWwrlcIUuUdC7xJzLQoii2eGGnnEqn2ZSVWTOMj+cnFYP1RdDqYIltjKVnZ9toh
-	 miaKjjapfu5o8z1d/LQZPigDcBH4SxO2PC3WDVgiF99BbOJ+7jU7XZ4ttgsZGtVrcB
-	 /jDNn5wL/iucXdA2abpwKIme7hy2C1glORsL1+Ms=
+	b=wMfELKByrdlbXyFHsckeepDxHCtwvK5EDu/gYWuiYn69FFkZPm8e6a52LCEZjMhom
+	 /7ramLj12/EAyEXm/DG6sfD9gjgxp9/vKiTq7XRZzZgZTbMDxZ3qqKPr3J7IcJnWKt
+	 C3OR40+OVdVVbpZ8Y0PKCSaXhDWcLkuW01hz0Dew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohsin Bashir <mohsin.bashr@gmail.com>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Sun Jian <sun.jian.kdev@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 218/250] veth: fix skb length accounting after XDP frag adjustment
-Date: Mon, 17 Aug 2026 15:32:59 +0200
-Message-ID: <20260817132545.433523279@linuxfoundation.org>
+	Jun Yang <junvyyang@tencent.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH 6.18 219/250] vhost: reset the vring metadata cache on vring reconfiguration
+Date: Mon, 17 Aug 2026 15:33:00 +0200
+Message-ID: <20260817132545.470336414@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.466235697@linuxfoundation.org>
 References: <20260817132536.466235697@linuxfoundation.org>
@@ -52,89 +50,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sun Jian <sun.jian.kdev@gmail.com>
+From: Jun Yang <junvyyang@tencent.com>
 
-commit cb6379feaaff11c4e1e79c26c745ffa23182768a upstream.
+commit de845981da67a6b049080c87e605130b0c30adc5 upstream.
 
-veth exposes non-linear skb fragments through an xdp_buff. If an XDP
-program adjusts the fragment area, veth_xdp_rcv_skb() copies
-xdp_frags_size back to skb->data_len but leaves skb->len containing the
-old fragment contribution.
+vq->meta_iotlb[] caches the vhost_iotlb_map that backs each vring
+metadata region, and iotlb_access_ok() returns early on a cache hit,
+taking the hit as proof that the region has already been validated:
 
-After a fragment shrink, this makes skb_headlen() larger than the actual
-linear area. In the reproduced UDP receive path, __skb_datagram_iter()
-copied 1024 bytes past the actual linear tail to userspace, starting at
-struct skb_shared_info. The copied bytes included the affected skb's
-nr_frags, xdp_frags_size, and a kernel pointer from
-skb_shinfo(skb)->frags[0]. Real packet data was displaced by the same
-amount and truncated at the end.
+	if (vhost_vq_meta_fetch(vq, addr, len, type))
+		return true;
 
-Subtract the old data_len before replacing it and add the new data_len
-afterwards, keeping skb->len and skb->data_len synchronized.
+The cache is reset on VHOST_IOTLB_UPDATE and VHOST_IOTLB_INVALIDATE, on
+device IOTLB (re)initialisation and on vq reset, but not when
+VHOST_SET_VRING_ADDR replaces vq->desc, vq->avail and vq->used, nor when
+VHOST_SET_VRING_NUM changes the region sizes.
 
-Additionally, bpf_xdp_pull_data() can advance data_end while leaving
-frags present. The skb is then still non-linear, so the old
-__skb_put(skb, off) triggers SKB_LINEAR_ASSERT().
+With a device IOTLB attached both ioctls are accepted while the vq is
+live, and neither validates the addresses at ioctl time: vq_access_ok()
+and vq_log_used_access_ok() return true early because the addresses are
+GIOVAs, deferring validation to prefetch time.  Once the cache has been
+populated that deferred validation no longer runs -- vq_meta_prefetch()
+hits the stale entry and returns true -- and vhost_vq_meta_fetch() keeps
+translating through the old mapping as
 
-Use skb_set_tail_pointer() and update skb->len explicitly instead,
-following bpf_prog_run_generic_xdp(). Unlike __skb_put(),
-skb_set_tail_pointer() does not require a linear skb.
+	map->addr + addr - map->start
 
-A 60000-byte UDP datagram on a veth pair with MTU 64000 was shortened by
-1024 bytes from its fragment area. Before the fix, all 10 runs produced
-corrupted payloads. After the fix, all 10 runs matched the expected
-payload exactly. A forced-tailroom reproducer also exercises
-bpf_xdp_pull_data() with frags still present; the old code triggers
-SKB_LINEAR_ASSERT(), while this fix passes 10/10 runs.
+for an address the mapping no longer covers.  vhost_copy_to_user() and
+vhost_copy_from_user() consume the result with __copy_to_user() and
+__copy_from_user(), which do not check it either, so a subsequent used
+ring update or descriptor fetch accesses memory outside the region the
+IOTLB actually maps.
 
-Fixes: 718a18a0c8a6 ("veth: Rework veth_xdp_rcv_skb in order to accept non-linear skb")
+Reset the metadata cache whenever the vring is reconfigured, so the new
+addresses are pushed back through iotlb_access_ok()'s slow path.
+
+Fixes: f88949138058 ("vhost: introduce O(1) vq metadata cache")
 Cc: stable@vger.kernel.org
-Reported-by: Mohsin Bashir <mohsin.bashr@gmail.com>
-Link: https://lore.kernel.org/bpf/80687d9c-9c27-494c-b3f2-efd0230b1895@gmail.com/
-Suggested-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Signed-off-by: Sun Jian <sun.jian.kdev@gmail.com>
-Link: https://patch.msgid.link/20260804054040.613675-3-sun.jian.kdev@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Assisted-by: tencentos-corvus-ai:kimi-k3
+Signed-off-by: Jun Yang <junvyyang@tencent.com>
+Message-ID: <20260803014823.68623-1-juny24602@gmail.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/veth.c |   22 ++++++++++++++--------
- 1 file changed, 14 insertions(+), 8 deletions(-)
+ drivers/vhost/vhost.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/net/veth.c
-+++ b/drivers/net/veth.c
-@@ -865,18 +865,24 @@ static struct sk_buff *veth_xdp_rcv_skb(
+--- a/drivers/vhost/vhost.c
++++ b/drivers/vhost/vhost.c
+@@ -2131,6 +2131,14 @@ static long vhost_vring_set_num_addr(str
+ 		BUG();
+ 	}
  
- 	skb_reset_mac_header(skb);
- 
--	/* check if bpf_xdp_adjust_tail was used */
--	off = xdp->data_end - orig_data_end;
--	if (off != 0)
--		__skb_put(skb, off); /* positive on grow, negative on shrink */
--
- 	/* XDP frag metadata (e.g. nr_frags) are updated in eBPF helpers
--	 * (e.g. bpf_xdp_adjust_tail), we need to update data_len here.
-+	 * (e.g. bpf_xdp_adjust_tail). Remove the old fragment contribution
-+	 * from skb->len before updating data_len, then add the new one back.
- 	 */
--	if (xdp_buff_has_frags(xdp))
-+	skb->len -= skb->data_len;
-+	if (xdp_buff_has_frags(xdp)) {
- 		skb->data_len = skb_shinfo(skb)->xdp_frags_size;
--	else
-+		skb->len += skb->data_len;
-+	} else {
- 		skb->data_len = 0;
-+	}
++	/*
++	 * The metadata cache holds the IOTLB mapping that backed the previous
++	 * desc/avail/used addresses and vring size, both of which are being
++	 * replaced here.  iotlb_access_ok() takes a cache hit as proof that the
++	 * region was validated, so the stale entries have to go.
++	 */
++	__vhost_vq_meta_reset(vq);
 +
-+	/* Synchronize the skb tail with XDP's updated linear area. */
-+	off = xdp->data_end - orig_data_end;
-+	if (off != 0) {
-+		skb_set_tail_pointer(skb, xdp->data_end - xdp->data);
-+		skb->len += off; /* positive on grow, negative on shrink */
-+	}
+ 	mutex_unlock(&vq->mutex);
  
- 	skb->protocol = eth_type_trans(skb, rq->dev);
- 
+ 	return r;
 
 
