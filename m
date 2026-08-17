@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E3EA3CB2E9;
-	Mon, 17 Aug 2026 15:21:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93D623EC83A;
+	Mon, 17 Aug 2026 15:21:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786980108; cv=none; b=HKY5rLVa3XzysyAJHNuSaJIj0+5muy01U9Joi7SJjxD3ef90cUkLzClsMGDMSCu4P3NzzXVoTC1vv8xqfzeqf5/NjlzrPyCMF3l6JjbNQhHCO/CXFXv37zUHfgCvRUBOw/Iv93TgHaQdEMVjsi/qZVVTTjWmbW+zdsHx2oAMYmI=
+	t=1786980112; cv=none; b=S4FcGITuvVm7ADw7EzMoWifSFiPrukuLZc4/2+etVJSmdsjshEjxq32xpDX+9NscUK9eObrqCKflXeWGG37oxivsaJcS9+u+9LBg5vcOIj/Ztm2mHyKjDs7/FzkgfeWzqTlLhvLrqW1XejpzVBt/CYg0zGAvRCcI8y/nfPsmN1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786980108; c=relaxed/simple;
-	bh=+RnVVLmZpMqsncprBLgO+KrKK5ousFt7OAOY3tX39lk=;
+	s=arc-20240116; t=1786980112; c=relaxed/simple;
+	bh=eknELRgPBQOgxgs9LvCjDuExOo0H6Bz746o8BZW3Z50=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jhoYi4Ft3TWxng6924ArpVkhsfjAvkbzaFSQLULm6dsZgPDLrqzc5b10D14LcQdQIONrOZQm3qh99RNGSbENo2H3hP+UbXAtlZFkUJXFzZlGeyxWYk8c7FQAMdz6TBY9fv/88WuCZjhOYlgoQ6I7QLeeYgpTq2gFe/Z2wJiD7rI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tTt2OTwl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Af98bVNfIssK7loUWTcIYZIehY9FYRRDhGZwzOfDkyHkTP+QwQ+5AaYDCQ21Hruymke3yUeDlmkYzR/RfunY83qFr6ZRKB3L7xWXbOhHOkDibLXzJvxR8O791oHaaOgyFQ5tDpNW/FkhqA1UA58qx6fjyZ3h/28zgNtyHuCAWTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EHuiD+6L; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tTt2OTwl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A98BE1F000E9;
-	Mon, 17 Aug 2026 15:21:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EHuiD+6L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D5C11F000E9;
+	Mon, 17 Aug 2026 15:21:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786980107;
-	bh=FXVk+JbBqWuqrtPh+WLTBbgbXuYwPH67X1KS3KTZDmQ=;
+	s=korg; t=1786980110;
+	bh=XR8+yIbIizOnp3UA/lUM52v95uBHwzlPouDfTmSI1pQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tTt2OTwlcuxCuhMEdFxzLxZkUO9km5zi3M/AVRMFTZf5t94uKwf2ixibQRY9jBtp7
-	 78B1YteC4yj4MO2of/2Awg/TqHw3wsFG4rX29BeXsRcLWKc8Z1Gadg4qCdezd+Ixd6
-	 eUIqO1Ugx4vSjwGD6FlGMKhCiIcA1EkzvpmmJNsU=
+	b=EHuiD+6LnmHlDKAb/jnZ4Knyelw5doMm0Lw5i4vEK+ftjnIdsiHC0e4U5F+aCPIea
+	 rsEkq6dupN3jOWMe7rBUtjK8txEmjBgFYpBRe4H1nSbp9swc122mmeUiqrQY7mHrsy
+	 cOacWRc0TwQblbXpTx50HBhySmKJAkGobyGe4mRU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Pavel Pisa <pisa@fel.cvut.cz>,
+	stable@kernel.org,
 	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.1 459/609] can: peak_usb: validate uCAN receive record lengths
-Date: Mon, 17 Aug 2026 15:32:35 +0200
-Message-ID: <20260817132559.380876708@linuxfoundation.org>
+Subject: [PATCH 6.1 460/609] can: ctucanfd: add missing MODULE_DEVICE_TABLE()
+Date: Mon, 17 Aug 2026 15:32:36 +0200
+Message-ID: <20260817132559.410985527@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -52,98 +54,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-commit 93fcab2c6968446316bbb49548848df604d6346f upstream.
+commit d937bdb244a751fe5967052ea2d64a7b2c476cc0 upstream.
 
-pcan_usb_fd_decode_buf() walks uCAN records packed in one USB
-receive buffer.
+The driver has a match table for the pci bus wired into its driver
+structure, but the table is not exported with MODULE_DEVICE_TABLE().
 
-Require each record to contain the fixed header for its type, and verify
-CAN payload bytes before copying them into the skb.
+Add the missing MODULE_DEVICE_TABLE() entry so module alias information
+is generated for automatic module loading.
+
+This is a source-level fix.  It does not claim dynamic hardware
+reproduction; the evidence is the driver-owned match table, its use by
+the driver registration structure, and the missing module alias
+publication.
 
 Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260706092836.79754-1-pengpeng@iscas.ac.cn
-Fixes: 0a25e1f4f185 ("can: peak_usb: add support for PEAK new CANFD USB adapters")
-Cc: stable@vger.kernel.org
+Acked-by: Pavel Pisa <pisa@fel.cvut.cz>
+Link: https://patch.msgid.link/20260704151957.48194-1-pengpeng@iscas.ac.cn
+Fixes: 792a5b678e81 ("can: ctucanfd: CTU CAN FD open-source IP core - PCI bus support.")
+Cc: stable@kernel.org
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/usb/peak_usb/pcan_usb_fd.c |   40 ++++++++++++++++++++++++++++-
- 1 file changed, 39 insertions(+), 1 deletion(-)
+ drivers/net/can/ctucanfd/ctucanfd_pci.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/net/can/usb/peak_usb/pcan_usb_fd.c
-+++ b/drivers/net/can/usb/peak_usb/pcan_usb_fd.c
-@@ -519,6 +519,13 @@ static int pcan_usb_fd_decode_canmsg(str
- 				     dev->can.ctrlmode);
- 	}
+--- a/drivers/net/can/ctucanfd/ctucanfd_pci.c
++++ b/drivers/net/can/ctucanfd/ctucanfd_pci.c
+@@ -278,6 +278,7 @@ static const struct pci_device_id ctucan
+ 		CTUCAN_WITH_CTUCAN_ID)},
+ 	{},
+ };
++MODULE_DEVICE_TABLE(pci, ctucan_pci_tbl);
  
-+	if (!(rx_msg_flags & PUCAN_MSG_RTR) &&
-+	    le16_to_cpu(rx_msg->size) - offsetof(struct pucan_rx_msg, d) <
-+	    cfd->len) {
-+		kfree_skb(skb);
-+		return -EBADMSG;
-+	}
-+
- 	cfd->can_id = le32_to_cpu(rm->can_id);
- 
- 	if (rx_msg_flags & PUCAN_MSG_EXT_ID)
-@@ -667,6 +674,24 @@ static void pcan_usb_fd_decode_ts(struct
- 		peak_usb_set_ts_now(&usb_if->time_ref, le32_to_cpu(ts->ts_low));
- }
- 
-+static size_t pcan_usb_fd_rx_msg_min_size(u16 rx_msg_type)
-+{
-+	switch (rx_msg_type) {
-+	case PUCAN_MSG_CAN_RX:
-+		return offsetof(struct pucan_rx_msg, d);
-+	case PCAN_UFD_MSG_CALIBRATION:
-+		return sizeof(struct pcan_ufd_ts_msg);
-+	case PUCAN_MSG_ERROR:
-+		return sizeof(struct pucan_error_msg);
-+	case PUCAN_MSG_STATUS:
-+		return sizeof(struct pucan_status_msg);
-+	case PCAN_UFD_MSG_OVERRUN:
-+		return sizeof(struct pcan_ufd_ovr_msg);
-+	default:
-+		return sizeof(struct pucan_msg);
-+	}
-+}
-+
- /* callback for bulk IN urb */
- static int pcan_usb_fd_decode_buf(struct peak_usb_device *dev, struct urb *urb)
- {
-@@ -681,6 +706,12 @@ static int pcan_usb_fd_decode_buf(struct
- 	msg_end = urb->transfer_buffer + urb->actual_length;
- 	for (; msg_ptr < msg_end;) {
- 		u16 rx_msg_type, rx_msg_size;
-+		size_t rx_msg_min_size;
-+
-+		if (msg_end - msg_ptr < sizeof(*rx_msg)) {
-+			err = -EBADMSG;
-+			break;
-+		}
- 
- 		rx_msg = (struct pucan_msg *)msg_ptr;
- 		if (!rx_msg->size) {
-@@ -692,12 +723,19 @@ static int pcan_usb_fd_decode_buf(struct
- 		rx_msg_type = le16_to_cpu(rx_msg->type);
- 
- 		/* check if the record goes out of current packet */
--		if (msg_ptr + rx_msg_size > msg_end) {
-+		if (rx_msg_size > msg_end - msg_ptr) {
- 			netdev_err(netdev,
- 				   "got frag rec: should inc usb rx buf sze\n");
- 			err = -EBADMSG;
- 			break;
- 		}
-+
-+		rx_msg_min_size = pcan_usb_fd_rx_msg_min_size(rx_msg_type);
-+		if (rx_msg_size < rx_msg_min_size) {
-+			netdev_err(netdev, "got short rec\n");
-+			err = -EBADMSG;
-+			break;
-+		}
- 
- 		switch (rx_msg_type) {
- 		case PUCAN_MSG_CAN_RX:
+ static struct pci_driver ctucan_pci_driver = {
+ 	.name = KBUILD_MODNAME,
 
 
