@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C6002C11DE;
-	Mon, 17 Aug 2026 15:01:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B0A92773EC;
+	Mon, 17 Aug 2026 15:01:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978916; cv=none; b=ESDl/+XSQqqRnNsyK152P1z3qI3Yz38cJp2gI8m4sajYDJ9yst5ABwDDj7gedQEY7Hk8vsV9QrwRfUgHuaAjlXVXQHSsOHNCwTqk01nculGajZxY0UHiY6obhus0HONftpV3NgJSe/2lpaqF11isqMAyWpXq2T+/yNbHximwz/0=
+	t=1786978919; cv=none; b=Ta7Fs+Kuy3izWakgxZFP/cUWotpb0WVfGFW5pYfDSfG559PZDbUaG6enkXoJM7bNQntB6um4lYmxMflC4PPUWqcLK2hdd18Bb2EUEGeSmCKwCSNBSiAS+PqnZZnm1VMyILKdBZFRJT9y3mJBD3QNVWGNgZmDPp0Mxfr1LERht7c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978916; c=relaxed/simple;
-	bh=YnSJHAV+FUCnKP2fCgtejhaOwFDcLckdDEv7DScINU0=;
+	s=arc-20240116; t=1786978919; c=relaxed/simple;
+	bh=7pmqhBqVw61tyF6qbBR7qY6OGd9UhjgEV0dXhKSukk8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JFOie0Twlw/MQPIsxrzsr4I8fG+ZmjKGH2410OnnU7gs3jcJutxF3Xf6J6JlsTWqBJgjRgdO/6l2Hf6aIGPPMuIzUX1vztvlkSKob0JwJpPa8BR96/lB7ZL8+L0mmU4PU4/cUUvqcPPOl8H7XDrvUMyEdRbzxM4cQCYctc0ip5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WkuZXsks; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RkvmH8PPD18hl51J/L2IsM8XPDnmdHP+iPyiiKg2rLqYc8FMDnk4wdRx/s46Uv4LH/rhwqpBM9ORwufUQ5jMk++egjTw8QMOdZwnm/yl996tVbUi4kjT39QlgRyytEvPrINosSHMdA1CfJ+5yop93aNLtXQEI0RLVgC0BNobpb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KifAA2Ic; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WkuZXsks"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ACAC1F000E9;
-	Mon, 17 Aug 2026 15:01:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KifAA2Ic"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72EC21F000E9;
+	Mon, 17 Aug 2026 15:01:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978915;
-	bh=sjYr4t3Jv3RPDWvG3yfcdLTkMRKNuRSi2UtorIekVo8=;
+	s=korg; t=1786978918;
+	bh=OdT24ZX+s9++5Vy94G0yn9BCGsPpYUUmIaex+WVfPkk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WkuZXskslgXu+hNwfflKHjzE+FGIwyppph9o/rzfpgEsNpIHhdo1HQ0LEEVb9yKjV
-	 j9R1AKEiXW13P1vq8Q49w6kPVMAru2FpiEGa1iaMue3UIkIRYEEogMJkuX8UfOfeOj
-	 Awz1/MF9H3CVgA6TW3V3Nwj2NqJ+Q6K4KZ+bnkLU=
+	b=KifAA2IcTAHTFuDD/sQHjXyQ4/XFfopsNBvO4Y1KPXEkFko+kTEa+h7pQIDtpshMQ
+	 38OIVArjcpGV/IoLkwo+ccQCVvDjwdGSW8C5/IrJF4Mw6HLHKsoy8U06V3JIxtbLen
+	 2Ra//Y4tcn5kAWMIQwOiuKbyGM7YFGIZ9kyK6OMA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Christian Lamparter <chunkeey@gmail.com>,
+	Zhao Li <enderaoelyther@gmail.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 044/609] wifi: p54: validate RX frame length in p54_rx_eeprom_readback()
-Date: Mon, 17 Aug 2026 15:25:40 +0200
-Message-ID: <20260817132544.808708511@linuxfoundation.org>
+Subject: [PATCH 6.1 045/609] wifi: nl80211: free RNR data on MBSSID mismatch
+Date: Mon, 17 Aug 2026 15:25:41 +0200
+Message-ID: <20260817132544.847348093@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -53,78 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Zhao Li <enderaoelyther@gmail.com>
 
-[ Upstream commit ebd6d37fa94bee929e0b4c9ca19fdf9b1dcf6cea ]
+[ Upstream commit 07a95ec2b54774201fdf4ef7ffb0ca2ab19ed29c ]
 
-p54_rx_eeprom_readback() copies the requested EEPROM slice out of a
-device-supplied readback frame without checking that the skb actually holds
-that many bytes. Commit da1b9a55ff11 ("wifi: p54: prevent buffer-overflow in
-p54_rx_eeprom_readback()") closed the destination overflow by copying a
-fixed priv->eeprom_slice_size (and rejecting a mismatched advertised len),
-but the source side is still unbounded: nothing verifies the frame is long
-enough to supply that many bytes.
+nl80211_parse_beacon() rejects EMA RNR data when there are fewer RNR
+entries than MBSSID entries.
 
-A malicious USB device can send a short frame whose advertised len matches
-priv->eeprom_slice_size while the payload is truncated. The equality check
-passes and memcpy() reads past the end of the skb, leaking adjacent heap:
+The rejected RNR allocation has not been attached to the beacon data yet,
+so free it before returning the error.
 
-  BUG: KASAN: slab-out-of-bounds in p54_rx (drivers/net/wireless/intersil/p54/txrx.c:507)
-  Read of size 1016 at addr ffff88800f077114 by task swapper/0/0
-  Call Trace:
-   <IRQ>
-   ...
-   __asan_memcpy (mm/kasan/shadow.c:105)
-   p54_rx (drivers/net/wireless/intersil/p54/txrx.c:507)
-   p54u_rx_cb (drivers/net/wireless/intersil/p54/p54usb.c:163)
-   __usb_hcd_giveback_urb (drivers/usb/core/hcd.c:1657)
-   dummy_timer (drivers/usb/gadget/udc/dummy_hcd.c:2005)
-   ...
-   </IRQ>
-
-  The buggy address belongs to the object at ffff88800f0770c0
-   which belongs to the cache skbuff_small_head of size 704
-  The buggy address is located 84 bytes inside of
-   allocated 704-byte region [ffff88800f0770c0, ffff88800f077380)
-
-Check that the slice fits in the skb before copying.
-
-Fixes: 7cb770729ba8 ("p54: move eeprom code into common library")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Acked-by: Christian Lamparter <chunkeey@gmail.com>
-Link: https://patch.msgid.link/20260628000510.4152481-1-xmei5@asu.edu
+Fixes: dbbb27e183b1 ("cfg80211: support RNR for EMA AP")
+Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
+Link: https://patch.msgid.link/20260610112208.1308-2-enderaoelyther@gmail.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intersil/p54/txrx.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/wireless/nl80211.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intersil/p54/txrx.c b/drivers/net/wireless/intersil/p54/txrx.c
-index 2deb1bb54f24bd..dc7bf54e30bba1 100644
---- a/drivers/net/wireless/intersil/p54/txrx.c
-+++ b/drivers/net/wireless/intersil/p54/txrx.c
-@@ -499,11 +499,19 @@ static void p54_rx_eeprom_readback(struct p54_common *priv,
- 		if (le16_to_cpu(eeprom->v2.len) != priv->eeprom_slice_size)
- 			return;
+diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
+index 36a7b9707eabd2..0146d837b8320e 100644
+--- a/net/wireless/nl80211.c
++++ b/net/wireless/nl80211.c
+@@ -5631,8 +5631,10 @@ static int nl80211_parse_beacon(struct cfg80211_registered_device *rdev,
+ 			if (IS_ERR(rnr))
+ 				return PTR_ERR(rnr);
  
-+		if (eeprom->v2.data + priv->eeprom_slice_size >
-+		    skb_tail_pointer(skb))
-+			return;
-+
- 		memcpy(priv->eeprom, eeprom->v2.data, priv->eeprom_slice_size);
- 	} else {
- 		if (le16_to_cpu(eeprom->v1.len) != priv->eeprom_slice_size)
- 			return;
+-			if (rnr && rnr->cnt < bcn->mbssid_ies->cnt)
++			if (rnr && rnr->cnt < bcn->mbssid_ies->cnt) {
++				kfree(rnr);
+ 				return -EINVAL;
++			}
  
-+		if (eeprom->v1.data + priv->eeprom_slice_size >
-+		    skb_tail_pointer(skb))
-+			return;
-+
- 		memcpy(priv->eeprom, eeprom->v1.data, priv->eeprom_slice_size);
- 	}
- 
+ 			bcn->rnr_ies = rnr;
+ 		}
 -- 
 2.53.0
 
