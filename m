@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C36BA41D118;
-	Mon, 17 Aug 2026 15:11:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55BBB3D349F;
+	Mon, 17 Aug 2026 15:11:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979507; cv=none; b=et+rT5q8OwSZ7oYNDeGZ8uoSPF9GsU0ot4EGIyGEzFUjKrCqOITJ/PR565kIzeT62IhuFvWn2bcco6cSJQXvRZg3tIb/QIQASQlT8euGk3LUb1dM31BOHYA3Jil33Hake1J9G3lVRW7n7mJmnEUDJi5LG3BV+rlTAR+lTfH/7EM=
+	t=1786979509; cv=none; b=YjmZSiR6XZbPl3szQkhoNMxnBF8GT9B7yq6VE8LVnf99cpiqjWvR+f0ZzDkHbiTi7NUX1yPI0+kJWQf8EmLcoknN16wSWY8NXWEYbZY0YhaKVA3XIKAQbZV6+BMJ+mfNcShdAo3a6hmx8QeQi2Vm3VXhJb1XbL2HltViKDyga5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979507; c=relaxed/simple;
-	bh=EPH06MWyRl66DBNu5fXv0VajWLiI6Dtx7rrbXpOJcRQ=;
+	s=arc-20240116; t=1786979509; c=relaxed/simple;
+	bh=2drcToBUZ7zfOqjl+iYWnBLTS94JBfzrGyDoHRaQwRU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wzr+Yi1Ikp3VnWqB/QR7s3saISxNeG3zh9t7mdY6jtaSZeW72up06r6D+XNhHaGNI9zB+WGbvrDTpWWFgwME6ZAflRbENGxh3JFZp3SkBHdvCD2nk3AijEg1P5ikodMb8RjxjV+db4CFAebv3GWHYSfyt/1XAevh0HKUl4ShzaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AoRnENOJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Nh7RTheSZ2jMGMTqnv+KfjOSuHi1tZyr+IrGUApiP5wCcICGMUlgbiSl0mE6+YIhzDh2N6RTzRb3Bwct5/kwGR9jhqzXm/YT5llDtFhInpjMQmsEbK3xpb5rfortSuPX+kEWhc5XEm7kvhJKle+hEXsypzDPp80TgTnyuTr04hE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pavxHT+z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AoRnENOJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDD321F00A3A;
-	Mon, 17 Aug 2026 15:11:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pavxHT+z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0FDA1F000E9;
+	Mon, 17 Aug 2026 15:11:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979505;
-	bh=/M/oAGUW/oio2HooJqpLPZAI/A1GtFjwEI+R2xeSX48=;
+	s=korg; t=1786979508;
+	bh=jp9qxoPLh+stHrS6vXyadIIhROUeXF3khpIj5evRWtg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AoRnENOJcCP7hQK3Lw0RUJVHMDMgvefyqgYa7eoxXaoJQFnryw7sP38hwh2AK/S1W
-	 0KSu8CURbVRxtXh3X/r/OMw5aaSVQZYAfHzEADfZUlMU5GL4xJ6i8pHmZGirE/21tg
-	 P91FvTurmCPuBK4qJFtviBO+d6BjFnySbzIvlF2I=
+	b=pavxHT+zUN42kJiScNBXRTbF25P9Ht4N/vZtljkb4PHaC2JRmGE8ZCUa8yH4XCzoy
+	 IBx296tze4wAYanb5MNSEnptPqxAKgpPA7ZCBRcADX9NE1lluM5tLHotozGA6ogPCw
+	 FM2RMIbXV+XNHLDpvDGWjSdThkfmCQP6apgWaBd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <yuantan098@gmail.com>,
-	Zhengchuan Liang <zcliangcn@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Douya Le <ldy3087146292@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
 	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 6.1 250/609] libceph: bound get_version reply decode to front len
-Date: Mon, 17 Aug 2026 15:29:06 +0200
-Message-ID: <20260817132552.454828627@linuxfoundation.org>
+Subject: [PATCH 6.1 251/609] libceph: Fix multiplication overflow in decode_new_up_state_weight()
+Date: Mon, 17 Aug 2026 15:29:07 +0200
+Message-ID: <20260817132552.492031584@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -55,47 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Douya Le <ldy3087146292@gmail.com>
+From: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
 
-commit d3c32939fa0e3ee9b883b9a0fd1972c5c444e3d0 upstream.
+commit 98917a499ec7064c14fc56d180a4fd636fc2784c upstream.
 
-handle_get_version_reply() uses msg->front_alloc_len as the decode
-boundary for MON_GET_VERSION_REPLY.  That is the size of the reused
-reply buffer, not the number of bytes actually received.
+If a message of type CEPH_MSG_OSD_MAP contains a (maliciously) corrupted
+osdmap, out-of-bounds memory accesses may occur in
+decode_new_up_state_weight(). This happens because the bounds check for
+the new_state part is based on calculating its length depending on a len
+value read from the incoming message. This calculation may overflow
+leading to an incorrect bounds check. Subsequently, out-of-bounds reads
+may occur when decoding this part.
 
-A truncated reply can therefore pass ceph_decode_need() and decode the
-second u64 from stale tail bytes left in the buffer by an earlier
-message, causing an uninitialized memory read.
+This patch switches the multiplication to use check_mul_overflow() to
+abort processing the osdmap if an overflow occurred. Therefore,
+osdmaps/messages containing large values for len that result in a
+multiplication overflow are treated as invalid.
 
-Use msg->front.iov_len as the receive-side decode boundary, matching
-other libceph reply handlers and limiting decoding to the bytes that
-were actually read from the wire.
+[ idryomov: rename new_state_len -> new_state_item_size, formatting ]
 
 Cc: stable@vger.kernel.org
-Fixes: 513a8243d67f ("libceph: mon_get_version request infrastructure")
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Assisted-by: Codex:GPT-5.4
-Signed-off-by: Douya Le <ldy3087146292@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Fixes: 930c53286977 ("libceph: apply new_state before new_up_client on incrementals")
+Signed-off-by: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
+Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/mon_client.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ceph/osdmap.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/net/ceph/mon_client.c
-+++ b/net/ceph/mon_client.c
-@@ -821,7 +821,7 @@ static void handle_get_version_reply(str
- 	struct ceph_mon_generic_request *req;
- 	u64 tid = le64_to_cpu(msg->hdr.tid);
- 	void *p = msg->front.iov_base;
--	void *end = p + msg->front_alloc_len;
-+	void *const end = p + msg->front.iov_len;
- 	u64 handle;
+--- a/net/ceph/osdmap.c
++++ b/net/ceph/osdmap.c
+@@ -1844,6 +1844,8 @@ static int decode_new_up_state_weight(vo
+ 	void *new_up_client;
+ 	void *new_state;
+ 	void *new_weight_end;
++	const u32 new_state_item_size =
++	    sizeof(u32) + (struct_v >= 5 ? sizeof(u32) : sizeof(u8));
+ 	u32 len;
+ 	int ret;
+ 	int i;
+@@ -1864,7 +1866,8 @@ static int decode_new_up_state_weight(vo
  
- 	dout("%s msg %p tid %llu\n", __func__, msg, tid);
+ 	new_state = *p;
+ 	ceph_decode_32_safe(p, end, len, e_inval);
+-	len *= sizeof(u32) + (struct_v >= 5 ? sizeof(u32) : sizeof(u8));
++	if (check_mul_overflow(len, new_state_item_size, &len))
++		goto e_inval;
+ 	ceph_decode_need(p, end, len, e_inval);
+ 	*p += len;
+ 
 
 
