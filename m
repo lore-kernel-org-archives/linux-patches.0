@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D73A282F29;
-	Mon, 17 Aug 2026 14:40:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65364175A6B;
+	Mon, 17 Aug 2026 14:40:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977644; cv=none; b=jzWjIHFRX6bnakT+RI0DAoKuOBnrflKev/hbcybTEr2oWEIDolu+9CCyDQR6wA6bkZsQLOey2behuLM+7SGFqmq1FtEIjiukrP03wfAIa8j3iFKSU4vAlQ6X7Oc678zoS1R7mODUfBWesBKrrZGT7W/A48vklz1yw4YRTBAU0v0=
+	t=1786977647; cv=none; b=tTA0bg36wyAr/Rs+QPcBZmMmF+ipeZNQjULI3GT/CI6ml7vtsALpuwhg8tc9jFT70F5Us7PIs78aN181uSAKyzLQGTLRRkJ9InQDaPhEl2KHdLbTG8CpY6yA5fXNatvCKMhvAxqmUUK/B7OZu6OF8LUChhaU5HPwHfwl/Ke1PR8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977644; c=relaxed/simple;
-	bh=LDX8xJFitvdi2Pb7sHwi6DsBSWgkP31JIlMPGeG/Aeo=;
+	s=arc-20240116; t=1786977647; c=relaxed/simple;
+	bh=nGfXzDWC20lQM3ixHsYESaKh9YpT0b+2E4Y5JMhyY3E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P7iMbMywydz7bVmCc/77jBDu+V7hpBF9V5VJOr/oRnvuDbhojgkOZf2UckGT8DHsvLnxqdMxuj5joVOEgD/CiDlEOFbEHmednR/KRBNK9XLQO2hPLs1gQ6ZQGhzqGNlu0INxOUEW+vnkuLZ6UqAtUmjYD/Cq2EW7yeWDEX9iVZw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZyEy/McJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YcZD4yfwl34LHBmjmkT8gRLrGLo8fvCIFY77yV5uC1KPXKhMj6GoikqPeWE+PK8h91/QBh4T4kuj5/JolqvWlACG1APICJ2AZUNX9Z6uVc2IgqB/KthfhCuux5MdfOmGtGoxRfVayQjzcT2MdYEct8iQsQxJUVA9VE6CXMxXmVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CEs/R3f4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZyEy/McJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 643FC1F000E9;
-	Mon, 17 Aug 2026 14:40:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CEs/R3f4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2DA21F000E9;
+	Mon, 17 Aug 2026 14:40:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977642;
-	bh=uHOFpiS3mzE0UISHZNYEiqhgjYwwnt4rCE10OtFfcls=;
+	s=korg; t=1786977646;
+	bh=j65XrDNEUhqaEC2pWqKX7+Nj7V4Ztfx2SbO3xFlCX/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZyEy/McJU0XP5SvEnboIr1apfyYfIv3W3s2wr6iIHoVbSfnTr8GiFAvXcCwDciZez
-	 rqFpDE0EHIIdbtWBfQczkHP/5M4XchAP4NLx04QwMN47dxjKjXFtogJMbMvSNkWMgP
-	 HVPCaQSJZGE9gfBGInKv+hQwwHEc6ulI0lR6tExM=
+	b=CEs/R3f4fFq3EWz13LTT+g5bx2luzX1hhZQovF2eLxEOr4Xwe5I3MDUVkxUVXil37
+	 ouhJ9Escd1WgDp/0t4TpNtqlZ0zF6bUgdVNUbqDsfgAYIj654DhOefxnZi1p9tHRRn
+	 9yMumdhcLilfCsQunvVbEbQDH5vwt+Nhp4j5y61Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 5.15 361/456] HID: logitech-dj: Fix maxfield check in DJ short report validation
-Date: Mon, 17 Aug 2026 15:32:31 +0200
-Message-ID: <20260817132553.631479116@linuxfoundation.org>
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	stable@kernel.org,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 5.15 352/456] can: softing: fw_parse(): validate firmware record spans
+Date: Mon, 17 Aug 2026 15:32:22 +0200
+Message-ID: <20260817132553.314263422@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -50,69 +51,158 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-commit 590cc4d782487632a52f37c2171bee1eeea29627 upstream.
+commit 856d6cb04e5407523566b075841dcd6423757d1c upstream.
 
-Commit b6a57912854e ("HID: logitech-dj: Prevent REPORT_ID_DJ_SHORT
-related user initiated OOB write") added validation for the DJ short
-output report, but the error path dereferences rep->field[0] even when
-rep->maxfield is zero.
+fw_parse() reads a fixed record header, a firmware-provided payload,
+and a trailing checksum without knowing the end of the firmware blob. A
+truncated record can therefore make those reads exceed the blob.
 
-Commit 8b9a097eb2fc ("HID: logitech-dj: fix wrong detection of bad
-DJ_SHORT output report") made the check conditional on rep being present,
-but a crafted descriptor can still create report ID 0x20 with only padding
-output items. hid-core registers the report, ignores the padding field,
-and leaves rep->maxfield as zero.
+The same record also supplies addresses and lengths for writes into
+DPRAM. The generic loader uses wrap-prone mixed signed arithmetic for its
+bounds check, while the application loader does not bound the staging
+copy at all.
 
-In that case the validation enters the rep->maxfield < 1 branch and then
-dereferences rep->field[0]->report_count while printing the error message,
-causing a NULL pointer dereference during probe. This is reproducible with
-uhid by emulating a Logitech receiver with a padding-only DJ short output
-report:
+Pass the firmware end to the parser and validate the full source record.
+Use a signed wide offset for generic DPRAM records and validate the
+application staging span against the mapped DPRAM before copying.
 
-  BUG: KASAN: null-ptr-deref in logi_dj_probe+0xb1/0x754 [hid_logitech_dj]
-  Read of size 4 at addr 0000000000000028 by task kworker/4:1/129
-  ...
-  Call Trace:
-   logi_dj_probe+0xb1/0x754 [hid_logitech_dj]
-   hid_device_probe+0x329/0x3f0 [hid]
-   really_probe+0x162/0x570
-   __device_attach+0x137/0x2c0
-   bus_probe_device+0x38/0xc0
-   device_add+0xa56/0xce0
-   hid_add_device+0x19c/0x280 [hid]
-   uhid_device_add_worker+0x2c/0xb0 [uhid]
-
-Reject the zero-field report before printing the field report_count.
-
-Fixes: b6a57912854e ("HID: logitech-dj: Prevent REPORT_ID_DJ_SHORT related user initiated OOB write")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Fixes: 03fd3cf5a179 ("can: add driver for Softing card")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260722044347.2708-1-pengpeng@iscas.ac.cn
+Cc: stable@kernel.org
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-logitech-dj.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/net/can/softing/softing_fw.c |   46 ++++++++++++++++++++++++-----------
+ 1 file changed, 32 insertions(+), 14 deletions(-)
 
---- a/drivers/hid/hid-logitech-dj.c
-+++ b/drivers/hid/hid-logitech-dj.c
-@@ -1797,8 +1797,13 @@ static int logi_dj_probe(struct hid_devi
- 	output_report_enum = &hdev->report_enum[HID_OUTPUT_REPORT];
- 	rep = output_report_enum->report_id_hash[REPORT_ID_DJ_SHORT];
+--- a/drivers/net/can/softing/softing_fw.c
++++ b/drivers/net/can/softing/softing_fw.c
+@@ -91,12 +91,12 @@ int softing_bootloader_command(struct so
+ 	return ret;
+ }
  
--	if (rep && (rep->maxfield < 1 ||
--		    rep->field[0]->report_count != DJREPORT_SHORT_LENGTH - 1)) {
-+	if (rep && rep->maxfield < 1) {
-+		hid_err(hdev, "Expected size of DJ short report is %d, but got 0",
-+			DJREPORT_SHORT_LENGTH - 1);
+-static int fw_parse(const uint8_t **pmem, uint16_t *ptype, uint32_t *paddr,
+-		uint16_t *plen, const uint8_t **pdat)
++static int fw_parse(const u8 **pmem, const u8 *limit, u16 *ptype,
++		    u32 *paddr, u16 *plen, const u8 **pdat)
+ {
+ 	uint16_t checksum[2];
+-	const uint8_t *mem;
+-	const uint8_t *end;
++	const u8 *mem;
++	const u8 *record_end;
+ 
+ 	/*
+ 	 * firmware records are a binary, unaligned stream composed of:
+@@ -114,14 +114,21 @@ static int fw_parse(const uint8_t **pmem
+ 	 * endianness & alignment.
+ 	 */
+ 	mem = *pmem;
++	/* A record needs an 8-byte prefix and a 2-byte checksum. */
++	if (mem > limit || limit - mem < 10)
 +		return -EINVAL;
-+	}
 +
-+	if (rep && rep->field[0]->report_count != DJREPORT_SHORT_LENGTH - 1) {
- 		hid_err(hdev, "Expected size of DJ short report is %d, but got %d",
- 			DJREPORT_SHORT_LENGTH - 1, rep->field[0]->report_count);
+ 	*ptype = le16_to_cpup((void *)&mem[0]);
+ 	*paddr = le32_to_cpup((void *)&mem[2]);
+ 	*plen = le16_to_cpup((void *)&mem[6]);
++	if (*plen > limit - mem - 10)
++		return -EINVAL;
++
+ 	*pdat = &mem[8];
+ 	/* verify checksum */
+-	end = &mem[8 + *plen];
+-	checksum[0] = le16_to_cpup((void *)end);
+-	for (checksum[1] = 0; mem < end; ++mem)
++	record_end = &mem[8 + *plen];
++	checksum[0] = le16_to_cpup((void *)record_end);
++	for (checksum[1] = 0; mem < record_end; ++mem)
+ 		checksum[1] += *mem;
+ 	if (checksum[0] != checksum[1])
  		return -EINVAL;
+@@ -139,6 +146,7 @@ int softing_load_fw(const char *file, st
+ 	uint16_t type, len;
+ 	uint32_t addr;
+ 	uint8_t *buf = NULL, *new_buf;
++	s64 dpram_offset;
+ 	int buflen = 0;
+ 	int8_t type_end = 0;
+ 
+@@ -153,7 +161,7 @@ int softing_load_fw(const char *file, st
+ 	mem = fw->data;
+ 	end = &mem[fw->size];
+ 	/* look for header record */
+-	ret = fw_parse(&mem, &type, &addr, &len, &dat);
++	ret = fw_parse(&mem, end, &type, &addr, &len, &dat);
+ 	if (ret < 0)
+ 		goto failed;
+ 	if (type != 0xffff)
+@@ -164,7 +172,7 @@ int softing_load_fw(const char *file, st
+ 	}
+ 	/* ok, we had a header */
+ 	while (mem < end) {
+-		ret = fw_parse(&mem, &type, &addr, &len, &dat);
++		ret = fw_parse(&mem, end, &type, &addr, &len, &dat);
+ 		if (ret < 0)
+ 			goto failed;
+ 		if (type == 3) {
+@@ -179,9 +187,13 @@ int softing_load_fw(const char *file, st
+ 			goto failed;
+ 		}
+ 
+-		if ((addr + len + offset) > size)
++		dpram_offset = (s64)addr + offset;
++		if (dpram_offset < 0 || dpram_offset > size ||
++		    len > size - dpram_offset) {
++			ret = -EINVAL;
+ 			goto failed;
+-		memcpy_toio(&dpram[addr + offset], dat, len);
++		}
++		memcpy_toio(&dpram[dpram_offset], dat, len);
+ 		/* be sure to flush caches from IO space */
+ 		mb();
+ 		if (len > buflen) {
+@@ -195,7 +207,7 @@ int softing_load_fw(const char *file, st
+ 			buf = new_buf;
+ 		}
+ 		/* verify record data */
+-		memcpy_fromio(buf, &dpram[addr + offset], len);
++		memcpy_fromio(buf, &dpram[dpram_offset], len);
+ 		if (memcmp(buf, dat, len)) {
+ 			/* is not ok */
+ 			dev_alert(&card->pdev->dev, "DPRAM readback failed\n");
+@@ -237,7 +249,7 @@ int softing_load_app_fw(const char *file
+ 	mem = fw->data;
+ 	end = &mem[fw->size];
+ 	/* look for header record */
+-	ret = fw_parse(&mem, &type, &addr, &len, &dat);
++	ret = fw_parse(&mem, end, &type, &addr, &len, &dat);
+ 	if (ret)
+ 		goto failed;
+ 	ret = -EINVAL;
+@@ -253,7 +265,7 @@ int softing_load_app_fw(const char *file
+ 	}
+ 	/* ok, we had a header */
+ 	while (mem < end) {
+-		ret = fw_parse(&mem, &type, &addr, &len, &dat);
++		ret = fw_parse(&mem, end, &type, &addr, &len, &dat);
+ 		if (ret)
+ 			goto failed;
+ 
+@@ -279,6 +291,12 @@ int softing_load_app_fw(const char *file
+ 		/* work in 16bit (target) */
+ 		sum &= 0xffff;
+ 
++		if (card->pdat->app.offs > card->dpram_size ||
++		    len > card->dpram_size - card->pdat->app.offs) {
++			ret = -EINVAL;
++			goto failed;
++		}
++
+ 		memcpy_toio(&card->dpram[card->pdat->app.offs], dat, len);
+ 		iowrite32(card->pdat->app.offs + card->pdat->app.addr,
+ 				&card->dpram[DPRAM_COMMAND + 2]);
 
 
