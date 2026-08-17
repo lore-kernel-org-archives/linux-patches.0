@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0430043D50C;
-	Mon, 17 Aug 2026 14:12:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC93143C07E;
+	Mon, 17 Aug 2026 14:12:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975955; cv=none; b=ePbIwDFt5c9uBGliXvUQ7Ec30Ohl/Pe6uXhwqeHWPyNpqIxVzcz08yHvEOeWqpAtxPtG0hdy3tFa2ikc+KOaACdK44YQyrNzc1PvHCBEqU8P7IbZGq291ERyi+0XAdRrUDwUNaCpmUD95yv64Ao5UoorxeNk9YvIcueV3tU/5yI=
+	t=1786975957; cv=none; b=Ho0VQ9pFqsiVBEmjKCwmz4KfoNRE+n7MCn3g9QflMu3TI813pO/Fc4+uxnnZpGHAbZL7Fy+oDnp0IF+tKXUNc9I+0B2/OQg0X0qJIPBN8kGSnUUTgd0r6qHv3vGYMqZJfrkhb60gZIU8mnJJeu29/Fhaeq1Vh3g212bEPF0UQtw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975955; c=relaxed/simple;
-	bh=2HIX7E+B5cfaMZPtDecu9dWsuMPT4TDKbWSSffizaZQ=;
+	s=arc-20240116; t=1786975957; c=relaxed/simple;
+	bh=4cv+XyWIk26cHvUl2pz0vL9OIW7BKIb7pYimz7eFOqI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gl8spOqOjal+qcrJSEMm3F6v6OTzHU5b8i7ykCOou+nCq5RW47P/oziQwnvYmUodSdG1pJFRhojpFXhYih9kn5xKB7mJgbCcN5QwwxaHiZ5HJff/mD5iYQI20vue/AJQR7Qza6vsseuKfkq4w3OEqEdToytr5pKPQ7yH7ra70Xk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bVh9FgFy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MZABmKpzIlmS/nTqIRDpjjzTNHRWx6svEB5Q8T79JwHaLVfDVDqmQiYcBSiORRX5cMd+OlNquTPOkX6JhzsM/nUvZgsbnSUZCDrz79Vkwl9PVCVVkcimZRVHpHpNkCBqPSBPOz7BKqfjxi2ZUYLxe1lDG06I6r3ACMpiWATimSU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hXZPjy1p; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bVh9FgFy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 489BB1F000E9;
-	Mon, 17 Aug 2026 14:12:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hXZPjy1p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 227A61F000E9;
+	Mon, 17 Aug 2026 14:12:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975953;
-	bh=hI+ERsY917QUy0pltP7uNwp3pAgBswhGUnJN1jx8LDg=;
+	s=korg; t=1786975956;
+	bh=BychF//+keSe0lE32X8/SV/5v8APmLUPAHb8W1TKG+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bVh9FgFyjpvkrcaq+t6JtTtt6oVvIwvhS5TK5bResrS6ejwiP4Kc1L6upGBO3aQNz
-	 VIsij065RyDBoS+PRQhUzEQpGMrPy/210zxEMwiLeuahPnhSowtaJsGoUN0KZtTO3i
-	 0+mS5Si7F+IiUHgY/bDWLDEGm9/FuONTu61zpg4U=
+	b=hXZPjy1p2vtB7bn4LYzxHs9wG26Huiwkkpm3g4Twen3Ka+D3+/yTgq27mMNMW8NiP
+	 6qzULDtEnVDl1TDptdHpgQZu+wBCSaYsnYFyveQOaKwnORSdmYeOjCpD6OCuf1te/X
+	 wG30thWwwVmnM9/4jURKXdJc5+BT6oX57KnjNx6U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Michael Bommarito <michael.bommarito@gmail.com>,
 	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 207/389] keys: fix out-of-bounds read in keyring_get_key_chunk()
-Date: Mon, 17 Aug 2026 15:30:46 +0200
-Message-ID: <20260817132547.296519086@linuxfoundation.org>
+Subject: [PATCH 5.10 208/389] keys: make keyring key-chunk byte order agree with keyring_diff_objects()
+Date: Mon, 17 Aug 2026 15:30:47 +0200
+Message-ID: <20260817132547.331979994@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -53,60 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit 63918731f9ae25b5deb022f118e941e6dddfcef4 ]
+[ Upstream commit 58565eef0f8d861aae92abfb7658458d661cee17 ]
 
-For description-level chunks keyring_get_key_chunk() advances the read
-pointer by level * sizeof(long) past the inline prefix but only
-bounds-checks the prefix, so a long enough key description is read past
-its kmemdup(desc, desc_len + 1) allocation.  Compute the full byte
-offset and bounds-check the description against it before reading.
+keyring_get_key_chunk() loads description bytes into the index chunk low
+address first, while keyring_diff_objects() numbers the first differing
+bit from the low end and folds the absolute byte index into the level
+without removing the inline-prefix offset the level already carries.
+The two disagree on byte order and bit position, so the array can be
+told two keys first differ at a bit that does not differ in the chunk
+the walker uses, letting crafted descriptions collide into one node.
 
-The walk only reaches a description-level chunk when two keys collide
-through the hash, x, type and domain_tag chunks, so this is reached from
-an unprivileged add_key(2) with a crafted pair of same-type keys whose
-index hashes collide; KASAN reports a slab-out-of-bounds read.
+Load the chunk in the order keyring_diff_objects() assumes and drop the
+inline-prefix length when folding the byte index into the level.  This
+only changes the in-memory ordering used to place keys within a keyring;
+add, search and read of non-colliding keys are unaffected.
 
 Fixes: f771fde82051 ("keys: Simplify key description management")
 Assisted-by: Claude:claude-opus-4-8
 Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
 Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
 Tested-by: Jarkko Sakkinen <jarkko@kernel.org>
-Link: https://lore.kernel.org/r/20260719161505.2423935-2-michael.bommarito@gmail.com
+Link: https://lore.kernel.org/r/20260719161505.2423935-3-michael.bommarito@gmail.com
 Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/keys/keyring.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ security/keys/keyring.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/security/keys/keyring.c b/security/keys/keyring.c
-index 3f609316a096e..165ac0d38bcfc 100644
+index 165ac0d38bcfc..8b938e61ecd8d 100644
 --- a/security/keys/keyring.c
 +++ b/security/keys/keyring.c
-@@ -271,6 +271,7 @@ static unsigned long keyring_get_key_chunk(const void *data, int level)
- 	unsigned long chunk = 0;
- 	const u8 *d;
- 	int desc_len = index_key->desc_len, n = sizeof(chunk);
-+	unsigned int offset;
- 
- 	level /= ASSOC_ARRAY_KEY_CHUNK_SIZE;
- 	switch (level) {
-@@ -284,12 +285,12 @@ static unsigned long keyring_get_key_chunk(const void *data, int level)
- 		return (unsigned long)index_key->domain_tag;
- 	default:
- 		level -= 4;
--		if (desc_len <= sizeof(index_key->desc))
-+		offset = sizeof(index_key->desc) + level * sizeof(long);
-+		if (desc_len <= offset)
- 			return 0;
- 
--		d = index_key->description + sizeof(index_key->desc);
--		d += level * sizeof(long);
--		desc_len -= sizeof(index_key->desc);
-+		d = index_key->description + offset;
-+		desc_len -= offset;
+@@ -293,9 +293,10 @@ static unsigned long keyring_get_key_chunk(const void *data, int level)
+ 		desc_len -= offset;
  		if (desc_len > n)
  			desc_len = n;
++		d += desc_len;
  		do {
+ 			chunk <<= 8;
+-			chunk |= *d++;
++			chunk |= *--d;
+ 		} while (--desc_len > 0);
+ 		return chunk;
+ 	}
+@@ -376,7 +377,7 @@ static int keyring_diff_objects(const void *object, const void *data)
+ 	return -1;
+ 
+ differ_plus_i:
+-	level += i;
++	level += i - (int)sizeof(a->desc);
+ differ:
+ 	i = level * 8 + __ffs(seg_a ^ seg_b);
+ 	return i;
 -- 
 2.53.0
 
