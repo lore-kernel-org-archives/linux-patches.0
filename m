@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB48113C9C4;
-	Mon, 17 Aug 2026 14:20:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2D6C54781;
+	Mon, 17 Aug 2026 14:20:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976449; cv=none; b=BZc+2bKKVS8bplBNZPLK5CP5cSl7QDJIHZUFgBQwnw3hY/xY1dsZfq0QsnYAJXCExIibZwqsX42PRz7TuP6TmJpgbZbkGK69e34osgf+rZMlQWXCBNgdgbqlAmyiCVwDbV5AxS7zFE5yU3RSgTFJ/XGd3BNhxUpGUj4XdEBSUAs=
+	t=1786976451; cv=none; b=qgR+7/tYzd5hU/nFU4WZ2CY727ftX82UnLqTefoP2s/Yuwp/qMnBbxS21CnD99FXCNy8ZlID6FcwHWhenHkQYcI86io6v9+LSHYA/sWFvk5cV8szvOyLNMXfcZfC6Q1iLTS/ah3j/5i2dqZbxjVdoVXAZ11xNziLVMx5lJkdyLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976449; c=relaxed/simple;
-	bh=ZmO2NWceW0IoAOkADp1a/VUBC+WC02vmubeOdxpJZeY=;
+	s=arc-20240116; t=1786976451; c=relaxed/simple;
+	bh=hJ6SuDgyDvSaal4U/ddH7azzfaUcXTkyi7Eg8mn95Bk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qHBE6RL79qp24oWN5dobHwtUjaZxGYoctg81FzkcvU6SudV6U26ZGzCvJYnoS40sHmdxP/ep2FOOcLoro6B9SL2lbbV6rDBKjzGNJ9sog1GN6b0KxjOMEbU2IYAf7Q9VPdWvgy+dlT7AWj1Hz+xNXACSa4IZ+rhYgdH9LXjDW4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iczg+8SS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MryF6ucRU07EeA1pAHRBebc3VGwzjcy5CIq3mjbz4UEDzyP2EnxQEnLP1E96ZXZIeLgMDsNIWTk+LMaAKuwmiXORSCYIWpve0olNdWr1wl8qogvM59kIEtY+ggl9qoJxhXjGsE/aT1uIxsmI9eBEBin4fCWq6Qqs+stoWuwpUqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O6flZq2x; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iczg+8SS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40D371F000E9;
-	Mon, 17 Aug 2026 14:20:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O6flZq2x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25CFC1F000E9;
+	Mon, 17 Aug 2026 14:20:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976447;
-	bh=OMfammhM3NUt3nP1oiOtJ/sFeCwkrathkTIvgnUEHK8=;
+	s=korg; t=1786976450;
+	bh=0mvQTBr0ooLYL0wW68xfk9Xooh2l+NMCLKWp9a6sumk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iczg+8SSWiriiQ3jUJbytZUux10twH/HGqk+GRj1EARyEsaGue+Zm5dntD24dwaRd
-	 tQEMNF4xJibBQHPtIZsRfdwVlCNU5jenP+hJLituB0bCwhO1fakYqqPTctb78j2lon
-	 43CDu/DcCCFaxJVwK02iqeg5yt/iJ3U1BM9oLHo8=
+	b=O6flZq2xHcBdUGsmDS6rvMG/COzDrTE9YwbuHwjdPeB4n5DH2sFprAI2+Sq1JnHqz
+	 /eqVQEnfRPRIFJkx2HP2WqhMTkiPYDovtVuEbZdt/PYnR35maV9VjBrxSmzwrUkv0B
+	 TJYESrH3WtN2E49lHCX/TbNNel0LcAvgw+qPfMa0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	TencentOS Corvus AI <corvus@tencent.com>,
-	Jun Yang <junvyyang@tencent.com>,
-	Tung Nguyen <tung.quang.nguyen@est.tech>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.10 377/389] tipc: read le->link under the node lock in tipc_node_link_down()
-Date: Mon, 17 Aug 2026 15:33:36 +0200
-Message-ID: <20260817132553.396288588@linuxfoundation.org>
+	Tengda Wu <wutengda@huaweicloud.com>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 5.10 378/389] ring-buffer: Use current_context for safe per-CPU buffer swap
+Date: Mon, 17 Aug 2026 15:33:37 +0200
+Message-ID: <20260817132553.431432492@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -53,106 +50,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jun Yang <junvyyang@tencent.com>
+From: Tengda Wu <wutengda@huaweicloud.com>
 
-commit cba9ccb47e9fa4cc77692fb896cc5ab57a667882 upstream.
+commit f27bdc43077e4fcb5557dfc315ee8d91e741f483 upstream.
 
-tipc_node_link_down() caches the link pointer before taking n->lock:
+The ring_buffer_swap_cpu() function currently checks the per-CPU
+committing counter to determine if a buffer is actively being written to
+before performing the swap. However, there exists a race window where
+this check can be bypassed:
 
-	struct tipc_link *l = le->link;		/* unlocked */
+    ring_buffer_lock_reserve
+        cpu_buffer = buffer->buffers[cpu];       // cpu_buffer_a
+        rb_reserve_next_event
+            rb_start_commit // inc committing
+            if (unlikely(READ_ONCE(cpu_buffer->buffer) != buffer)) {...}
+            __rb_reserve_next
+                rb_move_tail
+                    rb_end_commit(cpu_buffer);   // dec committing => 0
+                    /* interrupt hits here, successfully swaps! */
+                    local_inc(&cpu_buffer->committing);
 
-	if (!l)
-		return;
-	tipc_node_write_lock(n);
-	if (!tipc_link_is_establishing(l)) {	/* deref l */
-	...
-		tipc_link_reset(l);		/* write into l */
-	if (delete) {
-		kfree(l);
-		le->link = NULL;
+    ring_buffer_unlock_commit
+        cpu_buffer = buffer->buffers[cpu];      // cpu_buffer_b
+        rb_commit
+            rb_end_commit
+            RB_WARN_ON(cpu_buffer, !local_read(&cpu_buffer->committing))
+                                                // triggers warning
 
-The delete=true caller frees that very object under n->lock, so the lock
-does not protect the cached pointer against it:
+The committing counter can temporarily drop to 0 during a single write
+operation (within rb_move_tail), creating a window where swap can
+succeed even though the write is still in progress. This leads to
+inconsistent buffer state and triggers the RB_WARN_ON in rb_commit().
 
- - CPU A, delete=false: tipc_rcv() on TIPC_LINK_DOWN_EVT, or the link
-   supervision timer via tipc_node_timeout(), reads l unlocked and then
-   dereferences it under n->lock;
- - CPU B, delete=true: netlink TIPC_NL_BEARER_DISABLE -> bearer_disable()
-   -> tipc_node_delete_links() -> tipc_node_link_down(n, bearer_id, true)
-   -> kfree(l).
+Replace the committing counter check with current_context checks, which
+are set at the entry of ring_buffer_lock_reserve() and remain valid
+throughout the entire write operation, providing a reliable indicator of
+buffer busy state during swap.
 
-The link is freed with plain kfree(), not kfree_rcu(), and for UDP bearers
-disable_media() only schedules the asynchronous cleanup_bearer() work, so
-its synchronize_net() runs after the links are already gone.  An in-flight
-CPU A that has read l therefore dereferences freed memory once B frees it:
-a use-after-free read in tipc_link_is_establishing(), and a use-after-free
-write via tipc_link_reset() on the establishing branch.
-
-The following trace was captured on 7.2.0-rc5-00284-gaf39eb111ce6:
-
-  BUG: KASAN: slab-use-after-free in tipc_link_is_establishing (net/tipc/link.c:285)
-  Read of size 4 at addr ffff88802e2aa068 by task swapper/2/0
-   tipc_link_is_establishing (net/tipc/link.c:285)
-   tipc_node_link_down (net/tipc/node.c:1076)
-   tipc_node_timeout (net/tipc/node.c:843)
-  Allocated by task 9549:
-   tipc_link_create (net/tipc/link.c:490)
-   tipc_node_check_dest (net/tipc/node.c:1279)
-   tipc_disc_rcv (net/tipc/discover.c:252)
-   tipc_udp_recv (net/tipc/udp_media.c:389)
-  Freed by task 9549:
-   tipc_node_link_down (net/tipc/node.c:1084)
-   tipc_node_delete_links (net/tipc/node.c:1320)
-   bearer_disable (net/tipc/bearer.c:414)
-   __tipc_nl_bearer_disable (net/tipc/bearer.c:992)
-
-Move the le->link read inside tipc_node_write_lock(), so it is serialised
-against the kfree() in the delete path.  A racing teardown now either has
-not run yet, and we see a valid link, or has already run, and we see NULL.
-
-Fixes: 73f646cec354 ("tipc: delay ESTABLISH state event when link is established")
-Cc: stable@kernel.org
-Reported-by: TencentOS Corvus AI <corvus@tencent.com>
-Assisted-by: tencentos-corvus-ai:kimi-k3
-Signed-off-by: Jun Yang <junvyyang@tencent.com>
-Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
-Link: https://patch.msgid.link/20260810102147.48191-1-juny24602@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Cc: stable@vger.kernel.org
+Fixes: 4239c38fe0b3 ("ring-buffer: Process commits whenever moving to a new page.")
+Link: https://patch.msgid.link/20260803005640.2445666-2-wutengda@huaweicloud.com
+Signed-off-by: Tengda Wu <wutengda@huaweicloud.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/tipc/node.c |   15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ kernel/trace/ring_buffer.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/net/tipc/node.c
-+++ b/net/tipc/node.c
-@@ -1036,18 +1036,23 @@ static void __tipc_node_link_down(struct
- 
- static void tipc_node_link_down(struct tipc_node *n, int bearer_id, bool delete)
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -5234,7 +5234,7 @@ int ring_buffer_swap_cpu(struct trace_bu
  {
--	struct tipc_link_entry *le = &n->links[bearer_id];
- 	struct tipc_media_addr *maddr = NULL;
--	struct tipc_link *l = le->link;
- 	int old_bearer_id = bearer_id;
-+	struct tipc_link_entry *le;
- 	struct sk_buff_head xmitq;
--
--	if (!l)
--		return;
-+	struct tipc_link *l;
+ 	struct ring_buffer_per_cpu *cpu_buffer_a;
+ 	struct ring_buffer_per_cpu *cpu_buffer_b;
+-	int ret = -EINVAL;
++	int ret = -EBUSY;
  
- 	__skb_queue_head_init(&xmitq);
+ 	if (!cpumask_test_cpu(cpu, buffer_a->cpumask) ||
+ 	    !cpumask_test_cpu(cpu, buffer_b->cpumask))
+@@ -5270,10 +5270,10 @@ int ring_buffer_swap_cpu(struct trace_bu
+ 	atomic_inc(&cpu_buffer_a->record_disabled);
+ 	atomic_inc(&cpu_buffer_b->record_disabled);
  
-+	/* Synchronize the link lookup with bearer teardown. */
- 	tipc_node_write_lock(n);
-+	le = &n->links[bearer_id];
-+	l = le->link;
-+	if (!l) {
-+		tipc_node_write_unlock_fast(n);
-+		return;
-+	}
-+
- 	if (!tipc_link_is_establishing(l)) {
- 		__tipc_node_link_down(n, &bearer_id, &xmitq, &maddr);
- 	} else {
+-	ret = -EBUSY;
+-	if (local_read(&cpu_buffer_a->committing))
++	/* Do not swap if either buffer is in the process of writing */
++	if (cpu_buffer_a->current_context)
+ 		goto out_dec;
+-	if (local_read(&cpu_buffer_b->committing))
++	if (cpu_buffer_b->current_context)
+ 		goto out_dec;
+ 
+ 	/*
 
 
