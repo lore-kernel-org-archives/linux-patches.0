@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 403B942AF84;
-	Mon, 17 Aug 2026 14:30:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A50C44237B;
+	Mon, 17 Aug 2026 14:30:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977013; cv=none; b=co3ZoMxIpNAzsz6qKURlj2JQ2djh137YfetrXA/hAMfyqqK0cvR/b7GrvbUauiKAqlb2XJhg+P76cSSt9hOgObToilGAml142Ls7HVlW3xkZn9s04E/r8Cgc605h4nQn8pQT9YZT7xX4AA1NxBtTy4v+hyLka1gOqIb2ba36UO0=
+	t=1786977017; cv=none; b=oVqJTtROGMUdlrFN6IM+NNLTUycxHt+ZNsrYF3S7rxsAyCUBLIzgH9/VRrtfh57G5iIob9XDMm9nNAe3tiakkJlq3/citBdhCnRvgOhKyRJii0RUql/bZaoHS4x3QR8dzn8a3lLYVILNUDhhrQvSFMFDhhY93fzbdcprvgJQo8o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977013; c=relaxed/simple;
-	bh=zs9xDqU0WH2ftXaKxCDcuKSvuXq/iNlUNKs8HXmFIsU=;
+	s=arc-20240116; t=1786977017; c=relaxed/simple;
+	bh=f8SP9PwcXScoq6DdSbki/ARq9gb/s9T2roHvPZD0qMs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jxSpw1Ww9D8/g/MVRcE+JS2xdtPtU/qbrb9f13NNbkiI0sHpO6sXl08QbeouIYaGvca6Z7DUAuuv3SiszA3fHlevhRSly4QGrx5A95eGCMHyPtGQc36wNhTkEQ1KDQ/OzX31XspTeID0JW8bKDVK89L1VaYPpvYSqE3ntkOVgPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HUxM/qGx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VjJJq78RlQ7BkgkSAkU7e+qmaah9P0OxgwWUnHzlq5nX46u2JTcg0L1B6Il3YGDRssBR7aGX4Rx2xRS0Du9zrYlcVtCiJMjRO1AJfST0mvt+6xnbhFhDExIrhVMmb5o0E2HqjTQ5DVs9MOaBeXj/1wGrhksd0YEhiQcjUkxDMoE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gOZNrHqF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HUxM/qGx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 993A41F000E9;
-	Mon, 17 Aug 2026 14:30:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gOZNrHqF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 741081F000E9;
+	Mon, 17 Aug 2026 14:30:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977012;
-	bh=RC1r5/GqZVU3+rZvCi06CSRu7mcihh/a4l5U+RKzowk=;
+	s=korg; t=1786977015;
+	bh=nazvJy6cwZgBL9+HOWFtvVQ0Aa2BrQKpA26HMnxzHcg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HUxM/qGxxhxOT9Gsn9c1YLOC/nnAVQg2TFX42ht1T3eUlofA/f/VoTv4iEj/JldYo
-	 W/P1sogBcWPS9txRzyIsoeKy5bSaijOV/X5Yi1hq+R2kjVsFHeGA7wXztuA6Y0MP7G
-	 oXrnESisZeqK2xSYe8h2fIWgJrmdURK7H3QfdzCk=
+	b=gOZNrHqFIUhqTgdJIZalK29AlPFtnLmg0vrq7D8fu99ZGhVOYwoHklhSej3xrYeu8
+	 wXERK2GdVLbbT46eTU4FctdYDU98PaORJoi/IzdmuuBV35S4eS22l2Go7CqCPLuva7
+	 Xeo9d9WnLq/1wKqGC1fHlxMR7YlqwrQ7REqg51LY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	=?UTF-8?q?Pavel=20Ondra=C4=8Dka?= <pavel.ondracka@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.15 145/456] drm/radeon: fix r100_copy_blit for large BOs
-Date: Mon, 17 Aug 2026 15:28:55 +0200
-Message-ID: <20260817132545.752427881@linuxfoundation.org>
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 5.15 181/456] wifi: brcmfmac: make release_scratchbuffers idempotent
+Date: Mon, 17 Aug 2026 15:29:31 +0200
+Message-ID: <20260817132547.208684423@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -45,86 +45,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pavel Ondračka <pavel.ondracka@gmail.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit f896e86273dbbebb5eac966b4a201b5c62a02e9a upstream.
+commit 538c51e9d124cf656f2dd0c0394a8545efc7102d upstream.
 
-r100_copy_blit() copies BOs as 1024-pixel-wide ARGB8888 blits, so one
-GPU page becomes one blit row. Large copies are split into chunks of at
-most 8191 rows.
+brcmf_pcie_release_scratchbuffers() frees the shared.scratch and
+shared.ringupd DMA buffers with dma_free_coherent() but does not clear
+the pointers afterwards, unlike the sibling release_ringbuffers() which
+NULLs commonrings/flowrings/idxbuf on release.
 
-The kernel register header names the packet coordinate dwords SRC_Y_X
-and DST_Y_X. In the BITBLT_MULTI description in
-R5xx_Acceleration_v1.5.pdf docs, these correspond to [SRC_X1 | SRC_Y1]
-and [DST_X1 | DST_Y1], which are signed 13-bit coordinates in the
--8192..8191 range. The old code kept SRC/DST_PITCH_OFFSET at the BO base
-and used SRC_Y_X/DST_Y_X as the chunk address, so large BO moves could
-exceed that coordinate range.
+Both the bus_reset .reset callback (brcmf_pcie_reset) and
+brcmf_pcie_remove() call release_scratchbuffers.  When reset teardown
+has run before removal, remove's own teardown would call
+dma_free_coherent() a second time on the already-freed DMA allocation.
 
-Compute per-chunk SRC/DST_PITCH_OFFSET bases and emit zero source and
-destination coordinates. r100_copy_blit() already packs
-SRC/DST_PITCH_OFFSET as pitch plus base offset, so large chunk addresses
-belong there rather than in the coordinate fields.
+NULL the pointers after free, matching release_ringbuffers(), so a later
+release observes that the allocation has already been released.  This
+patch makes repeated sequential release safe; the reset-work lifetime is
+handled separately by the following patch.
 
-This fixes Prison Architect corruption with 4096x4096 mipped textures
-after they are evicted to GTT under memory pressure on RV530.
+This issue was found by an in-house static analysis tool.
 
-Closes: https://gitlab.freedesktop.org/mesa/mesa/-/work_items/6716
-Acked-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Pavel Ondračka <pavel.ondracka@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 87be26aee76239c6da03e599f238a426897f78ad)
+Fixes: 4684997d9eea ("brcmfmac: reset PCIe bus on a firmware crash")
 Cc: stable@vger.kernel.org
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Assisted-by: Codex:gpt-5.6
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Link: https://patch.msgid.link/20260718024353.3147201-2-fanwu01@zju.edu.cn
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/radeon/r100.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/radeon/r100.c
-+++ b/drivers/gpu/drm/radeon/r100.c
-@@ -904,6 +904,7 @@ struct radeon_fence *r100_copy_blit(stru
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
+@@ -1255,16 +1255,20 @@ fail:
+ static void
+ brcmf_pcie_release_scratchbuffers(struct brcmf_pciedev_info *devinfo)
  {
- 	struct radeon_ring *ring = &rdev->ring[RADEON_RING_TYPE_GFX_INDEX];
- 	struct radeon_fence *fence;
-+	uint64_t cur_src_offset, cur_dst_offset;
- 	uint32_t cur_pages;
- 	uint32_t stride_bytes = RADEON_GPU_PAGE_SIZE;
- 	uint32_t pitch;
-@@ -932,6 +933,10 @@ struct radeon_fence *r100_copy_blit(stru
- 			cur_pages = 8191;
- 		}
- 		num_gpu_pages -= cur_pages;
-+		cur_src_offset = src_offset +
-+			(uint64_t)num_gpu_pages * RADEON_GPU_PAGE_SIZE;
-+		cur_dst_offset = dst_offset +
-+			(uint64_t)num_gpu_pages * RADEON_GPU_PAGE_SIZE;
+-	if (devinfo->shared.scratch)
++	if (devinfo->shared.scratch) {
+ 		dma_free_coherent(&devinfo->pdev->dev,
+ 				  BRCMF_DMA_D2H_SCRATCH_BUF_LEN,
+ 				  devinfo->shared.scratch,
+ 				  devinfo->shared.scratch_dmahandle);
+-	if (devinfo->shared.ringupd)
++		devinfo->shared.scratch = NULL;
++	}
++	if (devinfo->shared.ringupd) {
+ 		dma_free_coherent(&devinfo->pdev->dev,
+ 				  BRCMF_DMA_D2H_RINGUPD_BUF_LEN,
+ 				  devinfo->shared.ringupd,
+ 				  devinfo->shared.ringupd_dmahandle);
++		devinfo->shared.ringupd = NULL;
++	}
+ }
  
- 		/* pages are in Y direction - height
- 		   page width in X direction - width */
-@@ -948,13 +953,13 @@ struct radeon_fence *r100_copy_blit(stru
- 				  RADEON_DP_SRC_SOURCE_MEMORY |
- 				  RADEON_GMC_CLR_CMP_CNTL_DIS |
- 				  RADEON_GMC_WR_MSK_DIS);
--		radeon_ring_write(ring, (pitch << 22) | (src_offset >> 10));
--		radeon_ring_write(ring, (pitch << 22) | (dst_offset >> 10));
-+		radeon_ring_write(ring, (pitch << 22) | (cur_src_offset >> 10));
-+		radeon_ring_write(ring, (pitch << 22) | (cur_dst_offset >> 10));
- 		radeon_ring_write(ring, (0x1fff) | (0x1fff << 16));
- 		radeon_ring_write(ring, 0);
- 		radeon_ring_write(ring, (0x1fff) | (0x1fff << 16));
--		radeon_ring_write(ring, num_gpu_pages);
--		radeon_ring_write(ring, num_gpu_pages);
-+		radeon_ring_write(ring, 0);
-+		radeon_ring_write(ring, 0);
- 		radeon_ring_write(ring, cur_pages | (stride_pixels << 16));
- 	}
- 	radeon_ring_write(ring, PACKET0(RADEON_DSTCACHE_CTLSTAT, 0));
+ static int brcmf_pcie_init_scratchbuffers(struct brcmf_pciedev_info *devinfo)
 
 
