@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D56A43F6C22;
-	Mon, 17 Aug 2026 15:08:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C8E83F12C6;
+	Mon, 17 Aug 2026 15:09:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979339; cv=none; b=AVRFrNi7+3Pxwu/8zHovYgdGl3uYif3phb9ni5RZSewKlfYPhbcSn+eC/T2OsNp6wzPboFffbUylU21q+vLUypPj2al4SZiA1FTWv1EaSMRaJzrOIfaWm9lWo5JXqJQwi76sU9Wt1ZgUy6Lir7v1P4eokiNANKVvmhCwraTiy+k=
+	t=1786979342; cv=none; b=MU8uUSj34jwYpEI25+cJ1rgnL7wxvjzS94kmRqloBMsUYde3UCQotWew5Ll4bvTN/+rmoQeaIeexfZ+2aa7nUkwpo9/DG30qZhWsmi9bzGTlOvhpuAl8+G14OZeSTP5bxx/bLy/wTqsBAvYt80KHJ/hhXlkWQgM9YLD+6hs/AgI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979339; c=relaxed/simple;
-	bh=FzKxkZdTeJYlJNXPE3UABGTWSqgMvwGHJ5kKwiXp8NA=;
+	s=arc-20240116; t=1786979342; c=relaxed/simple;
+	bh=O7B1KdOcBeBp4DuRVsBDQAOEojBC0H2Ld/v3nIe1wCg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MbPWW3J95ay3cEr6tL/7F882h9B1CtiJ+7TPNeepg+pERtBTu5tkBS7A/e4HSNe7pT1HjvkITmEsp/7/WTRbVUhRvXypzYkZGPrrZ2gHd+DVZhZIoVlWbauwcOHuDcJ/65QGJr/s8EXz1vswAIXWYO6F+RQS7BsEfSaZrQYMMAE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L5/x3uac; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CjwNFs1PgL6k/KtQU9ustTAJtglw7yP8NTVmvb1HVPrR1a/RvrCMDP3UITJF17W/xhkf20vwhAcGZhXYRvONTe/a1PXcIYuKNPVAJB45b3pPfG7l7xX+OPp0qbFj9aj2CzXhdPIclBwFYTQCIQUUQHo/e1fYKc3oq80PMn15hmU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MzBh0iio; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L5/x3uac"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 395861F000E9;
-	Mon, 17 Aug 2026 15:08:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MzBh0iio"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11EF31F000E9;
+	Mon, 17 Aug 2026 15:08:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979337;
-	bh=wuy7NVkSDkqawg9Afmqm1DWbzWQXrGFft1pNi3Jeehc=;
+	s=korg; t=1786979340;
+	bh=S5VAQYVuuNsvq+TUIURKZKC4mBEvgR+c+ZMJ3u66qJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L5/x3uacnkb731alIKWsbh+bi0kccd5KrGl/S4EIlTgZxG4jJWr+w5985+U8mShJz
-	 E6ROq6NZ/MRPSeW6DzCpxWdZ69eo1kTh/U3cz+M2Y/6jYZ/iAi1LVERCrTg3oZE+xv
-	 Y74yy5ohNc0Mkuea2mDio01r2PmTOZWrZ70uQ2o4=
+	b=MzBh0iio7CA3Z+hTdrYrHwrGwg55dHdaqM94iEET3EP1X5gYNlsTIrXZw3VC9ezns
+	 xz1usMlBOodXW+DpOESgUlAI/EE/jYA/C5iqz4Fu8asw2vusQcdvdbPNlNRPS5aDGK
+	 selR/LPXS9qTmr9FB1qlZvZCDdbS/fnjinlZiUuY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Carlier <devnexen@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.1 189/609] media: aspeed: fix missing of_reserved_mem_device_release() on probe failure
-Date: Mon, 17 Aug 2026 15:28:05 +0200
-Message-ID: <20260817132550.401631986@linuxfoundation.org>
+	Rohan G Thomas <rohan.g.thomas@altera.com>,
+	Nazim Amirul <muhammad.nazim.amirul.nazle.asmade@altera.com>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Jakub Raczynski <j.raczynski@samsung.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 154/609] net: stmmac: reset residual action in L3L4 filters on delete
+Date: Mon, 17 Aug 2026 15:27:30 +0200
+Message-ID: <20260817132549.164493702@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -50,41 +54,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Carlier <devnexen@gmail.com>
+From: Nazim Amirul <muhammad.nazim.amirul.nazle.asmade@altera.com>
 
-commit 253c8ef7d57da0c74db251f385324faaa5ae2257 upstream.
+[ Upstream commit a448f821289934b961dd9d8d0beb006cc8937ba2 ]
 
-aspeed_video_init() calls of_reserved_mem_device_init() to associate
-reserved memory regions with the device. When aspeed_video_setup_video()
-subsequently fails in aspeed_video_probe(), the error path frees the
-JPEG buffer and unprepares the clocks but does not release the reserved
-memory association, leaking the rmem_assigned_device entry on the global
-list.
+When deleting an L3/L4 flower filter entry, the action field is not
+reset. If a filter was previously configured with a drop action, that
+action may persist and affect subsequent filter configurations
+unintentionally.
 
-The normal remove path already calls of_reserved_mem_device_release()
-correctly; only the probe error path was missing it.
+Clear the action field when the filter entry is deleted.
 
-Add the missing of_reserved_mem_device_release() call to the
-aspeed_video_setup_video() failure cleanup.
-
-Fixes: d2b4387f3bdf ("media: platform: Add Aspeed Video Engine driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: David Carlier <devnexen@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 425eabddaf0f ("net: stmmac: Implement L3/L4 Filters using TC Flower")
+Signed-off-by: Rohan G Thomas <rohan.g.thomas@altera.com>
+Signed-off-by: Nazim Amirul <muhammad.nazim.amirul.nazle.asmade@altera.com>
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Link: https://patch.msgid.link/20260714023716.29865-5-muhammad.nazim.amirul.nazle.asmade@altera.com
+Reviewed-by: Jakub Raczynski <j.raczynski@samsung.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/aspeed/aspeed-video.c |    1 +
+ drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c | 1 +
  1 file changed, 1 insertion(+)
 
---- a/drivers/media/platform/aspeed/aspeed-video.c
-+++ b/drivers/media/platform/aspeed/aspeed-video.c
-@@ -1994,6 +1994,7 @@ static int aspeed_video_probe(struct pla
- 	rc = aspeed_video_setup_video(video);
- 	if (rc) {
- 		aspeed_video_free_buf(video, &video->jpeg);
-+		of_reserved_mem_device_release(&pdev->dev);
- 		clk_unprepare(video->vclk);
- 		clk_unprepare(video->eclk);
- 		return rc;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
+index 6bf198b3f12369..e9aac51c1b9b78 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_tc.c
+@@ -671,6 +671,7 @@ static int tc_del_flow(struct stmmac_priv *priv,
+ 	entry->in_use = false;
+ 	entry->cookie = 0;
+ 	entry->is_l4 = false;
++	entry->action = 0;
+ 	return ret;
+ }
+ 
+-- 
+2.53.0
+
 
 
