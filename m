@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5096E3BB57;
-	Mon, 17 Aug 2026 13:43:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EF4343B4A5;
+	Mon, 17 Aug 2026 13:43:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974228; cv=none; b=g3iT5czWeqgKjvsuymLjT55ANvVPExshOJqNU/kBGea/KlRTL6S9pPl58njkPYh2TmjZEe28RbJxIR02wSLb1Uhqn+M0BOV6Ij5p31IxolrPds9/EebYTgKcQP8XsqVV3pUOPDGUxcGfZNL2aoJeRTmSaMOLktUh4vUOlRJsNSg=
+	t=1786974231; cv=none; b=hyCXTyZCE7RiBv58kD2OuaBR2qjKwCC2jpU9Kl6XU48xTD4XBAWqrINsuNS0fO5FcBJf6vzxI+RhQm9RcfRt4rOpNiceP/xi6eCocuLulgNv+qMOMKbPEDUvdfY+PgHluA5tPYFImGSQr+kQ5kxUUgTA8kqlXh7ILvhFFmLyhOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974228; c=relaxed/simple;
-	bh=AwOcTOV6SsDWOjoz/cCqTolckSn7nOTOhwC9D5IeQys=;
+	s=arc-20240116; t=1786974231; c=relaxed/simple;
+	bh=JZD5H+MV3CAhXbFqXptn9dt20zhPGBG+N9/v40Wu8PA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LQ37jpcrtEgvyfS+VciJ9ggKzFsPvjMPLwMnsVX06fmFoLOTOsQQws9z0hKEniU0WFnTtKnxCzHMGU4lVvrOBS0Fs7puooAVePpiumdP0Dm3nrMlXCQoocnt0+QimWPc25gt/R1hqI2eOH95FTM1a4s4efAyUFVNzzXByzLBQGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FZlhkmSL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Q6eUJeBqtOv/9hNnUBZ/dZm7Fo+n6jvg+pyE50Q+meJnrB010s3LXcVyVUe+YFeVftqY1akF9imjMLsbdTEsC7WrcClpxZgQL7/XYAU60GWx6hYxVs6AOywDhXN+DD6rdBlwu6g1ZkNTqMpRevn2KRxBSXOimCtjLzUOaDoPJDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=raYNZixF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FZlhkmSL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0B251F00A3F;
-	Mon, 17 Aug 2026 13:43:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="raYNZixF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 776111F00A3A;
+	Mon, 17 Aug 2026 13:43:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974227;
-	bh=pCGAXd86nX5EO5IoYcVx03El2DBCX7lq432Ol8Of7vU=;
+	s=korg; t=1786974230;
+	bh=eN8H/SX9HpYTIT2pgJ2/Yf6PJM5JdN11SazfYYiX6o8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FZlhkmSL280TizPmYW74KT9sRgjR5+yGcaDYQaC5IJNBIAWfHjXNgj+estW87j1Cf
-	 6XXrCys/HoWYDt8Q7rG9O4MILcQ1TV0KSfMUhi+qw7akJvjossfgE8waZIB41XBxOG
-	 VKp+VF9KVs6a4H0PJNXMh1o3k1jwDlCt6o9+NJDY=
+	b=raYNZixFyZfUhBCV4bv9Sy711AdjGs1CgM6oRTQqwQ5Bs0whqk3kL0WuEUCwvP3l1
+	 sxxddOJmYXRTyIj3nQLt4NHI4fe4TB9CpN3/0qUkRhJ2md7n822vGaZCP2NXGAAsFP
+	 A/gGCuV1pROIsXSi8qrHx6oXzcGg8JyL5088rW18=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Sonali Pradhan <sonalipradhan@google.com>
-Subject: [PATCH 7.1 134/271] usb: gadget: f_ncm: Use unsigned int for ndp_index
-Date: Mon, 17 Aug 2026 15:30:59 +0200
-Message-ID: <20260817132542.367521796@linuxfoundation.org>
+	Yi Cong <yicong@kylinos.cn>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.1 135/271] net: usb: ax88179_178a: fix skb leak in ax88179_tx_fixup()
+Date: Mon, 17 Aug 2026 15:31:00 +0200
+Message-ID: <20260817132542.403867835@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -44,48 +44,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sonali Pradhan <sonalipradhan@google.com>
+From: Yi Cong <yicong@kylinos.cn>
 
-commit 6b1c8a9403a26cb0fed7a648916c74dc236da591 upstream.
+commit 1f428e30947395d9b9aacee03e25a4e6cfcad7a4 upstream.
 
-The variable ndp_index is declared as a signed integer, but it stores
-the return value of get_ncm(), which is unsigned.
+When the interface has NETIF_F_SG enabled and skb_linearize() fails in
+ax88179_tx_fixup(), the function returns NULL without freeing the skb.
 
-A malicious host can supply a large offset that overflows the signed
-ndp_index, making it negative. Because ndp_index is compared against
-unsigned bounds, this negative value bypasses sanity checks and leads
-to an out-of-bounds read when calculating the address of the NDP
-block (ntb_ptr + ndp_index).
+usbnet_start_xmit() treats a NULL return from tx_fixup() as a drop
+(info->flags does not set FLAG_MULTI_PACKET for this driver), jumping
+to the "drop" label where it does `if (skb) dev_kfree_skb_any(skb)`.
+Because tx_fixup() returned NULL, the local skb variable in
+usbnet_start_xmit() is NULL, so the original skb is never freed — a
+memory leak on every TX frame whose linearization fails (i.e. under
+memory pressure).
 
-Fix this by changing ndp_index to unsigned int to ensure consistent
-unsigned comparisons throughout the function.
+Free the skb before returning, matching the error handling already used
+for the pskb_expand_head() failure path in the same function.
 
-Fixes: 370af734dfaf ("usb: gadget: NCM: RX function support multiple NDPs")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Sonali Pradhan <sonalipradhan@google.com>
-Link: https://patch.msgid.link/20260720165654.2224591-1-sonalipradhan@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 16b1c4e01c89 ("net: usb: ax88179_178a: add TSO feature")
+Cc: stable@vger.kernel.org
+Signed-off-by: Yi Cong <yicong@kylinos.cn>
+Link: https://patch.msgid.link/20260729030436.3420477-1-cong.yi@linux.dev
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_ncm.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/usb/ax88179_178a.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/gadget/function/f_ncm.c
-+++ b/drivers/usb/gadget/function/f_ncm.c
-@@ -1171,7 +1171,7 @@ static int ncm_unwrap_ntb(struct gether
- 	unsigned char	*ntb_ptr = skb->data;
- 	__le16		*tmp;
- 	unsigned	index, index2;
--	int		ndp_index;
-+	unsigned int	ndp_index;
- 	unsigned	dg_len, dg_len2;
- 	unsigned	ndp_len;
- 	unsigned	block_len;
+--- a/drivers/net/usb/ax88179_178a.c
++++ b/drivers/net/usb/ax88179_178a.c
+@@ -1487,8 +1487,10 @@ ax88179_tx_fixup(struct usbnet *dev, str
+ 
+ 	headroom = skb_headroom(skb) - 8;
+ 
+-	if ((dev->net->features & NETIF_F_SG) && skb_linearize(skb))
++	if ((dev->net->features & NETIF_F_SG) && skb_linearize(skb)) {
++		dev_kfree_skb_any(skb);
+ 		return NULL;
++	}
+ 
+ 	if ((skb_header_cloned(skb) || headroom < 0) &&
+ 	    pskb_expand_head(skb, headroom < 0 ? 8 : 0, 0, GFP_ATOMIC)) {
 
 
