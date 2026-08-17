@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3E8A3033E7;
-	Mon, 17 Aug 2026 14:09:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE57D303C97;
+	Mon, 17 Aug 2026 14:09:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975758; cv=none; b=Z4tLTpoV0omMXsTwXOzE29ViLWO+HN2078Xd+zB0sUdg9dgI24gPhu0r5zFGyoiAWSNUXKvkXXAA15chLsPnY74AHURFa8To6cuMfL0IDSa2CBAvufEe9upHRr3S9Nh5x42axJqn7V4fqB8JXGTttV1KiMShE6ry39L4Rl9unVY=
+	t=1786975761; cv=none; b=RIcygKoZTDtFNYsdMsc6dmejx+l4JVKod0L7EdF+ZaugEx0v5RMz2XM4fq/5S6yLr1mTUOXJDNXv53HzmnGAy8Mai0+mfXQE5WyXWrWVVNalCbHm6JUt9yJIHWg4PQV9uyf1j1bjvoF2LMyFbD67TnAMZ0LOEZbdBfzGIe0Q36E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975758; c=relaxed/simple;
-	bh=bPwCtZWeXW7eGvvHj9hmNIujZx1urMF1a7ijUcjTYAY=;
+	s=arc-20240116; t=1786975761; c=relaxed/simple;
+	bh=4n3qDvV+na8pv2FYI8AKnmhJqs8BjGD8qVMEDmAtmbc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CZv7c5dyA2lvPHP7WTvFHUuTMcFXsmaa2b3Enma7aTj52CCbchjVQ84uOhghit2Q2QZMztn3Luvq0fqc8ElHCf+iCOON+oCg1j3X33H/P4l4aH+EBI0qtmVCwBxdNpsOdtZKCg2SZhjtgRz4Y1xYW8rYOWM9ABXo4E3gxy5+Qy4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OdMMzh9Z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dNv9UdlPG+K5h0+J9lIBCX99XNsi9VeLpdoCyvvSFr45voZ6NrxneRhgX7Zy5/t5pGE/dx40BDIYWQQOVu1hLJQrLfztQRRkPprOIqOYuZVD6lYrjMLDlC2A3svqmJIR7NYpVA6O0fhj9PbW7aHhE8h+8OrD80pQxxMffTq9lqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tErt+mju; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OdMMzh9Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 500BE1F000E9;
-	Mon, 17 Aug 2026 14:09:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tErt+mju"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26CE91F000E9;
+	Mon, 17 Aug 2026 14:09:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975756;
-	bh=buLbWsLjL1vXS7W3lzgfSoQcnikx8WPdIjUmBGw4Ozc=;
+	s=korg; t=1786975759;
+	bh=A3QO8SJKSFlcIopYSPLBCj9gZpDdUAj4u1qeHeyWgfY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OdMMzh9Z3nmv2DZbcBZdaz74ne478EOz+i0qnRnjdY9BfafZ0cdlD+J69SsMsBXVr
-	 wlMb1n45kj/Z59/ZIrP+C1KOQqiDZlqTk28W3gmpqr369iBg3ooi1ZJZTEQh1/y1Cx
-	 6N+tYX7DTlT4bcyuFt1DN7AQbF6bdiKV4fVdYPig=
+	b=tErt+mju2CU+pg4kru2/BAAgOKfrp3yg1RqBKTkL2lAghQa8ja3kWllqt1QVu+m/i
+	 WRBxV2Dwqmg5eTdrXo7th3+Y8ivAfIsziOFzz660e9jAg1g8tpHbSd9pJWvBGZG8e0
+	 Fnh45GhMeNUdXy3GfrlSfDIVD/GBLEYitI+5DYlo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	Hungyu Lin <dennylin0707@gmail.com>
-Subject: [PATCH 5.10 137/389] media: tegra-video: vi: fix invalid u32 return value in format lookup
-Date: Mon, 17 Aug 2026 15:29:36 +0200
-Message-ID: <20260817132544.495928469@linuxfoundation.org>
+	Zile Xiong <xiongzile99@gmail.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 5.10 138/389] media: vb2: use ssize_t for vb2_read/vb2_write
+Date: Mon, 17 Aug 2026 15:29:37 +0200
+Message-ID: <20260817132544.537145645@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -51,41 +51,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hungyu Lin <dennylin0707@gmail.com>
+From: Zile Xiong <xiongzile99@gmail.com>
 
-commit d5b50055338e131a1a99f923ebb0361974a00f36 upstream.
+commit a562d6dc86bdfdd299e1b4734977a8d63e803583 upstream.
 
-tegra_get_format_fourcc_by_idx() returns a u32 but uses -EINVAL to
-signal an out-of-bounds index. This results in a large unsigned
-value being returned, which may be interpreted as a valid fourcc.
+vb2_read() and vb2_write() return size_t, but propagate
+negative errno values from __vb2_perform_fileio().
 
-Returning 0 is not a valid fourcc either. This condition should
-never happen, so use WARN_ON_ONCE() to catch unexpected out-of-bounds
-access and return a valid fallback format instead.
+This relies on implicit signed/unsigned conversions in callers
+(e.g. vb2_fop_read()) to recover error codes:
 
-Suggested-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-Fixes: 3d8a97eabef0 ("media: tegra-video: Add Tegra210 Video input driver")
+    __vb2_perform_fileio() -> -EINVAL
+    vb2_read()             -> (size_t)-EINVAL
+    vb2_fop_read()         -> -EINVAL
+
+This relies on implicit conversions that are not obvious.
+
+These helpers are exported (EXPORT_SYMBOL_GPL) and part of the
+vb2 API, so changing their return type may affect existing users.
+
+However, they conceptually follow read/write semantics, where
+ssize_t is typically used to return either a byte count or a
+negative error code.
+
+Switch vb2_read() and vb2_write() to ssize_t, and update
+__vb2_perform_fileio() accordingly.
+
+Signed-off-by: Zile Xiong <xiongzile99@gmail.com>
+Acked-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Fixes: b25748fe6126 ("[media] v4l: videobuf2: add read() and write() emulator")
 Cc: stable@vger.kernel.org
-Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/media/tegra-video/vi.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/media/common/videobuf2/videobuf2-core.c |   12 ++++++------
+ include/media/videobuf2-core.h                  |    8 ++++----
+ 2 files changed, 10 insertions(+), 10 deletions(-)
 
---- a/drivers/staging/media/tegra-video/vi.c
-+++ b/drivers/staging/media/tegra-video/vi.c
-@@ -76,8 +76,8 @@ static int tegra_get_format_idx_by_code(
- static u32 tegra_get_format_fourcc_by_idx(struct tegra_vi *vi,
- 					  unsigned int index)
+--- a/drivers/media/common/videobuf2/videobuf2-core.c
++++ b/drivers/media/common/videobuf2/videobuf2-core.c
+@@ -2706,8 +2706,8 @@ static int __vb2_cleanup_fileio(struct v
+  * @nonblock:	mode selector (1 means blocking calls, 0 means nonblocking)
+  * @read:	access mode selector (1 means read, 0 means write)
+  */
+-static size_t __vb2_perform_fileio(struct vb2_queue *q, char __user *data, size_t count,
+-		loff_t *ppos, int nonblock, int read)
++static ssize_t __vb2_perform_fileio(struct vb2_queue *q, char __user *data, size_t count,
++				    loff_t *ppos, int nonblock, int read)
  {
--	if (index >= vi->soc->nformats)
--		return -EINVAL;
-+	if (WARN_ON_ONCE(index >= vi->soc->nformats))
-+		return vi->soc->video_formats[0].fourcc;
- 
- 	return vi->soc->video_formats[index].fourcc;
+ 	struct vb2_fileio_data *fileio;
+ 	struct vb2_fileio_buf *buf;
+@@ -2867,15 +2867,15 @@ static size_t __vb2_perform_fileio(struc
+ 	return ret;
  }
+ 
+-size_t vb2_read(struct vb2_queue *q, char __user *data, size_t count,
+-		loff_t *ppos, int nonblocking)
++ssize_t vb2_read(struct vb2_queue *q, char __user *data, size_t count,
++		 loff_t *ppos, int nonblocking)
+ {
+ 	return __vb2_perform_fileio(q, data, count, ppos, nonblocking, 1);
+ }
+ EXPORT_SYMBOL_GPL(vb2_read);
+ 
+-size_t vb2_write(struct vb2_queue *q, const char __user *data, size_t count,
+-		loff_t *ppos, int nonblocking)
++ssize_t vb2_write(struct vb2_queue *q, const char __user *data, size_t count,
++		  loff_t *ppos, int nonblocking)
+ {
+ 	return __vb2_perform_fileio(q, (char __user *) data, count,
+ 							ppos, nonblocking, 0);
+--- a/include/media/videobuf2-core.h
++++ b/include/media/videobuf2-core.h
+@@ -1040,8 +1040,8 @@ __poll_t vb2_core_poll(struct vb2_queue
+  * @ppos:	file handle position tracking pointer
+  * @nonblock:	mode selector (1 means blocking calls, 0 means nonblocking)
+  */
+-size_t vb2_read(struct vb2_queue *q, char __user *data, size_t count,
+-		loff_t *ppos, int nonblock);
++ssize_t vb2_read(struct vb2_queue *q, char __user *data, size_t count,
++		 loff_t *ppos, int nonblock);
+ /**
+  * vb2_read() - implements write() syscall logic.
+  * @q:		pointer to &struct vb2_queue with videobuf2 queue.
+@@ -1050,8 +1050,8 @@ size_t vb2_read(struct vb2_queue *q, cha
+  * @ppos:	file handle position tracking pointer
+  * @nonblock:	mode selector (1 means blocking calls, 0 means nonblocking)
+  */
+-size_t vb2_write(struct vb2_queue *q, const char __user *data, size_t count,
+-		loff_t *ppos, int nonblock);
++ssize_t vb2_write(struct vb2_queue *q, const char __user *data, size_t count,
++		  loff_t *ppos, int nonblock);
+ 
+ /**
+  * typedef vb2_thread_fnc - callback function for use with vb2_thread.
 
 
