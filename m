@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EAC3315D5D;
-	Mon, 17 Aug 2026 13:43:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82F683E764C;
+	Mon, 17 Aug 2026 13:43:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786974196; cv=none; b=ML5UOzOmlgnW8tAMDTW56oxrEX0sbjOnTqaru88HR13/k7ubJXDMqMKbK9r2DXMOvMDgGkjgc5RXTAC4vseQzpC/j0jYrn0k5FKK54uK7l4xZ4P79EDPMuIDfvd5ZRxp72seI1w9W3ybILlMBu/aVXM6l7a3YmOAQyh+tpcGAqA=
+	t=1786974199; cv=none; b=M1tNhojJl7ShoQQbWaCo1zpoRcrGFFUfAuiexl0ZzXfRivyGallTr5wsbmJFE18Fl5TJyjr7yjIJlvb4voy84RluysE2WSuQ++IOVm5o8Vv0PZCTTTxH/2/hn8wewd2EtUPUAQ5lUP00qfb+S1rdlCfFgM/fhfRA5NVLGFdZvXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786974196; c=relaxed/simple;
-	bh=tg1n7HhuWrLZm4TKinYiYh+5ma11JJLoLBt/bfGSEFg=;
+	s=arc-20240116; t=1786974199; c=relaxed/simple;
+	bh=JWnZg1Gspy35z2vfSpM3t2z0nX8iHg3dy1Ya7pRz7G4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=l8yzIY9G1h5AmnAFj7F13YP+eYwbcfoUTbi565yFSYa4Jx0sTBMFYOGpf98uGjIMWNBk9WNudmMoWWKgMlhP+/mSVKSYBTYZHUQCnTJLJyUi9eAq5tTbkj/DnsPRL2ShM8gbpNsA3MXt5DS3qf77T1mp8vHerKcbyDn14/B2SfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A6rNkKMy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l1RUtX/ug8vgWefth0KPslpwpoXPVzdzFJhZkUF6QEfJto/0JTik1q56Uan4kNwxMsiKTwRaj28f4azr1hkJylOL5UWgLHrBmI+P16ATdq5nM+IIzFX4JM4ByPQbYXevLsyz9DpbI3vOZNWl2YSbyYlmun/R5zGBGPT1gIGdgFs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QE1DWzin; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A6rNkKMy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F25B11F000E9;
-	Mon, 17 Aug 2026 13:43:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QE1DWzin"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA97F1F000E9;
+	Mon, 17 Aug 2026 13:43:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786974195;
-	bh=g1aWhc2GitnlSoM8DZEDBOB262DdruPRHfGhfjKBo1A=;
+	s=korg; t=1786974198;
+	bh=XcgbJxr52W+29fJIeDnWg6DNi83twGCxDRpmGR5JFXM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A6rNkKMyAFiySk3jJ4jzi5PIct5SMjdsOc0IVzl6ZfovRd+LJIvw+jr4DHagh6zQI
-	 4uvSI+Vvp2UR1qsvRSOvqE9Kk5r8yn9npTgKvER6cowU31ijjEH8dMtJ/JuqXimYs1
-	 bAd8nYr+ucJdQ9hfjP3GjznShCTYF43xcggSvvjc=
+	b=QE1DWzino/fhktzGb2lpOG1eCkg/ddvIvXwuQ45RqBCkpXsSyQ75Gd2MN2GtZmiii
+	 bn85RERaiUEzCBQDmdi+444a+FWhWvdcQSfCSE63UsFkmgTGrBeGwoTMQaqIWqR703
+	 8c3CxBVPbbUrz/7X/Q53r/V3isqDFr9PVa29zBzM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Nuno Sa <nuno.sa@analog.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Feng Xue <feng.xue@outlook.com>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.1 120/271] hwmon: (ltc4282) Fix parsing adi,current-limit-sense-microvolt
-Date: Mon, 17 Aug 2026 15:30:45 +0200
-Message-ID: <20260817132541.810014757@linuxfoundation.org>
+Subject: [PATCH 7.1 084/271] net/sched: cls_api: Always acquire rtnl_lock when destroying locked classifiers
+Date: Mon, 17 Aug 2026 15:30:09 +0200
+Message-ID: <20260817132540.208642843@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132536.752504388@linuxfoundation.org>
 References: <20260817132536.752504388@linuxfoundation.org>
@@ -46,70 +47,119 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit 335698fd7f60b6707b21fda725f97f35fa956b07 ]
+[ Upstream commit a347304b2ca1a5377d5bd2d8a72e4b4f12afe648 ]
 
-ltc4282_parse_dt() evaluates the wrong variable when parsing the current
-limit.
+Another challenge with unlocked filters.
+There is a short window in tc_new_tfilter where a tcf_proto can be found
+and briefly referenced by a totally unrelated, unlocked classifier's request
+and cause a race.
 
-When the adi,current-limit-sense-microvolt property is parsed into
-st->vsense_max, the subsequent switch statement evaluates the unrelated
-val variable instead of st->vsense_max:
+Feng created a poc which created this race with two threads, one creating a
+u32 filter and other a flower filter in the same chain/prio:
 
-drivers/hwmon/ltc4282.c:ltc4282_parse_dt() {
-    ...
-        ret = device_property_read_u32(dev, "adi,current-limit-sense-microvolt",
-                                       &st->vsense_max);
-        if (!ret) {
-                int reg_val;
+1. Both threads enter tc_new_tfilter, both find the chain empty, both
+   drop filter_chain_lock
+2. u32 finishes tcf_proto_create("u32") first, calls
+   tcf_chain_tp_insert_unique() -> inserts u32_tp into the chain
+3. flower finishes tcf_proto_create("flower") later, calls
+   tcf_chain_tp_insert_unique() -> tcf_chain_tp_find() now sees u32_tp
+   already there, takes a reference on it, destroys flower's own tp_new
+   and returns u32_tp to the caller.
 
-                switch (val) {
-                case 12500:
-                        reg_val = 0;
-                        break;
-    ...
-}
+Flower then hits the kind mismatch check (because it requested for kind
+"flower" but tp->ops->kind is "u32") and goes through the errout path
+which calls tcf_proto_put() on u32_tp. If the u32 thread has already
+gone through its own errout (its change() call failed on the PoC's empty
+options) and dropped its create and insert refs, flower's put is the
+last one and drops u32_tp's refcnt to zero.
 
-Because val holds a small integer representing vin_mode (from 0 to 3), it
-never matches any of the valid current limit cases.
+At this point tp->ops->destroy() runs in a context that never took
+rtnl_lock. When that happens, it might cause a UAF like the following
+(illustrated by the PoC):
 
-This causes it to always fall through to the default error case, return
--EINVAL, and aborts probe initialization for any device tree using this
-property.
+[  +0.000710] BUG: KASAN: slab-use-after-free in u32_init (net/sched/cls_u32.c:393)
+[  +0.000281] Read of size 8 at addr ffff888120022f00 by task poc_feng_xue/524
 
-Validate st->vsense_max instead to fix the problem.
+  Call Trace:
+   u32_init (net/sched/cls_u32.c:393)
+   tc_new_tfilter (net/sched/cls_api.c:2378)
 
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Fixes: cbc29538dbf7d ("hwmon: Add driver for LTC4282")
-Cc: Nuno Sa <nuno.sa@analog.com>
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+  Allocated by task 526:
+   u32_init (net/sched/cls_u32.c:378)
+   tc_new_tfilter (net/sched/cls_api.c:2378)
+
+  Freed by task 522:
+   kfree
+   u32_destroy (net/sched/cls_u32.c:662)
+   tcf_proto_destroy (net/sched/cls_api.c:446)
+   tcf_proto_put (net/sched/cls_api.c:459)
+   tc_new_tfilter (net/sched/cls_api.c:2459)
+
+Fix this by having tcf_proto_destroy() take rtnl_lock around
+tp->ops->destroy() for locked classifiers whenever rtnl is not held.
+
+To explain why I used a temp variable "not_lockless" I'd like to point to a
+semi-related note on rtnl_held vs TCF_PROTO_OPS_DOIT_UNLOCKED (adding here
+for future cleanup if deemed necessary):
+The rtnl_held parameter and the TCF_PROTO_OPS_DOIT_UNLOCKED flag are
+redundant sources of truth for whether rtnl_lock is held. Among the nine
+classifier destroy(..rtnl_held..) callbacks, only flower consults the
+rtnl_held parameter which it propagates to tc_setup_cb_destroy()
+and tc_setup_cb_call(). The other eight (u32, flow, bpf, cgroup, route, basic,
+fw, mall) ignore it entirely;-> those that call tc_setup_cb_destroy()
+(u32, bpf, mall) hardcode true always instead of forwarding the parameter.
+
+A future cleanup should remove the rtnl_held parameter from the destroy callback
+signature entirely and have callers rely solely on their knowledge whether
+they are running in an unlocked context.
+
+Fixes: 12db03b65c2b ("net: sched: extend proto ops to support unlocked classifiers")
+Reported-by: Feng Xue <feng.xue@outlook.com>
+Tested-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20260801125632.360365-1-jhs@mojatatu.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/ltc4282.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sched/cls_api.c | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/ltc4282.c b/drivers/hwmon/ltc4282.c
-index 9c88e98e101e2..d7c6226081440 100644
---- a/drivers/hwmon/ltc4282.c
-+++ b/drivers/hwmon/ltc4282.c
-@@ -1395,7 +1395,7 @@ static int ltc4282_setup(struct ltc4282_state *st, struct device *dev)
- 	if (!ret) {
- 		int reg_val;
- 
--		switch (val) {
-+		switch (st->vsense_max) {
- 		case 12500:
- 			reg_val = 0;
- 			break;
+diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
+index fee4524adc98e..4e6a2812a4f32 100644
+--- a/net/sched/cls_api.c
++++ b/net/sched/cls_api.c
+@@ -443,7 +443,22 @@ static void tcf_chain_put(struct tcf_chain *chain);
+ static void tcf_proto_destroy(struct tcf_proto *tp, bool rtnl_held,
+ 			      bool sig_destroy, struct netlink_ext_ack *extack)
+ {
+-	tp->ops->destroy(tp, rtnl_held, extack);
++	/* A locked classifier's destroy callback (e.g. u32_destroy) uses
++	 * rtnl_dereference() and mutates shared structures (e.g. the
++	 * tc_u_common hash list) that are only safe under rtnl_lock. When an
++	 * unlocked classifier's request (e.g. flower on ingress) loses the
++	 * tcf_chain_tp_insert_unique() race and ends up dropping the last
++	 * reference on a locked classifier's proto, destroy() would run
++	 * without rtnl held. Take it here in that case.
++	 */
++	bool not_lockless = !rtnl_held &&
++		!(tp->ops->flags & TCF_PROTO_OPS_DOIT_UNLOCKED);
++
++	if (not_lockless)
++		rtnl_lock();
++	tp->ops->destroy(tp, rtnl_held || not_lockless, extack);
++	if (not_lockless)
++		rtnl_unlock();
+ 	tcf_proto_count_usesw(tp, false);
+ 	if (sig_destroy)
+ 		tcf_proto_signal_destroyed(tp->chain, tp);
 -- 
 2.53.0
 
