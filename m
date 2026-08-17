@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BC143F23B1;
-	Mon, 17 Aug 2026 14:51:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3046E3F23B1;
+	Mon, 17 Aug 2026 14:51:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978311; cv=none; b=mGFC8IC8oUxgoCkJber1IENUUArjWDVDfRXhtk89CaoKe2zMzAlicwIaTkJfiPbsknGkhqZ0qdA8/ACwNMbEmP5QK30F1SAJabu7zUd1rmFfv3TIX/AYtKQ23gOb+2cm1X/3gw4YadIagz96BtkwYk9BTO6dmCIhfFVe5UJMTX0=
+	t=1786978314; cv=none; b=k2E+Q3WhY+AgufTbV8NXX19eJi3ldRMF5dR5Fy+DFpQsLbHJakaKGjtkipT0T+LXy4NOsLdvWlrJY7fgPdPju+hVTUOpYheDjDOhahuGJGXmPead39cRPhp0aT2nzlmFeJixwiU/zkCldAtbAxQJH0s4hpYFPv0auW3YJnCIcho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978311; c=relaxed/simple;
-	bh=S9pENg+9HBn6afJTOJYMD+FdKBvW6G3DEg3w0YwMIWY=;
+	s=arc-20240116; t=1786978314; c=relaxed/simple;
+	bh=k5aFbk4OdX2nltFyD5EFrP849aZzF+OazmDf9d/t7Q8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MVT22Pe2ZrhKj4IQQpPvu5R39hgL+gPXqKUGkKJEmPgozEQPKY4+cPe11T/6L2x+X134ufBUfUn6C2yZDzFSQz6Wi8q3FRRpznthDBmF2NicyqE//ciwkul57nlLpujyYHVeJH5JoqhwK/uw9lsNyhfiMHxHOQuOhi7u8JhZ3CA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PNgl8Eab; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ND8521vh5wzHj1f40D5wY55/7PnEotRk3KAaOlDVMx0dNJw5n11wWIRufHoKNmeT2UBGRvHmuPi9TTSou0ie7PKJ9FChXr3PPfnkFEkvYW1qiHy6FdF8H+ej56yB/n9HOWbn5z33Zinxksj+P1V9n8ZfaoWDZh3akCtRELQpeVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N4uBn2d7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PNgl8Eab"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A73841F000E9;
-	Mon, 17 Aug 2026 14:51:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N4uBn2d7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85C041F000E9;
+	Mon, 17 Aug 2026 14:51:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978310;
-	bh=Lb+aD6RoPg62bA88Cq0cammK1xnfOqUzbqqalBaSc+Y=;
+	s=korg; t=1786978313;
+	bh=3aJCZdGpDl0x7CEYRoWGKIegcAz0B7/krR9T/8z9sWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PNgl8EabQr8GpoOVFB0mWc5xpCK4L5fAN/rG6p1Uy/NvA1u1szABDECvSTcIS4zXo
-	 AyaqOVPiD4mrIAm9CuIgO6y4ZmkFQ/D+ee/Ny9zvGRdmXVu0GHQqZnT96o88b0DJg/
-	 ZYREk4H5RiCi2SxxBgn+NfgqurgQxTF8aEy0C4Uk=
+	b=N4uBn2d7tlIjgmlpucPwnPSePOgm2leAVQS+iOp9cyLUGxrqEkp9QR3nW54x4vyCk
+	 qsD+qhe5IHtRRl9rWcxdGpbJ2Le0njW6Bk5AtNTkMCDQOkSS64Cv+bXkaQUmqu8uGx
+	 MynRi8AGF+ATmOcn0jESzF7ub80FXiv0Ie9iXzR0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Rao <raoxu@uniontech.com>,
-	John Garry <john.g.garry@oracle.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
-Subject: [PATCH 6.12 175/181] scsi: scsi_debug: Negate wrapped memcmp() result
-Date: Mon, 17 Aug 2026 15:34:29 +0200
-Message-ID: <20260817132542.576726248@linuxfoundation.org>
+	Baul Lee <baul.lee@xbow.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 176/181] sctp: keep chunk->transport in step with the list it is queued on
+Date: Mon, 17 Aug 2026 15:34:30 +0200
+Message-ID: <20260817132542.622000255@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
 References: <20260817132535.394764707@linuxfoundation.org>
@@ -51,41 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Rao <raoxu@uniontech.com>
+From: Baul Lee <baul.lee@xbow.com>
 
-commit c4f6916a99cf105c3ff340b6210fcbba3fa66b35 upstream.
+commit 9f2cf069a9a72a2d6b97ca8b4c70e714aac99749 upstream.
 
-comp_write_worker() returns true when the compared data matches.
-memcmp() returns zero for equal data and non-zero for different data, so
-its result must be negated before it is stored in a bool.
+__sctp_outq_flush_rtx() moves a gap-acked chunk onto another transport's
+transmitted list without updating chunk->transport:
 
-The first segment already uses !memcmp(), but the wrapped segment uses
-memcmp() directly, reversing the match result. Use !memcmp() there as
-well.
+	if (chunk->tsn_gap_acked) {
+		list_move_tail(&chunk->transmitted_list,
+			       &transport->transmitted);
+		continue;
+	}
 
-Fixes: 38d5c8336e60 ("scsi_debug: add Report supported opcodes+tmfs; Compare and write")
+The chunk then sits on a live transport's list while chunk->transport still
+names a different one.  If that transport is removed - sctp_assoc_rm_peer()
+from an ASCONF Delete-IP - sctp_transport_free() RCU-frees it and the chunk
+is left with a dangling pointer.  sctp_assoc_rm_peer() scrubs
+peer->transmitted and asoc->outqueue.out_chunk_list, but the chunk is on
+neither.
+
+The pointer is not followed while tsn_gap_acked is set.  A SACK that
+reneges on the TSN clears the flag, and the next SACK reaches
+
+	tchunk->transport->flight_size -= sctp_data_size(tchunk);
+
+inside the freed transport.  KASAN reports a slab-use-after-free read in
+sctp_check_transmitted(), freed from sctp_assoc_rm_peer().  Both the
+removal and the SACKs come from the association peer.
+
+Set chunk->transport at the move.  The ordinary resend path needs nothing:
+it reaches its list_move_tail() only after sctp_packet_append_chunk()
+returned SCTP_XMIT_OK, and __sctp_packet_append_chunk() has rebound the
+chunk by then.
+
+Discovered by XBOW, triaged by Baul Lee <baul.lee@xbow.com>
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Xu Rao <raoxu@uniontech.com>
-Reviewed-by: John Garry <john.g.garry@oracle.com>
-Link: https://patch.msgid.link/E5AD42E9C0E18633+20260803095328.3445311-1-raoxu@uniontech.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Signed-off-by: Baul Lee <baul.lee@xbow.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20260729160028.54546-1-baul.lee@xbow.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/scsi_debug.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/sctp/outqueue.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/scsi/scsi_debug.c
-+++ b/drivers/scsi/scsi_debug.c
-@@ -3772,8 +3772,8 @@ static bool comp_write_worker(struct sde
- 	if (!res)
- 		return res;
- 	if (rest)
--		res = memcmp(fsp, arr + ((num - rest) * lb_size),
--			     rest * lb_size);
-+		res = !memcmp(fsp, arr + ((num - rest) * lb_size),
-+			      rest * lb_size);
- 	if (!res)
- 		return res;
- 	if (compare_only)
+--- a/net/sctp/outqueue.c
++++ b/net/sctp/outqueue.c
+@@ -650,6 +650,7 @@ static int __sctp_outq_flush_rtx(struct
+ 		if (chunk->tsn_gap_acked) {
+ 			list_move_tail(&chunk->transmitted_list,
+ 				       &transport->transmitted);
++			chunk->transport = transport;
+ 			continue;
+ 		}
+ 
 
 
