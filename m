@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 941C2443A9D;
-	Mon, 17 Aug 2026 14:13:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 780A83F3281;
+	Mon, 17 Aug 2026 14:13:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976009; cv=none; b=WpCM0KsEyNjf+H6CDK/tVqtgwAatfKFM2Y+wlJ7VNmb2T40Iv6JapkbEUOP1edBDeJ4eI6p5EZs7OlKkiueLHakYVdC+nceb36R1F1xbvHOxTXd/TXUBdRZpPG31BaTWIeMs3k7rmpk5JngdPMzRygA1k3TxpxnPqpKXJ7gOvbA=
+	t=1786976012; cv=none; b=OoSxvyeEc/dATXqhzs0hQQ58pPszcukexeKazfhFDKx2fS/KcGlAlpKFYNhtsdTzPT2mgfsXRRoouFRCt50Ft/5S0UvCy2fYjDU3YwyNDPweC5kX3g6s4T4iFnNAuDBXTYY+YPCk/cddS2zblNY+kp5xTpVk+BJgKI6qaVE0a2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976009; c=relaxed/simple;
-	bh=iZK2mllhIJApeF3Z+4Sz4s1mm8bpFJSGI+D5ZLH2J3k=;
+	s=arc-20240116; t=1786976012; c=relaxed/simple;
+	bh=nI0cT2RcBgxWkod2DCEzXuqltwdBxOTrVJ2qjmiErh8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gFna6evM+GZW7V3k9ry177ow9I52ckorSlV7+crHj74fu8FkMR5h9HrAP443UagAFoLGcyKM5ruGi4D6/a8b53903qFUPsacgzFKI5wPY7gsNoy0qiDj98cezEdC9Z116sYt/SuA6LpSfc5r8o/584qqIVv84vP2lO5mOdsjb+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SyTgRbqw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jaGMuhizvxBB1oAyq0RiGchDyQMhPrc2plY9HU/q3hD9EzdF2ensvTz/HRMk7uGEQdSRy6pCqsQS0/x8OtCKT4j0BVKhBIepAjJhGBral70+gWnSUL1oEFKZyYy6KV5nM5LmwsEnSb0TydBvXE/ntjeH3YhTTcl0jZePbPoLV48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DlynDqu4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SyTgRbqw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E99941F000E9;
-	Mon, 17 Aug 2026 14:13:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DlynDqu4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D071E1F000E9;
+	Mon, 17 Aug 2026 14:13:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976008;
-	bh=sbzhDrmRtxATQvtp521XKjFapRPCqh3odXJTcgOGNPE=;
+	s=korg; t=1786976011;
+	bh=spx1/zJJLgThSpdNQYG9d5eTNHSJ4CGCTO1V4efQi10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SyTgRbqwNU8xmyOhpghCCaTwDancwNybyBgYhfyvJP7gm5ErgijweCGxrh7IwSdPW
-	 g8uqmQjla86jfz9LDYbChB3YpECUjF3qwPvpFpzcbrBJ46Lp0bKH4Su/ODMBUrd1u4
-	 +0n4TZsHxDQuMSSi7hlzdPBLQLl4V8se/Z1SKHTs=
+	b=DlynDqu4a4seU4DwLA/wAN5cnWtL0vJPU6OZsGzlvsySYTIDhzUYjOinyxWVDcAyG
+	 ZNDeQ+OZabcZRp1k8yWD3VKEaTfzLGdbqUgJtDmYhbnSIC7D1HoQxMqNm9L15vkDlj
+	 AlJghCxc0CK4W0qZWROMzh3ex5NW+8gbBwYm2TPU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Luiz Angelo Daros de Luca <luizluca@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 224/389] hwmon: (adt7470) Fix PWM auto temp state array and bounds check
-Date: Mon, 17 Aug 2026 15:31:03 +0200
-Message-ID: <20260817132547.952535182@linuxfoundation.org>
+Subject: [PATCH 5.10 225/389] powerpc/boot: Fix simpleboot CPU node lookup check
+Date: Mon, 17 Aug 2026 15:31:04 +0200
+Message-ID: <20260817132548.001352615@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -52,55 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Angelo Daros de Luca <luizluca@gmail.com>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit 92413f439d1ec5e55b73ede8d66a7b971cbd1ced ]
+[ Upstream commit c824ab65685bb119c6c6a3a200b3428c72862d5a ]
 
-In pwm_auto_temp_store(), the parsed user input was missing bounds
-checks, allowing values > 0xF to overflow into the adjacent channel's
-bits. Furthermore, the value was being incorrectly written to the
-pwm_automatic state array instead of pwm_auto_temp.
+fdt_node_offset_by_prop_value() returns a negative error code on
+failure - fix the check accordingly.
 
-Fix this by rejecting values > 0xF with -EINVAL, and assigning the
-value to the correct array only after a successful I2C write.
-
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/all/20260727034932.0B7C41F000E9@smtp.kernel.org/#t
-Fixes: 6f9703d0be16 ("hwmon: add support for adt7470")
-Signed-off-by: Luiz Angelo Daros de Luca <luizluca@gmail.com>
-Link: https://lore.kernel.org/r/20260727-adt7470_fixes-v2-8-598e38a46ba6@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: d2477b5cc8ca ("[POWERPC] bootwrapper: Add a firmware-independent simpleboot target.")
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260702211554.56923-4-thorsten.blum@linux.dev
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/adt7470.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ arch/powerpc/boot/simpleboot.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/adt7470.c b/drivers/hwmon/adt7470.c
-index 274d38a9ba589..c8f6b9af0f139 100644
---- a/drivers/hwmon/adt7470.c
-+++ b/drivers/hwmon/adt7470.c
-@@ -1093,8 +1093,10 @@ static ssize_t pwm_auto_temp_store(struct device *dev,
- 	if (temp < 0)
- 		return temp;
- 
-+	if (temp > 0xF)
-+		return -EINVAL;
-+
- 	mutex_lock(&data->lock);
--	data->pwm_automatic[attr->index] = temp;
- 
- 	if (!(attr->index % 2)) {
- 		mask = 0xF0;
-@@ -1105,6 +1107,9 @@ static ssize_t pwm_auto_temp_store(struct device *dev,
- 	}
- 
- 	err = regmap_update_bits(data->regmap, pwm_auto_reg, mask, val);
-+	if (!err)
-+		data->pwm_auto_temp[attr->index] = temp;
-+
- 	mutex_unlock(&data->lock);
- 
- 	return err < 0 ? err : count;
+diff --git a/arch/powerpc/boot/simpleboot.c b/arch/powerpc/boot/simpleboot.c
+index c80691d83880b..27591df41e9e8 100644
+--- a/arch/powerpc/boot/simpleboot.c
++++ b/arch/powerpc/boot/simpleboot.c
+@@ -68,7 +68,7 @@ void platform_init(unsigned long r3, unsigned long r4, unsigned long r5,
+ 	/* finally, setup the timebase */
+ 	node = fdt_node_offset_by_prop_value(_dtb_start, -1, "device_type",
+ 					     "cpu", sizeof("cpu"));
+-	if (!node)
++	if (node < 0)
+ 		fatal("Cannot find cpu node\n");
+ 	timebase = fdt_getprop(_dtb_start, node, "timebase-frequency", &size);
+ 	if (timebase && (size == 4))
 -- 
 2.53.0
 
