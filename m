@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2767F44470E;
-	Mon, 17 Aug 2026 15:16:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC32F442372;
+	Mon, 17 Aug 2026 15:16:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979763; cv=none; b=ugeDX9unMVMhVR0wATUor8AJPRQ42i2XJOBjuIbacM2bgDHTInhuPjM6RtETubJRNpf5ckvwmXvfj7gCZk2twiXTKuUbWF8oFPxBrhKHIjp1EU/++Un0rgsAmpbl5jeoGDvxXgw0QYWUk4JT4kuS8Eoqd/SUTI+aqM9b4yLhqFE=
+	t=1786979764; cv=none; b=ehKgRXTZxYXuayFy2vojLbWr5dy/1cUETTasxoRIjSvqEsai8AFhBLTCQiTlk679kFTFp5OlpPS9ztsJAf8hyXnYp7iVKVpZ65dYvyuS57XE0oU6P7HSLUCx9F4F0vE0JyQKSue3mC5H2/E4M52XREjkPZwC9mh1ojTE1BN8S1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979763; c=relaxed/simple;
-	bh=ZwfvGZTUR/db7j6GMUgcnFiUo7nRGytXWqdxX8wmgcg=;
+	s=arc-20240116; t=1786979764; c=relaxed/simple;
+	bh=KMxYoJ3u2588oKhE4ph4E1u5ZLePZg1DK4/+nu+Hf24=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ru8pZnmuFOoDtuI3O6ki5CVdTl4pRBQe7CrWIWFUGrx/OoJ1ioCkNh/b/g6zdg98ehz85TO7Z2OqJinWLzzUg7fM4loSa/CEo3C0HeZIUekqbjkHKukN7u6EafjmGXVq5+D8w12nwldZ7SUyN2CpnxWHpUdI47HYbVGwhufLEhc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zoyMp5Yw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UdeNs+mz1OyUEp/Qri4I3EvoJ+U3WGDa27ed87/KVxQOCbvBKkMQRhSEcwNquwvPbYCwHtFpJR+nV6Nej3jiNXuSKRBKQm3d3QevqR4wGjxdxH4ofC81ELtu9Loo/Gkq3ffAkKAawsXq4Bo3VV8cTr3tC1e1vAojyKyMEBzVGJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SNXzD6Zn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zoyMp5Yw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55C3C1F00A3A;
-	Mon, 17 Aug 2026 15:15:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SNXzD6Zn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C1E01F000E9;
+	Mon, 17 Aug 2026 15:16:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979759;
-	bh=WcB0s7FLfRiCMAF0B7MifKGdbhQFkgj7T9cpJwCrVs8=;
+	s=korg; t=1786979762;
+	bh=z4gQP/SI3w0p/t0dXjQ/9gVkfPQLSXD/wMKTPCOb+1Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zoyMp5YwIiDW26Im+wuQGH6iOVUby5vnVCoMUHtCOCrLJ7kGEMzjq3YKSQ22hB4Y+
-	 /aYdgwyybzzZN2zxJjrn5gu7o9YmZiVjtHRNT99EV7SSjR324tHYWzduPTD57IaYYU
-	 fOPqBj06qt1P1TMfh6CUKVsMTCGFrHgu1BUvF1bM=
+	b=SNXzD6ZnS0KmiVFNXBU6RnhkP7/SAcJRRe0xrBFbKPPi5aovw5SAPiR8xKODkQ0Sb
+	 7XbDnVgbv2lGLYmLZkdfFVHuTsNMGS7oyQr4eyvGFoAD6n3cxFkAcdhq1ZOM/+djY1
+	 qeFDgT2dhfqALpBoWKqHCk6uIXPIs80TuzNaMNns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Xingui Yang <yangxingui@huawei.com>,
 	John Garry <john.g.garry@oracle.com>,
-	Jason Yan <yanaijie@huawei.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 338/609] scsi: libsas: Delete struct scsi_core
-Date: Mon, 17 Aug 2026 15:30:34 +0200
-Message-ID: <20260817132555.545283641@linuxfoundation.org>
+Subject: [PATCH 6.1 339/609] scsi: libsas: Fix HA resume deadlock and hisi_sas disk-wake race
+Date: Mon, 17 Aug 2026 15:30:35 +0200
+Message-ID: <20260817132555.580805955@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -53,561 +52,163 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Garry <john.g.garry@oracle.com>
+From: Xingui Yang <yangxingui@huawei.com>
 
-[ Upstream commit 1136a0225d0582c4464fa37e3a91ed4b19b8745e ]
+[ Upstream commit 3dbbbf656b850c9c8de05df6ad4a1dfc6ff02845 ]
 
-Since commit 79855d178557 ("libsas: remove task_collector mode"), struct
-scsi_core only contains a reference to the shost. struct scsi_core is only
-used in sas_ha_struct.core, so delete scsi_core and replace with a
-reference to the shost there.
+Commit fbefe22811c3 ("scsi: libsas: Don't always drain event workqueue
+for HA resume") introduced sas_resume_ha_no_sync() to avoid a deadlock:
+the PHYE_RESUME_TIMEOUT handler, running on the HA event workqueue,
+calls sas_deform_port() -> sas_destruct_devices(), which removes SCSI
+devices and waits for the host to become runtime-active. But the host
+cannot resume until sas_resume_ha() -> sas_drain_work() returns, and the
+drain is blocked on that very handler.
 
-Signed-off-by: John Garry <john.g.garry@oracle.com>
-Link: https://lore.kernel.org/r/20230815115156.343535-5-john.g.garry@oracle.com
-Reviewed-by: Jason Yan <yanaijie@huawei.com>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+However skipping the drain reintroduces a race: hisi_sas returns from
+resume before all PHY UP work and libsas discovery work finish. The
+controller may then autosuspend while disks are still waking up. The
+disks issue IO to a suspended controller, the IO fails, and the disks
+get disabled.
+
+Fix the deadlock at its source by moving the PHYE_RESUME_TIMEOUT
+notification to after sas_drain_work(). By then the host resume is about
+to complete, so device removal through device_link no longer blocks on
+the resume and the cycle is broken.
+
+With the deadlock gone, restore sas_resume_ha() (the draining variant)
+in hisi_sas and remove sas_resume_ha_no_sync().
+
+The reorder is safe for the other libsas consumers (isci, pm8001,
+aic94xx, mvsas). During suspend, sas_suspend_devices() calls
+sas_notify_lldd_dev_gone() for each device, which sets dev->lldd_dev to
+NULL. When scsi_unblock_requests re-enables I/O in resume, any I/O to a
+timed-out phy's disk is immediately rejected by the LLDD before reaching
+hardware: isci returns SAS_DEVICE_UNKNOWN (mapped to DID_BAD_TARGET),
+and pm8001 returns SAS_PHY_DOWN (mapped to DID_NO_CONNECT). Both
+complete directly via scsi_done() without entering SCSI EH. This is
+identical in both the old and new ordering since lldd_dev_gone runs
+during suspend, before resume. The reorder only affects when the
+PHYE_RESUME_TIMEOUT handler runs (synchronized by sas_drain_work()
+vs. asynchronous after resume returns), not whether I/O can reach the
+device. aic94xx and mvsas do not register any PM ops and never reach
+this code path.
+
+Fixes: fbefe22811c3 ("scsi: libsas: Don't always drain event workqueue for HA resume")
+Signed-off-by: Xingui Yang <yangxingui@huawei.com>
+Reviewed-by: John Garry <john.g.garry@oracle.com>
+Link: https://patch.msgid.link/20260716081145.3950172-1-yangxingui@huawei.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Stable-dep-of: 3dbbbf656b85 ("scsi: libsas: Fix HA resume deadlock and hisi_sas disk-wake race")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/aic94xx/aic94xx_hwi.c     |  2 +-
- drivers/scsi/aic94xx/aic94xx_init.c    |  6 +++---
- drivers/scsi/hisi_sas/hisi_sas_main.c  |  6 +++---
- drivers/scsi/hisi_sas/hisi_sas_v3_hw.c |  6 +++---
- drivers/scsi/isci/host.h               |  2 +-
- drivers/scsi/isci/init.c               |  4 ++--
- drivers/scsi/libsas/sas_ata.c          |  8 ++++----
- drivers/scsi/libsas/sas_discover.c     |  8 ++++----
- drivers/scsi/libsas/sas_expander.c     |  2 +-
- drivers/scsi/libsas/sas_host_smp.c     |  4 ++--
- drivers/scsi/libsas/sas_init.c         | 16 ++++++++--------
- drivers/scsi/libsas/sas_phy.c          |  8 ++++----
- drivers/scsi/libsas/sas_port.c         |  6 +++---
- drivers/scsi/libsas/sas_scsi_host.c    | 14 +++++++-------
- drivers/scsi/mvsas/mv_init.c           |  4 ++--
- drivers/scsi/pm8001/pm8001_init.c      |  2 +-
- include/scsi/libsas.h                  |  7 +------
- 17 files changed, 50 insertions(+), 55 deletions(-)
+ drivers/scsi/hisi_sas/hisi_sas_v3_hw.c | 10 +------
+ drivers/scsi/libsas/sas_init.c         | 37 +++++++++++++-------------
+ include/scsi/libsas.h                  |  1 -
+ 3 files changed, 19 insertions(+), 29 deletions(-)
 
-diff --git a/drivers/scsi/aic94xx/aic94xx_hwi.c b/drivers/scsi/aic94xx/aic94xx_hwi.c
-index 3dd1101434715..8f515aae0a8dd 100644
---- a/drivers/scsi/aic94xx/aic94xx_hwi.c
-+++ b/drivers/scsi/aic94xx/aic94xx_hwi.c
-@@ -28,7 +28,7 @@ static int asd_get_user_sas_addr(struct asd_ha_struct *asd_ha)
- 	if (asd_ha->hw_prof.sas_addr[0])
- 		return 0;
- 
--	return sas_request_addr(asd_ha->sas_ha.core.shost,
-+	return sas_request_addr(asd_ha->sas_ha.shost,
- 				asd_ha->hw_prof.sas_addr);
- }
- 
-diff --git a/drivers/scsi/aic94xx/aic94xx_init.c b/drivers/scsi/aic94xx/aic94xx_init.c
-index 1766302053da6..f204714ad7536 100644
---- a/drivers/scsi/aic94xx/aic94xx_init.c
-+++ b/drivers/scsi/aic94xx/aic94xx_init.c
-@@ -688,8 +688,8 @@ static int asd_unregister_sas_ha(struct asd_ha_struct *asd_ha)
- 
- 	err = sas_unregister_ha(&asd_ha->sas_ha);
- 
--	sas_remove_host(asd_ha->sas_ha.core.shost);
--	scsi_host_put(asd_ha->sas_ha.core.shost);
-+	sas_remove_host(asd_ha->sas_ha.shost);
-+	scsi_host_put(asd_ha->sas_ha.shost);
- 
- 	kfree(asd_ha->sas_ha.sas_phy);
- 	kfree(asd_ha->sas_ha.sas_port);
-@@ -739,7 +739,7 @@ static int asd_pci_probe(struct pci_dev *dev, const struct pci_device_id *id)
- 	asd_printk("found %s, device %s\n", asd_ha->name, pci_name(dev));
- 
- 	SHOST_TO_SAS_HA(shost) = &asd_ha->sas_ha;
--	asd_ha->sas_ha.core.shost = shost;
-+	asd_ha->sas_ha.shost = shost;
- 	shost->transportt = aic94xx_transport_template;
- 	shost->max_id = ~0;
- 	shost->max_lun = ~0;
-diff --git a/drivers/scsi/hisi_sas/hisi_sas_main.c b/drivers/scsi/hisi_sas/hisi_sas_main.c
-index 360f2799f2a13..10ea1d434c48d 100644
---- a/drivers/scsi/hisi_sas/hisi_sas_main.c
-+++ b/drivers/scsi/hisi_sas/hisi_sas_main.c
-@@ -2458,7 +2458,7 @@ int hisi_sas_probe(struct platform_device *pdev,
- 	sha->lldd_module = THIS_MODULE;
- 	sha->sas_addr = &hisi_hba->sas_addr[0];
- 	sha->num_phys = hisi_hba->n_phy;
--	sha->core.shost = hisi_hba->shost;
-+	sha->shost = hisi_hba->shost;
- 
- 	for (i = 0; i < hisi_hba->n_phy; i++) {
- 		sha->sas_phy[i] = &hisi_hba->phy[i].sas_phy;
-@@ -2500,12 +2500,12 @@ int hisi_sas_remove(struct platform_device *pdev)
- {
- 	struct sas_ha_struct *sha = platform_get_drvdata(pdev);
- 	struct hisi_hba *hisi_hba = sha->lldd_ha;
--	struct Scsi_Host *shost = sha->core.shost;
-+	struct Scsi_Host *shost = sha->shost;
- 
- 	del_timer_sync(&hisi_hba->timer);
- 
- 	sas_unregister_ha(sha);
--	sas_remove_host(sha->core.shost);
-+	sas_remove_host(shost);
- 
- 	hisi_sas_free(hisi_hba);
- 	scsi_host_put(shost);
 diff --git a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-index 20b4d76e07149..a3b408962a861 100644
+index a3b408962a861..ccd52fc7d34a2 100644
 --- a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
 +++ b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-@@ -4820,7 +4820,7 @@ hisi_sas_v3_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+@@ -5047,15 +5047,7 @@ static int _resume_v3_hw(struct device *device)
+ 		return rc;
+ 	}
+ 	phys_init_v3_hw(hisi_hba);
+-
+-	/*
+-	 * If a directly-attached disk is removed during suspend, a deadlock
+-	 * may occur, as the PHYE_RESUME_TIMEOUT processing will require the
+-	 * hisi_hba->device to be active, which can only happen when resume
+-	 * completes. So don't wait for the HA event workqueue to drain upon
+-	 * resume.
+-	 */
+-	sas_resume_ha_no_sync(sha);
++	sas_resume_ha(sha);
+ 	clear_bit(HISI_SAS_RESETTING_BIT, &hisi_hba->flags);
  
- 	sha->sas_phy = arr_phy;
- 	sha->sas_port = arr_port;
--	sha->core.shost = shost;
-+	sha->shost = shost;
- 	sha->lldd_ha = hisi_hba;
- 
- 	shost->transportt = hisi_sas_stt;
-@@ -4921,14 +4921,14 @@ static void hisi_sas_v3_remove(struct pci_dev *pdev)
- 	struct device *dev = &pdev->dev;
- 	struct sas_ha_struct *sha = dev_get_drvdata(dev);
- 	struct hisi_hba *hisi_hba = sha->lldd_ha;
--	struct Scsi_Host *shost = sha->core.shost;
-+	struct Scsi_Host *shost = sha->shost;
- 
- 	pm_runtime_get_noresume(dev);
- 	del_timer_sync(&hisi_hba->timer);
- 
- 	sas_unregister_ha(sha);
- 	flush_workqueue(hisi_hba->wq);
--	sas_remove_host(sha->core.shost);
-+	sas_remove_host(shost);
- 
- 	hisi_sas_v3_destroy_irqs(pdev, hisi_hba);
- 	hisi_sas_free(hisi_hba);
-diff --git a/drivers/scsi/isci/host.h b/drivers/scsi/isci/host.h
-index 6bc3f022630a2..52388374cf315 100644
---- a/drivers/scsi/isci/host.h
-+++ b/drivers/scsi/isci/host.h
-@@ -306,7 +306,7 @@ static inline struct isci_pci_info *to_pci_info(struct pci_dev *pdev)
- 
- static inline struct Scsi_Host *to_shost(struct isci_host *ihost)
- {
--	return ihost->sas_ha.core.shost;
-+	return ihost->sas_ha.shost;
- }
- 
- #define for_each_isci_host(id, ihost, pdev) \
-diff --git a/drivers/scsi/isci/init.c b/drivers/scsi/isci/init.c
-index 012cd2dade862..ee8c87dbe5ef3 100644
---- a/drivers/scsi/isci/init.c
-+++ b/drivers/scsi/isci/init.c
-@@ -571,7 +571,7 @@ static struct isci_host *isci_host_alloc(struct pci_dev *pdev, int id)
- 		goto err_shost;
- 
- 	SHOST_TO_SAS_HA(shost) = &ihost->sas_ha;
--	ihost->sas_ha.core.shost = shost;
-+	ihost->sas_ha.shost = shost;
- 	shost->transportt = isci_transport_template;
- 
- 	shost->max_id = ~0;
-@@ -726,7 +726,7 @@ static int isci_resume(struct device *dev)
- 		sas_prep_resume_ha(&ihost->sas_ha);
- 
- 		isci_host_init(ihost);
--		isci_host_start(ihost->sas_ha.core.shost);
-+		isci_host_start(ihost->sas_ha.shost);
- 		wait_for_start(ihost);
- 
- 		sas_resume_ha(&ihost->sas_ha);
-diff --git a/drivers/scsi/libsas/sas_ata.c b/drivers/scsi/libsas/sas_ata.c
-index 6b045be947b14..1d06daac1d927 100644
---- a/drivers/scsi/libsas/sas_ata.c
-+++ b/drivers/scsi/libsas/sas_ata.c
-@@ -162,7 +162,7 @@ static unsigned int sas_ata_qc_issue(struct ata_queued_cmd *qc)
- 	struct ata_port *ap = qc->ap;
- 	struct domain_device *dev = ap->private_data;
- 	struct sas_ha_struct *sas_ha = dev->port->ha;
--	struct Scsi_Host *host = sas_ha->core.shost;
-+	struct Scsi_Host *host = sas_ha->shost;
- 	struct sas_internal *i = to_sas_internal(host->transportt);
- 
- 	/* TODO: we should try to remove that unlock */
-@@ -236,7 +236,7 @@ static bool sas_ata_qc_fill_rtf(struct ata_queued_cmd *qc)
- 
- static struct sas_internal *dev_to_sas_internal(struct domain_device *dev)
- {
--	return to_sas_internal(dev->port->ha->core.shost->transportt);
-+	return to_sas_internal(dev->port->ha->shost->transportt);
- }
- 
- static int sas_get_ata_command_set(struct domain_device *dev);
-@@ -576,7 +576,7 @@ static struct ata_port_info sata_port_info = {
- int sas_ata_init(struct domain_device *found_dev)
- {
- 	struct sas_ha_struct *ha = found_dev->port->ha;
--	struct Scsi_Host *shost = ha->core.shost;
-+	struct Scsi_Host *shost = ha->shost;
- 	struct ata_host *ata_host;
- 	struct ata_port *ap;
- 	int rc;
-@@ -766,7 +766,7 @@ static void async_sas_ata_eh(void *data, async_cookie_t cookie)
- 	struct sas_ha_struct *ha = dev->port->ha;
- 
- 	sas_ata_printk(KERN_DEBUG, dev, "dev error handler\n");
--	ata_scsi_port_error_handler(ha->core.shost, ap);
-+	ata_scsi_port_error_handler(ha->shost, ap);
- 	sas_put_device(dev);
- }
- 
-diff --git a/drivers/scsi/libsas/sas_discover.c b/drivers/scsi/libsas/sas_discover.c
-index 49dea3c597778..4e8cdd3ae5ab9 100644
---- a/drivers/scsi/libsas/sas_discover.c
-+++ b/drivers/scsi/libsas/sas_discover.c
-@@ -170,7 +170,7 @@ int sas_notify_lldd_dev_found(struct domain_device *dev)
- {
- 	int res = 0;
- 	struct sas_ha_struct *sas_ha = dev->port->ha;
--	struct Scsi_Host *shost = sas_ha->core.shost;
-+	struct Scsi_Host *shost = sas_ha->shost;
- 	struct sas_internal *i = to_sas_internal(shost->transportt);
- 
- 	if (!i->dft->lldd_dev_found)
-@@ -192,7 +192,7 @@ int sas_notify_lldd_dev_found(struct domain_device *dev)
- void sas_notify_lldd_dev_gone(struct domain_device *dev)
- {
- 	struct sas_ha_struct *sas_ha = dev->port->ha;
--	struct Scsi_Host *shost = sas_ha->core.shost;
-+	struct Scsi_Host *shost = sas_ha->shost;
- 	struct sas_internal *i = to_sas_internal(shost->transportt);
- 
- 	if (!i->dft->lldd_dev_gone)
-@@ -234,7 +234,7 @@ static void sas_suspend_devices(struct work_struct *work)
- 	struct domain_device *dev;
- 	struct sas_discovery_event *ev = to_sas_discovery_event(work);
- 	struct asd_sas_port *port = ev->port;
--	struct Scsi_Host *shost = port->ha->core.shost;
-+	struct Scsi_Host *shost = port->ha->shost;
- 	struct sas_internal *si = to_sas_internal(shost->transportt);
- 
- 	clear_bit(DISCE_SUSPEND, &port->disc.pending);
-@@ -373,7 +373,7 @@ static bool sas_abort_cmd(struct request *req, void *data)
- static void sas_abort_device_scsi_cmds(struct domain_device *dev)
- {
- 	struct sas_ha_struct *sas_ha = dev->port->ha;
--	struct Scsi_Host *shost = sas_ha->core.shost;
-+	struct Scsi_Host *shost = sas_ha->shost;
- 
- 	if (dev_is_expander(dev->dev_type))
- 		return;
-diff --git a/drivers/scsi/libsas/sas_expander.c b/drivers/scsi/libsas/sas_expander.c
-index ffec7f0e51fcd..03d367c2f0a7a 100644
---- a/drivers/scsi/libsas/sas_expander.c
-+++ b/drivers/scsi/libsas/sas_expander.c
-@@ -37,7 +37,7 @@ static int smp_execute_task_sg(struct domain_device *dev,
- 	int res, retry;
- 	struct sas_task *task = NULL;
- 	struct sas_internal *i =
--		to_sas_internal(dev->port->ha->core.shost->transportt);
-+		to_sas_internal(dev->port->ha->shost->transportt);
- 	struct sas_ha_struct *ha = dev->port->ha;
- 
- 	pm_runtime_get_sync(ha->dev);
-diff --git a/drivers/scsi/libsas/sas_host_smp.c b/drivers/scsi/libsas/sas_host_smp.c
-index 32cdc969b736a..2ecb8535634c1 100644
---- a/drivers/scsi/libsas/sas_host_smp.c
-+++ b/drivers/scsi/libsas/sas_host_smp.c
-@@ -114,7 +114,7 @@ static int sas_host_smp_write_gpio(struct sas_ha_struct *sas_ha, u8 *resp_data,
- 				   u8 reg_type, u8 reg_index, u8 reg_count,
- 				   u8 *req_data)
- {
--	struct sas_internal *i = to_sas_internal(sas_ha->core.shost->transportt);
-+	struct sas_internal *i = to_sas_internal(sas_ha->shost->transportt);
- 	int written;
- 
- 	if (i->dft->lldd_write_gpio == NULL) {
-@@ -182,7 +182,7 @@ static void sas_phy_control(struct sas_ha_struct *sas_ha, u8 phy_id,
- 			    enum sas_linkrate max, u8 *resp_data)
- {
- 	struct sas_internal *i =
--		to_sas_internal(sas_ha->core.shost->transportt);
-+		to_sas_internal(sas_ha->shost->transportt);
- 	struct sas_phy_linkrates rates;
- 	struct asd_sas_phy *asd_phy;
- 
+ 	dev_warn(dev, "end of resuming controller\n");
 diff --git a/drivers/scsi/libsas/sas_init.c b/drivers/scsi/libsas/sas_init.c
-index e4f77072a58d2..d514cf3f85ed9 100644
+index d514cf3f85ed9..f1e24534d12fe 100644
 --- a/drivers/scsi/libsas/sas_init.c
 +++ b/drivers/scsi/libsas/sas_init.c
-@@ -186,7 +186,7 @@ static int sas_get_linkerrors(struct sas_phy *phy)
- 		struct sas_ha_struct *sas_ha = SHOST_TO_SAS_HA(shost);
- 		struct asd_sas_phy *asd_phy = sas_ha->sas_phy[phy->number];
- 		struct sas_internal *i =
--			to_sas_internal(sas_ha->core.shost->transportt);
-+			to_sas_internal(sas_ha->shost->transportt);
- 
- 		return i->dft->lldd_control_phy(asd_phy, PHY_FUNC_GET_EVENTS, NULL);
+@@ -412,7 +412,7 @@ static void sas_resume_insert_broadcast_ha(struct sas_ha_struct *ha)
  	}
-@@ -235,7 +235,7 @@ static int transport_sas_phy_reset(struct sas_phy *phy, int hard_reset)
- 		struct sas_ha_struct *sas_ha = SHOST_TO_SAS_HA(shost);
- 		struct asd_sas_phy *asd_phy = sas_ha->sas_phy[phy->number];
- 		struct sas_internal *i =
--			to_sas_internal(sas_ha->core.shost->transportt);
-+			to_sas_internal(sas_ha->shost->transportt);
+ }
  
- 		if (!hard_reset && sas_try_ata_reset(asd_phy) == 0)
- 			return 0;
-@@ -269,7 +269,7 @@ int sas_phy_enable(struct sas_phy *phy, int enable)
- 		struct sas_ha_struct *sas_ha = SHOST_TO_SAS_HA(shost);
- 		struct asd_sas_phy *asd_phy = sas_ha->sas_phy[phy->number];
- 		struct sas_internal *i =
--			to_sas_internal(sas_ha->core.shost->transportt);
-+			to_sas_internal(sas_ha->shost->transportt);
- 
- 		if (enable)
- 			ret = transport_sas_phy_reset(phy, 0);
-@@ -306,7 +306,7 @@ int sas_phy_reset(struct sas_phy *phy, int hard_reset)
- 		struct sas_ha_struct *sas_ha = SHOST_TO_SAS_HA(shost);
- 		struct asd_sas_phy *asd_phy = sas_ha->sas_phy[phy->number];
- 		struct sas_internal *i =
--			to_sas_internal(sas_ha->core.shost->transportt);
-+			to_sas_internal(sas_ha->shost->transportt);
- 
- 		ret = i->dft->lldd_control_phy(asd_phy, reset_type, NULL);
- 	} else {
-@@ -342,7 +342,7 @@ int sas_set_phy_speed(struct sas_phy *phy,
- 		struct sas_ha_struct *sas_ha = SHOST_TO_SAS_HA(shost);
- 		struct asd_sas_phy *asd_phy = sas_ha->sas_phy[phy->number];
- 		struct sas_internal *i =
--			to_sas_internal(sas_ha->core.shost->transportt);
-+			to_sas_internal(sas_ha->shost->transportt);
- 
- 		ret = i->dft->lldd_control_phy(asd_phy, PHY_FUNC_SET_LINK_RATE,
- 					       rates);
-@@ -441,7 +441,7 @@ static void _sas_resume_ha(struct sas_ha_struct *ha, bool drain)
- 	/* all phys are back up or timed out, turn on i/o so we can
- 	 * flush out disks that did not return
- 	 */
--	scsi_unblock_requests(ha->core.shost);
-+	scsi_unblock_requests(ha->shost);
- 	if (drain)
- 		sas_drain_work(ha);
- 	clear_bit(SAS_HA_RESUMING, &ha->state);
-@@ -471,7 +471,7 @@ void sas_suspend_ha(struct sas_ha_struct *ha)
+-static void _sas_resume_ha(struct sas_ha_struct *ha, bool drain)
++void sas_resume_ha(struct sas_ha_struct *ha)
+ {
+ 	const unsigned long tmo = msecs_to_jiffies(25000);
  	int i;
- 
- 	sas_disable_events(ha);
--	scsi_block_requests(ha->core.shost);
-+	scsi_block_requests(ha->shost);
+@@ -428,6 +428,23 @@ static void _sas_resume_ha(struct sas_ha_struct *ha, bool drain)
+ 		dev_info(ha->dev, "waiting up to 25 seconds for %d phy%s to resume\n",
+ 			 i, i > 1 ? "s" : "");
+ 	wait_event_timeout(ha->eh_wait_q, phys_suspended(ha) == 0, tmo);
++
++	/*
++	 * All phys are back up or timed out. Turn on I/O and drain
++	 * pending work.
++	 */
++	scsi_unblock_requests(ha->shost);
++	sas_drain_work(ha);
++
++	/*
++	 * Send PHYE_RESUME_TIMEOUT after sas_drain_work(). The handler
++	 * calls sas_deform_port() -> sas_destruct_devices(), which removes
++	 * SCSI devices and, for LLDDs using device_link() PM sync, waits
++	 * for the host to be runtime-active. Sending it before the drain
++	 * would deadlock: the drain waits for the handler, the handler
++	 * waits for host resume, and host resume waits for the drain to
++	 * finish.
++	 */
  	for (i = 0; i < ha->num_phys; i++) {
- 		struct asd_sas_port *port = ha->sas_port[i];
+ 		struct asd_sas_phy *phy = ha->sas_phy[i];
  
-@@ -644,7 +644,7 @@ struct asd_sas_event *sas_alloc_event(struct asd_sas_phy *phy,
- 	struct asd_sas_event *event;
- 	struct sas_ha_struct *sas_ha = phy->ha;
- 	struct sas_internal *i =
--		to_sas_internal(sas_ha->core.shost->transportt);
-+		to_sas_internal(sas_ha->shost->transportt);
- 
- 	event = kmem_cache_zalloc(sas_event_cache, gfp_flags);
- 	if (!event)
-diff --git a/drivers/scsi/libsas/sas_phy.c b/drivers/scsi/libsas/sas_phy.c
-index a0d592d11dfb1..57494ac97076d 100644
---- a/drivers/scsi/libsas/sas_phy.c
-+++ b/drivers/scsi/libsas/sas_phy.c
-@@ -38,7 +38,7 @@ static void sas_phye_oob_error(struct work_struct *work)
- 	struct sas_ha_struct *sas_ha = phy->ha;
- 	struct asd_sas_port *port = phy->port;
- 	struct sas_internal *i =
--		to_sas_internal(sas_ha->core.shost->transportt);
-+		to_sas_internal(sas_ha->shost->transportt);
- 
- 	sas_deform_port(phy, 1);
- 
-@@ -66,7 +66,7 @@ static void sas_phye_spinup_hold(struct work_struct *work)
- 	struct asd_sas_phy *phy = ev->phy;
- 	struct sas_ha_struct *sas_ha = phy->ha;
- 	struct sas_internal *i =
--		to_sas_internal(sas_ha->core.shost->transportt);
-+		to_sas_internal(sas_ha->shost->transportt);
- 
- 	phy->error = 0;
- 	i->dft->lldd_control_phy(phy, PHY_FUNC_RELEASE_SPINUP_HOLD, NULL);
-@@ -95,7 +95,7 @@ static void sas_phye_shutdown(struct work_struct *work)
- 	struct asd_sas_phy *phy = ev->phy;
- 	struct sas_ha_struct *sas_ha = phy->ha;
- 	struct sas_internal *i =
--		to_sas_internal(sas_ha->core.shost->transportt);
-+		to_sas_internal(sas_ha->shost->transportt);
- 
- 	if (phy->enabled) {
- 		int ret;
-@@ -131,7 +131,7 @@ int sas_register_phys(struct sas_ha_struct *sas_ha)
- 		spin_lock_init(&phy->sas_prim_lock);
- 		phy->frame_rcvd_size = 0;
- 
--		phy->phy = sas_phy_alloc(&sas_ha->core.shost->shost_gendev, i);
-+		phy->phy = sas_phy_alloc(&sas_ha->shost->shost_gendev, i);
- 		if (!phy->phy)
- 			return -ENOMEM;
- 
-diff --git a/drivers/scsi/libsas/sas_port.c b/drivers/scsi/libsas/sas_port.c
-index 11599c0e3fc34..60ad1486d15c2 100644
---- a/drivers/scsi/libsas/sas_port.c
-+++ b/drivers/scsi/libsas/sas_port.c
-@@ -28,7 +28,7 @@ static void sas_resume_port(struct asd_sas_phy *phy)
- 	struct domain_device *dev, *n;
- 	struct asd_sas_port *port = phy->port;
- 	struct sas_ha_struct *sas_ha = phy->ha;
--	struct sas_internal *si = to_sas_internal(sas_ha->core.shost->transportt);
-+	struct sas_internal *si = to_sas_internal(sas_ha->shost->transportt);
- 
- 	if (si->dft->lldd_port_formed)
- 		si->dft->lldd_port_formed(phy);
-@@ -109,7 +109,7 @@ static void sas_form_port(struct asd_sas_phy *phy)
- 	struct asd_sas_port *port = phy->port;
- 	struct domain_device *port_dev = NULL;
- 	struct sas_internal *si =
--		to_sas_internal(sas_ha->core.shost->transportt);
-+		to_sas_internal(sas_ha->shost->transportt);
- 	unsigned long flags;
- 
- 	if (port) {
-@@ -212,7 +212,7 @@ void sas_deform_port(struct asd_sas_phy *phy, int gone)
- 	struct sas_ha_struct *sas_ha = phy->ha;
- 	struct asd_sas_port *port = phy->port;
- 	struct sas_internal *si =
--		to_sas_internal(sas_ha->core.shost->transportt);
-+		to_sas_internal(sas_ha->shost->transportt);
- 	struct domain_device *dev;
- 	unsigned long flags;
- 
-diff --git a/drivers/scsi/libsas/sas_scsi_host.c b/drivers/scsi/libsas/sas_scsi_host.c
-index a36fa1c128a84..83ea14ce2330a 100644
---- a/drivers/scsi/libsas/sas_scsi_host.c
-+++ b/drivers/scsi/libsas/sas_scsi_host.c
-@@ -279,7 +279,7 @@ static enum task_disposition sas_scsi_find_task(struct sas_task *task)
- 	unsigned long flags;
- 	int i, res;
- 	struct sas_internal *si =
--		to_sas_internal(task->dev->port->ha->core.shost->transportt);
-+		to_sas_internal(task->dev->port->ha->shost->transportt);
- 
- 	for (i = 0; i < 5; i++) {
- 		pr_notice("%s: aborting task 0x%p\n", __func__, task);
-@@ -327,7 +327,7 @@ static int sas_recover_lu(struct domain_device *dev, struct scsi_cmnd *cmd)
- 	int res = TMF_RESP_FUNC_FAILED;
- 	struct scsi_lun lun;
- 	struct sas_internal *i =
--		to_sas_internal(dev->port->ha->core.shost->transportt);
-+		to_sas_internal(dev->port->ha->shost->transportt);
- 
- 	int_to_scsilun(cmd->device->lun, &lun);
- 
-@@ -355,7 +355,7 @@ static int sas_recover_I_T(struct domain_device *dev)
- {
- 	int res = TMF_RESP_FUNC_FAILED;
- 	struct sas_internal *i =
--		to_sas_internal(dev->port->ha->core.shost->transportt);
-+		to_sas_internal(dev->port->ha->shost->transportt);
- 
- 	pr_notice("I_T nexus reset for dev %016llx\n",
- 		  SAS_ADDR(dev->sas_addr));
-@@ -410,7 +410,7 @@ static void sas_wait_eh(struct domain_device *dev)
- 	spin_unlock_irq(&ha->lock);
- 
- 	/* make sure SCSI EH is complete */
--	if (scsi_host_in_recovery(ha->core.shost)) {
-+	if (scsi_host_in_recovery(ha->shost)) {
- 		msleep(10);
- 		goto retry;
- 	}
-@@ -440,7 +440,7 @@ static int sas_queue_reset(struct domain_device *dev, int reset_type,
- 			set_bit(SAS_DEV_EH_PENDING, &dev->state);
- 			set_bit(reset_type, &dev->state);
- 			int_to_scsilun(lun, &dev->ssp_dev.reset_lun);
--			scsi_schedule_eh(ha->core.shost);
-+			scsi_schedule_eh(ha->shost);
+@@ -438,12 +455,6 @@ static void _sas_resume_ha(struct sas_ha_struct *ha, bool drain)
  		}
- 		spin_unlock_irq(&ha->lock);
+ 	}
  
-@@ -926,7 +926,7 @@ static int sas_execute_internal_abort(struct domain_device *device,
- 				      unsigned int qid, void *data)
- {
- 	struct sas_ha_struct *ha = device->port->ha;
--	struct sas_internal *i = to_sas_internal(ha->core.shost->transportt);
-+	struct sas_internal *i = to_sas_internal(ha->shost->transportt);
- 	struct sas_task *task = NULL;
- 	int res, retry;
+-	/* all phys are back up or timed out, turn on i/o so we can
+-	 * flush out disks that did not return
+-	 */
+-	scsi_unblock_requests(ha->shost);
+-	if (drain)
+-		sas_drain_work(ha);
+ 	clear_bit(SAS_HA_RESUMING, &ha->state);
  
-@@ -1016,7 +1016,7 @@ int sas_execute_tmf(struct domain_device *device, void *parameter,
- {
- 	struct sas_task *task;
- 	struct sas_internal *i =
--		to_sas_internal(device->port->ha->core.shost->transportt);
-+		to_sas_internal(device->port->ha->shost->transportt);
- 	int res, retry;
- 
- 	for (retry = 0; retry < TASK_RETRY; retry++) {
-diff --git a/drivers/scsi/mvsas/mv_init.c b/drivers/scsi/mvsas/mv_init.c
-index b500c343cad75..4182e004d775f 100644
---- a/drivers/scsi/mvsas/mv_init.c
-+++ b/drivers/scsi/mvsas/mv_init.c
-@@ -416,7 +416,7 @@ static int mvs_prep_sas_ha_init(struct Scsi_Host *shost,
- 
- 	sha->sas_phy = arr_phy;
- 	sha->sas_port = arr_port;
--	sha->core.shost = shost;
-+	sha->shost = shost;
- 
- 	sha->lldd_ha = kzalloc(sizeof(struct mvs_prv_info), GFP_KERNEL);
- 	if (!sha->lldd_ha)
-@@ -473,7 +473,7 @@ static void  mvs_post_sas_ha_init(struct Scsi_Host *shost,
- 	shost->sg_tablesize = min_t(u16, SG_ALL, MVS_MAX_SG);
- 	shost->can_queue = can_queue;
- 	mvi->shost->cmd_per_lun = MVS_QUEUE_SIZE;
--	sha->core.shost = mvi->shost;
-+	sha->shost = mvi->shost;
+ 	sas_queue_deferred_work(ha);
+@@ -452,20 +463,8 @@ static void _sas_resume_ha(struct sas_ha_struct *ha, bool drain)
+ 	 */
+ 	sas_resume_insert_broadcast_ha(ha);
  }
+-
+-void sas_resume_ha(struct sas_ha_struct *ha)
+-{
+-	_sas_resume_ha(ha, true);
+-}
+ EXPORT_SYMBOL(sas_resume_ha);
  
- static void mvs_init_sas_add(struct mvs_info *mvi)
-diff --git a/drivers/scsi/pm8001/pm8001_init.c b/drivers/scsi/pm8001/pm8001_init.c
-index 60b477e65a66a..914a30b3dfc2e 100644
---- a/drivers/scsi/pm8001/pm8001_init.c
-+++ b/drivers/scsi/pm8001/pm8001_init.c
-@@ -653,7 +653,7 @@ static void  pm8001_post_sas_ha_init(struct Scsi_Host *shost,
- 	sha->lldd_module = THIS_MODULE;
- 	sha->sas_addr = &pm8001_ha->sas_addr[0];
- 	sha->num_phys = chip_info->n_phy;
--	sha->core.shost = shost;
-+	sha->shost = shost;
- }
- 
- /**
+-/* A no-sync variant, which does not call sas_drain_ha(). */
+-void sas_resume_ha_no_sync(struct sas_ha_struct *ha)
+-{
+-	_sas_resume_ha(ha, false);
+-}
+-EXPORT_SYMBOL(sas_resume_ha_no_sync);
+-
+ void sas_suspend_ha(struct sas_ha_struct *ha)
+ {
+ 	int i;
 diff --git a/include/scsi/libsas.h b/include/scsi/libsas.h
-index 9e9dff75a02bc..1be8aa6f53933 100644
+index 1be8aa6f53933..7165d3aee1176 100644
 --- a/include/scsi/libsas.h
 +++ b/include/scsi/libsas.h
-@@ -346,11 +346,6 @@ struct asd_sas_phy {
- 	void *lldd_phy;		  /* not touched by the sas_class_code */
- };
+@@ -703,7 +703,6 @@ extern int sas_register_ha(struct sas_ha_struct *);
+ extern int sas_unregister_ha(struct sas_ha_struct *);
+ extern void sas_prep_resume_ha(struct sas_ha_struct *sas_ha);
+ extern void sas_resume_ha(struct sas_ha_struct *sas_ha);
+-extern void sas_resume_ha_no_sync(struct sas_ha_struct *sas_ha);
+ extern void sas_suspend_ha(struct sas_ha_struct *sas_ha);
  
--struct scsi_core {
--	struct Scsi_Host *shost;
--
--};
--
- enum sas_ha_state {
- 	SAS_HA_REGISTERED,
- 	SAS_HA_DRAINING,
-@@ -371,7 +366,7 @@ struct sas_ha_struct {
- 
- 	struct mutex disco_mutex;
- 
--	struct scsi_core core;
-+	struct Scsi_Host *shost;
- 
- /* public: */
- 	char *sas_ha_name;
+ int sas_set_phy_speed(struct sas_phy *phy, struct sas_phy_linkrates *rates);
 -- 
 2.53.0
 
