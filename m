@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 585A313790B;
-	Mon, 17 Aug 2026 14:21:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A08113790B;
+	Mon, 17 Aug 2026 14:21:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976486; cv=none; b=k5tSLEudH5vN7jj3XYzodjX4I2+57e5fNbr2dGZLB8NKRuDnjORH2OU99gRG7FHhlRF8ea8QsJiPM/P8Cnlo4360qIFpXK073rKoz18fdcVLWmwqZzCH3Hd4CXbnv62h0qU6A/Cg6/8B4BHO2eAwhdR9aEwdcj7pPkjQFmCpq78=
+	t=1786976489; cv=none; b=f0lAkUdqhwqhNw1DD1r1bClWyV88a98kPJNjlJvp1Wqn3zsXw1Pf0QPBDotFp/bNURrtECC4IY9gBEf/DeZ45q8KmtYtGn8MtlOOqP5ZtaqiImHkVEhfEB4tclIc7zFfiFIsCPEgf0NEtYJrJqzYJBGdrJYXdH/JTRkzkh05/i8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976486; c=relaxed/simple;
-	bh=YHNdFeJjkraaTp1wpltnciEC7/HR6rEdHL9LEKsYGrQ=;
+	s=arc-20240116; t=1786976489; c=relaxed/simple;
+	bh=VtKvkH9F6pJJK+JxQmTd7UwtRno89MI7+nz31u4nuMM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qCTvROWQjJev6uI5n3G35gPJDY86REi6Rv4P0JhYgw71q9XGqJo9FLxX2bOJfTBu+jJLgK4ZeF6P0AVR9vbS4sR0/kawFsy4q0vImrYUUGMAeCwMRip6+3aMbj1snjqserlTO82CMyvRUTevbofZYJG89DjcMuQEtpMskAI+WKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kLmz2Vhv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=n2otqnjF37aYSvWIrm3zIES4N+JejsxhtgBGB5E7rRBBE2hU679FOkR8wt3Vq6Lr0g6ubmttCjVKnkcTxH7xvFIe97ldHRHZx3QeCI5Ei8VtTaJQFhNicJfmNd/EhNuX7RZqUX85PNvr370NgOSyr2qS18o7suvyaxdw7YugTcA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gYn1fysE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kLmz2Vhv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A53231F000E9;
-	Mon, 17 Aug 2026 14:21:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gYn1fysE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 874021F000E9;
+	Mon, 17 Aug 2026 14:21:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976485;
-	bh=wVNAVW0P9GS8OIvqXFUz0p1VzimWuh0zoR6cGUO/VAM=;
+	s=korg; t=1786976488;
+	bh=R2CsgFEFuWhcZAnanirWRdz22AoqQXAaoDdtKYso+og=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kLmz2Vhv7vlopJAhQMUaIp3a1tMbUlNdiFBVtdQW3CUV6cwRwRtModXIsqILZS0VR
-	 bFaeIhAPmyDRAHhbJwFxJO7t0fWU3hkfDLmnuY0hcYYVBPNr1kAHDB1lrH6ECbF/xh
-	 2cTHsHsWKVqYUVa5AOxdOJMXU/lkOsAs1due1TGA=
+	b=gYn1fysElUts4ELod/I+riQkyUkbT3MVF45MtHHLDyUO8jk/NxPOEzZSfsgs4Io05
+	 aOt8xCsQXVDQ00gFvB1WdozJ+lkf31GDMAKdtnyMqHrjL3mwyiuuq4T7vXHWhJ65AU
+	 coDt0cpIT14nJn0c7d9LoP6xEz+HfTnsVO9dICFQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Luiz Angelo Daros de Luca <luizluca@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 5.10 389/389] hwmon: (adt7470) Fix fans stuck in manual mode on I2C errors
-Date: Mon, 17 Aug 2026 15:33:48 +0200
-Message-ID: <20260817132553.819289647@linuxfoundation.org>
+	Ido Schimmel <idosch@nvidia.com>,
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.10 364/389] ipv4: fix use-after-free in fib_nhc_update_mtu()
+Date: Mon, 17 Aug 2026 15:33:23 +0200
+Message-ID: <20260817132552.926402641@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -51,110 +51,165 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Angelo Daros de Luca <luizluca@gmail.com>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-commit 625a2c02a1c04571232a746fe188b4d9a8d63edd upstream.
+commit bc5bde9ce3cc36502839dfe98e068f7303a50982 upstream.
 
-During adt7470_read_temperatures(), the driver temporarily switches
-the PWM channels to manual mode, performs the temperature collection,
-and then restores the original configuration registers.
+fib_nhc_update_mtu() walks the nexthop exception table under RTNL, but
+RTNL does not serialize this walk with PMTU exception updates. The walk
+uses rcu_dereference_protected() with a constant true condition without
+holding fnhe_lock.
 
-However, if an I2C transaction fails at any point after entering manual
-mode, the function aborts and returns immediately. This leaves the
-configuration registers un-restored, permanently trapping the fans in
-manual mode.
+The following interleaving can therefore occur:
 
-Introduce a recovery path to ensure that the original PWM configuration
-registers are always restored, even when intermediate I2C operations
-fail.
+  CPU 0                              CPU 1
+  fib_nhc_update_mtu()               update_or_create_fnhe()
+    load fnhe                          spin_lock_bh(&fnhe_lock)
+                                       fnhe_remove_oldest()
+                                         unlink fnhe
+                                         kfree_rcu(fnhe, rcu)
+    <quiescent state>
+    access fnhe after grace period
 
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/r/20260716213252.EACA71F000E9@smtp.kernel.org
-Fixes: ef67959c4253 ("hwmon: (adt7470) Convert to use regmap")
-Signed-off-by: Luiz Angelo Daros de Luca <luizluca@gmail.com>
-Link: https://lore.kernel.org/r/20260727-adt7470_fixes-v2-1-598e38a46ba6@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+KASAN reported:
+
+  BUG: KASAN: slab-use-after-free in fib_nhc_update_mtu+0x3df/0x410
+  Read of size 8 at addr ffff888107d49000 by task poc/90
+  Call Trace:
+   fib_nhc_update_mtu+0x3df/0x410
+   fib_sync_mtu+0x7a/0xd0
+   fib_netdev_event+0x229/0x3f0
+   netif_set_mtu_ext+0x33a/0x570
+   dev_set_mtu+0x88/0x120
+
+The same walk updates fnhe_pmtu and fnhe_mtu_locked. These fields form a
+pair and other writers serialize them with fnhe_lock. RCU alone prevents
+reclamation, but would still allow concurrent writers to leave a mixed
+pair.
+
+Walk the table under RCU and acquire fnhe_lock only while updating each
+exception. RCU keeps the current entry alive while the short critical
+section serializes its paired PMTU fields. This avoids holding the global
+lock while scanning all 2048 buckets for every nexthop.
+
+Fixes: af7d6cce5369 ("net: ipv4: update fnhe_pmtu when first hop's MTU changes")
+Cc: stable@vger.kernel.org
+Suggested-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260807181710.1178747-1-nicoyip.dev@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/adt7470.c |   40 +++++++++++++++++++++++++++++-----------
- 1 file changed, 29 insertions(+), 11 deletions(-)
+ include/net/route.h      |    2 ++
+ net/ipv4/fib_semantics.c |   34 +++++++++++-----------------------
+ net/ipv4/route.c         |   29 +++++++++++++++++++++++++++++
+ 3 files changed, 42 insertions(+), 23 deletions(-)
 
---- a/drivers/hwmon/adt7470.c
-+++ b/drivers/hwmon/adt7470.c
-@@ -205,11 +205,12 @@ static inline int adt7470_write_word_dat
- /* Probe for temperature sensors.  Assumes lock is held */
- static int adt7470_read_temperatures(struct adt7470_data *data)
+--- a/include/net/route.h
++++ b/include/net/route.h
+@@ -240,6 +240,8 @@ int fib_dump_info_fnhe(struct sk_buff *s
+ 		       u32 table_id, struct fib_info *fi,
+ 		       int *fa_index, int fa_start, unsigned int flags);
+ 
++void fnhe_update_pmtu(struct fib_nh_exception *fnhe, u32 new, u32 orig);
++
+ static inline void ip_rt_put(struct rtable *rt)
  {
--	unsigned long res;
-+	struct device *dev = regmap_get_device(data->regmap);
-+	u8 pwm[ADT7470_FAN_COUNT];
- 	unsigned int pwm_cfg[2];
--	int err;
-+	unsigned long res;
-+	int err, err2;
+ 	/* dst_release() accepts a NULL parameter.
+--- a/net/ipv4/fib_semantics.c
++++ b/net/ipv4/fib_semantics.c
+@@ -1943,42 +1943,30 @@ static int call_fib_nh_notifiers(struct
+ 	return NOTIFY_DONE;
+ }
+ 
+-/* Update the PMTU of exceptions when:
+- * - the new MTU of the first hop becomes smaller than the PMTU
+- * - the old MTU was the same as the PMTU, and it limited discovery of
+- *   larger MTUs on the path. With that limit raised, we can now
+- *   discover larger MTUs
+- * A special case is locked exceptions, for which the PMTU is smaller
+- * than the minimal accepted PMTU:
+- * - if the new MTU is greater than the PMTU, don't make any change
+- * - otherwise, unlock and set PMTU
++/* Walk the exceptions of a nexthop after its first hop MTU changed. The
++ * chain is RCU protected here, while fnhe_update_pmtu() takes fnhe_lock
++ * for the update of each entry.
+  */
+ void fib_nhc_update_mtu(struct fib_nh_common *nhc, u32 new, u32 orig)
+ {
+ 	struct fnhe_hash_bucket *bucket;
  	int i;
--	u8 pwm[ADT7470_FAN_COUNT];
  
- 	/* save pwm[1-4] config register */
- 	err = regmap_read(data->regmap, ADT7470_REG_PWM_CFG(0), &pwm_cfg[0]);
-@@ -233,19 +234,19 @@ static int adt7470_read_temperatures(str
- 	err = regmap_update_bits(data->regmap, ADT7470_REG_PWM_CFG(2),
- 				 ADT7470_PWM_AUTO_MASK, 0);
- 	if (err < 0)
--		return err;
-+		goto out_restore;
+-	bucket = rcu_dereference_protected(nhc->nhc_exceptions, 1);
++	rcu_read_lock();
++	bucket = rcu_dereference(nhc->nhc_exceptions);
+ 	if (!bucket)
+-		return;
++		goto out;
  
- 	/* write pwm control to whatever it was */
- 	err = regmap_bulk_write(data->regmap, ADT7470_REG_PWM(0), &pwm[0],
- 				ADT7470_PWM_COUNT);
- 	if (err < 0)
--		return err;
-+		goto out_restore;
+ 	for (i = 0; i < FNHE_HASH_SIZE; i++) {
+ 		struct fib_nh_exception *fnhe;
  
- 	/* start reading temperature sensors */
- 	err = regmap_update_bits(data->regmap, ADT7470_REG_CFG,
- 				 ADT7470_T05_STB_MASK, ADT7470_T05_STB_MASK);
- 	if (err < 0)
--		return err;
-+		goto out_restore;
+-		for (fnhe = rcu_dereference_protected(bucket[i].chain, 1);
++		for (fnhe = rcu_dereference(bucket[i].chain);
+ 		     fnhe;
+-		     fnhe = rcu_dereference_protected(fnhe->fnhe_next, 1)) {
+-			if (fnhe->fnhe_mtu_locked) {
+-				if (new <= fnhe->fnhe_pmtu) {
+-					fnhe->fnhe_pmtu = new;
+-					fnhe->fnhe_mtu_locked = false;
+-				}
+-			} else if (new < fnhe->fnhe_pmtu ||
+-				   orig == fnhe->fnhe_pmtu) {
+-				fnhe->fnhe_pmtu = new;
+-			}
+-		}
++		     fnhe = rcu_dereference(fnhe->fnhe_next))
++			fnhe_update_pmtu(fnhe, new, orig);
+ 	}
++out:
++	rcu_read_unlock();
+ }
  
- 	/* Delay is 200ms * number of temp sensors. */
- 	res = msleep_interruptible((data->num_temp_sensors >= 0 ?
-@@ -256,13 +257,30 @@ static int adt7470_read_temperatures(str
- 	err = regmap_update_bits(data->regmap, ADT7470_REG_CFG,
- 				 ADT7470_T05_STB_MASK, 0);
- 	if (err < 0)
--		return err;
-+		goto out_restore;
+ void fib_sync_mtu(struct net_device *dev, u32 orig_mtu)
+--- a/net/ipv4/route.c
++++ b/net/ipv4/route.c
+@@ -779,6 +779,35 @@ out_unlock:
+ 	spin_unlock_bh(&fnhe_lock);
+ }
  
-+out_restore:
- 	/* restore pwm[1-4] config registers */
--	err = regmap_write(data->regmap, ADT7470_REG_PWM_CFG(0), pwm_cfg[0]);
--	if (err < 0)
--		return err;
--	err = regmap_write(data->regmap, ADT7470_REG_PWM_CFG(2), pwm_cfg[1]);
-+	err2 = regmap_write(data->regmap, ADT7470_REG_PWM_CFG(0), pwm_cfg[0]);
-+	if (err2 < 0) {
-+		dev_warn_ratelimited(dev,
-+				     "failed to restore PWM{1,2} config (%d)\n",
-+				     err2);
++/* Update the PMTU of an exception when:
++ * - the new MTU of the first hop becomes smaller than the PMTU
++ * - the old MTU was the same as the PMTU, and it limited discovery of
++ *   larger MTUs on the path. With that limit raised, we can now
++ *   discover larger MTUs
++ * A special case is locked exceptions, for which the PMTU is smaller
++ * than the minimal accepted PMTU:
++ * - if the new MTU is greater than the PMTU, don't make any change
++ * - otherwise, unlock and set PMTU
++ *
++ * fnhe_lock keeps fnhe_pmtu and fnhe_mtu_locked consistent against
++ * update_or_create_fnhe(), which sets both under the same lock.
++ */
++void fnhe_update_pmtu(struct fib_nh_exception *fnhe, u32 new, u32 orig)
++{
++	spin_lock_bh(&fnhe_lock);
 +
-+		if (!err)
-+			err = err2;
++	if (fnhe->fnhe_mtu_locked) {
++		if (new <= fnhe->fnhe_pmtu) {
++			fnhe->fnhe_pmtu = new;
++			fnhe->fnhe_mtu_locked = false;
++		}
++	} else if (new < fnhe->fnhe_pmtu || orig == fnhe->fnhe_pmtu) {
++		fnhe->fnhe_pmtu = new;
 +	}
 +
-+	err2 = regmap_write(data->regmap, ADT7470_REG_PWM_CFG(2), pwm_cfg[1]);
-+	if (err2 < 0) {
-+		dev_warn_ratelimited(dev,
-+				     "failed to restore PWM{3,4} config (%d)\n",
-+				     err2);
++	spin_unlock_bh(&fnhe_lock);
++}
 +
-+		if (!err)
-+			err = err2;
-+	}
-+
- 	if (err < 0)
- 		return err;
- 
+ static void __ip_do_redirect(struct rtable *rt, struct sk_buff *skb, struct flowi4 *fl4,
+ 			     bool kill_route)
+ {
 
 
