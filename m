@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C1E04322E5;
-	Mon, 17 Aug 2026 14:58:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69E5C43CED7;
+	Mon, 17 Aug 2026 14:58:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978706; cv=none; b=YW+UMDxVvSbbFVeO5CBJzzNBVCLXo7Y06ZZZ3W4eHoZc+bd13I18K/lJA5bVhLDtvaNtO+eIeAmjQGVextk/Fw59aa5qiTThiY6wWISc0APz+v8nzn1imjPm2ys7xLFVegCT/tHtqA3+b7NYbnAb7kzBGXrYp4nlDMwsp0LUnBM=
+	t=1786978709; cv=none; b=s3vAUwl1u2K3ouxmAf0Wfs4/waorxLml90M/aCAYvtIDpYX6nW6dzsCcAhgqxAaEoVynRvhXOqnsAfL3Np7m6GBrPYWo4SWj9rDhrCt0W6sO91dEfGSYV6jY/LYMgZTgokd2ZAF++DsXD0YKozhGdzF+CIzUyg5iUymIYl8rDHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978706; c=relaxed/simple;
-	bh=EyZ7sBK7JGBcBVHk/wvSqXqzgwGCe+wShEnAqLIq77w=;
+	s=arc-20240116; t=1786978709; c=relaxed/simple;
+	bh=UZGwQ/1GFwp4dj7WcTwTyWCUMgyzpjh3MDFS4kLReCA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=siR6Fx81KqlgusMjRnVE74jJUiYHC27H9FVtbk4E/SdKnDtEW/G1cQznt8QLceNocv6SBGv+8lxDYdlxxvzOuz9gIIsQo6li+iRJfKbWfsidNA6rfNO0/TM6Fd3rLINenQf0bhpzrI3tVYwYnt8tV7xayQ9AiNCyCvX1G9BA8Y8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y04cyi0a; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Qmf2F/yP95sOc7lTLZplp4gmUr6lBf/h8X0/ea5CJzp5j7qIQeL5vWUsz/CZMo6A6DeIpoaanz3csJZWX7LKvmTuAUnmU8bRbjj7cZ94f1sqNZyrCbeUIM6JRBuohCfrw7TqKnDXsarRB0bsp8MtDlGu8zPywirTVUHCFXO6cHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sDR6QMIK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y04cyi0a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E352C1F000E9;
-	Mon, 17 Aug 2026 14:58:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sDR6QMIK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3E671F000E9;
+	Mon, 17 Aug 2026 14:58:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978705;
-	bh=BSsTD344M0QiG7pOzgDRz00iXcdBzm8NmTKAkHV2ADw=;
+	s=korg; t=1786978708;
+	bh=3/4suiquazl486hrKOmCqET6pjx5A8uwith5AvXPoXA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y04cyi0aPoU5AMGXlV4XcPjC5GQdfa+V0hnxxQJT8wGvq/AGbPZVZ7WyI3KdLrhqD
-	 k4jeRtm/+mUF6CkII3l2VBZHO7ENJaurWfeyq2NCTlydU/Hne06R2C818LM5ZZwpOB
-	 xPKBup0t7utSrviTw3sSG3jqBdTWABg7lLfcQvuA=
+	b=sDR6QMIK9x34rJjIi4XkDtzyVroJg9Nh/ITN3dBhJaHDJYxLWgcZqaIv/1uR1kgjs
+	 qHfYSgMK1oefOq+JX30cJzMsf9lJynE9Xv8HrF9tD7M0ZH5t5yRLZ0xexpD6t1RCv4
+	 cRPTe81uK9Y2tyExt1CiBdH7C1WrA+P+bJwPGBPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Xiang Mei <xmei5@asu.edu>,
+	Stefano Garzarella <sgarzare@redhat.com>,
 	Weiming Shi <bestswngs@gmail.com>,
 	Bobby Eshleman <bobbyeshleman@meta.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 130/156] vsock/virtio: read virtqueues under worker locks
-Date: Mon, 17 Aug 2026 15:34:24 +0200
-Message-ID: <20260817132539.773835547@linuxfoundation.org>
+Subject: [PATCH 6.6 131/156] vsock/virtio: avoid refilling the RX queue after teardown
+Date: Mon, 17 Aug 2026 15:34:25 +0200
+Message-ID: <20260817132539.811976253@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132534.666299318@linuxfoundation.org>
 References: <20260817132534.666299318@linuxfoundation.org>
@@ -54,79 +55,73 @@ Content-Transfer-Encoding: 8bit
 
 From: Weiming Shi <bestswngs@gmail.com>
 
-commit ebac8f6b1ef0e9278afe204b8692a7479988dace upstream.
+commit a31e0ad444698d8aa7534a0f89fda543730f97a5 upstream.
 
-Commit bd50c5dc182b ("vsock/virtio: add support for device
-suspend/resume") made the *_run flags transition from false to true when
-restore installs replacement virtqueues.  The RX, TX and event workers
-read their virtqueue before locking and checking the corresponding flag,
-so a worker delayed across freeze and restore can observe the replacement
-queue's running state while retaining a pointer to the deleted queue.
+Commit b917507e5ad9 ("vsock/virtio: stop workers during the .remove()")
+made the RX worker jump to its common exit when rx_run is clear.  That
+exit still refills the RX queue when the buffer count is low, so work
+queued across virtio_vsock_vqs_del() can add buffers after the virtqueues
+have been deleted.
 
-Read each virtqueue under its mutex after checking the run flag, keeping
-the pointer and state in the same queue generation.
+BUG: KASAN: slab-use-after-free in virtqueue_add_sgs
+Read of size 4 by task kworker/0:1
+Workqueue: virtio_vsock virtio_transport_rx_work
+Call Trace:
+ virtqueue_add_sgs (drivers/virtio/virtio_ring.c:2796)
+ virtio_vsock_rx_fill (net/vmw_vsock/virtio_transport.c:332)
+ virtio_transport_rx_work (net/vmw_vsock/virtio_transport.c:701)
+ process_one_work (kernel/workqueue.c:3314)
+ worker_thread (kernel/workqueue.c:3478)
+ kthread (kernel/kthread.c:436)
+ ret_from_fork (arch/x86/kernel/process.c:158)
+ ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
+...
+Freed by task 141:
+ kfree (mm/slub.c:6566)
+ vp_del_vq (drivers/virtio/virtio_pci_common.c:259)
+ vp_del_vqs (drivers/virtio/virtio_pci_common.c:285)
+ virtio_vsock_freeze (net/vmw_vsock/virtio_transport.c:912)
+ virtio_device_freeze (drivers/virtio/virtio.c:658)
+ virtio_pci_freeze (drivers/virtio/virtio_pci_common.c:601)
+ pci_pm_freeze (drivers/pci/pci-driver.c:1098)
+ device_suspend (drivers/base/power/main.c:1968)
+Kernel panic - not syncing: KASAN: panic_on_warn set ...
 
-Fixes: bd50c5dc182b ("vsock/virtio: add support for device suspend/resume")
+Jump to a no-refill exit when rx_run is clear, leaving the normal exit
+to replenish a running queue.
+
+Fixes: b917507e5ad9 ("vsock/virtio: stop workers during the .remove()")
 Cc: stable@vger.kernel.org
 Reported-by: Xiang Mei <xmei5@asu.edu>
 Link: https://lore.kernel.org/r/20260727035804.1860862-1-bestswngs@gmail.com
+Suggested-by: Stefano Garzarella <sgarzare@redhat.com>
 Signed-off-by: Weiming Shi <bestswngs@gmail.com>
 Reviewed-by: Bobby Eshleman <bobbyeshleman@meta.com>
-Link: https://patch.msgid.link/e79f68ad9284c983364fc3ac46904b6d9ef50231.1785352330.git.bestswngs@gmail.com
+Link: https://patch.msgid.link/f9c8c1d64cad9d262f305d02ffe164c2f900fadf.1785352330.git.bestswngs@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/vmw_vsock/virtio_transport.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ net/vmw_vsock/virtio_transport.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 --- a/net/vmw_vsock/virtio_transport.c
 +++ b/net/vmw_vsock/virtio_transport.c
-@@ -257,12 +257,13 @@ static void virtio_transport_tx_work(str
- 	struct virtqueue *vq;
- 	bool added = false;
- 
--	vq = vsock->vqs[VSOCK_VQ_TX];
- 	mutex_lock(&vsock->tx_lock);
- 
- 	if (!vsock->tx_run)
- 		goto out;
- 
-+	vq = vsock->vqs[VSOCK_VQ_TX];
-+
- 	do {
- 		struct sk_buff *skb;
- 		unsigned int len;
-@@ -362,13 +363,13 @@ static void virtio_transport_event_work(
- 		container_of(work, struct virtio_vsock, event_work);
- 	struct virtqueue *vq;
- 
--	vq = vsock->vqs[VSOCK_VQ_EVENT];
--
- 	mutex_lock(&vsock->event_lock);
- 
- 	if (!vsock->event_run)
- 		goto out;
- 
-+	vq = vsock->vqs[VSOCK_VQ_EVENT];
-+
- 	do {
- 		struct virtio_vsock_event *event;
- 		unsigned int len;
-@@ -487,13 +488,13 @@ static void virtio_transport_rx_work(str
- 		container_of(work, struct virtio_vsock, rx_work);
- 	struct virtqueue *vq;
- 
--	vq = vsock->vqs[VSOCK_VQ_RX];
--
+@@ -491,7 +491,7 @@ static void virtio_transport_rx_work(str
  	mutex_lock(&vsock->rx_lock);
  
  	if (!vsock->rx_run)
- 		goto out;
+-		goto out;
++		goto out_nofill;
  
-+	vq = vsock->vqs[VSOCK_VQ_RX];
-+
- 	do {
- 		virtqueue_disable_cb(vq);
- 		for (;;) {
+ 	vq = vsock->vqs[VSOCK_VQ_RX];
+ 
+@@ -539,6 +539,7 @@ static void virtio_transport_rx_work(str
+ out:
+ 	if (vsock->rx_buf_nr < vsock->rx_buf_max_nr / 2)
+ 		virtio_vsock_rx_fill(vsock);
++out_nofill:
+ 	mutex_unlock(&vsock->rx_lock);
+ }
+ 
 
 
