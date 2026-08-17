@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 191EC4315F;
-	Mon, 17 Aug 2026 14:19:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9DD84B048B;
+	Mon, 17 Aug 2026 14:19:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976378; cv=none; b=lP2TUbFcUWZ6VgBI2C/Ui7BRaOBKO4fuwyUOHFMX+yKFvJ6hsyDgN2hF2ZSaNCfyfm0WtQZdFIxaJ9PpB58rv+VMQrYJejH1NOG47+gSiSIXQRulVn7p35NlS1piG7JldnYUrGayaEtBiweYXSOiG0zmKnJITJkYZWGGiR+1sCk=
+	t=1786976381; cv=none; b=teq7zPL32OL0PDR5LYqoIvWhDYlEVTxp27Gnmw1Ik+CItyXJUKrVAHYGyh7JFnPeeLDias8AyQOtDA1aiBycOLSlUntEa32DDZZ6vcP8fFKpJpyqppH2PxtWOo0MbYWa1FKyqIq3fNchRAEoEpbcvjBkIWTDcoYfXlZPtrv+Va8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976378; c=relaxed/simple;
-	bh=FL8uJMepTwchrCxTyVt7k/tWKbLBI0Ge1p98D+5Kgt8=;
+	s=arc-20240116; t=1786976381; c=relaxed/simple;
+	bh=rkpIoYDaMJgqAjx5JM8PKSS51RG+bAcCtZvNRfRMSkw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oii7fQkpwHI5KqF+F58xXefh4o35Etvf87bTuCTgpc0HJ0mx671kYCk38p4xtkPvwZM8uEc/M7Dsh25b65cANlvBPgB9hka73TqH44ynhUW2ABWY8PifT+JxaFEF33HR0VSXLT6TeaNNc06MXHEK02E23yyTYGcmkjLHyDsghno=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v7lGVqdF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=U3r2ObKt4Db9gGvJ1v7h/T6kQx6tfttsv7RFeUwa/fg3nuzG6ZB3eqXrcx5exIiC3dfpWWAvDSxzT8HaUH05yj9lN7GKzHEGZcS+2VHZJ4zAzCr5HJ243oY39+KItYwaf9T7YuXYWgKejVSneTJrVpcPAH05XZT1sTdiLexCMVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DjFKT8ic; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v7lGVqdF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6964A1F000E9;
-	Mon, 17 Aug 2026 14:19:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DjFKT8ic"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C7511F000E9;
+	Mon, 17 Aug 2026 14:19:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976377;
-	bh=QytWJZziqDG7qE3u2XTaI1uH6Uf6NXqHZNt0vIMqK5M=;
+	s=korg; t=1786976379;
+	bh=X4z940EtzNupnmJSVU+bM90Bd14+xAXz+rIhpUX1sdk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v7lGVqdFdqswx01xCFjDHz14o4YscQ4kfA/hdNyZHdL+sOXXEk+RYpHl3e16lMFER
-	 vIblhpFilvJUEilyJbO/rxsetCsDsPvhpxCDL9hH2p0T3/i+kUHwJ3f8G8ZGE3nAet
-	 T//j+TtDGJpQngiwt5SAHNtX1Mp2w8TuzIROowQg=
+	b=DjFKT8ica7rvc+vN1kE+Nr1ZGxqNJucegYBShE4jYtsGB6tEmjHn7CmMF0JkF8miF
+	 EzmZyFbloKLXDeo86pRw9p8lUoWHcFbL/3o0zRax31sHJAxV8H3yopjLULOofygeoG
+	 Ab8vc/NPP2wOu0YxpfFkpUy18CLMblWqHv0VP5KA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
-	Ilya Maximets <i.maximets@ovn.org>,
+	Willem de Bruijn <willemb@google.com>,
+	Qihang Tang <q.h.hack.winter@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 351/389] net: openvswitch: reallocate update replies for mismatched IDs
-Date: Mon, 17 Aug 2026 15:33:10 +0200
-Message-ID: <20260817132552.471818958@linuxfoundation.org>
+Subject: [PATCH 5.10 352/389] net: remove CAP_SYS_RAWIO zero-padding in dev_validate_header
+Date: Mon, 17 Aug 2026 15:33:11 +0200
+Message-ID: <20260817132552.505510528@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -52,87 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Qihang Tang <q.h.hack.winter@gmail.com>
 
-commit 5d1c224dd914579524a183a514c12b95095d12ce upstream.
+commit 3b9a324e646d3657a8d9806dfbfe4f3e4066e882 upstream.
 
-ovs_flow_cmd_new() preallocates the optional reply skb before it takes
-ovs_mutex and before it knows which existing flow will be updated.
+dev_validate_header() reads dev->hard_header_len directly when
+zero-padding short link layer headers for CAP_SYS_RAWIO holders:
 
-That is normally fine because the skb is sized from the request flow
-identifier.  That identifier also becomes the inserted flow's identifier.
-For updates, however, a request with a UFID may miss the UFID lookup and
-then fall back to the flow key lookup.  That lookup can legitimately find
-an existing key-identified flow.  UFIDs are optional and the flow key is
-the primary identifier.
+    if (capable(CAP_SYS_RAWIO)) {
+        memset(ll_header + len, 0, dev->hard_header_len - len);
+        return true;
+    }
 
-For echoed replies, ovs_flow_cmd_fill_info() writes the matched flow's
-identifier, not the request identifier used for the preallocation.  A short
-request UFID can therefore leave too little room for the key identifier.
-The fill can then fail with -EMSGSIZE and hit the BUG_ON(error < 0) in the
-update path.
+Packet send paths call dev_validate_header() on skbs whose headroom was
+allocated from an earlier hard_header_len read. If the device is
+reconfigured so that dev->hard_header_len increases before validation,
+the memset writes past the reserved buffer, an out-of-bounds write.
 
-Once the update target has been resolved, reallocate the reply skb if the
-matched flow needs a larger reply than the request identifier allowed.  Do
-this before replacing the actions so the request can still fail cleanly if
-the rare extra allocation fails.
+This out-of-bounds write is masked in some SOCK_RAW paths today because
+the same concurrent increase can first make skb_push() exceed the
+reserved headroom and trigger skb_under_panic(). Remove the zero-padding
+branch before making those hard_header_len reads consistent, so the
+snapshot fixes do not turn a loud panic into a silent overwrite.
 
-Fixes: 74ed7ab9264c ("openvswitch: Add support for unique flow IDs.")
+This path is only reached for variable length L2 protocols, where
+len < hard_header_len but len >= min_header_len. No remaining in-tree
+variable length L2 protocol implements header_ops->validate, and the
+CAP_SYS_RAWIO bypass that zero-pads and accepts short headers has no
+real value beyond allowing testing of intentionally malformed input.
+
+Drop the CAP_SYS_RAWIO branch. The remaining reads of
+dev->hard_header_len in dev_validate_header() are comparisons only and
+have no memory safety impact.
+
+Suggested-by: Willem de Bruijn <willemb@google.com>
+Fixes: 2793a23aacbd ("net: validate variable length ll headers")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
-Link: https://patch.msgid.link/f7bbd3c30ce81a39156e226b3872d73abed21d2f.1785644623.git.zhilinz@nebusec.ai
+Signed-off-by: Qihang Tang <q.h.hack.winter@gmail.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260805125729.19220-2-q.h.hack.winter@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/openvswitch/datapath.c |   29 ++++++++++++++++++++++++++---
- 1 file changed, 26 insertions(+), 3 deletions(-)
+ include/linux/netdevice.h |    5 -----
+ 1 file changed, 5 deletions(-)
 
---- a/net/openvswitch/datapath.c
-+++ b/net/openvswitch/datapath.c
-@@ -1045,9 +1045,8 @@ static int ovs_flow_cmd_new(struct sk_bu
- 			error = -EEXIST;
- 			goto err_unlock_ovs;
- 		}
--		/* The flow identifier has to be the same for flow updates.
--		 * Look for any overlapping flow.
--		 */
-+
-+		/* Look for any overlapping flow. */
- 		if (unlikely(!ovs_flow_cmp(flow, &match))) {
- 			if (ovs_identifier_is_key(&flow->id))
- 				flow = ovs_flow_tbl_lookup_exact(&dp->table,
-@@ -1059,6 +1058,30 @@ static int ovs_flow_cmd_new(struct sk_bu
- 				goto err_unlock_ovs;
- 			}
- 		}
-+
-+		if (unlikely(reply)) {
-+			size_t cur, req;
-+
-+			cur = ovs_flow_cmd_msg_size(acts, &new_flow->id,
-+						    ufid_flags);
-+			req = ovs_flow_cmd_msg_size(acts, &flow->id,
-+						    ufid_flags);
-+			if (cur < req) {
-+				struct sk_buff *resized;
-+
-+				resized = ovs_flow_cmd_alloc_info(acts,
-+								  &flow->id,
-+								  info, false,
-+								  ufid_flags);
-+				if (IS_ERR(resized)) {
-+					error = PTR_ERR(resized);
-+					goto err_unlock_ovs;
-+				}
-+				kfree_skb(reply);
-+				reply = resized;
-+			}
-+		}
-+
- 		/* Update actions. */
- 		old_acts = ovsl_dereference(flow->sf_acts);
- 		rcu_assign_pointer(flow->sf_acts, acts);
+--- a/include/linux/netdevice.h
++++ b/include/linux/netdevice.h
+@@ -3208,11 +3208,6 @@ static inline bool dev_validate_header(c
+ 	if (len < dev->min_header_len)
+ 		return false;
+ 
+-	if (capable(CAP_SYS_RAWIO)) {
+-		memset(ll_header + len, 0, dev->hard_header_len - len);
+-		return true;
+-	}
+-
+ 	if (dev->header_ops && dev->header_ops->validate)
+ 		return dev->header_ops->validate(ll_header, len);
+ 
 
 
