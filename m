@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACF5E42EEDD;
-	Mon, 17 Aug 2026 14:58:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9106843CED7;
+	Mon, 17 Aug 2026 14:58:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978683; cv=none; b=sncw7Dd/GM63Ed1sgc8H590ATVwcp26Yw5yPDD8bC3nSx2YfrDh+PQj7tOTeAOg84yDCUcONratnag7mZcxUKKMUaF1QP/WdKy6YrzwlJCS/SnwGQ2uNhkbdVBc5NkXtEf1q/deH5oApa+OA83SO8YJHx4OFO3BkeCke+b8SwG4=
+	t=1786978686; cv=none; b=YWAJdsTsEX0U2RCuQq3kGo3UXve27tk7D4JnZE++rbyHV3v0e/cclEuHyeHR+4C1EwME4l5G+1qHfrBE+xRgbxemYEXAUzqulSmXX24tR4Cyux0OWDu5gpEXaQBYHG4M8IM5KhLsZd1r8NSF5qEEs3QnmLpmNSI6BQTT+n0JyGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978683; c=relaxed/simple;
-	bh=kmJ11N0OOEKQSzeduhoQcSqSKKhVFB15FIEiZgP/guM=;
+	s=arc-20240116; t=1786978686; c=relaxed/simple;
+	bh=HNVEjrae2K/mffnVgxQ5eV02LFrGJI6YZBpMBiD4vx8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QjHaDRBDKUVO9EebnIOpPgtjc7yUTJN45Cxxvg8RW8OhZ/QCP8AtQ8agNQjPwPcyJOuH3bgYBP4qIpY3DMNgFDSn9HAJLwTvmeIVgIPc93H8eNZFouExi1e3WXm64PR9YLfQsugYpXPiv2VzPRVp3hzkmLBwbDGmK6SQ8l3UpBE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WZmhORTS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=A90oZF1aeh3zYMJIhBEDq4KLjLRdX//kGuYP/xpfunXsY7T7dRUl76wjOG/EMEZjQ79gPW5VI3ZdoJmxEtAkgq1ZIbu+zFcX9Ez54x8aRRVQUDIzbj2OBS2ckZI3KITQ1KepUKTdf/CJcp4CXpYKFrPs+ihZKBXA+yuM/WbT8vA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pdGl0dCc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WZmhORTS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E95D1F000E9;
-	Mon, 17 Aug 2026 14:58:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pdGl0dCc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E44281F000E9;
+	Mon, 17 Aug 2026 14:58:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978682;
-	bh=0UglIdjP1DXIihLZ58YifKLh7ZSnnk6UPCcjjXyVCmA=;
+	s=korg; t=1786978685;
+	bh=EuFVHy0n8103GOzWUiiSXe6Lzl25lcN+tOjKDdFml9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WZmhORTSeqGTzuXHCR299+6wW9XBSX60xX6kFd6eaMS8L9hn5G/Kh2qLcKI+Ts2Bm
-	 nQ2rTGAPkb50RtvyoKvSLAwFif9LjBZK5+aR9Xw9/edgq5JBuB4XRCp61DnPB87MjE
-	 WL09x8m0m4OJF399GUZfzKhCrNi2m5AcoXQq4xBI=
+	b=pdGl0dCcOi0qHcuRIVbi84VpClNl4RmMHLShnzleNla2nClaWal0eXdrSVTGZKpto
+	 I7O38NQpMUDoCjjpChKR4nTr2PE4f6YfqlsEQ9p8bQ9w/oXgAw5xcvUtcoxiy6dJDx
+	 3FJ57EtY/TttzHHbcZqj313CVCxDxyA9x5ST16cI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Vega <vega@nebusec.ai>,
-	Zihan Xi <zihanx@nebusec.ai>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.6 082/156] packet: synchronize pressure clearing with ring reconfiguration
-Date: Mon, 17 Aug 2026 15:33:36 +0200
-Message-ID: <20260817132537.813152496@linuxfoundation.org>
+	Zhiling Zou <zhilinz@nebusec.ai>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 083/156] net: openvswitch: reallocate update replies for mismatched IDs
+Date: Mon, 17 Aug 2026 15:33:37 +0200
+Message-ID: <20260817132537.855963041@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132534.666299318@linuxfoundation.org>
 References: <20260817132534.666299318@linuxfoundation.org>
@@ -51,97 +52,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zihan Xi <zihanx@nebusec.ai>
+From: Zhiling Zou <zhilinz@nebusec.ai>
 
-commit 1a35da325cac4d5bcad76a2aa943408a6f1d9000 upstream.
+commit 5d1c224dd914579524a183a514c12b95095d12ce upstream.
 
-packet_set_ring() updates the RX ring state under sk_receive_queue.lock,
-but used to publish the tpacket receive mode through po->prot_hook.func
-after releasing that lock. packet_poll() and packet_recvmsg() can then
-run the pressure clearing path after the ring has been cleared while
-still seeing tpacket_rcv, causing __packet_rcv_has_room() to dereference
-stale or NULL ring storage.
+ovs_flow_cmd_new() preallocates the optional reply skb before it takes
+ovs_mutex and before it knows which existing flow will be updated.
 
-Move the existing receive hook assignment into the same
-sk_receive_queue.lock section as the ring state update. Keep the
-assignment otherwise unchanged, including on TX ring reconfiguration, to
-avoid adding behavior changes that are not required for the fix.
+That is normally fine because the skb is sized from the request flow
+identifier.  That identifier also becomes the inserted flow's identifier.
+For updates, however, a request with a UFID may miss the UFID lookup and
+then fall back to the flow key lookup.  That lookup can legitimately find
+an existing key-identified flow.  UFIDs are optional and the flow key is
+the primary identifier.
 
-Serialize packet_recvmsg() pressure clearing with the same queue lock
-only after PACKET_SOCK_PRESSURE has been observed. If the flag is clear
-and the socket has moved away from tpacket_rcv, packet_set_ring() has
-already detached the socket and waited for synchronize_net(), so no new
-packet input can set the flag again.
+For echoed replies, ovs_flow_cmd_fill_info() writes the matched flow's
+identifier, not the request identifier used for the preallocation.  A short
+request UFID can therefore leave too little room for the key identifier.
+The fill can then fail with -EMSGSIZE and hit the BUG_ON(error < 0) in the
+update path.
 
-packet_poll() already holds sk_receive_queue.lock, so it uses the new
-unlocked helper directly.
+Once the update target has been resolved, reallocate the reply skb if the
+matched flow needs a larger reply than the request identifier allowed.  Do
+this before replacing the actions so the request can still fail cleanly if
+the rare extra allocation fails.
 
-Fixes: 2ccdbaa6d55b ("packet: rollover lock contention avoidance")
+Fixes: 74ed7ab9264c ("openvswitch: Add support for unique flow IDs.")
 Cc: stable@vger.kernel.org
 Reported-by: Vega <vega@nebusec.ai>
-Assisted-by: Codex:gpt-5.4
-Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
-Link: https://patch.msgid.link/f90b5688311fa278d1361ea8c6be0bf25967d591.1785247446.git.zihanx@nebusec.ai
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
+Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
+Link: https://patch.msgid.link/f7bbd3c30ce81a39156e226b3872d73abed21d2f.1785644623.git.zhilinz@nebusec.ai
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/packet/af_packet.c |   20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
+ net/openvswitch/datapath.c |   29 ++++++++++++++++++++++++++---
+ 1 file changed, 26 insertions(+), 3 deletions(-)
 
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -1367,13 +1367,25 @@ static int packet_rcv_has_room(struct pa
- 	return ret;
- }
- 
--static void packet_rcv_try_clear_pressure(struct packet_sock *po)
-+static void __packet_rcv_try_clear_pressure(struct packet_sock *po)
- {
- 	if (packet_sock_flag(po, PACKET_SOCK_PRESSURE) &&
- 	    __packet_rcv_has_room(po, NULL) == ROOM_NORMAL)
- 		packet_sock_flag_set(po, PACKET_SOCK_PRESSURE, false);
- }
- 
-+static void packet_rcv_try_clear_pressure(struct packet_sock *po)
-+{
-+	struct sock *sk = &po->sk;
+--- a/net/openvswitch/datapath.c
++++ b/net/openvswitch/datapath.c
+@@ -1084,9 +1084,8 @@ static int ovs_flow_cmd_new(struct sk_bu
+ 			error = -EEXIST;
+ 			goto err_unlock_ovs;
+ 		}
+-		/* The flow identifier has to be the same for flow updates.
+-		 * Look for any overlapping flow.
+-		 */
 +
-+	if (!packet_sock_flag(po, PACKET_SOCK_PRESSURE))
-+		return;
++		/* Look for any overlapping flow. */
+ 		if (unlikely(!ovs_flow_cmp(flow, &match))) {
+ 			if (ovs_identifier_is_key(&flow->id))
+ 				flow = ovs_flow_tbl_lookup_exact(&dp->table,
+@@ -1098,6 +1097,30 @@ static int ovs_flow_cmd_new(struct sk_bu
+ 				goto err_unlock_ovs;
+ 			}
+ 		}
 +
-+	spin_lock_bh(&sk->sk_receive_queue.lock);
-+	__packet_rcv_try_clear_pressure(po);
-+	spin_unlock_bh(&sk->sk_receive_queue.lock);
-+}
++		if (unlikely(reply)) {
++			size_t cur, req;
 +
- static void packet_sock_destruct(struct sock *sk)
- {
- 	skb_queue_purge(&sk->sk_error_queue);
-@@ -4361,7 +4373,7 @@ static __poll_t packet_poll(struct file
- 			TP_STATUS_KERNEL))
- 			mask |= EPOLLIN | EPOLLRDNORM;
- 	}
--	packet_rcv_try_clear_pressure(po);
-+	__packet_rcv_try_clear_pressure(po);
- 	spin_unlock_bh(&sk->sk_receive_queue.lock);
- 	spin_lock_bh(&sk->sk_write_queue.lock);
- 	if (po->tx_ring.pg_vec) {
-@@ -4601,14 +4613,14 @@ static int packet_set_ring(struct sock *
- 		rb->frame_max = (req->tp_frame_nr - 1);
- 		rb->head = 0;
- 		rb->frame_size = req->tp_frame_size;
-+		po->prot_hook.func = (po->rx_ring.pg_vec) ?
-+						tpacket_rcv : packet_rcv;
- 		spin_unlock_bh(&rb_queue->lock);
- 
- 		swap(rb->pg_vec_order, order);
- 		swap(rb->pg_vec_len, req->tp_block_nr);
- 
- 		rb->pg_vec_pages = req->tp_block_size/PAGE_SIZE;
--		po->prot_hook.func = (po->rx_ring.pg_vec) ?
--						tpacket_rcv : packet_rcv;
- 		skb_queue_purge(rb_queue);
- 		if (atomic_long_read(&po->mapped))
- 			pr_err("packet_mmap: vma is busy: %ld\n",
++			cur = ovs_flow_cmd_msg_size(acts, &new_flow->id,
++						    ufid_flags);
++			req = ovs_flow_cmd_msg_size(acts, &flow->id,
++						    ufid_flags);
++			if (cur < req) {
++				struct sk_buff *resized;
++
++				resized = ovs_flow_cmd_alloc_info(acts,
++								  &flow->id,
++								  info, false,
++								  ufid_flags);
++				if (IS_ERR(resized)) {
++					error = PTR_ERR(resized);
++					goto err_unlock_ovs;
++				}
++				kfree_skb(reply);
++				reply = resized;
++			}
++		}
++
+ 		/* Update actions. */
+ 		old_acts = ovsl_dereference(flow->sf_acts);
+ 		rcu_assign_pointer(flow->sf_acts, acts);
 
 
