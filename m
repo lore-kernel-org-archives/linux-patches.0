@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5152435EC8;
-	Mon, 17 Aug 2026 15:23:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F0DD2F1FDF;
+	Mon, 17 Aug 2026 15:23:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786980187; cv=none; b=ixcgf2KirkdJ6g8YZoorJFU29y1eBeZDWzEYSv8oszGldhBmHmI/G9PRU5gaBLQZqS77IVkF7aJK/8B7i9OkVyZGZE9a9p2f1y1mSVnIaQ2oLq9fRtyPRK4OO7Yx9YNvar4SA6ojNfYQIrZUNzr97LkU2/fuVOm6azb2GoHqJUg=
+	t=1786980189; cv=none; b=Uqz3p9xpeMx/LzT7V9a8I+H8xdiZ6DjGBXTz9dyNatzoxrEJyIH2qpHbUhg+3/D5SsadLoBLK4GuJLbnWdYK/jcQEMNUm1POfw1xeR7B0vnTAuwFR3ZTl36nb7QzHMCqww9WzbaVLNQryywtqaWWKxd09bAiQgDDvXCQayp9kHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786980187; c=relaxed/simple;
-	bh=LUR/8TrIQ4q9fHAYlMF9LgTwmzsxNAY3zekvPTernkM=;
+	s=arc-20240116; t=1786980189; c=relaxed/simple;
+	bh=jbjoYLoNTHEe4uD0DA1onhqBQVMrYumbjEQ2+ylN3OA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ORJubf9Ki6bf2zJRO5/xfxidq5taf5E7Caz+fhh5cCoqJKhoulAbyxOPSvvX3oKngVBSyxafg3Wo05d1oojk6vCCFZdPADM8MRrzmuQiGmaXgqFoFcW1HvtLGQbk9RcjLPYSaYfy8RkfIDf7n2g+SSwe89mgOvew+qGm30RY4WU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mr1VfU2v; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HqC2K9I/WB3e63Z+nzEmkB8bsCNEbCd1wwi4buEyB7Zoesp3RRkGcbTrrqtilms6iNr72eB3glH7jwtVyxw2AcJabsHlGJXkgmkaLp4dfCi8GRrocLr5BDSZtguqmHEBKk01jPeQBo4BMPg23u7SYAaEOg0e1rCKL6/YEVjJ9k0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HFFCvJ0v; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mr1VfU2v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 178291F000E9;
-	Mon, 17 Aug 2026 15:23:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HFFCvJ0v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E98681F000E9;
+	Mon, 17 Aug 2026 15:23:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786980185;
-	bh=YckTGT52wmxgNQAPIz1iKRnVdVDSNEy0AadHhNy02II=;
+	s=korg; t=1786980188;
+	bh=VpSQrK94b/t2ozqfTam2Jv2/m+TochmgykerWXnz8/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Mr1VfU2vXVM9Y4zE3/WwEU0B1hGCFuKz+BFhbDHJ04Tuaofs/6Koi053W+tQPEplY
-	 JOTXjR/2RP9gmIRYTUwE8AOUowbuXltsBWSu4G4wRndgeaUvN02NdIBZwMwltC5fY4
-	 dLE4kAeR66uo3PycrDRhSzMSTMs2iIlimFeKUAEU=
+	b=HFFCvJ0v68Hj4Ehh+LBf+g0ISBx4iuVLasQxokIsvK+P9zKIhQ6NjDYMNoj9ECgKW
+	 zXZFZuvpxwST8IX5axNP9bT2HLJUf/retvzZLjDGE+nlAcZOHBTMlIPVfjShRVYsTa
+	 h/gbnreBLwd3blQsz3+bVfRRvqmp7mJYmV9Z5sac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Siwei Zhang <oss@fourdim.xyz>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Marco Elver <elver@google.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Todd Kjos <tkjos@google.com>
-Subject: [PATCH 6.1 483/609] Bluetooth: L2CAP: Fix UAF in channel timeout by holding conn ref
-Date: Mon, 17 Aug 2026 15:32:59 +0200
-Message-ID: <20260817132600.095133594@linuxfoundation.org>
+	Liem <liem16213@gmail.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Carlos Song <carlos.song@nxp.com>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH 6.1 447/609] i2c: imx: Fix slave registration race and error handling
+Date: Mon, 17 Aug 2026 15:32:23 +0200
+Message-ID: <20260817132559.024209731@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -53,252 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marco Elver <elver@google.com>
+From: Liem <liem16213@gmail.com>
 
-[ Upstream commit b66774b48dd98f07254951f74ea6f513efe7ff8b ]
+commit d64ec362c369bbc33833f7936d5f3a706b0d5c45 upstream.
 
-l2cap_chan_timeout() runs asynchronously and accesses chan->conn. If
-the connection is torn down while the timer is running or pending,
-chan->conn can be freed, leading to a use-after-free when the timer
-worker attempts to lock conn->lock:
+In i2c_imx_reg_slave(), the slave pointer was assigned before
+pm_runtime_resume_and_get().  If pm_runtime_resume_and_get() failed,
+the error path returned without clearing i2c_imx->slave, leaving it
+non-NULL and causing all subsequent registration attempts to fail
+with -EBUSY.
 
-| BUG: KASAN: slab-use-after-free in instrument_atomic_read_write include/linux/instrumented.h:112 [inline]
-| BUG: KASAN: slab-use-after-free in atomic_long_try_cmpxchg_acquire include/linux/atomic/atomic-instrumented.h:4456 [inline]
-| BUG: KASAN: slab-use-after-free in __mutex_trylock_fast kernel/locking/mutex.c:161 [inline]
-| BUG: KASAN: slab-use-after-free in mutex_lock+0x4f/0xa0 kernel/locking/mutex.c:318
-| Write of size 8 at addr ffff8881298d9550 by task kworker/2:1/83
-|
-| CPU: 2 UID: 0 PID: 83 Comm: kworker/2:1 Not tainted 7.1.0-rc6-next-20260601-dirty #6 PREEMPT(full)
-| Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-debian-1.17.0-1 04/01/2014
-| Workqueue: events l2cap_chan_timeout
-| Call Trace:
-|  <TASK>
-|  instrument_atomic_read_write include/linux/instrumented.h:112 [inline]
-|  atomic_long_try_cmpxchg_acquire include/linux/atomic/atomic-instrumented.h:4456 [inline]
-|  __mutex_trylock_fast kernel/locking/mutex.c:161 [inline]
-|  mutex_lock+0x4f/0xa0 kernel/locking/mutex.c:318
-|  l2cap_chan_timeout+0x5d/0x1b0 net/bluetooth/l2cap_core.c:422
-|  process_one_work kernel/workqueue.c:3326 [inline]
-|  process_scheduled_works+0x7c8/0xfb0 kernel/workqueue.c:3409
-|  worker_thread+0x8a9/0xcf0 kernel/workqueue.c:3490
-|  kthread+0x346/0x430 kernel/kthread.c:436
-|  ret_from_fork+0x1a3/0x470 arch/x86/kernel/process.c:158
-|  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
-|  </TASK>
-|
-| Allocated by task 320:
-|  l2cap_conn_add+0xa7/0x820 net/bluetooth/l2cap_core.c:7075
-|  l2cap_connect_cfm+0xdb/0xd70 net/bluetooth/l2cap_core.c:7452
-|  hci_connect_cfm include/net/bluetooth/hci_core.h:2139 [inline]
-|  hci_remote_features_evt+0x52f/0x9f0 net/bluetooth/hci_event.c:3760
-|  hci_event_func net/bluetooth/hci_event.c:7796 [inline]
-|  hci_event_packet+0x561/0xa70 net/bluetooth/hci_event.c:7847
-|  hci_rx_work+0x370/0x890 net/bluetooth/hci_core.c:4040
-|  process_one_work kernel/workqueue.c:3326 [inline]
-|  process_scheduled_works+0x7c8/0xfb0 kernel/workqueue.c:3409
-|  worker_thread+0x8a9/0xcf0 kernel/workqueue.c:3490
-|  kthread+0x346/0x430 kernel/kthread.c:436
-|  ret_from_fork+0x1a3/0x470 arch/x86/kernel/process.c:158
-|  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
-|
-| Freed by task 322:
-|  hci_disconn_cfm include/net/bluetooth/hci_core.h:2154 [inline]
-|  hci_conn_hash_flush+0x101/0x1f0 net/bluetooth/hci_conn.c:2736
-|  hci_dev_close_sync+0x889/0xde0 net/bluetooth/hci_sync.c:5405
-|  hci_dev_do_close net/bluetooth/hci_core.c:502 [inline]
-|  hci_unregister_dev+0x1f7/0x370 net/bluetooth/hci_core.c:2679
-|  vhci_release+0x12a/0x180 drivers/bluetooth/hci_vhci.c:690
-|  __fput+0x369/0x890 fs/file_table.c:510
-|  task_work_run+0x160/0x1d0 kernel/task_work.c:233
-|  get_signal+0xf5b/0x1120 kernel/signal.c:2810
-|  arch_do_signal_or_restart+0x4d/0x600 arch/x86/kernel/signal.c:337
-|  __exit_to_user_mode_loop kernel/entry/common.c:64 [inline]
-|  exit_to_user_mode_loop+0x85/0x510 kernel/entry/common.c:98
-|  do_syscall_64+0x263/0x3d0 arch/x86/entry/syscall_64.c:100
-|  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-|
-| The buggy address belongs to the object at ffff8881298d9400
-|  which belongs to the cache kmalloc-512 of size 512
-| The buggy address is located 336 bytes inside of
-|  freed 512-byte region [ffff8881298d9400, ffff8881298d9600)
+Additionally, because this driver uses a shared IRQ, the interrupt
+handler i2c_imx_isr() can execute concurrently and, after acquiring
+slave_lock, dereference i2c_imx->slave.  The previous fix attempt
+added a lockless i2c_imx->slave = NULL on the error path, but that
+could race with the ISR under the lock and still cause a NULL pointer
+dereference.
 
-Fix it by having chan->conn hold a reference to l2cap_conn (via
-l2cap_conn_get) when the channel is added to the connection, and
-releasing it in the channel destructor. This ensures the l2cap_conn
-remains alive as long as the channel exists.
+Fix both issues by deferring the assignment of i2c_imx->slave and
+i2c_imx->last_slave_event to after a successful resume, and by
+performing the assignment inside the slave_lock critical section.
+This guarantees that the slave pointer is never left stale on the
+error path and is always valid when observed by the interrupt handler.
 
-A new FLAG_DEL channel flag is introduced to indicate that the channel
-has been deleted from its connection. l2cap_chan_del() atomically sets
-this flag using test_and_set_bit() instead of setting chan->conn to
-NULL. All asynchronous workers (l2cap_chan_timeout, l2cap_ack_timeout,
-l2cap_monitor_timeout, l2cap_retrans_timeout) and l2cap_chan_send()
-check FLAG_DEL to determine whether the channel has been torn down,
-rather than testing chan->conn for NULL.
-
-Fixes: 8c8e620467a7 ("Bluetooth: L2CAP: use chan timer to close channels in cleanup_listen()")
-Cc: <stable@vger.kernel.org>
-Cc: Siwei Zhang <oss@fourdim.xyz>
-Cc: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Assisted-by: Gemini:gemini-3.1-pro-preview
-Reported-by: https://sashiko.dev/#/patchset/20260521021249.3258069-1-oss%40fourdim.xyz
-Signed-off-by: Marco Elver <elver@google.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: f7414cd6923f ("i2c: imx: support slave mode for imx I2C driver")
+Signed-off-by: Liem <liem16213@gmail.com>
+Cc: <stable@vger.kernel.org> # v5.11+
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Acked-by: Carlos Song <carlos.song@nxp.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/20260629023829.152651-2-liem16213@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Todd Kjos <tkjos@google.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/l2cap.h |  1 +
- net/bluetooth/l2cap_core.c    | 33 ++++++++++++++++++++-------------
- 2 files changed, 21 insertions(+), 13 deletions(-)
+ drivers/i2c/busses/i2c-imx.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/include/net/bluetooth/l2cap.h b/include/net/bluetooth/l2cap.h
-index 97ad02840530e..ba230c3cf4315 100644
---- a/include/net/bluetooth/l2cap.h
-+++ b/include/net/bluetooth/l2cap.h
-@@ -743,6 +743,7 @@ enum {
- 	FLAG_ECRED_CONN_REQ_SENT,
- 	FLAG_PENDING_SECURITY,
- 	FLAG_HOLD_HCI_CONN,
-+	FLAG_DEL,
- };
+--- a/drivers/i2c/busses/i2c-imx.c
++++ b/drivers/i2c/busses/i2c-imx.c
+@@ -871,9 +871,6 @@ static int i2c_imx_reg_slave(struct i2c_
+ 	if (i2c_imx->slave)
+ 		return -EBUSY;
  
- /* Lock nesting levels for L2CAP channels. We need these because lockdep
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index b5603531a9d60..d1881f48cd11c 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -415,7 +415,7 @@ static void l2cap_chan_timeout(struct work_struct *work)
- 
- 	BT_DBG("chan %p state %s", chan, state_to_string(chan->state));
- 
--	if (!conn) {
-+	if (test_bit(FLAG_DEL, &chan->flags)) {
- 		l2cap_chan_put(chan);
- 		return;
- 	}
-@@ -426,6 +426,9 @@ static void l2cap_chan_timeout(struct work_struct *work)
- 	 */
- 	l2cap_chan_lock(chan);
- 
-+	if (test_bit(FLAG_DEL, &chan->flags))
-+		goto unlock;
-+
- 	if (chan->state == BT_CONNECTED || chan->state == BT_CONFIG)
- 		reason = ECONNREFUSED;
- 	else if (chan->state == BT_CONNECT &&
-@@ -438,10 +441,11 @@ static void l2cap_chan_timeout(struct work_struct *work)
- 
- 	chan->ops->close(chan);
- 
-+unlock:
- 	l2cap_chan_unlock(chan);
--	l2cap_chan_put(chan);
- 
- 	mutex_unlock(&conn->chan_lock);
-+	l2cap_chan_put(chan);
- }
- 
- struct l2cap_chan *l2cap_chan_create(void)
-@@ -494,6 +498,9 @@ static void l2cap_chan_destroy(struct kref *kref)
- 	list_del(&chan->global_l);
- 	write_unlock(&chan_list_lock);
- 
-+	if (chan->conn)
-+		l2cap_conn_put(chan->conn);
-+
- 	kfree(chan);
- }
- 
-@@ -625,7 +632,7 @@ void __l2cap_chan_add(struct l2cap_conn *conn, struct l2cap_chan *chan)
- 
- 	conn->disc_reason = HCI_ERROR_REMOTE_USER_TERM;
- 
--	chan->conn = conn;
-+	chan->conn = l2cap_conn_get(conn);
- 
- 	switch (chan->chan_type) {
- 	case L2CAP_CHAN_CONN_ORIENTED:
-@@ -680,30 +687,26 @@ void l2cap_chan_add(struct l2cap_conn *conn, struct l2cap_chan *chan)
- 
- void l2cap_chan_del(struct l2cap_chan *chan, int err)
- {
--	struct l2cap_conn *conn = chan->conn;
+-	i2c_imx->slave = client;
+-	i2c_imx->last_slave_event = I2C_SLAVE_STOP;
 -
- 	__clear_chan_timer(chan);
- 
--	BT_DBG("chan %p, conn %p, err %d, state %s", chan, conn, err,
-+	BT_DBG("chan %p, err %d, state %s", chan, err,
- 	       state_to_string(chan->state));
- 
- 	chan->ops->teardown(chan, err);
- 
--	if (conn) {
-+	if (!test_and_set_bit(FLAG_DEL, &chan->flags)) {
- 		/* Delete from channel list */
- 		list_del(&chan->list);
- 
- 		l2cap_chan_put(chan);
- 
--		chan->conn = NULL;
--
- 		/* Reference was only held for non-fixed channels or
- 		 * fixed channels that explicitly requested it using the
- 		 * FLAG_HOLD_HCI_CONN flag.
- 		 */
- 		if (chan->chan_type != L2CAP_CHAN_FIXED ||
- 		    test_bit(FLAG_HOLD_HCI_CONN, &chan->flags))
--			hci_conn_drop(conn->hcon);
-+			hci_conn_drop(chan->conn->hcon);
+ 	/* Resume */
+ 	ret = pm_runtime_resume_and_get(i2c_imx->adapter.dev.parent);
+ 	if (ret < 0) {
+@@ -881,6 +878,11 @@ static int i2c_imx_reg_slave(struct i2c_
+ 		return ret;
  	}
  
- 	if (test_bit(CONF_NOT_COMPLETE, &chan->conf_state))
-@@ -1930,7 +1933,7 @@ static void l2cap_monitor_timeout(struct work_struct *work)
- 
- 	l2cap_chan_lock(chan);
- 
--	if (!chan->conn) {
-+	if (test_bit(FLAG_DEL, &chan->flags)) {
- 		l2cap_chan_unlock(chan);
- 		l2cap_chan_put(chan);
- 		return;
-@@ -1951,7 +1954,7 @@ static void l2cap_retrans_timeout(struct work_struct *work)
- 
- 	l2cap_chan_lock(chan);
- 
--	if (!chan->conn) {
-+	if (test_bit(FLAG_DEL, &chan->flags)) {
- 		l2cap_chan_unlock(chan);
- 		l2cap_chan_put(chan);
- 		return;
-@@ -2566,7 +2569,7 @@ int l2cap_chan_send(struct l2cap_chan *chan, struct msghdr *msg, size_t len)
- 	int err;
- 	struct sk_buff_head seg_queue;
- 
--	if (!chan->conn)
-+	if (test_bit(FLAG_DEL, &chan->flags))
- 		return -ENOTCONN;
- 
- 	/* Connectionless channel */
-@@ -3167,12 +3170,16 @@ static void l2cap_ack_timeout(struct work_struct *work)
- 
- 	l2cap_chan_lock(chan);
- 
-+	if (test_bit(FLAG_DEL, &chan->flags))
-+		goto unlock;
++	scoped_guard(spinlock_irqsave, &i2c_imx->slave_lock) {
++		i2c_imx->slave = client;
++		i2c_imx->last_slave_event = I2C_SLAVE_STOP;
++	}
 +
- 	frames_to_ack = __seq_offset(chan, chan->buffer_seq,
- 				     chan->last_acked_seq);
+ 	i2c_imx_slave_init(i2c_imx);
  
- 	if (frames_to_ack)
- 		l2cap_send_rr_or_rnr(chan, 0);
- 
-+unlock:
- 	l2cap_chan_unlock(chan);
- 	l2cap_chan_put(chan);
- }
--- 
-2.53.0
-
+ 	return 0;
 
 
