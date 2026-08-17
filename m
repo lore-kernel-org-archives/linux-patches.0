@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D06D82F1FDF;
-	Mon, 17 Aug 2026 15:05:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC9162EC54A;
+	Mon, 17 Aug 2026 15:05:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979136; cv=none; b=frzjK7B95+Ubfssi1VjRjGVUtcl098IePPli8wtQLquxBJyRe/+vX1t+mPkufcYsVZABUMXEl92y4+sN9KzL5H5kmrUhZsgbUio1hI5sDb87xniWMbH53MajCbU+w00iU0rCcUaHxhsHKOFQDLI5eB4biypM/MRmElwb51v1ypI=
+	t=1786979140; cv=none; b=QGkLXestYx8+bZ9TutRUq8/lCTVEB06u5aU3TOmaUlp0zrYc5ADFaVQKOQf51j27mSnafeRoYm68ZhbUMRRR8xekifQXtuhvhm0xk/nnO72jAo1NTgvsQ4jXcvSR8FJO2c+GEzgcwg5fO8t4f7icC7FKkk5xiNfqasgra0+46vY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979136; c=relaxed/simple;
-	bh=H7xJOOAO4ltYSr8fNP1CubO12gCMm6AWs3HhJdy7yj4=;
+	s=arc-20240116; t=1786979140; c=relaxed/simple;
+	bh=S8G/Y0GyXurSg4IyQNY579wfeG7+eFENXqdJc36eRrw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Si4H5BtXRYDb9Dr2aHvDRXb1QY+CGTnUF1r+QYeuReuo8V16qYopykzWaPInYzNIZirH454Q98DPLIAMSfa/6lwiaHSJBQCc5iBGclExI3c2KkWvYfZ1OKgoGus4VtGKi1btYBkN0tjIhDa/Mw/dZeTcSSMNxCI7NN41Y4jMfCQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zzXBEiT0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TtesumPAXy1mDJaehM+NI/nqTK5wC/TrJQ+KsqfgvNGcZ6mezs28T+DKkbgVjqJOUhv8MYsutANKszmj6ChRpqWc1/wKT33YulyD6oEUE1mq1Sfi2otsQkYHcoDQbCwqQIU+acdPfD0dTN0/MEu7yThWN2n2KRRTaQZjJJJuEKU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qa0C07y3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zzXBEiT0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 354D31F000E9;
-	Mon, 17 Aug 2026 15:05:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qa0C07y3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F3BA1F000E9;
+	Mon, 17 Aug 2026 15:05:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979135;
-	bh=/PgTtSgJBXabQVQ9BtjPmIwgeOGec5cz6YFB0p2fYms=;
+	s=korg; t=1786979138;
+	bh=7xYQsfjrwHmfyRfXHSffoxHu9YC/sQhu4yZeOzQqUls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zzXBEiT0cpQa7+w2eIKziSKKpsrjTYKB6OBVFkqKfgIzr3GV83/CHNOVeXS8GaJrw
-	 +K7RdNrkpotRD/QnAtDM4RLWiBs7BwA8ouTP5zCZd0ea4yrIXaubCUMJIFX/dEnQbX
-	 LOEzA2KLr73lUkMdl10K9a1MqluJMEUNbORuTw9U=
+	b=qa0C07y3an2KWEC+wRhYQ7UaJkwW4Wc97cPEMGN7cSK4e+A8IenYBycLuJir05gdh
+	 Jzbv49yXjDdTK6W/85AQMqjTumDxaCjPTBU+VmOLFbb+bXSeHYcnwsxcVSMGVZCrqv
+	 zYZDGZSOf/ENZLTpF7xh4jTQyMPZ4W4bTU7sdHmA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lee <david.lee@trailofbits.com>,
-	Willem de Bruijn <willemb@google.com>,
+	Qianheng Peng <pengqh1@chinatelecom.cn>,
+	Zhaolong Zhang <zhangzl68@chinatelecom.cn>,
+	Hangbin Liu <liuhangbin@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 122/609] net/packet: avoid fanout hook re-registration after unregister
-Date: Mon, 17 Aug 2026 15:26:58 +0200
-Message-ID: <20260817132547.907203187@linuxfoundation.org>
+Subject: [PATCH 6.1 123/609] bonding: fix devconf_all NULL dereference when IPv6 is disabled
+Date: Mon, 17 Aug 2026 15:26:59 +0200
+Message-ID: <20260817132547.946528023@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -52,59 +53,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Lee <david.lee@trailofbits.com>
+From: Zhaolong Zhang <zhangzl68@chinatelecom.cn>
 
-[ Upstream commit 50aff80475abd3533eef4320477037e6fcc6b56e ]
+[ Upstream commit 1c975de3343cdef506f2eecc833cc1f14b0401c4 ]
 
-packet_set_ring() temporarily detaches a socket from packet delivery while
-reconfiguring its ring. It records the previous running state, clears
-po->num, unregisters the protocol hook when needed, drops po->bind_lock,
-and later restores po->num and re-registers the hook from the saved
-was_running value.
+When booting with the 'ipv6.disable=1' parameter, the devconf_all is
+never initialized because inet6_init() exits before addrconf_init() is
+called which initializes it. bond_send_validate(), however, will still
+call bond_ns_send_all() even ipv6 is indeed disabled. It will lead to
+NULL derefence of net->ipv6.devconf_all in ip6_pol_route().
 
-That unlocked window can race with NETDEV_UNREGISTER. The notifier can
-observe the socket as not running, skip __unregister_prot_hook(), and
-invalidate the per-socket binding by setting po->ifindex to -1 and clearing
-po->prot_hook.dev. A one-member fanout group can still retain its shared
-fanout hook device pointer. When packet_set_ring() resumes, re-registering
-solely from the stale was_running state can re-add the fanout hook after
-the device has been unregistered.
+ BUG: kernel NULL pointer dereference, address: 000000000000000c
+ [...]
+ Workqueue: bond0 bond_arp_monitor [bonding]
+ RIP: 0010:ip6_pol_route+0x69/0x480
+ [...]
+ Call Trace:
+  <TASK>
+  ? srso_return_thunk+0x5/0x5f
+  ? __pfx_ip6_pol_route_output+0x10/0x10
+  fib6_rule_lookup+0xfe/0x260
+  ? wakeup_preempt+0x8a/0x90
+  ? srso_return_thunk+0x5/0x5f
+  ? srso_return_thunk+0x5/0x5f
+  ? sched_balance_rq+0x369/0x810
+  ip6_route_output_flags+0xd7/0x170
+  bond_ns_send_all+0xde/0x280 [bonding]
+  bond_ab_arp_probe+0x296/0x320 [bonding]
+  ? srso_return_thunk+0x5/0x5f
+  bond_activebackup_arp_mon+0xb4/0x2c0 [bonding]
+  process_one_work+0x196/0x370
+  worker_thread+0x1af/0x320
+  ? srso_return_thunk+0x5/0x5f
+  ? __pfx_worker_thread+0x10/0x10
+  kthread+0xe3/0x120
+  ? __pfx_kthread+0x10/0x10
+  ret_from_fork+0x199/0x260
+  ? __pfx_kthread+0x10/0x10
+  ret_from_fork_asm+0x1a/0x30
+  </TASK>
 
-Treat po->ifindex == -1 as an invalidated binding after reacquiring
-po->bind_lock. This is distinct from ifindex 0, the normal
-unbound/wildcard state: ifindex -1 marks an existing device binding that
-was invalidated when the device was unregistered. Restore po->num as
-before, but do not re-register the hook if device unregister already
-detached the socket.
+Fix this by adding ipv6_mod_enabled() condition check in the caller.
 
-Fixes: dc99f600698d ("packet: Add fanout support.")
-Link: https://lore.kernel.org/netdev/20260701113947.23180-1-david.lee@trailofbits.com/
-Signed-off-by: David Lee <david.lee@trailofbits.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260707104440.833129-1-david.lee@trailofbits.com
+Fixes: 4e24be018eb9 ("bonding: add new parameter ns_targets")
+Signed-off-by: Qianheng Peng <pengqh1@chinatelecom.cn>
+Signed-off-by: Zhaolong Zhang <zhangzl68@chinatelecom.cn>
+Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
+Link: https://patch.msgid.link/20260707010622.487333-1-zhangzl2013@126.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/packet/af_packet.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/net/bonding/bond_main.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
-index f3850784d66404..cf013102e77457 100644
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -4584,7 +4584,11 @@ static int packet_set_ring(struct sock *sk, union tpacket_req_u *req_u,
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index 9898d85075d150..5a71893fc6a962 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -3415,7 +3415,8 @@ static void bond_send_validate(struct bonding *bond, struct slave *slave)
+ {
+ 	bond_arp_send_all(bond, slave);
+ #if IS_ENABLED(CONFIG_IPV6)
+-	bond_ns_send_all(bond, slave);
++	if (likely(ipv6_mod_enabled()))
++		bond_ns_send_all(bond, slave);
+ #endif
+ }
  
- 	spin_lock(&po->bind_lock);
- 	WRITE_ONCE(po->num, num);
--	if (was_running)
-+	/*
-+	 * NETDEV_UNREGISTER may have invalidated the binding while bind_lock
-+	 * was dropped above.  Do not re-add a fanout hook to a dead device.
-+	 */
-+	if (was_running && READ_ONCE(po->ifindex) != -1)
- 		register_prot_hook(sk);
- 
- 	spin_unlock(&po->bind_lock);
 -- 
 2.53.0
 
