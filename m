@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C11172F1FDF;
-	Mon, 17 Aug 2026 15:06:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 272E22EEE85;
+	Mon, 17 Aug 2026 15:06:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979183; cv=none; b=GmMqS9Jy7/zcZtHjb7/DNYScf+JWlx5dYPyTnMICHbQ1CXrglfe7RmIEaXfjirH4daxh73SUncksv6wVqIaNnMwcVVjDTcJklpnyNezANjgCAagLCSw9qB4xImEgml4YQS6zYDJbcto2YBE2LvBfCTnyl+N83yz1ueIEHQQEWts=
+	t=1786979187; cv=none; b=OzXjByBmqbqAvYz6KbdLWXSuB39tIqtz50gr4j3NPxPttS7/qf4OrwjF5BGJRdPO9EuBZMl040fabGCD4oJIxuow4AHayhCDJaNdgeA6e/qA/QfsqSJobvndxeXv7qGmZQdAwA546ACeebTnsR6BNXaQVrRc5eLGig/FSjSrDhQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979183; c=relaxed/simple;
-	bh=oysxu0YyiuCqN5h9F+8qKNqmSpiVtV6+marJyKOR51s=;
+	s=arc-20240116; t=1786979187; c=relaxed/simple;
+	bh=9q44ukVpyXhM712GQsJxjFmghipY9slER1YUCR68fQc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lgxhBANAbtIvmekKYg0C7Y0rpwF+vyNPdFeVQYAi8n9nhcpI5RWkrOocj11seLTPu06bw2aVY51wDf8/6s/CFVm1PXduk4DCws5Lctai1tc5jLQpIJ3KtKxvzuNQThlC76vykSBJEpMurgM6Ku6mUicATGOKNF8R6SczJ8NTkcc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CryNsBdh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GMy4+HdOEddsYx0pfhbdbWbgKurvYyHAMy3qejjZxDT3lrgauXA7aa10tiLihVw8tI6YakIjW5QjHObGvalI6BskmfUjvE0v50sheTb9vVr93tvDdpDVPmU4wjpyTLEV3CuhIAzxnkMBM6M2wAmYMsQE5+CHndVvWdJR3CYFv8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xjphpB02; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CryNsBdh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2F271F000E9;
-	Mon, 17 Aug 2026 15:06:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xjphpB02"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FE911F000E9;
+	Mon, 17 Aug 2026 15:06:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979182;
-	bh=X9XCeP5AnFwxe9pwqBVKNHcqy6v468EnWzEd/KrejPk=;
+	s=korg; t=1786979186;
+	bh=SHs9QnONRidaATwR7rdrO8Ob+CqzcjmkgHun5zn0Yww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CryNsBdh4XE1KiMGbuAVvI9czEmzLi0FED0BSnENUFvy9/jaQ6jk0voALtWMDkrVL
-	 fpvGeAXI31gHCUqWKX3MNU0bSdgAhPfzgSl1uNICoApisJ1GETa0ZECwmyME1Hj2l9
-	 bJvUjWlzpQ8Zslbv3wSecFLFj6UFCC71rsiBBoqU=
+	b=xjphpB02z4emkgdXJnTrwzsURZKLy7zGUCtyoiU5QVsa3/XoAiIYCertiLsZP2apt
+	 3LJpfb6y4NeGWVeLp5RNmO1AbYk41jAHqOcz8WWJ/nue65RhDr7sFWHCUWDz910HKp
+	 TJL011WUetXQBYBhT1oSQ7f45YLwQ1IPIPz65R+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tristan Madani <tristan@talencesecurity.com>,
-	Christian Lamparter <chunkeey@gmail.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 110/609] wifi: carl9170: fix OOB read from off-by-two in TX status handler
-Date: Mon, 17 Aug 2026 15:26:46 +0200
-Message-ID: <20260817132547.425365620@linuxfoundation.org>
+Subject: [PATCH 6.1 137/609] selftest: af_unix: Add Kconfig file.
+Date: Mon, 17 Aug 2026 15:27:13 +0200
+Message-ID: <20260817132548.547053358@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -52,40 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tristan Madani <tristan@talencesecurity.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit a3f42f1049ad80c65560d2b078ad426c3134f78d ]
+[ Upstream commit 11b006d6896c0471ad29c6f1fb1af606e7ba278f ]
 
-The bounds check in carl9170_tx_process_status() uses
-`i > ((cmd->hdr.len / 2) + 1)` which is off by two, allowing
-2 extra iterations past valid _tx_status entries when the firmware-
-controlled hdr.ext exceeds hdr.len/2. Fix by using the correct
-comparison `i >= (cmd->hdr.len / 2)`.
+diag_uid selftest failed on NIPA where the received nlmsg_type is
+NLMSG_ERROR [0] because CONFIG_UNIX_DIAG is not set [1] by default
+and sock_diag_lock_handler() failed to load the module.
 
-Fixes: a84fab3cbfdc ("carl9170: 802.11 rx/tx processing and usb backend")
-Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
-Acked-by: Christian Lamparter <chunkeey@gmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=5c1ca6ccaa1215781cac
-Link: https://patch.msgid.link/20260421134929.325662-3-tristmd@gmail.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+  # # Starting 2 tests from 2 test cases.
+  # #  RUN           diag_uid.uid.1 ...
+  # # diag_uid.c:159:1:Expected nlh->nlmsg_type (2) == SOCK_DIAG_BY_FAMILY (20)
+  # # 1: Test terminated by assertion
+  # #          FAIL  diag_uid.uid.1
+  # not ok 1 diag_uid.uid.1
+
+Let's add all AF_UNIX Kconfig to the config file under af_unix dir
+so that NIPA consumes it.
+
+Fixes: ac011361bd4f ("af_unix: Add test for sock_diag and UDIAG_SHOW_UID.")
+Link: https://netdev-3.bots.linux.dev/vmksft-net/results/644841/104-diag-uid/stdout [0]
+Link: https://netdev-3.bots.linux.dev/vmksft-net/results/644841/config [1]
+Reported-by: Jakub Kicinski <kuba@kernel.org>
+Closes: https://lore.kernel.org/netdev/20240617073033.0cbb829d@kernel.org/
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: f8b1abed7361 ("selftests: af_unix: add USER_NS config")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/carl9170/tx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/net/af_unix/config | 3 +++
+ 1 file changed, 3 insertions(+)
+ create mode 100644 tools/testing/selftests/net/af_unix/config
 
-diff --git a/drivers/net/wireless/ath/carl9170/tx.c b/drivers/net/wireless/ath/carl9170/tx.c
-index 88ef6e023f8266..d036ebb42c0d24 100644
---- a/drivers/net/wireless/ath/carl9170/tx.c
-+++ b/drivers/net/wireless/ath/carl9170/tx.c
-@@ -693,7 +693,7 @@ void carl9170_tx_process_status(struct ar9170 *ar,
- 	unsigned int i;
- 
- 	for (i = 0;  i < cmd->hdr.ext; i++) {
--		if (WARN_ON(i > ((cmd->hdr.len / 2) + 1))) {
-+		if (WARN_ON(i >= (cmd->hdr.len / 2))) {
- 			print_hex_dump_bytes("UU:", DUMP_PREFIX_NONE,
- 					     (void *) cmd, cmd->hdr.len + 4);
- 			break;
+diff --git a/tools/testing/selftests/net/af_unix/config b/tools/testing/selftests/net/af_unix/config
+new file mode 100644
+index 00000000000000..37368567768cc0
+--- /dev/null
++++ b/tools/testing/selftests/net/af_unix/config
+@@ -0,0 +1,3 @@
++CONFIG_UNIX=y
++CONFIG_AF_UNIX_OOB=y
++CONFIG_UNIX_DIAG=m
 -- 
 2.53.0
 
