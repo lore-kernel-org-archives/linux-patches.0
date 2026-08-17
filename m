@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3B5943DA3A;
-	Mon, 17 Aug 2026 14:36:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E48C3B38A9;
+	Mon, 17 Aug 2026 14:36:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977375; cv=none; b=EIfe6guHxI7XUe0D+zWjhfvLkWCbZVEN4C8gDE34AF/ucfpW6wD6EuTT0JKqpxs7MMq3NMqini/P1BkQOOEYoYkPGLztfTlSr3rhNWdAF3BXaXQN404DD3tX88Xvng2sebfTZUn7/ytGHCliU+it4sQr91FLEcflVxLQAAX4ryA=
+	t=1786977378; cv=none; b=jYNXGPX0j4YNge2MqOybUwrrt5twV+KIqnToP26UfRJ1Tk7Kzy5KTCclIUqZ4uhvcqrXdimKD69lf9QSWi9GSAPp5Davzs8XiGKWi8mIhblHSKFUFZ9fK9ezIBD9kLMtqNLNcbOc11szRX5embTmUmgVV/1LHZyS1UhqhzuBwl4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977375; c=relaxed/simple;
-	bh=gLdpEvNqLIM0RkZvlLD/8xE/deS75QVxNIjUf6iLtHY=;
+	s=arc-20240116; t=1786977378; c=relaxed/simple;
+	bh=Hpm0oufxJ5JKKDzK7GzQtKUKkyRI0JXuVpgQLirwS/Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hc1hTPN84U6Gd+ZnlkWx/Emn4BKsNZ4tJ/NlxUEI3lKh0nQsGdQwxc83xUc+fV1bkTHuN4yBowmYaGt3p+61leyXl4y7B+2jxEhq3i7SGTsKaNIKXNNWqQY8P4ZyfBIwrUn40hx3kgXKd1mBLucI9ykBbH0i2TfYw7ONnKuUiEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qK5C6xrI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=izchKJlQcXJMvZ16Vc9hoR0fMCA3h+fj4jCUTMhaZ35YXbg3qa0VTtce9r76CuSReOP6Tuqu7nwAmVcOiwMNGsaRPDdumU/0AFze2Jl25QQcEI+4w8kZ8LAMVukqMY+TB/Hc70Vlwd0L5sqrbF29ANN8pGf5ZOPY2nFs7+DyDzg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NkUPPav6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qK5C6xrI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17A561F000E9;
-	Mon, 17 Aug 2026 14:36:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NkUPPav6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E71731F000E9;
+	Mon, 17 Aug 2026 14:36:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977374;
-	bh=4bcGffmH19DnsC4Syf0orJzMHJ9G12eiXvZrAfINl9o=;
+	s=korg; t=1786977377;
+	bh=d5IoEsAVXCgBgfZd3SUnrBik0SsgfRlwjJu18b+E4TY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qK5C6xrIpLyWOEDWoMZ7e6M1I9IDCsI4mTYdJAfuNapisP0ubpe+Hro59R+RiHfWO
-	 OhZXVkVBYzw1NhHdhvG1m7zFE8pCZSQnhEln5nzcMtW+AOsnx6i+ENukJvJJwwKkdU
-	 t6ShNyVVoR6rzPstu3YmfPxHO7FckJAz9hWY+P8M=
+	b=NkUPPav6r9SE4hUD+FllNydo3I6cUHdZ59W4s7RS5y61pa0+tF57eoZR6maeUY9i+
+	 RrcjsVMS1zZqXAa9hgAHyFLssGBtPX9NftXzbdMXNYjh4idmrzEs5V8J0lcmijgvLk
+	 fpZCODCXPPV3fmqRyjFWb3Sky88Oa6qH+okCLwlw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Federico Kirschbaum <federico.kirschbaum@xbow.com>,
-	Baul Lee <baul.lee@xbow.com>
-Subject: [PATCH 5.15 306/456] ALSA: usb-audio: fix OOB write in snd_usbmidi_akai_output()
-Date: Mon, 17 Aug 2026 15:31:36 +0200
-Message-ID: <20260817132551.746685049@linuxfoundation.org>
+	sashiko-bot@kernel.org,
+	Luiz Angelo Daros de Luca <luizluca@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 271/456] hwmon: (adt7470) Fix temperature alarm logic in hwmon_temp_read()
+Date: Mon, 17 Aug 2026 15:31:01 +0200
+Message-ID: <20260817132550.580451922@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -51,56 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baul Lee <baul.lee@xbow.com>
+From: Luiz Angelo Daros de Luca <luizluca@gmail.com>
 
-commit 0970274613fb463d376211450cab066d34ebfe6a upstream.
+[ Upstream commit 1a18c79c4bc44cc5349c60e16b0b744dc6ec5f77 ]
 
-snd_usbmidi_akai_output() computes its fill-loop bound
+During the conversion the alarm callback started interpreting the
+channel index as an alarm bitmask, resulting in incorrect alarm
+reporting. Compute the proper alarm bit instead.
 
-	buf_end = ep->max_transfer - MAX_AKAI_SYSEX_LEN - 1;
-
-as a signed int, so a small device-advertised bulk-OUT max_transfer
-makes buf_end negative.  The loop guard then compares the u32
-urb->transfer_buffer_length against that negative int: the usual
-arithmetic conversion turns buf_end into a large unsigned value, so the
-guard stays true and each iteration keeps appending SysEx framing and
-payload bytes past the end of the URB transfer buffer, which is only
-max_transfer bytes long.
-
-A USB device that advertises a tiny bulk-OUT endpoint can therefore
-trigger an attacker-length- and content-controlled heap out-of-bounds
-write when a process writes to the created /dev/snd/midiC*D* node.
-
-Return early when there is no room for even one SysEx, so the loop is
-never entered with a bound that would wrap.  The loop is the last
-statement of the function, so bailing out is equivalent to it not
-running.
-
-Discovered by XBOW, triaged by Baul Lee <baul.lee@xbow.com>
-
-Fixes: 4434ade8c933 ("ALSA: usb-audio: add support for Akai MPD16")
-Suggested-by: Takashi Iwai <tiwai@suse.de>
-Reported-by: Federico Kirschbaum <federico.kirschbaum@xbow.com>
-Reported-by: Baul Lee <baul.lee@xbow.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Baul Lee <baul.lee@xbow.com>
-Link: https://patch.msgid.link/20260726074500.50145-1-baul.lee@xbow.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: sashiko-bot@kernel.org
+Closes: https://lore.kernel.org/r/20260717211224.B9E291F000E9@smtp.kernel.org
+Fixes: fc958a61ff6d ("hwmon: (adt7470) Convert to devm_hwmon_device_register_with_info API")
+Signed-off-by: Luiz Angelo Daros de Luca <luizluca@gmail.com>
+Link: https://lore.kernel.org/r/20260727-adt7470_fixes-v2-5-598e38a46ba6@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/midi.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/hwmon/adt7470.c | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
---- a/sound/usb/midi.c
-+++ b/sound/usb/midi.c
-@@ -800,6 +800,8 @@ static void snd_usbmidi_akai_output(stru
+diff --git a/drivers/hwmon/adt7470.c b/drivers/hwmon/adt7470.c
+index 0874d3684fbce..68658cb566a1a 100644
+--- a/drivers/hwmon/adt7470.c
++++ b/drivers/hwmon/adt7470.c
+@@ -110,6 +110,21 @@ static const unsigned short normal_i2c[] = { 0x2C, 0x2E, 0x2F, I2C_CLIENT_END };
  
- 	msg = urb->transfer_buffer + urb->transfer_buffer_length;
- 	buf_end = ep->max_transfer - MAX_AKAI_SYSEX_LEN - 1;
-+	if (buf_end <= 0)
-+		return;
+ #define ALARM2(x)		((x) << 8)
  
- 	/* only try adding more data when there's space for at least 1 SysEx */
- 	while (urb->transfer_buffer_length < buf_end) {
++/* TEMP1..TEMP7 (ch 0..6) are, respectively BIT(0)..BIT(6) of reg 0x41 and
++ * 0x72, or BIT(0)..BIT(6) of data->alarm.
++ * TEMP8..TEMP9 (ch 7..9) are, respectively BIT(0)..BIT(2) of reg 0x42 and
++ * 0x73, or BIT(8)..BIT(10) of data->alarm.
++ */
++#define TEMP_ALARM_BIT(ch)	({		\
++	typeof(ch) _ch = (ch);			\
++	(1 << (_ch < 7 ? _ch : _ch + 1));	\
++})
++
++/* FAN1..FAN4 (ch 0..3) are respectively BIT(4)..BIT(7) in
++ * reg 0x42 and 0x73 or BIT(12)..BIT(15) in data->alarm.
++ */
++#define FAN_ALARM_BIT(ch)	(1 << (12 + (ch)))
++
+ #define ADT7470_VENDOR		0x41
+ #define ADT7470_DEVICE		0x70
+ /* datasheet only mentions a revision 2 */
+@@ -569,7 +584,7 @@ static int adt7470_temp_read(struct device *dev, u32 attr, int channel, long *va
+ 		*val = 1000 * data->temp_max[channel];
+ 		break;
+ 	case hwmon_temp_alarm:
+-		*val = !!(data->alarm & channel);
++		*val = !!(data->alarm & TEMP_ALARM_BIT(channel));
+ 		break;
+ 	default:
+ 		return -EOPNOTSUPP;
+@@ -668,7 +683,7 @@ static int adt7470_fan_read(struct device *dev, u32 attr, int channel, long *val
+ 			*val = 0;
+ 		break;
+ 	case hwmon_fan_alarm:
+-		*val = !!(data->alarm & (1 << (12 + channel)));
++		*val = !!(data->alarm & FAN_ALARM_BIT(channel));
+ 		break;
+ 	default:
+ 		return -EOPNOTSUPP;
+-- 
+2.53.0
+
 
 
