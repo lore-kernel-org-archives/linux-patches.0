@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF3212EEE86;
-	Mon, 17 Aug 2026 15:19:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4410422522;
+	Mon, 17 Aug 2026 15:19:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979966; cv=none; b=KK992I+OqFOLHiDMnqLVgbPtKdIZv7Zpwy31qfRqVpcy8vHDHtIEUgp2cGtO2CvzekopwUgmRMBEAToASqKk4BAZ4vHvdL+qdonHHX6O4rkswOeak37hPPq3EaU1si884IKySqDnEk5VwkNz2oH8uqLIqUsLnJF+eAJe0jKNWjo=
+	t=1786979972; cv=none; b=s9tW9flP5pzNaFEKA1ZgIfRDHwzNzuVEQic4TuHWUfHouJU4i6eaCDvEupVeYbDRRnFcdzbaJ48dInm6X8bxIcb9f1hOKdWEKe7RLtaKaCwBPyNWNIL0Qwmj4xp+Sd8Zm8H8RRwGZVGG2zDHTCL4CuK8v7Od4H6aeH6yw+AJM/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979966; c=relaxed/simple;
-	bh=xPBb3py3QfLmq0HigBRJAj8t9byFKtbXJA4SrIdqRd0=;
+	s=arc-20240116; t=1786979972; c=relaxed/simple;
+	bh=SGhx4/eSrTqy+vblh6YXrtyxBcre7QWN4+gs3pf5Bns=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aTVC1frbvA4X7N314vpPuNZFqaMVgejjZxjEOIAW5SbRjfhYo8i6lDPD4NP2Nf1gChN3TDKQCaVuPNfHtJ9rqvwnnPF1FCwikDxxu/mzlbdgN3rStOrUiGiAGVpyQIXBXa1lnOvkIuSN4+Ll5yMCM1g5ZzMVeBwtc/xLy12SREU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RBATDhF2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=R8gjHDu/DoqyQrrcwtPlUGDnHy3jE8qafrE/8o3iqqKbHmuR3g2mkwBmOvCxypShu7vJvM0JciaL5B4DhS1YTDceDEF734Wx+juecDpkUFUx2PnDJkV9uUUu3HkCiZVYB8ZxQVHyoyXcEEIJgj4Vb0fcyg5cZqWPDjAgOQ0cY5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PRekley0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RBATDhF2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D8D71F00A3D;
-	Mon, 17 Aug 2026 15:19:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PRekley0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32B2D1F00A3E;
+	Mon, 17 Aug 2026 15:19:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979959;
-	bh=0DXIYxwUpFP5OFtJGy9Jiley/Rw19tTW5IOUOVoBBXM=;
+	s=korg; t=1786979962;
+	bh=WdEzIR83KvZ8isEoIp7MZRkDUEJpTnm10FERMdXkYSY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RBATDhF2TIv3INR6rcG5KCs6NEc2/7Sbnd7neEVEjNABttflBds/ysLXgAfN+ycca
-	 lb4gIfuXtMmG8jepYgyPEkbdQ+PeRznOPs2aWzX+GV4+9XuaAEqttoTNpz+t6mrcgC
-	 5LVjxwLuPrJDK2/IKBabovQw5NNUJe7qZKZKX+Y0=
+	b=PRekley0A2M+wIKALOqDosRs4y3B4F7skrPtIbQflENRfxXbt/Z9bdbhu183VzRuK
+	 aU4/G7bzm6rNJHEyjasAujDb6sZSFYCkzw2EZ4wC+OXQdeJtQ5Zalogvc2NMTIULMJ
+	 iHiIoyucHeWj6NfskLGJHFfuZwVBbZLAZUUoA6FI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Angelo Daros de Luca <luizluca@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 358/609] hwmon: (adt7470) Fix swapped PWM3 and PWM4 auto mode masks
-Date: Mon, 17 Aug 2026 15:30:54 +0200
-Message-ID: <20260817132556.265183372@linuxfoundation.org>
+	Haidar Lee <haidar.lee@adlinktech.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.1 401/609] ASoC: tas2562: fix broken entries in the volume lookup table
+Date: Mon, 17 Aug 2026 15:31:37 +0200
+Message-ID: <20260817132557.618971290@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -51,62 +50,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Angelo Daros de Luca <luizluca@gmail.com>
+From: Haidar Lee <haidar.lee@adlinktech.com>
 
-[ Upstream commit a3850231521b06bbbb18c8ebea100320c14a08be ]
+commit bdb0fd6de403fcea7b85dc9d38f0a571583ebe80 upstream.
 
-The ADT7470_PWM3_AUTO_MASK and ADT7470_PWM4_AUTO_MASK macros are
-currently defined with swapped bit values.
+The float_vol_db_lookup table is supposed to hold
+round(10^(dB/20) * 2^30) for every 2 dB step from -110 dB to 0 dB,
+which is 56 entries, but it only has 55: the -90 dB entry duplicates
+the -92 dB value (0x0000695b) and the -20 dB entry (0x06666666) is
+missing altogether. As a result every step between -90 dB and -22 dB
+is off by 2 dB, and the control's maximum raw value of 110 indexes one
+element past the end of the array.
 
-According to Table 22 of the ADT7470 datasheet, the Fan Control Mode
-Configuration for register 0x69 follows the exact same bit position
-layout as register 0x68:
-- 0x68 Bit[7] corresponds to BHVR1 (PWM1) -> 0x80
-- 0x68 Bit[6] corresponds to BHVR2 (PWM2) -> 0x40
-- 0x69 Bit[7] corresponds to BHVR3 (PWM3) -> 0x80
-- 0x69 Bit[6] corresponds to BHVR4 (PWM4) -> 0x40
+Replace the duplicated -90 dB entry with the correct value 0x000084a3
+and add the missing -20 dB entry, bringing the table to the full 56
+entries so index 55 (raw value 110, 0 dB) is in range again.
 
-Consequently, PWM3 should use mask 0x80 and PWM4 should use 0x40.
-
-This typo did not cause any functional bugs because these specific
-macros are never referenced in the driver code. Instead, the driver
-correctly applies the configuration by relying on the modulo parity of
-the channel index (e.g., `channel % 2`) to selectively apply either
-ADT7470_PWM1_AUTO_MASK (0x80) or ADT7470_PWM2_AUTO_MASK (0x40).
-Since the bit layout is identical between the two configuration
-registers, the hardware is currently configured correctly.
-
-Fix the macro definitions to reflect the datasheet accurately and
-prevent future bugs or confusion during code review and refactoring.
-As this is a purely cosmetic fix with no functional impact, a backport
-to stable kernels is not necessary.
-
-Fixes: 6f9703d0be16 ("hwmon: add support for adt7470")
-Signed-off-by: Luiz Angelo Daros de Luca <luizluca@gmail.com>
-Link: https://lore.kernel.org/r/20260727-adt7470_fixes-v2-4-598e38a46ba6@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: bf726b1c86f2 ("ASoC: tas2562: Add support for digital volume control")
+Cc: stable@vger.kernel.org
+Signed-off-by: Haidar Lee <haidar.lee@adlinktech.com>
+Link: https://patch.msgid.link/20260715-tas2562-dvc-fix-v1-2-072b13901b20@adlinktech.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/adt7470.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/codecs/tas2562.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/hwmon/adt7470.c b/drivers/hwmon/adt7470.c
-index 7fae4a2b3dea0..a5bef97c8e0d3 100644
---- a/drivers/hwmon/adt7470.c
-+++ b/drivers/hwmon/adt7470.c
-@@ -70,8 +70,8 @@ static const unsigned short normal_i2c[] = { 0x2C, 0x2E, 0x2F, I2C_CLIENT_END };
- #define		ADT7470_PWM1_AUTO_MASK		0x80
- #define		ADT7470_PWM_AUTO_MASK		0xC0
- #define ADT7470_REG_PWM34_CFG			0x69
--#define		ADT7470_PWM3_AUTO_MASK		0x40
--#define		ADT7470_PWM4_AUTO_MASK		0x80
-+#define		ADT7470_PWM4_AUTO_MASK		0x40
-+#define		ADT7470_PWM3_AUTO_MASK		0x80
- #define	ADT7470_REG_PWM_MIN_BASE_ADDR		0x6A
- #define ADT7470_REG_PWM_MIN_MAX_ADDR		0x6D
- #define ADT7470_REG_PWM_TEMP_MIN_BASE_ADDR	0x6E
--- 
-2.53.0
-
+--- a/sound/soc/codecs/tas2562.c
++++ b/sound/soc/codecs/tas2562.c
+@@ -33,15 +33,16 @@
+ static const unsigned int float_vol_db_lookup[] = {
+ 0x00000d43, 0x000010b2, 0x00001505, 0x00001a67, 0x00002151,
+ 0x000029f1, 0x000034cd, 0x00004279, 0x000053af, 0x0000695b,
+-0x0000695b, 0x0000a6fa, 0x0000d236, 0x000108a4, 0x00014d2a,
++0x000084a3, 0x0000a6fa, 0x0000d236, 0x000108a4, 0x00014d2a,
+ 0x0001a36e, 0x00021008, 0x000298c0, 0x000344df, 0x00041d8f,
+ 0x00052e5a, 0x000685c8, 0x00083621, 0x000a566d, 0x000d03a7,
+ 0x0010624d, 0x0014a050, 0x0019f786, 0x0020b0bc, 0x0029279d,
+ 0x0033cf8d, 0x004139d3, 0x00521d50, 0x00676044, 0x0082248a,
+ 0x00a3d70a, 0x00ce4328, 0x0103ab3d, 0x0146e75d, 0x019b8c27,
+ 0x02061b89, 0x028c423f, 0x03352529, 0x0409c2b0, 0x05156d68,
+-0x080e9f96, 0x0a24b062, 0x0cc509ab, 0x10137987, 0x143d1362,
+-0x197a967f, 0x2013739e, 0x28619ae9, 0x32d64617, 0x40000000
++0x06666666, 0x080e9f96, 0x0a24b062, 0x0cc509ab, 0x10137987,
++0x143d1362, 0x197a967f, 0x2013739e, 0x28619ae9, 0x32d64617,
++0x40000000
+ };
+ 
+ struct tas2562_data {
 
 
