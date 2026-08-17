@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 219073ACEFE;
-	Mon, 17 Aug 2026 14:47:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3305426693;
+	Mon, 17 Aug 2026 14:47:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978043; cv=none; b=iFXd6azJNSftcPwk7SZiHTdXvLAGAbUUXTEtPdQ7aTSJkzTzsVb5wmRJVp6ULT6NLWxuROyowCZDS4XXwWY9vtdFt9glOGd3xiFGgGYb4aP6ygvr3Zz446Ufik8mIjXN4oEXvSyb5z/H+VdS+4JZfJ4Dmq+N3L4aLYeZKy2QYBY=
+	t=1786978046; cv=none; b=qrGwabksFOmNR1ajj/pOyTn1DkF4EfX8IoBxD/bzbx2bETfEKaNNsgwsBEQXo3kMlVNcYfX/xQHnDxS1pTzWe5xg2f943f231MGaDPBcrFgte/aqm8oyqNoiHC8CeOVY9D9kDrNvj9r9bKJ5wew9q88WS3fTVzApVyNHAHIyzxk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978043; c=relaxed/simple;
-	bh=2ajiivdCCLv1FzznFXuf3+xxN16dUZPsZCbhofIEutI=;
+	s=arc-20240116; t=1786978046; c=relaxed/simple;
+	bh=XKWhtVWvqGXG2wJpSTl4exZs4zHORzkYT07Te9jmkiQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TdrTQGs3H5Q/72m4KyY+jkWULiW+hDm23fPFh44smxwDcigbecEefYBwveyS3BHgT2m3hOJbYlZA6GXGEWCGJlUBrxgmZtZ9lYjnGPEAHTc7f4mfYKzIaqV41LbSPWzyZunChZ5/CbGXZaemzbawdCRL8uW23Osiq73Rxv4i+1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZywwTL5W; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Nv+nZqwYqxj9ZgaNUnrf6mJB/1EJdCPbisLwbqaAdrHdU//QMYc6t/n7PMiMC3tOi8PR5DuzG8mBe1sz9gmNeoqgg707jGb9TwHriO/OVj8yM6SDB3ew7O2saKFz3991rE49IfRwduIGU2w/JVfbbj9cFK7JTn4dFHnd1dBFejs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WbzbEA1K; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZywwTL5W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8062E1F000E9;
-	Mon, 17 Aug 2026 14:47:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WbzbEA1K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 490991F000E9;
+	Mon, 17 Aug 2026 14:47:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978042;
-	bh=em/RqDuETmlRTWSNHyRyaZCoWDJmkRk8inJ9xRSR4QM=;
+	s=korg; t=1786978044;
+	bh=hWq4DD3nKE+vYAWykGi2zFwHx6cQrzGDeiN5R9DaLBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZywwTL5WholteKCcrKSpAwwPR7RhcnU4uulb7D76dOJMpFluJOxnNin3mOUxd9yxa
-	 YqY3Kgji7+8+OA1vnIAhJYiWoMoV0AZVcGSxiXXKbsdUdapc3ZBnC5TZBnF6mkVgVb
-	 iuf7ekHUdzxU/8AHMUIqmnC1KdmitLOXPW2t7c38=
+	b=WbzbEA1KGC3YIAeF0IR757pKdhhQofXs1zf6cYi6pAH/VKsO6e8ELzjGyp0b/+iEK
+	 AeuEskViBEamQK37Dxqt119MS+nFSqWU4/SIInqiP2hC+sOiJMWj93BpF1W9cYWarM
+	 wZfVvuvnpVoJFqY6jk0o/Fn5KMbVnm4CJMHClNrY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	Eelco Chaudron <echaudro@redhat.com>,
-	"Cen Zhang (Microsoft)" <blbllhy@gmail.com>,
-	Ilya Maximets <i.maximets@ovn.org>,
+	Feng Xue <feng.xue@outlook.com>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 042/181] net/openvswitch: check Ethernet header length in key_extract()
-Date: Mon, 17 Aug 2026 15:32:16 +0200
-Message-ID: <20260817132537.050195537@linuxfoundation.org>
+Subject: [PATCH 6.12 043/181] net/sched: cls_api: Always acquire rtnl_lock when destroying locked classifiers
+Date: Mon, 17 Aug 2026 15:32:17 +0200
+Message-ID: <20260817132537.092294397@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132535.394764707@linuxfoundation.org>
 References: <20260817132535.394764707@linuxfoundation.org>
@@ -54,76 +53,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang (Microsoft) <blbllhy@gmail.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit cf6f8b29befb92173659bcef6a441d274947bfae ]
+[ Upstream commit a347304b2ca1a5377d5bd2d8a72e4b4f12afe648 ]
 
-When a packet arrives on an ARPHRD_NONE device (e.g. TUN),
-ovs_flow_key_extract() trusts the user-provided skb->protocol field: if
-it is ETH_P_TEB, the packet is classified as MAC_PROTO_ETHERNET and
-key_extract() is called without ensuring the skb has ETH_HLEN (14) bytes
-of linear data. key_extract() unconditionally pulls 2 * ETH_ALEN bytes
-for MAC addresses and parse_ethertype() pulls 2 more, either of which
-triggers a kernel BUG in __skb_pull() when the linear area is too small.
+Another challenge with unlocked filters.
+There is a short window in tc_new_tfilter where a tcf_proto can be found
+and briefly referenced by a totally unrelated, unlocked classifier's request
+and cause a race.
 
-  kernel BUG at include/linux/skbuff.h:2848!
-  RIP: 0010:key_extract+0xa7e/0xd90 net/openvswitch/flow.c:933
-  ovs_flow_key_extract+0x419/0xa70
-  ovs_vport_receive+0x222/0x390
-  netdev_frame_hook+0x3e0/0x630
-  tun_get_user+0x2d0c/0x38e0
+Feng created a poc which created this race with two threads, one creating a
+u32 filter and other a flower filter in the same chain/prio:
 
-Fixed by calling check_header() in key_extract() before accessing the
-Ethernet header.
+1. Both threads enter tc_new_tfilter, both find the chain empty, both
+   drop filter_chain_lock
+2. u32 finishes tcf_proto_create("u32") first, calls
+   tcf_chain_tp_insert_unique() -> inserts u32_tp into the chain
+3. flower finishes tcf_proto_create("flower") later, calls
+   tcf_chain_tp_insert_unique() -> tcf_chain_tp_find() now sees u32_tp
+   already there, takes a reference on it, destroys flower's own tp_new
+   and returns u32_tp to the caller.
 
-Fixes: 217ac77a3c25 ("openvswitch: allow L3 netdev ports")
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Reviewed-by: Eelco Chaudron <echaudro@redhat.com>
-Signed-off-by: Cen Zhang (Microsoft) <blbllhy@gmail.com>
-Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
-Link: https://patch.msgid.link/20260730222006.118652-1-blbllhy@gmail.com
+Flower then hits the kind mismatch check (because it requested for kind
+"flower" but tp->ops->kind is "u32") and goes through the errout path
+which calls tcf_proto_put() on u32_tp. If the u32 thread has already
+gone through its own errout (its change() call failed on the PoC's empty
+options) and dropped its create and insert refs, flower's put is the
+last one and drops u32_tp's refcnt to zero.
+
+At this point tp->ops->destroy() runs in a context that never took
+rtnl_lock. When that happens, it might cause a UAF like the following
+(illustrated by the PoC):
+
+[  +0.000710] BUG: KASAN: slab-use-after-free in u32_init (net/sched/cls_u32.c:393)
+[  +0.000281] Read of size 8 at addr ffff888120022f00 by task poc_feng_xue/524
+
+  Call Trace:
+   u32_init (net/sched/cls_u32.c:393)
+   tc_new_tfilter (net/sched/cls_api.c:2378)
+
+  Allocated by task 526:
+   u32_init (net/sched/cls_u32.c:378)
+   tc_new_tfilter (net/sched/cls_api.c:2378)
+
+  Freed by task 522:
+   kfree
+   u32_destroy (net/sched/cls_u32.c:662)
+   tcf_proto_destroy (net/sched/cls_api.c:446)
+   tcf_proto_put (net/sched/cls_api.c:459)
+   tc_new_tfilter (net/sched/cls_api.c:2459)
+
+Fix this by having tcf_proto_destroy() take rtnl_lock around
+tp->ops->destroy() for locked classifiers whenever rtnl is not held.
+
+To explain why I used a temp variable "not_lockless" I'd like to point to a
+semi-related note on rtnl_held vs TCF_PROTO_OPS_DOIT_UNLOCKED (adding here
+for future cleanup if deemed necessary):
+The rtnl_held parameter and the TCF_PROTO_OPS_DOIT_UNLOCKED flag are
+redundant sources of truth for whether rtnl_lock is held. Among the nine
+classifier destroy(..rtnl_held..) callbacks, only flower consults the
+rtnl_held parameter which it propagates to tc_setup_cb_destroy()
+and tc_setup_cb_call(). The other eight (u32, flow, bpf, cgroup, route, basic,
+fw, mall) ignore it entirely;-> those that call tc_setup_cb_destroy()
+(u32, bpf, mall) hardcode true always instead of forwarding the parameter.
+
+A future cleanup should remove the rtnl_held parameter from the destroy callback
+signature entirely and have callers rely solely on their knowledge whether
+they are running in an unlocked context.
+
+Fixes: 12db03b65c2b ("net: sched: extend proto ops to support unlocked classifiers")
+Reported-by: Feng Xue <feng.xue@outlook.com>
+Tested-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20260801125632.360365-1-jhs@mojatatu.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/openvswitch/flow.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ net/sched/cls_api.c | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/net/openvswitch/flow.c b/net/openvswitch/flow.c
-index b80bd3a907739..52e261ce91e8e 100644
---- a/net/openvswitch/flow.c
-+++ b/net/openvswitch/flow.c
-@@ -893,8 +893,6 @@ static int key_extract_l3l4(struct sk_buff *skb, struct sw_flow_key *key)
-  * Ethernet header
-  * @key: output flow key
-  *
-- * The caller must ensure that skb->len >= ETH_HLEN.
-- *
-  * Initializes @skb header fields as follows:
-  *
-  *    - skb->mac_header: the L2 header.
-@@ -914,8 +912,6 @@ static int key_extract_l3l4(struct sk_buff *skb, struct sw_flow_key *key)
-  */
- static int key_extract(struct sk_buff *skb, struct sw_flow_key *key)
+diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
+index c5aeff709ca66..51a09d5553102 100644
+--- a/net/sched/cls_api.c
++++ b/net/sched/cls_api.c
+@@ -443,7 +443,22 @@ static void tcf_chain_put(struct tcf_chain *chain);
+ static void tcf_proto_destroy(struct tcf_proto *tp, bool rtnl_held,
+ 			      bool sig_destroy, struct netlink_ext_ack *extack)
  {
--	struct ethhdr *eth;
--
- 	/* Flags are always used as part of stats */
- 	key->tp.flags = 0;
- 
-@@ -930,6 +926,13 @@ static int key_extract(struct sk_buff *skb, struct sw_flow_key *key)
- 		skb_reset_network_header(skb);
- 		key->eth.type = skb->protocol;
- 	} else {
-+		struct ethhdr *eth;
-+		int err;
+-	tp->ops->destroy(tp, rtnl_held, extack);
++	/* A locked classifier's destroy callback (e.g. u32_destroy) uses
++	 * rtnl_dereference() and mutates shared structures (e.g. the
++	 * tc_u_common hash list) that are only safe under rtnl_lock. When an
++	 * unlocked classifier's request (e.g. flower on ingress) loses the
++	 * tcf_chain_tp_insert_unique() race and ends up dropping the last
++	 * reference on a locked classifier's proto, destroy() would run
++	 * without rtnl held. Take it here in that case.
++	 */
++	bool not_lockless = !rtnl_held &&
++		!(tp->ops->flags & TCF_PROTO_OPS_DOIT_UNLOCKED);
 +
-+		err = check_header(skb, ETH_HLEN);
-+		if (unlikely(err))
-+			return err;
-+
- 		eth = eth_hdr(skb);
- 		ether_addr_copy(key->eth.src, eth->h_source);
- 		ether_addr_copy(key->eth.dst, eth->h_dest);
++	if (not_lockless)
++		rtnl_lock();
++	tp->ops->destroy(tp, rtnl_held || not_lockless, extack);
++	if (not_lockless)
++		rtnl_unlock();
+ 	tcf_proto_count_usesw(tp, false);
+ 	if (sig_destroy)
+ 		tcf_proto_signal_destroyed(tp->chain, tp);
 -- 
 2.53.0
 
