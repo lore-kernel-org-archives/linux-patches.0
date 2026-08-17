@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F0DD2F1FDF;
-	Mon, 17 Aug 2026 15:23:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99AD839A807;
+	Mon, 17 Aug 2026 15:23:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786980189; cv=none; b=Uqz3p9xpeMx/LzT7V9a8I+H8xdiZ6DjGBXTz9dyNatzoxrEJyIH2qpHbUhg+3/D5SsadLoBLK4GuJLbnWdYK/jcQEMNUm1POfw1xeR7B0vnTAuwFR3ZTl36nb7QzHMCqww9WzbaVLNQryywtqaWWKxd09bAiQgDDvXCQayp9kHA=
+	t=1786980192; cv=none; b=b9A/q2fpOo3V98i8MGpDUADWMJaD+5a1tl+2garjgV/QRK3fkuPANDiqbhk3/C0jwvZHdTEy/NSxIIZU61RAbwTN/KhIPS2QzCOFuJbVU2dmV48Xm3s+IxUi+dVc8KE3JwwQ5j1aCCnNdthvRLBaOfvTN2hyLs77PHxPjKJj1vs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786980189; c=relaxed/simple;
-	bh=jbjoYLoNTHEe4uD0DA1onhqBQVMrYumbjEQ2+ylN3OA=;
+	s=arc-20240116; t=1786980192; c=relaxed/simple;
+	bh=OLaLZyOCO26nJPCx+ZfcXXbx3ROT4+K84tLwNwaZhXQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HqC2K9I/WB3e63Z+nzEmkB8bsCNEbCd1wwi4buEyB7Zoesp3RRkGcbTrrqtilms6iNr72eB3glH7jwtVyxw2AcJabsHlGJXkgmkaLp4dfCi8GRrocLr5BDSZtguqmHEBKk01jPeQBo4BMPg23u7SYAaEOg0e1rCKL6/YEVjJ9k0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HFFCvJ0v; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=C2tljIyzSl5S9yhJ5fvz1PRzwhpGKaL5hJFVKB1+2O0I2cMojo1mdO4wcT3xdilTyhYhEbCbHS9FzgztCTmEo0SkYFnZmahGXMM/WW3EnSDYF6BRJuMa/3CP348dVvHybg8/aPeQh5fblvHzRUT2vcDaXNdzmid2/q7RM333fos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WwccefwJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HFFCvJ0v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E98681F000E9;
-	Mon, 17 Aug 2026 15:23:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WwccefwJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C33B01F000E9;
+	Mon, 17 Aug 2026 15:23:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786980188;
-	bh=VpSQrK94b/t2ozqfTam2Jv2/m+TochmgykerWXnz8/s=;
+	s=korg; t=1786980191;
+	bh=iPhjBpsbl8mEfvxU3JjtY08mYUXr74UUBaT25QIIJPk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HFFCvJ0v68Hj4Ehh+LBf+g0ISBx4iuVLasQxokIsvK+P9zKIhQ6NjDYMNoj9ECgKW
-	 zXZFZuvpxwST8IX5axNP9bT2HLJUf/retvzZLjDGE+nlAcZOHBTMlIPVfjShRVYsTa
-	 h/gbnreBLwd3blQsz3+bVfRRvqmp7mJYmV9Z5sac=
+	b=WwccefwJqveBLIeNZpMEFi0DVa4nZAjEektBAkB/cDbh7nvilKuMxzJzB/Uk7vewt
+	 NAKeIabwi7sXDVlJ3jSQV2yK7pml0IKhaYLqJhE2o8K+2p2susm5qwPIe+XmyeGFyc
+	 pEwE6Z/eTFbCu3Zn8e/VGyDoDixE8VeDzEwj728E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Liem <liem16213@gmail.com>,
-	Frank Li <Frank.Li@nxp.com>,
 	Carlos Song <carlos.song@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.1 447/609] i2c: imx: Fix slave registration race and error handling
-Date: Mon, 17 Aug 2026 15:32:23 +0200
-Message-ID: <20260817132559.024209731@linuxfoundation.org>
+Subject: [PATCH 6.1 448/609] i2c: imx: Cancel hrtimer before clearing slave pointer
+Date: Mon, 17 Aug 2026 15:32:24 +0200
+Message-ID: <20260817132559.055705872@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -54,62 +54,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Liem <liem16213@gmail.com>
 
-commit d64ec362c369bbc33833f7936d5f3a706b0d5c45 upstream.
+commit 6ac7702b6cc2b94aaed9ef2d95bfbefcdc90061f upstream.
 
-In i2c_imx_reg_slave(), the slave pointer was assigned before
-pm_runtime_resume_and_get().  If pm_runtime_resume_and_get() failed,
-the error path returned without clearing i2c_imx->slave, leaving it
-non-NULL and causing all subsequent registration attempts to fail
-with -EBUSY.
+In i2c_imx_unreg_slave(), the slave pointer is set to NULL after
+disabling interrupts.  However, a pending interrupt might already
+have started the hrtimer (i2c_imx_slave_timeout) before the pointer
+was cleared.  If the hrtimer fires after i2c_imx->slave is set to
+NULL, the timer callback i2c_imx_slave_finish_op() will call
+i2c_imx_slave_event() with a NULL slave pointer, which results in a
+use-after-free / NULL pointer dereference.
 
-Additionally, because this driver uses a shared IRQ, the interrupt
-handler i2c_imx_isr() can execute concurrently and, after acquiring
-slave_lock, dereference i2c_imx->slave.  The previous fix attempt
-added a lockless i2c_imx->slave = NULL on the error path, but that
-could race with the ISR under the lock and still cause a NULL pointer
-dereference.
-
-Fix both issues by deferring the assignment of i2c_imx->slave and
-i2c_imx->last_slave_event to after a successful resume, and by
-performing the assignment inside the slave_lock critical section.
-This guarantees that the slave pointer is never left stale on the
-error path and is always valid when observed by the interrupt handler.
+Fix by canceling the hrtimer and waiting for it to complete after
+disabling interrupts, before clearing the slave pointer.
 
 Fixes: f7414cd6923f ("i2c: imx: support slave mode for imx I2C driver")
 Signed-off-by: Liem <liem16213@gmail.com>
 Cc: <stable@vger.kernel.org> # v5.11+
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Acked-by: Carlos Song <carlos.song@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20260629023829.152651-2-liem16213@gmail.com
+Link: https://lore.kernel.org/r/20260629023829.152651-3-liem16213@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-imx.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/i2c/busses/i2c-imx.c |    1 +
+ 1 file changed, 1 insertion(+)
 
 --- a/drivers/i2c/busses/i2c-imx.c
 +++ b/drivers/i2c/busses/i2c-imx.c
-@@ -871,9 +871,6 @@ static int i2c_imx_reg_slave(struct i2c_
- 	if (i2c_imx->slave)
- 		return -EBUSY;
+@@ -901,6 +901,7 @@ static int i2c_imx_unreg_slave(struct i2
  
--	i2c_imx->slave = client;
--	i2c_imx->last_slave_event = I2C_SLAVE_STOP;
--
- 	/* Resume */
- 	ret = pm_runtime_resume_and_get(i2c_imx->adapter.dev.parent);
- 	if (ret < 0) {
-@@ -881,6 +878,11 @@ static int i2c_imx_reg_slave(struct i2c_
- 		return ret;
- 	}
+ 	i2c_imx_reset_regs(i2c_imx);
  
-+	scoped_guard(spinlock_irqsave, &i2c_imx->slave_lock) {
-+		i2c_imx->slave = client;
-+		i2c_imx->last_slave_event = I2C_SLAVE_STOP;
-+	}
-+
- 	i2c_imx_slave_init(i2c_imx);
++	hrtimer_cancel(&i2c_imx->slave_timer);
+ 	i2c_imx->slave = NULL;
  
- 	return 0;
+ 	/* Suspend */
 
 
