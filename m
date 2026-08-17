@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5117429CE8;
-	Mon, 17 Aug 2026 15:13:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5AB52E762C;
+	Mon, 17 Aug 2026 15:13:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979621; cv=none; b=mPegQexxnZDmxQyRjNToeM+PuYs9/z+8SEjd6c8AGvD/lyr8XwrRbD0K1+4iwoOaAeRPmvWyuJ4bzJ2auFVmGktwyqAaPogEG3iKoZeuLuUjGt+pHyRpelnbZOwSTgXfvfCygMJO3M+ZooVue1D4UH/i8Zx8DAaVCQFGTablgFw=
+	t=1786979624; cv=none; b=MmISUGaq3yQyti7qM2Ky7GUDAuQDrBijmrWU1PvaZEuY9YnXXJUGA+C96EkXgQVmouPBX4oVZC6gEfd+rQHiZXqdqFtrICpX61dK9cYe3JW3ouqWtxN/6dWK1JBvKINuJ6pPEN/6qGLc57trL5E2/6aUKyqhQ8DcRXGPmlyc/t4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979621; c=relaxed/simple;
-	bh=yRUYRfRL2+kw+PunshOrtSrlst14ZwurPMFqckKQl3Y=;
+	s=arc-20240116; t=1786979624; c=relaxed/simple;
+	bh=Oe4mvVa1I+7fSijvx91qnJbbZqpaS49tX/mahqE/kRs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LZ6MKa+ondexLDeIb1oxnKke5TM6XQyjhBdjqtMhsN1KkZ6NB0dCAEbEj2r81mumhoeDcbgJ+PQBLpA80/EKIUh+jYnM7TOiQoHne91aPLJKnUvaWhAnSqxu2GmUu6IOv4ImWbDbk/D+G1P4FRUzFhON5CN/C8mf8KwwPWD2GSQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L3VWRKfI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K5hNp8EjpYBSNhadXhExYo3U/Qh051sVnSQV729z8vzLAIjZngMECCxuU4cuEAyV/a0lnmcLK1C7VHv2/YYtVicg5ziFVNYdX103vvG3pWZWBtY/T9SF4obpolLgLOlqA/eZ0U04siq7JT61SLU2atVOHD5RrKZ61ErOTpNbWDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n57bIFNO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L3VWRKfI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 059071F000E9;
-	Mon, 17 Aug 2026 15:13:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n57bIFNO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E332F1F000E9;
+	Mon, 17 Aug 2026 15:13:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979619;
-	bh=auI3JBvoC3y/pssVdZQ/vc8/HubjcvzRO6vHEeXmWks=;
+	s=korg; t=1786979622;
+	bh=kooFqunMnSzXT1VMZr8U9ADt6fB2PxLNKDLSsw1x5QQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L3VWRKfIZPiljvEEUFZEOPnanwsPq+c2DwNtRZUwba/abKwYTwJ24JIpEBlNgL0lx
-	 rZyqvoB9E9dmqqRoKnsIL1w0LEKY9tTBnqTmq/8ojPWUhjNtuiAQHxdQZiv5PmXqV3
-	 dVR79j/lY+hNCl4LY1/YtdtwvVJpl9v9q+0awMcg=
+	b=n57bIFNO51iBb8i82NEBg6Ulu+AuQrFfQ19uEUCxk/yRbozshatWFUFVL0D14lK1H
+	 bso1xNq6+v5ecVaY49BP09BnIAvd94WJDGii3WfvZIoTaDInnvHxXepp2xdSgOn77K
+	 KqoITDH6pBzpbja9UhLWxWU5FqQOAk5H4JfRdDjk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Aaron Conole <aconole@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Eric Biggers <ebiggers@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 290/609] openvswitch: fix GSO userspace truncation underflow
-Date: Mon, 17 Aug 2026 15:29:46 +0200
-Message-ID: <20260817132553.906950183@linuxfoundation.org>
+Subject: [PATCH 6.1 291/609] fscrypt: Avoid dynamic allocation in fscrypt_get_devices()
+Date: Mon, 17 Aug 2026 15:29:47 +0200
+Message-ID: <20260817132553.938454811@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -53,191 +52,259 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Eric Biggers <ebiggers@kernel.org>
 
-[ Upstream commit 4032f8ed10fcb84d41c508dfb04be96589f78dfe ]
+commit 6fe4e4b8259e1330945b5f3c9476e08473b8e0e8 upstream.
 
-OVS_ACTION_ATTR_TRUNC currently stores a delta from the original skb
-length in OVS_CB(skb)->cutlen. When a later userspace action segments a
-GSO skb, queue_gso_packets() reuses that delta for each smaller segment.
-A segment can then reach queue_userspace_packet() with cutlen greater
-than skb->len, underflowing the length passed to skb_zerocopy().
+When a blk_crypto_key starts being used or is evicted, fs/crypto/ calls
+fscrypt_get_devices() to get the filesystem's list of block devices,
+then iterates over them and calls blk_crypto_config_supported(),
+blk_crypto_start_using_key(), or blk_crypto_evict_key() on each one.
 
-Store the maximum preserved length instead and bound each consumer
-against the current skb length. Use U32_MAX as the no-truncation
-sentinel so the value remains valid if skb geometry changes before a
-consumer handles it.
+Currently, the block device pointers are placed in a dynamically
+allocated array.  This dynamic allocation is problematic because:
 
-Fixes: f2a4d086ed4c ("openvswitch: Add packet truncation support.")
+- It can fail, especially at the fscrypt_destroy_inline_crypt_key() call
+  site when it's invoked for inode eviction under direct reclaim.
+
+- fscrypt_destroy_inline_crypt_key() doesn't handle the failure.  It
+  just zeroizes and frees the blk_crypto_key without calling
+  blk_crypto_evict_key().  That causes a use-after-free.
+
+For now, let's fix this in the straightforward and easily-backportable
+way by switching to an on-stack array.  Currently the fscrypt
+multi-device functionality is used only by f2fs, which has a hardcoded
+limit of 8 block devices.  An on-stack array works fine for that.
+
+(Of course, this solution won't scale up to large number of block
+devices.  For that we'd need a different solution, like moving the block
+device iteration into the filesystem.  Or in the case of btrfs, which
+will only support blk-crypto-fallback, we should make it just call
+blk-crypto-fallback directly, so the block devices won't be needed.)
+
+Fixes: 22e9947a4b2b ("fscrypt: stop holding extra request_queue references")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.5
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
-Reviewed-by: Aaron Conole <aconole@redhat.com>
-Link: https://patch.msgid.link/20260707221635.27489-1-kylebot@openai.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[6.1.y supports neither OVS_ACTION_ATTR_PSAMPLE nor OVS drop reasons]
-Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260713023708.9245-1-ebiggers%40kernel.org
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20260719055602.78828-1-ebiggers@kernel.org
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/openvswitch/actions.c  | 15 +++++----------
- net/openvswitch/datapath.c | 25 ++++++++++++++-----------
- net/openvswitch/datapath.h |  2 +-
- net/openvswitch/vport.c    |  2 +-
- 4 files changed, 21 insertions(+), 23 deletions(-)
+ fs/crypto/inline_crypt.c | 57 ++++++++++++++--------------------------
+ fs/f2fs/super.c          | 25 ++++++++++--------
+ include/linux/fscrypt.h  | 18 +++++++------
+ 3 files changed, 44 insertions(+), 56 deletions(-)
 
-diff --git a/net/openvswitch/actions.c b/net/openvswitch/actions.c
-index f7cc87e67d3c8c..18e419affb5727 100644
---- a/net/openvswitch/actions.c
-+++ b/net/openvswitch/actions.c
-@@ -856,12 +856,8 @@ static void do_output(struct datapath *dp, struct sk_buff *skb, int out_port,
- 		u16 mru = OVS_CB(skb)->mru;
- 		u32 cutlen = OVS_CB(skb)->cutlen;
+diff --git a/fs/crypto/inline_crypt.c b/fs/crypto/inline_crypt.c
+index 8bfb3ce864766e..47645c5539bc84 100644
+--- a/fs/crypto/inline_crypt.c
++++ b/fs/crypto/inline_crypt.c
+@@ -21,22 +21,14 @@
  
--		if (unlikely(cutlen > 0)) {
--			if (skb->len - cutlen > ovs_mac_header_len(key))
--				pskb_trim(skb, skb->len - cutlen);
--			else
--				pskb_trim(skb, ovs_mac_header_len(key));
--		}
-+		if (unlikely(cutlen < skb->len))
-+			pskb_trim(skb, max(cutlen, ovs_mac_header_len(key)));
+ #include "fscrypt_private.h"
  
- 		if (likely(!mru ||
- 		           (skb->len <= mru + vport->dev->hard_header_len))) {
-@@ -1242,22 +1238,21 @@ static int do_execute_actions(struct datapath *dp, struct sk_buff *skb,
- 			clone = skb_clone(skb, GFP_ATOMIC);
- 			if (clone)
- 				do_output(dp, clone, port, key);
--			OVS_CB(skb)->cutlen = 0;
-+			OVS_CB(skb)->cutlen = U32_MAX;
- 			break;
- 		}
+-static struct block_device **fscrypt_get_devices(struct super_block *sb,
+-						 unsigned int *num_devs)
++static unsigned int
++fscrypt_get_devices(struct super_block *sb,
++		    struct block_device *devs[FSCRYPT_MAX_DEVICES])
+ {
+-	struct block_device **devs;
+-
+-	if (sb->s_cop->get_devices) {
+-		devs = sb->s_cop->get_devices(sb, num_devs);
+-		if (devs)
+-			return devs;
+-	}
+-	devs = kmalloc(sizeof(*devs), GFP_KERNEL);
+-	if (!devs)
+-		return ERR_PTR(-ENOMEM);
++	if (sb->s_cop->get_devices)
++		return sb->s_cop->get_devices(sb, devs);
+ 	devs[0] = sb->s_bdev;
+-	*num_devs = 1;
+-	return devs;
++	return 1;
+ }
  
- 		case OVS_ACTION_ATTR_TRUNC: {
- 			struct ovs_action_trunc *trunc = nla_data(a);
+ static unsigned int fscrypt_get_dun_bytes(const struct fscrypt_info *ci)
+@@ -95,7 +87,7 @@ int fscrypt_select_encryption_impl(struct fscrypt_info *ci)
+ 	const struct inode *inode = ci->ci_inode;
+ 	struct super_block *sb = inode->i_sb;
+ 	struct blk_crypto_config crypto_cfg;
+-	struct block_device **devs;
++	struct block_device *devs[FSCRYPT_MAX_DEVICES];
+ 	unsigned int num_devs;
+ 	unsigned int i;
  
--			if (skb->len > trunc->max_len)
--				OVS_CB(skb)->cutlen = skb->len - trunc->max_len;
-+			OVS_CB(skb)->cutlen = trunc->max_len;
- 			break;
- 		}
+@@ -132,20 +124,15 @@ int fscrypt_select_encryption_impl(struct fscrypt_info *ci)
+ 	crypto_cfg.data_unit_size = sb->s_blocksize;
+ 	crypto_cfg.dun_bytes = fscrypt_get_dun_bytes(ci);
  
- 		case OVS_ACTION_ATTR_USERSPACE:
- 			output_userspace(dp, skb, key, a, attr,
- 						     len, OVS_CB(skb)->cutlen);
--			OVS_CB(skb)->cutlen = 0;
-+			OVS_CB(skb)->cutlen = U32_MAX;
- 			break;
- 
- 		case OVS_ACTION_ATTR_HASH:
-diff --git a/net/openvswitch/datapath.c b/net/openvswitch/datapath.c
-index 0c0d89470145a1..1181807f2b5020 100644
---- a/net/openvswitch/datapath.c
-+++ b/net/openvswitch/datapath.c
-@@ -251,7 +251,7 @@ void ovs_dp_process_packet(struct sk_buff *skb, struct sw_flow_key *key)
- 			upcall.portid = ovs_vport_find_upcall_portid(p, skb);
- 
- 		upcall.mru = OVS_CB(skb)->mru;
--		error = ovs_dp_upcall(dp, skb, key, &upcall, 0);
-+		error = ovs_dp_upcall(dp, skb, key, &upcall, U32_MAX);
- 		switch (error) {
- 		case 0:
- 		case -EAGAIN:
-@@ -414,7 +414,8 @@ static int queue_userspace_packet(struct datapath *dp, struct sk_buff *skb,
- 	struct sk_buff *nskb = NULL;
- 	struct sk_buff *user_skb = NULL; /* to be queued to userspace */
- 	struct nlattr *nla;
--	size_t len;
-+	size_t msg_size;
-+	size_t skb_len;
- 	unsigned int hlen;
- 	int err, dp_ifindex;
- 	u64 hash;
-@@ -435,7 +436,8 @@ static int queue_userspace_packet(struct datapath *dp, struct sk_buff *skb,
- 		skb = nskb;
+-	devs = fscrypt_get_devices(sb, &num_devs);
+-	if (IS_ERR(devs))
+-		return PTR_ERR(devs);
+-
++	num_devs = fscrypt_get_devices(sb, devs);
+ 	for (i = 0; i < num_devs; i++) {
+ 		if (!blk_crypto_config_supported(devs[i], &crypto_cfg))
+-			goto out_free_devs;
++			return 0;
  	}
  
--	if (nla_attr_size(skb->len) > USHRT_MAX) {
-+	skb_len = min(skb->len, cutlen);
-+	if (nla_attr_size(skb_len) > USHRT_MAX) {
- 		err = -EFBIG;
- 		goto out;
+ 	fscrypt_log_blk_crypto_impl(ci->ci_mode, devs, num_devs, &crypto_cfg);
+ 
+ 	ci->ci_inlinecrypt = true;
+-out_free_devs:
+-	kfree(devs);
+ 
+ 	return 0;
+ }
+@@ -158,7 +145,7 @@ int fscrypt_prepare_inline_crypt_key(struct fscrypt_prepared_key *prep_key,
+ 	struct super_block *sb = inode->i_sb;
+ 	enum blk_crypto_mode_num crypto_mode = ci->ci_mode->blk_crypto_mode;
+ 	struct blk_crypto_key *blk_key;
+-	struct block_device **devs;
++	struct block_device *devs[FSCRYPT_MAX_DEVICES];
+ 	unsigned int num_devs;
+ 	unsigned int i;
+ 	int err;
+@@ -175,17 +162,12 @@ int fscrypt_prepare_inline_crypt_key(struct fscrypt_prepared_key *prep_key,
  	}
-@@ -450,13 +452,13 @@ static int queue_userspace_packet(struct datapath *dp, struct sk_buff *skb,
- 	 * padding logic. Only perform zerocopy if padding is not required.
+ 
+ 	/* Start using blk-crypto on all the filesystem's block devices. */
+-	devs = fscrypt_get_devices(sb, &num_devs);
+-	if (IS_ERR(devs)) {
+-		err = PTR_ERR(devs);
+-		goto fail;
+-	}
++	num_devs = fscrypt_get_devices(sb, devs);
+ 	for (i = 0; i < num_devs; i++) {
+ 		err = blk_crypto_start_using_key(devs[i], blk_key);
+ 		if (err)
+ 			break;
+ 	}
+-	kfree(devs);
+ 	if (err) {
+ 		fscrypt_err(inode, "error %d starting to use blk-crypto", err);
+ 		goto fail;
+@@ -209,20 +191,21 @@ void fscrypt_destroy_inline_crypt_key(struct super_block *sb,
+ 				      struct fscrypt_prepared_key *prep_key)
+ {
+ 	struct blk_crypto_key *blk_key = prep_key->blk_key;
+-	struct block_device **devs;
++	struct block_device *devs[FSCRYPT_MAX_DEVICES];
+ 	unsigned int num_devs;
+ 	unsigned int i;
+ 
+ 	if (!blk_key)
+ 		return;
+ 
+-	/* Evict the key from all the filesystem's block devices. */
+-	devs = fscrypt_get_devices(sb, &num_devs);
+-	if (!IS_ERR(devs)) {
+-		for (i = 0; i < num_devs; i++)
+-			blk_crypto_evict_key(devs[i], blk_key);
+-		kfree(devs);
+-	}
++	/*
++	 * Evict the key from all the filesystem's block devices.
++	 * This *must* be done before the key is freed.
++	 */
++	num_devs = fscrypt_get_devices(sb, devs);
++	for (i = 0; i < num_devs; i++)
++		blk_crypto_evict_key(devs[i], blk_key);
++
+ 	kfree_sensitive(blk_key);
+ }
+ 
+diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
+index 7c8e05a81a0c63..9d1b5699f5bf1a 100644
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -3126,24 +3126,27 @@ static void f2fs_get_ino_and_lblk_bits(struct super_block *sb,
+ 	*lblk_bits_ret = 8 * sizeof(block_t);
+ }
+ 
+-static struct block_device **f2fs_get_devices(struct super_block *sb,
+-					      unsigned int *num_devs)
++static unsigned int
++f2fs_get_devices(struct super_block *sb,
++		 struct block_device *devs[FSCRYPT_MAX_DEVICES])
+ {
+ 	struct f2fs_sb_info *sbi = F2FS_SB(sb);
+-	struct block_device **devs;
++	int ndevs;
+ 	int i;
+ 
+-	if (!f2fs_is_multi_device(sbi))
+-		return NULL;
++	static_assert(MAX_DEVICES <= FSCRYPT_MAX_DEVICES);
+ 
+-	devs = kmalloc_array(sbi->s_ndevs, sizeof(*devs), GFP_KERNEL);
+-	if (!devs)
+-		return ERR_PTR(-ENOMEM);
++	if (!f2fs_is_multi_device(sbi)) {
++		devs[0] = sb->s_bdev;
++		return 1;
++	}
++	ndevs = sbi->s_ndevs;
++	if (WARN_ON_ONCE(ndevs > FSCRYPT_MAX_DEVICES))
++		ndevs = FSCRYPT_MAX_DEVICES;
+ 
+-	for (i = 0; i < sbi->s_ndevs; i++)
++	for (i = 0; i < ndevs; i++)
+ 		devs[i] = FDEV(i).bdev;
+-	*num_devs = sbi->s_ndevs;
+-	return devs;
++	return ndevs;
+ }
+ 
+ static const struct fscrypt_operations f2fs_cryptops = {
+diff --git a/include/linux/fscrypt.h b/include/linux/fscrypt.h
+index 4f5f8a65121328..fe842c9af9dcb8 100644
+--- a/include/linux/fscrypt.h
++++ b/include/linux/fscrypt.h
+@@ -57,6 +57,9 @@ struct fscrypt_name {
+ /* Maximum value for the third parameter of fscrypt_operations.set_context(). */
+ #define FSCRYPT_SET_CONTEXT_MAX_SIZE	40
+ 
++/* Maximum supported number of block devices per filesystem */
++#define FSCRYPT_MAX_DEVICES	8
++
+ #ifdef CONFIG_FS_ENCRYPTION
+ 
+ /*
+@@ -161,21 +164,20 @@ struct fscrypt_operations {
+ 				      int *ino_bits_ret, int *lblk_bits_ret);
+ 
+ 	/*
+-	 * Return an array of pointers to the block devices to which the
+-	 * filesystem may write encrypted file contents, NULL if the filesystem
+-	 * only has a single such block device, or an ERR_PTR() on error.
++	 * Retrieve the list of block devices to which the filesystem may write
++	 * encrypted file contents.
+ 	 *
+-	 * On successful non-NULL return, *num_devs is set to the number of
+-	 * devices in the returned array.  The caller must free the returned
+-	 * array using kfree().
++	 * This writes the block_device pointers to @devs and returns the count
++	 * (between 1 and FSCRYPT_MAX_DEVICES inclusively).
+ 	 *
+ 	 * If the filesystem can use multiple block devices (other than block
+ 	 * devices that aren't used for encrypted file contents, such as
+ 	 * external journal devices), and wants to support inline encryption,
+ 	 * then it must implement this function.  Otherwise it's not needed.
  	 */
- 	if (dp->user_features & OVS_DP_F_UNALIGNED)
--		hlen = skb_zerocopy_headlen(skb);
-+		hlen = min(skb_zerocopy_headlen(skb), cutlen);
- 	else
--		hlen = skb->len;
-+		hlen = skb_len;
+-	struct block_device **(*get_devices)(struct super_block *sb,
+-					     unsigned int *num_devs);
++	unsigned int (*get_devices)(
++		struct super_block *sb,
++		struct block_device *devs[FSCRYPT_MAX_DEVICES]);
+ };
  
--	len = upcall_msg_size(upcall_info, hlen - cutlen,
--			      OVS_CB(skb)->acts_origlen);
--	user_skb = genlmsg_new(len, GFP_ATOMIC);
-+	msg_size = upcall_msg_size(upcall_info, hlen,
-+				   OVS_CB(skb)->acts_origlen);
-+	user_skb = genlmsg_new(msg_size, GFP_ATOMIC);
- 	if (!user_skb) {
- 		err = -ENOMEM;
- 		goto out;
-@@ -517,7 +519,7 @@ static int queue_userspace_packet(struct datapath *dp, struct sk_buff *skb,
- 	}
- 
- 	/* Add OVS_PACKET_ATTR_LEN when packet is truncated */
--	if (cutlen > 0 &&
-+	if (skb_len < skb->len &&
- 	    nla_put_u32(user_skb, OVS_PACKET_ATTR_LEN, skb->len)) {
- 		err = -ENOBUFS;
- 		goto out;
-@@ -542,9 +544,9 @@ static int queue_userspace_packet(struct datapath *dp, struct sk_buff *skb,
- 		err = -ENOBUFS;
- 		goto out;
- 	}
--	nla->nla_len = nla_attr_size(skb->len - cutlen);
-+	nla->nla_len = nla_attr_size(skb_len);
- 
--	err = skb_zerocopy(user_skb, skb, skb->len - cutlen, hlen);
-+	err = skb_zerocopy(user_skb, skb, skb_len, hlen);
- 	if (err)
- 		goto out;
- 
-@@ -601,6 +603,7 @@ static int ovs_packet_cmd_execute(struct sk_buff *skb, struct genl_info *info)
- 		packet->ignore_df = 1;
- 	}
- 	OVS_CB(packet)->mru = mru;
-+	OVS_CB(packet)->cutlen = U32_MAX;
- 
- 	if (a[OVS_PACKET_ATTR_HASH]) {
- 		hash = nla_get_u64(a[OVS_PACKET_ATTR_HASH]);
-diff --git a/net/openvswitch/datapath.h b/net/openvswitch/datapath.h
-index 0cd29971a907ca..88156a677f22c5 100644
---- a/net/openvswitch/datapath.h
-+++ b/net/openvswitch/datapath.h
-@@ -114,7 +114,7 @@ struct datapath {
-  * @mru: The maximum received fragement size; 0 if the packet is not
-  * fragmented.
-  * @acts_origlen: The netlink size of the flow actions applied to this skb.
-- * @cutlen: The number of bytes from the packet end to be removed.
-+ * @cutlen: The number of bytes in the packet to preserve on output.
-  */
- struct ovs_skb_cb {
- 	struct vport		*input_vport;
-diff --git a/net/openvswitch/vport.c b/net/openvswitch/vport.c
-index 5d7af559a20bed..e83aa6417ffde0 100644
---- a/net/openvswitch/vport.c
-+++ b/net/openvswitch/vport.c
-@@ -438,7 +438,7 @@ int ovs_vport_receive(struct vport *vport, struct sk_buff *skb,
- 
- 	OVS_CB(skb)->input_vport = vport;
- 	OVS_CB(skb)->mru = 0;
--	OVS_CB(skb)->cutlen = 0;
-+	OVS_CB(skb)->cutlen = U32_MAX;
- 	if (unlikely(dev_net(skb->dev) != ovs_dp_get_net(vport->dp))) {
- 		u32 mark;
- 
+ static inline struct fscrypt_info *fscrypt_get_info(const struct inode *inode)
 -- 
 2.53.0
 
