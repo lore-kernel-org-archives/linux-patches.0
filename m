@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AE7A39733E;
-	Mon, 17 Aug 2026 14:03:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 412673B4417;
+	Mon, 17 Aug 2026 14:03:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786975405; cv=none; b=sZ2sc8zo76x5UCYZlNCjQXzpvuFDFxjFdN9/9fqCurBoa+rMHN5Fsr3t/NsMDEvjvWOB7kC4y3LW8cBgTa6g8cZB70Tqc/p8bWZ7Q6Yq65d7FzI7gWCaaU4Y3JGas0qGE0wu6IxGe/I1ZQlf2l0viMp8r435KdSN4qTte07yqkA=
+	t=1786975408; cv=none; b=nxCxpkmmpSoedAM2QNLnSvhg9FMVZ0st8hPP5Tfzgo10ONnj5h/j+gedVHCihoswmjCdt8BMrnXyeCo/ByPa/CzOYuXy1zfSjwIhOxPH/Qo5a02Xe5JTBXtg1ZmM6pg0tGu7beFn7JrAQy97Ig8x0SFZ3clUyBsbuLBg+mgIZbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786975405; c=relaxed/simple;
-	bh=5fVSsA8f+xKFcyWKeIkUxCDXWDWT84srSFBjG9g5Ch0=;
+	s=arc-20240116; t=1786975408; c=relaxed/simple;
+	bh=4bOk3EXgg6jOpZWv+ykrImgzD+H9KnindO0bT4sHlFE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cdaqK7Gwlrdd3SDWO6b6cnWjPqjNQYTt6odPP5gAcJtW0RmJtcbulwoECLgP/7cUM+iwhU1amrAHHgGDygcA0GHxEg1d1BqAzX1hVfn6GsU2Qw3xVEIY4wQJqn7UX+1bbtRM3QRE28Q5t1RG8OEze28Dbtuziinu5AQtnM+lKzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZcU/h3i/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=agVsdWts6XWmwv9yh9UQexmSaFeFyEqdn2PHMQE09sROh9Sij/c0032Tswj3YHyYhmp1EKWBk2M4HvA9Av/heZTv+A7/C4pIPMn1nGBT4aKhSa+2eOYt1eEQgBBPQeghQR2gLZO7LvCUCxLmLABgZISdWQb/VX2RwcgkSoE/FKY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fJj//0MD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZcU/h3i/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C176D1F000E9;
-	Mon, 17 Aug 2026 14:03:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fJj//0MD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9970F1F000E9;
+	Mon, 17 Aug 2026 14:03:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786975404;
-	bh=lf8MzT8pvRU9xTgvDuENYtUAbFD7rGPv7KM58/OhaVE=;
+	s=korg; t=1786975407;
+	bh=71UIOyJRUVQEAuBp8OmugmYf2C3TjbTbPGbCcNC4pTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZcU/h3i/p7huQxcLMw1g0/NTZp/AUAIDttSUwfamQrQMNzDREaTLeMdnbZOujDOhf
-	 228nz4m5XE964aM8FzdZYNm61PX5wA3pnkUjoJYxqUZHs/mOtwMh7ujP4POY5qL4AH
-	 azXppr4aAY/M/ajH7LSFDHezGEUzN8S+qxSr8DQk=
+	b=fJj//0MD/4gfOshsqYL0Dwk7O11mY9dv1rKrp27W+Boa33fLMKIbimTWu5hm/Ahci
+	 gw2XIgvZ27dUfT5sNj0vyzTXqnUkkfgV38dddSVSB3kkTaHOHf2yK9MPEea2/s0fi4
+	 LepgDBaS+YjIehrG61z2PcKxb7+no6K9HMwIVoTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
-	Florian Westphal <fw@strlen.de>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 017/389] xfrm: policy: preallocate inexact bins before xfrm_hash_rebuild reinsert
-Date: Mon, 17 Aug 2026 15:27:36 +0200
-Message-ID: <20260817132539.538107311@linuxfoundation.org>
+Subject: [PATCH 5.10 018/389] wifi: ipw2100: fix potential memory leak in ipw2100_pci_init_one()
+Date: Mon, 17 Aug 2026 15:27:37 +0200
+Message-ID: <20260817132539.586432010@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -53,72 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei (Microsoft) <xmei5@asu.edu>
+From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
 
-[ Upstream commit f38f8cce2f7e79775b3db7e8a5eacda04ac908e4 ]
+[ Upstream commit 0d388f62031dbabcba0f44bb91b59f10e88cac17 ]
 
-xfrm_hash_rebuild()'s first loop preallocates the bins/chains the reinsert
-loop needs, so the reinsert (after hlist_del_rcu()) cannot allocate or
-fail. But its guard is inverted: it skips policies with prefixlen <
-threshold and preallocates for the rest.
+The memory allocated in the ipw2100_alloc_device() function is not freed
+in some of the error paths in ipw2100_pci_init_one(). Fix that by
+converting the direct return into a goto to the error path return.
 
-prefixlen < threshold is exactly when policy_hash_bysel() returns NULL and
-the reinsert takes the allocating xfrm_policy_inexact_insert() path. So the
-loop preallocates for the exact policies (which never allocate) and skips
-the inexact ones, whose bin/node is then allocated GFP_ATOMIC during
-reinsert. On failure the error path only WARN_ONCE()s and continues,
-leaving a poisoned bydst node; the next rebuild's hlist_del_rcu()
-dereferences LIST_POISON2 and takes a GPF. Reachable under memory pressure,
-deterministic via failslab.
+The error path when pci_enable_device() fails cannot jump to fail, since
+at this point priv is not set, so perform error handling inline.
 
-Invert the guard so preallocation covers exactly the reinserted policies;
-the reinsert then allocates nothing and cannot fail.
-
-Crash:
-  Oops: general protection fault, probably for non-canonical address
-  0xfbd59c0000000024: 0000 [#1] SMP KASAN NOPTI
-  KASAN: maybe wild-memory-access in range [0xdead...]
-  ...
-  Workqueue: events xfrm_hash_rebuild
-  RIP: 0010:xfrm_hash_rebuild+0x5b3/0x1190
-  RAX: dead000000000122   (LIST_POISON2 + offset)
-  ...
-  Call Trace:
-   hlist_del_rcu (include/linux/rculist.h:599)
-   xfrm_hash_rebuild (net/xfrm/xfrm_policy.c:1365)
-   process_one_work (kernel/workqueue.c:3322)
-   worker_thread (kernel/workqueue.c:3486)
-   kthread (kernel/kthread.c:436)
-   ret_from_fork (arch/x86/kernel/process.c:158)
-   ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
-   ...
-  Kernel panic - not syncing: Fatal exception in interrupt
-
-Fixes: 24969facd704 ("xfrm: policy: store inexact policies in an rhashtable")
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Signed-off-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
-Reviewed-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: 2c86c275015c ("Add ipw2100 wireless driver.")
+Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+Link: https://patch.msgid.link/20260620065242.93798-1-nihaal@cse.iitm.ac.in
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_policy.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/intel/ipw2x00/ipw2100.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/xfrm/xfrm_policy.c b/net/xfrm/xfrm_policy.c
-index 37c4128e313cb2..26bc0821395507 100644
---- a/net/xfrm/xfrm_policy.c
-+++ b/net/xfrm/xfrm_policy.c
-@@ -1292,8 +1292,8 @@ static void xfrm_hash_rebuild(struct work_struct *work)
- 			}
- 		}
+diff --git a/drivers/net/wireless/intel/ipw2x00/ipw2100.c b/drivers/net/wireless/intel/ipw2x00/ipw2100.c
+index 23fbddd0c1f8e0..a46ecfa07ba2b9 100644
+--- a/drivers/net/wireless/intel/ipw2x00/ipw2100.c
++++ b/drivers/net/wireless/intel/ipw2x00/ipw2100.c
+@@ -6183,6 +6183,8 @@ static int ipw2100_pci_init_one(struct pci_dev *pci_dev,
+ 	if (err) {
+ 		printk(KERN_WARNING DRV_NAME
+ 		       "Error calling pci_enable_device.\n");
++		free_libipw(dev, 0);
++		pci_iounmap(pci_dev, ioaddr);
+ 		return err;
+ 	}
  
--		if (policy->selector.prefixlen_d < dbits ||
--		    policy->selector.prefixlen_s < sbits)
-+		if (policy->selector.prefixlen_d >= dbits &&
-+		    policy->selector.prefixlen_s >= sbits)
- 			continue;
+@@ -6195,16 +6197,14 @@ static int ipw2100_pci_init_one(struct pci_dev *pci_dev,
+ 	if (err) {
+ 		printk(KERN_WARNING DRV_NAME
+ 		       "Error calling pci_set_dma_mask.\n");
+-		pci_disable_device(pci_dev);
+-		return err;
++		goto fail;
+ 	}
  
- 		bin = xfrm_policy_inexact_alloc_bin(policy, dir);
+ 	err = pci_request_regions(pci_dev, DRV_NAME);
+ 	if (err) {
+ 		printk(KERN_WARNING DRV_NAME
+ 		       "Error calling pci_request_regions.\n");
+-		pci_disable_device(pci_dev);
+-		return err;
++		goto fail;
+ 	}
+ 
+ 	/* We disable the RETRY_TIMEOUT register (0x41) to keep
 -- 
 2.53.0
 
