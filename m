@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AFB54315F;
-	Mon, 17 Aug 2026 14:21:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73A5F23BCEE;
+	Mon, 17 Aug 2026 14:21:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786976480; cv=none; b=C0m5RL3sIkjIuRASXT5PnJEcu58CWsj1Y/2lfyg0qDSTyBpO9uYstXk59ySHcy2/CNV2sdye6mRnYGAMgICRobxfVfxibjSQqW+ZMuYGZke9VQMJGgf4VJbgk++6MpI3SpVtMvTiLZGV5FbD4c5huCka5VbfP2K0JyDfo8f6K8U=
+	t=1786976483; cv=none; b=OtaBy+L5OOxIGGEARJvlJrTd1diOKtUruCerCymJZVbWGU337ct4AWMTHAO1RE1CP1xlT5VxYcDAimt2wUF+JA+AOgTI4RuZMpjCEOv2QVp7Vh+cIT17e3lHu63l+FOQj4AhnP5bTU0Ql9BGFTaHcrrtHGVP307XybtP9SpK76A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786976480; c=relaxed/simple;
-	bh=qk6kYRNPkq453vZgWLa247FpxWsi0u6zjTzP02y8qcs=;
+	s=arc-20240116; t=1786976483; c=relaxed/simple;
+	bh=i9UKRDfMgR4DufPni8JQ9vuYAJWHbxxpKLWJtSEYCao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qOvmj00hG7axKTuG0lZRBpzdFZRU90Ee73cmoafBJeNgM8cuif9XkCXauJ2TKZ1+HaWlfbciVEuIKoZF4RQmKI+XJi4Quo2ZapCOKcOCt9Meea6476KuXdEIQYBcSuQp/uRGY1heSLaDYQxkI5Sm7u+D6jm233UWIFVs8Ifl96c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s2SLCjA0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=M6ZRrtERux69yQmf9uALy8Yx+oCTC+1EWt185Lqw/feOBBWxZ0bgF7Y0ZYtbZWpnv/kv0aCUtnfdQZ4US38sll2p98SzyL/3hBpFK/1kntgssfIynLpMUUUJyitTCZgF6VUlZA5u/4xu7uiwyhcSHsd6xXn5/Yms+yb5Dslb9BE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N5lO/VkM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s2SLCjA0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2FF11F00A3A;
-	Mon, 17 Aug 2026 14:21:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N5lO/VkM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C167E1F00A3F;
+	Mon, 17 Aug 2026 14:21:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786976479;
-	bh=NrcPfI5ki7gklZXy2WGm/mW/R798Pk0Iv8nQH5CNbh0=;
+	s=korg; t=1786976482;
+	bh=cOgREUmT5Lx0MeITSW0k3vMHq3CCZIzhyCpD5Yi6iPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s2SLCjA0jlcLDvwVlhhFYc3ZBTxkfDNmfBGFI9DyasRE3hOvFJ+H6J8uOSdGN0lF7
-	 STHEfCy6/SmQEERUcIYCBKp9L8X9hOFBCxRmKR5BJxk+SNW8nHXGsNithMJ15PCpXe
-	 7CPZ0qQnG3kTT4s5FVK+Y3sq8hI4aHYbN/sNzA+s=
+	b=N5lO/VkMq0eU3h4PXoAJh++DY0kRZHF3L3mfXLHK+fHj0zeO4Yiqg4F6lHt0hUr9U
+	 i5Npo0dRC6dODuvw0CrOX13mwyUtHEsRPijCtaAUDg0EFQ6Fmnd4tSvmR25q2ON5GP
+	 gRDDZ7vnISserdtjvXbz3VMTG02/d2QY/y86kJZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Gorski <jonas.gorski@bisdn.de>,
-	Elad Nachman <enachman@marvell.com>,
-	Jesse Brandeburg <jesse.brandeburg@intel.com>,
-	Taras Chornyi <taras.chornyi@plvision.eu>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 387/389] prestera: fix fallback to previous version on same major version
-Date: Mon, 17 Aug 2026 15:33:46 +0200
-Message-ID: <20260817132553.755665088@linuxfoundation.org>
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 5.10 388/389] hwmon: (adt7470) Add missing dependency on REGMAP_I2C
+Date: Mon, 17 Aug 2026 15:33:47 +0200
+Message-ID: <20260817132553.787763239@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132538.796021292@linuxfoundation.org>
 References: <20260817132538.796021292@linuxfoundation.org>
@@ -53,61 +50,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonas Gorski <jonas.gorski@bisdn.de>
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-commit b755c25fbcd568821a3bb0e0d5c2daa5fcb00bba upstream.
+commit b6abcc19566509ab4812bd5ae5df46515d0c1d70 upstream.
 
-When both supported and previous version have the same major version,
-and the firmwares are missing, the driver ends in a loop requesting the
-same (previous) version over and over again:
+This driver requires REGMAP_I2C to be selected in order to get access to
+regmap_config and devm_regmap_init_i2c. Add the missing dependency.
 
-    [   76.327413] Prestera DX 0000:01:00.0: missing latest mrvl/prestera/mvsw_prestera_fw-v4.1.img firmware, fall-back to previous 4.0 version
-    [   76.339802] Prestera DX 0000:01:00.0: missing latest mrvl/prestera/mvsw_prestera_fw-v4.0.img firmware, fall-back to previous 4.0 version
-    [   76.352162] Prestera DX 0000:01:00.0: missing latest mrvl/prestera/mvsw_prestera_fw-v4.0.img firmware, fall-back to previous 4.0 version
-    [   76.364502] Prestera DX 0000:01:00.0: missing latest mrvl/prestera/mvsw_prestera_fw-v4.0.img firmware, fall-back to previous 4.0 version
-    [   76.376848] Prestera DX 0000:01:00.0: missing latest mrvl/prestera/mvsw_prestera_fw-v4.0.img firmware, fall-back to previous 4.0 version
-    [   76.389183] Prestera DX 0000:01:00.0: missing latest mrvl/prestera/mvsw_prestera_fw-v4.0.img firmware, fall-back to previous 4.0 version
-    [   76.401522] Prestera DX 0000:01:00.0: missing latest mrvl/prestera/mvsw_prestera_fw-v4.0.img firmware, fall-back to previous 4.0 version
-    [   76.413860] Prestera DX 0000:01:00.0: missing latest mrvl/prestera/mvsw_prestera_fw-v4.0.img firmware, fall-back to previous 4.0 version
-    [   76.426199] Prestera DX 0000:01:00.0: missing latest mrvl/prestera/mvsw_prestera_fw-v4.0.img firmware, fall-back to previous 4.0 version
-    ...
-
-Fix this by inverting the check to that we aren't yet at the previous
-version, and also check the minor version.
-
-This also catches the case where both versions are the same, as it was
-after commit bb5dbf2cc64d ("net: marvell: prestera: add firmware v4.0
-support").
-
-With this fix applied:
-
-    [   88.499622] Prestera DX 0000:01:00.0: missing latest mrvl/prestera/mvsw_prestera_fw-v4.1.img firmware, fall-back to previous 4.0 version
-    [   88.511995] Prestera DX 0000:01:00.0: failed to request previous firmware: mrvl/prestera/mvsw_prestera_fw-v4.0.img
-    [   88.522403] Prestera DX: probe of 0000:01:00.0 failed with error -2
-
-Fixes: 47f26018a414 ("net: marvell: prestera: try to load previous fw version")
-Signed-off-by: Jonas Gorski <jonas.gorski@bisdn.de>
-Acked-by: Elad Nachman <enachman@marvell.com>
-Reviewed-by: Jesse Brandeburg <jesse.brandeburg@intel.com>
-Acked-by: Taras Chornyi <taras.chornyi@plvision.eu>
-Link: https://lore.kernel.org/r/20230802092357.163944-1-jonas.gorski@bisdn.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: ef67959c4253 ("hwmon: (adt7470) Convert to use regmap")
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Message-ID: <20241002-hwmon-select-regmap-v1-2-548d03268934@gmail.com>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/marvell/prestera/prestera_pci.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/hwmon/Kconfig |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/net/ethernet/marvell/prestera/prestera_pci.c
-+++ b/drivers/net/ethernet/marvell/prestera/prestera_pci.c
-@@ -629,7 +629,8 @@ pick_fw_ver:
- 
- 	err = request_firmware_direct(&fw->bin, fw_path, fw->dev.dev);
- 	if (err) {
--		if (ver_maj == PRESTERA_SUPP_FW_MAJ_VER) {
-+		if (ver_maj != PRESTERA_PREV_FW_MAJ_VER ||
-+		    ver_min != PRESTERA_PREV_FW_MIN_VER) {
- 			ver_maj = PRESTERA_PREV_FW_MAJ_VER;
- 			ver_min = PRESTERA_PREV_FW_MIN_VER;
- 
+--- a/drivers/hwmon/Kconfig
++++ b/drivers/hwmon/Kconfig
+@@ -239,6 +239,7 @@ config SENSORS_ADT7462
+ config SENSORS_ADT7470
+ 	tristate "Analog Devices ADT7470"
+ 	depends on I2C
++	select REGMAP_I2C
+ 	help
+ 	  If you say yes here you get support for the Analog Devices
+ 	  ADT7470 temperature monitoring chips.
 
 
