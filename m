@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08B41442370;
-	Mon, 17 Aug 2026 15:17:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4122F442FA4;
+	Mon, 17 Aug 2026 15:17:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786979841; cv=none; b=IkvwZJ8HaDZvYYeNF5zwH9OnJ6dBmZWXGZuRvuoflRkxgbrvdoDh6XDZoL3DF7UzbI8Pyd+7Czi7AaZUDXp4IRb98k7Nv1r32L7YFjBP8gGxFtW+pnUA6BlLbSQJFUJLpNFqzWsvxwFAOs35lv1OjFIJRM+PBKH0F59hizv00nU=
+	t=1786979844; cv=none; b=g6xs2cWDIR/YPhEZK43kksQANZUqtGdYFwG+M5E7cVjW872Yusm1dMwc5rA9SaI8bU1EW/pvPJM56Frw00BA0YYmv2gUaVIsKkJ4DZ2QBFZm33pnGcqUYwbnjHTCCbkOcDPcPWvSY0zEj2T0esu4gwsxiRB0zmbXhBQT3a2p+rM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786979841; c=relaxed/simple;
-	bh=ABTWIkZNXAeIgxZb8lzy5eIPQGDg246i7zEbHOTQp9g=;
+	s=arc-20240116; t=1786979844; c=relaxed/simple;
+	bh=kgiqxwMEE/+swZG5mNWj7EZUz9MRuy57+MFeOuxTDdA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HaIVFC09YWc3pX7NjMfAfSWPPT+NsD23l/1rKfZF3cuKca0Xr2veljzC26D+/xVLKC8YnU1X7G3/tEOVUJVlcWvgPQWeGNnpaQexk+uep3iCrtHYq7+AhFA6aBaVBrgtnSSqQmC6+EP8K0ibfqS7M+Ib+sji6lcmPVk5zRHfzd0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JS3zXwWS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NzhEQfdCTRqwJqZa4w1oj0hPPeUyL05h83cAYIKm+G0TKuPmdFegBJLqilYF4JGMC1QQOkzvk/t+d+TX3g2Vozr0sAkFXOKQClBEkxqKglbiMr2FkyrsPTtzkjFlvbEFc0cb/Hk8z7rC+phu2jY8M9XyddGK19yLVVZ/7eGztuU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gaP2IsGf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JS3zXwWS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56A051F00A3A;
-	Mon, 17 Aug 2026 15:17:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gaP2IsGf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C2C01F000E9;
+	Mon, 17 Aug 2026 15:17:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786979838;
-	bh=46aXk6qTde31syoD/wA9jmPZ5W7L96/3hJ1EwBGA6+I=;
+	s=korg; t=1786979841;
+	bh=QOCWvir80vTF2RvYX1xLF2vSvFOfp5F6acgqGMCZhrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JS3zXwWSEey2d6JSv6v08FuiDlJ9vsRxlRI1iMN6zHW1dVm3Aw0GlPj4r2fhFCLBX
-	 hWdQnvwmtTWreyS0YSS8vUY5tRe2p80IjrUVXA1FhspnVVzJOWCFn8HA+iy/JkQ1sT
-	 Op27n4mEVnvmaFPHiQLGbkWqXzAcKPMdM01CDaEg=
+	b=gaP2IsGfiN5eC1jpwb6sgjx8m5shXi2Y69hGD2FbXt4fiRZTuxWOWY6riWjYsvuMl
+	 ITVC3txnFRFSEzKXyyrvqag03WDkoZeIdMdn2vd/YL7JfLT2/qrV5yoR3Vsn7Xthkc
+	 9Ker6NyBb/k4mMjoV/Zs+mMG0hzP29T33kVEcxkU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Uday Khare <udaykhare77@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Luiz Angelo Daros de Luca <luizluca@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 316/609] ASoC: max98090: fix missing IS_ERR() before PTR_ERR() on mclk lookup
-Date: Mon, 17 Aug 2026 15:30:12 +0200
-Message-ID: <20260817132554.811946303@linuxfoundation.org>
+Subject: [PATCH 6.1 359/609] hwmon: (adt7470) Use cached PWM frequency value
+Date: Mon, 17 Aug 2026 15:30:55 +0200
+Message-ID: <20260817132556.299214889@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132543.039278408@linuxfoundation.org>
 References: <20260817132543.039278408@linuxfoundation.org>
@@ -51,59 +51,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Uday Khare <udaykhare77@gmail.com>
+From: Luiz Angelo Daros de Luca <luizluca@gmail.com>
 
-[ Upstream commit a792ce0fad61a70793ec565743f11d6ca534de59 ]
+[ Upstream commit 60677cd4c28f44d5b307d3029dccece38fcce90f ]
 
-In max98090_probe(), the -EPROBE_DEFER check after devm_clk_get() is
-broken due to a missing IS_ERR() guard.
+adt7470_pwm_read() currently ignores failures returned by
+pwm1_freq_get(). If the register read fails, the negative error code is
+returned through *val while the function itself reports success,
+potentially exposing a negative PWM frequency through sysfs.
 
-The code intends to return -EPROBE_DEFER only when the clock lookup
-fails with that specific error.  However, without IS_ERR() the check:
+Fix this by using the cached PWM frequency maintained by the driver,
+eliminating the register access from the read path.
 
-    if (PTR_ERR(max98090->mclk) == -EPROBE_DEFER)
+Apart from the corrected error propagation and using the cached value,
+no functional change is intended.
 
-is called unconditionally, including when devm_clk_get() succeeds and
-returns a valid pointer.  Calling PTR_ERR() on a valid pointer
-reinterprets its address as a signed long; the result is arbitrary
-and is almost never equal to -EPROBE_DEFER, so the check silently
-does nothing in the success case.  When devm_clk_get() fails with
-any error other than -EPROBE_DEFER the check is also skipped, leaving
-max98090->mclk holding an error pointer with no indication to the caller.
-
-This means a deferred probe will never actually be triggered for this
-device, and any non-EPROBE_DEFER clock error is silently swallowed with
-the error pointer left in the mclk field.
-
-Fix this by adding the missing IS_ERR() guard around the PTR_ERR() call,
-matching the pattern already used in the sibling max98088 and wm8960
-drivers.
-
-Fixes: b10ab7b838bd ("ASoC: max98090: Add master clock handling")
-Signed-off-by: Uday Khare <udaykhare77@gmail.com>
-Link: https://patch.msgid.link/20260720104254.14948-1-udaykhare77@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: ef67959c4253 ("hwmon: (adt7470) Convert to use regmap")
+Signed-off-by: Luiz Angelo Daros de Luca <luizluca@gmail.com>
+Link: https://lore.kernel.org/r/20260727-adt7470_fixes-v2-6-598e38a46ba6@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/max98090.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/hwmon/adt7470.c | 20 ++++++++++++++++++--
+ 1 file changed, 18 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/codecs/max98090.c b/sound/soc/codecs/max98090.c
-index f5acf84ee20cc..e64e2352c6aa4 100644
---- a/sound/soc/codecs/max98090.c
-+++ b/sound/soc/codecs/max98090.c
-@@ -2391,8 +2391,9 @@ static int max98090_probe(struct snd_soc_component *component)
- 	dev_dbg(component->dev, "max98090_probe\n");
+diff --git a/drivers/hwmon/adt7470.c b/drivers/hwmon/adt7470.c
+index a5bef97c8e0d3..1ac26a510bfe2 100644
+--- a/drivers/hwmon/adt7470.c
++++ b/drivers/hwmon/adt7470.c
+@@ -182,6 +182,7 @@ struct adt7470_data {
+ 	u8			pwm_min[ADT7470_PWM_COUNT];
+ 	s8			pwm_tmin[ADT7470_PWM_COUNT];
+ 	u8			pwm_auto_temp[ADT7470_PWM_COUNT];
++	u32			pwm_freq;
  
- 	max98090->mclk = devm_clk_get(component->dev, "mclk");
--	if (PTR_ERR(max98090->mclk) == -EPROBE_DEFER)
--		return -EPROBE_DEFER;
-+	if (IS_ERR(max98090->mclk))
-+		if (PTR_ERR(max98090->mclk) == -EPROBE_DEFER)
-+			return -EPROBE_DEFER;
+ 	struct task_struct	*auto_update;
+ 	unsigned int		auto_update_interval;
+@@ -756,7 +757,7 @@ static ssize_t force_pwm_max_store(struct device *dev,
+ }
  
- 	max98090->component = component;
+ /* These are the valid PWM frequencies to the nearest Hz */
+-static const int adt7470_freq_map[] = {
++static const u32 adt7470_freq_map[] = {
+ 	11, 15, 22, 29, 35, 44, 59, 88, 1400, 22500
+ };
  
+@@ -804,7 +805,7 @@ static int adt7470_pwm_read(struct device *dev, u32 attr, int channel, long *val
+ 		*val = 1 + data->pwm_automatic[channel];
+ 		break;
+ 	case hwmon_pwm_freq:
+-		*val = pwm1_freq_get(dev);
++		*val = data->pwm_freq;
+ 		break;
+ 	default:
+ 		return -EOPNOTSUPP;
+@@ -817,12 +818,14 @@ static int pwm1_freq_set(struct device *dev, long freq)
+ {
+ 	struct adt7470_data *data = dev_get_drvdata(dev);
+ 	unsigned int low_freq = ADT7470_CFG_LF;
++	u32 closest_freq;
+ 	int index;
+ 	int err;
+ 
+ 	/* Round the user value given to the closest available frequency */
+ 	index = find_closest(freq, adt7470_freq_map,
+ 			     ARRAY_SIZE(adt7470_freq_map));
++	closest_freq = adt7470_freq_map[index];
+ 
+ 	if (index >= 8) {
+ 		index -= 8;
+@@ -840,6 +843,10 @@ static int pwm1_freq_set(struct device *dev, long freq)
+ 	err = regmap_update_bits(data->regmap, ADT7470_REG_CFG_2,
+ 				 ADT7470_FREQ_MASK,
+ 				 index << ADT7470_FREQ_SHIFT);
++	if (err < 0)
++		goto out;
++
++	data->pwm_freq = closest_freq;
+ out:
+ 	mutex_unlock(&data->lock);
+ 
+@@ -1293,6 +1300,7 @@ static int adt7470_probe(struct i2c_client *client)
+ 	struct device *dev = &client->dev;
+ 	struct adt7470_data *data;
+ 	struct device *hwmon_dev;
++	int freq_val;
+ 	int err;
+ 
+ 	data = devm_kzalloc(dev, sizeof(struct adt7470_data), GFP_KERNEL);
+@@ -1317,6 +1325,14 @@ static int adt7470_probe(struct i2c_client *client)
+ 	if (err < 0)
+ 		return err;
+ 
++	freq_val = pwm1_freq_get(dev);
++	if (freq_val <= 0) {
++		err = freq_val < 0 ? freq_val : -EINVAL;
++		return err;
++	}
++
++	data->pwm_freq = (u32)freq_val;
++
+ 	/* Register sysfs hooks */
+ 	hwmon_dev = devm_hwmon_device_register_with_info(dev, client->name, data,
+ 							 &adt7470_chip_info,
 -- 
 2.53.0
 
