@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98E154322E5;
-	Mon, 17 Aug 2026 14:53:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AD2142EEDD;
+	Mon, 17 Aug 2026 14:53:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786978391; cv=none; b=QZoB0XnWYkncwYCJedHboQPKM1fLgsODPQqn1CkgfmtEvGlABldgcFkU9Yqx4jKtf4eSUySpHmwdRg4msika9oWd/5OldJ+TCs56WhaxVS5SSfZnDz/VsvQujdI3OfI5e7W1t7pKPdCTBgea92O8jIMaFDJYQacbV9XZ4iyJb7c=
+	t=1786978394; cv=none; b=D4zAY4NDSg7rHCnvVpuJ5ydIC/Vx2hwa1ZC0ofrp9HuHl19zOVl0QjOT88/E95YtVGcO5TTwuk1OjzYmqVu8JlXiS4T1t2P+46r4AIsXCywzmFb7eEWyXR4f1Rz4ZsEN9WVWvvANaDB10GO1ApRG2y3kqt6SWeuEpdBt1d81RZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786978391; c=relaxed/simple;
-	bh=mvtmlBxmjRjjWZl70kfQMGUSgyrzQ0dK+Iw6BcCVZUQ=;
+	s=arc-20240116; t=1786978394; c=relaxed/simple;
+	bh=YwKtMya9OrrAG0c0FvQehCvjsdcEZQos79s1TkgzosY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DEl8OOVzPNNWgJDJAJ2xUretC7TNRkCo2CZD4llFkgyJ+h1qnIxLMNwd6kyVVzYaPBHdNqU59UAWFSaWe2BrFYqOf+sMZaZSLpAyYkKixRevScREFow2anzvO7FXz1GcDSoBU/3X1dfuiGNRh1KUzryJzwu7zHPzCWLze8LxHE0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XD0GxAdv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Rtd/AwhOFZvT+IRgk/LTK47UwHA/lpKLUOl+ONxgjNcC/bVcp67prqBWt+ZQHQOcd2oqEo3GHB8+hb7I/I+7bsEbNAqBLRUVEXjqGuNEKi+sAukj/EodLpbzwPKOxiR1m8HQ/gyllSmxavgFioMac2E99SbE/qTF+fHv/+oNB0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JjkfQe+s; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XD0GxAdv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA0041F000E9;
-	Mon, 17 Aug 2026 14:53:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JjkfQe+s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B7E11F000E9;
+	Mon, 17 Aug 2026 14:53:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786978390;
-	bh=fXOdDJxvAEWH+i9l8qPi2keDPrdjqXM0BXr+pfgCvB4=;
+	s=korg; t=1786978393;
+	bh=CEIC5juLic6J6/x4bjLrkAYAoVE620AlXpMcSs5Rv/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XD0GxAdv2Ryy847joPhBiMyqrXVnaosBMFTM70NmyVaJ+6dZGHGClcEjdFDAAMGxk
-	 dPheHzCdTU1V8C2lec6GNGAtlPsivF9vwes43U1XflHnknghnfQ/pmh4hnCVDTdBYH
-	 FeOj3gu32+xnuKePe7UvXqygAaBEpaKI7EI/ZS8Y=
+	b=JjkfQe+snc11YwT1VeUhcA0a7Z7OqI6VBnj3ekpkn+yNEPJHwDaZlYQmZNbYdxoNP
+	 1v1TkdAnnLu5OaVtXysOkFGmhqr9I6nHoLc7ARkLAqS3w20SgvbT7M3bLbtbWWYSD7
+	 hiF0jMhIzgGNl7g9FfHfTHyE5zpWxzOZKaePylQU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Guralnik <michaelgur@nvidia.com>,
-	Shay Drori <shayd@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Babanpreet Singh <bbnpreetsingh@gmail.com>,
+	Joshua Crofts <joshua.crofts1@gmail.com>,
+	William Breathitt Gray <wbg@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 020/156] net/mlx5: fw_tracer, return NULL on create error
-Date: Mon, 17 Aug 2026 15:32:34 +0200
-Message-ID: <20260817132535.420743088@linuxfoundation.org>
+Subject: [PATCH 6.6 021/156] counter: microchip-tcb-capture: Fix DT channel validation
+Date: Mon, 17 Aug 2026 15:32:35 +0200
+Message-ID: <20260817132535.461007157@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132534.666299318@linuxfoundation.org>
 References: <20260817132534.666299318@linuxfoundation.org>
@@ -53,132 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Guralnik <michaelgur@nvidia.com>
+From: Babanpreet Singh <bbnpreetsingh@gmail.com>
 
-[ Upstream commit af39eb111ce6b5eba9c08513b62c4868eb7e7fd5 ]
+[ Upstream commit f1a3a9946aab611dd2200c01ff122f64b033dad2 ]
 
-Tracer creation can fail by returning either NULL or ERR_PTR.
-The return value is stored without a check on the device, and users
-treat ERR_PTR and NULL the same way.
-This also causes a crash in the core dump logic, which is missing the
-ERR_PTR check and ends up dereferencing it, as shown in the trace below.
+mchp_tc_probe() reads the devicetree "reg" cell - a u32, per the API
+contract of of_property_read_u32_index() - into a signed int, so the
+bounds check "channel > 2" fails to reject cell values at or above
+0x80000000: reinterpreted as a negative int, they compare below 2 and
+pass validation.
 
-Switch tracer creation to return NULL on failure only, so callers only
-need a single NULL check.
+A malformed devicetree can therefore drive a negative channel into the
+ATMEL_TC_REG() offset arithmetic, making the driver access syscon
+regmap offsets outside the TC block's register window, and into the
+"t%d_clk" clock-name formatting, where it truncates clk_name (sized
+for "t0_clk".."t2_clk").
 
-  Internal error: Oops: 0000000096000006 [#1]  SMP
-  Modules linked in: mlx5_ib ib_uverbs ib_core ipv6 mlx5_core
-  CPU: 1 UID: 0 PID: 12 Comm: kworker/u16:0 Not tainted 6.19.7 #1 PREEMPT(none)
-  Workqueue: mlx5_health0001:01:00.0 mlx5_fw_reporter_err_work [mlx5_core]
-  pstate: a3400009 (NzCv daif +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
-  pc : mlx5_fw_tracer_trigger_core_dump_general+0x58/0xe0 [mlx5_core]
-  lr : mlx5_fw_tracer_trigger_core_dump_general+0x40/0xe0 [mlx5_core]
-  sp : ffff800081cf3c40
-  x29: ffff800081cf3c90 x28: 0000000000000000 x27: 0000000000000000
-  x26: ffff000080018828 x25: 0000000000000000 x24: ffff000080304a05
-  x23: ffff800081cf3d80 x22: ffff0000847e01a0 x21: 0000000000000000
-  x20: ffff0000847e01a0 x19: ffffffffffffffa1 x18: ffff80008310bbf0
-  x17: ffff800080119650 x16: ffff80008010df54 x15: ffff80008010d4ac
-  x14: ffff800079c202e4 x13: ffff80008002fe60 x12: ffff800080119650
-  x11: ffff80008010df54 x10: ffff80008010d4ac x9 : ffff800079c203d8
-  x8 : ffff800081cf3c88 x7 : 0000000000000000 x6 : 0000000000000000
-  x5 : 0000000000000000 x4 : 0000000000000008 x3 : 0000000000000030
-  x2 : 0000000000000008 x1 : 0000000000000000 x0 : 00000000c5c4000e
-  Call trace:
-   mlx5_fw_tracer_trigger_core_dump_general+0x58/0xe0 [mlx5_core] (P)
-   mlx5_fw_reporter_dump+0x30/0x2e0 [mlx5_core]
-   devlink_health_do_dump+0x9c/0x160
-   devlink_health_report+0x1c0/0x288
-   mlx5_fw_reporter_err_work+0xac/0xc0 [mlx5_core]
-   process_one_work+0x15c/0x3d8
-   worker_thread+0x18c/0x320
-   kthread+0x148/0x228
-   ret_from_fork+0x10/0x20
-  Code: b9400000 5ac00800 7a401800 540003ca (3940a260)
-  ---[ end trace 0000000000000000 ]---
-  Kernel panic - not syncing: Oops: Fatal exception
-  SMP: stopping secondary CPUs
-  Kernel Offset: disabled
-  CPU features: 0x000000,00078031,75fce5a1,35fffe67
-  Memory Limit: none
-  ---[ end Kernel panic - not syncing: Oops: Fatal exception ]---
+Declare channel as u32, matching the API contract; the unsigned
+comparison then rejects everything except channels 0..2. Adjust the
+format specifier to %u accordingly, which also resolves the W=1
+warning that exposed the gap:
 
-Fixes: fd1483fe1f9f ("net/mlx5: Add support for FW reporter dump")
-Signed-off-by: Michael Guralnik <michaelgur@nvidia.com>
-Reviewed-by: Shay Drori <shayd@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260729080402.2427184-1-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+  microchip-tcb-capture.c:520:56: warning: '%d' directive output may
+    be truncated writing between 1 and 11 bytes into a region of size
+    6 [-Wformat-truncation=]
+  note: directive argument in the range [-2147483648, 2]
+
+No behavior change for well-formed devicetrees: channels 0..2 take
+identical paths before and after.
+
+Fixes: 106b104137fd ("counter: Add microchip TCB capture counter")
+Assisted-by: Claude:claude-fable-5 [gcc W=1]
+Signed-off-by: Babanpreet Singh <bbnpreetsingh@gmail.com>
+Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
+Link: https://lore.kernel.org/r/20260714042910.7-1-bbnpreetsingh@gmail.com
+Signed-off-by: William Breathitt Gray <wbg@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/mellanox/mlx5/core/diag/fw_tracer.c | 16 +++++++---------
- 1 file changed, 7 insertions(+), 9 deletions(-)
+ drivers/counter/microchip-tcb-capture.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c b/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
-index 0a33ab5f53fd3..dba0d73ac37d5 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
-@@ -1050,13 +1050,11 @@ struct mlx5_fw_tracer *mlx5_fw_tracer_create(struct mlx5_core_dev *dev)
+diff --git a/drivers/counter/microchip-tcb-capture.c b/drivers/counter/microchip-tcb-capture.c
+index 461f57f66631c..fbd1afe178a36 100644
+--- a/drivers/counter/microchip-tcb-capture.c
++++ b/drivers/counter/microchip-tcb-capture.c
+@@ -309,7 +309,7 @@ static int mchp_tc_probe(struct platform_device *pdev)
+ 	char clk_name[7];
+ 	struct regmap *regmap;
+ 	struct clk *clk[3];
+-	int channel;
++	u32 channel;
+ 	int ret, i;
  
- 	tracer = kvzalloc(sizeof(*tracer), GFP_KERNEL);
- 	if (!tracer)
--		return ERR_PTR(-ENOMEM);
-+		return NULL;
+ 	counter = devm_counter_alloc(&pdev->dev, sizeof(*priv));
+@@ -343,7 +343,7 @@ static int mchp_tc_probe(struct platform_device *pdev)
  
- 	tracer->work_queue = create_singlethread_workqueue("mlx5_fw_tracer");
--	if (!tracer->work_queue) {
--		err = -ENOMEM;
-+	if (!tracer->work_queue)
- 		goto free_tracer;
--	}
+ 		priv->channel[i] = channel;
  
- 	tracer->dev = dev;
+-		snprintf(clk_name, sizeof(clk_name), "t%d_clk", channel);
++		snprintf(clk_name, sizeof(clk_name), "t%u_clk", channel);
  
-@@ -1098,7 +1096,7 @@ struct mlx5_fw_tracer *mlx5_fw_tracer_create(struct mlx5_core_dev *dev)
- 	destroy_workqueue(tracer->work_queue);
- free_tracer:
- 	kvfree(tracer);
--	return ERR_PTR(err);
-+	return NULL;
- }
- 
- static int fw_tracer_event(struct notifier_block *nb, unsigned long action, void *data);
-@@ -1109,7 +1107,7 @@ int mlx5_fw_tracer_init(struct mlx5_fw_tracer *tracer)
- 	struct mlx5_core_dev *dev;
- 	int err;
- 
--	if (IS_ERR_OR_NULL(tracer))
-+	if (!tracer)
- 		return 0;
- 
- 	if (!tracer->str_db.loaded)
-@@ -1159,7 +1157,7 @@ int mlx5_fw_tracer_init(struct mlx5_fw_tracer *tracer)
- /* Stop tracer + Cleanup HW resources */
- void mlx5_fw_tracer_cleanup(struct mlx5_fw_tracer *tracer)
- {
--	if (IS_ERR_OR_NULL(tracer))
-+	if (!tracer)
- 		return;
- 
- 	mutex_lock(&tracer->state_lock);
-@@ -1188,7 +1186,7 @@ void mlx5_fw_tracer_cleanup(struct mlx5_fw_tracer *tracer)
- /* Free software resources (Buffers, etc ..) */
- void mlx5_fw_tracer_destroy(struct mlx5_fw_tracer *tracer)
- {
--	if (IS_ERR_OR_NULL(tracer))
-+	if (!tracer)
- 		return;
- 
- 	mlx5_core_dbg(tracer->dev, "FWTracer: Destroy\n");
-@@ -1240,7 +1238,7 @@ int mlx5_fw_tracer_reload(struct mlx5_fw_tracer *tracer)
- 	struct mlx5_core_dev *dev;
- 	int err;
- 
--	if (IS_ERR_OR_NULL(tracer))
-+	if (!tracer)
- 		return 0;
- 
- 	dev = tracer->dev;
+ 		clk[i] = of_clk_get_by_name(np->parent, clk_name);
+ 		if (IS_ERR(clk[i])) {
 -- 
 2.53.0
 
