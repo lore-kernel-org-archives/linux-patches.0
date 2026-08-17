@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31BF0441037;
-	Mon, 17 Aug 2026 14:30:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EB7B43F0B1;
+	Mon, 17 Aug 2026 14:30:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786977004; cv=none; b=t6CFBQO5N2jYlWnx4iOaG/c8L4gxBrfX+x5twShKbiHukVsvqcWM8E9R1WipjGTMLfydPWBdLoadntrTiuboVfKfe1i7OaM7BC6knbVPw4xYYB+tw30WMvDrEROcgqu/oJgD9ZqMLoSXHNRw4lZAS3FZUO6rSjQthu95QfdZtJY=
+	t=1786977006; cv=none; b=Us9eG2iPXTdI6T4yVyKA8k7JCQkpuk2yiQz4UrhjJX+0wa6fCOCp1W0YWuLhvSjsBmcV4jZdUbThRLY8X95Q4JiGvpLZkFzE3NDcdCq25Vf+UxolpnORBLpdCcEKpI2si4oY6dezesI8w8j2+rnE/3GxtFWAOgp5fm6sn0pvxas=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786977004; c=relaxed/simple;
-	bh=wY+ojlhADvj6QA1CoogGWFebWLkHz6GYVqX5/zqfMc4=;
+	s=arc-20240116; t=1786977006; c=relaxed/simple;
+	bh=K2qPyBp1yOh8s/m0CSRL6iuZFSovpxgSYKqYtR5nx9g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CLYHMuOow87Cx8VVaiG3Eb58iNNk1D4yyonu8o8Qc6ftAXRh8JaJ72XzntkpHGr+Xk6nFua/6SB0pHEiwDquBfULlQlkD4rtN0nvEro9++Z+lLVLAUq5hSoPiSELOEHjVjvS++uTFTRlc3PTi7eNuvyKIwZbJoq0QuW3Q3DCmmU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CHb+cj6a; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YRYW3FN/wiGUmDDPTqK/XphKJYh1PGd9i5SEWEnBoKJHrabAWthhoSf9H+DUo+0qVwyIVuCrC8DSQVUO0AFuWYN1S2WLIMXu3VUUJwSDvtuvSNyVRAoj9Ew8Af9nhQxwOAjNDBQ9Vp3FOnlWjCNfCxlLZlKtAAHMg5oREgw7AwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q4yOHDks; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CHb+cj6a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3A2B1F000E9;
-	Mon, 17 Aug 2026 14:29:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q4yOHDks"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 303411F00A3D;
+	Mon, 17 Aug 2026 14:30:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1786977000;
-	bh=6QdgwyqtaQz8BR+MX9U+mIWP/NmD83sKDnsbNvZGnHs=;
+	s=korg; t=1786977003;
+	bh=CdvplcpdC+05ykCvp53NfwNVhs+hT7KCRfrcC2vbNzs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CHb+cj6ap+ubGPDV3+IehAMTE2SdL7HGqKJnSOsLOIBHC/fQitbI8hsWxqzuiva7i
-	 Kc0KAb6bswXBrYToi+REbfbeH4sAwHG/2xhqV/EqzaFY3PSKorFmkKvq5u5B4aV1bB
-	 /u5zbKZTIGictL0RHvBDILqP60HNTmaIFz3bY/Ls=
+	b=q4yOHDksrEIzl43gjhLvoZLOZiH0AeRr/GrG7UiakPlm6ldDamxFrqHkLVpuO5stK
+	 L8cF8Zau2z2UxN21l5Y634tLDDg9q9yhZKF3cjBCEVDyXb5zgqkraGrPEjRCAZETLt
+	 EyDCRN8u0q40CNduz/jCvBu/0Uts/4AtoZtikC5g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	syzbot+dac8f5eaa46837e97b89@syzkaller.appspotmail.com,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 5.15 177/456] media: vivid: check for vb2_is_busy() when toggling caps
-Date: Mon, 17 Aug 2026 15:29:27 +0200
-Message-ID: <20260817132547.046207764@linuxfoundation.org>
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Tristan Madani <tristan@talencesecurity.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Subject: [PATCH 5.15 178/456] wifi: ath6kl: fix OOB access from firmware ADDBA window size
+Date: Mon, 17 Aug 2026 15:29:28 +0200
+Message-ID: <20260817132547.079102038@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260817132539.792407575@linuxfoundation.org>
 References: <20260817132539.792407575@linuxfoundation.org>
@@ -51,115 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans Verkuil <hverkuil+cisco@kernel.org>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-commit c2d1a2130c93f6d758af58590b86b2254c7a1dec upstream.
+commit 44126b6994eeb28f2103b638e698f40a1244f327 upstream.
 
-The vivid_update_format_cap/out() functions must only be called if the
-capture/output queue are not busy. But for the controls that select
-the CROP/COMPOSE/SCALE capability that is not checked.
+aggr_recv_addba_req_evt() logs a debug message when the firmware-supplied
+win_sz is outside [AGGR_WIN_SZ_MIN, AGGR_WIN_SZ_MAX] but does not
+return. The out-of-range win_sz is then used in TID_WINDOW_SZ() to
+compute a kzalloc size and stored in rxtid->hold_q_sz, leading to
+zero-size or overflowed allocations and subsequent out-of-bounds access.
 
-Only when streaming starts will they be set to 'grabbed' and it is
-impossible to change the control, but between REQBUFS and STREAMON you
-are still allowed to set these controls. Since vivid_update_format_cap/out
-will change the format, this can cause unexpected results.
+Clean up any previously active aggregation session for the TID first,
+then return early when win_sz is out of the valid range, instead of
+proceeding with a broken allocation size.
 
-Besides adding these checks, also add a WARN_ON in
-vivid_update_format_cap/out() if the queue is busy.
-
-I'm 90% certain that this is the cause of this syzbot bug:
-
-https://syzkaller.appspot.com/bug?extid=dac8f5eaa46837e97b89
-
-But since we never have reproducers, it is hard to be certain. In any case,
-these checks are needed regardless.
-
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Fixes: 73c3f48230cd ("[media] vivid: add the control handling code")
+Fixes: bdcd81707973 ("Add ath6kl cleaned up driver")
 Cc: stable@vger.kernel.org
-Reported-by: syzbot+dac8f5eaa46837e97b89@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=dac8f5eaa46837e97b89
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Link: https://patch.msgid.link/20260702005020.708717-1-tristmd@gmail.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/test-drivers/vivid/vivid-ctrls.c   |   12 ++++++++++++
- drivers/media/test-drivers/vivid/vivid-vid-cap.c |    6 ++++++
- drivers/media/test-drivers/vivid/vivid-vid-out.c |    6 ++++++
- 3 files changed, 24 insertions(+)
+ drivers/net/wireless/ath/ath6kl/txrx.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/drivers/media/test-drivers/vivid/vivid-ctrls.c
-+++ b/drivers/media/test-drivers/vivid/vivid-ctrls.c
-@@ -487,14 +487,20 @@ static int vivid_vid_cap_s_ctrl(struct v
- 		vivid_update_format_cap(dev, true);
- 		break;
- 	case VIVID_CID_HAS_CROP_CAP:
-+		if (vb2_is_busy(&dev->vb_vid_cap_q))
-+			return -EBUSY;
- 		dev->has_crop_cap = ctrl->val;
- 		vivid_update_format_cap(dev, true);
- 		break;
- 	case VIVID_CID_HAS_COMPOSE_CAP:
-+		if (vb2_is_busy(&dev->vb_vid_cap_q))
-+			return -EBUSY;
- 		dev->has_compose_cap = ctrl->val;
- 		vivid_update_format_cap(dev, true);
- 		break;
- 	case VIVID_CID_HAS_SCALER_CAP:
-+		if (vb2_is_busy(&dev->vb_vid_cap_q))
-+			return -EBUSY;
- 		dev->has_scaler_cap = ctrl->val;
- 		vivid_update_format_cap(dev, true);
- 		break;
-@@ -970,14 +976,20 @@ static int vivid_vid_out_s_ctrl(struct v
+--- a/drivers/net/wireless/ath/ath6kl/txrx.c
++++ b/drivers/net/wireless/ath/ath6kl/txrx.c
+@@ -1722,13 +1722,15 @@ void aggr_recv_addba_req_evt(struct ath6
  
- 	switch (ctrl->id) {
- 	case VIVID_CID_HAS_CROP_OUT:
-+		if (vb2_is_busy(&dev->vb_vid_out_q))
-+			return -EBUSY;
- 		dev->has_crop_out = ctrl->val;
- 		vivid_update_format_out(dev);
- 		break;
- 	case VIVID_CID_HAS_COMPOSE_OUT:
-+		if (vb2_is_busy(&dev->vb_vid_out_q))
-+			return -EBUSY;
- 		dev->has_compose_out = ctrl->val;
- 		vivid_update_format_out(dev);
- 		break;
- 	case VIVID_CID_HAS_SCALER_OUT:
-+		if (vb2_is_busy(&dev->vb_vid_out_q))
-+			return -EBUSY;
- 		dev->has_scaler_out = ctrl->val;
- 		vivid_update_format_out(dev);
- 		break;
---- a/drivers/media/test-drivers/vivid/vivid-vid-cap.c
-+++ b/drivers/media/test-drivers/vivid/vivid-vid-cap.c
-@@ -385,6 +385,12 @@ void vivid_update_format_cap(struct vivi
- 	unsigned size;
- 	u64 pixelclock;
+ 	rxtid = &aggr_conn->rx_tid[tid];
  
-+	/*
-+	 * This resets the format, so must never be called while vb2_is_busy().
-+	 */
-+	if (WARN_ON(vb2_is_busy(&dev->vb_vid_cap_q)))
+-	if (win_sz < AGGR_WIN_SZ_MIN || win_sz > AGGR_WIN_SZ_MAX)
+-		ath6kl_dbg(ATH6KL_DBG_WLAN_RX, "%s: win_sz %d, tid %d\n",
+-			   __func__, win_sz, tid);
+-
+ 	if (rxtid->aggr)
+ 		aggr_delete_tid_state(aggr_conn, tid);
+ 
++	if (win_sz < AGGR_WIN_SZ_MIN || win_sz > AGGR_WIN_SZ_MAX) {
++		ath6kl_dbg(ATH6KL_DBG_WLAN_RX, "%s: win_sz %d, tid %d\n",
++			   __func__, win_sz, tid);
 +		return;
++	}
 +
- 	switch (dev->input_type[dev->input]) {
- 	case WEBCAM:
- 	default:
---- a/drivers/media/test-drivers/vivid/vivid-vid-out.c
-+++ b/drivers/media/test-drivers/vivid/vivid-vid-out.c
-@@ -222,6 +222,12 @@ void vivid_update_format_out(struct vivi
- 	unsigned size, p;
- 	u64 pixelclock;
- 
-+	/*
-+	 * This resets the format, so must never be called while vb2_is_busy().
-+	 */
-+	if (WARN_ON(vb2_is_busy(&dev->vb_vid_out_q)))
-+		return;
-+
- 	switch (dev->output_type[dev->output]) {
- 	case SVID:
- 	default:
+ 	rxtid->seq_next = seq_no;
+ 	hold_q_size = TID_WINDOW_SZ(win_sz) * sizeof(struct skb_hold_q);
+ 	rxtid->hold_q = kzalloc(hold_q_size, GFP_KERNEL);
 
 
